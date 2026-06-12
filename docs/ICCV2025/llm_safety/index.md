@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 LLM安全论文汇总 · 11篇论文解读
+  ICCV2025 LLM安全论文汇总 · 10篇论文解读
 description: >-
-  11篇ICCV2025的 LLM 安全方向论文解读，涵盖联邦学习、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  10篇ICCV2025的 LLM 安全方向论文解读，涵盖联邦学习、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "LLM 安全"
@@ -16,8 +16,6 @@ item_list:
     t: "Adversarial Robust Memory-Based Continual Learner"
   - u: "asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset/"
     t: "Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset"
-  - u: "chartcap_mitigating_hallucination_of_dense_chart_captioning/"
-    t: "ChartCap: Mitigating Hallucination of Dense Chart Captioning"
   - u: "cooperative_pseudo_labeling_for_unsupervised_federated_classification/"
     t: "Cooperative Pseudo Labeling for Unsupervised Federated Classification"
   - u: "enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_/"
@@ -34,15 +32,15 @@ item_list:
     t: "SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders"
   - u: "temporal_unlearnable_examples_preventing_personal_video_data_from_unauthorized_e/"
     t: "Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation"
-item_total: 11
+item_total: 10
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**📹 ICCV2025** · **11** 篇论文解读
+**📹 ICCV2025** · **10** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md)
 
 🔥 **高频主题：** 联邦学习 ×4 · 对抗鲁棒 ×3 · 多模态 ×2
 
@@ -53,10 +51,6 @@ item_total: 11
 **[Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)**
 
 :   提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
-
-**[ChartCap: Mitigating Hallucination of Dense Chart Captioning](chartcap_mitigating_hallucination_of_dense_chart_captioning.md)**
-
-:   构建了包含56.5万张真实图表-描述对的大规模数据集ChartCap，通过类型特定的描述模式排除无关信息、强调结构与关键洞察，并提出无参考的Visual Consistency Score评估指标，有效减少VLM在图表描述中的幻觉问题。
 
 **[Cooperative Pseudo Labeling for Unsupervised Federated Classification](cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
 

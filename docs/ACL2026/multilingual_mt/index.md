@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 多语言/翻译论文汇总 · 63篇论文解读
+  ACL2026 多语言/翻译论文汇总 · 62篇论文解读
 description: >-
-  63篇ACL2026的多语言/翻译方向论文解读，涵盖翻译、LLM、语音、Agent、情感分析、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  62篇ACL2026的多语言/翻译方向论文解读，涵盖翻译、LLM、语音、Agent、情感分析、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "多语言/翻译"
@@ -75,17 +75,17 @@ item_list:
     t: "Location Not Found: Exposing Implicit Local and Global Biases in Multilingual LLMs"
   - u: "lost_in_translation_do_lvlm_judges_generalize_across_languages/"
     t: "Lost in Translation: Do LVLM Judges Generalize Across Languages?"
-item_total: 63
+item_total: 62
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**💬 ACL2026** · **63** 篇论文解读
+**💬 ACL2026** · **62** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/multilingual_mt/index.md)
 
-🔥 **高频主题：** 翻译 ×20 · LLM ×8 · 语音 ×3 · Agent ×3 · 情感分析 ×2
+🔥 **高频主题：** 翻译 ×20 · LLM ×7 · 语音 ×3 · Agent ×3 · 情感分析 ×2
 
 **[A Multilingual Dataset and Empirical Validation for the Mutual Reinforcement Effect in Information Extraction](a_multilingual_dataset_and_empirical_validation_for_the_mutual_reinforcement_eff.md)**
 
@@ -222,10 +222,6 @@ item_total: 63
 **[MORPHOGEN: A Multilingual Benchmark for Evaluating Gender-Aware Morphological Generation](morphogen_a_multilingual_benchmark_for_evaluating_gender-aware_morphological_gen.md)**
 
 :   本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标，对 15 个多语言 LLM 的基准测试揭示了模型在复杂形态推理、性别偏差和多实体干扰方面的系统性不足。
-
-**[MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)**
-
-:   MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。
 
 **[Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_language_models_encode_script_over_linguistic_structure.md)**
 

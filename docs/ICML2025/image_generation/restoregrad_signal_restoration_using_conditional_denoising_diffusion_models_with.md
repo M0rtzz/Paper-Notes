@@ -168,7 +168,7 @@ Posterior Net 对稳定训练和提升性能至关重要。
 - [\[CVPR 2025\] Navigating Image Restoration with VAR's Distribution Alignment Prior](../../CVPR2025/image_generation/navigating_image_restoration_with_vars_distribution_alignment_prior.md)
 - [\[NeurIPS 2025\] AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](../../NeurIPS2025/image_generation/accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
 - [\[ACL 2025\] OZSpeech: One-step Zero-shot Speech Synthesis with Learned-Prior-Conditioned Flow Matching](../../ACL2025/image_generation/ozspeech_one-step_zero-shot_speech_synthesis_with_learned-prior-conditioned_flow.md)
-- [\[ICCV 2025\] MoFRR: Mixture of Diffusion Models for Face Retouching Restoration](../../ICCV2025/image_generation/mofrr_mixture_of_diffusion_models_for_face_retouching_restoration.md)
+- [\[ICCV 2025\] DIIP: Diffusion Image Prior](../../ICCV2025/image_generation/diffusion_image_prior.md)
 
 </div>
 

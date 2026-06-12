@@ -72,7 +72,7 @@ item_total: 25
 
 **📷 CVPR2026** · **25** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (38)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×11 · 联邦学习 ×9 · 多模态 ×5 · 水印/隐写 ×4 · 机器人 ×3
 
@@ -138,7 +138,7 @@ item_total: 25
 
 **[One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control](one-to-more_high-fidelity_training-free_anomaly_generation_with_attention_control.md)**
 
-:   O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和异常引导增强(DAE)确保掩码区域完整填充，在 MVTec-AD 下游异常检测任务中显著优于现有方法。
+:   O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和双重注意力增强(DAE)确保掩码区域完整填充，在 MVTec-AD 下游异常检测任务中显著优于现有方法。
 
 **[ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 视频理解论文汇总 · 17篇论文解读
+  ACL2026 视频理解论文汇总 · 16篇论文解读
 description: >-
-  17篇ACL2026的视频理解方向论文解读，涵盖多模态、压缩/编码、问答、推理、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  16篇ACL2026的视频理解方向论文解读，涵盖多模态、压缩/编码、问答、推理、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "视频理解"
@@ -24,8 +24,6 @@ item_list:
     t: "Confidence Estimation for LLMs in Multi-turn Interactions"
   - u: "craft_critic-refined_adaptive_key-frame_targeting_for_multimodal_video_question_/"
     t: "CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering"
-  - u: "distorted_or_fabricated_a_survey_on_hallucination_in_video_llms/"
-    t: "Distorted or Fabricated? A Survey on Hallucination in Video LLMs"
   - u: "dualfact_a_multimodal_fact_verification_framework_for_procedural_video_understan/"
     t: "DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding"
   - u: "gameplayqa_a_benchmarking_framework_for_decision-dense_pov-synced_multi-video_un/"
@@ -48,13 +46,13 @@ item_list:
     t: "ViLL-E: Video LLM Embeddings for Retrieval"
   - u: "vista_verification_in_sequential_turn-based_assessment/"
     t: "VISTA: Verification In Sequential Turn-based Assessment"
-item_total: 17
+item_total: 16
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**💬 ACL2026** · **17** 篇论文解读
+**💬 ACL2026** · **16** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md) · [📹 ICCV2025 (56)](../../ICCV2025/video_understanding/index.md)
 
@@ -79,10 +77,6 @@ item_total: 17
 **[CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering](craft_critic-refined_adaptive_key-frame_targeting_for_multimodal_video_question_.md)**
 
 :   CRAFT 是一个面向新闻事件多视频问答的 claim-centric pipeline，它结合动态关键帧选择、ASR 转写、UNLI/MNLI/LLM critic 迭代修正和引用合并，在 MAGMaR-Test 上取得 0.739 macro average、0.810 reference recall 和 0.635 citation F1。
-
-**[Distorted or Fabricated? A Survey on Hallucination in Video LLMs](distorted_or_fabricated_a_survey_on_hallucination_in_video_llms.md)**
-
-:   本文首次对视频大语言模型（Vid-LLM）中的幻觉现象进行系统分类，提出"动态失真"（时空关系和引用一致性错误）和"内容捏造"（统计先验驱动和音视频冲突）的机制驱动分类体系，综述评估基准、缓解策略和根因分析。
 
 **[DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding](dualfact_a_multimodal_fact_verification_framework_for_procedural_video_understan.md)**
 

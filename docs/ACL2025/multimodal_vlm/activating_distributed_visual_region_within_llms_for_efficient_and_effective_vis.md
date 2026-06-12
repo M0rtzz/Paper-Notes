@@ -152,7 +152,7 @@ tags:
 - [\[ICML 2025\] SparseVLM: Visual Token Sparsification for Efficient Vision-Language Model Inference](../../ICML2025/multimodal_vlm/sparsevlm_visual_token_sparsification_for_efficient_vision-language_model_infere.md)
 - [\[ACL 2025\] R-VLM: Region-Aware Vision Language Model for Precise GUI Grounding](r-vlm_region-aware_vision_language_model_for_precise_gui_grounding.md)
 - [\[ACL 2025\] RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models](rate-nav_region-aware_termination_enhancement_for_zero-shot_object_navigation_wi.md)
-- [\[ICCV 2025\] SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](../../ICCV2025/multimodal_vlm/sparsevila_decoupling_visual_sparsity_for_efficient_vlm_inference.md)
+- [\[ACL 2025\] JARVIS-VLA: Post-Training Large-Scale Vision Language Models to Play Visual Games](jarvis-vla_post-training_large-scale_vision_language_models_to_play_visual_games.md)
 
 </div>
 

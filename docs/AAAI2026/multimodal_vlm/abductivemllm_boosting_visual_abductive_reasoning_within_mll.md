@@ -169,7 +169,7 @@ Top-$k$ 假设数量：$k=3$ 最优（CIDEr 57.04），$k=10$ 时下降至 53.66
 - [\[AAAI 2026\] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?](when_eyes_and_ears_disagree_can_mllms_discern_audio-visual_confusion.md)
 - [\[ICCV 2025\] Boosting MLLM Reasoning with Text-Debiased Hint-GRPO](../../ICCV2025/multimodal_vlm/boosting_mllm_reasoning_with_text-debiased_hint-grpo.md)
 - [\[CVPR 2026\] PaddleOCR-VL: Boosting Document Parsing Efficiency and Performance with Coarse-to-Fine Visual Processing](../../CVPR2026/multimodal_vlm/paddleocr_vl_coarse_to_fine_document_parsing.md)
-- [\[ICCV 2025\] BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models](../../ICCV2025/multimodal_vlm/basic_boosting_visual_alignment_with_intrinsic_refined_embeddings_in_multimodal_.md)
+- [\[ICCV 2025\] Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference](../../ICCV2025/multimodal_vlm/free-moref_instantly_multiplexing_context_perception_capabilities_of_video-mllms.md)
 
 </div>
 

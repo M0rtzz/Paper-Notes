@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 自动驾驶论文汇总 · 57篇论文解读
+  AAAI2026 自动驾驶论文汇总 · 56篇论文解读
 description: >-
-  57篇AAAI2026的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、扩散模型、Agent、对抗鲁棒、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  56篇AAAI2026的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、扩散模型、Agent、对抗鲁棒、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "自动驾驶"
@@ -22,8 +22,6 @@ item_list:
     t: "Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning"
   - u: "beta_distribution_learning_for_reliable_roadway_crash_risk_a/"
     t: "Beta Distribution Learning for Reliable Roadway Crash Risk Assessment"
-  - u: "bridging_day_and_night_target-class_hallucination_suppressio/"
-    t: "Bridging Day and Night: Target-Class Hallucination Suppression in Unpaired Image Translation"
   - u: "catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving/"
     t: "CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction"
   - u: "comptrack_information_bottleneckguided_lowrank_dynamic_token_compres/"
@@ -74,13 +72,15 @@ item_list:
     t: "LiNeXt: Revisiting LiDAR Completion with Efficient Non-Diffusion Architectures"
   - u: "mambaseg_harnessing_mamba_for_accurate_and_efficient_image-e/"
     t: "MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation"
-item_total: 57
+  - u: "meta_dynamic_graph_for_traffic_flow_prediction/"
+    t: "Meta Dynamic Graph for Traffic Flow Prediction"
+item_total: 56
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🤖 AAAI2026** · **57** 篇论文解读
+**🤖 AAAI2026** · **56** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (10)](../../ICML2025/autonomous_driving/index.md)
 
@@ -101,10 +101,6 @@ item_total: 57
 **[Beta Distribution Learning for Reliable Roadway Crash Risk Assessment](beta_distribution_learning_for_reliable_roadway_crash_risk_a.md)**
 
 :   提出基于 Beta 分布学习的地理空间深度学习框架，利用多尺度卫星图像预测道路致命事故风险的完整概率分布（而非点估计），在 Recall 上提升 17-23%，并通过分布形状自然表达不确定性。
-
-**[Bridging Day and Night: Target-Class Hallucination Suppression in Unpaired Image Translation](bridging_day_and_night_target-class_hallucination_suppressio.md)**
-
-:   首次系统性解决无配对日→夜图像翻译中的"目标类幻觉"问题，通过双头判别器（风格头+SAM2伪标签分割头）检测幻觉 + 类原型对比学习抑制幻觉，在BDD100K日夜域适应检测上将mAP从15.08提升到17.40（+15.5%），交通灯AP提升31.7%。
 
 **[CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction](catformer_causal_temporal_transformer_with_dynamic_contextual_fusion_for_driving.md)**
 

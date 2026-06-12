@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM评测论文汇总 · 88篇论文解读
+  ACL2025 LLM评测论文汇总 · 87篇论文解读
 description: >-
-  88篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、Agent、对抗鲁棒、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  87篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、Agent、对抗鲁棒、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "LLM 评测"
@@ -75,17 +75,17 @@ item_list:
     t: "EditInspector: A Benchmark for Evaluation of Text-Guided Image Edits"
   - u: "educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr/"
     t: "EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework"
-item_total: 88
+item_total: 87
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**💬 ACL2025** · **88** 篇论文解读
+**💬 ACL2025** · **87** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×33 · 推理 ×11 · Agent ×4 · 对抗鲁棒 ×3 · 情感分析 ×2
+🔥 **高频主题：** LLM ×32 · 推理 ×11 · Agent ×4 · 对抗鲁棒 ×3 · 情感分析 ×2
 
 **[A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)**
 
@@ -234,10 +234,6 @@ item_total: 88
 **[GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](guessarena_guess_who_i_am_a.md)**
 
 :   提出 GuessArena，一种基于"猜猜我是谁"博弈游戏的自适应 LLM 评估框架，通过领域知识建模和多轮交互推理，在五个垂直行业中有效区分模型的领域知识和推理能力。
-
-**[HalluLens: LLM Hallucination Benchmark](hallulens_llm_hallucination_benchmark.md)**
-
-:   提出了 HalluLens 幻觉基准，明确区分幻觉与事实性，建立了外在幻觉（与训练数据不一致）和内在幻觉（与输入上下文不一致）的清晰分类体系，引入三个动态可重生成的外在幻觉评估任务，并全面分析了现有基准的局限性。
 
 **[HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)**
 

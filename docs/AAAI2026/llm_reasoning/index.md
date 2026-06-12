@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM推理论文汇总 · 38篇论文解读
+  AAAI2026 LLM推理论文汇总 · 37篇论文解读
 description: >-
-  38篇AAAI2026的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、对抗鲁棒、代码智能等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  37篇AAAI2026的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、对抗鲁棒、代码智能等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "LLM 推理"
@@ -36,8 +36,6 @@ item_list:
     t: "Dropouts in Confidence: Moral Uncertainty in Human-LLM Alignment"
   - u: "efficient_thought_space_exploration_through_strategic_intervention/"
     t: "Efficient Thought Space Exploration Through Strategic Intervention"
-  - u: "esg-bench_benchmarking_long-context_esg_reports_for_hallucination_mitigation/"
-    t: "ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation"
   - u: "evaluating_synthesizing_and_enhancing_for_customer_support_conversation/"
     t: "Evaluating, Synthesizing, and Enhancing for Customer Support Conversation"
   - u: "extendattack_attacking_servers_of_lrms_via_extending_reasoning/"
@@ -74,15 +72,17 @@ item_list:
     t: "SCALE: Selective Resource Allocation for Overcoming Performance Bottlenecks in Mathematical Test-time Scaling"
   - u: "serl_self-examining_reinforcement_learning_on_open-domain/"
     t: "SERL: Self-Examining Reinforcement Learning on Open-Domain"
-item_total: 38
+  - u: "small_language_models_for_efficient_agentic_tool_calling_outperforming_large_mod/"
+    t: "Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning"
+item_total: 37
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🤖 AAAI2026** · **38** 篇论文解读
+**🤖 AAAI2026** · **37** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
 🔥 **高频主题：** 推理 ×25 · LLM ×11 · 强化学习 ×3 · 对抗鲁棒 ×2 · 代码智能 ×2
 
@@ -129,10 +129,6 @@ item_total: 38
 **[Efficient Thought Space Exploration Through Strategic Intervention](efficient_thought_space_exploration_through_strategic_intervention.md)**
 
 :   提出 Hint-Practice Reasoning（HPR）框架，通过大模型（hinter）在稀疏关键 token 处提供短提示、小模型（practitioner）完成主要推理的协作模式，仅需1/5的 token 即可达到 self-consistency 基线的性能，同时在相同 FLOPs 下精度最高提升5.1%。
-
-**[ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation](esg-bench_benchmarking_long-context_esg_reports_for_hallucination_mitigation.md)**
-
-:   构建 ESG-Bench——270 个人工标注 QA 对来自 94 份真实 ESG 报告（2020-2024），提出三阶段幻觉缓解：SFT（有基础答案+「不提供」弃权标签）→ CoT Prompting（2/4步提示模板）→ CoT 微调（人工推理链），其中 4 步 CoT 微调的 Llama-3 达到 92.52% 有答案准确率 + 99.37% 无答案准确率（平衡 96%），且迁移到 HaluEval/BioASQ 也有提升。
 
 **[Evaluating, Synthesizing, and Enhancing for Customer Support Conversation](evaluating_synthesizing_and_enhancing_for_customer_support_conversation.md)**
 

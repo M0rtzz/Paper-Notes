@@ -83,7 +83,7 @@ item_total: 35
 
 **📷 CVPR2026** · **35** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (95)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×2 · 多模态 ×2
 
@@ -121,7 +121,7 @@ item_total: 35
 
 **[DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)**
 
-:   提出 Dirichlet 先验增强（DirPA），在少样本学习训练阶段从 Dirichlet 分布中采样类别比例向量来构造不平衡 episode，主动模拟真实世界长尾分布以消除先验偏移，在欧盟多个国家的作物分类任务中展示了一致的鲁棒性提升和稀有类别精度改善。
+:   提出 Dirichlet 先验增强（DirPA），在少样本学习训练的每一步从对称 Dirichlet 分布采样一个伪先验并以 logit 调整 $z'=z+\tau\log\tilde{\pi}$ 注入分类器（不改数据、不重构 episode），主动模拟真实世界长尾分布以消除先验偏移，在欧盟多个国家的作物分类任务中展示了一致的鲁棒性提升和稀有类别精度改善。
 
 **[Do Vision Models Perceive Illusory Motion in Static Images Like Humans?](do_vision_models_perceive_illusory_motion_in_static_images_like_humans.md)**
 

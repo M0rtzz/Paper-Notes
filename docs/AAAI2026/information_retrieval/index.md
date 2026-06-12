@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 信息检索/RAG论文汇总 · 27篇论文解读
+  AAAI2026 信息检索/RAG论文汇总 · 26篇论文解读
 description: >-
-  27篇AAAI2026的信息检索/RAG 方向论文解读，涵盖 RAG、推理、多模态、LLM、Agent、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  26篇AAAI2026的信息检索/RAG 方向论文解读，涵盖 RAG、推理、多模态、LLM、Agent、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "信息检索/RAG"
@@ -29,8 +29,6 @@ item_list:
     t: "ConvMix: A Mixed-Criteria Data Augmentation Framework for Conversational Dense Retrieval"
   - u: "do_retrieval_augmented_language_models_know_when_they_dont_know/"
     t: "Do Retrieval Augmented Language Models Know When They Don't Know?"
-  - u: "does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms/"
-    t: "Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs"
   - u: "exposing_the_cracks_vulnerabilities_of_retrieval-augmented_llm-based_machine_tra/"
     t: "Exposing the Cracks: Vulnerabilities of Retrieval-Augmented LLM-Based Machine Translation"
   - u: "himo-clip_modeling_semantic_hierarchy_and_monotonicity_in_vi/"
@@ -69,15 +67,15 @@ item_list:
     t: "Towards Inference-Time Scaling for Continuous Space Reasoning"
   - u: "when_small_models_are_right_for_wrong_reasons_process_verification_for_trustwort/"
     t: "When Small Models Are Right for Wrong Reasons: Process Verification for Trustworthy Agents"
-item_total: 27
+item_total: 26
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**🤖 AAAI2026** · **27** 篇论文解读
+**🤖 AAAI2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (74)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
 
 🔥 **高频主题：** RAG ×7 · 推理 ×4 · 多模态 ×4 · LLM ×3 · Agent ×3
 
@@ -108,10 +106,6 @@ item_total: 27
 **[Do Retrieval Augmented Language Models Know When They Don't Know?](do_retrieval_augmented_language_models_know_when_they_dont_know.md)**
 
 :   系统分析RAG模型的拒绝校准问题，发现RALM在检索文档全部不相关时过度拒绝率超过55%（即使模型内部知识足够回答），提出结合不确定性估计和拒绝感知微调的机制来平衡拒绝与回答质量。
-
-**[Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs](does_less_hallucination_mean_less_creativity_an_empirical_investigation_in_llms.md)**
-
-:   系统研究三种幻觉缓解方法（CoVe、DoLa、RAG）对LLM创造力的影响，发现它们对发散性创造力有截然相反的效果——CoVe增强、DoLa抑制、RAG无影响——而收敛性创造力基本不受影响，这一规律跨模型家族和参数规模一致成立。
 
 **[Exposing the Cracks: Vulnerabilities of Retrieval-Augmented LLM-Based Machine Translation](exposing_the_cracks_vulnerabilities_of_retrieval-augmented_llm-based_machine_tra.md)**
 

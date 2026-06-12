@@ -2,7 +2,7 @@
 title: >-
   ACL2026 论文汇总 · 1363篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1363篇ACL2026论文解读，涵盖 LLM 安全(128篇)、多模态 VLM(99篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(74篇)、音频/语音(70篇)、可解释性(63篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "ACL2026论文汇总"
@@ -17,7 +17,7 @@ tags:
   - "LLM Agent"
   - "信息检索/RAG"
   - "音频/语音"
-  - "可解释性"
+  - "多语言/翻译"
 item_list:
   - u: "llm_safety/a_linguistics-aware_llm_watermarking_via_syntactic_predictability/"
     t: "STELA: A Linguistics-Aware LLM Watermarking via Syntactic Predictability"
@@ -37,8 +37,6 @@ item_list:
     t: "AgentMark: Utility-Preserving Behavioral Watermarking for Agents"
   - u: "llm_safety/agsc_adaptive_granularity_and_semantic_clustering_for_uncertainty_quantification/"
     t: "AGSC: Adaptive Granularity and Semantic Clustering for Uncertainty Quantification in Long-text Generation"
-  - u: "llm_safety/aligning_with_your_own_voice_self-corrected_preference_learning_for_hallucinatio/"
-    t: "Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs"
   - u: "llm_safety/appsi-139_a_parallel_corpus_of_english_application_privacy_policy_summarization_/"
     t: "APPSI-139: A Parallel Corpus of English Application Privacy Policy Summarization and Interpretation"
   - u: "llm_safety/astra_an_automated_framework_for_strategy_discovery_retrieval_and_evolution_for_/"
@@ -79,13 +77,15 @@ item_list:
     t: "CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge"
   - u: "llm_safety/dart_mitigating_harm_drift_in_difference-aware_llms_via_distill-audit-repair_tra/"
     t: "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training"
+  - u: "llm_safety/de-anonymization_at_scale_via_tournament-style_attribution/"
+    t: "De-Anonymization at Scale via Tournament-Style Attribution"
 item_total: 1363
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 ACL2026 论文汇总
 
-1363篇ACL2026论文解读，涵盖 LLM 安全(128篇)、多模态 VLM(99篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(74篇)、音频/语音(70篇)、可解释性(63篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -128,10 +128,6 @@ item_total: 1363
 **[AGSC: Adaptive Granularity and Semantic Clustering for Uncertainty Quantification in Long-text Generation](llm_safety/agsc_adaptive_granularity_and_semantic_clustering_for_uncertainty_quantification.md)**
 
 :   AGSC 提出了一个针对长文本生成的不确定性量化框架，通过 NLI 中立概率触发自适应粒度分解（减少 60% 推理时间），并使用 GMM 软聚类捕捉潜在语义主题进行主题感知的加权聚合，在 BIO 和 LongFact 基准上达到 SOTA 的事实性相关性。
-
-**[Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs](llm_safety/aligning_with_your_own_voice_self-corrected_preference_learning_for_hallucinatio.md)**
-
-:   提出 AVES-DPO 框架：用一致性多模型验证（YOLO/GroundingDINO/Qwen3-VL）在 object/attribute/relation 三层细粒度检测 LVLM 自己生成回复中的幻觉，再让同一个 LVLM 自我校正并丰富细节，得到的偏好对天然处于目标模型的"自身分布"内；仅 5.2K 样本即可在多个幻觉 benchmark 上超过依赖 GPT-4V 教师的 SOTA（数据效率约 25×）。
 
 **[APPSI-139: A Parallel Corpus of English Application Privacy Policy Summarization and Interpretation](llm_safety/appsi-139_a_parallel_corpus_of_english_application_privacy_policy_summarization_.md)**
 
@@ -241,10 +237,6 @@ item_total: 1363
 
 :   DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗水印头根据当前内容是"良性"还是"恶意"自适应地注入不同水印，使良性文本两路一致、恶意文本两路发散，从而在保持对 paraphrase 鲁棒的同时**首次能检测并溯源** piggyback spoofing 注入的恶意片段。
 
-**[Enhancing Hallucination Detection via Future Context](llm_safety/enhancing_hallucination_detection_via_future_context.md)**
-
-:   本文提出利用采样生成的"未来上下文"（后续句子）来增强黑盒场景下的幻觉检测，利用幻觉一旦出现就倾向于持续传播的"滚雪球效应"，在 SelfCheckGPT 和 SC 等多种采样方法上一致提升检测性能。
-
 **[Evaluating Answer Leakage Robustness of LLM Tutors against Adversarial Student Attacks](llm_safety/evaluating_answer_leakage_robustness_of_llm_tutors_against_adversarial_student_a.md)**
 
 :   本文系统评估 LLM 家教在「学生想骗答案」场景下的答案泄露鲁棒性：定义 6 类对抗/说服技巧，比较 4 类对抗学生代理（基础、推理增强、多代理、SFT 微调），并验证两种简单防御（推理优先、多代理 tutor）可在多数模型上把泄露率从 70–85% 压到 < 10%。
@@ -257,17 +249,9 @@ item_total: 1363
 
 :   本文提出FAITH框架，通过将LLM的不确定性信号（一致性+语义熵）映射到自然语言描述的知识状态象限（可信度×诚实度），设计考虑不确定性的细粒度奖励函数进行PPO训练，再用RAG模块纠正潜在错误，系统性提升LLM的事实准确性。
 
-**[FaithLens: Detecting and Explaining Faithfulness Hallucination](llm_safety/faithlens_detecting_and_explaining_faithfulness_hallucination.md)**
-
-:   本文提出 FaithLens，一个 8B 参数的忠实性幻觉检测模型，通过高质量数据合成+三维过滤（标签正确性、解释质量、数据多样性）进行冷启动 SFT，再用基于规则的强化学习（预测正确性奖励+解释质量奖励）进一步优化，在 12 个任务上超越 GPT-5.2 和 o3，同时提供高质量的解释性输出。
-
 **[Fast-MIA: Efficient and Scalable Membership Inference for LLMs](llm_safety/fast-mia_efficient_and_scalable_membership_inference_for_llms.md)**
 
 :   Fast-MIA 把 9 种主流 LLM 成员推理攻击（MIA）方法塞进同一个 vLLM 批量推理引擎，并加一层跨方法 log-prob 缓存，使评测在 LLaMA-30B / WikiMIA 上整体加速约 5×（SaMIA 单方法加速 19.5×）、AUC 几乎不变，让大规模 MIA 审计第一次变得真的"跑得起"。
-
-**[FinGround: Detecting and Grounding Financial Hallucinations via Atomic Claim Verification](llm_safety/finground_detecting_and_grounding_financial_hallucinations_via_atomic_claim_veri.md)**
-
-:   FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pipeline：(1) finance-aware 混合检索；(2) 把答案拆成原子 claim 并按"数值/时间/实体属性/比较/监管/计算"六类 taxonomy 用 type-routed 策略验证 (其中 computational claim 用公式重构 + 算术再校验)；(3) 对未支持的 claim 进行 grounded 重写并加段/单元格级引用——把 GPT-4o 蒸馏到 8B 检测器实现 91.4% F1、18× 加速，端到端将 hallucination rate 相比 GPT-4o+CoT 降 78%。
 
 **[FlexGuard: Continuous Risk Scoring for Strictness-Adaptive LLM Content Moderation](llm_safety/flexguard_continuous_risk_scoring_for_strictness-adaptive_llm_content_moderation.md)**
 
@@ -296,14 +280,6 @@ item_total: 1363
 **[ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](llm_safety/generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)**
 
 :   本文提出伪造归因报告生成（Forgery Attribution Report Generation）这一新任务，构建了包含 152,217 个样本的 MMTT 数据集（首个同时提供像素级掩码和人工文本描述的大规模面部伪造数据集），并提出 ForgeryTalker 端到端基线，通过共享编码器和双解码器（掩码+语言模型）联合生成定位掩码和归因报告，达到 59.3 CIDEr 和 73.67 IoU。
-
-**[Generating Effective CoT Traces for Mitigating Causal Hallucination](llm_safety/generating_effective_cot_traces_for_mitigating_causal_hallucination.md)**
-
-:   本文首先提出了因果幻觉率（CHR）指标来量化小型 LLM 在事件因果识别中过度预测因果关系的倾向，然后通过系统实验确定了有效 CoT 数据的两个关键标准（充分长度的语义解释+与目标模型对齐的分布），设计了一套低成本的 CoT 数据生成管线，将 Qwen2.5-1.5B 的 CHR 从 83.54% 降至 6.26%，同时提升平均准确率至 66.00%。
-
-**[Hallucination Detection in LLMs with Topological Divergence on Attention Graphs](llm_safety/hallucination_detection_in_llms_with_topological_divergence_on_attention_graphs.md)**
-
-:   TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 Manifold Topology Divergence 度量「response 子图相对 prompt 子图的拓扑新颖度」，并发现存在跨数据集稳定的「幻觉感知头」——只用 10 个这样的头做平均，就能在 RAG 场景下做到 training-free + 比 SelfCheckGPT 快 70× 且 ROC-AUC 显著领先。
 
 **[Hard to Read, Easy to Jailbreak: How Visual Degradation Bypasses MLLM Safety Alignment](llm_safety/hard_to_read_easy_to_jailbreak_how_visual_degradation_bypasses_mllm_safety_align.md)**
 
@@ -349,17 +325,9 @@ item_total: 1363
 
 :   LLM-VA 发现 LLM 内部把"是否回答"（answer 向量 $v_a$）与"输入是否安全"（benign 向量 $v_b$）编码成几乎正交的两个方向，导致 jailbreak 与 over-refusal 之间的取舍永远此消彼长；它通过闭式最小范数权重更新把 $v_a$ 与 $v_b$ 对齐，让模型"愿不愿答"因果依赖于"输入安不安全"，在 12 个 LLM 上 F1 比最强 baseline 高 11.45%、效用仅掉 4.08%，且无需任何 fine-tuning 或架构改动。
 
-**[Logical Consistency as a Bridge: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments](llm_safety/logical_consistency_as_a_bridge_improving_llm_hallucination_detection_via_label_.md)**
-
-:   把 LLM 的 self-judgment ("它觉得自己刚才答对了没") 也当成一个可能幻觉的 generation，先用 intrinsic feature 训一个 "meta-judgment detector" 估它的可信度，再用"如果 self-judgment 说真→两标签相同/说假→两标签相反"这条天然逻辑规则，把 response detector 和 meta-judgment detector 通过 Huber loss 互相约束、用置信度加权的互学习联合训练；推理时只用 response detector 但已经吸收了 self-judgment 的知识，零额外推理成本就拿到双视角增益。
-
 **[Look Twice before You Leap: A Rational Framework for Localized Adversarial Anonymization](llm_safety/look_twice_before_you_leap_a_rational_framework_for_localized_adversarial_anonym.md)**
 
 :   提出 RLAA 框架，通过 Attacker-Arbitrator-Anonymizer 三角色架构和边际替代率（MRS）理性约束，解决对抗式文本匿名化迁移到本地小模型时的效用崩溃问题，无需训练即可在本地实现优于 API 方案的隐私-效用平衡。
-
-**[Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models](llm_safety/lost_in_diffusion_uncovering_hallucination_patterns_and_failure_modes_in_diffusi.md)**
-
-:   首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。
 
 **[Lying with Truths: Open-Channel Multi-Agent Collusion for Belief Manipulation via Generative Montage](llm_safety/lying_with_truths_open-channel_multi-agent_collusion_for_belief_manipulation_via.md)**
 
@@ -372,10 +340,6 @@ item_total: 1363
 **[Maximizing Local Entropy Where It Matters: Prefix-Aware Localized LLM Unlearning](llm_safety/maximizing_local_entropy_where_it_matters_prefix-aware_localized_llm_unlearning.md)**
 
 :   本文提出 PALU（Prefix-Aware Localized Unlearning），从时间和词表两个维度实现局部化的熵最大化遗忘：在时间维度仅对敏感前缀 token 施加遗忘目标，在词表维度仅对 top-K logits 进行平坦化，以最小的参数扰动实现高效遗忘并保持模型通用能力。
-
-**[MeasHalu: Mitigation of Scientific Measurement Hallucinations for LLMs](llm_safety/meashalu_mitigation_of_scientific_measurement_hallucinations_for_large_language_.md)**
-
-:   本文提出MeasHalu框架，通过细粒度测量幻觉分类法和两阶段优化（推理感知SFT+幻觉靶向GRPO奖励）缓解LLM在科学测量抽取中的幻觉，在MeasEval上显著超越基线。
 
 **[Membership Inference Attacks on In-Context Learning Recommendation](llm_safety/membership_inference_attacks_on_llm-based_recommender_systems.md)**
 
@@ -456,10 +420,6 @@ item_total: 1363
 **[Responsible Federated LLMs via Safety Filtering and Constitutional AI](llm_safety/responsible_federated_llms_via_safety_filtering_and_constitutional_ai.md)**
 
 :   这篇论文把安全过滤器和 Constitutional AI 接入 FedLLM 流程，证明有害客户端数据会显著损害全局模型安全，而在客户端过滤数据、在服务器端低成本 CAI 微调可以把 AdvBench 安全分数从约 72% 拉回到 96% 以上。
-
-**[Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](llm_safety/rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)**
-
-:   本文重新定义了 RAG 场景幻觉检测 benchmark 应具备的 7 条要求，构建了长上下文、人类多轮标注且带真实噪声标签的 Trivia++，并发现现有检测器在有机 RAG 幻觉上仍明显低于理想性能。
 
 **[Rethinking Jailbreak Detection of Large Vision Language Models with Representational Contrastive Scoring](llm_safety/rethinking_jailbreak_detection_of_large_vision_language_models_with_representati.md)**
 
@@ -545,17 +505,9 @@ item_total: 1363
 
 :   SWAN 用 Abstract Meaning Representation 模板把水印嵌入句子的语义图结构，而不是 token 或 embedding 区域，因此在保持原意的 paraphrase 后仍能通过 AMR 解析、模板匹配和比例 z 检验检测出水印。
 
-**[The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](llm_safety/the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)**
-
-:   系统性揭示了"推理陷阱"悖论：增强LLM推理能力（无论通过RL、蒸馏还是可切换推理模式）会系统性地放大工具幻觉，且这一效应与推理本身而非RL训练相关联，现有缓解策略（提示工程、DPO）面临不可避免的可靠性-能力权衡。
-
 **[Topic-Based Watermarks for Large Language Models](llm_safety/topic-based_watermarks_for_large_language_models.md)**
 
 :   本文提出基于主题的轻量水印方案 TBW，将词表按语义主题聚类为"绿色列表"（而非随机分区），根据输入提示选择语义对齐的主题列表进行 logit 偏置，在保持与无水印文本相当的困惑度的同时，显著提升了对释义和词汇扰动攻击的鲁棒性。
-
-**[TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](llm_safety/tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)**
-
-:   本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献，结合词性标注聚合特征，实现 RAG 场景下的 SOTA 幻觉检测。
 
 **[Train in Vain: Functionality-Preserving Poisoning to Prevent Unauthorized Use of Code Datasets](llm_safety/train_in_vain_functionality-preserving_poisoning_to_prevent_unauthorized_use_of_.md)**
 
@@ -568,10 +520,6 @@ item_total: 1363
 **[TROJail: Trajectory-Level Optimization for Multi-Turn Large Language Model Jailbreaks with Process Rewards](llm_safety/trojail_trajectory-level_optimization_for_multi-turn_large_language_model_jailbr.md)**
 
 :   本文将自动化多轮越狱攻击建模为多轮强化学习问题，提出 TROJail，通过两个启发式过程奖励（过度有害惩罚和语义相关性递进）缓解结果奖励的稀疏监督问题，在多个模型和基准上显著提升攻击成功率。
-
-**[Two Pathways to Truthfulness: On the Intrinsic Encoding of LLM Hallucinations](llm_safety/two_pathways_to_truthfulness_on_the_intrinsic_encoding_of_llm_hallucinations.md)**
-
-:   本文发现 LLM 内部编码真实性信号存在两条不同的信息通路：Question-Anchored（依赖问题到回答的信息流）和 Answer-Anchored（从生成答案本身提取自包含证据），两者与知识边界紧密关联，并据此提出 Mixture-of-Probes 和 Pathway Reweighting 两种通路感知的幻觉检测方法，AUC 提升达 10%。
 
 **[Understanding and Mitigating Bias Inheritance in LLM-based Data Augmentation on Downstream Tasks](llm_safety/understanding_and_mitigating_bias_inheritance_in_llm-based_data_augmentation_on_.md)**
 
@@ -644,10 +592,6 @@ item_total: 1363
 **[Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions](multimodal_vlm/automatic_slide_updating_with_user-defined_dynamic_templates_and_natural_languag.md)**
 
 :   定义了"基于自然语言指令在用户自定义模板上进行动态幻灯片更新"的新任务，构建了包含 20,036 个指令-执行三元组的 DynaSlide 基准，并提出了 SlideAgent 作为强参考基线。
-
-**[Benchmarking Deflection and Hallucination in Large Vision-Language Models](multimodal_vlm/benchmarking_deflection_and_hallucination_in_large_vision-language_models.md)**
-
-:   提出 VLM-DeflectionBench，一个包含 2775 个样本的多模态基准，通过四种评估场景（参数化/Oracle/现实/对抗）系统性地评估大型视觉语言模型在证据不足或误导时的拒答（deflection）vs 幻觉（hallucination）行为，实验覆盖 20 个 SOTA LVLM，发现几乎所有模型都无法在噪声证据下可靠拒答。
 
 **[Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations](multimodal_vlm/beyond_screenshots_evaluating_vlms_understanding_of_ui_animations.md)**
 
@@ -829,10 +773,6 @@ item_total: 1363
 
 :   本文提出 MedLayBench-V，首个大规模多模态医学专家-通俗语义对齐基准（79,793 图文对），通过 Structured Concept-Grounded Refinement (SCGR) 流水线将专业放射学报告转化为通俗描述，确保临床语义保真的同时将阅读难度从研究生级别降至高中水平，零样本检索实验表明通俗描述仅带来不到 1% 的性能损失。
 
-**[Mitigating Hallucinations in Large Vision-Language Models without Performance Degradation](multimodal_vlm/mitigating_hallucinations_in_large_vision-language_models_without_performance_de.md)**
-
-:   本文提出 MPD 框架，通过语义感知正交子空间投影分离幻觉成分，并仅选择性更新与幻觉最相关的少量参数，在减少 23.4% 幻觉的同时保持 97.4% 的通用生成能力，不引入额外推理开销。
-
 **[MMErroR: A Benchmark for Erroneous Reasoning in Vision-Language Models](multimodal_vlm/mmerror_a_benchmark_for_erroneous_reasoning_in_vision-language_models.md)**
 
 :   本文提出 MMErroR，一个包含 1997 个样本的多模态错误推理基准，每个样本嵌入一个单一推理错误，覆盖 6 大领域和 4 种错误类型，要求 VLM 不仅检测推理链中的错误存在，还要分类错误类型（视觉感知错误/知识应用错误/问题理解错误/推理错误），评测 12 个代表性 VLM 后发现最强模型 Gemini-3-Pro-Preview 也仅达 66.65% 准确率。
@@ -897,10 +837,6 @@ item_total: 1363
 
 :   提出 SlideAgent，一个层次化智能体框架，通过全局、页面、元素三级专用 agent 构建结构化知识表示，显著提升多页视觉文档（尤其是幻灯片）的细粒度理解能力。
 
-**[Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation](multimodal_vlm/spotlight_and_shadow_attention-guided_dual-anchor_introspective_decoding_for_mll.md)**
-
-:   提出 DaID (Dual-Anchor Introspective Decoding)，通过挖掘 MLLM 内部不同层的视觉感知差异——Spotlight 层放大视觉信号、Shadow 层抑制语言惯性——在单次前向传播内实现幻觉缓解。
-
 **[Stability Implies Redundancy: Delta Attention Selective Halting for Efficient Long-Context Prefilling](multimodal_vlm/stability_implies_redundancy_delta_attention_selective_halting_for_efficient_lon.md)**
 
 :   提出 DASH（Delta Attention Selective Halting），一种无需训练的推理加速方法，通过监测自注意力层的逐层更新幅度 Δ_attn 来识别已"语义固化"的 token 并停止其后续计算，在长上下文文本和视觉-语言基准上实现显著的 prefill 加速且几乎不损失精度。
@@ -937,10 +873,6 @@ item_total: 1363
 
 :   本文提出PlantInquiryVQA基准和Chain-of-Inquiry（CoI）框架，包含24,950张植物图像和138,068个问答对，模拟植物学家的适应性诊断提问策略，评估18个MLLM在植物病理诊断中的多步视觉推理能力，发现结构化提问显著提升诊断准确性并减少幻觉，但即使最强模型的临床实用性得分仅0.188。
 
-**[Through the Magnifying Glass: Adaptive Perception Magnification for Hallucination-Free VLM Decoding](multimodal_vlm/through_the_magnifying_glass_adaptive_perception_magnification_for_hallucination.md)**
-
-:   本文提出 Perception Magnifier (PM)，一种视觉解码方法，在每个自回归解码步基于多层注意力迭代识别关键视觉区域并自适应放大，通过提升关键区域的有效分辨率来缓解 VLM 的视觉幻觉，同时保持空间结构完整性和推理能力。
-
 **[Topology-Aware Layer Pruning for Large Vision-Language Models](multimodal_vlm/topology-aware_layer_pruning_for_large_vision-language_models.md)**
 
 :   提出基于拓扑数据分析的层剪枝框架 TopoVLM，将各层隐藏状态建模为点云并通过 zigzag 持久同调量化层间拓扑一致性，自适应保留关键表征转换层、剪除结构冗余层，在 50-60% 稀疏率下显著优于现有剪枝方法。
@@ -976,10 +908,6 @@ item_total: 1363
 **[VL-Calibration: Decoupled Confidence Calibration for Large Vision-Language Models Reasoning](multimodal_vlm/vl-calibration_decoupled_confidence_calibration_for_large_vision-language_models.md)**
 
 :   VL-Calibration 将 LVLM 的口头置信度拆成视觉置信度和推理置信度，并用图像扰动 KL、token 熵与 token 级优势重加权训练模型，在 13 个视觉推理基准上同时降低 ECE、提升准确率。
-
-**[Vocabulary Hijacking in LVLMs: Unveiling Critical Attention Heads by Excluding Inert Tokens to Mitigate Hallucination](multimodal_vlm/vocabulary_hijacking_in_lvlms_unveiling_critical_attention_heads_by_excluding_in.md)**
-
-:   本文发现 LVLM 中部分无效视觉 token 会稳定解码到一组无关词并劫持注意力，进而提出 HABI 定位这些 token、用 NHAR 找到可靠视觉头，再通过 HAVAE 在推理时增强这些头以降低幻觉。
 
 **[VULCA-Bench: A Multicultural Vision-Language Benchmark for Evaluating Cultural Understanding](multimodal_vlm/vulca-bench_a_multicultural_vision-language_benchmark_for_evaluating_cultural_un.md)**
 
@@ -2269,10 +2197,6 @@ item_total: 1363
 
 :   本文提出 Prune-then-Merge，一个两阶段的免训练多向量文档压缩框架——先通过自适应注意力剪枝移除低信息 patch，再对剩余高信号 patch 进行层次聚类合并，在 29 个 VDR 数据集上将近无损压缩范围从 50-60% 扩展到 60-70%，并在 80%+ 高压缩率下显著优于单阶段方法。
 
-**[Stable-RAG: Mitigating Retrieval-Permutation-Induced Hallucinations in Retrieval-Augmented Generation](information_retrieval/stable-rag_mitigating_retrieval-permutation-induced_hallucinations_in_retrieval-.md)**
-
-:   揭示 RAG 系统对检索文档排列顺序高度敏感的问题，提出 Stable-RAG：通过对文档排列产生的隐状态做谱聚类识别主导推理模式，再用 DPO 对齐将幻觉输出引导向正确答案，在三个 QA 数据集上实现准确率和推理一致性的双重提升。
-
 **[Test-Time Training for Zero-Resource Dense Retrieval Reranking](information_retrieval/test-time_training_for_zero-resource_dense_retrieval_reranking.md)**
 
 :   提出 DART，通过在推理时用双线性矩阵自适应地调整密集检索器的评分函数，利用检索结果本身作为伪标签实现零样本无标注重排序，在 BEIR 基准上平均提升 2.1% NDCG@10，延迟控制在 10ms 以内。
@@ -2365,10 +2289,6 @@ item_total: 1363
 
 :   针对 LLM-based TTS 中模糊发音（如日语「辛い」既可读 karai 也可读 tsurai）的对齐难题，作者提出 TKTO：先用两个标签对调训练的对比 KTO 模型估计每个 token 的重要度权重 $w_t$，再把 KTO 的 utterance 级 value function 拆到 token 级并加权聚合，实现「无需配对数据 + 自动定位目标 token」的双重升级，把日语发音准确率从 0.668 抬到 0.958（+39%），CER 降 54%。
 
-**[Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps](audio_speech/detecting_hallucinations_in_speechllms_at_inference_time_using_attention_maps.md)**
-
-:   提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉，在域内数据上 PR-AUC 提升最高达 +0.23。
-
 **[Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking](audio_speech/dial_healthdial_for_advice_a_multilingual_and_multi-parallel_spoken_dialogue_dat.md)**
 
 :   HEALTHDIAL 构建了一个包含 4 种 WHO 官方语言、6,000 个多平行健康信息寻求对话和 163 小时真实用户语音的数据集，并基于 ASR、TTS、检索、知识过滤和用户研究建立了多语言 spoken RAG benchmark。
@@ -2404,10 +2324,6 @@ item_total: 1363
 **[SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models](audio_speech/generalizable_prompt_tuning_for_audio-language_models_via_semantic_expansion.md)**
 
 :   SEPT 通过利用 LLM 生成语义邻居并设计带边距约束的语义扩展损失来正则化提示嵌入空间，显著缓解了音频语言模型（ALM）提示调优中的 Base-New Tradeoff 问题，建立了 ALM 提示泛化的首个系统性评估基准。
-
-**[HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](audio_speech/halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)**
-
-:   本文提出 HalluAudio，首个大规模跨领域（语音/环境声/音乐）的音频幻觉检测基准，包含 5000+ 人工验证的 QA 对和系统化的对抗性提示设计，通过多维指标（准确率/幻觉率/Yes-No偏差/拒绝率/错误类型）评估主流 LALM，揭示了当前模型在声学锚定、时间推理和音乐属性理解方面的显著缺陷。
 
 **[Hard to Be Heard: Phoneme-Level ASR Analysis of Phonologically Complex, Low-Resource Endangered Languages](audio_speech/hard_to_be_heard_phoneme-level_asr_analysis_of_phonologically_complex_low-resour.md)**
 
@@ -2599,6 +2515,258 @@ item_total: 1363
 
 ---
 
+## 🌐 多语言/翻译 { #multilingual_mt }
+
+**[A Multilingual Dataset and Empirical Validation for the Mutual Reinforcement Effect in Information Extraction](multilingual_mt/a_multilingual_dataset_and_empirical_validation_for_the_mutual_reinforcement_eff.md)**
+
+:   构建首个多语言MRE Mix数据集（MMM，21个子集覆盖英中日），并通过大规模消融实验系统验证了词级与文本级信息抽取任务的互增强效应（MRE）跨语言普遍存在。
+
+**[Alexandria: A Multi-Domain Dialectal Arabic Machine Translation Dataset for Culturally Inclusive and Linguistically Diverse LLMs](multilingual_mt/alexandria_a_multi-domain_dialectal_arabic_machine_translation_dataset_for_cultu.md)**
+
+:   Alexandria 构建了覆盖 13 个阿拉伯国家、11 个社会影响领域、107K 轮次的多轮对话方言阿拉伯语-英语平行数据集，通过社区驱动的人工翻译与修订流程，为方言阿拉伯语机器翻译提供了前所未有的细粒度训练和评测资源，并在 24 个 LLM 上进行了系统性基准评估。
+
+**[BabelDOC: Better Layout-Preserving PDF Translation via Intermediate Representation](multilingual_mt/babeldoc_better_layout-preserving_pdf_translation_via_intermediate_representatio.md)**
+
+:   本文提出 BabelDOC：一个基于「中间表示（IR）」的版式保持 PDF 翻译系统，把视觉布局和语义内容解耦，让 LLM 翻译、术语提取、跨页上下文、公式占位等 NLP 操作发生在语义层，再用自适应排版引擎重新锚回原版式；在 200 页基准上 BIoU、layout fidelity、术语一致性都超过 PDFMathTranslate 和 DeepL Document Translation。
+
+**[Beyond Literal Mapping: Benchmarking and Improving Non-Literal Translation Evaluation](multilingual_mt/beyond_literal_mapping_benchmarking_and_improving_non-literal_translation_evalua.md)**
+
+:   构建非字面翻译元评估数据集 MENT（7,530 条人工标注），揭示传统指标和 LLM-as-Judge 在非字面翻译评估上的不可靠性，并提出 RATE 智能体评估框架，通过反思核心智能体动态调用子智能体，提升 3.2+ 点人类判断相关性。
+
+**[BhashaSutra: A Task-Centric Unified Survey of Indian NLP Datasets, Corpora, and Resources](multilingual_mt/bhashasutra_a_task-centric_unified_survey_of_indian_nlp_datasets_corpora_and_res.md)**
+
+:   首篇专门针对印度语言NLP资源的统一综述，覆盖200+数据集、50+基准、100+模型/工具，按17个任务类别组织（从核心语言处理到社会文化任务），系统分析了语言覆盖不均、标注碎片化、评估不一致等持续挑战。
+
+**[CLewR: Curriculum Learning with Restarts for Machine Translation Preference Learning](multilingual_mt/clewr_curriculum_learning_with_restarts_for_machine_translation_preference_learn.md)**
+
+:   本文提出 CLewR（Curriculum Learning with Restarts），一种在偏好优化训练中按易到难排序并在每个 epoch 重启课程的策略，有效缓解灾难性遗忘问题，在多个模型家族（Gemma2、Qwen2.5、Llama3.1）和多种偏好优化算法（DPO、CPO、ARPO）上持续提升机器翻译性能。
+
+**[Cross-Cultural Transfer of Emoji Semantics and Sentiment in Financial Social Media](multilingual_mt/cross-cultural_transfer_of_emoji_semantics_and_sentiment_in_financial_social_med.md)**
+
+:   在 4 语种 / 2 平台 / 2 资产类的 1 亿条金融微博上系统比较 emoji 的频率、语义和情感极性，发现 emoji 频率因语言/平台差异大但语义和极性高度稳定，并据此在零样本情感迁移上验证：把 emoji 加入文本能稳定地把 cross-platform transfer gap 从最高 21% 降到接近 0%。
+
+**[DFKI-MLT at SemEval-2026 TASK 7: Steering Multilingual Models Towards Cultural Knowledge](multilingual_mt/dfki-mlt_at_semeval-2026_task_7_steering_multilingual_models_towards_cultural_kn.md)**
+
+:   这篇 SemEval 系统论文用 FLORES 平行语料提取语言方向，在推理时向多语言 LLM 的 residual stream 注入 language steering vector，最终 MCQ 官方成绩为 86.96% accuracy、17 队第 7，但后验分析显示增益高度依赖层、prompt、模型和 locale。
+
+**[Digitizing Nepal's Written Heritage: A Comprehensive HTR Pipeline for Old Nepali Manuscripts](multilingual_mt/digitizing_nepals_written_heritage_a_comprehensive_htr_pipeline_for_old_nepali_m.md)**
+
+:   首个端到端的**古尼泊尔语手写文本识别 (HTR)** 完整 pipeline：用 "合成 Devanagari → 印刷 Nagari → 古尼泊尔手稿" 三阶段迁移学习 + 20 种数据增强 + 字节级 BPE + script-aware decoder，把 CER 从 fine-tuned TrOCR baseline 的 9.6% 降到 **4.9%**，并开源代码、模型与 Streamlit web 应用。
+
+**[Efficient Low-Resource Language Adaptation via Multi-Source Dynamic Logit Fusion](multilingual_mt/efficient_low-resource_language_adaptation_via_multi-source_dynamic_logit_fusion.md)**
+
+:   TriMix 把 LRL（低资源语言）适配拆解为"语言能力 + 任务能力 + scaling 红利"三股 logit benefit vector，仅对小模型做连续预训练即可，在推理时按 perplexity 动态决定权重，于 4 个模型家族 × 8 种 LRL 上一致超越单模型 baseline 和 Proxy Tuning，且核心实证发现"应让小 CPT 模型权重高于大指令模型"——直接挑战了 Proxy Tuning 默认的"大模型主导"假设。
+
+**[Efficient Training for Cross-lingual Speech Language Models](multilingual_mt/efficient_training_for_cross-lingual_speech_language_models.md)**
+
+:   本文提出CSLM，一种高效训练跨语言语音LLM的方法，通过新颖的对齐策略实现跨模态和跨语言对齐，并引入语音-文本交织链式模态生成来提升质量和降低延迟，无需大规模语音数据即可扩展到新语言。
+
+**[EMCEE: Improving Multilingual Capability of LLMs via Bridging Knowledge and Reasoning with Extracted Synthetic Multilingual Context](multilingual_mt/emcee_improving_multilingual_capability_of_llms_via_bridging_knowledge_and_reaso.md)**
+
+:   EMCEE 让 LLM 先从自身参数中抽取与非英语 query 相关的合成多语言上下文，再把上下文增强回答与 CoT 推理回答交给 LLM-as-a-Judge 合并，在四个多语言任务上显著提升低资源语言表现。
+
+**[Enhancing BiGRU with a KAN Block for Legal Document Classification and Summarization](multilingual_mt/enhancing_bigru_with_a_kan_block_for_legal_document_classification_and_summariza.md)**
+
+:   本文在低资源多语言孟加拉法律文档上，把 KAN block 加到 BiGRU 分类器和 attention-based GRU 摘要模型中，使分类准确率达到 67.96%、ROUGE-1/2/L 达到 0.38/0.23/0.31，并在消融中把 BiGRU 准确率从 57.34% 提升到 67.96%。
+
+**[Evaluating Robustness of Large Language Models Against Multilingual Typographical Errors](multilingual_mt/evaluating_robustness_of_large_language_models_against_multilingual_typographica.md)**
+
+:   本文提出 MulTypo——一个基于各语言键盘布局和 10 指打字习惯的多语种 typo 生成算法，并用它系统评测 18 个开源 LLM 在 12 种语言、5 类下游任务上的鲁棒性，证明 typo 对生成与推理任务影响最大、指令微调反而更脆弱、且 typo 影响存在跨语种和跨方向的非对称性。
+
+**[Evaluating the Impact of Verbal Multiword Expressions on Machine Translation](multilingual_mt/evaluating_the_impact_of_verbal_multiword_expressions_on_machine_translation.md)**
+
+:   本文首次系统评测动词类多词表达式（VMWE：动词成语 VID、动词-小品词 VPC、轻动词构式 LVC）对机器翻译质量的影响，在 8 个 MT 系统 × 7 个语言对 × 两类 QE 模型 + 人工 DA 评分上证明：VMWE 普遍掉点，且掉点幅度与"非组合性"严格正相关（VID > VPC > LVC），即使 GPT-4.1/GPT-5.1 也无法消除这一退化。
+
+**[Exploring Two-Phase Continual Instruction Fine-tuning for Multilingual Adaptation in Large Language Models](multilingual_mt/exploring_continual_fine-tuning_for_enhancing_language_ability_in_large_language.md)**
+
+:   本文提出两阶段持续微调（CFT）框架——先在英语指令数据上微调，再在多语言数据上微调——发现阶段间数据集的指令相似性是决定英语能力是否退化的关键因素，并通过生成式重放和启发式层冻结有效缓解了不相似数据集导致的表示漂移和英语遗忘。
+
+**[FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation](multilingual_mt/fairqe_multi-agent_framework_for_mitigating_gender_bias_in_translation_quality_e.md)**
+
+:   提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。
+
+**[From Fragments to Facts: A Curriculum-Driven DPO Approach for Generating Hindi News Veracity Explanations](multilingual_mt/from_fragments_to_facts_a_curriculum-driven_dpo_approach_for_generating_hindi_ne.md)**
+
+:   本文提出 DeFactoX，用课程学习组织 Hindi 新闻偏好数据，并在 DPO 中加入 Actuality 和 Finesse 两个事实性/稳定性信号，使模型能同时预测新闻真伪并生成更接近人工事实核查解释的 Hindi rationale。
+
+**[From Traditional Taggers to LLMs: A Comparative Study of POS Tagging for Medieval Romance Languages](multilingual_mt/from_traditional_taggers_to_llms_a_comparative_study_of_pos_tagging_for_medieval.md)**
+
+:   作者在三种中古罗曼语（古奥克语 NAF、古加泰罗尼亚语 CAT、古法语 Chauliac）的 POS 标注任务上，把传统 tagger（UDPipe / COLaF）与开源 LLM（Gemma3-12B / Phi4-14B）放在 zero-shot、few-shot、单语微调、双语 CLTF、三语 CLTF 五种设置下做系统对比，发现 LLM 一致优于传统方法，加泰罗尼亚语充当"桥梁语种"使 CAT+FR 双语训练把古法语 Chauliac 推到 93.14% 的最高准确率。
+
+**[Hierarchical Policy Optimization for Simultaneous Translation of Unbounded Speech](multilingual_mt/hierarchical_policy_optimization_for_simultaneous_translation_of_unbounded_speec.md)**
+
+:   本文提出 Hierarchical Policy Optimization (HPO)，通过层级奖励设计对基于 LLM 的同声传译模型进行后训练，在翻译质量未达阈值时抑制延迟优化，从而在 1.5 秒延迟下实现 +7 COMET 的翻译质量提升。
+
+**[IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents](multilingual_mt/indotabvqa_a_benchmark_for_cross-lingual_table_understanding_in_bahasa_indonesia.md)**
+
+:   提出 IndoTabVQA，一个针对印尼语（Bahasa Indonesia）文档表格的跨语言视觉问答基准，包含 1593 张文档图像和四种语言（印尼语/英语/印地语/阿拉伯语）的 QA 标注，揭示了 VLM 在低资源语言和跨语言表格理解上的显著性能差距，微调+空间先验可带来最高 48.5% 的 In-Match 准确率。
+
+**[Is Human-Like Text Liked by Humans? Multilingual Human Detection and Preference Against AI](multilingual_mt/is_human-like_text_liked_by_humans_multilingual_human_detection_and_preference_a.md)**
+
+:   作者组织 19 位母语专家对 9 种语言、9 个领域、11 个 SOTA LLM 共 16 个数据集做了 8.8k 例的人机文本判别，发现专家平均准确率高达 87.6%（远高于"接近随机"的早期结论），并进一步揭示：用显式说明差异的 prompt 改写后机器文本能把检测准确率压到 72.5%，但人在分不清来源时反而倾向选机器文本，挑战了"human-like 等于 liked-by-human"的隐含假设。
+
+**[Just Use XML: Revisiting Joint Translation and Label Projection](multilingual_mt/just_use_xml_revisiting_joint_translation_and_label_projection.md)**
+
+:   提出 LabelPigeon，一种基于 XML 标签的联合翻译与标签投影方法，通过在高质量 XML 标记平行语料上微调 NLLB-200 翻译模型，在 11 种语言上超越所有基线并主动提升翻译质量，在下游跨语言 NER 任务中实现最高 +40.2 F1 的提升。
+
+**[Language Models Entangle Language and Culture](multilingual_mt/language_models_entangle_language_and_culture.md)**
+
+:   本文通过基于 WildChat 数据集构建的通用建议类问题评估多语言 LLM，发现不同语言查询会导致回答质量和文化上下文的系统性差异——低资源语言的回答质量显著低于英语，且语言选择会隐式地改变回答中使用的文化信息，在翻译版 CulturalBench 上验证了语言与文化在 LLM 中的纠缠关系。
+
+**[Language on Demand, Knowledge at Core: Composing LLMs with Encoder-Decoder Translation Models for Extensible Multilinguality](multilingual_mt/language_on_demand_knowledge_at_core_composing_llms_with_encoder-decoder_transla.md)**
+
+:   本文提出 XBridge，一种将预训练多语言编码器-解码器翻译模型（如 NLLB）与英语为中心的 LLM 组合的架构——编码器负责多语言理解、LLM 负责知识推理、解码器负责多语言生成，通过轻量级映射层和最优传输对齐实现跨模型语义桥接，在低资源和未见语言上显著优于基线。
+
+**[LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models](multilingual_mt/laobench_a_large-scale_multidimensional_lao_benchmark_for_large_language_models.md)**
+
+:   LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17000+ 条专家精选样本，覆盖文化-知识应用 / 老挝 K12 课纲 / 老-中-英三语翻译三大维度，并独创"开源 7k + 黑盒 10k + 开放式 500"三段式设计——其中 10k 黑盒子集通过受控服务发分数防污染，主流闭源模型（GPT-5-High、Gemini-2.5-Pro 等）仍落后人类专家 ~10-20 个百分点，老挝语文化推理与翻译保真度依然是远未解决的难题。
+
+**[Lingo_Research_Group at SemEval-2026 Task 9: Evaluating Prompt Variants for Polarization Detection](multilingual_mt/lingo_research_group_at_semeval-2026_task_9_evaluating_prompt_variants_for_polar.md)**
+
+:   这篇 SemEval-2026 Task 9 系统论文用 Gemma3-27B 和 12 类英文 prompt 变体做 22 种语言的在线极化检测，发现 prompt-only 方法能较好完成粗粒度二分类，但在极化目标和表现形式等细粒度多标签任务上明显退化。
+
+**[LLM-XTM: Enhancing Cross-Lingual Topic Models with Large Language Models](multilingual_mt/llm-xtm_enhancing_cross-lingual_topic_models_with_large_language_models.md)**
+
+:   在已训练好的跨语言主题模型外面套一层"LLM 精炼 + 自一致性投票 + MMD 词分布对齐 + QA 式文档语义对齐"的两段式增强模块，可作为插件挂到 NMTM / InfoCTM / XTRA 等多种 backbone 上，在 EC News、Amazon Review、Rakuten Amazon 三个双语语料上把 CNPMI 涨了 9%–51%、TQ 涨了 6%–44%，同时把 LLM 调用次数降到了"每隔 $f$ 个 epoch 才一次"。
+
+**[Location Not Found: Exposing Implicit Local and Global Biases in Multilingual LLMs](multilingual_mt/location_not_found_exposing_implicit_local_and_global_biases_in_multilingual_llm.md)**
+
+:   本文提出 LocQA 基准（12 种语言、49 个地区、2156 个地域相关问答），通过地域模糊问题（如"紧急电话号码是多少？"）揭示 LLM 的隐式偏差：跨语言上存在持续的美国中心默认行为（模型回答的 50% 包含美国答案 vs 数据中仅 26%），语言内部存在人口规模驱动的"人口概率引擎"效应，且指令微调加剧了全球偏差。
+
+**[Lost in Translation: Do LVLM Judges Generalize Across Languages?](multilingual_mt/lost_in_translation_do_lvlm_judges_generalize_across_languages.md)**
+
+:   本文提出 MM-JudgeBench，首个大规模多语言多模态评判模型基准（25 种语言、60K+ 偏好实例），评估 22 个 LVLM 发现当前 LVLM 评判器存在显著的跨语言性能差异——模型大小和架构不能预测多语言鲁棒性，即使最先进的评判器也表现不一致，突显了多语言多模态评估基准的必要性。
+
+**[LQM: Linguistically Motivated Multidimensional Quality Metrics for Machine Translation](multilingual_mt/lqm_linguistically_motivated_multidimensional_quality_metrics_for_machine_transl.md)**
+
+:   提出LQM（Linguistically Motivated Multidimensional Quality Metrics），一个六层语言学驱动的机器翻译错误分类体系（社会语言学→语用学→语义→形态句法→正字法→字形），并在7种阿拉伯方言上构建3850句双向平行语料库，通过专家标注6113个错误跨度揭示现有MT系统在方言和文化感知翻译上的系统性不足。
+
+**[Mitigating Catastrophic Forgetting in Target Language Adaptation of LLMs via Source-Shielded Updates](multilingual_mt/mitigating_catastrophic_forgetting_in_target_language_adaptation_of_llms_via_sou.md)**
+
+:   提出 Source-Shielded Updates (SSU)，一种基于源数据驱动参数重要性评分的列级冻结策略，在仅使用无标签目标语言数据进行持续预训练时，将源语言性能退化从全量微调的 20.3% 降低至 3.4%，同时保持与全量微调相当甚至更优的目标语言性能。
+
+**[Mitigating Extrinsic Gender Bias for Bangla Classification Tasks](multilingual_mt/mitigating_extrinsic_gender_bias_for_bangla_classification_tasks.md)**
+
+:   针对孟加拉语预训练模型在下游分类任务中的外在性别偏见，提出 RandSymKL 方法，通过随机化交叉熵损失和对称 KL 散度联合优化，在保持分类准确率的同时有效缩小性别间预测差异。
+
+**[MORPHOGEN: A Multilingual Benchmark for Evaluating Gender-Aware Morphological Generation](multilingual_mt/morphogen_a_multilingual_benchmark_for_evaluating_gender-aware_morphological_gen.md)**
+
+:   本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标，对 15 个多语言 LLM 的基准测试揭示了模型在复杂形态推理、性别偏差和多实体干扰方面的系统性不足。
+
+**[Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_mt/multilingual_language_models_encode_script_over_linguistic_structure.md)**
+
+:   本文通过 LAPE 指标和稀疏自编码器系统分析多语言 LM 中的语言关联单元，发现这些单元主要由正字法（书写系统）驱动而非抽象语言结构：罗马化转写激活几乎完全不重叠的神经元集合，词序打乱影响甚微，类型学信息仅在深层逐渐可访问，因果干预表明功能重要性与表面形式不变性相关。
+
+**[Multilingual Steering by Design: Multilingual Sparse Autoencoders and Principled Layer Selection](multilingual_mt/multilingual_steering_by_design_multilingual_sparse_autoencoders_and_principled_.md)**
+
+:   这篇论文证明，多语言 sparse autoencoder 和“多语言对齐-语言可分性”交叉点层选择可以让 SAE 语言 steering 更稳定，把原先靠经验选层的多语言控制问题转成可预测的表征诊断问题。
+
+**[NeoAMT: Neologism-Aware Agentic Machine Translation with Reinforcement Learning](multilingual_mt/neoamt_neologism-aware_agentic_machine_translation_with_reinforcement_learning.md)**
+
+:   NeoAMT 把新词翻译从单纯依赖模型参数知识的问题，改造成“先推理、再查词典、再翻译”的 agentic MT 问题，并用面向新词命中率、整体译文质量和翻译难度的 GRPO 训练，让 8B 模型在 Neko 新词翻译基准上显著超过 SFT、无检索 RL 和多种通用/翻译专用 LLM。
+
+**[NiuTrans.LMT: Toward Inclusive and Scalable Multilingual Machine Translation with LLMs](multilingual_mt/niutranslmt_toward_inclusive_and_scalable_multilingual_machine_translation_with_.md)**
+
+:   本文发布 NiuTrans.LMT，一个覆盖 60 种语言、234 个中英双中心翻译方向、0.6B/1.7B/4B/8B 四种规模的开源 LLM 机器翻译套件，并指出多路平行数据在对称 SFT 中会造成 X→中/英方向退化，再用 Strategic Downsampling、Parallel Multilingual Prompting 和 COMET 奖励的 GRPO 把质量拉回到强开源 MMT 系统水平。
+
+**[No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs](multilingual_mt/no_one_fits_all_from_fixed_prompting_to_learned_routing_in_multilingual_llms.md)**
+
+:   本文证明没有一种提示策略在所有语言和任务上普遍最优，提出将策略选择建模为学习决策问题，用轻量级分类器为每个实例预测最优策略，在四个基准上显著优于固定策略。
+
+**[PEAR: Pairwise Evaluation for Automatic Relative Scoring in Machine Translation](multilingual_mt/pear_pairwise_evaluation_for_automatic_relative_scoring_in_machine_translation.md)**
+
+:   PEAR 将无参考机器翻译质量估计从“给单个译文打绝对分”改成“直接比较两个候选译文的相对差值”，在 WMT24 MQM 评测中以更小模型超过匹配的单候选 QE 基线和部分大规模指标。
+
+**[PluRule: A Benchmark for Moderating Pluralistic Communities on Social Media](multilingual_mt/plurule_a_benchmark_for_moderating_pluralistic_communities_on_social_media.md)**
+
+:   PluRule 把 Reddit 社区审核建模为“给定评论和上下文，选择违反了哪条本社区规则或没有违规”的多选题，构建了覆盖 1,989 个社区、2,885 条规则和 9 种语言的基准，并显示 GPT-5.2 high reasoning 全上下文也只有约 57.6% 准确率。
+
+**[Prosody as Supervision: Bridging the Non-Verbal–Verbal for Multilingual Speech Emotion Recognition](multilingual_mt/prosody_as_supervision_bridging_the_non-verbal--verbal_for_multilingual_speech_e.md)**
+
+:   本文提出 NOVA-ARC，首次将多语言语音情感识别（SER）建模为从标注的非语言发声（NVV）到未标注的语言语音（UVS）的无监督迁移问题，通过双曲空间中的韵律向量量化编码本、双曲情感透镜和最优传输原型对齐实现跨模态情感迁移，在 6 个数据集上验证了非语言→语言迁移的可行性和优越性。
+
+**[Reinforcement Learning with Semantic Rewards Enables Low-Resource Language Expansion without Alignment Tax](multilingual_mt/reinforcement_learning_with_semantic_rewards_enables_low-resource_language_expan.md)**
+
+:   本文把低资源语言扩展从 token 级模仿改写为语义空间对齐问题，用 GRPO 和 embedding 语义奖励训练 Qwen3-4B，在藏汉翻译和藏语标题生成上获得低资源能力，同时比强 SFT 更好地保留中文 CMRC 等主导语言能力。
+
+**[RouteLMT: Learned Sample Routing for Hybrid LLM Translation Deployment](multilingual_mt/routelmt_learned_sample_routing_for_hybrid_llm_translation_deployment.md)**
+
+:   RouteLMT 将混合 LLM 翻译中的路由问题形式化为固定大模型预算下的边际收益分配，并用小翻译模型最后 prompt token 的内部表示预测“大模型相对小模型能带来多少提升”，在四个翻译方向上比长度、质量估计和外部路由器获得更好的质量-预算 Pareto 前沿。
+
+**[Scripts Through Time: A Survey of the Evolving Role of Transliteration in NLP](multilingual_mt/scripts_through_time_a_survey_of_the_evolving_role_of_transliteration_in_nlp.md)**
+
+:   本文系统综述了音译（transliteration）在跨语言 NLP 中的演变角色，提出五大动机分类（命名实体/OOV处理、代码混合、跨文字相似性利用、英语中心迁移、统一预处理），比较了六种整合方式的优劣，并在现代 LLM 语境下讨论了音译是否仍然必要。
+
+**[Selective Contrastive Learning For Gloss Free Sign Language Translation](multilingual_mt/selective_contrastive_learning_for_gloss_free_sign_language_translation.md)**
+
+:   这篇论文发现手语翻译中随机 in-batch 负样本经常是不可靠或语义冲突的监督信号，因此用参考模型的相似度轨迹筛选更有信息量的负样本，并通过从易到难的课程式对比学习提升 gloss-free 手语翻译质量。
+
+**[SERM: Self-Evolving Relevance Model with Agent-Driven Learning from Massive Query Streams](multilingual_mt/serm_self-evolving_relevance_model_with_agent-driven_learning_from_massive_query.md)**
+
+:   提出 SERM 框架，通过多智能体样本挖掘器和多智能体相关性标注器，从大规模真实查询流中持续自进化搜索相关性模型，经三轮迭代在工业搜索平台上实现 NDCG@1 提升 +2.99，并在在线 A/B 测试中显著提升用户留存率。
+
+**[SteerEval: Inference-time Interventions Strengthen Multilingual Generalization in Neural Summarization Metrics](multilingual_mt/steereval_inference-time_interventions_strengthen_multilingual_generalization_in.md)**
+
+:   SteerEval 研究在推理时把多语种评测模型的隐藏表示向高资源枢轴语言对齐，发现向英语或法语方向 steering 能普遍提高多语种摘要自动指标与人工评分的相关性，尤其能改善低基线语言和 encoder-based COMET 指标。
+
+**[Structure-Guided Entity Resolution: Fine-Tuning LLMs for Robust Name Matching in Complex Linguistic Contexts](multilingual_mt/structure-guided_entity_resolution_fine-tuning_llms_for_robust_name_matching_in_.md)**
+
+:   SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配：Phase 1 训练模型解析姓名结构（输出 JSON），Phase 2 从 Phase 1 checkpoint 训练二分类匹配器，在 5 万对印度 KYC 数据上达到 99.02% 准确率和 0.994 F1，已在 Dream11（2.5 亿用户）生产环境部署。
+
+**[Syntax as a Rosetta Stone: Universal Dependencies for In-Context Coptic Translation](multilingual_mt/syntax_as_a_rosetta_stone_universal_dependencies_for_in-context_coptic_translati.md)**
+
+:   本文首次探索将 Universal Dependencies 句法信息作为上下文学习的增强源用于低资源科普特语到英语的机器翻译，发现虽然句法信息单独不如词典有效，但将词典与句法信息结合（LEX+SYN）在所有模型上取得最佳效果，Gemma-27B 的 BERTScore F1 达到 0.8746（+0.0361）。
+
+**[The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](multilingual_mt/the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)**
+
+:   本文提出GaoYao基准，包含182.3K样本、26种语言和51个国家/地区，通过三层文化评估框架（通用多语言/跨文化/单文化）和九个认知子层，结合人工本地化的主观测试集和专家验证的跨文化合成数据集SuperBLEnD，深度诊断20+旗舰与紧凑型LLM的多语言能力，揭示了显著的地理数字鸿沟和任务能力分层。
+
+**[Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation](multilingual_mt/think_in_latent_thoughts_a_new_paradigm_for_gloss-free_sign_language_translation.md)**
+
+:   提出 SignThought，一种推理驱动的无注释手语翻译框架：引入可学习的潜在思维槽作为视频和文本之间的显式中间语义层，通过"先规划后定位"的双流解码器实现语义规划与视觉证据检索的解耦，在多个基准上超越现有无注释方法。
+
+**[TLPO: Token-Level Policy Optimization for Mitigating Language Confusion in Large Language Models](multilingual_mt/tlpo_token-level_policy_optimization_for_mitigating_language_confusion_in_large_.md)**
+
+:   TLPO 将多语言 LLM 的语言混淆视为可定位的局部 token 错误，只在首次混淆位置的高概率候选 token 上做策略优化，从而在显著提高目标语言一致性的同时尽量保留模型原有推理和知识能力。
+
+**[Toward Culturally Grounded Natural Language Processing](multilingual_mt/toward_culturally_grounded_natural_language_processing.md)**
+
+:   这篇综述型论文综合 50 余篇多语与文化 NLP 工作，指出“语言覆盖率”不等于“文化能力”，并提出以 communicative ecologies 为中心的分层评估协议和研究议程。
+
+**[TransLaw: A Large-Scale Dataset and Multi-Agent Benchmark Simulating Professional Translation of Hong Kong Case Law](multilingual_mt/translaw_a_large-scale_dataset_and_multi-agent_benchmark_simulating_professional.md)**
+
+:   这篇论文构建了首个面向香港终审法院判词英中翻译的句级平行数据集 HKCFA Judgement 97-22，并提出模拟专业法律翻译流程的 TransLaw 多智能体系统，在自动指标、人类法律译者评测和成本分析上都显著优于单一翻译 agent。
+
+**[Unlocking the Edge: Multi-LoRA On-Device Deployment and Acceleration](multilingual_mt/unlocking_the_edge_deployment_and_ondevice_acceleration_of_multi-lora_enabled_on.md)**
+
+:   本文提出面向三星 Galaxy S24/S25 的端侧 LLM 部署框架，通过 LoRA 权重作为运行时输入实现动态任务切换、多流并发 token 生成减少风格变体延迟达 6 倍、无草稿模型的 Dynamic Self-Speculative Decoding 加速解码达 2.3 倍，在 9 语言 8 任务上实现 4-6 倍整体优化。
+
+**[Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](multilingual_mt/vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)**
+
+:   本文发现 LLM 在嵌入空间中将词形变化（如 walk→walked）编码为线性方向，基于此提出组合式词表设计：用基础词+变换向量的加法组合替代为每个表面形式分配独立 token，在冻结预训练骨干的前提下仅训练小型适配模块，释放 10-40% 的词表槽位用于多语言扩展，同时几乎不影响下游性能。
+
+**[Vocabulary Shapes Cross-Lingual Variation of Word-Order Learnability in Language Models](multilingual_mt/vocabulary_shapes_cross-lingual_variation_of_word-order_learnability_in_language.md)**
+
+:   本文用 Mallows 模型生成 10 种欧洲语言的连续词序扰动谱，训练小型自回归 LM 后发现：词序越不规则越难学，但跨语言差异主要由词表覆盖、句长和形态复杂度解释，而不是简单的自由/固定词序标签。
+
+**[What Factors Affect LLMs and RLLMs in Financial Question Answering?](multilingual_mt/what_factors_affect_llms_and_rllms_in_financial_question_answering.md)**
+
+:   本文系统研究了提示方法、Agent 框架和多语言对齐方法对 LLM 和 RLLM（推理型大模型）在金融问答任务上的影响，发现现有方法本质上是通过模拟 Long CoT 来提升 LLM 性能，但对已具备 Long CoT 能力的 RLLM 效果有限。
+
+**[Why Do Multilingual Reasoning Gaps Emerge in Reasoning Language Models?](multilingual_mt/why_do_multilingual_reasoning_gaps_emerge_in_reasoning_language_models.md)**
+
+:   本文首次系统分析了推理语言模型(RLMs)中多语言推理差距的来源，发现**语言理解失败**是主要原因，并提出通过检测理解失败后进行选择性翻译(Selective Translation)来高效弥补差距。
+
+**[Why Low-Resource NLP Needs More Than Cross-Lingual Transfer: Lessons Learned from Luxembourgish](multilingual_mt/why_low-resource_nlp_needs_more_than_cross-lingual_transfer_lessons_learned_from.md)**
+
+:   本文以理论上很适合跨语言迁移的卢森堡语为“最好情况”案例，论证低资源 NLP 不能只依赖多语模型的自发迁移，而必须把跨语言脚手架和目标语言特定的数据清洗、资源建设、任务设计结合起来。
+
+**[XQ-MEval: A Dataset with Cross-lingual Parallel Quality for Benchmarking Translation Metrics](multilingual_mt/xq-meval_a_dataset_with_cross-lingual_parallel_quality_for_benchmarking_translat.md)**
+
+:   构建首个具有跨语言平行质量的翻译评估基准 XQ-MEval，通过半自动注入 MQM 错误生成可控质量的伪翻译，首次实证揭示自动评估指标的跨语言评分偏差，并提出 LGN 归一化策略有效校准多语言指标评估。
+
+---
+
 ## 🔬 可解释性 { #interpretability }
 
 **[A Structured Clustering Approach for Inducing Media Narratives](interpretability/a_structured_clustering_approach_for_inducing_media_narratives.md)**
@@ -2761,10 +2929,6 @@ item_total: 1363
 
 :   这是一篇 position paper，主张机制可解释性研究需要补上“可审计性”这一层，通过连续协作评审平台、社区精炼指南和源证据追踪系统，把零散复现、负结果和方法学批评沉淀成可用于安全关键场景的审计协议。
 
-**[Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](interpretability/mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)**
-
-:   在受控的目标计数任务里把"模型听 prompt 不看图"的幻觉行为定位到 LLaVA-OneVision / Qwen-VL / Janus-Pro **早期层** (主要是 L0-1) 的 3-10 个 attention head，对它们做 mean ablation 不需要任何再训练就让 prompt-following 从 42–64% 掉到 <11%，把真实计数恢复率推到 70–78%，并能 zero-shot 迁移到颜色识别任务 (PIH 抑制 40–95%)。
-
 **[Mechanistic Interpretability of Large-Scale Counting in LLMs through a System-2 Strategy](interpretability/mechanistic_interpretability_of_large-scale_counting_in_llms_through_a_system-2_.md)**
 
 :   针对 LLM 大数量计数失败（单 forward 因为 layer 深度有限只能数到 ~10–30），用一个简单的 test-time "用 `|` 把列表切片 + 让模型先逐段计数再求和"策略让 Qwen2.5/Llama3/Gemma3/GPT-4o/Gemini-2.5-Pro 在 50–100 物体场景下从 0–20% 准确率跃升到 50–95%，并通过 attention 分析 + 4 类因果中介实验把"分段计数→中间步骤聚合→最终求和"三阶段电路定位到 Qwen2.5-7B 的 Layer 22 (head 13 负责分段, head 1 负责聚合)。
@@ -2841,273 +3005,9 @@ item_total: 1363
 
 :   本文系统研究LLM在文本生成过程中回忆关系知识的内部机制，发现注意力头对残差流的逐头贡献（$\Delta_{att,h}$）是线性关系分类的最强特征（准确率达91%），并提出HeadScore和TokenScore两种探针归因方法来分解预测到注意力头和源token级别，揭示了探针精度与关系特异性、实体连通度及探针信号集中度之间的明确相关性。
 
-**[Understanding New-Knowledge-Induced Factual Hallucinations in LLMs: Analysis and Interpretation](interpretability/understanding_new-knowledge-induced_factual_hallucinations_in_llms_analysis_and_.md)**
-
-:   本文通过受控合成数据集 Biography-Reasoning 系统分析了 SFT 阶段学习新知识导致的事实幻觉现象，发现幻觉的根本机制是模型对关键实体的注意力被削弱，并提出 KnownPatch——在训练末期注入少量已知知识来恢复注意力模式，有效缓解幻觉。
-
 **[Understanding or Memorizing? A Case Study of German Definite Articles in Language Models](interpretability/understanding_or_memorizing_a_case_study_of_german_definite_articles_in_language.md)**
 
 :   本文利用 Gradiend 梯度可解释性方法研究语言模型预测德语定冠词（der/die/das/den/dem/des）时是基于抽象语法规则还是表层记忆，发现模型至少部分依赖记忆化关联而非严格的规则编码。
-
-**[为什么 LLM 在结构化知识上产生幻觉：推理过程的机制分析](interpretability/why_llms_hallucinate_on_structured_knowledge_a_mechanistic_analysis_of_reasoning.md)**
-
-:   论文通过两个机制指标（结构捷径依赖 SSR 和语义对齐分数 SAS）揭示 LLM 在处理线性化结构化知识时产生幻觉的内部失败机制，并基于这些信号构建了一个轻量级的幻觉检测器。
-
----
-
-## 🌐 多语言/翻译 { #multilingual_mt }
-
-**[A Multilingual Dataset and Empirical Validation for the Mutual Reinforcement Effect in Information Extraction](multilingual_mt/a_multilingual_dataset_and_empirical_validation_for_the_mutual_reinforcement_eff.md)**
-
-:   构建首个多语言MRE Mix数据集（MMM，21个子集覆盖英中日），并通过大规模消融实验系统验证了词级与文本级信息抽取任务的互增强效应（MRE）跨语言普遍存在。
-
-**[Alexandria: A Multi-Domain Dialectal Arabic Machine Translation Dataset for Culturally Inclusive and Linguistically Diverse LLMs](multilingual_mt/alexandria_a_multi-domain_dialectal_arabic_machine_translation_dataset_for_cultu.md)**
-
-:   Alexandria 构建了覆盖 13 个阿拉伯国家、11 个社会影响领域、107K 轮次的多轮对话方言阿拉伯语-英语平行数据集，通过社区驱动的人工翻译与修订流程，为方言阿拉伯语机器翻译提供了前所未有的细粒度训练和评测资源，并在 24 个 LLM 上进行了系统性基准评估。
-
-**[BabelDOC: Better Layout-Preserving PDF Translation via Intermediate Representation](multilingual_mt/babeldoc_better_layout-preserving_pdf_translation_via_intermediate_representatio.md)**
-
-:   本文提出 BabelDOC：一个基于「中间表示（IR）」的版式保持 PDF 翻译系统，把视觉布局和语义内容解耦，让 LLM 翻译、术语提取、跨页上下文、公式占位等 NLP 操作发生在语义层，再用自适应排版引擎重新锚回原版式；在 200 页基准上 BIoU、layout fidelity、术语一致性都超过 PDFMathTranslate 和 DeepL Document Translation。
-
-**[Beyond Literal Mapping: Benchmarking and Improving Non-Literal Translation Evaluation](multilingual_mt/beyond_literal_mapping_benchmarking_and_improving_non-literal_translation_evalua.md)**
-
-:   构建非字面翻译元评估数据集 MENT（7,530 条人工标注），揭示传统指标和 LLM-as-Judge 在非字面翻译评估上的不可靠性，并提出 RATE 智能体评估框架，通过反思核心智能体动态调用子智能体，提升 3.2+ 点人类判断相关性。
-
-**[BhashaSutra: A Task-Centric Unified Survey of Indian NLP Datasets, Corpora, and Resources](multilingual_mt/bhashasutra_a_task-centric_unified_survey_of_indian_nlp_datasets_corpora_and_res.md)**
-
-:   首篇专门针对印度语言NLP资源的统一综述，覆盖200+数据集、50+基准、100+模型/工具，按17个任务类别组织（从核心语言处理到社会文化任务），系统分析了语言覆盖不均、标注碎片化、评估不一致等持续挑战。
-
-**[CLewR: Curriculum Learning with Restarts for Machine Translation Preference Learning](multilingual_mt/clewr_curriculum_learning_with_restarts_for_machine_translation_preference_learn.md)**
-
-:   本文提出 CLewR（Curriculum Learning with Restarts），一种在偏好优化训练中按易到难排序并在每个 epoch 重启课程的策略，有效缓解灾难性遗忘问题，在多个模型家族（Gemma2、Qwen2.5、Llama3.1）和多种偏好优化算法（DPO、CPO、ARPO）上持续提升机器翻译性能。
-
-**[Cross-Cultural Transfer of Emoji Semantics and Sentiment in Financial Social Media](multilingual_mt/cross-cultural_transfer_of_emoji_semantics_and_sentiment_in_financial_social_med.md)**
-
-:   在 4 语种 / 2 平台 / 2 资产类的 1 亿条金融微博上系统比较 emoji 的频率、语义和情感极性，发现 emoji 频率因语言/平台差异大但语义和极性高度稳定，并据此在零样本情感迁移上验证：把 emoji 加入文本能稳定地把 cross-platform transfer gap 从最高 21% 降到接近 0%。
-
-**[DFKI-MLT at SemEval-2026 TASK 7: Steering Multilingual Models Towards Cultural Knowledge](multilingual_mt/dfki-mlt_at_semeval-2026_task_7_steering_multilingual_models_towards_cultural_kn.md)**
-
-:   这篇 SemEval 系统论文用 FLORES 平行语料提取语言方向，在推理时向多语言 LLM 的 residual stream 注入 language steering vector，最终 MCQ 官方成绩为 86.96% accuracy、17 队第 7，但后验分析显示增益高度依赖层、prompt、模型和 locale。
-
-**[Digitizing Nepal's Written Heritage: A Comprehensive HTR Pipeline for Old Nepali Manuscripts](multilingual_mt/digitizing_nepals_written_heritage_a_comprehensive_htr_pipeline_for_old_nepali_m.md)**
-
-:   首个端到端的**古尼泊尔语手写文本识别 (HTR)** 完整 pipeline：用 "合成 Devanagari → 印刷 Nagari → 古尼泊尔手稿" 三阶段迁移学习 + 20 种数据增强 + 字节级 BPE + script-aware decoder，把 CER 从 fine-tuned TrOCR baseline 的 9.6% 降到 **4.9%**，并开源代码、模型与 Streamlit web 应用。
-
-**[Efficient Low-Resource Language Adaptation via Multi-Source Dynamic Logit Fusion](multilingual_mt/efficient_low-resource_language_adaptation_via_multi-source_dynamic_logit_fusion.md)**
-
-:   TriMix 把 LRL（低资源语言）适配拆解为"语言能力 + 任务能力 + scaling 红利"三股 logit benefit vector，仅对小模型做连续预训练即可，在推理时按 perplexity 动态决定权重，于 4 个模型家族 × 8 种 LRL 上一致超越单模型 baseline 和 Proxy Tuning，且核心实证发现"应让小 CPT 模型权重高于大指令模型"——直接挑战了 Proxy Tuning 默认的"大模型主导"假设。
-
-**[Efficient Training for Cross-lingual Speech Language Models](multilingual_mt/efficient_training_for_cross-lingual_speech_language_models.md)**
-
-:   本文提出CSLM，一种高效训练跨语言语音LLM的方法，通过新颖的对齐策略实现跨模态和跨语言对齐，并引入语音-文本交织链式模态生成来提升质量和降低延迟，无需大规模语音数据即可扩展到新语言。
-
-**[EMCEE: Improving Multilingual Capability of LLMs via Bridging Knowledge and Reasoning with Extracted Synthetic Multilingual Context](multilingual_mt/emcee_improving_multilingual_capability_of_llms_via_bridging_knowledge_and_reaso.md)**
-
-:   EMCEE 让 LLM 先从自身参数中抽取与非英语 query 相关的合成多语言上下文，再把上下文增强回答与 CoT 推理回答交给 LLM-as-a-Judge 合并，在四个多语言任务上显著提升低资源语言表现。
-
-**[Enhancing BiGRU with a KAN Block for Legal Document Classification and Summarization](multilingual_mt/enhancing_bigru_with_a_kan_block_for_legal_document_classification_and_summariza.md)**
-
-:   本文在低资源多语言孟加拉法律文档上，把 KAN block 加到 BiGRU 分类器和 attention-based GRU 摘要模型中，使分类准确率达到 67.96%、ROUGE-1/2/L 达到 0.38/0.23/0.31，并在消融中把 BiGRU 准确率从 57.34% 提升到 67.96%。
-
-**[Evaluating Robustness of Large Language Models Against Multilingual Typographical Errors](multilingual_mt/evaluating_robustness_of_large_language_models_against_multilingual_typographica.md)**
-
-:   本文提出 MulTypo——一个基于各语言键盘布局和 10 指打字习惯的多语种 typo 生成算法，并用它系统评测 18 个开源 LLM 在 12 种语言、5 类下游任务上的鲁棒性，证明 typo 对生成与推理任务影响最大、指令微调反而更脆弱、且 typo 影响存在跨语种和跨方向的非对称性。
-
-**[Evaluating the Impact of Verbal Multiword Expressions on Machine Translation](multilingual_mt/evaluating_the_impact_of_verbal_multiword_expressions_on_machine_translation.md)**
-
-:   本文首次系统评测动词类多词表达式（VMWE：动词成语 VID、动词-小品词 VPC、轻动词构式 LVC）对机器翻译质量的影响，在 8 个 MT 系统 × 7 个语言对 × 两类 QE 模型 + 人工 DA 评分上证明：VMWE 普遍掉点，且掉点幅度与"非组合性"严格正相关（VID > VPC > LVC），即使 GPT-4.1/GPT-5.1 也无法消除这一退化。
-
-**[Exploring Two-Phase Continual Instruction Fine-tuning for Multilingual Adaptation in Large Language Models](multilingual_mt/exploring_continual_fine-tuning_for_enhancing_language_ability_in_large_language.md)**
-
-:   本文提出两阶段持续微调（CFT）框架——先在英语指令数据上微调，再在多语言数据上微调——发现阶段间数据集的指令相似性是决定英语能力是否退化的关键因素，并通过生成式重放和启发式层冻结有效缓解了不相似数据集导致的表示漂移和英语遗忘。
-
-**[FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation](multilingual_mt/fairqe_multi-agent_framework_for_mitigating_gender_bias_in_translation_quality_e.md)**
-
-:   提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。
-
-**[From Fragments to Facts: A Curriculum-Driven DPO Approach for Generating Hindi News Veracity Explanations](multilingual_mt/from_fragments_to_facts_a_curriculum-driven_dpo_approach_for_generating_hindi_ne.md)**
-
-:   本文提出 DeFactoX，用课程学习组织 Hindi 新闻偏好数据，并在 DPO 中加入 Actuality 和 Finesse 两个事实性/稳定性信号，使模型能同时预测新闻真伪并生成更接近人工事实核查解释的 Hindi rationale。
-
-**[From Traditional Taggers to LLMs: A Comparative Study of POS Tagging for Medieval Romance Languages](multilingual_mt/from_traditional_taggers_to_llms_a_comparative_study_of_pos_tagging_for_medieval.md)**
-
-:   作者在三种中古罗曼语（古奥克语 NAF、古加泰罗尼亚语 CAT、古法语 Chauliac）的 POS 标注任务上，把传统 tagger（UDPipe / COLaF）与开源 LLM（Gemma3-12B / Phi4-14B）放在 zero-shot、few-shot、单语微调、双语 CLTF、三语 CLTF 五种设置下做系统对比，发现 LLM 一致优于传统方法，加泰罗尼亚语充当"桥梁语种"使 CAT+FR 双语训练把古法语 Chauliac 推到 93.14% 的最高准确率。
-
-**[Hierarchical Policy Optimization for Simultaneous Translation of Unbounded Speech](multilingual_mt/hierarchical_policy_optimization_for_simultaneous_translation_of_unbounded_speec.md)**
-
-:   本文提出 Hierarchical Policy Optimization (HPO)，通过层级奖励设计对基于 LLM 的同声传译模型进行后训练，在翻译质量未达阈值时抑制延迟优化，从而在 1.5 秒延迟下实现 +7 COMET 的翻译质量提升。
-
-**[IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents](multilingual_mt/indotabvqa_a_benchmark_for_cross-lingual_table_understanding_in_bahasa_indonesia.md)**
-
-:   提出 IndoTabVQA，一个针对印尼语（Bahasa Indonesia）文档表格的跨语言视觉问答基准，包含 1593 张文档图像和四种语言（印尼语/英语/印地语/阿拉伯语）的 QA 标注，揭示了 VLM 在低资源语言和跨语言表格理解上的显著性能差距，微调+空间先验可带来最高 48.5% 的 In-Match 准确率。
-
-**[Is Human-Like Text Liked by Humans? Multilingual Human Detection and Preference Against AI](multilingual_mt/is_human-like_text_liked_by_humans_multilingual_human_detection_and_preference_a.md)**
-
-:   作者组织 19 位母语专家对 9 种语言、9 个领域、11 个 SOTA LLM 共 16 个数据集做了 8.8k 例的人机文本判别，发现专家平均准确率高达 87.6%（远高于"接近随机"的早期结论），并进一步揭示：用显式说明差异的 prompt 改写后机器文本能把检测准确率压到 72.5%，但人在分不清来源时反而倾向选机器文本，挑战了"human-like 等于 liked-by-human"的隐含假设。
-
-**[Just Use XML: Revisiting Joint Translation and Label Projection](multilingual_mt/just_use_xml_revisiting_joint_translation_and_label_projection.md)**
-
-:   提出 LabelPigeon，一种基于 XML 标签的联合翻译与标签投影方法，通过在高质量 XML 标记平行语料上微调 NLLB-200 翻译模型，在 11 种语言上超越所有基线并主动提升翻译质量，在下游跨语言 NER 任务中实现最高 +40.2 F1 的提升。
-
-**[Language Models Entangle Language and Culture](multilingual_mt/language_models_entangle_language_and_culture.md)**
-
-:   本文通过基于 WildChat 数据集构建的通用建议类问题评估多语言 LLM，发现不同语言查询会导致回答质量和文化上下文的系统性差异——低资源语言的回答质量显著低于英语，且语言选择会隐式地改变回答中使用的文化信息，在翻译版 CulturalBench 上验证了语言与文化在 LLM 中的纠缠关系。
-
-**[Language on Demand, Knowledge at Core: Composing LLMs with Encoder-Decoder Translation Models for Extensible Multilinguality](multilingual_mt/language_on_demand_knowledge_at_core_composing_llms_with_encoder-decoder_transla.md)**
-
-:   本文提出 XBridge，一种将预训练多语言编码器-解码器翻译模型（如 NLLB）与英语为中心的 LLM 组合的架构——编码器负责多语言理解、LLM 负责知识推理、解码器负责多语言生成，通过轻量级映射层和最优传输对齐实现跨模型语义桥接，在低资源和未见语言上显著优于基线。
-
-**[LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models](multilingual_mt/laobench_a_large-scale_multidimensional_lao_benchmark_for_large_language_models.md)**
-
-:   LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17000+ 条专家精选样本，覆盖文化-知识应用 / 老挝 K12 课纲 / 老-中-英三语翻译三大维度，并独创"开源 7k + 黑盒 10k + 开放式 500"三段式设计——其中 10k 黑盒子集通过受控服务发分数防污染，主流闭源模型（GPT-5-High、Gemini-2.5-Pro 等）仍落后人类专家 ~10-20 个百分点，老挝语文化推理与翻译保真度依然是远未解决的难题。
-
-**[Lingo_Research_Group at SemEval-2026 Task 9: Evaluating Prompt Variants for Polarization Detection](multilingual_mt/lingo_research_group_at_semeval-2026_task_9_evaluating_prompt_variants_for_polar.md)**
-
-:   这篇 SemEval-2026 Task 9 系统论文用 Gemma3-27B 和 12 类英文 prompt 变体做 22 种语言的在线极化检测，发现 prompt-only 方法能较好完成粗粒度二分类，但在极化目标和表现形式等细粒度多标签任务上明显退化。
-
-**[LLM-XTM: Enhancing Cross-Lingual Topic Models with Large Language Models](multilingual_mt/llm-xtm_enhancing_cross-lingual_topic_models_with_large_language_models.md)**
-
-:   在已训练好的跨语言主题模型外面套一层"LLM 精炼 + 自一致性投票 + MMD 词分布对齐 + QA 式文档语义对齐"的两段式增强模块，可作为插件挂到 NMTM / InfoCTM / XTRA 等多种 backbone 上，在 EC News、Amazon Review、Rakuten Amazon 三个双语语料上把 CNPMI 涨了 9%–51%、TQ 涨了 6%–44%，同时把 LLM 调用次数降到了"每隔 $f$ 个 epoch 才一次"。
-
-**[Location Not Found: Exposing Implicit Local and Global Biases in Multilingual LLMs](multilingual_mt/location_not_found_exposing_implicit_local_and_global_biases_in_multilingual_llm.md)**
-
-:   本文提出 LocQA 基准（12 种语言、49 个地区、2156 个地域相关问答），通过地域模糊问题（如"紧急电话号码是多少？"）揭示 LLM 的隐式偏差：跨语言上存在持续的美国中心默认行为（模型回答的 50% 包含美国答案 vs 数据中仅 26%），语言内部存在人口规模驱动的"人口概率引擎"效应，且指令微调加剧了全球偏差。
-
-**[Lost in Translation: Do LVLM Judges Generalize Across Languages?](multilingual_mt/lost_in_translation_do_lvlm_judges_generalize_across_languages.md)**
-
-:   本文提出 MM-JudgeBench，首个大规模多语言多模态评判模型基准（25 种语言、60K+ 偏好实例），评估 22 个 LVLM 发现当前 LVLM 评判器存在显著的跨语言性能差异——模型大小和架构不能预测多语言鲁棒性，即使最先进的评判器也表现不一致，突显了多语言多模态评估基准的必要性。
-
-**[LQM: Linguistically Motivated Multidimensional Quality Metrics for Machine Translation](multilingual_mt/lqm_linguistically_motivated_multidimensional_quality_metrics_for_machine_transl.md)**
-
-:   提出LQM（Linguistically Motivated Multidimensional Quality Metrics），一个六层语言学驱动的机器翻译错误分类体系（社会语言学→语用学→语义→形态句法→正字法→字形），并在7种阿拉伯方言上构建3850句双向平行语料库，通过专家标注6113个错误跨度揭示现有MT系统在方言和文化感知翻译上的系统性不足。
-
-**[Mitigating Catastrophic Forgetting in Target Language Adaptation of LLMs via Source-Shielded Updates](multilingual_mt/mitigating_catastrophic_forgetting_in_target_language_adaptation_of_llms_via_sou.md)**
-
-:   提出 Source-Shielded Updates (SSU)，一种基于源数据驱动参数重要性评分的列级冻结策略，在仅使用无标签目标语言数据进行持续预训练时，将源语言性能退化从全量微调的 20.3% 降低至 3.4%，同时保持与全量微调相当甚至更优的目标语言性能。
-
-**[Mitigating Extrinsic Gender Bias for Bangla Classification Tasks](multilingual_mt/mitigating_extrinsic_gender_bias_for_bangla_classification_tasks.md)**
-
-:   针对孟加拉语预训练模型在下游分类任务中的外在性别偏见，提出 RandSymKL 方法，通过随机化交叉熵损失和对称 KL 散度联合优化，在保持分类准确率的同时有效缩小性别间预测差异。
-
-**[MORPHOGEN: A Multilingual Benchmark for Evaluating Gender-Aware Morphological Generation](multilingual_mt/morphogen_a_multilingual_benchmark_for_evaluating_gender-aware_morphological_gen.md)**
-
-:   本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标，对 15 个多语言 LLM 的基准测试揭示了模型在复杂形态推理、性别偏差和多实体干扰方面的系统性不足。
-
-**[MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](multilingual_mt/multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)**
-
-:   MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。
-
-**[Multilingual Language Models Encode Script Over Linguistic Structure](multilingual_mt/multilingual_language_models_encode_script_over_linguistic_structure.md)**
-
-:   本文通过 LAPE 指标和稀疏自编码器系统分析多语言 LM 中的语言关联单元，发现这些单元主要由正字法（书写系统）驱动而非抽象语言结构：罗马化转写激活几乎完全不重叠的神经元集合，词序打乱影响甚微，类型学信息仅在深层逐渐可访问，因果干预表明功能重要性与表面形式不变性相关。
-
-**[Multilingual Steering by Design: Multilingual Sparse Autoencoders and Principled Layer Selection](multilingual_mt/multilingual_steering_by_design_multilingual_sparse_autoencoders_and_principled_.md)**
-
-:   这篇论文证明，多语言 sparse autoencoder 和“多语言对齐-语言可分性”交叉点层选择可以让 SAE 语言 steering 更稳定，把原先靠经验选层的多语言控制问题转成可预测的表征诊断问题。
-
-**[NeoAMT: Neologism-Aware Agentic Machine Translation with Reinforcement Learning](multilingual_mt/neoamt_neologism-aware_agentic_machine_translation_with_reinforcement_learning.md)**
-
-:   NeoAMT 把新词翻译从单纯依赖模型参数知识的问题，改造成“先推理、再查词典、再翻译”的 agentic MT 问题，并用面向新词命中率、整体译文质量和翻译难度的 GRPO 训练，让 8B 模型在 Neko 新词翻译基准上显著超过 SFT、无检索 RL 和多种通用/翻译专用 LLM。
-
-**[NiuTrans.LMT: Toward Inclusive and Scalable Multilingual Machine Translation with LLMs](multilingual_mt/niutranslmt_toward_inclusive_and_scalable_multilingual_machine_translation_with_.md)**
-
-:   本文发布 NiuTrans.LMT，一个覆盖 60 种语言、234 个中英双中心翻译方向、0.6B/1.7B/4B/8B 四种规模的开源 LLM 机器翻译套件，并指出多路平行数据在对称 SFT 中会造成 X→中/英方向退化，再用 Strategic Downsampling、Parallel Multilingual Prompting 和 COMET 奖励的 GRPO 把质量拉回到强开源 MMT 系统水平。
-
-**[No One Fits All: From Fixed Prompting to Learned Routing in Multilingual LLMs](multilingual_mt/no_one_fits_all_from_fixed_prompting_to_learned_routing_in_multilingual_llms.md)**
-
-:   本文证明没有一种提示策略在所有语言和任务上普遍最优，提出将策略选择建模为学习决策问题，用轻量级分类器为每个实例预测最优策略，在四个基准上显著优于固定策略。
-
-**[PEAR: Pairwise Evaluation for Automatic Relative Scoring in Machine Translation](multilingual_mt/pear_pairwise_evaluation_for_automatic_relative_scoring_in_machine_translation.md)**
-
-:   PEAR 将无参考机器翻译质量估计从“给单个译文打绝对分”改成“直接比较两个候选译文的相对差值”，在 WMT24 MQM 评测中以更小模型超过匹配的单候选 QE 基线和部分大规模指标。
-
-**[PluRule: A Benchmark for Moderating Pluralistic Communities on Social Media](multilingual_mt/plurule_a_benchmark_for_moderating_pluralistic_communities_on_social_media.md)**
-
-:   PluRule 把 Reddit 社区审核建模为“给定评论和上下文，选择违反了哪条本社区规则或没有违规”的多选题，构建了覆盖 1,989 个社区、2,885 条规则和 9 种语言的基准，并显示 GPT-5.2 high reasoning 全上下文也只有约 57.6% 准确率。
-
-**[Prosody as Supervision: Bridging the Non-Verbal–Verbal for Multilingual Speech Emotion Recognition](multilingual_mt/prosody_as_supervision_bridging_the_non-verbal--verbal_for_multilingual_speech_e.md)**
-
-:   本文提出 NOVA-ARC，首次将多语言语音情感识别（SER）建模为从标注的非语言发声（NVV）到未标注的语言语音（UVS）的无监督迁移问题，通过双曲空间中的韵律向量量化编码本、双曲情感透镜和最优传输原型对齐实现跨模态情感迁移，在 6 个数据集上验证了非语言→语言迁移的可行性和优越性。
-
-**[Reinforcement Learning with Semantic Rewards Enables Low-Resource Language Expansion without Alignment Tax](multilingual_mt/reinforcement_learning_with_semantic_rewards_enables_low-resource_language_expan.md)**
-
-:   本文把低资源语言扩展从 token 级模仿改写为语义空间对齐问题，用 GRPO 和 embedding 语义奖励训练 Qwen3-4B，在藏汉翻译和藏语标题生成上获得低资源能力，同时比强 SFT 更好地保留中文 CMRC 等主导语言能力。
-
-**[RouteLMT: Learned Sample Routing for Hybrid LLM Translation Deployment](multilingual_mt/routelmt_learned_sample_routing_for_hybrid_llm_translation_deployment.md)**
-
-:   RouteLMT 将混合 LLM 翻译中的路由问题形式化为固定大模型预算下的边际收益分配，并用小翻译模型最后 prompt token 的内部表示预测“大模型相对小模型能带来多少提升”，在四个翻译方向上比长度、质量估计和外部路由器获得更好的质量-预算 Pareto 前沿。
-
-**[Scripts Through Time: A Survey of the Evolving Role of Transliteration in NLP](multilingual_mt/scripts_through_time_a_survey_of_the_evolving_role_of_transliteration_in_nlp.md)**
-
-:   本文系统综述了音译（transliteration）在跨语言 NLP 中的演变角色，提出五大动机分类（命名实体/OOV处理、代码混合、跨文字相似性利用、英语中心迁移、统一预处理），比较了六种整合方式的优劣，并在现代 LLM 语境下讨论了音译是否仍然必要。
-
-**[Selective Contrastive Learning For Gloss Free Sign Language Translation](multilingual_mt/selective_contrastive_learning_for_gloss_free_sign_language_translation.md)**
-
-:   这篇论文发现手语翻译中随机 in-batch 负样本经常是不可靠或语义冲突的监督信号，因此用参考模型的相似度轨迹筛选更有信息量的负样本，并通过从易到难的课程式对比学习提升 gloss-free 手语翻译质量。
-
-**[SERM: Self-Evolving Relevance Model with Agent-Driven Learning from Massive Query Streams](multilingual_mt/serm_self-evolving_relevance_model_with_agent-driven_learning_from_massive_query.md)**
-
-:   提出 SERM 框架，通过多智能体样本挖掘器和多智能体相关性标注器，从大规模真实查询流中持续自进化搜索相关性模型，经三轮迭代在工业搜索平台上实现 NDCG@1 提升 +2.99，并在在线 A/B 测试中显著提升用户留存率。
-
-**[SteerEval: Inference-time Interventions Strengthen Multilingual Generalization in Neural Summarization Metrics](multilingual_mt/steereval_inference-time_interventions_strengthen_multilingual_generalization_in.md)**
-
-:   SteerEval 研究在推理时把多语种评测模型的隐藏表示向高资源枢轴语言对齐，发现向英语或法语方向 steering 能普遍提高多语种摘要自动指标与人工评分的相关性，尤其能改善低基线语言和 encoder-based COMET 指标。
-
-**[Structure-Guided Entity Resolution: Fine-Tuning LLMs for Robust Name Matching in Complex Linguistic Contexts](multilingual_mt/structure-guided_entity_resolution_fine-tuning_llms_for_robust_name_matching_in_.md)**
-
-:   SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配：Phase 1 训练模型解析姓名结构（输出 JSON），Phase 2 从 Phase 1 checkpoint 训练二分类匹配器，在 5 万对印度 KYC 数据上达到 99.02% 准确率和 0.994 F1，已在 Dream11（2.5 亿用户）生产环境部署。
-
-**[Syntax as a Rosetta Stone: Universal Dependencies for In-Context Coptic Translation](multilingual_mt/syntax_as_a_rosetta_stone_universal_dependencies_for_in-context_coptic_translati.md)**
-
-:   本文首次探索将 Universal Dependencies 句法信息作为上下文学习的增强源用于低资源科普特语到英语的机器翻译，发现虽然句法信息单独不如词典有效，但将词典与句法信息结合（LEX+SYN）在所有模型上取得最佳效果，Gemma-27B 的 BERTScore F1 达到 0.8746（+0.0361）。
-
-**[The GaoYao Benchmark: A Comprehensive Framework for Evaluating Multilingual and Multicultural Abilities of Large Language Models](multilingual_mt/the_gaoyao_benchmark_a_comprehensive_framework_for_evaluating_multilingual_and_m.md)**
-
-:   本文提出GaoYao基准，包含182.3K样本、26种语言和51个国家/地区，通过三层文化评估框架（通用多语言/跨文化/单文化）和九个认知子层，结合人工本地化的主观测试集和专家验证的跨文化合成数据集SuperBLEnD，深度诊断20+旗舰与紧凑型LLM的多语言能力，揭示了显著的地理数字鸿沟和任务能力分层。
-
-**[Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation](multilingual_mt/think_in_latent_thoughts_a_new_paradigm_for_gloss-free_sign_language_translation.md)**
-
-:   提出 SignThought，一种推理驱动的无注释手语翻译框架：引入可学习的潜在思维槽作为视频和文本之间的显式中间语义层，通过"先规划后定位"的双流解码器实现语义规划与视觉证据检索的解耦，在多个基准上超越现有无注释方法。
-
-**[TLPO: Token-Level Policy Optimization for Mitigating Language Confusion in Large Language Models](multilingual_mt/tlpo_token-level_policy_optimization_for_mitigating_language_confusion_in_large_.md)**
-
-:   TLPO 将多语言 LLM 的语言混淆视为可定位的局部 token 错误，只在首次混淆位置的高概率候选 token 上做策略优化，从而在显著提高目标语言一致性的同时尽量保留模型原有推理和知识能力。
-
-**[Toward Culturally Grounded Natural Language Processing](multilingual_mt/toward_culturally_grounded_natural_language_processing.md)**
-
-:   这篇综述型论文综合 50 余篇多语与文化 NLP 工作，指出“语言覆盖率”不等于“文化能力”，并提出以 communicative ecologies 为中心的分层评估协议和研究议程。
-
-**[TransLaw: A Large-Scale Dataset and Multi-Agent Benchmark Simulating Professional Translation of Hong Kong Case Law](multilingual_mt/translaw_a_large-scale_dataset_and_multi-agent_benchmark_simulating_professional.md)**
-
-:   这篇论文构建了首个面向香港终审法院判词英中翻译的句级平行数据集 HKCFA Judgement 97-22，并提出模拟专业法律翻译流程的 TransLaw 多智能体系统，在自动指标、人类法律译者评测和成本分析上都显著优于单一翻译 agent。
-
-**[Unlocking the Edge: Multi-LoRA On-Device Deployment and Acceleration](multilingual_mt/unlocking_the_edge_deployment_and_ondevice_acceleration_of_multi-lora_enabled_on.md)**
-
-:   本文提出面向三星 Galaxy S24/S25 的端侧 LLM 部署框架，通过 LoRA 权重作为运行时输入实现动态任务切换、多流并发 token 生成减少风格变体延迟达 6 倍、无草稿模型的 Dynamic Self-Speculative Decoding 加速解码达 2.3 倍，在 9 语言 8 任务上实现 4-6 倍整体优化。
-
-**[Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic](multilingual_mt/vocab_diet_reshaping_the_vocabulary_of_llms_via_vector_arithmetic.md)**
-
-:   本文发现 LLM 在嵌入空间中将词形变化（如 walk→walked）编码为线性方向，基于此提出组合式词表设计：用基础词+变换向量的加法组合替代为每个表面形式分配独立 token，在冻结预训练骨干的前提下仅训练小型适配模块，释放 10-40% 的词表槽位用于多语言扩展，同时几乎不影响下游性能。
-
-**[Vocabulary Shapes Cross-Lingual Variation of Word-Order Learnability in Language Models](multilingual_mt/vocabulary_shapes_cross-lingual_variation_of_word-order_learnability_in_language.md)**
-
-:   本文用 Mallows 模型生成 10 种欧洲语言的连续词序扰动谱，训练小型自回归 LM 后发现：词序越不规则越难学，但跨语言差异主要由词表覆盖、句长和形态复杂度解释，而不是简单的自由/固定词序标签。
-
-**[What Factors Affect LLMs and RLLMs in Financial Question Answering?](multilingual_mt/what_factors_affect_llms_and_rllms_in_financial_question_answering.md)**
-
-:   本文系统研究了提示方法、Agent 框架和多语言对齐方法对 LLM 和 RLLM（推理型大模型）在金融问答任务上的影响，发现现有方法本质上是通过模拟 Long CoT 来提升 LLM 性能，但对已具备 Long CoT 能力的 RLLM 效果有限。
-
-**[Why Do Multilingual Reasoning Gaps Emerge in Reasoning Language Models?](multilingual_mt/why_do_multilingual_reasoning_gaps_emerge_in_reasoning_language_models.md)**
-
-:   本文首次系统分析了推理语言模型(RLMs)中多语言推理差距的来源，发现**语言理解失败**是主要原因，并提出通过检测理解失败后进行选择性翻译(Selective Translation)来高效弥补差距。
-
-**[Why Low-Resource NLP Needs More Than Cross-Lingual Transfer: Lessons Learned from Luxembourgish](multilingual_mt/why_low-resource_nlp_needs_more_than_cross-lingual_transfer_lessons_learned_from.md)**
-
-:   本文以理论上很适合跨语言迁移的卢森堡语为“最好情况”案例，论证低资源 NLP 不能只依赖多语模型的自发迁移，而必须把跨语言脚手架和目标语言特定的数据清洗、资源建设、任务设计结合起来。
-
-**[XQ-MEval: A Dataset with Cross-lingual Parallel Quality for Benchmarking Translation Metrics](multilingual_mt/xq-meval_a_dataset_with_cross-lingual_parallel_quality_for_benchmarking_translat.md)**
-
-:   构建首个具有跨语言平行质量的翻译评估基准 XQ-MEval，通过半自动注入 MQM 错误生成可控质量的伪翻译，首次实证揭示自动评估指标的跨语言评分偏差，并提出 LGN 归一化策略有效校准多语言指标评估。
 
 ---
 
@@ -4385,10 +4285,6 @@ item_total: 1363
 
 :   提出RADAR框架，通过角色锚定（政客 vs 科学家）的多智能体辩论来检测基于遗漏上下文的半真半假信息，配合双阈值自适应早停机制，在噪声检索条件下一致超越单智能体和传统多智能体基线。
 
-**[Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate](multi_agent/dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria.md)**
-
-:   提出 Dialectic-Med，一个受波普尔证伪主义启发的多智能体医学诊断框架，通过提议者（诊断假设）、反对者（视觉证伪模块主动检索矛盾视觉证据）和调解者（加权共识图决策）的对抗辩证推理，在 MIMIC-CXR-VQA、VQA-RAD 和 PathVQA 上取得 SOTA，解释忠实度提升 12.5%，显著缓解诊断幻觉。
-
 **[Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](multi_agent/diversity_collapse_in_multi-agent_llm_systems_structural_coupling_and_collective.md)**
 
 :   本文通过评估超过 10,000 个研究提案，从模型智能、智能体认知和系统动力学三个层次系统揭示了多智能体 LLM 系统中的"多样性崩溃"现象：更强的模型、权威驱动的角色分配和密集的通信拓扑都会抑制语义多样性，根本原因是交互结构而非模型能力不足。
@@ -4764,6 +4660,118 @@ item_total: 1363
 **[WildFeedback: Aligning LLMs With In-situ User Interactions And Feedback](llm_alignment/wildfeedback_aligning_llms_with_in-situ_user_interactions_and_feedback.md)**
 
 :   WildFeedback 从真实用户与 ChatGPT 的多轮对话中自动识别满意/不满意反馈，把自然发生的用户偏好转成偏好训练样本和逐例 checklist 评估标准，使小型开源指令模型在通用 benchmark 与真实用户偏好测试上都比 UltraFeedback 训练更贴近用户需求。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs](hallucination/aligning_with_your_own_voice_self-corrected_preference_learning_for_hallucinatio.md)**
+
+:   提出 AVES-DPO 框架：用一致性多模型验证（YOLO/GroundingDINO/Qwen3-VL）在 object/attribute/relation 三层细粒度检测 LVLM 自己生成回复中的幻觉，再让同一个 LVLM 自我校正并丰富细节，得到的偏好对天然处于目标模型的"自身分布"内；仅 5.2K 样本即可在多个幻觉 benchmark 上超过依赖 GPT-4V 教师的 SOTA（数据效率约 25×）。
+
+**[Benchmarking Deflection and Hallucination in Large Vision-Language Models](hallucination/benchmarking_deflection_and_hallucination_in_large_vision-language_models.md)**
+
+:   提出 VLM-DeflectionBench，一个包含 2775 个样本的多模态基准，通过四种评估场景（参数化/Oracle/现实/对抗）系统性地评估大型视觉语言模型在证据不足或误导时的拒答（deflection）vs 幻觉（hallucination）行为，实验覆盖 20 个 SOTA LVLM，发现几乎所有模型都无法在噪声证据下可靠拒答。
+
+**[Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps](hallucination/detecting_hallucinations_in_speechllms_at_inference_time_using_attention_maps.md)**
+
+:   提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉，在域内数据上 PR-AUC 提升最高达 +0.23。
+
+**[Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate](hallucination/dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria.md)**
+
+:   提出 Dialectic-Med，一个受波普尔证伪主义启发的多智能体医学诊断框架，通过提议者（诊断假设）、反对者（视觉证伪模块主动检索矛盾视觉证据）和调解者（加权共识图决策）的对抗辩证推理，在 MIMIC-CXR-VQA、VQA-RAD 和 PathVQA 上取得 SOTA，解释忠实度提升 12.5%，显著缓解诊断幻觉。
+
+**[Distorted or Fabricated? A Survey on Hallucination in Video LLMs](hallucination/distorted_or_fabricated_a_survey_on_hallucination_in_video_llms.md)**
+
+:   本文首次对视频大语言模型（Vid-LLM）中的幻觉现象进行系统分类，提出"动态失真"（时空关系和引用一致性错误）和"内容捏造"（统计先验驱动和音视频冲突）的机制驱动分类体系，综述评估基准、缓解策略和根因分析。
+
+**[Enhancing Hallucination Detection via Future Context](hallucination/enhancing_hallucination_detection_via_future_context.md)**
+
+:   本文提出利用采样生成的"未来上下文"（后续句子）来增强黑盒场景下的幻觉检测，利用幻觉一旦出现就倾向于持续传播的"滚雪球效应"，在 SelfCheckGPT 和 SC 等多种采样方法上一致提升检测性能。
+
+**[FaithLens: Detecting and Explaining Faithfulness Hallucination](hallucination/faithlens_detecting_and_explaining_faithfulness_hallucination.md)**
+
+:   本文提出 FaithLens，一个 8B 参数的忠实性幻觉检测模型，通过高质量数据合成+三维过滤（标签正确性、解释质量、数据多样性）进行冷启动 SFT，再用基于规则的强化学习（预测正确性奖励+解释质量奖励）进一步优化，在 12 个任务上超越 GPT-5.2 和 o3，同时提供高质量的解释性输出。
+
+**[FinGround: Detecting and Grounding Financial Hallucinations via Atomic Claim Verification](hallucination/finground_detecting_and_grounding_financial_hallucinations_via_atomic_claim_veri.md)**
+
+:   FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pipeline：(1) finance-aware 混合检索；(2) 把答案拆成原子 claim 并按"数值/时间/实体属性/比较/监管/计算"六类 taxonomy 用 type-routed 策略验证 (其中 computational claim 用公式重构 + 算术再校验)；(3) 对未支持的 claim 进行 grounded 重写并加段/单元格级引用——把 GPT-4o 蒸馏到 8B 检测器实现 91.4% F1、18× 加速，端到端将 hallucination rate 相比 GPT-4o+CoT 降 78%。
+
+**[Generating Effective CoT Traces for Mitigating Causal Hallucination](hallucination/generating_effective_cot_traces_for_mitigating_causal_hallucination.md)**
+
+:   本文首先提出了因果幻觉率（CHR）指标来量化小型 LLM 在事件因果识别中过度预测因果关系的倾向，然后通过系统实验确定了有效 CoT 数据的两个关键标准（充分长度的语义解释+与目标模型对齐的分布），设计了一套低成本的 CoT 数据生成管线，将 Qwen2.5-1.5B 的 CHR 从 83.54% 降至 6.26%，同时提升平均准确率至 66.00%。
+
+**[HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](hallucination/halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)**
+
+:   本文提出 HalluAudio，首个大规模跨领域（语音/环境声/音乐）的音频幻觉检测基准，包含 5000+ 人工验证的 QA 对和系统化的对抗性提示设计，通过多维指标（准确率/幻觉率/Yes-No偏差/拒绝率/错误类型）评估主流 LALM，揭示了当前模型在声学锚定、时间推理和音乐属性理解方面的显著缺陷。
+
+**[Hallucination Detection in LLMs with Topological Divergence on Attention Graphs](hallucination/hallucination_detection_in_llms_with_topological_divergence_on_attention_graphs.md)**
+
+:   TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 Manifold Topology Divergence 度量「response 子图相对 prompt 子图的拓扑新颖度」，并发现存在跨数据集稳定的「幻觉感知头」——只用 10 个这样的头做平均，就能在 RAG 场景下做到 training-free + 比 SelfCheckGPT 快 70× 且 ROC-AUC 显著领先。
+
+**[Logical Consistency as a Bridge: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments](hallucination/logical_consistency_as_a_bridge_improving_llm_hallucination_detection_via_label_.md)**
+
+:   把 LLM 的 self-judgment ("它觉得自己刚才答对了没") 也当成一个可能幻觉的 generation，先用 intrinsic feature 训一个 "meta-judgment detector" 估它的可信度，再用"如果 self-judgment 说真→两标签相同/说假→两标签相反"这条天然逻辑规则，把 response detector 和 meta-judgment detector 通过 Huber loss 互相约束、用置信度加权的互学习联合训练；推理时只用 response detector 但已经吸收了 self-judgment 的知识，零额外推理成本就拿到双视角增益。
+
+**[Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models](hallucination/lost_in_diffusion_uncovering_hallucination_patterns_and_failure_modes_in_diffusi.md)**
+
+:   首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。
+
+**[MeasHalu: Mitigation of Scientific Measurement Hallucinations for LLMs](hallucination/meashalu_mitigation_of_scientific_measurement_hallucinations_for_large_language_.md)**
+
+:   本文提出MeasHalu框架，通过细粒度测量幻觉分类法和两阶段优化（推理感知SFT+幻觉靶向GRPO奖励）缓解LLM在科学测量抽取中的幻觉，在MeasEval上显著超越基线。
+
+**[Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](hallucination/mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)**
+
+:   在受控的目标计数任务里把"模型听 prompt 不看图"的幻觉行为定位到 LLaVA-OneVision / Qwen-VL / Janus-Pro **早期层** (主要是 L0-1) 的 3-10 个 attention head，对它们做 mean ablation 不需要任何再训练就让 prompt-following 从 42–64% 掉到 <11%，把真实计数恢复率推到 70–78%，并能 zero-shot 迁移到颜色识别任务 (PIH 抑制 40–95%)。
+
+**[Mitigating Hallucinations in Large Vision-Language Models without Performance Degradation](hallucination/mitigating_hallucinations_in_large_vision-language_models_without_performance_de.md)**
+
+:   本文提出 MPD 框架，通过语义感知正交子空间投影分离幻觉成分，并仅选择性更新与幻觉最相关的少量参数，在减少 23.4% 幻觉的同时保持 97.4% 的通用生成能力，不引入额外推理开销。
+
+**[MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](hallucination/multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)**
+
+:   MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。
+
+**[Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](hallucination/rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)**
+
+:   本文重新定义了 RAG 场景幻觉检测 benchmark 应具备的 7 条要求，构建了长上下文、人类多轮标注且带真实噪声标签的 Trivia++，并发现现有检测器在有机 RAG 幻觉上仍明显低于理想性能。
+
+**[Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation](hallucination/spotlight_and_shadow_attention-guided_dual-anchor_introspective_decoding_for_mll.md)**
+
+:   提出 DaID (Dual-Anchor Introspective Decoding)，通过挖掘 MLLM 内部不同层的视觉感知差异——Spotlight 层放大视觉信号、Shadow 层抑制语言惯性——在单次前向传播内实现幻觉缓解。
+
+**[Stable-RAG: Mitigating Retrieval-Permutation-Induced Hallucinations in Retrieval-Augmented Generation](hallucination/stable-rag_mitigating_retrieval-permutation-induced_hallucinations_in_retrieval-.md)**
+
+:   揭示 RAG 系统对检索文档排列顺序高度敏感的问题，提出 Stable-RAG：通过对文档排列产生的隐状态做谱聚类识别主导推理模式，再用 DPO 对齐将幻觉输出引导向正确答案，在三个 QA 数据集上实现准确率和推理一致性的双重提升。
+
+**[The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](hallucination/the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)**
+
+:   系统性揭示了"推理陷阱"悖论：增强LLM推理能力（无论通过RL、蒸馏还是可切换推理模式）会系统性地放大工具幻觉，且这一效应与推理本身而非RL训练相关联，现有缓解策略（提示工程、DPO）面临不可避免的可靠性-能力权衡。
+
+**[Through the Magnifying Glass: Adaptive Perception Magnification for Hallucination-Free VLM Decoding](hallucination/through_the_magnifying_glass_adaptive_perception_magnification_for_hallucination.md)**
+
+:   本文提出 Perception Magnifier (PM)，一种视觉解码方法，在每个自回归解码步基于多层注意力迭代识别关键视觉区域并自适应放大，通过提升关键区域的有效分辨率来缓解 VLM 的视觉幻觉，同时保持空间结构完整性和推理能力。
+
+**[TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](hallucination/tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)**
+
+:   本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献，结合词性标注聚合特征，实现 RAG 场景下的 SOTA 幻觉检测。
+
+**[Two Pathways to Truthfulness: On the Intrinsic Encoding of LLM Hallucinations](hallucination/two_pathways_to_truthfulness_on_the_intrinsic_encoding_of_llm_hallucinations.md)**
+
+:   本文发现 LLM 内部编码真实性信号存在两条不同的信息通路：Question-Anchored（依赖问题到回答的信息流）和 Answer-Anchored（从生成答案本身提取自包含证据），两者与知识边界紧密关联，并据此提出 Mixture-of-Probes 和 Pathway Reweighting 两种通路感知的幻觉检测方法，AUC 提升达 10%。
+
+**[Understanding New-Knowledge-Induced Factual Hallucinations in LLMs: Analysis and Interpretation](hallucination/understanding_new-knowledge-induced_factual_hallucinations_in_llms_analysis_and_.md)**
+
+:   本文通过受控合成数据集 Biography-Reasoning 系统分析了 SFT 阶段学习新知识导致的事实幻觉现象，发现幻觉的根本机制是模型对关键实体的注意力被削弱，并提出 KnownPatch——在训练末期注入少量已知知识来恢复注意力模式，有效缓解幻觉。
+
+**[Vocabulary Hijacking in LVLMs: Unveiling Critical Attention Heads by Excluding Inert Tokens to Mitigate Hallucination](hallucination/vocabulary_hijacking_in_lvlms_unveiling_critical_attention_heads_by_excluding_in.md)**
+
+:   本文发现 LVLM 中部分无效视觉 token 会稳定解码到一组无关词并劫持注意力，进而提出 HABI 定位这些 token、用 NHAR 找到可靠视觉头，再通过 HAVAE 在推理时增强这些头以降低幻觉。
+
+**[为什么 LLM 在结构化知识上产生幻觉：推理过程的机制分析](hallucination/why_llms_hallucinate_on_structured_knowledge_a_mechanistic_analysis_of_reasoning.md)**
+
+:   论文通过两个机制指标（结构捷径依赖 SSR 和语义对齐分数 SAS）揭示 LLM 在处理线性化结构化知识时产生幻觉的内部失败机制，并基于这些信号构建了一个轻量级的幻觉检测器。
 
 ---
 
@@ -5223,78 +5231,6 @@ item_total: 1363
 
 ---
 
-## 📹 视频理解 { #video_understanding }
-
-**[APB-V: Accelerating Long-Video Understanding via Sequence-Parallelism-aware Approximate Attention](video_understanding/apb-v_accelerating_long-video_understanding_via_sequence-parallelism-aware_appro.md)**
-
-:   APB-V 用面向序列并行的近似注意力和系统级负载均衡加速长视频 LMM 推理，在保留完整视觉 embedding 的同时，在 64 帧 1440p 设置下相对 FlashAttn、ZigZagRing 和 APB 分别达到 12.72×、1.70× 和 1.18× 加速，且没有显著性能损失。
-
-**[ArrowGEV: Grounding Events in Video via Learning the Arrow of Time](video_understanding/arrowgev_grounding_events_in_video_via_learning_the_arrow_of_time.md)**
-
-:   提出 ArrowGEV，一个受物理学"时间之箭"启发的强化学习框架，通过区分时间敏感和时间不敏感事件来建模视频中的时间方向性，提升 VLM 的事件定位精度和时序理解能力。
-
-**[Automated Knowledge Component Generation and Interpretable Knowledge Tracing in Coding Problems](video_understanding/automated_knowledge_component_generation_for_interpretable_knowledge_tracing_in_.md)**
-
-:   这篇论文用 LLM 自动为开放式编程题生成和聚类 Knowledge Components，并提出 KCGen-KT 将学生在每个 KC 上的掌握度转成 soft token 输入 Llama 3，在 CodeWorkout 和 FalconCode 上同时提升正确率预测与学生代码生成。
-
-**[Confidence Estimation for LLMs in Multi-turn Interactions](video_understanding/confidence_estimation_for_llms_in_multi-turn_interactions.md)**
-
-:   首次系统研究多轮对话场景下的 LLM 置信度估计，提出两个核心准则（per-turn 校准 + 信息增加时单调性）、对应的 InfoECE 指标和 Kendall's $\tau$ 评估、Hinter-Guesser 数据集构造范式，并提出新颖的 P(SUFFICIENT) logit 探针——结果发现现有方法（verbalized / SC / P(TRUE)）在多轮场景中校准和单调性都很差，而 P(SUFFICIENT) 在 GUESS 上 InfoECE 降到 5.27（vs P(TRUE) 79.97）、$\tau$ 达 81.51，但任务远未解决。
-
-**[CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering](video_understanding/craft_critic-refined_adaptive_key-frame_targeting_for_multimodal_video_question_.md)**
-
-:   CRAFT 是一个面向新闻事件多视频问答的 claim-centric pipeline，它结合动态关键帧选择、ASR 转写、UNLI/MNLI/LLM critic 迭代修正和引用合并，在 MAGMaR-Test 上取得 0.739 macro average、0.810 reference recall 和 0.635 citation F1。
-
-**[Distorted or Fabricated? A Survey on Hallucination in Video LLMs](video_understanding/distorted_or_fabricated_a_survey_on_hallucination_in_video_llms.md)**
-
-:   本文首次对视频大语言模型（Vid-LLM）中的幻觉现象进行系统分类，提出"动态失真"（时空关系和引用一致性错误）和"内容捏造"（统计先验驱动和音视频冲突）的机制驱动分类体系，综述评估基准、缓解策略和根因分析。
-
-**[DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding](video_understanding/dualfact_a_multimodal_fact_verification_framework_for_procedural_video_understan.md)**
-
-:   作者把"做饭、家具制作"这类程序化视频字幕的事实评测拆成**双层事实**——conceptual facts（抽象角色，如 Action/Ingredient/Tool/Location）+ contextual facts（视频中可观察的 predicate–argument 关系，如 stir(soup, pot)），配套构建 YouCook3-Fact / CraftBench-Fact 两个标注隐式参数补全 (VIA) 与对比性事实的基准，并提出 MultiFactScore 用多模态/文本 NLI 在角色级别分别核查事实，进而把错误细分为 Hallucination / Saliency / Omission；实验发现 SOTA MLLM 字幕"流畅但事实残缺"，单看字幕会高估 Hallucination 一半左右，只有 video-grounded 评测才能区分 saliency 与真 hallucination。
-
-**[GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents](video_understanding/gameplayqa_a_benchmarking_framework_for_decision-dense_pov-synced_multi-video_un.md)**
-
-:   提出 GameplayQA，一个基于多人3D游戏视频的端到端基准框架，通过密集时间线标注（1.22标签/秒）和结构化干扰项分类学，系统评估多模态大模型在决策密集、多视角同步场景下的感知和推理能力，揭示前沿模型与人类表现仍有显著差距。
-
-**[HERMES: KV Cache as Hierarchical Memory for Efficient Streaming Video Understanding](video_understanding/hermes_kv_cache_as_hierarchical_memory_for_efficient_streaming_video_understandi.md)**
-
-:   本文提出 HERMES，基于对 MLLM 解码器层级注意力偏好的机制性分析，将 KV 缓存概念化为层级记忆框架（浅层=感觉记忆、中层=工作记忆、深层=长期记忆），实现免训练的高效流式视频理解，在减少 68% 视频 token 的条件下仍保持或提升准确率，TTFT 延迟仅 <30ms，比前 SOTA 快 10 倍。
-
-**[NSF-SciFy: Mining the NSF Awards Database for Scientific Claims](video_understanding/nsf-scify_mining_the_nsf_awards_database_for_scientific_claims.md)**
-
-:   NSF-SciFy 从 NSF 奖项摘要中抽取 2.8M 科学 claims 和 investigation proposals，构建了比现有科学 claim 数据集大几个数量级的资源，并展示了它能显著提升 claim / proposal 抽取模型。
-
-**[Probing for Reading Times](video_understanding/probing_for_reading_times.md)**
-
-:   本文探测语言模型各层表示预测阅读时间的能力，发现早期层表示在预测早期注视指标上优于surprisal，而surprisal在晚期指标上更优，最佳预测器因语言和指标而异。
-
-**[Response-G1: Explicit Scene Graph Modeling for Proactive Streaming Video Understanding](video_understanding/response-g1_explicit_scene_graph_modeling_for_proactive_streaming_video_understa.md)**
-
-:   Response-G1 用查询引导的在线场景图、历史场景图检索和带时间戳的触发提示，把流式视频中的视觉证据和用户查询的响应条件显式对齐，在无需微调的情况下显著提升 Video-LLM 判断“现在是否该回答”的能力。
-
-**[Rethinking the Idiomaticity Decomposability Hypothesis: Evidence from Distributional Learning](video_understanding/rethinking_the_idiomaticity_decomposability_hypothesis_evidence_from_distributio.md)**
-
-:   这篇论文用上下文化语言模型作为“受控的分布式学习者”重新检验 Idiom Decomposability Hypothesis，发现模型派生的可分解性只弱相关于人类判断，并且与句法灵活性呈小而稳定的负相关，说明习语行为更像是由分布经验、surprisal 和表征稳定过程共同塑造。
-
-**[TemporalVLM: Video LLMs for Temporal Reasoning in Long Videos](video_understanding/temporalvlm_video_llms_for_temporal_reasoning_in_long_videos.md)**
-
-:   本文提出 TemporalVLM，通过时间感知的片段编码器（重叠滑动 Video Q-Former + 融合模块）提取局部细粒度时间特征，再用 BiLSTM 聚合全局长程依赖，首次在 Video LLM 中引入 LSTM，在密集视频描述、时序定位、高光检测和动作分割四项任务上超越先前方法。
-
-**[TRACE：基于证据定位的多视频事件理解与声明生成](video_understanding/trace_evidence_grounding-guided_multi-video_event_understanding_and_claim_genera.md)**
-
-:   TRACE 通过"先定位后推理"的管道，先用 OCR 和目标检测构建文本可搜索的视频时间线，再用文本 LLM 进行查询条件的证据定位，最后由 LVLM 生成带引用的声明，在多视频事件理解任务上达到 SOTA，F1 从 0.705 提升到 0.811。
-
-**[ViLL-E: Video LLM Embeddings for Retrieval](video_understanding/vill-e_video_llm_embeddings_for_retrieval.md)**
-
-:   提出 ViLL-E，首个同时支持文本生成和 embedding 生成的 Video LLM 统一架构，通过三阶段生成-对比联合训练和自适应 KV-Former embedding head，在视频检索和时序定位上逼近专家模型，同时保持 VideoQA 竞争力。
-
-**[VISTA: Verification In Sequential Turn-based Assessment](video_understanding/vista_verification_in_sequential_turn-based_assessment.md)**
-
-:   VISTA 提出了一个基于声明级分解和顺序一致性追踪的多轮对话事实性评估框架，将不可验证内容细分为主观、矛盾、缺乏证据和弃权四类，在四个对话基准和八个 LLM 上显著优于 FActScore 和 LLM-as-Judge 基线。
-
----
-
 ## 🔎 AIGC 检测 { #aigc_detection }
 
 **[AEGIS: A Holistic Benchmark for Evaluating Forensic Analysis of AI-Generated Academic Images](aigc_detection/aegis_a_holistic_benchmark_for_evaluating_forensic_analysis_of_ai-generated_acad.md)**
@@ -5360,6 +5296,74 @@ item_total: 1363
 **[Who Wrote This Line? Evaluating the Detection of LLM-Generated Classical Chinese Poetry](aigc_detection/who_wrote_this_line_evaluating_the_detection_of_llm-generated_classical_chinese_.md)**
 
 :   本文构建了首个面向LLM生成古典中文诗词的检测基准ChangAn（含30,664首诗），系统评估了12种AI检测方法在不同文本粒度和生成策略下的表现，揭示了当前中文文本检测器在古典诗词领域的严重局限性。
+
+---
+
+## 📹 视频理解 { #video_understanding }
+
+**[APB-V: Accelerating Long-Video Understanding via Sequence-Parallelism-aware Approximate Attention](video_understanding/apb-v_accelerating_long-video_understanding_via_sequence-parallelism-aware_appro.md)**
+
+:   APB-V 用面向序列并行的近似注意力和系统级负载均衡加速长视频 LMM 推理，在保留完整视觉 embedding 的同时，在 64 帧 1440p 设置下相对 FlashAttn、ZigZagRing 和 APB 分别达到 12.72×、1.70× 和 1.18× 加速，且没有显著性能损失。
+
+**[ArrowGEV: Grounding Events in Video via Learning the Arrow of Time](video_understanding/arrowgev_grounding_events_in_video_via_learning_the_arrow_of_time.md)**
+
+:   提出 ArrowGEV，一个受物理学"时间之箭"启发的强化学习框架，通过区分时间敏感和时间不敏感事件来建模视频中的时间方向性，提升 VLM 的事件定位精度和时序理解能力。
+
+**[Automated Knowledge Component Generation and Interpretable Knowledge Tracing in Coding Problems](video_understanding/automated_knowledge_component_generation_for_interpretable_knowledge_tracing_in_.md)**
+
+:   这篇论文用 LLM 自动为开放式编程题生成和聚类 Knowledge Components，并提出 KCGen-KT 将学生在每个 KC 上的掌握度转成 soft token 输入 Llama 3，在 CodeWorkout 和 FalconCode 上同时提升正确率预测与学生代码生成。
+
+**[Confidence Estimation for LLMs in Multi-turn Interactions](video_understanding/confidence_estimation_for_llms_in_multi-turn_interactions.md)**
+
+:   首次系统研究多轮对话场景下的 LLM 置信度估计，提出两个核心准则（per-turn 校准 + 信息增加时单调性）、对应的 InfoECE 指标和 Kendall's $\tau$ 评估、Hinter-Guesser 数据集构造范式，并提出新颖的 P(SUFFICIENT) logit 探针——结果发现现有方法（verbalized / SC / P(TRUE)）在多轮场景中校准和单调性都很差，而 P(SUFFICIENT) 在 GUESS 上 InfoECE 降到 5.27（vs P(TRUE) 79.97）、$\tau$ 达 81.51，但任务远未解决。
+
+**[CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering](video_understanding/craft_critic-refined_adaptive_key-frame_targeting_for_multimodal_video_question_.md)**
+
+:   CRAFT 是一个面向新闻事件多视频问答的 claim-centric pipeline，它结合动态关键帧选择、ASR 转写、UNLI/MNLI/LLM critic 迭代修正和引用合并，在 MAGMaR-Test 上取得 0.739 macro average、0.810 reference recall 和 0.635 citation F1。
+
+**[DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding](video_understanding/dualfact_a_multimodal_fact_verification_framework_for_procedural_video_understan.md)**
+
+:   作者把"做饭、家具制作"这类程序化视频字幕的事实评测拆成**双层事实**——conceptual facts（抽象角色，如 Action/Ingredient/Tool/Location）+ contextual facts（视频中可观察的 predicate–argument 关系，如 stir(soup, pot)），配套构建 YouCook3-Fact / CraftBench-Fact 两个标注隐式参数补全 (VIA) 与对比性事实的基准，并提出 MultiFactScore 用多模态/文本 NLI 在角色级别分别核查事实，进而把错误细分为 Hallucination / Saliency / Omission；实验发现 SOTA MLLM 字幕"流畅但事实残缺"，单看字幕会高估 Hallucination 一半左右，只有 video-grounded 评测才能区分 saliency 与真 hallucination。
+
+**[GameplayQA: A Benchmarking Framework for Decision-Dense POV-Synced Multi-Video Understanding of 3D Virtual Agents](video_understanding/gameplayqa_a_benchmarking_framework_for_decision-dense_pov-synced_multi-video_un.md)**
+
+:   提出 GameplayQA，一个基于多人3D游戏视频的端到端基准框架，通过密集时间线标注（1.22标签/秒）和结构化干扰项分类学，系统评估多模态大模型在决策密集、多视角同步场景下的感知和推理能力，揭示前沿模型与人类表现仍有显著差距。
+
+**[HERMES: KV Cache as Hierarchical Memory for Efficient Streaming Video Understanding](video_understanding/hermes_kv_cache_as_hierarchical_memory_for_efficient_streaming_video_understandi.md)**
+
+:   本文提出 HERMES，基于对 MLLM 解码器层级注意力偏好的机制性分析，将 KV 缓存概念化为层级记忆框架（浅层=感觉记忆、中层=工作记忆、深层=长期记忆），实现免训练的高效流式视频理解，在减少 68% 视频 token 的条件下仍保持或提升准确率，TTFT 延迟仅 <30ms，比前 SOTA 快 10 倍。
+
+**[NSF-SciFy: Mining the NSF Awards Database for Scientific Claims](video_understanding/nsf-scify_mining_the_nsf_awards_database_for_scientific_claims.md)**
+
+:   NSF-SciFy 从 NSF 奖项摘要中抽取 2.8M 科学 claims 和 investigation proposals，构建了比现有科学 claim 数据集大几个数量级的资源，并展示了它能显著提升 claim / proposal 抽取模型。
+
+**[Probing for Reading Times](video_understanding/probing_for_reading_times.md)**
+
+:   本文探测语言模型各层表示预测阅读时间的能力，发现早期层表示在预测早期注视指标上优于surprisal，而surprisal在晚期指标上更优，最佳预测器因语言和指标而异。
+
+**[Response-G1: Explicit Scene Graph Modeling for Proactive Streaming Video Understanding](video_understanding/response-g1_explicit_scene_graph_modeling_for_proactive_streaming_video_understa.md)**
+
+:   Response-G1 用查询引导的在线场景图、历史场景图检索和带时间戳的触发提示，把流式视频中的视觉证据和用户查询的响应条件显式对齐，在无需微调的情况下显著提升 Video-LLM 判断“现在是否该回答”的能力。
+
+**[Rethinking the Idiomaticity Decomposability Hypothesis: Evidence from Distributional Learning](video_understanding/rethinking_the_idiomaticity_decomposability_hypothesis_evidence_from_distributio.md)**
+
+:   这篇论文用上下文化语言模型作为“受控的分布式学习者”重新检验 Idiom Decomposability Hypothesis，发现模型派生的可分解性只弱相关于人类判断，并且与句法灵活性呈小而稳定的负相关，说明习语行为更像是由分布经验、surprisal 和表征稳定过程共同塑造。
+
+**[TemporalVLM: Video LLMs for Temporal Reasoning in Long Videos](video_understanding/temporalvlm_video_llms_for_temporal_reasoning_in_long_videos.md)**
+
+:   本文提出 TemporalVLM，通过时间感知的片段编码器（重叠滑动 Video Q-Former + 融合模块）提取局部细粒度时间特征，再用 BiLSTM 聚合全局长程依赖，首次在 Video LLM 中引入 LSTM，在密集视频描述、时序定位、高光检测和动作分割四项任务上超越先前方法。
+
+**[TRACE：基于证据定位的多视频事件理解与声明生成](video_understanding/trace_evidence_grounding-guided_multi-video_event_understanding_and_claim_genera.md)**
+
+:   TRACE 通过"先定位后推理"的管道，先用 OCR 和目标检测构建文本可搜索的视频时间线，再用文本 LLM 进行查询条件的证据定位，最后由 LVLM 生成带引用的声明，在多视频事件理解任务上达到 SOTA，F1 从 0.705 提升到 0.811。
+
+**[ViLL-E: Video LLM Embeddings for Retrieval](video_understanding/vill-e_video_llm_embeddings_for_retrieval.md)**
+
+:   提出 ViLL-E，首个同时支持文本生成和 embedding 生成的 Video LLM 统一架构，通过三阶段生成-对比联合训练和自适应 KV-Former embedding head，在视频检索和时序定位上逼近专家模型，同时保持 VideoQA 竞争力。
+
+**[VISTA: Verification In Sequential Turn-based Assessment](video_understanding/vista_verification_in_sequential_turn-based_assessment.md)**
+
+:   VISTA 提出了一个基于声明级分解和顺序一致性追踪的多轮对话事实性评估框架，将不可验证内容细分为主观、矛盾、缺乏证据和弃权四类，在四个对话基准和八个 LLM 上显著优于 FActScore 和 LLM-as-Judge 基线。
 
 ---
 

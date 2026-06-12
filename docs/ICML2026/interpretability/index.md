@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 可解释性论文汇总 · 72篇论文解读
+  ICML2026 可解释性论文汇总 · 71篇论文解读
 description: >-
-  72篇ICML2026的可解释性方向论文解读，涵盖 LLM、对齐/RLHF、推理、布局/合成、自监督学习、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  71篇ICML2026的可解释性方向论文解读，涵盖 LLM、对齐/RLHF、推理、布局/合成、自监督学习、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "可解释性"
@@ -65,8 +65,6 @@ item_list:
     t: "Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning"
   - u: "expand_neurons_not_parameters/"
     t: "Expand Neurons, Not Parameters"
-  - u: "finding_the_correct_visual_evidence_without_forgetting_mitigating_hallucination_/"
-    t: "Finding the Correct Visual Evidence Without Forgetting: Mitigating Hallucination in LVLMs via Inter-Layer Visual Attention Discrepancy"
   - u: "formalizing_the_binding_problem/"
     t: "Formalizing the Binding Problem"
   - u: "from_rashomon_theory_to_praxis_efficient_decision_tree_rashomon_sets/"
@@ -75,15 +73,17 @@ item_list:
     t: "GEM: Geometric Entropy Mixing for Optimal LLM Data Curation"
   - u: "global_plane_waves_from_local_gaussians_periodic_charge_densities_in_a_blink/"
     t: "Global Plane Waves from Local Gaussians: Periodic Charge Densities in a Blink"
-item_total: 72
+  - u: "grokking_from_abstraction_to_intelligence/"
+    t: "Grokking: From Abstraction to Intelligence"
+item_total: 71
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧪 ICML2026** · **72** 篇论文解读
+**🧪 ICML2026** · **71** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (81)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×8 · 对齐/RLHF ×3 · 推理 ×3 · 布局/合成 ×2 · 自监督学习 ×2
 
@@ -186,10 +186,6 @@ item_total: 72
 **[Expand Neurons, Not Parameters](expand_neurons_not_parameters.md)**
 
 :   在保持非零参数总数不变的前提下，把每个神经元"切"成 $\alpha$ 个稀疏子神经元、让它们瓜分原来的输入边，就能显著降低神经元之间的特征干扰（多义性），从而在 Boolean 任务和 CLIP/CNN/ImageNet 等真实视觉任务上一致提升精度。
-
-**[Finding the Correct Visual Evidence Without Forgetting: Mitigating Hallucination in LVLMs via Inter-Layer Visual Attention Discrepancy](finding_the_correct_visual_evidence_without_forgetting_mitigating_hallucination_.md)**
-
-:   本文发现 LVLM 幻觉源于对正确视觉证据的"关注不足 + 生成中遗忘"，并观察到注意力对视觉证据存在显著的层间差异（ILVAD），据此提出一个 train-free / plug-and-play 的方法：用层间差分构造视觉证据显著性图，再在生成过程中持续加权视觉证据 token 和"扎根于证据"的文本 token，在 5 个 LVLM × 5 个幻觉/综合 benchmark 上一致降低幻觉。
 
 **[Formalizing the Binding Problem](formalizing_the_binding_problem.md)**
 

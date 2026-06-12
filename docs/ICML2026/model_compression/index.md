@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 模型压缩论文汇总 · 101篇论文解读
+  ICML2026 模型压缩论文汇总 · 100篇论文解读
 description: >-
-  101篇ICML2026的模型压缩方向论文解读，涵盖模型压缩、LLM、压缩/编码、对抗鲁棒、扩散模型、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  100篇ICML2026的模型压缩方向论文解读，涵盖模型压缩、LLM、压缩/编码、对抗鲁棒、扩散模型、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "模型压缩"
@@ -74,15 +74,15 @@ item_list:
     t: "Easier to Judge Than to Find: Predicting In-Context Learning Success for Demonstration Selection"
   - u: "effective_model_pruning_measure_the_redundancy_of_model_components/"
     t: "Effective Model Pruning: Measure the Redundancy of Model Components"
-item_total: 101
+item_total: 100
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧪 ICML2026** · **101** 篇论文解读
+**🧪 ICML2026** · **100** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (61)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
 
 🔥 **高频主题：** 模型压缩 ×17 · LLM ×16 · 压缩/编码 ×11 · 对抗鲁棒 ×4 · 扩散模型 ×3
 
@@ -281,10 +281,6 @@ item_total: 101
 **[GradPower: Powering Gradients for Faster Language Model Pre-Training](gradpower_powering_gradients_for_faster_language_model_pre-training.md)**
 
 :   GradPower 在喂给任意梯度优化器之前对原始梯度做一次逐元素的"符号保留幂次"变换 $\varphi_p(g_i)=\mathrm{sign}(g_i)\,|g_i|^p$，仅多一行代码、不动 AdamW/Muon 内部逻辑和超参，就能在 LLaMA / Qwen2MoE 从 66M 到 2B 的多个规模上一致拿到更低的终末 loss，尤其在 MoE + wsd 学习率调度下增益最显著。
-
-**[Hallucination is a Consequence of Space-Optimality: A Rate-Distortion Theorem for Membership Testing](hallucination_is_a_consequence_of_space-optimality_a_rate-distortion_theorem_for.md)**
-
-:   本文把"LLM 记住随机事实"形式化为带连续置信分数的**成员测试**问题，证明在事实稀疏极限下最优记忆开销恰好等于事实/非事实输出分布之间的最小 KL 散度——即"率失真定理"——并由此推出：在 log-loss 目标下，给定有限记忆，最优策略**不是弃答也不是遗忘**，而是把一定比例的非事实和事实压在同一个高置信点上，幻觉是信息论意义下的最优误差形态。
 
 **[Hard Labels In! Rethinking the Role of Hard Labels in Mitigating Local Semantic Drift](hard_labels_in_rethinking_the_role_of_hard_labels_in_mitigating_local_semantic_d.md)**
 

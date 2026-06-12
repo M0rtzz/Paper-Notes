@@ -110,8 +110,8 @@ AHAMask 在 LALM 的 decoder-only LLM 骨干中，为每个注意力头引入一
 - [\[ACL 2025\] Towards Reliable Large Audio Language Model](../../ACL2025/audio_speech/towards_reliable_large_audio_language_model.md)
 - [\[AAAI 2026\] Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models](listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode.md)
 - [\[AAAI 2026\] DiffA: Large Language Diffusion Models Can Listen and Understand](diffa_large_language_diffusion_models_can_listen_and_understand.md)
-- [\[ACL 2026\] HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](../../ACL2026/audio_speech/halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)
 - [\[ACL 2026\] Temporal Contrastive Decoding: A Training-Free Method for Large Audio-Language Models](../../ACL2026/audio_speech/temporal_contrastive_decoding_a_training-free_method_for_large_audio-language_mo.md)
+- [\[ACL 2026\] Closing the Modality Reasoning Gap for Speech Large Language Models](../../ACL2026/audio_speech/closing_the_modality_reasoning_gap_for_speech_large_language_models.md)
 
 </div>
 

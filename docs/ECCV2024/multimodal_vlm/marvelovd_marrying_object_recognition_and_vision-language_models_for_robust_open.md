@@ -190,11 +190,11 @@ burn-in 步数影响很小（模型收敛后伪标签质量趋同），阈值 0.
 
 ## 相关论文
 
-- [\[CVPR 2025\] Compositional Caching for Training-free Open-vocabulary Attribute Detection](../../CVPR2025/multimodal_vlm/compositional_caching_for_training-free_open-vocabulary_attribute_detection.md)
 - [\[ECCV 2024\] Elysium: Exploring Object-level Perception in Videos via MLLM](elysium_exploring_object-level_perception_in_videos_via_mllm.md)
 - [\[NeurIPS 2025\] OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models](../../NeurIPS2025/multimodal_vlm/openhoi_open-world_hand-object_interaction_synthesis_with_multimodal_large_langu.md)
-- [\[ECCV 2024\] Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models](vary_scaling_up_the_vision_vocabulary_for_large_visionlanguag.md)
+- [\[CVPR 2025\] Compositional Caching for Training-free Open-vocabulary Attribute Detection](../../CVPR2025/multimodal_vlm/compositional_caching_for_training-free_open-vocabulary_attribute_detection.md)
 - [\[ECCV 2024\] Zero-shot Object Counting with Good Exemplars (VA-Count)](zero-shot_object_counting_with_good_exemplars.md)
+- [\[CVPR 2025\] Locality-Aware Zero-Shot Human-Object Interaction Detection](../../CVPR2025/multimodal_vlm/locality-aware_zero-shot_human-object_interaction_detection.md)
 
 </div>
 

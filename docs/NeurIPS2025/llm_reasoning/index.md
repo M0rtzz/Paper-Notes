@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM推理论文汇总 · 83篇论文解读
+  NeurIPS2025 LLM推理论文汇总 · 82篇论文解读
 description: >-
-  83篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、多模态、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  82篇NeurIPS2025的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、多模态、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "LLM 推理"
@@ -74,17 +74,17 @@ item_list:
     t: "KTAE: A Model-Free Algorithm to Key-Tokens Advantage Estimation in Mathematical Reasoning"
   - u: "large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u/"
     t: "Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision"
-item_total: 83
+item_total: 82
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**🧠 NeurIPS2025** · **83** 篇论文解读
+**🧠 NeurIPS2025** · **82** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×59 · LLM ×19 · 强化学习 ×8 · 多模态 ×6 · 模型压缩 ×2
+🔥 **高频主题：** 推理 ×58 · LLM ×19 · 强化学习 ×7 · 多模态 ×6 · 模型压缩 ×2
 
 **[A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers](a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)**
 
@@ -277,10 +277,6 @@ item_total: 83
 **[Reasoning Models Better Express Their Confidence](reasoning_models_better_express_their_confidence.md)**
 
 :   系统性证明推理模型（extended CoT）比非推理模型具有显著更优的置信度校准能力，并揭示"慢思考"行为（探索替代方案、回溯、验证）是校准提升的根本来源。
-
-**[Reasoning Models Hallucinate More: Factuality-Aware Reinforcement Learning for Large Reasoning Models](reasoning_models_hallucinate_more_factuality-aware_reinforcement_learning_for_la.md)**
-
-:   揭示了RL训练的推理模型（如DeepSeek-R1）比非推理模型产生更多幻觉，从理论上分析了三个根因（高方差梯度、熵约束、伪局部最优），并提出FSPO算法通过步级事实性验证调整token级advantage，在减少幻觉的同时保持甚至提升推理能力。
 
 **[Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling](rethinking_optimal_verification_granularity_for_compute-efficient_test-time_scal.md)**
 

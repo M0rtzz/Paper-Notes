@@ -1,15 +1,14 @@
 ---
 title: >-
-  CVPR2026 LLM推理论文汇总 · 10篇论文解读
+  CVPR2026 LLM推理论文汇总 · 8篇论文解读
 description: >-
-  10篇CVPR2026的 LLM 推理方向论文解读，涵盖推理、多模态、少样本学习、自动驾驶、问答、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇CVPR2026的 LLM 推理方向论文解读，涵盖推理、少样本学习、自动驾驶、问答、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "LLM 推理"
   - "论文解读"
   - "论文笔记"
   - "推理"
-  - "多模态"
   - "少样本学习"
   - "自动驾驶"
   - "问答"
@@ -29,23 +28,19 @@ item_list:
     t: "Reinforcing Structured Chain-of-Thought for Video Understanding"
   - u: "step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering/"
     t: "Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering"
-  - u: "understanding_and_mitigating_hallucinations_in_multimodal_chain-of-thought_model/"
-    t: "Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models"
-  - u: "understanding_the_role_of_hallucination_in_reinforcement_post-training_of_multim/"
-    t: "Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models"
   - u: "visref_visual_refocusing_test_time_scaling/"
     t: "VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models"
-item_total: 10
+item_total: 8
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**📷 CVPR2026** · **10** 篇论文解读
+**📷 CVPR2026** · **8** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×9 · 多模态 ×2
+🔥 **高频主题：** 推理 ×7
 
 **[E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)**
 
@@ -74,14 +69,6 @@ item_total: 10
 **[Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)**
 
 :   构建首个对齐临床诊断工作流的结构化多步CoT医学推理数据集Step-CoT（10K+病例/70K QA对），并提出基于图注意力网络的教师-学生框架实现逐步推理监督，提升Med-VQA的准确性和可解释性。
-
-**[Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models](understanding_and_mitigating_hallucinations_in_multimodal_chain-of-thought_model.md)**
-
-:   本文系统分析了多模态 CoT 模型中幻觉的成因，发现"发散思维"（associative reasoning）是幻觉的核心触发因素，并提出基于视觉熵的免训练检测+解码干预策略，在 Object HalBench 上将 CHAIRS 降低超过 30%，同时保持甚至提升通用推理能力。
-
-**[Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models](understanding_the_role_of_hallucination_in_reinforcement_post-training_of_multim.md)**
-
-:   本文提出 Hallucination-as-Cue 分析框架，通过三种模态特定腐蚀策略（空白图像、随机图像、文本移除）系统研究 RL 后训练对多模态推理模型的真实作用机制，发现即使在 100% 腐蚀视觉输入下 GRPO 训练仍能显著提升推理性能，挑战了"RL 训练能有效利用视觉信息"的主流假设。
 
 **[VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](visref_visual_refocusing_test_time_scaling.md)**
 

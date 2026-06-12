@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 因果推理论文汇总 · 18篇论文解读
+  ICLR2026 因果推理论文汇总 · 17篇论文解读
 description: >-
-  18篇ICLR2026的因果推理方向论文解读，涵盖对抗鲁棒、推理、LLM、布局/合成、RAG、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇ICLR2026的因果推理方向论文解读，涵盖对抗鲁棒、推理、布局/合成、RAG、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "因果推理"
@@ -10,7 +10,6 @@ tags:
   - "论文笔记"
   - "对抗鲁棒"
   - "推理"
-  - "LLM"
   - "布局/合成"
   - "RAG"
   - "自监督学习"
@@ -19,8 +18,6 @@ item_list:
     t: "Action-Guided Attention for Video Action Anticipation"
   - u: "an_orthogonal_learner_for_individualized_outcomes_in_markov_decision_processes/"
     t: "An Orthogonal Learner for Individualized Outcomes in Markov Decision Processes"
-  - u: "copy-paste_to_mitigate_large_language_model_hallucinations/"
-    t: "Copy-Paste to Mitigate Large Language Model Hallucinations"
   - u: "counterfactual_explanations_on_robust_perceptual_geodesics/"
     t: "Counterfactual Explanations on Robust Perceptual Geodesics"
   - u: "direct_doubly_robust_estimation_of_conditional_quantile_contrasts/"
@@ -51,15 +48,15 @@ item_list:
     t: "Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders"
   - u: "validating_interpretability_in_sirna_efficacy_prediction_a_perturbation-based_da/"
     t: "Validating Interpretability in siRNA Efficacy Prediction: A Perturbation-Based, Dataset-Aware Protocol"
-item_total: 18
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**🔬 ICLR2026** · **18** 篇论文解读
+**🔬 ICLR2026** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/causal_inference/index.md) · [🤖 AAAI2026 (7)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×3 · 推理 ×2
 
@@ -70,10 +67,6 @@ item_total: 18
 **[An Orthogonal Learner for Individualized Outcomes in Markov Decision Processes](an_orthogonal_learner_for_individualized_outcomes_in_markov_decision_processes.md)**
 
 :   将因果推断中的半参数效率理论系统引入MDP的Q函数估计，证明经典的Q-regression和FQE本质上是有plug-in偏差的朴素学习器，并提出DRQQ-learner——一个同时具备双重鲁棒性、Neyman正交性和准oracle效率的元学习器，通过推导有效影响函数(EIF)构造去偏二阶段损失，在Taxi和Frozen Lake环境中全面超越基线方法。
-
-**[Copy-Paste to Mitigate Large Language Model Hallucinations](copy-paste_to_mitigate_large_language_model_hallucinations.md)**
-
-:   提出 Copy-Paste 生成范式，通过训练 LLM 优先直接复制检索上下文中的片段来生成回答，而非自由改写，配合高复制偏好的 DPO 训练，在反事实 RAG 基准上将忠实度从 80.2% 提升到 92.8%。
 
 **[Counterfactual Explanations on Robust Perceptual Geodesics](counterfactual_explanations_on_robust_perceptual_geodesics.md)**
 

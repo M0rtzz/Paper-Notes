@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 多模态VLM论文汇总 · 106篇论文解读
+  ICML2026 多模态VLM论文汇总 · 99篇论文解读
 description: >-
-  106篇ICML2026的多模态 VLM 方向论文解读，涵盖多模态、推理、对抗鲁棒、LLM、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  99篇ICML2026的多模态 VLM 方向论文解读，涵盖多模态、推理、对抗鲁棒、LLM、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "多模态 VLM"
@@ -19,8 +19,6 @@ item_list:
     t: "3ViewSense: Spatial and Mental Perspective Reasoning from Orthographic Views in Vision-Language Models"
   - u: "active_exploring_like_a_pigeon_reinforcing_spatial_reasoning_via_agentic_vision-/"
     t: "Active Exploring like a Pigeon: Reinforcing Spatial Reasoning via Agentic Vision-Language Models"
-  - u: "adaptive_residual-update_steering_for_low-overhead_hallucination_mitigation_in_l/"
-    t: "Adaptive Residual-Update Steering for Low-Overhead Hallucination Mitigation in Large Vision Language Models"
   - u: "agenthijack_benchmarking_computer_use_agent_robustness_to_common_environment_cor/"
     t: "AgentHijack: Benchmarking Computer Use Agent Robustness to Common Environment Corruptions"
   - u: "alterbute_editing_intrinsic_attributes_of_objects_in_images/"
@@ -43,8 +41,6 @@ item_list:
     t: "Breaking Dual Bottlenecks: Evolving Unified Multimodal Models into Self-Adaptive Interleaved Visual Reasoners"
   - u: "calibrated_multimodal_representation_learning_with_missing_modalities/"
     t: "Calibrated Multimodal Representation Learning with Missing Modalities"
-  - u: "capturing_gaze_shifts_for_guidance_cross-modal_fusion_enhancement_for_vlm_halluc/"
-    t: "Capturing Gaze Shifts for Guidance: Cross-Modal Fusion Enhancement for VLM Hallucination Mitigation"
   - u: "certified_robustness_under_heterogeneous_perturbations_via_hybrid_randomized_smo/"
     t: "Certified Robustness under Heterogeneous Perturbations via Hybrid Randomized Smoothing"
   - u: "cg-mllm_captioning_and_generating_3d_content_via_multi-modal_large_language_mode/"
@@ -75,17 +71,21 @@ item_list:
     t: "DenseMLLM: Standard Multimodal LLMs for Dense Prediction"
   - u: "density-aware_translation_of_spurious_correlations_in_zero-shot_vlms/"
     t: "Density-Aware Translation of Spurious Correlations in Zero-Shot VLMs"
-item_total: 106
+  - u: "detached_skip-links_and_r-probe_decoupling_feature_aggregation_from_gradient_pro/"
+    t: "Detached Skip-Links and $R$-Probe: Decoupling Feature Aggregation from Gradient Propagation for MLLM OCR"
+  - u: "dimension-free_multimodal_sampling_via_preconditioned_annealed_langevin_dynamics/"
+    t: "Dimension-Free Multimodal Sampling via Preconditioned Annealed Langevin Dynamics"
+item_total: 99
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧪 ICML2026** · **106** 篇论文解读
+**🧪 ICML2026** · **99** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (145)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×56 · 推理 ×17 · 对抗鲁棒 ×7 · LLM ×7 · 压缩/编码 ×4
+🔥 **高频主题：** 多模态 ×49 · 推理 ×17 · 对抗鲁棒 ×7 · LLM ×6 · 压缩/编码 ×4
 
 **[3ViewSense: Spatial and Mental Perspective Reasoning from Orthographic Views in Vision-Language Models](3viewsense_spatial_and_mental_perspective_reasoning_from_orthographic_views_in_v.md)**
 
@@ -94,10 +94,6 @@ item_total: 106
 **[Active Exploring like a Pigeon: Reinforcing Spatial Reasoning via Agentic Vision-Language Models](active_exploring_like_a_pigeon_reinforcing_spatial_reasoning_via_agentic_vision-.md)**
 
 :   本文把 VLM 空间推理从“被动看完所有视角再回答”改造成“按问题主动取景、更新认知地图、用可执行空间断言验证推理”的 agentic 流程，并用密集奖励微调 Qwen2.5-VL-3B，在 MindCube-Tiny 上取得 80.5% overall accuracy，尤其把 Rotation 子集提升到 85.0%。
-
-**[Adaptive Residual-Update Steering for Low-Overhead Hallucination Mitigation in Large Vision Language Models](adaptive_residual-update_steering_for_low-overhead_hallucination_mitigation_in_l.md)**
-
-:   这篇论文提出 RUDDER，在 LVLM 的 prefill 阶段从残差更新中提取每样本视觉证据方向，并在解码时用 Beta Gate 自适应注入，从而以接近单次前向的开销降低物体幻觉。
 
 **[AgentHijack: Benchmarking Computer Use Agent Robustness to Common Environment Corruptions](agenthijack_benchmarking_computer_use_agent_robustness_to_common_environment_cor.md)**
 
@@ -142,10 +138,6 @@ item_total: 106
 **[Calibrated Multimodal Representation Learning with Missing Modalities](calibrated_multimodal_representation_learning_with_missing_modalities.md)**
 
 :   针对"想用 V-T、A-T 等部分模态数据训练统一多模态对齐"这种现实场景，本文用奇异值扰动给出"缺失模态会导致 anchor shift"的理论上下界，并提出 CalMRL：用概率 PCA 风格的生成模型对缺失模态在表示层做闭式 EM 插补，再把观测 + 插补一起喂给 GRAM/PMRL 的 SVD 对齐目标，在 VAST 之上把跨模态平均 Recall@1 从 44.8 推到 54.2 (+9.4)。
-
-**[Capturing Gaze Shifts for Guidance: Cross-Modal Fusion Enhancement for VLM Hallucination Mitigation](capturing_gaze_shifts_for_guidance_cross-modal_fusion_enhancement_for_vlm_halluc.md)**
-
-:   提出 GIFT 方法，通过追踪 VLM 在理解用户查询时视觉注意力的正向变化（"注视转移"）构建视觉显著性图，并在解码阶段同时增强视觉和查询 token 的注意力以保持跨模态融合平衡，在 CHAIR 上最高提升 20.7%，且仅增加 1.13× 延迟。
 
 **[Certified Robustness under Heterogeneous Perturbations via Hybrid Randomized Smoothing](certified_robustness_under_heterogeneous_perturbations_via_hybrid_randomized_smo.md)**
 
@@ -287,10 +279,6 @@ item_total: 106
 
 :   本文把 MLLM 的连续值回归在长尾分布下的"回归到均值"问题转化为分布感知的 RL 问题，在 GRPO 框架内用 Concordance Correlation Coefficient (CCC) 作为批次级奖励——既看相关性、又看方差、又看均值——从而显式惩罚预测分布塌缩；在 4 个长尾回归任务、Qwen2.5-VL-3B/7B 上稳压 SFT、SoftLabel、各种 point-wise RL，特别是 medium/few-shot 区域 MAE 大幅下降。
 
-**[Instruction Lens Score: Your Instruction Contributes a Powerful Object Hallucination Detector for Multimodal Large Language Models](instruction_lens_score_your_instruction_contributes_a_powerful_object_hallucinat.md)**
-
-:   本文发现 MLLM 中 instruction token 的中间层嵌入能天然过滤视觉端引入的误导信息，据此提出训练无关的 InsLen 分数（Calibrated Local Score + Context Consistency Score），在 5 个 MLLM × 4 个基准上把对象幻觉检测的 AUROC 拉高最多 13.81%。
-
 **[VEENA: Interpreting and Enhancing Emotional Circuits in Large Vision-Language Models via Cross-Modal Information Flow](interpreting_and_enhancing_emotional_circuits_in_large_vision-language_models_vi.md)**
 
 :   VEENA 用 steering-vector 因果归因框架定位 LVLM 的情感电路——发现其遵循"Adapt（浅层模态对齐）→Aggregate（中层 emotion-specific heads 聚合）→Execute（深层 emotion-general heads + neurons 生成）"三段式机制，进而用"视觉情感增强 + 情感神经元放大"做训练无关推理时干预，显著缓解情感幻觉。
@@ -305,7 +293,7 @@ item_total: 106
 
 **[LBR/LBP: Language Bias in LVLMs — From In-Depth Analysis to Simple and Effective Mitigation](language_bias_in_lvlms_from_in-depth_analysis_to_simple_and_effective_mitigation.md)**
 
-:   本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$，证明 LVLM 在系统性低估视觉输入；提出 Language Bias Regularization（VIT 阶段惩罚 $|\mathcal{B}|$）和 Language Bias Penalty（DPO 阶段惩罚偏置正向增长），不加任何数据/辅助模型就显著提升 10+ benchmark 性能并降幻觉。
+:   本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$，证明 LVLM 在系统性低估视觉输入；提出 Language Bias Regularization（VIT 阶段用 $|\mathcal{B}|$ 把语言路径钉回参考水平）和 Language Bias Penalty（DPO 阶段用 sigmoid 惩罚主动把已有偏置往负压），不加任何数据/辅助模型就显著提升 10+ benchmark 性能并降幻觉。
 
 **[Large Vision-Language Models Get Lost in Attention](large_vision-language_models_get_lost_in_attention.md)**
 
@@ -318,10 +306,6 @@ item_total: 106
 **[Learn to Think: Improving Multimodal Reasoning through Vision-Aware Self-Improvement Training](learn_to_think_improving_multimodal_reasoning_through_vision-aware_self-improvem.md)**
 
 :   VISTA 把多模态大模型的自我改进训练改造成"难题靠 prefix 重采样补样本、伪正例靠视觉注意力分数 (VAS) 过滤"的两段式 pipeline，在 Qwen2.5-VL-3B 上把数学/医学多模态推理平均提升 +13.66%。
-
-**[Learning from Fine-Grained Visual Discrepancies: Mitigating Multimodal Hallucinations via In-Context Visual Contrastive Optimization](learning_from_fine-grained_visual_discrepancies_mitigating_multimodal_hallucinat.md)**
-
-:   将原图与对比负图拼成共享多图上下文，再用锚定指令告诉模型该看哪张，从而让视觉偏好 DPO 的配分函数自动对齐、跑出理论一致的对比目标，并配合精细编辑生成的硬负样本显著降低 VLM 的多模态幻觉。
 
 **[Learning GUI Grounding with Spatial Reasoning from Visual Feedback](learning_gui_grounding_with_spatial_reasoning_from_visual_feedback.md)**
 
@@ -351,17 +335,9 @@ item_total: 106
 
 :   Med-Scout 把"医学 MLLM 在病灶定位时不遵守图像几何约束"这一系统性缺陷定义为"几何盲"，用三个不需要专家标注的几何代理任务（多尺度定位 / 拓扑拼图 / 异常一致性）配合稠密几何奖励（DGR）在 GRPO 下做后训练，并发布 Med-Scout-Bench 用于量化几何盲，在四个 backbone、八个医学基准上一致提升，开源模型甚至反超 GPT-5 / Gemini-3-Flash。
 
-**[Mitigating Hallucinations in Large Vision-Language Models via Causal Route Gating](mitigating_hallucinations_in_large_vision-language_models_via_causal_route_gatin.md)**
-
-:   CRG 把每个注意力头的输出沿视觉/文本两条路线做精确线性分解，用一前向一反向梯度估计两条路线对当前 token 的因果"do-effect"，再仅压制那些视觉与文本符号冲突且 VRI 偏低（即先验主导）的头的文本路线，从而在无需训练的前提下系统性削弱 LVLM 的语言先验幻觉。
-
 **[Mitigating Perceptual Judgment Bias in Multimodal LLM-as-a-Judge via Perceptual Perturbation and Reward Modeling](mitigating_perceptual_judgment_bias_in_multimodal_llm-as-a-judge_via_perceptual_.md)**
 
 :   本文揭示并形式化 MLLM-as-a-Judge 的"感知判断偏差"——评判模型在视觉证据与文本叙述冲突时倾向于奖励语言上更流畅的回答，并通过构造感知扰动数据集 PPJD 与基于 GRPO 的批量排序奖励训练，仅用 3k 样本就让 7B 评判器在多模态评测一致性、单分预测、批量排序三类协议上同时大幅超越同尺寸基线。
-
-**[MM-Snowball: Evaluating and Mitigating Hallucination Snowballing in Multimodal Multi-Turn Dialogue](mm-snowball_evaluating_and_mitigating_hallucination_snowballing_in_multimodal_mu.md)**
-
-:   本文提出 MM-Snowball 基准（4992 条 6 轮对抗对话）系统刻画多模态大模型在长对话中"幻觉滚雪球"现象，并据此设计训练无关的 CAVR 方法，在表征层刷新视觉信号、在 logit 层裁决文本-视觉冲突，从而显著压平后段对话的性能塌陷曲线。
 
 **[Model-Dowser: Data-Free Importance Probing to Mitigate Catastrophic Forgetting in Multimodal Large Language Models](model-dowser_data-free_importance_probing_to_mitigate_catastrophic_forgetting_in.md)**
 
@@ -390,10 +366,6 @@ item_total: 106
 **[Referring Multiple Regions with Large Multimodal Models via Contextual Latent Steering](referring_multiple_regions_with_large_multimodal_models_via_contextual_latent_st.md)**
 
 :   CSteer 提出一种训练无关的 latent steering 方法,通过在错误/正确指代回答的隐藏激活差上构造"上下文向量",并在推理时分层注入到 query 早期层和 decode 中后期层,让通用 LMM (Qwen3-VL、InternVL-3.5) 在多区域视觉指代任务上反超专门微调的 region LMM。
-
-**[Revis: Sparse Latent Steering to Mitigate Object Hallucination in Large Vision-Language Models](revis_sparse_latent_steering_to_mitigate_object_hallucination_in_large_vision-la.md)**
-
-:   本文把 LVLM 幻觉重新定义为"被语言先验压制的视觉信息缺失"，用正交投影从原始视觉方向中剔除语言先验得到"纯视觉向量"，再用风险门控只在最优深度的单层做稀疏干预，免训练地把 CHAIRS 幻觉率降 ~19% 同时保住 MM-Vet 通用能力。
 
 **[ReVSI: Rebuilding Visual Spatial Intelligence Evaluation for Accurate Assessment of VLM 3D Reasoning](revsi_rebuilding_visual_spatial_intelligence_evaluation_for_accurate_assessment_.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 因果推理论文汇总 · 16篇论文解读
+  ICML2026 因果推理论文汇总 · 15篇论文解读
 description: >-
-  16篇ICML2026的因果推理方向论文解读，涵盖对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  15篇ICML2026的因果推理方向论文解读，涵盖对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "因果推理"
@@ -25,8 +25,6 @@ item_list:
     t: "Evaluating Bivariate Causal Statements Based on Mutual Compatibility"
   - u: "formalizing_and_falsifying_causal_pathways_of_rare_events/"
     t: "Formalizing and Falsifying Causal Pathways of Rare Events"
-  - u: "harnessing_reasoning_trajectories_for_hallucination_detection_via_answer-agreeme/"
-    t: "Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping"
   - u: "investigating_memory_in_model-free_rl_with_popgym_arcade/"
     t: "Investigating Memory in Model-Free RL with POPGym Arcade"
   - u: "outcome-aware_spectral_feature_learning_for_instrumental_variable_regression/"
@@ -43,17 +41,17 @@ item_list:
     t: "Towards a Holistic Understanding of Selection Bias for Causal Effect Identification"
   - u: "unveiling_the_structure_of_do-calculus_reasoning_via_derivation_graphs/"
     t: "Unveiling the Structure of Do-Calculus Reasoning via Derivation Graphs"
-item_total: 16
+item_total: 15
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**🧪 ICML2026** · **16** 篇论文解读
+**🧪 ICML2026** · **15** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (7)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/causal_inference/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×2 · 推理 ×2
+🔥 **高频主题：** 对抗鲁棒 ×2
 
 **[An Odd Estimator for Shapley Values](an_odd_estimator_for_shapley_values.md)**
 
@@ -82,10 +80,6 @@ item_total: 16
 **[Formalizing and Falsifying Causal Pathways of Rare Events](formalizing_and_falsifying_causal_pathways_of_rare_events.md)**
 
 :   本文把罕见事件的"口头因果解释"形式化为 **causal pathway**——一个由二值化事件构成的子图，并定义 **pathway explanation score** 来量化"根因 + 中介通路"对目标事件的解释力，得到一套可证伪的因果解释评价框架。
-
-**[Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping](harnessing_reasoning_trajectories_for_hallucination_detection_via_answer-agreeme.md)**
-
-:   本文针对大推理模型（LRM）的幻觉检测提出 ARS：不在文本层扰动 reasoning trace，而是**直接在 trace 末端的潜表示上施加小扰动并续解码**得到反事实答案，再用"答案是否一致"作为标签训一个轻量 contrastive 头来塑形 trace-conditioned answer embedding，使后续 embedding-based detector 把幻觉与真实回答分得更开（TruthfulQA 上 AUROC $66.85\to 86.64$）。
 
 **[Investigating Memory in Model-Free RL with POPGym Arcade](investigating_memory_in_model-free_rl_with_popgym_arcade.md)**
 

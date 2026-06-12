@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 信息检索/RAG论文汇总 · 33篇论文解读
+  ICLR2026 信息检索/RAG论文汇总 · 31篇论文解读
 description: >-
-  33篇ICLR2026的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、推理、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ICLR2026的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、推理、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "信息检索/RAG"
@@ -49,8 +49,6 @@ item_list:
     t: "Leveraging Data to Say No: Memory Augmented Plug-and-Play Selective Prediction"
   - u: "lightretriever_a_llm-based_text_retrieval_architecture_with_extremely_faster_que/"
     t: "LightRetriever: A LLM-based Text Retrieval Architecture with Extremely Faster Query Inference"
-  - u: "lumina_detecting_hallucinations_in_rag_system_with_context-knowledge_signals/"
-    t: "LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals"
   - u: "mapping_semantic_syntactic_relationships_with_geometric_rotation/"
     t: "Mapping Semantic & Syntactic Relationships with Geometric Rotation"
   - u: "multimodal_dataset_distillation_made_simple_by_prototype-guided_data_synthesis/"
@@ -73,17 +71,19 @@ item_list:
     t: "Summaries as Centroids for Interpretable and Scalable Text Clustering"
   - u: "synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge/"
     t: "SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models"
-item_total: 33
+  - u: "tokmem_one-token_procedural_memory_for_large_language_models/"
+    t: "TokMem: One-Token Procedural Memory for Large Language Models"
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**🔬 ICLR2026** · **33** 篇论文解读
+**🔬 ICLR2026** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (74)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×7 · LLM ×5 · 推理 ×4 · 多模态 ×3
+🔥 **高频主题：** RAG ×6 · LLM ×5 · 推理 ×4 · 多模态 ×3
 
 **[AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations](amemgym_interactive_memory_benchmarking_for_assistants_in_long-horizon_conversat.md)**
 
@@ -157,10 +157,6 @@ item_total: 33
 
 :   提出 LightRetriever，一种极端不对称的LLM检索架构：文档端保留完整LLM编码器，查询端完全去除深度建模——稠密检索仅需嵌入查表+平均，稀疏检索仅需token计数——实现查询编码1000倍加速、端到端10倍吞吐提升，同时保持95%的检索性能。
 
-**[LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals](lumina_detecting_hallucinations_in_rag_system_with_context-knowledge_signals.md)**
-
-:   提出 Lumina 框架，通过"上下文-知识信号"检测RAG系统中的幻觉：用MMD度量**外部上下文利用**程度，用跨层token预测演化度量**内部知识利用**程度，无需超参调优即可泛化。
-
 **[Mapping Semantic & Syntactic Relationships with Geometric Rotation](mapping_semantic_syntactic_relationships_with_geometric_rotation.md)**
 
 :   提出RISE（Rotor-Invariant Shift Estimation）方法，利用Clifford代数的rotor将话语级语义-句法变换（否定、条件化、礼貌化）表示为单位超球面上的一致旋转操作，在7种语言×3种嵌入模型×3种变换的系统实验中证实这些旋转可跨语言和跨模型迁移（77%-95%保持率），首次将线性表示假说从词级扩展到跨语言话语级并推广到弯曲流形上的测地线结构。
@@ -204,10 +200,6 @@ item_total: 33
 **[SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)**
 
 :   构建结构完全相同但实体分别映射到真实/合成名称的平行语料库，通过对比两个"平行世界"上的任务表现来量化 LLM 的参数化知识优势差距（Knowledge Advantage Gap），发现即使有 RAG 和 CoT 增强，该差距依然持续存在。
-
-**[Token-Guard: Towards Token-Level Hallucination Control via Self-Checking Decoding](token-guard_towards_token-level_hallucination_control_via_self-checking_decoding.md)**
-
-:   提出 Token-Guard，一种基于自检验解码的 token 级幻觉控制方法，通过隐空间中的 token 级/段级评分和迭代修正机制，在解码过程中检测并抑制幻觉生成，F1 平均提升 16.3%。
 
 **[TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)**
 

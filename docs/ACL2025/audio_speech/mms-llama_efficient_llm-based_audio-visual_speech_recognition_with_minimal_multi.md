@@ -187,7 +187,7 @@ LLaMA3.2-3B 在 clean 和 noisy 条件下均最优，不是越大越好。
 - [\[NeurIPS 2025\] MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition](../../NeurIPS2025/audio_speech/mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)
 - [\[ACL 2025\] Dialectal Coverage and Generalization in Arabic Speech Recognition](dialectal_coverage_and_generalization_in_arabic_speech_recognition.md)
 - [\[ACL 2025\] MultiMed: Multilingual Medical Speech Recognition via Attention Encoder Decoder](multimed_multilingual_medical_speech_recognition_via_attention_encoder_decoder.md)
-- [\[ACL 2025\] Contextual Biasing with the Knowledgeable External Language Model for End-to-End Speech Recognition](contextual_biasing_with_the_knowledgeable_external_language_model_for_end-to-end.md)
+- [\[ACL 2025\] Analyzing and Mitigating Inconsistency in Discrete Audio Tokens for Neural Codec Language Models](audio_token_consistency.md)
 
 </div>
 

@@ -105,7 +105,7 @@ item_total: 236
 
 **[3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)**
 
-:   提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive knowledge extraction）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
+:   提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
 
 **[4C4D: 4 Camera 4D Gaussian Splatting](4c4d_4_camera_4d_gaussian_splatting.md)**
 

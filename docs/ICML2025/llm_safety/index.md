@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM安全论文汇总 · 42篇论文解读
+  ICML2025 LLM安全论文汇总 · 41篇论文解读
 description: >-
-  42篇ICML2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、对齐/RLHF、持续学习、水印/隐写、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  41篇ICML2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、对齐/RLHF、持续学习、水印/隐写、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "LLM 安全"
@@ -61,8 +61,6 @@ item_list:
     t: "NegMerge: Sign-Consensual Weight Merging for Machine Unlearning"
   - u: "popri_private_federated_learning_using_preference-optimized_synthetic_data/"
     t: "POPri: Private Federated Learning using Preference-Optimized Synthetic Data"
-  - u: "rejecting_hallucinated_state_targets_during_planning/"
-    t: "Rejecting Hallucinated State Targets during Planning"
   - u: "revealing_weaknesses_in_text_watermarking_through_self-information_rewrite_attac/"
     t: "Revealing Weaknesses in Text Watermarking Through Self-Information Rewrite Attacks"
   - u: "reward-augmented_data_enhances_direct_preference_alignment_of_llms/"
@@ -75,15 +73,17 @@ item_list:
     t: "Safety Alignment Can Be Not Superficial With Explicit Safety Signals"
   - u: "sorbet_a_neuromorphic_hardware-compatible_transformer-based_spiking_language_mod/"
     t: "Sorbet: A Neuromorphic Hardware-Compatible Transformer-Based Spiking Language Model"
-item_total: 42
+  - u: "system-aware_unlearning_algorithms_use_lesser_forget_faster/"
+    t: "System-Aware Unlearning Algorithms: Use Lesser, Forget Faster"
+item_total: 41
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🧪 ICML2025** · **42** 篇论文解读
+**🧪 ICML2025** · **41** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md)
 
 🔥 **高频主题：** LLM ×14 · 对抗鲁棒 ×7 · 对齐/RLHF ×6 · 持续学习 ×3 · 水印/隐写 ×3
 
@@ -178,10 +178,6 @@ item_total: 42
 **[POPri: Private Federated Learning using Preference-Optimized Synthetic Data](popri_private_federated_learning_using_preference-optimized_synthetic_data.md)**
 
 :   将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。
-
-**[Rejecting Hallucinated State Targets during Planning](rejecting_hallucinated_state_targets_during_planning.md)**
-
-:   本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强，在不修改原始智能体的前提下显著减少妄想行为并提升OOD泛化性能。
 
 **[Revealing Weaknesses in Text Watermarking Through Self-Information Rewrite Attacks](revealing_weaknesses_in_text_watermarking_through_self-information_rewrite_attac.md)**
 

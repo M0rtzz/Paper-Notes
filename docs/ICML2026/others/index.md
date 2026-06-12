@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 其他论文汇总 · 95篇论文解读
+  ICML2026 其他论文汇总 · 94篇论文解读
 description: >-
-  95篇ICML2026的其他方向论文解读，涵盖对齐/RLHF、对抗鲁棒、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  94篇ICML2026的其他方向论文解读，涵盖对齐/RLHF、对抗鲁棒、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "其他"
@@ -73,13 +73,13 @@ item_list:
     t: "Expectation Consistency Loss: Rethink Confidence Calibration under Covariate Shift"
   - u: "foam_frequency_and_operator_error-based_adaptive_damping_method_for_reducing_sta/"
     t: "FOAM: Frequency and Operator Error-Based Adaptive Damping Method for Reducing Staleness-Oriented Error for Shampoo"
-item_total: 95
+item_total: 94
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2026** · **95** 篇论文解读
+**🧪 ICML2026** · **94** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
 
@@ -220,10 +220,6 @@ item_total: 95
 **[HASTE: Hardware-Aware Dynamic Sparse Training for Large Output Spaces](haste_hardware-aware_dynamic_sparse_training_for_large_output_spaces.md)**
 
 :   针对百万级标签的极端多标签分类，HASTE 把"每个标签独立采样 fan-in"改成"按语义分组共享 fan-in"，再配合一个吃掉高频标签的小 dense head，使得稀疏训练在 GPU 上真正跑出对应 FLOPs 的墙钟收益，前向最多 $4.4\times$、反向最多 $25\times$ 于现有稀疏基线，同时把与 dense 的精度差距收窄到几乎打平。
-
-**[Honest Lying: Understanding Memory Confabulation in Reflexive Agents](honest_lying_understanding_memory_confabulation_in_reflexive_agents.md)**
-
-:   本文揭露 Reflexion 类 agent 一种系统性失败模式——"记忆虚构 (memory confabulation)"：agent 会把错误的任务理解写进反思记忆并跨 trial 反复使用，作者用 Reflection Repetition Rate (RRR) 量化该现象，并用程序化反馈抽取替代开放式自我诊断，把 ALFWorld 上正确对象提及率从 0% 拉到 86%、RRR 从 0.64 降到 0.10。
 
 **[How Does Bayesian Sampling Help Membership Inference Attacks?](how_does_bayesian_sampling_help_membership_inference_attacks.md)**
 

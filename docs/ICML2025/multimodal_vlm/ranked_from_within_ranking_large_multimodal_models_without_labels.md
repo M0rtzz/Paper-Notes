@@ -141,7 +141,7 @@ LMM 生成答案时每个 token 都有 softmax 概率分布。利用这些概率
 - [\[ICML 2025\] Streamline Without Sacrifice — Squeeze out Computation Redundancy in LMM](streamline_without_sacrifice_--_squeeze_out_computation_redundancy_in_lmm.md)
 - [\[CVPR 2025\] Quantization without Tears](../../CVPR2025/multimodal_vlm/quantization_without_tears.md)
 - [\[CVPR 2026\] Towards Multimodal Domain Generalization with Few Labels](../../CVPR2026/multimodal_vlm/towards_multimodal_domain_generalization_with_few_labels.md)
-- [\[ACL 2026\] Mitigating Hallucinations in Large Vision-Language Models without Performance Degradation](../../ACL2026/multimodal_vlm/mitigating_hallucinations_in_large_vision-language_models_without_performance_de.md)
+- [\[ICML 2025\] Robust Multimodal Large Language Models Against Modality Conflict](robust_multimodal_large_language_models_against_modality_conflict.md)
 
 </div>
 

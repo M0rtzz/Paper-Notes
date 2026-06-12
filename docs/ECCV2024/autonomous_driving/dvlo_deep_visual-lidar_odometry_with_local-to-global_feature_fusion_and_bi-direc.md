@@ -172,8 +172,8 @@ DVLO 的核心优势在于：不仅精度全面领先，而且推理速度也是
 - [\[CVPR 2026\] LEADER: Learning Reliable Local-to-Global Correspondences for LiDAR Relocalization](../../CVPR2026/autonomous_driving/leader_lidar_relocalization.md)
 - [\[ECCV 2024\] GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection](graphbev_towards_robust_bev_feature_alignment_for_multi-modal_3d_object_detectio.md)
 - [\[CVPR 2025\] ZeroVO: Visual Odometry with Minimal Assumptions](../../CVPR2025/autonomous_driving/zerovo_visual_odometry_with_minimal_assumptions.md)
-- [\[ECCV 2024\] LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)
 - [\[ICCV 2025\] MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion](../../ICCV2025/autonomous_driving/mgsfm_multi-camera_geometry_driven_global_structure-from-motion.md)
+- [\[ECCV 2024\] Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection](detecting_as_labeling_rethinking_lidar-camera_fusion_in_3d_object_detection.md)
 
 </div>
 

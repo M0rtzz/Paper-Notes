@@ -286,8 +286,8 @@ CreBench 由两部分组成：
 - [\[CVPR 2026\] Recursive Think-Answer Process for LLMs and VLMs](../../CVPR2026/multimodal_vlm/recursive_think-answer_process_for_llms_and_vlms.md)
 - [\[CVPR 2026\] Dictionary-Aligned Concept Control for Safeguarding Multimodal LLMs](../../CVPR2026/multimodal_vlm/dictionary_aligned_concept_control_for_safeguarding_multimodal_llms.md)
 - [\[AAAI 2026\] ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration](clearair_a_human-visual-perception-inspired_all-in-one_image_restoration.md)
-- [\[CVPR 2026\] Do Vision Language Models Need to Process Image Tokens?](../../CVPR2026/multimodal_vlm/do_vision_language_models_need_to_process_image_tokens.md)
 - [\[AAAI 2026\] SDEval: Safety Dynamic Evaluation for Multimodal Large Language Models](sdeval_safety_dynamic_evaluation_for_multimodal_large_language_models.md)
+- [\[CVPR 2026\] Do Vision Language Models Need to Process Image Tokens?](../../CVPR2026/multimodal_vlm/do_vision_language_models_need_to_process_image_tokens.md)
 
 </div>
 

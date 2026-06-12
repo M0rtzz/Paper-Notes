@@ -115,10 +115,10 @@ $$\mathcal{D}(\mathbf{z}) = \frac{1}{c-1}\sum_{i \neq f_{max}} \frac{|(\mathbf{w
 ## 相关论文
 
 - [\[NeurIPS 2025\] Revisiting Logit Distributions for Reliable Out-of-Distribution Detection](../../NeurIPS2025/ai_safety/revisiting_logit_distributions_for_reliable_out-of-distribution_detection.md)
-- [\[ICML 2026\] From Out-of-Distribution Detection to Hallucination Detection: A Geometric View](../../ICML2026/ai_safety/from_out-of-distribution_detection_to_hallucination_detection_a_geometric_view.md)
 - [\[CVPR 2026\] LogitDynamics: Reliable ViT Error Detection from Layerwise Logit Trajectories](logitdynamics_vit_error_detection.md)
 - [\[ICLR 2026\] AP-OOD: Attention Pooling for Out-of-Distribution Detection](../../ICLR2026/ai_safety/ap-ood_attention_pooling_for_out-of-distribution_detection.md)
 - [\[CVPR 2025\] H2ST: Hierarchical Two-Sample Tests for Continual Out-of-Distribution Detection](../../CVPR2025/ai_safety/h2st_hierarchical_two-sample_tests_for_continual_out-of-distribution_detection.md)
+- [\[AAAI 2026\] Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries](../../AAAI2026/ai_safety/graph_out-of-distribution_detection_via_test-time_calibration_with_dual_dynamic_.md)
 
 </div>
 

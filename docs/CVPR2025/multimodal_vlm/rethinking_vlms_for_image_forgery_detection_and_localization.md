@@ -133,8 +133,8 @@ IFDL-VLM 采用两阶段解耦架构：
 - [\[CVPR 2025\] Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector](rethinking_vision-language_model_in_face_forensics_multi-modal_interpretable_for.md)
 - [\[CVPR 2025\] HEIE: MLLM-Based Hierarchical Explainable AIGC Image Implausibility Evaluator](heie_mllm-based_hierarchical_explainable_aigc_image_implausibility_evaluator.md)
 - [\[CVPR 2025\] Cropper: Vision-Language Model for Image Cropping through In-Context Learning](cropper_vision-language_model_for_image_cropping_through_in-context_learning.md)
-- [\[CVPR 2025\] HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)
 - [\[CVPR 2025\] Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
+- [\[CVPR 2025\] Beyond Words: Augmenting Discriminative Richness via Diffusions in Unsupervised Prompt Learning](beyond_words_augmenting_discriminative_richness_via_diffusions_in_unsupervised_p.md)
 
 </div>
 

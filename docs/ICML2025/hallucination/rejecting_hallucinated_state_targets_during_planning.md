@@ -1,0 +1,154 @@
+---
+title: >-
+  [论文解读] Rejecting Hallucinated State Targets during Planning
+description: >-
+  [ICML 2025][幻觉检测][目标导向RL] 本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强…
+tags:
+  - "ICML 2025"
+  - "幻觉检测"
+  - "目标导向RL"
+  - "幻觉目标"
+  - "妄想行为"
+  - "后见重标记"
+  - "OOD泛化"
+  - "可行性评估器"
+---
+
+# Rejecting Hallucinated State Targets during Planning
+
+**会议**: ICML 2025  
+**arXiv**: [2410.07096](https://arxiv.org/abs/2410.07096)  
+**代码**: [https://github.com/mila-iqia/delusions](https://github.com/mila-iqia/delusions)  
+**领域**: 幻觉检测  
+**关键词**: 目标导向RL, 幻觉目标, 妄想行为, 后见重标记, OOD泛化, 可行性评估器
+
+## 一句话总结
+本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强，在不修改原始智能体的前提下显著减少妄想行为并提升OOD泛化性能。
+
+## 研究背景与动机
+
+**领域现状**：目标导向RL（target-directed RL）使用生成器在决策时产生子目标/目标状态来引导行为，是提升RL泛化能力的主流方法。后见经验回放（HER）是训练此类智能体的核心技术。
+
+**现有痛点**：学习型生成器不可避免地会产生"幻觉目标"——不存在的状态（G.3.1型，如被岩浆包围的不可达位置）或暂时不可达的状态（G.3.1.1型，如已获取剑后无法回到未持剑状态）。当评估器也无法正确识别这些问题目标时，智能体会追逐不可达目标，产生"妄想行为"。
+
+**核心矛盾**：现有HER策略（如"future"和"episode"）在提升非妄想情况下的样本效率与处理妄想目标之间存在根本性权衡——"episode"擅长短距离估计但无法暴露不可达目标给评估器，"future"仅提供时间有序的数据导致更多盲区。
+
+**本文目标**：(1) 如何系统化识别不同类型的妄想行为？(2) 如何在不修改原始智能体的前提下预防性地拒绝不可行目标？(3) 如何在训练任务中学到拒绝OOD妄想目标的能力？
+
+**切入角度**：借鉴精神病学中"妄想"的定义——无法拒绝的错误信念，将RL中学习过程自然产生的错误信念系统分类，并通过扩展训练数据分布来让评估器获得识别不可行目标的能力。
+
+**核心 idea**：通过设计结合离策略学习、分布式架构和后见重标记数据增强的可行性评估器，让智能体在决策时能够拒绝生成器产生的幻觉目标。
+
+## 方法详解
+
+### 整体框架
+目标导向框架包含两个核心组件：**生成器**（Generator）提出候选目标状态，**评估器**（Estimator）评估目标的可行性和有利程度。妄想行为源于两者的不协调——生成器产生了有问题的目标（幻觉），且评估器未能正确拒绝。
+
+本文提出两个辅助策略来扩展评估器的训练数据分布，并引入混合策略和双槽（hybrid）方法分别满足生成器和评估器的不同需求。
+
+### 关键设计
+
+1. **"generate"策略 — 让评估器学习候选目标的特征**:
+
+    - 功能：在HER重标记时，用生成器当前产生的候选目标替代重标记目标
+    - 核心思路：由于评估器需要在决策时评判生成器的提案，直接用生成器的输出作为训练数据可以让评估器提前暴露于所有类型的问题目标（包括G.3.1）
+    - 实现：JIT（Just-In-Time）方式，当从buffer采样训练时，以一定概率将重标记目标替换为生成器条件生成的目标
+    - 设计动机：主要针对E.3.2.1型妄想（对不存在目标的错误评估），因为生成器可能产生各种类型的问题目标
+
+2. **"pertask"策略 — 让评估器学习已经历过的目标**:
+
+    - 功能：从同一训练任务的所有历史观测中采样重标记目标
+    - 核心思路：创建任务级别的source-target对，比轨迹级别的"episode"和"future"覆盖更多长距离和暂时不可达的组合
+    - 实现：为每个任务维护独立的辅助经验回放缓冲区，记录所有经历过的状态
+    - 设计动机：主要针对E.3.2.2型妄想（对暂时不可达目标的错误评估），同时缓解短轨迹导致的E.3.2型妄想
+
+3. **混合策略（Mixtures）与双槽方法（Hybrid）**:
+
+    - 混合策略：在固定训练预算下，按比例混合多个原子策略以达到权衡
+    - 双槽方法：生成器和评估器使用独立的重标记过程。例如：
+        - $\text{F-(E+G)}$：生成器用"future"，评估器用50% "episode" + 50% "generate"
+        - $\text{F-(E+P)}$：生成器用"future"，评估器用50% "episode" + 50% "pertask"
+        - $\text{F-(E+P+G)}$：生成器用"future"，评估器用50% "episode" + 25% "pertask" + 25% "generate"
+    - 设计动机：生成器应避免暴露于问题目标（否则会产生更多幻觉），而评估器恰恰需要这些暴露来学会拒绝
+
+4. **可行性评估器的三要素**:
+
+    - 离策略兼容学习规则：基于TD更新的 $Q$ 值估计，能在看到不可达目标的训练数据后惩罚其可行性
+    - 分布式架构：使用分布式RL架构提高估计稳定性
+    - 后见重标记数据增强：通过上述"generate"和"pertask"策略扩展训练数据分布
+
+### 损失函数 / 训练策略
+评估器使用标准的时序差分（TD）更新规则学习状态间的累积奖励和折扣估计。关键性质是：当训练数据包含不可行目标的source-target对时，TD更新会自然惩罚这些不可行路径的估计值。评估器作为插件附加到现有智能体，通过观察智能体与环境的交互及生成器产生的目标来学习，无需修改原始智能体或其生成器。
+
+## 实验关键数据
+
+### 主实验
+
+实验在SwordShieldMonster（SSM）和RandDistShift（RDS）两个MiniGrid环境上，使用Skipper和LEAP两种目标导向方法进行。
+
+**Skipper在SSM上的妄想行为频率（训练结束时E.3.2.2行为比例）**:
+
+| 策略 | E.3.2.2 行为频率↓ | 非妄想估计误差↓ | 聚合OOD性能↑ |
+|------|------------------|----------------|-------------|
+| F-E (baseline) | ~35% | 短距离低 | ~0.35 |
+| F-P | ~20% | 短距离高 | ~0.25 |
+| F-G | ~30% | 中等 | ~0.38 |
+| F-(E+G) | ~25% | 短距离低 | ~0.42 |
+| F-(E+P) | ~12% | 短距离低 | ~0.48 |
+| F-(E+P+G) | ~10% | 短距离低 | **~0.50** |
+
+### 消融实验
+
+**不同原子策略的特性对比**:
+
+| 策略 | 优势 | 劣势 |
+|------|------|------|
+| "episode" | 短距离非妄想估计准确 | 无法处理E.3.2.2；短轨迹下效果差 |
+| "future" | 可学习时间抽象的条件生成器 | 继承"episode"缺点并额外导致E.3.2 |
+| "generate" | 有效解决E.3.2.1 | 依赖生成器，额外计算开销，非妄想估计效率低 |
+| "pertask" | 有效解决E.3.2.2和长距离E.3.2 | 训练生成器时可能引入G.3.1.1；短距离效率低 |
+
+### 关键发现
+- 在SSM环境中，E.3.2.2型妄想是Skipper失效的主要原因，含"pertask"的混合策略效果最好
+- 在RDS环境中（无暂时不可达状态），E.3.2.1是主要问题，含"generate"的策略最有效
+- 双槽方法允许生成器和评估器使用不同的训练数据，同时提升两者的性能
+- 所有混合/双槽策略在OOD泛化上都显著优于单一原子策略
+
+## 亮点与洞察
+- **系统化的妄想分类**：首次用精神病学的"妄想"概念系统化地识别和分类RL中的失效模式，建立了G.3.1/G.3.1.1（生成器）和E.3.2/E.3.2.1/E.3.2.2（评估器）的完整分类体系
+- **插件式设计**：可行性评估器不需要修改原始智能体或生成器，只需观察交互即可学习，具有很好的工程实用性
+- **不同组件需要不同数据**的核心洞察：生成器应避免问题目标的暴露，评估器恰需要这些暴露——双槽方法优雅地解决了这个矛盾
+
+## 局限与展望
+- 实验环境（SSM/RDS）相对简单，缺乏在高维连续控制任务上的验证
+- 混合比例目前需要手动调优，缺少自适应的比例选择机制
+- 未充分讨论生成器本身的改进——当前方案主要依赖评估器的拒绝能力
+- 计算开销：特别是"generate"策略需要额外的生成器前向传播
+
+## 相关工作与启发
+- **vs HER原始方法**: HER只关注样本效率，忽略了重标记策略可能导致的妄想问题。本文首次系统分析了这一被忽视的失效模式
+- **vs Goal Misgeneralization**: Di Langosco等人研究的目标误泛化是妄想行为的一个子类，本文提供了更全面的分类和解决方案
+- **vs Non-delusional Q-learning (Lu et al. 2018)**: 该工作关注无模型RL中函数逼近器导致的妄想，本文扩展到目标导向框架的特定妄想类型
+- **启发**：双槽方法的核心思想——不同组件需要不同的训练数据分布——可以迁移到LLM的RLHF训练中，策略模型和奖励模型可能也需要不同的数据暴露策略
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐ 系统化的妄想分类和双槽方法是genuinely novel的贡献，但核心技术（HER变体）相对incremental
+- 实验充分度: ⭐⭐⭐⭐ 4组实验（2环境×2方法）覆盖全面，每组20个seed run，CI充分
+- 写作质量: ⭐⭐⭐⭐ 分类体系清晰，命名系统一致，图表信息丰富
+- 价值: ⭐⭐⭐⭐ 识别了目标导向RL中被忽视的重要失效模式，提出了实用的解决方案
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](../../ACL2025/hallucination/monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)
+- [\[ACL 2025\] ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](../../ACL2025/hallucination/icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)
+- [\[ACL 2026\] MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing](../../ACL2026/hallucination/multihaludet_multilingual_hallucination_detection_via_llm_hidden_state_probing.md)
+- [\[ACL 2025\] Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention](../../ACL2025/hallucination/activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m.md)
+- [\[ICML 2025\] Steer LLM Latents for Hallucination Detection](steer_llm_latents_for_hallucination_detection.md)
+
+</div>
+
+<!-- RELATED:END -->

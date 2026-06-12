@@ -160,7 +160,7 @@ ClearAIR 达到 29.34 dB / 0.886 SSIM，比 OneRestore (28.72 dB) 提升 0.62 dB
 - [\[AAAI 2026\] VipAct: Visual-Perception Enhancement via Specialized VLM Agent Collaboration and Tool-use](vipact_visual-perception_enhancement_via_specialized_vlm_age.md)
 - [\[AAAI 2026\] SatireDecoder: Visual Cascaded Decoupling for Enhancing Satirical Image Comprehension](satiredecoder_visual_cascaded_decoupling_for_enhancing_satirical_image_comprehen.md)
 - [\[AAAI 2026\] CreBench: Human-Aligned Creativity Evaluation from Idea to Process to Product](crebench_human-aligned_creativity_evaluation_from_idea_to_process_to_product.md)
-- [\[ICML 2026\] CVSearch: Empowering Multimodal LLMs with Cognitive Visual Search for High-Resolution Image Perception](../../ICML2026/multimodal_vlm/cvsearch_empowering_multimodal_llms_with_cognitive_visual_search_for_high-resolu.md)
+- [\[CVPR 2026\] PhysInOne: Visual Physics Learning and Reasoning in One Suite](../../CVPR2026/multimodal_vlm/physisinone_visual_physics_learning_and_reasoning_in_one_suite.md)
 
 </div>
 

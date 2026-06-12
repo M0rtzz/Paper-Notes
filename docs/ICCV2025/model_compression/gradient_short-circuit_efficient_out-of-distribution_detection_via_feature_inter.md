@@ -146,7 +146,7 @@ tags:
 - [\[ICCV 2025\] Heavy Labels Out! Dataset Distillation with Label Space Lightening](heavy_labels_out_dataset_distillation_with_label_space_lightening.md)
 - [\[ECCV 2024\] Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images](../../ECCV2024/model_compression/is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)
 - [\[ICCV 2025\] UniConvNet: Expanding Effective Receptive Field while Maintaining Asymptotically Gaussian Distribution for ConvNets of Any Scale](uniconvnet_expanding_effective_receptive_field_while_maintaining_asymptotically_.md)
-- [\[ICML 2025\] Steer LLM Latents for Hallucination Detection](../../ICML2025/model_compression/steer_llm_latents_for_hallucination_detection.md)
+- [\[ECCV 2024\] Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation](../../ECCV2024/model_compression/leveraging_hierarchical_feature_sharing_for_efficient_dataset_condensation.md)
 
 </div>
 

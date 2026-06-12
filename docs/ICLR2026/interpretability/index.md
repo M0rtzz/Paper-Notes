@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 可解释性论文汇总 · 60篇论文解读
+  ICLR2026 可解释性论文汇总 · 59篇论文解读
 description: >-
-  60篇ICLR2026的可解释性方向论文解读，涵盖 LLM、推理、多模态、布局/合成、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  59篇ICLR2026的可解释性方向论文解读，涵盖 LLM、推理、多模态、布局/合成、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "可解释性"
@@ -61,8 +61,6 @@ item_list:
     t: "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning"
   - u: "grokking_in_llm_pretraining_monitor_memorization-to-generalization_without_test/"
     t: "Grokking in LLM Pretraining? Monitor Memorization-to-Generalization without Test"
-  - u: "hallucination_begins_where_saliency_drops/"
-    t: "Hallucination Begins Where Saliency Drops"
   - u: "hidden_breakthroughs_in_language_model_training/"
     t: "Hidden Breakthroughs in Language Model Training"
   - u: "how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha/"
@@ -75,15 +73,17 @@ item_list:
     t: "Internal Planning in Language Models: Characterizing Horizon and Branch Awareness"
   - u: "layer_by_layer_module_by_module_choose_both_for_optimal_ood_probing_of_vit/"
     t: "Layer by layer, module by module: Choose both for optimal OOD probing of ViT"
-item_total: 60
+  - u: "lore_jointly_learning_the_intrinsic_dimensionality_and_relative_similarity_struc/"
+    t: "LORE: Jointly Learning the Intrinsic Dimensionality and Relative Similarity Structure from Ordinal Data"
+item_total: 59
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🔬 ICLR2026** · **60** 篇论文解读
+**🔬 ICLR2026** · **59** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (81)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×5 · 推理 ×4 · 多模态 ×3 · 布局/合成 ×3 · 对齐/RLHF ×3
 
@@ -178,10 +178,6 @@ item_total: 60
 **[Grokking in LLM Pretraining? Monitor Memorization-to-Generalization without Test](grokking_in_llm_pretraining_monitor_memorization-to-generalization_without_test.md)**
 
 :   首次在实际规模 LLM（7B MoE）的近单遍预训练中验证 grokking 现象——不同数据组异步记忆、延迟泛化；通过分析 MoE routing pathway 的演化（从 instance-specific 到 structured/shared），提出两个零成本指标来监控泛化进度，无需 instruction tuning 和 benchmark 评估。
-
-**[Hallucination Begins Where Saliency Drops](hallucination_begins_where_saliency_drops.md)**
-
-:   提出 LVLMs-Saliency 梯度感知诊断框架来量化每个输出 token 的视觉锚定强度，发现"当先前输出 token 对下一个 token 预测的显著性降低时，幻觉就会产生"的关键规律，并基于此设计了 SGRS（显著性引导的拒绝采样）+ LocoRE（局部一致性增强）双机制推理时框架，在多个 LVLM 上显著降低幻觉率。
 
 **[Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)**
 

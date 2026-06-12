@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 多智能体论文汇总 · 27篇论文解读
+  AAAI2026 多智能体论文汇总 · 26篇论文解读
 description: >-
-  27篇AAAI2026的多智能体方向论文解读，涵盖 Agent、LLM、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇AAAI2026的多智能体方向论文解读，涵盖 Agent、LLM、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "多智能体"
@@ -41,8 +41,6 @@ item_list:
     t: "Hierarchical Pedagogical Oversight: A Multi-Agent Adversarial Framework for Reliable AI Tutoring"
   - u: "imad_intelligent_multi-agent_debate_for_efficient_and_accura/"
     t: "iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference"
-  - u: "inex_hallucination_mitigation_via_introspection_and_cross-mo/"
-    t: "InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration"
   - u: "learning_to_generate_and_extract_a_multi-agent_collaboration_framework_for_zero-/"
     t: "Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction"
   - u: "liecraft_a_multi-agent_framework_for_evaluating_deceptive_capabilities_in_langua/"
@@ -67,17 +65,17 @@ item_list:
     t: "Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems"
   - u: "thucy_an_llm-based_multi-agent_system_for_claim_verification_across_relational_d/"
     t: "Thucy: An LLM-based Multi-Agent System for Claim Verification across Relational Databases"
-item_total: 27
+item_total: 26
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 👥 多智能体
 
-**🤖 AAAI2026** · **27** 篇论文解读
+**🤖 AAAI2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/multi_agent/index.md) · [💬 ACL2026 (39)](../../ACL2026/multi_agent/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/multi_agent/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/multi_agent/index.md) · [🧪 ICML2025 (7)](../../ICML2025/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/multi_agent/index.md) · [💬 ACL2026 (38)](../../ACL2026/multi_agent/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/multi_agent/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/multi_agent/index.md) · [🧪 ICML2025 (7)](../../ICML2025/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
 
-🔥 **高频主题：** Agent ×24 · LLM ×11 · 推理 ×4 · 对抗鲁棒 ×2
+🔥 **高频主题：** Agent ×23 · LLM ×11 · 推理 ×4 · 对抗鲁棒 ×2
 
 **[A Graph-Theoretical Perspective on Law Design for Multiagent Systems](a_graph-theoretical_perspective_on_law_design_for_multiagent_systems.md)**
 
@@ -134,10 +132,6 @@ item_total: 27
 **[iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)**
 
 :   iMAD 提出选择性触发多Agent辩论的框架：先让单Agent生成带自我批判的结构化响应，从中提取 41 个可解释的语言/语义特征，用轻量 MLP 分类器（FocusCal 损失训练）判断是否需要触发 MAD，在 6 个 QA/VQA 数据集上减少高达 92% 的 Token 开销，同时提升准确率高达 13.5%。
-
-**[InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration](inex_hallucination_mitigation_via_introspection_and_cross-mo.md)**
-
-:   提出 InEx 框架，通过内部自省推理（TVER 驱动的不确定性感知视觉增强）和外部跨模态多智能体协作（文本自反思 + 图像编辑验证 + 视觉自反思）迭代验证和修正 MLLM 输出，在 POPE 上提升 8.9%，在多个幻觉和通用 benchmark 上持续超越 OPERA/VCD/ICD。
 
 **[Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction](learning_to_generate_and_extract_a_multi-agent_collaboration_framework_for_zero-.md)**
 

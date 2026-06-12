@@ -157,7 +157,7 @@ $$\mathscr{R}_{\tilde\theta}^{P^{Target}}(N) = \mathbb{E}_{\tau^*} \mathbb{E}_{P
 - [\[ICML 2025\] On the Power of Context-Enhanced Learning in LLMs](../../ICML2025/interpretability/on_the_power_of_context-enhanced_learning_in_llms.md)
 - [\[ICLR 2026\] Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](../../ICLR2026/interpretability/exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
 - [\[NeurIPS 2025\] Rectifying Shortcut Behaviors in Preference-based Reward Learning](rectifying_shortcut_behaviors_in_preference-based_reward_learning.md)
-- [\[NeurIPS 2025\] Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)
+- [\[ICLR 2026\] GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning](../../ICLR2026/interpretability/gepa_reflective_prompt_evolution_can_outperform_reinforcement_learning.md)
 
 </div>
 

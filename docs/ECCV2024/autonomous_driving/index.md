@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 自动驾驶论文汇总 · 54篇论文解读
+  ECCV2024 自动驾驶论文汇总 · 53篇论文解读
 description: >-
-  54篇ECCV2024的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、语义分割、对抗鲁棒、扩散模型、目标检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  53篇ECCV2024的自动驾驶方向论文解读，涵盖自动驾驶、3D 目标检测、语义分割、对抗鲁棒、扩散模型、目标检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "自动驾驶"
@@ -52,8 +52,6 @@ item_list:
     t: "Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving"
   - u: "ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se/"
     t: "ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation"
-  - u: "lidar-event_stereo_fusion_with_hallucinations/"
-    t: "LiDAR-Event Stereo Fusion with Hallucinations"
   - u: "livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment/"
     t: "LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment"
   - u: "mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_/"
@@ -74,15 +72,17 @@ item_list:
     t: "OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving"
   - u: "occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving/"
     t: "OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving"
-item_total: 54
+  - u: "open_object-wise_position_embedding_for_multi-view_3d_object_detection/"
+    t: "OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection"
+item_total: 53
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🎞️ ECCV2024** · **54** 篇论文解读
+**🎞️ ECCV2024** · **53** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (56)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md)
 
 🔥 **高频主题：** 自动驾驶 ×10 · 3D 目标检测 ×8 · 语义分割 ×7 · 对抗鲁棒 ×6 · 扩散模型 ×4
 
@@ -161,10 +161,6 @@ item_total: 54
 **[ItTakesTwo: Leveraging Peer Representations for Semi-supervised LiDAR Semantic Segmentation](ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)**
 
 :   提出IT2框架，通过利用LiDAR数据的对等表示（range image + voxel grid）之间的一致性学习作为新型扰动形式，并引入基于高斯混合模型的跨分布对比学习，大幅提升半监督LiDAR语义分割性能。
-
-**[LiDAR-Event Stereo Fusion with Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)**
-
-:   提出将LiDAR稀疏深度点与事件立体相机融合的首个框架，通过在事件堆叠表示（VSH）或原始事件流（BTH）中"幻觉"（插入虚构事件）来弥补事件相机在无运动/无纹理区域的信息缺失，大幅提升事件立体匹配精度。
 
 **[LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment](livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment.md)**
 

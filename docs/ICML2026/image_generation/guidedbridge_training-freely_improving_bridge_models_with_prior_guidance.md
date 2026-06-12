@@ -157,7 +157,7 @@ Edges→Handbags（10000 张）上 FMPG(noise) 在 NFE=6 时把 baseline 4.86 �
 - [\[ICML 2026\] Spectral Guidance for Flexible and Efficient Control of Diffusion Models](spectral_guidance_for_flexible_and_efficient_control_of_diffusion_models.md)
 - [\[ICML 2026\] GUDA: Counterfactual Group-wise Training Data Attribution for Diffusion Models via Unlearning](guda_counterfactual_group-wise_training_data_attribution_for_diffusion_models_vi.md)
 - [\[ICML 2026\] Bayesian Tensor Decomposition with Diffusion Model Prior](bayesian_tensor_decomposition_with_diffusion_model_prior.md)
-- [\[NeurIPS 2025\] System-Embedded Diffusion Bridge Models](../../NeurIPS2025/image_generation/system-embedded_diffusion_bridge_models.md)
+- [\[NeurIPS 2025\] Training-Free Safe Text Embedding Guidance for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)
 
 </div>
 

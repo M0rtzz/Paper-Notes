@@ -156,8 +156,8 @@ MMedPO 包含三个步骤：
 - [\[CVPR 2025\] Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](../../CVPR2025/multimodal_vlm/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
 - [\[CVPR 2026\] Medic-AD: Towards Medical Vision-Language Model's Clinical Intelligence](../../CVPR2026/multimodal_vlm/medic-ad_towards_medical_vision-language_models_clinical_intelligence.md)
 - [\[ACL 2025\] HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](../../ACL2025/multimodal_vlm/hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
-- [\[NeurIPS 2025\] Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](../../NeurIPS2025/multimodal_vlm/mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
 - [\[CVPR 2025\] Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](../../CVPR2025/multimodal_vlm/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+- [\[ACL 2025\] Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images](../../ACL2025/multimodal_vlm/symmetrical_visual_contrastive_optimization_aligning_visionlanguage.md)
 
 </div>
 

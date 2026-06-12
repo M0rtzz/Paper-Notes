@@ -1,22 +1,19 @@
 ---
 title: >-
-  AAAI2026 医疗NLP论文汇总 · 12篇论文解读
+  AAAI2026 医疗NLP论文汇总 · 11篇论文解读
 description: >-
-  12篇AAAI2026的医疗 NLP 方向论文解读，涵盖医学影像、LLM、RAG、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  11篇AAAI2026的医疗 NLP 方向论文解读，涵盖医学影像、RAG、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "医疗 NLP"
   - "论文解读"
   - "论文笔记"
   - "医学影像"
-  - "LLM"
   - "RAG"
   - "生物分子"
 item_list:
   - u: "a_principle-driven_adaptive_policy_for_group_cognitive_stimu/"
     t: "A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment"
-  - u: "beyond_hallucinations_a_composite_score_for_measuring_reliability_in_open-source/"
-    t: "Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models"
   - u: "bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives/"
     t: "BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives"
   - u: "expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical/"
@@ -37,25 +34,21 @@ item_list:
     t: "ShortageSim: Simulating Drug Shortages under Information Asymmetry"
   - u: "voices_faces_and_feelings_multi-modal_emotion-cognition_captioning_for_mental_he/"
     t: "Voices, Faces, and Feelings: Multi-modal Emotion-Cognition Captioning for Mental Health Understanding"
-item_total: 12
+item_total: 11
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🩺 医疗 NLP
 
-**🤖 AAAI2026** · **12** 篇论文解读
+**🤖 AAAI2026** · **11** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
 
-🔥 **高频主题：** 医学影像 ×3 · LLM ×2 · RAG ×2 · 生物分子 ×2
+🔥 **高频主题：** 医学影像 ×3 · RAG ×2 · 生物分子 ×2
 
 **[A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment](a_principle-driven_adaptive_policy_for_group_cognitive_stimu.md)**
 
 :   针对老年认知障碍患者的群体认知刺激治疗（CST）场景，提出GCSD系统：通过多说话人上下文控制、动态参与者状态建模（soft prompt）、认知刺激注意力损失和多维奖励策略优化四个模块，基于Qwen-2.5-3B微调，在500+小时真实粤语CST对话和1万+模拟对话上训练，BLEU-4达27.93超越GPT-4o等大模型，A/B测试胜率50% vs GPT-4o的39%。
-
-**[Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models](beyond_hallucinations_a_composite_score_for_measuring_reliability_in_open-source.md)**
-
-:   提出 Composite Reliability Score (CRS)，将校准度、鲁棒性和不确定性量化三个维度统一为单一可解释指标，对 10 个开源 LLM 在 5 个 QA 数据集上进行系统评估，发现 Mistral-8x22B 综合可靠性最高（CRS=0.81），而模型大小并不直接决定可靠性。
 
 **[BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives](bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives.md)**
 

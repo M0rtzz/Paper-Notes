@@ -134,10 +134,10 @@ $$\mathcal{L}_{\text{ORPO}} = \mathcal{L}_{\text{NLL}} + \lambda \cdot \log \fra
 
 ## 相关论文
 
-- [\[AAAI 2026\] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets](../../AAAI2026/social_computing/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
 - [\[ICLR 2026\] Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
 - [\[NeurIPS 2025\] Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs](../../NeurIPS2025/social_computing/auto-search_and_refinement_an_automated_framework_for_gender_bias_mitigation_in_.md)
 - [\[ICLR 2026\] Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+- [\[ICML 2025\] When Bad Data Leads to Good Models](../../ICML2025/social_computing/when_bad_data_leads_to_good_models.md)
 - [\[ACL 2026\] Synthia: Scalable Grounded Persona Generation from Social Media Data](../../ACL2026/social_computing/synthia_scalable_grounded_persona_generation_from_social_media_data.md)
 
 </div>

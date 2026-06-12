@@ -2,7 +2,7 @@
 title: >-
   ICML2025 论文汇总 · 1061篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(75篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(51篇)、计算生物(48篇)、LLM 安全(42篇)、AI 安全(36篇)等 46个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(36篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "ICML2025论文汇总"
@@ -85,7 +85,7 @@ item_total: 1061
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2025 论文汇总
 
-1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(75篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(51篇)、计算生物(48篇)、LLM 安全(42篇)、AI 安全(36篇)等 46个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(36篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -716,10 +716,6 @@ item_total: 1061
 **[Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput](model_compression/speculative_decoding_in_decentralized_llm_inference_turning_communication_latenc.md)**
 
 :   提出 Decentralized Speculative Decoding (DSD)，一种即插即用的去中心化LLM推理加速框架，通过将跨节点通信等待时间转化为有效计算，结合基于语义重要性的自适应验证策略，在无需重训练的前提下实现最高 2.59× 的端到端加速。
-
-**[Steer LLM Latents for Hallucination Detection](model_compression/steer_llm_latents_for_hallucination_detection.md)**
-
-:   提出 Truthfulness Separator Vector (TSV)，一种轻量级 steering vector，在推理时重塑 LLM 表示空间以增强真实与幻觉输出的分离，仅需 32 个标注样本即可接近全监督性能。
 
 **[Strategic Fusion Optimizes Transformer Compression](model_compression/strategic_fusion_optimizes_transformer_compression.md)**
 
@@ -1397,10 +1393,6 @@ item_total: 1061
 
 :   提出 LlavaGuard——基于开源 VLM 的视觉内容安全审核框架，通过可定制安全分类体系、高质量人工标注数据集与策略增强训练，实现对图像内容的灵活、精准安全评估，在准确率和策略适应性上大幅超越现有开源与闭源审核工具。
 
-**[Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](multimodal_vlm/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)**
-
-:   提出 MemVR 解码范式，将视觉 token 作为补充证据通过 FFN 的 key-value memory 机制重新注入到中间触发层，以"再看一次"的方式缓解 MLLM 幻觉问题，不引入额外推理开销。
-
 **[M3-JEPA: Multimodal Alignment via Multi-gate MoE based on JEPA](multimodal_vlm/m3-jepa_multimodal_alignment_via_multi-gate_moe_based_on_the_joint-embedding_pre.md)**
 
 :   将 JEPA（联合嵌入预测架构）推广到任意模态组合的多模态对齐中，用 Multi-gate MoE 作为跨模态预测器在潜在空间对齐（而非 token 空间），门控函数解耦模态特定和共享信息，通过交替梯度下降避免多方向任务间的梯度冲突，仅 140M 可训练参数在多个检索和分类任务上超越 BLIP-2（1.2B）等 SOTA。
@@ -1796,10 +1788,6 @@ item_total: 1061
 **[POPri: Private Federated Learning using Preference-Optimized Synthetic Data](llm_safety/popri_private_federated_learning_using_preference-optimized_synthetic_data.md)**
 
 :   将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。
-
-**[Rejecting Hallucinated State Targets during Planning](llm_safety/rejecting_hallucinated_state_targets_during_planning.md)**
-
-:   本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强，在不修改原始智能体的前提下显著减少妄想行为并提升OOD泛化性能。
 
 **[Revealing Weaknesses in Text Watermarking Through Self-Information Rewrite Attacks](llm_safety/revealing_weaknesses_in_text_watermarking_through_self-information_rewrite_attac.md)**
 
@@ -3992,6 +3980,22 @@ item_total: 1061
 **[Unifying Specialized Visual Encoders for Video Language Models](video_understanding/unifying_specialized_visual_encoders_for_video_language_models.md)**
 
 :   MERV 提出了多编码器视频表示方法，将四种专长不同的视觉编码器（DINOv2、ViViT、SigLIP、LanguageBind）通过时空对齐和跨注意力融合整合到单一 VideoLLM 中，在视频推理基准上比基线 Video-LLaVA 提升最高 4.62%，并验证了不同编码器的互补专长。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](hallucination/look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)**
+
+:   提出 MemVR 解码范式，将视觉 token 作为补充证据通过 FFN 的 key-value memory 机制重新注入到中间触发层，以"再看一次"的方式缓解 MLLM 幻觉问题，不引入额外推理开销。
+
+**[Rejecting Hallucinated State Targets during Planning](hallucination/rejecting_hallucinated_state_targets_during_planning.md)**
+
+:   本文系统识别了目标导向决策规划中生成器产生不可行目标（幻觉目标）导致的"妄想行为"类型，并设计了一种可行性评估器（feasibility evaluator）作为附加模块来识别和拒绝这些不可行目标，结合离策略学习规则、分布式架构和后见重标记数据增强，在不修改原始智能体的前提下显著减少妄想行为并提升OOD泛化性能。
+
+**[Steer LLM Latents for Hallucination Detection](hallucination/steer_llm_latents_for_hallucination_detection.md)**
+
+:   提出 Truthfulness Separator Vector (TSV)，一种轻量级 steering vector，在推理时重塑 LLM 表示空间以增强真实与幻觉输出的分离，仅需 32 个标注样本即可接近全监督性能。
 
 ---
 

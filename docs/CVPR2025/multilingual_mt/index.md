@@ -23,7 +23,7 @@ item_total: 2
 
 **📷 CVPR2025** · **2** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (63)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (62)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md)
 
 **[Harnessing Frozen Unimodal Encoders for Flexible Multimodal Alignment](harnessing_frozen_unimodal_encoders_for_flexible_multimodal_alignment.md)**
 

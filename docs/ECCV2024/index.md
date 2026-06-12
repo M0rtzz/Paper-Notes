@@ -2,7 +2,7 @@
 title: >-
   ECCV2024 论文汇总 · 868篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(54篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(48篇)、视频理解(47篇)、目标检测(29篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(47篇)、视频理解(47篇)、目标检测(29篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "ECCV2024论文汇总"
@@ -85,7 +85,7 @@ item_total: 868
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎞️ ECCV2024 论文汇总
 
-868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(54篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(48篇)、视频理解(47篇)、目标检测(29篇)等 39个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(47篇)、视频理解(47篇)、目标检测(29篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -1345,10 +1345,6 @@ item_total: 868
 
 :   提出IT2框架，通过利用LiDAR数据的对等表示（range image + voxel grid）之间的一致性学习作为新型扰动形式，并引入基于高斯混合模型的跨分布对比学习，大幅提升半监督LiDAR语义分割性能。
 
-**[LiDAR-Event Stereo Fusion with Hallucinations](autonomous_driving/lidar-event_stereo_fusion_with_hallucinations.md)**
-
-:   提出将LiDAR稀疏深度点与事件立体相机融合的首个框架，通过在事件堆叠表示（VSH）或原始事件流（BTH）中"幻觉"（插入虚构事件）来弥补事件相机在无运动/无纹理区域的信息缺失，大幅提升事件立体匹配精度。
-
 **[LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment](autonomous_driving/livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment.md)**
 
 :   提出 LiveHPS++，一种基于单 LiDAR 的鲁棒人体动作捕捉方法，通过轨迹引导身体追踪器、噪声不敏感速度预测器和运动学感知姿态优化器三个模块，隐式和显式建模人体运动的动力学和运动学特征，在复杂噪声环境下实现精确且连贯的全局人体运动捕捉。
@@ -1936,10 +1932,6 @@ item_total: 868
 **[Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding](multimodal_vlm/bad_students_make_great_teachers_active_learning_accelerates_large-scale_visual_.md)**
 
 :   提出 ClassAct/ActiveCLIP 方法，利用小型廉价代理模型为数据点计算"可学习性"评分来优先选择训练数据，使大规模视觉分类器和多模态模型分别减少46%和51%的训练更新量，且总计算量节省高达25%，是首个在大规模预训练中实现计算正收益的主动学习方法。
-
-**[BEAF: Observing BEfore-AFter Changes to Evaluate Hallucination in Vision-Language Models](multimodal_vlm/beaf_observing_beforeafter_changes_to_evaluate_hallucination.md)**
-
-:   BEAF提出"前-后对比"的幻觉评估范式：通过图像编辑移除物体后观察VLM回答的变化，引入TU/IG/SB/ID四个变化感知指标，揭示了传统文本轴评估无法发现的幻觉行为。
 
 **[BLINK: Multimodal Large Language Models Can See but Not Perceive](multimodal_vlm/blink_multimodal_large_language_models_can_see_but_not_perceive.md)**
 
@@ -3364,6 +3356,18 @@ item_total: 868
 **[Semantically Guided Representation Learning For Action Anticipation](time_series/semantically_guided_representation_learning_for_action_anticipation.md)**
 
 :   提出 S-GEAR 框架，通过学习视觉动作原型并利用语言模型的语义关联来引导原型之间的几何关系，使模型理解动作间的语义互联性，从而提升动作预测性能，在 Epic-Kitchens 55/100、EGTEA Gaze+、50 Salads 四个基准上取得 SOTA 或极具竞争力的结果。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[BEAF: Observing BEfore-AFter Changes to Evaluate Hallucination in Vision-Language Models](hallucination/beaf_observing_beforeafter_changes_to_evaluate_hallucination.md)**
+
+:   BEAF提出"前-后对比"的幻觉评估范式：通过图像编辑移除物体后观察VLM回答的变化，引入TU/IG/SB/ID四个变化感知指标，揭示了传统文本轴评估无法发现的幻觉行为。
+
+**[LiDAR-Event Stereo Fusion with Hallucinations](hallucination/lidar-event_stereo_fusion_with_hallucinations.md)**
+
+:   提出将LiDAR稀疏深度点与事件立体相机融合的首个框架，通过在事件堆叠表示（VSH）或原始事件流（BTH）中"幻觉"（插入虚构事件）来弥补事件相机在无运动/无纹理区域的信息缺失，大幅提升事件立体匹配精度。
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 图像生成论文汇总 · 305篇论文解读
+  CVPR2025 图像生成论文汇总 · 304篇论文解读
 description: >-
-  305篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对齐/RLHF、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  304篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对齐/RLHF、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "图像生成"
@@ -75,15 +75,15 @@ item_list:
     t: "CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation"
   - u: "co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai/"
     t: "Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI"
-item_total: 305
+item_total: 304
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2025** · **305** 篇论文解读
+**📷 CVPR2025** · **304** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (222)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×116 · 文生图 ×27 · 个性化生成 ×18 · 对齐/RLHF ×13 · 对抗鲁棒 ×13
 
@@ -930,10 +930,6 @@ item_total: 305
 **[Personalized Preference Fine-tuning of Diffusion Models](personalized_preference_fine-tuning_of_diffusion_models.md)**
 
 :   PPD 提出个性化偏好扩散模型微调框架：利用 VLM 从少量（4 对）偏好示例中提取用户嵌入，通过解耦交叉注意力层注入扩散模型，结合 DPO 目标同时优化多用户的个性化偏好，仅需 4 个偏好对即可为新用户生成匹配其偏好的图像（76% 胜率）。
-
-**[PhD: A ChatGPT-Prompted Visual Hallucination Evaluation Dataset](phd_a_chatgpt-prompted_visual_hallucination_evaluation_dataset.md)**
-
-:   本文提出 PhD，一个 ChatGPT 辅助构建的大规模视觉幻觉评估数据集，包含 14K+ 日常图片、750 张反常识图片和 102K VQA 三元组，通过 4 种评估模式×5 种视觉任务系统化评估多模态大语言模型的幻觉问题，在规模和挑战性上远超现有基准。
 
 **[PICD: Versatile Perceptual Image Compression with Diffusion Rendering](picd_versatile_perceptual_image_compression_with_diffusion_rendering.md)**
 

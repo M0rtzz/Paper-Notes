@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 信息检索/RAG论文汇总 · 74篇论文解读
+  ACL2026 信息检索/RAG论文汇总 · 73篇论文解读
 description: >-
-  74篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、问答、推理、LLM、对话系统、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  73篇ACL2026的信息检索/RAG 方向论文解读，涵盖 RAG、问答、推理、LLM、对话系统、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "信息检索/RAG"
@@ -75,17 +75,17 @@ item_list:
     t: "eTracer: Towards Traceable Text Generation via Claim-Level Grounding"
   - u: "feedback_adaptation_for_retrieval-augmented_generation/"
     t: "Feedback Adaptation for Retrieval-Augmented Generation"
-item_total: 74
+item_total: 73
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2026** · **74** 篇论文解读
+**💬 ACL2026** · **73** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×27 · 问答 ×8 · 推理 ×7 · LLM ×7 · 对话系统 ×5
+🔥 **高频主题：** RAG ×26 · 问答 ×8 · 推理 ×7 · LLM ×7 · 对话系统 ×5
 
 **[A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval](a_picture_is_worth_a_thousand_words_an_empirical_study_of_aggregation_strategies.md)**
 
@@ -338,10 +338,6 @@ item_total: 74
 **[Prune-then-Merge: Towards Efficient Multi-Vector Visual Document Retrieval](sculpting_the_vector_space_towards_efficient_multi-vector_visual_document_retrie.md)**
 
 :   本文提出 Prune-then-Merge，一个两阶段的免训练多向量文档压缩框架——先通过自适应注意力剪枝移除低信息 patch，再对剩余高信号 patch 进行层次聚类合并，在 29 个 VDR 数据集上将近无损压缩范围从 50-60% 扩展到 60-70%，并在 80%+ 高压缩率下显著优于单阶段方法。
-
-**[Stable-RAG: Mitigating Retrieval-Permutation-Induced Hallucinations in Retrieval-Augmented Generation](stable-rag_mitigating_retrieval-permutation-induced_hallucinations_in_retrieval-.md)**
-
-:   揭示 RAG 系统对检索文档排列顺序高度敏感的问题，提出 Stable-RAG：通过对文档排列产生的隐状态做谱聚类识别主导推理模式，再用 DPO 对齐将幻觉输出引导向正确答案，在三个 QA 数据集上实现准确率和推理一致性的双重提升。
 
 **[Test-Time Training for Zero-Resource Dense Retrieval Reranking](test-time_training_for_zero-resource_dense_retrieval_reranking.md)**
 

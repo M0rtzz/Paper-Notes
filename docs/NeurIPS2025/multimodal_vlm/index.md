@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 多模态VLM论文汇总 · 147篇论文解读
+  NeurIPS2025 多模态VLM论文汇总 · 139篇论文解读
 description: >-
-  147篇NeurIPS2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  139篇NeurIPS2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对齐/RLHF、机器人、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "多模态 VLM"
@@ -57,8 +57,6 @@ item_list:
     t: "Can Multi-Modal LLMs Provide Live Step-by-Step Task Guidance?"
   - u: "capability_a_comprehensive_visual_caption_benchmark_for_eval/"
     t: "CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness"
-  - u: "causalllava_causal_disentanglement_for_mitigating_hallucinat/"
-    t: "Causal-LLaVA: Causal Disentanglement for Mitigating Hallucination in Multimodal Large Language Models"
   - u: "choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod/"
     t: "CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models"
   - u: "coido_efficient_data_selection_for_visual_instruction_tuning_via_coupled_importa/"
@@ -75,17 +73,19 @@ item_list:
     t: "DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding"
   - u: "dont_just_chase_highlighted_tokens_in_mllms_revisiting_visual_holistic_context_r/"
     t: "Don't Just Chase \"Highlighted Tokens\" in MLLMs: Revisiting Visual Holistic Context Retention"
-item_total: 147
+  - u: "dota_distributional_testtime_adaptation_of_visionlanguage_mo/"
+    t: "DOTA: DistributiOnal Test-time Adaptation of Vision-Language Models"
+item_total: 139
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧠 NeurIPS2025** · **147** 篇论文解读
+**🧠 NeurIPS2025** · **139** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [📹 ICCV2025 (145)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×85 · 推理 ×25 · LLM ×14 · 对齐/RLHF ×11 · 机器人 ×6
+🔥 **高频主题：** 多模态 ×79 · 推理 ×25 · LLM ×12 · 对齐/RLHF ×9 · 机器人 ×6
 
 **[A Frustratingly Simple Yet Highly Effective Attack Baseline: Over 90% Success Rate Against the Strong Black-box Models of GPT-4.5/4o/o1](a_frustratingly_simple_yet_highly_effective_attack_baseline.md)**
 
@@ -170,10 +170,6 @@ item_total: 147
 **[CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness](capability_a_comprehensive_visual_caption_benchmark_for_eval.md)**
 
 :   提出CAPability，一个涵盖6大视角12个维度的综合视觉描述评测基准，通过人工标注近11K图像/视频的视觉元素（而非句子），同时评估描述的正确性（precision）和全面性（hit），并引入"知道但说不出"（$K\bar{T}$）指标揭示MLLM在QA与caption任务之间的显著能力差距。
-
-**[Causal-LLaVA: Causal Disentanglement for Mitigating Hallucination in Multimodal Large Language Models](causalllava_causal_disentanglement_for_mitigating_hallucinat.md)**
-
-:   揭示 MLLM 中物体幻觉的表示层根因——数据集共现偏差导致的语义纠缠，提出双路因果解纠缠框架（Causal-Driven Projector + Causal Intervention Module），通过后门调整在 projector 和最终 Transformer 层分离共现物体表示，使 MME-Perception 提升 22.6%。
 
 **[CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models](choice_benchmarking_the_remote_sensing_capabilities_of_large_vision-language_mod.md)**
 
@@ -271,17 +267,9 @@ item_total: 147
 
 :   提出 GEM，首个统一 ECG 时间序列、12 导联 ECG 图像和文本的多模态大语言模型，通过双编码器框架、跨模态对齐和知识引导的指令数据生成，实现了基于可量化生理特征的接地心电图诊断，诊断准确率提升 7.4%，可解释性提升 22.7%，接地能力提升 25.3%。
 
-**[Generate, but Verify: Reducing Hallucination in Vision-Language Models with Retrospective Resampling](generate_but_verify_reducing_hallucination_in_visionlanguage.md)**
-
-:   提出REVERSE框架，首次将生成调整和事后验证统一到单个VLM中：通过1.3M半合成样本的幻觉感知训练+推理时回溯重采样，使VLM能在生成过程中自动检测并修正幻觉，在CHAIR-MSCOCO上降低12%、HaloQuest上提升34%。
-
 **[GeoRanker: Distance-Aware Ranking for Worldwide Image Geolocalization](georanker_distance-aware_ranking_for_worldwide_image_geolocalization.md)**
 
 :   提出 GeoRanker，一种距离感知排序框架，利用大视觉语言模型建模查询-候选之间的空间关系，通过多阶距离损失实现全球图像地理定位的 SOTA。
-
-**[GLSim: Detecting Object Hallucinations in LVLMs via Global-Local Similarity](glsim_detecting_object_hallucinations_in_lvlms_via_globalloc.md)**
-
-:   提出GLSim，一种无训练的LVLM物体幻觉检测方法，通过融合全局场景相似度（物体token与最后instruction token的余弦相似度）和局部视觉定位相似度（物体token与Visual Logit Lens定位的Top-K图像patch的余弦相似度），在MSCOCO上以83.7% AUROC超越SVAR 9%、Internal Confidence 10.8%。
 
 **[GoalLadder: Incremental Goal Discovery with Vision-Language Models](goalladder_incremental_goal_discovery_with_vision-language_models.md)**
 
@@ -322,10 +310,6 @@ item_total: 147
 **[In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting](in_the_eye_of_mllm_benchmarking_egocentric_video_intent_understanding_with_gaze-.md)**
 
 :   提出 EgoGazeVQA 基准和三种注视引导提示策略（文本/视觉/显著图），首次系统验证了眼动注视信号对提升 MLLM 第一人称视频意图理解的关键价值，Qwen2.5-VL-72B + GazeS 策略在平均准确率上提升 5.8 个百分点。
-
-**[Intervene-All-Paths: Unified Mitigation of LVLM Hallucinations across Alignment Formats](intervene-all-paths_unified_mitigation_of_lvlm_hallucinations_across_alignment_f.md)**
-
-:   提出 AllPath，一个基于 Transformer 因果架构的多路径幻觉干预框架，首次发现 LVLM 的幻觉不来自单一因果路径而是 image-to-input-text、image-to-output-text、text-to-text 三条路径的交互，并且模型会根据问答对齐格式自适应选择不同路径；通过为每条路径设计轻量级关键 head 识别方法并自适应干预，在 POPE、MCQ-POPE、CHAIR、MME 四个不同格式 benchmark 上一致降低幻觉。
 
 **[JailBound: Jailbreaking Internal Safety Boundaries of Vision-Language Models](jailbound_jailbreaking_internal_safety_boundaries_of_vision-language_models.md)**
 
@@ -374,10 +358,6 @@ item_total: 147
 **[MIRAGE: A Benchmark for Multimodal Information-Seeking and Reasoning in Agriculture](mirage_a_benchmark_for_multimodal_information-seeking_and_reasoning_in_agricultu.md)**
 
 :   MIRAGE 是首个基于真实农业专家咨询对话（35,000+条）构建的多模态基准，评估视觉语言模型在领域级实体识别、因果推理和"澄清还是回答"决策方面的能力，揭示了即使 GPT-4.1 识别准确率也仅 43.9% 的严峻挑战。
-
-**[Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)**
-
-:   提出 SymMPO（对称多模态偏好优化），通过对比图像的对称配对偏好学习和偏好边际一致性正则化，解决了现有视觉增强型 DPO 方法中目标函数不严格和间接偏好监督两大局限，在五个幻觉评测基准上取得了一致的性能提升。
 
 **[MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models](mm-opera_benchmarking_open-ended_association_reasoning_for_large_vision-language.md)**
 
@@ -491,10 +471,6 @@ item_total: 147
 
 :   提出MSMU大规模定量空间推理数据集（700K QA对、250万数值标注）和深度位置编码（DPE）方法，使VLM在不引入3D点云的前提下获得强大的定量空间测量和理解能力，在MSMU-Bench上超越GPT-4o达26.91%。
 
-**[Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models](seeing_is_believing_mitigating_ocr_hallucinations_in_multimodal_large_language_m.md)**
-
-:   针对多模态大模型在退化文档场景下的OCR幻觉问题，提出首个退化文档幻觉评测基准KIE-HVQA，并设计基于GRPO的多目标奖励强化学习框架，在7B参数模型上实现比GPT-4o高约28%的幻觉抑制准确率提升。
-
 **[See&Trek: Training-Free Spatial Prompting for Multimodal Large Language Model](seetrek_training-free_spatial_prompting_for_multimodal_large_language_model.md)**
 
 :   提出 See&Trek，一个无需训练和GPU的空间提示框架，通过最大语义丰富度采样和运动重建来增强 MLLM 的空间理解能力，在 VSI-Bench 上最高提升 3.5%。
@@ -538,10 +514,6 @@ item_total: 147
 **[Structure-Aware Fusion with Progressive Injection for Multimodal Molecular Representation Learning](structure-aware_fusion_with_progressive_injection_for_multimodal_molecular_repre.md)**
 
 :   提出 MuMo 框架，通过结构化融合管线（SFP）将 2D 拓扑与 3D 几何融合为稳定的结构先验，再通过渐进注入（PI）机制非对称地整合到序列流中，在 29 个分子属性预测基准任务中平均提升 2.7%，在 22 个任务上排名第一。
-
-**[Systematic Reward Gap Optimization for Mitigating VLM Hallucinations](systematic_reward_gap_optimization_for_mitigating_vlm_hallucinations.md)**
-
-:   提出 Topic-level Preference Rewriting（TPR），通过 topic 级别的细粒度语义控制系统性优化偏好数据中的 reward gap 配置，结合课程学习策略逐步提高负样本难度，在多个幻觉基准上实现约 93% 的幻觉减少。
 
 **[T-Rex: Task-Adaptive Spatial Representation Extraction for Robotic Manipulation with VLMs](t-rex_task-adaptive_spatial_representation_extraction_for_robotic_manipulation_w.md)**
 
@@ -666,10 +638,6 @@ item_total: 147
 **[When One Modality Sabotages the Others: A Diagnostic Lens on Multimodal Reasoning](when_one_modality_sabotages_the_others_a_diagnostic_lens_on_multimodal_reasoning.md)**
 
 :   提出"模态破坏"（modality sabotage）这一诊断性失败模式概念，设计轻量级、模型无关的评估层，将每个模态视为独立代理并通过简单融合暴露"贡献者"与"破坏者"，在多模态情感识别任务上揭示了系统性的模态可靠性差异。
-
-**[When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)**
-
-:   发现大多模态模型（LMMs）在场景文字识别中存在"语义幻觉"问题（将无语义文本误识为语义合理的词），分析发现注意力集中于文本区域的Transformer层更不易幻觉，据此提出训练无关的ZoomText+Grounded Layer Correction框架，在TextHalu-Bench上提升约4-5%，在ST-VQA上提升约4%。
 
 **[STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You](with_limited_data_for_multimodal_alignment_let_the_structure_guide_you.md)**
 

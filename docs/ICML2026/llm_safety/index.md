@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 LLM安全论文汇总 · 47篇论文解读
+  ICML2026 LLM安全论文汇总 · 45篇论文解读
 description: >-
-  47篇ICML2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、联邦学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  45篇ICML2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、联邦学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "LLM 安全"
@@ -53,8 +53,6 @@ item_list:
     t: "FoeGlass: Simple In-Context Learning Is Enough for Red Teaming Audio Deepfake Detectors"
   - u: "forget_to_know_remember_to_use_context-aware_unlearning_for_large_language_model/"
     t: "Forget to Know, Remember to Use: Context-Aware Unlearning for Large Language Models"
-  - u: "from_flat_facts_to_sharp_hallucinations_detecting_stubborn_errors_via_gradient_s/"
-    t: "From Flat Facts to Sharp Hallucinations: Detecting Stubborn Errors via Gradient Sensitivity"
   - u: "from_volume_to_value_preference-aligned_memory_construction_for_on-device_rag/"
     t: "From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG"
   - u: "from_weak_cues_to_real_identities_evaluating_inference-driven_de-anonymization_i/"
@@ -75,17 +73,19 @@ item_list:
     t: "Multilingual Unlearning in LLMs: 转移、动力学与可逆性"
   - u: "old_habits_die_hard_how_conversational_history_geometrically_traps_llms/"
     t: "Old Habits Die Hard: How Conversational History Geometrically Traps LLMs"
-item_total: 47
+  - u: "optimizing_token_choice_for_code_watermarking_an_rl_approach/"
+    t: "Optimizing Token Choice for Code Watermarking: An RL Approach"
+item_total: 45
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🧪 ICML2026** · **47** 篇论文解读
+**🧪 ICML2026** · **45** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×10 · 对抗鲁棒 ×6 · 水印/隐写 ×4 · 多模态 ×3 · 联邦学习 ×3
+🔥 **高频主题：** LLM ×9 · 对抗鲁棒 ×5 · 水印/隐写 ×4 · 多模态 ×3 · 联邦学习 ×3
 
 **[ACTG-ARL: Differentially Private Conditional Text Generation with RL-Boosted Control](actg-arl_differentially_private_conditional_text_generation_with_rl-boosted_cont.md)**
 
@@ -163,10 +163,6 @@ item_total: 47
 
 :   本文指出现有 LLM unlearning 方法在"把知识从参数里抹掉"的同时，会把"用户在 prompt 里重新提供该知识时模型能正确利用"的能力（contextual utility）一起抹掉，作者提出在已有 unlearning loss 上加一项 KL 正则——让 unlearn 后的模型在"问题+上下文"输入上的分布对齐原始模型——即可在几乎不损失遗忘效果和保留集效用的前提下，把 Contextual QA 的 LLM-Judge 分数从 0.00–0.84 拉回到 0.95+。
 
-**[From Flat Facts to Sharp Hallucinations: Detecting Stubborn Errors via Gradient Sensitivity](from_flat_facts_to_sharp_hallucinations_detecting_stubborn_errors_via_gradient_s.md)**
-
-:   本文把 LLM 幻觉检测从"看输出概率"切到"看 loss landscape 曲率"——在 embedding 加 Gaussian 噪声测量梯度方向与幅度的扰动，作为 Hessian 谱半径的廉价代理，在 12 个 model-dataset 组合上 AUROC 全面超越 entropy / Semantic Entropy / EigenScore 等基线。
-
 **[From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG](from_volume_to_value_preference-aligned_memory_construction_for_on-device_rag.md)**
 
 :   EPIC 把端侧 RAG 的核心瓶颈从「检索时怎么用偏好」前移到「索引时存什么」，用「粗筛 + 细验证 + 查询偏移」三段式 pipeline 只保留与用户偏好对齐的数据并生成「指令-条目」对作为索引单元，在 4 个偏好基准上把存储减小 2404× 的同时偏好对齐准确率绝对提升 20.17 个百分点。
@@ -238,10 +234,6 @@ item_total: 47
 **[PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection](prpo_paragraph-level_policy_optimization_for_vision-language_deepfake_detection.md)**
 
 :   作者用一个 115k 带推理标注的 DF-R5 数据集 + 把 CLIP ViT 换成 ConvNeXT 的 DX-LLaVA 架构，并提出 PRPO —— 段落级别 GRPO 变体，每段以 CLIP-文本-图像相似度（VCR）+ 推理-结论多数票一致性（PCR）为 reward，把跨域 deepfake 检测 F1 从 SOTA 75.26% 推到 89.91%，推理质量从 4.2/5 提到 4.55/5。
-
-**[REALISTA: Realistic Latent Adversarial Attacks that Elicit LLM Hallucinations](realista_realistic_latent_adversarial_attacks_that_elicit_llm_hallucinations.md)**
-
-:   REALISTA 在 LLM 隐空间里构造"输入相关的编辑方向字典"，把对抗 prompt 优化变成一个 simplex 约束下的连续问题，既保住了 SECA 这类离散方法的语义等价/连贯，又有 LARGO 那种连续方法的搜索灵活度，首次在 GPT-5 这类闭源推理模型 free-form 输出上诱发幻觉成功。
 
 **[REFLECTOR：把"边走边自省"内化进生成轨迹以抵御间接越狱](reflector_internalizing_step-wise_reflection_against_indirect_jailbreak.md)**
 

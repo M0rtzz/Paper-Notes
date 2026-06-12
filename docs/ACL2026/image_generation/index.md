@@ -31,7 +31,7 @@ item_total: 5
 
 **💬 ACL2026** · **5** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (222)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
 
 🔥 **高频主题：** LLM ×3 · 多模态 ×2
 

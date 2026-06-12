@@ -141,7 +141,7 @@ $$\mathcal{L}^{cyc} = \lambda_4 \mathcal{L}_{mse}^{cyc} + \lambda_5 \mathcal{L}_
 - [\[CVPR 2025\] Embodied Scene Understanding for Vision Language Models via MetaVQA](embodied_scene_understanding_for_vision_language_models_via_metavqa.md)
 - [\[CVPR 2025\] Global-Local Tree Search in VLMs for 3D Indoor Scene Generation](global-local_tree_search_in_vlms_for_3d_indoor_scene_generation.md)
 - [\[CVPR 2025\] MarkushGrapher: Joint Visual and Textual Recognition of Markush Structures](markushgrapher_joint_visual_and_textual_recognition_of_markush_structures.md)
-- [\[CVPR 2025\] StarVector: Generating Scalable Vector Graphics Code from Images and Text](starvector_generating_scalable_vector_graphics_code_from_images_and_text.md)
+- [\[CVPR 2026\] HOG-Layout: Hierarchical 3D Scene Generation, Optimization and Editing via Vision-Language Models](../../CVPR2026/multimodal_vlm/hog_layout_hierarchical_3d_scene_generation_optimization_and_editing.md)
 
 </div>
 

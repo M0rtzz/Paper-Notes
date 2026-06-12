@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 图像生成论文汇总 · 222篇论文解读
+  NeurIPS2025 图像生成论文汇总 · 221篇论文解读
 description: >-
-  222篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、布局/合成、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  221篇NeurIPS2025的图像生成方向论文解读，涵盖扩散模型、文生图、对抗鲁棒、布局/合成、多模态、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "图像生成"
@@ -75,17 +75,17 @@ item_list:
     t: "Conditional Panoramic Image Generation via Masked Autoregressive Modeling"
   - u: "contextual_thompson_sampling_via_generation_of_missing_data/"
     t: "Contextual Thompson Sampling via Generation of Missing Data"
-item_total: 222
+item_total: 221
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧠 NeurIPS2025** · **222** 篇论文解读
+**🧠 NeurIPS2025** · **221** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×80 · 文生图 ×16 · 对抗鲁棒 ×8 · 布局/合成 ×8 · 多模态 ×7
+🔥 **高频主题：** 扩散模型 ×80 · 文生图 ×15 · 对抗鲁棒 ×8 · 布局/合成 ×8 · 多模态 ×7
 
 **[70% Size, 100% Accuracy: Lossless LLM Compression for Efficient GPU Inference via Dynamic-Length Float (DFloat11)](70_size_100_accuracy_lossless_llm_compression_for_efficient.md)**
 
@@ -462,10 +462,6 @@ item_total: 222
 **[GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer](guideflow3d_optimization-guided_rectified_flow_for_appearance_transfer.md)**
 
 :   提出 GuideFlow3D，一种无需训练的 3D 外观迁移框架，通过在预训练 rectified flow 模型的采样过程中交替注入可微引导损失（部件感知外观损失 + 自相似性损失），实现几何差异显著的物体间鲁棒的纹理与几何细节迁移。
-
-**[Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation](hallucination_as_an_upper_bound_a_new_perspective_on_text-to-image_evaluation.md)**
-
-:   提出将文本到图像（T2I）模型中的幻觉定义为**偏差驱动的偏离**，建立了包含属性、关系和物体三类幻觉的分类学，并论证幻觉评估作为提示对齐评估的"上界"，可揭示模型隐藏偏差。
 
 **[Head Pursuit: Probing Attention Specialization in Multimodal Transformers](head_pursuit_probing_attention_specialization_in_multimodal.md)**
 

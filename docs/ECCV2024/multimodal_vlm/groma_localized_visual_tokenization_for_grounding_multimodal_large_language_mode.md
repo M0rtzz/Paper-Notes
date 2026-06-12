@@ -166,7 +166,7 @@ Pipeline: 输入图像(448×448) → DINOv2 Image Encoder → 分两路：(1) �
 - [\[CVPR 2025\] VideoGLaMM: A Large Multimodal Model for Pixel-Level Visual Grounding in Videos](../../CVPR2025/multimodal_vlm/videoglamm_a_large_multimodal_model_for_pixel-level_visual_grounding_in_videos.md)
 - [\[ICLR 2026\] Grounding-IQA: Grounding Multimodal Language Models for Image Quality Assessment](../../ICLR2026/multimodal_vlm/grounding-iqa_grounding_multimodal_language_model_for_image_quality_assessment.md)
 - [\[ECCV 2024\] LoA-Trans: Enhancing Visual Grounding by Location-Aware Transformers](loa-trans_enhancing_visual_grounding_by_location-aware_transformers.md)
-- [\[CVPR 2026\] GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding](../../CVPR2026/multimodal_vlm/groundvts_visual_token_sampling_in_multimodal_large_language_models_for_video_te.md)
+- [\[ECCV 2024\] IVTP: Instruction-Guided Visual Token Pruning for Large Vision-Language Models](ivtp_instruction-guided_visual_token_pruning_for_large_vision-language_models.md)
 
 </div>
 

@@ -83,7 +83,7 @@ item_total: 30
 
 **💬 ACL2025** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (12)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md)
 
 🔥 **高频主题：** 医学影像 ×24 · LLM ×5 · 对话系统 ×4 · 问答 ×4 · RAG ×4
 

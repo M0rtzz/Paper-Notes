@@ -2,7 +2,7 @@
 title: >-
   CVPR2025 论文汇总 · 1818篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1818篇CVPR2025论文解读，涵盖 3D 视觉(363篇)、图像生成(305篇)、多模态 VLM(151篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1818篇CVPR2025论文解读，涵盖 3D 视觉(362篇)、图像生成(304篇)、多模态 VLM(145篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "CVPR2025论文汇总"
@@ -19,8 +19,6 @@ tags:
   - "医学图像"
   - "人体理解"
 item_list:
-  - u: "3d_vision/3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall/"
-    t: "3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination"
   - u: "3d_vision/3d-gsw_3d_gaussian_splatting_for_robust_watermarking/"
     t: "3D-GSW: 3D Gaussian Splatting for Robust Watermarking"
   - u: "3d_vision/3d-hgs_3d_half-gaussian_splatting/"
@@ -79,23 +77,21 @@ item_list:
     t: "CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images"
   - u: "3d_vision/caddreamer_cad_object_generation_from_single-view_images/"
     t: "CADDreamer: CAD Object Generation from Single-view Images"
+  - u: "3d_vision/category-agnostic_neural_object_rigging/"
+    t: "Category-Agnostic Neural Object Rigging"
 item_total: 1818
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2025 论文汇总
 
-1818篇CVPR2025论文解读，涵盖 3D 视觉(363篇)、图像生成(305篇)、多模态 VLM(151篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1818篇CVPR2025论文解读，涵盖 3D 视觉(362篇)、图像生成(304篇)、多模态 VLM(145篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
 ---
 
 ## 🧊 3D 视觉 { #3d_vision }
-
-**[3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](3d_vision/3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
-
-:   构建了3D-GRAND——首个百万级**密集接地**的3D场景-语言数据集（40K场景、6.2M指令），并提出3D-POPE幻觉评估基准，证明密集接地的指令微调能显著提升3D-LLM的接地能力并减少幻觉，还展示了合成数据到真实场景的迁移效果。
 
 **[3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d_vision/3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)**
 
@@ -2389,10 +2385,6 @@ item_total: 1818
 
 :   PPD 提出个性化偏好扩散模型微调框架：利用 VLM 从少量（4 对）偏好示例中提取用户嵌入，通过解耦交叉注意力层注入扩散模型，结合 DPO 目标同时优化多用户的个性化偏好，仅需 4 个偏好对即可为新用户生成匹配其偏好的图像（76% 胜率）。
 
-**[PhD: A ChatGPT-Prompted Visual Hallucination Evaluation Dataset](image_generation/phd_a_chatgpt-prompted_visual_hallucination_evaluation_dataset.md)**
-
-:   本文提出 PhD，一个 ChatGPT 辅助构建的大规模视觉幻觉评估数据集，包含 14K+ 日常图片、750 张反常识图片和 102K VQA 三元组，通过 4 种评估模式×5 种视觉任务系统化评估多模态大语言模型的幻觉问题，在规模和挑战性上远超现有基准。
-
 **[PICD: Versatile Perceptual Image Compression with Diffusion Rendering](image_generation/picd_versatile_perceptual_image_compression_with_diffusion_rendering.md)**
 
 :   PICD 提出了一种通用的感知图像压缩框架，通过将文本信息无损编码并与压缩图像一起用扩散模型"渲染"融合，在三个层次（领域级、适配器级、实例级）改进条件扩散模型，同时实现屏幕内容和自然图像的高视觉质量与高文本精确度。
@@ -2953,10 +2945,6 @@ item_total: 1818
 
 :   构建了Ground-V，一个包含50万指令-分割对的数据集，系统性解决真实世界指代分割中的五大挑战（幻觉引用、多对象、推理、多粒度、部件引用），训练后的VLM在gRefCOCO上N-Acc超越前SOTA 20%以上。
 
-**[HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](multimodal_vlm/halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)**
-
-:   提出HalLoc，一个15.5万样本、覆盖VQA/指令跟随/图像描述三类任务的token级幻觉标注数据集，并基于此训练了轻量级幻觉检测模型HalLocalizer，可在不影响效率的前提下即插即用地集成到现有VLM中实现实时概率化幻觉检测。
-
 **[HEIE: MLLM-Based Hierarchical Explainable AIGC Image Implausibility Evaluator](multimodal_vlm/heie_mllm-based_hierarchical_explainable_aigc_image_implausibility_evaluator.md)**
 
 :   提出HEIE——基于多模态大语言模型（MLLM）的层次化可解释AIGC图像不合理性评估器，通过CoT驱动的三位一体评估器同时输出热力图、评分和文字解释，并用自适应层次化不合理性映射器实现全局-局部缺陷的精准定位，在RichHF-18K和AbHuman数据集上达到SOTA。
@@ -3081,21 +3069,9 @@ item_total: 1818
 
 :   NVILA 提出"先放大再压缩"(Scale-then-Compress)的范式，通过提升空间和时间分辨率后再压缩视觉Token，在保持甚至超越SOTA精度的同时，将训练成本降低1.9-5.1倍、推理预填充延迟降低1.6-2.2倍、解码延迟降低1.2-2.8倍。
 
-**[Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](multimodal_vlm/octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)**
-
-:   本文揭示了多模态大模型幻觉的混合特性——不同样本甚至同一回答中的不同 token 面临不同类型的幻觉挑战（语言先验、视觉信息丢失、注意力偏差），据此提出 Octopus 框架，通过可学习的"眼睛"模块自适应识别幻觉类型，动态选择最适合的对比解码策略（"触手"），在四个基准上实现了 SOTA。
-
-**[ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](multimodal_vlm/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)**
-
-:   本文提出 ODE（Open-set Dynamic Evaluation）协议，通过图结构建模现实世界物体概念及其分布关联，从中动态提取概念组合并生成合成测试图像，实现了开放集、持续更新的多模态幻觉评估，有效避免了现有静态基准可能存在的数据污染问题。
-
 **[On the Out-of-Distribution Generalization of Multimodal Large Language Models](multimodal_vlm/on_the_out-of-distribution_generalization_of_large_multimodal_models.md)**
 
 :   本文系统评估了14个MLLM在20个数据集上的分布外泛化能力，发现MLLM在医学/分子等领域特定数据上性能近似随机，通过三假设分析确定"语义-视觉映射缺陷"为主因，并证明上下文学习（ICL）能显著缓解该问题但对标签偏移和伪相关偏移敏感。
-
-**[One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination](multimodal_vlm/one_token_two_fates_a_unified_framework_via_vision_token_manipulation_against_ml.md)**
-
-:   提出首个统一的训练无关MLLM幻觉缓解框架，围绕vision token的双重角色——增强(SVC)与抑制(CRC)——在隐表示层协同操作，在LLaVA-1.5上POPE准确率提升约2%，仅增加1.06×推理延迟。
 
 **[OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](multimodal_vlm/opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)**
 
@@ -3185,10 +3161,6 @@ item_total: 1818
 
 :   MONDAY 框架从 YouTube 教学视频自动生成移动端导航数据集——通过 OCR 场景转换检测和 GPT-4o 的 3 步动作识别流程，以人工标注 1/17 的成本（$0.34 vs $5.76/视频）构建了覆盖 iOS/Android 双平台的 313K 标注帧，预训练后 agent 在未见的 Windows Mobile 上提升 18.11%。
 
-**[Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](multimodal_vlm/seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)**
-
-:   提出 FarSight，一种即插即用的无训练解码策略，通过在因果掩码的上三角矩阵中引入注意力寄存器来吸收异常 token 的过度注意力，并设计递减掩蔽率的位置感知编码增强远距离视觉 token 的信息传播，有效缓解多模态大模型中的初始幻觉和雪球幻觉。
-
 **[Seeing the Abstract: Translating the Abstract Language for Vision Language Models](multimodal_vlm/seeing_the_abstract_translating_the_abstract_language_for_vision_language_models.md)**
 
 :   提出 ACT（Abstract-to-Concrete Translator），通过 PCA 分析抽象-具象文本在 VLM 隐空间的表征差异，在推理时无训练地将抽象描述的表征向具象方向偏移，解决 VLM 对抽象语言理解不足的问题，在时尚领域文本-图像检索任务上显著超越微调模型。
@@ -3248,10 +3220,6 @@ item_total: 1818
 **[STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection](multimodal_vlm/sting-bee_towards_vision-language_model_for_real-world_x-ray_baggage_security_in.md)**
 
 :   构建了首个多模态X射线行李安全数据集**STCray**（46,642张图像-描述对，21类威胁含IED和3D打印枪），设计**STING协议**系统生成领域感知的高质量描述，并训练领域特化VLM **STING-BEE**，在场景理解、威胁定位、视觉定地和VQA四项任务上建立新基线，并展现SOTA跨域泛化能力。
-
-**[Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target](multimodal_vlm/stop_learning_it_all_to_mitigate_visual_hallucination_focus_on_the_hallucination.md)**
-
-:   提出**TL-DPO**（Target-Learning DPO），将传统DPO的全句级偏好学习限制到**幻觉发生的目标chunk**和**对应的图像区域**，通过目标生成损失和目标条件损失排除无关信号，在LLaVA-1.5上将CHAIR_s从66.8降至20.1，同时LLaVA-Bench从63.4提升至71.2。
 
 **[SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation](multimodal_vlm/svlta_benchmarking_vision-language_temporal_alignment_via_synthetic_video_situat.md)**
 
@@ -6803,6 +6771,46 @@ item_total: 1818
 
 ---
 
+## 👻 幻觉检测 { #hallucination }
+
+**[3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](hallucination/3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
+
+:   构建了3D-GRAND——首个百万级**密集接地**的3D场景-语言数据集（40K场景、6.2M指令），并提出3D-POPE幻觉评估基准，证明密集接地的指令微调能显著提升3D-LLM的接地能力并减少幻觉，还展示了合成数据到真实场景的迁移效果。
+
+**[Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition and Object Perception](hallucination/antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)**
+
+:   提出Antidote——合成数据驱动的统一后训练框架，通过将事实先验注入提示实现模型自校正，将幻觉缓解解耦为偏好优化问题，在LLaVA系列上CP-Bench提升超50%，POPE提升1.8-3.3%，CHAIR/SHR降低30-50%，且无灾难性遗忘。
+
+**[HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](hallucination/halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)**
+
+:   提出HalLoc，一个15.5万样本、覆盖VQA/指令跟随/图像描述三类任务的token级幻觉标注数据集，并基于此训练了轻量级幻觉检测模型HalLocalizer，可在不影响效率的前提下即插即用地集成到现有VLM中实现实时概率化幻觉检测。
+
+**[Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](hallucination/octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)**
+
+:   本文揭示了多模态大模型幻觉的混合特性——不同样本甚至同一回答中的不同 token 面临不同类型的幻觉挑战（语言先验、视觉信息丢失、注意力偏差），据此提出 Octopus 框架，通过可学习的"眼睛"模块自适应识别幻觉类型，动态选择最适合的对比解码策略（"触手"），在四个基准上实现了 SOTA。
+
+**[ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](hallucination/ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)**
+
+:   本文提出 ODE（Open-set Dynamic Evaluation）协议，通过图结构建模现实世界物体概念及其分布关联，从中动态提取概念组合并生成合成测试图像，实现了开放集、持续更新的多模态幻觉评估，有效避免了现有静态基准可能存在的数据污染问题。
+
+**[One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination](hallucination/one_token_two_fates_a_unified_framework_via_vision_token_manipulation_against_ml.md)**
+
+:   提出首个统一的训练无关MLLM幻觉缓解框架，围绕vision token的双重角色——增强(SVC)与抑制(CRC)——在隐表示层协同操作，在LLaVA-1.5上POPE准确率提升约2%，仅增加1.06×推理延迟。
+
+**[PhD: A ChatGPT-Prompted Visual Hallucination Evaluation Dataset](hallucination/phd_a_chatgpt-prompted_visual_hallucination_evaluation_dataset.md)**
+
+:   本文提出 PhD，一个 ChatGPT 辅助构建的大规模视觉幻觉评估数据集，包含 14K+ 日常图片、750 张反常识图片和 102K VQA 三元组，通过 4 种评估模式×5 种视觉任务系统化评估多模态大语言模型的幻觉问题，在规模和挑战性上远超现有基准。
+
+**[Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](hallucination/seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)**
+
+:   提出 FarSight，一种即插即用的无训练解码策略，通过在因果掩码的上三角矩阵中引入注意力寄存器来吸收异常 token 的过度注意力，并设计递减掩蔽率的位置感知编码增强远距离视觉 token 的信息传播，有效缓解多模态大模型中的初始幻觉和雪球幻觉。
+
+**[Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target](hallucination/stop_learning_it_all_to_mitigate_visual_hallucination_focus_on_the_hallucination.md)**
+
+:   提出**TL-DPO**（Target-Learning DPO），将传统DPO的全句级偏好学习限制到**幻觉发生的目标chunk**和**对应的图像区域**，通过目标生成损失和目标条件损失排除无关信号，在LLaVA-1.5上将CHAIR_s从66.8降至20.1，同时LLaVA-Bench从63.4提升至71.2。
+
+---
+
 ## 🦾 LLM Agent { #llm_agent }
 
 **[ATA: Adaptive Transformation Agent for Text-Guided Subject-Position Variable Background Generation](llm_agent/ata_adaptive_transformation_agent_for_text-guided_subject-position_variable_back.md)**
@@ -6975,30 +6983,6 @@ item_total: 1818
 
 ---
 
-## 🔗 因果推理 { #causal_inference }
-
-**[Adventurer: Optimizing Vision Mamba Architecture Designs for Efficiency](causal_inference/adventurer_optimizing_vision_mamba_architecture_designs_for_efficiency.md)**
-
-:   提出 Adventurer 系列视觉模型，通过"头部平均池化 token"和"层间翻转"两个简单设计将图像输入适配到单向因果扫描框架中，使 Mamba 架构在视觉任务上实现 4-6 倍于现有 Vision Mamba 的训练速度，同时保持与 ViT 相当甚至更优的精度。
-
-**[Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition and Object Perception](causal_inference/antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)**
-
-:   提出Antidote——合成数据驱动的统一后训练框架，通过将事实先验注入提示实现模型自校正，将幻觉缓解解耦为偏好优化问题，在LLaVA系列上CP-Bench提升超50%，POPE提升1.8-3.3%，CHAIR/SHR降低30-50%，且无灾难性遗忘。
-
-**[Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual Inference](causal_inference/image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)**
-
-:   将全参考图像质量评估（FR-IQA）形式化为反事实推断问题，通过结构因果模型（SCM）区分深度特征中与感知质量因果相关的成分和噪声成分，实现无需训练、可跨骨干网络的鲁棒质量预测，在多个基准数据集上取得竞争性性能。
-
-**[Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](causal_inference/joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)**
-
-:   提出 JSCPT（Joint Scheduling of Causal Prompts and Tasks）框架，首先设计多任务视觉语言提示（MTVLP）并通过因果干预消除提示中的虚假相关特征，然后通过自适应任务调度器根据训练过程中任务关系的动态变化调整学习顺序和权重，在多个多任务视觉识别基准上取得显著提升。
-
-**[FG-VCE: Towards Fine-Grained Interpretability — Counterfactual Explanations for Misclassification with Saliency Partition](causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)**
-
-:   提出 FG-VCE（Fine-Grained Visual Contrastive Explanation）框架，通过 Shapley 值计算特征点贡献度、显著性分区模块隔离局部特征、以及迭代反事实生成策略，首次实现了对象级和部件级的细粒度反事实解释，揭示模型误分类的具体原因——"哪些细粒度特征导致了错误"以及"哪些局部区域主导了预测改变"。
-
----
-
 ## ⚖️ 对齐 / RLHF { #llm_alignment }
 
 **[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](llm_alignment/bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
@@ -7140,6 +7124,26 @@ item_total: 1818
 **[Learning Extremely High Density Crowds as Active Matters](time_series/learning_extremely_high_density_crowds_as_active_matters.md)**
 
 :   本文将极端高密度人群（≥5人/m²）建模为主动物质（active matter），提出一种结合新型"人群材料"应力模型与Toner-Tu主动力的神经随机微分方程系统，通过混合欧拉-拉格朗日的CrowdMPM框架直接从野外视频光流中学习并预测人群动力学。
+
+---
+
+## 🔗 因果推理 { #causal_inference }
+
+**[Adventurer: Optimizing Vision Mamba Architecture Designs for Efficiency](causal_inference/adventurer_optimizing_vision_mamba_architecture_designs_for_efficiency.md)**
+
+:   提出 Adventurer 系列视觉模型，通过"头部平均池化 token"和"层间翻转"两个简单设计将图像输入适配到单向因果扫描框架中，使 Mamba 架构在视觉任务上实现 4-6 倍于现有 Vision Mamba 的训练速度，同时保持与 ViT 相当甚至更优的精度。
+
+**[Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual Inference](causal_inference/image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)**
+
+:   将全参考图像质量评估（FR-IQA）形式化为反事实推断问题，通过结构因果模型（SCM）区分深度特征中与感知质量因果相关的成分和噪声成分，实现无需训练、可跨骨干网络的鲁棒质量预测，在多个基准数据集上取得竞争性性能。
+
+**[Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](causal_inference/joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)**
+
+:   提出 JSCPT（Joint Scheduling of Causal Prompts and Tasks）框架，首先设计多任务视觉语言提示（MTVLP）并通过因果干预消除提示中的虚假相关特征，然后通过自适应任务调度器根据训练过程中任务关系的动态变化调整学习顺序和权重，在多个多任务视觉识别基准上取得显著提升。
+
+**[FG-VCE: Towards Fine-Grained Interpretability — Counterfactual Explanations for Misclassification with Saliency Partition](causal_inference/towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)**
+
+:   提出 FG-VCE（Fine-Grained Visual Contrastive Explanation）框架，通过 Shapley 值计算特征点贡献度、显著性分区模块隔离局部特征、以及迭代反事实生成策略，首次实现了对象级和部件级的细粒度反事实解释，揭示模型误分类的具体原因——"哪些细粒度特征导致了错误"以及"哪些局部区域主导了预测改变"。
 
 ---
 

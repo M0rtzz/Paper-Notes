@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 模型压缩论文汇总 · 143篇论文解读
+  NeurIPS2025 模型压缩论文汇总 · 142篇论文解读
 description: >-
-  143篇NeurIPS2025的模型压缩方向论文解读，涵盖 LLM、压缩/编码、模型压缩、知识蒸馏、对抗鲁棒、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  142篇NeurIPS2025的模型压缩方向论文解读，涵盖 LLM、压缩/编码、模型压缩、知识蒸馏、对抗鲁棒、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "模型压缩"
@@ -44,8 +44,6 @@ item_list:
     t: "AutoJudge: Judge Decoding Without Manual Annotation"
   - u: "barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial/"
     t: "BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG"
-  - u: "benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms/"
-    t: "Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs"
   - u: "beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad/"
     t: "Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation"
   - u: "beyond_random_automatic_inner-loop_optimization_in_dataset_distillation/"
@@ -74,15 +72,17 @@ item_list:
     t: "DeltaFlow: An Efficient Multi-frame Scene Flow Estimation Method"
   - u: "denoiserotator_enhance_pruning_robustness_for_llms_via_importance_concentration/"
     t: "DenoiseRotator: Enhance Pruning Robustness for LLMs via Importance Concentration"
-item_total: 143
+  - u: "dense_backpropagation_improves_training_for_sparse_mixture-of-experts/"
+    t: "Dense Backpropagation Improves Training for Sparse Mixture-of-Experts"
+item_total: 142
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧠 NeurIPS2025** · **143** 篇论文解读
+**🧠 NeurIPS2025** · **142** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (61)](../../AAAI2026/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
 
 🔥 **高频主题：** LLM ×24 · 压缩/编码 ×20 · 模型压缩 ×16 · 知识蒸馏 ×8 · 对抗鲁棒 ×7
 
@@ -145,10 +145,6 @@ item_total: 143
 **[BaRISTA: Brain-Scale Informed Spatiotemporal Representation of Human Intracranial EEG](barista_brain_scale_informed_spatiotemporal_representation_of_human_intracranial.md)**
 
 :   BaRISTA 系统探索 iEEG Transformer 的空间编码尺度（电极/脑区/脑叶），发现脑区级编码 + 空间掩码重建在语言任务解码上达 86.2% AUC（vs PopT 79.5%），编码尺度选择的影响 > 掩码策略选择，且跨被试泛化性好。
-
-**[Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs](benfords_curse_tracing_digit_bias_to_numerical_hallucination_in_llms.md)**
-
-:   本文发现 LLM 的数值幻觉根源于预训练语料中符合 Benford 定律的数字频率分布——数字 1 出现概率 ~30% 而数字 9 仅 ~5%，这种偏差被 FFN 后期层的特定"数字选择性神经元"内化，提出数字选择性分数（DSC）定位偏差神经元并通过剪枝 0.01% 的神经元修正 1.36-3.49% 的错误预测。
 
 **[Beyond Higher Rank: Token-wise Input-Output Projections for Efficient Low-Rank Adaptation](beyond_higher_rank_token-wise_input-output_projections_for_efficient_low-rank_ad.md)**
 

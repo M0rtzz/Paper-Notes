@@ -131,7 +131,7 @@ tags:
 - [\[ICCV 2025\] MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding](musevl_modeling_unified_vlm_through_semantic_discrete_encodi.md)
 - [\[NeurIPS 2025\] UniTok: A Unified Tokenizer for Visual Generation and Understanding](../../NeurIPS2025/multimodal_vlm/unitok_a_unified_tokenizer_for_visual_generation_and_understanding.md)
 - [\[ACL 2026\] STELLA: A Multimodal LLM for Protein Functional Annotation via Unified Sequence-Structure Encoding](../../ACL2026/multimodal_vlm/stella_a_multimodal_llm_for_protein_functional_annotation_via_unified_sequence-s.md)
-- [\[ICCV 2025\] Visual Interestingness Decoded: How GPT-4o Mirrors Human Interests](visual_interestingness_decoded_how_gpt-4o_mirrors_human_interests.md)
+- [\[CVPR 2026\] Customized Visual Storytelling with Unified Multimodal LLMs](../../CVPR2026/multimodal_vlm/customized_visual_storytelling_with_unified_multimodal_llms.md)
 
 </div>
 

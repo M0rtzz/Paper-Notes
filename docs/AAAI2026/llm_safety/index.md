@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM安全论文汇总 · 42篇论文解读
+  AAAI2026 LLM安全论文汇总 · 41篇论文解读
 description: >-
-  42篇AAAI2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、多模态、持续学习、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  41篇AAAI2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、多模态、持续学习、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "LLM 安全"
@@ -53,8 +53,6 @@ item_list:
     t: "Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures"
   - u: "graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns/"
     t: "GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs"
-  - u: "hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m/"
-    t: "Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models"
   - u: "invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi/"
     t: "Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving"
   - u: "iseal_encrypted_fingerprinting_for_reliable_llm_ownership_verification/"
@@ -75,15 +73,17 @@ item_list:
     t: "Perturb Your Data: Paraphrase-Guided Training Data Watermarking"
   - u: "principles2plan_llm-guided_system_for_operationalising_ethical_principles_into_p/"
     t: "Principles2Plan: LLM-Guided System for Operationalising Ethical Principles into Plans"
-item_total: 42
+  - u: "prism_privacy-aware_routing_for_adaptive_cloud-edge_llm_inference_via_semantic_s/"
+    t: "PRISM: Privacy-Aware Routing for Adaptive Cloud-Edge LLM Inference via Semantic Sketch Collaboration"
+item_total: 41
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🤖 AAAI2026** · **42** 篇论文解读
+**🤖 AAAI2026** · **41** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
 🔥 **高频主题：** LLM ×19 · 对抗鲁棒 ×8 · 联邦学习 ×4 · 多模态 ×3 · 持续学习 ×2
 
@@ -162,10 +162,6 @@ item_total: 42
 **[GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs](graphtextack_a_realistic_black-box_node_injection_attack_on_llm-enhanced_gnns.md)**
 
 :   提出 GraphTextack——首个针对 LLM 增强 GNN 的黑盒多模态节点注入投毒攻击，通过进化优化框架联合优化注入节点的图结构连接和语义特征，不依赖模型内部信息或代理模型，在5个数据集和2类LLM-GNN模型上显著优于12种基线方法。
-
-**[Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models](hallucination_stations_on_some_basic_limitations_of_transformer-based_language_m.md)**
-
-:   从计算复杂度理论出发证明 Transformer LLM 每步推理复杂度为 $O(N^2 \cdot d)$，基于时间层次定理（Hartmanis-Stearns），任何需要超过此复杂度的计算任务——如 $O(n^3)$ 矩阵乘法、$O(n^k)$ token 组合、TSP 验证等——LLM 必然无法正确完成（即产生幻觉），且 LLM Agent 也无法验证此类任务的正确性。
 
 **[Invisible Triggers, Visible Threats! Road-Style Adversarial Creation Attack for Visual 3D Detection in Autonomous Driving](invisible_triggers_visible_threats_road-style_adversarial_creation_attack_for_vi.md)**
 

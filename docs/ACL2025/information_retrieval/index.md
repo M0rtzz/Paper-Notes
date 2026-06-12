@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 信息检索/RAG论文汇总 · 85篇论文解读
+  ACL2025 信息检索/RAG论文汇总 · 82篇论文解读
 description: >-
-  85篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、问答、对抗鲁棒、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  82篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、问答、对抗鲁棒、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "信息检索/RAG"
@@ -51,8 +51,6 @@ item_list:
     t: "Divide-Then-Align: Honest Alignment based on the Knowledge Boundary of RAG"
   - u: "dont_reinvent_the_wheel_efficient_instruction-following_text_embedding_based_on_/"
     t: "Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation"
-  - u: "drag_distilling_rag_slm/"
-    t: "DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination"
   - u: "drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever/"
     t: "Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers"
   - u: "empaths_at_semeval-2025_task_11_retrieval-augmented_approach_to_perceived_emotio/"
@@ -75,17 +73,19 @@ item_list:
     t: "GainRAG: Preference Alignment in Retrieval-Augmented Generation through Gain Signal Synthesis"
   - u: "garage_a_benchmark_with_grounding_annotations_for_rag_evaluation/"
     t: "GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation"
-item_total: 85
+  - u: "genie_worksheets_tod_agent/"
+    t: "Controllable and Reliable Knowledge-Intensive Task-Oriented Conversational Agents with Declarative Genie Worksheets"
+item_total: 82
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2025** · **85** 篇论文解读
+**💬 ACL2025** · **82** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (74)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×55 · LLM ×13 · 问答 ×5 · 对抗鲁棒 ×5 · 推理 ×3
+🔥 **高频主题：** RAG ×52 · LLM ×12 · 问答 ×5 · 对抗鲁棒 ×5 · 推理 ×3
 
 **[A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)**
 
@@ -156,10 +156,6 @@ item_total: 85
 **[Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation](dont_reinvent_the_wheel_efficient_instruction-following_text_embedding_based_on_.md)**
 
 :   提出 GSTransform 框架，通过轻量级空间变换将预计算的通用嵌入实时适配到用户指令指定的语义空间，避免每次新指令都重新编码全部语料，在 9 个数据集上平均得分 66.01（SOTA 基线 55.31），同时实现 6~300 倍实时加速。
-
-**[DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination](drag_distilling_rag_slm.md)**
-
-:   DRAG 提出了一种从大模型向小模型蒸馏 RAG 能力的框架：用大模型（如 GPT-4o）为给定问题生成证据和知识图谱三元组，经排序过滤后作为结构化上下文输入给小模型（2B-9B），无需微调即可将小模型在 ARC-C 上提升高达 27.7%，同时显著减少幻觉。
 
 **[Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers](drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever.md)**
 
@@ -348,14 +344,6 @@ item_total: 85
 **[Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings](redundancy_isotropy_and_intrinsic_dimensionality_of_prompt-based_text_embeddings.md)**
 
 :   系统研究了基于Prompt的文本嵌入模型（如gte-Qwen2、E5-mistral等）在后处理降维下的性能鲁棒性，发现分类/聚类任务仅保留原始维度的0.5%即可基本保持性能，并通过内在维度（ID）和各向同性（IsoScore）两个指标定量解释了不同任务Prompt产生的嵌入冗余度差异。
-
-**[REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)**
-
-:   提出 REFIND 框架，通过计算每个 token 在有无检索文档条件下的生成概率之比（Context Sensitivity Ratio, CSR），实现对 LLM 输出中幻觉片段的高效检测，在 SemEval-2025 Task 3 的 9 种语言上显著超越基线。
-
-**[Removal of Hallucination on Hallucination: Debate-Augmented RAG](removal_of_hallucination_on_hallucination_debate-augmented_rag.md)**
-
-:   DRAG（Debate-Augmented RAG）提出在RAG系统的检索和生成两个阶段均引入多智能体辩论（MAD）机制，通过正反方辩论+裁判仲裁的结构化流程，消除因错误检索导致的"幻觉传递幻觉"问题，在6个QA基准上显著提升事实准确性。
 
 **[Reranking-based Generation for Unbiased Perspective Summarization](reranking-based_generation_for_unbiased_perspective_summarization.md)**
 

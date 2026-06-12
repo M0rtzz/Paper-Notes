@@ -141,7 +141,7 @@ $$W^* = \arg\min_W \|Y - XW\|_F^2 + \alpha\|W\|_F^2$$
 - [\[NeurIPS 2025\] Conditional Distribution Compression via the Kernel Conditional Mean Embedding](conditional_distribution_compression_via_the_kernel_conditional_mean_embedding.md)
 - [\[NeurIPS 2025\] Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences](deep_value_benchmark_measuring_whether_models_generalize_deep_values_or_shallow_.md)
 - [\[ICML 2025\] Leveraging Predictive Equivalence in Decision Trees](../../ICML2025/interpretability/leveraging_predictive_equivalence_in_decision_trees.md)
-- [\[NeurIPS 2025\] Saying the Unsaid: Revealing the Hidden Language of Multimodal Systems Through Telephone Games](saying_the_unsaid_revealing_the_hidden_language_of_multimodal_systems_through_te.md)
+- [\[NeurIPS 2025\] How Do Transformers Learn Implicit Reasoning?](how_do_transformers_learn_implicit_reasoning.md)
 
 </div>
 

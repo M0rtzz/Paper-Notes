@@ -178,7 +178,7 @@ $$\mathcal{L}_{SYNC} = \mathcal{L}_{evolve} + \alpha_1 \mathcal{L}_{MI} + \alpha
 - [\[ICML 2025\] E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)
 - [\[ICML 2025\] Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)
 - [\[ICML 2025\] Internal Causal Mechanisms Robustly Predict Language Model Out-of-Distribution Behaviors](internal_causal_mechanisms_robustly_predict_language_model_out-of-distribution_b.md)
-- [\[ICML 2025\] Position: Causal Machine Learning Requires Rigorous Synthetic Experiments for Broader Adoption](position_causal_machine_learning_requires_rigorous_synthetic_experiments_for_bro.md)
+- [\[NeurIPS 2025\] LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
 
 </div>
 

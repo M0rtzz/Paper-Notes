@@ -130,10 +130,10 @@ PrivacyPair 数据构建 → 逐层可学习向量 $m_l$ 量化特征变化 → 
 ## 相关论文
 
 - [\[ACL 2025\] Unveiling Privacy Risks in LLM Agent Memory](../../ACL2025/llm_safety/mextra_agent_memory_privacy.md)
-- [\[CVPR 2026\] Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](../../CVPR2026/llm_safety/mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)
-- [\[ICML 2025\] The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/llm_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
 - [\[ACL 2025\] PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts](../../ACL2025/llm_safety/pig_privacy_jailbreak.md)
-- [\[CVPR 2026\] HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](../../CVPR2026/llm_safety/hulluedit_subspace_editing_hallucination.md)
+- [\[ICML 2025\] The Canary's Echo: Auditing Privacy Risks of LLM-Generated Synthetic Text](../../ICML2025/llm_safety/the_canarys_echo_auditing_privacy_risks_of_llm-generated_synthetic_text.md)
+- [\[ACL 2025\] The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](../../ACL2025/llm_safety/tug_of_war_fairness_privacy.md)
+- [\[ICML 2025\] Targeted Unlearning with Single Layer Unlearning Gradient](../../ICML2025/llm_safety/targeted_unlearning_with_single_layer_unlearning_gradient.md)
 
 </div>
 

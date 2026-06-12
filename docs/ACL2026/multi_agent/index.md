@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 多智能体论文汇总 · 39篇论文解读
+  ACL2026 多智能体论文汇总 · 38篇论文解读
 description: >-
-  39篇ACL2026的多智能体方向论文解读，涵盖 Agent、LLM、推理、问答、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ACL2026的多智能体方向论文解读，涵盖 Agent、LLM、推理、问答、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "多智能体"
@@ -34,8 +34,6 @@ item_list:
     t: "ConSensus: Multi-Agent Collaboration for Multimodal Sensing"
   - u: "debating_the_unspoken_role-anchored_multi-agent_reasoning_for_half-truth_detecti/"
     t: "Debating the Unspoken: Role-Anchored Multi-Agent Reasoning for Half-Truth Detection"
-  - u: "dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria/"
-    t: "Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate"
   - u: "diversity_collapse_in_multi-agent_llm_systems_structural_coupling_and_collective/"
     t: "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation"
   - u: "efficient_multi-agent_system_training_with_data_influence-oriented_tree_search/"
@@ -74,17 +72,19 @@ item_list:
     t: "Preference Estimation via Opponent Modeling in Multi-Agent Negotiation"
   - u: "protea_offline_evaluation_and_iterative_refinement_for_multi-agent_llm_workflows/"
     t: "PROTEA: Offline Evaluation and Iterative Refinement for Multi-Agent LLM Workflows"
-item_total: 39
+  - u: "roadmapper_a_multi-agent_system_for_roadmap_generation_of_solving_complex_resear/"
+    t: "RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems"
+item_total: 38
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 👥 多智能体
 
-**💬 ACL2026** · **39** 篇论文解读
+**💬 ACL2026** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/multi_agent/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/multi_agent/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/multi_agent/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/multi_agent/index.md) · [🧪 ICML2025 (7)](../../ICML2025/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/multi_agent/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/multi_agent/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/multi_agent/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/multi_agent/index.md) · [🧪 ICML2025 (7)](../../ICML2025/multi_agent/index.md) · [💬 ACL2025 (8)](../../ACL2025/multi_agent/index.md)
 
-🔥 **高频主题：** Agent ×34 · LLM ×13 · 推理 ×5 · 问答 ×3 · 对抗鲁棒 ×3
+🔥 **高频主题：** Agent ×33 · LLM ×13 · 推理 ×5 · 问答 ×3 · 对抗鲁棒 ×2
 
 **[A Multi-Agent Framework for Feature-Constrained Difficulty Control in Reading Comprehension Item Generation](a_multi-agent_framework_for_feature-constrained_difficulty_control_in_reading_co.md)**
 
@@ -125,10 +125,6 @@ item_total: 39
 **[Debating the Unspoken: Role-Anchored Multi-Agent Reasoning for Half-Truth Detection](debating_the_unspoken_role-anchored_multi-agent_reasoning_for_half-truth_detecti.md)**
 
 :   提出RADAR框架，通过角色锚定（政客 vs 科学家）的多智能体辩论来检测基于遗漏上下文的半真半假信息，配合双阈值自适应早停机制，在噪声检索条件下一致超越单智能体和传统多智能体基线。
-
-**[Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate](dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria.md)**
-
-:   提出 Dialectic-Med，一个受波普尔证伪主义启发的多智能体医学诊断框架，通过提议者（诊断假设）、反对者（视觉证伪模块主动检索矛盾视觉证据）和调解者（加权共识图决策）的对抗辩证推理，在 MIMIC-CXR-VQA、VQA-RAD 和 PathVQA 上取得 SOTA，解释忠实度提升 12.5%，显著缓解诊断幻觉。
 
 **[Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation](diversity_collapse_in_multi-agent_llm_systems_structural_coupling_and_collective.md)**
 

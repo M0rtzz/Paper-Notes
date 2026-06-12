@@ -83,7 +83,7 @@ item_total: 34
 
 **🔬 ICLR2026** · **34** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (70)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (68)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
 🔥 **高频主题：** 语音 ×19 · 推理 ×5 · 情感分析 ×4 · 对抗鲁棒 ×3 · 对齐/RLHF ×2
 

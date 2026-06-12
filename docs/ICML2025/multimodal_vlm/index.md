@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 多模态VLM论文汇总 · 51篇论文解读
+  ICML2025 多模态VLM论文汇总 · 50篇论文解读
 description: >-
-  51篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、对齐/RLHF、LLM、扩散模型、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  50篇ICML2025的多模态 VLM 方向论文解读，涵盖多模态、推理、对齐/RLHF、LLM、扩散模型、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "多模态 VLM"
@@ -63,8 +63,6 @@ item_list:
     t: "LEMoN: Label Error Detection using Multimodal Neighbors"
   - u: "llavaguard_an_open_vlm-based_framework_for_safeguarding_vision_datasets_and_mode/"
     t: "LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models"
-  - u: "look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit/"
-    t: "Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models"
   - u: "m3-jepa_multimodal_alignment_via_multi-gate_moe_based_on_the_joint-embedding_pre/"
     t: "M3-JEPA: Multimodal Alignment via Multi-gate MoE based on JEPA"
   - u: "mmedpo_aligning_medical_vision-language_models_with_clinical-aware_multimodal_pr/"
@@ -75,17 +73,19 @@ item_list:
     t: "MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding"
   - u: "omnibal_towards_fast_instruction-tuning_for_vision-language_models_via_omniverse/"
     t: "OmniBal: Towards Fast Instruction-Tuning for Vision-Language Models via Omniverse Computation Balance"
-item_total: 51
+  - u: "overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab/"
+    t: "Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner"
+item_total: 50
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🧪 ICML2025** · **51** 篇论文解读
+**🧪 ICML2025** · **50** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×34 · 推理 ×5 · 对齐/RLHF ×5 · LLM ×4 · 扩散模型 ×2
+🔥 **高频主题：** 多模态 ×33 · 推理 ×5 · 对齐/RLHF ×5 · LLM ×3 · 扩散模型 ×2
 
 **[CoCoA-Mix: Confusion-and-Confidence-Aware Mixture Model for Context Optimization](cocoa-mix_confusion-and-confidence-aware_mixture_model_for_context_optimization.md)**
 
@@ -182,10 +182,6 @@ item_total: 51
 **[LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models](llavaguard_an_open_vlm-based_framework_for_safeguarding_vision_datasets_and_mode.md)**
 
 :   提出 LlavaGuard——基于开源 VLM 的视觉内容安全审核框架，通过可定制安全分类体系、高质量人工标注数据集与策略增强训练，实现对图像内容的灵活、精准安全评估，在准确率和策略适应性上大幅超越现有开源与闭源审核工具。
-
-**[Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models](look_twice_before_you_answer_memory-space_visual_retracing_for_hallucination_mit.md)**
-
-:   提出 MemVR 解码范式，将视觉 token 作为补充证据通过 FFN 的 key-value memory 机制重新注入到中间触发层，以"再看一次"的方式缓解 MLLM 幻觉问题，不引入额外推理开销。
 
 **[M3-JEPA: Multimodal Alignment via Multi-gate MoE based on JEPA](m3-jepa_multimodal_alignment_via_multi-gate_moe_based_on_the_joint-embedding_pre.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   ACL2025 论文汇总 · 1855篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(132篇)、多语言/翻译(89篇)、LLM 评测(88篇)、信息检索/RAG(85篇)、对齐 / RLHF(75篇)、LLM 安全(70篇)、模型压缩(67篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(126篇)、多语言/翻译(88篇)、LLM 评测(87篇)、信息检索/RAG(82篇)、对齐 / RLHF(75篇)、模型压缩(67篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "ACL2025论文汇总"
@@ -16,8 +16,8 @@ tags:
   - "LLM 评测"
   - "信息检索/RAG"
   - "对齐 / RLHF"
-  - "LLM 安全"
   - "模型压缩"
+  - "LLM Agent"
 item_list:
   - u: "llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant/"
     t: "A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant"
@@ -85,7 +85,7 @@ item_total: 1855
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 ACL2025 论文汇总
 
-1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(132篇)、多语言/翻译(89篇)、LLM 评测(88篇)、信息检索/RAG(85篇)、对齐 / RLHF(75篇)、LLM 安全(70篇)、模型压缩(67篇)等 44个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(126篇)、多语言/翻译(88篇)、LLM 评测(87篇)、信息检索/RAG(82篇)、对齐 / RLHF(75篇)、模型压缩(67篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -1659,10 +1659,6 @@ item_total: 1855
 
 :   本文发现 LLM 中存在类似人脑视觉皮层的"视觉区域"——稀疏且均匀分布的层集合，仅更新 25% 的层即可保留 99% 的视觉性能，同时保持甚至提升语言能力，并据此提出了高效的视觉区域定向训练和剪枝范式。
 
-**[Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention](multimodal_vlm/activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m.md)**
-
-:   本文提出 ASD（Activation Steering Decoding），一种无需训练的推理时幻觉缓解方法，通过在 LVLM 的中间隐藏状态中识别幻觉方向模式，利用双向引导和对比解码来抑制幻觉输出，同时保持模型在通用视觉理解任务上的性能。
-
 **[AdamMeme: Adaptively Probe the Reasoning Capacity of Multimodal Large Language Models on Harmfulness](multimodal_vlm/adammeme_adaptively_probe_the_reasoning_capacity_of_multimodal_large_language_mo.md)**
 
 :   提出AdamMeme——一个基于多智能体协作的自适应评估框架，通过迭代生成更具挑战性的meme样本来探测多模态大语言模型(mLLM)在有害内容理解上的推理能力和特定弱点。
@@ -1831,10 +1827,6 @@ item_total: 1855
 
 :   系统探究为何生成式多模态LLM（如LLaVA）使用与CLIP相同的视觉编码器却能在视觉推理任务上大幅超越CLIP，发现patch token、位置编码和prompt加权是关键因素。
 
-**[FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](multimodal_vlm/fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)**
-
-:   本文提出 FIHA，一个无需 LLM 和人工标注的自动化细粒度幻觉评估框架，通过从图像和描述中提取实体、属性和关系生成 Q&A 对，并引入 Davidson 场景图（DSG）建模问题间的依赖关系，构建了 FIHA-v1 基准，全面评估了主流大视觉语言模型的幻觉水平。
-
 **[Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](multimodal_vlm/filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)**
 
 :   TikTok提出一种基于MLLM的两阶段级联内容审核系统（Router-Ranker），通过轻量级嵌入检索路由器过滤97.5%的合规流量，仅将高风险视频送入微调后的LLaVA进行精细分类，F1提升66.5%的同时部署成本降至直接全量部署的1.5%。
@@ -1959,10 +1951,6 @@ item_total: 1855
 
 :   提出MIRe框架，通过"无融合模态交互"（fusion-free modality interaction）在视觉-文本对齐阶段避免直接融合文本特征，利用查询引导注意力池化模块让文本嵌入引导视觉信息提取但不将文本信号反馈回视觉表示，有效缓解多模态检索中的文本主导问题，在四个基准上取得零样本SOTA。
 
-**[Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](multimodal_vlm/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)**
-
-:   提出了 Mixture of Decoding (MoD)，通过 JS 散度衡量模型对图像 token 注意力的正确性，在注意力正确时采用互补解码放大关键信息，注意力错误时采用对比解码抑制误导信息，从而自适应地缓解多模态大模型的幻觉问题。
-
 **[MMBoundary: Advancing MLLM Knowledge Boundary Awareness through Reasoning Step Confidence Calibration](multimodal_vlm/mmboundary_reasoning_step_confidence.md)**
 
 :   提出 MMBoundary 框架，通过在推理链的每一步插入自然语言置信度表述（而非只在最终回答后给置信度），结合文本+跨模态的自奖励信号估计置信度，并用 SFT+RL 两阶段训练实现步级置信度校准，平均降低 7.5% 校准误差并提升 8.3% 任务准确率。
@@ -2031,17 +2019,9 @@ item_total: 1855
 
 :   提出 RedundancyLens 框架，系统揭示了 decoder-only MLLM 中视觉 token 在自注意力和 FFN 操作上存在大量结构化、聚簇式冗余，并利用这一发现实现免训练推理加速，与现有 token 压缩方法正交且可组合。
 
-**[ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](multimodal_vlm/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)**
-
-:   提出首个系统性评估多模态大模型**关系级幻觉**的综合基准 Reefknot（含 2 万+ 样本、三种任务），并基于置信度熵检测提出 Detect-then-Calibrate 缓解策略，平均降低幻觉率 9.75%。
-
 **[Response Wide Shut: Surprising Observations in Basic Vision Language Model Capabilities](multimodal_vlm/response_wide_shut_surprising_observations_in_basic_vision_language_model_capabi.md)**
 
 :   通过在VLM的三个中间特征空间（视觉编码器、VL投影层、语言解码器）上训练线性探针，系统揭示了一个反直觉的现象：对于大多数视觉任务，视觉编码器和VL投影层其实保留了充分的视觉信息，真正的瓶颈在于语言解码器的响应空间——信息在从投影层传递到最终文本输出的过程中大量丢失。
-
-**[Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](multimodal_vlm/retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)**
-
-:   提出 RVCD（Retrieval Visual Contrastive Decoding），通过检索 AI 生成的单概念显式图像构建正/负 logit 集合，在解码阶段抑制 LVLM 的物体幻觉（Object Hallucination），无需额外训练即可显著优于现有解码方法。
 
 **[Scalable Vision Language Model Training via High Quality Data Curation](multimodal_vlm/scalable_vision_language_model_training_via_high_quality_data_curation.md)**
 
@@ -2143,10 +2123,6 @@ item_total: 1855
 
 :   提出 MATE 基准（5,500 个问答实例），通过合成 3D 场景的跨模态属性检索任务系统评估 VLM 的实体链接能力，发现即使最强闭源模型仍落后人类约 15 个百分点，且性能随场景物体数量增加急剧下降——根源在于跨模态特征绑定而非单模态感知。
 
-**[Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](multimodal_vlm/visual_evidence_prompting.md)**
-
-:   提出Visual Evidence Prompting (VEP)，利用小型视觉专家模型（目标检测器、场景图生成器）的输出作为文本化"视觉证据"输入LVLM，无需训练即可在11个LVLM上显著降低幻觉——LLaVA-1.5在POPE上提升7.2%、Claude 3上提升12.1%。
-
 **[VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](multimodal_vlm/visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)**
 
 :   本文提出VisuoThink框架，通过视觉-文本交织推理和预测性前瞻树搜索，在推理过程中动态整合视觉辅助信息并探索多条推理路径，无需微调即可在几何和空间推理任务上实现SOTA性能（Geomverse-109上Accuracy@1最高达48.5%，相比最优基线提升21.8%）。
@@ -2226,10 +2202,6 @@ item_total: 1855
 **[CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning](multilingual_mt/cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_.md)**
 
 :   本文提出 CC-Tuning，一种在隐空间层面显式建立跨语言连接的多语言微调范式，通过融合英语和非英语输入的前馈激活来提升非英语语言的能力，并在推理时利用 Transform Matrix 模拟跨语言连接。
-
-**[CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models](multilingual_mt/cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_.md)**
-
-:   提出首个**联合跨语言与跨模态**幻觉检测基准 CCHall，覆盖 9 种语言和 4 类多模态数据集，系统评估 6 款主流 MLLM 在联合场景下的幻觉表现，揭示当前模型在该联合场景中 F1 比单独跨模态低 10.9、比单独跨语言低 3.4，且提出多语提示和外部工具辅助两条缓解路径。
 
 **[CLIX: Cross-Lingual Explanations of Idiomatic Expressions](multilingual_mt/clix_cross-lingual_explanations_of_idiomatic_expressions.md)**
 
@@ -2691,10 +2663,6 @@ item_total: 1855
 
 :   提出 GuessArena，一种基于"猜猜我是谁"博弈游戏的自适应 LLM 评估框架，通过领域知识建模和多轮交互推理，在五个垂直行业中有效区分模型的领域知识和推理能力。
 
-**[HalluLens: LLM Hallucination Benchmark](llm_evaluation/hallulens_llm_hallucination_benchmark.md)**
-
-:   提出了 HalluLens 幻觉基准，明确区分幻觉与事实性，建立了外在幻觉（与训练数据不一致）和内在幻觉（与输入上下文不一致）的清晰分类体系，引入三个动态可重生成的外在幻觉评估任务，并全面分析了现有基准的局限性。
-
 **[HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning](llm_evaluation/hellaswag-pro_a_large-scale_bilingual_benchmark_for_evaluating_the_robustness_of.md)**
 
 :   构建首个大规模双语（中英）LLM 常识推理鲁棒性评估基准 HellaSwag-Pro，通过 7 种推理形式变体对 1,600 道原始题生成 11,200 道变体题，在 41 个 LLM 上的系统评估表明所有模型在常识推理鲁棒性上远未达标——否定变换平均准确率仅 9.01%，人机差距显著。
@@ -2969,10 +2937,6 @@ item_total: 1855
 
 :   提出 GSTransform 框架，通过轻量级空间变换将预计算的通用嵌入实时适配到用户指令指定的语义空间，避免每次新指令都重新编码全部语料，在 9 个数据集上平均得分 66.01（SOTA 基线 55.31），同时实现 6~300 倍实时加速。
 
-**[DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination](information_retrieval/drag_distilling_rag_slm.md)**
-
-:   DRAG 提出了一种从大模型向小模型蒸馏 RAG 能力的框架：用大模型（如 GPT-4o）为给定问题生成证据和知识图谱三元组，经排序过滤后作为结构化上下文输入给小模型（2B-9B），无需微调即可将小模型在 ARC-C 上提升高达 27.7%，同时显著减少幻觉。
-
 **[Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers](information_retrieval/drama_diverse_augmentation_from_large_language_models_to_smaller_dense_retriever.md)**
 
 :   提出 Drama 框架，系统性地探索多种基于 LLM 的数据增强策略（裁剪句+合成查询+LLM 重排序偏好）与 LLM 剪枝 backbone 的结合，在单阶段对比学习中训练出 0.1B-1B 参数的小型检索器，在 BEIR 上以 0.3B 参数匹配 1B 参数的 Gecko，且具备强多语言和长上下文能力。
@@ -3160,14 +3124,6 @@ item_total: 1855
 **[Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings](information_retrieval/redundancy_isotropy_and_intrinsic_dimensionality_of_prompt-based_text_embeddings.md)**
 
 :   系统研究了基于Prompt的文本嵌入模型（如gte-Qwen2、E5-mistral等）在后处理降维下的性能鲁棒性，发现分类/聚类任务仅保留原始维度的0.5%即可基本保持性能，并通过内在维度（ID）和各向同性（IsoScore）两个指标定量解释了不同任务Prompt产生的嵌入冗余度差异。
-
-**[REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](information_retrieval/refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)**
-
-:   提出 REFIND 框架，通过计算每个 token 在有无检索文档条件下的生成概率之比（Context Sensitivity Ratio, CSR），实现对 LLM 输出中幻觉片段的高效检测，在 SemEval-2025 Task 3 的 9 种语言上显著超越基线。
-
-**[Removal of Hallucination on Hallucination: Debate-Augmented RAG](information_retrieval/removal_of_hallucination_on_hallucination_debate-augmented_rag.md)**
-
-:   DRAG（Debate-Augmented RAG）提出在RAG系统的检索和生成两个阶段均引入多智能体辩论（MAD）机制，通过正反方辩论+裁判仲裁的结构化流程，消除因错误检索导致的"幻觉传递幻觉"问题，在6个QA基准上显著提升事实准确性。
 
 **[Reranking-based Generation for Unbiased Perspective Summarization](information_retrieval/reranking-based_generation_for_unbiased_perspective_summarization.md)**
 
@@ -3540,290 +3496,6 @@ item_total: 1855
 **[World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning](llm_alignment/world_modeling_makes_a_better_planner_dual_preference_optimization_for_embodied_.md)**
 
 :   提出 Dual Preference Optimization (D²PO) 框架，通过联合优化状态预测（世界建模）和动作选择两个目标的偏好学习，使视觉语言模型在具身任务规划中同时学会"理解世界动态"和"做出更好决策"，7B 模型大幅超越 GPT-4o。
-
----
-
-## 🔒 LLM 安全 { #llm_safety }
-
-**[A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models](llm_safety/a_statistical_and_multi-perspective_revisiting_of_the_membership_inference_attac.md)**
-
-:   本文通过数千次实验从统计视角全面重新审视 LLM 中的成员推断攻击（MIA），从数据分割方式、模型规模、领域特性、文本特征、嵌入可分性和解码动态六个维度分析 MIA 性能的不一致性，揭示了阈值泛化、文本长度/相似性影响、嵌入层涌现变化等此前被忽视的发现。
-
-**[AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)**
-
-:   提出 AGrail，一个终身学习的 LLM Agent 安全护栏框架，通过双 LLM 协作（Analyzer + Executor）和记忆模块，在测试时自适应地生成和优化安全检查策略，有效防御任务特定风险和系统性风险。
-
-**[Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](llm_safety/aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)**
-
-:   提出NOVA框架，通过内部一致性探测(ICP)衡量LLM对指令的熟悉度+语义等价识别(SEI)衡量LLM对目标回复的熟悉度，筛选出知识对齐的高质量指令数据，仅用5%数据微调LLaMA-3-8B即可在BioGEN上提升8.6分、FollowRAG上提升7.2分，同时保持指令遵循能力。
-
-**[Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning](llm_safety/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md)**
-
-:   本文针对LLM中因知识错位（模型参数知识与事实不一致）导致的幻觉问题，提出选择性弃权学习（Selective Abstention Learning）方法，让模型在遇到知识边界外的问题时学会主动拒绝回答而非编造内容，从而减少幻觉。
-
-**[Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](llm_safety/answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)**
-
-:   提出"上下文知识遗忘"方法，通过引入特殊的遗忘 token `<<UNL>>...<</UNL>>` 使 LLM 在推理时根据上下文选择性遗忘特定知识，在 TOFU/AGE/RWKU 上达到 95% 遗忘准确率且保留 80% 无关知识，深入的内部分析发现 LLM 并未真正删除知识而是在最后一层"假装遗忘"。
-
-**[Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](llm_safety/are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding.md)**
-
-:   本文挑战了"LLM隐藏状态能编码事实真假信息"这一先前结论，通过构建更真实、更具挑战性的数据集（基于困惑度的负样本采样和基于QA的LLM生成数据集），发现先前方法在更贴近实际场景的数据上泛化能力有限，为LLM事实性评估研究提供了更严格的评估基准和实践指导。
-
-**[Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](llm_safety/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)**
-
-:   本文针对文化遗产图像检索任务，提出了一个结合自动解释生成和幻觉检测的框架，利用视觉语言模型为检索结果生成可解释的文本描述，同时通过领域知识约束的幻觉检测机制确保描述的事实准确性，在多个文化遗产数据集上验证了方法的有效性。
-
-**[Bias in the Mirror: Are LLMs' Opinions Robust to Their Own Adversarial Attacks](llm_safety/bias_in_the_mirror_are_llms_opinions_robust_to_their_own_adversarial_attacks.md)**
-
-:   本文提出一种新颖的"自辩论"范式，让同一个LLM的两个实例分别扮演正方和反方进行辩论，试图说服一个中立版本的模型，以此评估LLM内在偏见的鲁棒性——偏见是否容易被动摇，以及模型是否容易被自身的对抗性论证带偏。
-
-**[CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](llm_safety/cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)**
-
-:   提出 CAVGAN 框架，利用生成对抗网络在 LLM 内部表示空间中同时学习越狱攻击（生成器）和安全防御（判别器），首次将攻防统一到同一框架中实现"攻防共进"，攻击成功率平均 88.85%，防御成功率平均 84.17%。
-
-**[Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](llm_safety/chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)**
-
-:   提出 Chinese SimpleQA——首个全面的中文事实性评估基准，包含 3000 个高质量短问答（覆盖 6 大主题、99 个子主题），评估 41 个 LLM 后发现仅 o1-preview（63.8%）和 Doubao-pro-32k（61.9%）能通过，并系统揭示了"大模型更好"、"RAG缩小差距"、"对齐降低事实性"等关键洞察。
-
-**[CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](llm_safety/cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)**
-
-:   提出 CLIPErase，一种专为 CLIP 多模态模型设计的机器遗忘框架，通过遗忘模块、保留模块和一致性模块三部分协同，选择性地移除特定视觉-文本关联，同时保持模型在保留数据上的性能。
-
-**[ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](llm_safety/comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)**
-
-:   构建 ComparisonQA 基准（283K 配对问题），通过让高频和低频实体共享同一抽象问题实现受控对比，结合正确性和不确定性的两轮评估方法发现 LLM（包括 GPT-4o）对低频知识的鲁棒性极差。
-
-**[Core: Robust Factual Precision with Informative Sub-Claim Identification](llm_safety/core_robust_factual_precision_with_informative_sub-claim_identification.md)**
-
-:   本文提出 Core 框架，通过识别和过滤信息性子声明（informative sub-claims）来实现鲁棒的事实精度（factual precision）评估，解决了现有方法因无信息声明的稀释效应而导致评估不准确的问题。
-
-**[Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](llm_safety/correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)**
-
-:   系统性地探究了两种自纠正方法（CoVE 和 RARR）在新闻摘要幻觉纠正中的表现，比较了三种搜索引擎、多种检索设置和提示策略，发现 Bing 搜索片段 + RARR（few-shot）组合效果最佳，且 G-Eval 与人类评估高度一致。
-
-**[Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](llm_safety/cracking_hallucination_vhd.md)**
-
-:   提出 VHD 指标量化每个注意力头输出对视觉输入的敏感程度，发现仅少数注意力头对视觉信息高度敏感而模型过度依赖语言先验是导致幻觉的关键因素，进而设计 VHR 免训练方法逐层自适应增强视觉感知头的贡献（$\alpha=2$），在 CHAIR 上将 LLaVA-1.5 的 CHAIR$_S$ 从 49.68 降至 33.32，且几乎无额外推理开销。
-
-**[Defense Against Prompt Injection Attack by Leveraging Attack Techniques](llm_safety/defense_prompt_injection.md)**
-
-:   本文提出一种"以攻为防"的 prompt injection 防御策略：将已有的攻击技术（ignore、escape、fake completion）反转用于防御，在被注入的数据内容后追加 shield prompt + 原始指令，使 LLM 忽略注入指令而执行原始指令，在多种攻击场景下将 ASR 降至接近零。
-
-**[ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](llm_safety/dialect_fairness_robustness.md)**
-
-:   本文构建了首个高质量人工标注的标准英语-AAVE平行推理基准ReDial（1216对），系统评估LLM在方言输入下的公平性与鲁棒性，发现几乎所有主流模型在AAVE查询上性能显著下降超过10%。
-
-**[ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](llm_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)**
-
-:   建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。
-
-**[Ensemble Watermarks for Large Language Models](llm_safety/ensemble_watermarks_llm.md)**
-
-:   提出集成水印方法，将文体特征（藏头词 acrostic + 感觉运动词 sensorimotor norms）与已有红绿水印组合，在 paraphrasing 攻击后三特征集成检测率达 95%，而单独红绿水印仅 49%。
-
-**[Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](llm_safety/estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)**
-
-:   本文提出context influence指标，基于差分隐私框架量化语言模型在解码时对增强上下文知识的隐私泄露程度，并系统分析了模型大小、上下文大小、生成位置等因素对隐私泄露的影响。
-
-**[Exploring Forgetting in Large Language Model Pre-Training](llm_safety/exploring_forgetting_in_large_language_model_pre-training.md)**
-
-:   系统性地探索了 LLM 预训练阶段的灾难性遗忘问题，提出了基于实体记忆的新指标（M_ex、M_in）替代传统 PPL 来检测遗忘，并验证了周期性高强度 memory replay 策略在缓解预训练遗忘中的有效性。
-
-**[Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](llm_safety/fairness_difference_awareness.md)**
-
-:   挑战当前LLM公平性评估中"差异无视"(difference unawareness)的主导范式，提出DiffAware和CtxtAware两个指标和包含8个场景16K问题的基准套件，证明在法律、文化、伤害评估等场景中模型应当区分群体差异，而现有去偏方法反而损害了这种必要的差异感知能力。
-
-**[Faithful and Robust LLM-Driven Theorem Proving for NLI Explanations](llm_safety/faithful_and_robust_llm-driven_theorem_proving_for_nli_explanations.md)**
-
-:   本文研究 LLM 与定理证明器（TP）的交互架构，提出四种策略来缓解自动形式化中的语义信息损失、语法错误、证明构造不足和反馈解读困难等问题，在 e-SNLI、QASC 和 WorldTree 三个数据集上分别实现了形式化精度 +18.46%/+34.2%/+39.77% 和解释质量 +29.5%/+51.5%/+41.25% 的显著提升。
-
-**[From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs](llm_safety/from_misleading_queries_to_accurate_answers_a_three-stage_fine-tuning_method_for.md)**
-
-:   提出三阶段微调方法（误导检测->查询纠正->准确回答）增强 LLM 处理含误导信息输入的能力，在误导检测和 QA 任务上显著提升准确率，同时减少幻觉生成。
-
-**[From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](llm_safety/from_tradeoff_to_synergy_a_versatile.md)**
-
-:   提出SymMark共生水印框架，融合logits-based和sampling-based两类水印方法（串行/并行/混合三种策略），通过token熵和语义熵自适应选择水印策略，在可检测性、鲁棒性、文本质量和安全性上实现SOTA。
-
-**[Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](llm_safety/hallucination_detox_send.md)**
-
-:   提出Sensitivity Dropout (SenD)训练协议，通过识别并确定性丢弃训练过程中波动最大的嵌入索引（Sensitive Embedding Indices），减少LLM训练中幻觉的振荡行为，同时提出高效EigenScore近似方法(EES)实现2倍加速。
-
-**[HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](llm_safety/halogen_hallucinations.md)**
-
-:   提出 HALoGEN——覆盖 9 个领域（含编程、科学引用、摘要等）的 10,923 条 prompt 的大规模幻觉评测框架，配套原子级自动验证器，在 14 个 LLM 的约 150,000 条生成上系统性评估幻觉，发现即使最佳模型也可能有高达 86% 的原子事实存在幻觉，并提出 Type A/B/C 三类错误分类法。
-
-**[HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](llm_safety/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)**
-
-:   本文首次将神经微分方程（Neural DEs）应用于LLM幻觉检测，通过对隐空间中token激活的连续轨迹建模来系统评估陈述的真实性，在True-False数据集上AUC-ROC超过SOTA 14%以上。
-
-**[How Does Response Length Affect Long-Form Factuality](llm_safety/how_does_response_length_affect_long-form_factuality.md)**
-
-:   本文系统研究了LLM响应长度与事实精确度的关系，提出高效的双层事实性评估框架Bafe（与人类注释89.31%一致），确认了长度偏差的存在，并通过排除错误传播和长上下文假说，证明"事实耗竭"是事实性下降的主要原因。
-
-**[Improved Unbiased Watermark for Large Language Models](llm_safety/improved_unbiased_watermark_for_large_language.md)**
-
-:   提出 MCmark，一族基于多通道（Multi-Channel）的无偏水印算法，通过将词表分割为 $l$ 个段并在选中段内提升 token 概率来嵌入统计信号，在保持 LLM 原始输出分布的同时，可检测性比现有无偏水印提升超 10%。
-
-**[Ewe: Improving Factuality with Explicit Working Memory](llm_safety/improving_factuality_with_explicit_working_memory.md)**
-
-:   提出 Ewe（Explicit Working mEmory），在 LLM 解码过程中引入由多个 KV cache 单元组成的显式工作记忆，实时接收检索知识反馈和事实核查反馈，检测到错误时删除错误句子并用更新后的记忆重新生成，在 4 个事实性长文本生成基准上将 VeriScore F1 提升 2–6 分且不损失回答有用性。
-
-**[Improving Fairness of Large Language Models in Multi-document Summarization](llm_safety/improving_fairness_of_large_language_models_in_multi-document_summarization.md)**
-
-:   提出 FairPO（Fair Preference Optimization），通过扰动式偏好对生成和公平感知偏好调优，同时优化多文档摘要中的摘要级和语料级公平性。
-
-**[Improving Model Factuality with Fine-grained Critique-based Evaluator](llm_safety/improving_model_factuality_with_fine-grained_critique-based_evaluator.md)**
-
-:   训练细粒度的事实性评估器 FenCE，通过在公开数据集上增强文本批评（critique）和多工具获取的多样化源文档来提升评估准确率，并利用 FenCE 对生成器响应进行修订和评分以构建偏好训练数据，使 Llama2-7B/Llama3-8B 在 FActScore 上分别提升 16.86%/14.45%。
-
-**[Can Indirect Prompt Injection Attacks Be Detected and Removed?](llm_safety/indirect_prompt_injection_detection.md)**
-
-:   本文系统研究间接 prompt injection 攻击的检测与移除：构建评估基准，发现现有检测模型对间接攻击表现不佳但专门训练的模型可达 99% 准确率，提出分割移除和抽取移除两种方法，并将检测+移除组合为过滤管道，有效降低间接 prompt injection 的攻击成功率。
-
-**[Beyond Facts: Evaluating Intent Hallucination in Large Language Models](llm_safety/intent_hallucination_eval.md)**
-
-:   本文提出"意图幻觉"（Intent Hallucination）概念——LLM 在处理复杂多条件查询时遗漏或误解部分意图约束导致的偏离用户意图的生成，构建 FaithQA 基准（20,068 题）和 Constraint Score 评估指标，实验表明意图幻觉在 SOTA 模型中普遍存在且随查询复杂度增加而加剧。
-
-**[Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](llm_safety/lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)**
-
-:   提出 LIBU（LoRA 增强的影响函数遗忘算法），分两阶段实现 LLM 机器遗忘：Phase 1 用对角 Fisher 信息矩阵加权的影响函数更新参数精准遗忘，Phase 2 用 Sophia 二阶优化器稳定化训练，在 SemEval-2025 Task 4 的 OLMo-7B 上达到 0.283 遗忘率同时维持 0.469 MMLU 准确率。
-
-**[Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing](llm_safety/language_models_can_subtly_deceive_without_lying_a_case_study_on_strategic_phras.md)**
-
-:   构建了一个立法环境测试平台（LobbyLens），研究 LLM 是否能通过策略性措辞（strategic phrasing）——即不说谎但有意操纵表达方式——来隐藏修正案中对特定公司的利益导向，发现 LLM 经过 re-planning 可使欺骗率提升最多 40 个百分点。
-
-**[Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](llm_safety/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)**
-
-:   系统性地研究了开放域长文本生成中的无参考幻觉检测问题，发现 LLM 内部状态（概率/熵）不足以可靠区分事实与幻觉内容，并提出 RATE-FT（Rationale and Auxiliary Task Enhanced Fine-Tuning），通过引入推理解释和辅助 QA 任务增强微调，在 LongFact 上比普通微调提升 3% 以上。
-
-**[Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?](llm_safety/llm_watermark_distillation_robustness.md)**
-
-:   本文首次系统研究 LLM 水印在防止未授权知识蒸馏中的鲁棒性，提出三种水印去除攻击（无目标/有目标释义 + 推理时水印中和），发现有目标释义和水印中和可以彻底去除继承的水印，其中水印中和在保持知识迁移效率的同时实现零额外训练开销的水印去除。
-
-**[Fine-grained Hallucination Detection and Mitigation in Long-form Question Answering](llm_safety/localizing_and_mitigating_errors_in_long-form_question_answering.md)**
-
-:   本文构建了首个包含 span 级别错误标注的 LFQA 幻觉数据集 HaluQuestQA（698 QA 对，4.7k 错误标注，5 种错误类型），训练了一个自动反馈模型来检测不完整信息的错误 span 并生成解释，最后提出 Error-informed Refinement 方法利用反馈信号精炼答案，将幻觉减少约 3%，且人类评估中 84% 的用户更偏好精炼后的答案。
-
-**[Mamba Knockout for Unraveling Factual Information Flow](llm_safety/mamba_knockout_for_unraveling_factual_information_flow.md)**
-
-:   将 Transformer 上的 Attention Knockout 可解释性方法迁移至 Mamba-1 和 Mamba-2，揭示了 SSM 模型中事实信息的流动模式——发现 Mamba 与 Transformer 共享"主语 token 在中后层向最后 token 传递关键信息"的普遍模式，但在首 token 偏置和关系 token 依赖等方面存在架构特异性差异。
-
-**[Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](llm_safety/manu_modality_aware_unlearning.md)**
-
-:   提出 MANU——首个模态感知的 MLLM 遗忘框架，通过四种互补的神经元重要性函数（绝对/频率/方差/RMS）识别跨模态纠缠的知识载体神经元，选择性剪枝 top-α% 神经元实现多模态和纯文本输入下的均衡遗忘，无需任何梯度更新。
-
-**[MEGen: Generative Backdoor into Large Language Models via Model Editing](llm_safety/megen_generative_backdoor_into_large_language_models_via_model_editing.md)**
-
-:   提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
-
-**[Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](llm_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)**
-
-:   提出 Merge Hijacking——首个针对 LLM 模型合并的后门攻击方法，攻击者仅需上传一个恶意模型，当受害者将其与任意干净模型合并时，生成的合并模型继承后门并在所有任务上保持攻击有效性和正常性能，且对现有防御方法具有鲁棒性。
-
-**[Unveiling Privacy Risks in LLM Agent Memory](llm_safety/mextra_agent_memory_privacy.md)**
-
-:   本文系统研究了 LLM Agent 记忆模块的隐私风险，提出 MEXTRA 黑盒记忆提取攻击，通过精心设计的定位-对齐攻击 prompt 和自动化多样 prompt 生成方法，在医疗和网购两种 Agent 上成功提取大量私人查询记录。
-
-**[MMUnlearner: Reformulating Multimodal Machine Unlearning in the Era of Multimodal Large Language Models](llm_safety/mmunlearner_reformulating_multimodal_machine_unlearning_in_the_era_of_multimodal.md)**
-
-:   本文重新定义了多模态大语言模型（MLLM）时代的机器遗忘任务——仅擦除与特定实体关联的视觉模式而保留文本知识，并提出几何约束梯度上升方法MMUnlearner，通过权重显著性图选择性更新参数，在MLLMU-Bench和CLEAR两大基准上全面超越GA和NPO等基线。
-
-**[Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](llm_safety/monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)**
-
-:   提出 Monitoring Decoding (MD) 框架，在生成过程中动态监控部分响应的事实性，通过监控函数识别易产生幻觉的 token 并利用树搜索策略选择性地修正这些关键 token，从而在保持效率的同时显著提升事实准确性。
-
-**[MorphMark: Flexible Adaptive Watermarking for Large Language Models](llm_safety/morphmark_adaptive_watermarking.md)**
-
-:   MorphMark 通过多目标权衡分析框架揭示了绿表概率 P_G 在水印效果与文本质量之间的关键作用，并据此提出自适应调整水印强度 r 的方法——当 P_G 高时增强水印、P_G 低时减弱水印，实现了在不依赖额外模型训练的前提下同时提升水印可检测性和文本质量。
-
-**[On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](llm_safety/on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)**
-
-:   提出 RLFH（Reinforcement Learning for Hallucination），一种在策略（on-policy）自对齐方法，让 LLM 自己作为评判者，将回复分解为原子事实并进行真实性和信息量评估，生成 token 级别的密集奖励信号，通过在线 PPO 优化来有效缓解幻觉问题。
-
-**[Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](llm_safety/opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)**
-
-:   提出 Opt-Out，一种基于最优传输理论的实体级 LLM 遗忘方法，利用 Sliced Wasserstein Distance 正则化参数偏移实现精细遗忘；同时构建首个实体级遗忘数据集 ELUDe（20 目标实体 + 144 邻居实体，15K+ forget / 90K+ retain QA 对），在 Llama-3.1-8B 和 Phi-3.5 上全面超越现有方法。
-
-**[PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts](llm_safety/pig_privacy_jailbreak.md)**
-
-:   提出 PIG 框架，通过识别隐私查询中的 PII 实体类型、构建隐私上下文示例、并利用三种基于梯度的迭代优化策略更新上下文，实现对 LLM 的高效隐私越狱攻击，在白盒和黑盒模型上均达到 SOTA。
-
-**[Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](llm_safety/private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)**
-
-:   提出 PME（Private Memorization Editing），将 LLM 的记忆化特性从安全弱点转化为防御手段，通过编辑 Feed Forward 层参数来移除已记忆的个人身份信息（PII），实现无需重训的隐私保护。
-
-**[Real-time Factuality Assessment from Adversarial Feedback](llm_safety/real-time_factuality_assessment_from_adversarial_feedback.md)**
-
-:   本文揭示了现有事实性评估数据集存在"数据泄漏"问题（LLM 因预训练记忆而轻松识别旧虚假信息），提出了一个基于 RAG 检测器对抗反馈的迭代改写流水线来生成真正具有挑战性的实时虚假新闻变体，使 GPT-4o RAG 检测器的 ROC-AUC 绝对下降 17.5%。
-
-**[ReLearn: Unlearning via Learning for Large Language Models](llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)**
-
-:   ReLearn提出用"正向学习"替代传统的"逆向优化"来实现LLM知识遗忘，通过数据增强和微调pipeline使模型在遗忘目标知识的同时保持语言生成质量和流畅性，并设计了包含KFR、KRR和LS三个指标的综合评估框架。
-
-**[REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](llm_safety/revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)**
-
-:   提出 REVS，一种无梯度的模型编辑方法，通过在 FF2 层中定位与敏感 token 关联最强的神经元，将其投影到词汇空间后迭代降低目标 token 排名，在 SSN/Email/URL 三类敏感数据上 Unlearning Score 显著超越 6 种基线（89.58 vs 36.98），同时通用能力几乎零损（MMLU 61.05→60.87），且对 Logit-Lens 和 Delta 提取攻击高度鲁棒。
-
-**[Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](llm_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)**
-
-:   提出一种基于虚构知识（Fictitious Knowledge）的数据水印方法，通过在训练数据中注入虚构但合理的实体及其属性描述，实现对 LLM 训练数据所有权的可追溯验证，水印抗数据预处理过滤且支持黑盒 QA 验证。
-
-**[SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](llm_safety/saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)**
-
-:   提出 SafeRoute，一个二分类路由器，根据输入难度自适应地在小型和大型安全护栏模型之间选择，仅对约5%的"困难"样本使用大模型，在保持安全检测精度的同时大幅降低计算开销。
-
-**[SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](llm_safety/seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)**
-
-:   SEUF 首次揭示现有 LLM 遗忘方法在 MoE 模型上严重失效（效用下降 35%+），根因是遗忘过程导致路由器的专家选择漂移形成"捷径"——本该遗忘的目标专家被绕过而无辜专家被破坏，并提出通过专家归因定位目标专家+路由器锚定损失固定选择的框架，仅更新 0.06% 参数即可同时提升遗忘质量和模型效用。
-
-**[Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](llm_safety/stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)**
-
-:   通过行为分析和机械可解释性实验揭示 LLM 无关上下文幻觉的内部机制：模型在底层构建抽象类别表示（如"语言"），然后两条竞争电路（query-based vs context-based）争夺特征选择权，相对激活强度决定正确泛化还是产生幻觉。
-
-**[TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](llm_safety/tip_iceberg_adversarial_attacks.md)**
-
-:   本文提出 Task-in-Prompt (TIP) 攻击——一类通过在 prompt 中嵌入序列到序列任务（如密码解码、谜语、代码执行）来间接生成违禁内容的新型越狱攻击类别，并构建 PHRYGE benchmark 系统评估，证明该攻击可成功绕过 GPT-4o、LLaMA 3.2 等六种 SOTA LLM 的安全防护。
-
-**[Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)**
-
-:   提出 Grft（Gated Representation Fine-Tuning），一种轻量级即插即用的门控表示微调方法，仅需不到 200 个训练样本和模型 0.0004% 的参数，即可让 LLM 在面对矛盾、无用的外部上下文时表现出类似人类的鲁棒认知行为。
-
-**[Towards Effective Extraction and Evaluation of Factual Claims](llm_safety/towards_effective_extraction_and_evaluation_of_factual_claims.md)**
-
-:   提出了一个用于评估事实声明抽取质量的标准化框架（包含覆盖率和去语境化等指标），并开发了Claimify——一个能在高置信度下处理歧义并抽取声明的LLM方法，在该框架下显著优于已有方法。
-
-**[TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](llm_safety/treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)**
-
-:   提出 TreeCut，一种基于树结构的合成数据集生成方法，通过在树路径上移除必要条件边来系统性生成无穷多的不可回答数学应用题，用以评估 LLM 在面对不可解问题时的幻觉行为。
-
-**[Truth Knows No Language: Evaluating Truthfulness Beyond English](llm_safety/truth_knows_no_language_evaluating_truthfulness_beyond_english.md)**
-
-:   构建首个专业翻译的多语言 TruthfulQA 基准（巴斯克语、加泰罗尼亚语、加利西亚语、西班牙语），发现 LLM 的跨语言真实性差异小于预期，且 LLM-as-a-Judge 比多选题指标更贴合人类判断。
-
-**[The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](llm_safety/tug_of_war_fairness_privacy.md)**
-
-:   发现 LLM 通过 SFT 增强隐私意识会显著降低公平性意识（trade-off），提出无训练方法 SPIN（抑制公平-隐私耦合神经元），基于信息论解耦两种意识，在 Qwen2-7B 上同时提升公平性 12.2% 和隐私意识 14.0%。
-
-**[UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](llm_safety/ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)**
-
-:   提出 UAlign 框架，利用置信度分数和语义熵两种不确定性估计来显式建模 LLM 知识边界，并将其作为输入特征融入 PPO 对齐训练，使模型自信回答已知问题、坚定拒绝未知问题，在多个知识 QA 数据集上显著提升可靠性与泛化性。
-
-**[Unveiling and Addressing Pseudo Forgetting in Large Language Models](llm_safety/unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)**
-
-:   揭示 LLM 持续学习中的"伪遗忘"现象：性能下降并非因为模型丧失了旧任务能力，而是指令无法正确激活已有能力。通过归因分析证明遗忘模型的指令依赖度降低，并提出基于 Rationale-Guidance Difficulty（RGD）的动态数据回放框架 RGD-R 来缓解伪遗忘。
-
-**[When Backdoors Speak: Understanding LLM Backdoor Attacks Through Model-Generated Explanations](llm_safety/when_backdoors_speak_understanding_llm_backdoor_attacks_through_model-generated_.md)**
-
-:   本文首次从自然语言解释的角度研究 LLM 后门攻击，发现后门模型对干净输入生成逻辑连贯的解释，但对中毒输入生成多样且逻辑有缺陷的解释；进一步通过 token 级和句子级分析揭示中毒样本的预测语义仅在最后几层才出现，且注意力从输入上下文转移到新生成的 token。
-
-**[Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](llm_safety/which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)**
-
-:   系统研究实体遗忘中 retain set 的选择问题，提出 Syntactically Similar Neighbor Set，发现句法相似性（而非领域/实体相似性）才是遗忘过程中知识退化的主要驱动因素，用句法相似的 retain set 做正则化可同时最优保护所有类型的邻居知识。
-
-**[ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](llm_safety/zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)**
-
-:   在 SemEval-2025 Task 4（LLM 敏感内容遗忘）中获得第二名，核心思路是训练两个互补模型（一个过度遗忘、一个遗忘不足），通过 TIES-Merging 合并得到平衡遗忘的模型，本地实验达到近乎完美的 MIA 分数 0.501。
 
 ---
 
@@ -4322,6 +3994,230 @@ item_total: 1855
 **[ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](llm_agent/toolhop_multi_hop_tool_use.md)**
 
 :   提出 ToolHop——一个包含 995 个多跳查询和 3912 个本地可执行工具的基准数据集，通过"查询驱动"的数据构建方式（先有查询再造工具）确保工具间有真实依赖关系和可验证答案，评测 14 个 LLM 发现最强的 GPT-4o 准确率仅 49%，揭示了不同模型家族在工具使用上的显著策略差异。
+
+---
+
+## 🔒 LLM 安全 { #llm_safety }
+
+**[A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models](llm_safety/a_statistical_and_multi-perspective_revisiting_of_the_membership_inference_attac.md)**
+
+:   本文通过数千次实验从统计视角全面重新审视 LLM 中的成员推断攻击（MIA），从数据分割方式、模型规模、领域特性、文本特征、嵌入可分性和解码动态六个维度分析 MIA 性能的不一致性，揭示了阈值泛化、文本长度/相似性影响、嵌入层涌现变化等此前被忽视的发现。
+
+**[AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)**
+
+:   提出 AGrail，一个终身学习的 LLM Agent 安全护栏框架，通过双 LLM 协作（Analyzer + Executor）和记忆模块，在测试时自适应地生成和优化安全检查策略，有效防御任务特定风险和系统性风险。
+
+**[Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](llm_safety/answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)**
+
+:   提出"上下文知识遗忘"方法，通过引入特殊的遗忘 token `<<UNL>>...<</UNL>>` 使 LLM 在推理时根据上下文选择性遗忘特定知识，在 TOFU/AGE/RWKU 上达到 95% 遗忘准确率且保留 80% 无关知识，深入的内部分析发现 LLM 并未真正删除知识而是在最后一层"假装遗忘"。
+
+**[Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](llm_safety/are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding.md)**
+
+:   本文挑战了"LLM隐藏状态能编码事实真假信息"这一先前结论，通过构建更真实、更具挑战性的数据集（基于困惑度的负样本采样和基于QA的LLM生成数据集），发现先前方法在更贴近实际场景的数据上泛化能力有限，为LLM事实性评估研究提供了更严格的评估基准和实践指导。
+
+**[Bias in the Mirror: Are LLMs' Opinions Robust to Their Own Adversarial Attacks](llm_safety/bias_in_the_mirror_are_llms_opinions_robust_to_their_own_adversarial_attacks.md)**
+
+:   本文提出一种新颖的"自辩论"范式，让同一个LLM的两个实例分别扮演正方和反方进行辩论，试图说服一个中立版本的模型，以此评估LLM内在偏见的鲁棒性——偏见是否容易被动摇，以及模型是否容易被自身的对抗性论证带偏。
+
+**[CAVGAN: Unifying Jailbreak and Defense of LLMs via Generative Adversarial Attacks](llm_safety/cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks.md)**
+
+:   提出 CAVGAN 框架，利用生成对抗网络在 LLM 内部表示空间中同时学习越狱攻击（生成器）和安全防御（判别器），首次将攻防统一到同一框架中实现"攻防共进"，攻击成功率平均 88.85%，防御成功率平均 84.17%。
+
+**[Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models](llm_safety/chinese_simpleqa_a_chinese_factuality_evaluation_for_large_language_models.md)**
+
+:   提出 Chinese SimpleQA——首个全面的中文事实性评估基准，包含 3000 个高质量短问答（覆盖 6 大主题、99 个子主题），评估 41 个 LLM 后发现仅 o1-preview（63.8%）和 Doubao-pro-32k（61.9%）能通过，并系统揭示了"大模型更好"、"RAG缩小差距"、"对齐降低事实性"等关键洞察。
+
+**[CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP](llm_safety/cliperase_efficient_unlearning_of_visual-textual_associations_in_clip.md)**
+
+:   提出 CLIPErase，一种专为 CLIP 多模态模型设计的机器遗忘框架，通过遗忘模块、保留模块和一致性模块三部分协同，选择性地移除特定视觉-文本关联，同时保持模型在保留数据上的性能。
+
+**[ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](llm_safety/comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)**
+
+:   构建 ComparisonQA 基准（283K 配对问题），通过让高频和低频实体共享同一抽象问题实现受控对比，结合正确性和不确定性的两轮评估方法发现 LLM（包括 GPT-4o）对低频知识的鲁棒性极差。
+
+**[Core: Robust Factual Precision with Informative Sub-Claim Identification](llm_safety/core_robust_factual_precision_with_informative_sub-claim_identification.md)**
+
+:   本文提出 Core 框架，通过识别和过滤信息性子声明（informative sub-claims）来实现鲁棒的事实精度（factual precision）评估，解决了现有方法因无信息声明的稀释效应而导致评估不准确的问题。
+
+**[Defense Against Prompt Injection Attack by Leveraging Attack Techniques](llm_safety/defense_prompt_injection.md)**
+
+:   本文提出一种"以攻为防"的 prompt injection 防御策略：将已有的攻击技术（ignore、escape、fake completion）反转用于防御，在被注入的数据内容后追加 shield prompt + 原始指令，使 LLM 忽略注入指令而执行原始指令，在多种攻击场景下将 ASR 降至接近零。
+
+**[ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks](llm_safety/dialect_fairness_robustness.md)**
+
+:   本文构建了首个高质量人工标注的标准英语-AAVE平行推理基准ReDial（1216对），系统评估LLM在方言输入下的公平性与鲁棒性，发现几乎所有主流模型在AAVE查询上性能显著下降超过10%。
+
+**[ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models](llm_safety/elba-bench_an_efficient_learning_backdoor_attacks_benchmark_for_large_language_m.md)**
+
+:   建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。
+
+**[Ensemble Watermarks for Large Language Models](llm_safety/ensemble_watermarks_llm.md)**
+
+:   提出集成水印方法，将文体特征（藏头词 acrostic + 感觉运动词 sensorimotor norms）与已有红绿水印组合，在 paraphrasing 攻击后三特征集成检测率达 95%，而单独红绿水印仅 49%。
+
+**[Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models](llm_safety/estimating_privacy_leakage_of_augmented_contextual_knowledge_in_language_models.md)**
+
+:   本文提出context influence指标，基于差分隐私框架量化语言模型在解码时对增强上下文知识的隐私泄露程度，并系统分析了模型大小、上下文大小、生成位置等因素对隐私泄露的影响。
+
+**[Exploring Forgetting in Large Language Model Pre-Training](llm_safety/exploring_forgetting_in_large_language_model_pre-training.md)**
+
+:   系统性地探索了 LLM 预训练阶段的灾难性遗忘问题，提出了基于实体记忆的新指标（M_ex、M_in）替代传统 PPL 来检测遗忘，并验证了周期性高强度 memory replay 策略在缓解预训练遗忘中的有效性。
+
+**[Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs](llm_safety/fairness_difference_awareness.md)**
+
+:   挑战当前LLM公平性评估中"差异无视"(difference unawareness)的主导范式，提出DiffAware和CtxtAware两个指标和包含8个场景16K问题的基准套件，证明在法律、文化、伤害评估等场景中模型应当区分群体差异，而现有去偏方法反而损害了这种必要的差异感知能力。
+
+**[Faithful and Robust LLM-Driven Theorem Proving for NLI Explanations](llm_safety/faithful_and_robust_llm-driven_theorem_proving_for_nli_explanations.md)**
+
+:   本文研究 LLM 与定理证明器（TP）的交互架构，提出四种策略来缓解自动形式化中的语义信息损失、语法错误、证明构造不足和反馈解读困难等问题，在 e-SNLI、QASC 和 WorldTree 三个数据集上分别实现了形式化精度 +18.46%/+34.2%/+39.77% 和解释质量 +29.5%/+51.5%/+41.25% 的显著提升。
+
+**[From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs](llm_safety/from_misleading_queries_to_accurate_answers_a_three-stage_fine-tuning_method_for.md)**
+
+:   提出三阶段微调方法（误导检测->查询纠正->准确回答）增强 LLM 处理含误导信息输入的能力，在误导检测和 QA 任务上显著提升准确率，同时减少幻觉生成。
+
+**[From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models](llm_safety/from_tradeoff_to_synergy_a_versatile.md)**
+
+:   提出SymMark共生水印框架，融合logits-based和sampling-based两类水印方法（串行/并行/混合三种策略），通过token熵和语义熵自适应选择水印策略，在可检测性、鲁棒性、文本质量和安全性上实现SOTA。
+
+**[How Does Response Length Affect Long-Form Factuality](llm_safety/how_does_response_length_affect_long-form_factuality.md)**
+
+:   本文系统研究了LLM响应长度与事实精确度的关系，提出高效的双层事实性评估框架Bafe（与人类注释89.31%一致），确认了长度偏差的存在，并通过排除错误传播和长上下文假说，证明"事实耗竭"是事实性下降的主要原因。
+
+**[Improved Unbiased Watermark for Large Language Models](llm_safety/improved_unbiased_watermark_for_large_language.md)**
+
+:   提出 MCmark，一族基于多通道（Multi-Channel）的无偏水印算法，通过将词表分割为 $l$ 个段并在选中段内提升 token 概率来嵌入统计信号，在保持 LLM 原始输出分布的同时，可检测性比现有无偏水印提升超 10%。
+
+**[Ewe: Improving Factuality with Explicit Working Memory](llm_safety/improving_factuality_with_explicit_working_memory.md)**
+
+:   提出 Ewe（Explicit Working mEmory），在 LLM 解码过程中引入由多个 KV cache 单元组成的显式工作记忆，实时接收检索知识反馈和事实核查反馈，检测到错误时删除错误句子并用更新后的记忆重新生成，在 4 个事实性长文本生成基准上将 VeriScore F1 提升 2–6 分且不损失回答有用性。
+
+**[Improving Fairness of Large Language Models in Multi-document Summarization](llm_safety/improving_fairness_of_large_language_models_in_multi-document_summarization.md)**
+
+:   提出 FairPO（Fair Preference Optimization），通过扰动式偏好对生成和公平感知偏好调优，同时优化多文档摘要中的摘要级和语料级公平性。
+
+**[Improving Model Factuality with Fine-grained Critique-based Evaluator](llm_safety/improving_model_factuality_with_fine-grained_critique-based_evaluator.md)**
+
+:   训练细粒度的事实性评估器 FenCE，通过在公开数据集上增强文本批评（critique）和多工具获取的多样化源文档来提升评估准确率，并利用 FenCE 对生成器响应进行修订和评分以构建偏好训练数据，使 Llama2-7B/Llama3-8B 在 FActScore 上分别提升 16.86%/14.45%。
+
+**[Can Indirect Prompt Injection Attacks Be Detected and Removed?](llm_safety/indirect_prompt_injection_detection.md)**
+
+:   本文系统研究间接 prompt injection 攻击的检测与移除：构建评估基准，发现现有检测模型对间接攻击表现不佳但专门训练的模型可达 99% 准确率，提出分割移除和抽取移除两种方法，并将检测+移除组合为过滤管道，有效降低间接 prompt injection 的攻击成功率。
+
+**[Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](llm_safety/lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)**
+
+:   提出 LIBU（LoRA 增强的影响函数遗忘算法），分两阶段实现 LLM 机器遗忘：Phase 1 用对角 Fisher 信息矩阵加权的影响函数更新参数精准遗忘，Phase 2 用 Sophia 二阶优化器稳定化训练，在 SemEval-2025 Task 4 的 OLMo-7B 上达到 0.283 遗忘率同时维持 0.469 MMLU 准确率。
+
+**[Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing](llm_safety/language_models_can_subtly_deceive_without_lying_a_case_study_on_strategic_phras.md)**
+
+:   构建了一个立法环境测试平台（LobbyLens），研究 LLM 是否能通过策略性措辞（strategic phrasing）——即不说谎但有意操纵表达方式——来隐藏修正案中对特定公司的利益导向，发现 LLM 经过 re-planning 可使欺骗率提升最多 40 个百分点。
+
+**[Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?](llm_safety/llm_watermark_distillation_robustness.md)**
+
+:   本文首次系统研究 LLM 水印在防止未授权知识蒸馏中的鲁棒性，提出三种水印去除攻击（无目标/有目标释义 + 推理时水印中和），发现有目标释义和水印中和可以彻底去除继承的水印，其中水印中和在保持知识迁移效率的同时实现零额外训练开销的水印去除。
+
+**[Mamba Knockout for Unraveling Factual Information Flow](llm_safety/mamba_knockout_for_unraveling_factual_information_flow.md)**
+
+:   将 Transformer 上的 Attention Knockout 可解释性方法迁移至 Mamba-1 和 Mamba-2，揭示了 SSM 模型中事实信息的流动模式——发现 Mamba 与 Transformer 共享"主语 token 在中后层向最后 token 传递关键信息"的普遍模式，但在首 token 偏置和关系 token 依赖等方面存在架构特异性差异。
+
+**[Modality-Aware Neuron Pruning for Unlearning in Multimodal Large Language Models](llm_safety/manu_modality_aware_unlearning.md)**
+
+:   提出 MANU——首个模态感知的 MLLM 遗忘框架，通过四种互补的神经元重要性函数（绝对/频率/方差/RMS）识别跨模态纠缠的知识载体神经元，选择性剪枝 top-α% 神经元实现多模态和纯文本输入下的均衡遗忘，无需任何梯度更新。
+
+**[MEGen: Generative Backdoor into Large Language Models via Model Editing](llm_safety/megen_generative_backdoor_into_large_language_models_via_model_editing.md)**
+
+:   提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
+
+**[Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models](llm_safety/merge_hijacking_backdoor_attacks_to_model_merging_of_large_language_models.md)**
+
+:   提出 Merge Hijacking——首个针对 LLM 模型合并的后门攻击方法，攻击者仅需上传一个恶意模型，当受害者将其与任意干净模型合并时，生成的合并模型继承后门并在所有任务上保持攻击有效性和正常性能，且对现有防御方法具有鲁棒性。
+
+**[Unveiling Privacy Risks in LLM Agent Memory](llm_safety/mextra_agent_memory_privacy.md)**
+
+:   本文系统研究了 LLM Agent 记忆模块的隐私风险，提出 MEXTRA 黑盒记忆提取攻击，通过精心设计的定位-对齐攻击 prompt 和自动化多样 prompt 生成方法，在医疗和网购两种 Agent 上成功提取大量私人查询记录。
+
+**[MMUnlearner: Reformulating Multimodal Machine Unlearning in the Era of Multimodal Large Language Models](llm_safety/mmunlearner_reformulating_multimodal_machine_unlearning_in_the_era_of_multimodal.md)**
+
+:   本文重新定义了多模态大语言模型（MLLM）时代的机器遗忘任务——仅擦除与特定实体关联的视觉模式而保留文本知识，并提出几何约束梯度上升方法MMUnlearner，通过权重显著性图选择性更新参数，在MLLMU-Bench和CLEAR两大基准上全面超越GA和NPO等基线。
+
+**[MorphMark: Flexible Adaptive Watermarking for Large Language Models](llm_safety/morphmark_adaptive_watermarking.md)**
+
+:   MorphMark 通过多目标权衡分析框架揭示了绿表概率 P_G 在水印效果与文本质量之间的关键作用，并据此提出自适应调整水印强度 r 的方法——当 P_G 高时增强水印、P_G 低时减弱水印，实现了在不依赖额外模型训练的前提下同时提升水印可检测性和文本质量。
+
+**[Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](llm_safety/opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)**
+
+:   提出 Opt-Out，一种基于最优传输理论的实体级 LLM 遗忘方法，利用 Sliced Wasserstein Distance 正则化参数偏移实现精细遗忘；同时构建首个实体级遗忘数据集 ELUDe（20 目标实体 + 144 邻居实体，15K+ forget / 90K+ retain QA 对），在 Llama-3.1-8B 和 Phi-3.5 上全面超越现有方法。
+
+**[PIG: Privacy Jailbreak Attack on LLMs via Gradient-based Iterative Prompts](llm_safety/pig_privacy_jailbreak.md)**
+
+:   提出 PIG 框架，通过识别隐私查询中的 PII 实体类型、构建隐私上下文示例、并利用三种基于梯度的迭代优化策略更新上下文，实现对 LLM 的高效隐私越狱攻击，在白盒和黑盒模型上均达到 SOTA。
+
+**[Private Memorization Editing: Turning Memorization into a Defense to Strengthen Data Privacy in Large Language Models](llm_safety/private_memorization_editing_turning_memorization_into_a_defense_to_strengthen_d.md)**
+
+:   提出 PME（Private Memorization Editing），将 LLM 的记忆化特性从安全弱点转化为防御手段，通过编辑 Feed Forward 层参数来移除已记忆的个人身份信息（PII），实现无需重训的隐私保护。
+
+**[Real-time Factuality Assessment from Adversarial Feedback](llm_safety/real-time_factuality_assessment_from_adversarial_feedback.md)**
+
+:   本文揭示了现有事实性评估数据集存在"数据泄漏"问题（LLM 因预训练记忆而轻松识别旧虚假信息），提出了一个基于 RAG 检测器对抗反馈的迭代改写流水线来生成真正具有挑战性的实时虚假新闻变体，使 GPT-4o RAG 检测器的 ROC-AUC 绝对下降 17.5%。
+
+**[ReLearn: Unlearning via Learning for Large Language Models](llm_safety/relearn_unlearning_via_learning_for_large_language_models.md)**
+
+:   ReLearn提出用"正向学习"替代传统的"逆向优化"来实现LLM知识遗忘，通过数据增强和微调pipeline使模型在遗忘目标知识的同时保持语言生成质量和流畅性，并设计了包含KFR、KRR和LS三个指标的综合评估框架。
+
+**[REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space](llm_safety/revs_unlearning_sensitive_information_in_language_models_via_rank_editing_in_the.md)**
+
+:   提出 REVS，一种无梯度的模型编辑方法，通过在 FF2 层中定位与敏感 token 关联最强的神经元，将其投影到词汇空间后迭代降低目标 token 排名，在 SSN/Email/URL 三类敏感数据上 Unlearning Score 显著超越 6 种基线（89.58 vs 36.98），同时通用能力几乎零损（MMLU 61.05→60.87），且对 Logit-Lens 和 Delta 提取攻击高度鲁棒。
+
+**[Robust Data Watermarking in Language Models by Injecting Fictitious Knowledge](llm_safety/robust_data_watermarking_in_language_models_by_injecting_fictitious_knowledge.md)**
+
+:   提出一种基于虚构知识（Fictitious Knowledge）的数据水印方法，通过在训练数据中注入虚构但合理的实体及其属性描述，实现对 LLM 训练数据所有权的可追溯验证，水印抗数据预处理过滤且支持黑盒 QA 验证。
+
+**[SafeRoute: Adaptive Model Selection for Efficient and Accurate Safety Guardrails in Large Language Models](llm_safety/saferoute_adaptive_model_selection_for_efficient_and_accurate_safety_guardrails_.md)**
+
+:   提出 SafeRoute，一个二分类路由器，根据输入难度自适应地在小型和大型安全护栏模型之间选择，仅对约5%的"困难"样本使用大模型，在保持安全检测精度的同时大幅降低计算开销。
+
+**[SEUF: Is Unlearning One Expert Enough for Mixture-of-Experts LLMs?](llm_safety/seuf_is_unlearning_one_expert_enough_for_mixture-of-experts_llms.md)**
+
+:   SEUF 首次揭示现有 LLM 遗忘方法在 MoE 模型上严重失效（效用下降 35%+），根因是遗忘过程导致路由器的专家选择漂移形成"捷径"——本该遗忘的目标专家被绕过而无辜专家被破坏，并提出通过专家归因定位目标专家+路由器锚定损失固定选择的框架，仅更新 0.06% 参数即可同时提升遗忘质量和模型效用。
+
+**[TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](llm_safety/tip_iceberg_adversarial_attacks.md)**
+
+:   本文提出 Task-in-Prompt (TIP) 攻击——一类通过在 prompt 中嵌入序列到序列任务（如密码解码、谜语、代码执行）来间接生成违禁内容的新型越狱攻击类别，并构建 PHRYGE benchmark 系统评估，证明该攻击可成功绕过 GPT-4o、LLaMA 3.2 等六种 SOTA LLM 的安全防护。
+
+**[Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach](llm_safety/towards_context-robust_llms_a_gated_representation_fine-tuning_approach.md)**
+
+:   提出 Grft（Gated Representation Fine-Tuning），一种轻量级即插即用的门控表示微调方法，仅需不到 200 个训练样本和模型 0.0004% 的参数，即可让 LLM 在面对矛盾、无用的外部上下文时表现出类似人类的鲁棒认知行为。
+
+**[Towards Effective Extraction and Evaluation of Factual Claims](llm_safety/towards_effective_extraction_and_evaluation_of_factual_claims.md)**
+
+:   提出了一个用于评估事实声明抽取质量的标准化框架（包含覆盖率和去语境化等指标），并开发了Claimify——一个能在高置信度下处理歧义并抽取声明的LLM方法，在该框架下显著优于已有方法。
+
+**[Truth Knows No Language: Evaluating Truthfulness Beyond English](llm_safety/truth_knows_no_language_evaluating_truthfulness_beyond_english.md)**
+
+:   构建首个专业翻译的多语言 TruthfulQA 基准（巴斯克语、加泰罗尼亚语、加利西亚语、西班牙语），发现 LLM 的跨语言真实性差异小于预期，且 LLM-as-a-Judge 比多选题指标更贴合人类判断。
+
+**[The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models](llm_safety/tug_of_war_fairness_privacy.md)**
+
+:   发现 LLM 通过 SFT 增强隐私意识会显著降低公平性意识（trade-off），提出无训练方法 SPIN（抑制公平-隐私耦合神经元），基于信息论解耦两种意识，在 Qwen2-7B 上同时提升公平性 12.2% 和隐私意识 14.0%。
+
+**[UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models](llm_safety/ualign_leveraging_uncertainty_estimations_for_factuality_alignment_on_large_lang.md)**
+
+:   提出 UAlign 框架，利用置信度分数和语义熵两种不确定性估计来显式建模 LLM 知识边界，并将其作为输入特征融入 PPO 对齐训练，使模型自信回答已知问题、坚定拒绝未知问题，在多个知识 QA 数据集上显著提升可靠性与泛化性。
+
+**[Unveiling and Addressing Pseudo Forgetting in Large Language Models](llm_safety/unveiling_and_addressing_pseudo_forgetting_in_large_language_models.md)**
+
+:   揭示 LLM 持续学习中的"伪遗忘"现象：性能下降并非因为模型丧失了旧任务能力，而是指令无法正确激活已有能力。通过归因分析证明遗忘模型的指令依赖度降低，并提出基于 Rationale-Guidance Difficulty（RGD）的动态数据回放框架 RGD-R 来缓解伪遗忘。
+
+**[When Backdoors Speak: Understanding LLM Backdoor Attacks Through Model-Generated Explanations](llm_safety/when_backdoors_speak_understanding_llm_backdoor_attacks_through_model-generated_.md)**
+
+:   本文首次从自然语言解释的角度研究 LLM 后门攻击，发现后门模型对干净输入生成逻辑连贯的解释，但对中毒输入生成多样且逻辑有缺陷的解释；进一步通过 token 级和句子级分析揭示中毒样本的预测语义仅在最后几层才出现，且注意力从输入上下文转移到新生成的 token。
+
+**[Which Retain Set Matters for LLM Unlearning? A Case Study on Entity Unlearning](llm_safety/which_retain_set_matters_for_llm_unlearning_a_case_study_on_entity_unlearning.md)**
+
+:   系统研究实体遗忘中 retain set 的选择问题，提出 Syntactically Similar Neighbor Set，发现句法相似性（而非领域/实体相似性）才是遗忘过程中知识退化的主要驱动因素，用句法相似的 retain set 做正则化可同时最优保护所有类型的邻居知识。
+
+**[ZJUKLAB at SemEval-2025 Task 4: Unlearning via Model Merging](llm_safety/zjuklab_at_semeval-2025_task_4_unlearning_via_model_merging.md)**
+
+:   在 SemEval-2025 Task 4（LLM 敏感内容遗忘）中获得第二名，核心思路是训练两个互补模型（一个过度遗忘、一个遗忘不足），通过 TIES-Merging 合并得到平衡遗忘的模型，本地实验达到近乎完美的 MIA 分数 0.501。
 
 ---
 
@@ -5319,10 +5215,6 @@ item_total: 1855
 
 :   提出 DynaCode，一个动态复杂度感知的代码生成基准，通过将代码问题按圈复杂度分类并用调用图（Call Graph）组合嵌套，生成约 1.89 亿个唯一问题，有效缓解数据污染并系统评估 LLM 在不同复杂度下的代码生成能力。
 
-**[ETF: An Entity Tracing Framework for Hallucination Detection in Code Summaries](code_intelligence/etf_an_entity_tracing_framework_for_hallucination_detection_in_code_summaries.md)**
-
-:   提出 Entity Tracing Framework (ETF)，一种通过静态程序分析提取代码实体、再用 LLM 验证这些实体在生成摘要中是否被正确描述的幻觉检测框架，配合首创的 CodeSumEval 数据集（~10K样本），在代码摘要幻觉检测上达到 73% F1。
-
 **[ExploraCoder: Advancing Code Generation for Multiple Unseen APIs via Planning and Chained Exploration](code_intelligence/exploracoder_advancing_code_generation_for_multiple_unseen_apis_via_planning_and.md)**
 
 :   提出无需额外训练的 ExploraCoder 框架，通过任务规划将复杂多 API 编程问题分解为子任务，再通过链式 API 探索（CoAE）逐步实验并积累正确的 API 用法经验，在多 API 不可见库基准上 pass@10 绝对提升最高 17.28%。
@@ -5394,6 +5286,122 @@ item_total: 1855
 **[UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench](code_intelligence/utboost_rigorous_evaluation_of_coding_agents_on_swe-bench.md)**
 
 :   本文提出 UTBoost 框架，通过基于 LLM 的测试用例生成器 UTGenerator 和改进的解析器来增强 SWE-Bench 的测试用例覆盖率，发现 36 个测试不充分的实例和 345 个被错误标记为通过的补丁，导致 SWE-Bench Lite 排行榜 40.9% 和 SWE-Bench Verified 24.4% 的排名发生变化。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention](hallucination/activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m.md)**
+
+:   本文提出 ASD（Activation Steering Decoding），一种无需训练的推理时幻觉缓解方法，通过在 LVLM 的中间隐藏状态中识别幻觉方向模式，利用双向引导和对比解码来抑制幻觉输出，同时保持模型在通用视觉理解任务上的性能。
+
+**[Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](hallucination/aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)**
+
+:   提出NOVA框架，通过内部一致性探测(ICP)衡量LLM对指令的熟悉度+语义等价识别(SEI)衡量LLM对目标回复的熟悉度，筛选出知识对齐的高质量指令数据，仅用5%数据微调LLaMA-3-8B即可在BioGEN上提升8.6分、FollowRAG上提升7.2分，同时保持指令遵循能力。
+
+**[Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning](hallucination/alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md)**
+
+:   本文针对LLM中因知识错位（模型参数知识与事实不一致）导致的幻觉问题，提出选择性弃权学习（Selective Abstention Learning）方法，让模型在遇到知识边界外的问题时学会主动拒绝回答而非编造内容，从而减少幻觉。
+
+**[Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](hallucination/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)**
+
+:   本文针对文化遗产图像检索任务，提出了一个结合自动解释生成和幻觉检测的框架，利用视觉语言模型为检索结果生成可解释的文本描述，同时通过领域知识约束的幻觉检测机制确保描述的事实准确性，在多个文化遗产数据集上验证了方法的有效性。
+
+**[CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models](hallucination/cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_.md)**
+
+:   提出首个**联合跨语言与跨模态**幻觉检测基准 CCHall，覆盖 9 种语言和 4 类多模态数据集，系统评估 6 款主流 MLLM 在联合场景下的幻觉表现，揭示当前模型在该联合场景中 F1 比单独跨模态低 10.9、比单独跨语言低 3.4，且提出多语提示和外部工具辅助两条缓解路径。
+
+**[Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](hallucination/correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)**
+
+:   系统性地探究了两种自纠正方法（CoVE 和 RARR）在新闻摘要幻觉纠正中的表现，比较了三种搜索引擎、多种检索设置和提示策略，发现 Bing 搜索片段 + RARR（few-shot）组合效果最佳，且 G-Eval 与人类评估高度一致。
+
+**[Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](hallucination/cracking_hallucination_vhd.md)**
+
+:   提出 VHD 指标量化每个注意力头输出对视觉输入的敏感程度，发现仅少数注意力头对视觉信息高度敏感而模型过度依赖语言先验是导致幻觉的关键因素，进而设计 VHR 免训练方法逐层自适应增强视觉感知头的贡献（$\alpha=2$），在 CHAIR 上将 LLaVA-1.5 的 CHAIR$_S$ 从 49.68 降至 33.32，且几乎无额外推理开销。
+
+**[DRAG: Distilling RAG for SLMs from LLMs to Transfer Knowledge and Mitigate Hallucination](hallucination/drag_distilling_rag_slm.md)**
+
+:   DRAG 提出了一种从大模型向小模型蒸馏 RAG 能力的框架：用大模型（如 GPT-4o）为给定问题生成证据和知识图谱三元组，经排序过滤后作为结构化上下文输入给小模型（2B-9B），无需微调即可将小模型在 ARC-C 上提升高达 27.7%，同时显著减少幻觉。
+
+**[ETF: An Entity Tracing Framework for Hallucination Detection in Code Summaries](hallucination/etf_an_entity_tracing_framework_for_hallucination_detection_in_code_summaries.md)**
+
+:   提出 Entity Tracing Framework (ETF)，一种通过静态程序分析提取代码实体、再用 LLM 验证这些实体在生成摘要中是否被正确描述的幻觉检测框架，配合首创的 CodeSumEval 数据集（~10K样本），在代码摘要幻觉检测上达到 73% F1。
+
+**[FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](hallucination/fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)**
+
+:   本文提出 FIHA，一个无需 LLM 和人工标注的自动化细粒度幻觉评估框架，通过从图像和描述中提取实体、属性和关系生成 Q&A 对，并引入 Davidson 场景图（DSG）建模问题间的依赖关系，构建了 FIHA-v1 基准，全面评估了主流大视觉语言模型的幻觉水平。
+
+**[Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](hallucination/hallucination_detox_send.md)**
+
+:   提出Sensitivity Dropout (SenD)训练协议，通过识别并确定性丢弃训练过程中波动最大的嵌入索引（Sensitive Embedding Indices），减少LLM训练中幻觉的振荡行为，同时提出高效EigenScore近似方法(EES)实现2倍加速。
+
+**[HalluLens: LLM Hallucination Benchmark](hallucination/hallulens_llm_hallucination_benchmark.md)**
+
+:   提出了 HalluLens 幻觉基准，明确区分幻觉与事实性，建立了外在幻觉（与训练数据不一致）和内在幻觉（与输入上下文不一致）的清晰分类体系，引入三个动态可重生成的外在幻觉评估任务，并全面分析了现有基准的局限性。
+
+**[HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](hallucination/halogen_hallucinations.md)**
+
+:   提出 HALoGEN——覆盖 9 个领域（含编程、科学引用、摘要等）的 10,923 条 prompt 的大规模幻觉评测框架，配套原子级自动验证器，在 14 个 LLM 的约 150,000 条生成上系统性评估幻觉，发现即使最佳模型也可能有高达 86% 的原子事实存在幻觉，并提出 Type A/B/C 三类错误分类法。
+
+**[HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](hallucination/hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)**
+
+:   本文首次将神经微分方程（Neural DEs）应用于LLM幻觉检测，通过对隐空间中token激活的连续轨迹建模来系统评估陈述的真实性，在True-False数据集上AUC-ROC超过SOTA 14%以上。
+
+**[ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](hallucination/icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)**
+
+:   提出 ICR Score（Information Contribution to Residual Stream），通过测量 MHSA 和 FFN 模块对隐状态更新的贡献一致性来量化残差流动态，构建仅 16K 参数的 ICR Probe，在 4 个数据集 × 3 个 LLM 上幻觉检测 AUROC 全面超越基线。
+
+**[Beyond Facts: Evaluating Intent Hallucination in Large Language Models](hallucination/intent_hallucination_eval.md)**
+
+:   本文提出"意图幻觉"（Intent Hallucination）概念——LLM 在处理复杂多条件查询时遗漏或误解部分意图约束导致的偏离用户意图的生成，构建 FaithQA 基准（20,068 题）和 Constraint Score 评估指标，实验表明意图幻觉在 SOTA 模型中普遍存在且随查询复杂度增加而加剧。
+
+**[Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](hallucination/learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)**
+
+:   系统性地研究了开放域长文本生成中的无参考幻觉检测问题，发现 LLM 内部状态（概率/熵）不足以可靠区分事实与幻觉内容，并提出 RATE-FT（Rationale and Auxiliary Task Enhanced Fine-Tuning），通过引入推理解释和辅助 QA 任务增强微调，在 LongFact 上比普通微调提升 3% 以上。
+
+**[Fine-grained Hallucination Detection and Mitigation in Long-form Question Answering](hallucination/localizing_and_mitigating_errors_in_long-form_question_answering.md)**
+
+:   本文构建了首个包含 span 级别错误标注的 LFQA 幻觉数据集 HaluQuestQA（698 QA 对，4.7k 错误标注，5 种错误类型），训练了一个自动反馈模型来检测不完整信息的错误 span 并生成解释，最后提出 Error-informed Refinement 方法利用反馈信号精炼答案，将幻觉减少约 3%，且人类评估中 84% 的用户更偏好精炼后的答案。
+
+**[Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](hallucination/mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)**
+
+:   提出了 Mixture of Decoding (MoD)，通过 JS 散度衡量模型对图像 token 注意力的正确性，在注意力正确时采用互补解码放大关键信息，注意力错误时采用对比解码抑制误导信息，从而自适应地缓解多模态大模型的幻觉问题。
+
+**[Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](hallucination/monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)**
+
+:   提出 Monitoring Decoding (MD) 框架，在生成过程中动态监控部分响应的事实性，通过监控函数识别易产生幻觉的 token 并利用树搜索策略选择性地修正这些关键 token，从而在保持效率的同时显著提升事实准确性。
+
+**[On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](hallucination/on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)**
+
+:   提出 RLFH（Reinforcement Learning for Hallucination），一种在策略（on-policy）自对齐方法，让 LLM 自己作为评判者，将回复分解为原子事实并进行真实性和信息量评估，生成 token 级别的密集奖励信号，通过在线 PPO 优化来有效缓解幻觉问题。
+
+**[ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](hallucination/reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)**
+
+:   提出首个系统性评估多模态大模型**关系级幻觉**的综合基准 Reefknot（含 2 万+ 样本、三种任务），并基于置信度熵检测提出 Detect-then-Calibrate 缓解策略，平均降低幻觉率 9.75%。
+
+**[REFIND at SemEval-2025 Task 3: Retrieval-Augmented Factuality Hallucination Detection in Large Language Models](hallucination/refind_at_semeval-2025_task_3_retrieval-augmented_factuality_hallucination_detec.md)**
+
+:   提出 REFIND 框架，通过计算每个 token 在有无检索文档条件下的生成概率之比（Context Sensitivity Ratio, CSR），实现对 LLM 输出中幻觉片段的高效检测，在 SemEval-2025 Task 3 的 9 种语言上显著超越基线。
+
+**[Removal of Hallucination on Hallucination: Debate-Augmented RAG](hallucination/removal_of_hallucination_on_hallucination_debate-augmented_rag.md)**
+
+:   DRAG（Debate-Augmented RAG）提出在RAG系统的检索和生成两个阶段均引入多智能体辩论（MAD）机制，通过正反方辩论+裁判仲裁的结构化流程，消除因错误检索导致的"幻觉传递幻觉"问题，在6个QA基准上显著提升事实准确性。
+
+**[Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](hallucination/retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)**
+
+:   提出 RVCD（Retrieval Visual Contrastive Decoding），通过检索 AI 生成的单概念显式图像构建正/负 logit 集合，在解码阶段抑制 LVLM 的物体幻觉（Object Hallucination），无需额外训练即可显著优于现有解码方法。
+
+**[Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](hallucination/stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)**
+
+:   通过行为分析和机械可解释性实验揭示 LLM 无关上下文幻觉的内部机制：模型在底层构建抽象类别表示（如"语言"），然后两条竞争电路（query-based vs context-based）争夺特征选择权，相对激活强度决定正确泛化还是产生幻觉。
+
+**[TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](hallucination/treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)**
+
+:   提出 TreeCut，一种基于树结构的合成数据集生成方法，通过在树路径上移除必要条件边来系统性生成无穷多的不可回答数学应用题，用以评估 LLM 在面对不可解问题时的幻觉行为。
+
+**[Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](hallucination/visual_evidence_prompting.md)**
+
+:   提出Visual Evidence Prompting (VEP)，利用小型视觉专家模型（目标检测器、场景图生成器）的输出作为文本化"视觉证据"输入LVLM，无需训练即可在11个LVLM上显著降低幻觉——LLaVA-1.5在POPE上提升7.2%、Claude 3上提升12.1%。
 
 ---
 
@@ -6129,46 +6137,6 @@ item_total: 1855
 
 ---
 
-## 📹 视频理解 { #video_understanding }
-
-**[A Thousand Words Paint a Picture: Multimodal Goal Tracking for Grounded Social Intelligence](video_understanding/a_thousand_words_paint_a_picture_multimodal_goal_tracking_for_grounded_social_in.md)**
-
-:   本文提出了一个多模态目标追踪框架，通过结合视觉与语言线索来推理社交场景中参与者的隐含目标，从而提升模型对社交情境的理解能力（即"落地的社会智能"）。
-
-**[Addressing Blind Guessing: Calibration of Selection Bias in Multiple-Choice Question Answering by Video Language Models](video_understanding/addressing_blind_guessing_calibration_of_selection_bias_in_multiple-choice_quest.md)**
-
-:   首次系统性研究视频语言模型（VLM）在多选题回答中的选项选择偏差问题，通过任务分解分析偏差来源，提出BOLD后处理校准技术，在减少偏差的同时提升模型性能。
-
-**[Attention-Seeker: Dynamic Self-Attention Scoring for Unsupervised Key-Frame Extraction](video_understanding/attention-seeker_dynamic_self-attention_scoring_for_unsupervised_key-frame_extra.md)**
-
-:   本文提出Attention-Seeker方法，通过动态地分析Transformer模型中自注意力层的注意力得分分布，无需任何监督信号即可从视频中提取最具代表性的关键帧，在多个视频摘要基准数据集上超越了现有的无监督方法。
-
-**[From Teacher to Student: Tracking Memorization Through Model Distillation](video_understanding/from_teacher_to_student_tracking_memorization_through_model_distillation.md)**
-
-:   系统研究了知识蒸馏（KD）对大语言模型记忆化行为的影响，发现蒸馏不仅能压缩模型，还能显著降低对训练数据的逐字记忆风险——其中反向 KL 蒸馏（RKLD/MiniLLM）将记忆化比例从 SFT 的 65.4% 降至最低 6.0%。
-
-**[Generative Frame Sampler for Long Video Understanding](video_understanding/generative_frame_sampler_for_long_video_understanding.md)**
-
-:   提出 GenS，一个基于 VideoLLM 的生成式帧采样模块，用自然语言输出question-aware的相关帧时间段和置信度分数，作为即插即用模块在 LongVideoBench/MLVU/HourVideo 上为多种 VideoLLM 带来 2-4 个点的一致提升。
-
-**[ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](video_understanding/icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)**
-
-:   提出 ICR Score（Information Contribution to Residual Stream），通过测量 MHSA 和 FFN 模块对隐状态更新的贡献一致性来量化残差流动态，构建仅 16K 参数的 ICR Probe，在 4 个数据集 × 3 个 LLM 上幻觉检测 AUROC 全面超越基线。
-
-**[Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](video_understanding/improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)**
-
-:   提出 CombiSearch 方法，通过组合式评分为对话状态追踪（DST）选择最优 in-context 示例组合，在仅用 5% 训练数据的情况下超越所有使用 100% 数据的 baseline，理想设置下 JGA 上界比传统方法高 12%。
-
-**[RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning](video_understanding/raven_robust_advertisement_video_violation_temporal_grounding_via_reinforcement_.md)**
-
-:   本文提出RAVEN框架，将课程强化学习与多模态LLM结合，通过分层奖励机制和渐进式训练策略，实现广告视频违规内容的精确时序定位和类别预测，无需显式推理标注数据即可激发涌现推理能力。
-
-**[Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)**
-
-:   基于Video-LLM中注意力分数的稀疏性观察，提出Sparse-to-Dense (StD)解码策略，用top-K稀疏注意力模型作为draft model快速生成候选token，再用全注意力模型并行验证，实现最高1.94倍的无损加速，且无需额外训练或架构修改。
-
----
-
 ## 🎨 图像生成 { #image_generation }
 
 **[A Unified Agentic Framework for Evaluating Conditional Image Generation](image_generation/a_unified_agentic_framework_for_evaluating_conditional_image_generation.md)**
@@ -6274,6 +6242,42 @@ item_total: 1855
 **[TreeRL: LLM Reinforcement Learning with On-Policy Tree Search](reinforcement_learning/treerl_tree_search_rl.md)**
 
 :   提出 TreeRL，将基于熵引导的树搜索（EPTree）直接集成到 LLM 的 on-policy 强化学习训练中，通过在高不确定性 token 处分叉来扩展推理路径多样性，并利用树结构提供的全局+局部优势作为过程监督信号，在数学和代码推理任务上超过传统的多链采样 RL。
+
+---
+
+## 📹 视频理解 { #video_understanding }
+
+**[A Thousand Words Paint a Picture: Multimodal Goal Tracking for Grounded Social Intelligence](video_understanding/a_thousand_words_paint_a_picture_multimodal_goal_tracking_for_grounded_social_in.md)**
+
+:   本文提出了一个多模态目标追踪框架，通过结合视觉与语言线索来推理社交场景中参与者的隐含目标，从而提升模型对社交情境的理解能力（即"落地的社会智能"）。
+
+**[Addressing Blind Guessing: Calibration of Selection Bias in Multiple-Choice Question Answering by Video Language Models](video_understanding/addressing_blind_guessing_calibration_of_selection_bias_in_multiple-choice_quest.md)**
+
+:   首次系统性研究视频语言模型（VLM）在多选题回答中的选项选择偏差问题，通过任务分解分析偏差来源，提出BOLD后处理校准技术，在减少偏差的同时提升模型性能。
+
+**[Attention-Seeker: Dynamic Self-Attention Scoring for Unsupervised Key-Frame Extraction](video_understanding/attention-seeker_dynamic_self-attention_scoring_for_unsupervised_key-frame_extra.md)**
+
+:   本文提出Attention-Seeker方法，通过动态地分析Transformer模型中自注意力层的注意力得分分布，无需任何监督信号即可从视频中提取最具代表性的关键帧，在多个视频摘要基准数据集上超越了现有的无监督方法。
+
+**[From Teacher to Student: Tracking Memorization Through Model Distillation](video_understanding/from_teacher_to_student_tracking_memorization_through_model_distillation.md)**
+
+:   系统研究了知识蒸馏（KD）对大语言模型记忆化行为的影响，发现蒸馏不仅能压缩模型，还能显著降低对训练数据的逐字记忆风险——其中反向 KL 蒸馏（RKLD/MiniLLM）将记忆化比例从 SFT 的 65.4% 降至最低 6.0%。
+
+**[Generative Frame Sampler for Long Video Understanding](video_understanding/generative_frame_sampler_for_long_video_understanding.md)**
+
+:   提出 GenS，一个基于 VideoLLM 的生成式帧采样模块，用自然语言输出question-aware的相关帧时间段和置信度分数，作为即插即用模块在 LongVideoBench/MLVU/HourVideo 上为多种 VideoLLM 带来 2-4 个点的一致提升。
+
+**[Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](video_understanding/improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)**
+
+:   提出 CombiSearch 方法，通过组合式评分为对话状态追踪（DST）选择最优 in-context 示例组合，在仅用 5% 训练数据的情况下超越所有使用 100% 数据的 baseline，理想设置下 JGA 上界比传统方法高 12%。
+
+**[RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning](video_understanding/raven_robust_advertisement_video_violation_temporal_grounding_via_reinforcement_.md)**
+
+:   本文提出RAVEN框架，将课程强化学习与多模态LLM结合，通过分层奖励机制和渐进式训练策略，实现广告视频违规内容的精确时序定位和类别预测，无需显式推理标注数据即可激发涌现推理能力。
+
+**[Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs](video_understanding/sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in.md)**
+
+:   基于Video-LLM中注意力分数的稀疏性观察，提出Sparse-to-Dense (StD)解码策略，用top-K稀疏注意力模型作为draft model快速生成候选token，再用全注意力模型并行验证，实现最高1.94倍的无损加速，且无需额外训练或架构修改。
 
 ---
 

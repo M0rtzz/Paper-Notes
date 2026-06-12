@@ -119,8 +119,8 @@ RH-Partial2Global在Partial2Global基础上引入两个正交增强：(1) Jackkn
 - [\[ICCV 2025\] Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](../../ICCV2025/optimization/federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
 - [\[ICML 2025\] On Understanding Attention-Based In-Context Learning for Categorical Data](../../ICML2025/optimization/on_understanding_attention-based_in-context_learning_for_categorical_data.md)
 - [\[ICML 2025\] Training Dynamics of In-Context Learning in Linear Attention](../../ICML2025/optimization/training_dynamics_of_in-context_learning_in_linear_attention.md)
-- [\[NeurIPS 2025\] Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)
 - [\[NeurIPS 2025\] Clean First, Align Later: Benchmarking Preference Data Cleaning for Reliable LLM Alignment](clean_first_align_later_benchmarking_preference_data_cleaning_for_reliable_llm_a.md)
+- [\[ICML 2026\] Learning Context-Conditioned Predicate Semantics via Prototype Feedback](../../ICML2026/optimization/learning_context-conditioned_predicate_semantics_via_prototype_feedback.md)
 
 </div>
 

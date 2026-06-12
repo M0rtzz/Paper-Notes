@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 多模态VLM论文汇总 · 149篇论文解读
+  ICCV2025 多模态VLM论文汇总 · 145篇论文解读
 description: >-
-  149篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  145篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "多模态 VLM"
@@ -75,17 +75,17 @@ item_list:
     t: "CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance"
   - u: "compcap_improving_multimodal_large_language_models_with_composite_captions/"
     t: "CompCap: Improving Multimodal Large Language Models with Composite Captions"
-item_total: 149
+item_total: 145
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**📹 ICCV2025** · **149** 篇论文解读
+**📹 ICCV2025** · **145** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×76 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** 多模态 ×75 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 对齐/RLHF ×4
 
 **[A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)**
 
@@ -218,10 +218,6 @@ item_total: 149
 **[DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)**
 
 :   提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
-
-**[DASH: Detection and Assessment of Systematic Hallucinations of VLMs](dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)**
-
-:   提出DASH自动化流水线，通过LLM生成文本查询（DASH-LLM）和扩散模型优化图像查询（DASH-OPT）两种策略，在ReLAION-5B中系统性地发现VLM的假阳性对象幻觉聚类，共发现19k+聚类和950k+图像，并构建了更具挑战性的DASH-B基准。
 
 **[DisenQ: Disentangling Q-Former for Activity-Biometrics](disenq_disentangling_q-former_for_activity-biometrics.md)**
 
@@ -443,10 +439,6 @@ item_total: 149
 
 :   METEOR 提出首个面向多编码器 MLLM 的三阶段渐进式 token 剪枝框架：在编码阶段用特征秩分配各编码器的稀疏比例，在融合阶段通过协同剪枝消除跨编码器冗余，在解码阶段根据文本提示自适应调整剪枝比例，将视觉 token 减少 76% 而性能仅降 0.3%。
 
-**[Mitigating Object Hallucinations via Sentence-Level Early Intervention](mitigating_object_hallucinations_via_sentence-level_early_intervention.md)**
-
-:   本文提出SENTINEL框架，基于"幻觉在生成早期出现并向后传播"的关键观察，通过域内候选引导、双检测器交叉验证构建句子级偏好数据，使用上下文感知DPO（C-DPO）实现早期干预，在Object HalBench上减少92%幻觉且保持通用能力。
-
 **[MM-IFEngine: Towards Multimodal Instruction Following](mm-ifengine_towards_multimodal_instruction_following.md)**
 
 :   提出 MM-IFEngine 管线，系统性地生成高质量的图像-指令对数据（含 SFT 和 DPO 版本），并构建 MM-IFEval 基准，显著提升 MLLM 在多模态指令遵循任务上的表现。
@@ -494,10 +486,6 @@ item_total: 149
 **[One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)**
 
 :   本文提出 C-PGC 框架，通过恶意对比学习训练条件扰动生成器，生成一对通用图文对抗扰动（UAP），能够从根本上破坏 VLP 模型的多模态对齐关系，在白盒和黑盒场景下对多种 VLP 模型和下游任务均取得优异攻击效果。
-
-**[ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)**
-
-:   提出ONLY，一种training-free的单层干预解码方法——通过Text-to-Visual Entropy Ratio（TVER）选择偏向文本的attention head生成textually-enhanced logits，然后与原始logits做自适应对比/协作解码，仅增加1.07×推理时间就在POPE上比VCD/M3ID高3.14%，在CHAIR上降低CHAIR_S 6.2个点。
 
 **[OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning](openvision_a_fully-open_cost-effective_family_of_advanced_vision_encoders_for_mu.md)**
 
@@ -674,10 +662,6 @@ item_total: 149
 **[VQ-FocusAmbiguity: Acknowledging Focus Ambiguity in Visual Questions](vq_focusambiguity_acknowledging_focus_ambiguity_visual_questions.md)**
 
 :   首次关注VQA中的"焦点歧义"问题——当问题中的语言可以指向图像中多个合理区域时，构建了5500个样本的VQ-FocusAmbiguity数据集，为歧义感知VQA系统的开发奠定基础。
-
-**[Why LVLMs Are More Prone to Hallucinations in Longer Responses: The Role of Context](why_lvlms_are_more_prone_to_hallucinations_in_longer_responses_the_role_of_conte.md)**
-
-:   深入探究 LVLM 长文本生成中幻觉频发的根本原因——不是长度本身，而是上下文的连贯性（coherence）和完备性（completeness）需求驱动模型外推产生幻觉，并据此提出 HalTrapper 的"诱导-检测-抑制"三阶段框架。
 
 **[WikiAutoGen: Towards Multi-Modal Wikipedia-Style Article Generation](wikiautogen_towards_multi-modal_wikipedia-style_article_generation.md)**
 

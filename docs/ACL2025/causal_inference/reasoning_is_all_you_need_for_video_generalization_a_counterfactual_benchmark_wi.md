@@ -131,8 +131,8 @@ COVER 是一个 benchmark，不提出新模型。核心在任务分类体系 + �
 - [\[ICML 2025\] RE-IMAGINE: Symbolic Benchmark Synthesis for Reasoning Evaluation](../../ICML2025/causal_inference/re-imagine_symbolic_benchmark_synthesis_for_reasoning_evaluation.md)
 - [\[ACL 2025\] CoA-Reasoning: Explorations on Counterfactual Analysis in Physical Reasoning of LVLMs](coa-reasoning_explorations_on_counterfactual_analysis_in_physical_reasoning_of_l.md)
 - [\[ACL 2025\] Causal Graph based Event Reasoning using Semantic Relation Experts](causal_graph_based_event_reasoning_using_semantic_relation_experts.md)
-- [\[ACL 2025\] Counterfactual Explanations for Aspect-Based Sentiment Analysis](counterfactual_explanations_for_aspect-based_sentiment_analysis.md)
 - [\[NeurIPS 2025\] Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models](../../NeurIPS2025/causal_inference/counterfactual_reasoning_for_steerable_pluralistic_value_alignment_of_large_lang.md)
+- [\[ACL 2025\] Counterfactual Explanations for Aspect-Based Sentiment Analysis](counterfactual_explanations_for_aspect-based_sentiment_analysis.md)
 
 </div>
 

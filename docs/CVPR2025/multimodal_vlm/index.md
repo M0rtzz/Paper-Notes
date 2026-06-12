@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 多模态VLM论文汇总 · 151篇论文解读
+  CVPR2025 多模态VLM论文汇总 · 145篇论文解读
 description: >-
-  151篇CVPR2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、对齐/RLHF、少样本学习、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  145篇CVPR2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、对齐/RLHF、少样本学习、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "多模态 VLM"
@@ -75,17 +75,17 @@ item_list:
     t: "DynRefer: Delving into Region-level Multimodal Tasks via Dynamic Resolution"
   - u: "efficient_motion-aware_video_mllm/"
     t: "Efficient Motion-Aware Video MLLM"
-item_total: 151
+item_total: 145
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**📷 CVPR2025** · **151** 篇论文解读
+**📷 CVPR2025** · **145** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×90 · LLM ×19 · 推理 ×12 · 对齐/RLHF ×9 · 少样本学习 ×6
+🔥 **高频主题：** 多模态 ×88 · LLM ×18 · 推理 ×12 · 对齐/RLHF ×9 · 少样本学习 ×6
 
 **[4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)**
 
@@ -275,10 +275,6 @@ item_total: 151
 
 :   构建了Ground-V，一个包含50万指令-分割对的数据集，系统性解决真实世界指代分割中的五大挑战（幻觉引用、多对象、推理、多粒度、部件引用），训练后的VLM在gRefCOCO上N-Acc超越前SOTA 20%以上。
 
-**[HalLoc: Token-Level Localization of Hallucinations for Vision Language Models](halloc_token-level_localization_of_hallucinations_for_vision_language_models.md)**
-
-:   提出HalLoc，一个15.5万样本、覆盖VQA/指令跟随/图像描述三类任务的token级幻觉标注数据集，并基于此训练了轻量级幻觉检测模型HalLocalizer，可在不影响效率的前提下即插即用地集成到现有VLM中实现实时概率化幻觉检测。
-
 **[HEIE: MLLM-Based Hierarchical Explainable AIGC Image Implausibility Evaluator](heie_mllm-based_hierarchical_explainable_aigc_image_implausibility_evaluator.md)**
 
 :   提出HEIE——基于多模态大语言模型（MLLM）的层次化可解释AIGC图像不合理性评估器，通过CoT驱动的三位一体评估器同时输出热力图、评分和文字解释，并用自适应层次化不合理性映射器实现全局-局部缺陷的精准定位，在RichHF-18K和AbHuman数据集上达到SOTA。
@@ -403,21 +399,9 @@ item_total: 151
 
 :   NVILA 提出"先放大再压缩"(Scale-then-Compress)的范式，通过提升空间和时间分辨率后再压缩视觉Token，在保持甚至超越SOTA精度的同时，将训练成本降低1.9-5.1倍、推理预填充延迟降低1.6-2.2倍、解码延迟降低1.2-2.8倍。
 
-**[Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)**
-
-:   本文揭示了多模态大模型幻觉的混合特性——不同样本甚至同一回答中的不同 token 面临不同类型的幻觉挑战（语言先验、视觉信息丢失、注意力偏差），据此提出 Octopus 框架，通过可学习的"眼睛"模块自适应识别幻觉类型，动态选择最适合的对比解码策略（"触手"），在四个基准上实现了 SOTA。
-
-**[ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)**
-
-:   本文提出 ODE（Open-set Dynamic Evaluation）协议，通过图结构建模现实世界物体概念及其分布关联，从中动态提取概念组合并生成合成测试图像，实现了开放集、持续更新的多模态幻觉评估，有效避免了现有静态基准可能存在的数据污染问题。
-
 **[On the Out-of-Distribution Generalization of Multimodal Large Language Models](on_the_out-of-distribution_generalization_of_large_multimodal_models.md)**
 
 :   本文系统评估了14个MLLM在20个数据集上的分布外泛化能力，发现MLLM在医学/分子等领域特定数据上性能近似随机，通过三假设分析确定"语义-视觉映射缺陷"为主因，并证明上下文学习（ICL）能显著缓解该问题但对标签偏移和伪相关偏移敏感。
-
-**[One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination](one_token_two_fates_a_unified_framework_via_vision_token_manipulation_against_ml.md)**
-
-:   提出首个统一的训练无关MLLM幻觉缓解框架，围绕vision token的双重角色——增强(SVC)与抑制(CRC)——在隐表示层协同操作，在LLaVA-1.5上POPE准确率提升约2%，仅增加1.06×推理延迟。
 
 **[OpenING: A Comprehensive Benchmark for Judging Open-ended Interleaved Image-Text Generation](opening_a_comprehensive_benchmark_for_judging_open-ended_interleaved_image-text_.md)**
 
@@ -507,10 +491,6 @@ item_total: 151
 
 :   MONDAY 框架从 YouTube 教学视频自动生成移动端导航数据集——通过 OCR 场景转换检测和 GPT-4o 的 3 步动作识别流程，以人工标注 1/17 的成本（$0.34 vs $5.76/视频）构建了覆盖 iOS/Android 双平台的 313K 标注帧，预训练后 agent 在未见的 Windows Mobile 上提升 18.11%。
 
-**[Seeing Far and Clearly: Mitigating Hallucinations in MLLMs with Attention Causal Decoding](seeing_far_and_clearly_mitigating_hallucinations_in_mllms_with_attention_causal_.md)**
-
-:   提出 FarSight，一种即插即用的无训练解码策略，通过在因果掩码的上三角矩阵中引入注意力寄存器来吸收异常 token 的过度注意力，并设计递减掩蔽率的位置感知编码增强远距离视觉 token 的信息传播，有效缓解多模态大模型中的初始幻觉和雪球幻觉。
-
 **[Seeing the Abstract: Translating the Abstract Language for Vision Language Models](seeing_the_abstract_translating_the_abstract_language_for_vision_language_models.md)**
 
 :   提出 ACT（Abstract-to-Concrete Translator），通过 PCA 分析抽象-具象文本在 VLM 隐空间的表征差异，在推理时无训练地将抽象描述的表征向具象方向偏移，解决 VLM 对抽象语言理解不足的问题，在时尚领域文本-图像检索任务上显著超越微调模型。
@@ -570,10 +550,6 @@ item_total: 151
 **[STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection](sting-bee_towards_vision-language_model_for_real-world_x-ray_baggage_security_in.md)**
 
 :   构建了首个多模态X射线行李安全数据集**STCray**（46,642张图像-描述对，21类威胁含IED和3D打印枪），设计**STING协议**系统生成领域感知的高质量描述，并训练领域特化VLM **STING-BEE**，在场景理解、威胁定位、视觉定地和VQA四项任务上建立新基线，并展现SOTA跨域泛化能力。
-
-**[Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target](stop_learning_it_all_to_mitigate_visual_hallucination_focus_on_the_hallucination.md)**
-
-:   提出**TL-DPO**（Target-Learning DPO），将传统DPO的全句级偏好学习限制到**幻觉发生的目标chunk**和**对应的图像区域**，通过目标生成损失和目标条件损失排除无关信号，在LLaVA-1.5上将CHAIR_s从66.8降至20.1，同时LLaVA-Bench从63.4提升至71.2。
 
 **[SVLTA: Benchmarking Vision-Language Temporal Alignment via Synthetic Video Situation](svlta_benchmarking_vision-language_temporal_alignment_via_synthetic_video_situat.md)**
 

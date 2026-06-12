@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM安全论文汇总 · 128篇论文解读
+  ACL2026 LLM安全论文汇总 · 115篇论文解读
 description: >-
-  128篇ACL2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、推理、多模态、RAG等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  115篇ACL2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "LLM 安全"
@@ -11,9 +11,9 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "水印/隐写"
-  - "推理"
   - "多模态"
-  - "RAG"
+  - "推理"
+  - "对齐/RLHF"
 item_list:
   - u: "a_linguistics-aware_llm_watermarking_via_syntactic_predictability/"
     t: "STELA: A Linguistics-Aware LLM Watermarking via Syntactic Predictability"
@@ -33,8 +33,6 @@ item_list:
     t: "AgentMark: Utility-Preserving Behavioral Watermarking for Agents"
   - u: "agsc_adaptive_granularity_and_semantic_clustering_for_uncertainty_quantification/"
     t: "AGSC: Adaptive Granularity and Semantic Clustering for Uncertainty Quantification in Long-text Generation"
-  - u: "aligning_with_your_own_voice_self-corrected_preference_learning_for_hallucinatio/"
-    t: "Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs"
   - u: "appsi-139_a_parallel_corpus_of_english_application_privacy_policy_summarization_/"
     t: "APPSI-139: A Parallel Corpus of English Application Privacy Policy Summarization and Interpretation"
   - u: "astra_an_automated_framework_for_strategy_discovery_retrieval_and_evolution_for_/"
@@ -75,17 +73,19 @@ item_list:
     t: "CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge"
   - u: "dart_mitigating_harm_drift_in_difference-aware_llms_via_distill-audit-repair_tra/"
     t: "DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training"
-item_total: 128
+  - u: "de-anonymization_at_scale_via_tournament-style_attribution/"
+    t: "De-Anonymization at Scale via Tournament-Style Attribution"
+item_total: 115
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**💬 ACL2026** · **128** 篇论文解读
+**💬 ACL2026** · **115** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×47 · 对抗鲁棒 ×22 · 水印/隐写 ×10 · 推理 ×10 · 多模态 ×10
+🔥 **高频主题：** LLM ×42 · 对抗鲁棒 ×22 · 水印/隐写 ×10 · 多模态 ×10 · 推理 ×9
 
 **[STELA: A Linguistics-Aware LLM Watermarking via Syntactic Predictability](a_linguistics-aware_llm_watermarking_via_syntactic_predictability.md)**
 
@@ -122,10 +122,6 @@ item_total: 128
 **[AGSC: Adaptive Granularity and Semantic Clustering for Uncertainty Quantification in Long-text Generation](agsc_adaptive_granularity_and_semantic_clustering_for_uncertainty_quantification.md)**
 
 :   AGSC 提出了一个针对长文本生成的不确定性量化框架，通过 NLI 中立概率触发自适应粒度分解（减少 60% 推理时间），并使用 GMM 软聚类捕捉潜在语义主题进行主题感知的加权聚合，在 BIO 和 LongFact 基准上达到 SOTA 的事实性相关性。
-
-**[Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs](aligning_with_your_own_voice_self-corrected_preference_learning_for_hallucinatio.md)**
-
-:   提出 AVES-DPO 框架：用一致性多模型验证（YOLO/GroundingDINO/Qwen3-VL）在 object/attribute/relation 三层细粒度检测 LVLM 自己生成回复中的幻觉，再让同一个 LVLM 自我校正并丰富细节，得到的偏好对天然处于目标模型的"自身分布"内；仅 5.2K 样本即可在多个幻觉 benchmark 上超过依赖 GPT-4V 教师的 SOTA（数据效率约 25×）。
 
 **[APPSI-139: A Parallel Corpus of English Application Privacy Policy Summarization and Interpretation](appsi-139_a_parallel_corpus_of_english_application_privacy_policy_summarization_.md)**
 
@@ -235,10 +231,6 @@ item_total: 128
 
 :   DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗水印头根据当前内容是"良性"还是"恶意"自适应地注入不同水印，使良性文本两路一致、恶意文本两路发散，从而在保持对 paraphrase 鲁棒的同时**首次能检测并溯源** piggyback spoofing 注入的恶意片段。
 
-**[Enhancing Hallucination Detection via Future Context](enhancing_hallucination_detection_via_future_context.md)**
-
-:   本文提出利用采样生成的"未来上下文"（后续句子）来增强黑盒场景下的幻觉检测，利用幻觉一旦出现就倾向于持续传播的"滚雪球效应"，在 SelfCheckGPT 和 SC 等多种采样方法上一致提升检测性能。
-
 **[Evaluating Answer Leakage Robustness of LLM Tutors against Adversarial Student Attacks](evaluating_answer_leakage_robustness_of_llm_tutors_against_adversarial_student_a.md)**
 
 :   本文系统评估 LLM 家教在「学生想骗答案」场景下的答案泄露鲁棒性：定义 6 类对抗/说服技巧，比较 4 类对抗学生代理（基础、推理增强、多代理、SFT 微调），并验证两种简单防御（推理优先、多代理 tutor）可在多数模型上把泄露率从 70–85% 压到 < 10%。
@@ -251,17 +243,9 @@ item_total: 128
 
 :   本文提出FAITH框架，通过将LLM的不确定性信号（一致性+语义熵）映射到自然语言描述的知识状态象限（可信度×诚实度），设计考虑不确定性的细粒度奖励函数进行PPO训练，再用RAG模块纠正潜在错误，系统性提升LLM的事实准确性。
 
-**[FaithLens: Detecting and Explaining Faithfulness Hallucination](faithlens_detecting_and_explaining_faithfulness_hallucination.md)**
-
-:   本文提出 FaithLens，一个 8B 参数的忠实性幻觉检测模型，通过高质量数据合成+三维过滤（标签正确性、解释质量、数据多样性）进行冷启动 SFT，再用基于规则的强化学习（预测正确性奖励+解释质量奖励）进一步优化，在 12 个任务上超越 GPT-5.2 和 o3，同时提供高质量的解释性输出。
-
 **[Fast-MIA: Efficient and Scalable Membership Inference for LLMs](fast-mia_efficient_and_scalable_membership_inference_for_llms.md)**
 
 :   Fast-MIA 把 9 种主流 LLM 成员推理攻击（MIA）方法塞进同一个 vLLM 批量推理引擎，并加一层跨方法 log-prob 缓存，使评测在 LLaMA-30B / WikiMIA 上整体加速约 5×（SaMIA 单方法加速 19.5×）、AUC 几乎不变，让大规模 MIA 审计第一次变得真的"跑得起"。
-
-**[FinGround: Detecting and Grounding Financial Hallucinations via Atomic Claim Verification](finground_detecting_and_grounding_financial_hallucinations_via_atomic_claim_veri.md)**
-
-:   FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pipeline：(1) finance-aware 混合检索；(2) 把答案拆成原子 claim 并按"数值/时间/实体属性/比较/监管/计算"六类 taxonomy 用 type-routed 策略验证 (其中 computational claim 用公式重构 + 算术再校验)；(3) 对未支持的 claim 进行 grounded 重写并加段/单元格级引用——把 GPT-4o 蒸馏到 8B 检测器实现 91.4% F1、18× 加速，端到端将 hallucination rate 相比 GPT-4o+CoT 降 78%。
 
 **[FlexGuard: Continuous Risk Scoring for Strictness-Adaptive LLM Content Moderation](flexguard_continuous_risk_scoring_for_strictness-adaptive_llm_content_moderation.md)**
 
@@ -290,14 +274,6 @@ item_total: 128
 **[ForgeryTalker: Generating Attribution Reports for Manipulated Facial Images](generating_attribution_reports_for_manipulated_facial_images_a_dataset_and_basel.md)**
 
 :   本文提出伪造归因报告生成（Forgery Attribution Report Generation）这一新任务，构建了包含 152,217 个样本的 MMTT 数据集（首个同时提供像素级掩码和人工文本描述的大规模面部伪造数据集），并提出 ForgeryTalker 端到端基线，通过共享编码器和双解码器（掩码+语言模型）联合生成定位掩码和归因报告，达到 59.3 CIDEr 和 73.67 IoU。
-
-**[Generating Effective CoT Traces for Mitigating Causal Hallucination](generating_effective_cot_traces_for_mitigating_causal_hallucination.md)**
-
-:   本文首先提出了因果幻觉率（CHR）指标来量化小型 LLM 在事件因果识别中过度预测因果关系的倾向，然后通过系统实验确定了有效 CoT 数据的两个关键标准（充分长度的语义解释+与目标模型对齐的分布），设计了一套低成本的 CoT 数据生成管线，将 Qwen2.5-1.5B 的 CHR 从 83.54% 降至 6.26%，同时提升平均准确率至 66.00%。
-
-**[Hallucination Detection in LLMs with Topological Divergence on Attention Graphs](hallucination_detection_in_llms_with_topological_divergence_on_attention_graphs.md)**
-
-:   TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 Manifold Topology Divergence 度量「response 子图相对 prompt 子图的拓扑新颖度」，并发现存在跨数据集稳定的「幻觉感知头」——只用 10 个这样的头做平均，就能在 RAG 场景下做到 training-free + 比 SelfCheckGPT 快 70× 且 ROC-AUC 显著领先。
 
 **[Hard to Read, Easy to Jailbreak: How Visual Degradation Bypasses MLLM Safety Alignment](hard_to_read_easy_to_jailbreak_how_visual_degradation_bypasses_mllm_safety_align.md)**
 
@@ -343,17 +319,9 @@ item_total: 128
 
 :   LLM-VA 发现 LLM 内部把"是否回答"（answer 向量 $v_a$）与"输入是否安全"（benign 向量 $v_b$）编码成几乎正交的两个方向，导致 jailbreak 与 over-refusal 之间的取舍永远此消彼长；它通过闭式最小范数权重更新把 $v_a$ 与 $v_b$ 对齐，让模型"愿不愿答"因果依赖于"输入安不安全"，在 12 个 LLM 上 F1 比最强 baseline 高 11.45%、效用仅掉 4.08%，且无需任何 fine-tuning 或架构改动。
 
-**[Logical Consistency as a Bridge: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments](logical_consistency_as_a_bridge_improving_llm_hallucination_detection_via_label_.md)**
-
-:   把 LLM 的 self-judgment ("它觉得自己刚才答对了没") 也当成一个可能幻觉的 generation，先用 intrinsic feature 训一个 "meta-judgment detector" 估它的可信度，再用"如果 self-judgment 说真→两标签相同/说假→两标签相反"这条天然逻辑规则，把 response detector 和 meta-judgment detector 通过 Huber loss 互相约束、用置信度加权的互学习联合训练；推理时只用 response detector 但已经吸收了 self-judgment 的知识，零额外推理成本就拿到双视角增益。
-
 **[Look Twice before You Leap: A Rational Framework for Localized Adversarial Anonymization](look_twice_before_you_leap_a_rational_framework_for_localized_adversarial_anonym.md)**
 
 :   提出 RLAA 框架，通过 Attacker-Arbitrator-Anonymizer 三角色架构和边际替代率（MRS）理性约束，解决对抗式文本匿名化迁移到本地小模型时的效用崩溃问题，无需训练即可在本地实现优于 API 方案的隐私-效用平衡。
-
-**[Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models](lost_in_diffusion_uncovering_hallucination_patterns_and_failure_modes_in_diffusi.md)**
-
-:   首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。
 
 **[Lying with Truths: Open-Channel Multi-Agent Collusion for Belief Manipulation via Generative Montage](lying_with_truths_open-channel_multi-agent_collusion_for_belief_manipulation_via.md)**
 
@@ -366,10 +334,6 @@ item_total: 128
 **[Maximizing Local Entropy Where It Matters: Prefix-Aware Localized LLM Unlearning](maximizing_local_entropy_where_it_matters_prefix-aware_localized_llm_unlearning.md)**
 
 :   本文提出 PALU（Prefix-Aware Localized Unlearning），从时间和词表两个维度实现局部化的熵最大化遗忘：在时间维度仅对敏感前缀 token 施加遗忘目标，在词表维度仅对 top-K logits 进行平坦化，以最小的参数扰动实现高效遗忘并保持模型通用能力。
-
-**[MeasHalu: Mitigation of Scientific Measurement Hallucinations for LLMs](meashalu_mitigation_of_scientific_measurement_hallucinations_for_large_language_.md)**
-
-:   本文提出MeasHalu框架，通过细粒度测量幻觉分类法和两阶段优化（推理感知SFT+幻觉靶向GRPO奖励）缓解LLM在科学测量抽取中的幻觉，在MeasEval上显著超越基线。
 
 **[Membership Inference Attacks on In-Context Learning Recommendation](membership_inference_attacks_on_llm-based_recommender_systems.md)**
 
@@ -450,10 +414,6 @@ item_total: 128
 **[Responsible Federated LLMs via Safety Filtering and Constitutional AI](responsible_federated_llms_via_safety_filtering_and_constitutional_ai.md)**
 
 :   这篇论文把安全过滤器和 Constitutional AI 接入 FedLLM 流程，证明有害客户端数据会显著损害全局模型安全，而在客户端过滤数据、在服务器端低成本 CAI 微调可以把 AdvBench 安全分数从约 72% 拉回到 96% 以上。
-
-**[Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights](rethinking_evaluation_for_llm_hallucination_detection_a_desiderata_a_new_rag-bas.md)**
-
-:   本文重新定义了 RAG 场景幻觉检测 benchmark 应具备的 7 条要求，构建了长上下文、人类多轮标注且带真实噪声标签的 Trivia++，并发现现有检测器在有机 RAG 幻觉上仍明显低于理想性能。
 
 **[Rethinking Jailbreak Detection of Large Vision Language Models with Representational Contrastive Scoring](rethinking_jailbreak_detection_of_large_vision_language_models_with_representati.md)**
 
@@ -539,17 +499,9 @@ item_total: 128
 
 :   SWAN 用 Abstract Meaning Representation 模板把水印嵌入句子的语义图结构，而不是 token 或 embedding 区域，因此在保持原意的 paraphrase 后仍能通过 AMR 解析、模板匹配和比例 z 检验检测出水印。
 
-**[The Reasoning Trap: How Enhancing LLM Reasoning Amplifies Tool Hallucination](the_reasoning_trap_how_enhancing_llm_reasoning_amplifies_tool_hallucination.md)**
-
-:   系统性揭示了"推理陷阱"悖论：增强LLM推理能力（无论通过RL、蒸馏还是可切换推理模式）会系统性地放大工具幻觉，且这一效应与推理本身而非RL训练相关联，现有缓解策略（提示工程、DPO）面临不可避免的可靠性-能力权衡。
-
 **[Topic-Based Watermarks for Large Language Models](topic-based_watermarks_for_large_language_models.md)**
 
 :   本文提出基于主题的轻量水印方案 TBW，将词表按语义主题聚类为"绿色列表"（而非随机分区），根据输入提示选择语义对齐的主题列表进行 logit 偏置，在保持与无水印文本相当的困惑度的同时，显著提升了对释义和词汇扰动攻击的鲁棒性。
-
-**[TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG](tpa_next_token_probability_attribution_for_detecting_hallucinations_in_rag.md)**
-
-:   本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献，结合词性标注聚合特征，实现 RAG 场景下的 SOTA 幻觉检测。
 
 **[Train in Vain: Functionality-Preserving Poisoning to Prevent Unauthorized Use of Code Datasets](train_in_vain_functionality-preserving_poisoning_to_prevent_unauthorized_use_of_.md)**
 
@@ -562,10 +514,6 @@ item_total: 128
 **[TROJail: Trajectory-Level Optimization for Multi-Turn Large Language Model Jailbreaks with Process Rewards](trojail_trajectory-level_optimization_for_multi-turn_large_language_model_jailbr.md)**
 
 :   本文将自动化多轮越狱攻击建模为多轮强化学习问题，提出 TROJail，通过两个启发式过程奖励（过度有害惩罚和语义相关性递进）缓解结果奖励的稀疏监督问题，在多个模型和基准上显著提升攻击成功率。
-
-**[Two Pathways to Truthfulness: On the Intrinsic Encoding of LLM Hallucinations](two_pathways_to_truthfulness_on_the_intrinsic_encoding_of_llm_hallucinations.md)**
-
-:   本文发现 LLM 内部编码真实性信号存在两条不同的信息通路：Question-Anchored（依赖问题到回答的信息流）和 Answer-Anchored（从生成答案本身提取自包含证据），两者与知识边界紧密关联，并据此提出 Mixture-of-Probes 和 Pathway Reweighting 两种通路感知的幻觉检测方法，AUC 提升达 10%。
 
 **[Understanding and Mitigating Bias Inheritance in LLM-based Data Augmentation on Downstream Tasks](understanding_and_mitigating_bias_inheritance_in_llm-based_data_augmentation_on_.md)**
 

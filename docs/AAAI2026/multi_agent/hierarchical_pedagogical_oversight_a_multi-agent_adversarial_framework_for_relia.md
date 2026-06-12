@@ -196,9 +196,9 @@ HPO是一个三阶段流水线：
 
 - [\[ACL 2026\] MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering](../../ACL2026/multi_agent/mata_multi-agent_framework_for_reliable_and_flexible_table_question_answering.md)
 - [\[ICLR 2026\] HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatre](../../ICLR2026/multi_agent/hamlet_a_hierarchical_and_adaptive_multi-agent_framework_for_live_embodied_theat.md)
-- [\[ACL 2026\] Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate](../../ACL2026/multi_agent/dialectic-med_mitigating_diagnostic_hallucinations_via_counterfactual_adversaria.md)
 - [\[ACL 2026\] AutoReproduce: Automatic AI Experiment Reproduction with Paper Lineage](../../ACL2026/multi_agent/autoreproduce_automatic_ai_experiment_reproduction_with_paper_lineage.md)
 - [\[AAAI 2026\] ARCANE: A Multi-Agent Framework for Interpretable and Configurable Alignment](arcane_a_multi-agent_framework_for_interpretable_and_configurable_alignment.md)
+- [\[ACL 2026\] PosterForest: Hierarchical Multi-Agent Collaboration for Scientific Poster Generation](../../ACL2026/multi_agent/posterforest_hierarchical_multi-agent_collaboration_for_scientific_poster_genera.md)
 
 </div>
 

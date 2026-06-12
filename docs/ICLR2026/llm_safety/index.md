@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 LLM安全论文汇总 · 55篇论文解读
+  ICLR2026 LLM安全论文汇总 · 52篇论文解读
 description: >-
-  55篇ICLR2026的 LLM 安全方向论文解读，涵盖对抗鲁棒、LLM、联邦学习、推理、水印/隐写、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  52篇ICLR2026的 LLM 安全方向论文解读，涵盖对抗鲁棒、LLM、联邦学习、推理、水印/隐写、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "LLM 安全"
@@ -31,8 +31,6 @@ item_list:
     t: "Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models"
   - u: "efficient_adversarial_attacks_on_high-dimensional_offline_bandits/"
     t: "Efficient Adversarial Attacks on High-dimensional Offline Bandits"
-  - u: "enhancing_hallucination_detection_through_noise_injection/"
-    t: "Enhancing Hallucination Detection through Noise Injection"
   - u: "erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning/"
     t: "Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning"
   - u: "expguard_llm_content_moderation_in_specialized_domains/"
@@ -75,17 +73,19 @@ item_list:
     t: "Perturbation-Induced Linearization: Constructing Unlearnable Data with Solely Linear Classifiers"
   - u: "pmark_towards_robust_and_distortion-free_semantic-level_watermarking_with_channe/"
     t: "PMark: Towards Robust and Distortion-free Semantic-level Watermarking with Channel Constraints"
-item_total: 55
+  - u: "purifying_generative_llms_from_backdoors_without_prior_knowledge_or_clean_refere/"
+    t: "Purifying Generative LLMs from Backdoors without Prior Knowledge or Clean Reference"
+item_total: 52
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🔬 ICLR2026** · **55** 篇论文解读
+**🔬 ICLR2026** · **52** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×11 · LLM ×9 · 联邦学习 ×6 · 推理 ×6 · 水印/隐写 ×3
+🔥 **高频主题：** 对抗鲁棒 ×10 · LLM ×9 · 联邦学习 ×6 · 推理 ×6 · 水印/隐写 ×3
 
 **[Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)**
 
@@ -118,10 +118,6 @@ item_total: 55
 **[Efficient Adversarial Attacks on High-dimensional Offline Bandits](efficient_adversarial_attacks_on_high-dimensional_offline_bandits.md)**
 
 :   揭示了离线多臂老虎机（MAB）评估框架的安全漏洞：攻击者只需对公开的奖励模型权重进行极小的不可感知扰动，就能完全劫持 bandit 的决策行为，且所需扰动范数随输入维度增加而降低（$\widetilde{\mathcal{O}}(d^{-1/2})$），使基于图像的生成模型评估特别脆弱。
-
-**[Enhancing Hallucination Detection through Noise Injection](enhancing_hallucination_detection_through_noise_injection.md)**
-
-:   在 LLM 中间层的 MLP 激活中注入均匀噪声来近似贝叶斯后验，捕获认知不确定性（epistemic uncertainty），与采样温度捕获的偶然不确定性（aleatoric uncertainty）互补，将 GSM8K 上的幻觉检测 AUROC 从 71.56 提升到 76.14。
 
 **[Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)**
 
@@ -255,10 +251,6 @@ item_total: 55
 
 :   提出SHE-LoRA——将选择性同态加密(SHE)与LoRA结合用于跨设备联邦LLM微调：基于参数敏感度的列级加密子集协商 + 列交换参数混淆 + 列感知自适应聚合，在保持与非隐私基线可比的模型性能同时，通信开销减少99.71%、加密时间减少99.87%，完全抵御SOTA梯度反演攻击DAGER。
 
-**[SHIELD: Suppressing Hallucinations In LVLM Encoders via Bias and Vulnerability Defense](shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)**
-
-:   首次将LVLM对象幻觉系统性追溯到视觉编码器，识别出统计偏差（高频模式token过度强调）、固有偏差（预训练主导对象的残余表示）、脆弱性（微小扰动即导致特征失真）三大问题，并提出SHIELD——一个完全免训练的框架，通过token重加权、token减法和对比解码三策略协同防御，在LLaVA-1.5/InstructBLIP/Qwen-VL上全面超越VCD和OPERA等方法。
-
 **[Stop Tracking Me! Proactive Defense Against Attribute Inference Attack in LLMs](stop_tracking_me_proactive_defense_against_attribute_inference_attack_in_llms.md)**
 
 :   TRACE-RPS 提出统一防御框架应对 LLM 属性推断攻击：TRACE 通过注意力+推理链精准定位隐私泄露文本元素做细粒度匿名化，RPS 通过轻量后缀优化诱导模型拒绝推断，将属性推断准确率从约 50% 降至 5% 以下。
@@ -290,10 +282,6 @@ item_total: 55
 **[Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning](veritas_generalizable_deepfake_detection_via_pattern-aware_reasoning.md)**
 
 :   提出 Veritas，一个基于多模态大语言模型 (MLLM) 的 deepfake 检测器，通过模式感知推理 (pattern-aware reasoning) 模拟人类鉴伪思维过程（快速判断→推理→计划→自我反思→结论），设计两阶段训练流程（SFT+MiPO 冷启动 + P-GRPO 强化学习），同时构建包含四级 OOD 评估的 HydraFake 数据集，在跨伪造类型和跨域场景平均达到 90.7% 准确率，超越此前 SOTA 6.0%。
-
-**[VeriTrail: Closed-Domain Hallucination Detection with Traceability](veritrail_closed-domain_hallucination_detection_with_traceable_evidence_synthes.md)**
-
-:   提出 VeriTrail——首个为多步生成过程（MGS）提供可追溯性的闭域幻觉检测方法，建模生成过程为 DAG 并沿路径逐层验证，同时构建了首批包含所有中间输出和人工标注的 MGS 数据集。
 
 **[Watermark Robustness and Radioactivity May Be at Odds in Federated Learning](watermark_robustness_and_radioactivity_may_be_at_odds_in_federated_learning.md)**
 

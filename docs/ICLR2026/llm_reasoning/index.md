@@ -83,7 +83,7 @@ item_total: 82
 
 **🔬 ICLR2026** · **82** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (10)](../../CVPR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
 🔥 **高频主题：** 推理 ×59 · LLM ×24 · 多模态 ×4 · Agent ×3 · 强化学习 ×3
 

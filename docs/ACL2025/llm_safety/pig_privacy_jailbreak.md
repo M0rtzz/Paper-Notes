@@ -142,7 +142,7 @@ PIG 框架包含三个核心步骤：
 - [\[ACL 2025\] Defense Against Prompt Injection Attack by Leveraging Attack Techniques](defense_prompt_injection.md)
 - [\[CVPR 2025\] Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating](../../CVPR2025/llm_safety/neural_gate_mitigating_privacy_risks_in_lvlms_via_neuron-level_gradient_gating.md)
 - [\[ICML 2026\] Gradient Transformer: Learning to Generate Updates for LLMs](../../ICML2026/llm_safety/gradient_transformer_learning_to_generate_updates_for_llms.md)
-- [\[ICML 2025\] An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs](../../ICML2025/llm_safety/an_attack_to_break_permutation-based_private_third-party_inference_schemes_for_l.md)
+- [\[ACL 2025\] Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)
 
 </div>
 

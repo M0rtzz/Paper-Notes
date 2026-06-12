@@ -147,7 +147,7 @@ ReliabilityRAG 的完整流程分三阶段：
 - [\[ACL 2025\] Towards Effective Extraction and Evaluation of Factual Claims](../../ACL2025/llm_safety/towards_effective_extraction_and_evaluation_of_factual_claims.md)
 - [\[NeurIPS 2025\] DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents](drift_dynamic_rulebased_defense_with_injection_isolation_for.md)
 - [\[ICCV 2025\] Adversarial Robust Memory-Based Continual Learner](../../ICCV2025/llm_safety/adversarial_robust_memory-based_continual_learner.md)
-- [\[NeurIPS 2025\] Robust or Suggestible? Exploring Non-Clinical Induction in LLM Drug-Safety Decisions](robust_or_suggestible_exploring_non-clinical_induction_in_llm_drug-safety_decisi.md)
+- [\[ACL 2025\] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](../../ACL2025/llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)
 
 </div>
 

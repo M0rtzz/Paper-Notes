@@ -125,8 +125,8 @@ NegBench 包含两个核心任务：(1) Retrieval-Neg：在原始描述中加入
 ## 相关论文
 
 - [\[ACL 2025\] NegVQA: Can Vision Language Models Understand Negation?](../../ACL2025/multimodal_vlm/negvqa_can_vision_language_models_understand_negation.md)
-- [\[ICML 2025\] Do Vision-Language Models Really Understand Visual Language?](../../ICML2025/multimodal_vlm/do_vision-language_models_really_understand_visual_language.md)
 - [\[CVPR 2025\] Evaluating Vision-Language Models as Evaluators in Path Planning](evaluating_vision-language_models_as_evaluators_in_path_planning.md)
+- [\[ICML 2025\] Do Vision-Language Models Really Understand Visual Language?](../../ICML2025/multimodal_vlm/do_vision-language_models_really_understand_visual_language.md)
 - [\[CVPR 2025\] Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
 - [\[CVPR 2025\] VisionZip: Longer is Better but Not Necessary in Vision Language Models](visionzip_longer_is_better_but_not_necessary_in_vision_language_models.md)
 

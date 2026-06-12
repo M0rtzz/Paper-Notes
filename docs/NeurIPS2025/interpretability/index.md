@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 可解释性论文汇总 · 81篇论文解读
+  NeurIPS2025 可解释性论文汇总 · 79篇论文解读
 description: >-
-  81篇NeurIPS2025的可解释性方向论文解读，涵盖 LLM、推理、多模态、模型压缩、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  79篇NeurIPS2025的可解释性方向论文解读，涵盖 LLM、推理、多模态、模型压缩、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "可解释性"
@@ -33,8 +33,6 @@ item_list:
     t: "ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation"
   - u: "attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s/"
     t: "ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study"
-  - u: "auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models/"
-    t: "Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models"
   - u: "base_models_know_how_to_reason_thinking_models_learn_when/"
     t: "Base Models Know How to Reason, Thinking Models Learn When"
   - u: "benchmarking_probabilistic_time_series_forecasting_models_on_neural_activity/"
@@ -43,8 +41,6 @@ item_list:
     t: "Better Estimation of the Kullback-Leibler Divergence Between Language Models"
   - u: "beyond_components_singular_vector-based_interpretability_of_transformer_circuits/"
     t: "Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits"
-  - u: "beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit/"
-    t: "Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT"
   - u: "bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models/"
     t: "Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models"
   - u: "causal_head_gating_a_framework_for_interpreting_roles_of_attention_heads_in_tran/"
@@ -75,17 +71,21 @@ item_list:
     t: "Dynamic Features Adaptation in Networking: Toward Flexible Training and Explainable Inference"
   - u: "efficient_vision-language_reasoning_via_adaptive_token_pruning/"
     t: "Efficient Vision-Language Reasoning via Adaptive Token Pruning"
-item_total: 81
+  - u: "emergence_of_linear_truth_encodings_in_language_models/"
+    t: "Emergence of Linear Truth Encodings in Language Models"
+  - u: "empowering_decision_trees_via_shape_function_branching/"
+    t: "Empowering Decision Trees via Shape Function Branching"
+item_total: 79
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧠 NeurIPS2025** · **81** 篇论文解读
+**🧠 NeurIPS2025** · **79** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** LLM ×8 · 推理 ×7 · 多模态 ×4 · 模型压缩 ×3 · 对抗鲁棒 ×3
+🔥 **高频主题：** LLM ×7 · 推理 ×6 · 多模态 ×4 · 模型压缩 ×3 · 对抗鲁棒 ×3
 
 **[A Controllable Examination for Long-Context Language Models](a_controllable_examination_for_longcontext_language_models.md)**
 
@@ -123,10 +123,6 @@ item_total: 81
 
 :   ARC-JSD 提出基于 Jensen-Shannon 散度的 RAG 上下文归因方法——通过比较有/无特定上下文句子时模型输出分布的 JSD 差异，无需微调/梯度计算即可定位回答所依赖的上下文，计算效率比 baseline 快 3 倍，Top-1 归因准确率平均提升 10.7%，并通过 Logit Lens 揭示归因相关的注意力头集中在高层。
 
-**[Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models](auditing_meta-cognitive_hallucinations_in_reasoning_large_language_models.md)**
-
-:   系统性审计推理大模型（RLLM）中幻觉的产生与传播机制，发现长 CoT 中的反思（reflection）会通过元认知偏差放大幻觉而非纠正它，即使在幻觉源头进行干预也难以改变最终结果（chain disloyalty），揭示现有幻觉检测方法在多步推理场景下严重不足。
-
 **[Base Models Know How to Reason, Thinking Models Learn When](base_models_know_how_to_reason_thinking_models_learn_when.md)**
 
 :   通过无监督 SAE 聚类发现 thinking model 的推理机制分类，然后用 steering vector 在基座模型上激活这些潜在推理能力，混合模型恢复高达 91% 的 thinking-base 性能差距（无需权重更新），证明基座模型已具备推理能力，thinking model 只是学会了"何时"部署它们。
@@ -142,10 +138,6 @@ item_total: 81
 **[Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)**
 
 :   提出基于SVD奇异向量的方向级可解释性框架，通过对注意力头和MLP的增广矩阵统一SVD分解+可学习对角掩码（KL+L₁），发现单组件内存在正交低秩子函数叠加——IOI任务仅需~9%方向即可KLD=0.21复现模型行为。
-
-**[Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT](beyond_token_probes_hallucination_detection_via_activation_tensors_with_act-vit.md)**
-
-:   将LLM的全部隐层激活组织为"激活张量"（层×token×隐维度），类比图像用ViT处理，设计ACT-ViT架构支持跨LLM联合训练，在15个LLM-数据集组合上一致超越传统probing方法，并展现出对未见数据集和未见LLM的强零样本/少样本迁移能力。
 
 **[Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models](bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models.md)**
 

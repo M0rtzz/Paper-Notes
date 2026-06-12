@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 音频/语音论文汇总 · 70篇论文解读
+  ACL2026 音频/语音论文汇总 · 68篇论文解读
 description: >-
-  70篇ACL2026的音频/语音方向论文解读，涵盖语音、对话系统、LLM、多模态、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  68篇ACL2026的音频/语音方向论文解读，涵盖语音、对话系统、LLM、多模态、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "音频/语音"
@@ -39,8 +39,6 @@ item_list:
     t: "ControlAudio: Tackling Text-Guided, Timing-Indicated and Intelligible Audio Generation via Progressive Diffusion Modeling"
   - u: "data-efficient_targeted_token-level_preference_optimization_for_llm-based_text-t/"
     t: "Data-efficient Targeted Token-level Preference Optimization for LLM-based Text-to-Speech"
-  - u: "detecting_hallucinations_in_speechllms_at_inference_time_using_attention_maps/"
-    t: "Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps"
   - u: "dial_healthdial_for_advice_a_multilingual_and_multi-parallel_spoken_dialogue_dat/"
     t: "Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking"
   - u: "do_we_need_distinct_representations_for_every_speech_token_unveiling_and_exploit/"
@@ -59,8 +57,6 @@ item_list:
     t: "Full-Duplex-Bench-v2: A Multi-Turn Evaluation Framework for Duplex Dialogue Systems with an Automated Examiner"
   - u: "generalizable_prompt_tuning_for_audio-language_models_via_semantic_expansion/"
     t: "SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models"
-  - u: "halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-/"
-    t: "HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models"
   - u: "hard_to_be_heard_phoneme-level_asr_analysis_of_phonologically_complex_low-resour/"
     t: "Hard to Be Heard: Phoneme-Level ASR Analysis of Phonologically Complex, Low-Resource Endangered Languages"
   - u: "hcfd_a_benchmark_for_audio_deepfake_detection_in_healthcare/"
@@ -75,17 +71,21 @@ item_list:
     t: "Jamendo-MT-QA: A Benchmark for Multi-Track Comparative Music Question Answering"
   - u: "llm-mc-affect_llm-based_monte_carlo_modeling_of_affective_trajectories_and_laten/"
     t: "LLM-MC-Affect: LLM-Based Monte Carlo Modeling of Affective Trajectories and Latent Ambiguity for Interpersonal Dynamic Insight"
-item_total: 70
+  - u: "marquis_a_three-stage_pipeline_for_video_retrieval-augmented_generation/"
+    t: "MARQUIS: A Three-Stage Pipeline for Video Retrieval-Augmented Generation"
+  - u: "mcga_a_multi-task_classical_chinese_literary_genre_audio_corpus/"
+    t: "MCGA: A Multi-task Classical Chinese Literary Genre Audio Corpus"
+item_total: 68
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**💬 ACL2026** · **70** 篇论文解读
+**💬 ACL2026** · **68** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (34)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×52 · 对话系统 ×9 · LLM ×5 · 多模态 ×4 · 推理 ×3
+🔥 **高频主题：** 语音 ×50 · 对话系统 ×9 · LLM ×5 · 多模态 ×4 · 推理 ×3
 
 **[Affectron: Emotional Speech Synthesis with Affective and Contextually Aligned Nonverbal Vocalizations](affectron_emotional_speech_synthesis_with_affective_and_contextually_aligned_non.md)**
 
@@ -135,10 +135,6 @@ item_total: 70
 
 :   针对 LLM-based TTS 中模糊发音（如日语「辛い」既可读 karai 也可读 tsurai）的对齐难题，作者提出 TKTO：先用两个标签对调训练的对比 KTO 模型估计每个 token 的重要度权重 $w_t$，再把 KTO 的 utterance 级 value function 拆到 token 级并加权聚合，实现「无需配对数据 + 自动定位目标 token」的双重升级，把日语发音准确率从 0.668 抬到 0.958（+39%），CER 降 54%。
 
-**[Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps](detecting_hallucinations_in_speechllms_at_inference_time_using_attention_maps.md)**
-
-:   提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉，在域内数据上 PR-AUC 提升最高达 +0.23。
-
 **[Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking](dial_healthdial_for_advice_a_multilingual_and_multi-parallel_spoken_dialogue_dat.md)**
 
 :   HEALTHDIAL 构建了一个包含 4 种 WHO 官方语言、6,000 个多平行健康信息寻求对话和 163 小时真实用户语音的数据集，并基于 ASR、TTS、检索、知识过滤和用户研究建立了多语言 spoken RAG benchmark。
@@ -174,10 +170,6 @@ item_total: 70
 **[SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models](generalizable_prompt_tuning_for_audio-language_models_via_semantic_expansion.md)**
 
 :   SEPT 通过利用 LLM 生成语义邻居并设计带边距约束的语义扩展损失来正则化提示嵌入空间，显著缓解了音频语言模型（ALM）提示调优中的 Base-New Tradeoff 问题，建立了 ALM 提示泛化的首个系统性评估基准。
-
-**[HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models](halluaudio_a_comprehensive_benchmark_for_hallucination_detection_in_large_audio-.md)**
-
-:   本文提出 HalluAudio，首个大规模跨领域（语音/环境声/音乐）的音频幻觉检测基准，包含 5000+ 人工验证的 QA 对和系统化的对抗性提示设计，通过多维指标（准确率/幻觉率/Yes-No偏差/拒绝率/错误类型）评估主流 LALM，揭示了当前模型在声学锚定、时间推理和音乐属性理解方面的显著缺陷。
 
 **[Hard to Be Heard: Phoneme-Level ASR Analysis of Phonologically Complex, Low-Resource Endangered Languages](hard_to_be_heard_phoneme-level_asr_analysis_of_phonologically_complex_low-resour.md)**
 

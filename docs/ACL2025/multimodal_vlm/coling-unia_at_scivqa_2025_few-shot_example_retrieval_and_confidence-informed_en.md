@@ -183,7 +183,7 @@ $$\text{confidence} = \exp\left(\frac{1}{|T|}\sum_{t \in T} \log p(t)\right)$$
 - [\[ACL 2025\] GODBench: A Benchmark for Multimodal Large Language Models in Video Comment Art](godbench_a_benchmark_for_multimodal_large_language_models_in_video_comment_art.md)
 - [\[ACL 2025\] Token Pruning in Multimodal Large Language Models: Are We Solving the Right Problem?](token_pruning_in_multimodal_large_language_models_are_we_solving_the_right_probl.md)
 - [\[CVPR 2025\] Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](../../CVPR2025/multimodal_vlm/rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
-- [\[ACL 2025\] SemEval-2025 Task 1: AdMIRe -- Advancing Multimodal Idiomaticity Representation](semeval-2025_task_1_admire_--_advancing_multimodal_idiomaticity_representation.md)
+- [\[ACL 2025\] Progressive Multimodal Reasoning via Active Retrieval](progressive_multimodal_reasoning_via_active_retrieval.md)
 
 </div>
 

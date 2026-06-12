@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 视频理解论文汇总 · 9篇论文解读
+  ACL2025 视频理解论文汇总 · 8篇论文解读
 description: >-
-  9篇ACL2025的视频理解方向论文解读，涵盖目标跟踪、多模态、问答、对话系统、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇ACL2025的视频理解方向论文解读，涵盖目标跟踪、多模态、问答、对话系统、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "视频理解"
@@ -25,25 +25,23 @@ item_list:
     t: "From Teacher to Student: Tracking Memorization Through Model Distillation"
   - u: "generative_frame_sampler_for_long_video_understanding/"
     t: "Generative Frame Sampler for Long Video Understanding"
-  - u: "icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in/"
-    t: "ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs"
   - u: "improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex/"
     t: "Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples"
   - u: "raven_robust_advertisement_video_violation_temporal_grounding_via_reinforcement_/"
     t: "RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning"
   - u: "sparse-to-dense_a_free_lunch_for_lossless_acceleration_of_video_understanding_in/"
     t: "Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs"
-item_total: 9
+item_total: 8
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**💬 ACL2025** · **9** 篇论文解读
+**💬 ACL2025** · **8** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (17)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (16)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
 
-🔥 **高频主题：** 目标跟踪 ×4
+🔥 **高频主题：** 目标跟踪 ×3
 
 **[A Thousand Words Paint a Picture: Multimodal Goal Tracking for Grounded Social Intelligence](a_thousand_words_paint_a_picture_multimodal_goal_tracking_for_grounded_social_in.md)**
 
@@ -64,10 +62,6 @@ item_total: 9
 **[Generative Frame Sampler for Long Video Understanding](generative_frame_sampler_for_long_video_understanding.md)**
 
 :   提出 GenS，一个基于 VideoLLM 的生成式帧采样模块，用自然语言输出question-aware的相关帧时间段和置信度分数，作为即插即用模块在 LongVideoBench/MLVU/HourVideo 上为多种 VideoLLM 带来 2-4 个点的一致提升。
-
-**[ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)**
-
-:   提出 ICR Score（Information Contribution to Residual Stream），通过测量 MHSA 和 FFN 模块对隐状态更新的贡献一致性来量化残差流动态，构建仅 16K 参数的 ICR Probe，在 4 个数据集 × 3 个 LLM 上幻觉检测 AUROC 全面超越基线。
 
 **[Improving Dialogue State Tracking through Combinatorial Search for In-Context Examples](improving_dialogue_state_tracking_through_combinatorial_search_for_in-context_ex.md)**
 

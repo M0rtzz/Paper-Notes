@@ -138,7 +138,7 @@ tags:
 - [\[NeurIPS 2025\] MIRAGE: A Benchmark for Multimodal Information-Seeking and Reasoning in Agriculture](mirage_a_benchmark_for_multimodal_information-seeking_and_reasoning_in_agricultu.md)
 - [\[ICML 2025\] LEMoN: Label Error Detection using Multimodal Neighbors](../../ICML2025/multimodal_vlm/lemon_label_error_detection_using_multimodal_neighbors.md)
 - [\[ACL 2025\] WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts](../../ACL2025/multimodal_vlm/wikimixqa_a_multimodal_benchmark_for_question_answering_over_tables_and_charts.md)
-- [\[ICCV 2025\] DASH: Detection and Assessment of Systematic Hallucinations of VLMs](../../ICCV2025/multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)
+- [\[ACL 2025\] Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models](../../ACL2025/multimodal_vlm/unsolvable_problem_detection.md)
 
 </div>
 

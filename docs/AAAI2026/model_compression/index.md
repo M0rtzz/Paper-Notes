@@ -1,16 +1,16 @@
 ---
 title: >-
-  AAAI2026 模型压缩论文汇总 · 61篇论文解读
+  AAAI2026 模型压缩论文汇总 · 60篇论文解读
 description: >-
-  61篇AAAI2026的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、知识蒸馏、LLM、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  60篇AAAI2026的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、LLM、知识蒸馏、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "模型压缩"
   - "论文解读"
   - "论文笔记"
   - "压缩/编码"
-  - "知识蒸馏"
   - "LLM"
+  - "知识蒸馏"
   - "推理"
   - "布局/合成"
 item_list:
@@ -74,17 +74,17 @@ item_list:
     t: "Group Orthogonal Low-Rank Adaptation for RGB-T Tracking"
   - u: "hcf_hierarchical_cascade_framework_for_distributed_multi-stage_image_compression/"
     t: "HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression"
-item_total: 61
+item_total: 60
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🤖 AAAI2026** · **61** 篇论文解读
+**🤖 AAAI2026** · **60** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (48)](../../ICCV2025/model_compression/index.md)
 
-🔥 **高频主题：** 模型压缩 ×9 · 压缩/编码 ×7 · 知识蒸馏 ×6 · LLM ×6 · 推理 ×3
+🔥 **高频主题：** 模型压缩 ×9 · 压缩/编码 ×7 · LLM ×6 · 知识蒸馏 ×5 · 推理 ×3
 
 **[A Closer Look at Knowledge Distillation in Spiking Neural Network Training](a_closer_look_at_knowledge_distillation_in_spiking_neural_ne.md)**
 
@@ -221,10 +221,6 @@ item_total: 61
 **[Lightweight Optimal-Transport Harmonization on Edge Devices](lightweight_optimal-transport_harmonization_on_edge_devices.md)**
 
 :   提出 MKL-Harmonizer，利用经典最优传输理论中的 Monge-Kantorovich 线性映射（MKL），训练一个轻量级编码器预测 12 维颜色变换参数，实现边缘设备上的实时图像颜色协调，在 AR 场景的感知质量-速度综合指标上达到最优。
-
-**[Listen Like a Teacher: Mitigating Whisper Hallucinations using Adaptive Layer Attention and Knowledge Distillation](listen_like_a_teacher_mitigating_whisper_hallucinations_using_adaptive_layer_att.md)**
-
-:   提出两阶段框架——自适应层注意力（ALA）融合Whisper编码器多层表示以增强噪声鲁棒性，多目标知识蒸馏（MOKD）将clean teacher的语义和注意力分布对齐到noisy student——在多语言噪声ASR基准上显著降低幻觉率和WER。
 
 **[LOOM: Personalized Learning Informed by Daily LLM Conversations Toward Long-Term Mastery via a Dynamic Learner Memory Graph](loom_personalized_learning_informed_by_daily_llm_conversations_toward_long-term_.md)**
 

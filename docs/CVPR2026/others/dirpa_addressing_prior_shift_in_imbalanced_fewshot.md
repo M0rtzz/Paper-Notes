@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification
 description: >-
-  [CVPR 2026][few-shot learning] 提出 Dirichlet 先验增强（DirPA），在少样本学习训练的每一步从对称 Dirichlet 分布采样伪先验并以 logit 调整注入分类器，主动模拟真实世界长尾分布以消除先验偏移…
+  [CVPR 2026][few-shot learning] 提出 Dirichlet 先验增强（DirPA），在少样本学习训练的每一步从对称 Dirichlet 分布采样一个伪先验并以 logit 调整 $z'=z+\tau\log\tilde{\pi}$ 注入分类器（不改数据、不重构 episode）…
 tags:
   - "CVPR 2026"
   - "few-shot learning"

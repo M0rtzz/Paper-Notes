@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 多模态VLM论文汇总 · 87篇论文解读
+  AAAI2026 多模态VLM论文汇总 · 84篇论文解读
 description: >-
-  87篇AAAI2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  84篇AAAI2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "多模态 VLM"
@@ -75,17 +75,17 @@ item_list:
     t: "FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models"
   - u: "global_compression_commander_plug-and-play_inference_acceler/"
     t: "Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models"
-item_total: 87
+item_total: 84
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🤖 AAAI2026** · **87** 篇论文解读
+**🤖 AAAI2026** · **84** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (145)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×45 · 推理 ×10 · LLM ×8 · 对抗鲁棒 ×6 · 对齐/RLHF ×5
+🔥 **高频主题：** 多模态 ×44 · 推理 ×10 · LLM ×6 · 对抗鲁棒 ×6 · 对齐/RLHF ×5
 
 **[AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs](abductivemllm_boosting_visual_abductive_reasoning_within_mll.md)**
 
@@ -211,10 +211,6 @@ item_total: 87
 
 :   提出 Graph-of-Mark (GoM)，一种无需训练的像素级视觉提示方法，通过在输入图像上直接叠加深度感知的场景图（包含节点和有向边），显式编码物体间的空间关系，使多模态语言模型在 VQA 和定位任务中的零样本空间推理准确率最高提升 11 个百分点。
 
-**[Ground What You See: Hallucination-Resistant MLLMs via Caption Feedback, Diversity-Aware Sampling, and Conflict Regularization](ground_what_you_see_hallucination-resistant_mllms_via_caption_feedback_diversity.md)**
-
-:   针对多模态大模型（MLLM）在强化学习训练中产生幻觉的三大根因——视觉误解、探索多样性不足、样本冲突——分别提出 Caption Reward、奖励方差引导的样本选择、以及基于 NTK 相似度的 InfoNCE 正则化，在多个基准上显著降低幻觉率。
-
 **[Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning](harnessing_textual_semantic_priors_for_knowledge_transfer_and_refinement_in_clip.md)**
 
 :   本文提出SECA框架，利用CLIP文本分支的稳定语义先验来指导骨干网络中语义相关的历史知识迁移（SG-AKT模块），并通过文本嵌入的类间语义关系精炼视觉原型构建混合分类器（SE-VPR模块），在ImageNetR/A和CIFAR100上超越现有SOTA。
@@ -238,10 +234,6 @@ item_total: 87
 **[Leveraging Textual Compositional Reasoning for Robust Change Captioning](leveraging_textual_compositional_reasoning_for_robust_change_captioning.md)**
 
 :   提出 CORTEX 框架，通过引入 VLM 生成的组合推理文本作为显式线索，结合图像-文本双重对齐模块（ITDA），增强纯视觉变化描述方法对物体关系和空间配置等结构化语义的理解能力。
-
-**[LLM-CAS: Dynamic Neuron Perturbation for Real-Time Hallucination Correction](llm-cas_dynamic_neuron_perturbation_for_real-time_hallucinat.md)**
-
-:   LLM-CAS 首次将 LLM 实时幻觉纠正建模为层次强化学习（HRL）问题，训练 RL Agent 在推理时动态选择最优的神经元扰动策略（高层选择功能网络类别，低层选择扰动类型和幅度），结合自适应掩码+因果追踪精确定位目标神经元，在 StoryCloze 上提升 10.98%，超越 ITI/CAA/SADI 等静态/动态基线。
 
 **[LLMC+: Benchmarking Vision-Language Model Compression with a Plug-and-play Toolkit](llmc_benchmarking_vision-language_model_compression_with_a_plug-and-play_toolkit.md)**
 
@@ -398,10 +390,6 @@ item_total: 87
 **[URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding](urag_unified_retrieval_and_generation_in_multimodal_llms_for.md)**
 
 :   URaG 发现 MLLM 处理长文档时存在类人的"粗到细"推理模式（浅层注意力均匀分散、深层集中于证据页），基于此洞察在第 6 层插入轻量跨模态检索模块（仅占参数 0.05%），选取 Top-5 相关页面丢弃其余内容，实现 SOTA 性能的同时减少 44-56% 计算量。
-
-**[Verb Mirage: Unveiling and Assessing Verb Concept Hallucinations in Multimodal Large Language Models](verb_mirage_unveiling_and_assessing_verb_concept_hallucinations_in_multimodal_la.md)**
-
-:   首次系统研究多模态大语言模型（MLLM）中的动词概念幻觉问题，构建了多维度基准测试，发现现有幻觉缓解方法对动词幻觉无效，并提出基于丰富动词知识微调的基线方法，显著缓解动词幻觉。
 
 **[VILTA: A VLM-in-the-Loop Adversary for Enhancing Driving Policy Robustness](vilta_a_vlm-in-the-loop_adversary_for_enhancing_driving_poli.md)**
 

@@ -253,4 +253,4 @@ item_total: 42
 
 **[WestWorld: 知识编码的可扩展轨迹世界模型](westworld_a_knowledge-encoded_scalable_trajectory_world_model_for_diverse_roboti.md)**
 
-:   WestWorld 通过将机器人通用动力学知识显式编码到轨迹世界模型中，实现单一模型在多样化机器人系统上的可扩展预测——在 7 种不同形态机器人上比专用模型平均提升 14.3%，并支持零样本迁移到全新机器人配置。
+:   WestWorld 用系统感知 MoE（Sys-MoE）+ 知识编码的结构嵌入，把多种异构机器人的轨迹动力学统一进一个可扩展世界模型：在 89 个仿真+真实环境上预训练后，零样本/少样本轨迹预测的 MAE/MSE 显著优于 MLP Ensemble、TDM、TrajWorld，并提升下游 MPPI 控制、成功部署到真实 Unitree Go1。

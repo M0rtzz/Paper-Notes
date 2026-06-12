@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 优化/理论论文汇总 · 124篇论文解读
+  NeurIPS2025 优化/理论论文汇总 · 123篇论文解读
 description: >-
-  124篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、推理、对齐/RLHF、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  123篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、对齐/RLHF、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "优化/理论"
@@ -11,8 +11,8 @@ tags:
   - "联邦学习"
   - "LLM"
   - "对抗鲁棒"
-  - "推理"
   - "对齐/RLHF"
+  - "推理"
   - "布局/合成"
 item_list:
   - u: "a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio/"
@@ -75,17 +75,17 @@ item_list:
     t: "Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients"
   - u: "emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks/"
     t: "Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks"
-item_total: 124
+item_total: 123
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧠 NeurIPS2025** · **124** 篇论文解读
+**🧠 NeurIPS2025** · **123** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×13 · LLM ×12 · 对抗鲁棒 ×11 · 推理 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** 联邦学习 ×13 · LLM ×12 · 对抗鲁棒 ×11 · 对齐/RLHF ×4 · 推理 ×4
 
 **[A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)**
 
@@ -266,10 +266,6 @@ item_total: 124
 **[Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules](functional_scaling_laws_in_kernel_regression_loss_dynamics_and_learning_rate_sch.md)**
 
 :   在幂律核回归模型中建立了 Functional Scaling Law (FSL)，通过引入"内在时间"概念统一刻画任意学习率调度下的完整 loss 轨迹，并推导出常数/指数衰减/WSD 三种调度在数据受限和计算受限条件下的显式 scaling 关系，理论解释了 WSD 优于纯衰减的经验现象。
-
-**[Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers](generalization_or_hallucination_understanding_out-of-context_reasoning_in_transf.md)**
-
-:   本文论证 LLM 的泛化能力和幻觉产生源于同一机制——脱语境推理（OCR），并在单层注意力模型上理论证明：分解参数化 $(W_O, W_V)$ 因梯度下降的核范数隐式偏差而能执行 OCR，而合并参数化 $W_{OV}$ 因 Frobenius 范数偏差而不能，且 OCR 是样本高效的（仅需 $m_{\text{train}}>0$）。
 
 **[Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)**
 

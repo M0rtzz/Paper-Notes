@@ -2,7 +2,7 @@
 title: >-
   CVPR2026 论文汇总 · 1643篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(217篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(207篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "CVPR2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1643
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2026 论文汇总
 
-1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(217篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(207篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -111,7 +111,7 @@ item_total: 1643
 
 **[3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience](3d_vision/3drawagent_teaching_llm_to_draw_in_3d_with_early_contrastive_experience.md)**
 
-:   提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive knowledge extraction）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
+:   提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
 
 **[4C4D: 4 Camera 4D Gaussian Splatting](3d_vision/4c4d_4_camera_4d_gaussian_splatting.md)**
 
@@ -2177,10 +2177,6 @@ item_total: 1643
 
 :   提出量化感知积分梯度（QIG），将 LVLM 量化的灵敏度分析从模态级推进到 token 级，利用公理化归因原理精确量化每个 token 对量化误差的贡献，在 W4A8 和 W3A16 设置下显著提升量化模型精度，且几乎无额外计算开销。
 
-**[FINER: MLLMs Hallucinate under Fine-grained Negative Queries](multimodal_vlm/finer_mllms_hallucinate_under_fine-grained_negative_queries.md)**
-
-:   发现 MLLM 在细粒度负查询（涉及多个对象/属性/关系的查询中仅有一个细微错误）下幻觉率急剧上升，提出 FINER 基准和 FINER-Tuning 方法（基于 DPO），在 InternVL3.5-14B 上最高提升 24.2%。
-
 **[FlashCache: Frequency-Domain-Guided Outlier-KV-Aware Multimodal KV Cache Compression](multimodal_vlm/flashcache_frequency_kv_cache_compression.md)**
 
 :   提出 FlashCache，首次从频域角度分析多模态 KV Cache 的重要性分布，发现偏离低频主成分的"离群 KV"编码了推理关键特征，通过 DCT 低通滤波识别并优先保留离群 KV + 动态逐层预算分配，在 80% KV 内存压缩下实现 1.69× 解码加速且基本不损失任务性能，天然兼容 FlashAttention。
@@ -2269,10 +2265,6 @@ item_total: 1643
 
 :   提出 HouseMind，通过层次化 VQ-VAE 将建筑平面图的轮廓和房间实例分别离散化为空间 token，与文本 token 统一到同一词汇表中，使小规模 LLM（0.6B）就能在单一自回归框架下实现平面图的理解、生成和编辑三大任务，性能全面超越基于扩散模型和大规模 VLM 的方法。
 
-**[HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](multimodal_vlm/hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)**
-
-:   提出HulluEdit，一种单次前向、无参考模型的子空间编辑框架，通过将隐藏状态分解为正交的视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉定位，在POPE和CHAIR基准上达到SOTA幻觉缓解效果。
-
 **[HumanVBench: Probing Human-Centric Video Understanding in MLLMs with Automatically Synthesized Benchmarks](multimodal_vlm/humanvbench_probing_human_centric_video_understanding_in_mllms_with_automatica.md)**
 
 :   提出 HumanVBench，一个包含 16 个细粒度任务的人体中心视频理解基准，配套两个自动化流水线（视频标注 + 干扰项感知 QA 合成），对 30 个主流视频 MLLM 的评测揭示了当前模型在细微情感感知和语音-视觉对齐方面的关键不足。
@@ -2293,10 +2285,6 @@ item_total: 1643
 
 :   KEC 利用 LLM 构建层级化的概念-属性结构化文本知识来引导图像聚类，在 20 个数据集上无需训练即超越零样本 CLIP 14 个数据集，证明了判别性属性比简单类名更有效。
 
-**[KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing](multimodal_vlm/kvsmooth_mitigating_hallucination_in_multi-modal_large_language_models_through_k.md)**
-
-:   提出KVSmooth，一种免训练的即插即用方法，通过注意力行熵引导的自适应指数移动平均（EMA）对KV-Cache进行平滑，有效抑制多模态大语言模型（MLLM）在解码过程中因sink token引发的语义漂移与幻觉生成，在LLaVA-1.5上将CHAIR_S从41.8降至18.2（降幅56%），同时F1从77.5提升至79.2。
-
 **[Learning What Matters: Prioritized Concept Learning via Relative Error-driven Sample Selection](multimodal_vlm/learning_what_matters_prioritized_concept_learning_via_relative_error-driven_sam.md)**
 
 :   提出 PROGRESS 框架，通过追踪 VLM 在自动发现的多模态概念集群上的学习进度来动态选择最有信息量的训练样本，仅用 16-20% 的标注数据就达到全数据 99-100% 的性能，且总训练时间更短。
@@ -2316,10 +2304,6 @@ item_total: 1643
 **[LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models](multimodal_vlm/llmind_bio-inspired_training-free_adaptive_visual_representations_for_vision-lan.md)**
 
 :   受人眼中央凹编码和皮层放大机制启发，提出无需训练的自适应采样框架 LLMind，通过 Möbius 变换实现非均匀像素分配，并利用闭环语义反馈在测试时优化采样参数，在仅使用 1%-5% 像素的紧张预算下大幅超越均匀采样。
-
-**[Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](multimodal_vlm/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)**
-
-:   提出 LTS-FS（Locate-Then-Sparsify for Feature Steering）框架，通过因果干预归因方法定位幻觉相关层，并根据归因分数逐层稀疏地控制特征引导强度，在有效缓解 LVLM 幻觉的同时保持模型泛化能力。
 
 **[MA-Bench: Towards Fine-grained Micro-Action Understanding](multimodal_vlm/ma-bench_towards_fine-grained_micro-action_understanding.md)**
 
@@ -2352,14 +2336,6 @@ item_total: 1643
 **[MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents](multimodal_vlm/mindpower_enabling_theoryofmind_reasoning_in_vlmba.md)**
 
 :   MindPower提出以机器人为中心的心智理论（ToM）推理框架，将感知→信念→欲望→意图→决策→行动组织为六层推理层级，并用Mind-Reward（基于GRPO）优化推理一致性，在决策和动作生成上分别超过GPT-4o 12.77%和12.49%。
-
-**[Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection](multimodal_vlm/mitigating_multimodal_hallucinations_via_gradient-based_self-reflection.md)**
-
-:   提出 GACD（Gradient-based Influence-Aware Constrained Decoding），利用一阶 Taylor 梯度估计每个 token 对输出的影响力，在推理阶段同时缓解文本-视觉偏差和共现偏差导致的多模态幻觉，无需辅助模型或微调。
-
-**[MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](multimodal_vlm/mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)**
-
-:   提出 MoD-DPO（Modality-Decoupled DPO），通过不变性正则化、敏感性正则化和语言先验去偏三个机制解耦多模态 LLM 中各模态的贡献，有效缓解跨模态幻觉（如用听觉信息回答视觉问题），并推导出闭式最优策略。
 
 **[MoDES: Accelerating Mixture-of-Experts Multimodal Large Language Models via Dynamic Expert Skipping](multimodal_vlm/modes_accelerating_mixture-of-experts_multimodal_large_language_models_via_dynam.md)**
 
@@ -2433,10 +2409,6 @@ item_total: 1643
 
 :   揭示了动态 MoE 持续学习中"token 困境"——新任务数据中的模糊和旧 token 对新知识贡献微弱却会导致路由漂移和灾难性遗忘，提出 LLaVA-DyMoE 通过 Token Assignment Guidance 和 Routing Score Regularization 缓解路由漂移，在 CoIN 基准上 MFN 提升超 7%，遗忘降低 12%。
 
-**[Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models](multimodal_vlm/overthinking_causes_hallucination_tracing_confounder_propagation_in_vision_langu.md)**
-
-:   揭示VLM幻觉的新机制——"过度思考"(overthinking)：模型在中间解码层产生过多竞争性物体假设，混杂因子沿层传播至最终预测引发幻觉；提出Overthinking Score量化层间假设多样性×不确定性，在MSCOCO上F1达78.9%，OOD AMBER上71.58%。
-
 **[PaddleOCR-VL: Boosting Document Parsing Efficiency and Performance with Coarse-to-Fine Visual Processing](multimodal_vlm/paddleocr_vl_coarse_to_fine_document_parsing.md)**
 
 :   PaddleOCR-VL 提出粗到细的文档解析架构：粗阶段用轻量级有效区域聚焦模块(VRFM)定位文档中的有效视觉区域并预测阅读顺序，细阶段用紧凑的0.9B视觉语言模型对裁剪区域进行精细识别，在最少视觉token和参数下实现文档解析SOTA。
@@ -2508,10 +2480,6 @@ item_total: 1643
 **[ReMoRa: Multimodal Large Language Model based on Refined Motion Representation for Long-Video Understanding](multimodal_vlm/remora_multimodal_large_language_model_based_on_refined_motion_representation_fo.md)**
 
 :   提出 ReMoRa，直接操作视频压缩表示（I帧 + 运动向量），通过 Refined Motion Representation (RMR) 模块将粗糙的块级运动向量精化为接近光流的细粒度运动表征，再用 Hierarchical Motion State Space (HMSS) 模块进行线性时间的长程时间建模，在 LongVideoBench、NExT-QA、MLVU 等基准上超越基线。
-
-**[Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](multimodal_vlm/residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)**
-
-:   提出 Residual Decoding (ResDec)——一种训练免的即插即用解码策略，通过分析历史 token 的 logit 分布中的 U 型 JSD 模式发现语义锚定阶段，聚合该阶段的历史 logits 作为残差引导融入当前解码，以近乎零的额外推理开销有效抑制 LVLM 中的语言先验幻觉。
 
 **[Responses Fall Short of Understanding: Revealing the Gap between Internal Representations and Responses in VDU](multimodal_vlm/responses_fall_short_of_understanding_gap_between_internal_representations_and_responses_in_vdu.md)**
 
@@ -2613,10 +2581,6 @@ item_total: 1643
 
 :   提出TARA框架，通过将LMM的中间表示与生物基础模型(BFM)的分类学感知特征对齐，为大型多模态模型注入分类层次知识，显著提升已知和新颖类别的层次化视觉识别性能。
 
-**[Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](multimodal_vlm/tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)**
-
-:   提出Vision-Guided Attention (VGA)，一种免训练的方法，通过利用视觉token的语义特征构建精确的视觉定位，引导模型注意力聚焦于相关视觉区域，有效缓解MLLM幻觉，且兼容FlashAttention。
-
 **[Text-Only Training for Image Captioning with Retrieval Augmentation and Modality Gap Correction](multimodal_vlm/text-only_training_for_image_captioning_with_retrieval_augmentation_and_modality.md)**
 
 :   提出TOMCap——一种纯文本训练的图像描述方法，通过检索增强+模态差距修正+LoRA微调，在训练时只用文本而推理时处理图像，超越了已有的无训练和纯文本方法。
@@ -2699,7 +2663,7 @@ item_total: 1643
 
 **[Uncertainty-guided Compositional Alignment with Part-to-Whole Semantic Representativeness in Hyperbolic Vision-Language Models](multimodal_vlm/uncertainty-guided_compositional_alignment_with_part-to-whole_semantic_represent.md)**
 
-:   提出UNCHA框架，在双曲VLM中用双曲不确定性建模部分图像对整体场景的语义代表性，通过不确定性引导的对比损失和蒸含损失增强组合性场景理解，在多个下游任务上超趇现有双曲VLM。
+:   提出UNCHA框架，在双曲VLM中用双曲不确定性建模部分图像对整体场景的语义代表性，通过不确定性引导的对比损失和蕴含损失增强组合性场景理解，在多个下游任务上超越现有双曲VLM。
 
 **[Understanding Task Transfer in Vision-Language Models](multimodal_vlm/understanding_task_transfer_in_vision-language_models.md)**
 
@@ -2788,10 +2752,6 @@ item_total: 1643
 **[Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs](multimodal_vlm/widget2code_from_visual_widgets_to_ui_code_via_multimodal_llms.md)**
 
 :   首次形式化 Widget-to-Code 任务，构建了首个纯图像 widget 数据集和多维评估体系，提出基于感知代理和 WidgetFactory 基础设施的模块化基线，通过组件分解、图标检索、可复用可视化模板和自适应渲染实现高保真 widget 重建。
-
-**[Zina: Multimodal Fine-grained Hallucination Detection and Editing](multimodal_vlm/zina_multimodal_fine-grained_hallucination_detection_and_editing.md)**
-
-:   Zina 提出了多模态细粒度幻觉检测与编辑任务，设计了两阶段系统（detector MLLM + reviewer MLLM）将 token 复制委托给确定性函数以简化模型负担，同时构建了 VisionHall 数据集（6.9K 人工标注 + 20K 图结构合成数据），在检测 F1 上超过 GPT-4o 达 15.8 个点。
 
 ---
 
@@ -3015,7 +2975,7 @@ item_total: 1643
 
 **[MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification](medical_imaging/milpf_multiple_instance_learning_on_precomputed_fe.md)**
 
-:   将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局均值 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
+:   将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
 
 **[Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](medical_imaging/modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)**
 
@@ -3815,7 +3775,7 @@ item_total: 1643
 
 **[RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection](segmentation/rsonet_region-guided_selective_optimization_network_for_rgb-t_salient_object_det.md)**
 
-:   提出两阶段 RGB-T 显著性检测网络 RSONet：先通过区域引导阶段计算 RGB/热红外引导图与联合引导图的相似度，选出更可靠的模态；再在显著性生成阶段利用选择性优化融合双模态特征，配合密集细节增强和互信息语义模块生成高质量显著图，在三个 RGB-T 基准上取得 SOTA 性能。
+:   提出两阶段 RGB-T 显著性检测网络 RSONet：先通过区域引导阶段计算 RGB/热红外引导图与联合引导图的相似度，选出更可靠的模态；再在显著性生成阶段利用选择性优化融合双模态特征，配合密集细节增强和相互交互语义模块生成高质量显著图，在三个 RGB-T 基准上取得 SOTA 性能。
 
 **[SAP: Segment Any 4K Panorama](segmentation/sap_segment_any_4k_panorama.md)**
 
@@ -5663,6 +5623,110 @@ item_total: 1643
 
 ---
 
+## 🛡️ AI 安全 { #ai_safety }
+
+**[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
+
+:   首次揭示视觉模型成员推断攻击(MIA)面临的对抗性成员操纵漏洞——不可感知扰动可将非成员伪造为成员欺骗审计，发现伪造成员的梯度范数塌缩特征签名，并提出基于梯度几何的检测策略和对抗鲁棒推断框架。
+
+**[All Vehicles Can Lie: Efficient Adversarial Defense in Fully Untrusted-Vehicle Collaborative Perception via Pseudo-Random Bayesian Inference](ai_safety/all_vehicles_can_lie_efficient_adversarial_defense_in_fully_untrusted-vehicle_co.md)**
+
+:   提出 Pseudo-Random Bayesian Inference (PRBI) 框架，在**所有车辆均不可信**的协同感知场景中，利用帧间时序一致性作为自参考信号，通过伪随机分组 + 贝叶斯推断，仅需平均 2.5 次验证/帧即可高效识别并排除恶意车辆，检测精度恢复至攻击前的 79.4%–86.9%。
+
+**[ClusterMark: Towards Robust Watermarking for Autoregressive Image Generators with Visual Token Clustering](ai_safety/clustermark_towards_robust_watermarking_for_autoregressive_image_generators_with.md)**
+
+:   提出基于视觉 token 聚类的水印方案 ClusterMark，将 KGW 风格的 LLM 水印适配到自回归图像生成器，通过将相似 token 分到同一绿/红集合来显著提升水印在图像扰动下的鲁棒性，同时保持图像质量。
+
+**[Computation and Communication Efficient Federated Unlearning via On-server Gradient Conflict Mitigation and Expression](ai_safety/computation_and_communication_efficient_federated_unlearning_via_on-server_gradi.md)**
+
+:   提出 FOUL 框架，通过"学习阶段解耦因果/非因果特征 + 遗忘阶段服务器端梯度冲突匹配"两阶段策略，在不访问客户端数据的前提下实现高效且低通信开销的联邦遗忘。
+
+**[AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](ai_safety/decoupling_defense_strategies_for_robust_image_watermarking.md)**
+
+:   提出 AdvMark 两阶段解耦防御框架：Stage 1 Encoder Adversarial Training（EAT）将水印图像移入 non-attackable 区域抵御对抗攻击，Stage 2 直接图像优化抵御失真+再生攻击并保留对抗鲁棒性，在 9 种水印方法 ×10 种攻击上分别提升失真/再生/对抗准确率 29%/33%/46%，且图像质量最优。
+
+**[Domain-Skewed Federated Learning with Feature Decoupling and Calibration](ai_safety/domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)**
+
+:   提出 F²DC 框架，通过域特征解耦器（DFD）和域特征校正器（DFC）将联邦学习中客户端的局部特征分离为域鲁棒特征和域相关特征，并对域相关特征进行校准以挽救被丢弃的类别信息，配合域感知聚合策略，在三个多域数据集上一致超越 SOTA。
+
+**[Enhancing Out-of-Distribution Detection with Extended Logit Normalization](ai_safety/enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)**
+
+:   本文发现 LogitNorm 在训练中会导致两种特征坍塌（维度坍塌和原点坍塌），提出了一种无超参数的 Extended Logit Normalization（ELogitNorm），用特征到决策边界的距离替代到原点的距离作为缩放因子，在不损失分类精度的前提下显著提升各种 post-hoc OOD 检测方法的性能和置信度校准。
+
+**[FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](ai_safety/fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)**
+
+:   提出 FecalFed 隐私保护联邦学习框架，首先通过双哈希去重清理公开禽类粪便数据集中 46.89% 的重复污染并发布 8,770 张清洁基准数据集 poultry-fecal-fl，随后在 Dirichlet α=0.5 的高度非 IID 条件下验证：FedAdam + Swin-Small 可将单农场训练崩溃的 64.86% 准确率恢复至 90.31%，仅比中心化上界 95.10% 低 4.79%；边缘优化的 Swin-Tiny（28M 参数）仍达 89.74%，为农场端部署提供高效可行方案。
+
+**[FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](ai_safety/fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)**
+
+:   提出 FedAFD 框架，通过双层对抗对齐、粒度感知特征融合和相似度引导的集成蒸馏三阶段设计，在多模态联邦学习中同时提升异构客户端和服务器的模型性能。
+
+**[FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](ai_safety/feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)**
+
+:   提出域感知原型联邦学习框架 FedDAP，通过构建域特定全局原型和双重原型对齐策略（域内对齐 + 跨域对比），解决联邦学习中客户端数据域偏移导致的全局模型性能退化问题。
+
+**[Federated Active Learning Under Extreme Non-IID and Global Class Imbalance](ai_safety/federated_active_learning_extreme_noniid.md)**
+
+:   系统分析全局类不平衡与客户端异构性对联邦主动学习中 query model 选择的影响，归纳出3个核心 Observation，据此提出 FairFAL——自适应选择 query model + 原型引导伪标签 + 两阶段不确定性-多样性平衡采样的类公平 FAL 框架，在5个基准数据集上一致超越所有基线。
+
+**[FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](ai_safety/fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)**
+
+:   提出 FedRE 框架，通过"纠缠表示"（entangled representation）——将每个客户端的所有局部表示用归一化随机权重聚合为单一跨类别表示，实现模型异构联邦学习中性能、隐私保护和通信开销的三方平衡。
+
+**[Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting](ai_safety/generative_adversarial_perturbations_with_cross-paradigm_transferability_on_loca.md)**
+
+:   提出首个跨范式（密度图 + 点回归）对抗攻击框架 CrowdGen，利用轻量级 UNet 生成器和多任务损失（logit 抑制 + 密度抑制 + GradCAM 引导 + 频域约束），在保持视觉隐蔽性（~19dB PSNR）的同时实现对七个 SOTA 人群计数模型的高迁移率（TR 最高 1.69），攻击 MAE 平均提升 7 倍。
+
+**[LogitDynamics: Reliable ViT Error Detection from Layerwise Logit Trajectories](ai_safety/logitdynamics_vit_error_detection.md)**
+
+:   LogitDynamics 通过在 ViT 各层附加轻量分类头，提取层间 logit 轨迹和 top-K 竞争动态特征，训练线性探针来预测模型错误，在跨数据集泛化上优于现有方法。
+
+**[Monte Carlo Stochastic Depth for Uncertainty Estimation in Deep Learning](ai_safety/mcsd_uncertainty_estimation.md)**
+
+:   将随机深度（Stochastic Depth）正式连接到贝叶斯变分推理框架，提出 Monte Carlo Stochastic Depth (MCSD) 作为不确定性估计方法，并在 YOLO、RT-DETR 等现代检测器上进行首次系统基准测试，证明其在校准和不确定性排名上与 MC Dropout 竞争力强。
+
+**[One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control](ai_safety/one-to-more_high-fidelity_training-free_anomaly_generation_with_attention_control.md)**
+
+:   O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和双重注意力增强(DAE)确保掩码区域完整填充，在 MVTec-AD 下游异常检测任务中显著优于现有方法。
+
+**[ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](ai_safety/proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)**
+
+:   提出 ProxyFL 框架，利用分类器权重作为统一代理 (proxy) 同时缓解联邦半监督学习中的外部异质性（跨客户端分布差异）和内部异质性（标注/未标注数据分布不匹配），在多个数据集上显著超越现有 FSSL 方法。
+
+**[RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces](ai_safety/recovermark_robust_watermarking_for_localization_and_recovery_of_manipulated_fac.md)**
+
+:   提出 RecoverMark，一个将人脸内容本身作为水印嵌入背景的鲁棒水印框架，同时实现篡改区域定位、原始内容恢复和版权验证，在水印移除攻击下仍保持有效。
+
+**[SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](ai_safety/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)**
+
+:   提出 SubFLOT 框架，在服务器端利用最优传输（Optimal Transport）将全局模型的参数分布与客户端历史模型对齐，实现无需访问原始数据的个性化剪枝，并通过自适应正则化抑制剪枝导致的参数偏移，在多个数据集上大幅超越现有联邦剪枝方法。
+
+**[TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](ai_safety/tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)**
+
+:   提出 TIACam 框架，通过可学习自动增强器模拟相机失真、文本锚定跨模态对抗训练学习不变特征、零水印头在特征空间绑定消息，实现无需修改图像像素的相机鲁棒零水印方案，在屏幕翻拍/打印翻拍/截图三种真实场景下均达到 SOTA 提取精度。
+
+**[Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](ai_safety/towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)**
+
+:   提出 SADCA（语义增强动态对比攻击），通过动态对比交互机制和语义增强模块，迭代地破坏对抗图像与文本之间的跨模态语义一致性，显著提升对视觉语言预训练模型（VLP）的对抗可迁移性，在跨模型和跨任务攻击中均超越现有 SOTA 方法。
+
+**[Tutor-Student Reinforcement Learning: A Dynamic Curriculum for Robust Deepfake Detection](ai_safety/tutor-student_reinforcement_learning_a_dynamic_curriculum_for_robust_deepfake_de.md)**
+
+:   提出 Tutor-Student 强化学习（TSRL）框架，将深度伪造检测器的训练过程建模为马尔可夫决策过程，由"导师"（PPO agent）根据每个样本的视觉特征和历史学习动态（EMA 损失、遗忘次数）动态分配损失权重，通过"状态变化"奖励信号引导"学生"（检测器）优先学习高价值样本，在跨数据集和跨方法评估中显著提升泛化能力。
+
+**[UniGame: Turning a Unified Multimodal Model Into Its Own Adversary](ai_safety/unigame_turning_a_unified_multimodal_model_into_its_own_adversary.md)**
+
+:   UniGame 提出首个针对统一多模态模型（UMM）的自对抗后训练框架，通过在共享视觉 token 接口安装轻量扰动器，让生成分支主动创造语义一致的对抗样本来挑战理解分支，形成极小极大自博弈，显著提升一致性 (+4.6%)、理解 (+3.6%)、生成和鲁棒性。
+
+**[When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](ai_safety/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)**
+
+:   提出 UPA-RFAS 框架，学习一个单一物理对抗补丁，通过特征空间偏移、注意力劫持和语义错位三管齐下，实现对 VLA 机器人策略的通用、可迁移黑盒攻击。
+
+**[$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](ai_safety/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)**
+
+:   提出 $\varphi$-DPO，将 DPO 作为持续学习范式（以前一步模型为参考策略），并引入受 focal loss 启发的公平性调制因子 $(1-p)^\gamma$ 来平衡不同数据组间的梯度贡献，在理论上证明 $\gamma \to \infty$ 时梯度偏差趋于零，在 CoIN 和 MLLM-CL 基准上达到 SOTA。
+
+---
+
 ## 🔬 可解释性 { #interpretability }
 
 **[Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)**
@@ -5737,10 +5801,6 @@ item_total: 1643
 
 :   提出 Pixel2Phys，一个基于 MLLM 的多智能体协作框架，通过 Plan-Variable-Equation-Experiment 四个 Agent 的迭代假设-验证-精化循环，从原始视频中自动发现可解释的物理控制方程，外推精度比基线提升 45.35%。
 
-**[Reallocating Attention Across Layers to Reduce Multimodal Hallucination](interpretability/reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)**
-
-:   提出一种轻量级、无需训练的插件方法，通过识别感知型和推理型注意力头并进行类别条件缩放（Class-Conditioned Rescaling），重新平衡跨层注意力分配，从而缓解多模态大推理模型（MLRM）中的幻觉问题，在5个基准上平均提升4.2%，几乎无额外推理开销。
-
 **[Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](interpretability/rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)**
 
 :   提出 CBM-Suite 框架，系统性解决概念瓶颈模型的四大缺陷——缺乏概念相关性预评估指标、线性问题导致概念瓶颈被绕过、与黑盒模型的精度差距、以及不同视觉骨干/VLM 影响的研究空白——通过熵度量、非线性层和蒸馏损失显著提升 CBM 的精度与可解释性。
@@ -5777,10 +5837,6 @@ item_total: 1643
 
 :   提出VLM去偏的闭式解方法，通过在跨模态嵌入空间中对属性子空间做正交分解并利用Chebyshev标量化求解，实现Pareto最优公平性与有界效用损失，免训练、免标注，统一覆盖零样本分类、文本-图像检索和文本-图像生成三大下游任务。
 
-**[Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations](llm_safety/beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations.md)**
-
-:   提出基于 patch 级别的 LVLM 幻觉检测框架，发现幻觉 token 表现出弥散注意力模式和低语义对齐两个特征标志，据此设计注意力弥散分数（ADS）和跨模态接地一致性（CGC）两个轻量指标，检测准确率达 90%。
-
 **[DAMP: Class Unlearning via Depth-Aware Removal of Forget-Specific Directions](llm_safety/damp_class_unlearning_via_depth_aware_removal_of_forget_specific_directions.md)**
 
 :   提出 DAMP（深度感知投影调制），一种一次性闭式权重手术方法用于类遗忘，通过在每个网络阶段的编辑空间中移除遗忘类特有方向来实现选择性遗忘，深度感知缩放规则确保浅层保守编辑、深层强力编辑。
@@ -5801,10 +5857,6 @@ item_total: 1643
 
 :   分析发现视觉 jailbreak attack 迁移性差的根因是 attack 处于 high-sharpness loss region——源于浅层特征过度依赖 model-specific 表示和高频信息过度影响；提出 FORCE 方法通过 layer-aware regularization 扩展浅层 feasible region + spectral rescaling 抑制高频非语义成分，引导 attack 进入 flatter loss landscape，显著提升跨模型迁移性。
 
-**[HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](llm_safety/hulluedit_subspace_editing_hallucination.md)**
-
-:   提出HulluEdit，一个单次推理、无参考模型的幻觉缓解框架，通过将隐藏状态正交分解为视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉接地，在POPE和CHAIR上达到SOTA。
-
 **[IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding](llm_safety/iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding.md)**
 
 :   提出IAG，首个针对VLM视觉定位的多目标后门攻击方法，通过文本条件U-Net动态生成输入感知触发器，将任意指定目标物体的语义信息嵌入视觉输入中，在12种设置下的11种达到最高攻击成功率。
@@ -5816,10 +5868,6 @@ item_total: 1643
 **[Learning from Oblivion: Predicting Knowledge-Overflowed Weights via Retrodiction of Forgetting](llm_safety/learning_from_oblivion_predicting_knowledge_overflowed_weights_via_retrodiction_.md)**
 
 :   提出KNOW prediction：通过在逐步缩小的数据子集上sequential fine-tuning诱导结构化遗忘过程，收集权重转变轨迹，然后用meta-learned hyper-model（KNOWN）反转forgetting方向，预测"仿佛在更大数据集上训练"的虚拟知识增强权重。跨多数据集(CIFAR/ImageNet/PACS等)和多架构(ResNet/PVTv2/DeepLabV3+)持续超越naive fine-tuning及多种weight prediction基线，在图像分类、语义分割、图像描述、域泛化等下游任务上均有显著提升。
-
-**[Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](llm_safety/mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)**
-
-:   提出注意力失衡（Attention Imbalance）概念来解释 LVLM 中的对象幻觉现象，并设计轻量级解码时干预方法 AIR，通过跨模态注意力重新分配和方差约束投影正则化矫正注意力失衡，在四个 LVLM 上将幻觉率最高降低 35.1%，同时提升通用能力最高达 15.9%。
 
 **[Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](llm_safety/multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)**
 
@@ -5857,10 +5905,6 @@ item_total: 1643
 
 :   发现LVLM后门行为的本质是跨模态注意力窃取（trigger视觉token抢夺文本token的注意力），提出CleanSight——首个无需训练的测试时后门防御框架，通过检测和剪枝高注意力trigger token来消除后门效应。
 
-**[TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](llm_safety/tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)**
-
-:   提出TriDF——首个从感知 (Perception)、检测 (Detection) 和幻觉 (Hallucination) 三个维度综合评估可解释深度伪造检测的基准，包含55K高质量样本覆盖16种DeepFake类型和3种模态，揭示了准确感知是可靠检测的基础但幻觉会严重破坏决策的三方耦合关系。
-
 **[Unsafe2Safe: Controllable Image Anonymization for Downstream Utility](llm_safety/unsafe2safe_controllable_image_anonymization_for_downstream_utility.md)**
 
 :   本文提出 Unsafe2Safe 全自动隐私保护流水线，通过 VLM 隐私检查→双字幕生成（私有/公开）→LLM 编辑指令→文本引导扩散编辑的四阶段方案，实现可控图像匿名化，在 VLMScore 隐私指标大幅提升的同时，在 Caltech-101 分类和 OK-VQA 上匿名后准确率甚至超过原始图像。
@@ -5879,107 +5923,79 @@ item_total: 1643
 
 ---
 
-## 🛡️ AI 安全 { #ai_safety }
+## 👻 幻觉检测 { #hallucination }
 
-**[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
+**[Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations](hallucination/beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations.md)**
 
-:   首次揭示视觉模型成员推断攻击(MIA)面临的对抗性成员操纵漏洞——不可感知扰动可将非成员伪造为成员欺骗审计，发现伪造成员的梯度范数塌缩特征签名，并提出基于梯度几何的检测策略和对抗鲁棒推断框架。
+:   提出基于 patch 级别的 LVLM 幻觉检测框架，发现幻觉 token 表现出弥散注意力模式和低语义对齐两个特征标志，据此设计注意力弥散分数（ADS）和跨模态接地一致性（CGC）两个轻量指标，检测准确率达 90%。
 
-**[All Vehicles Can Lie: Efficient Adversarial Defense in Fully Untrusted-Vehicle Collaborative Perception via Pseudo-Random Bayesian Inference](ai_safety/all_vehicles_can_lie_efficient_adversarial_defense_in_fully_untrusted-vehicle_co.md)**
+**[Fighting Hallucinations with Counterfactuals: Diffusion-Guided Perturbations for LVLM Hallucination Suppression](hallucination/fighting_hallucinations_with_counterfactuals_diffusion-guided_perturbations_for_.md)**
 
-:   提出 Pseudo-Random Bayesian Inference (PRBI) 框架，在**所有车辆均不可信**的协同感知场景中，利用帧间时序一致性作为自参考信号，通过伪随机分组 + 贝叶斯推断，仅需平均 2.5 次验证/帧即可高效识别并排除恶意车辆，检测精度恢复至攻击前的 79.4%–86.9%。
+:   提出 CIPHER，一种无需训练的测试时幻觉抑制方法：离线阶段用扩散模型生成反事实图像构建 OHC-25K 数据集，通过 SVD 提取视觉幻觉子空间；推理阶段将隐状态投影到该子空间的正交补空间，在不修改模型参数、不增加推理开销的前提下显著降低 LVLM 的视觉幻觉。
 
-**[ClusterMark: Towards Robust Watermarking for Autoregressive Image Generators with Visual Token Clustering](ai_safety/clustermark_towards_robust_watermarking_for_autoregressive_image_generators_with.md)**
+**[FINER: MLLMs Hallucinate under Fine-grained Negative Queries](hallucination/finer_mllms_hallucinate_under_fine-grained_negative_queries.md)**
 
-:   提出基于视觉 token 聚类的水印方案 ClusterMark，将 KGW 风格的 LLM 水印适配到自回归图像生成器，通过将相似 token 分到同一绿/红集合来显著提升水印在图像扰动下的鲁棒性，同时保持图像质量。
+:   发现 MLLM 在细粒度负查询（涉及多个对象/属性/关系的查询中仅有一个细微错误）下幻觉率急剧上升，提出 FINER 基准和 FINER-Tuning 方法（基于 DPO），在 InternVL3.5-14B 上最高提升 24.2%。
 
-**[Computation and Communication Efficient Federated Unlearning via On-server Gradient Conflict Mitigation and Expression](ai_safety/computation_and_communication_efficient_federated_unlearning_via_on-server_gradi.md)**
+**[HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models](hallucination/hulluedit_single-pass_evidence-consistent_subspace_editing_for_mitigating_halluc.md)**
 
-:   提出 FOUL 框架，通过"学习阶段解耦因果/非因果特征 + 遗忘阶段服务器端梯度冲突匹配"两阶段策略，在不访问客户端数据的前提下实现高效且低通信开销的联邦遗忘。
+:   提出HulluEdit，一种单次前向、无参考模型的子空间编辑框架，通过将隐藏状态分解为正交的视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉定位，在POPE和CHAIR基准上达到SOTA幻觉缓解效果。
 
-**[AdvMark: Decoupling Defense Strategies for Robust Image Watermarking](ai_safety/decoupling_defense_strategies_for_robust_image_watermarking.md)**
+**[HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](hallucination/hulluedit_subspace_editing_hallucination.md)**
 
-:   提出 AdvMark 两阶段解耦防御框架：Stage 1 Encoder Adversarial Training（EAT）将水印图像移入 non-attackable 区域抵御对抗攻击，Stage 2 直接图像优化抵御失真+再生攻击并保留对抗鲁棒性，在 9 种水印方法 ×10 种攻击上分别提升失真/再生/对抗准确率 29%/33%/46%，且图像质量最优。
+:   提出HulluEdit，一个单次推理、无参考模型的幻觉缓解框架，通过将隐藏状态正交分解为视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉接地，在POPE和CHAIR上达到SOTA。
 
-**[Domain-Skewed Federated Learning with Feature Decoupling and Calibration](ai_safety/domain-skewed_federated_learning_with_feature_decoupling_and_calibration.md)**
+**[KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing](hallucination/kvsmooth_mitigating_hallucination_in_multi-modal_large_language_models_through_k.md)**
 
-:   提出 F²DC 框架，通过域特征解耦器（DFD）和域特征校正器（DFC）将联邦学习中客户端的局部特征分离为域鲁棒特征和域相关特征，并对域相关特征进行校准以挽救被丢弃的类别信息，配合域感知聚合策略，在三个多域数据集上一致超越 SOTA。
+:   提出KVSmooth，一种免训练的即插即用方法，通过注意力行熵引导的自适应指数移动平均（EMA）对KV-Cache进行平滑，有效抑制多模态大语言模型（MLLM）在解码过程中因sink token引发的语义漂移与幻觉生成，在LLaVA-1.5上将CHAIR_S从41.8降至18.2（降幅56%），同时F1从77.5提升至79.2。
 
-**[Enhancing Out-of-Distribution Detection with Extended Logit Normalization](ai_safety/enhancing_out-of-distribution_detection_with_extended_logit_normalization.md)**
+**[Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation](hallucination/locate-then-sparsify_attribution_guided_sparse_strategy_for_visual_hallucination.md)**
 
-:   本文发现 LogitNorm 在训练中会导致两种特征坍塌（维度坍塌和原点坍塌），提出了一种无超参数的 Extended Logit Normalization（ELogitNorm），用特征到决策边界的距离替代到原点的距离作为缩放因子，在不损失分类精度的前提下显著提升各种 post-hoc OOD 检测方法的性能和置信度校准。
+:   提出 LTS-FS（Locate-Then-Sparsify for Feature Steering）框架，通过因果干预归因方法定位幻觉相关层，并根据归因分数逐层稀疏地控制特征引导强度，在有效缓解 LVLM 幻觉的同时保持模型泛化能力。
 
-**[FecalFed: Privacy-Preserving Poultry Disease Detection via Federated Learning](ai_safety/fecalfed_privacy-preserving_poultry_disease_detection_via_federated_learning.md)**
+**[Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection](hallucination/mitigating_multimodal_hallucinations_via_gradient-based_self-reflection.md)**
 
-:   提出 FecalFed 隐私保护联邦学习框架，首先通过双哈希去重清理公开禽类粪便数据集中 46.89% 的重复污染并发布 8,770 张清洁基准数据集 poultry-fecal-fl，随后在 Dirichlet α=0.5 的高度非 IID 条件下验证：FedAdam + Swin-Small 可将单农场训练崩溃的 64.86% 准确率恢复至 90.31%，仅比中心化上界 95.10% 低 4.79%；边缘优化的 Swin-Tiny（28M 参数）仍达 89.74%，为农场端部署提供高效可行方案。
+:   提出 GACD（Gradient-based Influence-Aware Constrained Decoding），利用一阶 Taylor 梯度估计每个 token 对输出的影响力，在推理阶段同时缓解文本-视觉偏差和共现偏差导致的多模态幻觉，无需辅助模型或微调。
 
-**[FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](ai_safety/fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)**
+**[Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](hallucination/mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)**
 
-:   提出 FedAFD 框架，通过双层对抗对齐、粒度感知特征融合和相似度引导的集成蒸馏三阶段设计，在多模态联邦学习中同时提升异构客户端和服务器的模型性能。
+:   提出注意力失衡（Attention Imbalance）概念来解释 LVLM 中的对象幻觉现象，并设计轻量级解码时干预方法 AIR，通过跨模态注意力重新分配和方差约束投影正则化矫正注意力失衡，在四个 LVLM 上将幻觉率最高降低 35.1%，同时提升通用能力最高达 15.9%。
 
-**[FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift](ai_safety/feddap_domain-aware_prototype_learning_for_federated_learning_under_domain_shift.md)**
+**[MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization](hallucination/mod-dpo_towards_mitigating_cross-modal_hallucinations_in_omni_llms_using_modalit.md)**
 
-:   提出域感知原型联邦学习框架 FedDAP，通过构建域特定全局原型和双重原型对齐策略（域内对齐 + 跨域对比），解决联邦学习中客户端数据域偏移导致的全局模型性能退化问题。
+:   提出 MoD-DPO（Modality-Decoupled DPO），通过不变性正则化、敏感性正则化和语言先验去偏三个机制解耦多模态 LLM 中各模态的贡献，有效缓解跨模态幻觉（如用听觉信息回答视觉问题），并推导出闭式最优策略。
 
-**[Federated Active Learning Under Extreme Non-IID and Global Class Imbalance](ai_safety/federated_active_learning_extreme_noniid.md)**
+**[Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models](hallucination/overthinking_causes_hallucination_tracing_confounder_propagation_in_vision_langu.md)**
 
-:   系统分析全局类不平衡与客户端异构性对联邦主动学习中 query model 选择的影响，归纳出3个核心 Observation，据此提出 FairFAL——自适应选择 query model + 原型引导伪标签 + 两阶段不确定性-多样性平衡采样的类公平 FAL 框架，在5个基准数据集上一致超越所有基线。
+:   揭示VLM幻觉的新机制——"过度思考"(overthinking)：模型在中间解码层产生过多竞争性物体假设，混杂因子沿层传播至最终预测引发幻觉；提出Overthinking Score量化层间假设多样性×不确定性，在MSCOCO上F1达78.9%，OOD AMBER上71.58%。
 
-**[FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning](ai_safety/fedre_a_representation_entanglement_framework_for_model-heterogeneous_federated_.md)**
+**[Reallocating Attention Across Layers to Reduce Multimodal Hallucination](hallucination/reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)**
 
-:   提出 FedRE 框架，通过"纠缠表示"（entangled representation）——将每个客户端的所有局部表示用归一化随机权重聚合为单一跨类别表示，实现模型异构联邦学习中性能、隐私保护和通信开销的三方平衡。
+:   提出一种轻量级、无需训练的插件方法，通过识别感知型和推理型注意力头并进行类别条件缩放（Class-Conditioned Rescaling），重新平衡跨层注意力分配，从而缓解多模态大推理模型（MLRM）中的幻觉问题，在5个基准上平均提升4.2%，几乎无额外推理开销。
 
-**[Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting](ai_safety/generative_adversarial_perturbations_with_cross-paradigm_transferability_on_loca.md)**
+**[Residual Decoding: Mitigating Hallucinations in Large Vision-Language Models via History-Aware Residual Guidance](hallucination/residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_.md)**
 
-:   提出首个跨范式（密度图 + 点回归）对抗攻击框架 CrowdGen，利用轻量级 UNet 生成器和多任务损失（logit 抑制 + 密度抑制 + GradCAM 引导 + 频域约束），在保持视觉隐蔽性（~19dB PSNR）的同时实现对七个 SOTA 人群计数模型的高迁移率（TR 最高 1.69），攻击 MAE 平均提升 7 倍。
+:   提出 Residual Decoding (ResDec)——一种训练免的即插即用解码策略，通过分析历史 token 的 logit 分布中的 U 型 JSD 模式发现语义锚定阶段，聚合该阶段的历史 logits 作为残差引导融入当前解码，以近乎零的额外推理开销有效抑制 LVLM 中的语言先验幻觉。
 
-**[LogitDynamics: Reliable ViT Error Detection from Layerwise Logit Trajectories](ai_safety/logitdynamics_vit_error_detection.md)**
+**[Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention](hallucination/tell_model_where_to_look_mitigating_hallucinations_in_mllms_by_vision-guided_att.md)**
 
-:   LogitDynamics 通过在 ViT 各层附加轻量分类头，提取层间 logit 轨迹和 top-K 竞争动态特征，训练线性探针来预测模型错误，在跨数据集泛化上优于现有方法。
+:   提出Vision-Guided Attention (VGA)，一种免训练的方法，通过利用视觉token的语义特征构建精确的视觉定位，引导模型注意力聚焦于相关视觉区域，有效缓解MLLM幻觉，且兼容FlashAttention。
 
-**[Monte Carlo Stochastic Depth for Uncertainty Estimation in Deep Learning](ai_safety/mcsd_uncertainty_estimation.md)**
+**[TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](hallucination/tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)**
 
-:   将随机深度（Stochastic Depth）正式连接到贝叶斯变分推理框架，提出 Monte Carlo Stochastic Depth (MCSD) 作为不确定性估计方法，并在 YOLO、RT-DETR 等现代检测器上进行首次系统基准测试，证明其在校准和不确定性排名上与 MC Dropout 竞争力强。
+:   提出TriDF——首个从感知 (Perception)、检测 (Detection) 和幻觉 (Hallucination) 三个维度综合评估可解释深度伪造检测的基准，包含55K高质量样本覆盖16种DeepFake类型和3种模态，揭示了准确感知是可靠检测的基础但幻觉会严重破坏决策的三方耦合关系。
 
-**[One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control](ai_safety/one-to-more_high-fidelity_training-free_anomaly_generation_with_attention_control.md)**
+**[Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models](hallucination/understanding_and_mitigating_hallucinations_in_multimodal_chain-of-thought_model.md)**
 
-:   O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和异常引导增强(DAE)确保掩码区域完整填充，在 MVTec-AD 下游异常检测任务中显著优于现有方法。
+:   本文系统分析了多模态 CoT 模型中幻觉的成因，发现模型在凭联想自由发挥的推理步骤（论文称之为"发散思维" divergent thinking）中最易产生幻觉，并提出基于视觉熵的免训练检测+解码干预策略，在 Object HalBench 上将 CHAIRS 降低超过 30%，同时保持甚至提升通用推理能力。
 
-**[ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning](ai_safety/proxyfl_a_proxy-guided_framework_for_federated_semi-supervised_learning.md)**
+**[Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models](hallucination/understanding_the_role_of_hallucination_in_reinforcement_post-training_of_multim.md)**
 
-:   提出 ProxyFL 框架，利用分类器权重作为统一代理 (proxy) 同时缓解联邦半监督学习中的外部异质性（跨客户端分布差异）和内部异质性（标注/未标注数据分布不匹配），在多个数据集上显著超越现有 FSSL 方法。
+:   本文提出 Hallucination-as-Cue 分析框架，通过三种模态特定腐蚀策略（空白图像、随机图像、文本移除）系统研究 RL 后训练对多模态推理模型的真实作用机制，发现即使在 100% 腐蚀视觉输入下 GRPO 训练仍能显著提升推理性能，挑战了"RL 训练能有效利用视觉信息"的主流假设。
 
-**[RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces](ai_safety/recovermark_robust_watermarking_for_localization_and_recovery_of_manipulated_fac.md)**
+**[Zina: Multimodal Fine-grained Hallucination Detection and Editing](hallucination/zina_multimodal_fine-grained_hallucination_detection_and_editing.md)**
 
-:   提出 RecoverMark，一个将人脸内容本身作为水印嵌入背景的鲁棒水印框架，同时实现篡改区域定位、原始内容恢复和版权验证，在水印移除攻击下仍保持有效。
-
-**[SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport](ai_safety/subflot_submodel_extraction_for_efficient_and_personalized_federated_learning_vi.md)**
-
-:   提出 SubFLOT 框架，在服务器端利用最优传输（Optimal Transport）将全局模型的参数分布与客户端历史模型对齐，实现无需访问原始数据的个性化剪枝，并通过自适应正则化抑制剪枝导致的参数偏移，在多个数据集上大幅超越现有联邦剪枝方法。
-
-**[TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking](ai_safety/tiacam_text-anchored_invariant_feature_learning_with_auto-augmentation_for_camer.md)**
-
-:   提出 TIACam 框架，通过可学习自动增强器模拟相机失真、文本锚定跨模态对抗训练学习不变特征、零水印头在特征空间绑定消息，实现无需修改图像像素的相机鲁棒零水印方案，在屏幕翻拍/打印翻拍/截图三种真实场景下均达到 SOTA 提取精度。
-
-**[Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](ai_safety/towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)**
-
-:   提出 SADCA（语义增强动态对比攻击），通过动态对比交互机制和语义增强模块，迭代地破坏对抗图像与文本之间的跨模态语义一致性，显著提升对视觉语言预训练模型（VLP）的对抗可迁移性，在跨模型和跨任务攻击中均超越现有 SOTA 方法。
-
-**[Tutor-Student Reinforcement Learning: A Dynamic Curriculum for Robust Deepfake Detection](ai_safety/tutor-student_reinforcement_learning_a_dynamic_curriculum_for_robust_deepfake_de.md)**
-
-:   提出 Tutor-Student 强化学习（TSRL）框架，将深度伪造检测器的训练过程建模为马尔可夫决策过程，由"导师"（PPO agent）根据每个样本的视觉特征和历史学习动态（EMA 损失、遗忘次数）动态分配损失权重，通过"状态变化"奖励信号引导"学生"（检测器）优先学习高价值样本，在跨数据集和跨方法评估中显著提升泛化能力。
-
-**[UniGame: Turning a Unified Multimodal Model Into Its Own Adversary](ai_safety/unigame_turning_a_unified_multimodal_model_into_its_own_adversary.md)**
-
-:   UniGame 提出首个针对统一多模态模型（UMM）的自对抗后训练框架，通过在共享视觉 token 接口安装轻量扰动器，让生成分支主动创造语义一致的对抗样本来挑战理解分支，形成极小极大自博弈，显著提升一致性 (+4.6%)、理解 (+3.6%)、生成和鲁棒性。
-
-**[When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](ai_safety/when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)**
-
-:   提出 UPA-RFAS 框架，学习一个单一物理对抗补丁，通过特征空间偏移、注意力劫持和语义错位三管齐下，实现对 VLA 机器人策略的通用、可迁移黑盒攻击。
-
-**[$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](ai_safety/φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)**
-
-:   提出 $\varphi$-DPO，将 DPO 作为持续学习范式（以前一步模型为参考策略），并引入受 focal loss 启发的公平性调制因子 $(1-p)^\gamma$ 来平衡不同数据组间的梯度贡献，在理论上证明 $\gamma \to \infty$ 时梯度偏差趋于零，在 CoIN 和 MLLM-CL 基准上达到 SOTA。
+:   Zina 提出了多模态细粒度幻觉检测与编辑任务，设计了两阶段系统（detector MLLM + reviewer MLLM）将 token 复制委托给确定性函数以简化模型负担，同时构建了 VisionHall 数据集（6.9K 人工标注 + 20K 图结构合成数据），在检测 F1 上超过 GPT-4o 达 15.8 个点。
 
 ---
 
@@ -6339,50 +6355,6 @@ item_total: 1643
 
 ---
 
-## 💡 LLM 推理 { #llm_reasoning }
-
-**[E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)**
-
-:   构建首个面向中文电商海报的多维度质量评估框架 E-comIQ-ZH，包含18K专家标注数据集（含CoT推理链）、专用评估模型 E-comIQ-M（SFT+GRPO训练）和标准化基准 E-comIQ-Bench。
-
-**[EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence](llm_reasoning/eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for.md)**
-
-:   提出EagleVision双阶段框架，宏观感知阶段用语义-视角融合DPP(SPF-DPP)在SE(3)空间联合优化语义相关性和视角多样性选择关键帧，微观验证阶段让模型在BEV平面上主动查询新视角帧进行迭代空间CoT推理（假设→查看→验证闭环），查询策略纯RL训练无需人工标注，在VSI-Bench和SQA3D上达开源SOTA。
-
-**[GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization](llm_reasoning/graze_grounded_refinement_and_motion-aware_zero-shot_event_localization.md)**
-
-:   提出GRAZE，一种无需训练的管线用于美式橄榄球练习视频中的首触点(FPOC)定位——利用Grounding DINO进行层级prompt多候选发现、运动感知几何评分进行候选排序、SAM2掩码传播作为独立的像素级接触验证器，在738支视频中97.4%有效输出、77.5%在±10帧内定位准确。
-
-**[Latent Chain-of-Thought World Modeling for End-to-End Autonomous Driving](llm_reasoning/latent_chain-of-thought_world_modeling_for_end-to-end_autonomous_driving.md)**
-
-:   LCDrive 提出潜在链式思考（Latent CoT）框架，用动作提议token和世界模型预测token替代自然语言CoT进行推理，通过冷启动+RL后训练实现更低延迟、更好轨迹质量的端到端自动驾驶。
-
-**[Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)**
-
-:   发现现有LVLM在CoT推理时实际上忽略了中间rationale的内容，提出 RED (Rationale-Enhanced Decoding)——将图像条件和rationale条件的next-token分布在logit层面相乘，理论上等价于KL约束奖励最大化的最优解，无需训练即可显著提升多模态推理准确率。
-
-**[Reinforcing Structured Chain-of-Thought for Video Understanding](llm_reasoning/reinforcing_structured_chain-of-thought_for_video_understanding.md)**
-
-:   提出 SDRL（Summary-Driven Reinforcement Learning），一种无需 SFT 的单阶段 RL 框架，通过结构化 CoT（Summarize→Think→Answer）和两个自监督机制（CVK 和 DVR）增强视频时序推理，在 7 个 VideoQA 基准上达到 SOTA。
-
-**[Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](llm_reasoning/step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)**
-
-:   构建首个对齐临床诊断工作流的结构化多步CoT医学推理数据集Step-CoT（10K+病例/70K QA对），并提出基于图注意力网络的教师-学生框架实现逐步推理监督，提升Med-VQA的准确性和可解释性。
-
-**[Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models](llm_reasoning/understanding_and_mitigating_hallucinations_in_multimodal_chain-of-thought_model.md)**
-
-:   本文系统分析了多模态 CoT 模型中幻觉的成因，发现"发散思维"（associative reasoning）是幻觉的核心触发因素，并提出基于视觉熵的免训练检测+解码干预策略，在 Object HalBench 上将 CHAIRS 降低超过 30%，同时保持甚至提升通用推理能力。
-
-**[Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models](llm_reasoning/understanding_the_role_of_hallucination_in_reinforcement_post-training_of_multim.md)**
-
-:   本文提出 Hallucination-as-Cue 分析框架，通过三种模态特定腐蚀策略（空白图像、随机图像、文本移除）系统研究 RL 后训练对多模态推理模型的真实作用机制，发现即使在 100% 腐蚀视觉输入下 GRPO 训练仍能显著提升推理性能，挑战了"RL 训练能有效利用视觉信息"的主流假设。
-
-**[VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](llm_reasoning/visref_visual_refocusing_test_time_scaling.md)**
-
-:   提出 VisRef，一个免训练的视觉重聚焦框架——在多模态大推理模型（MLRM）的推理过程中，通过行列式点过程（DPP）在每步自适应选择与当前推理状态语义相关且视觉覆盖多样的 token 子集并重新注入，同时用基于熵的停止准则防止过度推理，在固定计算预算下将视觉推理准确率提升最高 6.4%。
-
----
-
 ## 🔍 信息检索/RAG { #information_retrieval }
 
 **[Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval](information_retrieval/beyond_global_similarity_towards_fine-grained_multi-condition_multimodal_retriev.md)**
@@ -6456,6 +6428,42 @@ item_total: 1643
 **[WSGG: Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](graph_learning/wsgg_spatiotemporal_world_scene_graph.md)**
 
 :   本文提出世界场景图生成（WSGG）任务，将传统帧级场景图扩展为在统一世界坐标系下追踪所有物体（包括被遮挡/不可见的），配合 ActionGenome4D 数据集和 PWG/MWAE/4DST 三种互补方法实现持久化场景推理。
+
+---
+
+## 💡 LLM 推理 { #llm_reasoning }
+
+**[E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)**
+
+:   构建首个面向中文电商海报的多维度质量评估框架 E-comIQ-ZH，包含18K专家标注数据集（含CoT推理链）、专用评估模型 E-comIQ-M（SFT+GRPO训练）和标准化基准 E-comIQ-Bench。
+
+**[EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence](llm_reasoning/eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for.md)**
+
+:   提出EagleVision双阶段框架，宏观感知阶段用语义-视角融合DPP(SPF-DPP)在SE(3)空间联合优化语义相关性和视角多样性选择关键帧，微观验证阶段让模型在BEV平面上主动查询新视角帧进行迭代空间CoT推理（假设→查看→验证闭环），查询策略纯RL训练无需人工标注，在VSI-Bench和SQA3D上达开源SOTA。
+
+**[GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization](llm_reasoning/graze_grounded_refinement_and_motion-aware_zero-shot_event_localization.md)**
+
+:   提出GRAZE，一种无需训练的管线用于美式橄榄球练习视频中的首触点(FPOC)定位——利用Grounding DINO进行层级prompt多候选发现、运动感知几何评分进行候选排序、SAM2掩码传播作为独立的像素级接触验证器，在738支视频中97.4%有效输出、77.5%在±10帧内定位准确。
+
+**[Latent Chain-of-Thought World Modeling for End-to-End Autonomous Driving](llm_reasoning/latent_chain-of-thought_world_modeling_for_end-to-end_autonomous_driving.md)**
+
+:   LCDrive 提出潜在链式思考（Latent CoT）框架，用动作提议token和世界模型预测token替代自然语言CoT进行推理，通过冷启动+RL后训练实现更低延迟、更好轨迹质量的端到端自动驾驶。
+
+**[Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)**
+
+:   发现现有LVLM在CoT推理时实际上忽略了中间rationale的内容，提出 RED (Rationale-Enhanced Decoding)——将图像条件和rationale条件的next-token分布在logit层面相乘，理论上等价于KL约束奖励最大化的最优解，无需训练即可显著提升多模态推理准确率。
+
+**[Reinforcing Structured Chain-of-Thought for Video Understanding](llm_reasoning/reinforcing_structured_chain-of-thought_for_video_understanding.md)**
+
+:   提出 SDRL（Summary-Driven Reinforcement Learning），一种无需 SFT 的单阶段 RL 框架，通过结构化 CoT（Summarize→Think→Answer）和两个自监督机制（CVK 和 DVR）增强视频时序推理，在 7 个 VideoQA 基准上达到 SOTA。
+
+**[Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering](llm_reasoning/step-cot_stepwise_visual_chain-of-thought_for_medical_visual_question_answering.md)**
+
+:   构建首个对齐临床诊断工作流的结构化多步CoT医学推理数据集Step-CoT（10K+病例/70K QA对），并提出基于图注意力网络的教师-学生框架实现逐步推理监督，提升Med-VQA的准确性和可解释性。
+
+**[VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models](llm_reasoning/visref_visual_refocusing_test_time_scaling.md)**
+
+:   提出 VisRef，一个免训练的视觉重聚焦框架——在多模态大推理模型（MLRM）的推理过程中，通过行列式点过程（DPP）在每步自适应选择与当前推理状态语义相关且视觉覆盖多样的 token 子集并重新注入，同时用基于熵的停止准则防止过度推理，在固定计算预算下将视觉推理准确率提升最高 6.4%。
 
 ---
 
@@ -6559,22 +6567,6 @@ item_total: 1643
 
 ---
 
-## 🔗 因果推理 { #causal_inference }
-
-**[Fighting Hallucinations with Counterfactuals: Diffusion-Guided Perturbations for LVLM Hallucination Suppression](causal_inference/fighting_hallucinations_with_counterfactuals_diffusion-guided_perturbations_for_.md)**
-
-:   提出 CIPHER，一种无需训练的测试时幻觉抑制方法：离线阶段用扩散模型生成反事实图像构建 OHC-25K 数据集，通过 SVD 提取视觉幻觉子空间；推理阶段将隐状态投影到该子空间的正交补空间，在不修改模型参数、不增加推理开销的前提下显著降低 LVLM 的视觉幻觉。
-
-**[MaskDiME: Adaptive Masked Diffusion for Precise and Efficient Visual Counterfactual Explanations](causal_inference/maskdime_adaptive_masked_diffusion_for_precise_and_efficient_visual_counterfactu.md)**
-
-:   提出 MaskDiME，一个免训练的扩散框架，通过自适应双掩码机制将全局分类器引导转化为决策驱动的局部编辑，实现精确高效的视觉反事实解释，推理速度比 DiME 快 30 倍以上，GPU 内存仅为 ACE/RCSB 的十分之一。
-
-**[Retrieving Counterfactuals Improves Visual In-Context Learning](causal_inference/retrieving_counterfactuals_improves_visual_in-context_learning.md)**
-
-:   提出 CIRCLES 框架，通过属性引导的 composed image retrieval 检索反事实示例，构建因果+相关性双通道 in-context demonstration，显著提升 VLM 的细粒度视觉推理能力。
-
----
-
 ## 📚 预训练 { #llm_pretraining }
 
 **[Evidential Transformation Network: Turning Pretrained Models into Evidential Models for Post-hoc Uncertainty Estimation](llm_pretraining/evidential_transformation_network_post_hoc_uncertainty_estimation.md)**
@@ -6588,6 +6580,18 @@ item_total: 1643
 **[Watch and Learn: Learning to Use Computers from Online Videos](llm_pretraining/watch_and_learn_learning_to_use_computers_from_online_videos.md)**
 
 :   提出 Watch & Learn (W&L) 框架，通过逆动力学模型 (IDM) 将互联网上的人类计算机操作视频自动转化为可执行的 UI 轨迹数据，生成 53K+ 高质量轨迹，作为 ICL 示例或 SFT 训练数据显著提升各类 CUA 性能。
+
+---
+
+## 🔗 因果推理 { #causal_inference }
+
+**[MaskDiME: Adaptive Masked Diffusion for Precise and Efficient Visual Counterfactual Explanations](causal_inference/maskdime_adaptive_masked_diffusion_for_precise_and_efficient_visual_counterfactu.md)**
+
+:   提出 MaskDiME，一个免训练的扩散框架，通过自适应双掩码机制将全局分类器引导转化为决策驱动的局部编辑，实现精确高效的视觉反事实解释，推理速度比 DiME 快 30 倍以上，GPU 内存仅为 ACE/RCSB 的十分之一。
+
+**[Retrieving Counterfactuals Improves Visual In-Context Learning](causal_inference/retrieving_counterfactuals_improves_visual_in-context_learning.md)**
+
+:   提出 CIRCLES 框架，通过属性引导的 composed image retrieval 检索反事实示例，构建因果+相关性双通道 in-context demonstration，显著提升 VLM 的细粒度视觉推理能力。
 
 ---
 
@@ -6719,7 +6723,7 @@ item_total: 1643
 
 **[DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](others/dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)**
 
-:   提出 Dirichlet 先验增强（DirPA），在少样本学习训练阶段从 Dirichlet 分布中采样类别比例向量来构造不平衡 episode，主动模拟真实世界长尾分布以消除先验偏移，在欧盟多个国家的作物分类任务中展示了一致的鲁棒性提升和稀有类别精度改善。
+:   提出 Dirichlet 先验增强（DirPA），在少样本学习训练的每一步从对称 Dirichlet 分布采样一个伪先验并以 logit 调整 $z'=z+\tau\log\tilde{\pi}$ 注入分类器（不改数据、不重构 episode），主动模拟真实世界长尾分布以消除先验偏移，在欧盟多个国家的作物分类任务中展示了一致的鲁棒性提升和稀有类别精度改善。
 
 **[Do Vision Models Perceive Illusory Motion in Static Images Like Humans?](others/do_vision_models_perceive_illusory_motion_in_static_images_like_humans.md)**
 

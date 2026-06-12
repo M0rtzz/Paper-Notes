@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 代码智能论文汇总 · 29篇论文解读
+  ACL2025 代码智能论文汇总 · 28篇论文解读
 description: >-
-  29篇ACL2025的代码智能方向论文解读，涵盖代码智能、LLM、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ACL2025的代码智能方向论文解读，涵盖代码智能、LLM、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "代码智能"
@@ -31,8 +31,6 @@ item_list:
     t: "DARS: Dynamic Action Re-Sampling to Enhance Coding Agent Performance by Adaptive Tree Traversal"
   - u: "dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language/"
     t: "DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation"
-  - u: "etf_an_entity_tracing_framework_for_hallucination_detection_in_code_summaries/"
-    t: "ETF: An Entity Tracing Framework for Hallucination Detection in Code Summaries"
   - u: "exploracoder_advancing_code_generation_for_multiple_unseen_apis_via_planning_and/"
     t: "ExploraCoder: Advancing Code Generation for Multiple Unseen APIs via Planning and Chained Exploration"
   - u: "feabench_repo_code_gen/"
@@ -69,13 +67,13 @@ item_list:
     t: "Tree-of-Evolution: Tree-Structured Instruction Evolution for Code Generation in Large Language Models"
   - u: "utboost_rigorous_evaluation_of_coding_agents_on_swe-bench/"
     t: "UTBoost: Rigorous Evaluation of Coding Agents on SWE-Bench"
-item_total: 29
+item_total: 28
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**💬 ACL2025** · **29** 篇论文解读
+**💬 ACL2025** · **28** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/code_intelligence/index.md) · [💬 ACL2026 (51)](../../ACL2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/code_intelligence/index.md)
 
@@ -120,10 +118,6 @@ item_total: 29
 **[DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation](dynacode_a_dynamic_complexity-aware_code_benchmark_for_evaluating_large_language.md)**
 
 :   提出 DynaCode，一个动态复杂度感知的代码生成基准，通过将代码问题按圈复杂度分类并用调用图（Call Graph）组合嵌套，生成约 1.89 亿个唯一问题，有效缓解数据污染并系统评估 LLM 在不同复杂度下的代码生成能力。
-
-**[ETF: An Entity Tracing Framework for Hallucination Detection in Code Summaries](etf_an_entity_tracing_framework_for_hallucination_detection_in_code_summaries.md)**
-
-:   提出 Entity Tracing Framework (ETF)，一种通过静态程序分析提取代码实体、再用 LLM 验证这些实体在生成摘要中是否被正确描述的幻觉检测框架，配合首创的 CodeSumEval 数据集（~10K样本），在代码摘要幻觉检测上达到 73% F1。
 
 **[ExploraCoder: Advancing Code Generation for Multiple Unseen APIs via Planning and Chained Exploration](exploracoder_advancing_code_generation_for_multiple_unseen_apis_via_planning_and.md)**
 

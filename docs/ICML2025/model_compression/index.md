@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 模型压缩论文汇总 · 75篇论文解读
+  ICML2025 模型压缩论文汇总 · 74篇论文解读
 description: >-
-  75篇ICML2025的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、知识蒸馏、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  74篇ICML2025的模型压缩方向论文解读，涵盖 LLM、模型压缩、压缩/编码、知识蒸馏、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "模型压缩"
@@ -74,17 +74,17 @@ item_list:
     t: "Generalization Bounds via Meta-Learned Model Representations: PAC-Bayes and Sample Compression Hypernetworks"
   - u: "gptaq_efficient_finetuning-free_quantization_for_asymmetric_calibration/"
     t: "GPTAQ: Efficient Finetuning-Free Quantization for Asymmetric Calibration"
-item_total: 75
+item_total: 74
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧪 ICML2025** · **75** 篇论文解读
+**🧪 ICML2025** · **74** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (61)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** LLM ×18 · 模型压缩 ×15 · 压缩/编码 ×8 · 知识蒸馏 ×4 · 持续学习 ×4
+🔥 **高频主题：** LLM ×17 · 模型压缩 ×15 · 压缩/编码 ×8 · 知识蒸馏 ×4 · 持续学习 ×4
 
 **[A Cross Modal Knowledge Distillation & Data Augmentation Recipe for Improving Transcriptomics Representations through Morphological Features](a_cross_modal_knowledge_distillation_data_augmentation_recipe_for_improving_tran.md)**
 
@@ -337,10 +337,6 @@ item_total: 75
 **[Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput](speculative_decoding_in_decentralized_llm_inference_turning_communication_latenc.md)**
 
 :   提出 Decentralized Speculative Decoding (DSD)，一种即插即用的去中心化LLM推理加速框架，通过将跨节点通信等待时间转化为有效计算，结合基于语义重要性的自适应验证策略，在无需重训练的前提下实现最高 2.59× 的端到端加速。
-
-**[Steer LLM Latents for Hallucination Detection](steer_llm_latents_for_hallucination_detection.md)**
-
-:   提出 Truthfulness Separator Vector (TSV)，一种轻量级 steering vector，在推理时重塑 LLM 表示空间以增强真实与幻觉输出的分离，仅需 32 个标注样本即可接近全监督性能。
 
 **[Strategic Fusion Optimizes Transformer Compression](strategic_fusion_optimizes_transformer_compression.md)**
 

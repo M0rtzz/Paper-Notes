@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WestWorld: 知识编码的可扩展轨迹世界模型
 description: >-
-  [ICML 2026][机器人][世界模型] WestWorld 用系统感知 MoE（Sys-MoE）+ 知识编码的结构嵌入，把多种异构机器人的轨迹动力学统一进一个可扩展世界模型：89 环境预训练后零样本/少样本轨迹预测的 MAE/MSE 显著优于 MLP Ensemble、TDM、TrajWorld，并提升下游 MPPI 控制、成功部署到真实 Unitree Go1。
+  [ICML 2026][机器人][世界模型] WestWorld 用系统感知 MoE（Sys-MoE）+ 知识编码的结构嵌入，把多种异构机器人的轨迹动力学统一进一个可扩展世界模型：在 89 个仿真+真实环境上预训练后…
 tags:
   - "ICML 2026"
   - "机器人"

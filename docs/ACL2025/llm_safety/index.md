@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM安全论文汇总 · 70篇论文解读
+  ACL2025 LLM安全论文汇总 · 55篇论文解读
 description: >-
-  70篇ACL2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、对齐/RLHF、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  55篇ACL2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "LLM 安全"
@@ -11,7 +11,6 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "水印/隐写"
-  - "对齐/RLHF"
   - "Agent"
   - "多模态"
 item_list:
@@ -19,16 +18,10 @@ item_list:
     t: "A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models"
   - u: "agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection/"
     t: "AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection"
-  - u: "aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e/"
-    t: "Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering"
-  - u: "alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_/"
-    t: "Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning"
   - u: "answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont/"
     t: "Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning"
   - u: "are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding/"
     t: "Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs"
-  - u: "automated_explanation_generation_and_hallucination_detection_for_heritage_image_/"
-    t: "Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval"
   - u: "bias_in_the_mirror_are_llms_opinions_robust_to_their_own_adversarial_attacks/"
     t: "Bias in the Mirror: Are LLMs' Opinions Robust to Their Own Adversarial Attacks"
   - u: "cavgan_unifying_jailbreak_and_defense_of_llms_via_generative_adversarial_attacks/"
@@ -41,10 +34,6 @@ item_list:
     t: "ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty"
   - u: "core_robust_factual_precision_with_informative_sub-claim_identification/"
     t: "Core: Robust Factual Precision with Informative Sub-Claim Identification"
-  - u: "correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m/"
-    t: "Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge"
-  - u: "cracking_hallucination_vhd/"
-    t: "Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence"
   - u: "defense_prompt_injection/"
     t: "Defense Against Prompt Injection Attack by Leveraging Attack Techniques"
   - u: "dialect_fairness_robustness/"
@@ -65,27 +54,37 @@ item_list:
     t: "From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs"
   - u: "from_tradeoff_to_synergy_a_versatile/"
     t: "From Trade-off to Synergy: A Versatile Symbiotic Watermarking Framework for Large Language Models"
-  - u: "hallucination_detox_send/"
-    t: "Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training"
-  - u: "halogen_hallucinations/"
-    t: "HALoGEN: Fantastic LLM Hallucinations and Where to Find Them"
-  - u: "hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms/"
-    t: "HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs"
   - u: "how_does_response_length_affect_long-form_factuality/"
     t: "How Does Response Length Affect Long-Form Factuality"
   - u: "improved_unbiased_watermark_for_large_language/"
     t: "Improved Unbiased Watermark for Large Language Models"
-item_total: 70
+  - u: "improving_factuality_with_explicit_working_memory/"
+    t: "Ewe: Improving Factuality with Explicit Working Memory"
+  - u: "improving_fairness_of_large_language_models_in_multi-document_summarization/"
+    t: "Improving Fairness of Large Language Models in Multi-document Summarization"
+  - u: "improving_model_factuality_with_fine-grained_critique-based_evaluator/"
+    t: "Improving Model Factuality with Fine-grained Critique-based Evaluator"
+  - u: "indirect_prompt_injection_detection/"
+    t: "Can Indirect Prompt Injection Attacks Be Detected and Removed?"
+  - u: "lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l/"
+    t: "Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs"
+  - u: "language_models_can_subtly_deceive_without_lying_a_case_study_on_strategic_phras/"
+    t: "Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing"
+  - u: "llm_watermark_distillation_robustness/"
+    t: "Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?"
+  - u: "mamba_knockout_for_unraveling_factual_information_flow/"
+    t: "Mamba Knockout for Unraveling Factual Information Flow"
+item_total: 55
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**💬 ACL2025** · **70** 篇论文解读
+**💬 ACL2025** · **55** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×33 · 对抗鲁棒 ×19 · 水印/隐写 ×6 · 对齐/RLHF ×3 · Agent ×2
+🔥 **高频主题：** LLM ×26 · 对抗鲁棒 ×19 · 水印/隐写 ×6 · Agent ×2 · 多模态 ×2
 
 **[A Statistical and Multi-Perspective Revisiting of the Membership Inference Attack in Large Language Models](a_statistical_and_multi-perspective_revisiting_of_the_membership_inference_attac.md)**
 
@@ -95,14 +94,6 @@ item_total: 70
 
 :   提出 AGrail，一个终身学习的 LLM Agent 安全护栏框架，通过双 LLM 协作（Analyzer + Executor）和记忆模块，在测试时自适应地生成和优化安全检查策略，有效防御任务特定风险和系统性风险。
 
-**[Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering](aligning_large_language_models_to_follow_instructions_and_hallucinate_less_via_e.md)**
-
-:   提出NOVA框架，通过内部一致性探测(ICP)衡量LLM对指令的熟悉度+语义等价识别(SEI)衡量LLM对目标回复的熟悉度，筛选出知识对齐的高质量指令数据，仅用5%数据微调LLaMA-3-8B即可在BioGEN上提升8.6分、FollowRAG上提升7.2分，同时保持指令遵循能力。
-
-**[Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning](alleviating_hallucinations_from_knowledge_misalignment_in_large_language_models_.md)**
-
-:   本文针对LLM中因知识错位（模型参数知识与事实不一致）导致的幻觉问题，提出选择性弃权学习（Selective Abstention Learning）方法，让模型在遇到知识边界外的问题时学会主动拒绝回答而非编造内容，从而减少幻觉。
-
 **[Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning](answer_when_needed_forget_when_not_language_models_pretend_to_forget_via_in-cont.md)**
 
 :   提出"上下文知识遗忘"方法，通过引入特殊的遗忘 token `<<UNL>>...<</UNL>>` 使 LLM 在推理时根据上下文选择性遗忘特定知识，在 TOFU/AGE/RWKU 上达到 95% 遗忘准确率且保留 80% 无关知识，深入的内部分析发现 LLM 并未真正删除知识而是在最后一层"假装遗忘"。
@@ -110,10 +101,6 @@ item_total: 70
 **[Are the Hidden States Hiding Something? Testing the Limits of Factuality-Encoding Capabilities in LLMs](are_the_hidden_states_hiding_something_testing_the_limits_of_factuality-encoding.md)**
 
 :   本文挑战了"LLM隐藏状态能编码事实真假信息"这一先前结论，通过构建更真实、更具挑战性的数据集（基于困惑度的负样本采样和基于QA的LLM生成数据集），发现先前方法在更贴近实际场景的数据上泛化能力有限，为LLM事实性评估研究提供了更严格的评估基准和实践指导。
-
-**[Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)**
-
-:   本文针对文化遗产图像检索任务，提出了一个结合自动解释生成和幻觉检测的框架，利用视觉语言模型为检索结果生成可解释的文本描述，同时通过领域知识约束的幻觉检测机制确保描述的事实准确性，在多个文化遗产数据集上验证了方法的有效性。
 
 **[Bias in the Mirror: Are LLMs' Opinions Robust to Their Own Adversarial Attacks](bias_in_the_mirror_are_llms_opinions_robust_to_their_own_adversarial_attacks.md)**
 
@@ -138,14 +125,6 @@ item_total: 70
 **[Core: Robust Factual Precision with Informative Sub-Claim Identification](core_robust_factual_precision_with_informative_sub-claim_identification.md)**
 
 :   本文提出 Core 框架，通过识别和过滤信息性子声明（informative sub-claims）来实现鲁棒的事实精度（factual precision）评估，解决了现有方法因无信息声明的稀释效应而导致评估不准确的问题。
-
-**[Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)**
-
-:   系统性地探究了两种自纠正方法（CoVE 和 RARR）在新闻摘要幻觉纠正中的表现，比较了三种搜索引擎、多种检索设置和提示策略，发现 Bing 搜索片段 + RARR（few-shot）组合效果最佳，且 G-Eval 与人类评估高度一致。
-
-**[Cracking the Code of Hallucination in LVLMs with Vision-aware Head Divergence](cracking_hallucination_vhd.md)**
-
-:   提出 VHD 指标量化每个注意力头输出对视觉输入的敏感程度，发现仅少数注意力头对视觉信息高度敏感而模型过度依赖语言先验是导致幻觉的关键因素，进而设计 VHR 免训练方法逐层自适应增强视觉感知头的贡献（$\alpha=2$），在 CHAIR 上将 LLaVA-1.5 的 CHAIR$_S$ 从 49.68 降至 33.32，且几乎无额外推理开销。
 
 **[Defense Against Prompt Injection Attack by Leveraging Attack Techniques](defense_prompt_injection.md)**
 
@@ -187,18 +166,6 @@ item_total: 70
 
 :   提出SymMark共生水印框架，融合logits-based和sampling-based两类水印方法（串行/并行/混合三种策略），通过token熵和语义熵自适应选择水印策略，在可检测性、鲁棒性、文本质量和安全性上实现SOTA。
 
-**[Hallucination Detox: Sensitivity Dropout (SenD) for Large Language Model Training](hallucination_detox_send.md)**
-
-:   提出Sensitivity Dropout (SenD)训练协议，通过识别并确定性丢弃训练过程中波动最大的嵌入索引（Sensitive Embedding Indices），减少LLM训练中幻觉的振荡行为，同时提出高效EigenScore近似方法(EES)实现2倍加速。
-
-**[HALoGEN: Fantastic LLM Hallucinations and Where to Find Them](halogen_hallucinations.md)**
-
-:   提出 HALoGEN——覆盖 9 个领域（含编程、科学引用、摘要等）的 10,923 条 prompt 的大规模幻觉评测框架，配套原子级自动验证器，在 14 个 LLM 的约 150,000 条生成上系统性评估幻觉，发现即使最佳模型也可能有高达 86% 的原子事实存在幻觉，并提出 Type A/B/C 三类错误分类法。
-
-**[HD-NDEs: Neural Differential Equations for Hallucination Detection in LLMs](hd-ndes_neural_differential_equations_for_hallucination_detection_in_llms.md)**
-
-:   本文首次将神经微分方程（Neural DEs）应用于LLM幻觉检测，通过对隐空间中token激活的连续轨迹建模来系统评估陈述的真实性，在True-False数据集上AUC-ROC超过SOTA 14%以上。
-
 **[How Does Response Length Affect Long-Form Factuality](how_does_response_length_affect_long-form_factuality.md)**
 
 :   本文系统研究了LLM响应长度与事实精确度的关系，提出高效的双层事实性评估框架Bafe（与人类注释89.31%一致），确认了长度偏差的存在，并通过排除错误传播和长上下文假说，证明"事实耗竭"是事实性下降的主要原因。
@@ -223,10 +190,6 @@ item_total: 70
 
 :   本文系统研究间接 prompt injection 攻击的检测与移除：构建评估基准，发现现有检测模型对间接攻击表现不佳但专门训练的模型可达 99% 准确率，提出分割移除和抽取移除两种方法，并将检测+移除组合为过滤管道，有效降低间接 prompt injection 的攻击成功率。
 
-**[Beyond Facts: Evaluating Intent Hallucination in Large Language Models](intent_hallucination_eval.md)**
-
-:   本文提出"意图幻觉"（Intent Hallucination）概念——LLM 在处理复杂多条件查询时遗漏或误解部分意图约束导致的偏离用户意图的生成，构建 FaithQA 基准（20,068 题）和 Constraint Score 评估指标，实验表明意图幻觉在 SOTA 模型中普遍存在且随查询复杂度增加而加剧。
-
 **[Lacuna Inc. at SemEval-2025 Task 4: LoRA-Enhanced Influence-Based Unlearning for LLMs](lacuna_inc_at_semeval-2025_task_4_lora-enhanced_influence-based_unlearning_for_l.md)**
 
 :   提出 LIBU（LoRA 增强的影响函数遗忘算法），分两阶段实现 LLM 机器遗忘：Phase 1 用对角 Fisher 信息矩阵加权的影响函数更新参数精准遗忘，Phase 2 用 Sophia 二阶优化器稳定化训练，在 SemEval-2025 Task 4 的 OLMo-7B 上达到 0.283 遗忘率同时维持 0.469 MMLU 准确率。
@@ -235,17 +198,9 @@ item_total: 70
 
 :   构建了一个立法环境测试平台（LobbyLens），研究 LLM 是否能通过策略性措辞（strategic phrasing）——即不说谎但有意操纵表达方式——来隐藏修正案中对特定公司的利益导向，发现 LLM 经过 re-planning 可使欺骗率提升最多 40 个百分点。
 
-**[Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation](learning_auxiliary_tasks_improves_reference-free_hallucination_detection_in_open.md)**
-
-:   系统性地研究了开放域长文本生成中的无参考幻觉检测问题，发现 LLM 内部状态（概率/熵）不足以可靠区分事实与幻觉内容，并提出 RATE-FT（Rationale and Auxiliary Task Enhanced Fine-Tuning），通过引入推理解释和辅助 QA 任务增强微调，在 LongFact 上比普通微调提升 3% 以上。
-
 **[Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?](llm_watermark_distillation_robustness.md)**
 
 :   本文首次系统研究 LLM 水印在防止未授权知识蒸馏中的鲁棒性，提出三种水印去除攻击（无目标/有目标释义 + 推理时水印中和），发现有目标释义和水印中和可以彻底去除继承的水印，其中水印中和在保持知识迁移效率的同时实现零额外训练开销的水印去除。
-
-**[Fine-grained Hallucination Detection and Mitigation in Long-form Question Answering](localizing_and_mitigating_errors_in_long-form_question_answering.md)**
-
-:   本文构建了首个包含 span 级别错误标注的 LFQA 幻觉数据集 HaluQuestQA（698 QA 对，4.7k 错误标注，5 种错误类型），训练了一个自动反馈模型来检测不完整信息的错误 span 并生成解释，最后提出 Error-informed Refinement 方法利用反馈信号精炼答案，将幻觉减少约 3%，且人类评估中 84% 的用户更偏好精炼后的答案。
 
 **[Mamba Knockout for Unraveling Factual Information Flow](mamba_knockout_for_unraveling_factual_information_flow.md)**
 
@@ -271,17 +226,9 @@ item_total: 70
 
 :   本文重新定义了多模态大语言模型（MLLM）时代的机器遗忘任务——仅擦除与特定实体关联的视觉模式而保留文本知识，并提出几何约束梯度上升方法MMUnlearner，通过权重显著性图选择性更新参数，在MLLMU-Bench和CLEAR两大基准上全面超越GA和NPO等基线。
 
-**[Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation](monitoring_decoding_mitigating_hallucination_via_evaluating_the_factuality_of_pa.md)**
-
-:   提出 Monitoring Decoding (MD) 框架，在生成过程中动态监控部分响应的事实性，通过监控函数识别易产生幻觉的 token 并利用树搜索策略选择性地修正这些关键 token，从而在保持效率的同时显著提升事实准确性。
-
 **[MorphMark: Flexible Adaptive Watermarking for Large Language Models](morphmark_adaptive_watermarking.md)**
 
 :   MorphMark 通过多目标权衡分析框架揭示了绿表概率 P_G 在水印效果与文本质量之间的关键作用，并据此提出自适应调整水印强度 r 的方法——当 P_G 高时增强水印、P_G 低时减弱水印，实现了在不依赖额外模型训练的前提下同时提升水印可检测性和文本质量。
-
-**[On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation](on-policy_self-alignment_with_fine-grained_knowledge_feedback_for_hallucination_.md)**
-
-:   提出 RLFH（Reinforcement Learning for Hallucination），一种在策略（on-policy）自对齐方法，让 LLM 自己作为评判者，将回复分解为原子事实并进行真实性和信息量评估，生成 token 级别的密集奖励信号，通过在线 PPO 优化来有效缓解幻觉问题。
 
 **[Opt-Out: Investigating Entity-Level Unlearning for Large Language Models via Optimal Transport](opt-out_investigating_entity-level_unlearning_for_large_language_models_via_opti.md)**
 
@@ -319,10 +266,6 @@ item_total: 70
 
 :   SEUF 首次揭示现有 LLM 遗忘方法在 MoE 模型上严重失效（效用下降 35%+），根因是遗忘过程导致路由器的专家选择漂移形成"捷径"——本该遗忘的目标专家被绕过而无辜专家被破坏，并提出通过专家归因定位目标专家+路由器锚定损失固定选择的框架，仅更新 0.06% 参数即可同时提升遗忘质量和模型效用。
 
-**[Stochastic Chameleons: Irrelevant Context Hallucinations Reveal Class-Based (Mis)Generalization in LLMs](stochastic_chameleons_irrelevant_context_hallucinations_reveal_class-based_misge.md)**
-
-:   通过行为分析和机械可解释性实验揭示 LLM 无关上下文幻觉的内部机制：模型在底层构建抽象类别表示（如"语言"），然后两条竞争电路（query-based vs context-based）争夺特征选择权，相对激活强度决定正确泛化还是产生幻觉。
-
 **[TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs](tip_iceberg_adversarial_attacks.md)**
 
 :   本文提出 Task-in-Prompt (TIP) 攻击——一类通过在 prompt 中嵌入序列到序列任务（如密码解码、谜语、代码执行）来间接生成违禁内容的新型越狱攻击类别，并构建 PHRYGE benchmark 系统评估，证明该攻击可成功绕过 GPT-4o、LLaMA 3.2 等六种 SOTA LLM 的安全防护。
@@ -334,10 +277,6 @@ item_total: 70
 **[Towards Effective Extraction and Evaluation of Factual Claims](towards_effective_extraction_and_evaluation_of_factual_claims.md)**
 
 :   提出了一个用于评估事实声明抽取质量的标准化框架（包含覆盖率和去语境化等指标），并开发了Claimify——一个能在高置信度下处理歧义并抽取声明的LLM方法，在该框架下显著优于已有方法。
-
-**[TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation](treecut_a_synthetic_unanswerable_math_word_problem_dataset_for_llm_hallucination.md)**
-
-:   提出 TreeCut，一种基于树结构的合成数据集生成方法，通过在树路径上移除必要条件边来系统性生成无穷多的不可回答数学应用题，用以评估 LLM 在面对不可解问题时的幻觉行为。
 
 **[Truth Knows No Language: Evaluating Truthfulness Beyond English](truth_knows_no_language_evaluating_truthfulness_beyond_english.md)**
 

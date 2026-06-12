@@ -133,7 +133,7 @@ DUTrack由四个主要组件构成：(1) 多模态交互模块 — 使用one-str
 - [\[CVPR 2025\] Improving Personalized Search with Regularized Low-Rank Parameter Updates](improving_personalized_search_with_regularized_low-rank_parameter_updates.md)
 - [\[CVPR 2025\] Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages](rethinking_few-shot_adaptation_of_vision-language_models_in_two_stages.md)
 - [\[ICCV 2025\] Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM](../../ICCV2025/multimodal_vlm/dynamic-vlm_simple_dynamic_visual_token_compression_for_videollm.md)
-- [\[CVPR 2025\] Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)
+- [\[CVPR 2025\] NVILA: Efficient Frontier Visual Language Models](nvila_efficient_frontier_visual_language_models.md)
 
 </div>
 

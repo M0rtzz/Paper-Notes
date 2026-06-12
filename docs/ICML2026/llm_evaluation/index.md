@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 LLM评测论文汇总 · 27篇论文解读
+  ICML2026 LLM评测论文汇总 · 24篇论文解读
 description: >-
-  27篇ICML2026的 LLM 评测方向论文解读，涵盖 LLM、强化学习、Agent、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  24篇ICML2026的 LLM 评测方向论文解读，涵盖 LLM、强化学习、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "LLM 评测"
@@ -12,22 +12,17 @@ tags:
   - "强化学习"
   - "Agent"
   - "推理"
-  - "对抗鲁棒"
 item_list:
   - u: "agent_world_model_infinity_synthetic_environments_for_agentic_reinforcement_lear/"
     t: "Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning"
   - u: "agzo_activation-guided_zeroth-order_optimization_for_llm_fine-tuning/"
     t: "AGZO: Activation-Guided Zeroth-Order Optimization for LLM Fine-Tuning"
-  - u: "automatic_layer_selection_for_hallucination_detection/"
-    t: "Automatic Layer Selection for Hallucination Detection"
   - u: "bespoke_benchmark_for_search-augmented_large_language_model_personalization_via_/"
     t: "BESPOKE: Benchmark for Search-Augmented Large Language Model Personalization via Diagnostic Feedback"
   - u: "beyond_log_likelihood_probability-based_objectives_for_supervised_fine-tuning_ac/"
     t: "Beyond Log Likelihood: Probability-Based Objectives for Supervised Fine-Tuning across the Model Capability Continuum"
   - u: "beyond_trajectory-level_attribution_graph-based_credit_assignment_for_agentic_re/"
     t: "Beyond Trajectory-Level Attribution: Graph-Based Credit Assignment for Agentic Reinforcement Learning"
-  - u: "building_reliable_long-form_generation_via_hallucination_rejection_sampling/"
-    t: "Building Reliable Long-Form Generation via Hallucination Rejection Sampling"
   - u: "capbencher_give_your_llm_benchmark_a_built-in_alarm_for_test-set_overfitting/"
     t: "CapBencher: Give Your LLM Benchmark a Built-in Alarm for Test-Set Overfitting"
   - u: "decompose_structure_and_repair_a_neuro-symbolic_framework_for_autoformalization_/"
@@ -62,23 +57,21 @@ item_list:
     t: "Toward Training Superintelligent Software Agents through Self-Play SWE-RL"
   - u: "when_ai_benchmarks_plateau_a_systematic_study_of_benchmark_saturation/"
     t: "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation"
-  - u: "when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar/"
-    t: "When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets (CAIA)"
   - u: "who_can_we_trust_llm-as-a-jury_for_comparative_assessment/"
     t: "Who can we trust? LLM-as-a-jury for Comparative Assessment"
   - u: "whose_alignment_comparing_llm_process_alignment_across_diverse_organizational_de/"
     t: "Whose Alignment? Comparing LLM Process Alignment Across Diverse Organizational Decision Contexts"
-item_total: 27
+item_total: 24
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**🧪 ICML2026** · **27** 篇论文解读
+**🧪 ICML2026** · **24** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×13 · 强化学习 ×3 · Agent ×2 · 推理 ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** LLM ×13 · 强化学习 ×3 · Agent ×2 · 推理 ×2
 
 **[Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning](agent_world_model_infinity_synthetic_environments_for_agentic_reinforcement_lear.md)**
 
@@ -87,10 +80,6 @@ item_total: 27
 **[AGZO: Activation-Guided Zeroth-Order Optimization for LLM Fine-Tuning](agzo_activation-guided_zeroth-order_optimization_for_llm_fine-tuning.md)**
 
 :   AGZO 发现线性层梯度行空间受前向激活子空间约束，并据此在零阶微调中只沿激活引导的低秩方向扰动参数，从而在几乎保持 MeZO 级别显存占用的同时提升梯度对齐和下游任务性能。
-
-**[Automatic Layer Selection for Hallucination Detection](automatic_layer_selection_for_hallucination_detection.md)**
-
-:   提出 FEPoID（内在维度的首个有效峰值）作为无需训练的自动层选择准则，并结合首句截断策略（FST），在多种 QA 和摘要幻觉检测基准上持续选出接近最优的中间层，显著超越已有基线方法。
 
 **[BESPOKE: Benchmark for Search-Augmented Large Language Model Personalization via Diagnostic Feedback](bespoke_benchmark_for_search-augmented_large_language_model_personalization_via_.md)**
 
@@ -103,10 +92,6 @@ item_total: 27
 **[Beyond Trajectory-Level Attribution: Graph-Based Credit Assignment for Agentic Reinforcement Learning](beyond_trajectory-level_attribution_graph-based_credit_assignment_for_agentic_re.md)**
 
 :   提出 GraphGPO，将所有 rollout 轨迹聚合为统一的状态转移图，利用图上全局最短路径信息为每一步计算基于距离的 advantage，实现比轨迹级归因更精细的信用分配，在 ALFWorld、WebShop、Sokoban 上显著超越 GRPO 和 GiGPO。
-
-**[Building Reliable Long-Form Generation via Hallucination Rejection Sampling](building_reliable_long-form_generation_via_hallucination_rejection_sampling.md)**
-
-:   提出 SHARS 框架，在推理时逐句检测并拒绝幻觉内容、仅保留经验证的事实段落继续生成，配合改进的语义熵检测器 HalluSE，在 FactScore 上将事实精度提升约 20–26%，同时保持甚至增加生成中的事实信息量。
 
 **[CapBencher: Give Your LLM Benchmark a Built-in Alarm for Test-Set Overfitting](capbencher_give_your_llm_benchmark_a_built-in_alarm_for_test-set_overfitting.md)**
 
@@ -175,10 +160,6 @@ item_total: 27
 **[When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation](when_ai_benchmarks_plateau_a_systematic_study_of_benchmark_saturation.md)**
 
 :   这篇论文把 AI benchmark 饱和定义为前沿模型之间失去可靠区分度，提出基于 leaderboard 不确定性的 saturation index，并分析 60 个文本 LLM benchmark，发现近一半已高饱和，年龄和测试集规模比私有测试集、开放式输出或模板多样性更能解释饱和。
-
-**[When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets (CAIA)](when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)**
-
-:   CAIA 用 17 个前沿大模型在 178 个时间锚定的加密货币真实任务上构建首个"对抗性高风险"agent 基准，发现：无工具时所有模型只有 12–28% 准确率（接近随机猜测），有工具时最强 GPT-5 也只到 67.4% vs. 人类入门分析师 80%；更致命的是模型 55.5% 的工具调用偏向"不可靠的网页搜索"而绕过权威链上数据，导致 Pass@k 指标系统性掩盖了"靠试错碰运气"的危险行为。
 
 **[Who can we trust? LLM-as-a-jury for Comparative Assessment](who_can_we_trust_llm-as-a-jury_for_comparative_assessment.md)**
 

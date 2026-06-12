@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 图像生成论文汇总 · 125篇论文解读
+  ICML2026 图像生成论文汇总 · 124篇论文解读
 description: >-
-  125篇ICML2026的图像生成方向论文解读，涵盖扩散模型、对齐/RLHF、文生图、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  124篇ICML2026的图像生成方向论文解读，涵盖扩散模型、对齐/RLHF、文生图、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -75,15 +75,15 @@ item_list:
     t: "DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection"
   - u: "diagnosing_and_correcting_concept_omission_in_multimodal_diffusion_transformers/"
     t: "Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers"
-item_total: 125
+item_total: 124
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2026** · **125** 篇论文解读
+**🧪 ICML2026** · **124** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (222)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×40 · 对齐/RLHF ×8 · 文生图 ×8 · 布局/合成 ×6 · 对抗鲁棒 ×4
 
@@ -530,10 +530,6 @@ item_total: 125
 **[SURGE: Approximation and Training Free Particle Filter for Diffusion Surrogate](surge_approximation_and_training_free_particle_filter_for_diffusion_surrogate.md)**
 
 :   SURGE 把扩散代理模型的引导采样视为路径测度上的有偏分布，用 Girsanov 公式计算重要性权重做 SMC 重采样，从而在不重新训练、不近似 Doob $h$-变换的前提下，得到无近似偏差的扩散代理数据同化滤波器，在 Lorenz、Navier-Stokes 和 SEVIR 天气预报上一致超越 BPF/EnKF/SDA/FlowDAS。
-
-**[TAG: Tangential Amplifying Guidance for Hallucination-Resistant Sampling](tag_tangential_amplifying_guidance_for_hallucination-resistant_sampling.md)**
-
-:   TAG 把每一步扩散更新沿当前潜变量方向分解为"径向 + 切向"两个分量，只对切向分量额外乘一个 $\eta \ge 1$ 的放大系数，从一阶 Taylor 展开上证明这等价于单调提升对数似然增益，从而把样本拉向数据流形高密度区，几乎零额外算力地缓解扩散模型的语义幻觉。
 
 **[The Coupling Within: Flow Matching via Distilled Normalizing Flows](the_coupling_within_flow_matching_via_distilled_normalizing_flows.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 多模态VLM论文汇总 · 48篇论文解读
+  ECCV2024 多模态VLM论文汇总 · 47篇论文解读
 description: >-
-  48篇ECCV2024的多模态 VLM 方向论文解读，涵盖多模态、LLM、对抗鲁棒、少样本学习、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  47篇ECCV2024的多模态 VLM 方向论文解读，涵盖多模态、LLM、对抗鲁棒、少样本学习、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "多模态 VLM"
@@ -26,8 +26,6 @@ item_list:
     t: "Attention Prompting on Image for Large Vision-Language Models"
   - u: "bad_students_make_great_teachers_active_learning_accelerates_large-scale_visual_/"
     t: "Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding"
-  - u: "beaf_observing_beforeafter_changes_to_evaluate_hallucination/"
-    t: "BEAF: Observing BEfore-AFter Changes to Evaluate Hallucination in Vision-Language Models"
   - u: "blink_multimodal_large_language_models_can_see_but_not_perceive/"
     t: "BLINK: Multimodal Large Language Models Can See but Not Perceive"
   - u: "brave_broadening_the_visual_encoding_of_vision-language_models/"
@@ -74,17 +72,19 @@ item_list:
     t: "MMBench: Is Your Multi-modal Model an All-Around Player?"
   - u: "myvlm_personalizing_vlms_for_userspecific_queries/"
     t: "MyVLM: Personalizing VLMs for User-Specific Queries"
-item_total: 48
+  - u: "navgpt-2_unleashing_navigational_reasoning_capability_for_large_vision-language_/"
+    t: "NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models"
+item_total: 47
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🎞️ ECCV2024** · **48** 篇论文解读
+**🎞️ ECCV2024** · **47** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×30 · LLM ×9 · 对抗鲁棒 ×3 · 少样本学习 ×3 · 模型压缩 ×2
+🔥 **高频主题：** 多模态 ×29 · LLM ×9 · 对抗鲁棒 ×3 · 少样本学习 ×3 · 模型压缩 ×2
 
 **[A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)**
 
@@ -109,10 +109,6 @@ item_total: 48
 **[Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding](bad_students_make_great_teachers_active_learning_accelerates_large-scale_visual_.md)**
 
 :   提出 ClassAct/ActiveCLIP 方法，利用小型廉价代理模型为数据点计算"可学习性"评分来优先选择训练数据，使大规模视觉分类器和多模态模型分别减少46%和51%的训练更新量，且总计算量节省高达25%，是首个在大规模预训练中实现计算正收益的主动学习方法。
-
-**[BEAF: Observing BEfore-AFter Changes to Evaluate Hallucination in Vision-Language Models](beaf_observing_beforeafter_changes_to_evaluate_hallucination.md)**
-
-:   BEAF提出"前-后对比"的幻觉评估范式：通过图像编辑移除物体后观察VLM回答的变化，引入TU/IG/SB/ID四个变化感知指标，揭示了传统文本轴评估无法发现的幻觉行为。
 
 **[BLINK: Multimodal Large Language Models Can See but Not Perceive](blink_multimodal_large_language_models_can_see_but_not_perceive.md)**
 

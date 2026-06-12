@@ -2,7 +2,7 @@
 title: >-
   ICCV2025 论文汇总 · 1316篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(145篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "ICCV2025论文汇总"
@@ -85,7 +85,7 @@ item_total: 1316
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文汇总
 
-1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(145篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -2137,10 +2137,6 @@ item_total: 1316
 
 :   提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
 
-**[DASH: Detection and Assessment of Systematic Hallucinations of VLMs](multimodal_vlm/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)**
-
-:   提出DASH自动化流水线，通过LLM生成文本查询（DASH-LLM）和扩散模型优化图像查询（DASH-OPT）两种策略，在ReLAION-5B中系统性地发现VLM的假阳性对象幻觉聚类，共发现19k+聚类和950k+图像，并构建了更具挑战性的DASH-B基准。
-
 **[DisenQ: Disentangling Q-Former for Activity-Biometrics](multimodal_vlm/disenq_disentangling_q-former_for_activity-biometrics.md)**
 
 :   提出 DisenQ（Disentangling Q-Former），通过结构化语言引导将视频特征解纠缠为生物特征、动作和非生物特征三个独立空间，无需额外视觉模态即可实现活动感知的行人识别 SOTA。
@@ -2361,10 +2357,6 @@ item_total: 1316
 
 :   METEOR 提出首个面向多编码器 MLLM 的三阶段渐进式 token 剪枝框架：在编码阶段用特征秩分配各编码器的稀疏比例，在融合阶段通过协同剪枝消除跨编码器冗余，在解码阶段根据文本提示自适应调整剪枝比例，将视觉 token 减少 76% 而性能仅降 0.3%。
 
-**[Mitigating Object Hallucinations via Sentence-Level Early Intervention](multimodal_vlm/mitigating_object_hallucinations_via_sentence-level_early_intervention.md)**
-
-:   本文提出SENTINEL框架，基于"幻觉在生成早期出现并向后传播"的关键观察，通过域内候选引导、双检测器交叉验证构建句子级偏好数据，使用上下文感知DPO（C-DPO）实现早期干预，在Object HalBench上减少92%幻觉且保持通用能力。
-
 **[MM-IFEngine: Towards Multimodal Instruction Following](multimodal_vlm/mm-ifengine_towards_multimodal_instruction_following.md)**
 
 :   提出 MM-IFEngine 管线，系统性地生成高质量的图像-指令对数据（含 SFT 和 DPO 版本），并构建 MM-IFEval 基准，显著提升 MLLM 在多模态指令遵循任务上的表现。
@@ -2412,10 +2404,6 @@ item_total: 1316
 **[One Perturbation is Enough: On Generating Universal Adversarial Perturbations against Vision-Language Pre-training Models](multimodal_vlm/one_perturbation_is_enough_on_generating_universal_adversarial_perturbations_aga.md)**
 
 :   本文提出 C-PGC 框架，通过恶意对比学习训练条件扰动生成器，生成一对通用图文对抗扰动（UAP），能够从根本上破坏 VLP 模型的多模态对齐关系，在白盒和黑盒场景下对多种 VLP 模型和下游任务均取得优异攻击效果。
-
-**[ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](multimodal_vlm/only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)**
-
-:   提出ONLY，一种training-free的单层干预解码方法——通过Text-to-Visual Entropy Ratio（TVER）选择偏向文本的attention head生成textually-enhanced logits，然后与原始logits做自适应对比/协作解码，仅增加1.07×推理时间就在POPE上比VCD/M3ID高3.14%，在CHAIR上降低CHAIR_S 6.2个点。
 
 **[OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning](multimodal_vlm/openvision_a_fully-open_cost-effective_family_of_advanced_vision_encoders_for_mu.md)**
 
@@ -2592,10 +2580,6 @@ item_total: 1316
 **[VQ-FocusAmbiguity: Acknowledging Focus Ambiguity in Visual Questions](multimodal_vlm/vq_focusambiguity_acknowledging_focus_ambiguity_visual_questions.md)**
 
 :   首次关注VQA中的"焦点歧义"问题——当问题中的语言可以指向图像中多个合理区域时，构建了5500个样本的VQ-FocusAmbiguity数据集，为歧义感知VQA系统的开发奠定基础。
-
-**[Why LVLMs Are More Prone to Hallucinations in Longer Responses: The Role of Context](multimodal_vlm/why_lvlms_are_more_prone_to_hallucinations_in_longer_responses_the_role_of_conte.md)**
-
-:   深入探究 LVLM 长文本生成中幻觉频发的根本原因——不是长度本身，而是上下文的连贯性（coherence）和完备性（completeness）需求驱动模型外推产生幻觉，并据此提出 HalTrapper 的"诱导-检测-抑制"三阶段框架。
 
 **[WikiAutoGen: Towards Multi-Modal Wikipedia-Style Article Generation](multimodal_vlm/wikiautogen_towards_multi-modal_wikipedia-style_article_generation.md)**
 
@@ -4779,54 +4763,6 @@ item_total: 1316
 
 ---
 
-## 🔒 LLM 安全 { #llm_safety }
-
-**[Adversarial Robust Memory-Based Continual Learner](llm_safety/adversarial_robust_memory-based_continual_learner.md)**
-
-:   揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块，在 Split-CIFAR10/100 和 Split-Tiny-ImageNet 上有效提升对抗鲁棒性达 8.13%。
-
-**[Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](llm_safety/asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)**
-
-:   提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
-
-**[ChartCap: Mitigating Hallucination of Dense Chart Captioning](llm_safety/chartcap_mitigating_hallucination_of_dense_chart_captioning.md)**
-
-:   构建了包含56.5万张真实图表-描述对的大规模数据集ChartCap，通过类型特定的描述模式排除无关信息、强调结构与关键洞察，并提出无参考的Visual Consistency Score评估指标，有效减少VLM在图表描述中的幻觉问题。
-
-**[Cooperative Pseudo Labeling for Unsupervised Federated Classification](llm_safety/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
-
-:   FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
-
-**[Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](llm_safety/enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)**
-
-:   提出Gradient-Guided Sampling (GGS)内迭代采样策略，通过使用上一内迭代的梯度方向引导采样，在平衡Exploitation（攻击强度/损失极大值）和Exploration（跨模型泛化/平坦损失面）的困境中取得突破，在CNN/ViT/MLLM等多架构上显著超越现有迁移攻击方法。
-
-**[Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)**
-
-:   提出 FUCRT 方法，通过类感知表征变换实现联邦遗忘：将遗忘类的表征“变换”到语义最近的保留类，而非直接消除，配合双重对比学习对齐跨客户端的变换一致性，在四个数据集上实现 100% 遗忘保障的同时保持甚至提升剩余类性能。
-
-**[Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](llm_safety/geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)**
-
-:   本文提出Geminio，首个利用视觉语言模型（VLM）实现自然语言引导的梯度反转攻击（GIA），使联邦学习中的恶意服务器可以用自然语言描述想要窃取的数据类型，并从大batch梯度中精准定位和重建匹配的隐私样本，同时不影响正常的FL模型训练。
-
-**[LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](llm_safety/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)**
-
-:   提出 Latte 框架，在联邦学习的去中心化场景下，通过本地记忆与外部记忆的协同机制，实现视觉语言模型（如 CLIP）的协作式测试时自适应，兼顾跨客户端知识共享与个性化。
-
-**[MUNBa: Machine Unlearning via Nash Bargaining](llm_safety/munba_machine_unlearning_via_nash_bargaining.md)**
-
-:   将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
-
-**[SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders](llm_safety/sauce_selective_concept_unlearning_in_vision-language_models_with_sparse_autoenc.md)**
-
-:   SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。
-
-**[Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation](llm_safety/temporal_unlearnable_examples_preventing_personal_video_data_from_unauthorized_e.md)**
-
-:   本文首次研究防止视频数据被深度跟踪器未授权使用的问题，提出基于 DiT 的生成式框架生成时序不可学习样本（TUE），通过时间对比损失使跟踪器依赖扰动噪声进行时序匹配而非学习真实数据结构，实现了跨模型、跨数据集和跨任务的强可迁移性。
-
----
-
 ## 🛰️ 遥感 { #remote_sensing }
 
 **[AstroLoc: Robust Space to Ground Image Localizer](remote_sensing/astroloc_robust_space_to_ground_image_localizer.md)**
@@ -4964,6 +4900,50 @@ item_total: 1316
 **[VITAL: More Understandable Feature Visualization through Distribution Alignment and Relevant Information Flow](interpretability/vital_more_understandable_feature_visualization_through_distribution_alignment_a.md)**
 
 :   提出VITAL方法，通过将特征可视化重新定义为真实图像特征分布对齐问题（而非传统的激活最大化），并结合相关性评分过滤无关特征，生成对人类更易理解的神经元可视化结果。
+
+---
+
+## 🔒 LLM 安全 { #llm_safety }
+
+**[Adversarial Robust Memory-Based Continual Learner](llm_safety/adversarial_robust_memory-based_continual_learner.md)**
+
+:   揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块，在 Split-CIFAR10/100 和 Split-Tiny-ImageNet 上有效提升对抗鲁棒性达 8.13%。
+
+**[Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset](llm_safety/asynchronous_event_error-minimizing_noise_for_safeguarding_event_dataset.md)**
+
+:   提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
+
+**[Cooperative Pseudo Labeling for Unsupervised Federated Classification](llm_safety/cooperative_pseudo_labeling_for_unsupervised_federated_classification.md)**
+
+:   FedCoPL 首次将无监督联邦学习扩展到分类任务，通过协作伪标签策略（全局分配伪标签确保类别平衡）和部分 prompt 聚合协议（仅聚合视觉 prompt、保留文本 prompt 本地化）有效应对 CLIP 固有偏差和标签偏移挑战。
+
+**[Enhancing Adversarial Transferability by Balancing Exploration and Exploitation with Gradient-Guided Sampling](llm_safety/enhancing_adversarial_transferability_by_balancing_exploration_and_exploitation_.md)**
+
+:   提出Gradient-Guided Sampling (GGS)内迭代采样策略，通过使用上一内迭代的梯度方向引导采样，在平衡Exploitation（攻击强度/损失极大值）和Exploration（跨模型泛化/平坦损失面）的困境中取得突破，在CNN/ViT/MLLM等多架构上显著超越现有迁移攻击方法。
+
+**[Forgetting Through Transforming: Enabling Federated Unlearning via Class-Aware Representation Transformation](llm_safety/forgetting_through_transforming_enabling_federated_unlearning_via_class-aware_re.md)**
+
+:   提出 FUCRT 方法，通过类感知表征变换实现联邦遗忘：将遗忘类的表征“变换”到语义最近的保留类，而非直接消除，配合双重对比学习对齐跨客户端的变换一致性，在四个数据集上实现 100% 遗忘保障的同时保持甚至提升剩余类性能。
+
+**[Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning](llm_safety/geminio_language-guided_gradient_inversion_attacks_in_federated_learning.md)**
+
+:   本文提出Geminio，首个利用视觉语言模型（VLM）实现自然语言引导的梯度反转攻击（GIA），使联邦学习中的恶意服务器可以用自然语言描述想要窃取的数据类型，并从大batch梯度中精准定位和重建匹配的隐私样本，同时不影响正常的FL模型训练。
+
+**[LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning](llm_safety/latte_collaborative_test-time_adaptation_of_vision-language_models_in_federated_.md)**
+
+:   提出 Latte 框架，在联邦学习的去中心化场景下，通过本地记忆与外部记忆的协同机制，实现视觉语言模型（如 CLIP）的协作式测试时自适应，兼顾跨客户端知识共享与个性化。
+
+**[MUNBa: Machine Unlearning via Nash Bargaining](llm_safety/munba_machine_unlearning_via_nash_bargaining.md)**
+
+:   将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
+
+**[SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders](llm_safety/sauce_selective_concept_unlearning_in_vision-language_models_with_sparse_autoenc.md)**
+
+:   SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。
+
+**[Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation](llm_safety/temporal_unlearnable_examples_preventing_personal_video_data_from_unauthorized_e.md)**
+
+:   本文首次研究防止视频数据被深度跟踪器未授权使用的问题，提出基于 DiT 的生成式框架生成时序不可学习样本（TUE），通过时间对比损失使跟踪器依赖扰动噪声进行时序匹配而非学习真实数据结构，实现了跨模型、跨数据集和跨任务的强可迁移性。
 
 ---
 
@@ -5128,6 +5108,30 @@ item_total: 1316
 **[VIM: Versatile Interactive Motion-Language Model](llm_nlp/vim_versatile_interactive_motion_language_model.md)**
 
 :   提出 VIM，首个能在统一框架内同时理解和生成双人交互运动与文本的多模态大模型，配合82.7K多轮交互运动指令数据集 Inter-MT²，支持文本到运动、运动到文本、反应生成、运动编辑和运动推理等多种任务。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[ChartCap: Mitigating Hallucination of Dense Chart Captioning](hallucination/chartcap_mitigating_hallucination_of_dense_chart_captioning.md)**
+
+:   构建了包含56.5万张真实图表-描述对的大规模数据集ChartCap，通过类型特定的描述模式排除无关信息、强调结构与关键洞察，并提出无参考的Visual Consistency Score评估指标，有效减少VLM在图表描述中的幻觉问题。
+
+**[DASH: Detection and Assessment of Systematic Hallucinations of VLMs](hallucination/dash_detection_and_assessment_of_systematic_hallucinations_of_vlms.md)**
+
+:   提出DASH自动化流水线，通过LLM生成文本查询（DASH-LLM）和扩散模型优化图像查询（DASH-OPT）两种策略，在ReLAION-5B中系统性地发现VLM的假阳性对象幻觉聚类，共发现19k+聚类和950k+图像，并构建了更具挑战性的DASH-B基准。
+
+**[Mitigating Object Hallucinations via Sentence-Level Early Intervention](hallucination/mitigating_object_hallucinations_via_sentence-level_early_intervention.md)**
+
+:   本文提出SENTINEL框架，基于"幻觉在生成早期出现并向后传播"的关键观察，通过域内候选引导、双检测器交叉验证构建句子级偏好数据，使用上下文感知DPO（C-DPO）实现早期干预，在Object HalBench上减少92%幻觉且保持通用能力。
+
+**[ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models](hallucination/only_onelayer_intervention_sufficiently_mitigates_hallucinat.md)**
+
+:   提出ONLY，一种training-free的单层干预解码方法——通过Text-to-Visual Entropy Ratio（TVER）选择偏向文本的attention head生成textually-enhanced logits，然后与原始logits做自适应对比/协作解码，仅增加1.07×推理时间就在POPE上比VCD/M3ID高3.14%，在CHAIR上降低CHAIR_S 6.2个点。
+
+**[Why LVLMs Are More Prone to Hallucinations in Longer Responses: The Role of Context](hallucination/why_lvlms_are_more_prone_to_hallucinations_in_longer_responses_the_role_of_conte.md)**
+
+:   深入探究 LVLM 长文本生成中幻觉频发的根本原因——不是长度本身，而是上下文的连贯性（coherence）和完备性（completeness）需求驱动模型外推产生幻觉，并据此提出 HalTrapper 的"诱导-检测-抑制"三阶段框架。
 
 ---
 

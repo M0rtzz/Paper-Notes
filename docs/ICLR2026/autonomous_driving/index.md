@@ -51,7 +51,7 @@ item_total: 16
 
 **🔬 ICLR2026** · **16** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (10)](../../ICML2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (56)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (10)](../../ICML2025/autonomous_driving/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×2 · Agent ×2 · 自动驾驶 ×2
 

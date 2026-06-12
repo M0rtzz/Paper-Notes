@@ -136,7 +136,7 @@ nanoTabPFN 系列沿用标准 TabPFN 训练目标，TabICL prior 生成器配置
 - [\[ICLR 2026\] Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](../../ICLR2026/interpretability/specialization_after_generalization_towards_understanding_test-time_training_in_.md)
 - [\[ICML 2026\] Memorization Dynamics of Fill-in-the-Middle Pretraining](memorization_dynamics_of_fill-in-the-middle_pretraining.md)
 - [\[ICML 2026\] OmniSapiens: A Foundation Model for Social Behavior Processing via Heterogeneity-Aware Relative Policy Optimization](omnisapiens_a_foundation_model_for_social_behavior_processing_via_heterogeneity-.md)
-- [\[ICML 2026\] Tracing the Dynamics of Refusal: Exploiting Latent Refusal Trajectories for Robust Jailbreak Detection](tracing_the_dynamics_of_refusal_exploiting_latent_refusal_trajectories_for_robus.md)
+- [\[ICLR 2026\] Layer by layer, module by module: Choose both for optimal OOD probing of ViT](../../ICLR2026/interpretability/layer_by_layer_module_by_module_choose_both_for_optimal_ood_probing_of_vit.md)
 
 </div>
 

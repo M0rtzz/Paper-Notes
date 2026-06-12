@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 AI安全论文汇总 · 38篇论文解读
+  ICML2026 AI安全论文汇总 · 37篇论文解读
 description: >-
-  38篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  37篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "AI 安全"
@@ -39,8 +39,6 @@ item_list:
     t: "Flatness-Aware Stochastic Gradient Langevin Dynamics"
   - u: "frequency_matching_in_spiking_neural_networks_for_mmwave_sensing/"
     t: "Frequency Matching in Spiking Neural Networks for mmWave Sensing"
-  - u: "from_out-of-distribution_detection_to_hallucination_detection_a_geometric_view/"
-    t: "From Out-of-Distribution Detection to Hallucination Detection: A Geometric View"
   - u: "gem-fi_gated_evidential_mixtures_with_fisher_modulation/"
     t: "GEM-FI: Gated Evidential Mixtures with Fisher Modulation"
   - u: "geometrically_constrained_outlier_synthesis/"
@@ -73,13 +71,15 @@ item_list:
     t: "PRISM: Gauge-Invariant Tangent-Space Differentially Private LoRA"
   - u: "regret-based_federated_causal_discovery_with_unknown_interventions/"
     t: "Regret-Based Federated Causal Discovery with Unknown Interventions"
-item_total: 38
+  - u: "rotation-invariant_spherical_watermarking_via_third-order_so3_representation_cou/"
+    t: "Rotation-Invariant Spherical Watermarking via Third-Order SO(3) Representation Coupling"
+item_total: 37
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧪 ICML2026** · **38** 篇论文解读
+**🧪 ICML2026** · **37** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
 
@@ -136,10 +136,6 @@ item_total: 38
 **[Frequency Matching in Spiking Neural Networks for mmWave Sensing](frequency_matching_in_spiking_neural_networks_for_mmwave_sensing.md)**
 
 :   本文从「机制-数据对齐」角度证明 LIF 脉冲神经元等价于一个一阶 IIR 低通滤波器，并提出根据毫米波信号的判别频谱来设定膜衰减系数 $\beta$，使 SNN 在四个常用 mmWave 数据集上平均比 ANN 提高 6.22% 精度并降低 3.64× 理论能耗。
-
-**[From Out-of-Distribution Detection to Hallucination Detection: A Geometric View](from_out-of-distribution_detection_to_hallucination_detection_a_geometric_view.md)**
-
-:   本文把 LLM 的下一 token 预测视为一个超大词表上的分类任务，将两个轻量级 OOD 检测器 NCI（特征与权重向量的接近度）与 fDBD（特征到决策边界的距离）迁移过来，配合"训练特征均值的解析代理 $\mu_G$"和"只在 top-$k$ 候选 token 上算边界距离"两个适配，得到一个**无训练、单样本**的推理类幻觉检测器，在 CSQA / GSM8K / AQuA 上稳定优于困惑度、Semantic Entropy、SelfCheckGPT 等基线。
 
 **[GEM-FI: Gated Evidential Mixtures with Fisher Modulation](gem-fi_gated_evidential_mixtures_with_fisher_modulation.md)**
 

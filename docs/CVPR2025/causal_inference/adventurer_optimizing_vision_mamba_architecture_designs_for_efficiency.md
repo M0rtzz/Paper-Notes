@@ -136,7 +136,7 @@ Channel mixer 消融：纯 Mamba 层 81.6%，+标准 MLP 81.7%，+SwiGLU 81.8%�
 - [\[CVPR 2025\] Image Quality Assessment: Investigating Causal Perceptual Effects with Abductive Counterfactual Inference](image_quality_assessment_investigating_causal_perceptual_effects_with_abductive_.md)
 - [\[CVPR 2025\] FG-VCE: Towards Fine-Grained Interpretability — Counterfactual Explanations for Misclassification with Saliency Partition](towards_fine-grained_interpretability_counterfactual_explanations_for_misclassif.md)
 - [\[CVPR 2025\] Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning](joint_scheduling_of_causal_prompts_and_tasks_for_multi-task_learning.md)
-- [\[CVPR 2025\] Antidote: A Unified Framework for Mitigating LVLM Hallucinations in Counterfactual Presupposition and Object Perception](antidote_a_unified_framework_for_mitigating_lvlm_hallucinations_in_counterfactua.md)
+- [\[ACL 2025\] Counterfactual Explanations for Aspect-Based Sentiment Analysis](../../ACL2025/causal_inference/counterfactual_explanations_for_aspect-based_sentiment_analysis.md)
 
 </div>
 

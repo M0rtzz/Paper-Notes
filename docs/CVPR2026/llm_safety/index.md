@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 LLM安全论文汇总 · 26篇论文解读
+  CVPR2026 LLM安全论文汇总 · 22篇论文解读
 description: >-
-  26篇CVPR2026的 LLM 安全方向论文解读，涵盖多模态、对抗鲁棒、人脸/视线、LLM、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  22篇CVPR2026的 LLM 安全方向论文解读，涵盖多模态、对抗鲁棒、人脸/视线、LLM、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "LLM 安全"
@@ -17,8 +17,6 @@ tags:
 item_list:
   - u: "a_closedform_solution_for_debiasing_visionlanguage/"
     t: "A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks"
-  - u: "beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations/"
-    t: "Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations"
   - u: "damp_class_unlearning_via_depth_aware_removal_of_forget_specific_directions/"
     t: "DAMP: Class Unlearning via Depth-Aware Removal of Forget-Specific Directions"
   - u: "demographic_fairness_in_multimodal_llms_a_benchmark_of_gender_and_ethnicity_bias/"
@@ -29,16 +27,12 @@ item_list:
     t: "FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models"
   - u: "force_transferable_visual_jailbreaking_attacks_via_feature_over_reliance_correct/"
     t: "FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction"
-  - u: "hulluedit_subspace_editing_hallucination/"
-    t: "HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs"
   - u: "iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding/"
     t: "IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding"
   - u: "interpretable_debiasing_of_vision-language_models_for_social_fairness/"
     t: "Interpretable Debiasing of Vision-Language Models for Social Fairness"
   - u: "learning_from_oblivion_predicting_knowledge_overflowed_weights_via_retrodiction_/"
     t: "Learning from Oblivion: Predicting Knowledge-Overflowed Weights via Retrodiction of Forgetting"
-  - u: "mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification/"
-    t: "Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification"
   - u: "multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua/"
     t: "Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models"
   - u: "oslash_source_models_leak_what_they_shouldnt_nrightarrow_unlearning_zero-shot_tr/"
@@ -57,8 +51,6 @@ item_list:
     t: "SineProject: Machine Unlearning for Stable Vision–Language Alignment"
   - u: "test-time_attention_purification_for_backdoored_large_vision_language_models/"
     t: "Test-Time Attention Purification for Backdoored Large Vision Language Models"
-  - u: "tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa/"
-    t: "TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection"
   - u: "unsafe2safe_controllable_image_anonymization_for_downstream_utility/"
     t: "Unsafe2Safe: Controllable Image Anonymization for Downstream Utility"
   - u: "v-attack_targeting_disentangled_value_features_for_controllable_adversarial_atta/"
@@ -67,25 +59,21 @@ item_list:
     t: "Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks"
   - u: "which_concepts_to_forget_and_how_to_refuse_decomposing_concepts_for_continual_un/"
     t: "Which Concepts to Forget and How to Refuse? Decomposing Concepts for Continual Unlearning in Large Vision-Language Models"
-item_total: 26
+item_total: 22
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**📷 CVPR2026** · **26** 篇论文解读
+**📷 CVPR2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** 多模态 ×10 · 对抗鲁棒 ×7
+🔥 **高频主题：** 多模态 ×10 · 对抗鲁棒 ×6
 
 **[A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks](a_closedform_solution_for_debiasing_visionlanguage.md)**
 
 :   提出VLM去偏的闭式解方法，通过在跨模态嵌入空间中对属性子空间做正交分解并利用Chebyshev标量化求解，实现Pareto最优公平性与有界效用损失，免训练、免标注，统一覆盖零样本分类、文本-图像检索和文本-图像生成三大下游任务。
-
-**[Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations](beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations.md)**
-
-:   提出基于 patch 级别的 LVLM 幻觉检测框架，发现幻觉 token 表现出弥散注意力模式和低语义对齐两个特征标志，据此设计注意力弥散分数（ADS）和跨模态接地一致性（CGC）两个轻量指标，检测准确率达 90%。
 
 **[DAMP: Class Unlearning via Depth-Aware Removal of Forget-Specific Directions](damp_class_unlearning_via_depth_aware_removal_of_forget_specific_directions.md)**
 
@@ -107,10 +95,6 @@ item_total: 26
 
 :   分析发现视觉 jailbreak attack 迁移性差的根因是 attack 处于 high-sharpness loss region——源于浅层特征过度依赖 model-specific 表示和高频信息过度影响；提出 FORCE 方法通过 layer-aware regularization 扩展浅层 feasible region + spectral rescaling 抑制高频非语义成分，引导 attack 进入 flatter loss landscape，显著提升跨模型迁移性。
 
-**[HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in LVLMs](hulluedit_subspace_editing_hallucination.md)**
-
-:   提出HulluEdit，一个单次推理、无参考模型的幻觉缓解框架，通过将隐藏状态正交分解为视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉接地，在POPE和CHAIR上达到SOTA。
-
 **[IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding](iag_input-aware_backdoor_attack_on_vlm-based_visual_grounding.md)**
 
 :   提出IAG，首个针对VLM视觉定位的多目标后门攻击方法，通过文本条件U-Net动态生成输入感知触发器，将任意指定目标物体的语义信息嵌入视觉输入中，在12种设置下的11种达到最高攻击成功率。
@@ -122,10 +106,6 @@ item_total: 26
 **[Learning from Oblivion: Predicting Knowledge-Overflowed Weights via Retrodiction of Forgetting](learning_from_oblivion_predicting_knowledge_overflowed_weights_via_retrodiction_.md)**
 
 :   提出KNOW prediction：通过在逐步缩小的数据子集上sequential fine-tuning诱导结构化遗忘过程，收集权重转变轨迹，然后用meta-learned hyper-model（KNOWN）反转forgetting方向，预测"仿佛在更大数据集上训练"的虚拟知识增强权重。跨多数据集(CIFAR/ImageNet/PACS等)和多架构(ResNet/PVTv2/DeepLabV3+)持续超越naive fine-tuning及多种weight prediction基线，在图像分类、语义分割、图像描述、域泛化等下游任务上均有显著提升。
-
-**[Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification](mitigating_object_hallucinations_in_lvlms_via_attention_imbalance_rectification.md)**
-
-:   提出注意力失衡（Attention Imbalance）概念来解释 LVLM 中的对象幻觉现象，并设计轻量级解码时干预方法 AIR，通过跨模态注意力重新分配和方差约束投影正则化矫正注意力失衡，在四个 LVLM 上将幻觉率最高降低 35.1%，同时提升通用能力最高达 15.9%。
 
 **[Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models](multi-paradigm_collaborative_adversarial_attack_against_multi-modal_large_langua.md)**
 
@@ -162,10 +142,6 @@ item_total: 26
 **[Test-Time Attention Purification for Backdoored Large Vision Language Models](test-time_attention_purification_for_backdoored_large_vision_language_models.md)**
 
 :   发现LVLM后门行为的本质是跨模态注意力窃取（trigger视觉token抢夺文本token的注意力），提出CleanSight——首个无需训练的测试时后门防御框架，通过检测和剪枝高注意力trigger token来消除后门效应。
-
-**[TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection](tridf_evaluating_perception_detection_and_hallucination_for_interpretable_deepfa.md)**
-
-:   提出TriDF——首个从感知 (Perception)、检测 (Detection) 和幻觉 (Hallucination) 三个维度综合评估可解释深度伪造检测的基准，包含55K高质量样本覆盖16种DeepFake类型和3种模态，揭示了准确感知是可靠检测的基础但幻觉会严重破坏决策的三方耦合关系。
 
 **[Unsafe2Safe: Controllable Image Anonymization for Downstream Utility](unsafe2safe_controllable_image_anonymization_for_downstream_utility.md)**
 

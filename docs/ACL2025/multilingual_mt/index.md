@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 多语言/翻译论文汇总 · 89篇论文解读
+  ACL2025 多语言/翻译论文汇总 · 88篇论文解读
 description: >-
-  89篇ACL2025的多语言/翻译方向论文解读，涵盖翻译、LLM、对齐/RLHF、少样本学习、语音、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  88篇ACL2025的多语言/翻译方向论文解读，涵盖翻译、LLM、对齐/RLHF、少样本学习、语音、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "多语言/翻译"
@@ -37,8 +37,6 @@ item_list:
     t: "Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention"
   - u: "cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_/"
     t: "CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning"
-  - u: "cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_/"
-    t: "CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models"
   - u: "clix_cross-lingual_explanations_of_idiomatic_expressions/"
     t: "CLIX: Cross-Lingual Explanations of Idiomatic Expressions"
   - u: "code-switching_curriculum_learning_for_multilingual_transfer_in_llms/"
@@ -75,17 +73,19 @@ item_list:
     t: "Disentangling Language and Culture for Evaluating Multilingual Large Language Models"
   - u: "edit_once_update_everywhere_a_simple_framework_for_cross-lingual_knowledge_synch/"
     t: "Edit Once, Update Everywhere: A Simple Framework for Cross-Lingual Knowledge Synchronization in LLMs"
-item_total: 89
+  - u: "execute_a_multilingual_benchmark_for_llm_token_understanding/"
+    t: "EXECUTE: A Multilingual Benchmark for LLM Token Understanding"
+item_total: 88
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**💬 ACL2025** · **89** 篇论文解读
+**💬 ACL2025** · **88** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (63)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (62)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md)
 
-🔥 **高频主题：** 翻译 ×23 · LLM ×15 · 对齐/RLHF ×5 · 少样本学习 ×3 · 语音 ×3
+🔥 **高频主题：** 翻译 ×23 · LLM ×14 · 对齐/RLHF ×5 · 少样本学习 ×3 · 语音 ×3
 
 **[A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)**
 
@@ -130,10 +130,6 @@ item_total: 89
 **[CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning](cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_.md)**
 
 :   本文提出 CC-Tuning，一种在隐空间层面显式建立跨语言连接的多语言微调范式，通过融合英语和非英语输入的前馈激活来提升非英语语言的能力，并在推理时利用 Transform Matrix 模拟跨语言连接。
-
-**[CCHall: A Novel Benchmark for Joint Cross-Lingual and Cross-Modal Hallucinations Detection in Large Language Models](cchall_a_novel_benchmark_for_joint_cross-lingual_and_cross-modal_hallucinations_.md)**
-
-:   提出首个**联合跨语言与跨模态**幻觉检测基准 CCHall，覆盖 9 种语言和 4 类多模态数据集，系统评估 6 款主流 MLLM 在联合场景下的幻觉表现，揭示当前模型在该联合场景中 F1 比单独跨模态低 10.9、比单独跨语言低 3.4，且提出多语提示和外部工具辅助两条缓解路径。
 
 **[CLIX: Cross-Lingual Explanations of Idiomatic Expressions](clix_cross-lingual_explanations_of_idiomatic_expressions.md)**
 

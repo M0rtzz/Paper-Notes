@@ -186,9 +186,9 @@ AvisC 在 InstructBLIP 上提升尤为显著：Random 设置 F1 提升 **+5.92**
 
 - [\[ACL 2025\] MMSafeAware: Can't See the Forest for the Trees: Benchmarking Multimodal Safety Awareness for Multimodal LLMs](cant_see_the_forest_for_the.md)
 - [\[ACL 2026\] VL-Calibration: Decoupled Confidence Calibration for Large Vision-Language Models Reasoning](../../ACL2026/multimodal_vlm/vl-calibration_decoupled_confidence_calibration_for_large_vision-language_models.md)
-- [\[ACL 2025\] Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention](activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m.md)
 - [\[ACL 2026\] Forest Before Trees: Latent Superposition for Efficient Visual Reasoning](../../ACL2026/multimodal_vlm/forest_before_trees_latent_superposition_for_efficient_visual_reasoning.md)
 - [\[ECCV 2024\] Robust Calibration of Large Vision-Language Adapters](../../ECCV2024/multimodal_vlm/robust_calibration_of_large_vision-language_adapters.md)
+- [\[ACL 2025\] VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service](vlminferslow_evaluating_the_efficiency_robustness_of.md)
 
 </div>
 

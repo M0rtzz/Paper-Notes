@@ -2,7 +2,7 @@
 title: >-
   ICLR2026 论文汇总 · 1529篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(87篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(60篇)、LLM 安全(55篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(59篇)、LLM 安全(52篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "ICLR2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1529
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 ICLR2026 论文汇总
 
-1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(87篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(60篇)、LLM 安全(55篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(59篇)、LLM 安全(52篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -1617,10 +1617,6 @@ item_total: 1529
 
 :   提出 DIVA-GRPO，通过动态评估问题难度、自适应生成不同难度的语义一致变体、并结合难度加权的局部-全局 advantage 估计，解决 GRPO 训练中的 reward sparsity 和 advantage vanishing 问题，在 7B 规模模型上实现 SOTA 多模态推理性能。
 
-**[Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](multimodal_vlm/dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)**
-
-:   提出动态多模态激活引导（DMAS），通过构建基于语义的真实性引导向量数据库和视觉感知引导向量，在推理时动态选择最相关的引导向量对关键注意力头进行干预，无需训练即可显著缓解LVLM幻觉，在MME上提升94.66分，在CHAIR上降低20.2%幻觉率。
-
 **[EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning](multimodal_vlm/egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning.md)**
 
 :   首次将上下文学习（ICL）范式引入3D手部重建，通过VLM引导的模板检索、多模态ICL分词器和MAE驱动的重建流程，在ARCTIC和EgoExo4D基准上显著超越SOTA方法。
@@ -1704,10 +1700,6 @@ item_total: 1529
 **[LLaVA-FA: Learning Fourier Approximation for Compressing Large Multimodal Models](multimodal_vlm/llava-fa_learning_fourier_approximation_for_compressing_large_multimodal_models.md)**
 
 :   提出 LLaVA-FA，一种在频域进行联合低秩加量化权重近似的高效多模态大模型压缩方法，利用傅里叶变换的去相关性和共轭对称性实现更紧凑准确的权重表示，并引入 PolarQuant（极坐标量化）和 ODC（可选对角校准）方案，在多个基准上以最少的激活参数和计算成本超越现有高效多模态模型。
-
-**[Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](multimodal_vlm/look_carefully_adaptive_visual_reinforcements_in_multimodal_large_language_model.md)**
-
-:   提出 AIR（Adaptive vIsual Reinforcement）框架，通过原型距离的 token 精简 + 最优传输引导的 patch 选择性增强，在推理时无训练地减少 MLLM 幻觉（LLaVA-1.5-7B CHAIR_S: 22→18.4，POPE 准确率 +5.3%），同时保持多模态通用能力。
 
 **[Meta-Adaptive Prompt Distillation for Few-Shot Visual Question Answering](multimodal_vlm/meta-adaptive_prompt_distillation_for_few-shot_visual_question_answering.md)**
 
@@ -2577,10 +2569,6 @@ item_total: 1529
 
 :   首次在实际规模 LLM（7B MoE）的近单遍预训练中验证 grokking 现象——不同数据组异步记忆、延迟泛化；通过分析 MoE routing pathway 的演化（从 instance-specific 到 structured/shared），提出两个零成本指标来监控泛化进度，无需 instruction tuning 和 benchmark 评估。
 
-**[Hallucination Begins Where Saliency Drops](interpretability/hallucination_begins_where_saliency_drops.md)**
-
-:   提出 LVLMs-Saliency 梯度感知诊断框架来量化每个输出 token 的视觉锚定强度，发现"当先前输出 token 对下一个 token 预测的显著性降低时，幻觉就会产生"的关键规律，并基于此设计了 SGRS（显著性引导的拒绝采样）+ LocoRE（局部一致性增强）双机制推理时框架，在多个 LVLM 上显著降低幻觉率。
-
 **[Hidden Breakthroughs in Language Model Training](interpretability/hidden_breakthroughs_in_language_model_training.md)**
 
 :   提出 POLCA（Projection Oriented Loss Change Allocation）——一种沿低秩训练子空间任意正交基分解单样本损失变化的方法，从看似平滑的训练损失曲线中揭示出大量隐藏的概念性突破（hidden breakthroughs），将训练可解释性从"先定义技能再观测"翻转为"先分解再自动发现技能"。
@@ -2759,10 +2747,6 @@ item_total: 1529
 
 :   揭示了离线多臂老虎机（MAB）评估框架的安全漏洞：攻击者只需对公开的奖励模型权重进行极小的不可感知扰动，就能完全劫持 bandit 的决策行为，且所需扰动范数随输入维度增加而降低（$\widetilde{\mathcal{O}}(d^{-1/2})$），使基于图像的生成模型评估特别脆弱。
 
-**[Enhancing Hallucination Detection through Noise Injection](llm_safety/enhancing_hallucination_detection_through_noise_injection.md)**
-
-:   在 LLM 中间层的 MLP 激活中注入均匀噪声来近似贝叶斯后验，捕获认知不确定性（epistemic uncertainty），与采样温度捕获的偶然不确定性（aleatoric uncertainty）互补，将 GSM8K 上的幻觉检测 AUROC 从 71.56 提升到 76.14。
-
 **[Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning](llm_safety/erase_or_hide_suppressing_spurious_unlearning_neurons_for_robust_unlearning.md)**
 
 :   揭示主流 LLM 遗忘方法的"浅层对齐"问题——它们通过产生"虚假遗忘神经元"抑制目标知识的显示而非真正擦除，导致知识通过后续微调轻松恢复；提出 Ssiuu 方法通过归因引导的正则化防止负向影响膨胀，实现鲁棒遗忘。
@@ -2895,10 +2879,6 @@ item_total: 1529
 
 :   提出SHE-LoRA——将选择性同态加密(SHE)与LoRA结合用于跨设备联邦LLM微调：基于参数敏感度的列级加密子集协商 + 列交换参数混淆 + 列感知自适应聚合，在保持与非隐私基线可比的模型性能同时，通信开销减少99.71%、加密时间减少99.87%，完全抵御SOTA梯度反演攻击DAGER。
 
-**[SHIELD: Suppressing Hallucinations In LVLM Encoders via Bias and Vulnerability Defense](llm_safety/shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)**
-
-:   首次将LVLM对象幻觉系统性追溯到视觉编码器，识别出统计偏差（高频模式token过度强调）、固有偏差（预训练主导对象的残余表示）、脆弱性（微小扰动即导致特征失真）三大问题，并提出SHIELD——一个完全免训练的框架，通过token重加权、token减法和对比解码三策略协同防御，在LLaVA-1.5/InstructBLIP/Qwen-VL上全面超越VCD和OPERA等方法。
-
 **[Stop Tracking Me! Proactive Defense Against Attribute Inference Attack in LLMs](llm_safety/stop_tracking_me_proactive_defense_against_attribute_inference_attack_in_llms.md)**
 
 :   TRACE-RPS 提出统一防御框架应对 LLM 属性推断攻击：TRACE 通过注意力+推理链精准定位隐私泄露文本元素做细粒度匿名化，RPS 通过轻量后缀优化诱导模型拒绝推断，将属性推断准确率从约 50% 降至 5% 以下。
@@ -2930,10 +2910,6 @@ item_total: 1529
 **[Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning](llm_safety/veritas_generalizable_deepfake_detection_via_pattern-aware_reasoning.md)**
 
 :   提出 Veritas，一个基于多模态大语言模型 (MLLM) 的 deepfake 检测器，通过模式感知推理 (pattern-aware reasoning) 模拟人类鉴伪思维过程（快速判断→推理→计划→自我反思→结论），设计两阶段训练流程（SFT+MiPO 冷启动 + P-GRPO 强化学习），同时构建包含四级 OOD 评估的 HydraFake 数据集，在跨伪造类型和跨域场景平均达到 90.7% 准确率，超越此前 SOTA 6.0%。
-
-**[VeriTrail: Closed-Domain Hallucination Detection with Traceability](llm_safety/veritrail_closed-domain_hallucination_detection_with_traceable_evidence_synthes.md)**
-
-:   提出 VeriTrail——首个为多步生成过程（MGS）提供可追溯性的闭域幻觉检测方法，建模生成过程为 DAG 并沿路径逐层验证，同时构建了首批包含所有中间输出和人工标注的 MGS 数据集。
 
 **[Watermark Robustness and Radioactivity May Be at Odds in Federated Learning](llm_safety/watermark_robustness_and_radioactivity_may_be_at_odds_in_federated_learning.md)**
 
@@ -4297,10 +4273,6 @@ item_total: 1529
 
 :   提出 LightRetriever，一种极端不对称的LLM检索架构：文档端保留完整LLM编码器，查询端完全去除深度建模——稠密检索仅需嵌入查表+平均，稀疏检索仅需token计数——实现查询编码1000倍加速、端到端10倍吞吐提升，同时保持95%的检索性能。
 
-**[LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals](information_retrieval/lumina_detecting_hallucinations_in_rag_system_with_context-knowledge_signals.md)**
-
-:   提出 Lumina 框架，通过"上下文-知识信号"检测RAG系统中的幻觉：用MMD度量**外部上下文利用**程度，用跨层token预测演化度量**内部知识利用**程度，无需超参调优即可泛化。
-
 **[Mapping Semantic & Syntactic Relationships with Geometric Rotation](information_retrieval/mapping_semantic_syntactic_relationships_with_geometric_rotation.md)**
 
 :   提出RISE（Rotor-Invariant Shift Estimation）方法，利用Clifford代数的rotor将话语级语义-句法变换（否定、条件化、礼貌化）表示为单位超球面上的一致旋转操作，在7种语言×3种嵌入模型×3种变换的系统实验中证实这些旋转可跨语言和跨模型迁移（77%-95%保持率），首次将线性表示假说从词级扩展到跨语言话语级并推广到弯曲流形上的测地线结构。
@@ -4344,10 +4316,6 @@ item_total: 1529
 **[SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](information_retrieval/synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)**
 
 :   构建结构完全相同但实体分别映射到真实/合成名称的平行语料库，通过对比两个"平行世界"上的任务表现来量化 LLM 的参数化知识优势差距（Knowledge Advantage Gap），发现即使有 RAG 和 CoT 增强，该差距依然持续存在。
-
-**[Token-Guard: Towards Token-Level Hallucination Control via Self-Checking Decoding](information_retrieval/token-guard_towards_token-level_hallucination_control_via_self-checking_decoding.md)**
-
-:   提出 Token-Guard，一种基于自检验解码的 token 级幻觉控制方法，通过隐空间中的 token 级/段级评分和迭代修正机制，在解码过程中检测并抑制幻觉生成，F1 平均提升 16.3%。
 
 **[TokMem: One-Token Procedural Memory for Large Language Models](information_retrieval/tokmem_one-token_procedural_memory_for_large_language_models.md)**
 
@@ -5121,10 +5089,6 @@ item_total: 1529
 
 :   将因果推断中的半参数效率理论系统引入MDP的Q函数估计，证明经典的Q-regression和FQE本质上是有plug-in偏差的朴素学习器，并提出DRQQ-learner——一个同时具备双重鲁棒性、Neyman正交性和准oracle效率的元学习器，通过推导有效影响函数(EIF)构造去偏二阶段损失，在Taxi和Frozen Lake环境中全面超越基线方法。
 
-**[Copy-Paste to Mitigate Large Language Model Hallucinations](causal_inference/copy-paste_to_mitigate_large_language_model_hallucinations.md)**
-
-:   提出 Copy-Paste 生成范式，通过训练 LLM 优先直接复制检索上下文中的片段来生成回答，而非自由改写，配合高复制偏好的 DPO 训练，在反事实 RAG 基准上将忠实度从 80.2% 提升到 92.8%。
-
 **[Counterfactual Explanations on Robust Perceptual Geodesics](causal_inference/counterfactual_explanations_on_robust_perceptual_geodesics.md)**
 
 :   提出 PCG（Perceptual Counterfactual Geodesic）方法，在鲁棒感知流形上通过测地线优化生成语义忠实的反事实解释，两阶段优化确保路径既感知自然又达到目标类别，在 AFHQ 上 FID=8.3 远优于 RSGD 的 12.9。
@@ -5776,6 +5740,46 @@ item_total: 1529
 **[VideoNSA: Native Sparse Attention Scales Video Understanding](video_understanding/videonsa_native_sparse_attention_scales_video_understanding.md)**
 
 :   本文提出 VideoNSA，将 Native Sparse Attention（NSA）引入视频语言模型，通过压缩、选择和滑动窗口三分支动态门控的混合稀疏注意力机制，在仅使用 3.6% 注意力预算的条件下实现 128K token 的视频理解，在长视频理解、时序推理和空间理解任务上全面超越 token 压缩和无训练稀疏注意力基线。
+
+---
+
+## 👻 幻觉检测 { #hallucination }
+
+**[Copy-Paste to Mitigate Large Language Model Hallucinations](hallucination/copy-paste_to_mitigate_large_language_model_hallucinations.md)**
+
+:   提出 Copy-Paste 生成范式，通过训练 LLM 优先直接复制检索上下文中的片段来生成回答，而非自由改写，配合高复制偏好的 DPO 训练，在反事实 RAG 基准上将忠实度从 80.2% 提升到 92.8%。
+
+**[Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](hallucination/dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)**
+
+:   提出动态多模态激活引导（DMAS），通过构建基于语义的真实性引导向量数据库和视觉感知引导向量，在推理时动态选择最相关的引导向量对关键注意力头进行干预，无需训练即可显著缓解LVLM幻觉，在MME上提升94.66分，在CHAIR上降低20.2%幻觉率。
+
+**[Enhancing Hallucination Detection through Noise Injection](hallucination/enhancing_hallucination_detection_through_noise_injection.md)**
+
+:   在 LLM 中间层的 MLP 激活中注入均匀噪声来近似贝叶斯后验，捕获认知不确定性（epistemic uncertainty），与采样温度捕获的偶然不确定性（aleatoric uncertainty）互补，将 GSM8K 上的幻觉检测 AUROC 从 71.56 提升到 76.14。
+
+**[Hallucination Begins Where Saliency Drops](hallucination/hallucination_begins_where_saliency_drops.md)**
+
+:   提出 LVLMs-Saliency 梯度感知诊断框架来量化每个输出 token 的视觉锚定强度，发现"当先前输出 token 对下一个 token 预测的显著性降低时，幻觉就会产生"的关键规律，并基于此设计了 SGRS（显著性引导的拒绝采样）+ LocoRE（局部一致性增强）双机制推理时框架，在多个 LVLM 上显著降低幻觉率。
+
+**[Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](hallucination/look_carefully_adaptive_visual_reinforcements_in_multimodal_large_language_model.md)**
+
+:   提出 AIR（Adaptive vIsual Reinforcement）框架，通过原型距离的 token 精简 + 最优传输引导的 patch 选择性增强，在推理时无训练地减少 MLLM 幻觉（LLaVA-1.5-7B CHAIR_S: 22→18.4，POPE 准确率 +5.3%），同时保持多模态通用能力。
+
+**[LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals](hallucination/lumina_detecting_hallucinations_in_rag_system_with_context-knowledge_signals.md)**
+
+:   提出 Lumina 框架，通过"上下文-知识信号"检测RAG系统中的幻觉：用MMD度量**外部上下文利用**程度，用跨层token预测演化度量**内部知识利用**程度，无需超参调优即可泛化。
+
+**[SHIELD: Suppressing Hallucinations In LVLM Encoders via Bias and Vulnerability Defense](hallucination/shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)**
+
+:   首次将LVLM对象幻觉系统性追溯到视觉编码器，识别出统计偏差（高频模式token过度强调）、固有偏差（预训练主导对象的残余表示）、脆弱性（微小扰动即导致特征失真）三大问题，并提出SHIELD——一个完全免训练的框架，通过token重加权、token减法和对比解码三策略协同防御，在LLaVA-1.5/InstructBLIP/Qwen-VL上全面超越VCD和OPERA等方法。
+
+**[Token-Guard: Towards Token-Level Hallucination Control via Self-Checking Decoding](hallucination/token-guard_towards_token-level_hallucination_control_via_self-checking_decoding.md)**
+
+:   提出 Token-Guard，一种基于自检验解码的 token 级幻觉控制方法，通过隐空间中的 token 级/段级评分和迭代修正机制，在解码过程中检测并抑制幻觉生成，F1 平均提升 16.3%。
+
+**[VeriTrail: Closed-Domain Hallucination Detection with Traceability](hallucination/veritrail_closed-domain_hallucination_detection_with_traceable_evidence_synthes.md)**
+
+:   提出 VeriTrail——首个为多步生成过程（MGS）提供可追溯性的闭域幻觉检测方法，建模生成过程为 DAG 并沿路径逐层验证，同时构建了首批包含所有中间输出和人工标注的 MGS 数据集。
 
 ---
 

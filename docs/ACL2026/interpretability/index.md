@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 可解释性论文汇总 · 63篇论文解读
+  ACL2026 可解释性论文汇总 · 60篇论文解读
 description: >-
-  63篇ACL2026的可解释性方向论文解读，涵盖 LLM、推理、布局/合成、对齐/RLHF、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  60篇ACL2026的可解释性方向论文解读，涵盖 LLM、推理、布局/合成、对齐/RLHF、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "可解释性"
@@ -74,17 +74,17 @@ item_list:
     t: "Interpretable Semantic Gradients in SSD: A PCA Sweep Approach and a Case Study on AI Discourse"
   - u: "interpretable_traces_unexpected_outcomes_investigating_the_disconnect_in_trace-b/"
     t: "Interpretable Traces, Unexpected Outcomes: Investigating the Disconnect in Trace-Based Knowledge Distillation"
-item_total: 63
+item_total: 60
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**💬 ACL2026** · **63** 篇论文解读
+**💬 ACL2026** · **60** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (81)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** LLM ×16 · 推理 ×5 · 布局/合成 ×3 · 对齐/RLHF ×3 · 多模态 ×3
+🔥 **高频主题：** LLM ×15 · 推理 ×5 · 布局/合成 ×3 · 对齐/RLHF ×3 · 多模态 ×2
 
 **[A Structured Clustering Approach for Inducing Media Narratives](a_structured_clustering_approach_for_inducing_media_narratives.md)**
 
@@ -246,10 +246,6 @@ item_total: 63
 
 :   这是一篇 position paper，主张机制可解释性研究需要补上“可审计性”这一层，通过连续协作评审平台、社区精炼指南和源证据追踪系统，把零散复现、负结果和方法学批评沉淀成可用于安全关键场景的审计协议。
 
-**[Mechanisms of Prompt-Induced Hallucination in Vision–Language Models](mechanisms_of_prompt-induced_hallucination_in_vision-language_models.md)**
-
-:   在受控的目标计数任务里把"模型听 prompt 不看图"的幻觉行为定位到 LLaVA-OneVision / Qwen-VL / Janus-Pro **早期层** (主要是 L0-1) 的 3-10 个 attention head，对它们做 mean ablation 不需要任何再训练就让 prompt-following 从 42–64% 掉到 <11%，把真实计数恢复率推到 70–78%，并能 zero-shot 迁移到颜色识别任务 (PIH 抑制 40–95%)。
-
 **[Mechanistic Interpretability of Large-Scale Counting in LLMs through a System-2 Strategy](mechanistic_interpretability_of_large-scale_counting_in_llms_through_a_system-2_.md)**
 
 :   针对 LLM 大数量计数失败（单 forward 因为 layer 深度有限只能数到 ~10–30），用一个简单的 test-time "用 `|` 把列表切片 + 让模型先逐段计数再求和"策略让 Qwen2.5/Llama3/Gemma3/GPT-4o/Gemini-2.5-Pro 在 50–100 物体场景下从 0–20% 准确率跃升到 50–95%，并通过 attention 分析 + 4 类因果中介实验把"分段计数→中间步骤聚合→最终求和"三阶段电路定位到 Qwen2.5-7B 的 Layer 22 (head 13 负责分段, head 1 负责聚合)。
@@ -326,14 +322,6 @@ item_total: 63
 
 :   本文系统研究LLM在文本生成过程中回忆关系知识的内部机制，发现注意力头对残差流的逐头贡献（$\Delta_{att,h}$）是线性关系分类的最强特征（准确率达91%），并提出HeadScore和TokenScore两种探针归因方法来分解预测到注意力头和源token级别，揭示了探针精度与关系特异性、实体连通度及探针信号集中度之间的明确相关性。
 
-**[Understanding New-Knowledge-Induced Factual Hallucinations in LLMs: Analysis and Interpretation](understanding_new-knowledge-induced_factual_hallucinations_in_llms_analysis_and_.md)**
-
-:   本文通过受控合成数据集 Biography-Reasoning 系统分析了 SFT 阶段学习新知识导致的事实幻觉现象，发现幻觉的根本机制是模型对关键实体的注意力被削弱，并提出 KnownPatch——在训练末期注入少量已知知识来恢复注意力模式，有效缓解幻觉。
-
 **[Understanding or Memorizing? A Case Study of German Definite Articles in Language Models](understanding_or_memorizing_a_case_study_of_german_definite_articles_in_language.md)**
 
 :   本文利用 Gradiend 梯度可解释性方法研究语言模型预测德语定冠词（der/die/das/den/dem/des）时是基于抽象语法规则还是表层记忆，发现模型至少部分依赖记忆化关联而非严格的规则编码。
-
-**[为什么 LLM 在结构化知识上产生幻觉：推理过程的机制分析](why_llms_hallucinate_on_structured_knowledge_a_mechanistic_analysis_of_reasoning.md)**
-
-:   论文通过两个机制指标（结构捷径依赖 SSR 和语义对齐分数 SAS）揭示 LLM 在处理线性化结构化知识时产生幻觉的内部失败机制，并基于这些信号构建了一个轻量级的幻觉检测器。

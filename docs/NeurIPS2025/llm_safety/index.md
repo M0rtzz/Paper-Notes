@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM安全论文汇总 · 85篇论文解读
+  NeurIPS2025 LLM安全论文汇总 · 83篇论文解读
 description: >-
-  85篇NeurIPS2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、对齐/RLHF、推理、联邦学习、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  83篇NeurIPS2025的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、对齐/RLHF、推理、联邦学习、水印/隐写等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "LLM 安全"
@@ -75,17 +75,17 @@ item_list:
     t: "Enhancing Sample Selection Against Label Noise by Cutting Mislabeled Easy Examples"
   - u: "evaluating_the_promise_and_pitfalls_of_llms_in_hiring_decisions/"
     t: "Evaluating the Promise and Pitfalls of LLMs in Hiring Decisions"
-item_total: 85
+item_total: 83
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🧠 NeurIPS2025** · **85** 篇论文解读
+**🧠 NeurIPS2025** · **83** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (42)](../../AAAI2026/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×20 · 对抗鲁棒 ×18 · 对齐/RLHF ×6 · 推理 ×6 · 联邦学习 ×5
+🔥 **高频主题：** LLM ×19 · 对抗鲁棒 ×17 · 对齐/RLHF ×6 · 推理 ×6 · 联邦学习 ×5
 
 **[A Cramér–von Mises Approach to Incentivizing Truthful Data Sharing](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)**
 
@@ -347,10 +347,6 @@ item_total: 85
 
 :   提出SAEMark框架，利用稀疏自编码器（SAE）提取文本的语义特征浓度评分，通过推理阶段的特征引导拒绝采样实现多比特水印嵌入，无需修改模型权重或logits，天然支持黑盒API、多语言和代码等场景，在英文/中文/代码上均达到领先的水印精度与文本质量。
 
-**[SECA: Semantically Equivalent and Coherent Attacks for Eliciting LLM Hallucinations](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)**
-
-:   提出 SECA（Semantically Equivalent and Coherent Attacks），通过保持语义等价和语义连贯性的现实主义提示修改来诱发 LLM 幻觉，在多选 QA 任务上实现更高攻击成功率且几乎无语义错误。
-
 **[Securing the Language of Life: Inheritable Watermarks from DNA Language Models to Proteins](securing_the_language_of_life_inheritable_watermarks_from_dna_language_models_to.md)**
 
 :   提出 DNAMark 和 CentralMark 两种水印方案，针对 DNA 语言模型生成的序列嵌入鲁棒水印：前者利用同义密码子替换实现功能不变水印，后者实现从 DNA 到蛋白质的可遗传水印。
@@ -378,10 +374,6 @@ item_total: 85
 **[SWE-SQL: Illuminating LLM Pathways to Solve User SQL Issues in Real-World Applications](swe-sql_illuminating_llm_pathways_to_solve_user_sql_issues_in_real-world_applica.md)**
 
 :   提出 BIRD-CRITIC 基准（首个 SQL 问题调试基准）和 Six-Gym 训练环境，并开发 Bird-Fixer 智能体，通过 f-Plan Boosting 策略将 14B 开源模型的 SQL 调试能力提升至超越 Claude-3.7-Sonnet 和 GPT-4.1 的水平，在保护数据隐私的同时实现高效的 SQL 问题修复。
-
-**[Teaming LLMs to Detect and Mitigate Hallucinations](teaming_llms_to_detect_and_mitigate_hallucinations.md)**
-
-:   将单模型一致性方法（Self-Consistency + Semantic Entropy）推广到多个异构 LLM 的"联盟"设置，通过聚合不同训练背景的模型响应来打破单模型一致性幻觉，在 15 个 LLM 组成的模型池中评估大量联盟组合，发现匹配的强模型联盟在 92% 的情况下超越最强单模型基线，同时推理成本更低。
 
 **[ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training](toxictextclip_text-based_poisoning_and_backdoor_attacks_on_clip_pre-training.md)**
 

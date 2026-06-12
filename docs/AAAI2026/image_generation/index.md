@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 图像生成论文汇总 · 79篇论文解读
+  AAAI2026 图像生成论文汇总 · 78篇论文解读
 description: >-
-  79篇AAAI2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、语音、超分辨率等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  78篇AAAI2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、超分辨率、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "图像生成"
@@ -12,8 +12,8 @@ tags:
   - "文生图"
   - "对齐/RLHF"
   - "布局/合成"
-  - "语音"
   - "超分辨率"
+  - "对抗鲁棒"
 item_list:
   - u: "aedr_training-free_ai-generated_image_attribution_via_autoen/"
     t: "AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction"
@@ -75,17 +75,17 @@ item_list:
     t: "Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling"
   - u: "hierarchicalprune_position-aware_compression_for_large-scale_diffusion_models/"
     t: "HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models"
-item_total: 79
+item_total: 78
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🤖 AAAI2026** · **79** 篇论文解读
+**🤖 AAAI2026** · **78** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🧠 NeurIPS2025 (222)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×33 · 文生图 ×9 · 对齐/RLHF ×8 · 布局/合成 ×5 · 语音 ×5
+🔥 **高频主题：** 扩散模型 ×33 · 文生图 ×9 · 对齐/RLHF ×8 · 布局/合成 ×5 · 超分辨率 ×4
 
 **[AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)**
 
@@ -282,10 +282,6 @@ item_total: 79
 **[PADiff: Predictive and Adaptive Diffusion Policies for Ad Hoc Teamwork](padiff_predictive_and_adaptive_diffusion_policies_for_ad_hoc_teamwork.md)**
 
 :   首次将扩散模型应用于 Ad Hoc Teamwork 问题，提出 PADiff 框架，通过 Adaptive Feature Modulation Net（AFM-Net）实现对动态队友的实时适应，通过 Predictive Guidance Block（PGB）将队友意图预测信息注入去噪过程，在多模态合作场景中比现有方法平均提升 35.25%。
-
-**[PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement](pase_leveraging_the_phonological_prior_of_wavlm_for_low-hallucination_generative.md)**
-
-:   提出 PASE 框架，通过去噪表示蒸馏（DRD）利用预训练 WavLM 中鲁棒的音韵先验来抑制语言幻觉，同时采用双流表示（高层音素 + 低层声学）消除声学幻觉，在感知质量和内容保真度两方面同时达到 SOTA。
 
 **[Playmate2: Training-Free Multi-Character Audio-Driven Animation via Diffusion Transformer with Reward Feedback](playmate2_training-free_multi-character_audio-driven_animation_via_diffusion_tra.md)**
 

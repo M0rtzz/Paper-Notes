@@ -135,7 +135,7 @@ Platonic表示假说指出：随着模型和数据规模的增长，不同模态
 - [\[CVPR 2025\] Quantization without Tears](quantization_without_tears.md)
 - [\[CVPR 2025\] Self-Supervised Spatial Correspondence Across Modalities](self-supervised_spatial_correspondence_across_modalities.md)
 - [\[CVPR 2025\] Synthetic Data is an Elegant GIFT for Continual Vision-Language Models](synthetic_data_is_an_elegant_gift_for_continual_vision-language_models.md)
-- [\[CVPR 2025\] Stop Learning It All to Mitigate Visual Hallucination, Focus on the Hallucination Target](stop_learning_it_all_to_mitigate_visual_hallucination_focus_on_the_hallucination.md)
+- [\[CVPR 2025\] MLLM-as-a-Judge for Image Safety without Human Labeling](mllm-as-a-judge_for_image_safety_without_human_labeling.md)
 
 </div>
 

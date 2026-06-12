@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 LLM评测论文汇总 · 39篇论文解读
+  NeurIPS2025 LLM评测论文汇总 · 38篇论文解读
 description: >-
-  39篇NeurIPS2025的 LLM 评测方向论文解读，涵盖 LLM、对齐/RLHF、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇NeurIPS2025的 LLM 评测方向论文解读，涵盖 LLM、对齐/RLHF、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "LLM 评测"
@@ -11,7 +11,6 @@ tags:
   - "LLM"
   - "对齐/RLHF"
   - "推理"
-  - "对抗鲁棒"
 item_list:
   - u: "adastar_adaptive_data_sampling_for_training_self-taught_reasoners/"
     t: "AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners"
@@ -73,17 +72,17 @@ item_list:
     t: "PaTH Attention: Position Encoding via Accumulating Householder Transformations"
   - u: "pfδ_a_benchmark_dataset_for_power_flow_under_load_generation_and_topology_variat/"
     t: "PFΔ: A Benchmark Dataset for Power Flow under Load, Generation, and Topology Variations"
-item_total: 39
+item_total: 38
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**🧠 NeurIPS2025** · **39** 篇论文解读
+**🧠 NeurIPS2025** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (27)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×12 · 对齐/RLHF ×4 · 推理 ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** LLM ×12 · 对齐/RLHF ×4 · 推理 ×2
 
 **[AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners](adastar_adaptive_data_sampling_for_training_self-taught_reasoners.md)**
 
@@ -212,10 +211,6 @@ item_total: 39
 **[Risk Management for Mitigating Benchmark Failure Modes: BenchRisk](risk_management_for_mitigating_benchmark_failure_modes_benchrisk.md)**
 
 :   基于NIST风险管理流程，系统分析了26个LLM基准测试中的57种失败模式，提出196种缓解策略，并构建了BenchRisk元评估框架对基准测试本身的可靠性进行评分。
-
-**[Robust Hallucination Detection in LLMs via Adaptive Token Selection](robust_hallucination_detection_in_llms_via_adaptive_token_selection.md)**
-
-:   HaMI 将幻觉检测建模为多示例学习（MIL）问题，将生成序列视为 token 实例的"bag"，通过联合优化 token 选择和幻觉检测来自适应地定位最具指示性的 token，在四个 QA 基准上以 AUROC 大幅超越所有现有方法（最高提升 11.9%）。
 
 **[Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems](small_language_models_as_compiler_experts_auto-parallelization_for_heterogeneous.md)**
 

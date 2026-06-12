@@ -129,9 +129,9 @@ Stage 1 的 AGCL 损失为加权 InfoNCE：$\mathcal{L}_{\text{AGCL}} = -\log \f
 ## 相关论文
 
 - [\[AAAI 2026\] DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control](../../AAAI2026/multimodal_vlm/deig_detail-enhanced_instance_generation_with_fine-grained_semantic_control.md)
+- [\[CVPR 2026\] CropVLM: Learning to Zoom for Fine-Grained Vision-Language Perception](../../CVPR2026/multimodal_vlm/cropvlm_learning_to_zoom_for_fine_grained_vision_language_perception.md)
 - [\[CVPR 2026\] Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](../../CVPR2026/multimodal_vlm/multi-modal_representation_learning_via_semi-supervised_rate_reduction_for_gener.md)
 - [\[CVPR 2025\] MMRL: Multi-Modal Representation Learning for Vision-Language Models](../../CVPR2025/multimodal_vlm/mmrl_multi-modal_representation_learning_for_vision-language_models.md)
-- [\[CVPR 2026\] CropVLM: Learning to Zoom for Fine-Grained Vision-Language Perception](../../CVPR2026/multimodal_vlm/cropvlm_learning_to_zoom_for_fine_grained_vision_language_perception.md)
 - [\[CVPR 2026\] Concept-wise Attention for Fine-grained Concept Bottleneck Models](../../CVPR2026/multimodal_vlm/coat_cbm_concept_wise_attention.md)
 
 </div>

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 3D视觉论文汇总 · 363篇论文解读
+  CVPR2025 3D视觉论文汇总 · 362篇论文解读
 description: >-
-  363篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、对抗鲁棒、语义分割、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  362篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、对抗鲁棒、语义分割、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "3D 视觉"
@@ -15,8 +15,6 @@ tags:
   - "语义分割"
   - "点云"
 item_list:
-  - u: "3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall/"
-    t: "3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination"
   - u: "3d-gsw_3d_gaussian_splatting_for_robust_watermarking/"
     t: "3D-GSW: 3D Gaussian Splatting for Robust Watermarking"
   - u: "3d-hgs_3d_half-gaussian_splatting/"
@@ -75,21 +73,19 @@ item_list:
     t: "CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images"
   - u: "caddreamer_cad_object_generation_from_single-view_images/"
     t: "CADDreamer: CAD Object Generation from Single-view Images"
-item_total: 363
+  - u: "category-agnostic_neural_object_rigging/"
+    t: "Category-Agnostic Neural Object Rigging"
+item_total: 362
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📷 CVPR2025** · **363** 篇论文解读
+**📷 CVPR2025** · **362** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (113)](../../NeurIPS2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×26 · 三维重建 ×18 · 对抗鲁棒 ×15 · 语义分割 ×15
-
-**[3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
-
-:   构建了3D-GRAND——首个百万级**密集接地**的3D场景-语言数据集（40K场景、6.2M指令），并提出3D-POPE幻觉评估基准，证明密集接地的指令微调能显著提升3D-LLM的接地能力并减少幻觉，还展示了合成数据到真实场景的迁移效果。
 
 **[3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)**
 

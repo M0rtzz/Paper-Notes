@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 多模态VLM论文汇总 · 99篇论文解读
+  ACL2026 多模态VLM论文汇总 · 94篇论文解读
 description: >-
-  99篇ACL2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、Agent、对齐/RLHF、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  94篇ACL2026的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、Agent、对齐/RLHF、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "多模态 VLM"
@@ -33,8 +33,6 @@ item_list:
     t: "Almieyar-Oryx-BloomBench: A Bilingual Multimodal Benchmark for Cognitively Informed Evaluation of Vision-Language Models"
   - u: "automatic_slide_updating_with_user-defined_dynamic_templates_and_natural_languag/"
     t: "Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions"
-  - u: "benchmarking_deflection_and_hallucination_in_large_vision-language_models/"
-    t: "Benchmarking Deflection and Hallucination in Large Vision-Language Models"
   - u: "beyond_screenshots_evaluating_vlms_understanding_of_ui_animations/"
     t: "Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations"
   - u: "can_mllms_reason_beyond_language_visreason_a_comprehensive_benchmark_for_vision-/"
@@ -75,17 +73,19 @@ item_list:
     t: "E2E-GMNER: End-to-End Generative Grounded Multimodal Named Entity Recognition"
   - u: "edu-circuit-hw_evaluating_multimodal_large_language_models_on_real-world_univers/"
     t: "EDU-CIRCUIT-HW: Evaluating Multimodal Large Language Models on Real-World University-Level STEM Student Handwritten Solutions"
-item_total: 99
+  - u: "efficient_inference_for_large_vision-language_models_bottlenecks_techniques_and_/"
+    t: "Efficient Inference for Large Vision-Language Models: Bottlenecks, Techniques, and Prospects"
+item_total: 94
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**💬 ACL2026** · **99** 篇论文解读
+**💬 ACL2026** · **94** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (145)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×57 · 推理 ×27 · LLM ×10 · Agent ×4 · 对齐/RLHF ×3
+🔥 **高频主题：** 多模态 ×54 · 推理 ×27 · LLM ×10 · Agent ×4 · 对齐/RLHF ×3
 
 **[A Survey of Multimodal Mathematical Reasoning: From Perception, Alignment to Reasoning](a_survey_of_multimodal_mathematical_reasoning_from_perception_alignment_to_reaso.md)**
 
@@ -122,10 +122,6 @@ item_total: 99
 **[Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions](automatic_slide_updating_with_user-defined_dynamic_templates_and_natural_languag.md)**
 
 :   定义了"基于自然语言指令在用户自定义模板上进行动态幻灯片更新"的新任务，构建了包含 20,036 个指令-执行三元组的 DynaSlide 基准，并提出了 SlideAgent 作为强参考基线。
-
-**[Benchmarking Deflection and Hallucination in Large Vision-Language Models](benchmarking_deflection_and_hallucination_in_large_vision-language_models.md)**
-
-:   提出 VLM-DeflectionBench，一个包含 2775 个样本的多模态基准，通过四种评估场景（参数化/Oracle/现实/对抗）系统性地评估大型视觉语言模型在证据不足或误导时的拒答（deflection）vs 幻觉（hallucination）行为，实验覆盖 20 个 SOTA LVLM，发现几乎所有模型都无法在噪声证据下可靠拒答。
 
 **[Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations](beyond_screenshots_evaluating_vlms_understanding_of_ui_animations.md)**
 
@@ -307,10 +303,6 @@ item_total: 99
 
 :   本文提出 MedLayBench-V，首个大规模多模态医学专家-通俗语义对齐基准（79,793 图文对），通过 Structured Concept-Grounded Refinement (SCGR) 流水线将专业放射学报告转化为通俗描述，确保临床语义保真的同时将阅读难度从研究生级别降至高中水平，零样本检索实验表明通俗描述仅带来不到 1% 的性能损失。
 
-**[Mitigating Hallucinations in Large Vision-Language Models without Performance Degradation](mitigating_hallucinations_in_large_vision-language_models_without_performance_de.md)**
-
-:   本文提出 MPD 框架，通过语义感知正交子空间投影分离幻觉成分，并仅选择性更新与幻觉最相关的少量参数，在减少 23.4% 幻觉的同时保持 97.4% 的通用生成能力，不引入额外推理开销。
-
 **[MMErroR: A Benchmark for Erroneous Reasoning in Vision-Language Models](mmerror_a_benchmark_for_erroneous_reasoning_in_vision-language_models.md)**
 
 :   本文提出 MMErroR，一个包含 1997 个样本的多模态错误推理基准，每个样本嵌入一个单一推理错误，覆盖 6 大领域和 4 种错误类型，要求 VLM 不仅检测推理链中的错误存在，还要分类错误类型（视觉感知错误/知识应用错误/问题理解错误/推理错误），评测 12 个代表性 VLM 后发现最强模型 Gemini-3-Pro-Preview 也仅达 66.65% 准确率。
@@ -375,10 +367,6 @@ item_total: 99
 
 :   提出 SlideAgent，一个层次化智能体框架，通过全局、页面、元素三级专用 agent 构建结构化知识表示，显著提升多页视觉文档（尤其是幻灯片）的细粒度理解能力。
 
-**[Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation](spotlight_and_shadow_attention-guided_dual-anchor_introspective_decoding_for_mll.md)**
-
-:   提出 DaID (Dual-Anchor Introspective Decoding)，通过挖掘 MLLM 内部不同层的视觉感知差异——Spotlight 层放大视觉信号、Shadow 层抑制语言惯性——在单次前向传播内实现幻觉缓解。
-
 **[Stability Implies Redundancy: Delta Attention Selective Halting for Efficient Long-Context Prefilling](stability_implies_redundancy_delta_attention_selective_halting_for_efficient_lon.md)**
 
 :   提出 DASH（Delta Attention Selective Halting），一种无需训练的推理加速方法，通过监测自注意力层的逐层更新幅度 Δ_attn 来识别已"语义固化"的 token 并停止其后续计算，在长上下文文本和视觉-语言基准上实现显著的 prefill 加速且几乎不损失精度。
@@ -415,10 +403,6 @@ item_total: 99
 
 :   本文提出PlantInquiryVQA基准和Chain-of-Inquiry（CoI）框架，包含24,950张植物图像和138,068个问答对，模拟植物学家的适应性诊断提问策略，评估18个MLLM在植物病理诊断中的多步视觉推理能力，发现结构化提问显著提升诊断准确性并减少幻觉，但即使最强模型的临床实用性得分仅0.188。
 
-**[Through the Magnifying Glass: Adaptive Perception Magnification for Hallucination-Free VLM Decoding](through_the_magnifying_glass_adaptive_perception_magnification_for_hallucination.md)**
-
-:   本文提出 Perception Magnifier (PM)，一种视觉解码方法，在每个自回归解码步基于多层注意力迭代识别关键视觉区域并自适应放大，通过提升关键区域的有效分辨率来缓解 VLM 的视觉幻觉，同时保持空间结构完整性和推理能力。
-
 **[Topology-Aware Layer Pruning for Large Vision-Language Models](topology-aware_layer_pruning_for_large_vision-language_models.md)**
 
 :   提出基于拓扑数据分析的层剪枝框架 TopoVLM，将各层隐藏状态建模为点云并通过 zigzag 持久同调量化层间拓扑一致性，自适应保留关键表征转换层、剪除结构冗余层，在 50-60% 稀疏率下显著优于现有剪枝方法。
@@ -454,10 +438,6 @@ item_total: 99
 **[VL-Calibration: Decoupled Confidence Calibration for Large Vision-Language Models Reasoning](vl-calibration_decoupled_confidence_calibration_for_large_vision-language_models.md)**
 
 :   VL-Calibration 将 LVLM 的口头置信度拆成视觉置信度和推理置信度，并用图像扰动 KL、token 熵与 token 级优势重加权训练模型，在 13 个视觉推理基准上同时降低 ECE、提升准确率。
-
-**[Vocabulary Hijacking in LVLMs: Unveiling Critical Attention Heads by Excluding Inert Tokens to Mitigate Hallucination](vocabulary_hijacking_in_lvlms_unveiling_critical_attention_heads_by_excluding_in.md)**
-
-:   本文发现 LVLM 中部分无效视觉 token 会稳定解码到一组无关词并劫持注意力，进而提出 HABI 定位这些 token、用 NHAR 找到可靠视觉头，再通过 HAVAE 在推理时增强这些头以降低幻觉。
 
 **[VULCA-Bench: A Multicultural Vision-Language Benchmark for Evaluating Cultural Understanding](vulca-bench_a_multicultural_vision-language_benchmark_for_evaluating_cultural_un.md)**
 

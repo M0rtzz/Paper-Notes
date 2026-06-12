@@ -136,8 +136,8 @@ ReasonFlux-PRM 发现现有 PRM 无法有效评估推理模型的中间思考轨
 - [\[NeurIPS 2025\] Is Chain-of-Thought Reasoning of LLMs a Mirage? A Data Distribution Lens](is_chain-of-thought_reasoning_of_llms_a_mirage_a_data_distribution_lens.md)
 - [\[NeurIPS 2025\] Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones](let_me_think_a_long_chainofthought_can_be_worth_exponentiall.md)
 - [\[ACL 2025\] DRT: Deep Reasoning Translation via Long Chain-of-Thought](../../ACL2025/llm_reasoning/drt_deep_reasoning_translation_via_long_chain-of-thought.md)
-- [\[NeurIPS 2025\] Trajectory Bellman Residual Minimization: A Simple Value-Based Method for LLM Reasoning](trajectory_bellman_residual_minimization_a_simple_value-based_method_for_llm_rea.md)
 - [\[ACL 2025\] Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?](../../ACL2025/llm_reasoning/can_large_language_models_detect_errors_in_long_chain-of-thought_reasoning.md)
+- [\[NeurIPS 2025\] Trajectory Bellman Residual Minimization: A Simple Value-Based Method for LLM Reasoning](trajectory_bellman_residual_minimization_a_simple_value-based_method_for_llm_rea.md)
 
 </div>
 

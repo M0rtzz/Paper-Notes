@@ -152,7 +152,7 @@ Teacher: GLM-4-9b-chat, Student: Llama-7b / Llama-3.2-1b。水印方案: KGW (n=
 - [\[NeurIPS 2025\] Distillation Robustifies Unlearning](../../NeurIPS2025/llm_safety/distillation_robustifies_unlearning.md)
 - [\[ACL 2026\] Train in Vain: Functionality-Preserving Poisoning to Prevent Unauthorized Use of Code Datasets](../../ACL2026/llm_safety/train_in_vain_functionality-preserving_poisoning_to_prevent_unauthorized_use_of_.md)
 - [\[NeurIPS 2025\] SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders](../../NeurIPS2025/llm_safety/saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)
-- [\[ACL 2025\] Correcting Hallucinations in News Summaries: Exploration of Self-Correcting LLM Methods with External Knowledge](correcting_hallucinations_in_news_summaries_exploration_of_self-correcting_llm_m.md)
+- [\[NeurIPS 2025\] Self-Refining Language Model Anonymizers via Adversarial Distillation](../../NeurIPS2025/llm_safety/self-refining_language_model_anonymizers_via_adversarial_distillation.md)
 
 </div>
 

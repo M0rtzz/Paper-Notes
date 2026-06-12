@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 多模态VLM论文汇总 · 87篇论文解读
+  ICLR2026 多模态VLM论文汇总 · 85篇论文解读
 description: >-
-  87篇ICLR2026的多模态 VLM 方向论文解读，涵盖多模态、推理、机器人、LLM、Agent、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  85篇ICLR2026的多模态 VLM 方向论文解读，涵盖多模态、推理、机器人、Agent、模型压缩、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "多模态 VLM"
@@ -11,9 +11,9 @@ tags:
   - "多模态"
   - "推理"
   - "机器人"
-  - "LLM"
   - "Agent"
   - "模型压缩"
+  - "压缩/编码"
 item_list:
   - u: "a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi/"
     t: "A-TPT: Angular Diversity Calibration Properties for Test-Time Prompt Tuning of Vision-Language Models"
@@ -47,8 +47,6 @@ item_list:
     t: "Directional Embedding Smoothing for Robust Vision Language Models"
   - u: "diva-grpo_enhancing_multimodal_reasoning_through_difficulty-adaptive_variant_adv/"
     t: "DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage"
-  - u: "dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis/"
-    t: "Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models"
   - u: "egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning/"
     t: "EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning"
   - u: "empowering_small_vlms_to_think_with_dynamic_memorization_and_exploration/"
@@ -75,17 +73,19 @@ item_list:
     t: "HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit"
   - u: "how_do_medical_mllms_fail_a_study_on_visual_grounding_in_medical_images/"
     t: "How Do Medical MLLMs Fail? A Study on Visual Grounding in Medical Images"
-item_total: 87
+  - u: "icym2i_the_illusion_of_multimodal_informativeness_under_missingness/"
+    t: "ICYM2I: The Illusion of Multimodal Informativeness under Missingness"
+item_total: 85
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🔬 ICLR2026** · **87** 篇论文解读
+**🔬 ICLR2026** · **85** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (149)](../../ICCV2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md) · [📹 ICCV2025 (145)](../../ICCV2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×42 · 推理 ×20 · 机器人 ×4 · LLM ×4 · Agent ×3
+🔥 **高频主题：** 多模态 ×40 · 推理 ×20 · 机器人 ×4 · Agent ×3 · 模型压缩 ×3
 
 **[A-TPT: Angular Diversity Calibration Properties for Test-Time Prompt Tuning of Vision-Language Models](a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi.md)**
 
@@ -150,10 +150,6 @@ item_total: 87
 **[DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage](diva-grpo_enhancing_multimodal_reasoning_through_difficulty-adaptive_variant_adv.md)**
 
 :   提出 DIVA-GRPO，通过动态评估问题难度、自适应生成不同难度的语义一致变体、并结合难度加权的局部-全局 advantage 估计，解决 GRPO 训练中的 reward sparsity 和 advantage vanishing 问题，在 7B 规模模型上实现 SOTA 多模态推理性能。
-
-**[Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models](dynamic_multimodal_activation_steering_for_hallucination_mitigation_in_large_vis.md)**
-
-:   提出动态多模态激活引导（DMAS），通过构建基于语义的真实性引导向量数据库和视觉感知引导向量，在推理时动态选择最相关的引导向量对关键注意力头进行干预，无需训练即可显著缓解LVLM幻觉，在MME上提升94.66分，在CHAIR上降低20.2%幻觉率。
 
 **[EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning](egohandicl_egocentric_3d_hand_reconstruction_with_in-context_learning.md)**
 
@@ -238,10 +234,6 @@ item_total: 87
 **[LLaVA-FA: Learning Fourier Approximation for Compressing Large Multimodal Models](llava-fa_learning_fourier_approximation_for_compressing_large_multimodal_models.md)**
 
 :   提出 LLaVA-FA，一种在频域进行联合低秩加量化权重近似的高效多模态大模型压缩方法，利用傅里叶变换的去相关性和共轭对称性实现更紧凑准确的权重表示，并引入 PolarQuant（极坐标量化）和 ODC（可选对角校准）方案，在多个基准上以最少的激活参数和计算成本超越现有高效多模态模型。
-
-**[Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](look_carefully_adaptive_visual_reinforcements_in_multimodal_large_language_model.md)**
-
-:   提出 AIR（Adaptive vIsual Reinforcement）框架，通过原型距离的 token 精简 + 最优传输引导的 patch 选择性增强，在推理时无训练地减少 MLLM 幻觉（LLaVA-1.5-7B CHAIR_S: 22→18.4，POPE 准确率 +5.3%），同时保持多模态通用能力。
 
 **[Meta-Adaptive Prompt Distillation for Few-Shot Visual Question Answering](meta-adaptive_prompt_distillation_for_few-shot_visual_question_answering.md)**
 

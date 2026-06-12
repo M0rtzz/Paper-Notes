@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 LLMAgent论文汇总 · 43篇论文解读
+  ICML2026 LLMAgent论文汇总 · 42篇论文解读
 description: >-
-  43篇ICML2026的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  42篇ICML2026的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "LLM Agent"
@@ -32,8 +32,6 @@ item_list:
     t: "EvolveR: Self-Evolving LLM Agents through an Experience-Driven Lifecycle"
   - u: "excytin-bench_evaluating_llm_agents_on_cyber_threat_investigation/"
     t: "ExCyTIn-Bench: Evaluating LLM Agents on Cyber Threat Investigation"
-  - u: "hallucinations_undermine_trust_metacognition_is_a_way_forward/"
-    t: "Hallucinations Undermine Trust; Metacognition is a Way Forward"
   - u: "hawkesllm_semantic_uncertainty_propagation_in_agentic_text_simulation/"
     t: "HawkesLLM: Semantic Uncertainty Propagation in Agentic Text Simulation"
   - u: "hunt_instead_of_wait_evaluating_deep_data_research_on_large_language_models/"
@@ -72,13 +70,15 @@ item_list:
     t: "Recovering Policy-Induced Errors: Benchmarking and Trajectory Synthesis for Robust GUI Agents"
   - u: "reflexgrad_within-episode_failure_recovery_in_llm_agents_via_progress-gated_dual/"
     t: "ReflexGrad: Within-Episode Failure Recovery in LLM Agents via Progress-Gated Dual-Process Routing"
-item_total: 43
+  - u: "reward_hacking_benchmark_measuring_exploits_in_llm_agents_with_tool_use/"
+    t: "Reward Hacking Benchmark: Measuring Exploits in LLM Agents with Tool Use"
+item_total: 42
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🧪 ICML2026** · **43** 篇论文解读
+**🧪 ICML2026** · **42** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (78)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
@@ -123,10 +123,6 @@ item_total: 43
 **[ExCyTIn-Bench: Evaluating LLM Agents on Cyber Threat Investigation](excytin-bench_evaluating_llm_agents_on_cyber_threat_investigation.md)**
 
 :   本文构建了首个评测 LLM Agent 端到端做"网络威胁调查"的 benchmark ExCyTIn-Bench：从真实 Azure 租户的 57 张安全日志表里，用 alert-entity 二部图自动生成 7542 道带证据链的 SQL 问答题，并提供 MySQL 环境让 Agent 通过查询日志、多跳追踪证据来回答，目前最强模型 Claude-Opus-4.5 也只能拿 0.606 的 reward。
-
-**[Hallucinations Undermine Trust; Metacognition is a Way Forward](hallucinations_undermine_trust_metacognition_is_a_way_forward.md)**
-
-:   本文是一篇 position paper，论证"彻底消除 LLM 幻觉"在原理上无法逃避一个"区分度税"（discrimination gap → utility tax）；作者主张把目标从"消灭幻觉"改为**忠实表达不确定性**（faithful uncertainty），并把这种 metacognition 视为 agentic LLM 调用工具时不可或缺的控制层。
 
 **[HawkesLLM: Semantic Uncertainty Propagation in Agentic Text Simulation](hawkesllm_semantic_uncertainty_propagation_in_agentic_text_simulation.md)**
 

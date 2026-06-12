@@ -1,15 +1,15 @@
 ---
 title: >-
-  CVPR2026 可解释性论文汇总 · 26篇论文解读
+  CVPR2026 可解释性论文汇总 · 25篇论文解读
 description: >-
-  26篇CVPR2026的可解释性方向论文解读，涵盖多模态、布局/合成、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  25篇CVPR2026的可解释性方向论文解读，涵盖布局/合成、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "可解释性"
   - "论文解读"
   - "论文笔记"
-  - "多模态"
   - "布局/合成"
+  - "多模态"
   - "推理"
 item_list:
   - u: "beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip/"
@@ -48,8 +48,6 @@ item_list:
     t: "On the Possible Detectability of Image-in-Image Steganography"
   - u: "pixel2phys_distilling_governing_laws_from_visual_dynamics/"
     t: "Pixel2Phys: Distilling Governing Laws from Visual Dynamics"
-  - u: "reallocating_attention_across_layers_to_reduce_multimodal_hallucination/"
-    t: "Reallocating Attention Across Layers to Reduce Multimodal Hallucination"
   - u: "rethinking_concept_bottleneck_models_from_pitfalls_to_solutions/"
     t: "Rethinking Concept Bottleneck Models: From Pitfalls to Solutions"
   - u: "riskprop_collision-anchored_self-supervised_risk_propagation_for_early_accident_/"
@@ -64,17 +62,17 @@ item_list:
     t: "VIRO: Robust and Efficient Neuro-Symbolic Reasoning with Verification for Referring Expression Comprehension"
   - u: "why_does_it_look_there_structured_explanations_for_image_classification/"
     t: "Why Does It Look There? Structured Explanations for Image Classification"
-item_total: 26
+item_total: 25
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**📷 CVPR2026** · **26** 篇论文解读
+**📷 CVPR2026** · **25** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (72)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (63)](../../ACL2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (81)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** 多模态 ×3 · 布局/合成 ×2 · 推理 ×2
+🔥 **高频主题：** 布局/合成 ×2 · 多模态 ×2 · 推理 ×2
 
 **[Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)**
 
@@ -147,10 +145,6 @@ item_total: 26
 **[Pixel2Phys: Distilling Governing Laws from Visual Dynamics](pixel2phys_distilling_governing_laws_from_visual_dynamics.md)**
 
 :   提出 Pixel2Phys，一个基于 MLLM 的多智能体协作框架，通过 Plan-Variable-Equation-Experiment 四个 Agent 的迭代假设-验证-精化循环，从原始视频中自动发现可解释的物理控制方程，外推精度比基线提升 45.35%。
-
-**[Reallocating Attention Across Layers to Reduce Multimodal Hallucination](reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)**
-
-:   提出一种轻量级、无需训练的插件方法，通过识别感知型和推理型注意力头并进行类别条件缩放（Class-Conditioned Rescaling），重新平衡跨层注意力分配，从而缓解多模态大推理模型（MLRM）中的幻觉问题，在5个基准上平均提升4.2%，几乎无额外推理开销。
 
 **[Rethinking Concept Bottleneck Models: From Pitfalls to Solutions](rethinking_concept_bottleneck_models_from_pitfalls_to_solutions.md)**
 

@@ -1,16 +1,16 @@
 ---
 title: >-
-  ACL2025 多模态VLM论文汇总 · 132篇论文解读
+  ACL2025 多模态VLM论文汇总 · 126篇论文解读
 description: >-
-  132篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  126篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "多模态 VLM"
   - "论文解读"
   - "论文笔记"
   - "多模态"
-  - "LLM"
   - "推理"
+  - "LLM"
   - "对抗鲁棒"
   - "对齐/RLHF"
   - "对话系统"
@@ -19,8 +19,6 @@ item_list:
     t: "A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models"
   - u: "activating_distributed_visual_region_within_llms_for_efficient_and_effective_vis/"
     t: "Activating Distributed Visual Region within LLMs for Efficient and Effective Vision-Language Training and Inference"
-  - u: "activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m/"
-    t: "Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention"
   - u: "adammeme_adaptively_probe_the_reasoning_capacity_of_multimodal_large_language_mo/"
     t: "AdamMeme: Adaptively Probe the Reasoning Capacity of Multimodal Large Language Models on Harmfulness"
   - u: "adaptive_linguistic_prompting_alp_enhances_phishing_webpage_detection_in_multimo/"
@@ -75,17 +73,19 @@ item_list:
     t: "Con Instruction: Universal Jailbreaking of Multimodal Large Language Models via Non-Textual Modalities"
   - u: "conflictvis_vision_knowledge_conflict/"
     t: "Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs"
-item_total: 132
+  - u: "cordial_can_multimodal_large_language_models_effectively_understand_coherence_re/"
+    t: "CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?"
+item_total: 126
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**💬 ACL2025** · **132** 篇论文解读
+**💬 ACL2025** · **126** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (106)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (99)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (217)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (87)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (87)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (147)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×110 · LLM ×17 · 推理 ×17 · 对抗鲁棒 ×5 · 对齐/RLHF ×5
+🔥 **高频主题：** 多模态 ×104 · 推理 ×17 · LLM ×16 · 对抗鲁棒 ×5 · 对齐/RLHF ×5
 
 **[A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models](a_parameter-efficient_and_fine-grained_prompt_learning_for_vision-language_model.md)**
 
@@ -94,10 +94,6 @@ item_total: 132
 **[Activating Distributed Visual Region within LLMs for Efficient and Effective Vision-Language Training and Inference](activating_distributed_visual_region_within_llms_for_efficient_and_effective_vis.md)**
 
 :   本文发现 LLM 中存在类似人脑视觉皮层的"视觉区域"——稀疏且均匀分布的层集合，仅更新 25% 的层即可保留 99% 的视觉性能，同时保持甚至提升语言能力，并据此提出了高效的视觉区域定向训练和剪枝范式。
-
-**[Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention](activation_steering_decoding_mitigating_hallucination_in_large_vision-language_m.md)**
-
-:   本文提出 ASD（Activation Steering Decoding），一种无需训练的推理时幻觉缓解方法，通过在 LVLM 的中间隐藏状态中识别幻觉方向模式，利用双向引导和对比解码来抑制幻觉输出，同时保持模型在通用视觉理解任务上的性能。
 
 **[AdamMeme: Adaptively Probe the Reasoning Capacity of Multimodal Large Language Models on Harmfulness](adammeme_adaptively_probe_the_reasoning_capacity_of_multimodal_large_language_mo.md)**
 
@@ -267,10 +263,6 @@ item_total: 132
 
 :   系统探究为何生成式多模态LLM（如LLaVA）使用与CLIP相同的视觉编码器却能在视觉推理任务上大幅超越CLIP，发现patch token、位置编码和prompt加权是关键因素。
 
-**[FIHA: Autonomous Fine-grained Hallucination Evaluation in Vision-Language Models with Davidson Scene Graphs](fiha_autonomous_hallucination_evaluation_in_vision-language_models_with_davidson.md)**
-
-:   本文提出 FIHA，一个无需 LLM 和人工标注的自动化细粒度幻觉评估框架，通过从图像和描述中提取实体、属性和关系生成 Q&A 对，并引入 Davidson 场景图（DSG）建模问题间的依赖关系，构建了 FIHA-v1 基准，全面评估了主流大视觉语言模型的幻觉水平。
-
 **[Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)**
 
 :   TikTok提出一种基于MLLM的两阶段级联内容审核系统（Router-Ranker），通过轻量级嵌入检索路由器过滤97.5%的合规流量，仅将高风险视频送入微调后的LLaVA进行精细分类，F1提升66.5%的同时部署成本降至直接全量部署的1.5%。
@@ -395,10 +387,6 @@ item_total: 132
 
 :   提出MIRe框架，通过"无融合模态交互"（fusion-free modality interaction）在视觉-文本对齐阶段避免直接融合文本特征，利用查询引导注意力池化模块让文本嵌入引导视觉信息提取但不将文本信号反馈回视觉表示，有效缓解多模态检索中的文本主导问题，在四个基准上取得零样本SOTA。
 
-**[Mixture of Decoding: An Attention-Inspired Adaptive Decoding Strategy to Mitigate Hallucination in Multimodal LLMs](mixture_of_decoding_an_attention-inspired_adaptive_decoding_strategy_to_mitigate.md)**
-
-:   提出了 Mixture of Decoding (MoD)，通过 JS 散度衡量模型对图像 token 注意力的正确性，在注意力正确时采用互补解码放大关键信息，注意力错误时采用对比解码抑制误导信息，从而自适应地缓解多模态大模型的幻觉问题。
-
 **[MMBoundary: Advancing MLLM Knowledge Boundary Awareness through Reasoning Step Confidence Calibration](mmboundary_reasoning_step_confidence.md)**
 
 :   提出 MMBoundary 框架，通过在推理链的每一步插入自然语言置信度表述（而非只在最终回答后给置信度），结合文本+跨模态的自奖励信号估计置信度，并用 SFT+RL 两阶段训练实现步级置信度校准，平均降低 7.5% 校准误差并提升 8.3% 任务准确率。
@@ -467,17 +455,9 @@ item_total: 132
 
 :   提出 RedundancyLens 框架，系统揭示了 decoder-only MLLM 中视觉 token 在自注意力和 FFN 操作上存在大量结构化、聚簇式冗余，并利用这一发现实现免训练推理加速，与现有 token 压缩方法正交且可组合。
 
-**[ReefKnot: A Comprehensive Benchmark for Relation Hallucination Evaluation, Analysis and Mitigation in Multimodal Large Language Models](reefknot_a_comprehensive_benchmark_for_relation_hallucination_evaluation_analysi.md)**
-
-:   提出首个系统性评估多模态大模型**关系级幻觉**的综合基准 Reefknot（含 2 万+ 样本、三种任务），并基于置信度熵检测提出 Detect-then-Calibrate 缓解策略，平均降低幻觉率 9.75%。
-
 **[Response Wide Shut: Surprising Observations in Basic Vision Language Model Capabilities](response_wide_shut_surprising_observations_in_basic_vision_language_model_capabi.md)**
 
 :   通过在VLM的三个中间特征空间（视觉编码器、VL投影层、语言解码器）上训练线性探针，系统揭示了一个反直觉的现象：对于大多数视觉任务，视觉编码器和VL投影层其实保留了充分的视觉信息，真正的瓶颈在于语言解码器的响应空间——信息在从投影层传递到最终文本输出的过程中大量丢失。
-
-**[Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models](retrieval_visual_contrastive_decoding_to_mitigate_object_hallucinations_in_large.md)**
-
-:   提出 RVCD（Retrieval Visual Contrastive Decoding），通过检索 AI 生成的单概念显式图像构建正/负 logit 集合，在解码阶段抑制 LVLM 的物体幻觉（Object Hallucination），无需额外训练即可显著优于现有解码方法。
 
 **[Scalable Vision Language Model Training via High Quality Data Curation](scalable_vision_language_model_training_via_high_quality_data_curation.md)**
 
@@ -578,10 +558,6 @@ item_total: 132
 **[Vision-Language Models Struggle to Align Entities across Modalities](vision-language_models_struggle_to_align_entities_across_modalities.md)**
 
 :   提出 MATE 基准（5,500 个问答实例），通过合成 3D 场景的跨模态属性检索任务系统评估 VLM 的实体链接能力，发现即使最强闭源模型仍落后人类约 15 个百分点，且性能随场景物体数量增加急剧下降——根源在于跨模态特征绑定而非单模态感知。
-
-**[Visual Evidence Prompting Mitigates Hallucinations in Large Vision-Language Models](visual_evidence_prompting.md)**
-
-:   提出Visual Evidence Prompting (VEP)，利用小型视觉专家模型（目标检测器、场景图生成器）的输出作为文本化"视觉证据"输入LVLM，无需训练即可在11个LVLM上显著降低幻觉——LLaVA-1.5在POPE上提升7.2%、Claude 3上提升12.1%。
 
 **[VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search](visuothink_empowering_lvlm_reasoning_with_multimodal_tree_search.md)**
 
