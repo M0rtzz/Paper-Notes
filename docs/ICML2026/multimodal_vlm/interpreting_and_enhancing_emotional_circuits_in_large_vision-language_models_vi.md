@@ -42,7 +42,33 @@ VEENA 用 steering-vector 因果归因框架定位 LVLM 的情感电路——发
 
 ### 整体框架
 
-VEENA 分两阶段，先把情感电路解析出来，再据此做推理时干预。Stage I 从成对的情感/中性输入里提取每一层的情感方向向量 $S_l$（按 hit rate 阈值过滤掉无效样本）；Stage II 拿 $S_l$ 当探针，coarse-to-fine 地逐级定位——先找关键层（注入 $S_l$ 看 hit rate 怎么变），再回溯关键 attention heads（backward activation patching），最后落到关键 MLP neurons，勾勒出 LVLM 情感处理的"Adapt→Aggregate→Execute"三段式电路。有了这张电路图，VEENA 再用两个训练无关的推理时手术——VEE 强化关键 attention heads 的情感注意力流，ENA 放大 explicit state neurons 的语义激活——直接缓解情感幻觉。
+VEENA 分两阶段，先把情感电路解析出来，再据此做推理时干预。Stage I 从成对的情感/中性输入里提取每一层的情感方向向量 $S_l$（按 hit rate 阈值过滤掉无效样本）；Stage II 拿 $S_l$ 当探针，coarse-to-fine 地逐级定位——先找关键层（注入 $S_l$ 看 hit rate 怎么变），再回溯关键 attention heads（backward activation patching），最后落到关键 MLP neurons，勾勒出 LVLM 情感处理的"Adapt→Aggregate→Execute"三段式电路。有了这张电路图，VEENA 再用两个训练无关的推理时手术——VEE 强化关键 attention heads 的情感注意力流，ENA 放大 Explicit State Neurons 的语义激活——直接缓解情感幻觉。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["1. Steering Vector + Latent Restoration Metric"]
+        direction TB
+        A["成对输入<br/>情感图+中性query / 中性图+中性query"] --> B["取末 token 逐层残差差"]
+        B --> C["按 hit rate 阈值过滤<br/>平均成情感方向 S_l"]
+    end
+    C --> D
+    subgraph S2["2. 分层因果定位（Layer → Head → Neuron）"]
+        direction TB
+        D["注入 S_l 定位关键层"] --> E["回溯关键 attention heads"]
+        E --> F["回溯关键 MLP neurons"]
+    end
+    F --> G["3. 揭示 Adapt-Aggregate-Execute 电路<br/>浅层对齐 → 中层聚合 → 深层执行"]
+    subgraph S3["4. VEENA 训练无关推理时干预"]
+        direction TB
+        H["VEE：强化关键 heads 注意力流<br/>校正情感路由"]
+        I["ENA：放大 Explicit State neurons<br/>激活，稳固情感表达"]
+    end
+    G --> H
+    G --> I
+    H --> J["缓解情感幻觉"]
+    I --> J
+```
 
 ### 关键设计
 
@@ -58,15 +84,21 @@ LLM 上做情感机制分析靠的是词汇替换（happy ↔ sad）反事实 + 
 
 层层收窄的好处是每一级的结果都能独立解释、互相印证，既高效又避免了在 head/neuron 粒度上直接搜索带来的噪声。
 
-**3. "Adapt-Aggregate-Execute" 机制发现 + VEENA 干预：把"情感识别"和"情感表达"分开做手术**
+**3. Adapt-Aggregate-Execute 机制 + 功能解耦：情感"识别"与"表达"分居两层**
 
 分层定位最终拼出一条清晰的三段式回路：浅层（Adapt）做视觉特征的模态对齐；中层（Aggregate）里 Contextual Trigger Neurons 先编码情境线索，emotion-specific heads 再把信号聚合到 Query token（相当于一个视觉摘要器），且不同情感会点亮不同的 heads；深层（Execute）则由 Query token 激活 Explicit State Neurons（编码情感本身）、再驱动 emotion-general heads 生成叙述。
 
-最关键的发现是中层与深层的 functional decoupling——中层 heads 对情感类别敏感（emotion-specific，负责"是什么情感"的路由），深层 heads 不挑情感只管表达强度（emotion-general，负责"怎么表达"）。正因为识别和执行分居两层、机制不同，VEENA 才能分两路精准干预：VEE (Visual Emotion Enhancement) 强化中层 emotion-specific heads 的注意力流以校正情感路由，ENA (Emotional Neuron Augmentation) 放大深层 Explicit State Neurons 的激活以稳住情感表达。两者都训练无关、即插即用，可直接打在已经 SFT 完的模型上。
+最关键的发现是中层与深层的功能解耦（functional decoupling）——中层 heads 对情感类别敏感（emotion-specific，负责"是什么情感"的路由），深层 heads 不挑情感、只管表达强度（emotion-general，负责"怎么表达"）。识别与执行分居两层、机制各异，这一发现既揭示了 LVLM 区别于 LLM 的情感处理结构，也为下面"分两路精准干预"提供了直接依据。
+
+**4. VEENA 推理时干预：VEE 校正路由 + ENA 稳固表达**
+
+既然识别（中层路由）和执行（深层表达）分居两层、机制不同，VEENA 就分两路、训练无关地各做一件事，直接打在已 SFT 完的模型上。VEE（Visual Emotion Enhancement）按"流向感知"的方式放大关键 heads 的注意力：prefill 阶段（$t=0$）在关键中层 $l_{emo}$ 及以下放大 $V\to Q$ 注意力，把视觉情感线索聚合进 Query token；decoding 阶段（$t>0$）在深层放大 $V\to L$ 注意力，让每个生成 token 都锚在细粒度视觉细节上——两处都给注意力分数乘一个增强系数 $\beta>1$。ENA（Emotional Neuron Augmentation）补上语义侧：对定位到的 top-$K$ Explicit State Neurons 的激活乘一个激励系数 $\gamma>1$，放大 MLP 里存的情感语义知识。
+
+VEE 管"信息怎么流"、ENA 管"语义有多强"，恰好对应被解耦的中层路由与深层表达两个环节；两者都即插即用、不更新任何参数，从而精准缓解情感幻觉。
 
 ### 损失函数 / 训练策略
 
-VEENA 是纯推理时干预，不更新任何参数、不需要训练数据；只在前向时对选定 heads 的注意力流和选定 neurons 的激活施加可调系数 $\alpha$。
+VEENA 是纯推理时干预，不更新任何参数、不需要训练数据；只在前向时对选定 heads 的注意力分数乘增强系数 $\beta$、对选定 neurons 的激活乘激励系数 $\gamma$。
 
 ## 实验关键数据
 

@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 两阶段训练 Llama-3.3-70B-Instruct，输入是 JSON（含 room_count / total_area / spaces 列表 / input_graph bubble diagram），输出也是 JSON（每个 space 含 id / room_type / area / floor_polygon 顶点列表，单位米）。**阶段 1 SFT**：在 RPLAN 转换的 JSON 户型上做 LoRA 监督微调（rank 64, $\alpha=128$，2 epoch，6×4×H100），学到 prompt → JSON 的基本映射。**阶段 2 GRPO**：合并 LoRA 后用 verifiable rewards 做 RL，每个 prompt 采 $G=4$ 个候选，按 connectivity reward + total-area reward 平均得分计算 group-relative advantage 更新。**推理**：best-of-10，按"重叠面积最小 → 平局看 Compatibility"选最终输出。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph REP["JSON 结构化表征 + RPLAN→polygon 转换管道"]
+        direction TB
+        A["RPLAN 8 万套户型<br/>256×256×4 图像"] --> B["House-GAN++ reader<br/>重构多边形 + 缩放到米"]
+        B --> C["polygon JSON<br/>room_count / total_area / spaces / bubble diagram"]
+    end
+    REP --> D["阶段 1 · SFT<br/>LoRA(rank 64) 监督微调"]
+    D --> E["GRPO + 双 verifiable reward + 硬可行性<br/>采 G=4，connectivity + total-area 奖励<br/>解析失败 / 房间重叠 → reward 归零"]
+    E --> F["Best-of-10 选择 + token 级 prompt 限定<br/>采 10 候选，重叠最小 → Compatibility tie-break"]
+    F --> G["CAD-ready JSON 户型"]
+```
+
 ### 关键设计
 
 **1. JSON 结构化表征 + RPLAN→polygon 转换管道：把户型生成从"画图"重新框定成"写结构化文本"**

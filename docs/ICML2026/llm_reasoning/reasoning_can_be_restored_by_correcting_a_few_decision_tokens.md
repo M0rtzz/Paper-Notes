@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 全文围绕一个问题展开：base LLM 在生成推理链时究竟在哪几步走错了？方法因此分成前后相扣的两段。先是**诊断**——在同词表的 base $\mathcal{M}_b$ 与强 reasoning $\mathcal{M}_r$ 之间，沿 base 自己的 rollout 逐 token 算一个分歧分数 $s_t$，再统计它的稀疏性、位置、语义和对答错的预测力；接着是**干预**——把诊断里发现的"分歧尖峰"做成一个推理时门 $g_t$，每一步据此决定是让 base 继续出 token，还是临时让 LRM 出一个 token 后立刻交还。整条流程输入是 prompt $x_0$、输出是混合解码序列 $y_{1:T}$，模型参数和隐状态全程不动，唯一被改的是个别位置的 token 选择权。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt x₀<br/>base M_b + reasoning M_r（同词表）"] --> CAL["离线校准<br/>收集 {s_t} 定出阈值 τ 与尾部比 λ"]
+    CAL --> B["Token 级分歧度量<br/>沿 base rollout 算 s_t = CE(p_b, p_r)"]
+    B --> C{"双重门控<br/>g_t：s_t 是否同时超 τ 与 λ·局部均值"}
+    C -->|"是·分歧尖峰"| D["一令牌接管<br/>该 token 由 LRM 出：y_t ~ p_r"]
+    C -->|"否"| E["base 续写<br/>y_t ~ p_b"]
+    D --> F["交还 base，进入下一步 t+1"]
+    E --> F
+    F -->|"未结束"| B
+    F -->|"已结束"| G["输出混合解码序列 y₁:T"]
+```
+
 ### 关键设计
 
 **1. Token 级分歧度量：把"推理差距"落到每一步上**

@@ -42,6 +42,21 @@ EPiC 用"基于第一帧可见性掩码"的方式从任意 in-the-wild 视频直
 ### 整体框架
 EPiC 基于 CogVideoX-5B-I2V（DiT 风格、3D 全自注意力）。训练管线分两步：(1) 从任意 in-the-wild 视频用可见性掩码合成训练 anchor（不需要相机/点云）；(2) 把 anchor 经 3D-VAE 编码后和噪声潜变量沿通道拼接，送入 26M 的 Anchor-ControlNet，输出再用可见性掩码 $M$ 做空间门控、加到 base DiT 的对应层，整个 backbone 全程冻结。推理时反过来——用真实点云沿用户给定轨迹渲染 anchor，靠 Anchor-ControlNet 的可见性门控隔离掉 3D 重建的错位与飞像素，并且通过对前景做点云 mask 来切换"静态相机控制"和"前景可动"两种模式，V2V 模式则换成 DepthCrafter 估计的动态点云。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ANCHOR["可见性掩码 anchor 构造（设计 1）"]
+        direction TB
+        T1["训练：野外视频<br/>RAFT 光流把每帧回溯到第1帧"] --> T2["保留可追回像素 + 抹黑新区<br/>飞像素伪造 → anchor + 可见性 mask M"]
+        I1["推理：点云沿用户轨迹重渲染<br/>DAv2 估深度 / V2V 用 DepthCrafter"] --> T2
+    end
+    T2 --> V["3D-VAE 编码 anchor 得 z_anchor<br/>与噪声潜变量 z_t 沿通道拼接"]
+    V --> C["Anchor-ControlNet（设计 2）<br/>26M 轻量 DiT，零初始化投影得 z̃"]
+    B["冻结 CogVideoX-5B-I2V 主干<br/>DiT_base 补不可见区"] --> G
+    C --> G["可见性感知输出门控（设计 3）<br/>ẑ = DiT_base(z_t) + M ⊙ z̃"]
+    G --> O["去噪输出：相机可控视频"]
+```
+
 ### 关键设计
 
 **1. 可见性掩码 anchor 构造：用光流可见性伪造一段与源视频逐像素对齐的 anchor**

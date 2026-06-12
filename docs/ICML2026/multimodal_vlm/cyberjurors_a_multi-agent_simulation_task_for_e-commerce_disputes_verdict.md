@@ -42,7 +42,25 @@ tags:
 ### 整体框架
 **数据集 VerdictBench**：6000 案，五大类目（家电/服饰/食品/数码/其它），保留交易元数据 + 多轮多模态证据 + 17 陪审员投票真值。每案平均 14 张图、0.9 段视频；卖家胜率 62.6%（更熟悉履约规则），按类别×难度（17 票边距）3:1:2 分层划分 train/val/test。
 
-**模型 CyberJurors**：建模为有向社交网络 $\boldsymbol{G}=\langle\boldsymbol{A},\boldsymbol{E}\rangle$，$\boldsymbol{A}=\{a_1,...,a_N\}$ 是 $N$ 名异质陪审员，$e_{k,j}\in\boldsymbol{E}$ 表示 $a_k$ 关注 $a_j$。给定案件 $\boldsymbol{D}=\{d,\bm{e}_1^b,\bm{e}_1^s,...\}$（$d$ 为元数据，$\bm{e}_i^b=\{\bm{T}_i^b,\bm{I}_i^b,\bm{V}_i^b\}$ 为买家第 $i$ 轮文/图/视频证据，卖方对称），JCV 模拟 $T$ 轮讨论：每轮所有陪审员先拿到上一轮 Collective Verdict Summary 与 Verdict Precedent Base，再用 IV-CoT 各自产生判决 $\hat y_{k,t}$ 与理由 $J_{k,t}$；最后多数投票得最终裁决，summary 作为可解释 justification。
+**模型 CyberJurors**：建模为有向社交网络 $\boldsymbol{G}=\langle\boldsymbol{A},\boldsymbol{E}\rangle$，$\boldsymbol{A}=\{a_1,...,a_N\}$ 是 $N$ 名异质陪审员，$e_{k,j}\in\boldsymbol{E}$ 表示 $a_k$ 关注 $a_j$。给定案件 $\boldsymbol{D}=\{d,\bm{e}_1^b,\bm{e}_1^s,...\}$（$d$ 为元数据，$\bm{e}_i^b=\{\bm{T}_i^b,\bm{I}_i^b,\bm{V}_i^b\}$ 为买家第 $i$ 轮文/图/视频证据，卖方对称），JCV 模拟 $T$ 轮讨论：每轮所有陪审员先拿到上一轮 Collective Verdict Summary 与 Verdict Precedent Base，再用 IV-CoT 各自产生判决 $\hat y_{k,t}$ 与理由 $J_{k,t}$；最后多数投票得最终裁决，summary 作为可解释 justification。整体是「集体层 JCV 多轮仿真」外层套「个体层 IV-CoT 四阶段推理」内层、再由判例约束在两层之间注入规范的嵌套结构：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["案件 D：元数据 + 买卖双方多轮<br/>文 / 图 / 视频证据"] --> R
+    PB["判例约束 Verdict Precedent<br/>判例库 B=⟨H,N⟩ → 语义检索<br/>→ 按人格选 top-K 指引写入记忆"] --> R
+    R["JCV 陪审团共识裁决·第 t 轮<br/>N 名异质陪审员（人格 + 记忆 + 邻居判词 + 集体摘要）"] --> IVCOT
+    subgraph IVCOT["IV-CoT 个体裁决思维链：单陪审员四阶段"]
+        direction TB
+        S1["阶段 I 焦点抽取<br/>定争议焦点 + 双方诉求"] --> S2["阶段 II 线索定位<br/>Select-Perceive 迭代选证-感知"]
+        S2 -->|未到 T_max 轮| S2
+        S2 --> S3["阶段 III 对抗分析<br/>找两方线索逻辑冲突"]
+        S3 --> S4["阶段 IV 终局裁决<br/>判决 ŷ_k + 可追溯理由 J_k"]
+    end
+    IVCOT --> VOTE["多数投票 + 生成集体摘要 S_t"]
+    VOTE -->|"共识 < δ 且未满 T 轮：摘要回灌下一轮"| R
+    VOTE -->|"共识 ≥ δ=0.8 或满 T 轮"| OUT["最终裁决 ŷ + 可解释 justification"]
+```
 
 ### 关键设计
 

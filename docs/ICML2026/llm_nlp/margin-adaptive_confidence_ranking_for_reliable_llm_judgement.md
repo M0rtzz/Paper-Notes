@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 方法要解决的是"如何让置信度真正与人机一致率单调对齐"。给定 judge 模型 $f_{LM}$ 和一个有人类偏好标注的小校准集 $S_{\mathrm{cal}}$，整条 pipeline 是：先把每条样本在多组 in-context 示例下的预测概率拼成一个高维特征向量，再用一个小 MLP $C_\theta$ 把这个向量映射成 $[0,1]$ 的置信度，训练目标是用 margin ranking loss 强制"人机一致的样本排在不一致样本之上"；最后把训练好的 $C_\theta$ 直接嵌进 Jung et al. (2025) 的 fixed-sequence testing，照旧选阈值做带高概率保证的选择性评估。具体而言，对每条样本 $x$ 用 $N=5$ 个 simulated annotator、各 $K=5$ 个示例枚举所有 $1\sim K$-shot 子集 $\mathcal{T}$，得到特征 $s\in\mathbb{R}^{|\mathcal{T}|}$；从 $S_{\mathrm{cal}}$ 中按 $f_{LM}(x)$ 是否等于人类标签 $y$ 切出 agreement / disagreement 两组，随机抽 5000 对构造 ranking 训练对；MLP 训练完后按 $\widehat{\lambda} = \inf\{\lambda: \widehat{R}^+(\lambda') \le \alpha,\ \forall \lambda' \ge \lambda\}$ 选阈值。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["样本 x（N=5 模拟标注者 × K=5 示例）"]
+    subgraph S1["多视角 in-context 特征 + 排序型置信度"]
+        direction TB
+        B["枚举 1~K-shot 子集<br/>拼成高维特征向量 s"] --> C["小 MLP C_θ<br/>映射成置信度 [0,1]"]
+        C --> D["margin ranking loss<br/>惩罚 agreement 样本排在 disagreement 之下"]
+    end
+    A --> S1
+    E["PAC-Bayes margin-based 泛化界<br/>误排序概率 ≤ 经验 margin 损失 + 1/γ² 复杂度项"]
+    S1 --> F["Margin-adaptive 联合优化<br/>交替更新：SGD 调 θ，再取最优 γ"]
+    E --> F
+    F -->|训练好的 C_θ| G["fixed-sequence testing<br/>选阈值 λ̂ 做选择性评估"]
+    G --> H["高置信样本<br/>人机一致率以高概率达标"]
+```
+
 ### 关键设计
 
 **1. 多视角 in-context 特征 + 排序型置信度：把"分类正确"和"排序一致"分开**

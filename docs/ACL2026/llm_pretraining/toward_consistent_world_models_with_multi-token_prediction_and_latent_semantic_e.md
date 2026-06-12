@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 LSE-MTP 在标准 MTP 架构上增加两个辅助损失。给定骨干隐状态 $h_n$，$K$ 个步长特异的转换层 $\mathcal{T}_\phi^{(k-1)}$ 生成多步预测表示 $\hat{h}_{n,k}$。训练目标包含：(1) 多步交叉熵损失（标准 MTP）；(2) 隐一致性损失（预测表示对齐未来骨干状态）；(3) 语义锚定损失（预测表示对齐目标 token 嵌入）。推理时所有转换层和辅助损失被丢弃，解码保持标准自回归 NTP。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 token 序列"] --> B["骨干网络<br/>骨干隐状态 h_n"]
+    B --> C["K 个步长特异转换层 T_φ<br/>多步预测表示 ĥ_n,k (k=2..K)"]
+    C --> D["多步交叉熵损失<br/>(标准 MTP 信号)"]
+    C --> E["隐一致性损失"]
+    C --> F["语义锚定损失"]
+    D -->|对齐| G["目标 token u_n+k"]
+    E -->|对齐| H["真实骨干隐状态 h_n+k−1"]
+    F -->|对齐 (stop-grad)| I["目标 token 嵌入 E(u_n+k)"]
+    B --> J["推理：丢弃转换层与辅助损失<br/>标准自回归 NTP 解码"]
+```
+
 ### 关键设计
 
 **1. 梯度耦合理论分析（Gradient Coupling Analysis）：用 NTK 解释 MTP 为何能"无意中"逼出信念状态**

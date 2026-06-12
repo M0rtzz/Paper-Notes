@@ -45,6 +45,30 @@ tags:
 
 ARCHE 基于 VAE 框架：分析变换 $g_a$ 将输入映射为潜在表示 $y$，合成变换 $g_s$ 从量化表示 $\hat{y}$ 重建图像。核心在于熵模型的层级设计：超先验提供全局统计 → Masked PixelCNN 上下文精化局部概率 → 通道条件捕获跨通道依赖 → SE 激励自适应加权通道 → LRP 修正量化误差。潜在表示 $y$ 沿通道维被分为 10 个切片顺序解码，每个切片有独立的条件变换和 LRP 子模块。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    X["输入图像 x"] --> GA["分析变换 g_a：卷积 + GDN 下采样 → 潜在表示 y"]
+    GA --> Q["量化得 ŷ，沿通道维分 10 个切片顺序解码"]
+    Q --> D1
+    subgraph D1["1. 自回归超先验 + Masked PixelCNN 上下文"]
+        direction TB
+        HP["超先验 h_a / h_s：侧信息 ẑ 提供全局均值 μ 与尺度 σ"]
+        CTX["Masked PixelCNN：光栅扫描建模空间因果先验"]
+        HP --> CTX
+    end
+    D1 --> D2
+    subgraph D2["2. 通道条件 + SE 激励"]
+        direction TB
+        CC["通道条件：用已解码通道把条件空间扩到空间 + 通道"]
+        SE["SE 切片变换：挤压-激励自适应加权通道"]
+        CC --> SE
+    end
+    D2 --> PN["参数网络拼接 → 高斯 μ, σ → 算术编解码"]
+    PN --> LRP["3. 潜在残差预测 LRP：softsign 修正量化残差"]
+    LRP --> GS["合成变换 g_s：反卷积 + IGDN 重建图像 x̂"]
+```
+
 ### 关键设计
 
 **1. 自回归超先验 + Masked PixelCNN 上下文：用纯卷积把全局统计和空间因果一起建进先验**

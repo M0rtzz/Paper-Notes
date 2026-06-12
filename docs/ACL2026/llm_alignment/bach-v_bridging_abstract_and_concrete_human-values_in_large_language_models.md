@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 BACH-V 用「三层 regime × 两种工具」的矩阵来拆解并验证 LLM 的价值表示。三层 regime 把「模型懂不懂一个价值」分成抽象-抽象（A-A，能否区分不同抽象概念的语义）、抽象-具体（A-C，抽象概念能否在具体事件里被识别）、具体-具体（C-C，抽象原则能否调控具体决策）三个递进层级；两种工具则分别从两个方向验证——Passive Probing 用线性探针被动读出激活里的价值强度以证明「存在」，Active Steering 把探针方向反向注入激活以证明「因果」。给定 prompt 加一段文本（抽象描述、具体事件或决策场景），系统提取每层 MLP 输出激活，输出该价值的相关性打分或调控后的行为分布；每个价值在每层都单独训一个探针，并选 Pearson 相关最高的那层作为后续实验的「诊断探针」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["价值数据集与 token 级监督"]
+        direction TB
+        A["10 个价值维度"] --> B["GPT-4o 生成相关/无关句<br/>+ ≤80 词概念解释"]
+        B --> C["逐 token 打 0–6 相关度分 y(t)"]
+    end
+    DATA --> D["提取各层 MLP 输出激活 x_l(t)"]
+    D --> E["价值探针训练与读出<br/>线性投影 P=ReLU(⟨w_p,x⟩+b)，MSE+L1"]
+    E --> F["按层选 Pearson 最高层作诊断探针"]
+    F --> G["Passive Probing<br/>读出价值强度 → 证存在"]
+    F --> H["激活引导<br/>x_l ← x_l + α·k_p·w_p → 证因果"]
+    G --> I["三层 regime 验证<br/>A-A / A-C / C-C"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 价值数据集与 token 级监督信号：用逐 token 强度对齐方向**

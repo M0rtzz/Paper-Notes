@@ -33,7 +33,24 @@ tags:
 
 ### 整体框架
 
-LUMINA 既是数据集也是方法论：它要补上现有乳腺 X 线公开数据集"规模小、标注少、厂商单一"的缺口，同时给出一个能抹平厂商/能量域漂移的预处理。整条工作流分三步——先做数据收集与整理（6 个厂商共 1824 张 FFDM，带病理确认的良恶性标签、BI-RADS 评分和密度标注）；再做前景直方图协调（Energy Harmonization），把所有图像对齐到低能参考分布；最后做多任务基准评估，在诊断、BI-RADS 分类、密度预测三个临床任务上对比 CNN（ResNet-50、DenseNet-121、EfficientNet-B0）和 Transformer（Swin-T）。
+LUMINA 既是数据集也是方法论：它要补上现有乳腺 X 线公开数据集"规模小、标注少、厂商单一"的缺口，同时给出一个能抹平厂商/能量域漂移的预处理。整条工作流分三步——先做**多厂商数据集构建**（6 个厂商共 1824 张 FFDM，带病理确认的良恶性标签、BI-RADS 评分和密度标注）；再做**前景直方图协调**（Energy Harmonization），把所有图像对齐到低能参考分布；最后用**双视图共享骨干网络**（CC + MLO 两视图过同一套共享权重）在诊断、BI-RADS 分类、密度预测三个临床任务上做基准评估，对比 CNN（ResNet-50、DenseNet-121、EfficientNet-B0）和 Transformer（Swin-T）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["多厂商数据集构建"]
+        direction TB
+        A["6 厂商 FFDM<br/>1824 图 / 468 例<br/>高能 + 低能"] --> B["DICOM 整理<br/>MONOCHROME1→2 转换"]
+        B --> C["标注：病理 + BI-RADS + 密度"]
+    end
+    DATA --> H["前景直方图协调<br/>前景掩码 → 前景 CDF → 匹配低能参考"]
+    H --> V1["CC 视图"]
+    H --> V2["MLO 视图"]
+    V1 --> SB["双视图共享骨干网络<br/>共享权重提特征"]
+    V2 --> SB
+    SB --> FC["特征拼接 → 全连接分类头"]
+    FC --> T["三任务评估<br/>诊断 / BI-RADS / 密度"]
+```
 
 ### 关键设计
 

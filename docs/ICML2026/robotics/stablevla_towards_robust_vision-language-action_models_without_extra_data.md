@@ -44,6 +44,22 @@ StableVLA 在结构上沿用 VLA-Adapter 的「冻结 SigLIP/DINOv2 + 适配器 
 
 形式化目标函数是标准 IB：$\min_{\phi(\mathbf{Z}\mid\mathbf{X}_v)} \mathcal{L}_{IB} = I(\mathbf{X}_v;\mathbf{Z}) - \beta I(\mathbf{Z};\mathbf{S})$，其中 $\mathbf{S}$ 是任务相关的"干净语义码"，$\beta$ 控制压缩-保真的折中。作者证明：在高斯+独立 Bernoulli 隐变量假设下，最优 $\mathbf{Z}$ 的迭代更新可写成通道维度的注意力 $\mathbf{Z} = \mathbf{V} \cdot \sigma(\beta \mathbf{Q}^\top \mathbf{K})$，其中 $\sigma$ 取 Sigmoid（对应独立 Bernoulli 假设）。这就是把"IB 优化"翻译成"可学模块"的桥。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RGB 观察 I + 指令 T"] --> B["冻结视觉编码器<br/>SigLIP / DINOv2 → 视觉 token X_v"]
+    B --> D["MLP 旁路<br/>保高频细节（高保真路径）"]
+    B --> IB
+    subgraph IB["通道维度 IB-Adapter（去噪路径）"]
+        direction TB
+        E["通道协方差注意力<br/>恒等键 + Gram 矩阵 G_h"] --> F["Sigmoid 门控<br/>独立抑制噪声通道"]
+        F --> G["GELU MLP 重建 Z_h"]
+    end
+    D --> H["双路径融合<br/>Z = MLP(X) + tanh(λ)·IB(X)"]
+    IB --> H
+    H -->|"训练期 SPD 按任务调 dropout"| I["LLM 策略骨干<br/>自回归预测动作 a"]
+```
+
 ### 关键设计
 
 **1. 通道维度的协方差注意力（IB-Adapter 主体）：在通道而非空间维度做信息瓶颈，识别语义子空间**

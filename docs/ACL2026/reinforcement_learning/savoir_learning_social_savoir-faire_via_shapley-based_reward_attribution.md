@@ -43,7 +43,21 @@ tags:
 
 ### 整体框架
 
-Savoir 的训练管道分三个阶段：(1) 数据收集——LLM 自我对弈生成社交交互 episode；(2) 奖励建模——用 Savoir 算法将 episode 级结果归因到话语级，训练奖励模型；(3) 策略训练——SFT 预热后用 GRPO 在线 RL。核心创新在阶段 (2)：给定对话 $\tau$ 中代理的 $n$ 句话语 $N = \{a_1, \ldots, a_n\}$，计算每句话语的 Shapley 值 $\phi_i$ 作为奖励信号。
+Savoir 的训练管道分三个阶段：(1) 数据收集——LLM 自我对弈生成社交交互 episode；(2) 奖励建模——用 Savoir 算法将 episode 级结果归因到话语级，训练奖励模型；(3) 策略训练——SFT 预热后用 GRPO 在线 RL。核心创新在阶段 (2)：给定对话 $\tau$ 中代理的 $n$ 句话语 $N = \{a_1, \ldots, a_n\}$，计算每句话语的 Shapley 值 $\phi_i$ 作为奖励信号——这一步内部又拆成"用期望效用衡量价值、用 Shapley 值公平分配、用 KernelSHAP 把计算压可行"三层。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数据收集<br/>LLM 自我对弈生成社交 episode"] --> RM
+    subgraph RM["奖励建模（Savoir 算法）"]
+        direction TB
+        B["期望效用<br/>Monte Carlo rollout 估前瞻战略价值 v(S)"] --> C["Shapley 值<br/>公理化分配话语级信用 φ_i"]
+        C --> D["KernelSHAP 近似<br/>加权回归把 2^n 联盟压到约 200 次采样"]
+    end
+    RM --> E["奖励模型 R_θ<br/>MSE 拟合 Shapley 信号 φ_i"]
+    E --> F["策略训练<br/>SFT 预热 → GRPO 在线 RL"]
+    F --> G["社交代理（SOTOPIA SOTA）"]
+```
 
 ### 关键设计
 

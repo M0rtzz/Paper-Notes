@@ -44,13 +44,32 @@ tags:
 
 两大阶段：(1) Hallucination Verification——先把初始回复解析成场景图 $G=(O, A, R)$，再分别用专门模型验证对象（YOLO + Grounding DINO 主验，Qwen3-VL 30B/32B 二次裁决）和属性/关系（Qwen3-VL 30B+32B 共识），共识机制要求两个独立模型给同样判定才算确诊，否则标 Ambiguous。(2) Self-correction——根据诊断让 LVLM 自己重写：先 Factual Rectification（删/换幻觉元素得到简洁正确回复），再 Detailed Enrichment（补充缺失视觉细节但禁止重提已知幻觉对象）；丰富后再回送验证，迭代至无幻觉或超过 3-5 轮后丢弃。最终把"自校正 + 丰富后的回复"作为 $y^+$、"原始幻觉回复"作为 $y^-$，跑标准 DPO。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + LVLM 初始回复"] --> B["解析为场景图 G=(O,A,R)"]
+    subgraph V["三层一致性幻觉验证（设计1）"]
+        direction TB
+        B --> C["Object：YOLO + Grounding DINO 主验<br/>歧义对象交 Qwen3-VL 30B/32B 裁决"]
+        C --> D["Attribute / Relation：Qwen3-VL 30B+32B 共识<br/>两模型同判才确诊，否则标 Ambiguous"]
+    end
+    subgraph SC["自校正 + 迭代细节丰富（设计2）"]
+        direction TB
+        E["Factual Rectification<br/>删/换幻觉元素得简洁正确回复"] --> F["Detailed Enrichment<br/>补缺失细节，禁止重提幻觉对象"]
+    end
+    D --> E
+    F -->|"仍有幻觉，重试 ≤3-5 轮"| B
+    F -->|"无幻觉"| G["构造偏好对<br/>y+ = 自校正+丰富回复，y− = 原始幻觉回复"]
+    G --> H["In-distribution DPO 训练（设计3）<br/>AVES-DPO Loss"]
+```
+
 ### 关键设计
 
 **1. 三层一致性幻觉验证（O/A/R Consensus Verification）：用「两个模型都同意」过滤单模型噪声**
 
 现有数据集过分偏向 object 级幻觉，对 attribute（颜色/材质/姿态/状态）和 relation（空间/动作关系）这类细粒度幻觉覆盖不足，而单一 verifier 又容易带噪。AVES-DPO 先把初始回复解析成场景图 $G=(O, A, R)$，再要求两个独立 verifier $V_1, V_2$ 给出相同 label 才确诊：$L(x) = l$ 当 $V_1(x) = V_2(x) = l$，否则标为 Ambiguous。Object 层用 YOLOv8x-worldv2 + Grounding DINO 主验，对相似词（cos sim ≥ 0.5）做 grouping 避免互相干扰，Ambiguous 对象再交 Qwen3-VL 30B + 32B 二次裁决。
 
-属性与关系只对已被判为 Factual 的对象验证，用预构建的 148 对象 + 38 属性 + 17 关系词表按语义子类型检索替换候选。分层验证比统一打分能更精确地定位错误类型，而「两者同意」机制把可靠性放在第一位——这正是用便宜的开源模型凑出媒美 GPT-4V 标注质量的关键。
+属性与关系只对已被判为 Factual 的对象验证，用预构建的 148 对象 + 38 属性 + 17 关系词表按语义子类型检索替换候选。分层验证比统一打分能更精确地定位错误类型，而「两者同意」机制把可靠性放在第一位——这正是用便宜的开源模型凑出媲美 GPT-4V 标注质量的关键。
 
 **2. 自校正 + 迭代细节丰富（Factual Rectification + Detailed Enrichment）：删错加详再验证，两者一起才能凑齐**
 

@@ -47,6 +47,29 @@ tags:
 
 整体管线建立在预训练的 Wan-I2V 图生视频扩散模型之上。推理时模型吃四样东西：一张参考图、一段文本提示、一条相机轨迹、以及若干物体的 3D 运动轨迹。两条控制支路并行工作：相机轨迹控制（CTC）通过 Viewpoint Control Module 注入相机位姿和几何先验，物体动态控制（ODC）通过 Object Motion Module 把 2D 视觉锚点和 3D 轨迹条件一起灌进去。两条支路用不同的注入方式接入扩散主干——CTC 走 ControlNet，ODC 走交叉注意力——既各管各的、又共享同一主干，这正是"解耦但统一"的来源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：参考图 + 文本提示<br/>相机轨迹 + 物体 3D 轨迹"]
+    IN --> PCD["Depth-Pro 估点云 + 内参 + 初始位姿<br/>按相机位姿逐帧渲染→几何感知帧 V"]
+    subgraph CTC["相机轨迹控制（CTC）"]
+        direction TB
+        PCD --> CCAM["相机编码器：Plücker→运动表征 c_cam"]
+        PCD --> CPCD["Wan 编码器：渲染帧→几何特征 c_pcd"]
+        CCAM --> VCM["Viewpoint Control Module<br/>ControlNet 注入"]
+        CPCD --> VCM
+    end
+    subgraph ODC["物体动态控制（ODC）"]
+        direction TB
+        PCD --> BOX["2D 视觉引导<br/>3D 轨迹投影成边界框叠加到 V"]
+        TRAJ["3D 轨迹条件化<br/>3D 轨迹嵌入 + 实体语义→c_obj"] --> CA["逐块交叉注意力注入"]
+    end
+    VCM --> BACK["Wan-I2V 扩散主干"]
+    BOX --> BACK
+    CA --> BACK
+    BACK --> OUT["输出：相机与物体联合可控视频"]
+```
+
 ### 关键设计
 
 **1. 相机轨迹控制（CTC）：用点云渲染帧给相机控制补上 3D 结构感**

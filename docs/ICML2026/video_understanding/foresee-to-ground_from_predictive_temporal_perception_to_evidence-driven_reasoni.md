@@ -52,6 +52,18 @@ $$p(A, T, z \mid V, Q, \mathcal{S}_K(V)) = p(z \mid V, Q, \mathcal{S}_K(V)) \cdo
 - Stage-2（**提案热启**）：有监督训练轻量提案头，提取 Top-K 候选并编码局部证据。
 - Stage-3（**证据驱动推理**）：微调 Video-LLM 做有监督的识别-测量两阶段生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：视频 V + 查询 Q"] --> B["多视图潜变量预测<br/>（Stage-1 自监督）<br/>学边界敏感时序特征 U"]
+    B --> C["提案头取 Top-K 候选段<br/>（Stage-2 热启，与查询无关）"]
+    C --> D["跨度证据编码器 SEE<br/>每段压成定长视觉证据 token"]
+    D --> E["证据池 S_K(V)<br/>每条 = Span ID + 粗时间区间 + 视觉证据"]
+    E --> F["证据驱动推理（Stage-3 Video-LLM）<br/>整个证据池注入上下文"]
+    F -->|识别：先吐 ID token 认领某候选事件| G["测量：在选中事件约束下精细生成边界 T"]
+    G --> H["输出：答案 A + 时间区间 T"]
+```
+
 ### 关键设计
 
 **1. 多视图潜变量预测（Predictive Temporal Perception）：用"部分能否预测整体"的差异自动学到边界敏感特征**

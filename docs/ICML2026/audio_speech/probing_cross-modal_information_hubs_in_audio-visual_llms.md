@@ -43,25 +43,36 @@ tags:
 ### 整体框架
 分析管线分三阶段:(i) 在 VGGSound 上用 20 选 1 多选题筛出 audio-dominant 与 video-dominant 样本,只保留 $\hat y_{av}=\hat y_a \neq \hat y_v$ 或对偶条件;(ii) 在 clean / corrupted (主导模态置零) / corrupted-with-restoration (把 clean 的隐藏状态 patch 到非主导 token 上) 三次前向中度量 indirect effect;(iii) 把候选 token 划成 object / sink / random / 全部非主导 四类,比较谁的 IE 最高。下游应用阶段则把 sink token 进一步按"被对方模态注意"切分成 cross-modal 与 unimodal,在解码时只对 cross-modal sink 放大注意力,得到训练免费的幻觉抑制器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VGGSound 20 选 1 多选题"] --> S1
+    subgraph S1["单模态主导因果追踪框架"]
+        direction TB
+        B["筛选单模态主导样本<br/>联合预测=单模态预测≠另一模态"] --> C["三次前向 clean / corrupted / 复原<br/>patch 非主导 token 测 IE"]
+    end
+    S1 --> D["全局 sink token 重新定义<br/>按跨层频次聚合取 top sink"]
+    D --> E["按 token 类型比较 IE<br/>object / sink / random"]
+    E -->|"sink 的 IE 最高"| S3
+    subgraph S3["Cross-modal sink token 与训练免费幻觉缓解"]
+        direction TB
+        F["切分 cross-modal / unimodal sink"] --> G["解码时放大 cross-modal sink 注意力<br/>缓解物体幻觉"]
+    end
+```
+
 ### 关键设计
 
-1. **单模态主导因果追踪框架**:
+**1. 单模态主导因果追踪框架:把双向交互拆成可定向的因果干预**
 
-    - 功能:在双向交互的 AVLLM 中可靠定位"信息搬运到哪里"。
-    - 核心思路:用条件 $\hat y_{av}=\hat y_a \neq \hat y_v$ 筛选音频主导样本,把音频置零形成 corrupted run;再把 clean 中视频 token 子集 $S$ 的隐藏态 $h_S^{\text{clean}}$ patch 回去。若预测恢复,说明 $S$ 在 clean run 中已经吸收了音频信息。定义 $\text{IE}_{\text{clean}}(S)=P_{h_S^{\text{clean}}}[o_{\text{clean}}]-P[o_{\text{clean}}]$ 与对偶的 $\text{IE}_{\text{corrupt}}(S)$ 两个互补指标。
-    - 设计动机:传统 causal tracing 在 LLM/LVLM 中只追踪文本→其他模态的单向流;但 AVLLM 中音视频都可能成为信号源,直接对所有样本做追踪会被噪声淹没。借助"主导样本"自然指定了源与目标,等价于一个观测因果干预实验。
+传统 causal tracing 在 LLM/LVLM 中只追踪文本→其他模态的单向流,但 AVLLM 中音视频都可能成为信号源,对所有样本盲目追踪会被噪声淹没。作者的破题点是只保留"单模态主导"样本——以音频主导为例,用条件 $\hat y_{av}=\hat y_a \neq \hat y_v$(联合预测等于音频预测、却不同于视频预测)筛出那些音频已给出决定性线索、视频模糊的片段,这类样本天然指明信息从音频流向视频 token。在此之上做三次前向:clean run、把音频原始表征置零的 corrupted run、以及把 clean 中视频 token 子集 $S$ 的隐藏态 $h_S^{\text{clean}}$ patch 回 corrupted 的复原 run;若预测被恢复,就说明 $S$ 已在 clean run 中吸收了音频信息。用 $\text{IE}_{\text{clean}}(S)=P_{h_S^{\text{clean}}}[o_{\text{clean}}]-P[o_{\text{clean}}]$ 与对偶的 $\text{IE}_{\text{corrupt}}(S)$ 两个互补指标量化。之所以有效,是因为主导样本相当于自带了"源模态—目标模态"标注,把一次被动观测变成等价的因果干预实验,绕开了"双向交互无法定向追踪"的根本难题。
 
-2. **全局 sink token 重新定义**:
+**2. 全局 sink token 重新定义:在 sink 位置逐层漂移的 AVLLM 里锁定稳定枢纽**
 
-    - 功能:在 sink 位置跨层漂移的 AVLLM 中得到一组稳定的 sink 集合。
-    - 核心思路:作者发现 AVLLM 不像 LVLM,sink token 的位置每层都在变。于是不再逐层取 sink,而是统计每个 token 在所有层中被识别为 sink 的频率,取频次最高的 top $|\mathcal T|/N$ 作为全局 sink, $N\in\{2,3,4\}$ 控制稀疏度。sink 本身仍按"在预定义 sink 维度激活幅值异常大"判定。
-    - 设计动机:逐层 sink 与稠密的非 sink 混在一起会让 IE 的归因失真;按出现频率聚合后,既保持了 sink 的稀疏性,又让因果追踪指向稳定子集,实验里 sink 子集 patch 后 IE 显著高于 object/random 基线。
+作者发现 AVLLM 不像 LVLM——sink token 的位置每层都在变,若逐层取 sink,它会和稠密的非 sink 混在一起,让 IE 的归因失真。对策是不再逐层取 sink,而是统计每个 token 在所有层中被识别为 sink 的频率,取频次最高的 top $|\mathcal T|/N$ 作为全局 sink,$N\in\{2,3,4\}$ 控制稀疏度;sink 本身仍按"在预定义 sink 维度上激活幅值异常大"判定。按频率聚合既保住了 sink 的稀疏性,又让因果追踪指向一个跨层稳定的子集——实验里 sink 子集 patch 后的 IE 显著高于 object / random 基线,正是这一定义带来的。
 
-3. **Cross-modal sink token 与训练免费的幻觉缓解**:
+**3. Cross-modal sink token 与训练免费的幻觉缓解:把"已融合的可信摘要"放大回推理**
 
-    - 功能:把 sink 进一步切成"自己模态被强注意 (unimodal)"与"对方模态被强注意 (cross-modal)",并据此调制注意力。
-    - 核心思路:对每个 sink token 测算来自同模态 vs. 跨模态的平均注意权重,占比高者归入对应类别。生成阶段在 LLM 的注意力矩阵中给 cross-modal sink token 加一个乘子,等价于让模型在推理时更依赖已经融合好的跨模态摘要,而非各自模态的局部 token。
-    - 设计动机:幻觉常源于 LLM 偏向某一个模态的局部噪声,跨模态 sink 正好是"已经融合过的可信摘要",放大它们等于把推理拉回到双模态共同支持的事实区域,这种干预完全发生在注意力权重上,不动参数也不需额外训练。
+幻觉常源于 LLM 偏信某一模态的局部噪声。作者对每个 sink token 测算来自同模态 vs. 跨模态的平均注意权重,占比高者归入 unimodal sink 或 cross-modal sink——后者是被对方模态重度注意、真正承载跨模态信息的枢纽。生成阶段在 LLM 的注意力矩阵中给 cross-modal sink token 乘上一个放大系数,等价于让模型推理时更依赖这些已经融合好的跨模态摘要,而非各自模态的局部 token。这之所以能压幻觉,是因为 cross-modal sink 正好是"双模态共同支持的事实摘要",放大它就把推理拉回到双模态都支持的事实区域;而且整个干预只动注意力权重,不改参数、也不需额外训练,几行 hook 即可部署。
 
 ### 损失函数 / 训练策略
 分析阶段没有任何训练,纯前向 + hook;幻觉缓解阶段也是 inference-only 干预,只引入一个标量调节系数。所有实验都在 Qwen2.5-Omni (7B/3B)、video-SALMONN-o1 (7B)、video-SALMONN2+ (7B/3B) 这五个开源 checkpoint 上直接做。

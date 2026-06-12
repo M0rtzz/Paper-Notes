@@ -51,6 +51,26 @@ tags:
 ### 整体框架
 ACTG-ARL 把"隐私条件文本生成"拆成一条流水线：先用 Oracle LLM 从私域文本抽出结构化属性矩阵，再用表格合成器在低维特征空间做差分隐私合成，然后 DP 微调一个"特征→文本"的条件生成器 $G_{x|f}$；最后用 Anchored RL 在不碰原始私域数据的前提下，把这个生成器的指令跟随能力进一步拉高。整条链路按隐私预算切成 $\varepsilon_1$（特征合成）和 $\varepsilon_2$（条件微调）两段，RL 阶段则完全免费——它只从模型自身采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["私域文本"] --> B
+    subgraph ACTG["分层分解 + 结构化属性模式（设计 1）"]
+        direction TB
+        B["Oracle LLM 标注<br/>抽 K 个结构化属性字段"] --> C["AIM 表格合成器<br/>低维特征空间 DP 合成（ε₁）"]
+        C --> D["DP 微调条件生成器<br/>学特征→文本映射（ε₂）"]
+    end
+    D --> E["最优 N 选一采样<br/>每特征采 N 条按 IFAcc 选最优"]
+    subgraph ARL["Anchored RL（设计 2）"]
+        direction TB
+        E --> F["SFT 锚点集<br/>零隐私成本"]
+        F --> G["混合损失 L=L_RL+γ(t)·L_SFT<br/>γ 线性衰减防奖励黑客"]
+    end
+    G --> H["可控条件生成器 +<br/>DP 合成文本数据集"]
+    I["IFAcc 可验证奖励（设计 3）<br/>Oracle 反提属性逐字段比对"] -.打分.-> E
+    I -.奖励.-> G
+```
+
 ### 关键设计
 
 **1. 分层分解 + 结构化属性模式：把隐私预算花在刀刃上**

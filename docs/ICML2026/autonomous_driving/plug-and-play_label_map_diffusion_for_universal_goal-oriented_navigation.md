@@ -43,17 +43,32 @@ tags:
 ### 整体框架
 PLMD 要解决的是模块化导航的「只有走过才有语义」难题：在不动任何导航策略的前提下，把已观测的 BEV 语义图与障碍图合并成一张可视化 Label Map，再用级联扩散把未观测区域的语义和障碍一起补全，让策略提前「看到」目标可能在哪。机器人正常导航时持续构建 egocentric 语义+障碍 BEV $M_t\in\mathbb R^{(n+4)\times H\times W}$（$n$ 个语义通道 + 占用/自由空间/位置），把它渲染成 Label Map 并对未观测区域打 mask；扩散模块先补障碍图再补语义图，得到预测 Label Map $L_t^P=[S_t^P,C_t^P]$；最后在补全图上用密度聚类找出目标类别的可靠落点作为长期目标，交给 FMM 局部规划，找不到可靠簇就退回原策略继续探索。整个过程从导航第 100 步起每 50 步刷新一次。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["egocentric BEV 语义+障碍图<br/>（导航中持续构建）"] --> B["Label Map 统一表示<br/>语义+障碍合成 RGB，未观测区填白作 mask"]
+    B --> C1
+    subgraph C["障碍先验调制的级联扩散"]
+        direction TB
+        C1["障碍图扩散：先收敛几何骨架"] --> C2["语义图扩散：SPADE 逐层调制跟随骨架"]
+    end
+    C2 --> D["预测 Label Map（语义+障碍）"]
+    D --> E["基于密度聚类的候选目标提取<br/>HDBSCAN 聚类 + 复合分数排序"]
+    E -->|有可靠簇| F["长期目标 → FMM 局部规划"]
+    E -->|无簇过阈值| G["退回原策略继续探索"]
+```
+
 ### 关键设计
 
-**1. 障碍先验调制的级联扩散：解决语义在未观测区漂移穿墙的幻觉**
+**1. Label Map 统一表示：让扩散直接复用图像 inpainting 工具链**
+
+直接对 $n+4$ 个通道做扩散需要从零设计 backbone，工程成本高。PLMD 改用一张三通道彩色图统一承载语义与障碍：用固定调色板把 $n+2$ 类标签映射成不同 RGB，未观测区域填白色当作 inpainting 的 mask，于是成熟的 DDPM/U-Net 图像补全经验可以原样套用。输出端再按同一调色板反查，得到预测语义 vector $S_t^P\in\mathbb R^{n\times H\times W}$ 与障碍 vector $C_t^P\in\mathbb R^{2\times H\times W}$，拼成 $L_t^P=[S_t^P,C_t^P]$。调色板本身把语义类别离散化，也顺带降低了相邻类别的混淆。
+
+**2. 障碍先验调制的级联扩散：解决语义在未观测区漂移穿墙的幻觉**
 
 PLMD 的核心痛点是 BEV 上语义像素稀疏、大片是 free space，纯语义扩散在去噪早期缺乏几何骨架就会四处乱画，导致房间边界漂移、物体长在墙上。本文的做法是把生成拆成「先画结构、再填物品」两级：障碍图 $c_\tau$ 沿 SDE $\mathrm dc=\theta_\tau(\mu_c-c)\mathrm d\tau+\delta_\tau\mathrm dw$ 演化，由条件网络 $\mathcal G_\phi(c_\tau,\mu_c,\tau)$ 做反向去噪，目标是最小化 $\mathcal L_\alpha=\sum_\tau\alpha_\tau\mathbb E[\|c_\tau-(\mathrm dc_\tau)_{\mathcal G_\phi}-c_{\tau-1}^*\|_p]$；因为墙线、门口这类障碍结构在房屋内部统计上更密、更刚性，所以障碍图能先稳定地收敛成几何骨架。
 
 随后语义网络 $\tilde{\mathcal G}_\phi(s_\tau,c_{\tau-1},\tau)$ 在每个去噪步都被这副骨架约束——在第 $k$ 层特征 $f_\tau^k$ 上做 SPADE 残差调制 $\hat f_\tau^k=\mathbf W_\gamma^{(k)}(c_{\tau-1})f_\tau^k+\mathbf b_\beta^{(k)}(c_{\tau-1})$，由当前障碍状态 $c_{\tau-1}$ 决定每层的 scale 与 bias，相当于让障碍布局逐层「驱动」语义生成。这正是 GauGAN 里「用 layout 调制语义」机制的迁移。训练上先单独预训练 $\mathcal G_\phi$，再冻结它去训 $\tilde{\mathcal G}_\phi$，保证语义始终跟随一个已经画对的房间格局，从根上避免穿墙物体。
-
-**2. Label Map 统一表示：让扩散直接复用图像 inpainting 工具链**
-
-直接对 $n+4$ 个通道做扩散需要从零设计 backbone，工程成本高。PLMD 改用一张三通道彩色图统一承载语义与障碍：用固定调色板把 $n+2$ 类标签映射成不同 RGB，未观测区域填白色当作 inpainting 的 mask，于是成熟的 DDPM/U-Net 图像补全经验可以原样套用。输出端再按同一调色板反查，得到预测语义 vector $S_t^P\in\mathbb R^{n\times H\times W}$ 与障碍 vector $C_t^P\in\mathbb R^{2\times H\times W}$，拼成 $L_t^P=[S_t^P,C_t^P]$。调色板本身把语义类别离散化，也顺带降低了相邻类别的混淆。
 
 **3. 基于密度聚类的候选目标提取：把含噪声的补全图变成可靠 goal**
 

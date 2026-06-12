@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 本文要解决的是"prompt 触发的价值表达和模型内在的价值表达，究竟是不是同一套电路"，做法是把每一对方向都装进同一个几何对象再拆开看。所有分析都围绕一个 (value $s$, layer $\ell$, expression type $e\in\{\text{int},\text{prompt}\}$) 元组展开：先在空系统提示（intrinsic）和价值优先系统提示（prompted）两种条件下抽出残差流方向，再用 SVD 把成对方向裁成共享轴与差异轴，最后把方向投到 MLP 输出列上归因到具体神经元，让向量级、神经元级、行为级三类证据落在同一坐标里互相印证。主干模型为 Qwen2.5-7B-Instruct，鲁棒性验证扩展到 Qwen2.5-1.5B/32B、Llama-3.1-8B-Instruct、Gemma2-9b-it、Qwen3-8B/14B。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实用户 query（ShareGPT / LMSYS）"] --> C["intrinsic 回答<br/>空系统提示"]
+    A --> D["prompted 回答<br/>价值优先系统提示"]
+    C --> E["Difference-in-means 价值向量<br/>+ 正交化因果检验"]
+    D --> E
+    E --> F["SVD 共享 / 独有轴分解<br/>共享轴 · intrinsic 轴 · prompted 轴"]
+    F --> G["MLP 价值神经元几何归类<br/>投影 + 夹角 → shared / int-unique / prompt-unique"]
+    G --> H["三层证据互证<br/>向量 steer · 神经元缩放 · 越狱 / 跨语言"]
+```
+
 ### 关键设计
 
 **1. Difference-in-means 价值向量 + 正交化因果检验：把"在表达某价值"压成一条方向，再验证它能否被对方替代**

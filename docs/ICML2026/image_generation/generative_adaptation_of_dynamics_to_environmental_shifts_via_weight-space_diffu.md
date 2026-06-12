@@ -45,6 +45,18 @@ DynaDiff 要解决的是"换了环境就得重新训一个动力学预测器"这
 
 到了在线阶段，整条链路是一次纯前向的采样：拿到新环境的 $L=10$ 帧观测，prompter 产出条件向量，扩散模型采样出 latent，VAE 把它解码回权重图并重组成完整 FNO 权重，再直接用这套权重跑 100 步自回归预测——全程不碰任何梯度更新，把分钟级的微调压成毫秒级的一次采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["模型库：100 个 expert FNO 权重"] --> WG["权重图 + 节点注意力 VAE<br/>无损压成低维 latent"]
+    LOSS["函数一致性损失<br/>比对功能输出而非权重数值"] -.监督重构.-> WG
+    WG --> DIFF["条件扩散模型<br/>latent 空间拟合 p(θ|e)"]
+    OBS["新环境短观测 X_L（L=10 帧）"] --> PR["动力学感知 prompter<br/>物理统计 + 谱-GRU 双分支"]
+    PR -.prompt 条件.-> DIFF
+    DIFF -->|采样 latent| DEC["VAE 解码 → 重组完整 FNO 权重"]
+    DEC --> PRED["前向自回归预测（不做梯度微调）"]
+```
+
 ### 关键设计
 
 **1. 权重图 + 节点注意力 VAE：把网络权重无损搬进扩散友好的 latent**

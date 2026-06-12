@@ -41,7 +41,34 @@ SURGE 给每个二值化层并联一个"全精度辅助分支"，前向输出不
 ## 方法详解
 
 ### 整体框架
-SURGE 想在不碰前向输出的前提下，给每个二值化层补一份"比 STE 更接近真梯度"的反向信号。具体做法是：对每个二值化线性算子（conv、linear、attention projection）并行挂一个尺寸完全相同的全精度副本（auxiliary branch），用一个 detach 自抵消的写法让这个副本**前向不出力、反向才开门**——前向输出严格等于纯 BNN，反向时全精度副本把 STE 剪掉的高阶梯度补回输入处，再由 AGS 按两路梯度的范数比动态缩放、保证补偿量级不压垮主分支。训练完毕后辅助分支整体丢弃，推理就是一个标准 BNN，零额外开销。
+SURGE 想在不碰前向输出的前提下，给每个二值化层补一份"比 STE 更接近真梯度"的反向信号。具体做法是：对每个二值化线性算子（conv、linear、attention projection）并行挂一个尺寸完全相同的全精度副本（auxiliary branch），用一个 detach 自抵消的写法让这个副本**前向不出力、反向才开门**——前向输出严格等于纯 BNN，反向时全精度副本把 STE 剪掉的高阶梯度补回输入处，再由 AGS（自适应梯度缩放器）按两路梯度的范数比动态缩放、保证补偿量级不压垮主分支。这套机制只依赖"一个二值化线性算子 + 一个同尺寸全精度副本"的最小结构，因此 architecture-agnostic、CNN 和 Transformer 都能即插即用；训练时整网三种计算状态（主分支前向、主分支反向、辅助分支反向）共存，训练完毕后辅助分支整体丢弃，推理就是一个标准 BNN，零额外开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 x（任一二值化线性层：conv / linear / attention 投影）"]
+    subgraph DPGC["DPGC 双路梯度补偿器"]
+        direction TB
+        MB["主分支·二值<br/>f_b = Q(W_b)ᵀ·Q(x)"]
+        AB["辅助分支·全精度<br/>f_ao = λ·W_aᵀx"]
+        OUT["自抵消输出<br/>f_b − f_ao↓ + f_ao（前向数值 = f_b）"]
+        MB --> OUT
+        AB --> OUT
+    end
+    X --> MB
+    X --> AB
+    OUT -->|前向：严格二值| FWD["层输出（等同标准 BNN）"]
+    MB -.反向走 STE.-> GB["g_b：一阶近似"]
+    AB -.反向走全精度.-> GA["g_a：高阶补偿"]
+    GB --> AGS
+    GA --> AGS
+    subgraph AGS["AGS 自适应梯度缩放器"]
+        direction TB
+        LAM["按范数比定 λ_AGS = η·‖g_b‖₂ / ‖g_a‖₂"]
+    end
+    AGS --> GRAD["∂L/∂x = g_b + λ_AGS·g_a"]
+    FWD --> INF["推理：丢弃辅助分支 → 标准 BNN，零额外开销"]
+```
 
 ### 关键设计
 
@@ -60,10 +87,6 @@ DPGC 补进来的 $g_a$ 量级未知：固定 $\lambda$ 取大了辅助路会炸
 $$\lambda_{\text{AGS}}=\eta\,\frac{\|g_b\|_2}{\|g_a\|_2+\epsilon}$$
 
 $\eta$ 是基础缩放系数、$\epsilon=10^{-8}$ 防除零。这个形式不是拍脑袋来的：论文从二阶矩模型出发证明最优缩放为 $\lambda^*=\frac{\langle\delta_b,\mu_a\rangle}{\|\mu_a\|_2^2+\text{tr}(\text{Var}(g_a))}$（$\delta_b$ 是 STE 的偏差向量），再在 alignment $\cos\theta$、相对偏差比 $\beta=\|\delta_b\|_2/\|\mu_b\|_2$、噪声比 $\rho$ 都近似稳定的假设下退化为 $\lambda^*\approx\eta\frac{\|\mu_b\|_2}{\|\mu_a\|_2}$，最后用 mini-batch 的梯度范数估计 $\|\mu\|_2$，就得到上面的实用公式。效果上它让两路始终量级相当，STE 仍主导优化方向、辅助路只作高阶修正，相当于在均方误差意义下取了两路梯度的最优凸组合。
-
-**3. 训练-推理对称的双路架构：把"补偿梯度"做成 architecture-agnostic 的层级插件**
-
-以前的 BNN 训练 trick 多是任务/架构特定的（如 ReActNet 的 RPReLU），迁移起来要重新设计。SURGE 因为只依赖"一个二值化线性算子 + 一个全精度副本"这个最小结构，所以哪里有二值化线性层就能挂哪里——图 2 同时给出了 conv block 和 transformer block（attention projection / FFN 的 linear）的接入示意。训练时整网三种计算状态共存（main forward、main backward、auxiliary backward），推理时把所有辅助权重 $W_a$ 丢掉即可，因此同一套机制能无缝覆盖 CNN 和 Transformer，迁移成本极低。
 
 ### 损失函数 / 训练策略
 端到端 cross-entropy（分类）/ detection loss（VOC）/ NLU loss（GLUE），不引入额外训练损失。$\eta$ 是少数需调的超参；推理零额外开销。

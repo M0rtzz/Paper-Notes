@@ -42,6 +42,31 @@ tags:
 ### 整体框架
 IFA-Net 换了个思路检测 AI 伪造：不去学"假长什么样"，而是用在海量真实图上预训练的 MAE 建模"真该长什么样"，凡是偏离自然图像流形的区域就是可疑区域。整体是一个两阶段闭环——Stage 1 用冻结 MAE 重建输入、由残差图暴露可疑区，经双流分割网络 DSSN 出一张粗 mask $M_{\text{crs}}$；Stage 2 把粗 mask 当先验注入 MAE，放大那些区域的重建残差，再过同一个 DSSN 精细化成最终 mask $M_{\text{ref}}$。这样"检测→聚焦→放大→精化"形成闭环，越可疑的地方残差被推得越大。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像 I（可能被篡改）"]
+    subgraph S1["Stage 1 · 粗检测"]
+        direction TB
+        MAE1["MAE 重建残差<br/>冻结 MAE 重出 Î，残差 R=|I−Î| 当探照灯"]
+        DSSN1["双流分割网络 DSSN<br/>内容流(I)+伪造流(R) 交叉注意力"]
+        MAE1 --> DSSN1
+    end
+    I --> MAE1
+    DSSN1 --> Mcrs["粗 mask M_crs"]
+    subgraph S2["Stage 2 · TAPI 迭代放大闭环"]
+        direction TB
+        PE["Prompt Encoder<br/>粗 mask → 全局上下文向量"]
+        FILM["FiLM 调制冻结 MAE encoder<br/>Z̃=γ⊙Z+β，聚焦可疑区"]
+        DEC["可训练 MAE decoder<br/>放大残差 R_amp=|I−Î_amp|"]
+        DSSN2["共享 DSSN 精细化"]
+        PE --> FILM --> DEC --> DSSN2
+    end
+    Mcrs --> PE
+    I --> FILM
+    DSSN2 --> Mref["精细 mask M_ref"]
+```
+
 ### 关键设计
 
 **1. MAE 重建残差：把"偏离真实流形"变成探照灯**
@@ -50,7 +75,7 @@ IFA-Net 换了个思路检测 AI 伪造：不去学"假长什么样"，而是用
 
 **2. 双流分割网络 DSSN：内容流与伪造流互相指路**
 
-只看残差容易被纹理噪声误导，只看原图又没有伪造线索。DSSN 基于 SegFormer 做双流：Content Stream 编码原图 $I$ 的语义内容（"在哪里看"），Artifact Stream 编码残差图 $R$（Stage 2 则是放大残差 $R_{\text{amp}}$）里的伪造线索（"看到了什么异常"），两路在每个 SegFormer stage 后用 cross-attention 交换信息。两个阶段共享同一套 DSSN 权重，既省参数，又让 Stage 1 的梯度顺带帮 Stage 2 的 DSSN 学习。
+只看残差容易被纹理噪声误导，只看原图又没有伪造线索。DSSN 基于 SegFormer 做双流：内容流（Content Stream）编码原图 $I$ 的语义内容（"在哪里看"），伪造流（Artifact Stream）编码残差图 $R$（Stage 2 则是放大残差 $R_{\text{amp}}$）里的伪造线索（"看到了什么异常"），两路在每个 SegFormer stage 后用交叉注意力（cross-attention）交换信息。两个阶段共享同一套 DSSN 权重，既省参数，又让 Stage 1 的梯度顺带帮 Stage 2 的 DSSN 学习。
 
 **3. TAPI 迭代放大闭环：让微弱残差被推大再精化**
 

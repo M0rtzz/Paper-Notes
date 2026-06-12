@@ -44,6 +44,27 @@ tags:
 
 本文要解决的是"一个模型同时把图表图像还原成 Python / R / LaTeX 三种语言的可执行脚本"，难点在于这三件事既共享同一份图表语义理解、又各自需要走不同语法的专门通道。方法分两条主线：数据侧用"元数据-模板"管线把单语言脚本批量合成跨语言视觉等价的三语言脚本，得到 176K 四元组数据集 Chart2NCode；模型侧在 LLaVA 风格的"SigLIP 视觉编码器 + 两层 MLP 投影器 + DeepSeek-Coder 后端"上并联一个语言条件的低秩子空间适配器 CharLuMA，让视觉 token 在共享 MLP 之外按目标语言动态选取子空间组合。整体流程是：图表图像经视觉编码后，由"共享 MLP + 语言路由的子空间适配器"产生语言自适应视觉 token，再交给 LLM 自回归解码出对应语言脚本；训练则分"模态对齐预训练"和"指令微调"两阶段渐进进行。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["元数据-模板对齐管线（设计 1）"]
+        direction TB
+        A["单语言脚本"] --> B["三层元数据提取 + 模板池匹配<br/>跨语言属性映射（GPT-4o 兜底校正）"]
+        B --> E["176K 四元组数据集 Chart2NCode"]
+    end
+    subgraph MODEL["语言条件低秩子空间适配器 CharLuMA（设计 2）"]
+        direction TB
+        F["图表图像 → SigLIP 视觉编码"] --> I["共享 MLP 投影器 ‖ 语言路由器选子空间<br/>语言自适应 token：Hv = W·Zv + A·B·Zv"]
+        I --> J["DeepSeek-Coder 解码<br/>Python / R / LaTeX 可执行脚本"]
+    end
+    subgraph TRAIN["两阶段渐进训练（设计 3）"]
+        direction TB
+        K["阶段1：只训共享投影器 W（模态对齐）"] --> M["阶段2：warm-up 路由器 + 子空间池<br/>再解冻 LLM 联合训练（A 全程冻结）"]
+    end
+    E -->|训练数据| TRAIN
+    MODEL -->|待优化参数| TRAIN
+```
+
 ### 关键设计
 
 **1. 元数据-模板对齐管线：把单语言脚本批量翻译成跨语言视觉等价的三语言脚本**

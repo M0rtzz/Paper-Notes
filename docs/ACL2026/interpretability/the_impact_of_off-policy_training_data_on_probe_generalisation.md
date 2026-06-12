@@ -45,6 +45,25 @@ tags:
 
 每个行为都使用两个领域。例如 list、metaphor、science、refusal 属于文本表面较明显的行为；sycophancy、deferral-to-authority、sandbagging、deception 属于文本歧义行为，单看输出文本往往无法知道模型真实动机。训练时，作者平衡正负样本；前六类行为每种策略用 3500 训练、500 验证、1000 测试，deception 和 sandbagging 因输入较少使用 2500 训练、500 验证、500 测试。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["目标模型 M + 输入 x"]
+    subgraph GEN["四种响应生成策略的因子化比较"]
+        direction TB
+        S1["on-policy natural：原始 prompt 自然回答"]
+        S2["on-policy incentivised：任务激励诱导行为"]
+        S3["on-policy prompted：显式指令制造行为"]
+        S4["off-policy：外部模型 / 数据生成文本"]
+    end
+    X --> GEN
+    GEN --> LBL["行为标签的反事实构造<br/>按生成动机而非表面文本定义正例"]
+    LBL --> EXT["移除额外提示 p + 提取某层激活 A"]
+    EXT --> PRB["训练 probe（线性 / attention）+ AUROC 评估"]
+    PRB --> STAT["domain shift 与 strategy shift 的统计分离<br/>混合效应模型 + OLS 交互回归"]
+    STAT -->|无 on-policy natural 数据时| PROXY["on-policy incentivised 代理测试<br/>预判真实泛化失败"]
+```
+
 ### 关键设计
 **1. 四种响应生成策略的因子化比较：把“是否目标模型策略”和“是否被诱导”拆开**
 

@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段管线：(1) **潜状态空间构造**：用一个点式 (point-wise，即对每个时刻独立) AutoEncoder $\mathcal{E}, \mathcal{D}$ 把 $\mathbf{x}_t \in \mathbb{R}^C$ 映到 $\mathbf{z}_t \in \mathbb{R}^D$（$D$ 可以比 $C$ 大也可以更小，重点是"更适合动力学建模"），用 MAE 重建损失预训练，然后**冻结**。(2) **潜状态预测**：任意 TSF backbone $\mathcal{F}^\mathbf{Z}_\theta$ 输入 $\mathbf{Z}_X = \mathcal{E}(\mathbf{X})$，输出 $\widehat{\mathbf{Z}}_Y$，再用冻结 $\mathcal{D}$ 解码出 $\widehat{\mathbf{Y}} = \mathcal{D}(\widehat{\mathbf{Z}}_Y)$。训练时不再对 $\widehat{\mathbf{Y}}$ 算损失，而是在潜空间里同时拉近 $\widehat{\mathbf{Z}}_Y$ 和 ground-truth 潜状态 $\mathbf{Z}_Y = \mathcal{E}(\mathbf{Y})$。
+两阶段管线：(1) **潜状态空间构造**：用一个点式 (point-wise，即对每个时刻独立) AutoEncoder $\mathcal{E}, \mathcal{D}$ 把 $\mathbf{x}_t \in \mathbb{R}^C$ 映到 $\mathbf{z}_t \in \mathbb{R}^D$（$D$ 可以比 $C$ 大也可以更小，重点是"更适合动力学建模"），用 MAE 重建损失预训练，然后**冻结**。(2) **潜状态预测**：任意 TSF backbone $\mathcal{F}^\mathbf{Z}_\theta$ 输入 $\mathbf{Z}_X = \mathcal{E}(\mathbf{X})$，输出 $\widehat{\mathbf{Z}}_Y$，再用冻结 $\mathcal{D}$ 解码出 $\widehat{\mathbf{Y}} = \mathcal{D}(\widehat{\mathbf{Z}}_Y)$。训练时不再对 $\widehat{\mathbf{Y}}$ 算损失，而是在潜空间里同时拉近 $\widehat{\mathbf{Z}}_Y$ 和 ground-truth 潜状态 $\mathbf{Z}_Y = \mathcal{E}(\mathbf{Y})$。下图把这条"观察 → 潜状态 → 潜状态预测 → 解码回观察"的管线和三个关键设计落在同一张图上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    subgraph S1["点式 AutoEncoder + 冻结目标编码器（设计 1）"]
+        direction TB
+        P1["逐时刻观察 x_t"] -->|"重建损失 L_Rec 预训练"| P2["编码器 ℰ、解码器 𝒟<br/>预训练后全程冻结"]
+    end
+    S1 --> A["历史窗口 X"]
+    A -->|"ℰ 冻结编码"| ZX["历史潜状态 Z_X"]
+    ZX --> BK["TSF backbone ℱθ<br/>潜空间内回归未来潜状态 Ẑ_Y"]
+    G["未来真值 Y"] -->|"ℰ 冻结编码"| ZY["目标潜状态 Z_Y（静止回归靶）"]
+    BK --> LOSS["潜空间联合损失（设计 2）<br/>L_Pred 约束幅度 + L_Align 约束方向"]
+    ZY --> LOSS
+    BK -->|"𝒟 冻结解码"| YH["预测 Ŷ"]
+    YH -.->|"默认关闭、不回传梯度"| NOP["拒绝观察空间 Perceptual Loss（设计 3）"]
+```
 
 ### 关键设计
 

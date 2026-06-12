@@ -43,6 +43,35 @@ tags:
 ### 整体框架
 HandX 包含三个层面的贡献：1) 数据层——整合 5 个已有数据集（GigaHands、HOT3D、ARCTIC、H2O、HoloAssist）并自采新动捕数据，统一为共享骨架表示，经质量过滤后获得 54.2 小时运动数据；2) 标注层——提出两阶段自动标注策略，先提取结构化运动学特征（接触事件、手指弯曲度等），再用 LLM 推理生成多粒度文本描述（48.5 万条）；3) 生成层——基准测试扩散模型和自回归模型两种范式，支持多种条件控制模式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph D1["统一数据整合与质量过滤"]
+        direction TB
+        A["5 个外部数据集<br/>GigaHands / HOT3D / ARCTIC / H2O / HoloAssist"]
+        B["自采动捕<br/>36 相机 OptiTrack + 25 反射标记点"]
+        A --> C["重投影到共享骨架与坐标系"]
+        B --> C
+        C --> E["强度感知过滤<br/>按关节角速度去除静止段"]
+    end
+    E --> F["54.2 小时运动数据"]
+    subgraph D2["解耦式自动标注"]
+        direction TB
+        G["运动学分析<br/>弯曲度 / 接触 / 分离事件 → 结构化 JSON"] --> H["LLM 推理生成<br/>五粒度 × 左手 / 右手 / 双手关系"]
+    end
+    F --> G
+    H --> I["48.5 万条文本标注"]
+    subgraph D3["双范式生成基准"]
+        direction TB
+        J["扩散模型<br/>x-prediction + 三路 cross-attention"]
+        K["自回归模型<br/>FSQ token + next-token 预测"]
+    end
+    F --> D3
+    I --> D3
+    J --> L["双手运动生成 + 多种推理时条件控制"]
+    K --> L
+```
+
 ### 关键设计
 
 **1. 统一数据整合与质量过滤：把五个异构数据集拼成一致可训练的整体**

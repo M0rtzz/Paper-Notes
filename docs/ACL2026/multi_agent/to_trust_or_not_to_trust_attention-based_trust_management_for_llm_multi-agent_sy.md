@@ -45,6 +45,28 @@ tags:
 
 系统分三层：(1) **信任维度定义 + Trust Violation 数据集**——六维度框架和 >20k 样本的受控数据集；(2) **A-Trust 评估**——基于注意力向量的轻量级分类器；(3) **TMS 信任管理**——消息级评估 → 信任感知行动策略 → 智能体级信任记录。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph PREP["六维度信任框架 + Trust Violation 数据集（离线准备）"]
+        direction TB
+        D1["Grice 合作原则拆成六个正交维度"] --> D2[">20k 受控数据集<br/>每个样本只违反一个维度"]
+    end
+
+    IN["输入：智能体间消息 M + 上下文 C"] --> ATTN["A-Trust：取最后 token 跨层注意力<br/>聚合成 H 维向量"]
+    PREP -.训练分类器.-> CLF
+    ATTN --> CLF["六个 one-vs-rest 逻辑回归<br/>→ 六维信任分"]
+
+    subgraph TMS["信任管理系统 TMS"]
+        direction TB
+        MSG["消息级评估：六维 A-Trust 分数"] --> ACT{"信任感知行动策略<br/>每维阈值 τ_r"}
+        ACT -->|事实维度落不确定区间| EXT["Gemini + Google Search 外部核查"]
+        ACT -->|超阈| FILT["标记不可信并过滤消息"]
+        ACT --> REC["智能体级信任记录 R_Ai<br/>违规率 VR_r 超标则隔离智能体"]
+    end
+    CLF --> MSG
+```
+
 ### 关键设计
 
 **1. 六维度信任框架 + Trust Violation 数据集：先把「可信」拆成互不重叠的六件事，再造出能逐维分析的数据**

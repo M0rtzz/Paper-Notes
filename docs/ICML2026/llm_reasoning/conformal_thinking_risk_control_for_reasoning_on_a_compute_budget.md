@@ -45,6 +45,22 @@ tags:
 
 具体地，给定轨迹 $y = \langle\text{think}\rangle r_{1:T}\langle/\text{think}\rangle a$ 和每步信号 $s_t = u(x, r_{1:t})$（可取 entropy / confidence / mutual predictability 等多种），平滑后得 $\tilde s_t = g(s_{1:t})$，早停时刻为 $\tau = \min\{t\ge 1 : \tilde s_t \ge \lambda_+ \;\lor\; \tilde s_t \le \lambda_-\}$（Eq. 5），$\lambda_+>\lambda_-$，命中上阈值表示"自信答出"、命中下阈值表示"放弃此题"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CAL["校准阶段（离线，一次性，无训练）"]
+        direction TB
+        V["标注校准集 𝒱"] --> L["四个互补损失<br/>两个 correctness 控错(FP/FN)+两个 efficiency 仅做 tie-break"]
+        L --> U["Conformal UCB 校准 + 信号 ensemble<br/>有限样本修正保 risk≤ε，grid search 选最优信号与阈值"]
+    end
+    U -->|"输出 s*、上阈值 λ₊、参数化下阈值 λ₋(t)"| X
+    X["问题 x：逐步生成 think 步骤 rₜ"] --> S["每步取置信度信号并平滑"]
+    S --> C{"双阈值判定"}
+    C -->|"信号 ≥ λ₊：自信"| O1["命中上阈值，停止 think 并输出答案"]
+    C -->|"信号 ≤ λ₋(t)：想不动"| O2["命中参数化下阈值，abstain 放弃此题"]
+    C -->|"两者都不满足"| S
+```
+
 ### 关键设计
 
 **1. 参数化动态下阈值：让"想不动"的题尽早 abstain**

@@ -49,6 +49,28 @@ OxyGent 的方法可以理解为一个面向多智能体系统的操作系统层
 
 从系统形态看，OxyGent 不是一个只服务单轮推理的 agent runner，而是覆盖“构建-推理-观察-标注-演化”的闭环框架。论文中展示的文件管理助手、GAIA 任务求解系统和 2000+ agent 的电商分类系统，都是这个框架的不同实例化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["用户请求 + 业务上下文 + 可用组件"] --> REG
+    subgraph REG["统一 Oxy 抽象与四层数据作用域"]
+        direction TB
+        R1["把 agent / tool / LLM / flow<br/>注册为同构 Oxy 节点"] --> R2["按 Application / Session Group<br/>/ Request / Node 划定状态边界"]
+    end
+    REG --> PLAN
+    subgraph PLAN["权限驱动动态规划与标准执行生命周期"]
+        direction TB
+        P1["编排器在授权边内<br/>动态生成调用路径"] --> P2["每个节点走标准生命周期<br/>预处理→执行→后处理→格式化"]
+    end
+    PLAN --> OUT["最终答案 + 调用图 + 耗时 + 可回放轨迹"]
+    OUT --> BANK
+    subgraph BANK["OxyBank 演化引擎与质量门控"]
+        direction TB
+        B1["MD5 去重 + 元数据定优先级"] --> B2["pending→annotated→approved<br/>状态机审核"] --> B3["回流知识库 / Prompt 优化 / 微调"]
+    end
+    BANK -.演化反哺.-> REG
+```
+
 ### 关键设计
 
 **1. 统一 Oxy 抽象与四层数据作用域：把 agent、tool、LLM、flow 都降维成同一种可注册、可替换、可监控的原子节点，并用四层作用域显式划定状态边界**

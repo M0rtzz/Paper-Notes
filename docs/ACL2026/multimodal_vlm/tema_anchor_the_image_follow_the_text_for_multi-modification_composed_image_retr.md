@@ -45,6 +45,26 @@ tags:
 
 TEMA 由两个核心组件构成：(1) MMT 解析助手（PA），包含 LLM 文本摘要器和一致性检测器，用于在训练时提取待修改实体并进行实体覆盖检查（推理时禁用）；(2) MMT 导向的实体映射模块（EM），通过文本和视觉实体映射，在摘要指导下聚合同一实体的多个 MMT 子句。底层使用 BLIP 作为特征提取骨干。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["参考图像 + 多修改文本（MMT）"]
+    subgraph PA["MMT 解析助手（PA）· 仅训练启用"]
+        direction TB
+        S1["LLM 文本摘要器<br/>生成摘要 t_s 覆盖全部待修改实体"] --> S2["一致性检测器<br/>核对覆盖、迭代修正"]
+    end
+    IN --> PA
+    PA --> ENC["冻结 BLIP 编码器<br/>摘要特征 E_s · MMT 局部特征 E_m"]
+    subgraph EM["实体映射模块（EM）"]
+        direction TB
+        T1["文本侧：可学习查询聚合<br/>同一实体多子句 → 文本实体通道"]
+        V1["视觉侧：可学习查询聚合<br/>参考图实体 → 视觉实体通道"]
+    end
+    ENC --> EM
+    EM --> REG["摘要引导蒸馏 + 正交正则化<br/>保实体信息 · 防通道坍缩"]
+    REG --> OUT["文本/视觉实体通道对齐 → 检索目标图像"]
+```
+
 ### 关键设计
 
 **1. MMT 解析助手（PA）：把稀疏分散的待修改实体显式拎成一张清单**

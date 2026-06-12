@@ -40,6 +40,30 @@ tags:
 
 GAR-SSL 想解决的核心问题是：现有声源定位都把任务当成"音频嵌入对齐视觉嵌入"的特征匹配，匹配上哪块区域就当声源，从不验证那块区域是否真的会发声。本文换了一条路——给定图像-音频对 $(I, A)$，不训练任何模型，而是把 MLLM 当推理引擎，让它像人一样"先猜、再查、后改"地走一遍。流程分三阶段：Generation 先给出一个初始 bounding box $b^{\text{init}}$ 和音频标签；Analysis 把这个框拿去和音视觉证据对质，算出它有多可信；Refinement 只在框确实不靠谱时才动手做几何校正。三个阶段全部用 prompt 驱动 MLLM、输出结构化 JSON，前一阶段的结论作为后一阶段的输入逐级收紧。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["图像-音频对 (I, A)"]
+    subgraph GEN["Generation 生成（宽假设空间）"]
+        direction TB
+        G1["音视觉定位 f_loc<br/>初始框 b_init + 描述 d"]
+        G2["音频分类 f_aud<br/>开放词表标签 c_aud + 置信度 s_aud"]
+    end
+    IN --> GEN
+    subgraph ANA["Analysis 分析（重复 n=5 取共识）"]
+        direction TB
+        A1["开放集角色标注<br/>发现发声部件（≤4）"]
+        A2["锚点投票 + 一致性分数 S_av<br/>诊断哪里改 / 为什么 / 怎么改"]
+        A1 --> A2
+    end
+    GEN --> ANA
+    ANA --> GATE{"自适应门控 G<br/>k=1 且 S_av≥τ 且 s_aud≥τ ?"}
+    GATE -->|"G=1 已够准"| KEEP["保留初始框 b_init"]
+    GATE -->|"G=0 不达标"| REF["Refinement 几何校正<br/>Delta / Expand-Shrink / Recenter"]
+    KEEP --> OUT["最终框 b_ref"]
+    REF --> OUT
+```
+
 ### 关键设计
 
 **1. Generation：用"宽假设空间"代替单点匹配，先别急着定死声源**

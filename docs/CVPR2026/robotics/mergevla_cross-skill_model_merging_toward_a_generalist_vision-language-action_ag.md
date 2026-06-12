@@ -43,7 +43,20 @@ tags:
 
 ### 整体框架
 
-MergeVLA 的目标是把多个单技能 VLA 专家合并成一个通用 agent，难点在于 VLA「天生不可合并」——直接套用 LLM 的合并算法成功率会直接归零。它的对策是从架构层面动手，让 VLA 一开始就「为可合并而设计」：基座 VLM 用 Qwen2.5-0.5B，动作专家基于 VLA-Adapter 改造，总参数约 0.7B。三个组件正好对应三个根因——任务掩码稀疏 LoRA 解决 VLM 里的 LoRA 参数冲突，去自注意力动作专家解决动作专家的架构不兼容，无训练测试时路由解决推理时不知道任务身份的问题。
+MergeVLA 的目标是把多个单技能 VLA 专家合并成一个通用 agent，难点在于 VLA「天生不可合并」——直接套用 LLM 的合并算法成功率会直接归零。它的对策是从架构层面动手，让 VLA 一开始就「为可合并而设计」：基座 VLM 用 Qwen2.5-0.5B，动作专家基于 VLA-Adapter 改造，总参数约 0.7B。整条流程分两段——离线把多个单技能专家合并成一个模型，在线推理时自动判断任务身份。三个组件正好对应三个根因——任务掩码稀疏 LoRA 解决 VLM 里的 LoRA 参数冲突，去自注意力动作专家解决动作专家的架构不兼容，无训练测试时路由解决推理时不知道任务身份的问题。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多个单技能 VLA 专家<br/>各含 LoRA + 动作专家"] --> B
+    subgraph OFF["离线合并（无需重训）"]
+        direction TB
+        B["任务掩码稀疏 LoRA<br/>合并 LoRA → 一致性检验生成掩码"]
+        B --> C["去自注意力动作专家<br/>仅交叉注意力 + sigmoid 门控<br/>浅层平均，每任务独占 expert head"]
+    end
+    C --> D["无训练测试时任务路由<br/>t=0 观测 → V 子空间 SVD<br/>选对应掩码与 expert head"]
+    D --> E["通用 agent 执行单一合并策略"]
+```
 
 ### 关键设计
 

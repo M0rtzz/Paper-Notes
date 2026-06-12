@@ -48,6 +48,19 @@ GUI Grounding 输出是结构化的动作字符串（如 `lclick [42,180,120,250
 
 这篇论文想回答一个此前没人验证过的问题：离散扩散视觉语言模型能不能胜任 GUI Grounding？为此作者直接拿现成的 LLaDA-V (8B) 来改——它由 LLaDA 离散扩散语言塔、SigLIP-2 视觉塔，以及一个把视觉嵌入对齐到语言 token 空间的两层 MLP 投影器组成。整条流程很直白：GUI 截图和自然语言指令一起进模型，模型输出一串动作字符串，比如 `lclick [42,180,120,250]` 或 `type_in [50,90,200,130] hello`，其中前面是动作类型、方括号里是目标元素的边界框。难点不在"生成文本"，而在让一个原本随机腐蚀所有 token 的扩散模型学会坐标之间的几何依赖，这正是后面混合掩码要解决的事。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GUI 截图 + 自然语言指令"] --> B["LLaDA-V 主干<br/>SigLIP-2 视觉塔 + 投影器 + LLaDA 语言塔"]
+    B --> C["扩散式文本生成<br/>掩码重建目标，复用预训练能力"]
+    subgraph HM["混合掩码调度"]
+        direction TB
+        D["线性掩码阶段<br/>粗定位：动作类型 + 锚点 (x1,y1)"] --> E["确定性掩码阶段<br/>以锚点为条件补范围 (x2,y2)"]
+    end
+    C --> HM
+    HM --> F["输出动作字符串<br/>lclick [42,180,120,250]"]
+```
+
 ### 关键设计
 
 **1. 把 GUI Grounding 重写成扩散式文本生成：让坐标预测复用 LLaDA-V 的预训练能力**

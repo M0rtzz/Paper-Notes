@@ -41,7 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RedirectQA 的构建分三步：（1）从 Wikidata 收集事实三元组 (subject, relation, object)；（2）利用 Wikipedia 重定向信息为每个主语实体关联规范表面形式和重定向表面形式，并按类别分组；（3）使用关系特定模板将表面实例渲染为问题。最终数据集包含 30,560 个表面实例、14,672 个事实三元组、61,120 个问题实现。
+RedirectQA 的构建分三步：（1）从 Wikidata 收集事实三元组 (subject, relation, object)；（2）利用 Wikipedia 重定向信息为每个主语实体关联规范表面形式和重定向表面形式，并按类别分组；（3）使用关系特定模板将表面实例渲染为问题。数据集建好后，在多个 LLM 上跑一致性评估，并对准确率做实体频率与表面频率的偏相关分解。最终数据集包含 30,560 个表面实例、14,672 个事实三元组、61,120 个问题实现。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Wikidata 事实三元组<br/>(主语, 关系, 宾语)"] --> G1
+    subgraph G1["重定向类别分组"]
+        direction TB
+        B["Wikipedia 重定向<br/>关联规范 + 重定向表面形式"] --> C["归并为三类难度梯度<br/>替代名称/缩写 · 拼写变体 · 典型错误"]
+    end
+    G1 --> D["双模板消歧<br/>原始模板 + GPT-4o 改述模板"]
+    D --> E["RedirectQA 数据集<br/>30,560 表面实例 / 61,120 问题"]
+    E --> F["13 个 LLM 15-shot 评估<br/>规范 vs 重定向一致性"]
+    F --> G["频率分解分析<br/>偏相关分离实体频率 / 表面频率"]
+```
 
 ### 关键设计
 

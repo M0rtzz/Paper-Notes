@@ -42,6 +42,30 @@ tags:
 ### 整体框架
 固定一个生成器（Stable Diffusion 1.5 + DDIM），在六个语义跨度差异巨大的参考集（FFHQ、CelebA-HQ、MJHQ-30K、ImageNet、Flickr30K、COCO）上分别生成图像，扫描去噪步数 $N \in \{15, 20, \dots, 50\}$ 控制样本质量，配上 ImageReward 作为质量代理。然后做两件事：(1) 给每个数据集算两个几何描述子；(2) 用分层线性模型测斜率差异是否能被这两个几何量解释。再用 precision/recall 分解 FID 看哪一侧贡献主导，最后换掉 Inception-v3（→ DINOv2）和 Fréchet（→ MMD/KID）做 ablation。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["固定生成器 SD1.5 + DDIM<br/>6 个参考集，扫描去噪步数 N 控质量"] --> B["逐 (数据集, N) 生成等大样本<br/>ImageReward 作质量代理 X"]
+    B --> C["两个几何描述子 Z<br/>密度 ⟨−log d_k⟩ + 有效秩 erank"]
+    B --> D["测距 Y<br/>FID / KID / FD_DINOv2"]
+    subgraph HLM["分层线性模型 + 跨层交互"]
+        direction TB
+        E["level-1：每集内拟合质量→FID 斜率 β_d"]
+        E --> F["level-2：β_d = γ00 + γ11·Z + u_d"]
+        F --> G["Omnibus 检验<br/>斜率跨集有差异？"]
+        F --> H["Moderation 检验<br/>几何 Z 解释多少斜率方差 R²"]
+    end
+    C --> F
+    D --> E
+    G --> ATTRIN
+    H --> ATTRIN
+    subgraph ATTR["Precision / Recall 归因 + 两类 ablation"]
+        direction TB
+        ATTRIN["P/R 分解：定位 FID 被哪侧主导"]
+        ATTRIN --> J["换 DINOv2 backbone / 换 MMD 距离<br/>效应仍在 → 非 backbone·估计器之过"]
+    end
+```
+
 ### 关键设计
 
 **1. 两个几何描述子：用密度 + 有效秩刻画参考集的"形状"**

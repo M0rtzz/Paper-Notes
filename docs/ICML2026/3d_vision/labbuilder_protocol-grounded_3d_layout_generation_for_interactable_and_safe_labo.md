@@ -42,6 +42,21 @@ LabBuilder 把自由文本的实验描述编译成"资产-化学协议"，再用
 ### 整体框架
 LabBuilder 要解决的是"把一句自由文本的实验需求，变成机器人真能跑通的 3D 实验室"。它把这件事拆成一条编译—生成—评测的流水线：前端的 **LabForge** 把自由文本和异构资产编译成结构化协议 $\mathcal{P}$ 与资产库 $\mathcal{A}$；中间的 **LabGen** 拿着协议先做层级化初始化得到候选布局 $\mathcal{L}_0$，再做几何+化学联合优化 $\Phi$，最后用导航感知修复 $\Upsilon$ 收敛到最优布局 $\mathcal{L}^\star$；末端的 **LabTouchstone** 从几何合规、可行性 FSR、化学安全、语义合理四个维度打分并补做 point-goal 导航评测。整条管线之所以跑得通，关键在协议 $\mathcal{P}$ 一身两职——它既是"目标说明书"告诉生成器要放哪些资产，又是"约束模板"告诉优化器哪些摆放算违规，从而把可执行性从事后评估前置进了生成回路。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["自由文本实验需求 x"] --> FORGE["LabForge：编译可校验协议<br/>资产库 + 化学库 → 协议 P + 资产库 A"]
+    subgraph GEN["层级化初始化 + 几何/化学多目标优化"]
+        direction TB
+        INIT["层级化初始化<br/>room-level + desktop-level → L0"]
+        INIT --> OPT["违规优先优化<br/>FastRepair + LLMAdjust"]
+    end
+    FORGE --> INIT
+    GEN --> NAV["导航感知修复<br/>A* 可达性当硬约束"]
+    NAV --> BEST["最优布局 L*"]
+    BEST --> TOUCH["LabTouchstone：四维评测 + 导航"]
+```
+
 ### 关键设计
 
 **1. LabForge：先把自由文本编译成可校验协议，再驱动布局**

@@ -44,6 +44,20 @@ tags:
 
 MAGIC 要解决的是工业场景里异常样本太少、直接微调 inpainting 模型又会严重过拟合（多样性塌缩、掩码放歪就生成崩坏）的困境。它以 Stable Diffusion 2 inpainting 为底座、用 DreamBooth 微调，并固定一个稀有 token（如「sks」）当异常 prompt，省掉对每类物体写文本描述的需求。训练时把异常图像 $I_A$、真实掩码 $M_{GT}$ 和被掩码遮挡的正常背景 $I_A^M$ 拼接成输入，配上经高斯扰动的 prompt embedding $c_p$ 训练网络；推理时给定正常图像 $I_N$ 和自动掩码 $M$，先用 CAMA 把掩码对齐到语义合理位置得到 $M_a$，再用随机扰动的 $c_p$ 和 MGNI 局部噪声注入去噪生成。三个模块分别从全局纹理、局部纹理、空间位置三个维度补回微调丢掉的能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Base["底座：SD2 inpainting + DreamBooth 微调<br/>固定稀有 token「sks」作异常 prompt"]
+    Base -->|训练| T1["拼接输入：异常图 + 真实掩码 + 遮挡背景"]
+    Base -->|推理| F1["输入：正常图 + 自动掩码"]
+    T1 --> GPP["高斯 Prompt 扰动 GPP<br/>prompt embedding 注入高斯噪声"]
+    GPP --> T2["训练去噪网络<br/>学平滑的 embedding 球→图像映射"]
+    F1 --> CAMA["上下文感知掩码对齐 CAMA<br/>三关键点语义对应、对齐到合理位置"]
+    CAMA --> Gen["DDIM 去噪生成<br/>推理时同用 GPP 扰动 prompt"]
+    Gen --> MGNI["掩码引导空间噪声注入 MGNI<br/>仅缺陷区注噪 + 时间衰减门控"]
+    MGNI --> Out["高保真 + 多样 + 位置合理的异常图像"]
+```
+
 ### 关键设计
 
 **1. 高斯 Prompt 扰动（GPP）：让异常概念对应一个 embedding 球而非一个点**

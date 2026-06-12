@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为带文本 prompt $\bm{c}$ 的偏好对 $(\bm{x}_0^+, \bm{x}_0^-)$（在 VAE 潜空间中），通过前向加噪得到 $(\bm{x}_t^+, \bm{x}_t^-)$。预训练的扩散骨干（SD3.5-Medium）提取多层视觉/文本特征，经 FiLM 时间步调制后送入门控 Q-Former 打分头，输出标量奖励 $r_\theta(\bm{x}_t, t, \bm{c})$。训练使用噪声校准的 Thurstone 似然 + Fidelity Loss；推理时支持单噪声评估或多噪声 token 级集成。
+输入为带文本 prompt $\bm{c}$ 的偏好对 $(\bm{x}_0^+, \bm{x}_0^-)$（在 VAE 潜空间中），通过前向加噪得到 $(\bm{x}_t^+, \bm{x}_t^-)$。预训练的扩散骨干（SD3.5-Medium）提取多层视觉/文本特征，经 FiLM 时间步调制后送入门控 Q-Former 打分头，输出标量奖励 $r_\theta(\bm{x}_t, t, \bm{c})$。这条「加噪 → 骨干抽特征 → Q-Former 打分」的主干就是**时间步感知潜空间奖励架构**；它产出的标量奖励在训练时喂给**噪声校准 Thurstone 似然** + Fidelity Loss，在推理时则可走单噪声评估、或开启**推理时多噪声集成**做测试时扩展。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["偏好对 (x0+, x0−) + prompt c<br/>（VAE 潜空间）"] --> B["前向加噪到时间步 t<br/>得噪声状态 (xt+, xt−)"]
+    B --> ARCH
+    subgraph ARCH["时间步感知潜空间奖励架构"]
+        direction TB
+        C["扩散骨干 SD3.5-M<br/>抽多层视觉/文本特征"] --> D["FiLM 时间步调制 + 降维<br/>跨层拼接 → V_t, T_t"]
+        D --> E["门控 Q-Former 聚合<br/>均值池化 + MLP"]
+    end
+    ARCH --> F["标量奖励 r_θ(xt, t, c)"]
+    F -->|训练| G["噪声校准 Thurstone 似然<br/>方差随噪声 σ²(t) 放大 → Fidelity Loss"]
+    F -->|推理| H["单噪声评估（t=0.4）"]
+    F -->|推理·测试时扩展| I["推理时多噪声集成<br/>多时间步 token 级拼接"]
+```
 
 ### 关键设计
 

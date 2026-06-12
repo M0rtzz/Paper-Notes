@@ -47,6 +47,26 @@ METER 是首个在**统一上下文**下系统评测 LLM 三层因果推理（di
 ### 整体框架
 METER 把「LLM 在因果阶梯上的能力衰减」做成一个可严格量化的现象，由数据与分析两条线串起来。数据线从 ESL/MAVEN-ERE/MECI/WIKIWHY 四个源数据集抽 cause-effect pair，用 Gemini-2.5-Pro 扩展事件描述并按模板生成三层问题、答案和四类 distractor，经 9 名 NLP 背景标注员的三阶段人审，最终落成 4145 个 entry——每个 entry 一段 context 同时挂 L1/L2/L3 三道 5 选 multiple-choice，做到「同一事实、三层对比」的控制变量。分析线则在这套数据上跑 12 个 LLM（GPT-4o/GPT-5、Gemini-3 系列、Qwen3 全尺寸、Llama-3.3-70B）× 4 种 prompting，先量出三层 accuracy 的衰减，再对 Qwen3-4B/8B 和 Llama-3.2-3B 做 saliency-based 信息流分析，把「行为层失败」一路追到「机制层信息流」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源数据 cause-effect pair<br/>ESL / MAVEN-ERE / MECI / WIKIWHY"] --> B["因果阶梯语言化<br/>L1 发现 / L2 干预 / L3 反事实"]
+    subgraph DATA["统一 context + 四类 distractor 数据构造"]
+        direction TB
+        C["三 LLM 一致去污染"] --> D["Gemini 按模板生成<br/>问题 + 答案 + 4 类 distractor"]
+        D --> E["9 人三阶段人审<br/>(Fleiss κ 0.71–0.78)"]
+    end
+    B --> DATA
+    DATA --> F["4145 entry<br/>1 context + L1/L2/L3 三题"]
+    F --> G["12 LLM × 4 prompting<br/>量出三层 accuracy 衰减"]
+    subgraph FLOW["基于 saliency 的层级信息流分析"]
+        direction TB
+        H["token-pair saliency"] --> I["段间信息流<br/>S(E→O / N→O / Q→O / O→T)"]
+        I --> J["attention masking 因果验证"]
+    end
+    G --> FLOW
+```
+
 ### 关键设计
 
 **1. 把 Pearl 因果阶梯翻译成可操作的语言任务**

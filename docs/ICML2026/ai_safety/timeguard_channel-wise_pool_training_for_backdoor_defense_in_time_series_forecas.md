@@ -49,6 +49,19 @@ $$\mathcal{L}_{\text{def}}(\theta;m) = \frac{1}{\sum_{t,c} m_{t,c}} \sum_{t,c} m
 
 整条 pipeline 分两阶段：Stage I（前 $T_1=10$ epoch）用 RCF ∩ NDF 初始化一个保守但高精度的池子；Stage II（后 $T_2=90$ epoch）用 DRLS 边训边把池子的比例 $\gamma$ 从 $\alpha=0.2$ 线性扩到 $\beta=0.5$。全程不需要干净参考数据，也不改动预测网络结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多变量训练序列 D<br/>部分通道×时间步被污染, 无干净参考集"] --> SG
+    subgraph SG["通道-时间双粒度可靠池训练"]
+        direction TB
+        B["Stage I 双信号初始化<br/>RCF 反向一致性 ∩ NDF 邻域多样性"] --> C["高纯度可靠池 D_rel"]
+        C --> D["Stage II DRLS<br/>距离约束 + loss 筛选, γ 从 0.2 线性扩到 0.5"]
+        D --> E["格点级 mask m(t,c) → masked loss 训练 f_θ"]
+    end
+    E --> F["抗后门预测器, 无需干净数据"]
+```
+
 ### 关键设计
 
 **1. 通道-时间双粒度的可靠池训练：把"整窗取舍"细化到格点，对齐 TSF 攻击的稀疏性**

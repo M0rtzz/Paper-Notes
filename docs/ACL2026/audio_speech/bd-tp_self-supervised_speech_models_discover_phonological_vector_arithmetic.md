@@ -44,6 +44,25 @@ tags:
 
 整个研究不训练新的语音模型，而是对已有 S3M 的表示空间做 post-hoc 探测，围绕两个假设展开两组实验。方向实验检验"是否存在满足音韵类比的线性方向"：用 PanPhon 的音韵特征筛出音素四元组，比较余弦相似度的排序关系。尺度实验检验"缩放音韵向量是否连续改变声学实现程度"：训练一个 vocoder 把 S3M 表示逆映射回语音，缩放向量后重新合成并测量声学量。数据覆盖 TIMIT（英语）与 VoxAngeles（95 种语言）共 96 种语言，输入是音素帧表示，输出是类比成功率与缩放-声学的相关系数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 S3M 音素帧表示<br/>(wav2vec 2.0 / HuBERT / WavLM)"]
+    A --> B
+    A --> C
+    subgraph B["音韵类比构建与余弦相似度评估"]
+        direction TB
+        B1["PanPhon 21 维音韵特征<br/>筛出音素四元组"] --> B2["算 cos(r1, r2+r3−r4)<br/>对比同/异音素基线"] --> B3["成功率 S(Q) + bootstrap 99% 置信区间"]
+    end
+    subgraph C["音韵向量缩放修改 + vocoder 逆映射"]
+        direction TB
+        C1["音韵向量 = 有/无该特征音素均值之差"] --> C2["按 λ 缩放后加到目标帧"] --> C3["Vocos vocoder 逆合成语音"] --> C4["测 F1/F2/HNR/COG<br/>与 λ 算 Spearman 相关"]
+    end
+    B --> D["逐层分析与元音/辅音分离<br/>(25 层 · 元音浅层峰 / 辅音深层峰)"]
+    D --> E["结论：方向假设 + 尺度假设均成立"]
+    C --> E
+```
+
 ### 关键设计
 
 **1. 音韵类比构建与余弦相似度评估：检验表示空间里是否存在满足类比的线性方向**

@@ -47,6 +47,20 @@ tags:
 
 于是整个流程拆成两段。Stage 1 是领域特定持续预训练：拿 VideoMAE-base（已在 Kinetics-400 上预训练）当起点，在「啮齿类癫痫 + 人类正常」的混合视频上做管状掩码自监督重建，逼模型把癫痫相关的时空模式学进编码器。Stage 2 是少样本微调：丢掉解码器、只留编码器，外接一个轻量分类头，在仅有 2/3/4 个正样本的设定下做二分类，输出「未来 5 秒内是否发作」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["跨物种预训练数据 D_pt"]
+        direction TB
+        A["啮齿类癫痫 2952<br/>+ 啮齿类正常 3000"] --> M["混合视频集"]
+        B["人类正常 1870<br/>（6 名患者，非发作期）"] --> M
+    end
+    DATA --> PT["VideoMAE 自监督预训练<br/>管状掩码 0.3 + MSE 重建"]
+    PT -->|丢弃解码器，保留编码器| FT["少样本分类微调<br/>CLS token → 线性头 + sigmoid"]
+    CLIP["发作前监测片段 3–10s"] --> FT
+    FT --> OUT["输出：未来 5 秒内是否发作"]
+```
+
 ### 关键设计
 
 **1. 跨物种预训练数据：用动物数据补人类数据的缺口**

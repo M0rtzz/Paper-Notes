@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 本文走的是「诊断—理论—算法」三步链条：先用大规模对照实验把 many-shot ICL 的三条经验规律一条条放进 CoT 推理场景，发现它们全线崩塌；再以 in-context test-time learning 视角重构解释，把长 context 看成一条 implicit curriculum 而非检索缓存；最后把「顺序要平滑过渡」这条原则落地成 CDS——给定 $n$ 条 demonstration，求一个排列 $O = [\mathbf{d}_{\pi(1)}, \ldots, \mathbf{d}_{\pi(n)}]$ 最小化嵌入轨迹的总曲率 $\Theta(O) = \sum_{t=2}^{n-1} \arccos\!\left(\frac{\mathbf{v}_t \cdot \mathbf{v}_{t+1}}{\|\mathbf{v}_t\|\|\mathbf{v}_{t+1}\|}\right)$，其中 $\mathbf{v}_t = \tilde{\mathbf{e}}_t - \tilde{\mathbf{e}}_{t-1}$ 是相邻投影嵌入的位移向量。诊断阶段覆盖 4 类非推理 LLM（LLaMA 3.1 8B / 3.3 70B / Qwen2.5 7B / 14B）与 4 类推理 LLM（Qwen3 8B / 14B / QwQ 32B / DeepSeek-R1 685B），在分类任务（SuperGLUE, NLU, TREC, BANKING77）和数学/叙事推理任务（GSM8K, MATH 的 geometry / number_theory / counting_and_probability, DetectiveQA）上跑 1–128 shot，统一用开放式生成 + exact match 评估。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["三维诊断实验（4+4 模型 × 推理/非推理任务 × 1–128 shot）<br/>Scaling：仅推理 LLM 才正向 scaling<br/>Retrieval：相似度检索在推理上反而最差<br/>Ordering：顺序方差随 shot 数上升"]
+    S -->|三条经验规律全线崩| THEORY["重构为 in-context 测试时学习<br/>长 context = implicit curriculum<br/>P1 可理解性 · P2 平滑过渡"]
+    THEORY --> ABL["Corrupted CoT 消融<br/>只破坏中间推理链 → 长 prompt 掉 1–2.5 pp<br/>证 procedure 才是 scaling 信号"]
+    ABL --> CDS
+    subgraph CDS["CDS：最小化嵌入轨迹总曲率（落地 P2）"]
+        direction TB
+        C1["完整 demonstration(q+CoT+a)<br/>Qwen3-Embedding-4B 编码 → 投影降维"]
+        C2["组合代价 D = 欧氏距离 + 曲率"]
+        C3["TSP 启发式：最近邻 + 2-opt → 线性化排列"]
+        C1 --> C2 --> C3
+    end
+    CDS --> OUT["最优 demonstration 顺序喂进 prompt<br/>geometry 64-shot +5.42 pp"]
+```
+
 ### 关键设计
 
 **1. 三维诊断实验：把 many-shot 的三条常识逐条压在显微镜下，证明它们在 CoT 推理上同时崩**
@@ -55,7 +72,7 @@ tags:
 
 **3. Curvilinear Demonstration Selection (CDS)：把「平滑过渡」量化为嵌入轨迹的总曲率并最小化它**
 
-既然顺序敏感来自「概念突变打断 implicit 学习轨迹」，那让轨迹尽量平滑就该有帮助。CDS 把这条 pedagogical 原则做成可计算的目标：先把每条 demonstration $\mathbf{d}_i$ 按 (question + CoT + answer) 整体用 Qwen3-Embedding-4B 编码成 $\mathbf{e}_i \in \mathbb{R}^d$——刻意用**完整 demonstration**而非仅 question，因为顺序效应取决于 procedural 内容，只看 question 抓不到 CoT 结构；再把 prompt 内所有嵌入投影到低维子空间 $\tilde{\mathbf{e}}_i \in \mathbb{R}^{d'}$ 让曲率估计稳定；然后把相邻两段位移的夹角定义为局部曲率 $\theta_i = \arccos\!\left(\frac{(\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}) \cdot (\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i)}{\|\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}\|\,\|\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i\|}\right)$，整条排列的总曲率即 $\Theta(O) = \sum_{i=2}^{n-1}\theta_i$（这里 $\theta_i$ 衡量「拐弯角度」，越大表示过渡越突兀），CDS 就是搜一个排列把 $\Theta$ 最小化（具体算法见原文 Section 6）。把最小曲率当目标不是拍脑袋：作者先量到 ordering curvature 与准确率显著负相关（总 $r=-0.547$，geometry $-0.545$，counting $-0.628$）。更关键的是为了排除「无非是把相似项聚到一起」的混淆，他们做了 high-curvature 反向 baseline——保持局部邻域不变、只反转曲率目标制造突兀转折——CDS 仍然胜出，证明起作用的是**平滑过渡本身**而非聚类，这条 causal smoothness ablation 是方法论上的点睛之笔。
+既然顺序敏感来自「概念突变打断 implicit 学习轨迹」，那让轨迹尽量平滑就该有帮助。CDS 把这条 pedagogical 原则做成可计算的目标：先把每条 demonstration $\mathbf{d}_i$ 按 (question + CoT + answer) 整体用 Qwen3-Embedding-4B 编码成 $\mathbf{e}_i \in \mathbb{R}^d$——刻意用**完整 demonstration**而非仅 question，因为顺序效应取决于 procedural 内容，只看 question 抓不到 CoT 结构；再把 prompt 内所有嵌入投影到低维子空间 $\tilde{\mathbf{e}}_i \in \mathbb{R}^{d'}$ 让曲率估计稳定；然后把相邻两段位移的夹角定义为局部曲率 $\theta_i = \arccos\!\left(\frac{(\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}) \cdot (\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i)}{\|\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}\|\,\|\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i\|}\right)$，整条排列的总曲率即 $\Theta(O) = \sum_{i=2}^{n-1}\theta_i$（这里 $\theta_i$ 衡量「拐弯角度」，越大表示过渡越突兀），CDS 就是搜一个排列把 $\Theta$ 最小化。但精确最小化是组合爆炸（$n!$ 种排列，$n \leq 128$ 时不可行），且只压角度可能得到「整体笔直、却在嵌入空间大跳」的轨迹，于是作者退一步用 **TSP 近似**：把相邻代价定为欧氏距离与曲率之和 $D_{\text{CDS}} = D_{\text{euclidean}} + D_{\text{curvature}}$——欧氏项把相邻 demonstration 锁在邻近区域、曲率项压制突兀转折——在完整图上用最近邻启发式 + 2-opt 局部搜索求一条短路径，再线性化成最终顺序；$n \leq 128$ 时普通 CPU 上一分钟内就能算完。把最小曲率当目标不是拍脑袋：作者先量到 ordering curvature 与准确率显著负相关（总 $r=-0.547$，geometry $-0.545$，counting $-0.628$）。更关键的是为了排除「无非是把相似项聚到一起」的混淆，他们做了 high-curvature 反向 baseline——保持局部邻域不变、只反转曲率目标制造突兀转折——CDS 仍然胜出，证明起作用的是**平滑过渡本身**而非聚类，这条 causal smoothness ablation 是方法论上的点睛之笔。
 
 ### 损失函数 / 训练策略
 CDS 完全是**推断时**算法，无任何训练。底层 embedding 模型用 Qwen3-Embedding-4B（off-the-shelf），评估模型涵盖 LLaMA、Qwen2.5、Qwen3、QwQ、DeepSeek-R1 系列，prompt 上下文最大 131K tokens，shot 数扫 $n \leq 128$。
@@ -101,7 +118,7 @@ CDS 在 Qwen3 系列上的提升（几何 / 数论 / DetectiveQA）：
 ## 局限与展望
 - CDS 的核心“平滑过渡”假设依赖 embedding 空间对 procedural 内容的可表达性；如果 embedding 模型本身对 CoT 内部结构编码差（如 instruction-only 模型），曲率信号失真，方法效果难保证。
 - 实验集中在数学和叙事推理；编程、定理证明、agentic planning 等更复杂的推理类型是否同样满足曲率-性能负相关未验证。
-- 没给出 CDS 的最优化算法复杂度与对比（TSP 类排序问题）；shot 数大时 minimization 本身可能成为瓶颈。
+- CDS 用 TSP 近似（最近邻 + 2-opt）求顺序，论文虽给出「$n \leq 128$ 时 CPU 上一分钟内」的实测代价，却没刻画这个启发式离全局最小曲率有多远；组合代价里欧氏项与曲率项的权重也未做敏感性分析。
 - “self-generated CoT 优于 ground-truth” 的优势随模型变强缩小——但这是否意味着未来强模型完全可以扔掉 self-generation 这一步骤，论文没量化。
 - 未来可探索把曲率项作为可微正则直接 inject 到训练里（curriculum learning fine-tuning），或与 RAG 的 chunk 排序结合做 retrieval-aware curriculum。
 

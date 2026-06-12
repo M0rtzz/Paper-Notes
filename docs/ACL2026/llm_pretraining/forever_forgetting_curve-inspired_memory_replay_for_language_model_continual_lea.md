@@ -43,7 +43,19 @@ tags:
 ### 整体框架
 FOREVER 把 replay 拆成两个紧耦合的组件，二者共享同一信号 (parameter update magnitude)：
 **(1) When to Replay — Forgetting Curve-inspired Replay Scheduler**：用 warm-up window $S$ 步 (本文 $S=24$) 内的累积参数更新作为"虚拟模型一天" $\tau_{\text{day}}$，把 Ebbinghaus 人类日 $\mathcal{D}_{\text{human}}=\{1,2,4,7,15,30,...\}$ 映射成 $\mathcal{D}_{\text{model}}=\{d\cdot\tau_{\text{day}} \mid d\in\mathcal{D}_{\text{human}}\}$；训练中持续追踪 $\tau_t$，当 $\tau_t \geq \mathcal{D}_{\text{model}}^{(j)}$ 时触发第 $j$ 次回放，每任务开始时 $\tau$ 重置。
-**(2) How to Replay — Intensity-aware Replay Regularization**：用 baseline intensity $\mu_0 = \frac{1}{S}\sum_{t=1}^S \Delta_t$ 与 EMA $\mu_t = (1-\lambda)\mu_{t-1} + \lambda \Delta_t$ 构造不稳定比 $r_t = \mu_t/\mu_0$，回放正则强度 $\beta_t = \beta_{\text{base}} \cdot \text{clip}(1 + \gamma(r_t - 1), g_{\min}, g_{\max})$；最终 replay loss 为 $\mathcal{L}_{\text{replay}} = \mathcal{L}_{\text{task}}^{(\text{old})} + \beta_t \sum_j \|\Theta_j - \Theta_j^\star\|_2^2$，其中 $\Theta^\star$ 是上个任务结束时的快照。
+**(2) How to Replay — Intensity-aware Replay Regularization**：用 baseline intensity $\mu_0 = \frac{1}{S}\sum_{t=1}^S \Delta_t$ 与 EMA $\mu_t = (1-\lambda)\mu_{t-1} + \lambda \Delta_t$ 构造不稳定比 $r_t = \mu_t/\mu_0$，回放正则强度 $\beta_t = \beta_{\text{base}} \cdot \text{clip}(1 + \gamma(r_t - 1), g_{\min}, g_{\max})$；最终 replay loss 为 $\mathcal{L}_{\text{replay}} = \mathcal{L}_{\text{task}}^{(\text{old})} + \beta_t \sum_j \|\Theta_j - \Theta_j^\star\|_2^2$，其中 $\Theta^\star$ 是上个任务结束时的快照。两条支线靠"何时回放"取 $\tau_t$ 的累积、"回放多强"取 $\mu_t$ 的 EMA，从同一个 $\Delta_t$ 分流而来，最后在回放损失处汇合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单步参数更新信号<br/>Δ_t = ‖Θ_t − Θ_{t−1}‖₂（仅 LoRA 权重，从 optimizer 直接取）"]
+    A --> B["模型时间校准<br/>累积 τ_t = Σ Δ_i；warm-up S=24 步得虚拟一天 τ_day"]
+    A --> E["强度自适应回放正则<br/>EMA μ_t 估当前移动速度，与基线 μ_0 对比"]
+    B --> C["遗忘曲线驱动的递增间隔调度<br/>Ebbinghaus 天数 {1,2,4,7,15,30...} × τ_day → 触发阈值 D_model"]
+    E --> D["不稳定比 r_t = μ_t / μ_0<br/>β_t = β_base · clip(1 + γ(r_t − 1))"]
+    C -->|"τ_t ≥ 阈值时触发第 j 次回放"| F["回放损失<br/>L_replay = L_task^old + β_t · Σ‖Θ_j − Θ_j*‖₂²"]
+    D -->|"提供动态回放强度 β_t"| F
+```
 
 ### 关键设计
 

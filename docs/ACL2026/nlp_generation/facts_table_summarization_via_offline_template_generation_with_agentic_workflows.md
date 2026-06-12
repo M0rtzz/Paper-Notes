@@ -45,6 +45,21 @@ tags:
 
 FACTS 由三个互联阶段组成，每个阶段的输出由 LLM Council（多模型集成验证）迭代验证和改进。最终产出为离线模板——SQL 查询集 + Jinja2 渲染模板。LLM 全程仅接触 schema 信息，从不暴露原始数据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户查询 + 表格 schema<br/>(LLM 全程不接触原始数据)"] --> B["模式引导规范与过滤<br/>引导问题 + 过滤规则"]
+    B --> C["SQL 查询生成<br/>过滤规则 → WHERE 约束"]
+    C -->|本地数据库执行| D{执行成功?}
+    D -->|失败/空结果, ≤3 轮| E["LLM Council 反馈"]
+    E --> C
+    D -->|通过| F["Jinja2 模板生成与对齐<br/>引用列名 + 迭代行渲染"]
+    F --> G["Council 校验 SQL ↔ 模板对齐"]
+    G -->|字段不齐, 协同修正| F
+    G -->|对齐| H["离线模板<br/>SQL 查询集 + Jinja2 模板"]
+    H -->|复用于同 schema 新表| I["自然语言摘要"]
+```
+
 ### 关键设计
 
 **1. Schema-Guided Specification and Filtering（模式引导规范与过滤）：把高层自然语言查询翻译成 schema 级的具体操作**

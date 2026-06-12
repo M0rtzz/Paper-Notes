@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 PipeSD 想解决的是端云投机解码里「边缘等 NAV、云等 draft 上传」的双向空转。它的一个 speculative round 这样转：边缘 draft 模型一边自回归吐 token，一边由 Token-batch Pipeline Scheduler 按 DP 算出的批边界 $\mathbb B=(b_1,\dots,b_K)$ 即时打包上传，让传输和生成重叠；同时 Dual-threshold NAV Trigger 盯着单 token 置信度和累积序列置信度，任一越界就发起 NAV，云端 target 模型验证后返回 accept/reject。所有自适应逻辑都压在边缘：Environment Monitor 持续测量 $(\alpha,\beta,\gamma)$ 触发 DP 重跑，BO autotuner 周期性更新触发阈值。系统用 llama-cpp-python（边）+ PyTorch + FastAPI（云）实现。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["边缘 draft 模型<br/>自回归生成 draft token"] --> B["Token-batch 流水 DP 调度<br/>按最优批边界 B 打包上传"]
+    B -->|生成与传输重叠| C["双阈值 NAV 触发<br/>C1≤R1 或 P(Dn)≤R2"]
+    C -->|阈值越界| D["云端 target 模型 NAV 验证<br/>返回 accepted token"]
+    D -->|继续下一轮 round| A
+    E["Environment Monitor<br/>在线测 α,β,γ"] -->|α/β/γ 变→重跑 DP| B
+    F["BO autotuner<br/>16 样本搜 R1,R2"] -->|TPT 变→更新阈值| C
+```
+
 ### 关键设计
 
 **1. Token-batch 流水的 DP 最优调度：在通信启动开销不可忽略时，求「凑几个 token 一起发」的最优批边界**

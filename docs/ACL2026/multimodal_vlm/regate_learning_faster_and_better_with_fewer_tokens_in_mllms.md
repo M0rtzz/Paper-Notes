@@ -45,6 +45,29 @@ ReGATE 的名字来自 Reference-Guided Adaptive Token Elision。它不是把视
 
 第二阶段是 student training：训练过程中维护每个样本每个 token 的 EMA 难度 $m_{s,i}$，用当前 student loss 持续更新。ReGATE 把二者合成 token 分数 $d_{b,i}=m_{s,i}+\lambda\ell^{ref}_{b,i}$，再按当前 sparsity schedule 选择 top-$k$ token 作为 active token。active token 正常经过 attention、MLP 和反向传播；inactive token 跳过主要计算，从而减少 token usage、训练时间和 activation memory。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["训练样本<br/>视觉输入 + 指令 + 答案 token"]
+    subgraph REF["text-only teacher 的 reference loss（离线预计算）"]
+        direction TB
+        T1["冻结 text-only teacher<br/>去掉视觉编码器/projector，视觉 token 用 pad 占位"]
+        T2["逐 token 负对数似然<br/>得 reference loss ℓ_ref（视觉必要性信号）"]
+        T1 --> T2
+    end
+    subgraph SCH["student EMA 难度与双周期稀疏调度"]
+        direction TB
+        EMA["student EMA 难度 m_s<br/>历史 student loss 滑动平均（当前难度）"]
+        SCORE["token 分数 d = m_s + λ·ℓ_ref<br/>前 F 步全保留，之后取 top-k 作 active token"]
+        EMA --> SCORE
+    end
+    IN --> REF
+    IN --> EMA
+    REF --> SCORE
+    SCH --> SPARSE["无参数的 decoder 稀疏计算<br/>active 走 attention/MLP，inactive 走 residual 透传"]
+    SPARSE --> OUT["更少 token、更快训练的 MLLM"]
+```
+
 ### 关键设计
 
 **1. text-only teacher 的 reference loss：用"文本能不能预测这个 token"当作它需不需要看图的代理信号**
@@ -59,7 +82,7 @@ $$d_{b,i}=m_{s,i}+\lambda\ell^{ref}_{b,i}$$
 
 训练按周期 $C$ 运行，每个周期前 $F$ 步保留全部 token 让难度估计稳定下来，之后只留分数最高的比例 $p_{sparse}$ 作为 active token。这样选择既不会一直死磕已经变容易的 token，也不会只听 teacher 的静态信号而无视 student 当前到底学到哪了——算力被引导到"既需要视觉、又仍然难学"的交集上。
 
-**3. 无参数的 decoder sparse computation：把 token mask 真正落成 attention 和 MLP 的计算节省，而不只是改 loss 权重**
+**3. 无参数的 decoder 稀疏计算（sparse computation）：把 token mask 真正落成 attention 和 MLP 的计算节省，而不只是改 loss 权重**
 
 如果只在 loss 层给 token 加 mask，forward/backward 的大头开销其实一点没省。ReGATE 把稀疏性下沉进 decoder layer：只为 active token 生成 query/key/value 并执行 attention，MLP 也只 gather active token 的 hidden states 去算、算完再 scatter 回原位置；inactive token 直接走 residual 透传，不接收对应计算路径的梯度。因为模型的函数形式没变、预训练权重照样兼容，这套稀疏化既不增加任何可训练参数、又能实打实减少每步训练的时间和 activation memory，把"少处理 token"翻译成真正的训练加速。
 

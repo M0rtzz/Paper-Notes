@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 这篇论文要在一条持续到来的医学分割任务流上，既不预设有多少类任务、又不存历史病人数据地完成持续学习。整体在冻结的 CLIPSeg backbone 之上运转：每来一个任务 $T_t$（含图像、mask、临床文本 prompt），先用冻结 CLIP text encoder 把 prompt 平均成一个语义嵌入 $e_t$，交给 CRP 在线判断它属于某个已有"语义模态"还是要开一个新模态；定下模态 $k$ 后，只激活该模态专属的 LoRA 适配器去训练，并在模态内部叠一层 EWC 约束防止覆盖同模态早先任务；训完再在线更新该模态的中心、相似度分布和 Fisher 信息，存成下一轮的 anchor。任务序列 $\mathcal{T}=\{T_1,\dots,T_N\}$ 就这样被自动切成若干互相隔离、内部共享的模态分支。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 T_t<br/>图像 + mask + 临床 prompt"] --> B["冻结 CLIP text encoder<br/>prompt 平均成语义嵌入 e_t"]
+    B --> C["CRP 模态分配<br/>先验偏老桌 + 自适应高斯似然比"]
+    C -->|和所有老桌都不像| D["开新模态 k<br/>实例化新低秩对 (A_k,B_k)"]
+    C -->|匹配已有模态 k| E["复用模态 k 的 LoRA"]
+    D --> F["模态特定 LoRA 适配器<br/>冻结 backbone，仅训该模态 Q/K/V/O 低秩对"]
+    E --> F
+    F --> G["模态内 EWC<br/>仅同模态已有多任务时加 Fisher 约束"]
+    G --> H["在线更新模态中心 / 相似度分布 / Fisher EMA"]
+    H -.下一任务的 anchor.-> C
+```
+
 ### 关键设计
 
 **1. CRP 先验 + 自适应似然的贝叶斯模态分配：让"该共享还是该隔离"由数据自己回答**

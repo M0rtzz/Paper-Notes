@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 SpatialReward 要解决的是"MLLM 评分时不回看源图"的感知缺口，做法是把 reward 从一次盲打分改造成一个条件生成任务：模型把输入 $X$ 映射成结构化输出 $Y=(B, \mathcal T, s)$，其中 $B$ 是被编辑区域的 bounding box 序列、$\mathcal T$ 是文本 rationale、$s$ 是标量分数。评估协议沿用 VIEScore 把判断解耦成两条性质不同的流——Semantic Consistency（SC，含指令遵循 $s_{if}$ 与源一致性 $s_{con}$）走"先定位再对比"的 Think-with-Boxes 路径并真正比对原图与编辑后图，Perceptual Quality（PQ，含自然度 $s_{nat}$ 与瑕疵 $s_{art}$）则只看编辑后图做无参考评估；两条流的结果最后以层次聚合 $R_{final}=(S_{SC})^{\alpha}(S_{PQ})^{1-\alpha}$（$\alpha=0.8$）合成最终 reward。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["Spatial-Prior-Guided 数据流水线<br/>235B 预生成 box → 教师按类别路由生成 rationale → 反向对齐+幻觉过滤（SpatialReward-260K）"]
+    DATA --> TRAIN["SFT + GRPO 两阶段训练<br/>Stage1：260K 交叉熵 SFT → Stage2：7K 难样本 GRPO（Gemini-3.0-Flash 监督）"]
+    TRAIN --> MODEL["SpatialReward 奖励模型（Qwen-3-VL-8B）"]
+    MODEL --> X["输入 X = 指令 + 原图 + 编辑后图"]
+    X --> SC["Think-with-Boxes · SC 流<br/>Localization 预测 box → Anchored Verification 回看像素 → s_sc=[s_if, s_con]"]
+    X --> PQ["PQ 流（B=∅，仅看编辑后图）→ s_pq=[s_nat, s_art]"]
+    SC --> AGG["层次聚合 R_final=(S_SC)^α · (S_PQ)^(1−α)，α=0.8"]
+    PQ --> AGG
+```
+
 ### 关键设计
 
 **1. Think-with-Boxes：把"看哪里"写进推理链**

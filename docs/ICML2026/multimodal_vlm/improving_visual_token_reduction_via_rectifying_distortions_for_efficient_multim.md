@@ -43,27 +43,38 @@ RESTORE 把现有视觉 Token 缩减(VTR)中被忽略的"位置失真"和"注意
 ### 整体框架
 RESTORE 是一个挂在标准 MLLM(以 LLaVA-1.5 为代表)上的**通用 VTR 增强器**,不动 visual encoder,也不动 LLM,只改两个地方:LLM 内部计算 attention 的 softmax 公式,以及 token 合并阶段的 anchor 挑选逻辑。
 
-整体流程:输入图像 → 视觉编码器输出 $\mathbf{X}_{\text{vis}}\in\mathbb{R}^{N_{\text{vis}}\times d}$($N_{\text{vis}}{=}576$) → VTR 阶段(任何剪枝/合并/混合方法都可)输出 $\hat{\mathbf{X}}_{\text{vis}}\in\mathbb{R}^{n_{\text{vis}}\times d}$($n_{\text{vis}}\in\{64,128,192\}$) → 保留 token 沿用全序列里的**原始位置索引** → LLM 在每个 attention 层使用**校准后**的 softmax → 输出文本响应。如果底层 VTR 包含合并步骤(如 VisionZip),还会用 RESTORE 的 anchor 选择策略替换原方法的 anchor 采样。
+整体流程:输入图像 → 视觉编码器输出 $\mathbf{X}_{\text{vis}}\in\mathbb{R}^{N_{\text{vis}}\times d}$($N_{\text{vis}}{=}576$) → VTR 阶段(任何剪枝/合并/混合方法都可)输出 $\hat{\mathbf{X}}_{\text{vis}}\in\mathbb{R}^{n_{\text{vis}}\times d}$($n_{\text{vis}}\in\{64,128,192\}$) → 保留 token 沿用全序列里的**原始位置索引** → LLM 在每个 attention 层使用**校准后**的 softmax → 输出文本响应。如果底层 VTR 包含合并步骤(如 VisionZip),合并时还会用 RESTORE 的判别性 anchor 选择策略替换原方法的 anchor 采样。也正因为只动 softmax 和 anchor 挑选这两处、不碰各 VTR 方法"挑哪些 token"的核心逻辑,RESTORE 成为一个能挂在 FastV、SparseVLM、ToMe、VisionZip、DivPrune、VisPruner、HoloV 等任意主干上的零训练通用增强器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["视觉编码器 + Projector<br/>576 个视觉 token"]
+    B --> C["VTR 阶段：剪枝 / 合并 / 混合<br/>缩减到 64~192 token"]
+    C -->|含合并步骤| D["判别性 Anchor 选择<br/>代表性 × 判别性 挑 anchor 再合并"]
+    C -->|纯剪枝| E
+    D --> E["保留原始位置索引<br/>不 reindex，维持真实空间距离"]
+    E --> F["拼接 [系统; 视觉; 文本] 输入 LLM"]
+    F --> G["距离感知注意力校准<br/>softmax 加 c−𝒟(|m−n|) 补回 RoPE 衰减"]
+    G --> H["输出文本响应"]
+```
 
 ### 关键设计
 
-1. **距离感知注意力校准(Attention Calibration)**:
+**1. 距离感知注意力校准:保留原始位置索引,再把 RoPE 偷走的注意力解析地补回来**
 
-    - 功能:在保留原始位置索引的前提下,把视觉 token 总注意力比例拉回到全 token 序列水平。
-    - 核心思路:在 softmax 的 logits 上加一个解析的、随相对距离单调上升的校准项,直接对冲 RoPE 长程衰减 $\mathcal{D}(|m-n|)=\frac{2}{d_h}\sum_{j=1}^{d_h/2}\cos(|m-n|\theta_j)$。校准后的注意力写为 $\hat{A}_{m,n}=\frac{\exp(z_{m,n}+\log s_n(c-\mathcal{D}(|m-n|)))}{\sum_{i}\exp(z_{m,i}+\log s_i(c-\mathcal{D}(|m-i|)))}$,其中 $z_{m,n}$ 是原始 logit,$s_n$ 是第 $n$ 个 token 所合并的原始 token 数,$c$ 是保证补偿量非负的常数。$\log s_n$ 沿用 ToMe 的"合并 token 按比例放大"做法,$(c-\mathcal{D})$ 则是 RESTORE 的新增项,负责把因距离衰减被压低的远距离视觉 token 的注意力拉回来。
-    - 设计动机:ToMe 的 $\log s_n$ 本来就是为纯视觉任务设计的,在 MLLM 里因为文本 token 距离近、logits 大,单靠 $\log s_n$ 救不了被 softmax 重分配走的视觉注意力。RESTORE 明确把"位置距离"这一因素从 $z_{m,n}$ 里隔离出来再单独反向补偿,既保住了 reindex 派想要的注意力总量,又保住了 retain 派想要的真实空间关系。论文还给出在 M-RoPE(Qwen2.5-VL 用的多模态 RoPE)上的推广,因此该校准同时适用于 1D 和多维空间编码。
+这一步是图中 LLM 阶段(节点 G)的核心,也是 RESTORE 最主要的增益来源。痛点在于:缩减序列后,reindex 派把保留 token 重新编号成连续位置,破坏了视觉 token 与文本 token 间真实的空间距离;retain 派沿用原始索引保住了空间关系,却因为 RoPE 的长程衰减把远距离视觉 token 的注意力 logit 压低,再经 softmax 归一化,概率质量被重分配给距离更近、logit 更大的文本 token,视觉 token 的总注意力比例整体跌破全序列基线,模型于是"少看图、多猜文",引发幻觉与 grounding 弱化。RESTORE 选择保留原始位置索引(守住空间真实性),再在每层 attention 的 softmax logit 上加一个解析校准项,把被衰减偷走的注意力补回来。
 
-2. **判别性 Anchor Token 选择(Distinctive Anchor Selection)**:
+具体做法是先把 RoPE 的长程衰减从注意力 logit 中解析隔离出来,得到只随相对距离变化的衰减函数 $\mathcal{D}(|m-n|)=\frac{2}{d_h}\sum_{j=1}^{d_h/2}\cos(|m-n|\theta_j)$。校准后的注意力为 $\hat{A}_{m,n}=\frac{\exp(z_{m,n}+\log s_n(c-\mathcal{D}(|m-n|)))}{\sum_{i}\exp(z_{m,i}+\log s_i(c-\mathcal{D}(|m-i|)))}$,其中 $z_{m,n}$ 是原始 logit,$s_n$ 是第 $n$ 个 token 合并的原始 token 数,$c$ 是保证补偿量非负的常数。这里 $\log s_n$ 沿用 ToMe 的"合并 token 按比例放大"做法,而 $(c-\mathcal{D})$ 是 RESTORE 的新增项——距离越远 $\mathcal{D}$ 越小、补偿量 $(c-\mathcal{D})$ 越大,恰好反向对冲 RoPE 对远距离视觉 token 的打压。
 
-    - 功能:在 token 合并阶段挑出既能代表邻域、又互相不冗余的 anchor,降低特征平均带来的细节丢失。
-    - 核心思路:借鉴 density peak clustering。先在归一化后的视觉特征上算成对相关矩阵 $\mathbf{C}=\mathbf{X}_{\text{vis}}\mathbf{X}_{\text{vis}}^T/\|\mathbf{X}_{\text{vis}}\|^2$;**代表性**定义为该 token 对其他所有视觉 token 相关度之和 $\mathcal{R}_i=\sum_j \mathbf{C}_{ij}$;**判别性**定义为 $1-\max_j \hat{\mathbf{C}}_{ij}$,其中 $\hat{\mathbf{C}}$ 是用二值掩码 $\mathbf{M}_{ij}=\mathbb{I}(\mathcal{R}_j>\mathcal{R}_i)$ 屏蔽掉非"更强对手"后的相关矩阵,即只看比自己更"中心"的 token 的最大相似度——值越小说明这个 token 没被任何更强对手覆盖,越独特。最终 anchor 集合 $\mathcal{A}=\operatorname{Top-K}(\mathcal{R}_i\odot(1-\max_j\hat{\mathbf{C}}_{ij}))$ 取代表性与判别性乘积最大的 Top-K。剩余 token 与之相关度最高的 anchor 合并。
-    - 设计动机:PruMerge 选高注意力 anchor、VisionZip 用均匀采样 anchor,这两种策略都不保证 anchor 与被合并 token 相似——结果 anchor 不像"邻域中心",平均下来反而模糊;若同时挑了几个高度相关的 anchor 又会浪费预算。"代表性 × 判别性"用一次预计算的相关矩阵就同时解决这两件事,且不引入额外计算开销(矩阵被复用)。
+为什么单靠 ToMe 的 $\log s_n$ 不够?因为它只考虑"合并了多少 token",在纯视觉任务里足够,但 MLLM 里文本 token 彼此距离近、logit 天然大,$\log s_n$ 救不回被 softmax 抢走的视觉注意力。RESTORE 把"位置距离"这一因素单独拎出来反向补偿,于是同时守住了 retain 派想要的真实空间关系和 reindex 派想要的注意力总量。论文进一步把校准项推广到 M-RoPE(Qwen2.5-VL 用的多模态 RoPE),因此 1D 与多维空间编码都适用。消融实验中,这一项几乎拉满了所有 VTR 主干的性能差距,其中 POPE(幻觉评测)涨幅最明显,与"视觉 grounding 被恢复"的解释一致。
 
-3. **保留原始位置索引的统一插拔接口**:
+**2. 判别性 Anchor Token 选择:让合并用的 anchor 既像邻域中心、又互不冗余**
 
-    - 功能:把"位置索引保持原样"作为强制约束,提供一个能挂在任意 VTR 主干上的统一接口,让 FastV、SparseVLM、ToMe、VisionZip、DivPrune、VisPruner、HoloV 等方法都能享受同一套校准。
-    - 核心思路:不修改各 VTR 方法的"挑哪些 token"或"怎么合并"的核心逻辑,只在 LLM 内的 attention 计算阶段统一替换 softmax,在合并阶段统一替换 anchor 选择。VTR 方法依然按各自策略输出 $\hat{\mathbf{X}}_{\text{vis}}$ 与 size 向量 $\{s_n\}$,RESTORE 仅消费这些产物。
-    - 设计动机:既然失真问题是 VTR 范式层面的,而不是某一具体方法的,那就把修复也做在范式层面。论文表 1/表 2 显示同一套 RESTORE 挂上 5 种不同 VTR 主干都能带来 1–4 点的平均得分提升,验证了这个接口设计的普适性。
+这一步对应图中合并分支(节点 D),只在底层 VTR 含合并步骤时生效。痛点在于:token 合并要把一簇相似 token 聚到代表性 anchor 上,但 PruMerge 挑高注意力 token、VisionZip 用均匀采样,都不保证 anchor 与被它合并的 token 真的相似——anchor 不像"邻域中心",平均下来反而把细节抹糊;反过来,若同时选了几个互相高度相关的 anchor,又会让有限的 token 预算浪费在重复区域上。
+
+RESTORE 借鉴 density peak clustering,用一次预计算的成对相关矩阵 $\mathbf{C}=\mathbf{X}_{\text{vis}}\mathbf{X}_{\text{vis}}^T/\|\mathbf{X}_{\text{vis}}\|^2$ 同时刻画两个指标。**代表性** $\mathcal{R}_i=\sum_j \mathbf{C}_{ij}$ 是该 token 对其他所有视觉 token 的相关度之和,值越大越像聚类中心。**判别性** $1-\max_j \hat{\mathbf{C}}_{ij}$ 则衡量独特性:先用二值掩码 $\mathbf{M}_{ij}=\mathbb{I}(\mathcal{R}_j>\mathcal{R}_i)$ 只保留"比自己更中心"的对手,得到屏蔽后的相关矩阵 $\hat{\mathbf{C}}$,再取它与最强对手的最大相似度——若某 token 没被任何更强对手高度覆盖,这个最大值就小、$1-\max$ 就大,说明它捕捉了别处没有的独特特征。最终 anchor 集合 $\mathcal{A}=\operatorname{Top-K}(\mathcal{R}_i\odot(1-\max_j\hat{\mathbf{C}}_{ij}))$ 取两个指标乘积最大的 Top-K,其余 token 各自并入与之相关度最高的 anchor。
+
+这样代表性保证 anchor 是邻域中心、减少平均带来的模糊,判别性则避免选出一堆彼此冗余的 anchor。关键是两个指标都从同一个相关矩阵 $\mathbf{C}$ 复用而来,不引入任何额外计算开销。在 VisionZip 这类含合并的主干上,它能在校准之上再带来约 +0.3~0.5% 的提升。
 
 ### 损失函数 / 训练策略
 RESTORE 是**纯推理期模块**,不引入任何可训练参数,也不需要重训 LLM 或 visual encoder。校准项 $c$ 是固定常数,长程衰减 $\mathcal{D}$ 完全由 RoPE 频率参数 $\theta_j$ 解析给出;anchor 选择只依赖特征相关矩阵,在 visual encoder 前向时一次性算完。因此插到任何已训好的 MLLM 上都是零训练成本。

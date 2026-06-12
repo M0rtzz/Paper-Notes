@@ -45,6 +45,24 @@ tags:
 
 CRISP 包含三个阶段：（1）原始 CoT 生成——从源模型获取完整推理轨迹；（2）关键推理路径搜索——利用 `</think>` 注意力评估步骤显著性，通过动态操作符压缩推理链；（3）精炼与微调——用 LLM 恢复压缩路径的语义连贯性，然后用多任务目标微调目标模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源模型生成原始 CoT<br/>完整推理轨迹"] --> B["&lt;/think&gt; 信息锚点<br/>注意力聚合得步骤显著性 Sᵢ"]
+    B --> OPS
+    subgraph OPS["四种原子操作的贪心搜索（按显著性约束动作空间）"]
+        direction TB
+        K["Keep 保留高显著步骤"]
+        P["Prune 移除低显著步骤"]
+        RW["Rewrite 用 LLM 精简步骤"]
+        FU["Fuse 合并语义重复步骤"]
+    end
+    OPS -->|"奖励函数 R(a)：似然净增益 − 长度惩罚"| D["压缩推理路径"]
+    D --> E["LLM 精炼器恢复语义连贯<br/>以原始 CoT 为参照"]
+    E --> F["多任务微调<br/>控制 token κ 混合完整 / 压缩推理"]
+    F --> G["压缩后推理模型"]
+```
+
 ### 关键设计
 
 **1. `</think>` 作为信息锚点的发现：用模型自己的注意力当步骤显著性信号，绕开外部代理**

@@ -41,7 +41,18 @@ CSRP 用 CPT、带 CoT rationale 的 SFT 和带 Efficiency-Aware Reward 的 GRPO
 CSRP 是一个 CPT-SFT-RL 三阶段 pipeline，目标是把通用 4B LLM 转成高精度中文纠错模型。相比只做 SFT，CSRP 额外强调两件事：第一，纠错前要有中文错误分布和语言约束先验；第二，强化学习奖励不只看是否接近答案，还要惩罚不必要编辑。
 
 ### 整体框架
-Phase I 使用 5.9M 样本继续预训练，其中通用数据和纠错相关数据按 8:2 混合。Phase II 使用 Qwen-Plus 作为 teacher，在固定 source 和 gold target 之间蒸馏结构化 rationale，格式为 [Localization] → [Classification] → [Rationale]，让学生模型在输出修正前先诊断错误。Phase III 使用保留的 RL 数据运行 GRPO，并引入 Efficiency-Aware Reward，让模型偏好“少而准”的编辑。
+Phase I 使用 5.9M 样本继续预训练，其中通用数据和纠错相关数据按 8:2 混合。Phase II 使用 Qwen-Plus 作为 teacher，在固定 source 和 gold target 之间蒸馏结构化 rationale，格式为 [Localization] → [Classification] → [Rationale]，让学生模型在输出修正前先诊断错误。Phase III 使用保留的 RL 数据运行 GRPO，并引入 Efficiency-Aware Reward，让模型偏好“少而准”的编辑。三个阶段依次回答“知道什么是错”“为什么要改”“什么时候不要改”，前一阶段的产出是后一阶段的初始策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["通用 4B LLM"] --> B["平衡继续预训练（CPT）<br/>5.9M 语料，通用:纠错 = 8:2"]
+    B --> C["诊断式 CoT 蒸馏（CoT-SFT）<br/>Qwen-Plus teacher 只产 rationale"]
+    C --> D["[Localization]→[Classification]→[Rationale]<br/>先诊断、后下笔"]
+    D --> E["效率感知策略对齐（GRPO）<br/>对每个输入采样 N 个候选"]
+    E --> F["Efficiency-Aware Reward<br/>相对改进 RI + 编辑效率 η，原句正确则不动得 +2.0"]
+    F -->|组内标准化 + KL 正则| G["高精度低过纠正纠错模型"]
+```
 
 ### 关键设计
 

@@ -42,6 +42,17 @@ tags:
 
 整条流水线是：可选的输入条件（边界点序列 / 邻接图 / 部分户型）先被编码成 FML 的条件段，拼到序列开头；FMLM 模型从这里出发逐 token 续写出房间和门；续写过程中用约束解码挡掉所有不合语法的 token；最后把生成好的 FML 解析回矢量户型图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入条件（可选）<br/>边界点序列 / 邻接图 / 部分户型"] --> B["Floorplan Markup Language<br/>编码成 FML 条件段"]
+    B --> C["FMLM 自回归续写<br/>逐 token 生成房间与门"]
+    C -->|每步候选 token| D["约束解码<br/>mask 掉违反语法的 token"]
+    D -->|只保留合法 token| C
+    C --> E["完整 FML 序列"]
+    E --> F["解析回矢量户型图"]
+```
+
 ### 关键设计
 
 **1. Floorplan Markup Language：把户型图写成一段可解析的标记序列**

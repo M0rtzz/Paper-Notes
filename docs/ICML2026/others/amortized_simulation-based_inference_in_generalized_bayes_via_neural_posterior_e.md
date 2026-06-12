@@ -44,26 +44,42 @@ tags:
 
 Route A 先从普通 simulator joint $\pi(\theta)p(x\mid\theta)$ 学一个 joint score，再用温度修正后的 score 跑短程退火 Langevin，合成近似来自 $\pi(\theta)p(x\mid\theta)^\beta$ 的 $(\theta,x,\beta)$ 三元组。随后用这些样本做条件 MLE 训练 NPE。
 
-Route B 不合成新样本，而是一次性抽取 base joint 数据并复用。对每个 $\beta$，它用 NLE 或 NRE 估计 $p(x\mid\theta)^{\beta-1}$ 或似然比权重，再用 self-normalized importance sampling 得到加权 NPE 目标。理论上，这个目标等价于用 forward KL 拟合目标 power posterior。
+Route B 不合成新样本，而是一次性抽取 base joint 数据并复用。对每个 $\beta$，它用 NLE 或 NRE 估计 $p(x\mid\theta)^{\beta-1}$ 或似然比权重，再用 self-normalized importance sampling 得到加权 NPE 目标。理论上，这个目标等价于用 forward KL 拟合目标 power posterior。两条路线产出的训练信号都喂给同一个 $\beta$ 条件 NPE，训练完后推断时只需对给定 $(x_{obs},\beta)$ 做一次前向。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["目标 power posterior<br/>pβ(θ∣x) ∝ π(θ)·p(x∣θ)^β"]
+    P --> RA
+    P --> RB
+    subgraph RA["Route A：score 合成 tempered 样本"]
+        direction TB
+        A1["学 joint score sψ(θ,x)"] --> A2["温度修正 score +<br/>短程退火 Langevin"]
+        A2 --> A3["合成 tempered (θ,x,β)"]
+    end
+    subgraph RB["Route B：SNIS 加权"]
+        direction TB
+        B1["抽一次 base joint<br/>π(θ)·p(x∣θ)"] --> B2["每 β 算权重<br/>wβ = p(x∣θ)^(β−1)·m(x)"]
+        B2 --> B3["SNIS 归一加权样本"]
+    end
+    RA --> N["β 条件 NPE qφ(θ∣x,β)<br/>条件 MLE 训练"]
+    RB --> N
+    N --> I["推断 输入 (x_obs, β)<br/>一次前向出样本，可扫 β"]
+```
 
 ### 关键设计
-1. **$\beta$ 条件化的 NPE 目标**:
 
-	- 功能：让一个后验网络覆盖多个观测和多个 generalized Bayes 温度。
-	- 核心思路：把 $\beta$ 和观测 $x$ 一起作为条件输入，训练 $q_\phi(\theta\mid x,\beta)$ 逼近 $p_\beta(\theta\mid x)$。
-	- 设计动机：GBI 分析经常需要扫温度；若网络能直接输入 $\beta$，就可以用同一模型做 posterior stability、predictive check 和校准分析。
+**1. $\beta$ 条件化的 NPE 目标：一张网覆盖所有观测和所有温度**
 
-2. **Route A：score-assisted tempered synthesis**:
+GBI 的鲁棒性分析离不开扫温度——要看后验在不同 $\beta$ 下稳不稳、做 posterior predictive check 和校准。但已有方法每换一个观测、每换一个 $\beta$ 都得重跑一次采样，扫温度因此成了最贵的一步。本文把 $\beta$ 和观测 $x$ 一起作为条件喂进后验网络，训练 $q_\phi(\theta\mid x,\beta)$ 直接逼近 power posterior $p_\beta(\theta\mid x)$。训练好后，扫温度只是改一个输入标量再做一次前向，原本每实例的采样成本被整体挪到了离线训练阶段——这也是图里两条路线最终汇聚的那个网络。
 
-	- 功能：为 NPE 生成更接近 tempered joint 的训练样本，尤其覆盖 base joint 不足的区域。
-	- 核心思路：学习 joint score $s_\psi(\theta,x)$ 后，用 $\beta s_\psi(\theta,x)-(\beta-1)(\nabla_\theta\log\pi(\theta),0)$ 构造 tempered score，并运行短程 Langevin 得到 $(\theta,x)$。
-	- 设计动机：当 SNIS 权重退化或 simulator joint 覆盖不到 tempered target 的关键区域时，显式合成 off-manifold 样本可能更稳。
+**2. Route A：用 score 合成 tempered 训练样本**
 
-3. **Route B：SNIS 加权 NPE**:
+要训练上面那张网，先得有服从 $\pi(\theta)p(x\mid\theta)^\beta$ 的 $(\theta,x,\beta)$ 样本，可这个 tempered joint 没法直接采。Route A 的做法是先用 denoising score matching 从普通 simulator joint 学一个 joint score $s_\psi(\theta,x)$，再用温度修正后的 score $\beta s_\psi(\theta,x)-(\beta-1)(\nabla_\theta\log\pi(\theta),0)$ 跑短程退火 Langevin，主动合成接近 tempered joint 的样本，最后拿它们做条件 MLE 训练 NPE。它的价值在于能覆盖 base joint 够不到的 off-manifold 区域——当 $\beta$ 很小、或 Route B 的重要性权重退化时，这种显式合成往往更稳，代价是依赖 score 准确性和 Langevin 步长调参。
 
-	- 功能：在不跑 MCMC、不合成 score 样本的情况下复用固定模拟数据学习多个温度后验。
-	- 核心思路：对 base joint 样本赋权 $w_\beta(\theta,x)=p(x\mid\theta)^{\beta-1}m(x)$，归一化后最小化 $\sum_i\tilde w_{\beta,i}[-\log q_\phi(\theta_i\mid x_i,\beta)]$；NLE 取 $m(x)=1$，NRE 取 $m(x)=p(x)^{1-\beta}$。
-	- 设计动机：SNIS 路线部署简单、推断快，且可以证明 NRE 权重在 $\beta\in[1/2,1]$ 时方差有限。
+**3. Route B：对固定数据做 SNIS 加权**
+
+Route B 走另一条更省事的路：不合成新样本，只把 base joint $\pi(\theta)p(x\mid\theta)$ 抽一次、跨所有温度复用。对每个 $\beta$，给样本赋自归一重要性权重 $w_\beta(\theta,x)=p(x\mid\theta)^{\beta-1}m(x)$（NLE 取 $m(x)=1$，NRE 取 $m(x)=p(x)^{1-\beta}$），归一化后最小化 $\sum_i\tilde w_{\beta,i}[-\log q_\phi(\theta_i\mid x_i,\beta)]$。论文证明这个加权目标等价于对 power posterior 做 forward KL 拟合（mass-covering），所以它不是纯工程 trick 而是有理论依据，且 NRE 权重在 $\beta\in[1/2,1]$ 时方差有限。它部署简单、推断快，但当 $|\beta-1|$ 大时权重会变尖、ESS 下降，也无法恢复 base joint 完全没覆盖的后验区域。
 
 ### 损失函数 / 训练策略
 Route A 的训练分三步：先用 denoising score matching 学 joint score，再对每个 $\beta$ 用退火 Langevin 合成 tempered pairs，最后最小化条件负对数似然 $\mathbb{E}[-\log q_\phi(\theta\mid x,\beta)]$。Route B 先训练 NLE 或 NRE，再用每个温度的 SNIS 权重训练 NPE。后验网络可以用 MDN、MAF 或 NSF；低维多峰后验适合 MDN，高维任务更适合 flow-based estimator。推断时对给定 $x_{obs}$ 和 $\beta$ 一次前向采样，不调用 simulator，也不运行 MCMC。

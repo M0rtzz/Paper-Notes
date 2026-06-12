@@ -42,7 +42,20 @@ tags:
 本文是纯理论论文，"方法"=算法（来自 Blanc et al. ITCS'20）+ 新的分析与 parameter-free 实现。
 
 ### 整体框架
-算法 `BuildTopDownDT(f, ε)`：从单叶树出发，每轮对每个叶子计算 score = $p_v \cdot \max_i \mathrm{Inf}^\mu_i(f_v)$，选 score 最高的叶子按其最具影响力变量做分裂；当 $f$-completion（按多数标签）已 $\epsilon$-逼近 $f$ 时停止。分析框架围绕 cost potential function 的两阶段下降：先从 $\mathrm{Inf}(f)$ 降到 $\epsilon D_\mathrm{opt}$（Phase 1，Lemma 4.6），再从 $\epsilon D_\mathrm{opt}$ 降到使 error ≤ $\epsilon$（Phase 2，Lemma 4.7）。
+算法 `BuildTopDownDT(f, ε)` 本身是一个**贪心迭代回环**：从单叶树出发，每轮对每个叶子计算 score = $p_v \cdot \max_i \mathrm{Inf}^\mu_i(f_v)$，选 score 最高的叶子按其最具影响力变量做分裂，再检查 $f$-completion（按多数标签补全叶子）是否已 $\epsilon$-逼近 $f$——未达标就回到打分、继续生长，达标即返回。本文的贡献不在改算法，而在为这个回环建立**分析框架**：以 cost 作势函数追踪两阶段下降——先从 $\mathrm{Inf}(f)$ 降到 $\epsilon D_\mathrm{opt}$（Phase 1，Lemma 4.6），再从 $\epsilon D_\mathrm{opt}$ 降到使 error ≤ $\epsilon$（Phase 2，Lemma 4.7）——并给出 parameter-free 的可运行实现（用样本估计 score、用 ERM 多数标签判终止）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：目标函数 f + 精度 ε<br/>初始化为单叶树 T°"] --> B["对每个叶子算 score<br/>Score(v)=p_v · max_i Inf_i(f_v)"]
+    B --> C["选 score 最高的叶子 l*<br/>样本估计即可，¼-近似就够（设计 3）"]
+    C --> D["按 l* 最具影响力变量分裂<br/>叶子 → 决策节点；cost 恰减 Score(l*)（设计 1）"]
+    D --> E{"f-completion 已 ε-逼近 f？<br/>多数标签 ERM 估计 error（设计 3）"}
+    E -->|否| B
+    E -->|是| F["返回 T° 的 f-completion"]
+```
+
+> 框架图画的是算法回环本身；设计 1（cost 势函数）解释「每一步 cost 怎么降、为什么 error ≤ cost」，设计 2（两深度参数）回答「这个回环要转多少轮」，设计 3 把「打分 / 判终止」落到可采样估计的实现上。
 
 ### 关键设计
 

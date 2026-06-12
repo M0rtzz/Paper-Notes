@@ -43,6 +43,31 @@ tags:
 ### 整体框架
 这篇要解决的是"Safe RL 训练时满足约束、部署到未见病人却悄悄越界"这个 OOD 安全缺口。系统分三层：先用统一糖尿病模拟器 GlucoSim（基于 UVA-Padova 物理模型扩展，覆盖 T1D 泵 / T2D 泵 / T2D 非泵三种临床场景）训出标准 Safe RL 策略，每步给 agent 一个 14 维 CGM/IOB/餐食历史观测、agent 输出离散的 bolus + 餐食推荐，经"病人接受模型"过滤后落地；再用一个个体化动力学预测器 BA-NODE 学会预测未来 H 步血糖轨迹；最后在测试时把任意预训练策略的动作分布过一道预测性屏蔽，把被预测会越界的动作概率压下去。训练阶段每种条件只拿一个代表病人 (Child#01 / Adolescent#01 / Adult#01) 训 11 天，部署阶段在 9 位未见病人上做 77 天 zero-shot 评估——分布偏移就发生在训练病人和部署病人之间。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph SIM["统一糖尿病模拟器 + OOD benchmark（设计1）"]
+        direction TB
+        A["GlucoSim<br/>T1D泵 / T2D泵 / T2D非泵"] --> B["代表病人训 8 种 Safe RL 策略<br/>(11 天)"]
+    end
+    SIM --> C
+    subgraph NODE["BA-NODE 个体化轨迹预测（设计2）"]
+        direction TB
+        C["ITransformer 跨变量编码<br/>→ 初始潜状态 h0"] --> D["K 个 neural ODE 向量场<br/>RK4 前推 → K 条基轨迹"]
+        D --> E["函数空间最小二乘解 w*<br/>→ 病人特异预测 H 步血糖"]
+    end
+    NODE --> F
+    subgraph SHIELD["测试时预测性屏蔽（设计3）"]
+        direction TB
+        F["未见病人部署<br/>策略输出动作分布"] -->|"BG<60"| G["Critical Rescue<br/>强制救援碳水 + 屏蔽胰岛素"]
+        F -->|"过渡区"| H["Gating 暂停验证<br/>信任基策略"]
+        F -->|"BG≥80"| I["Predictive Safety<br/>BA-NODE 预测越界则压低概率"]
+    end
+    G --> J["屏蔽后动作 → 病人接受模型 → 环境"]
+    H --> J
+    I --> J
+```
+
 ### 关键设计
 
 **1. 统一糖尿病模拟器 + OOD 安全 benchmark：让"训练合规、部署失败"自然涌现**

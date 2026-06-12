@@ -44,6 +44,17 @@ tags:
 
 整篇方法围绕一个核心改动：把脉冲神经元的发放机制拆成阈值上下两段，让代理梯度不再黏着膜电位值，从而在线训练截断时间依赖时不会引入前后向不一致。具体地，HD-LIF 在标准 LIF 上保留阈值以下的充电-泄漏积累，但在膜电位越过阈值发放后改用 P2-Reset（Precise-Positioning Reset）：膜电位精确重置回阈值 $\theta$，发放出的脉冲值取膜电位超出阈值的量 $s^* = m - \theta$，而非传统 LIF 固定吐出 $\theta$。在这个基础神经元之上，论文再叠两层工程优化——把一部分神经元换成无积累的并行版本压低推理算力，把批归一化搬到膜电位上稳住在线训练——最终形成 vanilla / Parallel / Mem-BN 三个可混搭的 HD-LIF 变体，配合 1-bit/1.5-bit 权重压缩与多位脉冲量化覆盖训练到部署的全链路。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入电流 + 膜电位累积"] --> B["HD-LIF 基础模型（P2-Reset）<br/>越阈值后精确重置回 θ、脉冲 = 超出量<br/>梯度与膜电位解耦、时间维可分离"]
+    B --> C["组装成 HD-LIF 模型族（三变体可混搭）"]
+    P["Parallel HD-LIF<br/>跳过积累、直接 I≥θ 判定<br/>每层只剩 T 次 ADD，省约 30% NOPs"] --> C
+    M["Mem-BN HD-LIF<br/>把 BN 搬到膜电位上稳住在线训练<br/>线性变换可 re-param 折进膜参数"] --> C
+    C --> D["在线训练<br/>1-bit/1.5-bit 权重压缩 + 随机时间步梯度 + SECA"]
+    D -->|re-param 折叠、零推理开销| E["低功耗部署<br/>10× 参数压缩 / 11× 功耗 / 30% NOPs"]
+```
+
 ### 关键设计
 
 **1. HD-LIF 基础模型：让梯度和膜电位值解耦，截断才"免费"**

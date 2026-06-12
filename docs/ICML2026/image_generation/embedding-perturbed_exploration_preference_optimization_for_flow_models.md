@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 给定 prompt $p$，先把它 tokenize 成嵌入 $\mathbf{E} \in \mathbb{R}^{S\times d}$，定义只覆盖"实质内容 token"的索引集 $\mathcal{I}$（剔除 [SOS]/[EOS]/padding，有效长度 $L$）。E²PO 的训练分两阶段：阶段一冻结整个 flow 模型，单独学一组扰动 $\Delta=\{\bm{\delta}_k\}_{k=1}^{K}$；阶段二冻结这些扰动，把它们和原 prompt 一起送进 RL 对齐循环（基于 DiffusionNFT 的对比目标）。采样时一个 batch 由 1 个原始条件 $\mathbf{C}^{\text{orig}}$ 加 $K-1$ 个扰动条件 $\mathbf{C}_k(t)$ 组成，按 noise-aware 时刻调度切换；策略更新只在 $\mathbf{C}^{\text{orig}}$ 上计算梯度，把"用什么探索"和"按什么更新"显式解耦。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt p → 嵌入 E，标出内容 token 索引集"] --> S1
+    subgraph S1["嵌入扰动机制（阶段一：冻结 flow，单独学扰动 Δ）"]
+        direction TB
+        B["为每个 prompt 学一组扰动 δ_k<br/>仅作用于内容 token"] --> C["混合目标 L_emb = λ·L_div + L_anc<br/>推开变体 + 锚定原意"]
+    end
+    S1 --> D["噪声感知采样调度<br/>条件随噪声水平在扰动/原始间插值"]
+    D --> E["按一组 K 个条件采样轨迹<br/>组内判别方差稳在非零"]
+    E --> F["参考锚定批策略<br/>梯度统一落回原始条件 C_orig"]
+    F --> G["对齐后的 flow 模型（DiffusionNFT 对比损失）"]
+```
+
 ### 关键设计
 
 **1. 嵌入扰动机制：把组内方差的来源从噪声换成语义**

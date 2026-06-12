@@ -41,27 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四大组件 (Figure 1):**Synthetic Web 生成环境** (用 LLM 围绕 topic taxonomy 生成数千篇带 site credibility 标签的相互链接文章) + **Hybrid Search Layer** (lexical + dense 检索,对抗模式下 rank 0 注入蜜罐) + **Agent Protocol** (zero-shot prompt + search/read_article 两个工具,要求输出 Answer/Confidence/Explanation 三段) + **Evaluation Pipeline** (固定 LLM-as-judge 评分 + 校准指标)。每个 rollout 之间蜜罐会被移除避免残留污染。
+四大组件协同构成一条完整的"造环境 → 检索 → 作答 → 评测"流水线 (Figure 1):**Synthetic Web 生成与污染过滤** (用 LLM 围绕 topic taxonomy 生成数千篇带 site credibility 标签、相互链接的文章,并做污染过滤排除预训练泄漏) → **混合检索层 (Hybrid Search Layer)** (lexical + dense 检索;对抗模式下在 rank 0 注入单条蜜罐) → **Agent 协议 (Agent Protocol)** (zero-shot prompt + search/read_article 两个工具,要求输出 Answer/Confidence/Explanation 三段) → **评测流程 (Evaluation Pipeline)** (固定 LLM-as-judge 评分 + 校准指标 + 过程轨迹)。每个 rollout 之间蜜罐会被移除,避免残留污染。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph GEN["Synthetic Web 生成与污染过滤"]
+        direction TB
+        A["主题分类法 → 站点画像<br/>强制 ~43% 站点低可信度"] --> B["生成文章簇<br/>真实时间线 + 高可信假信息"]
+        B --> C["污染过滤<br/>删掉不查就能答对的 query"]
+    end
+    GEN --> D["混合检索层<br/>lexical + dense 检索"]
+    D -->|对抗模式| E["Rank-0 蜜罐注入<br/>rank 0 插入定制反事实假源"]
+    D -->|标准模式| F
+    E --> F["Agent 协议<br/>无限预算 search/read_article<br/>输出 Answer/Confidence/Explanation"]
+    F --> G["过程级追踪与多维评测<br/>准确率 + 工具调用 + ECE/Brier 校准"]
+```
 
 ### 关键设计
 
-1. **Synthetic Web 生成与污染过滤**:
+**1. Synthetic Web 生成与污染过滤:造一个分布全已知、且逼模型必须真检索的"小互联网"**
 
-    - 功能:产生一个内容分布、可信度、事实性都完全已知且可控的"小型互联网",同时排除模型靠预训练记忆答题的可能
-    - 核心思路:用 seed 定义 world ID 和时间线;LLM 把 topic taxonomy 展开成 subtopic / entity / controversy level;生成 news/blog/research/social/conspiracy 等 site profile,每个 site 有 base credibility 和 topic-specific bias,**强制 ~43% 站点为低可信度**且 publication frequency 与 credibility 解耦 (防止"高频就是高质量"的 trivial 启发式);对每个 topic 生成 article cluster,含 factual timeline + perspective narrative + **高可信度但虚假**的 misinformation claim (伪造数字 / 研究名 / 引语,无表面破绽);最后用强模型无工具做**污染过滤** —— 模型能直接答对的 query 全删,确保答题必须依赖工具检索
-    - 设计动机:污染过滤是这个 benchmark 比 FEVER/TruthfulQA 更狠的地方 —— 它逼模型"必须真去搜",不让你靠 pretrain 知识蒙混过关;43% 低可信度站点的强制比例也是关键,让 baseline 任务本身就不平凡
+在真实 web 上做对抗实验有四个甩不掉的 confound——内容分布未知且漂移、误信息密度无标签、ranking 可被 game、模型可能直接从预训练记忆召回热门源而非真做检索,所以本文干脆程序化造一个可信度、偏见、事实性全部带 ground-truth 标签的 mini-internet。生成链路是:用 seed 固定 world ID 与时间线,让 LLM 把 topic taxonomy 展开成 subtopic / entity / controversy level;再生成 news/blog/research/social/conspiracy 等站点画像,每个站点带 base credibility 与 topic-specific bias,并**强制 ~43% 站点为低可信度**、让 publication frequency 与 credibility 解耦 (堵死"高频即高质量"这种 trivial 启发式);每个 topic 下生成文章簇,含真实时间线、多视角叙事,以及一条**表面高可信、实则虚假**的 misinformation claim (伪造数字 / 研究名 / 引语,无表面破绽)。最关键的收尾是**污染过滤**:用强模型无工具试答,凡是不查就能答对的 query 全删,逼模型答题必须依赖工具检索。这正是它比 FEVER/TruthfulQA 更狠之处——不让模型靠 pretrain 知识蒙混,43% 低可信度的强制比例也让 baseline 任务本身就不平凡。
 
-2. **Rank-0 Honeypot Injection (最小扰动因果实验)**:
+**2. Rank-0 蜜罐注入:把"对抗 ranking 攻击"做成只动一个 bit 的最小扰动因果实验**
 
-    - 功能:把"对抗 ranking 攻击"形式化成可控变量,只动一个 bit (rank 0 那篇换成蜜罐),其他全部不动
-    - 核心思路:standard mode 下搜索按相关性正常返回;adversarial mode 下在首查询时把单条 honeypot 文章插到 rank 0,其内容是针对该 query topic 量身定制的"详细但错误"的反事实 claim;honeypot 仅瞬时存在,rollout 间删除避免残留;agent 只看到 title/snippet/domain,要全文必须显式 read。agent 拥有**无限工具调用预算 + 全量真源访问权**,所以"失败 = 主动选择不查证"
-    - 设计动机:这是全文最巧妙的实验设计 —— 它把"在数千真源中混入一条假源"的最小污染做成可重复实验,排除了"模型没机会看到正确答案"的辩护;同时蜜罐**不主动压制**真源 (只是排第一),这意味着 attack 的杠杆完全来自"位置",而不是"覆盖范围"
+有了完全可控的环境,本文把"误信息攻击"操作化成最小扰动:标准模式下检索按相关性正常返回;对抗模式下只在首次查询时,把**单条**针对该 query topic 量身定制、"详细但错误"的反事实 claim 插到 rank 0,其余一概不动,且蜜罐仅瞬时存在、rollout 间删除以免残留污染。agent 只看到 title/snippet/domain,要全文必须显式 read,而且它拥有**无限工具调用预算 + 全量真源访问权**——所以一旦答错,只能解释为"主动选择不去查证",而非"没机会看到正确答案"。关键在于蜜罐**不压制**真源、只是排第一,这意味着攻击的全部杠杆都来自"位置"而非"覆盖范围":1/数千的污染密度就能让 GPT-5 准确率掉 47 点,把模糊的"对抗鲁棒性"讨论变成可复现、可归因的因果实验,也比 prompt injection 更隐蔽。
 
-3. **Process-Level Tracing 与多维度评测**:
+**3. 过程级追踪与多维评测:不只看答对没,还要诊断"为什么错"**
 
-    - 功能:不只测最终 accuracy,还测 agent 的工具调用轨迹 / search escalation / 自我置信度,从而能诊断 *为什么* 失败
-    - 核心思路:agent 必须输出 (Answer, Confidence 0-100%, Explanation) 三段,每次 search/read 都记录;主指标除了 accuracy 还有:平均工具调用次数、$P(\text{tool calls}\geq 5)$ (深度搜索比例)、ECE/Brier 校准误差、世界间方差;评分用固定 LLM-as-Judge 加 rubric,做轻量归一化 (大小写、单位、数值容差)
-    - 设计动机:有了 process trace 才能区分三种失败 —— 没查 (minimal escalation)、查了没整合 (synthesis failure)、查到但不敢答 (epistemic paralysis);校准指标能揭露"模型错了还自信"的危险模式
+只测最终 accuracy 无法区分失败原因,所以协议强制 agent 输出 (Answer, Confidence 0-100%, Explanation) 三段,且每次 search/read 都留痕。主指标除 accuracy 外还包括平均工具调用次数、$P(\text{tool calls}\geq 5)$ (深度搜索比例)、ECE/Brier 校准误差以及世界间方差;评分用固定的 LLM-as-Judge 加 rubric,并做大小写 / 单位 / 数值容差的轻量归一化。有了这条过程轨迹,才能把失败拆成三类——**没查** (minimal escalation)、**查了没整合** (synthesis failure)、**查到却不敢答** (epistemic paralysis);而校准指标专门用来揪出"答错了还高置信度"这种最危险的模式。
 
 ### 损失函数 / 训练策略
 **无训练,纯评测基准**。所有模型用统一 zero-shot prompt,工具协议相同。grader 模型在所有实验中固定以保证一致性。每个模型在 4 个独立世界各跑 10 个 rollout,每条件累计 5,870 query。

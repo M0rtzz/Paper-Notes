@@ -41,7 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-起点是已对齐到 $\pi_{\text{old}}$ 的模型 $\mathcal{M}_{\text{ref}}$ 和原 preference 数据 $\mathcal{D}$。给定新政策 $\pi_{\text{new}}$ (一个返回 compliant/non-compliant 的函数),TRACE 走三阶段:**Stage 1 Triage** 用 proxy LLM 评估每条 $(x, y_w, y_l)$ 在 $\pi_{\text{new}}$ 下的合规性,划入 $\mathcal{D}_I$ (Invert)、$\mathcal{D}_{II}$ (Punish)、$\mathcal{D}_R$ (Retain);**Stage 2 混合目标**对每类用不同 loss;**Stage 3 Alignment Impact Weighting** 通过双层优化推出每条样本的权重 $w_i$,再加权求和优化模型 $\mathcal{M}_\theta$。
+起点是已对齐到 $\pi_{\text{old}}$ 的模型 $\mathcal{M}_{\text{ref}}$ 和原 preference 数据 $\mathcal{D}$。给定新政策 $\pi_{\text{new}}$ (一个返回 compliant/non-compliant 的函数),TRACE 走三阶段:**Stage 1 Triage** 用 proxy LLM 评估每条 $(x, y_w, y_l)$ 在 $\pi_{\text{new}}$ 下的合规性,划入 $\mathcal{D}_I$ (Invert)、$\mathcal{D}_{II}$ (Punish)、$\mathcal{D}_R$ (Retain);**Stage 2 Hybrid Objectives**对每类用不同 loss;**Stage 3 Alignment Impact Weighting** 通过双层优化推出每条样本的权重 $w_i$,再加权求和优化模型 $\mathcal{M}_\theta$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入<br/>已对齐 M_ref（π_old） + 偏好数据 D + 新政策 π_new"]
+    IN --> T["Triage<br/>proxy LLM 评估每对 (y_w, y_l) 在 π_new 下的合规性"]
+    T -->|旧赢家违规·旧输家合规| DI["D_I（Invert）"]
+    T -->|两者皆违规| DII["D_II（Punish）"]
+    T -->|旧赢家仍合规| DR["D_R（Retain）"]
+    subgraph HO["Hybrid Objectives（对症下药的混合损失）"]
+        direction TB
+        DI --> LI["反转 DPO/IPO 损失<br/>把偏好翻过来"]
+        DII --> LII["NPO 压制<br/>（可选 oracle 纠正改 DPO）"]
+        DR --> LKL["前向 KL 锚定<br/>保住通用能力"]
+    end
+    LI --> W["Alignment Impact Weighting<br/>w_i = ⟨g_J, g_Li⟩ 过滤梯度冲突"]
+    LII --> W
+    W --> SUM["加权求和目标 L_TRACE<br/>Σ w_i·L_i + α_KL·Σ L_KL"]
+    LKL --> SUM
+    SUM --> OUT["再对齐后的模型 M_θ"]
+```
 
 ### 关键设计
 

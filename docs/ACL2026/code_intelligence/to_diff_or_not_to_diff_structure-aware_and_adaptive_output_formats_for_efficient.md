@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 给定源代码、编辑意图和目标代码，系统先计算最小文本差异 MinUniDiff，保证所有文本修改都被覆盖；再用 tree-sitter 构造 AST block tree，将每个 diff hunk 映射到最小的语法节点或连续节点集合。随后通过 anchor expansion 保证待替换片段在源代码中唯一可定位，并通过 bottom-up 合并处理重叠 hunk 或同一细粒度节点内的多个修改。训练时，模型输入仍是编辑意图和源代码，输出可以是 full-code、BlockDiff、FuncDiff 或 AdaEdit 选择后的混合格式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：源代码 + 编辑意图 + 目标代码"] --> B["MinUniDiff<br/>计算最小文本差异，覆盖全部修改"]
+    subgraph S1["BlockDiff / FuncDiff 结构感知 hunk"]
+        direction TB
+        C["tree-sitter 构造 AST block tree"] --> D["每个 hunk 映射到最小语法节点<br/>BlockDiff 细到分支/循环，FuncDiff 到整函数"]
+    end
+    B --> S1
+    subgraph S2["唯一 anchor 扩展与文本 patching"]
+        direction TB
+        E["anchor 不唯一时上探 sibling / 父节点"] --> F["bottom-up 合并重叠或同节点 hunk"]
+    end
+    S1 --> S2
+    S2 --> G["AdaEdit 自适应格式选择<br/>比较 full-code 与 diff 的 token 数，取更短者"]
+    G --> H["输出补丁：full-code / BlockDiff / FuncDiff"]
+```
+
 ### 关键设计
 
 **1. BlockDiff / FuncDiff 的结构感知 hunk：让 diff 的修改单位是完整语法块，而不是任意碎片行**

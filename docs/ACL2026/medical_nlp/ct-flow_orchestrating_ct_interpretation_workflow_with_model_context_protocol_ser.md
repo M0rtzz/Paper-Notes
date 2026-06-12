@@ -49,6 +49,28 @@ CT-Flow 系统由三层组成：
 
 诊断时给定临床 query $Q$，整套系统生成完整 Reasoning-Acting Trajectory $\mathcal{T} = \{(s_0, a_0, o_0), \ldots, (s_n, a_n, o_n)\}$，最终答案 $A$ 是累积证据合成的结果而非单次预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TOOLS["MCP 四级工具栈（FASTMCP 统一接口）"]
+        direction TB
+        T1["Data Ingestion<br/>载入体数据与元数据"] --> T2["Global Navigation<br/>全卷粗解剖定位"]
+        T2 --> T3["Detailed Observation<br/>高分辨率切片/子卷取证"]
+        T3 --> T4["Advanced Analysis<br/>HU 测量 / 分割 / 影像组学"]
+    end
+    TOOLS --> SYN
+    subgraph SYN["可执行轨迹合成 + 一致性过滤"]
+        direction TB
+        D1["CT-RATE 启发式筛选<br/>留高推理密度 case"] --> D2["教师模型探多条候选轨迹"]
+        D2 --> D3["执行级一致性过滤<br/>每步观察须在真实卷重现且终于金标"]
+    end
+    SYN --> SFT["小模型轨迹 SFT<br/>2000 条轨迹全参微调 Qwen2.5/3-VL-7B/8B"]
+    Q["临床 query Q + 3D CT 体数据"] --> LOOP
+    SFT --> LOOP["CT-Flow 编排器 ReAct 循环<br/>逐步从工具栈生成 (思考 s_t, 调用 a_t, 观察 o_t)"]
+    LOOP -->|证据不足，继续调工具| LOOP
+    LOOP -->|证据充分| ANS["累积证据合成可审计诊断 A"]
+```
+
 ### 关键设计
 
 **1. MCP 标准化的四级工具栈（Data Ingestion → Global Navigation → Detailed Observation → Advanced Analysis）：把所有低层影像操作抽象成可组合的原子动作**

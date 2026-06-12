@@ -47,6 +47,25 @@ tags:
 
 CLIPoint3D 要解决的是 3D 点云跨域分类时既缺标注又有严重域偏移的难题，且希望尽量复用 CLIP 的语义先验而不训练重型 3D 编码器。框架建在冻结的 CLIP（ViT-B/16）之上：每个 3D 点云先投影成 M=10 张深度图，送入 CLIP 视觉编码器提特征；在此之上叠加四个模块协同工作——知识驱动的 prompt tuning 注入语义与几何先验、PEFT 用 LoRA 低成本适配 CLIP 双分支、熵引导视图选取过滤噪声视图、不确定性感知域对齐把源域知识迁到目标域，最终以仅 ~11M 可训练参数完成少样本无监督域自适应。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["3D 点云（源域 + 目标域）"] --> B["投影为 M=10 张深度图"]
+    subgraph PT["知识驱动的 Prompt Tuning"]
+        direction TB
+        Q["共享 query 向量协同两侧"]
+        Q --> L["LLM 类别描述 → 文本 prompt（MHCA）"]
+        Q --> G["PointNet 几何特征 → 视觉 prompt（MHCA）"]
+    end
+    B --> C["CLIP ViT-B/16 双编码器（冻结）"]
+    PT -->|"prompt 注入双分支"| C
+    C --> PEFT["参数高效微调（PEFT）<br/>视觉/文本各加 LoRA rank=16"]
+    PEFT --> VS["熵引导视图选取<br/>仅保留熵低于第50百分位的高置信视图"]
+    VS --> AGG["概率聚合得预测与伪标签"]
+    AGG --> DA["不确定性感知域对齐<br/>原型对齐 + 熵正则 OT + 校准 + 几何正交"]
+    DA --> OUT["少样本无监督 3D 域自适应分类"]
+```
+
 ### 关键设计
 
 **1. 知识驱动的 Prompt Tuning：给 CLIP 注入 3D 语义与几何先验**

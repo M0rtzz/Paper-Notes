@@ -42,13 +42,24 @@ tags:
 ### 整体框架
 SPON 的全部改动落在 transformer 每个线性层上：原本 $Y = WX$ 在激活稀疏后变成 $Y = W\,S(X)$，其中 $S(X)_i = \mathbf{1}\{|x_i|>\tau\}\cdot x_i$ 把小幅激活清零；SPON 在此基础上并联一个与输入无关的"自发神经元"项，写成 $Y = W\,S(X) + W\vec{\alpha}$。训练时冻结整模型、只学每层一组 $\vec{\alpha}$，用 KL 散度把稀疏模型的 logits 拉回稠密模型；训练完后 $W\vec{\alpha}$ 是常量，直接折进偏置 $b' = b + W\vec{\alpha}$，推理图与原始稀疏 LLM 一模一样，不多一次矩阵乘。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入隐状态 X"] --> SP["激活稀疏 S(X)<br/>幅度阈值 τ 置零小激活"]
+    SP --> FWD["自发激活注入<br/>Y = W·S(X) + W·α"]
+    DENSE["稠密教师 logits z"] -.蒸馏目标.-> KL
+    FWD --> KL["分布匹配校准<br/>σ(z) ∥ σ(z̃)，冻结全模型只学每层 α"]
+    KL -->|Fisher 加权<br/>只补输出最敏感方向| FOLD["折入偏置<br/>b′ = b + W·α，训练后吸收为常量"]
+    FOLD --> INF["零开销稀疏推理<br/>计算图与原稀疏 LLM 相同"]
+```
+
 ### 关键设计
 
 **1. 输入无关的自发激活注入：用一个静态向量补回丢掉的常活神经元**
 
 稀疏的代价不在"丢信息"而在"丢锚点"——稠密模型里那些几乎对所有 token 都激活的神经元，本来提供了一份输入无关的全局先验，稀疏后被各 token 选择性关掉，隐状态就发生 token-dependent 的漂移。SPON 的做法是在 $W\,S(X)$ 之后并上一项 $W\vec{\alpha}$，其中 $\vec{\alpha}\in\mathbb{R}^d$ 是该层独有、与输入 $X$ 无关的可学习向量；因为它跟 token 无关，$W\vec{\alpha}$ 就是个常量，能在推理前算好塞进 bias，等于把稠密模型隐含的"全局期望"显式写回稀疏计算图。值得注意的是，论文发现每层只需 **一个** 自发神经元（即 $\vec{\alpha}$ 相当于一个固定方向的激活）就足以把性能找回，说明真正缺的是稳定的"方向"而非额外"容量"，因此能在严守零推理开销硬约束的同时稳住表示。
 
-**2. 分布匹配式的轻量校准：只蒸 logits、只更新偏置项**
+**2. 分布匹配式的轻量校准：只蒸 logits、只学每层自发向量 $\vec{\alpha}$**
 
 有了 $\vec{\alpha}$ 还得有不动原模型权重的训练方式。SPON 取一小批校准语料 $u\sim D$（WikiText、C4 皆可），把稠密、稀疏模型的输出 logits 分别记为 $z(u)$ 与 $\tilde z(u;\mathcal{A})$，只优化 $\mathcal{A}=\{\vec{\alpha}_\ell\}$ 去最小化 $\mathcal{L}(\mathcal{A}) = \mathbb{E}_u[\mathrm{KL}(\sigma(z)\|\sigma(\tilde z))]$。由于待学参数只有每层一个小向量，校准成本远低于全量微调；又因为只对齐最终 logits、不强行匹配中间层，自发神经元充当的是对稀疏残差的"全局补偿"，对校准语料分布相当鲁棒——在 C4 上校准、WikiText 上评估，PPL 仍优于基线。
 

@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 PiNDA 由两个网络组成: (1) 对比模型 $f_\theta$ (如 ResNet-18, 任意 SimCLR/BYOL backbone), (2) π-noise 生成器 $f_\psi$ —— 用重参化技巧 $\varepsilon = f_\psi(x, \epsilon)$ 从标准 Gaussian $\epsilon$ 出发生成 $\varepsilon$。训练时, 对每个样本 $x$: (a) 从 $f_\psi$ 采 $\varepsilon$ 作为增强, 算 $h^\pi = f_\theta(x + \varepsilon)$, (b) 用另一标准增强 $a(\cdot)$ 得 $h' = f_\theta(a(x))$, (c) 用 $(h^\pi, h')$ 作 positive pair 算 InfoNCE 风格的 $\mathcal{L}_{\text{PiNDA}}$, 同时更新 $\theta$ 与 $\psi$。PiNDA 完全兼容已有增强: 若有标准 $\mathcal{A}$, 把 PiNDA 作为 $\mathcal{A}$ 中的一个候选随机采样即可; 没有 $\mathcal{A}$ 时退化为"原图 vs 噪声增强"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入样本 x"] --> G["可学 π-noise 生成器 fψ<br/>输入 x + 标准高斯 ε₀，重参化采样"]
+    G --> EPS["π-noise ε = fψ(x, ε₀)<br/>取代标准增强里固定的 Dirac delta 点估计"]
+    X --> AUG["另一支标准增强 a(x)"]
+    EPS --> V1["视图1：fθ(x + ε) → h^π"]
+    AUG --> V2["视图2：fθ(a(x)) → h′"]
+    V1 --> LOSS["对比损失 L_PiNDA = −log γθ(x, ε)<br/>γθ 由辅助高斯分布定义、等价任务熵"]
+    V2 --> LOSS
+    LOSS -->|"联合优化 θ 与 ψ，生成器与对比模型 co-evolve"| G
+```
+
 ### 关键设计
 1. **辅助 Gaussian 分布 → 把对比损失转成"任务熵"**:
 

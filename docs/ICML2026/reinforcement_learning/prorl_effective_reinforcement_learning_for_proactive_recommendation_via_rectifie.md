@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ProRL 把 PRS 形式化为一个 episode 由若干离散选择步组成的 RL 问题：policy $\pi_\theta(\cdot\mid S_u,i_T)$ 从词表中自回归地生成下一个物品 id，直到输出 EOS 或长度达到 $L_\max=10$。整条 pipeline 是「监督预训练 $\pi_0$ → 用 ProRL 估计器做策略梯度微调」。RL 目标函数为 $J(\theta)=\mathbb E_{L_u\sim\pi_\theta}[R_\text{path}]-\lambda\cdot D_\mathrm{KL}(\pi_\theta\|\pi_0)$。KL 项有解析梯度，因此关键完全在 reward 项 $\nabla_\theta\mathbb E_{\pi_\theta}[R]$ 的估计。ProRL 用两个独立但互补的机制依次解决「长度捷径」和「梯度方差」两个问题。
+ProRL 把 PRS 形式化为一个 episode 由若干离散选择步组成的 RL 问题：policy $\pi_\theta(\cdot\mid S_u,i_T)$ 从词表中自回归地生成下一个物品 id，直到输出 EOS 或长度达到 $L_\max=10$。整条 pipeline 是「监督预训练 $\pi_0$ → 用 ProRL 估计器做策略梯度微调」：每个 batch 从 $\pi_\theta$ 采样 $m$ 条路径，由 SASRec user simulator 估出每步接受概率，组合成路径奖励 $R_\text{path}=\alpha\cdot\mathrm{IoI}+\beta\cdot\mathrm{IoR}+\gamma\cdot\mathrm{CTR}$（三个分量数量级相差几个量级，需归一化后量级才可比），再把路径奖励分解到步级后交给两个机制依次修正梯度。RL 目标函数为 $J(\theta)=\mathbb E_{L_u\sim\pi_\theta}[R_\text{path}]-\lambda\cdot D_\mathrm{KL}(\pi_\theta\|\pi_0)$，其中 KL 项把 $\pi_\theta$ 锚定到预训练 $\pi_0$、保留序列先验并防止搜索飘到分布外（这也解释了不在奖励里的 Coherence 为何被一并提升），且有解析梯度，因此关键完全在 reward 项 $\nabla_\theta\mathbb E_{\pi_\theta}[R]$ 的估计。ProRL 用两个独立但互补的机制依次解决「长度捷径」和「梯度方差」两个问题：Stepwise Reward Centering 让“延长一步”的期望梯度归零，Position-Specific Advantage Estimation 按步位置做分组基线压低方差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：用户交互序列 + 目标物品<br/>监督预训练得 π₀"] --> B["RL 微调：从 πθ 采样 m 条路径<br/>自回归选物品，长度 ≤ L_max=10"]
+    B --> C["SASRec 模拟器估每步接受概率<br/>算 R_path = α·IoI + β·IoR + γ·CTR，分解为步级 r_t"]
+    C --> D["Stepwise Reward Centering<br/>每步减常值基线 + 多目标归一化，消长度偏置"]
+    D --> E["Position-Specific Advantage Estimation<br/>reward-to-go + 按位置分组基线降方差"]
+    E --> F["加 KL 锚定 π₀ 解析梯度<br/>策略梯度上升更新 πθ"]
+    F -->|迭代下一轮| B
+    F --> G["输出：引导路径 Lu"]
+```
 
 ### 关键设计
 
@@ -60,10 +72,6 @@ $\mu^{(i)},\sigma^{(i)}$ 在第一个 warm-up epoch 用 rollout 累积估计后*
 $$\bar G_{i,t}=\frac{\sum_{j:L^{(i,j)}\ge t}G_t^{(i,j)}}{\sum_j \mathbb I[L^{(i,j)}\ge t]},\qquad \hat A_t^{(i,j)}=G_t^{(i,j)}-\bar G_{i,t},$$
 
 即对同一输入 $i$ 下所有"能到达第 $t$ 步"的 rollout 取平均，得到 rectified 估计器 $\hat g_\text{rect}=\frac{1}{nm}\sum_{i,j}\sum_{t}\nabla_\theta\log\pi_\theta^{(i,j,t)}\cdot\hat A_t^{(i,j)}$。这比 GRPO 用整条路径平均奖励 $\bar R_i$ 当所有步共享基线更贴 PRS 的结构——reward-to-go 在前期步累积长、末尾步累积短，$\mathbb E[G_t]$ 本来就随 $t$ 变化，一条全局基线对前期步偏低、对末尾步偏高，方差未必降；按位置分组的基线天然适配这种结构，仍是 Williams 1992 意义下的无偏估计，但方差显著更小。
-
-**3. 多目标奖励与 KL 约束的联动：三个量级悬殊的目标统一在同一个被锚定的目标里**
-
-PRS 的奖励组合 $R_\text{path}=\alpha\cdot\mathrm{IoI}+\beta\cdot\mathrm{IoR}+\gamma\cdot\mathrm{CTR}$ 三项数量级差几个量级，没有归一化时数百量级的 IoR 会单独支配梯度。ProRL 在 reward 端把归一化后的 $\tilde r_t$ 注入 advantage 计算，在 KL 端用预训练 $\pi_0$ 当 anchor，把 $\lambda\cdot D_\mathrm{KL}(\pi_\theta\|\pi_0)$ 解析求导直接加到 $\hat g_\text{rect}$ 上，rollout 采样数 $m$ 则控制 PSAE 基线的统计有效性。KL 锚定一方面保留了预训练学到的序列式先验，另一方面让 PSAE 在搜索时不至于飘到分布外——这也是工业部署中防止 reward hacking 的常用做法，后面 Coherence 这个不在奖励里的指标被一并提升，正是这套"奖励 + KL 锚定"自然偏好语义连贯路径的体现。
 
 ### 损失函数 / 训练策略
 训练分两阶段。预训练阶段：把历史交互序列截断成 (history, target, path) 三元组，用 seq2seq 交叉熵学到 $\pi_0$。RL 阶段：每个 batch 从 $\pi_\theta$ 采 $m$ 条路径，第一个 epoch 用 rollout 累积估计 $\mu^{(i)},\sigma^{(i)},\bar r$ 后冻结，后续 epoch 按 $\hat g_\text{rect}-\lambda\nabla_\theta D_\mathrm{KL}(\pi_\theta\|\pi_0)$ 做策略梯度上升。$L_\max=10$，user simulator 用 SASRec 训练在历史交互上，接受概率 $P(i\mid S)$ 通过 SASRec 的 softmax 输出读取。

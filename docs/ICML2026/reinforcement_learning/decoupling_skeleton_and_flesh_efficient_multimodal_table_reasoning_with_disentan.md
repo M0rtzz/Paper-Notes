@@ -43,6 +43,33 @@ tags:
 ### 整体框架
 训练阶段 DiSCo 用 10K 表格图，对同一张图同时构造**结构对齐样本** $(I_S,V)\to T_S$（cell 内容全部替换为占位符 $t_p$ 的匿名化 HTML/Markdown/LaTeX）和**内容对齐样本**——全局形如"$M$ 行 $N$ 列，第 $m$ 列描述 X"的半结构化摘要 $T_G$ 与局部形如"Row $m$ Column $n$: [content]"的单元格语义 $T_L$，三路目标用 LoRA 联合微调。推理阶段 Table-GLS 把单步问答拆成三步：先让 LVLM 看整图给出相关行列索引 $R,C$ 与推理草稿 $T_t$；再让它自检 $R,C$ 是否足够并抽出最小可解释子表 $T_{sub}$；最后只让它对 $T_{sub}$（保留原图作辅助视觉锚）做证据稳态推理输出 $\hat{y}$。整个 pipeline 不需要任何推理专用标注或外部工具，结构能力来自 DiSCo，推理能力来自基础 LVLM 自身。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["表格图 V（仅 10K 张对齐数据）"]
+    subgraph TRAIN["训练 DiSCo：LoRA 联合三路对齐"]
+        direction TB
+        S["DiSCo 结构对齐（骨架）<br/>单元格匿名化 → 预测骨架 T_S"]
+        subgraph CONTENT["DiSCo 内容对齐（血肉）"]
+            direction TB
+            G["全局摘要 T_G：行列数 + 每行列含义"]
+            L["局部查询 T_L：Row m Column n 内容"]
+        end
+    end
+    IMG --> S
+    IMG --> CONTENT
+    subgraph GLS["推理 Table-GLS：全局到局部三阶段（training-free）"]
+        direction TB
+        G1["阶段I 全局结构探查 GSE<br/>输出草稿 T_t、相关行 R 列 C"]
+        G2["阶段II 自反思子表抽取 SSE<br/>自检 R,C 充分性 → 抽最小子表 T_sub"]
+        G3["阶段III 证据稳态推理 EGR<br/>仅对 T_sub（原图作视觉锚）出答案"]
+        G1 --> G2 --> G3
+    end
+    TRAIN --> GLS
+    Q["问题 q"] --> G1
+    G3 --> Y["答案 ŷ"]
+```
+
 ### 关键设计
 
 **1. DiSCo 结构对齐（骨架）：用单元格匿名化把布局从内容里抽离出来单独学**

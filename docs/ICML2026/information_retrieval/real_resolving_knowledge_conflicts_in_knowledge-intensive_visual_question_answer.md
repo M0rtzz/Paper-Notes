@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 REAL 想解决的是 KI-VQA 里"什么才算真冲突"这件事，而它的答案是把判定收缩到推理链的关键节点上，再让这个判定信号一路贯穿训练和解码。整条 pipeline 用同一份 Reasoning-Pivot 语义实体串起三个组件：先用 Wikipedia + GPT-4o 自动构造带 pivot 级标注的 REAL-VQA 数据集（4,149 训练 / 629 测试，每样本配 5 段 ground-truth 段落），再用 RPA-SFT 训出一个"先抽 pivot 再判冲突"的判别器，最后用训练免费的 RPGD 在解码时把判别器圈出的冲突方向从 logits 里剥掉。三者形成"数据→判别器→解码"的闭环，避免了多模块之间的信号失配。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["KI-VQA 输入：图像 + 问题 + 检索段落"] --> B["Reasoning-Pivot 形式化 + REAL-VQA 数据构造<br/>把冲突锚到推理链关键节点，自动构造 pivot 级标注"]
+    B --> C["RPA-SFT 判别器<br/>RPivot token 感知 + 多阶段推理，输出冲突标签与 pivot 集合 K"]
+    C --> RPGD
+    subgraph RPGD["RPGD：训练免费的 pivot 引导对比解码"]
+        direction TB
+        P["Patch Shuffle 构造冲突主导路径 L_conf"] --> AG["Adaptive Gating 按 pivot 集合 K 提升 gate 强度"]
+        AG --> GS["Gram-Schmidt 正交化只剥离与冲突路径对齐的分量"]
+    end
+    RPGD --> O["L_final 截尾采样 → 输出答案"]
+```
+
 ### 关键设计
 
 **1. Reasoning-Pivot 形式化与 REAL-VQA 数据构造：把冲突锚到推理链关键节点**

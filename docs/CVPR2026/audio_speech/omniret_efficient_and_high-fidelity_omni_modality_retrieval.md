@@ -45,6 +45,20 @@ tags:
 
 OmniRet 以 GTE-Qwen2-1.5B-Instruct 为核心 LLM 充当跨模态 composer，视觉输入由 SigLIP-SO400M 编码，音频输入由 QwenAudio Encoder 编码。各模态 token 经共享媒体重采样器压缩后，按指令模板交错拼接输入 LLM，最后由 ASWP 把 LLM 输出聚合成单一 embedding 用于检索。训练只更新重采样器、投影层、池化层和 LLM 的 LoRA（rank=16），总可训练参数约 84M。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["文本查询"] --> RS
+    I["视觉输入<br/>SigLIP-SO400M 编码"] --> RS
+    A["音频输入<br/>QwenAudio 编码"] --> RS
+    RS["Shared Media Resampler<br/>共享 Perceiver + 模态专属 latent query<br/>把 500+ token 压成定长 latent"]
+    DIV["Diversity 正则损失<br/>正交约束防 latent 塌缩"] -.-> RS
+    RS --> CAT["按指令模板交错拼接"]
+    CAT --> LLM["LLM composer<br/>GTE-Qwen2-1.5B + LoRA"]
+    LLM --> ASWP["Attention Sliced Wasserstein Pooling<br/>最优传输 + STM 硬选择保细粒度"]
+    ASWP --> EMB["单一 embedding<br/>兼容 ANN 索引检索"]
+```
+
 ### 关键设计
 
 **1. Shared Media Resampler：用模态专属 query 把上百 token 压成定长 latent**

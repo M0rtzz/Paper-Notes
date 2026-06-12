@@ -42,6 +42,25 @@ tags:
 ### 整体框架
 GCL 想解决的是端到端融合里"交互学习"和"表示学习"挤在同一个 loss 里、谁也说不清哪次跨模态交流是有用的这个老问题。它的做法是把融合拆成一个有治理的两阶段协议：三个模态 $m\in\{l,a,v\}$ 的样本各自过 encoder 得到 $h_m$ 后，先进入"选择性交互"阶段——由 Routing 和 Auditing 两个 agent 共同决定哪些跨模态消息被允许流过，得到精炼表示 $z_n$；再进入"共识形成"阶段——由 Public-Factor 和 Aggregation 两个 agent 先蒸馏出共享语义、再以它为条件加权聚合，输出预测 $\hat o$。四个 agent 各自被一个辅助目标监督，整套系统用 task / local / public / gain alignment / redundancy 五项联合训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：语言 / 声学 / 视觉 三模态"] --> B["单模态编码器 → h_l, h_a, h_v"]
+    subgraph S1["选择性交互阶段"]
+        direction TB
+        C["边际增益审计门<br/>Routing 提议有向边 + Auditing 按边际增益准入"]
+    end
+    B --> C
+    C --> D["精炼表示 z_l, z_a, z_v"]
+    D --> G["Redundancy 对比正则<br/>压低 z 间互信息、防虚假耦合"]
+    subgraph S2["共识形成阶段"]
+        direction TB
+        E["解耦聚合<br/>Public-Factor 抽公共因子 c + Aggregation 以 c 加权聚合"]
+    end
+    D --> E
+    E --> F["预测输出 ô"]
+```
+
 ### 关键设计
 
 **1. 边际增益审计门：用「值不值得交流」而非「想不想交流」来开边**

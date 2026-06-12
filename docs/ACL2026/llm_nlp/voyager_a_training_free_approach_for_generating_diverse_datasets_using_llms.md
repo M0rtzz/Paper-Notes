@@ -46,6 +46,20 @@ Voyager 输入一个任务 prompt $p$、目标数据集大小 $l$、边际增益
 
 外层循环结束一批 explorer 后，算法用 DPP 从候选 anchor 中采样 $k$ 个点，保持 anchor set 小而多样；再用 DPP 从候选 explorer 中采样 $b$ 个 prompt，保证后续探索方向不集中。数据集达到目标大小 $l$ 或迭代到 $T$ 后停止。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 prompt p + 超参<br/>初始化 D=∅, Φ=∅, E={p}"] --> B["explorer 调用 LLM<br/>生成候选批 B"]
+    B --> C["体积多样性度量（determinant）<br/>候选相对 anchor set 的边际体积增益"]
+    C -->|增益 ≥ τ| D["接收：加入数据集 D + 候选 anchor"]
+    C -->|增益 < τ| E["拒绝：进入 rejected set"]
+    E --> F["textual gradients<br/>LLM 分析失败样本 → 改写 explorer"]
+    D --> G["anchor set 近似<br/>k-DPP 采样 k 个 anchor + DPP 采样 b 个 explorer"]
+    F --> G
+    G -->|未达 l 且 t<T，回下一轮| B
+    G -->|D 达目标大小 l| H["输出多样数据集 D"]
+```
+
 ### 关键设计
 **1. 用 determinant / volume 表示数据集多样性：把"多样"变成一个能优化的标量**
 

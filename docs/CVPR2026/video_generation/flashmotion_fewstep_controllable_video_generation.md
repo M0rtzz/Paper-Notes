@@ -45,6 +45,29 @@ tags:
 
 FlashMotion 的训练流程分为三个阶段：**Stage 1** 在多步视频生成器（Wan2.2-TI2V-5B）上训练 SlowAdapter 来学习轨迹控制；**Stage 2** 通过 DMD 蒸馏将多步生成器压缩为 4 步 FastGenerator；**Stage 3** 用混合扩散+对抗策略将 SlowAdapter 微调为适配 FastGenerator 的 FastAdapter。推理时，FastGenerator + FastAdapter 仅需 4 步去噪即可生成轨迹精确的高质量视频。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G0["多步生成器 Wan2.2-TI2V-5B"]
+    S1["Stage 1：轨迹适配器架构<br/>训练 SlowAdapter（分割 mask → bbox 渐进）"]
+    S2["Stage 2：DMD 蒸馏<br/>多步生成器 → 4 步 FastGenerator"]
+    subgraph S3["Stage 3：SlowAdapter → FastAdapter（交替优化）"]
+        direction TB
+        DISC["扩散判别器<br/>语义/轨迹/视频三路注意力 → 对抗损失"]
+        DYN["动态扩散损失缩放<br/>λ 随步数衰减：先画对、后画好"]
+        FA["FastAdapter"]
+        DISC --> FA
+        DYN --> FA
+    end
+    OUT["推理：FastGenerator + FastAdapter<br/>4 步生成轨迹可控视频"]
+
+    G0 --> S1
+    S1 --> S2
+    S1 -->|轨迹先验| S3
+    S2 -->|4 步生成器| S3
+    S3 --> OUT
+```
+
 ### 关键设计
 
 **1. 轨迹适配器架构：把用户画的轨迹注入生成过程，且不绑死在某一种 backbone 上**

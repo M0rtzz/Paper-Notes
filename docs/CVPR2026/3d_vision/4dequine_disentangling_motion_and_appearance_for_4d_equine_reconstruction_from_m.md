@@ -44,6 +44,27 @@ tags:
 
 4DEquine 要解决的是单目视频里马科动物的 4D 重建——既要逐帧恢复动作，又要重建出能换姿态的高保真外观。它的核心判断是：动作逐帧在变，但外观在同一段视频里几乎不变，所以没必要把两者耦合在一起联合优化。框架因此拆成两条独立的路：AniMoFormer 负责从视频里恢复逐帧的 VAREN 运动参数（姿态 θ、形状 β、全局平移 γ），EquineGS 负责从单张图前馈出标准空间下的可动画高斯 avatar。两者通过 VAREN 参数化模型桥接——AniMoFormer 给出骨骼姿态，EquineGS 生成标准空间高斯点云，再用 LBS（线性混合蒙皮）驱动到每帧姿态。推理时用滑动窗口处理任意长度视频。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["单目视频"] --> AM
+    IN --> EG
+    subgraph AM["AniMoFormer：时序一致的运动估计"]
+        direction TB
+        A1["VarenPoser 合成数据<br/>VAREN fit PFERD → 切段 → 多纹理多轨迹渲染"] --> A2["时空 Transformer<br/>Spatial 抽帧特征 + Temporal 建模 16 帧时序"]
+        A2 --> A3["VAREN Decoder<br/>回归每帧姿态 θ / 形状 β / 平移 γ"]
+        A3 --> A4["后优化（Post-Optimization）<br/>可微渲染对齐 2D 关键点 + mask"]
+    end
+    subgraph EG["EquineGS：单图前馈高斯外观"]
+        direction TB
+        E1["模板 mesh 上采样<br/>13873 → 55486 顶点作高斯初始位置"] --> E2["双流特征<br/>DINOv3 图像流 + 点云位置编码流"]
+        E2 --> E3["DSTG 解码器<br/>图像引导点特征 → 输出高斯 Δμ / r / s / c / o"]
+    end
+    AM --> VAREN["VAREN 参数化模型<br/>桥接骨骼姿态与标准空间高斯"]
+    EG --> VAREN
+    VAREN --> OUT["LBS 驱动到每帧姿态<br/>滑动窗口 → 4D 重建"]
+```
+
 ### 关键设计
 
 **1. AniMoFormer：从视频恢复时序一致的运动，且只靠合成数据训练**

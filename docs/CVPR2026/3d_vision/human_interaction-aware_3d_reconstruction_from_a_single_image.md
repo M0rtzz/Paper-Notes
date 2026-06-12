@@ -37,6 +37,35 @@ tags:
 ### 整体框架
 HUG3D包含三个阶段：(1) Pers2Ortho模块将输入透视图像转换为标准正交多视图表示；(2) HUG-MVD扩散模型联合补全遮挡区域的几何和纹理；(3) HUG-GR物理感知几何重建+纹理融合。输入是单张RGB图像，输出是多人交互的带纹理3D网格。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["单张 RGB 图像<br/>(多人交互场景)"] --> P2O
+
+    subgraph P2O["透视-正交视图变换 Pers2Ortho"]
+        direction TB
+        A1["BUDDI 估 SMPL-X<br/>+ 相机参数"] --> A2["Sapiens 深度/法线<br/>细化为部分几何 M"]
+        A2 --> A3["6 台正交相机环绕<br/>点云重投影 → 正交条件"]
+    end
+
+    P2O --> MVD
+
+    subgraph MVD["群体-个体多视图扩散 HUG-MVD"]
+        direction TB
+        B1["masked RGB + SMPL-X 法线<br/>(ControlNet 注入)"] --> B2["扩散去噪<br/>联合预测 RGB + 法线"]
+        B2 --> B3["instance-to-group latent 合成<br/>(α=0.8 混合)"]
+    end
+
+    MVD --> GR
+
+    subgraph GR["物理感知几何重建 HUG-GR"]
+        direction TB
+        C1["几何优化<br/>法线 + 可见性 + 穿透约束"] --> C2["多视图纹理融合<br/>+ 人脸修复"]
+    end
+
+    GR --> OUT["多人交互<br/>带纹理 3D 网格"]
+```
+
 ### 关键设计
 
 **1. 透视-正交视图变换 Pers2Ortho：把畸变的透视图掰正成扩散模型吃得下的正交表示**

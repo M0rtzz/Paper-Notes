@@ -54,6 +54,21 @@ CAA 是一个**通用算子**，输入三要素：
 3. 在 $\pi$ 下计算 $\mathrm{Var}_{A \sim \pi}[R(A;X)]$ 或最大 gap，得到 CAA；
 4. 在不同 ladder（Markov 阶数、计算预算、编码器集合）上扫描，得到"advantage profile"，进一步抽取标量指标。
 
+全文的骨架就是一个**共同定义 → 三条 ladder → 各自回到一个经典量**的分叉收敛结构：一个 regret 方差算子，在 Markov ladder 上回到 excess entropy、在预算 ladder 上回到逻辑深度、在 coder ladder 上回到 Kolmogorov/MDL，最终汇成一个可计算、观察者相关的复杂度谱。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：过程 X + 观察者族 A + 先验 π"] --> B["CAA 通用算子<br/>regret R = L − L* 的方差 Var[R]<br/>两观察者闭式 = (ΔL)²/4"]
+    B --> C["在三条 ladder 上扫描"]
+    C --> D["Markov ladder<br/>相邻阶 gap = 条件互信息<br/>累加 → excess entropy"]
+    C --> E["预算 ladder<br/>advantage profile<br/>→ 深度标量 (b50, D, TailFrac) → 逻辑深度"]
+    C --> F["coder ladder<br/>过剩码长的方差<br/>→ Kolmogorov / MDL"]
+    D --> G["统一复杂度谱<br/>可计算 · 观察者相关"]
+    E --> G
+    F --> G
+```
+
 ### 关键设计
 
 **1. CAA 的通用定义与两观察者闭式解：把"结构对谁可见"变成一个可算的标量**
@@ -75,6 +90,10 @@ $$\Delta L_m = L(A^{(m-1)};X)-L(A^{(m)};X) = I(X_t; X_{t-m}\mid X_{t-1}^{t-m+1})
 **3. 预算 ladder + 标量深度指标：把不可计算的 Bennett 逻辑深度变成可测量**
 
 Bennett 逻辑深度（展开结构所需的计算量）理论漂亮但既要 $K$ 又要时间，根本算不出来。CAA 用"计算预算"作观察者梯子来操作化它：取观察者族 $\{A^{(b)}\}$，$b$ 表示搜索深度、rollout 长度、CA 邻域半径等预算，相邻预算的 gap $\Delta L_b=L(A^{(b-1)};X)-L(A^{(b)};X)\ge 0$ 都是一个两阶 CAA gap。从 profile $\{\Delta L_b\}$ 抽三个标量——tail 占比 $\mathrm{TailFrac}_\alpha=\sum_{j>\lfloor\alpha B\rfloor}\Delta L_j/\sum_j\Delta L_j$、半质量预算 $b_{50}=\min\{b:\sum_{j\le b}\Delta L_j\ge M/2\}$、归一化深度分 $D=\frac{1}{B}\sum_b b\,\Delta L_b/\sum_b\Delta L_b$。三者一起就能把过程干净分类：shallow（如 Rule 90）红利前置，$b_{50}$ 与 $D$ 都小；deep（如 Rule 110）红利后置，tail fraction 与 $D$ 都大；chaotic（Rule 30）整体红利都很小。它保留了"deep = 晚才能挖出"的直觉，却第一次能在元胞自动机、密码学等具体场景上真的算出数。
+
+**4. coder ladder 下的 CAA：过剩码长的方差，把 Kolmogorov/MDL 从"绝对复杂度"改写成"优势势能"**
+
+第三条 ladder 把 CAA 接回 Kolmogorov 复杂度与 MDL。经典的 $K(x^n)$ 是最短程序长度、不可计算，实用压缩器只能给上界 $K(x^n)\le L_n(A;x^n)+O(1)$；MDL 用一个编码器近似但只吐出单一标量。CAA 的做法是把"损失"换成码长——无损编码器 $A$ 的 per-symbol 码长 $\bar L_n(A;x^n)=\tfrac1n L_n(A;x^n)$（概率编码器下恰等于 log-loss），过剩码长 $R_n(A;x^n)=\bar L_n(A;x^n)-\min_{B\in\mathcal{A}}\bar L_n(B;x^n)$，在一族编码器上取方差就是 CAA。它度量的是"不同编码策略能差多远"：所有编码器都渐近最优、或都对 i.i.d. 噪声无能时 regret 一致、CAA$\approx 0$，只有当某些编码器能挖到别人挖不到的结构时 CAA 才显著。这一步把 KC/MDL 从"这串序列有多复杂"重新定义为"哪种编码器能占到多少便宜"，也正是 gzip/bz2/huffman 消融的理论依据——Huffman 只抓零阶频率、LZ 类能用长程依赖，于是一旦把 Huffman 加进观察者集合，周期串和自然文本上的 CAA 立刻被拉开、纯噪声却纹丝不动。至此三条 ladder（Markov / 预算 / coder）在同一个方差公式下分别恢复 excess entropy、逻辑深度、Kolmogorov/MDL，构成本文"理论三合一"的核心。
 
 ### 损失函数 / 训练策略
 

@@ -48,6 +48,19 @@ $$Y = WX + g_{task}\sum_{i=1}^N g_i B_i(SAX)$$
 
 整套设计围绕「让路由对齐专家真实能力、让缩放对齐任务复杂度」展开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 X"] --> A["共享专家 A<br/>语义表示 h = AX"]
+    A --> R["语义感知路由器<br/>cos(h, 专家键 k_i) → 门控 g_i"]
+    R --> B["语义专家 B_i + 对角缩放 S<br/>g_i · B_i(SAX)"]
+    B --> T["任务自适应缩放<br/>任务嵌入 e_task → g_task"]
+    T --> Y["输出 Y = WX + g_task · Σ g_i B_i(SAX)"]
+    REG["联合正则化训练目标<br/>L_orth 解耦语义/缩放 · L_match 对齐专家键与能力"] -.约束.-> A
+    REG -.约束.-> R
+    REG -.约束.-> B
+```
+
 ### 关键设计
 
 **1. 语义感知路由器：用显式余弦相似度匹配代替黑箱 MLP 路由**

@@ -39,7 +39,25 @@ tags:
 
 ### 整体框架
 
-EgoMind 赌的是一件事：多帧空间推理不一定要点云、深度、BEV 这些昂贵的 3D 先验，靠精心设计的语言推理信号也能把跨帧视角的不连续接起来。它把推理组织成一条四段式 CoT——Summary Field → RPC Field → PSA Field → Reasoning Field：先判断问题需要什么样的空间推理，再用 RPC 把多帧拼成一张全局空间上下文，接着用 PSA 从里面抽出与问题相关的局部上下文，最后整合作答。整条链由 GPT-4o / Qwen2.5-72B 全自动合成训练数据，只用 5K SFT + 20K RL 就能训出来。
+EgoMind 赌的是一件事：多帧空间推理不一定要点云、深度、BEV 这些昂贵的 3D 先验，靠精心设计的语言推理信号也能把跨帧视角的不连续接起来。它把推理组织成一条四段式 CoT——Summary Field → RPC Field → PSA Field → Reasoning Field：先判断问题需要什么样的空间推理，再用 RPC 把多帧拼成一张全局空间上下文，接着用 PSA 从里面抽出与问题相关的局部上下文，最后整合作答。其中 Summary 与 Reasoning 是 CoT 的首尾脚手架，RPC 与 PSA 才是两个核心组件；而要让模型低成本学会生成这套 CoT，靠的是一条全自动数据生成 pipeline（GPT-4o / Qwen2.5-72B 合成 5K 样本）+ SFT/GRPO 两阶段训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["全自动数据生成 Pipeline"]
+        direction TB
+        D1["GPT-4o 逐帧描述<br/>+ 推断相邻帧视角转换 ΔT"] --> D2["Qwen2.5-72B 合成完整 RPC"]
+        D3["GPT-4o 提取任务空间上下文"] --> D4["GPT-4o 整合为 5K EgoMind CoT"]
+        D2 --> D4
+    end
+    DATA -->|"SFT 5K 学 CoT 结构 → GRPO 20K（格式+准确率奖励）"| MODEL["EgoMind MLLM"]
+    IN["多帧图像 + 问题 Q"] --> MODEL
+    MODEL --> S["Summary：判断问题的空间推理需求"]
+    S --> RPC["RPC 角色扮演字幕<br/>第一人称补视角转换，拼成全局场景图"]
+    RPC --> PSA["PSA 渐进式空间分析<br/>从显式目标渐进扩展隐式空间桥梁，取任务子图"]
+    PSA --> R["Reasoning：整合全局场景图 + 任务子图作答"]
+    R --> A["答案 A"]
+```
 
 ### 关键设计
 
@@ -53,7 +71,7 @@ EgoMind 赌的是一件事：多帧空间推理不一定要点云、深度、BEV
 
 **3. 全自动数据生成 Pipeline：零人工标注，把数据成本压到 5K**
 
-显式 3D 先验方法贵就贵在数据——SpaceVista 要 1M、Struct-2D 要 200K 样本。EgoMind 整条 CoT 数据全自动合成：GPT-4o 先生成逐帧描述，Qwen2.5-72B 推断视角转换并合成完整 RPC，空间上下文由 GPT-4o 提取，最后再由 GPT-4o 整合成完整的 EgoMind CoT。整套不需要人工标注，SFT 仅用 5K 样本，是把「语言推理替代 3D 先验」落到数据成本上的关键一步。
+显式 3D 先验方法贵就贵在数据——SpaceVista 要 1M、Struct-2D 要 200K 样本。EgoMind 整条 CoT 数据全自动合成：GPT-4o 先生成逐帧描述、并推断相邻帧之间的视角转换 $\Delta\mathcal{T}$，Qwen2.5-72B 再作为 $f_{\mathrm{RPC}}^{\mathrm{lang}}$ 把它们合成完整 RPC；另一路 GPT-4o 从多帧 + 问题里提取任务相关的空间上下文；最后再由 GPT-4o 把 RPC 与空间上下文整合成完整的 EgoMind CoT（含 Summary / RPC / PSA / Reasoning 四段）。整套不需要人工标注，SFT 仅用 5K 样本，是把「语言推理替代 3D 先验」落到数据成本上的关键一步。
 
 ### 损失函数 / 训练策略
 

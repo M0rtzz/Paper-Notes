@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 DeformPIC 想解决的是：点云 In-Context Learning 该怎么从一对 prompt（输入点云 → 目标点云）里读懂"这次要做什么任务"，再把这个任务原样套到查询点云上。它把整个过程拆成两步、两张网络来走。第一步由 Deformation Extraction Network（DEN）专门看 prompt：它读 prompt 的输入和目标，提炼出一个描述"这对点云之间发生了什么形变"的任务 token $\hat{T}_{\text{task}}$。第二步由 Deformation Transfer Network（DTN）接手：它拿着这个任务 token 当作"操作指令"，去调制一个 Transformer，让它对查询输入施加同样的形变，直接吐出形变后的点云。整条链路里没有任何掩码 token，输入输出都是完整点云，训练和推理走的是同一套流程。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DEN["Deformation Extraction Network（DEN）"]
+        direction TB
+        A["prompt 输入点云 + 目标点云"] --> B["mini-PointNet 编码<br/>得 token T_Pi, T_Pt"]
+        B --> C["拼可学习 task token<br/>过 Transformer"]
+    end
+    C --> D["任务 token T_task<br/>编码这对 prompt 的形变"]
+    Q["查询输入点云<br/>（完整，无掩码占位符）"] --> E
+    D --> E["Deformation Transfer Network（DTN）<br/>AdaLN-Zero 逐层注入 T_task"]
+    E --> F["形变后的查询点云<br/>（完整输出，训练/推理同一套流程）"]
+```
+
 ### 关键设计
 
 **1. Deformation Extraction Network：把"任务是什么"和"几何怎么算"拆开**

@@ -45,6 +45,27 @@ SBR 在 fine-tuning-as-a-service 场景下工作：service provider 持有对齐
 - **Phase 1 — Anchor Acquisition（离线）**：用冻结的 $f_{\theta_{\text{base}}}$ 对每个锚点抽取最后一层最后 token 的隐状态 $h_{\text{ref}}(x')=f^{\text{last}}_{\theta_{\text{base}}}(x')$，缓存为 $\mathcal{H}_{\text{ref}}$。
 - **Phase 2 — Dynamic Regularization（与用户 fine-tune 并行）**：每个 batch 同时计算 $\mathcal{L}_{CE}$（用户任务）与 $\mathcal{L}_{\text{safe}}=\frac{1}{|\mathcal{X}_{\text{anchor}}|}\sum_{x'}\|h_\theta(x')-h_{\text{ref}}(x')\|_2^2$，总目标 $\mathcal{L}_{\text{total}}=\mathcal{L}_{CE}+\lambda\mathcal{L}_{\text{safe}}$，$\lambda$ 控制 refusal 强度。整个过程不动 unembedding 矩阵、不需要修改 base model 架构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 380}}}%%
+flowchart TD
+    subgraph P1["Phase 1 · 锚点离线获取"]
+        direction TB
+        A["危险 prompt 池<br/>BeaverTails 子集"] --> B["随机抽 K=1–8 个<br/>危险 prompt（锚点 X_anchor）"]
+        B --> C["冻结对齐基模 f_θbase"]
+        C --> D["几何瓶颈定位：抽最后层<br/>最后 token 隐状态 → 缓存 h_ref"]
+    end
+    subgraph P2["Phase 2 · 训练时动态正则（与用户 fine-tune 并行）"]
+        direction TB
+        E["用户数据 D_train"] --> F["当前模型同位隐状态 h_θ(x')"]
+        F --> G["MSE 锚点损失 L_safe<br/>‖h_θ(x') − h_ref‖²"]
+        E --> H["用户任务损失 L_CE"]
+    end
+    D --> G
+    G --> I["L_total = L_CE + λ·L_safe<br/>反传更新（不动 unembedding 矩阵）"]
+    H --> I
+    I --> J["安全模型：h_final 偏向 refusal 嵌入<br/>有害 token 在 softmax 中竞争失败"]
+```
+
 ### 关键设计
 
 **1. 几何瓶颈定位：把防御从冗余的参数空间挪到 unembedding 输入**

@@ -43,37 +43,57 @@ tags:
 
 ### 整体框架
 
-ConceptPrism 想解决个性化 T2I 里"概念和图像特有信息缠在一起"的问题。它给每个被学习的概念配两类可学习 token：一个所有参考图像共享的 target token $t_{target}$，负责承接跨图像反复出现的目标概念；以及每张图像各自一个的 residual token $t_{residual}^{(i)}$，负责吸走这张图独有的背景、姿态、光照。训练时用重建损失保证"target + residual"合起来能还原原图，再用一个跨图像的排斥损失把共享信息从 residual 里挤出去，最后推理只留 target token，于是生成结果只带纯净概念、不再泄漏训练图的杂质。
+ConceptPrism 想解决个性化 T2I 里"概念和图像特有信息缠在一起"的问题。它给每个被学习的概念配两类可学习 token：一个所有参考图像共享的目标 token（target token）$t_{target}$，负责承接跨图像反复出现的目标概念；以及每张图像各自一个的残余 token（residual token）$t_{residual}^{(i)}$，负责吸走这张图独有的背景、姿态、光照。整个流程分两个阶段：先冻结 U-Net 只优化这两类 token（用重建损失保证"目标+残余"合起来能还原原图，再用一个跨图像的排斥损失把共享信息从残余 token 里挤出去），再给 attention 层插 LoRA 联合微调补上模型级保真度；推理时只留纯净的目标 token、丢掉全部残余 token，于是生成结果只带目标概念、不再泄漏训练图的杂质。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 张参考图像<br/>共享同一目标概念"]
+    subgraph INIT["不对称初始化"]
+        direction TB
+        B["目标 token：随机初始化<br/>（留出信息真空）"]
+        C["残余 token：VLM 生成的整图描述句<br/>经 CLIP 编码取均值做初值"]
+    end
+    A --> INIT
+    subgraph OPT["阶段①·token 优化（冻结 U-Net，200 步）"]
+        direction TB
+        D["重建损失<br/>『目标 with 残余⁽ⁱ⁾』还原第 i 张图"]
+        E["跨图像排斥损失<br/>用 i 的残余给第 j≠i 张图做条件<br/>→ 逼近空条件"]
+    end
+    INIT --> OPT
+    OPT -->|"L_total = L_rec + β·L_excl"| F["阶段②·微调（120 步）<br/>attention 层插 LoRA<br/>联合调 LoRA + token"]
+    F --> G["推理：只留纯净目标 token<br/>丢残余 token，配任意 prompt 生成"]
+```
 
 ### 关键设计
 
 **1. 不对称初始化：让两类 token 从一开始就分工**
 
-缠绕的根源之一是多个 token 不加约束时会冗余地编码同样信息。ConceptPrism 用初始化制造分工：target token 随机初始化，形成一个"信息真空"，在重建损失驱动下自然去填那些跨图像反复出现的内容（即共享概念）；而每个 residual token 用对应图像的 CLIP 描述句嵌入初始化（描述句由 BLIP-2 自动生成，如 "a photo of a dog sitting on a couch"），一上来就握着这张图的全部细节，训练中只需把共享部分让给 target、自己留下特有残余。这种"一个从零学、一个从满减"的不对称设计让信息流向天然互补，无需额外的优化技巧去强行分配。
+缠绕的根源之一是多个 token 不加约束时会冗余地编码同样信息。ConceptPrism 用初始化制造分工：目标 token 随机初始化，形成一个"信息真空"，在重建损失驱动下自然去填那些跨图像反复出现的内容（即共享概念），且不需要像以往方法那样依赖一个类别名词（class noun）作先验；而每个残余 token 则用对应图像的整图描述句（8–32 词、由 VLM（论文用 Gemini 2.5 Flash）自动生成）送入 CLIP 编码器、取其均值嵌入作为初值，一上来就握着这张图的全部细节，训练中只需把共享部分让给目标 token、自己留下特有残余。这种"一个从零学、一个从满减"的不对称设计让信息流向天然互补，无需额外的优化技巧去强行分配。
 
 **2. 重建损失：先把两类 token 合起来不丢信息这个锚立住**
 
-在排斥之前必须先有一个"信息守恒"的锚，否则把残余挤出 residual 后概念也可能跟着丢。重建损失要求条件 "[$t_{target}$] with [$t_{residual}^{(i)}$]" 能重建第 $i$ 张参考图 $x^{(i)}$：
+在排斥之前必须先有一个"信息守恒"的锚，否则把共享概念从残余 token 里挤出去后、目标概念也可能跟着丢。重建损失要求条件 "[$t_{target}$] with [$t_{residual}^{(i)}$]" 能重建第 $i$ 张参考图 $x^{(i)}$：
 
 $$\mathcal{L}_{recon} = \mathbb{E}_{i, t, \epsilon} \left[ \| \epsilon - \epsilon_\theta(z_t^{(i)}, c_{target+residual}^{(i)}) \|^2 \right]$$
 
-其中 $z_t^{(i)}$ 是加噪后的第 $i$ 张图，$c_{target+residual}^{(i)}$ 是同时含两类 token 的文本条件。它保证 target 与 residual 加起来覆盖整张图的信息，给后面的"分离"留出腾挪空间。
+其中 $z_t^{(i)}$ 是加噪后的第 $i$ 张图，$c_{target+residual}^{(i)}$ 是同时含两类 token 的文本条件。它保证目标 token 与残余 token 加起来覆盖整张图的信息，给后面的"分离"留出腾挪空间。
 
 **3. 跨图像排斥损失：把共享概念从残余 token 里挤出去**
 
-这是把概念真正解耦出来的核心。直觉是：如果某张图的 residual token 还残留着共享概念，那么拿它去给**另一张**图 $x^{(j)}$（$j \neq i$）做条件生成时，结果就会偏离无条件生成；反过来只要 residual 里不含共享信息，它对别的图像就应该毫无贡献、等同于空条件。于是损失直接惩罚这种"跨图像的泄漏"：
+这是把概念真正解耦出来的核心。直觉是：如果某张图的残余 token 还残留着共享概念，那么拿它去给**另一张**图 $x^{(j)}$（$j \neq i$）做条件生成时，结果就会偏离无条件生成；反过来只要残余 token 里不含共享信息，它对别的图像就应该毫无贡献、等同于空条件。于是损失直接惩罚这种"跨图像的泄漏"：
 
 $$\mathcal{L}_{excl} = \mathbb{E}_{i, j \neq i, t, \epsilon} \left[ \| \epsilon_\theta(z_t^{(j)}, c_{residual}^{(i)}) - \epsilon_\theta(z_t^{(j)}, \varnothing) \|^2 \right]$$
 
-$c_{residual}^{(i)}$ 是只用第 $i$ 张图残余 token 的条件，$\varnothing$ 是空文本无条件。$j \neq i$ 的交叉是关键——若用 $j = i$，同一张图的噪声样本本就和自己的残余 token 相关，无法分辨"概念泄漏"还是"图像特定匹配"。最小化它等价于最小化 $\text{KL}(p(x|c_{residual}^{(i)}) \| p(x))$，把残余 token 的条件分布逼向无条件分布，于是共享概念被迫全部沉淀到 target token 上。
+$c_{residual}^{(i)}$ 是只用第 $i$ 张图残余 token 的条件，$\varnothing$ 是空文本无条件。$j \neq i$ 的交叉是关键——若用 $j = i$，同一张图的噪声样本本就和自己的残余 token 相关，无法分辨"概念泄漏"还是"图像特定匹配"。最小化它等价于最小化 $\text{KL}(p(x) \| p(x|c_{residual}^{(i)}))$，把残余 token 的条件分布逼向无条件分布，于是共享概念被迫全部沉淀到目标 token 上。
 
 ### 损失函数 / 训练策略
 
-总损失把重建与排斥加权合并，$\lambda = 0.5$ 时最优（过小排斥不够，过大则压垮 residual 导致重建变差）：
+总损失把重建与排斥加权合并，权重 $\beta = 0.05$ 时最优（过小排斥不充分，过大则把残余 token 逼成空条件、反而迫使目标 token 重新吸收残余信息、文本对齐变差）：
 
-$$\mathcal{L}_{total} = \mathcal{L}_{recon} + \lambda \mathcal{L}_{excl}$$
+$$\mathcal{L}_{total} = \mathcal{L}_{recon} + \beta\, \mathcal{L}_{excl}$$
 
-优化分两段：先冻结 U-Net、只优化 $t_{target}$ 和 $\{t_{residual}^{(i)}\}$ 的嵌入 200 步，快速学到概念的粗表示；再在 attention 层加 LoRA、联合微调 LoRA 与 token 嵌入 120 步，补上模型级的细粒度保真度，总共 320 步即可。推理时只保留解耦干净的 $t_{target}$、丢掉全部 residual token，配任意 prompt 生成，于是输出只含目标概念、不再泄漏训练图的背景与姿态。
+（目标 token 长度取 1、每个残余 token 长度取 8。）优化分两段：先冻结 U-Net、只优化 $t_{target}$ 和 $\{t_{residual}^{(i)}\}$ 的嵌入 200 步，快速学到概念的粗表示；再在 attention 层加 LoRA、联合微调 LoRA 与 token 嵌入约 120 步达到最优，补上模型级的细粒度保真度。推理时只保留解耦干净的 $t_{target}$、丢掉全部残余 token，配任意 prompt 生成，于是输出只含目标概念、不再泄漏训练图的背景与姿态。
 
 ## 实验关键数据
 
@@ -115,7 +135,7 @@ ConceptPrism 在 object/style/pose 三种概念类型上均有效，说明解耦
 - **去掉 residual token（仅 target）**：CLIP-T 下降 0.015，target token 被迫编码所有信息，概念不纯净
 - **去掉描述性句子初始化**：DINO 下降 0.012，随机初始化的 residual token 学习更慢，部分残余信息未被充分吸收
 - **去掉 LoRA 阶段**：DINO 下降 0.025，仅 token 优化无法捕捉细粒度概念细节
-- **$\lambda$ 敏感性**：$\lambda = 0.5$ 为最优，过小则排斥不充分，过大则过度抑制 residual token 导致重建质量下降
+- **$\beta$ 敏感性**：$\beta = 0.05$ 为最优，过小则排斥不充分，过大则把残余 token 逼成空条件、迫使目标 token 重新吸收残余信息，反而拉低文本对齐
 
 ### 定性分析
 

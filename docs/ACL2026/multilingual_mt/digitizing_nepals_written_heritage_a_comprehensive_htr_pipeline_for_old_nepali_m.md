@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 Pipeline 五步：① **Line segmentation**——用 Kraken polygon-based 把 155 张手稿（平均 1593×133 px、1198 字符、20 行）切成 3100 行 line images（最长 162 字符、最短 1 字符）；② **Stage 1 合成预训练**——从 21 本历史尼泊尔教科书（Internet Archive）提取文本，用 11 种 Devanagari 字体 + 10 种噪声变形（透视、模糊、椒盐、JPEG 压缩等）渲染 100K 训练行 + 各 2500 val/test；③ **Stage 2 印刷迁移**——heiDATA 上 247 页印刷 Nagari 扫描切出 5139 行（80/10/10），灰度化后 fine-tune；④ **Stage 3 手稿微调**——3100 行手稿（80/10/10）做最终 fine-tune；⑤ **解码 + 后处理**——多种解码策略对比、按 token 不确定度做 post-correction flag。所有 stage 用 AdamW、lr=3e-5、bs=8、warmup 500，分别 6/10/20 epoch。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["155 张古尼泊尔手稿"] --> B["行切分<br/>Kraken polygon → 3100 行 line images"]
+    B --> C["数据中心优化<br/>标签归一化 (改动 57% 行) + 20 种增强 × 8 倍"]
+    C --> CURR
+    subgraph CURR["三阶段迁移学习课程"]
+        direction TB
+        D["Stage 1 合成预训练<br/>11 种字体渲染 10 万行 (CER 0.71)"] --> E["Stage 2 印刷迁移<br/>5K 行印刷 Nagari 扫描 (CER 0.51)"]
+        E --> F["Stage 3 手稿微调<br/>3100 行真实手稿 (CER 0.056)"]
+    end
+    CURR --> G["Script-aware decoder + byte-BPE<br/>ViT 编码器 + BERT decoder + 词表 500"]
+    G --> H["解码 + 后处理<br/>token 不确定度 flag 27% 错误"]
+```
+
 ### 关键设计
 
 **1. 三阶段迁移学习课程：用"合成 → 印刷 → 手稿"三段课程，在仅 3100 行真实标注下学会古尼泊尔手写识别**

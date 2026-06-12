@@ -51,6 +51,19 @@ $$\mathbf{c} = \sum_k \hat{\boldsymbol{c}}_k(\Theta_k, u, v, \vec{d}) \, \alpha_
 
 其中 $\hat{\boldsymbol{c}}_k$ 是第 $k$ 个原语的 MLP 在该交点处预测的颜色。围绕这个核心改动，论文再配一套频率感知的致密化来控制原语该往哪里加。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：3D 场景 + 2DGS 几何骨架"] --> B["仿射变换<br/>命中点映射到原语局部坐标 (u,v)"]
+    B --> C["Neural Gabor 原语<br/>每原语 SIREN MLP：(u,v,视角) → RGB"]
+    C --> D["alpha 混合沿光线叠加<br/>得到渲染图像"]
+    D -->|训练，与 GT 比较| E["频率感知致密化<br/>渲染图/GT 做 FFT → 分频段误差图"]
+    E -->|反投影回原语空间| F["挑出高频误差原语克隆/分裂"]
+    F --> G["渐进不透明度重置<br/>子原语复制父级 MLP 权重软着陆"]
+    G -->|继续优化| C
+    D -->|推理| H["输出：高频细节新视角图像"]
+```
+
 ### 关键设计
 
 **1. Neural Gabor 原语：让单个原语自己画出空间变化的颜色**

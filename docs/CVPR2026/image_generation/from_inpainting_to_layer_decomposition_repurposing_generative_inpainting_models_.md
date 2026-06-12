@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Outpaint-and-Remove 基于预训练的 FLUX.1-Fill-dev（一个基于 DiT 的 inpainting 扩散模型）。输入为原始图像和二值 mask，输出为背景层（RGB，物体移除后的干净背景）和前景层（RGBA，含 alpha 通道的提取前景，遮挡部分被恢复）。关键改动包括：（1）多模态上下文 tokenization 模块，融合边缘、分割、深度等辅助信息；（2）双向 image-mask context 设计，分别引导前景提取和背景生成；（3）独立的 RGBA 编解码器处理前景的透明通道。整体使用 LoRA 进行参数高效微调。
+Outpaint-and-Remove 基于预训练的 FLUX.1-Fill-dev（一个基于 DiT 的 inpainting 扩散模型）。输入为原始图像和二值 mask，输出为背景层（RGB，物体移除后的干净背景）和前景层（RGBA，含 alpha 通道的提取前景，遮挡部分被恢复）。关键改动包括：（1）多模态上下文融合模块，把边缘、分割、深度等辅助信息压成定长 token；（2）双向 image-mask context 设计，用背景 / 前景两路 context 分别引导背景生成与前景提取；（3）冻结底模、只用 LoRA + 独立 RGBA 编解码器学新能力。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：原图 + 二值 mask"] --> C
+    AUX["辅助线索：边缘 / 分割 / 深度图"] --> B
+    B["多模态上下文融合<br/>N 个 latent query token 压成定长表示"]
+    C["双向 Image-Mask Context<br/>背景 context + 前景 context 分管生成与保留"]
+    B --> D["DiT 主干（FLUX.1-Fill-dev）<br/>冻结底模 + LoRA（rank=256）微调"]
+    C --> D
+    D -->|背景路| E["原 VAE 解码 → 背景层（RGB，物体移除）"]
+    D -->|前景路| F["RGBA 解码器 → 前景层（RGBA，恢复遮挡）"]
+```
 
 ### 关键设计
 

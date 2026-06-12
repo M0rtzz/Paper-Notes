@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 EqR 要解决的是"迭代潜变量推理为什么 work、什么时候多算才有效"这个机制问题，做法是把迭代算子 $\mathbf{z}_{k+1}=f_\theta(\mathbf{z}_k;\mathbf{x})$ 当成一个 task-conditioned 的动力系统，目标从 DEQ 的"求唯一不动点"放宽为"塑造一片对齐良好的吸引子地形"，再把训练和测试时扩展都翻译成在这片地形上的操作。骨架直接沿用 TRM 风格的 hierarchical 迭代：维护一对 latent state $(\mathbf{z}_H, \mathbf{z}_L)$，内层把 $\mathbf{z}_L$ 在 $\mathbf{z}_H$ 条件下更新 $n$ 步、再用它更新一次 $\mathbf{z}_H$，外层重复 $T$ 步，其中前 $T-1$ 步走 `no_grad`+detach（truncated gradient，只在最后一步算梯度），并挂一个 ACT 头 $\hat q = f_\phi(\mathbf{z}_H)$ 做 difficulty-aware 早停。相对 HRM/TRM，EqR 的新东西集中在三处发力点——给每条轨迹换随机起点（广覆盖）、给每步更新注阻尼噪声（轻扰动）、推理时沿深度/广度两轴扩展并用残差挑轨迹（对齐选择信号）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["吸引子地形视角 + 四模式诊断<br/>低残差 basin 与 任务低错误 basin 是否重合"] --> B
+    subgraph TRAIN["训练侧地形塑造：随机初始化（RI）+ 路径噪声（NI）"]
+        direction TB
+        B["随机初始化起点 z0 ∼ N(0, σ0)（RI）"] --> C["权重共享迭代算子 f_θ<br/>z_{k+1} = z_k + (1−λ)r_k + βε_k（NI 注阻尼噪声）"]
+    end
+    TRAIN --> D["两轴测试时扩展：深度 D（同轨多迭代）<br/>+ 广度 B（多次随机重启）"]
+    D --> E["残差选轨：取末段平均残差最小的轨迹（Top-1）"]
+    E --> F["输出解"]
+```
+
 ### 关键设计
 
 **1. 吸引子地形视角 + 四模式诊断：把"残差"升格为任务无关的诊断量**

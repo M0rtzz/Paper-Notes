@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 这篇论文不训练任何模型，整套工作都是 zero-shot 推理实验，目的是回答一个被前人含糊带过的问题：self-consistency (SC) 到底是只对符号推理有用，还是对纯知识召回也有用。它分四步搭实验台：先用 "=="-启发式把 MMLU 的 57 个 subject 在学科层面切成 reasoning / knowledge 两个子集（比例约 1:2）；再用两个推理类型纯净的外部基准 GSM8K（纯符号推理）和 MedMCQA（几乎纯知识召回）做镜像验证，确认切分是干净的；然后在 GPT-4o (2024-08-06)、GPT-4o-mini、Qwen2.5-32B-Instruct 上对比 Direct Answer (DA)、CoT、CoT+SC（$n \in \{3, 5, 20\}$，nucleus sampling top-$p=0.9$）；最后引入置信度 $s = \frac{|\text{majority answer}|}{|\text{valid answers}|}$，做它与正确性的 Pearson 相关分析，给出 SC 为何有效的机制解释。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MMLU 57 个 subject"] --> B["a priori 学科级切分<br/>'=='-启发式按学科归类"]
+    B --> C["MMLU-Reasoning（符号推理）"]
+    B --> D["MMLU-Knowledge（知识召回）"]
+    C --> E["跨基准镜像验证<br/>GSM8K 锚定 Reasoning，MedMCQA 锚定 Knowledge"]
+    D --> E
+    E --> F["三模型 × 三 prompt<br/>DA / CoT / CoT+SC（n=3,5,20）"]
+    F --> G["答案一致性置信度 s<br/>= 多数答案占比，Pearson ρ≈0.42"]
+    G --> H["结论：SC 对知识召回也有效"]
+```
+
 ### 关键设计
 
 **1. a priori 学科级切分：把 MMLU 拆成推理类型纯净的两半**

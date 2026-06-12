@@ -47,24 +47,26 @@ tags:
 
 训练分两阶段。第一阶段 SFT 用三类冷启动数据让模型学会检索相关视角、更新认知地图、生成带 SAC 的空间推理。第二阶段 RFT 在 SFT 模型上用 GRPO 做强化微调，奖励由最终正确性门控，再加上 retrieval、cognitive map、SAC 三个中间项。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 Q + 候选视角集 V<br/>+ 视角变换关系 E"] --> B
+    subgraph LOOP["主动探索循环（探索→记忆，迭代）"]
+        direction TB
+        B["主动探索式视角检索<br/>VLM 生成 retrieve(k) 取下一张图"] --> C["动态认知地图更新<br/>新视角并入统一 top-down 坐标"]
+        C -->|信息不足且未达 T_max| B
+    end
+    C -->|信息足够 / 达到 T_max| D["空间心智推理<br/>读累计地图，输出答案 + SAC"]
+    D --> E["Spatial Assertion Code 与密集奖励<br/>地图上执行断言算 R_SAC / R_cogmap / R_retrieval"]
+    E --> F["最终答案 Y（最终正确性门控 + GRPO 强化）"]
+```
+
 ### 关键设计
-1. **主动探索式视角检索**:
+1. **主动探索式视角检索：按问题取景，而非一次看完所有图**：被动把所有视角塞进上下文不仅成本高，在 Rotation 这类问题里不同视角之间几乎没有共享视觉锚点，模型很容易在无关信息里迷失。本文把检索动作写成可解析的 Python-like action（如 `retrieve(k)` 表示取第 $k$ 张视角），让 VLM 每一步根据当前认知地图和问题主动选下一张最相关的图，既可以多轮探索、也可以在达到最大步数 $T_{\max}$ 前主动停止。这样模型沿着 egocentric reference frame 逐步拼接空间关系，把“一次性对齐所有视角”这件难事拆成若干可控的小步。
 
-	- 功能：让 VLM 不再一次性消费所有视角，而是根据当前认知地图和问题逐步选择下一张最相关的图。
-	- 核心思路：把检索动作写成可解析的 Python-like action，例如 `retrieve(k)`，并把每次观察后得到的新信息写回地图。模型可以多轮探索，也可以在达到最大步数前主动停止。
-	- 设计动机：Rotation 类问题中，不同视角之间可能几乎没有共享视觉锚点。顺序探索能让模型沿着 egocentric reference frame 逐步拼接空间关系，降低一次性对齐所有视角的负担。
+2. **动态认知地图作为结构化长期记忆：用坐标系替代文本历史**：空间推理最难的是视角变换与坐标对齐，而纯文本历史上下文会把精确的位置结构丢掉。本文用统一 top-down 坐标系下的地图状态 $s_t=\{\mathcal{O}_t,\mathcal{V}_t\}$ 当记忆：$\mathcal{O}_t$ 存物体的类别、位置与朝向，$\mathcal{V}_t$ 存相机的位置与朝向，每观察一张新视角就把它并入这个坐标系（$s_{t+1}=\mathcal{P}_\theta(s_t,v_{t+1},a_{t+1})$）。后续推理不再回读一长串图文历史，而是直接在坐标里读“哪些物体在哪、视角从哪看”，从而把跨视角观察沉淀成可积累的几何状态。
 
-2. **动态认知地图作为结构化长期记忆**:
-
-	- 功能：用物体位置、物体朝向、相机位置和相机朝向来保存场景布局，替代纯文本历史上下文。
-	- 核心思路：地图状态 $s_t=\{\mathcal{O}_t,\mathcal{V}_t\}$ 在每次观察后更新。后续推理不是回读一长串图文历史，而是在统一坐标中读取“哪些物体在哪里、视角从哪里看”。
-	- 设计动机：空间推理的核心困难是视角变换与坐标对齐。纯文本上下文会丢失精确位置结构，而 top-down map 能把跨视角观察变成可积累的几何状态。
-
-3. **Spatial Assertion Code 与密集奖励**:
-
-	- 功能：把中间空间关系转成可执行 Python 表达式，用地图验证每一步推理是否成立。
-	- 核心思路：自然语言“从 view 4 看，object 1 在 object 0 左侧”会对应类似 `obj1 in obj0.left(view=v4)` 的 SAC。奖励项 $R_{SAC}$ 通过在地图上下文中执行这些代码并统计 True 的比例来计算。
-	- 设计动机：最终答案奖励只能告诉模型“结果错了”，不能指出错在检索、地图还是关系判断。SAC 把原本不可控的自然语言中间过程变成可计算信号，是本文 RL 设计的核心。
+3. **Spatial Assertion Code 与密集奖励：把中间推理变成可执行验证**：只用最终答案奖励，模型只知道“结果错了”，却不知道错在检索、地图还是关系判断，反馈过于稀疏；而用 LLM judge 又会把幻觉和过度自信带进奖励。SAC 的做法是把自然语言空间关系翻译成布尔型 Python 表达式——“从 view 4 看，object 1 在 object 0 左侧”就对应 `obj1 in obj0.left(view=v4)`，再在认知地图上下文里执行，用 $R_{SAC}=\frac{1}{M}\sum_i \mathbb{1}(\text{eval}(\text{code}_i,s_t)=\texttt{True})$ 统计成立比例。它和检验地图正确性的 $R_{cogmap}$、检验取景相关性的 $R_{retrieval}$ 一起，被最终正确性门控（答错则总奖励为 0，防止 reward hacking）组合成密集奖励，把原本不可控的自然语言中间过程变成可计算信号，是本文 RL 设计的核心。
 
 ### 损失函数 / 训练策略
 SFT 阶段用标准自回归交叉熵：$\mathcal{L}_{SFT}=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{SFT}}[\log p_\theta(y|x)]$，其中训练数据由 retrieval、cognitive map update 和 SAC reasoning 三部分组成。

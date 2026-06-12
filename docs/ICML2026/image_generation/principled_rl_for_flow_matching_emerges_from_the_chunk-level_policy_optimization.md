@@ -42,6 +42,19 @@ GCPO 把 GRPO 在 flow matching 后训练里"每一步都用同一个最终 rewa
 ### 整体框架
 GCPO 想解决的是 GRPO 在 flow matching 后训练里"把同一个最终 reward 均匀贴到生成轨迹每一步"造成的错误归因，而它的做法是把策略优化的最小单元从单步抬到"块"。整条 pipeline 不动 reward、不动 sampler、不动 KL 约束，只改 GRPO 目标函数里"对哪个粒度做 importance ratio + clip"：以 FLUX.1 Dev 为 base policy，沿 SDE 化的 flow matching 公式 $dx_t=(v_\theta+\frac{\sigma_t^2}{2t}(x_t+(1-t)v_\theta))dt+\sigma_t dw_t$ 把轨迹采出来，沿途记下每步的 $L1_{rel}(x,t)$ 用来切 chunk，reward model 只对终态 $x_0$ 打分得到组内相对 advantage $A^i$，最后用 chunk-level 的重要性比做 PPO-style 更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["FLUX.1 Dev 基策略"] --> B["SDE flow matching 采样<br/>同 prompt 一组 G 条轨迹"]
+    B --> C["沿途记录每步 L1_rel(x,t) 曲线"]
+    C --> D["自适应切块<br/>沿 L1_rel 动力学拐点分 K 段"]
+    D --> E["加权采块（可选）<br/>按平均 L1_rel 偏向高噪段"]
+    E --> F["块级重要性比<br/>块内联合 likelihood 几何平均"]
+    B --> G["reward model 对终态打分<br/>组内相对 advantage A^i"]
+    G --> F
+    F --> H["PPO clip + KL 更新策略"]
+```
+
 ### 关键设计
 
 **1. Chunk-level importance ratio：把错误的步级梯度在块内稀释掉**

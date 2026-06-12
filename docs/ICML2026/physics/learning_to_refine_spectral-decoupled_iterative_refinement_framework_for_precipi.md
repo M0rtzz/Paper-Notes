@@ -47,6 +47,20 @@ SDIR 是一个 end-to-end 双分支网络：SFG-Former 输出基线骨架 $\hat 
 **输出**：未来 $T_{out}$ 帧的降水场 $\hat Y$。
 **主干**：(i) 频率尺度信号 $s\sim\operatorname{Beta}(1,3)$ 决定当前训练步要学的频段深度；(ii) SFG-Former 用 Scale-Adaptive Transformer（SAT）+ 3D RoPE，融合 $X$ 与 $C_s$ 给出低频骨架 $\hat Y_{base}$；(iii) FR-Refiner 是 U-Net 形态、bottleneck 嵌入 SFNO blocks 的 Fourier 残差生成器，按 $s$ 通过 Adaptive Normalization 调制，输出 $\hat Y_{res}$；(iv) 全程被 reconstruction L1 + 动态加权 PCPSD 谱损失共同优化；(v) 推理时按 schedule $\mathcal{S}=\{s_1=0,s_2,\dots,s_K\}$ 迭代，每步用上一次预测的 DCT 截断作为下一步的 $C_s$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["历史雷达序列 X"] --> D
+    B["频率尺度 s<br/>训练 Beta(1,3) 采样 / 推理按调度递增"] --> C
+    C["DCT 截断 → 低频条件 Cs<br/>训练取自 GT / 推理取自上一步预测"] --> D
+    D["SFG-Former 骨架分支<br/>SAT + 3D RoPE → 低频骨架 Ŷ_base"] --> E["FR-Refiner 残差分支<br/>SFNO bottleneck → 高频残差 Ŷ_res"]
+    D --> F["加性融合 Ŷ = Ŷ_base + Ŷ_res"]
+    E --> F
+    F -->|训练| G["PCPSD 谱损失 + L1<br/>对齐 Kolmogorov 湍流功率律"]
+    F -->|推理：截断 Ŷ 作下一轮 Cs、s 递增| C
+    F --> H["输出未来降水场 Ŷ"]
+```
+
 ### 关键设计
 
 **1. 频谱解耦的训练课程：用 DCT 截断 $C_s$ + Beta(1,3) 采样把"频段深度"当迭代变量**
@@ -57,13 +71,17 @@ SDIR 是一个 end-to-end 双分支网络：SFG-Former 输出基线骨架 $\hat 
 
 骨架分支要吃历史序列和低频条件、输出在任何 $s$ 下都稳的低频 base 预测 $\hat Y_{base}$。把 $X$ 与 $C_s$ 沿时间维拼接、patchify 投影成 $z\in\mathbb{R}^{B\times L\times D}$ 后，每个 SAT block 里的 Frequency Scale Embedder（FSE）把标量 $s$ 映成 modulation 三元组 $(\gamma,\beta,\alpha)$，对 LayerNorm 后特征做 affine 调制 $z_{mod}=(1+\gamma)\odot\operatorname{LN}(z)+\beta$，再以 gated residual $z_{out}=z+\alpha\odot\operatorname{Transformer}(z_{mod})$ 接回主干；位置编码用 3D RoPE 在空间-时间维一并保 translation invariance。Transformer 的 patch embedding 天然偏中等分辨率、单独用会丢高频，把"当前要重建的频谱深度"作为条件灌进每层，骨架分支就既能在低 $s$ 给"模糊但稳"的预测、又能在高 $s$ 给更锐版本，避免和 refiner 抢工；3D RoPE 取代绝对位置编码后，对气象场的平移和时间漂移更鲁棒。
 
-**3. FR-Refiner + SFNO + PCPSD 损失：高频残差合成与湍流谱约束**
+**3. FR-Refiner + SFNO：确定性的高频残差合成分支**
 
-回归类模型过平滑的根因是 MSE 在各频段的梯度被低频主导、模型理性地选平滑解。Refiner 用 U-Net 拓扑（PixelUnshuffle/Shuffle 做分辨率转换保细节），bottleneck 堆 SFNO blocks——FFT 进频域、按实部/虚部线性变换 + SoftShrink 稀疏化、再 IFFT 回空间域，在常数层数内捕捉跨尺度耦合，是 FourCastNet 风格设计的延伸。真正治本的是 PCPSD 损失：先用 2D Hann window 抑边缘伪影、rFFT 得 2D 功率谱、沿径向 bin 平均得 1D isotropic 谱 $S(k)$，在 log 域比较
+骨架分支基于 patch 的 Transformer 天生丢高频，残差分支负责把这部分细节补回来——它吃 $[X\,\|\,\hat Y_{base}]$、同样被 $s$ 调制，输出高频残差 $\hat Y_{res}$，与骨架相加得到最终预测 $\hat Y=\hat Y_{base}+\hat Y_{res}$。结构用 U-Net 拓扑（PixelUnshuffle/Shuffle 做分辨率转换保细节、residual skip 融合多尺度），bottleneck 堆 8 个 SFNO block——FFT 进频域、按实部/虚部线性变换 + SoftShrink（阈值 0.01）稀疏化、再 IFFT 回空间域，在常数层数内捕捉跨尺度耦合，是 FourCastNet 风格设计在 nowcasting 上的延伸；$s$ 经 FSE 注入每个 block 的 Adaptive Normalization，让残差合成始终对齐当前要解锁的频段。整条分支全程确定性、不引入随机采样，是它区别于扩散残差路线、从根上规避 unanchored hallucination 的关键。
+
+**4. PCPSD 损失：把 Kolmogorov 湍流功率律变成可微的频谱监督**
+
+回归类模型过平滑的根因是 MSE 在各频段的梯度被低频主导、模型理性地选平滑解——只靠空间损失（消融里去掉 PCPSD）HSS 从 0.5882 掉到 0.5367，说明结构对了高频仍塌。PCPSD 直接监督功率谱：先用 2D Hann window 抑边缘伪影、rFFT 得 2D 功率谱、沿径向 bin 平均得 1D isotropic 谱 $S(k)$，在 log 域比较
 
 $$\mathcal{L}_{pcpsd}=\frac{\sum_k\Omega(k,s)\big(\log S_{pred}(k)-\log S_{gt}(k)\big)^2}{\sum_k\Omega(k,s)},$$
 
-动态权重 $\Omega(k,s)=(k+\epsilon)^\gamma\cdot\{0.2\text{ if }k\le k_s(s);\,1.0\text{ otherwise}\}$ 给已解锁高频更强监督、给低频弱权重。这样预测必须把能量按 GT 的频谱分布"摊"出去，既不丢能量也不乱长结构，从而对齐 Kolmogorov 湍流功率律。总目标是 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，$\phi(s)=\eta(s/W)^2$ 让 spectral loss 随频段深度二次增长。
+动态权重 $\Omega(k,s)=(k+\epsilon)^\gamma\cdot\{0.2\text{ if }k\le k_s(s);\,1.0\text{ otherwise}\}$（$k_s(s)=s/W$ 为当前解锁的截止波数）给已解锁高频更强监督、给已被骨架稳住的低频弱权重。这样预测必须把能量按 GT 的频谱分布"摊"出去，既不丢能量也不乱长结构，从而对齐 Kolmogorov 湍流功率律。总目标是 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，$\phi(s)=\eta(s/W)^2$ 让 spectral loss 随频段深度二次增长。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，前两项是 base 与 residual 的 L1，$\phi(s)=\eta(s/W)^2,\eta=0.01$。优化器 AdamW，初始 lr $3\times 10^{-4}$，硬件 4×RTX 4090D。SFG-Former 含 8 个 SAT block（hidden 512），FR-Refiner 的 SFNO bottleneck 含 8 个 block，输入 CIKM 标准化到 $128\times 128$（zero-pad）、Shanghai / SEVIR 到 $256\times 256$（bilinear）。推理调度采用 8 步（详见消融）。

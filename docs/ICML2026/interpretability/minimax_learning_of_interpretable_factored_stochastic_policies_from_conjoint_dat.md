@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 本文要解决的是"派什么样的候选人"这个离线决策问题：输入是带强制二选一标签的联合实验数据 $(C_i, \mathbf{T}_i^a, \mathbf{T}_i^b)_{i=1}^n$（$\mathbf{T}^c \in \mathcal{T}=\{1,\dots,L\}^D$ 是 $D$ 维档案，$C_i\in\{0,1\}$ 是受访者是否选 $a$），输出是一个可逐属性读懂的随机干预策略及其置信区间。整个方法把它拆成前后衔接的两步：先拟合一个带二阶交互的结果模型，把 logit 写成主效应 $\beta_{dl}$ 与交互 $\gamma_{dl,d'l'}$ 的差分形式 $\eta_i=\sum \beta_{dl}(I_i^a-I_i^b)+\sum \gamma(\cdot)$；再在乘积型 Categorical 策略类 $\Pr_{\bm{\pi}^c}(\mathbf{T}^c=\mathbf{t})=\prod_d \pi^c_{d,t_d}$ 上、受 $L_2$ 信赖域 $\|\bm{\pi}^c-\mathbf{p}\|_2^2 \le \epsilon_n$ 约束地求最优策略——平均情形有闭式解，对抗情形用 logit 重参数化跑同步 ascent–descent。最后用 Delta 方法把结果模型的方差–协方差矩阵 $\hat{\Sigma}$ 通过 Jacobian $\mathbf{J}=\nabla_{\hat\beta,\hat\gamma}\{\hat Q,\hat{\bm\pi}^*\}$ 传播到策略概率和价值的标准误上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["联合实验数据<br/>强制二选一 (C, T^a, T^b)"] --> B["结果模型<br/>主效应 β + 二阶交互 γ"]
+    B --> C["乘积型 Categorical 策略类<br/>L2 信赖域 约束 π 贴近随机化分布 p"]
+    C -->|平均情形| D["闭式平均最优解<br/>线性系统 Cπ = B"]
+    C -->|对抗情形| E["含初选制度的对抗 minimax<br/>制度 pushforward + 同步 ascent–descent"]
+    D --> F["Delta 方法 UQ<br/>Jacobian 把结果模型不确定性传到策略与价值"]
+    E --> F
+    F --> G["可逐属性读懂的随机策略 + 置信区间"]
+```
+
 ### 关键设计
 
 **1. 乘积型 Categorical 受限策略类 + L2 信赖域：用可读的随机分布替代脆弱的"最优单档案"**

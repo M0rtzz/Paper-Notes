@@ -40,7 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对每个训练检查点，模型在两种推理协议下评估——**无工具协议**：不提供工具 schema 测量"内在能力"；**工具可用协议**：提供工具 schema 模型可主动调用。通过追踪两条曲线分离内在漂移 $f_{wo}(t)$ 与工具诱导漂移 $\Delta_{tool}(t)$：$f_w(t) = f_{wo}(t) + \Delta_{tool}(t)$。
+对每个训练检查点，模型在两种推理协议下评估——**无工具协议**：不提供工具 schema 测量"内在能力"；**工具可用协议**：提供工具 schema 模型可主动调用。通过追踪两条曲线分离内在漂移 $f_{wo}(t)$ 与工具诱导漂移 $\Delta_{tool}(t)$：$f_w(t) = f_{wo}(t) + \Delta_{tool}(t)$。在此基础上，MED 用一条 coarse-to-fine 的诊断流水线层层逼近成因——Measure 给宏观判决、Explain 把间隔拆成可作用的成分、Diagnose 再定位每项背后的机制。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每个训练检查点<br/>双协议评估"] --> B["无工具协议<br/>测内在能力 Acc_wo(t)"]
+    A --> C["工具可用协议<br/>测端到端 Acc_w(t)"]
+    B --> D["Measure 阶段<br/>分离内在漂移与工具漂移<br/>算工具贡献比 S_tool"]
+    C --> D
+    D -->|宏观判决：谁在驱动提升| E["Explain 阶段<br/>把工具间隔 G(t) 拆四项<br/>T1+T2 获益 − T3+T4 伤害"]
+    E -->|定位帮在哪、害在哪| F["Diagnose 阶段<br/>每项再分 Mass·Policy·Quality"]
+    F --> G["结论：内在能力主导<br/>工具主要学会与之安全共存"]
+```
 
 ### 关键设计
 

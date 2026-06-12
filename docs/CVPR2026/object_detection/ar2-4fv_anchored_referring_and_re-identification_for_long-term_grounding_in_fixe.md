@@ -44,7 +44,27 @@ tags:
 
 ### 整体框架
 
-这篇论文要解决的是固定视角视频里的长时间 referring：目标可能被遮挡、走出画面再回来，而文本 query 一直有效。输入是帧序列 $\{I_t\}_{t=1}^{T}$ 和一句自然语言 query $q$，输出每帧的 bounding box $\{y_t\}$。整套系统的关键转折是**不把记忆挂在目标外观上，而是挂在不动的背景上**，因此分成离线、在线两段。离线段只跑一次，从视频开头的若干帧里把稳定的背景区域蒸馏成一组锚点（Anchor Bank）；在线段则让 query 与这组锚点对齐，得到一张固定的空间热力图（Anchor Map），再用它去过滤、打分检测候选，目标消失时切到搜索模式并维护一个"目标会从哪儿回来"的重入先验，目标重现时用 ReID-Gating 验证身份。值得注意的是系统并不假设目标在首帧就可见——它从头开始在场景坐标系里"找"query 指的那个目标。
+这篇论文要解决的是固定视角视频里的长时间 referring：目标可能被遮挡、走出画面再回来，而文本 query 一直有效。输入是帧序列 $\{I_t\}_{t=1}^{T}$ 和一句自然语言 query $q$，输出每帧的 bounding box $\{y_t\}$。整套系统的关键转折是**不把记忆挂在目标外观上，而是挂在不动的背景上**，因此分成离线、在线两段。离线段只跑一次，从视频开头的若干帧里把稳定的背景区域蒸馏成一组锚点（Anchor Bank）；在线段则让 query 与这组锚点对齐，得到一张固定的空间热力图（Anchor Map），再用它去过滤、打分检测候选，目标消失时切到搜索模式并维护一个"目标会从哪儿回来"的重入先验（Re-entry Prior），目标重现时用 ReID-Gating 验证身份并把先验重定向回确认锚点，形成"消失→搜索→重捕获"的闭环。值得注意的是系统并不假设目标在首帧就可见——它从头开始在场景坐标系里"找"query 指的那个目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线段（跑一次）"]
+        direction TB
+        V["前 T0 帧取中位亮度帧"] --> SAM["SAM 切 K 个持久背景区域"]
+        SAM --> BANK["Anchor Bank 锚点库<br/>mask / 原型 / 质心（设计1）"]
+    end
+    Q["文本 query"] --> MAP["Anchor Map（设计2）<br/>query↔锚点对齐→固定空间热力图"]
+    BANK --> MAP
+    FR["每帧：GroundingDINO 出候选"] --> GATE["候选过滤 + 融合评分（设计3）<br/>空间门 η 筛候选 → Score 打分"]
+    MAP --> GATE
+    GATE -->|"最高分 < θ：判定不可见"| SEARCH["Re-entry Prior 重入先验（设计4）<br/>搜索模式累积重入概率"]
+    SEARCH -.->|"加权回流下一帧候选"| GATE
+    GATE -->|"胜出候选"| REID["ReID-Gating（设计5）<br/>外观 + 锚点一致性 − 位移 门控"]
+    REID -->|"接受 G ≥ γ"| OUT["输出 bbox + 更新动量队列与锚点 k⋆"]
+    OUT -.->|"重定向先验到锚点质心 c_{k⋆}"| SEARCH
+    REID -->|"拒绝"| SEARCH
+```
 
 ### 关键设计
 

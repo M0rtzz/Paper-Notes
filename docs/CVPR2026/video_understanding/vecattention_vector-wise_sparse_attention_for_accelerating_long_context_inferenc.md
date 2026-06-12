@@ -39,7 +39,22 @@ tags:
 
 VecAttention 要解决的是：视频模型动辄 17K–119K 个 token，全注意力的 $O(N^2)$ 计算把推理拖垮，而现有块级/行级稀疏又因为粒度太粗、把重要 token 和噪声混在同一块里跳过而掉精度。它的破局点来自一个观察——视频注意力图里重要的 KV 倾向于在所有 query 头上都"亮"，呈整列竖条状（垂直向量模式），因此可以先把 query 压缩，再以"向量"（默认 64 个 query 一组）为单位去挑 KV，既比逐 token 选省事、又比整块跳精细。
 
-整条推理拆成两步走：第一步是**选择**，把全序列的 query 做 pooling 得到压缩后的 $Q_p$，与所有 K 算相似度后用 minS 过滤挑出每组真正需要关注的 KV 向量，这一步由 TilingSelect 内核完成，把选择动作直接嵌进 GEMM；第二步是**计算**，只对选中的稀疏 KV 子集做一遍 FlashAttention-2 风格的注意力，跳过其余位置，最终输出。整个过程无需训练，是纯推理期方法。
+整条推理拆成两步走：第一步是**选择**，把全序列的 query 做 pooling 得到压缩后的 $Q_p$，与所有 K 算相似度后用 minS 过滤（过滤比率 $\alpha$ 还按 head 离线自适应）挑出每组真正需要关注的 KV 向量，这一步由 TilingSelect 内核完成，把选择动作直接嵌进 GEMM；第二步是**计算**，只对选中的稀疏 KV 子集做一遍 FlashAttention-2 风格的注意力，跳过其余位置，最终输出。整个过程无需训练，是纯推理期方法。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长视频 token 序列<br/>Q / K / V（17K–119K）"] --> B["Query pooling 压缩得 Q_p"]
+    subgraph SEL["选择阶段：TilingSelect 内核"]
+        direction TB
+        C["分片算 Q_p·Kᵀ 相似度<br/>融进 GEMM、不物化 N² 中间矩阵"] --> D["minS 过滤<br/>rowmax − α 阈值保留 KV"]
+        E["动态每头过滤比率<br/>离线 DP 搜各 head 最优 α"] -.设定 α.-> D
+    end
+    B --> C
+    D --> F["稀疏 KV 子集"]
+    F --> G["稀疏注意力计算<br/>FlashAttention-2 只算选中位置"]
+    G --> H["输出（注意力加速 2.65×）"]
+```
 
 ### 关键设计
 
@@ -53,11 +68,11 @@ $$M_i = \big(s_i \geq (m_i^s - \alpha)\big)$$
 
 **2. TilingSelect：把选择融进 GEMM，省掉 $N^2$ 的中间张量**
 
-minS 判据虽轻，但若先老老实实算出完整的 $Q_p\cdot K^T$ 相似度矩阵再过滤，仍要落地一个 $N^2$ 量级的中间张量——在 N=64K 时高达 18.3GB，显存直接成为新瓶颈。TilingSelect 的做法是在分片（tiled）计算 $Q_p\cdot K^T$ 的同时就地完成 minS 过滤，并跨 tile 累积 rowmax，算完一块就判完一块，不再整体物化相似度矩阵。中间显存从 $\Theta(N^2 P_q^{-1})$ 降到 $\Theta(N^2 P_q^{-1}(1-\rho))$（$\rho$ 为稀疏度），同样 N=64K 下从 18.3GB 压到 1.8GB，省了 10.2 倍。这一步本质是把"选择"从一个独立的访存密集算子，改写成嵌在 GEMM 里的融合操作，让稀疏选择的代价不再吃掉稀疏计算省下的收益。
+minS 判据虽轻，但若先老老实实算出完整的 $Q_p\cdot K^T$ 相似度矩阵再过滤，就得把这个 $N^2$ 量级的中间矩阵写回 HBM——由此产生的访存流量在 N=64K 时高达 18.3GB，显存带宽直接成为新瓶颈。TilingSelect 的做法是在分片（tiled）计算 $Q_p\cdot K^T$ 的同时就地完成 minS 过滤、只保留重要元素的索引，并跨 tile 累积 rowmax，算完一块就判完一块，绝不把估计出的相似度矩阵写回 HBM。这样 HBM 访存从 $\Theta(N^2 P_q^{-1})$ 降到 $\Theta(N^2 P_q^{-1}(1-\rho))$（$\rho$ 为稀疏度），同样 N=64K、稀疏度 0.9 下从 18.3GB 压到 1.8GB，选择延迟降 2.42 倍。这一步本质是把"选择"从一个独立的访存密集算子，改写成嵌在 GEMM 里的融合操作，让稀疏选择的代价不再吃掉稀疏计算省下的收益。
 
 **3. 动态每头过滤比率：不同 head 给不同的 $\alpha$**
 
-用统一稀疏度对所有 head 一刀切并不合理——有些 head 注意力天然集中、可以激进过滤，有些 head 分布平坦、激进过滤就会丢信息。本文据此让过滤比率 $\alpha$ 随 head 自适应：用动态规划根据每个 head 的注意力分布特征预测它各自的最优 $\alpha$，使整体在同一目标稀疏度下把"该省的 head 省到位、该保的 head 留够 KV"。⚠️ 动态规划预测 $\alpha$ 的具体目标函数与求解细节以原文为准。
+用统一稀疏度对所有 head 一刀切并不合理——不同 head 的稀疏度与重要性差异很大，有些天然集中、可以激进过滤，有些分布平坦、激进过滤就会丢信息。本文据此用动态规划**离线**为每个 head 搜出各自的最优 $\alpha$：先离线采样、记录每个 head 在不同 $\alpha$ 下的稀疏度 $\text{sp}_h(\alpha)$ 与性能 $\text{Perf}_h(\alpha)$，再以"目标平均稀疏度 $\rho_T$ 下整体性能最大"为目标按 head 逐个递推 DP 表——$\text{DP}[h][\rho]=\max_{\alpha\ge 0}\{\text{DP}[h-1][\tfrac{\rho\cdot h-\text{sp}_h(\alpha)}{h-1}]+\text{Perf}_h(\alpha)\}$，最终取 $\text{DP}[H][\rho_T]$ 反推出每个 head 的 $\alpha$ 分配。这样在同一目标稀疏度下把"该省的 head 省到位、该保的 head 留够 KV"，且整个搜索离线完成、不增加推理开销。
 
 ### 损失函数 / 训练策略
 

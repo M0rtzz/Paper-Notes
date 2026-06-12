@@ -38,7 +38,22 @@ tags:
 
 ### 整体框架
 
-Unsafe2Safe 想解决的核心张力是：要遮住隐私就得大改图像，可大改又会毁掉下游任务（分类、VQA）依赖的语义。作者的思路是不靠盲目的模糊/马赛克，而是把"识别隐私—描述场景—决定替换—精确编辑"拆成一条全自动流水线，让每一步只动该动的部分。具体来说，一张图先经 InternVL2.5 判定是否含隐私；若不安全，VLM 同时写出两版字幕——保留隐私细节的私有字幕 $c^{\text{priv}}$ 和抹掉隐私的公开字幕 $c^{\text{pub}}$；接着 Qwen3-4B 读 $c^{\text{pub}}$ 推断出合理的替换属性，产出编辑指令 $c^{\text{edit}}$；最后由扩散编辑器（FlowEdit 或微调过的 InstructPix2Pix）在 $c^{\text{pub}}$ 与 $c^{\text{edit}}$ 双条件下完成局部改写，输出匿名图。
+Unsafe2Safe 想解决的核心张力是：要遮住隐私就得大改图像，可大改又会毁掉下游任务（分类、VQA）依赖的语义。作者的思路是不靠盲目的模糊/马赛克，而是把"识别隐私—描述场景—决定替换—精确编辑"拆成一条全自动流水线，让每一步只动该动的部分。论文把它组织成两个阶段：**阶段一（检查）**用一个 VLM 完成隐私判定与双字幕生成、再用一个 LLM 产出编辑指令；**阶段二（安全生成）**由扩散编辑器执行编辑。具体来说，一张图先经 InternVL2.5 判定是否含隐私；判为安全则直接保留，判为不安全才进入改写。对不安全图，VLM 同时写出两版字幕——保留隐私细节的私有字幕 $c^{\text{priv}}$（仅作记录）和抹掉隐私的公开字幕 $c^{\text{pub}}$（作为安全语义表示）；接着 Qwen3-4B 读 $c^{\text{pub}}$ 推断出合理的替换属性，产出编辑指令 $c^{\text{edit}}$；最后由扩散编辑器（FlowEdit 或微调过的 InstructPix2Pix）在 $c^{\text{pub}}$ 与 $c^{\text{edit}}$ 双条件下完成局部改写，输出匿名图供下游使用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入图像"] --> CHK
+    subgraph S1["VLM 隐私检查 + 双字幕"]
+        direction TB
+        CHK["InternVL2.5 按 VISPR 准则逐图检查<br/>召回率 97.5%，宁可多报不漏报"]
+        CHK -->|安全| KEEP["直接保留原图"]
+        CHK -->|不安全| CAP["双字幕：私有 c_priv 仅作记录<br/>公开 c_pub 作安全语义表示"]
+    end
+    CAP --> GEN["LLM 生成替换属性与编辑指令<br/>Qwen3-4B 由 c_pub 推断伪私有属性 → c_edit"]
+    GEN --> DIFF["Safe Cross-Attention<br/>FlowEdit / InstructPix2Pix 双条件 c_pub + c_edit"]
+    DIFF --> OUT["匿名图 → 下游任务（分类 / VQA）"]
+```
 
 ### 关键设计
 

@@ -44,6 +44,15 @@ tags:
 
 DiP 想在像素空间做到和 LDM 一样快、又不靠 VAE，关键是把「全局结构」和「局部细节」拆开建模。给定噪声图像 $x_t \in \mathbb{R}^{H \times W \times 3}$，先切成 $N = (H \times W)/P^2$ 个大 patch（$P=16$）；DiT backbone 在这条短序列上用自注意力建出全局特征 $S_{\text{global}} \in \mathbb{R}^{N \times D}$，再由一个轻量 Patch Detailer Head 对每个 patch 并行处理——拿对应的全局特征 $s_i$ 和原始噪声像素 patch $p_i$，补出该 patch 的噪声分量 $\epsilon_i$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["噪声图像 x_t（H×W×3）"] --> B["DiT 大 patch 建模全局<br/>切 16×16 大 patch（N=256 token）<br/>自注意力 → 全局特征 S_global"]
+    B -->|"后置精化：DiT 末层后接入<br/>当黑盒、复用预训练权重"| C["Patch Detailer Head<br/>逐 patch 卷积 U-Net 补高频细节"]
+    C --> D["逐 patch 输出噪声分量 ε_i"]
+    D --> E["重建图像"]
+```
+
 ### 关键设计
 
 **1. DiT 大 patch 建模全局：把序列压到和 LDM 一样长**

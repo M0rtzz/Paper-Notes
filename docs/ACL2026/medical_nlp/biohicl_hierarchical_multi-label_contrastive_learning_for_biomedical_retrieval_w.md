@@ -41,7 +41,26 @@ BioHiCL 利用 MeSH（医学主题词）的**层级多标签标注**为稠密检
 ## 方法详解
 
 ### 整体框架
-在通用域稠密检索器 BGE 基础上，用 BioASQ 的 8 万篇带 MeSH 标注的摘要做 LoRA 微调。训练目标由两部分组成：(1) 回归损失 $\mathcal{L}_{\text{mse}}$ 使嵌入相似度拟合标签相似度；(2) 层级对比损失 $\mathcal{L}_{\text{con}}$ 使语义相关的文档在嵌入空间中靠近、不相关的远离。
+在通用域稠密检索器 BGE 基础上，用 BioASQ 的 8 万篇带 MeSH 标注的摘要做 LoRA 微调。整个训练是一条**双路对齐**的流水线：标签路把每篇摘要的 MeSH 标签沿层级树展开、深度加权后算出"标签相似度" $\text{SimL}$，嵌入路用 BGE+LoRA 编码器算出"嵌入相似度" $\text{SimE}$，两路在两个损失里汇合——(1) 回归损失 $\mathcal{L}_{\text{mse}}$ 使 $\text{SimE}$ 拟合 $\text{SimL}$；(2) 层级对比损失 $\mathcal{L}_{\text{con}}$ 使语义相关的文档在嵌入空间中靠近、不相关的远离。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["BioASQ 8 万篇摘要<br/>（带 MeSH 标注）"] --> B
+    A --> E
+    subgraph LBL["深度加权的层级标签表示"]
+        direction TB
+        B["MeSH 标签集<br/>沿层级树扩展到全部祖先"] --> C["multi-hot 向量 y_i + 深度权重 w_j=log(d+1)"]
+        C --> D["标签相似度 SimL<br/>（加权向量余弦）"]
+    end
+    E["BGE 编码器 + LoRA 适配器<br/>（仅 0.3% 参数可训练）"] --> F["嵌入相似度 SimE"]
+    D --> G["回归损失 L_mse<br/>使 SimE 拟合 SimL"]
+    D --> H["层级多标签对比损失 L_con<br/>正样本按 SimL 加权"]
+    F --> G
+    F --> H
+    G --> I["总损失 L = L_mse + λ·L_con"]
+    H --> I
+```
 
 ### 关键设计
 

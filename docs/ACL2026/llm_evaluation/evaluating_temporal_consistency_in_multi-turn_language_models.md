@@ -44,6 +44,17 @@ tags:
 
 ChronoScope 想隔离的失败是"事实知道、时间错配"：用户只在第一轮设一次时间框架，模型却在后续轮把作用域悄悄漂回当下。为此本文搭了一条全确定性、无人写无 LLM 生成的两阶段流水线——先构造锚定事实表（对每个 snapshot 年份和锚定日期，从 Wikidata claims 中按 start/end/point-in-time 过滤出该锚点有效的事实并用 QID 去重），再用属性专用模板把锚定事实变成自然语言问答、按 11 种 chain family 组合成多轮 chain。评测端把同一批 chain 放进三种上下文设定下跑模型，并用 Acc@1 / Final@1 / Chain@1 / Drift 四个指标度量，其中 Drift 专门捕捉"漂回现在"这一现象，让 present-day bias 成为一个可独立测量的量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Wikidata 带时间限定的 claims"] --> B["锚定事实表<br/>按 snapshot 年份过滤 start/end/point-in-time + QID 去重"]
+    B --> C["属性专用模板<br/>锚定事实 → 自然语言问答"]
+    C --> D["时间作用域形式化与三态分类<br/>Persist / Override / Transfer"]
+    D --> E["11 类 chain family<br/>Carryover / Scope Switch / Cross-Entity / Bridged Multi-PID …"]
+    E --> F["三种上下文设定<br/>Gold Context / Self-Conditioned / Questions Only"]
+    F --> G["四指标度量<br/>Acc@1 / Final@1 / Chain@1 / Drift（专测漂回当下）"]
+```
+
 ### 关键设计
 
 **1. 时间作用域的形式化与三态分类：把"隐式上下文继承"变成可评分的离散状态。** 

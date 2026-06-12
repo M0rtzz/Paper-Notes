@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 SSG 是一个可插进 KGW 系列水印框架的词表划分模块。每生成一个 token 前，模型先吐出下一 token 的 logits；SSG 在高 logit 候选上做一次更平衡的 green/red 划分，再沿用 KGW 类方法对 green token 注入 bias，最后交给兼容的统计检测器判断文本是否带水印。关键变化不在检测公式，而在「哪些 token 被分到 green set」——这正是低熵场景里水印成败的命门。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["下一 token 的 logits"] --> B["top-k 效率折中<br/>只取最高概率的 k 个候选(k=2/4)"]
+    B --> C["Sort-then-Split 分组均衡划分<br/>按 logit 排序 → 相邻成组 → 每组两边各分 → green/red 集合"]
+    C --> D["KGW 类 bias 注入<br/>对 green token 加 logit bias"]
+    D --> E["采样输出 token"]
+    E --> G["统计检测器判定<br/>兼容现有 KGW 系列，无需改检测公式"]
+    C -.度量是否注入成功.-> F["Watermark Strength 度量<br/>归一化概率提升 f_ws，划分越均衡 f_ws 越大"]
+```
+
 ### 关键设计
 
 **1. Watermark Strength 度量：把「低熵任务水印难」变成可分析的 token 级指标**

@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：把 TOFU（200 个虚构作者各 20 个 QA）翻译到 5 种语言（EN/CH/DE/RU/TU），三轴正交受控——共享语族 vs 共享书写 vs 都不共享；分别在某语言微调、再在某语言遗忘、再在某语言询问，得到 $5\times 5\times 5$ 的转移矩阵；并用 NLI 而非 lexical overlap 评估语义等价。
 
-**核心 idea**：把 fine-tuned 和 unlearned 模型在同一题上的隐表征之差当作「遗忘方向」（steering vector），加权地反向 inject 回 forward pass。如果这个方向是「语言无关的抑制方向」，那它在任何语言下都能恢复知识——这正是论文要验证的假说。
+**核心 idea**：把遗忘前后模型隐表征的系统性差异提炼成一个「抑制方向」（steering vector），推理时沿反方向加权注入 forward pass。如果这个方向是「语言无关的抑制方向」，那它在任何语言下都能恢复知识——这正是论文要验证的假说。
 
 ## 方法详解
 
@@ -44,7 +44,20 @@ tags:
 
 这篇论文不提新遗忘算法，而是搭一套受控实验把「跨语言遗忘转移到底发生在哪一层、能不能逆回去」量化清楚。整条流水线在 Qwen2.5-7B 和 Gemma2-9B 上跑：先用同一份 TOFU 双语数据在某门微调语言 $\mathcal{L}_{FT}$ 上做 LoRA 微调得到 $f_{\text{ft}}$，再用 DPO 风格遗忘目标在某门遗忘语言 $\mathcal{L}_{\text{unl}}$ 上抹掉 1% 的 forget 作者得到 $f_{\text{un}}$，然后换各种查询语言 $\mathcal{L}_Q$ 评测 forget/retain 准确率拼出转移矩阵，最后抽每层隐表征做余弦相似度定位 + 构造一个推理时转向向量验证可逆性。
 
-遗忘目标本身就是标准的层级化 DPO 偏好优化，$\arg\min_\theta \frac{1}{|\mathcal{L}_{\text{unl}}|} \sum_{\ell} (\mathbb{E}_{D_\ell^{\text{forget}}} J_{\text{forget}} + \lambda \mathbb{E}_{D_\ell^{\text{retain}}} J_{\text{retain}})$，其中 $J_{\text{forget}}$ 让模型偏好「IDK 拒答」胜过「真实答案」、$J_{\text{retain}}$ 用 $\lambda$ 加权护住 retain 集。评测一律不用 lexical overlap（跨语言下词面重合会虚高虚低），而是用多语 NLI 模型 xlm-roberta-large-xnli 判生成答案 $\hat y$ 与 ground truth $y$ 是否互蕴，并请 native speaker 在 50 个样本上校验过 NLI 判分的可靠性。
+遗忘目标本身就是标准的层级化 DPO 偏好优化，$\arg\min_\theta \frac{1}{|\mathcal{L}_{\text{unl}}|} \sum_{\ell} (\mathbb{E}_{D_\ell^{\text{forget}}} J_{\text{forget}} + \lambda \mathbb{E}_{D_\ell^{\text{retain}}} J_{\text{retain}})$，其中 $J_{\text{forget}}$ 让模型偏好「IDK 拒答」胜过「真实答案」、$J_{\text{retain}}$ 用 $\lambda$ 加权护住 retain 集。评测一律不用 lexical overlap（跨语言下词面重合会虚高虚低），而是用多语 NLI 模型 xlm-roberta-large-xnli 判生成答案 $\hat y$ 与 ground truth $y$ 是否互蕴，并请 native speaker 在 50 个样本上校验过 NLI 判分的可靠性。整条流水线是「同一份双语数据微调 → 在某语言遗忘 → 换语言询问」三段串行，再从遗忘后的模型 $f_{\text{un}}$ 分出三条分析支路（转移矩阵 / 跨语言提示 / 机制定位+转向向量）汇到同一个结论。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["TOFU：200 虚构作者×20 QA<br/>翻译成 5 语言（EN/CH/DE/RU/TU）"] --> B["LoRA 微调（微调语言）<br/>得 f_ft"]
+    B --> C["DPO 层级遗忘（遗忘语言，1% forget）<br/>IDK 拒答优先于真答案 → f_un"]
+    C --> D1["1. 5×5×5 遗忘转移矩阵<br/>遍历微调/遗忘/查询语言，测 NLI 降幅"]
+    C --> D2["2. 跨语言提示诊断<br/>用 q 提问、强制用微调语言作答，看 Δ 增益"]
+    C --> D3["3. 逐层余弦/PCA 定位 + 推理时转向向量<br/>沿抑制方向反向 steering 恢复知识"]
+    D1 --> E["结论：遗忘 = 后段解码层的表面抑制<br/>共享语义空间未真擦除、可跨语言恢复"]
+    D2 --> E
+    D3 --> E
+```
 
 ### 关键设计
 
@@ -56,9 +69,9 @@ tags:
 
 遗忘后性能掉了，可能是知识被抹了，也可能是知识还在共享空间里、只是被绑定到特定语言的解码层卡住了——这两种情况安全含义天差地别。本文用一招直接打开这个瓶颈：查询用语言 $q$ 提问，却强制模型用微调语言 $\ell$ 作答，记录性能增益 $\Delta_{\ell \leftarrow q}$。如果 $\Delta_{\ell \leftarrow q}$ 显著为正，就说明知识在共享语义空间里完好无损，缺的只是语言特化的解码出口。更进一步，论文把 $\Delta_{\ell \leftarrow q}$ 和转移矩阵里对应单元做相关，得到 Pearson $r=0.50$、Spearman $\rho=0.60$（均显著），等于把「共享语义空间完好」和「转移强度」两件事直接焊在一起——遗忘的损害确实是经共享空间传导到下游解码层的。
 
-**3. 遗忘方向 = 表征差，推理时 steering 验证可逆性：把「遗忘只是抑制」从猜测做成机制级反例**
+**3. 逐层定位 + 推理时转向向量恢复知识：把「遗忘只是抑制」从猜测做成机制级反例**
 
-要证明遗忘是「表面抑制」而非真擦除，最硬的证据是不重学、不给答案就能把知识拽回来。做法是对同一个 forget 问题，在 $f_{\text{ft}}$ 和 $f_{\text{un}}$ 上各取第 $l$ 层最终 token 的隐状态，作差得到遗忘方向 $d^{(l)} = h_{\text{ft}}^{(l)} - h_{\text{un}}^{(l)}$，再把这个方向加权 inject 回 $f_{\text{un}}$ 的 forward pass。逐层余弦相似度先给出定位证据：$f_{\text{un}}$ 在前中段几乎与 $f_{\text{ft}}$ 完全重合，分歧只集中在最后若干解码层——所以遗忘动的是「概念→语言特化输出」那一步，前中段的共享概念空间没被碰。正因如此，沿这一个方向做推理时 steering 就能跨语言地把知识恢复出来。和以往证据相比，brief relearning 仍要 forget 数据、答案前缀诱导需要先知道答案，而这套 single-direction inference-time steering 两样都不要、还能跨语言迁移，是对「LLM 遗忘到底有没有真擦除」最直接有力的反例。
+要证明遗忘是「表面抑制」而非真擦除，最硬的证据是不重学、不给答案就能把知识拽回来。第一步先做逐层定位：对同一个 forget 问题取每层最终 token 的隐状态，比较 $f_{\text{un}}$ 与 $f_{\text{ft}}$ 的余弦相似度，发现两者在前中段几乎完全重合、分歧只集中在最后若干解码层（PCA 也显示 $f_{\text{un}}$ 并未回到 $f_{\text{base}}$ 的分布）——遗忘动的是「概念→语言特化输出」那一步，前中段的共享概念空间没被碰。第二步把这一观察做成可操作的反例，关键是转向向量不能从真正被遗忘的事实上估，否则等于把答案泄回来：于是构造一个**辅助 forget 集**（把 retain 作者随机打乱冒充 forget 目标，刻意避开真正被遗忘的事实），对 $f_{\text{ft}}$ 在这个辅助集上再做一次同样的遗忘得到辅助模型 $f_{\text{un}}^{\text{aux}}$，把它与 $f_{\text{ft}}$ 每层隐状态之差当作「抑制方向」$\mathbf{g}^{(l)}$（逐层 $\ell_2$ 归一化）。推理时对 $f_{\text{un}}$ 在第 $l\!\sim\!l\!+\!N$ 层减去 $\alpha\lVert\mathbf{h}^{(l)}\rVert_2\,\mathbf{g}^{(l)}$（沿抑制方向反向 steering，$\alpha$ 控强度），真正的 forget 集只拿来评测、从不参与构造方向。结果是仅靠这一组方向就跨语言恢复了大量知识（Qwen 约 50%、Gemma 约 90%），且方向只从英文数据估出却能恢复其他语言；换成同范数的高斯随机方向几乎无效，说明它捕到的是结构化的抑制方向而非噪声。和以往证据相比，brief relearning 仍要 forget 数据、答案前缀诱导需要先知道答案，而这套推理时转向两样都不要、还能跨语言迁移，是对「LLM 遗忘到底有没有真擦除」最直接有力的反例。
 
 ## 实验关键数据
 

@@ -42,6 +42,17 @@ L3-PPI 把生物学里的 "L3 规则"（蛋白质对之间的 length-3 路径越
 ### 整体框架
 L3-PPI 想解决的核心难题是：现有 PPI 分类头都是从链路预测照搬的通用聚合，没有任何交互特有的先验，而想直接拿"#L3 路径数"当特征又会因为严格 split 下测试对在原图里断连而失效。它的破局思路是把蛋白对二分类**重构成模式图级别的二分类**——既然测试对在原图里没有 L3 路径，就让模型自己生成虚拟 L3 路径，再用一个预训练好的 frozen GNN 当评估器去判断这些虚拟模式像不像真实交互。整套东西做成挂在任意 PPI 表征模型（PIPR / SemiGNN-PPI / DPPI / DNN-PPI / S2F 等）后面的 plug-and-play 分类头，原模型保持 frozen。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原 PPI 网络 G + PIPR 节点嵌入"] --> B["L3 模式预训练<br/>DFS 取真实 L3 作正/负例，训 GIN surrogate 后 freeze"]
+    C["查询蛋白对 (u, v)"] --> D["Graph prompt + 门控路径过滤<br/>中心 + K 外围虚拟节点生成 K 条虚拟 L3，门控打分 + Gumbel-Softmax 取舍"]
+    D --> E["路径数正则 L_PN<br/>正例逼多 L3、负例逼少 L3"]
+    E --> F["组装虚拟模式图 G_F"]
+    B -->|frozen 评估器| G["frozen GNN_pre 打分 → PPI 概率"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. L3 模式预训练：先训一把"什么样的 L3 像真交互"的固定标尺**

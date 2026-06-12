@@ -42,7 +42,19 @@ tags:
 
 ### 整体框架
 
-MPDiT 想解决的问题很直接：标准 DiT 在每一层都处理同样多的 patch token，计算成本居高不下，但其实绝大部分计算并不需要那么细的粒度。它的做法是把等距的 DiT 改成「先粗后细」的层次结构。输入是 VAE 编码后的潜变量 $z \in \mathbb{R}^{32 \times 32 \times 4}$（ImageNet 256×256），标准 DiT 用 patch size=2 切成 256 个 token，MPDiT 则让前 $N-k$ 个 Transformer 块用 patch size=4 只处理 64 个 token，在低分辨率上把全局结构建模好；随后一个上采样模块把 64 个 token 展开成 256 个，交给最后 $k$ 个块精修局部细节；输出再经反向 patchify 和 VAE 解码成图像。换句话说，多数块在「缩略图」上跑，只有尾部少量块在「全图」上收尾。
+MPDiT 想解决的问题很直接：标准 DiT 在每一层都处理同样多的 patch token，计算成本居高不下，但其实绝大部分计算并不需要那么细的粒度。它的做法是把等距的 DiT 改成「先粗后细」的层次结构。输入是 VAE 编码后的潜变量 $z \in \mathbb{R}^{32 \times 32 \times 4}$（ImageNet 256×256），标准 DiT 用 patch size=2 切成 256 个 token，MPDiT 则让前 $N-k$ 个 Transformer 块用 patch size=4 只处理 64 个 token，在低分辨率上把全局结构建模好；随后一个上采样模块把 64 个 token 展开成 256 个，交给最后 $k$ 个块精修局部细节；输出再经反向 patchify 和 VAE 解码成图像。换句话说，多数块在「缩略图」上跑，只有尾部少量块在「全图」上收尾。条件信号（时间步、类别）则通过 FNO 时间嵌入与多 token 类别嵌入注入到所有块。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VAE 潜变量 z (32×32×4)"] --> B["大 patch 切块<br/>patch=4 → 64 token"]
+    B --> C["前 N−k 块：全局建模<br/>64 token 扛全局结构（多尺度 Patch 架构）"]
+    C --> D["上采样模块<br/>pixel-unshuffle 64→256 + skip 引回细节"]
+    D --> E["尾部 k 块：局部精修<br/>256 token 补细节（多尺度 Patch 架构）"]
+    E --> F["反 patchify + VAE 解码 → 图像"]
+    G["FNO 时间嵌入 + 多 token 类别嵌入"] -->|条件信号| C
+    G -->|条件信号| E
+```
 
 ### 关键设计
 

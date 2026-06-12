@@ -39,7 +39,24 @@ tags:
 
 ### 整体框架
 
-MixerCSeg 要解决的是裂缝分割里"形态多样、对比度低、还得轻量部署"这组矛盾。整体是一个编码器-解码器结构：输入先过 Stem 层，再由若干 TransMixer Block 逐级提取多尺度特征 $\{F_1, F_2, F_3, F_4\}$；这些特征经 DEGConv 注入方向与边缘先验后，由 SRF 模块自顶向下融合，最后交给分割头输出像素级裂缝掩码。整条链路的核心思路是"让 CNN、Transformer、Mamba 各管各擅长的通道"，而不是把它们简单堆在一起。
+MixerCSeg 要解决的是裂缝分割里"形态多样、对比度低、还得轻量部署"这组矛盾。整体是一个编码器-解码器结构：输入先过 Stem 层，再由若干 TransMixer Block 逐级提取多尺度特征 $\{F_1, F_2, F_3, F_4\}$；这些特征经 DEGConv 注入方向与边缘先验后，由 SRF 模块以高分辨率细节引导低分辨率语义完成融合，最后交给分割头输出像素级裂缝掩码。整条链路的核心思路是"让 CNN、Transformer、Mamba 各管各擅长的通道"，而不是把它们简单堆在一起。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入裂缝图像"] --> B["Stem 层"]
+    B --> TM
+    subgraph TM["TransMixer Block（顺 Δt 解耦通道）"]
+        direction TB
+        M["Mamba 输出 Y<br/>按 Δt 沿通道排序"]
+        M -->|"top d·γ 全局通道"| G["全局分支<br/>Self-Attention 补远程依赖"]
+        M -->|"其余 d·(1−γ) 局部通道"| L["局部分支<br/>Local Refinement 抠细节"]
+    end
+    TM --> F["多尺度特征 F1–F4"]
+    F --> D["DEGConv<br/>方向直方图门控边缘卷积"]
+    D --> S["SRF 融合<br/>高分辨率细节引导低分辨率语义"]
+    S --> H["分割头 → 像素级裂缝掩码"]
+```
 
 ### 关键设计
 

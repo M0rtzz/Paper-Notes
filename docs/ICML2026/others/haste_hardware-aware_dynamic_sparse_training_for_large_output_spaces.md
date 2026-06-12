@@ -47,6 +47,23 @@ tags:
 
 标签 $\ell\in\mathcal{G}_k$ 的 logit 为 $z_\ell(x)=\langle w_\ell,\,h_{\mathcal{I}_{g(\ell)}}\rangle$，其中 $w_\ell\in\mathbb{R}^F$ 是该标签独占的权重，$\mathcal{I}_{g(\ell)}\subseteq[H]$ 是它所在组的**共享 fan-in 索引集**（$|\mathcal{I}_k|=F$）。训练用 BCE，交替进行"连续相位（参数拟合，索引冻结）"与"离散相位（rewiring，按动态稀疏训练协议周期性重选 $\mathcal{I}_k$）"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["样本 x"] --> ENC["共享 encoder f_θ<br/>得特征 h ∈ R^H"]
+    ENC --> SPLIT["Head–Tail 分裂<br/>按标签频率切成 H ∪ T"]
+    SPLIT -->|"top 2–5% 高频标签 H"| HEAD["Dense head<br/>稠密权重 W_head，给 encoder 稳定梯度"]
+    SPLIT -->|"长尾标签 T"| GROUP
+    subgraph TAIL["Sparse tail（长尾走稀疏）"]
+        direction TB
+        GROUP["组共享固定 fan-in<br/>语义聚簇 → 组内共享索引 I_k"]
+        GROUP --> KERNEL["Tensor Core kernel<br/>gather-once H_k → 致密 MMA Z_k=H_k W_kᵀ"]
+    end
+    HEAD --> LOSS["端到端 BCE<br/>两支共享 encoder"]
+    KERNEL --> LOSS
+    LOSS -.->|"动态稀疏训练·周期 rewiring 重选 I_k"| GROUP
+```
+
 ### 关键设计
 
 **1. 组共享固定 fan-in 稀疏：让语义相近的标签共用一组 fan-in 索引，一次解决索引内存、访存复用、任务先验三件事**

@@ -40,6 +40,32 @@ tags:
 
 ParTY 采用两阶段训练策略。**第一阶段**训练 Temporal-aware VQ-VAE，将全身和各部位（手臂、腿）的动作序列分别量化为离散码本。**第二阶段**训练整体 Transformer 和部位 Transformer：文本 embedding 经 Part-aware Text Grounding (PTG) 处理后分别送入各部位 Transformer，先生成部位动作 token 构建 Part Guidance，再将其注入整体 Transformer 引导全身动作生成，并在生成过程中通过 Holistic-Part Fusion (HPF) 持续融合部位信息。推理时，预测的码本序列由第一阶段预训练的 VQ-VAE 解码器重建为动作。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph VQ["Temporal-aware VQ-VAE（第一阶段·预训练）"]
+        direction TB
+        M["全身 / 手臂 / 腿动作序列"] --> LG["LTE 组内 MLP 加权 → GTE 跨组 GCN"]
+        LG --> CB["量化进离散码本"]
+    end
+
+    T["文本描述"] --> CLIP["CLIP 文本编码器"]
+    CLIP --> PTG["部位感知文本对齐 PTG<br/>K 个 MLP 分裂 + 部位 Gate 按需取语义"]
+
+    subgraph PGN["部位引导网络 + 部位感知融合 HPF（第二阶段·循环生成）"]
+        direction TB
+        PT["部位 Transformer<br/>自回归生成部位 token"] --> PG["Part Guidance<br/>各部位 token 相加过 MLP"]
+        PG --> HT["整体 Transformer<br/>以 Part Guidance 为条件生成全身 token"]
+        HT --> HPF["HPF：全身 token 作 query、部位作 key/value<br/>cross-attention 实时融回全身"]
+        HPF -->|逐周期循环| PT
+    end
+
+    PTG --> PT
+    CB -.提供码本空间.-> PGN
+    HPF --> DEC["VQ-VAE 解码器（第一阶段预训练）<br/>码本序列重建为动作"]
+    DEC --> OUT["全身连贯动作"]
+```
+
 ### 关键设计
 
 **1. Temporal-aware VQ-VAE：让大压缩窗口下也不丢时序流**

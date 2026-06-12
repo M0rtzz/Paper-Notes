@@ -50,6 +50,16 @@ tags:
 
 层选择不依赖下游指标。对每层的语言向量两两 Pearson correlation matrix 做特征值分解，用第一主成分解释率 $f_\ell$ 表示 multilinguality，即语言之间共享方向的强弱；用 $s_\ell=1-f_\ell$ 表示 separability，即语言仍然彼此区分的程度。作者选择 $f_\ell$ 与 $s_\ell$ 平衡的交叉区域作为候选干预层，再在机器翻译和 CrossSumm 上验证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多语言文本样本（21 种语言）"] --> B["DiffMean 语言向量<br/>目标语言 SAE code 均值 − 其余语言均值"]
+    B --> C["多语言 SAE 训练<br/>EN-SAE 对照 vs MULTI21-SAE"]
+    C --> D["alignment-separability 交叉点选层<br/>逐层相关矩阵特征分解 → multilinguality 与 separability 交叉区"]
+    D --> E["在交叉层施加 SAE steering<br/>沿语言向量正方向加回激活"]
+    E --> F["机器翻译 / CrossSumm 验证"]
+```
+
 ### 关键设计
 
 **1. DiffMean 语言向量：为每种目标语言造一个既能分析、又能干预的方向**

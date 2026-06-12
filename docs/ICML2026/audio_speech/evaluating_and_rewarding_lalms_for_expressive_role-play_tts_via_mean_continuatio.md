@@ -46,6 +46,17 @@ tags:
 
 数据闭环全建在 WenetSpeech 上：先按 "YouTube + drama" 标签筛出 17k 视频、实际下载 8556 个，用 Demucs 去伴奏、pyannote 做说话人分离；再用 DeepSeek-R1 反推剧名/集数并基于全脚本生成角色档案 $\mathcal{P}$、用 Qwen-VL-7B 给每段场景生成环境描述 $\mathcal{S}$，按 5 秒静音切场景、30 秒封顶，最终留下 311k 场景 / 1435 小时，平均每场 7.3 句、涉及 2.33 位说话人；测试集做严格的视频级 hold-out，留 200 视频 900 场景，按 2–10 轮分层抽样保证每个轮次各 100 例。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["会话级自回归预训练<br/>Step-Audio-2 续写 → MCLP 续写模型"] --> B["MCLP 度量<br/>双 transcript + 反向续写真值的平均对数似然"]
+    C["WenetSpeech-RP-TTS<br/>R1 反推剧情 + Qwen-VL 描述场景"] --> D["多轮对话 SFT<br/>按场景/角色/历史生成本轮"]
+    B --> E["门控 MCLP + CER 复合奖励<br/>CER≤τ 才给风格分"]
+    D --> F["GRPO 末轮对齐<br/>组内相对优势, 只优化最后一轮"]
+    E --> F
+    F --> G["角色扮演 TTS 模型<br/>MOS 1.86 → 3.58"]
+```
+
 ### 关键设计
 
 **1. MCLP 度量：用"双 transcript + 反向续写"把风格一致性变成一个似然标量**

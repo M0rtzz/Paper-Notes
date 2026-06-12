@@ -41,7 +41,28 @@ tags:
 全文的核心是把球面浓度问题改写成一个特征值问题，再用球冠 (spherical cap) 让它在高带限下可计算，最后把局部 Slepian 与全球 SH 拼成混合编码送入 MLP。
 
 ### 整体框架
-输入是球面坐标 $x = (\lambda, \phi) \in S^2$；编码器 $\Phi(x)$ 给出一个 $D$ 维特征，再经过任意 NN (MLP / GLU / 与图像 embedding 融合的 bottleneck) 输出标签 $y$。本文不改变 NN，只替换 $\Phi$。整个流水线分四步：(A) 选一个或多个 ROI 球冠 $R_c$ 和高带宽 $L_r$，预先解出球冠 Slepian 特征函数 $\{g_n\}$ 并按浓度特征值 $\mu_n$ 排序、按 Shannon 数截断；(B) 再选一个低带宽 $L_g \ll L_r$ 计算全球 SH 基 $\Phi_{\text{SH}}$；(C) 在线推理时把每个 ROI 的 Slepian 评估值与全球 SH 评估值拼接为 $\Phi_{\text{Hybrid}}(x)$；(D) 送入下游 NN 做分类、回归或与图像特征融合。
+输入是球面坐标 $x = (\lambda, \phi) \in S^2$；编码器 $\Phi(x)$ 给出一个 $D$ 维特征，再经过任意 NN (MLP / GLU / 与图像 embedding 融合的 bottleneck) 输出标签 $y$。本文不改变 NN，只替换 $\Phi$。整个流水线分四步：(A) 选一个或多个 ROI 球冠 $R_c$ 和高带宽 $L_r$，预先解出球冠 Slepian 特征函数 $\{g_n\}$ 并按浓度特征值 $\mu_n$ 排序、按 Shannon 数截断；(B) 再选一个低带宽 $L_g \ll L_r$ 计算全球 SH 基 $\Phi_{\text{SH}}$；(C) 在线推理时把每个 ROI 的 Slepian 评估值与全球 SH 评估值拼接为 $\Phi_{\text{Hybrid}}(x)$；(D) 送入下游 NN 做分类、回归或与图像特征融合。下图中，离线分支（设计 1+2）负责把"区域 + 带宽"解成一组能量集中在 ROI 的局部基，全球 SH 分支提供粗上下文，二者在混合编码处（设计 3）并联：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["球面坐标 x=(λ,φ) ∈ S²"]
+    subgraph OFF["离线构造局部 Slepian 基"]
+        direction TB
+        A["选 ROI 球冠 R 与高带宽 Lr"]
+        B["Slepian 浓度问题<br/>解特征问题 K h = μ h"]
+        C["球冠块对角化 + 旋转<br/>O(D³) 降到 Lr 个 O(Lr³)"]
+        D["按 Shannon 数 N(R,Lr) 截断<br/>取前 K 个 {gn} → Φ_Slep"]
+        A --> B --> C --> D
+    end
+    SH["低带宽 SH 全球基 Φ_SH<br/>Lg ≪ Lr，提供全球粗上下文"]
+    X --> OFF
+    X --> SH
+    OFF -->|Φ_Slep 局部高分辨率| H["混合 Slepian-SH 编码<br/>Φ_Hybrid = Concat(Φ_Slep, Φ_SH)"]
+    SH --> H
+    H --> NN["下游 NN（MLP / GLU / 图像融合）"]
+    NN --> Y["输出 y（分类 / 回归 / 密度预测）"]
+```
 
 ### 关键设计
 

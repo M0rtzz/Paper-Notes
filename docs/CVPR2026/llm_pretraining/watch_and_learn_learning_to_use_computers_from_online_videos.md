@@ -47,6 +47,19 @@ tags:
 
 W&L 要解决的是 CUA（计算机使用代理）训练数据又贵又窄的瓶颈，思路是把互联网上海量的人类操作教程视频自动转成可执行的 UI 轨迹。整条流水线分三段：先构建大规模状态转移语料并训练一个逆动力学模型（IDM），让它学会"看两帧截图反推出中间动作"；再按任务检索 YouTube 教程视频、用 IDM 逐帧标注生成轨迹；最后把这些轨迹以 ICL 示例或 SFT 数据两种形式喂给 CUA。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Common Crawl 网页<br/>自动浏览采样 600K+ 三元组"] --> B["逆动力学模型 IDM<br/>看相邻两帧反推单步动作"]
+    C["YouTube 教程视频"] --> D["任务感知视频检索与轨迹生成<br/>检索候选 → 1fps 采样清洗 → IDM 逐帧标注"]
+    B --> D
+    D --> E["可执行 UI 轨迹<br/>53K+ 条"]
+    E -->|"observation/action/reasoning 三元组"| F["ICL：增强闭源模型"]
+    E -->|"(state, action) 序列语料"| G["SFT：微调开源模型"]
+    F --> H["计算机使用代理 CUA"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 逆动力学模型（IDM）：把"复原整条轨迹"降成"单步反推动作"**

@@ -33,7 +33,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CCCaption 的目标是在没有可靠人工参考的情况下，让模型自己学会写出既"全"又"对"的图像描述。它把描述质量拆成两个可计算的客观属性——完整性和正确性——各自设计成一个奖励，再用 GRPO 在 Qwen3-VL-2B 上做强化学习。整体流程是：对一张图，先用多个 MLLM 离线生成一组覆盖图像事实的视觉 query 作为"该图应该被描述到什么"的代理；训练时模型 rollout 出若干 caption，completeness reward 看 caption 能答对多少图像 query（覆盖率），correctness reward 把 caption 拆成原子 query 再回查原图看有多少是真实的（幻觉率），两者加权成总奖励喂给 GRPO。为提升效率，还用 dynamic query sampling 砍掉那些几乎不产生梯度的"太简单"query。这套 query 数据最终沉淀为 CCaption-44k 训练集。
+CCCaption 的目标是在没有可靠人工参考的情况下，让模型自己学会写出既"全"又"对"的图像描述。它把描述质量拆成两个可计算的客观属性——完整性和正确性——各自设计成一个奖励，再用 GRPO 在 Qwen3-VL-2B 上做强化学习。整体流程是：对一张图，先用多个 MLLM 离线生成一组覆盖图像事实的视觉 query 作为"该图应该被描述到什么"的代理；训练时模型 rollout 出若干 caption，completeness reward 看 caption 能答对多少图像 query（覆盖率，类似 recall），correctness reward 把 caption 拆成原子 query 再回查原图看有多少是真实的（类似 precision），两者凸组合成总奖励喂给 GRPO。为提升效率，还用 dynamic query sampling 砍掉那些几乎不产生梯度的"太简单"query。生成 query 的这套流程最终沉淀为 CCaption-44k 训练集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像 x"] --> POLICY["策略模型 Qwen3-VL-2B<br/>rollout 出一组候选 caption"]
+    subgraph COMP["1. Completeness Reward（完整性 · recall）"]
+        direction TB
+        GEN["多 MLLM 生成视觉 query<br/>+ 多样性过滤 → CCaption-44k"]
+        SAMP["3. Dynamic Query Sampling<br/>按贡献度采掉无梯度 query"]
+        JC["judge 模型读 caption 答 query<br/>R_comp = 答对比例"]
+        GEN --> SAMP --> JC
+    end
+    subgraph CORR["2. Correctness Reward（正确性 · precision）"]
+        direction TB
+        DEC["caption 拆成原子子 query"]
+        JR["judge 模型对照原图逐条核验<br/>R_corr = 真实比例"]
+        DEC --> JR
+    end
+    POLICY --> JC
+    POLICY --> DEC
+    JC --> SUM["总奖励 R = α·R_comp + (1−α)·R_corr"]
+    JR --> SUM
+    SUM -->|GRPO 更新策略| POLICY
+```
 
 ### 关键设计
 

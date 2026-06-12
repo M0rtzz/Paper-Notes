@@ -45,6 +45,23 @@ LiTS 不是单个算法，而是一个框架。它的关键是定义一套统一
 
 框架覆盖三类任务：Environment Grounded，例如 BlocksWorld 和 Crosswords；Language Grounded，例如 MATH500；Tool Use，例如 MapEval-SQL。用户通过 `@register_transition`、`@register_dataset`、`@register_policy`、`@register_search`、`@register_resource` 等 decorator 扩展框架。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["decorator registry 与 CLI 组合<br/>注册任务组件、命令行选搜索算法"] --> B["搜索算法（MCTS / BFS）<br/>只在 Node 与 reward 层运转"]
+    B --> C["选一个待扩展 Node（持有 State）"]
+    subgraph COMP["Policy / Transition / RewardModel 组件解耦"]
+        direction TB
+        D["Policy：据 State 生成候选 Action"]
+        E["Transition：执行 Action → Step → 新 State → 新 Node"]
+        F["RewardModel：给新 Node 打分"]
+        D --> E --> F
+    end
+    C --> D
+    F -->|reward 与 visit count 回传| B
+    B -->|满足终止条件| G["写入 save_dir<br/>terminal nodes / config / logs，供后验评估"]
+```
+
 ### 关键设计
 
 **1. 统一数据结构 Action → Step → State → Node：让搜索算法只碰统一节点，不碰任务细节**

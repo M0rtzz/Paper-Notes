@@ -47,6 +47,24 @@ AES 三层：
 2. **在线层**：用可观测漂移代理替换未知的最优比较器漂移，得到完全在线的调度规则 $\lambda_t = \sqrt{(C_1 / C_2) \cdot \widehat{A}_t / t}$，$\widehat{A}_t$ 是累积漂移代理。
 3. **实现层**：把调度后的熵系数 $\alpha_t$ 或 $c_{\text{ent}, t}$ 插入 SAC / PPO / SQL / MEow，作为即插即用的探索控制层，不改算法核心结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["单轮权衡函数 + 平方根缩放<br/>φ_t = C1·ξ_t/λ + C2·λ ⟹ λ* ∝ √ξ_t"]
+    A["非平稳环境交互<br/>采样 batch"] --> B["TD 误差 |δ_Q|"]
+    subgraph PROXY["可观测漂移代理 + 在线调度"]
+        direction TB
+        B --> C["90 分位数代理 ξ̂_t ≥ ξ_t"]
+        C --> D["累积前缀和 Â_t = Σ ξ̂_s"]
+        D --> E["λ_t = √((C1/C2)·Â_t/t)，再 clip"]
+    end
+    P -.指导.-> E
+    E --> F["跨算法即插即用<br/>代回熵权 α_t / c_ent"]
+    F -->|SAC/SQL/MEow：温度 α| G["策略更新"]
+    F -->|PPO：熵奖励系数 c_ent| G
+    G --> A
+```
+
 ### 关键设计
 
 **1. 单轮权衡函数 + 平方根缩放：给"探索该加多少"一个硬公式**

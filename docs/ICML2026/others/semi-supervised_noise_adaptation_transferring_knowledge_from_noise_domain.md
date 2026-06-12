@@ -43,7 +43,24 @@ tags:
 
 SSNA 设定：目标域 $\mathcal D_t=\mathcal D_l\cup\mathcal D_u\cup\mathcal D_e$ 由少量带标 $\mathcal D_l$（$n_l$ 个）、大量无标 $\mathcal D_u$（$n_u\gg n_l$）、测试集 $\mathcal D_e$ 组成；噪声域 $\mathcal D_n=\{(\mathbf n_i,y_i)\}$ 由 $C$ 个不同高斯分布（每类一个均值 + 单位协方差）采样得到，其类下标 $y_i\in\{0,\dots,C-1\}$ 仅为整数标识、无语义。训练前固定一对一映射，把噪声类 0 绑给目标类"cat"、噪声类 1 绑给目标类"dog"等。
 
-NAF 由三个部件构成：表征提取器 $g_t:\mathcal X\to\mathcal Z$（处理目标像素，论文用 ResNet-18/50 backbone）、噪声投影器 $g_n:\mathcal E\to\mathcal Z$（把 1024 维高斯噪声映到同一表征空间）、共享分类器 $f:\mathcal Z\to\{0,\dots,C-1\}$。目标和噪声在 $\mathcal Z$ 里被监督地拉到对应类下标的簇上，同时还要拉近两个簇分布。
+NAF 由三个部件构成：表征提取器 $g_t:\mathcal X\to\mathcal Z$（处理目标像素，论文用 ResNet-18/50 backbone）、噪声投影器 $g_n:\mathcal E\to\mathcal Z$（把 1024 维高斯噪声映到同一表征空间）、共享分类器 $f:\mathcal Z\to\{0,\dots,C-1\}$。目标和噪声在 $\mathcal Z$ 里被监督地拉到对应类下标的簇上，同时还要拉近两个簇分布。三个损失分别对应泛化界里三个可控分项，联合最小化它们就等于收紧目标域的泛化界。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["目标域样本<br/>少量带标 + 大量无标"] --> GT["表征提取器 g_t"]
+    N["噪声域<br/>C 个高斯各采 50 样本"] --> MAP["一对一类下标映射<br/>噪声类 k ↔ 目标类 k"]
+    MAP --> GN["噪声投影器 g_n"]
+    GT --> Z["共享表征空间 Z"]
+    GN --> Z
+    Z --> F["共享分类器 f"]
+    F --> LT["L_t：目标交叉熵<br/>收紧 ε̂_t"]
+    F --> LN["L_n：噪声交叉熵<br/>收紧 ε̂_n"]
+    F -->|无标样本伪标估类均值| LNT["L_n,t：NDS 域对齐<br/>收紧 d_HΔH"]
+    LT --> OBJ["联合目标 L_t + αL_n + βL_n,t<br/>收紧 SSNA 泛化界（Thm 4.1）"]
+    LN --> OBJ
+    LNT --> OBJ
+```
 
 ### 关键设计
 

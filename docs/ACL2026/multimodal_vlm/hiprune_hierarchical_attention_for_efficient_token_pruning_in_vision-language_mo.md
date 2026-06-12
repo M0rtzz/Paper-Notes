@@ -45,6 +45,19 @@ tags:
 
 HiPrune 在视觉编码器输出前进行：(1) 从中间层提取注意力分数，选择高注意力 token 作为 Anchor；(2) 选择 Anchor 的空间邻居作为 Buffer；(3) 从输出层提取注意力分数，选择剩余预算的高注意力 token 作为 Register；(4) HiPrune++ 可选地增加基于文本相似度的 token。最终仅保留这些索引对应的输出层 token。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → 视觉编码器"] --> B["中间层 object layer 注意力"]
+    A --> C["输出层注意力"]
+    B --> D["Anchor Token<br/>中层 top-Nₐ 高注意力，对应主体对象"]
+    D --> E["Buffer Token<br/>为每个 Anchor 补十字邻域，纠正注意力噪声"]
+    C --> F["Register Token<br/>深层剩余预算 top，排除 Anchor/Buffer，补全局上下文"]
+    E --> G["Anchor+Buffer+Register 索引合并<br/>仅保留对应输出层 token（剪枝结果）"]
+    F --> G
+    G -->|HiPrune++ 可选| H["文本相似度补 token<br/>增强指令跟随、减幻觉"]
+```
+
 ### 关键设计
 
 **1. Anchor Token（中层对象 token）：从中间层注意力里捞出主体对象，保住局部细节**

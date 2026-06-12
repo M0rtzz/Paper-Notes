@@ -1,0 +1,120 @@
+---
+title: >-
+  [论文解读] ArtFormer: Controllable Generation of Diverse 3D Articulated Objects
+description: >-
+  [CVPR 2025][文本生成][关节物体] 提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。
+tags:
+  - "CVPR 2025"
+  - "文本生成"
+  - "关节物体"
+  - "树结构参数化"
+  - "Shape Prior"
+  - "可控生成"
+  - "文本/图像引导"
+---
+
+# ArtFormer: Controllable Generation of Diverse 3D Articulated Objects
+
+**会议**: CVPR 2025  
+**arXiv**: [2412.07237](https://arxiv.org/abs/2412.07237)  
+**代码**: [https://github.com/ShuYuMo2003/ArtFormer](https://github.com/ShuYuMo2003/ArtFormer)  
+**领域**: 3D生成 / 关节物体建模  
+**关键词**: 关节物体、树结构参数化、Shape Prior、可控生成、文本/图像引导
+
+## 一句话总结
+提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。
+
+## 研究背景与动机
+
+### 领域现状
+
+**领域现状**：关节物体（多刚体通过关节相连）生成研究有限。NAP受限于预定义图结构，CAGE/SINGAPO采用检索方式限制多样性。
+
+**核心矛盾**：质量vs灵活性（固定结构限多样性），几何质量vs运动学准确性（两者约束冲突）。
+
+**核心洞察**：关节物体本质是树形结构 → 树位置编码捕捉层级关系 + Shape Prior保证几何质量 + Gumbel-Softmax扩展多样性。
+
+### 解决思路
+
+**本文目标**：### 整体框架
+**阶段1**：Shape Prior预训练（VAE+SDF+条件扩散模型学习几何先验）
+**阶段2**：Articulation Transformer（树位置编码+迭代解码逐层生成节点）
+
+### 关键设计
+
+1. **树结构参数化**：每节点存储几何属性(bbox $b_i \in \mathbb{R}^6$, 潜在码 $z_i \in \mathbb{R}^{768}$)。
+
+
+## 方法详解
+
+### 整体框架
+**阶段1**：Shape Prior预训练（VAE+SDF+条件扩散模型学习几何先验）
+**阶段2**：Articulation Transformer（树位置编码+迭代解码逐层生成节点）
+
+### 关键设计
+
+1. **树结构参数化**：每节点存储几何属性(bbox $b_i \in \mathbb{R}^6$, 潜在码 $z_i \in \mathbb{R}^{768}$) + 运动学属性(关节轴 $j_i \in \mathbb{R}^6$, 运动范围 $l_i \in \mathbb{R}^4$)，总维度D=785
+
+2. **Shape Prior（Gumbel-Softmax采样）**：将几何编码分解为4个分量，通过4个独立编码本将潜在空间从4N扩展至N⁴，大幅提升多样性而不增加计算成本
+
+3. **树位置编码(TPE)**：绝对位置用双向GRU编码根-到-节点路径，相对位置串联路径节点编码。支持任意树形结构
+
+4. **迭代解码**：逐轮为已有节点预测子节点，直到所有输出为终止令牌。捕捉部分间相互依赖
+
+### 损失函数 / 训练策略
+$L_{trans} = \beta_o L_o + \beta_P L_P + L_a$（终止分类 + 编码簿KL + 属性MSE）
+
+## 实验关键数据
+
+### 主实验
+
+| 方法 | POR↓ | MMD↓ | COV↑ | DS↑ |
+|------|------|------|------|-----|
+| NAP-128 | 0.805 | 0.3085 | 0.7021 | 0.13 |
+| CAGE | 0.251 | 0.6064 | 0.5319 | 0.07 |
+| **Ours** | **0.709** | **0.5213** | **0.5266** | **0.67** |
+
+### 消融实验
+
+| 配置 | POR↓ | MMD↓ | COV↑ |
+|------|------|------|------|
+| 全模型 | 0.709 | 0.5213 | 0.5266 |
+| 移除TPE | 1.170% | 0.5000 | 0.5053 |
+| 移除Shape Prior | 2.502% | 0.4574 | 0.7606 |
+
+### 关键发现
+- 多样性指标(DS=0.67)显著领先(CAGE仅0.07)
+- TPE移除后POR增加65%，证明位置信息必要
+- Shape Prior移除后所有指标大幅恶化
+
+## 亮点与洞察
+- 树结构参数化优雅简化关节物体表示
+- Gumbel-Softmax在不增计算下扩展多样性空间(4N→N⁴)
+- 树位置编码是关键创新，消融清晰证明
+
+## 局限与展望
+- 仅6类物体训练，部分类数量少
+- 定量条件控制（旋转角度等）困难
+- SDF多类训练泛化性下降
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐⭐ 树位置编码+Shape Prior+Gumbel-Softmax组合
+- 实验充分度: ⭐⭐⭐⭐ 消融细致，缺跨数据集验证
+- 写作质量: ⭐⭐⭐⭐⭐ 图表清晰，逻辑严密
+- 价值: ⭐⭐⭐⭐ 机器人/数字孪生应用潜力
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation](../../ACL2025/nlp_generation/odysseus_dynamic_focus_decoding.md)
+- [\[ACL 2026\] Difficulty-Controllable Cloze Question Distractor Generation](../../ACL2026/nlp_generation/difficulty-controllable_cloze_question_distractor_generation.md)
+- [\[ACL 2026\] XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
+- [\[ACL 2026\] Children's English Reading Story Generation via Supervised Fine-Tuning of Compact LLMs with Controllable Difficulty and Safety](../../ACL2026/nlp_generation/childrens_english_reading_story_generation_via_supervised_fine-tuning_of_compact.md)
+- [\[ACL 2026\] Adaptive Planning for Multi-Attribute Controllable Summarization with Monte Carlo Tree Search](../../ACL2026/nlp_generation/adaptive_planning_for_multi-attribute_controllable_summarization_with_monte_carl.md)
+
+</div>
+
+<!-- RELATED:END -->

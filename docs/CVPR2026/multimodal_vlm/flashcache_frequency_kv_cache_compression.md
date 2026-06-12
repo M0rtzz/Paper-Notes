@@ -41,7 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FlashCache 在 prefilling 阶段结束后对多模态 KV Cache 执行一次性压缩。整体 pipeline 包含两个核心模块：(1) Outlier KV Recognition Module——对每一层的 KV 矩阵进行 DCT 频域变换，通过低通滤波获取平滑的 Base KV，再计算每个 KV 对与 Base KV 的 MSE 偏差，优先保留偏差最大的离群 KV；(2) Dynamic Budget Allocation Module——分析各层 KV 矩阵频域中离群信息能量占总能量的比例，据此归一化并为每层动态分配不同的 KV Cache 保留配额。整个过程无需训练、不依赖注意力分数，天然兼容 FlashAttention。使用 NVIDIA CuPy 算子库加速 DCT 运算。
+FlashCache 在 prefilling 阶段结束后对多模态 KV Cache 执行一次性压缩，包含两个核心模块：(1) 离群 KV 识别（Outlier KV Recognition Module）——对每一层的 KV 矩阵做 DCT 频域变换，通过低通滤波获取平滑的 Base KV，再计算每个 KV 对与 Base KV 的 MSE 偏差，优先保留偏差最大的离群 KV；(2) 动态预算分配（Dynamic Budget Allocation Module）——统计各层 KV 矩阵频域中离群信息能量占总能量的比例，据此归一化并为每层动态分配不同的 KV Cache 保留配额。两个模块共享同一套频域分析：先对逐层 KV 矩阵做一次 DCT，离群识别用低频系数重建 Base KV、动态分配用功率谱算各层离群能量占比，最后在每层配额约束下保留偏差最大的离群 KV。整个过程无需训练、也不依赖注意力分数——因为全程只读 KV 矩阵自身的频域统计、从不触碰注意力矩阵，FlashCache 无需改动即可挂在 FlashAttention 上；DCT/IDCT 经 NVIDIA CuPy 算子加速后，8K token 输入下仅增加约 6.77ms 延迟（约为 H2O 的 1/4、LOOK-M 的 1/8）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prefilling 结束<br/>逐层 KV 矩阵 K / V"] --> B["DCT 频域变换<br/>得到频域系数（两模块共享）"]
+    subgraph OKR["离群 KV 识别"]
+        direction TB
+        C["低通滤波保留前 ω=γ·N 个低频<br/>→ IDCT 得 Base KV"] --> D["MSE 偏差 Dev<br/>= 各 KV 对偏离 Base KV 的距离"]
+    end
+    subgraph DBA["动态预算分配"]
+        direction TB
+        E["Parseval 算功率谱<br/>各层离群能量占比 R"] --> F["归一化 → 每层 KV 保留配额"]
+    end
+    B --> C
+    B --> E
+    D --> G["按每层配额<br/>保留偏差最大的离群 KV"]
+    F --> G
+    G --> H["压缩后 KV Cache<br/>解码阶段·原生兼容 FlashAttention"]
+```
 
 ### 关键设计
 
@@ -60,10 +79,6 @@ $$Dev[x] = \text{MSE}(K^l[x], K_{base}^l[x]) + \text{MSE}(V^l[x], V_{base}^l[x])
 $$R^l = R_k^l + R_v^l, \quad R_k^l = \frac{\sum_{\ell=\omega+1}^{N-1}P_k^l[\ell]}{\sum_{\ell=0}^{N-1}P_k^l[\ell]}$$
 
 $R^l$ 越大说明该层离群信息越丰富、越不该被狠压。把各层 $R^l$ 归一化成权重，在全局预算约束下给离群多的层多留配额、离群少的层少留，从而把有限的 KV 预算花在刀刃上。消融里这一模块在视觉推理任务上贡献尤其明显（CLEVR-Change +5.19 分）。
-
-**3. FlashAttention 原生兼容：只看 KV 自身频域特征，不碰注意力矩阵**
-
-这是前两个设计带来的"免费红利"。H2O、SnapKV、LOOK-M、MEDA 这些方法都要显式拿到或重算注意力矩阵来判重要性，而 FlashAttention 出于 IO-aware 设计根本不输出完整注意力矩阵，于是它们要么不兼容、要么得额外重算、徒增开销。FlashCache 的离群识别和预算分配全部只依赖 KV 矩阵自身的频域统计，整条判断链路里压根没有注意力分数这一项，因此无需改动 FlashAttention 的计算流程就能直接挂上去。代价端也很轻——DCT/IDCT 用 NVIDIA CuPy 算子加速后，8K token 输入下额外延迟仅 6.77ms，约为 H2O 的 1/4、LOOK-M 的 1/8。
 
 ### 损失函数 / 训练策略
 FlashCache 是完全无训练（training-free）的推理时压缩方案。在 prefilling 阶段结束后执行一次性压缩，不涉及任何参数更新或反向传播。关键超参数包括：低通滤波截止因子 $\gamma$（最优范围 0.1-0.2）和全局 KV Cache 保留比 $\rho$。DCT/IDCT 运算通过 NVIDIA CuPy 算子库加速实现，在 8K token 输入下额外延迟仅 6.77ms（显著低于注意力分数方法的 27-84ms）。

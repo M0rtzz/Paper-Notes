@@ -45,6 +45,25 @@ tags:
 
 SpHOR 想回答的问题是：能不能不靠改分类器、而是直接把特征空间"塑形"得更利于开放集识别？它把训练拆成两段——第一段做表示学习，用编码器加投影网络提取 L2 归一化的球面特征，靠 vMF Alignment Loss 和正交正则把类别特异性表示学好；第二段冻结编码器，只在其上训一个线性分类器、用标准交叉熵。表示学习阶段的输入会先过 RandAugment、Label Smoothing 和 Mixup 三重增强，让模型在学已知类的同时见到"语义模糊"的样本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入图像"] --> AUG
+    subgraph S1["阶段一：表示学习（学完冻结编码器）"]
+        direction TB
+        AUG["Mixup + Label Smoothing<br/>制造语义模糊样本，预演未知类"] --> ENC["编码器 Enc + 投影网络 Proj<br/>(脚手架，产出 d 维嵌入)"]
+        ENC --> SPH["球面表示 + vMF Alignment Loss<br/>L2 归一化到超球面，建模 vMF 分布混合<br/>(对齐同类 + 球面均匀)"]
+        ORT["正交性正则<br/>标签嵌入两两正交，各占独立子空间"] -.联合损失.-> SPH
+    end
+    S1 --> FRZ
+    subgraph S2["阶段二：分类器训练"]
+        direction TB
+        FRZ["冻结编码器特征<br/>丢弃投影网络与标签嵌入"] --> CLS["线性分类器<br/>标准交叉熵"]
+    end
+    CLS --> SCORE["OSR 评分规则<br/>MaxLogit / PostMax / KNN / NNGuide"]
+    SCORE -->|阈值| OUT["已知类 / 未知类"]
+```
+
 ### 关键设计
 
 **1. 球面表示与 vMF Alignment Loss：把无界的开放空间压回有界球面**

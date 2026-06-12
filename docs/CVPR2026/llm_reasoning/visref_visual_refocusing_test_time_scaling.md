@@ -46,13 +46,25 @@ tags:
 
 VisRef 要解决的是 MLRM 推理链一拉长就"忘了看图"的问题：模型在初始处理完视觉 token 后不再回看，越往后越靠文本先验硬猜。VisRef 的做法是把"回看图"插进推理循环——每产生一步文本推理 $z_k$，就回头从原图的视觉 token 里挑一小撮重新喂给模型，让下一步推理重新接地到图像上，整个过程不动模型权重、纯在推理时完成。
 
-形式上，给定图文输入 $x_{\text{input}} = [I, T]$ 和全部视觉 token $\mathcal{V} = \{v_1, \ldots, v_N\}$，第 $k$ 步推理产出 $z_k$ 后，VisRef 做三件事：先用 DPP 从 $\mathcal{V}$ 里选出一个子集 $V_k$（既贴当前推理状态、又覆盖面广），把 $V_k$ 注入到下一步上下文里，再检查模型回答分布的熵是否已经够低来决定要不要收尾。整条推理轨迹记作 $\tau_{1:k} = \{(z_1, V_1), \ldots, (z_k, V_k)\}$，最终答案 $y \sim \pi_\theta(\cdot \mid x_{\text{input}}, \tau_{1:k})$。
+形式上，给定图文输入 $x_{\text{input}} = [I, T]$ 和全部视觉 token $\mathcal{V} = \{v_1, \ldots, v_N\}$，第 $k$ 步推理产出 $z_k$ 后，VisRef 做三件事：先用 DPP 从 $\mathcal{V}$ 里选出一个子集 $V_k$（既贴当前推理状态、又覆盖面广），把 $V_k$ 注入到下一步上下文里，再检查模型回答分布的熵是否已经够低来决定要不要收尾；若没收尾就带着新的视觉接地继续下一步，形成"推理—回看图—再推理"的闭环。整条推理轨迹记作 $\tau_{1:k} = \{(z_1, V_1), \ldots, (z_k, V_k)\}$，最终答案 $y \sim \pi_\theta(\cdot \mid x_{\text{input}}, \tau_{1:k})$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 I + 文本 T<br/>抽取全部视觉 token 集合 V"] --> B["生成第 k 步推理文本 z_k"]
+    B --> C["DPP 视觉 token 选择<br/>用 z_k 构造文本子空间 M_k、定义核 L_k"]
+    C --> D["贪心近似求解<br/>逐个挑边际增益最大的 token，凑满 30%"]
+    D --> E["把选中的子集 V_k 注入下一步上下文"]
+    E --> F["基于熵的自适应停止<br/>算答案分布熵 H_k"]
+    F -->|"H_k ≥ 阈值 δ 且 k < K_max"| B
+    F -->|"H_k < 阈值 δ 或 k = K_max"| G["输出最终答案 y"]
+```
 
 ### 关键设计
 
 **1. DPP 视觉 token 选择：用一个行列式同时管住"相关"和"多样"**
 
-重聚焦最直接的痛点是：把全部视觉 token 重新注入一次，InternVL-3.5-8B 上每图约 1772 个视觉 token、每步才约 615 个文本 token，全量回注直接带来 2.3 倍延迟；可只挑"和当前推理最相关"的又会扎堆冗余、漏掉图里其他关键区域。VisRef 用行列式点过程（DPP）把这两个目标统一进一个优化里。它先用当前推理步的文本表示构造子空间几何 $M_k = \sum_{j=1}^{T_k} z_k^{(j)}(z_k^{(j)})^\top$，据此定义视觉 token 间的核函数 $L_k(v_i, v_j) = v_i^\top M_k v_j$，然后选使核矩阵行列式最大的子集 $\tilde{V}_k = \arg\max_{V_k \subseteq \mathcal{V}} \det(L_k^{V_k})$。妙处在于这个对数行列式能自然拆成两项：
+重聚焦最直接的痛点是：把全部视觉 token 重新注入一次，InternVL-3.5-8B 上每图约 1772 个视觉 token、每步才约 615 个文本 token，全量回注直接带来 2.3 倍延迟；可只挑"和当前推理最相关"的又会扎堆冗余、漏掉图里其他关键区域。理论上"该挑哪些 token"应当以"让最终答案最可能正确"为目标，但这个奖励只有生成完答案才知道、且要在指数级的子集空间里枚举，测试时根本解不动。VisRef 引入马尔可夫假设——第 $k$ 步注入哪些 token 主要取决于当前推理状态 $z_k$（它本身已自回归地编码了历史），从而把"最大化答案奖励"换成一个只依赖 $z_k$ 的可解打分函数 $\mathcal{J}(V_k \mid x_{\text{input}}, z_k)$。这个打分函数用行列式点过程（DPP）把"相关"和"多样"两个目标统一进一个优化里：先用当前推理步的文本表示构造子空间几何 $M_k = \sum_{j=1}^{T_k} z_k^{(j)}(z_k^{(j)})^\top$，据此定义视觉 token 间的核函数 $L_k(v_i, v_j) = v_i^\top M_k v_j$，然后选使核矩阵行列式最大的子集 $\tilde{V}_k = \arg\max_{V_k \subseteq \mathcal{V}} \det(L_k^{V_k})$。妙处在于这个对数行列式能自然拆成两项：
 
 $$\log\det(L_k^{V_k}) = \underbrace{\sum_{v_i \in V_k} \log(r_i^2)}_{\text{relevance}} + \underbrace{\log\det(\bar{L}_k^{V_k})}_{\text{diversity}}$$
 

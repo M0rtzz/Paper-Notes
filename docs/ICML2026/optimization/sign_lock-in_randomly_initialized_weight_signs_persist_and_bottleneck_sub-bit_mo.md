@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 全文分两段：诊断段 + 干预段。诊断段把权重做 sign–magnitude 分解 $W=S\odot A$，分别测 $S$ 和 $A$ 的 SVD 压缩性、谱随机性、训练中漂移率；接着用一维停时分析得到 sign lock-in 定理。干预段把诊断段的两个关键量——初始命中概率 $h_T$ 和再入概率 $g_T$——作为可控旋钮，提出"低秩符号模板初始化 + 间隙采样 + 外区对数障碍正则"的从头训练 pipeline，使训练完成后符号矩阵仍是初始模板的浅层扰动，存储时只保留 $(G,H,\text{rank})$ 即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练权重 W"] --> B["sign-magnitude 分解<br/>W = S ⊙ A"]
+    B --> C["诊断：测 S 的 SVD 压缩性<br/>谱随机性 · 训练漂移率"]
+    C --> D["停时框架与 sign lock-in 定理<br/>过零稀有事件 → 几何尾律"]
+    D --> E["两个可控尾参数<br/>命中概率 h_T · 再入概率 g_T"]
+    E --> F["低秩符号模板 T = sign(GHᵀ)<br/>训练前选定、可重生成"]
+    subgraph KNOB["间隙初始化 + 外区对数障碍正则"]
+        direction TB
+        G["间隙初始化：拒绝采样远离 0<br/>压低命中概率 h_T"]
+        H["外区对数障碍 R_LB<br/>warmup 压低再入概率 g_T"]
+    end
+    F --> KNOB
+    KNOB --> I["from-scratch 训练<br/>符号被锁定、模板被自然保留"]
+    I --> J["存储 (G, H, rank) + 幅值因子<br/>符号位 → 接近 0 bit/weight"]
+```
+
 ### 关键设计
 
 **1. 一维停时框架与 sign lock-in 定理：用"过零边界"的稀有事件解释符号既像噪声又持久**

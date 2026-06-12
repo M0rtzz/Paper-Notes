@@ -42,6 +42,22 @@ tags:
 
 BiMotion 要解决的核心矛盾是：固定容量的前馈生成模型（VAE-latent diffusion）只能吃固定长度输入，可运动序列天生变长，硬裁剪会丢语义、硬下采样会抖。它的破法是把「帧」这个离散表示换成连续的 B 样条曲线——不管原序列多少帧，都拟合成固定数量的控制点。训练时，变长顶点差异序列先经 B 样条拟合成控制点，VAE 把控制点编码成运动 latent，flow-matching 扩散模型学习「初始形状 + 文本 → 运动 latent」的条件生成；推理时给定初始 mesh 和文本，扩散生成 latent、VAE 解回控制点、B 样条再重投影成任意长度的运动序列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["变长顶点差异序列"] --> B["B 样条运动表示<br/>Laplacian 正则拟合 → 16 控制点"]
+    B --> VAE
+    subgraph VAE["运动 VAE 编码"]
+        direction TB
+        N["Normal Fusion<br/>法线+点坐标余弦加权"] --> P["多层级控制点嵌入 Control-PE<br/>粗→精捕高频细节"] --> S["交叉注意力空间压缩<br/>FPS 4096→512 token"]
+    end
+    VAE --> Z["运动 latent 空间"]
+    C["初始 mesh + 文本"] --> F["Flow-matching 生成模型<br/>DiT + 解耦交叉注意力 + CFG"]
+    Z --> F
+    F --> D["VAE 解码 → 控制点"]
+    D --> O["B 样条重投影<br/>任意长度平滑运动序列"]
+```
+
 ### 关键设计
 
 **1. B 样条运动表示：把变长序列压成定长控制点，还能任意重采样**

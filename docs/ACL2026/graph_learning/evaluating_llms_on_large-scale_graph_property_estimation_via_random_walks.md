@@ -45,6 +45,16 @@ tags:
 
 EstGraph 针对的是「图大到塞不进 prompt、又只能通过 API 局部查询」的真实场景：它不再把整张图编码进上下文，而是先在大图 $G=(V,E)$ 上跑若干条随机游走采样，把游走衍生的统计量（节点交集、度分布直方图、重访率等）压成一段与图规模脱钩的 prompt，让 LLM 以「带图论先验的估计器」身份直接输出标量估计或排序。节点/边数、社区数、图结构、影响节点这四项估计任务共享同一条「采样 → 统计 → LLM 推理 → 对比经典估计器」的流水线，区别仅在于游走策略、统计量种类与输出形式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["大图 G=(V,E)<br/>仅 API 局部可查、规模塞不进 prompt"] --> B["双采样协议<br/>MH 游走（无偏·理想）/ srw（纯 API 可用·有度偏置）"]
+    B --> C["Statistics-only Prompt<br/>游走结果压成节点交集 / 度直方图 / 重访率，几百 token、与图规模解耦"]
+    C --> D["LLM 作为带图论先验的估计器"]
+    D --> E["四任务输出<br/>规模(Chapman) / 社区数 / 结构 4-分类 / 影响节点排序"]
+    E --> F["对比经典估计器<br/>uniform · MH · Louvain · Betweenness…"]
+```
+
 ### 关键设计
 
 **1. Statistics-only Prompt：把 prompt 长度从 $\Theta(n+m)$ 压到 $\Theta(\log n)$**

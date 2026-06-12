@@ -50,6 +50,31 @@ tags:
 
 BenchMarker 把一个 MCQA 数据集作为输入，对其中每道题并行跑三条独立的诊断流水线——污染、捷径、写作错误，每条都以 LLM judge 为核心，最终给每题输出一组二分类标签加判官解释。三条结果既能按题保留供人工 review，也能聚合到数据集层面得到"这个 benchmark 有多少题被污染 / 有捷径 / 违反写作规则"的健康报告，整套封装在 InspectAI 里提供 UI。其设计灵魂是把教育学几十年沉淀的 MCQ 质检标准（item-writing rubric、partial-input 诊断）翻译成可大规模自动执行的 LLM 评分协议。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：MCQA 数据集<br/>逐题并行诊断"]
+    IN --> C
+    IN --> S
+    IN --> W
+    subgraph C["污染检测"]
+        direction TB
+        C1["题干 + gold answer<br/>查 4 个搜索引擎"] --> C2["LLM judge 判是否复现 MCQA 题面<br/>严格格式匹配"]
+    end
+    subgraph S["捷径检测"]
+        direction TB
+        S1["3 模型仅看选项作答<br/>+ 反推题干"] --> S2["judge 比对反推题干 vs 真题<br/>语义不等价才算捷径"]
+    end
+    subgraph W["写作错误检测"]
+        direction TB
+        W1["19 条 rubric 拆成<br/>per-rule prompt"] --> W2["每条单独 LLM judge<br/>输出 19 个二分类标签"]
+    end
+    C --> AGG["每题标签 + judge 解释"]
+    S --> AGG
+    W --> AGG
+    AGG --> OUT["数据集健康报告<br/>InspectAI UI"]
+```
+
 ### 关键设计
 
 **1. 污染检测：web-search 代理 + 严格格式匹配。** LLM 的预训练数据是私有的，无法直接核对某题是否被"背"过，本文用公开网络作为可观察代理。把题干 $q$ 与 gold answer $a$ 联合查询 Google/Bing/DuckDuckGo/Brave 四个搜索引擎，再把 top-K 结果交给 LLM judge 判定该题是否被"完整或几乎完整地复现"。关键在于匹配标准很严：若网页只是含有答案对应的知识点、却没有 MCQA 的题面格式，就不算污染——因为它不会让模型记住"这道题选哪个"。这既比单纯 token-overlap 更准确，又避免把"考察通用常识"误判成污染，与人类教师查重的直觉一致。

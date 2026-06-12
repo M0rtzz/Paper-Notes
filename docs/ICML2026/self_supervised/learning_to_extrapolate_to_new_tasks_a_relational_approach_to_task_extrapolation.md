@@ -42,7 +42,28 @@ tags:
 
 ### 整体框架
 
-RTE 把任务外推拆成两阶段。**训练阶段**：从训练任务库 $\mathcal{F}_{train}$ 里反复采样任务对 $(f_i, f_j)$，并取其相对变换 $\phi_{ij}$，训练一个关系算子 $\Psi$ 使得 $\Psi(x, f_i, \phi_{ij}) \approx f_j(x)$。**推理阶段**：给一个目标任务的少量上下文 $D_{target}$，先估计它在任务嵌入空间中的代理向量 $\hat\theta_{target}$，再找一个最佳锚点 $f_{anc}^*$ 和变换 $\phi^*$，最后用 $\Psi(x_{query}, f_{anc}^*, \phi^*)$ 出预测。整个 pipeline 既适用于纯函数预测（MLP 作为 $\Psi$），也适用于序列预测（LLM 作为 $\Psi$，通过 LoRA 微调）。
+RTE 把任务外推拆成两阶段。**训练阶段**：从训练任务库 $\mathcal{F}_{train}$ 里反复采样任务对 $(f_i, f_j)$，并取其相对变换 $\phi_{ij}$，训练一个关系算子 $\Psi$ 使得 $\Psi(x, f_i, \phi_{ij}) \approx f_j(x)$。**推理阶段**：给一个目标任务的少量上下文 $D_{target}$，先估计它在任务嵌入空间中的代理向量 $\hat\theta_{target}$，再找一个最佳锚点 $f_{anc}^*$ 和变换 $\phi^*$，最后用 $\Psi(x_{query}, f_{anc}^*, \phi^*)$ 出预测。整个 pipeline 既适用于纯函数预测（MLP 作为 $\Psi$），也适用于序列预测（LLM 作为 $\Psi$，通过 LoRA 微调）。贯穿两阶段的底层结构都是同一个「锚点 + 变换」分解：训练时 $\Psi$ 吃 $(f_i, \phi_{ij})$，推理时把目标拆回 $(f_{anc}^*, \phi^*)$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TRAIN["训练阶段：关系算子 Ψ 训练"]
+        direction TB
+        A["训练任务库 F_train"] --> B["采样任务对 (f_i, f_j)"]
+        B --> C["取相对变换 φ_ij<br/>连续: Task2Vec 嵌入差<br/>离散: ground-truth 关系标签"]
+        C --> D["训练 Ψ: Ψ(x, f_i, φ_ij) ≈ f_j(x)"]
+    end
+    D --> E["目标任务稀疏上下文 D_target"]
+    subgraph INFER["推理阶段：测试时分解"]
+        direction TB
+        F["估计代理向量 θ̂_target"] --> G["反解最优锚点-变换 (f_anc*, φ*)"]
+        G -->|"连续: 几何捷径（最近邻 + 嵌入差）"| H["拼装分解"]
+        G -->|"离散: 摊销搜索（decomposer top-k）"| H
+        G -->|"LLM: 似然打分（Neural RAG）"| H
+    end
+    E --> F
+    H --> I["Ψ(x_query, f_anc*, φ*) → 目标预测"]
+```
 
 ### 关键设计
 
@@ -61,9 +82,6 @@ RTE 把任务外推拆成两阶段。**训练阶段**：从训练任务库 $\mat
 **3. 测试时分解：几何捷径 vs 摊销搜索**
 
 测试时只给目标任务的稀疏上下文 $D_{target}$，要反解出最优 $(f_{anc}^*, \phi^*) = \arg\min_{f, \phi} \sum_{(x,y)\in D_{target}} \mathcal{L}(y, \Psi(x, f, \phi))$。RTE 按 regime 走三条路：连续 regime 任务流形几何良好，用 Task2Vec 估出 $\hat\theta_{target}$、最近邻取锚点、相减得变换，一次 lookup 解决；离散组合 regime 的流形是组合爆炸的，训一个 decomposer $g_\psi$ 给出 top-$k$ 候选对，再在 $\mathcal{C}_k$ 上做小规模搜索，把空间压到 $O(k)$；LLM 场景无法直接算 proxy embedding，就用模型在 $D_{target}$ 上的负对数似然当打分器对候选暴力搜索（作者称之为 "Neural RAG"）。三条路的共性是用合适的代理把"反解分解"这个难题变成可执行的检索或最小化。
-
-### 损失函数 / 训练策略
-函数预测场景下 $\Psi$ 是 MLP，损失用 MSE。LLM 场景下 $\Psi$ 是 LoRA 微调的 Qwen / Mistral，把（锚点 demo, 变换描述 $\phi$, 查询输入）格式化成 prompt $P$，最小化 $\mathcal{L}_{SFT} = -\sum_t \log p_\theta(y_t | P, y_{<t})$。变换 $\phi$ 可以是自然语言指令、离散控制 token 或学习到的 embedding，视 regime 而定。
 
 ### 损失函数 / 训练策略
 

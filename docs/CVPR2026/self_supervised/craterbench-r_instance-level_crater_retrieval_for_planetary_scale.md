@@ -40,7 +40,26 @@ tags:
 
 ### 整体框架
 
-这篇论文先把"陨石坑分析"从检测任务重新定义为实例级图像检索任务，再围绕这个新任务做诊断和提方法。整体分三步走：先建一个 CraterBench-R 基准，把"跨图关联同一陨石坑"变成可评测的检索问题；再用 30 种冻结 backbone 跑一遍诊断，定位出"单向量池化精度有上限、有监督度量学习反而退化"两个瓶颈；最后提出一个无训练的实例 token 聚合，把 196 个 ViT patch token 压成 K 个代表 token 做 late interaction 匹配，并用"单向量粗筛 + 实例 token 精排"的两阶段管线落到行星尺度。
+这篇论文先把"陨石坑分析"从检测任务重新定义为实例级图像检索任务，再围绕这个新任务做诊断和提方法。整体分三步走：先建一个 CraterBench-R 基准，把"跨图关联同一陨石坑"变成可评测的检索问题；再用 30 种冻结 backbone 跑一遍诊断，定位出"单向量池化精度有上限、有监督度量学习反而退化"两个瓶颈；最后提出一个无训练的实例 token 聚合，把 196 个 ViT patch token 压成 K 个代表 token 做 late interaction 匹配，并用"单向量粗筛 + 实例 token 精排"的两阶段管线落到行星尺度。下图画的是论文最终落地的检索方法本身（对应下方的设计 3、设计 4），基准与诊断是支撑这条方法的前置工作。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["火星 CTX 陨石坑图像"] --> B["冻结 ViT 编码<br/>CLS 单向量 + 196 个 patch token"]
+    subgraph AGG["实例 token 聚合（无训练）"]
+        direction TB
+        C["选 K 个种子<br/>CLS→patch 注意力 top-K / 余弦空间 FPS"] --> D["非种子 token<br/>按余弦最近邻分配成簇"]
+        D --> E["残差合并种子与其簇<br/>得 K 个实例 token"]
+    end
+    B -->|patch token| C
+    subgraph PIPE["两阶段行星尺度检索管线"]
+        direction TB
+        F["Stage 1：单向量 FAISS 粗筛<br/>毫秒级取 top-S 候选"] --> G["Stage 2：实例 token late interaction<br/>仅在 S 个候选上精排"]
+    end
+    B -->|CLS 单向量| F
+    E -->|K 个实例 token| G
+    G --> H["匹配结果<br/>跨图去重 / 跨观测关联"]
+```
 
 ### 关键设计
 

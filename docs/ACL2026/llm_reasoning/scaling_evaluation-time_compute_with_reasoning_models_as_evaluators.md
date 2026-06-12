@@ -41,7 +41,21 @@ tags:
 方法并不训练新模型，而是构造一套 inference-time evaluation recipe。给定问题 $x_i$ 和候选回答 $y_i$，reasoning evaluator 会先生成 CoT，再输出二元 judgment；分数来自 “1/0” token 的 logits。过程评估会把回答切成多个 step，逐 step 评估并聚合。
 
 ### 整体框架
-整体 pipeline 分两种用途。第一种是 evaluator 本身的能力测试：在 ProcessBench 中，模型需要找出一个解答中第一个错误段落。第二种是提升 generator：先让 generator 为每道题采样多个候选答案，再让 evaluator 给候选打分，选择最高分答案作为 Best-of-N 输出。论文在固定近似计算预算下比较 direct evaluator 的 Best-of-64 和 reasoning evaluator 的 Best-of-8。
+整体 pipeline 分两种用途。第一种是 evaluator 本身的能力测试：在 ProcessBench 中，模型需要找出一个解答中第一个错误段落。第二种是提升 generator：先让 generator 为每道题采样多个候选答案，再让 evaluator 给候选打分，选择最高分答案作为 Best-of-N 输出。论文在固定近似计算预算下比较 direct evaluator 的 Best-of-64 和 reasoning evaluator 的 Best-of-8。具体到打分内部，同一个候选回答会同时走结果评估与过程评估两条路，最后把两路分数融合成最终分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 x_i + 候选答案 y_i"]
+    A --> B["推理结果评估器<br/>读完整答案 → CoT → 二元判断 j_i"]
+    A --> C["模型切分 M_split<br/>插入 [SPLIT] 划分推理步骤"]
+    B --> D["结果分 s_outcome<br/>1/0 token logits 取 softmax"]
+    C --> E["推理过程评估器<br/>逐步核查每个 step 是否正确"]
+    E --> F["过程分 s_process<br/>各步判断用 mean_logit 聚合"]
+    D --> G["分数融合<br/>s_final = α·s_outcome + (1−α)·s_process"]
+    F --> G
+    G --> H["下游：Best-of-N 重排序 / ProcessBench 错误定位"]
+```
 
 ### 关键设计
 

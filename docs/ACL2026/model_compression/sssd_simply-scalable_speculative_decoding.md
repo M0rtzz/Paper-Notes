@@ -34,7 +34,27 @@ tags:
 
 ### 整体框架
 
-SSSD 将 prompt + 自生成文本视为统一的 n-gram 源，并与大型文本数据存储（datastore）集成。最终 token 的前缀在两个源中匹配，匹配到的续写用于构建树形候选集进行验证。整个草稿生成在 CPU 上运行，不占用 GPU 资源。
+SSSD 将 prompt + 自生成文本视为统一的 n-gram 源，并与大型文本数据存储（datastore）集成。最终 token 的前缀在两个源中匹配，匹配到的续写经加权合并与概率校准后构建成树形候选集，再由硬件感知的投机长度决定提交多少候选给目标模型一次性验证。整个草稿生成在 CPU 上运行，不占用 GPU 资源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["前缀：最新已接受 token + 近期上下文"]
+    subgraph FUSE["双源候选融合"]
+        direction TB
+        B["输入源 trie<br/>prompt + 自生成，实时更新"]
+        C["datastore 源<br/>后缀数组二分检索 + 区间采样"]
+        B --> M["加权树合并 + 概率校准<br/>衰减输入源过度自信"]
+        C --> M
+    end
+    A --> B
+    A --> C
+    DS["Datastore 管理<br/>多子索引 + 异步重建 + 最旧替换"] -.->|供数| C
+    M --> S["硬件感知投机长度<br/>s_q = I_knee / b，按 batch 调节"]
+    S --> V["树形候选 + attention mask<br/>目标模型单次前向验证"]
+    V --> O["一次产出多个 token"]
+    O -.->|追加自生成| B
+```
 
 ### 关键设计
 

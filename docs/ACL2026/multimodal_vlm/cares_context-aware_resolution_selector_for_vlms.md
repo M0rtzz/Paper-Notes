@@ -43,6 +43,24 @@ CARES 的主版本是一个 discriminative selector：用截断后的 SmolVLM-50
 ### 整体框架
 训练前，作者先对样本 `(x,q,gt)` 做多分辨率标注：把图像分别 resize 到候选分辨率，送入固定 VLM 得到答案，用 ANLS 或相应指标评估答案质量，选择最小充分分辨率作为标签。训练时 CARES 只看低分辨率图像和 query，学习预测该标签。部署时，CARES 输出连续分辨率，目标 VLM 只处理被缩放后的图像和原 query。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph LABEL["多分辨率充分性标注（训练前离线）"]
+        direction TB
+        A["样本 (x, q, gt)"] --> B["逐档 resize 到 {384, 768, 1024}<br/>送固定 VLM 算 ANLS 质量 u_k"]
+        B --> C["取首个 u_k≥τ 且增益≤δ 的最小档<br/>= 充分分辨率标签 r*"]
+    end
+    subgraph SEL["轻量上下文感知 selector"]
+        direction TB
+        D["低清图 (r_min) + 文本 query"] --> E["截断 SmolVLM-500M<br/>取 layer 16 最后 token"]
+        E --> F["轻量分类头<br/>输出 384/768/1024 三档概率"]
+    end
+    C -->|CE 监督训练| F
+    F --> G["离散训练、连续部署<br/>p=softmax，期望 r̃=Σ p_k·r_k 向上取整"]
+    G --> H["目标 VLM 处理缩放后图像 + 原 query<br/>（权重不变）"]
+```
+
 ### 关键设计
 
 **1. 多分辨率充分性标注：让目标 VLM 自己的性能曲线定义“够用阈值”**

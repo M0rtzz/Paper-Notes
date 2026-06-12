@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 要在用户只答几道题的冷启动条件下高效预测他剩下的回答，本文的解法是把"这个用户像谁"建成一个离散潜变量，再让 LLM 离线把每种"谁"的回答画像算好。具体分两阶段：离线阶段拿一个 persona 字典（本文用 Twin-2K-500 的 $n=2058$ 个真实美国受访者 profile），对每个 persona $\xi_\theta$ 和每道题 $x$ 用 GPT-5-mini 算出 $K$ 类回答分布 $\mu_{\theta,x}\in\Delta^{K-1}$ 缓存成查找表；在线阶段则对新用户维护一个 persona 后验，每次贪心选一道最能消除不确定性的题、观察回答、闭式更新后验，直到预算耗尽后用混合分布预测目标题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线：Persona-induced 潜变量模型"]
+        direction TB
+        A["persona 字典<br/>(2058 个真实受访者 profile)"] --> B["GPT-5-mini 算 persona×题<br/>回答分布 μ，缓存查找表"]
+    end
+    OFF --> C["经验贝叶斯学先验<br/>EM 在真实用户上拟合 p(θ)"]
+    C --> D["初始化新用户 persona 后验"]
+    D --> E["贪心一步前瞻自适应问询<br/>选期望剩余熵最小的题"]
+    E --> F["观察回答 → 闭式更新后验"]
+    F -->|"预算 T 未耗尽"| E
+    F -->|"预算耗尽"| G["混合分布预测目标题<br/>+ 评分规则评估"]
+```
+
 ### 关键设计
 
 **1. Persona-induced 潜变量模型：把灵活先验和实时推断同时拿到**

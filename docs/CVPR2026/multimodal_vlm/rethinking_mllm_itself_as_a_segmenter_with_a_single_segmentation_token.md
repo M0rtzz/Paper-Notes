@@ -45,7 +45,21 @@ tags:
 ### 整体框架
 SELF1E 想回答一个反直觉的问题：MLLM 做分割，到底是缺 token，还是缺分辨率？现有无解码器方案（UFO）认为单个 [SEG] token 表达力不够，于是堆到 16 个；本文则把矛头指向 MLLM 内部的 pixel-shuffle 下采样——它把视觉特征压到原来的 $1/\alpha$（InternVL 系列 $\alpha$ 通常为 4），细粒度空间信息在送进 LLM 前就已丢失，再多 token 也补不回这个分辨率。
 
-于是整条管线走两条并行的支线。主线照常：图像过 Vision Encoder，经 pixel-shuffle + MLP 压缩成低分辨率视觉 token，连同文本一起喂给 LLM，最后吐出一个 [SEG] token 和一组被 LLM 重新编码过的图像特征 $F_{IMG}$。旁线则在压缩发生之前，把编码器的高分辨率特征原样截留下来。两条线在 LLM 之后汇合：先用 **RFR** 把 LLM 学到的语义增量"回填"到高分辨率特征上，再用 **RFA** 借 Pixel-Unshuffle 把分辨率进一步放大，最后让放大后的图像特征与同样处理过的 [SEG] token 做点积，直接生成高分辨率 mask——全程不碰任何外部分割模型。
+于是整条管线走两条并行的支线。主线照常：图像过视觉编码器（Vision Encoder），经 pixel-shuffle + MLP 压缩成低分辨率视觉 token，连同文本一起喂给 LLM，最后吐出一个 [SEG] token 和一组被 LLM 重新编码过的图像特征 $F_{IMG}$。旁线则在压缩发生之前，把编码器的高分辨率特征原样截留下来。两条线在 LLM 之后汇合：先用 **RFR** 把 LLM 学到的语义增量"回填"到高分辨率特征上，再用 **RFA** 借 Pixel-Unshuffle 把分辨率进一步放大，最后让放大后的图像特征与同样处理过的 [SEG] token 做点积，直接生成高分辨率 mask——全程不碰任何外部分割模型。LLM 内部还把因果注意力换成**分割专用注意力掩码**，让 [SEG] token 能双向看全图。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 + 文本指令"] --> B["视觉编码器<br/>未压缩高分辨率特征 F_V0"]
+    B -->|主线| C["pixel-shuffle + MLP<br/>压缩成低分辨率 F_V1（降到 1/α）"]
+    C --> D["LLM（分割专用注意力掩码）<br/>image↔image、image↔[SEG] 双向交互"]
+    D --> E["输出 [SEG] token 与图像特征 F_IMG"]
+    B -->|旁线·绕过压缩| F["自复制 ×α + 同一 MLP<br/>未压缩特征 F_V1-HQ"]
+    E --> G["RFR：回填语义增量<br/>F_V1-HQ + 插值(F_IMG − F_V1)"]
+    F --> G
+    G --> H["RFA：Pixel-Unshuffle 解包<br/>分辨率放大到 α·N0"]
+    H --> I["与 [SEG] token 点积 → 高分辨率 mask"]
+```
 
 ### 关键设计
 

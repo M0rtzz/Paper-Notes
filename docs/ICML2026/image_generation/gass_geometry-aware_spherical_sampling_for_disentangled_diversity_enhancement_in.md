@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 GASS 想解决的是"同一个 prompt 反复采样却总出雷同图"的问题，而它的思路是把"多样性"这件事搬到 CLIP 单位超球面上来重新定义和操作。冻结的 T2I backbone（UNet 或 DiT，扩散或 rectified flow 都行）正常采样，每隔几步插入一次 GASS 引导：先用冻结的 CLIP image encoder $\mathcal{E}_I$ 把当前预测的干净图编码成球面嵌入，找出一条文本方向和一条主残差方向作为两根解耦坐标轴，沿这两根轴把 batch 内的嵌入人为推开，再通过对预测干净图 $\hat{x}_{0|t}$ 求梯度，把"想象中更分散的嵌入"反传回像素空间。整套引导是稀疏的，只在 10–20 个采样步上开启，A100 上一个 batch 仅多花 2.93–3.68 秒。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 T2I backbone 采样<br/>每隔几步插入引导"] --> B["CLIP 编码预测干净图<br/>得单位球面嵌入"]
+    B --> C["SPP 球面解耦度量<br/>文本轴 e_t + 主残差轴 u_ind"]
+    C --> D["球面投影扩张 + 重归一化<br/>沿两轴注入扰动得目标嵌入"]
+    D --> E["对预测干净图求梯度<br/>最小化 L_SPP，Adam 优化"]
+    E --> F["优化后的干净图塞回 solver<br/>扭转后续采样轨迹"]
+    F -->|稀疏调度 10-20 步| A
+```
+
 ### 关键设计
 
 **1. 球面解耦度量 SPP：把多样性拆成 prompt 相关与无关两根轴**

@@ -44,6 +44,36 @@ MARQUIS 要解决的是“给定一个复杂查询和一大堆视频，写出一
 
 第一阶段 **Video Retrieval** 先把复杂查询拆成多个 atomic sub-queries，每个子查询独立用 OmniEmbed 检索，再用 RRF、相似度聚合等策略融合 ranked lists，最后用 RankVideo 对 Top-100 candidates 做 video-native reranking。第二阶段 **Information Extraction** 对检索到的视频并行抽取 query-agnostic notes、query-conditioned claims 和 question-answer evidence，并用 CLUE 校准每条证据是否被源视频支持。第三阶段 **Article Generation** 把筛选后的 evidence artifacts 交给生成器，比较 Bullet、CAG、GINGER、QA-based generation 和 MARQUIS-RLM 控制器几种合成方式。其中 MARQUIS-RLM 是一个可选的高层控制层：它把上面所有模块包装成工具，由 Root LM 在持久 Python sandbox 里以 Think-Act-Observe 循环调用，并维护一个 structured memory bank。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["复杂 persona 查询 + 视频库"]
+    subgraph S1["查询分解、融合与视频重排"]
+        direction TB
+        A["LLM 拆成 N 个原子子查询"] --> B["每个子查询独立检索 Top-1000"]
+        B --> C["RRF / Sum / Max 融合 ranked lists"]
+        C --> D["RankVideo 对 Top-100 重排"]
+    end
+    subgraph S2["三路证据抽取与视频支撑校准"]
+        direction TB
+        E["query-agnostic notes"]
+        F["query-conditioned claims"]
+        G["QA 抽取"]
+        E --> H["CLUE 估计支持概率，过滤 unsupported claims"]
+        F --> H
+        G --> H
+    end
+    subgraph S3["证据驱动文章生成与 RLM 控制器"]
+        direction TB
+        I["Bullet / CAG / GINGER / QA 生成"]
+        J["MARQUIS-RLM：memory bank 迭代补检索、解冲突"]
+    end
+    Q --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> O["带引用、可归因的分析文章"]
+```
+
 ### 关键设计
 
 **1. 查询分解、融合与视频重排：把长 persona 查询拆回检索器熟悉的短查询**

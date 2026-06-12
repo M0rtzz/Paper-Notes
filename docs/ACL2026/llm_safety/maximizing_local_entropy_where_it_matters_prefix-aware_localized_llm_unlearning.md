@@ -45,6 +45,23 @@ tags:
 
 PALU 想解决的是"遗忘要精准、别误伤"。它把遗忘干预同时压缩到两个维度的最小子集上：时间维度（token 序列）只盯敏感前缀，词表维度只动 top-K logits。具体分两层——Token 级先通过语义感知过滤识别出敏感 span，从每个 span 里只取前 N 个"起始 token"作为遗忘目标，其余 token 要么用 KL 散度钉住不变、要么干脆跳过；词表级则对这些起始 token 用局部熵最大化目标（只平坦化 top-K logits）来替换传统的负 CE。两层叠加，把遗忘复杂度从 $O(T|V|)$ 压到 $O(TK)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["遗忘集 response token 序列"] --> S1
+    subgraph S1["稀疏起始 Token 选择（时间维度稀疏）"]
+        direction TB
+        B["语义感知过滤<br/>DistilBERT / GPT-4 识别敏感 span → 二值 mask"] --> C["每个 span 仅取前 N 个 token<br/>构成起始目标集"]
+        C --> D["token 三分类"]
+    end
+    D -->|起始目标| E["局部熵最大化（词表维度稀疏）<br/>取 top-K logits 拍平到目标值 c"]
+    D -->|普通 token| F["KL 散度保持原分布"]
+    D -->|冗余敏感 token| G["跳过，不计梯度"]
+    E --> H["统一遗忘损失<br/>局部熵项 + λ·KL 保持项"]
+    F --> H
+    H --> I["总损失 = 遗忘损失 + λ·保留集 CE"]
+```
+
 ### 关键设计
 
 **1. 稀疏起始 Token 选择（时间维度稀疏）：只干预每个敏感 span 的前几个 token，就能偏转整条生成轨迹**

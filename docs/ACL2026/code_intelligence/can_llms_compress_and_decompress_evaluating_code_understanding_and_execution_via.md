@@ -42,7 +42,22 @@ tags:
 
 ### 整体框架
 
-RTCE 把"代码理解"重新表述成"代码可逆性"问题，再用一条严格的回环约束去检验模型是否真的在脑子里跑通了算法。整个基准分三步搭起来：先在图案字符串、Apache 日志、YAML 配置、CSV 表格四个数据家族（共 36 个子类）下合成 250 个多样化输入，再用 LZW/AE/RLE/Huffman 四个压缩算法的 Python 参考实现在固定 seed 下产出确定性的 ground truth，最后让模型在 execution-free（不准真跑代码）的设定下完成四种任务变体（O/P Pred、O/P Pred-I、I/P Pred、I/P Pred-I），逼它在头脑里模拟执行。评分用 EM、Edit Similarity、Pass@5 三个指标：EM（exact match，浮点容差 $10^{-3}$）是主指标，ES（归一化 Levenshtein）给部分分，Pass@5 取 5 次采样的最好结果——之所以以 EM 为准，是因为很多 EM=0 的样本 ES 仍有 8%–20%，恰恰说明模型输出"看起来像但并不精确"，只有严格回环才抓得住这种脆性。
+RTCE 把"代码理解"重新表述成"代码可逆性"问题，再用一条严格的回环约束去检验模型是否真的在脑子里跑通了算法。整个基准分三步搭起来：先在图案字符串、Apache 日志、YAML 配置、CSV 表格四个数据家族（共 36 个子类）下合成 250 个多样化输入，再用 LZW/AE/RLE/Huffman 四个压缩算法的 Python 参考实现在固定 seed 下产出确定性的 ground truth，最后让模型在 execution-free（不准真跑代码）的设定下完成四种任务变体（O/P Pred、O/P Pred-I、I/P Pred、I/P Pred-I），逼它在头脑里模拟执行。评分用 EM、Edit Similarity、Pass@5 三个指标：EM（exact match，浮点容差 $10^{-3}$）是主指标，ES（归一化 Levenshtein）给部分分，Pass@5 取 5 次采样的最好结果——之所以以 EM 为准，是因为很多 EM=0 的样本 ES 仍有 8%–20%，恰恰说明模型输出"看起来像但并不精确"，只有严格回环才抓得住这种脆性。在这套基准上，论文进一步用 zero-shot / self-reflection / SFT 三种诊断范式去穷尽涨分手段，把失败归因钉死在架构层面。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["四个数据家族（36 子类）<br/>图案串 / 日志 / YAML / CSV → 250 输入"] --> B["四类压缩算法<br/>LZW / AE / RLE / Huffman 参考实现"]
+    B -->|固定 seed 产出确定性 ground truth| C["round-trip 双射框架<br/>4 任务变体：编码 / 解码 / 两个 inversion"]
+    C --> DIAG
+    subgraph DIAG["三种诊断范式（execution-free 头脑模拟执行）"]
+        direction TB
+        E["zero-shot：测原始能力"]
+        F["self-reflection：critique→revision 多轮循环"]
+        G["SFT：trace→reasoning chain→LoRA 微调 QwQ-32B"]
+    end
+    DIAG --> H["EM / Edit Sim / Pass@5 评分<br/>EM 为主，要求 bit 精确回环"]
+```
 
 ### 关键设计
 

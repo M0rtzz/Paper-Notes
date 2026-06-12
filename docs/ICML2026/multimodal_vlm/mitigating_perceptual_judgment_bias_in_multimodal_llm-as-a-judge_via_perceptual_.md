@@ -42,6 +42,39 @@ tags:
 ### 整体框架
 方法分三步走：（1）形式化 Perceptual Judgment Bias 并用 VQA 探针把失败归因到 Mode (a)/(b)；（2）构造 *Perceptually Perturbed Judgment Dataset (PPJD)*——基于 MMPR-v1.2 抽取 3k 高质量样本，对每个 chosen 回答生成感知扰动版与感知+推理双扰动版；（3）用 GRPO 训练，奖励为格式校验 × 批量排序得分。最终模型记作 Perception-Judge-Flex / Perception-Judge-Qwen3，分别基于 Flex-Judge-VL-7B 和 Qwen3-VL-4B-Thinking。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MLLM 评判器误判<br/>视觉错却给高分"] --> S1
+
+    subgraph S1["感知判断偏差形式化与两通道归因"]
+        direction TB
+        D1["VQA 探针估评判器感知 π_Judge"]
+        D1 --> MA["Mode (a)：自己看错图"]
+        D1 --> MB["Mode (b)：看对却被回答叙述带跑"]
+    end
+
+    S1 --> S2
+
+    subgraph S2["PPJD：构造感知扰动四元组"]
+        direction TB
+        P1["取正确回答 r_c"] --> P2["仅扰视觉属性 → r_rp<br/>改颜色/计数/空间, VQA 一致性校验"]
+        P2 --> P3["再退化推理 → r_rp+r"]
+        P3 --> P4["四元组 (x, r_c, r_rp, r_rp+r)<br/>目标序 r_c ≻ r_rp ≻ r_rp+r"]
+    end
+
+    S2 --> S3
+
+    subgraph S3["批量排序奖励 + GRPO 训练"]
+        direction TB
+        R1["评判器预测排列 π̂"] --> R2["结构奖励：格式非法 → 0"]
+        R2 --> R3["批量排序奖励<br/>1 − 归一化 Levenshtein 距离"]
+        R3 --> R4["总奖励代入 GRPO<br/>组内归一化优势"]
+    end
+
+    S3 --> OUT["Perception-Judge<br/>感知对齐的评判器"]
+```
+
 ### 关键设计
 
 **1. 感知判断偏差的形式化与两通道归因：把"评判器为什么不准"拆成可测的二维**

@@ -47,6 +47,21 @@ tags:
 
 UAAI（Uncertainty-Aware Active Inference）要对付的是微手势那种"稍纵即逝"的信号——持续 <0.5 秒、幅度极小、关键信息只藏在少数几帧和局部区域。它借主动推理的认知框架，把"在哪一帧、哪块区域看"当成智能体要主动决策的动作，用期望自由能（EFE）来挑信息量最大的帧和区域，再用一个不确定性感知的数据增强稳住训练。整体三个模块串起来：EFE 引导的时间帧选择负责"看哪几帧"，EFE 引导的空间注意力负责"看哪块区域"，UMIX 负责"怎么从带噪样本里稳稳学"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入视频<br/>微手势信号(短/微弱/时空稀疏)"] --> B
+    subgraph B["EFE 引导的时间帧选择（POMDP）"]
+        direction TB
+        B1["维护类别后验 q(s_t)"] --> B2["对候选帧算 EFE<br/>pragmatic value + epistemic value"]
+        B2 --> B3["选 EFE 最小的下一帧去看"]
+        B3 -->|"看到新帧后贝叶斯更新后验"| B1
+    end
+    B --> C["EFE 引导的空间注意力<br/>分解出位置信息量 → 空间权重掩码 M"]
+    C --> D["时空增强特征 → 微手势分类"]
+    E["UMIX 不确定性感知增强<br/>MC Dropout 估不确定性 → 自适应增强强度 + loss 加权"] -. 训练时 .-> D
+```
+
 ### 关键设计
 
 **1. EFE 引导的时间帧选择：把"找关键帧"建成主动决策问题**

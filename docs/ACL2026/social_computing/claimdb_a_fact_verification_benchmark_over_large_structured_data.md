@@ -53,6 +53,22 @@ ClaimDB 构建 pipeline 是 5 步流水线：
 
 评测端给 agent 一个 SQL 执行工具（Google MCP toolbox）、最多 20 次 tool call、3-way 分类（E/C/NEI），report Macro-F1 + Acc。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["BIRD 起点<br/>11k NL/SQL pairs + 80 个真实数据库"] --> B["AST 预过滤<br/>只留 ORDER BY / 聚合 / 窗口函数 / 多表 join<br/>答案 ≤10 行 → 约 6.5k query"]
+    B --> C["三类 + 三子类 Claim 生成<br/>GPT-5 产 entailed / contradicted / NEI<br/>NEI 再分 out-of-schema / counterfactual / subjective"]
+    subgraph QC["Judge Panel + STS 难度分层"]
+        direction TB
+        D["三模型 judge panel<br/>Phi-4 + grok-3-mini + mistral-small<br/>单否决制、recall 优先"]
+        E["STS grounding<br/>gemini-embedding 算 claim↔Q/A 相似度<br/>test 只取 top quartile 难 NEI"]
+        D --> E
+    end
+    C --> QC
+    QC --> F["53,368 claim<br/>平均 11.3 表 / 4.6M 行 / 约 110M token"]
+    F --> G["SQL tool-calling agent 评测<br/>≤20 次 tool call，3 分类 E/C/NEI"]
+```
+
 ### 关键设计
 
 **1. AST-based Pre-Filtering：用机械可验证的语法规则强制每条 claim 都需要组合推理**

@@ -46,6 +46,20 @@ tags:
 
 方法要解决的是"全序列平均把判别信号稀释、单点 log-prob 又太脆弱"这一对老问题。做法是给任意文本 $\mathbf{x}=\{x_i\}_{i=0}^{n-1}$ 配一个 proxy / source LM $p_\theta$，先在每个位置上同时读出"实际 token 的对数概率"和"整个条件分布的 Rényi 熵"，再只挑序列内概率最低的那一小撮位置，在这撮位置上把局部 log-prob 信号和全局熵信号加权融成一个标量分，分越大越像 AI；Uncertainty++ 则把局部信号换成条件独立采样归一化后的版本以求更稳。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 x + 代理 LM pθ"] --> B["逐位置算 log-prob 与 Rényi 熵"]
+    B --> C["取底部 ρ 分位低概率位 Sρ"]
+    C --> D["百分位局部不确定度<br/>Sρ 上聚合 log-prob → z_local"]
+    C --> E["Rényi 熵全局不确定度<br/>Sρ 上聚合分布形状熵 → z_global"]
+    D -->|"Uncertainty++"| F["条件独立采样归一化<br/>z_local 减模型期望 → Dρ*"]
+    D -->|"Uncertainty"| G["融合打分<br/>z = β·local + (1−β)·z_global"]
+    F --> G
+    E --> G
+    G --> H["检测分数（越大越像 AI）"]
+```
+
 ### 关键设计
 
 **1. 百分位局部不确定度：把平均池缩到低概率位以抑制 boilerplate 稀释**

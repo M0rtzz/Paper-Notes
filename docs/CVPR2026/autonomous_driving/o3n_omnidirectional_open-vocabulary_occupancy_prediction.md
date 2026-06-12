@@ -45,6 +45,21 @@ O3N 想用一台全景相机就完成开放词汇的 3D 占用预测：既要在
 
 三个核心模块各管一摊：PsM 负责在全景畸变下把几何建连续，OCA 负责让开放词汇语义不过拟合到可见类，NMA 负责弥合 CLIP 文本和视觉之间的模态鸿沟。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN1["全景图像（ERP 投影）"] --> VENC["CLIP 视觉编码器<br/>提图像特征"]
+    IN2["任意类名文本"] --> TENC["CLIP 文本编码器<br/>提文本嵌入"]
+    VENC --> VT["2D→3D 视角变换<br/>生成笛卡尔立方体素 + 极坐标圆柱体素"]
+    VT --> PsM["Polar-spiral Mamba (PsM)<br/>极坐标螺旋扫描建连续几何"]
+    PsM --> OCA["Occupancy Cost Aggregation (OCA)<br/>体素-文本匹配代价体积"]
+    TENC --> OCA
+    OCA --> NMA["Natural Modality Alignment (NMA)<br/>无梯度对齐 pixel-voxel-text"]
+    TENC --> NMA
+    NMA --> HEAD["占用预测头"]
+    HEAD --> OUT["3D 语义占用<br/>（含未见类别）"]
+```
+
 ### 关键设计
 
 **1. Polar-spiral Mamba (PsM)：在极坐标里把全景几何建得连续又省算力**

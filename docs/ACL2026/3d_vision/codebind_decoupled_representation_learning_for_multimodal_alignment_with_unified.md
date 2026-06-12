@@ -42,6 +42,28 @@ CodeBind 用 shared-specific 表征解耦和组合式 VQ codebook 改造 ImageBi
 ### 整体框架
 CodeBind 以冻结的视觉-语言基础模型作为桥接空间，把目标模态逐步对齐到 text/image 语义空间。每个模态 encoder 的输出先被投影成两个分量：$z^{\mathcal{M}}_{shared}$ 负责跨模态共享语义，$z^{\mathcal{M}}_{spec}$ 负责模态特有信息。shared 分量进入所有模态共用的 codebook，specific 分量进入各自模态的 specific codebook。量化后的 shared 与 specific embedding 拼接后交给 Transformer decoder 做重建，以约束信息不丢失；推理时如果只做跨模态对齐，可以只保留 shared embedding，并丢弃重建模块以降低成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["模态输入（图像/音频/深度/热成像/点云/EEG 等）<br/>经冻结视觉-语言桥接模型 encoder"] --> B["投影成两路分量"]
+    subgraph DEC["shared-specific 表征解耦"]
+        direction TB
+        B --> S["z_shared：跨模态共享语义"]
+        B --> P["z_spec：模态特有细节"]
+    end
+    subgraph CB["模态共享-专属 codebook（组合式向量量化）"]
+        direction TB
+        SC["共享 codebook<br/>所有模态共用语义中心"]
+        PC["各模态 specific codebook"]
+    end
+    S --> SC
+    P --> PC
+    SC --> M["量化后 shared + specific 拼接"]
+    PC --> M
+    M --> R["Transformer decoder 重建<br/>训练期约束，推理可丢弃"]
+    SC -->|仅跨模态对齐| OUT["分类 / 跨模态检索"]
+```
+
 ### 关键设计
 
 **1. shared-specific 表征解耦：让跨模态语义和模态私有细节各走各路**

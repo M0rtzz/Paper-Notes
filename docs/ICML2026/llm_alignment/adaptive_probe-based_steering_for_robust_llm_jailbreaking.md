@@ -43,24 +43,29 @@ tags:
 ### 整体框架
 输入包括少量有害/无害对比提示、一个可访问隐藏状态的 LLM，以及一个用于标注回复是否“faithful to harmful request”的评估器。首先，方法从对比提示中抽取 hidden states，训练每层 linear probe，得到初始方向。然后进入自适应重训练：用当前 probe 对有害提示进行 steering，收集生成过程中的激活和对应回复，由 judge 给回复标注，再把这些新激活加入训练集重训 probe。最后，推理时不再手工设置统一强度，而是根据训练集中目标行为激活的 probe logit 统计量，为每层设定自适应 target，并在所有 token 位置施加 steering。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：50 对有害/无害对比提示<br/>白盒 LLM + faithful judge"] --> B["抽取各层 hidden state<br/>训练初始线性 probe F₀"]
+    subgraph RT["1. 基于模型抽取的 probe 自适应重训练（T=20 轮）"]
+        direction TB
+        C["用当前 probe Fᵢ steering 模型<br/>对有害提示生成回复"] --> D["收集生成激活<br/>judge 标注是否 faithful"]
+        D --> E["标注激活并入训练集<br/>重训得 Fᵢ₊₁"]
+        E -->|未达 T 轮| C
+    end
+    B --> RT
+    RT -->|得最终 probe F_T| F["2. 按激活统计设定每层强度<br/>用同层目标激活 logit 校准，抑制 oversteering"]
+    F --> G["3. 丢弃最后层 + 对所有 token 位置 steering<br/>把 probe 视作 rank-1 adapter"]
+    G --> H["输出：steered 有害回复<br/>白盒最坏情况鲁棒性评测"]
+```
+
 ### 关键设计
-1. **基于 model extraction 的 probe 自适应重训练**:
 
-	- 功能：降低初始对比提示带来的方向偏差，使 probe 更接近真正控制目标行为的方向。
-	- 核心思路：第 $i$ 轮先用当前 probe steering 模型生成回复，收集中间激活；再用外部 judge 给这些回复打标签，把标注激活加入训练集，得到下一轮 probe。论文主实验设置 $T=20$，并用 SRF judge 的高低阈值筛出相对可靠的正负样本。
-	- 设计动机：简单增加更多有害/无害对比提示会继续引入主题和伦理维度的噪声；用当前模型被 steering 后的激活做主动采样，能更集中地探索决策边界附近的行为方向。
+**1. 基于模型抽取（model extraction）的 probe 自适应重训练：把"找方向"变成主动逼近理想判别器。** 初始 probe 只能用有害/无害对比提示训练，但这些提示同时编码了伦理、主题、文风等耦合方向，学到的方向其实是"faithful 判别器 × 噪声判别器"，方向偏差无法忽略。作者指出，单纯堆更多对比提示只会继续引入这些耦合维度，治标不治本。关键观察是：方向搜索本质上就是 model extraction——理想 probe $f^*$ 不可见，但可以用一个可靠的 jailbreak judge 当代理标注器。于是方法把 steering 改成迭代过程：第 $i$ 轮用当前 probe $F_i$ steering 模型、对有害提示生成回复并收集中间激活，再用 judge 标注这些激活是否 faithful，把标注样本并入训练集得到 $F_{i+1}$（主实验 $T=20$ 轮）。一个细节是重训练时把目标强度设为 $s^{(l)}=0$，让 steering 后的激活恰好落在当前 probe 决策边界附近——这正是主动学习 / adaptive retraining 的思路，用"分类器最不确定的样本"来采样比随机采样更高效，从而把方向集中地往真正控制行为的子空间逼近。
 
-2. **基于激活统计的自适应强度设定**:
+**2. 基于激活统计的自适应强度设定：用同层目标激活的尺度替代统一 logit target。** probe steering 需要为每层设一个强度，把 hidden state 推到某个 probe logit target；逐层手调是 $L$ 个连续参数的苦力活，而已有方法用层间统一的 target 又忽略了一个事实——各层激活的 $L_2$ 范数相差数个数量级（早层小、晚层大）。统一 target 会让范数小的层受到相对过强的扰动，也就是 oversteering，生成随之崩坏。方法改用同层目标激活 $\mathbf{y}_i^{(l)}$ 的 logit 来设定 $s^{(l)}=\mathbf{w}^{(l)}\cdot\mathbf{y}_i^{(l)}+b^{(l)}$：由于同层激活范数量级相近（$\|\mathbf{y}_i^{(l)}\|_2\approx\|\mathbf{x}_i^{(l)}\|_2$），steering 向量与原激活的范数比可化简为 $\cos\theta_{wy}-\cos\theta_{wx}$，一个只依赖方向、与激活幅度无关的量。这相当于用"该层真实目标激活的尺度"自动校准强度，既免去手工调参，又从根上避免了 oversteering，同时还能丢掉论文证明并不稳定的 accuracy-based layer selection。
 
-	- 功能：避免每层手动调强度，同时降低统一 logit target 带来的 oversteering。
-	- 核心思路：probe steering 可写成把 hidden state 推到某个 probe logit target。作者观察不同层 hidden state 范数相差数个数量级，所以统一 target 会让范数较小的层受到过强相对扰动。方法改用训练集中目标激活的同层 logit 统计量来设定 $s^{(l)}$，推理时只把当前激活推到该层合理的目标区间。
-	- 设计动机：安全攻击评测需要提高 harmfulness，但不能把模型推到无意义输出。按层统计强度相当于用“该层真实目标激活的尺度”做校准。
-
-3. **丢弃最后层并对所有 token 位置 steering**:
-
-	- 功能：提升生成连贯性和干预覆盖面。
-	- 核心思路：最后 decoder 层的 hidden state 直接接近 logits，干预它类似 logit bias，容易诱导重复或局部语气变化；因此方法丢弃最后层。与此同时，作者把 probe steering 解释成一种固定方向的 rank-1 adapter，所以它应该作用在所有 token 位置，而不是只作用在回复 token。
-	- 设计动机：只改回复 token 会让 prompt token 中被防御方法操纵的表示继续主导生成，特别是在 Circuit Breaker 和 RepBend 等防御模型上会降低攻击有效性。
+**3. 丢弃最后层 + 对所有 token 位置 steering：从干预面上修掉两个易被忽视的坑。** 这两点是论文归在"其他实现细节"里的工程校正，但对 fortified 模型上的攻击有效性影响很大。其一，最后一个 decoder 层的激活直接接 unembedding、近似 logit bias，干预它容易诱发重复，而且它只影响当前 step、不参与后续自回归，属于局部干预，因此方法直接丢弃最后层。其二，以往工作因为方向是从回复 token 位置学的，就只 steering 回复 token；但若把 steering 向量看作 LLM 权重的一部分，它其实是一个带固定 bias 的 rank-1 LoRA，理应作用在所有 token 位置。只改回复 token 会让 prompt token 中被防御方法（如 Circuit Breaker、RepBend）操纵的表示继续主导生成，从而削弱攻击；对所有 token 位置 steering 后，这类能力退化型防御上的有效性明显回升。
 
 ### 损失函数 / 训练策略
 probe 本身使用线性分类训练，样本来自初始对比激活和后续自适应标注激活。方向搜索使用 100 对 contrastive prompts，其中 50 对用于训练/迭代、50 个 harmful prompts 用于验证选择最佳方向。评估阶段使用 StrongReject 和 HarmBench 的 200 个 harmful prompts；judge 包括 SRF、StrongReject rubric judge 和 HarmBench classifier，分数都归一到 0 到 1。论文把该方法定位为红队鲁棒性评测工具，目标是揭示防御模型在白盒隐藏状态干预下的最坏情况，而不是给普通用户提供绕过安全策略的使用流程。

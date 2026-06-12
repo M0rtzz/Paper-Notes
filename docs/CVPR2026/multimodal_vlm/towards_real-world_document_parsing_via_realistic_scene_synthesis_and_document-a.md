@@ -45,6 +45,29 @@ tags:
 
 这篇论文想让一个只有 1B 参数的端到端 MLLM，在随手拍出来的文档照片上也能稳定解析出结构化文本——而现有端到端方法之所以做不到，卡点是两条：训练数据太单调（PDF-to-LaTeX 转出来的页面布局千篇一律），训练目标又没把结构当回事（长输出里表格、公式动不动就重复、串行）。DocHumming 的答案是数据和训练一起改：数据侧用 Realistic Scene Synthesis（RSS）从原子元素和布局模板「拼」出 300 万张视觉多样的页面级解析数据（DocMix-3M），训练侧用 Document-Aware Training Recipe（DATR）把「先认元素再读整页」的课程和「结构 token 多扣分」的损失加进去。整条链路落在 InternVL2-1B 基座上微调，得到的模型就叫 DocHumming；另外为了能测真实场景，作者还手工搭了一套 Wild-OmniDocBench。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph RSS["Realistic Scene Synthesis（合成数据）"]
+        direction TB
+        A["原子元素仓库 ~9M<br/>表格/公式/段落/图<br/>Qwen2.5-72B 改写增强"]
+        B["布局模板库 576K<br/>带阅读顺序标注"]
+        A --> C["空间/结构约束下组合排版"]
+        B --> C
+        C --> D["20% 叠加拍摄增强<br/>透视/弯曲/光照/摩尔纹"]
+        D --> E["DocMix-3M<br/>3M 页面级解析数据"]
+    end
+    subgraph DATR["Document-Aware Training Recipe（结构感知训练）"]
+        direction TB
+        F["阶段1：单元素训练<br/>异构提示 + 扩词表加结构 token"]
+        F --> G["阶段2：整页端到端训练<br/>DocMix-3M + 1M 元素 + 100K 人工"]
+        G --> H["结构 token 加权损失<br/>结构 token α=λ=4，其余 α=1"]
+    end
+    E --> F
+    H --> I["DocHumming<br/>InternVL2-1B 全参微调"]
+    I --> J["Wild-OmniDocBench 评测<br/>OmniDocBench 转真实拍摄"]
+```
+
 ### 关键设计
 
 **1. Realistic Scene Synthesis：不转换 PDF，而是从零拼出多样的页面**

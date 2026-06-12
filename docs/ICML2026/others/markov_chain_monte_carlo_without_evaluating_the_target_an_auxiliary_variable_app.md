@@ -50,7 +50,22 @@ tags:
 3. 从 $\mathbb{P}_{\theta_t,\theta'}(\cdot\mid\omega_1)$ 采 $\omega_2$，用于估计目标比值；
 4. 用接受率 $r=\dfrac{\pi(\theta'\mid x)\mathbb{P}_{\theta',\theta_t}(\omega_1,\omega_2)}{\pi(\theta_t\mid x)\mathbb{P}_{\theta_t,\theta'}(\omega_1,\omega_2)}\cdot\dfrac{q_{\omega_1}(\theta',\theta_t)}{q_{\omega_1}(\theta_t,\theta')}$ 决定是否接受。
 
-设 $\Omega_1$ 或 $\Omega_2$ 为单点空间 $\mathsf{NULL}$ 即可"关闭"对应辅助变量：(Null,Null) 是普通 MH；(Null,有) 退化为 Section 2 的旧框架（含 exchange/PoissonMH/TunaMH）；$\omega_1=\omega_2$ 是 Metropolis-within-Gibbs 视角的辅助 MH (Titsias & Papaspiliopoulos 2018)；$\omega_1\perp\omega_2$ 则让"设计 proposal"和"估计比值"用两组独立的小批量。命题 2 通过把 $(\theta,\omega_1,\theta',\omega_2)$ 视为 involutive MCMC 中的对合 $(\theta',\omega_1,\theta,\omega_2)$，给出统一的 detailed balance 证明。
+设 $\Omega_1$ 或 $\Omega_2$ 为单点空间 $\mathsf{NULL}$ 即可"关闭"对应辅助变量：(Null,Null) 是普通 MH；(Null,有) 退化为 Section 2 的旧框架（含 exchange/PoissonMH/TunaMH）；$\omega_1=\omega_2$ 是 Metropolis-within-Gibbs 视角的辅助 MH (Titsias & Papaspiliopoulos 2018)，对应下面的 Poisson–Barker/MALA；$\omega_1\perp\omega_2$ 则让"设计 proposal"和"估计比值"用两组独立的小批量，对应下面的 Tuna–SGLD。命题 2 通过把 $(\theta,\omega_1,\theta',\omega_2)$ 视为 involutive MCMC 中的对合 $(\theta',\omega_1,\theta,\omega_2)$，给出统一的 detailed balance 证明。下图把元算法每步的数据流，以及"如何配置 $\omega_1,\omega_2$"分岔出的两类新算法画在一起：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph META["双辅助变量元算法（每步迭代）"]
+        direction TB
+        A["当前状态 θ_t"] --> B["采 ω₁ ~ ℙ_θt<br/>用来设计 proposal 核 q"]
+        B --> C["提议 θ′ ~ q(θ_t, ·)"]
+        C --> D["采 ω₂ ~ ℙ(· | ω₁)<br/>用来估计目标比值"]
+        D --> E["接受率 r：昂贵项成对抵消<br/>只依赖小批量数据"]
+        E -->|"以 min(1, r) 接受 / 拒绝"| F["输出 θ_t+1"]
+    end
+    META -->|"配置 ω₁ = ω₂"| G["Poisson–Barker / Poisson–MALA<br/>梯度型 locally balanced proposal"]
+    META -->|"配置 ω₁ ⊥ ω₂"| H["Tuna–SGLD<br/>给 SGLD 补精确 MH 修正"]
+```
 
 ### 关键设计
 

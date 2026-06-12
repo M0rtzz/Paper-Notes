@@ -50,6 +50,24 @@ tags:
 ### 整体框架
 AdvMark 想解决的是同一张水印图像要同时扛住对抗、失真、再生三类攻击，而联合训练把这三件事搅在一起又慢又互相拖累。它的解法是把防御沿攻击的"本质"切成两段来打：对抗攻击是冲着模型决策边界的弱点来的（model-specific），失真/再生攻击则是信号层面的破坏（model-agnostic），二者根本不是一回事，没必要也不应该用同一套训练去硬扛。于是 Stage 1 用 Encoder Adversarial Training（EAT）只管对抗鲁棒性——微调 encoder，把水印图像"挪进"对抗攻击够不着的安全区域；Stage 2 拿到 Stage 1 的输出 $x_{w1}$，在像素空间直接优化出 $x_{w2}$ 来抵御失真和再生，同时用一个偏移约束把图像锁在 Stage 1 建立的安全区域里，让前一阶段的对抗防御成果不被推翻。推断时就是 encoder 嵌入 → Stage 2 优化 → 输出最终水印图像。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 + 水印信息 m"] --> B["Encoder 嵌入水印 → x_w"]
+    subgraph S1["Encoder Adversarial Training（Stage 1·抗对抗攻击）"]
+        direction TB
+        C["构造 defender-tailored 对抗样本<br/>找最能把 decoder 输出推向 0.5 的扰动 δ"] --> D["微调 encoder 把水印挪进 non-attackable 安全区<br/>decoder 仅当 bit acc &lt; τ₁ 时条件更新"]
+    end
+    B --> S1
+    S1 --> E["x_w1：已落在对抗攻击触不到的安全区"]
+    subgraph S2["像素级优化抵御失真/再生（Stage 2·model-agnostic）"]
+        direction TB
+        F["直接图像优化 + 约束 loss<br/>梯度下降优化 x_w2，约束 ‖x_w2−x_w1‖ ≤ ε 锁住安全区"] --> G["Quality-aware early-stop<br/>实时监控 PSNR/SSIM，画质达阈值即停"]
+    end
+    E --> S2
+    S2 --> H["输出最终水印图像 x_w2"]
+```
+
 ### 关键设计
 
 **1. Encoder Adversarial Training：与其让 decoder 包容对抗样本，不如让 encoder 把图像搬到安全区**

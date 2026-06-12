@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 GAT 想回答的问题很直接：把 diffusion 社区验证过的可扩展配方——VAE 隐空间加纯 ViT——原样搬到 GAN 上，GAN 能不能跟着一起 scale。它的答案是一个生成器和判别器都是标准 ViT 的隐空间 GAN：随机隐码 $z\sim p_z$（$d_z=64$）和类别 $c$ 经轻量 MLP 映成 style 向量 $w$，由 $w$ 在每个 ViT block 里通过 adaptive RMSNorm + LayerScale 注入 modulation，最后一个 unpatchify 线性头把 token 序列还原成 SD-VAE 的 $32\times 32$ 隐图、再 decode 成 $256\times 256$ 图像，整条链路单次前向就出图。判别器是另一个 ViT，用 `[cls]` token 走线性头出真假 logit、配 projection discriminator 引类别条件。作者把"GAN 能否 scale"拆成正交的两端分别治：架构端只保证骨干贴近原始 ViT，闲置的早期层交给 MNG 叫醒；优化端用一条宽度感知 lr 公式把不同尺寸模型的更新幅度对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["隐码 z + 类别 c"] --> B["轻量 MLP → style 向量 w"]
+    B --> C["纯 Transformer GAN 骨干<br/>ViT block 内 adaptive RMSNorm + LayerScale 注入 w"]
+    C --> D["多层级噪声扰动监督 MNG<br/>K 个 stage 各出中间图，加噪 α_k 单调递增（浅强深弱）"]
+    D --> E["unpatchify → SD-VAE 隐图 → decode 256×256 输出图"]
+    D --> F["判别器 ViT<br/>cls token 出真假 logit + projection 引类条件"]
+    E --> F
+    F -->|"宽度感知学习率缩放 η∝1/C，稳训 S→XL"| C
+```
+
 ### 关键设计
 
 **1. VAE 隐空间上的纯 Transformer GAN 骨干：把架构改动压到最低，好继承 ViT 的 scalability**

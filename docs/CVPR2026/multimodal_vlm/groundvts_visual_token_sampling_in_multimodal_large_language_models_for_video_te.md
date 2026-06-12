@@ -41,7 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GroundVTS 想解决的是「Vid-LLM 把预算平摊给所有帧、关键时刻被冗余 token 稀释」这个问题，做法是把采样的颗粒度从「选哪些帧」下沉到「选哪些视觉 token」，并且让这个选择由查询来引导、可端到端训练。整条管线是这样转的：视频先做时间下采样、过视觉编码器得到密集时空特征 $H_v \in \mathbb{R}^{N_v \times D_v}$，再经多模态投影器映射到与语言对齐的共享空间 $V \in \mathbb{R}^{N_v \times D}$；接着 VTS（Visual Token Sampling）模块拿文本查询 $Q$ 给 $V$ 里每个 token 打分，做一次可微的 top-K 选择，挑出紧凑子集 $\tilde{V}$；被选中的 token 保留它原始的位置编码以维持时序对齐，最后和查询 token 拼在一起喂给 LLM 做联合推理和片段边界生成。关键在于这个「打分—选择」发生在 VLM 内部、投影层之后，所以它既能看到与语言对齐的语义、又能用语言模型的损失反传来学。
+GroundVTS 想解决的是「Vid-LLM 把预算平摊给所有帧、关键时刻被冗余 token 稀释」这个问题，做法是把采样的颗粒度从「选哪些帧」下沉到「选哪些视觉 token」，并且让这个选择由查询来引导、可端到端训练。整条管线是这样转的：视频先做时间下采样、过视觉编码器得到密集时空特征 $H_v \in \mathbb{R}^{N_v \times D_v}$，再经多模态投影器映射到与语言对齐的共享空间 $V \in \mathbb{R}^{N_v \times D}$；接着 VTS（Visual Token Sampling）模块拿文本查询 $Q$ 给 $V$ 里每个 token 打分（查询引导的 Token 评分），做一次可微的 top-K 选择，挑出紧凑子集 $\tilde{V}$；被选中的 token 保留它原始的位置编码以维持时序对齐，最后和查询 token 拼在一起喂给 LLM 做联合推理和片段边界生成。为了让 LLM 适应这种非均匀 token 分布，整个 VTS + LLM 用三阶段渐进优化来训练。关键在于这个「打分—选择」发生在 VLM 内部、投影层之后，所以它既能看到与语言对齐的语义、又能用语言模型的损失反传来学。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧"] --> B["时间下采样 + 视觉编码器<br/>密集时空特征 Hv"]
+    B --> C["多模态投影器<br/>对齐到语言空间 V"]
+    Q["文本查询 Q"] --> S
+    C --> S
+    subgraph S["VTS 视觉 token 采样模块"]
+        direction TB
+        S1["查询引导的 Token 评分<br/>低维点积 + softmax 得相关度 w"]
+        S1 --> S2["可微 Top-K 选择<br/>Gumbel-Softmax STE 硬选 K 个 token"]
+    end
+    S --> D["保留原始位置编码<br/>维持时序对齐"]
+    D --> E["与查询 token 拼接 → LLM"]
+    E --> F["生成片段边界"]
+    T["三阶段渐进优化<br/>VTS 热身 → 联合 LoRA → 定位微调"] -. 训练 .-> S
+    T -. 训练 .-> E
+```
 
 ### 关键设计
 

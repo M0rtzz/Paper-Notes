@@ -37,6 +37,23 @@ tags:
 ### 整体框架
 TIGON要解决的是"一张参考图 + 一段文字"同时作为条件去生成3D资产的问题。它建在UniLat3D的整流流框架上，但故意不去拼一个统一的大骨干：图像分支和文本分支各跑各的DiT，分别在共享的隐空间噪声 $\tilde{\mathbf{z}}$ 上预测自己那一路的速度场。两路之间在每一层之间插一个轻量的线性桥互相递信息（early fusion），到了每一个去噪步又把两路的速度场平均一下再走下一步（late fusion）。最后把去噪完的隐变量解码成网格或3DGS。整条链路的核心就是"两个专家各自看一个模态、边走边对账"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：参考图 I + 文本 T<br/>共享隐空间噪声 z"]
+    subgraph BR["双分支 DiT 骨干 + 跨模态线性桥（Early Fusion）"]
+        direction TB
+        B["图像分支 DiT<br/>预测速度场 v_img"]
+        C["文本分支 DiT<br/>预测速度场 v_txt"]
+        B <-->|"逐 block 零初始化<br/>线性桥双向交换特征"| C
+    end
+    A --> BR
+    B --> D["逐步预测平均（Late Fusion）<br/>v = (v_img + v_txt) / 2"]
+    C --> D
+    D -->|"去噪轨迹每步迭代"| BR
+    D --> E["解码为网格 / 3DGS"]
+```
+
 ### 关键设计
 
 **1. 双分支DiT骨干：让图像专家和文本专家分开看，不强行塞进一个网络**

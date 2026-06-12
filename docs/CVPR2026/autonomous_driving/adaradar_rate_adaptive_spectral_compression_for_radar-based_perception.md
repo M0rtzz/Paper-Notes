@@ -50,6 +50,25 @@ tags:
 
 AdaRadar 把雷达前端（编码端）和计算端（解码端 + 推理网络）连成一个反馈环路，让压缩率能随场景在线调整。一帧原始 range–Doppler 张量在前端先做 DCT、自适应频谱剪枝、缩放量化，只把压缩后的系数和缩放因子传过去；计算端反量化、IDCT 重建后送进下游检测/分割网络拿到结果。关键在于这条环路会把检测置信度（或分割熵）当反馈信号，用零阶代理梯度更新下一帧的剪枝率，从而做到在线码率自适应——简单场景多压、复杂场景少压。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始 range–Doppler 张量"] --> FE
+    subgraph FE["雷达前端（编码端，可跑在 DSP）"]
+        direction TB
+        B["分块 Type-II DCT"] --> C["DCT 频谱剪枝<br/>按幅值保留前 k 个系数"]
+        C --> D["缩放量化<br/>per-block 定点 + 缩放因子"]
+    end
+    FE -->|"压缩系数 + 缩放因子"| CE
+    subgraph CE["计算端（解码端 + 推理）"]
+        direction TB
+        E["反量化 → IDCT 重建"] --> F["下游检测 / 分割网络"]
+    end
+    CE --> G["检测 / 分割结果"]
+    F -->|"置信度 p_max / 分割熵"| H["零阶代理梯度自适应<br/>两次前向估梯度更新 r"]
+    H -->|"更新剪枝率 r（下一帧）"| C
+```
+
 ### 关键设计
 
 **1. DCT 频谱剪枝：按幅值自适应保留，贴合雷达频谱的稀疏性**

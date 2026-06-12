@@ -42,7 +42,18 @@ tags:
 ### 整体框架
 输入是任意 OLO 算法 $\mathcal{A}$、时间长度 $T$ 和 bandit loss 序列。输出是一串无约束动作及 regret 保证。PABLO 本身不限定 OLO 子程序：若选择 parameter-free mirror descent，就得到静态 comparator-adaptive expected regret；若选择动态 comparator-adaptive OLO 算法，就得到 path-length 自适应动态 regret；若选择带 optimistic composite penalty 的 OLO 变体，则能处理高概率界中无约束动作范数带来的额外项。
 
-关键技术在于 $H_t$ 的设置。论文采用满足 $H_t\preceq \frac{1}{d(\|w_t\|^2\vee \varepsilon^2)}I_d$ 的各向同性选择，这样扰动在 $w_t$ 大时变小，在 $w_t$ 接近零时由 $\varepsilon$ 防止除零。由此得到两类估计性质：$\tilde{\ell}_t$ 是无偏的，并且其二阶矩和几乎处处范数都有可控上界。这些性质决定了后续能接哪些 OLO 保证。
+关键技术在于 $H_t$ 的设置。论文采用满足 $H_t\preceq \frac{1}{d(\|w_t\|^2\vee \varepsilon^2)}I_d$ 的各向同性选择，这样扰动在 $w_t$ 大时变小，在 $w_t$ 接近零时由 $\varepsilon$ 防止除零。由此得到两类估计性质：$\tilde{\ell}_t$ 是无偏的，并且其二阶矩和几乎处处范数都有可控上界。这些性质决定了后续能接哪些 OLO 保证。整体看，PABLO 是一个每轮循环的归约：OLO 子程序给中心点、bandit 侧造无偏估计再喂回，二者解耦后只换子程序就能换 regret 保证。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["OLO 子程序 𝒜<br/>输出中心点 w_t（按 regret 目标切换）"] --> B["扰动矩阵选择<br/>H_t 各向同性、随 ‖w_t‖ 缩放"]
+    B --> C["在 H_t 特征方向采样 s_t ∈ ±v_i<br/>播放 w̃_t = w_t + H_t^(−1/2)·s_t"]
+    C --> D["环境只返回标量损失 ⟨ℓ_t, w̃_t⟩"]
+    D --> E["PABLO 损失估计器<br/>ℓ̃_t = d·H_t^(1/2)·s_t·⟨w̃_t, ℓ_t⟩（无偏）"]
+    E -->|喂回并更新, 进入下一轮| A
+    A -.换插件换保证.-> F["PFMD → 静态 comparator 自适应<br/>动态 OLO → path-length 自适应<br/>optimistic + composite → 高概率界"]
+```
 
 ### 关键设计
 

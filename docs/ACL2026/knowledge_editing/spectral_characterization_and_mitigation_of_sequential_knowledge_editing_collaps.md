@@ -42,6 +42,23 @@ tags:
 ### 整体框架
 论文分"机制分析"和"干预方法"两部分：前者用 LLaMA3-8B 的 FFN 权重把一般能力和谱结构对应起来，后者据此提出与编辑器解耦的 plug-and-play wrapper——REVIVE。REVIVE 不改编辑器如何算更新，而是在更新落地前插一道谱过滤：给定任意编辑器产生的权重更新 $\Delta W$，先对原始权重 $W$ 做 SVD 得到左右奇异向量 $u_i,v_j$ 和奇异值 $\sigma_i$，用能量阈值 $\tau$ 圈出 dominant subspace，再把 $\Delta W$ 展开到这组外积基 $\sum_{i,j}\alpha_{ij}u_iv_j^\top$ 上，凡是触及 dominant input/output 方向的分量一律置零，只把更新留在低能谱区域，输出一个 safe update。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["原始权重 W"] --> SVD["谱视角分解 (SVD)<br/>W = Σ σᵢ uᵢ vᵢᵀ"]
+    SVD --> DIAG["顺序编辑崩溃的谱诊断<br/>dominant 方向承载一般能力、被编辑逐步旋转"]
+    DIAG --> TAU["能量阈值 τ 圈定<br/>dominant 子空间 (top-k)"]
+    EDITOR["任意编辑器 ΔW<br/>MEMIT / RECT / AlphaEdit"] --> EXP["展开到外积基<br/>Σ αᵢⱼ uᵢ vⱼᵀ"]
+    SVD --> EXP
+    subgraph PROT["Dominant Subspace Protection"]
+        direction TB
+        TAU --> FILTER["凡 i≤k 或 j≤k 的分量置零<br/>(触及 dominant 输入/输出方向)"]
+        EXP --> FILTER
+        FILTER --> SAFE["safe update ΔW_safe<br/>= Σ (i>k 且 j>k) αᵢⱼ uᵢ vⱼᵀ"]
+    end
+    SAFE --> APPLY["落地更新 W + ΔW_safe"]
+```
+
 ### 关键设计
 
 **1. 谱视角解读权重作用：一般能力到底藏在哪**

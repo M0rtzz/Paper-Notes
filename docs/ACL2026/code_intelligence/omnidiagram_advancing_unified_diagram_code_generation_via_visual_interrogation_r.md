@@ -43,21 +43,43 @@ tags:
 
 ### 整体框架
 
-图表代码生成的难点在于既要代码逻辑正确、又要渲染后的视觉保真，而异构任务里很难找到统一的视觉奖励——Text-to-Code 没有唯一参考图，Diagram-to-Code 又是非双射（不同代码可渲染出相同图像）。OmniDiagram 用一条"数据—SFT—RL"的流水线统一应对：先用自上而下的合成方法造出覆盖 3×3 任务-语言矩阵的 M32Diagram 数据集（196k 样本），再用 SFT 把基础的多格式图表代码生成能力打牢，最后进入由 Viva 视觉问答奖励驱动的 GRPO 阶段，让模型在渲染—审问—反馈的闭环中迭代提升视觉保真度，输出 LaTeX/Mermaid/PlantUML 三种语言的可执行图表代码。
+图表代码生成的难点在于既要代码逻辑正确、又要渲染后的视觉保真，而异构任务里很难找到统一的视觉奖励——文本转代码（Text-to-Code）没有唯一参考图，图表转代码（Diagram-to-Code）又是非双射（不同代码可渲染出相同图像）。OmniDiagram 用一条"数据—SFT—RL"的流水线统一应对：先用自上而下的合成方法造出覆盖 3×3 任务-语言矩阵的 M32Diagram 数据集（196k 样本），再用 SFT 把基础的多格式图表代码生成能力打牢，最后进入由 Viva 视觉问答奖励驱动的 GRPO 阶段，让模型在渲染—审问—反馈的闭环中迭代提升视觉保真度，输出 LaTeX/Mermaid/PlantUML 三种语言的可执行图表代码。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["M32Diagram 数据集构建"]
+        direction TB
+        A["主题 → 场景 → 结构化数据"] --> B["Gemini 合成代码-图像对"]
+        B --> C["纠错循环 + 视觉验证过滤<br/>共 196k 样本，覆盖 3×3 任务-语言"]
+    end
+    DATA --> SFT["SFT 阶段<br/>next-token 预测建立多格式基础能力"]
+    SFT --> RL["RL 阶段（GRPO）<br/>每题采 G=4 个候选"]
+    RL --> REN["渲染候选代码为图<br/>不可渲染直接判 0"]
+    subgraph VIVA["Viva 视觉问答奖励"]
+        direction TB
+        Q["离线：GPT-4.1-mini 生成针对性视觉问题"]
+        ANS["在线：Qwen3-VL 基于渲染图逐题作答<br/>取均值并与格式奖励组合"]
+        Q --> ANS
+    end
+    REN --> VIVA
+    VIVA -->|奖励反馈更新策略| RL
+    RL --> OUT["输出可执行图表代码<br/>LaTeX / Mermaid / PlantUML"]
+```
 
 ### 关键设计
 
-**1. Viva（Visual Interrogation Verifies All）奖励机制：用"逐题审问"代替整体相似度来判分**
+**1. M32Diagram 大规模数据集：自上而下合成 + 严格过滤，补齐 3×3 任务-语言的数据空白**
 
-固定模板奖励受评估模型能力限制且易被 prompt hacking，全局相似度又偏向表面结构而忽略细粒度细节。Viva 借鉴人类审查复杂构建任务时的元认知机制，把问题生成与答案验证解耦：离线阶段用 GPT-4.1-mini 为每个样本生成若干针对性视觉问题（都设计为正确答案对应"Yes"）；在线阶段把每个 rollout 的代码渲染成图，再让 Qwen3-VL-32B 作为奖励模型基于渲染图回答这些问题。Viva 奖励取所有问题得分的均值，并与格式奖励组合为 $R_i = \alpha \cdot R_{\text{Viva}} + (1-\alpha) \cdot R_{\text{fmt}}$（$\alpha=0.9$），渲染失败的候选直接判 0。问题驱动的验证关注逻辑一致性而非严格全局模仿，因而能奖励更多样的 rollout，多问题聚合也通过方差分析被证明可有效压低单次 VQA 的奖励噪声。
+图表代码生成长期缺少覆盖多语言多任务的大规模数据，没有数据这条流水线无从谈起。OmniDiagram 采用场景驱动的自上而下合成（主题 topic → 场景 scenario → 结构化数据 → 代码-图像对），用 Gemini-2.5-Flash 生成，并经过错误纠正循环与视觉验证，从 300k 候选中筛出 165k 高质量样本，加上 31k 开源数据共 196k，另有 77k 推理增强样本。每种语言覆盖约 15 种图表类型，并用基于感知哈希（perceptual hashing）的分层聚类来平衡 SFT 与 RL 训练集在难度和拓扑复杂度上的分布，使数据既全面又不在某类图表上失衡。
 
-**2. M32Diagram 大规模数据集：自上而下合成 + 严格过滤，补齐 3×3 任务-语言的数据空白**
+**2. SFT-to-RL 两阶段训练管线：先立基础能力，再用 RL 精炼视觉保真**
 
-图表代码生成长期缺少覆盖多语言多任务的大规模数据。OmniDiagram 采用场景驱动的自上而下合成（topic→scenario→structured data→code-image pairs），用 Gemini-2.5-Flash 生成，并经过错误纠正循环与视觉验证，从 300k 候选中筛出 165k 高质量样本，加上 31k 开源数据共 196k，另有 77k 推理增强样本。每种语言覆盖约 15 种图表类型，并用基于感知哈希的分层聚类来平衡 SFT 与 RL 训练集在难度和拓扑复杂度上的分布，使数据既全面又不在某类图表上失衡。
+直接上 RL 会导致模式坍缩——消融显示纯 RL（无 SFT）的模型只会生成 Mermaid 代码而无视具体指令。因此 OmniDiagram 先用标准 next-token prediction 做 SFT，建立跨格式的图表代码生成基础；再进入 RL 阶段，用 GRPO 每题采 $G=4$ 个候选，渲染后在线计算 Viva 奖励并惩罚不可渲染的 rollout。两阶段互补，SFT 保证了"会画"，RL 在此之上把"画得像不像"逐步拉满（执行率从 SFT 的 88.6% 提升到 93.0%）。
 
-**3. SFT-to-RL 两阶段训练管线：先立基础能力，再用 RL 精炼视觉保真**
+**3. Viva（Visual Interrogation Verifies All）奖励机制：用"逐题审问"代替整体相似度来判分**
 
-直接上 RL 会导致模式坍缩——消融显示纯 RL（无 SFT）的模型只会生成 Mermaid 代码而无视具体指令。因此 OmniDiagram 先用标准 next-token prediction 做 SFT，建立跨格式的图表代码生成基础；再进入 RL 阶段，用 GRPO 每题采 $G=4$ 个候选，在线计算 Viva 奖励并惩罚不可渲染的 rollout。两阶段互补，SFT 保证了"会画"，RL 在此之上把"画得像不像"逐步拉满。
+这是驱动上述 RL 阶段的核心奖励。固定模板奖励受评估模型能力限制且易被 prompt hacking，全局相似度又偏向表面结构而忽略细粒度细节。Viva 借鉴人类审查复杂构建任务时的元认知机制，把问题生成与答案验证解耦：离线阶段用 GPT-4.1-mini 为每个样本生成若干针对性视觉问题（都设计为正确答案对应"Yes"）；在线阶段把每个 rollout 的代码渲染成图，再让 Qwen3-VL-32B 作为奖励模型基于渲染图回答这些问题。Viva 奖励取所有问题得分的均值，并与格式奖励组合为 $R_i = \alpha \cdot R_{\text{Viva}} + (1-\alpha) \cdot R_{\text{fmt}}$（$\alpha=0.9$），渲染失败的候选直接判 0。问题驱动的验证关注逻辑一致性而非严格全局模仿，因而能奖励更多样的 rollout，多问题聚合也通过方差分析被证明可有效压低单次 VQA 的奖励噪声。
 
 ### 损失函数 / 训练策略
 

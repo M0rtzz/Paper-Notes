@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 ReVSI 流水线分三阶段：(1) 用自研 3D web 标注界面，在 ScanNetv2/ScanNet++/ARKitScenes/3RScan/MultiScan 上从原 VSI-Bench 的 288 场景 65 类扩到 381 场景 504 类（开放词表），重画 5365 个 3D 框；(2) 对 6 类任务（object counting / object size / absolute distance / room size / relative distance / relative direction，删除 Object Appearance Order 因更偏时间推理）按更严的模板规则重新生成 QA，每条人工 verify；(3) 同一段视频在 16/32/64/all-frame 四个采样预算下分别构造 GT，并额外生成"删除所有含查询对象帧"的 dummy 视频做 visibility-guided 控制实验。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始视频 + VSI-Bench 原标注<br/>(ScanNet/ARKitScenes 等 5 个 3D 数据集)"] --> B
+    B["视频对齐的开放词表 3D 重标注<br/>过滤错标·收紧 3D 框·补回可见物体·人工画房间 polygon<br/>288→381 场景, 65→504 类, 3185→5365 物体"] --> C
+    C["去偏 + 人工 verify 的 QA 重生成<br/>6 类任务逐个重写模板·打掉答案分布偏差·每题人工核验"] --> D
+    subgraph D["帧预算自适应评估 + dummy 视频控制实验"]
+        direction TB
+        D1["按 GT 相机位姿光栅化判物体可见(占帧 >5%)<br/>为 16/32/64/all 各构造一份 GT(frames)"]
+        D2["dummy 视频：删除所有含查询对象帧<br/>GT 确定(如计数必为 0)，测模型是否真依赖视觉证据"]
+    end
+    D --> E["ReVSI 基准<br/>MCQ 用 Acc · NQ 用 MRA → 诊断评估"]
+```
+
 ### 关键设计
 
 **1. 视频对齐的开放词表 3D 重标注：把 GT 从"基于 noisy 重建网格"换成"以原始视频为锚的人工标注"**

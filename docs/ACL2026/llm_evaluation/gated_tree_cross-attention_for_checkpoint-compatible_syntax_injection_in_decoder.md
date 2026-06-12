@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 GTCA 的整体思路是给一个已经训好的 decoder-only LLM 挂一条"可装可卸"的句法侧支路，而完全不去改写 backbone 本身。输入文本先在离线阶段被 Berkeley Neural Parser 解析成 constituency 树并按 hash 缓存，训练时不再付出 parser 开销；这棵树被按高度切成多层 chunk memory，逐层喂给对应的 transformer 层。在第 $\ell$ 层，当前 token 的隐状态作 query、通过一条头级门控的 cross-attention 去读这一层的 chunk memory，得到一个残差更新 $\Delta H^\ell$，再经一道 token update mask 过滤后才叠加回隐状态、送入下一层。整条路径从输入端的离线解析、到中间的逐层门控读取、到输出端的受控残差注入，backbone 参数始终可冻结，GTCA 分支随时可旁路关闭。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入文本"] --> B["离线 Berkeley parser<br/>构建 constituency 树并按 hash 缓存"]
+    B --> C["Height-aligned Chunk Memory<br/>按高度 h(u) 切树，第 ℓ 层取对应高度的 chunk"]
+    C --> D["Head-wise Gated Cross-Attention<br/>冻结 token 隐状态作 query 读 chunk，σ(G) 头级门控"]
+    D --> E["残差更新 ΔH"]
+    E --> F["Token Update Mask + 三阶段训练<br/>m_tok 屏蔽 option token，受控叠加回隐状态"]
+    F -->|逐层 ℓ=1..D 重复| D
+    F --> G["输出（backbone 始终冻结，GTCA 可旁路关闭）"]
+```
+
 ### 关键设计
 
 **1. Height-aligned Chunk Memory：让树的高度对齐 transformer 的层**

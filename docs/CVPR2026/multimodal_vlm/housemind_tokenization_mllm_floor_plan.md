@@ -43,6 +43,36 @@ tags:
 ### 整体框架
 平面图的难点在于它本质是连续的几何对象，而 LLM 只会处理离散 token 序列，两者之间隔着一道表征鸿沟。HouseMind 的思路是把这道鸿沟「填平」：先用 VQ-VAE 把平面图拆成轮廓和一个个房间，各自压成离散 token，再把这些空间 token 和文本 token 塞进同一个词汇表，让一个小 LLM 用纯自回归的方式同时处理几何和语言。整条链路最终落成一串交织序列 $Z = [\boldsymbol{z}_o, \ell_{r_1}, \boldsymbol{z}_{r_1}, \ldots, \ell_{r_N}, \boldsymbol{z}_{r_N}]$——开头是轮廓 token，后面每个房间由「语义标签 token $\ell_{r_i}$ + 几何 token $\boldsymbol{z}_{r_i}$」成对排开。一旦平面图变成了这样的序列，理解、生成、编辑就都退化成同一个「读这串 token、写那串 token」的问题。
 
+整条链路分三段：先做层次化 token 化得到统一词汇表与交织序列，再用三阶段对齐训练把空间 token 和文本 token 拉到同一表征空间，最后在这个对齐好的自回归 LLM 上统一地做理解 / 生成 / 编辑。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：平面图（轮廓 x_o + N 个房间）+ 文本指令"]
+    subgraph TOK["层次化房间实例 Token 化"]
+        direction TB
+        S["拆成轮廓 + N 个房间实例"]
+        S --> EO["轮廓 VQ-VAE<br/>z_o = E_o(x_o)"]
+        S --> ER["条件房间 VQ-VAE<br/>z_ri = E_r(x_ri, x_o)，带轮廓上下文"]
+        EO --> VOC["并入统一词汇表<br/>交织序列 Z = [z_o, ℓ_r1, z_r1, …]"]
+        ER --> VOC
+    end
+    subgraph TRAIN["三阶段多模态对齐训练"]
+        direction TB
+        T1["Stage 1 嵌入初始化<br/>码字并入 LLM 词表"]
+        T1 --> T2["Stage 2 多模态预训练<br/>文本↔空间自回归对齐"]
+        T2 --> T3["Stage 3 指令微调 SFT<br/>理解/生成/编辑指令数据"]
+    end
+    LLM["对齐后的小 LLM（Qwen3-0.6B，自回归）"]
+    UNI["统一任务建模<br/>理解 / 生成 / 编辑 = 同一条件序列生成"]
+    OUT["VQ-VAE 解码器还原像素布局"]
+    IN --> TOK
+    TOK --> TRAIN
+    TRAIN --> LLM
+    LLM --> UNI
+    UNI --> OUT
+```
+
 ### 关键设计
 
 **1. 层次化房间实例 Token 化：把整张图拆到房间粒度再离散化**

@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 本文要解决的是"MoE 大模型能不能不靠 SAE、直接在专家这一级被读懂"。思路是把可解释性分析从神经元逐级抬升到整个专家：先用 $k$-sparse probing 量出 MoE 专家神经元确实比 dense FFN 神经元更单义，再借这股稀疏红利让 LLM 给每个专家自动写自然语言标签并做因果验证，最后用一个客观度量去仲裁"专家到底专在什么颗粒度"。全程不训练任何 LLM，只对 12 个公开的 MoE / dense checkpoint（OLMoE-1B-7B、Mixtral-8x7B、Qwen3-30B-A3B、ERNIE-4.5-21B-A3B、OLMo-7B 等）做前向分析，配一个外部 explainer/scorer LLM (Gemini 3 Flash Preview)。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["12 个 MoE / dense checkpoint<br/>(OLMoE / Mixtral / Qwen3 / ERNIE …)"] --> B["k-sparse probing + best-layer 协议<br/>逐概念测单义性：MoE 专家神经元 > dense FFN"]
+    B --> C["分析单元由神经元抬升到整个专家"]
+    subgraph LABEL["残差流贡献模驱动的专家自动标注流水线"]
+        direction TB
+        D["按残差贡献模 g·‖E(x)‖ 给序列打分<br/>每专家取 top-20 高分序列"] --> E["配 Logit Lens top-3 token<br/>喂 explainer LLM 写一句话标签"]
+        E --> F["scorer LLM 在 10 正 10 负样本算 F1 验证"]
+    end
+    C --> LABEL
+    LABEL --> G{"验证标签因果性 + 仲裁特化颗粒度"}
+    G -->|因果| H["Trigger-Target 归因<br/>DLA 排序：matched 进 Top-1/8"]
+    G -->|颗粒度| I["JSD × unembedding k-means<br/>k-sweep：k=5000 远高于 k=10"]
+    H --> J["结论：专家是细粒度任务专家"]
+    I --> J
+```
+
 ### 关键设计
 
 **1. $k$-sparse probing + best-layer 协议：把"是否单义"做成可比指标**

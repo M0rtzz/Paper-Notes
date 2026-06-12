@@ -48,6 +48,24 @@ WISER 要解决的是组合图像检索里两条路各有死穴的老问题：T2
 
 形式化地，给定参考图像 $I_{\text{ref}}$ 和修改文本 $T_{\text{mod}}$，编辑器 $\mathcal{F}$ 分别产出编辑描述 $C_{\text{edit}}$ 和编辑图像 $I_{\text{edit}}$，再由 CLIP 的视觉/文本编码器 $E_{\text{img}}$、$E_{\text{txt}}$ 编码成查询向量 $q_v$、$q_t$，在数据库 $\mathcal{D}$ 里按余弦相似度各自检索。后续三个关键设计正好对应论文标题里的三个词：Wider Search 把候选面铺宽、Adaptive Fusion 做验证引导的融合排序、Deeper Thinking 对没把握的检索做自反思精化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：参考图 I_ref + 修改文本 T_mod"] --> B["编辑器 F"]
+    subgraph WS["Wider Search：两条路同时跑"]
+        direction TB
+        B --> T["T2I 路：图转描述→编辑描述<br/>→CLIP 文本检索 top-K"]
+        B --> I["I2I 路：直接编辑参考图<br/>→CLIP 图像检索 top-K"]
+        T --> U["并集候选池<br/>两路 top-K 取并集"]
+        I --> U
+    end
+    U --> V["VLM 验证器 Φ<br/>给每个候选打可靠性分 c"]
+    V -->|"两路最高分均 ≥ τ：可靠"| AF["Adaptive Fusion<br/>融合分排序"]
+    V -->|"任一路 < τ：没把握"| DT["Deeper Thinking<br/>诊断漏改的属性/实体→定向建议"]
+    DT -->|"重编辑再来一轮（至多 N 次）"| B
+    AF --> O["输出：排序后的检索结果"]
+```
+
 ### 关键设计
 
 **1. Wider Search：两条路同时跑，先把召回面铺宽**

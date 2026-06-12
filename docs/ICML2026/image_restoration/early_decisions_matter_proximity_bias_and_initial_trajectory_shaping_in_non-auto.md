@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 方法要解决的是 masked 扩散语言模型在完全 NAR 解码下"越解越乱"的问题，但解法刻意保守：它建立在标准 MDLM 反向解码之上——每步 $d$ 既为所有 mask 位置预测 token，又要选出子集 $\mathcal{U}_d$ 把它们 unmask——而本文 **不动** backbone $\theta$、也 **不动** 后续步的 greedy 策略，只在第 1 步把位置选择 $\mathcal{U}_1$ 从 "Top-1 confidence" 换成一个轻量 planner 打分，并在所有步对 EOS 的 logit 施加随时间衰减的 inverse-temperature 缩放。三件事串在一个 progressive schedule 上：早期每步放出的 token 数 $|\mathcal{U}_d|<L/T$，越往后越多，好让 planner 在最关键的开局拥有足够的区分度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：prompt + 全 mask 答案序列（L 个 token）"] --> B["冻结 backbone θ：为所有 mask 位置预测 token<br/>EOS 温度退火：排序前给 EOS logit 除以 λ（3→1），压低其 unmask 优先级"]
+    B --> C{"是否第 1 步？"}
+    C -->|"是（开局决定整条轨迹）"| D["轻量 Planner：采 P 个候选位置集<br/>打分取最高 → 定首批 unmask 位置 U₁"]
+    C -->|"否（第 2 至 T 步）"| E["confidence-based greedy<br/>按置信度选 unmask 位置"]
+    D --> F["unmask 选中位置<br/>progressive schedule：早期放出少、逐步增多"]
+    E --> F
+    F -->|"仍有 mask"| B
+    F -->|"全部解码完成"| G["输出：生成序列"]
+```
+
 ### 关键设计
 
 **1. Proximity bias 诊断：把"NAR 为什么不行"钉死在两个可量化的现象上**
@@ -53,7 +66,7 @@ tags:
 
 既然第一步几乎决定全局，那么集中算力学好这一步性价比极高。Planner $\pi_\phi(\mathcal{U}_1\mid h_\mathcal{S})$ 是个 2 层 Transformer encoder 加 position-wise scoring head，关键约束是它 **只吃 backbone 最后一层在候选位置 $\mathcal{S}$ 上的 hidden** $h_\mathcal{S}$、不看整段上下文——这样它被迫学到"位置先验"而非简单复现 backbone 的 confidence。每个候选 token 出一个标量分，平均成候选集的总分。训练完全离线：对每条样本随机采 $S=32$ 个候选 $\mathcal{U}_1$，其余步全 greedy 跑到底，拿到 0/1 的 trajectory-level 正确性标签后用 BCE 优化，目标即 $\max_\phi \mathbb{E}_{\mathcal{U}_1\sim\pi_\phi}[R(\mathbf{z}_0)]$，其中 $R(\mathbf{z}_0)$ 是最终任务奖励 (Sudoku 用 cell accuracy)。推理时随机采 $P=32$ 个候选集打分、取分高者作为 $\mathcal{U}_1$，之后所有步退回普通的 confidence-based greedy。相对 8B backbone，这 5M 参数几乎可以忽略。
 
-**3. EOS Temperature Annealing：在排序时压低 EOS，但保留它的停止能力**
+**3. EOS 温度退火（EOS temperature annealing）：在排序时压低 EOS，但保留它的停止能力**
 
 proximity bias 一旦从 EOS 起头就会沿序列向前传染，最经济的打断方式不是重训或换 padding 方案 (如 Rainbow Padding 需 finetune)，而是只在"决定 unmask 谁"这一步暂时削弱 EOS 的影响力。具体做法是在所有步对 EOS 的 logit 单独施加随时间衰减的 inverse-temperature $\lambda_d$——softmax 前把 EOS logit 除以 $\lambda_d$，初值 $\lambda_T=3$ 线性退火到 $1$，使其在排 unmask 优先级时被显著压低。注意它 **只影响位置选择的排序、不改实际 token 预测**：位置一旦选定，token 仍按原始 logit 走 greedy argmax，因此模型后期的自然停止行为被完整保留。配合 progressive schedule，这一招把 GSM8K 的有效 (非 EOS) token 数从 157.2 提到 188.6，相当于把推理任务真正需要的"生成窗口"还给了模型。
 

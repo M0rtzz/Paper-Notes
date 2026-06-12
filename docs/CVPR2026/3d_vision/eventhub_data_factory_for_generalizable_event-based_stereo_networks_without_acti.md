@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EventHub 通过两条互补路径生成训练数据：(i) **Event Data Factory**——使用 SVRaster 从稀疏 RGB 图像序列通过新视角合成生成合成事件立体对和深度标签；(ii) **Stereo Cross-Modal Distillation**——在已有 RGB-Event 配对数据的场景中，用 RGB 立体基础模型（如 FoundationStereo）生成代理深度标签，通过多视图几何对齐到事件域。两条路径的数据合并为 EventHub 训练集，用于训练/适配事件立体网络。
+EventHub 通过两条互补路径生成训练数据：(i) **事件数据工厂（Event Data Factory）**——使用 SVRaster 从稀疏 RGB 图像序列通过新视角合成生成合成事件立体对和深度标签；(ii) **立体跨模态蒸馏（Stereo Cross-Modal Distillation）**——在已有 RGB-Event 配对数据的场景中，用 RGB 立体基础模型（如 FoundationStereo）生成代理深度标签，通过多视图几何对齐到事件域。两条路径的数据合并为 EventHub 训练集；训练时把事件编码成 Tencode 三通道、直接复用 RGB 立体模型的架构与权重来适配事件立体网络。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DF["基于 SVRaster 的合成事件生成管线"]
+        direction TB
+        A["多视角 RGB 图像"] --> B["COLMAP 恢复位姿"]
+        B --> C["训练 SVRaster 辐射场<br/>法线一致性 + 单目深度正则"]
+        C --> D["虚拟轨迹渲染三目图像<br/>光流自适应帧间隔"]
+        D --> E["ESIM 模拟合成事件 + 深度标签"]
+    end
+    F["RGB-Event 配对数据"] --> G["立体跨模态蒸馏<br/>FoundationStereo 出视差→深度→重投影到事件域"]
+    E --> H["EventHub 训练集"]
+    G --> H
+    H --> I["RGB 立体模型到事件域的重用<br/>Tencode 三通道 + RGB 权重初始化"]
+    I --> J["泛化事件立体网络"]
+```
 
 ### 关键设计
 

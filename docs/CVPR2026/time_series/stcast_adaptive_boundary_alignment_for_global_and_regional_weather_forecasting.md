@@ -39,6 +39,17 @@ tags:
 
 STCast要解决的核心矛盾是：高分辨率区域预报离不开全球大气动力学的支撑，但直接训练一个高分辨率全球模型（~1km、0.01°，对应近 20000×40000 的网格）在算力上根本跑不通。它的应对是把任务拆成一条耦合链路——先用一个骨干网络在低分辨率上做全球预报，再让区域模型通过 SAA 把全球场的信息自适应地"借"进来做高分辨率区域预报，进而从区域预报的海平面气压推断台风路径，最后向全球初始场注入 Perlin 噪声、多次模拟取均值得到集合预测。骨干采用 Encoder-Processor-Decoder 结构，Processor 交替使用窗口注意力和自注意力来兼顾局部细节和全局关联。四个任务形式上不同，但都建立在同一套全球—区域—时序耦合表征之上：全球预报记作 $X_g^{t+1} = \Phi_g(X_g^t)$，区域预报记作 $X_r^{t+1} = \Phi_r(X_r^t, X_g^t)$，后两个任务则是在这两步输出上的衍生应用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["全球初始场 X_g^t<br/>ERA5 低分辨率"] --> B["全球预报骨干 Φ_g<br/>Encoder-Processor-Decoder<br/>内含 TMoE 按月份高斯先验路由专家"]
+    B --> G["全球预报 X_g^t+1"]
+    G --> C["Spatial-Aligned Attention SAA<br/>可学习全球分布替代静态边界<br/>区域场自适应聚合全球信息"]
+    C --> R["区域高分辨率预报 X_r^t+1"]
+    R --> D["台风路径<br/>从区域海平面气压推断轨迹"]
+    G --> E["集合预测<br/>注入 Perlin 噪声跑 n 次取均值"]
+```
+
 ### 关键设计
 
 **1. Spatial-Aligned Attention（SAA）：用可学习的全球分布替代静态邻域边界**

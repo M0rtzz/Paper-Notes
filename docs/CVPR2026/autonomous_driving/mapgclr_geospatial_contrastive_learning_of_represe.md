@@ -45,6 +45,21 @@ tags:
 
 半监督训练流水线包含两个数据流：(1) **监督分支**：少量标注数据通过 MapTRv2 编码器-解码器完整流程，计算监督损失 $\mathcal{L}_{sup}$；(2) **自监督分支**：大量无标注多遍历数据仅通过编码器生成 BEV 特征网格，利用地理空间对比损失 $\mathcal{L}_{GCLR}$ 训练。批次中包含 $n$ 个监督样本和 $2m$ 个自监督样本（$m$ 个参考-邻接对）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["多遍历无标注数据 + 少量标注数据"]
+    DATA --> D1["多遍历分析与数据划分<br/>位姿转全局系 → 包围盒合多边形 → 标多遍历<br/>建空间图 G=(V,E)，IoU 落区间的位姿对连边"]
+    D1 --> PAIR["参考-邻接位姿对 (R, A)"]
+    PAIR --> ENC["MapTRv2 编码器<br/>ResNet-50 → BEV 特征网格"]
+    ENC -->|"标注分支 (n 样本)"| DEC["地图解码器<br/>Transformer 预测向量化多段线"]
+    DEC --> LSUP["监督损失 L_sup"]
+    ENC -->|"自监督分支 (2m 样本)"| D2["地理空间对比学习<br/>重叠区采锚点 → 最近邻找正样本 → 随机采负样本<br/>投影头 h: f → z 解耦学习域/应用域"]
+    D2 --> D3["InfoNCE 对比损失 L_GCLR<br/>拉近同地点、推远不同地点"]
+    LSUP --> COMB["总损失 L_semi = λ_sup·L_sup + λ_GCLR·L_GCLR"]
+    D3 --> COMB
+```
+
 ### 关键设计
 
 **1. 多遍历分析与数据划分：从原始轨迹里自动挖出“同一地点的不同次经过”**

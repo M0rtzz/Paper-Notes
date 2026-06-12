@@ -45,6 +45,28 @@ Deco-Mamba 的切入：(1) 将 Mamba 引入解码器而非编码器；(2) 设计
 
 Deco-Mamba 想回答一个被忽视的问题：当编码器已经足够强，瓶颈到底卡在解码端的哪一步。它保留 U-Net 的对称形状，但把重心整体下移到解码路径。编码侧是一个双分支结构——CNN 分支（7×7 卷积）负责保留高分辨率空间细节，PVT Transformer 分支（4 阶段）负责提取多尺度语义；两路特征送进解码器。解码器一共 6 个阶段，每个阶段把上一阶段的特征依次过三道工序：先用 Co-Attention Gate 把编码器跳连特征和解码器特征对齐融合，再用 VSSMB 在线性复杂度下补回全局语义一致性，最后用 Deformable Residual Block 把被平滑掉的边界细节修回来。训练时不只在最终输出算损失，而是让每个解码阶段都直接在自己的原始分辨率上接受一次分布层面的监督（MSDA）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像"] --> ENC
+    subgraph ENC["双分支编码器（脚手架）"]
+        direction TB
+        C["CNN 分支<br/>7×7 卷积保高分辨率细节"]
+        T["PVT Transformer 分支<br/>4 阶段提多尺度语义"]
+    end
+    ENC --> B["瓶颈层<br/>2× VSSMB → 上采样"]
+    B --> S
+    subgraph S["解码器阶段（自瓶颈起逐级上采样，×5）"]
+        direction TB
+        CAG["Co-Attention Gate（CAG）<br/>编/解码特征互为门控融合"] --> VSS["VSSMB<br/>四向选择性扫描补全局一致性"]
+        VSS --> DRB["Deformable Residual Block（DRB）<br/>可变形卷积修回边界细节"]
+    end
+    S --> HEAD["分割头 → 输出掩码"]
+    S -.各阶段原始分辨率.-> MSDA["MSDA 深度监督<br/>GT 窗口分布 vs 预测分布 算 KL"]
+    HEAD --> L["总损失 = Dice + Σ λ·KL"]
+    MSDA --> L
+```
+
 ### 关键设计
 
 **1. Co-Attention Gate（CAG，共注意力门控）：让编码器和解码器特征互相当门控**

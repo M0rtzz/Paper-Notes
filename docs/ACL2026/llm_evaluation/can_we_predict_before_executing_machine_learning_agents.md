@@ -43,21 +43,46 @@ tags:
 ### 整体框架
 本文先把"不执行就预判 ML 解优劣"形式化成 Data-centric Solution Preference 任务并配上评测语料，再把这种预判能力嵌进 agent。语料这一侧，从 AIDE/AutoMind 在 MLE-Bench 上的真实 trajectory 中抽出 1,329 个有效解，经去重、分类、专家采样精选到 895 个实例，两两组合成 18,438 对，并平衡 ground-truth winner 的位置以消除位置偏差。agent 这一侧的 ForeAgent 以 AIDE 的 tree search 为骨架，把 Improvement 阶段从"逐个执行"改成三步：一次性生成 m=10 个候选 → 用置信度 0.7 阈值做 pairwise 筛选 → 只对 top-1 候选做真实执行验证。preference 任务用 Micro-Averaged Accuracy 衡量（Random 基线 50.0%、复杂度启发式 50.8%），agent 则用 Beat Ratio（在 MLE-Bench 上击败多少比例的人类参赛者）衡量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["任务描述 + 原始数据"]
+    subgraph REP["验证式数据分析报告"]
+        direction TB
+        P["Profile：GPT-5.1 写数据探查脚本"] --> V["Verify：sandbox 执行 + 核对原始事实"]
+        V --> B["Verbalize：翻成可操作语义洞察"]
+    end
+    IN --> REP
+    subgraph LOOP["预测-验证主循环"]
+        direction TB
+        GEN["高通量生成<br/>一次并行出 m=10 个候选"]
+        PREF["置信度门控的成对偏好<br/>两两比较 → 赢家 + 置信度 c"]
+        TOP["排序取 top-1 候选"]
+        EXEC["验证执行<br/>只对 top-1 跑真实训练"]
+        GEN --> PREF
+        PREF -->|"c ≥ 0.7 信预测"| TOP
+        PREF -->|"c < 0.7 退化兜底"| EXEC
+        TOP --> EXEC
+        EXEC -->|"反馈锚定下一轮"| GEN
+    end
+    REP --> PREF
+```
+
 ### 关键设计
 
-**1. Verified Data Analysis Report：把原始数据炼成 LLM 能推理的语义洞察**
+**1. 验证式数据分析报告（Verified Data Analysis Report）：把原始数据炼成 LLM 能推理的语义洞察**
 
 LLM 既不擅长直接处理数字，上下文又塞不下原始数据表，于是本文用 Profile-Verify-Verbalize 三步管道把 raw 数据翻译成 LLM 友好的洞察。先让 GPT-5.1 写 Python profile 脚本（如 `df['target'].value_counts()`），再在 sandbox 里执行并人工严格核对输出无运行时错误，得到 raw fact（如 "Target: 0: 0.915, 1: 0.085"），最后由 GPT-5.1 把日志翻成 actionable insight（"Severe class imbalance (Pos: 8.5%). Implication: Accuracy is not a suitable metric; consider using F1-score."）。
 
 消融实验印证了这条链路的价值：Code Only 56.7% → Numerical Stats 59.0% → Verbal Report 61.3%，而故意配错上下文的 Context Mismatch 只有 56.8%。这说明 LLM 不是靠"代码看起来复杂"去猜，而是真的在做"数据语义 × 算法适配"的推理；verbal narrative 比 raw stat 还强，说明模型更像一个被"含义"触发推理跳跃的 rhetorical reasoner。
 
-**2. Confidence-Gated Pairwise Preference：让模型只在自信时跳过执行**
+**2. 置信度门控的成对偏好（Confidence-Gated Pairwise Preference）：让模型只在自信时跳过执行**
 
 预测的输入是 $\mathcal{X}=(I, D_{rep}, \{C_0, C_1\}, \mathcal{P})$，输出是 $\mathcal{Y}=(cot, \hat{y}, c)$，其中 $\hat{y}\in\{0,1\}$ 是预测的赢家、$c\in[0,1]$ 是置信度。ForeAgent 拿 $c=0.7$ 当 gating 阈值：置信度够高才信预测、跳过执行，置信度不足就退化到真实执行兜底。
 
 这套机制能成立的前提是模型不会乱给高置信度。校准实验显示置信度与准确率严格正相关——正因为 calibration 好，filter 才能高效剪枝而不误伤好解；若置信度噪声大，gating 就退化成随机筛选。可靠的自报置信度，正是这个 implicit world model 能被安全部署的关键。
 
-**3. Predict-then-Verify Loop：把执行从主循环降级为最后的验证环节**
+**3. 预测-验证循环（Predict-then-Verify Loop）：把执行从主循环降级为最后的验证环节**
 
 ForeAgent 把 AIDE "执行驱动"的主循环翻转成"预测驱动"，物理执行只用于终点验证，每个 Improvement 步因此从跑 m=10 次降到跑 1 次，立即拿到 m× 量级的加速。具体分三步：High-Volume Generation 并行生成 m=10 个候选（无执行成本，可大幅拓宽搜索宽度）；Confidence-Gated Pairwise Selection 用上面的 implicit world model 两两比较、置信度 ≥0.7 者才进入排序；Verification Execution 只对 top-k=1 的候选做真实执行以锚定反馈。
 

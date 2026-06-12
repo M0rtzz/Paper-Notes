@@ -40,17 +40,42 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的 pipeline 可以分成四步。第一步，对每个含习语的句子 $s$ 和对应 gloss-replaced sentence $s_g$，从 BERT/ModernBERT 等双向 transformer 中提取上下文化表征。第二步，计算完整习语句子与 gloss 的相似度，再逐个 mask 习语 token，观察相似度变化，用 token contribution 聚合出 expression-level decomposability。第三步，从 enTenTen 语料中统计习语在不同 constructional frames 中的出现频率，用 Shannon entropy 衡量 syntactic flexibility，并计算频率和 predictability。第四步，在 BERT/ModernBERT 的静态表征分析之外，追踪 OLMo-2 7B 和 OLMo-3 7B 的 100 个预训练 checkpoint，分析 idiom 表征和 gloss 表征的相似度如何随训练推进而变化。
+论文的 pipeline 可以分成四步。第一步，对每个含习语的句子 $s$ 和对应 gloss-replaced sentence $s_g$，从 BERT/ModernBERT 等双向 transformer 中提取上下文化表征。第二步，计算完整习语句子与 gloss 的相似度，再逐个 mask 习语 token，观察相似度变化，用 token contribution 聚合出 expression-level decomposability。第三步，从 enTenTen 语料中统计习语在不同 constructional frames 中的出现频率，用 Shannon entropy 衡量 syntactic flexibility，并计算频率和 predictability。第四步，在 BERT/ModernBERT 的静态表征分析之外，追踪 OLMo-2 7B 和 OLMo-3 7B 的 100 个预训练 checkpoint，分析 idiom 表征和 gloss 表征的相似度如何随训练推进而变化。其中第一、二步共同构成可分解性指标，第三、四步分别提供句法灵活性证据和学习轨迹证据，最终汇到对 IDH 的相关/回归检验。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["习语句子 s + 释义句 s_g"] --> SUB1
+    subgraph SUB1["模型内部可分解性指标"]
+        direction TB
+        B["双向模型提取上下文表征<br/>算 s 与 gloss 相似度 S_fig"] --> C["逐个 mask 习语 token<br/>测对齐被破坏幅度 Δ_j"]
+        C --> D["mean/max/Gini/entropy/sum 聚合<br/>得习语级可分解性分数"]
+    end
+    A2["enTenTen 语料"] --> SUB2
+    subgraph SUB2["语料化句法灵活性与使用因子"]
+        direction TB
+        E["归入 base/被动化/插入等构式<br/>Shannon entropy = 句法灵活性"]
+        F["频率 + masked predictability"]
+    end
+    SUB1 --> G["相关/回归检验 IDH<br/>可分解性 vs 句法灵活性"]
+    SUB2 --> G
+    G --> SUB3
+    subgraph SUB3["预训练动态分析"]
+        direction TB
+        H["OLMo-2/3 7B 的 100 个 checkpoint<br/>追踪句子–gloss 余弦相似度"] --> I["回归 Steps × 频率/surprisal/可分解性"]
+    end
+    SUB3 --> J["结论：分布经验 + surprisal + 表征稳定<br/>比语义可分解性更能解释习语行为"]
+```
 
 ### 关键设计
 
-**1. 模型内部 decomposability 指标：用表征扰动替代人类评分**
+**1. 模型内部可分解性指标：用表征扰动替代人类评分**
 
 传统检验依赖人类对习语"可分解性"的离线评分，而这些评分混入了熟悉度、世界知识和说话人差异。作者改从模型 hidden-state geometry 直接估计每个组成词对整体隐喻意义的贡献：先算完整句子 $s$ 与其 gloss 句子 $s_g$ 的表征相似度 $S_{fig}$，再对习语 span 中每个 token $j$ 构造 mask 版本 $s^{(-j)}$、算出 $S_{mask}^{(j)}$，把 token 贡献定义为对齐被破坏的幅度 $\Delta_j=|S_{fig}-S_{mask}^{(j)}|$，最后用 mean、maximum、Gini dispersion、entropy 或 sum 等聚合函数把这些 token 贡献汇成习语级 decomposability 分数。
 
 这样设计的直觉是：如果某个组成词真的承载隐喻意义，mask 掉它就该显著拉远句子与 gloss 的对齐；这种"扰动测量"比直接问模型"它是否可分解"更贴近表征机制本身，也让指标可计算、可跨模型复现。
 
-**2. 语料化 syntactic flexibility 与 usage factors：用真实用法分布检验 IDH**
+**2. 语料化句法灵活性与使用因子：用真实用法分布检验 IDH**
 
 IDH 声称 decomposability 约束习语能否被动化、插入修饰语等句法变形，所以应当拿语料中的实际用法来检验，而不是再问人类的离线可接受性判断。作者把习语在语料中的出现归到 base form、adverb insertion、adjective insertion、passivization、action nominalization 等 constructional types，用各类型概率的 Shannon entropy $H(i)=-\sum_c p_{i,c}\log_2 p_{i,c}$ 度量句法灵活性——entropy 越高说明习语越能接受多样的句法构式。
 

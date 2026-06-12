@@ -39,7 +39,30 @@ tags:
 
 SpatialStack 想解决的是：VLM 看不懂 3D 几何，而现有做法只把几何编码器的最后一层特征塞进视觉通路，白白丢掉了中间层的层级几何线索。它的整体思路是把几何编码器（VGGT，全程冻结）多个不同深度的输出各自对齐后，以加性残差的方式分别注入 LLM 解码器的不同深度——浅层几何配 LLM 浅层、深层几何配 LLM 深层。
 
-一次前向是这样转的：K 帧输入图像先过视觉编码器，经 spatial merger 压成视觉 token $\tilde{\mathbf{V}}$；同一组图像再过 VGGT 几何 Transformer，从第 11/17/23 层各取一份 patch token；这三份几何特征经各自独立的投影器对齐到语言空间后，被加到 LLM 解码器第 0/1/2 层的 hidden state 上；最后 LLM 处理这条融合后的多模态序列，吐出答案。整个改动只发生在"几何特征往哪注、怎么注"这一处，主干模型不动。
+一次前向是这样转的：K 帧输入图像先过视觉编码器，经 spatial merger 压成视觉 token $\tilde{\mathbf{V}}$；同一组图像再过 VGGT 几何 Transformer，从第 11/17/23 层各取一份 patch token；这三份几何特征经各自独立的投影器（Geometry Token Merger）对齐到语言空间后，被加到 LLM 解码器第 0/1/2 层的 hidden state 上；最后 LLM 处理这条融合后的多模态序列，吐出答案。整个改动只发生在"几何特征往哪注、怎么注"这一处，主干模型不动。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["K 帧输入图像"] --> VE["视觉编码器 + spatial merger<br/>→ 视觉 token Ṽ"]
+    IN --> VGGT["VGGT 几何 Transformer（冻结）<br/>取第 11 / 17 / 23 层 patch token"]
+    subgraph MG["Geometry Token Merger（每层一个独立投影器）"]
+        direction TB
+        M11["第 11 层 → G₁₁（精细局部几何）"]
+        M17["第 17 层 → G₁₇（中层几何）"]
+        M23["第 23 层 → G₂₃（全局语义几何）"]
+    end
+    VGGT --> MG
+    subgraph FUSE["层级几何-语言融合（加性残差·浅对浅 / 深对深）"]
+        direction TB
+        L0["LLM 第 0 层 H⁰ + G₁₁"]
+        L1["LLM 第 1 层 H¹ + G₁₇"]
+        L2["LLM 第 2 层 H² + G₂₃"]
+    end
+    VE --> FUSE
+    MG --> FUSE
+    FUSE --> OUT["LLM 续算 → 空间推理答案"]
+```
 
 ### 关键设计
 

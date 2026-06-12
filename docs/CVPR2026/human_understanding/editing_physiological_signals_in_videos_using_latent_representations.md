@@ -54,6 +54,27 @@ tags:
 
 PhysioLatent 把这件事搬到 3D VAE 的潜空间里做。一段 128 帧、72×72 的面部视频先经冻结的 3D Causal VAE 编码器压成潜表示 $z$；目标心率写成一句文本 prompt（如 "Heart rate 80 bpm"），交给冻结的 CLIP ViT-B/32 得到条件向量 $c$。$c$ 经线性投影对齐 $z$ 的尺寸后沿通道拼接，送进唯一可训练的**时空融合层**（空间卷积 + 时间自注意力 + AdaLN 注入 HR 条件）完成调制，再由 3D Causal VAE 解码器（FiLM 条件化 + 微调输出层）还原成视频。最后用 Haar Cascade 检出面部区域、只把这块替换回原视频，其余像素原样保留——于是观感不变、心率已被改写。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入面部视频<br/>128帧×72×72"]
+    B["目标心率 prompt<br/>如 Heart rate 80 bpm"]
+    subgraph L["在 3D VAE 潜空间做条件化（非像素空间）"]
+        direction TB
+        C["冻结 3D Causal VAE 编码器<br/>空间4×时间8×下采样 → 潜表示 z"]
+        D["冻结 CLIP ViT-B/32<br/>→ 条件向量 c → 线性投影对齐"]
+        E["沿通道拼接 z 与 c"]
+        C --> E
+        D --> E
+    end
+    A --> C
+    B --> D
+    E --> F["时空融合层<br/>空间卷积 + 时间自注意力 + AdaLN 注入 HR 条件"]
+    F --> G["3D VAE 解码器<br/>FiLM 条件化 + 仅微调输出层"]
+    G --> H["仅替换面部区域<br/>Haar Cascade 检面部 → 贴回原视频"]
+    H --> I["输出视频<br/>观感不变、心率已改写"]
+```
+
 ### 关键设计
 
 **1. 在 3D VAE 潜空间而非像素空间做编辑：让微妙信号可被精确调制**

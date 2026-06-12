@@ -50,6 +50,19 @@ tags:
 
 CoVFT 要拆的死结是：标准视觉编码器只看图、不看文本指令，它建模的是"给定图像 $\mathbf{I}$ 的视觉特征" $p(\mathbf{z}|\mathbf{I})$；可同一张图，在 grounding 任务下要盯住物体位置、在 captioning 任务下要把握全图语义，需求的视觉特征截然不同。当这些任务的梯度被硬挤进同一套视觉参数时就会互相拉扯，微调反而比冻结更不稳。CoVFT 的破局思路是引入一个潜在上下文变量 $\mathbf{c}$，把视觉后验从 $p(\mathbf{z}|\mathbf{I})$ 扩展成 $p(\mathbf{z}|\mathbf{I}, \mathbf{c})$，让视觉编码"随任务上下文而变"。整体跑两步：先由 CVE 模块从图文信息里逐层提炼出上下文向量 $\mathbf{c}$，再由 CoMoE 模块拿这个 $\mathbf{c}$ 去调节视觉编码器内部的前馈计算，把本会互相冲突的优化信号按上下文分流到不同专家。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像 I"] --> Z0["视觉 token z<br/>（ViT 逐层前向）"]
+    Q["文本指令"] --> BERT["冻结 BERT 编码<br/>文本嵌入 t"]
+    Z0 --> CVE["上下文向量提取 CVE<br/>文本为 query 的跨模态注意力<br/>逐层提炼上下文向量 c"]
+    BERT --> CVE
+    CVE -->|上下文向量 c| COMOE["上下文混合专家 CoMoE<br/>g(c)=softmax(Wc+b) 路由<br/>N=4 专家密集加权聚合"]
+    Z0 --> COMOE
+    COMOE --> Z1["上下文感知视觉特征 z̃"]
+    Z1 --> PROJ["投影层 → LLM 生成回答"]
+```
+
 ### 关键设计
 
 **1. 上下文向量提取（CVE）：让视觉编码"知道"当前在做哪类任务**

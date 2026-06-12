@@ -42,7 +42,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EVE 是一个把数据、训练、评测、部署四件事打通的端到端生产系统，前人工作往往只覆盖其中一两件。系统由四大模块协同：核心是 **EVE-Instruct**（基于 Mistral Small 3.2，24B、128k context 微调而来），负责答案生成、query rewriting 与 summarization；其上接 ~365k 文档的多源 **Knowledge Bases**（开放访问 + Wiley 专属 + ESA 内部文档，支持 semantic + metadata 混合检索）；**Retrieval Pipeline** 按查询与过滤器召回候选并用 Qwen3-Reranker-4B 重排；最外层的 **Chat System + Hallucination Detection** 管理对话状态、做事实核查、必要时触发「重写答案」闭环。用户的一次提问，会经历检索接地、生成、自评幻觉、按需修订这一条龙处理后才返回。
+EVE 是一个把数据、训练、评测、部署四件事打通的端到端生产系统，前人工作往往只覆盖其中一两件。系统由四大模块协同：核心是 **EVE-Instruct**（基于 Mistral Small 3.2，24B、128k context 微调而来），负责答案生成、查询改写 (query rewriting) 与摘要；其上接 ~365k 文档的多源知识库 (Knowledge Bases，开放访问 + Wiley 专属 + ESA 内部文档，支持 semantic + metadata 混合检索）；检索管线 (Retrieval Pipeline) 按查询与过滤器召回候选并用 Qwen3-Reranker-4B 重排；最外层的对话系统 + 幻觉检测 (Chat System + Hallucination Detection) 管理对话状态、做事实核查、必要时触发「重写答案」闭环。一次提问会经历检索接地、生成、自评幻觉、按需修订这一条龙处理后才返回——但要让这条龙跑起来，前面还有「先把数据备好、把模型练出来、把效果量化」三步，下图把数据→训练→评测→部署四个阶段串成一条完整链路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["EO 语料 + 合成数据双轨制"]
+        direction TB
+        RAW["raw 语料 5.3B token<br/>22 家出版机构爬取→去重→匿名化"]
+        SYN["合成数据<br/>Active Reading 长文本 + 五类指令 QA"]
+        RAW --> JUDGE["LLM-as-judge 过滤精选"]
+        SYN --> JUDGE
+        JUDGE --> SET["10.7B token 训练集"]
+    end
+    SET --> TRAIN["IFT/长文本交替 + replay + 10-checkpoint 融合<br/>+ Online DPO 对齐"]
+    TRAIN --> EVE["EVE-Instruct（Mistral Small 3.2, 24B）"]
+    EVE -->|zero-shot 评测| BENCH["首批 EO benchmark 5693 样本<br/>MCQA / 开放 QA / 幻觉检测"]
+    EVE -->|生产部署| SERVE
+    subgraph SERVE["Hallucination-aware RAG 闭环"]
+        direction TB
+        Q["用户 query → 改写"] --> RET["检索：Qwen3-Embedding + Qdrant<br/>→ Qwen3-Reranker 重排 top K"]
+        RET --> GEN["EVE-Instruct 生成答案"]
+        GEN --> CHK{"自评是否幻觉"}
+        CHK -->|是| REW["按 justification 重写 query<br/>→ 重检索 → 生成修订版"]
+        REW --> GEN
+        CHK -->|否| OUT["原版 / 修订版择优返回"]
+    end
+```
 
 ### 关键设计
 

@@ -49,6 +49,26 @@ tags:
 1. **离线**：选 $N_{\mathrm{FK}}$ 个内部 FK 监督点 $\{x_k^{\mathrm{FK}}\}$（均匀/低差异/自适应均可）；对每个点用 Euler–Maruyama 跑 $N_{\mathrm{MC}}$ 条带 step $\Delta t$、最长时间 $T_{\max}$ 的扩散轨迹，按算法 1 的累加公式 $\hat u^{\mathrm{MC}}(x) = \frac{1}{N_{\mathrm{MC}}}\sum_m(\sum_{n=0}^{\hat\tau^{(m)}-1} r(X_n^{(m)})\Delta t + h(X_{\hat\tau^{(m)}}^{(m)}))$ 估出 $\hat u^{\mathrm{MC}}(x_k^{\mathrm{FK}})$。这一步**完全离线、可并行**，且不依赖网络。
 2. **在线**：每一步采样新的内部 / 边界 collocation 点，连同已有的 FK 数据集一起算总损失（4.2），用 Adam/SGD 更新 $\theta$ 和任务权重 $\phi$；总损失退化为标准 PINN 当且仅当 $\lambda_{\mathrm{FK}} = 0$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：算子 L、源项 f、边界数据 g、定义域 Ω、tanh 网络 u_θ"]
+    subgraph FK["FK 监督项作算子预条件"]
+        direction TB
+        A["离线：选 N_FK 个内部 FK 监督点"]
+        A --> B["每点用 Euler–Maruyama<br/>模拟 N_MC 条扩散轨迹"]
+        B --> C["MC 平均 FK 泛函<br/>→ 少量内点伪标签 û(x_k)"]
+        C --> D["数据保真项 R_FK 接入损失<br/>等价曲率 H_FK = H + λ_FK·M（质量项预条件）"]
+    end
+    IN --> A
+    IN --> E["在线：每步采样内部 / 边界 collocation 点"]
+    E --> F["总损失 R = λ_PDE·R_PDE + λ_∂Ω·R_∂Ω + λ_FK·R_FK<br/>Adam / L-BFGS 更新 θ 与任务权重 φ"]
+    D --> F
+    F --> G["训练好的 u_θ ≈ u*"]
+    F -.->|理论保证| H["条件数界（定理 5.4）<br/>κ_FK ≤ C，与 collocation 数 N 无关"]
+    G -.->|理论保证| I["非渐近 L² 误差界（定理 6.2）<br/>把 MC 偏差/方差与优化收敛装进同一表达式"]
+```
+
 ### 关键设计
 
 **1. Feynman–Kac 监督项作算子预条件：在训练目标里加质量项把病态谱拉起来**

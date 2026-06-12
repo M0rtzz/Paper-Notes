@@ -45,6 +45,34 @@ MultiDx 是一个训练无关的两阶段框架，重点不在微调某个医疗
 
 这条流程有清晰的临床对应：第一阶段相当于医生先列出“疑似诊断清单”，第二阶段相当于做“鉴别诊断”。所以 MultiDx 不是简单把多个 Agent 的答案投票，而是把候选疾病背后的证据也一起纳入重排。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["病例描述 C"] --> S1
+
+    subgraph S1["第一阶段：四路多源候选诊断生成"]
+        direction TB
+        SOAP["SOAP 结构化分支<br/>LLM 转 S/O/A/P 四栏 → H_SOAP"]
+        WEB["网页搜索分支<br/>Agent 规划→迭代搜索/浏览 → H_web"]
+        subgraph HIER["层次化病例库检索"]
+            direction TB
+            CASE["病例级：BM25 取 top-k 相似病例 → H_case"]
+            TRACE["推理级：切步骤+实体 Jaccard 匹配 → H_trace"]
+        end
+    end
+
+    S1 --> S2
+
+    subgraph S2["第二阶段：证据整合与鉴别诊断重排"]
+        direction TB
+        M["疾病名同义匹配"] --> AGG["按来源+排名聚合支持度"]
+        AGG --> DIFF["高排名候选差异分析"]
+        DIFF --> RANK["重排输出"]
+    end
+
+    S2 --> OUT["最终诊断 D + 推理轨迹 R"]
+```
+
 ### 关键设计
 
 **1. 四路多源候选诊断生成：单一知识源各有盲区，用四个互补视角同时铺开候选**

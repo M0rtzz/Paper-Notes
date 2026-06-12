@@ -45,6 +45,29 @@ tags:
 
 这篇论文本质是一场"控制变量的比武"：要回答的问题是——在时空物理系统上，哪种学习范式学到的表示最"懂物理"。为了让答案可量化，作者把所有方法都放进同一套评估协议里：先在某个物理系统上预训练一个 encoder，然后**冻结 encoder、只训练一个 attentive probe**去估计该系统的物理参数。参数估计误差越低，说明 encoder 的表示里保留的物理信息越多。比武的舞台是 The Well 数据集里的三个 2D PDE 系统：活性物质（待估参数 $\alpha$, $\zeta$）、剪切流（Reynolds 数、Schmidt 数）、Rayleigh-Bénard 对流（Rayleigh 数、Prandtl 数）。参赛选手分两类四种——通用自监督的 JEPA 与 VideoMAE，专为物理设计的 DISCO 与 MPP，它们的核心差异都落在"在隐空间预测，还是在像素空间重建/预测"这一条轴上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三个 2D PDE 系统<br/>活性物质 / 剪切流 / RB 对流"] --> B["在各系统上独立预训练 encoder<br/>(6 epochs，控制变量比武)"]
+    subgraph LAT["隐空间预测范式"]
+        direction TB
+        J["JEPA<br/>预测下 k 帧的隐表示"]
+        D["DISCO<br/>上下文算子学习（物理专用）"]
+    end
+    subgraph PIX["像素级预测范式"]
+        direction TB
+        V["VideoMAE<br/>masked 像素重建"]
+        M["MPP<br/>自回归逐帧像素预测（物理专用）"]
+    end
+    B --> LAT
+    B --> PIX
+    J --> P["冻结 encoder + attentive probe<br/>(100 epochs)"]
+    D --> P
+    V --> P
+    M -->|MPP 例外：端到端微调| P
+    P --> O["物理参数估计 MSE↓<br/>量化各 encoder 保留多少物理信息"]
+```
+
 ### 关键设计
 
 **1. JEPA 动力学版本：在隐空间里预测未来，而不是重建像素**
@@ -57,7 +80,7 @@ $$\ell_{\text{VICReg}}\big(g(f(x_i)),\, f(x_{i+1})\big) = \lambda\, s + \mu\,[v(
 
 **2. VideoMAE 对照组：像素级 masked 重建，代表"另一条路"**
 
-它是用来回答"那像素重建到底行不行"的对照实验。做法是经典的 masked autoencoding：随机遮住时空块，再从可见部分重建被遮的像素值，骨干用 ViT-small/16，遮挡采用时间 tube masking（所有帧共享同一套空间 mask），优化的是像素级 MSE 重建损失。它和 JEPA 的唯一关键区别就是"在哪里算损失"——VideoMAE 在像素空间，JEPA 在隐空间，从而把"重建像素 vs 预测表示"这个变量单独拎出来比较。
+它是用来回答"那像素重建到底行不行"的对照实验。做法是经典的 masked autoencoding：随机遮住时空块，再从可见部分重建被遮的像素值，骨干用 ViT-tiny/16，遮挡采用时间 tube masking（所有帧共享同一套空间 mask），优化的是像素级 MSE 重建损失。它和 JEPA 的唯一关键区别就是"在哪里算损失"——VideoMAE 在像素空间，JEPA 在隐空间，从而把"重建像素 vs 预测表示"这个变量单独拎出来比较。
 
 **3. 两个物理专用基线 DISCO 与 MPP：检验"专为物理设计"是否真的更强**
 

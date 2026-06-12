@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 这篇工作要回答的不是"造一个新模型"，而是"FIM 这个预训练目标到底怎么改变了逐字记忆"，所以方法本质是一套把混淆因子全部锁死的对比实验设计。整条 pipeline 串成三段：先用同源数据切出一对只在训练目标上不同的 LTR/FIM 语料、并把 Gutenberg 部分按重复次数分桶，再在 prefix-only probe 下扫出两种模型在不同重复、不同 span 长度、不同阈值下的逐字抽取曲线，最后切到 FIM 真正会被使用的双向 prompt（prefix + sentinel + suffix），通过预算切分和 distractor 替换把 prefix 与 suffix 的记忆贡献定量拆开。两个模型还在 LM Evaluation Harness 的 8 个下游任务上做体检，性能几乎一致，从而把"差异源于模型能力"这一备择假说排除掉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["配对训练 + 重复分桶语料"]
+        direction TB
+        A["FineWeb 100B + Project Gutenberg"] --> B["FineWeb-only Llama 3.2<br/>打分过滤预先记住的窗口"]
+        B --> C["12 个重复桶 · 曝光 1–128 次"]
+        C --> D["改写成配对语料<br/>LTR 自回归 / FIM sentinel 随机切分"]
+        D --> E["训练一对 Llama 3.2 3B<br/>同架构同算力 ~103B token"]
+    end
+    E --> F["双重抽取指标<br/>精确 pz + ROUGE-L 扫重复 / span / 阈值"]
+    E --> G["原生 FIM probe + distractor 消融<br/>prefix / suffix 切分与替换"]
+    F --> H["记忆形状：LTR 少数高峰 / FIM 大量小丘<br/>且 FIM 仍强烈依赖 prefix"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 配对训练 + 重复分桶语料：把"预训练目标"做成唯一变量**

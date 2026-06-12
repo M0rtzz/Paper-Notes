@@ -40,7 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CIRM（Causally motivated Inference-time intervention for Reward Models）把「给 RM 纠偏」拆成离线定位、在线干预两步，全程不碰 RM 权重（图 2）。离线时它在 500 条 RewardBench 验证子集上，对每个神经元收集「last-token 激活」与五类风格偏差量 $f_b(x)$ 的成对样本，用 Spearman 相关挑出真正编码偏差的少数神经元，并记下它们在验证集上的激活中位数。在线推理时，每来一对 prompt-response 就正常前向，但把这些 bias-specific neurons 的激活强行钉到中位数 $m^*$ 再输出 reward——这样 BT 比较从估计 total effect 退化成估计 controlled direct effect $\hat{\mathrm{CDE}} = r_\theta(x_1, m^*) - r_\theta(x_2, m^*)$，即「假设两条回答的偏差程度一样」时再比内容质量。
+CIRM（Causally motivated Inference-time intervention for Reward Models）把「给 RM 纠偏」拆成离线定位、在线干预两步，全程不碰 RM 权重（图 2）。离线时它在 500 条 RewardBench 验证子集上，对每个神经元收集「last-token 激活」与五类风格偏差量 $f_b(x)$ 的成对样本，用 Spearman 相关挑出真正编码偏差的少数神经元，并记下它们在验证集上的激活中位数；每类偏差到底编辑多少个神经元，则交给 Optuna 在验证集准确率上做一次五维联合搜索来确定。在线推理时，每来一对 prompt-response 就正常前向，但把这些 bias-specific neurons 的激活强行钉到中位数 $m^*$ 再输出 reward——这样 BT 比较从估计 total effect 退化成估计 controlled direct effect $\hat{\mathrm{CDE}} = r_\theta(x_1, m^*) - r_\theta(x_2, m^*)$，即「假设两条回答的偏差程度一样」时再比内容质量。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["500 条 RewardBench 验证子集"] --> B
+    subgraph LOC["多偏差量度 + Spearman 定位 bias-specific neurons"]
+        direction TB
+        B["每神经元 last-token 激活<br/>vs 五类偏差量度 f_b"] --> C["Spearman 排序取 top/bottom-k<br/>记录验证集激活中位数 m*"]
+    end
+    C --> D["Optuna 联合搜索五类偏差的 k<br/>TPE 抽样 100 次定编辑神经元集"]
+    D --> E["在线：prompt-response 对前向 RM"]
+    subgraph INT["CDE 替代 TE 因果干预"]
+        direction TB
+        E --> F["forward hook 把 bias 神经元激活钉到 m*"]
+        F --> G["BT 比较退化为<br/>CDE = r(x1,m*) − r(x2,m*)"]
+    end
+    G --> H["无偏 reward → DPO 偏好标注"]
+```
 
 ### 关键设计
 
@@ -50,17 +68,17 @@ CIRM（Causally motivated Inference-time intervention for Reward Models）把「
 
 之所以用 Spearman 而非 Pearson，是因为它只要求单调相关、对异常激活更鲁棒。这套定位足够精准，五类偏差合并后实际只需编辑 GRM 1.7%、FsfairX 0.085% 的神经元，却能覆盖全部风格偏差。
 
-**2. 用 CDE 替代 TE 做因果干预：把 mediator 钉死，系统性扣掉风格贡献**
+**2. 用 Optuna 联合搜索多偏差的 $k$：让五类偏差的神经元数互相协调**
 
-把 RM 看成因果图（图 3）后，输入 $x$ 到 reward $r$ 有两条路：$x \to r$ 的直接内容路径，和 $x \to m \to r$ 的间接偏差路径（$m$ 是 bias 神经元激活）。原始 BT 估计的 $\hat{\mathrm{TE}} = r_\theta(x_1, m(x_1)) - r_\theta(x_2, m(x_2))$ 把两条路混在一起，分不开内容好坏与风格强弱。CIRM 改成估计 $\hat{\mathrm{CDE}} = r_\theta(x_1, m^*) - r_\theta(x_2, m^*)$，即把 mediator 固定为同一个 $m^*$ 后再做差，概念上正对应「当 $x_1, x_2$ 在偏差维度完全一样时谁的内容更好」，这恰是 reward model 真正想要的无偏比较。
-
-$m^*$ 取验证集激活中位数：作者实测过 0、swap、median 三种选择，median 最稳——用中位数而非均值是为了对异常激活鲁棒，用单一固定值而非 swap 则避免 $x_1, x_2$ 的内容差异通过 mediator 互相传染。
-
-**3. 用 Optuna 联合搜索多偏差的 $k$：让五类偏差的神经元数互相协调**
-
-每类偏差该编辑多少神经元（$k$）不能各调各的，否则会忽略不同偏差神经元集合之间的重叠与干涉，出现「调好长度反而把段落搞坏」。CIRM 把五类偏差的 $k$ 当作 5 维超参联合搜索，候选值 $k\in\{50,100,200,500,1000,2000,5000\}$ 共 $7^5 \approx 16{,}807$ 种组合，用 TPE 抽样 100 次，目标函数是 500 条验证集上的整体 reward accuracy。
+上一步只圈出了候选神经元，但每类偏差该编辑多少个（$k$）不能各调各的，否则会忽略不同偏差神经元集合之间的重叠与干涉，出现「调好长度反而把段落搞坏」。CIRM 把五类偏差的 $k$ 当作 5 维超参联合搜索，候选值 $k\in\{50,100,200,500,1000,2000,5000\}$ 共 $7^5 \approx 16{,}807$ 种组合，用 TPE 抽样 100 次，目标函数是 500 条验证集上的整体 reward accuracy。
 
 联合搜索的好处是 TPE 能感知到「编辑过多 paragraph 神经元会拖垮 length 准确率」这类耦合。最终 GRM 选到 len=5000, para=5000, over=500, excl=200, bold=50，FsfairX 选到 len=500, para=100, over=100, excl=50, bold=200，两者差异也印证了不同 RM 对各偏差的编码冗余度很不一样。
+
+**3. 用 CDE 替代 TE 做因果干预：把 mediator 钉死，系统性扣掉风格贡献**
+
+定位好神经元、定好 $k$ 后，真正的纠偏发生在在线推理。把 RM 看成因果图（图 3）：输入 $x$ 到 reward $r$ 有两条路——$x \to r$ 的直接内容路径，和 $x \to m \to r$ 的间接偏差路径（$m$ 是 bias 神经元激活）。原始 BT 估计的 $\hat{\mathrm{TE}} = r_\theta(x_1, m(x_1)) - r_\theta(x_2, m(x_2))$ 把两条路混在一起，分不开内容好坏与风格强弱。CIRM 改成估计 $\hat{\mathrm{CDE}} = r_\theta(x_1, m^*) - r_\theta(x_2, m^*)$，即用 forward hook 把 mediator 固定为同一个 $m^*$ 后再做差，概念上正对应「当 $x_1, x_2$ 在偏差维度完全一样时谁的内容更好」，这恰是 reward model 真正想要的无偏比较。
+
+$m^*$ 取验证集激活中位数：作者实测过 0、swap、median 三种选择，median 最稳——用中位数而非均值是为了对异常激活鲁棒，用单一固定值而非 swap 则避免 $x_1, x_2$ 的内容差异通过 mediator 互相传染。
 
 ### 损失函数 / 训练策略
 **完全无训练**。所有编辑通过推理时的 forward hook 把命中神经元的激活替换为 $m^*$。下游 DPO 训练用标准 hyperparam（$\beta=0.1$，lr 5e-7，batch 64，1 epoch）。

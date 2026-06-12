@@ -41,26 +41,36 @@ AesFormer 将日常照片美化定义为 Aesthetic Photo Reconstruction，通过
 AesFormer 的核心由数据、规划和编辑三部分组成。数据侧用 VCMP 从教程视频中挖出 AesRecon；规划侧训练 AesThinker 产生七个摄影维度上的有序动作；编辑侧训练 AesEditor 根据动作执行结构重构。
 
 ### 整体框架
-输入是一张普通用户拍摄的 poor photo。Stage 1 的 AesThinker 先读取照片和提示，输出一个 ordered action plan，覆盖 aspect ratio、framing/composition、camera viewpoint、subject placement、pose/action details、focus/depth-of-field、color/light 七个渐进维度。Stage 2 的 AesEditor 接收原图和动作计划，在 flow-matching 编辑器上生成重构后的照片。训练时，动作监督来自 AesRecon 中 poor/good 对以及教程视频文本线索；编辑监督来自严格对齐的 poor/good/action 三元组。
+输入是一张普通用户拍摄的 poor 照片。Stage 1 的 AesThinker 先读取照片和提示，输出一条有序动作计划，覆盖 aspect ratio、framing/composition、camera viewpoint、subject placement、pose/action、focus/depth-of-field、color/light 七个渐进维度。Stage 2 的 AesEditor 接收原图和动作计划，在 flow-matching 编辑器上生成重构后的照片。训练时，动作监督来自 AesRecon 中 poor/good 对以及教程视频文本线索；编辑监督来自严格对齐的 poor/good/动作三元组。整个 pipeline 由数据、规划、编辑三块串起，分别对应下面三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["VCMP 视频挖掘构建 AesRecon"]
+        direction TB
+        V["教程视频检索<br/>5700 → 2144 个教程"] --> C["切段 + 好帧检测<br/>开头帧 = poor，clean 帧 = good"]
+        C --> R["过滤去字幕 + 严格对齐<br/>9071 对 poor/good 样本"]
+    end
+    P["输入：普通 poor 照片"] --> T["AesThinker 七维有序动作链与 GRPO-A<br/>SFT 冷启动 + GRPO-A 探索"]
+    DATA -->|监督| T
+    T -->|七维有序动作计划| E["动作条件 AesEditor<br/>rectified-flow + LoRA 微调"]
+    DATA -->|监督| E
+    E --> O["输出：结构重构后的好照片"]
+```
 
 ### 关键设计
-1. **VCMP 视频挖掘构建 AesRecon**:
 
-	- 功能：为 APR 提供同一主体和场景下的 poor/good 对齐训练样本。
-	- 核心思路：从 Rednote、TikTok、YouTube 等平台检索 5,700 个摄影教程候选视频，筛掉广告、展示向和无步骤内容后保留 2,144 个教程。对每个拍摄事件以 2 fps 采帧，用 Qwen2.5-VL-72B 找到 clean good frame，把事件开头帧作为 poor image；随后过滤低质量 good image，移除 poor image 的字幕和相机 UI，并用 VLM 检查人物、场景和拍摄事件是否一致，最终得到 9,071 对严格对齐样本。
-	- 设计动机：APR 需要结构差异来自摄影动作，而不是换人、换景或新增物体。教程视频天然包含“怎么从差拍到好”的过程，但必须通过多阶段过滤才能变成可训练数据。
+**1. VCMP 视频挖掘构建 AesRecon：把"同主体同场景"的成对训练数据从教程视频里挖出来**
 
-2. **AesThinker 的七维有序动作链和 GRPO-A**:
+APR 的训练数据要求很苛刻——必须是同一主体、同一场景下的 poor/good 对，且美学差异要来自构图、姿态等拍摄结构，而非换人换景或调色，这种成对样本在现有图像集里几乎不存在。VCMP 抓住"摄影教程视频天然记录了同一拍摄事件从差拍到好拍的全过程"这一点：先用摄影教学关键词从 Rednote、TikTok、YouTube 检索 5,700 个候选视频，去重并剔除广告、纯展示、无分步演示的内容后留下 2,144 个教程；对每个拍摄事件按 2 fps 采帧，用 Qwen2.5-VL-72B 找出干净的 good frame、把事件开头帧当作 poor image，构成粗对。随后经三道精修——用画质/美学打分器和 VLM 滤掉低质 good 图、用 Qwen-Image-Edit 去掉 poor 图上的字幕和相机 UI（并让 GPT-4o 核验去除后场景与身份不变）、最后用 VLM 严格校验同人同景同事件——最终得到 9,071 对严格对齐样本。多阶段过滤之所以必需，是因为原始视频里夹杂广告、转场模糊和满屏叠加 UI，不清洗就无法变成可训练的结构差异对。
 
-	- 功能：把模糊的“让照片更美”转成可执行、有顺序的摄影编辑动作。
-	- 核心思路：先用 GPT-5.2 根据 poor/good/text cue 蒸馏 ground-truth action，并让 Gemini 3 验证完整性和七维顺序，再用 SFT 冷启动 Qwen3-VL-8B。之后用 GRPO-A 继续优化，每个 poor image 采样多条动作计划，用格式奖励、与参考动作的语义对齐奖励、以及创造性/美学提升奖励组成总 reward，其中对齐和创造性由 Qwen2.5-VL-32B 作为 training-free reward model 评分。
-	- 设计动机：摄影美学不是单答案问题，同一张照片可以通过不同构图、姿态或景深方案变好。只用 SFT 会过拟合单条标注轨迹，GRPO-A 用组内相对奖励鼓励多样但仍可执行的动作计划。
+**2. AesThinker 的七维有序动作链与 GRPO-A：把模糊的"更好看"翻译成可执行、有先后的摄影动作**
 
-3. **动作条件 AesEditor**:
+通用编辑器收到"让照片更美"这类指令时无从下手，因为它既不知道这张照片结构上差在哪、也不知道该按什么顺序改。AesThinker 把美学规划落成一条七维有序动作链：aspect ratio → framing/composition → camera viewpoint → subject placement → pose/action → focus/depth-of-field → color/light，从全局构图逐级推进到局部光色。这个顺序不是随意排的——这些决策虽大体可分离，却存在单向依赖（如主体位置没定好之前谈景深关系就是病态的），固定顺序能稳住规划、得到可分解的动作空间。训练分两步：先用 GPT-5.2 依据 poor/good/文本线索蒸馏 ground-truth 动作、让 Gemini 3 校验完整性与七维顺序，再 SFT 冷启动 Qwen3-VL-8B。但只靠 SFT 会过拟合单条标注轨迹，而摄影审美本质是多解的（同一张照片换构图、换姿态、换景深都可能变好），单轨迹监督天生不完整。于是再用 GRPO-A 强化：对每张 poor 图采样多条动作计划，按"格式奖励 + 与参考动作的语义对齐奖励 + 创造性/美学提升奖励"组成总 reward（对齐和创造性由 Qwen2.5-VL-32B 作为 training-free reward model 打分，并对分数 token 取期望得到连续信号），用组内相对优势更新策略，从而鼓励多样但仍可执行的方案，突破 SFT 的单轨迹模仿。
 
-	- 功能：把高层摄影动作可靠地落到图像结构编辑上。
-	- 核心思路：以 Qwen-Image-Edit-2511 为基础编辑器，冻结多模态 encoder 和 VAE，只对 MMDiT 做 LoRA。给定 poor image、good reference 和动作序列，模型在 rectified-flow 框架中学习动作条件 velocity field，目标是预测 $v_t=x_0-x_1$，从而在推理时按 AesThinker 输出的动作生成重构结果。
-	- 设计动机：通用编辑器知道怎么听指令，但不一定会把“改善构图/视角/姿态”稳定映射成像素变化。用 APR 三元组微调后，编辑器学到的是摄影动作与结构重构之间的对应关系。
+**3. 动作条件 AesEditor：把高层摄影动作可靠地落到像素级的结构重构上**
+
+上游有了动作计划，还需要一个真能把"改善构图/视角/姿态"稳定映射成像素变化的执行器——通用编辑器会听指令，却不一定会把这类结构性指令做对。AesEditor 以 Qwen-Image-Edit-2511 为底座，冻结多模态 encoder 和 VAE、只对 MMDiT 做 LoRA 微调；给定 poor image、good reference 和动作序列，在 rectified-flow 框架里学习动作条件的速度场，预测 $v_t=x_0-x_1$，推理时就按 AesThinker 输出的动作生成重构结果。用 APR 三元组（poor/good/动作）微调后，编辑器学到的正是"摄影动作 ↔ 结构重构"之间的对应关系，而不只是泛泛的指令跟随。
 
 ### 损失函数 / 训练策略
 Stage 1(a) 使用标准自回归 SFT，最大化动作序列在输入照片和提示下的条件概率。Stage 1(b) 使用 GRPO-A：对同一输入采样多条动作序列，按组内 reward 标准化得到 advantage，并加 KL 到 reference policy；reward 权重为 $\lambda_f=0.1$、$\lambda_a=0.5$、$\lambda_c=0.4$。Stage 2 使用 flow-matching 损失 $\mathcal{L}_{edit}=\mathbb{E}\|v_\psi(x_t,t,h)-v_t\|_2^2$。实验在 10 张 NVIDIA A40 48GB GPU 上完成。

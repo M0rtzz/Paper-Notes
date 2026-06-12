@@ -41,7 +41,24 @@ Polaris 将 Gödel Agent 的递归自我改进改造成适合 7B/8B 小模型的
 Polaris 的目标不是让模型“再想一遍答案”，而是让 agent 修改自己下一次如何解题。它继承 Gödel Agent 的 self-inspect、interact、self-update、continue-improve 框架，但把原始的 repair policy 模块换成一个更保守的经验抽象修复器。整个系统围绕一个可变 policy `π` 运转：先用当前 policy 在验证集上运行，找出失败样本；再分析失败原因，抽象出修复策略，生成代码补丁；最后只要补丁能通过执行检查，就将新 policy 作为下一轮起点。
 
 ### 整体框架
-输入包括当前 agent policy、任务目标、验证集失败样本和 agent memory；输出是一个修改后的 policy。每一轮先评估当前 policy，收集若干失败任务 `T={τ_i}`。随后 Polaris 对每个失败任务做 failure analysis，得到结构化反思 `A_i=(diagnosis_i, revision_i, prevention_i)`；再通过 strategy synthesis 把多个 `A_i` 压缩成一两个可迁移的策略 `δ_j`；接着 patch generation 生成只改必要行的代码补丁；最后 patch integration 检查补丁是否可执行，失败最多重试 3 次，成功后通过 runtime code mutation 更新 policy。
+输入包括当前 agent policy、任务目标、验证集失败样本和 agent memory；输出是一个修改后的 policy。每一轮先评估当前 policy，收集若干失败任务 `T={τ_i}`。随后 Polaris 对每个失败任务做失败分析（failure analysis），得到结构化反思 `A_i=(diagnosis_i, revision_i, prevention_i)`；再通过策略合成（strategy synthesis）把多个 `A_i` 压缩成一两个可迁移的策略 `δ_j`；接着补丁生成（patch generation）产出只改必要行的代码补丁；最后集成校验（patch integration）检查补丁是否可执行，失败最多重试 3 次，成功后通过 runtime code mutation 更新 policy 作为下一轮起点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前 policy π + 验证集 + memory"] --> B["评估 policy<br/>收集失败任务 T={τ_i}"]
+    B --> C["失败分析<br/>每个错例 → 诊断/修订/预防 A_i"]
+    C --> D["经验抽象与策略合成<br/>多份反思 → 1-2 条可迁移策略 δ_j"]
+    subgraph REPAIR["最小补丁与保守集成"]
+        direction TB
+        E["最小补丁生成<br/>只改必要行、无解释文本"] --> F["集成校验<br/>语法 + 执行检查"]
+        F -->|"失败且重试 < 3"| E
+        F -->|"失败 3 次"| H["补丁与上下文存入 memory<br/>保留旧 policy"]
+    end
+    D --> E
+    F -->|"通过"| G["runtime code mutation<br/>更新 policy 作为下一轮起点"]
+    G -.下一轮.-> B
+```
 
 ### 关键设计
 

@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 Ψ-RAG 要解决的是"把擅长摘要的 Tree-RAG 搬到语料级、跨文档多跳"这件事，办法是把建树、检索、细粒度补位三处分别替换掉。索引阶段不再做 k-means，而是把所有 chunk 编码成 dense 向量后按两两相似度从高到低逐对处理，迭代式地"合并 / 坍缩"出一棵多叉抽象树——叶子是原始 chunk，每个内部节点由 abstraction agent 写一段 summative 摘要（或一组 keyword 摘要）再重新编码。检索阶段把 query 交给一个 R&A Agent：它先做一次 dense top-down + BM25 的混合检索，把证据回填进上下文后自己判断该 `<answer>` 还是 `<retrieve>`，若选后者就改写出更具体的子 query 进入下一轮，直到回答或耗尽预算。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    C["语料所有 chunk → dense 向量"] --> T["合并—坍缩层次抽象树<br/>相似度降序 merge / collapse 建多叉树"]
+    C --> BM["关键词混合索引<br/>额外建 BM25 稀疏索引"]
+    Q["用户 query"] --> A["R&A Agent 多轮检索<br/>dense top-down + BM25 混合"]
+    T --> A
+    BM --> A
+    A -->|"选 retrieve：Query 改写加同位语"| A
+    A -->|"选 answer"| Y["最终答案"]
+```
+
 ### 关键设计
 
 **1. 基于"合并—坍缩"的层次抽象树：用贪心合并绕开 k-means 的分布假设**

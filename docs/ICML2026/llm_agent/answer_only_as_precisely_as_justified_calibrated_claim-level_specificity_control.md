@@ -53,24 +53,28 @@ tags:
 
 第四步是 claimwise selection：选择器对每个 claim 采取 $\pi_i \in \{\mathrm{fine}, \mathrm{coarse}, \mathrm{omit}\}$。如果 fine 分数过阈值，保留原始 claim；如果 fine 不过但 coarse 过阈值，输出粗粒度版本；如果两者都不通过，则省略该 claim。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上游 LLM 草稿 draft<br/>（prompt + 证据，各方法共用同批固定草稿）"] --> B["claim 抽取 + 粗粒度回退提议<br/>每个原始 claim 配一个去细节的粗粒度版本"]
+    B --> C["支持度打分（现成 scorer，非本文贡献）<br/>对 fine / coarse 各算支持分数"]
+    C --> D["逐 claim 校准选择<br/>fine（原句）/ coarse（回退）/ omit（省略）三档"]
+    E["校准集枚举阈值对<br/>Clopper-Pearson 约束 unsupported 率 + 选 OAU 最高"] -->|"选定 τ_fine、τ_coarse"| D
+    D --> F["编辑后答案<br/>每个 claim 只说到证据支撑的粒度"]
+```
+
 ### 关键设计
-1. **三档语义特异性阶梯**:
+**1. 三档语义特异性阶梯：在「答/不答」之外多开两档语义粒度**
 
-	- 功能：把每个 claim 的输出空间限制为 fine、coarse、omit 三种动作，使系统能局部降低语义精度。
-	- 核心思路：fine 是原始细粒度 claim，coarse 是去掉不稳定细节后的改写，omit 是不输出。论文用特异性权重刻画三档价值：$w(\mathrm{omit})=0$、$w(\mathrm{coarse})=\gamma$、$w(\mathrm{fine})=1$，实验中 $\gamma=0.6$。
-	- 设计动机：这个动作空间比“保留/删除”更细，因为很多错误并不是 claim 完全无效，而是原始表达过于具体。coarse backoff 让系统保留被支持的核心内容。
+传统不确定性处理只在「保留整段」和「整段拒答」之间二选一——拒答会丢掉大量本来被支持的有用内容，原样保留又会把日期、数字、实体关系等不被证据支撑的细节说得过于确定。CSS 把每个 claim 的输出空间细化成三档：fine 是原始细粒度 claim，coarse 是去掉不稳定细节后的改写（局部降精度而非删除），omit 才是彻底不输出。三档的价值用特异性权重刻画：$w(\mathrm{omit})=0$、$w(\mathrm{coarse})=\gamma$、$w(\mathrm{fine})=1$（实验取 $\gamma=0.6$）。这比「保留/删除」二元动作更贴合真实错误形态——很多 claim 并非完全无效，只是原句说得太具体；coarse backoff 让系统在守不住细粒度时退一步，保留住被证据支持的核心含义。
 
-2. **过度承诺感知的评估目标**:
+**2. 过度承诺感知的评估目标 OAU：把「有用地保留」和「错误地过度承诺」放进同一把尺子**
 
-	- 功能：用一组 claim 级指标同时衡量支持精度、保留信息量和 unsupported emission 的代价。
-	- 核心思路：论文报告 support precision、specificity retention、supported specificity 和 OAU。其中 OAU 对被支持的特异性给正奖励，对输出但不被支持的 claim 给负惩罚，形式上近似为每个 claim 的 $w(\pi_i)y_i^{\mathrm{sel}} - e_i(1-y_i^{\mathrm{sel}})$ 平均值。
-	- 设计动机：如果只看 precision，系统可能通过大量删除或拒答获得很高分；如果只看 retention，系统可能保留未被支持的细节。OAU 把“有用地保留”和“错误地过度承诺”放到同一目标里比较。
+如果只看 support precision，系统大可靠「大量删除/拒答」刷出虚高分数；如果只看 specificity retention，又会纵容它保留未被支持的细节。论文用 OAU（over-commitment-aware utility）把两种倾向放进同一个目标：对被支持的特异性给正奖励、对「输出了却不被支持」的 claim 给负惩罚，形式上近似为每个 claim 的 $w(\pi_i)y_i^{\mathrm{sel}} - e_i(1-y_i^{\mathrm{sel}})$ 取平均（论文同时报告 support precision、specificity retention、supported specificity 作为侧面指标）。关键在于 OAU 不只是评估指标，它还是下一步校准阈值时被最大化的目标，因此直接定义了「什么样的逐 claim 选择策略才算好」。
 
-3. **Clopper-Pearson 约束下的校准阈值选择**:
+**3. Clopper-Pearson 约束下的校准阈值选择：用置信上界把 noisy 分数变成可部署阈值**
 
-	- 功能：把 noisy support score 转换成可部署的 fine/coarse 阈值，而不是手工固定阈值。
-	- 核心思路：在 held-out calibration split 上枚举阈值对 $(\tau_{\mathrm{fine}}, \tau_{\mathrm{coarse}})$。对每个阈值对，统计校准集里 unsupported emitted claims 数 $k$ 和 emitted claims 数 $n$，计算单侧 Clopper-Pearson 上置信界，并只保留满足 $\mathrm{CPUpper}(k,n;\delta) \leq \alpha$ 的阈值对；实验中 $\alpha=0.10$、$\delta=0.05$。在有效阈值对中选择 calibration OAU 最高者。
-	- 设计动机：固定阈值会过于保守，尤其当 score distribution 随数据集、模型或 run 改变时。校准让选择器在控制 unsupported emission 风险的同时，自动移动到更高 utility 的 operating point。
+support score 本身是 noisy 的，且分布会随数据集、模型、run 漂移，手工固定阈值要么太保守、要么压不住风险。CSS 改在 held-out 校准集上枚举阈值对 $(\tau_{\mathrm{fine}}, \tau_{\mathrm{coarse}})$：对每一对，统计校准集里 unsupported emitted claims 数 $k$ 与 emitted claims 数 $n$，算单侧 Clopper-Pearson 上置信界，只保留满足 $\mathrm{CPUpper}(k,n;\delta) \leq \alpha$ 的阈值对（实验 $\alpha=0.10$、$\delta=0.05$），再在这些合法阈值对里选校准 OAU 最高者。这样选择器既把 unsupported emission 的风险压在预算内，又能自动移动到 utility 更高的 operating point。论文也谨慎说明：同一校准集既用于筛阈值又用于最大化 OAU，因此这只是 conservative calibration rule，不是端到端的分布无关 conformal 保证。
 
 ### 损失函数 / 训练策略
 CSS 不是端到端训练方法，因此没有传统意义上的训练损失。它的“训练/选择”主要发生在两个层面：一是 support scorer 在每个 run 内 fit 一次并固定，二是 calibrated CSS 在校准 split 上选择阈值对。全量 LongFact 实验采用 five-fold out-of-fold evaluation：每个 prompt 在 held-out fold 上评估，scorer fitting 和 threshold calibration 在其余 folds 上完成。

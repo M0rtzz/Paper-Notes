@@ -43,7 +43,22 @@ tags:
 
 这篇论文要解决的是免训练开放词汇语义分割：给一张图和一组文本类别，不训练、不做模型特定的注意力魔改，就要输出像素级分割。整条流水线的关键转折在于它**不再去优化 logits**。传统范式是先用 CLIP 算出视觉-语言相似度 logits，再把 logits 分布往 GT 分布拉（$\mathcal{Q}^* = \arg\min_\mathcal{Q} \mathbf{D}(\mathcal{P}\|\mathcal{Q})$），最后 argmax 取类别；本文把它翻转成一个解析解 $\mathbf{M} = \arg\max_{N_c} \mathbf{D}(\mathcal{S}\|\mathcal{Q})$，直接拿「logits 到退化分布 $\mathcal{S}$ 的差异」当作分割依据。
 
-具体走法是：CLIP 算出 logits 后，先做非极大值抑制（NMS）和归一化压掉噪声；然后计算归一化 logits 到退化分布（均匀分布 $\frac{1}{N}\mathbf{1}_N$）的差异，这一步有两条等价路线——最优传输路径或最大传输速度；最后用联合双边上采样（JBU）把低分辨率结果恢复到原图尺寸，argmax 得到分割图。整个过程没有任何参数更新。
+具体走法是：CLIP 算出 logits 后，先做非极大值抑制（NMS）和归一化压掉噪声；然后计算归一化 logits 到退化分布（均匀分布 $\frac{1}{N}\mathbf{1}_N$）的差异，这一步有两条等价路线——最优传输路径或最大传输速度，两者都依赖一张刻画 patch 间关系的自注意力张量；最后用联合双边上采样（JBU）把低分辨率结果恢复到原图尺寸，argmax 得到分割图。整个过程没有任何参数更新。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 + 文本类别"] --> B["CLIP 编码<br/>余弦相似度得 logits"]
+    B --> C["NMS + 归一化<br/>压掉低置信 patch"]
+    C --> D["退化分布替代 GT<br/>测 logits 到均匀分布 S 的差异"]
+    SD["自注意力张量来源<br/>SD2 单步去噪取 up0+up1 块"] -.->|代价 / 转移矩阵| E
+    SD -.->|代价 / 转移矩阵| F
+    D --> E["最优传输路径<br/>Sinkhorn 解析解"]
+    D --> F["最大传输速度<br/>马尔可夫收敛步数倒数"]
+    E --> G["JBU 上采样得差异图"]
+    F --> G
+    G --> H["argmax → 分割图"]
+```
 
 ### 关键设计
 

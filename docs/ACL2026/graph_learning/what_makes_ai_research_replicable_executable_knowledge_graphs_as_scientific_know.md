@@ -43,7 +43,32 @@ xKG 是一个面向 AI 论文复现的层级知识图谱。它既有图的结构
 ### 整体框架
 xKG 的形式化表示为 $xKG=(N,E)$。节点集合分为三类：Paper Node、Technique Node 和 Code Node；边集合分为 Structural Edge 和 Implementation Edge。Paper Node 表示一篇论文及其元数据、技术节点和代码节点；Technique Node 表示一个可自包含的学术概念或方法组件；Code Node 表示一个可执行单元，包含实现代码、测试脚本和文档说明。
 
-构建流程分为两大块。第一块是 paper-aware corpus curation：围绕目标 PaperBench 任务，自动识别核心技术、选择高相关引用论文和 web 检索结果、下载 arXiv 源文和官方 GitHub repo，并过滤没有官方实现的论文。第二块是 hierarchical KG construction：从论文抽技术树，从 repo 取代码片段，生成并验证 Code Node，再剪掉无法 grounding 到代码的技术节点。
+构建流程分为两大块。第一块是 paper-aware corpus curation：围绕目标 PaperBench 任务，自动识别核心技术、选择高相关引用论文和 web 检索结果、下载 arXiv 源文和官方 GitHub repo，并过滤没有官方实现的论文。第二块是 hierarchical KG construction：从论文抽技术树，从 repo 取代码片段，生成并验证 Code Node，再剪掉无法 grounding 到代码的技术节点。构建完成的 xKG 随后通过两阶段方式接入复现 agent：规划阶段只看方法骨架，实现阶段才检索可运行代码。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标论文 / PaperBench 任务"] --> B
+    subgraph BUILD["可执行 grounding 自动构建流水线"]
+        direction TB
+        B["语料筛选<br/>核心技术→相关论文→下载源文与repo→过滤无官方实现"] --> C["抽技术树 + 补定义<br/>o4-mini + Paper-RAG"]
+        C --> D["repo 检索 + 合成 Code Node<br/>自调试循环保证可执行"]
+        D --> E["知识过滤<br/>剪掉无法 grounding 的技术节点"]
+    end
+    BUILD --> KG
+    subgraph KG["Paper- Technique- Code 三层节点表示"]
+        direction TB
+        F["Paper Node"] -->|Structural Edge| G["Technique Node"]
+        G -->|Implementation Edge| H["Code Node：代码σ / 测试τ / 文档δ"]
+    end
+    KG --> AGENT
+    subgraph AGENT["两阶段 agent 集成"]
+        direction TB
+        I["高层规划：只给 Paper Node"] --> J["低层实现<br/>按子目标检索 Technique-Code 对"]
+        J --> K["LLM verifier<br/>校验相关且可执行"]
+    end
+    AGENT --> L["复现代码"]
+```
 
 ### 关键设计
 

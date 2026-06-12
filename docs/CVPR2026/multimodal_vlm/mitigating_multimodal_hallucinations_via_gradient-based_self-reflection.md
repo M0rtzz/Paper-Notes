@@ -45,7 +45,20 @@ tags:
 
 ### 整体框架
 
-GACD 是一个纯推理阶段的方法，核心流程为：**梯度影响力估计 → 物体感知视觉 token 分组 → 锚定特定的影响力加权解码**。在每一步解码时，通过梯度分析 token 贡献，将视觉 token 分为与已提及物体相关和无关两组，然后构造负指导 logits 进行对比解码，自适应地增强视觉 token 影响力。
+GACD 是一个纯推理阶段、逐 token 运行的解码框架。在每一步解码 $m$，它先用**梯度影响力估计**量化视觉/prompt/历史输出三类 token 对当前 logit 的贡献；随后根据当前要预测的是不是名词分两条支路——**名词步**走**物体感知视觉 token 分组**，把视觉 token 拆成与已提及物体相关（$\mathbf{t}^o$）和无关（$\mathbf{t}^u$）两组以瞄准共现偏差；**非名词步**则不分组、统一增强全部视觉 token 以纠正文本-视觉偏差。两条支路汇合后进入**锚定特定影响力加权解码**：用 $\mathbf{t}^o$ 构造负指导 logits 做对比解码、并由影响力自适应算出权重 $\alpha_m$。最后用**样本依赖的提前停止**在视觉依据不足时及时收尾。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第 m 步解码<br/>输入：视觉 token + prompt + 历史输出"] --> B["基于梯度的 Token 影响力估计<br/>一阶 Taylor 求 Jacobian，得 I^v / I^p / I^y"]
+    B -->|名词预测步| C["物体感知视觉 Token 分组<br/>按已提及名词分物体相关/无关两组"]
+    B -->|非名词步| D["不分组：统一增强全部视觉 token"]
+    C --> E["锚定特定影响力加权解码<br/>负指导 logits + 自适应权重 α 对比解码"]
+    D --> E
+    E --> F["输出 token y_m"]
+    F -->|视觉影响力比率过低且前一 token 为 EOS| G["样本依赖提前停止"]
+    F -->|否则| A
+```
 
 ### 关键设计
 
@@ -59,10 +72,7 @@ $$I_{ms}^v = \|\mathbf{g}_{ms}^v\|_1, \quad I_{mn}^p = \|\mathbf{g}_{mn}^p\|_1, 
 
 **2. 物体感知视觉 Token 分组（Object-aware Visual Token Grouping）**
 
-- 用 spaCy 在已生成序列 $\mathbf{y}_{<m}$ 中检测名词
-- 对每个名词 $y_i$，选取影响力最大的视觉 token 构建掩码 $\mathcal{M}_{is}$
-- 累积所有名词的掩码，将视觉 token 分为**物体相关** $\mathbf{t}^o$ 和**物体无关** $\mathbf{t}^u$
-- 仅在名词预测步执行分组（共现偏差发生在物体对之间）；非名词步设 $\mathbf{t}^o = \varnothing$
+共现偏差发生在物体对之间，所以这一步只在**名词预测步**触发。先用 spaCy 在已生成序列 $\mathbf{y}_{<m}$ 中检测名词，把每个名词 $y_i$ 当作一次"物体提及"；再借助设计 1 的影响力，为该名词挑出影响力最大的那个视觉 token 形成掩码 $\mathcal{M}_{is}$。累积此前所有名词的掩码得到 $\mathcal{M}_m$，并据此把视觉 token 用 Hadamard 积切成**物体相关** $\mathbf{t}^o = \mathbf{t}^v \odot \mathcal{M}_m$ 和**物体无关** $\mathbf{t}^u = \mathbf{t}^v \odot (\mathbf{1}-\mathcal{M}_m)$ 两组——前者是导致共现幻觉的"锚点"，后者才是被忽视的真实视觉证据。非名词步则令 $\mathbf{t}^o = \varnothing$、$\mathbf{t}^u$ 等于全部视觉 token，退化为纯文本-视觉偏差校正。
 
 **3. 锚定特定影响力加权解码（Anchor-specific Influence-weighted Decoding）**
 

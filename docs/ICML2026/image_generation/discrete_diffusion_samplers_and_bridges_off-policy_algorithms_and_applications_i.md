@@ -42,7 +42,19 @@ tags:
 
 ### 整体框架
 
-本文要解决的是从未归一化能量 $p_{\text{target}}(x) \propto e^{-E(x)}$（$E: \mathcal{S} \to \mathbb{R}$，$\mathcal{S} = \{1, \dots, C\}^d$ 为离散序列空间）中摊销采样的问题。做法是学一个前向去噪核 $\overrightarrow{p}_\theta(X_{n+1} \mid X_n)$，配合事先选定的后向加噪核 $\overleftarrow{p}$（masking 或 uniform 离散扩散），让从先验 $p_0$ 出发、经 $N$ 步 Markov 链到达的 $X_N$ 的边缘分布逼近 $p_{\text{target}}$。整套方法的关键不在网络结构，而在用一个"轨迹比平方"的二阶矩损失把训练数据来源（轨迹分布 $\mathcal{P}$）与最优解解耦，从而能像 off-policy RL 那样自由地往训练里塞 replay buffer 和 MCMC 探索出来的轨迹；同一框架再被推广到 data-to-energy 离散 Schrödinger 桥，并落到 VQ-VAE 离散潜空间的 data-free 后验采样。
+本文要解决的是从未归一化能量 $p_{\text{target}}(x) \propto e^{-E(x)}$（$E: \mathcal{S} \to \mathbb{R}$，$\mathcal{S} = \{1, \dots, C\}^d$ 为离散序列空间）中摊销采样的问题。做法是学一个前向去噪核 $\overrightarrow{p}_\theta(X_{n+1} \mid X_n)$，配合事先选定的后向加噪核 $\overleftarrow{p}$（masking 或 uniform 离散扩散），让从先验 $p_0$ 出发、经 $N$ 步 Markov 链到达的 $X_N$ 的边缘分布逼近 $p_{\text{target}}$。整套方法的关键不在网络结构，而在用一个"轨迹比平方"的二阶矩损失把训练数据来源（轨迹分布 $\mathcal{P}$）与最优解解耦，从而能像 off-policy RL 那样自由地往训练里塞 replay buffer 和 MCMC 探索出来的轨迹；同一框架再被推广到 data-to-energy 离散 Schrödinger 桥，并落到 VQ-VAE 离散潜空间的 data-free 后验采样。算法 1 把这套思路串成一个 off-policy 训练回环：模型 rollout → 加权入 buffer → MCMC 精修探索 → 加权采样 + 后向核反向 unroll → 算二阶矩损失更新模型。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["未归一化能量目标<br/>p_target ∝ exp(−E)"] --> B["前向去噪核 p_θ rollout<br/>采轨迹得终末态 X_N"]
+    B --> C["重要性加权 replay buffer<br/>按权重 w 入库历史 X_N"]
+    C --> D["MCMC exploration<br/>以 p_target 为平稳分布精修，走到模型没采过的新模式"]
+    D --> E["按 w 加权采样<br/>用后向核反向 unroll 出完整轨迹"]
+    E --> F["统一二阶矩损失 TB / LV<br/>解耦轨迹来源，更新 θ"]
+    F -->|"off-policy 训练回环"| B
+    F --> G["推广应用<br/>离散 Schrödinger 桥 / VQ-VAE 后验采样"]
+```
 
 ### 关键设计
 

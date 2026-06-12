@@ -50,6 +50,24 @@ Pipeline 三段：
 
 所有 $l$ 之间相互独立，天然嵌入并行。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["观测数据 z(1:n) + 损失 ℓ(z,θ)<br/>滚动长度 N、独立样本数 L"]
+    subgraph ROLL["TabPFN 当预测规则 + Bayesian bootstrap 当协变量边际"]
+        direction TB
+        X["协变量 x：Bayesian bootstrap<br/>从已生成 x 的经验分布抽样"]
+        Y["响应 y：TabPFN 条件采样<br/>y ~ TabPFN(·|x, 历史数据)"]
+        X --> Y
+        Y -.->|自回归追加, 滚动到 N| X
+    end
+    IN --> ROLL
+    ROLL -->|L 条独立 rollout| FN["经验测度 F_N<br/>n 个观测 + 生成样本拼接"]
+    FN --> RISK["生成参数后验：风险极小化<br/>θ = argmin Σ ℓ(z,θ)"]
+    RISK --> CS["可信集 (1−α)<br/>协方差迹 + 椭球近似"]
+    CS -.->|经验验证有效性| DIAG["放弃严格鞅性质 → 经验诊断三件套<br/>路径稳定 / 频率覆盖 / 后验收缩"]
+```
+
 ### 关键设计
 
 **1. TabPFN 当预测规则 + Bayesian bootstrap 当协变量边际：把硬骨头分给各自擅长的部件**

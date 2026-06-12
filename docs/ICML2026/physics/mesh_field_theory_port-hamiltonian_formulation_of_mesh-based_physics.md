@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 输入是一个固定的有向 cell complex $\mathcal{K}$ 和初始状态 $z^0 = (z_k^0, z_{k+1}^0)$（cochain 自由度，例如节点势 + 边流）。输出是下一时刻状态 $z^{n+1}$。整条 pipeline：(1) 用 reduction theorem 把动力学限定为 $\dot z = (J - R(z)) G(z) z$ 的 port-Hamiltonian 形式；(2) $J = \begin{pmatrix} 0 & -D_k^\top \\ D_k & 0 \end{pmatrix}$ 完全由网格关联矩阵决定，不训练；(3) 用 Strang 分裂积分器交替做「半步耗散 + 守恒步 + 半步耗散」，所有运算都是稀疏 matvec，复杂度 $O(N)$。
 
+下图把这条「定理定结构 → 架构落结构 → 积分器推进」的链路画出来，三个分组分别对应下面的三个关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：定向 cell complex 𝒦（给定符号关联矩阵 D_k）<br/>+ 初始状态 z =（节点势 z_k、边流 z_k+1）"] --> THM
+    subgraph THM["四公理 + 局部 port-Hamiltonian 约化定理"]
+        direction TB
+        B["四公理：L 局部性 / P 置换等变 / O 朝向协变 / E 能量平衡"] --> C["Jacobian 因式分解 ż =（J − R）G z<br/>判定：拓扑写死、度量可学"]
+    end
+    THM --> NET
+    subgraph NET["MeshFT-Net：拓扑写死、度量可学"]
+        direction TB
+        D["J 由符号关联矩阵 D_k 固定，不训练"]
+        E["G_θ 正定度量 / R_θ 半正定耗散（可学）<br/>co-energy e = G_θ z"]
+    end
+    NET --> INT
+    subgraph INT["Strang 分裂时间积分器 + CFL 守护"]
+        direction TB
+        F["半步耗散"] --> G["守恒 leapfrog 步"] --> H["半步耗散"]
+    end
+    INT -->|CFLGuard 缩步、rollout 多步循环| OUT["下一时刻状态 z^(n+1)"]
+```
+
 ### 关键设计
 
 **1. 四公理 + 局部 port-Hamiltonian 约化定理：先证"哪些必须固定、哪些能学"，再谈架构**

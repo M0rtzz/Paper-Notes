@@ -43,6 +43,17 @@ DyLLM 是一种 training-free 的扩散 LLM 推理加速框架，利用相邻去
 ### 整体框架
 DyLLM 要解决的是 MDLM 每步把整段序列重算一遍的"重复前缀"瓶颈，做法是在标准解码循环外套一层"显著性调度器"：先用前 $T_{full}=4$ 个 full step 把各层的 attention / FFN 输出 cache 灌满，之后进入 "Salient only" 阶段——每一步 $t$、每一层 $l$ 先用相邻步上下文的余弦相似度算出一小撮"真的在动"的显著 token 子集 $\mathcal{A}_{t,l}$，FFN 与注意力都只对这个子集精确重算，其余 token 直接命中 cache。整体上等价于把 AR 推理的 "prefill → decode" 两阶段思想搬到了 diffusion 解码上，但 decode 阶段的 active set 是层自适应、步自适应的。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["含 mask 序列"] --> B["暖启 T_full=4 个 full step<br/>灌满各层 attention / FFN cache"]
+    B --> C["层自适应显著 token 选择<br/>cos(C_t, C_t−1) < τ 的进显著集 A，非显著跳 FFN 命中 cache"]
+    C --> D["显著感知近似注意力<br/>显著 query 行重算；非显著 query 仅 gather 显著列"]
+    D --> E["Response-only Step 调度<br/>多数步只送 response，每 4 步带 prompt，无 full refresh"]
+    E -->|"未解完，进入下一步 t+1"| C
+    E -->|"全部解掩完成"| F["输出生成序列"]
+```
+
 ### 关键设计
 
 **1. 层自适应显著 token 选择：用上下文方向漂移当 proxy**

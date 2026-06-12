@@ -40,7 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ACIArena 由四个模块组成：**Benign Tasks**（从 GSM8K、MATH500、HumanEval、MBPP、GPQA、MedMCQA 中用 LLM judge 按难度/可分解性/低歧义筛选）；**Attacks**（28 种 ACI 攻击，覆盖 3 攻击面 × 3 攻击目标，通过 generate-mutate-select 循环自动优化生成）；**MAS Library**（重构 6 个 MAS 到统一接口）；**Evaluation Suites**（1356 测试用例 + BU/ASR/UA/PVI 四类指标）。攻击执行时由攻击者把恶意 prompt 注入到指定攻击面，观察恶意信息在 MAS 内的级联传播与最终输出。
+ACIArena 由四个模块组成：**良性任务库**（Benign Tasks，从 GSM8K、MATH500、HumanEval、MBPP、GPQA、MedMCQA 中用 LLM judge 按难度/可分解性/低歧义筛选）；**攻击库**（Attacks，28 种 ACI 攻击，覆盖 3 攻击面 × 3 攻击目标，通过 generate-mutate-select 循环自动优化生成）；**MAS 库**（MAS Library，重构 6 个 MAS 到统一接口）；**评测套件**（Evaluation Suites，1356 测试用例 + BU/ASR/UA/PVI 四类指标）。攻击执行时由攻击者把恶意 prompt 注入到指定攻击面，观察恶意信息在 MAS 内的级联传播与最终输出。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["良性任务库<br/>GSM8K/MATH/HumanEval…<br/>LLM judge 选难度适中可分解任务"] --> GEN
+    subgraph GEN["三轴威胁模型与攻击生成器"]
+        direction TB
+        B["种子攻击 a₀<br/>攻击面 × 攻击目标交叉"] --> C["变异算子 ω 生成变体 a′"]
+        C --> D["在 N 个 MAS 上执行"]
+        D --> E["LLM judge 打分<br/>隐蔽性 + 危害性 → 选最优"]
+        E -->|未收敛| C
+    end
+    GEN -->|注入指定攻击面| F["MAS 库<br/>6 个 MAS 统一接口执行"]
+    F --> G["恶意信息级联传播"]
+    G --> H["评测套件<br/>BU/ASR/UA + PVI 量化穿透力"]
+    F -.防御侧.-> I["ACI-Sentinel<br/>保留任务必需语义最小集<br/>剔除附加注入指令"]
+    I --> F
+```
 
 ### 关键设计
 **1. 三轴威胁模型与攻击生成器：把所有 ACI 攻击形式化为"攻击面 × 攻击目标 × MAS"，并让 LLM 自动写攻击**

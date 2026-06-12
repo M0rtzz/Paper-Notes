@@ -45,6 +45,30 @@ tags:
 
 评估时，RELU 把 TOFU QA 转成四选一 MCQA。模型对每个选项计算 likelihood，归一化成概率分布。作者用这些概率计算 accuracy、F1、Brier、ECE 和 MCE；再用 Integrated Gradients 找到影响预测选项 logit 的 top-10 token；最后用 Local Mutual Information 找出与标签高度相关的 top 5% token。如果一个预测的高 attribution token 与对应标签的高 LMI token 有交集，就把它记为 shortcut-cued prediction。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["TOFU 数据集<br/>按 1% / 5% / 10% 划分 forget / retain"] --> B
+    subgraph B["多遗忘比例 × 多算法对照"]
+        direction TB
+        B1["Full fine-tune Llama-3.1-8B"]
+        B1 --> B2["近似遗忘：GradAscent / GradDiff / NPO / DPO"]
+        B1 --> B3["retained model（仅 retain split 训练，理想遗忘近似）"]
+    end
+    B --> C["RELU 转四选一 MCQA<br/>对每个选项算 likelihood 并归一化为概率"]
+    C --> D["概率可靠性<br/>ECE / MCE / Brier"]
+    C --> E
+    subgraph E["IG + LMI shortcut 检测"]
+        direction TB
+        E1["Integrated Gradients<br/>取对预测选项 logit 贡献 top-10 的 token"]
+        E2["Local Mutual Information<br/>取与标签高相关 top 5% 的 token"]
+        E1 --> E3["取交集 → 记为 shortcut-cued 预测<br/>捷径比例 P_SC = 捷径预测 / 总预测"]
+        E2 --> E3
+    end
+    D --> F["对照低 ECE 与高 P_SC<br/>揭示可靠性悖论"]
+    E3 --> F
+```
+
 ### 关键设计
 **1. 概率可靠性与决策可靠性分离：把"置信度准不准"和"决策靠不靠谱"拆成两件事分开报告**
 

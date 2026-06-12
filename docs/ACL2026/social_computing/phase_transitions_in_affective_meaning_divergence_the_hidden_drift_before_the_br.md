@@ -47,6 +47,28 @@ tags:
 
 最后在数据上估计 rolling-window 方差和自相关。理论预测：接近鞍结分岔时系统恢复速度变慢，噪声扰动更久才能消散，于是方差和自相关会在破裂前上升。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["双方对话 + 高频共享锚词 x"] --> D1
+    subgraph D1["上下文条件的 AMD 定义"]
+        direction TB
+        M["情感意义分布 M_i(s|x,c)"] --> L["三层 AMD：边缘 / 条件 / 上下文<br/>上界分解，控制语境隔离真分歧"]
+    end
+    D1 --> D2
+    subgraph D2["修复博弈与鞍结分岔"]
+        direction TB
+        K["AMD 抬高修复负载 κ = c₀ + λD<br/>→ q_{t+1} = σ(β(αq − κ))"] --> BF["βα > 4 出现双稳态<br/>越过 κ₊ 突然坍塌 + 滞后"]
+    end
+    D2 --> D3
+    subgraph D3["构念对齐的经验估计"]
+        direction TB
+        E["GoEmotions 情绪 + regex 锚词(≥3 次)<br/>+ 上下文(前轮 dialog act + TF-IDF 簇)"] --> P["按锚词与上下文池化得 M_i proxy<br/>→ AMD proxy"]
+    end
+    D3 --> CSD["CSD 检测：滚动方差 + lag-1 自相关<br/>10k permutation test + BH 校正"]
+    CSD --> OUT["破裂前早期预警信号"]
+```
+
 ### 关键设计
 
 **1. 上下文条件的 AMD 定义：把“同词不同情感”和“同词不同语境”分开**

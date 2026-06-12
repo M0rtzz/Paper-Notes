@@ -50,6 +50,24 @@ H-TDBU 由三段流水线组成。**输入**是真实数据 $\mathcal{D}_{\text{
 2. **Bottom-Up 路径** — 从 $\mathcal{D}_{\text{real}}$ 抽样后让 ensemble（RandomForest/XGBoost）或生成模型（CTGAN/TVAE/Gaussian copula）拟合潜空间 $\mathcal{Z}$，把列与列之间的复杂相关结构记下来。这一步只管"看起来像真的"，不管业务规则。
 3. **Synthesis & Reconciliation** — 把骨架 $\mathcal{S}$ 和潜噪声 $z\in\mathcal{Z}$ 一起喂给条件生成器 $X_{\text{Syn}}:=G(z\in\mathcal{Z}\mid\mathcal{S})$，生成的每一行都受 $\mathcal{S}$ 约束。生成后用 TSTR 评下游效用、用 XModal 评跨模态对齐，若 XModal 不达标触发 *Retrain Model* 重新训 bottom-up；若约束违法率高则触发 *Adjust Constraints* 回到 top-down 修规则。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["真实数据 + schema 摘要"]
+    IN --> TD["LLM/人工规则提供者<br/>一次性产出结构模板 𝒮"]
+    IN --> BU["轻量生成器学统计纹理<br/>RF/XGBoost/CTGAN → 潜空间 z"]
+    subgraph DECOUP["骨架×纹理条件解耦"]
+        direction TB
+        BU -->|统计纹理 z| SYN["条件生成器 G(z∈𝒵∣𝒮)<br/>按 𝒮 约束裁剪采样"]
+    end
+    TD -->|逻辑骨架 𝒮| SYN
+    SYN --> OUT["合成数据 D_syn"]
+    OUT --> EVAL["TSTR + XModal 双指标评估"]
+    EVAL -->|XModal 不达标<br/>Retrain Model| BU
+    EVAL -->|约束违法率高<br/>Adjust Constraints| TD
+    EVAL -->|通过| DONE["可用合成表格"]
+```
+
 ### 关键设计
 
 **1. 把 LLM 从"逐行生成器"降级为"一次性规则提供者"**

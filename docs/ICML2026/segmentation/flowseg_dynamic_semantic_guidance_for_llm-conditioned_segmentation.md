@@ -40,7 +40,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FlowSeg 继承 LISA / X-SAM 那套双视觉编码 + LLM + query decoder 的标准 scaffold：(1) 一个 Vanilla Encoder（SigLIP2-so400m）抽语义特征送进 LLM，(2) 一个 Segmentation Encoder（SAM-ViT-L）抽像素特征 $\mathbf{F}_{\text{pix}}$ 给分割 decoder。LLM 用 Qwen-3，输入指令里嵌 `<p>...</p>` 标短语跨度、`<SEG>` 标分割输出位。从 LLM 隐藏态取两类向量：条件嵌入 $\mathbf{C}_{\text{LLM}}$（来自 `<p>` 跨度）和分割嵌入 $\mathbf{S}_{\text{LLM}}$（来自 `<SEG>` 位置），各自经投影 $\phi_{\text{llm}}$ 得到 $\mathbf{C},\mathbf{S}$。$\mathbf{S}$ 加到初始 query $\mathbf{Q}^{(0)}$ 上提供全局多模态上下文。Decoder 采用 Mask2Former 架构 + $N=200$ query，但 FlowSeg 把每层 decoder 的内部流程换成 BSF；输出阶段对 mask 概率做 BAR 细化；最终用 $L$ 层后的 $\mathbf{Q}_{\text{out}}$ 与最终 $\mathbf{C}^L$ 匹配出 mask。
+FlowSeg 继承 LISA / X-SAM 那套双视觉编码 + LLM + query decoder 的标准 scaffold：(1) 一个 Vanilla Encoder（SigLIP2-so400m）抽语义特征送进 LLM，(2) 一个 Segmentation Encoder（SAM-ViT-L）抽像素特征 $\mathbf{F}_{\text{pix}}$ 给分割 decoder。LLM 用 Qwen-3，输入指令里嵌 `<p>...</p>` 标短语跨度、`<SEG>` 标分割输出位。从 LLM 隐藏态取两类向量：条件嵌入 $\mathbf{C}_{\text{LLM}}$（来自 `<p>` 跨度）和分割嵌入 $\mathbf{S}_{\text{LLM}}$（来自 `<SEG>` 位置），各自经投影 $\phi_{\text{llm}}$ 得到 $\mathbf{C},\mathbf{S}$。$\mathbf{S}$ 加到初始 query $\mathbf{Q}^{(0)}$ 上提供全局多模态上下文。Decoder 采用 Mask2Former 架构 + $N=200$ query，但 FlowSeg 把每层 decoder 的内部流程换成双向语义流 BSF——它由两条子流组成：SR（语言流进视觉）与 CR（视觉反过来刷新条件）；输出阶段对 mask 概率做 BAR 细化；最终用 $L$ 层后的 $\mathbf{Q}_{\text{out}}$ 与最终 $\mathbf{C}^L$ 匹配出 mask。三个贡献模块 SR / CR / BAR 即下面的三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像 + 指代指令"] --> VE["Vanilla Encoder<br/>SigLIP2 语义特征"]
+    IMG --> SE["Segmentation Encoder<br/>SAM-ViT-L 像素特征 F_pix"]
+    VE --> LLM["LLM Qwen-3<br/>条件嵌入 C（&lt;p&gt; 跨度）｜分割嵌入 S（&lt;SEG&gt;）"]
+    LLM -->|S 初始化 query| Q0["初始 query Q⁰"]
+    subgraph DEC["L 层 query decoder（每层执行双向语义流 BSF）"]
+        direction TB
+        SR["SR 语义交叉注意力 + 门控融合<br/>视觉交叉注意力 → 语义交叉注意力 → sigmoid 门融合"]
+        SR --> SA["self-attention + FFN"]
+        SA --> CR["CR 条件刷新<br/>condition 反向吸收 query 证据（残差更新）"]
+        CR -.->|逐层更新 C / query| SR
+    end
+    Q0 --> SR
+    SE -->|F_pix| SR
+    LLM -->|条件嵌入 C| SR
+    CR --> MRAW["mask logits M_raw + Q_out"]
+    MRAW --> BAR["BAR 边界感知细化<br/>形态学梯度圈边界 → tanh 限幅残差只改边界"]
+    BAR --> MATCH["匹配 Q_out 与最终 C^L → 输出分割 mask"]
+```
 
 ### 关键设计
 

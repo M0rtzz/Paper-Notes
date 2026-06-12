@@ -49,6 +49,17 @@ DriverGaze360系统由两部分组成：**大规模360°数据集** 和 **Driver
 
 **网络架构**：DriverGaze360-Net采用编码器-解码器结构，以Video Swin Transformer为骨干网络，配合多头解码器实现注意力图预测和语义分割的联合学习。模型输入为T帧连续全景图像序列（默认T=16），输出为注意力热力图和7类语义分割图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["360° 全景视频序列<br/>T=16 帧 · 6400×720"] --> B["Video Swin Transformer 时空编码器<br/>4 阶段 3D 移位窗口注意力 · 多尺度特征 96/192/384/768"]
+    B -->|跳跃连接保留细粒度空间信息| C["DecoderSwin 共享上采样主干<br/>convtsp1 → convtsp2 → convtsp3"]
+    C --> D["注意力预测头（sal）<br/>单通道热力图 · Sigmoid"]
+    C --> E["辅助语义分割头（ss）<br/>7 通道 · 仅被注视物体标签"]
+    D --> F["L_total = w_sal·L_sal + w_ss·L_ss"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. Video Swin Transformer 时空编码器：用视频 Transformer 啃下 360° 全景的极端宽高比**

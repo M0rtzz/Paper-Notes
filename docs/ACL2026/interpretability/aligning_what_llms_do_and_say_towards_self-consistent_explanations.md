@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-PSCB构建流程：(1) 对QA决策计算特征归因向量；(2) 对每个决策生成K个多样化解释，分别计算归因向量；(3) 用对齐函数度量决策与解释的归因一致性；(4) 选取最好和最差解释构建偏好对，用DPO优化。
+PSCB构建流程：(1) 对QA决策计算特征归因向量；(2) 对每个决策生成K个多样化解释，分别计算归因向量；(3) 用对齐函数度量决策与解释的归因一致性；(4) 选取最好和最差解释构建偏好对，用DPO优化。前两步共同填充 PSCB 这一基准库，后两步基于库中数据做对齐度量与偏好优化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多选 QA 输入"] --> SUB
+    subgraph SUB["Post-hoc Self-Consistency Bank (PSCB)"]
+        direction TB
+        B["决策<br/>LLM 生成答案 + 输入归因向量 (LIME / LIG)"]
+        C["解释<br/>温度采样生成 K 个解释，各算归因向量"]
+        B --> C
+    end
+    SUB --> D["Spearman 秩相关对齐<br/>比较决策与解释的归因向量"]
+    D --> E["构造偏好对<br/>最高分 chosen / 最低分 rejected"]
+    E --> F["DPO 微调"]
+    F --> G["自一致 LLM"]
+```
 
 ### 关键设计
 

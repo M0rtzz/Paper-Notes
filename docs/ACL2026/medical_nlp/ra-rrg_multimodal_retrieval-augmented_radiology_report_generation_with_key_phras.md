@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 RA-RRG 分为三个阶段：(1) 关键短语提取——用 RadGraph 解析报告结构后，LLM（Llama 70B）将其精炼为去除比较性幻觉的关键短语；(2) 多模态检索器训练——使用双视觉编码器（XrayDINOv2 + XrayCLIP）提取视觉特征，DETR 解码器输出语义嵌入，与 MPNet 文本嵌入对齐；(3) 报告生成——将检索到的短语输入 GPT-4o 生成连贯报告，无需 LLM 微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["放射报告 FINDINGS"]
+    subgraph KP["LLM 辅助关键短语提取"]
+        direction TB
+        A["RadGraph 解析<br/>实体与关系"] --> B["Llama 70B 精炼<br/>剔除比较性幻觉"]
+    end
+    R --> KP
+    KP --> DB[("关键短语库<br/>243K 唯一短语")]
+
+    I["胸部 X 光影像"]
+    subgraph RET["双编码器 + DETR 解码器的多模态检索器"]
+        direction TB
+        C["双视觉编码器<br/>XrayDINOv2 + XrayCLIP 通道拼接"] --> D["DETR 解码器<br/>50 查询并行解码 + 选择分类器"]
+    end
+    I --> RET
+    DB -.训练对齐.-> RET
+    RET --> E["检索到的关键短语"]
+
+    E --> G["零训练 LLM 报告生成<br/>GPT-4o 扩写为连贯报告"]
+    G --> O["放射报告输出"]
+```
+
 ### 关键设计
 
 **1. LLM 辅助关键短语提取：把报告切到“最小临床有意义”的粒度，顺手剔掉幻觉源**

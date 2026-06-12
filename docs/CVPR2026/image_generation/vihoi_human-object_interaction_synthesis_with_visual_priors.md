@@ -45,6 +45,18 @@ tags:
 
 ViHOI由两个核心组件构成：VLM-based Prior Extractor和Vision-aware HOI Generator。输入包括一组2D参考图像和文本描述，VLM（Qwen2.5-VL）从不同层分别提取视觉先验和文本先验，通过两个Q-Former-based Prior Adaptor压缩为紧凑token，然后作为条件注入基于DiT的运动扩散模型中，通过自注意力机制引导HOI运动合成。训练阶段使用GT运动渲染的图像，推理阶段使用文生图模型合成的参考图像。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本描述"] --> EX
+    B["参考图像生成"] -->|"训练：渲染 GT 运动图<br/>取交互起/中/止三关键帧"| C["2D 参考图像"]
+    B -->|"推理：Nano Banana 合成图<br/>引入世界知识泛化"| C
+    C --> EX["层解耦先验提取（VLM）<br/>第3层取视觉先验 E_v<br/>第12层取文本先验 E_t"]
+    EX --> QF["Q-Former Prior Adaptor<br/>视觉/文本各一个<br/>交叉注意力压缩为紧凑 token"]
+    QF --> D["DiT 运动扩散生成器<br/>自注意力注入条件 c={c_v,c_t}"]
+    D --> E["HOI 运动序列"]
+```
+
 ### 关键设计
 
 **1. 层解耦先验提取：让浅层管几何、深层管语义，各取所长**

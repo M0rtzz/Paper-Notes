@@ -45,6 +45,32 @@ UniSonate 把"文本→语音/音乐/音效"统一成同一个条件流匹配问
 
 网络是一个双流 MM-DiT：Text Stream 处理 instruction-content 条件，Audio Stream 处理带噪 latent。前半部分的 Joint Diffusion Transformer 层通过 joint attention 让两条流对齐，使音频 latent 同时关注全局风格与局部结构 token；后半部分的 Single Diffusion Transformer 层只在音频流上细化声学细节。训练学习从噪声到真实 latent 的向量场，推理用 ODE solver 积分后再由 VAE 解码成波形。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["自然语言指令<br/>（描述说话人/情绪/乐器/音效）"]
+    subgraph COND["Instruction-Content 解耦表示"]
+        direction TB
+        INS["Instruction 高层属性<br/>Qwen2.5-7B 冻结编码"]
+        CON["Content 时间骨架<br/>TTS/TTM 用音素序列"]
+        SFX["SFX 动态 token 注入<br/>按 λ·T 生成 L 个 [SFX] 伪音素"]
+    end
+    AUD["带噪音频 latent<br/>Mel-VAE 把 44.1kHz 波形压成连续 latent"]
+    subgraph MMDIT["双流 MM-DiT + 多阶段课程学习"]
+        direction TB
+        JOINT["Joint Diffusion Transformer<br/>joint attention 对齐文本流与音频流"]
+        SINGLE["Single Diffusion Transformer<br/>仅音频流细化声学细节"]
+        JOINT --> SINGLE
+    end
+    IN --> INS
+    IN --> CON
+    IN --> SFX
+    COND --> JOINT
+    AUD --> JOINT
+    SINGLE --> FM["Flow matching 学习向量场<br/>推理用 ODE solver 积分"]
+    FM --> OUT["Mel-VAE 解码<br/>→ 语音 / 音乐 / 音效波形"]
+```
+
 ### 关键设计
 
 **1. Instruction-Content 解耦表示：把任意音频任务投到同一条件空间**

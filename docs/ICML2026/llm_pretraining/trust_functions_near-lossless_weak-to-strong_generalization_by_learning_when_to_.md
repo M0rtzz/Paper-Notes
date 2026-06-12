@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 框架叫 **Learning to Trust (L2T)**，核心是把"弱到强"里那道难闭合的差距归结为：弱教师的伪标签里混着可信和不可信两类，只要能把可信的那部分挑出来单独喂给强学生，就能逼近甚至超过真值监督。它需要两份数据——一份有标签的源集 $\mathcal{D}_{\ell}=\{(x_i,y_i)\}$ 和一份无标签的目标集 $\mathcal{D}_u=\{x_j\}$，二者不必同分布。先让弱教师 $\pi_{\mathcal{W}}$ 在 $\mathcal{D}_u$ 上前向产出弱标签 $\hat{y}=\pi_{\mathcal{W}}(x)$ 并顺手缓存隐藏状态；再在 $\mathcal{D}_{\ell}$ 上用"弱预测对不对"训出一个信任判别器 $\tau$；然后让 $\tau$ 给 $\mathcal{D}_u$ 每条样本打分、挑出高信任子集 $\tilde{\mathcal{D}}_u$；最后只用这个子集上的弱标签去 SFT 或 GRPO 训练强学生 $\pi_{\mathcal{S}}$——全程不碰 $\mathcal{D}_u$ 的真值。链式版本再把训好的学生当作下一代教师重跑一遍，把收益滚大。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["有标签源集 D_ℓ"] --> TFL["弱教师 π_W 前向<br/>缓存隐藏状态 + 比对真值标出正误"]
+    U["无标签目标集 D_u"] --> TFU["弱教师 π_W 前向<br/>产弱标签 ŷ + 缓存隐藏状态"]
+    TFL --> NTF["基于隐藏状态的信任函数 NTF τ<br/>残差MLP读隐藏向量 → 信任分 [0,1]"]
+    NTF -->|"零样本部署：源域训练、迁到目标域打分"| SCORE["给 D_u 每条弱标签打信任分"]
+    TFU --> SCORE
+    SCORE --> FILTER["挑高信任子集 D̃_u<br/>纯度 0.69–0.98"]
+    FILTER --> STU["训练强学生 π_S<br/>MCQA→LoRA-SFT；数学→GRPO"]
+    STU --> OUT["近无损 / 超越真值监督"]
+    STU -->|"弱到强链：当下一代教师滚雪球"| TFU
+```
+
 ### 关键设计
 
 **1. 基于隐藏状态的 Neural Trust Function（NTF）：到隐藏空间里判断弱标签的对错，绕开失准的输出层置信度**

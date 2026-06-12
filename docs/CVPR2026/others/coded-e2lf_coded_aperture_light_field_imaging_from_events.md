@@ -46,37 +46,46 @@ tags:
 
 ### 整体框架
 
-Coded-E2LF 想解决的是：能不能完全抛开传统强度相机、只靠 event camera 重建出像素级精度的 4D 光场。系统的链路是——可编程光圈按一段编码 pattern 序列依次开关（约 20ms），每次 pattern 切换都会在静态场景上触发一批 events，这些 events 累积成 event image；网络一端学习这段编码 pattern（AcqNet），另一端从 event images 重建出 $8\times8$ 视点的完整光场（RecNet），整条 pipeline 端到端联合优化编码与解码。
+Coded-E2LF 想解决的是：能不能完全抛开传统强度相机、只靠 event camera 重建出像素级精度的 4D 光场。系统沿用 Habuchi et al. 的 AcqNet-RecNet 流水线作为 baseline，再加上理论分析与两项算法改进。链路是——可编程光圈按一段编码 pattern 序列依次开关（约 30ms），每次 pattern 切换都会在静态场景上触发一批 events，这些 events 累积成 event image；网络一端（AcqNet）学习这段编码 pattern，另一端（RecNet）从 $N-1$ 张 event images 重建出 $8\times8$ 视点的完整光场，整条 pipeline 端到端联合优化编码与重建。关键的两条理论结论是：序列里只要含一个全黑 pattern，event-based 成像就与传统 intensity-based 编码光圈成像近似等价（因而可解）；且编码 pattern 近似置换不变，黑 pattern 放哪不改变信息量——这两条共同支撑了 Black-First（BF）与 Reference-Aware（RA）两项改进。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["输入光场 L（训练为 GT，部署为真实场景）"]
+    L --> A["AcqNet 学编码 pattern<br/>N 个可训练张量经 sigmoid，scale 渐增 → 二值"]
+    A --> BF["Black-First 编码序列（BF）<br/>第一个 pattern 固定全黑，其余 N−1 个可学"]
+    BF --> I["编码光圈成像模型<br/>强度图 I⁽ⁿ⁾ = Σ a·L（Eq.1）"]
+    I --> RA["RA 参考感知 event 生成<br/>追踪 I_ref 逐事件模拟，累积成 event image"]
+    RA -->|"Black pattern 等价性 + 置换不变性<br/>event ≈ intensity 编码光圈，可解"| REC["RecNet 重建<br/>N−1 张 event image → 8×8 视点光场 L̂"]
+    REC --> OUT["4D 光场输出<br/>数字重聚焦 / 视点合成"]
+    REC -.->|"端到端 MSE 回传，联合优化编码 ↔ 重建"| A
+```
 
 ### 关键设计
 
 **1. 编码光圈 + Event Camera 成像模型：把 pattern 切换变成可累积的 event image**
 
-event 的对数响应让传统编码光圈理论不能直接套用，第一步要先把光场信息编码进 events。系统让 $N$ 个二值 pattern $\{a^{(n)}\}_{n=1}^{N}$（$a^{(n)} \in \{0,1\}^{u \times v}$，$u \times v$ 为角度分辨率如 $8\times8$）依次施加于光圈，控制各子光圈开关；在场景保持静态的约 20ms 内，pattern 切换是唯一的亮度变化来源。pattern 从 $a^{(n-1)}$ 切到 $a^{(n)}$ 时触发的 events 累积为 event image $E^{(n-1,n)}(x) = \log I^{(n)}(x) - \log I^{(n-1)}(x)$，其中 $I^{(n)}(x) = \sum_{s,t} a^{(n)}(s,t) \cdot L(x, s, t)$ 是该 pattern 下的强度图像，$L(x,s,t)$ 正是待重建的光场。这样一来，光场信息就被编码进了一串 event image 的对数差里。
+event 的对数响应让传统编码光圈理论不能直接套用，第一步要先把光场信息编码进 events。系统让 $N$ 个二值 pattern $\{a^{(n)}\}_{n=1}^{N}$（$a^{(n)} \in \{0,1\}^{u \times v}$，$u \times v$ 为角度分辨率如 $8\times8$）依次施加于光圈，控制各子光圈开关；在场景保持静态的约 30ms 采集窗口内，pattern 切换是唯一的亮度变化来源。pattern 从 $a^{(n-1)}$ 切到 $a^{(n)}$ 时触发的 events 累积为 event image $E^{(n-1,n)}(x) = \log I^{(n)}(x) - \log I^{(n-1)}(x)$，其中 $I^{(n)}(x) = \sum_{s,t} a^{(n)}(s,t) \cdot L(x, s, t)$ 是该 pattern 下的强度图像，$L(x,s,t)$ 正是待重建的光场。这样一来，光场信息就被编码进了一串 event image 的对数差里。
 
-**2. Black Pattern 等价性定理：用全黑参考消掉对数非线性**
+**2. Black Pattern 等价性与置换不变性：用全黑参考消掉对数非线性**
 
-event image 是对数差、没有绝对强度参考，难以直接解码。论文证明（Eq. 8）只要编码序列里含一个全黑 pattern $a^{(n_B)} = \mathbf{0}$（光圈完全关闭），就有 $E^{(n_B, n)}(x) = \log I^{(n)}(x) - \log I^{(n_B)}(x) = \log I^{(n)}(x) + C$——因为 event camera 存在暗电流基底 $I_{\text{dark}}$，使 $\log I^{(n_B)}$ 退化为常数 $C$。于是含黑 pattern 的 event image 与 intensity-based 编码光圈图像只差一个全局常数，传统编码光圈的解码方法可以直接拿来用；而且黑 pattern 提供了统一的参考基准，不同 pattern 顺序生成的 event images 近似置换不变，编码设计被大大简化。
+event image 记录的是对数强度差（Eq. 4：$\tau E^{(n-1,n)} \approx \ln(I^{(n)}+\epsilon) - \ln(I^{(n-1)}+\epsilon)$），从 $N-1$ 张 event image 反解 $N$ 张强度图本是欠定问题。论文证明（Eq. 8）只要序列里含一个全黑 pattern $a^{(n_B)} = \mathbf{0}$（光圈全关、对应强度图 $I^{(n_B)}=0$），就能借暗电流偏置 $\epsilon$ 把所有 $I^{(n)}$ 从 event images 闭式恢复出来。这意味着**含黑 pattern 的 event-based 编码光圈成像与传统 intensity-based 编码光圈成像近似等价**，现成的解码方法可以直接复用——这也解释了为何 baseline 自动学出的 pattern 里总会出现一个全黑 pattern（机器学习自发选了能保证等价性的解）。论文还证明了第二条性质：编码 pattern **近似置换不变**（Eq. 11，任意顺序的虚拟 event image 都能由原序列线性组合算出），即黑 pattern 放在序列哪个位置都不改变所含信息量——这条正是下面 BF 改进的理论依据。
 
 **3. Black-First 编码序列（BF）：把黑 pattern 固定在第一位**
 
-黑 pattern 放在哪、序列怎么排会直接影响 event 数量和重建质量。BF 直接令 $a^{(1)} = \mathbf{0}$、后续 $N-1$ 个 pattern 依次施加，于是从首个黑 pattern 到各后续 pattern 的 event images $\{E^{(1,n)}\}_{n=2}^{N}$ 直接对应 intensity-based 测量，$N-1$ 张 event image 即可重建 $u \times v$ 视点的完整光场。相比任意排列，BF 避免了相邻非零 pattern 之间的冗余 events，大幅压缩 event 数量，实测约 20ms 完成整段编码序列采集。
+baseline 学出的黑 pattern 位置是随机的，而论文观察到**黑 pattern 前后的 pattern 切换会触发大量 events**，把黑 pattern 放在序列中间很浪费。借助上面的置换不变性，黑 pattern 放哪不影响信息量，于是 BF 直接令 $a^{(1)} = \mathbf{0}$、后续 $N-1$ 个 pattern 由 AcqNet 学习。这样从首个黑 pattern 出发的 event images $\{E^{(1,n)}\}_{n=2}^{N}$ 直接对应 intensity-based 测量，$N-1$ 张 event image 即可重建完整光场。BF 避开了黑 pattern 两侧的冗余 events，显著压缩总 event 数（论文测得平均约 7.18 events/像素）；event 越少采集时间越短（EVK4 对应的理论采集下界约 6.2ms，实测采集时间约 30ms），更短的采集窗口也让系统能容忍缓慢运动的场景。
 
 **4. Reference-Aware Event Generation（RA）：在训练里精确模拟 event 触发**
 
-event camera 的对数响应和阈值机制让简单的 event 累积存在误差，pattern 的优化梯度会回传不准。RA 显式追踪参考强度 $I_{\text{ref}}$，按规则逐事件模拟 event 生成：
-
-$$e_k = \begin{cases} +1 & \text{if } \log I(x_k, t_k) - \log I_{\text{ref}}(x_k) \geq C_{\text{pos}} \\ -1 & \text{if } \log I(x_k, t_k) - \log I_{\text{ref}}(x_k) \leq -C_{\text{neg}} \end{cases}$$
-
-每触发一次 event，$I_{\text{ref}}$ 随之更新。作为可微分的 event 生成模拟器，RA 让编码 pattern 的优化梯度能准确穿过 event 生成过程。
+baseline 的 event 生成（Eq. 12）有个隐患：它直接拿相邻两张强度图 $I^{(n)}$、$I^{(n-1)}$ 的对数差算 event 数，并未用到 event sensor 真正的参考强度 $I_{\text{ref}}$（上一次触发 event 时的强度），偏离了真实触发条件（Eq. 3：$|\ln(I+\epsilon) - \ln(I_{\text{ref}}+\epsilon)| > \tau$），pattern 的优化梯度因而回传不准。RA 改为**严格追踪并更新 $I_{\text{ref}}$**：用 Eq. 13 从当前 $I^{(n)}$ 与 $I_{\text{ref}}$ 算出 event image，再用 Eq. 14（$\ln(I_{\text{ref}}+\epsilon) \leftarrow \ln(I_{\text{ref}}+\epsilon) + \tau E^{(n-1,n)}$）按触发量更新 $I_{\text{ref}}$。关键是 $I_{\text{ref}}$ 在一般情形下不确定、难以追踪，而 **BF 恰好让它可行**——序列首位是全黑 pattern，可在 $n=1$ 时把 $I_{\text{ref}}$ 初始化为 0，之后逐步更新。配合梯度透传（quantization 算子做 pass-through），RA 成为可微分的 event 生成模拟器，让编码梯度准确穿过 event 生成过程；BF 单独用会略降质量，与 RA 合用才同时拿到更少 events 和更高重建质量。
 
 **5. 端到端 Deep Optics：AcqNet 学编码、RecNet 学重建**
 
-手工设计编码 pattern 有上限，不如让网络自己学。AcqNet 输入随机初始化的连续 pattern $\tilde{a}^{(n)} \in [0,1]^{u \times v}$，训练收敛后二值化为 $a^{(n)} \in \{0,1\}^{u \times v}$；RecNet 接收 $N-1$ 个 event images，输出完整光场 $\hat{L} \in \mathbb{R}^{H \times W \times u \times v}$，架构为 CNN encoder-decoder，spatial 与 angular 维度分别处理后融合。前向是 AcqNet 生成 pattern → RA 模拟 events → RecNet 重建光场，反向让梯度穿过整条 pipeline 联合优化编码和解码，从而超越手工编码的上限。
+手工设计编码 pattern 有上限，不如让网络自己学（deep optics 思路）。AcqNet 的**可训练参数本身就是 $N$ 个编码 pattern**——$N$ 组 $8\times8$ 张量 $\dot{a}^{(n)}$ 经 $\text{sigmoid}(s\,\dot{a}^{(n)})$ 得到 $a^{(n)}$，训练中 scale $s$ 逐渐增大，迫使 pattern 自然收敛到二值（$0/1$），**无需单独的二值化正则项**；AcqNet 的 forward 输入光场 $L$、按成像模型与 RA 模拟出 event images。RecNet 接收堆叠成 $(N-1)\times H \times W$ 的 event images，输出 $64 \times H \times W$（即 $8\times8=64$ 个视点）的光场 $\hat{L}$，沿用 Habuchi et al. 的 23 层 CNN 架构以作公平对比。前向是 AcqNet 生成 pattern → 成像 → RA 模拟 events → RecNet 重建光场，反向让梯度穿过整条 pipeline 联合优化编码和重建，从而超越手工编码的上限。
 
 ### 损失函数 / 训练策略
 
-总损失 $\mathcal{L} = \mathcal{L}_{\text{recon}}(\hat{L}, L_{\text{GT}}) + \gamma \cdot \mathcal{L}_{\text{binary}}$：$\mathcal{L}_{\text{recon}}$ 是光场重建的 L1 + SSIM 损失，$\mathcal{L}_{\text{binary}}$ 是鼓励 pattern 趋于二值的正则化项。
+AcqNet-RecNet 流水线以**原始光场与重建光场之间的均方误差（MSE）**为唯一训练目标，端到端最小化。pattern 的二值化不是靠额外的正则损失，而是靠 AcqNet 内 $\text{sigmoid}(s\,\dot{a})$ 中 scale 参数 $s$ 在训练中逐渐增大来实现；event 生成里的量化算子 $Q(\cdot)$ 用梯度透传保持可微。训练完成后，AcqNet 被替换为真实成像硬件（光圈 pattern 设为学到的参数），实采 event 数据喂给 RecNet 重建真实场景。
 
 ## 实验
 

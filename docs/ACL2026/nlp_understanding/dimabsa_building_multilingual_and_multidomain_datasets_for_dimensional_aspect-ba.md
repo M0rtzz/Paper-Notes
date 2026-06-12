@@ -51,6 +51,23 @@ DimABSA 不是一个模型，而是 **「数据集 + 子任务 + 评测指标 + 
 
 Tatar 和 Ukrainian 是低资源语言，通过把 Russian 数据用 Yandex Translate 机翻 + native speaker 复核（Tatar 45.5%、Ukrainian 35.6% 被人工修订）得到。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["12 个真实来源文本<br/>6 语言 × 4 领域"] --> SUB
+    subgraph SUB["维度情感标注协议"]
+        direction TB
+        B["三元组抽取<br/>2 标注者 + 第 3 人裁决"] --> C["VA 评分<br/>SAM 量表 + emoji，5 标注者打 (1–9)"]
+        C --> D["去离群取均值<br/>剔除 ±1.5σ"]
+    end
+    SUB -->|俄语 gold| LR["低资源语言 tat / ukr<br/>Yandex 机翻 + 母语者复核"]
+    SUB --> E["DimABSA 数据集<br/>76,958 实例 / 42,590 句"]
+    LR --> E
+    E --> F["三个递进子任务<br/>DimASR → DimASTE → DimASQP"]
+    F --> G["连续 F1（cF1）<br/>类别 exact match + VA 距离软化"]
+    G --> H["6 个开 / 闭源 LLM benchmark"]
+```
+
 ### 关键设计
 
 **1. 维度情感标注协议：把 polarity 三分类换成连续的 valence–arousal 坐标**

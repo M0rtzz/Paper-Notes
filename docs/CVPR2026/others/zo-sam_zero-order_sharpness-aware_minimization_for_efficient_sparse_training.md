@@ -45,7 +45,21 @@ tags:
 
 标准 SAM 的每一步要做两次前向反传：先正常算一遍梯度找到"最伤泛化的扰动方向" $\epsilon$，把参数推到 $\theta+\epsilon$ 这个邻域最差点，再在那里算一遍梯度真正更新参数。这第二遍计算才是为了到达平坦极小值，第一遍只是为了挑方向——而 ZO-SAM 的核心观察正是：挑方向这件事根本不需要精确梯度。于是它把第一步（扰动步）换成不需要反传的零阶梯度估计，只在第二步（更新步）保留一次精确反传，整体反传次数从 2 降到 1。
 
-扰动步用估计出的梯度方向构造扰动 $\epsilon = \rho \frac{\hat{\nabla}\mathcal{L}(\theta)}{\|\hat{\nabla}\mathcal{L}(\theta)\|}$，更新步在扰动点 $\theta^*(\epsilon)=\theta+\epsilon$ 处用精确梯度更新 $\theta \leftarrow \theta - \eta \nabla\mathcal{L}(\theta^*(\epsilon))$。这样既拿到了 SAM 引导平坦极小值的泛化收益，又把开销压回到接近普通 SGD 的水平，刚好回应了稀疏训练"本来就是为省计算"的初衷。
+扰动步用估计出的梯度方向构造扰动 $\epsilon = \rho \frac{\hat{\nabla}\mathcal{L}(\theta)}{\|\hat{\nabla}\mathcal{L}(\theta)\|}$，更新步在扰动点 $\theta^*(\epsilon)=\theta+\epsilon$ 处用精确梯度更新 $\theta \leftarrow \theta - \eta \nabla\mathcal{L}(\theta^*(\epsilon))$。整个 ZO-SAM 只是顶替优化器套在稀疏训练循环外面，稀疏掩码 $M$ 怎么生成照旧，这样既拿到了 SAM 引导平坦极小值的泛化收益，又把开销压回到接近普通 SGD 的水平，刚好回应了稀疏训练"本来就是为省计算"的初衷。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["稀疏掩码 M<br/>（LTH / SNIP / RigL / MEST… 照常生成）"] --> A
+    subgraph S["ZO-SAM 优化器（即插即用：只换优化器，不碰稀疏结构）"]
+        direction TB
+        A["当前稀疏参数 θ⊙M"] --> B["扰动步：随机梯度估计 RGE<br/>2m 次前向取差分估方向，零反传"]
+        B --> C["构造扰动 ε = ρ·ĝ/‖ĝ‖<br/>推到邻域最差点 θ+ε"]
+        C --> D["更新步：一阶精确梯度<br/>在 θ+ε 处做 1 次反传"]
+        D --> E["更新参数 θ ← θ − η∇L(θ+ε)"]
+    end
+    E -->|下一训练迭代| A
+```
 
 ### 关键设计
 

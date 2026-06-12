@@ -45,6 +45,19 @@ FS-I2P 要解决的是图像到点云的 detection-free 配准：输入同场景
 
 具体走 coarse-to-fine：先用 ResNet+FPN 抽出三个尺度的图像特征 $F_{Ia},F_{Ib},F_{Ic}$、用 KPFCNN 抽点云特征 $F_P$，过一层 self/cross-attention 做初步桥接；随后进入核心的层级 Focus-Sweep 交互模块，对每个尺度的图像特征先做 Focus 全局粗对齐、再做 Sweep 分块精细交互，而每个尺度上这对 FS-Layer 重复几次则交给一个 RL 策略网络动态分配；交互完成后把多尺度图像特征拼接，与三尺度点云特征分别算余弦相似度并逐元素取 max 得到 score map，据此做 top-k patch 匹配、细化到像素级，最后用 PnP+RANSAC 解算位姿。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：RGB 图像 I + 点云 P"] --> B["ResNet+FPN 三尺度图像特征<br/>KPFCNN 点云特征 + 初步 self/cross-attention 桥接"]
+    B --> C["Focus<br/>点云整体尺度调制图像统计量，一次性全局粗对齐"]
+    C --> D["Sweep<br/>点云序列插进图像 patch，SSM 精细分块对齐"]
+    L["Dynamic Layer Allocation<br/>RL 策略给每尺度选迭代次数"] -.->|"决定本尺度看几遍"| C
+    D -->|"未到次数：再看一遍"| C
+    D --> E["多尺度图像特征拼接<br/>与点云特征余弦相似度逐元素取 max 得 score map"]
+    E --> F["top-k patch 匹配 → 像素级细化"]
+    F --> G["PnP+RANSAC 解算位姿 [R, t]"]
+```
+
 ### 关键设计
 
 **1. Focus：用点云的整体尺度一次性把图像特征「对准」，避免逐层注意力漂移**

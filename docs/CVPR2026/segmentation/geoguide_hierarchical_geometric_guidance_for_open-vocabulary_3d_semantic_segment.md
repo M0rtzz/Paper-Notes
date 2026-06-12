@@ -40,6 +40,27 @@ tags:
 
 给定场景点云 $\mathbf{P} \in \mathbb{R}^{N \times 3}$ 和多视角 RGB 图像 $\mathcal{I}$，GeoGuide 并行提取两类特征：(1) 冻结的预训练 3D 骨干提取几何特征 $\mathbf{F}_{3d}^G \in \mathbb{R}^{N \times C_1}$；(2) 冻结的 2D 开放词表分割模型提取像素级语义特征 $\mathbf{F}_{2d}^M$。通过相机参数建立 2D-3D 对应关系，将 2D 特征投影到点云得到 $\mathbf{F}_{2d} \in \mathbb{R}^{N \times C}$。3D 几何特征通过轻量级 MLP 适配器映射到相同语义空间得到 $\mathbf{F}_{3d}^{\text{sem}}$。三个层次化模块（USD、IMR、IIRC）从局部到全局引导蒸馏过程。推理时仅需 3D 点云输入，丢弃所有辅助模块。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：场景点云 P + 多视角 RGB 图像"]
+    A --> B["冻结 3D 骨干（Sonata）<br/>几何特征 F_3d^G（几何先验·当裁判）"]
+    A --> C["冻结 2D 开放词表模型<br/>像素语义特征投影到点云 → F_2d"]
+    B --> D["MLP 适配器<br/>映射到语义空间 F_3d^sem"]
+    B --> USD
+    C --> USD
+    D --> IMR
+    B --> IIRC
+    D --> IIRC
+    USD["基于不确定性的超点蒸馏 USD（局部）<br/>超点内估可靠性权重 → 加权去噪 2D → 蒸馏 L_sp"]
+    IMR["实例级掩码重建 IMR（区域）<br/>随机遮挡掩码 → 重建完整实例 → BCE 损失 L_mask"]
+    IIRC["跨实例关系一致性 IIRC（全局）<br/>语义相似度矩阵向几何相似度看齐 → L_sim"]
+    USD --> L["总损失 L_final = λ₁·L_sp + λ₂·L_mask + λ₃·L_sim"]
+    IMR --> L
+    IIRC --> L
+    L --> O["推理：仅 3D 点云 → F_3d^sem 与 CLIP 文本嵌入算相似度分类<br/>（三个辅助模块全部丢弃，零额外开销）"]
+```
+
 ### 关键设计
 
 三个模块对应蒸馏偏差的三个尺度——超点（局部）、实例（区域）、跨实例（全局），共同点是都拿冻结的预训练 3D 几何特征当"裁判"，去校正投影过来的 2D 语义特征。

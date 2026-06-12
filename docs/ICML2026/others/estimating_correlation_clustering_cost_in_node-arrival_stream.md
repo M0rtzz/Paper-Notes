@@ -46,7 +46,20 @@ C4Approx 实现 5 步流水线。
 
 之后并行执行两个子例程：(i) Est-EA 用 3 遍估计 $|E_A^{\text{mis}}|$（至少一端在 $A$ 的不匹配对），(ii) Est-EB 用 $k+3$ 遍估计 $|E_B^{\text{mis}}|$（两端都在 $B$）。这里 $A$ 是「能借助 $R$ 直接判定 pivot 的节点」，$B=V\setminus A$ 为剩下的低度节点。
 
-最终返回 $(\tilde m_A+\tilde m_B + \frac{3}{8}\epsilon n^{1-\alpha})/(1-\epsilon/8)$，配合 Theorem 2.1 (Dalirrooyfard et al.) 的 PrunedPivot $(9+\frac{24}{k-1})$-近似，组合得到对 OPT cost 的 $(O(1),n^{1-\alpha})$-近似，概率至少 $0.99$。
+最终返回 $(\tilde m_A+\tilde m_B + \frac{3}{8}\epsilon n^{1-\alpha})/(1-\epsilon/8)$，配合 Theorem 2.1 (Dalirrooyfard et al.) 的 PrunedPivot $(9+\frac{24}{k-1})$-近似，组合得到对 OPT cost 的 $(O(1),n^{1-\alpha})$-近似，概率至少 $0.99$。整条流水线是「先建参考集分区、再双路并行估计、最后合并」的分支-汇合结构，下图三条贡献路径正对应后面三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["节点流 V（图片/推文等原始对象）<br/>边标签按需用相似度函数计算"] --> B["参考集 R + FindPivot 节点分区<br/>第 1 遍存排名最高的 Õ(n^(1−β)) 个节点"]
+    B -->|高度节点 / pivot 落在 R 内| C["可判定集 A"]
+    B -->|低度节点 + pivot 不在 R| D["低度节点集 B"]
+    C --> E["E_A^mis 高低度分解估计<br/>采样证书切 H/L 分别 rescale（3 遍）"]
+    D --> F["E_B^mis 整簇采样估计<br/>整簇搬入内存数簇内/簇间边（k+3 遍）"]
+    E --> G["合并 m̃_A + m̃_B + 加性校正项"]
+    F --> G
+    G --> H["OPT cost 的 (O(1), n^(1−α)) 近似<br/>套 PrunedPivot (9+24/(k−1)) 因子"]
+```
 
 ### 关键设计
 

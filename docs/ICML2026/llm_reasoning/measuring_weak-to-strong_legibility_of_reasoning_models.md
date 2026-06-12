@@ -45,7 +45,22 @@ Pipeline 三步走：
 
 1. **生成 trace**：12 个 RLM 在 MATH / GPQA / LSAT 三个数据集上做题，按 think token 抠出推理 trace，NLTK 切句得到步骤序列，共 84,396 条 trace。
 2. **算 efficiency 维度**：每条 trace 算 token/step 长度、句向量冗余度 ($\tau=0.8$ 阈值)、LLM-judge (Gemini 2.5-Flash) 标注的 backtracking 次数。
-3. **算 transfer 维度 (本文核心)**：只对 RLM 已答对的题，按 $X=\{2,4,\ldots,100\}\%$ 的栅格把 trace 前缀喂给弱学生 $W$，弱学生最多再写 1024 token、强制给答案，记下每个 bin 的正确性 $S(R_p^{(x)})\in\{0,1\}$；trace 级曲线 $f_p(x)$ 用线性插值补齐，teacher 级曲线 $\mu_T(x)$ 是 trace 加权均值再在学生间均值。
+3. **算 transfer 维度 (本文核心)**：只对 RLM 已答对的题，按 $X=\{2,4,\ldots,100\}\%$ 的栅格把 trace 前缀喂给弱学生 $W$，弱学生最多再写 1024 token、强制给答案，记下每个 bin 的正确性 $S(R_p^{(x)})\in\{0,1\}$；trace 级曲线 $f_p(x)$ 用线性插值补齐，teacher 级曲线 $\mu_T(x)$ 是 trace 加权均值再在学生间均值。再从这条曲线衍生出 FOTU / SOTU / RR 三个互补标量，即下面的三个关键设计——它们共享同一条 TU 曲线，只是从均值、信息密度、局部劣化三个角度去刻画它。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["12 个 RLM × 3 数据集<br/>抠 think token、NLTK 切句<br/>共 84k 条推理 trace"] --> B["仅保留 RLM 已答对的 trace"]
+    B --> C["按百分位栅格 X={2,4,…,100}%<br/>截前缀喂弱学生续写<br/>记每个 bin 正确性 S∈{0,1}"]
+    C --> D["插值 + 聚合成 TU 曲线 μ_T(x)<br/>弱学生续写准确率曲线"]
+    D --> E["FOTU：曲线均值<br/>多数前缀位置就答对"]
+    D --> F["SOTU：首次答对位置分布的熵<br/>抗 front-load / sandbag"]
+    D --> G["RR：相邻前缀正确率下降比例<br/>越往后读越糊涂"]
+    A -.->|"efficiency 维度（脚手架）"| H["token/step 长度、冗余度 τ=0.8<br/>backtracking（Gemini judge）"]
+    E --> I["12 个 RLM 的 legibility 排名<br/>+ 下游 monitorability 验证"]
+    F --> I
+    G --> I
+```
 
 ### 关键设计
 

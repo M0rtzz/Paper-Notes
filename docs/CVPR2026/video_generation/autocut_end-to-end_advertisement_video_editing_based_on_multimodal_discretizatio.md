@@ -44,6 +44,25 @@ AutoCut 要解决的是把一堆原始广告素材（视频片段、音频、口
 
 训练分两步走：先冻住 Qwen3-8B 骨干、只训新加的多模态 embedding 层做对齐（~700K 样本），再全参数 SFT 学具体任务行为（~100K 策划样本）。推理时 LLM 吐出一串混合 token，视频 token 拿去最近邻检索真实片段、音频 token 解码成 BGM、文本 token 直接当脚本，最后用 ffmpeg 把它们拼成 MP4。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始广告素材<br/>视频片段 + 音频 + 口播文案"]
+    subgraph ENC["多模态编码与离散化"]
+        direction TB
+        B["视频帧 ResNet-50 · 音频段 PANNs<br/>抽连续 embedding"] --> C["RQVAE 残差量化<br/>256×8 码本 → 每帧/段 8 个离散 token"]
+    end
+    A --> ENC
+    ENC --> D["统一 Token 空间<br/>视频/音频/文本 token 共享扩展词表"]
+    D --> E["四项任务统一建模<br/>Qwen3-8B 自回归：选择 / 排序 / 脚本 / BGM"]
+    subgraph REN["检索与渲染"]
+        direction TB
+        F["视频 token → FAISS 检索真实片段<br/>音频 token → BGM · 文本 token → 脚本"] --> G["ffmpeg 拼接 + 转场 + 字幕"]
+    end
+    E --> REN
+    REN --> H["成片 MP4"]
+```
+
 ### 关键设计
 
 **1. 多模态编码与离散化：把连续的视频/音频压成 LLM 能消化的离散 token**

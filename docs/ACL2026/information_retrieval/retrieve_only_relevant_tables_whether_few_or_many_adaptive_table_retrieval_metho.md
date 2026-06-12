@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 ATR 要解决的核心问题是"一个查询到底该取几张表"——固定 top-k 在简单查询上过检索、在复杂查询上欠检索。它把这个数量决策交给模型本身：给定自然语言查询 $q$ 和候选表集合 $C$，用 ModernBERT-large 作 encoder，把查询、一个阈值 token 和多张表的 schema 表示拼成输入序列 $[T_{th}; q; T_1; t_1; ...; T_n; t_n]$，其中每张表前有 table token $T_i$，阈值边界由 threshold token $T_{th}$ 承载。模型为每个 table token 和 threshold token 输出 logit，推理时只保留 logit 高于阈值 logit 的表，于是返回表数 $k_q$ 随查询自动变化。为支撑大表库，实际部署先用 bi-encoder（Contriever 或 UAE）取 top-50 候选，再对其做 reranking；为绕开 encoder 长度和 self-attention 的二次成本，reranking 用滑动窗口的方式分段完成，最终所有排在阈值之上的表构成检索结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 q + 数据库表集合 C"]
+    BI["双编码器（Contriever / UAE）<br/>取 top-50 候选表（脚手架）"]
+    SEQ["拼接序列 [T_th; q; T_1; t_1; …]<br/>ModernBERT-large 逐 table token 出 logit"]
+    AT["自适应阈值<br/>阈值 token T_th 作可学边界，保留 logit 高于阈值的表"]
+    TRAIN["相关性校准 + 语义分组（训练目标）<br/>BCE 拉开 logit gap + 对比学习注入 joinability"]
+    RR["滑动窗口重排<br/>按窗口 W 分段、每段留 top-R，阈值跌出保留区即定稿"]
+    OUT["返回 k_q 张表 → text-to-SQL 生成器（脚手架）"]
+    Q --> BI --> SEQ --> AT
+    TRAIN -.塑造 logit 与表征.-> AT
+    AT --> RR --> OUT
+```
+
 ### 关键设计
 **1. Adaptive Thresholding：把"取几张表"从手调超参变成模型学到的决策边界**
 

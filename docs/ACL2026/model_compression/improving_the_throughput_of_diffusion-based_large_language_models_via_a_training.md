@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 CadLLM 在 dLLM 的每次前向传播后，利用 token 置信度作为反馈信号，通过四个线性插值策略动态更新块大小 $B_t$、步数 $S_t$、词表大小 $V_t$ 和阈值 $\tau_t$，形成闭环控制器。即插即用，兼容 KV 缓存的 dLLM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["掩码 dLLM 一次前向传播"] --> B["token 解码置信度 c̄<br/>（滑动窗口均值，单一共享信号）"]
+    B --> C["自适应块大小 B_t<br/>有把握放大块、犹豫缩小块"]
+    B --> D["自适应步数 S_t / 阈值 τ_t<br/>没把握多去噪几步、阈值随进度松弛"]
+    B --> E["自适应词表大小 V_t<br/>高置信度收窄 softmax 候选省算力"]
+    C --> F["按 B_t / S_t / V_t / τ_t 并行解码并提交 token"]
+    D --> F
+    E --> F
+    F -->|未生成完，置信度反馈下一步| A
+    F -->|生成完成| G["输出文本"]
+```
+
 ### 关键设计
 
 **1. 自适应块大小 $B_t$：按置信度决定一次并行解码多少 token**

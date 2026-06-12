@@ -48,7 +48,18 @@ tags:
 
 ### 整体框架
 
-输入为点云场景和文本指令。首先对点云进行分割得到物体，每个物体的特征（PointNet++提取的几何特征）投影到LLM输入空间，同时分配物体标识符（如 `<obj005>`）。每个物体对应若干 object-related token。QuatRoPE 在这些 token 上编码物体的3D绝对位置（包围盒中心），通过注意力层的 QK 点积自动转换为两两相对位置。IGRE 机制则确保 QuatRoPE 只影响物体 token 之间的注意力，不干扰语言 token。
+输入为点云场景和文本指令。首先对点云进行分割得到物体，每个物体的特征（PointNet++提取的几何特征）投影到LLM输入空间，同时分配物体标识符（如 `<obj005>`）。每个物体对应若干物体 token（object-related token）。QuatRoPE 在这些 token 上编码物体的3D绝对位置（包围盒中心），通过注意力层的 QK 点积自动转换为两两相对位置。IGRE 机制则确保 QuatRoPE 只影响物体 token 之间的注意力，不干扰语言 token。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云场景 + 文本指令"] --> B["点云分割 → 物体"]
+    B --> C["PointNet++ 几何特征<br/>投影到 LLM 输入空间 + 物体标识符"]
+    C --> D["QuatRoPE<br/>物体 token 编码 3D 绝对位置（包围盒中心）<br/>四元数旋转整体编码"]
+    D --> E["IGRE<br/>维度隔离 + 非物体 token 零填充门控"]
+    E --> F["LLM 注意力层 QK 点积<br/>O(n) 绝对位置 → O(n²) 成对相对位置"]
+    F --> G["3D 视觉定位 / 3D 问答"]
+```
 
 ### 关键设计
 

@@ -38,7 +38,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要回答的不是"哪些视频值得留下"，而是"怎么把一段不完美视频的学习信号送到它真正擅长的去噪阶段"。整套流程（称为 TQD，Timestep Quality-aware Distribution）是一个纯数据侧的预处理：先用 VideoAlign 给每个视频离线打出运动质量（MQ）和视觉质量（VQ）两个分数并归一化，训练时分两层调度——样本级先按"绝对质量"决定这个视频以多大概率参与训练（质量 dropout），时间步级再按"相对质量"把它的梯度集中投放到合适的噪声区间，最后照常用流匹配（Wan-T2V）或噪声预测（CogVideoX）目标训练。模型结构、loss、超参都不动，改的只是"喂哪段数据、在哪个时间步喂"。
+这篇论文要回答的不是"哪些视频值得留下"，而是"怎么把一段不完美视频的学习信号送到它真正擅长的去噪阶段"。整套流程（称为 TQD，Timestep Quality-aware Distribution）是一个纯数据侧的预处理：先用 VideoAlign 给每个视频离线打出运动质量（MQ）和视觉质量（VQ）两个分数并归一化，训练时分两层调度——样本级先按"绝对质量"决定这个视频以多大概率参与训练（质量 dropout），时间步级再按"相对质量"把它的梯度集中投放到合适的噪声区间，两层最终揉成同一个采样分布，最后照常用流匹配（Wan-T2V）或噪声预测（CogVideoX）目标训练。模型结构、loss、超参都不动，改的只是"喂哪段数据、在哪个时间步喂"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频数据<br/>（含大量单维度优秀的不平衡样本）"] --> B["VideoAlign 离线打分<br/>归一化得 mq_norm / vq_norm"]
+    B --> C["样本级加权<br/>p_sample = max(vq_norm, mq_norm)"]
+    B --> D["时间步级分布调整<br/>Beta(t; μκ, (1−μ)κ)"]
+    C --> E["组合质量加权分布<br/>p(t) ∝ max(vq,mq)·Beta(·)"]
+    D --> E
+    E -->|"高MQ低VQ → 大时间步喂运动"| F["流匹配 / 噪声预测训练<br/>Wan-T2V / CogVideoX"]
+    E -->|"低MQ高VQ → 小时间步喂细节"| F
+    E -->|"双高→均匀；双低→dropout"| F
+```
 
 ### 关键设计
 

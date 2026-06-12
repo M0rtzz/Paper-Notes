@@ -43,9 +43,25 @@ tags:
 
 ### 整体框架
 
-OA-SORT 要解决的核心问题是：当同类目标互相遮挡时，检测框会变得不准，导致 IoU 关联代价混淆、Kalman Filter（KF）估计发散，进而引发身份交换。它以 Hybrid-SORT 的三阶段关联（高分检测关联→低分检测关联→丢失轨迹重连）为骨架，额外挂上三个「遮挡感知」组件——OAM 算出每个目标被遮挡的程度，OAO 把这个程度注入关联代价，BAM 把它注入 KF 更新——整个框架 plug-and-play、无需训练。
+OA-SORT 要解决的核心问题是：当同类目标互相遮挡时，检测框会变得不准，导致 IoU 关联代价混淆、Kalman Filter（KF）估计发散，进而引发身份交换。它以 Hybrid-SORT 的三阶段关联（高分检测关联→低分检测关联→丢失轨迹重连）为骨架，额外挂上三个「遮挡感知」组件——OAM（Occlusion-Aware Module，遮挡感知模块）算出每个目标被遮挡的程度，OAO（Occlusion-Aware Offset）把这个程度注入关联代价，BAM（Bias-Aware Momentum）把它注入 KF 更新——整个框架 plug-and-play、无需训练。其中 OAM 又由「深度排序→遮挡系数→高斯图精炼」三个子步组成（对应下面关键设计的前三点），OAO、BAM 则各是一个独立组件。
 
-一帧的流转是这样的：KF 先给出位置预测，OAM 据此计算遮挡系数；高分检测关联时 OAO 用遮挡系数修正空间一致性度量；与低分检测关联上的轨迹再经 BAM 调整 KF 的运动参数；帧末 OAM 基于最新观测重算遮挡系数，留给下一帧的 BAM 使用。
+一帧的流转是这样的：KF 先给出位置预测，OAM 据此计算遮挡系数；高分检测关联时 OAO 用 KF 估计侧的遮挡系数修正空间一致性度量；与低分检测关联上的轨迹再经 BAM 调整 KF 的运动参数；帧末 OAM 基于最新观测重算遮挡系数，留给下一帧的 BAM 使用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["KF 位置预测"] --> OAM
+    subgraph OAM["OAM 遮挡感知模块：估计遮挡系数"]
+        direction TB
+        D1["深度排序<br/>底边 y 坐标判前后"] --> D2["遮挡系数<br/>被挡面积占比"]
+        D2 --> D3["高斯图精炼<br/>扣掉 bbox 边缘背景"]
+    end
+    OAM -->|"估计侧遮挡系数"| S1["高分检测关联<br/>OAO 注入遮挡、修正空间一致性"]
+    S1 --> S2["低分检测关联<br/>BAM 按遮挡调 KF 更新强度"]
+    S2 --> S3["丢失轨迹重连"]
+    S3 --> OUT["输出当帧轨迹"]
+    OUT -.->|"帧末按最新观测重算、供下一帧 BAM"| OAM
+```
 
 ### 关键设计
 

@@ -49,6 +49,20 @@ tags:
 
 整条 pipeline 分四步：(1) 用 DeepSeek-V3 抽取每句话每层的 token 序列；(2) 把 token 聚合成单一句向量（concat 后 N 个 token 或 mean）；(3) 用"共享集合的均值"构造句法质心 $\mathbf{S}_i$ 与语义质心 $\mathbf{T}_i$；(4) 在每一层做正交投影消融，并用基于排名的相似度衡量配对句子的几何接近度。注意 $\mathbf{S}_i$ 不包含 $\mathbf{X}_i$ 自身，$\mathbf{T}_i$ 也不包含 $\mathbf{X}_i$ 或 $\mathbf{P}_i$，避免"自消"伪信号。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原句 X_i（约2000句）+ 三类对照<br/>句法双胞胎 s_i / 英文转述 P_i / 6语翻译 t_i"] --> B["DeepSeek-V3 逐层抽取 token 表示<br/>聚合成句向量（concat 末 N 个 token / mean）"]
+    subgraph C["1. 质心构造与正交消融"]
+        direction TB
+        C1["句法质心 S_i = 平均句法双胞胎<br/>语义质心 T_i = 平均 6 语翻译"] --> C2["沿质心方向正交投影消融<br/>X⊥S_i、X⊥T_i（非直接相减）"]
+    end
+    B --> C
+    C --> D["2. 基于邻域排名的相似度<br/>最近邻互查排名，高维稳健"]
+    D --> E["3. 跨层 × 两类消融交叉矩阵<br/>无 / 正确 / 随机 / 跨类质心 + 下游 probe"]
+    E --> F["句法-语义编码地图<br/>分层分工 + 不对称解耦结论"]
+```
+
 ### 关键设计
 
 **1. 质心构造与正交消融：用纯线性手段把句法成分和语义成分从句向量里显式抠出来**

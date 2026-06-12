@@ -47,6 +47,18 @@ Markov-VAR 将 VAR 改造为非全上下文马尔可夫过程：
 
 其中 $M_t = f_\phi(R_t, M_{t-1})$ 为代表性动态状态，$M_0 = \langle\text{sos}\rangle$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上一尺度 token E_(t−1)"] --> W["滑动窗口历史补偿<br/>取最近 N=3 个尺度<br/>cross-attn 压成历史向量 h_(t−1)"]
+    A --> M["马尔可夫状态 M_(t−1)<br/>Concat(E_(t−1), H_(t−1))"]
+    W --> M
+    M --> ATT["Markovian Attention<br/>可见范围锁死在 M_(t−1) 内"]
+    ATT --> R["预测当前尺度 R_t"]
+    R -->|t ← t+1 滚动生成| A
+    R --> OUT["各尺度拼合 → 生成图像"]
+```
+
 ### 关键设计
 
 **1. 马尔可夫状态定义：让当前尺度自己充当"历史的浓缩"**

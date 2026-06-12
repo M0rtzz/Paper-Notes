@@ -55,7 +55,18 @@ GPU矩阵乘法吞吐量提升(80x)远超reduction/elementwise操作(5-9x)，RMS
 
 ### 整体框架
 
-MXNorm 的出发点是一个"免费午餐"观察：在 Pre-Norm transformer 里，RMSNorm 紧挨在 MXFP 量化前面，两者都要沿 hidden dimension 收集统计量来 rescale——RMSNorm 算 RMS，MXFP 算每个 block 的 absmax。既然 MXFP 已经把 block absmax 算好了，何不直接拿它来近似 RMS，省掉 RMSNorm 那次独立的 reduction？给定 tensor $X \in \mathbb{R}^{T \times D}$，RMSNorm 每行要算 inverse RMS $\rho_t = \left(\frac{1}{D}\sum_{d=1}^{D} X_{td}^2\right)^{-1/2}$ 再乘 gain：$Y_{td} = \rho_t \cdot X_{td} \cdot \gamma_d$，瓶颈就是对 $D$（通常 4096-8192）个元素做 reduction；而 MXFP8 量化（MXCast）把 $D$ 列切成 $K=D/B$ 个大小 $B=32$ 的 block，每 block 算 absmax $m_{tk} = \max_b |Y_{tkb}|$、取 power-of-2 scale $S_{tk} = \text{cast}(m_{tk}/256; E8M0)$ 再量化 $V_{tkb} = \text{cast}(Y_{tkb}/S_{tk}; E4M3)$。MXNorm 就是把这两次 reduction 合成一次。
+MXNorm 的出发点是一个"免费午餐"观察：在 Pre-Norm transformer 里，RMSNorm 紧挨在 MXFP 量化前面，两者都要沿 hidden dimension 收集统计量来 rescale——RMSNorm 算 RMS，MXFP 算每个 block 的 absmax。既然 MXFP 已经把 block absmax 算好了，何不直接拿它来近似 RMS，省掉 RMSNorm 那次独立的 reduction？给定 tensor $X \in \mathbb{R}^{T \times D}$，RMSNorm 每行要算 inverse RMS $\rho_t = \left(\frac{1}{D}\sum_{d=1}^{D} X_{td}^2\right)^{-1/2}$ 再乘 gain：$Y_{td} = \rho_t \cdot X_{td} \cdot \gamma_d$，瓶颈就是对 $D$（通常 4096-8192）个元素做 reduction；而 MXFP8 量化（MXCast）把 $D$ 列切成 $K=D/B$ 个大小 $B=32$ 的 block，每 block 算 absmax $m_{tk} = \max_b |Y_{tkb}|$、取 power-of-2 scale $S_{tk} = \text{cast}(m_{tk}/256; E8M0)$ 再量化 $V_{tkb} = \text{cast}(Y_{tkb}/S_{tk}; E4M3)$。MXNorm 就是把这两次 reduction 合成一次：先复用 block absmax 的广义 p-mean 估出 inverse RMS，指数取 $p=2$ 约束 output 上界以保住训练稳定，再把 gain $\gamma$ 融进下一层 Linear 权重、让归一化输出直接以 MXFP 格式进入下游矩阵乘。下图给出从输入激活到下游 MatMul 的完整数据流，核心是 block absmax 这一次计算同时喂给 RMS 估计与量化两条支路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 X（T×D），Pre-Norm 层激活"] --> B["切 K=D/B 个 block，算 block absmax<br/>reduction 规模从 D 降到 K（B=32 时省 32 倍）"]
+    B -->|复用同一组 absmax| C["广义 p-mean 估 inverse RMS<br/>ρ̃ = c̃(p,B)·(mean of absmaxᵖ)^(−1/p)，取 p=2"]
+    B -->|复用同一组 absmax| D["MXFP 量化：算 block scales + 量化值"]
+    C --> E["MXNormLinear：gain γ 融进下一层权重<br/>H = MXNorm(X)·MXCast(W·γ)ᵀ"]
+    D --> E
+    E --> F["输出 H（MXFP 格式）→ 下游 MatMul"]
+```
 
 ### 关键设计
 

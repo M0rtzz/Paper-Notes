@@ -40,6 +40,30 @@ tags:
 
 数据管线分三步：(1) **收集**——从HD-VILA-100M、Panda-70M、Koala-36M和Pexels汇集大规模视频源；(2) **预处理**——质量筛选（分辨率>1080p, FPS≥10, 时长5s-1min）+ 内容审查（用Qwen2.5-VL-72B评估6个维度）+ TransNetV2时间分割；(3) **标注**——三个专用模型分别标注文本描述、几何信息和3D点轨迹。最终输出包含完整标注的100万视频片段，以及用多视图重投影筛选的静态子集SceneScribe-MVS。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频源汇集<br/>HD-VILA-100M / Panda-70M<br/>Koala-36M / Pexels"]
+    subgraph FILTER["多维度质量筛选与内容审查"]
+        direction TB
+        B["硬参数筛选<br/>分辨率>1080p / FPS≥10 / 5s–1min"]
+        C["TransNetV2 镜头分割<br/>切成单镜头片段"]
+        D["Qwen2.5-VL-72B 内容审查<br/>运动/水印/畸变/强光等6维"]
+        B --> C --> D
+    end
+    subgraph ANNOT["三模型联合标注"]
+        direction TB
+        E["Qwen2.5-VL-72B：语义<br/>结构化场景描述"]
+        F["MegaSaM：几何<br/>相机位姿+时序一致深度"]
+        G["TAPIP3D：动态<br/>借深度位姿投影出3D点轨迹"]
+        F --> G
+    end
+    A --> FILTER
+    FILTER --> ANNOT
+    ANNOT --> H["SceneScribe-1M<br/>100万片段全标注"]
+    H -->|多视图重投影解耦相机/物体运动| I["SceneScribe-MVS 子集<br/>保留相机运动、剔除动态物体"]
+```
+
 ### 关键设计
 
 **1. 多维度质量筛选与内容审查：硬参数挡不住"看着清楚但内容没用"的视频**

@@ -38,7 +38,33 @@ tags:
 
 ### 整体框架
 
-这篇论文不提新检测器，而是把"如何系统评估全脑 LSFM 细胞检测的泛化能力"做成一套可复现的基准。整条链路分两段：前段是数据，小鼠脑组织经 SHIELD 保存、脱脂、SmartBatch+ 荧光标记、EasyIndex 透明化，再用 SmartSPIM 光片显微镜以 1.8×1.8×4 µm 体素成像，去条纹拼接后存为 Zarr 并通过 Neuroglancer 可视化标注；后段是检测，用 ConvMixer 作 backbone 输出概率热图，再接一个 FindMaxima 层把热图转成离散的 3D 细胞质心坐标。在此之上，论文额外探索一个 3D-MAE 自监督分支，试图绕开 LSFM 标注成本极高的瓶颈。
+这篇论文不提新检测器，而是把"如何系统评估全脑 LSFM 细胞检测的泛化能力"做成一套可复现的基准。整条链路分三块：**多标记物基准**这一块负责造数据——小鼠脑组织经 SHIELD 保存、脱脂、SmartBatch+ 荧光标记、EasyIndex 透明化，再用 SmartSPIM 光片显微镜以 1.8×1.8×4 µm 体素成像，去条纹拼接后存为 Zarr 并通过 Neuroglancer 可视化标注约 9.3 万个细胞质心；**ConvMixer + FindMaxima 检测基线**这一块在标注数据上训检测器，ConvMixer backbone 输出概率热图，再接一个 FindMaxima 层做 3D 非极大值抑制把热图转成离散质心坐标；**3D-MAE 自监督**这一块从海量无标注体积里学可迁移特征，绕开 LSFM 标注成本极高的瓶颈，学到的编码器特征反过来拼接进检测候选做 TP/FP 后处理精修。三块串起来，就构成"造基准 → 跑检测基线暴露泛化鸿沟 → 用自监督补标注稀缺"的完整评估闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["多标记物基准（设计 1）"]
+        direction TB
+        A["6 种标记物鼠脑<br/>NeuN/cFos/PV/TH/Iba1/GFAP"] --> B["透明化 + SmartSPIM 成像<br/>1.8×1.8×4 µm 体素"]
+        B --> C["去条纹 + 拼接 → Zarr"]
+        C --> D["人工标注细胞质心<br/>约 93,000 个"]
+    end
+    subgraph DET["ConvMixer + FindMaxima 检测基线（设计 2）"]
+        direction TB
+        E["ConvMixer 输出概率热图 H"] --> F["FindMaxima 层<br/>3D 非极大值抑制"]
+        F --> G["细胞质心预测"]
+    end
+    subgraph MAE["3D-MAE 自监督表示学习（设计 3）"]
+        direction TB
+        H["海量无标注体积"] --> I["内容感知加权掩码重建<br/>16×32×32 裁剪, 掩码比 0.15"]
+        I --> J["编码器特征"]
+    end
+    D -->|每标记物单独训| E
+    C -->|无标注体积| H
+    G --> K["TP/FP 后处理分类<br/>拼接 MAE 特征精修候选"]
+    J --> K
+    K --> L["全脑细胞检测 + 跨标记物/跨脑区泛化评估"]
+```
 
 ### 关键设计
 
@@ -59,10 +85,6 @@ $$w_i = \alpha + \gamma \cdot \min\!\left(1,\ \mathrm{Var}(\mathbf{x}_i)/\bar{\s
 其中背景 patch 取最低权重 $\alpha=1$，方差足够大的含细胞 patch 拿到 $\alpha+\gamma=10$，即 10 倍权重。配套地，最优掩码比只有 0.15，远低于自然图像 MAE 的 0.75——因为 3D 显微体积里每个 patch 的语义密度很高，掩太多会直接抹掉细胞间的关键空间关系，重建任务反而失去监督信号。
 
 ### 损失函数 / 训练策略
-
-- **基线检测模型**：二值 Focal Loss，每种标记物单独训练，NVIDIA RTX 3090/4090 上一天内收敛
-- **3D-MAE**：内容感知 MSE 重建损失，AdamW 优化器（$\eta=1.5 \times 10^{-4}$），余弦退火调度，训练 700 epochs
-- **全标记物模型**：合并 6 种标记物约 60k patch 联合训练，重建损失在单标记物最优的 15% 以内
 
 - **基线检测模型**：二值 Focal Loss，每种标记物单独训练，NVIDIA RTX 3090/4090 上一天内收敛
 - **3D-MAE**：内容感知 MSE 重建损失，AdamW 优化器（$\eta=1.5 \times 10^{-4}$），余弦退火调度，训练 700 epochs

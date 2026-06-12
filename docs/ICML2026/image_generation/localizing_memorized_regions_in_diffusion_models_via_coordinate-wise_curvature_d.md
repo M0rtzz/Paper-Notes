@@ -44,6 +44,17 @@ tags:
 
 本文要解决的是"图里哪些像素是从训练集抄来的"这个空间定位问题，而它的整套方法都建立在一个翻译上：借 Tweedie 关系（命题 4.1）把"某坐标方差崩塌"等价改写成"对数密度在该坐标的曲率很大"，于是定位变成测对角 Hessian。但高曲率有真有假——真记忆是过拟合，假记忆是 prompt 强制的纯色背景这类数据固有低方差。本文的核心动作就是用一个"欠拟合 baseline"的曲率去减条件模型的曲率，把数据固有的那部分扣掉，只留下过拟合贡献，并配上一个零 Hessian 的 score-difference 代理让方法跑得起来。整条流程都在 DDIM 最后一步（$t\approx 0$）的 latent 上做：先正常 CFG 采样得到接近终点的 $x_t$，算曲率差或其 score 代理，沿通道求和、归一化、二值化，即得记忆掩码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["DDIM 最后一步 t≈0 的 latent x_t"] --> B["坐标级曲率差<br/>条件模型曲率 − 欠拟合 baseline 曲率"]
+    B -->|Hessian 路线| C["Hutchinson 估计器<br/>HVP 取对角 diag(−H)"]
+    B -->|零 Hessian 代理| D["score-difference 代理<br/>score 差的逐坐标平方"]
+    C --> E["沿通道求和 → 归一化 → 二值化"]
+    D --> E
+    E --> F["记忆区域掩码"]
+```
+
 ### 关键设计
 
 **1. 坐标级曲率差：用欠拟合 baseline 减掉数据流形固有曲率**

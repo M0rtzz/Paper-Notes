@@ -40,7 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定 $n$ 个 LLM $M_1,\dots,M_n$ 与权重 $\lambda_i\ge 0$、$\sum_i \lambda_i = 1$，传统集成（CE）每步要显式算出加权平均分布 $\bar P(y|x_{\le t}) = \sum_i \lambda_i M_i(y|x_{\le t})$ 再采下一个 token，因而每步都得跑全部 $n$ 个模型。本文提出的混合模型式集成（ME）反过来：每步先从 $\mathrm{Mult}(\lambda)$ 抽一个索引 $i$，只用 $M_i$ 算一次分布并采 token——再套上"懒 KV 同步"处理换模型时的历史缺口、用词表映射兼容异构模型，就能把 $n$ 倍前向无损地变回 1 倍。
+给定 $n$ 个 LLM $M_1,\dots,M_n$ 与权重 $\lambda_i\ge 0$、$\sum_i \lambda_i = 1$，传统集成（CE）每步要显式算出加权平均分布 $\bar P(y|x_{\le t}) = \sum_i \lambda_i M_i(y|x_{\le t})$ 再采下一个 token，因而每步都得跑全部 $n$ 个模型。本文提出的混合模型式集成（ME）反过来：每步先从 $\mathrm{Mult}(\lambda)$ 抽一个索引 $i$，只用 $M_i$ 算一次分布并采 token——再套上"懒 KV 同步"处理换模型时的历史缺口、用词表映射兼容异构模型，就能把 $n$ 倍前向无损地变回 1 倍。整条流水线是一个逐 token 的解码回环：选源 → 补缓存 → 单次前向 → （异构时）映射词表 → 采样 → 拼接 → 回到选源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["前缀 x≤t / n 个模型 Mi + 权重 λ"] --> B["混合模型式采样<br/>按权重 λ 抽一个索引 i"]
+    B -->|"Mi 落后 k 个 token"| C["懒同步 KV 缓存<br/>一次 prefill 补全 k 个 token"]
+    B -->|"缓存已最新"| D["只跑 Mi 一次前向 → 分布 Pi"]
+    C --> D
+    D -->|"异构词表"| E["异构词表映射 Fi<br/>投到统一词表 U"]
+    D -->|"同词表"| F["从分布采下一 token<br/>（混合模型式采样）"]
+    E --> F
+    F --> G["拼接到序列 S"]
+    G -->|"未结束，回到选源"| B
+    G -->|"结束"| H["输出序列"]
+```
 
 ### 关键设计
 

@@ -45,6 +45,25 @@ ChatHLS 提出了一个多智能体 HLS 设计框架，通过 HLSTuner（QoR 感
 
 ChatHLS 是一条把 HLS 设计、优化、调试串起来的多智能体流水线，核心是让微调过的 LLM 真正"懂"指令与硬件性能之间的因果关系。流程分两段：生成段里 LLM 先产出 HLS-C 代码，再由 HLSTuner 基于 QoR 感知推理挑选并插入优化指令；调试段里 HLSFixer 解析 HLS 工具的反馈做错误诊断与修复，同时 VODA 把新遇到的错误用例回收进库，让调试能力随使用不断自我进化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：C 算法 / 自然语言描述"] --> B["LLM 生成 HLS-C 初始代码"]
+    B --> C["HLSTuner：QoR 感知推理<br/>沿指令→硬件→性能因果链选并插入指令"]
+    C -->|性能未达标，迭代调参| C
+    C --> D["HLS 工具：C 仿真 + 综合"]
+    D -->|无错误| Z["输出：优化后 HLS-C"]
+    D -->|检测到错误| FIX
+    subgraph FIX["HLSFixer：分层反馈调试"]
+        direction TB
+        E["分析 LLM：错误诊断 + 生成修复指令"] --> F["修复 LLM：按指令执行修复"]
+        F -->|长尾错误超出训练分布| G["LLM-as-a-Judge：多角度评估兜底"]
+    end
+    FIX -->|修复后回灌重测| D
+    FIX --> V["VODA：自进化收集错误用例回库"]
+    V -.持续反哺.-> FIX
+```
+
 ### 关键设计
 
 **1. HLSTuner：用 QoR 感知推理把"插指令"变成"懂权衡"**

@@ -49,6 +49,25 @@ tags:
 
 这些技术手段被进一步放进 Construct Validity Protocol。CVP 有三阶段：概念化、操作化、效度套件。它要求研究者先说清楚构念是什么、不是什么、可能被哪些 nuisance 混淆；再设计减少混杂的测量仪器；最后用稳定性、收敛效度、区分/增量效度、known-groups、预测效度等证据报告 proxy 是否真的在测目标构念。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档 D：由目标构念 c 与混杂因素 z 共同生成"] --> B["默认测量流程：编码器 E → embedding e → proxy f(e) → 标量分数"]
+    B --> C["不可识别性论证<br/>正交旋转 h′=Rh 给出相同观测分布，无监督似然分不清 c 与 c/z 混合"]
+    C --> D["Construct Validity Protocol：把启发式 proxy 变成可验证测量"]
+    D --> E["概念化：construct map + facet blueprint + 三档样例，说清构念是什么 / 不是什么"]
+    E --> F["操作化"]
+    subgraph G["操作化的三层缓解"]
+        direction TB
+        H["输入端：抽取相关片段 / 标准化文风 / mask 实体"]
+        I["表示端：对抗去除 / 零空间投影 / 对比学习"]
+        J["反事实中和<br/>打分层差分 Ĉ = f(e_obs) − f(e_base)，减掉 nuisance 贡献"]
+        H --> I --> J
+    end
+    F --> G
+    G --> K["效度套件：Validity Card 报告稳定性 / 收敛 / 区分 / 增量 / known-groups / 预测效度"]
+```
+
 ### 关键设计
 **1. 不可识别性论证：从数学上说清"无监督 embedding 自动分离社会构念"为何站不住**
 
@@ -56,7 +75,7 @@ tags:
 
 这意味着无监督似然目标根本无法区分"真实构念坐标"和"构念与 nuisance 的线性混合"——两者在数据上不可分辨。所以即使现实世界里 $c$ 与 $z$ 真的独立，模型学到的 embedding 也可能把二者搅在一起，这不是语料更大、encoder 更深就能自动修好的，而是测量目标在原理上就没被识别。
 
-**2. Counterfactual Neutralization：在打分函数层把主题、风格、实体等 nuisance 的贡献减掉**
+**2. 反事实中和（Counterfactual Neutralization）：在打分函数层把主题、风格、实体等 nuisance 的贡献减掉**
 
 承接上一点，既然 embedding 距离里混了一堆 nuisance，那直接报告 $f(e_{obs})$ 就不可信。作者的对策不是重训 embedding，而是构造一个反事实中性文本——移除 stance、novelty claim 或情绪表达，但尽量保留主题内容——再算差分分数 $\hat{C}=f(e_{obs})-f(e_{base})$，期望留下的就是目标构念变化贡献的那部分。
 

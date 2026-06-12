@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 本文要解决的是长序列生成中模型"悄悄变坏"却没有实时仪表盘的问题。做法是在 decoder-only 模型自回归解码的每一步 $t$，用轻量探针从内部读出三个正交信号——当前 token 对 prompt 区域的注意力、隐状态相对 prompt 末尾的偏移、以及下一 token 分布的熵，把它们各自归一化到统一惩罚尺度后线性聚合成一个有界的 Fatigue Index (FI)。FI 满足五条公理以保证可解释、可归因，再叠加一层滞后告警把连续的风险分转成稳定的在线告警，整个过程不动模型权重、不需重训。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["解码每一步 t<br/>探针读取内部状态"] --> SIG
+    subgraph SIG["三信号提取与归一化"]
+        direction TB
+        S1["prompt 注意力 A_t → φ_A"]
+        S2["输出熵 E_t → φ_E（健康带两侧加罚）"]
+        S3["嵌入漂移 D_t → φ_D"]
+    end
+    SIG --> C["公理化 Fatigue Index 聚合<br/>线性加权 FI = w_A·φ_A + w_E·φ_E + w_D·φ_D"]
+    C --> D["滞后告警机制<br/>双阈值 θ=0.50 / θ_low=0.40"]
+    D --> E["在线退化告警"]
+```
+
 ### 关键设计
 
 **1. 三信号提取与归一化：把异构内部状态映成可加的退化惩罚**

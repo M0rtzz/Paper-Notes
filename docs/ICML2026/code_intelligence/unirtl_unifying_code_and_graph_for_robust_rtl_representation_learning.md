@@ -41,6 +41,19 @@ tags:
 ### 整体框架
 UniRTL 想解决的核心问题是：单看 RTL 代码会丢结构依赖、单看图又语义稀疏，二者必须细粒度融合才能学到鲁棒表示。它的做法是把 Verilog 代码先编译成保留完整设计信息的控制数据流图（CDFG，经 Yosys→RTLIL→AST→CDFG），再用一个统一的 Transformer（CodeBERT 基座）把文本、代码、图三种模态喂进同一表示空间，靠"互相遮蔽"让三者彼此预测、彼此对齐。整个训练分层进行，最后接性能预测或代码检索两类下游任务。数据规模为 132,008 个 RTL 设计，其中 38,888 个成功转成 CDFG。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Verilog 代码 → CDFG 构造<br/>Yosys→RTLIL→AST→CDFG"] --> B["图感知分词器<br/>节点嵌入(type/width/文本)→GIN→轻量 Transformer"]
+    B --> HT
+    subgraph HT["分层训练策略：按模态数据丰度排预训练顺序"]
+        direction TB
+        C["阶段1：预训练图感知分词器"] --> D["阶段2：文本-代码对齐热身<br/>互相遮蔽建模 20% token，互为监督"]
+        D --> E["阶段3：图融合<br/>互相遮蔽 20% 节点+token + Laplacian 位置编码"]
+    end
+    HT --> F["统一多模态表示<br/>下游：性能预测 / 代码检索"]
+```
+
 ### 关键设计
 
 **1. 图感知分词器：让 Transformer 读懂 CDFG 的拓扑而非平铺节点**

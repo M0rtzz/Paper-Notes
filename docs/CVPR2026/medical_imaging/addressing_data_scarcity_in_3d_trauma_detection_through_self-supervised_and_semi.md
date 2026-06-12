@@ -44,7 +44,23 @@ tags:
 
 ### 整体框架
 
-这篇论文要解决的是 3D 创伤检测里"有标注样本太少（RSNA 腹部数据集仅 4.4% 有分割标注）"的困境。整体分两阶段走：先把 1,206 个 CT 体数据切成 patch、用掩码重建做自监督预训练，让 3D U-Net 编码器在没有任何人工标注的情况下学会解剖结构；再把这个编码器接上 VDETR 解码器做 3D 检测，并用 Mean Teacher 半监督机制把额外 2,000 个无标注体数据也利用起来。输入是标准化为 512×336×336 体素的 CT 序列，输出是 3D bounding box 加分类标签。
+这篇论文要解决的是 3D 创伤检测里"有标注样本太少（RSNA 腹部数据集仅 4.4% 有分割标注）"的困境。整体分两阶段走：先把 1,206 个 CT 体数据切成 patch、用掩码重建做自监督预训练，让 3D U-Net 编码器在没有任何人工标注的情况下学会解剖结构；再把这个**冻结的编码器同时喂给两个下游任务**——任务 I 是 VDETR 解码器做 3D 创伤检测，配合两阶段训练和 Mean Teacher 半监督机制把额外 2,000 个无标注体数据也利用起来；任务 II 是在编码器 bottleneck 特征上接 linear probe 做多标签损伤分类。检测输入是标准化为 512×336×336 体素的 CT 序列，输出是 3D 损伤框加分类标签。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CT 体数据 1,206 个<br/>206 有标注 + 1,000 无标注"] --> B["1. Patch-based MIM 自监督预训练<br/>128³ patch 遮蔽 75% 子块重建"]
+    B --> C["冻结 3D U-Net 编码器<br/>bottleneck 特征 32×21×21×256"]
+    subgraph DET["下游任务 I：3D 创伤检测"]
+        direction TB
+        D2["2. VDETR + 3D 顶点相对位置编码<br/>采样 4,096 token，8 顶点偏移算注意力偏置"]
+        D2 --> D3["3. 两阶段训练 + Mean Teacher 半监督<br/>Phase I 冻结编码器 / Phase II 联合微调 + 一致性正则"]
+    end
+    C --> DET
+    DET --> E["3D 损伤框 + 分类"]
+    C --> H["4. 多标签损伤分类（下游任务 II）<br/>linear probe 7 类二分类"]
+    H --> F["7 类损伤概率"]
+```
 
 ### 关键设计
 

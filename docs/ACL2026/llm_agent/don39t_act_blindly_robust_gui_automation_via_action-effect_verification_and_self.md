@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 VeriGUI要解决的是GUI Agent"盲目执行"的问题：操作失败时不自知，继续在没变化的屏幕上往下走，最终陷入无限循环。它的做法是把"验证"显式写进每一步推理。给定截图和指令，Agent在每个交互步不只是输出一个动作，而是输出一组结构化结果——先思考（Think）、再对照上一步的预测验证当前屏幕是否如愿改变（Verification），然后给出动作（Action），最后预测这次动作应该带来的屏幕变化（Expected Effect），这个预测又成为下一步的验证标尺，形成时间上前后咬合的闭环。这套TVAE推理循环靠两阶段训练学会：Stage 1用Robust SFT在混合成功/失败轨迹上建立基本的验证行为，Stage 2用GRPO配合非对称奖励把"诚实的自我监控"精炼出来——整个过程不需要任何在线交互。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["截图 S_t + 自然语言指令"] --> TVAE
+    subgraph TVAE["TVAE 推理循环（每个交互步）"]
+        direction TB
+        T["Think：结构化分析<br/>[Verify] [Recall] [Grounding] [Action]<br/>纠错时切 [Diagnose] [Recovery]"] --> V["Verification：对比当前屏幕<br/>与上一步预期效果<br/>判 SUCCESS / NO_CHANGE"]
+        V --> ACT["Action：可执行 JSON 操作"]
+        ACT --> E["Expected Effect：预测本步<br/>应带来的屏幕变化"]
+    end
+    TVAE -->|"预期效果成为下一步的验证标尺（时间闭环）"| A
+    subgraph TRAIN["两阶段训练管线（全程离线）"]
+        direction TB
+        S1["Stage 1 · Robust SFT<br/>Type A 成功轨迹 + Type B 合成失败轨迹<br/>GPT-4o 生成结构化 CoT 标注"] --> S2["Stage 2 · GRPO<br/>用 GUI 错误的幂等性模拟在线反馈"]
+        S2 --> R["复合奖励 + 非对称验证惩罚<br/>R = R_act + α·R_eff + β·R_ver<br/>误报 −2.0 ≫ 漏报 −0.5"]
+    end
+    TRAIN -.训练习得.-> TVAE
+```
+
 ### 关键设计
 
 **1. TVAE推理循环：把人类"做完一步看一眼"的习惯写进每一步推理**

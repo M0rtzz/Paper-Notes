@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 对两个模态分别用 MoE encoder $f^1,f^2$，每个 MoE 层有 $N_{\mathrm{expert}}=\chi\cdot\rho$ 个专家（粒度 $\chi$ + 扩展比 $\rho$），路由器 $g$ 用 top-$k$ softmax 决定每个 token 走哪些专家：$g(\mathbf{x})=\mathrm{TOP}_k(\mathrm{softmax}(\mathbf{W}_g\mathbf{x}))$，输出 $\mathrm{MoE}(\mathbf{x})=\sum_i g(\mathbf{x})_i e_i(\mathbf{x})$。三阶段串联：阶段一 SSL 预训练 encoder + router；阶段二只 fine-tune router；阶段三推理时剪枝。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["双模态输入 X¹, X²<br/>各接一个 MoE 编码器 f¹/f²（top-k 路由）"] --> B["Specialization 阶段一<br/>SSL 预训练编码器+路由器，专家锚定概念<br/>DSC 让同一概念跨模态激活同一专家"]
+    B --> C["Selection 阶段二<br/>冻结全部专家，只微调路由器 g（&lt;5% 参数）<br/>目标：Task-Sufficient + Information-Minimal"]
+    C --> D["Sparsification 阶段三（推理时）<br/>按路由分数只保留 top-p 比例路由对<br/>稀疏度↑性能呈反 U 型、中等稀疏达峰"]
+    D --> E["结构可控的多模态表征<br/>→ linear probing 下游任务"]
+```
+
 ### 关键设计
 
 **1. Specialization：先把表征空间预训练成一组"概念专家"，并让跨模态对齐发生在专家级**

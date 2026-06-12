@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 输入 $X\in\mathbb{R}^{N\times D}$（$N$ 样本、$D$ 列），首先按列做 $z$-score 标准化得到 $\tilde{x}_{i,j}$，然后 RaBEL 把每个标量 $\tilde{x}_{i,j}$ 展开成 $M$ 维 RBF 响应再线性投到 $d$ 维隐空间，形成 cell embedding 张量 $E\in\mathbb{R}^{N\times D\times d}$。这张张量送入 $L$ 个**重排后的双向注意力块** S→N→F：每块先做样本维注意力（聚合列级统计量）→ FFN（条件化压缩）→ 特征维注意力（在更好的条件下学列间关系）。最后用 attention pooling 把所有 feature token 聚合成预测向量，使每一次注意力都"看得见"读出端的梯度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 X (N×D)<br/>按列 z-score 标准化"]
+    subgraph RB["RaBEL 径向基嵌入"]
+        direction TB
+        B["RBF 展开<br/>标量→M 维分位数高斯核响应"] --> C["指数门控<br/>log 域桶软指派调中心/带宽"]
+    end
+    A --> RB
+    RB --> D["cell embedding E (N×D×d)"]
+    subgraph SNF["L × S→N→F 双向块"]
+        direction TB
+        E["S：样本维注意力<br/>聚合列级统计量"] --> F["N：FFN 条件化压缩"] --> G["F：特征维注意力<br/>在富统计 token 上学列间关系"]
+    end
+    D --> SNF
+    SNF --> H["attention pooling 读出<br/>聚合所有 feature token"]
+    H --> I["预测输出"]
+```
+
 ### 关键设计
 
 **1. RaBEL：径向基嵌入层 + 指数门控，把"值方向"自由度从 1 提到 $M$**
@@ -60,9 +79,6 @@ tags:
 **3. 2M 参数 + 同款训练配方的三角对照：把架构贡献从工程贡献里剥出来**
 
 tabular FM 圈最常见的质疑是"涨点其实来自训练数据 / 时长 / 超参 tuning"。作者用一组对照堵死这个口子：造一个 2M 参数的"Linear-SNF baseline"，与 LimiX-2M 共享完全相同的 SNF 层序、训练数据、训练超参，唯一差别是嵌入层用普通 Linear 而非 RaBEL；同时把 RaBEL 分别接到 MLP 主干和纯 Transformer 主干上。这样 Linear-SNF / RaBEL-MLP / RaBEL-SNF 三个点逐项消融，就能把 RaBEL 和 S→N→F 的架构贡献从训练配方里彻底分离，证明涨点真来自这两处改动。
-
-### 损失函数 / 训练策略
-继承 LimiX/TabPFN-v2 的"在合成生成的表格任务上做掩码预测预训练"范式，损失沿用原配方，不动训练目标，只改嵌入层和块内顺序。RaBEL 的中心 / 带宽 / 指数桶嵌入 / 门控 MLP 全部端到端学习。
 
 ### 损失函数 / 训练策略
 继承 LimiX/TabPFN-v2 的"在合成生成的表格任务上做掩码预测预训练"范式，损失沿用原配方；本文不动训练目标，只动嵌入层和块内顺序。RaBEL 中心 / 带宽 / 指数桶嵌入 / 门控 MLP 全部端到端学习。

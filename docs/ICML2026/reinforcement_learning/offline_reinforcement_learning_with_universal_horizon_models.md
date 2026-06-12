@@ -44,6 +44,35 @@ tags:
 
 UHM 是一个以 $(s,a,n)$ 为条件、用 flow matching 实现的生成模型，输出 $n$ 步后状态的分布 $m^\pi(\cdot|s,a,n)$。训练时通过 bootstrapping 递归学习：1 步对应数据集真实转移 $\mathcal{P}(\cdot|s,a)$；$n>1$ 步用 $n-1$ 步模型自举。配套的 critic 学习用一个 $\nu$-Bellman 算子框架，把 $n$-step TD、TD($\lambda$)、$\gamma$-MVE 统一成 $\nu$ 的不同选择，再用 Winsorized 几何测度作为 $\nu$ 来稳定训练。整个算法（Algorithm 1）以 TD3+BC 为骨架，外加 reward 网络、actor、critic、UHM 向量场 $v_\theta$、目标网络 EMA、behavior mixing 系数 $\beta=0.3$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集转移<br/>(s, a, r, s', a')"] --> UHM
+
+    subgraph UHM["1 · Universal Horizon Model（flow matching + 自举）"]
+        direction TB
+        U1["n=1：拟合真实转移 P(·|s,a)"] --> U2["n>1：用 n−1 步模型自举<br/>coupled flow matching 学向量场 v_θ"]
+    end
+
+    subgraph NU["2 · ν-Bellman 算子 + Winsorized 几何测度"]
+        direction TB
+        S["按视界 n 采样未来状态 s_e<br/>n ~ Winsorized 几何分布"] --> NB["ν-Bellman 回填<br/>统一 n-step TD / TD(λ) / γ-MVE<br/>截断长尾视界"]
+    end
+
+    UHM --> NU
+    NU --> Q["critic 目标 G^ν → 更新 Q_θ"]
+    Q --> A["actor（TD3+BC）→ 策略 π_θ"]
+    A -->|on-policy 自举回路| UHM
+
+    subgraph STAB["3 · λ 调度 + 行为混合（稳定 bootstrap）"]
+        direction TB
+        T1["λ 调度：有效视界 1→目标"]
+        T2["行为混合 β=0.3：限制 OOD 查询"]
+        T3["terminal 增广：防止终止后 bootstrap"]
+    end
+    STAB -.约束.-> UHM
+```
+
 ### 关键设计
 
 **1. Universal Horizon Model：把视界 $n$ 从隐藏在分布里拎出来当条件**

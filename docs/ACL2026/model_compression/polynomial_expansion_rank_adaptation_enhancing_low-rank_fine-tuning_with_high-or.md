@@ -43,7 +43,20 @@ tags:
 
 ### 整体框架
 
-PERA 沿用 LoRA 的分解框架，将权重更新分解为 $B \in \mathbb{R}^{m \times r}$ 和 $A \in \mathbb{R}^{r \times n}$。核心改进在于组合前对两个因子进行多项式展开：对 $B$ 进行标准二阶多项式展开 $\text{Poly}^2(B)$，对 $A$ 进行基于 Hadamard 的多项式展开 $\text{Poly}_H^2(A)$（带可学习系数 $\mathbf{h}$ 保证稳定性），最终更新为 $\Delta W = \text{Poly}^2(B) \cdot \text{Poly}_H^2(A)$。
+PERA 沿用 LoRA 的分解框架，将权重更新分解为 $B \in \mathbb{R}^{m \times r}$ 和 $A \in \mathbb{R}^{r \times n}$。核心改进在于组合前对两个因子进行多项式展开：对 $B$ 进行标准二阶多项式展开 $\text{Poly}^2(B)$，对 $A$ 进行基于 Hadamard 的多项式展开 $\text{Poly}_H^2(A)$（带可学习系数 $\mathbf{h}$ 保证稳定性），最终更新为 $\Delta W = \text{Poly}^2(B) \cdot \text{Poly}_H^2(A)$。整套流程是一条"双路展开—拼接合并"的参数构造管线：$B$、$A$ 两条支路各自做多项式展开，拼接相乘得到 $\Delta W$，再合并进冻结的 $W_0$，全部发生在训练期的参数构造里，推理形态与 LoRA 完全一致。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    B0["低秩因子 B（高斯初始化）"]
+    A0["低秩因子 A（零初始化）<br/>+ 可学习系数 h（零初始化）"]
+    B0 --> POLYB["参数空间多项式展开<br/>对 B 做标准二阶展开 Poly²(B)<br/>B̂ = [B; 平方项 b⊙b; 交叉项 b⊙b′]"]
+    A0 --> POLYA["Hadamard 系数零初始化<br/>对 A 做 Hadamard 展开 Poly_H²(A)<br/>h=0 起步，训练中逐渐唤醒高阶项"]
+    POLYB --> MERGE["矩阵拼接实现零推理开销<br/>ΔW = B̂·Â（拼接而非串行加法）"]
+    POLYA --> MERGE
+    W0["预训练权重 W0（冻结）"] --> OUT
+    MERGE --> OUT["ΔW 合并进 W0<br/>推理与 LoRA 同等零开销"]
+```
 
 ### 关键设计
 

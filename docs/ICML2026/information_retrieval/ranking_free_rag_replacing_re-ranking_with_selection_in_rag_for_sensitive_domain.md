@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 METEORA 要解决的问题是：把 RAG 里那个不可解释、靠 top-$k$ 截断的 re-ranker 整段拿掉，换成一个能同时说清"选哪些、为什么选、哪些是投毒"的统一框架。形式上它学一个 $f_\theta(q, E) \to (R, E_s)$，输入 query $q$ 和检索出的候选 chunk 集合 $E$，同时吐出 rationale 集合 $R = \{r_1, \dots, r_k\}$ 和被选证据子集 $E_s \subset E$。整条链路靠一份 rationale 串起三个阶段——DPO 训出的 LLM 先把 query 翻译成若干条"为什么相关"的解释，ECSE 拿这些 rationale 在 $E$ 上选证并自适应决定选多少，Verifier 再拿同一份 rationale 当指令把投毒 chunk 剔掉——从头到尾都没有出现魔法数字 $k$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["query q + 检索出的候选 chunk 集合 E"] --> B["DPO Rationale 生成器<br/>把 q 翻成多条「为什么相关」的 rationale R"]
+    subgraph ECSE["ECSE：双路证据选择 + 统计肘部自适应截断"]
+        direction TB
+        L["Local 路径：每条 rationale 取最相似 chunk"]
+        G["Global 路径：pooled embedding 排序 + z-score 肘部检测定 k*"]
+    end
+    B --> ECSE
+    ECSE --> D["候选证据 E_s = Local ∪ Global ∪ 邻居扩展"]
+    D --> V["Verifier LLM<br/>复用同一份 rationale 当指令剔除投毒 chunk"]
+    V --> O["选定证据 E_s → 送生成器"]
+```
+
 ### 关键设计
 
 **1. DPO 驱动的 Rationale 生成器：把"选证准确率"当偏好信号**

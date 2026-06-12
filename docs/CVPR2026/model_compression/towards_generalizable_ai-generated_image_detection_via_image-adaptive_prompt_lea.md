@@ -45,7 +45,30 @@ tags:
 
 IAPL 要解决的核心问题是：训练时只见过有限几种生成器（如仅 ProGAN），推理时却要面对 19 种未见生成器，固定参数的 CLIP 检测器一旦换分布就失灵。它的思路是让 prompt「分两半」——一半训练后固定、提供稳定的伪造先验，另一半在推理时针对每张测试图像现场调整、捕获实例级线索。
 
-整条管道基于 CLIP ViT-L/14。论文在原编码器里插入三类可训练组件：等间隔插入 $N_a=6$ 个 block 的 MLP adapter、布在第 2 到第 $N_t=9$ 个 block 的 learnable token，以及喂给第 1 个 block 的 image-adaptive prompt。前两类训练后冻结，构成稳定骨干；只有 image-adaptive prompt 在推理时随图像继续变化。一张测试图进来后，先由条件信息学习器从它的高频纹理里抽出伪造线索，再与测试时调优的 token 融合成这张图专属的 prompt，最后 CLS token 过分类器给出真/伪判断。
+整条管道基于 CLIP ViT-L/14。论文在原编码器里插入三类可训练组件：等间隔插入 $N_a=6$ 个 block 的 MLP adapter、布在第 2 到第 $N_t=9$ 个 block 的 learnable token，以及喂给第 1 个 block 的 image-adaptive prompt。前两类训练后冻结，构成稳定骨干；只有 image-adaptive prompt 在推理时随图像继续变化。一张测试图进来后，分两条支路并行处理：测试时 token 调优支路从多视角一致性里现场调出 token，条件信息学习器支路从高频纹理里抽出伪造线索；二者再经可学习缩放因子融合成这张图专属的 prompt 喂回第 1 个 block，最后 CLS token 过分类器、并用 Optimal Input Selection 取最自信视角给出真/伪判断。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["测试图像（含未见生成器）"]
+    subgraph TTT["测试时 token 调优"]
+        direction TB
+        V["生成 32 个视角<br/>1 全局 + 31 局部裁剪翻转"] --> SEL["置信度筛选保留 6 个"]
+        SEL --> ENT["最小化平均熵<br/>更新 token A，共 2 步"]
+    end
+    subgraph CIL["条件信息学习器"]
+        direction TB
+        PT["切 192 个 32×32 块<br/>DCT 选纹理最丰富块"] --> HP["高通滤波取高频"]
+        HP --> CNN["两路独立 CNN<br/>Cf 伪造特有 / Cg 通用"]
+    end
+    IMG --> TTT
+    IMG --> CIL
+    ENT --> SF["可学习缩放因子<br/>逐通道融合 αf·Cf + αg·Cg + A"]
+    CNN --> SF
+    SF --> PR["image-adaptive prompt"]
+    PR --> CLIP["CLIP ViT-L/14 编码器<br/>冻结 MLP adapter + learnable token"]
+    CLIP --> OUT["CLS → 分类器<br/>Optimal Input Selection 取最自信视角 → 真/伪"]
+```
 
 ### 关键设计
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification
 description: >-
-  [CVPR 2026][医学图像][多实例学习] 将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局均值 + 局部 Perceiver 交叉注意力）…
+  [CVPR 2026][医学图像][多实例学习] 将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力）…
 tags:
   - "CVPR 2026"
   - "医学图像"
@@ -23,7 +23,7 @@ tags:
 
 ## 一句话总结
 
-将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局均值 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
+将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
 
 ## 研究背景与动机
 
@@ -43,7 +43,24 @@ tags:
 
 ### 整体框架
 
-MIL-PF 分两阶段：(1) **特征预计算**——用冻结编码器 $\mathcal{F}$（DINOv2 ViT-Giant 或 MedSigLIP）分别提取每张乳腺图像的全局特征（整图编码 $\mathcal{G}_i$）和局部特征（分块编码 $\mathcal{T}_i$），构建嵌入数据集 $\mathcal{E} = \{(\mathcal{G}_i, \mathcal{T}_i, y_i)\}$；(2) **MIL 头训练**——在嵌入上训练 ~40k 参数的聚合头，包含全局流聚合器 $\mathcal{A}_\psi^G$、局部流 Perceiver 聚合器 $\mathcal{A}_\omega^T$、最终分类层 $h_\theta$。一个 bag 定义为同一乳房在同一检查中的所有视角图像。
+MIL-PF 分两阶段：(1) **特征预计算**——用冻结编码器 $\mathcal{F}$（DINOv2 ViT-Giant 或 MedSigLIP）分别提取每张乳腺图像的全局特征（整图编码 $\mathcal{G}_i$）和局部特征（分块编码 $\mathcal{T}_i$），构建嵌入数据集 $\mathcal{E} = \{(\mathcal{G}_i, \mathcal{T}_i, y_i)\}$；(2) **MIL 头训练**——在嵌入上训练 ~40k 参数的聚合头，全局流用 max pooling 聚合器 $\mathcal{A}_\psi^G$、局部流用 Perceiver 聚合器 $\mathcal{A}_\omega^T$，两路聚合结果拼接后送进最终分类层 $h_\theta$。一个 bag 定义为同一乳房在同一检查中的所有视角图像。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：一次检查的多视角乳腺图像<br/>（CC + MLO，构成一个 bag）"] --> B
+    A --> C
+    subgraph S1["双流嵌入数据集构建（冻结编码器 F 跑两遍，预计算特征）"]
+        direction TB
+        B["全局流：整图编码<br/>每视角一个向量 → G_i"]
+        C["局部流：切 tile 网格<br/>丢背景块 → 逐块编码 → T_i"]
+    end
+    B --> G["全局流聚合器<br/>max pooling"]
+    C --> L["Perceiver 局部注意力聚合器<br/>单 latent query 交叉注意力"]
+    G --> H["晚期融合分类头<br/>concat（全局, 局部）→ h_θ"]
+    L --> H
+    H --> O["输出：乳房级 BI-RADS 良/恶预测"]
+```
 
 ### 关键设计
 
@@ -61,7 +78,7 @@ $$\mathcal{A}_\omega^T(\mathcal{T}_i) = \text{softmax}(zK^\top)V$$
 
 **3. 晚期融合分类头：两路各自聚合后再拼，保持模块化**
 
-两路信号最终要合到一个预测上。MIL-PF 选择晚期融合：全局流和局部流各自聚合出一个向量后再拼接，送进分类层
+两路信号最终要合到一个预测上。MIL-PF 选择晚期融合：全局流（用 max pooling 聚合 $\mathcal{A}_\psi^G$）和局部流（用 Perceiver 注意力聚合 $\mathcal{A}_\omega^T$）各自得到一个向量后再拼接，送进分类层
 
 $$\hat{y}_i = h_\theta\big(\text{concat}(\mathcal{A}_\psi^G(\mathcal{G}_i),\ \mathcal{A}_\omega^T(\mathcal{T}_i))\big)$$
 

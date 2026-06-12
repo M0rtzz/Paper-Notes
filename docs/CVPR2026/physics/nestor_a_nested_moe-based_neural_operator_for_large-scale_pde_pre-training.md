@@ -43,7 +43,23 @@ tags:
 
 NESTOR 想解决的是「一个网络吃下十几种 PDE」时的两难：不同方程之间动力学差异巨大，同一方程内部又有复杂的空间局部相关性，单一架构很难两头都顾上。它的解法是把任务框成自回归预测——输入最近 $T$ 帧 PDE 状态 $u_{t-T+1:t}$，预测下一帧 $u_{t+1}$——并在中间塞进一个两层嵌套的专家系统。
 
-数据流是这样转的：输入先被切成 patch 做时空编码，压成统一维度的隐表示；接着进入核心的嵌套 MoE，外层 image-level MoE 按整张图的全局特征挑出适合当前 PDE 类型的几个专家，每个被选中的专家内部再用 token-level Sub-MoE 逐个空间位置挑局部专家；最后由输出头还原成下一帧物理场。外层负责「这是哪类方程」，内层负责「这块区域该用谁」。
+数据流是这样转的：输入先被切成 patch 做时空编码，压成统一维度的隐表示；接着进入核心的嵌套 MoE，外层 image-level MoE 按整张图的全局特征挑出适合当前 PDE 类型的几个专家，每个被选中的非共享专家内部再用 token-level Sub-MoE 逐个空间位置挑局部专家；选中的专家按路由权重加权融合，最后由输出头还原成下一帧物理场。外层负责「这是哪类方程」，内层负责「这块区域该用谁」——这种「外层套内层」正是 NESTOR 名字里 Nested 的来源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：最近 T 帧 PDE 状态 u(t−T+1:t)"] --> B["时空编码<br/>切 patch + 位置编码 + 时间加权求和<br/>压成统一维度隐表示 Y"]
+    B --> C{"Image-level MoE 路由<br/>全局平均池化打分 → Top-2 选专家"}
+    C -->|共享专家·常驻| D["AFNO 共享专家<br/>FFT → 频域复数卷积 → IFFT<br/>抓全局低频结构"]
+    C -->|非共享专家·按 PDE 类型激活| E
+    subgraph E["嵌套协作（非共享专家：Flash Attention + Sub-MoE）"]
+        direction TB
+        E1["Flash Attention<br/>抓细粒度时空特征"] --> E2["Token-level Sub-MoE<br/>逐 token 路由 → MLP 局部专家<br/>抓区域局部相关性"]
+    end
+    D --> F["按路由权重 w 加权融合"]
+    E --> F
+    F --> G["输出头<br/>还原下一帧 u(t+1)"]
+```
 
 ### 关键设计
 

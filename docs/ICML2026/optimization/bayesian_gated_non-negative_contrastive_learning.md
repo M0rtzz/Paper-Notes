@@ -41,6 +41,23 @@ tags:
 ### 整体框架
 BayesNCL 在标准 NCL 编码器 $f: \mathcal{X} \to \mathbb{R}_{\geq 0}^K$ 的基础上，增加一个**贝叶斯门控头**。输入图像经编码器得到非负特征 $z = f(x)$，门控头预测每个维度的 Bernoulli 参数 $\alpha = \sigma(g_\theta(x))$，通过阈值生成离散掩码 $m_{\text{hard}} = \mathbb{I}(\alpha > 0.5)$，最终门控表示 $\tilde{z} = z \odot m_{\text{hard}}$ 用于计算对比损失。训练目标结合门控 InfoNCE 与 KL 稀疏正则化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入图像 x"] --> ENC["NCL 编码器 f<br/>非负特征 z"]
+    subgraph GH["贝叶斯门控头"]
+        direction TB
+        GATE["逐维激活概率 α = σ(g_θ(x))"] --> MASK["硬掩码 m_hard：α 超过 0.5 的维度置 1<br/>反向走 STE 绕过阈值"]
+    end
+    ENC --> GATE
+    ENC --> GZ["门控表示 z̃ = z ⊙ m_hard"]
+    MASK --> GZ
+    GZ --> ALIGN["门控 InfoNCE 对齐损失 L_align"]
+    GATE --> SPARSE["变分稀疏正则化<br/>KL(q_θ ‖ Bern(ρ)) 充当逆频率过滤器"]
+    ALIGN -->|梯度回传骨干 + 门控头| ENC
+    SPARSE -.->|梯度隔离：只回门控头、detach 骨干| GATE
+```
+
 ### 关键设计
 
 **1. 贝叶斯门控头：让每张图自己决定哪些维度该关掉**

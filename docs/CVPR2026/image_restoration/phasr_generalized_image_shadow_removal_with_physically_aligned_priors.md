@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 PhaSR把"泛化阴影去除"拆成两层物理对齐，分两阶段串起来。Stage 1是PAN，一个**完全无训练参数**的预处理模块：原图先做Gray-world颜色归一化压掉全局色偏，再到对数域做一次闭式Retinex分解把光照和反射率分开，最后重组归一化，吐出一张光照一致的图。Stage 2是多尺度Transformer编码器-解码器，吃这张干净图，并在不同深度注入两种冻结的外部先验——编码器阶段注入DINO-v2语义嵌入，瓶颈层注入DepthAnything-v2的深度/法线几何先验——再由GSRA在瓶颈层用差分注意力把这两种先验对齐后融合。整条流水线不依赖任何阴影mask，全局色偏由PAN管、局部跨模态冲突由GSRA管，对应"全局对齐+局部对齐"的双层设计。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入阴影图（无需mask）"] --> S1
+    subgraph S1["物理对齐归一化 PAN（无参数·全局对齐）"]
+        direction TB
+        P1["Gray-world 颜色归一化<br/>压全局色偏"] --> P2["对数域 Retinex 闭式分解<br/>光照 / 反射率分离"] --> P3["重组并归一化动态范围"]
+    end
+    S1 --> ENC["多尺度Transformer骨干 · 编码器<br/>注入 DINO-v2 语义先验"]
+    ENC --> GSRA["几何-语义校正注意力 GSRA · 瓶颈层<br/>注入 DepthAnything-v2 几何先验<br/>差分校正 A_sem − λ·A_geo"]
+    GSRA --> DEC["多尺度Transformer骨干 · 解码器"]
+    DEC --> O["去阴影输出图"]
+```
+
 ### 关键设计
 
 **1. 物理对齐归一化（PAN）：用闭式Retinex在输入端就掐掉全局色偏**

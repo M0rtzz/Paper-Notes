@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 MM-StanceDet 对每条输入 $x = (I, T, K)$（image / text / target）按 4 个阶段串行：(1) **Retrieval Augmentation** 从向量库 $\mathcal{D}$ 检索 top-$k$ 相似样本及其预生成的 CoT；(2) **Multimodal Analysis** 由 Text-Agent / Image-Agent / Modality-Conflict-Agent 三个专家分别输出 $A_\text{text}$、$A_\text{image}$、$A_\text{conflict}$；(3) **Reasoning-Enhanced Debate** 三个 debater agent（支持/反对/中立）各拿到所有分析，分别构造支持本立场的 argument；(4) **Self-Reflection and Adjudication** 一个 judge agent 综合三方 argument + 原始分析 + critical reflection 给出最终 $\hat{y} \in \{-1, 0, 1\}$ 和 justification $J_\text{final}$。所有 agent 默认用 GPT-4o-mini，检索用 CLIP encoder + ANN，默认 $k=3$、debate 3 轮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入 x = (图像 I, 文本 T, 目标 K)"] --> RA
+    subgraph RA["带预生成 CoT 的检索增强"]
+        direction TB
+        R1["CLIP 编码图文联合向量 v"] --> R2["ANN 检索 top-k 相似样本<br/>(默认 k=3，每条自带预生成 CoT)"]
+    end
+    RA --> MA
+    subgraph MA["三专家多模态分析"]
+        direction TB
+        M1["Text-Agent<br/>关键词 / 情感 / 隐式讽刺 / 话题相关性"]
+        M2["Image-Agent<br/>视觉对象 / 场景 / 情绪 / 象征寓意"]
+        M3["Modality-Conflict-Agent<br/>显式判定图文 冲突 / 互补 / 协同"]
+    end
+    MA --> DEB
+    subgraph DEB["辩论 + 自我反思裁决"]
+        direction TB
+        D1["3 个 debater 角色扮演<br/>支持 / 反对 / 中立 各自论证 (默认 3 轮)"] --> D2["judge agent 自我反思裁决<br/>查一致性 / 漏判冲突信号 / 弱推理"]
+    end
+    DEB --> OUT["输出 立场 ŷ ∈ {−1, 0, 1} + 理由 J_final"]
+```
+
 ### 关键设计
 
 **1. 带预生成 CoT 的检索增强：让被检索样本不只给"类似情境"还给"如何推理"**

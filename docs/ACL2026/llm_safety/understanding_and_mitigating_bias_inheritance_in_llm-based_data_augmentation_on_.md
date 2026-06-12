@@ -43,6 +43,35 @@ tags:
 ### 整体框架
 实验以 Llama-3.1-8B-Instruct 为主模型，并用 GPT-4o-mini 做大规模验证，附录还包含 Qwen 和 DeepSeek 系列的跨架构验证。性别偏见实验围绕 architect、dentist、nurse、painter、professor、software engineer 六个职业，评估职业分类、招聘推荐和薪资推荐。文化偏见实验覆盖 Arabic、Chinese、Portuguese、Spanish 四类文化，评估直接相关与间接相关的分类任务，以及故事生成中的负面形容词比例。偏见比例设置为 0、5%、10%、20%、50%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["原始无偏数据 D_o"]
+    subgraph GEN["六类多维偏见生成框架"]
+        direction TB
+        P["LLM 按偏见 prompt 生成"] --> DIM["上下文/对比 × 单一/交叉 × 显式/隐式"]
+    end
+    DIM --> A["有偏增强数据 D_a"]
+    O --> MIX["按比例 γ=|D_a|/|D| 混合<br/>D = D_o ∪ D_a"]
+    A --> MIX
+    MIX --> SFT["监督微调（LoRA）"]
+    SFT --> EVAL
+    subgraph EVAL["偏见继承评测协议"]
+        direction TB
+        E1["群体内性能"]
+        E2["群体间差距"]
+        E3["开放生成倾向"]
+    end
+    subgraph MIT["三类缓解策略"]
+        direction TB
+        M1["token：加偏见提示"]
+        M2["mask：遮蔽敏感线索"]
+        M3["loss：分布对齐损失"]
+    end
+    MIT -. 干预 .-> A
+    MIT -. 干预 .-> SFT
+```
+
 ### 关键设计
 
 **1. 六类多维偏见生成框架：把“偏见”拆成可组合的维度，而不是一个笼统标签**

@@ -46,6 +46,24 @@ tags:
 
 VtT（teach the Vision to Think like the Text）针对的是一个反直觉现象：在 Source-Free 跨域少样本设置下，CLIP 文本编码器的某些中间层被移除后性能反而更好——这些"Lost Layers"不是冗余，而是因视觉域偏移没被用上。VtT 的思路不是丢掉它们，而是教视觉分支"像文本分支一样思考"，把被浪费的预训练文本知识重新激活。它是一个即插即用的微调插件，由三个模块串起来：V-T Fusion 在层级上融合视觉与文本各层输出，TIA 把融合特征送回文本编码器做编码器级吸收，DGSO 则用梯度冲突信息动态平衡分类与知识吸收两个目标。微调完成后所有 VtT 参数被移除，推理阶段零额外开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CLIP 双分支<br/>视觉各层 CLS + 文本各层 EOS token"] --> B
+    subgraph VTF["V-T Fusion：跨层扫描层级融合"]
+        direction TB
+        B["深→浅交错排成序列 H_i"] --> C["SSM 分支 + 残差分支<br/>聚合得 μ_i"]
+    end
+    C --> D
+    subgraph TIA["TIA：文本编码器信息吸收（编码器级）"]
+        direction TB
+        D["μ_i 经 Adapter → 吸收 token A_i"] --> E["A_i 替换 [CLASS]<br/>送回文本编码器得 A_i′"]
+        E --> F["A_i′ 与视觉特征 f_i 对齐蒸馏<br/>损失 L_VtT"]
+    end
+    F --> G["DGSO：动态梯度监督优化<br/>梯度冲突则正交投影；滑窗均值为负则停用 L_VtT"]
+    G -->|微调后移除全部 VtT 参数| H["推理零额外开销"]
+```
+
 ### 关键设计
 
 **1. V-T Cross-Layer Scanning Fusion：把视觉和文本逐层交错喂给 SSM 做层级融合**

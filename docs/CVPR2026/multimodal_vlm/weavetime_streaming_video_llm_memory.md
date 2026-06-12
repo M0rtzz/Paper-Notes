@@ -48,6 +48,17 @@ tags:
 
 WeaveTime 针对的是 Video-LLM 的「时间不可知」（Time-Agnosticism）——模型把视频当成无序证据袋，打乱帧序几乎不影响精度。它是一个即插即用、与具体 Video-LLM 无关的流式 QA 框架，遵循「先教时序，再用时序」的思路：训练阶段用流式时序感知增强（SOPE）通过一个时序重建辅助任务把「帧是有先后的」教进模型；推理阶段用过去-当前动态焦点缓存（PCDF-Cache）做不确定性门控 + 粗到细检索，让模型按需回溯历史而不是无脑重载。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧流 + 问题"] --> B["SOPE 流式时序感知增强（训练）<br/>时间戳 token + 打乱帧的时序重建"]
+    B --> C["PCDF-Cache 推理<br/>先看短时窗口作答 + 算熵 H_t"]
+    C --> D{"H_t < δ ？"}
+    D -->|"是，省去回溯"| F["输出答案"]
+    D -->|"否"| E["粗到细检索<br/>帧级粗筛 + late-interaction 精匹配"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. Time-Agnosticism 诊断：先证明模型确实没在用时序**

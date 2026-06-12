@@ -43,6 +43,21 @@ ATHA 提出在 CLIP 跨域小样本微调中"对齐头部 token、推开尾部 t
 ### 整体框架
 基础模型为 CLIP-ViT/B-16,采用 LoRA 低秩适配——backbone 冻结,只训 LoRA 矩阵和一组层级可学习对齐强度。给定输入图 $\mathbf{x}$ 与 $N$ 个目标类名,文本编码器给出文本嵌入 $\mathbf{T}\in\mathbb{R}^{N\times D_t}$,再用 CLIP 自带的视觉投影矩阵 $\mathbf{W}_p$ 把它们投影到视觉 token 空间 $\mathbf{T}'=\text{LayerNorm}(\mathbf{T})\mathbf{W}_p^\top\in\mathbb{R}^{N\times D}$(全层共享)。视觉路径上,图被切成 $L$ 个 patch,经 ViT 第 $l$ 层得到 $\mathbf{V}^{(l)}\in\mathbb{R}^{B\times(L+1)\times D}$。ATHA 在指定的 transformer block 内,先算每个 patch token 对所有类文本的余弦相似度,挑出 Head/Tail token 做非对称改动,再送回 transformer block 的剩余部分。最后用 [CLS] token 与文本嵌入做余弦相似度,标准交叉熵损失驱动 LoRA + $\{\alpha^{(l)},\beta^{(l)}\}$ 一起端到端训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    TXT["类名 → 文本编码器<br/>经视觉投影 Wp 得 T′(全层共享)"] --> SEL
+    X["输入图像"] --> PV["ViT 切 patch·第 l 层<br/>得视觉 token"]
+    PV --> SEL["Head/Tail 判别<br/>算 token–类最大相似度→Top-ρ 为 Head·Bottom-γ 为 Tail"]
+    SEL -->|Head token| PULL["拉头 Pull<br/>v + α(l)·t(最像类)"]
+    SEL -->|Tail token| PUSH["推尾 Push<br/>v − β(l)·t(最不像类)"]
+    SEL -->|中性 token| KEEP["保持原样"]
+    PULL --> REST["送回 transformer block 剩余部分<br/>逐层迭代"]
+    PUSH --> REST
+    KEEP --> REST
+    REST --> CLS["CLS token 与文本嵌入算相似度<br/>交叉熵端到端训 LoRA + α(l),β(l)"]
+```
+
 ### 关键设计
 
 1. **基于最大相似度的 Head/Tail 判别(Discriminative Token Selection)**:

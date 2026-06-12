@@ -39,6 +39,19 @@ BHCast从单张模糊的EHT黑洞图像出发，通过U-Net动力学代理模型
 
 BHCast 把一个不适定的天体物理逆问题重构成「预测 + 推断」两段式：与其用超级计算机跑数周的 GRMHD 模拟去比对，不如训练一个神经代理模型来替代模拟。具体流程是，从单张模糊的 EHT 图像出发，用 U-Net 自回归地逐帧预测等离子体动力学（稳定外推到 100 步），再从预测序列里构造 cylinder plot、提取旋转速度/螺旋角等物理特征，最后用 XGBoost 从这些特征推断黑洞的自旋和倾角。三级流水线各自独立、可分别改进。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单张模糊 EHT 图像<br/>~20μas 分辨率"] --> PRED
+    subgraph PRED["U-Net 动力学代理预测"]
+        direction TB
+        B["多尺度拉普拉斯金字塔损失<br/>+ 平均通量约束 → 100 步稳定外推"] --> C["基于吸引子的超分辨率<br/>逐帧演化把图像拉回流形、持续锐化"]
+    end
+    PRED --> D["物理驱动的特征提取<br/>cylinder plot → 旋转速度/螺旋角/不对称度"]
+    D --> E["XGBoost 物理参数推断<br/>4 个特征 → 自旋 + 倾角"]
+    E --> F["输出：黑洞自旋 + 倾角<br/>epistemic uncertainty 0.003–0.004"]
+```
+
 ### 关键设计
 
 **1. 多尺度拉普拉斯金字塔损失：用平均通量约束撑住长时预测**

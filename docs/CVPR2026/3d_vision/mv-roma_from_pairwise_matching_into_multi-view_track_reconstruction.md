@@ -40,6 +40,17 @@ tags:
 
 输入：一张源图 $I_0$ + 多张共视目标图 $\{I_v\}$。先用现有 matcher（默认 UFM）做初始逐对匹配，通过聚类采样构建稀疏多视图轨迹 token。然后：(1) Track-Guided 多视图编码器在 DINOv2 backbone 中注入多视图信息，产生几何一致的稠密特征；(2) 全局匹配器产生粗对应；(3) 多视图精炼器用像素对齐注意力逐级上采样到全分辨率稠密对应。输出：源图到每个目标图的稠密 warp 场 $W^{0\to v}$ 和置信度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：源图 I₀ + 共视目标图 {Iᵥ}"] --> B["初始逐对匹配（UFM）<br/>产生上万条带噪轨迹"]
+    B --> C["Track Token 构建与聚类采样<br/>按可见性分组 + k-means 取 512 token"]
+    C --> D["Track-Guided 多视图编码器<br/>在 DINOv2 内 sample→transform→splat 传导多视图上下文"]
+    D --> E["全局匹配器<br/>产生粗分辨率对应"]
+    E --> F["多视图匹配精炼器<br/>像素对齐注意力 coarse-to-fine 上采样"]
+    F --> G["输出：源图到各目标图的稠密 warp 场 + 置信度"]
+```
+
 ### 关键设计
 
 **1. Track Token 构建与聚类采样：把逐对匹配压缩成紧凑的多视图几何先验**

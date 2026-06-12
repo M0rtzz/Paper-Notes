@@ -42,7 +42,24 @@ MindZero 把贝叶斯逆向规划改写成一个对多模态 LLM 的「自监督
 
 ### 整体框架
 
-MindZero 训练一个多模态 LLM $Q_\theta(\cdot \mid s_{1:t}, a_{1:t})$，给定历史状态-动作序列，一次性输出 $N$ 个心智假设 $\mathcal{M}_t = \{m_t^{(1)}, \dots, m_t^{(N)}\}$ 及其归一化后验 $\mathcal{Q}_t = \{q_t^{(1)}, \dots, q_t^{(N)}\}$（$\sum q^{(i)} = 1$）。一个外部「动作似然评估器」（GridWorld 用模型驱动 planner，家居域用 LLM）给出 $P(a_{1:t} \mid m_t^{(i)}, s_{1:t})$，另一个 LLM（或均匀分布）给出先验 $P(m_t^{(i)})$，按公式合成 reward 后扔给 GRPO 更新模型。部署时模型在每个时间步做一次前向就拿到多假设分布，下游 helper 直接用 $P(a^A_t | s_{1:t}, a_{1:t}) = \sum_{m_t} P(a^A_t | s_t, m_t) P(m_t | s_{1:t}, a_{1:t})$ 规划协助动作。
+MindZero 训练一个多模态 LLM $Q_\theta(\cdot \mid s_{1:t}, a_{1:t})$，给定历史状态-动作序列，一次性输出 $N$ 个心智假设 $\mathcal{M}_t = \{m_t^{(1)}, \dots, m_t^{(N)}\}$ 及其归一化后验 $\mathcal{Q}_t = \{q_t^{(1)}, \dots, q_t^{(N)}\}$（$\sum q^{(i)} = 1$）。一个外部「动作似然评估器」（GridWorld 用模型驱动 planner，家居域用 LLM）给出 $P(a_{1:t} \mid m_t^{(i)}, s_{1:t})$，另一个 LLM（或均匀分布）给出先验 $P(m_t^{(i)})$，按公式合成 reward 后扔给 GRPO 更新模型。部署时模型在每个时间步做一次前向就拿到多假设分布，下游 helper 直接用 $P(a^A_t | s_{1:t}, a_{1:t}) = \sum_{m_t} P(a^A_t | s_t, m_t) P(m_t | s_{1:t}, a_{1:t})$ 规划协助动作。整套流程是一个自监督训练回环：模型出假设 → 两个估计器评分 → 合成 ELBO 奖励 → GRPO 更新模型，下面三个关键设计正对应回环里的三个贡献环节。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["历史状态-动作序列 (s, a)₁:ₜ"] --> B["多假设 + 熵正则化<br/>LLM Qθ 一次前向出 N 个假设 m⁽ⁱ⁾ 与归一化后验 q⁽ⁱ⁾"]
+    B --> EST
+    subgraph EST["显式先验建模 + 双估计器"]
+        direction TB
+        C["动作似然评估器<br/>planner / LLM → P(a | m, s)"]
+        D["先验估计器<br/>LLM 常识打分 / 均匀 → P(m)"]
+    end
+    EST --> E["自监督 RL 奖励 = ELBO<br/>Σ q⁽ⁱ⁾·log(似然 · 先验) − 熵正则 H(Qθ)"]
+    B -->|后验 q⁽ⁱ⁾ + 熵项| E
+    E --> F["GRPO 组内归一化优势更新 Qθ"]
+    F -->|自监督训练回环| B
+    F ==>|训练收敛后部署| G["单次前向得多假设分布<br/>helper 按 belief-state 规划协助动作"]
+```
 
 ### 关键设计
 

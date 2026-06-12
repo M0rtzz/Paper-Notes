@@ -46,25 +46,30 @@ VR 行为给出两个关键观察。第一，人类在 Action 条件下平均只
 
 模型部分据此堆叠三个模块。Module I 是 Equivariant Neural Renderer 风格的卷积自编码器，从单张 2D 图像恢复可被 3D 旋转矩阵操作的空间 latent。Module II 是 Vision Symbolic Model，用 ViT encoder 和 autoregressive Transformer decoder 把空间 latent 转成 Shepard-Metzler 形状的序列化符号描述。Module III 是 MLP 决策器，输入两个符号描述，输出“same / mirror”判断，或者输出需要采取的象限旋转动作。若输出动作，就把动作应用到 source 的 3D latent，再重新经过符号编码和决策，直到做出 match/mismatch 判断或超过 6 次动作上限。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：两个 2D 视角图像<br/>(target / source)"] --> B["3D 等变空间表示<br/>从 2D 恢复可旋转 latent (Module I)"]
+    B --> C["象限依赖的神经符号对象描述<br/>latent → 象限级符号序列 (Module II)"]
+    C --> D["动作式决策 agent<br/>比较两符号描述 (Module III)"]
+    D -->|"输出 same / mirror"| E["输出判断，结束"]
+    D -->|"输出象限旋转动作"| F["对 source 的 3D latent 施加旋转<br/>(最多 6 次)"]
+    F --> C
+```
+
 ### 关键设计
 
-1. **3D 等变空间表示**:
+**1. 3D 等变空间表示：让内部对象"可以被旋转"**
 
-	- 功能：从单个 2D 视角中构造一个可在 latent space 内旋转的 3D 对象表征。
-	- 核心思路：Module I 在训练时接收同一物体不同姿态的图像对，把一个视角编码成 latent 后，通过 3D 旋转矩阵变换到另一个姿态，再解码重建目标视角。这样 latent 必须对 $SO(3)$ 旋转保持等变，即旋转物体应对应 latent 中可预测的旋转操作。
-	- 设计动机：心理旋转至少需要某种可操控的空间表征；若只从像素直接分类，很容易学到训练物体上的捷径而无法泛化到新形状。
+心理旋转的前提是脑子里得有一个能被几何变换操作的对象表征，而不是直接对像素分类——后者很容易在训练物体上学到捷径、换个新形状就崩。Module I 借用 Equivariant Neural Renderer 的卷积自编码器：训练时输入同一物体两个不同姿态的图像对，把一个视角编码成 latent，再用一个 3D 旋转矩阵把 latent 变换到另一姿态、解码重建目标视角。为了让重建成立，latent 必须对 $SO(3)$ 旋转保持等变——旋转物体就对应 latent 里一个可预测的旋转操作。这样模型在推理时就能直接对内部 latent 施加 3D 旋转矩阵来“在脑中转动物体”，而且整个过程无需任何 3D 监督。
 
-2. **象限依赖的神经符号对象描述**:
+**2. 象限依赖的神经符号对象描述：把连续角度压成离散象限符号**
 
-	- 功能：把 3D 空间表征转成随观察象限变化的离散符号序列，为动作选择提供抽象结构。
-	- 核心思路：作者把 360 度视角划成 4 个象限，并用从最靠近观察者的立方体开始的 9 个方向转移来描述形状，每个转移取上、下、前、后、左、右之一。VSM 学习从 Module I 的 3D latent 预测这种符号序列，因此同一物体在不同象限会有不同但结构化的描述。
-	- 设计动机：VR 实验表明人类不追求精确角度对齐，而是先把物体放到相近象限再判断；符号描述正好提供这种象限级、组合式的对象表示。
+VR 实验显示人类并不追求精确角度对齐，而是把物体粗略放到相近“象限”就开始判断，这启发作者把 360° 视角划成 4 个象限。每个象限下，形状用从最靠近观察者的立方体出发的 9 个方向转移来描述（每个转移取上、下、前、后、左、右之一），于是同一物体在 4 个象限会得到 4 个结构化但彼此不同的符号序列。Module II（Vision Symbolic Model）用 ViT encoder + 自回归 Transformer decoder，学习从 Module I 的 3D latent 预测这种符号序列。这层离散、组合式的象限符号正好为后续动作选择提供抽象结构——比较与决策只需在象限层面进行，不必对齐到精确角度。
 
-3. **动作式决策 agent**:
+**3. 动作式决策 agent：在符号空间里决定“再转一下还是下结论”**
 
-	- 功能：在符号空间中比较两个物体，并决定是直接判断 same/mirror，还是执行一个离散旋转动作。
-	- 核心思路：Module III 接收 target 和 source 的符号 logits 拼接，输出五类之一：same、mirror、顺时针一象限、逆时针一象限、两象限。训练时它只学关系类别，不在训练过程中执行真实旋转；推理时若输出旋转动作，动作会作用在 source 的空间 latent 上，再重新编码和决策。
-	- 设计动机：这让模型同时拥有“可以在空间 latent 中旋转”的能力和“像人一样用少量离散动作解决任务”的行为，而不是直接用一个全不变分类器跳过 mental rotation 过程。
+Module III 是个小 MLP，输入 target 和 source 两个符号描述（logits 拼接），输出五类之一：same、mirror、顺时针一象限、逆时针一象限、两象限。训练时它只学这种关系分类、不真的执行旋转；推理时一旦输出旋转动作，动作就作用到 source 的 3D latent 上，再经 Module II 重新符号编码、回到决策——这条递归回路最多走 6 步，直到给出 same/mirror。正是这个“少量离散动作 + 随时可下判断”的回环，让模型既保有“能在 latent 里旋转”的能力，又复现了人类只做约 1 次大动作就判断的行为，而不是用一个全不变分类器一步跳过整个 mental rotation 过程。
 
 ### 损失函数 / 训练策略
 三个模块独立训练。Module I 在 50,000 对 Shepard-Metzler 图像上训练等变重建；Module II 冻结 EqNR encoder 后，用固定 $25^\circ$ elevation、变化 azimuth 的视角数据，把 3D latent 映射到符号序列，共使用 201,600 个 image-symbolic description pair；Module III 在 38,400 个 mental rotation 关系任务上训练 MLP，输出 same、mirror 或三类象限动作。测试阶段使用训练中未见过的 Shepard-Metzler 物体，并平衡 match/mismatch 与四种角度差。

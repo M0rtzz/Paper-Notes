@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 DualFact 想解决的是：怎么客观评判一段程序化视频字幕到底"说对了几分"。它把整条评测流水线 MultiFactScore 拆成四步串起来——先做数据集（把 YouCook2 重切成 atomic clause、补全隐式参数、人工标注双层事实、自动生成对比负样本，再新建覆盖木工/金工的 CraftBench）；接着用 LLaMA-3.3-70B-Instruct 从待测 caption $\hat{C}$ 抽出 predicted facts $\mathcal{F}_p = \text{LLM}_{\text{extract}}(\hat{C}; \Phi)$；然后让 NLI 验证器在 role 级别逐条判 SUPPORTED/REFUTED；最后用 PaliGemma2-10B 判断每条 fact 是否在视频里真有视觉依据 $G(f_i)$，按 grounding × verifier 标签把错误分到 Hallucination/Saliency/Omission 三档，并汇成 caption 级分数 $\text{MultiFactScore} = |\{f_i \in F : \hat{y}_i = \text{SUPPORTED}\}| / |F|$。整套设计的核心是"分两层事实 + 用视觉区分错误来源"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["双层事实表示<br/>conceptual 角色 + contextual 谓词−论元"] --> B["隐式参数补全 (VIA)<br/>+ 对比性负样本 → gold facts"]
+    Cap["待测字幕 Ĉ"] --> EX["LLaMA-3.3-70B 抽取<br/>predicted facts"]
+    B --> NLI["多模态 / 文本 NLI 验证<br/>逐角色判 SUPPORTED / REFUTED"]
+    EX --> NLI
+    NLI --> ERR["三档错误分解 + 视觉 grounding<br/>Hallucination / Saliency / Omission"]
+    ERR --> MFS["MultiFactScore<br/>支持事实占比 → caption 级分数"]
+```
+
 ### 关键设计
 
 **1. Dual-Layer Fact 表示：把"语义"和"执行"拆成两层独立核查**

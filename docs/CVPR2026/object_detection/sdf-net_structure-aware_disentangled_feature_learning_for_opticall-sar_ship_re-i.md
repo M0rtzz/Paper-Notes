@@ -44,7 +44,33 @@ tags:
 
 ### 整体框架
 
-SDF-Net 抓住的关键点是：光学和 SAR 成像物理完全不同（被动反射 vs 主动微波散射），辐射外观剧变让直接对齐数学上不适定，但船舶是刚体，几何结构在两个模态里高度一致——所以它把几何结构当作跨模态不变锚点。整体基于 ViT-B/16，分四步走：输入端用跨模态双头 Tokenizer 把光学/SAR 图像各自线性投影到统一 C 维潜空间、中和低层传感器差异；中间层（第 $B_s$ 层 Transformer block）提取梯度能量做结构感知一致性学习（SCL），对齐跨模态结构原型；终端层把表示解耦成模态共享身份特征 $\mathbf{f}_{sh}$ 和模态特定特征 $\mathbf{f}_{sp}$ 再加法融合（DFL）；推理时用融合特征 $\mathbf{f}_{fuse}$ 做双向跨模态检索。
+SDF-Net 抓住的关键点是：光学和 SAR 成像物理完全不同（被动反射 vs 主动微波散射），辐射外观剧变让直接对齐数学上不适定，但船舶是刚体，几何结构在两个模态里高度一致——所以它把几何结构当作跨模态不变锚点。整体基于 ViT-B/16，分四步走：输入端用跨模态双头 Tokenizer 把光学/SAR 图像各自线性投影到统一 C 维潜空间、中和低层传感器差异；中间层（第 $B_s$ 层 Transformer block）提取梯度能量做结构感知一致性学习（SCL），对齐跨模态结构原型；终端层把表示解耦成模态共享身份特征 $\mathbf{f}_{sh}$ 和模态特定特征 $\mathbf{f}_{sp}$ 再加法融合（DFL）；推理时用融合特征 $\mathbf{f}_{fuse}$ 做双向跨模态检索。其中双头 Tokenizer 与检索是脚手架，两个核心贡献是分别作用在中间层和终端层的 SCL 与 DFL。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["光学图像"] --> TK
+    S["SAR 图像"] --> TK
+    TK["双头 Tokenizer<br/>各自投影到统一 C 维潜空间"] --> MID["ViT-B/16 第 1~6 层"]
+    subgraph SCL["结构感知一致性学习（SCL）"]
+        direction TB
+        GRAD["第 6 层取水平/垂直梯度能量<br/>→ 结构描述子 f_struct"] --> NORM["尺度不变实例归一化<br/>剥模态风格留几何内容"]
+        NORM --> PROTO["身份级结构原型对齐<br/>min ‖c_i^o − c_i^s‖²"]
+    end
+    MID --> GRAD
+    MID --> TOP["ViT-B/16 第 7~12 层<br/>→ 终端表示 f^(L)"]
+    subgraph DFL["解耦特征学习与残差融合（DFL）"]
+        direction TB
+        SH["共享头 f_sh<br/>受 L_struct 正则·模态不变"]
+        SP["特定头 f_sp<br/>保留模态细节"]
+        SH -.正交约束 L_orth.- SP
+        SH --> FUSE["加法残差融合<br/>f_fuse = f_sh + f_sp"]
+        SP --> FUSE
+    end
+    TOP --> SH
+    TOP --> SP
+    FUSE --> RET["双向跨模态检索 O↔S"]
+```
 
 ### 关键设计
 

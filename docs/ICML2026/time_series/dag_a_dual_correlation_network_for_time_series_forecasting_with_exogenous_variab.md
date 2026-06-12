@@ -45,24 +45,54 @@ tags:
 - **通道相关模块 CCM**: 镜像设计, Discovery 用 series-wise embedding + Transformer 预测 $\hat X^{endo}$ (副任务, 从历史外生反推历史内生), 输出 $\mathcal{W}_{q'}, \mathcal{W}_{k'}$; Injection 把它们注入 $Y^{exo}$ 的 Transformer, 预测 $\dot Y^{endo}$。
 - 最终预测 $\hat Y^{endo} = \lambda_1 \cdot \ddot Y^{endo} + (1-\lambda_1) \cdot \dot Y^{endo}$, 总 loss $L_{total} = L_f + \lambda_2 (L_t + L_c)$ 同时优化主预测与两个 discovery 副任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    XE["历史外生变量"]
+    XN["历史内生变量"]
+    YE["未来外生变量"]
+
+    subgraph TCM["时间相关模块 TCM（沿时间维 · patch token）"]
+        direction TB
+        TD1["Discovery：patchify + Transformer<br/>预测未来外生（副任务 Lt）"]
+        TI1["Injection：双注意力融合<br/>得 TCM 路内生预测"]
+        TD1 -->|"搬运可学习 Q,K 投影矩阵"| TI1
+    end
+
+    subgraph CCM["通道相关模块 CCM（沿通道维 · series token）"]
+        direction TB
+        CD1["Discovery：series 编码 + Transformer<br/>预测历史内生（副任务 Lc）"]
+        CI1["Injection：双注意力融合<br/>得 CCM 路内生预测"]
+        CD1 -->|"搬运可学习 Q,K 投影矩阵"| CI1
+    end
+
+    XE --> TD1
+    XN --> TI1
+    XE --> CD1
+    YE --> CI1
+
+    GATE["样本级 gating α<br/>自适应权衡原始/借来注意力"]
+    GATE -.-> TI1
+    GATE -.-> CI1
+
+    TI1 --> FUSE["加权融合两路预测<br/>λ₁·TCM + (1−λ₁)·CCM"]
+    CI1 --> FUSE
+    FUSE --> OUT["未来内生预测结果"]
+```
+
 ### 关键设计
-1. **时间相关模块: $W_q', W_k'$ 跨任务搬运**:
 
-    - 功能: 把"历史外生 → 未来外生"学到的 token 间注意力模式, 直接搬给"历史内生 → 未来内生"的预测使用。
-    - 核心思路: Discovery 把 $X^{exo}$ patchify 成 $M$ 个 token, 用标准 Transformer 算 $S_i' = \text{softmax}(Q K^\top / \sqrt d) V$ 预测 $\hat Y^{exo}$, 但只把可学习的 $W_q', W_k'$ 矩阵抽出 (不传 attention score, 这样对样本独立, 更稳健)。Injection 把 $X^{endo}$ 也 patchify, 用自己的 $W_q, W_k, W_v$ 算 $(Q, K, V)$, 同时用借来的 $W_q', W_k'$ 算 $(Q', K')$, 然后 $S_{\text{fused}} = \alpha \cdot \sigma(QK^\top/\sqrt d) + (1-\alpha) \sigma(Q' K'^\top / \sqrt d)$, $P_i' = \sigma(S_{\text{fused}}) V$。
-    - 设计动机: 直接传 attention score 会让两个任务过度耦合且依赖具体样本; 传可学习参数 $W_q', W_k'$ 是任务级的归纳偏置, 更稳健可解释。Transformer 的注意力本质是"哪个 token 影响哪个 token", 这个模式在外生与内生之间天然可迁移。
+**1. 时间相关模块 TCM：把 $W_q', W_k'$ 投影矩阵跨任务搬运**
 
-2. **通道相关模块: 跨通道相关性搬运**:
+时间通路要补强的是框架图里「历史内生 → 未来内生」这一步——它本身缺乏额外结构信号。关键洞察是：「历史外生 → 未来外生」的演化模式（Granger 因果直觉）与「历史内生 → 未来内生」结构相似，于是前者学到的注意力可以借给后者。Discovery 子模块把 $X^{exo}$ patchify 成 $M$ 个 token, 用标准 Transformer 算 $S_i' = \text{softmax}(Q K^\top / \sqrt d) V$ 预测 $\hat Y^{exo}$（副任务），但**不传递 attention score、只抽出可学习的 $W_q', W_k'$ 矩阵**。Injection 子模块把 $X^{endo}$ 同样 patchify, 用自己的 $W_q, W_k, W_v$ 算 $(Q, K, V)$, 同时用借来的 $W_q', W_k'$ 算 $(Q', K')$, 再按 $S_{\text{fused}} = \alpha \cdot \sigma(QK^\top/\sqrt d) + (1-\alpha)\, \sigma(Q' K'^\top / \sqrt d)$ 融合两路注意力, 得 $P_i' = \sigma(S_{\text{fused}}) V$。之所以传可学习参数而非 attention score, 是因为 score 依赖具体样本、会让两个任务过度耦合; 而 $W_q', W_k'$ 是任务级的归纳偏置, 更稳健、更可解释——消融显示这一选择稳定优 1–2%。
 
-    - 功能: 把"历史外生 → 历史内生"的通道间相关 (例如温度影响销量) 搬给"未来外生 → 未来内生"的预测。
-    - 核心思路: Discovery 用 series-wise embedding (一条序列变一个 token) 把每个 $X^{exo}_i$ 编码成 $u_i \in \mathbb{R}^d$, 拼成 $U \in \mathbb{R}^{D \times d}$, 跑 Transformer 预测 $\hat X^{endo}$ (从历史外生反推历史内生, 一个 self-supervised 副任务), 抽出 $\mathcal{W}_{q'}, \mathcal{W}_{k'}$。Injection 把 $Y^{exo}$ 也 series-embed 成 $O$, 跑相同的双注意力融合 + gating, 得到 $\dot Y^{endo}$。
-    - 设计动机: 通道间相关通常较稳定 (天气影响销量的强度在历史与未来近似不变), 直接 transfer 是合理近似; series-wise embedding 让 attention 直接作用在变量级别, 抓的就是 Pearson 相关结构, 与论文 figure 2 "Pearson correlation for channels" 的设计一致。
+**2. 通道相关模块 CCM：把跨通道相关性搬运**
 
-3. **样本级 gating $\alpha$ 自适应融合**:
+通道通路镜像 TCM, 补强的是框架图里「未来外生 → 未来内生」这一步。洞察是：协变量影响内生变量的方式（Pearson 相关直觉, 如温度影响销量）在历史与未来之间近似稳定, 于是「历史外生 → 历史内生」学到的通道注意力可以借给「未来外生 → 未来内生」。与 TCM 用 patch token 不同, CCM 用 **series-wise embedding**——把每条序列整体编码成一个 token ($X^{exo}_i \to u_i \in \mathbb{R}^d$, 拼成 $U \in \mathbb{R}^{D \times d}$), 让 attention 直接作用在变量级别、抓的就是通道间相关结构（呼应论文 figure 2 的 "Pearson correlation for channels"）。Discovery 跑 Transformer 从历史外生反推历史内生 $\hat X^{endo}$（自监督副任务）, 抽出 $\mathcal{W}_{q'}, \mathcal{W}_{k'}$; Injection 把 $Y^{exo}$ 也 series-embed 后做同样的双注意力融合, 得到 $\dot Y^{endo}$。
 
-    - 功能: 让每个样本自己决定"原始注意力"与"借来注意力"的权重, 处理"相关性强弱因样本而异"的现实。
-    - 核心思路: $\alpha = \text{MLP}(X^{exo}_i)^\top \cdot \text{MLP}(X^{endo}_i)$, 把两路输入分别经 MLP 后做点积得标量权重, 再用 $\alpha$ 融合两个注意力 score。TCM 与 CCM 各用一份 gating。
-    - 设计动机: 如果外生与内生在某样本上几乎不相关, $\alpha$ 会降到接近 1, 退化为标准 Transformer; 反之 $\alpha$ 接近 0, 让借来的注意力主导。这种"动态平衡"避免了硬 transfer 的 overfit, 也让方法对低相关数据保持鲁棒。
+**3. 样本级 gating $\alpha$：把硬搬运变成软切换**
+
+TCM 与 CCM 各配一份 gating（即框架图里同时调控两条 Injection 的那个模块）, 用来回答「这个样本的借来注意力到底该信几分」。它把两路输入分别过 MLP 后点积成一个标量 $\alpha = \text{MLP}(\cdot)^\top \cdot \text{MLP}(\cdot)$（TCM 取 $X^{exo}, X^{endo}$, CCM 取 $X^{exo}, Y^{exo}$）, 再用 $\alpha$ 融合两路 attention score。当外生与内生在某样本上几乎不相关时 $\alpha \to 1$, 模型退化成标准 Transformer; 强相关时 $\alpha \to 0$, 让借来的注意力主导。这种动态平衡避免了硬 transfer 在低相关数据上的 overfit, 是双通路保持鲁棒的关键。
 
 ### 损失函数 / 训练策略
 三个 loss 相加: $L_t = \|Y^{exo} - \hat Y^{exo}\|_1$ (时间相关副任务), $L_c = \|X^{endo} - \hat X^{endo}\|_1$ (通道相关副任务), $L_f = \|Y^{endo} - \hat Y^{endo}\|_1$ (主预测)。总损失 $L_{total} = L_f + \lambda_2 (L_t + L_c)$, $\lambda_1, \lambda_2$ 为超参。所有任务联合训练, end-to-end。

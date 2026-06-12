@@ -46,6 +46,23 @@ tags:
 ### 整体框架
 把 LRM 的 think 段切成 $\mathcal{T}=\{s_1,\dots,s_K\}$（按双换行切分），最终 answer 由 $M_L$ 生成。在每个 step $k$：(1) 用小模型 $M_S$ 在前文 $\mathbf{c}_k$ 上只解码第一个 token，得到 $\mathbf{H}_{\text{init}}(s_k)=\mathbf{H}(P_\theta(t_1|\mathbf{c}_k))$；(2) 若 $\mathbf{H}_{\text{init}}\leq\tau$ → Delegate，由 $M_S$ 自回归续写直至 step 分隔符；否则 → Intervene，把 $\mathbf{c}_k$ 交 $M_L$ 续写。所有协同动作 train-free，仅引入一个超参 $\tau$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["LRM think 段<br/>按双换行切成步 s₁…s_K"] --> G1
+    subgraph G1["Glimpse：探针-派发（只看 1 个 token）"]
+        direction TB
+        B["小模型 M_S 解码该步首 token"] --> C["计算首 token 熵 H_init"]
+    end
+    G1 -->|"H_init ≤ τ"| D["Delegate<br/>小模型 M_S 自回归续写整步"]
+    G1 -->|"H_init > τ"| E["Intervene<br/>大模型 M_L 续写并隐式纠错"]
+    E --> F["Efficient Switching<br/>复用 prefix-cache + 叠加 Speculative Decoding"]
+    D --> L["逐步迭代至 think 段结束"]
+    F --> L
+    L -->|"下一步 k+1"| B
+    L -->|"全部完成"| O["输出：最终 answer 由 M_L 生成"]
+```
+
 ### 关键设计
 
 **1. Glimpse：用 1 个 token 的代价做 Probe-then-Dispatch**

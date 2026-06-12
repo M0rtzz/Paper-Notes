@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 分为两大部分：(1) 数据集构建——通过 seed subreddit → seed user → 全站帖子收集 → 话题标注的流水线构建 Splits! 数据集，按 6 个人口统计群体 × 89 个话题切分；(2) 假设过滤——对候选假设计算 lift（数据支持度）和 triviality（平凡度），双重过滤筛选有价值假设。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据集构建：Splits! 沙盒"]
+        direction TB
+        A["种子 subreddit<br/>（6 个人口统计群体）"] --> B["Group-ness 指标<br/>筛高置信度群体用户"]
+        B --> C["收集这些用户全站帖子"]
+        C --> D["话题标注（ColBERT + LLM）<br/>切分为 6 群体 × 89 话题"]
+    end
+    D --> E["LLM 生成候选假设<br/>（2.3 万条）"]
+    E --> F["Lift 指标<br/>BM25 重排 + 超几何检验<br/>筛统计有效"]
+    F --> G["Triviality 指标<br/>定义性词表回忆率<br/>剔除平凡假设"]
+    G --> H["非平凡有效假设"]
+```
+
 ### 关键设计
 
 **1. Group-ness 指标：从嘈杂的 subreddit 成员关系里筛出高置信度的群体用户**

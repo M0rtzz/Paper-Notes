@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 ACE 要解决的是"把多个异质扩散/流专家拼成 ratio 组合 $h_t(x) = \prod_i (\tilde q^{(i)}_t(x))^{\gamma_i(t)}$ 时，中间时刻的复合密度可能根本不可归一化"这个隐蔽失败。它把这个问题拆成先诊断、再修路径、再采样三件事：先用一个只依赖噪声调度和指数的封闭量在采样前判断路径是否存在；若某段时间内不存在，就给指数加一个端点归零、中段为正的扰动把路径"抬"回合法区；最后配一个能正确处理时变指数的加权粒子采样器去执行修正后的路径。输入是一组预训练异质专家加一个目标 ratio 组合，输出是从修正路径上采到的、端点目标分布完全不变的样本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["异质专家 + 目标 ratio 组合<br/>h_t = ∏ (q_t^i)^γ_i(t)"] --> B["Path Existence Criterion (PEC)<br/>采样前算 C(t)=min_k Σ γ_i/(α_i)²"]
+    B -->|"C(t)>0 处处成立"| E["ACE Sampler<br/>时变指数 Feynman–Kac 加权 SDE"]
+    B -->|"某段 C(t)≤0：路径塌缩"| C["Adaptive Exponent Bump<br/>只动指数中段、端点归零抬 C(t)>0"]
+    C --> E
+    E --> F["端点目标分布不变的样本<br/>ESS 低于阈值时按权重重采样"]
+```
+
 ### 关键设计
 
 **1. Path Existence Criterion：在采样前一行求和就能判断路径是否塌缩**

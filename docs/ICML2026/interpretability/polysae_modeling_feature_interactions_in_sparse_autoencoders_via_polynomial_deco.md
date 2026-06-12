@@ -43,6 +43,19 @@ PolySAE 在标准稀疏自编码器（SAE）线性解码器之外，新增基于
 ### 整体框架
 PolySAE 要解决的是"线性 decoder 只能加法叠加、表达不了乘法组合"这件事，做法是把 SAE 的 encoder 原封不动留作线性，只把 decoder 从一阶线性升级成三阶多项式。具体地，输入是预训练 LLM 中间层激活 $x \in \mathbb{R}^d$，encoder 沿用标准 SAE 算出稀疏码 $z = S(\text{ReLU}(E^\top x + b_\text{enc}))$（$S$ 取 TopK / BatchTopK / Matryoshka 之一），而重构改写成 $\hat{x} = b_\text{dec} + y_1 + \lambda_2 y_2 + \lambda_3 y_3$，三项分别是线性项 $y_1 = A z$、pairwise 项 $y_2 = B (z \otimes z)$、triple 项 $y_3 = \Gamma (z \otimes z \otimes z)$，$\lambda_2, \lambda_3$ 是可学习标量。这个写法的妙处在于令 $\lambda_2 = \lambda_3 = 0$ 就严格退回线性 SAE，因此 PolySAE 是现有所有变体的真子集泛化，可以即插即用地挂到 TopK / BatchTopK / Matryoshka 上。真正的难点是朴素的 $B, \Gamma$ 分别要 $O(d_\text{sae}^2)$、$O(d_\text{sae}^3)$ 参数完全不可承受，所以全部高阶项都被约束到一个共享的低秩、正交子空间里，把暴力张量积压成紧凑形式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["LLM 中间层激活 x"] --> ENC["线性 encoder（保留不动）<br/>z = S(ReLU(Eᵀx+b))<br/>S ∈ TopK / BatchTopK / Matryoshka"]
+    ENC --> U["共享低秩投影 zU<br/>嵌套秩 R₁≥R₂≥R₃ + Stiefel 正交化 UᵀU=I"]
+    U --> Y1["线性项 y₁<br/>单特征字典 A"]
+    U --> Y2["pairwise 项 y₂<br/>(zU) Hadamard 自乘 → 隐式字典 B"]
+    U --> Y3["triple 项 y₃<br/>(zU) 三次 Hadamard → 隐式字典 Γ"]
+    Y1 --> REC["重构 x̂ = b + y₁ + λ₂y₂ + λ₃y₃<br/>λ₂=λ₃=0 即退化为线性 SAE"]
+    Y2 --> REC
+    Y3 --> REC
+```
+
 ### 关键设计
 
 **1. 多项式 decoder + 共享低秩投影：用同一组方向的不同次幂表达高阶交互**

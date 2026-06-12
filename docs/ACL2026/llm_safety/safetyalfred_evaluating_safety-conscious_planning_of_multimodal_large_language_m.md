@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SafetyALFRED 将安全约束规划建模为元组 $\mathcal{P} = \langle \mathcal{S}, \mathcal{A}, \mathcal{T}, \mathcal{G}, \mathcal{H}, \mathcal{R}_{\text{safe}} \rangle$，要求安全意识策略 $\pi^*$ 在存在危险时优先执行修正动作 $\mathcal{R}_{\text{safe}}(h_i, s_t)$，只有在无危险状态下才推进任务目标。评估管线包括：（1）环境扰动引入危险；（2）QA 任务中模型作为安全评判者识别危险；（3）具身任务中模型生成包含缓解的计划。
+SafetyALFRED 将安全约束规划建模为元组 $\mathcal{P} = \langle \mathcal{S}, \mathcal{A}, \mathcal{T}, \mathcal{G}, \mathcal{H}, \mathcal{R}_{\text{safe}} \rangle$，要求安全意识策略 $\pi^*$ 在存在危险时优先执行修正动作 $\mathcal{R}_{\text{safe}}(h_i, s_t)$，只有在无危险状态下才推进任务目标。评估管线包括：（1）环境扰动引入危险；（2）QA 任务中模型作为安全评判者识别危险；（3）具身任务中模型生成包含缓解的计划；（4）用对齐率量化 QA 识别与具身缓解之间的落差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ALFRED 厨房环境（30 个场景）"] --> B["六类厨房安全隐患<br/>注入危险条件谓词 + 修正动作"]
+    subgraph DUAL["双设置评估（同一场景两次独立测试）"]
+        direction TB
+        D["QA 设置：模型作安全评判者识别危险<br/>结构检查 + NLI 两阶段验证"]
+        E["具身设置：模型逐帧生成动作/子目标<br/>边执行任务边缓解危险"]
+    end
+    B --> DUAL
+    DUAL --> F["对齐率 A<br/>QA 判断 vs 具身行为一致比例"]
+    E -.诊断对照.-> G["多代理框架<br/>安全评判代理识别 → 告知 → 具身代理缓解"]
+    G --> F
+```
 
 ### 关键设计
 

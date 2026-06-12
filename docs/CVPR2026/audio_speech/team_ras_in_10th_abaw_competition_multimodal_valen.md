@@ -45,6 +45,21 @@ tags:
 
 这篇竞赛技术报告要解决的是野外连续效价-唤醒（VA）估计：在 Aff-Wild2 这种外观多变、姿态遮挡频繁、音频噪声大的视频里，逐帧预测被试的情感效价和唤醒度。整体管线先用三路**互相独立**的单模态编码器把视频拆成人脸、行为语义、音频三股表示——GRADA 人脸编码器走 Transformer 时序回归，Qwen3-VL 行为描述走 Mamba 时序编码，WavLM 音频走块级注意力池化，三者各自带独立的时序建模器并投影到共享隐空间。随后这三股表示进入**两种可选的融合策略**（DCMMOE 或 RAAV）之一，最终输出帧级 VA 预测。三个编码器的真正新意在于第二路：把 VLM 提取的行为描述当成一个独立的第三模态，补上传统人脸/音频特征看不见的高层语义。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["野外视频<br/>（人脸 + 行为 + 音频）"]
+    IN --> F["GRADA 人脸编码器<br/>EfficientNet-B1 帧级嵌入 → Transformer 时序回归"]
+    IN --> B["Qwen3-VL 行为描述编码器<br/>情感 prompt 取段级嵌入 → Mamba 时序编码"]
+    IN --> A["WavLM 音频编码器<br/>嘴部开合过滤 → 块级注意力池化"]
+    F --> P["三路投影到共享隐空间"]
+    B --> P
+    A --> P
+    P -->|"策略A：DCMMOE<br/>M(M−1) 有向对专家 + 自适应门控"| FUSE["三模态融合"]
+    P -->|"策略B：RAAV<br/>视觉为锚 + 音频侧路补充"| FUSE
+    FUSE --> OUT["帧级 VA 预测"]
+```
+
 ### 关键设计
 
 **1. GRADA 人脸编码器 + Transformer 时序回归：把帧级外观情感拉成连续时序**

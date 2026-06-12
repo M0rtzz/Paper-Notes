@@ -45,6 +45,20 @@ tags:
 
 NWCAD 维护两个并行前向传播（有上下文 vs 无上下文），在每个解码步骤通过两阶段门控选择使用哪个流的 logits。输入是查询和可选的外部上下文，输出是最终生成的文本。整个过程是三路路由：无上下文解码 / 有上下文解码 / CAD 风格回退解码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["查询 + 外部上下文"] --> DUAL["两流并行 + 双信号计算<br/>有上下文 z_c / 无上下文 z_0<br/>算 JS 散度 D 与 top-1 margin"]
+    DUAL --> BC{"Stage 1 · BC 门控<br/>D ≤ τ 且无上下文 margin ≥ κ_pri ?"}
+    BC -->|"是 · 上下文中性"| OUT0["复制 z_0：精确回退<br/>输出与无上下文逐字一致"]
+    BC -->|"否 · 上下文改变分布"| CC{"Stage 2 · CC 门控<br/>有上下文 margin ≥ κ_ctx ?"}
+    CC -->|"是 · 有上下文流自信"| OUTC["直接采用 z_c"]
+    CC -->|"否 · 边缘 token ~1-2%"| FB["CoCoA 风格对比回退 z_fallback"]
+    OUT0 --> TOK["输出最终 token"]
+    OUTC --> TOK
+    FB --> TOK
+```
+
 ### 关键设计
 
 **1. 两流并行 + 双信号计算：为门控决策提供"上下文有没有用、模型有没有把握"两把尺子**

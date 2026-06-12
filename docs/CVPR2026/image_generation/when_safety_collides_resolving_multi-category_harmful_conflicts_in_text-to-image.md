@@ -39,6 +39,21 @@ tags:
 
 CASG 想解决的是一件很具体的事：当一个提示词可能同时触碰多种有害类别时，现有安全引导把所有类别的关键词拼成一个集合、求出一个统一的「安全方向」，结果不同类别的方向互相打架，安全性不升反降。CASG 的思路是不再用聚合方向，而是在去噪的每一个时间步，先判断当前生成轨迹最像哪一类有害内容，再只沿这一个主导类别施加安全校正。整个流程分两步——先用 CaCI（Conflict-aware Category Identification）挑出主导类别，再用 CrGA（Conflict-resolving Guidance Application）只沿它做校正——而且这套机制对潜在空间（CASG+SLD）和文本空间（CASG+SAFREE）两类安全机制都能即插即用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["提示词 + 预定义有害类别集"] --> B["去噪时间步 t<br/>当前潜变量 z_t"]
+    B --> C{"安全机制类型"}
+    C -->|潜在空间 SLD| D["冲突感知类别识别 CaCI<br/>各类引导方向与提示词方向求余弦相似度，取 argmax"]
+    C -->|文本空间 SAFREE| E["冲突感知类别识别 CaCI<br/>各类子空间正交补残差范数，取 argmin"]
+    D --> F["主导类别 h*"]
+    E --> F
+    F --> G["冲突消解引导施加 CrGA<br/>只沿 h* 做安全校正，其余机制与超参不变"]
+    G --> H["更新 z_(t−1)"]
+    H -->|"t > 0：逐步动态重选类别"| B
+    H -->|"t = 0"| I["安全图像输出"]
+```
+
 ### 关键设计
 
 **1. 冲突感知的类别识别（CaCI）：每个时间步只锁定与当前生成最对齐的那一个有害类别**

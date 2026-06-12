@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 UserMirrorer 是一条端到端的"数据构造 + 模型训练"流水线，目标是把噪声大、缺上下文的 RS 日志炼成能教会小模型对齐真用户的训练数据。第一步把 8 个领域的 RS 日志（MIND/Amazon/MovieLens/Steam/Goodreads/MobileRec/LastFM/KuaiRec2）统一改写成仿真场景 $\bm{X}=\text{Prompt}(\bm{M},\bm{L})$，其中 $\bm{M}$ 是用户记忆（profile + 历史）、$\bm{L}$ 是一个 $N+1$ 长的曝光列表，每个 item 打 [A]/[B]/[C] 标签。第二步用 Qwen2.5-32B（强）和 Llama-3.2-3B（弱）各采样 10 个 EKB 决策过程，挑出"强模型能讲明白、弱模型却抓瞎"的难样本，再用拒绝采样去噪并配成 chosen/rejected 偏好对。最后对 Llama-3.2-3B 先 SFT 再 DPO，得到一个 3B 的部署级用户模拟器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["8 领域 RS 日志<br/>MIND / Amazon / MovieLens / Steam …"] --> B["统一仿真场景改写<br/>X = Prompt(用户记忆 M, 曝光列表 L)"]
+    B --> C["EKB 决策过程生成<br/>强 Qwen2.5-32B + 弱 Llama-3.2-3B 各采 10 个<br/>Stimulus → Knowledge → Evaluation"]
+    C --> D["基于不确定性的难样本筛选<br/>用熵差 ΔEU 锁定高信息增益样本<br/>16K → 约 10K"]
+    D --> E["拒绝采样去噪 + DPO 偏好对构造<br/>10 个全错则丢弃；正确标 accepted / 错误标 rejected"]
+    E -->|accepted 决策过程| F["SFT<br/>next-token 监督"]
+    F -->|chosen / rejected 偏好对| G["DPO 偏好对齐"]
+    G --> H["3B 部署级用户模拟器"]
+```
+
 ### 关键设计
 
 **1. EKB 决策过程生成：给每条点击补一段"为什么点"的显式推理**

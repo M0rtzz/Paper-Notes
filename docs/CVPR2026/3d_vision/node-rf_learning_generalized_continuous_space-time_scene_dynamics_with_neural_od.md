@@ -60,6 +60,19 @@ $$F_\Theta(x, d, z_{t_i}) = (c, \sigma)$$
 
 时间在这里是微分方程的自变量，而不是查表的索引——这正是它能外推的根本原因。整个系统端到端训练，并按数据形态拆成两个子任务：单序列任务学一段视频自己的内插与外推，多序列任务从一批不同初始条件的轨迹里抽出共享的运动规律。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多视角图像序列<br/>（+相机位姿；多序列另附初始位置 p₀、速度 v₀）"] --> B["warmup<br/>冻住 nODE，只学前两帧 latent 并拟合 NeRF"]
+    B -->|单序列| C1["单序列连续动力学<br/>ODE-RNN 编码器估隐空间分布 → 采样 z(t₀)"]
+    B -->|多序列| C2["多序列泛化学习<br/>规范 latent z_can + MLP 编码 p₀ 拼接 v₀"]
+    C1 --> D["nODE 积分（共享 fθ）<br/>ODESolve 解出各时刻动态 latent z(tᵢ)"]
+    C2 --> D
+    L["Lipschitz 正则化<br/>约束每层上界，结构化隐空间"] -.约束.-> D
+    D --> E["解码器 D<br/>单序列→NeRF latent；多序列→渲染/位姿/速度三路"]
+    E --> F["NeRF Fθ(x, d, z) 体渲染<br/>输出颜色 c 与密度 σ"]
+```
+
 ### 关键设计
 
 **1. 单序列连续动力学：用 Latent ODE 把一段视频的演化变成可积分的微分方程**

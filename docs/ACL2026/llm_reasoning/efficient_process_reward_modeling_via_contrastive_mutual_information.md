@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 对每个推理步：(1) 计算"有该步"和"无该步"时模型输出正确答案的 log 概率差异；(2) 同样计算对错误答案的差异；(3) 两者之差即为 CPMI 奖励。然后用归一化的 CPMI 作为软标签训练 PRM。推理时用 PRM 对候选轨迹评分选择最优。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 q + 推理步 s_i"] --> S1
+    subgraph S1["CPMI 奖励公式（单次前向传播）"]
+        direction TB
+        B["正确答案增量<br/>log p(A|q,s_i) − log p(A|q)"]
+        C["错误答案增量（M 个取平均）<br/>log p(Ã|q,s_i) − log p(Ã|q)"]
+        B --> D["相减 → 对比点互信息 r_CPMI"]
+        C --> D
+    end
+    S1 -->|前缀短的早期步噪声大| E["CPMI-Merge 混合策略<br/>初始步用 MC、后续步用 CPMI"]
+    E --> F["z-score 归一化 → 软标签"]
+    F --> G["训练 PRM<br/>Qwen3-4B + 线性奖励头，BCE"]
+    G --> H["推理：对候选轨迹加权评分选最优"]
+```
+
 ### 关键设计
 
 **1. CPMI 奖励公式：用一次前向传播的概率增量替代几十条 MC 滚动**

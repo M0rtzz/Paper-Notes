@@ -42,6 +42,20 @@ LANG 用同语种推理 hint 启动多语言数学推理 RL，再通过余弦衰
 ### 整体框架
 LANG 是一个面向多语言推理的 RL 课程学习框架，核心是把同语种推理 hint 当成训练早期的"脚手架"，再逐步撤掉。给定一道语言为 $l$ 的数学问题 $q$ 和 teacher 生成的同语种推理轨迹 $h=(h_1,\ldots,h_L)$，训练第 $t$ 步时 LANG 按 hint ratio $p_t^l$ 取前 $k_t^l=\lfloor p_t^lL\rfloor$ 个片段拼到问题后构成 hint-conditioned prompt，策略模型基于它采一组输出，再用 GRPO 按答案正确、格式、语言一致三项联合奖励更新。训练早期靠长 hint 解决低资源语言采不到正样本的问题，随训练推进 hint 逐渐缩短直至完全移除，模型也从"跟着同语种轨迹走"过渡到"自己生成同语种推理"；当某语言资源组已能稳定采到正样本时，该组提前进入 zero-hint regime。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：语言 l 的数学问题 q<br/>+ teacher 同语种推理轨迹 h"] --> B["Scheduled Multilingual Hint Decay<br/>第 t 步取前 k_t^l 个片段（余弦衰减 p_t^l）"]
+    B --> C{"Language-adaptive Switch<br/>该语言组正样本比例 EMA ≥ τ？"}
+    C -->|"是·切 zero-hint"| D["原问题 prompt（无 hint）"]
+    C -->|"否·保留 hint"| E["hint-conditioned prompt<br/>问题 + 前 k_t^l 个 hint 片段"]
+    D --> F["策略模型采样 G 个输出"]
+    E --> F
+    F --> G["Conjunctive Reward GRPO<br/>答案正确 ∧ 格式 ∧ 语言一致 → R=1，否则 0"]
+    G --> H["GRPO 组内标准化 advantage 更新策略"]
+    H -->|"下一步 t+1"| B
+```
+
 ### 关键设计
 
 **1. Scheduled Multilingual Hint Decay：早期给脚手架，再平滑撤掉以防 hint 依赖**

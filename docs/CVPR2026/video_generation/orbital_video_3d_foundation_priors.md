@@ -45,6 +45,24 @@ tags:
 
 基于 SVD 的视频扩散模型为基础，输入图像同时送入 3D 基础模型（Hunyuan3D）获取形状先验。两个尺度的特征通过多尺度 3D 适配器以交叉注意力方式注入各 Transformer 块，引导视频生成。推理时 3D 特征提取仅需约 2 秒额外开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 I"] --> B["基础视频扩散模型 SVD<br/>VAE 编码 + CLIP + 相机轨迹"]
+    A --> C
+    subgraph PRIOR["双尺度 3D 基础先验（源自 Hunyuan3D 原生 3D 潜在空间）"]
+        direction TB
+        C["DINOv2 特征<br/>rectified flow 去噪"] --> D["全局潜在向量 p̂₀<br/>约束整体轮廓"]
+        D --> E["3D 网格查询 → 体积特征<br/>投影到 M=8 规范视角"]
+        E --> F["局部潜在图像 L̂<br/>视角依赖几何细节"]
+    end
+    B --> G["多尺度 3D 适配器<br/>串联交叉注意力：先全局后局部"]
+    D --> G
+    F --> G
+    G --> H["去噪视频扩散 Transformer 块"]
+    H --> I["输出轨道视频 V"]
+```
+
 ### 关键设计
 
 **1. 双尺度 3D 基础先验：一个管整体轮廓，一个管视角细节**

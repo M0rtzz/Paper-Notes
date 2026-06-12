@@ -73,10 +73,6 @@ $$\|\theta_t - \theta_t^*\|^2 \lesssim (1 - \gamma\mu/2)^t \|\theta_0 - \theta_0
 - 恒定步长：$\gamma^* = \arg\min_\gamma \left[ \frac{192 (2 + \beta)^2}{\mu^2 \gamma^2} \Delta^2 + \frac{96}{\mu (1 - \beta)} \sigma^2 \gamma \right]$。
 - 时期衰减 + 动量重启：按对数时间增加步长，时期边界处把动量缓冲重置为 0，打破过时梯度的累积。
 
-### 训练策略
-- 恒定步长：$\gamma^* = \arg\min_\gamma \left[ \frac{192 (2 + \beta)^2}{\mu^2 \gamma^2} \Delta^2 + \frac{96}{\mu (1 - \beta)} \sigma^2 \gamma \right]$。
-- 时期衰减 + 动量重启：按对数时间增加步长，时期边界处把动量缓冲重置为 0，打破过时梯度的累积。
-
 ## 实验关键数据
 
 ### 主实验：强凸二次目标 + 随机游走漂移

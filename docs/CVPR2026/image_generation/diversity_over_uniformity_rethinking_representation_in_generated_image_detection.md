@@ -41,9 +41,20 @@ tags:
 
 AFCL 的出发点是：生成图检测器的瓶颈不是特征不够，而是训练把多源线索压成了少数几个判别方向（有效秩仅 1-2），换个生成器就失效。框架基于冻结的 CLIP ViT-L/14 提取多阶段 CLS 特征，每阶段特征先过 CIB 模块做信息瓶颈过滤、再由 AFCL 模块强制去相关，最后用加权聚合和类别特定提示学习完成真伪判别——核心是一路守住表征的多样性和互补性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["冻结 CLIP ViT-L/14<br/>提取多阶段 CLS 特征"]
+    B --> C["线索信息瓶颈 CIB<br/>逐阶段过滤成不可或缺的判别特征"]
+    C --> D["反特征坍塌学习 AFCL<br/>HSIC 逼各阶段特征互相独立"]
+    D --> E["加权聚合（权重均匀性正则）<br/>得最终表征"]
+    E --> F["类别特定提示学习 CSP<br/>真/伪上下文向量余弦对齐"]
+    F --> G["真伪判别"]
+```
+
 ### 关键设计
 
-**1. Cue Information Bottleneck：把每条线索过滤成不可或缺的判别信息**
+**1. 线索信息瓶颈（Cue Information Bottleneck, CIB）：把每条线索过滤成不可或缺的判别信息**
 
 要避免特征坍塌，先得让每条线索都「干净且不可替代」。CIB 对每阶段特征做信息瓶颈：最大化与标签 $y$ 的互信息、同时最小化与输入 $x$ 的互信息，
 
@@ -55,7 +66,7 @@ $$\mathcal{L}_{\mathrm{CIB}} = \sum_{i=1}^{N} D_{\mathrm{KL}}[p(y|\tilde{\mathca
 
 它度量「抽掉第 $i$ 条线索后预测会变多差」，从而逼每条线索都携带不可或缺的判别信息，得到纯化且互补的特征集合。
 
-**2. Anti-Feature-Collapse Learning：用 HSIC 逼各阶段特征互相独立**
+**2. 反特征坍塌学习（Anti-Feature-Collapse Learning, AFCL）：用 HSIC 逼各阶段特征互相独立**
 
 纯化之后还要防止不同阶段的线索过度重叠塌成同一方向。AFCL 用 Hilbert-Schmidt 独立性准则（HSIC）作核度量，强制各阶段特征统计独立：
 
@@ -63,7 +74,7 @@ $$\mathcal{L}_{\mathrm{AFCL}} = \frac{1}{N(N-1)} \sum_{i \neq j} \mathrm{HSIC}(\
 
 其中 $\mathrm{HSIC}(\tilde{v}_i, \tilde{v}_j) = \frac{1}{(B-1)^2} \mathrm{Tr}(K_i H K_j H)$。核方法比简单正交约束更灵活，能捕捉非线性依赖。此外再加一项权重均匀性正则 $\mathcal{L}_{\mathrm{reg}} = (\sum_{i=1}^{N} \alpha_i^2 - 1/N)^2$，防止聚合时权重又坍缩到少数线索上。
 
-**3. Class-Specific Prompt Learning：为真/伪各学一组上下文向量对齐**
+**3. 类别特定提示学习（Class-Specific Prompt Learning, CSP）：为真/伪各学一组上下文向量对齐**
 
 判别端不用固定分类头，而是为「真实」和「伪造」各学一组可训练的上下文向量，用余弦相似度把最终视觉表征 $\tilde{v}_{\mathrm{final}}$ 对齐到对应文本原型 $e_c$：
 

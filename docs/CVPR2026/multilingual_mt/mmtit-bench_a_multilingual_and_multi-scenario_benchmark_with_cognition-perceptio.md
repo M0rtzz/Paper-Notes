@@ -38,7 +38,36 @@ tags:
 
 ### 整体框架
 
-工作包含两部分：（1）MMTIT-Bench 基准构建——从 14 种语言收集图像，经 OCR 标注、翻译标注、人工过滤，最终得到 1400 个高质量样本；（2）CPR-Trans 数据范式——通过 VLLM 辅助生成认知、感知、翻译推理三阶段的结构化思维链数据，用于训练端到端 TIMT 模型。
+工作包含两条并行的 pipeline。一条是 **MMTIT-Bench 基准构建**：从 14 种语言收集真实图像，经「图像收集 → OCR 解析标注 → 翻译标注 → 过滤终审」四步加工，每种语言精选 100 张、共得 1400 个高质量评测样本（剩余标注数据进训练语料），并配套一套**双协议评估**（VLLM 判官 + COMET）来打分。另一条是 **CPR-Trans 数据范式**：用 Qwen3-VL-235B 在训练语料上分阶段生成「认知 → 感知 → 翻译推理」三段式结构化思维链，作为 SFT 监督训练端到端 TIMT 模型；训练好的模型再回到 MMTIT-Bench 上用双协议评估检验。下图给出整条数据流，三个贡献模块（基准构建、CPR-Trans、双协议评估）各对应一个分组。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["14 种语言真实图像<br/>菜单/海报/文档 等 ~14000 张"]
+    subgraph BENCH["MMTIT-Bench 基准构建"]
+        direction TB
+        B1["图像收集 + 人工核验"] --> B2["OCR 解析标注<br/>Gemini 2.5 Flash + 人工校验"]
+        B2 --> B3["翻译标注<br/>多温度采样 + 三模型投票"]
+        B3 --> B4["过滤终审<br/>每语言精选 100 张 → 1400 样本"]
+    end
+    A --> BENCH
+    BENCH -->|官方评测集| EVALSET["评测集 1400 样本<br/>中英双语参考"]
+    BENCH -->|剩余标注数据| TRAIN["训练语料"]
+    subgraph CPR["CPR-Trans 数据范式（Qwen3-VL-235B 分阶段生成）"]
+        direction TB
+        C1["认知 cognition<br/>描述全局场景，不识别文字"] --> C2["感知 perception<br/>分析文字布局与阅读序"]
+        C2 --> C3["翻译推理 trans<br/>整合视觉+文本做翻译"]
+    end
+    TRAIN --> CPR
+    CPR --> SFT["SFT 训练 Qwen2.5-VL-3B/7B<br/>&lt;think&gt; 推理链 + &lt;answer&gt; 译文"]
+    SFT --> EVAL
+    EVALSET --> EVAL
+    subgraph EVAL["双协议评估"]
+        direction LR
+        E1["VLLM 判官<br/>忠实/流畅/可读/术语 四维"]
+        E2["规则指标 COMET"]
+    end
+```
 
 ### 关键设计
 

@@ -48,16 +48,35 @@ TrajTok 由两个可微分模块组成，联合训练：
 
 输入 $\mathbf{V} \in \mathbb{R}^{T \times H \times W \times 3}$，输出 $\mathbf{Z} \in \mathbb{R}^{N \times d}$，其中 $N$ 随场景语义复杂度动态变化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入视频 V<br/>(T×H×W×3)"] --> SEG
+    subgraph SEG["Universal Segmenter（通用分割器）"]
+        direction TB
+        S1["ConvNeXt-Tiny 多尺度特征<br/>上采样求和→密集特征 F"] --> S2["128 个可学习查询<br/>Perceiver 交叉注意力 + 1D RoPE"]
+        S2 --> S3["softmax 软 mask<br/>丢弃空查询→动态 token 数"]
+    end
+    SEG -->|"detach 特征梯度"| ENC
+    subgraph ENC["Trajectory Encoder（轨迹编码器）"]
+        direction TB
+        E1["软 mask 加权聚合<br/>初始轨迹 embedding"] --> E2["硬 mask（argmax）<br/>masked cross-attention 精化"]
+        E2 --> E3["自适应 token 数<br/>每轨迹发射 1/2/4 个 token"]
+    end
+    ENC --> Z["轨迹 token Z<br/>(N×d, N 随语义复杂度变化)"]
+    Z --> D["下游：TrajViT2 / TrajAdapter / TrajVLM"]
+```
+
 ### 核心设计
 
-**1. Universal Segmenter**
+**1. Universal Segmenter（通用分割器）：单次前向把视频隐式聚类成轨迹 mask**
 
 - **逐帧特征提取**：使用轻量 ConvNeXt-Tiny 提取多尺度特征图，上采样到 1/4 分辨率后求和得到密集特征 $\mathbf{F} \in \mathbb{R}^{T \times h \times w \times d}$。
 - **可学习查询聚类**：引入 $N_q=128$ 个可学习查询 $\mathbf{Q}$，通过 Perceiver 层的交叉注意力与特征交互，对特征施加 1D RoPE 编码时空位置。
 - **软分割**：查询与特征点积后 softmax 得到软 mask $\mathbf{M}^{\text{soft}} \in [0,1]^{N_q \times T \times h \times w}$；空 mask 的查询被丢弃，实现动态 token 数。
 - **梯度截断**：detach 特征 $\mathbf{F}$ 进入 Perceiver 前的梯度，防止 patch 特征与查询之间的不稳定共适应。
 
-**2. Trajectory Encoder**
+**2. Trajectory Encoder（轨迹编码器）：按 mask 聚合像素，输出自适应数量的轨迹 token**
 
 - **软聚合初始化**：用软 mask 对特征加权求和得到初始轨迹 embedding $\mathbf{z}_k^{\text{init}}$，保证梯度回传。
 - **硬 mask 精化**：对 $\mathbf{M}^{\text{soft}}$ 取 argmax 得到硬 mask $\mathbf{M}^{\text{hard}}$，用 masked cross-attention 精化 token 表示，确保解纠缠。

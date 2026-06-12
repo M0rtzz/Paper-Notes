@@ -22,7 +22,7 @@ tags:
 **关键词**: 语言偏置, VIT, DPO, 模态错位, 训练即插即用
 
 ## 一句话总结
-本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$，证明 LVLM 在系统性低估视觉输入；提出 Language Bias Regularization（VIT 阶段惩罚 $|\mathcal{B}|$）和 Language Bias Penalty（DPO 阶段惩罚偏置正向增长），不加任何数据/辅助模型就显著提升 10+ benchmark 性能并降幻觉。
+本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$，证明 LVLM 在系统性低估视觉输入；提出 Language Bias Regularization（VIT 阶段用 $|\mathcal{B}|$ 把语言路径钉回参考水平）和 Language Bias Penalty（DPO 阶段用 sigmoid 惩罚主动把已有偏置往负压），不加任何数据/辅助模型就显著提升 10+ benchmark 性能并降幻觉。
 
 ## 研究背景与动机
 
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：分解训练奖励——把 reward $\mathcal{R} = \log \pi_\theta(y|x,v)/\pi_{\text{ref}}(y|x,v)$（multimodal gain）和 bias $\mathcal{B} = \log \pi_\theta(y|x)/\pi_{\text{ref}}(y|x)$（text-only gain）分开追踪，若 $\mathcal{B} \approx \mathcal{R}$ 说明改善全靠语言路径。
 
-**核心 idea**：定义 $\mathcal{B}$ 后直接在损失里惩罚——VIT 加 $|\mathcal{B}|$（LBR），DPO 在 chosen 上惩罚 $\mathcal{B}_w$ 正向增长（LBP）。
+**核心 idea**：定义 $\mathcal{B}$ 后直接在损失里惩罚——VIT 加 $|\mathcal{B}|$ 钉住语言路径（LBR），DPO 加一个 sigmoid 惩罚项主动把已有偏置往负推（LBP）。
 
 ## 方法详解
 
@@ -60,9 +60,13 @@ $$\mathcal{L}_{\text{LBR}} = |\mathcal{B}| = \left|\log \frac{\pi_\theta(y|x)}{\
 
 用绝对值（而非只惩罚正向增长）是为了双向锁定：既不让纯文本能力膨胀、也不让它退化，把语言模态推理钉在参考水平。这样模型想拿到额外的 reward 就只剩"真正用视觉"这一条路，从损失层面堵死了模态错位。
 
-**3. LBP：DPO 阶段惩罚 chosen 偏置正向增长，堵住 reward hacking**
+**3. LBP：DPO 阶段用 sigmoid 惩罚主动卸载已有偏置**
 
-DPO 有个特有的漏洞——它会让 preferred（chosen）答案在纯文本路径上也涨分，相当于"靠语言混过偏好"这种 reward hacking。LBP 在 DPO loss 上加一项 $\max(0, \mathcal{B}_w)$，只惩罚 chosen 的 text-only gain 正向增长；为负不罚（chosen 在纯文本下变差是可以接受的），rejected 的偏置也完全不动以避免 over-regularization。这样就专门切断了"preferred 答案不看图也能赢"的捷径，逼 DPO 的偏好优势真正来自视觉对齐。
+DPO 起步时模型已经从 VIT 阶段背上了语言偏置（Figure 3(b) 里 $\mathcal{B}_{\text{DPO}_w}$ 甚至反超 $\mathcal{R}_{\text{DPO}_w}$），LBR 那种温和的「钉在参考水平」已经不够——需要一个更主动的惩罚把已有偏置往回卸。LBP 仿照 DPO 自身的 loss 形式，把偏置写成一个 sigmoid 惩罚项：
+
+$$\mathcal{L}_{\text{LBP}} = -\log\sigma(\mathcal{B}) = -\log\sigma\!\left(\beta \cdot \log \frac{\pi_{\text{ref}}(y|x)}{\pi_\theta(y|x)}\right)$$
+
+加到带 margin 的 DPO baseline 上：$\mathcal{L}_{\text{DPO}}' = \mathcal{L}_{\text{DPO}_M} + \gamma\,\mathcal{L}_{\text{LBP}}$，其中 $y$ 可取 chosen $y_w$ 或 rejected $y_l$。和 LBR 用绝对值「双向锁定」不同，最小化 $\mathcal{L}_{\text{LBP}}$ 会主动把 $\mathcal{B}$ 往负值推——也就是让模型"忘掉"VIT 阶段学到的语言偏置、转而更依赖视觉。sigmoid 的饱和性顺带保证惩罚不会无限增大，维持训练稳定。
 
 ## 实验关键数据
 
@@ -108,7 +112,7 @@ DPO 有个特有的漏洞——它会让 preferred（chosen）答案在纯文本
 
 ### 关键发现
 - **language bias 是 VIT/DPO 两阶段共有现象**：Figure 3 显示 $\mathcal{B}, \mathcal{R}$ 轨迹一致——证明这是训练范式系统性问题，不是数据问题
-- **简单到不像方法**：LBR 就是损失 + $|\mathcal{B}|$，LBP 就是 DPO + $\max(0, \mathcal{B}_w)$，但跨 10+ 基准、多模型一致涨
+- **简单到不像方法**：LBR 就是损失 + $|\mathcal{B}|$，LBP 就是 DPO + $-\log\sigma(\mathcal{B})$，但跨 10+ 基准、多模型一致涨
 - **零额外数据/模型**：不像之前缓解方案要外加 reference VLM 或人工标注，LBR/LBP 完全在原 pipeline 内
 - **可视化证实**：Figure 2 显示 LBR 让模型对图像 token 的注意力分布显著抬升
 
@@ -116,13 +120,13 @@ DPO 有个特有的漏洞——它会让 preferred（chosen）答案在纯文本
 - **形式化 + 量化 + 干预的完整闭环**：把 "language bias" 这个模糊概念变成可定义、可追踪、可干预的工程对象——这套"定义 → 测量 → 损失项"的方法学是 alignment 领域的范本
 - **简单到反直觉的有效性**：$|\mathcal{B}|$ 这种"幼稚"的正则化竟然 dominate 复杂的缓解方法——说明问题诊断对了之后方案可以非常简洁
 - **抓住训练范式而非数据**：以往幻觉缓解都加数据 / 改 prompt / 加 reward model；本文证明问题在训练目标本身，从损失函数层面解决一劳永逸
-- **VIT vs DPO 双阶段诊断**：两阶段都有 bias 但形式不同（VIT 是模态错位、DPO 是 reward hacking），分别用 LBR / LBP 治——细致区分而非一刀切
+- **VIT vs DPO 双阶段诊断**：两阶段都有 bias 但形式不同（VIT 从零长出偏置、DPO 起步已背着偏置还继续放大），分别用温和正则 LBR / 主动卸载的 LBP 治——细致区分而非一刀切
 
 ## 局限性 / 可改进方向
 - $\mathcal{B}$ 计算需要每步 forward 一次 text-only 输入，训练成本约 +50%
 - $\pi_{\text{ref}}$ 选择影响 $\mathcal{B}$ 测量——pre-VIT vs 中间 checkpoint 区别未充分讨论
 - 单纯惩罚 $|\mathcal{B}|$ 可能伤害某些"语言主导"任务（如纯文本推理），需更细 task-aware 控制
-- DPO 阶段只惩罚 $\mathcal{B}_w$，未探索 $\mathcal{B}_l$ 的复杂作用（chosen 文本 gain vs rejected 文本 gain 的关系可能更微妙）
+- LBP 的 $y$ 可取 chosen 或 rejected，但论文未深入剖析分别作用于 $y_w$ / $y_l$ 的差异（chosen 文本 gain vs rejected 文本 gain 的关系可能更微妙）
 - 没分析 LBR 对 visual token 数量 / patch 大小的敏感性
 
 ## 相关工作与启发

@@ -43,6 +43,17 @@ OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血
 ### 整体框架
 这套管线要解决的是"在一张已有冠脉造影上局部改一处狭窄、其余解剖一丝不动"，所以它不从噪声重画整图，而是把编辑当成从原图到目标图的一次"最小运输"。先从编辑规范造出二值掩码 $\mathbf{M}$、保护区 $\bar{\mathbf{M}}=\mathbf{1}-\mathbf{M}$ 和目标几何 $\mathbf{S}^\star=\mathcal{S}(\cdot)$，并在"血管-结构复合域"（原图边缘 + 血管 mask）里设定起点；再把编辑写成一端固定在原图 $\mu_0=\delta_{\mathbf{x}_0}$、另一端 $\mu_1$ 受几何可行集约束的熵正则化 OT，用 Diffusion Schrödinger Bridge 解出一条桥过程；最后在桥前进的每 $K$ 步插入几何投影 $\Pi_\mathcal{F}$，一边把编辑区拉向目标几何、一边把非编辑区拽回原图，滚到 $T$ 步即得像素级精确的合成造影。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原冠脉造影 x₀ + 编辑规范"] --> B["构造编辑掩码 M / 保护区 1−M<br/>目标几何 S* + 血管-结构复合域起点"]
+    B --> C["可行集 + mask-aware 传输代价<br/>把'哪能动、哪不能动'硬写进熵正则 OT"]
+    C --> D["Schrödinger Bridge 求解器<br/>OT 化为桥过程，从 s₀=x₀ 滚 T=50 步"]
+    D --> E["GPG 路径级几何投影<br/>每 5 步 Π_F：编辑区拉向 S*、保护区拽回 x₀"]
+    E -->|未到 T 步，继续滚桥| D
+    E -->|滚满 T 步| F["像素级精确的合成造影"]
+```
+
 ### 关键设计
 
 **1. 可行集 + mask-aware 传输代价：把"哪能动、哪不能动"写进 OT 而非靠软引导**

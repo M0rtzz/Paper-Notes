@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MAIC-TQA 采用模块化多智能体架构，流程为：SLU 模块提取用户意图和槽位信息 → 范围验证智能体（SV Agent）验证并澄清表范围信息 → 表检索智能体（TR Agent）整合原始查询和澄清信息确定目标表 → SQL 生成与验证智能体（SGV Agent）生成、执行和验证 SQL 查询。各智能体在流程中可动态触发与用户模拟器的澄清对话。
+MAIC-TQA 采用模块化多智能体架构，流程为：SLU 模块提取用户意图和槽位信息 → 范围验证智能体（SV Agent）验证并澄清表范围信息 → 表检索智能体（TR Agent）整合原始查询和澄清信息确定目标表 → SQL 生成与验证智能体（SGV Agent）生成、执行和验证 SQL 查询。各智能体在流程中可动态触发与用户模拟器的澄清对话，而这一对话能否拿到有效澄清，取决于前一步的模糊性是否被正确识别。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["模糊查询<br/>拼写错 / 表述不清 / 信息缺失"] --> SLU["SLU 模块<br/>BERT 联合意图检测+槽位填充（SELECT 意图）"]
+    SLU --> SV["SV Agent 范围验证<br/>检测 FROM 槽位缺失/无效"]
+    SV --> TR["TR Agent 表检索<br/>整合澄清 → 表摘要 → BM25 检索目标表"]
+    TR --> SGV["SGV Agent SQL 生成与验证<br/>5-shot ICL 生成 → 执行 → 校验 WHERE"]
+    SGV --> OUT["可执行 SQL"]
+    SV -->|检测到 FROM 模糊| SIM
+    SGV -->|结果为空 / WHERE 模糊| SIM
+    SIM["动态澄清用户模拟器<br/>门控于检测正确性·LLM 口语化改写"] -.澄清信息.-> SV
+    SIM -.澄清信息.-> SGV
+```
+
+> 图中 SELECT / FROM / WHERE 三类检测对应的正是「细粒度模糊性分类与标注体系」（设计 1）：分类决定每个智能体该查哪段子句、该向模拟器（设计 2）要什么澄清；四个智能体串成的主干则是 MAIC-TQA 框架（设计 3）。
 
 ### 关键设计
 

@@ -41,7 +41,22 @@ tags:
 
 ### 整体框架
 
-记源模型为 $f_{\theta_0}$，测试流为 $\{B_t\}_{t=1}^T$，可适应参数为归一化层 affine 子集 $\theta^a \subset \theta$。标准 TTA 更新为 $\theta_{t+1} = \theta_t - \eta \Delta_t$，其中 $\Delta_t = \frac{1}{|B_t|}\sum_{x_i \in B_t} w_t^i g_t(x_i)$，$g_t(x_i) = \nabla_\theta \ell_\text{tta}(x_i,\theta_t)$。DP-TTA 用以下替换：先对每个样本梯度做 $L_2$ 裁剪 $\bar g_t(x_i) = g_t(x_i)/\max(1,\|g_t(x_i)\|_2/C)$，再注入高斯噪声 $\Delta_t^{DP} = \frac{1}{|B_t|}(\sum_i \bar g_t(x_i) + \mathcal{N}(0,C^2\sigma^2 I_d))$。架构层面禁用 BatchNorm（梯度跨样本耦合违反 per-sample 敏感度假设），统一采用 LayerNorm 的 ViT-Base/16。
+记源模型为 $f_{\theta_0}$，测试流为 $\{B_t\}_{t=1}^T$，可适应参数为归一化层 affine 子集 $\theta^a \subset \theta$。标准 TTA 更新为 $\theta_{t+1} = \theta_t - \eta \Delta_t$，其中 $\Delta_t = \frac{1}{|B_t|}\sum_{x_i \in B_t} w_t^i g_t(x_i)$，$g_t(x_i) = \nabla_\theta \ell_\text{tta}(x_i,\theta_t)$。DP-TTA 用以下替换：先对每个样本梯度做 $L_2$ 裁剪 $\bar g_t(x_i) = g_t(x_i)/\max(1,\|g_t(x_i)\|_2/C)$，再注入高斯噪声 $\Delta_t^{DP} = \frac{1}{|B_t|}(\sum_i \bar g_t(x_i) + \mathcal{N}(0,C^2\sigma^2 I_d))$。架构层面禁用 BatchNorm（梯度跨样本耦合违反 per-sample 敏感度假设），统一采用 LayerNorm 的 ViT-Base/16。整条流水线如下图：每个测试 batch 先按各方法定义构造 per-sample 损失与梯度（去过滤/后处理化），再逐样本裁剪、聚合加噪、更新 LayerNorm 的 affine 参数；而流式 + change-one 邻接的隐私核算从侧面闭合在加噪那一步上，跨步无须组合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["测试流 batch（无标签、单 epoch 流式）"] --> G2
+    subgraph G2["去过滤 / 后处理化（按方法构造梯度）"]
+        direction TB
+        B["按各方法定义 per-sample 损失<br/>Tent 熵 / EATA Fisher / 私有 SAM / DeYO PLPD / COME"] --> C["per-sample 梯度"]
+    end
+    G2 --> D["per-sample 裁剪到范数 C<br/>压范数、保方向，兼作稳定器"]
+    D --> E["聚合 + 高斯噪声 N(0, C²σ²I)"]
+    E --> F["更新 LayerNorm 的 affine 参数<br/>（禁用 BatchNorm，用 ViT）"]
+    F -->|下一 batch、无重采样| A
+    E -.->|单步 μ=2/σ 的 μ-GDP，post-processing 闭合| P["DP 隐私核算<br/>change-one 邻接、跨步无组合损耗"]
+```
 
 ### 关键设计
 

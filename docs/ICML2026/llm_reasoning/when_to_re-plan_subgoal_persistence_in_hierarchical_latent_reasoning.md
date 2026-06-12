@@ -43,26 +43,26 @@ tags:
 ### 整体框架
 HRM backbone 有两个 latent states：低层状态每个 micro-step 更新，高层状态每 $T$ 个低层步更新一次。Subgoal-Augmented HRM 额外引入 manager period $P$。在 $t_k=kP$ 时刻，高层状态通过 $W_g$ 输出 $\tilde g_k=W_g z^H_{t_k}$，再归一化成 $g_k=\tilde g_k/(\|\tilde g_k\|_2+\epsilon)$。这个 $g_k$ 在接下来 $P$ 个低层更新中保持不变。
 
-低层更新时，子目标通过投影 $V_L$ 加到输入或低层更新中，形成持续的 steering term。为了避免子目标只是一个无约束 bias，论文还在每个 commitment window 上计算低层状态净位移 $\Delta z^L_k=z^L_{t_k+P}-z^L_{t_k}$ 与 $g_k$ 的 cosine alignment loss。
+低层更新时，子目标通过投影 $V_L$ 加到输入或低层更新中，形成持续的 steering term。为了避免子目标只是一个无约束 bias，论文还在每个 commitment window 上计算低层状态净位移 $\Delta z^L_k=z^L_{t_k+P}-z^L_{t_k}$ 与 $g_k$ 的 cosine alignment loss。整条流水线可概括为：高层状态周期性发出方向子目标 → 在 $P$ 步窗口内持续注入偏置 worker → 用窗口对齐损失约束 worker 真朝该方向前进 → 窗口结束后重新规划。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["编码输入<br/>HRM backbone：高层状态(慢) + 低层状态(快)"]
+    IN --> EMIT["方向式子目标<br/>每 P 步由高层经 W_g 投影、归一化出方向 g"]
+    EMIT --> INJ["持久期 P 内注入<br/>g 经 V_L 偏置 worker 更新，P 步内保持不变"]
+    INJ --> ALIGN["窗口级 cosine alignment loss<br/>低层净位移 Δz 与方向 g 对齐"]
+    ALIGN -->|"P 步窗口结束后重新规划"| EMIT
+    ALIGN --> LOSS["总损失 = HRM 损失 + λ·Σ 对齐损失"]
+    LOSS --> OUT["输出预测"]
+```
 
 ### 关键设计
-1. **方向式子目标而非目标状态**:
+**1. 方向式子目标而非目标状态**：要给 latent reasoner 一个中期意图信号，最直接的做法是让 manager 指定一个该到达的绝对 hidden state，但 latent hidden dynamics 本身非平稳，worker 状态一直在漂移，硬追一个固定终点会很脆弱。论文改成输出单位方向：manager 在 $t_k$ 时刻把高层状态经 $W_g$ 投影、再 L2 归一化成 $g_k=\tilde g_k/(\|\tilde g_k\|_2+\epsilon)$，表达“接下来往哪里走”而不是“必须走到哪”。还可选一个 commitment gate $\alpha_k=\sigma(w_\alpha^\top z^H_{t_k})\in(0,1)$，在高层状态不确定时软化承诺强度。方向是让 manager 承诺中期意图、又不过度规定执行细节的最小结构，因此能提供规划先验而不锁死 worker。
 
-	- 功能：给 latent reasoner 一个中期意图信号，同时避免规定必须到达某个绝对 hidden state。
-	- 核心思路：manager 输出的是单位方向 $g_k$，表达“接下来往哪里走”，而不是具体终点。可选 commitment gate $\alpha_k=\sigma(w_\alpha^\top z^H_{t_k})$ 调节子目标强度，让高层在不确定时能软化承诺。
-	- 设计动机：latent hidden dynamics 本身非平稳，强制追踪绝对 target state 很脆弱；方向信号更像规划先验，能提供结构又不完全锁死 worker。
+**2. 持久期 $P$ 控制稳定性-适应性折中**：架构本身并不规定一个 latent 意图该持续多久——这正是本文要回答的核心 knob。论文让发出的方向在 $t\in[t_k,t_k+P)$ 这 $P$ 个低层 micro-step 内保持不变（$g(t)=g_k$），并经学习投影 $V_L$ 作为加性 bias 持续注入低层更新：$z^L_{t+1}=f_L(z^L_t,z^H_t,\tilde x_t+\alpha(t)V_Lg(t);\theta_L)$（可选地也经 $V_H$ 注入高层更新）。$P=1$ 表示每步重规划，$P$ 越大承诺越久。核心假设是 compositional latent computation 需要至少几个连续更新步围绕同一意图累积；没有持久性，manager-worker 架构就只有形式、没有功能——这一点被“$P=1$ 反而比无子目标 baseline 还差”的负结果直接验证。
 
-2. **持久期 $P$ 控制稳定性-适应性折中**:
-
-	- 功能：显式控制子目标在多少个低层 micro-steps 内保持不变。
-	- 核心思路：当 $t\in[t_k,t_k+P)$ 时，active goal 一直是 $g_k$。低层更新形如 $z^L_{t+1}=f_L(z^L_t,z^H_t,\tilde x_t+\alpha(t)V_Lg(t);\theta_L)$。$P=1$ 表示每步重规划，较大的 $P$ 表示更长承诺。
-	- 设计动机：作者的核心假设是 compositional latent computation 需要至少几个连续更新步围绕同一意图累积；没有持久性，manager-worker 架构只有形式，没有功能。
-
-3. **窗口级 cosine alignment loss**:
-
-	- 功能：让 worker 的一段净位移与子目标方向一致，而不是只在每一步被动接收 bias。
-	- 核心思路：每个窗口使用 $\mathcal{L}_{align}^{(k)}=1-\cos(\Delta z^L_k,g_k)$，总损失为 $\mathcal{L}=\mathcal{L}_{HRM}+\lambda\sum_k\mathcal{L}_{align}^{(k)}$。由于 HRM 在 segment 之间 detach state，alignment loss 也只在 segment 内反传。
-	- 设计动机：这把子目标从“附加输入特征”变成“内部几何先验”。但 $\lambda$ 不能太大，否则方向约束会和任务梯度竞争。
+**3. 窗口级 cosine alignment loss**：持续注入只是在每一步给 worker 加 bias，并不保证 worker 的整段轨迹真的朝子目标方向前进。论文为每个承诺窗口取净位移 $\Delta z^L_k=z^L_{t_k+P}-z^L_{t_k}$，用 cosine 对齐损失 $\mathcal{L}_{align}^{(k)}=1-\cos(\Delta z^L_k,g_k)$ 奖励位移与方向一致，总损失 $\mathcal{L}=\mathcal{L}_{HRM}+\lambda\sum_k\mathcal{L}_{align}^{(k)}$（由于 HRM 在 segment 间 detach state，对齐损失也只在 segment 内反传）。这把子目标从“附加输入特征”升级为约束 worker 几何走向的“内部先验”。但权重 $\lambda$ 不能太大，否则方向约束会与任务梯度竞争——实验中 $\lambda\approx0.05$ 像轻量先验最优，$\lambda\ge0.20$ 明显有害。
 
 ### 损失函数 / 训练策略
 训练目标是 HRM 原始任务损失与 ACT halting loss，加上子目标窗口的 alignment loss。实验固定 HRM backbone：hidden size 512，4 层 high-level transformer、4 层 low-level transformer，8 heads，最大 16 个内部 steps，并用 AdamATan2、base learning rate $10^{-4}$、weight decay 0.1 训练。

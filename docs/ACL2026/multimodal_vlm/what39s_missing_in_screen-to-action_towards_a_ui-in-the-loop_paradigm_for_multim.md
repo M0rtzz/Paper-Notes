@@ -43,7 +43,29 @@ tags:
 
 ### 整体框架
 
-UILoop 包含两个主要阶段：(1) 数据构建阶段——设计合成管道构建 UI Comprehension-Bench（26K 样本），增强现有 GUI 数据集使其包含关键 UI 元素的定位、语义描述和使用信息；(2) 训练阶段——提出 UI 元素驱动的强化微调（RFT），通过三种专门的奖励函数训练模型掌握 UI 元素。
+UILoop 包含两个主要阶段：(1) 数据构建阶段——设计合成管道构建 UI Comprehension-Bench（26K 样本），增强现有 GUI 数据集使其包含关键 UI 元素的定位、语义描述和使用信息；(2) 训练阶段——提出 UI 元素驱动的强化微调（RFT），通过三种专门的奖励函数训练模型掌握 UI 元素。在此基础上，UI Comprehension 评估任务把推理的中间环节也变成可打分的诊断指标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["UI Comprehension-Bench：补齐关键 UI 元素标注"]
+        direction TB
+        A["收集 GUI 数据集<br/>原始格式 (I, S, a)"] --> B["OmniParser V2 标出全部 UI 元素"]
+        B --> C["GPT-4o 筛关键元素 U*（不到 4%）<br/>并补写语义功能 / 用法"]
+        C --> D["扩展数据格式<br/>(I, S, U*, a)"]
+    end
+    D --> E["Qwen2.5-VL 基座 + GRPO"]
+    subgraph RFT["三维奖励驱动的强化微调"]
+        direction TB
+        E --> F["Location Reward<br/>定位坐标距离"]
+        E --> G["Lingualization Reward<br/>语义描述相似度"]
+        E --> H["Leverage Reward<br/>元素利用是否正确"]
+        F --> I["门控总奖励<br/>先 loc·lin 过阈值 η<br/>再计入 lev"]
+        G --> I
+        H --> I
+    end
+    I --> J["UI Comprehension 评估任务<br/>Locate × Lingualize × Leverage"]
+```
 
 ### 关键设计
 

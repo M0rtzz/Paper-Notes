@@ -42,6 +42,17 @@ A-TPT 用一种针对对抗扰动加固的 Gradient Attention Rollout 提取 CLI
 ### 整体框架
 A-TPT 想解决的是"零样本 CLIP 在对抗扰动下崩盘，而现有测试时方法又会把细粒度判别区揉烂"的两难。它的破局点是：不去对抗被污染的特征空间，而是先在图像空间拿稳一张"哪里是判别区"的注意力图，再让增强、集成、prompt 优化三步全部围着它转。整套流程建在冻结的 CLIP（ViT-B/16、ViT-B/32、RN50）上，对单张测试样本 $x_0$ 依次走三步：先用一版对扰动加固的 Gradient Attention Rollout 从视觉编码器算出 CLS-to-patch 注意力图 $\mathbf{A}(x)\in\mathbb{R}^{H\times W}$ 作为"语义锚点"；再以这张图为引导生成空间非均匀的多视图集合——判别区保护原图、背景区放开 AugMix 多样性；最后按各视图注意力的 Total Variation 算可靠性权重 $w_i$，加权后既喂给 prompt tuning 的熵损失、也喂给最终预测的 logits 聚合。文本端只对可学 prompt $P$ 跑 1 步 Adam（lr=0.005），两个编码器全程冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["测试样本 x₀<br/>冻结 CLIP 视觉编码器"] --> B["注意力锚点<br/>Token-grad 加固 GAR → 注意力图 A(x)"]
+    B --> C["注意力引导增强<br/>判别区保原图 / 背景区放飞 AugMix"]
+    C --> D["多视图集合 + 低熵筛选"]
+    D --> E["TV 可靠性集成<br/>注意力空间平滑度 → 权重 wᵢ"]
+    E -->|加权熵损失| F["Prompt tuning<br/>1 步 Adam 更新 prompt P"]
+    F --> G["加权 logits 聚合<br/>最终预测 ĉ"]
+```
+
 ### 关键设计
 
 **1. Token-gradient 加固的注意力 rollout：把锚点本身做得对扰动不敏感**

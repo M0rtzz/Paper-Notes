@@ -45,6 +45,20 @@ tags:
 
 VLAForge基于CLIP构建，包含两个核心组件：ForgePerceiver和Identity-Aware VLA Scoring。ForgePerceiver作为VLM的独立视觉伪造学习器，生成伪造感知mask来调制VLM的class token（全局判别），并输出伪造定位图（局部线索）。Identity-Aware VLA Scoring通过身份先验增强文本提示，计算patch级VLA注意力图，与伪造定位图融合产生局部真实性评分。最终真实性得分由全局和局部两个分支加权组合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["人脸视频帧"] --> CLIP["CLIP 视觉编码器<br/>视觉 token V + class token"]
+    CLIP --> FP["ForgePerceiver 伪造感知 mask<br/>独立 ViT + query Q 学 H 组 mask"]
+    FP -->|注意力偏置回注 VLM| GLOBAL["调制 class token<br/>全局判别得分 s_g"]
+    FP --> LOC["伪造定位图 M_loc<br/>卷积聚合 + MSE 对齐 GT mask"]
+    CLIP -->|class token 作身份占位注入提示| VLA["Identity-Aware VLA Scoring<br/>real/fake 文本特征 × patch token"]
+    LOC --> FUSE["局部 VLA 评分 s_VLA<br/>VLA 注意力图 ⊙ 定位图"]
+    VLA --> FUSE
+    GLOBAL --> OUT["真伪得分<br/>s = α·s_g + (1−α)·s_VLA"]
+    FUSE --> OUT
+```
+
 ### 关键设计
 
 **1. ForgePerceiver 的伪造感知 mask：让 VLM 的 class token「看见」它原本不敏感的伪影**

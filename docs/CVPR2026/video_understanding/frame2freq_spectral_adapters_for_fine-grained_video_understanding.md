@@ -40,7 +40,30 @@ tags:
 
 ### 整体框架
 
-Frame2Freq 想解决的是：图像预训练的 VFM 迁到视频时，现有时域适配器只盯着静态线索和极快闪烁，恰好漏掉了区分细粒度动作的中频运动信号。它的做法是在冻结 ViT 骨干（CLIP/DINOv2）每个 Transformer 块后插一个轻量适配器：输入 $T$ 帧经 ViT 得到 patch 嵌入 $X \in \mathbb{R}^{T \times N \times D}$，适配器走 $\text{FC}_{down} \to \text{频域/时域分支} \to \text{FC}_{up}$ 的瓶颈结构，把时序信息搬到频谱空间做滤波，再残差加回骨干输出，最后逐帧 CLS 聚合接线性分类头。论文给出两种变体，分别对应单尺度和多尺度的运动数据集。
+Frame2Freq 想解决的是：图像预训练的 VFM 迁到视频时，现有时域适配器只盯着静态线索和极快闪烁，恰好漏掉了区分细粒度动作的中频运动信号。它的做法是在冻结 ViT 骨干（CLIP/DINOv2）每个 Transformer 块后插一个轻量适配器：输入 $T$ 帧经 ViT 得到 patch 嵌入 $X \in \mathbb{R}^{T \times N \times D}$，适配器走 $\text{FC}_{down} \to \text{频域/时域分支} \to \text{FC}_{up}$ 的瓶颈结构，把时序信息搬到频谱空间做滤波，再残差加回骨干输出，最后逐帧 CLS 聚合接线性分类头。频域/时域分支有两种实现变体——Frame2Freq-ST 与 Frame2Freq-MS，分别对应单尺度和多尺度的运动数据集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 T 帧视频"] --> B["冻结 ViT 块 CLIP/DINOv2<br/>patch 嵌入 X"]
+    B --> C["FC_down 降维<br/>（瓶颈入口）"]
+    C -->|"动作尺度单一<br/>Drive&Act / IKEA-ASM"| D1
+    C -->|"运动频率跨度大<br/>Diving48 / SSv2"| E1
+    subgraph ST["Frame2Freq-ST：短时频谱适配器"]
+        direction TB
+        D1["STFT 时频变换<br/>Hann 窗"] --> D2["Conv_temp + Conv_freq<br/>沿时间/频率轴精炼"] --> D3["iSTFT 回时域"]
+    end
+    subgraph MS["Frame2Freq-MS：多尺度频谱适配器"]
+        direction TB
+        E1["通道对半拆<br/>频域分支 / 时域分支"] --> E2["频域：K 窗口 [T,T/2,T/4] FFT<br/>共享 Conv_freq → 均值 → iFFT"]
+        E1 --> E3["时域：3×1×1 Conv_temp<br/>补短程连续性"]
+        E2 --> E4["拼接两分支"]
+        E3 --> E4
+    end
+    D3 --> F["FC_up 升维<br/>残差加回骨干输出"]
+    E4 --> F
+    F --> G["逐帧 CLS 聚合<br/>→ 线性分类头"]
+```
 
 ### 关键设计
 

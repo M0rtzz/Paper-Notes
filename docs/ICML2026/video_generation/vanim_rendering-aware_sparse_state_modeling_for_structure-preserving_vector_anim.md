@@ -47,6 +47,22 @@ VAnim 在数据、表示、推理、训练四个层面都做了配合 SSU 的重
 
 数据侧，作者从 Flaticon 抓 Lottie 文件，经 Node.js 渲染脚本生成 ID 锚定的 SVG DOM 序列，做坐标规范化、绝对→相对坐标、清洗后得到 SVGAnim-134k；用 Doubao-Seed-1.6 做双流标注：用户中心 prompt $P$ + Structure-Bound CoT $C$（含「Entity Identification: blue circle → ID 05」和「Visual Dynamic Planning: ID 05 scale up/down」两段式），并用严格 ID 一致性过滤保证 CoT 引用的 ID 都真实存在。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据构建：SVGAnim-134k"]
+        direction TB
+        D1["Flaticon Lottie → Node.js 渲染<br/>共享 DOM 的 SVG 帧序列（全局 ID 锚定）"] --> D2["SSU 提取 + 双流标注<br/>prompt P + Structure-Bound CoT（ID 一致性过滤）"]
+    end
+    IN["输入 x=(I₀ 渲染图, S₀ 初始 SVG, P 指令)<br/>视觉 token 与 SVG/文本交错进 MLLM"] --> DIR
+    DIR["Identification-First 运动规划（CoT）<br/>Director：实体→ID + 基于 ID 的运动逻辑"] --> ANI
+    ANI["稀疏状态更新 SSU<br/>Animator：仅生成变化属性差分 Δt"] --> OUT["输出 D={Δt}<br/>持久 DOM 上的稀疏 diff 序列"]
+    DATA -->|"SVGAnim-SFT"| SFT["Stage I 结构化 SFT<br/>监督 CoT + diff 正确性"]
+    DATA -->|"SVGAnim-RL（高复杂度子集）"| RL["Rendering-Aware RL（GRPO）<br/>采 G=8 → Playwright 渲视频<br/>→ PE-Core → 混合奖励 R"]
+    SFT --> DIR
+    RL -->|"策略更新：敢动 d 属性做非刚性形变"| DIR
+```
+
 ### 关键设计
 
 **1. 稀疏状态更新（SSU）表示：把"逐帧重写整树"换成"初始 SVG + 属性差分流"**

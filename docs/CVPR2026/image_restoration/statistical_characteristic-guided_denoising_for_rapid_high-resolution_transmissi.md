@@ -44,6 +44,24 @@ tags:
 
 SCGN 针对的是 HRTEM 快速成像的痛点：成核过程在毫秒级变化，只能短曝光抓拍，结果原子位置被强噪声淹没。它的关键观察是——HRTEM 图里原子区域的局部标准差远高于背景，且信号集中在特定频带，这两个统计特征正好可以拿来当去噪的"导航"。网络本身是基于 FFC（Fast Fourier Convolution）的残差结构，整体走全局残差 $\hat{I}_{clean} = I_{noisy} + \mathcal{F}(I_{noisy})$，由 head conv（1→64 通道）→ 8 个 FFCResnetBlock → tail conv（64→1 通道）构成；每个 FFCResnetBlock 把特征劈成空间分支（32 通道）和频率分支（32 通道）分别处理再拼回。空间和频率两个域各自挂一套统计特征引导的加权，外加一套 HRTEM 专用的噪声标定来造训练数据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["含噪 HRTEM 图<br/>毫秒级短曝光"] --> B["head conv（1→64）"]
+    B --> C["8× FFCResnetBlock<br/>特征劈成空间/频率两分支"]
+    subgraph BLK["单个 FFCResnetBlock"]
+        direction TB
+        D["空间分支（32 通道）"] --> D2["空间偏差引导加权<br/>WindowStd 局部标准差→Sigmoid 权重"]
+        E["频率分支（32 通道）"] --> E2["频带引导加权<br/>rFFT→通道注意力→IFFT"]
+        D2 --> M["两分支拼回融合"]
+        E2 --> M
+    end
+    C --> BLK
+    BLK --> F["tail conv（64→1）+ 全局残差"]
+    F --> G["去噪 HRTEM 图<br/>清晰原子位置"]
+    H["HRTEM 噪声标定与数据集<br/>均值-方差标定 + 无序结构合成"] -. 提供训练数据 .-> C
+```
+
 ### 关键设计
 
 **1. 空间偏差引导加权：用窗口标准差区分原子区和背景区**

@@ -38,7 +38,22 @@ tags:
 
 ### 整体框架
 
-这篇论文要解决的是一个很具体的痛点：MLLM 在视频时序定位上微调后，域内（ID）很强但域外（OOD）大幅退化，根因是模型学会了走数据集特有的捷径而不再真正看视觉内容。SlotVTG 的整体思路是给视觉信息的流动加一道"对象级瓶颈"——视频帧先经冻结视觉编码器提取 token 并投影到 LLM 解码器空间，在早期解码器层插入一个轻量 Slot Adapter，把密集视觉 token 压成少数几个抽象 slot 再重建回原序列；重建后的 token 才进入更深的层（用 LoRA 微调）做时间推理和答案生成。文本 token 全程绕过 Slot Adapter，只有视觉信息被强制经过这道分解。这样模型想 grounding 就只能依赖经过实体分解、域特定噪声已被滤掉的表示。
+这篇论文要解决的是一个很具体的痛点：MLLM 在视频时序定位上微调后，域内（ID）很强但域外（OOD）大幅退化，根因是模型学会了走数据集特有的捷径而不再真正看视觉内容。SlotVTG 的整体思路是给视觉信息的流动加一道"对象级瓶颈"——视频帧先经冻结视觉编码器提取 token 并投影到 LLM 解码器空间，在早期解码器层插入一个轻量 Slot Adapter，把密集视觉 token 压成少数几个抽象 slot 再重建回原序列；重建后的 token 才进入更深的层（用 LoRA 微调）做时间推理和答案生成。文本 token 全程绕过 Slot Adapter，只有视觉信息被强制经过这道分解。重建阶段还借冻结 DINOv2 的物体先验，用 Slot Alignment Loss 把 slot 的分组对齐到真实物体边界。这样模型想 grounding 就只能依赖经过实体分解、域特定噪声已被滤掉的表示。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧 → 冻结视觉编码器<br/>提 token + 投影到 LLM 空间"] --> C["视觉 token"]
+    subgraph EARLY["早期层插入（解码器 layer 1-7）"]
+        direction TB
+        C --> D["Slot Adapter<br/>降维 → Slot Attention 竞争绑定（3 轮）<br/>→ 交叉注意力重建 → 升维"]
+    end
+    DINO["冻结 DINOv2 特征"] --> SA["Slot Alignment Loss<br/>对齐 slot 相似度 ↔ DINOv2 相似度结构"]
+    D -. slot 注意力权重 .-> SA
+    D --> H["深层（LoRA 微调）<br/>时间推理 + 答案生成"]
+    T["文本 token"] -. 绕过 Slot Adapter .-> H
+    H --> O["起止时间戳"]
+```
 
 ### 关键设计
 

@@ -44,6 +44,17 @@ tags:
 
 这篇论文想回答的不是「怎么把 NVS 渲染做得更准」，而是「在固定计算预算下，NVS Transformer 该怎么设计和训练才最划算」——这是 3D 视觉里此前空白的缩放定律问题。它的载体是一个单向 encoder-decoder 架构 SVSM：上下文图像 $C=\{(I_i, g_i, K_i)\}$ 先过 Transformer Encoder 做双向自注意力，得到保留全部 patch token 的场景表示 $z=E[C]$（不压成固定瓶颈），再由 Cross-Attention Decoder 单向地从 $z$ 中并行渲染 $V_T$ 个目标视图 $\tilde{I}=D[z, g_T, K_T]$。一句话概括就是「编码一次、解码多次，目标视图之间互不交互但能并行」，而论文真正的贡献是用这套架构把 encoder-decoder 被低估的原因讲清楚，并给出计算最优的训练配方。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上下文图像 C<br/>每张含图像 + 相机位姿 + 内参"] --> B["Transformer Encoder<br/>对所有上下文图像做双向自注意力"]
+    B --> C["无瓶颈场景表示 z<br/>保留全部 patch token，不压成固定瓶颈"]
+    C --> D["Cross-Attention Decoder<br/>各目标视图独立查询 z、共享 z 可并行解码"]
+    D --> E["渲染 V_T 个目标视图"]
+    P["PRoPE 投影旋转位置编码<br/>每层注意力前把 Q/K/V 变换到公共参考系"] -.->|注入每一层| B
+    P -.->|注入每一层| D
+```
+
 ### 关键设计
 
 **1. SVSM 架构：用无瓶颈的场景表示摊销多目标视图渲染**
@@ -54,7 +65,7 @@ LVSM 的 decoder-only 每渲染一张目标视图都要重走全部上下文 tok
 
 NVS 训练惯例是每个场景重建多个目标视图，但「增大 $V_T$」和「增大 $B$」对训练动态到底等不等价，此前无人形式化。本文提出有效批量大小 $B_\text{eff}\equiv B\cdot V_T$（$B$ 为场景数、$V_T$ 为每场景目标视图数），并在 DL3DV（$V_C=8$）和 RE10K（$V_C=2$）上固定 $B_\text{eff}$ 换不同 $(B, V_T)$ 组合：最终 PSNR 只差 $\pm0.1\sim0.2$、损失曲线几乎重合。这个假设一举解释了两件事——对 LVSM，$\chi\propto B\cdot V_T\cdot(V_C+1)=B_\text{eff}\cdot(V_C+1)$，与拆分方式无关，调 $V_T$ 省不了算力；对 SVSM，$\chi\propto B\cdot(V_C+V_T)=B_\text{eff}+B\cdot V_C$，于是减小 $B$、增大 $V_T$ 就能在保持 $B_\text{eff}$（即保持性能）的同时压低总 FLOPs，这正是 enc-dec 效率优势的来源。也由此点破：LVSM 原文里 enc-dec 输给 decoder-only，是因为在等迭代次数而非等 FLOPs 下对比。
 
-**3. 立体 stereo 缩放定律：同性能只需 1/3 计算**
+**3. 立体（stereo）缩放定律：同性能只需 1/3 计算**
 
 在 $V_C=2$ 的 RE10K 上（$V_T=6$、batch size=256、patch size=16），扫 7M~300M 参数 × 3-4 种训练样本数，总计算跨 $10^3$ 量级（100 petaflops 到 100 exaflops），并用 $1/\sqrt{L}$ 残差缩放（depth-μP）保证不同深度模型公平对比。结果在 log-log 图上两族 Pareto 前沿斜率相同，但 SVSM 整体左移 $3\times$——同性能只要 1/3 FLOPs。按 Chinchilla 方式对每个预算 $\chi$ 拟合 $N_\text{opt}\propto\chi^a$、$D_\text{opt}\propto\chi^b$，SVSM 得 $a=0.52, b=0.47$（$a\approx b$，与 Chinchilla 一致，预算翻倍应 $\sqrt{k}$ 给模型、$\sqrt{k}$ 给数据），LVSM 则 $a=0.65, b=0.33$ 更偏模型侧。最终 SVSM-416M（Pareto 最优）和 SVSM-740M（迭代匹配）在约 0.77 zflops（LVSM 一半）下双双超过 LVSM-171M。
 

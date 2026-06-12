@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 ExCyTIn-Bench 把"网络威胁调查"做成一个可交互、可判分的闭环，由数据、出题、环境三层拼起来。数据层从微软用于安全演示的虚构 Azure 租户 "Alpine Ski House" 采集 57 张 Sentinel 日志表（EmailEvents、SecurityAlert、SecurityIncident 等），里面注入了 8 条独立的多阶段攻击链（Manatee Tempest 勒索、BEC 账号接管、SAP 财务篡改等），每条都有真实历史攻击的剧本依据，alert 数从 7 到 7739 不等、时间跨度 2 小时到 5 天。出题层在每条攻击链上用 alert-entity 二部图自动生成 7542 道题（589 道作测试集）。环境层把全部日志灌进一个只读 MySQL Docker，Agent 拿到一道带 seed alert 和起始实体上下文的安全问题后，以 ReAct 循环反复"提交 SQL 查询 → 读表格反馈 → 推理"，直到给出 final answer 字符串，再用 ground-truth 实体匹配、按是否摸到解路径上的中间节点算 partial reward。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Azure 租户日志<br/>57 张 Sentinel 表 + 8 条真实多阶段攻击链"] --> B
+    subgraph QG["二部图建图与多跳问题模板"]
+        direction TB
+        B["每条 incident 建 alert-entity 二部图 G=(U,V,E)"] --> C["GetFarthestEntities<br/>选起讫 alert + 最远实体当背景/答案"]
+        C --> D["LLM 写多跳题<br/>7542 道（589 测试），最短路径=标准解"]
+    end
+    D --> E
+    subgraph ENV["SQL Docker 沙盒 + ReAct 交互环境"]
+        direction TB
+        E["日志灌入只读 MySQL Docker"] --> F["Agent ReAct 循环<br/>提交 SQL→读表反馈→推理→submit(answer)"]
+    end
+    F --> G["基于解路径的渐进式 reward<br/>沿最短解路径指数衰减 γ=0.4"]
+```
+
 ### 关键设计
 
 **1. 二部图建图与多跳问题模板：把"出题"从凭经验变成图上采样**

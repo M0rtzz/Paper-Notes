@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-策略骨干 $\pi_\theta$ 全程冻结。输入是一段语言指令 $I$ 加 360° 全景观察，输出是 action 序列。IDEA 在 visual token 序列前 prepend 一组可学习 soft prompt $P = \{p_i\}_{i=1}^{L}$，把 prompt 后的 token 送进原 fusion transformer 的 $M$ 层得到融合表示 $\mathcal{Z}_t^{(\ell)}$。每一步导航时，IDEA 先用历史资产库 $\mathcal{M}$ 构造一个组合 prompt $P_b(w)$ 作为初始化，再根据"加 prompt 后是否显著缩小与源域统计距离"决定是直接用这个 bridge 推理，还是把它当作起点继续优化成新资产存回库里。
+策略骨干 $\pi_\theta$ 全程冻结。输入是一段语言指令 $I$ 加 360° 全景观察，输出是 action 序列。IDEA 在 visual token 序列前 prepend 一组可学习 soft prompt $P = \{p_i\}_{i=1}^{L}$，把 prompt 后的 token 送进原 fusion transformer 的 $M$ 层得到融合表示 $\mathcal{Z}_t^{(\ell)}$。每一步导航时，IDEA 先用历史资产库 $\mathcal{M}$ 构造一个组合 prompt $P_b(w)$ 作为初始化，再根据"加 prompt 后是否显著缩小与源域统计距离"决定是直接用这个 bridge 推理，还是把它当作起点继续优化成新资产存回库里。三大设计串成一个互补回环：资产库越长越丰富，凸包桥梁就有越多基底可组合；桥梁给出的好初始化又反过来加速下一次资产优化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：语言指令 + 360° 全景观察"] --> B["冻结骨干 π_θ<br/>双编码器抽 token，注入 soft prompt P"]
+    B --> C["M 层 fusion transformer<br/>得融合表示 Z_t"]
+    C --> D["Fisher 引导的多层 soft prompt 对齐<br/>按层敏感度加权优化 prompt"]
+    D --> E["Triplet 结构化资产库<br/>封装 {P*, Γ, u}，满则近邻合并入库"]
+    E --> F["Wasserstein 凸包投影桥梁<br/>KKT 闭式解组合出 P_b(w)"]
+    F -->|"d_p < τ·d_0：已覆盖域"| G["直接用 P_b(w) 推理 → 输出 action"]
+    F -->|"否则：新域，以 P_b(w) 为起点再对齐"| D
+```
 
 ### 关键设计
 

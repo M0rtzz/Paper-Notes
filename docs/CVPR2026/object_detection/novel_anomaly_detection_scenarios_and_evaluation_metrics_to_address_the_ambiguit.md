@@ -47,6 +47,32 @@ tags:
 
 这里先把贯穿全篇的度量讲清楚：标准 AUROC 在全部测试样本上算，无法看出模型在"被重定义的那一小撮样本"上表现如何。**S-AUROC（Specification-AUROC）就是只在受规格变更影响的那部分样本上计算的 AUROC**——A2N 里是被改判为正常的小异常，N2A 里是被改判为异常的伪异常样本。把评估范围收窄到这些边界样本，S-AUROC 才能真正反映模型对定义切换的适应力，而不被大量没争议的样本稀释掉。
 
+下图把这套"两层贡献"画出来：评估层用 A2N、N2A 两个场景模拟规格变更的两个方向，统一汇到 S-AUROC 上度量；方法层用 RePaste 在训练时迭代地把高分区域粘回，逼模型把这些边界区域吸收进正常分布。两层最终都落在"模型对定义切换的适应力"这一指标上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    P["规格变更问题<br/>正常定义随设备/标准升级而漂移"]
+    subgraph EVAL["评估层：两个场景 + S-AUROC 指标"]
+        direction TB
+        A["A2N 场景<br/>小异常被改判为正常"]
+        B["N2A 场景<br/>伪异常被改判为异常"]
+        A --> S["S-AUROC<br/>只在受重定义样本上算 AUROC"]
+        B --> S
+    end
+    subgraph METHOD["方法层：RePaste 训练增强（挂在 GLASS 上）"]
+        direction TB
+        R1["当前图 x_α 过模型 → 异常图 A_α"]
+        R1 --> R2["阈值 τ=0.9 二值化 → mask M"]
+        R2 --> R3["Mixup 融合把高分区域粘到下一张图 x_α+1"]
+        R3 -->|下一训练迭代| R1
+    end
+    P --> EVAL
+    P --> METHOD
+    METHOD --> S
+    S --> O["量化适应力：S-AUROC 达 SOTA、零推理开销"]
+```
+
 ### 关键设计
 
 **1. Anomaly-to-Normal 场景（A2N）：模拟"规格放宽、原来的异常现在算合格"**

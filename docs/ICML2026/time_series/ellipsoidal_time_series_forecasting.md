@@ -43,17 +43,27 @@ Fern 把长期时间序列预测重新表述为「从固定高斯源到数据相
 ### 整体框架
 Fern 的 pipeline 是一个「双向耦合编码 + SPD 投影」的小模型：输入是长度 $L$（如 70）的单变量时间序列窗口 $x$，输出是长度 $n$（如 24）的未来 patch 预测，整个长 horizon 通过 patch 切分并行解码。中间状态包括一个低维高斯潜变量 $z \sim \mathcal{N}(\mu(x), \Sigma(x))$ 和一个固定噪声源 $y_0 \sim \mathcal{N}(0, I)$；最终通过仿射映射 $y^* = U^\top \Lambda U (y_0 + t_y)$ 把噪声「揉」成目标椭球。
 
-架构遵循 channel-independent 原则：每个通道单独走，依靠 Takens 嵌入定理保证单通道 time-delay embedding 在拓扑上已经能重构整个吸引子，因此根本不需要显式 cross-channel 混合。
+架构遵循 channel-independent 原则：每个通道单独走，依靠 Takens 嵌入定理保证单通道 time-delay embedding 在拓扑上已经能重构整个吸引子，因此根本不需要显式 cross-channel 混合。整条数据流可以概括为「编码器把上下文压成各向异性高斯 → SPD 谱投影把固定噪声揉成目标椭球 → patch 切分并行解码」三步：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入窗口 x（长度 L=70）+ 潜变量 z₀ ∼ N(0, I)"]
+    X --> ENC["双向耦合编码器<br/>5 层 z↔x 仿射互更新，把 z 揉成各向异性椭球"]
+    ENC --> SPD["SPD Jacobian 谱参数化<br/>OT 头出 Λ/U/t_y，投影 y*=Uᵀ Λ U(y₀+t_y)"]
+    SPD --> PATCH["Patch-wise 并行解码<br/>horizon 切 n_p 个 patch，各自独立做 SPD 传输"]
+    PATCH --> OUT["未来预测（逐 patch 椭球链，长度 n）"]
+```
 
 ### 关键设计
 
-**1. SPD Jacobian 的谱参数化：直接把传输映射写成谱因子**
+**1. 双向耦合编码器：用潜变量把上下文压成各向异性椭球，避免梯度爆炸**
+
+要把后面的 SPD 投影接上，得先有一个能概括窗口几何信息的低维高斯。如果直接用 $s(x) \odot x$ 这种公式去捏，训练会梯度爆炸。受 ANF 启发，Fern 引入潜变量 $z$ 和 5 层互相 affine 更新的耦合块：每层用一个 head 同时生成 4 个向量 $(s^i_x, t^i_x, s^i_z, t^i_z)$，交替迭代 $z^{i+1} = s^i_z \odot z^i + t^i_z$ 和 $x^{i+1} = s^i_x \odot x^i + t^i_x$，让初始各向同性的 $z \sim \mathcal{N}(0, I)$ 被逐步捏成各向异性的椭球。潜变量这条中间通道既稳定了训练，又让 Takens 嵌入承载的吸引子信息以「微分同胚」方式被压进低维高斯，正好衔接后面的 SPD 投影。
+
+**2. SPD Jacobian 的谱参数化：直接把传输映射写成谱因子**
 
 传统「直接建模 Jacobian」的路线在 $n$ 维 horizon 下要存 $n^2$ 个分量、特征分解还要 $O(n^3)$，根本跑不动。Fern 的破解点来自 Brenier 定理——既然目标被限制成高斯，高斯之间的 W2 最优传输必为仿射 SPD 映射，那 Jacobian 一定落在 SPD 锥里，于是不必再搜任意矩阵再去求特征分解，直接以谱因子作参数即可。具体把映射写成 $A = U^\top \Lambda U$，其中 $\Lambda$ 是对角的非负特征值向量、$U$ 是 $R$ 个 Householder 反射 $I - 2vv^\top$ 串成的正交矩阵。$\Lambda$ 的成本是 $O(n)$、$R$ 个反射向量的成本是 $O(Rn)$，整体 $O(Rn)$，$R$ 取 $n$ 给全容量、取小值给压缩容量。这一改不仅消掉了 $O(n^3)$ 的特征分解，还让特征值天然变成「跨 patch 可比的拉伸幅度信号」，可以直接拿来做局部稳定性诊断。
-
-**2. 双向耦合编码器：用潜变量把上下文压成各向异性椭球，避免梯度爆炸**
-
-要把 SPD 投影接上，得先有一个能概括窗口几何信息的低维高斯。如果直接用 $s(x) \odot x$ 这种公式去捏，训练会梯度爆炸。受 ANF 启发，Fern 引入潜变量 $z$ 和 5 层互相 affine 更新的耦合块：每层用一个 head 同时生成 4 个向量 $(s^i_x, t^i_x, s^i_z, t^i_z)$，交替迭代 $z^{i+1} = s^i_z \odot z^i + t^i_z$ 和 $x^{i+1} = s^i_x \odot x^i + t^i_x$，让初始各向同性的 $z \sim \mathcal{N}(0, I)$ 被逐步捏成各向异性的椭球。潜变量这条中间通道既稳定了训练，又让 Takens 嵌入承载的吸引子信息以「微分同胚」方式被压进低维高斯，正好衔接后面的 SPD 投影。
 
 **3. Patch-wise 并行解码：把维数诅咒变成红利**
 

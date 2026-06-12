@@ -42,7 +42,25 @@ ICR 不在 residual stream 注入 shift vector，而是从多域 ICL 中用 PCA 
 
 ### 整体框架
 
-ICR 把"隐式 ICL"从 residual stream 的加性偏移搬到 attention logits 的低秩调制：先离线跨多个域跑显式 ICL、用 PCA 从每层 query/key projection 里提炼一组任务无关的 Principal ICL Directions (PIDs)，再训一个 query-conditioned router 学会"对当前 query 该怎么沿这些方向调制注意力"。三阶段串起来——(1) 跨 $\mathbb{D}$ 个域提 PIDs $U_q^l, U_k^l \in \mathbb{R}^{d\times r}$；(2) 冻结 LLM、只训 router 输出每层方向权重 $\alpha(x)$ 和每 head gate $\gamma(x)$；(3) 推理时对任意新 query 算出 $\alpha,\gamma$，把低秩修正加到 attention logits，全程零检索零再训。
+ICR 把"隐式 ICL"从 residual stream 的加性偏移搬到 attention logits 的低秩调制：先离线跨多个域跑显式 ICL、用 PCA 从每层 query/key projection 里提炼一组任务无关的 Principal ICL Directions (PIDs)，再训一个 query-conditioned router 学会"对当前 query 该怎么沿这些方向调制注意力"。三阶段串起来——(1) 跨 $\mathbb{D}$ 个域提 PIDs $U_q^l, U_k^l \in \mathbb{R}^{d\times r}$；(2) 冻结 LLM、只训 router 输出每层方向权重 $\alpha(x)$ 和每 head gate $\gamma(x)$；(3) 推理时对任意新 query 算出 $\alpha,\gamma$，把低秩修正加到 attention logits，全程零检索零再训。下图把这条 pipeline 的两个核心设计（PIDs 提取、router）与推理调制串起来：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["阶段一 · Principal ICL Directions 提取（离线一次）"]
+        direction TB
+        A["多域 explicit ICL<br/>收集每层末 token 的 Q/K projection"] --> B["逐层 PCA 取 top-r 主方向<br/>得 PIDs U_q, U_k（可存可复用）"]
+    end
+    subgraph S2["阶段二 · Query-conditioned Router 训练（冻结 LLM）"]
+        direction TB
+        C["query x → 冻结 text encoder E(x)"] --> D["两个 2-layer MLP"]
+        D --> E["方向权重 α(x)=tanh ∈[−1,1]<br/>head gate γ(x)=σ ∈[0,1]"]
+        E --> L["多目标 loss 约束<br/>CE + 置信对齐 + 稀疏路由 + gate 正则"]
+    end
+    B --> M
+    E --> M["阶段三 · 推理：低秩修正加到 attention logits<br/>ΔA = γ·(Q U_q) diag(α) (K U_k)ᵀ"]
+    M --> N["标准 forward 解码（零检索 · 零再训）"]
+```
 
 ### 关键设计
 

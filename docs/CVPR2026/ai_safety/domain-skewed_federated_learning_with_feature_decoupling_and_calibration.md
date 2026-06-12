@@ -46,6 +46,19 @@ F²DC 包含两个核心模块和一个聚合策略，嵌入标准 FedAvg 框架
 
 架构上，DFD 和 DFC 在最后一个 backbone 层后插入（以 ResNet-10 为例，在 L4 后），$f^+$ 和 $f^\star$ 相加得到最终特征 $\tilde{f}$ 送入后续层。DFD、DFC 和辅助 MLP $\mathbf{m}$ 仅保留在本地，不参与全局聚合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["局部特征 f<br/>（backbone L4 后）"] --> B["域特征解耦器 DFD<br/>Gumbel Concrete 生成伪二值掩码 M"]
+    B -->|"M ⊙ f"| C["域鲁棒特征 f⁺"]
+    B -->|"(1−M) ⊙ f"| D["域相关特征 f⁻"]
+    D --> E["域特征校正器 DFC<br/>残差修正捞回类别线索 f★"]
+    C --> F["融合特征 f̃ = f⁺ + f★<br/>送入后续层做本地分类"]
+    E --> F
+    F --> G["上传客户端模型至服务端"]
+    G --> H["域感知聚合 DaA<br/>按域差异度调权聚合 → 全局模型"]
+```
+
 ### 关键设计
 
 **1. 域特征解耦器 DFD：先把域上下文分出来，而不是急着处理原始特征**

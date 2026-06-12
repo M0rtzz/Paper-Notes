@@ -44,6 +44,16 @@ tags:
 
 这是一篇 position paper，主张把"数据"当作一个有显式概率定义的形式对象来研究——核心论证是：与其在分布未知的真实语料上反复试错，不如主动构造一个**完全已知**的生成过程当参考系，由它驱动整套"数据探针"方法论。具体 pipeline 分四步：先设计一个带理论解释的生成过程 $\mathcal{P}$ 及可控旋钮（熵率、词表大小、依赖阶数等），从中采样训练/测试序列去训练架构与真实 LLM 同款、仅把 embedding 适配到合成词表的 **probe-LLM**；再让 probe-LLM 在不同解码条件下生成新序列、**送回 $\mathcal{P}$ 计算似然**，对照可计算的诊断指标（平均 NLL、典型集归属）；最后在真实 LLM（text-LLM，如 GPT-2）上做方向一致性的定性对比。整条链路的输入是研究者预先声明的因果假设（claim card），输出是一张转移判定表：内部有效性 IV(h) × 外部有效性 EV(h)，两者皆为 1 才算"转移成功"，IV=1 且 EV=0 则结论只在探针空间局部成立，IV=0 则声明直接被证伪。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["生成过程 P（完全已知、可采样）<br/>可控旋钮：熵率 / 词表大小 / 依赖阶数"] --> TRAIN["采样序列训练 probe-LLM<br/>架构同真实 LLM，embedding 适配合成词表"]
+    TRAIN --> GEN["probe-LLM 在不同解码条件下生成新序列"]
+    GEN --> BACK["送回 P 计算似然<br/>平均 NLL + ε-典型集三段制（过保守/典型/不确定）"]
+    BACK --> TEXT["真实 LLM（text-LLM, 如 GPT-2）方向一致性定性对比"]
+    TEXT --> JUDGE["IV/EV 转移判定（配 claim card + reduction record）<br/>IV∧EV=1 转移成功；IV=1,EV=0 仅 probe-local；IV=0 证伪"]
+```
+
 ### 关键设计（核心论点）
 
 **1. 数据探针应被形式化为带四条准入准则的元组：**

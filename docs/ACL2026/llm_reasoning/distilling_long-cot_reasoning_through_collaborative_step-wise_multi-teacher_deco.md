@@ -51,6 +51,22 @@ $$\tau(x_i)^* = \{(s_1^*, \dots, s_T^*) \mid s_t^* = \arg\max_{s_t \in \{s_t^{(1
 
 每步每个教师条件于共享前缀 $\tau_{<t}$ 提议候选 step $s_t^{(k)}$，由打分函数 $S(\cdot)$ 选出最佳。这是「step-wise autoregressive decoding」——decoding vocabulary 是教师提议集合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x + K 个教师 LRM"] --> B["Prompt-guided step segmentation<br/>用 Step 模板引导多教师输出对齐的 step 边界"]
+    B --> C["当前 beam：B 条部分轨迹前缀"]
+    subgraph LOOP["Beam search step-wise decoding（逐 step 迭代）"]
+        direction TB
+        C --> D["每条前缀 × K 教师各提一个候选 step<br/>得到 B×K 个扩展候选"]
+        D --> E["Predictive perplexity step selection<br/>meta-prover 评：接上后正确答案的可预测性"]
+        E --> F["按分数取 Top-B 成为新 beam"]
+    end
+    F -->|未到终点| C
+    F -->|轨迹完成| G["合成的完整推理轨迹<br/>跨教师 step 拼接，质量超单教师上限"]
+    G --> H["作为一条蒸馏样本 SFT 学生模型"]
+```
+
 ### 关键设计
 
 **1. Prompt-guided step segmentation：用模板把不同 LRM 的 Long-CoT 切到对齐的 step 边界，才谈得上跨模型替换**

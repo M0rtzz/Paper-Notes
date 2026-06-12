@@ -45,6 +45,17 @@ KoCo 将标准预训练目标从 $P(x)$ 转化为条件分布 $P(x|\mathcal{T})$
 
 $$\mathcal{L}_{\text{KoCo}} = -\sum_{i=1}^{n} \log P_\theta(x_i | x_{<i}, \mathcal{T})$$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档（URL + 文本）"] --> B["轻量标注器（Qwen-3-4B / BERT-base）<br/>预测坐标标签"]
+    B --> C["三维知识坐标体系<br/>Source / Content / Stability"]
+    C --> D["拼成自然语言前缀 + 原始文本"]
+    D --> E["条件预训练<br/>mask 前缀，仅对文档 token 算 loss → P(x|𝒯)"]
+    E --> F["条件推理控制<br/>指定可靠坐标前缀引导生成"]
+    F --> G["下游任务 / 事实性提升"]
+```
+
 ### 关键设计
 
 **1. 三维知识坐标体系：用一组与主题无关的客观元描述，给文档在知识空间里定位**

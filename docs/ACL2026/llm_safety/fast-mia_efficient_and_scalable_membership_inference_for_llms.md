@@ -40,7 +40,18 @@ Fast-MIA 把 9 种主流 LLM 成员推理攻击（MIA）方法塞进同一个 vL
 ## 方法详解
 
 ### 整体框架
-Fast-MIA 是个 YAML-config-driven 的评测库，由六块拼起来：(1) Data Loader 吃 CSV/JSON/JSONL/Parquet/HF 五种格式；(2) Model Loader 通过 vLLM 加载 HF 模型或 LoRA adapter（支持量化）；(3) Evaluator 负责按需触发推理 + 维护缓存 + 调方法；(4) MIA Method Registry 用 `BaseMethod` 基类登记每种攻击；(5) YAML Config Interface 把 model / data / methods / sampling 全部声明化；(6) 输出 timestamped 目录，含 metrics、ROC、score 分布、git/cache 元数据。
+Fast-MIA 是个 YAML-config-driven 的评测库，由六块拼起来：(1) Data Loader 吃 CSV/JSON/JSONL/Parquet/HF 五种格式；(2) Model Loader 通过 vLLM 加载 HF 模型或 LoRA adapter（支持量化）；(3) Evaluator 负责按需触发推理 + 维护缓存 + 调方法；(4) MIA Method Registry 用 `BaseMethod` 基类登记每种攻击；(5) YAML Config Interface 把 model / data / methods / sampling 全部声明化；(6) 输出 timestamped 目录，含 metrics、ROC、score 分布、git/cache 元数据。串起来看，Evaluator 先按方法声明的"所需推理类型"查缓存，命中就免推理、未命中才落到 vLLM 后端跑一遍并回填缓存，最后各方法只需把缓存里的 log-prob 聚合成分数。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["YAML 配置 + 数据加载器<br/>CSV/JSON/JSONL/Parquet/HF"] --> B["Evaluator 编排<br/>建「方法 → 所需推理」依赖表"]
+    B --> C{"跨方法 log-prob 缓存<br/>键 (sample_id, prompt_variant, model_id)"}
+    C -->|未命中| D["vLLM 高吞吐批推理后端<br/>PagedAttention + 批量内核"]
+    D -->|回填缓存| C
+    C -->|"命中, n_infer=0"| E["模块化方法注册（BaseMethod）<br/>9 种 MIA 聚合 log-prob 算分"]
+    E --> F["时间戳输出<br/>AUC / ROC / 分布 / git&cache 元数据"]
+```
 
 ### 关键设计
 

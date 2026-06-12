@@ -36,7 +36,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GTR-Turbo 在标准的多轮 PPO 训练循环之上增加了三个关键步骤：(1) 每次 RL 更新后保存 checkpoint 到缓冲区；(2) 使用 TIES 合并方法将缓冲区中的所有 checkpoint 合并为一个教师模型；(3) 用该合并教师指导后续 RL 训练（通过 SFT 损失或 KL 散度）。整个过程不需要任何外部模型调用。
+GTR-Turbo 在标准的多轮 PPO 训练循环之上增加了三个关键步骤：(1) 每次 RL 更新后保存 checkpoint 到缓冲区；(2) 使用 TIES 合并方法将缓冲区中的所有历史 checkpoint 合并为一个**免费教师**模型；(3) 用该合并教师指导后续 RL 训练——指导方式二选一，要么走 **SFT 指导**（GTR-Turbo-SFT），要么走 **KL 散度蒸馏**（GTR-Turbo-KL）。更新后的模型又被存入缓冲区，使合并教师随训练不断变强，形成自我进化的正反馈回环。整个过程不需要任何外部模型调用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VLM 智能体 πθ<br/>多轮 PPO 训练循环"] --> B["每次 RL 更新后<br/>保存 checkpoint 入缓冲区"]
+    subgraph T["TIES 合并生成免费教师"]
+        direction TB
+        B --> C["历史 checkpoint 缓冲区"]
+        C --> D["TIES 合并<br/>修剪 → 符号选举 → 选择性平均<br/>(SMA / EMA 加权)"]
+        D --> E["合并教师 π_merged<br/>稳定强于当前模型"]
+    end
+    E -->|方式一| F["SFT 指导<br/>教师写出参考思维 → 模仿损失"]
+    E -->|方式二| G["KL 散度蒸馏<br/>一次前向取 logits → 反向 KL 当辅助奖励"]
+    F --> H["更新 πθ"]
+    G --> H
+    H -.自我进化回环.-> A
+```
 
 ### 关键设计
 

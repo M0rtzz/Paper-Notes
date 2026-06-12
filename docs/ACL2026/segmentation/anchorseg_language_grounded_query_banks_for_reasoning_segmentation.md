@@ -45,6 +45,21 @@ tags:
 
 输入图像和文本查询，LMM（如LLaVA）自回归生成K个潜在推理token和1个分割锚点token `<SEG>`，构成查询库 $\mathbf{Q} = (\boldsymbol{q}_1, ..., \boldsymbol{q}_K, \boldsymbol{q}_{anc})$。锚点查询与图像token计算相似度产生空间先验，注入视觉特征后，整个查询库送入SAM解码器预测最终掩码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 文本查询"] --> B
+    subgraph B["语言引导查询库构建"]
+        direction TB
+        B1["LMM 自回归生成<br/>K 个潜在推理 token + 1 个 &lt;SEG&gt;"] --> B2["上下文查询（分割什么）<br/>+ 锚点查询（在哪分割）"]
+    end
+    B --> C["语言引导空间条件化<br/>锚点查询·图像 token 内积 → 空间先验 P<br/>逐元素注入视觉特征 f"]
+    C --> D["SAM 解码器<br/>整个查询库条件化"]
+    D --> E["预测掩码"]
+    C -.->|训练约束| T["Token-Mask 循环一致性 TMCC<br/>token 级响应 ↔ 像素级掩码 双向对齐"]
+    E -.->|训练约束| T
+```
+
 ### 关键设计
 
 **1. 语言引导查询库构建：把挤在一个 token 里的"推什么"和"在哪"拆到不同 token 上**

@@ -41,27 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是高分辨率图像 $I$ 和查询 $Q$。VLM 先按 ReAct 风格生成一个种子 crop $\mathbf{d}_{\text{seed}}$,FOVEA 拦截这个命令,围绕它生成候选 crop 池 $\mathcal{D}_{\text{cand}}=\{\mathbf{d}_{\text{seed}}, \mathbf{d}_{\text{small}}, \mathbf{d}_{\text{large}}\}$,对每个候选用 resolvability probe 估一个 utility 分,选最高的作为最终 crop 喂回 VLM 或下游工具 (OCR/Detection)。整个过程**完全训练免费**,只是在推理时多调几次 VLM 当 scorer。
+输入是高分辨率图像 $I$ 和查询 $Q$。VLM 先按 ReAct 风格生成一个种子 crop $\mathbf{d}_{\text{seed}}$,FOVEA 把它视作含噪的空间先验(不直接信任),围绕它生成候选 crop 池 $\mathcal{D}_{\text{cand}}=\{\mathbf{d}_{\text{seed}}, \mathbf{d}_{\text{small}}, \mathbf{d}_{\text{large}}\}$,对每个候选用 resolvability probe 估一个 utility 分 $\hat{\mathcal{J}}$,再用优化器(Greedy / MCMC / Lookahead)选出最优 crop。被选中的视图会更新交互历史 $\mathcal{H}_t$,作为下一轮觅食的搜索状态 —— 所以 FOVEA 是一个序贯 refine 过程,能利用前几轮的正/负证据。最终 crop 喂回 VLM 或下游工具 (OCR/Detection) 产出答案。整个过程**完全训练免费**,只是在推理时多调几次 VLM 当 scorer。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["高分辨率图像 I + 查询 Q"] --> B["VLM 生成种子 crop d_seed<br/>ReAct 风格，视作含噪空间先验"]
+    B --> C["生成候选 crop 池 D_cand<br/>种子 + 局部扰动（更小 / 更大）"]
+    C --> D["Resolvability Probing<br/>每候选跑 K 次 VLM Yes/No 估 Ĵ(d)"]
+    D --> E["按覆盖率 × 分辨率目标 J 选 crop<br/>Greedy / MCMC / Lookahead"]
+    E -->|更新交互历史，下一轮觅食| C
+    E --> F["最终 crop 喂回 VLM / 下游工具<br/>OCR / Detection → 答案"]
+```
 
 ### 关键设计
 
-1. **S-BOED 形式化与三层概率模型**:
+**1. S-BOED 形式化与三层概率模型:把"看哪儿"变成最优实验设计。** 针对现有方法把 crop 决策当成 ad-hoc 启发式的问题,本文把主动视觉重新表述成序贯贝叶斯最优实验设计 —— 每选一个 foveation(crop)$\mathbf{d}$ 就像科学家选一次实验,目标是降低对潜变量 $\boldsymbol{\theta}=\{\ell, y\}$(目标位置 + 语义答案)的不确定性。模型分三层把约束讲清:**物理层**定义感知带宽 $\mathcal{B}$、信息密度 $\rho(\mathbf{d})=\mathcal{B}/A(\mathbf{d})$ 和分辨率概率 $\phi(\mathbf{d})=f_{\text{sat}}(\rho(\mathbf{d}))$(sigmoid 形式,对应"语义 Nyquist 速率");**生成层**引入二元 visibility 事件 $\mathcal{S}$,只有当目标既被空间覆盖 ($\ell\in\mathbf{d}$) 又被分辨率解析 ($\phi=1$) 时才 $\mathcal{S}=1$,这时 observation $\mathbf{z}$ 才携带关于 $y$ 的语义信息,否则退化成背景噪声 $p_0$;**决策层**把目标定为最大化期望信息增益 (EIG)。作者特别指出这个问题违反 active learning 常用的子模性假设 —— 单看"宽视野"或"随机放大"信息增益都接近 0,只有它们的序列组合才有大增益,出现"信息悬崖" (Information Cliff),所以必须 look-ahead 而不能纯贪心。
 
-    - 功能:把"主动视觉"重新表述成贝叶斯最优实验设计,清晰区分物理约束 (固定 token 预算)、生成过程 (visibility-gated observation) 和决策目标 (EIG)
-    - 核心思路:定义感知带宽 $\mathcal{B}$、信息密度 $\rho(\mathbf{d})=\mathcal{B}/A(\mathbf{d})$ 和分辨率概率 $\phi(\mathbf{d})=f_{\text{sat}}(\rho(\mathbf{d}))$ (sigmoid 形式,对应"语义 Nyquist 速率");引入二元 visibility 事件 $\mathcal{S}$,只有当目标既被空间覆盖 ($\ell\in\mathbf{d}$) 又被分辨率解析 ($\phi=1$) 时才 $\mathcal{S}=1$,这时 observation $\mathbf{z}$ 才携带关于 $y$ 的语义信息,否则就是背景噪声 $p_0$
-    - 设计动机:作者特别指出这种问题违反 active learning 常用的子模性假设 —— 单看"宽视野"或"随机放大"信息增益都接近 0,只有它们的序列组合才有大增益,出现"信息悬崖" (Information Cliff),所以必须 look-ahead 而不能纯贪心
+**2. 可计算的 Coverage-Resolution 目标:把 EIG 退化成几何可见性。** BOED 里的 EIG 是 nested expectation 形式,在 gigapixel 连续空间根本算不动。本文靠三个递进假设把它化简成一个标量目标 —— Factorised Belief ($p_t(\ell, y)\approx p_t(\ell)\cdot p_t(y)$)、Calibrated Visibility ($H(\mathcal{S}|\mathbf{z},\mathbf{d})\approx 0$)、Ideal Observer ($H(y|\mathbf{z},\mathcal{S}=1)\approx 0$) —— 推导出 $U_t(\mathbf{d})\approx H_t(y)\cdot\mathcal{J}_t(\mathbf{d})$,其中 $\mathcal{J}_t(\mathbf{d})=\left(\int_{\mathbf{x}\in\mathbf{d}}p_t(\mathbf{x})d\mathbf{x}\right)\cdot \phi(\mathbf{d})$ 正是"覆盖率 × 分辨率"乘积。由于 $H_t(y)$ 与设计 $\mathbf{d}$ 无关,最大化 EIG 就等价于最大化 $\mathcal{J}_t$。这一步的妙处在于把语义推理的复杂目标退化成几何上的可见性最大化:把"理解"的负担留给 backbone VLM、把"搜索"的负担留给 FOVEA,正是这种 separation of concerns 让训练免费的推理时优化成为可能。
 
-2. **可计算的 Coverage-Resolution 目标**:
-
-    - 功能:把 BOED 里那个 nested expectation 形式的 EIG 化简成一个可在 gigapixel 空间里算的标量目标
-    - 核心思路:基于三个递进假设 —— Factorised Belief ($p_t(\ell, y)\approx p_t(\ell)\cdot p_t(y)$)、Calibrated Visibility ($H(\mathcal{S}|\mathbf{z},\mathbf{d})\approx 0$)、Ideal Observer ($H(y|\mathbf{z},\mathcal{S}=1)\approx 0$) —— 推导出 $U_t(\mathbf{d})\approx H_t(y)\cdot\mathcal{J}_t(\mathbf{d})$,其中 $\mathcal{J}_t(\mathbf{d})=\left(\int_{\mathbf{x}\in\mathbf{d}}p_t(\mathbf{x})d\mathbf{x}\right)\cdot \phi(\mathbf{d})$ 就是"覆盖率 × 分辨率"乘积。由于 $H_t(y)$ 与设计 $\mathbf{d}$ 无关,最大化 EIG 等价于最大化 $\mathcal{J}_t$
-    - 设计动机:它把语义推理的复杂目标退化成几何上的可见性最大化,把"理解"的负担留给 backbone VLM,把"搜索"的负担留给 FOVEA;这种 separation of concerns 让训练免费的推理时优化成为可能
-
-3. **Resolvability Probing 与三种优化器**:
-
-    - 功能:在没有真 ground-truth belief map 的情况下,用 VLM 自己当"二元打分器"来估 $\hat{\mathcal{J}}(\mathbf{d})$
-    - 核心思路:引入 binary resolvability signal $r\in\{0,1\}$,定义 $\hat{\mathcal{J}}(\mathbf{d})\approx P(\text{VLM}(I_\mathbf{d}, Q)=\text{"Yes"})$,即"这个 crop 里有没有足够回答问题的视觉证据";对每个候选 crop 跑 $K=3$ 次随机 probe 取平均。上层支持三种 optimiser:Greedy (默认,选 $\hat{\mathcal{J}}$ 最大的)、MCMC-style (迭代扰动 refine)、Lookahead (用 simulated next-state 的 $\hat{V}(\mathbf{d}, \mathcal{H}_{t-1})$ 而不是 immediate score,专门对付信息悬崖)
-    - 设计动机:resolvability probe 不是 EIG 的精确估计器,而是 S-BOED 视角下的经验代理 —— 这样设计的好处是无需训练打分模型,只需调一次 VLM;三档 optimiser 提供了"compute-accuracy operating points"的连续谱,可按延迟预算切换
+**3. Resolvability Probing 与三种优化器:用 VLM 自己当打分器。** 真实场景里没有 ground-truth belief map,$\mathcal{J}$ 算不出来。FOVEA 的解法是引入二元 resolvability 信号 $r\in\{0,1\}$,定义 $\hat{\mathcal{J}}(\mathbf{d})\approx P(\text{VLM}(I_\mathbf{d}, Q)=\text{"Yes"})$,即"这个 crop 里有没有足够回答问题的视觉证据",对每个候选 crop 跑 $K$ 次随机 probe 取平均(论文取 $K=3$)。它把 VLM 自己当成 critic,无需训练任何打分模型,只多调几次 VLM。在此之上 FOVEA 支持三档优化器,构成一条 compute-accuracy 谱:**Greedy**(默认,直接选 $\hat{\mathcal{J}}$ 最大的)、**MCMC-style**(迭代扰动 crop 做局部 refine)、**Lookahead**(用 simulated next-state 的 $\hat{V}(\mathbf{d}, \mathcal{H}_{t-1})$ 而非 immediate score 打分,专门对付信息悬崖)。作者明确 resolvability probe 不是 EIG 的精确估计器,而是 S-BOED 视角下的经验代理;三档优化器让用户能按延迟预算在精度与开销间切换。
 
 ### 损失函数 / 训练策略
 **完全训练免费**,没有任何参数更新。FOVEA 只在推理时插入到 VLM 的 crop 调用链路上,通过额外的 $|\mathcal{D}_{\text{cand}}|\times K$ 次 VLM probe 来选 crop,代价是额外 token,但收益是 crop 质量上升。

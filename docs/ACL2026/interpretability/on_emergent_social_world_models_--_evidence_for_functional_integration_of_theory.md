@@ -47,6 +47,19 @@ tags:
 
 机制实验则选取其中 20 个模型，主要来自 Qwen-2.5、Llama、Falcon-3 和 Gemma-2。作者构造四套 ToM localizer suite：LatentBeliefs、CommunicativeIntent、GameBeliefs、MoralIntent。每套 localizer 都有需要心理状态推理的 target 条件，以及尽量匹配表面形式但不需要 ToM 的 control 条件。模型处理这些刺激时，作者记录 transformer block 在最后一个待作答 token 前的单元激活，用 target-control 激活差异定位功能子网络，然后通过置零消融验证其因果作用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：ToM / 语用 / 一般语言数据集<br/>+ 48 个开源语言模型"] --> B["条件 log-probability 打分<br/>归一化后取 accuracy"]
+    B --> C["行为层面的功能整合检验<br/>P1 相关 → P2 beta 回归控制混杂 → P3 ToM 比一般语言更能预测语用"]
+    A --> D["选 20 个模型<br/>构造四套 ToM localizer suite"]
+    D --> E["ToM 子网络定位<br/>target−control 激活差异 Welch t-test 取前 1%"]
+    E --> F["ToM 子网络的因果消融与跨域验证<br/>关键单元置零 vs 控制单元置零"]
+    F --> G["重测 ToM / 语用 / BLiMP / SNLI<br/>比较 accuracy 下降幅度"]
+    C --> H["结论：ToM 与语用共享可定位、可消融的内部机制"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 行为层面的功能整合检验：用统计控制把"大模型什么都强"和"能力真正耦合"分开**

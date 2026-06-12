@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 这篇论文要解决的是"自动 MAS 设计"被 sequential 多步 RL 拖累的老问题：以往让 orchestrator 一步步增量拼装系统，长程信用分配差、错误顺着步骤累积。MAS-Orchestra 把整个过程压成一次性决策——给定数据集 $\mathcal{D}=\{(x_i,y_i)\}$ 和用户指定的 DoM 等级 $m\in\{\text{LOW},\text{HIGH}\}$，orchestrator 策略只在第 0 步看到任务 $x$，一个 forward 内采样出完整编排 $a\sim\pi_\theta(\cdot\mid x,m)$；再由确定性规则解析器 $f$ 把 $a$ 翻成可执行的子智能体调用图，跑出预测 $\hat{y}=f(x,a)$。之后 orchestrator 不再观测中间状态、不再做增量决策，编排好坏只通过最终答案是否正确来回传，整套训练靠 GRPO 在端到端任务奖励上完成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 x + DoM 等级 m（LOW / HIGH）"] --> ORCH
+    DOM["DoM 显式约束<br/>LOW：至多 1 个子智能体、无拓扑<br/>HIGH：数量与连接不设限"] -. 约束编排空间 .-> ORCH
+    subgraph ORCH["整体编排 + 函数调用形式化"]
+        direction TB
+        B["orchestrator 策略 πθ<br/>一个 forward 一次性吐出完整编排 a"] --> C["create_agent / create_flow<br/>实例化子智能体 + 描述信息流"]
+    end
+    ORCH --> P["确定性规则解析器 f<br/>把 a 解析成可执行子智能体调用图"]
+    P --> E["执行子智能体图<br/>ŷ = f(x, a)，orchestrator 不观测中间状态"]
+    subgraph TRAIN["GRPO + 任务级稀疏奖励"]
+        direction TB
+        R["任务级稀疏奖励 R = 1[ŷ = y]"] --> G["每个 x 采样 K 个候选编排<br/>组内相对优势更新 πθ"]
+    end
+    E --> R
+    G -. 端到端回传 .-> B
+```
+
 ### 关键设计
 
 **1. Holistic Orchestration + Function-Calling 形式化：让 orchestrator 一次吐出整张系统，而不是逐步拼**

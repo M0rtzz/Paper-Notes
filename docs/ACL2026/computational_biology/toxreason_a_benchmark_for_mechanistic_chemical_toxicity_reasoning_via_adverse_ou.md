@@ -45,6 +45,27 @@ tags:
 
 ToxReason 把"化学毒性"从一道结构-性质分类题重新定义为一条沿不良结局路径（AOP）展开的因果推理题：输入一个化学物质，模型需要从分子起始事件（MIE）出发，经关键事件逐步推理到器官级不良结局（AO），既给出毒性预测又给出与生物机制对齐的解释。围绕这一目标，论文先从权威毒理库构造带 AOP 标注的数据，再切分出支持学习与无泄漏评估的训练/测试集，最后用强化学习显式优化"预测正确 + 推理忠实"的联合目标。评估同时看毒性预测的 F1 和推理质量的 LLM-as-a-Judge 四维度评分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：化学物质 + AOP 因果链"] --> S1
+    subgraph S1["AOP 选择与化学物质-AOP 关联推导"]
+        direction TB
+        B["AOP-Wiki 筛肝/心/肾相关 AOP"] --> C["以 AO 当疾病概念在 CTD 反查关联化学物质"]
+        C --> D["ChEMBL 取 MIE 靶点活性<br/>(EC50/IC50 < 10000 nM 判有活性)"]
+        D --> E["结构相似多数投票推 MIE 方向<br/>(激活/抑制)"]
+    end
+    S1 --> F
+    subgraph F["互补的训练集与无泄漏测试集"]
+        direction TB
+        G["MIE-matched：仅满足 MIE<br/>扩大学习覆盖"]
+        H["MIE-AO-matched：MIE+AO 双满足<br/>推理到下游 AO"]
+        I["测试集：严格策展 + 结构完全相同<br/>杜绝结构泄漏"]
+    end
+    F --> J["两阶段 GRPO 强化学习训练<br/>SFT 对齐格式 → GRPO 优化因果一致性"]
+    J --> K["输出：毒性预测 F1 + 推理质量评估<br/>(LLM-as-a-Judge 四维 + NW 对齐)"]
+```
+
 ### 关键设计
 
 **1. AOP 选择与化学物质-AOP 关联推导**

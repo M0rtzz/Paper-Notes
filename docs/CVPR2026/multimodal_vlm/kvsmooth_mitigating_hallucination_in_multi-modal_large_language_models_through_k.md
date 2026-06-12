@@ -38,7 +38,18 @@ tags:
 
 ### 整体框架
 
-KVSmooth 是一种**免训练、即插即用**的推理时方法，要治的是 MLLM 解码越说越偏、逐渐脱离图像的幻觉问题。作者把矛头指向 sink token——注意力过度聚集到少数"聚合 token"上，它们由全局平均产生的隐藏状态偏离视觉上下文，系统性地抬高幻觉对象的 logit。KVSmooth 的做法是在解码时对 KV-Cache 的 Key 和 Value 施加一个自适应 EMA 平滑，让隐藏状态的演化更平稳、压住 sink 带来的语义漂移。
+KVSmooth 是一种**免训练、即插即用**的推理时方法，要治的是 MLLM 解码越说越偏、逐渐脱离图像的幻觉问题。作者把矛头指向 sink token——注意力过度聚集到少数"聚合 token"上，它们由全局平均产生的隐藏状态偏离视觉上下文，系统性地抬高幻觉对象的 logit。KVSmooth 的做法是在解码时对 KV-Cache 的 Key 和 Value 施加一个自适应 EMA 平滑，让隐藏状态的演化更平稳、压住 sink 带来的语义漂移。整条 pipeline 是一个嵌在逐 token 解码里的闭环：先用**注意力行熵**实时诊断当前 token 的 sink 强度，再据此对 **KV-Cache 做 EMA 平滑**，平滑的力度由**熵引导的自适应系数**动态决定，平滑后的 KV 写回缓存、参与下一个 token 的生成。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 指令"] --> B["MLLM 逐 token 解码<br/>（作用于第 3-31 层）"]
+    B --> C["注意力行熵<br/>实时度量该 token 的 sink 强度"]
+    C --> D["KV-Cache EMA 平滑<br/>对 Key、Value 做指数移动平均（贝叶斯 MAP 推导）"]
+    D --> E["熵引导的自适应系数<br/>行熵百分位 → λ → 裁剪，sink 越强平滑越大"]
+    E --> F["抑制语义漂移<br/>输出忠实于图像的描述"]
+    E -.平滑后 KV 写回，下一 token.-> B
+```
 
 ### 关键设计
 

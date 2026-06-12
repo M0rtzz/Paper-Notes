@@ -44,6 +44,17 @@ KnapSpec 把自推测解码（SSD）的草稿层选择重新建模为 0/1 背包
 
 KnapSpec 把目标模型每层拆成 Attention、MLP 两个独立"物品"，展平成 $2L$ 个候选层（$f^{(2i-1)}:=f^{(i)}_{\mathtt{Attn}}$、$f^{(2i)}:=f^{(i)}_{\mathtt{MLP}}$），草稿网络就是子集 $S\subseteq[2L]$ 按原序复合而成。它先一次性 profiling 硬件，把 Attention 延迟拟合成上下文长度的函数 $t_{\mathtt{Attn}}(n)$、MLP 延迟测成常数 $t_{\mathtt{MLP}}$；推理时每个 speculation 步都用并行 DP 即时解一个"以延迟为重量、以余弦相似度为价值"的背包问题，在所有延迟预算下的候选层集合里网格搜索出吞吐最大的 $(S^*,\gamma^*)$，用 $f^{(S^*)}$ 串行起草 $\gamma^*$ 个 token 再由目标模型并行验证。整个过程无需任何额外训练或参数，输出分布严格等价于原目标模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["离线 profiling<br/>拟合 t_Attn(n)、测 t_MLP 常数"] --> D0["解耦 Attention / MLP<br/>展平成 2L 个候选层"]
+    D0 --> DP["背包形式化 + 并行 DP<br/>权重=延迟，价值=余弦相似度（Lemma 4.1）<br/>一次回溯得候选集 A={S_k} 覆盖全预算"]
+    DP --> G["TPT 网格搜索<br/>在 A×[D] 上选 (S*, γ*)<br/>最大化墙钟吞吐"]
+    G --> DR["子网 f^(S*) 串行起草 γ* 个 token"]
+    DR --> V["目标模型并行验证<br/>输出分布严格等价原模型"]
+    V -->|"上下文增长，每步重选"| DP
+```
+
 ### 关键设计
 
 **1. TPT（Tokens-per-Time）：把目标函数对齐到墙钟吞吐**

@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 攻击者拿到的是 $f_{W^\star,v^\star}(X)=\text{softmax}(x_1^\top W^\star x_N,\dots,x_N^\top W^\star x_N)^\top(Xv^\star)$ 这个 value oracle，要从黑盒查询里把参数 $(W^\star,v^\star)\in\mathbb R^{d\times d}\times\mathbb R^d$ 一字不差地解出来。整套算法吃定了 attention 一个 MLP 没有的便利——序列长度 $N$ 攻击者说了算：先喂长度-1 的输入让 softmax 权重恒为 1，oracle 直接吐出 $v^\star$ 的各分量；再喂长度-2 的输入把 softmax 压成可逆的 sigmoid，逐列反解出 $W^\star$。这两步合起来 $d^2+d$ 次查询就能精确复原单头 attention，剩下的低秩、带噪、含 ReLU FFN 等变体都是在这条主线上换探针尺度、叠加压缩感知或对称化技巧的加工。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["value oracle f(W*, v*)<br/>序列长度 N 攻击者可控"]
+    O -->|"喂长度-1 输入<br/>softmax 权重恒为 1"| V["读出 v*<br/>(d 次查询, 反演前置)"]
+    V --> D1["长度-2 探针 + sigmoid 反演<br/>softmax 退化为 sigmoid, 逐列解 w_j<br/>O(d²), 精确"]
+    D1 -->|"探针换 Gaussian ROP"| D2["低秩压缩感知恢复<br/>核范数凸程序, O(rd)"]
+    D1 -->|"探针尺度 a=1/2, b=1/W + clip"| D3["带噪 oracle 稳定恢复<br/>锁 σ⁻¹ 在 Lipschitz 区间"]
+    D1 --> T["下游: 一层 Transformer<br/>antisymmetric query 消 ReLU + 调 FFN learner"]
+    D1 -.->|"多头可任意置换叠加"| M["多头 attention 不可识别<br/>(反例, 需结构假设)"]
+```
+
 ### 关键设计
 
 **1. 长度-2 探针 + sigmoid 反演（Thm 4.1）：把非线性 attention 还原成一组线性方程**

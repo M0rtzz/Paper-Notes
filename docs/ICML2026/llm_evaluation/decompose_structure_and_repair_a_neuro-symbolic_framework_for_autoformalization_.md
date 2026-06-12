@@ -43,7 +43,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DSR 要解决的是「把自然语言定理翻成能过 Lean 4 编译、又不跑偏原意的形式化陈述」。它不把这件事当成端到端的一次性字符串生成，而是拆成三段流水线：先用 Gemini 3.0 Pro 把原文做语义规范化并切成若干被标注为 *Condition* / *Conclusion* 的 NL 成分（Semantic Decomposition）；再让 DSR Formalizer（LoRA 微调的 Qwen2.5-7B-Instruct）对每个成分同时吐出一段线性 FL 代码和一棵算子树 OPT（Structured Translation）；最后用 OPT 的叶子节点 Structure-First Assembly 拼出整条 statement 交 Lean 编译，编译失败就把报错位置定位到 OPT 节点、按子树→成分→整句三级逐层修复（Tree-Guided Repair）。贯穿全程的核心载体是 OPT——它既是训练时的结构先验，又是推理时的修复地址簿。
+DSR 要解决的是「把自然语言定理翻成能过 Lean 4 编译、又不跑偏原意的形式化陈述」。它不把这件事当成端到端的一次性字符串生成，而是拆成三段流水线：先用 Gemini 3.0 Pro 把原文做语义规范化并切成若干被标注为 *Condition* / *Conclusion* 的 NL 成分（Semantic Decomposition）；再让 DSR Formalizer（LoRA 微调的 Qwen2.5-7B-Instruct）对每个成分同时吐出一段线性 FL 代码和一棵算子树 OPT（Structured Translation）；最后用 OPT 的叶子节点 Structure-First Assembly 拼出整条 statement 交 Lean 编译，编译失败就把报错位置定位到 OPT 节点、按子树→成分→整句三级逐层修复（Tree-Guided Repair）。贯穿全程的核心载体是 OPT——它既是训练时的结构先验，又是推理时的修复地址簿。其中 Formalizer 联合生成 FL+OPT 的能力，由一套四阶段课程学习训练而来（推理时不出现，故在下图中以虚线「训练」标注）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自然语言定理 NL"] --> B["语义分解 Semantic Decomposition<br/>语义规范化 + 角色对齐<br/>→ Condition / Conclusion 成分（Gemini 3.0 Pro）"]
+    B --> C["DSR Formalizer（Qwen2.5-7B + LoRA）<br/>对每个成分联合生成 FL 代码 + 算子树 OPT"]
+    CL["四阶段课程学习<br/>Phase 1 仅 NL→FL → Phase 2-4 加 OPT、难度递增"] -.->|训练| C
+    C --> D["结构化拼装 Structure-First Assembly<br/>按 OPT 叶子拼出整条 FL statement"]
+    D --> E["Lean 4 编译"]
+    E -->|通过| F["输出形式化 statement"]
+    E -->|失败 → 报错定位到出错 OPT 节点| G
+    subgraph G["树引导修复 Tree-Guided Repair（总预算 4 次 call）"]
+        direction TB
+        G1["子树级：从出错节点父节点抽最小子树重写<br/>失败则 bottom-up 扩到祖父"] --> G2["成分级：整段 FL component 重写"]
+        G2 --> G3["整句级：整句重写 + 强制语义二次检查"]
+    end
+    G --> E
+```
 
 ### 关键设计
 

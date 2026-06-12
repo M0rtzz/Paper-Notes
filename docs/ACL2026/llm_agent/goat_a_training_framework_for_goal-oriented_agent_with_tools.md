@@ -44,6 +44,31 @@ GOAT 通过从 API 文档自动构建"依赖图 + call-first 合成数据"的流
 
 GOAT 要解决的是「想用开源小模型做 goal-oriented agent 却没有标注数据」这个困境：用户只给一句高层目标，agent 得自己拆任务、决定调哪些 API、还要把前一个 API 的输出当后一个的参数。整条流水线分两段，输入是一组固定 API 的文档，输出是一个学会了 API 间依赖推理的微调模型。第一段从 API 文档自动构建依赖图——初始化成全连接多重有向图后过三级过滤，留下只含可执行依赖的 $G=(\mathcal{V}, \mathcal{E})$，边 $(n_i, n_j, k)$ 表示 $n_i$ 的输出能填进 $n_j$ 的第 $k$ 个参数；第二段从图里采连通子图，拓扑排序后「先执行 API 再生成 query」（call-first）合成训练数据，最后用 LoRA 指令微调 LLM、用 InfoNCE 微调一个 SBERT retriever。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["固定 API 文档<br/>初始化全连接候选边 |V|²×K"]
+    subgraph FILTER["三级依赖图过滤"]
+        direction TB
+        C["① SBERT 相似度粗筛<br/>低阈值保召回 0.92"]
+        D["② LLM 语义判断<br/>顺带生成 justification"]
+        E["③ 真实执行验证<br/>跑通才保留 精度 0.90"]
+        C --> D --> E
+    end
+    A --> C
+    E --> F["依赖图 G → 采连通子图 → 拓扑排序"]
+    subgraph CALL["Call-first 数据生成"]
+        direction TB
+        H["依赖驱动参数生成<br/>从前序输出抽值，执行 + 写 sub-query"]
+        J["汇总 sub-query → user query<br/>triplet → final response"]
+        H --> J
+    end
+    F --> H
+    D -.->|复用 justification 引导填参| H
+    J --> K["LoRA 指令微调 LLM<br/>+ InfoNCE 微调 SBERT retriever"]
+    K --> L["Goal-oriented Agent 模型"]
+```
+
 ### 关键设计
 
 **1. 三级依赖图过滤：用漏斗式预算控制从组合爆炸里筛出可执行依赖**

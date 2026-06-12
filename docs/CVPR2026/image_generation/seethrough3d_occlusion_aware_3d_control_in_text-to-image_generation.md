@@ -50,6 +50,18 @@ SeeThrough3D 要解决的是文本到图像生成里缺失的 3D 布局控制—
 
 流程是：用户在虚拟环境里摆放半透明 3D 包围盒、设定相机视角 → Blender 渲染出 OSCR 图 → VAE 编码为 OSCR token → 与文本 token、噪声图像 token 拼接后送入 mmDiT 块联合处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户摆放半透明 3D 包围盒<br/>设定相机视角"] --> B["OSCR 遮挡感知场景表示<br/>Blender 渲染：透明度编码遮挡 + 各面颜色编码朝向"]
+    B --> C["VAE 编码为 OSCR token"]
+    R["参考物体图像"] -->|个性化扩展| RV["VAE 编码为外观 token"]
+    C --> D["与文本 token + 噪声图像 token 拼接"]
+    RV --> D
+    D --> E["mmDiT 块联合处理<br/>注意力掩码物体绑定：包围盒 token 仅关注对应名词 token"]
+    E --> F["输出：3D 布局可控、遮挡一致的图像"]
+```
+
 ### 关键设计
 
 **1. OSCR 遮挡感知场景表示：用半透明带色包围盒把遮挡、朝向、视角一起编码进一张图**

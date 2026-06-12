@@ -41,7 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这套方案要回答的问题是：能不能不靠人写规则、也不靠 70B 大模型，就训出一个又准又快、还能跨域泛化的合规 guardrail。作者把它拆成数据和模型两侧。数据侧从 ScribeAgent 在 WebArena 五个 domain（Reddit / Map / GitLab / Shopping-Admin / Shopping）上跑出的原始浏览器 trace 出发，依次走标准化轨迹、反向合成策略、跨子域配对、违规标注四步，把 733 条 base trajectory 和 2195 条策略撞成 314,556 条 raw pair，再筛成 59,997 条 label 平衡（42.4% 违规 / 57.6% 合规、41.6% 跨子域）的 PolicyGuardBench。模型侧把 `(policy, 标准化轨迹动作序列, domain metadata)` 拼成一条指令、输出 `{violation, no_violation}` 二元 label，按 base trajectory 做 8:2 切分（保证 train/test 轨迹零重叠）后全参数微调 Qwen3-4B-Instruct，得到 PolicyGuard-4B。
+这套方案要回答的问题是：能不能不靠人写规则、也不靠 70B 大模型，就训出一个又准又快、还能跨域泛化的合规 guardrail。作者把它拆成数据和模型两侧。数据侧从 ScribeAgent 在 WebArena 五个 domain（Reddit / Map / GitLab / Shopping-Admin / Shopping）上跑出的原始浏览器 trace 出发，依次走标准化轨迹、反向合成策略、跨子域配对、违规标注四步，把 733 条 base trajectory 和 2195 条策略撞成 314,556 条 raw pair，再筛成 59,997 条 label 平衡（42.4% 违规 / 57.6% 合规、41.6% 跨子域）的 PolicyGuardBench。模型侧把 `(policy, 标准化轨迹动作序列, domain metadata)` 拼成一条指令、输出 `{violation, no_violation}` 二元 label，按 base trajectory 做 8:2 切分（保证 train/test 轨迹零重叠）后全参数微调 Qwen3-4B-Instruct，得到 PolicyGuard-4B。下图把"数据侧造 60k benchmark → 模型侧 SFT → 三套评估"这条主线串起来，三个关键设计分别对应图中前两个分组与底部的切分/评估环节。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始浏览器 trace<br/>ScribeAgent × WebArena 5 域"] --> S1
+    subgraph S1["标准化轨迹 + 反向合成原子策略"]
+        direction TB
+        B["标准化轨迹<br/>清洗 + 动词归一 → 733 条"] --> C["GPT-4o 反向合成<br/>一规则一 atom → 2195 条策略"]
+    end
+    S1 --> S2
+    subgraph S2["跨子域配对 + LLM 标注 + 人审校验"]
+        direction TB
+        D["Sentence-BERT 检索 + 关键词触发<br/>强造跨子域 pair → 314k"] --> E["gpt-oss-120B 标注<br/>低置信送审 + 287 对人审"]
+    end
+    S2 --> F["平衡筛选<br/>PolicyGuardBench 60k"]
+    F --> G["轨迹隔离切分<br/>按 base trajectory 8:2 零重叠"]
+    G --> H["全参数 SFT Qwen3-4B<br/>→ PolicyGuard-4B"]
+    H --> I["前缀截断 / LODO 评估<br/>N=1..5 早期预警 + 跨域泛化"]
+```
 
 ### 关键设计
 

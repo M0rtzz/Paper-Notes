@@ -41,6 +41,21 @@ tags:
 
 这篇论文要解决的是：现有 3D 生成模型只吃图像/文本条件，对真实几何"看得见却用不上"。它的做法是把点云引导的生成整体当成一道**潜空间补全题**——可见区域是给定的答案，不可见区域才需要网络去填。具体一路转下来是这样：可见点云先体素化成 $N=64$ 的占据网格 $\mathbf{M}'$，过 TRELLIS 自己的 SS VAE 编码成部分观测的结构潜变量 $\mathbf{q}_{\text{vis}}=\mathcal{E}_s(\mathbf{M}')$；同时记下一张 occupancy mask $\mathbf{m}_s$ 标出哪里有观测、哪里是空白；空白处灌入噪声拼成组合输入 $\mathbf{q}_{\text{comb}}$，交给微调过的 Inpainting Flow Transformer，配合两阶段采样把整块 SS latent 补全，最后接回 TRELLIS 原本的 SLAT 生成与渲染。整个改动落在"结构潜变量"这一层，下游一字不改。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可见点云<br/>LiDAR / RGBD / VGGT 估计"] --> B["体素化 → 占据网格 M'（N=64）"]
+    B --> C["SS VAE 编码<br/>可见潜变量 q_vis + occupancy mask m_s"]
+    C --> D["潜空间初始化<br/>q_comb = m_s⊙q_vis + (1−m_s)⊙ε_s"]
+    D --> E["Mask-aware 补全网络 G_inp<br/>mask 沿通道拼接，显式区分约束 / 待填"]
+    subgraph SAMP["两阶段采样"]
+        direction TB
+        F["结构补全阶段（前 s 步）<br/>每步重拼 mask，钉回可见区"] --> G["边界精炼阶段（后 t−s 步）<br/>mask 换全 1，标准去噪修边界空洞"]
+    end
+    E --> SAMP
+    SAMP --> H["补全 SS latent<br/>→ TRELLIS SLAT 生成 + 渲染"]
+```
+
 ### 关键设计
 
 **1. 点云先验驱动的潜空间初始化：把真实几何直接焊进生成起点**

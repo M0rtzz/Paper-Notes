@@ -43,6 +43,25 @@ TransLaw 的贡献可以分成数据集和系统两条线。数据集 HKCFA Judg
 ### 整体框架
 输入是一份英文香港终审法院判词，系统先按语义结构拆分为句子序列 $J=\{s_i\}$。Translation Command Agent 负责维护全局流程和前文翻译记忆；Translation Execution Module 中的 Legal Terminology Agent 先从香港律政司官方法律术语表检索候选术语，Sentence Translation Agent 再结合术语和上下文生成初稿；Expert Review Module 用多个专家 agent 检查语义、术语、引用和风格。如果审校发现问题，反馈会被映射为修改建议并进入下一轮翻译，直到反馈为空或达到迭代上限。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["英文判词"] --> B["命令层 Command Agent<br/>句子分割 + 维护翻译记忆"]
+    subgraph EXEC["执行层（术语检索 + 句子翻译）"]
+        direction TB
+        C["Legal Terminology Agent<br/>RAG 检索官方术语表"] --> D["Sentence Translation Agent<br/>注入术语生成初稿"]
+    end
+    subgraph REVIEW["审校层：语义 / 术语 / 引用 / 文体四专家"]
+        direction TB
+        E["四个专家 Agent 分头审查"]
+    end
+    B --> C
+    D --> E
+    E -->|"反馈 F≠∅ 且未达上限"| F["基于审校反馈的迭代修订<br/>反馈映射为修改增量"]
+    F --> B
+    E -->|"反馈为空或达上限"| G["集成为完整判词译文"]
+```
+
 ### 关键设计
 
 **1. HKCFA Judgement 97-22 句级平行数据集：用官方判词解决“参考答案本身不可信”的评测难题**

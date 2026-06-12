@@ -45,6 +45,25 @@ tags:
 
 这篇要化解的矛盾是：Tsetlin Machine（TM）靠布尔词袋（BoW）子句获得逐条可读的透明性，却无法泛化训练数据里没出现过的近义表达；BERT 语义强但不可追溯。作者让 LLM 只在离线训练阶段当"语义教师"，分三步把语义知识以符号形式搬进 TM：先用 LLM 把类别拆成子意图并三阶段（Seed→Core→Enriched）生成合成数据，再在合成数据上预训练一个 Non-Negated TM（NTM）提取高置信度符号特征，最后把这些特征注入真实数据的 BoW 表示、在增强表示上微调标准 TM。推理时全程纯符号计算，不调 LLM、不用嵌入。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["类别标签 + 真实样本"]
+    subgraph GEN["LLM 引导的子意图发现与三阶段数据生成"]
+        direction TB
+        A["LLM 拆子意图<br/>positive→positive_due_to_plot"] --> B["Seed：规范锚点表达"]
+        B --> C["Core：固定词汇换句法"]
+        C --> D["Enriched：同义词 + 组合短语"]
+    end
+    IN --> A
+    D --> E["合成数据"]
+    E --> F["Non-Negated TM（NTM）预训练<br/>单调合取子句 + Type I 反馈拉满"]
+    F --> G["取 TA 最深文字<br/>高置信度符号特征"]
+    IN --> H["语义特征注入与 TM 微调<br/>真实样本→NTM→激活文字追加进 BoW"]
+    G --> H
+    H --> OUT["标准 TM 纯符号推理分类"]
+```
+
 ### 关键设计
 
 **1. LLM 引导的子意图发现与三阶段数据生成：把粗标签拆成可读的语义驱动因素**

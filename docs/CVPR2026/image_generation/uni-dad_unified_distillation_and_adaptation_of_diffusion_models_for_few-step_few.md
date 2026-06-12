@@ -41,6 +41,22 @@ tags:
 
 Uni-DAD 想把扩散模型的「蒸馏」和「域适配」合并成单阶段一次做完，而不是走传统的两阶段流水线。它把一个冻结的源域教师 $\epsilon^{\text{src}}$（在大规模源数据上预训练，$T \sim 1000$ 步）直接压成一个快速学生生成器 $G$（$1 \leq \text{NFE} \leq 4$），同时把它适配到只有少量样本 $Y$（$|Y| \leq 10$）表示的目标分布 $p^{\text{trg}}(y)$。训练时三组模型交替优化：学生 $G$ 用双域 DMD + 多头 GAN 生成器损失更新；假教师 $\epsilon^{\text{fk}}$ 和多头判别器 $D$ 负责追踪学生分布、区分真实目标样本与学生生成；可选的目标教师 $\epsilon^{\text{trg}}$ 在目标样本上微调、提供目标域分数引导。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["噪声 z"] --> G["快速学生 G<br/>1–4 步采样生成 x"]
+    G --> FK["假教师 ε_fk<br/>在学生样本上训练、追踪学生分布"]
+    SRC["源域教师 ε_src（冻结、预训练）"] --> DMD["双域 DMD<br/>源域保多样 + 目标域促适配"]
+    FK --> DMD
+    TRG["目标教师 ε_trg（可选）<br/>少量目标样本 Y 微调"] --> DMD
+    FK --> GAN["多头 GAN<br/>复用 ε_fk 特征多尺度判真假"]
+    Y["目标样本 Y (≤10 张)"] --> GAN
+    G --> GAN
+    DMD --> UP["学生 G 更新<br/>双域 DMD + 多头 GAN 生成器损失"]
+    GAN --> UP
+    UP -.->|交替优化| G
+```
+
 ### 关键设计
 
 **1. 双域分布匹配蒸馏（Dual-domain DMD）：源域保多样、目标域促适配**

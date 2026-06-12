@@ -45,7 +45,24 @@ tags:
 
 ### 整体框架
 
-UTPTrack 想在 one-stream Transformer 跟踪器上做一套通用的高效化方案：它把搜索区域 SR、静态模板 ST、动态模板 DT（以及语言 token）拼起来送进共享编码器，在选定的编码层插入轻量的 **CTEM（Candidate or Template Elimination Module）**，直接用注意力权重算 token 重要性分数并剪枝；剪掉的 SR token 再用零填充补回原空间位置，保证跟踪 head 的空间对齐。和以往只剪单一组件不同，它对三个组件联合建模冗余。
+UTPTrack 想在 one-stream Transformer 跟踪器上做一套通用的高效化方案：它把搜索区域 SR、静态模板 ST、动态模板 DT（以及语言 token）拼起来送进共享编码器，在选定的编码层插入轻量的 **CTEM（Candidate or Template Elimination Module）**，直接用注意力权重算 token 重要性分数并剪枝；剪掉的 SR token 再用零填充补回原空间位置，保证跟踪 head 的空间对齐。和以往只剪单一组件不同，它对三个组件联合建模冗余。CTEM 内部对 SR、DT、ST 三路分别做注意力引导剪枝（CE / DTE / STE），并由 Token 类型感知（TTA）的框先验和文本引导（TG）的语言信号两路先验调节保留决策。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["搜索区域 SR + 静态模板 ST + 动态模板 DT<br/>（统一跟踪再拼语言 token）"] --> ENC["one-stream 共享编码器<br/>选定层插入 CTEM 模块"]
+    ENC --> CTEM
+    subgraph CTEM["CTEM：以 ST 中心 token 为锚点联合剪枝"]
+        direction TB
+        CE["搜索区域剪枝 CE<br/>top-k 滤背景杂波"]
+        DTE["动态模板剪枝 DTE<br/>剪漂移/遮挡噪声 token"]
+        STE["静态模板剪枝 STE<br/>去边缘背景、永留中心"]
+    end
+    TTA["Token 类型感知 TTA<br/>首帧框先验 bonus 防误删前景"] -.->|bonus 加到注意力分数| STE
+    TG["文本引导剪枝 TG<br/>语言 token 第二路注意力（统一跟踪）"] -.->|加权融合| CE
+    CTEM --> PAD["剪掉的 SR token 零填充补回原位<br/>保证空间对齐"]
+    PAD --> HEAD["跟踪 head 输出目标框"]
+```
 
 ### 关键设计
 

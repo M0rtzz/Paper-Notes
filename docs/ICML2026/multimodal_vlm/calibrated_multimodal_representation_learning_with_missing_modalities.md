@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两层结构：**(1) 生成模型** 对每个模态 $m$ 假设 $\mathbf{z}^m=\mathbf{W}^m\bm{\beta}+\bm{\mu}^m+\bm{\epsilon}^m$ ($\bm{\beta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\bm{\epsilon}^m\sim\mathcal{N}(\mathbf{0},(\sigma^m)^2\mathbf{I})$)，所有模态共享潜变量 $\bm{\beta}$，参数 $\widehat{\bm\theta}=\{\mathbf{W}^m, \bm{\mu}^m, \sigma^m\}_{m\in\mathcal{M}}$；**(2) 表示学习** ：观测模态由各自编码器 $\phi^m_{\bm\theta}$ 编码，缺失模态用 (1) 闭式补全 $\widehat{\mathbf{z}}^{m'}=\mathbf{W}^{m'}\mathbf{m}+\bm{\mu}^{m'}$，然后把 $[\mathbf{Z}^\Omega;\widehat{\mathbf{Z}}^{\mathcal{M}/\Omega}]$ 拼起来送 SVD 取最大奇异值 $\lambda_1$ 作为对齐目标 (PMRL 风格)。
+两层结构：**(1) 生成模型** 对每个模态 $m$ 假设 $\mathbf{z}^m=\mathbf{W}^m\bm{\beta}+\bm{\mu}^m+\bm{\epsilon}^m$ ($\bm{\beta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\bm{\epsilon}^m\sim\mathcal{N}(\mathbf{0},(\sigma^m)^2\mathbf{I})$)，所有模态共享潜变量 $\bm{\beta}$，参数 $\widehat{\bm\theta}=\{\mathbf{W}^m, \bm{\mu}^m, \sigma^m\}_{m\in\mathcal{M}}$；**(2) 表示学习** ：观测模态由各自编码器 $\phi^m_{\bm\theta}$ 编码，缺失模态用 (1) 闭式补全 $\widehat{\mathbf{z}}^{m'}=\mathbf{W}^{m'}\mathbf{m}+\bm{\mu}^{m'}$，然后把 $[\mathbf{Z}^\Omega;\widehat{\mathbf{Z}}^{\mathcal{M}/\Omega}]$ 拼起来送 SVD 取最大奇异值 $\lambda_1$ 作为对齐目标 (PMRL 风格)。整套方法的支撑是 Theorem 1 对 anchor shift 的理论刻画——它说明为什么非补缺不可，是下面三个设计里第一个（理论）设计的内容，本身不是数据流上的一步，故不画进框架图。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["缺模态训练样本<br/>(如 V-T、A-T 对)"] --> B["各模态编码器 φ^m<br/>→ 观测表示 Z^Ω"]
+    B --> C["概率 PCA 生成模型<br/>z^m = W^m·β + μ^m + ε^m"]
+    subgraph EM["Bi-step EM 闭式优化（仅用观测模态）"]
+        direction TB
+        D["E-step：求共享潜变量后验<br/>β ~ N(m, V)"] --> E["M-step：闭式更新<br/>W^m, μ^m, σ^m"]
+        E -->|迭代提升似然| D
+    end
+    C --> EM
+    EM --> F["闭式插补缺失模态<br/>ẑ^m′ = W^m′·m + μ^m′"]
+    F --> G["拼接 [观测; 插补]<br/>→ SVD 取最大奇异值 λ₁"]
+    G --> H["对齐损失 + matching loss<br/>→ 更新编码器 φ^m"]
+```
 
 ### 关键设计
 

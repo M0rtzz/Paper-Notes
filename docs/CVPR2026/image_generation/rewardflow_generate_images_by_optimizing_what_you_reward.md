@@ -37,13 +37,35 @@ RewardFlow 提出一种无需反转的推理时框架，通过多奖励 Langevin
 
 **切入角度**：作者从 Langevin 动力学出发，将奖励引导的采样过程理论化为一个目标为 prompt-tilted 密度的 Langevin SDE 的有效离散化，为稳定收敛提供了理论保证。
 
-**核心 idea**：将多个互补的可微分奖励（CLIP 语义、LPIPS 感知、SAM2 局部化、VQA 属性级、人类偏好）通过 Langevin 动力学统一融合，并设计 prompt-aware 自适应策略动态调节各奖励权重。
+**核心 idea**：将一束互补的可微分奖励（CLIP 语义对齐、感知保真度、SAM2 局部定位、物体一致性、人类偏好）外加本文新提出的可微分 VQA 属性级奖励，通过 Langevin 动力学统一融合到采样过程，并设计 prompt-aware 自适应策略动态调节各奖励权重。
 
 ## 方法详解
 
 ### 整体框架
 
 RewardFlow 想解决的事情很直接：在不微调模型、也不反转原图的前提下，让一个预训练的扩散 / flow-matching 模型按编辑指令把图改对。它的做法是把"编辑"重新理解成"在采样过程中优化你真正想要的那些奖励"——给定原图和指令，模型照常一步步去噪，但每一步都额外算几个可微分奖励对当前 latent 的梯度，用这些梯度把去噪方向往"更符合指令"的地方推一把。为了不让图被推得面目全非，整条采样轨迹还被一个 clean-latent KL 正则项软锚在原始 latent 附近。整个过程被作者证明等价于一个目标为 prompt-tilted 密度的 Langevin SDE 的离散化，因此收敛是有理论依据的、而非纯启发式的拼凑。
+
+下图给出这条推理时采样回环：prompt-aware 策略先据指令配好权重，之后每步去噪叠加多奖励梯度、再被 KL 正则拉回，循环到收敛。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["原图 + 编辑指令"] --> PA["Prompt-Aware 自适应策略<br/>抽语义基元→判局部/全局意图→设权重 w_i(t)、步长"]
+    PA --> STEP["每步去噪：对当前 latent 算多奖励梯度"]
+    subgraph RB["多奖励 Langevin 动力学（奖励束）"]
+        direction TB
+        RC["CLIP 语义对齐"]
+        RP["感知保真度"]
+        RS["SAM2 局部定位（防语义泄漏）"]
+        RV["可微分 VQA 奖励（属性级问答打分）"]
+        RH["物体一致性 + 人类偏好"]
+    end
+    STEP --> RB
+    RB --> G["加权求和 g=∇Σ w_i(t)·R_i<br/>叠为 Langevin 漂移更新"]
+    G --> KL["clean-latent KL 正则<br/>软锚定原始 latent"]
+    KL -->|未收敛| STEP
+    KL -->|收敛| OUT["编辑后图像<br/>（无反转、无微调）"]
+```
 
 ### 关键设计
 

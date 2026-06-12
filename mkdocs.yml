@@ -37,9 +37,7 @@ theme:
     toggle:
       icon: material/weather-night
       name: 切换亮色模式
-  font:
-    text: Noto Sans SC
-    code: JetBrains Mono
+  font: false
 nav:
 - 🏠 首页: index.md
 - 🧪 ICML2026:
@@ -18442,7 +18440,6 @@ markdown_extensions:
 extra_javascript:
 - javascripts/title-link.js
 - javascripts/mathjax.js
-- https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js
 extra_css:
 - stylesheets/extra.css
 copyright: ✨本站笔记由 AI 辅助生成，仅供学术参考，如有错误欢迎指正

@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DP-SGD-RC 不重造 DP-SGD，而是只在最贵的那一步动刀。原版 DP-SGD 走的是"第一次反向算出每个样本的梯度范数 → 按 $\min(C/\sqrt{n_i},1)$ 重缩放每样本损失 → 第二次反向聚合 + 加噪 + 优化器步"，它的显存全卡在"精确算范数"上。本文把这一步换成随机迹估计：对每个 linear-like 层，前向 hook 拿到激活 $A\in\mathbb{R}^{B\times T\times d}$、反向 hook 拿到输出梯度 $G\in\mathbb{R}^{B\times T\times p}$，调用范数估计例程返回近似 $\hat n_i^{(l)}$，逐层求和得到 $n_i=\sum_l \hat n_i^{(l)}$，其余流程原封不动。整套实现走 forward/backward hook、每层只过一遍，总成本是 1 次 forward + 2 次 backward，和 FGC 同档，但单层峰值显存被压下来——并配一套新的隐私会计把"裁剪尺度随机化"带来的隐私损失算清楚。
+DP-SGD-RC 不重造 DP-SGD，而是只在最贵的那一步动刀。原版 DP-SGD 走的是"第一次反向算出每个样本的梯度范数 → 按 $\min(C/\sqrt{n_i},1)$ 重缩放每样本损失 → 第二次反向聚合 + 加噪 + 优化器步"，它的显存全卡在"精确算范数"上。本文把这一步换成随机迹估计：对每个 linear-like 层，前向 hook 拿到激活 $A\in\mathbb{R}^{B\times T\times d}$、反向 hook 拿到输出梯度 $G\in\mathbb{R}^{B\times T\times p}$，调用范数估计例程（默认 Hutchinson，小 $\varepsilon$ 切 Hutch++）返回近似 $\hat n_i^{(l)}$，逐层求和得到 $n_i=\sum_l \hat n_i^{(l)}$，其余流程原封不动。整套实现走 forward/backward hook、每层只过一遍，总成本是 1 次 forward + 2 次 backward，和 FGC 同档，但单层峰值显存被压下来——并配一套新的 $f$-DP 隐私会计把"裁剪尺度随机化"带来的隐私损失算清楚、反过来给训练设定噪声 multiplier。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["前向/反向 hook<br/>取每层激活 A、输出梯度 G"] --> B{"范数估计档位"}
+    B -->|"默认 / d 较大"| C["Hutchinson 随机投影估范数<br/>k 次矩阵-向量积估 ‖A⊤G‖²"]
+    B -->|"小 ε / 小数据"| D["Hutch++ 头-尾分解<br/>低秩吃头部 + 残差跑 Hutchinson"]
+    C --> E["逐层求和得逐样本范数<br/>n_i = Σ_l n̂_i"]
+    D --> E
+    E --> F["裁剪：按 min(C/√n_i, 1) 重缩放每样本损失"]
+    F --> G["聚合 + 加高斯噪声 σC·N(0,I) + 优化器步"]
+    H["f-DP 隐私会计<br/>卡方混合 envelope CDF → PRV 组合"] -.->|"定噪声 multiplier，输出 (ε,δ)-DP"| G
+```
 
 ### 关键设计
 

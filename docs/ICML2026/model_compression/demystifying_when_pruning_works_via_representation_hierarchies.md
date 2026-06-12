@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 论文不提新的剪枝算法，而是搭一个**诊断框架**来回答"剪枝为什么挑任务"。它把 LLM 推理沿信息流拆成三段表征空间——嵌入 $h^{(l)}$、logit $z$、概率 $p$，对每一层单独施加剪枝，然后追踪同一个扰动是怎么从 $\Delta h$ 一路传到 $\Delta z$ 再到 $\Delta p$、在哪一步被放大的。整条链路先用实证测量（余弦相似度 + KL 散度）暴露现象，再用二阶 Taylor 展开给出闭式公式钉死成因，最后把单步分析延伸到多步自回归生成、并把多选任务切到"候选 token 子空间"，从而把生成崩溃和非生成鲁棒统一到同一套数学里。代表性剪枝方法取 Wanda / SparseGPT（intra-layer）与 ShortGPT / Attn-Drop / MLP-Drop（inter-layer），代表模型用 Qwen-2.5-7B-Instruct 和 Mistral-7B。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单层剪枝引入扰动 Δh"] --> B["嵌入空间 h<br/>余弦相似度≈1（稳）"]
+    B -->|"LM head 线性投影 z=Wh"| C["logit 空间 z<br/>正交分量被压缩（仍稳）"]
+    C -->|"softmax(z/T) 非线性放大"| D["概率空间 p<br/>按 Var_r(Δz)/(2T²) 指数放大（震荡）"]
+    D --> E{"任务用哪段表征<br/>子空间多大 / 是否多步"}
+    E -->|"非生成：单步 + 候选子空间（尾部稳）"| F["鲁棒：MMLU/BEIR 近无损"]
+    E -->|"生成：完整 vocab + 自回归累积"| G["崩溃：GSM8K/HumanEval→0"]
+```
+
 ### 关键设计
 
 **1. 三空间扰动测量协议：把"扰动在哪一步被放大"用对照实验钉死**

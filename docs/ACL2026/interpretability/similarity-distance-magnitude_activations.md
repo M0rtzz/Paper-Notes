@@ -45,6 +45,22 @@ tags:
 
 SDM 系统包含三层：(1) 冻结的预训练 LM 提供隐藏状态 $\mathbf{h}$；(2) exemplar adaptor（1-D CNN + 线性层）将 $\mathbf{h}$ 映射为紧凑表示 $\mathbf{h}'$ 和新 logits $\mathbf{z}'$；(3) SDM 激活层利用 $\mathbf{h}'$ 计算 Similarity $q$ 和 Distance $d$，与 $\mathbf{z}'$ 结合输出校准的概率分布。在此之上，SDM 估计器通过数据驱动的经验 CDF 分区构建高可靠性区域用于选择性分类。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结预训练 LM<br/>隐藏状态 h"] --> B["exemplar adaptor（1-D CNN + 线性层）<br/>紧凑表示 h′ 与新 logits z′"]
+    B --> C["Similarity（q）<br/>最近邻是否既同类又预测对"]
+    B --> D["Distance（d）<br/>到训练分布距离归一化"]
+    subgraph SDM["SDM 激活与高可靠性区域"]
+        direction TB
+        E["SDM 激活<br/>底数换 (2+q)、温度换 d"] --> F["高可靠性区域<br/>渐进收紧阈值 q′min"]
+    end
+    B -->|新 logits z′| E
+    C -->|底数| E
+    D -->|温度| E
+    F --> G["选择性分类输出"]
+```
+
 ### 关键设计
 
 **1. Similarity（$q$）：用最近邻是否"既同类又预测对"度量可靠性**

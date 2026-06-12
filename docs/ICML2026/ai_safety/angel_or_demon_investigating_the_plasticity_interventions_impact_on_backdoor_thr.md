@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 本文要回答的核心问题是"DRL pipeline 里标配的可塑性干预，到底会让后门更容易还是更难"。它先用一组庞大的受控实验把每种干预对攻击成功率 (ASR) 和良性表现 (BTP) 的影响测出来，再把这些杂乱的数字"翻译"成网络内部的病理变化，最后把诊断出的机理反过来用作攻击设计和检测信号。换句话说，整篇工作是"先大规模量出现象、再诊断出机理、最后把机理派生成攻防工具"这条主线，三块环环相扣。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["大规模受控实验<br/>14,664 cases 测 ASR/BTP 变化谱"] --> B
+    subgraph B["三类病理机理诊断（M1/M2/M3）"]
+        direction TB
+        M1["M1 激活通路扰动<br/>裁剪/重置抢通路"]
+        M2["M2 表征空间压缩<br/>后门梯度正交 → 对齐"]
+        M3["M3 后门梯度放大<br/>SAM 撞尖锐方向"]
+    end
+    B --> C["SCC 鲁棒后门注入框架<br/>Sweeper → Converter → Connector"]
+    B --> D["sharpness 检测信号<br/>实时盯 loss 锐度异常"]
+```
+
 ### 关键设计
 
 **1. 大规模受控实验：把"干预对后门的影响"测成一张谱**

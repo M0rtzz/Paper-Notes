@@ -45,6 +45,23 @@ tags:
 
 ProChatIP 的设计目标是让客服机器人在不打扰用户主诉求的前提下，学会「何时该主动探一句」。它把探测决策从生成中拆出来：每轮对话先由一个轻量级对话策略模块 CS（Qwen3-0.6B 实现）分析对话历史 $h_t$ 和目标信息 $\mathcal{I}$，输出二元决策 $d_t \in \{0,1\}$；再由 LLM 骨干执行——$d_t=1$ 时在客服回复里自然融入探测问题，$d_t=0$ 时正常应答。CS 模块经 SFT 打底、RL 精修的两阶段课程训练，逐步从「会探测」走向「会挑时机探测」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TRAIN["CS 模块两阶段课程训练"]
+        direction TB
+        SFT["SFT 阶段<br/>规则化合成数据 bootstrap 基础探测能力"]
+        SFT --> RL["RL 阶段<br/>用户模拟器 + 双重奖励<br/>（主动探测奖励 + 被动等待奖励）"]
+    end
+    TRAIN -->|训练好的策略| CS
+    subgraph DEC["策略-生成解耦架构（运行时每轮对话）"]
+        direction TB
+        H["对话历史 h_t + 目标信息 I"] --> CS["对话策略模块 CS（Qwen3-0.6B）<br/>输出二元决策 d_t ∈ {0,1}"]
+        CS -->|"d_t=1"| P["LLM 骨干：回复中自然融入探测问题"]
+        CS -->|"d_t=0"| A["LLM 骨干：正常应答"]
+    end
+```
+
 ### 关键设计
 
 **1. SFT 阶段：用规则化合成数据 bootstrap 出基础探测能力**

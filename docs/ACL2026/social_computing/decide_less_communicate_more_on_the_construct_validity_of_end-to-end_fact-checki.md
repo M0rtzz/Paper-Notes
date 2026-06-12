@@ -42,6 +42,27 @@ tags:
 ### 整体框架
 **AI-in-the-loop 标注 pipeline（图 1）**：(1) 从 r/Epilepsy、r/CysticFibrosis、r/ADHD、r/lupus 等 24 个健康相关子论坛的 RedHOT 语料里抽 claim；(2) 用 Llama-3.1-405B-Instruct 重新抽取 PIO（Population / Intervention / Outcome）三元组以稳定专家关注点；(3) 在 Trialstreamer 80 万 RCT 摘要库上用 stella_en_400M_v5 dense retriever 检 10 篇候选 RCT；(4) 把帖子 / claim span / PIO / 10 个抽象 + 自动 tiering 喂进 web 标注界面；(5) 专家先按 PIO + Overall 四个维度（Relevant / Somewhat / Irrelevant）标 abstract 相关性 → Support / Partially Support / Partially Refute / Refute → 整合阶段分 Overall Support 和 Expert Support 两轮 → 写 paragraph 级 plain-language 解释。整个研究分 3 轮，含 1,000 abstract-level 标注 + 100 synthesis 解释，前两轮持续修订 guideline，最后一轮 5 个 claim × 5 个专家 × 50 abstract 用于一致性分析。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RedHOT 24 个健康子论坛<br/>抽取真实声明 claim"] --> S1
+    subgraph S1["AI-in-the-loop 专家标注（设计 1·自动预处理部分）"]
+        direction TB
+        B["自动 PIO 抽取<br/>Llama-3.1-405B，准确率 >90%"] --> C["RCT 检索<br/>Trialstreamer 80 万库 + stella，取 10 篇"]
+        C --> D["自动相关性 tiering<br/>10 篇预分四档"]
+    end
+    S1 --> E["专家标注界面<br/>帖子 + claim + PIO + 10 篇摘要 + tier"]
+    subgraph S2["6 级细粒度 veracity 标签 + 双轨综合（设计 2）"]
+        direction TB
+        F["专家标摘要相关性<br/>P/I/O/Overall 四维"] --> G["专家标 veracity<br/>Support → Refute 多档"]
+        G --> H["双轨综合<br/>Overall Support / Expert Support，各 6 级标签"]
+    end
+    E --> S2
+    S2 --> I["解释优先<br/>paragraph 级 plain-language 多视角解释"]
+    I --> J["一致性分析<br/>Cohen κ → construct validity 诊断"]
+    J -.->|三轮迭代式 guideline 精修（设计 3）| S1
+```
+
 ### 关键设计
 
 **1. AI-in-the-loop 专家标注：把苦力交给机器，只把"证据相关性 + 综合判断"留给人**

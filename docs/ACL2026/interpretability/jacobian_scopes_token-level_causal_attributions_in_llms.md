@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 把 LLM 看成一个函数 $f:\bm{X}_{1:T}\mapsto\bm{y}\in\mathbb{R}^{d_{\text{model}}}$，输出末层 post-LN 的 hidden state $\bm{y}$，再经 $\bm{z}=\bm{W}\bm{y}$、$\bm{p}=\mathrm{softmax}(\bm{z})$ 得到 logit 与预测分布。对每个输入位置 $t$ 可定义输入到输出的 Jacobian $\bm{J}_t=\partial\bm{y}/\partial\bm{x}_t\in\mathbb{R}^{d_{\text{model}}\times d_{\text{model}}}$，但直接算它要 $d_{\text{model}}$ 次反向传播。本文的核心观察是：任何"输入 token 如何影响某种输出性质"的问题都能写成 $\|\bm{v}^\intercal\bm{J}_t\|_2$ 这一个形式，其中方向向量 $\bm{v}$ 就编码了"你想解释什么"。于是只要构造标量 loss $\mathcal{L}=\bm{v}^\intercal\bm{y}$ 做一次反向，就能用 vector-Jacobian product 一次性拿到所有位置的 $\bm{v}^\intercal\bm{J}_t$，统一归因得分 $\mathrm{Influence}_t:=\|\bm{v}^\intercal\bm{J}_t\|_2$ 的几何含义是"$\bm{x}_t$ 上一个 $\varepsilon$-范数扰动能在 $\bm{v}$ 方向上引起的最大位移"。整套流水线只需更换 $\bm{v}$，就分别派生出针对 logit、整个分布、置信度三种解释对象的 Semantic / Fisher / Temperature 三个 Scope。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 token 序列"] --> B["LLM 前向<br/>得到末层 hidden state y、logit z=Wy、预测分布 p"]
+    B --> C["选定方向向量 v<br/>v 编码你想解释什么"]
+    C --> D["Semantic Scope<br/>v = 目标词 unembed 行<br/>解释某个目标 logit"]
+    C --> E["Fisher Scope<br/>v = Fisher 矩阵主特征向量<br/>解释整个预测分布"]
+    C --> F["Temperature Scope<br/>v = 归一化 hidden state<br/>解释模型置信度"]
+    D --> G["构造标量 loss L = vᵀy，单次反向传播<br/>vector-Jacobian product 一次拿到所有位置的 vᵀJ_t"]
+    E --> G
+    F --> G
+    G --> H["归因得分 Influence_t = ‖vᵀJ_t‖₂"]
+```
+
 ### 关键设计
 
 **1. Semantic Scope：用 unembed 行解释某个目标 token 的 logit**

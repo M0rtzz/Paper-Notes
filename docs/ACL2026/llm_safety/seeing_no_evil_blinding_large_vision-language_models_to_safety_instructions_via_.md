@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-将 LVLM 分解为视觉编码器 $\phi_v$、多模态投影器 $\phi_p$ 和语言模型 $\phi_{lm}$。输入序列 $x_{\text{seq}} = [s, h_{\text{img}}, q]$，其中 $s$ 为前缀 token（系统指令和角色标记），$h_{\text{img}}$ 为图像 token，$q$ 为查询 token。在标准对抗目标之上增加两个注意力辅助损失，形成 push-pull 机制。
+将 LVLM 分解为视觉编码器 $\phi_v$、多模态投影器 $\phi_p$ 和语言模型 $\phi_{lm}$。输入序列 $x_{\text{seq}} = [s, h_{\text{img}}, q]$，其中 $s$ 为前缀 token（系统指令和角色标记），$h_{\text{img}}$ 为图像 token，$q$ 为查询 token。每次前向后，先从模型后层聚合出注意力矩阵，再在标准对抗目标之上施加抑制和锚定两个注意力辅助损失，形成一推一拉（push-pull）的机制，最后用投影梯度下降迭代更新对抗扰动 $\delta$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入序列 [前缀 s, 图像 h_img, 查询 q]<br/>叠加对抗扰动 δ"] --> B["LVLM 前向<br/>视觉编码器 φv → 投影器 φp → 语言模型 φlm"]
+    B --> C["后层注意力聚合<br/>对最后 K=6 层注意力取平均 Ā，取目标→前缀 / 目标→图像 块"]
+    C --> D["注意力抑制损失<br/>压低 生成→前缀 注意力（push，禁用安全检索）"]
+    C --> E["注意力锚定损失<br/>抬高 生成→图像 注意力（pull，锚定对抗特征）"]
+    B --> F["对抗目标损失 L_target"]
+    D --> G["总损失 L_total = L_target + α·L_suppress + β·L_anchor"]
+    E --> G
+    F --> G
+    G --> H["投影梯度下降更新对抗扰动 δ"]
+    H -->|"迭代 2000 次"| B
+    H --> I["输出：prompt-universal 对抗图像"]
+```
 
 ### 关键设计
 

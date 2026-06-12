@@ -54,6 +54,28 @@ LiDAR-Camera融合是自动驾驶3D感知的主流范式。Camera提供丰富的
 
 这篇论文要解决 LiDAR-Camera 融合里的跨模态空间不对齐——传感器标定误差和滚动快门让 LiDAR 点投到图像上时错位，错位的深度既污染了 Camera 分支的深度监督、又让语义和几何在 BEV 空间被错误关联。它的核心主张是“先看再融合”：在融合发生之前，先用 2D 目标检测先验定位并修正不对齐，再去做 BEV 融合。整体构建在 BEVFusion 之上——LiDAR 分支经 TransFusion-L 得 LiDAR BEV 特征，Camera 分支经 Swin Transformer + FPN 得图像特征；随后 PGDC 用 2D 框定位错位区做局部深度校正与特征增强，DAGF 把校正后的稀疏深度变成密集的深度+梯度表示，SGDM 用门控注意力融合图像特征与几何表示预测逐像素深度，最后经 LSS 投到 BEV 与 LiDAR BEV 融合做 3D 检测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["LiDAR 点云"] --> LB["LiDAR 分支<br/>TransFusion-L → LiDAR BEV 特征"]
+    I["多视角图像"] --> CB["Camera 分支<br/>Swin Transformer + FPN → 图像特征"]
+    I --> Y["YOLOv9 → 2D 框先验"]
+    subgraph PGDC["先验引导深度校准 PGDC（只修前景-背景边界）"]
+        direction TB
+        DAM["深度对齐模块 DAM<br/>框内 KD-Tree 取 4 关键邻居 → 校正深度"]
+        FEM["特征增强模块 FEM<br/>类别系数放大小目标图像特征"]
+    end
+    Y --> PGDC
+    L --> DAM
+    CB --> FEM
+    PGDC --> DAGF["不连续感知几何融合 DAGF<br/>差异掩码纠错 + 稠密化 → 深度⊕梯度"]
+    DAGF --> SGDM["结构引导深度调制器 SGDM<br/>门控注意力调制 + 残差保语义 → 逐像素深度"]
+    SGDM --> LSS["LSS 投影 → Camera BEV"]
+    LB --> FUSE["BEV 融合"]
+    LSS --> FUSE
+    FUSE --> DET["3D 检测头"]
+```
+
 ### 关键设计
 
 **1. 先验引导深度校准 PGDC：只在前景-背景边界这种错位高发区做修正**

@@ -45,6 +45,21 @@ UnIte 要解决的是一个预算受限的采样问题：给定一个超过 100k
 
 整个循环以平均 EU 的 EMA 作为停止信号：EU 先随训练下降表示模型正在填补缺口，一旦反弹就说明新样本开始冗余或过拟合，此时即便没用满 5k 预算也提前停下。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标域语料（>100k 文档）<br/>+ 固定伪查询预算"] --> B["AU Filtering<br/>BM25 kNN 词法密度过滤低密度噪声文档"]
+    B --> C
+    subgraph LOOP["迭代采样、重采样惩罚与早停（每轮 500 篇，≤10 轮）"]
+        direction TB
+        C["Domain-aware EU Estimation<br/>目标域 IDF × MLM head 词表投射定位知识缺口"] --> D["聚类内采样<br/>score = λ·EU + (1−λ)·Diversity，乘反重复权重"]
+        D --> E["Llama3-8B 生成伪查询 → 微调检索器"]
+        E --> F["重估 EU"]
+    end
+    F -->|"平均 EU(EMA) 进入平台期"| G["输出：适配后的检索器"]
+    F -->|"EU 仍下降且预算未用尽"| C
+```
+
 ### 关键设计
 
 **1. AU Filtering：用模型无关的词法密度先把噪声剔掉**

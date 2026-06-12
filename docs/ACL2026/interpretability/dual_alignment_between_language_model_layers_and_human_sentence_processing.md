@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 方法全程不训练模型，只把 LM 当探针、在阅读时间数据上跑回归。先用 logit-lens 把每个 LM、每个 token、每一层的隐状态都解码成"内部 surprisal"，让 surprisal 从单一标量变成一条按层展开的曲线；再在句法歧义阅读数据上逐层独立拟合"surprisal → slowdown"的线性回归，看哪一层估出的减速最接近真人，并用 D+/D− × ROI/¬ROI 四象限隔离"深层优势"到底出现在哪种数据点；最后把"浅层到深层的预测更新量"（SU/KL/JS）显式抽出来，当作 surprisal 之外的新阅读时间预测特征。输入是文本 token 序列，输出是逐层 surprisal、四象限相关分析和层间更新量对 reading-time 的解释力增益。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["阅读语料 token 序列"] --> B["Logit-Lens 抽层级 surprisal<br/>每层隐状态过 unembedding 得逐层 surprisal<br/>(Tuned-Lens 复核)"]
+    B --> C["逐层独立线性回归<br/>surprisal → slowdown，对人类减速"]
+    C --> D["D+/D− × ROI/¬ROI 四象限 PPP 分析<br/>隔离深层优势只在歧义解决处出现"]
+    D --> E["Probability-Update 三度量<br/>SU / KL / JS：浅深层预测差当认知代价"]
+    E --> F["输出：双重对齐结论<br/>+ JS 作 reading-time 新预测特征"]
+```
+
 ### 关键设计
 
 **1. Logit-Lens 抽层级 surprisal + Tuned-Lens 鲁棒性补充：把"哪一层在预测下一个词"展开成层级曲线。** 要问"人类的快/慢处理对应模型的哪些层"，前提是先把"模型预测"从黑盒拆成按层的序列，这是整篇论文的视角基石。具体做法是对每一层第 $i$ 个 token 的隐状态 $h^{(l)}_{i}$ 套用模型自带的 unembedding 矩阵（带 LayerNorm），得到该层对下一个 token 的预测分布，再算目标词的层级 surprisal $S^{(l)}_t = -\log P^{(l)}(w_t \mid w_{<t})$，subword 用联合概率累加。早期层的 logit-lens 偏置较大，作者用 Tuned-Lens (Belrose 2023) 重复整套实验，确认主结论在更可靠的探针下依然稳定。

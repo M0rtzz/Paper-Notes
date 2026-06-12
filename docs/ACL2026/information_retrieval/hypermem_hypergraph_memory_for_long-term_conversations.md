@@ -45,6 +45,33 @@ HyperMem 用"超图（hyperedge 连接 ≥3 个节点）"代替传统 RAG 的 pa
 
 HyperMem 把流式对话 $X = \{x_t\}_{t=1}^T$ 离线组织成一张"主题—情节—事实"三层超图，在线再用粗到细检索为查询 $q$ 拼出上下文交给 LLM 作答。离线构建分三步走：先让 LLM 做流式边界检测，把对话切成语义完整的 episode 节点 $v^E = (v^E_{\text{dialogue}}, v^E_{\text{title}}, v^E_{\text{episode}})$；再让每个新 episode 检索历史相似 episode，按「初始化 / 新建 / 更新主题」三种 case 聚成 topic 并用超边 $e^E_t \in \mathcal{E}^E$ 把同主题的所有 episode 绑成一组；最后从每个 episode 抽出原子 fact $v^F = (v^F_{\text{content}}, v^F_{\text{potential}}, v^F_{\text{keywords}})$（`potential` 预判这条 fact 能回答哪类 query，`keywords` 供 BM25 召回），用超边 $e^F$ 把同 episode 的 fact 绑成一组。构建完每个节点同时建 BM25 sparse + Qwen3-Embedding-4B dense 双索引，并做一次超图嵌入传播让远距离的同主题 episode 在向量空间靠拢。在线检索沿 Topic→Episode→Fact 逐级展开，每级先 RRF 融合 sparse/dense 排名再过 Qwen3-Reranker-4B 精排，依次取 top-$k^T{=}10$、$k^E{=}10$、$k^F{=}30$，最终把 fact 的 content 与 episode 的 summary 拼成 context 喂给 GPT-4.1-mini 生成答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["流式对话 X = {x_t}"] --> S1
+
+    subgraph S1["三层超图结构（Topic / Episode / Fact）"]
+        direction TB
+        BD["流式边界检测<br/>切出 episode 节点"] --> TA["主题聚合<br/>超边 e^E 绑同主题 episode"]
+        TA --> FE["事实抽取<br/>超边 e^F 绑同 episode 的 fact"]
+    end
+
+    S1 --> IDX["建双索引（脚手架）<br/>BM25 稀疏 + Qwen3 稠密"]
+    IDX --> HP["超图嵌入传播<br/>同超边节点向量靠拢"]
+
+    HP --> Q["查询 q"]
+    Q --> S3
+
+    subgraph S3["粗到细三级检索（每级 RRF 融合 + Reranker 精排）"]
+        direction TB
+        RT["Topic 检索 top-k^T"] --> RE["Episode 检索 top-k^E"]
+        RE --> RF["Fact 检索 top-k^F"]
+    end
+
+    S3 --> CTX["拼接上下文<br/>fact content + episode summary"]
+    CTX --> ANS["GPT-4.1-mini 生成答案"]
+```
+
 ### 关键设计
 
 **1. 三层超图结构（Topic / Episode / Fact）：把两两关系升级成多对多的联合关联**

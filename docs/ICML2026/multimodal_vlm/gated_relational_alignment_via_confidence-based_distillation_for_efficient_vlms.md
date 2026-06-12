@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 teacher 是 frozen 的 BF16 大模型（如 LLaVA-1.5 13B），student 是 group-wise LSQ 量化（默认 INT4 / g=128）的小模型（如 LLaVA-1.5 7B）。两者并行处理同一输入，student 受三种监督：(i) Confidence-Gated DKD（解耦 + 门控的 logit 蒸馏）；(ii) Relational CKA（在 LLM 倒数第二层对 visual token 的 Gram 矩阵做 CKA 对齐，text token 排除）；(iii) Adaptive IB Controller（监控 EMA 平滑后的 $\widehat{\mathcal{L}}_{GDKD}$，动态调整 $\beta$）。weight $W$ 与 per-group scale $s$ 联合更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：同一图像 + 文本"] --> T["Teacher（冻结 BF16）<br/>输出 P_T、视觉 token V_T"]
+    IN --> S["Student：Group-wise LSQ INT4<br/>输出 P_S、视觉 token V_S"]
+    T --> G["置信度门控解耦蒸馏 GDKD<br/>按 teacher 熵加权 TCKD + NCKD"]
+    S --> G
+    T --> R["关系中心化核对齐 RCKA<br/>倒数第二层 visual token Gram 矩阵做 CKA"]
+    S --> R
+    G --> L["总损失 L = L_CE + β(t)·L_GDKD + γ·L_RCKA"]
+    R --> L
+    S -->|任务损失 L_CE| L
+    L --> C["自适应 IB 控制器<br/>监控 EMA 平滑 L_GDKD，动态调 β(t)"]
+    C -->|更新 β(t)| L
+    L -->|STE 反传，联合更新 W 与每组 scale s| S
+```
+
 ### 关键设计
 
 **1. 置信度门控的解耦蒸馏（GDKD）：只跟"teacher 后验最 sharp"的 token 学**

@@ -42,6 +42,24 @@ VR 草图绘制让用户直接在 3D 空间中探索和迭代想法，消除了 
 
 论文的核心主张就一句话：笔画顺序很重要。人画图时先勾全局轮廓再补细节，这种从粗到细的次序蕴含了结构先验，而以往把 VR 草图当无序点云的方法把它全丢了。VRSketch2Shape 据此搭了一条三段链路——先用一条无需训练的几何管线从 3D 网格批量造出带时序的合成草图解决数据稀缺，再用序列感知的 BERT 编码器把有序笔画编码成条件，最后用扩散式生成器 SDFusion 从该条件生成 3D 形状，编码器与扩散器端到端联合训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["合成草图生成管线（无需训练）"]
+        direction TB
+        M["3D 网格"] --> P["表面采样 2048 点<br/>Sharp Edge + 曲率筛显著区"]
+        P --> B["拟合 Bézier 样条<br/>剔冗余点 + 合并近端点笔画"]
+        B --> O["端点邻近建连接图<br/>DFS 遍历定笔画顺序"]
+    end
+    O --> SK["有序 VR 草图<br/>合成 20k + 真实 900"]
+    SK --> ENC["序列感知草图编码器<br/>SEP/EoS 标记 + Fourier/笔画/点嵌入 → 6 层 BERT"]
+    ENC --> COND["草图条件嵌入"]
+    COND --> GEN["扩散式 3D 形状生成<br/>SDFusion U-Net 条件去噪 + DDIM 采样"]
+    GEN --> VQ["VQ-VAE 解码"]
+    VQ --> OUT["3D 形状"]
+    ENC -. 端到端联合训练 .- GEN
+```
+
 ### 关键设计
 
 **1. 无需训练的合成草图生成管线：用纯几何启发式批量造时序草图，绕开标注稀缺**

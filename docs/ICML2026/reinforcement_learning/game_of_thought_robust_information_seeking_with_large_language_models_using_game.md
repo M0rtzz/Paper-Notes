@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 问题被形式化为四元组 $(\mathcal{S},\mathcal{Q},f,g)$：$\mathcal{S}$ 是候选 item 集合，$\mathcal{Q}$ 是 LLM 能生成的自然语言问题集合，$f:\mathcal{Q}\times\mathcal{S}\to\{0,1\}$ 是 LLM 充当 oracle 的答案函数，$g$ 是“给定剩余 item 集合时 LLM 提议的 $m$ 个候选问题”。每轮 GoT 的 4 步流程：(1) 用 LLM 做 depth-limited 模拟，沿 candidate questions 构出树；(2) 把树翻译成 EFG 子博弈；(3) 用 CFR（LiteEFG）求该子博弈的近似 NE；(4) 从 NE 的提问者分布里采样下一个问题。重复直至 $|S(H)|=1$。
 
+下图把这套"展开子博弈→求 NE→采样提问→更新候选集"的回环画出来：SLS/SLSR 形式化（设计 1）落在候选问题与 EFG 翻译节点上，Subgame Search（设计 2）是中间那组 on-demand 构造+CFR 求解，加权支付（设计 3）是 EFG 节点上的可选支路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前一致集合 S(H_t)"] --> B["LLM 提候选问题 g(·)<br/>列出 m 个候选（SLSR 限定动作空间）"]
+    subgraph SG["Subgame Search：on-demand 构造 + CFR 求局部 NE"]
+        direction TB
+        C["深度受限模拟<br/>LLM 充当 oracle f 把 S 切是/否，递归 d 步成模拟树"]
+        D["翻译成 EFG 子博弈<br/>对手在根重选分布；叶支付 d(l)−1+h(l)<br/>加权时支付换成 w(s)·|H|"]
+        E["CFR（LiteEFG）求近似 NE"]
+        C --> D --> E
+    end
+    B --> C
+    E --> F["从提问者随机化策略采样下一题"]
+    F --> G["问出问题，oracle 答，更新一致集合 S(H)"]
+    G -->|"剩余 > 1 个"| A
+    G -->|"只剩 1 个"| H["输出：识别出唯一 item"]
+```
+
 ### 关键设计
 
 **1. SLS / SLSR / WSLS 形式化：把"LLM 该问哪个问题"写成可严格分析的两人零和 EFG**

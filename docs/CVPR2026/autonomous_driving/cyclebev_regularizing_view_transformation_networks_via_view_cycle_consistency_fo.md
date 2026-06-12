@@ -41,6 +41,22 @@ tags:
 
 BEV 语义分割的难点在于透视到正射的映射受深度模糊和遮挡影响，小目标和被遮挡物体常常丢失。CycleBEV 不改推理结构，而是在**训练时**加一圈正则：训练一个逆视角变换（IVT）网络把预测的 BEV 图再「翻译」回多视角透视（PV）分割图，用循环一致性逼着主模型把 BEV 学准；同时配上高度几何正则和跨视角隐空间对齐两项辅助目标。推理时 IVT 和所有辅助分支全部丢弃，只跑原始 VT 模型，**零额外推理开销**。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["环视相机图像"] --> B["VT 模型<br/>(LSS / CVT / PETRv2 / BEVFormer)"]
+    B --> C["预测 BEV 分割图 + 高度图"]
+    subgraph IVT["逆视角变换（IVT）网络"]
+        direction TB
+        C --> D["CNN 编码器 → 多分辨率 BEV 特征"]
+        D --> E["双分支 IVT 编码器<br/>交叉注意力更新 PV 查询"]
+        E --> F["解码 N_c 张 PV 分割图"]
+    end
+    F --> G["三项训练时正则目标<br/>L_Cycle 语义循环一致性<br/>L_Height 高度几何<br/>L_Align 隐空间对齐"]
+    G --> H["梯度回传，正则化 VT 模型"]
+    H -.->|"推理时丢弃 IVT，零开销"| B
+```
+
 ### 关键设计
 
 **1. 逆视角变换（IVT）网络：给 PV↔BEV 补上「逆映射」这一环**

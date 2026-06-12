@@ -18,7 +18,7 @@ tags:
 **会议**: CVPR 2026  
 **arXiv**: [2603.20738](https://arxiv.org/abs/2603.20738)  
 **代码**: [https://github.com/QunjieHuang/SATTC-CVPR2026](https://github.com/QunjieHuang/SATTC-CVPR2026)  
-**领域**: LLM评测  
+**领域**: 时间序列  
 **关键词**: EEG解码, 跨被试检索, 无标签校准, hubness缓解, 相似度矩阵
 
 ## 一句话总结
@@ -41,6 +41,17 @@ tags:
 这篇论文要解决的是跨被试EEG-to-image检索的"测试时排名不可靠"问题：编码器已经训好了，但换一个新被试上线时，谁都不想为它重新标注数据、重新微调网络。SATTC的做法是把整个问题降维成"校准一张相似度矩阵"——冻结EEG编码器 $f_{\text{eeg}}$ 和图像编码器 $f_{\text{img}}$，测试时拿它们生成一个 $|Q| \times |C|$ 的相似度矩阵 $S_{\text{new}}$（行是query脑电，列是候选图像类别），SATTC只是一个作用在这张矩阵上的算子 $F: S_{\text{new}} \mapsto S_{\text{final}}$，不碰任何网络权重。
 
 矩阵进来后走三步：先用被试自适应白化把不同被试的脑电特征拉回同一套统计坐标系，再让一个"几何专家"按局部密度自适应地做CSLS缩放、一个"结构专家"从排名关系里挖出可信匹配和虚假热门，最后两个专家在logit空间相加融合，$S_{\text{final}} = \alpha S_{\text{geom}} + \beta S_{\text{struct}}$，输出校准后的检索得分。整个流程无标签、无训练，对底层用什么编码器完全无所谓。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 EEG / 图像编码器<br/>生成相似度矩阵 S_new"] --> B["被试自适应白化 SAW<br/>按被试估计 μ_s,Σ_s 白化 → 拉回共享球面"]
+    B --> C["几何专家：自适应 CSLS<br/>按行 / 列局部密度选邻域 k 抑制 hubness"]
+    B --> D["结构专家<br/>互最近邻锚点 + 双向 top-L + 惩罚热门 hub"]
+    C --> E["乘积专家融合<br/>S_final = α·S_geom + β·S_struct"]
+    D --> E
+    E --> F["校准后检索得分<br/>最近邻检索图像"]
+```
 
 ### 关键设计
 

@@ -52,6 +52,22 @@ CAPS 在每个决策步运行如下流程：
 
 所有计算都在推理时进行，不更新任何参数，完全 plug-in。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：指令 I + 观测 V_t + 历史 H_t"] --> B["SNR 元认知门控<br/>SNR=log|𝒜|−ℋ，按策略熵 ℋ 判断"]
+    B -->|"高 SNR（低熵）"| C["System 1：贪心采样<br/>几乎零额外开销"]
+    B -->|"低 SNR（高熵）= Pivotal Window"| D
+    subgraph S2["System 2：块级自回归 MCMC"]
+        direction TB
+        D["Proposal：保留 chunk 前缀<br/>用温度 1/α 重采样后缀 → τ_new"]
+        D --> E["Acceptance：幂分布 π∝p^α 下<br/>MH 接受率比较 τ_new 与 τ_old"]
+        E -->|"未满 N_MCMC 次，迭代精修"| D
+    end
+    C --> F["输出 action chunk"]
+    E -->|"达到 N_MCMC 次"| F
+```
+
 ### 关键设计
 
 **1. 幂分布采样：把全局轨迹概率锐化，等价于隐式 lookahead**
@@ -66,7 +82,7 @@ $$\text{SNR}_t=D_{KL}(\pi_\theta\|\mathcal{U}_{\text{unif}})=\log|\mathcal{A}|-\
 
 由于 SNR 与策略 Shannon 熵严格线性负相关，直接用 $\mathcal{H}>\gamma$ 当高效代理判据就行。求解 $\mathcal{L}(\pi)=\mathbb{E}[\text{Error}]+\lambda\cdot\mathcal{C}(\pi)$ 得到 hard-threshold switching：高熵触发 CAPS 的迭代精修、低熵走 greedy。从信息几何看，高熵时刻正对应概率流形上的"分岔点"，也就是漂移最易发生的 Pivotal Window，把算力精准砸在这里。
 
-**3. Block-based Autoregressive MCMC：用局部 chunk 接受逼近全局轨迹目标**
+**3. 块级自回归 MCMC（Block-based Autoregressive MCMC）：用局部 chunk 接受逼近全局轨迹目标**
 
 直接在整条轨迹上跑 MCMC 计算不可行，CAPS 退到 chunk 级别做 Metropolis-Hastings。Proposal $q(\tau_{new}|\tau_{old})$ 显式定义为"保留当前 action chunk 的 prefix，用温度 $1/\alpha$ 重采样 suffix"，接受率为
 

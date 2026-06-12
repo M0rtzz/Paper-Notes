@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 数据来自 NCTE elementary mathematics classroom transcripts，共 1,600 多节课，切成 6,005 个 15 分钟片段，并由专家按 CLASS 框架标注。本文只研究 Instructional Support 下的 Quality of Feedback 维度，分数为 1-7。训练集 4,775 段，测试集 1,230 段，同一班级不会跨 split。对于每个转录片段，模型先输出 QoF 分数；解释方法再给出最重要的句子排名；系统逐个删除 top-10 句子并重新评分，用平均连续预测变化 $\overline{\Delta}$ 衡量解释是否真的命中模型依赖的证据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["转录片段输入<br/>NCTE 15 分钟切段"]
+    subgraph SCORER["PLM 与 LLM 双评分器设置"]
+        direction TB
+        P["PLM 路径<br/>微调，逐句 [CLS]→注意力聚合→回归头"]
+        L["LLM 路径<br/>few-shot prompt 直接打分"]
+    end
+    A --> SCORER
+    SCORER --> S["QoF 分数（1-7）"]
+    subgraph EXPL["句子级解释与删除检验"]
+        direction TB
+        E["句子级排名<br/>PLM 跑 SHAP / LLM 返回 top-10 句"]
+        E --> D["删除检验<br/>逐句删 top-10 重评分，量 Δ̄ vs 随机删除"]
+    end
+    S --> EXPL
+    EXPL --> T["跨模型一致性评估<br/>SHAP 句删 LLM / LLM 句删 PLM"]
+    T --> O["忠实度结论"]
+```
+
 ### 关键设计
 
 **1. PLM 与 LLM 双评分器设置：先把两条技术路线摆在同一张桌子上，才能看清解释方法到底依附于谁**

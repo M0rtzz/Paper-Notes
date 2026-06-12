@@ -48,6 +48,17 @@ tags:
 
 Stable Spike 想解决的是 SNN 在不同时间步脉冲图差异过大、低延迟下早期时间步尤其混乱的问题。它不去改神经元动力学，而是在训练阶段加上**双一致性优化**：一条线从相邻时间步的脉冲图里用 AND 位运算抽出「稳定脉冲骨架」，把原始脉冲图往这个锚点上拉齐；另一条线在稳定脉冲发放率上注入离散噪声，逼模型对扰动给出一致预测。两条线合到同一个目标里训练，推理时完全不增加额外结构：$\mathcal{L}_{total} = \mathcal{L}_{CE} + \beta \mathcal{L}_{spike} + \gamma \mathcal{L}_{noise}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多时间步脉冲图 S_t<br/>SNN backbone 前传"] --> B["AND 位运算解耦稳定脉冲<br/>相邻步按位 AND → 稳定脉冲发放率 Φ̃ 当锚点"]
+    B --> C["脉冲一致性损失<br/>L_spike = MSE(Φ̃, Φ) 拉齐原始脉冲图"]
+    B --> D["振幅感知脉冲噪声<br/>ε ~ Bernoulli(Φ̃)，Φ_noise = Φ̃ + ε"]
+    D --> E["扰动一致性损失<br/>L_noise = KL(O ‖ O_noise)"]
+    C --> F["总目标<br/>L = L_CE + β·L_spike + γ·L_noise"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. AND 位运算解耦稳定脉冲：把跨时间步一致的语义骨架挑出来当锚点**

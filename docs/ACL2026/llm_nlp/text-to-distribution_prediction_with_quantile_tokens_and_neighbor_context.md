@@ -41,7 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定文本输入（如Airbnb房源描述或Stack Overflow问题），系统先通过密集嵌入检索Top-K个语义相似的邻居实例，将邻居的标题和9个代表性经验分位数拼接到输入中。然后在输入序列末尾附加99个可学习的分位数token，送入预训练Transformer（Qwen3系列），利用各分位数token的隐状态通过共享线性回归器预测对应的分位数值，输出完整的99分位条件分布。
+给定文本输入（如Airbnb房源描述或Stack Overflow问题），系统先通过密集嵌入检索Top-K个语义相似的邻居实例，将邻居的标题和9个代表性经验分位数拼接到输入中。然后在输入序列末尾附加99个可学习的分位数token，送入预训练Transformer（Qwen3系列），利用各分位数token的隐状态通过共享线性回归器预测对应的分位数值，输出完整的99分位条件分布。训练时采用 $\ell_1$ Wasserstein 损失在经验分位数目标上拟合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["文本输入<br/>(房源描述 / Stack Overflow 问题)"]
+    subgraph RAG["检索增强分布估计"]
+        direction TB
+        R1["Qwen3-Embedding-8B 稠密嵌入<br/>检索 Top-K=8 语义相似邻居"]
+        R2["拼接邻居标题 + 9 个经验分位数"]
+        R1 --> R2
+    end
+    IN --> RAG
+    subgraph QTR["Quantile Token Regression"]
+        direction TB
+        Q1["序列末尾附加 99 个分位数 token ⟨Qτ⟩"]
+        Q2["Transformer (Qwen3, LoRA 微调)<br/>各 token 自注意力收集差异化信息"]
+        Q3["共享线性回归器读取各分位数隐状态"]
+        Q1 --> Q2 --> Q3
+    end
+    RAG --> QTR
+    QTR --> OUT["99 分位条件分布"]
+    OUT -->|训练目标| LOSS["ℓ1 Wasserstein 损失<br/>匹配经验分位数, 避开 pinball 偏差"]
+```
 
 ### 关键设计
 

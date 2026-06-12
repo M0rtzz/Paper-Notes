@@ -44,6 +44,17 @@ FAB 把上层非凸、下层 $\mu$-强凸的分布式双层问题
 $\min_x \mathcal{F}^*(x)=F(x,y^*(x))$，$y^*(x)=\arg\min_y G(x,y)$
 重写为带辅助变量的等价 min-max 形式 $\min_{x,y}\max_z \frac{1}{n}\sum_i \mathcal{L}_i(x,y,z)$，其中 $\mathcal{L}_i = f_i(x,y)+\lambda(g_i(x,y)-g_i(x,z))$。每个 agent $i$ 在每轮维持两组变量：决策变量 $(x_i^k,y_i^k,z_i^k)$ 与梯度追踪变量 $(t_{x,i}^k,t_{y,i}^k,t_{z,i}^k)$。每轮通过 pull（行随机矩阵 $A^k$）从入邻居聚合决策，本地评估 $\nabla \mathcal{L}_i$，再通过 push（列随机矩阵 $B^k$）传递梯度追踪量，三步循环到底。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["分布式双层问题<br/>上层非凸 · 下层强凸"] --> B["值函数惩罚重写<br/>引入辅助变量 z，展平为单层 min-max"]
+    B --> C["Step1 决策变量更新<br/>pull 行随机阵 A^k 聚合 (x,y,z)"]
+    C --> D["Step2 本地梯度评估<br/>算 ∇L_i：(d_x, d_y, −d_z)"]
+    D --> E["Step3 追踪变量更新<br/>push 列随机阵 B^k + 梯度差分自校正"]
+    E -->|"k → k+1，共 K 轮"| C
+    E --> F["收敛到平稳点<br/>λ 与 η 配比 → O(K^−2/3)"]
+```
+
 ### 关键设计
 
 **1. AB/Push-Pull + 值函数惩罚的耦合：把单层通信原语无缝扩展到双层，全程不碰二阶导**

@@ -39,7 +39,23 @@ tags:
 
 ### 整体框架
 
-FlowMotion 想解决的痛点很具体：现有 training-free 运动迁移要么靠模型内部中间层（attention map / diffusion feature）做梯度回传，显存动辄 51–89 GB、推理几百上千秒，要么绑死特定架构、还得额外 inversion。作者的关键观察是——flow-based T2V 模型在去噪前几步的 **latent prediction**（单步估出的干净 latent）就已经编码了粗糙的运动轨迹和时序动态，外观细节是之后才逐步累积的。于是 FlowMotion 干脆直接在这个预测输出上做文章：先把源视频编码成干净 latent $z_0^{src}$、前向加噪到 $z_t^{src}$、过模型预测速度 $v_t^{src}$，算出运动表示 $\hat{z}_0^{src}(t) = z_t^{src} - t \cdot v_t^{src}$（无需 inversion）；目标视频生成时，在去噪前 10 步对目标 latent 算出它的 latent prediction 并与源运动表示对齐，**梯度只回传到 latent 本身、不穿过模型内部层**，所以显存极低、架构无关。
+FlowMotion 想解决的痛点很具体：现有 training-free 运动迁移要么靠模型内部中间层（attention map / diffusion feature）做梯度回传，显存动辄 51–89 GB、推理几百上千秒，要么绑死特定架构、还得额外 inversion。作者的关键观察是——flow-based T2V 模型在去噪前几步的 **latent prediction**（单步估出的干净 latent）就已经编码了粗糙的运动轨迹和时序动态，外观细节是之后才逐步累积的。于是 FlowMotion 干脆直接在这个预测输出上做文章：先把源视频编码成干净 latent $z_0^{src}$、前向加噪到 $z_t^{src}$、过模型预测速度 $v_t^{src}$，算出运动表示 $\hat{z}_0^{src}(t) = z_t^{src} - t \cdot v_t^{src}$（无需 inversion）；目标视频生成时，在去噪前 10 步对目标 latent 算出它的 latent prediction，先经 **Velocity Regularization** 稳定速度更新，再用 **Flow Guidance** 与源运动表示对齐，**梯度只回传到 latent 本身、不穿过模型内部层**，所以显存极低、架构无关。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["源视频"] --> SENC["编码为干净 latent + 前向加噪<br/>（免 inversion）"]
+    SENC --> SMOT["空 prompt 预测速度<br/>→ 源运动表示（latent prediction）"]
+
+    TGT["目标噪声 latent"] --> TVEL["预测目标速度"]
+    TVEL --> VR["Velocity Regularization<br/>沿累积方向投影、衰减正交分量"]
+    VR --> TPRED["目标 latent prediction"]
+
+    SMOT --> FG["Flow Guidance<br/>Latent Alignment + Difference Alignment"]
+    TPRED --> FG
+    FG -->|"前 10 步，梯度只回传 latent"| TGT
+    FG --> OUT["目标视频"]
+```
 
 ### 关键设计
 

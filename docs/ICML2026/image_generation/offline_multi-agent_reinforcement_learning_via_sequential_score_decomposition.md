@@ -48,25 +48,30 @@ OMSD 整体是一个 CTDE 框架下的 actor-critic,但 actor 端的行为约束
 
 整套流程的关键就一句:把"独立扩散 + 独立正则"(DOM2 的做法)替换为"沿链式分解的条件扩散 + 条件正则",代价仅是训练时多一次前缀采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线数据 D：多源混合，联合行为高度多模态"] --> B["序列链式分解<br/>μ(a|s) = ∏ μᵢ(aᵢ | s, a&lt;ᵢ)，以前缀动作为条件"]
+    B --> C["每 agent 一个条件扩散分数模型<br/>蒸馏条件分数 ∇log μᵢ(aᵢ | s, a&lt;ᵢ)"]
+    A --> D["集中式 IQL → 联合值 Q^tot"]
+    C --> E["Q^tot 梯度 + 序列前缀 + 确定性 actor<br/>轮询 i=1→n，梯度 = ∇Q + (1/β)·分数正则"]
+    D --> E
+    E -->|训练完成| F["执行：各 agent 并发独立 πᵢ(oᵢ)，去中心化"]
+```
+
 ### 关键设计
 
-1. **联合行为策略的序列链式分解(Sequential Score Decomposition)**:
+**1. 序列链式分解（Sequential Score Decomposition）：把“边缘对齐”换成“前缀条件对齐”，从根上消解 CMS**
 
-    - 功能:替代传统的 $\mu(\bm{a}|s)=\prod_i\mu_i(a_i|s)$ 边缘分解假设,改用**精确的**概率链式分解 $\mu(\bm{a}|s)=\prod_{i=1}^n \mu_i(a_i|s,a_{<i})$。
-    - 核心思路:把多 agent 的协调写成"agent $i$ 看到 agent $1\ldots i-1$ 选了什么之后再决策"的串行条件分布。这样 KL 正则项 $D_{\mathrm{KL}}[\pi_{\theta_i}(\cdot|s)\|\mu_i(\cdot|s,a_{<i})]$ 里的参考分布天然是"在前缀模态下的条件分布",而不是把所有模平均掉的边缘——这就消解了 CMS。
-    - 设计动机:Proposition 3.1 证明了独立分解在 $n$ agent 双模态任务下会让真分布与重构分布的 TV 距离趋于 1,推论 3.2 进一步把它推广到 $K$ 模态 → $K^n$ 个虚假模。链式分解是**最便宜的无偏修复**——只引入"训练时顺序"这一种序结构,不需要建模整个 $\mu(\bm{a}|s)$。
+现有离线 MARL 几乎都默认联合行为可按 $\mu(\bm{a}|s)=\prod_i\mu_i(a_i|s)$ 拆成各 agent 的边缘，再把每个 agent 单独正则到自己的边缘上。可一旦数据是多专家混合、联合分布多模态，这种边缘分解就出事：Proposition 3.1 给出的 Combinatorial Mode Shift（CMS）反例显示，独立学边缘会让重构的联合分布摊到 $K^n$ 个虚假模、与真分布的 TV 距离趋于 1（推论 3.2 把它从双模态推广到 $K$ 模态）——“边缘对齐”在多模态下等于“联合几乎完全错位”到没人采过的 OOD 联合动作。OMSD 改用概率链式法则做**精确**分解 $\mu(\bm{a}|s)=\prod_{i=1}^n \mu_i(a_i|s, a_{<i})$，让 agent $i$ 的决策以“前缀 agent $1\ldots i-1$ 已选的动作”为条件。这样每个 agent 的 KL 正则项 $D_{\mathrm{KL}}[\pi_{\theta_i}(\cdot|s)\|\mu_i(\cdot|s,a_{<i})]$ 的参考分布天然是“前缀模态下的条件分布”而非被平均掉的边缘，CMS 自然消解。它是**最便宜的无偏修复**：只引入“训练时顺序”这一种序结构，不必显式建模整个 $\mu(\bm{a}|s)$，也不需要集中规划器。
 
-2. **每 agent 一个条件扩散分数模型 + 低噪声分数蒸馏(沿用 SRPO 风格)**:
+**2. 每 agent 一个条件扩散分数模型：只当分数估计器，不当采样器（沿用 SRPO 风格）**
 
-    - 功能:用扩散模型隐式建模复杂的 $\mu_i(a_i|s,a_{<i})$,但**不**用它做生成采样,只用它的去噪网络当**分数估计器**。
-    - 核心思路:每个 agent 训练一个 DDPM-style 网络 $\epsilon_i(a_i^k, k| s, a_{<i})$,损失就是标准的去噪损失 $\mathcal{L}_{\text{denoise}}=\mathbb{E}\|\epsilon-\epsilon_i(a_i^k,k|s,a_{<i})\|^2$;策略更新时取 $t\to 0$ 极限,$-\epsilon_i^*/\sigma_t$ 就是条件分数 $\nabla_{a_i}\log\mu_i$ 的近似,直接加到 actor 梯度里——见 Eq. (6) 的 OMSD 实际梯度公式。
-    - 设计动机:(a) 多模态分布下,GMM / normalizing flow 这类轻量密度估计器要么 mode collapse 要么 mode coverage 差(附录 D.7.5 有对比);(b) Diff-QL/MADiff 那种"扩散模型做 actor"在执行时要跑几十步去噪,推理成本太高,还容易在低质量数据上累计采样误差。OMSD 只用扩散模型当"梯度方向给定器",一步前向 = 一个分数,推理时根本不调用扩散模型。
+链式分解里的条件分布 $\mu_i(a_i|s,a_{<i})$ 本身高度多模态，GMM、normalizing flow 这类轻量密度估计器要么 mode collapse、要么 mode coverage 差（附录 D.7.5 有对比）。OMSD 为每个 agent 训练一个 DDPM 式条件扩散模型 $\epsilon_i(a_i^k, k| s, a_{<i})$，损失就是标准去噪损失 $\mathcal{L}_{\text{denoise}}=\mathbb{E}\|\epsilon-\epsilon_i(a_i^k,k|s,a_{<i})\|^2$。关键是它**不**用扩散模型做生成采样——那样执行时要跑几十步去噪、推理成本高还会在低质量数据上累计采样误差（Diff-QL/MADiff 的痛点）；OMSD 沿用 SRPO 思路，只取低噪声极限 $t\to 0$，此时 $-\epsilon_i^*/\sigma_t$ 就近似条件分数 $\nabla_{a_i}\log\mu_i(a_i|s,a_{<i})$，一步前向就给出一个梯度方向直接加进 actor 梯度（见 Eq. (6)）。这样既用扩散模型的表达力吃下多模态，又把推理成本压到与普通策略一样、根本不调用扩散模型。各 agent 的分数模型还**完全可并行**预训练、与 agent 数 $n$ 解耦，论文一直扩到 6-HalfCheetah。
 
-3. **集中式 $Q^{tot}$ 梯度 + 序列前缀条件 + 确定性 actor 的三件套**:
+**3. $Q^{tot}$ 梯度 + 序列前缀 + 确定性 actor：把方法落成一条可执行的策略梯度**
 
-    - 功能:把方法落地为一个具体的策略梯度——见 Eq. (6):$\nabla_{\theta_i}\mathcal{L}^i = \mathbb{E}[\nabla_{a_i}Q_\phi(s,\bm{a}) + \frac{1}{\beta}\cdot(-\epsilon_i^*/\sigma_t)]\nabla_{\theta_i}\pi_{\theta_i}(s)$,其中前缀 $a_{<i}^{\mathrm{new}}$ 是本轮已更新策略现采、后缀走老策略采样且不反传梯度。
-    - 核心思路:由 IQL 学到的 $Q^{tot}$ 给出"往哪个方向更赚",条件扩散分数给出"待在数据支持的哪个模态里";二者相加得到一个**模态内的爬山方向**。每轮策略更新按 agent 索引顺序滚动,后面 agent 用前面 agent 刚更新出的动作做条件,从而把"协调"压到训练时;执行时所有 agent 并发独立动作,完全 decentralized。
-    - 设计动机:为什么用确定性 actor 而不是随机 actor?因为前缀采样的方差会沿链式累积,随机 actor 会让条件扩散模型每次拿到的 $a_{<i}$ 跳来跳去,分数估计噪声爆炸;DiLac 确定性策略既保住表达能力又稳定了 prefix 信号(附录 D.7.1/D.7.4 显示对更新顺序不敏感,说明序列结构是"训练时协调机制"而非强归纳偏置)。
+有了分数估计器，还要把“往哪走更赚”和“待在数据支持的模态里”合成一个更新方向。OMSD 用集中式 IQL 先学一个联合值 $Q^{tot}(s,\bm{a})$，策略更新按 Eq. (6) 取 $\nabla_{\theta_i}\mathcal{L}^i = \mathbb{E}[\nabla_{a_i}Q_\phi(s,\bm{a}) + \frac{1}{\beta}\cdot(-\epsilon_i^*/\sigma_t)]\nabla_{\theta_i}\pi_{\theta_i}(s)$——前一项是 critic 给的“增益方向”，后一项是条件扩散分数给的“留在模态内”约束，二者相加得到一个**模态内的爬山方向**。每轮按 agent 索引 $i=1\to n$ 滚动更新，agent $i$ 的前缀 $a_{<i}^{\mathrm{new}}$ 用本轮**已更新**的 $\{\pi_j^{\mathrm{new}}\}_{j<i}$ 现采，后缀动作只用于估 $Q^{tot}$ 梯度、不反传——这就把“协调”压进了训练时。actor 之所以取**确定性**（DiLac）而非随机策略，是因为前缀采样的方差会沿链累积，随机 actor 会让条件扩散每次拿到的 $a_{<i}$ 跳来跳去、分数估计噪声爆炸；确定性策略既保住表达力又稳住前缀信号（附录 D.7.1/D.7.4 显示对更新顺序不敏感，说明序列结构是“训练时协调机制”而非强归纳偏置）。执行时所有 agent 并发独立调用 $\pi_{\theta_i}(o_i)$，完全去中心化。
 
 ### 损失函数 / 训练策略
 - 预训练:`centralized IQL` 学 $Q^{tot}$;每个 agent 独立训练 $\epsilon_i$,损失 = 条件去噪损失 (Eq. 1)。所有扩散模型**完全可并行**,与 agent 数 $n$ 解耦,scalable 到大 team(论文做到 6-HalfCheetah)。

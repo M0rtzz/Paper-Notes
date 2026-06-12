@@ -43,6 +43,28 @@ Ryze 是一个端到端 workflow，而不是单一模型结构。它从原始 PD
 ### 整体框架
 输入包括一批生物医学论文 PDF、base VLM（论文中使用 Qwen3-VL-8B）和一个目标评测 benchmark（LAB-Bench）。Ryze 先将 PDF 切成文本块、figure、table 和 caption，并恢复正文里的 figure/table cross-reference；然后为每个问题检索关联证据，生成带完整 evidence 的 QA；接着按约 1M token 的增量反复合成、SFT、评测，当 SFT 提升停滞后切换到 GRPO；最后通过 benchmark category 的弱项诊断触发新一轮 paper 搜索和数据增强。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["生物医学论文 PDF + base VLM + 目标 benchmark"]
+    subgraph S1["图表感知抽取与三段式清洗"]
+        direction TB
+        A["Surya 版面检测<br/>切文本 / 图 / 表 / caption"] --> B["文本转 Markdown<br/>恢复图表 cross-reference"]
+        A --> C["GLM-OCR 抽图表<br/>表格转 HTML"]
+        B --> D["Qwen3 三段式清洗<br/>幻觉检测 + 术语修复 + 一致性检查"]
+        C --> D
+    end
+    IN --> S1
+    S1 --> E["证据增强 QA 合成<br/>种子重写并 grounding 到完整证据包"]
+    subgraph S3["进度门控的 SFT→GRPO 训练闭环"]
+        direction TB
+        F["SFT：每约 1M token 训练并评测"] -->|准确率停滞| G["GRPO：强化证据推理链"]
+        G --> H["benchmark 类别弱项诊断"]
+    end
+    E --> F
+    H -->|触发新一轮取论文| IN
+```
+
 ### 关键设计
 
 **1. 图表感知抽取与三段式清洗：先把 PDF 变成可信的结构化证据库，再谈合成**

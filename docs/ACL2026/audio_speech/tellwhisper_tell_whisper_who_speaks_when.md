@@ -45,6 +45,17 @@ tags:
 
 TellWhisper以Whisper large-v3-turbo为骨干，目标是从多人对话语音中一次性预测"谁在何时说了什么"，把传统流水线里分裂的说话人日志和ASR收进同一个编码器里联合建模。多说话人语音先过卷积层得到帧级特征，Hyper-SD据此估计每帧的说话人活动概率；这些活动信息连同时间索引一起喂给TS-RoPE，构成注入自注意力的多维位置编码，让"何时"与"谁"在注意力内部就被耦合起来；最后结构化内容预测器以自回归方式吐出"说话人标签+起止时间戳+转录文本"的有序序列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多说话人对话语音"] --> B["卷积层 → 帧级特征"]
+    B --> C["Hyper-SD<br/>WavLM 多层聚合 → Conformer → Poincaré 球双曲原型<br/>输出每帧说话人活动概率 π"]
+    C -->|"说话人活动概率 + 时间索引"| D["TS-RoPE<br/>时间子空间 / 说话人子空间交替旋转<br/>Query 端对非活跃说话人加相位偏置"]
+    D --> E["Whisper 编码器自注意力<br/>时间-说话人联合建模"]
+    E --> F["结构化内容预测器<br/>自回归生成 ⟨spk⟩⟨t_start⟩⟨text⟩⟨t_end⟩"]
+    F --> G["谁在何时说了什么"]
+```
+
 ### 关键设计
 
 **1. TS-RoPE：让旋转位置编码同时携带时间与说话人身份**

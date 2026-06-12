@@ -40,13 +40,13 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文要回答 "方向和幅值谁对 transformer 更重要"，难点是这两个量天然不可比——扰一个小角度和缩一个小因子在表征空间里位移大小完全不同。整体思路是把两种扰动都参数化到同一个位移强度 $\delta$ 上：对 Pythia-410M 中层（layer 8-15）每个 token 的隐状态 $\mathbf{h}$，要么只缩长度（磁度扰动 $\mathbf{h}'_{\text{mag}} = \alpha \mathbf{h}$）、要么只转方向（角度扰动 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\| \cdot \hat{\mathbf{h}}'$），并强制两者到 $\mathbf{h}$ 的欧氏距离都等于 $\delta$。匹配好大小后，再去测下游的语言建模 loss、句法准确率，以及把某条计算路径修回干净版后效应恢复了多少，从而既量出方向 / 幅值的因果差异、又定位它走哪条路径。
+本文要回答 "方向和幅值谁对 transformer 更重要"，难点是这两个量天然不可比——扰一个小角度和缩一个小因子在表征空间里位移大小完全不同。整体思路是把两种扰动都参数化到同一个位移强度 $\delta$ 上：对 Pythia-410M 中层（layer 8-15）每个 token 的隐状态 $\mathbf{h}$，要么只缩长度（幅值扰动 $\mathbf{h}'_{\text{mag}} = \alpha \mathbf{h}$）、要么只转方向（角度扰动 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\| \cdot \hat{\mathbf{h}}'$），并强制两者到 $\mathbf{h}$ 的欧氏距离都等于 $\delta$。匹配好大小后，再去测下游的语言建模 loss、句法准确率，以及把某条计算路径修回干净版后效应恢复了多少，从而既量出方向 / 幅值的因果差异、又定位它走哪条路径。
 
 ### 关键设计
 
 **1. L2 匹配扰动协议：把两条不可比的轴投影到同一个 $\delta$**
 
-朴素比较的致命问题是：如果角度扰动破坏更大，无法判断到底是方向更重要还是这种扰动 "更暴力"。本文用一组解析公式强制两种扰动产生完全相同的位移 $\|\mathbf{h} - \mathbf{h}'_{\text{mag}}\| = \|\mathbf{h} - \mathbf{h}'_{\text{ang}}\| = \delta$。磁度侧从 $|1-\alpha| \cdot \|\mathbf{h}\| = \delta$ 反解出 $\alpha = 1 \pm \delta / \|\mathbf{h}\|$，符号随机抽（放大、缩小各半，需 $\delta < \|\mathbf{h}\|$）；角度侧先采一个正交单位向量 $\mathbf{v} \perp \mathbf{h}$，写成 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\|(\cos\theta \cdot \hat{\mathbf{h}} + \sin\theta \cdot \hat{\mathbf{v}})$，由距离约束推出旋转角 $\theta = \arccos(1 - \delta^2 / 2\|\mathbf{h}\|^2)$，每次实验都经验性验证位移误差 < 0.01。这样一来因果效应的任何差异都只能归因于扰动 "类型" 而非大小，这是整篇文章成立的方法论前提。
+朴素比较的致命问题是：如果角度扰动破坏更大，无法判断到底是方向更重要还是这种扰动 "更暴力"。本文用一组解析公式强制两种扰动产生完全相同的位移 $\|\mathbf{h} - \mathbf{h}'_{\text{mag}}\| = \|\mathbf{h} - \mathbf{h}'_{\text{ang}}\| = \delta$。幅值侧从 $|1-\alpha| \cdot \|\mathbf{h}\| = \delta$ 反解出 $\alpha = 1 \pm \delta / \|\mathbf{h}\|$，符号随机抽（放大、缩小各半，需 $\delta < \|\mathbf{h}\|$）；角度侧先采一个正交单位向量 $\mathbf{v} \perp \mathbf{h}$，写成 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\|(\cos\theta \cdot \hat{\mathbf{h}} + \sin\theta \cdot \hat{\mathbf{v}})$，由距离约束推出旋转角 $\theta = \arccos(1 - \delta^2 / 2\|\mathbf{h}\|^2)$，每次实验都经验性验证位移误差 < 0.01。这样一来因果效应的任何差异都只能归因于扰动 "类型" 而非大小，这是整篇文章成立的方法论前提。
 
 **2. Cross-over dissociation：用互补的两个任务捕捉双重分离**
 

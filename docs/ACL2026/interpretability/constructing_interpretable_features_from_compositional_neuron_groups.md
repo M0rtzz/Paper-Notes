@@ -44,6 +44,20 @@ tags:
 
 核心想法是：MLP 输出本来就是 $\sum_i a_i \mathbf{v}_i$，即一组神经元按激活值加权叠加，那么相似输入应当触发相似的神经元组合，只要把这种共激活模式从激活矩阵里分解出来，特征就天然锚定在模型的真实计算上。具体地，对预训练 LLM 的某一层 MLP，先在大量文本上前向，收集每个 token 在该层的激活向量 $\mathbf{a} \in \mathbb{R}^{d_a}$ 堆成矩阵 $A \in \mathbb{R}^{d_a \times n}$；再用半非负矩阵分解解 $A \approx Z Y$，得到 $k$ 个 MLP 特征 $\mathbf{z}_i$（$d_a$ 维的神经元加权方向）和非负系数矩阵 $Y$。每个特征乘 $W_V$ 投影回残差流得到 $\mathbf{f}_i = W_V \mathbf{z}_i$，从而能和 SAE / DiffMeans 在同一空间公平比较；而 $Y$ 直接给出每个特征被哪些 token 强激活，自带 SAE 缺失的"激活上下文"标注。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["收集 MLP 激活<br/>每个 token 激活堆成矩阵 A"] --> B["SNMF 分解 + 神经元稀疏<br/>A≈ZY，对 Z 列做 WTA 只留 top 1% 神经元"]
+    B --> C["特征矩阵 Z（有符号神经元组合）"]
+    B --> D["系数矩阵 Y（非负，token→特征）"]
+    C --> E["投影回残差流<br/>f=W_V·z，与 SAE/DiffMeans 同空间比较"]
+    D --> F["基于 Y 的自动概念标注<br/>取 top-m token 喂 GPT-4o-mini 总结语义"]
+    C --> G["递归 SNMF<br/>逐级缩小 k 合并出概念层级"]
+    E --> H["因果引导评估（concept steering）"]
+    F --> H
+    G --> H
+```
+
 ### 关键设计
 
 **1. SNMF 分解 + 神经元稀疏：让特征是少量神经元的有符号线性组合**

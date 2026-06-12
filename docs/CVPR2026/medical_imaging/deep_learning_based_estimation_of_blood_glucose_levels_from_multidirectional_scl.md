@@ -39,6 +39,26 @@ tags:
 
 ScleraGluNet 要解决的是：只用一台普通前段相机、不抽血，就把人的代谢状态判出来、空腹血糖估出来。它的做法是把"一只眼睛"拆成五个视角看。每位受试者按正视、上视、下视、鼻侧、颞侧五个注视方向各拍一张巩膜照片，先做统一的图像预处理（ROI 提取 → 颜色/亮度归一化 → CLAHE 对比度增强 → Frangi 滤波突出管状血管），再分给五个参数独立的 CNN 分支各自提特征；五路特征拼起来后先用 MRFO 算法筛掉冗余维度，剩下的判别性特征送进 Transformer 做跨视角自注意力融合，最后分出两个头——一个 softmax 分类头判三类代谢状态，一个回归头吐出连续的空腹血糖值。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多方向巩膜采集协议<br/>正视/上视/下视/鼻侧/颞侧 5 张"] --> B["图像预处理<br/>ROI 提取→归一化→CLAHE→Frangi 滤波"]
+    B --> CNN
+    subgraph CNN["并行 CNN + MRFO 特征精炼"]
+        direction TB
+        C["5 个参数独立 CNN 分支<br/>各学方向特异性血管特征"] --> D["拼接成多视角特征"]
+        D --> E["MRFO 筛选判别性子集<br/>剔除冗余维"]
+    end
+    CNN --> FUSE
+    subgraph FUSE["Transformer 跨视角融合 + 双任务头"]
+        direction TB
+        F["Transformer 自注意力<br/>建模跨象限关联"] --> G["分类头<br/>3 类代谢状态"]
+        F --> H["回归头<br/>空腹血糖估计"]
+    end
+    G --> I["联合损失 CE + MSE<br/>分类回归互为监督"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 多方向巩膜采集协议：用五个注视方向覆盖空间上不均匀的血管病变**

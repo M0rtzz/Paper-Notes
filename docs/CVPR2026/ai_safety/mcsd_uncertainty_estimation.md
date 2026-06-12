@@ -45,6 +45,23 @@ tags:
 
 这篇论文想解决的是：随机深度（Stochastic Depth, SD）已经是 YOLO、ViT 等现代残差架构里的标配正则化器，但没人把它当成推理时的不确定性来源用——既缺理论依据，也缺在目标检测这种复杂任务上的实证。MCSD 的整套思路就是把训练时随机丢残差块这件事「延续到推理时」：训练照常用 SD，推理时不再做确定性的期望折算，而是对每个残差块独立掷一次硬币 $b_l \sim \text{Bernoulli}(p_l)$，$b_l=1$ 走完整残差路径、$b_l=0$ 只走跳跃连接，于是每次前向都是一个深度不同的子网络。重复 T 次随机前向，把这 T 个子网络的预测平均起来，就得到带不确定性的输出：$p(y_* | x_*, \mathcal{D}) \approx \frac{1}{T} \sum_{t=1}^{T} p(y_* | x_*, W^{(B_t)})$。整条链路不改结构、不加训练，只是在推理时「让随机性继续活着」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 x"] --> B["在检测器残差路径插入随机开关<br/>YOLO Bottleneck / RT-DETR HGBlock / FasterRCNN 残差层"]
+    subgraph INF["MCSD 推理：保留随机性（重复 T 次前向）"]
+        direction TB
+        G["逐残差块掷硬币 b_l ~ Bernoulli(p_l)"]
+        G -->|"b_l=1：走残差路径<br/>归一化补偿 A_res / p_keep"| C["激活该残差块"]
+        G -->|"b_l=0：走跳跃连接"| D["跳过该残差块"]
+        C --> E["一个深度不同的子网络<br/>完成一次前向 → 预测"]
+        D --> E
+    end
+    B --> G
+    E -->|"重复 T 次采样"| G
+    E --> F["聚合 T 次预测<br/>均值 = 输出，方差 = 不确定性"]
+```
+
 ### 关键设计
 
 **1. 把随机深度推导成变分推理：给 MCSD 补上理论依据**

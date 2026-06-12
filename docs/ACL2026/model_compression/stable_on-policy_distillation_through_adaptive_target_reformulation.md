@@ -18,7 +18,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2601.07155](https://arxiv.org/abs/2601.07155)  
 **代码**: 无  
-**领域**: 医学图像  
+**领域**: 模型压缩  
 **关键词**: 知识蒸馏, On-policy蒸馏, 梯度稳定性, KL散度, 目标重构
 
 ## 一句话总结
@@ -44,6 +44,19 @@ tags:
 ### 整体框架
 
 Veto 在标准 on-policy KD 的基础上修改目标分布：不直接用教师分布 $P_T$ 作为目标，而是构建中间目标 $Q$，通过 logit 空间的几何插值实现。对于每个 token 位置，计算教师和学生的 logits $z_T$ 和 $z_S$，构建 $Q \propto \exp(z_T + \beta \cdot z_S)$，然后最小化 $D_{KL}(Q \| P_S)$（forward KL）或 $D_{KL}(P_S \| Q)$（reverse KL）。$\beta$ 按线性衰减从初始值递减到 0。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["学生 on-policy 自生成输出"] --> B["逐 token 取教师 logits z_T 与学生 logits z_S"]
+    B --> C["几何桥接分布 Q ∝ exp(z_T + β·z_S)<br/>Product of Experts 共识过滤器"]
+    C --> D{"选择散度目标"}
+    D -->|forward KL| E["自适应梯度否决<br/>P_S^β 门控掐掉低置信 token 梯度爆炸"]
+    D -->|reverse KL| F["果断性旋钮<br/>β 调节模式寻找 ↔ 多样性"]
+    E --> G["更新学生 + 锐化效应与线性衰减调度<br/>β ← β·(1 − i/N)，最优不动点 P_S ∝ P_T^(1/(1−β))"]
+    F --> G
+    G -->|下一训练步| A
+```
 
 ### 关键设计
 

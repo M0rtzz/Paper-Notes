@@ -41,7 +41,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文要解决的是"隐私缺一个能解释、能裁剪、还能覆盖确定性算法的统一定义"，做法是把数据发布重写成一个 Sender–Receiver 的 Stackelberg 博弈。Sender 持真值 $x$ 并预先公开承诺一个机制 $M$（Markov kernel）及其所属隐私类，Receiver 持先验 $Q$、观察输出 $T\sim M(x,\cdot)$ 后做贝叶斯决策；借 Grünwald–Dawid 的经典等价，Receiver 最优决策诱导的损失自动是一个 proper scoring rule，于是"隐私"就被表述成"发布前后 Receiver 对真值预测能力的相对提升"在最坏情形下的上界。整个框架因此分三步落地：先定下博弈语义与透明性假设，再把 Sender 偏好转成评分规则，最后用相对评分写出统一的 PP 不等式。
+本文要解决的是"隐私缺一个能解释、能裁剪、还能覆盖确定性算法的统一定义"，做法是把数据发布重写成一个 Sender–Receiver 的 Stackelberg 博弈。Sender 持真值 $x$ 并预先公开承诺一个机制 $M$（Markov kernel）及其所属隐私类，Receiver 持先验 $Q$、观察输出 $T\sim M(x,\cdot)$ 后做贝叶斯决策；借 Grünwald–Dawid 的经典等价，Receiver 最优决策诱导的损失自动是一个 proper scoring rule，于是"隐私"就被表述成"发布前后 Receiver 对真值预测能力的相对提升"在最坏情形下的上界。整个框架因此先分三步把定义立起来——定下博弈语义与透明性假设、把 Sender 偏好转成评分规则、用相对评分写出统一的 PP 不等式；定义立住后再反过来验证自洽性：把 pure / probabilistic DP 收编为特例，并厘清"接收方后处理（receiver post-processing）"与"发送方后处理（sender post-processing）"两种含义的区别。
 
 ### 关键设计
 

@@ -49,6 +49,18 @@ $$r^{\text{gen}} = \alpha \cdot r^{\text{video}} + \beta \cdot r^{\text{FB}} + r
 
 最终喂给建立在 DreamerV3 世界模型之上的策略优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前观察 + 任务描述"] --> B["微调视频扩散模型<br/>(CogVideoX-5B-I2V)"]
+    B --> C["生成目标条件视频 V_goal"]
+    C --> D["视频级奖励<br/>3D Causal VAE 编码轨迹与目标视频<br/>取余弦相似度 → r_video"]
+    C --> E["帧级 Forward-Backward 奖励<br/>OpenCLIP 选目标帧 I* → DINOv3 编码<br/>F/B 表示估到达目标概率 → r_FB"]
+    D --> F["奖励融合与训练节奏<br/>先训稳 FB 再冻结<br/>r_gen = α·r_video + β·r_FB + r_env"]
+    E --> F
+    F --> G["DreamerV3 世界模型 + 策略优化"]
+```
+
 ### 关键设计
 
 **1. 视频级奖励：用扩散模型自己的编码器衡量「整段轨迹像不像范例」**

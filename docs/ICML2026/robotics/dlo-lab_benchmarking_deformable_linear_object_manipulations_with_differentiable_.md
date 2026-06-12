@@ -49,6 +49,36 @@ DLO-Lab 整体分成三层：底层物理仿真器（Section 3）、中层 bench
 
 **输出**：可微的 reward、可导的轨迹梯度 $\partial r/\partial a_{0:T}$，供 GD/SHAC/SAPO 用；同时支持纯采样型 RL（PPO/SAC）和黑盒优化（CMA-ES）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入<br/>DLO 初始状态 + 目标条件 + 机器人构型"]
+    subgraph SIM["可微 DER solver + 双向耦合（设计 1）"]
+        direction TB
+        DER["DER 动力学<br/>拉伸/弯曲/扭转 + 弯曲塑性 + 闭环拓扑"]
+        COUP["双向耦合<br/>刚体 SDF 软接触 · MPM 软体网格碰撞"]
+        DER --> COUP
+    end
+    CKPT["梯度 checkpointing（设计 2）<br/>分段重算把显存从 O(T) 压到 O(√T)"]
+    MDP["MDP 策略接口<br/>状态/观测/动作 + 可微 reward 与轨迹梯度"]
+    ALGO["策略学习横评<br/>PPO/SAC · SHAC/SAPO · GD · CMA-ES"]
+    subgraph AGENT["VLM 驱动的 DLO agent（设计 3）"]
+        direction TB
+        GRASP["抓点提议<br/>Candidate / Coefficient / Marker"]
+        DECOMP["任务分解 + 闭环重规划<br/>子任务逐段轨迹优化"]
+        GRASP --> DECOMP
+    end
+    OUT["输出<br/>策略 / 轨迹 + 系统辨识 sim-to-real"]
+
+    IN --> SIM
+    SIM --> CKPT
+    CKPT --> MDP
+    MDP --> ALGO
+    ALGO --> OUT
+    MDP -->|长 horizon 复杂任务| AGENT
+    AGENT -->|拆出的短 horizon 子任务| ALGO
+```
+
 ### 关键设计
 
 **1. 基于 DER 的可微 DLO solver + 双向耦合：把高保真物理和可微/可耦合两组互斥需求装进同一个 solver**

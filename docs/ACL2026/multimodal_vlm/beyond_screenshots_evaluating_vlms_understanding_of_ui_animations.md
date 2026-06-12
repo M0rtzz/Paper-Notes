@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 本工作分两阶段：(1) **AniMINT 数据集构建**——300 段 UI 动画视频（mobile 大头：Top 100 App Store/Google Play 应用）+ 多层级标注（时间范围、ROI、交互上下文、用途类别、10 条独立语义解读）；(2) **VLM 系统评测 + 增强探索**——围绕三个 RQ 测 9 个 VLM：能否识别基本运动效果 (RQ1)、能否分类动画用途 (RQ2)、能否解读动画语义 (RQ3)；随后用 MCPC 三因素探针定位瓶颈并验证增强效果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["300 段 UI 动画视频<br/>mobile / web / desktop"] --> SUB1
+    subgraph SUB1["三层级 AniMINT 标注协议"]
+        direction TB
+        B["统一 480px + 10fps 重采样<br/>绿色 bbox 框出动画 ROI"] --> C["3 位专家投票<br/>7 类用途标签 (α=0.78)"]
+        C --> D["300 名用户众包<br/>每段 10 条语义解读"]
+    end
+    SUB1 --> DS["AniMINT 数据集<br/>运动效果 / 用途 / 语义 三层标注"]
+    DS --> SUB2
+    subgraph SUB2["三个递进 RQ + GPT-judge 评测协议"]
+        direction TB
+        E["RQ1 感知：7 类基本运动效果"] --> F["RQ2 用途分类：Acc / Macro F1"]
+        F --> G["RQ3 语义解读：GPT-judge 0–5 相似度"]
+    end
+    SUB2 -->|定位瓶颈在哪一层| SUB3
+    SUB3["MCPC 增强探针 (Gemini-2.5-Flash)<br/>Motion blending + Context + Perceptual caption"] --> I["归因：感知 / 情境 / 语义瓶颈<br/>三信号联合最优"]
+```
+
 ### 关键设计
 
 **1. 三层级 AniMINT 标注协议：同一段动画支持低/中/高三种粒度评测，逼出瓶颈到底在哪一层**

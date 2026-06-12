@@ -42,6 +42,16 @@ tags:
 ### 整体框架
 这套框架想解决的是"现有方法把测量误差和样本真实差异混在一起算，导致 LLM 评判不稳定时说不清到底坏在哪"，思路是把评判过程当成一次心理测量、用 GRM 反推出三类隐变量再据此分项诊断。具体走三步：先对每个原始评判 prompt 生成 typo / newline / paraphrase 三种语义不变的微扰版本（加原版共 4 个变体），再把"7 个 LLM × 每个 prompt 变体 × 每个样本"的评分喂给 GRM、用贝叶斯采样同时估出每个 prompt 变体的判别力与门槛 $(\alpha_p, \boldsymbol{\beta}_p)$ 以及每个样本共享的潜在质量 $\theta_j$，最后做两阶段诊断——Phase 1 先用一致性指标筛掉"仪器本身就不稳"的评判者，只有过线者才进入 Phase 2 与人类的潜在质量分布对比。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：7 个 LLM 评判者<br/>× 评判 prompt × 样本评分"] --> B["prompt 扰动<br/>原版 + typo + newline + paraphrase（4 变体）"]
+    B --> C["GRM 解耦<br/>贝叶斯采样估 (α_p, β_p) 与共享潜在质量 θ_j"]
+    C --> D["Phase 1 一致性筛选<br/>C_V 测 prompt 一致性；ρ 测边际信度"]
+    D -->|"C_V ≤ 0.10 且 ρ ≥ 0.70 才过线"| E["Phase 2 对齐归因<br/>θ_ratio 测范围错配；D_W 测分布漂移"]
+    D -->|不合格| F["判定为不可靠仪器，淘汰"]
+```
+
 ### 关键设计
 
 **1. GRM 解耦：把 prompt 效应从样本真质量里剥出来**

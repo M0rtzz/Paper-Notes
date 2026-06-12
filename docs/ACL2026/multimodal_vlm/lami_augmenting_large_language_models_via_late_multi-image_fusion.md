@@ -43,15 +43,29 @@ tags:
 
 ### 整体框架
 
-LaMI 由四个组件构成：冻结的预训练 LLM、冻结的预训练视觉编码器、可训练的 Visual Token Projector (VTP)、可训练的 Late Fusion Attention Layer (LFAL)。训练时使用图像-文本对，推理时从输入文本生成多张图像进行聚合预测。
+LaMI 由四个组件构成：冻结的预训练 LLM、冻结的预训练视觉编码器、可训练的视觉 token 投影器（Visual Token Projector, VTP）、可训练的后融合注意力层（Late Fusion Attention Layer, LFAL）。整条数据流是：输入文本一边送进冻结 LLM 正常完成语言处理、一边交给文生图模型生成 $k$ 张图像；图像经视觉编码器与 VTP 变成伪文本 token，在 LLM 输出最终表示之后才由 LFAL 一次性融合；每张图给出一个预测分布，最后用 CLIP 对齐分数把多张图的分布与纯文本分布加权聚合成最终答案。训练时只用图像-文本对调 VTP 和 LFAL，推理时则从输入文本现场生成多张图像。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入文本"] --> GEN["多图像推理：文生图生成 k 张图像"]
+    Q --> LLM["LLM（冻结）<br/>输出最终文本表示 z^x"]
+    GEN --> ENC["视觉编码器（冻结）<br/>提取 patch 特征 z^v"]
+    ENC --> VTP["视觉 token 投影器 VTP<br/>两层 MLP 映射为伪文本嵌入 u^v"]
+    VTP --> LFAL["后融合注意力层 LFAL<br/>Q=文本, K=V=[视觉; 文本]"]
+    LLM --> LFAL
+    LFAL --> HEAD["预测头<br/>每张图得到分布 p_i, 纯文本得 p_0"]
+    HEAD --> AGG["置信度加权聚合<br/>CLIP 对齐分数高则信图、低则回退文本"]
+    AGG --> OUT["最终预测分布 p_final"]
+```
 
 ### 关键设计
 
-1. **Visual Token Projector (VTP)**：将视觉编码器提取的 patch 特征 $z^v \in \mathbb{R}^{n_v \times d_v}$ 通过两层 MLP 映射为伪文本嵌入 $u^v = W_1 \sigma(W_2 z^v) \in \mathbb{R}^{n_v \times d_x}$。设计动机是将视觉特征对齐到 LLM 的文本嵌入空间，使后续融合层能够有效整合跨模态信息。
+1. **视觉 token 投影器（VTP）**：视觉编码器输出的 patch 特征 $z^v \in \mathbb{R}^{n_v \times d_v}$ 活在视觉空间，LLM 却只认文本嵌入，二者无法直接对话。VTP 用两层 MLP 把它映射成伪文本嵌入 $u^v = W_1 \sigma(W_2 z^v) \in \mathbb{R}^{n_v \times d_x}$，相当于把图像翻译成 LLM 能读的"伪 token"，让后续融合层能在统一空间里整合跨模态信息。
 
-2. **Late Fusion Attention Layer (LFAL)**：在 LLM 输出最终表示之后、预测头之前，插入一个注意力层，设置 $K=V=[u^v; z^x_{(<t)}]$, $Q=z^x_{(<t)}$，使文本 token 一次性关注视觉 token。设计动机是将视觉信息的注入推迟到最后阶段，让 LLM 在整个计算过程中专注于语言处理，仅在需要时访问视觉信息，从而最小化对语言能力的干扰。
+2. **后融合注意力层（LFAL）**：早期/中间融合把视觉信号过早塞进 LLM，会干扰它的语言行为、拉低文本推理。LaMI 反其道而行，把融合推迟到 LLM 已输出最终表示、预测头之前的最后一步：插入一个注意力层，令 $Q=z^x_{(<t)}$、$K=V=[u^v; z^x_{(<t)}]$，文本 token 在此一次性关注视觉 token。这样 LLM 整个前向过程都专注于语言、只在临门一脚才"轻触"视觉，把对语言能力的干扰降到最低。
 
-3. **多图像推理与置信度加权**：推理时生成 $k$ 张图像，每张产生分布 $p_i$，同时计算纯文本分布 $p_0$。使用 CLIP 分数进行置信度加权：$p_{\text{final}} = \sum_i f(\bar{x}_i, v_i) p_i + (1 - f(\bar{x}_i, v_i)) p_0$。高对齐度图像获得更高权重，低对齐度时自动回退到纯文本 LLM。设计动机是单张生成图像可能有噪声或偏差，多张图像提供冗余视觉证据，置信度加权确保不可靠图像不会损害预测。
+3. **多图像推理与置信度加权**：单张生成图可能带噪声或语义偏差，押注一张图很危险。推理时改为生成 $k$ 张图像、各自得到分布 $p_i$，再与纯文本分布 $p_0$ 一起按 CLIP 对齐分数加权：$p_{\text{final}} = \sum_i f(\bar{x}_i, v_i)\, p_i + (1 - f(\bar{x}_i, v_i))\, p_0$。多张图互为冗余证据；对齐度高的图获得更高权重，对齐度低时权重趋零、自动回退到纯文本 LLM，从而保证不可靠的图不会拖累预测。
 
 ### 损失函数 / 训练策略
 

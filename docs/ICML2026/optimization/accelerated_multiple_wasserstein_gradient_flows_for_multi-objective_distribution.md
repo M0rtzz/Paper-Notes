@@ -46,23 +46,18 @@ tags:
 连续时间 MWGraD flow 使用 continuity equation $\dot{\rho}_t+\nabla\cdot(\rho_t\nabla\Phi_t)=0$ 描述粒子如何被速度场推动。A-MWGraD 在此基础上增加 $\dot{\Phi}_t$、阻尼项 $\alpha_t\Phi_t$ 和 kinetic term，形成类似 Wasserstein accelerated information gradient 的二阶动态。
 
 ### 关键设计
-1. **MWGraD flow 与 merit function**:
 
-	- 功能：给原始 MWGraD 一个连续时间解释，并可分析到 weak Pareto optimum 的距离。
-	- 核心思路：定义 $\mathcal{M}(\rho)=\sup_q \min_k\{F_k(\rho)-F_k(q)\}$，它非负且为 0 当且仅当 $\rho$ weakly Pareto optimal；在 geodesically convex 条件下证明 MWGraD flow 满足 $\mathcal{M}(\rho_t)\le R/(2t)$。
-	- 设计动机：多目标优化不能用单个函数值差直接衡量收敛，merit function 提供了统一标尺。
+**1. MWGraD flow 与 merit function：先把离散算法升级成连续流，再给它一把量收敛的尺**
 
-2. **A-MWGraD accelerated flow**:
+离散 MWGraD 只是「把多个 Wasserstein 梯度组合成一个共同下降方向、然后迭代往下走」，既缺连续时间刻画，也没有一个统一标尺说明「收敛到哪、收敛多快」。本文把离散更新取 $\eta\to 0$ 的极限，得到 MWGraD flow：连续性方程 $\dot{\rho}_t+\nabla\cdot(\rho_t\nabla\Phi_t)=0$ 描述粒子如何被速度场 $\nabla\Phi_t$ 推动，而势函数由 $\Phi_t+\text{proj}_{\mathcal{C}(\rho_t),\rho_t}[0]=0$ 决定——即把 $0$ 投影到所有目标 first variation 的凸包 $\mathcal{C}(\rho)=\text{conv}\{\delta_\rho F_k(\rho)\}$ 上，这一步正是保证速度方向落在多目标共同下降方向里的关键。为了量收敛，作者引入 merit function $\mathcal{M}(\rho)=\sup_q \min_k\{F_k(\rho)-F_k(q)\}$，它恒非负、且为 $0$ 当且仅当 $\rho$ 弱 Pareto 最优。多目标优化不能用单个目标的函数值差衡量收敛，merit function 给了 Pareto 语境下统一的标尺。在 geodesically convex 假设下，以 $\tfrac12\mathcal{W}_2^2(\rho_t,q)$ 作 Lyapunov 泛函即可证 $\mathcal{M}(\rho_t)\le R/(2t)=O(1/t)$，这是 MWGraD 的首个严格连续时间收敛率，也成了后面加速的对比基线。
 
-	- 功能：把 Nesterov 风格加速迁移到多目标 Wasserstein 分布优化。
-	- 核心思路：在 continuity equation 外，引入动量势函数演化 $\dot{\Phi}_t+\alpha_t\Phi_t+\frac{1}{2}\|\nabla\Phi_t\|^2+\text{proj}_{\mathcal{C}(\rho_t),\rho_t}[0]=0$；当 $K=1$ 时退化为 Wasserstein accelerated information gradient。
-	- 设计动机：这样既保留概率空间的几何结构，又让动量沿着多目标共同下降方向累积。
+**2. A-MWGraD accelerated flow：沿共同下降方向注入动量，把 $O(1/t)$ 拉到 $O(1/t^2)$**
 
-3. **粒子化实现与梯度近似**:
+MWGraD flow 的 $O(1/t)$ 像普通梯度下降一样慢；欧氏空间里 Nesterov 动量能把 $O(1/t)$ 提到 $O(1/t^2)$，但概率空间的多目标版本一直缺位。本文借 damped Hamiltonian 视角，在势函数演化里加进动量与阻尼：连续性方程保持不变，而势函数方程变为 $\dot{\Phi}_t+\alpha_t\Phi_t+\frac{1}{2}\|\nabla\Phi_t\|^2+\text{proj}_{\mathcal{C}(\rho_t),\rho_t}[0]=0$，其中 $\alpha_t\Phi_t$ 是阻尼项、$\frac12\|\nabla\Phi_t\|^2$ 是动能项；当 $K=1$ 时它正好退化为已知的 Wasserstein accelerated information gradient (W-AIG) flow。关键在于动量是沿着「投影到凸包得到的共同下降方向」累积的，而不是给每个目标各加各的 momentum，因此加速不会破坏多目标共同下降。理论上这把收敛率提到 geodesically convex 的 $O(1/t^2)$ 和 $\beta$-strongly geodesically convex 的 $O(e^{-\sqrt{\beta}t})$，是概率空间多目标优化的首个加速结果。
 
-	- 功能：把理论流转成可运行的采样算法。
-	- 核心思路：粒子位置和速度满足 $\dot{x}_t=v_t$、$\dot{v}_t+\alpha_t v_t+\sum_k w_{t,k}\nabla\delta_\rho F_k(\rho_t)(x_t)=0$；离散时用 $x_i^{n+1}=x_i^n+\sqrt{\eta}v_i^n$、$v_i^{n+1}=\alpha_n v_i^n-\sqrt{\eta}\sum_k w_{n,k}\bar{\Delta}_k^n(x_i^n)$ 更新。
-	- 设计动机：真实的 $\nabla\log\rho$ 不可直接计算，SVGD 和 Blob kernel 近似能让粒子系统落地。
+**3. 粒子化实现与梯度近似：把分布层面的 PDE 落到可运行的粒子系统**
+
+A-MWGraD flow 是分布层面的偏微分方程，无法直接执行；而且它显式用到 $\nabla\log\rho$，对经验测度（一堆离散粒子）根本算不出来。本文把分布流改写成粒子动力学——位置与速度满足 $\dot{x}_t=v_t$、$\dot{v}_t+\alpha_t v_t+\sum_k w_{t,k}\nabla\delta_\rho F_k(\rho_t)(x_t)=0$，离散后用 $x_i^{n+1}=x_i^n+\sqrt{\eta}v_i^n$、$v_i^{n+1}=\alpha_n v_i^n-\sqrt{\eta}\sum_k w_{n,k}\bar{\Delta}_k^n(x_i^n)$ 更新，geodesically convex 场景取动量系数 $\alpha_n=(n-1)/(n+2)$。对于不可直接计算的 Wasserstein 梯度（含 $\nabla\log\rho$ 项），用 SVGD 或 Blob kernel 做核近似。这样既保留了「每步先解 simplex 上的二次规划求权重 $w_n$、再沿加速方向更新」的多目标结构，又让整套理论落到可运行的粒子算法上，于是 A-MWGraD-SVGD 与 A-MWGraD-Blob 两个实例都能直接做多目标采样。
 
 ### 损失函数 / 训练策略
 对于多目标采样，论文常取 $F_k(\rho)=\text{KL}(\rho||\pi_k)$。每步需要解一个 simplex 上的二次优化，求权重 $w_n$ 来最小化组合 Wasserstein 梯度范数。Geodesically convex 场景使用 $\alpha_n=(n-1)/(n+2)$；strongly geodesically convex 场景使用与 $\sqrt{\beta\eta}$ 相关的动量系数。实验分别实现 A-MWGraD-SVGD 和 A-MWGraD-Blob。

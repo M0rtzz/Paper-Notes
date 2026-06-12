@@ -43,26 +43,44 @@ tags:
 ### 整体框架
 系统由两个角色组成。Executor 是端侧小模型，负责持续 ReAct 循环：根据当前任务、上下文和可用工具生成 reasoning/action，调用环境，收集 observation。Supervisor 是云端 GPT-4o，不直接承担每一步工具执行，而是周期性查看轨迹并决定是否介入。用户通过 verification interval 控制云端介入频率，interval 越小，云端调用越频繁，成本越高。
 
-实验覆盖三个难度逐步增加的任务族。HotpotQA 是短程多跳问答，报告 ROUGE-1 F1；FanOutQA 是长程 fan-out 信息聚合，同样报告 ROUGE-1 F1；AppWorld 是状态化 API 环境，报告 Test Pass Ratio 和 Task Success。效率侧报告云端 API 美元成本、端侧能耗估计，以及长任务中的 KV-cache 最大占用。
+实验覆盖三个难度逐步增加的任务族。HotpotQA 是短程多跳问答，报告 ROUGE-1 F1；FanOutQA 是长程 fan-out 信息聚合，同样报告 ROUGE-1 F1；AppWorld 是状态化 API 环境，报告 Test Pass Ratio 和 Task Success。效率侧报告云端 API 美元成本、端侧能耗估计，以及长任务中的 KV-cache 最大占用。两个角色组合成两种互斥的混合架构 PEVR 与 EVA，论文按任务类型对比它们，最后统一用“准确率 + 成本 + 上下文”三个维度评估。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户 query"] --> ARCH{"按任务选架构"}
+    subgraph PEVR["PEVR：计划-执行-验证-重规划"]
+        direction TB
+        P1["云端 Supervisor<br/>生成显式 plan"] --> P2["端侧 Executor<br/>按 plan 跑 ReAct 循环"]
+        P2 -->|"每 Tv 步"| P3["云端 Supervisor<br/>对照 plan 验证轨迹"]
+        P3 -->|"偏离则重规划"| P4["输出 revised plan"]
+        P4 --> P2
+    end
+    subgraph EVA["EVA：执行-验证-建议"]
+        direction TB
+        E1["端侧 Executor<br/>无初始 plan 直接 ReAct"] -->|"周期性"| E2["云端 Supervisor<br/>判断进展是否异常"]
+        E2 -->|"需介入"| E3["给摘要 + advice<br/>并清空旧上下文"]
+        E3 --> E1
+    end
+    ARCH -->|"状态化任务 AppWorld"| PEVR
+    ARCH -->|"deep search HotpotQA/FanOutQA"| EVA
+    PEVR --> EVAL["成本与上下文效率联合评估<br/>准确率 / 云端费用 / 端侧能耗 / KV-cache"]
+    EVA --> EVAL
+```
 
 ### 关键设计
-1. **PEVR: Plan-Execute-Verify-Replan**:
 
-	- 功能：让云端 Supervisor 先给出显式计划，并在执行过程中检查端侧 Executor 是否偏离计划。
-	- 核心思路：Supervisor 根据用户 query 生成自然语言 plan；Executor 按 plan 执行；每隔 $T_v$ 步，Supervisor 根据当前 plan 和轨迹做 verification。如果判断需要介入，就输出 revised plan，Executor 在更新计划下继续执行。
-	- 设计动机：AppWorld 这类状态化 UI/API 任务中，错误早期动作可能不可逆，因此明确计划、控制流和工具调用顺序很重要。PEVR 把云端能力集中用于规划和纠偏。
+**1. PEVR：计划-执行-验证-重规划（Plan-Execute-Verify-Replan）**
 
-2. **EVA: Execute-Verify-Advise**:
+这条线服务于 AppWorld 这类状态化 API 任务——早期一个错误动作可能不可逆，控制流和工具调用顺序必须从一开始就对。机制上，云端 Supervisor 先根据用户 query 生成一份自然语言 plan，端侧 Executor 按 plan 跑 ReAct 循环；每隔 $T_v$ 步，Supervisor 对照 plan 检查轨迹是否偏离，一旦判断需要介入就输出 revised plan，Executor 在更新后的计划下继续执行。这样昂贵的云端能力被集中用在“规划 + 纠偏”上，而最耗 token 的逐步执行留在端侧，既保住了状态化任务所需的全局可控性，又避免云端承担每一步工具调用。
 
-	- 功能：让端侧 Executor 先自主执行，云端 Supervisor 只在发现进展异常时给摘要和建议。
-	- 核心思路：EVA 没有初始 plan，Executor 直接 ReAct；Supervisor 周期性根据 query 和轨迹判断是否介入。介入时不重写 plan，而是生成过往动作摘要和后续 advice，并清空 Executor 的旧上下文。
-	- 设计动机：FanOutQA / HotpotQA 这类 deep search 任务更依赖探索和信息聚合，过于频繁的重规划会打断搜索轨迹；轻量建议加摘要更适合保持长期搜索方向。
+**2. EVA：执行-验证-建议（Execute-Verify-Advise）**
 
-3. **成本和上下文效率的联合评估**:
+这条线服务于 HotpotQA / FanOutQA 这类 deep search 任务——表现高度依赖连续的探索和信息聚合，频繁重规划反而会打断已经积累的搜索轨迹。因此 EVA 干脆不给初始 plan，端侧 Executor 直接 ReAct 自主探索；云端 Supervisor 只周期性地根据 query 和轨迹判断进展是否异常，需要介入时也不重写计划，而是生成过往动作的摘要加一条后续 advice，并清空 Executor 的旧上下文再继续。轻量建议 + 摘要既保持了长程搜索方向，又顺手压掉了端侧累积的长上下文。
 
-	- 功能：不仅看准确率，还看云端费用、端侧能耗和 KV-cache 增长。
-	- 核心思路：云端成本按 GPT-4o API 价格累加，端侧能耗按模型推理估计；上下文效率用最大 KV-cache footprint 衡量。PEVR/EVA 的干预都会触发上下文重置或摘要，从而限制端侧长上下文增长。
-	- 设计动机：混合 MAS 的价值不只是“比端侧更准”，还要“比纯云更便宜”并“能在端侧内存限制下跑完长任务”。
+**3. 成本与上下文效率的联合评估**
+
+混合 MAS 的价值不只是“比端侧单体更准”，还得“比纯云端更便宜”且“能在端侧内存限制下跑完长任务”，所以论文不只看准确率。它把云端开销按 GPT-4o 的 API 价格累加，端侧能耗按模型推理量估计，上下文压力用最大 KV-cache footprint 衡量。关键在于：PEVR 的重规划和 EVA 的摘要+重置都会周期性截断端侧上下文，从而直接限制 KV-cache 增长——这让上下文管理从“评测指标”变成了架构本身自带的一项收益。
 
 ### 损失函数 / 训练策略
 本文不训练模型，所有实验都是推理时系统设计比较。云端模型固定为 GPT-4o，端侧模型为 Qwen3 4B、8B、14B、32B。HotpotQA 最大 10 个 ReAct turn，验证间隔为 1/2/3/5；FanOutQA 最大 20 turn，间隔为 1/2/3/5/10；AppWorld 最大 40 turn，间隔为 1/2/4/8/16。Qwen3 32B 使用 fp8 KV-cache 和权重量化以便单 A100 跑实验。

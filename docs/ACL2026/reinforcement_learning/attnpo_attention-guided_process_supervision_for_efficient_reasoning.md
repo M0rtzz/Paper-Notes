@@ -44,6 +44,18 @@ tags:
 
 AttnPO 在 GRPO/RLOO 框架基础上，利用 KFH 的注意力分数对结果级 advantage 进行步级缩放：对正 advantage 的正确回复衰减冗余步骤的正 advantage（减少过度鼓励），对负 advantage 的正确回复衰减关键步骤的负 advantage（避免过度惩罚）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GRPO/RLOO 采样多条推理轨迹<br/>得到结果级 advantage A^i"] --> B["Key-Focus Heads 发现与验证<br/>读 KFH 注意力得到每步关键性分数 S"]
+    B --> C{"该回复 advantage 符号"}
+    C -->|"A^i > 0（正确但啰嗦）"| D["正 Advantage 冗余步骤衰减<br/>S 低于基线的冗余步乘 γ 削弱奖励"]
+    C -->|"A^i < 0（错误但有价值）"| E["负 Advantage 关键步骤保护<br/>S 高于基线的关键步令 γ=0 免罚"]
+    D --> F["步级缩放后的 advantage"]
+    E --> F
+    F --> G["策略梯度更新"]
+```
+
 ### 关键设计
 
 **1. Key-Focus Heads (KFH) 发现与验证：从模型自己的注意力里读出哪些步骤是关键的**

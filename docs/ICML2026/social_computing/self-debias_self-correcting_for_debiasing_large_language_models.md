@@ -41,19 +41,49 @@ Self-Debias 把 LLM 的去偏问题重塑为「在自回归推理链上对概率
 ## 方法详解
 
 ### 整体框架
-Qwen3-8B 为 backbone。pipeline 三阶段：(I) Cold-start：用 10k BBQ + GPT-4o 合成 CoT 构造 $(x, \mathbf{y}^+, \mathbf{y}^-, t)$ 四元组，联合训练「直接生成无偏」+「在指令 $t$ 下从有偏 $\mathbf{y}^-$ 自我纠正」两个能力。(II) Trajectory Optimization：在 bias activation step $i$ 处冻结合法前缀 $\mathbf{y}_{<i}$，仅对后缀做 DPO 风格 margin + Jain 公平正则。(III) Online Self-Improvement：对未标注 query 强制注入有偏前缀产出 $\mathbf{y}^-$，再让模型自我修正出 $\mathbf{y}^-\to\mathbf{y}_1\to\dots\to\mathbf{y}_K$，仅当最后若干轮收敛一致才取 $\mathbf{y}_K$ 作正例 $\mathbf{y}^+$，与 $\mathbf{y}^-$ 配对继续更新策略。
+Qwen3-8B 为 backbone。pipeline 三阶段层层递进：(I) **Cold-start**：用 10k BBQ + GPT-4o 合成 CoT 构造 $(x, \mathbf{y}^+, \mathbf{y}^-, t)$ 四元组，联合训练「直接生成无偏」+「在指令 $t$ 下从有偏 $\mathbf{y}^-$ 自我纠正」两个能力——先让模型**具备**自我纠偏的本事。(II) **Trajectory Optimization**：在偏见激活步 $i$ 处冻结合法前缀 $\mathbf{y}_{<i}$，仅对后缀做 DPO 风格 margin + Jain 公平正则——让模型在不确定时**偏好**无偏轨迹。(III) **Online Self-Improvement**：对未标注 query 强制注入有偏前缀产出 $\mathbf{y}^-$，再让模型自我修正出 $\mathbf{y}^-\to\mathbf{y}_1\to\dots\to\mathbf{y}_K$，仅当最后若干轮收敛一致才取 $\mathbf{y}_K$ 作正例 $\mathbf{y}^+$，与 $\mathbf{y}^-$ 配对回灌策略——摆脱人工标注、**自主**持续改进。三阶段对应下面四个关键设计（阶段 II 含后缀 margin + Jain 两点）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["阶段 I · Cold-start 双任务 SFT"]
+        direction TB
+        A["敏感问题 x"] --> B["vanilla 模型生成有偏回答 y⁻"]
+        B --> C["GPT-4o 合成无偏链 y⁺ + 去偏指令 t"]
+        C --> D["四元组 (x, y⁺, y⁻, t)<br/>双任务 NLL：直接无偏 + 条件自纠正"]
+    end
+    D --> E
+    subgraph S2["阶段 II · 轨迹优化（后缀 margin + Jain 正则）"]
+        direction TB
+        E["定位偏见激活步 i<br/>冻结其之前的合法前缀"] --> F["后缀 margin r_i<br/>只重排第 i 步之后的概率质量"]
+        F --> G["batch margin 套 Jain 公平指数<br/>−λ log 𝒥(r) 抬难样本、压易样本"]
+    end
+    G --> H["更新策略 π（+ L_SC 锚定防遗忘）"]
+    H --> I
+    subgraph S3["阶段 III · 在线自我改进"]
+        direction TB
+        I["未标注 query<br/>Bias Injection 强造有偏 y⁻"] --> J["触发自纠正链 y⁻→y₁→…→y_K"]
+        J -->|末轮收敛一致| K["取 y_K 作 y⁺，与 y⁻ 配对"]
+        J -->|不一致| L["整条丢弃"]
+    end
+    K -->|Iter1 / Iter2 回灌| H
+```
 
 ### 关键设计
 
-**1. 轨迹级后缀 margin：只重排「出问题之后」的概率质量，保住干净的前缀**
+**1. Cold-start 双任务 SFT：先教会模型「能」自我纠偏，再谈偏好**
+
+后两个阶段都建立在「模型已经会从有偏改到无偏」这个前提上，但 base 模型并不具备这种条件自纠正能力（消融里 w/o Reasoning——去掉条件自纠正监督——自纠正增益直接归零）。Cold-start 用一个双任务数据集 $\mathcal{D}_{\text{SC}}$ 把这个能力灌进去：每条样本是四元组 $(x, \mathbf{y}^+, \mathbf{y}^-, t)$，其中 $\mathbf{y}^-$ 是 vanilla baseline 产出的有偏回答（模拟刻板印象被激活）、$t$ 是去偏指令、$\mathbf{y}^+$ 是核验过的无偏轨迹。联合 NLL 同时训两件事：① 直接生成无偏回答 $\log\pi(\mathbf{y}^+\mid x)$；② 在看到有偏 $\mathbf{y}^-$ 和指令 $t$ 后条件自我纠正 $\log\pi(\mathbf{y}^+\mid x,\mathbf{y}^-,t)$。前者保通用能力，后者才是「自我纠错」的种子；这个 $\mathcal{L}_{\text{SC}}$ 后续还会被一路保留当 generative anchor 防止灾难性遗忘。
+
+**2. 轨迹级后缀 margin：只重排「出问题之后」的概率质量，保住干净的前缀**
 
 普通 response-level DPO 会把整条推理链的 prefix 一起惩罚，结果合法的前半段也被牵连，utility 暴跌（消融里 Response-Level baseline 直接掉 2.3 点 utility）。Self-Debias 的做法是把边际计算的起点挪到偏见激活步 $i$：给定上下文 $c=(x,\mathbf{y}^-,t)$ 和触发步 $i$，定义 $r_i(\pi) = \beta \log \frac{\pi(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})} - \beta \log \frac{\pi(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}$，DPO 的 BCE 目标只对这段后缀生效。这样「干净的前缀」被当 free 资产保留，只对问题真正发生之后的那段重排概率质量——既纠了偏见，又不毁推理逻辑。
 
-**2. Jain 公平指数反塌缩正则：别让训练只挑容易的样本做**
+**3. Jain 公平指数反塌缩正则：别让训练只挑容易的样本做**
 
 标准 DPO 受 sigmoid 饱和拖累——容易样本梯度趋零、难样本被平均稀释，结果 stubborn bias 样本被边缘化。作者把一个 batch 的边际 $\mathbf{r}=[r_1,\dots,r_B]$ 拿来算 Jain 公平指数 $\mathcal{J}(\mathbf{r})=\frac{(\sum_j r_j)^2}{B\sum_j r_j^2} \in [1/B, 1]$，再加正则 $-\lambda \log \mathcal{J}(\mathbf{r})$。它的梯度 $\partial \mathcal{R}/\partial r_i \propto 2 r_i / \overline{r^2} - 2/\bar{r}$ 在 $r_i < \bar{r}$ 时为正、$r_i > \bar{r}$ 时为负，等于自动给难样本加权、给易样本减权。几何上它逼着「所有推理轨迹分到的边际尽量等长」，这正是把网络资源分配里的公平思想搬过来当反塌缩机制。
 
-**3. 基于一致性过滤的在线自训练：用收敛一致当标签，摆脱人工标注**
+**4. 基于一致性过滤的在线自训练：用收敛一致当标签，摆脱人工标注**
 
 要持续迭代又不想一直喂标注，就得让模型自己造 preference pair。做法是用 Bias Injection 强制生成 $\mathbf{y}^-$，再触发一轮轮自纠正 $\mathbf{y}^- \to \mathbf{y}_1 \to \dots \to \mathbf{y}_K$；关键是 self-consistency 过滤——只有当最后若干轮答案收敛到同一结论时，才采纳 $\mathbf{y}_K$ 当 $\mathbf{y}^+$，否则整条丢弃，避免错误标签污染策略。每轮（Iter1、Iter2）各用 5k 未标注 query。之所以靠「一致收敛」而不是固定阈值或外部裁判，是因为在公平任务里「答案不再被 stereotype 牵着变」本身就是个廉价又靠谱的客观信号，还能规避传统 self-training 的 confirmation bias。
 

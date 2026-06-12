@@ -45,6 +45,20 @@ tags:
 ### 整体框架
 FlashTrace 要解释的目标是模型最终输出 span $\mathbf{O}$，输入是一段完整 context $\mathbf{S}=\mathbf{I}\circ\mathbf{T}\circ\mathbf{O}$（用户输入 + 推理链 + 输出），最终给出每个 context token 对 $\mathbf{O}$ 的重要性分数 $\mathbf{w}_{final}$，理想情况下能把分数精准聚回原始输入 $\mathbf{I}$ 里真正决定答案的那几个 token。它把这件事拆成两层：先用 span-wise 聚合在一次前向里算完整段 $\mathbf{O}$ 的归因（Hop 0），拿到落在输入的 $\mathbf{w}_{\mathbf{I}}^{(0)}$ 和被推理 token 吸走的 $\mathbf{w}_{\mathbf{T}}^{(0)}$；再把 $\mathbf{w}_{\mathbf{T}}^{(k-1)}$ 当成下一跳的加权目标递归地重做归因（Hop $k\ge 1$），让 mass 沿 $\mathbf{O}\to\mathbf{T}\to\mathbf{I}$ 继续往输入流；最后按"剩余 mass"折算把各跳的输入分量合成单一分布。所有归因共用 ALTI 的 L1 proximity 度量 $\text{Proximity}(\mathbf{z},\mathbf{y}) = \max(0, -\|\mathbf{y}-\mathbf{z}\|_1 + \|\mathbf{y}\|_1)$（衡量"去掉贡献 $\mathbf{z}$ 后目标向量 $\mathbf{y}$ 的范数会缩多少"，在 Transformer 高维各向异性空间里比 cosine 稳），实验里 $K=1$ 一跳即够用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["context S = 输入 I ∘ 推理链 T ∘ 输出 O"] --> B["Span-wise Aggregation<br/>一次前向算完整段 O 的归因，O(N)"]
+    B --> C["落到输入的分量 w_I^(0)"]
+    B --> D["被推理 token 吸走 w_T^(k−1)"]
+    D --> E["Recursive Attribution<br/>把 w_T 当加权目标，沿 O→T→I 再归因"]
+    E -->|剩余 mass ρ_k 仍在 T，继续下一跳| D
+    E --> F["该跳落到输入的分量 w_I^(k)"]
+    C --> G["跨跳概率流聚合<br/>w_final = w_I^(0) + Σ(∏ρ_j)·w_I^(k)"]
+    F --> G
+    G --> H["每个输入 token 对 O 的最终重要性分布"]
+```
+
 ### 关键设计
 
 **1. Span-wise Aggregation：把整段 span 的归因压成一次前向**

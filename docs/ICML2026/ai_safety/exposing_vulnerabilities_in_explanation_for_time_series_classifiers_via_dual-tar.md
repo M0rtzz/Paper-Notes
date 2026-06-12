@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 TSEF 要解决的是一个双目标攻击问题：在白盒下攻击者完全访问冻结的分类器 $f$ 与解释器 $\mathcal{H}^E$，要在 $\ell_\infty$ 预算内找一个扰动 $\delta$，使对抗样本 $\tilde{\mathbf{X}} = \mathbf{X} + \delta$（$\|\delta\|_\infty \leq \epsilon$）既被预测成目标标签（$f(\tilde{\mathbf{X}}) = y'$），又让解释器输出贴近攻击者指定的参考显著图（$d(\mathcal{H}^E(\tilde{\mathbf{X}}), \mathbf{A}')$ 最小）。本文先用一条定理证明这件事不能靠逐点稠密扰动来做，再把攻击拆成"何处动"和"怎么动"两个嵌套子问题——内层学一个时间掩码 $\mathbf{M}_t \in [0,1]^{T \times D}$ 框出值得动手的时间-通道窗口，外层只在这个窗的 FFT 谱上学一个滤波器 $\mathbf{M}_f \in [0,2]^{K \times D}$ 来塑形扰动。最终对抗样本把"频域改写过的窗"和"原信号其余部分"拼回来：$\tilde{\mathbf{X}} = \mathcal{F}^{-1}(\mathcal{F}(\mathbf{M}_t \odot \mathbf{X}) \odot \mathbf{M}_f) + (1 - \mathbf{M}_t) \odot \mathbf{X}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：时序 X + 冻结分类器 f + 解释器 H^E<br/>目标标签 y' + 参考显著图 A'"] --> B["高维悖论定理<br/>证明稠密 ℓ∞ 攻击归因必发散 → 须压进结构化子空间"]
+    B --> C["TVM 时间脆弱掩码：何处动<br/>学稀疏 + 连通掩码 M_t，框出脆弱时间窗"]
+    C --> D["FPF 频域扰动滤波器：怎么动<br/>窗内 FFT × 滤波 M_f → IFFT，生成相干波形"]
+    D --> E["拼回信号<br/>X̃ = 频域改写窗 + 原信号其余部分"]
+    E --> F["对抗样本 X̃：翻预测到 y' + 伪造解释 ≈ A'"]
+```
+
 ### 关键设计
 
 **1. 高维悖论的理论刻画：证明稠密攻击为何必然失败**

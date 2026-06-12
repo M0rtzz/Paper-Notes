@@ -47,6 +47,21 @@ tags:
 
 最终决策逻辑是严格交集：只有当 MCP 的预测集合大小为 1，且样本到预测类别局部 centroid 的 Mahalanobis 距离不超过类别阈值 $\tau_{dist}(\hat{y})$ 时，系统输出 $\hat{y}$；否则输出 defer。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["患者多条西班牙临床笔记"] --> B["切分重叠 chunks（64 段 × 384 token）"]
+    B --> C["bsc-bio-ehr-es 编码<br/>Spanish biomedical RoBERTa"]
+    C --> D["gated attention MIL<br/>聚合为患者级表示"]
+    D --> E["分类头<br/>二分类预测 ŷ + 概率"]
+    E -->|风险容忍度 α 调节松紧| F["Mondrian Conformal Prediction<br/>预测集合 Γ(x) 是否恰含 1 类"]
+    D --> G["Multi-Centroid Mahalanobis Distance<br/>到类别 centroid 距离 ≤ τ"]
+    F --> H{"双 veto 交集"}
+    G --> H
+    H -->|两个检查都通过| J["输出 Clear ŷ<br/>Clear Negative / Clear Positive"]
+    H -->|任一不通过| I["Defer 交回医生"]
+```
+
 ### 关键设计
 **1. Mondrian Conformal Prediction 管 aleatoric uncertainty：判断文本证据本身够不够明确**
 

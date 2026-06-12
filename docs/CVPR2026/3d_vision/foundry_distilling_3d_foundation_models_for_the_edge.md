@@ -45,7 +45,17 @@ tags:
 
 Foundry 想解决的事很具体：把一个动辄数亿参数的 3D 自监督教师，压成能塞进边缘设备的学生，同时**不丢掉教师那套"什么任务都能接"的通用表征**。它的做法不是去模仿教师在某个任务上的输出，而是逼学生学会用一组很窄的 SuperToken 把教师的整个潜空间"装下"再"还原"出来。
 
-一次前向分三步走。先让冻结的教师吃进点云，吐出目标表征 $\mathbf{Y} \in \mathbb{R}^{c \times d}$（$c$ 个 token）。接着 DSO 模块把这 $c$ 个 token 压成 $s \ll c$ 个可学习的 SuperToken，由轻量学生编码器处理，CAU 模块再从这几个 SuperToken 把完整的 token 级表征 $\hat{\mathbf{Y}} \in \mathbb{R}^{c \times d}$ 重建回来。最后只用一个目标对齐两者：$\mathcal{L}_{distillation} = \text{SmoothL1}(\hat{\mathbf{Y}}, \mathbf{Y})$。具象一点：教师给出 $c$ 个 token，DSO 把它们硬分配进 $s=16$ 个桶并各取均值得到 16 个 SuperToken，学生只在这 16 维的瓶颈上算，CAU 再把它"撑回" $c$ 个 token——瓶颈越窄，学生被迫学到的就越是教师潜空间的"主成分"。
+一次前向分三步走。先让冻结的教师吃进点云，吐出目标表征 $\mathbf{Y} \in \mathbb{R}^{c \times d}$（$c$ 个 token）。接着 DSO 模块把这 $c$ 个 token 压成 $s \ll c$ 个可学习的 SuperToken，由轻量学生编码器处理，CAU 模块再从这几个 SuperToken 把完整的 token 级表征 $\hat{\mathbf{Y}} \in \mathbb{R}^{c \times d}$ 重建回来。最后只用一个目标对齐两者：$\mathcal{L}_{distillation} = \text{SmoothL1}(\hat{\mathbf{Y}}, \mathbf{Y})$。具象一点：教师给出 $c$ 个 token，DSO 把它们硬分配进 $s=16$ 个桶并各取均值得到 16 个 SuperToken，学生只在这 16 维的瓶颈上算，CAU 再把它"撑回" $c$ 个 token——瓶颈越窄，学生被迫学到的就越是教师潜空间的"主成分"。此外可选的门控压缩在压缩前给每个 token 预测一个融合概率，让同一个学生在部署时按需调精度/速度。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云输入"] --> B["冻结教师 Point-JEPA<br/>输出目标表征 Y（c 个 token）"]
+    B -->|"可选：门控压缩按 π>r 挑出待压缩 token"| C["动态 SuperToken 优化（DSO）<br/>交叉注意力硬分配 → s 个可学习 SuperToken"]
+    C --> D["轻量学生编码器<br/>仅在 s 维瓶颈上计算"]
+    D --> E["交叉注意力上采样（CAU）<br/>复用分配矩阵 + 残差还原 c 个 token Ŷ"]
+    E --> F["蒸馏损失对齐<br/>SmoothL1(Ŷ, Y)"]
+```
 
 ### 关键设计
 

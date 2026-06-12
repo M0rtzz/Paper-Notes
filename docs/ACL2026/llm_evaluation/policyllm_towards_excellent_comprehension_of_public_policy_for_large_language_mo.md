@@ -44,6 +44,21 @@ tags:
 
 PolicyLLM 把"评估"和"适配"两件事串成一条线。评估侧是 PolicyBench：21K 道题覆盖中国和美国两个政策体系，按 Bloom 认知层次拆成记忆 / 理解 / 应用三级、共 10 个子任务，让一篇政策题不再只问"答对没有"，而是分辨模型是记住了、理解了还是能用了。适配侧是 PolicyMoE：在 Qwen2.5-7B-Instruct 基座上用 LoRA 分别训练 Memory / Understanding / Application 三个专家，再由一个可训练的线性路由器按输入动态选专家，验证认知层次对齐的领域专门化能否补上短板。输入是政策题，中间经路由分流到对应认知层次的专家，输出是该层次任务的答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三层认知评估体系<br/>记忆 / 理解 / 应用 · 10 子任务"] --> B["跨体制数据构建<br/>中美政策文件 + 异构模型池生成干扰项"]
+    B --> C["PolicyBench（21K 题）"]
+    C --> D["政策题输入"]
+    D --> E["PolicyMoE 路由器<br/>top-k(softmax(θ_r·x)) 动态选专家"]
+    E -->|记忆| F["Memory 专家（LoRA）"]
+    E -->|理解| G["Understanding 专家（LoRA）"]
+    E -->|应用| H["Application 专家（LoRA）"]
+    F --> I["对应认知层次的任务答案"]
+    G --> I
+    H --> I
+```
+
 ### 关键设计
 
 **1. 三层认知评估体系：把"政策理解"拆成记忆、理解、应用**

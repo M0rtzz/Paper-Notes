@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 输入视频先用 VQ-VAE（OmniTokenizer）编码成离散 token 序列，再交给自回归 Transformer 建模。关键改动全在训练侧：不在完整序列上算损失，而是随机采样一个局部窗口、只优化窗口内的自回归损失，窗口外的前文 token 当作冻结上下文（stop-gradient），同时对窗口内相邻隐状态施加连续性约束；推理时仍走标准的全序列自回归生成，因此推理速度不受影响。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入视频"] --> B["VQ-VAE（OmniTokenizer）编码<br/>离散 token 序列"]
+    B --> C["自回归 Transformer"]
+    subgraph TRAIN["训练侧（算力减半）"]
+        direction TB
+        D["Local Optimization 局部优化<br/>随机采样局部窗口 + 重叠步长<br/>窗口外前文作冻结上下文（stop-grad）"]
+        E["First-Frame Balanced Sampling 首帧均衡采样<br/>含首帧窗口采样概率提到 0.5"]
+        F["Representation Continuity (ReCo) 表示连续性<br/>相邻隐状态连续性损失 L_ReCo"]
+        D --> E --> F
+        F --> G["总损失 L_Total = L_CE + λ·L_ReCo"]
+    end
+    C --> D
+    G -.训练完成.-> H["推理：标准全序列自回归生成<br/>速度不受影响"]
+```
+
 ### 关键设计
 
 **1. Local Optimization：只在局部窗口上回传，砍掉一半训练算力**

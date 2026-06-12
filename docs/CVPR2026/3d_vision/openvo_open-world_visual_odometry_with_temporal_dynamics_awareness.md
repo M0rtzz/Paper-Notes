@@ -39,7 +39,47 @@ tags:
 
 ### 整体框架
 
-OpenVO 要解决的是开放世界行车视频（单目、无标定、帧率各异）下的真实尺度自车运动估计。它采用两帧位姿回归架构：输入连续两帧图像，输出 SE(3) 相对相机位姿。整条管线先由时间感知流编码器把"当前帧率"显式注入光流、并构建端到端可微的 3D 流，再由几何感知上下文编码器从推断的相机内参和度量深度里提取尺度先验，最后交给世界坐标自运动解码器回归旋转和平移。三个模块串起来，让网络既知道"两帧之间隔了多久"，又知道"场景的真实尺度"。
+OpenVO 要解决的是开放世界行车视频（单目、无标定、帧率各异）下的真实尺度自车运动估计。它采用两帧位姿回归架构：输入连续两帧图像，输出 SE(3) 相对相机位姿。整条管线先由时间感知流编码器把"当前帧率"显式注入光流、并在其内部用可微 2D→3D 流把光流抬到带尺度的 3D 运动场，再由几何感知上下文编码器从推断的相机内参和度量深度里提取尺度先验，最后交给世界坐标自运动解码器回归旋转和平移。三大模块串起来，让网络既知道"两帧之间隔了多久"，又知道"场景的真实尺度"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["连续两帧图像 I₁, I₂<br/>（单目 · 无标定 · 帧率 f）"]
+    IN --> FLOW["光流 MaskFlowNet（2D 位移）"]
+    IN --> DEP["度量深度 Metric3Dv2"]
+    IN --> CAM["相机内参 WildCamera（推断 K）"]
+
+    subgraph FLOWENC["时间感知流编码器"]
+        direction TB
+        TCL["Time Condition Layers<br/>帧率 f→Δt→PE→仿射调制 (1+α)⊙Fᶜ+β"]
+        TCL --> SA1["4 层 self-attention 精炼空间关联"]
+        D3["可微 2D→3D 流<br/>反投影 P₁=D₁·K⁻¹p₁ → warp 采样 → P₂<br/>稠密 3D 流 P₂−P₁（端到端可微）"]
+        SA1 --> FUSE["Time-Aware Flow Feature（融合）"]
+        D3 --> FUSE
+    end
+    FLOW --> TCL
+    FLOW --> D3
+    DEP --> D3
+
+    subgraph GEOENC["几何感知上下文编码器"]
+        direction TB
+        CT["Camera Tokenizer<br/>归一化射线场 r=K⁻¹[u,v,1]ᵀ"]
+        DT["Depth Tokenizer<br/>M=D·r 带尺度 3D 点"]
+        CT --> GSA["8 层 self-attention → 几何嵌入"]
+        DT --> GSA
+    end
+    CAM --> CT
+    DEP --> DT
+
+    subgraph DEC["世界坐标自运动解码器"]
+        direction TB
+        ROT["旋转分支：Fisher 矩阵 → SO(3) + 不确定性"]
+        TRA["平移分支：世界坐标位移 t∈ℝ³"]
+    end
+    FUSE --> DEC
+    GSA --> DEC
+    DEC --> OUT["SE(3) 相对相机位姿"]
+```
 
 ### 关键设计
 

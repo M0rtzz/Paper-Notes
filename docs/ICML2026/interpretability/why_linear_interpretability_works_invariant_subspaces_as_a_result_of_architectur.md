@@ -41,7 +41,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文不训练新模型，而是把"线性可解释为什么总是奏效"这个经验现象转成一个可证明的架构命题。在 4 条架构假设（加性 residual stream、OV 与 unembedding 都是线性接口、参数共享、线性输出层）下，作者先证明两个定理——任何走线性接口被读出的语义特征必然落在跨上下文不变的线性子空间里，且在容量约束下表征必然稀疏因式分解为共享方向——再由此推出一个零样本应用：token 自身的嵌入方向就是它所对应概念的几何方向。最后用 8 个分类任务 × 4 个模型家族的几何对齐实验，外加一个"把 unembedding 换成 MLP head"的准实验对照来佐证因果方向。
+本文不训练新模型，而是把"线性可解释为什么总是奏效"这个经验现象转成一个可证明的架构命题。在 4 条架构假设（加性 residual stream、OV 与 unembedding 都是线性接口、参数共享、线性输出层）下，作者先证明核心定理（Theorem 3.7，任何走线性接口被读出的语义特征必然落在跨上下文不变的线性子空间里），再用一条容量约束命题（Proposition 3.8）说明这种表征在词表远大于维度时必然稀疏因式分解为共享方向——再由此推出一个零样本应用：token 自身的嵌入方向就是它所对应概念的几何方向。最后用 8 个分类任务 × 4 个模型家族的几何对齐实验，外加一个"把 unembedding 换成 MLP head"的准实验对照来佐证因果方向。
 
 ### 关键设计
 
@@ -49,7 +49,7 @@ tags:
 
 整篇论文的痛点是，transformer 是深层强非线性系统，本没有义务让中间表示"线性可读"，但 probe / SAE / steering 却屡屡奏效，缺一个非经验的解释。作者先把"可通讯特征" $f: \mathcal{C} \to \mathcal{Y}$ 形式化为两个条件：multi-context 要求存在多个不同表面 $c_1, c_2$ 都表达同一 $f$ 值（"France"和"the country of the Eiffel Tower"都指法国），linear decodability 要求存在 $\phi \in \mathbb{R}^{|V|}$ 使 $\phi^\top W_U \mathbf{h}(c) = g(f(c))$ 对所有 $c$ 成立。在此之上，由于线性接口意味着存在标量读出 $o_f(c) = \mathbf{w}_f^\top \mathbf{h}(c)$，任何上下文要给出相同的 $f$ 值，就必须在 $\mathbf{w}_f$ 方向上保持一致、只能在正交补 $\mathbf{w}_f^\perp$ 里自由变化——也就是说 $f$ 的信息只活在由 $\mathbf{w}_f$ 决定的、与上下文无关的子空间 $\mathcal{S}_f$ 内。Directional Invariance 进一步把这个子空间收紧到 $\dim(\mathcal{S}_f)=1$，即单个 direction 就足够。这条等价之所以有效，是因为它一举把 linear probe、SAE、activation steering 这些看似不同的工具统一成"在利用同一个 $\mathcal{S}_f$"，从而解释了它们为何常常给出一致结论。
 
-**2. Capacity Constraint 推论：词表远大于维度逼出稀疏因式分解**
+**2. Capacity Constraint 命题：词表远大于维度逼出稀疏因式分解**
 
 光证明"存在不变方向"还不够，得解释为什么 SAE 找到的是一组可复用的稀疏字典。作者从 $|\mathcal{V}| \gg d$ 这个工程现实出发：unembedding $W_U \in \mathbb{R}^{|\mathcal{V}| \times d}$ 里每个 token 的列向量 $\mathbf{w}_t$ 不可能两两正交（token 数远多于维度），只能彼此共享方向。若各上下文只激活稀疏的 feature 集合、且多个 token 共享同一语义属性，最优表示就必然因式分解为 $\mathbf{w}_t = \sum_{f \in F_t} \alpha_{t,f} \mathbf{d}_f$，其中共享方向数 $|F| \ll |\mathcal{V}|$。代回后 logit 写成 $\text{logit}_t = \sum_{f \in F_t} \alpha_{t,f}\,(\mathbf{d}_f^\top \mathbf{h}(c))$，每个因子方向 $\mathbf{d}_f$ 又重新满足"线性可解码且上下文无关"，正好落回 Theorem 3.7 的前提。这条命题说明 SAE 能成功不是巧合——容量约束、稀疏激活、多 token 共享语义这三条现实联手逼模型把表示组织成可被稀疏字典还原的形式，也就解释了为什么 SAE 字典与 linear probe 找到的方向常常重合。
 

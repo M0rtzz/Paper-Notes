@@ -45,6 +45,22 @@ tags:
 
 分为三个阶段：(1) 分析验证——使用 Patchscopes 探针验证 LLM 能否正确解读组合式嵌入；(2) 后训练适配——在已训练模型上用知识蒸馏微调变换向量并加 LoRA 适配器；(3) 从头预训练——验证组合式词表作为新模型设计选择的可行性。输入端将表面形式替换为基础词+变换向量的和，输出端将大 unembedding 矩阵拆分为基础词和变换两个独立投影。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表面形式<br/>walk / walks / walking / walked"] --> REP
+    subgraph REP["组合式词表表示（基础词 + 变换向量之和）"]
+        direction TB
+        B["输入端：e_w = e_b + Σ e_t"]
+        C["输出端：unembedding 拆成基础词路 + 变换路"]
+    end
+    REP --> D["Patchscopes 验证<br/>模型天生能读懂加法嵌入吗：屈折成功 · 派生较弱"]
+    D --> E["后训练适配<br/>两阶段知识蒸馏 + 末 8 层 LoRA"]
+    REP --> F["从头预训练<br/>分解式预测 p(w|h)=p(b|h)·p(T|b,h)"]
+    E --> G["释放 10-40% 词表槽位 → 多语言扩展"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 组合式词表表示：把每个表面形式拆成「基础词 + 变换向量」之和**

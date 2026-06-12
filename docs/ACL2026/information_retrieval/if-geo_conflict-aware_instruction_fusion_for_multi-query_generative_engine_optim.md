@@ -44,6 +44,34 @@ tags:
 
 IF-GEO 是一条纯 LLM-API 流水线（同款 GPT-4o-mini 跑所有调用），输入一篇待优化文档 $D$、输出一份按蓝图改好的文档，核心是"先发散后收敛"两个 Phase。Phase I（Diverge）先让 LLM 当"搜索分析师"对 $D$ 反向检索出加权代表性 query 集合 $Q(D) = \{(q_i, w_i)\}_{i=1}^m$（$w_i \in [0,100]$ 为流行度打分、禁止 paraphrase），再对每个 $q_i$ 独立诊断"文档缺什么"，生成结构化请求 $r_{i,j} = \langle e_{i,j}, u_{i,j}, s_{i,j} \rangle$（锚点片段 $e_{i,j}$、改写建议 $u_{i,j}$、G-EVAL 风格的必要性打分 $s_{i,j} \in [0,100]$）。Phase II（Converge）把这堆互相打架的请求收敛成一份蓝图：按全局优先度 $g_{i,j} = w_i \cdot s_{i,j}$ 卡阈值去噪、语义去重，再对同锚点互斥请求做冲突仲裁，把保留指令按文档**章节**聚合成有序 JSON 蓝图，最后交给一个"受限编辑器"LLM 严格照蓝图改、未提及章节原样保留。整套优化在最大化期望能见度 $\mathbb{E}[\Delta v]$ 之外，还把 WCP / DR / WTR 三项稳定性指标作为同等重要的约束写进目标函数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["待优化文档 D"]
+    subgraph DIV["Diverge：加权 query 集 + 结构化请求"]
+        direction TB
+        B["反向检索代表性 query 集 Q(D)<br/>每条带流行度权重 w_i"]
+        C["逐 query 诊断缺口<br/>生成 ⟨锚点, 改写建议, 必要性 s⟩"]
+        B --> C
+    end
+    subgraph CONV["Converge：四步收敛成全局蓝图"]
+        direction TB
+        D2["Prioritize：g = w·s 卡阈值去噪"]
+        E["Dedup：语义去重合并"]
+        F["Conflict-Resolve：同锚点互斥仲裁<br/>选优 / 合成折衷"]
+        G["Blueprint：按章节聚合成 JSON 蓝图"]
+        D2 --> E --> F --> G
+    end
+    H["受限编辑器 LLM<br/>严格照蓝图改、未提及章节原样保留"]
+    I["优化后文档"]
+    J["Risk-Aware 目标约束<br/>WCP / DR / WTR"]
+    A --> DIV
+    DIV --> CONV
+    CONV --> H
+    H --> I
+    I -.评估 / 约束.-> J
+```
+
 ### 关键设计
 
 **1. Diverge——加权代表性 query 集合 + 必要性打分的结构化请求：把"为不同 query 服务"的需求显式化、可比较化**

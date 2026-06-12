@@ -45,6 +45,22 @@ tags:
 
 框架分三个阶段：(1) 逻辑复杂度测量——构建 NSA-LR 数据集并用 LoCM 量化每个样本的逻辑难度；(2) 逻辑相变发现——用 LoCM 评估 LLM 性能，识别相变区间，将样本分为 Easy/Medium/Hard 三个经验池；(3) 神经符号课程调优——先通过 NL-FOL 权重插值得到混合语义模型 $\theta_{MIX}$，再通过复杂度递增的课程优化得到最终模型 $\theta^*$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["NSA-LR 数据集<br/>（含完整 FOL 表示）"] --> B["逻辑复杂度度量（LoCM）<br/>运算符权重+嵌套深度+前提数+跳数 → 标量"]
+    B --> C["逻辑相变发现<br/>按 LoCM 评测 LLM，定位相变临界区间"]
+    C --> D["分层经验池<br/>Easy / Medium / Hard"]
+    subgraph NSA["自适应神经符号对齐"]
+        direction TB
+        E["分别微调 θ_NL（语义锚定）<br/>与 θ_FOL（符号精确）"] --> F["参数空间线性插值<br/>θλ=(1−λ)θ_NL+λθ_FOL，搜最优 λ → θ_MIX"]
+    end
+    A --> E
+    F --> G["复杂度感知课程优化<br/>Easy→Medium→Hard 渐进训练 θ_MIX"]
+    D --> G
+    G --> H["最终模型 θ*"]
+```
+
 ### 关键设计
 
 **1. 逻辑复杂度度量（LoCM）：给每道题一个能精确刻画"逻辑难度"的标量**

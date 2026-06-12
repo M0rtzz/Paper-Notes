@@ -44,17 +44,36 @@ tags:
 
 具体地，输入是初始模型集合 $\mathcal M_0$、总预算 $B$、剪枝系数 $\eta$。第 $r$ 轮里每个仍保留的模型获得预算 $C_r=\lfloor B/(|\mathcal M_r|\lceil\log_\eta |\mathcal M_0|\rceil)\rfloor$，训练到累计预算后形成 learning curve $L_m(C)$。普通 SH 直接按已观测曲线的最低 loss 用 Top$_k$ 选下一轮模型；带 surrogate 的 SH LMC / SH DE 则先用 surrogate 预测每条曲线延伸到最后一轮预算时的 loss，把观测段和预测 continuation 合并起来再选。最终输出只保存真实训练出的曲线（surrogate 的 continuation 绝不当作已观测数据），用它们拟合 compute-loss scaling law。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：模型集合 M₀ + 总预算 B + 剪枝系数 η<br/>代理目标：预算内逼近最低 validation loss"] --> B["第 r 轮：给每个保留模型<br/>分配等量新增预算 Cr"]
+    B --> C["训练到累计预算，得到各模型<br/>learning curve 观测段 L(C)"]
+    C --> D{"按什么标准取 Top-k？"}
+    D -->|普通 SH·看当前| E["按观测段最低 loss 选"]
+    D -->|SH LMC / SH DE·看未来| F["surrogate 预测 continuation<br/>估计未来可达最低 loss 再选<br/>（LMC GP 或 Deep Ensemble）"]
+    E --> G["保留 Top-k 模型，淘汰其余"]
+    F --> G
+    G -->|预算未耗尽，进下一轮| B
+    G -->|预算耗尽| H["输出真实训练曲线集合 L<br/>（surrogate continuation 不计入）"]
+    H --> I["拟合 scaling law (C/α)^−γ<br/>GP mean / UCB / LCB 外推给出乐观/悲观区间"]
+```
+
 ### 关键设计
 
 **1. 把 scaling law 采样转成预算受限的 proxy 优化：绕开没有金标准的拟合目标**
 
 「哪组 learning curve 最能拟合 scaling law」本身没有可直接优化的目标——真正的 ground-truth frontier 要把模型完整训练才知道，而这恰恰是最贵的部分。作者因此换了个可计算的 proxy：在总预算 $B$ 内寻找能达到最低 validation loss 的模型集合。优化这个 proxy 的副产物，正是一组被不同程度训练过的 learning curves，拿它们去拟合 scaling law 即可。这样目标就只依赖当前已观测到的训练 loss，可以直接套用 SH 这类 anytime 的资源分配算法来近似，而不必先知道前沿。
 
-**2. LMC Gaussian Process：用跨曲线相关性给大模型「翻案」**
+**2. Surrogate-guided Successive Halving：按「未来潜力」而非「当前 loss」剪枝**
 
-普通 SH 的硬伤是只看当前 loss——小模型早期下降快，会在短预算下显得更优，于是后期才发力的大模型被过早淘汰。这一设计让 surrogate 根据多条早期曲线预测某个模型后续的 loss 走向，从而保留那些当前不占优、但预测未来更低的大模型。具体把曲线外推建模为一个 multi-input multi-output 的 GP，kernel 由 exponential decay、white noise 和 bias 三个子核组合，再通过 co-regionalisation 矩阵显式捕捉不同模型曲线之间的相关性。这样「小模型大约何时 plateau」「大模型曲线何时由劣转优」这类规律会跨曲线共享，成为外推其他曲线的信号——这正是单曲线外推方法拿不到的先验。
+这是论文标题里的核心机制，也是把 proxy 目标真正解出来的算法骨架。原始 SH 每轮给所有保留模型分配等量预算 $C_r$、训练出一段 learning curve，然后按**已观测的当前最低 loss** 取 Top$_k$ 进入下一轮，预算逐轮集中到少数模型。它的硬伤前面已点出：小模型早期下降快，会在短预算下被判为「当前更优」，后期才发力的大模型被过早淘汰。本文只动了「取 Top$_k$」这一步——不看观测段终点，而是让 surrogate 预测每个模型若走完剩余所有轮次能达到的**未来最低 loss**，按这个预测值排序剪枝，从而把预算留给真正有潜力贡献 frontier 的模型。一个关键的稳健性细节是：surrogate 预测出的 continuation $\hat{\mathcal L}$ **只用于剪枝决策**，最终拿去拟合 scaling law 的曲线集合 $\mathcal L$ 只收真实训练出的观测段，预测段绝不混入——这让方法比「直接外推当数据」更可信。
 
-**3. Deep Ensemble surrogate 与 scaling law 外推：换参数化曲线族 + 给前沿配不确定性区间**
+**3. LMC Gaussian Process：用跨曲线相关性给大模型「翻案」**
+
+设计 2 把剪枝标准换成了「预测的未来最低 loss」，但这个预测靠什么 surrogate 给出？这是作者的第一种答案。它根据多条早期曲线预测某个模型后续的 loss 走向，从而保留那些当前不占优、但预测未来更低的大模型。具体把曲线外推建模为一个 multi-input multi-output 的 GP，kernel 由 exponential decay、white noise 和 bias 三个子核组合，再通过 co-regionalisation 矩阵显式捕捉不同模型曲线之间的相关性。这样「小模型大约何时 plateau」「大模型曲线何时由劣转优」这类规律会跨曲线共享，成为外推其他曲线的信号——这正是单曲线外推方法拿不到的先验。
+
+**4. Deep Ensemble surrogate 与 scaling law 外推：换参数化曲线族 + 给前沿配不确定性区间**
 
 GP 之外作者还试了参数化路线，用来回答「非参数 GP 和参数化 curve family 谁更适合 budget allocation」。Deep Ensemble 用两层 MLP 去条件化 power law、exponential、Morgan-Mercer-Flodin 等曲线函数的系数，预测曲线形状；不同数据集的曲线噪声和形状各异，单一 surrogate 未必最优，多套曲线族给了选择空间。此外 scaling law 常要外推到已训练 compute 区间之外，作者在 SH LMC 之后再用 GP 的 mean / UCB / LCB 把 learning curve 往外延，缩小拟合曲线与 ground truth 的 AbC 差距——UCB/LCB 还顺带给出乐观/悲观的曲线边界，让预算决策不只有一个点估计。
 

@@ -41,6 +41,24 @@ tags:
 
 这篇论文要解决的是扩散人脸替换里一个长期纠结的矛盾：身份条件想把脸拉向源人脸，属性条件想把表情姿态拉向目标人脸，两个条件在训练里方向相反、互相打架。作者的解法是给它们排个优先级——「先像，再准」。整套框架建在 Stable Diffusion 1.5 的条件修复上，输入源人脸和目标人脸，输出换了身份的目标图；训练分三阶段走，先把模型解空间收缩到身份一致的区域，再在这个子空间里对齐属性，最后端到端精炼真实感。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["源人脸"] --> CID
+    TGT["目标人脸"] --> CATTR
+    subgraph DECOUP["解耦条件注入（同一人不同属性配对）"]
+        direction TB
+        CID["身份路径<br/>ArcFace token + DINOv2 细节"]
+        CATTR["属性路径<br/>SimSwap 编码表情/姿态"]
+        CID --> CFUSE["融合特征 c_fuse<br/>λ_fuse 控属性注入强度"]
+        CATTR --> CFUSE
+    end
+    CFUSE --> S1["Stage 1 身份导向调优<br/>λ_fuse=0 收缩身份解空间"]
+    S1 --> S2["Stage 2 属性对齐<br/>λ_fuse=1 零初始化 + 弱化 λ_id"]
+    S2 --> S3["Stage 3 端到端精炼<br/>ID 监督独立于 ELBO + 对抗损失"]
+    S3 --> OUT["换脸输出 512×512"]
+```
+
 ### 关键设计
 
 **1. 解耦条件注入：从数据和特征两头把身份和属性拆开**

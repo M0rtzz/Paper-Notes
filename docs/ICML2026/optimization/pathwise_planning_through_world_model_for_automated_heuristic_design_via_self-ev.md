@@ -48,6 +48,19 @@ PathWise 在两层时间尺度上调度：外层迭代 $r$ 维护一个根节点
 
 每个节点本身是个五元组 $(h,\kappa,d,P(h;\mathcal{D}),\mathrm{PM})$：代码 $h$、生成它的推导文本 $\kappa$、算法的自然语言描述 $d$、性能 $P$、父节点元信息 $\mathrm{PM}=\{(d_k,P(h_k;\mathcal{D}))\mid v_k\in S\}$。父元信息只放描述和分数、不放代码，从源头上压住 prompt 上下文长度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始化：LLM 生成 N_p 个根启发式<br/>组成外层种群 P_r"] --> B["蕴含图状态 s_t（有状态搜索记忆）<br/>节点 = (代码 h, 推导 κ, 描述 d, 性能 P, 父元信息)"]
+    B --> C["策略代理 π_p<br/>采样 N_a 个动作 a=(父节点集 S, 推导指令 κ)"]
+    C --> D["世界模型代理 π_wm<br/>对每个动作生成 N_w 条代码 rollout"]
+    D --> E["评估器在数据集 D 上跑 N_a×N_w 条 rollout<br/>选最优 rollout 作为新节点写入图"]
+    E --> F["更新状态 s_t+1<br/>剪掉用过的父节点、永久保留全局最优解"]
+    F -->|预算 n_e 未尽| G["策略 critic → 策略反思 ρ_p<br/>世界模型 critic → 代码反思 ρ_wm<br/>+ 多样性扰动（prompt 短语库 / state shuffling）"]
+    G -->|ρ_p 路由回策略、ρ_wm 路由回世界模型| C
+    F -->|预算 n_e 用尽| H["输出最佳启发式"]
+```
+
 ### 关键设计
 
 **1. 蕴含图作为有状态搜索记忆：把整条搜索轨迹压成一张 LLM 读得懂的图**

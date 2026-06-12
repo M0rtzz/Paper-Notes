@@ -64,6 +64,22 @@ MLLM 不同于纯文本 LLM，其视觉和语言表示通过精心训练的**投
 
 SineProject 想解决的是「遗忘的同时别把视觉-语言对齐弄崩」，而它的全部改动只落在投影层这一个地方。标准 MLLM 的数据流是「视觉编码器 → 投影层 MLP → 语言模型」，投影层是一个两层 MLP：$F(x) = W_2 \phi(W_1 x + b_1) + b_2$（$\phi$ 为 GELU/ReLU）。SineProject 不动语言骨干、不动视觉编码器、也不改遗忘损失，只把投影层的权重换一种参数化方式包起来，于是它能像补丁一样挂到任何现成的遗忘流水线上。整条链路里真正被改写的就是 $W_1, W_2$ 进入前向的形式——其余部分照常训练、照常算 forget/retain 损失。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["视觉编码器<br/>CLIP ViT-L/14（冻结）"]
+    B --> S1
+    subgraph S1["投影层（SineProject 唯一改动处）"]
+        direction TB
+        C["正弦投影层<br/>sin(·) 把权重值域钉死在 [−1,1]"]
+        C --> D["冻结 W + 学 sin(ΔW) 增量<br/>全稠密适配器，参数开销 <1%"]
+    end
+    S1 --> E["语言模型骨干<br/>（LoRA rank 32，视觉编码器冻结）"]
+    E --> F["遗忘-保留损失<br/>L_forget + λ·L_retain"]
+    F --> G["提示解耦 PD<br/>纯文本/多模态样本分开算损失"]
+    G -->|反向传播仅更新 ΔW、偏置、LoRA| S1
+```
+
 ### 关键设计
 
 **1. 正弦投影层：用 sin(·) 把权重值域钉死在 [-1,1]，从源头掐住 Jacobian 爆炸**

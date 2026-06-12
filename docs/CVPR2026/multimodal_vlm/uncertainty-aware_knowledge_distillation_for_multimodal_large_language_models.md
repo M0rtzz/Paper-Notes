@@ -47,7 +47,7 @@ tags:
 
 **2. MAP 推断 + Laplace 近似：自然长出一个防极端的正则项**
 
-把蒸馏看成对学生激活求 MAP，目标是 $\min_{a^s} -\log p(y\mid a^s) + \beta\ell(a^s; a^t) + \log Z_\beta(a^t)$，难点在配分函数 $Z_\beta$。用 Laplace 近似可得 $\log Z_\beta \approx -\frac{d}{2}\log\beta + \text{const}$，代回后最终目标化为 $\min \mathcal{L}_{CE} + \beta\ell + \frac{d}{2}\log\beta$。最后这一项 $\frac{d}{2}\log\beta$ 是推导自然带出来的正则化：它阻止 $\beta$ 滑向 0 或无穷，避免模型彻底倒向数据或彻底倒向教师。
+把蒸馏看成对学生激活求 MAP，目标是 $\min_{a^s} -\log p(y\mid a^s) + \beta\ell(a^s; a^t) + \log Z_\beta(a^t)$，难点在配分函数 $Z_\beta$。用 Laplace 近似可得 $\log Z_\beta \approx -\frac{d}{2}\log\beta + \text{const}$，代回后最终目标化为 $\min \mathcal{L}_{CE} + \beta\ell - \frac{d}{2}\log\beta$。最后这一项 $-\frac{d}{2}\log\beta$ 是推导自然带出来的正则化：它阻止 $\beta$ 滑向 0 或无穷，避免模型彻底倒向数据或彻底倒向教师。
 
 **3. 任务级与实例级两种粒度：让每个样本都能有自己的平衡**
 

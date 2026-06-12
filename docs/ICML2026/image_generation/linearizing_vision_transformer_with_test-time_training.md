@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 方法要解决的是"把已经训好的 Softmax 注意力换成线性复杂度的替身，又不想重新训练"。作者的做法是只动 attention 模块、保留 MLP/LayerNorm/embedding：先把 Softmax 注意力替换成两层 TTT-SwiGLU 内模型，让内部的 $W_1, W_2$ 直接继承原 Q/K/V projection 权重；再在 K 上加 instance norm、在 Q/K 上各加一条 depthwise conv 分支，把 Softmax 隐含的 shift-invariance 和 locality 在表示空间补回来。改造完成后只需 1 小时量级的微调即可恢复原性能，可选地再与 Neighborhood Attention 做 50/50 混合进一步涨点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SM["预训练 Softmax 注意力<br/>Q/K/V/MLP 权重"] -->|"全权重继承"| TTT
+    X["输入 token"] --> PROJ["Q/K/V 投影"]
+    PROJ --> KIN["Key Instance Normalization<br/>跨 token 中心化补 shift-invariance"]
+    PROJ --> DWC["Q/K 上 Depthwise Conv<br/>残差分支注入 locality"]
+    KIN --> TTT["TTT-SwiGLU 两层内模型<br/>Softmax 的结构同构替身"]
+    DWC --> TTT
+    TTT --> OUT["线性复杂度注意力输出<br/>1 小时微调即恢复原性能"]
+    OUT -->|"可选 50/50 混合"| NAT["Neighborhood Attention"]
+```
+
 ### 关键设计
 
 **1. TTT 作为 Softmax 的"结构同构"替身：跨越表示能力鸿沟**

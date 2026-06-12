@@ -44,6 +44,16 @@ tags:
 
 方法叫 **Fixed Parameter Expansion (FPE)**，定位是"机制性探针"而非可部署 recipe：它要回答的问题是，在非零参数总数严格不变的前提下，把神经元数变多、让每个神经元的连接变稀疏，能否降低特征干扰并换来精度。具体做法是先把一个稠密浅层 MLP 训到接近收敛，再把隐层"切宽"——每个原神经元被复制成 $\alpha$ 个子神经元、瓜分原来的输入边，复制带来的多余参数则靠剪掉最小权重补回去，最后在同样设置下微调并和稠密 baseline 对比精度与干扰指标。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["稠密浅层 MLP<br/>预训练 25 epoch"] --> B["Disjoint 边分割<br/>每神经元切成 α 个子神经元、瓜分输入边"]
+    B --> C["掩码生成<br/>clause-split / random-split 对照"]
+    C --> D["剪最小权重<br/>守住非零参数预算 不变"]
+    D --> E["微调 25 epoch"]
+    E --> F["干扰量化：feature capacity + cosine similarity<br/>对比稠密 baseline 精度"]
+```
+
 ### 关键设计
 
 **1. Disjoint 边分割：用更多神经元而非更多参数撑开特征容量**

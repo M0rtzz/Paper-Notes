@@ -50,39 +50,52 @@ tags:
 
 ### 整体框架
 
-BiLaLoRA 要解决的是：把在合成雾图上预训练好的去雾模型，在没有真实配对监督、也不想付出全量微调代价的前提下，迁移到真实雾霾场景。整条流水线分两步走——先用一个无监督的语义信号（H2C Loss）替代缺失的真实 GT，再用双层优化自动找出最该插 LoRA 的那几层，最后只在这些层上轻量微调。换句话说，"用什么信号训"和"在哪里训"这两件事，被分别交给了 H2C Loss 和 BiLaLoRA。
+BiLaLoRA 要解决的是：把在合成雾图上预训练好的去雾模型，在没有真实配对监督、也不想付出全量微调代价的前提下，迁移到真实雾霾场景。整条流水线把「用什么信号训」和「在哪里训」分别交给两个部件——前者用无监督的语义信号 H2C Loss 替代缺失的真实 GT，后者用双层优化（BiLaLoRA）自动定位最该插 LoRA 的「瓶颈层」。作者的关键观察是：受域差距影响的瓶颈层并非固定，而是随骨干结构动态变化（编码器末段贡献最大，但具体是哪几层因架构而异），因此层选择必须自动化、不能靠人工经验。BiLaLoRA 的执行分两阶段：Stage 1（双层搜索）同时学层选择门控 $\alpha$ 与 LoRA 权重 $\omega$，搜完按 $\alpha$ 取 Top-K 层；Stage 2（LoRA 微调）只在这 Top-K 层上训练 LoRA、其余层冻结。两个阶段都以 H2C Loss 作为优化目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["合成数据预训练去雾模型<br/>+ 真实无配对雾图"] --> H["H2C Loss<br/>CLIP 语义方向当无监督监督信号"]
+    H --> S1
+    subgraph BLL["BiLaLoRA：双层优化自动定位 LoRA 插入层"]
+        direction TB
+        S1["Stage 1 双层搜索<br/>上层调门控 α、下层学 LoRA 权重 ω"] --> S2["rank-one 近似超梯度<br/>按 α 取 Top-K 瓶颈层"]
+        S2 --> S3["Stage 2 微调<br/>仅 Top-K 层训 LoRA，余层冻结"]
+    end
+    S3 --> O["适配真实域的去雾模型"]
+```
 
 ### 关键设计
 
 **1. H2C Loss：没有真实 GT 时，用 CLIP 的语义方向当监督信号**
 
-真实场景拿不到同一画面的有雾/无雾配对，传统 L1/感知损失无从计算。H2C Loss 的思路是借 CLIP 已经对齐好的视觉-语言空间，把"去雾"翻译成一个方向：定义正向提示 $T_{\text{pos}}$（"a clear photo"、"a bright image"、"a high-quality photo"）和负向提示 $T_{\text{neg}}$（"a hazy photo"、"a foggy image"、"a blurry photo"），二者之差 $\Delta T_{\text{text}} = T_{\text{pos}} - T_{\text{neg}}$ 就是"有雾→清晰"在文本域的语义方向。
+真实场景拿不到同一画面的有雾/无雾配对，传统 L1/感知损失无从计算。H2C Loss 的思路是借 CLIP 已经对齐好的视觉-语言空间，把「去雾」重新表述为隐空间里的一次语义跨模态对齐：用 CLIP 文本编码器把负向提示 $T_{\text{neg}}$（"a photo with haze"）和正向提示 $T_{\text{pos}}$（"a clear photo"）编码成文本域里的起点与终点，二者之差 $\Delta T_{\text{text}} = T_{\text{pos}} - T_{\text{neg}}$ 就是「有雾→清晰」的理想语义方向。换不同场景只需换提示词（如夜间雾用 "a photo with nighttime haze"），无需改结构。
 
-对应地，把去雾输出 $\hat{J}$ 和有雾输入 $I$ 各过一次 CLIP 图像编码器，得到图像域的变化方向 $\Delta V_{\text{img}} = V_{\text{out}} - V_{\text{in}}$，其中 $V_{\text{out}} = \text{CLIP}_{\text{img}}(\hat{J})$、$V_{\text{in}} = \text{CLIP}_{\text{img}}(I)$。损失就是让这两个方向尽量同向：
+对应地，把有雾输入 $I_{\text{in}}$ 和去雾输出 $I_{\text{out}}$ 各过一次 CLIP 图像编码器，得到图像域的位移向量 $\Delta V_{\text{img}} = V_{\text{out}} - V_{\text{in}}$，其中 $V_{\text{in}} = \text{CLIP}_{\text{img}}(I_{\text{in}})$、$V_{\text{out}} = \text{CLIP}_{\text{img}}(I_{\text{out}})$。损失就是让这两个方向尽量同向（用余弦相似度度量）：
 
-$$\mathcal{L}_{\text{H2C}} = 1 - \cos(\Delta V_{\text{img}}, \Delta T_{\text{text}})$$
+$$\mathcal{L}_{\text{H2C}} = 1 - \frac{\Delta V_{\text{img}} \cdot \Delta T_{\text{text}}}{\|\Delta V_{\text{img}}\|_2 \cdot \|\Delta T_{\text{text}}\|_2}$$
 
-关键在于用"方向差"而非"绝对距离"——只约束图像往清晰的方向走，不强迫输出去匹配某个具体文本，从而避开了 CycleGAN 式翻译的训练不稳定与伪影，也避开了让输出直接对齐文本的退化解。
+关键在于用「方向对齐」而非「绝对距离」——只约束图像往清晰的方向走，不强迫输出去匹配某个具体文本，因此不引入额外复杂结构，也避开了 CycleGAN 式翻译的训练不稳定与伪影。
 
 **2. BiLaLoRA：把"LoRA 插在哪层"建模成可微的双层优化**
 
-LoRA 能省参数，但插在哪些层、各层权重怎么分配是个组合优化问题，随机或均匀分配远非最优。BiLaLoRA 借鉴 NAS 里 DARTS 的思路，把它写成上层选层、下层学权重的双层优化：上层在验证集上调每层的选择权重 $\alpha = \{\alpha_1, \ldots, \alpha_L\}$，下层在训练集上学所有 LoRA 参数 $\omega$，
+LoRA 能省参数，但它的效果高度依赖插在哪些层；而作者实验发现受域差距影响的「瓶颈层」并不固定——编码器末段贡献最大，但具体哪几层因架构而异，靠人工/经验选层缺乏通用性。于是 BiLaLoRA 把层选择重述成一个可微的架构搜索：给每个候选 LoRA 模块挂一个可学习的门控 $\alpha$，用 sigmoid 约束到 $(0,1)$，与缩放因子 $\gamma$ 一起调制低秩增量的贡献，
 
-$$\min_{\alpha} \mathcal{L}_{\text{val}}(\omega^*(\alpha), \alpha), \quad \omega^*(\alpha) = \arg\min_{\omega} \mathcal{L}_{\text{train}}(\omega, \alpha)$$
+$$W' = W_0 + \alpha \cdot \gamma \cdot \Delta W$$
 
-离散的选层不可微，于是用 Gumbel-Sigmoid 做连续松弛 $g_l = \sigma\left(\frac{\log(\alpha_l / (1-\alpha_l)) + G}{\tau}\right)$（$G$ 为 Gumbel 噪声，$\tau$ 为温度），训练时 $g_l$ 是连续权重，搜完取 Top-K 层固化。双层优化的超梯度本来要算二阶 Hessian、代价高，本文用 rank-one 近似把它降到只需一阶导：
+这里 $\alpha$ 就是离散「选不选这层」决策的连续松弛。门控 $\alpha$（架构参数）与 LoRA 权重 $\omega$（低秩增量）之间存在层级依赖，单层优化无法刻画，于是写成上层定层、下层学权重的双层优化：
 
-$$\nabla_\alpha \mathcal{L}_{\text{val}} \approx \nabla_\alpha \mathcal{L}_{\text{val}} - \frac{\eta}{\epsilon} (\nabla_\alpha \mathcal{L}_{\text{train}}(\omega^+) - \nabla_\alpha \mathcal{L}_{\text{train}}(\omega^-))$$
+$$\min_{\alpha} \varphi(\omega^*(\alpha), \alpha), \quad \text{s.t.}\ \omega^*(\alpha) \in \arg\min_{\omega} \psi(\omega, \alpha)$$
 
-其中 $\omega^\pm = \omega \pm \epsilon \nabla_\omega \mathcal{L}_{\text{val}}$。这样选层既自动又便宜，训练时间的大头省在"搜完只训少数层"上。
+其中 $\varphi$、$\psi$ 分别是上层（优化层选择 $\alpha$）与下层（优化 LoRA 增量 $\omega$）目标。难点在上层超梯度 $\nabla_\alpha \varphi$ 含 $\omega^*$ 对 $\alpha$ 的雅可比，按隐函数定理展开要算并求逆二阶 Hessian，对大模型不可行。本文用 rank-one 外积近似 Hessian，把超梯度降到只需一阶导：
+
+$$g_\alpha \approx \nabla_\alpha \varphi - \frac{\nabla_\omega \varphi^\top \nabla_\omega f}{\|\nabla_\omega f\|^2} \nabla_\alpha f$$
+
+（$f$ 为下层目标）。这一步等价于一次 rank-one 拟牛顿更新，使选层既自动又便宜；训练时间的大头则省在「搜完只训少数 Top-K 层」上。
 
 ### 损失函数 / 训练策略
 
-整体分两阶段：**Stage 1（双层搜索）**同时优化 $\alpha$ 和 $\omega$，用 Gumbel-Sigmoid 连续化层选择，搜完按 $\alpha$ 取 Top-K 层；**Stage 2（LoRA 微调）**只在这 Top-K 固化层上训练 LoRA，其余层冻结。总损失为
-
-$$\mathcal{L} = \mathcal{L}_{\text{H2C}} + \lambda \mathcal{L}_{\text{reg}}$$
-
-其中 $\mathcal{L}_{\text{reg}}$ 是防止去雾输出偏离输入过多的正则项，$\lambda$ 为平衡系数。搜索与训练解耦，使搜索阶段能快速完成、训练阶段只聚焦有效层。
+整体只用 H2C Loss 作为优化目标（无需配对 GT，也不额外引入正则结构），分两阶段执行（见 Algorithm 1）：**Stage 1（双层定位，$t=0 \ldots T_s-1$）**交替更新——先按 rank-one 超梯度更新架构参数 $\alpha$，再更新 LoRA 权重 $\omega$；到切换轮 $T_s$ 时按 $\alpha$ 的排序取 Top-K 层固化（$\alpha^* = \text{TopK}(\alpha_{T_s}, k)$）。**Stage 2（LoRA 微调，$t=T_s \ldots T$）**冻结层选择 $\alpha^*$，只在这 Top-K 层上继续训练 LoRA 权重。搜索与微调解耦，使搜索阶段快速定位、微调阶段只聚焦真正的瓶颈层。
 
 ## 实验关键数据
 
@@ -142,9 +155,9 @@ BiLaLoRA 在 4 种不同的去雾骨干网络上均有效：
 
 ## 亮点与洞察
 
-1. **H2C Loss 设计优雅**：利用 CLIP 语义空间的方向性构造无监督损失，比 CycleGAN 式方法更稳定且无伪影风险。关键在于用"方向差"而非"绝对距离"，避免了使输出直接匹配某些文本的退化解
-2. **将 NAS 思想引入 LoRA 层选择**：双层优化自动定位最优层，避免了人工试错。Gumbel-Sigmoid 松弛使离散搜索可微分
-3. **Rank-one 近似降低双层优化成本**：从二阶 Hessian 简化为一阶，实用性大幅提升
+1. **H2C Loss 设计优雅**：利用 CLIP 语义空间的方向性构造无监督损失，比 CycleGAN 式方法更稳定且无伪影风险。关键在于用"方向对齐"而非"绝对距离"，且不引入额外复杂结构，换场景只需改提示词
+2. **将可微架构搜索引入 LoRA 层选择**：双层优化自动定位瓶颈层，避免了人工试错。sigmoid 门控 $\alpha$ 把离散选层松弛成连续可微决策（$W' = W_0 + \alpha\gamma\Delta W$）
+3. **Rank-one 近似降低双层优化成本**：用 rank-one 外积近似 Hessian，把超梯度从二阶简化为一阶（等价一次 rank-one 拟牛顿更新），实用性大幅提升
 4. **跨模型通用性强**：在 CNN（MSBDN、ConvIR）和 Transformer（DeHamer、DEA）架构上均有效，说明方法不依赖特定架构
 5. **两阶段解耦**：搜索与训练分离，搜索阶段可快速完成，训练阶段仅聚焦有效层
 

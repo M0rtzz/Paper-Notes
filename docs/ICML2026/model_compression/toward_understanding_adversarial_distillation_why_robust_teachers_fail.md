@@ -40,7 +40,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要回答一个反直觉问题：为什么更强的鲁棒教师反而可能让蒸馏学生更糟？它分三段递进给出答案——先在**经验上**从训练集里抠出一个跨方法、跨种子都「学不会」的稳定子集 $\mathcal{S}_U$，再在**理论上**用一个可分析的 patch 特征学习模型为 AT 与 AD 各证一个二分定理，把「学生会不会陷入鲁棒过拟合」精确绑定到「教师在 $\mathcal{S}_U$ 上是否自信」，最后把这条结论**落地**成一个先验可算的教师筛选指标：候选教师在 $\mathcal{S}_U$ 上的预测熵。
+这篇论文要回答一个反直觉问题：为什么更强的鲁棒教师反而可能让蒸馏学生更糟？它分三段递进给出答案——先在**经验上**从训练集里抠出一个跨方法、跨种子都「学不会」的稳定子集 $\mathcal{S}_U$，再在**理论上**用一个可分析的 patch 特征学习模型为 AT 与 AD 各证一个二分定理，把「学生会不会陷入鲁棒过拟合」精确绑定到「教师在 $\mathcal{S}_U$ 上是否自信」，最后把这条结论**落地**成一个先验可算的教师筛选指标：候选教师在 $\mathcal{S}_U$ 上的预测熵。三个设计沿同一条主线串起来：识别出的 $\mathcal{S}_U$ 既是理论模型里「不可学习特征 $\mathbf{v}$」的现实对应，也是最终筛选指标的评测样本集；而二分定理在 $\mathcal{S}_U$ 上分出的 Good / Bad Teacher 两条轨迹，正是熵指标高低所对应的两种结局。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对抗训练集"] --> B["鲁棒不可学习集 S_U 的稳定识别<br/>6 范式 × 10 种子 = 60 模型取峰值预测交集"]
+    B --> C["patch 特征学习框架与教师二分<br/>两层网络 + 强制滤波器正交于不可学习特征 v"]
+    C -->|教师在 S_U 上高熵·与 v 正交| D["Good Teacher<br/>残余梯度方向抵消 → 噪声响应压在初始尺度"]
+    C -->|教师在 S_U 上高置信·利用 v| E["Bad Teacher<br/>残余梯度持续偏置 → 学生记忆伪噪声"]
+    D --> F["鲁棒泛化（无过拟合）"]
+    E --> G["鲁棒过拟合"]
+    F --> H["可证选择准则<br/>用候选教师在 S_U 上的预测熵先验筛选"]
+    G --> H
+```
 
 ### 关键设计
 
@@ -56,7 +69,7 @@ tags:
 
 **3. Good vs Bad Teacher 与可证选择准则：同样鲁棒的两个教师，结局只由 $\mathcal{S}_U$ 上的置信度决定**
 
-有了上面的二分轨迹，就能形式化「为什么更强的教师反而有害」。在 $\mathcal{S}_L$ 上，Good 与 Bad 两类教师都满足目标对齐的大间隔 $y_i f_{W_T}(X_i)\ge\Gamma$ —— 即它们**同样鲁棒**；区别只在 $\mathcal{S}_U$ 上：Good Teacher 与 $\mathbf{v}$ 正交、在这些样本上保持不确定 $y_i f_{W_G}(X_i)=0$，Bad Teacher 反而在 $\mathbf{v}$ 方向高置信 $y_i f_{W_B}(X_i)\ge\Gamma$。在 $\Gamma\ge\tilde\Omega(d)$ 的饱和教师区，AD 软标签近似硬标签，学生残余梯度被教师 sigmoid 因子 $\sigma(-yf_{W_T}(X))$ 调制：Good Teacher 让这个因子在 $\mathcal{S}_U$ 上保持 $\Theta(1)$ 但梯度方向均匀抵消，于是噪声响应被压在初始化尺度 $\tilde O(\sigma_0\sigma_n\sqrt d)$；Bad Teacher 让因子指数衰减、残余项偏置却不变，最终把噪声响应推到 $\tilde\Omega(1)$、学生被迫用噪声去补全教师的高置信。这直接给出一条可计算的实践准则——**用候选教师在训练集 $\mathcal{S}_U$ 上的预测熵作为先验筛选指标**，熵越高越接近 Good Teacher。相比靠经验（用早 epoch 教师）或事后指标（TAS，需先训完学生），这条准则只看教师本身在已识别 $\mathcal{S}_U$ 上的输出分布，$O(N)$ 一次前向即可完成，把「a priori 教师选择」从工程经验升级为有理论支撑的可算流程。
+有了上面的二分轨迹，就能形式化「为什么更强的教师反而有害」。在 $\mathcal{S}_L$ 上，Good 与 Bad 两类教师都满足目标对齐的大间隔 $y_i f_{W_T}(X_i)\ge\Gamma$ —— 即它们**同样鲁棒**；区别只在 $\mathcal{S}_U$ 上：Good Teacher 与 $\mathbf{v}$ 正交、在这些样本上保持不确定 $y_i f_{W_G}(X_i)=0$，Bad Teacher 反而在 $\mathbf{v}$ 方向高置信 $y_i f_{W_B}(X_i)\ge\Gamma$。在 $\Gamma\ge\tilde\Omega(d)$ 的饱和教师区，AD 软标签近似硬标签，学生残余梯度被教师 sigmoid 因子 $\sigma(-yf_{W_T}(X))$ 调制：Good Teacher 让这个因子在 $\mathcal{S}_U$ 上保持 $\Theta(1)$ 但梯度方向均匀抵消，于是噪声响应被压在初始化尺度 $\tilde O(\sigma_0\sigma_n\sqrt d)$；Bad Teacher 让因子指数衰减、残余项偏置却不变，最终把噪声响应推到 $\tilde\Omega(1)$、学生被迫用噪声去补全教师的高置信。这直接给出一条可计算的实践准则（论文称之为「不可学习熵准则 (Unlearnable-Entropy Criterion)」）——**用候选教师在 $\mathcal{S}_U$ 上的预测熵作为先验筛选指标**，熵越高越接近 Good Teacher。为避免每次都跑 60 个模型，实践中用单个峰值 PGD-AT 模型构造一个**代理 $\mathcal{S}_U$**，再在 PGD-10 攻击下测候选教师在该子集上的平均预测熵即可——因为表 1 显示各方法的不可学习集高度重叠，单参考模型的代理足以区分 Good / Bad Teacher。相比靠经验（用早 epoch 教师）或事后指标（TAS，需先训完学生），这条准则只看教师本身在 $\mathcal{S}_U$ 上的输出分布，$O(N)$ 一次前向即可完成，把「a priori 教师选择」从工程经验升级为有理论支撑的可算流程。
 
 ### 损失函数 / 训练策略
 AT 目标为 $\mathcal{L}_{AT}=\ell(yf_W(\tilde X))$，AD 目标为 $\mathcal{L}_{AD}=\sigma(yf_{W_T}(X))\ell(yf_W(\tilde X))+\sigma(-yf_{W_T}(X))\ell(-yf_W(\tilde X))$。优化用全 batch 梯度下降 $W^{(t+1)}=W^{(t)}-\frac{\eta}{N}\sum\nabla_W\mathcal{L}$，训练 $T\ge\tilde\Omega(N/(\eta\sigma_0\sigma_n^3 d^{3/2}))$ 步以覆盖信号学习与可能的噪声记忆双相。理论统一在事件 $\mathcal{E}$ 上以 $1-\delta$ 高概率成立。

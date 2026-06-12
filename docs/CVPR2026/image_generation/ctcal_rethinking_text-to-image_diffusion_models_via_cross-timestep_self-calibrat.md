@@ -41,7 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定图像、文本和噪声，采样两个时间步 $t_{\text{tea}} < t_{\text{stu}}$。分别前向得到 cross-attention maps $\mathbf{A}_{\text{tea}}$ 和 $\mathbf{A}_{\text{stu}}$。用 $\mathbf{A}_{\text{tea}}$ 作为目标校准 $\mathbf{A}_{\text{stu}}$，仅优化 $t_{\text{stu}}$ 对应的网络参数。
+给定图像、文本和噪声，采样两个时间步 $t_{\text{tea}} < t_{\text{stu}}$。分别前向得到 cross-attention maps $\mathbf{A}_{\text{tea}}$ 和 $\mathbf{A}_{\text{stu}}$。用 $\mathbf{A}_{\text{tea}}$ 作为目标校准 $\mathbf{A}_{\text{stu}}$，仅优化 $t_{\text{stu}}$ 对应的网络参数。整条流水线是一个"自己教自己"的双分支结构：同一三元组在小时间步分支产出可靠的 teacher 对齐、在大时间步分支产出退化的 student 对齐，再经名词筛选、双空间对齐、主体均衡、自适应加权把校准信号注入扩散损失。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本 + 噪声"] --> B["采样两个时间步<br/>t_tea（小）、t_stu（大）"]
+    B -->|小时间步 teacher| C["前向得 A_tea<br/>可靠对齐（目标）"]
+    B -->|大时间步 student| D["前向得 A_stu<br/>退化对齐（待校准）"]
+    C --> E["名词 token 筛选<br/>只保留承载空间语义的名词"]
+    D --> E
+    E --> F["像素—语义双空间联合对齐<br/>Pixel + Semantic + 重建代理"]
+    F --> G["主体响应对齐正则<br/>抬升弱势主体响应"]
+    G --> H["时间步自适应加权 λ_t<br/>大时间步校准力度更大"]
+    H --> I["L = L_diffusion + λ_t·L_CTCal<br/>仅更新 student 参数"]
+```
 
 ### 关键设计
 

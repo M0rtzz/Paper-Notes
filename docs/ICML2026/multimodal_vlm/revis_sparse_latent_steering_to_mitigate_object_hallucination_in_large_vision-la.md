@@ -40,7 +40,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段无训练 pipeline：阶段 1，用 $N=100$ 对样本算每层 $\mathbf{v}_{\text{raw}}^{(\ell)}$ 与 $\mathbf{v}_{\text{prior}}^{(\ell)}$，Gram-Schmidt 得 $\mathbf{v}_{\text{vis}}^{\perp(\ell)}$；阶段 2，在 COCO 100 张图上构造 POPE 式问答收集事实/幻觉隐状态集合，按风险得分 $R(\mathbf{h}) = -\cos(\mathbf{h}, \mathbf{v}_{\text{vis}}^{\perp(\ell)})$ 自顶向下搜索最深满足 $R(\mathcal{H}_{\text{hall}}) > R(\mathcal{H}_{\text{fact}})$ 的层 $L^\*$，并按事实集合的 $k$ 分位定阈值 $\tau$；阶段 3，推理每个 token 计算 $R_t$，若 $R_t>\tau$ 则在 $L^\*$ 层加 $\alpha\,\mathbf{v}_{\text{vis}}^{\perp(L^\*)}$，否则保持原激活。
+三阶段无训练 pipeline：阶段 1，用 $N=100$ 对样本算每层 $\mathbf{v}_{\text{raw}}^{(\ell)}$ 与 $\mathbf{v}_{\text{prior}}^{(\ell)}$，Gram-Schmidt 得 $\mathbf{v}_{\text{vis}}^{\perp(\ell)}$；阶段 2，在 COCO 100 张图上构造 POPE 式问答收集事实/幻觉隐状态集合，按风险得分 $R(\mathbf{h}) = -\cos(\mathbf{h}, \mathbf{v}_{\text{vis}}^{\perp(\ell)})$ 自顶向下搜索最深满足 $R(\mathcal{H}_{\text{hall}}) > R(\mathcal{H}_{\text{fact}})$ 的层 $L^\*$，并按事实集合的 $k$ 分位定阈值 $\tau$；阶段 3，推理每个 token 计算 $R_t$，若 $R_t>\tau$ 则在 $L^\*$ 层加 $\alpha\,\mathbf{v}_{\text{vis}}^{\perp(L^\*)}$，否则保持原激活。前两阶段离线一次性完成、把"往哪个方向修、在哪一层修"算好，第三阶段推理时才逐 token 决定"这一步要不要修"，三个阶段恰好对应下面三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["反事实状态样本<br/>N=100 对：GT / 幻觉 / 无图三态"]
+    subgraph S1["正交投影提纯视觉向量（离线）"]
+        direction TB
+        A1["逐层算原始视觉向量 v_raw<br/>与语言先验向量 v_prior"] --> A2["Gram-Schmidt 投到 v_prior 正交补<br/>得纯视觉向量 v_vis⊥"]
+    end
+    subgraph S2["基于校准的稀疏单层选择（离线）"]
+        direction TB
+        B1["COCO+POPE 校准集<br/>收集事实集 H_fact / 幻觉集 H_hall"] --> B2["风险得分 R=−cos(h, v_vis⊥)<br/>自顶向下搜最深可分层 L*"]
+        B2 --> B3["按事实集 k 分位定阈值 τ"]
+    end
+    subgraph S3["风险门控的动态注入（推理逐 token）"]
+        direction TB
+        C1["算当前 token 风险 R_t"] -->|"R_t>τ：L* 层加 α·v_vis⊥"| C2["注入修正后激活"]
+        C1 -->|"R_t≤τ：零成本旁路"| C3["原激活不动"]
+    end
+    IN --> S1 --> S2 --> S3
+    S3 --> OUT["生成 token"]
+```
 
 ### 关键设计
 

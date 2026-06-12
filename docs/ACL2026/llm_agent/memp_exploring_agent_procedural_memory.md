@@ -45,6 +45,34 @@ tags:
 
 Mem^p 把 Agent 交互建模为 MDP，并把策略从 $\pi(a_t|s_t)$ 扩展为带程序性记忆的 $\pi_{m^p}(a_t|s_t)$，让记忆从隐式的参数/手写 prompt 升级为可被系统优化的一等对象。整个流程沿"输入任务序列 → Build 把完成轨迹蒸馏成记忆 → Retrieve 按相似度召回相关记忆辅助新任务 → Update 在测试期动态增删改记忆库 → 输出不断演化的记忆库 Mem"运转，三个模块各自留出多种可替换策略供逐一消融。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入任务序列"] --> BUILD
+    subgraph BUILD["记忆构建（Build）：完成轨迹后沉淀什么"]
+        direction TB
+        B1["Trajectory<br/>保留完整逐轮轨迹"]
+        B2["Script<br/>蒸馏成抽象程序性知识"]
+        B3["Proceduralization<br/>轨迹+脚本，兼具具体与抽象"]
+    end
+    BUILD --> MEM["程序性记忆库 Mem"]
+    MEM --> RETR
+    subgraph RETR["记忆检索（Retrieve）：用什么当 key 召回"]
+        direction TB
+        R1["构造检索 key<br/>Query 语义 / AveFact 关键词"] --> R2["余弦相似度召回相关记忆"]
+    end
+    RETR --> EXEC["召回记忆辅助新任务执行"]
+    EXEC --> UPD
+    subgraph UPD["记忆更新（Update）：测试期维护记忆质量"]
+        direction TB
+        U1["Vanilla 直接追加"]
+        U2["Validation 只留成功、过滤冗余"]
+        U3["Adjustment 反思错误轨迹原地修正"]
+    end
+    UPD -->|演化后写回| MEM
+    UPD --> OUT["输出不断演化的记忆库"]
+```
+
 ### 关键设计
 
 **1. 记忆构建（Build）：在轨迹的"具体"与脚本的"抽象"之间找平衡**

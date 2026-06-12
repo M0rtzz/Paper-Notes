@@ -41,6 +41,21 @@ tags:
 
 WildCap 想做的事是：只用手机随手拍的环绕视频，就重建出过去要靠 Light Stage 专业光照才能拿到的高质量 4K 面部漫反射 albedo。它的思路是把两类各有短板的方法拼起来——数据驱动方法（如 SwitchLight）鲁棒但会把阴影等光照「烘焙」进预测，基于模型的逆渲染物理上合理但在复杂光照下高度病态。整条流水线分三步：先做数据预处理，从手机环绕视频均匀采样 300 帧（960×720），用 COLMAP 标定相机、2DGS 重建网格、Wrap3D 配准 ICT 模板，最后选 V=16 帧用于反射率估计；再用 SwitchLight 对每帧预测漫反射 albedo $\{I^i\}$，把杂乱的野外光照压缩成更受约束的条件；最后在 UV 空间里把 SwitchLight 残留的 baking 瑕疵当成「光照效应」来解释，联合优化 texel grid lighting 和扩散先验采样，得到干净的 albedo 贴图 $A$。最终再用 RCAN 把 1K 贴图超分到 4K——相比 DoRA 直接采样 4K 要 508 分钟，WildCap 只需 8 分钟（24GB RTX 4090）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["手机野外环绕视频"] --> B["数据预处理（脚手架）<br/>采样300帧 · COLMAP标定 · 2DGS重建 · Wrap3D配准ICT模板 · 选V=16帧"]
+    B --> C["SwitchLight 去光照<br/>逐帧预测漫反射 albedo（数据驱动半，含 baking 瑕疵）"]
+    C --> D
+    subgraph OPT["UV 空间联合优化（混合逆渲染核心）"]
+        direction TB
+        D["Texel Grid Lighting Model<br/>全局SH + 局部网格SH 解释烘焙瑕疵"] --> E["扩散先验 + 后验采样<br/>在合理分布里采 albedo，联合估光照"]
+        E -->|"每个扩散时间步交替更新 albedo 与光照参数"| D
+    end
+    OPT --> F["RCAN 超分<br/>1K → 4K"]
+    F --> G["4K 面部漫反射 albedo 贴图（脚手架·输出）"]
+```
+
 ### 关键设计
 
 **1. Texel Grid Lighting Model：用非物理的局部光照解释烘焙瑕疵**

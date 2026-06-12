@@ -47,6 +47,20 @@ tags:
 
 > JEPA-SCORE 是这里的核心自定义指标：它把编码器 Jacobian $J_f(x) \in \mathbb{R}^{d \times n}$ 所有奇异值的对数加起来，$\text{JS}(x) = \sum_{i=1}^r \log(\sigma_i(J_f(x)))$。直觉上 Jacobian 的奇异值刻画了编码器在该点附近对输入扰动的敏感度，密度高的区域表征被压得很平、奇异值小，密度低（稀有）的区域则相反，所以 JS 越低代表该样本在世界先验下越稀有，引导方向就是让 JS 下降。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["噪声态 xₜ"] --> P["扩散逆过程预测干净图像估计 x̂₀ₜ"]
+    P --> R["随机 SVD 近似 JEPA-SCORE<br/>投影 Jacobian 取前 k 奇异值算 JS̄"]
+    R --> E["包络定理加速梯度<br/>stop-grad 投影 Q*，正确反传 ∇JS*"]
+    E --> D{"延迟引导：t ≤ τT ?"}
+    D -->|否，前 80% 步：自由采样搭好条件结构| F["扩散步 xₜ₋₁ = μθ + Σ^½ z"]
+    D -->|是，后段：注入稀有性引导| G["引导步 xₜ₋₁ = μθ + Σ^½ z − ηₜ ∇JS*"]
+    F --> X
+    G --> X
+    G --> O["t = 0：world-centric 少数样本"]
+```
+
 ### 关键设计
 
 **1. 随机 SVD 近似 JEPA-SCORE：把一个原本算不动的密度信号压到能用**

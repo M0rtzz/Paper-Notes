@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 Clean-PR 想解决的是"仓库级编辑能力能否直接编码进权重、从而摆脱推理时复杂 agent 脚手架"这个问题。它把 8.6 TB 原始 GitHub 数据先清洗、重构、验证成 200 万条可执行的 Search/Replace 编辑语料，在 Qwen2.5-Coder-32B-Base 上做一轮仓库级编辑 mid-training 把"改哪里、怎么改"的先验固化进权重，再用 SWE-Gym/SWE-rebench 的可验证轨迹做一轮 Agentless 对齐的分步 SFT 教模型在大仓库里定位、导航、生成补丁。推理时只跑一条线性的 Simplified Agentless 协议，不需要多轮工具调用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    RAW["16.4M 原始 GitHub PR（8.6TB）"] --> FILTER["粗筛：去 bot/未合并/纯文档<br/>+ 核心扩展规则 → 留 18.59%"]
+    FILTER --> SR["Search/Replace 编辑块 + Round-Trip 验证<br/>apply patch→推最小 span→选唯一锚定 Search 块→逐字节回放验证"]
+    ISSUE["Issue-Augmented Intent<br/>解析 linked issue 拼进上下文"] --> CORPUS["2.0M 条可执行 S/R 语料"]
+    SR --> CORPUS
+    CORPUS --> MID["仓库级编辑 mid-training<br/>（Qwen2.5-Coder-32B-Base，固化『改哪里怎么改』）"]
+    MID --> SFT["Agentless-Aligned 分步 SFT + Error-Driven 增强<br/>Step1 文件定位→Step2 细粒度导航（加 hard negative）→Step3 补丁生成"]
+    SFT --> INFER["推理：Simplified Agentless 协议<br/>定位→导航→编辑（线性、无多轮工具调用）"]
+```
+
 ### 关键设计
 
 **1. Search/Replace 编辑块 + Round-Trip 验证：把脏 PR 炼成可执行训练信号**

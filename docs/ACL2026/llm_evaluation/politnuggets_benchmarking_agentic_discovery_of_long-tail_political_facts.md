@@ -43,6 +43,24 @@ PolitNuggets 一篇里塞了三样东西：benchmark 构建、agent 系统和评
 ### 整体框架
 数据来自 WhoGov：200 位非美国 cabinet politicians 加 200 位美国 legislators/senators，共 400 个实体。系统在两种条件下跑：With Wiki enhancement 给出已有 Wikipedia 文本、让 agent 去补缺口；Without Wiki reconstruction 只给一个姓名，从开放网页冷启动重建整段履历。每个 agent run 产出一份 structured biography 和一份 evidence archive，随后 FactNet 判断预测的 nuggets 有没有被证据支持，并算出 Event-Level F1、Attribute-Level F1 和搜索成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：400 位政治人物<br/>With Wiki 补缺 / Without Wiki 冷启动"] --> SUP
+    subgraph ARCH["Supervisor-Searcher-Archive-Coder 架构"]
+        direction TB
+        SUP["Supervisor：维护搜索总结 + 任务清单，拆子任务"] --> SE["Searcher：搜索 / 浏览 / 检索，每子任务 ≤3 轮"]
+        SE -->|存 source-linked chunks| AR["Archive：原始证据片段"]
+        AR --> CO["Coder：读总结 + 证据，按 JSON schema 输出"]
+    end
+    CO -->|结构化传记 + 证据档案| GG
+    subgraph FN["FactNet 动态证据评价"]
+        direction TB
+        GG["novel set G（过滤 Wiki 已覆盖事实）"] --> JD["预测 nugget 不在 G 时<br/>judge 查 Archive 证据，支持则并入 G′"]
+    end
+    JD --> EV["双层粒度 + 效率评价<br/>Event-F1 / Attribute-F1 / search steps + tokens"]
+```
+
 ### 关键设计
 
 **1. Supervisor-Searcher-Archive-Coder 架构：把开放式搜索拆成规划、检索、存证、输出四个角色**

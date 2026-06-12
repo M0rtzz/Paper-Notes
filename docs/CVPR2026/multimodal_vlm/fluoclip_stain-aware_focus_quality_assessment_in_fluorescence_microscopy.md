@@ -40,7 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FluoCLIP 要解决的是：荧光显微镜里同一张图清不清晰，不只看空间锐度，还强烈取决于用了什么染色——DAPI、Alexa-488 等不同荧光剂的发射特性、信噪比、背景荧光各不相同，对焦退化的"长相"也随之变化。论文把对焦质量评估（FQA）重新定义成「染色感知的序数回归」，并用两阶段把 CLIP 适配到这个任务上。第一阶段（Stain-Grounding）先让 CLIP 的文本编码器认识各种染色术语的语义，把"什么染色"这件事学进嵌入空间；第二阶段（Stain-Guided Ranking）再拿这些染色嵌入去条件化对焦等级的排序，让模型预测"什么等级"时知道当前是哪种染色。两阶段刻意解耦——先认染色、再判等级——避免染色语义和对焦变化纠缠在一起。
+FluoCLIP 要解决的是：荧光显微镜里同一张图清不清晰，不只看空间锐度，还强烈取决于用了什么染色——DAPI、Alexa-488 等不同荧光剂的发射特性、信噪比、背景荧光各不相同，对焦退化的"长相"也随之变化。论文把对焦质量评估（FQA）重新定义成「染色感知的序数回归」，并用两阶段把 CLIP 适配到这个任务上。第一阶段（Stain-Grounding）先让 CLIP 的文本编码器认识各种染色术语的语义，把"什么染色"这件事学进嵌入空间；第二阶段（Stain-Guided Ranking）再拿这些染色嵌入去条件化对焦等级的排序，让模型预测"什么等级"时知道当前是哪种染色。两阶段刻意解耦——先认染色、再判等级——避免染色语义和对焦变化纠缠在一起。整个框架还建立在新数据集 FluoMix 之上，它把多组织、多染色的对焦变异真正放进训练数据里。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["FluoMix 数据集<br/>多组织·多染色·32 层 z-stack"] --> IMG["视觉编码器 E_img<br/>抽图像特征 v"]
+    subgraph S1["染色锚定（Stage 1）"]
+        direction TB
+        ST["可学习染色嵌入 S_l + context<br/>→ pseudo-sentence"] --> TXT1["冻结文本编码器 + 轻量适配器"]
+        TXT1 --> ALIGN["对比对齐：v ↔ 染色文本<br/>学到染色身份 S_l"]
+    end
+    IMG --> ALIGN
+    subgraph S2["染色引导排序（Stage 2）"]
+        direction TB
+        RBASE["基础排序嵌入 R_base"] --> COND["条件化网络 f_θ<br/>结合染色嵌入 S_l"]
+        COND --> RANK["染色专属排序嵌入<br/>插值补中间等级"]
+    end
+    ALIGN -->|染色嵌入 S_l| COND
+    RANK --> PRED["与 v 算余弦相似度<br/>→ 预测对焦等级 r"]
+    IMG --> PRED
+```
 
 ### 关键设计
 

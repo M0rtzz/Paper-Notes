@@ -51,6 +51,20 @@ $$\mathcal{G}_i = (\boldsymbol{\mu}_i, \boldsymbol{\Sigma}_i, \alpha_i, \mathbf{
 
 推理时，对每个被占用体素的嵌入与文本 prompt 计算余弦相似度，即可实现任意类别的语义查询。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目 RGB 图像"] --> B["前馈高斯预测器<br/>生成 LE-Gaussians (μ,Σ,α,f)"]
+    B -->|几何参数 μ,Σ,α| C["Poisson 高斯到占用（G2O）算子<br/>至少一次事件算占用"]
+    C -->|二值占用标签监督| D["3D 占用预测"]
+    B -->|语义嵌入 f| E["渐进温度衰减<br/>温度化 sigmoid 锐化 opacity"]
+    E --> F["α-blending 渲染语义特征"]
+    F -->|对齐 Trident 开放词汇特征| G["语言对齐语义嵌入"]
+    F --> H["多视图特征一致性<br/>相邻帧重渲染约束"]
+    D --> I["逐体素嵌入 × 文本 prompt<br/>余弦相似度 → 开放词汇查询"]
+    G --> I
+```
+
 ### 关键设计
 
 **1. Poisson 高斯到占用（G2O）算子：用“至少发生一次事件”算占用，避免重叠饱和**

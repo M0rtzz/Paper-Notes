@@ -45,7 +45,23 @@ $$\Delta L \approx \frac{1}{\sqrt{d}} \left( (\varepsilon_{\text{up}} W_q) K_T^\
 
 $$\Delta O \approx J_{\text{softmax}}(L_T) \Delta L \, V_T W_{o,T} + A_T \varepsilon_{\text{up}} W_v W_{o,T} + A_T V_T \delta W_o + \Delta O_{\text{local}}$$
 
-整个框架就是对症下药：先用选择性布局把最脆弱的层留作浮点，再用两个轻量标量分别把温度和能量拉回教师的工作点。
+整个框架就是对症下药：先用选择性量化布局把最脆弱的层留作浮点，再用两个轻量标量分别把温度和能量拉回教师的工作点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RGB 帧 + 语言指令"] --> B["视觉编码器 + 语言骨干<br/>融合为视觉-语言特征 F_VL"]
+    B --> C["选择性量化布局<br/>LLM 全线性层 W4A8；DiT 仅量化 MLP，注意力投影 Q/K/V/O 保浮点"]
+    C --> D["DiT 动作头条件去噪<br/>x_t → x_{t−1}，迭代 T 步"]
+    subgraph CAL["跨模块漂移标定（标量折叠进反量化因子，推理零额外开销）"]
+        direction TB
+        E["注意力温度匹配 ATM<br/>逐头标量 α 拉回 softmax 有效温度"]
+        F["输出头平衡 OHB<br/>逐层标量 β 恢复残差流能量"]
+    end
+    C --> CAL
+    CAL --> D
+    D --> G["解码 x_0 为可执行动作"]
+```
 
 ### 关键设计
 

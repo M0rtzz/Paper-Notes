@@ -41,6 +41,25 @@ ViBES 要解决的核心问题是：让一个已经会"说话"的对话模型同
 
 模型整体是一个语音-语言-行为（SLB）模型，用模态专家混合（MoME）把三类参数分开：语音-文本专家直接冻结自预训练的 GLM-4-Voice，负责对话智能；面部表情专家和身体动作专家是两个轻量侧车，负责把语言/语音里的意图翻译成具体动作。三个专家通过 SLB 跨模态注意力耦合，在统一时间线上联合生成交错的 token 流。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户语音 / 文本"] --> B["标记化<br/>语音·文本·面部·身体 → token"]
+    B --> R["多模态分数 RoPE<br/>按时间戳插值，统一不同帧率到一条旋转时间线"]
+    R --> MOME
+    subgraph MOME["模态专家混合（MoME）·按模态硬路由"]
+        direction TB
+        TS["语音-文本专家<br/>冻结 GLM-4-Voice·自注意力"]
+        FACE["面部表情专家<br/>Query 单向注意 TS"]
+        BODY["身体动作专家<br/>Query 单向注意 TS"]
+        TS -->|跨模态注意力| FACE
+        TS -->|跨模态注意力| BODY
+    end
+    D["1000 小时同步数据集<br/>YouTube 单目恢复·音频-文本-动作三模态对齐"] -->|训练| MOME
+    MOME --> S["交错 token 流"]
+    S --> O["解码 SMPL-X + FLAME<br/>→ 与语音逐帧对齐的 3D 全身动画"]
+```
+
 ### 关键设计
 
 **1. 模态专家混合（MoME）：让动作专家"读取"对话状态，又不破坏 LLM 已有的说话能力**

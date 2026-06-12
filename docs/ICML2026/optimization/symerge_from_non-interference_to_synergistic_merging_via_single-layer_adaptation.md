@@ -42,19 +42,32 @@ tags:
 ### 整体框架
 输入：预训练权重 $\Theta_{\text{pre}}$、$K$ 个独立 fine-tuned 的任务专家 $\{\Theta_k\}_{k=1}^K$、每个任务的无标签测试集 $\mathcal{X}_k^{te}$；输出：一个共享 encoder $\Theta_{\text{MTL}}^{\text{enc}}$ 加上 $K$ 套任务头。pipeline 走三步：(1) 把每层编码器权重写成 $\theta_{\text{MTL}}^l = \theta_{\text{pre}}^l + \sum_k \lambda_k^l \tau_k^l$，把 $\Lambda = \{\lambda_k^l\}$ 设为可学习的层级×任务系数矩阵（沿用 AdaMerging 的参数化）；(2) 在每个任务上挑一个 task-specific 适配层 $\theta_k^{\text{tr}}$，初始化为该任务专家的原层；(3) 联合优化 $\Lambda$ 和 $\{\theta_k^{\text{tr}}\}$，使合并模型在 $\mathcal{X}_k^{te}$ 上的预测尽量逼近专家模型的预测。整个过程只动这两组参数，其它层全部冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：预训练权重 + K 个任务专家 + 各任务无标签测试集"]
+    IN --> ENC["单层适配 + 系数联合优化<br/>可学层级合并系数 Λ 与每任务一层适配层 θ_tr，其余层冻结"]
+    ENC --> FWD["合并模型前向 → 预测 C_merged"]
+    subgraph TEACH["专家引导自标注"]
+        direction TB
+        TEA["专家模型前向 → 软标签 C_ft"] --> FILT["可选置信度过滤<br/>按 max softmax 取 top-p 高置信样本"]
+    end
+    IN --> TEA
+    FWD --> LOSS["自标注损失 Σ L(C_merged, C_ft)<br/>分类用交叉熵 / 密集预测用 L1"]
+    FILT --> LOSS
+    LOSS -->|反传只更新 Λ 与 θ_tr，迭代| ENC
+    LOSS --> OUT["输出：共享 encoder + K 套任务头"]
+```
+
 ### 关键设计
 
-**1. 专家引导自标注目标：把不稳定的熵最小化换成"专家当老师"的软标签监督**
+**1. 单层适配 + 系数联合优化：用最少的可训参数同时改造 encoder 混合方式和任务输出端**
 
-测试时合并没有标签，AdaMerging 这类方法只能用熵最小化当代理目标，但作者发现这个代理并不靠谱——他们用 Spearman 相关系数衡量"代理 loss"和真实监督交叉熵的一致性，结果熵最小化在训练前还有中等相关、训练后就显著漂移（Cars 上甚至反向），这正是 AdaMerging 类方法不稳的根源。SyMerge 的替代方案很直接：每个任务的 fine-tuned 专家本来就在硬盘上躺着，且在自己任务上已是 SOTA，那就把它的输出 $C_k^{\text{ft}}(x)$（分类是 softmax 概率向量，回归是连续输出）当软标签老师，让合并模型 $C_k^{\text{merged}}(x)$ 去逼近它，最小化 $\sum_k \mathcal{L}_{CE}(C_k^{\text{merged}}, C_k^{\text{ft}})$。对分割、深度、表面法向量这类不能算熵的密集预测任务，交叉熵换成对应的 L1 损失即可，所以这个目标天然覆盖各类任务。让专家做老师比让模型自己猜伪标签可靠得多，相关性度量也显示它在训练全程都和真监督高度一致。
+cross-task pilot 已经证明"调一层"就足以拉齐 encoder 与 predictor 的功能对齐，SyMerge 要把这个发现搬到无标签测试时场景。具体做法是同时放开两组参数：共享 encoder 的层级合并系数 $\Lambda=\{\lambda_k^l\}$（每层权重写成 $\theta_{\text{MTL}}^l=\theta_{\text{pre}}^l+\sum_k\lambda_k^l\tau_k^l$，沿用 AdaMerging 的参数化），加上每个任务一层 task-specific 适配层 $\theta_k^{\text{tr}}$（默认是分类头或最后一个 transformer block，用该任务专家的原层初始化），两者同步反传同一个自标注 loss、其余层全部冻结。和只学 $\Lambda$ 的 AdaMerging 相比，把适配层一起放开才能稳住——作者发现"只调系数"在不同初始化（disjoint basins）下会塌掉，平均跌到 30% 以下，而 SyMerge 靠放开的适配层仍能恢复出可用模型；现实中大量开源 fine-tuned 模型并不共享 pretrain，能合并这类异源专家才有实用价值，而这恰是只调系数的方法触不到的边界。和 Surgery/ProbSurgery 那种额外叠 adapter 的做法相比，SyMerge 不引入任何新模块，只是让本来就存在的一层从冻结变可训。把适配层放开还有一层隐含好处——当 encoder 系数被调向某个不友好的混合方向时，task-specific 层能把信息反向修回来，形成 encoder–predictor 的协同更新，这正是标题里 "Synergistic" 的由来。
 
-**2. 单层适配 + 系数联合优化：用最少的可训参数同时改造 encoder 混合方式和任务输出端**
+**2. 专家引导自标注目标：把不稳定的熵最小化换成"专家当老师"的软标签监督**
 
-cross-task pilot 已经证明"调一层"就足以拉齐 encoder 与 predictor 的功能对齐，SyMerge 要把这个发现搬到无标签测试时场景。具体做法是同时放开两组参数：共享 encoder 的层级合并系数 $\Lambda=\{\lambda_k^l\}$（每层权重写成 $\theta_{\text{MTL}}^l=\theta_{\text{pre}}^l+\sum_k\lambda_k^l\tau_k^l$，沿用 AdaMerging 的参数化），加上每个任务一层 task-specific 适配层 $\theta_k^{\text{tr}}$（默认是分类头或最后一个 transformer block，用该任务专家的原层初始化），两者同步反传同一个自标注 loss、其余层全部冻结。和只学 $\Lambda$ 的 AdaMerging 相比，作者发现"只调系数"在不同初始化（disjoint basins）下会塌掉，把适配层一起放开才能稳住；和 Surgery/ProbSurgery 那种额外叠 adapter 的做法相比，SyMerge 不引入任何新模块，只是让本来就存在的一层从冻结变可训。把适配层放开还有一层隐含好处——当 encoder 系数被调向某个不友好的混合方向时，task-specific 层能把信息反向修回来，形成 encoder–predictor 的协同更新，这正是标题里 "Synergistic" 的由来。
-
-**3. 可选置信度过滤 + 跨初始化兼容：低代价过滤噪声标签，并把合并范围推到异源专家**
-
-测试时专家本身也会犯错，所以作者加了一个可选、与主目标解耦的置信度过滤：每个 batch 按专家预测的最大 softmax 概率排序，只用 top-$p$ 的高置信样本反传，避免噪声软标签污染优化——这是 test-time learning 里的标准低代价技巧。更值得一提的是 disjoint-basin 这个设置：当各任务专家来自不同的 pretrain 初始化时，传统系数搜索几乎全塌（平均跌到 30% 以下），而 SyMerge 因为放开了适配层做兜底，仍能恢复出可用的合并模型。这点很重要，因为现实中大量开源 fine-tuned 模型并不共享 pretrain，能合并这类异源模型才有实用价值，而这恰恰是只调系数的方法触不到的边界。
+测试时合并没有标签，AdaMerging 这类方法只能用熵最小化当代理目标，但作者发现这个代理并不靠谱——他们用 Spearman 相关系数衡量"代理 loss"和真实监督交叉熵的一致性，结果熵最小化在训练前还有中等相关、训练后就显著漂移（Cars 上甚至反向），这正是 AdaMerging 类方法不稳的根源。SyMerge 的替代方案很直接：每个任务的 fine-tuned 专家本来就在硬盘上躺着，且在自己任务上已是 SOTA，那就把它的输出 $C_k^{\text{ft}}(x)$（分类是 softmax 概率向量，回归是连续输出）当软标签老师，让合并模型 $C_k^{\text{merged}}(x)$ 去逼近它，最小化 $\sum_k \mathcal{L}_{CE}(C_k^{\text{merged}}, C_k^{\text{ft}})$。对分割、深度、表面法向量这类不能算熵的密集预测任务，交叉熵换成对应的 L1 损失即可，所以这个目标天然覆盖各类任务。让专家做老师比让模型自己猜伪标签可靠得多，相关性度量也显示它在训练全程都和真监督高度一致。在此之上，作者还提供一个可选、与主目标解耦的置信度过滤：每个 batch 按专家预测的最大 softmax 概率排序，只用 top-$p$ 的高置信样本反传，避免少数被专家判错的软标签污染优化——这是 test-time learning 里的标准低代价技巧。
 
 ### 损失函数 / 训练策略
 统一的目标是 $\min_{\{\lambda_k^l\}, \{\theta_k^{\text{tr}}\}} \sum_{k=1}^K \mathcal{L}_k(C_k^{\text{merged}}, C_k^{\text{ft}})$，分类用交叉熵，回归任务用 L1。优化器与学习率沿用 AdaMerging 的设置（详见附录 E.2），$\Lambda$ 初始化为均匀分配，task-specific 层 $\theta_k^{\text{tr}}$ 用专家模型的对应层初始化。论文报告所有结果都是 5 个随机种子的均值±标准差。

@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 CGD 想解决的事很具体：让小 student 从大 teacher 处学到"从错改对"的推理能力，但又不像 CFT 那样把 student 训成只会输出 critique、连指令跟随都丢了。它的做法是一个三步数据合成 + 一次性 SFT 的极简 pipeline，不引入新模块也不动 prompt 格式——先让未训练的 student $S_{\theta_{\text{init}}}$ 对每个 prompt $x$ 现采样一个"很可能有错"的草稿 $y' \sim S_{\theta_{\text{init}}}(\cdot \mid x)$，再让 teacher $T_\phi$ 看着 $(x, y')$ 写出文本 critique $c \sim T_\phi(\cdot \mid x, y')$ 指出错在哪，最后 teacher 在 $(x, y', c)$ 全上下文上产出 gold-standard 改写 $\hat{y} \sim T_\phi(\cdot \mid x, y', c)$；最终只拿 $((x, y', c), \hat{y})$ 这条四元组把 student 训一遍。关键在于：critique 只在训练期当条件出现，推理时只喂 prompt 单遍生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Y["错误锚点 curriculum<br/>对 prompt x 用未训练 student 现采草稿 y′"]
+    Y --> C["teacher 写 critique c：指出 y′ 错在哪"]
+    C --> R["teacher 写 refined answer ŷ<br/>在 (x, y′, c) 全上下文上改对"]
+    R --> SFT["完全监督 SFT（无 RL、无额外 critic）<br/>四元组 ((x, y′, c), ŷ) 上条件 NLL 预测 ŷ"]
+    SFT -->|critique 仅训练期出现、推理时抹除| INF["推理：单 prompt 单遍<br/>已内化 error-aware reasoning、自发拉长 CoT"]
+```
+
 ### 关键设计
 
 **1. 以 student-specific 错误为锚点的 curriculum：让 critique 永远对着 student 真会犯的错**

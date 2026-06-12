@@ -43,7 +43,18 @@ tags:
 
 ### 整体框架
 
-SPECTRA 想让小型视觉语言模型在没有任何监督轨迹的冷启动条件下，仅靠环境反馈自行学会"先用工具取证、再据证推理"的策略。它以 Qwen2.5-VL 为底座，冻结视觉编码器、用 LoRA 适配语言解码器；对每个多模态输入 $(I, q)$ 采样 $G$ 条结构化 rollout 轨迹，用一个多目标奖励（正确性+结构完整性+工具效用+终止）打分，算出组相对优势后用 GRPO 更新策略。动作空间是自然语言 token 加上四个视觉工具原语（Image Captioning、Object Detection、OCR、Visual Perception），而软结构化的拓扑约束则像一根"训练轮"，把模型从盲目直接推理引导到工具驱动的推理路径上。
+SPECTRA 想让小型视觉语言模型在没有任何监督轨迹的冷启动条件下，仅靠环境反馈自行学会"先用工具取证、再据证推理"的策略。它以 Qwen2.5-VL 为底座，冻结视觉编码器、用 LoRA 适配语言解码器；对每个多模态输入 $(I, q)$ 采样 $G$ 条结构化 rollout 轨迹，用一个多目标奖励（正确性+结构完整性+工具效用+终止）打分，算出组相对优势后用 GRPO 更新策略。动作空间是自然语言 token 加上四个视觉工具原语（Image Captioning、Object Detection、OCR、Visual Perception），而软结构化的拓扑约束则像一根"训练轮"，把模型从盲目直接推理引导到工具驱动的推理路径上。训练收敛后，再用 TIU 指标在无 ground truth 的条件下评估工具到底用得好不好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入 (I, q)"] --> B["Qwen2.5-VL 底座<br/>冻结视觉编码器 + LoRA 适配解码器"]
+    B --> C["软结构化多轮 Rollout（SSMR）<br/>采样 G 条轨迹，遵循拓扑：推理→调工具→观察→感知→推理→作答<br/>4 个视觉工具：Captioning / Detection / OCR / Perception"]
+    C --> D["多目标 Agent 奖励<br/>R_corr + R_struct + R_tool + R_term"]
+    D --> E["组相对优势 + GRPO 更新策略"]
+    E -->|迭代优化| B
+    E --> F["TIU 工具效用评估<br/>TER × (1+TTAC)/2 × tanh(TSS)"]
+```
 
 ### 关键设计
 

@@ -41,7 +41,27 @@ tags:
 论文包含两个任务：法律文档 disposition classification 和 legal document summarization。二者共享一个基本思路：先用 recurrent architecture 编码长文本，再把 KAN 作为增强 head 或 transformation block。分类任务侧重固定长度文档表示，摘要任务侧重 encoder-decoder attention 输出。
 
 ### 整体框架
-数据来自 Manupatra，包含 2,937 个孟加拉法律文档样本，文本中混有 Bengali、English 和 romanized Bengali。作者把数据分成 2,349 个训练样本和 588 个 held-out evaluation 样本。预处理包括缺失值和 placeholder 标准化、文本 normalization、删除重复/损坏项、长度分析、tokenization 等。分类任务使用 BiGRU 编码 case notes，并通过 mean pooling 和 max pooling 得到文档表示，再交给 KAN block 预测 disposition。摘要任务使用 attention-based GRU encoder-decoder，并在输出头上加入 KAN 来增强 token prediction。
+数据来自 Manupatra，包含 2,937 个孟加拉法律文档样本，文本中混有 Bengali、English 和 romanized Bengali。作者把数据分成 2,349 个训练样本和 588 个 held-out evaluation 样本。预处理包括缺失值和 placeholder 标准化、文本 normalization、删除重复/损坏项、长度分析、tokenization 等。分类任务使用 BiGRU 编码 case notes，并通过 mean pooling 和 max pooling 得到文档表示，再交给 KAN block 预测 disposition。摘要任务使用 attention-based GRU encoder-decoder，并在输出头上加入 KAN 来增强 token prediction。两条任务支路共享同一套预处理后的文本，并各自在 recurrent backbone 之上挂一个 KAN 增强模块。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["孟加拉法律文档<br/>(Bengali / English / romanized)"] --> B["预处理<br/>归一化 + tokenization"]
+    B --> SAMP["类别不平衡处理<br/>WeightedRandomSampler 抬升少数类"]
+    subgraph CLS["BiGRU + KAN 分类模型"]
+        direction TB
+        C["BiGRU 编码 case notes"] --> D["mean + max pooling<br/>固定长度文档表示"]
+        D --> E["KAN block<br/>spline 边函数细化非线性决策边界"]
+    end
+    subgraph SUM["Attention GRU + KAN 摘要模型"]
+        direction TB
+        F["Attention GRU encoder-decoder<br/>context vector 选关键片段"] --> G["KAN head<br/>增强生成头非线性表达"]
+    end
+    SAMP --> C
+    B --> F
+    E --> H["disposition 分类输出"]
+    G --> I["法律摘要"]
+```
 
 ### 关键设计
 

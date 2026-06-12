@@ -45,7 +45,17 @@ tags:
 
 ### 整体框架
 
-输入为 SPAD 传感器的 binary photon frames（或其 aggregated 3-bit nano-burst），输出为高质量 RGB 图像。Pipeline 分三个顺序训练的阶段：Stage 1 训练 quanta-aligned VAE encoder 实现去噪+去马赛克；Stage 2 对抗训练 LoRA U-Net 增强感知保真度；Stage 3 训练 FusionViT 在 latent space 做 burst 级时空融合。每个阶段冻结前序模块的参数。
+输入为 SPAD 传感器的 binary photon frames（或其 aggregated 3-bit nano-burst），输出为高质量 RGB 图像。训练数据由一条物理一致的 Bernoulli SPAD 图像形成模型从 clean 图像合成而来。Pipeline 分三个顺序训练的阶段：Stage 1 训练 quanta-aligned VAE encoder 实现去噪+去马赛克；Stage 2 对抗训练 LoRA U-Net 增强感知保真度；Stage 3 训练 FusionViT 在 latent space 做 burst 级时空融合。每个阶段冻结前序模块的参数。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Bernoulli SPAD 图像形成模型<br/>clean sRGB → 线性辐射 → 二值光子帧（+Bayer）"] --> B["Stage 1：Quanta-Aligned VAE<br/>确定性均值编码 + LSA loss，去噪去马赛克得对齐 latent"]
+    B --> C["Stage 2：对抗微调 LoRA U-Net<br/>蒸馏成单步生成器 + ConvNext 判别器，补回高频"]
+    C -->|单帧重建图| D["Stage 3：FusionViT<br/>重建图上估 RAFT 光流 → warp 到 center → 窗口注意力融合"]
+    D --> E["VAE Decoder 解码"]
+    E --> F["高质量 RGB 图像"]
+```
 
 ### 关键设计
 

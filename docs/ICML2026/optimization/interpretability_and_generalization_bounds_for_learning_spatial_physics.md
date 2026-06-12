@@ -74,9 +74,6 @@ $$\mathbf{W}^* = \mathbf{A}\,\mathbf{U}\mathbf{U}^\top + \mathbf{W}^0(\mathbf{I}
 ### 实验与交叉验证协议
 作者引入**function-space cross-evaluation**：用 25 个数据集分别训练同一模型，再在另外 24 个上测试，形成 25×25 MSE 热图。差异既来自网格 $\Delta x$ 也来自函数类 $\mathcal{F}(\mathrm{type}, p)$。这构成新的 SciML benchmark，"OOD" 的定义从"换分布"严格化为"换函数子空间"。模型覆盖 5 大类共 8 种：有限差分 + PINN（参数拟合）；线性 / deep linear / MLP（黑盒）；DeepONet / FNO（SciML 黑盒）；PI-DeepONet（物理感知）。
 
-### 实验与交叉验证协议
-作者引入**function-space cross-evaluation**：用 25 个数据集分别训练同一模型，再在另外 24 个上测试，形成 25×25 MSE 热图。差异既来自网格 $\Delta x$ 也来自函数类 $\mathcal{F}(\mathrm{type}, p)$。这构成新的 SciML benchmark，"OOD" 的定义从"换分布"严格化为"换函数子空间"。模型覆盖 5 大类共 8 种：有限差分 + PINN（参数拟合）；线性 / deep linear / MLP（黑盒）；DeepONet / FNO（SciML 黑盒）；PI-DeepONet（物理感知）。
-
 ## 实验关键数据
 
 ### 主实验（25×25 OOD cross-evaluation 的关键发现）

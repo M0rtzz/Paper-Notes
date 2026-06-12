@@ -44,6 +44,24 @@ tags:
 
 NeUQI 要解决的是"给定一层权重，怎么挑出真正最优的 scale $s$ 与 zero-point $z$"。它对单层权重矩阵 $\bm{W}$ 的每一行 $\bm{w}$ 独立做量化，凭借的输入是这一行的权重和一个 GPTQ 风格的对角 Hessian $\bm{H} = \mathbb{E}_{\bm{X}}[\bm{X}^\top \bm{X}]$。核心做法是把原本要在 $(s, z)$ 二维上联合搜的问题拆成内外两层：外层从 Min-Max 给出的 scale 上界往下均匀采候选、用由粗到细的方式定位最优 scale；内层对每个候选 scale 解析地求出令误差最小的浮点 zero-point。两层套完后取 $\arg\min_s \mathcal{L}(s, z^*(s))$ 作为最终参数，整层量化从基线的百秒级压到秒级。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：单行权重 w + 对角 Hessian H"] --> B
+    subgraph OUT["Coarse-to-fine scale 搜索（外层）"]
+        direction TB
+        B["以 Min-Max scale 为上界<br/>向下均匀采 T 个候选"] --> C["粗搜 √T 个候选定位 s_c"]
+        C --> D["s_c 邻域再精搜 ~T/√T 个候选"]
+    end
+    D -->|对每个候选 scale s 固定后| E
+    subgraph IN["给定 scale 解析求最优 zero-point（内层）"]
+        direction TB
+        E["Transition-point reduction<br/>近似函数每样本仅 2 转折点<br/>粗定位 z_S"] --> F["闭式求最优 zero-point<br/>在 [z_S−1, z_S+1] 内分段二次<br/>增量维护取解析极值 z*(s)"]
+    end
+    F --> G["取 argmin_s ℒ(s, z*(s)) → 最优 (s*, z*)"]
+    G --> H["逐行重复，整层秒级完成量化"]
+```
+
 ### 关键设计
 
 **1. 闭式求最优 zero-point：把内层从二维搜索变成一维解析极值**

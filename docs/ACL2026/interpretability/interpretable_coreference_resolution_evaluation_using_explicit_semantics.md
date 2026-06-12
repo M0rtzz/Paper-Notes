@@ -44,6 +44,21 @@ tags:
 
 输入：文档 $D$ 中共指模型预测的 mention 集合 $\mathcal{M} = \{m_1, ..., m_n\}$ 与 cluster 集合 $\mathcal{G}$，以及 CNER 预测的标注 span $\mathcal{C} = \{c_1, ..., c_k\}$，每个 $c_j$ 有标签 $L(c_j) \in \mathcal{T}$（$\mathcal{T}$ 含 29 类如 PERSON / LOCATION / EVENT / RELATION / SUPERNATURAL / PLANT / DISEASE 等）。中间两步：(1) Mention Assignment 用 Jaccard 重叠把 mention $m_i$ 对到最大重叠的 CNER span $\hat{c}_j$，重叠 > τ=0.5 时赋标签；(2) Category Propagation 在每个 cluster $G$ 内用多数投票决定 $S(G) = \arg\max_{t \in \mathcal{T}} |\{m_G \in G : L(m_G) = t\}|$，再把 $S(G)$ 传播给所有未标 mention（含代词）。输出：每个 mention 都带 CNER 标签，可按类别分层计算 typed Mention F1 / Link F1。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["共指模型输出<br/>mention + cluster"] --> S1
+    C["CNER 输出<br/>29 类语义 span"] --> S1
+    subgraph S1["两步标注 + 簇级多数投票"]
+        direction TB
+        B1["Mention Assignment<br/>Jaccard 重叠 τ=0.5 直标"] --> B2["Category Propagation<br/>簇内多数投票传给代词"]
+    end
+    S1 --> D["每个 mention 带语义标签<br/>覆盖率 ~90%"]
+    D --> E["Typed Mention F1 + Link F1<br/>按 29 类分层诊断"]
+    E -->|定位弱势类| F["诊断驱动的定向数据增强<br/>3 篇合成文档 + Unrestricted 标注"]
+    F --> G["微调后模型<br/>跨域 CoNLL-F1 +2.5 / Mention F1 +9.5"]
+```
+
 ### 关键设计
 
 **1. 两步标注 + 簇级多数投票：把代词也拉进语义诊断**

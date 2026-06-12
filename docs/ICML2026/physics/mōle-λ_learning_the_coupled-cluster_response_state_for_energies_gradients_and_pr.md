@@ -42,7 +42,25 @@ MōLe-Λ 把分子轨道学习从只预测耦合簇右态 $T$ 振幅扩展到同
 ## 方法详解
 
 ### 整体框架
-输入是分子几何 $\{\mathbf{R}_A\}$；先跑一次廉价的限制性 Hartree–Fock 拿到 MO 系数 $\mathbf{C}$；做占据/虚轨道分别局域化（Foster–Boys 类），把全分子非局域 canonical MO 转成可跨分子迁移的局域 MO；把每个局域 MO 当作一张图，原子上的 AO 系数向量做 padding 后嵌入到等变隐空间；共享 backbone 在 MO 内做消息传递、在 MO 间做注意力交互；最后由四个独立"奇读出头"分别给出 $T_1, T_2, \Lambda_1, \Lambda_2$。预测出的振幅交给标准 CCSD 后处理（拉格朗日、CPHF、1-/2-RDM 重建）生成能量、受力、偶极、四极、极化率、密度与对密度。
+输入是分子几何 $\{\mathbf{R}_A\}$；先跑一次廉价的限制性 Hartree–Fock 拿到 MO 系数 $\mathbf{C}$；做占据/虚轨道分别局域化（Foster–Boys 类），把全分子非局域 canonical MO 转成可跨分子迁移的局域 MO；把每个局域 MO 当作一张图，原子上的 AO 系数向量做 padding 后嵌入到等变隐空间；共享 backbone 在 MO 内做消息传递、在 MO 间做注意力交互；四个独立"奇读出头"分别给出 $T_1, T_2, \Lambda_1, \Lambda_2$ 的残差，再叠加 MP2 零阶基线得到完整振幅；训练时损失只监督这四个振幅张量、不碰任何性质。预测出的振幅交给标准 CCSD 后处理（拉格朗日、CPHF、1-/2-RDM 重建）生成能量、受力、偶极、四极、极化率、密度与对密度。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["分子几何"] --> B["限制性 HF → MO 系数 C"]
+    B --> C["占据/虚轨道局域化<br/>Foster–Boys：得可迁移局域 MO"]
+    C --> D["局域 MO 嵌入等变隐空间"]
+    subgraph G1["共享等变 backbone + 四头镜像读出"]
+        direction TB
+        K["共享 backbone<br/>MO 内消息传递 + MO 间注意力"] --> E["四个奇读出头<br/>→ T1, T2, Λ1, Λ2 残差"]
+    end
+    D --> K
+    MP2["MP2 残差目标<br/>叠加 MP2 零阶基线"] --> H["完整振幅 (T, Λ)<br/>= MP2 基线 + NN 残差"]
+    E --> H
+    LOSS["振幅重建损失<br/>只监督四个振幅张量"] -.->|训练监督| H
+    H --> I["标准 CCSD 后处理<br/>拉格朗日 / CPHF / 1-,2-RDM"]
+    I --> J["能量 / 受力 / 偶极 / 四极<br/>极化率 / 密度 / 对密度"]
+```
 
 ### 关键设计
 

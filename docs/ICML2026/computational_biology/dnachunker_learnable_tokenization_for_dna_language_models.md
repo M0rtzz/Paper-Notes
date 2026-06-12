@@ -43,6 +43,15 @@ DNAChunker 在掩码 DNA 语言模型中嵌入一个端到端可学习的"动态
 ### 整体框架
 DNAChunker 是一个 encoder–main–decoder 结构的双向 MLM：输入一条最长 8192 bp 的核苷酸序列，目标是预测每个被 mask 位置的碱基。它不再用固定 k-mer/BPE 切词，而是让序列在前向过程中被"压缩两次再展开两次"——base-pair 长度 $T$ 经两阶可学习分块缩成 chunk 序列 $T''$，由 30 层 Transformer 主网络在这个最短的长度上做长程建模，再经两阶 dechunking 逐级上采样回 base-pair 分辨率做预测。整套设计的一条主线是把最贵的长程注意力算力全部留给主网络：编码、解码两端只用轻量 BiMamba 负责"压短"和"展开"，中间才用昂贵的 Transformer，从而以 172M 参数撬动 1.2B 级别的建模能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 DNA 序列（≤8192 bp）"] --> B["双向自适应分块（两阶）<br/>BiMamba 编码 + 余弦边界预测<br/>+ mask 保护，T→T′→T″"]
+    B --> C["30 层 Transformer 主网络<br/>块级 RoPE，压缩域长程建模"]
+    C --> D["层级 dechunking + 双向门控平滑<br/>+ 掩码残差门控，展开回碱基级"]
+    D --> E["预测各 [MASK] 位碱基"]
+```
+
 ### 关键设计
 
 **1. 双向自适应分块：把"切词"变成可学的边界预测，解决固定分词切坏功能 motif 的痛点**

@@ -56,6 +56,20 @@ SegQuant 的出发点是一个被作者称为“编译器鸿沟”（Compiler Ga
 
 默认组合是 SmoothQuant + GPTQ + SegLinear + DualScale，Optimizer 和 Calibrator 都可自由替换，使框架成为一个通用量化平台；★ 标的 SegLinear 和 DualScale 是两个核心贡献。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练扩散模型<br/>SD3.5 / FLUX / SDXL"] --> B["Optimizer：激活分布预处理<br/>SmoothQuant 等（可插拔脚手架）"]
+    B --> C["Calibrator：量化参数校准<br/>GPTQ / AMax（可插拔脚手架）"]
+    C --> D["SegLinear：从静态计算图识别语义边界<br/>对线性层分段量化（权重端）"]
+    C --> G["DualScale：按极性拆正负、各用一个 scale<br/>BatchedGEMM 保留 GPU 加速（激活端）"]
+    D -->|输出接 chunk/split| E["输出分段：权重按列切独立量化"]
+    D -->|输入来自 concat/reshape| F["输入分段：权重按行切独立量化"]
+    E --> H["静态图驱动、硬件原生的量化模型"]
+    F --> H
+    G --> H
+```
+
 ### 关键设计
 
 **1. SegLinear：从计算图自动识别语义边界，对线性层分段量化**

@@ -42,6 +42,28 @@ tags:
 ### 整体框架
 MM-Eval 接收源文档 $D = \{T_{source}, V_{source}\}$ 和候选摘要 $S_{cand} = \{T_{gen}, V_{sel}\}$，输出标量 $S_{final}$。pipeline 三个并行 pillar 后做两阶段 Ridge 回归：(1) 文本质量 $S_{text}$ —— 子分量 $S_{fact}, S_{rel}, S_{coh}, S_{flu}$ 内部用 Ridge ($\alpha=1.0$) 聚合；(2) 跨模态对齐 $S_{relevance}$ —— MLLM 给出 1–5 分；(3) 视觉多样性 $S_{diversity}$ —— TCE 输出 log-entropy。三大 pillar 归一化到 $[0,1]$ 后再用 Ridge ($\alpha=0.1$) 学最终系数 $\beta$，目标是最小化与人类 overall score 的 MSE。整个流程使用开源模型 (Mistral-7B-Instruct, LLaVA-Mistral, ViT-B/32)，温度 = 0 保证可复现。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["源文档 D = 文本 + 图<br/>候选摘要 = 生成文本 + 选中图"]
+    subgraph P1["文本质量（Pillar 1）"]
+        direction TB
+        A1["OpenFActScore<br/>拆原子事实 → 逐条核验得 S_fact"]
+        A2["G-Eval<br/>切题/连贯/流畅 S_rel,S_coh,S_flu"]
+        A1 --> A3["Ridge α=1.0 聚合 → S_text"]
+        A2 --> A3
+    end
+    P2["跨模态对齐（Pillar 2）<br/>MLLM-as-Judge 给 1–5 分 → S_relevance"]
+    P3["视觉多样性（Pillar 3）<br/>Truncated CLIP Entropy → S_diversity"]
+    IN --> P1
+    IN --> P2
+    IN --> P3
+    P1 --> AGG["三支柱归一化 → Ridge α=0.1 学权重 β"]
+    P2 --> AGG
+    P3 --> AGG
+    AGG --> OUT["最终标量分 S_final"]
+```
+
 ### 关键设计
 
 **1. Pillar 1：文本质量 = OpenFActScore（硬事实）+ G-Eval（软质量），把事实和文风分开度量再合并**

@@ -38,7 +38,26 @@ tags:
 
 ### 整体框架
 
-系统由三部分构成：(1) 背包式多相机采集系统（8个外视角+2个头戴设备自我中心相机，共10个同步鱼眼相机@60Hz），(2) ego-exo 3D手部姿态标注pipeline，(3) CAD-based 3D物体位姿标注pipeline。输入为多视角同步灰度图像，输出为3D手部关键点/网格、6DoF物体位姿、分割掩码、接触区域和文本描述。
+系统由三部分构成：(1) 背包式多相机采集系统（8个外视角+2个头戴设备自我中心相机，共10个同步鱼眼相机@60Hz），(2) ego-exo 3D手部姿态标注pipeline，(3) CAD-based 3D物体位姿标注pipeline。输入为多视角同步灰度图像，由采集系统分出手部、物体两条并行标注支路，最后汇合输出3D手部关键点/网格、6DoF物体位姿、分割掩码、接触区域和文本描述。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可穿戴多相机采集系统<br/>8 外视角 + 2 自我中心，10 路同步 @60Hz"] --> B["多视角同步灰度图像"]
+    B --> C
+    B --> F
+    subgraph HAND["Ego-Exo 手部 3D 标注"]
+        direction TB
+        C["Sapiens 全图粗定位 + InterNet 裁图精检"] --> D["RANSAC 鲁棒三角化 → 3D 关键点"]
+        D --> E["个性化 LBS 手模 + IK 拟合网格<br/>贝叶斯置信度滤帧"]
+    end
+    subgraph OBJ["CAD-based 物体 6DoF 标注"]
+        direction TB
+        F["CNOS 检测 → FoundPose 粗位姿"] --> G["GoTrack 精化<br/>多视角 gPnP，高置信跳检测"]
+    end
+    E --> H["输出：3D 手部关键点/网格 · 6DoF 物体位姿<br/>分割掩码 · 接触区域 · 文本描述"]
+    G --> H
+```
 
 ### 关键设计
 

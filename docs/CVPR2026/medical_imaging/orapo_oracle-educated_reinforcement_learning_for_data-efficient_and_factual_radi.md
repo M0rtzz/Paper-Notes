@@ -44,11 +44,38 @@ tags:
 
 ### 整体框架
 
-OraPO 是一个单阶段、纯 RL 的放射报告生成框架，不需要领域预训练、图文对齐或 SFT。它要解决两件事：一是 GRPO 直接用在 RRG 上时，基座 VLM 缺放射学知识，前 50 步约 30% 的 group 全零奖励、梯度消失、rollout 白白浪费；二是长文本报告没法像数学题那样二值验证，BLEU/CIDEr 又抓不住事实错误。对应地，OraPO 由两块拼成——OraPO 算法在 GRPO group 全零奖励时动态注入 DPO 监督，把 ground-truth 报告当正样本、零奖励 rollout 当负样本组偏好对；FactScore 奖励（FactS）则从报告里抽原子临床事实做蕴含检查，给出密集、可解释的句子级奖励。
+OraPO 是一个单阶段、纯 RL 的放射报告生成框架，不需要领域预训练、图文对齐或 SFT。它要解决两件事：一是长文本报告没法像数学题那样二值验证，BLEU/CIDEr 又抓不住事实错误，奖励难设计；二是 GRPO 直接用在 RRG 上时，基座 VLM 缺放射学知识，前 50 步约 30% 的 group 全零奖励、梯度消失、rollout 白白浪费。对应地，OraPO 由两块拼成：FactScore 奖励（FactS）先从每条报告抽原子临床事实、对照 ground-truth 标签做蕴含检查，给出密集、可解释的句子级奖励；OraPO 算法再用这些奖励统计每个 group 的零奖励率，在 group 全零奖励、GRPO 学不动时动态注入 DPO 监督，把 ground-truth 报告当正样本、零奖励 rollout 当负样本组成偏好对，并按零奖励率自适应混合 GRPO 与 DPO 两种损失，让失败探索直接变成监督信号。整套训练随之形成自增强飞轮：模型越好 → 负样本越强 → 奖励越准 → 模型更好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：胸片 + 文本指令"] --> B["策略模型 πθ（3B VLM）<br/>每个 prompt 采样 K 个报告 rollout"]
+    subgraph FACTS["FactScore 奖励（FactS）"]
+        direction TB
+        C["GPT-4.1 抽原子临床事实"] --> D["逐 14 个 CheXpert 标签做蕴含检查<br/>矛盾计为假阳性"]
+        D --> E["算 Fβ 奖励（β>1 偏 recall）<br/>得密集、可解释的句级信号"]
+    end
+    B --> FACTS
+    subgraph ORAPO["ZRR 自适应混合（OraPO 算法）"]
+        direction TB
+        F["统计每组零奖励率 → EMA 平滑<br/>→ 映射混合权重 w"]
+        F --> G["DPO 分支：GT 报告为正样本<br/>零奖励 rollout 为负样本"]
+        F --> H["GRPO 分支：继续探索利用"]
+        G -->|"权重 w"| I["混合损失 L_OraPO<br/>= (1−w)·L_GRPO + w·L_DPO"]
+        H -->|"权重 1−w"| I
+    end
+    FACTS --> F
+    I --> J["更新策略模型 πθ"]
+    J -.->|"自增强飞轮：模型越好<br/>→ 负样本越强 → 奖励越准"| B
+```
 
 ### 关键设计
 
-**1. Zero-Reward Rate（ZRR）自适应混合：把失败 rollout 回收成免费偏好负样本**
+**1. FactScore 奖励（FactS）：把报告质量锚定到原子临床事实蕴含**
+
+RRG 的奖励难设计，是因为表面流畅度指标对句子级事实错误和跨句矛盾几乎不罚。FactS 改成三步给出贴临床的奖励：先用 GPT-4.1 从生成报告中抽出原子临床陈述集合 $\mathcal{F}(\hat{y}_i)$；再对 14 个 CheXpert 标签逐一检查事实集是否蕴含该标签，矛盾就记假阳性；最后基于 per-instance 的 precision/recall 算 $F_\beta$ 作为奖励，取 $\beta > 1$ 让奖励偏向 recall——因为临床里漏诊比误报后果重得多。这样奖励既密集又可解释，直接惩罚的是「说错事实」而非「说得不顺」，也为下游的混合训练提供了可统计零奖励率的可靠信号。
+
+**2. ZRR 自适应混合（OraPO 算法）：把失败 rollout 回收成免费偏好负样本**
 
 GRPO 撞上全零奖励 group 时既学不到东西又浪费算力，而 DAPO 重采样、增大 group size 这些修法都是在加计算。OraPO 换个思路：对每个 prompt $x_i$ 先算 $K$ 个 rollout 里零奖励的比例 $z_i$，用指数移动平均（EMA, $\alpha=0.5$）平滑成 $\tilde{z}_i^{(t)}$，再映射成混合权重：
 
@@ -59,10 +86,6 @@ $$w_i^{(t)} = \text{clip}(w_{\min} + (w_{\max} - w_{\min})[\tilde{z}_i^{(t)}]^\g
 $$\mathcal{L}_{\text{OraPO}} = \frac{1}{B}\sum_{i=1}^{B}[(1 - w_i^{(t)})\mathcal{L}_{\text{GRPO}} + w_i^{(t)}\mathcal{L}_{\text{DPO}}]$$
 
 ZRR 高就让 DPO 主导（oracle 教育、稳住梯度），ZRR 低就让 GRPO 主导（继续探索）。关键巧处在于 DPO 的负样本就是那些全零奖励 rollout、正样本就是 ground-truth 报告，两者都是现成的、零额外标注开销，等于把失败探索直接变成监督信号。
-
-**2. FactScore 奖励（FactS）：把报告质量锚定到原子临床事实蕴含**
-
-RRG 的奖励难设计，是因为表面流畅度指标对句子级事实错误和跨句矛盾几乎不罚。FactS 改成三步给出贴临床的奖励：先用 GPT-4.1 从生成报告中抽出原子临床陈述集合 $\mathcal{F}(\hat{y}_i)$；再对 14 个 CheXpert 标签逐一检查事实集是否蕴含该标签，矛盾就记假阳性；最后基于 per-instance 的 precision/recall 算 $F_\beta$ 作为奖励，取 $\beta > 1$ 让奖励偏向 recall——因为临床里漏诊比误报后果重得多。这样奖励既密集又可解释，直接惩罚的是「说错事实」而非「说得不顺」。
 
 ### 损失函数 / 训练策略
 

@@ -45,7 +45,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-攻击者拥有：目标用户 $u$ 的历史交互 $I_u$ 和该用户的（已知）推荐 $R_u$、目标 LLM（black-box，无 token / 无 logits / 无 tokenizer）、以及第三方语义 embedding 模型（Sentence-BERT，不必是目标 LLM 的）。攻击者**不知道** $u$ 是否被 RecSys 维护者选中放进了 system prompt 的 $k$-shot demos 里。在此设定下，作者依次设计四种攻击：(1) Similarity（复刻传统 MIA）、(2) Memorization（利用 LLM 把记住的 item 直接再吐出来）、(3) Inquiry（直接拷问 LLM "你见过这个用户吗？"）、(4) Poisoning（用扰动 prompt 探测"模型立场是否被改变"）。每种攻击都用一个阈值 $\tau$ 将一个标量信号映射为 member / non-member。
+攻击者拥有：目标用户 $u$ 的历史交互 $I_u$ 和该用户的（已知）推荐 $R_u$、目标 LLM（black-box，无 token / 无 logits / 无 tokenizer）、以及第三方语义 embedding 模型（Sentence-BERT，不必是目标 LLM 的）。攻击者**不知道** $u$ 是否被 RecSys 维护者选中放进了 system prompt 的 $k$-shot demos 里。在此设定下，作者设计四种攻击：(1) Similarity（复刻传统 MIA，在 LLM 场景下沦为失效基线）、(2) Memorization（利用 LLM 把记住的 item 直接再吐出来）、(3) Poisoning（扰动历史、探测模型坚持记忆的固执程度）、(4) Inquiry（直接拷问 LLM "你见过这个用户吗？"）。四种攻击共享同一套黑盒查询范式：构造 prompt → 拿到 LLM 的自然语言输出 → 算出一个标量信号 → 用阈值 $\tau$ 把它映射为 member / non-member，全程不需要 logits、shadow model 或任何训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["攻击者已知：目标用户历史 I_u + 已知推荐 R_u<br/>黑盒 LLM（无 logits）+ Sentence-BERT 编码器"]
+    A --> S["相似度攻击 Similarity（失效基线）<br/>语义 embedding 相似度 vs 阈值 τ_s"]
+    A --> M["记忆攻击 Memorization<br/>让 LLM 重新推荐 → 数重复 item 数 vs τ_m"]
+    A --> P["投毒攻击 Poisoning<br/>扰动历史后重推荐 → 推荐语义相似度 vs τ_p"]
+    A --> Q["拷问攻击 Inquiry<br/>直接问见没见过该用户 → Yes / No"]
+    S --> D["判定 member / non-member"]
+    M --> D
+    P --> D
+    Q --> D
+```
 
 ### 关键设计
 

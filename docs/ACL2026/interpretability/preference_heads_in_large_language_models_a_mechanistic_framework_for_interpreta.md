@@ -47,6 +47,34 @@ tags:
 
 如果用户群体差异很大，论文还会先把用户画像编码成 embedding 并聚类。每个 cluster 内重新发现 Preference Heads，推理时根据用户到各 cluster 的相似度做 hard routing 或 soft routing，避免把所有用户的偏好头粗暴合并成一个全局集合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户条件数据<br/>任务输入 x · 用户画像 u · 参考输出 y*"]
+    subgraph PCS["偏好贡献分 PCS（因果消融发现偏好头）"]
+        direction TB
+        B["逐个注意力头定向屏蔽"] --> C["比较屏蔽前后<br/>参考输出 NLL 的变化打分"]
+        C --> D["选 PCS 最高的 top-K 偏好头"]
+    end
+    subgraph DPS["差分偏好引导 DPS（解码时放大偏好信号）"]
+        direction TB
+        E["原模型前向：偏好 logits"]
+        F["屏蔽偏好头前向：通用 logits"]
+        E --> G["差分组合<br/>(1+γ)·偏好 − γ·通用"]
+        F --> G
+    end
+    subgraph CLU["群组感知偏好引导（异质用户扩展）"]
+        direction TB
+        H["用户画像 embedding + k-means 聚类"] --> I["每个 cluster 内单独跑 PCS"]
+        I --> J["推理按相似度 hard / soft 路由选头"]
+    end
+    A --> B
+    D --> E
+    D --> F
+    G --> K["个性化输出"]
+    CLU -.异质用户时替换全局偏好头.-> PCS
+```
+
 ### 关键设计
 **1. Preference Contribution Score：用因果消融给每个注意力头打一个个性化贡献分**
 

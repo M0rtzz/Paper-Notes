@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 方法要解决的是"多实例同时编辑时 N 条指令在共享注意力里相互串味"，而把这件事整体转成"在冻结的 FLUX.1 Kontext（MMDiT + Rectified Flow Matching）骨干上，给 joint attention 套一层按实例分块的结构化掩码，让一次前向积分就完成 N 条互不干扰的编辑"。具体而言，先把全局/空 prompt $s_g$ 和每条带 bbox 的指令 $s_n$ 各自独立编码再拼成 text token，再按"模态 × 实例归属"把整条 joint token 序列 $Z = Z^{\text{text}} \| Z^{\text{latent}} \| Z^{\text{context}}$ 划成全局 prompt $\mathbb{T}_g$、实例 prompt $\mathbb{T}_n$、背景/实例 latent $\mathbb{L}_u/\mathbb{L}_n$、背景/实例 context $\mathbb{C}_u/\mathbb{C}_n$（bbox 重叠时一个 token 可同属多个 $n$）；最后让 MMDiT 不同深度的层用不同掩码约束 velocity field，从 $t=0$ 一次 ODE 积到 $t=1$ 得到成图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["参考图 + 全局/空 prompt s_g + N 条带 bbox 指令 {(s_n, b_n)}"]
+    IN --> ENC["高效多 prompt 独立编码<br/>每条 s_n 单独过文本编码器得变长嵌入 → concat 成 Z_text"]
+    ENC --> PART["按模态×实例归属分区<br/>Z = Z_text ‖ Z_latent ‖ Z_context → T_g / T_n / L_u·L_n / C_u·C_n"]
+    subgraph MM["分层 Mask 调度（冻结 FLUX.1 Kontext / MMDiT 各深度）"]
+        direction TB
+        E["早层：和谐掩码 M^har（开局打底）"]
+        E --> D["中层：IDAttn 解耦掩码 M^dis<br/>跨实例 prompt↔prompt / prompt↔latent 通路置 −∞"]
+        D --> L["晚层：和谐掩码 M^har（收尾全局拼合）"]
+    end
+    PART --> E
+    L --> OUT["Rectified Flow 单次 ODE 积分 t=0→1<br/>→ N 条互不干扰的编辑成图"]
+```
+
 ### 关键设计
 
 **1. Instance-Disentangled Attention（IDAttn）：用加性掩码把跨实例的注意力通路从架构上掐断**

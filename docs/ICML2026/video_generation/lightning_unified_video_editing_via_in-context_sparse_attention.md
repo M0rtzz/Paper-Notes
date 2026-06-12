@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 ICL 拼接后的长序列 $Q,K,V \in \mathbb{R}^{B\times H\times N\times D}$，其中前 $L_{src}$ 个 token 来自 source、后 $L_{ctx}$ 个来自 context。ISA 的 forward 分四步：(1) 用 pooling attention 得到粗粒度 score $S_\text{coarse}$ 与 block mask $M_\text{coarse}$；(2) 在 $S_\text{coarse}$ 的 context 子块上做 Top-k 选择，把 context K/V 压缩成 $\alpha_s L_{ctx}$ 长；(3) 用粗粒度方差 $M_i$ 评估每个 Query block 的锐度，按 Flat Ratio $\alpha_f$ 把 Query 分流；(4) 高锐度 Query 走 FlashAttention v2/3，低锐度 Query 走 block-wise 0 阶 Taylor 稀疏注意力，最后把两路 online-softmax 合并。整个 forward/backward 都用 Triton/TileLang 写成可训练 kernel。
+输入是 ICL 拼接后的长序列 $Q,K,V \in \mathbb{R}^{B\times H\times N\times D}$，其中前 $L_{src}$ 个 token 来自 source、后 $L_{ctx}$ 个来自 context。ISA 的 forward 分四步：(1) 用 pooling attention 得到粗粒度 score $S_\text{coarse}$ 与 block mask $M_\text{coarse}$，这一步是后面所有选择/分流的"廉价探针"，本身不算一个独立设计；(2) 在 $S_\text{coarse}$ 的 context 子块上做 Top-k 选择，把 context K/V 压缩成 $\alpha_s L_{ctx}$ 长（**Context Pre-Selection**）；(3) 用粗粒度方差 $M_i$ 评估每个 Query block 的锐度，按 Flat Ratio $\alpha_f$ 把 Query 分流（**基于 Query 锐度的 Grouped Computation**）；(4) 高锐度 Query 走 FlashAttention v2/3 精算，低锐度 Query 走 **Block-wise 0 阶 Taylor 稀疏注意力**，最后把两路 online-softmax 合并。整个 forward/backward 都用 Triton/TileLang 写成可训练 kernel。下图把这条数据流画出来——其中 pooling attention、FlashAttention 精算路、合并输出是脚手架，三个加粗模块才是关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ICL 拼接长序列 Q,K,V<br/>前 source + 后 context"] --> B["Pooling Attention（粗粒度探针）<br/>得 S_coarse 与 block mask M_coarse"]
+    B --> C["Context Pre-Selection<br/>context 子块 Top-k 选显著 K/V → K_new,V_new"]
+    C --> D["基于 Query 锐度的 Grouped Computation<br/>按 M_i 排序，Flat Ratio α_f 分流"]
+    D -->|高锐度 Query（精算）| E["FlashAttention v2/3<br/>精确 online-softmax"]
+    D -->|低锐度 Query（近似）| F["Block-wise 0 阶 Taylor 稀疏注意力<br/>用块代表值 Kc,Vc 顶替整块"]
+    E --> G["两路 online-softmax 合并<br/>O_i = O_i / ℓ_i → 输出"]
+    F --> G
+```
 
 ### 关键设计
 

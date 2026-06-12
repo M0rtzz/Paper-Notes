@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 这条流水线要解决的是"让 LLM 把一份自由文本病例可控地写成合规 FHIR，又不让它瞎编医学编码"。输入一份英文自由文本病例（来自 MedCaseReasoning），输出一个通过校验的 HL7 FHIR R4 patient bundle，可选地按诊断屏蔽模式剔除诊断结论供下游评测。它把任务拆成串联的四段：先由 LLM #1 把文本抽成扁平中间结构（人口学/症状/体征/生命体征/化验/用药/操作/既往史，每条保留原文 verbatim 引用做溯源）；再用内部术语库对所有编码做确定性接地；接着由 LLM #2 按 R4 模板组装成 FHIR 资源并跑校验-修复循环；最后由 LLM #3 按配置屏蔽诊断结论。全程统一用 Claude (claude-sonnet-4-20250514)、temperature 0 以求可复现——LLM 只在抽取、合成、语义扫描三个固定锚点出手，其余约束都交给检索与规则。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自由文本病例<br/>(MedCaseReasoning)"] --> B["LLM #1 抽取<br/>扁平中间结构 + verbatim 溯源"]
+    B --> C["术语接地<br/>SapBERT+FAISS 检索 · 三阈值判定"]
+    C -->|拒绝码回灌| D["LLM #2 FHIR R4 合成<br/>+ 校验-修复循环 ≤3 轮"]
+    C -->|接受 / 最近邻替换| D
+    D -->|3 轮仍不过| X["标记转换失败"]
+    D -->|校验通过| E["规则后处理<br/>补全资源 · 归一化单位/日期/状态"]
+    E --> F["LLM #3 诊断屏蔽<br/>4 模式 + 语义泄漏扫描"]
+    F --> G["FHIR R4 patient bundle"]
+```
+
 ### 关键设计
 
 **1. 术语接地：用 SapBERT + FAISS + 三阈值判定把幻觉码当场钉死**

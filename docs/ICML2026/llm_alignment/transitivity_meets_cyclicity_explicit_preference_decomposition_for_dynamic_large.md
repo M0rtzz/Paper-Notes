@@ -47,6 +47,30 @@ HRC 把人类偏好显式拆成正交的「传递标量分量」（BT 模型）+
 
 HRC 模型本身的结构是：共享的 LLM hidden state $\mathbf{h}_{\mathbf{y}|\mathbf{x}}$ 经过三个 head——transitive head 给出标量 reward $r_\phi(\mathbf{y}|\mathbf{x}) = \mathrm{clip}(\mathbf{w}_r^\top \mathbf{h}, -\delta, \delta)$，cyclic head 给出单位向量 $\mathbf{v}(\mathbf{y}|\mathbf{x}) = \mathbf{W}_c \mathbf{h} / \|\mathbf{W}_c \mathbf{h}\|_2$，context gating 给出 $\mathbf{D}(\mathbf{x}) = \mathrm{diag}(\lambda(\mathbf{x})) \otimes \mathbf{I}_2$。最终偏好得分 $s_{\mathrm{HRC}} = C_1(r(\mathbf{y}_w) - r(\mathbf{y}_l)) + C_2(\mathbf{v}_w^\top \mathbf{D}(\mathbf{x}) \mathbf{R}^{\succ} \mathbf{D}(\mathbf{x}) \mathbf{v}_l)$ 用 BCE loss 端到端训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["prompt x + 一对回复 y_w / y_l"] --> BB["共享 LLM backbone<br/>hidden state h"]
+    subgraph HRC["HRC 偏好分解（传递标量 + 循环向量两路相加）"]
+        direction TB
+        BB --> TH["transitive head：标量 reward r<br/>reward clipping 限幅 [−δ, δ]"]
+        BB --> CH["cyclic head：单位向量 v<br/>unit norm 球面各向同性"]
+        BB --> CG["context gating：D(x)<br/>按 prompt 调循环强度"]
+        TH --> SUM["偏好得分 s_HRC = 传递项 + 循环项"]
+        CH --> SUM
+        CG --> SUM
+    end
+    SUM --> BCE["BCE loss 端到端训练<br/>得到 HRC 偏好模型"]
+    BCE --> DS
+    subgraph DS["DSPPO 时变博弈对齐"]
+        direction TB
+        ST["拆出传递得分 s_T / 循环得分 s_C"] --> TV["时变 oracle P_t = σ(s_t)<br/>s_t =（1+λ/√t）s_T +（1−λ/√t）s_C"]
+        TV --> UP["SPPO 风格权重更新策略 π"]
+        UP -->|"早期传递主导 → 后期补循环细节"| ST
+    end
+    DS --> OUT["收敛到 Nash 均衡的对齐策略"]
+```
+
 ### 关键设计
 
 **1. HRC 偏好分解：把传递和循环显式拆成两路相加**

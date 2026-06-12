@@ -43,7 +43,19 @@ SAME 把多模态持续指令微调里 MoE-LoRA 的"灾难性遗忘"明确拆成
 ## 方法详解
 
 ### 整体框架
-基座是 LLaVA-v1.5-7B + CLIP-L/14-336，只在 LLM 的 FFN 层插 LoRA 专家。给定输入 $\mathbf{x}\in\mathbb{R}^d$，输出是 $\mathbf{h}=\mathbf{W}_0\mathbf{x}+\sum_{i=1}^n \omega_i \mathbf{B}_i\mathbf{A}_i\mathbf{x}$，其中 $\omega_i=\mathrm{Softmax}(\mathbf{W}_G\mathbf{x})_i$ 是路由器输出。流程：任务 $t$ 训练时 (1) 在线维护输入协方差 $\mathbf{C}^t$ 并做 top-$k$ SVD 得 $\mathbf{V}_\parallel, \mathbf{V}_\perp$；(2) 用谱感知规则约束 $\mathbf{W}_G$ 的更新方向；(3) 用 $(\mathbf{C}^{t-1})^{-1}$ 做专家梯度预条件；(4) 按效用-重要性差分挑出一批专家暂时冻结。
+基座是 LLaVA-v1.5-7B + CLIP-L/14-336，只在 LLM 的 FFN 层插 LoRA 专家。给定输入 $\mathbf{x}\in\mathbb{R}^d$，输出是 $\mathbf{h}=\mathbf{W}_0\mathbf{x}+\sum_{i=1}^n \omega_i \mathbf{B}_i\mathbf{A}_i\mathbf{x}$，其中 $\omega_i=\mathrm{Softmax}(\mathbf{W}_G\mathbf{x})_i$ 是路由器输出。整套方法围绕一份共享的「过去几何」——跨任务累计的输入协方差 $\mathbf{C}^t$——展开：任务 $t$ 训练时先在线维护 $\mathbf{C}^t$ 并做 top-$k$ SVD 得 $\mathbf{V}_\parallel, \mathbf{V}_\perp, \boldsymbol{\Sigma}$，然后这份分解同时喂给三件稳定机制——谱感知路由用 $\mathbf{V}_\parallel/\mathbf{V}_\perp$ 约束 $\mathbf{W}_G$ 的更新方向（治 router drift），曲率感知 Riemannian 缩放复用同一份因子构造 $(\mathbf{C}^{t-1})^{-1}$ 给专家梯度做预条件（治 expert drift），自适应专家激活用输入能量近似历史重要性、按效用-重要性差分把一批专家暂时冻结（省算力 + 减干扰）。三者共用一份协方差，存储几乎零增。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 t 输入 x<br/>(MoE-LoRA on FFN，基座 LLaVA-1.5-7B)"] --> B["维护跨任务输入协方差 C，做 top-k SVD<br/>得 V∥ / V⊥ / Σ（一份几何，复用三处）"]
+    B --> C["1. 谱感知路由<br/>路由器梯度只投 V∥（新任务方向），V⊥（旧任务方向）几乎不动"]
+    B --> D["2. 曲率感知 Riemannian 缩放<br/>复用 SVD 因子构造历史协方差求逆，专家梯度预条件"]
+    B --> E["3. 自适应专家激活<br/>低效用·高历史重要的专家本任务暂时冻结"]
+    C --> F["稳定的 MoE-LoRA 更新<br/>同治 router drift + expert drift，rehearsal-free 零额外 loss"]
+    D --> F
+    E --> F
+```
 
 ### 关键设计
 

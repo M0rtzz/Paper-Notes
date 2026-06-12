@@ -49,6 +49,19 @@ tags:
 
 模型用模态专属编码器分别提特征（RGB 用 VideoPose3D、LiDAR/mmWave 用 Point Transformer、WiFi 用 MetaFi++），经多模态融合后由姿态回归头预测 3D 关节坐标。在此之上挂两个组件来治"模态不平衡"：一个 Shapley 模态贡献评估模块，用 Shapley 值 + Pearson 相关系数量化每个模态的贡献、检测谁强谁弱；一个自适应权重约束(AWC)正则化，用 Fisher 信息矩阵给参数重要性加权，在训练早期的"学习窗口"里平衡各模态的学习速度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["四模态输入<br/>RGB / LiDAR / mmWave / WiFi"] --> B["模态专属编码器<br/>VideoPose3D / Point Transformer / MetaFi++"]
+    B --> C["多模态融合 + 姿态回归头<br/>预测 3D 关节坐标"]
+    C --> D["MPJPE 任务损失"]
+    C --> E["Shapley 贡献评估<br/>Pearson 利润函数算各模态边际贡献"]
+    E --> F["K-Means(K=2) 聚类<br/>优势模态集 / 劣势模态集"]
+    F --> G["自适应权重约束(AWC)<br/>FIM 加权惩罚，α_S > α_I"]
+    D --> H["总损失 L_total = L_MPJPE + L_AWC"]
+    G -->|"仅学习窗口前 K 个 epoch"| H
+```
+
 ### 关键设计
 
 **1. 回归任务的 Shapley 贡献评估：把利润函数从 MSE 换成 Pearson**

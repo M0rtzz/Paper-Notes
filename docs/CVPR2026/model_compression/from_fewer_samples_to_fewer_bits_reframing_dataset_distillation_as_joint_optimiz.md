@@ -45,6 +45,20 @@ $$\mathcal{S}^* = \arg\min_{\mathcal{S}} \mathbb{E}_{\theta \sim \Theta} [\mathc
 
 每轮迭代里，合成数据先过量化层得 $\mathcal{S}^q = Q(\mathcal{S})$ 再算蒸馏损失，梯度顺着链式法则同时回传到合成数据和量化器参数。这样合成样本从一开始就是"为低精度存储而生"的，而不是先蒸馏好再硬量化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["真实数据 𝒯"] --> INIT["量化引导初始化<br/>均匀量化 + 图割贪心选样"]
+    INIT --> S["合成数据 𝒮<br/>(可学习, 含量化阈值 α)"]
+    S --> Q["可微量化层 Q<br/>hard rounding + STE / 非均匀 APoT"]
+    Q --> SQ["量化合成数据 𝒮q"]
+    T --> PHI["特征提取器 φ(·;θ)"]
+    SQ --> PHI
+    PHI --> L["蒸馏损失 ℒ(φ(𝒯), φ(𝒮q))"]
+    L -->|"梯度同时回传至 𝒮 与 α"| S
+    S --> OUT["低比特紧凑数据集<br/>存储预算 M×D×b"]
+```
+
 ### 关键设计
 
 **1. 可微量化层：让 clipping 和 rounding 进得了梯度循环**

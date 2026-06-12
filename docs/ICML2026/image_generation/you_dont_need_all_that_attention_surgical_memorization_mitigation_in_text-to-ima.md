@@ -45,24 +45,25 @@ GUARD 不是训练新 diffusion model，而是在每个 denoising step 改写噪
 
 本文的具体实例叫 CA-in-GUARD。它先在原始条件分支中读取 cross-attention maps，自动找出当前 prompt 的 spike token 集合 $S(p)$，再在 positive branch 中对这些 token 的 attention logits 做缩放，得到 spike-attenuated conditional prediction。实现上，unconditional、原始 conditional 和 spike-attenuated conditional 可以拼成 batch 做一次 U-Net forward，从而减少额外开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每步去噪：记忆 prompt p + 状态 x_t"] --> B["吸引-排斥引导<br/>预测 = ε + s·(ε⁺−ε) − r·(ε⁻−ε)"]
+    B --> C["无条件预测 ε（空 prompt）"]
+    B --> D["负向目标 ε⁻：原始条件预测（记忆方向，被排斥）"]
+    B --> E["正向目标 ε⁺：安全条件预测（被吸引）"]
+    D -.读取交叉注意力图.-> F["每-prompt 交叉注意力尖峰检测器<br/>统计离群 → 触发 token 集 S(p)"]
+    F --> G["手术式交叉注意力 logit 衰减<br/>缩放 S(p) 的 logits → 构成 ε⁺"]
+    G -.-> E
+    B --> H["合成去噪方向 → x_t−1 → 迭代 → 输出图像"]
+```
+
 ### 关键设计
-1. **Attractive-repulsive guidance**:
+**1. 吸引-排斥引导（attractive-repulsive guidance）：拉开记忆方向又不坍质量**：GUARD 的总框架是改写标准无分类器引导（classifier-free guidance, CFG）的噪声预测组合，专治“既要压住记忆复现、又不能让图崩”的两难。它把最终噪声预测写成 $\hat{\epsilon}=\epsilon_\theta(x_t,e_\phi)+s\,(\epsilon_\theta^+(x_t,e_p)-\epsilon_\theta(x_t,e_\phi))-r\,(\epsilon_\theta^-(x_t,e_p)-\epsilon_\theta(x_t,e_\phi))$：其中 $\epsilon_\theta^-$ 是原始 prompt 的标准条件预测（记忆方向，作负向目标，用权重 $r$ 排斥），$\epsilon_\theta^+$ 是经安全处理的正向目标（用权重 $s$ 吸引）。只做排斥会把生成质量一起拖垮，所以必须同时给一个仍贴合 prompt、但不再指向训练图的替代方向去吸引；把吸引和排斥拆成两股独立的力，就能分别调节“记忆缓解强度”和“质量保持”。
 
-	- 功能：在生成轨迹层面同时减少记忆复现并维持图像质量。
-	- 核心思路：将最终噪声预测写成 $\hat{\epsilon}=\epsilon_\theta(x_t,e_\phi)+s(\epsilon_\theta^+(x_t,e_p)-\epsilon_\theta(x_t,e_\phi))-r(\epsilon_\theta^-(x_t,e_p)-\epsilon_\theta(x_t,e_\phi))$。其中 $\epsilon_\theta^-$ 是标准 prompt 条件预测，$\epsilon_\theta^+$ 是经过安全处理的 positive target。
-	- 设计动机：单纯削弱 prompt 条件会让生成退化；单纯增加替代目标又可能仍然贴近记忆方向。把 attraction 和 repulsion 分开后，可以独立调节记忆缓解与质量保持。
+**2. 每-prompt 交叉注意力尖峰检测器：动态定位触发 token**：正向目标到底要在哪里动手？论文先分析了记忆与非记忆 prompt 的交叉注意力分布，发现 verbatim 记忆里 EOT token 常有强尖峰，但其他 token 的尖峰往往更高；template 记忆里 EOT 甚至不一定是主因。因此像 Ren et al. 那样固定只处理 EOT/padding 既不充分、又可能误伤。GUARD 改成逐 prompt 的统计离群检测：从原始条件分支的交叉注意力分布里，对每个 token 算跨空间 query 的最大注意力质量 $M_i$，再做 $Z_i=(M_i-\mu)/\sigma$ 标准化，超过阈值 $\tau$ 的 token 收进集合 $S(p)$。这个集合既可能含 EOT、也可能含任意 prompt 特有 token，且随 prompt 和去噪步自适应变化。
 
-2. **Per-prompt cross-attention spike detector**:
-
-	- 功能：动态定位每个 prompt 中最可能触发训练图像复现的 token 位置。
-	- 核心思路：从原始 conditional pass 的 cross-attention distribution 中，对每个 token 计算跨空间 query 的最大 attention mass $M_i$，再用 $Z_i=(M_i-\mu)/\sigma$ 做 outlier detection，超过阈值 $\tau$ 的 token 被加入 $S(p)$。这个集合可以包含 EOT，也可以包含任意 prompt-specific token。
-	- 设计动机：verbatim 和 template memorization 的触发模式不同，固定处理 EOT/padding 既不充分也可能反向伤害。统计 outlier 机制让方法随 prompt 和 denoising step 自适应。
-
-3. **Surgical CA-logit attenuation**:
-
-	- 功能：构造 GUARD 的 positive target，让模型仍听 prompt，但不再过度依赖记忆触发 token。
-	- 核心思路：在 selected U-Net cross-attention modules 中，对 $i \in S(p)$ 的 attention logits 做乘性缩放 $\ell'_{q,i}=\ell_{q,i}\cdot\alpha$，再进入 softmax。默认在 down/mid blocks 处理，避免 late up blocks 质量退化；可以选择所有 heads 或 hot heads，论文发现 all-heads 是强而简单的默认。
-	- 设计动机：直接把 token 删除或把注意力置零太粗暴，可能破坏语义。logit attenuation 是更细的干预，只压低异常尖峰，保留其他正常 cross-attention pattern。
+**3. 手术式交叉注意力 logit 衰减：只压异常尖峰、造出安全正向目标**：拿到触发位置 $S(p)$ 后，需要据此造出 GUARD 的正向目标。做法是在选定的 U-Net 交叉注意力模块里，对 $i\in S(p)$ 的注意力 logits 做乘性缩放 $\ell'_{q,i}=\ell_{q,i}\cdot\alpha$ 再进 softmax，得到一份“仍听 prompt、但不再过度依赖记忆触发 token”的条件预测，即 $\epsilon_\theta^+$。默认只在 down/mid block 动手、避开 late up block 以免质量退化；head 可选全部或只选 hot head，论文发现“全 head”是简单又强的默认。相比直接删 token 或把注意力置零这类粗暴操作，只压异常尖峰、保留其余正常注意力模式的 logit 衰减是更精细的“手术式”干预。
 
 ### 损失函数 / 训练策略
 本文没有训练损失，也不更新模型权重。主要超参是 attention spike threshold $\tau$、attenuation factor $\alpha$ 和 GUARD repulsion strength $r$。作者为不同架构和记忆类型做 grid search，并采用质量约束的选择策略：在 CLIP 不超过参考值 15% degradation 的配置中，优先选择 SSCD 更低的设置。

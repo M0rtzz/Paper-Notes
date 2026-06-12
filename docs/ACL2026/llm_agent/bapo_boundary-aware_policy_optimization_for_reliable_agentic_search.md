@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 BAPO 把"敢于拒答"训进 agentic search 模型，整条流水线只动 GRPO 的奖励层，不改策略架构、也不需要冷启动 SFT。对每个问题 $x$，策略先采样 $G=8$ 条交错 `<think>/<search>/<result>/<answer>` 的轨迹 $\{\tau_i\}_{i=1}^{G}$；每条轨迹同时算两项奖励——衡量答对的 correctness reward 和只在整组全错时才奖励 IDK 的 boundary-aware reward，二者相加后送进 GRPO 的组归一化优势 $A_i$。一个自适应调制器再按训练阶段与样本多样性决定是否真正注入 IDK 奖励，从而在"先学会解题、再学会认怂"之间取得平衡。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x"] --> B["策略采样 G=8 条<br/>think/search/answer 轨迹"]
+    B --> C["correctness 奖励<br/>R_Correct = F1（违规记 −1）"]
+    B --> D["基于组的边界感知奖励<br/>组内全错才给 IDK 样本 +0.5"]
+    D --> E["Stage 调制器<br/>探索期关·平台期开 IDK 奖励"]
+    E -->|平台期| F["Sample 调制器<br/>高多样性关·低多样性开 IDK 奖励"]
+    F --> G["注入后的 IDK 奖励"]
+    C --> H["GRPO 组归一化优势 A_i → 更新策略"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 基于组的边界感知奖励：用一组 rollout 的"全军覆没"当越界证据**

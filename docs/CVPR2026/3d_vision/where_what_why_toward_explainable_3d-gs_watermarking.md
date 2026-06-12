@@ -45,6 +45,25 @@ tags:
 
 3D-GS 把场景显式编码成一堆可直接编辑的高斯，方便归方便，但也让攻击者能轻松复制、篡改、剥离作者信息——水印因此要回答三件事：**Where**（在哪些高斯上写）、**What**（写什么、更新幅度怎么控）、**Why**（凭什么选这些载体，能否审计归因）。整个框架分三段跑：初始化阶段先按渲染贡献修剪冗余高斯，再用 Trio-Experts 提取载体先验、SBAG 选定载体并致密化；解耦微调阶段用 Channel-wise Group Mask 把水印载体和视觉补偿器的梯度分路，各自独立优化；推理阶段从渲染视图经冻结解码器提取水印比特。修剪沿用 3D-GSW 的策略：引入临时颜色参数 $C'$，用辅助 loss 的梯度 $V_\pi = \partial L_\pi^{aux}/\partial C'$ 当贡献分数，剪掉 $V_\pi < 10^{-8}$ 的低影响高斯。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练好的 3D-GS 场景"] --> B["渲染贡献修剪<br/>剪掉低影响高斯（V_π < 1e−8）"]
+    subgraph TE["Trio-Experts：表示原生载体打分"]
+        direction TB
+        E1["几何专家<br/>各向同性 / 旋转一致 / 紧凑足迹"]
+        E2["外观专家<br/>高频能量 / 不透明度门 / DC 带通"]
+        E3["冗余专家<br/>颜色形状相似 / 投影重叠"]
+    end
+    B --> TE
+    TE --> C["证据包 E_k = [不确定度 U, 质量分 S]"]
+    C --> D["SBAG：排序 + 自适应预算<br/>效用 u_i 排序 → 算预算 B → top-B 载体 → 致密化"]
+    D -->|"载体集 WM*"| F["Channel-wise Group Mask<br/>按通道分路梯度"]
+    D -->|补偿集 VIS| F
+    F --> G["解耦微调<br/>水印目标只动 WM*<br/>视觉目标只动 VIS"]
+    G --> H["渲染视图 → 冻结解码器 → 提取水印比特"]
+```
+
 ### 关键设计
 
 **1. Trio-Experts：在 3D 参数空间里给每个高斯打"能不能当载体"的分**

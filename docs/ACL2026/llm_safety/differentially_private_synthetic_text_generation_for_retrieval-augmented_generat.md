@@ -53,6 +53,20 @@ Pipeline 两阶段（Algorithm 1，5 个子步骤）：
 
 **Privacy 总账**（Theorem 1）：整个 pipeline 满足 $(\varepsilon, \delta)$-DP，其中 $\rho = \frac{K}{2\sigma_h^2} + L \left( \frac{1}{8}\varepsilon_{\theta_s}^2 + \frac{1}{2\sigma_\mu^2} + \frac{T}{2}\left(\frac{c}{\tau}\right)^2 \right)$，再转化为 $\varepsilon = \rho + \sqrt{4\rho\log(1/\delta)}$。关键技巧是 **overlapping parallel composition** —— 因为每篇文档最多在 $L$ 个 cluster 中，并行处理的隐私代价是 $L \cdot \rho_{\text{cluster}}$ 而非 $R \cdot \rho_{\text{cluster}}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["私有 RAG 数据库<br/>含 PII 的敏感文档"] --> S1
+    subgraph S1["DP 关键词软聚类（设计 1）"]
+        direction TB
+        B["关键词直方图<br/>LLM 抽 K 个关键词 + 高斯噪声"] --> C["关键词软聚类<br/>频率反序赋 cluster，每文档最多 L 个"]
+        C --> D["Embedding 重排<br/>DP 均值 + 指数机制选阈值剔离群"]
+    end
+    S1 --> E["Token 级 private prediction<br/>logit clip 求和 + softmax 采样 ≈ 指数机制"]
+    E --> F["Self-filtering<br/>LLM 判合成文本对 task 是否有用"]
+    F --> G["差分隐私合成文本库<br/>下游任意次查询免预算（后处理）"]
+```
+
 ### 关键设计
 
 **1. DP 关键词软聚类：让合成文本保留病名、用户偏好这类"局部细节"，而不只是学到全库平均特征**

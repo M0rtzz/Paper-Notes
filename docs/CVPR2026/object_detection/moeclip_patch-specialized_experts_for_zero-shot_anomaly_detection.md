@@ -53,6 +53,22 @@ MoECLIP 想解决的核心问题是：CLIP 的 patch 特征对所有区域一视
 
 一张图进来后，CLIP ViT 先抽出多层 patch 特征，每一层的 MoE 模块根据 patch 内容把它路由给合适的专家做残差适配；适配后的特征经 PAA 在多个尺度上聚合，再分两路出口——逐 patch 与文本特征算相似度得到像素级异常图，全局特征经 Depth-wise Adapter 与文本算相似度得到图像级异常分数。训练只在辅助数据集（VisA）上做监督，测试时面对的是完全没见过的类别。整条链路里真正可学习的只有 LoRA 的上投影、路由器和两个轻量适配头，CLIP 主干始终冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 518×518"] --> B["CLIP ViT-L/14（冻结）<br/>取第 6/12/18/24 层 patch 特征"]
+    subgraph MOE["MoE 特征适配（每层一个 · Top-2 路由 + K=4 LoRA 专家）"]
+        direction TB
+        C["FOFS（输入端分离）<br/>正交分块下投影 A 冻结，切 K 个子空间"] --> D["K 个 LoRA 专家<br/>路由器取 Top-2 加权残差"]
+        D --> E["ETF Loss（输出端分离）<br/>约束专家输出等角最大分离"]
+    end
+    B --> MOE
+    MOE --> F["PAA 多尺度聚合<br/>滑窗 s∈{1,3,5} 均值池化 · 零参数"]
+    F -->|逐 patch 与文本算相似度| G["像素级异常图"]
+    F -->|取末层特征| H["Depth-wise Adapter<br/>深度可分离卷积 + GAP → V_image"]
+    H -->|与文本算相似度| I["图像级异常分数"]
+```
+
 ### 关键设计
 
 **1. MoE 特征适配：让每个 patch 走自己的专家通道**

@@ -45,6 +45,22 @@ tags:
 
 CLewR 分为两个阶段：(1) 排序阶段——根据选中翻译与拒绝翻译之间的相似度差异对所有训练三元组排序；(2) 训练阶段——在每个 epoch 中按固定的易到难顺序遍历所有数据，不进行随机打乱。排序在训练开始前一次性完成，训练过程中每个 epoch 重复相同的排序。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["偏好三元组 (x, y_w, y_l)"] --> S
+    subgraph S["难度评分（二选一）"]
+        direction TB
+        B1["多指标难度评分<br/>BLEU + COMET-22 + METEOR 归一化取平均 → s"]
+        B2["CLewR-z 模型距离评分<br/>s = −z_θ（借 ARPO 自适应距离）"]
+    end
+    S --> C["固定易到难排序<br/>训练前一次性算好、全程不变"]
+    C --> D["Epoch 级重启遍历<br/>每轮按同序从简单走到困难、不打乱"]
+    D -->|"每个 epoch 重启课程"| D
+    D --> E["偏好优化<br/>DPOP / CPO / ARPO 原生损失"]
+    E --> F["输出：翻译模型"]
+```
+
 ### 关键设计
 
 **1. 基于多指标的难度评分：让"难"有一个可量化的定义**

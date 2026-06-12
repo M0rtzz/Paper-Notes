@@ -43,6 +43,33 @@ BehaviorVLA 用因果三流 Mamba 编码器 (VBE) 把长视野演示压缩成时
 ### 整体框架
 模型在 $\pi_{0.5}$ 主干上加两个模块：(1) **VBE (Visuomotor Behavior Encoder)**：因果三流 (视觉 $S_v$ / 动作 $S_a$ / 行为 $S_z$) 架构，每流用 Mamba 做长视野时间过滤，再跨流注意力融合，把整个轨迹压成 $\{z_{\text{proto}}, z_{\text{phase}}\}$；离线把每条演示的 $z_{\text{proto}}$ 存入 Behavior Memory Bank。(2) **PBD (Phase-conditioned Behavior Decoder)**：检索 Top-K 全局原型加权得 $\hat z_{\text{proto}}$，展开成位置编码的潜锚序列 $\mathbf M$；用 $z_{\text{phase}}^{(t)}$ 做查询做相位注意力得局部上下文 $c_t$，投影成高斯先验 $\mathcal N(\mu_\psi(c_t), \Sigma)$；最后把先验通过加性偏置注入流匹配策略的噪声嵌入，由速度场 $v_\theta$ 积分出最终动作 trunk。整条 pipeline 推理时每个 episode 检索一次原型 + 每步更新一次相位，流匹配负责局部修正。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph VBE["VBE 因果三流 Mamba 编码器（设计 1）"]
+        direction TB
+        I["长视野演示<br/>视觉流 Sv / 动作流 Sa"] --> M["三流 Mamba 时间过滤<br/>+ 渐进式跨流注意力（行为流 Sz 当瓶颈）"]
+        M --> Z["行为 token → 原型 z_proto + 相位 z_phase"]
+    end
+    Z --> BANK["Behavior Memory Bank<br/>离线存每条演示的 z_proto（脚手架）"]
+    subgraph DEC["流形坐标解耦（设计 2）"]
+        direction TB
+        R["t=0 检索 Top-K 原型<br/>加权得 ẑ_proto（整段锁定）"]
+        P["每步在线递归更新 z_phase^(t)<br/>跟踪执行进度"]
+    end
+    BANK --> R
+    O["当前观测 O_t（脚手架）"] --> P
+    subgraph PBD["PBD Predictor-Corrector（设计 3）"]
+        direction TB
+        EXP["Predictor：展开位置编码潜锚序列 M"] --> ATT["相位注意力<br/>z_phase 查询 M → 局部上下文 c_t"]
+        ATT --> PRIOR["投影成高斯先验 N(μ,Σ)"]
+        PRIOR --> FLOW["Corrector：加性偏置注入噪声嵌入<br/>流匹配速度场 v_θ 积分"]
+    end
+    R --> EXP
+    P --> ATT
+    FLOW --> ACT["相位对齐的动作 trunk（脚手架）"]
+```
+
 ### 关键设计
 
 **1. VBE 因果三流 Mamba + 渐进式跨流注意力：把长视野的视觉/动作序列压成"行为 token"**

@@ -45,7 +45,36 @@ HSD 把每一层算子学习写成"Base 分支 + Fiber 分支 + 交换子修正"
 
 $\boldsymbol{\omega}_k^{(\ell+1)}=\mathcal{G}_{\mathrm{base}}^{(\ell)}(\boldsymbol{\omega}_k^{(\ell)})+(\mathbf{I}-\Pi_{\mathrm{base}}^k)\bigl[\mathcal{G}_{\mathrm{fiber}}^{(\ell)}(\boldsymbol{\omega}_k^{(\ell)})+\mathcal{C}_\theta^{(\ell)}(\mathbf{z}^{(\ell)})\bigr]$
 
-输入是单纯复形 $K$ 上的离散 $k$-form（节点上的 0-form、边上的 1-form、面上的 2-form）；离线阶段先做一次 $\mathbf{L}_k \mathbf{\Psi}_k = \mathbf{\Psi}_k \mathbf{\Lambda}_k$ 稀疏特征分解，截断成 $m_k$ 个最低频特征向量构成谱基 $\mathbf{\Phi}_k$；在线阶段把场分别投影到 Base 空间（谱系数）和经过 lift 算子 $\iota$ 投影到辅助欧式网格做 FFT；输出经过反投影与正交补约束后相加。
+输入是单纯复形 $K$ 上的离散 $k$-form（节点上的 0-form、边上的 1-form、面上的 2-form）；离线阶段先做一次 $\mathbf{L}_k \mathbf{\Psi}_k = \mathbf{\Psi}_k \mathbf{\Lambda}_k$ 稀疏特征分解，截断成 $m_k$ 个最低频特征向量构成谱基 $\mathbf{\Phi}_k$；在线阶段把场分别投影到 Base 空间（谱系数）和经过 lift 算子 $\iota$ 投影到辅助欧式网格做 FFT；输出经过反投影与正交补约束后相加。关键点是 Base 直接相加、而 Fiber 与交换子修正都先被 $(\mathbf{I}-\Pi_{\mathrm{base}})$ 约束到 Base 的正交补，保证两支落在互补子空间互不干扰。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    OFF["离线一次性：Hodge Laplacian Lk 稀疏特征分解<br/>截断 mk 个最低频模 → 谱基 Φk"]
+    IN["输入：单纯复形 K 上的离散 k-form ω⁽ˡ⁾"]
+    OFF -.提供谱基 Φk.-> B1
+    IN --> B1
+    IN --> F1
+    IN --> C1
+
+    subgraph BASE["Base 分支：谱域非线性 + 硬钉谐和模"]
+        direction TB
+        B1["投到 Hodge 谱域 ck = Φkᵀ ∗k ω"] --> B2["门控 MLP 学谱域二次耦合"]
+        B2 --> B3["对角投影 PH 把谐和模覆盖回原值（保守恒）"]
+    end
+    subgraph FIBER["Fiber 分支：辅助欧式网格学高频残差"]
+        direction TB
+        F1["lift ι 升到辅助网格 Ω_aux"] --> F2["FNO 谱卷积 F⁻¹ R F"]
+        F2 --> F3["pullback R 反投回 Cᵏ(K)"]
+    end
+    C1["交换子修正 Cθ：交互特征 z → 轻量 MLP"]
+
+    F3 --> PROJ["正交补 I − Π_base 清零低频"]
+    C1 --> PROJ
+    B3 --> SUM["可加合并 → ω⁽ˡ⁺¹⁾"]
+    PROJ --> SUM
+    SUM -->|逐层迭代| OUT["输出：守恒律保真的高精度 k-form 场"]
+```
 
 ### 关键设计
 

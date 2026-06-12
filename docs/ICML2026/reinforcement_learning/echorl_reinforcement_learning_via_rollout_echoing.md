@@ -44,6 +44,20 @@ tags:
 
 EchoRL 是一个 plug-and-play 模块，挂在任意 RLVR 算法（GRPO、DAPO、LUFFY、UFT）之外。对每个 prompt $q$，标准流程仍然采 $G$ 个 rollout、算 group-relative advantage、做 PPO-style 更新；EchoRL 在此基础上插入两步：(1) **EchoClip Mining**——从 verified-success 子集 $V=\{o\mid r(o)=1\}$ 里按步级熵筛出一个最关键的前缀片段 $o_{echo}$；(2) **EchoRL Update**——把这个片段的负对数似然作为辅助监督 $\mathcal{J}_{EchoRL}$ 加到主 loss 上，整体目标变成 $\mathcal{J}(\theta)=\mathcal{J}_{RLVR}(\theta)+\lambda\mathcal{J}_{EchoRL}(\theta)$，$\lambda=0.001$ 调节量级。整个机制最妙的地方是：当 group 内全成功导致 $\hat{A}_i=0$、$\nabla\mathcal{J}_{RLVR}\to 0$ 时，$\nabla\mathcal{J}_{EchoRL}$ 仍然非零，训练不至于卡死。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Prompt q"] --> B["采样 G 个 rollout<br/>各自验证 reward"]
+    B --> C["GRPO 主路<br/>group-relative advantage + PPO 更新"]
+    B --> D["verified-success 子集 V (r=1)"]
+    D --> E["步级熵代理度量<br/>逐步算 token 熵均值 H̄(s_j)"]
+    E --> F["EchoClip Mining<br/>全池取最大熵步 s*，截前缀为 EchoClip"]
+    F --> G["EchoRL Update<br/>EchoClip 前缀 NLL 辅助损失 J_EchoRL"]
+    C --> H["总目标 J = J_RLVR + λ·J_EchoRL (λ=0.001)"]
+    G --> H
+    H --> I["策略更新<br/>advantage 归零时仍有非零梯度"]
+```
+
 ### 关键设计
 
 **1. 步级熵作为"可用学习信号"的代理度量：把"哪一步重要"量化成一个标量**

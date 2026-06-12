@@ -51,6 +51,22 @@ $$\mathcal{L}_{\text{total}} = (1-\alpha)\mathcal{L}_{\text{CE}} + \alpha\big(\l
 
 三个 KD 项各盯一个诊断粒度，缺一就掉点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ECG 图像"] --> T["Teacher VLM（冻结）<br/>dense 视觉 token / 隐藏态 H_t"]
+    A --> S["Student VLM（≤2B）<br/>compact 视觉 token / 隐藏态 H_s"]
+    T --> M["多头交叉注意力对齐 MHCA<br/>H_s 作 query 聚合 H_t → Ĥ_t（L_mhca）"]
+    S --> M
+    T --> O["最优传输视觉匹配 OT-VFM<br/>Sinkhorn 软运输保 12 导联拓扑（L_ot）"]
+    S --> O
+    M --> R["几何关系内部匹配<br/>对 Ĥ_t 与 H_s 各算距离势+角度势再对齐（L_rel）"]
+    S --> R
+    M --> L["总损失 L_total<br/>(1−α)L_CE + α(λ_m·L_mhca + λ_r·L_rel + λ_ot·L_ot)"]
+    O --> L
+    R --> L
+```
+
 ### 关键设计
 
 **1. 多头交叉注意力对齐（MHCA）：在长度不等时让 student 自己摘取 teacher 信息**

@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 gWorld 把"预测下一张 GUI 截图"这件难事换了个表征空间：让一个标准 VLM（基座 Qwen3-VL 8B / 32B）去生成下一状态的可渲染网页代码，再由浏览器确定性地渲染回像素。要让 VLM 学会这件事，作者先用一条数据合成管线把现成的 mobile agent 策略轨迹自动改造成"截图+动作→推理链+下一状态代码"的训练样本，在 26 万条这样的样本上做监督微调（SFT），最后用"浏览器渲染 + 三家前沿 VLM 联合判分"来评估。工程上整条链路就是"一个 VLM + 一个渲染器"，对比 VIMO 那种 OCR/扩散/多次调 GPT-4o 的 5 段式管线极简。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    REP["可渲染网页代码表征<br/>下一状态从像素改写成 HTML/CSS 代码"]
+    REP --> RELABEL["跨模态状态重标注<br/>π* 把策略轨迹每帧真值截图转写成代码"]
+    RELABEL --> LA["look-ahead 推理链合成<br/>教师偷看下一状态 S(t+1) 反写推理 R_t"]
+    LA --> SAMPLE["训练样本：(S_t 截图, A_t) → (R_t, 下一状态代码)"]
+    SAMPLE --> SFT["SFT 微调 VLM（Qwen3-VL 8B/32B）"]
+    SFT --> GEN["gWorld 推理：先写推理链 R_t 再生成代码"]
+    GEN --> RENDER["浏览器渲染回像素（下一状态截图）"]
+```
+
 ### 关键设计
 
 **1. 用可渲染网页代码替换像素作为下一状态表征：让 VLM 的语言先验绕开图像模型写不好字的弱点**

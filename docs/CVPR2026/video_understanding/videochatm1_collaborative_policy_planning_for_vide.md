@@ -44,6 +44,22 @@ VideoChat-M1 由两大核心组成：**Collaborative Policy Planning（CPP）** 
 
 推理流程：用户问题 $\mathcal{Q}$ + 视频 $\mathcal{V}$ → 各 agent 独立生成工具调用计划 → 逐步执行工具并通过共享内存交换中间结果 → 各 agent 根据对等信息决定是否更新后续计划 → 迭代多轮后各 agent 汇总答案 → 多数投票（多选题）或指定 agent 汇总（开放题）得出最终答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 Q + 视频 V"] --> GEN
+    subgraph CPP["协作策略规划 CPP（推理时迭代循环）"]
+        direction TB
+        GEN["策略生成<br/>4 个异构 agent 各自给出<br/>工具调用序列 P_i"] --> EXE["策略执行<br/>逐步调工具，中间线索<br/>写入共享内存 M"]
+        EXE --> COM["策略通信<br/>读队友线索 → 改写<br/>后续计划 P′_i"]
+        COM -->|未收敛，下一轮| GEN
+    end
+    COM -->|收敛| AGG["汇总<br/>多选题多数投票 / 开放题指定 agent"]
+    AGG --> OUT["最终答案"]
+    TRAIN["MARL 联合训练<br/>Policy SFT 冷启动 → GRPO 联合优化"] -. 训练出协作策略 .-> GEN
+    DROP["Agent Dropout<br/>每步随机采样 DAG 通信拓扑"] -. 正则化 .-> TRAIN
+```
+
 ### 关键设计
 
 **1. Collaborative Policy Planning（CPP）：把"一次性定好工具顺序"换成可迭代的生成-执行-通信循环**

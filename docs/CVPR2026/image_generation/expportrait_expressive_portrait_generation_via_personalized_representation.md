@@ -43,6 +43,19 @@ tags:
 
 人像视频生成卡在精细表情控制和身份一致性的矛盾上，而矛盾的根子是中间控制信号信息密度不够。ExpPortrait 的思路是与其改进生成器、不如先把中间表征做强：它在 SMPL-X 粗模型上叠加个性化的高细节头部表征，再用一个身份自适应模块把驱动表情迁移到目标身份，最后以个性化法线图为条件训练 DiT 视频生成器。三步分别解决"表征不够细""跨身份表情不兼容""如何渲染成视频"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SMPLX["SMPL-X 粗网格 V"] --> NEUT["目标中性网格<br/>V_neutral = V^s + 静态身份偏移 Δg"]
+    DRV["驱动信号<br/>表情系数 ψ + 下颌姿态 ω"] --> TRANS["身份自适应表情迁移<br/>条件 MLP 预测动态偏移 Δf"]
+    NEUT --> TRANS
+    TRANS --> REP["个性化头部表征<br/>V^s + Δg + 动态表情偏移 Δf"]
+    NEUT --> REP
+    REP --> NORM["渲染个性化法线图<br/>参考帧 + 驱动序列"]
+    NORM --> DIT["DiT 视频生成器<br/>法线图为条件微调预训练模型"]
+    DIT --> OUT["人像视频"]
+```
+
 ### 关键设计
 
 **1. 个性化头部表征：在 SMPL-X 上叠静态身份偏移 + 动态表情偏移**

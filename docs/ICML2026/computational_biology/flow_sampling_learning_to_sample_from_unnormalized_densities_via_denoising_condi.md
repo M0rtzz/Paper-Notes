@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 Flow Sampling 要解决的是没有任何真实样本、只知道未归一化密度 $q(x)=\exp(r(x))/Z$ 及其梯度 $\nabla r$ 时如何训练一个高效扩散采样器。它把整件事转成一个自举式的回归任务：先用当前模型从噪声出发跑出一批近似 $q$ 的样本并缓存它们的能量梯度，再以这些缓存样本作监督、让模型回归一个闭式的去噪 drift，两个阶段交替迭代直到模型端点分布逼近目标 $q$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["未归一化密度 q(x)=exp(r)/Z<br/>已知 r 与 ∇r，无真实样本"] --> B
+    B["探索阶段：detached 模型从 X₀~p₀ 出发<br/>用 Euler-Maruyama 模拟端点 X₁，评估 ∇r(X₁)"] --> C["Replay Buffer 缓存 (X₁, ∇r(X₁))<br/>在时间轴与源样本上复用同一次评估"]
+    C --> D["优化阶段：采 X₀、t，沿 interpolant 算 Xₜ"]
+    D --> E["去噪 supervising drift（闭式目标）<br/>u=α̇ₜX₁+σ̇ₜX₀+(gₜ²/2αₜ)∇r(X₁)"]
+    E --> F["MSE 回归 u^θ(Xₜ)，更新参数 θ"]
+    F -->|两阶段交替：固定点迭代训练| B
+    F --> G["收敛：端点分布 p₁^θ → 目标 q"]
+    H["黎曼流形扩展：欧氏 interpolant 换 geodesic<br/>+ rank-1 闭式 Jacobian"] -.推广到球面/双曲.-> D
+```
+
 ### 关键设计
 
 **1. 噪声条件下的去噪 supervising drift：让 data-free 也能套用 FM 的回归框架**

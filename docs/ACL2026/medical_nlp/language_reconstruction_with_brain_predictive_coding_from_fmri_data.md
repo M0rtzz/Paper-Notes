@@ -45,6 +45,31 @@ tags:
 
 PredFT 想把神经科学里的"预测编码"——大脑在听语音时会自然预测接下来要说什么——这条信息引进 fMRI-to-Text 解码。它是端到端模型，由两条网络组成：主网络 $\mathcal{M}_\theta$（编码器-解码器）做标准的 fMRI 转文本，把 fMRI 序列编成时空特征再用 Transformer 解码器吐出文字；侧网络 $\mathcal{M}_\phi$（编码器-解码器）则从预测相关脑区里抽取"前瞻性"表征，其编码器输出 $H_{\phi_\text{Enc}}^M$ 被注入主网络辅助解码。训练时两网共同优化，推理时侧网络解码器被丢掉，只留它的编码器持续供给预测表征。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["fMRI 信号序列"] --> ENC
+    IN --> ROI["预测脑区 ROIs<br/>STS / IFG / SMG / Angular Gyrus"]
+
+    subgraph MAIN["主网络编码器"]
+        direction TB
+        ENC["3D-CNN 空间降维"] --> FIR1["FIR 补偿 BOLD 延迟 + 时间位置编码"]
+        FIR1 --> TENC["Transformer 编码器"]
+    end
+
+    subgraph SIDE["侧网络"]
+        direction TB
+        ROI --> SENC["降维 + FIR + 位置编码<br/>→ Transformer 编码器"]
+        SENC --> HPRED["预测表征"]
+        SENC -.训练时脚手架，推理丢弃.-> SDEC["侧解码器<br/>未来词监督"]
+    end
+
+    TENC --> DEC["主网络 Transformer 解码器"]
+    DEC --> PCA["预测编码注意力 PC-Attention<br/>因果掩码：当前词只看未来预测表征"]
+    HPRED --> PCA
+    PCA --> OUT["重建文本"]
+```
+
 ### 关键设计
 
 **1. 主网络编码器：从带延迟的原始 fMRI 信号里抠出对齐好的时空特征**

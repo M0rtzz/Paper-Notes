@@ -47,23 +47,11 @@ tags:
 
 ### 关键设计
 
-1. **AUC 型下游准则 + Fisher 一致性证明**:
+**1. AUC 型下游准则 + Fisher 一致性证明**：既往 surrogate-gap 类结果只能比较"对比风险"与"线性探针后的监督风险", 无法保证 sample size 趋于无穷时解会收敛到 oracle——评估目标 (线性分类误差) 和训练目标 (pairwise 对比) 根本是两套几何。本文换一个天然契合的下游准则: 用 $\mathcal E(s)=\Pr[s(x,y)>s(x,y')]+\tfrac12\Pr[s(x,y)=s(x,y')]$ 这一 AUC 型 pairwise ranking 量度, 它衡量的正是"正对被 ranked above 负对"的概率, 与对比损失的成对结构同源。证明分两步咬合: 先写出 $L(s)$ 在所有可测函数族上的逐点最优解 $s^*(x,y)=\tau\log\frac{p_x^+(y)}{p_x^-(y)}+g(x)$ (Lemma 3.2); 再注意 $\log$ 单调, 于是 $s^*(x,y)>s^*(x,y')$ 当且仅当似然比 $p^+(y)/p^-(y)>p^+(y')/p^-(y')$, 这恰是 AUC 的最优排序条件 (Lemma 3.3)。两者拼起来即得 $L(s_n)\to L^*\Rightarrow\mathcal E(s_n)\to\mathcal E^*$ 的 Fisher 一致性 (Thm 3.1)。把"排序"立为下游任务, 一致性的闭环才真正合上。
 
-    - 功能: 用 $\mathcal E(s)$ 这一 pairwise ranking 准则代替 "线性分类误差", 使评估目标本身就和对比损失的 pairwise 几何一致。
-    - 核心思路: 写出 $L(s)$ 在所有可测函数族上的逐点解 $s^*=\tau\log(p^+/p^-)+g(x)$; 由 $\log$ 单调可知, $s^*(x,y)>s^*(x,y')$ 当且仅当 $p^+(y)/p^-(y)>p^+(y')/p^-(y')$, 这恰是 AUC 最优排序条件; 因此 $L(s_n)\to L^*\Rightarrow\mathcal E(s_n)\to\mathcal E^*$, 完成统计一致性。
-    - 设计动机: 既往 surrogate-gap 类结果只能比较 "对比风险"与 "线性探针后的监督风险", 无法保证 sample size 趋于无穷时收敛到 oracle; 用 AUC 把 "排序"作为天然 downstream, 才能闭环。
+**2. OCE 重写 + 算法稳定性给出 $O(1/m)$ 内层界**：泛化误差里对负样本数 $m$ 最敏感的是内层那一项 $\tau\log\tfrac1m\sum_j\exp(\Delta_w/\tau)$。既往直接用 Hoeffding / 均匀收敛处理这个 log-平均-exp, 因为要对参数取 sup, $m$ 必然被推到分子上, 才出现 $O(m/\sqrt n)$ 这种"负样本越多越差"的反常结论。本文的关键招是把它改写成 optimized certainty equivalent (OCE) 形式——引入辅助标量 $\mu\in[-2B,2B]$, 把内层平均变成一个**强凸最小化** (Lemma 4.2): $\widehat L_S(s_w)=-\tau+\tfrac1n\sum_i\min_{|\mu_i|\le 2B}\bigl[\tfrac{\tau}{m}\sum_j\exp((\Delta-\mu_i)/\tau)+\mu_i\bigr]$。重写后内层误差变成 $f(w,x,y)-\hat f(w,x,y)$ 的差, 其中 $\hat f$ 正是用 $m$ 个负样本解的 ERM、$f$ 是其总体版本; 由强凸性, ERM 解相对最优解的算法稳定性为 $O(1/m)$ (Bousquet-Elisseeff), 于是监督 CRL 的内层界 $\sup_w|L_S(s_w)-\mathbb E\widehat L_S(s_w)|=O(1/m)$ (Lemma 4.3)。自监督场景因 $m$ 个负样本被所有 anchor 共享, 不存在按 anchor 解耦的 ERM 结构, 只能退回均匀收敛, 内层界放宽到 $O(1/\sqrt m)$。正是 OCE 把"求和取 log"变成可分解的强凸问题, 才让分析享受到 $1/m$ 的快速率, 把 $m$ 从分子搬到了分母。
 
-2. **OCE 重写 + 算法稳定性给出 $O(1/m)$ 内层界**:
-
-    - 功能: 把内层 $\tau\log\tfrac1m\sum_j\exp(\Delta_w/\tau)$ 这一对负样本数极敏感的项, 改写成关于辅助 scalar $\mu\in[-2B,2B]$ 的 **强凸最小化** (Lemma 4.2): $\widehat L_S(s_w)=-\tau+\tfrac1n\sum_i\min_{|\mu_i|\le 2B}\bigl[\tfrac{\tau}{m}\sum_j\exp((\Delta-\mu_i)/\tau)+\mu_i\bigr]$。
-    - 核心思路: 在重写后, 内层误差变成 $f(w,x,y)-\hat f(w,x,y)$ 的形式, 其中 $\hat f$ 是用 $m$ 个负样本的 ERM, $f$ 是其总体版本; 由强凸性, $\hat f$ 的 ERM 解相对最优解的稳定性为 $O(1/m)$ (Bousquet-Elisseeff), 故监督 CRL 内层界为 $\sup_w|L_S(s_w)-\mathbb E\widehat L_S(s_w)|=O(1/m)$ (Lemma 4.3)。自监督场景因负样本被所有 anchor 共享, 不存在 ERM 解耦结构, 只能用均匀收敛得到 $O(1/\sqrt m)$。
-    - 设计动机: 既往用 Hoeffding / 均匀收敛直接处理 $\log$-平均-$\exp$, 必然把 $m$ 推到分子 (因为 sup 操作); OCE 把求和变成可分解的强凸问题后, 才能享受 $1/m$ 的快速率。
-
-3. **Inner / Outer 分解 + Rademacher 控制外层**:
-
-    - 功能: 把总体泛化 gap 写成 $L(s_w)-\widehat L(s_w)\le\underbrace{L(s_w)-\mathbb E\widehat L(s_w)}_{\text{inner}}+\underbrace{\mathbb E\widehat L(s_w)-\widehat L(s_w)}_{\text{outer}}$, 把 "负样本采样"和 "anchor 采样"两个独立扰动解耦。
-    - 核心思路: 引入聚合函数 $k_w(x,y,y'_1,\dots,y'_m)=\tau\log\tfrac1m\sum_j\exp(\Delta_w/\tau)$, 用 deep network 的 Rademacher 复杂度 $\mathcal R_S(\mathcal K)$ 得到外层 $O(\sqrt{\log(1/\delta)/n})$, 把外层界完全独立于 $m$。组合两边得到主定理 Thm 4.5: $\sup_w|L_S(s_w)-\widehat L_S(s_w)|=O(1/m+\sqrt{\log(1/\delta)/n})$。
-    - 设计动机: 该分解暴露了 $m$ 与 $n$ 的 explicit trade-off: 在总样本预算 $N=n\cdot m$ 固定时, 增大 $m$ 让 inner 项指数收缩、增大 $n$ 让 outer 项以 $1/\sqrt n$ 收缩, 解释了 CLIP 把 batch 内所有非匹配 caption 全用作负样本的工程合理性。
+**3. Inner / Outer 分解 + Rademacher 控制外层**：要拿到上面的快率, 先得把泛化 gap 干净地拆成两个互不干扰的部分。本文沿对比损失的复合结构写出 $L(s_w)-\widehat L(s_w)\le\underbrace{L(s_w)-\mathbb E\widehat L(s_w)}_{\text{inner}}+\underbrace{\mathbb E\widehat L(s_w)-\widehat L(s_w)}_{\text{outer}}$, 把"负样本采样 (inner)"和"anchor 采样 (outer)"两个独立扰动彻底解耦。inner 项交给设计 2 处理; outer 项则引入聚合函数 $k_w(x,y,y'_1,\dots,y'_m)=\tau\log\tfrac1m\sum_j\exp(\Delta_w/\tau)$, 用深度网络的 Rademacher 复杂度 $\mathcal R_S(\mathcal K)$ 得到 $O(\sqrt{\log(1/\delta)/n})$——这一项完全不含 $m$。两边合成即主定理 Thm 4.5: $\sup_w|L_S(s_w)-\widehat L_S(s_w)|=O(1/m+\sqrt{\log(1/\delta)/n})$。这个加法形式直接暴露了 $m$ 与 $n$ 的 explicit trade-off: 在总样本预算 $N=n\cdot m$ 固定时, 增大 $m$ 收缩 inner 项、增大 $n$ 以 $1/\sqrt n$ 收缩 outer 项, 两者不可互相替代, 从理论上解释了 CLIP 为何要把 batch 内所有非匹配 caption 都拿来当负样本。
 
 ### 损失函数 / 训练策略
 本文不引入新损失, 而是分析两种已存在的对比目标: 监督版 $L_S(s_w)$ (Eq. 5, 每个 anchor 独立采 $m$ 负样本) 与自监督版 $L_{SS}(s_w)$ (Eq. 8 / GCL, $m$ 个负样本被所有 anchor 共享, 即 CLIP / SimCLR 的实际实现)。两种损失共享 InfoNCE 的 log-sum-exp 形式, 仅在采样耦合方式上不同, 这一差异恰好导致 inner 界从 $O(1/\sqrt m)$ (SSCRL) 收紧到 $O(1/m)$ (SCRL)。

@@ -43,7 +43,7 @@ tags:
 ### 整体框架
 **输入**：universe size $m$、目标 top-$k$、scoring family $\mathcal{F}\in\{\mathcal{F}_{\rm linear},\mathcal{F}_{\cos},\mathcal{F}_{\ell_2}\}$。
 **输出**：使得"任意 size $\le k$ 的子集都可被某 query 精确分离"成立的最小维度 $d^*$。
-**主干**：先用 cyclic polytope 给出 $2k$ 上界 → 由 VC 维给出 $k-1$ 下界 → 通过几何 reduction 将上下界传到欧氏 / 余弦 → 引入归一化和 margin $\epsilon$，给出 RMED 的可行天花板 $\epsilon_\star(m,k)$ 与 $O(k^2\log m)$ 维的 Gaussian centroid 构造 → 在合成 top-2 与 LIMIT 数据集上验证。
+**主干**：先用循环多面体（cyclic polytope）给出 $2k$ 上界 → 由 VC 维给出 $k-1$ 下界 → 通过几何 reduction 将上下界传到欧氏 / 余弦 → 引入归一化和 margin $\epsilon$，给出 RMED 的可行天花板 $\epsilon_\star(m,k)$ 与 $O(k^2\log m)$ 维的 Gaussian centroid 构造 → 在合成 top-2 与 LIMIT 数据集上验证。
 
 ### 关键设计
 

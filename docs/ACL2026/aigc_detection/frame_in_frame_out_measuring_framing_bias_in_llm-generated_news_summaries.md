@@ -45,6 +45,23 @@ FIFO 的核心不是训练一个新的摘要模型，而是提出一条 framing-
 
 整个流程分为四步。第一步，在 XSum 上汇总 27 个系统的 15,499 条摘要，这些系统覆盖 BART、T5、FLAN-T5、GPT、Claude、LLaMA 等不同架构和微调设置。第二步，用 GPT-4.1-nano、GPT-4o、GPT-3.5-Turbo 组成 jury，每个模型独立判断 Framed / Not Framed，并用多数投票形成银标。第三步，随机抽取 320 条摘要由 framing 分析专家人工标注，得到金标并计算 Cohen's $\kappa=0.616$。第四步，根据 jury 标签与专家标签的对应关系，把每条银标转换为概率权重，再聚合为专家校准 framing rate。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["XSum 新闻 + 27 个系统的<br/>15,499 条单句摘要"] --> B["二分类 framing 判据<br/>选择强调/遗漏/评价/归因 → Framed / Not Framed"]
+    subgraph CAL["LLM jury + 专家金标校准"]
+        direction TB
+        C["LLM jury（GPT-4.1-nano / GPT-4o / GPT-3.5）<br/>独立判断 + 多数投票 → 银标"]
+        D["专家标 320 条 → 金标<br/>Cohen's κ=0.616"]
+        C --> E["对照 jury↔专家算条件可靠率<br/>Framed 0.778 / Not Framed 0.163"]
+        D --> E
+    end
+    B --> C
+    B --> D
+    E --> F["专家校准 framing rate<br/>FR(S) = 均值 w_s"]
+    F --> G["模型 / 主题 / 微调级<br/>framing rate 对比"]
+```
+
 ### 关键设计
 
 **1. 二分类 framing operationalization：把复杂的 framing 理论压成一个可评测的摘要属性——这条摘要有没有解释性框架**

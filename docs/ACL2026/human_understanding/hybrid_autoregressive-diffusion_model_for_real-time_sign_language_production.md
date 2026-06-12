@@ -46,6 +46,25 @@ HybridSign 的方法可以概括为“逐帧因果生成 + 局部扩散细化 + 
 
 在每个时间步内部，三个 expert 可以并行运行；时间步之间保留因果依赖。作者采用 self-forcing 策略：训练和推理时都把模型自己的上一帧预测作为下一步输入，而不是训练时喂 ground truth，从而减轻训练/推理分布不一致。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自然语言输入"] --> POSE
+    subgraph HYB["混合自回归-扩散生成框架（因果逐帧 + flow-based 扩散细化）"]
+        direction TB
+        subgraph POSE["三专家多尺度姿态表示"]
+            direction TB
+            B["关键点 (x,y,c) → MLP + 时间位置编码"] --> C["按 face / body / hands 分三组各送专门 expert"]
+            C --> D["joint average pooling + attention 融合成当前帧表示"]
+        end
+        POSE --> E["flow-based diffusion 去噪器<br/>self-attention 加因果 mask，逐帧往前推"]
+        E --> F["Confidence-Aware Causal Attention<br/>logits 加置信度偏置 β·c̄(s)"]
+        F --> G["当前帧 2D 姿态"]
+        G -->|拆回三 articulator 组，作下一步自回归条件| POSE
+    end
+    HYB --> H["60 帧手语姿态序列输出"]
+```
+
 ### 关键设计
 
 **1. 混合自回归-扩散生成框架：让系统先快速吐出首帧，再逐帧细化质量**

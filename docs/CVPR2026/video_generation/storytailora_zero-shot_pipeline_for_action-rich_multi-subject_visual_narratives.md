@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 StoryTailor 要在一张 24GB 显卡上、不训练任何参数，就把一段长叙事 prompt 渲染成多主体、动作丰富、跨帧背景连续的图像序列。它直接复用现成的 SDXL + MS-Diffusion 作 backbone，输入是叙事 prompt、每个主体的参考图像和一组 grounding box，再在推理过程里挂三个即插即用模块——分别管空间、语义、时间这三件原本互相打架的事：GCA 在 IP 分支的交叉注意力里压住主体的空间位置，AB-SVR 在文本嵌入空间里放大当前帧该做的动作、压掉别帧串过来的动作，SFC 则负责把背景上下文跨帧传下去。三者作用在 backbone 的不同环节、互不重叠，所以能叠加而不互相破坏。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["叙事 prompt + 参考图 + grounding box"] --> BB["SDXL + MS-Diffusion backbone<br/>推理时挂三个即插即用模块"]
+    BB --> GCA["高斯中心注意力 GCA（管空间）<br/>IP 分支交叉注意力加高斯 logit bias，护身份核心、淡出背景"]
+    GCA --> SVR["动作增强奇异值重加权 AB-SVR（管语义）<br/>SVD 子空间：当前帧动作放大、别帧动作切口归零"]
+    SVR --> SFC["选择性遗忘缓存 SFC（管时间）<br/>top-k 取背景 token + 负偏置遗忘 + 背景区上下文混合"]
+    SFC --> OUT["多主体、动作丰富、背景连续的图像序列"]
+    SFC -.->|跨帧传背景上下文，主体动作不冻结| BB
+```
+
 ### 关键设计
 
 **1. 高斯中心注意力（GCA）：让主体各占一块、又不被 box 框死**

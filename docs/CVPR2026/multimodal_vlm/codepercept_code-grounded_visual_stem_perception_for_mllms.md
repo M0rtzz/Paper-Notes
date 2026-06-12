@@ -46,6 +46,28 @@ tags:
 
 CodePercept 想解决的是一个被整个领域忽略的问题：MLLM 在 STEM 上做不好，瓶颈不在推理而在感知——它根本没"看清"图里的辅助线、立体结构和精确坐标。作者的核心赌注是用**可执行 Python 代码**当感知的锚点：只有真正读懂一张图，才写得出能把它重画出来的代码。整条 pipeline 因此分三步转——先用一个图像-代码对构建引擎把现有 STEM 图像批量配上 ground-truth 重建代码（ICC-1M 数据集），再把这些配对喂成两种训练任务（看图写字幕、看图写代码），最后用 SFT 打底、GRPO 强化学习收尾，全部基于 Qwen3-VL 系列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["公开 STEM 种子图像"] --> ENG
+    subgraph ENG["图像-代码对构建引擎（三条互补管线 + 质量闸）"]
+        direction TB
+        B1["Image Reproduction<br/>看图写描述 → 生成重建代码"]
+        B2["Image Diversity<br/>抽科学原理 → 重实例化 K 个变体"]
+        B3["Solid Geometry<br/>参数化模板批量合成立体几何"]
+        B1 --> Q["统一质量闸<br/>图像 Q_I / 代码 Q_C / 一致性 Q_IC"]
+        B2 --> Q
+        B3 --> Q
+    end
+    ENG --> ICC["ICC-1M：100 万级 图像-字幕-代码 三元组"]
+    ICC --> T1["代码锚定字幕生成<br/>草稿 → 执行追踪取事实 → 外科式纠错"]
+    ICC --> T2["STEM 图像转代码翻译<br/>解释性代码草稿 → 用 GT 代码纠错"]
+    T1 --> S1["Stage 1 SFT<br/>字幕 + 代码联合训练"]
+    T2 --> S1
+    S1 --> S2["Stage 2 RL（GRPO）<br/>仅代码任务，执行 + 语义 + 视觉奖励"]
+    S2 --> OUT["CodePercept MLLM<br/>STEM 感知 + 下游推理提升"]
+```
+
 ### 关键设计
 
 **1. 图像-代码对构建引擎：用三条互补管线攒出 100 万级 image-code 配对**

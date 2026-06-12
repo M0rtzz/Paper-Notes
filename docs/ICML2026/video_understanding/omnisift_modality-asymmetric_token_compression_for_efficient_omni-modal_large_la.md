@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 输入：视频 $\mathcal{V}$ 和同步音频 $\mathcal{A}$，经 Qwen2.5-Omni 的编码器-投影器映射成 token 序列 $\mathbf{Z}_v \in \mathbb{R}^{N_v \times D}$ 和 $\mathbf{Z}_a \in \mathbb{R}^{N_a \times D}$。为保持时间对齐，按 2 秒一个 chunk 把音视频 token 分块成 $\mathcal{C}_t = [\mathbf{Z}_v^{(t)}; \mathbf{Z}_a^{(t)}]$，每个 chunk 含 2 帧视觉 + 对应音频。OmniSIFT 在 chunk 级别串行执行两阶段：（1）STVP 剪掉每个 chunk 的视觉冗余得到压缩视觉序列 $\hat{\mathbf{Z}}_v^{(t)}$；（2）VGAS 用 $\hat{\mathbf{Z}}_v^{(t)}$ 作为条件从 $\mathbf{Z}_a^{(t)}$ 中选音频 token。整个框架端到端可导（用 straight-through estimator 处理 top-k 选择），训练时优化 token 选择能尽量保留下游任务性能。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频 + 同步音频<br/>Qwen2.5-Omni 编码器投影 → 视觉 / 音频 token"] --> B["按 2 秒切 chunk<br/>每块 2 帧视觉 + 对应音频"]
+    subgraph STVP["STVP：帧内空间 + 帧间时间双轴显著性剪枝"]
+        direction TB
+        C1["第 1 帧 · 空间显著性<br/>token 与帧均值的 cosine 距离"]
+        C2["第 2 帧 · 时间显著性<br/>与第 1 帧同位 token 的 cosine 距离"]
+        C1 --> C3["各取 top-α_v 拼成视觉锚点"]
+        C2 --> C3
+    end
+    B --> STVP
+    STVP --> D["VGAS：视觉锚点引导的音频选择<br/>音频作 query、锚点作 key/value 轻量交叉注意力 → top-k"]
+    B -->|音频 token| D
+    D --> E["拼接压缩后 token → LLM 主干"]
+    E -.->|STE 直通梯度，端到端训 VGAS + LLM 解码器| D
+```
+
 ### 关键设计
 
 **1. STVP：帧内空间 + 帧间时间双轴显著性剪枝**
@@ -51,14 +69,14 @@ tags:
 
 **2. VGAS：视觉锚点引导的音频 token 选择**
 
-这是非对称设计的核心。OmniSIFT 把 STVP 剪枝后保留的视觉 token $\hat{\mathbf{Z}}_v^{(t)}$ 当成"视觉锚点池"，对每个音频 token 算它与所有锚点的相关性分数，按 $\alpha_a$ 比例选 top-k——也就是说音频显著性完全条件于视觉场景，而不靠音频自身的内部信号（OmniZip 用的是音频注意力）。这么做的依据是感知科学（Koppen 2008, Zhao 2018）：人处理音视频本就不对称，视频内部冗余可估，但音频显著性依赖视觉锚点（说话人可不可见、事件有没有视觉支撑），所以对 Omni-LLM 的有效压缩应当是"视觉引导"而非对称对待两个模态。
+这是非对称设计的核心。OmniSIFT 把 STVP 剪枝后保留的视觉 token $\hat{\mathbf{Z}}_v^{(t)}$ 当成"视觉锚点池"，用一个**轻量交叉注意力**层（8 头、隐藏维 512，外接一个 MLP 打分头）算每个音频 token 的显著性：音频 token 作 query $\mathbf{Q}_a$，剪枝后的视觉锚点作 key $\mathbf{K}_v$ 和 value $\mathbf{V}_v$，注意力输出经打分头得到 $s_{a,j}^{(t)}$，再按 $\alpha_a$ 比例选 top-k。也就是说音频显著性完全条件于视觉场景，而不靠音频自身的内部信号（OmniZip 用的是音频注意力）。这么做的依据是感知科学（Koppen 2008, Zhao 2018）：人处理音视频本就不对称，视频内部冗余可估，但音频显著性依赖视觉锚点（说话人可不可见、事件有没有视觉支撑），所以对 Omni-LLM 的有效压缩应当是"视觉引导"而非对称对待两个模态。
 
-**3. STE 端到端微调与轻量参数预算：让 top-k 选择可导，不重训主干就端到端优化压缩管线**
+**3. STE 端到端微调与轻量参数预算：让 top-k 选择可导，用极小参数把压缩管线训进 LLM**
 
-top-k 在反向是离散不可导的，OmniSIFT 用 straight-through estimator——前向走硬选择、反向拿 soft 分数做梯度直通，于是整个 STVP + VGAS 能端到端训。整个模块只引入 4.85M 额外参数（相对 Qwen2.5-Omni-7B），训练时冻结主干、只训压缩模块。相比 EchoingPixels 加 4 个 LLM 解码层做全局上下文化，这 4.85M 是真正的"轻量插件"、不会拉长推理路径；又因为不算注意力分数，推理延迟甚至比 training-free 的 OmniZip 还低。
+top-k 在反向是离散不可导的，OmniSIFT 用 straight-through estimator（STE）——前向给每个音频 token 生成 0/1 硬掩码 $m_j$（显著性进 top-k 取 1，否则取 0），只把选中的 token 喂进 LLM；反向用恒等代理梯度 $\partial m_j/\partial s_{a,j}^{(t)}\approx 1$ 让梯度直接流回显著性分数，于是整条 STVP + VGAS 管线能端到端训。这里要分清参数账：STVP 全程只算 cosine 距离、**没有可学参数**；4.85M 额外参数全在 VGAS 那个交叉注意力 + 打分头上（不到 7B 主干的 0.1%）。训练时**微调 LLM 解码器 + VGAS 模块**（学习率 $1\times10^{-5}$、批大小 128），而非冻结主干——为公平对比，基线也都接在同样微调过的 Qwen2.5-Omni 主干上。相比 EchoingPixels 加 4 个 LLM 解码层做全局上下文化，这 4.85M 是真正的"轻量插件"、不会拉长推理路径；又因为剪视频时不算注意力分数，端到端延迟和 training-free 的 OmniZip / DyCoke 持平甚至更低。
 
 ### 损失函数 / 训练策略
-保留下游任务损失（标准 next-token prediction），冻结 Qwen2.5-Omni 主干，只训 OmniSIFT 模块的可学参数。压缩率 $\rho_v, \rho_a$ 是超参，论文主要测 35% 和 25% 保留比例两档。
+用标准 next-token prediction 的下游任务损失，借 STE 把不可导的 top-k 选择接进反向传播，**微调 LLM 解码器 + VGAS 模块**（STVP 无可学参数），学习率 $1\times10^{-5}$、批大小 128。压缩率 $\rho_v, \rho_a$ 是超参，论文主要测 35% 和 25% 保留比例两档。
 
 ## 实验关键数据
 
@@ -104,7 +122,7 @@ Qwen2.5-Omni-7B 在 35% 保留比例下，OmniSIFT 的 WorldSense (50.0)、OmniV
 ## 局限与展望
 - **2 秒固定 chunk 粒度**：硬绑定 Qwen2.5-Omni 的对齐粒度，对其他 Omni-LLM（不同 chunk size）需要重新调参，可移植性有限。
 - **每个 chunk 仅 2 帧的假设**：长视频快速运动场景下，2 帧不足以捕获完整动态；论文没讨论可变帧率或自适应 chunk 切分。
-- **VGAS 的具体跨模态相关性计算**：论文摘要描述比较抽象，需要看代码才能完全确认是 cosine 相似度还是更复杂的注意力机制，可解释性有提升空间。
+- **query-agnostic 的固定 token 预算**：VGAS 给定的保留比例与下游问题无关（query-agnostic），同一段视频不论问什么都剪成同一套 token；论文也承认任务相关的 query-guided 自适应剪枝（按问题保留关键证据）是更优但尚未探索的方向。
 - **音频引导视觉的反向场景**：在"听觉为主，视觉为辅"的场景（如只听音乐看 album cover），单向视觉引导是否依然最优值得研究。
 - **训练数据和泛化**：论文没明说在哪些数据上训 OmniSIFT 模块，跨域泛化（新任务、新数据集）的稳定性还需更多实验。
 

@@ -46,6 +46,21 @@ EARL 用"粗解析-细响应"两阶段 MLLM 框架把第一视角交互理解任
 - **Stage 1 (coarse-grained interpretation)**：固定 prompt $T_a$ = "Please analyze the interactions of hands and objects in detail"，由 VLM decoder $\mathcal{D}_{vlm}$ 输出整体描述 $T_{ana}$，**关键副产品**是最后一层 hidden 当作 global descriptor $\mathbf{F}_{ana}$。这个阶段用 cross-entropy loss 普通监督训练。
 - **Stage 2 (fine-grained response)**：另一个 VLM decoder $\mathcal{D}_{vlm}^{\prime}$（Qwen2.5VL-7B）在 query 上给出文本答案 $T_{ans}$ 和 bounding boxes $\mathcal{B}$；boxes 喂给冻结的 SAM2 得到最终掩膜 $\mathcal{M}$。两阶段之间通过 AFS 把 $\mathbf{F}_{ana}$ 注入到主特征。这个阶段用 GRPO + 三路 reward 训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：第一视角图 I + 用户查询 T_q"]
+    A --> B["Stage 1 粗解析：固定 prompt 驱动 VLM<br/>输出整图交互描述 T_ana"]
+    B -->|"抽 decoder 最后一层 hidden"| C["语义先验 F_ana<br/>（粗到细两阶段的显式传递）"]
+    A --> D["AFS 特征合成器<br/>自注意力先 select、残差再 fuse"]
+    C --> D
+    D --> E["统一表示 F_R 驱动 Stage 2 VLM<br/>输出文本答案 T_ans + bounding boxes B"]
+    E --> F["冻结 SAM2 由 boxes 生成掩膜 M"]
+    E -.->|训练信号| G["GRPO + 三路奖励<br/>格式 R_f / 答案 R_a / grounding R_g"]
+    F -.-> G
+    G -.->|只更新 Stage 2 与 AFS| E
+```
+
 ### 关键设计
 
 **1. Coarse-to-fine 两阶段 + 语义先验显式传递：让第二阶段"开局就已经看懂这张图"**

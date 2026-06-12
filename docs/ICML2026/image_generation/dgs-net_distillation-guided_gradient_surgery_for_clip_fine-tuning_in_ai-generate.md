@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 DGS-Net 要解决的是"CLIP 微调到 AIGI 检测时，拿到真假信号的同时把可迁移先验毁掉"这个两难，它的做法是把"保留有益先验、抑制无关语义"这件事从特征空间挪到**梯度空间**去做手术。训练时同时跑三条冻结/可训练的支路：可训练的学生（CLIP image encoder + LoRA）、冻结的 CLIP 文本编码器、冻结的图像教师（fine-tune 前的 CLIP 副本）。三条支路各自算损失、各自在特征层取梯度，然后用文本梯度的"有害方向"把学生梯度里的语义干扰投影掉，再用图像教师梯度的"有益方向"把预训练好处补回来，最后反传只更新 LoRA 参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像"]
+    IMG --> STU["可训练学生<br/>CLIP image encoder + LoRA → 任务梯度 g_task"]
+    IMG --> TXT["冻结文本编码器<br/>BLIP caption → 文本梯度 g_text"]
+    IMG --> TEA["冻结图像教师<br/>fine-tune 前 CLIP → 图像梯度 g_img"]
+    STU --> DEC["1. 梯度正负分解<br/>逐坐标拆有害正分量 / 有益负分量"]
+    TXT --> DEC
+    TEA --> DEC
+    DEC --> OS["2. Orthogonal Suppression<br/>g_task 投影到 g_text 正分量的正交补"]
+    OS --> PA["3. Prior Alignment<br/>蒸回图像教师有益方向 g_img 负分量"]
+    PA --> UPD["反传只更新 LoRA 参数"]
+```
+
 ### 关键设计
 
 **1. 梯度正负分解：给"知识价值"一把坐标级刻度尺**

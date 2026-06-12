@@ -52,6 +52,15 @@ $$
 
 其中噪声 $\{W_n\}$ 是空间 $\mathcal{W}$ (允许非紧、不可数) 上的 Markov 链，步长满足 $\lim_n \beta(n)/\alpha(n)=0$。论文的证明 roadmap 是：① 在快尺度证明 Lemma 3.1 (running-max 桥接界)，② 在慢尺度证明 Theorem 3.2 (整体稳定性)，③ 据此证明 Theorem 3.3 (几乎必然收敛)，④ 验证 TDC($\lambda$) 满足全部假设，得 Theorem 7.2。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["两时间尺度递推（快 x · 慢 y）<br/>Markov 噪声、非紧空间、β/α→0"] --> B["Running-max 桥接（Lemma 3.1）<br/>快尺度分析：用历史最大慢迭代压住快迭代"]
+    B --> C["慢尺度稳定性（Theorem 3.2）<br/>慢尺度分析：全体迭代有界 a.s."]
+    C --> D["几乎必然收敛（Theorem 3.3）<br/>ODE 方法：收敛到唯一全局渐近稳定平衡"]
+    D --> E["TDC(λ) 离策略收敛应用（Theorem 7.2）<br/>资格迹 + 线性逼近 + 无投影"]
+```
+
 ### 关键设计
 
 **1. Running-max 桥接（Lemma 3.1）：用"历史最大慢参数"压住快参数**

@@ -45,6 +45,20 @@ tags:
 
 潜在推理模型拿到问题 $\bm{x}$ 后，在连续向量空间里自回归地生成 $T$ 步潜在向量 $\bm{h}_{1:T}$，最后经一个 end-of-thinking token 切回显式 token 生成、吐出答案。并行 TTS 想做的，是生成很多条不同的推理轨迹再聚合——但潜在空间既没有显式概率分布可采样，也没有 token 概率信号可评分，两件事都卡住了。本文于是补两个组件：用「在潜在空间注入随机性」解决采样，用「专门训练的潜在奖励模型」解决评分与聚合。具体就是先采出 $N$ 条轨迹 $\{\bm{h}^{(n)}\}_{n=1}^N$，再用 LatentRM 打分或多数投票合成最终答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x"] --> B["潜在推理骨干<br/>自回归生成 T 步潜在向量"]
+    B --> C["Monte Carlo Dropout 采样<br/>推理时保留 dropout，权重后验扰动（认知不确定性）"]
+    B --> D["加性高斯噪声 AGN 采样<br/>潜在向量加各向同性噪声 σ（随机不确定性）"]
+    C --> E["N 条潜在轨迹"]
+    D --> E
+    E --> F["潜在奖励模型 LatentRM<br/>逐步打分并累加 Σ r_t"]
+    F -->|best-of-N / beam search| G["按分数聚合"]
+    E -->|多数投票| G
+    G --> H["解码输出答案"]
+```
+
 ### 关键设计
 
 **1. Monte Carlo Dropout 采样：用权重后验的随机性产生认知不确定性**

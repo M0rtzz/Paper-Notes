@@ -47,6 +47,25 @@ GFM 要解决的事，是给被污染的 SSP 向量做 cleanup，但它换了个
 
 更下游，这个 cleanup 被当成**在线 stabilizer** 插在脉冲路径积分器 (path integrator, PI) 和 VSA 地图之间：每隔一段时间把漂移的 PI 状态拉回流形，再去做 landmark binding，从而把 SLAM 闭环稳住。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["污染 SSP 向量 φ̃<br/>cross-talk / 相位漂移 / 脉冲噪声"] --> B
+    subgraph GEO["测地线插值 + 切空间速度回归（训练）"]
+        direction TB
+        B["球面测地线插值 φ_t<br/>Exp/Log 映射，全程单位模长"] --> C["残差 MLP v_θ 回归切空间速度<br/>cosine flow loss 只对齐方向"]
+    end
+    GEO --> D
+    subgraph INF["几何一致推理 ODE"]
+        direction TB
+        D["从 p0 采噪声起点 φ_0"] --> E["K 步 Exp-map 积分<br/>φ_{k+1}=Exp_φk(Δt·v_k)"] --> F["每步显式归一兜底数值漂移"]
+    end
+    INF --> G["清洁 SSP φ_K（落在超球面）"]
+    G --> H["下游：脉冲 SLAM 在线 stabilizer<br/>把漂移路径积分状态拉回流形"]
+```
+
+（图中训练分支与推理分支分别对应设计 2、设计 3；设计 1 是支撑两者的几何失败诊断，是动机而非数据流节点。）
+
 ### 关键设计
 
 **1. 几何失败诊断：先证明欧氏 CFM 在 SSP 域必然崩**

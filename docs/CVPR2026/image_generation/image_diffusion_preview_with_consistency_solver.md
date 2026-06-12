@@ -45,6 +45,19 @@ tags:
 
 给定文本提示和噪声图，扩散模型 $\epsilon_\phi$ 预测去噪方向。可学习 ODE 求解器 $\Psi_\theta$ 用少量步数生成预览图像 $\mathbf{x}_p$，无训练求解器 $\Psi$ 用全步数生成目标图像 $\mathbf{x}_{gt}$。基于深度图、分割掩码、DINO 特征等计算相似度奖励 $\mathcal{R}$，通过 PPO 更新 $\theta$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["离线三元组数据集<br/>提示 c + 噪声 z + 全步目标 x_gt"] --> SOLVER
+    DM["扩散模型 ε_φ（冻结）"] --> SOLVER["ConsistencySolver Ψθ<br/>MLP 按 (t_i,t_i+1) 吐时间步相关权重"]
+    SOLVER --> PREVIEW["K 步预览图像 x_p"]
+    DATA --> GT["全步目标 x_gt（无训练求解器）"]
+    PREVIEW --> REWARD["多维度相似度奖励 R<br/>训练用深度图，评估扩到六维"]
+    GT --> REWARD
+    REWARD --> PPO["PPO 更新 MLP 参数 θ<br/>仅几千参数进梯度"]
+    PPO -->|策略迭代| SOLVER
+```
+
 ### 关键设计
 
 **1. ConsistencySolver 的可学习参数化：把固定的理论系数换成时间步相关的权重**

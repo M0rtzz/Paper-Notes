@@ -45,6 +45,28 @@ tags:
 
 UniCreative 想做的是：让一个模型既能写好需要全局规划的长文本，又能写好讲究灵动的短文本，且全程不依赖 SFT 和参考答案。它由两个组件咬合而成——一个负责"打分"，一个负责"学习"。打分端是 AC-GenRM，它根据查询语义临时生成评估标准，再对模型的多个候选输出做去偏的成对排序；学习端是 ACPO，它在 GRPO 框架上把内容质量、结构范式、输出长度三个奖励信号叠在一起优化策略。训练时模型对每个查询采样 $G$ 个响应，AC-GenRM 在这组响应内部做自我竞争产生相对奖励，再驱动策略更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 x"] --> S["策略采样 G 个响应"]
+    S --> P["投影算子 φ<br/>剥离规划 token，只留最终内容打分"]
+    subgraph RM["AC-GenRM：随查询变的生成式奖励"]
+        direction TB
+        C1["动态标准合成<br/>按查询语义生成评估维度"] --> C2["去偏成对排序<br/>50% 概率交换顺序消位置偏差"]
+    end
+    P --> RM
+    subgraph REW["三维奖励组合"]
+        direction TB
+        R1["R_rel 内容质量<br/>组内自举对比 ±2"]
+        R2["R_struct 范式惩罚<br/>长不规划 / 短乱规划扣 5"]
+        R3["R_len 非对称长度正则"]
+    end
+    RM --> REW
+    REW --> T["R_total = R_rel + R_struct + R_len"]
+    T --> ACPO["ACPO<br/>GRPO 组内归一化优势 + KL 约束"]
+    ACPO -->|更新策略后重新采样| S
+```
+
 ### 关键设计
 
 **1. AC-GenRM：让奖励标准随查询语义变，而不是一把尺子量到底**

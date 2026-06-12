@@ -47,6 +47,20 @@ SGMD 通过引入**稳定的 teacher stop-gradient Fisher 目标**和**双重势
 ### 整体框架
 SGMD 要解决 DMD 风格 few-step 视频蒸馏里两个互相牵制的难题：fake score 追踪不断演变的生成器、追踪一致性要靠多次更新（DMD2 每轮 5 次），代价很高；而 reverse-KL 风格的匹配是模式寻求且保守的，会避开目标分布的低密度区，导致视频运动不足。它的破局点是一次角色翻转——不再把 fake score 当跟踪工具，而把它当主优化目标、应朝教师方向移动，同时让生成器充当追踪器去维护分数一致性，从而打破循环依赖。落到训练上是两阶段交替：生成器更新阶段（detach fake score）优化 $\mathcal{L}_{\text{Fisher}}(\theta) + \lambda \mathcal{L}_{\text{NR}}(\theta)$，fake-score 更新阶段（detach 生成器）优化 $\lambda \mathcal{L}_{\text{RC}}(\psi)$，每轮只需 1 次 fake score 反向传播。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["生成样本<br/>x₀ = G_θ(z)，加噪得 xₜ"] --> B["算 x₀-预测<br/>x_fake = μ_ψ(xₜ)、x_real = μ_base(sg[xₜ])<br/>追踪残差 r = sg[x₀] − x_fake"]
+    subgraph BILEVEL["轻量级两步双层更新（每轮仅 1 次 fake score 反传）"]
+        direction TB
+        C["生成器更新（detach ψ）<br/>Teacher Stop-Gradient Fisher 目标 L_Fisher<br/>+ λ·负残差势 L_NR：把 x₀ 推向 x_fake"]
+        C --> D["fake-score 更新（detach θ）<br/>残差收缩势 L_RC：把 x_fake 拉向 x₀"]
+    end
+    B --> C
+    D -->|下一轮迭代| A
+    D --> E["输出：4 步蒸馏生成器"]
+```
+
 ### 关键设计
 
 **1. Teacher Stop-Gradient Fisher 目标：换掉保守的 reverse-KL，给出更平滑的匹配梯度**

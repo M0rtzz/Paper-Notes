@@ -45,6 +45,21 @@ tags:
 ### 整体框架
 论文要解决的是"VideoLLM 看不懂镜头怎么运动"这件事，但它选择**不去碰 VideoLLM 本身**——既不微调权重也不改架构，而是在外面挂一条几何线索注入链路。整条链路这样转：输入视频先按镜头切分为 shot，每个 shot 再切成不重叠的 1 秒段；冻结的 3D 基础模型 VGGT 对每段的 $T=8$ 帧抽出 camera tokens $\{c_t\}_{t=1}^T$（$c_t \in \mathbb{R}^{2048}$），这些 token 编码了帧间相机的几何变化；一个轻量 Transformer 时序分类器把它们映射成"约束合规"的多标签运动原语；最后预测结果被序列化成一段结构化文本，前缀注入到下游冻结 VideoLLM 的 prompt 里。由于注入发生在文本层面，整套方案对任何 VideoLLM 都即插即用。围绕这条主链路，论文还配了一套数据/benchmark、一个诊断探针、以及一个效率蒸馏分支，共五个设计点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["CameraMotionDataset / CameraMotionVQA<br/>UE5 合成 + extrinsic 确定性标注"]
+    A["输入视频"] --> B["shot 切分 → 不重叠 1 秒段（T=8 帧）"]
+    B --> C["冻结 VGGT 抽 camera tokens"]
+    C --> E["约束感知运动分类器<br/>互斥/基数正则 + 推理端硬过滤"]
+    E --> F["Structured Prompting 注入<br/>逐段运动标签前缀进 prompt"]
+    F --> G["冻结 VideoLLM → 生成电影语言描述（输出）"]
+    D -->|训练 + 评测| E
+    C -->|效率档：替代 VGGT| H["VGGT–Q-Former 蒸馏<br/>5.3× 吞吐、显存降 61%"]
+    H --> E
+    A -->|诊断：为何 VideoLLM 做不到| P["Q-Former Probing<br/>定位运动线索在编码器哪层被挤掉"]
+```
+
 ### 关键设计
 
 **1. CameraMotionDataset 与 CameraMotionVQA：用合成数据的精确 extrinsics 换确定性标签**

@@ -43,6 +43,38 @@ tags:
 ### 整体框架
 PATRA 整体由一个 Text Encoder（直接用 LLM 自带 tokenizer 与 embedding）、一个 TS Encoder（Instance Norm + Patching + Embedding）、一个 Pattern-Aware Alignment 模块、和一个 LLM Backbone (Qwen2.5-7B) 组成。文本与时序各自编码后送入对齐模块，对齐后的时序 token 通过 `<ts>...</ts>` 占位符回填到文本 token 序列里，再整体送给 LLM 生成 `<think>...</think><answer>...</answer>` 形式的响应。训练分两阶段：先在大规模 TSQA 数据上做 SFT (Alignment Stage)，再用 GRPO + 复合奖励做 Reasoning-Enhanced Stage。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["文本问题 Q"] --> TE["Text Encoder<br/>tokenize + embed 得 X_text"]
+    TS["时间序列集 S"] --> TSE["TS Encoder<br/>InstanceNorm + Patching + Embedding 得 X_ts"]
+
+    subgraph PAA["模式感知对齐 PAA（设计 1）"]
+        direction TB
+        DEC["潜空间分解<br/>X_ts 拆成 full / trend / season 三路"]
+        LAT["文本端模式提取<br/>三组可学习对齐 token (LAT) 抽三套文本模式表征"]
+        XATT["跨模态交互对齐<br/>每路 文本+时序 拼接做 self-attention，融合得 X_ts^fusion"]
+        DEC --> XATT
+        LAT --> XATT
+    end
+
+    TE --> LAT
+    TSE --> DEC
+    XATT --> REP["占位符回填<br/>X_ts^fusion 填入 ts 占位符，拼成多模态序列 X_m"]
+    REP --> LLM["LLM Backbone (Qwen2.5-7B)<br/>生成 think + answer 结构化响应"]
+
+    subgraph TRAIN["两阶段训练"]
+        direction TB
+        S1["Alignment Stage<br/>SFT + 交叉熵，先学会读懂分解后的模式"]
+        RWD["任务感知平衡奖励（设计 2）<br/>label 阶段式 + 生成 Rouge-L，统一映射到 [0,2]"]
+        S2["Reasoning-Enhanced Stage<br/>GRPO 组内标准化优势（设计 3）"]
+        S1 --> S2
+        RWD --> S2
+    end
+
+    LLM -.训练优化.-> TRAIN
+```
+
 ### 关键设计
 
 **1. 模式感知对齐模块（PAA）：把时序-文本对齐从"浅层拼接"升级成"模式级深度对齐"**

@@ -42,6 +42,16 @@ tags:
 ### 整体框架
 全套 pipeline 简洁到一句话能讲完：先训练一个 0 层（只有 Embedding + LM_head + 最终 LayerNorm、*完全没有* Transformer 层）或 1 层的极浅模型，在 WSD schedule 的*稳定阶段*选一个时刻 $\tau \approx 0.8T$ 把模型一次性扩展到目标深度 $L$ 层（zero-layer 只能 random init 新层，one-layer 既可 random 也可 copying，例如 $\mathbf{w}\to[\mathbf{w},\mathbf{w},\mathbf{w}]$），扩展后**沿用同一个学习率**继续训到底。难点不在流程，而在三件互相牵制的事：怎么证明这套东西不会掉 loss、扩展前后凭什么不用重调超参、扩展时机为什么能晚到 80%——下面三个设计分别回答它们。同一套 recipe 在 GPT2 / LLAMA3 / Qwen3 / Mixtral / DeepSeekV3 / ResNet 上原样跑通，覆盖 weight-tying、dense/MoE、MHA/GQA/MLA、绝对/旋转位置编码、LayerNorm/RMSNorm、GeLU/SwiGLU 各种变种。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["极浅源模型<br/>0 层（Embed + LM_head + LN）或 1 层"] --> B["WSD 稳定段训练<br/>muP 超参全程不重调"]
+    B -->|"τ≈0.8T（由 mixing time 反推）"| C["扩展为 L 层：一次「瞬移」初始化<br/>zero→random；one→random / copying 全复制"]
+    C --> D["同一学习率继续训<br/>WSD 衰减段"]
+    D --> E["mixing：loss 追平 fixed-size 训练"]
+    E --> F["输出：≈ 同 loss，省 ≈80% 计算（5× 加速）"]
+```
+
 ### 关键设计
 
 **1. 把"深度扩展"重述成大模型的初始化问题，用一个收敛 bound 统管所有选择**

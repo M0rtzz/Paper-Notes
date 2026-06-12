@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 本文要解决的是图扩散反向 SDE "用固定步长采样"的浪费：高噪声段动力学平滑却照样一步步磨，低噪声段 drift 急剧变化（stiff）却来不及细分。作者的转法是不再用时间 $t$ 当采样进度的标尺，而是把每个时刻诱导的高斯转移核看成统计流形上的一点，用 Fisher-Rao 度量量出"分布到底变了多快"，让采样器在这条信息流形上等弧长前进。落到实现上，每个离散时刻对节点 $\mathbf{X}$ 和邻接 $\mathbf{A}$ 各算一个反映局部信息曲率的标量 DVS，EMA 平滑后按幂律换算成步长，取两支里更保守的那个推进一次 Euler/Heun solver step，再把曲率反馈给下一步。整套逻辑只在采样循环里加几行，不碰预训练 score 网络。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["反向 SDE 当前状态：节点特征 X + 邻接 A"] --> B["节点通道：Fisher-Rao 线元算 DVS（V_X）"]
+    A --> C["边通道：Fisher-Rao 线元算 DVS（V_A）"]
+    B --> D["EMA 平滑 → 等弧长法则换算 Δt_X"]
+    C --> E["EMA 平滑 → 等弧长法则换算 Δt_A"]
+    D --> F["bottleneck：取 Δt = min(Δt_X, Δt_A)"]
+    E --> F
+    F --> G["推进一步 Euler / Heun solver"]
+    G -->|"曲率反馈下一步（节点-边跨模态耦合）"| A
+    G ==>|"到达 t=0"| H["生成的分子 / 图"]
+```
+
 ### 关键设计
 
 **1. Fisher-Rao 线元 + Drift Variation Score：给"分布变化速率"一个可在线算的标量**

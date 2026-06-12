@@ -50,6 +50,21 @@ tags:
 
 实验使用 CounterFact。ROME 实验在单个编辑上训练 mask；MEMIT 支持 batch editing，作者一次编辑 1,000 个 facts，并只在单个编辑层上训练 mask。模型包括 GPT-2 XL (1.5B)、LLaMA-3.2 (3B) 和 Qwen2.5 (7B)。训练集 3,000 个 samples，覆盖 10 个 relations；测试集为 1,700 个 held-out samples。部分 OOD 实验还额外使用 1,000 个 ROME edits 和 10 个未见 relations。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["事实 prompt（subject + relation）<br/>旧 object 如 radium"] --> B["ROME / MEMIT 编辑<br/>得到一批编辑权重 Ŵ_1 … Ŵ_N"]
+    B --> C
+    subgraph MASK["跨编辑共享二值 mask"]
+        direction TB
+        C["每个 fact 路由到自己的 Ŵ_i<br/>逐元素乘共享 mask：Ŵ_i ⊙ K"] --> D["冻结原模型与编辑权重<br/>只让 mask 参数 Θ 接收梯度"]
+    end
+    D --> E["三重约束训练目标<br/>restoration + sparsity + KL"]
+    E --> F["pruned model：偏好旧 object"]
+    F --> G["残差流分解与编辑阻断实验<br/>Logit Lens 拆 MLP/attention 贡献<br/>编辑阶段预注入 mask，成功率 98%→38%"]
+    G --> H["结论：旧知识未被擦除<br/>编辑靠共享 overattention 子空间"]
+```
+
 ### 关键设计
 
 **1. 跨编辑共享二值 mask：用同一个 mask 检验不同编辑是不是依赖同一组权重位置**

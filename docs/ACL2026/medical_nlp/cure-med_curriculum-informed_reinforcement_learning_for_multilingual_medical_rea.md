@@ -42,6 +42,28 @@ tags:
 ### 整体框架
 Pipeline 分三段：(A) 数据构造 —— 从 MedlinePlus 拉临床素材，GPT-4o 多语言生成 MCQ，多阶段过滤掉 3 个小模型都能做对的 trivial 题，再转成 open-ended（保留参考推理链 $r$ 和参考答案 $y^*$），最后由 native + 医学专家逐条校验，平均评分 4.89/5。(B) Cold-Start SFT —— 在 Qwen2.5-Instruct backbone 上用允许 code-switching 的长 CoT 轨迹做 SFT，让中间推理步可以用任意 $\ell_t \in \mathcal{L}$，但最终答案必须落到目标语言 $\ell$。(C) Curriculum GRPO —— 按语言资源等级划分高 / 中 / 低三档，按 high→mid→low 顺序训练，每进入新档保留 $\alpha=0.85$ 比例的旧档样本防遗忘，复合奖励同时约束 accuracy、language、format。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据构造 → CureMed-Bench（13 语言开放问答）"]
+        direction TB
+        D1["MedlinePlus 临床素材"] --> D2["GPT-4o 多语言生成 MCQ"]
+        D2 --> D3["过滤 trivial 题<br/>3 个小模型都答对则剔除"]
+        D3 --> D4["转 open-ended<br/>保留参考推理链 r 与答案 y*"]
+        D4 --> D5["native + 医学专家校验<br/>均分 4.89/5"]
+    end
+    DATA --> SFT["Code-switching 感知 SFT 冷启动<br/>中间步任意语言推理，最终答案落目标语言"]
+    SFT --> REW["复合可验证奖励<br/>R = λacc·Racc + λlang·Rlang + λfmt·Rfmt"]
+    REW -->|"组内归一化得 advantage"| GRPO
+    subgraph GRPO["语言资源等级课程式 GRPO"]
+        direction TB
+        G1["high：FR / JA / ES / VI"] --> G2["mid：KO / TH / TR / BN"]
+        G2 --> G3["low：AM / YO / HA / HI / SW"]
+        G1 -.->|"保留 α=0.85 旧档样本防遗忘"| G2
+    end
+    GRPO --> OUT["多语言医学推理模型<br/>语言一致 + 推理正确联合优化"]
+```
+
 ### 关键设计
 
 **1. Code-switching 感知的 SFT 冷启动：先给 RL 一个不会中途崩掉的起点**

@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 PACO 把多属性可控摘要建模为 MDP：state $s$ = 当前摘要（含所有历史调整），action $a \in \{ext, len, spc, top, spk\}$ = 调整某个属性，root $s_0$ = 一次性 prompt 所有属性得到的初始摘要。LLM 作为 policy $\pi$，每个 action 由"prompt LLM 重新生成只针对该属性优化的摘要"实现。终止条件是所有属性都满足或达到最大深度。MCTS 完整跑完后从整棵树中选 degree（属性对齐度）最高的节点作为最终输出——这一点很关键，意味着 PACO 不强求修完所有属性，找到最佳折中即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：文档 + 多属性目标<br/>（长度 / 抽取性 / 特异性 / 主题 / 说话人）"] --> B["root s₀：一次性 prompt<br/>所有属性得到初始摘要"]
+    B --> C
+    subgraph MCTS["MCTS 迭代（width=5, depth=5）"]
+        direction TB
+        C["Summary-Level 节点选择<br/>PUCT 选动作 a*"] --> D["扩展：枚举 5 个属性动作<br/>prompt LLM 重生成完整摘要"]
+        D --> E["属性类型感知 reward<br/>硬约束 MAD 倒数 + 软约束 BERTScore"]
+        E --> F["回传更新 Q = W / N"]
+    end
+    F -->|未达终止条件| C
+    F -->|所有属性满足或到 max depth| G["DimensionAware 选择<br/>全树选 degree 最高节点"]
+    G --> H["输出：最终摘要"]
+```
+
 ### 关键设计
 
 **1. Summary-Level MCTS 节点设计：把搜索粒度从 token 级提到整篇摘要级**

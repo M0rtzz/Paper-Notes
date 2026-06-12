@@ -50,6 +50,25 @@ Loca-DiT（图3）学习条件分布 $p_\text{BAP}(\mathcal{M} | \mathcal{P}_{in
 1. **几何补全阶段**（潜在扩散）：$p(\mathcal{P}_{out} | \mathcal{P}_{in})$ — 从稀疏/噪声点云恢复均匀密集的完整点云
 2. **结构化Mesh生成阶段**（自回归Transformer）：$p(\mathcal{M} | \mathcal{P}_{out})$ — 从恢复的点云自回归生成Mesh token序列
 
+整条流水线沿着「三级潜在空间」逐段填平点云→Mesh 的模态鸿沟：异构输入先被分层潜在扩散恢复成均匀稠密点云，再序列化成 token 交给自回归 Transformer 吐出结构化 Mesh。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入点云 P_in<br/>（LiDAR / SfM / 稀疏噪声）"] --> B["点云编码器量化<br/>体素网格作条件"]
+    subgraph DIFF["分层潜在扩散（几何补全阶段）"]
+        direction TB
+        C["粗级扩散<br/>稠密潜在网格 G_d：密化补全基础体块"] --> D["细级扩散<br/>稀疏潜在网格 G_s：磨表面细节、防双表面"]
+    end
+    B --> C
+    D --> E["解码恢复点云 P_out<br/>均匀稠密 + 法向量"]
+    E --> F["序列化 token T_P<br/>预训练编码器，与 Mesh token 对齐"]
+    F --> G["自回归 Mesh 生成<br/>decoder-only Transformer 逐 token 预测"]
+    G --> H["结构化建筑 Mesh M<br/>约 10 顶点 / 16 面"]
+```
+
+（图中三个潜在表示 G_d / G_s / T_P 即「三级潜在空间转换」，分层扩散与自回归生成分别对应两个阶段。）
+
 ### 关键设计
 
 **1. 三级潜在空间转换：让点云阶段和 Mesh 阶段各用最顺手的表示**

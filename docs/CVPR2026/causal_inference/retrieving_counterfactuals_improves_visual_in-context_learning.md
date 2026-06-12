@@ -49,6 +49,23 @@ tags:
 
 CIRCLES（Composed Image Retrieval for Causal Learning Example Selection）由三个模块组成：(1) 基于属性引导 CIR 的因果理解通道；(2) 基于标准图像相似度的相关性理解通道；(3) 双通道融合的检索增强推理。给定查询图像和问题，两个通道分别检索 $k_{\text{causal}}$ 和 $k_{\text{corr}}$ 个示例，合并后作为 ICL 上下文输入 VLM 进行推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询图像 + 问题"] --> B
+    A --> F
+    subgraph CAUSAL["属性引导的反事实示例检索（因果通道）"]
+        direction TB
+        B["VLM 抽取决定性<br/>属性-值对 A"] --> C["对属性做 do() 干预<br/>生成反事实描述"]
+        C --> D["CIR 引擎与问题相似度增强<br/>OSrCIR 图文相似度 + 问题相似度约束"]
+    end
+    F["相关性检索通道<br/>CLIP 图-图相似度取 top-k_corr"]
+    D -->|"top-k_causal"| G["合并双通道示例<br/>构成 ICL 上下文"]
+    F -->|"top-k_corr"| G
+    G --> H["VLM in-context 推理"]
+    H --> I["输出答案"]
+```
+
 ### 关键设计
 
 **1. 属性引导的反事实示例检索：让模型看到"只改一个属性，答案就跟着变"**

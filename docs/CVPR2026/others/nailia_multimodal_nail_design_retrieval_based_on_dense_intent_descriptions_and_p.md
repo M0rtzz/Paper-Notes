@@ -44,7 +44,32 @@ tags:
 
 ### 整体框架
 
-NaiLIA 要解决的是"按用户的复杂意图检索美甲设计图"：用户既会用一段密集文字描述图案/饰品/主题/整体印象，又会给一组 RGB 调色板指定色调。系统把这套多层意图拆给三个模块处理——IPFM 融合文字意图与调色板，VDFM 从三个角度理解候选图像，CRAM 则估计哪些"未标注但其实相似"的样本该被当成正样本，最后用一个松弛对比损失把查询和图像对齐。输入形式化为 $\bm{x} = \{\bm{x}_{\text{txt}}, \bm{x}_{\text{pal}}, X_{\text{img}}\}$，其中 $\bm{x}_{\text{txt}}$ 是密集意图描述，$\bm{x}_{\text{pal}} \in \mathbb{R}^{3 \times N_{\text{pal}}}$ 是调色板查询（零个或多个 RGB 颜色），$X_{\text{img}}$ 是待排序图像集。
+NaiLIA 要解决的是"按用户的复杂意图检索美甲设计图"：用户既会用一段密集文字描述图案/饰品/主题/整体印象，又会给一组 RGB 调色板指定色调。系统把这套多层意图拆给三个模块处理——IPFM 融合文字意图与调色板得到语言-调色板表示 $\bm{l}_+$，VDFM 从三个角度理解候选图像得到视觉表示 $\bm{v}$，二者算相似度后由 CRAM 估计哪些"未标注但其实相似"的样本该被当成正样本，最后用松弛对比损失（CRC loss）把查询和图像对齐、按相似度排序输出。输入形式化为 $\bm{x} = \{\bm{x}_{\text{txt}}, \bm{x}_{\text{pal}}, X_{\text{img}}\}$，其中 $\bm{x}_{\text{txt}}$ 是密集意图描述，$\bm{x}_{\text{pal}} \in \mathbb{R}^{3 \times N_{\text{pal}}}$ 是调色板查询（零个或多个 RGB 颜色），$X_{\text{img}}$ 是待排序图像集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["密集意图描述 + 调色板查询"]
+    IMG["候选美甲设计图像集"]
+    subgraph IPFM["1. IPFM 意图-调色板融合"]
+        direction TB
+        A["LLM 结构化描述<br/>多层描述 MDD + 名词短语 NNP"] --> C["以调色板为 query 交叉注意力<br/>放大颜色相关元素 → 表示 l₊"]
+    end
+    subgraph VDFM["2. VDFM 视觉设计融合"]
+        direction TB
+        D["三路视觉表示<br/>单模态 + 多模态对齐 + img2txt"] --> E["Transformer 融合 → 表示 v"]
+    end
+    Q --> IPFM
+    IMG --> VDFM
+    IPFM --> S["查询-图像相似度 S"]
+    VDFM --> S
+    subgraph CRAM["3. CRAM 基于置信度的松弛对齐"]
+        direction TB
+        F["MLLM 估置信度 c<br/>c ≥ θ 纳入未标注正样本集 Z"] --> G["CRC 损失<br/>L_P + λ·L_UP + λ·L_N"]
+    end
+    S --> CRAM
+    CRAM --> OUT["按相似度排序的检索结果"]
+```
 
 ### 关键设计
 

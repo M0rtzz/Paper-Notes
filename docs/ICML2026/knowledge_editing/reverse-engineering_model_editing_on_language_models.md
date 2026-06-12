@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 论文要回答的是"拿到编辑前后两份权重，能不能把被擦除的隐私反推回来"，并把它拆成一条两阶段攻击 KSTER 加一套防御。威胁模型设白盒攻击者持有 $\theta$、$\theta'$、编辑算法和协方差 $\mathbf{C}$，外加一个由公开领域知识构造的"候选主语集 × 候选 prompt 集"。攻击先在 Stage I 从权重差 $\Delta\mathbf{W}$ 的代数结构里捞出被编辑主语，再在 Stage II 用前后模型的熵差为每个主语锁定真 prompt，最后把"主语+prompt"喂回预编辑模型一次就拿到原始答案；防御 Subspace Camouflage 则反向操作，在编辑时主动掺入"语义诱饵"主语，让攻击者 SVD 看到的子空间被诱饵污染。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["白盒输入：θ、θ'、编辑算法、协方差 C<br/>+ 候选主语集 × 候选 prompt 集"] --> S1
+    subgraph ATK["KSTER 两阶段攻击"]
+        direction TB
+        S1["Stage I：基于 SVD 的主语推断<br/>对 ΔW·C 做 SVD 取 key 子空间 V_N<br/>候选激活投影比 ρ 排序取 top-N"] --> S2["Stage II：基于熵下降的 prompt 恢复<br/>相对熵差打分锁定真 prompt"]
+        S2 --> S3["(主语 + prompt) 回喂预编辑模型<br/>→ 恢复原始答案"]
+    end
+    D["子空间伪装防御<br/>编辑时掺语义诱饵 K_decoy<br/>构造伪装更新 ΔW_defense"] -. 污染 SVD 主方向 .-> S1
+```
+
 ### 关键设计
 
 **1. 基于 SVD 的主语推断（Stage I）：把"反推主语"降格成一次子空间投影**

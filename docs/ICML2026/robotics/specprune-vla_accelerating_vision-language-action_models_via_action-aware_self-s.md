@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 SpecPrune-VLA 是一个外挂在 OpenVLA-OFT / DB-OFT / CogACT 等模型上的 plug-in 加速框架，**不需要任何额外训练**。一次动作推理的流程：(1) **动作级静态剪枝**——在 LLM forward 一开始，融合 $V_{global}$（来自上一步深/中层注意力的 Top-K 集合）、$V_{dynamic}$（与历史帧 patch 余弦相似度最低的 K 个 patch）、$V_{local}$（本步前两层注意力的 Top-K 并集），得到 $V_{retain} = V_{global}\cup V_{dynamic}\cup V_{local}$；(2) **层级动态剪枝**——剩余 token 进入 LLM，在指定的若干"更新层"用基于排名的 sigmoid 权重 × 熵导出的层置信度滚动更新 EMA 分数，每层再砍掉分数最低的 10%；(3) **动作感知控制器**——根据上一时刻输出动作的平移/旋转速度判定本步是粗还是细粒度，相应地按比例 $\alpha$ 缩放所有 $K$ 值（粗粒度更激进、细粒度更保守），实现自适应剪枝强度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph STATIC["三路融合的动作级静态剪枝"]
+        direction TB
+        G["全局先验 V_global<br/>复用上一步中/深层注意力 Top-30"]
+        D["动态补充 V_dynamic<br/>帧差余弦相似度最低 Top-20"]
+        L["本步局部 V_local<br/>前两层注意力各 Top-24 并集"]
+        G --> U["并集 V_retain<br/>一次砍掉 60-70% 视觉 token"]
+        D --> U
+        L --> U
+    end
+    U --> DYN["基于熵和排名的层级动态剪枝<br/>rank 权重 × 熵置信度 → EMA，每层再砍 10%"]
+    DYN --> ACT["输出整段连续动作"]
+    CTRL["速度感知的粗/细粒度控制器<br/>末端执行器速度判定粗/细 → 缩放各 K 值"] -.调节剪枝强度.-> STATIC
+    CTRL -.调节剪枝强度.-> DYN
+```
+
 ### 关键设计
 
 **1. 三路融合的动作级静态剪枝：用三种正交的重要性来源拼出保留集**

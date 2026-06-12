@@ -42,7 +42,21 @@ tags:
 
 ### 整体框架
 
-DIQ 将每个训练样本投射到二维空间：(1) **难度分数** — 模型无关，由 BiomedBERT 分类器在 5 级 Likert 量表上预测；(2) **影响力分数 (Dot)** — 模型相关，通过训练样本梯度与验证集均值梯度内积计算。基于这两维度划分四个象限，按优先级 $\mathcal{Q}_1 \to \mathcal{Q}_2 \to \mathcal{Q}_3 \to \mathcal{Q}_4$ 选取样本直到达到目标保留比例。
+DIQ 将每个训练样本投射到二维空间：(1) **难度分数** — 模型无关，由 BiomedBERT 分类器在 5 级 Likert 量表上预测；(2) **影响力分数 (Dot)** — 模型相关，通过训练样本梯度与验证集均值梯度内积计算。基于这两维度划分四个象限，按优先级 $\mathcal{Q}_1 \to \mathcal{Q}_2 \to \mathcal{Q}_3 \to \mathcal{Q}_4$ 选取样本直到达到目标保留比例。最终用精选子集做 LoRA 微调。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练样本池 D + 验证集"] --> B["难度估计<br/>BiomedBERT 打 5 级难度分 D(z)"]
+    A --> C["Dot-Product 影响力<br/>样本梯度 · 验证集均值梯度"]
+    subgraph S["象限优先级选择"]
+        direction TB
+        D["二维象限划分<br/>难度阈值 τ_d × 影响力中位数 m_dot"] --> E["按 Q1→Q2→Q3→Q4<br/>选至目标保留比例"]
+    end
+    B --> D
+    C --> D
+    S --> F["精选子集 → LoRA 微调"]
+```
 
 ### 关键设计
 

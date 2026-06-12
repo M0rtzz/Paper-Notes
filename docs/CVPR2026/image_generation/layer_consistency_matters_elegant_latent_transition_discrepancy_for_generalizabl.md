@@ -45,6 +45,18 @@ tags:
 
 具体地，输入图像先过冻结的 CLIP ViT 拿到 24 层分层特征；一个动态层选择模块挑出最有判别力的一段连续中间层（实验里落在 11–19 这一带）；在这段层上，一支保留原始中间层特征用来看整体结构一致，另一支对相邻层做差得到层间转换差异（LTD）用来放大那个跳变。两支特征各自加上 CLS token 和位置编码，送进**权重共享**的同一个 Transformer block 交互，最后拼起来过 MLP 做真/假二分类。CLIP 全程冻结，可训练的只有层选择参数、位置编码和这一小块双分支头。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["冻结 CLIP ViT-L/14<br/>24 层分层特征"]
+    B --> C["动态层选择<br/>Gumbel-Softmax 挑连续 n 层"]
+    C --> D["原始中间层特征分支<br/>看整体结构一致性"]
+    C --> E["层间转换差异 LTD<br/>相邻层 CLS 相减"]
+    D --> G["双分支共享权重<br/>同一 Transformer block"]
+    E --> G
+    G --> H["拼接 → MLP → 真 / 假二分类"]
+```
+
 ### 关键设计
 
 **1. 动态层选择：让模型自己挑判别力最强的那段中间层**

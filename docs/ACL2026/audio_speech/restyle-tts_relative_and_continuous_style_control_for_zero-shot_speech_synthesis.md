@@ -42,6 +42,21 @@ ReStyle-TTS 通过解耦文本/参考音频 guidance、可连续缩放的风格 
 ### 整体框架
 ReStyle-TTS 建在 F5-TTS 这类 flow-matching 零样本 TTS 之上，输入是目标文本、一段参考音频和一个或多个风格强度旋钮，输出是保留参考说话人音色、但音高/能量/情绪被相对调节过的语音。它不重训大模型，而是用三层改造串起整条生成链路：先用 Decoupled CFG 以较低 reference guidance 生成，让模型不完全复制参考音频的原始风格，从而腾出风格空间；再按用户指定的强度把对应 Style LoRA（必要时先做正交融合）加到 base model 上注入风格方向；训练阶段额外用 speaker similarity reward 对流匹配损失重新加权，把被削弱的音色一致性补回来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["目标文本 + 参考音频 + 风格强度旋钮 α"] --> DCFG["Decoupled CFG<br/>三路预测组合：λt 保文本可懂度、λa 调低释放风格空间"]
+    DCFG --> SL
+    subgraph SL["Style LoRA + 正交 LoRA 融合"]
+        direction TB
+        L1["各属性 LoRA<br/>高/低音高、能量、各情绪"] --> L2["正交补投影<br/>消除属性纠缠"]
+        L2 --> L3["α 加权融合 ΔW_fuse"]
+    end
+    SL --> GEN["注入 F5-TTS 流匹配主干<br/>生成语音"]
+    GEN --> OUT["输出：保留说话人音色<br/>音高/能量/情绪被相对调节"]
+    TCO["音色一致性优化（训练）<br/>speaker similarity reward → advantage → 有界权重重加权流匹配损失"] -.训练时补偿音色.-> GEN
+```
+
 ### 关键设计
 **1. Decoupled Classifier-Free Guidance：把文本 fidelity 和参考依赖拆成两个旋钮**
 

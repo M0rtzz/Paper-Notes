@@ -47,6 +47,20 @@ Semantic Softmax 的流程分三步。第一步，不在全词表上盲目聚合
 
 这个设计的效果是：如果模型把概率分散给多个与“joy”接近的词，Semantic Softmax 会把这些词的票重新汇总到 joy；如果模型在多个语义邻域之间摇摆，最终分布也会更柔和，从而更像人类标注者的分歧。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入文本 + 候选标签集 L"] --> B["LLM 全词表 logits（unconstrained 分布）"]
+    B -->|"标准做法：只留标签 token 重归一化"| C["Renormalization Bias<br/>非标签语义证据被删 → 置信度虚高"]
+    subgraph SS["Semantic Softmax（训练无关推理层）"]
+        direction TB
+        D["取 top-K token（K=50）"] --> E["Semantic Kernel 加权<br/>w(v,l)=max(0, cos(E_v,E_l)−τ)，τ=0.8 过滤"]
+        E --> F["按 w 加权聚合 top-K 概率<br/>并在标签集上归一化"]
+    end
+    B --> D
+    F --> G["校准后的 P(l|x)：找回沉默投票"]
+```
+
 ### 关键设计
 
 **1. Renormalization Bias 形式化：点明 constrained softmax 为何会系统性过度自信**

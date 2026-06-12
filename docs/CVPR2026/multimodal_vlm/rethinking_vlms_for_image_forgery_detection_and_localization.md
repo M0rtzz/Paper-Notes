@@ -41,23 +41,42 @@ tags:
 
 这篇论文要解决的核心矛盾是：VLM 天生擅长判断一张图"语义上合不合理"，却不擅长判断它"是不是被篡改过"——而后者才是伪造检测真正需要的能力。既有方法（SIDA、FakeShield）让一个 VLM 同时扛起检测、定位、生成解释三件事，结果 VLM 的语义偏向反而把检测/定位拖下水。IFDL-VLM 的破局思路是把任务拆成两段、各司其职。Stage-1 先训练一套不含语言模型的视觉专家——可训练 ViT 配上冻结的 SAM-H——专心把"这张图是不是假的、假在哪块"判准；Stage-2 再把第一阶段产出的定位掩码当作显式的"伪造线索"喂回 VLM，让 VLM 只负责它擅长的事：用自然语言把篡改区域和内容讲清楚。整条链路是"图像 → 专家模型出检测结果 + 定位掩码 → 掩码增强视觉特征 → VLM 生成解释"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入图像 x"] --> VIT
+    subgraph S1["Stage-1：检测/定位专家（解耦优化）"]
+        direction TB
+        VIT["可训练 ViT<br/>CLIP-ViT-L/14 初始化"] --> ATT["多头注意力特征融合<br/>CLS logits 作 Query、patch 作 K/V → SEG token"]
+        VIT --> CLSF["CLS token → 线性头<br/>三分类：真实 / 全合成 / 局部篡改"]
+        ATT --> SAM["冻结 SAM-H 解码 → 定位掩码 M"]
+    end
+    CLSF --> DET["检测结果"]
+    SAM --> FUSE
+    X --> FUSE
+    subgraph S2["Stage-2：语言解释生成"]
+        direction TB
+        FUSE["区域感知视觉特征增强<br/>T_vis = α·CLIP(x) + (1−α)·CLIP(x⊙M)"] --> VLM["VLM（Vicuna-13B）<br/>生成篡改区域 / 内容解释"]
+    end
+```
+
 ### 关键设计
 
 **1. 解耦优化：把检测/定位从 VLM 的语义偏向里摘出来**
 
 作者观察到 CLIP 这类 VLM 在预训练时对齐的是高层语义，篡改图像即使物体被换掉，视觉 token 与原图的余弦相似度仍高达 96–98%，这种"语义合理性优先"的本能会直接干扰低层伪造痕迹的判别。所以 IFDL-VLM 索性不让 VLM 碰检测/定位：Stage-1 用一个以 CLIP-ViT-L/14 初始化的可训练 ViT，提取 $\langle\text{SEG}\rangle$ token 送入冻结的 SAM-H 解码出定位掩码，同时用全局 $\langle\text{CLS}\rangle$ token 做三分类（真实 / 全合成 / 局部篡改）。检测和定位都在这个纯视觉专家里完成，不再被 VLM 的偏向裹挟，这也是后面所有提升的根基。
 
-**2. 区域感知视觉特征增强：让定位掩码反过来当 VLM 的先验**
+**2. 多头注意力特征融合：一套 ViT 同时供给定位和检测两个出口**
+
+Stage-1 的 ViT 并不各任务各训一套，而是用同一份 patch-level 特征分流出两个出口。全局 $\langle\text{CLS}\rangle$ token 走一个线性头做图像级三分类（真实 / 全合成 / 局部篡改）；同时它产生的分类 logits 作为 Query、patch tokens 作为 Key/Value，经多头注意力融合成 $\langle\text{SEG}\rangle$ token，当作冻结 SAM-H 的 prompt embedding 去解码像素级定位掩码。一份特征喂两个出口，让定位与检测共享同一套伪造表征，既省参数也保证两个任务对"哪里可疑"的判断一致。
+
+**3. 区域感知视觉特征增强：让定位掩码反过来当 VLM 的先验**
 
 这是 Stage-2 的核心创新，也是"解耦"之后的"反哺"环节。常规做法是把整张图丢给 VLM，让它自己从数据里隐式学出"哪里被改了"——但 VLM 既然缺乏伪造概念的先验，这一步学起来很吃力。IFDL-VLM 改成把 Stage-1 已经算好的定位掩码 $M$ 与原图 $x$ 逐元素相乘，抠出伪造区域，再和原图分别过 CLIP 编码后加权融合：
 
 $$T_{vis} = \alpha \cdot \text{CLIP}(x) + (1 - \alpha) \cdot \text{CLIP}(x \odot M)$$
 
 其中 $\alpha = 0.5$。这样融合出来的视觉特征里，一半来自全图语境、一半来自被高亮的伪造区域，等于把"伪造概念"直接写进了 VLM 的输入，省去它从数据里隐式摸索的过程，真伪图像的表征也因此更可分。推理阶段没有真值掩码，就用 Stage-1 预测的 $\hat{M}$ 顶替 $M$，整条链路闭合——比如一张人脸被局部换过的图，Stage-1 先框出下巴附近的篡改区，Stage-2 拿到这块区域增强后的特征，VLM 才能稳定地说出"下颌轮廓被替换"。
-
-**3. 多头注意力特征融合：一套 ViT 同时供给定位和检测两个出口**
-
-Stage-1 的 ViT 并不是各任务各训一套，而是用同一份 patch-level 特征分流出两个用途。patch 特征经过投影和多头注意力融合，聚成 $\langle\text{SEG}\rangle$ token 作为 SAM 的 prompt embedding 去解码像素级掩码；全局 $\langle\text{CLS}\rangle$ token 则走一个线性头做图像级三分类。一份特征喂两个出口，让定位与检测共享同一套伪造表征，既省参数也保证两个任务对"哪里可疑"的判断一致。
 
 ### 损失函数 / 训练策略
 

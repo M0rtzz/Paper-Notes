@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 方法分三段。第一段（Sec. 3.1）定义可分解量：把数据集的位置 $(x,j)$ 按"被几个概念同时标注"分成 **unique** $U$ 和 **common** $C$ 两类，再把神经元激活、与某概念的交集、与某概念的"非激活但被标注的剩余"分别按 $U/C$ 拆分，得到 $N^{U},N^{C},I^{U}(k),I^{C}(k),E^{U}(k),E^{C}(k)$ 六个基本量。第二段（Sec. 3.2）给启发式：基于一个**Disjoint Matrix** $D$ 判断子公式两侧是否在标注上 disjoint，对 OR/AND/AND NOT 分别推出 $I^C$ 和 $E^C$ 的 min/max 递推；再用每个概念在每个量上的 top-$n$/bottom-$n$ 估计"再拼 $n$ 个概念能带来的最大/最小增益"。第三段（Sec. 3.3）把启发式塞进 best-first search 实现最优算法。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：已训 CNN 神经元激活 N<br/>+ 概念标注张量 M（激活范围 τ1,τ2）"] --> B["IoU 的精确分解 (dIoU) + 基本量<br/>按位置是否被多概念同标切 unique/common<br/>得 N/I/E 的 U,C 共 6 个基本量"]
+    B --> C["min/max 启发式 + 多步路径估计<br/>Disjoint Matrix 判子公式两侧是否 disjoint<br/>+ Top_n/Bott_n → admissible 区间 [dIoU_min, dIoU_max]"]
+    C --> D["best-first 最优搜索<br/>max-heap frontier，每次 pop 当前 dIoU_max 最高的 prefix"]
+    D -->|"仍是 aggregated 估计"| E["升级到 sample-wise 精算后回堆"]
+    E --> D
+    D -->|"已 sample-wise"| F["展开（拼下一个概念 × 算子）或算真值<br/>sub-label 反向传播收紧上界 + 逻辑等价剪枝"]
+    F --> G["更新全局 dIoU_min*<br/>剪掉所有 dIoU_max < dIoU_min* 的节点"]
+    G -->|"frontier 非空"| D
+    G -->|"frontier 空"| H["输出：全局最优逻辑公式 L*<br/>admissible 上界保证全局最优"]
+```
+
 ### 关键设计
 
 **1. IoU 的精确分解 (dIoU) + 基本量：把全局指标改写成可在 prefix 上剪枝的局部项**

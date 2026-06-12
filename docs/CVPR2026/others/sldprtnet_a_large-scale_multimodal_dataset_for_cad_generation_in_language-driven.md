@@ -46,6 +46,23 @@ SldprtNet 不是一个模型，而是一套「采集 → 筛选 → 多模态生
 
 最终每个样本是五种模态的完整对齐：.sldprt 文件（SolidWorks 原生格式，编码完整特征树历史）、.step 文件（标准交换格式，支持跨平台验证）、多视图合成图像（前/后/左/右/上/下 6 个正交视图 + 1 个等轴视图合成为单张 PNG）、参数化建模脚本 Encoder_txt（含特征树和每个特征的详细参数）、自然语言描述 Des_txt（由 Qwen2.5-VL-7B 生成的外观与功能描述）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["网络平台采集<br/>GrabCAD / McMaster-Carr / FreeCAD<br/>约 680K .sldprt"] --> B["过滤筛选<br/>保留含 13 种特征类型的 242K 样本"]
+    B --> C["七视图渲染合成<br/>6 正交 + 1 等轴 → 单张 PNG"]
+    B --> D["编码器：CAD → 参数化文本<br/>遍历特征树抽参数 → Encoder_txt"]
+    B --> E["标准格式转换<br/>.sldprt → .step"]
+    C --> F["自然语言描述生成<br/>Qwen2.5-VL-7B(图 + 脚本) → Des_txt"]
+    D --> F
+    F --> G["人工校验对齐"]
+    C --> G
+    E --> G
+    G --> H["五模态对齐样本<br/>.sldprt / .step / PNG / Encoder_txt / Des_txt"]
+    H --> I["数据集复杂度分层<br/>按特征数切四级 → 支持课程学习"]
+    D -.闭环验证.-> J["解码器：参数化文本 → CAD<br/>逐特征重建并比对原模型"]
+```
+
 ### 关键设计
 
 **1. 编码器/解码器：用一对无损双向工具把 CAD 和文本打通**

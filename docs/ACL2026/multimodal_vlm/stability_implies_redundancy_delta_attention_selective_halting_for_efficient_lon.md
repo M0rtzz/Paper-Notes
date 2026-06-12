@@ -34,7 +34,19 @@ tags:
 
 ### 整体框架
 
-DASH 在 prefill 阶段的激活层 l_s 处一次性决定 token 的活跃集合。对于 l < l_s 的层，所有 T 个 token 正常处理；在 l_s 层，计算每个 token 的 Δ_attn 分数，保留 top-(1-ρ)T 个 token 作为活跃集，其余 token 被"停止"。被停止的 token 在所有后续层中跳过自注意力和 FFN 计算，其隐状态冻结在最后更新值。
+DASH 在 prefill 阶段的激活层 l_s 处一次性决定 token 的活跃集合。对于 l_s 之前的层，所有 T 个 token 正常处理；在 l_s 层，计算每个 token 的 Δ_attn 分数，保留 Δ_attn 最高的 top-(1-ρ)T 个 token 作为活跃集，其余"语义已固化"的 token 被"停止"。被停止的 token 在所有后续层中跳过自注意力和 FFN 计算，其隐状态冻结在最后更新值。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["长上下文输入 T 个 token（文本 / 视觉）"] --> SHALLOW["浅层全量计算（前 l_s 层）<br/>所有 token 走自注意力 + FFN"]
+    SHALLOW --> DELTA["Δ_attn 信号（第 l_s 层）<br/>逐 token 取残差前注意力输出 L2 范数 ‖U‖₂"]
+    DELTA --> SELECT["单次选择调度 + 模态统一处理<br/>TopK 保留高 Δ_attn 的 (1−ρ)T 个 token；文本 / 视觉同一准则"]
+    SELECT -->|高 Δ_attn：仍在聚合信息| ACTIVE["活跃集继续计算<br/>l_s 之后各层正常自注意力 + FFN"]
+    SELECT -->|低 Δ_attn：语义已固化| HALT["停止集冻结<br/>跳过后续所有层注意力 + FFN，隐状态定格"]
+    ACTIVE --> OUT["输出隐状态 + KV cache → 解码"]
+    HALT --> OUT
+```
 
 ### 关键设计
 

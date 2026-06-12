@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 HyPE 把「先解释、后检索」做进生成式检索的解码流程：模型在吐出文档标识符（docid）之前，先逐级生成一条从粗到细的层级类别路径（如 "Government >> Government by cities"），既给出检索决策的解释，又借这条 coarse-to-fine 路径把搜索空间逐步收窄。整个框架由三段串起来——离线先为每篇文档构建候选类别路径集，训练时把查询与最贴切的路径绑定、让模型同时学「索引」与「检索」两个任务，推理时先用 beam search 生成多条路径、再在每条路径条件下解码 docid，最后用路径感知排序把多路径结果聚合成最终排名。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CONS["候选路径集构建（离线）"]
+        direction TB
+        A["Wikipedia 分类树<br/>（深度限 4 层）"] --> B["bi-encoder 粗筛<br/>每篇文档候选路径集"]
+        B --> C["LLM 精选 1-3 条<br/>最具代表性路径"]
+    end
+    CONS --> D["路径增强训练<br/>查询关联最相似路径，多任务学索引 + 检索"]
+    D --> E["推理：beam search 生成 K 条类别路径"]
+    E --> F["每条路径下 constrained beam search<br/>解码 docid + 分数"]
+    F --> G["路径感知排序<br/>同一 docid 取跨路径最高分"]
+    G --> H["最终排名 + 可解释路径"]
+```
+
 ### 关键设计
 
 **1. 候选路径集构建：编码器粗筛 + LLM 精选，为每篇文档配 1-3 条语义路径**

@@ -45,24 +45,27 @@ tags:
 
 实验目标模型包括 Llama-3.2-1B/3B-Instruct、Qwen3-4B-Instruct-2507 和 Tiny-aya-global；防御环境还加入 Llama-Guard 或 ShieldGemma 的 prompt/response 两侧过滤。训练数据来自 AdvBench 子集，包含 harmful question 和来自未对齐 Vicuna 的参考回答。论文用 55 个随机种子，并报告 bootstrap 95% 置信区间。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["有害问题子集 + 初始模板队列"] --> B
+    subgraph ENV["POMDP 化的 jailbreak 环境"]
+        direction TB
+        B["agent 选模板变换动作<br/>观察=响应embedding+步数+上一动作"] --> C["helper LLM 改写 prompt"]
+        C --> D["目标模型 / safeguard 返回响应"]
+        D --> E["双 reward 评估<br/>dense 余弦相似度 / sparse 阈值"]
+        E -->|未到 T 步| B
+    end
+    E -->|episode 结束| F["aggregate 指标<br/>ASR(emb) · 平均相似度"]
+    G["结构化消融轴<br/>reward · 动作空间 · episode 长度 · PPO/DDQN · safeguard"] -.调控.-> ENV
+```
+
 ### 关键设计
-1. **POMDP 化的 jailbreak 环境**:
+**1. POMDP 化的 jailbreak 环境：把红队交互变成可逐项消融的标准 RL 问题。** 已有 RL-jailbreaker 多把 agent 当黑盒攻击器，reward、动作空间、episode 长度、训练数据和算法混在一起，攻成功了也说不清是哪一环起作用。本文先把多轮红队交互形式化为 POMDP：隐藏状态是目标 LLM、safeguard 与当前模板配置，agent 只能观察一个由当前响应的 embedding、时间步、终止标志和上一动作编号拼成的向量，动作则限定在一个固定的离散模板变换集合里——选一个变换，helper LLM 据此改写 prompt，目标模型或 safeguard 再返回响应和 reward。把环境边界这样定死之后，reward、动作、episode 才能被单独替换、逐轴消融，成功率也才可能归因到具体组件，而不是笼统地归给“模型本来就脆弱”。
 
-	- 功能：把多轮红队交互转成标准 RL 问题，使 reward、action 和 episode 可以独立修改。
-	- 核心思路：观察向量由当前模板/响应的 embedding、时间步、终止信号和上一动作拼接而成；动作只在固定模板变换集合中选择；环境返回目标模型或 safeguard 的文本响应及 reward。
-	- 设计动机：如果不把环境边界定义清楚，就很难判断成功来自 prompt engineering、reward shaping 还是模型本身的脆弱性。
+**2. 双 reward 评估：用 dense 与 sparse 两种信号对照，看反馈形态如何左右学习。** dense reward 取模型输出与参考回答 embedding 的平均余弦相似度，给出连续的塑形信号；sparse reward 只在相似度超过阈值、且输出不含明显拒绝词时才给一次正反馈。两者的差别很关键：面对强拒绝模型，sparse reward 会长时间为零，credit assignment 极其困难；dense reward 能持续提供方向，但连续相似度也可能把 agent 引向“像、却并未真正越狱”的输出。这一对照正是全文“环境定义比换算法更重要”的核心证据——多数目标模型上 dense reward 的成功率最高。
 
-2. **双 reward 评估**:
-
-	- 功能：比较 dense 与 sparse 信号对 RL agent 学习的影响。
-	- 核心思路：dense reward 使用模型输出与参考回答 embedding 的平均 cosine similarity；sparse reward 只有在相似度超过阈值且没有明显拒绝词时才给正反馈。
-	- 设计动机：强拒绝模型会让 sparse reward 长时间为零，造成 credit assignment 困难；dense reward 可以提供连续学习信号，但也可能偏离真正成功标准。
-
-3. **结构化消融轴**:
-
-	- 功能：把 RL jailbreaking 的成功因素拆到可复现实验维度上。
-	- 核心思路：分别改变 action space 大小、episode length、reward shaping bonus、训练问题数量、PPO vs DDQN，以及 safeguard 组合。
-	- 设计动机：单一总 ASR 只能说明“会被攻破”，无法说明防御应优先关注交互长度、奖励代理、数据覆盖还是算法选择。
+**3. 结构化消融轴：把成功因素拆到可复现维度，把“会被攻破”变成“该加固哪一环”。** 只报一个总 ASR 只能说明模型会被攻破，却不能告诉防守方该优先收紧交互长度、奖励代理、数据覆盖还是算法。于是作者沿动作空间大小、episode 长度、reward shaping bonus、训练问题数量、PPO vs DDQN、以及 safeguard 组合逐轴独立变化，并用 55 个随机种子加 bootstrap 95% 置信区间报告结果。正是这套消融得出了那些可指导防御的结论：reward 密度和 episode 长度比换算法更决定成功率、20 个训练问题反而优于 5 个和 520 个、在有限交互预算下扩大动作空间反而更难攻击。
 
 ### 损失函数 / 训练策略
 PPO 和 DDQN 都使用两层前馈网络实现 policy 或 Q-function。PPO 作为已有 RL-jailbreaker 的主力算法，DDQN 用来测试 value-based 方法是否也适合这个红队环境。所有主要结果用 55 个种子，指标包括平均 cosine similarity 和 embedding-based ASR，后者要求语义相似度达到阈值且输出不含常见拒绝词。论文明确不使用 LLM-as-a-judge，因为对抗场景下 judge 的可靠性容易退化。

@@ -42,7 +42,38 @@ SPROUT 是首个完全训练无关、零标注的病理核分割框架——用 
 
 ### 整体框架
 
-SPROUT 要解决的是「零标注、零训练地分割一张病理切片里成千上万个细胞核」。它的核心思路是：既然在病理图上找不到稳定的外部 reference，就让每张切片自己当自己的 reference。整条管线分三段——先用 H&E 染色的物理先验在图上自构高置信前景/背景区域、从中提取原型；再用渐进式部分最优传输把原型语义稳定地传播到全图特征上、顺手过滤掉模糊特征；最后把对齐结果翻译成 SAM 的正/负点提示，跑一遍 SAM 并用 containment-aware NMS 收尾。具体串起来就是：patch encoding（DINOv2 或 H-optimus-1）→ stain decomposition（OD 空间 + Otsu）→ 高置信前景/背景 mask → K-means 原型 $\mathcal{P}_{fg}, \mathcal{P}_{bg}$ → POT-Scan 软对齐 → 激活 + watershed 取点 → SAM 推理 → NMS。全程不更新任何参数、不需要任何标注。
+SPROUT 要解决的是「零标注、零训练地分割一张病理切片里成千上万个细胞核」。它的核心思路是：既然在病理图上找不到稳定的外部 reference，就让每张切片自己当自己的 reference。整条管线分三段——先用 H&E 染色的物理先验在图上自构高置信前景/背景区域、从中提取原型（**染色先验自参考**）；再用渐进式部分最优传输把原型语义稳定地传播到全图特征上、顺手过滤掉模糊特征（**POT-Scan**）；最后把对齐结果翻译成 SAM 的正/负点提示，跑一遍 SAM 并用 containment-aware NMS 收尾（**激活提示 + containment-aware NMS**）。具体串起来就是：分块编码（DINOv2 或 H-optimus-1）拼回全图特征 → 颜色去卷积（OD 空间 + Otsu）取高置信前景/背景 mask → K-means 聚出原型 $\mathcal{P}_{fg}, \mathcal{P}_{bg}$ → POT-Scan 软对齐 → 激活 + watershed 取点 → SAM 推理 → NMS。全程不更新任何参数、不需要任何标注。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["H&E 病理切片"] --> ENC["编码器 fθ（DINOv2 / H-optimus-1）<br/>分块编码 → 拼回全图特征 F"]
+    subgraph D1["1. 染色先验自参考"]
+        direction TB
+        B1["颜色去卷积<br/>OD 空间 + 染色矩阵 Q"]
+        B1 --> B2["Otsu 粗分 + 取 top-t 强度<br/>高置信前/背景 mask"]
+        B2 --> B3["K-means 聚类<br/>原型 P_fg / P_bg"]
+    end
+    A --> B1
+    ENC --> B3
+    subgraph D2["2. POT-Scan（渐进式部分最优传输）"]
+        direction TB
+        C1["余弦代价矩阵<br/>特征 ↔ 原型"]
+        C1 --> C2["partial OT<br/>允许 1−ρ 特征不匹配，滤掉模糊区"]
+        C2 --> C3["传输比 ρ 从 ρ0 由易到难渐增"]
+    end
+    ENC --> C1
+    B3 --> C1
+    subgraph D3["3. 激活提示 + containment-aware NMS"]
+        direction TB
+        E1["传输矩阵重加权激活<br/>F⋆ = F̃ ⊙ T⋆，再 DenseCRF 平滑"]
+        E1 --> E2["watershed 取正点 / 背景采负点"]
+        E2 --> E3["SAM 推理"]
+        E3 --> E4["containment-aware NMS<br/>抑制嵌套核误检"]
+    end
+    C3 --> E1
+    E4 --> H["核实例分割结果"]
+```
 
 ### 关键设计
 

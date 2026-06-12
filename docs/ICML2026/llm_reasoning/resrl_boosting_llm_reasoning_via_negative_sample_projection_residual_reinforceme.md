@@ -41,7 +41,23 @@ ResRL 从理论上把 RLVR 中 "负样本梯度污染正样本"现象 (Lazy Like
 ## 方法详解
 
 ### 整体框架
-ResRL 是对 GRPO 的 token-wise advantage 重加权扩展。对一个 prompt $c$ 采 $G$ 条 trajectory,正样本组 $\mathcal{P}$ (advantage $>0$) 一律用小常数 $\lambda_{\text{pos}} = 0.1$ 弱锚定 (防 mode collapse);负样本组 (advantage $\leq 0$) 的每个 token 都拿到一个动态权重 $\omega_{i,t} \in [\xi, 1]$——它来自三步流程:(1) 取 penultimate hidden state $h_{i,t}$,经 LayerNorm + 减去正样本质心 $\mu^+$ 得 centered 表征 $x_{i,t}$;(2) 对正样本子集 $\hat{X}^+$ 做 truncated SVD 得到 rank-$k$ 主方向 $V_k$,构造投影 $P_S = V_k V_k^\top$;(3) 每个负 token 算正交残差能量 $\mathcal{R}_{i,t} = \frac{1}{d}\|(I-P_S) x_{i,t}^-\|_2^2$,经过 group-relative 分位数归一化映射到 $[\xi, 1]$,作为最终 token-wise 权重。整个流程没有额外训练参数,只是改了 advantage 形状。
+ResRL 是对 GRPO 的 token-wise advantage 重加权扩展。对一个 prompt $c$ 采 $G$ 条 trajectory,正样本组 $\mathcal{P}$ (advantage $>0$) 一律用小常数 $\lambda_{\text{pos}} = 0.1$ 弱锚定 (防 mode collapse);负样本组 (advantage $\leq 0$) 的每个 token 都拿到一个动态权重 $\omega_{i,t} \in [\xi, 1]$——它来自三步流程:(1) 取 penultimate hidden state $h_{i,t}$,经 LayerNorm + 减去正样本质心 $\mu^+$ 得 centered 表征 $x_{i,t}$;(2) 对正样本子集 $\hat{X}^+$ 做 truncated SVD 得到 rank-$k$ 主方向 $V_k$,构造投影 $P_S = V_k V_k^\top$;(3) 每个负 token 算正交残差能量 $\mathcal{R}_{i,t} = \frac{1}{d}\|(I-P_S) x_{i,t}^-\|_2^2$,经过 group-relative 分位数归一化映射到 $[\xi, 1]$,作为最终 token-wise 权重。整个流程没有额外训练参数,只是改了 advantage 形状。下图把这套"分组 → 负样本表征加权 → 合成 advantage"的数据流画出来(理论框架是这套加权的合理性来源,不作为运行时阶段单列):
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt c：采 G 条 trajectory<br/>按 advantage 分正/负样本组"] -->|"Â > 0"| P["正样本弱锚定<br/>λpos=0.1 缩放梯度"]
+    A -->|"Â ≤ 0"| N1["取负 token 的 penultimate 隐藏态<br/>LayerNorm + 减正样本质心 μ⁺"]
+    subgraph SVD["SVD 低秩子空间构造 + 投影残差 token 权重"]
+        direction TB
+        N1 --> N2["正样本子集做 truncated SVD<br/>取 rank-k 主方向 → 投影 P_S"]
+        N2 --> N3["算负 token 正交残差能量<br/>R = ‖(I−P_S)x⁻‖² / d"]
+        N3 --> N4["group-relative 分位数归一化<br/>→ token 权重 ω ∈ [ξ,1]"]
+    end
+    P --> C["合成 token-wise advantage Ã<br/>正样本 λpos·Â；负样本 ω·Â"]
+    N4 --> C
+    C --> D["代入 GRPO clipped 目标<br/>+ 长度缩放奖励防膨胀"]
+```
 
 ### 关键设计
 

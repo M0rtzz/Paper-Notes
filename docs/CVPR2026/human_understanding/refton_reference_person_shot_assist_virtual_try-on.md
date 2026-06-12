@@ -37,6 +37,25 @@ tags:
 ### 整体框架
 RefTon 要解决的是「人对人虚拟试穿」：给一张源人物图和一件目标服装，让源人物穿上这件衣服，而且额外允许塞一张「别人穿着这件衣服」的参考图来补全服装细节。整条 pipeline 建在 Flux-Kontext 骨干上——源人物图（或其遮罩版）、目标服装图、可选参考图都先经 VAE 编码成潜变量，再沿序列维拼成一条 token 序列，丢进 DiT（Diffusion Transformer）去噪还原出穿好衣服的目标图。难点不在去噪本身，而在两件事：训练人对人模型需要的「非配对三元组」数据现实中根本不存在，以及多张异构条件图怎么在一个序列里被模型分清楚。RefTon 用两阶段训练造数据、用缩放位置索引区分条件、再用一条数据流水线把参考图也造出来，逐一拆掉这些障碍。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["两阶段训练策略（造非配对三元组）"]
+        direction TB
+        A1["阶段一：丰富条件训掩码试穿模型<br/>(agnostic + DensePose + warp mask)"] --> A2["合成「同人穿别的衣服」<br/>得到非配对训练数据"]
+    end
+    subgraph S4["参考图像数据生成流水线"]
+        direction TB
+        B1["Qwen2.5-VL 描述外观 + 生成相反描述"] --> B2["Flux-Kontext 编辑<br/>(相反描述正向 / 原描述负向)"]
+        B2 --> B3["CLIP 去重 + VLM 打分过滤"]
+    end
+    S1 --> C["拼接条件 token 序列<br/>人物图 + 服装图 + 可选参考图"]
+    S4 -->|参考图像引导| C
+    C --> D["缩放位置索引<br/>条件标签 + 按分辨率缩放坐标"]
+    D --> E["DiT 去噪<br/>(Flux-Kontext 骨干 + LoRA 微调)"]
+    E --> F["输出：穿好目标服装的人物图"]
+```
+
 ### 关键设计
 
 **1. 两阶段训练策略：把不存在的非配对数据造出来**

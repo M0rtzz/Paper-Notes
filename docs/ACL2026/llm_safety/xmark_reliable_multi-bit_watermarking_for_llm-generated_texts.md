@@ -45,6 +45,17 @@ tags:
 
 XMark 想一口气治好多比特水印的两个老毛病：绿色列表太小导致文本质量塌、信号太弱导致有限 token 下解码不准。它仍然沿用分块编解码范式——把 $b$ 比特消息切成 $r$ 个块、每块 $d$ 比特，生成时每个 token 嵌入一个块的信息，检测时再从嫌疑文本里逐块恢复。真正的新意集中在三处：编码端先用 Leave-one-Shard-out 反转绿色列表的选法来保住质量，再用多排列的 evergreen list 把被削弱的水印信号补回来，解码端则用约束映射矩阵 cTMM 堵住多排列引入的计数偏差。三者环环相扣，缺一个都不成立。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["b 比特消息<br/>切成 r 块 × d 比特"] --> B["Leave-one-Shard-out（LoSo）编码<br/>排除消息 shard，其余当绿色列表 γ≥0.75"]
+    B --> C["Evergreen list（多排列交集）<br/>k 套排列各取绿色列表，求交集"]
+    C --> D["对交集内 token 的 logit 加偏置 δ"]
+    D --> E["逐 token 生成水印文本"]
+    E --> F["约束 Token-Shard 映射矩阵（cTMM）<br/>每 token 每 shard 至多计 1 次"]
+    F --> G["取计数最少 shard = 被排除 shard<br/>还原嵌入消息"]
+```
+
 ### 关键设计
 
 **1. Leave-one-Shard-out（LoSo）编码：反转绿色列表的选法，把分布失真压到最低**

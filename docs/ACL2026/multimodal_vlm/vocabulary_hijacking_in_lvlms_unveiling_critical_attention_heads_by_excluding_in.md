@@ -46,6 +46,19 @@ tags:
 
 干预阶段提出 HAVAE。它不更新模型参数，也不引入额外模型，只在推理时对 NHAR 排名前 $K$ 的注意力头增强其面向视觉 token 的注意力。这样做的目标不是盲目提高所有视觉注意力，而是增强那些已经被诊断为“关注非劫持视觉内容”的头。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视觉 token + LVLM 内部注意力 / hidden state"] --> DIAG
+    subgraph DIAG["诊断阶段"]
+        direction TB
+        B["HABI：用词汇锚点定位 Inert Tokens<br/>Logit Lens 跨层 Trace × (Dominance·Frequency·Attention)<br/>→ IQR 筛出 Hijacking Anchors → Inert Tokens"]
+        B --> C["HAR / NHAR 两个互补指标<br/>HAR 证劫持与幻觉正相关；NHAR 只统计落在非劫持视觉 token 的注意力"]
+    end
+    DIAG --> D["HAVAE：训练无关注意力增强<br/>按真实物体 token 的平均 NHAR 选 top-K 头<br/>推理时正向增强其面向视觉 token 的注意力"]
+    D --> E["输出：幻觉下降、保通用能力"]
+```
+
 ### 关键设计
 
 **1. HABI：用词汇锚点定位 Inert Tokens**

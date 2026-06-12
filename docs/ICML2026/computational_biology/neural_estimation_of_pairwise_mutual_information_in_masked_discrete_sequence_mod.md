@@ -42,6 +42,15 @@ tags:
 ### 整体框架
 本文要解决的是 MDM 并行解码"选错 token"的问题：现有方法只看每个位置的边际置信度，无法判断两个高置信位置是否彼此相关，导致同步 unmask 时违反约束。作者的思路是先承认"预训练 MDM 的隐藏状态里其实已经编码了 token 间的联合依赖，只是输出头没把它读出来"，于是训练一个轻量级 predictor head 把这份依赖以条件互信息矩阵的形式显式输出，再用这张矩阵在每个去噪步里只挑出彼此条件独立的 token 一起 unmask。整套流程的监督信号不是来自数据真实分布，而是来自 MDM 自己 probing 出来的"模型相信的 MI"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结的预训练 MDM<br/>当特征提取器"] --> B["conditional probing 求 ground-truth MI<br/>边际熵 − 条件熵，O(N·|V|) 次前向"]
+    B -->|监督标签| C["lightweight MI predictor head<br/>hidden state → MI 矩阵，Frobenius MSE"]
+    C -->|推理一次前向出 MI 矩阵| D["Budgeted MI-Guided 并行采样<br/>entropy + λ·MI 贪心选条件独立 token"]
+    D --> E["并行 unmask 一组 token<br/>循环至生成完成"]
+```
+
 ### 关键设计
 
 **1. 基于 conditional probing 的 ground-truth MI：从只输出 marginal 的 MDM 反推出联合依赖**

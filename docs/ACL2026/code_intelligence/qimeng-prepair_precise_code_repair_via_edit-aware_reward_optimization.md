@@ -45,6 +45,26 @@ tags:
 
 PRepair 把"精确修复"拆成一条数据自造、奖励自洽的闭环流水线。先让模型自己向正确代码注入多样化 bug（Self-Breaking），凭空造出大量"逻辑大体正确、仅局部出错"的训练样本；再在这些 bug 代码上用编辑感知的 GRPO（Self-Repairing）训练模型，让奖励在正确性达标后才追加编辑惩罚。从输入的 bug 代码到输出的修复补丁，整条链路都不依赖人工标注，最终统一用新提出的 $\text{fix}_p@k$ 指标衡量"既改对又改得少"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["正确代码 + 题目描述"] --> SB
+    subgraph SB["Self-Breaking：自造多样化 bug 数据"]
+        direction TB
+        B1["提示模型注入 bug<br/>生成 m 个候选"] --> B2["min-max 采样<br/>挑最分散的 k 个"]
+    end
+    SB --> C["bug 代码数据集"]
+    C --> EA
+    subgraph EA["EA-GRPO：编辑感知奖励训练"]
+        direction TB
+        D1["采样一组 rollout 修复补丁"] --> D2["组级准确率超过阈值 α？"]
+        D2 -->|"否"| D3["仅奖励正确性"]
+        D2 -->|"是"| D4["正确样本追加<br/>标准化编辑惩罚"]
+    end
+    EA --> E["修复补丁"]
+    E --> F["fix_p@k 评测<br/>通过测试 且 编辑 ≤ p 倍最小编辑"]
+```
+
 ### 关键设计
 
 **1. $\text{fix}_p@k$ 精确修复指标：让评测同时盯住正确性和编辑量**

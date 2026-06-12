@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 CoCD（Coherent Coordinate Descent）想要一个确定性、每步只花 $O(1)$ 函数评估、又低方差的零阶优化器，做法是把"上一步算出来的偏导"当成资产留着复用而不是丢掉。它维护一份与参数等大的 dense 梯度 buffer $\hat{\mathbf{g}} \in \mathbb{R}^n$，全局参数 $\mathbf{x}_t$ 按 cyclic 顺序轮流选下一组坐标。每一步先把整个 buffer 衰减一下 $\hat{\mathbf{g}}_{t-1}^{\text{decay}} = \gamma \cdot \hat{\mathbf{g}}_{t-1}$，再只对当前被选中的 $B$ 个坐标用中心有限差分算新值 $\tilde{\nabla}_i f(\mathbf{x}_t) = \frac{f(\mathbf{x}_t+\epsilon\mathbf{e}_i)-f(\mathbf{x}_t-\epsilon\mathbf{e}_i)}{\epsilon}$ 覆盖进 buffer 对应位置，最后拿整份 buffer 做一次全维度更新 $\mathbf{x}_{t+1} = \mathbf{x}_t - \alpha \hat{\mathbf{g}}_t$。于是每步真正算 FD 的只有 $B$ 个坐标（典型 $B \ll n$），但下降方向始终是满维的，绝大多数分量来自衰减后的 stale 值。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["参数 x_t + 满维梯度 buffer ĝ"] --> B["循环选下一组 B 个坐标"]
+    B --> C["γ 衰减重用<br/>整份 buffer ×γ，旧偏导当 warm start"]
+    C --> D["ε 隐式平滑<br/>对 B 个坐标算中心有限差分"]
+    D --> E["扁平 FIFO buffer<br/>新值就地覆盖对应位置<br/>满维 in-place 更新 x ← x − α·ĝ"]
+    E -->|循环刷下一组坐标| B
+    E --> F["输出收敛参数 x*"]
+```
+
 ### 关键设计
 
 **1. 用一个衰减因子 $\gamma$ 把"丢弃 stale"和"完美记忆"连成一族算法**

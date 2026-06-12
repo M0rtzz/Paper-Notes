@@ -43,6 +43,31 @@ STEM 将知识图谱多跳问答从逐步路径搜索改写为“先生成查询
 
 STEM 把多跳 KGQA 从"让 LLM 一步步猜下一跳"改写成"先画结构蓝图、再按图索骥"：输入是自然语言问题、问题实体和目标 KG，输出是一张 query-specific evidence subgraph，最后被线性化成推理链交给 LLM 生成答案。中间分三层推进——先把问题投影成 KG 可执行的 schema graph，再用一个轻量图模型生成全局 guidance graph 注入结构先验，最后让检索器在真实 KG 上对照这两张图做结构追踪，把"猜下一跳"变成"找结构匹配"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：自然语言问题<br/>+ 问题实体 + 目标 KG"]
+    subgraph PROJ["语义到结构投影"]
+        direction TB
+        SGDA["SGDA：分解为原子关系断言<br/>并判定 Precision / Breadth 策略"]
+        SAGB["SAGB：对齐 KG 标准关系名<br/>拼成 schema graph"]
+        SGDA --> SAGB
+    end
+    GNN["Triple-GNN 全局引导图<br/>编码 schema triples 为实体打分<br/>连成 guidance graph"]
+    subgraph RETR["结构追踪式子图检索"]
+        direction TB
+        ANCHOR["实体锚定<br/>Top-50 候选 + 实体级偏置"]
+        EDGE["边匹配：沿 schema graph 递归扩展<br/>三元组相似度 + 三元组级偏置"]
+        ANCHOR --> EDGE
+    end
+    OUT["evidence subgraph<br/>DFS 展开成推理链 → LLM 生成答案"]
+    IN --> PROJ
+    PROJ --> GNN
+    GNN --> RETR
+    EDGE -->|Precision：取最高分边| OUT
+    EDGE -->|Breadth：保留超阈值分支| OUT
+```
+
 ### 关键设计
 
 **1. 语义到结构投影：先学问题模式、再做符号 grounding，压住 schema 幻觉**

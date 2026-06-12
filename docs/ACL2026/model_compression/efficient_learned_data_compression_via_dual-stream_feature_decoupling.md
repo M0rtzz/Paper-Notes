@@ -41,7 +41,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FADE包含三个核心创新：(1) 双流多尺度解耦器（DMD）将特征分离到局部CNN流和全局MLP流中并行处理；(2) 层次化门控精炼器（HGR）通过粗细两级精炼实现实例自适应的概率建模；(3) 并发流并行流水线（CSPP）融合数据并行和时序并行，实现零等待处理。
+FADE包含三个核心创新：(1) 双流多尺度解耦器（DMD）将特征分离到局部CNN流和全局MLP流中并行处理；(2) 层次化门控精炼器（HGR）通过粗细两级精炼实现实例自适应的概率建模；(3) 并发流并行流水线（CSPP）融合数据并行和时序并行，实现零等待处理。前两者在模型层面把"深层串行"换成"浅层并行 + 实例自适应精炼"提升压缩率与表达力，第三者在系统层面打通 GPU 概率生成与 CPU 算术编码的流水线、绕开自回归因果依赖提升吞吐。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入数据序列<br/>文本 / 音频 / 基因组等"] --> DMD
+    subgraph DMD["双流多尺度解耦器 DMD"]
+        direction TB
+        G["全局流<br/>GeGLU 滚动缓存抓长程依赖"]
+        L["局部流<br/>1D 卷积锁定 N-gram"]
+        G --> R["内容自适应路由器<br/>Sigmoid 门控逐维融合"]
+        L --> R
+    end
+    DMD -->|融合特征 H_mix| HGR
+    subgraph HGR["层次化门控精炼器 HGR"]
+        direction TB
+        C["粗粒度精炼<br/>BMM + 持久化记忆，每流专属权重"]
+        F["细粒度精炼<br/>GeGLU 投影非线性精化"]
+        C --> F
+    end
+    HGR --> P["逐步条件概率分布"]
+    P --> CSPP
+    subgraph CSPP["并发流并行流水线 CSPP"]
+        direction TB
+        GPU["GPU 生产者<br/>异步 ping-pong 缓冲"]
+        GPU -->|零拷贝指针交换| CPU["CPU 消费者<br/>算术编码"]
+    end
+    CSPP --> OUT["压缩码流<br/>切 N 子流并行，解压追平压缩"]
+```
 
 ### 关键设计
 

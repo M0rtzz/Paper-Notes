@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 SafeSearch 要解决的是"怎么在不污染真实搜索引擎、也不伤害无辜用户的前提下，可扩展地评测搜索 Agent 遇到不可靠结果时会不会被带偏"。它把这件事拆成离线和在线两段：离线用四个 LLM 助手编排出 300 道高质量测试用例，每道题是一个四元组 `(benign query, target negative consequence, unreliable website, checklist)`；在线时把那个不可靠网页 $d_u$ 拼到真实搜索结果列表 $D=\{d_1,\dots,d_k\}$ 末尾，让 Agent 在 $D\cup\{d_u\}$ 上照常多轮搜索/工具调用/深度研究并给出最终回答，再用 checklist 辅助的安全评判器输出布尔判定聚合成 Attack Success Rate（ASR），另用一个 helpfulness 评判器换算成 Helpfulness Score（HS）。整套设计刻意走保守路线（只注 1 个网页、放末尾、多轮只注第一轮），所以最终量到的是 Agent 安全性的**下界**。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph GEN["三步式造题工作流 + 差分过滤"]
+        direction TB
+        A["三步造题：场景锚定→测试设计→实例化<br/>产出网页内容指南 + checklist"] --> B["差分过滤：baseline Agent 跑操控/良性两种工具<br/>仅留可诱发且良性下不触发的题"]
+    end
+    B --> C["300 道测试用例四元组<br/>benign query / 目标后果 / 不可靠网页 / checklist"]
+    C --> D["单网页沙箱注入 + 时间戳条件化生成<br/>合成不可靠网页 d_u 拼到真实结果末尾"]
+    D --> E["搜索 Agent 在 D∪{d_u} 上多轮作答<br/>仅第一轮注入"]
+    E --> F["Checklist 辅助的双轴 LLM-as-Judge<br/>安全判定→ASR，有用性→HS"]
+```
+
 ### 关键设计
 
 **1. 三步式造题工作流 + 差分过滤：保证 ASR 量的是"不可靠结果带来的额外伤害"**

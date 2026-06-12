@@ -43,6 +43,32 @@ tags:
 ### 整体框架
 这篇论文要解决的是"怎么把 CoT 有没有逻辑变成一个能算的数，再用它去挑训练数据"。整套方法分两条主线。评估线：给定一道带 ground-truth 逻辑节点 $(\mathcal{N},\mathcal{W})$ 的科学题和模型推理 $\mathcal{R}$，先用 all-MiniLM-L6-v2 把节点和句子两边都编成向量 $V_\mathcal{N},V_\mathcal{R}$，算出相似度矩阵 $M$，再从 $M$ 上读出三个分数 $\mathcal{F},\mathcal{O},\mathcal{P}$。数据线：从 arXiv + 期刊抓 38 万篇物理论文，R1 过滤掉综述/工具类剩 11.8 万篇，再让 R1 多轮对话从每篇论文的推导链里生成 $(Q,R,A,\mathcal{N},\mathcal{W})$ 五元组（rejection sampling 保证 $A'=A$，最多重试 5 次），留 864 道做 PhysLogic benchmark，其余 8 万和 4 万分别走 RST 与 Logic-Distill 两种采样策略喂给 SFT。最后用 LlamaFactory 在 8×H100 上对 Llama-3.1-8B、Qwen2.5-7B-Instruct、DeepSeek-R1-Distill-Qwen-7B 三种 backbone 做全参 SFT（lr $5\times10^{-6}$、cosine、2 epoch、cutoff 32768），再回到 PhysLogic 和 3 个公开 benchmark 上闭环评测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph METRIC["三维科学逻辑性度量 ℱ/𝒪/𝒫"]
+        direction TB
+        M1["句编码器嵌入 𝒩 与 ℛ<br/>→ 相似度矩阵 M"] --> M2["ℱ 内容保真 · 𝒪 因果次序 · 𝒫 向前推进"]
+    end
+    A["物理论文 38万篇 → R1 过滤留 11.8万<br/>→ R1 生成五元组 (Q,R,A,𝒩,𝒲)·拒绝采样保 A'=A"]
+    A -->|864 题| BENCH["PhysLogic 基准"]
+    A --> RST
+    A --> LD
+    subgraph RST["风格迁移 RST"]
+        direction TB
+        R1n["强 LLM 按 𝒩,𝒲 改写成连贯 CoT R'"] --> R2n["{Q,R',A} 8万样本"]
+    end
+    subgraph LD["逻辑蒸馏 Logic-Distill"]
+        direction TB
+        L1["强 LLM 直接推理 (R',A')"] --> L2["按总分 𝒮 取 top-κ 4万样本"]
+    end
+    RST --> SFT["全参 SFT·3 backbone·8×H100"]
+    LD --> SFT
+    SFT --> EVAL["PhysLogic + 3 OOD 物理基准评测"]
+    METRIC -. 弱监督打分 .-> L2
+    METRIC -. 评估 CoT .-> EVAL
+```
+
 ### 关键设计
 
 **1. 三维科学逻辑性度量 $\mathcal{F},\mathcal{O},\mathcal{P}$：把"有没有逻辑"拆成内容、次序、进展三件能独立算的事**

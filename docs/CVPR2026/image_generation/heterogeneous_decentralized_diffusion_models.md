@@ -42,6 +42,20 @@ tags:
 
 这篇论文要解决的是「去中心化训练前沿扩散模型」时贡献者资源与偏好各异、被迫统一训练目标不现实的问题。它先用 DINOv2 特征 + 层次化 k-means 把数据集划成 K=8 个语义簇（如人像、风景、建筑），每个专家在各自簇上完全独立训练、无需任何梯度/参数/激活同步；推理时由一个路由器网络 $p_\phi(k|x_t,t)$ 动态选择并融合专家预测。关键突破是允许不同专家用不同扩散目标（DDPM 的 ε-prediction 与 Flow Matching 的 velocity-prediction），再在推理时确定性地统一到速度空间融合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    B["训练数据 → DINOv2 + 层次 k-means<br/>划分 K=8 语义簇"]
+    B --> C["异构目标设计<br/>2 个 DDPM 专家 (ε-prediction)<br/>6 个 FM 专家 (velocity-prediction)，各簇独立训练"]
+    C --> D["高效架构与 Checkpoint 转换<br/>AdaLN-Single 压参 + 复用 DDPM 预训练权重"]
+    D --> E["路由器<br/>按噪声潜变量动态选 Top-2 专家"]
+    E -->|选中 DDPM 专家| F["推理时确定性转换<br/>ε 预测代数换算为速度"]
+    E -->|选中 FM 专家| G["直接输出速度场 v"]
+    F --> H["速度空间融合"]
+    G --> H
+    H --> I["生成图像"]
+```
+
 ### 关键设计
 
 **1. 异构目标设计：让 DDPM 与 Flow Matching 专家各训各的**

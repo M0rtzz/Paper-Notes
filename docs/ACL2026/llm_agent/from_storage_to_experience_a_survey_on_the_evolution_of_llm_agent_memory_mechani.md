@@ -45,17 +45,38 @@ tags:
 
 ### 整体框架
 
-作者把 LLM agent 记忆机制看作一个由 MDL（最小描述长度）驱动的演化过程，并用「Why-How-What」三层 RQ 把整条 storyline 串起来：RQ1（§3）追问是哪三股选择压力逼着记忆机制往前走，RQ2（§4）刻画 Storage → Reflection → Experience 三阶段的演化路径，RQ3（§5）则聚焦 frontier 的 Experience 阶段带来的两大质变。三阶段共享同一套形式化——agent 在时刻 $t$ 按 $a_t \sim \pi_\theta(a_t \mid \mathcal{I}, o_t, m_t)$ 采样动作，其中局部记忆 $m_t = \text{Retrieve}(\mathcal{M}, o_t)$ 来自全局 memory $\mathcal{M}$，而三阶段的真正分野就在于 $\mathcal{M}$ 是怎么被构造出来的：保留原始轨迹、精炼单条轨迹、还是跨轨迹归纳出通用规则。
+作者把 LLM agent 记忆机制看作一个由 MDL（最小描述长度）驱动的演化过程，并用「Why-How-What」三层 RQ 把整条 storyline 串起来：RQ1（§3）追问是哪三股选择压力逼着记忆机制往前走，RQ2（§4）刻画 Storage → Reflection → Experience 三阶段的演化路径，RQ3（§5）则聚焦 frontier 的 Experience 阶段带来的两大质变。三阶段共享同一套形式化——agent 在时刻 $t$ 按 $a_t \sim \pi_\theta(a_t \mid \mathcal{I}, o_t, m_t)$ 采样动作，其中局部记忆 $m_t = \text{Retrieve}(\mathcal{M}, o_t)$ 来自全局 memory $\mathcal{M}$，而三阶段的真正分野就在于 $\mathcal{M}$ 是怎么被构造出来的：保留原始轨迹、精炼单条轨迹、还是跨轨迹归纳出通用规则。整条综述顺着「Why-How-What」展开——先讲是哪三股压力逼着记忆机制演化，再讲演化出的三阶段形式化，最后深挖 frontier 的 Experience 阶段。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["三股选择压力（Why）<br/>长期一致性 / 动态环境 / 持续学习"]
+    P -->|MDL 压缩驱动逐代演化| AXIS
+    subgraph AXIS["信息抽象层级·三阶段形式化（How）"]
+        direction TB
+        S["Storage：轨迹保留<br/>保留原始轨迹 M_raw（Linear/Vector/Structured）"]
+        R["Reflection：轨迹精化<br/>单轨迹语义变换 m_i'（Introspection/Env/Coord）"]
+        E["Experience：跨轨迹抽象<br/>归纳通用规则集 K，约束 |K| ≪ Σ|τ|"]
+        S --> R --> E
+    end
+    subgraph EXP["Experience 两大变革线（What）"]
+        direction TB
+        AE["Active Exploration<br/>reward / curriculum / reuse 驱动"]
+        CTA["Cross-Trajectory Abstraction<br/>shallow / intermediate / deep 粒度"]
+    end
+    E --> EXP
+    EXP --> OUT["通用规则集 K 作 policy prior<br/>直接用于未见场景"]
+```
 
 ### 关键设计
 
-**1. 以「信息抽象层级」为分类轴的三阶段形式化**
-
-综述最核心的设计是换了一根分类轴。以往工作要么按「长期/短期」分（认知科学风格）、要么按「内存层级」分（OS 风格），都解释不了为什么 Reflexion 和 Voyager 属于不同代次；作者改用信息抽象层级，并给每一阶配一个精确的 functional signature。Storage 保留原始轨迹 $\tau = \langle(o_1,a_1),\dots,(o_T,a_T)\rangle$、$\mathcal{M}_{raw} = \{\tau_i\}_{i=1}^N$（再细分 Linear / Vector / Structured）；Reflection 做单轨迹语义变换 $m_i' = \mathcal{F}_{ref}(\tau_i \mid \phi)$、$\phi$ 是评估准则（细分 Introspection / Environment / Coordination）；Experience 做跨轨迹归纳 $\mathcal{F}_{exp}: \mathcal{T}_{batch} \to \mathcal{K}$ 并要求 $|\mathcal{K}| \ll \sum_{\tau\in\mathcal{T}_{batch}} |\tau|$ 的 MDL 约束（细分 Explicit / Implicit / Hybrid）。这根轴和「OS vs 认知科学」两条旧线都正交，因此能把分裂的文献统一起来，也让「Voyager 为何后于 Reflexion」有了干净答案——前者已迈入 cross-trajectory 抽象，后者还停在单轨迹精化。
-
-**2. 把演化驱动力拆成三股可定位的选择压力（Why）**
+**1. 把演化驱动力拆成三股可定位的选择压力（Why）**
 
 作者没有泛泛地说「记忆很重要」，而是把「为什么会从 Storage 一路演化到 Experience」分解成三个具体压力，并各自绑定一波文献爆发。其一是长期一致性：agent 要保持推理链不自相矛盾、目标不被局部最优带偏，这逼出了最早的记忆模块（MemGPT、Sumers 2023）。其二是动态环境：知识有时效且过期不会自动报错（Lazaridou 2021）、因果有延迟的级联效应（Joshi 2024），逼出 active management、temporal decay、causal graph 等机制。其三是持续学习：episodic memory 容量有限、无限扩张又会让错误传播污染整库（Xiong 2025），最终逼出从「记录」到「抽象」的跃迁，也就是 Experience。三股压力与时间线对齐后，读者能清楚看到「哪种选择压力催生了哪一代记忆方法」。
+
+**2. 以「信息抽象层级」为分类轴的三阶段形式化（How）**
+
+综述最核心的设计是换了一根分类轴。以往工作要么按「长期/短期」分（认知科学风格）、要么按「内存层级」分（OS 风格），都解释不了为什么 Reflexion 和 Voyager 属于不同代次；作者改用信息抽象层级，并给每一阶配一个精确的 functional signature。Storage 保留原始轨迹 $\tau = \langle(o_1,a_1),\dots,(o_T,a_T)\rangle$、$\mathcal{M}_{raw} = \{\tau_i\}_{i=1}^N$（再细分 Linear / Vector / Structured）；Reflection 做单轨迹语义变换 $m_i' = \mathcal{F}_{ref}(\tau_i \mid \phi)$、$\phi$ 是评估准则（细分 Introspection / Environment / Coordination）；Experience 做跨轨迹归纳 $\mathcal{F}_{exp}: \mathcal{T}_{batch} \to \mathcal{K}$ 并要求 $|\mathcal{K}| \ll \sum_{\tau\in\mathcal{T}_{batch}} |\tau|$ 的 MDL 约束（细分 Explicit / Implicit / Hybrid）。这根轴和「OS vs 认知科学」两条旧线都正交，因此能把分裂的文献统一起来，也让「Voyager 为何后于 Reflexion」有了干净答案——前者已迈入 cross-trajectory 抽象，后者还停在单轨迹精化。
 
 **3. 把 Experience 阶段切成 Active Exploration 与 Cross-Trajectory Abstraction 两条变革线（What）**
 

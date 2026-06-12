@@ -39,7 +39,22 @@ tags:
 
 ### 整体框架
 
-Rewis3d 想用"重建出来的 3D 几何"给 2D 弱监督分割当辅助监督，但又不让 3D 拖累部署——推理时只跑 2D。它由三块协同：2D 分割分支用 SegFormer-B4 + Mean Teacher，3D 分割分支用 Point Transformer V3 + Mean Teacher，再用跨模态一致性（CMC）让一个模态的教师去指导另一个模态的学生、双向传递知识。训练分两阶段：先做 15 个 epoch 的基础训练，各自把两个模态的学生-教师框架独立立起来；再进入 CMC 训练，引入跨模态一致性损失、用 5 个 epoch 线性预热到最大权重 $\lambda = 0.1$。关键是 3D 重建只当预处理，最终推理完全在 2D，既不需要 3D 传感器、也无额外推理开销。
+Rewis3d 想用"重建出来的 3D 几何"给 2D 弱监督分割当辅助监督，但又不让 3D 拖累部署——推理时只跑 2D。预处理阶段先用 MapAnything 前馈重建出密集点云，再做**视角感知采样**为每张图配齐足够多的 2D-3D 对应点。随后由三块协同：2D 分割分支用 SegFormer-B4 + Mean Teacher，3D 分割分支用 Point Transformer V3 + Mean Teacher，再用跨模态一致性（CMC）让一个模态的教师去指导另一个模态的学生、双向传递知识。训练分两阶段：先做 15 个 epoch 的基础训练，各自把两个模态的学生-教师框架独立立起来；再进入 CMC 训练，引入跨模态一致性损失、用 5 个 epoch 线性预热到最大权重 $\lambda = 0.1$。关键是 3D 重建只当预处理，最终推理完全在 2D，既不需要 3D 传感器、也无额外推理开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["2D 视频序列 + 稀疏标注"] --> B["MapAnything 前馈重建<br/>密集点云 + 逐点重建置信度"]
+    B --> C["视角感知采样<br/>每图 120K 点：60% 当前视角 + 40% 周围场景<br/>约 72K 个 2D-3D 对应点"]
+    C -->|"阶段1：15 epoch 基础训练"| DST
+    subgraph DST["双学生-教师架构"]
+        direction TB
+        D2["2D 分支：SegFormer-B4<br/>学生 + EMA 教师"]
+        D3["3D 分支：Point Transformer V3<br/>学生 + EMA 教师"]
+    end
+    DST -->|"阶段2：引入 CMC，λ 线性预热到 0.1"| E["双置信度加权跨模态一致性（CMC）<br/>预测置信度 × 重建置信度，2D↔3D 双向指导"]
+    E --> F["纯 2D 推理<br/>无需 3D 传感器、无额外开销"]
+```
 
 ### 关键设计
 

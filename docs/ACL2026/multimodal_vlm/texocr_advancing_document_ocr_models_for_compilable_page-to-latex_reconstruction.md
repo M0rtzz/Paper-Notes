@@ -45,6 +45,35 @@ TeXOCR 的方法由三个部分组成：TEXOCR-Bench 用来定义任务和评测
 
 评测时，所有模型都按统一 page-level inference 协议处理：每一页独立生成 LaTeX，随后按文档顺序拼接，再计算九个指标和最终 Overall score。作者还比较了 single-image、multi-image、merged 多页图三种推理粒度，发现单页图最稳定。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["TEXOCR-Bench 三维九指标"]
+        direction TB
+        M["转写保真<br/>CTP / FA / TA"]
+        N["结构忠实<br/>SA / CC / RV"]
+        O["端到端可用<br/>DS / sanity / 编译成功率 CSR"]
+    end
+    A["arXiv PDF + LaTeX 源码<br/>2022.01–2025.10"]
+    subgraph DATA["页面级 LaTeX 对齐数据构建"]
+        direction TB
+        B["解析依赖 + 合并 canonical 源码"] --> C["正文页对齐<br/>GPT-5-mini 标页面起止 token"]
+        C --> D["浮动体定位<br/>pdf2figure 分配到页"]
+        D --> E["参考文献页<br/>正文→LaTeX / 文献→BibTeX"]
+    end
+    A --> DATA
+    DATA --> F["404K 页面图像–LaTeX/BibTeX 对"]
+    F --> G["SFT 转写预训练<br/>Qwen3-VL-2B 全参数 next-token"]
+    subgraph RLVR["SFT + RLVR 可验证奖励训练"]
+        direction TB
+        H["每页采样 K 个 LaTeX"] --> I["跑页面级单元测试 T(x)"]
+        I --> J["reward = 通过比例<br/>组内相对优势 + KL 约束"]
+    end
+    G --> RLVR
+    BENCH -->|九指标转为页面级单元测试| I
+    RLVR --> K["TEXOCR 模型<br/>单页推理 → 按序拼接 → Bench 评测"]
+```
+
 ### 关键设计
 
 **1. 三维九指标的 TEXOCR-Bench：把"能不能用"拆成可量化的工程约束**

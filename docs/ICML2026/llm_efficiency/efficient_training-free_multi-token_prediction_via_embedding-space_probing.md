@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 冻结的 LLM $f_\theta$ 接收 prompt $x_{1:t}$ 后，ESP 不直接 next-token 解码，而是：(1) 在 embedding 空间合成 $k$ 个 mask token $m_1,\dots,m_k$ 并拼到序列末尾；(2) 一次前向得到所有 mask 位置的 logits，按动态树扩展从这些 logits 里采样 Top-K 候选构成"草稿 token 树"；(3) 用一个简单剪枝规则去掉与父节点重复的冗余分支；(4) 把整棵草稿树送进同一个 $f_\theta$ 做并行验证（speculative-decoding 标准做法），逐位精确匹配则接受、不匹配则截断；(5) 每个被接受的 token 触发对应 mask token 的更新（EMA 式融合最新生成 token 的嵌入），进入下一轮。整套流程通过定制的"树注意力掩码 + 位置索引"在一次前向里完成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt x₁:t<br/>冻结 LLM fθ"] --> B["Soft mask token 注入<br/>prompt 嵌入均值初始化 k 个占位向量"]
+    B --> C["一次前向 · 静态树注意力实现<br/>增量追加掩码列，探出各 mask 位 logits"]
+    C --> D["动态草稿树扩展<br/>累计概率 Top-1 expansion 取 Top-(B−1) 轨迹"]
+    D --> E["树剪枝<br/>替换与父节点重复的 token"]
+    E --> F["并行验证 · 复用树注意力掩码<br/>逐位精确匹配，无损"]
+    F -->|匹配，接受| G["EMA 在线更新 mask token<br/>融入最新生成 token 嵌入"]
+    G --> C
+    F -->|不匹配，截断| H["输出已接受 token，进入下一轮"]
+```
+
 ### 关键设计
 
 **1. Soft mask token 注入 + EMA 在线更新：用什么向量当"占位符"才能骗出未来 token**

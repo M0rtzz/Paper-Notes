@@ -50,6 +50,25 @@ $$\hat{\theta}_T^{(c)} = \theta_T + \pi_{S \to T}(\tau_S^{(c)}), \quad \tau_S^{(
 
 其中 $\tau_S^{(c)}$ 是源域里类别 $c$ 相对域专家的知识残差，$\pi_{S \to T}(\cdot)$ 是把这块残差从源域搬到目标域的传输函数——后面三个设计点分别负责造出 $\theta_S/\theta_T$、抠出 $\tau_S^{(c)}$、以及实现 $\pi_{S \to T}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    GD["预训练 Grounding DINO θ₀"] --> OBJ
+    subgraph OBJ["Objectification：训练类无关域专家"]
+        direction TB
+        SRC["源域数据<br/>top-3 类标签改成 object"] --> TS["源域专家 θ_S"]
+        TGT["目标域数据<br/>top-3 类标签改成 object"] --> TT["目标域专家 θ_T"]
+    end
+    TS --> SVFT["SVFT：在 θ_S 上为类别 c 抠奇异值残差<br/>冻结 U_S/Σ_S/V_S，只训 ΔΣ_S(c)"]
+    SVFT --> TELE
+    TT --> TELE
+    subgraph TELE["Teleportation：Orthogonal Procrustes 旋转搬运残差"]
+        direction TB
+        ROT["闭式旋转 L*=U_T·U_S, R*=V_T·V_S"] --> ADD["旋进目标谱空间，叠加到 θ_T"]
+    end
+    TELE --> OUT["目标域类别 c 检测器 θ̂_T(c)<br/>全程零目标域 c 类数据"]
+```
+
 ### 关键设计
 
 **1. Objectification：把多类标签塌缩成「物体」，逼模型只学域风格、不学类别**

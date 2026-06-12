@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 ElasticFlow 想同时解决两件事：让语言条件动作策略做到 1-NFE 单步推理却不丢物理一致性，并让同一套权重既能毫秒级反应控制、又能秒级长程规划。整体流程是：观测 $o$ 经 SigLIP 编码、语言指令 $\ell$ 经 T5 编码，通过 cross-attention 注入一个 150M 参数的 DiT 骨干；Elastic Time Horizon 模块把时间三元组 $(r,t,\Delta t)$ 用 Fourier 特征编码后经 AdaLN 调制注入；网络输出的不是瞬时速度而是平均速度场预测 $u_\theta(z_t,r,t,o,\ell)$。训练用 MeanFlow Identity Loss 配 Forward-mode AD 监督；推理时给定 $z_1\sim\mathcal{N}(0,I)$，单次前向即得动作块 $\hat{x}=z_1-u_\theta(z_1,0,1,o,\ell)$，全程无迭代、无蒸馏。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["观测 o（SigLIP 编码）"] --> DIT["DiT 骨干（150M 参数）"]
+    L["语言指令 ℓ（T5 编码）"] -->|cross-attention| DIT
+    TH["弹性时间区间<br/>三元组 (r, t, Δt) 经 Fourier 特征 + AdaLN 调制"] --> DIT
+    DIT --> U["平均速度场建模<br/>输出 u_θ(z_t, r, t, o, ℓ)"]
+    U --> TRAIN["训练：MeanFlow Identity 损失<br/>Forward-mode AD + stop-gradient + CFG"]
+    U --> INFER["单步推理：x̂ = z₁ − u_θ(z₁,0,1,o,ℓ)，1-NFE（∼71Hz）"]
+```
+
 ### 关键设计
 
 **1. 平均速度场建模（MeanFlow Identity）：把动作生成从"多步 ODE 积分"改成"学一个一步映射"**

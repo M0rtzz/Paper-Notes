@@ -38,7 +38,18 @@ tags:
 
 ### 整体框架
 
-GNVC-VD 处理输入视频 $V \in \mathbb{R}^{(1+T) \times H \times W \times 3}$ 的流程如下：(1) 3D 因果 VAE 编码器 $\mathcal{E}$（来自 Wan2.1）将视频编码为时空潜在序列 $\boldsymbol{x}_1 = \{l_t\}_{t=1}^{1+T/4}$；(2) 上下文变换编码模块压缩潜在表示并生成码流；(3) 基于 VideoDiT 的 flow-matching 潜在精炼模块对解码后的潜在序列进行序列级生成去噪；(4) 3D 因果解码器 $\mathcal{D}$ 重建视频。整个流水线将变换编码压缩与扩散生成精炼紧密耦合。
+GNVC-VD 处理输入视频 $V \in \mathbb{R}^{(1+T) \times H \times W \times 3}$ 的流程如下：(1) 3D 因果 VAE 编码器 $\mathcal{E}$（来自 Wan2.1）将视频编码为时空潜在序列 $\boldsymbol{x}_1 = \{l_t\}_{t=1}^{1+T/4}$；(2) **上下文潜在编解码器**用时序条件编码把潜在序列压成运动感知的紧凑码流；(3) 基于 VideoDiT 的 **flow-matching 潜在精炼模块**从解码后（受压缩退化）的潜在出发，做序列级生成去噪，其中**压缩感知条件适配器**把压缩域上下文注入 DiT，引导它认得并修正压缩伪影；(4) 3D 因果解码器 $\mathcal{D}$ 重建视频。整个流水线将变换编码压缩与扩散生成精炼紧密耦合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入视频 V"] --> B["3D 因果 VAE 编码器<br/>→ 时空潜在序列"]
+    B --> C["上下文潜在编解码器<br/>I 帧独立压 + 预测帧编码相对前帧的增量"]
+    C --> D["码流（熵编解码）"]
+    D --> E["flow-matching 潜在精炼<br/>从压缩潜在部分加噪、5 步走短路径去噪"]
+    F["压缩感知条件适配器<br/>把压缩域上下文注入 DiT 中间层"] -->|"调制速度场修正项 Δv_fine"| E
+    E --> G["3D 因果解码器 → 重建视频"]
+```
 
 ### 关键设计
 

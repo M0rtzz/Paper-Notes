@@ -44,6 +44,36 @@ CTFS 想解决的是一个很具体的困境：声呐图像标注极贵，半监
 
 整篇 pipeline 因此分两条线走。标注数据走常规监督训练，给学生一个 $\mathcal{L}_{sup}$。未标注数据是重点：经过前 $E$ 个 epoch 的预热后，三个教师按"通用→声学阴影→能量衰减"的固定顺序每 3 个 epoch 轮流上岗（轮换函数 $\phi(e)$）。当前激活的教师对弱增强输入生成伪标签，学生则在强增强输入上学习；伪标签不是照单全收，而是先经过多视角可靠性评估打分，再以这个分数同时做硬过滤和软加权，得到无监督损失 $\mathcal{L}_{unsup}$。最终 $\mathcal{L}_{total} = \mathcal{L}_{sup} + \lambda_u \cdot \mathcal{L}_{unsup}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["标注图像"] --> STU["学生模型"]
+    U["未标注图像"] -->|强增强| STU
+    U -->|弱增强| CBTS
+    subgraph CBTS["多教师协作 CBTS"]
+        direction TB
+        ROT["轮换 φ(e)：通用→声学阴影→能量衰减<br/>每 3 epoch 换一个，均 EMA 更新"]
+        ROT --> TG["通用教师<br/>几何+颜色扰动"]
+        ROT --> TA["声学阴影教师<br/>扇形阴影强度衰减"]
+        ROT --> TB2["能量衰减教师<br/>垂直方向线性衰减"]
+    end
+    CBTS --> PL["当前激活教师生成伪标签"]
+    PL --> MVRA
+    subgraph MVRA["多视角可靠性评估 MVRA"]
+        direction TB
+        R1["单教师内稳定性 r<br/>原图 vs 增强视图余弦相似度"]
+        R2["跨教师间一致性 C<br/>三教师两两预测一致性"]
+        R1 --> RR["综合可靠性 R = Π(C) × mean(r)"]
+        R2 --> RR
+    end
+    MVRA --> AC["可靠性引导的自适应约束<br/>硬阈值 Δ 过滤 + 软权重加权"]
+    STU --> LSUP["监督损失 L_sup"]
+    STU --> LUN["无监督损失 L_unsup"]
+    AC --> LUN
+    LSUP --> TOT["总损失 L_total = L_sup + λu·L_unsup"]
+    LUN --> TOT
+```
+
 ### 关键设计
 
 **1. 多教师协作（CBTS）：把声呐成像物理写进教师的增强里**

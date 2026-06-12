@@ -47,6 +47,27 @@ A2P 想解决的是单目双手重建里最棘手的两类失败：互遮挡时 
 
 Stage 1 负责「2D 结构对齐」：ResNet-50 从图像抽出特征 $\mathbf{F}_i$，训练时再用 Sapiens 基础模型抽出关键点、分割、深度三种 2D 先验特征 $\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d$，融合成 $\mathbf{F}_p$；一个轻量的 Fusion Alignment Encoder 把 $\mathbf{F}_p$ 蒸馏下来，于是推理时可以直接扔掉 Sapiens。两路特征 $\langle\mathbf{F}_i, \mathbf{F}_p\rangle$ 经 Transformer Encoder 融合后送进 MANO 回归器，得到双手参数。Stage 2 负责「3D 空间交互对齐」：只有当检测到双手包围盒 IoU>0 且确实发生穿透时才启动，把这组穿透的 MANO 参数当条件喂给扩散模型，边 DDIM 去噪边用碰撞梯度往「不穿模」的方向推，最终输出物理上站得住的配置。大部分帧不穿透，直接跳过 Stage 2。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目双手图像"] --> B["ResNet-50 主干<br/>图像特征 F_i"]
+    subgraph S1["Stage 1：2D 结构对齐"]
+        direction TB
+        T["Sapiens 基础模型<br/>抽关键点/分割/深度先验<br/>（仅训练，推理移除）"] -. 蒸馏 .-> C["Fusion Alignment Encoder（FAE）<br/>MSE 对齐先验特征 F_p"]
+        C --> D["Transformer Encoder<br/>融合 ⟨F_i, F_p⟩"]
+        B --> D
+        D --> E["MANO 回归器<br/>输出双手参数"]
+    end
+    E -->|"无穿透（多数帧）"| OUT["输出双手 MANO"]
+    E -->|"IoU>0 且检出穿透"| G
+    subgraph S2["Stage 2：3D 空间交互对齐"]
+        direction TB
+        G["穿透感知扩散模型<br/>穿透姿态为条件 X_c<br/>DDIM 逐步去噪"] --> H["碰撞梯度引导<br/>距离+法向区分穿透/接触<br/>沿碰撞梯度推开"]
+        H -->|"逐步迭代"| G
+    end
+    H --> OUT
+```
+
 ### 关键设计
 
 **1. Fusion Alignment Encoder（FAE）：把基础模型的 2D 先验蒸馏成一个推理时用得起的小模型**

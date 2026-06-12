@@ -45,6 +45,25 @@ tags:
 
 这篇论文想回答一个看似简单的问题：VLM 到底为什么数不准物体？它的做法是把"诊断"拆成两步走。第一步，用一套**完全可控的合成图像**把影响计数的变量逐个隔离开——白底黑圆做基线，每次只动一个属性（数量、颜色、形状、纹理、背景），这样模型一旦数错，就能精确归因到是哪个因素在作祟。第二步，在模型已经数错的地方，深入到语言解码器内部去**改写它对视觉 token 的注意力分配**，看看把注意力强行往物体上挪能不能救回计数。整条链路从合成数据 → 多维度评估 → 注意力干预，始终围绕"隔离变量、定位根因"这一条主线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["合成评估数据集（单变量控制）"]
+        direction TB
+        A["512×512 白底黑圆基线"] --> B["每次只动一个属性<br/>数量 / 颜色 / 形状 / 纹理 / 背景"]
+    end
+    L["Prompt Specificity Ladder<br/>P1–P5 提示阶梯"]
+    DATA --> M["VLM 计数推理"]
+    L --> M
+    M --> E["评估：Accuracy + MRCE<br/>逐维度定位失败因素"]
+    E -->|数错的场景| R
+    subgraph R["五种注意力重加权策略<br/>解码器内改写视觉 token 注意力"]
+        direction TB
+        R1["Amplify / Suppress / Focus / Balance"] --> R2["Visual Mask Amplify（SAM 掩码引导）"]
+    end
+    R --> E2["重评估 MRCE：注意力能否救回计数"]
+```
+
 ### 关键设计
 
 **1. 合成评估数据集：用单变量控制把失败因素一个一个揪出来**

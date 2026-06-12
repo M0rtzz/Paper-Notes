@@ -49,6 +49,20 @@ tags:
 
 在实现上，作者构造一个辅助问题，例如“这张证据是否有助于回答用户问题？”，并把输出空间限制为 True / False。对于候选图像 $c_i$，模型输入是由原问题、候选图像和辅助判断指令组成的模板 $I=Template(q,c_i,q_{aux})$。helpfulness 分数直接取最终层对 True token 的 logit，即 $s(c_i)=\ell(v^+|I)$。这个设计避免了生成长答案，也不需要额外训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户问题 q"] --> POOL["固定候选池<br/>GT 图像 + 检索得到的干扰图像"]
+    POOL --> SUR["Surrogate 代理模型加速<br/>轻量 MLLM 替主模型扛 O(N) 次逐张打分"]
+    SUR --> SCORE
+    subgraph SCORE["效用打分：信息增益效用 → 潜在 helpfulness 变量"]
+        direction TB
+        AUX["拼辅助判断模板<br/>『此证据是否有助于回答 q？』限定 True/False"] --> LOGIT["取最终层 True token logit<br/>作 helpfulness 分数 s(c_i)=P(Z=1|c_i,q)"]
+    end
+    SCORE -->|按 helpfulness 排序| TOPK["选 Top-K 证据"]
+    TOPK --> GEN["高成本主模型仅用 Top-K 证据生成最终答案"]
+```
+
 ### 关键设计
 
 **1. 从相关性到信息增益效用：把目标从“图像和查询像不像”换成“它能不能改变模型的回答”**

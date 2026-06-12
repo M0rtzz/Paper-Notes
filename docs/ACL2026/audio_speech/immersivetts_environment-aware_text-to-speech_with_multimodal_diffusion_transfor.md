@@ -45,6 +45,45 @@ ImmersiveTTS 的输入包含三类信息：content prompt，即要说的话；en
 
 语音侧先由文本 encoder 和 MAS duration alignment 得到 frame-level linguistic prior，再通过卷积网络映射到 VAE latent 兼容的表示，并与 noisy latent 拼接。双流 MM-DiT 的 double-stream blocks 让环境 token 与语音 latent 通过 joint attention 互相读取；后续 single-stream blocks 只保留 speech stream 做高保真细化。最终模型用 flow matching 预测速度场，并用 dual classifier-free guidance 在推理时分别调节环境条件和内容条件的强度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    CP["content prompt"] --> TE["文本 encoder + MAS 时长对齐<br/>frame-level 语言先验 → 卷积映射"]
+    SP["speaker prompt"] --> SE["说话人 embedding"]
+    EP["environment prompt"]
+
+    subgraph ENV["双粒度环境条件（CLAP + T5）"]
+        direction TB
+        CLAP["CLAP 全局声景语义<br/>调制 AdaLN"]
+        T5["Flan-T5 token 环境序列"]
+    end
+    EP --> ENV
+
+    TE --> SLAT["speech latent<br/>含噪 latent + 内容对齐特征"]
+    SE --> SLAT
+
+    subgraph MMDIT["双流 MM-DiT 建模语音-环境交互"]
+        direction TB
+        DS["double-stream blocks<br/>joint attention 互读"]
+        SS["single-stream blocks<br/>语音高保真细化"]
+        DS --> SS
+    end
+    SLAT --> DS
+    T5 --> DS
+    CLAP --> MMDIT
+
+    SS --> FM["flow matching 速度场<br/>dual CFG 控制环境/内容强度"]
+    FM --> DEC["VAE decoder + HiFi-GAN"]
+    DEC --> OUT["16 kHz 混合波形"]
+
+    subgraph REPA["Domain-specific REPA 表征对齐"]
+        direction TB
+        WAVLM["WavLM 教师<br/>clean speech · 盯内容"]
+        ATST["ATST-Frame 教师<br/>混合音频 · 盯环境"]
+    end
+    SS -.->|中间层 hidden + projector| REPA
+```
+
 ### 关键设计
 **1. 双流 MM-DiT 建模语音-环境交互：把语音和环境放进两个并行流，让它们在生成过程中显式耦合**
 

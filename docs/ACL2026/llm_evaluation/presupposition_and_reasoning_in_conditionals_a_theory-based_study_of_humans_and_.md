@@ -49,6 +49,20 @@ tags:
 
 LLM 除了给数值判断，还需要输出 step-by-step reasoning。随后，Claude-Haiku-4 作为 judge，用专家设计的 checklist 对 reasoning trace 逐条判断是否满足理论标准。最后，作者抽样 5% 输出交给两名语言学博士人工验证 judge 结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["受控 item 构造"]
+        direction TB
+        A["30 个 base proposition<br/>(物主代词触发存在预设)"] --> B["norming：估计先验与条件概率<br/>30 名母语者评分"]
+        B --> C["分出高/中/低概率 × 三档前件相关性<br/>保留 90 个条件句 item"]
+    end
+    S1 --> D["平行人类与模型行为实验<br/>120 人 + 4 模型给 0–7 likelihood 评分"]
+    D -->|without-context / with-context 两档| E["模型额外输出 step-by-step reasoning"]
+    E --> F["理论驱动 checklist 的 LLM-as-a-Judge<br/>Claude-Haiku-4 逐条二元判定"]
+    F --> G["5% 输出语言学博士人工验证"]
+```
+
 ### 关键设计
 
 **1. 概率与相关性的受控 item 构造：把 proviso problem 里“前件到底让不让预设更可能成立”做成可控变量**

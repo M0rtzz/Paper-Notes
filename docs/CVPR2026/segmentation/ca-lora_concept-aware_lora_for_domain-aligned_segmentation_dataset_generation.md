@@ -41,11 +41,25 @@ tags:
 
 这篇论文要解决的是「合成分割数据既要对齐目标域、又要保持多样性」这对矛盾：直接拿预训练 T2I 模型生成的图够多样但不像驾驶场景，对它做完整 LoRA 微调能对齐却又把视角、风格、物体形状、布局全学进去，过拟合到训练集失去多样性。CA-LoRA 的破局点是把微调从「全学」收窄成「只学某一个概念」。整条流程是：先给每一层权重打一个「对目标概念有多敏感」的分数，只挑最敏感的前 k% 层挂上 LoRA、其余冻结保留预训练知识；微调完再用这个对齐后的模型训练一个标签生成器，最后用增强 prompt 批量产出图像-标签对喂给分割模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 T2I 模型 + 目标域训练集"] --> B
+    subgraph CA["概念感知度量"]
+        direction TB
+        B["概念增强 prompt<br/>风格/视角增强构造伪目标"] --> C["逐层算敏感度<br/>归一化梯度比值并排序"]
+    end
+    C --> D["CA-LoRA 选择性微调<br/>仅前 k% 敏感层挂 LoRA、其余冻结"]
+    D --> E["标签生成器与域差距缩减<br/>用微调后模型特征训 Mask2Former 标签头"]
+    E --> F["增强 prompt 批量生成<br/>图像-标签对"]
+    F --> G["训练下游分割模型"]
+```
+
 ### 关键设计
 
 **1. 概念感知度量（Concept Awareness）：用归一化的梯度比值，公平地量出每层对某个概念有多敏感**
 
-要「只学某个概念」，前提是先知道哪些层真正负责这个概念。难点在于扩散模型每层权重的梯度量级天差地别（浅层和深层、不同投影层都不在一个尺度上），直接比谁的梯度大根本不公平。CA-LoRA 先构造一个概念损失：把原 prompt 做概念增强当伪目标，比如原 prompt 是 "Photorealistic first-person urban street view"，做风格增强得到 "Sketch of first-person urban street view"，做视角增强得到 "Photorealistic urban street in top-down view"，让模型在原 caption 和增强 caption 下的去噪预测靠拢，
+要「只学某个概念」，前提是先知道哪些层真正负责这个概念。难点在于扩散模型每层权重的梯度量级天差地别（浅层和深层、不同投影层都不在一个尺度上），直接比谁的梯度大根本不公平。CA-LoRA 先构造一个概念损失：把原 prompt 做概念增强当伪目标，比如原 prompt 是 "Photorealistic first-person urban street view"，做风格增强得到 "Sketch of first-person urban street view"，做视角增强得到 "Photorealistic urban street in top-down view"，让模型在原 prompt 和增强 prompt 下的去噪预测靠拢，
 
 $$\mathcal{L}_{Concept} = \|\epsilon_\theta(x_t, c, t) - \text{sg}[\epsilon_\theta(x_t, c_{Aug}, t)]\|_2^2$$
 
@@ -53,7 +67,7 @@ $$\mathcal{L}_{Concept} = \|\epsilon_\theta(x_t, c, t) - \text{sg}[\epsilon_\the
 
 $$\text{Concept-Awareness}(\theta) = \mathbb{E}_{x_0, \epsilon, c_{Aug}}\left[\frac{\|\nabla_\theta \mathcal{L}_{Concept}\|}{\|\nabla_\theta \mathcal{L}_{Diff}\|}\right]$$
 
-分母把各层固有的梯度量级差异（位置偏差）抵消掉，剩下的比值才真正反映「这一层相对而言对概念扰动有多在意」。这样得到的排序可以扩展到任意自定义概念，只要换一个概念增强 caption 即可。
+分母把各层固有的梯度量级差异（位置偏差）抵消掉，剩下的比值才真正反映「这一层相对而言对概念扰动有多在意」。这样得到的排序可以扩展到任意自定义概念，只要换一个概念增强 prompt 即可。
 
 **2. CA-LoRA 选择性微调：按概念敏感度排序，只给前 k% 层挂 LoRA，其余冻结**
 

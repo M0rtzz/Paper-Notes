@@ -37,11 +37,23 @@ tags:
 
 ### 整体框架
 
-针对上面两个毛病——过早定答案、初期不看图——作者提出两个完全免训练的推理时方法：PSP 在早期时间步压住"急着生成答案"的冲动，VRG 在生成时放大视觉条件信号。两者都作用在 dMLLM 的重掩码阶段，可叠加用在任意重掩码策略（Low-conf/Entropy/Margin）上，无需改模型、无需重训。
+针对上面两个毛病——过早定答案、初期不看图——作者提出两个完全免训练的推理时方法：位置-步骤惩罚 (Position & Step Penalty, PSP) 在早期时间步压住"急着生成答案"的冲动，视觉推理引导 (Visual Reasoning Guidance, VRG) 在生成时放大视觉条件信号。两者都嵌入 dMLLM 的扩散去噪循环：每个时间步里，PSP 修正 token 置信度、VRG 修正 logits，再共同决定这一步的重掩码（恢复哪些 token），如此迭代直至全部恢复。它们可叠加用在任意重掩码策略（Low-conf/Entropy/Margin）上，无需改模型、无需重训。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 问题 prompt"] --> B["dMLLM 扩散去噪步"]
+    B --> C["位置-步骤惩罚 PSP<br/>早期压低末端 token 置信度"]
+    B --> D["视觉推理引导 VRG<br/>CFG 放大视觉条件 logits"]
+    C --> E["重掩码：恢复高置信 token"]
+    D --> E
+    E -->|未完成，进入下一时间步| B
+    E -->|全部恢复| F["输出答案"]
+```
 
 ### 关键设计
 
-**1. Position & Step Penalty：早期时间步压住序列末端的答案 token**
+**1. 位置-步骤惩罚 (PSP)：早期时间步压住序列末端的答案 token**
 
 答案通常落在序列末端，而 dMLLM 偏偏在扩散早期就把末端 token 定了下来。PSP 据此在早期对越靠末端的 token 施加越强的惩罚：
 
@@ -49,7 +61,7 @@ $$\tilde{C}_j^i = C_j^i \cdot [1 - \gamma(1-\tau_i)\text{rel}(j)]$$
 
 其中 $\tau_i = i/K$ 是扩散进度、$\text{rel}(j)\in[0,1]$ 是 token 的相对位置、$\gamma$ 是惩罚强度。早期（$\tau_i$ 小）且越靠后（$\text{rel}(j)$ 大）的 token 被压得越狠，于是模型被迫先把中间推理补完、再去落答案。消融显示 PSP 确实把答案生成推迟到了更晚的时间步。
 
-**2. Visual Reasoning Guidance：借 CFG 放大视觉条件信号**
+**2. 视觉推理引导 (VRG)：借 CFG 放大视觉条件信号**
 
 dMLLM 初期对视觉 prompt 依赖太弱，VRG 把图像扩散里的 Classifier-Free Guidance 搬过来，在 logits 层面把"有视觉条件"相对"无条件"的差异放大：
 

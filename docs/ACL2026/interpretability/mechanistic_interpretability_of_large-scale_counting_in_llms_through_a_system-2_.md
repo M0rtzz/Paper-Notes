@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 方法把一个超出单 forward 计数能力的「数列表里有几个物体」任务，外化成一段可在 token 流上展开的多步运算：输入端用 `|` 把 N 个物体切成若干 partition（开源模型每段 ~6-9、闭源模型 ~15-25，都落在模型可靠计数 range 内），prompt 强制模型按固定格式先逐段输出局部计数 `part1: x1\npart2: x2\n...` 再给 `Final answer: x`。这样每个分段交给 System-1 的 implicit counter 去数（它在小数量上很可靠），跨段求和交给显式写出的 token 序列即 System-2 去做，全程无需微调、无外部工具。机制分析侧则围绕这条 pipeline 叠了一套因果探针——CountScope probing 定位 latent count 落在哪些 token、token 零消融与 layer-wise mask 找出写入 count 的层、attention knockout 找出关键 head、cross-context patching 验证因果方向——把行为效果一路追到具体电路。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["显式 partition × 强制中间步骤"]
+        direction TB
+        A["物体列表（N 个）"] --> B["用 | 切成若干 partition<br/>每段落在可靠计数范围内"]
+        B --> C["逐段 System-1 计数<br/>part1: x1 / part2: x2 / …"]
+        C --> D["System-2 显式求和<br/>Final answer: x"]
+    end
+    D --> E["CountScope 定位<br/>count 落在 partition 末尾 item+comma token"]
+    E --> S2
+    subgraph S2["三阶段电路与单 head 因果归因"]
+        direction TB
+        G["attention 分析<br/>中间步骤 token 注意力指向 partition 末尾"] --> H["attention knockout<br/>Layer22-Head13 传递 · Head1 聚合"]
+        H --> I["cross-context patching<br/>替换中间步骤 embedding → 最终答案随之变"]
+    end
+```
+
 ### 关键设计
 
 **1. 显式 partition × 强制中间步骤：缺一不可的双重组合**

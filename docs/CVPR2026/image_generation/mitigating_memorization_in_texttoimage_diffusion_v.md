@@ -49,6 +49,30 @@ tags:
 
 这篇把扩散模型记忆化当成一个「训练时种因、评估时结果」的完整链路来治，给出两个互不依赖的模块。RAPTA 作用在训练阶段：对每张训练图用 Faster R-CNN 检测显著区域、生成一池带位置信息的提示变体，经 CLIP 评分加权采样后拿去 conditioning 扩散模型，打破「一张图永远配同一句 caption」的强绑定。ADMCD 作用在推理/评估阶段：抽 ViT patch 特征、CLIP 全局特征、ResNet 纹理特征三路，经 Transformer 注意力融合后用双阈值判断是否复制、以及是精确复制还是风格模仿。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph RAPTA["RAPTA：区域感知提示增强（训练时）"]
+        direction TB
+        A["训练图 + 原始 caption"] --> B["Faster R-CNN 检测<br/>保留 top-M 高置信框"]
+        B --> C["bbox 中心离散到 3×3 网格<br/>得位置 token"]
+        C --> D["模板实例化<br/>生成区域感知变体池 V"]
+        D --> E["CLIP 一致性评分加权采样<br/>π(v) ∝ Sᵥ^γ"]
+    end
+    E -->|采样变体做 conditioning| F["扩散模型去噪训练<br/>损失不变、不改架构"]
+
+    subgraph ADMCD["ADMCD：三流注意力融合复制检测（评估时）"]
+        direction TB
+        G["生成图 + 参考图"] --> H["三流特征<br/>ViT patch / CLIP 全局 / ResNet 纹理"]
+        H --> I["线性投影 + Transformer 注意力融合<br/>L2 归一化"]
+        I --> J{"S_fus > τ₁=0.938 ?"}
+    end
+    J -->|否| K["非复制"]
+    J -->|是| L{"加权流分数 S̄ > τ₂=0.970 ?"}
+    L -->|是| M["精确复制 / 检索"]
+    L -->|否| N["风格模仿"]
+```
+
 ### 关键设计
 
 **1. RAPTA：用区域感知的提示变体打破 caption-image 一对一依赖**
@@ -57,11 +81,9 @@ tags:
 
 **2. ADMCD：三流注意力融合替代单一相似度指标做鲁棒复制检测**
 
-单一指标各有偏向——LPIPS 偏纹理、ORB 偏关键点、SSIM 偏结构——既分不清精确复制和风格模仿，也扁不住图像扰动。ADMCD 提取三流特征 $f_{\text{vis}}$（ViT patch 级）、$f_{\text{clip}}$（CLIP 全局语义）、$f_{\text{tex}}$（ResNet 纹理），线性投影到同维后过 Transformer 编码器注意力融合、L2 归一化得 $\hat{f}_{\text{fus}}$，再两阶段判定：先看融合相似度 $S_{\text{fus}} = \cos(\hat{f}_{\text{fus}}(G), \hat{f}_{\text{fus}}(R)) > \tau_1 = 0.938$ 判是否为 Copy；是 Copy 再算加权流分数 $\bar{S} = 0.24 \cdot S_{\text{vis}} + 0.38 \cdot S_{\text{clip}} + 0.38 \cdot S_{\text{tex}}$，$\bar{S} > \tau_2 = 0.970$ 判 Retrieve/Exact Copy、否则判 Style Copy。两个阈值和三流权重都靠验证集扫描确定，不用训练下游分类器，等于零训练部署。
+单一指标各有偏向——LPIPS 偏纹理、ORB 偏关键点、SSIM 偏结构——既分不清精确复制和风格模仿，也扛不住图像扰动。ADMCD 提取三流特征 $f_{\text{vis}}$（ViT patch 级）、$f_{\text{clip}}$（CLIP 全局语义）、$f_{\text{tex}}$（ResNet 纹理），线性投影到同维后过 Transformer 编码器注意力融合、L2 归一化得 $\hat{f}_{\text{fus}}$，再两阶段判定：先看融合相似度 $S_{\text{fus}} = \cos(\hat{f}_{\text{fus}}(G), \hat{f}_{\text{fus}}(R)) > \tau_1 = 0.938$ 判是否为复制（Copy）；是复制再算加权流分数 $\bar{S} = 0.24 \cdot S_{\text{vis}} + 0.38 \cdot S_{\text{clip}} + 0.38 \cdot S_{\text{tex}}$，$\bar{S} > \tau_2 = 0.970$ 判精确复制/检索（Exact Copy）、否则判风格模仿（Style Copy）。两个阈值和三流权重都靠验证集扫描确定，不用训练下游分类器，等于零训练部署。
 
-**3. ADMCD 当通用鲁棒相似度度量：三流互补抗扰动**
-
-把 ADMCD 单拎出来当相似度度量也成立。在高斯噪声、模糊、椒盐、遮挡、旋转、翻转、裁剪等 10 种常见攻击下，它的融合相似度稳定在 0.748–0.974，而 LPIPS/ORB/SSIM 波动剧烈。稳的原因正是三流互补：LPIPS 对亮度敏感失灵时 CLIP 和纹理顶上，ORB 关键点稀疏时 patch 特征补上，没有哪一种退化能同时打垮三路。
+正因三流互补，ADMCD 单拎出来还能当通用鲁棒相似度度量：在高斯噪声、模糊、椒盐、遮挡、旋转、翻转、裁剪等 10 种常见攻击下，它的融合相似度稳定在 0.748–0.974，而 LPIPS/ORB/SSIM 波动剧烈。稳的原因正是三路彼此兜底——LPIPS 对亮度敏感失灵时 CLIP 和纹理顶上，ORB 关键点稀疏时 patch 特征补上，没有哪一种退化能同时打垮三路。
 
 ### 损失函数 / 训练策略
 

@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 DPEPO 是 GRPO 的并行扩展。给定任务 + $K$ 个共享初始状态的并行环境 $\mathcal{E}$，agent 在每步 $t$ 自主选 $\mathcal{E}'_t$，对每个被选环境生成 action 形成 $A_t$，同时执行得到 $S_t$，trajectory $\tau=\{(S_t, A_t)\}_{t=1}^T$。训练分两阶段：(1) Cold-start SFT，用 5 条人工标注的 ground-truth 并行 trajectory 引导 DeepSeek-V3.2 合成 500 / 1000 条 SFT 数据（ALFWorld / ScienceWorld），让 model 先学会"并行思考输出格式"；(2) RL 阶段，用分层奖励——并行轨迹级成功奖励 + 两个步级 diversity 奖励——加 GRPO 的 group-relative advantage 做优化。推理时 group size $N=8/4$、$K=4$、$T_{\max}=25$、温度 0.4。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["任务 + K 个共享初始状态的并行环境"] --> SFT["冷启动 SFT：5 条人工轨迹<br/>→DeepSeek 合成 500/1000 条→学并行思考格式"]
+    SFT --> ROLL["并行 rollout：每步选环境子集<br/>→并行动作 At→并行状态 St"]
+    ROLL --> TRAJ["Parallel Trajectory-level Success Reward<br/>任一环境到达目标即赢（OR 语义）"]
+    TRAJ --> STEP
+    subgraph STEP["步级多样性奖励"]
+        direction TB
+        DAR["Diverse Action Reward<br/>深度防原地打转 × 宽度防复制粘贴"]
+        DTR["Diverse State Transition Reward<br/>惩罚重复的 状态→动作 transition"]
+    end
+    STEP --> ADV["分层 Advantage Φ=Φ_step·Φ_traj<br/>失败轨迹用 2−R_step 翻转符号"]
+    ADV --> GRPO["GRPO group-relative 更新（critic-free）"]
+```
+
 ### 关键设计
 
 **1. Parallel Trajectory-level Success Reward：把成功判定改成"任一环境到达即赢"的 OR 语义**

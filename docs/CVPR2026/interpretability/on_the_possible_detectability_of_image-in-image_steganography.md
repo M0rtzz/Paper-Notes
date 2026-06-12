@@ -49,6 +49,18 @@ $$S = f_{\text{embed}}(C, M) \approx C + g(M)$$
 
 也就是把两路独立信号（载体内容与秘密内容）混到了同一幅图里——这正是盲源分离（BSS）里的经典混合模型。顺着这条线，作者用独立成分分析（ICA）把混合结构拆开来"看见"，再用拆出来的统计矩做可解释检测，最后用经典 SRM+SVM 给出"几乎透明"的检测上界，三条证据互相印证不安全结论。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    OBS["核心观察：嵌入即混合<br/>S ≈ C + g(M)，两路独立源混合"]
+    OBS --> E1["ICA 分离<br/>小波子带→FastICA<br/>看见载体/秘密的混合结构"]
+    OBS --> E2["基于统计矩的可解释检测<br/>2 级 Haar→ICA→前四阶矩→8 维特征→SVM"]
+    OBS --> E3["经典 SRM+SVM 验证与无密钥漏洞<br/>34671 维富模型 + 提取网络无需密钥"]
+    E1 --> CONC["结论：image-in-image 隐写从原理上不安全"]
+    E2 -->|"8 维约 84.6%"| CONC
+    E3 -->|"99%+ AUC≈1.0"| CONC
+```
+
 ### 关键设计
 
 **1. ICA 分离：把"嵌入=混合"直接拆给你看**

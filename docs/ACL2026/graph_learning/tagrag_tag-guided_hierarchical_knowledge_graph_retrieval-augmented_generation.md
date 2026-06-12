@@ -43,6 +43,33 @@ TagRAG 可以理解为把 GraphRAG 的「先抽实体再聚社区」改成「先
 ### 整体框架
 输入是一组领域文档和一个预定义根领域标签（如 Agriculture、Computer Science、Legal 或 All disciplines），输出是一个层级标签知识图谱，包含 object tags、domain tags、domain-domain 边和 object-domain 连接。构建分四步：先把文档切 chunk 并抽对象标签和关系；再把对象标签连同根领域一起交给 LLM，生成从根领域到细分子领域的标签链；接着把多条链合并成 DAG；最后为每个 domain tag 融合链上信息和相邻对象标签信息，生成可向量检索的 domain-centric summary。推理时先检索相关 domain tag summary，再沿对应标签链收集上下层 summary，最后把这些摘要喂给 LLM 生成答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["领域文档 + 预定义根领域标签"]
+    subgraph S1["对象标签抽取与领域标签链组织"]
+        direction TB
+        A["切 chunk → LLM 抽对象标签/关系<br/>得对象标签图 Go"]
+        B["对象标签 + 根领域 → LLM<br/>生成多级领域标签链"]
+        A --> B
+    end
+    subgraph S2["DAG 合并与 domain-centric 知识融合"]
+        direction TB
+        C["多条标签链合并成层级 DAG"]
+        D["融合 链信息 Chain + 邻接对象 Nei<br/>生成领域摘要 s，存入向量库 K"]
+        C --> D
+    end
+    subgraph S3["标签引导检索生成与增量插入"]
+        direction TB
+        E["query → cosine 检索 top-k 领域摘要"]
+        F["沿标签链收集上下层摘要"]
+        G["分层摘要喂小模型生成答案"]
+        E --> F --> G
+    end
+    IN --> S1 --> S2 --> S3
+    NEW["新文档"] -.->|对象/领域标签挂入 DAG，重融受影响摘要| S2
+```
+
 ### 关键设计
 
 **1. 对象标签抽取与领域标签链组织：用领域概念而非实体来组织知识**

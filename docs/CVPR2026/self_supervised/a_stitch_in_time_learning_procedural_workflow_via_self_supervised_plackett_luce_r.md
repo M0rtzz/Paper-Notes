@@ -40,6 +40,26 @@ tags:
 
 PL-Stitch 想解决的核心问题是：让自监督预训练学到"程序感知"——既知道帧里有什么，也知道帧该在什么时候出现。整体由一个共享的 ViT 骨干编码器 $f_\theta$ 和两条互补分支组成。Video 分支负责全局：从一段视频里稀疏采样 k=8 帧打乱，让模型把它们重新排回正确的时间顺序，从而学到工作流的整体进展。Image 分支负责局部：在「过去/当前/未来」三帧组上同时做掩码图像建模（MIM）和时空拼图（jigsaw），学习细粒度的帧级语义和跨帧对应关系。三个目标共享同一个编码器，最后联合训练，全局排序信号和局部重建信号互相补足。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["程序化视频<br/>（手术 / 烹饪）"] --> ENC["共享 ViT 编码器 f_θ"]
+    subgraph VID["基于 Plackett-Luce 的列表级时序排序（Video 分支）"]
+        direction TB
+        V1["稀疏采样 k=8 帧并打乱"] --> V2["时序头 h_vid<br/>MLP→Transformer→MLP，输出每帧排序分 s"]
+        V2 --> V3["PL 负对数似然<br/>把帧排回正确时序"]
+    end
+    subgraph IMG["Image 分支：过去 / 当前 / 未来三帧组"]
+        direction TB
+        J1["时空拼图<br/>掩码当前帧 patch 作 Query"] --> J2["Cross-Attn 聚合邻帧<br/>（K/V 去位置编码）→ Self-Attn → PL 参数"]
+        M1["掩码图像建模<br/>30% 块掩码重建（iBOT）"]
+    end
+    ENC --> VID
+    ENC --> IMG
+    VID --> LOSS["联合训练<br/>L = λ1·L_vid + λ2·L_MIM + λ3·L_jigsaw"]
+    IMG --> LOSS
+```
+
 ### 关键设计
 
 **1. 基于 Plackett-Luce 的列表级时序排序：把"排顺序"建模成概率排名而非硬分类**

@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SAGO 是个模块化两阶段迭代框架（Algorithm 1）：每一步先从 forget 集 $\mathcal{D}_f$ 与 retain 集 $\mathcal{D}_r$ 各采一个 mini-batch，分别计算梯度 $g_f^t$ 与 $g_r^t$；再用一个可插拔的 `CombineGradients` 模块把两个梯度合成最终更新方向 $g_{\text{final}}^t$，最后参数 $\theta^t = \theta^{t-1} - \eta\, g_{\text{final}}^t$。框架本身与 forget objective 解耦，既能套 GA+GD，也能套 NPO+GD、SimNPO+GD。论文给出两种 `CombineGradients` 实现：模块级 PCGrad（已有方法的非对称适配）和 SAGO（本文新方法）。
+SAGO 是个模块化的迭代训练框架（Algorithm 1）：每一步先从 forget 集 $\mathcal{D}_f$ 与 retain 集 $\mathcal{D}_r$ 各采一个 mini-batch，分别计算 forget 梯度 $g_f^t$ 与 retain 梯度 $g_r^t$；再用一个可插拔的 `CombineGradients` 模块把两个梯度合成最终更新方向 $g_{\text{final}}^t$，最后参数 $\theta^t = \theta^{t-1} - \eta\, g_{\text{final}}^t$，如此迭代到收敛。框架本身与 forget objective 解耦，既能套 GA+GD，也能套 NPO+GD、SimNPO+GD。论文给出两种 `CombineGradients` 实现：模块级 PCGrad（已有方法的非对称适配）和 SAGO（本文新方法）；并从余弦相似度角度给两者各推一个「retention 对齐度」下界，证明 SAGO 在结构上对齐得更紧。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["forget 集 D_f / retain 集 D_r<br/>各采一个 mini-batch"] --> B["分别算梯度<br/>forget 梯度 g_f / retain 梯度 g_r"]
+    B --> C{"CombineGradients<br/>可插拔的梯度合成模块"}
+    C -->|逐模块正交投影| D["模块级 PCGrad<br/>每模块把 g_f 投到 g_r 法平面、削去冲突分量"]
+    C -->|逐坐标符号门控| E["SAGO 元素级符号对齐门控<br/>符号同→放行 forget，符号反→只留 retain"]
+    D --> F["合成最终更新方向 g_final<br/>cos 下界证明 SAGO 对齐更紧"]
+    E --> F
+    F --> G["参数更新 θ ← θ − η·g_final"]
+    G -->|迭代到收敛| A
+```
 
 ### 关键设计
 

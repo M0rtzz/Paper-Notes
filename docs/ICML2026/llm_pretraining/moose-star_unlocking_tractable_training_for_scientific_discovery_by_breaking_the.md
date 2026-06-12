@@ -42,6 +42,31 @@ MOOSE-Star 把"训练一个能直接生成科学假设的 LLM"这个原本要在
 ### 整体框架
 MOOSE-Star 的目标是直接训练 $P(h\mid b)$——给定研究背景 $b$ 就生成科学假设 $h$，难点在于这隐含着要在 $N\approx10^7$ 篇文献里找出 $k$ 条灵感序列，搜索空间 $\mathcal{O}(N^k)$ 大到没法端到端学。整条 pipeline 就是把这个不可训的问题层层降复杂度：先用 R1 / R1-distill-Qwen 把 108,717 篇 2020–2025 开放论文解构成 $(b,h,\{i_j\})$ 三元组、并把 $h$ 拆成若干增量 $\Delta h_j$（每个写成 Motivation/Mechanism/Methodology 三层），再把 $P(h\mid b)$ 按 chain rule 拆成"灵感检索 (IR) + 假设合成 (HC)"两个可训子任务循环 $k$ 次，最后在推理侧用语义检索树 + motivation 剪枝把检索那一段从线性压到对数级。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["研究背景 b + 全球文献库<br/>N≈10^7：需找 k 条灵感，搜索空间 O(N^k)"] --> DATA
+
+    subgraph DATA["TOMATO-Star 数据构建（脚手架）"]
+        direction TB
+        D1["108,717 篇开放论文"] --> D2["R1 解构成三元组 (b, h, {i_j})"]
+        D2 --> D3["假设拆成增量 Δh_j<br/>（Motivation / Mechanism / Methodology 三层）"]
+    end
+
+    DATA --> TRAIN
+
+    subgraph TRAIN["分解式序列训练（IR + HC）：循环 k 步"]
+        direction TB
+        I1["灵感检索 IR<br/>15 候选(1 正 14 负)中生成式选 1 篇 + CoT"] --> I2["假设合成 HC<br/>据 i_j 写增量假设 Δh_j"]
+        BC["Bounded Composition<br/>从 i* 语义邻域(大小 M)采近似灵感"] -.训练时注入噪声.-> I2
+        I2 -->|"j ← j+1"| I1
+    end
+
+    TRAIN --> SEARCH["Motivation-Guided 分层搜索（推理侧）<br/>语义树自顶向下导航 + motivation 变量剪枝<br/>检索 O(N) → O(log N)"]
+
+    SEARCH --> OUT["科学假设 h<br/>（随推理预算持续 scaling）"]
+```
+
 ### 关键设计
 
 **1. 分解式序列训练（IR + HC）：把指数级的端到端学习换成 $k$ 步线性子任务**

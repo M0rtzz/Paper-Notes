@@ -60,6 +60,18 @@ DROID-W 要解决的核心问题是：DROID-SLAM 的可微分稠密 Bundle Adjus
 
 整条流水线沿用 DROID-SLAM 的骨架：ConvGRU 迭代估计光流与置信度，DBA 层联合优化相机位姿和逐帧逆深度。DROID-W 在此之上插入三件事——把逐像素不确定性写进 BA 的加权项（UBA），用 DINOv2 语义特征每隔若干步重新估计这个不确定性（动态不确定性更新），再用单目深度先验在极端动态场景里兜底。三者在 BA 迭代中交替进行直到收敛，约 10 FPS 实时运行。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：野外视频帧"] --> B["ConvGRU 迭代<br/>估计光流与置信度"]
+    B --> C["不确定性感知 BA（UBA）<br/>按 1/u 加权重投影<br/>联合优化位姿与逐帧逆深度"]
+    C -->|"每隔 K 步"| D["动态不确定性更新<br/>DINOv2 特征刚性重投影<br/>u = 1 − 余弦相似度"]
+    D --> C
+    C -->|"动态占比极高时兜底"| E["单目深度正则化<br/>scale/shift 不变深度软约束"]
+    E --> C
+    C -->|"迭代收敛"| F["输出：相机位姿 + 逐帧逆深度"]
+```
+
 ### 关键设计
 
 **1. 不确定性感知的 Bundle Adjustment（UBA）：让动态像素在优化里自动降权**

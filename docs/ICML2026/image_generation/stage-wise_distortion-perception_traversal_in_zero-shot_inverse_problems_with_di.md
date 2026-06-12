@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 MAP-RPS 要解决的是"如何用一个不动的预训练扩散模型，在推理时自由滑动 distortion-perception trade-off"。它把这件事拆成两阶段串联：先用扩散 score 当 prior、用梯度优化求一个低失真的 MAP 锚点（对应 D-P 曲线失真端），再把这个锚点沿扩散的正向 SDE 加噪到中间时刻 $t_0$、用现成后验采样器从 $t_0$ 去噪跑回 0（向感知端滑动）。输入是观测 $\mathbf{y}=\mathcal{A}(\mathbf{x})+\sigma_{\mathbf{y}}\mathbf{n}$ 和预训练 score 网络 $\mathbf{s}_\theta(\mathbf{x}_t,t)$，输出是重建图像 $\hat{\mathbf{x}}_0$，而用户只需调一个标量 $t_0\in[0,T]$ 就能在两端之间任意取点。整套流程还能整体搬进 VAE 隐空间得到 LMAP-RPS，直接借力 Stable Diffusion 跑 MS-COCO 级别的近真实任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["观测 y 与预训练 score 网络"] --> B
+    subgraph CORE["MAP-RPS 两阶段（像素空间）"]
+        direction TB
+        B["MAP 锚点：score 当 prior，SGD 优化求低失真解 x_MAP"] --> C["re-noise：把 x_MAP 加噪到中间时刻 t₀"]
+        C --> D["Stage 2 后验采样：从 t₀ 去噪回 0"]
+    end
+    D --> E["重建 x̂₀：调标量 t₀ 遍历 D-P 曲线"]
+    CORE -.整套搬进 latent 空间.-> F["LMAP-RPS：在 latent z 上跑，借 Stable Diffusion"]
+```
+
 ### 关键设计
 
 **1. 用 MAP 替代 MMSE 作低失真锚点：可证误差界 + 单次前向的 score 梯度**

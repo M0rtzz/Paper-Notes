@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入多视角视频和360°静态捕获。方法包含两阶段优化：(1) **头部层优化**：先用VLM编辑去除头发生成秃头训练图像，在这些图像上优化FLAME绑定的3DGS面部模型；(2) **头发层优化**：在头部层之上，用NeuralHaircut初始化发丝几何，将3DGS挂载到发丝段上优化外观。最终头发通过物理引擎中的导向束(guiding strands)+稀疏-密集传播实现动画。
+输入多视角视频和360°静态捕获。方法包含两阶段优化：(1) **头部层优化**：先用VLM编辑去除头发生成秃头训练图像，在这些图像上优化FLAME绑定的3DGS面部模型；(2) **头发层优化**：在头部层之上，用NeuralHaircut初始化发丝几何，将3DGS挂载到发丝段上优化外观。最终头发通过物理引擎中的引导束(guiding strands)+稀疏-密集传播实现动画。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入<br/>多视角视频 + 360°静态捕获"] --> B
+    subgraph HEAD["头部层优化"]
+        direction TB
+        B["VLM 辅助秃头图像生成<br/>VLM去发 + 共享纹理 + 泊松编辑"] --> C["优化 FLAME 绑定 3DGS 面部"]
+    end
+    HEAD --> D
+    subgraph HAIR["头发层优化"]
+        direction TB
+        D["发丝级 3DGS 外观模型<br/>NeuralHaircut发丝 + TNB框架挂高斯"] --> E["颜色一致性正则<br/>可见发丝颜色扩散到隐藏发丝"]
+    end
+    HAIR --> F["稀疏引导束物理模拟<br/>引导束积分 + k近邻传播到6万发丝"]
+    F --> G["可动画头部 Avatar"]
+```
 
 ### 关键设计
 

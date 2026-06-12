@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 OMAC 接收一个已有的 MAS 配置（多个 agent + 协作拓扑）和一个带监督指标的训练集（如 HumanEval 的 Pass@1），输出一套被优化过的提示。它的关键洞察是：MAS 里所有"可调的东西"——agent 的提示、新加的 agent、谁参与协作、信息怎么流——本质上都是在调一段自然语言指令，因此可以用**同一个算法**统一处理。具体分两层：下层是一个**单维度优化算法**，盯住 5 个维度中的某一个反复试错；上层是**多维度联合优化**，按"固定其他、一次只优一个"的方式在多个维度间轮转，把单维度的收益叠起来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：已有 MAS 配置 + 带监督指标的训练集"]
+    IN --> DIM["五维优化空间<br/>功能维 Fun-1 / Fun-2 + 结构维 Str-1 / Str-2 / Str-3"]
+    DIM -->|选定一个维度| ACTOR
+
+    subgraph ACTOR["双 actor 算法（单维优化）"]
+        direction TB
+        SI["Semantic Initializer<br/>探索语义空间生成 n 个候选"]
+        SI --> EV["每个候选放进 MAS 跑训练集打分"]
+        EV --> SAMP["按阈值抽样正负对<br/>top⌊nh⌋ 取正样本 / bottom⌊nl⌋ 取负样本"]
+        SAMP --> CC["Contrastive Comparator<br/>对比推理生成更优候选"]
+        CC -->|新候选加回集合| EV
+    end
+
+    ACTOR -->|该维收敛，保留最优| JOINT["迭代式联合优化<br/>固定其他维，一次只优一个，多维轮转"]
+    JOINT -->|切到下一维重跑单维优化| DIM
+    JOINT -->|达到迭代上限| OUT["输出：最优 MAS 配置 → 测试集推理"]
+```
+
 ### 关键设计
 
 **1. 五维优化空间：把 MAS 拆成一张可调的信息流图**

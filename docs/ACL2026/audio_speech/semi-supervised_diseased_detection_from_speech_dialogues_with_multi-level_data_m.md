@@ -45,6 +45,32 @@ tags:
 
 框架采用教师-学生架构，包含三个层次的建模：(1) 会话级主管线——将完整对话编码后通过 Transformer 聚合，输出最终诊断；(2) 片段级——利用 RNN 对每个话语级别的嵌入进行建模，使用主管线生成的伪标签进行训练；(3) 帧级——通过 Siamese 网络施加帧级一致性约束。教师网络参数通过 EMA 更新，不参与梯度回传。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["完整临床对话<br/>（少量标注 + 大量未标注）"] --> B["切成 clip → 音频编码器 E<br/>(HuBERT/wav2vec2) 池化得 clip 嵌入"]
+    B --> S
+    B --> D
+    B --> F
+    subgraph S["会话级主管线"]
+        direction TB
+        S1["+ 位置编码 → 3 层 16 头 Transformer"] --> S2["时间注意力聚合 + 分类头 → 会话级诊断"]
+    end
+    S --> P["推断会话级伪标签<br/>（高置信样本动态补入训练集）"]
+    subgraph D["片段级伪标签训练"]
+        direction TB
+        D1["双层 BiLSTM 细化片段嵌入"] --> D2["用伪标签做交叉熵训练"]
+    end
+    P -.伪标签.-> D2
+    subgraph F["帧级一致性约束"]
+        direction TB
+        F1["两组增强（语速/音高/时间掩码）<br/>→ 学生网络 / 教师网络"] --> F2["MSE 拉近帧级嵌入<br/>教师 EMA 更新 m=0.999"]
+    end
+    S2 --> O["三级损失加权求和<br/>单阶段端到端训练"]
+    D2 --> O
+    F2 --> O
+```
+
 ### 关键设计
 
 **1. 会话级主管线：把完整对话当作一个整体来诊断，并顺手生成伪标签**

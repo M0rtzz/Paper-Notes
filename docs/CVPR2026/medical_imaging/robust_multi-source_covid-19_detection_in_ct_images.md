@@ -45,6 +45,26 @@ tags:
 
 输入：每个 CT scan 经肺部提取和 KDS（核密度切片采样）处理后固定选取 8 个代表性切片。8 个切片独立通过共享的 EfficientNet-B7 骨干编码为 2560 维特征向量，逐元素均值池化为单一扫描级表示。两个分类头分别输出 COVID-19 诊断概率（二分类，sigmoid）和来源医院预测（四分类，softmax）。推理时仅使用疾病检测头。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始 CT 扫描<br/>切片数随患者/协议浮动"]
+    subgraph PRE["KDS 切片采样预处理"]
+        direction TB
+        B["肺部提取<br/>最小滤波→二值化→形态学补洞"] --> C["KDS 核密度采样<br/>按肺面积分布等分 8 个百分位"]
+    end
+    A --> PRE
+    subgraph MT["双头多任务架构"]
+        direction TB
+        D["共享 EfficientNet-B7 骨干<br/>8 切片独立编码"] --> E["逐元素均值池化<br/>→ 单一扫描级 2560 维特征"]
+        E --> F["COVID-19 检测头<br/>sigmoid · BCE 损失"]
+        E --> G["来源识别头<br/>softmax · Logit-Adjusted 来源分类损失"]
+    end
+    PRE -->|每扫描 8 切片| MT
+    G -.->|梯度回流共享骨干，逼其学来源不变特征| D
+    F -->|推理时仅保留此头| H["COVID-19 诊断输出"]
+```
+
 ### 关键设计
 
 **1. KDS 切片采样预处理：把变长 CT 压成固定 8 切片，又不丢诊断信息**

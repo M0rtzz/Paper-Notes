@@ -48,6 +48,18 @@ tags:
 
 整条 pipeline 是这样转的：每个维度的坐标 $v_k$ 先过一个所有模式共享的正弦频率嵌入层 $\mathbf{z}_k = \sin(\omega_0(\mathbf{w}v_k + \mathbf{b}))$ 得到嵌入；每个模式各自有一个分支 MLP $f_{\theta_k}$，把嵌入映射成隐张量切片 $\mathcal{C}^{(k)}_{:v_k:} \in \mathbb{R}^{r_k \times R_{k+1}}$（其中 $R_{k+1} = \beta r_{k+1}$，$\beta \geq 1$ 为扩展因子）；隐张量再通过 $\mathcal{G}^{(k)} = \mathcal{C}^{(k)} \times_3 \mathbf{B}^{(k)}$ 与固定基 $\mathbf{B}^{(k)}$ 收缩成真正的 TR 因子；最后用 TR 收缩算子 $\Phi(\cdot)$ 的迹运算重建出目标张量的每个元素。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["坐标 v_k"] --> S1
+    subgraph S1["共享频率嵌入 + 分支 MLP"]
+        direction TB
+        B["共享正弦频率嵌入<br/>z_k = sin(ω₀(w·v_k + b))"] --> C["模式分支 MLP f_θk<br/>输出隐张量切片 C⁽ᵏ⁾"]
+    end
+    S1 --> D["因子重参数化<br/>G⁽ᵏ⁾ = C⁽ᵏ⁾ ×₃ B⁽ᵏ⁾（固定基）"]
+    D --> E["TR 收缩 Φ(·) 迹运算<br/>重建目标张量元素"]
+```
+
 ### 关键设计
 
 **1. 共享频率嵌入 + 分支 MLP：让同一套坐标编码服务所有模式**

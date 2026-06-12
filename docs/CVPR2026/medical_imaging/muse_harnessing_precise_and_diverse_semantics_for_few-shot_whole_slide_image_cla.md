@@ -43,6 +43,31 @@ tags:
 
 MUSE 要解决的是少样本全切片图像（WSI）分类下「语义用得太粗」的问题：现有方法把 LLM 当描述生成器，所有样本共享同一条静态类别级文本，既不够精准也不够多样。它的整体思路是把语义同时往「精」和「多」两个方向推——SFSE（样本级细粒度语义增强）负责为每张 WSI 量身定制精确的语义感知，SMMO（随机多视角模型优化）负责注入丰富的语义多样性，两条线产出的先验在分类头处融合，共同提升泛化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I1["WSI 切 patch<br/>→ bag 特征 B"]
+    I2["类别名 + 可学习 prompt<br/>→ 文本编码器 → 文本特征 D"]
+    subgraph SFSE["SFSE：样本级细粒度语义增强"]
+        direction TB
+        DSR["DSR 分解式语义精炼<br/>MoE 路由选 top-k 专家 → k 个语义线索 Q"]
+        SVTI["SVTI 样本级视觉-文本交互<br/>Q 对 B 交叉注意力 + 保留 top-r% patch<br/>路由加权 → 样本语义先验 f"]
+        DSR --> SVTI
+    end
+    I2 --> DSR
+    I1 --> SVTI
+    subgraph SMMO["SMMO：随机多视角模型优化"]
+        direction TB
+        KB["离线知识库<br/>GPT-4 拆 4 临床维度 → 本地 LLM 生成 300 条/类"]
+        RET["余弦相似度检索 top-m → 随机队列<br/>每轮弹一条文本 → 复用 DSR+SVTI → 辅助先验 f_aux"]
+        KB --> RET
+    end
+    SVTI -->|"先验 f 作 query 检索"| RET
+    SVTI --> FUSE
+    RET --> FUSE
+    FUSE["主先验 f / 辅先验 f_aux 各过 MLP<br/>logits 取均值 → 交叉熵分类"]
+```
+
 ### 关键设计
 
 **1. SFSE：把全局类别语义拆成专家子概念，再按样本定制**

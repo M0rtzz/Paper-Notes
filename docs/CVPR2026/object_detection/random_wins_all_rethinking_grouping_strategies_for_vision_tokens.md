@@ -37,7 +37,25 @@ tags:
 
 ### 整体框架
 
-这篇论文想回答一个很朴素的问题：Vision Transformer 里那些越做越花哨的 token 分组（窗口、四叉树、双层路由）到底有没有必要？它给出的答案近乎挑衅——把 token 随机打乱再等分成组，就足以打败所有精心设计的分组方案。整条流程因此短到只剩三步：先生成一个随机张量、按它把 token 重排、再把重排后的序列均等切成若干组，组内照常做 self-attention 或 pooling。关键在于这个随机张量一旦生成就被冻结，所有图像、所有训练步都用同一套打乱顺序，于是分组模式既"随机"又"固定"。正因为不依赖任何聚类或路由，它能即插即用地替换 Swin、CSwin、Quadtree、BiFormer、PVTv2、Focal 等 backbone 里的分组模块，也能直接迁到点云和 VLM 上。
+这篇论文想回答一个很朴素的问题：Vision Transformer 里那些越做越花哨的 token 分组（窗口、四叉树、双层路由）到底有没有必要？它给出的答案近乎挑衅——把 token 随机打乱再等分成组，就足以打败所有精心设计的分组方案。整条流程因此短到只剩三步：先生成一个随机张量、按它把 token 重排、再把重排后的序列均等切成若干组，组内照常做 self-attention 或 pooling。关键在于这个随机张量一旦生成就被冻结，所有图像、所有训练步都用同一套打乱顺序，于是分组模式既"随机"又"固定"。其余三处设计都是围绕这个核心展开：用多头独立洗牌让每个注意力头看到不同的全局组合，用最近邻插值把固定尺寸的随机张量迁到高分辨率下游任务，再以统一的替换方式插进三类 backbone（plain / partition-based / pooling-based）。正因为不依赖任何聚类或路由，它能即插即用地替换 Swin、CSwin、Quadtree、BiFormer、PVTv2、Focal 等 backbone 里的分组模块，也能直接迁到点云和 VLM 上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 token X (h×w×d)"]
+    H["多头独立洗牌<br/>P 扩成 n×h×w，每头一套排列"]
+    I["最近邻插值迁移<br/>下游高分辨率时放大 P"]
+    subgraph G["随机张量重排分组"]
+        direction TB
+        P["生成随机张量 P（一次性冻结）"] --> S["按 P 降序排列得 Xp"]
+        S --> D["均等切成 g 组"]
+    end
+    X --> G
+    H --> P
+    I -.高分辨率任务.-> P
+    G --> B["三类 backbone 统一替换<br/>组内 self-attention 或 pooling"]
+    B --> O["输出特征"]
+```
 
 ### 关键设计
 

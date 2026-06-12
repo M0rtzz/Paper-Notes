@@ -49,6 +49,35 @@ tags:
 
 三种上下文设置：no-context（只看当前句）、one-context（前后各一句）、full-context（仅 LLaMA-3 / Qwen-3 支持，把全部前文 concat）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["双语口语对话语料<br/>英(Switchboard+MapTask)/日(BTSJ)·各取 top-15 高频项"]
+    A --> FT
+    subgraph FT["三种微调任务做对照"]
+        direction TB
+        M["MASK<br/>BERT 双向重构 backchannel/filler"]
+        N["NTP<br/>GPT 系/LLM 下一 token 预测"]
+        T["TTP<br/>TurnGPT 预测 turn-shift 位置"]
+    end
+    FT --> CTX
+    subgraph CTX["三档上下文 × 多模型规模"]
+        direction TB
+        C0["no-context 当前句"]
+        C1["one-context 前后各一句"]
+        C2["full-context 全部前文(仅 8B LLM)"]
+    end
+    CTX --> R["取表征：加 &lt;ds&gt; 标记，过 LM 取最后层隐状态<br/>多 token 加权平均 → PCA 100 维 → k-means"]
+    R --> EVAL
+    subgraph EVAL["silhouette + 距离矩阵 + NLG 三重验证"]
+        direction TB
+        S["silhouette 聚类<br/>簇内紧/簇间散"]
+        D["距离矩阵 + t-SNE<br/>top-15 间可分性"]
+        G["NLG 生成行为<br/>频次/多样性/PPL/BERTScore"]
+    end
+    EVAL --> O["结论：微调显著区分功能词表征，并传导到生成行为"]
+```
+
 ### 关键设计
 
 **1. 三种微调任务做对照：用不同训练目标分别"压"出 backchannel/filler 的语用差异**

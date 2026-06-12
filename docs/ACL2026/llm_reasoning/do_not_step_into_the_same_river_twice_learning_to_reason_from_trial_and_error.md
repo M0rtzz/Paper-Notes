@@ -43,6 +43,25 @@ tags:
 
 LTE 想解决的是 RLVR 训练里那些"模型怎么都做不对"的难题——标准 GRPO 下，一道题如果 $G$ 个 rollout 全军覆没，group-relative advantage 全部归零、梯度也归零，模型从这类样本身上学不到任何东西，能力上限被死死卡住。LTE 的做法是给这些"全错"样本（none-pass samples）一次补救机会：先跑 $G$ 个标准 rollout，一旦发现全错，就根据它们的失败模式选一个提示模板，把模型自己刚犯的错告诉它，再跑 $G$ 个"带提示"的额外 rollout；如果这次蒙对了，就用对的轨迹替换掉初始的错误轨迹，最后通过混合策略 GRPO 完成一次更新。整个闭环只用到模型自身的行为，不碰任何外部专家或更强模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["难题：G 个标准 rollout 全错<br/>none-pass 样本，梯度归零"] --> PROMPT
+    subgraph PROMPT["提示引导的额外 rollout"]
+        direction TB
+        B{"失败模式"}
+        B -->|全截断| C["提示：想得更简洁"]
+        B -->|部分截断| D["提示：未截断回复的错误答案 + 简洁"]
+        B -->|无截断| E["提示：错误答案集合 {a1,a2,...}"]
+        C --> F["带提示再跑 G 个 rollout"]
+        D --> F
+        E --> F
+    end
+    PROMPT -->|蒙对 G' 个正确轨迹| G["混合策略优化<br/>off-policy 替换等量失败轨迹"]
+    G --> H["混合策略 GRPO 更新<br/>共享 group-relative advantage"]
+    H -.LTE† 变体.-> I["熵控制增强<br/>显式熵正则拉满探索多样性"]
+```
+
 ### 关键设计
 
 **1. 提示引导的额外 rollout：把模型刚犯的错当成"别再走这条路"的路标**

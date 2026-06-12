@@ -35,13 +35,35 @@ StructBreak 提出"结构认知过载"（SCO）攻击范式，利用视觉知识
 
 ### 整体框架
 
-StructBreak 包含两个模块：(1) **StructBreak-Synth** 自动生成对抗性 VKG 图像；(2) **StructBreak-Eval** 标准化评估。整体流程为自动化的 "生成 → 过滤 → 评估" pipeline，全程黑盒、无需模型内部访问。
+StructBreak 包含两个模块：(1) **StructBreak-Synth** 自动生成对抗性视觉知识图谱（Visual Knowledge Graph, VKG）图像；(2) **StructBreak-Eval** 标准化评估。整体流程为自动化的 "生成 → 过滤 → 评估" pipeline，全程黑盒、无需模型内部访问。其中生成侧串起「语义混淆 → 图分解与渲染 → 质量门控」三步，并由一个 verify-and-refine 反馈回环把不达标的样本退回重做；评估侧则靠「意图解耦」把对抗图像伪装成中性任务喂给目标模型。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["有害查询"] --> B
+    subgraph SYNTH["StructBreak-Synth：对抗 VKG 生成"]
+        direction TB
+        B["语义混淆<br/>按风险类别套用模板，场景化包装意图"]
+        B --> C["图分解与渲染<br/>DeepSeek-R1 拆成图 G=(V,E)，渲染为 VKG 图像"]
+        C --> D["质量门控<br/>探测测试 MLLM，judge 打三标签 (R,V,A)"]
+        D -->|"未绕过：反馈调整拓扑"| C
+    end
+    D -->|"成功绕过"| E["对抗 VKG 集合"]
+    subgraph EVAL["StructBreak-Eval：标准化评估"]
+        direction TB
+        F["意图解耦<br/>VKG 图像 + 良性 prompt 配对，输入目标 MLLM"]
+        F --> G["judge 模型打三标签<br/>(R,V,A)=(0,1,1) 即攻击成功"]
+    end
+    E --> F
+    G --> H["攻击成功率 ASR"]
+```
 
 ### 关键设计
 
-1. **语义混淆（Semantic Obfuscation）**：根据有害查询的风险类别，使用预设模板将恶意意图包装在场景化语境中（如学术分析、系统调试），确保一致的混淆质量，避免关键词级拦截。
-2. **图分解与渲染（Graph Decomposition & Rendering）**：用 DeepSeek-R1 作为 Graph Builder，将混淆后的意图分解为结构化图 $G=(V,E)$，编码逻辑依赖（因果关系等），渲染为 VKG 图像。消融实验证实拓扑复杂度（而非视觉风格）是认知过载的主要驱动力。
-3. **意图解耦（Intent Decoupling）+ 质量门控**：将恶意意图（编码在图结构中）与指令触发（良性 prompt 如"分析图中的结构关系"）分离，防止文本语义匹配触发早期拒绝。质量门控通过 verify-and-refine 循环，对测试 MLLM 探测，失败则反馈调整拓扑，仅通过的样本进入最终集合。
+1. **语义混淆（Semantic Obfuscation）**：pipeline 第一步要先躲过关键词级拦截。StructBreak 不用随机 LLM 改写，而是按有害查询的风险类别选取预设模板（角色扮演、场景伪装等），把恶意意图包装进学术分析、系统调试这类场景化语境——确定性模板保证混淆质量稳定，也为后续结构化分解打好基础。
+2. **图分解与渲染（Graph Decomposition & Rendering）**：这是触发认知过载的核心环节。以 DeepSeek-R1 作为图构造器（Graph Builder），把混淆后的意图零样本分解为结构化图 $G=(V,E)$，用边编码因果等逻辑依赖，诱导模型进入"先解析后执行"的推理模式，再渲染成 VKG 图像。消融实验确认：真正驱动过载的是图的拓扑复杂度，而非节点颜色、背景等视觉风格。
+3. **质量门控 + 反馈回环（Quality Gate with Feedback Loop）**：不同模型的"过载临界点"不同，单次生成未必成功，故引入 verify-and-refine 回环。每个候选样本先拿测试 MLLM 探测，由 judge 模型打三标签 (R,V,A)；失败样本触发反馈式精修（节点重组、拓扑调整），退回图分解步骤迭代，只有成功绕过的样本才进入最终对抗 VKG 集合。
+4. **意图解耦（Intent Decoupling）**：评估阶段把"恶意意图"和"指令触发"彻底分开——意图已编码在图结构里，配对的文本只是一句良性 prompt（如"分析图中的结构关系"）。文本语义层面看不出恶意，模型便不会在早期基于关键词匹配直接拒绝，从而把输入伪装成中性的结构分析任务。
 
 ### 损失函数/训练策略
 

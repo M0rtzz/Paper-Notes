@@ -45,14 +45,36 @@ AOEPT 的方法主线很清楚：先从训练集中收集某个模态的 layer-w
 
 当测试样本缺失文本时，模型取出 TCPs；当缺失图像时，模型取出 ICPs。MCPs 本身是全局的，因此还需要用当前样本中剩余的模态表示进行门控，得到 instance-aware prompts。最终这些 prompts 与原始 hidden tokens 拼接进入 MT 层，分类头基于最后一层表示输出预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph MCP["1. 模态上下文提示库 MCPs（训练集蒸馏）"]
+        direction TB
+        A["某模态可用样本过冻结 MT 抽每层表示<br/>→ K-means 聚成语义原型"] --> B["可学习 prompt 作 query、cross-attention 凝练<br/>成全局 MCPs（缺文本→TCPs / 缺图像→ICPs）"]
+    end
+    C["缺失模态样本<br/>（如图像可见、文本缺失）"] --> D
+    B --> D
+    subgraph INST["2. 样本级实例化"]
+        direction TB
+        D["按缺失模式取对应 MCP"] --> E["剩余模态过 MLP+sigmoid 门控<br/>与 MCP 逐元素相乘 → 样本专属 prompt"]
+    end
+    E --> F
+    subgraph PROP["3. 一致性约束 + 分层插入"]
+        direction TB
+        F["前 N 层逐层实例化插入、后续层继承传播<br/>训练期用 intra-modal InfoNCE 拉向真实模态 latent"]
+    end
+    F --> G["与 hidden tokens 拼接进入冻结 MT"]
+    G --> H["分类头输出预测"]
+```
+
 ### 关键设计
-1. **Modal-Contextualized Prompts 作为缺失模态信息库**:
+1. **模态上下文提示（MCP）作为缺失模态信息库**:
 
 	- 功能：把训练集中某一模态的全局上下文压缩成一组 prompt tokens，作为该模态在缺失时可访问的隐式信息源。
 	- 核心思路：以 TCP 为例，先把所有文本可用样本送入冻结 MT，得到每层的文本 token 表示集合 $C_t^l$；再用 K-means 把大量 token 表示压缩成 $N_t'$ 个语义原型，降低存储和计算成本；默认构造方式是 attention-based，用可学习 prompt 作为 query，对这些文本原型做 cross-attention，得到每一层的 TCP。
 	- 设计动机：随机 prompt 只能告诉模型“这里缺了一个模态”，不能提供缺失模态可能包含什么信息。MCPs 则把训练分布中对应模态的上下文显式保存下来，相当于给冻结 MT 接回一个轻量、内部化的模态记忆。
 
-2. **Instance-aware prompt instantiation**:
+2. **样本级实例化（Instance-aware Instantiation）**:
 
 	- 功能：把全局 MCPs 转换成当前样本专属的 prompt，避免所有缺失样本共享同一组粗粒度补偿信息。
 	- 核心思路：对于图像可见、文本缺失的样本，用图像 hidden representation 经过 MLP 和 sigmoid 生成门控向量，再与 TCPs 做逐元素相乘，即 $P_{TCP,i}^l = P_{TCP}^l \odot \sigma(MLP(\bar{V}_i^{l-1}))$。这样，当前图像会选择性激活与自己最相关的文本上下文。

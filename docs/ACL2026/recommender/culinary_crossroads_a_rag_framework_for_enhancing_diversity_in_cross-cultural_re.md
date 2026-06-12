@@ -41,7 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CARRIAGE 要解决的是"标准 RAG 在创意任务上多样性塌缩"，把多样性挤压拆成四个独立失败点（C1 检索遗漏、C2 排序无多样意识、C3 上下文被 LLM 集中利用、C4 生成不感知多样性），每个 C 对应一个轻量组件。给定源菜谱 $q$，它顺序走查询重写→历史感知 MMR 重排→滑窗动态上下文→对比性上下文注入四阶段，对每个源菜谱产 $K=5$ 个适配候选。整套流程完全 inference-time、训练 free，可即插即用到任意 LLM。
+CARRIAGE 要解决的是"标准 RAG 在创意任务上多样性塌缩"，把多样性挤压拆成四个独立失败点（C1 检索遗漏、C2 排序无多样意识、C3 上下文被 LLM 集中利用、C4 生成不感知多样性），每个 C 对应一个轻量组件。给定源菜谱 $q$，它顺序走查询重写→历史感知 MMR 重排→滑窗动态上下文→对比性上下文注入四阶段，对每个源菜谱产 $K=5$ 个适配候选。每轮生成的输出会回灌到 MMR 的历史集合与对比注入的反样本里，构成 session 级的去重回环。整套流程完全 inference-time、训练 free，可即插即用到任意 LLM。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["源菜谱 q"]
+    subgraph RET["查询重写 + 历史感知 MMR 重排（C1+C2）"]
+        direction TB
+        QR["查询重写<br/>原标题 + 内容变体 + 文化变体 共 3 条并发检索"]
+        MMR["历史感知 MMR 重排<br/>BGE-M3 相关性 − 惩罚已选集 S 与历史输出 H"]
+        QR --> MMR
+    end
+    Q --> RET
+    RET --> DCO["滑窗动态上下文组织（C3）<br/>第 t 轮只取 w=1 条上下文"]
+    DCO --> CCI["对比性上下文注入（C4）<br/>把前几轮输出塞进 prompt：要求 avoid similar results"]
+    CCI --> GEN["LLM 生成<br/>per-input 产 K=5 个适配候选"]
+    GEN -.->|历史输出 H 回灌| MMR
+    GEN -.->|已生成输出当反样本| CCI
+```
 
 ### 关键设计
 

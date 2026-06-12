@@ -44,6 +44,19 @@ tags:
 
 DexBench 把"理解程序执行"拆成对称的两问，再用一个共享上下文把它们绑在一起评估。每个实例给定程序 $P$ 和一个真实输入 $I_{exec}$：正向问"这条输入会走过哪些行"，要求模型预测语句覆盖；反向问"要怎么改这条输入，才能让执行流拐进一条原本没走的目标分支"，要求模型给出变异输入 $I_{cf}$。两个方向落在同一份程序、同一个分支点上，只有同时答对才算真正读懂了这段代码。基准共 445 个配对实例，分别取自 CruxEval（298 个，简单控制流）、HumanEval（100 个，中等复杂度）和 PythonSaga（47 个，深度嵌套与递归），评估采用 one-shot prompting 并报告 pass@k（k=1、5）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["程序 P + 真实输入 I_exec"] --> B["SlipCover 插桩<br/>采集真实覆盖（ground-truth）"]
+    B --> C["正向执行推理 R_exec<br/>模型预测语句覆盖 φ(τ_exec)"]
+    B --> D["选目标分支 b<br/>取覆盖增量最大的未走分支"]
+    C --> E["精确匹配判定 → S_exec"]
+    D --> F["反向反事实推理 R_cf<br/>模型生成变异输入 I_cf"]
+    F --> G["实际执行核验 b 是否被覆盖 → S_cf"]
+    E --> H["双路径推理 R_dual<br/>S_dual = S_exec ∧ S_cf，同时答对才算成功"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 正向执行推理 $\mathcal{R}_{exec}$：让模型在脑内"跑"一遍代码**

@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 RM-NLHF 想给二元偏好任务上的 GRM 补一份"critique 到底对不对"的过程奖励，又不想被人工 critique 数据稀缺卡死。基线仍是 GRPO：query $q$ 配一对候选 $y_A, y_B$ 和偏好标签 $l\in\{A,B\}$，GRM $\pi_\theta$ 生成 CoT + critique + 预测 $\hat l$，每条 prompt rollout $N$ 次得到 outcome 奖励 $R_{\text{outcome}}^i$ 后组内归一化成 advantage $\hat A_i$。在此之上接一路 process 奖励：带人工 critique $h$ 的数据直接算模型 critique $\hat c$ 与 $h$ 的核心论点相似度，没有 $h$ 的数据交给一个辅助模型 MetaRM 预测，而 MetaRM 又在训练全程随 policy 在线更新，使最终 advantage 由 outcome 与 process 两路奖励共同决定。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：query + 候选对 (y_A, y_B) + 偏好标签 l"] --> B["GRM 生成 CoT + critique + 预测标签<br/>每条 prompt rollout N 次"]
+    B --> C["Outcome 奖励 R_outcome ∈ {0,1}<br/>预测标签是否匹配 l"]
+    B --> D{样本是否带<br/>人工 critique h}
+    D -->|带 h| E["核心论点相似度<br/>抽 core args 后算与 h 的 sim"]
+    D -->|不带 h| F["MetaRM 预测过程奖励<br/>输入 query、候选对、critique"]
+    E --> G["过程奖励 R_process"]
+    F --> G
+    C & G --> H["R = R_outcome + λ·R_process<br/>组内归一化得 advantage"]
+    H --> I["GRPO 更新 GRM"]
+    I -.->|policy 新 rollout 作监督对| J["Online MetaRM 更新<br/>追上 policy 漂移"]
+    J -.-> F
+    I --> K["输出：critique 质量更高的 GRM"]
+```
+
 ### 关键设计
 
 **1. 核心论点相似度（Similarity w/ Core HC）：把"critique 合不合理"压成一个能机算的数值奖励**

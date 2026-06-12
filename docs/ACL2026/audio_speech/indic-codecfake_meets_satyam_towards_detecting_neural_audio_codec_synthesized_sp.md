@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 SATYAM 把 CodecFake 检测当成一个条件生成问题来解：与其训练一个分类头，不如让一个冻结的大语言模型直接说出 "Real" 还是 "Fake"。一段待检测语音先被两个冻结编码器并行编码——Whisper 抓语义、TRILLsson 抓副语言（音色、韵律、合成痕迹），两路特征经 CNN 投影和门控后被送进双曲空间做两阶段对齐融合，最后映射回欧氏空间、作为前缀条件 token 注入 Qwen2-7B 解码器输出判别结果。全程只有投影、门控和双曲对齐模块参与训练，可训练参数仅约 3.75M。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ICF["Indic-CodecFake 数据集（12 印度语 × 14 种 NAC 配置）"]
+        direction TB
+        A1["12 种印度语真实语音<br/>（源自 IndicSUPERB）"] --> A2["8 类 NAC 编码-解码重合成<br/>区分 Seen / Unseen"]
+    end
+    ICF --> B["待检测语音"]
+    B --> C1["Whisper 编码器<br/>抓语义（冻结）"]
+    B --> C2["TRILLsson 编码器<br/>抓副语言（冻结）"]
+    C1 --> D["CNN 投影 + 门控"]
+    C2 --> D
+    subgraph FUSE["双曲双阶段融合"]
+        direction TB
+        E["指数映射投到双曲空间"] --> F["阶段1 语音-语音<br/>Bhattacharyya 对齐 + Mobius 融合"]
+        F --> G["阶段2 语音-提示<br/>Bhattacharyya 对齐 + Mobius 聚合"]
+    end
+    D --> E
+    G --> H["轻量条件生成<br/>对数映射回欧氏 + 投影成前缀 token"]
+    H --> I["冻结 Qwen2-7B 解码器<br/>条件提示引导找合成痕迹"]
+    I --> J["输出 Real / Fake"]
+```
+
 ### 关键设计
 
 **1. Indic-CodecFake (ICF)：把检测基准从英语扩到 12 种印度语言**

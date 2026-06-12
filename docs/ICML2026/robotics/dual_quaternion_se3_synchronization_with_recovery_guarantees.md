@@ -46,7 +46,19 @@ tags:
 1. **谱初始化**（Algorithm 1）：对 $\bm{C}$ 跑幂迭代得到主特征向量 $\bm{u}_1\in\mathbb{DH}^n$（约束 $\|\bm{u}_1\|_2^2=n$），然后逐元素投影 $\bm{x}^0=\Pi(\bm{u}_1)\in\mathrm{UDQ}^n$；
 2. **DQGPM 精化**（Algorithm 2）：每步先做矩阵-向量乘 $\bm{y}^k=\bm{C}\bm{x}^{k-1}$，再投影 $\bm{x}^k=\Pi(\bm{y}^k)$，迭代到收敛。
 
-把问题写成 QPQC：$\arg\max_{\bm{x}\in\mathrm{UDQ}^n} \bm{x}^*\bm{C}\bm{x}$（Proposition 2.1 证明这与原最小二乘等价，目标差一个常数因子 2）。如果把 $\mathrm{UDQ}^n$ 松弛成 $\|\bm{x}\|_2^2=n$ 的对偶四元数球面，最优解就是 $\bm{C}$ 的主右特征向量 $\bm{u}_1$，这就是谱估计的来源。
+把问题写成 QPQC：$\arg\max_{\bm{x}\in\mathrm{UDQ}^n} \bm{x}^*\bm{C}\bm{x}$（Proposition 2.1 证明这与原最小二乘等价，目标差一个常数因子 2）。如果把 $\mathrm{UDQ}^n$ 松弛成 $\|\bm{x}\|_2^2=n$ 的对偶四元数球面，最优解就是 $\bm{C}$ 的主右特征向量 $\bm{u}_1$，这就是谱估计的来源。贯穿两阶段的共用算子是闭式投影 $\Pi$——谱初始化末尾投一次得初值，DQGPM 每步迭代各投一次，正是它把"启发式 rounding"换成了可分析的一步操作。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：Hermitian 对偶四元数测量矩阵 C<br/>C_ij = 真值位姿乘积 + 噪声 Δ_ij"]
+    A --> B["对偶四元数幂迭代谱初始化<br/>幂迭代取主右特征向量 u_1"]
+    B --> P1["闭式投影 Π<br/>逐元投到 UDQ^n，得初值 x⁰"]
+    P1 --> C["DQGPM 精化：矩阵-向量乘<br/>y^k = C·x^(k−1)"]
+    C --> P2["闭式投影 Π<br/>x^k = Π(y^k)，每步自动可行"]
+    P2 -->|未收敛| C
+    P2 -->|收敛| D["输出：n 个绝对位姿 x ∈ UDQ^n"]
+```
 
 ### 关键设计
 

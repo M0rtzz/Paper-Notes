@@ -41,6 +41,20 @@ tags:
 
 RDNet 针对遥感图像"目标尺度跨度极大、固定卷积核顾不过来"的难题，以 SwinTransformer 为骨干提取 5 层特征 $\{F_i^R\}_{i=1}^{5}$（输入 384×384），按特征层级分工设计三个模块，再自底向上融合输出显著性图：高层特征 $F_4^R, F_5^R$ 交给 RPL 做定位并预测目标区域比例 $F^G$，中层 $F_2^R, F_3^R$ 交给 FCE 做上下文增强，低层 $F_1^R$ 在 $F^G$ 引导下交给 DAD 做细节感知。核心思路是先"看清目标占多大比例"，再据此动态决定怎么卷。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入图像 384×384"] --> BB["SwinTransformer 骨干<br/>提取 5 层特征 F1~F5"]
+    BB -->|"高层 F4,F5"| RPL["区域比例感知定位 RPL<br/>通道+空间注意力定位 → 预测比例 F^G"]
+    BB -->|"低层 F1"| DAD["动态自适应细节感知 DAD<br/>按比例切换卷积核组合"]
+    BB -->|"中层 F2,F3"| FCE["频率匹配上下文增强 FCE<br/>小波域同频交互降算力"]
+    RPL -->|"比例 F^G 引导选核"| DAD
+    RPL --> FUSE["自底向上逐层融合"]
+    FCE --> FUSE
+    DAD --> FUSE
+    FUSE --> OUT["显著性图"]
+```
+
 ### 关键设计
 
 **1. 区域比例感知定位模块（RPL）：先估出目标的"大小档位"再去指导后续卷积**

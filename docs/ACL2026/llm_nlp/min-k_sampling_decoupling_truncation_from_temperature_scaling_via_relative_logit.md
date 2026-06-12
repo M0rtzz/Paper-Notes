@@ -45,6 +45,16 @@ Min-k Sampling 通过分析排序 logit 分布的局部结构来检测"语义悬
 
 Min-k 要解决的是「截断决策被温度污染」这一痛点：传统方法把候选集大小交给概率空间的阈值决定，而概率随温度剧烈变化，导致高温下噪声 token 大量涌入。Min-k 把视角搬回 logit 空间，在每个生成步骤拿到 logit 向量 $\mathbf{I}\in\mathbb{R}^{|V|}$ 后先降序排列，沿着这条由高到低的曲线寻找一个「语义悬崖」——有意义候选与尾部噪声之间最陡的那道落差，并把悬崖位置当作截断点 $k$。悬崖之后的 logit 置为 $-\infty$，剩下的才进入温度缩放与 softmax 去采样。由于悬崖检测只看 logit 之间的相对形态、且发生在除以 $T$ 之前，整条流水线的候选集构成与温度彻底解耦。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["logit 向量 I（每个生成步）"] --> B["降序排列<br/>l₁ ≥ l₂ ≥ … ≥ l_|V|"]
+    B --> C["位置加权相对衰减<br/>wᵢ = (lᵢ−lᵢ₊₁)/R_l · 1/i<br/>k_cliff = argmaxᵢ wᵢ"]
+    C --> D["动态回退<br/>k = max(k_cliff, ⌊τ/R_l⌋)"]
+    D --> E["截断：保留前 k 个候选<br/>其余 logit 置 −∞"]
+    E -->|严格温度不变：截断在 /T 之前完成| F["温度缩放 l/T + softmax → 采样"]
+```
+
 ### 关键设计
 
 **1. 位置加权相对衰减：用局部斜率而非全局统计量定位悬崖**

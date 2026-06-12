@@ -42,19 +42,28 @@ Model-Dowser 用"权重幅值 × 输入激活 × 输出 Jacobian"三因素给 ML
 ### 整体框架
 Model-Dowser 是一条三阶段 pipeline：(1) Probing——用 MLLM 自己生成的合成 prompt 跑前向收集激活、用 Hutchinson trick 跑少量反向收集 Jacobian L2 范数；(2) Compute Score——按 $S=\|J_i\|_2\cdot|W_{ij}|\cdot|h_j|$ 给每个权重打分，并做 N 次 Monte Carlo 平均；(3) Sparse Fine-tune——在每层内按分数降序选出 top-$(1-\rho)$ 高分权重并冻结，只用 binary mask 把梯度限制在剩下 $\rho$ 比例的"非关键"权重上正常 SGD。整个过程不需要原始预训练数据，也不维护任何梯度历史。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 MLLM θ_pre"] -->|随机 token seed 自生成 N 条合成 prompt| B["数据无关合成探测<br/>前向取输入激活 |h_j|，Hutchinson 反向估 ‖J_i‖₂"]
+    B --> C["三因素评分<br/>S = ‖J_i‖₂ · |W_ij| · |h_j|，N 次 MC 平均"]
+    C --> D["硬 mask 稀疏微调<br/>每层按 S 升序取底部 ρ 可更新、其余冻结"]
+    D -->|"masked SGD：θ − λ(M⊙∂L/∂θ)"| E["下游适应且保留预训练知识的 MLLM"]
+```
+
 ### 关键设计
 
-**1. 三因素功能重要性评分：在非同质激活下量出"扰动一个权重会让输出 shift 多少"**
+**1. 数据无关合成探测：不碰预训练数据、也不显式构造 Jacobian，就估出每个权重的输出敏感度**
 
-传统 magnitude 重要性（如 Wanda）假设激活同质，但 GELU/SiLU/GLU 这些现代非线性激活让"权重大 ≠ 影响大"，排名直接失真。Model-Dowser 把重要性从数值视角切到功能视角：从 Theorem 3.1 出发，一阶 Taylor 下扰动某个权重造成的输出偏移 $\|\Delta f\|_2\approx\|J_i^{(l)}\|_2\cdot|\Delta W_{ij}^{(l)}|\cdot|h_j^{(l-1)}|$，把潜在扰动 $\Delta W$ 用当前权重幅值 $|W|$ 代入，就得到三因素乘积评分
+整条 pipeline 的第一步要衡量"扰动一个权重会让输出 shift 多少"，这需要每个权重的输出 Jacobian 范数 $\|J_i\|_2$ 和输入激活 $|h_j|$（二者会在设计 2 的评分公式里相乘）。但 MLLM 的预训练数据通常拿不到，而显式构造 Jacobian 又要 $d_{\text{final}}$ 量级的反向传播、贵到不可行。Model-Dowser 用两招化解：一是 Hutchinson Trace Estimator，把输出投影到随机 Rademacher 向量 $\xi\in\{\pm 1\}^{d_{\text{final}}}$，利用 $\mathbb{E}_\xi[(\partial(\xi^\top f)/\partial z_i)^2]=\|J_i\|_2^2$，只用极少几次反向就拿到所有节点的输出敏感度；二是让 MLLM 用随机 token seed 自我生成 $N$ 条合成 prompt $\hat{x}_n=f(\epsilon;\theta_{\text{pre}})$，在这些 prompt 上做前向收集 $|h_j|$、做 Hutchinson 反向收集 $\|J_i\|_2$。合成 prompt 激发的是"模型自己学到的"功能结构而非任务相关分布，总复杂度只有 $\mathcal{O}(N\cdot R)$ 次前向/反向，其中 $N,R\ll d_{\text{final}}$，因此天然能扩到几十 B 的 MLLM。
 
-$$S_{ij}^{(l)}=\|J_i^{(l)}\|_2\cdot|W_{ij}^{(l)}|\cdot|h_j^{(l-1)}|.$$
+**2. 三因素功能重要性评分：把探测到的敏感度组合成"输出 shift"的一阶估计**
 
-三项各管一段功能路径：Jacobian 范数捕捉"下游输出对这个节点有多敏感"，权重幅值捕捉"参数本身的规模"，输入激活捕捉"上游信号有多强"。它把局部线性的梯度路径走完整，弥补了纯 magnitude 缺的非线性敏感度，又不像纯 gradient 方法那样要背负沉重的梯度历史。
+传统 magnitude 重要性（如 Wanda）假设激活同质，但 GELU/SiLU/GLU 这些现代非线性激活让"权重大 ≠ 影响大"，排名直接失真。Model-Dowser 把重要性从数值视角切到功能视角：由 Theorem 3.1，一阶 Taylor 下扰动某个权重造成的输出偏移 $\|\Delta f\|_2\approx\|J_i^{(l)}\|_2\cdot|\Delta W_{ij}^{(l)}|\cdot|h_j^{(l-1)}|$，把潜在扰动 $\Delta W$ 用当前权重幅值 $|W|$ 代入，就得到三因素乘积评分
 
-**2. 数据无关的 Jacobian/激活合成探测：没有预训练数据也能估出敏感度，且不显式构造 Jacobian**
+$$S_{ij}^{(l)}=\|J_i^{(l)}\|_2\cdot|W_{ij}^{(l)}|\cdot|h_j^{(l-1)}|,$$
 
-上面的评分要算 $\|J_i\|_2$ 和 $|h_j|$，但预训练数据通常拿不到，而显式构造 Jacobian 又要 $d_{\text{final}}$ 量级的反向传播、贵到不可行。Model-Dowser 用两招化解：一是 Hutchinson Trace Estimator，把输出投影到随机 Rademacher 向量 $\xi\in\{\pm 1\}^{d_{\text{final}}}$，利用 $\mathbb{E}_\xi[(\partial(\xi^\top f)/\partial z_i)^2]=\|J_i\|_2^2$，只用极少几次反向就拿到所有节点的输出敏感度；二是让 MLLM 用随机 token seed 自我生成 $N$ 条合成 prompt $\hat{x}_n=f(\epsilon;\theta_{\text{pre}})$，在这些 prompt 上做 Monte Carlo 平均 $\bar S=\frac{1}{N}\sum_n \|J_{i,n}\|_2\cdot|W_{ij}|\cdot|h_{j,n}|$。合成 prompt 激发的是"模型自己学到的"功能结构而非任务相关分布，总复杂度只有 $\mathcal{O}(N\cdot R)$ 次前向/反向，其中 $N,R\ll d_{\text{final}}$。
+并在 $N$ 条合成 prompt 上做 Monte Carlo 平均 $\bar S=\frac{1}{N}\sum_n \|J_{i,n}\|_2\cdot|W_{ij}|\cdot|h_{j,n}|$ 抑制单条 prompt 的噪声。三项各管一段功能路径：Jacobian 范数捕捉"下游输出对这个节点有多敏感"，权重幅值捕捉"参数本身的规模"，输入激活捕捉"上游信号有多强"。它把局部线性的梯度路径走完整，弥补了纯 magnitude 缺的非线性敏感度，又不像纯 gradient 方法那样要背负沉重的梯度历史。
 
 **3. 硬 binary mask 稀疏微调：把"保护重要参数"写成训练前一次性算好的一行 mask**
 

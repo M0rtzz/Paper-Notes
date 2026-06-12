@@ -45,6 +45,21 @@ tags:
 
 作者先定义 IFD 作为样本难度指标：$IFD(y|x)=PPL(y|x)/PPL(y)$，数值越大表示模型从 instruction 中获益越少、生成越困难。接着定义 ICI：$ICI_{i\rightarrow b}=IFD(y_b|x_b)-IFD(y_b|a_i,x_b)$。如果加入候选样本后 probe 的 IFD 下降，ICI 为正。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["指令数据集 D + 预算 k"] --> B["取候选样本 aᵢ 作 one-shot demonstration"]
+    subgraph PROBE["多样且困难的 probe set 构建"]
+        direction TB
+        C["embedding 空间取 N=32 最近邻<br/>保证与候选样本语义相关"] --> D["K=5 k-means 聚类<br/>避免 probe 挤在同一语义模式"]
+        D --> E["每簇内取 DEITA 复杂度最高<br/>保证 probe 不会太简单"]
+    end
+    B --> PROBE
+    PROBE --> F["Weighted In-Context Influence 打分<br/>IFD 下降量按 cosine 距离加权聚合"]
+    F --> G["带多样性约束的贪心选择<br/>wICI 降序，cos 相似度 < τ=0.9 才接受"]
+    G --> H["选出子集 Q 做标准 SFT"]
+```
+
 ### 关键设计
 
 **1. 多样且困难的 probe set 构建：给每个候选样本配一组真正能检验其"教学价值"的 probe**

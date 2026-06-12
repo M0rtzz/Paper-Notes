@@ -45,7 +45,18 @@ tags:
 
 ### 整体框架
 
-CARE（Cross-modal Adaptive Region Encoder）想解决病理 slide-level 基础模型的一个老问题：把 WSI 当成一堆固定大小 patch 的集合，既不贴合组织的形态异质性，也学不出临床医生读片时"先定位 ROI"的层级。它的思路是借一个"词级 tokenization"的类比——先把 WSI 从固定网格切片重组成形态学一致的不规则自适应区域（ARG），在区域内做自注意力提特征（ARSA），再用覆盖率先验加语义注意力把区域聚成 slide 级嵌入（SPF），并让区域构建受 RNA/蛋白质表达谱引导、使区域边界带上生物学意义。预训练分两阶段：Stage I 做 iBOT 式自监督（34,277 WSI），Stage II 做跨模态对比（先 WSI-RNA 对齐、再 WSI-蛋白质对齐）。
+CARE（Cross-modal Adaptive Region Encoder）想解决病理 slide-level 基础模型的一个老问题：把 WSI 当成一堆固定大小 patch 的集合，既不贴合组织的形态异质性，也学不出临床医生读片时"先定位 ROI"的层级。它的思路是借一个"词级 tokenization"的类比——先在固定网格上备好带空间先验的子区域"积木"（子区域表示），再把 patch 按语义和空间重组成形态学一致的不规则自适应区域（ARG），在区域内做自注意力提特征（ARSA），用覆盖率先验加语义注意力把区域聚成 slide 级嵌入（SPF），并让区域构建受 RNA/蛋白质表达谱引导、使区域边界带上生物学意义。预训练分两阶段：Stage I 做 iBOT 式自监督（34,277 WSI），Stage II 做跨模态对比（先 WSI-RNA 对齐、再 WSI-蛋白质对齐）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["WSI → 固定网格 patch"] --> B["子区域表示<br/>k×k 子区域 + CLS/query 聚合特征 + 软包含矩阵 C"]
+    B --> C["自适应区域生成器 ARG<br/>语义亲和度 ρ × 空间邻近度 C → 不规则自适应区域"]
+    C --> D["区域内自注意力 ARSA<br/>聚出每个自适应区域的特征"]
+    D --> E["语义与先验融合 SPF<br/>覆盖率先验 α + 语义权重 β → slide 嵌入 + ROI"]
+    E -->|"Stage I"| F["iBOT 自监督<br/>34K WSI · masked patch 预测"]
+    E -->|"Stage II"| G["跨模态对齐<br/>先 WSI–RNA 再 WSI–蛋白质 · InfoNCE"]
+```
 
 ### 关键设计
 

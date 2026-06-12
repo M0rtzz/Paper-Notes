@@ -46,7 +46,19 @@ SPECTRA 是一个加在基优化器外面的两层封装。给定任意基优化
 1. **(可选) 前置谱裁剪**：在基优化器拿到梯度之前，对原始随机梯度 $\mathbf{g}$ 先做一次 $\mathrm{clip}^{\mathrm{sp}}_{c_{\mathrm{pre}}}(\mathbf{g})$，把谱尖刺截掉再喂给基优化器；
 2. **后置谱裁剪**：把基优化器算出的更新 $\mathbf{U}_k$ 做 $\mathrm{clip}^{\mathrm{sp}}_{c_k}(\mathbf{U}_k)$，再以 $\alpha\eta_k$ 步长更新参数，得到带 decoupled weight decay 的规则 $\mathbf{X}_{k+1}=(1-\lambda\eta_k)\mathbf{X}_k - \alpha\eta_k\,\mathrm{clip}^{\mathrm{sp}}_{c_k}(\mathbf{U}_k)$。
 
-谱裁剪算子定义为对 SVD $\mathbf{X}=\mathbf{U}\mathbf{S}\mathbf{V}^T$ 中每个奇异值 $\mathbf{S}_{ii}$ 应用标量 clip：$\mathrm{clip}^{\mathrm{sp}}_c(\mathbf{X}) = \mathbf{U}\,\mathrm{diag}(\mathrm{clip}_c(\mathbf{S}_{ii}))\,\mathbf{V}^T$，保证输出谱范数 $\le c$。直接 SVD 太贵，关键工程贡献是用 Newton-Schulz 迭代把它替换成几次方阵-方阵乘法。
+谱裁剪算子定义为对 SVD $\mathbf{X}=\mathbf{U}\mathbf{S}\mathbf{V}^T$ 中每个奇异值 $\mathbf{S}_{ii}$ 应用标量 clip：$\mathrm{clip}^{\mathrm{sp}}_c(\mathbf{X}) = \mathbf{U}\,\mathrm{diag}(\mathrm{clip}_c(\mathbf{S}_{ii}))\,\mathbf{V}^T$，保证输出谱范数 $\le c$。直接 SVD 太贵，关键工程贡献是用 Newton-Schulz 迭代把它替换成几次方阵-方阵乘法——这一个算子同时被前置和后置裁剪复用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始随机梯度 g"] -->|可选| B["前置谱裁剪<br/>截掉低秩噪声尖刺、保住信号"]
+    B --> C["基优化器<br/>AdamW / Signum / Mars / AdEMAMix → 更新 U_k"]
+    C --> D["后置谱裁剪<br/>硬约束更新谱范数 ≤ c（= 复合 Frank-Wolfe）"]
+    D --> E["带 weight decay 参数更新<br/>X_k+1 = (1−λη)X_k − αη·clip(U_k)"]
+    NS["Newton-Schulz 软谱裁剪<br/>orth(X) 几轮 matmul 近似、无 SVD"]
+    NS -.实现.-> B
+    NS -.实现.-> D
+```
 
 ### 关键设计
 

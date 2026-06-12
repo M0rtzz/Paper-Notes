@@ -42,7 +42,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-APS 的输入是一篇文档的 token surprisal 序列 $\mathbf{x} = (x_0, \dots, x_{N-1})$，其中 $x_n = -\log p(t_n \mid t_{<n})$ 由语言模型估计（英语用 LLaMA3-8B / Yarn-LLaMA2-7B，中文用 Qwen2-7B），输出则是该文档的有效周期集 $\{\tau_1, \tau_2, \dots\}$ 或空集。它把信号处理里成熟的 AutoPeriod 两步走搬到 surprisal 上：先用周期图在频域圈出统计显著的候选周期（period hints），再用 ACF 的几何形态在时域过滤掉假阳，留下经双重确认的周期。据此可把全部文档切成三类——$P_1$（至少一个 hint，准周期）、$P_2 \subseteq P_1$（hint 通过 ACF 验证，严格周期）、$\Sigma - P_1$（无 hint，非周期），这套分类既是 APS 的输出，也是后续与 genre / human-vs-LLM 等 doc-level 变量关联的实验切片工具。
+APS 的输入是一篇文档的 token surprisal 序列 $\mathbf{x} = (x_0, \dots, x_{N-1})$，其中 $x_n = -\log p(t_n \mid t_{<n})$ 由语言模型估计（英语用 LLaMA3-8B / Yarn-LLaMA2-7B，中文用 Qwen2-7B），输出则是该文档的有效周期集 $\{\tau_1, \tau_2, \dots\}$ 或空集。它把信号处理里成熟的 AutoPeriod 两步走搬到 surprisal 上：先用周期图在频域圈出统计显著的候选周期（period hints），再用 ACF 的几何形态在时域过滤掉假阳，留下经双重确认的周期。据此可把全部文档切成三类——$P_1$（至少一个 hint，准周期）、$P_2 \subseteq P_1$（hint 通过 ACF 验证，严格周期）、$\Sigma - P_1$（无 hint，非周期）；这套分类既是 APS 的输出，也是后续与 genre / human-vs-LLM 等 doc-level 变量关联的实验切片工具，并被进一步用谐波回归（HR）做反向验证以坐实"检出的周期是真"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：文档 token surprisal 序列<br/>由语言模型逐 token 估计"] --> B["周期图 + 随机置换显著性检验<br/>Lomb-Scargle 谱，99 分位阈值圈出 period hints"]
+    B -->|"候选周期 hints = P1 准周期"| C["ACF Hill 验证<br/>自相关呈先升后降山丘则保留，否则剔除假阳"]
+    C -->|"通过验证 = P2 严格周期"| D["三类分类输出<br/>P2 ⊂ P1 ⊂ Σ"]
+    D --> E["HR 反向验证<br/>APS 周期代入谐波回归，看谐波显著性 + MSE 排序"]
+    E --> F["结论：APS 周期真实<br/>MSE 按 P2 &lt; P1 &lt; Σ−P1 单调排序"]
+```
 
 ### 关键设计
 

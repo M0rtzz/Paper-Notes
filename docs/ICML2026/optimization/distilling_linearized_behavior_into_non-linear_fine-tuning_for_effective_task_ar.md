@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 对每个任务 $t$ 同时维护两个模型：教师 $f_{\mathrm{lin}}(\bm x;\bm\theta_t^T)$ 走切空间线性化、学生 $f(\bm x;\bm\theta_t^S)$ 走标准非线性 fine-tune。两者共享同一预训练初始化 $\bm\theta_0$，在同一次反传里联合优化（不是先训老师再蒸学生），并且都加 EK-FAC 曲率正则。教师负责给出"低干扰目标激活"，学生通过对教师沿插值路径采样的多个 snapshot 做特征 MSE 蒸馏来抓住"线性化行为"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["共享预训练初始化 θ₀"]
+    A --> B["线性化教师 + 任务无关 EK-FAC 曲率正则<br/>切空间 f_lin，漂移正则的 GGN 用第三方参考集预算"]
+    A --> C["非线性学生 f（标准 fine-tune）"]
+    B --> D["沿路径知识蒸馏 APKD<br/>α∼U(0.5,1) 采插值点，投影头前激活 MSE，教师 stop-grad"]
+    C --> D
+    D --> E["学生端联合曲率正则<br/>KD 管线性化、曲率正则管解耦，两条通路并行"]
+    E --> F["部署：纯非线性 forward 学生（零推理开销）<br/>task vector 可加=合并 / 可减=遗忘"]
+```
+
 ### 关键设计
 
 **1. 线性化教师 + 任务无关 EK-FAC 曲率正则：把教师推到对任意未来任务都低干扰的方向**

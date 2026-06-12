@@ -43,6 +43,23 @@ NeAR 提出将神经资产创作和神经渲染联合设计为一个耦合栈，
 ### 整体框架
 NeAR 分两个阶段：**Stage 1** 用 LoRA 微调 rectified-flow 模型，将任意光照下的单张输入图像提升到光照均匀化的 SLAT（LH-SLAT），消除烘焙阴影和不稳定高光；**Stage 2** 用前馈解码器将 LH-SLAT 在目标光照和视角条件下合成可重光照的 3D 高斯溅射场。整个流程无需逐物体优化，支持实时推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 I_in"] --> B["SLAT 流模型 f_s<br/>生成带阴影的 Shaded SLAT Z_s"]
+    B --> C["光照均匀化结构化潜变量（LH-SLAT）<br/>LoRA 模型 f_θ 把光照洗掉 → Z_lh"]
+    ENV["HDR 环境光"] --> TOK["光照 Tokenizer<br/>编成方向可编辑 token C_L"]
+    subgraph DEC["内在感知解码器（IAD）+ 光照感知解码器（LAD）"]
+        direction TB
+        D["IAD：输出光照无关内在特征 h"] --> E["LAD：注入视角 + 光照条件<br/>得光照感知特征 h_e"]
+    end
+    C --> D
+    TOK --> E
+    D --> F["神经 3D 高斯溅射<br/>按内在 / 光照分两组回归高斯参数"]
+    E --> F
+    F --> G["可微光栅化<br/>输出 HDR 可重光照图像"]
+```
+
 ### 关键设计
 
 **1. 光照均匀化结构化潜变量（LH-SLAT）：用流模型把光照"洗掉"，而不是显式逆 PBR**

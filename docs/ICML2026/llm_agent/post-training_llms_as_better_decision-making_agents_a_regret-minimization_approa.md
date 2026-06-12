@@ -44,6 +44,17 @@ tags:
 ### 整体框架
 Iterative RMFT 是一个 meta-algorithm：同一套外层循环就能套到 FOL（全信息在线学习）、MAB（多臂赌博机）、NS-MAB（非平稳赌博机）三种在线决策环境上。一次外层迭代里，LLM 在 $M$ 个不同 scenario（语言描述的决策任务）上各 rollout $L$ 条轨迹，每条轨迹由若干 (推理 CoT, 动作) 对组成，全程用自然语言交互；轨迹跑完后算累积 regret，从每个 scenario 里挑 regret 最低的 $k$ 条组成 SFT 数据集 $\mathcal{D}$，用标准 SFT loss 更新模型；新模型替换旧模型进入下一轮，循环至收敛。整个范式的精髓是：训练信号只有 regret 这一个标量，对动作格式、CoT 模板、最优算法都不做任何假设，模型自带的推理也被一并保留并强化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["M 个语言化 scenario（FOL / MAB / NS-MAB）"] --> B["当前 LLM 各 rollout L 条轨迹<br/>每条 =（CoT 推理, 动作）序列"]
+    B --> C["基于 regret 的轨迹筛选<br/>算 regret / dynamic regret，按升序取每 scenario 最低 k 条"]
+    C --> D["保留自生成 CoT 的 SFT<br/>整条轨迹按对话格式做 cross-entropy"]
+    D --> E["更新模型 → 替换旧模型"]
+    E -->|未收敛，进入下一轮迭代| B
+    E -->|收敛| F["输出：no-regret 决策 agent"]
+```
+
 ### 关键设计
 
 **1. 基于 regret 的轨迹筛选：把"评估"和"造数据"用一个标量统一起来**

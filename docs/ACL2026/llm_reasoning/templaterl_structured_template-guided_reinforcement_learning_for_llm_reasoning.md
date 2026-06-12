@@ -47,6 +47,33 @@ TemplateRL 分三个阶段：
 
 **第三阶段 —— 可选的动态扩展**：在训练或推理过程中，如果发现新的正确推理路径，自动提取其动作序列并加入模板库，持续丰富库的覆盖范围。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["种子集合（500 问题）"] --> B
+    subgraph S1["基于 MCTS 的模板构造与复杂度感知（设计 1）"]
+        direction TB
+        B["MCTS 生成多条解答树"] --> C["评分函数权衡正确率 R 与复杂度 C<br/>筛最优路径"]
+        C --> D["抽象动作序列 + 按 PCC 聚类"]
+    end
+    D --> L[("结构化模板库 L")]
+    F["训练问题 q"] --> E
+    L --> E
+    subgraph S2["自适应模板检索与多群组 RL 优化（设计 2）"]
+        direction TB
+        E["算 PCC，检索 top-k 相似模板"] --> G["每个模板沿动作序列采样轨迹"]
+        G --> H["多群组 GRPO 优化<br/>每模板对应一个子目标"]
+    end
+    H --> I["更优策略 π"]
+    H -->|训练中的正确轨迹| J
+    I -->|推理多数投票结果| J
+    subgraph S3["动态模板库扩展（设计 3）"]
+        direction TB
+        J["抽取新动作序列"]
+    end
+    J -.回填.-> L
+```
+
 ### 关键设计
 
 **1. 基于 MCTS 的模板构造与复杂度感知：从少量高质量示例里把"怎么解"抽象成可复用的动作序列**

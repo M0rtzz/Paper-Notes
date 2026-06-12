@@ -50,6 +50,19 @@ HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一
 2. **构造两个辅助模型**：用 GPT-4o 把每条轨迹切成 segment $\tau^s = \{s_1, \dots, s_n\}$，训练 Segmental Process RM（SPRM）和 hindsight 模型 $\pi_{hind}$。
 3. **PPO 训练**：用 SPRM 预测段级 reward $\hat R$，用 hindsight/policy 似然比算段级 importance $\hat z_s$，乘起来再归一化得 $\hat R_{him}$，加 grounding reward 后驱动 PPO。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["专家轨迹 D_bc<br/>行为克隆(BC) SFT → 参考策略 π_ref"] --> B["π_ref rollout N 次<br/>过滤失败/重复 → 轨迹集 D_ct"]
+    B --> C["GPT-4o 切 segment<br/>轨迹按 sub-goal 对齐分段"]
+    C --> D["Segmental Process RM(SPRM)<br/>末隐层接 MLP，拟合 R = Σ 段分"]
+    C --> E["Hindsight 模型 π_hind<br/>mask 重建动作 → 似然比算段级 importance"]
+    D --> F["Hindsight 调制奖励<br/>段奖励 ⊙ 段级 importance 再归一化"]
+    E --> F
+    F --> G["+ grounding reward<br/>融合 r_fuse → PPO 的 GAE"]
+    G --> H["PPO 更新 policy"]
+```
+
 ### 关键设计
 
 **1. Segmental Process Reward Model（SPRM）：把轨迹末尾的一个标量拆成与 sub-goal 对齐的连续段奖励**

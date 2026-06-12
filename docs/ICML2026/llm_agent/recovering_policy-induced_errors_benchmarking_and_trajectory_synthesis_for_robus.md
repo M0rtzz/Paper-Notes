@@ -44,6 +44,25 @@ tags:
 
 数据侧 RoTS 则在 20k 个有可复现快照的任务上建轨迹树 $T=(O,A,E)$（节点是 screenshot，边是 action）：先并行跑 $N=4$ 条 rollout 初始化，再迭代 $K=32$ 轮 "explore-recovery co-expansion"，每轮按外层 reward model $\mathcal{R}$ 把树切成成功子树 $T^{\text{corr}}$ 和失败子树 $T^{\text{fail}}$ 各扩展一次——前者主动找新错误，后者合成恢复轨迹。最后做后处理筛选，组装成 800k 训练样本去 SFT Qwen2.5-VL-7B/32B。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph EVAL["GUI-RobustEval 评测集构建"]
+        direction TB
+        B1["12 个 SOTA agent<br/>1.5k 真实失败轨迹"] --> B2["人工标 root-cause 步<br/>+ 11 类错误 × 4 档深度"]
+        B2 --> B3["标准化为可执行模板<br/>纯净前缀 + 后续 d 步错误"]
+        B3 --> B4["重放到已错状态再接手<br/>测 Awareness / Post-Error Success"]
+    end
+    T0["20k 可复现快照任务"] --> T1["N=4 并行 rollout<br/>初始化轨迹树 T"]
+    T1 --> RM["reward model R<br/>切成功 / 失败子树"]
+    RM -->|成功子树| FDE["FDE 脆弱度探索<br/>UCB 选脆弱节点重放造新错"]
+    RM -->|失败子树| EIR["EIR 经验引导恢复<br/>借兄弟经验合成长程修复"]
+    FDE -->|回灌| RM
+    EIR -->|回灌| RM
+    RM -->|K=32 轮后| POST["后处理筛选<br/>拆反思无关 / 反思相关子集"]
+    POST --> SFT["SFT Qwen2.5-VL-7B/32B → RoTS"]
+```
+
 ### 关键设计
 
 **1. GUI-RobustEval：从真实失败里反推可控的错误前缀**

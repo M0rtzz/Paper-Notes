@@ -42,7 +42,19 @@ tags:
 ### 整体框架
 输入是一个预训练的掩码 DLM $\pi_{\text{ref}}$（如 LLaDA-8B-Instruct 或 Eso-LM）与一个带可验证奖励 $r(x, q)$ 的推理任务（Sudoku 检查器 / GSM8K 答案匹配等）。框架分三步：(1) 用旧策略 $\pi_{\text{old}}$ 在 group size $G$ 下采样 $G$ 条完整反掩码轨迹 $x_{0:T}^{1:L}$；(2) 计算 group-relative advantage $A^{(i)}$，并用 d2-AnyOrder 或 d2-StepMerge 估计 $\pi_\theta / \pi_{\text{old}} / \pi_{\text{ref}}$ 在该轨迹上的似然；(3) 按下面 Corollary 3.3 的 GRPO 目标做梯度更新。最终输出是经过 RL 后训练的策略 $\pi_\theta$，在推理任务上达到 SOTA。
 
-正文先把 DLM 上的策略梯度严格化为 Theorem 3.1：在 $\theta = \theta_{\text{old}}$ 处，$\nabla_\theta J(\theta) = \nabla_\theta \mathbb{E}_{x_{0:T}^{1:L} \sim \pi_{\text{old}}}[r(x_0^{1:L}, q) \sum_{t=0}^{T-1} \sum_{l=1}^{L} \mathbf{1}_{t,l} \cdot \rho_t^l]$，其中 $\mathbf{1}_{t,l} = \mathbf{1}\{x_{t+1}^l = m, x_t^l \neq m\}$ 表示"在第 $t$ 步把位置 $l$ 解码出来"，$\rho_t^l = \pi_\theta(x_t^l | x_{t+1}^{1:L}, q) / \pi_{\text{old}}(x_t^l | x_{t+1}^{1:L}, q)$ 是按扩散步分摊的重要性比。再加上 advantage、clip 和 KL 约束就得到 GRPO 目标 (Corollary 3.3)。剩下的工程问题就是：如何高效估出这些 $\rho_t^l$。
+正文先把 DLM 上的策略梯度严格化为 Theorem 3.1：在 $\theta = \theta_{\text{old}}$ 处，$\nabla_\theta J(\theta) = \nabla_\theta \mathbb{E}_{x_{0:T}^{1:L} \sim \pi_{\text{old}}}[r(x_0^{1:L}, q) \sum_{t=0}^{T-1} \sum_{l=1}^{L} \mathbf{1}_{t,l} \cdot \rho_t^l]$，其中 $\mathbf{1}_{t,l} = \mathbf{1}\{x_{t+1}^l = m, x_t^l \neq m\}$ 表示"在第 $t$ 步把位置 $l$ 解码出来"，$\rho_t^l = \pi_\theta(x_t^l | x_{t+1}^{1:L}, q) / \pi_{\text{old}}(x_t^l | x_{t+1}^{1:L}, q)$ 是按扩散步分摊的重要性比。再加上 advantage、clip 和 KL 约束就得到 GRPO 目标 (Corollary 3.3)。剩下的工程问题就是：如何高效估出这些 $\rho_t^l$——这正是下面两个估计器各自要解决的，按模型是否支持 any-order 解码分流。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：预训练掩码 DLM π_ref<br/>+ 可验证奖励推理任务"] --> B["π_old 采样 G 条完整反掩码轨迹"]
+    B --> C["计算 group-relative advantage A<br/>+ 估计轨迹似然比 ρ（按模型结构分流）"]
+    C -->|支持 any-order 解码的 AO-dLLM| D["d2-AnyOrder<br/>2L 拼接 + 取模位置编码 + 自定义注意力掩码<br/>单次前向给出精确似然"]
+    C -->|标准 MDM| E["d2-StepMerge<br/>T 步均分 N 段、段端各一次前向<br/>N 次前向的精度可调近似"]
+    D --> F["GRPO clip 目标 (Corollary 3.3)<br/>min(ρA, clip(ρ)A) + β·KL 梯度更新"]
+    E --> F
+    F --> G["输出：RL 后训练策略 π_θ（推理 SOTA）"]
+```
 
 ### 关键设计
 

@@ -45,6 +45,29 @@ tags:
 
 FaithLens 要解决的是"幻觉检测既要准、又要能说清为什么"这对难题，整体走两阶段。第一阶段冷启动 SFT：从开源数据集出发，用高级推理模型（DeepSeek-V3.2-Think）合成带解释的训练数据，经过一道三维过滤筛掉噪声样本后微调出一个会输出"标签 + 解释"的 8B 模型；第二阶段规则强化学习：用 GRPO 进一步优化，奖励由预测正确性、解释质量、格式三部分组成。两阶段串起来的逻辑是——SFT 先让模型学会基本的检测和解释格式，RL 再用奖励信号把它推到复杂场景也站得住的水平。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["开源数据集"] --> B["DeepSeek-V3.2-Think 合成<br/>带解释的训练数据"]
+    B --> FILT
+    subgraph FILT["三维数据过滤策略"]
+        direction TB
+        F1["标签过滤<br/>预测 ≠ 真值则整条丢弃"] --> F2["解释质量过滤<br/>解释须压低正确标签困惑度"]
+        F2 --> F3["多样性过滤<br/>K-Medoids 探测集筛覆盖度"]
+    end
+    FILT --> C["冷启动 SFT<br/>微调出输出『标签 + 解释』的 8B 模型"]
+    C --> D["GRPO 强化学习训练<br/>每个文档-声明对采样 G 个候选"]
+    D --> REW
+    subgraph REW["组合奖励 R_final"]
+        direction TB
+        R1["预测正确性 R_pred"]
+        R2["解释质量奖励 R_exp<br/>新手模型仅凭解释能否预测对"]
+        R3["格式正确性 R_format"]
+    end
+    REW -->|组内相对优势 + KL 正则更新策略| D
+    D --> OUT["FaithLens-8B<br/>输出检测标签 + 解释"]
+```
+
 ### 关键设计
 
 **1. 三维数据过滤策略：用三道筛子保证合成数据既标得对、又讲得清、还覆盖得全**

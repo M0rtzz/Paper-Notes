@@ -41,21 +41,43 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这是一篇方法论 position：核心主张是"能力（capability）和可靠性（reliability）应该是两条独立的进展轴，不能再被单一准确率裹挟"。论文的论证方式是把航空 / 核电 / 汽车等安全关键工程里反复出现的可靠性维度翻译成 agent 可计算的指标，再用一套统一协议在 GAIA + $\tau$-bench 上把 15 个前沿模型测一遍，用实证数据反推出"准确率猛涨、可靠性停滞"的行业级结论。
+这是一篇方法论 position：核心主张是"能力（capability）和可靠性（reliability）应该是两条独立的进展轴，不能再被单一准确率裹挟"。论文的论证方式是把航空 / 核电 / 汽车等安全关键工程里反复出现的可靠性维度翻译成 agent 可计算的指标，再用一套统一协议在 GAIA + $\tau$-bench 上把 15 个前沿模型测一遍，用实证数据反推出"准确率猛涨、可靠性停滞"的行业级结论。具体落地拆成三件事：先把现有 benchmark 改造成统一的可靠性测量台（**统一评测协议**），再把跑出来的信号映射进四维分解下的 12 个与准确率正交的指标（**四维分解 + 12 指标矩阵**），最后用 **safety 独立于总分** 的聚合策略合成可比分数——一套扰动各自喂给不同维度，一次运行就同时产出全部 12 个指标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 380}}}%%
+flowchart TD
+    IN["GAIA / τ-bench 任务 + agent<br/>+ 脚手架（ReAct / tool-calling）"]
+    IN --> P["统一评测协议（reliability harness）<br/>不改题目，只加扰动"]
+    subgraph M["四维分解 + 12 指标矩阵（每个指标都与准确率正交）"]
+        direction TB
+        D1["一致性 · 4 指标<br/>Cout · JSD · Levenshtein · Cres"]
+        D2["鲁棒性 · 3 指标<br/>min(Acc扰动 ÷ Acc0, 1)"]
+        D3["可预测性 · 3 指标<br/>ECE · AUROC · Brier"]
+        D4["安全 · 2 指标<br/>违规率 Scomp · 严重度 Sharm"]
+    end
+    P -->|"重复 K=5 @ 温度0"| D1
+    P -->|"提示 / 故障 / 环境扰动"| D2
+    P -->|"完成后自评置信度"| D3
+    P -->|"LLM-as-Judge 标违规"| D4
+    D1 --> AGG["总分 R = ⅓（一致性 + 可预测性 + 鲁棒性）"]
+    D2 --> AGG
+    D3 --> AGG
+    D4 -->|"尾部事件，不进总分"| SAFE["safety 独立报告 / 硬约束<br/>1 − (1−Scomp)(1−Sharm)"]
+```
 
 ### 关键设计
 
-**1. 四维分解 + 12 指标矩阵：把"可靠吗"翻译成可计算标量**
+**1. 统一评测协议：用同一套扰动让旧 benchmark 同时测全 12 指标**
 
-论文最核心的论点是可靠性不是一个模糊感受，而是可以被锚定到成熟工程标准上的一组量。作者把它拆成 consistency / robustness / predictability / safety 四维，每维都对应一条安全关键工程的成熟做法——consistency 对应 FAA flight-critical software 的"确定性执行"，robustness 对应汽车 / 航空对环境扰动的 graceful degradation，predictability 对应 NRC 的故障模式建模与分级风险分类，safety 对应 SIL 4 那种 $<10^{-5}$ 的危险失效率。每个维度再落 2–4 个 $[0,1]$ 区间的指标共 12 个：一致性用每任务成功率方差 $C_\text{out}=\frac{1}{T}\sum_t(2\hat p_t-1)^2$（以最大伯努利方差 0.25 归一）、轨迹层面的 JSD 与 Levenshtein、资源层面的 $C_\text{res}=\exp(-\overline{\text{CV}_r})$；鲁棒性统一成 $\min(\text{Acc}_\text{perturb}/\text{Acc}_0,1)$ 的 clipped ratio；可预测性用 ECE / AUROC / Brier 分测校准、判别、联合；安全分 compliance（违规率）和 harm（条件期望严重度），合成成风险公式 $1-(1-S_\text{comp})(1-S_\text{harm})$。关键约束是每个指标都必须"与准确率正交"——比如 $C_\text{out}$ 在 $\hat p_t=0$ 和 $\hat p_t=1$ 两端都拿满分，于是一个总失败但稳定失败的 agent 不会被罚到 0，"稳不稳"由此从"会不会"里被彻底剥离出来。
+框架要落地，关键在于不重新造题，而是把 GAIA、$\tau$-bench 包成一个可靠性测量台（reliability harness）：每题跑 $K=5$ 次、温度设 0（任何方差都归因于 floating-point / batch / kernel 调度等系统源而非采样），用 GPT-4o 自动生成 $J=5$ 种等价改写测 prompt 鲁棒性，对工具调用注入概率 $p_\text{fault}=0.2$ 的失败/超时，环境扰动改 JSON 字段名 / 顺序 / 日期格式，agent 完成后被提示"给自己打分"抽取 confidence，再用 LLM-as-Judge 对照约束集标安全违规。脚手架上 GAIA 用 ReAct + 浏览 / 代码 / 文件工具、$\tau$-bench 用 tool-calling。这套扰动各自喂给不同维度——重复跑喂一致性、三类扰动喂鲁棒性、置信度自评喂可预测性、违规标注喂安全——于是一次 apples-to-apples 的运行就同时产出全部 12 个指标的原始信号。$\tau$-bench 只取 Cuadron et al. 清理后的 26 题子集，因为论文对比完整集和清洗集发现清洗后 calibration 大幅改善，证明 benchmark 自身的质量都会扭曲可靠性测量——这也顺手把所有扰动参数公开成可复现的旋钮。
 
-**2. 故意把 safety 排除在总分之外：常态可平均、尾部不可平均**
+**2. 四维分解 + 12 指标矩阵：把"可靠吗"翻译成可计算标量**
 
-第二个论点针对"把一切塞进一个数"的评测惯性：作者主张安全属于尾事件，绝不能和其他维度求平均掩盖掉。所以整体可靠性只取三维 $\mathcal R=\frac{1}{3}(\mathcal R_\text{Con}+\mathcal R_\text{Pred}+\mathcal R_\text{Rob})$，把 safety 单独以 hard constraint 形式报告，任何安全指标退化都触发独立警报。其依据是 Kaplan & Garrick 风险公式与 SIL 4 / FAA"一亿飞行小时一次灾难"的尾部视角——若与其他维度平均，"99% 安全 + 1% 灾难"会被压成"看起来挺安全"。同样的防主导思路也用在一致性内部，轨迹分量 $C_\text{traj}=\frac{1}{2}(C_\text{traj}^d+C_\text{traj}^s)$ 用 1/2 加权，避免它因 sub-metric 多而主导整维。这条设计把"评估必须区分常态指标与尾部指标"立成了原则。
+协议跑出的原始信号要变成可比的标量，靠的是论文最核心的论点：可靠性不是一个模糊感受，而是可以被锚定到成熟工程标准上的一组量。作者把它拆成 consistency / robustness / predictability / safety 四维，每维都对应一条安全关键工程的成熟做法——consistency 对应 FAA flight-critical software 的"确定性执行"，robustness 对应汽车 / 航空对环境扰动的 graceful degradation，predictability 对应 NRC 的故障模式建模与分级风险分类，safety 对应 SIL 4 那种 $<10^{-5}$ 的危险失效率。每个维度再落 2–4 个 $[0,1]$ 区间的指标共 12 个：一致性用每任务成功率方差 $C_\text{out}=\frac{1}{T}\sum_t(2\hat p_t-1)^2$（以最大伯努利方差 0.25 归一）、轨迹层面的 JSD 与 Levenshtein、资源层面的 $C_\text{res}=\exp(-\overline{\text{CV}_r})$；鲁棒性统一成 $\min(\text{Acc}_\text{perturb}/\text{Acc}_0,1)$ 的 clipped ratio；可预测性用 ECE / AUROC / Brier 分测校准、判别、联合（聚合时取兼顾两者的 Brier 作 $\mathcal R_\text{Pred}$）；安全分 compliance（违规率）和 harm（条件期望严重度），合成成风险公式 $1-(1-S_\text{comp})(1-S_\text{harm})$。关键约束是每个指标都必须"与准确率正交"——比如 $C_\text{out}$ 在 $\hat p_t=0$ 和 $\hat p_t=1$ 两端都拿满分，于是一个总失败但稳定失败的 agent 不会被罚到 0，"稳不稳"由此从"会不会"里被彻底剥离出来。
 
-**3. 统一评测协议：用同一套扰动让旧 benchmark 同时测全 12 指标**
+**3. safety 独立于总分：常态可平均、尾部不可平均**
 
-第三个论点是落地性——可靠性框架不能停在概念，要能在现有 benchmark 上 apples-to-apples 地跑。作者不改题目，而是把 GAIA、$\tau$-bench 包成一个 reliability harness：每题跑 $K=5$ 次、温度设 0（任何方差都归因于 floating-point / batch / kernel 调度等系统源而非采样），用 GPT-4o 自动生成 $J=5$ 种等价改写测 prompt 鲁棒性，对工具调用注入概率 $p_\text{fault}=0.2$ 的失败/超时，环境扰动改 JSON 字段名 / 顺序 / 日期格式，agent 完成后被提示"给自己打分"抽取 confidence。脚手架上 GAIA 用 ReAct + 浏览 / 代码 / 文件工具、$\tau$-bench 用 tool-calling。$\tau$-bench 只取 Cuadron et al. 清理后的 26 题子集，因为论文对比完整集和清洗集发现清洗后 calibration 大幅改善，证明 benchmark 自身的质量都会扭曲可靠性测量——这也顺手把所有扰动参数公开成可复现的旋钮。
+拿到 12 个指标后，怎么聚合本身就是一个有立场的设计：作者主张安全属于尾事件，绝不能和其他维度求平均掩盖掉。所以整体可靠性只取三维 $\mathcal R=\frac{1}{3}(\mathcal R_\text{Con}+\mathcal R_\text{Pred}+\mathcal R_\text{Rob})$，把 safety 单独以 hard constraint 形式报告，任何安全指标退化都触发独立警报。其依据是 Kaplan & Garrick 风险公式与 SIL 4 / FAA"一亿飞行小时一次灾难"的尾部视角——若与其他维度平均，"99% 安全 + 1% 灾难"会被压成"看起来挺安全"。同样的防主导思路也用在一致性内部，轨迹分量 $C_\text{traj}=\frac{1}{2}(C_\text{traj}^d+C_\text{traj}^s)$ 用 1/2 加权，避免它因 sub-metric 多而主导整维。这条设计把"评估必须区分常态指标与尾部指标"立成了原则。
 
 ## 实验关键数据
 

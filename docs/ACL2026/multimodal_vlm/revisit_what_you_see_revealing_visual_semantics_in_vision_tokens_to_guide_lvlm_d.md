@@ -45,6 +45,18 @@ ReVisiT 是一个解码时方法，不改模型结构，不需要额外标注，
 
 该流程的关键是所有比较都发生在同一个受约束词表内。这样既避免完整词表中 function word、标点、低相关词带来的噪声，也让视觉 token 的对象语义能够和当前上下文对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本提示"] --> B["LVLM 编码<br/>视觉 token + 文本上下文"]
+    B --> C["原始输出分布 p_θ(w)"]
+    C --> D["候选词表约束<br/>保留 p_θ(w) ≥ α·max 的词"]
+    D --> E["视觉 token 选择<br/>投影到候选词表，选最小 JSD 的 token/层"]
+    E --> F["logit 融合（Product-of-Experts）<br/>log 空间相加 → softmax"]
+    F --> G["选出下一词"]
+    G -->|逐步生成下一时间步| C
+```
+
 ### 关键设计
 **1. 上下文感知的候选词表约束：先把词表收窄到"这一步真有可能说出口的词"，视觉语义才显形**
 

@@ -45,24 +45,25 @@ ALSO 的对象不是模型参数，而是每轮插入到 persona 后面的策略
 
 对话环境返回对手回应后，LLM evaluator 给出 turn-level 多维评分，ALSO 将其归一化为标量奖励。这个样本会加入 replay buffer，用 MSE 更新 surrogate，同时用带衰减的 score smoothing 更新每个策略 arm 的累计分数。底层 LLM 完全冻结，在线变化只发生在策略选择器和轻量级 value network。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["策略库 Σ + 基础 persona<br/>预计算各增强 persona 嵌入 b_k"] --> B["编码对话历史<br/>c(t) = g(H(t−1))"]
+    B --> C["神经 surrogate 预测全部策略奖励<br/>v_k = f_θ([b_k; c(t)])"]
+    C --> D["对抗式 bandit arm：EXP3 采样策略<br/>π_k ∝ exp(η·S_k)"]
+    D --> E["拼接选中策略 → 冻结 LLM 生成话语<br/>观察对手回应 + evaluator 归一化奖励 r_t"]
+    E --> F["replay buffer + MSE 在线更新 surrogate"]
+    F --> G["衰减式分数平滑<br/>S_k = λ·S_k + v_k"]
+    G -->|进入下一轮| B
+```
+
 ### 关键设计
-1. **策略作为 adversarial bandit arm**:
 
-	- 功能：把社会互动中的动态行为选择变成可在线优化的离散决策问题。
-	- 核心思路：每个策略指令对应一个 arm，选中后与基础 persona 拼接；策略采样概率由 $\pi_k^{(t)}\propto\exp(\eta S_k^{(t-1)})$ 给出，并随奖励反馈更新。
-	- 设计动机：社会互动的奖励分布会随对手行为和对话状态漂移，EXP3 式随机化比固定贪心选择更能抵抗非平稳与对抗性变化。
+**1. 策略作为对抗式 bandit arm（exponential-weights 选择）**：社会互动的奖励会随对手反应和对话阶段不断漂移，把策略选择当成平稳随机问题（贪心或固定验证集搜索）会被这种非平稳性反噬。ALSO 把策略空间 $\Sigma=\{\sigma_1,\dots,\sigma_K\}$ 里的每条策略指令当作一个 arm，选中后与基础 persona 拼成增强 persona $b^{(t)}=b^0\oplus\sigma_{k_t}$ 再喂给冻结的 LLM。每轮按指数权重分布 $\pi_k^{(t)}\propto\exp(\eta S_k^{(t-1)})$ 随机采样一个 arm，而非贪心取最高分。这种 EXP3 式随机化是对抗设定下的关键——贪心策略容易被对手摸清规律、或过拟合到转瞬即逝的局势，随机化能在非平稳环境里保持探索鲁棒性。
 
-2. **历史感知的神经 surrogate**:
+**2. 历史感知的神经 surrogate（密集化稀疏反馈）**：bandit 每轮只看得到被选中那条策略的奖励，而 12 条候选策略里大多数（及其同义改写）可能整局都没被采样到，直接按 arm 累计奖励极其低效。ALSO 用一个冻结 embedding 模型 $g(\cdot)$ 分别编码对话历史 $\mathbf{c}^{(t)}=g(\mathcal{H}^{(t-1)})$ 和预计算好的增强 persona 嵌入 $\mathbf{b}_k$，拼成特征 $\mathbf{x}_k^{(t)}=[\mathbf{b}_k;\mathbf{c}^{(t)}]$，再由可训练 value network $f_\theta$ 一次性预测全部 arm 的当前奖励 $\hat v_k^{(t)}=f_\theta(\mathbf{x}_k^{(t)})$。因为语义相近的策略（如“先验证再转向”与“合作式谈判”）在相似上下文里往往同样有效，surrogate 能把单条反馈泛化到语义邻近的策略上，给指数权重分布提供稠密的分数估计——这也是消融里最关键的部件，去掉后 Overall 从 3.91 掉到 3.33。
 
-	- 功能：在只观察到被选策略奖励的 bandit 反馈下，估计其他策略在当前上下文中的潜在价值。
-	- 核心思路：冻结 embedding model 分别编码对话历史和增强 persona，拼接成特征 $x_k^{(t)}=[b_k;c^{(t)}]$，再由 value network $f_\theta$ 预测 $\hat v_k^{(t)}$。
-	- 设计动机：社会策略具有语义相关性，例如“先验证再转向”和“合作式谈判”可能在相似上下文中都有效；surrogate 能把少量反馈泛化到语义相近策略。
-
-3. **衰减式分数平滑**:
-
-	- 功能：让策略分数既利用历史经验，又能追踪对话中的奖励漂移。
-	- 核心思路：新奖励进入 arm score 时带有时间衰减因子，旧反馈不会永久支配当前选择；同时 replay buffer 继续为 surrogate 提供样本。
-	- 设计动机：社会对话中的最佳策略常常随阶段变化，过度记忆早期反馈会造成策略僵化，过度只看最近反馈又会增加方差。
+**3. 衰减式分数平滑（追踪非平稳漂移）**：经典 EXP3 把历史反馈等权累加，但社会对话的最优策略常随阶段切换，过度记忆早期反馈会让策略僵化。ALSO 给累计分数加一个指数衰减因子 $\lambda\in(0,1]$（实验取 0.9），更新为 $S_k^{(t)}=\lambda S_k^{(t-1)}+\hat v_k^{(t)}$，让近期证据主导、旧反馈逐渐淡出。这样 arm 分数既保留历史经验、又能对对手立场变化快速响应，在“过度记忆早期反馈导致僵化”和“只看最近反馈导致高方差”之间取得平衡。
 
 ### 损失函数 / 训练策略
 ALSO 不微调 LLM。唯一训练的是 value network，它用 replay buffer 中的样本最小化预测奖励和 evaluator 奖励之间的 MSE。策略选择器使用指数权重和 score smoothing 在线更新。实验默认使用 12 个预定义社会策略，每个 episode 最多 20 轮；双边设置下两个 agent 各自维护独立 optimizer，并只根据自身反馈更新。

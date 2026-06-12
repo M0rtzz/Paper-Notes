@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 这套方法要解决的是 test-time latent 优化"既要快、又不能 reward hacking"的两难。作者的做法是保留原来的 reward ascent 循环——每步算 reward $J = r(\mathcal{M}(\bm{x}))$、求梯度 $\bm{g} = \nabla_{\bm{x}} J$、用 Adam 更新 latent——但在 Adam 之前插入一个投影算子，把梯度 $\bm{g}$ 投影到一个刻画"白高斯噪声"的可行集 $\mathcal{G}$ 上再去更新（Algorithm 1）。关键的视角转换是：软正则路线 $\max_{\bm{x}} r(\mathcal{M}(\bm{x})) - \lambda \mathcal{L}_{\text{reg}}(\bm{x})$ 把噪声性写进目标函数、还要调 $\lambda$，而本文把它写进**更新方向**——不要求 $\bm{x}$ 本身落在 $\mathcal{G}$ 里，只要求每步走的方向落在 $\mathcal{G}$ 里，这样既无超参，又把搜索锁在与白噪声兼容的子空间内。整个方法的全部技术含量都在投影算子 $\text{Proj}_{\mathcal{G}}$ 怎么设计得既精确又能 $\mathcal{O}(N\log N)$ 算出来，下面三个设计层层递进地解决它。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 26, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["latent 噪声 x"] --> B["一步生成模型 M<br/>reward J=r(M(x))"]
+    B --> C["求 reward 梯度 g=∇x J"]
+    C --> D["紧凑谱域 bijection F<br/>FFT + 剥 Hermitian 冗余 → y∈ℂ^(N/2)"]
+    D --> E["块状 ℓ1/ℓ2 双范数可行集 G<br/>每块范数卡到复高斯期望"]
+    E --> F["O(NlogN) 闭式投影 Proj_G<br/>块内闭式 + 逆 FFT → noise-aligned 梯度"]
+    F --> G["Adam 用投影后梯度更新 latent"]
+    G -->|"迭代 60–200 步"| A
+```
+
 ### 关键设计
 
 **1. 紧凑谱域 bijection $\mathcal{F}$：把 Hermitian 冗余剥掉让投影解耦**

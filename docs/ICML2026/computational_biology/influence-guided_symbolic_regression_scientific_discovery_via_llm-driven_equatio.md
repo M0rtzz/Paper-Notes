@@ -43,6 +43,21 @@ IGSR 把符号回归拆成"LLM 提议基函数 ψ_j + 逐项影响力分数 Δ_j
 ### 整体框架
 IGSR 要发现的是稀疏闭式模型 $f(\mathbf{x}) = \sum_j w_j \psi_j(\mathbf{x})$：每个基函数 $\psi_j$ 由 LLM 提议、可以任意非线性，外层权重 $w_j$ 则交给 OLS 拟合。关键在于把"想新项"和"判该不该留"彻底拆开——LLM 只负责创造候选，留谁删谁由一个便宜的统计量决定，整套提议-剪枝的循环再放进 MCTS 里搜索基函数的组合空间。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：数据 (x,y) + 变量描述"] --> M["MCTS 嵌入搜索<br/>UCT 选节点、随机采样扩展多分支"]
+    M --> P
+    subgraph P["Propose-and-Prune 循环（单次节点扩展）"]
+        direction TB
+        B["LLM 提议基函数 ψ_j<br/>携带历史 buffer 不重提失败项"] --> C["OLS 拟合权重 w_j"]
+        C --> D["逐项影响力分数 Δ_j<br/>置零第 j 项看验证 MSE 涨多少"]
+        D --> E["按 Δ_j 排序保留 Top-K"]
+    end
+    P -->|"reward = −MSE_val 回传"| M
+    M -->|搜索收敛| F["输出：稀疏闭式等式 f(x)=Σ w_j ψ_j"]
+```
+
 ### 关键设计
 
 **1. 逐项影响力分数 $\Delta_j$：把"该不该留这一项"从猜变成测**

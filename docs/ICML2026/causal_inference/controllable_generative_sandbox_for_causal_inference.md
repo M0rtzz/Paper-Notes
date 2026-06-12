@@ -52,6 +52,27 @@ tags:
 **统一目标**：
 $$\mathcal{L}(\theta) = \mathcal{L}_{\text{VAE}} + \lambda_\alpha \mathcal{L}_\alpha + \lambda_\tau \mathcal{L}_\tau^{\text{mean}} + \lambda_\tau^{\text{var}}\mathcal{L}_\tau^{\text{var}} + \lambda_\kappa \mathcal{L}_\kappa^{\text{mean}} + \lambda_\kappa^{\text{var}}\mathcal{L}_\kappa^{\text{var}}$$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["Treatment 模型 p(T)<br/>采样 T' ~ Bernoulli"]
+    subgraph GX["X-生成器（X / Y 模块化解耦）"]
+        direction TB
+        X1["条件 VAE 建模 X | T<br/>多头 decoder + 贝叶斯 GMM 先验"]
+        X2["overlap 旋钮 α(X)<br/>Huber 复合 penalty"]
+        X1 -.约束.-> X2
+    end
+    subgraph GY["Y-生成器（X / Y 模块化解耦）"]
+        direction TB
+        Y1["条件 VAE 联合建模 Y(0), Y(1) | X, T<br/>多头 decoder + 贝叶斯 GMM 先验"]
+        Y2["CATE 旋钮 τ(X) + 混杂旋钮 κ(X,T)<br/>Huber + variance penalty"]
+        Y1 -.约束.-> Y2
+    end
+    T --> GX
+    GX -->|"X'"| GY
+    GY -->|"Y(0)', Y(1)'"| O["合成观测 Y' = T'·Y(1)' + (1−T')·Y(0)'"]
+```
+
 ### 关键设计
 
 **1. 三个独立的因果"旋钮" + Huber 复合 penalty：让用户能调、且保证真调进去了**

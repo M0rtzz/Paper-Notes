@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 全文走"先严谨建模，再概率松弛，再剪枝回整数"三步：(1) **P1**：在马尔可夫张量参数化下把 MAPF 写成相邻时刻间 transport plan $\{\Pi_t\}_{t=1}^T$ 的 LP，证全单模性给出整数最优；(2) **P2**：以 Gibbs kernel $\bar g_{ij,t} \propto \exp(-c_{ij,t}/\varepsilon)$ 为 reference distribution 写 Schrödinger bridge，得到 P1 的 entropic 正则化，用多边际 Sinkhorn 求"影子"分数传输 $\tilde\Pi_t$；(3) **P3**：用影子高质量边做图剪枝（保留 mass 大的边），在缩小后的图上重解 LP 恢复整数解 $\hat\Pi_t$。pipeline 把"最优性 + 整数性"和"可扩展性"两段拼起来，整体复杂度从经典 IPM 的 $O(K^{1.68})$ 降到 $O(K^{1.15})$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["匿名 MAPF<br/>马尔可夫 MMOT 张量参数化"] --> B["P1：MMOT-LP 与全单模性<br/>gluing + terminal + vertex-capacity 约束"]
+    B -->|"证全单模 → 极点天然取整"| C["整数最优解<br/>多项式 O(KT) 变量，但大规模仍慢"]
+    C -->|"以 Gibbs kernel 为 reference"| D["P2：Schrödinger bridge 与 entropic 松弛<br/>多边际 Sinkhorn"]
+    D --> E["影子传输（分数）<br/>放松 vertex-capacity，标出高质量边"]
+    E -->|"砍掉 mass ≤ η 的边"| F["P3：影子剪枝 + LP 恢复整数性<br/>稀疏子图重解、保持全单模"]
+    F --> G["无冲突整数轨迹<br/>O(K^1.15)、代价差距 <10%"]
+```
+
 ### 关键设计
 
 **1. P1：MAPF 的 MMOT-LP 与全单模性保证**

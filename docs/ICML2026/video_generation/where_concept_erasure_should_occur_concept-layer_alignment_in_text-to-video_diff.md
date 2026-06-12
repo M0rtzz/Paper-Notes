@@ -45,24 +45,34 @@ CLEAR 的核心不是重新训练视频扩散模型，而是在冻结模型的 T
 
 训练完成后，层分布收敛到 $l^*=\arg\max_l\alpha_l$。推理阶段只在该层挂载 SAE，不更新扩散模型权重。给定 hidden state $h_{l^*}$，CLEAR 编码得到 sparse features，保留与目标概念相关的特异 feature，解码回模型空间形成 $v_{tar}$，然后执行 $h'_{l^*}=h_{l^*}-\gamma v_{tar}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：目标概念 + 正/负 prompt 对<br/>冻结 T2V 模型（T5 文本编码器）"] --> S3
+    subgraph S3["分离性驱动的交替优化（训练）"]
+        direction TB
+        B["可微的干预层搜索<br/>各层偏好 α + Gumbel-Softmax 退火"]
+        C["SAE 概念特异方向分解<br/>稀疏特征 + 负样本取特异 mask"]
+        B <-->|"交替更新：重构损失 ↔ 分离损失"| C
+    end
+    S3 --> D["收敛：选定层 l* + 该层 SAE 模块"]
+    D --> E["推理：在 l* 层提取目标方向<br/>v_tar = W_dec(f ⊙ m_spec)"]
+    E --> F["减法干预 h′ = h − γ·v_tar<br/>输出：抑制目标概念的视频"]
+```
+
 ### 关键设计
-1. **可微的干预层搜索**:
 
-	- 功能：自动决定概念擦除应该发生在哪个模型深度，而不是使用固定层或人工搜索。
-	- 核心思路：为所有候选层维护偏好参数 $\boldsymbol{\alpha}$，用 Gumbel-Softmax 采样近似 one-hot 的层权重 $p_k=\frac{\exp((\log\alpha_k+g_k)/\tau)}{\sum_j\exp((\log\alpha_j+g_j)/\tau)}$。随着温度退火，soft distribution 逐渐变成确定层选择。
-	- 设计动机：不同概念的最佳层不同，逐层穷举成本高；可微搜索能让层选择被 separability 目标直接驱动。
+**1. 可微的干预层搜索：把“在哪层擦除”变成可学习变量**
 
-2. **SAE 概念特异方向分解**:
+这一步对应框架图里“收敛到选定层 $l^*$”的源头。传统做法把擦除层当固定超参数或靠人工逐层穷举，但论文发现不同概念在不同深度才变得可分，固定层要么擦不干净、要么伤质量。CLEAR 为所有候选层维护偏好参数 $\boldsymbol{\alpha}=(\alpha_1,\dots,\alpha_L)$，用 Gumbel-Softmax 采样近似 one-hot 的层权重 $p_k=\frac{\exp((\log\alpha_k+g_k)/\tau)}{\sum_j\exp((\log\alpha_j+g_j)/\tau)}$（$g_k$ 为 Gumbel 噪声）。训练时温度 $\tau$ 逐步退火，soft distribution 从平滑逐渐收敛到确定的层选择 $l^*=\arg\max_l\alpha_l$。这样层选择不再靠穷举，而是被后面的分离性目标直接反向传播驱动，自动落到目标概念最可分的深度。
 
-	- 功能：在选中层中找到目标概念相关 feature，同时避免误删非目标语义。
-	- 核心思路：SAE 把激活 $h$ 编码成稀疏特征 $f=\text{ReLU}(W_{enc}h+b_{enc})$。作者用 negative prompts 的特征激活构造 shared mask $m_{shared}$，再定义 specificity mask $m_{spec}=1-m_{shared}$，让更少出现在非目标语境中的 feature 被视为目标概念方向。
-	- 设计动机：dense activation 往往多义，直接修改某些维度容易伤害背景语义；稀疏特征和正负 prompt 对能把“目标概念”和“共享视觉语义”区分开。
+**2. SAE 概念特异方向分解：分离目标概念与共享语义**
 
-3. **分离性驱动的交替优化与推理时减法干预**:
+对应框架图中提取目标方向的 SAE 模块，解决“擦除哪个方向才不伤背景”的问题。直接修改 dense activation 的某些维度容易误伤，因为这些维度往往多义。CLEAR 用稀疏自编码器（SAE）把激活 $h$ 编码成稀疏特征 $f=\text{ReLU}(W_{enc}h+b_{enc})$，再借助正负 prompt 对做区分：用不含目标概念但语境相似的 negative prompts 的特征激活构造 shared mask $m_{shared}$，取反得到特异性 mask $m_{spec}=1-m_{shared}$。那些很少出现在非目标语境中的 feature 被认定为目标概念方向，从而把“目标概念”和“共享视觉语义”在稀疏空间里分开。
 
-	- 功能：让“在哪层擦除”和“怎么擦除”相互适配，并在推理时保持轻量。
-	- 核心思路：训练交替进行两步。固定层偏好时，SAE 最小化加权重构误差和稀疏惩罚；固定 SAE 时，用 $\mathcal{L}_{con}=\log(1+S_{uni}/(S_{spe}+\epsilon))$ 更新层偏好，使共享能量相对概念特异能量更低。推理时用 $v_{tar}=W_{dec}(f\odot m_{spec})$ 并从 hidden state 中减去 $\gamma v_{tar}$。
-	- 设计动机：单独优化重构会偏向稳定但概念纠缠的层；加入 separability 信号后，层搜索会偏向目标概念自然分离的位置。
+**3. 分离性驱动的交替优化与推理时减法干预：让层与方向相互适配、推理保持轻量**
+
+这是把前两个设计粘合起来的训练-推理闭环，对应框架图的交替优化子图与最终的减法节点。训练交替进行两步：固定层偏好时，SAE 最小化加权重构误差和稀疏惩罚；固定 SAE 时，用对比式分离损失 $\mathcal{L}_{con}=\log(1+S_{uni}/(S_{spe}+\epsilon))$ 更新层偏好，惩罚共享/非目标能量 $S_{uni}$ 相对概念特异能量 $S_{spe}$ 过强。若只优化重构，层搜索会偏向稳定但概念纠缠的层；加入分离信号后，它才会偏向目标概念自然分离的位置。推理时不更新任何扩散模型权重，只在选中层把目标方向 $v_{tar}=W_{dec}(f\odot m_{spec})$ 从 hidden state 中减去：$h'_{l^*}=h_{l^*}-\gamma v_{tar}$。因此 CLEAR 介于纯 prompt 引导和权重 fine-tuning 之间——比负向提示更强，比改权重更局部。
 
 ### 损失函数 / 训练策略
 训练目标包含两部分。第一部分是 SAE 重构与稀疏损失，鼓励当前层偏好加权下的激活能够被稀疏特征重构。第二部分是 CLEAR 的对比式分离损失，惩罚 shared/non-target energy 相对 concept-specific energy 过强。优化时，层偏好和 SAE 参数交替更新，Gumbel-Softmax 温度逐步退火，最终得到每个概念独立的最佳层与 SAE 模块。

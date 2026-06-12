@@ -44,6 +44,15 @@ MuHL 要解决的是：脑里的异常常是一组 ROI 同时协同失常，而 
 
 整条流水线分三段、首尾端到端：先用可学尺度的图小波把 $X$ 分解成 $J$ 份不同感受野的 ROI 表征 $\{X_{s_j}\}$（MSF 模块）；再对每个尺度用同一套可学投影矩阵 $\Phi$ 直接学出该尺度的软超边 $\bar{H}_{s_j}$（HSL 模块）；最后对每个尺度先做超图卷积，再用一个"每个 head 专看一个尺度"的 Transformer 把局部到全局的语义聚到一起喂给分类头（MST 模块）。所有参数——包括尺度标量 $s_j$ 和投影矩阵 $\Phi$——都由分类损失一起反传学出来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：被试脑图 𝒢（节点=ROI）<br/>+ 节点特征 X（SUVR/tau/皮层厚度…）"] --> B["可学尺度图小波分解（MSF）<br/>谱分解 + J 个可学尺度 s_j 平滑<br/>→ J 份多分辨率表征 {X_sj}"]
+    B --> C["软超边结构学习（HSL）<br/>共享投影 Φ 生成关联矩阵<br/>SoftMax(ReLU(·)) 后 TopK 稀疏化"]
+    C --> D["多尺度 Transformer（MST）<br/>逐尺度超图卷积 + SWSA<br/>每个 head 专看一个尺度"]
+    D --> E["疾病阶段分类<br/>ADNI 5 类 / PPMI 3 类"]
+```
+
 ### 关键设计
 
 **1. 可学尺度的图小波分解：让"看多大的 ROI 邻域"自己学出来**
@@ -54,9 +63,9 @@ MuHL 要解决的是：脑里的异常常是一组 ROI 同时协同失常，而 
 
 现有超图方法的死穴是拓扑不可学——要么 KNN 拍出超边、要么只学超边权重而连接关系固定。这里反过来让拓扑从数据里端到端长出来：把节点嵌入 $\bar{X}_{s_j} = X_{s_j} W$ 与可学投影 $\Phi \in \mathbb{R}^{d_h \times M}$ 相乘得到关联矩阵 $H_{s_j} = \bar{X}_{s_j}\Phi$，再过 $\tilde{H}_{s_j} = \mathrm{SoftMax}(\mathrm{ReLU}(\bar{X}_{s_j}\Phi))$，最后每个节点只保留 top-$\eta$ 条超边形成稀疏的 $\bar{H}_{s_j}$。关键巧思是所有尺度共用同一个 $\Phi$：这让 $M$ 条超边在不同尺度间有了**对应关系**——同一条超边在小尺度只圈住几个紧凑节点、在大尺度就扩成跨脑区的大组。作者还给了两个命题做背书：(1) 算 $H_s$ 等价于在小波域里用 $\Phi$ 投影小波系数 $W_X(s)$；(2) 至少存在一条超边，其被分配的节点集合大小随 $s$ 单调增加，$s \to \infty$ 时趋近 $N$。这正好解释了图 1 里"超边随尺度逐渐膨胀"的可视化，也保证了 TopK 之后超边稀疏而不冗余。
 
-**3. Scale-Wise Self-Attention（SWSA）：用 attention head 显式承载分辨率层级**
+**3. 多尺度 Transformer（MST）：用 Scale-Wise Self-Attention 让 attention head 承载分辨率层级**
 
-每个尺度内的超图卷积只能在本尺度传消息，但"哪些局部模式该被哪些全局模式调制"这种跨尺度依赖得专门融。SWSA 的做法是先对每个尺度跑超图卷积抽到 $F_{s_j}^{(Z)}$：
+每个尺度内的超图卷积只能在本尺度传消息，但"哪些局部模式该被哪些全局模式调制"这种跨尺度依赖得专门融。MST 模块的核心是 Scale-Wise Self-Attention（SWSA）：先对每个尺度跑超图卷积抽到 $F_{s_j}^{(Z)}$：
 
 $$F_{s_j}^{(z)} = \sigma\left(\mathcal{D}_v^{-1/2}\bar{H}_{s_j} W_e \mathcal{D}_e^{-1} \bar{H}_{s_j}^T \mathcal{D}_v^{-1/2} F_{s_j}^{(z-1)} \Theta^{(z)}\right)$$
 

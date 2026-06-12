@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 DITS 把单轮训练拆成三步：(1) 用当前 MAS 做 MCTS rollout，按拓扑序展开有向图 $\mathcal{G}=(\mathcal{V},\mathcal{E})$ 上的 agent 调用，得到带 Q-value 的合成轨迹池；(2) 对每条候选偏好对 $z=(s, a^h, a^l)$ 计算影响分数 $\mathcal{I}$，按 $H(z_i)=\mathcal{I}_{\mathcal{F}_{\text{val}}}(z_i,\mathcal{D}_{\text{val}},\theta)+\gamma\cdot Q(s,a_i^h)$ 排序，取 Top-α 进 DPO 训练集 $\mathcal{D}_{\text{tr}}$；(3) 用 $\mathcal{D}_{\text{tr}}$ 训出 $\theta_t$ 后回到第 1 步开始下一轮迭代。整个 pipeline 即 "iSFT-DPO" 的影响导向版本，称为 DITS-iSFT-DPO。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前 MAS 模型 θ(t-1)"] --> B["影响导向的 MCTS 节点扩展<br/>edit-distance 过滤 + Softmax(Q) 采样"]
+    B --> C["候选偏好对 z = (s, a_high, a_low)"]
+    C --> D["不可微指标影响分数估计<br/>一步 LoRA 更新 + 验证集 F1/EM 前向"]
+    D --> E["影响-Q 联合评分 H(z) = I + γ·Q<br/>取 Top-α 进 DPO 训练集"]
+    E --> F["DPO 训练得到 θ(t)"]
+    F -->|迭代自训练：更强模型→更优数据| A
+```
+
 ### 关键设计
 
 **1. 影响导向的 MCTS 节点扩展：selection 不再为"答对题"服务，而为"教得动模型"服务**

@@ -41,6 +41,29 @@ tags:
 ### 整体框架
 给定 $T$ 个同构 LoRA adapter $\{(A^{(t)}, B^{(t)})\}_{t=1}^{T}$（相同基座模型、相同注入层、相同输入秩 $r_{\text{in}}$），CtM 把传统 MtC 的"先合并后压缩"反转成"先压缩后合并"：先学一对共享的 $r$ 维正交基 $(U, V)$，把每个 adapter 投影成紧凑的 $r \times r$ 坐标矩阵，然后在这个低维坐标空间里跑标准合并规则、再提升回原始参数空间。由于子空间在合并之前就固定下来，输出天然落在 rank-$r$ 子空间内，根本不需要事后的截断 SVD。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：T 个同构 LoRA adapter<br/>各任务更新 ΔW⁽ᵗ⁾ = B⁽ᵗ⁾A⁽ᵗ⁾"] --> S1
+    subgraph S1["重缩放感知的共享子空间学习（设计 1）"]
+        direction TB
+        B["重缩放代理目标 ΔW_target<br/>先按范数归一化消偏差，再用 λ 软注回尺度"]
+        C["Tucker-2 分解求共享正交基 (U, V)<br/>HOSVD 初始化 + HOOI 迭代"]
+        D["Core-Space 无损加速（设计 3）<br/>薄 SVD 投影到 (Tr)×(Tr) 核心空间求解"]
+        B --> C
+        D -.加速 Tucker 求解.-> C
+    end
+    S1 -->|输出共享基 (U, V)| S2
+    subgraph S2["低维坐标空间合并（设计 2）"]
+        direction TB
+        E["投影原始 LoRA 得坐标<br/>O⁽ᵗ⁾ = Uᵀ ΔW⁽ᵗ⁾ V（r×r）"]
+        F["在 r×r 空间套用现成规则合并<br/>TIES / DARE 等"]
+        G["提升回参数空间<br/>ΔW_LoRA = U · O_merged · Vᵀ"]
+        E --> F --> G
+    end
+    S2 --> H["输出：单个 rank-r LoRA<br/>构造层面保证秩约束，免截断 SVD"]
+```
+
 ### 关键设计
 
 **1. 重缩放感知的共享子空间学习：怎么选一个不偏袒大范数任务的子空间**

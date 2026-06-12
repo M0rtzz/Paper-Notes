@@ -40,7 +40,19 @@ Lie Diffuser Actor (LDA) 把扩散过程从把 SE(3) 位姿展平成 $\mathbb{R}
 ## 方法详解
 
 ### 整体框架
-LDA 由几何上下文编码器、迭代去噪 Transformer、切空间预测头与切空间 score matching 训练目标四部分组成。输入是 $K$ 路 RGB-D 观测和语言指令 $\mathcal{L}$，输出是 horizon $H$ 的位姿轨迹 $\mathbf{g} = (g^1, \dots, g^H) \in SE(3)^H$ 加 gripper 二值序列。点云被 back-project 后过 GAT 图注意力 Transformer 得几何特征 $\mathbf{F}_{\text{geo}}$，CLIP 文本编码器产语言特征 $\mathbf{F}_{\text{lang}}$，cross-attention 融合成 context $\mathcal{C}$；去噪 Transformer 在每个 diffusion step $t$ 接收 noisy 轨迹 $\mathbf{g}_t$ 与时间嵌入 $\tau(t)$，self-attention 建轨迹时间依赖、cross-attention 注入 $\mathcal{C}$；最后切空间预测头对每个 waypoint 输出 6 维 twist $\boldsymbol{\xi}^h = (\boldsymbol{\omega}^h, \mathbf{v}^h)$，去噪更新走 $g_{t-1}^h = g_t^h \cdot \exp(-\beta_t \boldsymbol{\xi}^h)$，所有中间态都自动 $\in$ SE(3)。
+LDA 由几何上下文编码器、迭代去噪 Transformer、切空间预测头与切空间 score matching 训练目标四部分组成。其中前两块沿用 3D Diffuser Actor 的脚手架，真正的几何贡献集中在后两块（预测头 + 去噪更新 + 训练目标），对应下面三个关键设计。输入是 $K$ 路 RGB-D 观测和语言指令 $\mathcal{L}$，输出是 horizon $H$ 的位姿轨迹 $\mathbf{g} = (g^1, \dots, g^H) \in SE(3)^H$ 加 gripper 二值序列。点云被 back-project 后过 GAT 图注意力 Transformer 得几何特征 $\mathbf{F}_{\text{geo}}$，CLIP 文本编码器产语言特征 $\mathbf{F}_{\text{lang}}$，cross-attention 融合成 context $\mathcal{C}$；去噪 Transformer 在每个 diffusion step $t$ 接收 noisy 轨迹 $\mathbf{g}_t$ 与时间嵌入 $\tau(t)$，self-attention 建轨迹时间依赖、cross-attention 注入 $\mathcal{C}$；最后切空间预测头对每个 waypoint 输出 6 维 twist $\boldsymbol{\xi}^h = (\boldsymbol{\omega}^h, \mathbf{v}^h)$，去噪更新走 $g_{t-1}^h = g_t^h \cdot \exp(-\beta_t \boldsymbol{\xi}^h)$ 把扰动结合回流形，所有中间态都自动 $\in$ SE(3)；如此迭代到 $t=0$ 得到最终轨迹，其反向过程天然偏置到测地线（螺旋运动）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["K 路 RGB-D 观测 + 语言指令"] --> B["几何上下文编码器（脚手架）<br/>点云→GAT 图注意力→几何特征；CLIP→语言特征；<br/>cross-attn 融合成 context C"]
+    B --> C["去噪 Transformer（脚手架）<br/>self-attn 建轨迹时间依赖 + cross-attn 注入 context C"]
+    G["noisy 轨迹 g_t + 时间嵌入 τ(t)"] --> C
+    C --> D["切空间 score matching + Adjoint 等变性<br/>切空间预测头双路 MLP 输出 6 维 twist ξ=(ω, v)"]
+    D --> E["左不变 SDE 前向扩散 + 指数映射回拉<br/>g_{t−1} = g_t · exp(−β_t ξ)，中间态恒 ∈ SE(3)"]
+    E -->|t>0 迭代去噪| G
+    E -->|t=0| F["几何确定性 ODE → 测地线偏置<br/>输出 SE(3)^H 位姿轨迹（螺旋运动）+ gripper 序列"]
+```
 
 ### 关键设计
 

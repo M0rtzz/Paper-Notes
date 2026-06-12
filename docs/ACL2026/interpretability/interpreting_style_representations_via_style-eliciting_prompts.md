@@ -45,6 +45,28 @@ tags:
 
 模型部分由 frozen style representation model、trainable projection module 和 frozen LLM decoder 组成。风格表示模型使用 Mistral-Nemo-Instruct-2407，经 author-labeled data 对比学习训练。projection module 是三层 feedforward network，将 style vector 投影成 20 个连续 token embeddings；这些 embeddings 与自然语言指令一起输入 Ministral-8B-Instruct，生成形如“The author uses ...”的 style prompt。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph D1["反向构造监督"]
+        direction TB
+        A["1010 个风格特征（26 类）"] --> B["随机组合 1-10 个特征<br/>→ 明确 style prompt s"]
+        B --> C["LLM 按 s 生成文本 y<br/>真实风格意图 = 已知的 s"]
+    end
+    C --> S["风格表示模型 S（冻结）<br/>文本 y → 风格向量 x"]
+    subgraph D2["连续 prompt 投影"]
+        direction TB
+        P["投影模块（3 层 FFN，唯一可训练）<br/>x → 20 个连续 token embeddings"] --> G["冻结 LLM decoder<br/>解码出 style prompt"]
+    end
+    S --> P
+    G -->|"训练: 交叉熵让解码 prompt 恢复 s"| B
+    subgraph D3["可控制性评价"]
+        direction TB
+        H["把解码 prompt 喂回 LLM 生成新文本 y'"] --> L["L2(S(y'), x) 越小，解释越能驱动生成"]
+    end
+    G --> H
+```
+
 ### 关键设计
 
 **1. 反向构造监督：从 prompt 生成文本，而不是从文本里猜描述**

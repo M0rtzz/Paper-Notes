@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 NeuroKalman 要解决的是连续 VLN 里 belief state 沿时间不断漂走的问题, 做法是把每一步的 waypoint 预测从"一次性开环外推"改写成"先验外推 + 历史观测纠正"的递归贝叶斯滤波闭环。输入是每步的多视角图像 $v_t$、当前 3D 坐标 $p_t$ 和全局指令 $l$, 模型在一个 $d$ 维潜在 belief state $\mathbf{z}_t$ 上工作：先由 GRU 不看图像地外推一个先验 $\tilde{\mathbf{z}}_t$, 再由 MLLM 结合当前视觉和从 memory bank 检索回来的历史 anchor 给出测量 $\mathbf{r}_t$ 与置信度 $\sigma_t$, 最后用一个可学习卡尔曼增益把两者融成后验 $\mathbf{z}_t$, 解码出 waypoint $w_t$ 并把 $\mathbf{z}_t$ 传给下一步, 形成 prediction-update 的滤波循环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["多视角图像 + 3D 坐标 + 全局指令"] --> G["GRU 先验通道<br/>不看图像，仅由上步后验+动作外推先验 z̃t"]
+    I --> R["Memory Retrieval = KDE 似然<br/>MLLM + 检索历史 anchor 给出测量 rt 与置信度 σt"]
+    G --> K["可学习卡尔曼增益<br/>门控网络按残差自适应融合先验与测量"]
+    R --> K
+    K --> Z["后验 belief zt → 解码 waypoint wt"]
+    Z -->|高置信度后验写回| R
+    Z -->|zt 传入下一步| G
+```
+
 ### 关键设计
 
 **1. GRU 先验通道：把 dead-reckoning 隔离成纯运动学证据**

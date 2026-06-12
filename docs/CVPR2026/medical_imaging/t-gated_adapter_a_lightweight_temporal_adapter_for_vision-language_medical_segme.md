@@ -47,6 +47,18 @@ tags:
 
 整条流水线这样转：取中心切片连同它前后各2张、共5张切片，一起并行过CLIP ViT-B/16视觉编码器，得到5份token序列；时序适配器先让每个空间位置在5切片维度上互相attend（时序Transformer），再在切片内部把这份体积信息扩散给空间邻居（空间上下文块），最后用一个自适应门控决定"这次到底信多少时序融合的结果、信多少原始单切片特征"，混合后的中心切片特征送回CLIPSeg解码器出分割图。三个模块串成"先跨切片、再跨空间、再决定融多少"的链路，整个基础VLM权重保持冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["5切片上下文窗口<br/>中心切片 + 前后各2张"] --> B["CLIP ViT-B/16 视觉编码器（冻结）<br/>并行出 5 份 token (5, L, Dv)"]
+    B -->|"reshape (L, 5, D)"| C["时序 Transformer<br/>沿 5 切片维度逐位置取证，压伪阳性"]
+    C --> D["空间上下文块<br/>切片内空间自注意力，对齐器官边界"]
+    D -->|"时序融合特征 h_temporal"| E["自适应门控<br/>g·h_temporal + (1−g)·h_single"]
+    B -->|"中心切片原始特征 h_single"| E
+    E --> F["CLIPSeg 解码器<br/>+ 文本提示条件化"]
+    F --> G["分割图"]
+```
+
 ### 关键设计
 
 **1. 时序Transformer：让每个空间位置去问邻居切片"你那儿有没有这个结构"**

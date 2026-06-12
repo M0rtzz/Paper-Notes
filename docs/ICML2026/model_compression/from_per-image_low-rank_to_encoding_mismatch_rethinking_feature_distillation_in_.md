@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 论文是一条"先诊断、再开药"的链：前半（§2）拿三个互补的频谱/几何探针去刻画 ViT 末层 token 特征矩阵 $\mathbf{X} \in \mathbb{R}^{N \times D}$ 的真实结构，把"每张图低秩却蒸不动"这个悖论拆成可量化的 encoding mismatch；后半（§3）顺着诊断结论开出 Lift 和 WideLast 两味极简补丁——前者在推理时保留一个固定线性 projector 把学生宽度抬到 teacher 宽度，后者干脆把学生最后一个 Transformer block 原生加宽到 teacher 宽度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["教师末层 token 特征矩阵<br/>X ∈ R^(N×D)"]
+    subgraph DIAG["三视角表征几何诊断"]
+        direction TB
+        SVD["Sample-wise SVD<br/>每图低秩（d≈61 保 95% 能量）"]
+        PCA["Dataset-level PCA<br/>共享子空间近满秩（d≈302）→ 子空间旋转"]
+        SEP["Token-level SEP<br/>单 token 带宽≈100%（频谱普适律）"]
+    end
+    X --> DIAG
+    DIAG --> MIS["编码不匹配诊断<br/>子空间旋转 + 端点带宽不足"]
+    MIS -->|补带宽·固定线性| LIFT["Lift<br/>推理保留 lifting projector，抬到 teacher 宽度"]
+    MIS -->|补带宽 + 输入相关旋转| WIDE["WideLast<br/>只加宽末 block，输入相关非线性扩展"]
+    LIFT --> OUT["朴素 MSE 特征 KD 复活<br/>74.86 → 77.53 / 78.23"]
+    WIDE --> OUT
+```
+
 ### 关键设计
 
 **1. 三视角表征几何诊断：把"redundancy"拆成互不重叠的三层，找出真正卡住蒸馏的那一层**

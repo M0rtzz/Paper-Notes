@@ -45,6 +45,21 @@ tags:
 
 HyCoLLM 把"四维认知状态联合预测"建模成一个先在双曲空间里铺开认知坐标系、再把 LLM 拉到这个坐标系上的两阶段过程。输入是一条社交帖子，第一阶段 Hyperbolic Cognitive Network (HCN) 把它的句子嵌入投影到 Poincaré 球上，用几何感知对比损失把 1512 种认知状态组合摊在双曲流形的不同区域；第二阶段 Hyperbolic Guided Alignment Tuning (HGAT) 在微调 LLaMA-3.1-8B-Instruct 时，用语义-认知拓扑损失约束模型隐状态去贴合 HCN 学好的几何，最终输出情感、思维风格、立场、意图四个维度的联合预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["CognitiveBench：四维认知标签体系"]
+        direction TB
+        A["Twitter 帖子<br/>四主题采集"] --> B["多阶段过滤<br/>约 9000 候选"]
+        B --> C["29 名专家标注<br/>3 人独立 · 保留 2/3 以上一致"]
+        C --> D["6,514 条样本<br/>情感·思维风格·立场·意图"]
+    end
+    D --> E["句子嵌入"]
+    E --> F["Hyperbolic Cognitive Network<br/>投影到 Poincaré 球 + 几何感知对比损失<br/>1512 种认知状态分得开"]
+    F --> G["Hyperbolic Guided Alignment Tuning<br/>语义-认知拓扑损失约束 LLaMA-3.1-8B 隐状态"]
+    G --> H["四维认知状态联合预测"]
+```
+
 ### 关键设计
 
 **1. CognitiveBench：把"思维风格"补进四维认知标签体系**

@@ -40,7 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-JurisMA 要处理的是真实法律咨询那种"模糊、多方面、上下文高度依赖"的查询，端到端模型很难一口气覆盖。它把流程拆成三段顺着走：先由 Element Agent 把自由文本查询解析成一张法律语义图（实体、事件、关系、用户意图、法律问题都落到图上），给下游推理提供全局上下文；再进入多 Agent 迭代优化，由 Manager Agent 动态评估当前草稿、按需调用 FormatCheck Agent 修结构、调用 LawSearch Agent 补法条；最后由 Content Check Agent 做语言质量和专业性的收尾润色。整条链路模仿的是真实律所里"多角色协作修改一份法律意见书"的工作流。
+JurisMA 要处理的是真实法律咨询那种"模糊、多方面、上下文高度依赖"的查询，端到端模型很难一口气覆盖。它把流程拆成三段顺着走：先由 Element Agent 把自由文本查询解析成一张法律语义图（实体、事件、关系、用户意图、法律问题都落到图上），给下游推理提供全局上下文；再进入多 Agent 迭代优化，由 Manager Agent 动态评估当前草稿、按需调用 Format Check Agent 修结构、调用 Law Search Agent 补法条；最后由 Content Check Agent 做语言质量和专业性的收尾润色。整条链路模仿的是真实律所里"多角色协作修改一份法律意见书"的工作流。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["自由文本法律咨询"] --> EG["法律元素图构建<br/>Element Agent 解析出实体/事件/关系/意图/法律问题"]
+    EG --> DR["Draft Agent 生成初稿"]
+    DR --> MA["Manager Agent 动态协调<br/>每轮评估语言充分性 + 法律完整性"]
+    MA -->|结构/表达问题| FC["Format Check Agent 出修改建议<br/>→ Draft Agent 整合"]
+    MA -->|法条引用不足| LS["Law Search Agent 检索法规条文"]
+    FC --> MA
+    LS --> MA
+    MA -->|Pass 或满 5 轮| CC["Content Check Agent 专业性润色"]
+    CC --> OUT["最终法律意见"]
+```
 
 ### 关键设计
 

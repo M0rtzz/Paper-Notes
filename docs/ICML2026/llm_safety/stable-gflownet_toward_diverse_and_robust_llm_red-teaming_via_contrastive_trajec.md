@@ -44,7 +44,17 @@ tags:
 
 ### 整体框架
 
-Stable-GFN 把红队攻击当成"采样概率正比于毒性 reward"的分布匹配问题，但把 GFN 里两个不稳定零件（要学的 partition function $Z_\theta$、被 classifier 污染的噪声 reward）换成三件不增加 forward 次数的 hard filter。一个训练 step 这样转：attacker LLM $\pi_\theta$ 用当前 policy 采 $N$ 条候选 attack prompts $\{y_n\}$；victim $\pi_\phi$ 对每条给 response $z_n$，toxicity classifier 算 $R(y_n) = \mathbb{E}_{z \sim \pi_\phi(\cdot|y)}[T(y, z)]$；MKS 先用 reference model 算每条 prompt 的 Min-K 流畅度、把 gibberish 的 reward 清零；NGP 在 batch 内枚举 $N^2$ 个 pair、丢掉 reward 对比度太低的对；剩下的 pair 用 CTB loss 更新 $\theta$。整条 pipeline 不再有外部标量 $Z_\theta$、不维护 QD archive、也不靠 reference policy 做强约束。
+Stable-GFN 把红队攻击当成"采样概率正比于毒性 reward"的分布匹配问题，但把 GFN 里两个不稳定零件（要学的 partition function $Z_\theta$、被 classifier 污染的噪声 reward）换成三件不增加 forward 次数的 hard filter。一个训练 step 这样转：attacker LLM $\pi_\theta$ 用当前 policy 采 $N$ 条候选 attack prompts $\{y_n\}$；victim $\pi_\phi$ 对每条给 response $z_n$，toxicity classifier 算 $R(y_n) = \mathbb{E}_{z \sim \pi_\phi(\cdot|y)}[T(y, z)]$；MKS 先用 reference model 算每条 prompt 的 Min-K 流畅度、把 gibberish 的 reward 清零；NGP 在 batch 内枚举 $N^2$ 个 pair、丢掉 reward 对比度太低的对；剩下的 pair 用 CTB loss 更新 $\theta$。整条 pipeline 不再有外部标量 $Z_\theta$、不维护 QD archive、也不靠 reference policy 做强约束。下图按数据流自上而下展示这条训练回环（三个加粗模块即下文三个关键设计）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Attacker LLM π_θ<br/>采 N 条候选攻击 prompt"] --> B["Victim π_φ 回复<br/>toxicity classifier 算毒性 reward R(y)"]
+    B --> C["Min-K Fluency Stabilizer (MKS)<br/>最低 k 个 token 测流畅度，gibberish reward 清零"]
+    C --> D["Noisy Gradient Pruning (NGP)<br/>枚举 N² 个 pair，丢掉低对比度对"]
+    D --> E["Contrastive Trajectory Balance (CTB)<br/>pairwise ratio 约掉 Z_θ，算 loss"]
+    E -->|反传梯度更新 θ| A
+```
 
 ### 关键设计
 

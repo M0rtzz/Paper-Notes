@@ -46,6 +46,22 @@ tttLRM 的灵感来源于人类感知的类比：人类观察连续视觉流 →
 
 tttLRM 想解决的是：现有前馈大重建模型靠注意力，复杂度 $O(N^2)$，输入视图一多就扱不住（GS-LRM ≤ 4 张、Long-LRM 到 32 张就到头，且都没法处理流式输入）。它的破法是把"序列建模"换成 Test-Time Training：把多视图观测压进一组在推理时在线更新的"快速权重"$W$，让 $W$ 充当随观测增多而不断完善的隐式 3D 记忆，再让虚拟视图 token 去查询它、线性解码出显式 3DGS。整条流程三步：图像 patch 化投影成 token → LaCT 层用 token 迭代更新快速权重 $W$ → 虚拟视图 token 查询 $W$、线性解码器输出 3DGS 参数。灵感来自人类感知：看连续视觉流 → 构建抽象内部表示 → 按需解码成显式 3D。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多视图图像 + 射线嵌入<br/>patch 化为观测 token"] --> LACT
+    subgraph LACT["TTT + LaCT 快速权重（24 个 block 堆叠）"]
+        direction TB
+        B["窗口注意力<br/>捕视图内局部关系"] --> C["快速权重 W 在线梯度更新<br/>观测 token 写入记忆（线性）"]
+    end
+    LACT -->|每批新视图增量更新 W：自回归重建| LACT
+    LACT --> D["虚拟 token 查询 W<br/>只读不更新（读写分离）"]
+    D --> E["线性解码器"]
+    E -->|默认虚拟 token| F["3DGS 高斯参数"]
+    E -->|换三平面虚拟 token| G["三平面 NeRF 等格式"]
+    A -.沿序列维分片多 GPU：分布式前馈.-> LACT
+```
+
 ### 关键设计
 
 **1. TTT + LaCT 快速权重：用线性复杂度的在线学习取代注意力**
@@ -64,7 +80,7 @@ $$\mathbf{T}_i = \mathbf{T}_i + \text{WinAttn}(\mathbf{T}_i)$$
 $$W = \text{Update}(\{\mathbf{T}_i\}_{i=1}^N)$$
 $$\mathbf{T}_i^v = \text{Apply}(W, \mathbf{T}_i^v)$$
 
-虚拟 token $\mathbf{T}^v$ 只参与 Apply、不更新 $W$，解码器把它转成每 patch 的高斯参数（颜色、尺度、旋转、不透明度、深度）。观测 token 负责"写记忆"、虚拟 token 负责"读记忆"，读写分离。
+虚拟 token $\mathbf{T}^v$ 只参与 Apply、不更新 $W$，解码器把它转成每 patch 的高斯参数（颜色、尺度、旋转、不透明度、深度）。观测 token 负责"写记忆"、虚拟 token 负责"读记忆"，读写分离。也正因为输出表示完全由虚拟 token 决定，这套架构对 3D 格式是通用的：保持同一组快速权重不变，把虚拟 token 换成三平面 token 去查询 $W$，就能解码成三平面 NeRF 等其他 3D 表示，无需改动 backbone。
 
 **3. 自回归重建：把模型变成类 RNN 的在线流式推理**
 
@@ -73,10 +89,6 @@ $$\mathbf{T}_i^v = \text{Apply}(W, \mathbf{T}_i^v)$$
 **4. 分布式前馈重建：序列并行吃下大量视图**
 
 为了塞进更多视图和更高分辨率，沿序列维把 token 分片到多 GPU：各 GPU 同步快速权重后独立预测自己那批视图的高斯，聚合成完整场景，再各自渲染子集新视图算损失、梯度 All-Reduce。正因为 LaCT 更新是线性的，梯度能简单地 All-Reduce 同步，训练推理都能近线性多卡加速。
-
-**5. 多格式输出：换虚拟 token 就能切表示**
-
-同一套快速权重不绑死 3DGS——把虚拟 token 换成三平面 token 去查询 $W$，就能解码成三平面 NeRF 等其他 3D 格式，架构对输出表示是通用的。
 
 ### 损失函数 / 训练策略
 

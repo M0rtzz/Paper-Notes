@@ -41,7 +41,27 @@ tags:
 
 PI-DEF 要解决的是一个极端病态的逆问题：事件视界望远镜（EHT）只能从单一视角、稀疏且带噪地观测黑洞附近的辐射气体，而目标是重建它随时间变化的 4D（时间 + 3D）发射率场，外加 3D 速度场。先前唯一的方法 BH-NeRF 假设气体严格遵守 Keplerian 动力学，但在强引力区这个假设站不住，且无法处理观测窗口内新出现的辐射。
 
-PI-DEF 的做法是用两个坐标神经网络分别表示 4D 发射率场 $e(t, \mathbf{x}; \theta_e)$ 和 3D 速度场 $\tilde{u}^i(\mathbf{x}; \theta_v)$，都用位置编码 $\gamma$ 提升高频表达力，再通过三项物理信息损失把两个场联合优化到既拟合观测、又满足流体连续性、还受软物理先验约束的状态。总损失为 $\mathcal{L} = \lambda_{\text{data}}\mathcal{L}_{\text{data}} + \lambda_{\text{dyn}}\mathcal{L}_{\text{dyn}} + \lambda_{\text{reg}}\mathcal{L}_{\text{reg}}$，关键在于物理模型只作为可衰减的软正则化注入，而非硬约束。
+PI-DEF 的做法是用两个坐标神经网络分别表示 4D 发射率场 $e(t, \mathbf{x}; \theta_e)$ 和 3D 速度场 $\tilde{u}^i(\mathbf{x}; \theta_v)$，都用位置编码 $\gamma$ 提升高频表达力，再通过三项损失把两个场联合优化到既拟合观测、又满足流体连续性、还受软物理先验约束的状态。总损失为 $\mathcal{L} = \lambda_{\text{data}}\mathcal{L}_{\text{data}} + \lambda_{\text{dyn}}\mathcal{L}_{\text{dyn}} + \lambda_{\text{reg}}\mathcal{L}_{\text{reg}}$，关键在于物理模型只作为可衰减的软正则化注入，而非硬约束。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["EHT 稀疏带噪观测<br/>单视角 visibility"]
+    EN["发射率场网络<br/>e(t,x;θe) + 位置编码 γ"]
+    VN["速度场网络<br/>ũ(x;θv) + 位置编码 γ"]
+    PARAM["速度参数化<br/>normal observer 参考系避奇点"]
+    VN --> PARAM
+    IN --> LDATA["数据拟合损失 L_data<br/>广义相对论光线追踪投影<br/>红移 g² 由速度推导"]
+    EN --> LDATA
+    PARAM --> LDATA
+    EN --> LDYN["动力学损失 L_dyn<br/>沿速度 ODE 传播 e(t)→ê(t+Δt)<br/>与 e(t+Δt) 做 L1"]
+    PARAM --> LDYN
+    PARAM --> LREG["速度软正则化 L_reg<br/>AART 先验·权重指数衰减"]
+    LDATA --> OPT["联合优化<br/>L = λ_data·L_data + λ_dyn·L_dyn + λ_reg·L_reg"]
+    LDYN --> OPT
+    LREG --> OPT
+    OPT --> OUT["4D 发射率场 + 3D 速度场"]
+```
 
 ### 关键设计
 

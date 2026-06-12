@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 locate-then-edit 的难点不在闭式解本身，而在给每个决定层 $W_1,\dots,W_L$ 凑出一组互相兼容的目标 hidden state $m_l$。本文要做的就是把这组 target 的来源从"末层往前摊"换成"首层往后传"：先在第一决定层优化出 $m_1$，再让模型自己做一次前向传播把后续各层的 $m_l$ 算出来，闭式解部分完全不动。记关键 token 在 $W_l$ 前的 hidden state 为 $k_l$，各层共享同一个更新公式 $\Delta W^* = (M_I - W K_I) K_I^\top (K_I K_I^\top + \lambda K_J K_J^\top)^{-1}$，MEMIT 只算 $m_L$、其余靠线性插值，本文 FE（Forward propagation Edit）只算 $m_1$、其余靠 replay，整条 pipeline 唯一的区别就在这里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["定位（沿用 ROME/MEMIT）<br/>因果追踪选关键 token + 决定层 W₁..W_L"]
+    I --> T["目标 hidden state 构造<br/>（本文唯一改动点）"]
+    T -->|"旧做法 backward spreading"| BW["在末层优化 m_L<br/>→ 线性插值摊到各层 m_l<br/>远层方向漂移、浅层几乎不贡献"]
+    T -->|"本文 forward replay"| FW["在首层优化 m_1<br/>→ 标准前向传播沿途记录各层 m_l<br/>同一前向轨迹、跨层兼容"]
+    BW --> CF["各层闭式 rank-one 更新 ΔW*<br/>（FE 完全不改此式）"]
+    FW --> CF
+    CF --> O["编辑后模型<br/>可正交叠加 RECT / PRUNE / AlphaEdit"]
+```
+
 ### 关键设计
 
 **1. 先把 backward spreading 的成立条件讲清楚：何时能用、何时崩**

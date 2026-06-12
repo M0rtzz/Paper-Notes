@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 CoSToM 的出发点是"诊断再治疗"：要让 LLM 把内部已有的 ToM 知识自发外化为对话行为，得先知道这些知识藏在哪一层，再有针对性地干预那一层。框架因此分两阶段——解释阶段用因果追踪逐层扫描，定位编码 BDI（信念-欲望-意图）信息的关键层（实验发现主要在早期层）；转向阶段在这些关键层装上 LoRA 适配器，用一个冻结的 probe 解码器把 ToM 问答准确率当作监督信号反向传播回编码器。训练时输入是对话历史与 BDI 标签，解码器充当 ToM 验证器；推理时同一个编码器产出 ToM 增强的激活，解码器切换成对话生成器，输出谈判 / 说服等社交对话。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    H["对话历史 + BDI 标签"] --> ENC["上下文编码器"]
+    subgraph TRACE["因果追踪定位 ToM 关键层"]
+        direction TB
+        L["逐层截取冻结激活"] --> P["probe 解码器逐层回答 ToM 问题"]
+        P --> LOC["定位 BDI 信息峰值层 ℓ<br/>实验发现多在早期层"]
+    end
+    ENC --> TRACE
+    subgraph BRIDGE["梯度桥机制（训练）"]
+        direction TB
+        ACT["在层 ℓ 截取激活注入冻结 probe 解码器"] --> CE["ToM 问答与 BDI 标签算交叉熵"]
+        CE --> GRAD["梯度穿过冻结解码器回流第 0~ℓ 层<br/>仅更新浅层 LoRA"]
+    end
+    TRACE --> BRIDGE
+    subgraph INFER["推理时的 ToM 增强对话生成"]
+        direction TB
+        EA["对齐后编码器产出 ToM 增强激活"] --> GEN["解码器切换为对话生成器"]
+    end
+    BRIDGE --> INFER
+    INFER --> OUT["谈判 / 说服等社交对话"]
+```
+
 ### 关键设计
 
 **1. 因果追踪定位 ToM 关键层：先搞清 BDI 信息存在哪**

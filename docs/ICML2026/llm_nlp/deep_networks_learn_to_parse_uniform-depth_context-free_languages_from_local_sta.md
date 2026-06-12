@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 这篇论文想回答的核心问题是：深度网络在没有句法监督时，到底是怎样从 $P$ 个 (句子, 根标签) 样本里学会解析一个带歧义的上下文无关文法的？作者把它拆成一条可证明的链路——先造一个歧义可调的合成文法 Varying-tree RHM，让"span 边界未知"和"局部歧义"成为数据的内禀属性；再给出一套只用低阶矩 + 聚类的规则推断算法（Algorithm 1），自顶向下逐层把规则集恢复出来，从而构造出 Bayes-optimal 的根分类器（并顺带得到一棵解析树）；最后给出这套算法的闭式样本复杂度 $P^\star$，并断言深度 $\geq L$ 的标准 NN 走的是同一条机制，用 CNN/Transformer 实验把学习曲线按 $P^\star$ rescale 后塌缩到一条主曲线来验证。算法侧的中间产物是逐层规则集 $\{\mathcal{R}_2^{(\ell)}, \mathcal{R}_3^{(\ell)}\}_{\ell=1}^L$，最终输出是根分类器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["变树 RHM 文法<br/>每个非终结符持 m2 条二元 + m3 条三元规则、无放回采样<br/>歧义强度由标量 f 调节 → 生成 P 个 (句子, 根标签) 样本"]
+    G --> C["终端层 L：算 root-to-pair 协方差 C2、root-to-triple 协方差 C3"]
+    subgraph INF["InferBinary / InferTernary：低阶矩 + 减污染聚类"]
+        direction TB
+        IB["InferBinary(C2)<br/>阈值 τ2 筛真二元兄弟 + 归一化聚类 → 二元规则 R2"]
+        IB --> IT["InferTernary(C2, C3)<br/>减二元污染 w(abc) + 余弦对齐 → 三元规则 R3"]
+        IT --> NT["构造下层非终结符指示函数<br/>乘法组合相邻 pair / triple → 得下一层的 C2、C3"]
+    end
+    C --> INF
+    INF -->|"ℓ = L → 2 递归至根"| OUT["规则集 → Bayes-最优根分类器（CYK 解析树）"]
+    OUT --> SNR["样本复杂度 P* 与 Conjecture 3.4<br/>信噪比分析给出闭式 P*；depth ≥ L 的 NN 同复杂度（CNN/Transformer 实证）"]
+```
+
 ### 关键设计
 
 **1. Varying-tree RHM：把"局部歧义"做成可调的合成文法**

@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 论文拆成两块：**数据侧 Webshot 流水线**和**模型侧 ScreenVLM**。Webshot 从 45M URL 中均衡采样 1M 页面 → Playwright 渲染全页截图 → 抽 DOM 树并按可见性/重叠过滤 → 用 Qwen3-VL-8B 给每个候选元素分类到 55 类之一 → VLM-as-a-judge 给整页打质量分剔除低质量样本 → 出 771K 图 / 21M 元素，按 90/5/5 切分。模型侧 ScreenVLM 用 SigLIP-2 作视觉 backbone 编码图像 patch token，投影后送进 165M 的 Granite 自回归 decoder（初始化自 Granite Docling 文档转 markup 模型），输出一个 XML-like 的 ScreenTag 序列，每个元素形如 `<tag> <x1> <y1> <x2> <y2> [text] [children] </tag>`，坐标被归一化并量化到 0–500 网格。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph WS["Webshot 自动稠密标注流水线"]
+        direction TB
+        A["45M URL 均衡采样 1M 页面"] --> B["Playwright 渲染全页截图"]
+        B --> C["DOM 抽取 + 可见性/重叠过滤<br/>去退化框/隐藏框/重复 wrapper"]
+        C --> D["Qwen3-VL-8B 重分类<br/>每个候选 → 55 类之一"]
+        D --> E["VLM-as-a-judge 质量过滤<br/>覆盖/误检/重复/定位四维打分"]
+    end
+    E --> F["ScreenParse 数据集<br/>771K 图 / 21M 元素 / 90:5:5 切分"]
+    F --> G["SigLIP-2 视觉编码<br/>截图 → patch token"]
+    G --> H["投影 → Granite-165M decoder<br/>初始化自 Granite Docling"]
+    H -->|结构感知加权交叉熵监督| I["ScreenTag 结构序列<br/>带坐标/类别的 markup，坐标量化 0–500"]
+```
+
 ### 关键设计
 
 **1. Webshot 自动稠密标注流水线：零人力逼近"完整 + 干净"的全屏标注**

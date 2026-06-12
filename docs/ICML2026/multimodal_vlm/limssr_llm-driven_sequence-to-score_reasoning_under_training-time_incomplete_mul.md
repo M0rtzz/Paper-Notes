@@ -41,7 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对样本 $(\mathbf{X} \odot \boldsymbol{m}, \boldsymbol{m}, y)$（$\boldsymbol{m}\in\{0,1\}^M$ 是缺失掩码），LIMSSR 走三步：(1) Context Construction $\Phi_{in}$ 把指令 prompt、可见模态特征 $\tilde{\mathbf{X}}^m$、missing token 占位序列、fusion token 拼成统一 embedding $\mathbf{Z}_{in}$；(2) LLM 推理 $\mathbf{H}_{out} = \mathrm{LLM}(\mathbf{Z}_{in})$ 同时完成缺失语义推断和多模态融合；(3) Mask-Aware Dual-Path Aggregation $\Psi_{agg}$ 把高层语义路径和底层跨模态路径用掩码加权融合，输出动作质量分 $\hat{y}$。模态侧用冻结的 VST/AST/I3D 提 video/audio/flow 特征，经 2 层 conv 投影到 LLM 输入空间。
+对样本 $(\mathbf{X} \odot \boldsymbol{m}, \boldsymbol{m}, y)$（$\boldsymbol{m}\in\{0,1\}^M$ 是缺失掩码），LIMSSR 走三步：(1) Context Construction $\Phi_{in}$ 把指令 prompt、可见模态特征 $\tilde{\mathbf{X}}^m$、missing token 占位序列、fusion token 拼成统一 embedding $\mathbf{Z}_{in}$；(2) LLM 推理 $\mathbf{H}_{out} = \mathrm{LLM}(\mathbf{Z}_{in})$ 同时完成缺失语义推断和多模态融合；(3) Mask-Aware Dual-Path Aggregation $\Psi_{agg}$ 把高层语义路径和底层跨模态路径用掩码加权融合，输出动作质量分 $\hat{y}$。模态侧用冻结的 VST/AST/I3D 提 video/audio/flow 特征，经 2 层 conv 投影到 LLM 输入空间。下面三个贡献模块（PCMI、LMRF、MDA）分别落在输入侧、接口侧、输出侧，恰好对应下文三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可见模态 video/audio/flow<br/>冻结 VST/AST/I3D 提特征 + 2 层 conv 投影"]
+    M["缺失掩码 m"]
+    subgraph IN["输入/接口侧：拼装 LLM 输入 Z_in"]
+        direction TB
+        B["1. PCMI 上下文感知模态填补<br/>可见模态用 boundary token 分块，缺失模态塞 T 个 missing 占位 + prompt 说明"]
+        C["2. LMRF 多维表示融合<br/>prompt 末尾追加 K 个 fusion token 信息槽"]
+        B --> C
+    end
+    A --> B
+    M --> B
+    C --> D["LLM 前向推理 H_out<br/>missing 位推断缺失 latent，fusion 位收集 K 维表示"]
+    D --> E["角色权重聚合 z_main = Σ softmax(w_role)·h_k"]
+    subgraph MDA["3. MDA 掩码感知双路聚合"]
+        direction TB
+        F["Path1 不确定性校准<br/>门控 g + 残差 δ 精修 z_main"]
+        G["Path2 跨模态模式恢复<br/>各模态隐藏态 pooling→self-attn→按掩码置信度 γ 加权"]
+    end
+    E --> F
+    D --> G
+    M --> G
+    F --> O["两路掩码加权融合 → 动作质量分 ŷ"]
+    G --> O
+```
 
 ### 关键设计
 

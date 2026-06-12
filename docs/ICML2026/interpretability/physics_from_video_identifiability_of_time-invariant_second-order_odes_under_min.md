@@ -42,6 +42,23 @@ tags:
 ### 整体框架
 整套 pipeline 完全 encoder-only，要回答的核心问题不是"怎么把视频拟合好"，而是"什么条件下数据能把 latent 坐标系钉死为真物理状态的仿射函数、从而保证恢复的 $(\hat\gamma_1,\hat\gamma_0)$ 唯一"。运行时每帧 $\boldsymbol{x}_k$ 过共享 CNN encoder $E_\phi$ 得到标量 latent $\hat{z}_k$，用中心差分算出 $\hat{z}'_k, \hat{z}''_k$，代入 ODE 残差 $r_k = \hat{z}''_k + \gamma_1 \hat{z}'_k + \gamma_0 \hat{z}_k$ 做最小二乘拟合 $(\hat\gamma_1,\hat\gamma_0)$，再叠一个方差下限正则防止 latent 塌缩；与训练并行的一个"UNIQUENESS CHECK"诊断盒子在线判定当前 clip 是否满足 level-set slope coverage，给出 CERTIFIED 标签。理论侧（coverage 几何条件）与估计侧（离散差分 + 方差正则 + 误差界）是同一套思路的两面。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧序列 x_k"] --> B["共享 CNN encoder E_φ<br/>逐帧映射为标量 latent ẑ_k"]
+    B --> F["设计1：Level-Set Slope Coverage 诊断<br/>每个 state level 是否被 ≥3 个不同速度经过"]
+    F -->|欠阻尼·单 clip 满足| CERT["CERTIFIED<br/>(γ̂1, γ̂0) 由视频唯一确定"]
+    F -->|临界/过阻尼| MULTI["需 3 条速度多样轨迹"]
+    subgraph EST["设计2：中心差分残差 + 方差下限正则"]
+        direction TB
+        C["中心差分算 ẑ′, ẑ″<br/>离散偏置降到 O(Δt²)"] --> D["ODE 残差 L_ODE 最小二乘拟合"]
+        E["方差下限正则 L_var<br/>只压 std 下限·防塌缩"] --> D
+    end
+    B --> C
+    D --> G["参数估计 (γ̂1, γ̂0)"]
+    G --> H["设计3：有限样本非渐近误差界<br/>‖γ̂ − γ‖ ≤ 统计项 + 离散偏置 + encoder mismatch"]
+```
+
 ### 关键设计
 
 **1. Level-Set Slope Coverage：把"latent 唯一性"翻译成轨迹上的几何条件**

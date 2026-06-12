@@ -42,6 +42,21 @@ PRISM 把 CLIP / SAM / DINOv2 三个异质视觉基础模型蒸馏进同一个 V
 ### 整体框架
 PRISM 要把 CLIP / SAM / DINOv2 三个互相打架的教师压进一个 ViT-B/16 学生而不让它们的梯度互相抵消。做法是把学生第 2/5/8/11 层的 FFN 换成 **PRISM 块**——一个**双流条件 MoE**：一条 **Universal Anchor**（跨所有上下文共享的稠密 MLP $\mathcal{F}_{\text{anc}}$，吃任务无关的低频共识）保稳定,一条 **Specialized Delta**（15 专家 Top-3 路由 + 1 个内部 shared expert 的稀疏 MoE $\mathcal{F}_{\text{moe}}$，被上下文 $c$ 调制）解冲突,整块输出按可学习门控 $\lambda\in[0,1]$ 把两流加权相加 $\mathbf{y}=\mathbf{x}+\lambda\cdot \mathcal{F}_{\text{anc}}(\text{LN}(\mathbf{x}))+(1-\lambda)\cdot \mathcal{F}_{\text{moe}}(\mathbf{x}, c)$。训练走 "Decompose-then-Recombine" 两阶段：Stage 1 在 ImageNet-1k 上 30 epoch、以 Teacher ID 为上下文从 3 个冻结 ViT-L 教师（DINOv2-L / CLIP-L / SAM-L 的第 5/11/17/23 层特征）蒸馏出自发分工的专家,Stage 2 在 PASCAL-Context / NYUD-v2 上 40k iter、改以 Task ID 为上下文把这些专家重组到下游多任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 token 特征 x<br/>ViT-B/16 第 2/5/8/11 层 FFN → PRISM 块"]
+    X --> ANC["Universal Anchor 稳定流<br/>共享稠密 MLP，吃低频共识"]
+    X --> FILM["上下文调制路由<br/>FiLM 用 Context ID c 仿射调制特征"]
+    FILM --> ROUTE["Top-3 路由器<br/>15 专家 + 1 个 shared expert"]
+    ROUTE --> DELTA["Specialized Delta 可塑流<br/>稀疏 MoE，按上下文解冲突"]
+    ANC -->|"× λ"| GATE["可学习门控 λ 融合<br/>y = x + λ·Anchor + (1−λ)·Delta"]
+    DELTA -->|"× (1−λ)"| GATE
+    GATE --> OUT["块输出 y"]
+    CTX["Context ID c：梯度正交化的开关<br/>Stage 1 = Teacher ID（拆冲突）<br/>Stage 2 = Task ID（重组到下游）"] -.-> FILM
+    LDL["Locality-Aware Decorrelation Loss<br/>只加最前两层，防 rank collapse"] -.-> X
+```
+
 ### 关键设计
 
 **1. 把 MoE 当梯度正交化工具：用稀疏路由拆开冲突梯度**

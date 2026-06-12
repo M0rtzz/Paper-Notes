@@ -37,7 +37,23 @@ tags:
 
 ### 整体框架
 
-VOSR 要质疑的是「生成式超分必须站在 T2I 预训练的肩膀上」这个默认前提。它走纯视觉路线：以 LightningDiT 为骨干、在潜空间里做 flow matching 训练，给定 LR 图像后构建两个互补条件——结构条件（VAE 编码的 LR 潜在表示）和视觉语义条件（DINO 编码器提取的高级特征），一起注入 DiT 来预测 HR。整条管线不碰任何文本/多模态预训练，训练成本只有代表性 T2I-based SR 方法的约 1/10。
+VOSR 要质疑的是「生成式超分必须站在 T2I 预训练的肩膀上」这个默认前提。它走纯视觉路线：以 LightningDiT 为骨干、在潜空间里做 flow matching 训练，给定 LR 图像后构建两个互补条件——结构条件（VAE 编码的 LR 潜在表示）和视觉语义条件（DINO 编码器提取的高级特征），一起注入 DiT 来预测 HR；推理时用面向恢复的引导外推，再把多步教师蒸馏成单步学生加速。整条管线不碰任何文本/多模态预训练，训练成本只有代表性 T2I-based SR 方法的约 1/10。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    LR["LR 低分输入"] --> COND
+    subgraph COND["视觉语义条件（双条件构建）"]
+        direction TB
+        VAE["结构条件<br/>VAE 编码 LR 潜在表示"]
+        DINO["语义条件<br/>DINO 提取高级特征"]
+    end
+    COND --> DIT["LightningDiT 骨干<br/>潜空间 flow matching 预测 HR"]
+    DIT -->|"全条件分支：结构+语义"| GUIDE["面向恢复的引导<br/>全条件↔部分条件外推"]
+    DIT -->|"部分条件分支：弱化LR、去语义"| GUIDE
+    GUIDE --> DISTILL["单步蒸馏<br/>多步教师→单步学生"]
+    DISTILL --> HR["HR 高分输出"]
+```
 
 ### 关键设计
 

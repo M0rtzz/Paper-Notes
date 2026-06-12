@@ -45,6 +45,22 @@ tags:
 
 PDB（Precise Debugging Benchmark）的核心是把调试评估从"程序整体能否通过测试"下沉到"哪些编辑是必要的、哪些 bug 被真正修好"，因此它需要一批带 ground-truth 编辑脚本的 buggy 程序。框架分两阶段：生成阶段从现有编程数据集出发，用 LLM 把验证过的原子 bug 注入正确程序，再组合成多 bug 程序；评估阶段让调试系统修复这些 buggy 程序，并用编辑级精度和 bug 级召回两个新指标衡量修复的"精准度"而非仅仅"功能正确性"。数据上，基准包含 PDB-Single-Hard（5,751 个单行 bug 样本）和 PDB-Multi（256 个多行 bug 样本），从 BigCodeBench 和 LiveCodeBench 构建，bug 生成器池由 GPT-5.1-Codex、Claude-4.5-Sonnet 与 Gemini-2.5-Pro 组成；整个框架不涉及任何模型训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["正确程序<br/>(BigCodeBench / LiveCodeBench)"] --> S1
+    subgraph S1["原子 Bug 合成与组合"]
+        direction TB
+        B["按 ODC 五类选操作类型与可编辑行"] --> C["LLM 注入单行 bug"]
+        C --> D["单测验证 bug 确实失败"]
+        D --> E["按最小间距 stride 组合多 bug<br/>+ 独立性约束"]
+    end
+    S1 --> F["buggy 程序 + ground-truth 编辑脚本"]
+    F --> G["待评估调试系统修复"]
+    G --> H["编辑级精度<br/>必要修改占比"]
+    G --> I["bug 级召回<br/>逐 bug 隔离检验"]
+```
+
 ### 关键设计
 
 **1. 原子 Bug 合成与组合：构造有 ground-truth 编辑脚本、可精确度量的 buggy 程序**

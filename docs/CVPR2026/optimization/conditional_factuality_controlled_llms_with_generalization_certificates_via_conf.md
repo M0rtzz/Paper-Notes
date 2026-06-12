@@ -46,6 +46,19 @@ CFC是一个纯后验层（post-hoc），不需要微调基础生成模型。工
 4. 通过增广分位数回归学习条件化阈值 $\hat{\lambda}_\alpha(X)$
 5. 接受所有分数低于阈值的候选：$\hat{C}_\alpha(X) = \{y : V(X,y) \leq \hat{\lambda}_\alpha(X)\}$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt X"] --> B["从生成器 π 采样 M 个候选<br/>验证器打分 V(X,y)，越小越好"]
+    CAL["校准集 (Xᵢ, Sᵢ)<br/>成功分数 S(X)：最优正确候选的分数"] --> C
+    B --> C["增广分位数回归<br/>校准集 + 测试点共拟合 pinball 损失"]
+    C --> D["不动点求条件阈值 λ̂(X)"]
+    D -->|基础版 CFC| E["期望级条件覆盖保证"]
+    D -->|CFC-PAC：加岭正则 + 收缩风险水平| F["有限样本 PAC 证书（高概率成立）"]
+    E --> G["接受 V ≤ λ̂(X) 的候选 → 预测集 Ĉ_α(X)<br/>子群覆盖更均衡、集合更紧凑"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 增广分位数回归：让接受阈值随 prompt 难度自适应**

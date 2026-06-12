@@ -48,6 +48,23 @@ Mesh-Pro 把 artist-style 四边形网格生成当成一个 autoregressive token
 
 这套"生成—打分—更新"之所以能解耦，是因为三者被流水线化了：trainer 在啃当前 batch 时，rollout worker 已经在生成下一轮样本。相比离线 DPO 那种"先把候选全生成完、再标注、再训练"的串行循环，异步架构在 wall-clock 上直接省掉了大段等待，带来 3.75× 的训练加速——而这份提速纯粹来自工程上的架构设计，不依赖任何算法近似。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["条件输入<br/>(点云 / 图像)"] --> B["rollout worker 并行采样<br/>Diagonal-aware 混合三/四边形 tokenization<br/>每条件采 N 个候选 mesh"]
+    B --> C["Ray-based 几何完整性 reward<br/>射线奇偶性查破面 → 标量分数"]
+    C --> D[("共享 buffer<br/>异步在线 RL 流水线核心")]
+    subgraph ARPO["ARPO 策略更新（trainer 异步取样）"]
+        direction TB
+        E1["Plackett-Luce 排名建模<br/>N 个候选按奖励排序的排名似然"]
+        E2["优势函数加权<br/>Aᵢ = rᵢ − r̄，梯度集中到明显好/坏样本"]
+        E3["KL 正则<br/>约束 πθ 不偏离 πref"]
+        E1 --> E2 --> E3
+    end
+    D --> ARPO
+    ARPO -->|"更新后策略（版本略旧，staleness）"| B
+```
+
 ### 关键设计
 
 **1. 异步在线 RL 流水线：用解耦+流水线消除离线/同步 RL 的串行等待**

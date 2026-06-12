@@ -43,6 +43,31 @@ CAIA 用 17 个前沿大模型在 178 个时间锚定的加密货币真实任务
 ### 整体框架
 CAIA 想把 agent 评测从"能否完成任务"升级到"能否在主动敌对环境下安全完成"，为此它把加密货币选作天然对抗实验室，构造了 178 道时间锚定的真实分析任务。整条 pipeline 是：先从 3000+ 真实从业者的 10000+ 真实查询里，经 5 阶段流水线萃取出既真实、可验证、又抗训练数据污染的高质量题目；再让每个模型在"无工具（闭卷）"和"有工具（开卷，23 个专业工具 + 统一 ReAct 框架）"两种条件下各跑一遍，每题独立采样 5 次取多数投票，并同时报告 Pass@1/Pass@5、token 消耗与美元成本；最后把准确率拆成 6 个分析类目 + 工具调用分布 + cost/score，做部署级的细粒度失败诊断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["3000+ 从业者的<br/>10000+ 真实查询"] --> PIPE
+    subgraph PIPE["对抗优先 + 时间锚定数据流水线"]
+        direction TB
+        S1["Stage 1 LLM 初筛<br/>留 top 15% ≈ 1000 条"] --> S2["Stage 2 92 专家评审<br/>≥4 评去极值 → 186 条"]
+        S2 --> S3["Stage 3 格式统一<br/>锚定 block / timestamp"]
+        S3 --> S4["Stage 4 构造可复现<br/>ground-truth toolchain → 178 条"]
+        S4 --> S5["Stage 5 划 6 类目"]
+    end
+    PIPE --> T["178 道时间锚定任务"]
+    subgraph EVAL["双条件评测 + 23 工具统一 ReAct 框架"]
+        direction TB
+        NC["无工具（闭卷）<br/>仅 parametric memory"]
+        WC["有工具（开卷）<br/>23 工具 + ReAct"]
+    end
+    T --> EVAL
+    subgraph SCORE["6 类细粒度失败诊断 + cost-aware 评测"]
+        direction TB
+        RUN["每题采样 5 次多数投票<br/>记 Pass@1 / Pass@5 / 成本"] --> DIAG["6 类目准确率 + 工具调用分布<br/>+ cost/score"]
+    end
+    EVAL --> SCORE
+```
+
 ### 关键设计
 
 **1. 5 阶段对抗优先 + 时间锚定数据流水线：让 ground truth 客观、可复现且抗污染**

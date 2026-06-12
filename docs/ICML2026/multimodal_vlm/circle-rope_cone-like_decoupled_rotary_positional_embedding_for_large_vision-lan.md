@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Circle-RoPE 在 M-RoPE 的基础上，对图像 token 的 $(w, h)$ 索引在送入 RoPE 旋转之前进行几何变换。输入是图像 token 的 2D 网格坐标和文本 token 的 1D 位置索引，输出是变换后的 3D 坐标（用于图像）和原始 1D 索引（用于文本）。整个方法分为两大模块：CIP（圆形图像 token 索引投影）和 AGE（交替几何编码）。
+Circle-RoPE 在 M-RoPE 的基础上，对图像 token 的 $(w, h)$ 索引在送入 RoPE 旋转之前进行几何变换。输入是图像 token 的 2D 网格坐标和文本 token 的 1D 位置索引，输出是变换后的 3D 坐标（用于图像）和原始 1D 索引（用于文本）。先用 PTD 指标量出"跨模态位置耦合有多严重"并定下"PTD=0"的优化目标，再由两大模块落地：CIP（圆形图像 token 索引投影）把图像索引投到与文本轴正交的锥体上达成 PTD=0，AGE（交替几何编码）则让奇偶层在 Circle-RoPE 与 M-RoPE 之间交替、兼顾跨模态解耦与图像内部局部性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["图像 token 2D 网格坐标 (w, h)"]
+    TXT["文本 token 1D 位置索引"]
+    subgraph CIP["圆形图像 token 索引投影（CIP）"]
+        direction TB
+        C1["① 坐标中心化<br/>几何中心平移到原点"] --> C2["② 混合角度环形映射<br/>θ = α·SA + (1−α)·GA，半径 R 控尺度"]
+        C2 --> C3["③ 目标平面旋转<br/>环面法向对齐文本轴 → 锥体几何"]
+    end
+    IMG --> C1
+    TXT -.提供对齐法向.-> C3
+    C3 --> CONE["锥体几何：文本居锥顶<br/>到所有图像 token 等距（达成 PTD=0）"]
+    CONE --> AGE["交替几何编码（AGE）<br/>奇数层 Circle-RoPE 解耦 / 偶数层 M-RoPE 保局部"]
+    AGE --> OUT["送入 RoPE 旋转 → 跨模态注意力"]
+```
 
 ### 关键设计
 

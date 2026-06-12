@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MorphAny3D 想做的事很直接：给定源对象 $x^{src}$ 和目标对象 $x^{tgt}$，生成一段 $N=50$ 帧的平滑变形序列 $\{x^n\}_{n=0}^{N}$，由 $\alpha^n = n/N$ 线性控制从源到目标的过渡进度。它整个建在预训练的 Trellis Image-to-3D 生成器之上，不引入任何重训练——所有"变形"都发生在 Trellis 推理时的注意力层里。Trellis 内部把一个 3D 对象编码成 Structured Latent（SLAT），并经过两个阶段：先 Sparse Structure（SS）阶段定出体素骨架，再 SLAT 阶段填充几何与纹理细节。MorphAny3D 的做法是在这两个阶段的注意力计算里同时注入源和目标的特征，让生成器自己"插值"出结构合理的中间形态，最后再用一个方向校正环节抹平偶发的姿态突变。
+MorphAny3D 想做的事很直接：给定源对象 $x^{src}$ 和目标对象 $x^{tgt}$，生成一段 $N=50$ 帧的平滑变形序列 $\{x^n\}_{n=0}^{N}$，由 $\alpha^n = n/N$ 线性控制从源到目标的过渡进度。它整个建在预训练的 Trellis Image-to-3D 生成器之上，不引入任何重训练——所有"变形"都发生在 Trellis 推理时的注意力层里。Trellis 内部把一个 3D 对象编码成 Structured Latent（SLAT），并经过两个阶段：先 Sparse Structure（SS）阶段定出体素骨架，再 SLAT 阶段填充几何与纹理细节。MorphAny3D 的做法是在这两个阶段的注意力计算里同时注入源和目标的特征，让生成器自己"插值"出结构合理的中间形态，最后再用一个方向校正环节抹平偶发的姿态突变。核心是把"在哪一层融合"拆开看：交叉注意力（CA）注入 Morphing Cross-Attention（MCA）保结构合理，自注意力（SA）注入 Temporal-Fused Self-Attention（TFSA）保时序平滑，二者各管一摊。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源对象 + 目标对象<br/>编码为 SLAT 特征"] --> B["Trellis SS 阶段<br/>生成体素骨架"]
+    MCA["Morphing Cross-Attention（MCA）<br/>源/目标各算注意力再按 α 加权 → 保结构合理"] -. 注入交叉注意力 .-> B
+    TFSA["Temporal-Fused Self-Attention（TFSA）<br/>融入上一帧 K/V → 保时序平滑"] -. 注入自注意力 .-> B
+    B --> OC["方向校正<br/>四个 yaw 候选取 Chamfer 最小"]
+    OC --> C["Trellis SLAT 阶段<br/>填充几何与纹理（同样注入 MCA + TFSA）"]
+    C --> D["50 帧变形序列"]
+```
 
 ### 关键设计
 

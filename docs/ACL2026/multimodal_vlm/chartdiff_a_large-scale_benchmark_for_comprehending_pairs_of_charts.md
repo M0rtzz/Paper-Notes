@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 ChartDiff 数据集构建分四阶段：(1) **原始数据收集**——从 Macrotrends、Yahoo Finance、Visual Crossing 抓取 8 个领域（经济、健康、移民、劳动、人口、贸易、股票、天气）的时间序列，覆盖 ~200 国家/地区、100 城市、100 股票；剔除断点、不完整数据。(2) **配对**——每对两个 CSV 数据集，只允许在"实体 / 时间跨度 / 数据类别"三种维度之一上不同，保证差异可控。(3) **图渲染**——用 Matplotlib、Plotly、Plotnine 三个库共 60 种风格配置，覆盖线图、柱图、横向柱图、多系列线图、多系列柱图、饼图共 6 类；线/柱图每对 6–12 点，饼图 3–5 类别；同一对共享 styling；人工检查避免遮挡/缺点/比例异常。(4) **标注**——annotate–judge–verify 三阶段。最终保留 8,541 对，划分为 train 6041 / val 1000 / test 1500。评测套件覆盖 14 个模型，4 大族：闭源大模型（GPT-5.4、Gemini 3.1 Pro、Claude Sonnet 4.6、GPT-4o 等）、开源大模型（Qwen3.5-397B-A17B、Qwen3.5-9B、Qwen2.5-VL-7B）、领域专用（ChartGemma、MatCha）、pipeline（DePlot + GPT/Qwen）；外加 random 下界 baseline。指标用 ROUGE-1/2/L + GPT Score（GPT-5.4 作 judge，与 300 人评的 Pearson $r=0.91$）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始数据收集<br/>8 领域时间序列（~200 国家 / 100 城市 / 100 股票）"] --> B["差异仅一维配对约束<br/>每对仅在 实体 / 时间跨度 / 数据类别 之一不同"]
+    B --> C["图渲染<br/>3 绘图库 × 60 风格 × 6 类图，同对共享样式"]
+    C --> D
+    subgraph D["annotate–judge–verify 三阶段流水线"]
+        direction TB
+        D1["annotate：L1 配底层 CSV 生成候选摘要 S"] --> D2["judge：另一 L2≠L1 评判 S 是否可接受"]
+        D2 --> D3["verify：人工核验 事实 / 完整 / 清晰"]
+    end
+    D --> E["ChartDiff 数据集<br/>8,541 对（train 6041 / val 1000 / test 1500）"]
+    E --> F["ROUGE + GPT Score 双指标评测<br/>14 模型 × 4 族 + random 下界"]
+```
+
 ### 关键设计
 
 **1. "差异仅一维"的配对约束：把所有混淆变量都关掉，只留"内容差异"这一个轴**

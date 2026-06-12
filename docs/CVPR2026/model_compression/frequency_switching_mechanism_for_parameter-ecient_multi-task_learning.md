@@ -38,23 +38,37 @@ Free Sinewich 提出基于频率切换的参数高效多任务学习框架，通
 ### 整体框架
 这篇论文想做的是让同一组共享权重在面对不同任务时表现出不同行为，从而摆脱以往 PEFT-MTL 里"每个任务一套独立适配器"的伪共享。整体管线建在 Swin Transformer Tiny 编码器上：图像 patch tokens 前面拼上一组可学习的任务 tokens，编码器每个阶段前 N-1 个 block 走 Task-Agnostic Module（标准 LoRA）提取所有任务通用的特征，最后一个 block 换成带频率切换的 Task-Specific Module 抽任务特定特征。转换的关键发生在这个特定模块里——一个轻量 Clock Net 先从任务 token 算出一个任务专属频率 $\omega_t$，再由 Sine-AWB 用这个频率去调制一份**所有任务共享**的基矩阵，调制出来的权重才是该任务专用的。解码端同理，也用频率切换让多任务共用一份解码器基矩阵。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 patch tokens + 任务 tokens<br/>（VPT-shallow，仅第一阶段拼入）"] --> B["Swin-T 编码器：前 N−1 个 block<br/>Task-Agnostic Module（标准 LoRA）<br/>提取所有任务通用特征"]
+    B --> TS
+    subgraph TS["每阶段最后一个 block：Task-Specific Module"]
+        direction TB
+        C["Lightweight Clock Net（LCN）<br/>任务 token → 任务频率 ω_t"] -->|ω_t| D["Sine-AWB<br/>对共享基矩阵 M_AWB 作 sin(ω_t·M_AWB)<br/>+ 高斯低通滤波 → 任务专用核 M̃_t"]
+    end
+    TS --> E["逐任务多尺度特征<br/>（冻结主干 + M̃_t 卷积残差）"]
+    E --> F["Shared Decoder Group<br/>1×1 投影 + 上采样 + 拼接 → x_t<br/>共享基矩阵经频率切换出各任务卷积核"]
+    F --> G["各任务密集预测输出"]
+```
+
 ### 关键设计
 
-**1. Sine-AWB：用任务频率给共享基矩阵"调相"，让一份权重变出多份**
+**1. Lightweight Clock Net（LCN）：把任务 token 翻译成一个有界的调制频率**
 
-PEFT-MTL 的老问题是想省参数就只能让任务共用一条路径、想特化就得各自加适配器，两者难兼得。Sine-AWB 的做法是先把 LoRA 的两个因子 $A,B$ 和中间卷积核 $W$ 融合成单一等效卷积核 $M_{AWB} = AWB^\top$，再对这份融合后的矩阵施加任务特定频率的正弦变换：
-
-$$M_t = \sin(\omega_t \cdot M_{AWB})$$
-
-由于 Sine-LoRA 已证明正弦映射能显著抬高低秩矩阵的有效秩，不同的 $\omega_t$ 对应不同的正弦波、给出不同的非线性映射 $\mathcal{F}_{\omega_t}$，于是同一份 $M_{AWB}$ 被映射到各任务各自的权重空间里，真正实现了参数复用而非复制。这里有个容易踩坑的数学细节决定了"先融合再正弦"的顺序：因为 $\sin(AWB) \neq \sin(A)\sin(W)\sin(B)$，正弦并不满足乘法同态，只有在融合成单一矩阵后再施加，才能保住有效秩的扩展。最后再用一个高斯低通滤波器（$K=7,\ \sigma=1$）平滑 $M_t$，压掉正弦引入的高频噪声；中间那层卷积核 $W$ 则为密集预测任务注入了必要的空间先验。
-
-**2. Lightweight Clock Net：把任务 token 翻译成一个有界的调制频率**
-
-正弦调制要稳，频率就不能乱飘，所以需要一个专门生成 $\omega_t$ 的小模块。LCN 就是一层 MLP，把任务 token $\boldsymbol{p}_t \in \mathbb{R}^C$ 映射成一个标量频率：
+整条管线的"开关"是任务频率 $\omega_t$——只有先有了它，后面的 Sine-AWB 才知道要把共享基矩阵"调"到哪个任务上。但正弦调制要稳，频率就不能乱飘，所以需要一个专门生成 $\omega_t$ 的小模块。LCN 就是一层 MLP，把任务 token $\boldsymbol{p}_t \in \mathbb{R}^C$ 映射成一个标量频率：
 
 $$\omega_t = s \cdot \big(\tanh(W_q\,\text{ReLU}(\boldsymbol{p}_t)) + c\big)$$
 
 其中 $s,c$ 是可学习的缩放与偏移。$\tanh$ 把输出限制在有界区间，正是为了稳住正弦调制的训练，避免频率过大导致映射剧烈震荡。LCN 的参数跨任务共享，真正驱动频率分化的是各任务 token 在训练中学到的差异——LCN 本身并不是性能增益的主力，它的价值在于"管住频率"这件稳定训练的脏活。
+
+**2. Sine-AWB：用任务频率给共享基矩阵"调相"，让一份权重变出多份**
+
+拿到 $\omega_t$ 之后，真正"变出"任务专用权重的就是 Sine-AWB，它也是全文性能增益的主力。PEFT-MTL 的老问题是想省参数就只能让任务共用一条路径、想特化就得各自加适配器，两者难兼得。Sine-AWB 的做法是先把 LoRA 的两个因子 $A,B$ 和中间卷积核 $W$ 融合成单一等效卷积核 $M_{AWB} = AWB^\top$，再对这份融合后的矩阵施加任务特定频率的正弦变换：
+
+$$M_t = \sin(\omega_t \cdot M_{AWB})$$
+
+由于 Sine-LoRA 已证明正弦映射能显著抬高低秩矩阵的有效秩，不同的 $\omega_t$ 对应不同的正弦波、给出不同的非线性映射 $\mathcal{F}_{\omega_t}$，于是同一份 $M_{AWB}$ 被映射到各任务各自的权重空间里，真正实现了参数复用而非复制。这里有个容易踩坑的数学细节决定了"先融合再正弦"的顺序：因为 $\sin(AWB) \neq \sin(A)\sin(W)\sin(B)$，正弦并不满足乘法同态，只有在融合成单一矩阵后再施加，才能保住有效秩的扩展。最后再用一个高斯低通滤波器（$K=7,\ \sigma=1$）平滑 $M_t$ 得到 $\widetilde{M}_t$，压掉正弦引入的高频噪声，这个 $\widetilde{M}_t$ 再以逐通道卷积的形式加到冻结主干的输出上（$\boldsymbol{f}_{i+1}^t = \Phi_i(\boldsymbol{f}_i^t) + \widetilde{M}_t * \boldsymbol{f}_i^t$，形式同 LoRA）；而中间那层卷积核 $W$ 则为密集预测任务注入了必要的空间先验。
 
 **3. Shared Decoder Group：把频率切换搬到解码端，省掉成倍增长的解码器**
 

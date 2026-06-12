@@ -46,23 +46,11 @@ f-DMU 的出发点是：许多概念擦除方法其实都在做“把 target 的
 具体实例包括 KL/MSE、Jeffreys、squared Hellinger、Pearson $\chi^2$ 以及更一般的 $\alpha$-divergence。论文重点比较 closed-form Hellinger、closed-form $\chi^2$、标准 MSE/KL 和 variational losses。
 
 ### 关键设计
-1. **$f$-divergence 统一遗忘目标**:
+**1. $f$-divergence 统一遗忘目标：把各式概念擦除 loss 收进同一个分布对齐框架。** 主流方法其实都在做同一件事——把目标概念的生成分布改得像锚概念，并习惯性地写成 MSE。本文指出，这个 MSE 不过是两个高斯 reverse-process 分布之间的 KL，于是把目标推广为最小化任意 $f$-divergence $D_f$，KL/MSE 只是其中一个特例。关键观察是：换用不同的 $f$ 并不改变全局最优点（最优解仍是让两个分布对齐），但会改变优化路径和梯度幅度，也就是改变“擦除有多激进、先验保留得多好”。所以扩散遗忘真正该调的旋钮是分布迁移的强弱，而不是被默认锁死在 MSE 这一种几何上。
 
-	- 功能：把多种概念擦除 loss 放到同一个概率分布对齐框架里。
-	- 核心思路：最小化原模型 anchor 分布与遗忘模型 target 分布的 $D_f$，其中 KL 是 MSE 的特例；全局最优点不随 $f$ 改变，但优化路径和梯度幅度会改变。
-	- 设计动机：扩散遗忘真正需要控制的是分布迁移强弱，而不是固定使用 MSE 这一种几何。
+**2. closed-form Hellinger / $\chi^2$ loss：不加网络、不做 min-max，只换梯度形态。** 当目标与锚概念的两个条件分布近似为同协方差高斯时，一部分 $f$-divergence 有闭式解，loss 仍然像 MSE 一样便宜，差别全落在梯度缩放上。Hellinger loss 的梯度约为 $e^{-\text{MSE}}\nabla \text{MSE}$，会给大误差样本更小的权重，从而自然压住离群更新、减少 fine-tuning 途中图像突然崩坏；$\chi^2$ loss 的梯度约为 $e^{\text{MSE}}\nabla \text{MSE}$，反而放大大误差样本，适合需要更强擦除、可接受一定质量损失的场景。这组闭式 loss 因此排成一条“偏保真 ↔ 偏强擦除”的可选谱系，且都不增加训练成本。
 
-2. **closed-form Hellinger / $\chi^2$ loss**:
-
-	- 功能：在不引入额外网络和 min-max 训练的情况下，获得不同于 MSE 的梯度行为。
-	- 核心思路：Hellinger loss 的梯度相当于 $e^{-\text{MSE}}\nabla \text{MSE}$，大误差样本权重更小；$\chi^2$ loss 的梯度相当于 $e^{\text{MSE}}\nabla \text{MSE}$，会放大大误差样本。
-	- 设计动机：Hellinger 能自然抑制离群更新，减少 fine-tuning 途中图像突然崩坏；$\chi^2$ 则适合需要更强擦除、可接受一定质量损失的场景。
-
-3. **variational f-DMU**:
-
-	- 功能：支持没有 Gaussian closed-form 的任意 $f$-divergence。
-	- 核心思路：利用 $D_f(p||q)=\sup_T \mathbb{E}_p[T]-\mathbb{E}_q[f^*(T)]$，让判别函数 $T$ 估计两个输出分布的 divergence，遗忘模型最小化该估计。
-	- 设计动机：closed-form 覆盖有限，variational 形式提供通用性；代价是小 batch 下估计噪声更大，训练更激进。
+**3. variational f-DMU：用变分形式把框架推广到没有闭式解的任意 $f$-divergence。** 不是每个 $f$-divergence 都有高斯闭式解；这时改用变分表示 $D_f(p\|q)=\sup_T \mathbb{E}_p[T]-\mathbb{E}_q[f^*(T)]$，引入一个判别函数 $T$ 去估计两个输出分布之间的散度，遗忘模型则最小化这个估计，整体写成 $\min_{\hat{\Phi}}\max_T$ 的 min-max 目标。代价是它需要额外训练判别函数，而且扩散 fine-tuning 常用的小 batch 下散度估计噪声更大、训练更激进、生成质量风险也更高——通用性是用稳定性换来的。
 
 ### 损失函数 / 训练策略
 实验覆盖 Stable Diffusion 1.4、1.5、2.1、XL，并在附录扩展到 SD3 和 FLUX。评估概念是否被擦除使用 CLIP Score 和 CLIP Accuracy：对 target 概念越低越好，对保留概念越高越好；KID 用于衡量图像分布和质量变化。closed-form loss 与 MSE 一样只需单模型 fine-tuning，variational loss 需要额外训练判别函数。

@@ -40,7 +40,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两条主线推进。**第一条主线 (基准侧)**：通过 AHTS 流水线对真实图像 $v_i$ 生成 4992 条 6 轮对话轨迹（共 29952 条 OE 问题）。流水线分三阶段：（A）*Visual Atomic Proposition Construction* 将图像解析为结构化语义单元，建立 ground-truth 状态 $S_{GT}$；（B）*Causal Intervention & State Perturbation* 通过语义算子在 $S_{GT}$ 上施加反事实扰动得到幻觉状态 $S_{Hall}$；（C）*Adversarial Dialogue Trajectory Simulation* 用一个"欺骗性攻击者"与一个"分叉响应者"演 6 轮戏，把对话推过 5 个认知阶段：感知锚定 → 对抗分叉 → 推理升级 → 系统幻觉 → 视觉纠正。**第二条主线 (方法侧 CAVR)**：训练无关纠正方法，在推理时挂在任意自回归 MLLM 之上，针对作者观察到的两类 *visual fading* 分别给出表征层和 logit 层的双机制干预，整体作为"幻觉断路器"。
+论文分两条主线推进。**第一条主线 (基准侧)**：通过 AHTS 流水线对真实图像 $v_i$ 生成 4992 条 6 轮对话轨迹（共 29952 条 OE 问题）。流水线分三阶段：（A）*Visual Atomic Proposition Construction* 将图像解析为结构化语义单元，建立 ground-truth 状态 $S_{GT}$；（B）*Causal Intervention & State Perturbation* 通过语义算子在 $S_{GT}$ 上施加反事实扰动得到幻觉状态 $S_{Hall}$；（C）*Adversarial Dialogue Trajectory Simulation* 用一个"欺骗性攻击者"与一个"分叉响应者"演 6 轮戏，把对话推过 5 个认知阶段：感知锚定 → 对抗分叉 → 推理升级 → 系统幻觉 → 视觉纠正。**第二条主线 (方法侧 CAVR)**：训练无关纠正方法，在推理时挂在任意自回归 MLLM 之上，针对作者观察到的两类视觉淡出（visual fading）分别给出表征层和 logit 层的双机制干预，整体作为"幻觉断路器"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["真实图像 v_i"]
+    subgraph AHTS["AHTS 对抗轨迹合成（基准侧）"]
+        direction TB
+        A["A 视觉原子命题构建<br/>解析对象/属性/关系 → 真值状态 S_GT"]
+        B["B 因果干预与状态扰动<br/>语义算子反事实改写 → 幻觉状态 S_Hall"]
+        C["C 对抗对话轨迹模拟<br/>欺骗攻击者 vs 被测响应者，6 轮 5 阶段"]
+        A --> B --> C
+    end
+    V --> AHTS
+    AHTS --> BENCH["MM-Snowball 基准<br/>4992 条 6 轮对话，VFR↓ / SRS↑"]
+    BENCH --> DIAG["评测主流 MLLM<br/>V 形曲线 → 归因视觉淡出"]
+    DIAG -->|据此设计训练无关纠偏 CAVR| RVR
+    subgraph CAVR["CAVR 幻觉断路器（方法侧）"]
+        direction TB
+        RVR["表征层视觉纠正 RVR<br/>按不确定度门控，把视觉 token 重写回中间层 KV"]
+        LCR["logit 层冲突纠正 LCR<br/>污染历史分布 vs 纯视觉分布，冲突点偏向视觉"]
+        RVR --> LCR
+    end
+    LCR --> OUT["重锚视觉事实<br/>压平后段塌陷曲线"]
+```
 
 ### 关键设计
 
@@ -50,7 +74,7 @@ tags:
 
 **2. 表征层视觉纠正 RVR：在模型把图压住之前，就把视觉信号续回去**
 
-作者发现 V 形曲线的底部对应中间层视觉 attention 显著下降——也就是 visual fading 发生在表征通道里，等到 logit 层再补救已经晚了。RVR 因此在生成的每一步监测选定中间层的 epistemic 不确定度信号 $U_\ell$（如该层 token 分布熵、或视觉/文本 attention 比的代理量），一旦 $U_\ell$ 越过阈值、怀疑视觉接地正在衰减，就把原始视觉 token 表征 $h_v$ 重新写回该层的 key-value 缓存（思想上扩展了 MemVR 的"视觉记忆再注入"），相当于强制模型在对话中段"再看一眼图"。整个过程不改参数、不引入训练。它解决的是 fading 本身，为后面的 logit 干预铺好干净的表征底子，否则 logit 层只是对一堆脏分布做局部修匀。
+作者发现 V 形曲线的底部对应中间层视觉 attention 显著下降——也就是视觉淡出（visual fading）发生在表征通道里，等到 logit 层再补救已经晚了。RVR 因此在生成的每一步监测选定中间层的 epistemic 不确定度信号 $U_\ell$（如该层 token 分布熵、或视觉/文本 attention 比的代理量），一旦 $U_\ell$ 越过阈值、怀疑视觉接地正在衰减，就把原始视觉 token 表征 $h_v$ 重新写回该层的 key-value 缓存（思想上扩展了 MemVR 的"视觉记忆再注入"），相当于强制模型在对话中段"再看一眼图"。整个过程不改参数、不引入训练。它解决的是 fading 本身，为后面的 logit 干预铺好干净的表征底子，否则 logit 层只是对一堆脏分布做局部修匀。
 
 **3. logit 层冲突纠正 LCR：显式裁决"污染历史 vs 当前视觉锚点"**
 
@@ -93,7 +117,7 @@ CAVR 与现有缓解策略对比（基于论文披露的趋势性结论，定性
 | 无触发的恒开 RVR | 干扰正常 token、整体下降 | 必须由不确定度门控、按需触发 |
 
 ### 关键发现
-- *Visual Fading 是 snowballing 的主因*：作者通过 attention 分析与 Turn 6 视觉再提示实验，把"为什么会雪球"的根因从"模型忘了图"修正为"模型把图压住了"——这一区分直接决定缓解方法应该刷新表征而非重新输入图像。
+- *视觉淡出（visual fading）是 snowballing 的主因*：作者通过 attention 分析与 Turn 6 视觉再提示实验，把"为什么会雪球"的根因从"模型忘了图"修正为"模型把图压住了"——这一区分直接决定缓解方法应该刷新表征而非重新输入图像。
 - *V 形曲线的可恢复性* 表明任何只在最后一轮做后处理的方法都会高估自己的真实能力，应按逐轮报告 VFR/SRS 才能反映长对话稳健性。
 - *训练无关 + 表征层 + logit 层* 的组合可以在不引入额外训练成本的前提下，让现有 MLLM 直接获得多轮鲁棒性，这是单轮 SOTA 缓解器普遍欠缺的属性。
 

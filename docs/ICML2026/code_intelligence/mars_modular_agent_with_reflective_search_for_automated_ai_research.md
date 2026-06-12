@@ -47,7 +47,19 @@ MARS 把自动化 AI 研究重构成"在软件仓库空间中搜索最优解"的
 ### 整体框架
 MARS 要解决的是"在 24h wall-clock 预算内，把一个 MLE 任务做到金牌水平"，它的做法是把这件事重述成一个带约束的搜索问题：输入是任务三元组 $\mathcal{P} = (\mathcal{I}, \mathcal{E}, \mathcal{O})$（指令 / 环境 / 目标）和预算 $B$，要找的是在 $B$ 内最大化目标 $\mathcal{O}$ 的一份模块化仓库 $s_n = \langle \{\mathcal{M}_j\}_{j=1}^{l}, \pi_{\text{main}}\rangle$。
 
-整个系统是一个迭代 loop。开局先做一次 Task Preparation：多 agent 提取任务元数据、做探索性数据分析（EDA）生成报告指导后续特征工程，并切好 train/val/test。之后进入 MARS Loop —— 在一棵 MCTS 树上反复地"决定下一步动作、生成或修改仓库、从执行结果蒸馏经验喂回去"，每个树节点就是一份候选仓库，可执行的扩展动作有三种：在 root 处从零写新解的 **Drafting**、在 valid 节点上改模块的 **Improvement**、在 buggy 节点上修 runtime error 的 **Debugging**（最多 $N_d=10$ 次 debug 循环）。预算耗尽后输出全树 score 最高的 leaf 对应的仓库。下面三个关键设计分别对应这个 loop 的"怎么写代码、怎么记经验、怎么选下一步"。
+整个系统是一个迭代 loop。开局先做一次 Task Preparation：多 agent 提取任务元数据、做探索性数据分析（EDA）生成报告指导后续特征工程，并切好 train/val/test。之后进入 MARS Loop —— 在一棵 MCTS 树上反复地"决定下一步动作、生成或修改仓库、从执行结果蒸馏经验喂回去"，每个树节点就是一份候选仓库，可执行的扩展动作有三种：在 root 处从零写新解的 **Drafting**、在 valid 节点上改模块的 **Improvement**、在 buggy 节点上修 runtime error 的 **Debugging**（最多 $N_d=10$ 次 debug 循环）。预算耗尽后输出全树 score 最高的 leaf 对应的仓库。下面三个关键设计分别对应这个 loop 的"怎么写代码（Modular Decomposition）、怎么记经验（Comparative Reflective Memory）、怎么选下一步（Budget-Aware MCTS）"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：任务三元组（指令/环境/目标）+ 预算 B"] --> P["Task Preparation：多 agent EDA<br/>切分 train / val / test"]
+    P --> S["Budget-Aware MCTS 选下一动作<br/>reward 把执行时间写进打分"]
+    S -->|Drafting / Improvement / Debugging| M["Modular Decomposition<br/>设计→分解→实现 + diff 编辑"]
+    M --> E["执行评测当前候选仓库"]
+    E --> R["Comparative Reflective Memory<br/>对比 best 解蒸馏 lesson 喂回"]
+    R -->|预算未耗尽| S
+    R -->|预算耗尽| O["输出：全树最高分 leaf 仓库"]
+```
 
 ### 关键设计
 

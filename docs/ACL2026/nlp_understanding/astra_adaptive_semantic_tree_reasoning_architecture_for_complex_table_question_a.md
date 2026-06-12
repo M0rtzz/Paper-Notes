@@ -44,6 +44,32 @@ ASTRA 把复杂 TableQA 拆成两个阶段。第一阶段是 AdaSTR，即 Adapti
 
 这个流程的重点是“表示先行”：不是直接让 LLM 对 Markdown 表格硬推理，而是先把表格重写成具有显式父子关系、语义路径和可执行结构的树。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始复杂表格 T"] --> B
+    subgraph S1["AdaSTR 自适应语义树重构"]
+        direction TB
+        B["表头规范化<br/>补全垂直依赖"] --> C["层级识别<br/>挖掘隐藏语义组"]
+        C --> D["自适应构树<br/>DSP / SRE / PSS"]
+    end
+    D --> E{"Evaluator 评分<br/>结构完整 + 覆盖率"}
+    E -->|"低于阈值 (~7%)"| D
+    E -->|"达标 (~93%)"| F["语义树 T̃"]
+    subgraph S2["DuTR 双模式树推理"]
+        direction TB
+        G["文本树导航<br/>Root-to-Leaf / Leaf-to-Root"]
+        H["符号树操作<br/>生成 Python 程序执行"]
+    end
+    F --> G
+    F --> H
+    G --> I["文本候选答案"]
+    H --> J["符号候选答案"]
+    I --> K["Answer Selector<br/>轻量 LLM 选更可信"]
+    J --> K
+    K --> L["最终答案"]
+```
+
 ### 关键设计
 
 **1. AdaSTR 自适应语义树重构：复杂表格不能用一种固定序列化吃遍天下**

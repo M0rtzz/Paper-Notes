@@ -91,7 +91,7 @@ HAR 真实数据（30 受试者多任务 logistic regression，二分类站立 v
 | 平衡度 $\bar B$ | 5,10,15,20 | $\bar B=5$ 时本文最优；$\bar B$ 增大后 ITL 反超，本文自动靠拢 ITL 不出现灾难式负迁移 |
 
 ### 关键发现
-- 在 $\alpha=2$ 的强病态规面下，ARMUL 因 $\rho\asymp d^{-2}$ 导致界 vacuous，本文反而稳健胜出——这正是理论"剔除 $\rho^{-2}$"的实证体现。
+- 在 $\alpha=2$ 的强病态局面下，ARMUL 因 $\rho\asymp d^{-2}$ 导致界 vacuous，本文反而稳健胜出——这正是理论"剔除 $\rho^{-2}$"的实证体现。
 - 平衡度扫描里看到了清晰的"双 regime 切换"：$\bar B$ 小时本文吃多任务红利，$\bar B$ 大时本文与 ITL 几乎重合——也就是 Theorem 2 的 safety 部分在数值上完全兑现。
 - HAR 上不做 PCA 的 logistic 回归把 ARMUL 的标志性预处理拿掉，本文错误率 1.25% 比 ITL 的 4.67% 低近 4 倍，说明矩阵加权正则在真实低 SNR 高维场景仍有效。
 

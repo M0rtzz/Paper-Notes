@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 这篇论文不提新训练流程，而是重写测试时解码的概率结构：在没有大对齐模型 $p^\ast$ 的情况下，用小对齐模型 $q^\ast$ 的信息去改善大基础模型 $p$ 的生成。每生成一个 token，先从 $p$ 采一个 draft token $w$ 作为候选；再用拒绝变量 $r$ 决定它的去留——$r=0$ 就接受 $w$，$r=1$ 就拒绝 $w$ 并从 $q^\ast$ 重新采样；最终输出分布因此拆成"保留大模型样本"和"拒绝后由小模型接管"两部分。框架里大部分结构是固定的（latent draft 分布设为 $\pi(\bar{x}=w)=p_w$、fallback 分布设为 $q^\ast$），真正可设计的只剩每个 token 的拒绝概率 $\mu_v=\pi(r=1\mid\bar{x}=v)$，也就是标题里的 rejection criterion。这样改写之后，输入是 $p$ 与 $q^\ast$ 的下一 token 分布，中间是一个带 latent rejection variable 的概率图模型，输出是组合后的 token 分布；许多看似不同的测试时对齐方法都被压成同一个问题——该怎样设 $\mu_v$，才能既不轻易放弃大模型能力，又能在小对齐模型更可靠时切过去。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：大基础模型 p 与小对齐模型 q* 的下一 token 分布"]
+    DRAFT["拒绝式概率图模型<br/>从 p 采 draft token w，再采拒绝变量 r"]
+    subgraph BET["Conservative confidence bet（拒绝准则 μ_v）"]
+        direction TB
+        CMP["比较 draft 概率 p_v 与 q* 最强候选 max q*_w"]
+        DEC["判据 p_v < max q*_w − λ ?"]
+        CMP --> DEC
+    end
+    IN --> DRAFT --> BET
+    DEC -->|否：draft 够强，r=0| ACC["接受 token w（采自 p）"]
+    DEC -->|是：fallback 更强，r=1| REJ["拒绝 w，改从 q* 重采样"]
+    ACC --> OUT["输出 token x"]
+    REJ --> OUT
+```
+
 ### 关键设计
 
 **1. 拒绝式概率图模型：把 proxy 对齐拆成"先提候选、再决定拒绝"两件事**

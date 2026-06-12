@@ -44,6 +44,25 @@ BiCo 要做的事是：从图像和视频里把任意视觉概念（包括风格
 
 $$\mathbf{x}_{out} = \text{cross\_attention}(\mathbf{x}_{in}, \mathbf{p}, \mathbf{p})$$
 
+绑定阶段的三个核心设计——层次化 Binder 结构、多样化-吸收机制、时序解耦策略——共同把视觉概念稳定、干净地绑到 prompt token 上；组合阶段再把不同来源的绑定 token 拼成更新后的 prompt，注入 DiT 生成最终视频：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 / 视频概念输入"]
+    subgraph BIND["绑定阶段 Concept Binding：为每个视觉输入学一个 binder"]
+        direction TB
+        B["层次化 Binder 结构<br/>全局 binder + 逐块 binder，两阶段倒序训练"]
+        C["多样化-吸收机制 DAM<br/>VLM 生成多样 prompt + 可学习吸收 token"]
+        D["时序解耦策略 TDS<br/>单帧→视频两步，双分支 binder 门控融合"]
+        B --- C --- D
+    end
+    A --> BIND
+    BIND --> E["组合阶段 Concept Composing<br/>目标 prompt 分解→各部分过对应 binder→重组更新 prompt"]
+    E --> F["DiT cross-attention 条件注入"]
+    F --> G["组合视频输出"]
+```
+
 ### 关键设计
 
 **1. 层次化 Binder 结构：用全局+逐块两层 binder 适配 DiT 各块的不同行为**

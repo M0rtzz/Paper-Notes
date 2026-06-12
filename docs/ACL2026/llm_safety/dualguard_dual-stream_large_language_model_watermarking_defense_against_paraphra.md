@@ -43,6 +43,31 @@ DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗
 ### 整体框架
 输入为待生成的 LLM token 序列 $y_{:t}$，输出为带双流水印的文本以及检测时的三类分数：水印检测分 $\text{Score}_{wd}$、spoofing 检测分 $\text{Score}_{sd}$、spoofing 溯源分 $\text{Score}_{st}$。整个流程包含三段：(1) 用映射模型 $\mathcal{G}$ 离线训练得到共享主干 + 两个水印头 $\Theta_s, \Theta_a$；(2) 解码时按固定窗口 $k$ 计算当前前缀的两路 cosine 距离 $\text{dist}(y_{:t})$，距离 $<\alpha$ 用 $\Theta_s$、否则切到 $\Theta_a$，把输出经 tanh + 随机投影映射到 $|\mathcal{V}|$ 维并按 $P_{\mathcal{M}'}^t = P_\mathcal{M}^t + \delta\cdot P_\mathcal{M}^t P_\Theta^t$ 注入；(3) 检测时同样按窗口重放头选择，再分别用平均水印 logit、平均双流距离、对抗头命中率三种统计完成水印检测 / spoofing 检测 / 溯源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["前缀嵌入 e_t = E(y)"]
+    subgraph G["双头映射网络 G（离线训练）"]
+        direction TB
+        BK["共享 FFN + 残差主干"]
+        BK --> HS["标准头 Θs"]
+        BK --> HA["对抗头 Θa"]
+    end
+    LOSS["内容敏感对比损失 L_con<br/>良性两头余弦→+1 / 恶意→分离 margin"]
+    IN --> BK
+    LOSS -.训练约束.-> G
+    G --> INJ["窗口级自适应注入<br/>距离小于阈值 α 用标准头，否则用对抗头 → tanh+随机投影 → 乘性注入"]
+    INJ --> TXT["带双流水印文本"]
+    TXT --> DET["三路检测：按同一窗口规则重放头序列"]
+    subgraph SCORE["三类分数"]
+        direction TB
+        S1["水印检测 Score_wd"]
+        S2["spoofing 检测 Score_sd"]
+        S3["spoofing 溯源 Score_st"]
+    end
+    DET --> SCORE
+```
+
 ### 关键设计
 
 **1. 双头映射网络 $\mathcal{G}$（标准头 + 对抗头）：让同一段前缀同时吐出两组互补水印，给后续 spoofing 检测留一个"参照系"**

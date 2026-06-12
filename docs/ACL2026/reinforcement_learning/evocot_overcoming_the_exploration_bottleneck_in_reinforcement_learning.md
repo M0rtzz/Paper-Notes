@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 EvoCoT 是嵌套两阶段的迭代框架。Stage 1 (Answer-Guided Reasoning Path Self-Generation)：对每道 $(Q,A)$ 硬题，让 LLM 在已知最终答案 $A$ 的条件下生成 $\hat{C}$；再用一致性检查 $(Q,\hat{C}) \to \hat{A}$，只保留 $\hat{A}=A$ 的 $\hat{C}$，并按 "\n\n" 切成步骤 $\{\hat{c_1},\dots,\hat{c_n}\}$。Stage 2 (Step-Wise Curriculum Learning)：对每条 CoT 从尾部依次删步——先用 $(Q,c_1,\dots,c_n)$ 做 rollout、再 $(Q,c_1,\dots,c_{n-1})$、…、$(Q,c_1)$、最后 $(Q)$——形成一条"从全 prefix 引导到零引导"的难度梯度，每个 prefix 作为 rollout 的固定前缀，剩余步骤自由生成，再用 RLVR 更新。两阶段交替迭代 $t$ 次（Equation 5），随着 LLM 能力提升，下一轮 Stage 1 又能生成更高质量的 CoT，形成自我进化闭环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["硬题 (Q, A)<br/>8 次 rollout 全错"] --> S1
+    subgraph S1["Answer-Guided 反向 CoT 自生成 + 一致性过滤"]
+        direction TB
+        B["已知答案反推：(Q, A) → Ĉ"] --> C["正向验证：(Q, Ĉ) → Â"]
+        C -->|"Â = A 才保留"| D["按段落切成步骤 {c₁,…,cₙ}"]
+    end
+    S1 --> S2
+    subgraph S2["Step-Wise 反向前缀课程"]
+        direction TB
+        E["从尾部逐步删步<br/>(Q,c₁…cₙ) → … → (Q,c₁) → (Q)"] --> F["每个 prefix 作固定前缀<br/>rollout 续写剩余步骤"]
+        F --> G["RLVR (GRPO/DAPO) 按最终答案验证更新"]
+    end
+    S2 --> H["更强的 LLM⁽ᵗ⁺¹⁾"]
+    H -->|"自我进化迭代（默认 2 轮）"| S1
+    H --> I["输出：在硬题上稳定训练的策略"]
+```
+
 ### 关键设计
 
 **1. Answer-Guided 反向 CoT 自生成 + answer-consistency 过滤：从只有 $(Q,A)$ 的硬题里无中生有地造出可信推理链**

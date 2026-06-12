@@ -43,17 +43,36 @@ NanoQuant 把权重量化重新表述为「低秩二值分解」问题，用 Hes
 ### 整体框架
 NanoQuant 把每个 Linear 层权重 $\mathbf{W}\in\mathbb{R}^{d_\text{out}\times d_\text{in}}$ 分解为 $\widehat{\mathbf{W}}=\mathbf{s}_1\odot(\mathbf{U}_{\pm 1}\mathbf{V}_{\pm 1}^\top)\odot\mathbf{s}_2^\top$，其中 $\mathbf{U}_{\pm 1}\in\{-1,+1\}^{d_\text{out}\times r}$、$\mathbf{V}_{\pm 1}\in\{-1,+1\}^{d_\text{in}\times r}$，$\mathbf{s}_1,\mathbf{s}_2$ 是两条全精度的通道尺度向量。整条流水线分三段：**(1) 全局校准**——把 128 条样本灌进 FP teacher，给每个 Linear 层算出 K-FAC 风格的输入/输出对角预条件子 $\widetilde{\mathbf{D}}_\text{in},\widetilde{\mathbf{D}}_\text{out}$；**(2) 块级重建**——逐 Transformer block，每个 block 内先调 FP 权重抵消前级量化误差，再用 LB-ADMM 精确初始化所有 Linear 层的 $\mathbf{U},\mathbf{V},\mathbf{s}_1,\mathbf{s}_2$，再用 STE 联合微调连续 latent 和尺度，最后冻结 sign 并打包成 int；**(3) 模型重建**——冻住所有打包后的二值矩阵，只继续优化全局浮点尺度集合 $\mathbf{S}_\text{global}$，用 KL 把量化模型的 logits 拉回 FP teacher。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["FP 权重 W + 128 条校准样本"] --> B["低秩二值分解 + Hessian 感知预条件<br/>全局校准估 D_in, D_out；目标 ‖D_out(W−Ŵ)D_in‖²"]
+    subgraph BLK["逐 Transformer block 重建"]
+        direction TB
+        C["跨块误差抵消<br/>调 FP 权重补偿前级量化误差"] --> D["LB-ADMM 初始化<br/>对偶解耦解出 U±1, V±1, s1, s2"]
+        D --> E["块级 STE 微调<br/>翻错误 sign + 精调尺度"]
+        E --> F["冻结 sign 打包成 int"]
+    end
+    B --> C
+    F --> G["模型级 KL 校准<br/>冻结二值矩阵，仅优化全局尺度 S_global"]
+    G --> H["亚 1-bit 量化模型"]
+```
+
 ### 关键设计
 
 **1. 低秩二值分解 + Hessian 感知预条件：换一个能突破 1-bit 下界的量化结构**
 
 二值 PTQ 卡在 1 bit 的根源是表征——$\mathbf{W}\approx\alpha\mathbf{B}_{\pm 1}$ 这种「就地二值化」每个参数都得存一个 sign，比特率天然不可能低于 1。NanoQuant 干脆把量化目标换成两个 $\pm 1$ 低秩因子的乘积，存储量由秩 $r$ 连续控制，从而能压到亚 1 bit。但换了表征还得有对的优化目标：作者不去最小化朴素的欧氏重建误差，而是改写成 Hessian 加权的 $\mathcal{L}(\widehat{\mathbf{W}})\approx\|\widetilde{\mathbf{D}}_\text{out}(\mathbf{W}-\widehat{\mathbf{W}})\widetilde{\mathbf{D}}_\text{in}\|_F^2$——这等价于在校准激活/梯度统计张成的椭球范数下做低秩二值近似，也正是二阶 Taylor 展开下的任务损失。这么做是因为欧氏误差对小校准集太敏感、会让那些 quantization-sensitive 的通道被淹没，而 Hessian 加权让后续优化优先压住对下游 loss 影响最大的方向。其中的对角预条件子 $\widetilde{\mathbf{D}}_\text{in},\widetilde{\mathbf{D}}_\text{out}$ 取自 K-FAC 风格估计，并用收缩稳定 $[\widetilde{\mathbf{D}}]_{ii}\leftarrow(1-\gamma)[\mathbf{D}]_{ii}+\gamma\,\mathrm{mean}(\mathbf{D})$——把经验估计往均值拉一点，对小校准集尤其关键，Llama/Qwen 取 $\gamma\approx 0.2$、输出分布更尖锐的 Gemma/Rnj 取 $\gamma\approx 0.6$。
 
-**2. Latent-Binary ADMM（LB-ADMM）：在 PTQ 预算下解出高质量的二值初始化**
+**2. 跨块误差抵消（Error Mitigation）：先补偿前级累积误差，再量化当前块**
+
+逐 block 顺序量化在二值化下会让误差一路累积放大——前面 block 量化引入的输出偏差会被后面 block 当成「真实输入」继续传播，传到深层时早已面目全非。NanoQuant 借鉴 GPTQ 式的顺序误差补偿：量化第 $i$ 个 block 前，先用已经量化好的前 $i-1$ 个 block 的实际输出，去调整当前 block 的 FP 目标权重，让它主动吸收掉前级累积的量化误差，再把这份「已补偿」的权重交给 LB-ADMM 去分解。这是整条 pipeline 里单点收益最大的模块——消融里只做 LB-ADMM 初始化时 PPL 高达 206.03，补上 Error Mitigation 直接降到 15.07，说明跨块误差累计在亚 1 bit 下被放大得极其严重，不先把它压住，后面再怎么微调都救不回来。
+
+**3. Latent-Binary ADMM（LB-ADMM）：在 PTQ 预算下解出高质量的二值初始化**
 
 低秩 $\pm 1$ 分解本身是 NP-hard 的组合优化，直接搜不动。LB-ADMM 的做法是用对偶变量把「连续重建」和「二值约束」解耦，写成 $\min_{\mathbf{U},\mathbf{V},\mathbf{Z}_U,\mathbf{Z}_V}\tfrac{1}{2}\|\widetilde{\mathbf{W}}_\text{target}-\mathbf{U}\mathbf{V}^\top\|_F^2+\tfrac{\lambda}{2}(\|\mathbf{U}\|_F^2+\|\mathbf{V}\|_F^2)$，约束为 $\mathbf{U}=\mathbf{Z}_U,\mathbf{V}=\mathbf{Z}_V$。然后三段交替：连续因子 $\mathbf{U}$（及对称的 $\mathbf{V}$）的更新归结为一个由 $\rho,\lambda$ 正则的线性系统，用 Cholesky 分解把复杂度压到 $\mathcal{O}(r^3/3)$；辅助变量 $\mathbf{Z}$ 用 Sign-Value Independent Decomposition (SVID) 取最佳秩-1 sign-preserving 近似，把连续解逐步投影到可行的二值流形上；对偶变量 $\boldsymbol{\Lambda}$ 按标准方式累加。收敛后再做一次「magnitude balancing」——用 $\eta=\sqrt{\|\widehat{\mathbf{V}}\|_F/\|\widehat{\mathbf{U}}\|_F}$ 调平两个因子的量级，把每行平均绝对值分别灌进尺度 $\mathbf{s}_1,\mathbf{s}_2$。这套解耦比 LittleBit 的 Dual-SVID 和 DBF 的端到端 ADMM 在小校准集下都更稳：消融里 LB-ADMM 在 0.8 bit 下 PPL 20.06，而 DBF-ADMM 30.27、Dual-SVID 直接崩到 167.73——初始化质量几乎决定了亚 1 bit 的成败。
 
-**3. 块级 STE 微调 + 仅尺度的模型级 KL 校准：把局部初始化对齐成全局可用的量化模型，同时把显存压住**
+**4. 块级 STE 微调 + 仅尺度的模型级 KL 校准：把局部初始化对齐成全局可用的量化模型，同时把显存压住**
 
 好的初始化只是局部最优，还要让整个网络的输出对齐 FP teacher，但又不能像 DBF 那样把全部权重梯度留在显存里——那样 70B 根本跑不动。NanoQuant 把这步拆成两级。块级用 Straight-Through Estimator 让梯度穿过 $\mathrm{sign}(\cdot)$ 反传，逐 Transformer block 联合优化 $\mathcal{U},\mathcal{V},\mathbf{s}_1,\mathbf{s}_2$ 去最小化块输出误差 $\|\mathcal{B}(\mathbf{X}_\text{in})-\widehat{\mathcal{B}}(\mathbf{X}_\text{in};\mathrm{sign}(\mathcal{U}),\mathrm{sign}(\mathcal{V}),\mathbf{s}_1,\mathbf{s}_2)\|_F^2$；这一步既能翻转初始化里少量错误 sign，又能精调尺度，反传只局限在单个 block 内、规模可控。模型级则把所有 block 的二值矩阵全部冻结打包成 int，只放开全局浮点尺度集合 $\mathbf{S}_\text{global}$，用 KL 把量化模型的 logits 拉回 teacher：
 

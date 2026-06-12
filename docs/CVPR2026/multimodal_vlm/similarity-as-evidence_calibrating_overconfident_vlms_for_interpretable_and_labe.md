@@ -45,7 +45,21 @@ tags:
 
 ### 整体框架
 
-SaE 想解决的是"VLM 把余弦相似度当成确定性、结果过度自信，拿去做主动学习就会挑错样本"这件事。它的做法是把相似度重新解释成证据：冻结 VLM 图像编码器，只训练一个把相似度映射成 Dirichlet 证据的 Similarity Evidence Head (SEH) 和 CoOp 风格的可学习提示，再从校准后的分布里分解出两类不确定性来驱动样本采集。整条链路是 PubMed 增强提示构建富语义文本原型 → SEH 把相似度变成证据参数 → 基于 vacuity/dissonance 的双因子策略选样本。
+SaE 想解决的是"VLM 把余弦相似度当成确定性、结果过度自信，拿去做主动学习就会挑错样本"这件事。它的做法是把相似度重新解释成证据：冻结 VLM 图像编码器，只训练一个把相似度映射成 Dirichlet 证据的 Similarity Evidence Head (SEH) 和 CoOp 风格的可学习提示，再从校准后的分布里分解出两类不确定性来驱动样本采集。整条链路是 PubMed 增强提示构建富语义文本原型 → SEH 把相似度变成证据参数 → 相似度-证据映射分解出 vacuity/dissonance → 双因子策略选样本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["医学图像 → 冻结 VLM 图像编码器<br/>得图像嵌入 x"]
+    TXT["PubMed 增强提示<br/>检索描述句 → 文本编码 → 均值得类别原型"]
+    IMG --> SIM["余弦相似度向量 s"]
+    TXT --> SIM
+    SIM --> SEH["Similarity Evidence Head (SEH)<br/>特征分支 + 相似度分支 → MLP+softplus → 证据强度 λ"]
+    SEH --> MAP["相似度-证据映射<br/>α_k = λ·p_k + 1 → Dirichlet 分布"]
+    MAP --> UNC["分解两类不确定性<br/>Vacuity 知识空缺 + Dissonance 证据冲突"]
+    UNC --> ACQ["双因子采集策略<br/>早期偏 Vacuity 补覆盖 / 后期偏 Dissonance 磨边界"]
+    ACQ --> OUT["选最有信息量样本送专家标注"]
+```
 
 ### 关键设计
 

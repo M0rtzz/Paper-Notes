@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 方法要回答的是同一件事的两面：哪些组件构成电路（read）、怎么改这些组件来换输出（write）。它把这两个问题都化成"几何对齐"——一边是答案 token 单独前向留下的差分方向（电路指纹），一边是 contrastive prompt（clean vs corrupted）下各组件的输出差分 $\Delta o_c$。Read 阶段把指纹方向投到每个组件的原生空间，与 $\Delta o_c$ 做内积得到节点重要性，再用 Q/K/V 三通道分解算出 edge；write 阶段则直接拿同一组方向去替换或叠加组件激活。整个流程不碰梯度、不做干预，只靠纯前向投影。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["答案 token a+ / a− 各自前向"] --> B["答案 token 差分作为几何目标<br/>差分方向 Δr 即电路指纹"]
+    P["contrastive prompt<br/>clean vs corrupted"] --> C["组件输出差分 Δo_c"]
+    B --> D["投到组件原生空间<br/>内积得节点重要性 S_c"]
+    C --> D
+    D --> E["Q/K/V Shapley 分解<br/>三通道博弈唯一解算 edge"]
+    E --> F["输出电路（read）"]
+    B --> G["几何 steering<br/>同一组方向替换/叠加激活（write）"]
+    G --> H["改写输出（read-write 对偶）"]
+```
+
 ### 关键设计
 
 **1. 答案 token 差分作为几何目标：用原生空间投影保住可加性**

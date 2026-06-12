@@ -40,7 +40,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-KITE 包含五个阶段：文档摄取与清洗、embedding 生成、多阶段检索、意图感知生成、session management。系统先把课程 PDF 按页抽取并去除页眉页脚等噪声，再按 section-aware chunking 切成约 500 字符、100 字符 overlap 的 chunks。每个 chunk 用 text-embedding-3-large 编码成 3072 维向量并存入 FAISS。学生提问时，系统先用 dense retrieval 找 top-50，再结合 BM25、MMR、cross-encoder reranking 和课程来源 boost，最终把 top-8 chunks 注入 GPT-5 prompt。生成侧先识别学生意图，再选择对应的辅导策略。
+KITE 包含五个阶段：文档摄取与清洗、embedding 生成、多阶段检索、意图感知生成、session management。系统先把课程 PDF 按页抽取并去除页眉页脚等噪声，再按 section-aware chunking 切成约 500 字符、100 字符 overlap 的 chunks。每个 chunk 用 text-embedding-3-large 编码成 3072 维向量并存入 FAISS。学生提问时，系统先用 dense retrieval 找 top-50，再结合 BM25、MMR、cross-encoder reranking 和课程来源 boost，最终把 top-8 chunks 注入 GPT-5 prompt。生成侧先识别学生意图，再选择对应的辅导策略。除运行时管线外，论文还配套一条模拟学生 + 专家评审的评估管线，专门衡量反馈是否真的推动学生修订答案。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["课程 PDF"] --> B["文档摄取与清洗<br/>按页抽取 + 去页眉页脚 + section-aware 切块"]
+    B --> C["embedding 生成<br/>text-embedding-3-large → 3072 维 → FAISS"]
+    Q["学生提问"] --> D
+    C --> D
+    subgraph RET["多阶段课程材料检索管线"]
+        direction TB
+        D["dense 召回 top-50"] --> E["hybrid 融合 dense 70% + BM25 30%"]
+        E --> F["MMR 去冗余 λ=0.7"]
+        F --> G["cross-encoder 重排"]
+        G --> H["官方材料 boosting<br/>score>0.6 加 0.3"]
+    end
+    H -->|"top-8 chunks"| I["意图分类与教学策略路由"]
+    I -->|"Direct / Conceptual"| J["课程材料解释 + 反思追问"]
+    I -->|"Validation / Debugging"| K["简短评价 + 逐步提示"]
+    I -->|"Tracing"| L["维护 OPEN/CLOSED 状态 + 引导问题"]
+    J --> M["苏格拉底式反馈 + session management"]
+    K --> M
+    L --> M
+    subgraph EVAL["模拟学生 + 专家评审的反馈评估"]
+        direction LR
+        P["proxy student 首轮"] --> R["KITE 反馈"] --> S["二次修订"] --> T["专家对照打分"]
+    end
+    M -.评估反馈质量.-> EVAL
+```
 
 ### 关键设计
 

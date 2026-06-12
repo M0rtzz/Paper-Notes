@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 RUAC 把 SAM2 的确定性 mask decoder 替换成 Bayesian Mask Decoder (UE)；同时挂上两个 attacker：Style Adversarial Network $\psi_s$ 和 Deformation Adversarial Network $\psi_d$，通过 Gradient Reversal Layer (GRL) 与 segmentation 模型做端到端 min-max 训练。每个 iteration 包含 clean 与 adversarial 两路 forward：clean 路保留 in-domain 性能，adversarial 路负责把模型推到 calibration 失效边缘并再训回来。推理时 attacker 全部丢掉，只跑 UE，因此部署成本仅是给 SAM2 加一个轻量贝叶斯 head。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 点提示"] --> B["SAM2 图像编码器<br/>提取主干特征"]
+    B --> C["clean 路：原图直接前向"]
+    subgraph AUE["协同 Style + Deformation 对抗攻击"]
+        direction TB
+        D1["Style attacker ψs<br/>GCN 改 per-object 风格统计 → AdaIN 换纹理"]
+        D1 --> D2["Deformation attacker ψd<br/>预测 offset field → 同步 warp 图与 GT mask"]
+    end
+    B --> AUE
+    AUE -->|"对抗图 I_adv"| E["SAM2 编码器再前向"]
+    C --> F["贝叶斯 mask decoder<br/>双粒度 Weibull 后验 → 像素级不确定性"]
+    E --> F
+    F --> G["输出：分割 mask + 逐像素不确定性 u"]
+    G --> H["不确定性-精度对齐校准损失 L_cal<br/>罚『自信但错』+『不确定但对』"]
+    H -.->|"经 GRL 反向逼 attacker 增大 miscalibration"| AUE
+```
+
 ### 关键设计
 
 **1. 贝叶斯 mask decoder（双粒度 Weibull 后验）：把 mask 级置信度下放到像素级**

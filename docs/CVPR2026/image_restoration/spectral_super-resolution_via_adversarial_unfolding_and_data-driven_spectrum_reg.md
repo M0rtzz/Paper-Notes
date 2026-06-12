@@ -45,6 +45,20 @@ tags:
 
 UALNet 要回答一个很具体的科学问题：能不能用计算的方式，把全球覆盖但只有 12 波段的 Sentinel-2 数据，重建成 NASA AVIRIS 级的 186 波段高光谱图像。这是个高度欠定的线性逆问题——观测建模为 $\mathbf{Y} = \mathbf{R}\mathbf{X} + \mathbf{N}$，其中 $\mathbf{Y} \in \mathbb{R}^{12 \times P}$ 是多光谱观测，$\mathbf{X} \in \mathbb{R}^{186 \times P}$ 是待求高光谱图像，$\mathbf{R} \in \mathbb{R}^{12 \times 186}$ 是光谱响应矩阵，用 12 个方程去解 186 个未知数，必须靠强正则化。UALNet 的做法是把这个优化问题展开成多阶段网络，每个 stage 走一步"数据保真梯度下降 + 正则约束"的迭代，并在迭代里塞进两件别人没做的事：用 PriorNet 提供显式光谱先验，用判别器在训练和推理时都参与重建。此外，Sentinel-2 的 12 个波段分布在 60/20/10 m 三种空间分辨率上，UALNet 把光谱超分和空间超分耦合成联合任务，统一重建到 5 m。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Sentinel-2 多光谱<br/>12 波段 / 60·20·10 m"] --> B["深度展开框架<br/>K 个 stage 迭代求解 12→186"]
+    subgraph STG["单个展开 stage（重复 K 次）"]
+        direction TB
+        C["数据保真梯度下降<br/>沿 ‖Y − RX‖² 更新"] --> D["PriorNet<br/>数据驱动光谱先验正则"]
+        D --> E["展开对抗学习 UAL<br/>判别器评估重建质量并回传梯度"]
+    end
+    B --> STG
+    STG -->|未收敛，进入下一 stage| B
+    STG -->|完成 K 次迭代| F["AVIRIS 级高光谱<br/>186 波段 @ 5 m"]
+```
+
 ### 关键设计
 
 **1. 深度展开框架：把迭代优化拆成可学习的多阶段网络**

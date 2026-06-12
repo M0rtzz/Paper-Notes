@@ -49,6 +49,18 @@ LiveFact 是一条"五阶段月度流水线 + 双模式评测"：
 
 形式化上，对每个 claim $c_i$ 给出 LLM $f_\theta$ 输入三元组 $(c_i, E_i^{(\delta)}, k_i)$，输出 $\hat y_i^{(\delta)} \in \{\text{Real},\text{Fake},\text{Ambiguous}\}$；评测在两种模式下计算 Acc 与 Macro-F1。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["事件抓取<br/>Google News 每日抓 World 板块 → 737 去重事件"] --> B["时间切片证据 Fog of War<br/>以头条日 T 为锚，按 δ∈{−3,0,+3} 拉三档证据"]
+    B --> C["claim 与背景生成<br/>o4-mini 产中性 context + 三标签 claim（Real/Fake/Ambiguous）"]
+    C --> D["人审三轮<br/>校对 + 按当下证据动态改 INF 标签"]
+    D --> E["双模式评测<br/>CLS 绝对事实 + INF 当下证据是否够判"]
+    D --> F["SSA 实体替换<br/>Qwen3-235B 把命名实体换成虚构名 → 平行 shifted 集"]
+    F --> E
+    E --> G["Reasoning Gap = INF − CLS<br/>SSA Factor = Δ × 翻转率 × 100"]
+```
+
 ### 关键设计
 
 **1. 时间切片证据（Fog of War）：用三档证据窗模拟真实世界里"信息逐步显形"**

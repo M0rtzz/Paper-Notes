@@ -42,7 +42,7 @@ tags:
 
 ### 整体框架
 
-输入：蒸馏好的 synthetic 数据集 $\mathcal{C}$、预生成的有限软标签池 $\Omega_{\text{soft}}$（容量受 SLC 控制）、教师 teacher。输出：在真实测试集上能泛化的 student $\hat\theta$。
+输入：蒸馏好的 synthetic 数据集 $\mathcal{C}$、预生成的有限软标签池 $\Omega_{\text{soft}}$（容量受每图软标签数 $s$ 控制）、教师 teacher。输出：在真实测试集上能泛化的 student $\hat\theta$。
 
 整体训练分三阶段，由 $n_{\text{total}}$ 与"软标签 ERM 收敛所需 epoch 数" $n_{\text{soft}}$ 决定划分：
 
@@ -50,7 +50,18 @@ $T_A=\lfloor n_{\text{soft}}/2 \rfloor,\ T_B = n_{\text{total}}-n_{\text{soft}},
 
 阶段 A 用 $\Omega_{\text{soft}}$ 软标签做粗预训练；阶段 B 切换到 CutMix + label-smoothed 硬标签做语义校准，专门压制 LVSD 引入的 crop-内方差；阶段 C 再回到软标签精修，巩固类间结构。若 $n_{\text{total}} \le n_{\text{soft}}$ 则退化为纯软标签训练，HALD 兼容现有 SRe2L/LPLD pipeline。
 
-理论部分是动机的核心。作者把 LVSD 拆成两块：固定 $\tilde x$、令 $\bar p = \mathbb{E}[\tilde p(x^{(\text{crop})})]$、$\Sigma=\text{Cov}[\tilde p(x^{(\text{crop})})]$，对 $s$ 个 crop 聚合 $\hat p_s$ 的监督误差恰好分解为"oracle 不可约项 $\|\bar p - e_y\|_2^2$"加上"LVSD 项 $\text{Tr}(\Sigma)/s$"。只要 $\Sigma \ne 0$ 且 $s$ 有限，LVSD 项就严格大于 0。进一步 Theorem 3.5 给出训练目标层面的 $\Omega(s^{-1/2})$ 偏差下界；Theorem 3.6 给出 ERM 解 $\hat\theta_s$ 与 oracle $\hat\theta_\star$ 之间 $\Omega(1/s)$ 的过剩泛化损失下界。这些下界都只在 $s\to\infty$ 时消失——但 $s$ 大正是要避免的存储灾难。结论：**靠纯软标签不可能在低 SLC 下追平 oracle**，必须引入额外的、与 crop 内容独立的监督源。
+理论部分是动机的核心。作者把 LVSD 拆成两块：固定 $\tilde x$、令 $\bar p = \mathbb{E}[\tilde p(x^{(\text{crop})})]$、$\Sigma=\text{Cov}[\tilde p(x^{(\text{crop})})]$，对 $s$ 个 crop 聚合 $\hat p_s$ 的监督误差恰好分解为"oracle 不可约项 $\|\bar p - e_y\|_2^2$"加上"LVSD 项 $\text{Tr}(\Sigma)/s$"。只要 $\Sigma \ne 0$ 且 $s$ 有限，LVSD 项就严格大于 0。进一步 Theorem 3.5 给出训练目标层面的 $\Omega(s^{-1/2})$ 偏差下界；Theorem 3.6 给出 ERM 解 $\hat\theta_s$ 与 oracle $\hat\theta_\star$ 之间 $\Omega(1/s)$ 的过剩泛化损失下界。这些下界都只在 $s\to\infty$ 时消失——但 $s$ 大正是要避免的存储灾难。结论：**靠纯软标签不可能在低 $s$ 下追平 oracle**，必须引入额外的、与 crop 内容独立的监督源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入：合成数据集 𝒞 + 受限软标签池 Ω_soft + 教师"]
+    I --> A["阶段 A：软标签粗预训练<br/>用 Ω_soft 训 student 至软标签局部最优 θ_A"]
+    A --> B["阶段 B：硬标签语义校准<br/>CutMix + 重度平滑标签，压制 LVSD 的 crop 内方差"]
+    B --> C["阶段 C：软标签精修<br/>切回软标签，补回 teacher 的类间结构"]
+    C --> O["输出：在真实测试集泛化的 student θ̂"]
+    A -.->|n_total ≤ n_soft 退化为纯软标签| O
+```
 
 ### 关键设计
 

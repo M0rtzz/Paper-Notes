@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 ShaplEIG 把"精确算 Shapley 值要枚举 $2^p$ 个 coalition"的难题，重铸成一个贪婪的贝叶斯自适应设计（BAD）循环：用一个概率化代理拟合昂贵的价值函数 $\nu$，每一轮只问"评估哪个 coalition 最能减少对 SV 的不确定性"，把有限预算精确地花在刀刃上。给定玩家集 $P=\{1,\dots,p\}$、价值函数 $\nu:2^P\to\mathbb{R}$、按 leverage score 采的初始集合 $\mathcal{C}_0$（$T_0=p+1$ 个）和预算 $T$（论文 $\le 512$），每轮先在候选池里挑出期望信息增益 $\mathrm{EIG}^{(t)}_\phi$ 最大的 coalition，真去调一次 $\nu$、把 $(z,\nu(z))$ 并入数据集、再重训代理超参；终止后用一个线性算子 $\hat\phi = A\mu_{\nu\mid\mathcal{D}_{T+1}}$ 从后验均值直接读出全部 $p$ 个 SV。整套方法的三块拼图——代理选什么、准则对准谁、复杂度怎么压下来——正好对应下面三个关键设计。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["昂贵价值函数 ν + 玩家集 P + 预算 T<br/>leverage score 采初始 coalition 集 C₀"] --> B["Hamming 核 GP 代理拟合 ν<br/>后验均值 / 协方差有闭式"]
+    B --> C["对候选 coalition 算「对 SV 的 EIG」<br/>GOODE 线性 end-goal φ=Aν，闭式 log-det"]
+    C --> D["ESP 展开把 EIG 压到 O(p⁴+t³)<br/>大 p（≤101）也能实算"]
+    D --> E["挑 EIG 最大的 coalition z*<br/>真调一次 ν(z*) 并入数据集"]
+    E -->|未达预算 T：重训 GP 超参 ξ| B
+    E -->|达预算 T| F["线性算子 φ̂ = A·μ 读出全部 p 个 SV"]
+```
+
 ### 关键设计
 
 **1. Hamming 核 GP 代理：让设计真正随观测自适应**

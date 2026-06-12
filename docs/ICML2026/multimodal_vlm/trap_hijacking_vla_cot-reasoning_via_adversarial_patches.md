@@ -44,7 +44,25 @@ TRAP 是第一个针对 reasoning VLA 的目标行为劫持攻击——通过桌
 
 威胁模型：白盒（已知 VLA 架构/参数/梯度），攻击者可以在场景里放一个对抗 patch（如桌布、墙贴），用户 instruction 始终是良性的（attacker 不能改）。攻击有效要求 patch 在整个 rollout（多步推理）中持续有效。
 
-攻击 pipeline：(1) 离线收集 clean trajectory $\mathcal{D} = \{(O, R, a)\}$；(2) 优化 patch $\delta$ 满足 $\min_{\delta} \mathbb{E}_{\tau \sim \mathcal{D}}[\mathcal{L}_{\mathrm{cot}} + \lambda_1 \mathcal{L}_{\mathrm{action}} + \lambda_2 \mathcal{L}_{\mathrm{content}} + \lambda_3 \mathcal{L}_{\mathrm{tv}}]$；(3) 用 PGD 更新 $\delta_{t+1} = \mathrm{Proj}(\delta_t + \eta \nabla L)$；(4) 物理部署阶段加 homography 几何变换 + 颜色校准 MLP + EoT 数据增强。
+攻击 pipeline：(1) 离线收集 clean trajectory $\mathcal{D} = \{(O, R, a)\}$；(2) 优化 patch $\delta$ 满足 $\min_{\delta} \mathbb{E}_{\tau \sim \mathcal{D}}[\mathcal{L}_{\mathrm{cot}} + \lambda_1 \mathcal{L}_{\mathrm{action}} + \lambda_2 \mathcal{L}_{\mathrm{content}} + \lambda_3 \mathcal{L}_{\mathrm{tv}}]$，其中前两项（CoT 劫持 + action）保证攻击有效、后两项（content + TV，外加 DIP 重参数化）保证隐蔽；(3) 用 PGD 投影梯度迭代更新 $\delta_{t+1} = \mathrm{Proj}(\delta_t + \eta \nabla L)$；(4) 物理部署阶段再加 homography 几何变换 + 颜色校准 MLP + EoT 数据增强，跨越「数字 patch → 打印桌布」的现实鸿沟。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线 rollout<br/>收集干净轨迹 D = {(O, R, a)}"] --> B["设定攻击目标<br/>目标 CoT R* + 目标动作 a*"]
+    B --> C["对抗观测 Õ = (1−M)⊙O + M⊙δ<br/>把 patch δ 贴进场景"]
+    C --> OPT
+    subgraph OPT["patch 优化目标（四项 loss 联合）"]
+        direction TB
+        D["1. CoT 劫持 loss<br/>CE 逼模型吐出目标推理 R*"]
+        E["2. 双模式 action loss<br/>discrete 用 CE / continuous 用 MSE"]
+        F["3. 隐蔽性优化<br/>content + TV + DIP，伪装成印花桌布"]
+        G["4. 物理鲁棒性<br/>homography + 颜色校准 MLP + EoT"]
+    end
+    OPT --> H["PGD 投影梯度更新 δ"]
+    H -->|未收敛| C
+    H -->|收敛| I["打印 patch 物理部署<br/>劫持 CoT → 控制机器人目标动作"]
+```
 
 ### 关键设计
 
@@ -56,9 +74,13 @@ preliminary experiment（Table 1）显示，当 instruction 和 CoT 冲突时 Gr
 
 CoT-to-action 的 coupling 在不同 VLA 上强弱不一——GraspVLA 强（CoT 直接 condition action），InstructVLA 弱（hierarchical 两段式、高层 CoT 与低层 policy 解耦），所以仅靠 CoT loss 不够，需要 action loss 把劫持可靠落到 action 层。针对两类 head 分别处理：MolmoAct 这类 discrete-token action（动作量化成 bin 当 token 出）用 $\mathcal{L}_{\mathrm{action}}^{\mathrm{disc}} = -\log P_\theta(a^* | R^*, \tilde{O}, I)$；GraspVLA/InstructVLA 这类 continuous regression（diffusion、flow matching、MLP head）用轨迹 waypoint 上的 MSE $\mathcal{L}_{\mathrm{action}}^{\mathrm{cont}} = \|f_{\mathrm{traj}}(a) - f_{\mathrm{traj}}(a^*)\|_2^2$。必要性看 InstructVLA：CoT-only 攻击只有 4.03% ASR（action 出现 mode collapse 重复动作），加 action loss 后涨到 33.71%。
 
-**3. DIP + 颜色校准 + EoT：让 patch 从噪声变成可打印的隐蔽桌布**
+**3. 隐蔽性优化：content loss + TV loss + DIP 把噪声 patch 伪装成印花桌布**
 
-纯 PGD 出来的 patch 全是高频噪声，人一眼就能看出来，所以真正物理可部署的关键是把它伪装成印花桌布且在真实相机+光照下仍有效。这套靠多件套实现：content loss $\mathcal{L}_{\mathrm{content}} = \frac{1}{C_l H_l W_l} \|\phi_l(\delta) - \phi_l(I_{\mathrm{ref}})\|_2^2$ 让 patch 在预训练 CNN 中间层特征上贴近参考图（如运动车），TV loss 抑制高频伪影，DIP（Deep Image Prior）不直接优化像素而是优化 CNN 参数让 $\delta = f_\theta(z)$、用 CNN 的隐式正则让 patch 视觉更连贯；部署侧再加 homography 模拟桌面→图像平面的投影、MLP 学打印-相机色彩失真、EoT 对变换分布求期望提升鲁棒性。三件套让 patch 看起来像普通印花桌布，即使被人看见也不会起疑——这才是真实世界 stealthy 的核心。
+纯 PGD 优化出来的 patch 全是高频噪声，人一眼就能看出异常，根本没法在真实场景部署。隐蔽性靠三件套联手：content loss $\mathcal{L}_{\mathrm{content}} = \frac{1}{C_l H_l W_l} \|\phi_l(\delta) - \phi_l(I_{\mathrm{ref}})\|_2^2$ 用预训练 CNN 第 $l$ 层特征把 patch 拉向一张参考图（如跑车），让它带上自然图案的内容与结构；TV loss 惩罚相邻像素差、抑制高频伪影并保证颜色连续（也利于物理打印）；DIP（Deep Image Prior）不直接在像素空间优化 $\delta$，而是优化一个 CNN $f_\theta$ 的参数、令 $\delta = f_\theta(z)$，借 CNN 结构的隐式正则让 patch 更平滑、噪点更少。三者叠加后 patch 看起来就是一块普通印花桌布，即使被人看见也不易起疑——物理实验里 DIP 版本相比纯 PGD 版本攻击效果几乎不掉（34% vs 38%），说明隐蔽和有效可以兼得。
+
+**4. 物理鲁棒性：homography + 颜色校准 MLP + EoT 跨越「数字 patch → 打印桌布」的现实鸿沟**
+
+数字空间优化出的 patch 直接贴到图像平面是不够的——真实部署里它是平铺在桌面、被相机斜着拍进画面的，还要经历打印-拍摄的色彩失真。论文用三件套补上这个 sim-to-real gap：homography 用一个 $3\times3$ 单应矩阵 $\mathbf{H}$ 把 patch 从桌面平面到图像平面的投影建模进优化，让 patch 在真实视角的几何形变下仍有效；颜色校准用一个 MLP 学习「数字仿真色 → 物理打印色」的映射，优化时就把 patch 颜色分布对齐到物理现实；EoT（Expectation over Transformation）在一组变换分布上对 patch 求期望优化，提升它对视角/光照扰动的鲁棒性。这套让真正打印出来当桌布的 patch 在真实世界 GraspVLA 上仍拿到 86.7% 单步劫持成功率。
 
 ### 优化过程
 

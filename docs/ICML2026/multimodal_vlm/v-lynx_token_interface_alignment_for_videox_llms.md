@@ -49,6 +49,27 @@ V-LynX 通过发现 Video LLM 内部的**连续 token interface（流形）**—
 2. **编码器侧适配**：在冻结的视觉编码器中并联轻量 LoRA（$\Delta\psi$），通过对新模态输入做注意力响应对齐和分布正则化，使其在编码器内部激活与 video 模态兼容的 attention 行为，同时产出分布兼容的 token。
 3. **LLM 侧指令微调**：在 LLM 中加 LoRA（$\Delta\phi$），通过指令微调让 LLM 学会利用新模态 token 推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["参考视频 𝒱（无标注）"] --> G["接口导引提取<br/>冻结编码器算 Key/Value 均值 Kv,Vv<br/>+ 投影后 token 分布 μv,σv²"]
+    Xm["新模态数据 ℳ<br/>音频/3D/高帧率，非配对单模态"] --> ENC
+
+    subgraph ADAPT["编码器侧适配（冻结主干 + LoRA Δψ）"]
+        direction TB
+        ENC["轻量级并联 LoRA 路径<br/>编码器主体 ψ 冻结，仅训 Δψ"]
+        ENC --> ATTN["注意力响应对齐<br/>Qm 借用 Kv,Vv 算参考响应<br/>逼近实际响应 → ℒattn"]
+        ENC --> STAT["分布正则化<br/>token 统计量 μm,σm² 对齐 μv,σv² → ℒstat"]
+    end
+
+    G -.参考锚点.-> ATTN
+    G -.参考锚点.-> STAT
+    ATTN --> ZM["新模态 token Zm<br/>已落在 video token interface 上<br/>ℒ = ℒattn + β·ℒstat 训练 Δψ"]
+    STAT --> ZM
+    ZM --> LLM["LLM 侧指令微调<br/>LLM 加 LoRA Δφ，指令数据训练"]
+    LLM --> OUT["多模态推理输出"]
+```
+
 ### 关键设计
 
 **1. 轻量级并联 LoRA 路径：主视觉通路冻结，只为新模态加少量可学习参数**

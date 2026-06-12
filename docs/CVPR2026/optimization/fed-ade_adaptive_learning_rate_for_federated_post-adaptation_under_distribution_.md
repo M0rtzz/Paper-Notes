@@ -49,9 +49,25 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 
 其中 $\mathcal{S}_c^t \in [0,1]$ 是综合分布漂移信号，由两个互补的估计器组合：$\mathcal{S}_c^t = \frac{1}{2}(\mathcal{S}_{\text{unc}}^t + \mathcal{S}_{\text{rep}}^t)$。整套方法的难点不在更新规则本身，而在于无标签时怎么知道"漂移了多少"——下面四个设计依次解决信号怎么测、风险怎么估、以及这套调度为什么有理论最优性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["客户端 c 第 t 步：无标签批次 x_c^t"]
+    X --> U["不确定性动态估计 S_unc<br/>softmax 均值的相邻余弦距离"]
+    X --> R["表征动态估计 S_rep<br/>归一化特征均值的相邻余弦距离"]
+    X --> B["无监督风险估计 BBSE<br/>M⁻¹ 反解标签分布得到风险"]
+    U --> C["综合漂移信号 S_c = ½(S_unc + S_rep)"]
+    R --> C
+    C --> E["自适应学习率<br/>η_c = η_min + (η_max − η_min)·S_c"]
+    E --> M["用 η_c 最小化估计风险，更新模型 θ_c"]
+    B --> M
+    M -->|上传共享层 ψ| S["服务器加权聚合 → ψ̄"]
+    S -->|回传并冻结 ψ| P["仅用 η_c 更新个性化层 φ"]
+```
+
 ### 关键设计
 
-**1. Uncertainty Dynamics Estimation：用预测置信度的时间变化感知 label shift**
+**1. 不确定性动态估计（Uncertainty Dynamics Estimation）：用预测置信度的时间变化感知 label shift**
 
 部署后拿不到标签，最直接的漂移信号其实藏在模型自己的输出里。Fed-ADE 把当前批次所有样本的 softmax 向量取平均，得到一个类级别的平均置信度摘要 $\mathbf{q}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_{x} \mathcal{H}(\theta_c; x)$——它无需标签，相当于一个熵代理，刻画了模型当下"觉得数据属于哪些类"。当类别分布发生 label shift 时，这个平均向量的方向会跟着偏转，于是用相邻两步之间的余弦距离来量化变化幅度：
 
@@ -59,7 +75,7 @@ $$\mathcal{S}_{\text{unc}}^t = 1 - \cos(\mathbf{q}_c^{t-1}, \mathbf{q}_c^t)$$
 
 之所以取批次级平均而非单样本，是为了消掉单个样本带来的随机抖动，让信号反映分布层面的迁移；而整个估计只需缓存上一步的 $\mathbf{q}_c^{t-1}$，内存开销仅 $O(|\mathcal{I}|)$（类别数），轻到可以挂在每个边缘客户端上。
 
-**2. Representation Dynamics Estimation：在嵌入空间补上 covariate shift 的那一维**
+**2. 表征动态估计（Representation Dynamics Estimation）：在嵌入空间补上 covariate shift 的那一维**
 
 label shift 信号看的是输出端，但输入图像被加噪、换域这类 covariate shift 不一定立刻反映到 softmax 上，所以需要一个看特征端的互补信号。这里取共享层提取的特征、做 $\ell_2$ 归一化后求批次平均 $\mathbf{z}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_x \frac{h_{\psi_c}(x)}{\|h_{\psi_c}(x)\|_2}$，同样用相邻两步的余弦距离衡量特征方向的漂移：
 

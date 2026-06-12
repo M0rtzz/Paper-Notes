@@ -48,6 +48,24 @@ tags:
 
 Rubric 结构是 reasoning 段 + 一系列 (criterion, yes/no question) 对。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["base model M（双重身份：M_g 生 rubric / M_v 当 verifier）"]
+    M --> S1
+    subgraph S1["margin-based 对比对合成（设计1）"]
+        direction TB
+        A["对每个偏好样本采 16 条 rubric"] --> B["算似然 margin m(r)：加 rubric 后对正确答案的偏好强度"]
+        B --> C["取最猛的当 r+ (helpful) / 最坏的当 r− (misleading)"]
+    end
+    S1 --> D["DPO 训 cooperative generator G<br/>chosen=r+ / rejected=r−，多产有用 rubric"]
+    S1 --> E["GRPO 训 critical verifier V<br/>format + preference + rubric 奖励，学判 helpful/misleading"]
+    D --> F["selective inference：G 采 rubric → V 输出 判断 + rubric 可信度"]
+    E --> F
+    F -->|helpful| G1["采纳 rubric 下的判断"]
+    F -->|misleading| H["丢弃 rubric，回退 rubric-free 模式重问一次"]
+```
+
 ### 关键设计
 
 **1. margin-based 对比对合成：用 verifier 自己的似然 margin 给每条 rubric 自动贴 helpful/misleading 标签**

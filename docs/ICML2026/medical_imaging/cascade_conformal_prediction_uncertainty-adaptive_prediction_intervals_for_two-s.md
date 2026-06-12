@@ -41,6 +41,17 @@ tags:
 ### 整体框架
 CASCADE（Calibrated Adaptive Scaling via Conformal And Distributional Estimation）要解决的是两阶段临床决策里"决策边界信息丢失"的问题：患者特征向量 $x \in \mathbb{R}^d$（年龄、临床变量等）先进第一阶段分类器判断是否需要调药，再进第二阶段回归器预测 LEDD 变化百分比。数据按 80/20 切成训练集 $D_{\text{train}}$ 和校准集 $D_{\text{cal}}$。关键转折在于：分类器不止输出"调/不调"的决策，还通过 Venn-Abers 校准吐出一个认知不确定性分数 $u_{\text{VA}}(x)$，这个分数被传到第二阶段，按样本动态缩放回归区间的宽度——确信的患者区间收窄、模糊的患者区间扩展，这就是"级联效应"（cascade effect）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["患者特征 x<br/>年龄 / 临床变量"] --> B["第一阶段分类器<br/>判断是否需要调药"]
+    B --> C["Venn-Abers 认知不确定性提取<br/>u_VA(x) = 概率区间宽度 p1−p0"]
+    B --> D["第二阶段回归器<br/>点预测 f̂(x)：LEDD 变化%"]
+    C --> E["连续级联缩放 σ(x)<br/>以群体均值 ū_VA 为枢轴"]
+    E -->|"灵敏度参数 β<br/>调自适应强度"| F["自适应预测区间<br/>Ĉ(x) = f̂(x) ± Q·σ(x)"]
+    D --> F
+```
+
 ### 关键设计
 
 **1. Venn-Abers 认知不确定性提取：把分类器的"犹豫程度"量化成无分布的标量**

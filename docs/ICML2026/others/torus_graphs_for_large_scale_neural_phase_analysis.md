@@ -44,6 +44,17 @@ tags:
 
 TG 密度写为 $p(\mathbf{x};\bm{\phi})\propto\exp(\bm{\phi}^\top S(\mathbf{x}))$，$S(\mathbf{x})$ 包含单变量项 $\cos x_j,\sin x_j$ 与成对相位差/和项 $\cos(x_j\pm x_k),\sin(x_j\pm x_k)$，参数维度 $2d^2$。配置上用 JAX，端到端跑在单卡 A5000 24GB 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["相位数据<br/>d 维环面上 LFP/EEG"] --> B["Torus Graph 指数族密度<br/>S(x) 含单变量项与成对相位差/和项"]
+    B --> C["Stochastic Score Matching<br/>VJP 利用稀疏 Jacobian，每步 O(d⁶)→O(d²)，Adam 优化"]
+    C --> D["TG-HMM 判别式 M-step<br/>forward-backward(代理) + logistic 拟合配分常数 Aₖ"]
+    C --> E["AR-TG 与转移熵<br/>相位嵌入 ψ(θ)，双模型对数似然差估 TE"]
+    D --> F["动态状态发现<br/>清醒/NREM 频率特异性相位重组"]
+    E --> G["有向交互推断<br/>状态相关的不对称信息路由"]
+```
+
 ### 关键设计
 
 **1. Stochastic Score Matching：用 VJP 把每步推断从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$**

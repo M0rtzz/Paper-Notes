@@ -43,6 +43,23 @@ tags:
 
 本文不训练任何模型，而是给「指令语言多样性」搭一套可量化的体检框架，再用它给主流 VLA 语料和一组跨域参考语料拍 CT。被检对象一侧是 VLA 数据集（RT-1、BRIDGE、TacoPlay、Language Table、LIBERO），参照一侧是指令调优与对话语料（OASST2、Alpaca、LLaVA-Instruct）以及语言导向的 robotics 语料（ALFRED、SCOUT）。每个数据集都沿词汇、语义、句法三条轴（A1/A2/A3）跑约十个互补指标，最后汇成一张跨域对照画像，并据此给出增广、跨域迁移、采集指南三类改进处方。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VLA 数据集<br/>RT-1 / BRIDGE / TacoPlay / Language Table / LIBERO"]
+    B["参照语料<br/>指令调优 OASST2 / Alpaca / LLaVA-Instruct + robotics ALFRED / SCOUT"]
+    A --> C
+    B --> C
+    C["放到统一指标尺度上各跑约十个互补指标"]
+    C --> D1["重复与词汇多样性（A1）<br/>唯一率 / 唯一词数 / 压缩比 CR / pairwise 相似度"]
+    C --> D2["语义多样性（A2）<br/>BERTScore / 句向量 PCA 内在维度 / 动词-宾语共现"]
+    C --> D3["结构与句法多样性（A3）<br/>POS 分布 / 句法树核 / 否定·条件·多步·循环占比"]
+    D1 --> E["跨域对照画像<br/>量化 VLA 语料的偏离程度"]
+    D2 --> E
+    D3 --> E
+    E --> F["三类改进处方<br/>针对性增广 / 跨域迁移 / 采集指南"]
+```
+
 ### 关键设计
 
 **1. 分析一：重复与词汇多样性（A1）——指令到底重复多少、用了多少种词**

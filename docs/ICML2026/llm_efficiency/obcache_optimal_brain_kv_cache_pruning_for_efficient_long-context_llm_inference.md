@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 OBCache 的全部改动只发生在 eviction 方法的"打分"这一步：它不碰 H2O / TOVA / SnapKV / AdaKV 决定"何时触发裁剪""如何在多 head 间分配预算"的调度逻辑，只把它们打分函数里那个 attention-only 的 saliency 换成一个能感知 value/key 的闭式分数。换分数的依据是把 cache eviction 重新看成逐层的结构化剪枝：在 token 位置 $p$ 写出扰动 $\widehat{\mathbf{V}} = \mathbf{V} + \delta\mathbf{V}$、$\widehat{\mathbf{K}} = \mathbf{K} + \delta\mathbf{K}$，剪掉该 token 等价于令 $\mathbf{e}_p^\top [\widehat{\mathbf{V}}\ \widehat{\mathbf{K}}] = \mathbf{0}$；优化目标是让裁剪后注意力输出与原始输出的 Frobenius 误差（*pruning-induced eviction error*）$\mathcal{L} = \| \sigma(\mathbf{Q}\widehat{\mathbf{K}}^\top/\sqrt{d})\widehat{\mathbf{V}} - \sigma(\mathbf{Q}\mathbf{K}^\top/\sqrt{d})\mathbf{V} \|_F^2$ 最小，它是不可观测的真实 eviction error（影响未来 $\mathbf{o}_{s+1},\dots$）的代理。在 $(\mathbf{V},\mathbf{K})$ 处做二阶 Taylor 展开，一阶项因 $\widehat{\mathbf{O}}-\mathbf{O}=\mathbf{0}$ 而消失，剩下 $\mathcal{L} = \tfrac{1}{2}\delta\mathbf{V}^\top \mathbf{H}^{vv} \delta\mathbf{V} + \tfrac{1}{2}\delta\mathbf{K}^\top \mathbf{H}^{kk} \delta\mathbf{K} + \delta\mathbf{V}^\top \mathbf{H}^{vk} \delta\mathbf{K} + \mathcal{O}(\|\cdot\|^3)$；再沿用 OBD 的对角假设、只取 Hessian 的 $(p,p)$ 子块，就能为剪 value、剪 key、剪 KV-pair 三种单位各推出一个能从单次 forward 立即算出的闭式 saliency $\mathbf{S}_p$，最后代回原方法替换 attention-累加分数即可。下面三个分数对应论文 Propositions 4.3–4.5。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单次 forward<br/>得到 attention A / logits Z / value V / 输出 O"] --> B["形式化为逐层结构化剪枝<br/>最小化裁剪后注意力输出的 Frobenius 误差"]
+    B --> C["在 (V,K) 处二阶 Taylor 展开<br/>取对角 Hessian 的 (p,p) 子块"]
+    C --> D["Value-Pruning Score<br/>剪 value：多乘 value 范数因子"]
+    C --> E["Key-Pruning Score<br/>剪 key：含 softmax 重归一化扰动"]
+    C --> F["Joint Key-Value Score<br/>剪 KV-pair：加 cross-term 交互项"]
+    D --> G["替换现有框架的 attention-only 打分<br/>H2O / TOVA / SnapKV / AdaKV"]
+    E --> G
+    F --> G
+    G -->|Prefill| H["一次性贪心 evict 到目标 budget"]
+    G -->|Decoding| I["累加 saliency 分数，动态 evict"]
+```
+
 ### 关键设计
 
 **1. Value-Pruning Score（$\mathbf{S}_p^{\text{value}}$）：只删 value 时输出扰动的最廉价度量**

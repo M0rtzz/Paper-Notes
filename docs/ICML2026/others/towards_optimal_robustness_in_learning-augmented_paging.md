@@ -50,6 +50,22 @@ tags:
 
 最终请求处理后，更新 $Y\leftarrow \mathcal{U}_{RPB}(\omega)$ 供下一步评估。整套流程统一在算法 RPB-OnOPT 里，把不同的 $\mathcal{J}_{RPB},\mathcal{U}_{RPB}$ 实例化即可得到不同强度的鲁棒-一致权衡。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["请求 p 到达<br/>更新工作函数 ω（k+1 层 L₀…Lₖ）"] --> B["按请求类型分流"]
+    B -->|"命中 p∈C"| Z["不驱逐"]
+    B -->|"缺页 p∈L₀<br/>（不确定性最大）"| C["按预测驱逐<br/>预测预算重置 B←τ=O(1)"]
+    B -->|"缺页 p∈Lᵢ, i>0<br/>（lazy 请求）"| D["OM 规则圈合法候选集 V<br/>判定 J_RPB(Y,ω) 成立则赚预算 B←B+1"]
+    D -->|"B>0：花 1 单位"| H["按预测从 V 驱逐"]
+    D -->|"B=0"| I["退化为 OM<br/>按随机优先级驱逐"]
+    C --> J["换入 p，更新配置 C<br/>更新评估器 Y←U_RPB(ω)=U(ω)"]
+    H --> J
+    I --> J
+    J -.下一请求.-> A
+    Z -.下一请求.-> A
+```
+
 ### 关键设计
 
 **1. 相对预测预算（Relative Prediction Budget, RPB）：用一面镜子照清所有现存算法的预测使用强度**

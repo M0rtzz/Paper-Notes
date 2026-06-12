@@ -41,7 +41,19 @@ tags:
 
 ### 整体框架
 
-输入为文本意图、其他智能体的观测动作和场景上下文。ReMoGen 包含三个组件：(1) 冻结的文本条件单人运动先验（在 HumanML3D 上预训练的 VAE + 潜在扩散模型）；(2) Meta-Interaction 模块（分别为 HHI 和 HSI 独立训练的适配器）；(3) Frame-wise Segment Refinement（轻量逐帧修正模块）。生成方式为段级自回归：在历史窗口 $M_h^i \in \mathbb{R}^{H \times D}$ 和文本 $W$ 条件下预测未来段 $\hat{M}_f^i \in \mathbb{R}^{F \times D}$（H=2帧历史，F=8帧未来）。
+输入为文本意图、其他智能体的观测动作和场景上下文。ReMoGen 包含三个组件：(1) 冻结的文本条件单人运动先验（在 HumanML3D 上预训练的 VAE + 潜在扩散模型）；(2) Meta-Interaction 模块（分别为 HHI 和 HSI 独立训练的适配器）；(3) 帧级段内细化（Frame-wise Segment Refinement，FWSR，轻量逐帧修正模块）。生成方式为段级自回归：在历史窗口 $M_h^i \in \mathbb{R}^{H \times D}$ 和文本 $W$ 条件下预测未来段 $\hat{M}_f^i \in \mathbb{R}^{F \times D}$（H=2帧历史，F=8帧未来）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：文本意图 + 对方观测动作 + 场景上下文"] --> B["通用运动先验（冻结）<br/>HumanML3D 预训练 VAE + 潜在扩散，10 步去噪"]
+    A --> C["Meta-Interaction 模块<br/>Others Encoder(TCN) + Scene Encoder(ViT)"]
+    C -->|"FiLM 仿射调制 (γ, β)"| B
+    B --> D["段级自回归生成<br/>一次预测未来 8 帧段"]
+    D --> E["帧级段内细化 FWSR<br/>轻量 Block 用最新观测对每帧潜在 z0 微调"]
+    E -->|"取该帧结果，更新历史缓冲滑到下一帧"| E
+    E --> F["输出：实时反应动作（0.047s/帧）"]
+```
 
 ### 关键设计
 

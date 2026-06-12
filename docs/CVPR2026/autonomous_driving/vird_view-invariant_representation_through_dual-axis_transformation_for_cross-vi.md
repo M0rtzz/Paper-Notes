@@ -42,7 +42,26 @@ tags:
 
 ### 整体框架
 
-VIRD 是一个全方向跨视角位姿估计框架，核心是用"双轴变换"把地面图和卫星图统一到同一个视图不变描述子上。先用预训练 CNN(VGG16 / EfficientNet-B0)分别提取地面特征 $F_g \in \mathbb{R}^{C \times H \times W_g}$ 和卫星特征 $F_s \in \mathbb{R}^{C \times A \times A}$；接着分两步对齐——极坐标变换把卫星特征的方位角映射到水平轴(水平对齐)，上下文增强位置注意力(CEPA)再消除垂直轴的不对齐；对齐后的特征沿垂直方向压缩、展平成方向感知的 1D 描述子 $D_g$ 和 $D_{s2p}$，先用余弦相似度匹配拿到粗位姿，再由回归模块预测残差精化。
+VIRD 是一个全方向跨视角位姿估计框架，核心是用"双轴变换"把地面图和卫星图统一到同一个视图不变描述子上。先用预训练 CNN(VGG16 / EfficientNet-B0)分别提取地面特征 $F_g \in \mathbb{R}^{C \times H \times W_g}$ 和卫星特征 $F_s \in \mathbb{R}^{C \times A \times A}$；接着分两步对齐——极坐标变换把卫星特征的方位角映射到水平轴(水平对齐)，上下文增强位置注意力(CEPA)再消除垂直轴的不对齐（CEPA 建立在位置注意力 PA 之上）；对齐后的特征沿垂直方向压缩、展平成方向感知的 1D 描述子 $D_g$ 和 $D_{s2p}$，先用余弦相似度匹配拿到粗位姿，再由回归模块预测残差精化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    GN["地面图像 → CNN 特征 F_g"]
+    SN["卫星图像 → CNN 特征 F_s"]
+    SN --> POLAR["极坐标变换<br/>方位角→水平轴(水平对齐)"]
+    subgraph V["垂直轴对齐"]
+        direction TB
+        PA["位置注意力(PA)<br/>共享虚拟轴学垂直坐标映射,免相机参数"] --> CEPA["上下文增强位置注意力(CEPA)<br/>用地面上下文按方向自适应"]
+    end
+    POLAR --> PA
+    GN --> CEPA
+    GN --> DESC
+    CEPA --> DESC["垂直压缩+展平<br/>1D 视图不变描述子 D_g / D_s2p"]
+    DESC -->|训练| RECON["视图重建损失<br/>原始+交叉重建,逼描述子编码垂直结构"]
+    DESC --> MATCH["余弦相似度匹配 → 粗位姿"]
+    MATCH --> REG["回归模块预测残差 → 3-DoF 位姿"]
+```
 
 ### 关键设计
 

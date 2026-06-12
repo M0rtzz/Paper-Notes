@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 给定 prompt $p$、从策略 $\pi$ 采到的 $n$ 条响应 $r_1,\dots,r_n$，以及一个固定的"打分基座模型" $\theta$（实验用 Qwen2.5-3B），度量分两条平行轨道跑一遍前向：条件轨把所有响应拼成一段带"Response A/B…"标签的长 context 喂给 $\theta$，读出每条响应在"已见前面若干条"之后还剩多少 per-byte 惊奇，取末点得到残余多样性 $a_n$；无条件轨把每条响应单独打分得到一个可读性权重 $C$。最终多样性就是两者相乘 $D_{Ca_n}=C\times a_n$（单位 bits/byte），可读作"$\theta$ 用 ICL 学完其余响应能学的之后，每字节还剩多少合理惊奇"。整条管线无 embedding、无参考语料、无人工标签、无辅助分类器，只吃 $\theta$ 本就会输出的逐 token 概率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：prompt p + 采样响应 r₁…rₙ + 打分基座 θ"]
+    subgraph COND["渐进条件惊奇曲线 aₙ"]
+        direction TB
+        A1["拼接全部响应<br/>带 Response A/B… 标签"] --> A2["θ 单次前向<br/>读每条 per-byte 条件惊奇"]
+        A2 --> A3["25–50 次随机排列取均值<br/>取曲线末点 aₙ"]
+    end
+    subgraph UNCOND["Coherence 权重 C"]
+        direction TB
+        B1["每条响应单独以 prompt 打分<br/>per-byte 交叉熵"] --> B2["几何均 → C = 1 / PPL"]
+    end
+    IN --> COND
+    IN --> UNCOND
+    COND --> M["乘法合成<br/>D = C × aₙ（bits/byte）"]
+    UNCOND --> M
+    M --> OUT["多样性标量<br/>跨 prompt 平均 / 配对检验"]
+```
+
 ### 关键设计
 
 **1. 渐进条件惊奇曲线 $a_k$：把多样性变成"读完前面后还剩多少惊奇"**

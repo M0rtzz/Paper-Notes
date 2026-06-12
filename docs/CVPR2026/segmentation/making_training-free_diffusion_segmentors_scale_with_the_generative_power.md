@@ -46,6 +46,30 @@ tags:
 
 GoCA（Generative scaling of Cross-Attention）要解决的是一个反直觉的失效：无训练扩散分割本应"生成越强、分割越好"，但换上 SDXL、PixArt-Sigma、Flux 后性能不升反降。整篇方法围绕把"原始交叉注意力图"翻译成"可靠的语义相关性图"展开——先用**自动聚合**把多头多层各自独立的注意力图合成一张全局图（弥合聚合 gap），再用**逐像素重缩放**抹掉语义特殊 token 造成的分数不平衡（弥合分数不平衡 gap），最后接标准的自注意力精炼和 argmax 得到分割结果。整条链路不引入任何可学习参数，保持无训练范式的纯粹性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：原始交叉注意力图<br/>(多头·多层，各自独立)"]
+    subgraph AGG["自动聚合（弥合聚合 gap）"]
+        direction TB
+        H["头间聚合<br/>用每个头的输出向量算逐像素头权重"]
+        L["层间聚合<br/>拿伪自注意力图当标准答案给每层打分"]
+        H --> L
+    end
+    A --> AGG
+    AGG --> G["全局注意力图 A"]
+    subgraph RES["逐像素重缩放（弥合分数不平衡 gap）"]
+        direction TB
+        R1["排除非内容 token<br/>(丢掉 &lt;sos&gt; 与停用词)"]
+        R2["逐像素归一化到 1<br/>消语义特殊 token 尺度差异"]
+        R3["逐 token 跨像素 min-max 到 [0,1]<br/>让跨 token 比较可靠"]
+        R1 --> R2 --> R3
+    end
+    G --> RES
+    RES --> S["自注意力精炼 + argmax"]
+    S --> O["输出：语义分割结果"]
+```
+
 ### 关键设计
 
 **1. 头间聚合（Head-wise Aggregation）：用每个头自己的输出衡量它该占多大权重**

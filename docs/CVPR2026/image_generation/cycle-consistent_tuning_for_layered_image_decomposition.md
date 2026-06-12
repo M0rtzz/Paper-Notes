@@ -39,7 +39,20 @@ tags:
 
 ### 整体框架
 
-基于 FLUX.1-Fill-dev（预训练diffusion inpainting模型），通过 LoRA 轻量微调适配分解任务。采用 In-Context Learning 范式：输入为三面板网格图像（合成图/logo/干净物体），模型学习从合成图分离出两个层。
+基于 FLUX.1-Fill-dev（预训练diffusion inpainting模型），通过 LoRA 轻量微调适配分解任务。采用 In-Context Learning 范式：输入为三面板网格图像（合成图/logo/干净物体），模型学习从合成图分离出两个层。在这个 ICL 底座之上，本文用循环一致性把分解与合成两个方向绑成一个对偶环来互相监督，并用一套渐进式自改进数据收集源源不断地往训练里回灌高质量分层样本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三面板网格输入<br/>合成图 / logo / 干净物体 + mask"] --> B["基于 Flow Matching 的 ICL 训练<br/>FLUX.1-Fill-dev + 共享 LoRA"]
+    B --> C["分解方向 F_D<br/>合成图 → ⟨logo, 物体⟩"]
+    B --> D["合成方向 F_C<br/>⟨logo, 物体⟩ → 合成图"]
+    C --> E["循环一致性损失 L_cyc<br/>分解→重合成 与 合成→重分解 对齐"]
+    D --> E
+    E --> F["渐进式自改进数据收集<br/>种子 → 迭代生成+Qwen-VL筛选 → 循环自改进"]
+    F -->|高质量样本回灌重训| B
+    E --> G["输出分层<br/>logo + 干净物体"]
+```
 
 ### 关键设计
 

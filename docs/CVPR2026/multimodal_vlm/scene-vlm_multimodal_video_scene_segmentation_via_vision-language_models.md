@@ -36,6 +36,17 @@ tags:
 ### 整体框架
 Scene-VLM 把"视频场景分割"从传统的编码器逐镜头分类，改造成 VLM 的序列生成任务。它基于 Qwen2.5-VL-7B 微调，输入是 $N$ 个连续镜头的多模态表征（视觉帧 + 对白 + 角色 ID），让模型按顺序对焦点窗口内每个镜头吐出"Shot i: Yes/No"判定是否为场景边界，再从判定 token 的 logits 里读出置信度。这一改造一举把多模态融合、镜头间的因果依赖和可解释性三件事都装进了同一个生成框架。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个连续镜头"] --> REP["结构化多模态镜头表征<br/>K=3 帧 + 对白 + 角色 / Shot-ID 标识"]
+    REP --> SEQ["因果序列预测<br/>VLM 顺次输出 Shot i: Yes/No，后判依赖前判"]
+    SEQ --> WIN["上下文-焦点窗口机制<br/>20 镜头上下文，仅预测中间 10 镜头"]
+    WIN --> CONF["VLM 置信度提取<br/>conf = P(Yes) / (P(Yes) + P(No))"]
+    CONF --> OUT["场景边界 + 置信度"]
+    CONF -->|可选定向微调| EXP["可解释性对齐<br/>生成自然语言边界理由"]
+```
+
 ### 关键设计
 
 **1. 结构化多模态镜头表征：把对白和角色这些非视觉信号也喂进去**

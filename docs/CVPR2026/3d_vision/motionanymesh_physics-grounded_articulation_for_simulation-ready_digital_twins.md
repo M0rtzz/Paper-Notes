@@ -37,6 +37,21 @@ tags:
 
 整条流水线分三阶段：先做运动感知部件分割，从 3D 原生几何基元出发、用 SP4D 运动先验引导 VLM 把碎片组装成功能部件；再做关节估计与优化，按关节类型几何初始化、再用物理约束优化轨迹保证无碰撞；最后确定运动范围、保留纹理，输出标准 URDF 模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["静态 3D 网格"] --> SEG
+    subgraph SEG["运动感知部件分割"]
+        direction TB
+        B["P3-SAM 提取 3D 几何基元<br/>边界纯净"] --> C["SP4D 多视角运动 mask<br/>+ 基元可视化图"]
+        C --> D["VLM 交叉关联<br/>组装功能部件"]
+    end
+    SEG --> E["类型感知运动初始化<br/>PCA / RANSAC 给关节初值"]
+    E -->|Spin 轴 / Hinge 轴 / 平移轴| F["物理约束轨迹优化<br/>SDF 距离磨平长程偏差"]
+    F --> G["运动范围估计 + 纹理保留"]
+    G --> H["输出 URDF 铰接模型"]
+```
+
 ### 关键设计
 
 **1. 运动感知部件分割：用 SP4D 运动先验把 VLM 的语义推理锚到物理现实**

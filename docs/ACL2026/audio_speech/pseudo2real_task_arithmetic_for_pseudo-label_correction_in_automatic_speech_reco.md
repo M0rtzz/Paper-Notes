@@ -43,7 +43,33 @@ tags:
 
 ### 整体框架
 
-Pseudo2Real 的思路是把"伪标签噪声"从样本空间搬到参数空间来处理：既然在有真实标签的源域上，可以同时训出一个"真标签模型"和一个"伪标签模型"，那么它们的权重差就刻画了伪标签带来的系统性偏差方向，而这个方向可以迁移去纠正没有标签的目标域。具体地，从同一预训练骨干 $\theta^{\text{pre}}$ 出发，源域分别用真实标签和伪标签微调得到 $\theta_s^{\text{real}}$ 与 $\theta_s^{\text{pseudo}}$，相减得校正向量 $\tau = \theta_s^{\text{real}} - \theta_s^{\text{pseudo}}$；目标域只有伪标签，微调得 $\theta_t^{\text{pseudo}}$，再叠加缩放后的校正向量得到 $\theta_t^{\text{corrected}} = \theta_t^{\text{pseudo}} + \lambda\tau$。整个过程无需目标域真实标注，也不需要迭代训练。
+Pseudo2Real 的思路是把"伪标签噪声"从样本空间搬到参数空间来处理：既然在有真实标签的源域上，可以同时训出一个"真标签模型"和一个"伪标签模型"，那么它们的权重差就刻画了伪标签带来的系统性偏差方向，而这个方向可以迁移去纠正没有标签的目标域。具体地，从同一预训练骨干 $\theta^{\text{pre}}$ 出发，源域分别用真实标签和伪标签微调得到 $\theta_s^{\text{real}}$ 与 $\theta_s^{\text{pseudo}}$，相减得校正向量 $\tau = \theta_s^{\text{real}} - \theta_s^{\text{pseudo}}$；目标域只有伪标签，微调得 $\theta_t^{\text{pseudo}}$，再叠加缩放后的校正向量得到 $\theta_t^{\text{corrected}} = \theta_t^{\text{pseudo}} + \lambda\tau$。整个过程无需目标域真实标注，也不需要迭代训练。SC 变体则用说话者聚类把单条校正向量细化成多条子组向量后取平均。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["预训练骨干 θ_pre"]
+    P --> SR["源域真标签微调 θ_s^real"]
+    P --> SP["源域伪标签微调 θ_s^pseudo"]
+    P --> TP["目标域伪标签微调 θ_t^pseudo"]
+    P -->|源域按说话者| CL["ECAPA-TDNN 嵌入 + k-means 聚类"]
+
+    subgraph D1["单校正向量（Pseudo2Real）"]
+        direction TB
+        SR --> TAU["校正向量 τ = θ_s^real − θ_s^pseudo"]
+        SP --> TAU
+    end
+
+    subgraph D2["子组校正向量（Pseudo2Real-SC）"]
+        direction TB
+        CL --> TAUC["各子组 τ_c → 取平均"]
+    end
+
+    TAU --> ADD["叠加缩放向量 θ_t^pseudo + λτ"]
+    TAUC -.SC 变体替换 τ.-> ADD
+    TP --> ADD
+    ADD --> OUT["校正后目标域模型 θ_t^corrected"]
+```
 
 ### 关键设计
 
@@ -55,15 +81,13 @@ Pseudo2Real 的思路是把"伪标签噪声"从样本空间搬到参数空间来
 
 伪标签质量本身因口音、发音习惯、录音条件而异，一条全局校正向量会把这些差异抹平。SC 变体先用 ECAPA-TDNN 提取说话者嵌入并做 k-means 聚类，对每个子组单独估一个校正向量 $\tau_c$，最终取所有子组平均 $\theta_t^{\text{corrected}} = \theta_t^{\text{pseudo}} + \frac{\lambda}{C}\sum_{c=1}^{C}\tau_c$。聚类只看声学嵌入、不依赖任何域标签，因此完全自动化，却能捕获统一向量丢掉的细粒度偏差。
 
-**3. 跨口音交叉折验证：跨语系压测迁移能力**
-
-校正向量的价值在于能否跨域迁移，所以评估刻意设计得有挑战性：把 10 种口音按不同语系拆成两折，交替充当源域与目标域互相校正。这 10 种口音横跨尼日尔-刚果、亚非、印欧三大语系，跨口音适应难度很高，这种交叉折安排能直接检验校正方向在差异较大域间是否仍然成立。
-
 ### 损失函数 / 训练策略
 
 微调阶段用标准 ASR 损失，覆盖 Whisper tiny/base/small/medium/large-v2 五种规模；校正阶段只需调缩放系数 $\lambda$ 一个超参。
 
 ## 实验关键数据
+
+评估刻意设计得有挑战性：把 AfriSpeech-200 里样本最多的 10 种口音按语系拆成两折（横跨尼日尔-刚果、亚非、印欧三大语系），交替充当源域与目标域互相校正，直接检验校正方向能否在差异较大的域间迁移。
 
 ### 主实验
 

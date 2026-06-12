@@ -43,7 +43,22 @@ tags:
 
 ### 整体框架
 
-归纳编码里每个编码者会从同一批数据里各自总结出一套 codes（即 Code Space, CSP），但不同人对同一概念往往措辞不同，没法直接横向比。本文先用一个四阶段合并算法把所有人的 CSP 聚合成一个共享的 Aggregated Code Space（ACS），把"语义相同、说法不同"的 codes 归并到一起；然后在这个统一空间上算四个互补指标，从覆盖广度、与他人重合度、独特贡献、分布偏离四个角度，给每个编码者一个无需 ground truth 的相对评估。
+归纳编码里每个编码者会从同一批数据里各自总结出一套 codes（即 Code Space, CSP），但不同人对同一概念往往措辞不同，没法直接横向比。本文先用一个四阶段合并算法把所有人的 CSP 聚合成一个共享的 Aggregated Code Space（ACS），把"语义相同、说法不同"的 codes 归并到一起；随后给每个编码者算一个归一化权重，压住"产出越多占位越大"的偏差；最后在这个统一空间上算四个互补指标，从覆盖广度、与他人重合度、独特贡献、分布偏离四个角度，给每个编码者一个无需 ground truth 的相对评估。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多个编码者各自的代码空间<br/>Code Space, CSP"] --> M
+    subgraph M["四阶段代码空间合并算法"]
+        direction TB
+        S1["Stage 1：标签精确合并"] --> S2["Stage 2：标签层级聚类<br/>严格阈值"]
+        S2 --> S3["Stage 3：LLM 生成定义<br/>标签+定义一起聚类"]
+        S3 --> S4["Stage 4：双阈值迭代合并<br/>惩罚项裁决中间地带"]
+    end
+    M --> ACS["聚合代码空间<br/>Aggregated Code Space, ACS"]
+    ACS --> W["编码者权重归一化<br/>w_x = 1 / ln(size_x)"]
+    W --> ME["四个无 ground truth 指标产出相对评估<br/>Coverage / Overlap / Novelty / Divergence"]
+```
 
 ### 关键设计
 
@@ -53,15 +68,15 @@ tags:
 
 双阈值加惩罚是这一步的关键：上阈值之上直接合并、严格阈值之下绝不合并、中间地带交给 $penalty$ 裁决——示例重叠高才合、唯一示例多则抑制合并，这样既防止把不同概念错并到一起，也避免某个小 codebook 因为体量小而被大 codebook 不成比例地吞掉。阈值通过交互式验证选定（strict=0.32, upper=0.55），相似度用余弦距离度量。
 
-**2. 四个无 ground truth 评估指标：组合起来才有诊断力**
+**2. 编码者权重归一化机制：让指标反映质量而非数量**
+
+如果一个编码者疯狂产出大量冗余 codes（flooding），他在 ACS 里占的位置会虚高，Coverage 等指标被数量撑大却不代表质量好。本文给每个编码者一个权重 $w_x = \frac{1}{\ln(size_x)}$，其中 $size_x$ 是他的 code 数量（下限取所有人的中位数）。code 数越多，权重越低，于是每个 code 的边际贡献被稀释——这样最终指标反映的是真实概念贡献，而不是谁写得多谁就赢。
+
+**3. 四个无 ground truth 评估指标：组合起来才有诊断力**
 
 归纳编码追求的是"广泛捕获新见解"而非"对标准答案"，所以传统的 inter-rater reliability 这类指标天然不适用。本文在 ACS 上定义四个互补指标：Coverage 衡量一个编码者（加权后）覆盖了 ACS 多大比例的概念广度；Overlap 衡量他的 codes 和其他人重合的程度，即概念一致性；Novelty 衡量只有他一个人发现、别人都没有的 codes，即独特贡献；Divergence 用 Jensen-Shannon 散度衡量他的 code 分布偏离群体分布的程度。
 
 单看任何一个指标都会误判，组合解读才是这套指标的价值所在：高 Coverage + 高 Overlap 是可靠编码者；高 Novelty 但 Overlap 极低往往不是创见而是幻觉（没人能印证）；Divergence 异常高则提示这个编码者整体跑偏。这种多维诊断比卡单一阈值能区分出"过度编码""幻觉""正常"等不同失效模式。
-
-**3. 编码者权重归一化机制：让指标反映质量而非数量**
-
-如果一个编码者疯狂产出大量冗余 codes（flooding），他在 ACS 里占的位置会虚高，Coverage 等指标被数量撑大却不代表质量好。本文给每个编码者一个权重 $w_x = \frac{1}{\ln(size_x)}$，其中 $size_x$ 是他的 code 数量（下限取所有人的中位数）。code 数越多，权重越低，于是每个 code 的边际贡献被稀释——这样最终指标反映的是真实概念贡献，而不是谁写得多谁就赢。
 
 ### 损失函数 / 训练策略
 

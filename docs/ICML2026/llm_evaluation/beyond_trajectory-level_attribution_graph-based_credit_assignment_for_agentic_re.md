@@ -45,6 +45,16 @@ tags:
 
 GraphGPO 的 pipeline 分三步：(1) 将同一 task 的 $M$ 条 rollout 轨迹聚合为一张有向状态转移图 $\mathcal{G} = (\mathcal{S}, \mathcal{E})$；(2) 在图上用 Dijkstra 算法计算每个状态到目标状态 $s_{\text{succ}}$ 的最短距离 $d(s)$；(3) 基于距离为每条边计算图级步级奖励和 advantage，最终结合轨迹级 advantage 进行 PPO 风格的策略优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["M 条 rollout 轨迹"] --> B["聚合状态转移图<br/>相同状态合并为同一节点 → G=(S,E)"]
+    B --> C["基于最短路径的步级奖励<br/>Dijkstra 算到目标距离 d(s)，R^G=r_succ·ω^(d(s′)+c)"]
+    C --> D["图级 advantage 估计<br/>同源出边分组 G^G(s)，组内标准化得 A^G"]
+    D -->|组内单边时 A^G 退化，补轨迹级 A^E| E["组合 advantage<br/>A = β^G·A^G + β^E·A^E"]
+    E --> F["PPO clipped + KL 惩罚更新策略"]
+```
+
 ### 关键设计
 
 1. **聚合状态转移图**:

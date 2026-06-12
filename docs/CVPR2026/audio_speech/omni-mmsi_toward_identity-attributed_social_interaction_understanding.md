@@ -47,6 +47,25 @@ $$f: (P, I_{AV}, \mathcal{R}) \rightarrow X_{answer}$$
 
 输入为系统提示 $P$、原始音视频 $I_{AV}$ 和参考集 $\mathcal{R} = \{(a_i, v_i)\}_{i=1}^N$（每个参与者的代表性声音和外观）。整条流程是：加载参考 → 用专用工具生成身份归因线索 → Omni-LLM 做链式推理 → 输出答案，核心思想是先把"身份"这一步交给可靠的小工具，再让 LLM 在带身份的线索上做社交推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    AV["原始音视频 I_AV"] --> TOOL
+    REF["参考引导<br/>每人一对（声音, 外观）身份底库"] --> TOOL
+    subgraph TOOL["基于工具的社交线索提取"]
+        direction TB
+        A1["Whisper 转写<br/>带时间戳话语序列"] --> A2["SpeechBrain 说话者验证<br/>话语↔参考声音余弦相似度"]
+        V1["YOLO 检测末帧参与者框"] --> V2["OSNet 行人重识别<br/>检测框↔参考图像匹配"]
+    end
+    TOOL --> CUE["语言线索（谁说了什么）<br/>+ 非语言线索（每人在哪）"]
+    CUE --> COT
+    subgraph COT["Omni-LLM 两步 CoT 推理"]
+        direction TB
+        S1["说话者确认<br/>声音匹配 + 口部运动"] --> S2["指称推理<br/>对话上下文 + 注视 / 手指方向"]
+    end
+    COT --> OUT["社交交互答案<br/>（STI / PCR）"]
+```
+
 ### 关键设计
 
 **1. 参考引导：像认熟人一样给每个参与者建档**

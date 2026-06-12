@@ -40,7 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-R2-Router 想解决的是"被动式路由按静态成本估计一票否决强模型"这个老毛病，办法是把输出长度预算 $b$ 升格成和选哪个 LLM 同等地位的决策变量。它分离线、在线两段：离线先构造 R2-Bench——对每个 (query, LLM) 对在 16 个不同 token 预算下各采一次回答、用 LLM judge 打质量分，从而把每个模型从一个点摊成一条质量-成本曲线；在线时输入 query $x$ 和 trade-off 系数 $\lambda$，共享 encoder 先编码出 $z_x=\text{Enc}(x)$，多头 MLP 一次性预测所有 (LLM, 预算) 组合的质量、拼成 $n\times K$ 曲线矩阵，Decision Maker 在矩阵上 $\arg\max$ 选出 $(M^*,b^*)$，最后调用 $M^*$ 并把 "Use at most $b^*$ tokens." 注入 prompt 强制约束输出长度。
+R2-Router 想解决的是"被动式路由按静态成本估计一票否决强模型"这个老毛病，办法是把输出长度预算 $b$ 升格成和选哪个 LLM 同等地位的决策变量。它分离线、在线两段：离线先构造 R2-Bench——对每个 (query, LLM) 对在 16 个不同 token 预算下各采一次回答、用 LLM judge 打质量分，从而把每个模型从一个点摊成一条质量-成本曲线，这批多预算数据用来训练预测器；在线时输入 query $x$ 和 trade-off 系数 $\lambda$，共享 encoder 先编码出 $z_x=\text{Enc}(x)$，每个 LLM 的一族多头 MLP 一次性预测所有 (LLM, 预算) 组合的质量、拼成 $n\times K$ 曲线矩阵，Decision Maker 按重表述后的目标 $(M^*,b^*)=\arg\max\bigl((1-\lambda)Q-\lambda C(b)\bigr)$ 在矩阵上挑出最优组合，最后调用 $M^*$ 并把 "Use at most $b^*$ tokens." 注入 prompt 强制约束输出长度。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["R2-Bench（离线·多预算数据集）"]
+        direction TB
+        D1["(query, LLM) 对"] --> D2["16 个 token 预算各采一次回答"]
+        D2 --> D3["LLM judge 打质量分<br/>→ 每个模型摊成质量-成本曲线"]
+    end
+    BENCH -->|训练| P["多头质量预测器<br/>共享 encoder + 每 LLM 一族 K 个 head"]
+    X["输入：query x + 系数 λ"] --> E["共享 encoder<br/>z_x = Enc(x)"]
+    E --> P
+    P --> M["n×K 质量曲线矩阵<br/>anchor 间线性插值补连续预算"]
+    M --> DM["Decision Maker<br/>argmax (1−λ)Q − λC(b) → (M*, b*)"]
+    DM --> C["调用 M*，prompt 注入<br/>“Use at most b* tokens.”"]
+    C --> O["输出回答（受预算约束）"]
+```
 
 ### 关键设计
 

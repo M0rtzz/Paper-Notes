@@ -45,6 +45,21 @@ GEN（Generative Evaluative Network）由两部分组成。其一是 **Quantum e
 
 推理时先一次前向 $(\mathbf{S}_0, \mathbf{P}_0) = g_\theta(G_{\text{new}})$ 拿初值，再做 test-time adaptation——在该单个实例上 fine-tune 生成器参数 $\theta$ 几步梯度上升，得到 $\theta^*$，输出 $(\mathbf{S}^*, \mathbf{P}^*) = g_{\theta^*}(G_{\text{new}})$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["输入图 G"] --> GEN
+    subgraph GEN["联合生成器 gθ（先分区后参数）"]
+        direction TB
+        OCH["正交补头 OCH<br/>拓扑编码 + cluster center 正交约束<br/>→ soft partition S̃"]
+        OCH --> GCD["贪心容量离散化 GCD + STE<br/>前向离散满足 qubit 容量 / 反向直通回传梯度<br/>→ 离散分区 S"]
+        GCD --> PG["参数生成器<br/>sg(A_sub) + arctan → 参数初值 P"]
+    end
+    GEN -->|输出 (S, P)| EVAL["多视图量子评估器 fφ<br/>topology / partition / param 三路 GNN<br/>→ performance ratio ρ̂"]
+    EVAL -->|梯度上升引导（fφ 冻结）| GEN
+    EVAL --> OUT["推理：前向取初值 + test-time adaptation 微调 θ"]
+```
+
 ### 关键设计
 
 **1. 多视图量子评估器 $f_\phi$：学一个可微 proxy，把"跑一遍量子模拟"换成"过一次 GNN"**

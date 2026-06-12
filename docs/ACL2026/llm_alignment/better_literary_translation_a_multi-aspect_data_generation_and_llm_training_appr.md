@@ -45,6 +45,29 @@ tags:
 
 生成阶段留下两类产物。第一类是每个源句的最佳译文 $T^*$，用于 SFT；第二类是迭代历史中所有“高分译文优于低分译文”的偏好对，用于 DPO 系列训练或奖励模型训练。训练阶段先用高质量参考做 SFT，然后比较隐式偏好优化与显式奖励建模。最终最好的方案是从 SFT checkpoint 出发，训练一个 8B reward model，再用 GRPO 结合复合奖励继续优化策略模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["英文文学原文 S"] --> B["普通翻译器<br/>初始译文 T0"]
+    subgraph REFINE["多维度迭代精修"]
+        direction TB
+        C["评估器打分 + 指出待改处"] --> D["Expression Optimizer<br/>修中文表达自然度"]
+        C --> E["Literary Effect Preserver<br/>保隐喻 / 修辞 / 语气"]
+        D --> F["Aggregator 融合两路改写"]
+        E --> F
+        F --> G["评估器复评<br/>更好则更新最佳译文"]
+        G -->|"未触发停止"| C
+    end
+    B --> C
+    G -->|"得分>4.9 / 满8轮 / 连续3轮无改进"| H["最佳译文 T* + 迭代历史全部译文"]
+    H --> I["偏好数据构造<br/>score(Tw)>score(Tl) 即成对"]
+    H --> J["SFT：用 T* 交叉熵训练"]
+    I --> K["显式奖励模型<br/>Bradley-Terry 标量头"]
+    J --> K
+    K --> L["复合 GRPO 奖励<br/>r_RM + 0.05·r_BLEU + r_fmt"]
+    L --> M["LitMT-8B / 14B"]
+```
+
 ### 关键设计
 
 **1. 多维度迭代精修：把“好读”和“有文学性”拆成两个译者各自负责，而不是让一个模型混着优化**

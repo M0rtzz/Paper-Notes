@@ -45,6 +45,31 @@ tags:
 
 RepMD 的出发点是：有害梗图的视觉外壳一直在变，但背后恶意用户"怎么设计一张有害梗图"的逻辑相对稳定，可以从历史失败案例里提炼出来反过来引导检测。整条流水线无需训练，全部在推理时完成，分三步走：先回看 MLLM 过去在哪些梗图上栽了跟头、为什么栽，整理成一棵失败原因树；再把这些失败原因抽象成设计概念图（DCG），用攻击树的形式描述"一个恶意用户会怎么一步步把无害素材改造成有害梗图"；最后对一张新梗图，从 DCG 里检索出最相关的设计步骤，拼成逐步引导喂给 MLLM，让它沿着设计者的思路去判断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["历史梗图"] --> S1
+    subgraph S1["失败原因树"]
+        direction TB
+        A["5 个 MLLM 投票<br/>保留 ≥3 个判错的难例"] --> B["Qwen3VL 逐条归因<br/>归入文化/政治等 7 类"]
+        B --> C["自底向上汇成<br/>层级化失败原因树"]
+    end
+    S1 --> S2
+    subgraph S2["设计概念图（DCG）"]
+        direction TB
+        D["Reproduction Method<br/>恶意设计步骤"] --> E["Logic Gate<br/>AND/OR/NOT 串联步骤"]
+        E --> F["Reproduction Goal<br/>设计目标 + 有害标注"]
+    end
+    S2 --> S3
+    subgraph S3["SVD 剪枝 + 检索引导"]
+        direction TB
+        G["SVD 降维剪除<br/>冗余低信息节点"] --> H["按相似度检索<br/>相关设计步骤"]
+        H --> I["拼成逐步引导 prompt"]
+    end
+    TGT["目标梗图"] --> H
+    S3 --> OUT["MLLM 沿设计逻辑链推理<br/>判定是否有害"]
+```
+
 ### 关键设计
 
 **1. 失败原因树：只盯 MLLM 真正搞不定的难例，把"为什么检测失败"结构化**

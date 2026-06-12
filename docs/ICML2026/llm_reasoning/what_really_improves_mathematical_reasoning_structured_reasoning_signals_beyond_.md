@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 这篇论文不提新架构，而是把"代码到底有没有帮助数学推理"做成一套大规模数据因果归因实验。作者先把 10T-token 语料严格切成 Web、Code、Code-NL、Math、Wikipedia、Books、Multilingual 七个域（每个域过 300+ 质量指标准入），再从头预训练核心模型——20 层自回归 MoE，hidden size 2048、16 heads，每层 16 个专家做 top-2 routing。真正的实验在数据配置上：从 full data 出发，分别去掉纯 Code、去掉 Math、或在 Math 内部把普通样本换成结构化样本，然后看五类能力维度怎么变。整套设计的关键约束是**固定总训练 token**——移除某个域时剩余域按比例上采样补齐，所以分数差异反映的是"数据替换效应"而不是训练量缩水，最后再用专家路由分布从机制层解释数据配比如何改写了模型内部激活。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["10T-token 语料<br/>采集→清洗→300+指标准入"] --> B["拆 Code / Code-NL<br/>纯程序 vs 代码-文本混合，切七域"]
+    B --> C["MoE 从头预训练<br/>固定总 token 预算"]
+    C --> D["固定预算消融<br/>移除某域→其余域按比例补齐"]
+    D -->|保留 Code-NL，移除纯 Code| E["w/o code"]
+    D -->|移除 Math| F["w/o math"]
+    D -->|Math 内替换| G["认知脚手架<br/>FastText f≥τ 筛结构化样本"]
+    E --> H["五维能力评估"]
+    F --> H
+    G --> H
+    H --> I["MoE 专家路由分析<br/>JS 散度看激活偏移"]
+```
+
 ### 关键设计
 
 **1. 把 Code 和 Code-NL 拆成两类，分离纯程序的边际贡献**

@@ -40,6 +40,24 @@ tags:
 
 要解决的是 BAH 视频的犹豫/矛盾（A/H）二分类。难点在于 A/H 信号微妙、常藏在跨模态不一致里，所以管线走两阶段：先各自把视频压成一个嵌入，再把它们放到一起对质。阶段一独立训练四个专用单模态模型（场景、人脸、音频、文本），每个模型把整段视频映射成一个固定维度的嵌入向量；阶段二把四个嵌入投影到共享的 128 维空间，过一个 6 层 Transformer 编码器让模态彼此交互，最后从融合表示里读出视频级的 A/H 判断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["输入视频<br/>场景/人脸/音频/转录文本"]
+    V --> S["场景视觉编码器<br/>VideoMAE 全局上下文"]
+    V --> F["人脸情感编码器<br/>EfficientNetB0 + 统计池化"]
+    V --> A["音频时序编码器<br/>Wav2Vec2.0 第10层 + Mamba"]
+    V --> T["文本语义编码器<br/>EmotionDistilRoBERTa"]
+    S --> P["模态专用投影器<br/>映射到共享 128 维"]
+    F --> P
+    A --> P
+    T --> P
+    P --> M["Transformer 多模态融合模块<br/>6 层注意力 + 缺失模态 mask"]
+    M --> Z["融合表示 z<br/>masked mean pooling"]
+    Z --> C["主线性分类器<br/>A/H 二分类输出"]
+    Z -->|仅训练时| PR["原型增强分类头<br/>每类 16 原型，辅助正则"]
+```
+
 ### 关键设计
 
 **1. 场景视觉编码器（VideoMAE）：补上前人 A/H 工作里没用过的全局上下文**

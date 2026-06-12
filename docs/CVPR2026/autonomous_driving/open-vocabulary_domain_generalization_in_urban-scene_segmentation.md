@@ -43,7 +43,22 @@ tags:
 
 ### 整体框架
 
-S2-Corr 构建在 CAT-Seg 的相关性聚合流水线之上。给定图像-文本对，通过 CLIP（EVA02）提取视觉特征 $\mathbf{F}_v \in \mathbb{R}^{HW \times d}$ 和文本类别嵌入 $\mathbf{F}_t \in \mathbb{R}^{N_C \times d}$，计算初始相关性图 $\mathbf{C} = \text{Norm}(\mathbf{F}_v \mathbf{F}_t^\top)$。然后通过可学习投影将相关性提升到 $d_f$ 维嵌入空间，再依次进行**空间聚合**和**类别聚合**两阶段修复。核心创新是将原有的交叉注意力聚合替换为选择性状态空间模型（SSM），并引入三项增强设计。
+S2-Corr 构建在 CAT-Seg 的相关性聚合流水线之上。给定图像-文本对，通过 CLIP（EVA02）提取视觉特征 $\mathbf{F}_v \in \mathbb{R}^{HW \times d}$ 和文本类别嵌入 $\mathbf{F}_t \in \mathbb{R}^{N_C \times d}$，计算初始相关性图 $\mathbf{C} = \text{Norm}(\mathbf{F}_v \mathbf{F}_t^\top)$。然后通过可学习投影将相关性提升到 $d_f$ 维嵌入空间，再依次进行**空间聚合**和**类别聚合**两阶段修复。核心创新是将原有的交叉注意力聚合替换为选择性状态空间模型（SSM），并在两阶段聚合的前置调制、SSM 状态传递、扫描方式上引入三项增强设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本类别 → CLIP（EVA02）编码<br/>视觉特征 F_v · 文本嵌入 F_t"] --> B["初始相关性图 C = Norm(F_v · F_tᵀ)<br/>投影到 d_f 维相关性嵌入"]
+    B --> C["调制前置（空间）<br/>图像特征生成 γ/β 注入域线索"]
+    subgraph SP["空间聚合（选择性 SSM）"]
+        direction TB
+        D["可学习几何衰减先验<br/>压制长程噪声传播"] --> E["分块蛇形扫描<br/>保空间连续 + 高并行"]
+    end
+    C --> SP
+    SP --> F["调制前置（类别）<br/>多域文本提示生成调制向量"]
+    F --> G["类别聚合（选择性 SSM）"]
+    G --> H["分割结果（开放词汇）"]
+```
 
 ### 关键设计
 

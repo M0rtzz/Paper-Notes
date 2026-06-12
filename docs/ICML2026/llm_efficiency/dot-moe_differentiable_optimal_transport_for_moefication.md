@@ -44,6 +44,19 @@ DOT-MoE 把"dense FFN 转成 MoE 时怎么分配神经元到专家"建模成 dif
 
 DOT-MoE 接收一个 dense 预训练 LLM 的 FFN $\text{FFN}(\mathbf{x}) = (\sigma(\mathbf{x} \mathbf{W}_{\text{gate}}) \odot (\mathbf{x} \mathbf{W}_{\text{up}})) \mathbf{W}_{\text{down}}$（含 $d_{\text{ffn}}$ 个中间神经元），目标是把这些神经元切成 $E$ 个 expert（每个 $s = d_{\text{ffn}}/E$ 个神经元）、每 token 只路由到 $k < E$ 个 expert，从而把激活参数减半却保住质量。它把"哪个神经元归哪个 expert"建模成一个 balanced optimal transport 问题，用 Sinkhorn 解出可微的 soft assignment，再用 Straight-Through Estimator 把这个分配和 token router 一起放进一个端到端训练里——训练目标不是去对齐什么中间表示，而是直接让 sparse 输出逼近 dense 输出。训练收敛后把学到的 hard assignment $\mathbf{M}$ 提出来，就得到一个标准 MoE 架构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["dense FFN<br/>d_ffn 个中间神经元"] --> B["可学习 affinity 矩阵 A<br/>神经元 i 想去 expert e 的偏好"]
+    B --> C["balanced optimal transport + Sinkhorn-Knopp<br/>marginal 约束硬编码 expert 容量均衡 → soft 分配 M_soft"]
+    C --> D["Straight-Through Estimator<br/>greedy rounding 转 hard M；前向走 hard、反向走 soft"]
+    D --> E["Output-aware KL alignment<br/>模拟 sparse 输出 Ŷ，token router top-k 同样走 STE"]
+    E --> F["对齐目标 = KL(dense‖sparse) + CE + z-loss + load-balance"]
+    F -->|反传联合更新 affinity A 与 router W_r| B
+    F --> G["收敛后提取 hard 分配 M<br/>→ 标准 MoE，每 token 激活 k 个 expert"]
+    D -.同套 balanced transport.-> H["推广到 attention：把 head 当神经元分到 expert"]
+```
+
 ### 关键设计
 
 **1. 把神经元分配建成 balanced optimal transport：用 marginal 约束强制 expert 容量均衡**

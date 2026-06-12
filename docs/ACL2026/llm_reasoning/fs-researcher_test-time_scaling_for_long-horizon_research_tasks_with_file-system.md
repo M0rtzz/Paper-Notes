@@ -45,6 +45,28 @@ tags:
 
 FS-Researcher 想解决的核心矛盾是：深度研究要消化数百个网页、产出数万 token 的报告，信息量远超模型上下文窗口，硬塞就会截断或有损压缩。它的破局思路是把记忆从上下文搬到文件系统——信息写进文件、按需加载，从而突破窗口上限。整个框架是双 Agent、两阶段：Context Builder 像图书管理员一样浏览互联网、写结构化笔记、归档原始网页，搭起一座层次化知识库；Report Writer 随后以这座知识库为唯一事实来源，分节把报告写出来。两个 Agent 共享同一个文件系统工作空间，里面既有交付物（知识库、报告），也有控制文件（TODO、Checklist、Log），各自都能独立迭代优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["研究主题"] --> CB
+    subgraph CB["Context Builder：收集 → 蒸馏 → 归档"]
+        direction TB
+        C1["联网搜索<br/>search_web / read_webpage"] --> C2["写带引用的知识库笔记<br/>归档原始网页"]
+        C2 --> C3["session 末自检<br/>标记缺口 / 冲突"]
+        C3 -->|未通过审查，迭代| C1
+    end
+    CB --> FS
+    FS["文件系统工作空间（共享持久记忆）<br/>index.md · knowledge_base/ · sources/ · report.md<br/>TODO · Checklist · Log"]
+    FS --> RW
+    subgraph RW["Report Writer：只读知识库 · 分节写作"]
+        direction TB
+        R1["首个 session 建大纲<br/>（即章节 TODO）"] --> R2["逐 session 写一章节"]
+        R2 --> R3["节级 / 报告级审查"]
+        R3 -->|不达标，重标 IN-PROGRESS 返工| R2
+    end
+    RW --> OUT["最终研究报告 report.md"]
+```
+
 ### 关键设计
 
 **1. 文件系统工作空间：用持久化外部记忆替掉上下文窗口，让信息量不再受 token 预算约束**

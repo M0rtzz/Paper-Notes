@@ -50,6 +50,31 @@ tags:
 3. **off-policy 流**：用当前 $\overrightarrow p_\theta$ 与 $F^\phi_n$ 跑 SMC 得到 $(x_N,w_N)$，再 backward 采样 $\overleftarrow p(\cdot\mid x_N)$ 拿到完整轨迹，进 IW-Buffer，用 SubTB 训流；
 4. **重要性加权经验回放**：把多个批次的 SMC 输出按批级归一化常数估计 $\widehat Z_m$ 与批内自归一权重 $W^{m,k}_N$ 乘起来作为采样概率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["目标 R(x)=π(x)·Z<br/>不可归一化能量"]
+    subgraph OBJ["神经采样器：策略 p_θ + 流 F^φ_n"]
+        direction TB
+        P["策略/提议核 p_θ"]
+        F["流/扭曲目标 F^φ_n（最优 F_N=R）"]
+    end
+    R --> OBJ
+    OBJ -->|on-policy rollout| TBL["TB 损失<br/>训策略 θ"]
+    OBJ -->|当提议核 + 扭曲目标| SMC
+
+    subgraph OFF["SMC 当行为策略 + IW-Buffer"]
+        direction TB
+        SMC["SMC 采样<br/>学到的采样器当提议"]
+        TMP["自适应权重温度<br/>w↦w^λ（ESS≥γK 取最大 λ）"]
+        BUF["反向核补全轨迹 → 存入 IW-Buffer<br/>优先级 Ẑ_m·W_N"]
+        SMC -->|自适应 resample ESS≤κ| TMP --> BUF
+    end
+    BUF -->|按权重抽样| STB["SubTB 损失<br/>训流 φ"]
+    TBL --> OBJ
+    STB --> OBJ
+```
+
 ### 关键设计
 
 **1. TB/SubTB 损失 = AIS 对数权重的二阶矩：让"训采样器"和"跑 SMC"变成同一件事**

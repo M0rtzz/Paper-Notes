@@ -43,6 +43,28 @@ SDiaReward 把语音对话评测做成一个端到端的标量打分问题：不
 ### 整体框架
 模型接收一段多轮语音对话上下文 $\mathcal{C}$ 和候选最终回复 $y$，输出标量 $r_\theta(\mathcal{C}, y)$。训练用 preference pairs 监督：每对包含一个 preferred episode 和一个 rejected episode，数据来源横跨 wild YouTube 多人对话、MELD 半自然表演对话、DailyTalk studio scripted 语音，以及由 LLM 改写出的书面/口语两种风格对话。数据建好后，作者从 validation split 按 source 和 metadata 分层采样组成 ESDR-Bench，防止 Wild 子集体量过大把评测拉成单一分布。整套数据集共 13,356 对，其中训练 11,630 对、验证 1,726 对。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["双 gap 偏好数据构造"]
+        direction TB
+        M["modality 子集<br/>真人 vs 同文本合成语音"]
+        C["colloquialness 子集<br/>书面 vs 同 TTS 口语版"]
+        M --> P["成对偏好 (preferred / rejected)"]
+        C --> P
+    end
+    P --> BENCH["ESDR-Bench 分层抽样<br/>(评测集)"]
+    P --> IN["输入：多轮上下文 + 候选回复 + 准则指令 inst"]
+    subgraph MODEL["Episode-level 端到端 reward model"]
+        direction TB
+        IN --> BB["MLLM backbone (Qwen2.5-Omni)<br/>交错 speech-text 联合表示"]
+        BB --> POOL["mean pooling 汇总整段隐状态"]
+        POOL --> MLP["MLP score head"]
+    end
+    MLP --> R["标量 reward r(C, y, inst)"]
+    R --> LOSS["多准则条件化与中心化正则<br/>Bradley-Terry 偏好损失 + center loss"]
+```
+
 ### 关键设计
 
 **1. 双 gap 偏好数据构造：把"语音自然性"和"口语风格"两条评估轴隔离开**

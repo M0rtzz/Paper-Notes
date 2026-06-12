@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-这篇论文要在极小的卵巢癌组织病理数据上，既做出高准确率分类、又保证模型可被 XAI 有效解释。整条流水线是：从 Mendeley 数据集拿到 5 类组织病理图像（Clear Cell、Endometri、Mucinous、Non Cancerous、Serous）共 498 张，用 Albumentations 增强扩到 2490 张，再系统训练 15 种 CNN 变体，综合准确率和可解释性选出最佳模型（InceptionV3-A），最后叠加 LIME/SHAP/IG 三种 XAI 方法做对比解释。
+这篇论文要在极小的卵巢癌组织病理数据上，既做出高准确率分类、又保证模型可被 XAI 有效解释。整条流水线是：从 Mendeley 数据集拿到 5 类组织病理图像（Clear Cell、Endometri、Mucinous、Non Cancerous、Serous）共 498 张，用 Albumentations 增强扩到 2490 张并做 Tensor 转换 + 归一化，再系统训练 15 种 CNN 变体，综合准确率和可解释性选出最佳模型（InceptionV3-A），最后叠加 LIME/IG/SHAP 三种 XAI 方法做对比解释。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Mendeley 组织病理数据<br/>5 类 498 张"] --> PRE
+    subgraph PRE["数据增强管线"]
+        direction TB
+        B["Albumentations 增强<br/>旋转/翻转/色彩 ×5 → 2490 张"] --> C["Tensor 转换 + 归一化<br/>RGB 0–255→0–1，80:20 划分"]
+    end
+    PRE --> SEL
+    subgraph SEL["15 种 CNN 变体系统对比"]
+        direction TB
+        D["LeNet×3 / ResNet×4 / VGG×4 / Inception×4"] -->|综合精度 + XAI 可行性，排除黑盒 VGG| E["选出 InceptionV3-A（ReLU），94%"]
+    end
+    SEL --> F["三种 XAI 方法对比解释<br/>LIME / Integrated Gradients / SHAP"]
+```
 
 ### 关键设计
 

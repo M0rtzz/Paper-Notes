@@ -43,6 +43,22 @@ tags:
 
 RDDG 要解决的是「让 LLM 在不微调的前提下，合成高保真且服务于不平衡分类的表格数据」。整条流水线分三步串起来：先做**核心集构建**，从原始训练数据里挑出最有代表性的少量样本，绕开 LLM 上下文窗口的限制；再做**关系挖掘**，用 in-context learning 从核心集里挖出属性间的潜在 pattern 和相关性，固化成显式的结构约束；最后做**数据生成与约束优化**，把训练集切成多个 batch 作为参考集逐批生成，并在每批之后用自强化反馈机制评估质量、把评估结果转成反馈提示喂给下一批。形式上，第 $i$ 批合成数据由 $\mathcal{S}_i = S_\phi(\mathcal{R}_i, \mathcal{C}, \mathcal{F}_{i-1})$ 产生，其中 $\mathcal{R}_i$ 是真实参考集、$\mathcal{C}$ 是关系挖掘得到的约束、$\mathcal{F}_{i-1}$ 是上一批的反馈，总目标是逼近 $\min_{\mathcal{S}_i} d(\hat{\mathbb{P}}_{\mathcal{S}_i}, \mathbb{P}_{\mathcal{R}})$（$d$ 为 KL 散度等分布距离）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始训练表（不平衡）"] --> B["基于误差方差的核心集选择<br/>MLP 估误差方差 → 按类取 Top-K"]
+    subgraph REL["渐进式 CoT 关系挖掘与约束驱动生成"]
+        direction TB
+        C["prompt 1：挖属性间函数关系"] --> D["prompt 2：固化为显式约束 C"]
+    end
+    B --> C
+    D --> E["prompt 3：逐 batch 带约束生成 S_i"]
+    E --> F["自强化反馈：质量评估<br/>统计一致性 / 相关性保持 / 分布一致性"]
+    F -->|"反馈 F_i 前向传播到下一批"| E
+    F --> G["合成数据达标 → 下游不平衡分类"]
+    H["贝叶斯校准<br/>序贯后验更新，保证闭环收敛"] -.->|"理论保证"| F
+```
+
 ### 关键设计
 
 **1. 基于误差方差的核心集选择：用一小撮「最难学」的样本撑起整个分布**

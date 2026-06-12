@@ -43,7 +43,27 @@ tags:
 
 ### 整体框架
 
-两阶段 CFT：Phase 1 在英语指令数据集（Alpaca/OpenOrca）上微调，Phase 2 在多语言数据集（MultiAlpaca/mOpenOrca）上微调。与单阶段混合微调对比，两阶段 CFT 在相同训练步数下平均表现更优。
+两阶段 CFT：Phase 1 在英语指令数据集（Alpaca/OpenOrca）上微调，Phase 2 在多语言数据集（MultiAlpaca/mOpenOrca）上微调。与单阶段混合微调对比，两阶段 CFT 在相同训练步数下平均表现更优。围绕这条主线，本文先用两把尺子（DES、MPD）从数据和参数两个视角量化两阶段数据集的指令相似性，相似性高低恰好预测了 Phase 2 之后英语能力是保持还是因表示漂移而退化；对退化的情形再用重放和层冻结两条路径压制漂移。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["基础模型<br/>Mistral-7B / LLaMA-3-8B"] --> B["Phase 1：英语指令微调<br/>Alpaca / OpenOrca"]
+    B --> C["Phase 2：多语言指令微调<br/>MultiAlpaca / mOpenOrca"]
+    C --> D["数据集嵌入相似度 DES<br/>LaBSE 平均嵌入归一化点积"]
+    C --> E["模型参数差异 MPD<br/>两微调模型参数 L2 范数差"]
+    D --> F{"两阶段指令相似？"}
+    E --> F
+    F -->|相似 DES高/MPD低| G["英语能力保持甚至提升"]
+    F -->|不相似 DES低/MPD高| H["表示漂移 → 英语遗忘"]
+    subgraph K["表示漂移缓解"]
+        direction TB
+        I["生成式重放 GR / 英语重放 ER<br/>架桥两阶段数据分布"]
+        J["层冻结 LF<br/>锁住高变化层"]
+    end
+    H --> K
+    K --> G
+```
 
 ### 关键设计
 

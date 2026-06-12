@@ -41,27 +41,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ChatR1 是一个用 PPO 训练的 policy LLM $\pi_\theta$（Qwen2.5-3B/7B-Instruct），每个 turn 输入对话历史 $\mathcal{H}$ 和当前 user query $q$，自主输出一条交错 reasoning / search / answer 的轨迹：`<think>` 思考后用 `<search>q^k</search>` 触发 retriever（e5-base-v2，300M，zero-shot，top-3，至多 2 次），检索结果以 `<information>d^k</information>` 注入下一轮推理，最终给出 `<answer>y</answer>`。它的核心难点是多轮对话里 outcome reward 太稀疏，于是把轨迹总奖励拆成答案奖励加意图奖励 $R(\tau) = R_{\text{answer}}(y) + \alpha R_{\text{intent}}(Q)$，再用 PPO+GAE 把它沿所有生成 token 反向分配 credit。训练覆盖 TopiOCQA / QReCC / INSCIT / MultiDoc2Dial / FaithDial 五个数据集，分别对应 topic shift、大语料、mixed-initiative、多文档 grounding、faithfulness 五类挑战。
+ChatR1 是一个用 PPO 训练的 policy LLM $\pi_\theta$（Qwen2.5-3B/7B-Instruct），每个 turn 输入对话历史 $\mathcal{H}$ 和当前 user query $q$，自主输出一条交错 reasoning / search / answer 的轨迹：`<think>` 思考后用 `<search>q^k</search>` 触发 retriever（e5-base-v2，300M，zero-shot，top-3，至多 2 次），检索结果以 `<information>d^k</information>` 注入下一轮推理，最终给出 `<answer>y</answer>`。它的核心难点是多轮对话里 outcome reward 太稀疏，于是把轨迹总奖励拆成答案奖励加意图奖励 $R(\tau) = R_{\text{answer}}(y) + \alpha R_{\text{intent}}(Q)$，再用 PPO+GAE 把它沿所有生成 token 反向分配 credit。训练覆盖 TopiOCQA / QReCC / INSCIT / MultiDoc2Dial / FaithDial 五个数据集，分别对应 topic shift、大语料、mixed-initiative、多文档 grounding、faithfulness 五类挑战。下面三个关键设计按"先架构、再奖励、后优化"的训练数据流逐一展开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：对话历史 H + 当前用户问题 q"] --> ROLL
+    subgraph ROLL["RAG-as-tool 端到端联合优化（rollout）"]
+        direction TB
+        B["策略 LLM 生成 think 思考"] --> C["search 触发检索<br/>自主决定何时搜 / 搜什么 / ≤2 次"]
+        C --> D["冻结检索器 e5-base-v2<br/>top-3 文档以 information 注入"]
+        D -->|未结束，继续推理| B
+        D --> E["answer 输出最终回答 y"]
+    end
+    E --> F["Intent-aware reward<br/>所有 search query 与人工 rewrite 取 max token-F1"]
+    F --> G["轨迹总奖励 R(τ) = R_answer(y) + α·R_intent(Q)"]
+    G --> H["PPO + GAE reward shaping<br/>critic 估 value，advantage 沿 token 反向分配 credit"]
+    H -->|梯度更新策略| ROLL
+```
 
 ### 关键设计
 
-**1. Intent-aware reward：把人工 rewrite 当 dense 监督信号**
-
-多轮 RL 最大的障碍是 reward 稀疏——一段对话要走 reasoning → 多次 search → integrate → answer，最终只有一个 F1 奖励，credit assignment 极难。ChatR1 抓住 CQA 数据集自带 human rewrite $q^{rw}$（用于 resolve 上下文指代）这个 free lunch，把整条轨迹里模型自主生成的所有 search query $Q=\{q^1,...,q^K\}$ 与 $q^{rw}$ 做 token-F1 并取 max：$R_{\text{intent}}(Q) = \max_{q^k \in Q} \mathrm{F1}(q^k, q^{rw})$。取 max 是为了允许"粗查 + 精修"的探索，只要任意一次查询命中意图即获奖，总奖励里 $\alpha=0.2$ 最佳。
-
-这个 reward 之所以好，在于它同时稠密、便宜、且与 retriever 解耦：相比 StepSearch 用检索 hit@k 当中间奖励，F1 是连续值而非二值、又不会被检索器误差污染；相比以往 CQA 只把 rewrite 当 SFT 输入，这里把它升格为 RL 监督，逼模型学会"自主生成接近黄金的 query"而非被动被喂 rewrite；而 passage-level relevance 标注本身既稀疏又有盲点（漏标会造成 hit@k 假阴）。
-
-**2. PPO + GAE 的 trajectory-level reward shaping：把末端奖励铺到中间步骤**
-
-轨迹末端的 $R(\tau)$ 需要传回 reasoning 和 search 的中间 token 才能学得动。ChatR1 的 actor 与 critic 用同一 LLM 独立初始化，critic $V_\psi$ 以 squared 误差学每个 token 位置的 value baseline，再算 advantage $\hat{A}_i = \delta_i + (\gamma\lambda)\delta_{i+1} + \cdots$；取 $\gamma=\lambda=1$ 时退化为 REINFORCE 形式 $\hat{A}_i = R(\tau) - V_\psi(\tau_i)$。检索得到的文档 token 沿用 Search-R1 的 loss masking 排除出 policy loss，防止 retriever 输出误导 actor，最大 prompt 3500 token、lr=1e-6、clip $\epsilon=0.2$。
-
-选 PPO 而非 GRPO 是经过对比的——后者在多轮 CQA 上常在 100–200 步 collapse，作者给出的训练曲线显示 PPO 配 critic baseline 在 long-horizon 场景显著更稳。
-
-**3. RAG-as-tool 的端到端联合优化：让检索行为本身可被优化**
+**1. RAG-as-tool 的端到端联合优化：让检索行为本身可被优化**
 
 ChatR1 把搜索器当外部 tool，由 `<search>` 特殊 token 调起，模型自主决定何时搜、搜什么、搜几次（≤2 次），retriever 全程 frozen（e5-base-v2，300M）。因此所有"检索质量提升"都来自 actor 学到的 query formulation 而非微调检索器——Table 5 显示 ChatR1-7B 的 retrieval R@10 在 TopiOCQA 达 46.9、QReCC 达 61.1，已超过 ConvDR、QuReTeC 等需要 contrastive 微调检索器的强 baseline。
 
 这套设计的好处是三重的：检索端用 300M 编码器，比 UniConv/ChatRetriever 的 7B 编码器便宜得多；actor 与 retrieval/generation 在端到端训练中互相 co-adapt；推理时还能即插即用地换 retriever（BM25 / Dense / Dense+Reranker）做 ablation。
+
+**2. Intent-aware reward：把人工 rewrite 当 dense 监督信号**
+
+上面的 rollout 在多轮场景下暴露出 RL 最大的障碍——reward 稀疏：一段对话要走 reasoning → 多次 search → integrate → answer，最终只有一个 F1 奖励，credit assignment 极难。ChatR1 抓住 CQA 数据集自带 human rewrite $q^{rw}$（用于 resolve 上下文指代）这个 free lunch，把整条轨迹里模型自主生成的所有 search query $Q=\{q^1,...,q^K\}$ 与 $q^{rw}$ 做 token-F1 并取 max：$R_{\text{intent}}(Q) = \max_{q^k \in Q} \mathrm{F1}(q^k, q^{rw})$。取 max 是为了允许"粗查 + 精修"的探索，只要任意一次查询命中意图即获奖，总奖励里 $\alpha=0.2$ 最佳。
+
+这个 reward 之所以好，在于它同时稠密、便宜、且与 retriever 解耦：相比 StepSearch 用检索 hit@k 当中间奖励，F1 是连续值而非二值、又不会被检索器误差污染；相比以往 CQA 只把 rewrite 当 SFT 输入，这里把它升格为 RL 监督，逼模型学会"自主生成接近黄金的 query"而非被动被喂 rewrite；而 passage-level relevance 标注本身既稀疏又有盲点（漏标会造成 hit@k 假阴）。
+
+**3. PPO + GAE 的 trajectory-level reward shaping：把末端奖励铺到中间步骤**
+
+有了 $R(\tau) = R_{\text{answer}}(y) + \alpha R_{\text{intent}}(Q)$ 这个轨迹总奖励，还得让它传回 reasoning 和 search 的中间 token 才能学得动。ChatR1 的 actor 与 critic 用同一 LLM 独立初始化，critic $V_\psi$ 以 squared 误差学每个 token 位置的 value baseline，再算 advantage $\hat{A}_i = \delta_i + (\gamma\lambda)\delta_{i+1} + \cdots$；取 $\gamma=\lambda=1$ 时退化为 REINFORCE 形式 $\hat{A}_i = R(\tau) - V_\psi(\tau_i)$。检索得到的文档 token 沿用 Search-R1 的 loss masking 排除出 policy loss，防止 retriever 输出误导 actor，最大 prompt 3500 token、lr=1e-6、clip $\epsilon=0.2$。
+
+选 PPO 而非 GRPO 是经过对比的——后者在多轮 CQA 上常在 100–200 步 collapse，作者给出的训练曲线显示 PPO 配 critic baseline 在 long-horizon 场景显著更稳。
 
 ## 实验关键数据
 

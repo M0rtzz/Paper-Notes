@@ -46,23 +46,12 @@ tags:
 方法先做一个对称化去偏：如果同一对候选在两个顺序下得到 $p_{ij}$ 和 $p_{ji}$，则用 $p'_{ij}=\frac{1}{2}(p_{ij}+1-p_{ji})$ 强制满足最基本的顺序一致性。之后，hard BT、soft BT、Temp-BT、BT-σ 等方法都在同一组 debiased comparisons 上比较。
 
 ### 关键设计
-1. **从概率一致性解释 hard BT 与 soft BT 的差异**:
 
-	- 功能：解释为什么有时 hard BT 反而比 soft BT 更好，并把这个现象和 LLM judge 的逻辑不一致联系起来。
-	- 核心思路：标准 BT 假设 $P(i\succ j)=\sigma(s_i-s_j)$。soft BT 用概率 $p_{ij}$ 拟合这个结构；如果概率本身来自某个全局 skill 向量，则温度缩放只会整体缩放 skill，不改变排名。但如果 LLM 概率存在循环或非传递关系，soft BT 必须拟合矛盾的概率强度，hard BT 只保留方向反而更抗噪。
-	- 设计动机：这为后续 reliability modeling 提供诊断基础：问题不是 BT 结构本身，而是不同 judge 的概率信号质量不同，不能等权处理。
+**1. 用概率一致性诊断 hard BT 与 soft BT 的优劣边界**：论文先回答一个反直觉现象——为什么保留概率强度的 soft BT 有时反而不如只看胜负方向的 hard BT。标准 Bradley-Terry 假设 $P(i\succ j)=\sigma(s_i-s_j)$，soft BT 用观测概率 $p_{ij}$ 去拟合这个结构。作者证明：当评审概率本身自洽（确实由某个全局 skill 向量生成）时，对概率做温度缩放只等价于整体缩放 skill 空间、不改变排名，soft BT 会隐式完成自校准，此时 hard BT 与 soft BT 给出相同排序。但真实 LLM 概率常违反传递性、交换性，无法用单一 skill 向量解释；这时 soft BT 必须去拟合互相矛盾的概率强度，反而把噪声放大，而 hard BT 丢掉幅度、只留方向，成了更抗噪的估计量。这个诊断是全文的出发点：问题不在 BT 结构，而在不同评审的概率信号质量参差，不能等权处理。
 
-2. **BT-σ 的 judge-specific discriminator**:
+**2. BT-σ：给每个评审一个可学习的判别尺度 $\sigma_k$**：这是论文的核心。论文证明，直接把所有评审的概率喂给 soft BT，等价于先把各评审概率平均、再拟合一个 soft BT，因此只能学到一个全局排名和一套共享的隐式校准，完全无法表达评审间的可靠性差异。BT-σ 在 soft BT 似然里为每个评审 $k$ 插入一个判别尺度 $\sigma_k$：$\mathcal{L}(\mathbf{s},\{\sigma_k\})\propto\prod_k\prod_{(i,j)}\sigma((s_i-s_j)/\sigma_k)^{p_{ij}^{(k)}}(1-\sigma((s_i-s_j)/\sigma_k))^{1-p_{ij}^{(k)}}$。$\sigma_k$ 控制评审 $k$ 对 skill 差异的敏感度：$\sigma_k$ 越小，说明该评审对候选差异越敏感、概率越自洽、越可信；$\sigma_k$ 越大，说明其概率越平、越噪。所有 $\{s_i\}$ 和 $\{\sigma_k\}$ 在同一个似然里联合最大化、不需要任何人工标签。它本质上是温度缩放的无监督版本——但校准信号不来自人类标注，而来自多评审比较结构本身，从而在聚合时自动给可靠评审更大权重、压低噪声评审。论文也强调 $\sigma_k$ 只在「多评审 + 软概率」场景才有意义：单评审或 hard BT 下，全局尺度 $\sigma_k$ 会被 item skill 吸收、失去信息。
 
-	- 功能：在没有人工标签的情况下学习每个 judge 的可靠性，并用它调节 judge 对全局排名的影响。
-	- 核心思路：BT-σ 把 soft BT 扩展为 $\mathcal{L}(\mathbf{s},\{\sigma_k\})\propto\prod_k\prod_{(i,j)}\sigma((s_i-s_j)/\sigma_k)^{p_{ij}^{(k)}}(1-\sigma((s_i-s_j)/\sigma_k))^{1-p_{ij}^{(k)}}$。较小的 $\sigma_k$ 表示 judge 对 item skill 差异更敏感、更一致；较大的 $\sigma_k$ 表示概率更平、更噪。
-	- 设计动机：这相当于无监督温度校准，但校准信号来自 judge 间比较结构本身，而不是人类标注；它能在聚合时自动让可靠 judge 占更大权重。
-
-3. **可靠性诊断与 aspect-dependent 扩展**:
-
-	- 功能：验证学到的 $\sigma_k$ 不是纯数学自由度，而是有可解释的可靠性含义。
-	- 核心思路：论文用 $1/\sigma_k$ 与 judge 自身 SRC、以及 $1-\text{CycleRate}$ 做相关分析。还提出 BT-σ-asp，为每个 judge-aspect pair 学单独 discriminator，用来检查 judge 可靠性是否随评价维度变化。
-	- 设计动机：如果 $1/\sigma_k$ 与独立性能和循环一致性强相关，就说明模型学到的是实际可靠性，而不是简单过拟合某个 benchmark。
+**3. 用相关性验证 $\sigma_k$ 真捕捉到可靠性，并扩展到 aspect 维度**：$\sigma_k$ 可能只是数学上的自由度，论文必须证明它确实对应「可靠性」。作者用学到的 $1/\sigma_k$ 分别与评审自身的独立 SRC、以及 $1-\text{CycleRate}$（循环一致性，CycleRate 统计三元组里出现 $i\succ j\succ k\succ i$ 这类有向环的比例）做相关分析：若越一致的评审学到越大的 $1/\sigma_k$，就说明模型抓到的是真实可靠性而非过拟合某个 benchmark。论文还提出 BT-σ-asp，为每个「评审 × 评价维度」对学一个单独判别尺度，检验可靠性是否随评价维度变化；实验发现单评审一个 $\sigma_k$ 往往已够用，说明评审可靠性大体跨维度稳定。
 
 ### 损失函数 / 训练策略
 BT-σ 直接最大化上述联合似然，参数包括所有 item skills $\{s_i\}$ 和 judge discriminators $\{\sigma_k\}$。作者用 L-BFGS-B 优化，随机初始化 $s_i$ 和 $\sigma_k$，通常 100 次迭代内收敛。Temp-BT 作为有监督参考，需要用人类标注拟合每个 judge/aspect 的温度；BT-σ 不使用人类标签，只依赖 LLM pairwise probabilities。

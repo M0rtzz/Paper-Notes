@@ -45,6 +45,22 @@ COFT 通过在解码时构造反事实掩码分支并与原始分支进行 logit
 
 COFT 想解决的是：冻结的 LLM 在逐 token 生成推理链时会暴露并放大社会偏见，而我们既不想重训也不想接外部分类器，还希望每一步都有可审计的统计保证。它的做法是把每个 prompt 同时跑成"原始"和"去敏感"两个世界，再用三个串起来的阶段处理每一步解码：先把 prompt 中的敏感词替换成中性哨兵得到掩码 prompt $\tilde{p}=M(p)$，再对原始和掩码两组 logit 做凸插值融合以衰减属性驱动的偏差，最后用离线校准的双分支共形阈值过滤候选，只从两个世界都高概率支持的 token 里采样。整条流水线只多一次缓存的前向传播，不碰梯度、不动权重、不依赖辅助模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt p"] --> M["反事实掩码 M(p)<br/>敏感片段→[MASK]，保持 token 数对齐"]
+    A --> F["原始分支（冻结 LLM）<br/>logit z_t^F"]
+    M --> CF["掩码分支（冻结 LLM）<br/>logit z_t^CF"]
+    F --> FUSE["反事实 Logit 融合<br/>ẑ_t = (1−λ)z_t^F + λz_t^CF"]
+    CF --> FUSE
+    FUSE --> FILT["双分支分裂共形过滤<br/>C_t = {v : min(π̂_t, π_t^CF) ≥ τ_t}"]
+    CF --> FILT
+    FILT -->|C_t 非空| SAMP["从限制在 C_t 上的 π̂_t 采样"]
+    FILT -->|C_t 为空| FALL["回退 argmax"]
+    SAMP --> OUT["输出 next token"]
+    FALL --> OUT
+```
+
 ### 关键设计
 
 **1. 反事实掩码：构造一个与原始 prompt 严格对齐的"去敏感"分支**

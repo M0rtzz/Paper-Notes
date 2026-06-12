@@ -41,6 +41,19 @@ tags:
 ### 整体框架
 ByG 要解决的核心难题是：没有 source-target 配对数据时，怎么把一个预训练 T2I 模型微调成既听话又保结构的编辑模型。它的破局思路是让模型"自己教自己"——用编辑模型的 EMA 副本生成训练所需的噪声输入，用冻结的 T2I 模型提供"该往哪个方向编辑"的先验，再用正向编辑+反向重建的 cycle 约束逼模型保住源内容。三股信号合成总损失 $\mathcal{L} = \mathcal{L}_{\text{cycle}} + \lambda_{\text{prior}}(\mathcal{L}_{\text{prior}}^{\text{fwd}} + \mathcal{L}_{\text{prior}}^{\text{rev}}) + \lambda_{\text{id}}\mathcal{L}_{\text{id}}$，整个训练只需源图像和它的 source/target caption。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源图像 x + 源 / 目标描述"] --> B["自举式伪噪声输入<br/>EMA 副本多步采样生成 ỹ_t"]
+    B --> C["可训练模型正向编辑 → ŷ"]
+    T["冻结 T2I 模型<br/>查询 v_src / v_tgt"] --> D["编辑方向先验损失<br/>余弦对齐 (v_tgt − v_src) 方向"]
+    C --> D
+    C --> E["梯度路由<br/>前向喂干净 ỹ_0、反向走单步 ŷ"]
+    E --> F["cycle 反向重建回 x（逆指令）"]
+    D --> G["总损失 = cycle + 双向先验 + identity"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 自举式伪噪声输入：补上 flow matching 缺失的训练输入**

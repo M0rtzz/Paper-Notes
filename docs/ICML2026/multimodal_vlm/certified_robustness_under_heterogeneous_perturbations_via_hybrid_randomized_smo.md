@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 输入 $x=(x_1,x_2)$（文本 + 图像），用两个独立平滑核：文本 $Z_1\sim p_1(\cdot\mid x_1)$（uniform/absorbing 替换），图像 $Z_2\sim\mathcal{N}(x_2,\sigma^2 I)$。基分类器 $f$ 通过 $g(x)=\mathbb{E}[f(Z_1,Z_2)]$ 平滑成 smoothed classifier。给定联合扰动预算 $(d,\epsilon)$（$\ell_0$ + $\ell_2$），定义混合 worst-case 概率 $p_{\mathrm{adv}}(d,\epsilon)$。整体算法：① Monte Carlo 估计干净 $p_A$ 的 Clopper-Pearson 下界 → ② 利用 kernel symmetry 枚举/分析最坏离散对手 → ③ 对每个候选 $x_{1,\mathrm{adv}}$ 求一维 NP 阈值 $t^\star$ → ④ 算 $V_k$ → ⑤ 取最小作为最终保守认证值。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 x=(文本 x₁, 图像 x₂) + 预算 (d, ε)<br/>双平滑核：文本 uniform 替换 + 图像 Gaussian 噪声"] --> C["① 干净分数 p_A 下界<br/>MC 采样 + Clopper–Pearson 保守下界"]
+    C --> D["② 离散最坏聚合<br/>kernel 对称 → canonical 对手免组合枚举"]
+    D --> E["③ 一维 NP CDF 求根<br/>解 F_k(t)=p_A（在 log t 上 bisection）得 t*_k"]
+    E --> F["④ 闭式最坏值 V_k<br/>连续半径在 r=ε 处单调取最坏"]
+    F --> G["⑤ 离散聚合 p_adv = min_k V_k"]
+    G -->|p_adv 与 p_A 同侧于 τ| H["认证通过：图文联合 (d,ε) 证书"]
+    G -->|否则| I["不认证"]
+```
+
 ### 关键设计
 
 **1. 联合似然比的一维 CDF $F(t;r)$：把混合 NP 的容量约束塌成单变量连续函数**

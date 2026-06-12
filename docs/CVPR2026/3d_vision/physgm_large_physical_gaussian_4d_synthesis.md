@@ -42,7 +42,37 @@ tags:
 
 ### 整体框架
 
-PhysGM 要回答的是：能不能完全绕开逐场景优化，用一次前向传播就从单图直接吐出可仿真的物理 4D？输入 1–4 张 RGB 图加相机参数，先用 DINOv3 编码图像 patch、用 Plücker 射线编码每像素相机几何，拼接后再附 3 个可学习全局 token，一起送进 24 层 Transformer；输出分两路——DPT Head 回归 3DGS 参数 $\psi$，Physics Head 预测物理属性分布 $\theta$（材质类别 + 杨氏模量/泊松比）；最后把几何和物理参数交给 MPM 仿真器，滚出 4D 动态序列。单图推理时用 MVAdapter 先补出后/左/右辅助视图。
+PhysGM 要回答的是：能不能完全绕开逐场景优化，用一次前向传播就从单图直接吐出可仿真的物理 4D？输入 1–4 张 RGB 图加相机参数，先用 DINOv3 编码图像 patch、用 Plücker 射线编码每像素相机几何，拼接后再附 3 个可学习全局 token，一起送进 24 层 Transformer；输出分两路——DPT Head 回归 3DGS 参数 $\psi$，Physics Head 预测物理属性分布 $\theta$（材质类别 + 杨氏模量/泊松比）；最后把几何和物理参数交给 MPM 仿真器，滚出 4D 动态序列。单图推理时用 MVAdapter 先补出后/左/右辅助视图。整套流程由两阶段训练撑起：先用 PhysAssets 的 GT 物理参数做监督预训练，再冻结骨干、只对物理头跑 DPO 偏好微调。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["PhysAssets 数据集<br/>资产聚合 → Qwen3VL 标物理参数 → Framepack 生成参考视频"]
+    IN["输入 1–4 张 RGB + 相机参数<br/>单图时 MVAdapter 补辅助视图"]
+    TOK["多模态 Tokenization 与全局物理 token<br/>DINOv3 patch + Plücker 射线 + 3 个可学习全局 token"]
+    TF["24 层 Transformer"]
+    GS["DPT Head：回归 3DGS 参数 ψ"]
+    PHY["概率物理属性预测头<br/>材质类别 + 回归 (μ,σ²) 出条件分布"]
+    MPM["MPM 仿真器"]
+    OUT["4D 动态序列"]
+
+    IN --> TOK --> TF
+    DATA -->|"监督预训练：GT 物理参数"| TF
+    TF --> GS --> MPM
+    TF --> PHY --> MPM
+    MPM --> OUT
+
+    subgraph DPO["DPO 偏好微调替代 SDS（Stage 2：冻结骨干只调物理头）"]
+        direction TB
+        SAMPLE["从物理头采 K 组候选 → 各自 MPM 仿真 + 渲染"]
+        DIST["SAM-2 分割 + CoTracker-3 轨迹算感知距离<br/>最近 = winner，最远 = loser"]
+        LOSS["最小化 DPO 损失"]
+        SAMPLE --> DIST --> LOSS
+    end
+    PHY -.候选.-> SAMPLE
+    DATA -->|"DPO：GT 仿真视频"| DIST
+    LOSS -.更新.-> PHY
+```
 
 ### 关键设计
 

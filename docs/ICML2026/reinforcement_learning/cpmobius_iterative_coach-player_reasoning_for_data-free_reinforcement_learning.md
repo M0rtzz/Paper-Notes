@@ -40,26 +40,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个独立策略 $\pi_\theta^{\text{C}}$ (Coach) 与 $\pi_\phi^{\text{P}}$ (Player) 在 4 阶段循环里 co-evolve: (1) Coach 采样 $m$ 道题; (2) 对每题 Player 采 $n$ 个解, majority voting 得伪标签 $y_i^*$, 计算每个解的二值 reward 与 GRPO 优势, 用 GRPO 更新 $\phi$; (3) 在固定的小验证集 $\mathcal{D}_{\text{val}}$ (实验用 AMC) 上算更新前后准确率差 $\Delta_t$ 作为"环境反馈"; (4) Coach 用 $R^{\text{Coach}}_i = R^{\text{Player}}_i \cdot \Delta_t$ 经 REINFORCE 更新 $\theta$。整个 loop 不用任何外部题集, Coach 仅靠一次性 SFT warm-up 预热。
+CPMöbius 让两个独立策略 $\pi_\theta^{\text{C}}$ (Coach, 出题) 与 $\pi_\phi^{\text{P}}$ (Player, 解题) 在一个迭代循环里协同进化 (co-evolve)。流程在一次性的 **Coach SFT 预热**之后进入主循环: (1) Coach 采样 $m$ 道候选题, 经**难度过滤器**只保留 Player 解题率落在 $[0.2, 0.8]$ 的题、不够则即时重采; (2) 对每道保留的题, Player 采 $n$ 个解, majority voting 得伪标签 $y_i^*$, 算每个解的二值 reward 与 GRPO 优势并更新 $\phi$; (3) 在固定的小验证集 $\mathcal{D}_{\text{val}}$ (实验用 AMC) 上算更新前后准确率差 $\Delta_t$ 作为"学习进度"信号; (4) Coach 用**乘法奖励** $R^{\text{Coach}}_i = R^{\text{Player}}_i \cdot \Delta_t$ 经 REINFORCE 更新 $\theta$, 再回到 (1)。除一次性预热外, 整个循环不碰任何外部题集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["Coach SFT 预热<br/>4K 题学会出数学题（一次性）"] --> C["Coach 采样 m 道候选题"]
+    C --> F["难度过滤器<br/>仅留 0.2 ≤ acc ≤ 0.8 的题"]
+    F -->|不足 m 道则即时重采| C
+    F --> P["Player 解题<br/>每题采 n 解 + majority vote 伪标签<br/>二值 reward → GRPO 更新 φ"]
+    P --> D["验证集 D_val（AMC）<br/>算更新前后准确率差 Δt"]
+    D --> R["乘法 Coach 奖励<br/>R_Coach = R_Player × Δt<br/>REINFORCE 更新 θ"]
+    R -->|进入下一轮 co-evolution| C
+```
 
 ### 关键设计
-1. **乘法 Coach 奖励 + 协作而非对抗**:
 
-    - 功能: 给 Coach 一个同时奖励"被解出"与"带来全局进步"的标量, 排除"出无人能解的题" / "出已掌握的水题"两种退化解。
-    - 核心思路: $R^{\text{Coach}}_i = R^{\text{Player}}_i \cdot \Delta_t$, 其中 $R^{\text{Player}}_i = \frac{1}{n}\sum_j r_{i,j}$ 是该题 Player 平均解题率, $\Delta_t = \text{Acc}_{\text{val}}(\pi_{\phi_{t+1}}^{\text{P}}) - \text{Acc}_{\text{val}}(\pi_{\phi_t}^{\text{P}})$ 是验证集上 Player 一步训练带来的准确率提升。两个因子任意一个为零或负都会让题"惩罚化": 太难没人解 $R^{\text{Player}}=0$, 没带来进步 $\Delta_t \le 0$。
-    - 设计动机: 直接化解对抗 self-play 的 collapse —— 出无人能解的题 Coach 立刻得 0 reward; 同时通过 $\Delta_t$ 引入"真实学习进度"信号, 比 RENT 的自置信度 reward 更接近 ground-truth 进步。
+**1. 乘法 Coach 奖励：用一个乘积同时排除"题太难"和"题太水"两种崩溃**
 
-2. **难度过滤器 (Difficulty-Filtered Batching)**:
+对抗式 self-play 的死穴在于出题方的收益等于解题方的失败——为了难倒 Player, Coach 会越出越偏, 最终生成无意义或不可学的题 (collapse)。CPMöbius 把 Coach 奖励改成乘积 $R^{\text{Coach}}_i = R^{\text{Player}}_i \cdot \Delta_t$: 第一个因子 $R^{\text{Player}}_i = \frac{1}{n}\sum_j r_{i,j}$ 是该题 Player 的平均解题率, 第二个因子 $\Delta_t = \text{Acc}_{\text{val}}(\pi_{\phi_{t+1}}^{\text{P}}) - \text{Acc}_{\text{val}}(\pi_{\phi_t}^{\text{P}})$ 是 Player 这一步训练在验证集上带来的真实准确率提升。两个因子是"与"的关系——题太难没人解则 $R^{\text{Player}}=0$, 题没带来进步则 $\Delta_t \le 0$, 任一为零或负都让这道题的奖励塌成零甚至变成惩罚。于是 Coach 被迫去出"既能被解出、又能推动 Player 整体能力上涨"的题, 把自博弈从零和的对抗拉回正和的协作, 从机制上堵死了 collapse; 同时 $\Delta_t$ 这个外部进度信号比 RENT 用模型自身置信度当 reward 更接近真实的学习进度。
 
-    - 功能: 在 Coach 提交题目前先做一次廉价 rollout, 只留下"教学最优区" 0.2 ≤ acc ≤ 0.8 的题, 保证每批训练数据都落在最近发展区。
-    - 核心思路: 对每个候选 $x_i$, Player 跑 $n$ 次解, 算 majority voting 准确率 $acc_i = \frac{1}{n}\sum_j \mathbb{I}[y_{i,j} = y_i^*]$; 超出 $[0.2, 0.8]$ 则丢弃并即时重采样, 直到凑够 $m$ 道。这个过滤器把"题已经会" / "题完全不会"两种无信息样本直接过滤掉。
-    - 设计动机: GRPO 在 reward 全 0 或全 1 的 batch 上优势归零、梯度为 0; 难度过滤把 Coach 偶发的极端难度问题处理掉, 保证训练信号始终非空, 且让"积极尝试且部分成功"成为 Player 的主要学习场景, 与人类课程学习直觉一致。
+**2. 难度过滤器：把每一批训练题钉在 Player 的最近发展区**
 
-3. **Coach SFT warm-up (一次性, 非数据外泄)**:
+GRPO 在 reward 全 0 或全 1 的 batch 上优势会归零、梯度消失, 所以"已经会的题"和"完全不会的题"对训练都是无信息样本。难度过滤器在 Coach 把题提交给训练前先做一次廉价 rollout: 对每个候选 $x_i$ 让 Player 跑 $n$ 次, 算 majority voting 准确率 $acc_i = \frac{1}{n}\sum_j \mathbb{I}[y_{i,j} = y_i^*]$, 只有落在 $[0.2, 0.8]$ 的题才留下, 超出区间就丢弃并即时重采, 直到凑够 $m$ 道。这样每批数据都落在"积极尝试且部分成功"的区间, 既给 GRPO 保证了非空的训练信号, 也把 Coach 偶发的极端难度题挡在门外, 与人类课程学习"始终略高于当前水平"的直觉一致。
 
-    - 功能: 在 co-evolution 前先用 4K PRIME Eurus-2-RL-Data 给 Coach 做一次轻量 SFT, 让它学会"会出数学题"这件基本能力。
-    - 核心思路: 不接触验证集 / 测试集, 仅训练 Coach 的"提问格式与诊断性"; 之后 co-evolution 全程零外部数据。文章明确把"data-free"限定为"co-evolution 阶段"。
-    - 设计动机: 实验发现 base model 直接当 Coach 会生成歧义/无解题目, 让 $\Delta_t$ 信号噪声爆炸; warm-up 是"教学技能"的最小代价初始化, 而非"数学知识"的迁移。Ablation w/o Coach Warm-up 直接掉到 23.7 (vs 28.8), 证明这一步必要但非数据泄露。
+**3. Coach SFT 预热：先把"怎么出题"教会, 再开始 co-evolution**
+
+直接拿 base model 当 Coach 会生成歧义或无解的题目, 让 $\Delta_t$ 信号噪声爆炸、整个循环失稳。CPMöbius 在协同进化前先用 4K 条 PRIME Eurus-2-RL-Data 给 Coach 做一次轻量 SFT, 只训练它"出格式规整、有诊断性的数学题"这项基本教学技能, 不接触验证集和测试集。论文据此把"data-free"严格限定在 co-evolution 阶段——预热注入的是"怎么出题"的技能而非"数学知识", 之后全程零外部数据。消融显示去掉预热 (w/o Coach Warm-up) 直接从 28.8 掉到 23.7 (−5.1, 三个模块里影响最大), 说明这步虽小却是循环能稳定起步的前提。
 
 ### 损失函数 / 训练策略
 Player 用 GRPO: 对每题 $n$ 个解, 优势 $A_{i,j} = (r_{i,j} - \text{mean})/\text{std}$, 在 trust region 内更新; Coach 用 REINFORCE: $\nabla_\theta J = \frac{1}{m}\sum_i R^{\text{Coach}}_i \nabla_\theta \log \pi_\theta^{\text{C}}(x_i)$。验证集固定为 AMC (难度适中, 既不饱和也不稀疏), 实验也用 Minerva / OlympiadBench 验证选择鲁棒。所有训练在 verl 框架, 4–8 张 A800-80GB, batch=16, rollout=16。

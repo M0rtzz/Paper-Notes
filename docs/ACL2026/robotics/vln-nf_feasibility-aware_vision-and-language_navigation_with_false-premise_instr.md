@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-VLN-NF 包含三个贡献：(1) 数据集构建流程——用 LLM 将可行指令改写为虚假前提指令，用 VLM 验证目标确实不存在；(2) REV-SPL 评估指标——联合评估到达目标房间、探索覆盖率和 FOUND/NOT-FOUND 决策正确性；(3) ROAM 两阶段方法——第一阶段用监督模型定位目标房间，第二阶段用 LLM/VLM 在房间内探索并做出判断。
+VLN-NF 包含三个贡献：(1) 数据集构建流程——用 LLM 将可行指令改写为虚假前提指令，用 VLM 验证目标确实不存在；(2) REV-SPL 评估指标——联合评估到达目标房间、探索覆盖率和 FOUND/NOT-FOUND 决策正确性；(3) ROAM 两阶段方法——第一阶段用监督模型定位目标房间，第二阶段用 LLM/VLM 在房间内探索并做出判断。三者串成一条链路：先自动造出虚假前提数据，再让 ROAM 在数据上跑导航与验证，最后用 REV-SPL 给出探索是否充分、判断是否正确的评分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据集构建（Rewrite + Verify）"]
+        direction TB
+        A["原可行 VLN 指令 + 目标物体 o"] --> B["LLM 改写：挑替代物 o′<br/>生成语义通顺但事实错误的指令"]
+        B --> C["VLM 验证：开放词汇检测<br/>确认 o′ 在目标房间不存在"]
+        C -->|"检测到 o′，重采样"| B
+    end
+    C -->|"未检测到，接受"| D["VLN-NF 基准数据集"]
+    subgraph ROAM["ROAM 两阶段混合框架"]
+        direction TB
+        E["阶段1：DUET 监督导航<br/>弱监督定位目标房间"] --> F["阶段2：LLM/VLM 房间内探索<br/>自由空间间隙先验引导覆盖"]
+        F --> G{"FOUND / NOT-FOUND 决策"}
+    end
+    D --> E
+    G --> H["REV-SPL 评估指标<br/>联合衡量导航·探索·决策"]
+```
 
 ### 关键设计
 

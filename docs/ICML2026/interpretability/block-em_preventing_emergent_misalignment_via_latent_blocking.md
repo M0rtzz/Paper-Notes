@@ -41,6 +41,21 @@ BLOCK-EM 用 SAE 找到一小撮"因果地控制 emergent misalignment"的内部
 ### 整体框架
 BLOCK-EM 要解决的是"窄域 SFT 会泛化出广义 misalignment"，它的思路是把对齐干预从输出层下沉到少数 SAE latent 上。整个方法分两阶段：先在一个 reference 受控实验里对比安全的 base 模型 $\mathcal{M}^{\text{base}}$ 和被 SFT 带坏的 $\mathcal{M}^{\text{mis}}$，离线挖出一小撮"因果地控制 EM"的 latent 集 $\mathcal{K}$；再把这个集合写进一个 one-sided 训练正则，在窄域 SFT 时只禁止模型把它们朝失对齐方向放大，从而既学会 in-domain 任务又不长出 EM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["参考受控实验：安全 base 模型 vs 被 SFT 带坏的 mis 模型<br/>model-diffing 经 SAE 投到 ~60K 维 latent"]
+    subgraph DISC["三阶段因果 latent 发现 pipeline"]
+        direction TB
+        C["Stage 1 Top-Delta 候选池<br/>按激活变化 Δ 取正负 top"] --> D["Stage 2 induce-and-repair 因果筛选<br/>诱发 + 修复 双向通过才保留"]
+        D --> E["Stage 3 质量预算 ranked 选择<br/>incoherence ≤ 10% 内按行为效应排序"]
+    end
+    A --> C
+    E -->|"得到因果 latent 集 𝒦（按符号拆成 𝒦+、𝒦−）"| G["One-sided signed latent blocking 损失<br/>ReLU 只惩罚朝失对齐方向放大，与 SFT 联合优化"]
+    G --> H["下游冻结 + 跨域迁移<br/>冻结 layers 21−32，复用同一 𝒦 跨 6 域"]
+    H --> I["对齐模型：学会 in-domain 且不长出 EM"]
+```
+
 ### 关键设计
 
 **1. 三阶段因果 latent 发现 pipeline：从相关到因果**

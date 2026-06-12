@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-输入为 prompt 集合 $\mathcal{X}$ 和教师模型池 $\mathcal{M}$，PerSyn 路由器 $\pi(x)$ 为每个 prompt $x$ 输出一个分数向量 $\mathbf{o} \in \mathbb{R}^{|\mathcal{M}|}$，取最高分对应的教师。该教师仅为其被分配的 prompt 子集生成响应，所有教师的输出合并为最终合成数据集 $\mathcal{D}$，用于 SFT 训练学生模型。
+输入为 prompt 集合 $\mathcal{X}$ 和教师模型池 $\mathcal{M}$，PerSyn 路由器 $\pi(x)$ 为每个 prompt $x$ 输出一个分数向量 $\mathbf{o} \in \mathbb{R}^{|\mathcal{M}|}$，取最高分对应的教师。该教师仅为其被分配的 prompt 子集生成响应，所有教师的输出合并为最终合成数据集 $\mathcal{D}$，用于 SFT 训练学生模型。整条流程只在一小撮校准集上付"所有教师都生成"的代价，用来训练路由器，之后对全量 prompt 只做一次轻量前向就完成教师分配。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt 集合 + 教师模型池"] --> B["2.5K 校准 prompt<br/>所有教师并行生成响应"]
+    B --> C["双维度教师评估准则<br/>可学习性 rl + 质量 rq → 总奖励 r"]
+    C --> D["按总奖励比出每对教师的偏好标签"]
+    D --> E["Bradley-Terry 路由器训练<br/>Qwen2.5-1.5B + 系数头"]
+    E --> F
+    subgraph RG["先路由再生成范式"]
+        direction TB
+        F["路由器预测每个 prompt 的最优教师<br/>切成各教师专属子集"] --> G["每个教师只生成分给它的那批"]
+    end
+    RG --> H["合并为合成数据集"]
+    H --> I["SFT 训练学生模型"]
+```
 
 ### 关键设计
 

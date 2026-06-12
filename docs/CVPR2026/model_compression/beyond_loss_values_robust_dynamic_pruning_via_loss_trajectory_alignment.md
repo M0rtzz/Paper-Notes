@@ -38,6 +38,22 @@ tags:
 ### 整体框架
 这篇论文要解决的是：动态数据剪枝在有噪声标签时会把噪声样本当成"高价值难样本"留下来，越剪越脏。AlignPrune 的思路是不再看每个样本当前损失有多高，而是看它**这几个 epoch 损失是怎么变化的**——干净样本的损失会跟着模型一起平滑下降，噪声样本则忽上忽下。整体流程上，它给训练集 $\mathcal{D}$ 配一个很小的干净参考集 $\mathcal{D}_{ref}$，每一轮为每个样本算一个对齐分数 DAS，用它替换掉原有方法（InfoBatch、SeTa）里基于损失值的排序，再照常做子集选择和训练。因为只换了"打分"这一步，它能直接挂到现有动态剪枝框架上而不碰其余部分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["含噪训练集 D"] --> B
+    R["干净参考集 D_ref（约 1%）"] --> C
+    subgraph TRAJ["损失轨迹（近 N 个 epoch 的损失走势）"]
+        direction TB
+        B["逐样本损失序列 v_i"]
+        C["参考集平均损失序列 v_ref"]
+    end
+    TRAJ --> D["Dynamic Alignment Score (DAS)<br/>DAS_i = Pearson(v_i, v_ref)"]
+    D --> E["AlignPrune 即插即用集成<br/>用 DAS 替换 InfoBatch/SeTa 的损失值排序"]
+    E -->|逐 epoch 剪枝| F["保留子集 S^(t+1)<br/>低 DAS 的噪声样本被剪掉"]
+    F -->|进入下一轮训练| A
+```
+
 ### 关键设计
 
 **1. 损失轨迹：用时序行为而非单点损失刻画样本**

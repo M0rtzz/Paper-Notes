@@ -44,26 +44,35 @@ AMDP 可以看作对异步流水线的重新排程。它没有单纯追求让一
 
 限制读入会引入空闲，因此 AMDP 同时启动多条 pipeline。对于深度 $d$，单条受控流水线活跃比例约为 $2/d$，因此启动 $d/2$ 条方向互补的流水线即可填满设备。不同流水线按 Chimera 风格映射到 GPU，但 AMDP 是异步执行，并用 FIFO 规则解决多条流水线在同一 GPU 上的操作冲突。
 
-为了降低每次 backward 后 all-reduce 的通信频率，AMDP 不立即更新参数，而是把多个 minibatch 的梯度累积到阈值后统一 reduce 和 update。最后，AMDP 用 ZeRO 思路让每个 stage 的 optimizer state 只由一个 GPU 持有，其他副本发送梯度并接收更新参数，从而避免多条 pipeline 带来的 optimizer state 复制。
+为了降低每次 backward 后 all-reduce 的通信频率，AMDP 不立即更新参数，而是把多个 minibatch 的梯度累积到阈值后统一 reduce 和 update。最后，AMDP 用 ZeRO 思路让每个 stage 的 optimizer state 只由一个 GPU 持有，其他副本发送梯度并接收更新参数，从而避免多条 pipeline 带来的 optimizer state 复制。整个方法由四个相互衔接的组件构成，下图按数据流向把它们串起来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["模型切成 d 个 pipeline stage"] --> B["一步参数错配上界<br/>stage 0 只读 2 个 minibatch<br/>mismatch(i)=min(n,d−i)−1 ≤ 1"]
+    B --> C["多方向并发调度<br/>启动 d/2 条方向互补流水线<br/>Chimera 映射 + FIFO 解冲突 + 预载填 bubble"]
+    C --> D["梯度累积更新<br/>累积到阈值，在 bubble 时统一 reduce 并更新"]
+    D --> E["ZeRO 状态分片<br/>stage i 的 optimizer 只驻 GPU i，reduce → broadcast"]
+    E --> F["近同步收敛 + 高吞吐"]
+```
 
 ### 关键设计
-1. **一步参数错配上界**:
 
-	- 功能：控制异步 pipeline 中 forward 和 backward 使用的参数版本差距。
-	- 核心思路：参数错配满足 $\mathrm{mismatch}(i)=\min(n,d-i)-1$；AMDP 设 $n=2$，于是所有 stage 的错配都不超过 1。
-	- 设计动机：此前异步方法的错配会随 pipeline depth 线性增长，深模型上更容易收敛不稳；常数错配能把异步扰动控制在二阶量级。
+**1. 一步参数错配上界：从源头把异步扰动钉死在常数级**
 
-2. **多方向并发流水线调度**:
+异步流水线的收敛风险全部来自 forward 和 backward 之间参数被更新过几次（参数错配）。作者先把这个量写成结构公式：stage $i$ 的错配等于「第一次 backward 前读入的 minibatch 数减一」，受两个约束限制——为保持 backward 不出 bubble，stage $i$ 最多读 $d-i$ 个；同时任意 stage 的读入数不超过 stage 0 的读入数 $n$，于是 $\mathrm{mismatch}(i)=\min(n,d-i)-1$。此前方法为消 bubble 令 $n=d$，错配随深度线性增长到 $d-i-1$，深模型上 stale gradient 越来越严重。AMDP 直接令 $n=2$，于是所有 stage 的错配都不超过 1，与 pipeline 深度、多节点部署、多方向放置都无关。理论上这把 AMDP 的平均梯度范数上界压到只比同步 SGD 多 $O(\eta^2)$ 的二阶扰动。
 
-	- 功能：弥补少读入 minibatch 后产生的 leading 和 trailing bubbles。
-	- 核心思路：为深度 $d$ 启动约 $d/2$ 条方向不同的流水线，偶数/奇数 pipeline 使用不同 GPU 映射方向，让空闲时段互相重叠；操作冲突按 FIFO 延后处理。
-	- 设计动机：如果只靠一条受控流水线，收敛稳定但利用率低；多方向并发把“控错配”和“高吞吐”拆开处理。
+**2. 多方向并发流水线调度：用互补方向填掉少读入留下的 bubble**
 
-3. **梯度累积与 ZeRO 状态分片**:
+令 $n=2$ 控住了错配，却让单条流水线大量空闲——单条受控流水线对 GPU 的活跃比例只有 $r=2/d$。AMDP 不追求让一条流水线满负载，而是同时启动 $d/2$ 条方向互补的流水线，让彼此的空闲时段相互重叠填满设备。流水线方向沿用 Chimera 映射：偶数流水线 stage $i$ 映射到 GPU $(2j+i)\bmod d$，奇数流水线反向映射，使不同流水线错峰占用 GPU。但与同步的 Chimera 不同，AMDP 是异步执行、且 forward/backward 耗时不对称，多条流水线会在同一 GPU 抢占资源，AMDP 用 FIFO 规则解决：先到的操作先做、后到的延后。每段 $d$ 个 minibatch 的边界处还会按 backward/forward 耗时比预载额外的 forward，消掉首尾的 leading/trailing bubble。
 
-	- 功能：减少通信频率，并压低多流水线复制带来的 optimizer state 内存。
-	- 核心思路：梯度累积到阈值后在 bubble 时统一更新，使每个累积窗口只有前 $d$ 个 minibatch 受到一步错配；ZeRO 让 stage $i$ 的 optimizer 只驻留在 GPU $i$，其他 replica 通过 reduce 和 broadcast 同步。
-	- 设计动机：多条 pipeline 会增加参数和优化器状态压力，若不做累积和分片，系统收益会被通信与内存抵消。
+**3. 梯度累积更新：降通信频率，并把错配窗口限制在每窗前 $d$ 个 minibatch**
+
+逐 backward 立即更新有两个副作用：每次 backward 后都要 all-reduce，通信开销大；且 bubble 填充会打乱 1F1B，反而引入多步错配（如 GPU 0 上 minibatch 6 的 forward 与 backward 之间夹了 minibatch 2、4 两次更新）。AMDP 改为把多个 minibatch 的梯度累积到阈值后，在下一个 bubble 时统一 reduce 并更新。这既把 all-reduce 频率降下来，又让每个累积窗口内只有前 $d$ 个 minibatch 经历一步错配、其余都用一致参数。实践中阈值远大于 $d$，错配影响可忽略——这正是 AMDP 与 PipeDream 类方法的本质区别：后者错配随 stage 数增长，AMDP 把它锁死在每窗口前 $d$ 个。
+
+**4. ZeRO 状态分片：让多流水线副本可扩展的必要条件**
+
+多方向调度让每张 GPU 要为多个 stage 存参数、梯度和 optimizer state，朴素实现会被 optimizer state 复制吃掉吞吐收益。AMDP 引入 ZeRO：stage $i$ 的 optimizer 只驻留在 GPU $i$，由它独家负责更新 stage $i$ 的参数；其他持有 stage $i$ 副本的 GPU 把梯度发给 GPU $i$ 做 reduce，更新后再 broadcast 回来。这把每张 GPU 的 optimizer state 内存降到朴素方案的 $2/d$，且 reduce + broadcast 的总通信量与 all-reduce 相同、不增开销，同步每次更新只发生一次、不随流水线数增长。消融显示去掉 ZeRO 吞吐约低 4%，它不是附加优化，而是多流水线能扩展的前提。
 
 ### 损失函数 / 训练策略
 AMDP 不改变模型训练目标，只改变流水线执行和更新语义。理论部分在 $L$-smooth 非凸目标、随机梯度无偏且方差有界的假设下，证明一步错配带来的平均梯度范数上界与同步 SGD 相比只多 $O(\eta^2)$ 扰动。实验使用 AdamW、混合精度、microbatch size 4，并在 GPT-style 和 BERT-style 模型上比较吞吐、显存和收敛。

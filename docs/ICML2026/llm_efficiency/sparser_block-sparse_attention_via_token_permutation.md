@@ -44,15 +44,25 @@ tags:
 
 PBS-Attn 是一个 plug-and-play 的长上下文 prefilling 加速模块，核心是把块稀疏注意力的"被动挑块"改成"先把重要 key 聚成簇再挑块"。一次前向里它做四件事：先用序列最后一个 query block 当 proxy，给每个 key 估一个全局重要性分数；再把序列切成定长段、在段内按分数降序重排 K（和对应 V），段间保持原序以维持因果；接着在重排后的张量上用 mean-pooling 选出真正密集的块、只对这些块跑 FlashAttention 在线 softmax；最后因为 query 全程没动，输出天然就是原始顺序、不用做逆置换。整套流程不改动数学输出，只重塑了注意力矩阵的稀疏结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：Q / K / V（长上下文 prefilling）"] --> B["Global-Importance 评分<br/>用 last-block query 当 proxy 估每个 key 的重要性 s"]
+    B --> C["Segmented Permutation<br/>切定长段：段内按 s 降序重排 K/V，段间保序维持因果"]
+    C --> D["块选择（mean-pooling）<br/>累计覆盖 90% attention mass 的密集块"]
+    D --> E["Permuted-FlashAttention 内核<br/>只对选中 tile 跑在线 softmax，跳过其余"]
+    E --> F["输出<br/>Q 全程未动 → 天然原序，无需逆置换"]
+```
+
 ### 关键设计
 
-**1. Segmented Permutation：在不破坏因果 mask 的前提下重排 key**
+**1. Global-Importance-based Key Permutation：用 last-block query 当 proxy 排出 heavy hitter**
 
-heavy hitter 是按重尾分布零散撒在整条序列上的，要覆盖它们就得选很多块、而每块里有用的 token 又很少——本设计要解决的就是"怎么把它们物理上聚到一起，又不踩因果性的坑"。做法是把前 $\lfloor N/S \rfloor \cdot S$ 个 token 切成 $G$ 个长度 $S$ 的段，全局置换矩阵写成块对角形式 $\mathbf{P}_\pi = \text{diag}(\mathbf{P}_{\pi_1}, \dots, \mathbf{P}_{\pi_G}, \mathbf{I})$：段内随便打乱、段间相对顺序不动。这样 query $q_i$ 仍然只能"看到"它所在段及之前的所有段——这些段不论内部怎么重排都还在它的可见范围里，对角线段（query 段 = key 段）保留因果三角，对角线以下的段整块要么全选要么全跳。之所以非段化不可，是因为一次性全局 permutation 会把因果三角彻底打散，让原本被天然跳过的上三角块也变成必须计算（block density 从 $\frac{T_c+1}{2T_c}$ 涨到 1），收益直接变负；段化是"保因果"与"提稀疏度"之间的最小折中。
+要把散落各处的 heavy hitter 聚成簇，第一步得先有一把"哪些 key 重要"的尺子。本设计给出"key 有多重要"的可计算定义：分数向量 $\mathbf{s} = \text{mean}_{\text{rows}}(\text{softmax}(\mathbf{Q}_{\text{last\_block}} \mathbf{K}^T / \sqrt{d}))$，之后就按它对 key 降序排。直接对完整 $QK^T$ 排序要 $O(N^2)$、得不偿失，所以只用最后 $B$ 个 query 做 proxy，把代价压到线性的 $O(NBd)$，而实测它和"全 query 平均"几乎一致。为什么一小撮 query 就够？因为 heavy hitter（attention sink、vertical line pattern 等）对不同 query 几乎是一致的——16K 上的对照实验（Figure 1）显示：随机 permutation 反而掉点（说明原序里确有局部结构要尊重），fine-grained 的 greedy 局部对齐略好但不如全局重要性排序。这把"permutation 为什么 work"从经验观察落到了一个可解释的归纳偏置上：稀疏注意力的关键不在精细对齐，而在把全局重要 token 聚成簇。
 
-**2. Global-Importance-based Key Permutation：用 last-block query 当 proxy 排出 heavy hitter**
+**2. Segmented Permutation：在不破坏因果 mask 的前提下重排 key**
 
-段内要按什么排序？本设计给出"key 有多重要"的可计算定义：分数向量 $\mathbf{s} = \text{mean}_{\text{rows}}(\text{softmax}(\mathbf{Q}_{\text{last\_block}} \mathbf{K}^T / \sqrt{d}))$，每段内取 $\pi_i = \text{argsort}(-\mathbf{s}_{[(i-1)S+1 : iS]})$ 降序排列。直接对完整 $QK^T$ 排序要 $O(N^2)$、得不偿失，所以只用最后 $B$ 个 query 做 proxy，把代价压到线性的 $O(NBd)$，而实测它和"全 query 平均"几乎一致。为什么一小撮 query 就够？因为 heavy hitter（attention sink、vertical line pattern 等）对不同 query 几乎是一致的——16K 上的对照实验（Figure 1）显示：随机 permutation 反而掉点（说明原序里确有局部结构要尊重），fine-grained 的 greedy 局部对齐略好但不如全局重要性排序。这把"permutation 为什么 work"从经验观察落到了一个可解释的归纳偏置上：稀疏注意力的关键不在精细对齐，而在把全局重要 token 聚成簇。
+有了重要性分数，直接按它做一次性全局重排却会踩因果性的坑——全局 permutation 把因果三角彻底打散，让原本被天然跳过的上三角块也变成必须计算（block density 从 $\frac{T_c+1}{2T_c}$ 涨到 1），收益直接变负。本设计的解法是段化：把前 $\lfloor N/S \rfloor \cdot S$ 个 token 切成 $G$ 个长度 $S$ 的段，全局置换矩阵写成块对角形式 $\mathbf{P}_\pi = \text{diag}(\mathbf{P}_{\pi_1}, \dots, \mathbf{P}_{\pi_G}, \mathbf{I})$：段内按分数 $\mathbf{s}$ 降序重排（$\pi_i = \text{argsort}(-\mathbf{s}_{[(i-1)S+1 : iS]})$）、段间相对顺序不动。这样 query $q_i$ 仍然只能"看到"它所在段及之前的所有段——这些段不论内部怎么重排都还在它的可见范围里，对角线段（query 段 = key 段）保留因果三角，对角线以下的段整块要么全选要么全跳。段化是"保因果"与"提稀疏度"之间的最小折中。
 
 **3. Permuted-FlashAttention 内核：只重排 K/V，避开 GQA 复制开销**
 

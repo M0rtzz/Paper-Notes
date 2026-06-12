@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 Step-Saliency 是一个诊断工具，StepFlow 是基于诊断的干预方法。整体 pipeline 为：(1) 将推理序列分割为 question-thinking-summary 三段；(2) 计算 token 级 attention-gradient 影响分数并池化为 step-to-step map；(3) 逐层分析 saliency 模式，识别 Shallow Lock-in 和 Deep Decay；(4) 在解码时通过 OEB 和 SMI 两个组件修复信息流。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["推理序列<br/>question–thinking–summary 三段"] --> B
+    subgraph DIAG["Step-Saliency 诊断"]
+        direction TB
+        B["token 级影响分数<br/>注意力 × 梯度取绝对值"] --> C["按步骤边界均值池化<br/>得 step-to-step 影响图"]
+        C --> D["逐层对比正确 / 错误轨迹"]
+    end
+    D -->|浅层注意力坍缩到当前步<br/>Shallow Lock-in| E["Odds-Equal Bridge (OEB)<br/>给桥接段补注意力质量下界"]
+    D -->|深层 saliency 衰减<br/>Deep Decay| F["Step Momentum Injection (SMI)<br/>步骤边界注入残差摘要"]
+    E --> G["修复信息流后的解码轨迹"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. Step-Saliency 诊断：把 token 级 saliency 池化成步骤级影响图，让长推理链第一次有了可读的分析单元**

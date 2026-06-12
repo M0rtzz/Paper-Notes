@@ -42,26 +42,33 @@ xKV 发现 LLM 不同层的 KV-cache 虽然逐 token 余弦相似度不高，但
 ### 整体框架
 xKV 面向 decoder-only LLM 的长上下文推理。输入是一段长 prompt 在预填充阶段产生的各层 key/value cache；输出不是新的模型权重，而是一个压缩后的 cache 表示。它把模型层按连续窗口分组，对每个窗口里的多层 cache 做联合低秩分解，存储共享 basis 和层特定重构矩阵。解码时，模型可以选择密集重构整层 cache，也可以只重构当前 query 最可能关注的少量 token，从而在显存和计算之间取得更好的平衡。
 
-更具体地说，设某个层的 key 或 value cache 为 $X_\ell \in \mathbb{R}^{L \times d}$，其中 $L$ 是上下文长度，$d$ 是 KV hidden size。xKV 把窗口 $\mathcal{W}_k$ 内的 $W$ 层 cache 横向拼接为 $X_k^{cat}=[X_{kW},\ldots,X_{kW+W-1}]$，然后做低秩近似 $X_k^{cat}\approx A_k[B_{kW},\ldots,B_{kW+W-1}]$。其中 $A_k\in\mathbb{R}^{L\times r}$ 是这个层组共享的 token basis，$B_\ell\in\mathbb{R}^{r\times d}$ 是每层自己的重构矩阵。
+更具体地说，设某个层的 key 或 value cache 为 $X_\ell \in \mathbb{R}^{L \times d}$，其中 $L$ 是上下文长度，$d$ 是 KV hidden size。xKV 把窗口 $\mathcal{W}_k$ 内的 $W$ 层 cache 横向拼接为 $X_k^{cat}=[X_{kW},\ldots,X_{kW+W-1}]$，然后做低秩近似 $X_k^{cat}\approx A_k[B_{kW},\ldots,B_{kW+W-1}]$。其中 $A_k\in\mathbb{R}^{L\times r}$ 是这个层组共享的 token basis，$B_\ell\in\mathbb{R}^{r\times d}$ 是每层自己的重构矩阵。整条流水线可概括为：预填充阶段靠跨层对齐先分组、再做跨层低秩分解得到共享基；解码阶段在密集重构与选择性重构之间二选一。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长 prompt 预填充<br/>产出各层 K/V cache"] --> B["跨层对齐分析（CKA）<br/>主奇异向量跨层对齐 → 相邻 W 层分组（默认 W=4）"]
+    B --> C["跨层低秩分解（CLF）<br/>窗口内多层横向拼接 → 跨层 SVD<br/>得共享基 A_k 与每层重构矩阵 B_ℓ"]
+    C --> D{解码时重构}
+    D -->|密集重构：全 L token<br/>O(L) 计算瓶颈| E["X̂_ℓ = A_k · B_ℓ"]
+    D -->|选择性重构（SR）| F["近似注意力选 query 相关 token 集 S<br/>仅重构 S 对应行（|S| ≪ L）"]
+    E --> G["参与注意力 → 长上下文推理加速"]
+    F --> G
+```
 
 ### 关键设计
-1. **用 CKA 找到跨层共享 basis，而不是沿用 token 级相似度**:
 
-	- 功能：为跨层压缩提供可靠依据，解释为什么 MiniCache 式相邻层 token 合并会失败。
-	- 核心思路：论文先计算 token-wise cosine similarity，发现相邻层逐 token 向量并不够相似；随后计算中心化 Gram 矩阵之间的 CKA，观察到许多层对的整体几何结构高度一致。高 CKA 意味着主左奇异向量对齐，因此多层 cache 可以共享同一个低维 token basis。
-	- 设计动机：KV-cache 中真正可压缩的冗余藏在子空间结构里，而不是单个 token 表示的一一对应关系里。这个观察把跨层压缩从“硬合并相似 token”改成了“共享主方向”，因此可以在更高压缩率下保留信息。
+**1. 用 CKA 发现跨层共享的主奇异向量：把“跨层相似”从 token 级改成子空间级**
 
-2. **Cross-Layer Factorization 统一压缩一组层的 key/value cache**:
+xKV 的全部前提是先回答一个问题——不同层的 KV-cache 到底像不像。MiniCache 这类方法直接比相邻层逐 token 的余弦相似度，得出“挺像、可以合并”的结论，但实测在 Llama 上 1.3 倍压缩就掉到 45 分。xKV 改用 Centered Kernel Alignment（CKA）：它比较的不是单个 token 向量，而是两层 token 嵌入的中心化 Gram 矩阵，刻画整体几何结构是否一致。结果发现，逐 token 余弦相似度确实不高，但许多层对的 CKA 很高，而高 CKA 在数学上等价于两层主左奇异向量高度对齐（附录给了证明）。换句话说，真正可压缩的冗余不在“同一个 token 在相邻层很像”，而在“不同层的 token 空间由相近的主方向张成”。只看余弦相似度会严重低估跨层压缩空间，这既是 MiniCache 脆弱的根因，也直接决定了 xKV 选择“共享主方向”而非“合并相似 token”——这正是框架图里第一步“分组依据”的来源。
 
-	- 功能：把 $W$ 层原本需要存储的 $O(WLd)$ cache 压缩成 $O(Lr+Wrd)$ 的共享 basis 加层特定系数。
-	- 核心思路：在 prefill 阶段对同一窗口内的多层 cache 做在线 SVD。basis $A_k$ 只存一次，层间差异交给每层的 $B_\ell$ 表示；key 和 value 都可以用同一流程处理，默认窗口大小为 4，key/value rank 按 1:1.5 设置。
-	- 设计动机：单层 SVD 会为每层重复存储高度相似的主方向，压缩率上去后准确率快速下降。跨层分解把这些重复 basis 合并，因此同等压缩率下能保留更多有效信息。
+**2. 跨层低秩分解（Cross-Layer Factorization，CLF）：让一组层共享一套 token basis**
 
-3. **Selective Reconstruction 把重构成本从全序列转向 query 相关 token**:
+既然主奇异向量跨层对齐，xKV 就把相邻 $W$ 层（默认 $W=4$）编为一个窗口，在 prefill 阶段对窗口内多层 cache 做联合低秩分解。做法是把各层 cache 横向拼接成 $X_k^{cat}$，再做跨层 SVD，得到一个层组共享的 token basis $A_k\in\mathbb{R}^{L\times r}$ 和每层各自的小重构矩阵 $B_\ell\in\mathbb{R}^{r\times d}$。这样原本 $W$ 层要存 $O(WLd)$ 的 cache，被压成 $O(Lr+Wrd)$ 的“一份共享基 + $W$ 份层特定系数”；key 和 value 走同一流程，默认 key/value rank 按 1:1.5 配置。对比单层 SVD——它给每层各存一份高度相似的主方向，压缩率一上去就快速掉点（Llama 上 8.4 倍只有 45.71）——跨层分解把这些重复 basis 合并成一份，同等压缩率下保留的有效信息显著更多。这也解释了窗口从 1 扩到 4 时密集 xKV 平均分从 45.71 跳到 88.50：收益主要来自“跨层共享”本身，而不是“低秩”。
 
-	- 功能：避免解码阶段每步都重构 $L$ 个 token 的完整 cache，使压缩后的表示真正带来端到端加速。
-	- 核心思路：对每个解码步、每个 head 和每层，先用近似注意力选出 token 集合 $\mathcal{S}_{t,\ell,g}$，只计算 $\hat{X}_{\ell,g}[\mathcal{S}_{t,\ell,g},:]=A_k[\mathcal{S}_{t,\ell,g},:]B_{\ell,g}$。被选 token 数固定且远小于上下文长度，所以重构开销不再随 $L$ 线性增长。
-	- 设计动机：密集重构虽然省显存，但会变成计算瓶颈；ShadowKV 也用了选择性重构，却因为单层 SVD 保真不足而常要把 value 放到 CPU。xKV-SR 压缩质量更高，可以把 key/value 都留在 GPU HBM，避开 PCIe 传输瓶颈。
+**3. 选择性重构（Selective Reconstruction，SR）：把重构成本从全序列降到 query 相关的少数 token**
+
+压缩省了显存，但解码时若每步都把整层 $L$ 个 token 的 cache 重构出来（$\hat{X}_\ell=A_k B_\ell$），重构 FLOPs 会随 $L$ 线性增长、落到关键路径上，反而拖垮速度——论文实测密集重构在 122k 上下文把 kernel 速度压到约 0.4 倍。Selective Reconstruction 借助 LLM 注意力天然稀疏的特性：每个解码步、每个 head、每层先用近似注意力（landmark-guided chunk selector）选出当前 query 最可能关注的 token 集 $\mathcal{S}_{t,\ell,g}$，只重构这些行 $\hat{X}_{\ell,g}[\mathcal{S}_{t,\ell,g},:]=A_k[\mathcal{S}_{t,\ell,g},:]B_{\ell,g}$。由于 $|\mathcal{S}|$ 固定且远小于 $L$，重构开销不再随上下文长度增长。ShadowKV 最早提出选择性重构，但它底层是单层 SVD、保真不足，压缩 value 后掉点明显，只能把 value offload 到 CPU、走 PCIe 传输；xKV-SR 因为跨层分解保真更高，可以把 key/value 都留在 GPU HBM，避开传输瓶颈，最终在 122k 上下文拿到 4.23 倍端到端吞吐提升。
 
 ### 损失函数 / 训练策略
 xKV 不引入训练损失，也不需要微调。它是 post-training、plug-and-play 的推理时压缩方法：prefill 后对真实 prompt 产生的 cache 做在线低秩分解，解码时根据 query 选择性重构。作者还实现了自定义 randomized SVD kernel，用 16-bit GEMM 和 shifted Cholesky QR 降低在线分解开销；在 Llama-3.1-8B 的 64k 到 256k 上下文里，窗口大小为 4 时 SVD 时间约为 prefill 的 5.72% 到 1.24%。

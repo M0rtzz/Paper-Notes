@@ -42,6 +42,20 @@ tags:
 
 整篇论文想绕开"约束求解"这条老路：不再让 LLM 吐出一堆空间原语再交给求解器优化布局，而是把 VLM 当成一个会用 Blender 的 3D 设计师，让它在"看一眼渲染图 → 想一步 → 动一下 → 再看一眼"的循环里把场景搭起来。具体地，用户给一句自然语言描述 $d$，VLM agent（Gemini-3.0-Flash）按 ReAct 范式迭代：每一步它拿到当前场景的渲染图、物体元数据和历史 action 序列，推理后选一批 Action API 执行，Blender 引擎落地这些 action 并渲染出新图回传，如此往复，直到 agent 主动调用 Finish 或撞到最大步数 $T_M = 20$。场景里的 3D 资产不是预先准备好的素材库，而是临场生成——Create 一个物体时走 Z-Image（文生图）+ Hunyuan3D（图生 3D mesh）的 pipeline 现做。整个系统 training-free，全靠 prompt engineering 约束 agent 行为（系统 prompt 规定 +Z 向上、增量建场景、每步都要看渲染图验证等）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自然语言描述 d"] --> B["VLM Agent 推理<br/>(Gemini-3.0-Flash, ReAct)"]
+    B --> C["功能完备的 Action API 体系<br/>物体增删 / 6-DoF 操控 / 相机控制"]
+    C --> D["Blender 引擎执行<br/>Create 走 Z-Image + Hunyuan3D 现做资产"]
+    D --> E["渲染新图 + 纯视觉反馈闭环<br/>标注名称标签 + 坐标轴 HUD"]
+    E -->|"系统消息: BVH 碰撞 / 违规拒绝"| B
+    E -->|"资产不满意 → 自校正与质量控制: Delete 重做"| B
+    E -->|"满意但未达 T_M=20, 继续迭代"| B
+    E -->|"Finish 或 T_M=20"| F["开放词汇 3D 场景"]
+    G["人在回路编辑指令"] -.->|系统消息注入| B
+```
+
 ### 关键设计
 
 **1. 功能完备的 Action API 体系：把 Blender 代码抽象掉，让 VLM 只管高层空间规划**

@@ -38,6 +38,21 @@ tags:
 ### 整体框架
 NoOVD要解决的核心是开放词汇检测里的"训练-测试鸿沟"：训练时只有基类标注，所有未标注的新类别目标被当成背景压低分数，到测试时这些 proposal 仍然得分低、在后处理里被滤掉，于是新类别召回崩盘。整个框架建在冻结CLIP的两阶段检测器之上，思路是把CLIP自身的零样本前景识别能力贯穿到训练和推理两端。训练时，先用无参数的 K-FPN 从冻结CLIP的多层特征搭出特征金字塔，避免基类训练污染CLIP原有的新类别知识；再借类别无关的"前景/背景"文本描述把潜在新类别 proposal 从背景里捞出来，并通过自蒸馏把CLIP的区域特征灌进RoI head，让检测器在训练阶段就见过新类别而非把它们学成背景。推理时，R-RPN 复用同一套前景发现策略，给那些被RPN压低的新类别 proposal 重新加分，把它们救回 top-1000 送进RoI head。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → 冻结CLIP 图像编码器"] --> B["K-FPN：无参数知识保留金字塔<br/>插值+拼接+池化，5 层 512 维特征"]
+    B --> C["RPN 生成 proposal"]
+    subgraph DISC["新类别发现与嵌入"]
+        direction TB
+        D["投到 K-FPN 取特征<br/>与前景/背景文本算余弦相似度"] --> E["保留前景、剔除基类GT框<br/>得潜在新类别 proposal"]
+        E -->|训练| F["裁原图过冻结CLIP<br/>L2 自蒸馏注入 RoI head"]
+    end
+    C --> D
+    E -->|推理·复用发现策略| G["R-RPN：重加权 proposal 得分<br/>α·RPN得分+(1−α)·K-FPN前景得分"]
+    G --> H["重排取 top-1000 → RoI head → 开放词汇检测输出"]
+```
+
 ### 关键设计
 
 **1. K-FPN：用完全无参数的金字塔守住CLIP的新类别知识**

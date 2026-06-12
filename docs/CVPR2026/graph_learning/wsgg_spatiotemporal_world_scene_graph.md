@@ -45,6 +45,22 @@ tags:
 
 这篇论文要把视频场景图从"只画当前帧里看得见的物体"升级到"在统一世界坐标系下追踪所有物体（含被遮挡/离开画面的）"。输入单目视频 $V_1^T = \{I^t\}_{t=1}^T$，逐时刻输出世界场景图 $\mathcal{G}_{\mathcal{W}}^t$；世界状态 $\mathcal{W}^t = \mathcal{O}^t \cup \mathcal{U}^t$ 显式拆成可见集 $\mathcal{O}^t$ 与不可见集 $\mathcal{U}^t$，每个物体都用 3D OBB $\mathbf{b}_k^t \in \mathbb{R}^{8 \times 3}$ 锚定位置，关系则横跨 attention（3 类）、spatial（6 类）、contacting（17 类）三个轴。三种方法共用同一套 Global Structural Encoder + Spatial GNN + Relationship Predictor，真正的分歧只在一处——**不可见物体的特征怎么来**，论文借此把"如何实现物体恒存"切成三种递进的归纳偏置来对比。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目视频帧序列"] --> B["π³ 单目重建<br/>统一世界坐标系 + 持久 3D 线框"]
+    B --> C["逐物体多模态 token<br/>DINO 视觉 + 3D OBB + 运动 + 相机外参"]
+    C -->|可见物体：真实特征| H
+    C -->|不可见物体| P["PWG<br/>Last-Known-State 缓冲：冻结最后可见特征 + 过期度 Δ"]
+    C -->|不可见物体| M["MWAE<br/>遮挡当掩码 + Associative Retriever 关联检索补全"]
+    C -->|不可见物体| T["4DST<br/>可微时序 Transformer：Fusion Node + 双向时序自注意力"]
+    P --> H
+    M --> H
+    T --> H
+    H["共享主干（三法通用）<br/>Global Structural Encoder → Spatial GNN → Relationship Predictor"]
+    H --> O["世界场景图<br/>attention / spatial / contacting 三轴关系"]
+```
+
 ### 关键设计
 
 **1. PWG：用最后已知状态缓冲，实现最朴素的物体恒存**

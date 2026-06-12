@@ -48,6 +48,21 @@ tags:
 （3）评估三种泛化：single-object positional / seen-pair configuration / unseen-pair generalization。
 （4）取已泛化的 1-层 4-头模型做**注意力分解**：把 pre-softmax logit $QK^T$ 先做 weight-bias 分解，再把主项 $XW_{QK}X^T$ 按 $X=E+P$ 展开为 4 项，逐项可视化并消融。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可控 1D 合成数据集<br/>10 像素图 + left/right 模板<br/>双轴扫 N_pair / 布局 n2"] --> B["训练双编码器 CLIP<br/>简化:去 LN/MLP,1 层 4 头<br/>对比损失端到端"]
+    B --> C["三种泛化评估<br/>单物体 / seen-pair / unseen-pair<br/>→ 取已泛化模型"]
+    C --> D
+    subgraph D["注意力 logit 四项分解"]
+        direction TB
+        D1["QK^T 先做 weight-bias 分解<br/>主项 XW_QK X^T 占 76−91%"] --> D2["按 X=E+P 展开<br/>EE / EP / PE / PP 四信道"]
+        D2 --> D3["仅 EP 项 EW_QK P^T<br/>出现左→右水平梯度"]
+    end
+    D --> E["EP 项消融<br/>推理清零 → 准确率 0.9→0.5<br/>相关性升级为因果"]
+    E --> F["文本侧镜像 + 图文对齐<br/>EOT→首词偏置;旋转商空间对齐"]
+```
+
 ### 关键设计
 
 **1. 可控 1D 合成数据集 + 标签/布局双轴扫描：把"什么驱动空间泛化"变成可干涉变量**

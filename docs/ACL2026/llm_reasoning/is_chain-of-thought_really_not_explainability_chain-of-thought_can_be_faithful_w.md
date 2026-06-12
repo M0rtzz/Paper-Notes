@@ -49,6 +49,21 @@ tags:
 
 最后在 Llama-3.3-70B-Instruct（4-bit 量化）和 Qwen-3-32B（thinking mode）上重复关键实验验证大模型/推理模型的可推广性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["注入 hint 后答案被改变、但 CoT 未明示 hint 的样本"] --> B["复现 Biasing Features 基线<br/>3 数据集 × 3 模型 × 3 类 hint → 不忠实率 ≥80%"]
+    subgraph MI["多指标对照（两面独立的镜子）"]
+        direction TB
+        C1["Filler Tokens：CoT 换成 '...' 看预测是否变<br/>测上下文忠实"]
+        C2["FUR：unlearn 某推理步看预测是否变<br/>测参数忠实"]
+    end
+    B --> MI
+    MI --> D["faithful@k<br/>每例采 128 条 CoT，统计 k 次里至少一次说出 hint 的概率"]
+    D --> E["Causal Mediation Analysis（CMA）+ Logit Lens<br/>反事实拆出 NDE（绕过 CoT）与 NIE（经 CoT）"]
+    E --> F["结论：过半'不忠实'实为 incompleteness<br/>CoT 仍是可用的可解释工具"]
+```
+
 ### 关键设计
 
 **1. 多指标对照：用两面独立的镜子，照出 Biasing Features 的盲区**

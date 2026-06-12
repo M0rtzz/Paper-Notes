@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 PFlowNet 把 LVLM 的工作流分成两个解耦阶段：(i) **Flow Generation**：模型从 $p_\theta(Z|X)$ 采样一条 Perceptual Flow $Z = (z_0 \to z_1 \to \dots \to z_K)$，其中 $z_0$ 是 `<analyze>...</analyze>` 包裹的规划状态，$z_{\ge 1} = \langle r_k, c_k\rangle$ 由 `<localize>...</localize>` 包裹，每个状态都包含一个 RoI 框（相对坐标 0–1000）和一个描述性 caption；(ii) **Flow-Guided Reasoning**：模型基于 $Z$ 及其裁剪出来的视觉证据 $I_{RoI}$ 通过自回归生成最终答案 $Y$，整体联合分布因子化为 $p_\theta(Y, Z|X) = p_\theta(Z|X) p_\theta(Y|Z, \langle X, I_{RoI}\rangle)$。训练分两步：先用 SFT 在合成的 perceptual flow 数据 $(X, Z_s)$ 上做冷启动，再用变分 RFT 在 $(X, Y, E)$ 上优化 $p_\theta(Z|X)$，让它更接近 $P_V$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 X：图像 + 问题"] --> FG
+    subgraph FG["Flow Generation：采样感知流 Z（z₀→z₁…z_K）"]
+        direction TB
+        Z0["规划状态 z₀<br/>&lt;analyze&gt; 自然语言规划"] --> ZK["感知状态 z₁…z_K<br/>&lt;localize&gt; RoI 框 + caption"]
+    end
+    FG --> CROP["按 RoI 裁剪视觉证据 I_RoI"]
+    CROP --> FGR["Flow-Guided Reasoning<br/>自回归生成答案 Y"]
+
+    FG -.训练时优化感知分布.-> VRFT
+    subgraph VRFT["变分 RFT（先 SFT 冷启动，再 vRFT）"]
+        direction TB
+        D2["多维奖励 R<br/>对比视觉似然 × 信息增益"] --> RL["整形奖励 R_λ = R · ω_λ"]
+        D3["邻域几何整形 ω_λ<br/>仅罚专家邻域外轨迹"] --> RL
+        RL --> D1["Perceptual Flow + Sub-TB 变分目标<br/>任意子段平衡 → dense 监督"]
+    end
+```
+
 ### 关键设计
 
 **1. Perceptual Flow + Sub-TB 变分目标：把"看哪里、看到什么"结构化成可逐段打分的轨迹**

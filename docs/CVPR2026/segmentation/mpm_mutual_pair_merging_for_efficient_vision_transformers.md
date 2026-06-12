@@ -44,6 +44,22 @@ tags:
 
 输入图像经 ViT patch embedding 得到 $N$ 个 image tokens。MPM 模块被插入到 ViT 编码器的特定层之前（默认第 3 层和第 6 层，0-based index 2 和 5）。每次插入将 token 数量减少（最多减半但实际取决于数据），后续层在更少的 token 上运算。编码完成后，用保存的 merge map 通过 gather 操作恢复原始 $N$ 个 token 的序列，然后送入标准的 Mask Transformer 解码器做分割预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → ViT patch embedding<br/>得到 N 个 image token"] --> B["编码器前几层"]
+    subgraph SCHED["离散插入调度（默认第 3、6 层各插一次 MPM）"]
+        direction TB
+        C["互近邻配对合并<br/>余弦相似度 + 互近邻 + 均值融合"]
+        C -->|token 自适应减少| D["编码器中间层<br/>在更短序列上运算"]
+        D --> E["互近邻配对合并"]
+    end
+    B --> C
+    E -->|再次减少| F["编码器后续层"]
+    F --> G["merge map 组合与精确重建<br/>r* = r²∘r¹，gather 还原 N 个 token 网格"]
+    G --> H["Mask Transformer 解码器<br/>分割预测"]
+```
+
 ### 关键设计
 
 **1. 互近邻配对合并：用对称条件杜绝合并冲突**

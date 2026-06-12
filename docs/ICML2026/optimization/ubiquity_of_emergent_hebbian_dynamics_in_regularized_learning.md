@@ -79,13 +79,6 @@ $$\mathbb{E}_\epsilon[(\Delta_{\rm SGD}w)^\top \Delta_{\rm Hebb}w] = -\|x\|^2\bi
 - **SRE**（Standard Regression Experiment）：student-teacher 回归，输入/输出 32 维各向同性 Gaussian，2 万训练样本+2 千验证；transformer 变体用 2 层 4 头、32-d token embed。
 论文反复强调要用**较大 batch（256）**做对齐度量——因为定理是关于稳态期望的，小 batch SGD 噪声会掩盖 Hebbian 信号。
 
-### 损失函数 / 训练策略
-
-本文不引入新的训练目标，所有实验沿用标准 CE/MSE。两个标准设置为：
-- **SCE**（Standard Classification Experiment）：在 CIFAR-10 上训练 2 层 128-d tanh MLP，cross-entropy，默认 $\eta=0.01$、batch=256、50 epochs。
-- **SRE**（Standard Regression Experiment）：student-teacher 回归，输入/输出 32 维各向同性 Gaussian，2 万训练样本+2 千验证；transformer 变体用 2 层 4 头、32-d token embed。
-论文反复强调要用**较大 batch（256）**做对齐度量——因为定理是关于稳态期望的，小 batch SGD 噪声会掩盖 Hebbian 信号。
-
 ## 实验关键数据
 
 ### 主实验

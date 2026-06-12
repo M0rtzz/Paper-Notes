@@ -44,6 +44,32 @@ tags:
 
 这篇论文要解决的是"如何让 LLM 忠实模仿某个法官怎么想、怎么写"，而原始素材只有一堆非结构化的判决文书。整条流水线因此拆成两段：先把判决文书"提纯"成可训练的推理监督信号，再用一套轻量的两阶段 LoRA 把这些信号灌进模型。前一段是用多个 LLM agent 把判决里散落的推理逐句抽出来、再为每句反推一个合成问题，得到问答形式的推理指令集；后一段是先在法官全部判决上学文体、再在推理指令集上学逻辑，最后用多维指标（含作者辨识测试）验收个性化是否到位。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["法官原始判决文书<br/>（非结构化长文本）"]
+    subgraph PIPE["Synthetic-Organic 对齐管线（设计 1）"]
+        direction TB
+        B["提取推理声明<br/>GPT-4.1-mini"] --> C["验证提取质量<br/>GPT-4o-mini"]
+        C --> D["反推合成问题<br/>+ 验证保真度"]
+    end
+    A --> PIPE
+    PIPE --> E["推理指令集<br/>62,051 条问答"]
+    subgraph COLA["Chain-of-LoRA 两阶段训练（设计 2）"]
+        direction TB
+        F["阶段1：QLoRA + CLM<br/>学文体 → adapter 合并回基座"] --> G["阶段2：QLoRA 指令微调<br/>学推理逻辑"]
+    end
+    A --> F
+    E --> G
+    COLA --> H["个性化法官模型"]
+    subgraph EVAL["多维评估体系（设计 3）"]
+        direction TB
+        I["词汇/语义/风格相似度<br/>BLEU·BERTScore·POS-JSD"]
+        J["作者辨识测试<br/>分类器准确率 → 50%"]
+    end
+    H --> EVAL
+```
+
 ### 关键设计
 
 **1. Synthetic-Organic 对齐管线：把判决文书提纯成问答式推理监督**

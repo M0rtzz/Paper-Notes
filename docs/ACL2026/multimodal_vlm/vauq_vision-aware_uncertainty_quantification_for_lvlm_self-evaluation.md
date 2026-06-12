@@ -49,6 +49,22 @@ VAUQ 因此不只问“模型对回答是否自信”，而是问“模型的自
 
 原始 Image-Information Score 可写为 $IS_{blank}=H(y|empty,t)-H(y|v,t)$，其中 $empty$ 表示移除视觉输入。核心区域版本则使用 $IS_{core}=H(y|v_{masked},t)-H(y|v,t)$。最终分数为 $s_{VAUQ}=H(y|v,t)-\alpha\cdot IS_{core}$，也可理解为 $(1+\alpha)H(y|v,t)-\alpha H(y|v_{masked},t)$。分数越高，表示回答越可能不可靠；如果遮掉核心视觉证据后熵显著上升，$IS_{core}$ 较大，分数会被拉低，说明回答更可信。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 v + 文本 t"] --> B["LVLM 生成回答 y<br/>算原始预测熵 H(y|v,t)"]
+    B --> C
+    subgraph MASK["无监督核心区域遮蔽"]
+        direction TB
+        C["聚合中后层生成 token<br/>对视觉 patch 的注意力"] --> D["选 top-K% 重要 patch<br/>遮蔽得 v_masked"]
+        D --> E["算遮蔽后熵 H(y|v_masked,t)"]
+    end
+    E --> F["Image-Information Score<br/>IS_core = H(y|v_masked,t) − H(y|v,t)"]
+    B --> F
+    F --> G["熵与视觉信息线性组合<br/>s_VAUQ = (1+α)H(y|v,t) − α·H(y|v_masked,t)"]
+    G --> H["输出：风险分<br/>越高越可能幻觉/出错"]
+```
+
 ### 关键设计
 
 **1. Image-Information Score：用"去掉图像后预测不确定性涨多少"来量化这次回答到底吃了多少视觉证据**

@@ -39,7 +39,20 @@ tags:
 DAPPr 的优雅之处在于：一个本来需要在高维参数空间做约束优化的 "投影后验"，通过 over-parameterized assumption + Dirichlet 参数化 + Danskin 定理三件套，被压缩成 10 行 PyTorch 代码。
 
 ### 整体框架
-输入是普通分类样本 $(\bm{x}, \bm{y})$；模型 $\Phi'_{\bm{\psi}}$ 输出 Dirichlet 参数 $\bm{\alpha} = \mathrm{softplus}(\mathrm{logits}) + 1$；定义 Dirichlet possibility function $g_{\bm{\psi}}(\bm{p}|\bm{x})$；推理时用 $1 - \max_k \alpha_k / \alpha_0$ 算 aleatoric uncertainty、$K / \alpha_0$ 算 epistemic uncertainty（$\alpha_0 = \sum_k \alpha_k$ 即总 evidence）。训练时构造 "投影 + 逼近" 两步 pipeline，最终在 cross-entropy 下推出 closed-form 的 surrogate loss。
+输入是普通分类样本 $(\bm{x}, \bm{y})$；模型 $\Phi'_{\bm{\psi}}$ 输出 Dirichlet 参数 $\bm{\alpha} = \mathrm{softplus}(\mathrm{logits}) + 1$，由此定义一个**学习侧**的 Dirichlet possibility function $g_{\bm{\psi}}(\bm{p}|\bm{x})$。训练的核心是个"对齐"问题：另起一条**目标侧**支路，把参数空间的 possibilistic 后验 $\pi(\bm{\theta}|\mathcal{D})$ 经 supremum 投影到 simplex 得到投影后验 $g^*_{\bm{x}}(\bm{p}|\mathcal{D}) \propto \exp(-\ell)$，再用 maxitive pseudo-divergence 把学习侧 $g_{\bm{\psi}}$ 逼近目标侧 $g^*$。这个 min-max 目标经 Danskin 定理 + Dirichlet 参数化在 cross-entropy 下塌缩成 closed-form 的 surrogate loss，外加一个 spurious evidence 正则。推理时直接用 $\bm{\alpha}$：$1 - \max_k \alpha_k / \alpha_0$ 算 aleatoric uncertainty、$K / \alpha_0$ 算 epistemic uncertainty（$\alpha_0 = \sum_k \alpha_k$ 即总 evidence）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入样本 (x, y)"] --> B["骨干网络 Φ'_ψ<br/>输出 Dirichlet 参数 α = softplus(logits)+1"]
+    B --> C["学习侧：Dirichlet possibility function<br/>g_ψ(p|x)"]
+    A --> D["Possibilistic Posterior + Supremum 投影<br/>π(θ|D) 投到 simplex → 目标侧 g*(p|D) ∝ exp(−ℓ)"]
+    C --> E["Maxitive Pseudo-divergence 训练目标<br/>D_max(g_ψ ‖ g*) → Danskin → closed-form p̃*"]
+    D --> E
+    E --> F["Spurious Evidence 正则<br/>仅惩罚错误类别 evidence ‖(1−y)⊙α‖²"]
+    F --> G["surrogate 交叉熵 loss（约 10 行直接替换 CE）"]
+    B -->|推理| H["不确定性<br/>aleatoric 1−max α_k/α_0 · epistemic K/α_0"]
+```
 
 ### 关键设计
 

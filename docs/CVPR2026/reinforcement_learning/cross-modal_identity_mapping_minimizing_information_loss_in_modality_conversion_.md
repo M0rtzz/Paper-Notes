@@ -33,7 +33,20 @@ LVLM 在图像描述任务中常常遗漏或错误表示关键视觉内容。作
 ## 方法详解
 
 ### 整体框架
-CIM 要解决的是「怎么在没有细粒度标注的情况下，判断一段 caption 丢了多少视觉信息」。它的巧思是把这个跨模态评估问题转译成一个图像检索问题：让 LVLM 给同一张图采样出 $G$ 段候选 caption，把每段 caption 当查询去文本检索库里捞回 top-K 张相关图像，然后只看「捞回来的这堆图长得像不像、跟原图像不像」就能反推 caption 的好坏——caption 越细，捞回的图越聚成一簇；caption 越准，捞回的图越贴近源图。整条 pipeline 因此不碰任何人工标注，捞图得到的两个统计量直接当奖励喂给 GRPO 去更新模型。
+CIM 要解决的是「怎么在没有细粒度标注的情况下，判断一段 caption 丢了多少视觉信息」。它的巧思是把这个跨模态评估问题转译成一个图像检索问题：让 LVLM 给同一张图采样出 $G$ 段候选 caption，把每段 caption 当查询去文本检索库里捞回 top-K 张相关图像，然后只看「捞回来的这堆图长得像不像、跟原图像不像」就能反推 caption 的好坏——caption 越细，捞回的图越聚成一簇；caption 越准，捞回的图越贴近源图。捞图后兵分两路：一路用 **GRC** 量「细不细」，一路用 **QIR** 量「准不准」，两路再合成单一奖励 $\Upsilon$ 经组内归一化喂给 **GRPO** 反向更新 LVLM。整条 pipeline 因此不碰任何人工标注。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源图像 v"] --> B["LVLM 采样 G 段候选 caption"]
+    B --> C["每段 caption 经 SBERT 文本检索<br/>捞回 top-K 相关图像"]
+    C --> D["GRC<br/>检索图聚集度 → 量细粒度"]
+    C --> E["QIR<br/>检索图与源图相似度 → 量准确性"]
+    D --> F["CIM 奖励 Υ = GRC + β·QIR"]
+    E --> F
+    F --> G["组内归一化得 advantage<br/>GRPO 更新 LVLM"]
+    G -.反馈.-> B
+```
 
 ### 关键设计
 

@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 ScaleFormer 要解决的是「训练在 200–256px 小图、推理却要在 800–2000px 大图上跑」的跨尺度泛化问题。它的核心思路是把分辨率变化重新理解成序列长度变化：固定每个 patch 的空间大小，图像变大时只是 token 序列变长。输入一张 PAN 图 $\mathbf{P} \in \mathbb{R}^{H \times W \times 1}$ 和上采样后的 MS 图 $\mathbf{L} \in \mathbb{R}^{H \times W \times C}$，先由 Scale-Aware Patchify 切成 5D 张量 $\mathbf{P}_{5d} \in \mathbb{R}^{B \times T \times C \times h \times w}$（$T$ 是序列长度），再依次过 Single Transformer（空间域与序列域分别建模）和 Cross Transformer（PAN-MS 跨模态融合），最后回归出高分辨率多光谱图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["PAN 图 P (H×W×1)"] --> SAP
+    L["上采样 MS 图 L (H×W×C)"] --> SAP
+    SAP["Scale-Aware Patchify<br/>分桶采样切成 5D token 序列 (B×T×C×h×w)"] --> ST
+    subgraph ST["解耦空间-序列建模（Single Transformer）"]
+        direction TB
+        SPA["Spatial 自注意力<br/>patch 内建模空间关系"] --> SEQ["Sequence 自注意力 + RoPE<br/>跨 patch 建模、向未见序列长度外推"]
+    end
+    ST --> CT["Cross Transformer<br/>MS 交叉查询 PAN，注入高频空间细节"]
+    CT --> HEAD["回归头"]
+    HEAD --> OUT["HRMS 高分辨率多光谱图"]
+```
+
 ### 关键设计
 
 **1. Scale-Aware Patchify：把分辨率泛化变成序列长度泛化**

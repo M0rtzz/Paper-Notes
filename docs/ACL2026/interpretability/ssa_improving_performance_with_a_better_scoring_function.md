@@ -53,10 +53,6 @@ tags:
 
 SSA 对每个 logit 先做变换 $(1+b|x|)^{sgn(x)n}$ 再归一化，其中 $b>0$、$n\geq1$ 均可训练：正值以多项式速度增长，负值向 0 衰减，且当 $b=1/m,\,n=m,\,m\to\infty$ 时可退化逼近指数函数，因此 Softmax 是它的极限特例。关键差别在于，面对全局放大或单个 token 过强时，Softmax 会指数级集中而 SSA 只按多项式速度集中，给模型更多机会保留次强但仍相关的上下文 token，从而缓解上面诊断出的饱和。
 
-**3. 跨架构验证设计：确认收益不止存在于玩具任务**
-
-为排除“只在合成数字任务上有效”的怀疑，作者把 SSA 同时放进 decoder-only Transformer 和 encoder-only BabyBERTa，在完全相同的训练设置下与 Softmax 对照，并额外比较 temperature Softmax、Sparsemax、Entmax、CosFormer、SA-Softmax 等替代评分函数。只有当 SSA 在真实 NLP benchmark 和语法探针上也稳定超过这些基线，才能说明它是一项通用的 attention scoring 改动，而非任务特化的 trick。
-
 ### 损失函数 / 训练策略
 
 合成 ICL 中线性函数任务用平方误差、量词任务用交叉熵，训练 500,000 steps、batch size 64。decoder-only 实验为 114M Nemotron-style 模型（12 层、24 头、hidden size 768），在 FineWeb 10B tokens 上训练 22k steps。BabyBERTa 实验在 AO-CHILDES 上从零训练，并比较 SSA 固定指数 $n=1.5$ 与 $n=2$ 两个版本。

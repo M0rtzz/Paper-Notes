@@ -43,7 +43,22 @@ tags:
 
 ### 整体框架
 
-DaID 在标准 MLLM 解码过程中，利用各层对视觉 token 的注意力分布实时选择两个锚定层：Spotlight 层（视觉注意力最高 → 放大视觉信号）和 Shadow 层（Spotlight 之前视觉注意力最低 → 抑制语言先验），通过双锚对比公式校准最终 logits。整个过程不需要额外前向传播。
+DaID 在标准 MLLM 解码过程中，利用各层对视觉 token 的注意力分布实时选择两个锚定层：Spotlight 层（视觉注意力最高 → 放大视觉信号）和 Shadow 层（Spotlight 之前视觉注意力最低 → 抑制语言先验），通过双锚对比公式校准最终 logits，并用自适应合理性约束把校准限制在语法合理的候选词上。整个过程不需要额外前向传播。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本指令<br/>单次前向传播"] --> B
+    subgraph S1["视觉注意力分数(VAS)与动态锚定"]
+        direction TB
+        B["逐层计算 VAS<br/>各头对视觉 token 的平均注意力"] --> C["Spotlight 层<br/>argmax VAS：视觉感知峰值"]
+        B --> D["Shadow 层<br/>Spotlight 前 argmin VAS：语言噪声主导"]
+    end
+    C --> E["双锚对比解码<br/>加亮视觉信号 + 去除语言惯性"]
+    D --> E
+    E --> F["自适应合理性约束<br/>只校准概率 ≥ γ·最大概率 的候选"]
+    F --> G["输出 token"]
+```
 
 ### 关键设计
 

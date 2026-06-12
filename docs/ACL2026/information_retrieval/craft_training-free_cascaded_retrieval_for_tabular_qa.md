@@ -45,6 +45,25 @@ tags:
 
 CRAFT 的核心命题是：不靠任何数据集特定微调，单凭精心编排的级联管道加现成预训练模型，就能在表格检索上打平甚至超过微调 SOTA。给定一条自然语言问题，系统先做离线预处理（Gemini-1.5-Flash 生成查询子问题、为每个表格补一段标题和描述，Sentence Transformer 把表格行按语义相关性排好序），再走「稀疏粗筛 → 语义中筛 → 神经精排」三级漏斗：从 16.9 万/41.9 万张表里逐级收窄到最终 Top 结果，交给端到端 LLM 生成答案。整条链路一个权重都不更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["自然语言问题<br/>Gemini 生成子问题"]
+    subgraph PRE["Mini-table 构建与表格增强（离线）"]
+        direction TB
+        T["表格库 16.9万 / 41.9万张"] --> MT["Gemini 补标题 + 描述<br/>Sentence Transformer 选 top-5 行 → mini-table"]
+    end
+    subgraph CAS["三阶段级联检索"]
+        direction TB
+        S1["Stage 1 · SPLADE 稀疏粗筛<br/>全库 → 5000 候选"] --> S2["Stage 2 · bi-encoder 语义中筛<br/>→ Top-K"] --> S3["Stage 3 · 最强嵌入模型精排<br/>→ Top 结果"]
+    end
+    Q --> S1
+    MT --> S1
+    S3 --> ANS["LLM 端到端生成答案"]
+    MODEL["数据集特定模型选择<br/>按数据特征配预训练模型"] -.-> S2
+    MODEL -.-> S3
+```
+
 ### 关键设计
 
 **1. 三阶段级联检索：让模型「越往后越强、越往后越少」**

@@ -42,6 +42,22 @@ HawkesLLM 把多变量 Hawkes 点过程嫁接到 LLM 智能体文本模拟循环
 ### 整体框架
 论文把"边写边读"的文本级联建模在一张固定有向图 $\mathcal{G}_0=(\mathcal{N},\mathcal{E})$ 上，每个节点是一个"文本生成智能体"，每个事件 $e_m=(\tau_m, n_m, x_m)$ 是一条"时间戳—节点—文本"三元组。核心做法是把"调度"和"语言化"彻底拆开：从种子事件 $e_0$ 出发循环 $L$ 步，每一步都先让拟合好的多变量 Hawkes 过程决定**何时由哪个节点说话**、并据此打分挑出**该回看哪些历史节点**作为压缩记忆 $\mathcal{M}_t$，再把这段记忆连同节点风格指令 $a_{n_t}$ 拼成 prompt $p_t$ 交给 LLM 采样下一条文本 $x_t \sim g_{\text{LLM}}(\cdot\mid p_t)$。整条流水线里 LLM 只负责写字，时间、节点、记忆全由 Hawkes 控制，于是语义不确定性的传播就被框成一个可监控、可读的轨迹问题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["事件流 + 种子事件 e₀"]
+    subgraph H["多变量 Hawkes 时序影响层"]
+        direction TB
+        B["拟合 Hawkes 参数 μ、α、β<br/>得激励矩阵 G 与衰减率 β"] --> C["thinning 采样下一步的<br/>时间 τ 与活跃节点 n"]
+    end
+    A --> B
+    C --> D["Hawkes 记忆策略<br/>节点级衰减打分 → 阈值 + Top-k → 加权压缩记忆"]
+    D --> E["拼 prompt：节点风格指令 + 加权记忆"]
+    E --> F["LLM 生成下一条事件文本 x"]
+    F -->|"append 完成事件，回到采样下一步"| C
+    F --> G["局部/全局漂移诊断 + 局部语义对齐<br/>对齐度 S + 全局/局部漂移"]
+```
+
 ### 关键设计
 
 **1. 多变量 Hawkes 时序影响层：把"谁该说话、谁影响谁"写成可读的参数化点过程**

@@ -45,6 +45,23 @@ tags:
 ### 整体框架
 两层 auxiliary modality learning：(1) **Model-level** —— 先在带轨迹的数据集 $\mathcal{D}^{trj}$ 上训一个双模态训练器 $g$（同时吃轨迹嵌入 $\mathbf{E}_\mathbf{p}$、结构嵌入 $\mathbf{E}_\mathbf{x}$、温度嵌入 $\mathbf{E}_T$），然后用闭式岭回归把 $g$ 的合并隐藏表示 $\mathbf{H}=\mathbf{H}_\mathbf{p}+\mathbf{H}_{\mathbf{x},T}$ 蒸到预测器 $f_1$ 的编码器上，再 finetune；(2) **Data-level**（可选）—— 给只有结构的数据集 $\mathcal{D}^{str}$ 训预测器 $f_2$ 时，编码器从 $g$ 的结构编码器初始化、解码器从 $f_1$ 的解码器初始化，把轨迹数据集学到的动力学知识跨数据集迁移。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["原子轨迹（特权模态，仅训练时）<br/>Fourier 频域 → MOMENT 时序嵌入 E_p"]
+    X["平衡结构<br/>SevenNet → 三阶多项式展开 E_x"]
+    T["温度 E_T"]
+    P --> G
+    X --> G
+    T --> G
+    G["双模态训练器 g + 结构-only 正则<br/>H = H_p + H_x,T，强约束结构通路单独也预测准"]
+    G -->|闭式岭回归蒸馏初始化| F1["预测器 f1<br/>编码器继承隐表示 H，解码器复用 g_dec"]
+    F1 -->|"在 D_trj 上微调（推理不再喂轨迹）"| OUT1["结构-only 推理 → 输运量<br/>MSD / 扩散率 / 电导率"]
+    G -.结构编码器 W_x,T.-> F2["跨数据集初始化（data-level）<br/>预测器 f2：编码器←g 结构编码器，解码器←f1 解码器"]
+    F1 -.解码器 f_dec.-> F2
+    F2 --> OUT2["结构-only 数据集 D_str<br/>跨数据集 / 跨离子物种迁移"]
+```
+
 ### 关键设计
 
 **1. 双模态训练器 $g$ + 结构-only 正则：逼结构编码器在有轨迹时也学到真东西**

@@ -42,6 +42,24 @@ CrysLDNet 把"扩散预训练"从原始晶体特征空间搬到 VAE 学到的平
 ### 整体框架
 CrysLDNet 要解决的是"无标注晶体多、但 DFT 标注稀缺"这个矛盾：怎么在 38 万条无标注晶体上预训练出一个迁移性强的结构编码器。它的做法是把 Stable Diffusion 那套"先 VAE 压到潜空间、再在潜空间扩散"的范式搬到晶体上——先用一个对称性感知的 VAE 把异构的晶体输入 $\mathcal{M}=(\mathbf{A},\mathbf{X},\mathbf{L})$（原子类型 one-hot $\mathbf{A}\in\mathbb{R}^{N\times k}$、3D 坐标 $\mathbf{X}\in\mathbb{R}^{N\times 3}$、晶格基 $\mathbf{L}\in\mathbb{R}^{3\times 3}$）统一编码进连续平滑的潜空间 $\mathbf{Z}\in\mathbb{R}^{N\times d}$，再只在这个潜空间上做 flow matching 扩散去精炼编码器。整套预训练分两阶段（VAE 重构 + 潜空间扩散），下游只把精炼好的 PDDFormer 编码器接上 READOUT + MLP 按性质微调，输出 $\hat{y}=\text{MLP}_\lambda(\text{READOUT}(\mathcal{E}_\phi(\mathcal{M})))$；由于所有扩散和解码器只看潜表示，编码器换成别的等变 Transformer 也能直接跑。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无标注晶体 M = (A, X, L)<br/>38 万 GNoME 结构"] --> B
+    subgraph S1["对称性感知的 VAE 编码器（Stage 1）"]
+        direction TB
+        B["PDDFormer 编码器 E_φ"] --> C["连续平滑潜空间 Z"]
+        C --> D["三个 MLP 解码器重构 A / X / L + KL 正则"]
+    end
+    C --> E
+    subgraph S2["潜空间 Flow Matching 扩散（Stage 2）"]
+        direction TB
+        E["线性插值 Z^t = (1−t)·Z^0 + t·Z^1"] --> F["DiT 去噪 F_θ 预测干净 Z<br/>扩散梯度联合回传精炼 E_φ"]
+    end
+    F --> G["双重精炼后的编码器 E_φ"]
+    G -->|"下游按性质微调"| H["READOUT + MLP → 性质预测 ŷ"]
+```
+
 ### 关键设计
 
 **1. 对称性感知的 VAE 编码器：把异构晶体摊平成统一潜空间**

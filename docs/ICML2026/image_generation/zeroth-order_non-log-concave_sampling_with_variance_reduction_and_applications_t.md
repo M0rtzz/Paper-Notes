@@ -45,24 +45,26 @@ tags:
 
 在逆问题中，观测满足 $y=A(x)+\xi$，其中 $A$ 只能黑盒查询。后验可写为 likelihood 与 prior 的乘积，likelihood score 用零阶估计，prior score 用预训练 SGM $S_\theta(x,\sigma)$ 近似。ZO-APMC 在每个 annealing step 同时使用 $g_k$ 和带权重的 score prior，形成 $x_{k+1}=x_k-\gamma(g_k-\alpha_k S_\theta(x_k,\sigma_k))+$ Langevin noise。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["黑盒逆问题：仅能查询前向算子 A 与观测 y"] --> B["方差缩减零阶梯度估计器 g_k"]
+    B -->|"概率 p"| C["大 batch b：完整零阶估计"]
+    B -->|"概率 1−p"| D["小 batch b′：递推估计梯度变化<br/>g_k = g_k−1 + Δ"]
+    C --> E["似然梯度 g_k（仅函数查询）"]
+    D --> E
+    P["预训练 SGM 先验 score<br/>S_θ(x_k, σ_k)"] --> F["ZO-APMC 朗之万更新<br/>x_k+1 = x_k − γ(g_k − α_k S_θ) + 噪声"]
+    E --> F
+    F -->|"退火：衰减 σ_k, α_k 后迭代"| B
+    F --> G["收敛 → 黑盒后验样本"]
+```
+
 ### 关键设计
-1. **方差缩减零阶梯度估计器**:
+**1. 方差缩减零阶梯度估计器：用迭代点相关性换计算量**：朴素零阶估计要把方差压下去，batch size 得随维度 $d$ 线性增长，在 MRI、黑洞成像这类高维问题里意味着海量前向调用和内存。这一设计专治该痛点：以概率 $p$ 计算一个 batch size 为 $b$ 的完整零阶估计，以概率 $1-p$ 沿用上一轮估计 $g_{k-1}$、只用很小的 batch $b'$ 去估计相邻两步的梯度变化 $\tilde{\nabla}f_\mu(x_k,u)-\tilde{\nabla}f_\mu(x_{k-1},u)$。因为相邻 Langevin 迭代点通常很近，这个差分的方差远小于直接估梯度。本质上是把“每步重估绝对梯度”换成“间歇刷新 + 平时只跟踪梯度变化”，用迭代点的强相关性换来每步仅 $O(1)$ 次函数查询、batch 不再依赖维度。
 
-	- 功能：降低 ZO-LMC 每步的函数查询和内存成本，同时保持可分析的估计误差。
-	- 核心思路：以概率 $p$ 计算一个 batch size 为 $b$ 的完整零阶估计；以概率 $1-p$ 使用上一轮估计 $g_{k-1}$，再用很小的 batch $b'$ 估计 $\tilde{\nabla}f_\mu(x_k,u)-\tilde{\nabla}f_\mu(x_{k-1},u)$。因为相邻 Langevin iterates 距离通常很近，这个差分的方差比直接估计梯度小。
-	- 设计动机：朴素零阶估计靠增大 batch size 压方差，代价随维度变高；递推式差分把“每步重估绝对梯度”改为“跟踪梯度变化”，用相关性换计算量。
+**2. 以相对 Fisher 信息刻画非对数凹采样收敛（本文理论支柱，不是 pipeline 里的一步）**：非对数凹分布常常多模态，传统强凸/强 log-concave 分析失效。作者借用非凸优化里的“驻点分析”思想，把相对 Fisher 信息 $\mathrm{FI}(\nu\|\pi)$ 看成 KL 散度在 Wasserstein 空间里的梯度范数——就像优化里用梯度范数定义驻点。Theorem 1 据此证明：时间平均分布达到 $\varepsilon$-相对 FI 误差需 $O(d^7 L_m^4/\varepsilon^4)$ 次迭代，但每步函数查询是 $O(1)$；若目标再满足 Poincaré 不等式，还能转成 squared TV 距离的保证。FI 提供了一个既能表达“score 已对齐”、又能导出 TV 收敛的中间指标，这也是首个零阶非对数凹采样的非渐近收敛刻画。
 
-2. **以相对 Fisher information 做非对数凹采样分析**:
-
-	- 功能：在不假设强 log-concavity 的情况下给出收敛刻画。
-	- 核心思路：把 $FI(\nu\|\pi)$ 看成 KL 在 Wasserstein 空间中的梯度范数，类似非凸优化中用梯度范数定义 stationary point。Theorem 1 证明时间平均分布达到 $\varepsilon$-relative FI 误差需要 $O(d^7 L_m^4/\varepsilon^4)$ 次迭代，但每步函数查询是 $O(1)$；若目标满足 Poincare inequality，还可转成 squared TV distance 保证。
-	- 设计动机：非对数凹分布可能多模态，传统强凸/强 log-concave 分析不适用。FI 提供了一个既能表达“score 已对齐”，又能导出 TV 收敛的中间指标。
-
-3. **ZO-APMC 黑盒后验采样**:
-
-	- 功能：在只有 forward model evaluations 的逆问题中，用 SGM prior 生成后验样本。
-	- 核心思路：likelihood 由黑盒 forward operator 和观测定义，其梯度用方差缩减 ZO estimator；prior score 由预训练 SGM 在噪声尺度 $\sigma_k$ 上提供；annealing schedule 同时降低 prior smoothing level 和权重 $\alpha_k$，让采样先在平滑 prior 下逃离低概率平台，再逐渐强调真实 likelihood。
-	- 设计动机：SGM prior 很强，但现有 posterior sampler 常默认能访问 forward gradient。ZO-APMC 让不可微、闭源、PDE simulator 或规则系统也能进入同一套 Bayesian reconstruction 框架。
+**3. ZO-APMC 黑盒后验采样：让不可微前向算子也能用 SGM 先验**：强大的 SGM 先验通常默认能访问前向模型梯度，可现实里前向算子常是不可微、闭源或 PDE simulator。ZO-APMC 把上面的方差缩减零阶估计器嵌进带退火的后验采样：likelihood 由黑盒前向算子和观测定义、其梯度用零阶估计 $g_k$，先验 score 由预训练 SGM $S_\theta(x_k,\sigma_k)$ 提供，更新式为 $x_{k+1}=x_k-\gamma(g_k-\alpha_k S_\theta(x_k,\sigma_k))+$ Langevin noise。退火 schedule 同时衰减先验平滑尺度 $\sigma_k$ 和权重 $\alpha_k$，让采样先在平滑先验下逃离低概率平台、再逐步加重真实 likelihood。这样不可微、闭源或仿真器型的前向算子也能进入同一套有收敛保证的贝叶斯重建框架。
 
 ### 损失函数 / 训练策略
 本文不训练新的生成模型；实验使用已有或定制训练的 SGM prior。算法侧的关键超参包括 step size $\gamma$、ZO smoothing $\mu$、刷新概率 $p$、大/小 batch size $b,b'$，以及 annealing schedule $\alpha_k=\max\{\alpha_0\rho_1^k,1\}$、$\sigma_k=\max\{\sigma_0\rho_2^k,\sigma_{min}\}$。理论中这些参数被设置成随迭代数和维度缩放的形式，以平衡零阶估计 bias、估计方差和 Langevin 离散误差。

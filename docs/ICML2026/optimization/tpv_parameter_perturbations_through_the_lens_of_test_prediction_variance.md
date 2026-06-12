@@ -77,9 +77,6 @@ $$\mathrm{TPV}_{\mathrm{label}}\approx\sigma_\varepsilon^2\sum_{i=1}^r B_{ii}/s_
 ### 损失函数 / 训练策略
 TPV 本身不是训练目标，文中给出的训练相关结论只有定理 4.3：squared loss 下 SGD 稳态噪声的 TPV 近似为 $\tfrac{\eta\sigma_\varepsilon^2}{2b}\mathrm{Tr}(\nabla_w^2 L(w^\star))$，即"学习率/批量比 × 平方残差 × Hessian 迹"，恢复宽极小直觉；量化噪声给出 $\tfrac{\delta^2}{12}\mathrm{Tr}(\nabla_w^2 L(w^\star))$。
 
-### 损失函数 / 训练策略
-TPV 本身不是训练目标，文中给出的训练相关结论只有定理 4.3：squared loss 下 SGD 稳态噪声的 TPV 近似为 $\tfrac{\eta\sigma_\varepsilon^2}{2b}\mathrm{Tr}(\nabla_w^2 L(w^\star))$，即"学习率/批量比 × 平方残差 × Hessian 迹"，恢复宽极小直觉；量化噪声给出 $\tfrac{\delta^2}{12}\mathrm{Tr}(\nabla_w^2 L(w^\star))$。
-
 ## 实验关键数据
 
 ### 主实验

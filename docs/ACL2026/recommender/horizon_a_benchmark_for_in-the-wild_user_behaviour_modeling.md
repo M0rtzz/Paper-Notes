@@ -45,6 +45,19 @@ tags:
 
 HORIZON 从 Amazon Reviews 2023 出发，把所有品类的用户交互合并成一条统一历史（54M 用户、35M 商品、486M 交互），并以 $\tau$=2020 作为全局时间截断点。在此之上定义三个任务：Task 1 是传统 next-item 推荐，但配上四象限解耦评估；Task 2 让 LLM 把用户历史改写成搜索查询再检索；Task 3 让 LLM 直接生成未来若干商品的描述来建模长期偏好演化。三个任务共用同一份跨领域、时序连续的数据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Amazon Reviews 2023<br/>全品类用户交互"] --> B["合并为统一用户历史<br/>54M 用户 / 35M 商品 / 全局截断 τ=2020"]
+    B --> C["四象限解耦评估协议（Task 1）<br/>已见/未见用户 × 截断前/截断后"]
+    B --> D["LLM 查询改写推荐（Task 2）<br/>生成 10 条搜索查询"]
+    B --> E["LLM 长期用户建模（Task 3）<br/>生成未来 10 个商品描述"]
+    D --> F["BLAIR 编码 + ANN 检索 Top-K"]
+    E --> F
+    C --> G["泛化诊断<br/>NDCG@10 / Recall@10 / Precision@K"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 四象限解耦评估协议（Task 1）：把时间泛化和用户泛化拆成两条正交的轴**

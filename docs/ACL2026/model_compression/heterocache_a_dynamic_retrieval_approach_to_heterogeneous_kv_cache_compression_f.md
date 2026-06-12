@@ -45,6 +45,26 @@ tags:
 
 HeteroCache 分三步：(1) **头分类**——基于稳定性和相似性将头分为 full heads（保留完整上下文）和 compressed heads（压缩缓存）；(2) **细粒度缓存分配**——为 compressed heads 中的漂移头分配更大预算；(3) **稀疏监控+异步检索**——full heads 持续监控注意力漂移，显著漂移时异步从 CPU 预取数据更新 compressed heads。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["校准数据 profiling<br/>统计各头 top-k 重叠系数"] --> B
+    subgraph B["基于稳定性和相似性的头分类"]
+        direction TB
+        B1["时间稳定性：稳定头 vs 漂移头"]
+        B2["层内相似性聚类：代表头 vs 冗余头"]
+    end
+    B --> C["full heads（稳定头 + 代表头）<br/>GPU 保留完整上下文"]
+    B --> D["compressed heads（漂移头 + 冗余头）<br/>压缩缓存"]
+    D --> E["细粒度缓存预算分配<br/>漂移越快分到越大缓存"]
+    C --> F["稀疏监控注意力漂移"]
+    E --> F
+    F -->|漂移超阈值| G["异步从 CPU 预取 KV<br/>更新 compressed heads"]
+    F -->|多数步漂移稳定| H["跳过检索（约 85% 步）"]
+    G --> I["224K 上下文 3× 解码加速"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 基于稳定性和相似性的头分类：先给每个注意力头定角色**

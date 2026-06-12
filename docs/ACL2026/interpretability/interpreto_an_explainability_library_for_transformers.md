@@ -43,7 +43,32 @@ Interpreto 的系统由两个主模块组成：`interpreto.attributions` 和 `in
 ### 整体框架
 attribution pipeline 通常有三步：实例化 explainer，输入 HuggingFace model/tokenizer 和待解释样本；计算 attribution，可指定分类目标或生成输出 token；最后可视化高亮 token、word 或 sentence。分类示例中，LIME 解释 BERT emotion classifier，显示 “thrilled” 驱动 joy 类；生成示例中，Occlusion 解释 Qwen3-0.6B 的某个输出 token，并展示输入-output attribution matrix 的切片。
 
-concept pipeline 有四步。第一步用 `ModelWithSplitPoints` 包装 HuggingFace 模型，指定 split points，并在数据集上提取激活。第二步用 Semi-NMF、PCA、ICA、SAE 等方法学习 concept space。第三步用 top-k activating examples、tokens/ngrams 或 LLM labels 为概念赋予人类可读标签。第四步通过 concept-to-output gradients 或 concept x gradients 估计概念对预测的贡献。
+concept pipeline 有四步。第一步用 `ModelWithSplitPoints` 包装 HuggingFace 模型，指定 split points，并在数据集上提取激活。第二步用 Semi-NMF、PCA、ICA、SAE 等方法学习 concept space。第三步用 top-k activating examples、tokens/ngrams 或 LLM labels 为概念赋予人类可读标签。第四步通过 concept-to-output gradients 或 concept×gradients 估计概念对预测的贡献。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["HuggingFace 模型 + tokenizer + 样本"]
+    M --> ATTR
+    M --> CONC
+
+    subgraph ATTR["统一 attribution API（覆盖分类与生成）"]
+        direction TB
+        A1["实例化 explainer<br/>扰动法 / 梯度法"] --> A2["计算 attribution<br/>指定分类目标或输出 token"]
+        A2 --> A3["可视化高亮<br/>token / word / sentence"]
+    end
+
+    subgraph CONC["端到端 concept pipeline"]
+        direction TB
+        C1["切分 + 提取激活<br/>ModelWithSplitPoints"] --> C2["学习概念空间<br/>Semi-NMF / PCA / ICA / SAE"]
+        C2 --> C3["概念标注<br/>top-k 样本 / n-gram / LLM 标签"]
+        C3 --> C4["估计概念贡献<br/>concept-to-output gradients"]
+    end
+
+    ATTR --> OUT["解释结果"]
+    CONC --> OUT
+    OUT -.-> DEMO["demo gallery + runnable snippets<br/>浏览器探索预计算解释 → 复制最小代码"]
+```
 
 ### 关键设计
 

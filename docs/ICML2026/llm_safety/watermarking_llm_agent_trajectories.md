@@ -46,6 +46,25 @@ ACTHOOK 给出一个由三元组 $W = (\text{CHECK}, \text{INJECT}, \text{DETECT
 
 检测时只查 action 文本是否匹配 hook 模式，无需读取模型权重；对每个 prompt $x_i$ 用真实 key、sham key 和原 prompt 各跑 $Q$ 次，再用配对单边 t 检验比较两侧 hook 频率，得出 p-value。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    subgraph INJ["注入流水线（数据集发布方）"]
+        direction TB
+        A["原始轨迹数据集 T"] --> B["Filter：W.CHECK 筛出合法轨迹<br/>(如要求轨迹里出现文件创建动作)"]
+        B --> C["Sample：随机抽 Nw=⌊R·|T|⌋ 条<br/>低注入率 R≈0.05"]
+        C --> D["Inject：插入行为级 hook action<br/>辅助 LLM 改写措辞 + 拼接秘密 key"]
+    end
+    D --> E["水印数据集 T'（每条比原轨迹多一步）<br/>攻击者标准 agent SFT → 可疑模型 π_θ"]
+    subgraph DET["检测流水线（黑盒，无需模型权重）"]
+        direction TB
+        H["同组 prompt 分别加真 key / sham key / 不加 key，各查 Q 次"]
+        H --> I["统计 hook 出现率差 Δ̂q，配对单边 t 检验"]
+    end
+    E --> H
+    I -->|差异显著| J["判定该模型用过自家数据"]
+```
+
 ### 关键设计
 
 **1. 行为级 hook action：把水印从"写什么字"抬升到"做什么事"**

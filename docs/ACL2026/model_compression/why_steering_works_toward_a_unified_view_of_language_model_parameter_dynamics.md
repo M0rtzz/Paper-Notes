@@ -29,11 +29,11 @@ tags:
 
 **现有痛点**：这些方法通常被分开研究：LoRA 用一套参数效率语言，activation steering 用隐藏向量语言，局部微调用权重更新语言。评测上也常只看最终输出是否更符合目标概念，却忽略输出是否仍然连贯、服从指令、完成任务。
 
-**核心矛盾**：控制强度越大，模型越容易朝目标属性移动；但过强干预也会让表示偏离模型熟悉的激活流形，导致输出失真、跑题或格式崩坏。因此“更强 steering”不一定更好，控制效果必须拆成目标偏好和任务效用两部分。
+**核心矛盾**：控制强度越大，模型越容易朝目标属性移动；但过强干预也会让表示偏离模型熟悉的激活流形（activation manifold），导致输出失真、跑题或格式崩坏。因此“更强 steering”不一定更好，控制效果必须拆成目标偏好和任务效用两部分。
 
 **本文目标**：作者希望回答两个问题：不同控制方法是否存在统一数学形式和统一动态规律？如果存在，能否据此设计一个训练目标，让模型在提升 preference 的同时少牺牲 utility？
 
-**切入角度**：论文观察到线性层输出都可写成 affine transformation。无论修改权重、加 LoRA 低秩矩阵，还是给激活加向量，都可以等价看成在某层引入一个 $\Delta h$，只是 $\Delta h$ 的来源不同。
+**切入角度**：论文观察到线性层输出都可写成仿射变换（affine transformation）。无论修改权重、加 LoRA 低秩矩阵，还是给激活加向量，都可以等价看成在某层引入一个 $\Delta h$，只是 $\Delta h$ 的来源不同。
 
 **核心 idea**：把多种 LLM 控制方法放进统一的动态权重更新框架，再用 preference log-odds 和 utility log-odds 建模控制强度 $m$ 的响应曲线，最后用这个机制设计 SPLIT：同时优化正负样本语言建模效用和偏好间隔。
 
@@ -49,11 +49,11 @@ tags:
 
 **1. 动态权重统一公式：把三类控制方法翻译成同一种“给激活加 Δh”**
 
-过去 LoRA 讲低秩参数、steering 讲隐藏向量、局部微调讲权重更新，三套语言互不相通，没法系统对比。作者抓住一个共同点：线性层输出本质都是 affine transformation。原始层是 $h_{i+1}=Wh_i+b$，局部权重更新写成 $(W+m\Delta W)h_i+(b+m\Delta b)$，LoRA 写成 $(W+mBA)h_i+b$，steering vector 写成 $Wh_i+(b+m\Delta b)$。从激活视角看，它们做的都是同一件事——往该层注入一个 $\Delta h=m_1\Delta W h_i+m_2\Delta b$，区别只在 $\Delta h$ 的来源和参数量。统一成 $h_{i+1}=(W+m_1\Delta W)h_i+(b+m_2\Delta b)$ 后，不同方法的差异收敛成“更新项结构不同”，控制强度 $m$ 一变，就能在同一坐标系里观察 preference 与 utility 的共同动态。
+过去 LoRA 讲低秩参数、steering 讲隐藏向量、局部微调讲权重更新，三套语言互不相通，没法系统对比。作者抓住一个共同点：线性层输出本质都是仿射变换。原始层是 $h_{i+1}=Wh_i+b$，局部权重更新写成 $(W+m\Delta W)h_i+(b+m\Delta b)$，LoRA 写成 $(W+mBA)h_i+b$，steering vector 写成 $Wh_i+(b+m\Delta b)$。从激活视角看，它们做的都是同一件事——往该层注入一个 $\Delta h=m_1\Delta W h_i+m_2\Delta b$，区别只在 $\Delta h$ 的来源和参数量。统一成 $h_{i+1}=(W+m_1\Delta W)h_i+(b+m_2\Delta b)$ 后，不同方法的差异收敛成“更新项结构不同”，控制强度 $m$ 一变，就能在同一坐标系里观察 preference 与 utility 的共同动态。
 
 **2. Preference-Utility log-odds 分解与流形衰减解释：把“控制效果”拆成两条互不遮蔽的曲线**
 
-只看输出是否更像目标概念，会把“目标增强了”和“输出还能用”混为一谈——很多 steering 失败其实是目标属性确实变强了、但生成已经跑题崩坏。作者据此把效果拆成两条曲线：给定正负答案 $A_p,A_n$，用损失差定义 $PrefOdds=L_n-L_p$（共享的 utility 在正负似然比里抵消掉），再用正负答案概率和定义 $UtilOdds=\log(P(u)/(1-P(u)))$。机制上，preference 由“沿目标方向的投影增益”和“有效性衰减”共同决定，utility 则主要由表示偏离 activation manifold 之后的 validity decay 决定。拆开后能看清：preference 随 $m$ 先近似线性、再过渡、最后收敛，而 utility 在 $m\approx 0$ 附近最高、随 $|m|$ 增大单调下降——这正是“更强 steering 不一定更好”的几何来源。
+只看输出是否更像目标概念，会把“目标增强了”和“输出还能用”混为一谈——很多 steering 失败其实是目标属性确实变强了、但生成已经跑题崩坏。作者据此把效果拆成两条曲线：给定正负答案 $A_p,A_n$，用损失差定义 $PrefOdds=L_n-L_p$（共享的 utility 在正负似然比里抵消掉），再用正负答案概率和定义 $UtilOdds=\log(P(u)/(1-P(u)))$。机制上，preference 由“沿目标方向的投影增益”和“有效性衰减”共同决定，utility 则主要由表示偏离激活流形之后的有效性衰减（validity decay）决定。拆开后能看清：preference 随 $m$ 先近似线性、再过渡、最后收敛，而 utility 在 $m\approx 0$ 附近最高、随 $|m|$ 增大单调下降——这正是“更强 steering 不一定更好”的几何来源。
 
 **3. SPLIT 联合优化目标：训练时同时把目标偏好推上去、把效用衰减压下来**
 

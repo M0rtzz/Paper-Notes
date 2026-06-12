@@ -43,7 +43,17 @@ tags:
 
 ### 整体框架
 
-两阶段框架：Stage 1 让 LLM 生成形式化推理步骤（few-shot 指导格式）→ 用形式化验证工具标注每步正确性。Stage 2 用标注数据微调 LLM 做步骤级二分类（输出 "correct"/"incorrect"），得到 FoVer-PRM。
+两阶段框架：Stage 1 让 LLM 生成形式化推理步骤（few-shot 指导格式）→ 用形式化验证工具标注每步正确性。Stage 2 用标注数据微调 LLM 做步骤级二分类（输出 "correct"/"incorrect"），得到 FoVer-PRM，再迁移到非形式化自然语言推理任务上评估。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["形式化任务<br/>FLDx2 逻辑 / GSM8K 数学"] --> B["LLM 生成形式化推理链<br/>Llama 3.1 8B / Qwen 2.5 7B"]
+    B --> C["步骤级形式化验证<br/>Z3 判可满足 / Isabelle 逐步验证"]
+    C --> D["FoVer-40K 数据集构建<br/>4 万步, correct / incorrect 各半"]
+    D --> E["微调 PRM<br/>交叉熵, 步骤级二分类"]
+    E --> F["形式到非形式迁移评估<br/>12 基准, Best-of-K"]
+```
 
 ### 关键设计
 

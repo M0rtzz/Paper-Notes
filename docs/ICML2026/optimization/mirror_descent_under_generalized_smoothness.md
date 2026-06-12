@@ -66,10 +66,6 @@ $$\|\nabla f(\mathbf{x})\|_*^2\le 2\ell(2\|\nabla f(\mathbf{x})\|_*)\,(f(\mathbf
 
 理论文章不涉及训练损失；关键学习率配置为：标准 MD $\eta\le 1/L$、Mirror Prox $\eta\le 1/(2L)$、乐观 MD $\eta\le 1/(3L)$、加速 MD 中 $L:=\ell(4G)$（需要稍大）。Assumption 3.3 要求 $\ell$ 次二次（$\lim_{\alpha\to\infty}\alpha^2/\ell(\alpha)=\infty$），这是为了保证关于 $G$ 的方程有有限解。
 
-### 损失函数 / 训练策略
-
-理论文章不涉及训练损失；关键学习率配置为：标准 MD $\eta\le 1/L$、Mirror Prox $\eta\le 1/(2L)$、乐观 MD $\eta\le 1/(3L)$、加速 MD 中 $L:=\ell(4G)$（需要稍大）。Assumption 3.3 要求 $\ell$ 次二次（$\lim_{\alpha\to\infty}\alpha^2/\ell(\alpha)=\infty$），这是为了保证关于 $G$ 的方程有有限解。
-
 ## 实验关键数据
 
 ### 主实验

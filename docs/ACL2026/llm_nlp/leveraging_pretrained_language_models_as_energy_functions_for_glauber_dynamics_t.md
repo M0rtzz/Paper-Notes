@@ -51,6 +51,24 @@ tags:
 - **架构**：UL2 (FLAN-T5 encoder-decoder) + AdaLN-Zero 时间嵌入 + RoPE，加 ~15% 时间参数初始化为 0；冻结一份做转移核，另一份做可学习的反向 score
 - **推理**：先用 UL2 在 $t=T$ 做 causal generation 得初始 $x$；然后倒序 $N$ 轮，每轮按排列倒序对每个 token 做 mask infilling，共 $L + N \cdot L = (N+1)L$ 次模型调用
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 UL2 当能量函数<br/>稳态/噪声分布 p_base ∝ e^f，离数据分布最近"]
+    A --> B["Glauber 动力学 ≡ mask infilling<br/>每步只重填一个位置，按条件分布转移"]
+    B --> TRAIN
+    subgraph TRAIN["同步排列 + UL2 双 mode + score entropy 训练"]
+        direction TB
+        C["固定排列 σ：前向加噪位置 = 反向去噪位置"]
+        D["frozen UL2 当转移核 + 可学 UL2 算 score<br/>两份输出相除得概率比 s_θ"]
+        E["DWDSE 损失 + 每 epoch 刷新 frozen 副本（渐进自蒸馏）"]
+        C --> D --> E
+    end
+    TRAIN --> F["推理初始化：causal generation 采稳态初始 x（t=T）"]
+    F --> G["倒序 N 轮 × L 步 mask infilling 迭代精修"]
+    G --> H["生成文本"]
+```
+
 ### 关键设计
 
 **1. 预训练 LM 当能量函数：把噪声分布从随机起点拉到离数据很近的地方**

@@ -46,6 +46,24 @@ FlashU 要解决的矛盾是：原生统一多模态模型把"理解"和"生成"
 
 具体落地时，输入先按任务类型分流。理解请求走"FFN 静态剪枝 + 动态层跳过 + V-Norm token 剪枝"这条路；生成请求走"Hybrid FFN + 动态层跳过 + 自适应引导缩放 + 扩散头缓存"这条路。所有改动都不碰原始权重，只在推理时按规则选择性地少算一些东西，因此整套方案即插即用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DIAG["参数特化分析<br/>逐 FFN 神经元置零，量化各神经元只对哪个任务重要"] --> INPUT["统一模型输入<br/>按任务类型分流"]
+    subgraph UND["理解路径"]
+        direction TB
+        U1["任务特定 FFN 剪枝<br/>静态 mask"] --> U2["动态层跳过<br/>看最后一个 token 相似度"] --> U3["V-Norm 代理 token 剪枝<br/>浅层按 value 范数丢 token"]
+    end
+    subgraph GEN["生成路径"]
+        direction TB
+        G1["Hybrid FFN<br/>早期完整 / 后期剪枝"] --> G2["动态层跳过<br/>看整序列平均相似度"] --> G3["自适应引导缩放<br/>引导强度先低后高"] --> G4["扩散头缓存<br/>隔若干步复用隐藏状态"]
+    end
+    INPUT -->|理解请求| UND
+    INPUT -->|生成请求| GEN
+    UND --> OUT["免训练加速输出<br/>共享同一底座模型权重"]
+    GEN --> OUT
+```
+
 ### 关键设计
 
 **1. 参数特化分析：先量化每个 FFN 神经元只对哪个任务重要**

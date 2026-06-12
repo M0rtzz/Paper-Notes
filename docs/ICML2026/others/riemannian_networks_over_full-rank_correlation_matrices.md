@@ -40,7 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一组协方差矩阵，先按 $\mathrm{Cor}(\Sigma)$ 投到 $\mathrm{Cor}^+(n)$ 上得到相关矩阵；然后堆叠"相关 Conv 层 → 相关 MLR 头"两段。Conv 层对每个 receptive field 内拼起来的多通道相关矩阵做 FC 变换，FC 又由对应度量下的 MLR logit 隐式定义。所有可学习参数都被参数化在切空间 $T_E M \cong \mathrm{Hol}(n)$（对称且对角为零的矩阵）里，因此可以用标准 PyTorch 优化器直接训练，几何只体现在前向的 $\phi$、$\phi^{-1}$ 与必要的 Newton/iteration。
+输入是一组协方差矩阵，先按 $\mathrm{Cor}(\Sigma)$ 投到 $\mathrm{Cor}^+(n)$ 上得到相关矩阵；然后堆叠"相关 Conv 层 → 相关 MLR 头"两段。Conv 层对每个 receptive field 内拼起来的多通道相关矩阵做 FC 变换，FC 又由对应度量下的 MLR logit 隐式定义。所有可学习参数都被参数化在切空间 $T_E M \cong \mathrm{Hol}(n)$（对称且对角为零的矩阵）里，因此可以用标准 PyTorch 优化器直接训练，几何只体现在前向的 $\phi$、$\phi^{-1}$ 与必要的 Newton/iteration。整套层不是逐条几何手撸，而是"在原型空间写一遍欧氏层 → 经五种微分同胚 $\phi$ 等距拉回"统一产出。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：一组协方差矩阵 Σ"] --> B["Cor 投影<br/>C = Cor(Σ) ∈ Cor⁺(n)"]
+    B --> C["相关 Conv 层（设计 2）<br/>感受野内 c 个相关矩阵拼接 → FC 变换"]
+    C --> D["相关 MLR 头（设计 1）<br/>原型空间闭式 logit + 交叉熵"]
+    D --> E["分类输出"]
+    F["原型空间写一遍欧氏层，经 5 种 φ 等距拉回<br/>ECM / LECM / OLM / LSM / PHCM"] -.构造 MLR/FC/Conv.-> C
+    F -.构造.-> D
+    G["参数扎根切空间 Hol(n)，标准优化器<br/>OLM/LSM 隐函数定理精确反传（设计 3）"] -.训练.-> D
+```
 
 ### 关键设计
 

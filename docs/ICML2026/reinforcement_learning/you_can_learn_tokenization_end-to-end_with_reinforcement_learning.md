@@ -45,24 +45,39 @@ tags:
 
 训练目标是边缘化所有可能 tokenization strategy 后的 next-byte likelihood。由于 $a$ 是离散随机变量，梯度可拆成两部分：常规的 conditional language modeling gradient，以及 policy gradient 项 $\log p_\theta(y|a,x)\nabla_\theta\log\pi_\theta(a|x)$。后者就是本文要降方差的核心。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    X["byte 序列 x"] --> ENC["encoder（滑窗 transformer）<br/>得 byte 级表征 X"]
+    ENC --> POL["轻量边界策略 π_θ：采样 a_i∈{0,1}<br/>窗口 w 内 logit + L^target 控压缩率→1/5"]
+    POL --> DS["downsample：取 a_i=1 处<br/>得 token 序列 X′"]
+    DS --> MID["mid transformer<br/>token 级建模 → Y′"]
+    MID --> US["upsample（distribute-then-add）<br/>Y = X + Y′"]
+    US --> DEC["decoder：预测 next byte<br/>→ 语言建模损失 L^auto"]
+    ENC -->|早期 byte 表征| EARLY["early-exit head<br/>分词无关 baseline p^early"]
+    subgraph VR["RL 风格方差缩减"]
+        direction TB
+        R["相对 reward R_i = log p − log p^early"] --> DISC["time discounting γ=0.99"]
+        DISC --> CEN["batch 内同 token index 中心化<br/>→ advantage A_i"]
+    end
+    DEC --> R
+    EARLY --> R
+    CEN --> LPI["policy loss L^π = −Σ log π_θ(a_i)·detach(A_i)"]
+    LPI -.->|score function 梯度更新边界策略| POL
+```
+
 ### 关键设计
-1. **score function estimator 直接优化离散边界**:
+**1. score function estimator：直接对离散边界求梯度，而非连续松弛**
 
-	- 功能：让 token boundary policy 直接以 language modeling loss 为目标学习，而不是通过连续松弛近似。
-	- 核心思路：边界序列 $a$ 从 $\pi_\theta(a|x)$ 采样，模型优化 $\mathbb{E}_{a\sim\pi_\theta}\log p_\theta(y|a,x)$。score function 梯度把“某个边界决策导致后续 token 预测更好/更差”的信息反馈给边界策略。
-	- 设计动机：token 边界是离散动作，STE 需要手工定义 surrogate gradient；REINFORCE 虽然方差高，但优化对象和真实离散问题一致，理论上更干净。
+token 边界是 0/1 离散动作，无法直接反向传播。已有端到端方法用 straight-through estimator（STE），把离散边界当成连续量、手工设计 surrogate 梯度规则，缺乏直接优化离散问题的理论保证。本文改用 score function estimator：把边界序列 $a$ 看成从策略 $\pi_\theta(a|x)$ 采样的随机变量，优化期望语言建模似然 $\mathbb{E}_{a\sim\pi_\theta}\log p_\theta(y|a,x)$。其梯度拆成两项——给定边界后正常反传的 conditional language modeling gradient，以及 policy gradient 项 $\log p_\theta(y|a,x)\,\nabla_\theta\log\pi_\theta(a|x)$，后者把“这个边界决策让后续 byte 预测变好还是变差”的信号反馈给边界策略。好处是它直接逼近离散问题期望损失的梯度，论文证明在大数据/大算力极限下做梯度下降会收敛到局部最优 tokenization，而 STE 没有这种保证；代价是 policy gradient 方差很高——这正是设计 2 要解决的。
 
-2. **RL 风格方差缩减**:
+**2. RL 风格方差缩减：让单样本 policy gradient 真正可学**
 
-	- 功能：解决单样本 Monte Carlo policy gradient 太 noisy 的问题。
-	- 核心思路：首先用 early exit head 从早期 byte representation 预测 next byte，作为 tokenization-independent baseline，构造相对 reward $R_i=\log p_\theta(x_i|x_{<i},a_{<i})-\log p^{early}_\theta(x_i|x_{<i})$；然后用 discount factor $\gamma=0.99$ 计算未来 advantage；最后在 batch 内对同一 token index 的 advantage 做中心化，得到 policy loss $L^\pi=-\sum_i\log\pi_\theta(a_i|x_{<i},a_{<i})\,detach(A_i)$。
-	- 设计动机：一个边界动作只影响后续预测，长序列里直接累加所有后续 loss 会产生极高方差。early baseline 去掉样本本身难度，discounting 解决 credit assignment，batch centering 去掉位置相关偏置。
+出于 efficiency 约束，每条序列只采一个 $a$ 做 Monte-Carlo 估计，朴素 REINFORCE 噪声太大学不动，难点是 reward attribution（究竟哪个边界决策对后续 loss 负责）。本文叠三招降方差：① **early-exit relative reward**——用 early-exit head 从早期 byte 表征直接预测 next byte，作为“与分词无关”的难度 baseline，相对 reward $R_i=\log p_\theta(x_i|x_{<i},a_{<i})-\log p^{early}_\theta(x_i|x_{<i})$ 扣掉“这段文本本来就难预测”的部分，只留 tokenization 额外带来的收益；② **time discounting** $\gamma=0.99$——长序列里把远处的 reward 折扣后再累加成 advantage，使序列里相隔较远的 advantage 近似解耦，等价于每条序列给边界策略很多条近独立的训练信号，用一点点偏差换大幅降方差；③ **batch-relative advantage**——由于最终层模型普遍强于 early-exit 模型，$G_i$ 系统性偏正、且该偏置随 token index 增大，于是在一个 batch 的 $B$ 条序列里对同一 token index 的 advantage 做中心化，去掉这个位置相关偏置。最终 policy loss $L^\pi=-\sum_i\log\pi_\theta(a_i|x_{<i},a_{<i})\,detach(A_i)$。三招缺一不可：没有 baseline 和 discounting，单样本梯度根本学不动。
 
-3. **轻量边界策略与 downsample rate targeting**:
+**3. 轻量边界策略与目标压缩率：可忽略的 logit 计算 + 防退化约束**
 
-	- 功能：让模型学习边界位置，同时控制平均压缩率，避免退化成每个 byte 一个 token。
-	- 核心思路：边界 logit 由当前 byte representation 和一个短窗口内的历史边界决定，默认窗口 $w=8$，用 sigmoid 得到 $p_i$。初始化时加入目标边界率的 logit bias，使 $p_i$ 接近 $\bar{\pi}_{target}=1/5$。训练中再用 $L^{target}=\bar{l}\cdot detach(\bar{p}-\bar{\pi}_{target})$ 对 batch mean logit 施加压力，使实际下采样率靠近目标。
-	- 设计动机：没有压缩率约束时，模型会偏向更贵但更容易的 byte-level 细粒度表示；把边界率作为训练约束后，比较不同策略才公平。
+边界概率是 logit $l_i$ 的 sigmoid。$l_i$ 由 byte 表征 $X_i$ 的线性投影、加上窗口内每个历史边界的条件项构成（预计算 $W_kX_i$ 后做一次 scan），相对整体前向 compute 可忽略；默认窗口 $w=8$，论文还验证 $w=1$（只看 $X_i$ 和前一个边界 $a_{i-1}$）已接近，说明不需要复杂长窗口规则。初始化时缩放 $l^{scaled}_i=l^{raw}_i/D+\sigma^{-1}(\bar{\pi}_{target})$（$D=16$），使 $p_i\approx\bar{\pi}_{target}$。但若不加约束，模型会退化成“每个 byte 都画边界”的昂贵策略，因此加目标率损失 $L^{target}=\bar{l}\cdot detach(\bar{p}-\bar{\pi}_{target})$，对 batch 平均 logit $\bar{l}$ 施加正/负压力，把实际下采样率推向 $\bar{\pi}_{target}=1/5$（实测收敛到 0.204，接近 BPE 的 0.207）。选择在 logit 而非概率上施压，是因为 sigmoid 梯度幅度不均会让直接操作概率不稳定。
 
 ### 损失函数 / 训练策略
 总损失为 $L=L^{auto}+\lambda_\pi L^\pi+\lambda_{target}L^{target}+\lambda_{early}L^{early}$。其中 $L^{auto}$ 是最终 next-byte cross-entropy，$L^{early}$ 训练 early-exit baseline，$L^\pi$ 是 policy loss，$L^{target}$ 控制平均边界率。实验中 $\lambda_\pi=\lambda_{target}=10^{-2}$，$\lambda_{early}=10^{-1}$，目标下采样率为 $1/5$。

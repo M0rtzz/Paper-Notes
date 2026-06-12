@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 这篇论文走的是「先做基准、再据基准提最小方法」的路子，所以方法侧有两条并行的线。第一条是诊断基准 **KVFundaBench**：它覆盖 5 类基础能力任务（MMLU 世界知识 WK、CommonsenseQA 常识 CSR、GSM8K 算术 AR、HumanEval 代码 CG、JailBreakV 安全 SA）加上 LG-GSM8K 长生成，在 LLaMA-3.1-8B / Instruct、Mistral-7B-Instruct、DeepSeek-R1-Distill-Llama-8B 四个模型上交叉跑六种 KV 压缩方法，用相对性能 $\Delta P = (P_C - P_{\text{base}})/P_{\text{base}}$ 量化「压完掉多少」。第二条是据此构造的最小验证方法 **ShotKV**：它把 prompt 切成 $n$ 个 shot $\{s_1,\dots,s_n\}$，prefill 阶段以整个 shot 为颗粒度评分并整段保留，decoding 阶段再单独做 token 级动态压缩，最后每层把两段 cache 拼回去 $KV_{\text{total},l}=KV^C_{\text{prefill},l}\cup KV^C_{\text{decoding},l}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DIAG["KVFundaBench 诊断基准（设计 1）"]
+        direction TB
+        A["5 类能力 + 长生成<br/>× 4 模型 × 6 压缩法"] --> B["6 条关键观察<br/>推理类压不动、shot 是不可切的语义单元"]
+    end
+    DIAG --> C["两条设计原则<br/>语义完整性 + 阶段分离"]
+    C --> D["输入 prompt 切成 n 个 shot"]
+    subgraph SEP["Prefill / Decoding 阶段分离（设计 3）"]
+        direction TB
+        E["Shot-aware Prefill 保留（设计 2）<br/>逐层 shot 级评分 → 整段保留至预算 r_p → 冻结"]
+        F["Decoding 阶段：token 级动态压缩<br/>逐层 token 评分 TopK 至预算 r_d"]
+        G["逐层拼合<br/>KV_total = KV_prefill ∪ KV_decoding"]
+        E --> G
+        F --> G
+    end
+    D --> E
+    D --> F
+    G --> H["压缩后 KV cache → 长上下文生成推理"]
+```
+
 ### 关键设计
 
 **1. KVFundaBench：把「压缩在不同能力上的差异化退化」第一次量出来**

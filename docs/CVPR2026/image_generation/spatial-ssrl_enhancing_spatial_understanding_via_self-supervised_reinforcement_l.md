@@ -45,6 +45,24 @@ tags:
 
 整套流程分两步走。第一步是数据构造：从RGB或RGB-D图像出发，自动生成五种pretext任务的QA对，攒成Spatial-SSRL-81k数据集，因为所有答案都来自确定性变换，标注准确率是100%。第二步是RL训练：先用约3600个样本做SFT冷启动，让模型先学会输出规定的答案格式（否则直接RL时生成正确格式的成功率不到5%），再上GRPO优化。五种任务里有三种只看RGB、考2D布局，两种依赖深度图、考3D空间推理，难度由浅入深地铺开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RGB / RGB-D 图像"] --> DC
+    subgraph DC["数据构造：五种 pretext 任务（确定性变换→100% 准确标注）"]
+        direction TB
+        T1["图像块重排<br/>打乱 patch，预测复原逆排列"]
+        T2["翻转识别<br/>找出被翻转的 patch 与方向"]
+        T3["裁剪修补<br/>4 选 1 填回挖空区域"]
+        T4["区域深度排序<br/>3 区域按深度从近到远排序"]
+        T5["相对 3D 位置预测<br/>物体自身坐标系下的方位"]
+    end
+    DC --> D["Spatial-SSRL-81k 数据集"]
+    D --> SFT["SFT 冷启动<br/>~3600 样本，学答案格式"]
+    SFT --> GRPO["GRPO 强化学习<br/>奖励 r = 0.9·准确 + 0.1·格式"]
+    GRPO --> OUT["空间理解增强的 LVLM"]
+```
+
 ### 关键设计
 
 **1. Shuffled Patch Reordering（图像块重排）：把全局2D布局变成一道可判分的复原题**

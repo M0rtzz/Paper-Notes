@@ -47,6 +47,24 @@ FREIA 把自由能原理 (FEP) 引入无标签 RL 微调，用「共识 + 探索
 
 FREIA 建立在 GRPO 之上，只在「奖励」和「优势」两处做手术，其余 PPO 结构原样保留。对每个输入 $x$，先 rollout $G=8$ 条 reasoning 路径并提取最终答案，统计去重后的唯一答案集 $U=\{u_1,...,u_M\}$ 及其频率 $D=\{f_1,...,f_M\}$；然后 FER 模块根据群体置信度在「跟随共识」和「鼓励探索」之间自适应混合，给每条路径打出连续 reward $R_i$；AAS 模块再用这批 reward 分布的偏度判断当前训练处于早期还是后期，对正、负优势分别衰减，得到整形后的 $\hat{A}_i$；最后把 $\hat{A}_i$ 塞进标准 GRPO 的 clip-PPO 目标（带 $\beta=0.001$ 的 KL 约束）完成策略更新。整条 pipeline 不引入任何额外训练成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入问题 x"] --> B["Rollout G=8 条推理路径<br/>提取唯一答案集 U 及频率 D"]
+    B --> C
+    subgraph FER["Free Energy-Driven Reward (FER)"]
+        direction TB
+        C["置信锐化 w_i = f_i^α / Σf_k^α<br/>群体置信度 C_G = 1 − H(W)/log M"] --> D["R_i = C_G·共识项 + (1−C_G)·探索项<br/>低 C_G 偏探索 / 高 C_G 偏共识"]
+    end
+    D --> E
+    subgraph AAS["Adaptive Advantage Shaping (AAS)"]
+        direction TB
+        E["组归一化优势 Ã_i + 偏度 S = mean(Ã_i³)"] --> F["w_pos=σ(−S), w_neg=σ(S)<br/>分别衰减正 / 负优势 → Â_i"]
+    end
+    F --> G["与 GRPO 无缝集成<br/>Â_i 替换原优势，clip-PPO + β·KL 更新"]
+    G --> H["更新后的策略 π_θ"]
+```
+
 ### 关键设计
 
 **1. Free Energy-Driven Reward (FER)：用一个公式同时表达「跟随多数」和「鼓励冒险」，门控权重随训练动态滑动**

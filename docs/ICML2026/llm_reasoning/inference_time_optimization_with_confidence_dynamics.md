@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CDG 要解决的是 Best-of-N 投票里"怎么从 $L$ 条 reasoning trace 里挑出对的那个答案"。它的输入是对一道题采的 $L$ 条 trace，每条带着 token 序列 $y_{\ell,1:T}$ 与逐 token 的 top-K log-prob；输出是投票选出的最终答案 $\hat{a}$。整条流水线先把每条 trace 的逐 token 置信度按位置归一化切成 10 个 bin，量出"尾段比头段自信多少"这个标量 $\Delta C_\ell$，再把它叠加到平均置信度上得到 trace 分数，最后用一个带频数阻尼的加权投票把分数聚到答案级取 argmax。整套方法完全 training-free，唯一额外开销是从推理栈把 token logprob 留下来。
+CDG 要解决的是 Best-of-N 投票里"怎么从 $L$ 条 reasoning trace 里挑出对的那个答案"。它的输入是对一道题采的 $L$ 条 trace，每条带着 token 序列 $y_{\ell,1:T}$ 与逐 token 的 top-K log-prob；输出是投票选出的最终答案 $\hat{a}$。整条流水线先把每条 trace 的逐 token 置信度按位置归一化切成 10 个 bin，一路取全 token 平均得到平均置信度 $\bar{C}_\ell$、另一路量出"尾段比头段自信多少"这个标量 $\Delta C_\ell$，把两者线性组合成 trace 分数 $s_\ell$，最后用一个带频数阻尼的加权投票把分数聚到答案级取 argmax。整套方法完全 training-free，唯一额外开销是从推理栈把 token logprob 留下来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：一道题采的 L 条 trace<br/>(token 序列 + 逐 token top-K logprob)"]
+    A --> B["逐 token 置信度 + 位置归一化 binning<br/>top-K 近似算 C_t，按比例切成 10 个 bin"]
+    B --> C["全 token 平均<br/>平均置信度 C̄_ℓ（沿用 DeepConf）"]
+    B --> D["Confidence Dynamic Gain<br/>头 10% bin 与尾 10% bin 差分 ΔC_ℓ"]
+    C --> E["trace 分数<br/>s_ℓ = C̄_ℓ + β·ΔC_ℓ"]
+    D --> E
+    E --> F["Count-dampened weighted voting<br/>R(a) = |T_a|^α · μ_a(s_ℓ)"]
+    F --> G["argmax 选最终答案 â"]
+```
 
 ### 关键设计
 

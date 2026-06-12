@@ -39,6 +39,26 @@ tags:
 
 StreamingTOM 要解决的是流式视频 VLM 的两个硬约束——因果性（看不到未来帧）和 kv-cache 无界增长——在不训练的前提下同时压住 LLM 前的 prefill 计算和 LLM 后的解码显存。它把整条链路拆成两段，中间用一个固定大小的 **group 抽象**（每帧固定 G=50 个 token 的帧对齐组）当接口：视觉编码器出特征后先经 CTR 在 LLM *前*把每帧压到 G 个 token 写进在线记忆，用户提问时再由 OQM 从记忆里检索相关 group、4-bit 反量化送进 LLM 生成。形式化即 $\text{StreamingTOM} = \text{OQM}_{16\to4} \circ \text{CTR}_{N\to G}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流式视频帧<br/>视觉编码器出每帧 N=196 token"] --> CTR
+    subgraph CTR["Causal Temporal Reduction (CTR)：LLM 前因果削减"]
+        direction TB
+        B["相邻 2 帧算时序相似度<br/>+ 白嫖编码器空间显著性"] --> C["按阈值 τc 分静态集 / 动态集<br/>并自适应分配预算 ks / kd"]
+        C -->|动态路| D["按显著性选 top-kd"]
+        C -->|静态路| E["密度聚类合并成 ks 个代表 token"]
+    end
+    CTR --> F["帧对齐 group：每帧固定 G=50 token"]
+    F --> G["LLM prefill / 解码"]
+    G --> OQM
+    subgraph OQM["Online Quantized Memory (OQM)：LLM 后限制 kv-cache"]
+        direction TB
+        H["每 group 独立量化成 4-bit<br/>+ 存均值代表 key"] --> I["提问时按代表 key 检索 top-k group<br/>仅选中的 4-bit→FP16 反量化"]
+    end
+    OQM --> J["生成回答"]
+```
+
 ### 关键设计
 
 **1. Causal Temporal Reduction (CTR)：在 LLM 前做严格因果的逐帧 token 削减**

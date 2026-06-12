@@ -49,6 +49,24 @@ EgoFlow 提出一种基于 Flow Matching 的生成框架，通过 Mamba-Transfor
 ### 整体框架
 EgoFlow 要解决的是：从一段第一人称视频里，预测某个物体接下来会怎么动——不光要轨迹合理，还得不穿墙、不抖动。整体怎么转可以拆成三段。先把场景里能拿到的信息（点云、固定装置的包围盒、任务文本、目标位姿）全部喂进一个多模态融合模块，压成一个统一的条件向量 $\mathbf{u}$；再用一个 Mamba-Transformer 混合架构的 Flow Matching 模型，在 $\mathbf{u}$ 的条件下从噪声把 6DoF 轨迹 $\mathbf{x}_{H+1:T} \in \mathbb{R}^{(T-H) \times 9}$（位置 $\mathbb{R}^3$ + 连续 6D 旋转 $\mathbb{R}^6$）一步步流出来；最后在推理的每个积分步里，用梯度引导把速度场往"不碰撞、更平滑"的方向掰一掰。训练阶段只看历史 30% 的观测轨迹，预测剩下的 70%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：第一人称视频<br/>点云 + 固定装置包围盒 + 任务文本 + 目标位姿 + 观测历史轨迹"]
+    FUSE["多模态场景条件融合<br/>5 路模态特征 → 统一条件向量 u"]
+    subgraph ARCH["Mamba-Transformer-Perceiver 混合架构（Flow Matching）"]
+        direction TB
+        S1["Stage 1：双向 Mamba 时序编码<br/>FiLM 注入条件"]
+        S2["Stage 2：Perceiver Transformer<br/>交叉注意力查询多模态条件"]
+        S3["Stage 3：双向 Mamba 精炼 → 速度场 v"]
+        S1 --> S2 --> S3
+    end
+    GUIDE["梯度引导采样<br/>每个 Euler 步前 K=50 步梯度下降<br/>碰撞 / 旋转一致 / 平移平滑 三项可微代价"]
+    OUT["输出：物理合理的 6DoF 物体轨迹"]
+
+    IN --> FUSE --> ARCH --> GUIDE --> OUT
+```
+
 ### 关键设计
 
 **1. 多模态场景条件融合：单一模态描述不全一个凌乱的第一人称场景**

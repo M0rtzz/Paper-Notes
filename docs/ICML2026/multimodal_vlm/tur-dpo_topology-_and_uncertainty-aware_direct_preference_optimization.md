@@ -43,6 +43,29 @@ TUR-DPO 在 DPO 的偏好 logit 上同时叠加一个"语义+拓扑结构"塑形
 ### 整体框架
 训练循环与 DPO 完全一致：维持策略 $\pi_\theta$ 与参考策略 $\pi_{\text{ref}}$（固定或按 EMA 缓更新），训练数据为成对偏好 $\mathcal{D}=\{(x_i,y_i^+,y_i^-)\}$。对每个 $(x,y)$，TUR-DPO 额外做四步：（a）从回答抽取小型有向图 $G=(V,E)$，节点 3-6 个；（b）计算语义分 $s_{\text{sem}}(x,y)$、拓扑分 $s_{\text{topo}}(G)$、不确定性分 $u(G)$；（c）把它们线性组合成塑形奖励 $r_\phi(x,y,G)=a f^{\text{sem}}_\phi(s_{\text{sem}}) + (1-a)f^{\text{topo}}_\phi(s_{\text{topo}}) - \lambda u(G)$；（d）把对内不确定性平均映射成每对权重 $w \in [w_{\min},1]$，把塑形奖励差 $\gamma\Delta r_\phi$ 加到 DPO logit 上，并把 $w$ 作为 loss 的乘法系数。整套设计不引入在线采样、不引入 value head，参数量集中在一个小型线性 calibrator $\phi$ 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["偏好对 (x, y⁺, y⁻)"] --> B
+    subgraph SIG["推理拓扑图与三路信号"]
+        direction TB
+        B["抽取推理拓扑图 G=(V,E)<br/>节点=原子子主张，边=支持/依赖（3–6 节点）"] --> C1["语义分 s_sem<br/>事实性 + 任务指标 − 幻觉"]
+        B --> C2["拓扑分 s_topo<br/>路径覆盖 − 环 − 悬空 − 矛盾"]
+        B --> C3["不确定性 u(G)<br/>重抽 K 次方差/JSD（epistemic）+ 节点熵（aleatoric）"]
+    end
+    subgraph INJ["塑形奖励进 margin、实例权重进 loss 系数"]
+        direction TB
+        D["塑形奖励 r_φ = a·f_sem + (1−a)·f_topo − λ·u<br/>加到 margin，决定方向"]
+        E["对级权重 w = clip(τ_w/(1+ū), w_min, 1)<br/>乘到 loss，决定步长"]
+    end
+    C1 --> D
+    C2 --> D
+    C3 --> D
+    C3 --> E
+    D --> H["L_TUR-DPO = −w·log σ(β·Δlogπ + γ·Δr_φ)"]
+    E --> H
+```
+
 ### 关键设计
 
 **1. 推理拓扑图与三路信号：把"怎么推出来的"变成可计算的标量**

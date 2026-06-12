@@ -45,6 +45,22 @@ tags:
 
 ForgeryTalker 基于 InstructBLIP 扩展，包含：(1) 共享编码器（ViT + Q-Former）处理篡改图像提取多模态特征；(2) Forgery Prompter Network (FPN) 生成区域关键词提示；(3) 掩码解码器用于伪造定位；(4) 大语言模型生成归因报告。训练分两阶段：伪造感知预训练和归因报告生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MMTT 数据集构建<br/>程序化像素掩码 + 人工文本描述（监督信号）"] --> B["篡改人脸图像"]
+    B --> C["共享编码器<br/>ViT + Q-Former 提多模态特征"]
+    C --> D["Forgery Prompter Network（FPN）<br/>卷积分支 + CoordConv 预测 21 维区域概率"]
+    D --> E["区域提示模板<br/>『这些面部区域可能被篡改：[R]』"]
+    C --> F["掩码解码器"]
+    C --> G["大语言模型（LLM）"]
+    E --> G
+    F --> H["定位掩码（Where）"]
+    G --> I["归因报告（Why）"]
+```
+
+> 整张图由两阶段训练策略统一支配：阶段一预训练共享编码器，阶段二先单独训 FPN 再冻结、微调 Q-Former 与掩码解码器。
+
 ### 关键设计
 
 **1. MMTT 数据集构建：用伪造过程本身换取像素完美的掩码，再叠上人工文本描述**

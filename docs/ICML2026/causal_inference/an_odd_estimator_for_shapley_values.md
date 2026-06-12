@@ -42,7 +42,16 @@ tags:
 ### 整体框架
 OddSHAP 要解决的是怎样在有限采样预算下把高维 Shapley value 估得又准又稳。它的关键转换是：不再去拟合整个 value function，而是先用理论证明 Shapley value 只依赖集合函数的 odd 部分，再换到 Fourier 基底里只挑出那些真正对 Shapley 有贡献的稀疏 odd 交互来回归。整个流程是先 paired sampling 采 coalition，再用一个 gradient boosted tree (GBT) 代理模型筛出幅度最大的 odd 高阶交互，最后在精简后的支持集上解带边界约束的加权最小二乘，从 Fourier 系数直接读出归因。
 
-输入是黑盒 value function $f$、采样预算 $m$ 和 regression variable factor $\eta$。如果预算太低连线性项都没法稳定回归（即 $m<d\eta$），算法直接退回 GBT 的 TreeSHAP 输出；否则把候选高阶 odd 交互数量设成 $|T_{odd}|=\lceil m/\eta\rceil-d$，让回归变量数随预算线性增长，而不是随特征数和阶数组合爆炸。
+输入是黑盒 value function $f$、采样预算 $m$ 和 regression variable factor $\eta$。如果预算太低连线性项都没法稳定回归（即 $m<d\eta$），算法直接退回 GBT 的 TreeSHAP 输出；否则把候选高阶 odd 交互数量设成 $|T_{odd}|=\lceil m/\eta\rceil-d$，让回归变量数随预算线性增长，而不是随特征数和阶数组合爆炸。论文把整条算法明确写成三步：配对采样、交互筛选、odd 回归，下面的关键设计按这条流向依次展开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：黑盒 value function f<br/>采样预算 m、变量因子 η"] --> B["Odd component 理论判据<br/>配对采样隔离 odd 信号"]
+    B -->|"预算不足 m&lt;dη"| F["退回 GBT 的 TreeSHAP 输出"]
+    B -->|"预算充足"| C["Fourier 基底 + GBT 交互筛选<br/>取幅度最大的 odd 高阶交互"]
+    C --> D["odd 加权最小二乘回归<br/>带边界约束，从系数读出 Shapley 归因"]
+```
 
 ### 关键设计
 
@@ -50,13 +59,13 @@ OddSHAP 要解决的是怎样在有限采样预算下把高维 Shapley value 估
 
 传统回归 estimator 会连带拟合与 Shapley 无关的部分，把预算浪费在无效信号上。作者把任意集合函数分解为 $f=f_{odd}+f_{even}$，其中 odd 部分满足 $f_{odd}(S)=-f_{odd}(S^c)$，even 部分满足 $f_{even}(S)=f_{even}(S^c)$，并证明 $\phi_i(f)=\phi_i(f_{odd})$——也就是 even component 对所有特征的 Shapley value 贡献恒为 0。这个判据顺带把工程界常用的 paired sampling（每采一个 coalition $S$ 同时采补集 $S^c$）从"经验降方差技巧"提升成严格结论：paired sampling 本质是在 weighted least squares 目标里把 odd 与 even 两部分正交分解开，让估计器可以干净地丢掉无关的 even 成分。
 
-**2. Fourier odd regression：把"只拟合 odd 项"落到基函数层面**
+**2. Fourier 基底 + GBT 交互筛选：在 odd Fourier 子空间挑稀疏高阶交互**
 
-光有理论判据还不够，还要有一个能精确隔离 odd 信号的基底。KernelSHAP/LeverageSHAP 常用的 unanimity basis 做不到干净的奇偶分离，作者改用 Fourier basis：基函数 $\chi_T(S)=(-1)^{|S\cap T|}$ 是否 odd 完全由 $|T|$ 的奇偶决定，$|T|$ 为奇数就是 odd term，偶数就是 even term。于是 OddSHAP 只保留线性项和筛出的 odd 高阶交互，并用严格边界约束保证估计满足 efficiency（归因之和等于 $f([d])-f(\emptyset)$）。最终从系数算归因的公式是 $\phi_i(\hat f_{odd})=-2\sum_{T\ni i,\,|T|\ \text{odd}}\beta_T/|T|$，直接在 Fourier 子空间里读出每个特征的 Shapley value。
+光有理论判据还不够，还得有一个能精确隔离 odd 信号的基底。KernelSHAP/LeverageSHAP 常用的 unanimity basis 做不到干净的奇偶分离，作者改用 Fourier basis：基函数 $\chi_T(S)=(-1)^{|S\cap T|}$ 是否 odd 完全由 $|T|$ 的奇偶决定，$|T|$ 为奇数即 odd term、偶数即 even term，于是"丢弃 even 子空间"在基底层面变得干净利落。但高阶 odd 项依然组合爆炸，而机器学习的 value function 往往只有少数重要交互，枚举所有项既不现实也浪费预算。为此 OddSHAP 用配对采样得到的同一批样本先拟合一个 GBT proxy，再用 ProxySPEX 风格方法提取绝对幅度最大的 odd Fourier 系数，构成回归支持集 $T_{odd}$。支持集大小由变量因子 $\eta$ 控制——令 $|T_{odd}|=\lceil m/\eta\rceil-d$，使回归变量数随采样预算 $m$ 线性增长，而不是随特征数与阶数组合爆炸；预算低到连线性项都拟合不稳（$m<d\eta$）时则直接退回 GBT 的 TreeSHAP 输出避免欠定回归。这样在表达力（能建模高阶交互）和统计稳定性（不被海量低影响项拖累方差）之间取得折中。
 
-**3. GBT 交互筛选 + 预算自适应支持集：避免高阶组合爆炸**
+**3. odd 加权最小二乘回归：从 Fourier 系数直接读出归因**
 
-机器学习的 value function 往往只有少数重要的 Fourier 交互，枚举所有高阶项既不现实也浪费预算。OddSHAP 用同一批 paired 样本先拟合一个 GBT proxy，再用 ProxySPEX 风格方法提取绝对幅度最大的 odd Fourier 系数作为回归支持集。支持集大小由 $\eta$ 控制——预算越大纳入越多交互，预算不足则退回 TreeSHAP 避免欠定回归。这样在表达力（能建模高阶交互）和统计稳定性（不被海量低影响项拖累方差）之间取得折中。
+拿到支持集后，OddSHAP 在 $T_{\le 1}\cup T_{odd}$（线性项 + 筛出的 odd 高阶交互）上解一个带 Shapley kernel 权重的加权最小二乘，并用严格边界约束保证估计满足 efficiency（所有归因之和等于 $f([d])-f(\emptyset)$）。最终从系数算归因的公式是 $\phi_i(\hat f_{odd})=-2\sum_{T\ni i,\,|T|\ \text{odd}}\beta_T/|T|$，直接在 odd Fourier 子空间里读出每个特征的 Shapley value。这一步是整条管线落地为 Shapley 估计的出口：odd 判据决定了"只拟合 odd"，Fourier 基底 + GBT 筛选决定了"拟合哪些 odd 交互"，受约束回归再把它们变成满足一致性的最终归因。
 
 ### 损失函数 / 训练策略
 核心优化是带 Shapley kernel 权重的加权最小二乘回归，但只在 odd Fourier 支持上求解。借助 paired samples 预计算 $f_{odd}(S)=\frac12(f(S)-f(S^c))$ 后，可以丢掉补集行，只用 $m/2$ 个代表样本拟合 odd target，把 $m$ 次查询的信息压进一半的回归行。边界约束在回归里显式处理，而不是像部分 KernelSHAP 实现那样用伪无穷权重近似。

@@ -41,6 +41,20 @@ tags:
 ### 整体框架
 sale 把异构 agent 集合 $\mathcal{A} = \{a_i\}_{i=1}^{|\mathcal{A}|}$（论文里是 4 个 Qwen3 规格）排成一个测试时拍卖市场：拿到任务 t 后，每个 agent 先吐一段"我打算怎么做"的短策略当标书，市场用 cost-minus-value 给标书打分选出临时赢家，比赢家便宜的 agent 还能翻历史竞拍记忆精炼标书来抢单，最终胜者才真正执行其策略生成完整轨迹。关键在于整个竞拍只让每个 agent 吐几百 token 的 plan，token 与时延上占总推理不到 1%，于是把"要不要用大模型"这件事变成一次几乎免费的市场出清。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 t"] --> B["各 agent 提交策略短计划当标书<br/>几百 token 的 plan"]
+    B --> C["Cost−Value 评分 C − V<br/>成本=单价×标书长度 · 价值=熵 H + jury 互评/自评"]
+    C --> D["min-max 权重学习<br/>最小化最坏任务的 C−V → 选临时赢家"]
+    D --> E["更便宜的 agent 翻拍卖记忆<br/>检索相似 (输,赢) 策略对 → 对比精炼标书"]
+    E --> F{"精炼标书 C−V 更低?"}
+    F -->|是| G["替换胜者"]
+    F -->|否| H["保留原赢家"]
+    G --> I["胜者执行策略 → 完整轨迹"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 策略短计划作为标书：用几百 token 的 plan 代替跑完整解来做路由**

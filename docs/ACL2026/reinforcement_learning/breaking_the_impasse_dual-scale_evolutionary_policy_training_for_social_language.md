@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DEPT 在 GRPO/role-conditioned advantage estimation 之上额外维护两个角色 $p \in \{0,1\}$ 的 fast/slow EMA baseline + 全局 $V_{max}/V_{min}$ 历史界限。每个训练 step 包含：(1) self-play 收集 batch trajectory；(2) 计算 match outcome 分布 $P = \{p_{win}, p_{draw}, p_{loss}\}$ 与 match entropy $H_{match}^{(t)}$，识别 dominant outcome；(3) 更新两个 baseline，计算 stagnation coefficient $\sigma^{(t)}$ 和 intervention coefficient $\lambda^{(t)}$；(4) 用 $\lambda^{(t)}$ 把 slow baseline 与 asymmetric value 做线性融合得到 reshaped baseline $\tilde{b}_p(\tau)$；(5) 用 reshaped advantage 做策略梯度更新。
+DEPT 在 GRPO/role-conditioned advantage estimation 之上额外维护两个角色 $p \in \{0,1\}$ 的 fast/slow EMA baseline + 全局 $V_{max}/V_{min}$ 历史界限。每个训练 step 包含：(1) self-play 收集 batch trajectory；(2) 计算 match outcome 分布 $P = \{p_{win}, p_{draw}, p_{loss}\}$ 与 match entropy $H_{match}^{(t)}$，识别 dominant outcome；(3) 更新两个 baseline，计算 stagnation coefficient $\sigma^{(t)}$ 和 intervention coefficient $\lambda^{(t)}$；(4) 用 $\lambda^{(t)}$ 把 slow baseline 与 asymmetric value 做线性融合得到 reshaped baseline $\tilde{b}_p(\tau)$；(5) 用 reshaped advantage 做策略梯度更新，循环到下一 step。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["self-play 收集 batch 轨迹"] --> B["统计比赛结果分布 P 与 match 熵 H_match<br/>识别 dominant outcome"]
+    B --> C["双时间尺度 EMA + 干预系数 λ<br/>fast/slow baseline 散度 → 停滞系数 σ，λ=σ·√(1−H_match)"]
+    C --> D["非对称优势重塑<br/>dominant 配 V_max 压制、rare 配 V_min 放大"]
+    D --> E["自适应 baseline 融合<br/>b̃=(1−λ)·b_slow + λ·V_asym"]
+    E --> F["reshaped advantage → GRPO 策略梯度更新"]
+    F -->|下一 step| A
+```
 
 ### 关键设计
 

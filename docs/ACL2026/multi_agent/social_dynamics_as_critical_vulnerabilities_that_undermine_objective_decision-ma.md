@@ -42,7 +42,7 @@ tags:
 ### 整体框架
 每个 trial 包含一个有客观答案的多选题、五个 peer agents 和一个 representative agent。良性同伴正常解题；误导性同伴被设置为支持某个错误选项，并给出看似合理的理由。代表智能体接收原题、候选答案和五个同伴意见，最后独立给出答案。系统用正则匹配答案选项，计算最终准确率。
 
-论文围绕四个研究问题展开：RQ1 改变误导性同伴数量，模拟 social conformity；RQ2 改变误导性同伴模型能力，模拟 perceived expertise；RQ3 改变误导性理由长度，模拟 dominant speaker effect；RQ4 改变理由风格为 Ethos、Logos、Pathos，模拟 rhetorical persuasion。
+论文围绕四个研究问题展开：RQ1 改变误导性同伴数量，模拟社会从众（social conformity）；RQ2 改变误导性同伴模型能力，模拟感知专业性（perceived expertise）；RQ3 改变误导性理由长度，模拟强势发言者效应（dominant speaker effect）；RQ4 改变理由风格为 Ethos、Logos、Pathos 三类，模拟修辞说服（rhetorical persuasion）。
 
 ### 关键设计
 

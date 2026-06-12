@@ -45,6 +45,22 @@ tags:
 
 模型 FGAesQ 以 CLIP 的 ViT-B/16 作视觉编码器，走两阶段训练：先在粗粒度 AVA 上预训练打底，建立基本的审美感知；再在"粗粒度独立图 + 细粒度系列对"上交替联合训练——粗粒度批喂独立图和绝对评分，细粒度批喂系列内配对图和排序标签。三个模块各管一段：DiffToken 管输入表征、CTAlign 管特征对齐、RankReg 管评分校准。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["系列内图像<br/>目标图 x + 参考图 y₁（语义近似、美学微差）"] --> B
+    subgraph B["差异保留 Tokenization（DiffToken）"]
+        direction TB
+        B1["切大 patch，逐位置算 SSIM 相似度"] --> B2["低相似度 patch → 差异区域 D"]
+        B2 --> B3["D 内按原分辨率精细 tokenize，其余缩放丢弃<br/>总 token 数不变"]
+    end
+    B --> C["CLIP ViT-B/16 视觉编码器"]
+    C -.->|仅训练| D["对比文本辅助对齐（CTAlign）<br/>GPT-4o 对比描述对齐视觉差方向"]
+    C --> E["回归头输出绝对评分 Score"]
+    E --> F["排序感知回归（RankReg）<br/>Bradley-Terry 配对概率 + ListMLE 对齐真实排序"]
+    F --> G["判别性审美评分（系列内排序选优）"]
+```
+
 ### 关键设计
 
 **1. 差异保留 Tokenization（DiffToken）：把 token 预算押在"决定排序的那几块"上**

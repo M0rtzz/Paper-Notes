@@ -40,7 +40,21 @@ SPA-Cache 把扩散语言模型 (DLM) 中"哪些 token 需要更新"的判定，
 ## 方法详解
 
 ### 整体框架
-SPA-Cache 要解决的核心问题是：DLM 每个解码步都对全序列重算 forward，但其实大部分 token 的隐状态在步间几乎不变，只要找出真正"漂移"的少数 token 重算、其余复用缓存就能省下大量计算——难点在于"找漂移 token"这件事本身别太贵，而且不同层该重算的比例还不一样。围绕这两点，单个 Transformer block 的 SPA-Cache 工作流分三阶段（Algorithm 1）：先做**更新识别**，把输入隐状态 $H \in \mathbb{R}^{N \times d}$ 经低维投影 $f_\text{proxy}: \mathbb{R}^d \to \mathbb{R}^r$ 得到 proxy 标识，与上一步缓存的 proxy 比余弦相似度，按当前层预算 $\rho(l)$ 选出 Top-$k$（$k = N\rho$）最不相似的索引集 $\mathcal{I}$；再做**部分缓存注意力**，只对 $\mathcal{I}$ 里的 token 算 $Q_\mathcal{I}, K_\mathcal{I}, V_\mathcal{I}$ 并 scatter 写回缓存 $K^c, V^c$，让这批 sparse query 对完整 KV 缓存做 attention；最后**更新 FFN 与输出**，sparse attention 输出过 FFN 后 scatter 写回输出缓存 $H^c$，未选中的 token 直接复用缓存。这样每层 attention 与 FFN 的计算量从 $O(N)$ 降到 $O(k) = O(N\rho)$，而 $\rho$ 还按层自适应。下面三个设计分别回答"该用什么信号选 token""怎么把选 token 这步算便宜""每层该选多少"。
+SPA-Cache 要解决的核心问题是：DLM 每个解码步都对全序列重算 forward，但其实大部分 token 的隐状态在步间几乎不变，只要找出真正"漂移"的少数 token 重算、其余复用缓存就能省下大量计算——难点在于"找漂移 token"这件事本身别太贵，而且不同层该重算的比例还不一样。围绕这两点，单个 Transformer block 的 SPA-Cache 工作流分三阶段（Algorithm 1）：先做**更新识别**，把输入隐状态 $H \in \mathbb{R}^{N \times d}$ 经低维投影 $f_\text{proxy}: \mathbb{R}^d \to \mathbb{R}^r$ 得到 proxy 标识，与上一步缓存的 proxy 比余弦相似度，按当前层预算 $\rho(l)$ 选出 Top-$k$（$k = N\rho$）最不相似的索引集 $\mathcal{I}$；再做**部分缓存注意力**，只对 $\mathcal{I}$ 里的 token 算 $Q_\mathcal{I}, K_\mathcal{I}, V_\mathcal{I}$ 并 scatter 写回缓存 $K^c, V^c$，让这批 sparse query 对完整 KV 缓存做 attention；最后**更新 FFN 与输出**，sparse attention 输出过 FFN 后 scatter 写回输出缓存 $H^c$，未选中的 token 直接复用缓存。这样每层 attention 与 FFN 的计算量从 $O(N)$ 降到 $O(k) = O(N\rho)$，而 $\rho$ 还按层自适应。下面三个设计分别回答"该用什么信号选 token""怎么把选 token 这步算便宜""每层该选多少"——其中"该用什么信号"由理论奠基（Theorem 3.1/3.2 证明 Value 相似度是漂移上界）回答，框架图里不单列节点；另两个设计是 Phase 1 里真正改造的环节，体现在下图的更新识别阶段。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入隐状态 H (N×d)"] --> SUB
+    subgraph SUB["更新识别（Phase 1）"]
+        direction TB
+        B["奇异代理 f_proxy=W_r·h<br/>Value 投影矩阵截断 SVD 到 r=128 维"] --> C["与上一步缓存 proxy 比余弦相似度"]
+        C --> D["分段高斯预算 ρ(l) 定 k=Nρ<br/>取 Top-k 最不相似 → 索引集 I"]
+    end
+    SUB --> E["部分缓存注意力（Phase 2）<br/>仅对 I 算 Q/K/V，scatter 写回 K^c/V^c"]
+    E --> F["FFN 与输出更新（Phase 3）<br/>I 过 FFN，scatter 写回 H^c"]
+    F --> G["输出：I 处 token 更新，其余复用缓存"]
+```
 
 ### 关键设计
 

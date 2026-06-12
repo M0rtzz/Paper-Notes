@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 输入是一个 VLA 策略 $\pi_\theta$ 和一段视觉序列 $V_{1:T}$ 与指令 token。先做 token 级因果干预产出每帧的 ISS 显著图 $S_t \in \mathbb{R}^{H \times W}$；再按预定义的「动作关键区 / 环境支撑区 / 视觉干扰区」三分割计算 NMR@k，作为模型「因果错位」程度的标量；最后把 NMR@k 与真实 OOD 成功率做 Pearson 相关，验证它能否预测泛化。整个流程是**离线介入协议**，不依赖仿真器执行，避免动力学误差累积。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VLA 策略 π_θ + 视觉序列 + 指令 token"]
+    subgraph ISS["介入显著性分数 ISS"]
+        direction TB
+        B["软干预：Bernoulli 掩码<br/>+ 高斯模糊 + 模态均值替换"]
+        B --> C["前向 N 次累加 Action MSE δ<br/>（代理 KL 散度）"]
+        C --> D["归一化 → 每帧显著图 S_t"]
+    end
+    A --> ISS
+    A --> E["因果空间分割 + Markov 毯<br/>token 分动作区/支撑区/干扰区 Ω_nuis"]
+    D --> F["干扰物质量比 NMR@k<br/>top-k% 显著 token 落入 Ω_nuis 的比例"]
+    E --> F
+    F --> G["与 OOD 成功率做 Pearson 相关<br/>NMR@10 ↔ r = −0.77"]
+```
+
 ### 关键设计
 
 **1. 介入显著性分数 ISS：用因果干预而非被动观察量化每个 token 对动作的影响**

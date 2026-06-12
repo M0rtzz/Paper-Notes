@@ -46,6 +46,31 @@ tags:
 
 直接把 Evidence Gain 当奖励会非常昂贵。缓存中给出的估计是，对约 12K 样本和 100 个 demonstrations 显式计算 Evidence Gain 需要约 80 小时 H800。作者因此不在 rollout 后计算奖励，而是在 rollout 前从 demonstration set 中采样一个示范，拼到当前问题前面，再执行标准 RLVR 更新。这个简单的输入侧改动就是 In-Context RLVR。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["训练问题 q + 候选推理轨迹 r"]
+    subgraph EG["Evidence Gain：把推理质量定义为示范教学效用"]
+        direction TB
+        E1["将 (q,r) 作为示范拼到 held-out 验证样本前"]
+        E2["测验证参考推理的 log-likelihood<br/>相比 zero-shot 的提升 = Evidence Gain"]
+        E1 --> E2
+    end
+    Q --> EG
+    EG -->|高 Evidence Gain = 可迁移的优质推理| INS["质量代理信号<br/>(显式计算昂贵，仅用于验证)"]
+    subgraph IC["In-Context RLVR：输入侧拼示范，隐式重加权奖励"]
+        direction TB
+        D1["从 demonstration set 采样高质量示范 e"]
+        D2["把 e 拼到当前问题 q 前，从 π(r|e,q) 采样回答"]
+        D3["仍只用答案正确性奖励 R(q,r) 做标准 RLVR 更新"]
+        D1 --> D2 --> D3
+    end
+    INS --> IC
+    IC -->|Bayesian identity| W["等价于优化重加权奖励 R(q,r)·w(q,r)<br/>log w ≈ Evidence Gain + 常数"]
+    W --> WRAP["与 DAPO/GRPO 解耦组合<br/>IC-DAPO / IC-GRPO"]
+    WRAP --> OUT["偏向高质量推理轨迹的 policy"]
+```
+
 ### 关键设计
 
 **1. Evidence Gain：把"推理质量"重新定义成"示范教学效用"**

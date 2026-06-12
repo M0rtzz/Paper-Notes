@@ -48,6 +48,24 @@ tags:
 
 推理时分类与生成共享同一次 forward；若被判为 unsafe，编排层可在任何 token 流出前直接拦截，再调用 serving LLM 生成 contextual 拒答（无需额外调一次模型）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 LLM 单次 forward<br/>输出 L+1 个隐状态矩阵 h^(l) ∈ R^(T×d)"]
+    subgraph AGG["两阶段聚合架构（先压 token 再压 layer）"]
+        direction TB
+        S1["Stage 1 · token 聚合<br/>每层 T×d 压成 layer summary v^(l) ∈ R^d"]
+        S2["Stage 2 · layer 聚合<br/>L+1 个 summary 压成单向量 v ∈ R^d"]
+        S1 --> S2
+    end
+    OP["可插拔聚合算子（两阶段共用同一算子族）<br/>mean/max pooling 3K → scoring attention gate 100K → downcast MHA probe 35M"]
+    A --> AGG
+    OP -.填充两个 Stage.-> AGG
+    AGG --> H["分类头 logits = W_out·v + b_out<br/>交叉熵训练，LLM 全程冻结"]
+    H -->|"safe"| G["放行，与生成共享同一 forward"]
+    H -->|"unsafe"| B["同一次 forward 内拦截，触发拒答"]
+```
+
 ### 关键设计
 
 **1. 两阶段聚合架构：把三维张量拆成两步一维 reduce，绕开参数爆炸**

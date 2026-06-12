@@ -50,7 +50,7 @@ tags:
 
 ### 5. 切入角度
 
-**Busemann 函数**——双曲空间中内积的内蕴推广。欧式内积 $\langle v, x \rangle$ 在双曲空间的对应是 Busemann 函数 $-B^v(x)$；欧式超平面的对应是**horophere（极球面）**。这对概念在 Poincaré 和 Lorentz 模型上均有解析闭式。
+**Busemann 函数**——双曲空间中内积的内蕴推广。欧式内积 $\langle v, x \rangle$ 在双曲空间的对应是 Busemann 函数 $-B^v(x)$；欧式超平面的对应是**horosphere（极球面）**。这对概念在 Poincaré 和 Lorentz 模型上均有解析闭式。
 
 ### 6. 核心 idea
 
@@ -60,9 +60,9 @@ tags:
 
 ### 整体框架
 
-这篇论文想解决的是：双曲神经网络里最基础的两个零件——分类头（MLR）和全连接层（FC）——一直缺一个既内蕴、又紧凑、还能跨 Poincaré 和 Lorentz 两种模型通用的写法。作者的破题点是一个观察：欧式空间里这两个零件本质都建立在「内积 $\langle v, x\rangle$」和「超平面」之上，而内积在双曲空间的内蕴对应物正是 **Busemann 函数** $-B^v(x)$，超平面的对应物则是 **horophere（极球面）**。于是只要把欧式公式里的内积换成 Busemann 函数、把超平面换成 horophere，就能整体平移到双曲空间。
+这篇论文想解决的是：双曲神经网络里最基础的两个零件——分类头（MLR）和全连接层（FC）——一直缺一个既内蕴、又紧凑、还能跨 Poincaré 和 Lorentz 两种模型通用的写法。作者的破题点是一个观察：欧式空间里这两个零件本质都建立在「内积 $\langle v, x\rangle$」和「超平面」之上，而内积在双曲空间的内蕴对应物正是 **Busemann 函数** $-B^v(x)$，超平面的对应物则是 **horosphere（极球面）**。于是只要把欧式公式里的内积换成 Busemann 函数、把超平面换成 horosphere，就能整体平移到双曲空间。
 
-按这个思路落成两个组件：**BMLR** 接在网络末端做分类，把欧式 logit $u_k(x)=\langle a_k,x\rangle+b_k$ 改写成基于 Busemann 函数的形式；**BFC** 替换中间的全连接层，把欧式 FC「输出第 $k$ 维 = 到坐标超平面的有符号距离」这一等式的右端换成 Busemann logit，再反解出双曲点 $y$。两者共用同一套「内积→Busemann、超平面→horophere」的字典，所以一套公式同时覆盖两种模型，且曲率 $K\to 0^-$ 时自动退回欧式版本。
+按这个思路落成两个组件：**BMLR** 接在网络末端做分类，把欧式 logit $u_k(x)=\langle a_k,x\rangle+b_k$ 改写成基于 Busemann 函数的形式；**BFC** 替换中间的全连接层，把欧式 FC「输出第 $k$ 维 = 到坐标超平面的有符号距离」这一等式的右端换成 Busemann logit，再反解出双曲点 $y$。两者共用同一套「内积→Busemann、超平面→horosphere」的字典，所以一套公式同时覆盖两种模型，且曲率 $K\to 0^-$ 时自动退回欧式版本。
 
 ### 关键设计
 
@@ -76,7 +76,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 **2. 点到极球面的距离解释：让这个 logit 有几何含义**
 
-把内积换成 Busemann 函数后，自然要问换出来的 logit 到底代表什么。答案是它就是「点到 horophere 的有符号测地距离」。关键依据是 Hadamard 空间（涵盖欧式与双曲的广义度量空间）里 Busemann 函数的等值面——也就是 horophere——彼此等距：$d(H_{\tau_1}^\gamma,H_{\tau_2}^\gamma)=|\tau_2-\tau_1|$，于是点到任意 horophere 的距离写成 $d(x,H_\tau^v)=|B^v(x)-\tau|$。把这个代回去，BMLR 的 logit 恰好等于有符号点到 horophere 距离再乘 $\alpha_k$。这就把欧式 MLR 里「logit = 点到决策超平面的有符号距离」（Lebanon & Lafferty 的经典解释）原封不动搬到了双曲空间：样本离哪一类的 horophere 越近，属于那类的概率越大。区别在于它用的是真实测地距离，而不是切空间投影出来的伪距离。
+把内积换成 Busemann 函数后，自然要问换出来的 logit 到底代表什么。答案是它就是「点到 horosphere 的有符号测地距离」。关键依据是 Hadamard 空间（涵盖欧式与双曲的广义度量空间）里 Busemann 函数的等值面——也就是 horosphere——彼此等距：$d(H_{\tau_1}^\gamma,H_{\tau_2}^\gamma)=|\tau_2-\tau_1|$，于是点到任意 horosphere 的距离写成 $d(x,H_\tau^v)=|B^v(x)-\tau|$。把这个代回去，BMLR 的 logit 恰好等于有符号点到 horosphere 距离再乘 $\alpha_k$。这就把欧式 MLR 里「logit = 点到决策超平面的有符号距离」（Lebanon & Lafferty 的经典解释）原封不动搬到了双曲空间：样本离哪一类的 horosphere 越近，属于那类的概率越大。区别在于它用的是真实测地距离，而不是切空间投影出来的伪距离。
 
 **3. Busemann FC：把同一套字典用到全连接层**
 
@@ -138,7 +138,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 ## 亮点与洞察
 
 - **数学优雅**：用 Busemann 函数统一了欧式内积 → 双曲空间的推广，一个公式同时涵盖 Poincaré 和 Lorentz 两种模型
-- **理论完整**：证明了 Hadamard 空间中极球面等距性质（Thm 3.3），给出了 BMLR 的点到 horophere 距离解释，以及 $K \to 0^-$ 的极限定理
+- **理论完整**：证明了 Hadamard 空间中极球面等距性质（Thm 3.3），给出了 BMLR 的点到 horosphere 距离解释，以及 $K \to 0^-$ 的极限定理
 - **实用性强**：BMLR-L 的 FLOPs 为 $C(2n+12)$，接近欧式 MLR 的 $C(2n)$，几乎零额外开销
 - **跨领域验证**：四类任务（视觉、基因组、图节点分类、图链接预测）覆盖面广，说明方法的通用性
 

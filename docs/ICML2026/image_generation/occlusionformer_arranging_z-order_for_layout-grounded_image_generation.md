@@ -45,6 +45,17 @@ OcclusionFormer 要解决的是：扩散模型的注意力天生在 2D 平面上
 ### 整体框架
 输入是一组实例条件 $(M_i, B_i, \mathcal{O}_i, C_i, P)$（mask、bounding box、遮挡集合、实例 caption、全局 prompt）。每个 DiT block 先跑一次冻结的全局 MM-Attention 得到视觉特征 $\mathbf{Z}\in\mathbb{R}^{L\times D}$，随后做三件事：按每个实例的 box 抽出局部 token 单独算注意力得到"独立层" $\hat{\mathbf{Z}}_i$；用体渲染按 $\mathcal{O}_i$ 指定的 Z-order 把所有层合成成 $\mathbf{Z}_{out}$ 并残差加回主干；再用一个可学习 query 从每层读出空间相似度图、经轻量 CNN 预测前景概率，用 GT mask 监督几何。训练目标为 $\mathcal{L}_{total} = \mathcal{L}_{flow} + \lambda \mathcal{L}_{align}$，$\lambda=0.5$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["实例条件 (maskᵢ, boxᵢ, 遮挡集 Oᵢ, captionᵢ) + 全局 prompt"] --> B["冻结全局 MM-Attention<br/>得视觉特征 Z"]
+    B --> C["实例解耦的局部 MM-Attention<br/>按 box 抽 token 单独算注意力 → 独立层 Ẑᵢ"]
+    C --> D["基于体渲染的 Z-order 显式建模<br/>learned σᵢ → 透射率 Tᵢ·αᵢ 按序合成 → 残差加回"]
+    C --> E["查询对齐损失<br/>query 读相似图 → 轻量 CNN → 前景概率 → GT mask 监督"]
+    D --> F["输出：层级一致的图像特征"]
+    E -.训练时几何监督.-> F
+```
+
 ### 关键设计
 
 **1. 实例解耦的局部 MM-Attention：把全局平面注意力切成可分层的"层"**

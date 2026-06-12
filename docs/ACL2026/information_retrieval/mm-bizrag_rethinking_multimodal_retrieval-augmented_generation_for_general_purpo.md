@@ -44,6 +44,21 @@ MM-BizRAG 想解决的是企业知识库里那堆异构文档：PDF 财报、PPT
 
 对纵向文档，Docling 等工具抽出文本块、表格、图片和页面图：文本里插入表格/图片 placeholder 来锁住阅读顺序，表格转 markdown 后由 LLM 生成逐行描述，图片由 VLM 描述并过滤掉 logo 这类无信息内容。对横向文档则不强拆，每页保留页面图加一段 VLM 生成的 slide-level 描述。检索阶段按变体建立 text 或 multimodal embedding；推理时 query rewriter 先结合对话历史改写查询，再用 dense + BM25 hybrid retrieval，RRF 融合取 top 30 送进 LLM list-wise reranker，最终选 top 20 chunks 组装成多模态上下文交给 GPT-4.1 生成答案。论文据此定义三种变体（TCTE、PCMHE、TCMIE），差别在 chunk 粒度、embedding 模型和 artifact 注入时机。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["企业文档<br/>PDF / PPTX / DOCX / HTML / TXT"] --> B["结构感知文档分流<br/>纵向/横向分类器"]
+    B -->|纵向：报告/财报| C["版式解析<br/>文本+占位符 / 表格→markdown→LLM描述 / 图片→VLM描述"]
+    B -->|横向：幻灯片| D["整页表示<br/>页面图 + slide级VLM描述"]
+    C --> E["索引侧轻量表示<br/>text / multimodal embedding（解耦·检索侧）"]
+    D --> E
+    E --> F["查询改写<br/>结合对话历史补全自含查询"]
+    F --> G["混合检索<br/>dense 70 + BM25 100 → RRF top30"]
+    G --> H["list-wise 重排<br/>取 top20 chunks"]
+    H --> I["推理时上下文组装<br/>顺占位符还原表格markdown/图片（解耦·生成侧）"]
+    I --> J["GPT-4.1 生成答案"]
+```
+
 ### 关键设计
 
 **1. 结构感知文档分流：报告和幻灯片不能用同一套解析**

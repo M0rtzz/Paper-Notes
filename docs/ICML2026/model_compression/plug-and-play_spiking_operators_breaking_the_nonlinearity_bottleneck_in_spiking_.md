@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 NLSpiking 是一个三层结构：最底层是三个 spike-native 原语（除法、$\ell_2$ 范数、指数），中间层把每个目标非线性算子改写成 $\phi(x) = \text{num}(x)/\text{denom}(x)$ 的"分子-分母"形式、分别用原语近似，最上层的 NLSpiking 算子（NLS-Softmax / NLS-SiLU / NLS-RMS）只是这套原语在分子分母构造上的不同组合。关键在于它和原 ANN-to-SNN 转换框架完全解耦——可以在 SpikeZIP-TF 把线性层转换完之后，再单独把非线性算子换成 NLSpiking 版本，权重和流水线都不用动。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ANN Transformer / LLM<br/>LLaMA-3 · Qwen3 · BERT"] --> B["ANN-to-SNN 转换<br/>SpikeZIP / SpikeLLM 先脉冲化线性层"]
+    B --> C["即插即用替换非线性算子<br/>training-free，不动权重与流水线"]
+    C --> D["改写成分子-分母形式 num(x)/denom(x)<br/>分母 = 某个非负归一化项"]
+    subgraph PRIM["三个 spike-native 原语"]
+        direction TB
+        P1["Division Neuron Group<br/>ordered-threshold LIF 群体竞争算除法"]
+        P2["PolarNorm Unit<br/>CORDIC 二叉树求 ℓ₂ 范数"]
+        P3["PWL-Exp Unit<br/>8-bit 查找表求 exp"]
+    end
+    D --> PRIM
+    PRIM --> E["NLS-Softmax / NLS-SiLU / NLS-RMS<br/>三原语的不同组合"]
+    E --> F["spike-only 推理<br/>全 in-core · 0 跨域搬运"]
+```
+
 ### 关键设计
 
 **1. Division Neuron Group：把"除法"翻译成神经元群体竞争**

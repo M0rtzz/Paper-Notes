@@ -45,6 +45,20 @@ tags:
 
 给定目标模型 $M_{target}$ 和问题 q，模型生成答案并获得二元正确性标签 $y \in \{0,1\}$。使用源模型 $M_{source}$ 处理同一问题 q 得到隐藏状态 $\mathbf{h}$，训练分类器（探针）$f$ 预测 y。通过变换源模型来创建不同配置：自探针（$M_{source} = M_{target}$）和外部探针（$M_{source} \neq M_{target}$）。特权优势（premium gap）定义为自探针相对于外部探针在 AUC 上的优势。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 q"] --> GEN["目标模型生成答案<br/>→ 二元正确性标签 y"]
+    Q --> HS["源模型处理 q 得隐藏状态<br/>形式化分解 h ≈ z_public ⊕ z_private"]
+    HS -->|"源 = 目标"| SELF["自探针配置"]
+    HS -->|"源 ≠ 目标"| EXT["外部探针配置"]
+    SELF --> TRAIN["探针 f 在全量训练集上训练"]
+    EXT --> TRAIN
+    TRAIN --> DIS["分歧子集评估<br/>仅评 y_target ≠ y_source 的题"]
+    DIS --> GAP["特权优势 = 自探针 AUC − 外部探针 AUC"]
+    GAP --> LAYER["逐层特权优势分析<br/>每 5 层取隐藏状态画曲线"]
+```
+
 ### 关键设计
 
 **1. 特权知识的形式化定义：把"任何人都能看到的"和"只有自己知道的"在隐藏状态里掰开**

@@ -47,6 +47,24 @@ tags:
 
 Shape-of-You (SoY) 要解决 in-the-wild 语义对应里"伪标签几何不一致"的老毛病。它走两阶段：第一阶段用 Fused Gromov-Wasserstein (FGW) 最优传输融合语义特征相似性和 3D 几何结构一致性，生成全局一致的高质量伪标签；第二阶段用软目标损失训练一个轻量适配器，推理时只需前向传播加最近邻匹配、无需再迭代求解 OT。输入侧，给定源/目标图像先用 SAM 分出实例区域并切成 patch 网格，每个 patch 取两种表示——DINOv2/SD 的语义特征 $\mathbf{f}_i \in \mathbb{R}^d$ 和 VGGT（3D 基础模型）提升出的 3D 坐标 $\mathbf{v}_i \in \mathbb{R}^3$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源 / 目标图像"] --> B["SAM 分实例 + 切 patch 网格"]
+    B --> C["每 patch 两种表示<br/>语义特征 f_i（DINOv2/SD）+ 3D 坐标 v_i（VGGT）"]
+    C --> D["语义 UOT 初始化<br/>语义代价 C_sem → Sinkhorn → 初始传输计划 π(0)"]
+    D --> FGW
+    subgraph FGW["锚点线性化 FGW 迭代精炼（迭代 T 轮）"]
+        direction TB
+        E["选 K=64 高置信锚点<br/>循环一致性过滤：3D 循环误差低于 δ"] --> F["稀疏锚点线性化几何代价 C_geo"]
+        F --> G["融合 C_total =（1−α）C_sem + α C_geo"]
+        G --> H["解 UOT → π(t)"]
+        H -->|未满 T 轮则回填锚点| E
+    end
+    FGW -->|"π(T) 作为伪标签"| I["软目标损失<br/>π_hard 与当前特征 π_curr 混合 → 训练轻量适配器 f_θ"]
+    I --> J["推理：适配器前向 + 最近邻匹配（无需迭代 OT）"]
+```
+
 ### 关键设计
 
 **1. 语义 UOT 初始化：用非平衡传输应对遮挡与非重叠**

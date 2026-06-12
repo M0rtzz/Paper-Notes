@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-OmniSapiens-7B 2.0 要解决的是多任务社会行为 RL 里"少数任务/样本因优势幅值偏大而主导整个策略梯度"的失衡问题。它以 Qwen 2.5-Omni-7B 为多模态 backbone，吃文本/图像/视频/音频混合的行为数据（Human Behavior Atlas 10 个任务、100k+ 样本，含 SEN/EMO/SOC/INT/NVC/HUM/SAR/ANX/DEP/PTSD），输出"推理链 + 预测标签/答案"的自回归序列。训练用 HARPO（Heterogeneity-Aware Relative Policy Optimization），整体沿用 GRPO 的 PPO clipped surrogate + KL 正则，唯一改动是在 actor 之外挂一个"调制器"：它按训练步 $t$ 在线估计每个 sample/task 的更新贡献，再把贡献转成调制因子去乘组归一化优势，把主导更新的 $\hat{A}_{(m,q,i)}$ 替换成再平衡后的 $A^H_{(m,q,i)}$。Reward 仍是三部分加权——任务奖励 $r_{task}$（分类 binary、QA cosine）、格式奖励 $r_{fmt}$（权重 0.2）、长度惩罚 $r_{len}$（系数 0.75）。
+OmniSapiens-7B 2.0 要解决的是多任务社会行为 RL 里"少数任务/样本因优势幅值偏大而主导整个策略梯度"的失衡问题。它以 Qwen 2.5-Omni-7B 为多模态 backbone，吃文本/图像/视频/音频混合的行为数据（Human Behavior Atlas 10 个任务、100k+ 样本，含 SEN/EMO/SOC/INT/NVC/HUM/SAR/ANX/DEP/PTSD），输出"推理链 + 预测标签/答案"的自回归序列。训练用 HARPO（Heterogeneity-Aware Relative Policy Optimization），整体沿用 GRPO 的 PPO clipped surrogate + KL 正则，唯一改动是在 actor 之外挂一个"调制器"：它按训练步 $t$ 在线估计每个 sample/task 的更新贡献，再把贡献转成调制因子去乘组归一化优势，把主导更新的 $\hat{A}_{(m,q,i)}$ 替换成再平衡后的 $A^H_{(m,q,i)}$。Reward 仍是三部分加权——任务奖励 $r_{task}$（分类 binary、QA cosine）、格式奖励 $r_{fmt}$（权重 0.2）、长度惩罚 $r_{len}$（系数 0.75）。调制器内部顺次做三件事——双层贡献估计、几何均值倒数比调制、乘性 EMA 惯性平滑——正好对应下面三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态行为数据<br/>Qwen 2.5-Omni-7B backbone"] --> B["GRPO rollout<br/>组内 reward 归一化得优势 Â"]
+    B --> C["双层贡献估计<br/>sample/task 级平均 |Â| 当贡献信号 p"]
+    C --> D["几何均值倒数比调制<br/>s = p_ref / p，∏s=1 全局步长守恒"]
+    D --> E["乘性 EMA 惯性平滑<br/>调制随贡献趋势慢演化"]
+    E --> F["再平衡优势 A^H = s_(m,q)·s_m·Â"]
+    F --> G["PPO clipped surrogate + KL<br/>策略更新"]
+```
 
 ### 关键设计
 

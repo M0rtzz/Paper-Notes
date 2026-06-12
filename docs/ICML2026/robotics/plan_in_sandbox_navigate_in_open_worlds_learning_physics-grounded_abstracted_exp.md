@@ -41,7 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SAGE 含三阶段：(1) **Genesis** 在沙盒环境 $\mathcal E_S=(\mathcal S,\mathcal A,\mathcal P)$ 里采样起终点 + A* 规划 + 在关键点渲染三视角观测 $\mathcal V_t=\{v_{t,0°},v_{t,+120°},v_{t,-120°}\}$，用 VLM 把场景图 + 终点描述合成自然语言指令 $I$ 与答案 $a^*$，组成任务 $o=(I,\tau^*,a^*,\mathcal K)$；同时 VLM 把每步的最优视角选择理由编为「IF 任务 X AND 观察 Y THEN 优先路径 Z」规则存入向量库 $\mathcal D_{exp}$。(2) **Evolution** 用 GRPO 在 $\mathcal O$ 上优化策略 $\pi_\theta$，输入按 Bernoulli 概率 $\eta_t$ 决定是否注入检索经验 $\mathcal K_{ret}$，按 homogeneous group 计算优势，按 mask 决定 PPO clip 上下界。(3) **Navigation** 部署时仍走「retrieval + VLM 决策 + 几何规划器」三件套：用 RGB-D + 动态 3D 场景图维护 Memory Buffer $\mathcal M_t$（已见对象）与 Frontier Buffer $\mathcal F_t$（未探索边界），VLM 从 $\mathcal F_t\cup\mathcal M_t$ 选目标节点，Habitat-Sim / ROS 规划器执行。
+SAGE 含三阶段：(1) **Genesis** 在沙盒环境 $\mathcal E_S=(\mathcal S,\mathcal A,\mathcal P)$ 里采样起终点 + A* 规划 + 在关键点渲染三视角观测 $\mathcal V_t=\{v_{t,0°},v_{t,+120°},v_{t,-120°}\}$，用 VLM 把场景图 + 终点描述合成自然语言指令 $I$ 与答案 $a^*$，组成任务 $o=(I,\tau^*,a^*,\mathcal K)$；同时 VLM 把每步的最优视角选择理由编为「IF 任务 X AND 观察 Y THEN 优先路径 Z」规则存入向量库 $\mathcal D_{exp}$。(2) **Evolution** 用 GRPO 在 $\mathcal O$ 上优化策略 $\pi_\theta$，输入按 Bernoulli 概率 $\eta_t$ 决定是否注入检索经验 $\mathcal K_{ret}$，按同质分组（homogeneous group）计算优势，按 mask 决定 PPO clip 上下界。(3) **Navigation** 部署时仍走「检索经验 + VLM 决策 + 几何规划器」三件套：用 RGB-D + 动态 3D 场景图维护 Memory Buffer $\mathcal M_t$（已见对象）与 Frontier Buffer $\mathcal F_t$（未探索边界），VLM 从 $\mathcal F_t\cup\mathcal M_t$ 选目标节点，Habitat-Sim / ROS 规划器执行。
+
+下面三个关键设计中，设计 1 对应 Genesis 阶段（造经验），设计 2、3 共同支撑 Evolution 阶段的 RL 蒸馏（学经验）；Navigation 阶段是把学到的策略接回真实控制的部署脚手架，本身不引入新的训练设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph G["物理沙盒经验生成（Genesis）"]
+        direction TB
+        A["HM3D / InteriorGS<br/>解析成语义状态图"] --> B["A* 采样起终点<br/>关键点渲染三视角观测"]
+        B --> C["VLM 合成指令+答案<br/>抽 IF-THEN 经验规则"]
+    end
+    C --> D["任务集 O + 经验库 D_exp"]
+    subgraph E["GRPO 蒸馏经验（Evolution）"]
+        direction TB
+        F["混合提示采样的同质分组优势估计<br/>按 η_t 注入检索经验·两类样本各自归一化"] --> H["非对称自适应裁剪 AAC<br/>上界放开吸好经验·下界保守防崩"]
+    end
+    D --> F
+    H --> I["导航策略 π_θ"]
+    subgraph N["开放世界部署（Navigation，脚手架）"]
+        direction TB
+        J["RGB-D + 动态 3D 场景图<br/>维护 Memory / Frontier Buffer"] --> K["VLM 从节点中选目标"]
+        K --> L["几何规划器执行"]
+    end
+    I --> J
+```
 
 ### 关键设计
 

@@ -48,6 +48,32 @@ tags:
 
 DEO 想要的是一个**单一学生网络**，既能吃多光谱（MS）输入又能吃光学（RGB）输入，且两边都强。它用一张共享骨干、两套教师把这件事串起来：从一张 Sentinel-2 多光谱图像出发，先做多尺度增强生成全局/局部视图，然后兵分两路喂给同一个学生。一路是**多光谱分支**，学生和一个 EMA 更新的 MS 教师做对比自蒸馏，逼学生学出结构化的光谱特征；另一路是**光学分支**，学生和一个冻结的 DINOv3 教师做特征蒸馏，把现成的光学语义先验灌进来。学生本体是 Swin Transformer 骨干，前面挂一个双 patch embedding（MS 走 10 通道、光学走 3 通道），之后所有 Transformer 层共享——这样两种模态最终落到同一个特征空间里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["fMoW-Sentinel 多光谱（10 波段）<br/>+ fMoW-RGB / 高分航空光学"] --> B["多尺度增强<br/>全局视图 + 局部视图"]
+    B --> C
+    subgraph BK["骨干与数据策略"]
+        direction TB
+        C["双 patch embedding<br/>MS 10 通道入口 / 光学 3 通道入口"] --> D["共享 Swin 学生骨干<br/>patch size 4，细粒度特征"]
+    end
+    D --> E
+    D --> H
+    subgraph MS["多光谱对比自蒸馏"]
+        direction TB
+        E["学生：局部 + 全局视图"] -.EMA 慢更新.-> F["MS 教师：仅全局视图"]
+        E --> G["L_MS：余弦项拉近正对<br/>− 编码率正则防坍塌"]
+        F --> G
+    end
+    subgraph OPT["光学 VFM 蒸馏"]
+        direction TB
+        H["学生光学特征<br/>cls / patch / 中层 patch"] --> J["L_O：与 DINOv3 三特征对齐<br/>各配独立投影头"]
+        I["冻结 DINOv3 教师（ViT）"] --> J
+    end
+    G --> K["总损失 L = −L_MS − L_O"]
+    J --> K
+```
+
 ### 关键设计
 
 **1. 多光谱对比自蒸馏：用对比目标而非 MIM 来撑起全局语义**

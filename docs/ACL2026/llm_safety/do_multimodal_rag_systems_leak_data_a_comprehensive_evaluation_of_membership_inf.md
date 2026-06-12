@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 威胁模型设定为黑盒：攻击者只能通过 API 提供 (target_image, text_prompt) 并读回 VLM 的文本输出，无法访问 retriever 嵌入、reranker 分数或 VLM 权重。研究分为两类攻击：MIA（二分类，输出 Yes/No）与 ICR（生成，输出 caption 字符串）。每类攻击都在 4 个数据集（Conceptual Captions、ROCOv2 医学、Pokemon BLIP、MRAG-Bench）× 3 个 VLM（Qwen2.5-VL 7B、Cosmos-Reason1 7B、InternVL3.5 8B）× 7 种图像变换（原图 / Crop / Mask / Blur / Cutout / Rotate / Gaussian Noise）矩阵上评测，retriever 用 CLIP + cosine，reranker 用 Jina-Reranker（MIA 用 image-image 模式，ICR 用 image-text 模式），默认 $n=20, k=5$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标图 i_q"] --> T["图像变换<br/>原图 / Crop / Mask / Blur / Cutout / Rotate / Noise"]
+    T --> R["CLIP retriever：cosine 取 Top-n=20"]
+    R --> K["Jina reranker 取 Top-k=5<br/>MIA 用 image-image · ICR 用 image-text"]
+    K --> P["prompt 构造（位置消融 RAG-First / RAG-Last）"]
+    P --> G["VLM 读「目标图 + 检索上下文」<br/>Qwen2.5-VL / Cosmos-Reason1 / InternVL3.5"]
+    G -->|"极简 prompt 问『是否同图』"| M["MIA：输出 Yes/No"]
+    G -->|"令其逐字复述 caption"| I["ICR：吐出 caption 原文"]
+```
+
 ### 关键设计
 
 **1. MIA 的极简 prompt：用最朴素的一句黑盒提问，逼出 mRAG 系统级的固有泄漏下限**

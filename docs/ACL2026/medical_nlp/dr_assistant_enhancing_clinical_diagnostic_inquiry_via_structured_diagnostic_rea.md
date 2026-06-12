@@ -43,7 +43,27 @@ tags:
 
 ### 整体框架
 
-CDRD 构建管道（LLM+医生协作三阶段：症状提取→疾病匹配→逻辑补全）→ 数据合成（CDRD→QA 对用于 SFT + CDRD→多轮问诊对话用于 RL）→ Dr. Assistant 两阶段训练（SFT 记忆推理逻辑 + RL 强化问诊技能）。
+CDRD 构建管道（LLM+医生协作三阶段：症状提取→疾病匹配→逻辑补全）→ 数据合成（CDRD→QA 对用于 SFT + CDRD→多轮问诊对话用于 RL）→ Dr. Assistant 两阶段训练（SFT 记忆推理逻辑 + RL 强化问诊技能），训练出的模型在每轮问诊里都按结构化模板"先想清楚再开口"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["临床指南<br/>诊断逻辑散在各章"] --> CDRD
+    subgraph CDRD["CDRD 数据结构与构建管道"]
+        direction TB
+        P1["① 症状提取<br/>LLM 提取 + 医生标准化"] --> P2["② 疾病匹配<br/>LLM 匹配 + 医生验证"]
+        P2 --> P3["③ 逻辑补全<br/>LLM 补推理链 + 医生审核"]
+    end
+    CDRD --> T["三元组 C=(核心症状 S, 诊断证据 E, 鉴别诊断 D)"]
+    T --> SYN["数据合成"]
+    SYN -->|生成 QA 对| SFT
+    SYN -->|生成多轮问诊对话| RL
+    subgraph TRAIN["两阶段训练（SFT + RL）"]
+        direction TB
+        SFT["Stage 1 SFT<br/>记忆诊断推理逻辑"] --> RL["Stage 2 RL<br/>双智能体环境（医生 + 患者）<br/>奖励 = 推理问诊评分 + CDRD 逻辑偏差惩罚"]
+    end
+    RL --> INF["结构化推理-问诊模板<br/>每轮六步：已知→意图→已提供→诊断假设→待收集→策略→问诊/诊断输出"]
+```
 
 ### 关键设计
 

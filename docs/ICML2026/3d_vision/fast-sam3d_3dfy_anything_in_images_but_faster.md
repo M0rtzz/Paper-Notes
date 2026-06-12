@@ -45,6 +45,15 @@ tags:
 
 整条 pipeline 接收一张场景图 $I$ 和目标物体 mask $M$，输出该物体的 3D shape $S$、texture $T$ 与布局参数 $(R,t,s)$。第一阶段 SS generator 跑 25 步扩散，这里 shape token 与 layout token 被解耦成两套缓存规则，避免跳步把 pose 带偏；第二阶段 SLaT generator 同样 25 步，但在空间上只重算少数高显著 token、在时间上按轨迹曲率自适应决定何时跳步；最后一阶段 Mesh decoder 先用 mask 与粗 voxel 的频谱能量给当前实例挑一个下采样力度，再对 sparse 3D token 做坐标量化加 max-pool 聚合。三个模块叠在一起，把对象级时间从 31.04 s 压到 11.60 s（2.67×），场景级从 462.3 s 压到 229.7 s（2.01×）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["场景图 I + 目标 mask M"] --> SS["SS Generator（25 步扩散）<br/>模态感知步缓存：shape 大步跳 / layout 动量平滑"]
+    SS --> SLAT["SLaT Generator（25 步扩散）<br/>时空 Token 雕刻 + 误差有界自适应步缓存"]
+    SLAT --> MESH["Mesh Decoder<br/>谱感知动态 Token 聚合（按 HFER 选下采样档）"]
+    MESH --> OUT["3D shape S + texture T + 布局 (R,t,s)"]
+```
+
 ### 关键设计
 
 **1. 模态感知步缓存（SS Generator）：让 shape 大步跳、layout 保守走，避免 pose drift**

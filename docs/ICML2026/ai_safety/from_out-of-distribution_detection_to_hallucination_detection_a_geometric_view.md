@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 本文要解决的是推理任务下的幻觉检测：既不能训练分类器（怕分布漂移），也不能多次采样（怕开销爆炸）。核心做法是把 LLM 的 language head 看成一个 $|\mathcal{V}|$ 类的线性分类器，penultimate-layer 特征 $\bm{z}^t$ 就是分类器输入，于是 OOD 文献里"特征相对权重向量、决策边界的几何位置"这套成熟的不确定性度量就能直接搬过来。推理时每个解码步 $t$ 算一个标量几何分数 $s(\bm{z}^t)$，整条输出走完取序列均值 $S=\frac{1}{T}\sum_t s(\bm{z}^t)$ 当作幻觉分数，再用阈值 $\tau$ 判定。整个流程不动权重、不需训练数据、单条回答只采样一次。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["language head 当线性分类器<br/>解码步 t 的 penultimate 特征 z^t"] --> B
+    subgraph G["几何不确定性分数（NCI / fDBD）"]
+        direction TB
+        B["NCI：特征到预测类权重向量接近度"]
+        C["fDBD：特征到决策边界距离"]
+    end
+    P["μ_G 解析代理<br/>Decision-Neutral Closest Point"] --> B
+    Q["fDBD top-k 候选裁剪<br/>只取 logits 最高 k 个对手 token"] --> C
+    B --> S["逐 token 几何分数 → 序列平均 S"]
+    C --> S
+    S -->|阈值 τ| T["判定幻觉"]
+```
+
 ### 关键设计
 
 **1. 几何不确定性分数：把 NCI / fDBD 迁到 language head 上**

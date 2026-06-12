@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 本文是评估 + 解释性研究，pipeline 为：① **设定模型矩阵**——LLaMA-2 Base/Chat (7B/13B) 与 Qwen-2.5 (7B/14B)，每个模型 × {fine-tune 数学、fine-tune 代码、不 fine-tune} × {SVD, FWSVD, BASEL} × {k=70%, 50%, 30%}；② **可信评测**——四个维度独立测：Enron Email (training-data leakage 5 指标) + Enron PII (zero-shot / few-shot protected / few-shot attack 三场景 leakage&reject) + GLUE/AdvGLUE++ on SST-2/QQP/MNLI (accuracy drop $\Delta_{\text{robust}}$) + ETHICS commonsense (zero/few-shot acc + FPR under 5 jailbreak instructions) + UCI Adult (MDPD / MEOD on race/sex/age)；③ **理论解释**——用 SVD 的 safety subspace、condition number、capacity-memorization 三套理论分别解释 PII↓ ethics↓、对抗鲁棒↑、training-data privacy↑ 的成因；④ **层级归因**——用 first-order Taylor 把每层贡献量化为 $a_i = \|(\partial \ell / \partial \mathbf{h}_i) \mathbf{h}_i\|_2$，用 clean vs adversarial 的 $\Delta_i = |a_i^{\text{clean}} - a_i^{\text{adv}}|$ 找出对鲁棒性最关键的层。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["模型矩阵（脚手架）<br/>LLaMA-2 / Qwen-2.5 × 微调{数学/代码/无} × {SVD,FWSVD,BASEL} × k={70,50,30}%"]
+    subgraph EVAL["四维可信评测协议"]
+        direction TB
+        P["隐私<br/>Enron 训练数据泄漏 + PII 拒答"]
+        A["对抗鲁棒<br/>GLUE vs AdvGLUE++ 准确率差 Δrobust"]
+        E["伦理对齐<br/>ETHICS + 5 条越狱指令 FPR"]
+        F["公平性<br/>Adult MDPD / MEOD"]
+    end
+    M --> EVAL
+    EVAL --> T["Safety Subspace 与 condition number 理论<br/>SVD 截断误差解释 PII↓伦理↓、κ↓解释鲁棒↑"]
+    T --> G["梯度归因层级敏感度分析<br/>clean 与 adv 归因差定位 trust-critical 层"]
+    G --> O["输出（脚手架）<br/>四象限决策表 + embed_tokens / down_proj 应留高 rank"]
+```
+
 ### 关键设计
 
 **1. 四维可信评测协议：把"可信性"拆成四象限独立测，不让 overall accuracy 一刀切**

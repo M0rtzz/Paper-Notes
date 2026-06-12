@@ -41,7 +41,27 @@ tags:
 ### 整体框架
 这篇论文要解决的是遥感 VLM 的"伪推理"：模型写了一长串推理链，性能却不升反降，根源是它只"瞥"一眼整张大图就开始推理。RS-EoT 的对策是把"看一眼再推理"换成"推理→取证→再推理"的迭代证据搜索，让推理过程反过来驱动感知去按需找新证据。
 
-整条流水线分三步走，最终产出 RS-EoT-7B（底座 Qwen2.5-VL-7B）。第一步是 SFT 冷启动：用一个三角色自博弈的 SocraticAgent 合成出带迭代证据搜索特征的推理轨迹（RS-EoT-4K 数据集），把这种推理模式先"注入"模型。随后是两阶段渐进强化学习——Stage 1 在精细定位（grounding）任务上用 IoU 奖励把证据搜索能力磨出来，Stage 2 再到一般遥感 VQA 上把这种能力泛化开。
+整条流水线分三步走，最终产出 RS-EoT-7B（底座 Qwen2.5-VL-7B）。第一步是 SFT 冷启动：用一个三角色自博弈的 SocraticAgent 合成出带迭代证据搜索特征的推理轨迹（RS-EoT-4K 数据集），把这种推理模式先"注入"模型。随后是两阶段渐进强化学习——Stage 1 在精细定位（grounding）任务上用 IoU 奖励把证据搜索能力磨出来，Stage 2 再到一般遥感 VQA 上把这种能力泛化开。底层贯穿其间的是 RS-EoT 范式本身：让自然语言驱动推理、让视觉信息按需取证，把"一瞥后空想"换成"推理→取证→再推理"的循环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["遥感图像 + 任务问题<br/>（RGB / 红外 / SAR）"]
+    subgraph SA["SocraticAgent：三角色自博弈合成轨迹"]
+        direction TB
+        R["Reasoner（GPT-5-mini）<br/>只读文本·提问·整合"]
+        P["Perceiver（Gemini-2.5-flash）<br/>只看图·简洁作答"]
+        R -->|增量提问| P
+        P -->|视觉证据| R
+        R --> V["Verifier（doubao）<br/>盲答对才收录该轨迹"]
+    end
+    IN --> SA
+    SA --> D["RS-EoT-4K 推理轨迹"]
+    D --> SFT["SFT 冷启动<br/>注入迭代取证推理模式"]
+    SFT --> RL1["两阶段 RL·阶段1：grounding<br/>IoU 奖励磨证据搜索"]
+    RL1 --> RL2["两阶段 RL·阶段2：VQA<br/>多选题重构 + 分级奖励泛化"]
+    RL2 --> OUT["RS-EoT-7B<br/>推理→取证→再推理循环"]
+```
 
 ### 关键设计
 

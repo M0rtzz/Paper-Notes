@@ -42,6 +42,23 @@ tags:
 
 CompACT 要解决世界模型规划太慢的问题：现有方法每帧编几百个 token（SD-VAE 要 784 个），MPC 规划一轮要上千次 rollout，注意力的二次复杂度把单 episode 规划拖到 3 分钟。它的关键判断是"重建保真度 ≠ 规划所需"——规划只要空间布局和物体关系这些高层语义，不需要纹理光照。于是整条流水线分三步：(a) 训练 CompACT tokenizer 把一帧压成 8/16 个离散 token；(b) 在这个极小潜空间里训动作条件世界模型；(c) 测试时用 MPC（CEM 优化）在潜空间搜动作。压到 8 token 也有信息论依据：规划充分表征的最低熵是 $H(\mathbf{a}^*)$，远小于完整观测熵 $H(\mathbf{o})$，理论上百余 bit 就够。
 
+CompACT tokenizer 又拆成编码端（设计 1，把帧压成离散 token）和解码端（设计 2，8 token 重建像素是欠定问题，改用生成式建模补细节），下游的世界模型与规划合为设计 3。三者的数据流如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入帧"] --> ENC
+    subgraph ENC["语义编码器：压成 8/16 token"]
+        direction TB
+        B["冻结 DINOv3-B 抽 patch 特征"] --> C["Latent Resampler<br/>N 个 query 蒸馏高层语义"] --> D["FSQ 离散化（≈16 bits/token）"]
+    end
+    ENC --> E["紧凑离散 token<br/>128~256 bits/帧"]
+    E --> F["生成式解码器<br/>masked generative 还原像素（训练监督）"]
+    E --> G["动作条件世界模型<br/>token + 动作 → 预测下一帧 token"]
+    G --> H["MPC / CEM 搜最优动作<br/>代价：潜空间 L1 或像素 LPIPS"]
+    H --> I["输出动作序列 → 控制"]
+```
+
 ### 关键设计
 
 **1. 语义编码器：冻结视觉基础模型，只蒸馏规划要的语义**

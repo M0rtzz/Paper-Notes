@@ -40,6 +40,31 @@ tags:
 
 输入为视频序列，backbone 提取逐帧视觉特征。SEMA 模块从历史帧特征和分割结果构建记忆，结合边缘结构信息增强当前帧特征。RPG 模块从可学习 token bank 和历史记忆中生成语义先验和时序线索作为分割提示，替代手动点击/框提示。增强后的特征和提示输入 SAM 2 的 mask decoder 生成机器人分割掩码。训练时仅需首帧 GT 标注，通过三级一致性损失实现端到端学习。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入视频序列"] --> B["backbone 逐帧特征 F_t<br/>历史帧特征+掩码编码为记忆 M_t"]
+    subgraph SEMA["结构增强记忆关联器 SEMA"]
+        direction TB
+        C1["时序分支<br/>自注意力 + 以 M_t 为 KV 的交叉注意力 → F_t'"]
+        C2["结构分支<br/>Canny 边缘调制 + 多尺度 + M_t 引导 → 结构图 S_t"]
+        C1 --> C3["可学习权重 α 融合 → 增强特征 F_t''"]
+        C2 --> C3
+    end
+    subgraph RPG["机器人提示生成器 RPG"]
+        direction TB
+        D1["class token<br/>token bank 取目标类别向量"]
+        D2["object token<br/>历史记忆分层聚类 FPS→宏观→微观"]
+    end
+    B --> SEMA
+    B --> RPG
+    SEMA --> E["SAM 2 mask decoder"]
+    RPG --> E
+    E --> F["机器人分割掩码"]
+    F -. 仅首帧 GT .-> G["标签高效训练 LET<br/>循环 + 语义 + patch 三级一致性"]
+    G -. 端到端监督 .-> B
+```
+
 ### 关键设计
 
 **1. 结构增强记忆关联器（SEMA）：让当前帧同时"记得过去"又"看清关节"**

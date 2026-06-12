@@ -45,6 +45,19 @@ tags:
 
 SciRM 把科学写作评估看成一个条件生成任务：输入是任务查询 $q$（待评估的科学文本）、评估标准 $c$（constitution，包含评分规则与标准描述）和评分示例 $e$，模型输出用 `<reasoning>` 包裹的推理过程 $j$ 和用 `<score>` 包裹的最终评分 $s$。训练分两阶段走 GRPO：第一阶段教模型按 constitution 准确评分，第二阶段在此基础上追加反思步骤、教它重新审视标准后修正自己的推理；训练数据跨多个任务（相关工作评估的二值标签、审稿质量的 1-5 分制）联合混训，以换取跨任务泛化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：任务查询 q + 评估标准 c（constitution）+ 评分示例 e"] --> S1
+    subgraph MT["多任务联合训练（跨任务·跨评分制：二值 / 1-5 分）"]
+        direction TB
+        S1["第一阶段·评估偏好优化<br/>GRPO + 分层奖励 + 长度惩罚"] --> M1["SciRM（仅一阶段）"]
+        M1 --> S2["第二阶段·推理能力强化（Self-Reflection）<br/>去评分留推理 + 反思提示<br/>奖励从错改对、罚从对变错"]
+        S2 --> M2["SciRM-Ref（两阶段）"]
+    end
+    MT --> O["输出：推理过程 j + 最终评分 s<br/>（reasoning / score 标签包裹）"]
+```
+
 ### 关键设计
 
 **1. 第一阶段·评估偏好优化：用分层奖励区分错误的严重程度**

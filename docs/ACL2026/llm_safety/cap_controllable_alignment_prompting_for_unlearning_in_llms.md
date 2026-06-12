@@ -45,6 +45,29 @@ tags:
 
 CAP 的核心想法是把"遗忘"从改参数挪到改输入：LLM 始终冻结，真正被训练的是一个轻量 SLM（主实验用 Qwen3-0.6B），它充当策略网络，为每个查询现场生成一段控制前缀来引导 LLM 的行为。整条流程分两段——训练阶段用 RL 优化这个提示生成器，让它学会产出有效的遗忘/保留前缀；推理阶段把 SLM 冻结，由它生成前缀、再拼上一条 Self-Check 指令一起喂给 LLM 得到最终输出。因为所有遗忘逻辑都装在离散提示里，把提示生成器移除就能无损恢复原模型，这正是 CAP "可逆、可迁移到闭源模型"的根源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入查询"] --> SLM["轻量 SLM 策略网络<br/>Qwen3-0.6B（可训练）"]
+    subgraph DUAL["双提示前缀机制"]
+        direction TB
+        SLM --> PF["n 个遗忘提示候选"]
+        SLM --> PR["n 个保留提示候选"]
+    end
+    PF --> LLM["冻结 LLM<br/>前缀+查询拼接，得遗忘/保留答案"]
+    PR --> LLM
+    subgraph VIB["变分信息瓶颈对比目标"]
+        direction TB
+        LLM --> MIN["遗忘分支：最小化输出↔目标互信息（KL 上界）"]
+        LLM --> MAX["保留分支：最大化输出↔目标互信息（InfoNCE 下界）"]
+    end
+    MIN --> R["总奖励 R = VIB + 标签 + 长度"]
+    MAX --> R
+    R --> BPPO["Beam PPO<br/>k 个锚策略取最小 KL 正则"]
+    BPPO -->|训练阶段更新策略| SLM
+    BPPO -->|训练完成冻结| INF["推理：SLM 生成前缀 + Self-Check 指令 → 冻结 LLM 输出"]
+```
+
 ### 关键设计
 
 **1. 双提示前缀机制：把遗忘和保留拆成两条互不打架的优化方向**

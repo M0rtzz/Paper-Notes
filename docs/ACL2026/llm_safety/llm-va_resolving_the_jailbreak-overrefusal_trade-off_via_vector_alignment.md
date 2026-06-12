@@ -45,7 +45,19 @@ LLM-VA 分三步，全程不动梯度：
 2. **层选择**：用每层对最终输出的贡献度 + SVM 分类准确度选出"安全决策最相关"的层子集（避开早层歧义性强、晚层任务无关的层）；
 3. **向量对齐**：通过最小范数权重更新 $\Delta W$ 把该层 MLP/attention 输出空间里 $v_a$ 旋转到与 $v_b$ 对齐，迭代至所有选中层完成。
 
-输入 $x$ 进入对齐后的模型时，若 $x$ benign → $v_b$ 投影为正 → $v_a$ 投影也正（已对齐）→ 模型倾向 answer；若 toxic → 反之 → 模型倾向 refuse。
+贯穿这条流水线的枢纽是**向量识别之后的一次逐层正交性诊断**：正是测出 $v_a$ 与 $v_b$ 近乎正交（$\sim 90^\circ$）这一事实，才推断出"调幅度注定无解"、必须改用几何对齐，因此它既是方法的理论支点也是图中承上启下的一环。输入 $x$ 进入对齐后的模型时，若 $x$ benign → $v_b$ 投影为正 → $v_a$ 投影也正（已对齐）→ 模型倾向 answer；若 toxic → 反之 → 模型倾向 refuse。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["校准样本：128 toxic（S-Eval）+ 128 benign（ORFuzzSet）"] --> B["SVM 提取双向量<br/>每层各训最大边距分类器，得 benign 向量 v_b 与 answer 向量 v_a"]
+    B --> C["正交性诊断<br/>逐层测 cos θ，发现 v_a ⊥ v_b（≈90°）→ 调幅度注定无解"]
+    C --> D["层选择<br/>按对输出贡献度 + SVM 准确度挑安全决策相关层"]
+    D --> E["闭式最小范数对齐<br/>SVD 一步求 ΔW，把 v_a 旋到与 v_b 同向，逐层迭代"]
+    E --> F["加固模型（不动梯度、不改架构，可直接 hot-swap）"]
+    F -->|"benign → v_b 正 → v_a 随之正"| G["倾向 answer"]
+    F -->|"toxic → 全反号"| H["倾向 refuse"]
+```
 
 ### 关键设计
 

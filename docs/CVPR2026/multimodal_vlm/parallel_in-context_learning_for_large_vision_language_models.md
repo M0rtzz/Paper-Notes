@@ -42,7 +42,21 @@ tags:
 ### 整体框架
 这篇论文要解决的是 MM-ICL 的一个硬约束：demonstration 越多性能越好，但把几十个示例拼成一条长序列喂给 LVLM，注意力开销随长度二次膨胀，32-shot 推理要比 8-shot 慢约 3.5 倍。Parallel-ICL 的整体思路是，既然各个 demonstration 彼此独立、不必非得作为一条长序列被一起注意，那就把它们切成若干个短"块"（chunk），每个 chunk 只带少量示例、并行地各自跑一遍前向，最后在 logit 层把各 chunk 的预测加权合并成最终输出。
 
-举个具体的例子串一下：当 N=32、K=4 时，32 个示例先按多模态特征聚成 4 组，每组约 8 个示例构成一个 chunk；4 个 chunk 连同查询并行送入模型，各自得到一份对答案词表的 logit；再按"这个 chunk 跟当前查询有多像"算出 4 个权重，把 4 份 logit 加权求和得到最终预测。这样每条前向序列只有约 8-shot 的长度（~21K token 而非全上下文的 ~85K token），延迟从 3.5 秒压到约 1.5 秒，准确率却基本持平甚至更高。整个过程不动模型参数、不动示例集合，纯粹改变"怎么处理"。
+举个具体的例子串一下：当 N=32、K=4 时，32 个示例先按多模态特征聚成 4 组，每组约 8 个示例构成一个 chunk；4 个 chunk 连同查询并行送入模型，各自得到一份对答案词表的 logit；再按"这个 chunk 跟当前查询有多像"算出 4 个权重，把 4 份 logit 加权求和得到最终预测。这样每条前向序列只有约 8-shot 的长度（~21K token 而非全上下文的 ~85K token），延迟从 3.5 秒压到约 1.5 秒，准确率却基本持平甚至更高。整个过程不动模型参数、不动示例集合，纯粹改变"怎么处理"。整条 pipeline 可概括为「聚类切块 → 并行前向 → 加权 PoE 合并」，对应下面两个关键设计 Context Chunking 与 Context Compilation，而设计 3 的集成学习理论是这两步的共同依据。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：N 个 demonstration + 查询 (image, question)"] --> B["Context Chunking（聚类切块）<br/>CLIP 多模态特征 k-means → K 个 chunk"]
+    B --> C1["chunk 1 + 查询"]
+    B --> C2["chunk 2 + 查询"]
+    B --> Ck["chunk K + 查询"]
+    C1 --> D["并行前向<br/>各 chunk 各跑一遍 LVLM → K 份 logit"]
+    C2 --> D
+    Ck --> D
+    D --> E["Context Compilation（加权 PoE）<br/>按 query-chunk 相似度 softmax 加权求和 logit"]
+    E --> F["softmax → 输出预测"]
+```
 
 ### 关键设计
 

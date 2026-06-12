@@ -50,9 +50,27 @@ tags:
 
 Dr.Occ 在现有占用预测流程基础上做两处改进：
 1. 用 **D2-VFormer** 替换原有视图变换器，利用 MoGe-2 深度先验实现深度引导的双投影特征构建
-2. 在 3D 特征精炼阶段插入 **R2-EFormer**，通过区域引导的递归专家进行语义增强
+2. 在 3D 特征精炼阶段插入 **区域引导专家 Transformer（R-EFormer / 递归变体 R2-EFormer）**，按物理空间分配专家进行语义增强
 
-输入为 $T$ 帧环视图像 → 图像编码器 → D2-VFormer 构建 3D 体素特征 → R2-EFormer 语义精炼 → OCC 解码器输出 $\hat{\mathbf{O}} \in \mathbb{R}^{X \times Y \times Z \times C}$。
+输入为 $T$ 帧环视图像 → 图像编码器 → D2-VFormer 构建 3D 体素特征 → R-EFormer / R2-EFormer 语义精炼 → OCC 解码器输出 $\hat{\mathbf{O}} \in \mathbb{R}^{X \times Y \times Z \times C}$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["T 帧环视图像"] --> B["图像编码器<br/>ResNet-50 提图像特征"]
+    A --> M["MoGe-2 深度估计<br/>生成几何感知占用 mask"]
+    subgraph D2["D2-VFormer（深度引导双投影视图变换器）"]
+        direction TB
+        S1["Stage 1：前向投影<br/>多帧融合 + 下采样 λ 抗噪"]
+        S2["Stage 2：可变形交叉注意力<br/>后向投影稠密化"]
+        S3["Stage 3：仅非空体素精炼<br/>几何 + 语义增强，空体素填 embedding"]
+        S1 --> S2 --> S3
+    end
+    B --> S1
+    M --> S3
+    S3 --> R["R-EFormer / R2-EFormer<br/>区域引导专家语义精炼"]
+    R --> O["OCC 解码器<br/>输出占用体素 Ô"]
+```
 
 ### 关键设计
 

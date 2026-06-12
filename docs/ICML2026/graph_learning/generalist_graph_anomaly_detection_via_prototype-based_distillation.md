@@ -40,7 +40,19 @@ ProMoS 把一个冻结的自监督 GNN 当成"正态先验老师"，用一束共
 ## 方法详解
 
 ### 整体框架
-ProMoS 想解决的是"无标签、零样本、跨图"三者同时成立的图异常检测，思路是不再从零学正态，而是把一个冻结的自监督 GNN 老师当成现成的"正态先验"，用轻量学生去蒸馏它，并把师生对齐挪到可迁移的语义原型层级而非容易过拟合的实例层级。具体地，输入 attributed graph $\mathcal{G}=(\mathcal{V},\mathcal{E},\mathbf{X})$ 先做邻居残差增强 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + (\mathbf{x}_i - \frac{1}{|\mathcal{N}(v_i)|}\sum_{v_j\in\mathcal{N}(v_i)}\mathbf{x}_j)$，然后冻结老师 $f_T$ 经可训适配器 $g_\phi$ 给出 $\mathbf{Z}_T = g_\phi(f_T(\mathbf{X},\mathbf{A}))$ 作为蒸馏目标，一束共享 + 稀疏激活学生分支去拟合它；师生都被投影到一组可学习原型上对齐，原型本身在训练中被持续稳定与演化；推理阶段不再训练，节点异常分数直接由师生在原型空间的蒸馏偏差加几何量化偏差给出。
+ProMoS 想解决的是"无标签、零样本、跨图"三者同时成立的图异常检测，思路是不再从零学正态，而是把一个冻结的自监督 GNN 老师当成现成的"正态先验"，用轻量学生去蒸馏它，并把师生对齐挪到可迁移的语义原型层级而非容易过拟合的实例层级。具体地，输入 attributed graph $\mathcal{G}=(\mathcal{V},\mathcal{E},\mathbf{X})$ 先做邻居残差增强 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + (\mathbf{x}_i - \frac{1}{|\mathcal{N}(v_i)|}\sum_{v_j\in\mathcal{N}(v_i)}\mathbf{x}_j)$，然后冻结老师 $f_T$ 经可训适配器 $g_\phi$ 给出 $\mathbf{Z}_T = g_\phi(f_T(\mathbf{X},\mathbf{A}))$ 作为蒸馏目标，一束共享 + 稀疏激活学生分支去拟合它；师生都被投影到一组可学习原型上对齐，原型本身在训练中被持续稳定与演化；推理阶段不再训练，节点异常分数直接由师生在原型空间的蒸馏偏差加几何量化偏差给出。学生模块、原型对齐、原型稳定这三步分别对应下面的三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：属性图 G=(V,E,X)"] --> B["邻居残差增强<br/>增强特征 = 原特征 + (原特征 − 邻居均值)"]
+    B --> T["冻结自监督老师 f_T + 适配器 g_φ<br/>给出正态先验目标 Z_T（蒸馏目标）"]
+    B --> S["Mixture-of-Students 学生模块<br/>共享学生 + top-K 稀疏个性化学生池"]
+    T --> P["原型驱动 soft-label 蒸馏 PSD<br/>师生在可学习原型上做 KL 对齐"]
+    S --> P
+    P --> D["差异感知 commitment + refinement DCR<br/>可靠度加权稳定原型、挡住异常污染"]
+    D --> I["推理：节点异常分数<br/>原型蒸馏偏差 + 几何量化偏差"]
+```
 
 ### 关键设计
 

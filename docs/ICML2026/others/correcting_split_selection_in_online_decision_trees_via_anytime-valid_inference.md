@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 输入是顺序到达的 $(X_t,Y_t)$，输出是一棵随时间扩展的决策树。每个叶子 $v$ 内部维护一组候选分裂 $C_v$。对每个候选 $c=(j,s)$ 同时跑两个"影子预测器"：incumbent $m^v$ 用 $v$ 上的经验类分布预测；challenger $m^{v_c}$ 沿候选分裂把 $v$ 切成左右两叶，各自维护经验类分布。两者都基于过去信息预测，再用观测到的 $Y_t$ 计算预测损失差 $\Delta_t^{v,c}=\ell(m^v_{t-1}(X_t),Y_t)-\ell(m^{v_c}_{t-1}(X_t),Y_t)\in[-1,1]$。该差值通过一个 anytime-valid 测试累积"证据"，证据足够强时把 $v$ 用 $c^\star$ 真正切开，否则继续观望。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数据流顺序到达 (X_t, Y_t)"] --> B["叶子 v + 候选分裂 c=(j,s)"]
+    subgraph CMP["在线模型对比"]
+        direction TB
+        C1["incumbent：不分裂叶子<br/>用 v 的经验类分布预测"]
+        C2["challenger：按 c 切成左右两叶<br/>各维护经验类分布"]
+        C1 --> D["预测损失差 Δ_t ∈ [−1,1]"]
+        C2 --> D
+    end
+    B --> CMP
+    D --> E["Testing-by-betting + Universal Portfolio<br/>财富 W_t = W_{t-1}(1+β_t·Δ_t)，β_t 免调参"]
+    G["置信序列变体 + 全局 α-分配"] -.->|设定阈值 1/α^{v,c}| F
+    E --> F{"财富越线？ W_t ≥ 1/α^{v,c}<br/>（Ville 不等式）"}
+    F -->|否，继续观望| A
+    F -->|是| H["提交分裂 c⋆，把叶子 v 真正切开"]
+    H --> A
+```
+
 ### 关键设计
 
 **1. 从"impurity 最大化"重构为"在线模型对比"：换掉一个在漂移下站不住的目标**

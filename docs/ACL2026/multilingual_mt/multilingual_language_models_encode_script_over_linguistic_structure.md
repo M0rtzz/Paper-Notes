@@ -43,7 +43,19 @@ tags:
 
 ### 整体框架
 
-在 Llama-3.2-1B、Llama-3-8B、Gemma-2-2B、Gemma-2-9B 四个模型上，分析跨拉丁、西里尔、天城体、阿拉伯-波斯、表意文字等书写系统的语言。使用 LAPE（Language Activation Probability Entropy）定位原始神经元级别的语言关联单元，使用 SAE-LAPE 在稀疏自编码器的潜在空间中定位语言关联特征。通过罗马化实验、词序打乱实验、类型学探测和因果干预四类实验回答研究问题。
+在 Llama-3.2-1B、Llama-3-8B、Gemma-2-2B、Gemma-2-9B 四个模型上，分析跨拉丁、西里尔、天城体、阿拉伯-波斯、表意文字等书写系统的语言。使用 LAPE（Language Activation Probability Entropy）定位原始神经元级别的语言关联单元，使用 SAE-LAPE 在稀疏自编码器的潜在空间中定位语言关联特征。在这套共享的"定位"基础上，通过罗马化实验、词序打乱实验、类型学探测和因果干预四类实验回答研究问题。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多语言语料<br/>(FLORES+, 多书写系统)"] --> B["定位语言关联单元<br/>LAPE(神经元) + SAE-LAPE(稀疏特征)"]
+    B --> C["罗马化对照实验<br/>换书写系统·留内容"]
+    B --> D["词序打乱实验<br/>留书写系统·毁结构"]
+    B --> E["类型学探测 + 因果干预<br/>可探测性 vs 功能必要性"]
+    C --> F["结论：正字法主导表示组织<br/>类型学逐层涌现、不塌缩为语际语"]
+    D --> F
+    E --> F
+```
 
 ### 关键设计
 

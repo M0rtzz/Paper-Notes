@@ -51,6 +51,29 @@ tags:
 
 E-3DPSM 把自我中心 3D 姿态估计当成一个连续时间的状态机，分三步走。先把原始事件流转成 LNES 帧 $\{\mathbf{L}_t\}_{t=1}^N$（20ms 窗口，192×256×2）；再由时空姿态编码模块（SPEM）提取带时序感知的关节特征；最后姿态回归模块（PRM）同时预测直接姿态 $\mathbf{P}_t^D$ 和增量姿态 $\mathbf{P}_t^\Delta$，经一个可学习的卡尔曼式融合得到最终 3D 姿态 $\mathbf{P}_t$。整条流水线刻意去掉了 2D 热力图和分割掩码这些中间监督。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["事件流 → LNES 帧<br/>20ms 窗口 192×256×2"]
+    subgraph SPEM["时空姿态编码模块（SPEM）"]
+        direction TB
+        B["四级层次卷积<br/>残差块 + 下采样"] --> C["可变形注意力<br/>聚焦鱼眼畸变/自遮挡区"]
+        C --> D["双向 S5 层（SSM）<br/>第 2、4 阶段聚合长程时序<br/>训练双向 / 推理因果"]
+        D --> E["16 关节查询 + Transformer Decoder"]
+    end
+    A --> SPEM
+    SPEM --> F["关节感知特征 F_t (16×192)"]
+    subgraph PRM["姿态回归模块（PRM）"]
+        direction TB
+        G["直接姿态 P_t^D<br/>全局锚点防漂移"]
+        H["增量姿态 P_t^Δ<br/>帧间位移贴合事件特性"]
+        G --> I["可学习卡尔曼融合<br/>Q/R 可学习, 运动更新 + 测量更新"]
+        H --> I
+    end
+    F --> PRM
+    PRM --> J["3D 人体姿态 P_t（80Hz 实时）"]
+```
+
 ### 关键设计
 
 **1. 时空姿态编码模块（SPEM）：让事件流的时序被真正用起来**

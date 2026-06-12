@@ -23,7 +23,21 @@
 
 ### 整体框架
 
-UETrack 要填的空白是"高效跟踪器只会 RGB、多模态跟踪器又太慢"——做一个能实时跑、还能统一处理 RGB / 深度 / 热红外 / 事件 / 语言五种模态的单目标跟踪框架。它基于 Fast-iTPN-T 的轻量 backbone，沿用 SUTrack 的统一 token 编码：Depth/Thermal/Event 与 RGB 沿通道拼成 6 通道复合图像，语言走冻结 CLIP 文本编码器，所有 token 拼成一条序列进 Transformer。训练时有教师（SUTrack-B，冻结）、学生和 Adaptive Net 三方，推理时只留学生模型。
+UETrack 要填的空白是"高效跟踪器只会 RGB、多模态跟踪器又太慢"——做一个能实时跑、还能统一处理 RGB / 深度 / 热红外 / 事件 / 语言五种模态的单目标跟踪框架。它基于 Fast-iTPN-T 的轻量 backbone，沿用 SUTrack 的统一 token 编码：Depth/Thermal/Event 与 RGB 沿通道拼成 6 通道复合图像，语言走冻结 CLIP 文本编码器，所有 token 拼成一条序列进 Transformer。训练时有教师（SUTrack-B，冻结）、学生和 Adaptive Net 三方协同，推理时只留学生模型——学生 backbone 里用 **TP-MoE** 强化多模态建模，**TAD** 则在训练阶段逐样本判断要不要从教师那里学。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["五模态输入<br/>RGB / 深度 / 热红外 / 事件 / 语言"] --> ENC["统一 token 编码<br/>RGB-X 拼 6 通道 + 冻结 CLIP 文本 → 一条序列"]
+    ENC --> STU["学生 backbone（Fast-iTPN-T）<br/>部分 FFN 换成 TP-MoE 软分配专家"]
+    ENC --> TEA["教师 backbone（SUTrack-B，冻结）"]
+    STU --> SH["学生预测头 → 跟踪结果<br/>（推理仅留此路）"]
+    TEA --> TH["教师预测头"]
+    STU -->|"学生特征 F_s"| TAD["Target-aware Adaptive Distillation<br/>Adaptive Net 逐样本判该不该信教师"]
+    TEA -->|"教师特征 F_t"| TAD
+    TAD -->|"α=1：KL+MSE 蒸馏"| STU
+    TAD -->|"α=0：跳过蒸馏"| SH
+```
 
 ### 关键设计
 

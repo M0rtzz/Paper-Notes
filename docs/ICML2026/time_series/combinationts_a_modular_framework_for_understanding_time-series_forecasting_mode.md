@@ -52,6 +52,21 @@ $$f = \mathcal{T}^{-1}_{out}\circ \mathcal{D}\circ \varPhi\circ \mathcal{E}\circ
 
 在这个统一接口上，每个模块都可以独立替换并自由组合，论文把 4 种 Embedding × 3 种 Encoder × 1 种 Decoder + 4 种 Input Transformation 组成 100+ 架构变体的搜索空间。然后用配对的 EC 蒙特卡洛在 6 个数据集 × 4 个 horizon 上跑出每个模块的 $(\mu, \sigma)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["历史观测 X ∈ R^(T×N)"] --> S1
+    subgraph S1["模块化解耦 + 张量接口标准化（设计 1）"]
+        direction TB
+        A["Input Transformation<br/>RevIN / 趋势-季节分解 / 多尺度 / Cycle"] --> B["Embedding<br/>统一输出张量 Z ∈ R^(B×C×L×D)"]
+        B --> C["Encoder：仅在 Z 上做 token 间交互<br/>Self-Attention / MLP / Identity"]
+        C --> D["Decoder → Output Transformation<br/>投影到 horizon + 逆归一化 → 预测 Y"]
+    end
+    S1 -->|"可替换组合：4 Embedding × 3 Encoder，共 100+ 变体"| F["概率化评估协议：EC 空间 Ω + μ/σ 双统计量<br/>模块=被评对象 EO，其余配置=评测条件 EC"]
+    F --> G["分层配对蒙特卡洛采样<br/>固定 K=600 条件，所有 EO 同套 EC 配对评测"]
+    G --> H["输出 μ / σ / L_best + Mann–Whitney U 检验<br/>→ Identity Paradox：视图选对则无参 Encoder 夺冠"]
+```
+
 ### 关键设计
 
 **1. 模块化解耦 + 张量接口标准化：让任何论文的组件都能拆出来插回去**

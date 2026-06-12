@@ -45,6 +45,22 @@ tags:
 
 LottieGPT 想解决的是「让自回归模型直接生成可编辑矢量动画」这件以前没人做成的事。难点在于矢量动画不像光栅视频那样是一串像素，而是一份带层级结构（资产→层→形状→属性）又带时间逻辑（关键帧+缓动）的 JSON。整套系统的核心是把这份 JSON 翻译成一串离散 token：先用一个 Lottie 分词器把动画编码成紧凑序列，交给 Qwen2.5-VL 骨干在文本/图像条件下自回归预测，生成的 token 再被解码器无损还原回 Lottie JSON。训练上则走「先学画静态图、再学加动画」的两阶段课程。输入端可以是纯文本、文本+首帧图、或文本+若干关键帧，输出端始终是一份可无限缩放、可在 After Effects 里继续改的矢量动画。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入<br/>文本 / 文本+首帧图 / 文本+关键帧"] --> B["Qwen2.5-VL 编码为前缀 token"]
+    B --> C["Qwen2.5-VL 骨干<br/>自回归预测 Lottie token"]
+    subgraph TOK["Lottie 分词器（编码 ↔ 解码）"]
+        direction TB
+        D["层级结构编码<br/>特殊 token 对应 schema 层级"]
+        E["关键帧运动压缩<br/>只存关键帧 + 缓动函数"]
+    end
+    TOK -.离散词表.-> C
+    H["静态到动态渐进训练<br/>Stage1 学画静态图 → Stage2 学加动画"] -.两阶段课程.-> C
+    C --> F["解码无损还原 Lottie JSON"]
+    F --> G["可编辑矢量动画"]
+```
+
 ### 关键设计
 
 **1. Lottie 分词器的层级结构编码：让序列保留 schema 而不是退化成纯文本**

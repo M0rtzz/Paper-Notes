@@ -41,7 +41,33 @@ tags:
 
 ### 整体框架
 
-ForceVLA2 要让 VLA 真正"会用力"——不再把力当成旁观的辅助感知，而是主动输出力目标并闭环调节。它受人类感觉运动控制启发做成双层级：长时程层把力信息以文本 prompt 注入 VLM expert，构建跨阶段的力感知任务概念；短时程层用 Cross-Scale MoE 把任务语义和实时交互力融到一起，输出混合力-位置动作。输入是多视角图像 + 任务提示 + 力提示 + 本体感觉状态（EE 6D 位姿 + 6D 力/力矩），输出 EE 位姿增量 $\Delta p \in \mathbb{R}^7$ + 目标接触力 $f \in \mathbb{R}^6$ + 子任务转换指示器 $s \in [0,1]$。
+ForceVLA2 要让 VLA 真正"会用力"——不再把力当成旁观的辅助感知，而是主动输出力目标并闭环调节。它受人类感觉运动控制启发做成双层级：长时程层把力信息以文本提示（Force-based Prompts）注入 VLM，构建跨阶段的力感知任务概念；短时程层先把实时力信号做**双路径编码**（一路融进任务语义、一路旁路直连保梯度），再用 Cross-Scale MoE 按场景动态决定信视觉还是信力，输出混合力-位置动作。输入是多视角图像 + 任务提示 + 力提示 + 本体感觉状态（EE 6D 位姿 + 6D 力/力矩），输出 EE 位姿增量 $\Delta p \in \mathbb{R}^7$ + 目标接触力 $f \in \mathbb{R}^6$ + 子任务转换指示器 $s \in [0,1]$；其中 $s$ 越过阈值就触发阶段转换、刷新力提示，形成跨阶段的闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["多视角图像"] --> VLM
+    TP["任务提示 T_t + 力提示 T_f"] --> VLM
+    subgraph LH["长时程：Force-based Prompts"]
+        direction TB
+        VLM["VLM token-to-token 注意力<br/>构建力感知任务概念 → 融合表示 E"]
+    end
+    STATE["本体感觉<br/>EE 6D 位姿 p + 6D 力/力矩 f_raw"]
+    subgraph SH["力信号双路径编码"]
+        direction TB
+        STATE --> SEM["语义路：E_state 经 cross-attention<br/>注入任务语义 → E'_state"]
+        STATE --> REACT["反应路：力嵌入 E_F 旁路直连<br/>保梯度保真"]
+    end
+    VLM -->|融合表示 E 作条件| SEM
+    SEM --> MOE
+    REACT --> MOE
+    subgraph DEC["Cross-Scale MoE"]
+        direction TB
+        MOE["视觉/状态/力专家 + 动态门控<br/>按场景选主导模态"] --> FM["flow matching 策略头<br/>迭代去噪"]
+    end
+    FM --> OUT["混合力-位置动作<br/>Δp(7D) + 目标力 f(6D) + 子任务转换 s(1D)"]
+    OUT -->|s 超阈值触发阶段转换| TP
+```
 
 ### 关键设计
 

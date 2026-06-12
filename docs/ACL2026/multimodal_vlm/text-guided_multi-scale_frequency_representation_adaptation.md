@@ -45,6 +45,26 @@ FreqAdapter 的基本流程是：CLIP 编码图像和文本得到视觉嵌入与
 
 在 CLIP 检索任务中，适配后的视觉嵌入进入最后一层 transformer，再取 `[CLS]` 视觉特征与文本特征做对比学习。在 LLaVA 中，FreqAdapter 可直接插到 CLIP vision encoder 与 LLaVA multimodal projector 之间，把更文本相关的视觉特征送给大语言模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像-文本对"] --> B["CLIP 编码<br/>视觉嵌入 E_v + 文本嵌入 E_t"]
+    B --> C["频域适配（DCT）<br/>X_v = DCT(E_v), X_t = DCT(E_t)"]
+    C --> D["多尺度适配<br/>视觉频域 reshape 成 H×W 网格<br/>按尺度 n 做 downsampling"]
+    subgraph MOD["MGFA + MCFA 互补频率调制（逐尺度）"]
+        direction TB
+        E["MGFA 全局校准<br/>G_n = f(X_v,n)"]
+        F["MCFA 文本调制<br/>文本频率 X_t 生成 γ,β<br/>C_n = γ⊙X_v,n + β"]
+        E --> G["逐尺度融合<br/>X̃_v,n = G_n + w·C_n"]
+        F --> G
+    end
+    D --> MOD
+    MOD --> H["上采样(repeat-interleave)<br/>各尺度平均 → X̃_v"]
+    H --> I["IDCT 还原<br/>Ẽ_v = IDCT(X̃_v)"]
+    I -->|检索| J["CLIP 末层 transformer<br/>取 [CLS] 做对比学习"]
+    I -->|VQA| K["LLaVA multimodal projector → LLM"]
+```
+
 ### 关键设计
 
 **1. 频域适配而非空间域适配：把有限的参数花在信息密度最高的频率分量上**

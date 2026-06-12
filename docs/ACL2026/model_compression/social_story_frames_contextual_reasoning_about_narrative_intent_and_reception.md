@@ -41,7 +41,23 @@ tags:
 SocialStoryFrames 不是单一分类器，而是一套从理论 taxonomy、语料构建、上下文摘要、推理生成、推理分类到社区分析的完整 pipeline。它的输入是一条包含故事的 Reddit 评论、其所在社区信息以及前文对话；输出则是多个维度上的自由文本推理和 taxonomy 标签分布。
 
 ### 整体框架
-整体流程可以分成四步。第一步从 ConvoKit 的 reddit-corpus-small 中筛选故事，构造 SSF-Corpus，并为每条故事保留社区和对话上下文。第二步用 GPT-4o 摘要 subreddit 目的、规范、初始帖子和祖先/同级评论，使模型推断时能看到读者实际可能拥有的上下文。第三步用 SSF-Generator 生成每个 taxonomy 维度上的读者反应推理，例如作者意图、因果解释、未来预测或审美感受。第四步用 SSF-Classifier 把自由文本推理映射到细粒度 taxonomy 子标签，从而得到可统计、可比较的社区级叙事表示。
+整体流程可以分成四步。第一步从 ConvoKit 的 reddit-corpus-small 中筛选故事，构造 SSF-Corpus，并为每条故事保留社区和对话上下文。第二步用 GPT-4o 摘要 subreddit 目的、规范、初始帖子和祖先/同级评论，使模型推断时能看到读者实际可能拥有的上下文。第三步用 SSF-Generator 生成每个 taxonomy 维度上的读者反应推理，例如作者意图、因果解释、未来预测或审美感受。第四步用 SSF-Classifier 把自由文本推理映射到细粒度 taxonomy 子标签，从而得到可统计、可比较的社区级叙事表示。贯穿其中的是 SSF-Taxonomy：它既规定了第三步生成推理的 10 个维度，又提供了第四步分类落点的子标签。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：Reddit 故事<br/>+ 所在社区 + 前文对话"] --> B["SSF-Corpus 构建<br/>+ GPT-4o 摘要版规/原帖/祖先评论"]
+    TAX["SSF-Taxonomy<br/>读者反应 10 维度（含子类）"]
+    B --> GEN["上下文感知推理生成与蒸馏<br/>GPT-4o 教师 → LoRA 蒸出 SSF-Generator"]
+    TAX -.规定维度.-> GEN
+    subgraph SIM["推理分类与 ssf-sim 社区比较"]
+        direction TB
+        CLS["SSF-Classifier<br/>自由文本推理 → taxonomy 子标签"] --> SS["ssf-sim<br/>比较推理/标签分布而非文本主题"]
+    end
+    GEN --> CLS
+    TAX -.提供子标签.-> CLS
+    SS --> OUT["输出：社区级叙事功能表示<br/>频率 / NPMI / 熵 / 相似度分析"]
+```
 
 ### 关键设计
 

@@ -45,26 +45,29 @@ tags:
 
 学习时，方法从数据 batch 和 quantile latent batch 之间计算 minibatch OT assignment，用这个 coupling 同时做两件事：一方面最小化 latent 与数据的 Wasserstein alignment loss，另一方面用 OT-coupled endpoints 训练 velocity field。训练若干步后冻结 quantile，只继续优化速度场，因此推理阶段几乎没有额外成本。
 
-方法还讨论了更一般的一维 process，如 Kac process 和 MMD gradient flow，以及如何用 quantile interpolants 接到 few-step/IMM 类方法里。但主实验集中在最直接的 learned static quantile prior。
+方法还讨论了更一般的一维 process，如 Kac process 和 MMD gradient flow，以及如何用 quantile interpolants 接到 few-step/IMM 类方法里。但主实验集中在最直接的 learned static quantile prior。训练流水线如下图：数据路与均匀 latent 路在 minibatch OT 处汇合，随后联合优化 quantile 与 velocity field，训足后冻结 quantile。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    U["均匀采样 U（Uniform[0,1]^d）"] --> Q["quantile function 参数化 latent<br/>各维独立 Q_φ（一维 process 到 product prior 的分解）"]
+    DATA["数据 batch x0"] --> OT["minibatch OT 配对<br/>把 latent 与数据耦合"]
+    Q --> OT
+    OT --> ALIGN["Wasserstein alignment loss<br/>让各维 latent 边缘贴近数据"]
+    OT --> FM["插值端点训练 velocity field<br/>CFM loss + entropy 正则（stop-gradient）"]
+    ALIGN --> JOINT["联合训练若干步"]
+    FM --> JOINT
+    JOINT --> FREEZE["冻结 quantile，只继续训 velocity field"]
+    FREEZE --> INF["推理：U → Q_φ → velocity field 生成样本"]
+```
 
 ### 关键设计
-1. **一维 process 到高维 product prior 的分解**:
 
-	- 功能：在不手工设计高维噪声 PDE 的情况下，引入非高斯 latent。
-	- 核心思路：令多维噪声 $\mathbf{N}_t=(N_t^1,\ldots,N_t^d)$ 的各维独立，每个维度有一维 velocity $v_t^i$，则高维 velocity 按分量拼接即可。数据相关性不由噪声承担，而由 learned velocity field 学习。
-	- 设计动机：Kac、uniform/MMD 等一维过程在高维未必容易直接定义。分量化构造让这些一维过程可用于任意维生成建模。
+**1. 一维 process 到高维 product prior 的分解**：想引入非高斯 latent，却不想手工设计高维噪声 PDE。作者令多维噪声 $\mathbf{N}_t=(N_t^1,\ldots,N_t^d)$ 的各维独立、每维有一维 velocity $v_t^i$，那高维 velocity 按分量拼接即可，而跨维相关性不由噪声承担、交给 learned velocity field。这么分工的好处是：Kac、uniform/MMD 这些一维过程在高维未必能直接定义，分量化构造让它们能用于任意维生成建模，同时 latent 保持独立、简单、可采样。
 
-2. **quantile function 参数化 latent**:
+**2. quantile function 参数化 latent**：要让每维 latent 的边缘自动适配数据的 scale、support 和 tail，又不能太复杂。方法用 rational quadratic spline 表示 $Q^i_\phi$，用单调性约束保证它是合法 quantile；采样时只需先采 $U^i\sim\mathcal{U}(0,1)$ 再过 $Q^i_\phi$。选 quantile 是因为它对一维分布是通用表示，且天然与 Wasserstein-2 对齐（一维 $W_2$ 等价于 quantile functions 的 $L_2$ 距离）；相比手调 Student-t 的自由度，它能按维学出不同的尾部行为。
 
-	- 功能：让每个维度的 latent 边缘自动适配数据的 scale、support 和 tail。
-	- 核心思路：用 rational quadratic spline 表示 $Q^i_\phi$，并用单调性约束保证它是合法 quantile。采样时只需先采 $U^i\sim\mathcal{U}(0,1)$，再经过 $Q^i_\phi$。
-	- 设计动机：quantile functions 对一维分布是通用表示，且天然与 Wasserstein-2 对齐；相比手调 Student-t 自由度，它能按维度学习不同尾部行为。
-
-3. **Wasserstein alignment 与 FM 联合训练**:
-
-	- 功能：让 learned noise 靠近数据边缘，同时保持 velocity field 学到从 latent 到数据的 transport。
-	- 核心思路：目标函数为 $\mathcal{L}(\theta,\phi)=\mathcal{L}_{CFM}(\theta,\phi)+\lambda\mathcal{L}_{AN}(\phi)-\beta\mathcal{R}(\phi)$。其中 $\mathcal{L}_{AN}=W_2^2(\mu_0,\nu_\phi)$，$\mathcal{R}$ 是 log-det/entropy 正则，CFM loss 使用同一个 minibatch OT coupling。
-	- 设计动机：只靠 FM loss 学 latent 容易退化；Wasserstein alignment 提供直接边缘匹配信号，entropy 正则防止高维小 batch 下 quantile collapse。
+**3. Wasserstein alignment 与 FM 联合训练**：只靠 FM loss 学 latent 容易退化——quantile 会靠缩小端点位移来投机地压低 loss。为此目标函数取 $\mathcal{L}(\theta,\phi)=\mathcal{L}_{CFM}(\theta,\phi)+\lambda\mathcal{L}_{AN}(\phi)-\beta\mathcal{R}(\phi)$：$\mathcal{L}_{AN}=W_2^2(\mu_0,\nu_\phi)$ 直接做边缘匹配，$\mathcal{R}$ 是 log-det/entropy 正则；同一个 minibatch OT coupling 同时用于 alignment 和 OT-FM；velocity 目标用 $\mathrm{sg}(\mathbf{y}-\mathbf{x})$ stop-gradient，让 quantile 只能通过插值状态拿到梯度。这样 Wasserstein alignment 提供直接的边缘匹配信号，entropy 正则防高维小 batch 下 quantile collapse，stop-gradient 防 trivial collapse。训练若干步后冻结 quantile，之后只优化速度场，推理几乎无额外开销。
 
 ### 损失函数 / 训练策略
 实践中每个 batch 采数据 $\{\mathbf{x}_i\}$ 和 uniform latent $\{\mathbf{u}_j\}$，计算 $\mathbf{y}_j=\mathbf{Q}_\phi(\mathbf{u}_j)$，再求最小化 $\|\mathbf{x}_i-\mathbf{y}_j\|^2$ 的 assignment。对被匹配的端点，插值 $\mathbf{z}_j=(1-t_j)\mathbf{x}_{P(j)}+t_j\mathbf{y}_j$，速度目标是 $\mathrm{sg}(\mathbf{y}_j-\mathbf{x}_{P(j)})$。stop-gradient 防止 quantile 通过缩小 endpoint displacement 来投机地降低 FM loss。

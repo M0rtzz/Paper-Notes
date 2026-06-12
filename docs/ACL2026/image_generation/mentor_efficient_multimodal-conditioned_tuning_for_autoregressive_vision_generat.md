@@ -43,6 +43,26 @@ MENTOR 的方法可以理解为一个多模态条件的图像 token 语言模型
 ### 整体框架
 输入可以是图像、文本或它们的组合。多模态 encoder 产生条件序列 $H=(h_1,\dots,h_M)$，自回归 decoder 在 teacher forcing 下学习 $p(y_i|y_{<i},H)$，其中 $y$ 是离散图像 token 序列。训练分为两阶段：第一阶段强调像素和语义对齐；第二阶段通过多任务指令调优，让模型在参考图像和文本指令之间取得平衡。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["参考图像 + 文本指令"]
+    subgraph ARCH["统一自回归生成架构"]
+        direction TB
+        ENC["CLIP-L 视觉编码器 + FlanT5-XL 文本编码器"]
+        CONN["MLP connector<br/>视觉 token 投影到共享 latent 空间"]
+        DEC["LlamaGen-XL 自回归 decoder<br/>逐 token 预测 VQGAN 图像 token"]
+        VQ["VQGAN decoder 还原像素"]
+        ENC --> CONN --> DEC --> VQ
+    end
+    IN --> ENC
+    VQ --> OUT["输出图像"]
+    S1["Stage 1 多模态对齐训练<br/>图像重建 + 目标分割 + 文本到图像"]
+    S2["Stage 2 多模态指令调优<br/>文本到图像 + 分割 + 图像恢复 + subject-driven"]
+    S1 -->|对齐后| S2
+    S2 -.两阶段课程训练.-> ARCH
+```
+
 ### 关键设计
 
 **1. 统一自回归生成架构：把多模态条件和图像输出压进同一个 next-token 目标**

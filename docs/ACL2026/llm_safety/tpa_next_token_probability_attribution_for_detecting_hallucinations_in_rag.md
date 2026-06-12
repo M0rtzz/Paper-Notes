@@ -43,7 +43,28 @@ tags:
 
 ### 整体框架
 
-TPA 分三步：(1) 粗粒度分解——用探测函数（logit lens）将 token 概率分解为 Initial Embedding、各层 Attention、各层 FFN 和 Final LayerNorm 四类贡献；(2) 细粒度归因——将 Attention 贡献通过 logit 空间分配到各注意力头，再按注意力权重归因到 Query/RAG/Past/Self 四个来源，形成七维归因向量；(3) 语法感知特征工程——按词性标签（名词、动词、数词等）聚合归因分数，构建检测特征。
+TPA 分三步：(1) 粗粒度分解——用探测函数（logit lens）将 token 概率分解为 Initial Embedding、各层 Attention、各层 FFN 和 Final LayerNorm 四类贡献；(2) 细粒度归因——将 Attention 贡献通过 logit 空间分配到各注意力头，再按注意力权重归因到 Query/RAG/Past/Self 四个来源，形成七维归因向量；(3) 语法感知特征工程——按词性标签（名词、动词、数词等）聚合归因分数，构建检测特征，最终在该特征上训练轻量分类器输出响应级幻觉判定。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RAG 响应 token<br/>单次 teacher-forced 前向"] --> B
+    subgraph B["完整概率分解（Theorem 1）"]
+        direction TB
+        B1["探测函数 logit lens<br/>逐组件求概率差值"] --> B2["望远镜求和精确加和"]
+    end
+    B2 --> C["初始嵌入贡献"]
+    B2 --> D["FFN 贡献"]
+    B2 --> E["Final LayerNorm 贡献"]
+    B2 --> F["注意力贡献"]
+    F --> G["Logit 空间注意力头归因<br/>拆到各头 → Query/RAG/Past/Self"]
+    C --> H["七维归因向量"]
+    D --> H
+    E --> H
+    G --> H
+    H --> I["词性感知特征聚合<br/>按 POS 求平均 → 7 × 词性数 维特征"]
+    I --> J["轻量分类器 XGBoost<br/>响应级幻觉判定"]
+```
 
 ### 关键设计
 

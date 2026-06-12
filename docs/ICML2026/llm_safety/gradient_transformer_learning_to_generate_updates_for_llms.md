@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 本文要让服务商在完全不碰私有数据的前提下，把客户在私有数据上微调小模型攒下的"梯度知识"搬到大模型上。整套机制分三步串起来：先在**公开 shadow 数据集** $D_p$ 上分别微调 TinyLM 和 LLM，凑出 $K$ 个 $(\Delta\tilde\theta_{S,k}, \Delta\tilde\theta_{T,k})$ 配对（curation）；用这些配对训一个 seq2seq 的 Grad-Transformer，学会"TinyLM update → LLM update"的翻译关系（train）；部署时客户本地微调 TinyLM 得到 $\Delta\theta_{S,i}$ 上传，服务商把多客户的 update pool 起来送进 Grad-Transformer 得到 $\Delta\hat\theta_T$，叠回初始权重 $\hat\theta_T=\theta_T^0+\Delta\hat\theta_T$ 返还客户推理（deploy）。映射只在 shadow 数据上训一次，对所有客户复用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CUR["① Update vector 配对构建（curation，公开 shadow 数据）"]
+        direction TB
+        A["公开 shadow 数据 D_p<br/>切成 K 个子集"] --> B["每个子集分别微调<br/>TinyLM 与 LLM"]
+        B --> C["收集 K 个 update vector 配对<br/>(ΔθS_k, ΔθT_k)"]
+    end
+    CUR --> D
+    subgraph TR["② 训练 Grad-Transformer（teacher forcing）"]
+        direction TB
+        D["Block-wise tokenization<br/>按 attention block 切成 token 序列"] --> E["encoder-decoder 处理整条序列<br/>真值喂回 decoder"]
+        E --> F["block-wise MSE 损失"]
+    end
+    TR --> G
+    subgraph DEP["③ 部署（客户私有数据，autoregressive 推理）"]
+        direction TB
+        G["客户本地微调 TinyLM<br/>上传 ΔθS（数据不出本地）"] --> H["多客户 pool 聚合"]
+        H --> I["Grad-Transformer 自回归生成 ΔθT"]
+        I --> J["θ̂T = θT0 + ΔθT<br/>返还客户推理"]
+    end
+```
+
 ### 关键设计
 
 **1. Update vector 作为蒸馏载体：把"参数增量"当成不泄密的知识介质**

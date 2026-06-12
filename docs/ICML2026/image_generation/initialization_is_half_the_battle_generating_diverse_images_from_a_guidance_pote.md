@@ -44,6 +44,19 @@ tags:
 
 DivIn 要解决的是扩散/flow matching 模型换种子也出雷同图的 mode collapse，做法不去改后续的 denoising 轨迹，而是只在最前面修正起点：把"采初始噪声"从盲采各向同性高斯，改成从一个由 guidance 势能定义的后验里采样。这个后验写成 $p_{\text{diverse}}(\mathbf{x}_T|c) \propto \exp(-\tau \cdot U(\mathbf{x}_T,c)) \cdot \mathcal{N}(\mathbf{x}_T;0,\mathbf{I})$，温度 $\tau$ 调节"贴近高斯先验"和"追求低势能"之间的权衡。整条 pipeline 只多了一步：标准高斯起步 $\mathbf{x}_T^{(0)} \sim \mathcal{N}(0,\mathbf{I})$ → 用 $K$ 步 Langevin 把它推到这个后验上（实测 $K=1$ 已经够用）→ 把更新后的 $\mathbf{x}_T^{(K)}$ 交给原 denoiser 正常出图，后续链路一律不动。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["标准高斯起点 x_T 初值 ~ N(0,I)"] --> B
+    subgraph LV["Langevin 一步更新（重复 K 次，实测 K=1 即可）"]
+        direction TB
+        B["Tweedie-空间势能 U<br/>有条件 / 无条件单步去噪在 x_0 空间的距离"] --> C["三力更新<br/>多样性力 −τ∇U + 先验项 −x + 随机噪声"]
+    end
+    C --> D["精修后起点 x_T 终值"]
+    D -->|"可叠加 PG / CADS / IG 等轨迹方法（正交叠加）"| E["原 denoiser 正常出图（链路不动）"]
+    E --> F["多样化图像"]
+```
+
 ### 关键设计
 
 **1. Tweedie-空间的 guidance 势能 $U$：用便宜标量量化条件对起点的拉扯**

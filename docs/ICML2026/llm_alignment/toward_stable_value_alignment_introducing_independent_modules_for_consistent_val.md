@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 SVGT 把对齐从"写进 backbone 权重"改成"挂一个外置价值模块"：backbone $\theta_{\mathrm{LLM}}$ 全程冻结，旁边外挂一个独立价值策略 $\pi_\phi$。它从指定的中-后期层 $l^*$ 抽 hidden states，先在一个与任务空间隔离的价值空间里判断"当前生成方向安不安全"、给出一个修正方向 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$，再把这个抽象修正翻译成 $K$ 个 Bridge Token $\mathbf{B}\in\mathbb{R}^{K\times d}$ 插在 prompt 后面，让自回归生成在 frozen attention 的作用下被它们牵引。整套结构相当于把普通解码 $P(y_t|y_{<t},x)$ 扩展成带显式价值上下文的 $P(y_t|y_{<t},x,\mathbf{c}_v)$，其中 $\mathbf{c}_v=\pi_\phi(\mathcal{E}(\mathbf{h}))$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["输入 prompt + 冻结 backbone<br/>抽第 l* 层 hidden"] --> VS
+    subgraph VS["独立价值空间 + 双通路编码"]
+        direction TB
+        A1["聚合取 h_v / h_p<br/>无条件 + 条件通路融合得价值状态 z"] --> A2["判别器 D 评分<br/>取梯度 Δz = ∇D(z)"]
+    end
+    subgraph LVB["Latent Value Bridge"]
+        direction TB
+        B1["检索 bank C = [h_v ; φ(Δz)]<br/>K 个 seed query 交叉注意力检索 B_raw"] --> B2["门控残差锚回 h_v<br/>得 Bridge Token B"]
+    end
+    VS --> LVB
+    LVB --> GEN["插在 prompt 后自回归生成"]
+    GEN -->|"每步重算 z_t/Δz_t、momentum 更新 B"| GEN
+    GEN --> OUT["对齐后输出"]
+    CUR["三阶段课程训练<br/>价值判别 → 上下文判别 → 训 LVB"] -.训练.-> VS
+    CUR -.训练.-> LVB
+```
+
 ### 关键设计
 
 **1. 独立价值空间 + 双通路编码：把价值方向从动态的 residual stream 里隔离出来**

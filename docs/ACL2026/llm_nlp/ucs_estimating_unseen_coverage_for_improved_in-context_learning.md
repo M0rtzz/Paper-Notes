@@ -45,6 +45,21 @@ tags:
 
 UCS 分三步：(1) 用 LLM 自身的嵌入表示所有候选示例（模型一致表示）；(2) 通过字典学习+DBSCAN 将连续嵌入离散化为聚类 ID（离散化）；(3) 用 Smoothed Good-Turing 估计器从选定子集的频率谱估算总聚类数量（覆盖率估计），与现有选择目标加权组合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["候选示例池"] --> S1
+    subgraph S1["模型一致嵌入与聚类离散化"]
+        direction TB
+        B["同一 LLM 隐藏状态<br/>masked mean pooling"] --> C["字典学习 ridge coding<br/>得 K 个原子上的编码"]
+        C --> D["DBSCAN 余弦聚类<br/>→ 离散聚类 ID（噪声各自 singleton）"]
+    end
+    S1 --> E["Smoothed Good-Turing 覆盖率估计<br/>由频率谱估算未观测聚类数 Û_t(S)"]
+    E --> F["UCS 正则化选择<br/>U_base(S) + λ·Φ_UCS(S)"]
+    G["基座选择器 DPP / MDL / VoteK"] --> F
+    F --> H["选中示例子集 → ICL prompt"]
+```
+
 ### 关键设计
 
 **1. 模型一致嵌入与聚类离散化：把连续嵌入压成离散"潜在模式"标签，才能数清覆盖了几种模式**

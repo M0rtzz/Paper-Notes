@@ -41,6 +41,17 @@ tags:
 ### 整体框架
 全文围绕一个统一的二分类任务展开：把表面码 Z-memory 实验产生的 $r\times(d^2-1)$ 时空 syndrome 体 $s$ 喂给网络 $f(s;\theta)\in[0,1]$，预测这一段记忆实验结束后逻辑比特是否发生了 flip。在这个固定接口下，论文做三件事——先在 Stim 仿真的大规模数据集上把五种归纳偏置不同的架构（MLP / dilated 3D-CNN / TCN / Transformer / GNN）放在同一基准下重训并用 Sycamore 真机数据微调，回答"增益来自架构还是数据"；再把每个网络一路压到 INT4 + 高稀疏，看精度能否守住；最后把压缩后的网络折算成 FPGA 资源占用与延迟，判断它到底能不能在 $1\mu s$ 窗口内跑完。三步层层收紧约束，把"精度"和"实时性"逼到同一张桌子上谈。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：表面码 Z-memory 实验<br/>时空 syndrome 体 s（r×(d²−1)）"] --> B
+    B["五架构统一对照<br/>MLP / 3D-CNN / TCN / Transformer / GNN<br/>Stim 10⁷ 仿真训练 + Sycamore 真机微调"] --> C
+    C["PTQ → QAT → 剪枝<br/>对称均匀量化压到 INT4 + 高稀疏<br/>STE 绕过取整 + 稀疏感知微调"] --> D
+    D["FPGA 资源估计<br/>INT4 MAC 折算 LUT/BRAM/DSP<br/>比对 d 个 round 的 ~1μs 时序预算"]
+    D -->|放得下且赶得上| E["实时解码器 f(s)→[0,1]<br/>预测逻辑比特是否 flip"]
+    D -->|放不下 / 超时| B
+```
+
 ### 关键设计
 
 **1. 五架构统一对照：把"偏置 vs 数据"彻底解耦**

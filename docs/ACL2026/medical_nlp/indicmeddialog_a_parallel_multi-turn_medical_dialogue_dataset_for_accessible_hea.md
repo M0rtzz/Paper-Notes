@@ -47,6 +47,32 @@ tags:
 2. **模型训练（IndicMedLM）**：基模 LLaMA-3.2-3B-Instruct + 4-bit NF4 量化 + LoRA（rank 16, α=16, dropout 0），LoRA 插入所有 attention proj 和 MLP proj；AdamW-8bit lr=$2\times 10^{-4}$，wd=0.001, bsz=8（2×4 grad acc），300 step + 5 warm，BF16/FP16，seed=3407；每个印度语单独训练，对话格式为 ShareGPT 风格的 human/gpt 交替；可选 patient pre-context 拼到对话前缀，使模型按年龄/性别/过敏等个性化提问。
 3. **两阶段 post-processing 评测**：模型输出经常把正确诊断包裹在解释性长句里，原始 accuracy 会低估真实诊断能力；用 ChatGPT 作为 LLM judge，做"受限语义等价分类"——给定自由文本输出与 12 个标准疾病名，judge 必须从封闭集中选一个或返回 NULL（高于置信阈值时才映射），从而避免幻觉同时回收"对了但格式不对"的案例。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MDDial 英文种子<br/>1,879 段"] --> S1
+    subgraph S1["三段式语料链"]
+        direction TB
+        B["Llama-3.3-70B 合成<br/>12 病 / 118 症状 / 4-8 轮"] --> C["TranslateGemma 翻译 9 种印度语"]
+        C --> D["脚本感知后处理<br/>Unicode 形态映射纠错"]
+        D --> E["native speaker 校对<br/>T=9.50 / S=9.56"]
+    end
+    S1 --> F["IndicMedDialog<br/>2,980 段 × 10 语 = 29,800 实例"]
+    F --> S2
+    subgraph S2["LoRA + 量化 + Patient Pre-context"]
+        direction TB
+        G["LLaMA-3.2-3B + 4-bit NF4 量化"] --> H["LoRA 插 attention 与 MLP proj"]
+        H --> I["Patient Pre-context 前缀<br/>年龄 / 性别 / 过敏史"]
+    end
+    S2 -->|每语单独训练| J["IndicMedLM"]
+    J --> S3
+    subgraph S3["两阶段后处理评测 + 错误诊断"]
+        direction TB
+        K["ChatGPT closed-set judge<br/>自由文本 → 12 标准病名 / NULL"] --> L["Post accuracy 回收<br/>Hindi/Marathi +53/+55pp"]
+        L --> M["5 类 Failure Mode taxonomy<br/>ID / LC / CDC / TTF / PLG"]
+    end
+```
+
 ### 关键设计
 
 **1. 合成 + 翻译 + 脚本感知后处理的三段式语料链：在没有真实临床多语对话的前提下，造出语义一致、临床合理、语言准确的 10 语平行语料**

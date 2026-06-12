@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-模型吃进任意一段图/文/视频或它们的混合，要一次性吐出"真假二分类"和"对应模态上的篡改位置"——图像空间 mask（IoU 衡量）、文本 token 跨度（F1）、视频时间区间（tIoU）。作者把所有定位任务都统一成 MLLM 的文本输出（坐标 / token 跨度 / 时间区间），从而能用一个 Qwen3VL-8B 同时覆盖四个任务。落地分两块：离线先用 Self-Evolving CoT Generation 造出 FSFR 数据集（73k SFT 冷启动样本 + 110k RL 样本），再在 Qwen3VL-8B 上做 SFT 冷启动、然后跑 ARSPO 这套针对"难度偏置"的多任务 RL，最后在 In-Domain 与 OOD 上测。难点都集中在后两块——怎么造不带答案泄漏的 CoT，以及怎么让简单的二分类别把定位任务的梯度抢光。
+模型吃进任意一段图/文/视频或它们的混合，要一次性吐出"真假二分类"和"对应模态上的篡改位置"——图像空间 mask（IoU 衡量）、文本 token 跨度（F1）、视频时间区间（tIoU）。作者把所有定位任务都统一成 MLLM 的文本输出（坐标 / token 跨度 / 时间区间），从而能用一个 Qwen3VL-8B 同时覆盖四个任务。落地分两块：离线先用 Self-Evolving CoT Generation 造出 FSFR 数据集（73k SFT 冷启动样本 + 110k RL 样本），再在 Qwen3VL-8B 上做 SFT 冷启动、然后跑 ARSPO 这套针对"难度偏置"的多任务 RL（其内部由 TBRMF 与 DCA 两个模块构成），最后在 In-Domain 与 OOD 上测。难点都集中在后两块——怎么造不带答案泄漏的 CoT，以及怎么让简单的二分类别把定位任务的梯度抢光。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph COT["Self-Evolving CoT Generation（自演化 CoT 合成）"]
+        direction TB
+        B["公开数据池 → 种子集 D_s⁰<br/>GT 过滤 + 另一 MLLM 一致性核验"] --> C["迭代自演化（停在第 3 轮，每轮从 base 重训）<br/>hard 样本走多智能体改写去 hindsight bias"]
+    end
+    COT --> E["FSFR 数据集<br/>73k SFT + 110k RL"]
+    E --> F["SFT 冷启动 Qwen3VL-8B"]
+    subgraph ARSPO["ARSPO 多任务 RL"]
+        direction TB
+        G["TBRMF 任务奖励映射<br/>定位任务用凸映射放大高分梯度"] --> H["DCA 动态系数调整<br/>最弱者优先闭环调任务权重"]
+    end
+    F --> ARSPO
+    ARSPO --> I["统一输出：真假二分类 +<br/>图 mask / 文 span / 视频时间区间定位"]
+```
 
 ### 关键设计
 

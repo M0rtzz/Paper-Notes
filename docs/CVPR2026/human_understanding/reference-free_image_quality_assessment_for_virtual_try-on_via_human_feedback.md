@@ -41,6 +41,17 @@ tags:
 
 VTON-IQA 要解决的是一个很实际的评估难题：电商场景里根本拿不到「同一个人穿着目标服装」的 ground-truth，SSIM/LPIPS 这类全参考指标全部失效，FID/KID 又只能看数据集级别的统计、说不清单张图好不好。它的方案是一个三分支 Transformer：把服装图 $I_G$、人物图 $I_P$、生成的试穿图 $I_V$ 各自做 patch embedding 加 [CLS] token，前 L/2 层各自独立自注意力提特征，后 L/2 层引入 ICA 模块让三路互相交互，最后取 [CLS] 表征做加权余弦打分，输出一个连续质量分 $\hat{s} \in [-1, 1]$。backbone 用 DINOv3 ViT-L/16。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["服装图 I_G"] --> S
+    P["人物图 I_P"] --> S
+    V["试穿图 I_V"] --> S
+    S["patch embedding + [CLS]<br/>前 L/2 层各分支独立自注意力"] --> ICA["ICA 交错式交叉注意力<br/>以试穿图为中心的非对称交互（V↔G、V↔P）"]
+    ICA --> SC["加权余弦打分<br/>α·cos(c_G,c_V) + (1−α)·cos(c_P,c_V)"]
+    SC --> O["质量分 ŝ ∈ [−1,1]"]
+```
+
 ### 关键设计
 
 **1. 交错式交叉注意力 ICA：以试穿图为中心的非对称交互**

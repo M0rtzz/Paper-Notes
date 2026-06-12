@@ -43,6 +43,23 @@ NaviEdit 把 diffusion/flow 编辑器中"模型尺度坐标 = 编辑进度时钟
 ### 整体框架
 输入是源图 latent $x_{\text{src}}$、源 prompt $c_{\text{src}}$、目标 prompt $c_{\text{tar}}$、固定 step budget $K$，以及一个 frozen 的 flow 模型（FlowEdit / InfEdit / FlowAlign 等任一兼容编辑器作为 base）。NaviEdit 作为一个 rollout-level controller 完全替换原编辑器的"budget→range"调度规则：在 scheduler path 上选定一个固定尾窗 $\mathcal{U}_{\text{eff}}$（由参考深度 $t_{\text{ref}}$ 锚定，排除极端高噪声尾部），通过单调坐标 $p\in[0,1]$ 在该窗口内决定 $K$ 个采样点 $\{u_k\}$ 与对应增量 $\{\Delta u_k\}$。每一步：用同一个 $u_k$ 构造 co-located anchor 对 $(z^{\text{src}},z^{\text{tar}})$、用 $t=\tau(u_k)$ 查询模型得到差分速度 $\Delta V$（可选过一个内部 feasible-region gate $M(u_k)$ 得到 $\Delta V_{\text{eff}}$）、用 $\Delta u_k$ 做一阶 Euler 更新 $x_{k+1}=x_k+\Delta u_k\,\Delta V_{\text{eff}}$。整个过程不训练、不反演、不依赖外部 mask。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["源图 latent x_src + 源/目标 prompt + 固定 budget K<br/>冻结 flow 模型（FlowEdit / InfEdit / FlowAlign）"]
+    subgraph CI["受控积分 rollout（Progress-Granularity 解耦形式化）"]
+        direction TB
+        W["Density-over-range 有效窗口算力再分配<br/>选尾窗 U_eff（t_ref 锚定）+ 单调坐标 p 排布 K 个 u_k / Δu_k"]
+        W --> M["Self-consistency contract：同一 u_k 构造 anchor（z_src, z_tar）"]
+        M --> Q["查询模型 t=τ(u_k) → 差分速度 ΔV"]
+        Q --> G["可选 feasible-region gate M(u_k) → ΔV_eff"]
+        G --> U["一阶 Euler 更新 x_{k+1} = x_k + Δu_k·ΔV_eff"]
+        U -->|"k < K：回到同窗口下一个 u_k"| M
+    end
+    IN --> W
+    U --> OUT["编辑结果（背景保真 + 语义一致）"]
+```
+
 ### 关键设计
 
 **1. Progress-Granularity 解耦的受控积分形式化：把"算力放在哪个尺度"变成可优化问题**

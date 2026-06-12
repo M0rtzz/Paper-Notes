@@ -44,6 +44,34 @@ MAGMA 把 LLM agent 的记忆拆成语义 / 时间 / 因果 / 实体四张正交
 
 MAGMA 要同时满足两件互相打架的事：记忆既要能「快回忆」不阻塞用户，又要能「深推理」回答 why。它的做法是把整套系统分成读、存、写三层协同。存储层不再是单一向量库，而是一张时变有向多重图 $\mathcal{G}_t=(\mathcal{N}_t,\mathcal{E}_t)$，节点 $n_i = \langle c_i, \tau_i, \mathbf{v}_i, \mathcal{A}_i\rangle$ 存事件的内容、时间戳、稠密向量与结构化属性，边按语义维度切成四张正交关系图，并配一个向量库做粗筛入口。读路径先由意图路由判断 query 想问什么，再在对应关系图上做自适应拓扑检索，最后由 Context Synthesizer 合成答案；写路径拆成快慢两条流，Fast Path 同步入库只做轻量编码，Slow Path 异步用 LLM 把隐含的因果与实体关系补进图里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph STORE["四张正交关系图"]
+        direction LR
+        TG["时间图"]
+        CG["因果图"]
+        SG["语义图"]
+        EG["实体图"]
+        VEC["向量库<br/>粗筛入口"]
+    end
+    Q["用户 query"] --> RT
+    subgraph READ["意图感知自适应遍历"]
+        direction TB
+        RT["意图路由<br/>判 Why/When/Entity + RRF 融合锚点"] --> BEAM["policy-guided beam search<br/>按意图给边类型加权"]
+        BEAM --> CS["Context Synthesizer<br/>salience 预算压缩链路"]
+    end
+    STORE --> BEAM
+    CS --> OUT["LLM 生成答案"]
+    EV["交互事件"] --> FAST
+    subgraph WRITE["双流写入"]
+        direction LR
+        FAST["Fast Path 同步<br/>分割+编码+时间骨干边，不调 LLM"] -.入队.-> SLOW["Slow Path 异步<br/>LLM 补因果/实体边"]
+    end
+    FAST --> STORE
+    SLOW --> STORE
+```
+
 ### 关键设计
 
 **1. 四张正交关系图作 Data Structure：把单一记忆库拆成可独立访问的四种关系视图**

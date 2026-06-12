@@ -44,6 +44,28 @@ tags:
 ### 整体框架
 CARvE 把"该路由到 hub 里哪个模型"做成一个可以持续追加标签的嵌入打分问题。经验是按时间一波波到来的 $\{E_t\}_{t=1}^T$，每个 $E_t$ 给出若干 $(q_i, m_i, d_i)$ 三元组（query、正确模型、所属域），候选池随之累计扩张 $\mathcal{M}_{\leq t} = \bigcup_{k \leq t} \mathcal{M}_k$。打分时，冻结的骨干 LLM（默认 LLaMA2-7B + LoRA）把 query 抽成 hidden $h(q) \in \mathbb{R}^D$，过一个可学习投影 $W$ 归一化后得查询向量 $z(q) = h(q)W / \lVert h(q)W \rVert_2$；每个模型 ID 各自维护一个可学习的归一化嵌入 $e(m) = v(m)/\lVert v(m) \rVert_2$；在候选集 $\mathcal{C}(q)$ 上算余弦打分 $s(q,m) = z(q)^\top e(m) / \tau$，取 $\hat m = \arg\max_{m \in \mathcal{C}(q)} s(q,m)$ 输出。每当新经验到来，注册表 $\mathcal{R}$ 追加新模型 ID 行，投影 $W$、模型嵌入表 $\{v(m)\}$ 和 LoRA 适配器一起更新，并以上一经验末的快照作为 anchor 防止老 ID 的几何被新数据冲乱。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 query q"] --> BB["冻结骨干 LLM + LoRA<br/>抽 hidden h(q)"]
+    BB --> PROJ["投影 W + 归一化<br/>查询向量 z(q)"]
+    REG["模型注册表<br/>每个 model-ID 一行嵌入 e(m)"] --> SCORE
+    PROJ --> SCORE["候选集内余弦打分<br/>argmax 选出 m̂"]
+    SCORE --> OUT["路由结果：该跑哪个模型"]
+
+    subgraph TRAIN["持续训练（新经验 E_t 到来时更新路由器）"]
+        direction TB
+        NEW["追加新 model-ID 行<br/>随机初始化模型嵌入"] --> CAND["固定大小候选集 + 结构化负采样<br/>hard / semantic / far 负样本"]
+        NEW --> RPL["域-模型 coreset 回放<br/>按域配额 + FPS 选样"]
+        CAND --> LOSS["对比路由损失 + 非对称 anchoring<br/>只锁老 ID 的嵌入与投影"]
+        RPL --> LOSS
+        LOSS --> SNAP["存快照作为下一经验的 anchor"]
+    end
+
+    SNAP -.更新.-> REG
+    LOSS -.更新.-> PROJ
+```
+
 ### 关键设计
 
 **1. Checkpoint-based 非对称 anchoring：经验切换时锁住老模型的几何、放开新模型**

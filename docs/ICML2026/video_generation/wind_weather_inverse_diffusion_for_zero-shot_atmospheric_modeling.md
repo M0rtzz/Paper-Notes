@@ -43,26 +43,31 @@ WIND 的方法非常像“先学大气世界模型，再把任务写成观测方
 ### 整体框架
 训练数据来自 ERA5，论文使用 1.5 度分辨率、70 个大气变量、长度为 5 的 6 小时间隔序列。模型骨干是 UViT，输入输出都是形如 $T\times C\times H\times W$ 的大气状态序列。训练时，对每一帧单独采样噪声等级，把干净大气序列变成不同程度损坏的序列，再让 UViT 复原 clean sequence。
 
-推理时，给定一个任务观测 $Y$ 和 forward operator $\mathcal{A}$。例如空间下采样里 $\mathcal{A}$ 是平均池化，时间下采样里 $\mathcal{A}$ 是对时间维求均值，稀疏重建里 $\mathcal{A}$ 是二值 mask，干空气质量守恒里 $\mathcal{A}$ 是非线性的 global dry air mass 计算。反向扩散每一步先由 WIND 给出 prior score，再由 MMPS 根据 $\mathcal{A}(\hat X)$ 与目标 $Y$ 的差异给出 likelihood score，两者相加后更新样本。
+推理时，给定一个任务观测 $Y$ 和前向算子（forward operator）$\mathcal{A}$。例如空间下采样里 $\mathcal{A}$ 是平均池化，时间下采样里 $\mathcal{A}$ 是对时间维求均值，稀疏重建里 $\mathcal{A}$ 是二值掩码（mask），干空气质量守恒里 $\mathcal{A}$ 是非线性的全球干空气质量（dry air mass, DAM）计算。反向扩散每一步先由 WIND 给出先验分数（prior score），再由 MMPS 根据 $\mathcal{A}(\hat X)$ 与目标 $Y$ 的差异给出似然分数（likelihood score），两者相加后更新样本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TRAIN["扩散强迫训练统一大气先验（设计 1）"]
+        direction TB
+        A["ERA5 大气序列<br/>T×C×H×W"] --> B["逐帧独立噪声等级<br/>clean/noisy 帧混合"]
+        B --> C["UViT 去噪重建<br/>不告知噪声等级"]
+    end
+    C --> D["冻结的大气生成先验 WIND"]
+    D --> E["任务算子 𝒜<br/>下采样/掩码/质量守恒（设计 2）"]
+    E --> F["反向扩散 DDIM 单步"]
+    F --> G["先验分数 + MMPS 似然分数<br/>按不确定性加权（设计 3）"]
+    G -->|未收敛| F
+    G -->|收敛| H["零样本多任务输出<br/>预报/下采样/稀疏重建/守恒/暖化"]
+```
 
 ### 关键设计
-1. **Diffusion forcing训练统一大气先验**:
 
-	- 功能：让模型在同一序列中同时处理 clean context frame 和 noisy future frame，从而支持稳定的任意长度 rollout。
-	- 核心思路：标准视频扩散常给所有帧同一噪声等级，WIND 则对每个时间步独立采样 $k^t$，生成 $z^t=\alpha(k^t)x^t+\beta(k^t)\epsilon^t$。模型不显式接收噪声等级，必须从输入状态中推断每帧的不确定性。
-	- 设计动机：自回归天气生成需要把前一个窗口的最后一帧作为下一窗口的 clean context。如果训练时从未见过 clean/noisy 混合状态，就会产生分布外输入；独立噪声等级正好解决这个问题。
+**1. 扩散强迫训练统一大气先验**：自回归天气生成需要把上一个窗口的最后一帧（clean context）接到下一个窗口前面继续滚动，但标准视频扩散给所有帧同一噪声等级，模型一旦遇到「干净帧 + 噪声帧混合」的输入就会落到分布外、长 rollout 随之发散。WIND 改用扩散强迫（diffusion forcing）：对序列里每个时间步独立采样噪声等级 $k^t$，前向过程为 $z^t=\alpha(k^t)x^t+\beta(k^t)\epsilon^t$。这样训练时模型就见过任意「clean/noisy 混合」组合，推理时把已知历史当 clean 帧、未来当噪声帧自然拼接，支持稳定的任意长度滚动。关键之处是模型**不显式接收噪声等级**，必须从输入状态自己推断每帧的不确定性，从而学到更鲁棒的时空表示，而不是依赖固定的噪声调度表。
 
-2. **把下游任务全部写成可微逆问题**:
+**2. 把下游任务全部写成可微逆问题**：传统做法是预报、下采样、稀疏重建各训一个专门模型，换任务就要重训。WIND 把所有任务统一成同一个逆问题 $Y=\mathcal{A}(X)+\eta$——从部分观测 $Y$ 恢复满足大气先验的完整状态 $X$，任务的差异全部压进前向算子 $\mathcal{A}$：空间下采样用 $\mathcal{A}(X)=\mathrm{AvgPool}(X)$，时间下采样用 $\mathcal{A}(X)=\frac{1}{T}\sum_t x^t$，稀疏重建用 $\mathcal{A}(X)=M\odot X$，物理守恒用干空气质量的非线性积分公式。这样同一个冻结模型只要更换 $\mathcal{A}$，就能在不做任何任务微调的前提下零样本迁移到多种天气/气候任务。
 
-	- 功能：避免为每个天气任务单独训练条件模型，让一个冻结模型通过不同算子适配多任务。
-	- 核心思路：推理时统一设定 $Y=\mathcal{A}(X)+\eta$。空间下采样用 $\mathcal{A}(X)=\mathrm{AvgPool}(X)$，时间下采样用 $\mathcal{A}(X)=\frac{1}{T}\sum_t x^t$，稀疏重建用 $\mathcal{A}(X)=M\odot X$，物理守恒用 dry air mass 的非线性积分公式。
-	- 设计动机：天气任务本质上常常是“从部分观测恢复满足大气先验的完整状态”。把任务差异压缩到 $\mathcal{A}$，模型就能通过同一套 prior 和 sampler 做零样本迁移。
-
-3. **MMPS引导采样而非点估计约束**:
-
-	- 功能：在反向扩散中更稳定地加入观测/物理约束，尤其是在高噪声阶段避免过强误导。
-	- 核心思路：普通 diffusion posterior sampling 常把 $p(X|Z)$ 近似成当前预测点的 Dirac delta。WIND 使用 MMPS，把 $p(X|Z)$ 近似成带协方差的 Gaussian，并用 Tweedie covariance 估计不确定性。噪声高时 prior 主导，噪声低且预测更可靠时 likelihood guidance 变强。
-	- 设计动机：大气任务约束可能是高维、低维或非线性的。如果不考虑模型当前不确定性，早期高噪声阶段的观测梯度很容易过度拉扯样本，破坏生成先验。
+**3. MMPS 引导采样而非点估计约束**：把约束注入反向扩散的难点在于，似然项 $p(X|Z)$ 没有闭式解。普通 diffusion posterior sampling（DPS）直接把它近似成当前预测点处的 Dirac delta，相当于忽略模型不确定性，于是在高噪声阶段观测梯度很容易过度拉扯样本、破坏生成先验。WIND 改用矩匹配后验采样（moment matching posterior sampling, MMPS）：把 $p(X|Z)$ 近似成带协方差的高斯分布，并用 Tweedie covariance 估计当前预测的不确定性。其效果是噪声高、预测不可靠时让先验主导，噪声低、预测可靠时再加强似然引导，使得高维、低维或非线性的各类大气约束都能被稳定地施加。
 
 ### 损失函数 / 训练策略
 训练目标是去噪 score matching / clean sequence reconstruction，模型学习从不同噪声等级组合的序列中恢复大气状态。论文使用 5 帧窗口、6 小时间隔、70 个变量和 1.5 度 ERA5 网格。推理阶段使用 DDIM 类更新，并在需要约束的任务中加入 MMPS likelihood score。作者把气象预测、下采样和物理约束都放在推理阶段完成，没有对这些下游任务做任务特定微调。

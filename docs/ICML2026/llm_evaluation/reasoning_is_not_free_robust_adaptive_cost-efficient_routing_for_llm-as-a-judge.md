@@ -44,6 +44,21 @@ RACER 把"对每个 query 决定要不要调用 reasoning 模式做 judge"建模
 
 RACER 要回答的是"这条 query 值不值得花 reasoning 的钱来 judge"，并且要在部署时 query 分布漂移的情况下依然守住 cost 预算。它的输入是带 ground-truth 偏好标签的 preference dataset $\{(x_i, y_{i,1}, y_{i,2}, l_i)\}$，外加一个 hybrid LLM——同一个模型既能当 reasoning judge $\Phi_1$、又能当 non-reasoning judge $\Phi_0$。训练前先对每个 instance 把两个 mode 都跑一遍，记下命中标签的 reward $r_i = \mathbb{I}(\Phi_{a_i}(z_i) = l_i)$ 和 token 成本 $c_i$，作为后续优化的离线信号。真正学的 router 是个 4 层小 NN，吃 prompt+response 拼接后用 bge-m3 取的 embedding，吐出"激活 reasoning"的概率 $\pi(a|z)$。整个训练就是把"在 cost 预算下最大化鲁棒 reward"写成约束 min-max，再用 primal-dual 交替更新策略 $\pi$ 和对偶变量 $\lambda$，最后在 validation 上挑最好的一轮 iterate。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["偏好数据集 + hybrid LLM<br/>(同一模型当 reasoning judge / non-reasoning judge)"] --> B["离线预处理：两个 mode 各跑一遍<br/>记录命中 reward 与 token 成本"]
+    B --> C["router：拼接 (x, y1, y2) 经 bge-m3 取 embedding<br/>→ 4 层 NN 输出激活 reasoning 的概率 π(a|z)"]
+    C --> D
+    subgraph LOOP["primal-dual 训练循环（Algorithm 1，每轮）"]
+        direction TB
+        D["采 batch，算 baseline 均值 reward / cost"] --> E["双重分布鲁棒 + KL 闭式重赋权<br/>reward worst-case：压低高于 baseline 的样本<br/>cost worst-case：抬高高于 baseline 的样本"]
+        E --> F["primal-dual 更新<br/>π：加权目标 + entropy 正则；λ：对偶变量更新"]
+        F -->|未收敛| D
+    end
+    LOOP --> G["validation 选最优 iterate<br/>(linear last-iterate 收敛，部署直接取末轮)"]
+```
+
 ### 关键设计
 
 **1. 双重分布鲁棒：reward 和 cost 各自取 worst-case**

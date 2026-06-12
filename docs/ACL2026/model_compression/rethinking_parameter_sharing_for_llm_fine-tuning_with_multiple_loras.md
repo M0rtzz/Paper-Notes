@@ -42,6 +42,23 @@ tags:
 ### 整体框架
 论文分为“诊断”和“方法”两部分。诊断部分先在 LLaMA2-7B 等模型上控制 A 的初始化种子，发现 A 的高相似性只在同初始化下出现，而不同初始化时 A 不再相似；进一步分析训练前后矩阵的 magnitude 和 direction 变化，发现 B 承担了更多方向变化。方法部分据此提出 ALoRA，用多个 $A_i$ 和一个共享 $B$ 做多任务微调；再提出 Fed-ALoRA，在联邦微调中让客户端本地更新完整 LoRA，但只上传和聚合 B 相关参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DIAG["重新解释 A/B 分工（诊断）"]
+        direction TB
+        S1["控制初始化种子<br/>对比同/异初始化的多 LoRA"]
+        S2["主角度子空间相似度<br/>同初始化才相似，换种子即消失"]
+        S3["训练动态分析<br/>方向变化集中在 B"]
+        S1 --> S2 --> S3
+    end
+    DIAG --> C["结论：A 是特征投影器、B 是知识聚合器"]
+    C --> ALORA["ALoRA：多 A 单 B 非对称结构<br/>y = W₀x + B Σ wᵢAᵢx，线性门控路由"]
+    C --> FED["Fed-ALoRA：联邦只聚合 B<br/>客户端上传 Bᵢ，分解重构支持异构 rank"]
+    ALORA --> OUT["多任务 / 联邦微调输出"]
+    FED --> OUT
+```
+
 ### 关键设计
 
 **1. 从初始化与训练动态重新解释 A/B 分工：A 的"相似"其实是初始化残留，真正承载知识的是 B**

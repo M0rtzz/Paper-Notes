@@ -45,6 +45,17 @@ tags:
 
 具体到一次循环里有三件事在转：先给定一对样本——被污染的 $\tilde{x}$ 和它对应的干净版 $x$——以 $\tilde{x}$ 为参考点、用 Integrated Gradients 算出每一层对"从坏行为变回好行为"的归因 $M^l(x, \tilde{x})$；再把这个归因投影到 rank-one 的编辑方向上、压成一个标量可编辑性得分 $\hat{G}_l = \|M^{*,l}\|_F$，得分最高的那层 $l^* = \arg\max_l \hat{G}_l$ 就是这一轮的"嫌疑层"；最后对 $l^*$ 做一次 rank-one 权重更新，把"污染 key → 干净 value"这条新关联焊进去。整个三步外面套一个 while 循环：每轮重新定位、重新编辑，直到污染样本和干净样本的预测差距 $\delta^*$ 降到阈值以下，或者累计的性能退化触到预算 $\epsilon$ 才停。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["clean-corrupted 样本对 (x, x̃)"] --> B["归因引导层定位<br/>IG 归因→投影编辑方向→选嫌疑层 l*"]
+    B --> C["rank-one 编辑 l*<br/>污染 key→干净 value（纠正设定保证 1 样本即可）"]
+    C --> D["评估预测差距 δ* 与性能退化 ε*"]
+    D -->|"δ* 仍高且退化在预算内（动态纠正循环）"| B
+    D -->|"δ* 达标"| E["输出纠正后模型"]
+    D -->|"退化超预算"| F["回滚，返回当前最优"]
+```
+
 ### 关键设计
 
 **1. 纠正设定的理论优势：为什么"1 个样本就够"不是运气（Rectifiability & Span-Aligned Control）**

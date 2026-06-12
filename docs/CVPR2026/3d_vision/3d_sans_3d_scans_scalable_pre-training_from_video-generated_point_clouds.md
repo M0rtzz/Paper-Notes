@@ -43,6 +43,25 @@ tags:
 
 整条流水线分两半。前半是数据侧：用关键词搜来的导览视频先经 CLIP 逐帧分出室内/室外、再按房间类型切段，然后送进 π³ 前馈重建逐场景生成带颜色的点云，过滤离群点后得到 49,219 个场景的 RoomTours 数据集——全程不碰任何真实扫描。后半是预训练侧：在这些噪声点云上用教师-学生聚类做表示学习，并额外挂两个针对噪声的正则项（拉普拉斯平滑稳局部、噪声一致性稳全局），最后把学到的 PTv3 backbone 拿去做下游分割的微调或线性探测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据侧：RoomTours 数据集构建（零真实扫描）"]
+        direction TB
+        A["YouTube 室内导览视频"] --> B["CLIP 逐帧分室内/室外<br/>按房间类型切段"]
+        B --> C["π³ 前馈重建逐场景点云<br/>置信度掩码 + 离群点过滤"]
+        C --> D["49K 场景 VGPC 点云"]
+    end
+    subgraph PRE["预训练侧：LAM3C 噪声正则化聚类"]
+        direction TB
+        E["聚类骨架<br/>教师-学生 EMA · PTv3"]
+        E --> F["拉普拉斯平滑损失<br/>沿局部几何稳邻域"]
+        E --> G["噪声一致性损失<br/>跨视图稳全局表示"]
+    end
+    DATA --> PRE
+    PRE --> H["下游分割<br/>微调 / 线性探测"]
+```
+
 ### 关键设计
 
 **1. RoomTours 数据集构建：把无标注网络视频变成大规模 3D 点云**

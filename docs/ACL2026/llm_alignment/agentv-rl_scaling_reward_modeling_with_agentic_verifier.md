@@ -44,6 +44,29 @@ tags:
 
 AgentV-RL 把"奖励模型"从一次性读完候选解打个分，改造成像人做证明那样多轮、双向、带工具的审议过程。推理时，给定问题 $x$ 和某条候选解 $y$，verifier $\pi_\psi$ 同时启动一前一后两个 agent：forward agent 从题目前提一路推到结论、查每一步是否充分，backward agent 从最终答案倒推回题面、查所有约束是否真被满足，两者都能在中途调用 Python 解释器核算数值。两路各自走完 "Plan → Validate → Verdict" 后输出二元判定，聚合 verdict 的 token logits 得到这条解的综合置信分；BoN 场景下就按置信分从一批候选里挑最高的那条。训练上则分两步把这套多 agent 流程压进单个 4B 模型——先用合成轨迹做拒绝采样 SFT 灌入 ReAct + 工具行为，再用 GRPO 释放更深的推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：问题 x + 候选解 y"] --> SPLIT["verifier 同时启动一前一后两个 agent"]
+    subgraph DUAL["双向 agent 验证（充分性 + 必要性互补）"]
+        direction TB
+        subgraph FWD["前向 agent：前提→结论查充分性"]
+            direction TB
+            F1["Plan：拆成原子步"] --> F2["Validate：多轮 ReAct + 工具增强验证<br/>调 Python 解释器核算"] --> F3["Verdict：二元判定"]
+        end
+        subgraph BWD["后向 agent：结论→前提查必要性"]
+            direction TB
+            B1["Plan：倒推题面约束"] --> B2["Validate：多轮 ReAct + 工具增强验证<br/>调 Python 解释器核算"] --> B3["Verdict：二元判定"]
+        end
+    end
+    SPLIT --> FWD
+    SPLIT --> BWD
+    FWD --> AGG["聚合两路 verdict logits → 综合置信分"]
+    BWD --> AGG
+    AGG --> BON["BoN：按置信分挑最高候选"]
+    TRAIN["AgentV-RL 训练配方<br/>合成轨迹拒绝采样 SFT → GRPO"] -. 蒸馏进单个 4B 模型 .-> SPLIT
+```
+
 ### 关键设计
 
 **1. 双向 agent 验证：充分性与必要性互补检查**

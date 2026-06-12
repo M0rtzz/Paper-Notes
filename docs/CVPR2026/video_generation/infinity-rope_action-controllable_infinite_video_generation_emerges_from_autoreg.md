@@ -43,6 +43,21 @@ tags:
 
 ∞-RoPE 想解决的问题很具体：一个只在5秒片段上蒸馏出来的自回归视频扩散模型（这里是 Self-Forcing 蒸馏的 Wan2.1-T2V-1.3B，4步因果生成器），凭什么能被"骗"去生成无限长、还能随时换动作、甚至切镜头的视频？作者的答案是——不碰模型权重，只在推理时改写它读取时间位置的方式。整条 pipeline 仍然是逐 block（3帧一组）自回归往后滚，但每滚一步都对 RoPE 的时间坐标和 KV cache 做一次"手术"：Block-Relativistic RoPE 负责把无限延伸的绝对帧号折叠回模型见过的范围，让长度不再是天花板；KV Flush 负责在 prompt 变更时清掉旧语义，让新动作立刻生效；RoPE Cut 负责在时间轴上制造受控断点，让画面能像电影一样硬切到另一个场景。三者共享同一套相对化的坐标系，因此可以叠加使用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 prompt + Self-Forcing 蒸馏模型<br/>(仅5秒训练, 4步因果生成器)"] --> B["逐 block 自回归 self-rollout<br/>(每 block 3 帧)"]
+    B --> C["Block-Relativistic RoPE<br/>把绝对帧号折叠回 f_limit 内"]
+    C -->|prompt 变更| D["KV Flush<br/>清空历史, 只留 sink 帧 + 最后帧"]
+    C -->|需要场景切换| E["RoPE Cut<br/>在时间坐标插入跳变 Δ"]
+    C -->|继续连续生成| F["生成当前 block"]
+    D --> F
+    E --> F
+    F --> G["更新 KV cache<br/>(固定大小 6)"]
+    G -->|滚动到下一 block| B
+    G --> H["无限长可控视频"]
+```
+
 ### 关键设计
 
 **1. Block-Relativistic RoPE：把绝对帧号折叠成"移动的局部参考系"，让长度不再受 RoPE 训练范围限制**

@@ -41,6 +41,27 @@ tags:
 ### 整体框架
 一句话概括，Reflector 把"安全"从守生成入口（句首拒答模板）改成守整条生成轨迹：模型 $\pi_\theta$ 对可能藏有间接越狱意图的 query $x$ 自回归生成 $\tau = (y_1, \dots, y_T)$，期望在任何中间 step 一旦意识到自己正被诱导，就插入一段 `<|reflect|>` 反思 + `<|explore|>` 改道，最终落到无害响应。要让这种"边走边自省"长出来，训练走两阶段——Stage I 用教师合成的反思数据 $\mathcal{D}_R$ 做 SFT 解决冷启，把"什么时候停、怎么改道"的格式先验灌进基座；Stage II 用双奖 GDPO 在策略自生轨迹上做 RL，把行为从模板内化进参数。推理时不挂任何外部 guardrail。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["间接越狱 query x<br/>有害意图藏在多步推理里"] --> S1
+    subgraph S1["Stage I：教师引导反思数据 D_R + SFT 冷启"]
+        direction TB
+        A["策略 π_θ 生成完整轨迹 τ"] --> B["均匀随机采截断点 n<br/>切出前缀 y_before"]
+        B --> C["教师 GPT-5 看 (x, y_before)<br/>生成 ⟨reflect⟩ 反思段 + ⟨explore⟩ 改道段"]
+        C --> D["策略续写安全结尾 y_after<br/>拼成含反思的新轨迹做 NTP loss SFT<br/>混入 AlpacaEval 保通用能力"]
+    end
+    S1 --> S2
+    subgraph S2["Stage II：双奖 GDPO 内化"]
+        direction TB
+        E["策略自采 G=8 条轨迹"] --> F["安全奖励 r_safety<br/>HarmCLS 判定 ∈ 0/1"]
+        E --> G["反思奖励 r_reflect<br/>有效 +λ / 反向 −λ / 无反思 0"]
+        F --> H["组内归一化 advantage<br/>更新策略 π_θ"]
+        G --> H
+    end
+    S2 --> Y["推理：不挂外部 guardrail<br/>任意 step 自省→拒答（轨迹级安全）"]
+```
+
 ### 关键设计
 
 **1. 轨迹级安全的重定义：把安全边界从前缀拉到每一个 step**

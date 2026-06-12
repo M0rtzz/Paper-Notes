@@ -53,13 +53,28 @@ tags:
 
 ### 整体框架
 
-所有方法共享统一的输入和组件套件：预提取的 DINOv2/v3 视觉特征、π³ 重建的 3D OBB 角点坐标、相机外参矩阵。共享组件包括：
+所有方法共享统一的输入和一套几何编码组件：预提取的 DINOv2/v3 视觉特征、π³ 重建的 3D OBB 角点坐标、相机外参矩阵先送入共享套件，再进入三选一的不可见物体推理分支，最后由统一的关系预测器输出世界场景图。共享组件包括：
 
-- **Global Structural Encoder**：将 OBB 8 个角点编码为 27 维输入，通过 MLP 产生结构 token
-- **Spatial Positional Encoding**：计算物体对之间的欧氏距离、方向向量、体积比等 5D 特征
-- **Spatial GNN**：帧内 Transformer Encoder + 空间位置编码，建模物体交互
-- **Relationship Predictor**：融合人/物 token、union RoI 特征和 CLIP 文本嵌入，分别预测 attention (3类)、spatial (6类)、contacting (17类) 关系
-- **Camera Pose / Motion Encoder**：编码相机运动和物体 3D 速度/加速度
+- **结构编码器（Global Structural Encoder）**：将 OBB 8 个角点编码为 27 维输入，通过 MLP 产生结构 token
+- **空间位置编码（Spatial Positional Encoding）**：计算物体对之间的欧氏距离、方向向量、体积比等 5D 特征
+- **空间 GNN（Spatial GNN）**：帧内 Transformer Encoder + 空间位置编码，建模物体交互
+- **关系预测器（Relationship Predictor）**：融合人/物 token、union RoI 特征和 CLIP 文本嵌入，分别预测 attention (3类)、spatial (6类)、contacting (17类) 关系
+- **相机位姿 / 运动编码器（Camera Pose / Motion Encoder）**：编码相机运动和物体 3D 速度/加速度
+
+三种方法（PWG / MWAE / 4DST）就插在「共享几何编码」与「关系预测器」之间，差别只在如何为当下看不见的物体生成表示。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目视频 → DINOv2/v3 特征<br/>+ π³ 重建 3D OBB + 相机外参"] --> B["共享几何编码套件<br/>结构编码器 + 空间位置编码 + 空间 GNN"]
+    B -->|零阶记忆保持| C["PWG 持久世界图<br/>Last-Known-State 缓冲 + staleness"]
+    B -->|掩码补全| D["MWAE 掩码世界自编码器<br/>非对称 cross-attention 补全不可见物体"]
+    B -->|可微时序注意力| E["4DST 4D 场景 Transformer<br/>全视频双向自注意力"]
+    C --> F["关系预测器<br/>attention / spatial / contacting 三轴"]
+    D --> F
+    E --> F
+    F --> G["世界场景图<br/>覆盖可观测 + 不可观测物体"]
+```
 
 ### 关键设计
 

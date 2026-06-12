@@ -43,7 +43,20 @@ tags:
 
 ### 整体框架
 
-ICPO 在标准 GRPO 基础上引入三个组件：(1) 混合策略 GRPO + 隐式专家强制(IEF)：利用 ICL 生成 off-policy 轨迹扩展探索空间；(2) 专家区域拒绝采样(ERRS)：过滤低质量 off-policy 轨迹；(3) 退火专家奖励塑形(RS)：平衡早期专家引导与后期自主优化。每个 prompt 生成 8 个轨迹（7 个 on-policy + 1 个 off-policy ICL 引导）。
+ICPO 在标准 GRPO 基础上引入三个组件：(1) 混合策略 GRPO + 隐式专家强制(IEF)：利用 ICL 生成 off-policy 轨迹扩展探索空间；(2) 专家区域拒绝采样(ERRS)：过滤低质量 off-policy 轨迹；(3) 退火专家奖励塑形(RS)：平衡早期专家引导与后期自主优化。每个 prompt 生成 8 个轨迹（7 个 on-policy + 1 个 off-policy ICL 引导），三者依次串在 GRPO 的"采样 → 筛选 → 算优势 → 更新"流程上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入 prompt q"] --> ONP["on-policy 采样<br/>当前策略采 7 条轨迹"]
+    Q --> IEF["隐式专家强制 IEF<br/>MATH 示例拼成 ICL 上下文<br/>同模型生成 1 条引导轨迹"]
+    ONP --> POOL["混合 rollout 组<br/>7 on-policy + 1 ICL 引导"]
+    IEF --> POOL
+    POOL --> ERRS["专家区域拒绝采样 ERRS<br/>仅保留答对的 ICL 轨迹 R≥δ"]
+    ERRS --> RS["退火专家奖励塑形<br/>R + α·(1−t/T) 加成线性衰减"]
+    RS --> ADV["组内相对优势<br/>+ 正则化重要性采样 + KL"]
+    ADV --> UPD["策略更新 π_θ"]
+```
 
 ### 关键设计
 

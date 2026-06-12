@@ -42,7 +42,18 @@ ECL 证明在协变量漂移下完整对齐输入分布 $P_s(X) = P_t(X)$ 并非
 ### 整体框架
 ECL 的 pipeline 是：在源域上正常训练分类器 $f$ 和一个估计 $P(Y|X)$ 的辅助分类头（共享 backbone），然后在两域的无标签输入上联合优化"交叉熵 + $\lambda \cdot$ ECL"。ECL 只用源/目标域的输入 $X$ 和分类器输出 $S = f(X)$，不需要目标域标签，所以是**无监督域适应**。
 
-具体三步：(1) 把每个样本按 $S$ 落到 $B$ 个 soft bin 里，用 RBF 核 $\omega_{ij} = \exp(-\|S^{(i)} - a_j\|_2^2/\tau)$ 做软分配；(2) 在每个 bin $j$ 内分别估算源/目标域的条件期望 $\hat{\mathbb{E}}_{d,j} = \sum_i \omega^d_{ij} p^{(i)} / (\sum_i \omega^d_{ij} + \varepsilon)$，其中 $p^{(i)} = P(Y|X_i)$ 由额外分类头给出；(3) 以目标域 bin 频率 $w_j = n^t_j / \sum_r n^t_r$ 加权累加 $\|\hat{\mathbb{E}}_{s,j} - \hat{\mathbb{E}}_{t,j}\|$ 得到 ECL 损失，作为正则项注入主分类器的训练。
+具体三步：(1) 把每个样本按 $S$ 落到 $B$ 个 soft bin 里，用 RBF 核 $\omega_{ij} = \exp(-\|S^{(i)} - a_j\|_2^2/\tau)$ 做软分配；(2) 在每个 bin $j$ 内分别估算源/目标域的条件期望 $\hat{\mathbb{E}}_{d,j} = \sum_i \omega^d_{ij} p^{(i)} / (\sum_i \omega^d_{ij} + \varepsilon)$，其中 $p^{(i)} = P(Y|X_i)$ 由额外分类头给出；(3) 以目标域 bin 频率 $w_j = n^t_j / \sum_r n^t_r$ 加权累加 $\|\hat{\mathbb{E}}_{s,j} - \hat{\mathbb{E}}_{t,j}\|$ 得到 ECL 损失，作为正则项注入主分类器的训练。落到 mini-batch 上时，再用辅助变量 + proximal/EMA 把"先期望后取范数"的梯度偏置消掉，得到可端到端反传的可训练版本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源域 + 目标域无标签输入 X"] --> B["共享 backbone<br/>主分类器 f 输出置信度 S<br/>辅助头估跨域不变量 P(Y∣X)"]
+    B --> C["soft binning：按 S 用 RBF 核<br/>软分配到 B 个置信度桶"]
+    C --> D["每桶估两域条件期望并对齐<br/>（期望一致性条件）"]
+    D --> E["加权累加桶内期望差<br/>= 可微 ECL 损失"]
+    E --> F["辅助变量 + Proximal / EMA 更新<br/>mini-batch 梯度无偏"]
+    F --> G["总损失 L = L_ce + λ·ECL<br/>反传训练主分类器 f"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,16 @@ MARI 指出现有「表征干预」方法都依赖一个线性表征假设——
 ### 整体框架
 MARI 想在不碰模型权重的前提下，让「表征干预」既随样本自适应、又能在良性输入上自动收手。它在 frozen LLM $f_\theta$ 的某一固定层-位置 $(l^\star,p^\star)$ 插入一组干预模块，推理时一条输入要过三道关：先取出隐藏状态 $\mathbf{h}=\mathbf{h}^{(l^\star)}_{p^\star}(x)$，让一个独立 probe 算它的「传播能量」$E(x;\alpha_\text{probe})$ 并和阈值 $\tau_E$ 比，能量不够就判定为「不该干预」直接走 frozen base（$\alpha=0$）；过了门控的输入再算 $K$ 个低秩 adapter 各自的预测熵，选最自信的那个出手；胜出的 adapter 以强度 $\alpha_\text{full}$ 改写 $\mathbf{h}$，剩余层照常前向得到输出。训练分两阶段——先用「硬路由、赢家拿梯度」训出 $K$ 个各占一块子空间的 adapter，再独立训 probe 配 off-subspace 正则把它的扰动方向拉到干预子空间附近。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 x → 在 frozen LLM 固定层-位置 (l*,p*)<br/>取隐藏状态 h"] --> B["Energy-Based Gate<br/>probe 注入后测传播能量 E(x)，与阈值 τ_E 比"]
+    B -->|"E 低于 τ_E：良性输入，不该干预"| Z["回退 frozen base（α=0）<br/>剩余层前向 → 输出"]
+    B -->|"E 达到 τ_E：值得干预"| C["Entropy Router<br/>共享冻结骨干 + 同一 softmax 使 K 路熵可比<br/>选最低熵 adapter k̂"]
+    C --> D["Competitive Multi-Adapter<br/>胜出 adapter 以 α_full 改写 h：Φ(h)=h+γ·Δ_k̂(h)"]
+    D --> E["剩余层照常前向 → 输出"]
+```
+
 ### 关键设计
 
 **1. Competitive Multi-Adapter + 熵路由：把单条全局向量拆成 $K$ 段、按样本自适应选**

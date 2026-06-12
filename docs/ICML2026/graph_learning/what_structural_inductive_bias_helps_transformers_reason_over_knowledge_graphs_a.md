@@ -43,26 +43,33 @@ tags:
 ### 整体框架
 输入是一张知识图谱子图、问题文本和候选答案实体。问题侧用冻结的 DistilBERT 编码，图侧在实体节点之间运行一个 3 层、hidden size 128、4 头的 RASA Transformer。每层 attention 在标准 scaled dot-product attention 基础上读取边连接和边类型：如果两个节点在图中相连或是自环，就允许它们 attention；否则对应 score 被置为 $-\infty$。在允许的边上，模型还可以使用关系类型 bias、关系特定 query scale 和 value gate 来微调不同关系的影响。最后模型基于实体表示做答案打分，用 Hits@1/Hits@10 评估。
 
-实验设计上，作者固定同一个编码器、同一套 answer scoring 和近似相同的调参预算，然后比较 Vanilla Transformer、Graphormer、R-GCN、GAT、RASA 以及 RASA 的组件消融。关键对比不是“RASA 是否超过所有模型”，而是 Full、Mask only、Bias only 之间的阶梯差距。
+实验设计上，作者固定同一个编码器、同一套 answer scoring 和近似相同的调参预算，然后比较 Vanilla Transformer、Graphormer、R-GCN、GAT、RASA 以及 RASA 的组件消融。关键对比不是"RASA 是否超过所有模型"，而是 Full、Mask only、Bias only 之间的阶梯差距。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题文本 → 冻结 DistilBERT 编码"]
+    G["知识图谱子图 + 候选答案实体"]
+    Q --> T["3 层 RASA 图 Transformer<br/>每层先做标准 scaled dot-product attention"]
+    G --> T
+    T --> M["邻接 mask（拓扑传播约束）<br/>非邻接对 score 置 −∞，一层 attention = 一跳传播"]
+    M --> R["关系参数（局部重加权）<br/>在合法边上加 bias / query scale / value gate"]
+    R --> S["实体表示 → 答案打分（Hits@1 / Hits@10）"]
+    S --> AB["可拆卸组件消融<br/>Full / Mask only / Bias only 对比，归因拓扑 vs 关系"]
+```
 
 ### 关键设计
-1. **邻接 mask 作为拓扑传播约束**:
+1. **邻接 mask：把多跳推理约束在合法图路径上**
 
-	- 功能：把每个节点的注意力范围限制在图邻居和自身，使一层 attention 对应一次一跳消息传播。
-	- 核心思路：标准 attention score 为 $S_{ij}=(XW_Q)_i\cdot(XW_K)_j/\sqrt{d_k}$，RASA 在 softmax 前用邻接矩阵过滤 score：若 $A_{ij}=0$ 且 $i\ne j$，则令 $S_{ij}=-\infty$。这样非邻接节点无法直接交换信息，多跳答案必须通过多层逐跳累积。
-	- 设计动机：全局 dense attention 的搜索空间是 $O(n^2)$，但稀疏知识图谱的真实边通常是 $O(m)$ 且 $m\ll n^2$。mask 不只是省计算，而是把“哪些路径可能合法”提前编码进模型，减少模型从数据中重新发现图连通性的负担。
+	RASA 要回答的核心问题是"沿哪条边传播信息"，而全局 dense attention 允许任意两节点直接交互，等于放任模型在 $O(n^2)$ 的搜索空间里自己去重新发现图的连通性。邻接 mask 直接把这一步前置编码进模型：标准 attention score 为 $S_{ij}=(XW_Q)_i\cdot(XW_K)_j/\sqrt{d_k}$，RASA 在 softmax 之前用邻接矩阵过滤——若 $A_{ij}=0$ 且 $i\ne j$ 就令 $S_{ij}=-\infty$，于是非邻接节点无法直接交换信息，一层 attention 恰好对应一次"一跳"消息传播，$k$-hop 答案必须靠多层逐跳累积。它的价值不只是把搜索空间从 $O(n^2)$ 压到稀疏图的 $O(m)$（$m\ll n^2$）省计算，更在于把"哪些路径可能合法"作为拓扑先验交给模型，省去它从数据里重新学连通性的负担。
 
-2. **关系参数只做局部重加权**:
+2. **关系参数：只在合法边上做局部重加权**
 
-	- 功能：在已经允许的边上区分不同关系类型，给 attention score 或 value 流量加入关系特定调节。
-	- 核心思路：RASA 为每种关系和每个 attention head 学习三个参数：edge-type bias $b_r$ 加到 score 上，query scaling $s_r$ 乘到 score 上，value gate $g_r$ 通过 $\sigma(g_r)$ 调节对应边传递的信息量。三者合计每层只增加 $3|R|H$ 个参数。
-	- 设计动机：这些参数可以表达“导演”“出生地”“主演”等关系类型重要性差异，但它们不改变 attention 图本身。如果没有邻接 mask，它们只是在 dense attention 里改变权重，无法阻止模型关注无关节点。
+	有了 mask 划定的合法传播空间后，模型还需要区分"导演""出生地""主演"这些关系类型的重要性差异，这由三类关系参数完成：为每种关系、每个 attention head 学习一个加到 score 上的 edge-type bias $b_r$、一个乘到 score 上的 query scale $s_r$、以及一个通过 $\sigma(g_r)$ 调节对应边信息流量的 value gate $g_r$，三者合计每层只增加 $3|R|H$ 个参数。关键在于这些参数只改变已有边上的权重，并不改变 attention 图本身——一旦抽掉 mask，它们就退化成在 dense attention 里乱调权重，无法阻止模型去关注无关节点。这正是本文想证明的层级差异：mask 改的是"能不能连"，关系参数改的只是"连了之后看多重"。
 
-3. **以可拆卸组件做因果式消融**:
+3. **可拆卸组件消融：把拓扑与关系拆开做因果归因**
 
-	- 功能：让同一套架构分别运行 Full、Mask only、Bias only 等配置，避免把多个结构信号混在一起归因。
-	- 核心思路：Full 打开 mask、bias、scale、gate；Mask only 保留二值邻接 mask、移除所有学习关系参数；Bias only 移除 mask，只保留最简单的 edge-type bias。作者还在 WebQSP/CWQ 和 held-out relation 实验中复现同样趋势。
-	- 设计动机：如果 Mask only 已经恢复绝大多数增益，而 Bias only 在复杂数据集上接近甚至低于 Vanilla Transformer，就能更直接地说明主要贡献来自拓扑约束，而不是关系参数或额外容量。
+	很多图 Transformer 把 mask、边类型、位置编码、关系权重一起塞进模型再报一个总分，根本分不清增益来自哪。RASA 的设计让 mask、bias、scale、gate 四个组件都能独立开关、无需重训编码器，于是同一套架构可以跑出三种关键配置：Full 打开全部四项；Mask only 只保留二值邻接 mask、移除所有可学习关系参数；Bias only 移除 mask、只留最简单的 edge-type bias。如果 Mask only 已经恢复绝大部分增益、而 Bias only 在 CWQ 这类复杂数据集上接近甚至低于 Vanilla Transformer，就能干净地把功劳归给拓扑约束而非关系参数或额外容量；作者还在 WebQSP/CWQ 与 held-out relation 设置中复现同一趋势，进一步排除"只是某个数据集的偶然"。
 
 ### 损失函数 / 训练策略
 论文没有引入特殊损失，训练重点是公平控制变量。所有自实现模型使用冻结 DistilBERT 编码器和统一 answer scoring；RASA 在 MetaQA 上使用 3 层、128 维、4 heads，batch size 16，AdamW，学习率 $2\times 10^{-5}$，cosine annealing，并用 early stopping patience 5。主要结果报告 3 个随机种子均值和标准差，WebQSP 的 best HP 版本使用更宽的 $d=256,L=4$ 配置，CWQ 则保持相同超参比较。

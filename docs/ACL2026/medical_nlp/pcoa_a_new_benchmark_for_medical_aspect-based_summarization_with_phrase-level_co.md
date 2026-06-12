@@ -75,6 +75,20 @@ PCoA 本质上不是一个新模型，而是一个新任务、新数据集和新
 评测框架分别衡量摘要是否覆盖关键事实、引用句是否真正支撑摘要、短语是否来自引用句且能对应摘要内容。
 作者用 Mistral-Large-2411 做 claim decomposition，用 TRUE 做 entailment 判断，用 NLTK 做短语 tokenization。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DS["短语级上下文归因数据集"]
+        direction TB
+        A["melanoma RCT 摘要<br/>PubMed 检索 607 篇 → 筛选 152 篇"] --> B["定义 16 个医学方面<br/>PICO + 医生访谈"]
+        B --> C["专家三步标注<br/>句子标方面 → 写方面摘要 → 圈贡献短语"]
+        C --> D["1,799 个三元组实例<br/>摘要 + 引用句 + 贡献短语"]
+    end
+    DS --> E["解耦式三层评测指标<br/>claim / sentence / phrase 各自计分"]
+    E --> F["三种归因策略统一比较<br/>intrinsic / prior / post-hoc"]
+    F --> G["诊断 LLM 可验证摘要能力"]
+```
+
 ### 关键设计
 
 **1. 短语级上下文归因数据集：把摘要、支撑句、贡献短语拧成一条可查的证据链**

@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 UGRN 把"判断 $g_i$ 是否调控 $g_j$"拆成两步来做：先冻结 scFM $\mathcal{M}$，把它当成一台反事实推理引擎，对任意基因对 $(g_i,g_j)$ 抽出一个固定维度、跨数据集可比的成对特征 $\mathbf{e}_{ij}$；再在某个源数据集 $\mathcal{D}_b$（例如 hESC）上用一个浅层 MLP 翻译器 $f_\phi$ 把 $\mathbf{e}_{ij}$ 映射成调控概率 $s_{ij}=f_\phi(\mathbf{e}_{ij})$，然后零样本迁移到含未见基因、未见细胞类型的目标数据集（mDC、mESC、mHSC-E/G/L、hHEP 等）。整套设计的关键全压在第一步：怎样让特征摆脱"绑定具体细胞数 $N$ 和真实表达量级"的桎梏，从而能在数据集之间对齐。作者先放两个朴素策略垫底——**Pert** 用真实平均表达 $\bar{\mathbf{x}}$ 做 zero-out 取差值 $e_{ij}=\mathcal{M}(\bar{\mathbf{x}})_j-\mathcal{M}(\bar{\mathbf{x}}_{\neg i})_j$，**Emb** 直接相加 scFM 词表 embedding $\mathbf{E}_{\mathcal{M},i}+\mathbf{E}_{\mathcal{M},j}$——再引出两个真正的探针 VVP 与 GDT，并把它们的 logit 平均成 Ensemble。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["基因对 (g_i, g_j)"] --> M["冻结 scFM：当作反事实推理引擎<br/>统一虚拟基线消除量纲"]
+    M --> V["Virtual Value Perturbation<br/>多目标值 → 区间响应曲线 e_ij"]
+    M --> G["Gradient Trajectory<br/>多基线反向传播 → 瞬时斜率轨迹 e_ij"]
+    V --> FV["翻译器 f_φ（MLP）→ logit"]
+    G --> FG["翻译器 f_φ（MLP）→ logit"]
+    FV --> E["Ensemble + 翻译器训练<br/>logit 平均 → 调控概率 s_ij"]
+    FG --> E
+    E --> OUT["零样本迁移到未见基因 / 数据集"]
+```
+
 ### 关键设计
 
 **1. Virtual Value Perturbation：用统一虚拟基线把扰动响应变成可跨数据集对齐的曲线**

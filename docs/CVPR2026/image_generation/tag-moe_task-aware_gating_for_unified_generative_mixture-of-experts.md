@@ -47,6 +47,19 @@ TAG-MoE 想解决的核心问题是：统一生成模型里门控网络只看局
 
 整条 pipeline 建立在 MM-DiT（多模态扩散 Transformer）之上：文本指令经 MLLM 编码为文本嵌入，条件图像与目标图像经 VAE 压成潜在表示，一起送入 DiT。在后 10 层 Transformer 块里，图像流的 FFN 被换成 MoE 层（每层 4 个专家、top-1 路由）。训练时，先用一套层次化标注给每个样本打上结构化任务描述符，再让一个语义对齐路由器把"全模型的整体路由模式"对齐到这些任务描述符，整体由 Flow Matching 目标端到端训练；推理时不需要标注，只靠 VLM 改写指令即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["文本指令 → MLLM 文本嵌入<br/>条件图 + 目标图 → VAE 潜在表示"] --> DIT["MM-DiT<br/>MoE 只放后 10 层（每层 4 专家、top-1 路由）"]
+    DIT --> FLOW["Flow Matching 主损失"]
+    DIT --> G["聚合路由签名 g<br/>路由分数跨层、跨 token 平均池化"]
+    LBL["层次化任务语义标注<br/>Scope / Type / Preservation（Qwen-VL 自动打标）"] --> S["语义嵌入 s<br/>命中标签向量逐元素求和"]
+    G --> PRED["语义对齐门控网络<br/>2 层 MLP 预测头 g → ŝ"]
+    S --> ALIGN
+    PRED --> ALIGN["预测性对齐损失<br/>最小化 ŝ 与 s 的余弦距离"]
+    ALIGN -.->|梯度反传逼门控按任务意图分派| DIT
+```
+
 ### 关键设计
 
 **1. 层次化任务语义标注：把笼统的"编辑"拆成正交的三层标签**

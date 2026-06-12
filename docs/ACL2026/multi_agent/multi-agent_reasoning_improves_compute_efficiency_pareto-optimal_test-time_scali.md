@@ -51,6 +51,21 @@ tags:
 
 最终分析不是只找最高准确率，而是画出每个配置的 accuracy-cost 点，并计算 Pareto-front：如果某配置在更低或相同成本下还能取得更高或相同准确率，那么被支配的配置就不是高效选择。论文的大部分结论都来自这些 Pareto 最优点的形态。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["选择题推理任务<br/>MMLU-Pro / BBH"] --> B
+    subgraph B["统一的测试时计算扩展坐标系"]
+        direction TB
+        B1["四类 pipeline 摆到同一张 cost-accuracy 图<br/>self-consistency / self-refinement / debate / MoA"] --> B2["扫并行轴 × 顺序轴 × 模型大小<br/>34 个配置"]
+    end
+    B --> C["每个配置跑 zero-shot CoT 推理<br/>抽取 log-likelihood 最高的选项"]
+    C --> D["面向部署的计算成本估计<br/>prefill + decode，每阶段取 max(FLOP 时间, 显存传输时间)"]
+    D --> E["每个配置映射成 (准确率, 估计时间) 一个点"]
+    E --> F["用 Pareto-front 提炼多智能体设计规则<br/>算前沿 + 抽高效配置规律"]
+    F --> G["配置建议<br/>MoA proposer = layer + 1，debate 优先加 agent"]
+```
+
 ### 关键设计
 
 **1. 统一的测试时计算扩展坐标系：把四类结构迥异的推理方法摆到同一张 cost-accuracy 图上，逼它们在相同预算下竞争**

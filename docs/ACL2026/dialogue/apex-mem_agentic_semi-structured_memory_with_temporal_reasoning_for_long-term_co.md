@@ -45,6 +45,26 @@ tags:
 ### 整体框架
 系统分两阶段。**构建阶段**：把每个 source document $d_i$ 抽成子图 $g_i$，通过 soft-canonicalization 增量合入全局属性图 $G^{(t+1)}\leftarrow\mathrm{Merge}(G^{(t)},g_t)$。形式化记 $G=(V,E,\Pi,\Lambda)$，其中 $\Pi$ 是 key-value 属性映射，$\Lambda$ 是节点/边的本体类型。**查询阶段**：ReAct 代理 $\pi_\theta$ 在每步 $t$ 生成推理 trace $r_t$ 和动作 $a_t$，动作要么是工具调用 $(T_t,z_t)$（$T_t\in\{\text{SchemaViewer, EntityLookup, GraphSQL, Search}\}$），要么是 Answer。代理把时序引用先解析成具体日期，再调工具，最后给答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["源文档 d_i"] --> ONTO["混合实体-事件本体<br/>抽成时序锚定事实子图 g_i"]
+    ONTO --> APP["Append-Only 事件存储<br/>soft-canonicalization 只追加不覆盖"]
+    APP --> G[("全局属性图 G")]
+    Q["用户 query"] --> AGENT
+    G --> AGENT
+    subgraph AGENT["多工具 ReAct 检索代理（≤40 步）"]
+        direction TB
+        R["推理 + 时序引用解析为具体日期"]
+        R -->|结构 / 计划| SV["SchemaViewer"]
+        R -->|实体规范化| EL["EntityLookup"]
+        R -->|只读 SQL 时序查询| GS["GraphSQL"]
+        R -->|混合语义检索| SE["Search"]
+        SV & EL & GS & SE --> R
+    end
+    AGENT --> ANS["答案"]
+```
+
 ### 关键设计
 
 **1. 混合实体-事件本体 + 时序锚定事实**

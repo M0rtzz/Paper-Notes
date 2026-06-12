@@ -45,6 +45,15 @@ tags:
 
 I-PERI 要解决的问题是：$K$ 个客户端各持数据集 $\mathbb{D}^k$ 和一个**未知**的干预目标 $\Phi^k \subseteq \mathbb{V}$（仅假设至少一个客户端是纯观测的，即 $\exists k:\Phi^k=\emptyset$），既不能把数据汇总、也不能上传本地图，只能交换一个 regret 标量，却要在 server 端恢复尽可能紧的因果结构并附带差分隐私保证。作者的办法是把原版 PERI 的单一 regret 拆成两遍 GES 搜索：第一遍只惩罚"客户端有、server 缺"的边，把干预带来的稀疏化豁免掉，从而稳稳恢复出公共 CPDAG；第二遍反过来，让客户端因干预新生出的方向反向回灌进 server 的未定向边，把结构进一步精化到一个新等价类 Φ-CPDAG。客户端本地始终只用 PC/GES 估自己的突变图 (mutilated DAG) CPDAG $\mathcal{C}(G_{\Phi^k})$ 并保留在本地，每个 regret 上传前再叠一层 Laplace 噪声完成 $\epsilon$-DP。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["K 个客户端本地<br/>PC/GES 估突变图 CPDAG C(G_Φk)，保留本地"] --> B["regret 标量上传前叠 Laplace 噪声<br/>基于敏感度上界 Q 的 ε-DP"]
+    B --> C["有向一致掩码 μ<br/>缺边豁免 + 有向优先 → 恢复公共 CPDAG"]
+    C --> D["无向一致掩码 ν 与 Φ-CPDAG<br/>无向优先 → 回灌客户端 v-structure 方向"]
+    D --> E["Φ-CPDAG<br/>MEC ⊂ Φ-MEC ⊂ I-MEC"]
+```
+
 ### 关键设计
 
 **1. 有向一致掩码：把干预造成的"缺边"从错误改判为豁免**

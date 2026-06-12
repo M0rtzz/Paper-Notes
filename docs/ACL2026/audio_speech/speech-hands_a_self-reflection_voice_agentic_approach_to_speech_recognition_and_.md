@@ -34,13 +34,37 @@ tags:
 
 ### 整体框架
 
-Speech-Hands 将语音理解建模为一个代理决策过程。给定输入音频 A 和可选查询 Q，模型首先生成自身响应 H_omni（内部感知），同时获取外部模型的响应 H_ext。然后，模型基于完整上下文 (A, Q, H_omni, H_ext) 生成一个显式动作 token，指导后续生成策略：<internal> 信任自身、<external> 采用外部、<rewrite> 融合重写。
+Speech-Hands 将语音理解建模为一个代理决策（agentic decision）过程。给定输入音频 A 和可选查询 Q，全能模型先生成自身响应 H_omni（内部感知），同时获取外部模型给出的响应 H_ext。然后模型基于完整上下文 (A, Q, H_omni, H_ext) 显式生成一个动作 token（action token），指导后续生成策略：`<internal>` 信任自身、`<external>` 采用外部、`<rewrite>` 综合所有证据重写（即 GER）。信任分支直接走快速推理输出，重写分支才进入更深的 Omni Rewrite。这一动作 token 机制靠「事后对比真实结果」构造的标签来训练，并用单一交叉熵损失端到端学会「从证据到动作」的映射。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入音频 A + 可选查询 Q"]
+    subgraph S1["学习式动作 token 决策机制"]
+        direction TB
+        B["全能模型内部感知<br/>生成自身响应 H_omni"]
+        C["外部模型<br/>生成外部响应 H_ext"]
+        D["基于完整上下文 (A, Q, H_omni, H_ext)<br/>生成动作 token"]
+        B --> D
+        C --> D
+    end
+    A --> B
+    A --> C
+    D -->|"internal：信任自身"| E["输出 H_omni（快速推理）"]
+    D -->|"external：采用外部"| F["输出 H_ext"]
+    D -->|"rewrite：综合重写"| G["Omni Rewrite<br/>综合所有证据重写"]
+    E --> H["最终响应"]
+    F --> H
+    G --> H
+```
 
 ### 关键设计
 
-1. **ASR 动作 token 构建**：对每个训练样本，分别计算内部转录 T_int、外部转录 T_ext 和 GER 融合转录 T_ger 的 WER。如果 T_int 与 ground truth 相同（WER=0）或 WER 最低，标注 <internal>；T_ext 最优则标注 <external>；T_ger 最优则标注 <rewrite>。这种基于 WER 的精细标注提供了强监督信号。
-2. **Audio QA 动作 token 构建**：由于 QA 是离散正确/错误信号，引入多次采样稳定策略——对外部模型采样 5 次，多数投票决定 <external> 或 <rewrite> 标签，降低外部预测的随机性对决策边界的影响。
-3. **统一的端到端训练**：每个训练样本格式化为 "动作token + 目标文本"，通过单一交叉熵损失联合监督动作选择和后续生成，使模型内化从多模态证据到动作选择的映射。
+**1. 学习式动作 token 决策机制（核心）**：天真融合的痛点在于，当自身感知与外部假设冲突时模型无所适从——zero-shot 仲裁高度依赖 prompt 措辞而非答案正确性。Speech-Hands 不再隐式融合，而是让全能模型先生成自身响应 H_omni、再结合外部模型给出的 H_ext，基于完整上下文 (A, Q, H_omni, H_ext) 显式吐出一个动作 token：`<internal>` 信任自身、`<external>` 采用外部、`<rewrite>` 综合所有证据重写（即 GER）。这把不可解释的信息融合变成一次可解释的策略决策；token 在推理时生成并直接条件化后续输出——信任分支走快速推理，只有重写分支才付出 Omni Rewrite 的额外推理成本。
+
+**2. 基于结果对比的动作 token 标签构建**：决策机制需要监督，但「哪个源更可信」没有现成标签，本文用「事后对比真实结果」反推，并按任务类型分两种策略。ASR 误差可量化：对每个样本分别算内部转录 T_int、外部转录 T_ext、GER 融合转录 T_ger 的 WER，谁最低（或内部 WER=0）就标对应 token，提供精细的强监督。Audio QA 只有离散对错、且外部预测带随机性，于是对外部模型采样 5 次、多数投票决定标 `<external>` 还是 `<rewrite>`，稳定决策边界、降低单次外部预测随机性的干扰。
+
+**3. 统一端到端训练**：把每个样本格式化成「动作 token + 目标文本」，用单一交叉熵损失联合监督「选哪个动作」与「该动作下生成什么」，让模型把「从多模态证据到动作选择」的映射内化进同一套参数。ASR 与 Audio QA 因此复用同一框架，仅切换标签构建策略即可从语音识别自然泛化到音频问答。
 
 ### 损失函数/训练策略
 

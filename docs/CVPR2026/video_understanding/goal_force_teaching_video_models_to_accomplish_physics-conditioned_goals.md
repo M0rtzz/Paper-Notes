@@ -40,6 +40,22 @@ tags:
 
 GoalForce 想让视频生成模型像人一样思考物理任务：不是被动执行「施加多大力」，而是给定「想要的结果」（目标力），自己逆推出该有的前因动作。它基于 Wan2.2（MoE 扩散模型）+ ControlNet，核心是把物理意图编码成多通道控制信号，并用一套「随机遮蔽因果」的训练策略，逼模型在简单合成数据上学会因果链规划，再零样本迁到工具使用、人-物交互等复杂场景。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户物理意图<br/>目标力 / 直接力 / 质量"] --> B
+    subgraph B["三通道物理控制张量"]
+        direction TB
+        B0["Ch0 直接力（因）<br/>移动高斯 blob"]
+        B1["Ch1 目标力（果）<br/>移动高斯 blob"]
+        B2["Ch2 质量（物性）<br/>静态高斯 blob，可选"]
+    end
+    D["极简合成训练数据<br/>多米诺 / 滚球 / 康乃馨 ~12k"] --> C
+    B --> C["随机遮蔽因果信息<br/>训练时只留一路：Goal→Plan 或 Action→Outcome"]
+    C --> E["只微调 High-Noise Expert<br/>克隆 10 层 DiT + zero-conv 接冻结 Wan2.2"]
+    E --> F["生成视频：逆向规划因果链<br/>零样本泛化到工具使用 / 人-物交互"]
+```
+
 ### 关键设计
 
 **1. 三通道物理控制张量：把原因、效果、属性拆成正交的三路信号**

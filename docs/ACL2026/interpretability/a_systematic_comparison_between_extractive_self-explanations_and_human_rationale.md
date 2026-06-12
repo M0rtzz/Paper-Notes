@@ -53,19 +53,41 @@ tags:
 
 第五步是 faithfulness 与策略分析。作者用 Gradient×Input 和 LRP 生成 post-hoc attribution，并通过遮蔽重要 token 后观察模型正确答案 token 与备选答案 token 的概率差变化来衡量 faithfulness。为了让二值的人类 / 模型 rationale 也能排序，论文采用 k-greedy importance ordering：逐步选择能最大降低预测概率差的 rationale token，短文本 SST 设 $k=1$，其他较长数据集设 $k=3$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["跨难度·跨语言·跨任务数据设计"]
+        direction TB
+        D1["SST/mSST<br/>短句情感(英/丹/意)"]
+        D2["RaFoLa<br/>长新闻强迫劳动风险"]
+        D3["Climate-Fever<br/>气候声明验证(新标注 rationale 子集)"]
+    end
+    DATA --> CLF["4 个 LLM 零样本分类<br/>Gemma3/Llama3/Qwen3/Mistral"]
+    CLF -->|"预测错误"| DROP["丢弃(不抽 rationale)"]
+    CLF -->|"预测正确才继续"| EXT["受控抽取式自解释<br/>从输入抽支撑预测的 token span"]
+    EXT -->|"Climate-Fever"| AGG["逐 evidence 抽 rationale<br/>→ 汇总 claim 判断"]
+    EXT --> EVAL
+    AGG --> EVAL
+    subgraph EVAL["plausibility / faithfulness 分离评测"]
+        direction TB
+        P["plausibility<br/>Cohen's Kappa vs 人类 rationale"]
+        F["faithfulness<br/>k-greedy 遮蔽 + LRP/Grad×Input 对照"]
+    end
+```
+
 ### 关键设计
 
-**1. 抽取式 self-explanation 的受控比较：把“模型能说出理由”收敛成可测量的 token rationale**
-
-自由文本解释更贴近真实用户场景，但一旦要评测它“像不像人类理由”或“是否真的影响预测”，就找不到一个干净的对齐单位——解释里可能掺入输入以外的背景知识和推理链。作者干脆把解释限制成从输入抽取的 token 片段：先让 LLM 输出分类结果，再**只在预测正确的样本上**要求它抽取支撑该结果的输入 span。这一步“预测正确才抽 rationale”很关键，否则会把分类错误和解释错误混在一起。
-
-对于结构特殊的 Climate-Fever，作者沿用原始 claim-evidence 结构：先对 5 条 evidence 各自生成 rationale，再汇总成整体 claim 判断。这样无论哪个任务，模型解释、人类标注、后验归因都被压到同一种 token-level 粒度，解释质量问题就转化成可量化的 token agreement 与 token perturbation 问题。
-
-**2. 跨难度、跨语言、跨任务的数据设计：不让结论只成立于短句情感分类**
+**1. 跨难度、跨语言、跨任务的数据设计：不让结论只成立于短句情感分类**
 
 解释质量很容易被数据集属性支配：短句里一个情感词就能定标签，模型和人类自然容易一致；可一旦换到证据跨句、含糊甚至彼此冲突的长文本，self-explanation 的局限才会暴露。为此作者刻意拉开三档难度——SST/mSST 是短句情感分类（mSST 还覆盖英语、丹麦语、意大利语），RaFoLa 是长新闻文章上的强迫劳动风险检测（文本长、证据常隐含），Climate-Fever 是气候声明验证（claim 本身欠规范，evidence 与 claim 的语义关系更模糊）。
 
 由于 Climate-Fever 原本没有 token-level rationale，作者额外收集了一个含 104 个 claim、520 条 evidence 的人工 rationale 子集。三个任务串起来，正好说明解释质量不是模型的单一属性，而是模型、任务、文本结构共同作用的结果。
+
+**2. 受控抽取式自解释：把“模型能说出理由”收敛成可测量的 token rationale**
+
+自由文本解释更贴近真实用户场景，但一旦要评测它“像不像人类理由”或“是否真的影响预测”，就找不到一个干净的对齐单位——解释里可能掺入输入以外的背景知识和推理链。作者干脆把解释限制成从输入抽取的 token 片段：先让 LLM 输出分类结果，再**只在预测正确的样本上**要求它抽取支撑该结果的输入 span。这一步“预测正确才抽 rationale”很关键，否则会把分类错误和解释错误混在一起。
+
+对于结构特殊的 Climate-Fever，作者沿用原始 claim-evidence 结构：先对 5 条 evidence 各自生成 rationale，再汇总成整体 claim 判断。这样无论哪个任务，模型解释、人类标注、后验归因都被压到同一种 token-level 粒度，解释质量问题就转化成可量化的 token agreement 与 token perturbation 问题。
 
 **3. plausibility 与 faithfulness 分离评测：把“像人类”和“对模型有效”拆成两个独立问题**
 

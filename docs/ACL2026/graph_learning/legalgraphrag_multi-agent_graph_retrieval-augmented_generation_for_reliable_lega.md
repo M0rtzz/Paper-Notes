@@ -43,6 +43,29 @@ LegalGraphRAG 的关键不是单纯「把法律文档放进图里」，而是把
 ### 整体框架
 输入是一段犯罪事实描述 $f$ 和被告 $d$，系统先基于离线法律语料 $\mathcal{D}$ 构建法律知识图 $KG=\Phi(\mathcal{D})$。查询时检索器从图中取上下文 $\mathcal{C}=\mathcal{R}(f,d,KG)$，生成器再据此推断罪名 $y$。整条流程被拆成两个阶段：第一阶段是 Hierarchical Knowledge Construction，把历史案例、法条、司法解释、案件特征和罪名组织进分层的 HierarGraph；第二阶段是 Evidence-based Legal Reasoning，由三个代理串联——Researcher 从 ontology/fact graph 检索候选案例和法条，Auditor 用 rule graph 验证法条是否适用，Adjudicator 汇总确认后的法条、案例和罪名节点生成带引用的最终判断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：犯罪事实 f + 被告 d<br/>离线法律语料 D"]
+    subgraph HG["HierarGraph 三层法律图谱"]
+        direction TB
+        FG["Fact Graph<br/>案例·法条·罪名节点"]
+        OG["Ontology Graph<br/>属性抽象 + kNN / Leiden 社区"]
+        RG["Rule Graph<br/>法条·司法解释 + Diagnostic Checklist"]
+    end
+    IN --> HG
+    HG --> RES
+    subgraph RES["Researcher 多路证据检索"]
+        direction TB
+        SEM["语义匹配 R_sem"]
+        COM["社区扩展 R_com"]
+        CHG["罪名锚定 R_chg"]
+    end
+    RES -->|"候选证据集（偏宽，含噪声）"| AUD["Auditor 证据验证<br/>按 Checklist 剪掉不适用法条"]
+    AUD -->|"验证后子图 A_f / C_f / O_f"| ADJ["Adjudicator 汇总裁决"]
+    ADJ --> OUT["输出：罪名 y + 可追溯法条引用"]
+```
+
 ### 关键设计
 
 **1. HierarGraph 三层法律图谱：把事实、概念、规则分层，避免扁平图混淆粒度**

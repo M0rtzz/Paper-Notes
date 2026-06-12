@@ -40,6 +40,18 @@ tags:
 
 NLCE 要解决的是细粒度场景下「擦掉一个概念却殃及邻居」的问题，做法是把擦除拆成由粗到精的三道工序，全程不动模型权重、只在推理时介入 UNet 的 cross-attention。第一道工序在嵌入空间动手，改写 Key/Value 的投影矩阵，从源头削弱目标概念、顺手把邻居的表征补回来；但全局改投影难免有漏网的残留，于是第二道工序在每个去噪步用注意力把「画面里还残留目标影子的位置」框出来；第三道工序再在这些框出来的位置上做不可逆的硬清理。三道工序处理的空间一层比一层小：从整张嵌入 → 一张空间门控图 → 二值 mask 内的若干像素。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 prompt + 目标概念"] --> B["Stage 1 表征空间调制<br/>SVD 谱加权改写 W_K/W_V，削目标补邻居"]
+    N["邻居挖掘<br/>Wikipedia→RoBERTa→CLIP"] --> B
+    B --> C["Stage 2 注意力引导空间门控<br/>dry pass 测投影范数定位 live token"]
+    C -->|得门控图 G_t| D["real pass<br/>按 G_t 衰减残留区注意力"]
+    D -->|门控值 > δ_scrub| E["Stage 3 门控特征硬擦除<br/>mask 内隐特征置零（不可逆）"]
+    D -->|无残留| F["生成图像<br/>目标擦除、邻居保留"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. Stage 1 表征空间调制：在嵌入层面削目标、补邻居**

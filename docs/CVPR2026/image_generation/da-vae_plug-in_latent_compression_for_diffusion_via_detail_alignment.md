@@ -42,6 +42,23 @@ $$\mathbf{z}_{hr} = [\mathbf{z}, \mathbf{z}_d] \in \mathbb{R}^{(C+D) \times \fra
 
 这样高分辨率图像被编码成和基础分辨率一样多的 token，扩散模型只需在原序列长度上多吃几个通道，就能生成更高分辨率的结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["高分辨率图像"] --> E
+    I --> Ed
+    subgraph SLS["结构化潜空间"]
+        direction TB
+        E["冻结预训练 VAE 编码器<br/>基础通道 z（C 维，结构先验不动）"]
+        Ed["额外编码器 E_d<br/>细节通道 z_d（D 维，编码高频细节）"]
+        E -.->|"潜空间对齐损失：Proj(z_d) 向 z 看齐"| Ed
+        E --> CAT["拼接 z_hr = [z, z_d]<br/>token 数不变、通道扩到 C+D"]
+        Ed --> CAT
+    end
+    CAT --> DIT["零初始化 warm-start 微调 DiT<br/>P'/O' 零初始化 + 余弦权重调度 w(n)"]
+    DIT --> OUT["高分辨率生成"]
+```
+
 ### 关键设计
 
 **1. 结构化潜空间：把新通道明确定义成"细节"，而不是让它自由生长**

@@ -43,6 +43,17 @@ SEA 不是端到端训练一个字幕 aligner，而是 modular pipeline。它先
 ### 整体框架
 输入是一段 continuous sign language episode 和原始字幕序列，每条字幕有 start/end time。输出是修正后的字幕时间戳。SEA 的第一步 segmentation 使用预训练手语分割模型产生 signs $s_1,\ldots,s_m$；第二步 embedding 使用 SignCLIP 把 sign clips 和 subtitles 映射到共享空间；第三步 alignment 对每条字幕 $t_i$ 选择连续 sign span $s_l,\ldots,s_r$，将字幕时间改为该 span 的边界。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["连续手语视频 + 原始字幕<br/>（含延迟偏移的 start/end 时间）"] --> B["Sign Segmentation as Tokenization<br/>MediaPipe pose + LSTM 逐帧 BIO，切成 signs s₁…sₘ"]
+    B --> C["SignCLIP Cross-modal Embedding<br/>字幕走文本编码器、sign clip 走 pose 编码器，映射到共享空间"]
+    C --> D["text-sign 相似度矩阵 M"]
+    D --> E["Episode-level DP Alignment<br/>时间/韵律代价（onset/offset/duration/gap）− 语义项 w_sim·Σ"]
+    E -->|每条字幕只保留时间最近的 50 个 signs| F["整集一次性求全局最优、不重叠的连续 span 分配"]
+    F --> G["修正后的字幕时间戳"]
+```
+
 ### 关键设计
 
 **1. Sign Segmentation as Tokenization：像分词一样把连续 signing 切成可对齐的单元**

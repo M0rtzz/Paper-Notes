@@ -39,6 +39,22 @@ tags:
 
 整条 pipeline 串起来是这样：先把每个高斯投影到当前要渲染的切片深度上（Scan）；再用焦点模型对它做轴向重参数化和不透明度调制，把离焦平面太远的信号衰减掉；最后做屏幕空间投影并把所有高斯的贡献**累加**成 2D 图像。训练时随机抽切片当虚拟相机来回拟合，结束后这组原语既可渲染任意切片也可量化压缩存盘。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["一组 Focus Gaussian 原语 + 灵敏度图 h(σz)"] --> B["焦点感知物理模型<br/>PSF 卷积，σz 编码焦深"]
+    subgraph R["Focus Gaussian 可微渲染"]
+        direction TB
+        C["Scan：投影到目标切片深度"] --> D["轴向重参数化 + 不透明度调制<br/>Σe⁻¹=Σc⁻¹+e₃e₃ᵀ/σz²，焦外衰减"]
+        D --> E["屏幕空间投影 + 加性光栅化<br/>取 2D 边缘分布→各高斯贡献累加"]
+    end
+    B --> C
+    E --> F["随机抽切片当虚拟相机<br/>L1+D-SSIM 损失，密化/剪枝，CUDA 反传"]
+    F -->|共享协方差保证 3D 一致| B
+    E --> G["量化与压缩<br/>Morton 排序→分属性量化→差分+LZMA"]
+    G --> H["压缩存盘 / 可微体素化→3D 体"]
+```
+
 ### 关键设计
 
 **1. 焦点感知物理模型：把"有限焦深"写进渲染方程**
@@ -47,13 +63,13 @@ tags:
 
 GaussianPile 的切入点是把成像系统的点扩散函数（PSF）直接卷进渲染。它假设 PSF 是各向异性高斯 $\text{psf}(\mathbf{x}_c) \propto \exp(-\frac{1}{2}(\frac{x_c^2}{\sigma_x^2}+\frac{y_c^2}{\sigma_y^2}+\frac{z_c^2}{\sigma_z^2}))$，其中 $\sigma_z$ 就是轴向聚焦能力，再由此定义沿深度的灵敏度图 $h(-z_c) = \exp(-z_c^2 / (2\sigma_z^2))$；一张切片的渲染强度，就是高斯原语和这个灵敏度图的卷积。妙处在于一个标量 $\sigma_z$ 就把三种成像模态串成了连续谱：$\sigma_z \to \infty$ 退回全焦模型（X 光 / 标准 3DGS），$\sigma_z \to 0$ 退回零厚度模型（MRI），中间的有限 $\sigma_z$ 正对应超声和光片显微镜这类有限焦深的情形。实践中按 Nyquist 采样准则取 $\sigma_z \approx \delta_z$（扫描步长）作默认值。有了这层物理约束，原语在轴向不再能随意生长，2D 保真和 3D 一致才被同时锁住。
 
-**2. Focus Gaussian 的三步渲染：让焦深既约束前向、又约束梯度**
+**2. Focus Gaussian 的可微渲染：让焦深既约束前向、又约束梯度**
 
-有了焦点模型，问题变成怎么把卷积高效、可微地算出来。GaussianPile 把它拆成三步、全部保持高斯的封闭形式。第一步是**轴向重参数化**，把焦深当成对协方差的一项加法修正 $\Sigma_e^{-1} = \Sigma_c^{-1} + \mathbf{e}_3 \mathbf{e}_3^\top / \sigma_z^2$，并相应更新均值 $\mu_e = \Sigma_e \Sigma_c^{-1} \mu_c$——它只收缩轴向支持，横向结构原封不动。第二步是**不透明度调制**
+有了焦点模型，问题变成怎么把「高斯 ⊛ 灵敏度图」这步卷积高效、可微地算出来。GaussianPile 把它分解成四步、全程保持高斯的封闭形式。第一步是**轴向重参数化**，把焦深当成对协方差的一项加法修正 $\Sigma_e^{-1} = \Sigma_c^{-1} + \mathbf{e}_3 \mathbf{e}_3^\top / \sigma_z^2$，并相应更新均值 $\mu_e = \Sigma_e \Sigma_c^{-1} \mu_c$——它只收缩轴向支持、横向结构原封不动，得到的就是 Focus Gaussian。第二步是**不透明度调制**
 
 $$\text{opacity}_r = \exp\!\Big(-\tfrac{1}{2}\big(\mu_c^\top \Sigma_c^{-1} \mu_c - \mu_e^\top \Sigma_e^{-1} \mu_e\big)\Big)$$
 
-直观上就是焦外越远的高斯被衰减得越狠、变得越透明。第三步是**加性光栅化**：体成像里像素强度是各高斯贡献的线性叠加而非表面渲染的 alpha-blending 遮挡，所以写成 $I(p) = \sum_{i} \tilde{\alpha}_i \exp(-\frac{1}{2} \mathbf{d}_i^\top \Sigma_{2d,i}^{-1} \mathbf{d}_i)$，对应体积投影的物理本质。
+直观上就是焦外越远的高斯被衰减得越狠、变得越透明，从源头掐掉跨切片的幽灵伪影。第三步是**屏幕空间投影**：取 Focus Gaussian 协方差对 $(x_c, y_c)$ 平面的边缘分布得到 2D 高斯，并按 $\tilde{\alpha} = \alpha \cdot \text{opacity}_r / \sqrt{\det(\Sigma_{2d})}$ 归一化——这个行列式项让亮度随足迹大小自适应、保证投影前后总能量守恒。第四步是**加性光栅化**：体成像里像素强度是各高斯贡献的线性叠加而非表面渲染的 alpha-blending 遮挡，所以写成 $I(p) = \sum_{i} \tilde{\alpha}_i \exp(-\frac{1}{2} \mathbf{d}_i^\top \Sigma_{2d,i}^{-1} \mathbf{d}_i)$，对应体积投影的物理本质。
 
 这样设计的关键好处是：焦深被编码进协方差，而梯度也走这同一套表示——同一个高斯被多张切片观测时共享同一组协方差参数，3D 一致性是被结构天然保证的，而不是靠额外正则去拉。也正因为体数据不需要视角相关的颜色，作者干脆去掉球谐函数（SH），既省了约 40% 存储，又避免 SH 系数为了拟合 2D 投影而破坏 3D 几何。
 

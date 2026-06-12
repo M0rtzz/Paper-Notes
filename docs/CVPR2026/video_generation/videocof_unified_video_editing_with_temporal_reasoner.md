@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-VideoCoF 基于 VideoDiT（如 WAN-14B）构建统一视频编辑框架。输入为源视频、文本编辑指令；输出为编辑后的视频。中间过程分三阶段：首先将源视频编码为 latent 作为"看"的依据，然后模型预测推理 latent（标注编辑区域的灰度高亮帧）作为"推理"步骤，最后基于推理结果生成编辑后的视频 latent。三组 latent 沿时间维度拼接为统一序列 $\mathbf{z}_{full}$，由 VideoDiT 通过自注意力（上下文学习）和交叉注意力（语言控制）统一处理。训练时仅对推理帧和目标帧施加噪声并监督速度场预测。
+VideoCoF 基于 VideoDiT（如 WAN-14B）构建统一视频编辑框架。输入为源视频、文本编辑指令；输出为编辑后的视频。中间过程分三阶段：首先将源视频编码为 latent 作为"看"的依据，然后模型预测推理 latent（标注编辑区域的灰度高亮帧）作为"推理"步骤，最后基于推理结果生成编辑后的视频 latent。三组 latent 沿时间维度拼接为统一序列 $\mathbf{z}_{full}$，由 VideoDiT 通过自注意力（上下文学习）和交叉注意力（语言控制）统一处理；拼接时由 RoPE 索引对齐策略给三组 token 分配时间位置编码。训练时仅对推理帧和目标帧施加噪声并监督速度场预测，而训练所需的"源-推理帧-目标"三元组由实例级数据增强管线离线造出。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["实例级数据增强管线（离线造训练三元组）"]
+        direction TB
+        P1["Pexels 视频 → Qwen-VL 多实例识别 + Grounding-SAM2 分割"] --> P2["分任务生成编辑对 → Dover/VIE 滤质 → 50K 三元组"]
+    end
+    IN["源视频 + 文本编辑指令"] --> ENC["编码源视频为 z_s<br/>干净 latent 作条件（看）"]
+    ENC --> COF["Chain of Frames 推理帧<br/>预测灰度高亮编辑区域 z_r（推理）"]
+    COF --> TGT["生成目标视频 latent z_e（编辑）"]
+    DATA -.推理帧监督.-> COF
+    ENC --> ROPE["RoPE 索引对齐拼接 z_full<br/>源/目标=[1,F]，推理帧=0"]
+    COF --> ROPE
+    TGT --> ROPE
+    ROPE --> DIT["VideoDiT 统一去噪<br/>自注意力（上下文） + 交叉注意力（语言）"]
+    DIT --> OUT["编辑后视频"]
+```
 
 ### 关键设计
 

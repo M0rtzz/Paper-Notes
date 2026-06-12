@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 DPA 架构由三部分串联：感知小 VLM $M_p$（包含一个 ViT $\mathcal{E}$、内部 projector $\phi_p$、内部 LLM 块 $M_p^{\text{LLM}}$）、对齐 projector $\phi$、目标大 LLM $M_t$。标准 VLM 的数据流是 $v \xrightarrow{\mathcal{E}} \mathbf{H}_v \xrightarrow{\phi} \mathbf{H}_v' \to M_t$，DPA 改为 $v \xrightarrow{\mathcal{E}} \mathbf{H}_v \xrightarrow{\phi_p} \mathbf{H}_v' \xrightarrow{M_p^{\text{LLM}}, \phi} \mathbf{H}_{\text{aligned}} \to M_t$。视觉 token 多走一段 perceiver 内部的语言块再进 $M_t$，最终送给大 LLM 的特征已经处于"文本空间近邻"状态。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["输入图像 v"]
+    INS["文本指令<br/>(默认不传入 perceiver)"]
+    subgraph PER["小 VLM 当视觉编码器 (perceiver Mp)"]
+        direction TB
+        E["ViT 编码器 E<br/>输出视觉特征 Hv"]
+        PP["内部 projector φp"]
+        LB["语言块 Mp-LLM<br/>取末层隐状态 = H_aligned"]
+        E --> PP --> LB
+    end
+    V --> E
+    INS -.->|"早融合旋钮:编码时拼入指令"| E
+    LB --> PHI["对齐 projector φ<br/>映射维度接入目标 LLM"]
+    PHI --> MT["目标大 LLM Mt<br/>专心深度理解与推理"]
+    MT --> OUT["输出回答"]
+```
+
 ### 关键设计
 
 **1. 用小 VLM 整体当视觉编码器：让对齐这件耗深度的脏活在 perceiver 内部就做完**

@@ -43,11 +43,34 @@ tags:
 
 $$\min_{x} \max_{\theta} \mathcal{L}_{\text{res}}(x, a_{\text{tar}}) + \lambda \mathcal{L}_{\text{sem}}(x, a_{\text{tar}})$$
 
-交替优化 trigger image $x$（最小化注入损失，把版权信息写进像素）和辅助模型参数 $\theta$（最大化注入损失，主动模拟下游 fine-tune 的抵抗），让 trigger 对参数变化也稳。
+交替优化 trigger image $x$（最小化注入损失，把版权信息写进像素）和辅助模型参数 $\theta$（最大化注入损失，主动模拟下游 fine-tune 的抵抗），让 trigger 对参数变化也稳。整体流程是：先定好 trigger 的稀有 Q-A 与扰动预算，再在 min-max 内外循环里同时做两路注入并对抗训练，最后导出 trigger image 用于黑盒验证。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Trigger 设计<br/>稀有 Q-A 搭配 + ε=16/255 扰动预算"] --> B["初始化 trigger image x + 辅助模型 θ"]
+    B --> C
+    subgraph LOOP["min-max 交替优化（PGD，K=1000 步）"]
+        direction TB
+        C["min_x 步·双注入"]
+        C --> D["Response 级注入<br/>CE loss 逼辅助模型逐 token 生成 target answer"]
+        C --> E["Semantic 级注入<br/>CLIP 空间拉近 x 与 target text"]
+        D --> F["L_res + λ·L_sem 反传 → PGD 更新像素 x"]
+        E --> F
+        F --> G["max_θ 步·对抗训练<br/>更新辅助模型抵抗生成 → 复位 θ ← θ_ref"]
+        G --> C
+    end
+    LOOP --> H["输出 trigger image x_trig"]
+    H --> I["黑盒验证：喂 x_trig + q_trig，看是否吐出 a_tar"]
+```
 
 ### 关键设计
 
-**1. Response 级注入：用 CE loss 把 target answer 写死进像素**
+**1. Trigger 设计：稀有 Q-A 搭配 + 固定扰动预算**
+
+一切的起点是定义「触发什么、扰动多大」。trigger 必须在正常使用中绝不被误触发，所以作者特意用 5 组日常罕见的 Q-A 搭配（如 "Detecting copyright → ICLR Conference"、"What are you busy with → I'm playing games"），这种生僻搭配在正常训练数据里几乎不会出现，从而保证只有发布者主动查询时才会激活。配 200 张 ImageNet 验证集图像 × 5 组 Q-A，共 1000 个 trigger 查询；像素扰动预算 $\epsilon = 16/255$，PGD 步数 $K = 1000$，步长 $\alpha = 1/255$。这些设定决定了后面两路注入往哪个 target answer 优化、像素能动多大。
+
+**2. Response 级注入：用 CE loss 把 target answer 写死进像素**
 
 只在语义层对齐还不足以驱动模型真去「生成」那句 target text，得有一路直接逼输出。这一路用交叉熵强制辅助 MLLM 在 trigger image + trigger question 下逐 token 生成 target answer：
 
@@ -55,21 +78,17 @@ $$\mathcal{L}_{\text{res}}(x, a_{\text{tar}}) = -\log f_\theta(a_{\text{tar}}|x)
 
 梯度反传到图像像素，把版权相关信息注进去。消融里去掉这一路，ASR 直接掉到接近 0%——只靠语义对齐根本驱动不出 target 文本。
 
-**2. Semantic 级注入：借 CLIP 模块的「fine-tune 不变性」换泛化**
+**3. Semantic 级注入：借 CLIP 模块的「fine-tune 不变性」换泛化**
 
 只有 response 注入会过拟合 base model 的特定响应模式，下游 fine-tune 后就失效（PLA 的毛病）。作者观察到大多数 MLLM 内含的 CLIP-like 对齐模块，其高层 image-text embedding 在 fine-tune 后相当稳定（实测 cosine 漂移仅 0.5%~9.3%），于是再加一路把 trigger image 与 target text 在 CLIP 空间里拉近：
 
 $$\mathcal{L}_{\text{sem}}(x, a_{\text{tar}}) = -\frac{\mathcal{E}_\phi(x) \cdot \mathcal{E}_\psi(a_{\text{tar}})}{\|\mathcal{E}_\phi(x)\| \|\mathcal{E}_\psi(a_{\text{tar}})\|}$$
 
-其中 $\mathcal{E}_\phi, \mathcal{E}_\psi$ 是 CLIP 图像 / 文本编码器。这一路把版权信息绑在「衍生模型也改不动」的子模块上，trigger 因此能跨 fine-tune 泛化；去掉它，方法就退回 PLA 的水平。
+其中 $\mathcal{E}_\phi, \mathcal{E}_\psi$ 是 CLIP 图像 / 文本编码器。这一路把版权信息绑在「衍生模型也改不动」的子模块上，trigger 因此能跨 fine-tune 泛化；去掉它，方法就退回 PLA 的水平。Response 与 Semantic 两路一起构成标题里的 dual injection——前者保激活精度、后者保跨模型泛化，在 min 步里以 $\mathcal{L}_{\text{res}} + \lambda \mathcal{L}_{\text{sem}}$ 同时反传更新像素 $x$。
 
-**3. 对抗训练 + 参数复位：让 trigger 扳得住真实 fine-tune**
+**4. 对抗训练 + 参数复位：让 trigger 扳得住真实 fine-tune**
 
-要让 trigger 对参数变化鲁棒，就得在优化时预演 fine-tune 的破坏。固定 trigger image、反向更新辅助模型去抵抗生成 target：$\mathcal{L}_{\text{model}} = -\mathcal{L}_{\text{res}} - \lambda \mathcal{L}_{\text{sem}}$，参数更新 $\theta \leftarrow \theta - \gamma \cdot \text{clip}(\nabla_\theta \mathcal{L}_{\text{model}})$，图像更新走 PGD 风格 $x \leftarrow x - \alpha \cdot \text{sign}(\nabla_x \mathcal{L}_{\text{trig}})$。关键的一笔是：每张 trigger 优化完，辅助模型参数立刻复位到 reference 模型 $\theta \leftarrow \theta_{\text{ref}}$，防止多张 trigger 之间累积漂移、把后面的优化带偏。比起 RNA 那种无方向的随机扰动，这种有方向的对抗更贴近真实 fine-tune 行为。
-
-**4. Trigger 设计：稀有 Q-A + 固定扰动预算**
-
-trigger 要在正常使用中绝不被误触发，所以用 5 组日常罕见的 Q-A 搭配（如 "Detecting copyright → ICLR Conference"、"What are you busy with → I'm playing games"）。配 200 张 ImageNet 验证集图像 × 5 组 Q-A，共 1000 个 trigger 查询；像素扰动预算 $\epsilon = 16/255$，PGD 步数 $K = 1000$，步长 $\alpha = 1/255$。
+前面两路只是把信息写进像素，但下游用户会 fine-tune 模型——要让 trigger 对参数变化鲁棒，就得在优化时预演 fine-tune 的破坏，这就是 min-max 里的 max 步。固定 trigger image、反向更新辅助模型去抵抗生成 target：$\mathcal{L}_{\text{model}} = -\mathcal{L}_{\text{res}} - \lambda \mathcal{L}_{\text{sem}}$，参数更新 $\theta \leftarrow \theta - \gamma \cdot \text{clip}(\nabla_\theta \mathcal{L}_{\text{model}})$，图像更新走 PGD 风格 $x \leftarrow x - \alpha \cdot \text{sign}(\nabla_x \mathcal{L}_{\text{trig}})$。关键的一笔是：每张 trigger 优化完，辅助模型参数立刻复位到 reference 模型 $\theta \leftarrow \theta_{\text{ref}}$，防止多张 trigger 之间累积漂移、把后面的优化带偏。比起 RNA 那种无方向的随机扰动，这种有方向的对抗更贴近真实 fine-tune 行为。
 
 ## 实验关键数据
 

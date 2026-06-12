@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 DeCoVec 不碰模型参数也不碰内部隐状态，只在输出 logit 这一层做文章。给定一个测试查询，它在每个解码步同时维护三套上下文：基础解码上下文、zero-shot 上下文和 few-shot ICL 上下文，分别前向得到三组 logit。核心观察是 zero-shot 与 few-shot 的 logit 之差恰好刻画了「示例激活了哪些任务行为」，把这个差向量当作解码空间里的任务向量按比例叠加回基础 logit，就能逐 token 地把任务知识注入生成，而无需任何训练或结构改动。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["测试查询 + 已生成前缀"] --> CTX
+    subgraph CTX["上下文解耦（steering 与 decode 独立采样三套上下文）"]
+        direction TB
+        DE["基础解码上下文"]
+        ZS["zero-shot 上下文"]
+        ICL["few-shot ICL 上下文"]
+    end
+    DE --> ZDE["基础 logit z_de"]
+    ZS --> ZZS["zero-shot logit z_zs"]
+    ICL --> ZICL["ICL logit z_icl"]
+    ZZS --> V["解码空间任务向量<br/>v = z_icl − z_zs"]
+    ZICL --> V
+    ZDE --> MIX["token 级在线引导<br/>z̃ = z_de + λ·v"]
+    V --> MIX
+    MIX --> SAMP["采样下一 token"]
+    SAMP -->|未结束·刷新前缀| Q
+    SAMP -->|结束| OUT["最终生成"]
+```
+
 ### 关键设计
 
 **1. 解码空间任务向量：把任务行为读成 logit 之差**

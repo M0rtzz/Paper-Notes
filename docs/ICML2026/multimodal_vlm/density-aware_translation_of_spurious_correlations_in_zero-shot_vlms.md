@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 DAT 的 pipeline 完全建立在冻结的 VLM 之上：先用训练/验证集为每个 $(y,a)$ 组构造一个紧凑的参考集 $R_{y,a}$；推理时对测试图 $z=\phi_I(x)$ 计算它在每个组参考集中的局部密度 $D_{y,a}(z)$，将原 cosine 相似度按密度重缩放，再聚合得到最终预测。当伪属性 $a$ 不可得时，DAT$^*$ 先用 $\hat a=\arg\max_a \langle \phi_I(x), \phi_T(t_a)\rangle$ 推断 $\hat a$，整条管线不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph REF["基于 herding 的组参考集构造"]
+        direction TB
+        TR["训练/验证集<br/>每组 (y,a) 样本池"] --> HERD["herding 贪心选点<br/>逼近组均值"]
+        HERD --> RSET["紧凑参考集 R_y,a<br/>(n = 40~128)"]
+    end
+    X["测试图 x"] --> ENC["冻结图像编码器<br/>z = φ_I(x)"]
+    ENC -->|"伪属性 a 未知 (DAT*)"| AHAT["推断组归属<br/>â = argmax_a ⟨z, φ_T(t_a)⟩"]
+    ENC --> SIM["原始相似度<br/>s_y,a = ⟨z, φ_T(t_y,a)⟩"]
+    ENC --> SLOF["SLOF 局部密度 D_y,a(z)<br/>量化 z 相对组有多孤立"]
+    RSET --> SLOF
+    AHAT --> SLOF
+    SLOF --> DT["Density Translation 重缩放<br/>s̃ = s / (D+ε)^λ：压稀疏区过度自信分数"]
+    SIM --> DT
+    DT --> AGG["组合聚合 + max-of-max 决策<br/>ŷ = argmax_y max{max_a s̃_y,a, s̃_y,Avg}"]
+    AGG --> OUT["预测类别 ŷ"]
+```
+
 ### 关键设计
 
 **1. 基于 herding 的组参考集构造：为每组选出代表中心几何的 exemplar**

@@ -44,7 +44,21 @@ tags:
 
 ### 整体框架
 
-这篇论文不重写 SIENA，而是把它当成一座已经验证过的桥，只去加固其中最薄弱的两根承重梁。SIENA 的核心流程——对称的颅骨约束配准、脑边界检测、边界位移估计、再做双向平均——全部原样保留，因为正是这套可逐步检查的经典框架赢得了临床信任。改动只发生在两个最容易出错的预处理模块上：颅骨剥离和组织分割。把这两处各自的"经典算法"与"深度学习方案"两两组合，就得到四种可对比的管线变体：SIENA Vanilla (BET2 + FAST)、SIENA-SS (SynthStrip + FAST)、SIENA-SEG (BET2 + SynthSeg)、SIENA-SS-SEG (SynthStrip + SynthSeg)。这种"留框架、换部件"的设计让每一处改动的收益都能被单独归因。
+这篇论文不重写 SIENA，而是把它当成一座已经验证过的桥，只去加固其中最薄弱的两根承重梁。SIENA 本身是一条串行管线：先用 BET2 做**颅骨剥离**得到脑 mask 和颅骨 mask；再用 FLIRT 做**对称颅骨约束配准**，把两个时间点的扫描映射到公共的 halfway 空间（颅骨当作稳定解剖锚点，避免把真实萎缩误归一化掉）；接着用 FAST 做**组织分割**把脑分成 CSF/GM/WM、由此**识别边界体素**；然后沿边界体素的表面法线采样强度、估计**边界位移**得到 PBVC；最后正反两个方向各跑一遍再**双向平均**消除方向偏差。其中配准、边界位移估计、双向平均这三步全部原样保留，因为正是这套可逐步检查的经典框架赢得了临床信任。改动只落在两个最容易出错、且会向下游级联污染的预处理模块上：颅骨剥离和组织分割。把这两处各自的"经典算法"与"深度学习方案"两两组合，就得到四种可对比的管线变体：SIENA Vanilla (BET2 + FAST)、SIENA-SS (SynthStrip + FAST)、SIENA-SEG (BET2 + SynthSeg)、SIENA-SS-SEG (SynthStrip + SynthSeg)。这种"留框架、换部件"的设计让每一处改动的收益都能被单独归因。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["配对 T1 MRI<br/>基线 + 随访"] --> B["颅骨剥离：SynthStrip 换下 BET2<br/>出脑 mask，再反推颅骨 mask"]
+    B --> C["对称颅骨约束配准（FLIRT）<br/>颅骨当锚点，双向映射到 halfway 空间"]
+    C --> D["组织分割→边界识别：SynthSeg 换下 FAST<br/>解剖标签折叠回 CSF / GM / WM"]
+    D --> E["边界位移估计<br/>沿表面法线采样强度求位移"]
+    E --> F["双向平均 → PBVC"]
+    classDef repl fill:#ffe0b2,stroke:#e65100,stroke-width:2px;
+    class B,D repl;
+```
+
+> 图中橙色的两个节点（颅骨剥离、组织分割）正是本文定向替换的环节，对应下面两个关键设计；其余节点是原样保留的 SIENA 脚手架。
 
 ### 关键设计
 

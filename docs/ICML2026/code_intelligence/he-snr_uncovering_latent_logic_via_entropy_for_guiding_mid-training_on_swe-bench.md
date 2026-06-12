@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 本文要解决的是"怎么在不跑完整 SFT 的前提下，判断一个中训练 checkpoint 未来的 SWE 能力强不强"。做法是把"压缩=智能"从标量 PPL 升级到分布层面：先从少量 SWE-bench-Verified 轨迹里只挑出反映可执行逻辑的 Action token，再只在那些"模型仍在合理犹豫"的高熵决策点上，度量目标 token 信号相对熵噪声的比值，得到一个 SFT 不变、抗"长上下文税"的指标 HE-SNR。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["少量 SWE-bench-Verified 轨迹"] --> B
+    subgraph FILTER["Token 级别过滤管线"]
+        direction TB
+        B["丢 Observation + Thought<br/>只保留 Action 段"] --> C["去 XML/markdown · AST 去注释 · 清空白符"]
+    end
+    C --> D["筛选高熵决策点<br/>Top-10 熵 高于 (ln3+ln4)/2 中点"]
+    D --> E["HE-SNR 指标<br/>决策点上 目标概率/熵 取均值"]
+    E --> F["与 SFT 后 SWE-bench Pass@1 做相关性"]
+```
+
 ### 关键设计
 
 **1. 熵压缩状态与 "$\ln 3$" 转移现象：把"压缩"从标量升级到分布层面**

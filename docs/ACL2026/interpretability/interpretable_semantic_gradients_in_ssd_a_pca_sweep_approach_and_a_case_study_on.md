@@ -44,6 +44,22 @@ tags:
 
 输入：文档集合 $\{d_i\}$ 配对连续结果 $y_i$（人格分数）、固定 embedding 模型、可选 lexicon。中间过程：(1) 对每个候选 $K$，做相同预处理后构造 Personal Concept Vector $\mathbf{x}_i \in \mathbb{R}^D$，PCA 投影到 $\tilde{\mathbf{x}}_i \in \mathbb{R}^K$，拟合 $y_i = \alpha + \boldsymbol{\beta}^\top \tilde{\mathbf{x}}_i + \epsilon_i$，归一化系数得梯度 $\hat{\boldsymbol{\beta}}_K$；(2) 回投到原嵌入空间，正负极各取 top-100 邻居聚类，按 silhouette 选簇数 $k \in [2,5]$；(3) 计算三类诊断：representation (累计方差解释)、interpretability (簇相干 + 簇心与梯度的余弦对齐，按簇大小加权)、stability ($\Delta_K = 1 - \cos(\hat{\boldsymbol{\beta}}_K, \hat{\boldsymbol{\beta}}_{K-1})$)；(4) 对解释性按 log 方差解释 detrend 后 z-score，对解释性与稳定性各取 local AUC-K 平滑，最后挑联合分最大的最小 $K$。输出：选定的 $K^*$、对应梯度 $\hat{\boldsymbol{\beta}}_{K^*}$ 与正负极簇。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档集 + 人格分数 y<br/>固定 embedding 模型"] --> SSD
+    subgraph SSD["逐候选 K 跑完整 SSD（K = 1,3,…,119，借自原 SSD 流程）"]
+        direction TB
+        B["构造 Personal Concept Vector"] --> C["PCA 投影到 K 维"]
+        C --> D["线性回归拟合 → 语义梯度 β_K"]
+        D --> E["回投嵌入空间<br/>正负极各取 top-100 邻居聚类"]
+    end
+    SSD --> F["反预测精度三诊断<br/>representation / interpretability / stability"]
+    F --> G["解释性 detrend<br/>剥掉维度越多簇越紧的伪上升"]
+    G --> H["AUC-K plateau 平滑<br/>联合分挑最小的最大 K*"]
+    H --> I["输出 K* / 梯度 β_K* / 正负极簇"]
+```
+
 ### 关键设计
 
 **1. 三诊断联合的"反预测精度"选 $K$ 准则：让超参服务于解释而非拟合**
@@ -52,17 +68,17 @@ SSD 是个解释性方法，但若用 $R^2$ 或 $F$ 统计量选 $K$，结果会
 
 这条准则的必要性被反事实直接坐实：$K=120$ 的 $R^2$ (0.234) 反而高过 sweep 选出的 $K=15$ (0.19)，但前者的语义簇彻底散架。如果按预测精度选超参，就会一头扎进噪声维度，正是 SSD 这类解释性方法最该避开的陷阱。
 
-**2. Plateau-sensitive smoothing (AUC-K)：奖励一整片好区，而非孤立尖峰**
-
-在低 $K$ 区域，解释性曲线抖动剧烈，单点峰值往往只是噪声。本文对解释性和稳定性两条曲线分别在以 $K$ 为中心、半径 3 的局部邻域取平均得到 AUC-K 值，再做 z-score 标准化，最后用联合分 $\text{joint\_score}_K = \frac{1}{2}(\text{interp\_auck}_K + \text{stab\_auck}_K)$ 来挑 $K^* = \min \arg\max_K \text{joint\_score}_K$。
-
-平滑把"一整片区域都好"的高原揪出来，而非追逐转瞬即逝的局部峰；"最小取最大"则在并列的好区里偏向最低维度，自带 parsimony 倾向。这一步把"扫超参看曲线"从凭审美的目测升级成有明确判据的自动选择。
-
-**3. 解释性指标的 detrend 设计：剥掉"维度越多簇越紧"的伪上升**
+**2. 解释性指标的 detrend 设计：剥掉"维度越多簇越紧"的伪上升**
 
 原始解释性 score 会被 $K$ 单调拉高——维度一多，簇内邻居自然更紧，机械上升掩盖了真正的拐点，让人看不出"什么时候开始变差"。本文对每个 $K$ 先算簇相干 + 簇心对齐的加权聚合，再用 log(累计方差解释) 做回归 detrend，取残差后 z-score。
 
-去趋势后得到的"解释性"度量的是"超出维度自然增长之外的额外信号"，等于把指标 normalize 到一条公平基线上。只有这样，前一条 AUC-K 平滑想找的 plateau 才会真正凸显出来，否则曲线一路爬升，高原根本无从辨认。
+去趋势后得到的"解释性"度量的是"超出维度自然增长之外的额外信号"，等于把指标 normalize 到一条公平基线上。只有先剥掉这条伪上升趋势，下一步 AUC-K 平滑想找的 plateau 才会真正凸显出来，否则曲线一路爬升，高原根本无从辨认。
+
+**3. Plateau-sensitive smoothing (AUC-K)：奖励一整片好区，而非孤立尖峰**
+
+即便去过趋势，低 $K$ 区域的解释性曲线仍抖动剧烈，单点峰值往往只是噪声。本文对解释性和稳定性两条曲线分别在以 $K$ 为中心、半径 3 的局部邻域取平均得到 AUC-K 值，再做 z-score 标准化，最后用联合分 $\text{joint\_score}_K = \frac{1}{2}(\text{interp\_auck}_K + \text{stab\_auck}_K)$ 来挑 $K^* = \min \arg\max_K \text{joint\_score}_K$。
+
+平滑把"一整片区域都好"的高原揪出来，而非追逐转瞬即逝的局部峰；"最小取最大"则在并列的好区里偏向最低维度，自带 parsimony 倾向。这一步把"扫超参看曲线"从凭审美的目测升级成有明确判据的自动选择。
 
 ### 损失函数 / 训练策略
 

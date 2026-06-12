@@ -36,6 +36,22 @@ SAVE 想解决的是：现有音视觉检索方法虽然引入了声音，却把
 
 整条管线这样走：视觉分支用 CLIP ViT-B/32 抽帧特征 $\{v_i\}$；音频分支把 AST（冻结）抽出的音频 token 过 Resampler，再经 Gated-Fusion 与视觉 token 融合得到 $\{\hat{a}_i\}$；新增的语音分支先用 Whisper large-v3 把语音转成 ASR 文本，送进 CLIP 文本编码器得到语音 token $\{s_i\}$，同样经 Gated-Fusion 得到 $\{\hat{s}_i\}$。三路最终合成语音感知的视频表示 $\{\tilde{v}_i\} = \{v_i\} + (\{\hat{a}_i\} + \{\hat{s}_i\})/2$，整个检索仍在 CLIP 的视觉-文本空间里完成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["输入视频"] --> VIS["视觉分支<br/>CLIP ViT-B/32 抽帧 → {v_i}"]
+    V --> MISS["缺失数据处理<br/>无声→零 Mel；ASR 失败→零向量"]
+    MISS --> AUD["音频分支<br/>AST(冻结) → Resampler → 音频 token"]
+    MISS --> SPE["语音分支<br/>Whisper ASR → CLIP 文本编码器 → 语音 token"]
+    VIS -.->|Soft-ALBEF 早期对齐| AUD
+    AUD --> GFA["Gated-Fusion<br/>与视觉 token 融合 → {â_i}"]
+    SPE --> GFS["Gated-Fusion<br/>与视觉 token 融合 → {ŝ_i}"]
+    VIS --> FUSE["三分支融合与权重设计<br/>{ṽ_i} = {v_i} + ({â_i}+{ŝ_i})/2"]
+    GFA --> FUSE
+    GFS --> FUSE
+    FUSE --> RET["与文本查询检索<br/>(CLIP 视觉-文本空间)"]
+```
+
 ### 关键设计
 
 **1. 三分支融合与权重设计：把语音语义单独拎成一路，又不让它喧宾夺主**

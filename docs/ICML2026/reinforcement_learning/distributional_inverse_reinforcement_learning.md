@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 输入是离线专家轨迹 $\mathcal{D}=\{(s_t^E,a_t^E)\}$、奖励先验 $p_0(r)$、所选失真函数 $\xi$（实验默认 CVaR$_{0.05}$）；输出是变分奖励分布 $q_\phi(r\mid s,a)$ 和分布感知策略 $\pi_\varphi(a\mid s)$，外加一个分位回归 critic $\theta$ 估计回报分位。整个 pipeline 三方在每个外迭代里交替更新：从 mini-batch 状态出发分别采样专家动作回报 $r_t^E$ 与策略动作回报 $r_t$、由 Monte Carlo 累加构造回报样本 $Z^E,Z^\pi$、用 FSD 违反量更新 $\phi$、用 DRM 目标更新 $\varphi$、用 quantile Huber 更新 critic $\theta$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线专家轨迹 D + 奖励先验 p₀ + 失真函数 ξ"] --> B["每个 mini-batch：采样专家回报 r^E、策略回报 r"]
+    B --> C["Monte Carlo 累加 + 排序统计量<br/>构造回报样本 Z^E、Z^π 的经验分位"]
+    C --> REW
+    C --> F["DRM 松弛：失真函数 ξ̃ 替指示函数<br/>更新分布感知策略 π_φ"]
+    C --> H["分位回归 critic<br/>quantile Huber 更新 θ"]
+    subgraph REW["奖励分布学习"]
+        direction TB
+        D["FSD 形式反向目标<br/>最小化 FSD 违反量"] --> E["能量基 + 变分推断<br/>更新奖励分布 q_φ"]
+    end
+    E --> I["三方交替迭代至收敛"]
+    F --> I
+    H --> I
+    I -->|下一外迭代| B
+    I --> J["输出：奖励分布 q_φ + 分布感知策略 π_φ"]
+```
+
 ### 关键设计
 
 **1. FSD 形式的反向目标：把"专家优于学习者"从期望升级到全分布**

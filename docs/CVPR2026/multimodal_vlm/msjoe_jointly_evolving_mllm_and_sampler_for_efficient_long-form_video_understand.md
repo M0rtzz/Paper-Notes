@@ -45,6 +45,22 @@ MSJoE 要解决的是长视频问答里"该看哪几帧"的问题：视频可能
 
 整条推理管线分四步串起来：先均匀抽一小批低分辨率预览帧，连同问题一起送进 MLLM，让它推理出 $N_q$ 条视觉查询；CLIP 把这些查询和密采的全部帧编码成相似度矩阵；一个约 200 万参数的 1D U-Net 把矩阵压成逐帧采样概率，据此选出关键帧；最后 MLLM 在选中的高分辨率关键帧上生成答案。关键在于采样器和 MLLM 不是各练各的，而是通过强化学习端到端联合进化——这正是后面三个设计要分别打通的三个堵点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长视频 V（上万帧）+ 问题 q"] --> B["MLLM 引导的查询生成<br/>均匀抽预览帧 + 问题<br/>→ MLLM 推理 N_q 条视觉查询"]
+    B --> SAMP
+    subgraph SAMP["可学习关键帧采样器"]
+        direction TB
+        C["CLIP 编码：N_q 查询 × 密采 N_f 帧<br/>→ 相似度矩阵 S"] --> D["1D U-Net（约 2M 参数）<br/>→ 逐帧采样概率 p"]
+        D --> E["按 p 选出 K 帧高分辨率关键帧"]
+    end
+    SAMP --> F["答案生成<br/>MLLM 在 K 关键帧上作答"]
+    F -->|准确率奖励 r_acc| G["联合 RL 训练<br/>MLLM 用 GRPO · 采样器用 REINFORCE"]
+    G -.端到端更新.-> B
+    G -.端到端更新.-> D
+```
+
 ### 关键设计
 
 **1. MLLM 引导的查询生成：让模型先想清楚"该找什么画面"**

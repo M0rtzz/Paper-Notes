@@ -42,6 +42,27 @@ tags:
 ### 整体框架
 设 $\mathcal{M}_p$ 为 PoLLM、$\mathcal{M}_b$ 为同族 base LLM。$\mathcal{M}_p$ 像往常一样针对 prompt $x$ 生成回答 $y^p=(y_1^p,\dots,y_T^p)$。BaseCal 不改动 $\mathcal{M}_p$ 的生成过程，只接管"置信度计算"环节。两条路线：(1) **BaseCal-ReEval**：把 $(x, y^p)$ 喂给 $\mathcal{M}_b$ 强制解码，取 base LLM 给到 $y_t^p$ 的平均 token 概率作为置信度；(2) **BaseCal-Proj**：训练一个线性映射 $\phi_\theta:\mathbb{R}^d\to\mathbb{R}^d$，把 $\mathcal{M}_p$ 末层隐状态投到 $\mathcal{M}_b$ 末层空间，再过 $\mathcal{M}_b$ 的输出层 $W_b^o$ 得到近似 base 概率分布，从而避免 base 的整次前向。两种方案都是 plug-and-play、无监督（不要 ground-truth 标签）、不修改模型参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt x"] --> B["PoLLM 生成回答 y^p<br/>（生成过程不改）"]
+    B --> C{"置信度计算<br/>两条无监督路线"}
+    C -->|路线1| D["BaseCal-ReEval<br/>把 (x, y^p) 喂回同源 base LLM teacher-forcing<br/>取 base 视角目标 token 平均概率"]
+    subgraph TRAIN["问题集训练（无标注，离线）"]
+        direction TB
+        T1["10k 问题 + PoLLM 自生成回答"] --> T2["抽 PoLLM / base 末层隐状态对 (h^p, h^b)"]
+        T2 --> T3["MSE 拟合 φ，两模型全程冻结"]
+    end
+    subgraph PROJ["BaseCal-Proj（借 base 输出头、跳过 base 前向）"]
+        direction TB
+        F["线性映射 φ 把 PoLLM 末层隐状态对齐到 base 空间"] --> G["过 base 输出头 + softmax<br/>取目标 token 概率并平均"]
+    end
+    C -->|路线2| F
+    T3 -.训练好的 φ.-> F
+    D --> Z["校准后的置信度<br/>（拒答 / 选择性预测）"]
+    G --> Z
+```
+
 ### 关键设计
 
 **1. BaseCal-ReEval：把 PoLLM 的回答拿去 base LLM 上"复读"，用 base 的概率当置信度**

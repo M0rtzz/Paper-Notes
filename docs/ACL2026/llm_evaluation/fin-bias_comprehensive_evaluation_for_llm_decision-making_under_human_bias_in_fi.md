@@ -42,6 +42,24 @@ Fin-Bias 用 8868 份长篇分析师报告构造了一个"原始 / 去掉评级 
 ### 整体框架
 Fin-Bias 把"LLM 在金融决策里会不会盲从人类观点"做成一条可量化的对照实验链：先从 Yahoo Finance 抓取 8868 份覆盖 9 个行业、平均 4000 token 的 PDF 分析师报告，再对每份报告做一句话级别的扰动，造出"原版（含真实评级首句）/ 删掉评级首句 / 替换为对立 fake 评级"三个 minimal pair；随后用统一的 CoT prompt 让 18 个模型在三个版本上各出一次 Bullish/Neutral/Bearish 评级，分别和分析师评级、fake 评级、60 天 CAR 分位数三类 ground-truth 比对，量出 herding 程度；最后用 MPQA 主观词典过滤 + DPO 偏好优化两步给开源模型"去偏"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["8868 份 PDF 分析师报告<br/>9 行业 · 均 4000 token"] --> PERT
+    subgraph PERT["三版本 minimal-pair 扰动"]
+        direction TB
+        B["原版：含真实评级首句"]
+        C["删评级：去掉首句"]
+        D["fake 评级：替换为对立评级"]
+    end
+    PERT --> E["18 个 LLM 统一 CoT prompt<br/>出 Bullish/Neutral/Bearish"]
+    E --> F["Herding Score<br/>对比分析师 / fake 评级量化盲从"]
+    E --> G["CAR 分位数无偏 ground-truth<br/>60 天超额回报反推对错"]
+    F --> H["MPQA 主观词典过滤 + DPO 偏好对齐"]
+    G --> H
+    H --> I["开源 8B 模型去偏后准确率反超 GPT-5"]
+```
+
 ### 关键设计
 
 **1. 三版本 minimal-pair 扰动 + Herding Score：用一句话的因果操纵分离"模型独立判断"和"模型抄分析师"**

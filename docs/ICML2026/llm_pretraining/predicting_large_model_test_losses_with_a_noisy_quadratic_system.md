@@ -40,7 +40,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NQS 把 LLM 训练想象成一件很物理的事：在一个无穷维的二次损失面 $\mathcal{Q}^{\mathrm{NQS}}(w) = \mathcal{E}_{\mathrm{irr}} + \tfrac{1}{2}\langle w-w^*, H(w-w^*)\rangle$ 上跑带噪声的投影 SGD。把 Hessian $H$ 的特征向量按特征值从大到小排好，模型只在前 $N$ 个方向上更新（对应它有限的可训练参数），每步注入一个方差正比于 $1/B$ 的 mini-batch 噪声，跑 $K$ 步。整套动力学因此只由 $N, B, K$ 三个变量驱动，最终给出一个可数值计算的封闭损失 $L_\theta(N, B, K)$，其中 $\theta$ 含 7 个超参（三条谱的 power 指数 $p, q, r$、对应 scale 系数、学习率、不可约误差），再为 LayerNorm 补一个第 8 参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$。它的精妙之处在于 "mechanistic but tractable"——保留二次优化的可解释结构，却把所有恼人的 asymptotic phase 隐式塞进数值参数里。
+NQS 把 LLM 训练想象成一件很物理的事：在一个无穷维的二次损失面 $\mathcal{Q}^{\mathrm{NQS}}(w) = \mathcal{E}_{\mathrm{irr}} + \tfrac{1}{2}\langle w-w^*, H(w-w^*)\rangle$ 上跑带噪声的投影 SGD。把 Hessian $H$ 的特征向量按特征值从大到小排好，模型只在前 $N$ 个方向上更新（对应它有限的可训练参数），每步注入一个方差正比于 $1/B$ 的 mini-batch 噪声，跑 $K$ 步。整套动力学因此只由 $N, B, K$ 三个变量驱动，最终给出一个可数值计算的封闭损失 $L_\theta(N, B, K)$，其中 $\theta$ 含三条谱的 power 指数 $p, q, r$、对应 scale 系数 $P, Q, R$、学习率 $\gamma$ 与不可约误差 $\mathcal{E}_{\mathrm{irr}}$；论文证明学习率 $\gamma$ 可被其余参数吸收、属冗余项，故 vanilla NQS 实际只有 **7 个自由度**，再为 LayerNorm 补一个第 8 参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$，全系统共 7+1 个自由度。它的精妙之处在于 "mechanistic but tractable"——保留二次优化的可解释结构，却把所有恼人的 asymptotic phase 隐式塞进数值参数里。
 
 ### 关键设计
 

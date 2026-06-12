@@ -41,6 +41,18 @@ E-RayZer 要解决的是「在零 3D 标注下学到真正理解几何的 3D 表
 
 落到三步：多视角 Transformer $f_\theta^{\text{cam}}$ 先预测所有图像的内参 K 和外参 T；把图像分成参考集 $\mathcal{I}_{\text{ref}}$ 与目标集 $\mathcal{I}_{\text{tgt}}$，从参考视角预测像素对齐的 3D 高斯 $\mathcal{G}$；再用自己预测出的目标视角相机参数把这些高斯渲染出来，与真实目标图像算光度损失。每个训练序列取 10 张图，5 张当参考、5 张当目标，全程不碰任何 3D 标注。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["V 张同场景多视角图像"] --> CUR["视觉重叠度课程学习<br/>按重叠度下限 o(s) 由易到难送样本"]
+    CUR --> CAM["消除视图插值捷径<br/>删 image index embedding + 局部-全局注意力 + 成对位姿回归"]
+    CAM --> POSE["相机 Transformer 预测内参 K、外参 T"]
+    POSE -->|参考集 I_ref| GAUSS["显式 3D 高斯重建<br/>场景 Transformer → 线性 decoder → 像素对齐高斯"]
+    GAUSS --> REND["可微物理渲染<br/>用预测的目标相机渲染高斯"]
+    POSE -->|目标集 I_tgt 真图| LOSS["光度自监督损失<br/>渲染对不上 → 反传逼正几何与相机"]
+    REND --> LOSS
+```
+
 ### 关键设计
 
 **1. 显式 3D 高斯重建：用物理可渲染的几何替代 RayZer 的隐式潜空间**

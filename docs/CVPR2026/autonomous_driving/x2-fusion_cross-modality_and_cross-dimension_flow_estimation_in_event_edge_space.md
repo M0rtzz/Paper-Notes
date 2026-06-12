@@ -45,6 +45,22 @@ tags:
 
 具体来说，先单独预训练一个 Event Edge Encoder，让它学会从事件流里提取边缘表示，训练好后把它冻结，当作整套系统的"边缘原型"；图像和 LiDAR 编码器再各自学着把自己的特征对齐到这个原型空间。三种模态都落到同质空间后，用一个可靠性感知的自适应融合模块按每个模态当下的可信度加权合并，最后通过跨维度对比学习让 2D 流和 3D 流互相约束，输出光流与场景流。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    EV["事件流"] --> EES
+    subgraph EES["Event Edge Space（模态公共锚）"]
+        direction TB
+        ENC["Event Edge Encoder<br/>稀疏 3D CNN，自监督预训练后冻结"] --> PROTO["边缘原型 + 边缘强度权重图"]
+    end
+    IMG["图像"] --> ALIGN
+    LID["LiDAR 点云"] --> ALIGN
+    EES --> ALIGN["图像-LiDAR 对齐<br/>投影到冻结边缘原型，边缘处强对齐"]
+    ALIGN --> FUSE["可靠性感知自适应融合<br/>全局 × 局部可靠性加权 + 跨注意力增强"]
+    FUSE --> CD["跨维度对比学习<br/>约束 2D-3D 运动与几何一致"]
+    CD --> OUT["输出：2D 光流 + 3D 场景流"]
+```
+
 ### 关键设计
 
 **1. Event Edge Space：用事件边缘当所有模态的"公共锚"**

@@ -42,6 +42,15 @@ tags:
 ### 整体框架
 作者要解决的是全局 softmax 注意力跨层叠加后塌向单一共识、产生 attention sink 与表征塌缩的问题。做法是把社会动力学里的 Krause 有界置信模型搬进来：tokens 当成只与"意见相近"邻居互动的 agents，于是标准 self-attention 里"全局 dot-product 相似度 + softmax 归一化"被换成"欧氏距离的 RBF 亲和度 + 局部窗内 top-$k$ 稀疏归一化"。整个模块是 drop-in replacement，LayerNorm / FFN / RoPE 等其余组件原封不动。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["query q / key k / value v"] --> B["距离-RBF query-key 交互<br/>Δ = ‖q − k‖ → 亲和度 s = exp(−Δ²/2σ²)"]
+    B --> C["局部窗 + top-k 选择性稀疏<br/>邻域 N_i 内归一化 → 选最近 k 个邻居重归一化"]
+    C --> D["加权聚合 value<br/>z_i = Σ a* · v_j"]
+    D --> E["输出 token 表示（多簇而非全局塌缩）"]
+```
+
 ### 关键设计
 
 **1. 距离-RBF query-key 交互：把"远即低权重"写进相似度本身**

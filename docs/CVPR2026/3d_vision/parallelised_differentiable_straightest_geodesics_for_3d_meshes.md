@@ -50,6 +50,21 @@ tags:
 
 问题在于，这套追踪此前既没有高效的 GPU 实现（逐条串行追，batch 训练根本跑不动），又含有"跨哪条边""怎么展开"这类条件分支与非光滑操作，没法直接反向传播。本文因此分三层做文章：先把追踪并行化吃满 GPU，再给它配两套可微分梯度方案，最后用这套可微分的指数映射去支撑测地线卷积、网格流匹配、二阶 Voronoi 优化三个下游应用，证明它确实是端到端可用的积木。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["三角网格 + 起点 p、切向量 v"] --> CORE["GPU 并行追踪<br/>每线程一条 straightest geodesic<br/>逐面展开得指数映射 Exp_p(v)"]
+    CORE -->|前向落点 q| DIFF
+    subgraph DIFF["可微分梯度方案（二选一）"]
+        direction TB
+        PROXY["外在代理函数法<br/>嵌入空间解析梯度·快"]
+        FD["测地线有限差分法<br/>流形上中心差分·准"]
+    end
+    DIFF --> CONV["测地线卷积层<br/>核沿测地距离采样"]
+    DIFF --> FLOW["网格上的流匹配<br/>切空间参数化流场"]
+    DIFF --> CVT["二阶优化与 CVT<br/>Hessian 驱动 Newton 法"]
+```
+
 ### 关键设计
 
 **1. GPU 并行追踪：把"逐条串行"改成"每线程一条测地线"**

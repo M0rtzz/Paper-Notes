@@ -43,6 +43,37 @@ tags:
 ### 整体框架
 输入是公开 YouTube/Zoom 会议录像，输出是可用于训练和仿真的 speaker-labeled civic deliberation 数据集，以及为每个说话人微调出的 persona agent。流程可以分成四步：先从视频中识别活跃说话人并 OCR 出姓名；再用 Whisper 转写音频并把每段话对齐到规范化说话人；然后用 GPT-5 抽取 persona profile、meeting topics 和 action tags；最后把带元数据的上下文序列化为 ChatML 风格样本，用 QLoRA 微调 LLM 预测目标说话人的下一轮发言。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["公开 Zoom/YouTube 会议视频"] --> S1
+    subgraph S1["多模态说话人链接"]
+        direction TB
+        B["1 FPS 取帧<br/>高亮边框定位活跃 tile"] --> C["OCR 姓名<br/>低清先 EDSR 超分"]
+        C --> D["Whisper 转写<br/>按时间轴对齐说话人"]
+        D --> E["模糊匹配归一<br/>canonical speaker label"]
+    end
+    S1 --> S2
+    subgraph S2["行动感知的 persona 数据格式"]
+        direction TB
+        F["persona profile<br/>25 条最长发言 → GPT-5 画像"]
+        G["topic<br/>1024-token chunk 逐块总结"]
+        H["action tag<br/>15–30 类语用动作标注"]
+        F --> I["序列化为 ChatML 样本<br/>前缀拼 action tags + 前文说话人"]
+        G --> I
+        H --> I
+    end
+    S2 --> J["QLoRA 微调 LLM<br/>自回归预测目标说话人下一轮发言"]
+    J --> K["多 agent 仿真<br/>round-robin / time-aware"]
+    K --> S3
+    subgraph S3["互补式 fidelity 评价"]
+        direction TB
+        L["PPL<br/>流畅度"]
+        M["CFR<br/>像不像这个人 (plausibility)"]
+        N["SAA<br/>能否与同场人区分 (distinctiveness)"]
+    end
+```
+
 ### 关键设计
 
 **1. 多模态说话人链接：把匿名 `Speaker_1` 还原成跨视频一致的真实身份**

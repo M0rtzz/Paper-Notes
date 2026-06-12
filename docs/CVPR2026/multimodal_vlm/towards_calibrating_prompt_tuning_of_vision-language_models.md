@@ -60,12 +60,10 @@ $$\mathcal{L}_{\text{mom}} = \|\mu_{\tilde{c}} - \mu_{c^0}\|_2^2 + \|\Sigma_{\ti
 
 它和直接对每个类别嵌入做 L2 对齐有本质区别：L2 会把嵌入硬拽回原位、连任务适配也一起冻住；矩匹配只约束整批嵌入的中心和散度，保住语义几何的同时，仍给局部的下游适配留出空间。
 
-**3. 两项的互补性：一个补漏、一个堵漏**
-
-两个正则不是简单叠加，而是各自补对方的短板。Margin 项在 logit 空间增强鉴别性，但带着"top-1 错误时会加剧新类过自信"这个 failure mode；矩匹配项在嵌入空间稳住几何，恰好抵消这个副作用。消融也印证了这一点：单用 margin 时新类 ECE 可能不降反升，叠上矩匹配后两类 ECE 才一致改善。
-
 ### 损失函数 / 训练策略
-总损失即上述三项之和，$\lambda_{\text{Margin}}$、$\lambda_{\text{mom}}$ 分别控制两个正则的强度。整套方法与底层 prompt tuning 技术解耦，对 CoOp、CoCoOp、MaPLe 等都能当即插即用的插件挂上去。
+总损失把交叉熵和两个正则项加在一起：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda_{\text{Margin}}\mathcal{L}_{\text{Margin}} + \lambda_{\text{mom}}\mathcal{L}_{\text{mom}}$，$\lambda_{\text{Margin}}$、$\lambda_{\text{mom}}$ 分别控制两个正则的强度。
+
+这两个正则项不是简单叠加，而是各自补对方的短板。Margin 项在 logit 空间增强类间鉴别性，但带着一个 failure mode——当 top-1 预测本身就错时，被拉大的是错误类别的 margin，反而加剧新类过自信；矩匹配项在嵌入空间稳住 CLIP 的语义几何、维持类间的相对结构，恰好抵消这个副作用。消融也印证了这一点：单用 margin 时新类 ECE 可能不降反升，叠上矩匹配后基类与新类的 ECE 才一致改善。整套方法与底层 prompt tuning 技术解耦，对 CoOp、CoCoOp、MaPLe 等都能当即插即用的插件挂上去，且只在训练时生效、不引入任何推理开销。
 
 ## 实验关键数据
 

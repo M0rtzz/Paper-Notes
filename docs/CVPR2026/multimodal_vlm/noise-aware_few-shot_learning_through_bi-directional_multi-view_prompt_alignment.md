@@ -50,9 +50,24 @@ NA-MVP包含两个核心模块协同迭代：
 
 两个模块迭代更新训练集并优化prompt参数，最终产出去噪数据集 $\mathcal{D}_{\text{denoised}} = \mathcal{D}_{\text{clean}} \cup \mathcal{D}_{\text{refinement}}$ 用于鲁棒预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["噪声小样本数据<br/>图像切 patch → 局部特征 F_i"] --> C
+    B["双向多视图Prompt构建<br/>每类 N 个 clean + N 个 noise-aware prompt"] --> C
+    C["基于 UOT 的细粒度噪声感知对齐<br/>patch↔prompt 放松质量约束，丢弃噪声 patch"] --> D["输出 clean / noise-aware 概率 p_c, p_n"]
+    D --> E["选择性标签修正<br/>自适应阈值 φ 逐样本判定"]
+    E -->|判为 clean| F["保留原标签<br/>D_clean"]
+    E -->|判为 noisy| G["经典 OT 全局修正<br/>严格质量守恒 → 伪标签 D_refinement"]
+    F --> H["去噪数据集 D_denoised"]
+    G --> H
+    H -->|GCE 继续训练，迭代优化 prompt| C
+    H --> I["鲁棒预测<br/>p = (1−p_n)·p_c"]
+```
+
 ### 关键设计
 
-**1. 双向多视图Prompt构建**
+**1. 双向多视图Prompt构建：用隐式负样本替代僵硬的显式负标签**
 
 每个类 $k$ 构建两组可学习prompt：clean-oriented $\{Prompt_{m,k}^c\}_{m=1}^N$ 和 noise-aware $\{Prompt_{m,k}^n\}_{m=1}^N$（默认 $N=4$）。每个prompt由 $M$ 个可学习context token后接类别特定token组成：
 
@@ -60,7 +75,7 @@ $$Prompt_{m,k}^c = [V_1^c, V_2^c, \ldots, V_M^c, \texttt{CLS}_k]$$
 
 Clean prompt负责捕捉类别相关的稳定语义，noise-aware prompt充当自适应过滤器来识别和抑制误导信号。关键地，非目标类全部作为隐式负样本，避免了显式负标签的僵硬问题——不需要指定某个特定反类，而是让所有非目标类自然地提供对比信号。
 
-**2. 基于UOT的细粒度噪声感知对齐**
+**2. 基于UOT的细粒度噪声感知对齐：放松质量约束，让噪声patch可被安全丢弃**
 
 将局部图像特征 $F_i \in \mathbb{R}^{L \times d}$（$L = H \times W$ 个patch）和prompt特征 $G_k \in \mathbb{R}^{N \times d}$ 视为离散分布，用余弦相似度计算代价矩阵 $C_k = 1 - F_i G_k^\top$。
 
@@ -70,7 +85,7 @@ $$\Pi(\mu, \nu) = \{T \in \mathbb{R}_+^{L \times N} \mid T\mathbf{1}_N \leq \mu,
 
 注意 $T\mathbf{1}_N \leq \mu$ 是不等号，允许部分图像patch不被分配到任何prompt。这一放松天然适配噪声场景：噪声或不相关的patch无需强制对齐，可以被安全"丢弃"。通过Dykstra算法（Sinkhorn + 熵正则化）高效求解，得到最优传输计划 $T^* = \text{diag}(\mu^{(t)}) Q \text{diag}(\nu^{(t)})$。
 
-**3. 选择性标签修正**
+**3. 选择性标签修正：样本自适应阈值 + 经典OT，只改该改的样本**
 
 - **噪声识别**：计算样本与clean/noise-aware prompt的UOT距离得到相似度 $s_{i,k}^c$ 和 $s_{i,k}^n$，导出自适应阈值：
 

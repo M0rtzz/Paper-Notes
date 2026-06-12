@@ -45,6 +45,20 @@ VecCISC 不是替换 Self-Consistency 或 CISC 的完整推理框架，而是插
 
 这个流程的关键在于“先按答案分组，再对轨迹聚类”。如果直接跨答案聚类，语义相似但答案不同的轨迹可能被压在一起，破坏候选答案集合；按答案分组则把 VecCISC 的作用限定为压缩每个答案内部的证据，而不是改写答案空间。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 q + 采样预算 n<br/>生成模型采 n 条「推理轨迹, 答案」"] --> B["通用嵌入模型<br/>每条推理轨迹 → 语义向量"]
+    B --> C
+    subgraph C["答案内 reasoning trace 聚类"]
+        direction TB
+        C1["按候选答案分组 G_a"] --> C2["组内 KMeans / HAC 聚类<br/>簇数取 min(K, 组大小)"]
+    end
+    C --> D["最小中心距离代表轨迹选择<br/>每簇取离簇中心最近的一条送审"]
+    D --> E["保留 CISC 的置信度加权投票<br/>critic 打分 → softmax → 按答案累加"]
+    E --> F["输出加权票数最高的答案"]
+```
+
 ### 关键设计
 **1. 答案内 reasoning trace 聚类：先按答案分组、再在组内语义聚类，把交给 critic 的轨迹数压下来又不动答案空间**
 

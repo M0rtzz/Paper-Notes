@@ -41,6 +41,22 @@ tags:
 ### 整体框架
 MoDEX 要解决的是"单次前向就能给出结构可解释的二阶不确定性"。它把分类想象成一场法庭辩论：$K$ 个类各派一名辩护人，所有人看同一份案件证据，但可以基于不同侧重得出不同的概率信念，最终判决是这些信念按可信度加权聚合的结果。落到网络上，输入 $\mathbf{x}_i$ 先经特征提取器 $f_{\bm{\psi}}$ 得到表征 $\mathbf{z}_i$，再由三个轻量头并行输出三组法庭参数——共享证据 $\bm{\alpha}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$、可信度权重 $\bm{\omega}(\mathbf{x}_i)\in\Delta^{K-1}$、类专属辩护强度 $\bm{\tau}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$——它们共同定义一个 EFD 分布 $p(\bm{\pi}_i\mid\mathbf{x}_i)=\sum_k \omega_k(\mathbf{x}_i)\,\mathrm{Dir}(\bm{\pi}_i\mid\bm{\alpha}(\mathbf{x}_i)+\tau_k(\mathbf{x}_i)\mathbf{e}_k)$。预测时从 EFD 闭式取一阶矩得到 $\hat{p}(y^\star=k\mid\mathbf{x}^\star)$ 再 argmax，并分别用一阶熵与二阶协方差迹输出 aleatoric / epistemic 不确定性，全程严格单次前向、无需采样或多模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 x"] --> B["特征提取器 f_ψ → 表征 z"]
+    subgraph H["三头网络（并行预测法庭参数）"]
+        direction TB
+        C["共享证据头 → α"]
+        D["可信度门控头 → ω"]
+        E["辩护强度头 → τ"]
+    end
+    B --> H
+    H --> F["结构化分解 α_k = α + τ_k·e_k<br/>构成法庭生成模型的 EFD 混合分布"]
+    F --> G["一阶矩 → 预测 ŷ = argmax μ_k"]
+    F --> I["双不确定性度量<br/>AU 一阶熵；EU 二阶协方差迹（分解 inter + intra）"]
+```
+
 ### 关键设计
 
 **1. 法庭生成模型：给不确定性的"形成机制"建模**

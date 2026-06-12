@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 ORCA 想解决的是：怎么让一个冻结的文生图扩散模型，针对每个机器人控制任务吐出"刚好合用"的视觉特征，而不靠微调模型本身。整条管线是这样转的——一帧观察图像 $I$ 先经 VQGAN 编码器压成潜变量 $z_0$，在时间步 $t=0$ 加噪得到 $z_t$ 后喂进 Stable Diffusion 的 U-Net；与此同时，一组任务提示词和逐帧的视觉提示词被拼起来过文本编码器，生成条件 $\mathcal{C}^*$ 注入 U-Net 的 cross-attention。U-Net 前向一遍，从下采样层和瓶颈层抽出中间特征 $f$，经一个压缩层降维后送进策略网络 $\pi_\phi$ 输出动作。全程扩散模型权重纹丝不动，可训练的只有两组提示词、压缩层和策略网络。关键就在那个条件 $\mathcal{C}^*$：换掉它，同一个冻结模型就能为不同任务给出不同的特征。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["观察图像 I"] --> VQ["VQGAN 编码器<br/>压成潜变量 z_0 → 加噪 z_t"]
+    I --> DINO["DINOv2 视觉编码器<br/>抽当前帧稠密特征"]
+    TP["任务提示词<br/>4 个共享的可学习 token"] --> CAT["拼接 → 文本编码器 τ_θ"]
+    DINO --> VP["视觉提示词<br/>16 个逐帧 visual token"]
+    VP --> CAT
+    CAT --> COND["条件 C*"]
+    VQ --> UNET["冻结 SD U-Net<br/>cross-attention 注入 C*"]
+    COND --> UNET
+    UNET --> FEAT["抽下采样+瓶颈层特征 f<br/>→ 压缩层降维"]
+    FEAT --> POLICY["行为克隆端到端训练<br/>策略网络 π_φ"]
+    POLICY --> A["动作 a"]
+```
+
 ### 关键设计
 
 **1. 任务提示词：用可学习 token 替掉失效的文本条件**

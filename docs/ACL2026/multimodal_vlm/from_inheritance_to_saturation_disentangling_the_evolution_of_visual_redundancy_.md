@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-HalfV 分两步：（1）在 Stage II 起始处对所有架构统一执行一次性 token 剪枝，消除 IVR；（2）在 Stage III 根据架构特异性处理 SSR——对 Vicuna/Mistral 架构复用 KV 缓存跳过层计算，对 Qwen 架构只保留 top-5% 主导 token 参与计算。
+HalfV 分两步：（1）在 Stage II 起始处对所有架构统一执行一次性 token 剪枝，消除 IVR；（2）在 Stage III 根据架构特异性处理 SSR——对 Vicuna/Mistral 架构复用 KV 缓存跳过层计算，对 Qwen 架构只保留 top-5% 主导 token 参与计算。这一切的前提，是先用截断矩阵熵这把"尺子"把推理过程切成三阶段、读出 IVR 与 SSR 各自该在哪一段下手。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视觉 token + 文本 token 输入"] --> LIFE
+    subgraph LIFE["三阶段推理生命周期（截断矩阵熵探针定位三段）"]
+        direction TB
+        B["Stage I 模态对齐<br/>视觉熵高而稳、文本熵被压缩"]
+        C["Stage II 全局聚合<br/>视觉证据聚合，对扰动极敏感"]
+        D["Stage III 视觉饱和<br/>上下文饱和，边际收益递减"]
+        B --> C --> D
+    end
+    LIFE --> IVR["固有视觉冗余 IVR<br/>Stage II 起点边际效用最低，一次性剪枝"]
+    IVR --> SSR{"次生饱和冗余 SSR<br/>Stage III 按骨干饱和形式分流"}
+    SSR -->|"Vicuna/Mistral：整层不活跃"| E["复用 KV 缓存跳过层计算"]
+    SSR -->|"Qwen：token 极端稀疏"| F["保留 top-5% 主导 token"]
+    E --> G["加速推理输出"]
+    F --> G
+```
 
 ### 关键设计
 

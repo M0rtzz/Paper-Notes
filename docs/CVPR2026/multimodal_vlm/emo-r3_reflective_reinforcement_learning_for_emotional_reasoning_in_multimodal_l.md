@@ -45,6 +45,24 @@ tags:
 
 EMO-R3 想解决的是：MLLM 做情感推理时 think 过程和最终答案常常对不上——模型蒙对了情感标签，但中间那段推理其实站不住。它的办法是先用一段「结构化情感思维」(SET) 的 prompt 把模型的自由思考掰成「识别触发 → 刻画反应 → 下结论」三步，再用「反思情感奖励」(RER) 把这三步的中间产物拿回去让模型自检，最后把这些奖励一起喂进 GRPO 优化策略。整条链路是：图像 + SET prompt → 模型逐步输出三段思考加 `\boxed{}` 答案 → RER 抽出中间步骤反向校验 → 各项奖励汇总进 GRPO 更新。训练前可选先跑一段轻量的 Cold-Start-Emo SFT，把预训练模型的情感先验对齐到下游标签体系。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：图像 + SET prompt<br/>（可选先经 Cold-Start-Emo 轻量 SFT 对齐情感先验）"] --> SET
+    SET["结构化情感思维 SET<br/>s₁ 触发识别 → s₂ 情感反射 → s₃ 结论 + 最终答案"] --> ROLL["组内采样 G 条推理轨迹"]
+    subgraph RER["反思情感奖励 RER（中间步骤反向自检）"]
+        direction TB
+        RC["图文一致性：(s₁ + 图) 送回模型问 Yes/No"]
+        RH["情感连贯性：(s₁ + s₂) 送回模型推情感 vs 真值"]
+    end
+    ROLL --> RER
+    ROLL --> GEN["通用奖励：答案准确 R_acc + 格式 R_format"]
+    RER --> AGG["总奖励 R_overall 加权汇总"]
+    GEN --> AGG
+    AGG --> GRPO["GRPO 组内优势归一化 → 更新策略"]
+    GRPO -.反馈迭代.-> IN
+```
+
 ### 关键设计
 
 **1. 结构化情感思维（SET）：把"想到哪算哪"的自由 think 掰成可被检验的三步**

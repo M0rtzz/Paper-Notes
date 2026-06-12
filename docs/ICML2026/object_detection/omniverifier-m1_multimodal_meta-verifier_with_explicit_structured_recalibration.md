@@ -45,6 +45,34 @@ OmniVerifier-M1 沿 RLVR 框架训练一个 pointwise 多模态 verifier $\pi_\t
 ### 整体框架
 输入 (image, prompt, ground-truth label, optional ground-truth bbox)；输出 verifier 的 $(o, \hat y, e)$；reward 由三部分构成——格式奖励 $\mathcal{R}_f$（要求 `<think>` 标签）、准确率奖励 $\mathcal{R}_{acc} \in \{0,1\}$、meta-verification 奖励 $\mathcal{R}_{meta}$（在符号 rationale 情形下 = IoU）。训练用 DAPO 在 OmniVerifier-7B 与 Qwen3-VL-8B 上各跑 80 步 / 16 张 A800-80G。下游应用 M1-TTS 把 verifier 输出当 agent tool：先识别错误 region，再驱动生成模型做 region-level 编辑，迭代 replanning 收敛。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + prompt<br/>+ 真值标签 + 真值 bbox"]
+    subgraph SYM["Symbolic Rationale"]
+        direction TB
+        B["多模态验证器 π_θ<br/>输出 思维 o、二值判断 ŷ、错误 bbox e"]
+        B --> C["ŷ=False 时 R_meta = IoU(ê, b*)<br/>规则化奖励，免 LLM judge"]
+    end
+    A --> B
+    subgraph DEC["Decoupled RL Reward"]
+        direction TB
+        D["平衡数据流<br/>只监督 R_acc（二值准确率）"]
+        E["False-only 复制流<br/>只监督 R_meta（定位）"]
+        D --> F["DAPO 混合 rollout 训练<br/>解除 p_acc 乘性门控"]
+        E --> F
+    end
+    C --> D
+    subgraph TTS["M1-TTS 区域级自校正闭环"]
+        direction TB
+        H["生成模型产出图像"] --> I["verifier 判 True/False"]
+        I -->|False + 错误 bbox| J["planner 转 region 编辑 prompt<br/>对该区域局部 inpaint"]
+        J --> H
+        I -->|全部 region 通过| K["输出最终图像"]
+    end
+    F -->|训练完成后部署| H
+```
+
 ### 关键设计
 
 **1. Symbolic Rationale：用 bbox 代替文本解释当 meta 反馈**

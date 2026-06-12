@@ -43,6 +43,22 @@ tags:
 
 论文把"turn-level 学生模拟"形式化成一个预测问题：给定真实 tutor-student 对话的历史、题目和可选上下文，模型在每个学生回合生成下一句学生话语，并以真实学生话语作为 reference 进行多维打分。整套设计因此分成评测与训练两层——评测层让模型逐回合生成模拟学生话语，从对话行为、正确性、错误、知识获得、语言相似度和 tutor 反应可预测性等角度衡量它是否真的"像学生"；训练层则反过来用这些指标做反馈信号，先用真实学生话语 SFT，再用指标给候选回答打分构造偏好对做 DPO，看能否把"评估真实性"变成"训练真实性"。实验数据来自 Question-Anchored Tutoring Dialogues 2k 这套真实中学数学在线辅导对话，处理后含 1,529 个训练对话和 382 个测试对话（训练集再切 1,147/382 的训练/验证），平均每段 23.42 个回合，学生每轮仅 4.11 个词，导师 14.84 个词——这种"短而碎"的学生语言本身就是模拟的难点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实辅导对话历史 + 题目 + 可选上下文"] --> B["逐回合学生模拟<br/>预测下一句学生话语"]
+    B --> C["七维 turn-level 评测指标<br/>Acts / Correctness / Errors / Knowledge<br/>Cosine / ROUGE-L / Tutor Response"]
+    C --> D["LLM 标注 + 本地支持模型<br/>GPT-4.1 标 acts/correctness · GPT-5 mini 判错误 · LLMKT 估掌握度"]
+    subgraph TRAIN["多指标奖励的 DPO 训练"]
+        direction TB
+        E["SFT on 真实学生话语"] --> F["每回合采样多个候选"]
+        F --> G["七指标平均分打分 → 构造偏好对"]
+        G --> H["DPO 优化"]
+    end
+    D --> TRAIN
+    TRAIN --> I["更真实的模拟学生"]
+```
+
 ### 关键设计
 
 **1. 七维 turn-level 评测指标：用学习科学维度取代单一文本相似度**

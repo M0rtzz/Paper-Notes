@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 LineageFlow 要解决的是"给定 Pfam 家族、生成既像这个家族又足够新颖的蛋白序列"，而它的关键转换是把流匹配的生成时间轴 $t \in [0, 1]$ 直接当成"从家族祖先到现存叶节点"的进化时间轴：起点不再是通用噪声，而是用祖先序列重建（ASR）算出来的家族脚手架，终点是现存序列，denoiser 学的是"祖先怎么突变成现存"而不是"噪声怎么合成蛋白"。预处理阶段对每个家族建 MSA、用 IQ-TREE 推系统发育树、用 PAML 在根节点做 ASR；训练阶段所有家族共享一个 denoiser，从家族特异的 Dirichlet 路径里抽中间态学终点分类；采样时先跑基流到中点 $t_{\mathrm{int}}=0.5$，在那里插一次粒子级的 mutate–select–amplify 做目标导向选择，再精修积分到终点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["同源序列 → MSA<br/>IQ-TREE 推系统发育树"] --> B["ASR 祖先 Dirichlet 先验<br/>PAML 根后验当位点 Dirichlet α"]
+    B --> C["家族特异矢量场<br/>共享 denoiser 学终点分类"]
+    C --> D["采样：从先验起步跑基流<br/>积分到中点 t=0.5"]
+    D --> E["rerouting：mutate–select–amplify<br/>粒子级目标导向选择"]
+    E --> F["精修积分到 t=1"]
+    F --> G["家族特异新序列"]
+```
+
 ### 关键设计
 
 **1. ASR 祖先 Dirichlet 先验：把家族进化约束烧进起点**

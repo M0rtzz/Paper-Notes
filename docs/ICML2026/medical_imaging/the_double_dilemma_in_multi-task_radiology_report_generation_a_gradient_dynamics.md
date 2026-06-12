@@ -44,6 +44,15 @@ tags:
 
 CAME-Grad 是一个即插即用的梯度优化器，直接替换 RRG 多任务训练里的静态线性加权。每一步它先算出各任务梯度 $\bm g_i$、加权梯度 $\bm g_{joint}$ 和均值 $\bm \mu$，再依次走三个阶段：先把所有任务的拉扯纠成一个"对最坏任务也有改善"的方向（治 drift deviation），再把这个方向的振幅放大、补回探索能量（治 diffusion decay），最后和原始 $\bm g_{joint}$ 软融合保住任务先验，得到 $\bm g_{final}$ 后做一次普通 SGD 更新 $\Theta \leftarrow \Theta - \eta \bm g_{final}$。整套逻辑对应 SDE 视角下"方向 + 振幅必须同治"的诊断结论。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["各任务梯度 g_i<br/>加权 g_joint、均值 μ"] --> B["Conflict-Averse 方向纠偏<br/>信任域内 max-min 求 u*_rect（治 drift deviation）"]
+    B --> C["Magnitude-Enhanced 能量注入<br/>缩放到 τ_mag = κ·‖g_joint‖ 得 u_en（治 diffusion decay）"]
+    C --> D["Adaptive Gradient Fusion<br/>g_final = (1−ν)·u_en + ν·κ·g_joint"]
+    D --> E["SGD 更新<br/>Θ ← Θ − η·g_final"]
+```
+
 ### 关键设计
 
 **1. Conflict-Averse 方向纠偏：在所有任务间找一个"最坏改善最大"的方向**

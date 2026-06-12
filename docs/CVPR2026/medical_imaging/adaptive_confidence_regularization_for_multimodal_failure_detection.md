@@ -40,11 +40,27 @@ tags:
 
 ### 整体框架
 
-ACR 要解决的是多模态场景下的失败检测（FD）——模型不只要准，还要能可靠地标出哪些预测不可信。架构上，M 个模态分支各有编码器 $g_k(\cdot)$ 提取嵌入 $\mathbf{E}^k$，拼接后送进融合分类器 $h(\cdot)$ 得到多模态预测 $\hat{p}$，同时每个模态还有独立分类器 $h_k(\cdot)$ 给出单模态预测 $\hat{p}^k$。在这之上，ACR 加了两个互补模块：一个损失（ACL）盯住"融合后反而比单模态更没把握"的退化信号，一个数据增强（MFS）在特征空间凭空造出失败样本来训练检测器。
+ACR 要解决的是多模态场景下的失败检测（failure detection, FD）——模型不只要准，还要能可靠地标出哪些预测不可信。架构上，M 个模态分支各有编码器 $g_k(\cdot)$ 提取嵌入 $\mathbf{E}^k$，拼接后送进融合分类器 $h(\cdot)$ 得到融合预测 $\hat{p}$ 与融合置信度 $\text{conf}$，同时每个模态还有独立分类器 $h_k(\cdot)$ 给出单模态预测 $\hat{p}^k$ 与单模态置信度 $\text{conf}_k$。在这套主干之上，ACR 接两个互补模块：自适应置信度损失（ACL）盯住"融合后反而比单模态更没把握"的退化信号，多模态特征交换（MFS）在特征空间凭空造出失败样本喂给检测器。两者各产生一项损失，连同原始分类损失合成总目标一起训练；推理时只用融合分支的 MSP 置信度做失败检测。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入<br/>M 个模态 x1…xM"] --> B["各模态编码器 g_k<br/>得各模态嵌入 E^k"]
+    B --> C["单模态分类器 h_k<br/>单模态预测、置信度 conf_k"]
+    B --> D["拼接嵌入 + 融合分类器 h<br/>融合预测、置信度 conf"]
+    B --> E["多模态特征交换（MFS）<br/>跨模态交换若干维 → 离群特征 E_o"]
+    C --> F["自适应置信度损失（ACL）<br/>conf 低于任一 conf_k 即线性惩罚"]
+    D --> F
+    E --> G["软标签插值 + 离群损失 L_outlier"]
+    F --> H["总损失 = L_cls + L_outlier + λ·L_acl"]
+    G --> H
+    D --> H
+    D -->|"推理: MSP 评分"| I["失败检测<br/>低置信度即拒绝 / 人工介入"]
+```
 
 ### 关键设计
 
-**1. Adaptive Confidence Loss（ACL）：惩罚"越融合越不自信"的置信度退化**
+**1. 自适应置信度损失（Adaptive Confidence Loss, ACL）：惩罚"越融合越不自信"的置信度退化**
 
 作者发现误分类样本里，融合置信度低于某个单模态置信度的比例远高于正确样本（HMDB51 上高出 32.4%，HAC 上高出 52.4%）——这种"置信度退化"是失败的强指示。ACL 就把它写进损失。记融合置信度 $\text{conf} = \max_y \hat{p}$、单模态置信度 $\text{conf}_k = \max_y \hat{p}^k$，两模态情形下：
 
@@ -52,9 +68,9 @@ $$\mathcal{L}_{\text{acl}} = \frac{1}{2}\left(\max(0, \text{conf}_1 - \text{conf
 
 融合置信度高于所有单模态时不罚，低于任一单模态时线性惩罚。这等于逼着融合机制充分整合互补信息、同时压住单模态的过度自信，副作用是分类准确率也跟着提升。
 
-**2. Multimodal Feature Swapping（MFS）：在特征空间凭空合成失败样本**
+**2. 多模态特征交换（Multimodal Feature Swapping, MFS）：在特征空间凭空合成失败样本**
 
-FD 缺真实失败样本，传统 Outlier Exposure 要外部大数据集、还造不出跨模态冲突这种多模态特有的失败。MFS 不取外部数据，直接在特征空间动手：从每个模态嵌入里随机选 $n_{\text{swap}} \sim \mathcal{U}(n_{\min}, n_{\max})$ 个连续维度做交换，得到扰动特征 $\mathbf{E}_o$，软标签按交换量在真实标签和离群类之间插值 $\mathbf{y}_{\text{swapped}} = (1-\lambda)\mathbf{y}_{\text{true}} + \lambda\mathbf{y}_{\text{outlier}}$，其中 $\lambda = n_{\text{swap}} / n_{\max}$。交换量小就得到贴近分布内的困难负样本，交换量大就得到明确的离群点，可控性强、还省去外部数据、模态无关。
+FD 缺真实失败样本，传统离群暴露（Outlier Exposure, OE）要外部大数据集、还造不出跨模态冲突这种多模态特有的失败。MFS 不取外部数据，直接在特征空间动手：从每个模态嵌入里随机选 $n_{\text{swap}} \sim \mathcal{U}(n_{\min}, n_{\max})$ 个连续维度做交换，得到扰动特征 $\mathbf{E}_o$，软标签按交换量在真实标签和离群类之间插值 $\mathbf{y}_{\text{swapped}} = (1-\lambda)\mathbf{y}_{\text{true}} + \lambda\mathbf{y}_{\text{outlier}}$，其中 $\lambda = n_{\text{swap}} / n_{\max}$。交换量小就得到贴近分布内的困难负样本，交换量大就得到明确的离群点，可控性强、还省去外部数据、模态无关。
 
 ### 损失函数 / 训练策略
 

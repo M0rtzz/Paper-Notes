@@ -43,6 +43,31 @@ tags:
 ### 整体框架
 本文分两部分：(a) **现象分析**——构造 770 条去重有害 query × DPI ∈ {15,30,…,300} 渲染图，跑 10+ 个 SOTA MLLM，用三 LLM 评判 + 人工仲裁的 ASR 协议绘出 DPI–ASR 曲线，识别出 ACZ；用 layer-wise 线性 safety probe 量化"安全特征滞后"。(b) **防御方法**——提出 Structured Cognitive Offloading，把单次 prompt 拆成 transcription → safety → response 三段序列化执行；并消融 token 数、模板、OOD 三类 confounder 把根因定位到"内容解码难度"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["有害 query × DPI∈{15…300}<br/>role-play 模板 + Glyph 渲染成图"]
+    subgraph ACZ["攻击舒适区 ACZ 现象 + 三阶段 DPI 曲线"]
+        direction TB
+        A1["10+ SOTA MLLM 推理<br/>测 OCR 准确率 + ASR"] --> A2["三 LLM 评判 + 人工仲裁<br/>绘 DPI–ASR 曲线"]
+        A2 --> A3["定位 ACZ：DPI 45–150<br/>读得清却安全失守"]
+    end
+    subgraph PROBE["认知过载假设 + 逐层安全探针"]
+        direction TB
+        B1["240 条平衡文本训 logistic 探针"] --> B2["冻结探针、跨模态零样本测图像"]
+        B2 --> B3["量化『安全特征滞后』<br/>有害语义被推迟到深层"]
+    end
+    subgraph DEF["结构化认知卸载（防御）"]
+        direction TB
+        C1["转录：先 OCR 出干净文本"] --> C2["审计：仅基于转录文本做安全判定"]
+        C2 --> C3["回答：条件于文本+判定给答复"]
+    end
+    Q --> ACZ
+    ACZ --> PROBE
+    PROBE -->|"根因：读与判共享浅层算力"| DEF
+    DEF --> OUT["ASR 打回近基线、utility 不降"]
+```
+
 ### 关键设计
 
 **1. Attack Comfort Zone (ACZ) 现象 + 三阶段 DPI 曲线：用一条 DPI–ASR 曲线把"分辨率与安全"的非单调关系定量出来**

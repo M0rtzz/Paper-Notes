@@ -45,6 +45,26 @@ MOOSE-Copilot 的核心不是提出一个新的单阶段生成器，而是把已
 
 输出端不是单个答案，而是一条带历史的 search trajectory。界面提供输入页、树视图、排名页和反馈页：树视图显示假设如何由不同 inspiration 演化；排名页展示 LLM 自评得分；反馈页允许用户选择继续探索还是进入细粒度细化，并输入定向 feedback。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：研究问题 + 文献综述 + 灵感语料"] --> B["初始蓝图 f_init<br/>约束根节点搜索边界"]
+    subgraph SM["探索-利用统一状态机"]
+        direction TB
+        C["探索阶段 MOOSE-Chem<br/>从背景 b 出发长出假设树"]
+        D["交互式树形界面<br/>树视图 + 排名页（LLM 自评）"]
+        E["细化阶段 MOOSE-Chem2<br/>高抽象层 → 方法 → 实验逐级修正"]
+        F["反馈页<br/>用户写定向 critique"]
+        C --> D
+        D -->|阶段路由 f_route 选节点下钻| E
+        E --> F
+        F -->|内层反馈 f_dir 触发再生成| E
+        F -->|阶段路由 f_route 退回发散| C
+    end
+    B --> C
+    SM --> G["输出：带历史的搜索轨迹"]
+```
+
 ### 关键设计
 
 **1. 探索-利用统一状态机：把发散搜索和细粒度优化拼成一个闭环**

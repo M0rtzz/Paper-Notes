@@ -42,7 +42,20 @@ GIST 把"为 target task 挑 instruction tuning 数据"看作 gradient subspace 
 
 ### 整体框架
 
-GIST 要在限定 budget 下为某个 target task 挑出最有用的 instruction tuning 数据，核心是把"挑数据"重新表述成"梯度子空间对齐"。整条流水线三步走：先用 5% 候选数据 LoRA 训 1 个 epoch 当 warmup，让模型落进一个稳定的 loss basin；再在这个 checkpoint 上对 validation 样本求梯度、SVD 抽出一个低秩的 task 子空间投影器 $\boldsymbol{\Pi}$；最后把每个候选样本的梯度投到这个子空间，跟 target 梯度算 cosine 相似度做打分，取 top-$k$。难点不在"对齐"本身，而在用什么 metric 对齐——LESS 用 Adam diagonal preconditioner，本文论证它在 LoRA 上系统性失效，并给出 SVD 子空间这个 non-diagonal 又 tractable 的替代。
+GIST 要在限定 budget 下为某个 target task 挑出最有用的 instruction tuning 数据，核心是把"挑数据"重新表述成"梯度子空间对齐"。整条流水线三步走：先用 5% 候选数据 LoRA 训 1 个 epoch 当 warmup，让模型落进一个稳定的 loss basin；再在这个 checkpoint 上对 validation 样本求梯度、SVD 抽出一个低秩的 task 子空间投影器 $\boldsymbol{\Pi}$；最后把每个候选样本的梯度投到这个子空间，跟 target 梯度算 cosine 相似度做打分，取 top-$k$。难点不在"对齐"本身，而在用什么 metric 对齐——LESS 用 Adam diagonal preconditioner，本文论证它在 LoRA 上系统性失效（关键设计 1、2 即这套理论），并给出 SVD 子空间这个 non-diagonal 又 tractable 的替代（关键设计 3、4 把它落成可执行流程）。下图是这条可执行流程：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["候选数据池 + target task 验证集"] --> B["Warmup<br/>5% 候选数据 LoRA 训 1 epoch<br/>落入稳定 loss basin"]
+    B --> C["谱过滤（Spectral filtering）<br/>验证梯度 G_val 做 SVD<br/>取 top-r 左奇异向量 U_r"]
+    C --> D["子空间投影器 Π = U_rᵀ<br/>non-diagonal，编码坐标耦合"]
+    D --> E["候选梯度投到子空间<br/>与 target 梯度算 cosine 相似度"]
+    E --> F["多目标聚合（Max-cosine）<br/>取对各 target 相似度的最大值"]
+    F --> G["按 FinalScore 选 top-k 样本"]
+```
+
+> 关键设计 1、2 是这条流程背后的理论支撑（论证"为什么不用 diagonal、可以用 SVD 子空间"），不对应单独的流程节点；关键设计 3「谱过滤」对应 C→D，关键设计 4「多目标聚合」对应 F。
 
 ### 关键设计
 

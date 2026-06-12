@@ -48,6 +48,25 @@ FOUL 分为两个阶段：
 - **阶段一 Learning to Unlearn (L2U)**：在联邦训练阶段将特征提取器解耦为因果子网络 $\theta_K$（提取域不变特征）和非因果子网络 $\theta_V$（提取域特异特征），为未来遗忘做准备。
 - **阶段二 On-server Gradient Matching**：遗忘触发后，仅更新非因果子网络 $\theta_V$，在服务器端通过梯度匹配聚合——使聚合梯度与保留客户端梯度方向一致、与遗忘客户端梯度方向冲突。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["各客户端本地数据"] --> E["浅层提取器 θ_E"]
+    subgraph L2U["阶段一·因果/非因果特征解耦（Learning to Unlearn）"]
+        direction TB
+        E --> K["因果编码器 θ_K<br/>原型损失 L_K：拉紧同类（域不变知识）"]
+        E --> V["非因果编码器 θ_V<br/>Hinge 方差损失 L_V：推开同类（域特异信息）"]
+        K --> DC["解码器 θ_D + 分类器 θ_C<br/>L_rec 重建 + L_gtc 分类"]
+        V --> DC
+    end
+    L2U -->|遗忘请求触发，仅更新 θ_V| GM
+    subgraph GM["阶段二·服务器端梯度冲突匹配"]
+        direction TB
+        G1["学习客户端权重系数 Γ<br/>U 维（U≪d），免迭代搜索"] --> G2["闭式聚合梯度（Theorem 1）<br/>与保留集同向 · 与遗忘集冲突"]
+    end
+    GM --> OUT["遗忘后全局模型<br/>保留知识不损 · 通信/计算减半"]
+```
+
 ### 关键设计
 
 **1. 因果/非因果特征解耦：把"该忘的"和"该留的"在训练时就拆到两个子网络里**

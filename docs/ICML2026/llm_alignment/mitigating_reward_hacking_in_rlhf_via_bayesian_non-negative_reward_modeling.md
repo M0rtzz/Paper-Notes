@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 BNRM（Bayesian Non-negative Reward Model）把标准 BT 奖励模型重写成一个分层贝叶斯生成过程：给定偏好三元组 $(\bm{x},\bm{y}_1,\bm{y}_2)$，LLM backbone $f$（如 Gemma-2B-it / Skywork-Reward-Llama-3.1-8B）先把每个 $(\bm{x},\bm{y})$ 编码成稠密表征 $\bm{z}=f(\bm{x},\bm{y})\in\mathbb{R}^{d_{\text{model}}}$，再由它推断出非负稀疏的实例局部因子 $\bm{\theta}\in\mathbb{R}^{K}_+$，与同样非负稀疏的全局奖励字典 $\Phi\in\mathbb{R}^{K}_+$ 内积得到奖励 $r=\bm{\theta}^{\top}\Phi$，最后塞回 BT 似然 $p(\bm{y}_1\succ\bm{y}_2)=\sigma(r_1-r_2)$。关键是 $\bm{\theta}$ 与 $\Phi$ 都用 Weibull 变分后验建模、Gamma 先验约束，整套框架借摊销变分推断 + Weibull 重参数化做端到端训练——单次前向就同时给出"奖励均值 + 不确定性 + $K$ 个语义因子的分解"，全程不需要训多个模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["偏好三元组 (x, y₁, y₂)"] --> B["LLM backbone f 编码<br/>z = f(x,y) 稠密表征"]
+    B --> C["摊销推断头 W_vi<br/>单次前向 → Weibull(k,λ) 参数"]
+    C --> D["局部因子 θ：Weibull 变分后验<br/>Gamma 稀疏先验 → 实例级解耦"]
+    E["全局奖励字典 Φ：Weibull 变分后验<br/>Gamma 稀疏先验 → 种群级去偏"] --> F
+    D --> F["奖励 r = θᵀΦ<br/>非负稀疏因子内积（NFA 重塑）"]
+    F --> G["BT 似然 σ(r₁ − r₂)"]
+    G --> H["ELBO = 重构项 − η·KL(θ) − η·KL(Φ)<br/>端到端训练"]
+```
+
 ### 关键设计
 
 **1. NFA 重塑奖励生成过程：从稠密黑盒到非负稀疏因子，先解耦再去偏**

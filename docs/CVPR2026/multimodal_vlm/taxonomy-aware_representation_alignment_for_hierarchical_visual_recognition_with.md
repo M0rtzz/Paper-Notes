@@ -40,7 +40,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为图像和指定分类层级的VQA问题（四选一），TARA在不改变推理流程的前提下，通过训练时的表示对齐将BFM的分类学知识注入LMM。推理时不需要BFM和投影器。
+输入为图像和指定分类层级的四选一VQA问题。TARA在不改变推理流程的前提下，于训练时把生物基础模型（BFM）的分类学知识注入LMM：一路做**分类学视觉表示对齐**，把LMM中间层的视觉token对齐到BFM的视觉特征；一路做**自由粒度标签表示对齐**，把首个答案token对齐到BFM的标签文本特征；两个对齐损失合成 $\mathcal{L}_{\text{alignment}}$ 后，再与**No-Thinking RFT交替训练**，让知识注入和强化探索互不挤占。推理时丢弃BFM和投影器，无额外开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 四选一VQA问题（指定分类层级）"] --> B["LMM 主干"]
+    B --> C["中间层视觉token"]
+    B --> D["首个答案token"]
+    subgraph V["分类学视觉表示对齐"]
+        direction TB
+        C --> CP["投影器 P_V"]
+        CP --> CL["负余弦相似度对齐<br/>BFM视觉特征 y_img（损失 L_V）"]
+    end
+    subgraph L["自由粒度标签表示对齐"]
+        direction TB
+        D --> DP["投影器 P_T"]
+        DP --> DL["对齐当前粒度标签<br/>BFM文本特征 y_label（损失 L_C）"]
+    end
+    subgraph T["对齐损失与No-Thinking RFT交替训练"]
+        direction TB
+        E["对齐损失 L_alignment = (L_V + L_C) / 2"]
+        F["No-Thinking RFT<br/>仅准确率奖励、禁止思维链"]
+        E <-->|交替优化| F
+    end
+    CL --> E
+    DL --> E
+    T --> G["推理：丢弃 BFM 与投影器，零额外开销"]
+```
 
 ### 关键设计
 

@@ -47,6 +47,23 @@ tags:
 ### 整体框架
 方法要解决的是"重采样这一步天然不可微"的问题：输入一组带权样本 $\{(w_i, X_i)\}_{i=1}^N \sim \pi$，要输出一组等权样本 $\{(\frac{1}{N}, X_i^*)\}$，同时让从输入到输出的映射对 SSM 参数 $\theta$ 可导。作者的转法是把"重采样"重述成"一段扩散采样"：先指定一个 Langevin 前向 SDE 把目标 $\pi$ 平滑推向一个用户选定的 reference $\pi_{\mathrm{ref}}$，再反演这条 SDE 从 $\pi_{\mathrm{ref}}$ 采回 $\pi$，于是整条链路上唯一的随机源只剩 Gaussian 噪声，自然可重参数化。其中 reverse SDE 需要的 score 用带权样本即时估计、不需要训练，最后把这段可微 SDE 模拟整体嵌进 Feynman–Kac / SMC 主循环，就得到一个梯度能端到端反传的 differentiable SMC。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["带权样本 {(w_i, X_i)} ~ π"]
+    subgraph S["可微重采样：重述成一段可微 reverse SDE"]
+        direction TB
+        C["无训练 ensemble score<br/>带权样本 IS 闭式估计 s_N，省去训练"]
+        B["均值回归 Gaussian reference<br/>粒子矩拼 OU 前向，让 score 闭式可算"]
+        D["半线性 exponential integrator<br/>大步长稳定积分 reverse SDE"]
+        C --> B --> D
+    end
+    A --> C
+    D --> E["等权样本 {(1/N, X_i*)}"]
+    E --> F["嵌入 SMC / Feynman–Kac 主循环"]
+    F -->|Gaussian 噪声重参数化| G["梯度对 SSM 参数 θ 端到端反传"]
+```
+
 ### 关键设计
 
 **1. 无训练 ensemble score：把离散类别采样翻译成连续可微的 score**

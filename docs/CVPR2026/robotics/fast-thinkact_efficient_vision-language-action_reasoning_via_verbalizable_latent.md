@@ -52,7 +52,41 @@ Reasoning VLA（如 ThinkAct、CoT-VLA、MolmoAct）通过引入显式 chain-of-
 
 ### 整体框架
 
-Fast-ThinkAct 要治的是 reasoning VLA 的延迟病——ThinkAct 那种 ~250 token 的文本 CoT 一步要好几秒，根本喂不动 1-15 Hz 的机器人控制。它的办法是把推理从 token 空间搬进连续 latent 空间，压成 6 个 latent token，又不能把推理质量一起压没。整体是个 teacher-student 三步蒸馏：先用 teacher 的 reward 信号教 student 学出高质量的 latent 推理，再对齐 teacher/student 的轨迹级视觉规划表示，最后冻住 student VLM、用它的 latent 推理特征去增强一个扩散动作模型生成动作。
+Fast-ThinkAct 要治的是 reasoning VLA 的延迟病——ThinkAct 那种 ~250 token 的文本 CoT 一步要好几秒，根本喂不动 1-15 Hz 的机器人控制。它的办法是把推理从 token 空间搬进连续 latent 空间，压成 6 个 latent token，又不能把推理质量一起压没。整体是个 teacher-student 三步蒸馏：先用 teacher 的 reward 信号教 student 学出高质量的 latent 推理，再对齐 teacher/student 的轨迹级视觉规划表示，最后冻住 student VLM、用它的 latent 推理特征去增强一个扩散动作模型生成动作。下面三个关键设计正对应这三步，框架图自上而下也是这个流向。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["观测 o_t + 指令 l"]
+    T["文本 teacher VLM<br/>GRPO 生成 CoT，按 advantage 排序"]
+    PAIR["取最高/最低 advantage<br/>构成偏好对 τ⁺ / τ⁻"]
+    S["latent student VLM<br/>自回归吐 6 个 latent token + 5 个 spatial token"]
+    IN --> T --> PAIR
+    IN --> S
+    subgraph D1["Reward-Guided Preference Distillation"]
+        direction TB
+        V["verbalizer LLM 把 latent 解码回文本"]
+        LV["L_verb（DPO）逼 latent 编码出 τ⁺ 的高质量推理"]
+        V --> LV
+    end
+    subgraph D2["Action-Aligned Visual Plan Distillation"]
+        direction TB
+        LD["L_distill 对齐师生 answer token 的 hidden state"]
+        WP["spatial token 并行投出 5 个 waypoint（L_ans）"]
+    end
+    subgraph D3["Reasoning-Enhanced Policy Learning"]
+        direction TB
+        FZ["冻结 student VLM，抽早层 KV 得 visual latent c_t"]
+        DIT["cross-attention 注入扩散动作模型 π_φ"]
+        FZ --> DIT
+    end
+    PAIR --> D1
+    S --> D1
+    S --> D2
+    T --> LD
+    D2 --> D3
+    DIT --> OUT["输出动作 a_t"]
+```
 
 ### 关键设计
 

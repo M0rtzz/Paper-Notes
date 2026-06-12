@@ -44,6 +44,20 @@ tags:
 
 ReFi-GAD 要解决的是"PCA 对齐只统一维度、不统一语义"导致的跨域负迁移：与其在异构的原始特征上硬对齐，不如先把每个节点压成一组语义恒等的"关系指纹"，再在这个统一空间里学异常。给定一张图 $\mathcal{G}=(\mathcal{V},\mathcal{E},\mathbf{X})$ 和每类 $k$ 个标注节点的 few-shot support set，模型先对每个节点抽 5 维 ReFi 向量得到指纹矩阵 $\mathbf{P}$，再用一个上下文感知 Transformer 把指纹映到隐空间、用 SNR 模块按目标域重校准维度权重，最后让 query 与 support 算余弦相似度并 softmax 加权得到异常分。训练只在源域用 BCE 做 episodic 优化，推理时 support 不更新任何参数，是纯 training-free 的迁移。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图 G + few-shot support set"] --> B
+    subgraph REFI["5 维关系指纹 ReFi"]
+        direction TB
+        B["相似度感知图卷积<br/>抑制异常节点被平滑掉"] --> C["抽 5 维关系属性<br/>NP / ND / GD / 度 / 聚类系数"]
+        C --> D["rank 百分位变换<br/>跨域尺度统一、防特征坍缩"]
+    end
+    D --> E["上下文感知 Transformer 加不对称 attention mask<br/>support 互通、query 只看 support"]
+    E --> F["SNR 引导的域自适应维度重校准<br/>按目标域筛掉无信息维"]
+    F --> G["余弦相似度 + softmax 加权 → 异常分"]
+```
+
 ### 关键设计
 
 **1. 5 维关系指纹 ReFi：把"邻域一致性"显式编码为通用特征**

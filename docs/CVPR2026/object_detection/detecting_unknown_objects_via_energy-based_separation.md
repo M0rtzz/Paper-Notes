@@ -54,6 +54,30 @@ DEUS 的两个设计分别对应解决这两个问题。
 - **EUS（ETF-Subspace Unknown Separation）**：构建正交的已知/未知子空间，引导提案特征分离
 - **EKD（Energy-based Known Distinction）**：在记忆重放时分离新旧分类器的能量响应
 
+两个模块共享同一份提案特征 $f$：EUS 在训练时做三类（已知/未知/背景）分离、在推理时把子空间偏移校准进检测器原有的未知 logit；EKD 只在增量任务的记忆重放阶段激活，用同一套能量语言把旧类和新类的分类器响应拉开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["OrthogonalDet 基础检测器<br/>提取提案特征 f"]
+    subgraph EUS["ETF 子空间未知目标分离（EUS）"]
+        direction TB
+        C["Simplex ETF 生成 K 个正交基<br/>前 K/2 已知空间 / 后 K/2 未知空间"]
+        C --> D["分算自由能 E^K(f)、E^U(f)<br/>未知偏移 Δu = s_u − s_k"]
+        D --> E["能量间隔损失 + 子空间 focal loss<br/>已知 Δu≤−m / 未知 Δu≥m / 背景居中"]
+    end
+    subgraph EKD["能量基已知区分损失（EKD，仅记忆重放）"]
+        direction TB
+        G["分类头拆分<br/>旧任务 H_prev / 新任务 H_curr"]
+        G --> H["能量分数 S(f;H) 衡量亲和力<br/>对比损失拉开新旧类响应"]
+    end
+    B --> EUS
+    B --> EKD
+    EUS -->|推理校准| F["注入未知 logit<br/>z_u' = z_u + σ·Δu~"]
+    F --> I["开放世界检测<br/>已知类识别 + 未知目标召回"]
+    EKD --> I
+```
+
 ### 关键设计
 
 **1. ETF 子空间未知目标分离（EUS）：给未知目标一个专属表示空间，而不只是把它推离已知**

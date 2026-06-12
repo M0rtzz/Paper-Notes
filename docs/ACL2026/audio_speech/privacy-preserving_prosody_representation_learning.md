@@ -49,6 +49,28 @@ tags:
 
 最后，训练好的 encoder 被冻结，下游任务只使用 final encoder output layer。作者在 pitch reconstruction、phrase boundary detection、syllable prominence detection 三个 prosody 任务上评估表征能力，并在 VoxCeleb1 speaker identification 上评估隐私泄露程度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始语音"] --> B["声门源输入与低通过滤<br/>LPC 逆滤波估声门源 + 1 kHz 低通<br/>低能量帧回退原始波形"]
+    B --> C["prosody encoder<br/>卷积 + Transformer（HuBERT-base 结构）"]
+    A --> D
+    subgraph D["说话人归一化 hidden units（离线目标）"]
+        direction TB
+        D1["逐帧特征 [P, 说话人归一 logF0, ΔlogF0, c1]"] --> D2["corpus 级 z-norm"] --> D3["k-means 聚类 → 帧级 label"]
+    end
+    subgraph E["masked/span 目标 + 对抗说话人损失"]
+        direction TB
+        E1["L_mp 掩码预测：学局部韵律"]
+        E2["L_sb span 边界：学跨帧 suprasegmental"]
+        E3["L_spk_adv 梯度反转：压低身份"]
+    end
+    C --> E
+    D --> E
+    E --> F["冻结 encoder<br/>仅取最后一层输出"]
+    F --> G["下游评估<br/>音高重建 / 短语边界 / 音节突显 / VoxCeleb1 SID 隐私"]
+```
+
 ### 关键设计
 **1. glottal source 输入与低通过滤：把隐私保护前移到输入层，不给模型学到身份 shortcut 的机会**
 

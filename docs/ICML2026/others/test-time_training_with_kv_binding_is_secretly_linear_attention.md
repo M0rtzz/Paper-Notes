@@ -45,7 +45,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分三步：(1) 实证给出四个与记忆解读冲突的反例（Section 4）；(2) 用三条定理把 TTT-KVB 严格化为线性注意力的形式（Section 5）；(3) 沿这个理论提出一条把 LaCT/ViTTT 逐步剥成标准线性注意力的 ablation 路径（Variants 1-6），最终把 recurrent 实现替换为 parallel prefix-scan（Section 6）。
+论文分三步：(1) 实证给出四个与记忆解读冲突的反例（Section 4）；(2) 用三条定理把 TTT-KVB 严格化为线性注意力的形式（Section 5）；(3) 沿这个理论提出一条把 LaCT/ViTTT 逐步剥成标准线性注意力的 ablation 路径（Variants 1-6），最终把 recurrent 实现替换为 parallel prefix-scan（Section 6）。整条逻辑是「反例祛魅 → 展开定理 → 逐步剥皮 → 并行加速」的因果链，下面三个关键设计正好对应链条中段到末端的三个贡献节点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["四个记忆悖论反例<br/>梯度上升无伤 · Q↔K 互换无伤 · 内步越多越差 · Q/K 分布不对称"] --> B["内循环展开定理（Theorem 5.1–5.3）<br/>把内循环 GD 步显式展开"]
+    B --> C["TTT-KVB ≡ 学到的线性注意力算子<br/>梯度方向 / 动量 / 学习率全被吸进有效 q,k,v"]
+    C --> D["6 步剥皮 ablation 路径<br/>V1 只更新末层 → V2 去 weight norm → V3 单层 → V4 去 per-token lr → V5 去动量 → V6 = 标准线性注意力"]
+    D --> E["Parallel Prefix-Scan<br/>核函数静态 → 状态更新满足结合律 → 可并行"]
+    E --> F["吞吐 4× / 端到端训练 1.19×，性能几乎不掉"]
+```
 
 ### 关键设计
 

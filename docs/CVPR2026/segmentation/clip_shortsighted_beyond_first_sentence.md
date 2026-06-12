@@ -18,7 +18,7 @@ tags:
 **会议**: CVPR 2026  
 **arXiv**: [2602.22419](https://arxiv.org/abs/2602.22419)  
 **代码**: [https://github.com/TRAILab/DeBias-CLIP.git](https://github.com/TRAILab/DeBias-CLIP.git)  
-**领域**: 多模态VLM  
+**领域**: 语义分割  
 **关键词**: CLIP, 长文本检索, 注意力偏向, 首句偏差, 数据增强
 
 ## 一句话总结
@@ -42,6 +42,25 @@ tags:
 
 ### 整体框架
 DeBias-CLIP 想解决的是 CLIP 文本编码器只"看"首句、对长 caption 后半段几乎视而不见的近视毛病。它不动架构、不加参数，整套改动都落在训练时短 caption 的构造方式上。具体来说，它沿用 Long-CLIP 的双对比损失：长 caption 损失 $\mathcal{L}^\ell$ 把完整长文本和图像对齐，短 caption 损失 $\mathcal{L}^s$ 把一个文本子集和图像对齐。Long-CLIP 的做法是直接拿首句摘要当短 caption——而这正是首句偏向的源头。DeBias-CLIP 把短 caption 的来源换成"去掉首句、随机采样、再前移 padding"三步加工出来的片段，逼模型把注意力摊到整段文本上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长 caption [s₁,s₂,…,s_k]<br/>s₁ 为摘要句"]
+    A -->|完整长文本| F["文本编码器<br/>（共享，无新增参数）"]
+    A --> C
+    subgraph SHORT["短 caption 构造（DeBias-CLIP 的全部改动）"]
+        direction TB
+        C["去除摘要句<br/>C_nosum = [s₂,…,s_k]"] --> D["句子随机采样<br/>无放回抽若干句并打乱 → [s₄,s₂]"]
+        D --> E["Token 前缀填充<br/>[SOT,PAD,s₄,s₂,EOT,PAD]"]
+    end
+    E --> F
+    F --> G["与图像特征对齐"]
+    G -->|长文本·原始图像特征| H["长 caption 损失 L^ℓ"]
+    G -->|短文本·PCA 近似特征| I["短 caption 损失 L^s"]
+    H --> J["加权双对比损失<br/>L = λˢ·L^s + (1−λˢ)·L^ℓ"]
+    I --> J
+```
 
 ### 关键设计
 

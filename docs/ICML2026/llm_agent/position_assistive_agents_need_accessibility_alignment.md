@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 作者的核心主张是：盲人辅助 Agent 反复犯的安全错误，根子不在多模态能力不够，而在于当前 Agent 把"用户能用眼睛核对输出"当成了隐式前提，所以 accessibility 应当被提升到 alignment 层、与 helpful/harmless/honest 并列。论证分四步推进——先用 778 个真实任务实例建立任务-中心的 taxonomy 当地基，再从 BVI 场景的环境约束推出 4 类系统性失败模式，接着把这些失败归因到 3 条站不住的设计假设，最后给出一套四维对齐框架配三阶段生命周期 pipeline 作为补救方案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["417 篇文献 → 778 个盲人辅助任务实例"] --> B["实证地基<br/>任务-中心 taxonomy（阅读/出行/识别/VQA 四大类）"]
+    B --> C["诊断矩阵<br/>4 Stressor × 4 Failure Mode → 归因到 3 条隐式设计假设"]
+    C --> D["四维对齐框架<br/>Goal · Interaction · Risk · Lifecycle"]
+    D --> S
+    subgraph S["三阶段生命周期 pipeline"]
+        direction TB
+        E["Design：产出 6 个 artifact"] --> F["Deployment：artifact → runtime guardrail"]
+        F --> G["Post-deployment：near-miss 日志 + incident triage + 安全更新"]
+    end
+```
+
 ### 关键设计
 
 **1. 用 778 个任务实例做实证地基，堵死"accessibility 是边缘问题"的反驳**

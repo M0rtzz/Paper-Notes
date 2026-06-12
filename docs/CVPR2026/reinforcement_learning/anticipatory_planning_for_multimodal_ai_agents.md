@@ -46,6 +46,24 @@ tags:
 
 TraceR1 想解决的是一个很具体的毛病：现在的多模态智能体几乎都是"看一眼当前画面就决定下一步"的反应式选手，在多步任务里走着走着就偏题。它的做法不是去搭一个显式世界模型，而是让模型在每一步都先"想几步、走一步"——给定当前观测，一次性预测出未来多步的动作轨迹 $\hat{\tau}_{t:T}$，但真正执行的只有第一步，拿到环境反馈后再重新预测。整套训练分两阶段递进：Stage 1（Anticipatory Trajectory Optimization）用轨迹级 RL 把"看得远、看得连贯"先教会，Stage 2（Grounded Reinforcement Fine-tuning）再用冻结工具代理的真实执行反馈把"每一步做得准"补上。基座是 Qwen3-VL-8B-Thinking，训练框架用 EasyR1。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：用户指令 + 当前观测<br/>+ K 步交互历史"]
+    IN --> PRED["预测未来 T 步动作轨迹<br/>（每步含动作类型 + grounding 指令）"]
+    subgraph S1["Stage 1：轨迹级对齐优化（先学看得远）"]
+        direction TB
+        D1["轨迹级对齐奖励<br/>预测轨迹与参考轨迹整体对齐"]
+        D2["重复惩罚 + 时间折扣<br/>堵 reward hacking、先走稳近期"]
+        D1 --> D2
+    end
+    PRED --> S1
+    S1 -->|GRPO 组相对优势| MID["策略 π_θ：全局连贯的多步规划"]
+    MID --> D3["Grounded RL 微调（再学做得准）<br/>冻结工具代理执行第一步 → 坐标/答案匹配奖励"]
+    D3 -->|GRPO| TRAINED["训练好的规划模型"]
+    TRAINED --> D4["推理：Plan-Act 循环<br/>每步重预测整条轨迹、只执行第一步、滚动纠偏"]
+```
+
 ### 关键设计
 
 **1. 轨迹级对齐奖励：让模型一次想清楚未来几步，而不是逐 token 抠当前动作**

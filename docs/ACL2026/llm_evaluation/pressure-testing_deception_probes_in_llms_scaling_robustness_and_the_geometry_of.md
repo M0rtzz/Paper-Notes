@@ -51,6 +51,27 @@ tags:
 
 第五步，构造 8 种风格扰动（pirate、Shakespearean、childlike、formal academic、slang、robotic、poetic、sarcastic）测试 distribution shift，并进一步用 4 种风格做增强训练、剩余 4 种风格做 held-out 测试。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["数据构造<br/>D-RepE / D-Role / D-MASK 诚实-欺骗对比样本"]
+    DATA --> ACT["激活收集<br/>Gemma 3 1B/4B/12B/27B 各层末 token residual stream"]
+    ACT --> PROBE["探针训练<br/>逐层 L2 logistic regression，按 AUROC 选最优层"]
+    PROBE --> MATRIX
+    subgraph MATRIX["预注册几何假设矩阵"]
+        direction TB
+        HLIN["H-LIN 单一方向<br/>跨域 AUROC ≥ 0.90 ?"]
+        HSUB["H-SUB 多维子空间<br/>top-k PCA probe"]
+        HCONE["H-CONE 凸锥<br/>方向不对称 + permutation null"]
+        HENT["H-ENT 熵代理<br/>Logit Lens 熵相关 + 残差化"]
+    end
+    HLIN --> DECOMP["层级与跨域分解<br/>C1/C2/C3 拆开层错配与几何不共线"]
+    PROBE --> STYLE["风格扰动与风格增强对照<br/>8 种风格 shift，4 训 4 测 held-out"]
+    MATRIX --> REPORT["诊断报告<br/>四条几何解释哪条被证伪 / 留下"]
+    DECOMP --> REPORT
+    STYLE --> REPORT
+```
+
 ### 关键设计
 
 **1. 预注册几何假设矩阵：把“探针为什么准/为什么垮”拆成四个可证伪的几何解释，再逐个判生死**

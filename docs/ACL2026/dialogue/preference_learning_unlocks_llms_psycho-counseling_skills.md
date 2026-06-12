@@ -43,7 +43,30 @@ tags:
 
 ### 整体框架
 
-作者把"教模型做心理咨询"这件事重新表述成一个专业偏好学习问题：输入是来访者的陈述，输出是一条更像专业咨询师的回复，而中间的关键是一套能稳定区分好坏的偏好信号。整条管线分三层推进——先用专业原则把多个 LLM 对同一陈述的回复转化成偏好对，构建 PsyCoPref 数据集；再用这些偏好对训练一个 Bradley-Terry 奖励模型，学会判断"哪个回复更像专业咨询师"；最后以奖励模型为锚，用离线 DPO 和在线迭代 DPO 训练 policy model，并交由 GPT-4o 与真实心理咨询专家共同验证生成质量。
+作者把"教模型做心理咨询"这件事重新表述成一个专业偏好学习问题：输入是来访者的陈述，输出是一条更像专业咨询师的回复，而中间的关键是一套能稳定区分好坏的偏好信号。整条管线分三层推进——先用专业原则把多个 LLM 对同一陈述的回复转化成偏好对，构建 PsyCoPref 数据集；再用这些偏好对训练一个 Bradley-Terry（BT）奖励模型，学会判断"哪个回复更像专业咨询师"；最后以奖励模型为锚，用离线 DPO 和在线迭代 DPO 训练 policy model，并交由 GPT-4o 与真实心理咨询专家共同验证生成质量。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["来访者陈述<br/>多数据集收集去重，26,483 条"] --> B
+    P["PsychoCounsel 七维评价原则<br/>共情/相关/简洁/安全/自我探索/自主性/改变阶段"]
+    subgraph DATA["generate-score-pair 数据构造管线"]
+        direction TB
+        B["4 模型生成候选回复<br/>3B~70B + 商业模型"] --> C["GPT-4o 按七维原则逐维 1-5 分"]
+        C --> D["分差过滤<br/>训练集保留总分差 ≥ 1"]
+    end
+    P --> C
+    DATA --> E["PsyCoPref 偏好数据集"]
+    subgraph TRAIN["奖励模型与迭代式偏好学习"]
+        direction TB
+        F["奖励模型<br/>BT loss 拉开 chosen/rejected reward gap"]
+        F --> G["离线 DPO<br/>固定偏好分布优化"]
+        F --> H["在线迭代 DPO-Iter<br/>每轮生成 8 候选，奖励模型选极端对"]
+    end
+    E --> F
+    G --> I["GPT-4o + 真实专家联合验证"]
+    H --> I
+```
 
 ### 关键设计
 

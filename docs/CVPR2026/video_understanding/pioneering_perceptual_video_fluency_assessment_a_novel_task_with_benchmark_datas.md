@@ -43,7 +43,18 @@ tags:
 
 ### 整体框架
 
-FluNet 包含三个部分：patch embedding 层 $F_p$（单层卷积）、编码器 $F_e$（含 T-PSA 的四阶段 Transformer）和 VFA 预测头 $F_h$（两层逐点卷积）。输入视频 $V \in \mathbb{R}^{T \times H \times W \times 3}$ 先经过 $F_p$ 映射为特征图，再逐层编码，最后通过 $F_h$ 回归流畅度分数。整个架构基于 Swin Transformer 的层次化设计，四个 stage 分别含 (2,2,6,2) 个 T-PSA block。
+FluNet 包含三个部分：patch embedding 层 $F_p$（单层卷积）、编码器 $F_e$（含 T-PSA 的四阶段 Transformer）和 VFA 预测头 $F_h$（两层逐点卷积）。输入视频 $V \in \mathbb{R}^{T \times H \times W \times 3}$ 先经过 $F_p$ 映射为特征图，再逐层编码，最后通过 $F_h$ 回归流畅度分数。整个架构基于 Swin Transformer 的层次化设计，四个 stage 分别含 (2,2,6,2) 个 T-PSA block。模型先在合成排序数据上做自监督排序学习、再用 FluVid 数据集微调，这三块（T-PSA 架构、排序训练、FluVid 数据）正是下文的三项关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["合成排序数据<br/>HD-VILA 锚点 + 丢帧/复制帧造 K=7 递减版本"] -->|"自监督排序学习<br/>margin ranking loss"| C["两阶段训练得到 FluNet"]
+    B["FluVid 数据集<br/>前景/背景/相机三成分 + 专家流畅度 MOS"] -->|"微调 L1 损失"| C
+    C --> D["输入视频 128 帧"]
+    D --> E["Patch Embedding 单层卷积"]
+    E --> F["四阶段 Transformer 编码器<br/>时序排列自注意力 T-PSA（窗口 8→32）"]
+    F --> G["VFA 预测头 → 流畅度分数"]
+```
 
 ### 关键设计
 

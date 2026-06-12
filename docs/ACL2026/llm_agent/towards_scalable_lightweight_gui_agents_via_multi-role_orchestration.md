@@ -45,6 +45,34 @@ tags:
 
 LAMO 要回答的问题是：能不能让一个 3B 的轻量 MLLM 既具备 GUI 自动化所需的全部子能力，又能像多 Agent 系统那样灵活地分工协作。它的做法是先把 GUI 任务拆成五类原子技能，用教师模型为每类技能合成训练数据，再经过两阶段训练（PWCE 监督微调 + 多任务 GRPO）把这些技能压进同一组参数。训练完的 LAMO-3B 在推理时通过切换提示词扮演不同角色，从而支持三种由弱到强的工作模式：端到端单体推理、参数共享的多 Agent 协作、以及作为即插即用执行器搭配 GPT-5 这类先进规划器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GUI 任务拆成五类原子技能<br/>ATA / LCC / SU / GP / SG"]
+    subgraph DS["角色导向数据合成"]
+        direction TB
+        B["教师模型分技能合成数据<br/>Qwen2.5-VL-72B + Gemini-2.5-Pro"]
+        C["SG 难点：caption 扩写<br/>+ ILG 复杂布局增强"]
+        B --> C
+    end
+    A --> DS
+    subgraph TR["两阶段训练（技能压进同一组参数）"]
+        direction TB
+        D["阶段1：PWCE 监督微调<br/>困惑度加权偏向坐标 token"]
+        E["阶段2：多任务 GRPO 强化"]
+        D --> E
+    end
+    DS --> TR
+    TR --> F["LAMO-3B（参数共享多技能模型）"]
+    subgraph MR["多角色编排推理"]
+        direction TB
+        G["切换提示词扮演<br/>Observer → Planner → Allocator → Executor"]
+    end
+    F --> MR
+    MR -->|端到端单体 / 参数共享 MAS| H["LAMO-3B 自主完成全流程"]
+    MR -->|策略执行器：GPT-5 规划| I["LAMO-3B 当 Executor 精确落地操作"]
+```
+
 ### 关键设计
 
 **1. 角色导向数据合成：把长时序难题拆成可靠的子能力**

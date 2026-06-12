@@ -36,6 +36,19 @@ tags:
 ### 整体框架
 HINT 的目标是让 MLLM 听懂"这个/那个"到底指向哪——而这只有结合用户的手势才能确定。它没有改动主干，而是在标准 MLLM 旁边并起一条手意图流：逐帧处理时，视觉编码器照常吐出视觉 token $V_t$，同时用现成的 WiLoR 从画面里重建出 21 个 3D 手关键点 $K_t \in \mathbb{R}^{21 \times 3}$，再由一个轻量 Keypoint Adapter 把这串几何坐标压成一个手意图 token $H_t$。最后不是把两路特征拼到一起，而是按时间顺序交错排列（某帧的视觉 token 后紧跟该帧的手意图 token）一起喂给 LLM，让模型在生成答案时同时看到"画面里有什么"和"手指向了哪"。整套方法还配套了一个专门的数据集 EgoPointVQA，因为缺训练数据本身就是问题的一半。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["第一人称视频帧 t"] --> VE["视觉编码器<br/>→ 视觉 token V_t"]
+    F --> WL["WiLoR 重建<br/>→ 21 个 3D 手关键点 K_t"]
+    WL --> KA["Keypoint Adapter<br/>LN + 两层 MLP → 手意图 token H_t"]
+    VE --> IL["帧-关键点交错输入<br/>Frame-t: V_t, Keypoint-t: H_t"]
+    KA -->|"置信度 c_t ≥ 0.5 才插入"| IL
+    DATA["EgoPointVQA 数据集<br/>4000 合成 + 400 真实, 18745 QA"] -->|"LoRA 微调"| LLM
+    IL --> LLM["MLLM(LoRA 微调)<br/>自回归生成答案"]
+    LLM --> OUT["指示性问答答案"]
+```
+
 ### 关键设计
 
 **1. EgoPointVQA 数据集：先补上"手势指向问答"这块缺失的训练数据**

@@ -33,7 +33,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MoS 想解决的是多模态扩散模型里文本/视觉信号怎么灵活融合的问题。它用双塔设计：理解塔 $\mathcal{U}$（冻结的 PLM-8B/InternVL-14B）处理文本/图像条件，生成塔 $\mathcal{G}$（从头训练的 3B/5B DiT）进行扩散去噪。两塔之间插一个轻量路由器 $\mathcal{R}$（仅 100M 参数、2 个 Transformer 块），根据（prompt, 噪声图像 $z_t$, 时刻 $t$）动态决定理解塔哪些层的 hidden state 被路由到生成塔的哪些层。
+MoS 想解决的是多模态扩散模型里文本/视觉信号怎么灵活融合的问题。它用双塔设计：理解塔 $\mathcal{U}$（冻结的 PLM-8B/InternVL-14B）一次前向处理文本/图像条件、输出全部 $m$ 层 hidden state，生成塔 $\mathcal{G}$（从头训练的 3B/5B DiT）进行扩散去噪。两塔之间插一个轻量路由器 $\mathcal{R}$（仅 100M 参数、2 个 Transformer 块），它同时接收理解塔各层状态、噪声潜变量 $z_t$ 和去噪时刻 $t$，为每个 context token 预测一个路由矩阵，动态决定理解塔哪些层的 hidden state 被聚合后送进生成塔的哪一层。训练时理解塔冻结、只训生成塔与路由器，且每个去噪步都重新路由一次，形成"随去噪进度变化"的动态融合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    C["文本 / 图像条件 c"] --> U["理解塔 U（冻结 PLM-8B / InternVL-14B）<br/>一次前向 → 全部 m 层 hidden state"]
+    U --> R
+    T["噪声潜变量 z_t ＋ 去噪时刻 t"] --> R
+    subgraph R["路由器 R（约 100M，2 个 Transformer 块）"]
+        direction TB
+        R1["Token 级稀疏路由<br/>每 token 预测 m×n 路由矩阵，列向 softmax 取 top-k=2"]
+        R2["时刻敏感路由<br/>z_t、t 作为输入，路由随去噪进度变化"]
+        R3["ε-greedy 探索训练<br/>训练时以 ε 概率随机选层防锁死"]
+    end
+    R --> G["生成塔 G（3B / 5B DiT）<br/>第 j 块拼接路由来的 hidden state 做扩散去噪"]
+    G -->|每个去噪步 t 重复| T
+    G --> OUT["输出图像"]
+```
 
 ### 关键设计
 

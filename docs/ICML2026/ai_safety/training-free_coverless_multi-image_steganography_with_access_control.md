@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 MIDAS 要解决的是"在一张生成图里同时藏 N 张秘密图、还要按私钥分别授权解出"这件事，难点在于既不能训练新模型、又不能泄漏任何与秘密相关的辅助信息。它的做法是把整套机制都搬进预训练 Stable Diffusion v1.5 的 latent 空间（$C\times H\times W$），把"加密"和"消拼接缝"两件事统一成对 latent 向量施加正交矩阵。发送端把每张秘密图先反演成 noisy latent、用各自私钥加密后拼接，再整体融合进一张确定性生成的参考 latent，最后渲染成可公开传输的 stego 图像；接收端逆着这条路、只有持正确私钥的那一段才能解回有意义的图像。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 张秘密图 I_sec"] --> B["各图 DDIM forward → noisy latent z_sec"]
+    B --> C["Random Basis 私钥加密<br/>正交旋转 Q(K_priv,γ) 打散 latent 结构"]
+    C --> D["按私钥分别加密后上下拼接 → z_prot"]
+    K["RefGen 无 control image 参考图生成<br/>公钥种子 + 公开 prompt 确定性生成 I_ref → z_ref"] --> E
+    D --> E["Latent Vector Fusion 拼接融合<br/>z_pub = √α·Q(K_pub)·z_prot + √(1−α)·z_ref"]
+    E --> F["DDIM reverse + 公开 prompt → 可公开传输的 stego 图 I_stego"]
+```
+
 ### 关键设计
 
 **1. Random Basis 私钥加密：用正交旋转替代符号翻转，给出可证泄漏界**

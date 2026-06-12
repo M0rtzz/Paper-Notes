@@ -47,8 +47,27 @@ FOCUS 通过"完全去除类别名 + 注意力 mask 优化 + GRPO IoU 奖励"两
 输入序列：$\mathcal{C} = \langle \text{prompt}, (I_1, b_1), \dots, (I_{T-1}, b_{T-1}), I_T \rangle$ —— 注意无类别信息
 
 **训练两阶段**：
-1. Stage 1：SFT + bbox attention mask 损失（强制 query token 给 bbox token 高 attention）
+1. Stage 1：SFT + bbox attention mask 损失（强制 query token 给 bbox token 高 attention），仅训练 LoRA 权重
 2. Stage 2：GRPO + IoU reward 微调
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["去类别 Prompt<br/>支持对 (图, bbox) × (T−1) + 查询图"] --> B["VLM 编码为图文 token 序列"]
+    subgraph S1["Stage 1：SFT + Bbox 注意力优化"]
+        direction TB
+        C["聚合各层各头注意力得 A"] --> D["取查询图 token 对应行 P"]
+        D --> E["bbox token mask 标位置<br/>margin hinge 损失 L_bbox"]
+    end
+    B --> C
+    S1 -->|"L_SFT = L_LM + β·L_bbox（仅训 LoRA）"| F
+    subgraph S2["Stage 2：GRPO 精修"]
+        direction TB
+        F["对查询采样 G 个 bbox rollout"] --> G2["IoU 奖励 + 格式奖励"]
+        G2 --> H["组内归一化得 advantage，更新策略"]
+    end
+    H --> I["输出查询 bbox 预测"]
+```
 
 ### 关键设计
 
@@ -58,11 +77,11 @@ VLM 在 ICOL 上严重依赖类别名偏置——query 里只要出现"dog""bowl
 
 **2. Bounding Box Attention Optimization：直接监督 query token 该看哪里**
 
-论文 §3 的证据显示：即便去掉类别词，vanilla 模型的 attention 仍然 diffuse，并不集中在 support 对应区域——问题不是缺信息，而是 attention 错配。FOCUS 于是显式监督注意力分布：先把各层各头的 attention 聚合成 $A = \tfrac{1}{LH}\sum_{\ell, h} A^{(\ell, h)}$，取出 query image token 对应的行 $P \in \mathbb{R}^{N \times T}$，用 binary mask $m$ 标出 bbox token 的位置，attention loss 鼓励 $P$ 在 mask=1（bbox token）处 attention 高、其他位置低。这是 attention 工程而非架构创新，却是单组件里最大的贡献（消融里 +4.5 AP），因为它强迫模型真正去"看 support 的几何"，而不是停留在类别相关的浅层模式上。
+论文 §3 的证据显示：即便去掉类别词，vanilla 模型的 attention 仍然 diffuse，并不集中在 support 对应区域——问题不是缺信息，而是 attention 错配。FOCUS 于是显式监督注意力分布：先把各层各头的 attention 聚合成 $A = \tfrac{1}{LH}\sum_{\ell, h} A^{(\ell, h)}$，取出 query image token 对应的行 $P \in \mathbb{R}^{N \times T}$，用 binary mask $m$ 标出 support 的 bbox token 位置。它不直接拉高 bbox token 的绝对注意力，而是用一个 **margin hinge 损失**：先算每个 query token 落到 bbox token 上的平均注意力 $p^+_i$ 与落到非 bbox token 上的平均注意力 $p^-_i$，取偏好间隔 $\Delta_i = p^+_i - p^-_i$，再以 $\mathcal{L}_{\text{bbox}} = \tfrac{1}{N}\sum_i \max(0, \mu - \Delta_i)^2$ 强制 bbox token 比无关 token 至少高出 margin $\mu$。它和语言建模损失合成 SFT 目标 $\mathcal{L}_{\text{SFT}} = \mathcal{L}_{\text{LM}} + \beta\,\mathcal{L}_{\text{bbox}}$（只更新 LoRA 权重）。这是 attention 工程而非架构创新，却是单组件里最大的贡献（消融里 +4.5 AP），因为它强迫模型真正去“看 support 的几何”，而不是停留在类别相关的浅层模式上。
 
 **3. GRPO + IoU Reward 精修：用 RL 直接对齐定位误差**
 
-SFT 的 token-level cross-entropy 和"bbox 几何对不对齐"只是间接相关，模型最省力的解未必是几何最优。FOCUS 在 SFT 收敛后接一段 GRPO（Group Relative Policy Optimization）：对每个 prompt 采样若干 bbox rollout，直接用 $\text{reward}=\text{IoU}(\text{predicted}, \text{ground-truth})$ 排序得到 group advantage，无需 critic。RL 目标和任务目标（IoU）完全一致，GRPO 在 bbox 坐标这种结构化连续输出、小 batch 下又比 PPO 更稳——消融里 SFT 之后再加 GRPO 还能涨 3.3 点，正是补上了"SFT loss 与 IoU 间接对齐"的缺口。
+SFT 的 token-level cross-entropy 和“bbox 几何对不对齐”只是间接相关，模型最省力的解未必是几何最优。FOCUS 在 SFT 收敛后接一段 GRPO（Group Relative Policy Optimization）：对每个 prompt 采样 $G$ 个 bbox rollout，奖励由两部分组成——IoU 奖励 $r_{\text{iou}}=\text{IoU}(b_{\text{pred}}, b_{\text{qry}})$ 直接对齐查询真值、格式奖励则约束输出符合 `<answer>[xmin,ymin,xmax,ymax]</answer>` 的语法。组内对奖励做均值/方差归一化得到 advantage $A_i$，无需 critic。RL 目标和任务目标（IoU）完全一致，GRPO 在 bbox 坐标这种结构化连续输出、小 batch 下又比 PPO 更稳——消融里 SFT 之后再加 GRPO 还能涨 3.3 点，正是补上了“SFT loss 与 IoU 间接对齐”的缺口。
 
 ## 实验关键数据
 

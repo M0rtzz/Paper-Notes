@@ -40,17 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Geo-R1 用 Qwen2.5-VL-7B 作 base，分两阶段后训练：阶段 1 是 Geospatial Thinking Scaffolding，用 CV-Cities 派生的 12.6K 高质量 CoT 数据进行 SFT，给模型注入统一的地理推理模板（看视觉线索 → 跨视图对照证据 → 关联气候带等地理知识 → 给出结论）；阶段 2 是 Reasoning Elevation via Indirect Signals，把训练目标切换到 Cross-View Pairing：给定地面全景 $I_g$ 与 $k$ 张候选卫星图 $\mathcal S=\{I_s^1,\dots,I_s^k\}$（含 1 个正例 + $k-1$ 个邻域 hard negatives），让模型用 CoT 推理后挑出正例。奖励用 GRPO 的 group-relative 形式优化复合 reward $r=\lambda_{\mathrm{acc}}r_{\mathrm{acc}}+\lambda_{\mathrm{fmt}}r_{\mathrm{fmt}}+\lambda_{\mathrm{len}}r_{\mathrm{len}}+\lambda_{\mathrm{rep}}r_{\mathrm{rep}}$。SFT 与 RL 都做全参数微调，8×H100，借助 LLama-Factory + VLM-R1 + vLLM 加速推理。
+Geo-R1 用 Qwen2.5-VL-7B 作 base，分两阶段后训练：阶段 1 是 Geospatial Thinking Scaffolding，用 CV-Cities 派生的 12.6K 高质量 CoT 数据进行 SFT，给模型注入统一的地理推理模板（看视觉线索 → 跨视图对照证据 → 关联气候带等地理知识 → 给出结论）；阶段 2 是 Reasoning Elevation via Indirect Signals，把训练目标切换到 Cross-View Pairing：给定地面全景 $I_g$ 与 $k$ 张候选卫星图 $\mathcal S=\{I_s^1,\dots,I_s^k\}$（含 1 个正例 + $k-1$ 个邻域 hard negatives），让模型用 CoT 推理后挑出正例。奖励用 GRPO 的 group-relative 形式优化复合 reward $r=\lambda_{\mathrm{acc}}r_{\mathrm{acc}}+\lambda_{\mathrm{fmt}}r_{\mathrm{fmt}}+\lambda_{\mathrm{len}}r_{\mathrm{len}}+\lambda_{\mathrm{rep}}r_{\mathrm{rep}}$。SFT 与 RL 都做全参数微调，8×H100，借助 LLama-Factory + VLM-R1 + vLLM 加速推理。两条产物对应两种入口：从 Geo-SFT 续训得到 Geo-R1，从基座跳过 scaffolding 直接 RL 得到 Geo-R1-Zero。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Qwen2.5-VL-7B 基座"] --> B["阶段1·CoT Scaffolding<br/>12.6K 单一推理模板 SFT<br/>+ Fact-Check 校验坐标/城市名"]
+    B --> C["Geo-SFT"]
+    subgraph S2["阶段2·间接信号驱动的推理提升（RL）"]
+        direction TB
+        D["Cross-View Pairing 代理任务<br/>地面全景 + k 张卫星候选<br/>同邻域 hard negatives 堵 shortcut"]
+        D --> E["GRPO 复合可验证奖励<br/>r = λ_acc·r_acc + 格式/长度/重复正则"]
+    end
+    C -->|接 Geo-SFT 续训 → Geo-R1| S2
+    A -.从基座直接 RL → Geo-R1-Zero.-> S2
+    S2 --> G["零样本迁移到 25+ 地理空间任务"]
+```
 
 ### 关键设计
 
-**1. Cross-View Pairing + Hard-Negative Bottleneck：用可验证的代理任务逼出 view-invariant 特征**
-
-间接奖励能不能激发推理是本文最被质疑的点，第一项设计就把这个疑点固化成可证伪定理。作者把图像信息拆成 view-invariant 几何语义 $\Phi(I)$ 和模态特异的 nuisance 因素 $N(I)$，再从同一时空邻域采样 hard negatives，使得 $\mathcal I(Y;N(\mathcal S))=0$——也就是说任何只依赖 nuisance 作弊的策略都只能拿到最大熵 $\mathcal H(Y|\pi_{shortcut})=\log K$（Theorem 3.1），等于瞎猜。于是哪怕只用二值奖励 $r_{acc}\in\{-1,+1\}$，模型要想拿分就必须最大化 $\mathcal I(C;Y|\mathcal S)\Leftrightarrow\mathcal I(C;\Phi(I_s^*))$，即推理链 $C$ 被迫去编码可迁移的几何语义 $\Phi$（物体几何、阴影方向、建筑布局）。hard negatives 在这里不是普通的难例，而是把"靠 nuisance 抄近路"这条路彻底堵死的瓶颈，难度差距 $\Delta\mathcal H=\log K$ 正是 RL 必须跨越的 reasoning margin。
-
-**2. CoT Scaffolding：只注入一种推理范式，避免 RL cold-start 又不引入遗忘**
+**1. CoT Scaffolding：只注入一种推理范式，避免 RL cold-start 又不引入遗忘**
 
 直接从 base 模型上 RL 容易 cold-start 崩塌，但传统 SFT 为保证多样性会灌大量任务、反而破坏后续 RL。Geo-R1 反其道而行——只用 CV-Cities 合成的 12.6K 推理 trace 注入**单一**模板："分析视觉线索 → 跨视图证据印证 → 关联地理常识 → 输出答案"，并引入 Fact-Check Engine 用 metadata 校验坐标 / 城市名等关键实体，保证 scaffold 不学到错事实。这样设计的逻辑是：SFT 阶段只负责把"怎么组织一段地理推理"这个范式灌进去，具体能力让 RL 阶段自己探索，既拿到了 RL warm-up，又把灾难性遗忘降到最低。
+
+**2. Cross-View Pairing + Hard-Negative Bottleneck：用可验证的代理任务逼出 view-invariant 特征**
+
+间接奖励能不能激发推理是本文最被质疑的点，这项核心设计就把这个疑点固化成可证伪定理。作者把图像信息拆成 view-invariant 几何语义 $\Phi(I)$ 和模态特异的 nuisance 因素 $N(I)$，再从同一时空邻域采样 hard negatives，使得 $\mathcal I(Y;N(\mathcal S))=0$——也就是说任何只依赖 nuisance 作弊的策略都只能拿到最大熵 $\mathcal H(Y|\pi_{shortcut})=\log K$（Theorem 3.1），等于瞎猜。于是哪怕只用二值奖励 $r_{acc}\in\{-1,+1\}$，模型要想拿分就必须最大化 $\mathcal I(C;Y|\mathcal S)\Leftrightarrow\mathcal I(C;\Phi(I_s^*))$，即推理链 $C$ 被迫去编码可迁移的几何语义 $\Phi$（物体几何、阴影方向、建筑布局）。hard negatives 在这里不是普通的难例，而是把"靠 nuisance 抄近路"这条路彻底堵死的瓶颈，难度差距 $\Delta\mathcal H=\log K$ 正是 RL 必须跨越的 reasoning margin。
 
 **3. GRPO + 复合可验证奖励：纯 outcome 信号下产出结构合规、长度适中的推理链**
 

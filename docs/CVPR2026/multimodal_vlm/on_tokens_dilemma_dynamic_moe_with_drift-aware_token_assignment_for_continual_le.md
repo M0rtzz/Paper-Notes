@@ -47,6 +47,19 @@ tags:
 
 整篇方法因此分两步走：先用一组受控实验把"到底是哪些 token 在制造漂移"看清楚，把 token 按路由倾向分成三类；再针对这三类的不同脾气下两道约束——Token Assignment Guidance (TAG) 在训练时直接改写路由分数、把可疑 token 挡在新专家门外，Routing Score Regularization (RSR) 用软损失从梯度上进一步推动"非此即彼"的排他路由。两道约束都只在训练时生效，推理时完全撤掉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["新任务到来：新增 LoRA 专家+路由<br/>旧专家/旧路由全冻结"] --> B["逐 token 算新/旧组最大路由分<br/>c_new = max(s_new), c_old = max(s_old)"]
+    B --> C["Token 类型分析<br/>按相对差异 D_rel 分 new/old/ambiguous"]
+    C --> D{"Token Assignment Guidance<br/>非模糊且新组主导?"}
+    D -->|"是·new token"| E["放行流向新专家学新知识"]
+    D -->|"否·old/ambiguous"| F["新组分数置 −∞，导回旧专家"]
+    E --> G["Routing Score Regularization<br/>L_exc 排他 + L_spe 专化"]
+    F --> G
+    G --> H["总损失 L_NTP + λL_aux + α(L_exc+L_spe)<br/>仅训练时生效，推理零约束"]
+```
+
 ### 关键设计
 
 **1. Token 类型分析与 Token 困境：先搞清楚到底是谁在制造遗忘**

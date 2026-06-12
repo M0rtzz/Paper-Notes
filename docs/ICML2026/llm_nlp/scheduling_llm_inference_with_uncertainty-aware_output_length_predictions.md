@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 方法把"预测一个长度数字"换成"预测一个长度分布再算风险敏感优先级"，跑在 vLLM 上。离线先为每个 prompt 用 MLE 拟合 log-t 分布参数当训练标签；在线时一个 fine-tuned DeBERTa-v3-base 直接从 prompt 预测分布参数，TIE 调度器把这个分布转成一个标量优先级喂给 vLLM 的最小堆队列，并用异步预测把预测开销藏在主循环之外。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线：每 prompt 多次采样长度<br/>MLE 拟合 log-t 参数作训练标签"] --> B["训练 DeBERTa 预测头<br/>两阶段 MSE 回归 (μ,σ)"]
+    B --> C["在线：新请求 prompt 到达"]
+    C --> D["异步预测 + 动态 batching<br/>先以 max_tokens 暂入堆<br/>背景线程攒 32 条 / 3ms 批量预测"]
+    D --> E["log-t 分布拟合输出长度<br/>由预测 (μ,σ) 还原长度分布"]
+    E --> F["TIE 等效长度<br/>截断后算 E[X]+β·CVaR<br/>自适应 β + 等待衰减防饿死"]
+    F --> G["写回 vLLM 最小堆 O(log n) 重排<br/>按分数从小到大调度解码"]
+```
+
 ### 关键设计
 
 **1. log-t 分布拟合输出长度：用分布替代点估计**

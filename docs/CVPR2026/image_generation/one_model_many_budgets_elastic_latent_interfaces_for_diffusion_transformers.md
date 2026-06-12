@@ -41,6 +41,19 @@ tags:
 
 ELIT 要解决 DiT 的两个刚性问题：每步 FLOPs 被分辨率写死、无法按需调节，而且对所有空间 token 均匀分配计算、白白浪费在简单背景上。它的办法是在标准 DiT 里塞进一段“可变长度的潜变量接口”，让推理时的潜变量 token 数 $K$ 变成一个用户旋钮，直接决定每步算力。整体是三段式结构：输入先过 Spatial Head（$B_{\text{in}}$ 个 block）提取空间特征；Read 层用轻量跨注意力把空间信息抽进 $K$ 个潜变量 token（优先关注高损失的困难区域）；主算力放在 Latent Core（$B_{\text{core}}$ 个标准 block）的潜变量域里；Write 层再把更新后的潜变量广播回空间 token；最后 Spatial Tail（$B_{\text{out}}$ 个 block）恢复细节、输出速度预测。调大或调小 $K$，就在同一个模型里平滑地换算力预算。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入潜变量 X_t + 时间步 t"] --> B["Spatial Head<br/>B_in 个标准 block 提空间特征"]
+    B --> C["Read 跨注意力<br/>K 个潜变量 token 为 Query 抽空间信息<br/>分组跨注意力降复杂度"]
+    C --> D["Latent Core<br/>B_core 个标准 block 在潜变量域算主算力"]
+    D --> E["Write 跨注意力<br/>更新后潜变量广播回空间 token"]
+    E --> F["Spatial Tail<br/>B_out 个 block 恢复细节"]
+    F --> G["输出：速度预测"]
+    K["尾部随机丢弃<br/>训练随机采样 K、推理调 K 换算力预算"] -.控制.-> C
+    G -.低预算弱模型做引导.-> H["Cheap CFG<br/>主项满预算 + 引导项低预算"]
+```
+
 ### 关键设计
 
 **1. Read/Write 跨注意力：用两层对称跨注意力打通空间域与潜变量域**

@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 方法要解决的是"音频 codec 的解码-重编码不幂等让 token 级 KGW 水印信号指数衰减"这个核心问题。它的破局点是不再把水印规则绑死在 token 身份上，而是先离线把容易互相混淆的 token 聚成"簇"，再把整套 KGW 规则上移到簇这一层。整条流程拆成两个解耦阶段：离线阶段用 codec 自身的混淆统计蒸馏出一张 token→cluster 映射表，在线阶段直接复用标准 KGW 的采样-检测范式、只是把绿/红划分和 hash 上下文都换成簇粒度，从而在不动 codec 参数、只黑盒查询 encoder/decoder 的前提下保住信号。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["基于混淆矩阵的社区检测词表蒸馏（离线）"]
+        direction TB
+        A["无标签音频数据集"] --> B["逐条 E→D→E 重编码<br/>统计 token 混淆计数"]
+        B --> C["混淆矩阵 M（加权有向图）"]
+        C --> D["Leiden 社区检测<br/>最大化 modularity"]
+        D --> E["token→簇 映射 C<br/>词表收缩 c 倍"]
+    end
+    R["多通道 resolution<br/>每个 RVQ 通道单独定 ρ（熵↔鲁棒权衡）"] -.-> D
+    E --> F
+    subgraph ONL["Cluster 级 KGW（在线 + 检测）"]
+        direction TB
+        F["前 h 个 token 的簇算 hash → 划绿簇集 G_i"] --> G["对落入 G_i 的所有 token 加 δ 偏置<br/>采样 → 加水印音频"]
+        G --> H["检测：波形重编码 → token→簇"]
+        H --> I["簇级二项检验 → z-score"]
+    end
+```
+
 ### 关键设计
 
 **1. 基于混淆矩阵的社区检测词表蒸馏：让聚类目标对齐水印检测目标**

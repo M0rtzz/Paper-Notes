@@ -45,6 +45,20 @@ $$F(i,j) = A(i,j) \times DM(i,j) + B(i,j) \times (1 - DM(i,j))$$
 
 整条链路没有任何可学习权重，参数全由对神经元放电行为的理论分析自动定出。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["源图像对 A、B"] --> SA["SML 输入预处理（A 路）<br/>像素值→局部清晰度信号"]
+    IN --> SB["SML 输入预处理（B 路）"]
+    SA --> CA["CNP 系统 Φ_A<br/>神经动力学约束下放电"]
+    SB --> CB["CNP 系统 Φ_B<br/>神经动力学约束下放电"]
+    CA --> FA["脉冲矩阵 SM_A → 计数 F_A"]
+    CB --> FB["脉冲矩阵 SM_B → 计数 F_B"]
+    FA --> DM["脉冲计数决策图生成<br/>逐像素比 F_A、F_B"]
+    FB --> DM
+    DM --> OUT["像素级融合<br/>F = A·DM + B·(1−DM)"]
+```
+
 ### 关键设计
 
 **1. CNP 神经元动力学分析：用闭式约束堵住"异常持续放电"**

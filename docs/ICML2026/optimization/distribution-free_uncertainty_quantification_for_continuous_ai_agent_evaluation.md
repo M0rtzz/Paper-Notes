@@ -44,6 +44,17 @@ tags:
 AgentPulse 每小时从 19 个数据源采集信号，对 50 个 agent 算一个四因子复合分：
 $\mathrm{AP}(a)=0.35\,B(a)+0.25\,A(a)+0.20\,S(a)+0.20\,E(a)$，其中 $B$ 是 benchmark（SWE-bench/GAIA/WebArena/HumanEval+/TAU-bench，缺失用中性先验 0.5），$A$ 是 GitHub stars/包下载/VSCode 安装的对数归一组合，$S$ 是 VADER/TextBlob/FinBERT/DistilBERT-SST2 在 9 个平台文本上的情感融合（200 条校准文本上 $\kappa{=}0.81$），$E$ 是 contributor depth + issue 关闭率 + release 新鲜度。预测用均值回归 $\widehat{\mathrm{AP}}_{t+h}(a)=\mathrm{AP}_t(a)+\lambda(\overline{\mathrm{AP}}-\mathrm{AP}_t(a))\cdot h$，$\lambda{=}0.003$（ADF 检验在 42/50 agent 上拒绝单位根）。不确定性侧由下面三个关键设计支撑。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["19 数据源·每小时采集"] --> B["四因子复合分 AP(a)<br/>0.35B + 0.25A + 0.20S + 0.20E"]
+    B --> C["均值回归预测 ÂP(t+h)<br/>λ=0.003"]
+    C --> D["Split Conformal + ACI<br/>分布无关区间 + 释放冲击下漂移自适应扩宽"]
+    D --> E["Mondrian 条件覆盖<br/>按 σ_cross 分 stable/volatile 两组各自校准分位"]
+    E --> F["组合管线界 + BH-FDR 受控弃权<br/>多阶段管线两端界 / 1225 对比较弃权 + FDR 校正"]
+    F --> G["输出：带覆盖保证的区间 + 错排率受控的榜单"]
+```
+
 ### 关键设计
 
 **1. Split Conformal + ACI 双层覆盖：在分布无关的基础上再补一层漂移自适应**

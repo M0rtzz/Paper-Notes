@@ -44,6 +44,33 @@ tags:
 
 输入是一个 Top-$K$ MoE actor 在 PPO 训练管线中的 forward 输出；输出是一项加进 PPO loss 的可微正则项。整个 derivation 是一串"逐层下行的代理"：$r_e(\mathbf{K}) \to r_e(G^{\mathrm{GN}}) \to$ 块对角近似 $\to$ 各层 expert 块 $r_e(\mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell) \to$ Kronecker proxy 的条件数下界 $\frac{k_\ell}{\kappa(\mathbf{A}^{\mathrm{exp}}_{\ell-1} \otimes \mathbf{G}^{\mathrm{exp}}_\ell)} \to$ 只对 $\mathbf{A}^{\mathrm{exp}}_{\mathrm{last}}$（最后一层、权重最重的 expert block）做谱收缩。最终的 loss 长这样：$\mathcal{L} = \mathcal{L}_{\mathrm{PPO}} + \lambda^e \cdot \|\mathbf{A}^{\mathrm{exp}}_{\mathrm{last}} - \tfrac{\mathrm{Tr}(\mathbf{A}^{\mathrm{exp}}_{\mathrm{last}})}{m}\mathbf{I}_m\|_F^2$。
 
+下面这张图把这条"从不可计算的全局量逐步降到一行可微罚"的归约链画出来，三个虚线分组正对应后面的三个关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    K["eNTK 矩阵 K = J·Jᵀ（N×N）<br/>有效秩 r_e(K) 直接刻画可塑性<br/>但 O(N²P) 不可形成、不可优化"]
+    subgraph D1["eNTK → Gauss-Newton + 块对角近似"]
+        direction TB
+        GN["参数空间 G^GN = JᵀJ / N<br/>与 K 共享非零谱 → r_e 相等"]
+        BD["K-FAC 块对角拆分（Lemma 4.1）<br/>门控块权重可忽略 → 收敛到逐层 expert 块"]
+        GN --> BD
+    end
+    subgraph D2["Kronecker proxy + 条件数下界"]
+        direction TB
+        CONCAT["门控加权后跨 expert 拼接特征<br/>→ 加权专家 Gram A^exp"]
+        KRON["层内独立 → A^exp ⊗ G^exp<br/>得可优化下界 r_e ≥ k / κ(·)"]
+        CONCAT --> KRON
+    end
+    AL["只取最后一层 A^exp_last<br/>（forward 顺手算、维度仅数百）"]
+    subgraph D3["SPHERE Parseval 罚"]
+        direction TB
+        PEN["‖A − (TrA/m)·I‖_F² 把谱推向均匀<br/>可证谱收缩、κ 单减 → r_e(K) 单调升"]
+    end
+    LOSS["L = L_PPO + λ·L_SPHERE(A^exp_last)"]
+    K --> D1 --> D2 --> AL --> D3 --> LOSS
+```
+
 ### 关键设计
 
 **1. 从 eNTK 到 Gauss-Newton + 块对角近似：把"不可形成的全局矩阵"降成"逐层 expert 块"**

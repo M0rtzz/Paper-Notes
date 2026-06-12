@@ -44,6 +44,19 @@ tags:
 
 系统维护 $N$ 个 slot (最大并发数)：decode 相位每完成一个请求腾出一个 slot，空闲 slot 攒到阈值 $k$ 时切进 prefill 相位、把 $k$ 条新请求并行灌进腾出的位置，prefill 完再回到 decode，如此循环。围绕"$k$ 取多少 / $N$ 开多大 / EB 还是 MB"这三件事，下面三个设计依次给出闭式答案与在线落地方式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["滑窗统计输入/输出长度<br/>拟合 hazard rate h(t)=p₀+ηt"] --> B["CFR 基线阈值 θ₀<br/>常数 hazard 下解根方程定切相位阈值"]
+    B --> C["IFR 校正与解耦优化<br/>扰动展开得 θ*，再反求内存安全批大小 N*"]
+    C --> D["k* = ⌊θ* · N*⌋<br/>攒够 k* 个空 slot 切回 prefill"]
+    D --> E{"EB+ 在线判据<br/>边际成本差 vs O(1/N)"}
+    E -->|带宽紧张 / 重载| F["走 EB：分相轮换省 TPOT"]
+    E -->|带宽富裕 / 轻载| G["走 MB：相位重叠省 TTFT"]
+    F --> A
+    G --> A
+```
+
 ### 关键设计
 
 **1. CFR 基线阈值 $\theta_0$：在常数 hazard rate 下定下"攒几个再切"**

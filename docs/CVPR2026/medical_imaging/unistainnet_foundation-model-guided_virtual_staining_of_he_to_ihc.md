@@ -41,6 +41,22 @@ tags:
 
 UNIStainNet 要把常规 H&E 切片虚拟染成 IHC，难点在于 H&E 和 IHC 取自连续切片、天然有 10–50px 的空间错位，像素级损失根本不可靠，而且过去每种染色都得单独训一个模型。它的做法是一个 SPADE-UNet 生成器 $\hat{x}_{\text{IHC}} = G(x_{\text{HE}}, U, y)$：把冻结的病理基础模型 UNI 抽出的密集空间 token 当作调制信号注入生成器，用多尺度边缘编码器（RGB + Sobel 梯度图在 5 个尺度提结构特征）补结构，用 SPADE+FiLM 双重调制把“组织级语义”和“染色类型”分别灌进解码器，再配一个无条件 PatchGAN 判别器。输入端 512×512 图像被切成 4×4 子图分别过冻结的 UNI (ViT-L/16)，拼成 32×32 的 1024 维 token 网格，轻量处理器 $\mathcal{P}$ 再生成 $s \in \{32,64,128,256\}$ 四个尺度的调制图 $U^{(s)}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    HE["H&E 输入 512×512"]
+    HE --> UNI["切 4×4 子图过冻结 UNI ViT-L/16<br/>拼成 32×32×1024 token，处理器 P 出 4 个尺度调制图"]
+    HE --> ENC["CNN 编码器：5 次下采样<br/>+ 自注意力瓶颈"]
+    HE --> EDGE["多尺度边缘编码器<br/>RGB + Sobel 梯度，5 个尺度"]
+    STAIN["统一多染色：64 维染色嵌入<br/>一张嵌入表服务 HER2/Ki67/ER/PR"]
+    UNI --> DUAL["双重 SPADE+FiLM 调制<br/>UNI 空间调制管组织语义 + 染色嵌入通道调制管染色类型"]
+    ENC --> DUAL
+    EDGE --> DUAL
+    STAIN --> DUAL
+    DUAL --> OUT["生成 IHC 图"]
+    OUT --> LOSS["错位感知损失<br/>低分感知 / 64px L1 / 边缘 / DAB / 无条件 PatchGAN"]
+```
+
 ### 关键设计
 
 **1. 双重 SPADE+FiLM 调制：让基础模型语义和染色类型分头控制生成**

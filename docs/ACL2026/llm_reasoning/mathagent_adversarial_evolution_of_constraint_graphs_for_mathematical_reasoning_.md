@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 MathAgent 分为两个解耦阶段：(1) Meta-Level 结构进化：Legislator 三Agent系统在约束图空间中对抗进化，产出优化的问题骨架 $\mathcal{G}^*$；(2) Base-Level 语义实例化：Executor 将 $\mathcal{G}^*$ 和风格令牌 $\mathcal{S}$ 转化为自然语言问题 Q 和推理链 A。最后通过外部模型验证筛选合格样本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始化（对抗机制自动构建）<br/>概念分类学 + 风格令牌池 S"] --> G0["约束图表示<br/>G=(V,E)：节点=概念，边=逻辑关系"]
+    subgraph LEG["Legislator 三 Agent 进化系统（Meta-Level）"]
+        direction TB
+        P["Proposer：进化约束图<br/>消解矛盾·扩展结构深度"]
+        C["Critic：审查新图<br/>一致性·规范对齐·优化潜力"]
+        M{"Moderator：是否收敛？"}
+        P --> C --> M
+        M -->|否，指导继续进化| P
+    end
+    G0 --> LEG
+    LEG -->|收敛，输出骨架 G*| E["Executor 语义实例化<br/>G* + S → 问题 Q 与推理链 A"]
+    E --> J{"外部 LLM judge 验证<br/>逻辑正确·问答一致"}
+    J -->|不通过，重采样| E
+    J -->|通过| OUT["合格样本入库 → SFT 微调目标模型"]
+```
+
 ### 关键设计
 
 **1. 约束图表示：把数学题的逻辑骨架从文字里剥离出来**

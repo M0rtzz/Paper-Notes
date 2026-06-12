@@ -42,24 +42,29 @@ tags:
 ### 整体框架
 CorrSteer 的输入是一个 base LLM、对应的多层 SAE、一个带标签的小型评测集 (~4k 样本) 与一个 benchmark 类别 (multi-choice/safety/factuality 等)。流水线分三个阶段, 全部自动: (1) 在生成时刻把每个 SAE 特征 $z_i$ 的激活与样本是否正确 $y_j \in \{0,1\}$ 计算 Pearson 相关 $r_i$, 用 Welford 风格的流式累加器实现 $O(1)$ 内存; (2) 对每个候选特征 $i$, 用正样本上的均值激活 $c_i = \frac{1}{|\{j:y_j>0\}|}\sum_{j:y_j>0} z_{i,j}$ 作为引导系数; (3) 把 $v_{\text{steer}} = \sum_{i \in \mathcal{F}} c_i \cdot W_{\text{dec}}[:,i]$ 在生成位置加到残差流。最终输出三个变体 CorrSteer-S/A/P 分别对应"全局单特征 / 每层选一个 / 加干预剪枝", 用于不同任务粒度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：base LLM + 多层 SAE<br/>+ 带标签评测集（约 4k 样本）"] --> B["生成时 Pearson 相关 + 流式累加<br/>末 token 激活 × 正确性，O(1) 内存选 top-k"]
+    B --> C["正样本均值系数 + 干预剪枝<br/>系数取正样本均值激活，干预保留真提升特征"]
+    C --> D["残差流叠加引导向量<br/>v = Σ c_i · W_dec[:,i]"]
+    D --> E["输出：CorrSteer-S / A / P 三变体"]
+    E --> F["副作用率 SER 评估<br/>改错数 ÷ 改动总数"]
+```
+
 ### 关键设计
-1. **生成时 Pearson 相关 + 流式累加**:
 
-    - 功能: 在 $10^5$ 量级 SAE 字典上把每个特征与任务成功率的线性关联排序, 选出 top-k 候选, 内存与样本数无关。
-    - 核心思路: 仅在"最后生成 token"位置抽取激活 $z_i$, 与样本正确性 $y_j$ 做 $r_i = \text{Cov}(z_i, y) / \sqrt{\text{Var}(z_i) \cdot \text{Var}(y)}$; 用 Welford-like online algorithm 累加均值、方差、协方差三个标量, 每个特征 $O(1)$ 内存。多 token 生成任务用 max-pooling 聚合, 但长 reasoning 任务 (GSM8K) 改 mean-pooling, 否则系数会爆。仅保留正相关特征 —— 负相关特征经消融发现一律会拖低性能。
-    - 设计动机: 与基于 mutual information (SPARE) 或 Fisher matrix (DSG) 的非线性度量相比, Pearson 与 SAE 解码器的线性叠加结构最匹配 (线性表示假设); 同时与 context-token 选特征 (CAA, AlphaEdit) 相比, 生成时 token 的激活更贴近输出行为这条"因果路径", 避免选到只反映输入处理的特征。
+**1. 生成时 Pearson 相关 + 流式累加：用线性度量在十万维字典里 O(1) 内存选特征**
 
-2. **正样本均值系数 + 干预剪枝 CorrSteer-P**:
+第一阶段要在 $10^5$ 量级的 SAE 字典里挑出与任务成功相关的少数特征, 难点是既不能把所有样本激活都存下来, 又要让选择对齐"生成行为"而非"输入处理"。CorrSteer 只在**最后生成 token** 位置抽取每个特征激活 $z_i$, 与样本正确性 $y_j \in \{0,1\}$ 做 Pearson 相关 $r_i = \text{Cov}(z_i, y) / \sqrt{\text{Var}(z_i) \cdot \text{Var}(y)}$, 并用 Welford 式在线累加器只维护均值、方差、协方差三个标量, 每个特征 $O(1)$ 内存、与样本数无关; 多 token 生成任务用 max-pooling 聚合激活, 长 reasoning 任务 (GSM8K) 则改 mean-pooling, 否则系数会被稀释到爆; 最后只保留正相关特征——消融显示负相关特征一律拖低性能。之所以选 Pearson 而非 SPARE 的互信息或 DSG 的 Fisher 矩阵, 是因为线性相关与 SAE 解码器的线性叠加结构 (线性表示假设) 最匹配; 而把抽取点放在生成 token 而非 context token (CAA、AlphaEdit), 是因为引导真正影响的是输出行为, 选特征也该看输出位置。
 
-    - 功能: 给每个特征定一个有物理意义且低方差的引导系数, 并通过"是否真能提升性能"二次过滤候选, 把相关性升级为因果证据。
-    - 核心思路: 系数取 $c_i$ = 正确样本上该特征的平均激活, 利用 SAE 激活的非负性, 比 contrastive 差值方差更小; 然后 CorrSteer-P 在 CorrSteer-A (每层最相关特征) 的基础上跑一次干预, 只保留"加了之后比 non-steered 更高"的特征。例如 LLaMA-3.1 8B 上 MMLU 保留 24/31 层、HarmBench 保留 27/31、MMLU-Pro 只保留 5/31, 任务越特化剪得越狠。
-    - 设计动机: 相关性可能选到与成功"共生"但不"驱动"的虚假特征; 干预测试是判断因果的金标准。把它做成自动剪枝, 不需任何人工先验, 也不依赖 task-specific 超参。
+**2. 正样本均值系数 + 干预剪枝 CorrSteer-P：把相关性升级为因果证据**
 
-3. **副作用率 SER 作为评估轴**:
+相关性筛出的候选里可能混着与成功"共生"却不"驱动"的虚假特征, 还需要给每个特征定一个稳定系数并二次过滤。系数直接取 $c_i$ = 正确样本上该特征的平均激活——利用 SAE 激活非负的性质, 它比 contrastive 差值的方差更小、物理意义更明确。在此之上, CorrSteer-P 于 CorrSteer-A (每层选最相关特征) 的基础上跑一次干预, 只保留"加上之后比 non-steered 更高"的特征: LLaMA-3.1 8B 上 MMLU 保留 24/31 层、HarmBench 27/31、MMLU-Pro 仅 5/31, 任务越特化剪得越狠。这样做是因为干预测试是判断因果的金标准, 把它做成自动剪枝既不需人工先验、也不依赖 task-specific 超参, 就能把"相关"过滤成"真能改进"。
 
-    - 功能: 量化"steering 在改对答案的同时弄错了多少原本对的答案", 直接揭示 reward hacking 风险。
-    - 核心思路: $\text{SER} = \#\text{negatively changed} / \#\text{all changed}$, 把"steering 是否真改善了模型"分解为"改了多少 + 改对的占比", 比单看准确率更公平。CorrSteer-A 在 MMLU 上 SER=0.21, 微调是 0.41, 准确率却几乎打平 (55.48% vs 55.75%)。
-    - 设计动机: 现有 steering 工作只报准确率, 掩盖了"压制其他正确行为来换目标提升"的情况, 这与 RLHF 的 reward hacking 同源; SER 是一个简单但极具判别力的副作用度量。
+**3. 副作用率 SER：揭示 steering 的 reward hacking 风险**
+
+现有 steering 工作普遍只报准确率, 掩盖了"压制其他原本正确的行为来换目标提升"这种与 RLHF reward hacking 同源的副作用。CorrSteer 提出副作用率 $\text{SER} = \#\text{改错} / \#\text{改动}$, 把"steering 是否真改善模型"拆解为"改动了多少 + 改对的占比"两层, 比单看准确率诚实得多: CorrSteer-A 在 MMLU 上 SER=0.21、微调是 0.41, 而两者准确率几乎打平 (55.48% vs 55.75%)——同样的分数下微调悄悄弄错了一倍的题。这个简单度量因此成为衡量引导"净收益"的判别性指标。
 
 ### 损失函数 / 训练策略
 方法无任何梯度训练 —— 不微调权重、不训练 SAE、不需反向传播。仅前向算激活、累加相关、加干预。Gemma-2 2B 上 4000 个样本的完整流水线 (含模型加载、流式相关、评估) 在单张 RTX 5090 上约 9 分钟; 推理时只把预先算好的 steering 向量加到残差流, overhead < 0.1%。

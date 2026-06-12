@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 本文要在 RAG 生成阶段（Step II）解决一个隐蔽性博弈问题：低预算投毒攻击要让少数恶意段压住多数良性段，就必然在 LLM 内部留下"少数段抢走过多注意力"的痕迹，于是把这个痕迹做成可量化的检测信号。具体地，给定 query $q$、检索得到的 top-$k$ 段落 $z^{(k)}$、LLM $\text{LLM}_\theta$、腐化预算 $\epsilon$ 与方差阈值 $\delta$，先让 LLM 正常前向一次并复用它产出的注意力矩阵（无需额外算力），把多层多头注意力平均成单矩阵 $A \in \mathbb{R}^{l \times T}$（$l$ 为响应 token 数、$T$ 为输入 token 数），再聚合成段落级的 NPAS；只要 NPAS 方差超过阈值就剥离分数最高的段落并重跑，直到方差落回阈值下或已删够 $\lfloor \epsilon k \rfloor$ 段，最后把净化后的段落集 $\tilde z$ 喂回 LLM 做最终生成。同一套 NPAS 还充当 SADG 博弈里的"分辨器" $\mathcal{D}_{\text{AV}}$，把检测与隐蔽性度量统一在一个信号上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["query q + 检索 top-k 段落"] --> B["LLM 正常前向一次<br/>复用注意力矩阵 A（无额外前向）"]
+    B --> C["NPAS：段落级注意力影响分<br/>多层多头平均 → top-α 聚合 → 跨段归一化"]
+    C --> D["AV Filter：按 NPAS 重排消除位置偏置"]
+    D --> E["算 k 段 NPAS 方差 σ²"]
+    E -->|"σ² ≤ δ 或已删 ⌊εk⌋ 段"| G["净化段落集 → LLM 最终生成"]
+    E -->|"σ² > δ"| F["剥离 NPAS 最高的段落<br/>重新前向算新 A"]
+    F --> C
+    C -.->|"同一信号作分辨器 D_AV"| H["SADG：隐蔽性博弈<br/>证伪攻击的隐蔽性宣称"]
+```
+
 ### 关键设计
 
 **1. SADG：把"隐蔽性"做成密码学风格的可证伪定义**

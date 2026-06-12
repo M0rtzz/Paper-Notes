@@ -41,7 +41,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RGD 要解决的是 Riemannian VAE 必须为每种流形手写概率密度这一痛点，做法是把整个 encoder 删掉。给定数据 $X=\{x_i\}_{i=1}^N\in\mathbb{R}^D$ 和一个选定的 $d$ 维黎曼流形 $(\mathcal{M},g)$，它把每个样本的隐变量 $z_i$ 当成一个可学习的自由参数，和 decoder $f_\theta:\mathcal{M}\to\mathcal{X}$ 一起做 MAP 估计 $\mathcal{L}(\theta,Z)=\sum_i(-\log p_\theta(x_i|z_i)-\log p(z_i))-\log p(\theta)$。训练时 $\theta$ 用普通 Adam 走欧式步、$Z$ 用 RiemannianAdam 走黎曼步，每步靠 retraction $R_z(\cdot)$ 把切向量映回流形，保证 $z_i$ 始终留在曲面上——于是任何 density 近似都不再需要，借助 geoopt 库实现极其简洁。
+RGD 要解决的是 Riemannian VAE 必须为每种流形手写概率密度这一痛点，做法是把整个 encoder 删掉。给定数据 $X=\{x_i\}_{i=1}^N\in\mathbb{R}^D$ 和一个选定的 $d$ 维黎曼流形 $(\mathcal{M},g)$，它把每个样本的隐变量 $z_i$ 当成一个可学习的自由参数，和 decoder $f_\theta:\mathcal{M}\to\mathcal{X}$ 一起做 MAP 估计 $\mathcal{L}(\theta,Z)=\sum_i(-\log p_\theta(x_i|z_i)-\log p(z_i))-\log p(\theta)$。训练时 $\theta$ 用普通 Adam 走欧式步、$Z$ 用 RiemannianAdam 走黎曼步，每步靠 retraction $R_z(\cdot)$ 把切向量映回流形，保证 $z_i$ 始终留在曲面上；同时给 latent 注入按局部度量逆缩放的几何噪声作正则，让 decoder 的平滑方向与流形几何对齐。于是任何 density 近似都不再需要，借助 geoopt 库实现极其简洁。
 
 ### 关键设计
 

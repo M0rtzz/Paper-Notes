@@ -45,6 +45,22 @@ SGT（Supplement Generation Training）训练一个小型 LLM（1.7B）生成逐
 
 SGT 不去碰那个昂贵且不可微的大模型，而是在它前面挂一个 1.7B 的小模型当「助理」。任务查询 $q$ 先进补充生成器 $\pi_\mathcal{S}$ 产出一段补充文本 $s$，再把 $s$ 与 $q$ 拼接送进冻结的 Actor $\pi_\mathcal{A}$，得到最终输出 $y = \pi_\mathcal{A}(q, s)$。补充本身好坏没有现成标签，于是直接拿 Actor 解题成功与否当代理奖励来回传训练生成器。训练分两步：先用 Warm-Start SFT 把小模型从「自己解题」掰成「为大模型备课」，再用迭代 DPO 逐轮打磨补充质量与类型选择。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["任务查询 q"] --> GEN["补充生成器 π_S（Qwen3-1.7B，冻结大模型前的『助理』）"]
+    GEN --> TYPE["八种补充类型 + Free Style<br/>产出补充文本 s"]
+    TYPE --> CAT["拼接 (q, s)"]
+    CAT --> ACT["冻结 Actor π_A<br/>输出 y = π_A(q, s)"]
+    ACT --> REW["任务结果当代理奖励<br/>r = R(y, y*)，成功 1 / 失败 0"]
+    REW -->|"按奖励切成正集 S⁺ / 负集 S⁻"| TRAIN
+    subgraph TRAIN["训练补充生成器（两阶段）"]
+        direction TB
+        SFT["Warm-Start SFT<br/>从『自己解题』掰成『为大模型备课』"] --> DPO["迭代 DPO·search-and-focus<br/>先广撒网探类型，再收敛到最有效的几种（5 轮）"]
+    end
+    TRAIN -.更新生成策略.-> GEN
+```
+
 ### 关键设计
 
 **1. 八种补充类型 + 任务结果当代理奖励：用大模型答没答对来给补充打分**

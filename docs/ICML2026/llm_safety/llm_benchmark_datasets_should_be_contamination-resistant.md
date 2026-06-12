@@ -54,6 +54,22 @@ tags:
 
 对应的评测流程分三步：**Curation**，发布方用 anchor 模型把 prompt 投到 latent 表示；**Discovery**，target 模型先求出一个 anchor→target 的转换映射；**Evaluation**，target 模型在转换后的 latent 上自回归续写、给出答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["明文基准（prompt + 明文答案 Y）"] --> B
+    subgraph CUR["Curation · 训练-推理不对称发布 CRD"]
+        direction TB
+        B["anchor 模型把 prompt 编码成 latent"] --> C["只发布推理够用的部分<br/>KV-cache + 倒数第二层 hidden state + 明文 Y"]
+    end
+    C --> D["Discovery · target 模型求 anchor→target 转换映射"]
+    D -->|近期可行| E["anchor + subspace alignment<br/>Cross-LoRA / LoRA-Align 线性映射"]
+    D -->|长期愿景| F["relative representations<br/>对共享 anchor 样本的相似度向量"]
+    E --> G["Evaluation · target 在转换后 latent 上自回归续写"]
+    F --> G
+    G --> H["输出对照明文 Y 打分（Exact Match / 语义相似度）"]
+```
+
 ### 关键设计
 
 **1. 用 Transformer 训练-推理不对称发布 CRD：从架构层面把"可推理"和"可训练"切开**

@@ -42,9 +42,25 @@ tags:
 ### 整体框架
 FDB-v2 想回答一个此前没人系统量化的问题：全双工语音模型能不能撑住一整段多轮对话，而不只是单次接话接得漂亮。它把评测组织成一个三方实时回路——一个 gpt-realtime 驱动的 Examiner 按预设子目标推进对话、必要时主动打断，一个 Orchestrator 维护两条 WebRTC peer connection、强制双向以统一的 canonical wire format 传音频，被测模型则通过 adapter 接进来把自己的音频流转成统一格式。每场对话由 Examiner 开口、按子目标逐步推进、以固定结束语收尾，全程双轨录音（Examiner 一条、Evaluatee 一条），事后用 Parakeet-TDT 转录再交给 Gemini-2.5-flash 当 judge 打分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["四类任务族脚本<br/>Daily / Correction / Entity / Safety"] --> EX["Examiner（gpt-realtime）<br/>分步语义目标 + Fast / Slow 节奏"]
+    EX <-->|实时对话| IF
+    subgraph IF["标准化流式接口（WebRTC 双向）"]
+        direction TB
+        OR["Orchestrator<br/>canonical wire format 强制 10 ms 帧"] <--> AD["Adapter<br/>把被测输出归一化为统一格式"]
+    end
+    IF <--> EV["被测全双工模型"]
+    EX --> REC["双轨录音<br/>Examiner / Evaluatee 各一条"]
+    EV --> REC
+    REC --> ASR["Parakeet-TDT 转录对齐"]
+    ASR --> JUDGE["三维评分<br/>Turn-Taking / Instruction Following / Task-Specific"]
+```
+
 ### 关键设计
 
-**1. Stepwise Semantic Goals + 两种 Examiner 节奏：把"随便聊"改成有诊断力的结构化推进**
+**1. 分步语义目标（Stepwise Semantic Goals）+ 两种 Examiner 节奏：把"随便聊"改成有诊断力的结构化推进**
 
 多轮评测最怕变成一段无法判定成败的自由闲聊，所以作者把每个场景拆成若干 step，每个 step 挂一个明确的 semantic goal，只有当前 goal 被满足 Examiner 才推进，否则就换种说法重复或细化追问。更巧的是给 Examiner 配了两档节奏：Fast 模式下它主动打断、补 backchannel、stage 一完成立刻切下一步；Slow 模式下它只在被测说完或停顿过长时才介入。两档节奏不是为了舒适度，而是把两类失败拆开——Fast 专门压测 turn-taking 的协调能力（被测能不能扛住打断），Slow 给足时间反而暴露 memory 与 entity tracking 的耐力（上下文一长就容易漂移）。同一套任务脚本在两种节奏下各跑一遍，"是接不上还是记不住"就被干净地分离出来。
 

@@ -40,7 +40,18 @@ tags:
 
 ### 整体框架
 
-JiT 想省的是 DiT 在空间上的冗余算力：扩散生成是从低频全局结构逐步走到高频细节的，早期阶段其实只要在少数关键区域算速度场，就能驱动整张图的潜在状态演化，没必要对所有 token 一视同仁地全算。它是个完全免训练的框架，靠两个组件实现：SAG-ODE 在稀疏的 anchor token 上算速度、再外推到全空间；当生成进入新阶段、需要激活更多 token 时，DMF 用一段确定性微流把新 token 平滑接进来，避免突变。
+JiT 想省的是 DiT 在空间上的冗余算力：扩散生成是从低频全局结构逐步走到高频细节的，早期阶段其实只要在少数关键区域算速度场，就能驱动整张图的潜在状态演化，没必要对所有 token 一视同仁地全算。它是个完全免训练的框架，由三个组件协同：SAG-ODE 在稀疏的 anchor token 上精确算速度、再外推到全空间，驱动整张图的潜在状态演化；这些 anchor token 选哪些，由 ITA（重要性引导的 token 激活）按速度场方差决定，把算力投到最活跃的区域；当生成进入新阶段、需要激活更多 token 时，DMF（确定性微流）用一段打靶 ODE 把新 token 平滑接进来，避免突变。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["噪声 latent（全部 N 个 token）"] --> B["SAG-ODE<br/>仅在 anchor token 精确算速度，外推到全空间"]
+    B --> C{"进入新阶段<br/>需扩展 token 子集？"}
+    C -->|是| D["ITA 重要性引导激活<br/>按速度场方差选要新激活的 token"]
+    D --> E["DMF 确定性微流<br/>打靶 ODE 让新 token 无缝接入"]
+    E --> B
+    C -->|否| F["生成图像"]
+```
 
 ### 关键设计
 
@@ -52,21 +63,21 @@ $$\frac{d\mathbf{y}(t)}{dt} = \mathbf{\Pi}_k \, \boldsymbol{u}_\theta(\mathbf{S}
 
 增广提升算子 $\mathbf{\Pi}_k$ 干两件事：嵌入映射 $\mathbf{S}_k \boldsymbol{u}_\theta$ 把 anchor token 的精确速度放回全空间对应位置，插值算子 $\mathcal{I}_k(\boldsymbol{u}_\theta)$ 给非活跃 token 做空间插值近似。关键是它满足一致性 $\mathbf{S}_k^\top(\mathbf{\Pi}_k \boldsymbol{u}_\theta) = \boldsymbol{u}_\theta$——anchor token 的动力学始终由 Transformer 精确控制，所以加速不会牺牲关键区域的质量。
 
-**2. DMF（确定性微流）：让新激活的 token 无缝接入而不引入跳变**
+**2. 重要性引导的 token 激活（ITA）：按速度场方差把算力投到最活跃的区域**
+
+SAG-ODE 要在 anchor token 上算速度，但固定网格式地选 anchor 并不知道哪里更需要算。ITA 改用速度场的局部方差来衡量每个区域有多「活跃」：
+
+$$\mathbf{I}(t) = \mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta \odot \boldsymbol{u}_\theta] - (\mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta])^{\odot 2}$$
+
+方差大说明该处生成过程最活跃（多为高频细节），就优先激活这些 token，把算力精准投到刀刃上，比固定模式更省也更准。
+
+**3. DMF（确定性微流）：让新激活的 token 无缝接入而不引入跳变**
 
 子集每扩展一次就有一批新 token 被激活，如果直接用插值状态顶上去，统计分布会和真实轨迹对不齐。DMF 先给新 token 构造一个统计正确的目标状态
 
 $$\mathbf{y}_k^\star = \mathbf{Q}_k \left( T_k \Phi_k(\mathbf{S}_k^\top \hat{\mathbf{y}}(1)) + (1-T_k)\epsilon \right)$$
 
 这里用 Tweedie 公式预测干净数据、再结合结构先验插值和正确噪声水平拼出目标；随后用一段有限时间的打靶 ODE 在极短区间里把新 token 精确收敛到这个目标，于是阶段转换处不会出现噪声或断层。
-
-**3. 重要性引导的 token 激活（ITA）：按速度场方差把算力投到最活跃的区域**
-
-固定网格式地选 anchor 并不知道哪里更需要算。ITA 改用速度场的局部方差来衡量每个区域有多「活跃」：
-
-$$\mathbf{I}(t) = \mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta \odot \boldsymbol{u}_\theta] - (\mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta])^{\odot 2}$$
-
-方差大说明该处生成过程最活跃（多为高频细节），就优先激活这些 token，把算力精准投到刀刃上，比固定模式更省也更准。
 
 ## 实验关键数据
 

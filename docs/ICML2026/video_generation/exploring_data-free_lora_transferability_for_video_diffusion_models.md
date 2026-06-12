@@ -48,6 +48,34 @@ CASA 的输入：源模型 $\mathbf{W}_s$、源上训的 LoRA $\Delta_{\text{lor
 (4) 按"是否落在主导路由区"分两种规则更新 $\mathbf{C}_{\text{casa}}$；
 (5) 反投影回权重空间，低秩分解得新 LoRA。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：源模型 W_s ＋ 源 LoRA Δ_lora=BA<br/>蒸馏模型 W_t（得漂移 Δ_fft = W_t − W_s）"]
+    subgraph D1["路由矩阵 + cluster 构造"]
+        direction TB
+        PROJ["SVD(W_s) 后投影两个 update<br/>得路由矩阵 C_lora、C_fft"]
+        CLU["top-k 子空间（覆盖 90% 能量）<br/>按旋转强度 R 连边 → 得 cluster"]
+        PROJ --> CLU
+    end
+    IN --> PROJ
+    CLU --> DOM["主导路由区识别<br/>FFT 能量密度超分位 → 标记主导区"]
+    subgraph D3["二级仲裁规则"]
+        direction TB
+        NON["补偿漂移：<br/>C_casa = C_lora − C_fft（还原 LoRA）"]
+        RISK{"同向过激活风险 S<br/>超分位 q_act?"}
+        CAP["同向封顶：截到二者<br/>幅值最大值 − C_fft"]
+        KEEP["保持 C_lora"]
+        RISK -->|是| CAP
+        RISK -->|否| KEEP
+    end
+    DOM -->|"非主导区 D=0"| NON
+    DOM -->|"主导区 D=1"| RISK
+    NON --> OUT["反投影回权重空间<br/>＋ 截断 SVD → 新 LoRA (B', A')"]
+    CAP --> OUT
+    KEEP --> OUT
+```
+
 ### 关键设计
 
 **1. 路由矩阵 + cluster 构造：把"权重 update"翻译成奇异方向之间的信息流**

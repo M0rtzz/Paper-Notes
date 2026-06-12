@@ -40,7 +40,26 @@ tags:
 
 ### 整体框架
 
-COTe 要解决 DLA 评估指标与任务不匹配、且对标注粒度高度敏感的问题。它先把物理文本区域按语义聚合成「结构语义单元 SSU」作为评估单元，再用四个可分解分量（Coverage / Overlap / Trespass / Excess）在像素掩码层面度量预测与 SSU 的关系，最后把分量相加得到一个仍可逐项回溯的 COTe 分数，并支持向多类别扩展做精细诊断。
+COTe 要解决 DLA 评估指标与任务不匹配、且对标注粒度高度敏感的问题。它先把物理文本区域按语义聚合成「结构语义单元 SSU」作为评估单元，再把每个预测框按最大面积重叠 many-to-one 分配到 SSU，然后用四个可分解分量（Coverage / Overlap / Trespass / Excess）在像素掩码层面并行度量预测与 SSU 的关系，最后把分量相加得到一个仍可逐项回溯的 COTe 分数，并支持向多类别扩展做精细诊断。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    GT["物理文本区域<br/>(行 / 段落级标注)"] --> SSU["结构语义单元 SSU<br/>同类别+同结构+同语义+阅读相邻 → 聚合"]
+    PRED["模型预测框"] --> ASSIGN["预测分配<br/>按最大面积重叠 many-to-one 落入 SSU"]
+    SSU --> ASSIGN
+    ASSIGN --> COMP
+    subgraph COMP["四个可分解分量（像素掩码层面并行计算）"]
+        direction TB
+        C["覆盖率 Coverage<br/>覆盖了多少 GT"]
+        O["重叠率 Overlap<br/>同区被多框重复覆盖"]
+        T["越界率 Trespass<br/>跨越 SSU 语义边界"]
+        E["溢出率 Excess（辅助）<br/>预测超出所有 GT 的面积"]
+    end
+    COMP --> SCORE["加法式总分<br/>COTe = C − O − T"]
+    SCORE --> MULTI["多类别扩展<br/>K 类 → 非对称混淆矩阵"]
+    MULTI --> OUT["可逐项回溯的诊断分数"]
+```
 
 ### 关键设计
 

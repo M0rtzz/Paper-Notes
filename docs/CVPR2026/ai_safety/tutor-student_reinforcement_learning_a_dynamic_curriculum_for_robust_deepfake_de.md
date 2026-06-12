@@ -47,6 +47,18 @@ TSRL 想解决的核心问题是：传统训练对所有样本一视同仁地施
 
 框架由三个角色构成：Student 是真正要训练的深度伪造检测器 $M_S$；Tutor 是一个 PPO 强化学习 agent $T_\pi$，它不直接碰检测任务，只负责给每个样本派发损失权重；State Manager 则在背后默默维护每个训练样本的纵向学习历史。一个训练步骤里，三者形成闭环：State Manager 把某样本的当前状态（视觉特征 + 历史学习轨迹）打包交给 Tutor，Tutor 据此输出一个 0–1 的权重缩放该样本的损失，Student 用这个加权损失做一次梯度更新，更新前后预测的变化又被换算成奖励反哺给 Tutor。整条流水线分三阶段推进：行为克隆初始化 → Student 预热 → 完整 TSRL 训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SM["历史感知状态表示<br/>State Manager 维护 5 维状态<br/>视觉特征+置信度+对错+EMA损失+遗忘次数"]
+    SM -->|样本状态 s_i| T["Tutor（PPO agent）"]
+    T --> A["连续动作空间的样本加权<br/>输出 w_i=σ(z_i)∈[0,1] 缩放该样本损失"]
+    A --> S["Student 检测器<br/>用加权损失做一次梯度更新"]
+    S --> R["状态变化奖励函数<br/>错→对 +1.0 / 对→错 −1.0 / 同号按置信度变化微调"]
+    R -->|奖励反哺，epoch 末 PPO 更新策略| T
+    S -->|更新后预测回写历史轨迹| SM
+```
+
 ### 关键设计
 
 **1. 历史感知状态表示：让 Tutor 看清一个样本"难在哪、学得稳不稳"**

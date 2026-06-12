@@ -46,6 +46,20 @@ tags:
 
 作者把一个能处理任意长输入的 LLM 抽象成固定系统 $(T,D,C)$：给定输入 $x=x_1\cdots x_n$，置 $r^{(1)}=x$，第 $t$ 步由上下文管理器 $C$ 用 $w^{(t)}=C_w(r^{(t)})\in\Sigma^N$ 拼出送进窗口的字符串，Transformer 给出下一 token 分布，解码规则取 $\hat{x}_{t+1}=D(T(w^{(t)}))$，$C$ 再用 $r^{(t+1)}=C_r(\hat{x}_{t+1}, r^{(t)})$ 更新自己维护的历史串，直到触发停机。论文的核心主张就是：在 $T$、$D$、精度全部固定的前提下，**$C$ 才是决定系统计算能力的自由变量**。论证分三步——先把固定系统与 scaling-family 的语义剥开，再分别证明两种"简单到能工程部署"的 $C$ 把系统钉死在哪一复杂度类。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    X["输入串 x，置历史 r⁽¹⁾ = x"] --> CW["上下文管理器 C_w<br/>从历史 r⁽ᵗ⁾ 拼出窗口 w⁽ᵗ⁾ ∈ Σᴺ"]
+    CW --> T["固定 Transformer T<br/>→ 下一 token 分布"]
+    T --> D["解码规则 D<br/>→ 新 token x̂"]
+    D --> CR["上下文管理器 C_r<br/>把 x̂ 写回、更新历史 r⁽ᵗ⁺¹⁾"]
+    CR -->|未触发停机| CW
+    CR -->|触发停机| OUT["系统输出 / 接受-拒绝 token"]
+    CW -.->|"C 的选择决定系统能力上限"| L1
+    L1["总结式管理 ⇒ REG（Prop 5.1）"] --> L2["追加式管理 ⇔ DCSL（Prop 5.2+5.4）"]
+    L2 --> L3["外存 / 多 token 解码 ⇒ 图灵完备"]
+```
+
 ### 关键设计
 
 **1. 固定系统形式化 $(T,D,C)$ 与 fixed/scaling 二分：先把"什么固定、什么可增长"写进定义**

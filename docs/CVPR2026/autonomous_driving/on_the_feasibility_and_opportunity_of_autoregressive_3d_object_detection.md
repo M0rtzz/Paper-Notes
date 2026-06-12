@@ -39,7 +39,20 @@ tags:
 
 ### 整体框架
 
-AutoReg3D 想验证一件事：能不能把 LiDAR 3D 检测彻底当成“自回归序列生成”来做，从而扔掉 anchor、proposal 匹配、置信度阈值和 NMS 这一整套手工流水线。它用编码器-解码器架构：任意点云编码器（pillar/voxel/Transformer/Mamba 都行）提场景特征，6 层 Transformer 解码器通过交叉注意力自回归地吐 token，序列以 `[start]` 起、`[end]` 止，天然输出一个变长的检测框集合。这样检测就变成了一个语言模型式的生成问题，RL 微调、beam search、test-time scaling 这些语言模型的招数可以直接搬过来。
+AutoReg3D 想验证一件事：能不能把 LiDAR 3D 检测彻底当成“自回归序列生成”来做，从而扔掉 anchor、proposal 匹配、置信度阈值和 NMS 这一整套手工流水线。它用编码器-解码器架构：任意点云编码器（pillar/voxel/Transformer/Mamba 都行）提场景特征，6 层 Transformer 解码器通过交叉注意力自回归地吐 token，序列以 `[start]` 起、`[end]` 止，天然输出一个变长的检测框集合。这样检测就变成了一个语言模型式的生成问题，RL 微调、beam search、test-time scaling 这些语言模型的招数可以直接搬过来。整条流水线把 box 离散成 token（设计 1）、用近到远顺序串成序列（设计 2）、由解码器自回归生成、最后两种排序互补补漏（设计 3）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云输入"] --> B["点云编码器<br/>pillar / voxel / Transformer / Mamba 任选"]
+    B --> C["3D 物体 Token 化<br/>每框 10 token，参数独立词表"]
+    C --> D["近到远排序<br/>物体按距离升序 + 物体内 class-first"]
+    D --> E["Transformer 解码器<br/>交叉注意力自回归吐 token"]
+    E -->|teacher forcing 训练| F["统一 CE loss"]
+    E -->|可选 RL 微调| G["GRPO 微调<br/>冻结编码器，IoU-F1 奖励"]
+    E --> H["级联精炼<br/>近到远 prior → 随机模型补漏 → IoU 合并"]
+    H --> I["检测框集合<br/>无 anchor / NMS"]
+```
 
 ### 关键设计
 

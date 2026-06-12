@@ -51,9 +51,23 @@ tags:
 
 1. **采样插值路径**：从 $\mathcal{D}$ 抽一对 $\bm{x}_1,\bm{x}_2$，定义 $\bm{x}(\alpha)=\alpha\bm{x}_1+(1-\alpha)\bm{x}_2$，$\alpha\in[0,1]$。
 2. **节点采样**：在 $\alpha$ 上取 $r$ 个"随机余弦节点"$\alpha_i=\tfrac{1}{2}(1-\cos\theta_i)$，其中 $\theta_i\sim U[(i-1)\pi/r,i\pi/r]$，相当于 Chebyshev 测度上的分层随机化。
-3. **输出降维**：把 $\{f(\bm{x}(\alpha_i))\}$ 这条路径上的输出做 path-specific PCA，留前 $m$ 维（典型 $m=2,3$），把多输出多项式拟合简化为低维标量序列。
+3. **输出降维**：把 $\{f(\bm{x}(\alpha_i))\}$ 这条路径上的输出做路径专属 PCA（path-specific PCA），留前 $m$ 维（典型 $m=2,3$），把多输出多项式拟合简化为低维标量序列。
 4. **Chebyshev 最小二乘拟合**：对每个 PCA 维度，拟合 $P(\alpha)=\sum_{k=0}^K c_k T_k(2\alpha-1)$，解阻尼正规方程 $(\bm{T}^\top\bm{T}+\epsilon\bm{I})\bm{c}_\epsilon=\bm{T}^\top\bm{y}$ 以保证数值稳定。
 5. **ED 计算 & 平均**：$\mathrm{ED}(P)=\sum_k|c_k|\cdot k$，对多输出取均值；最终 $\widehat{\mathrm{ED}}(f)=\mathbb{E}_{\bm{x}_1,\bm{x}_2\sim\mathcal{D}}[\mathrm{ED}(P_{\bm{x}_1,\bm{x}_2})]$，训练时用 minibatch 内 $n_p$ 对路径的经验均值。
+
+这条 pipeline 自上而下的流向，对应下面三个关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：数据对 (x₁, x₂) 来自数据分布 D"]
+    D1["插值路径 + 次数序保持<br/>沿 g(α)=f(αx₁+(1−α)x₂) 采 r 个随机余弦节点"]
+    D2["标签锚定 + 路径专属 PCA<br/>分类时两端换真实标签；高维输出降到 2-3 维"]
+    D3["有效次数 ED + 闭式梯度<br/>Chebyshev 阻尼最小二乘拟合得系数 c<br/>ED=Σ|cₖ|·k，解析梯度可反传"]
+    AVG["对 nₚ 条路径取均值 ÊD(f)"]
+    OUT["作泛化度量（预测泛化间隔）<br/>或作正则项 L = L_task + λ·ÊD"]
+    IN --> D1 --> D2 --> D3 --> AVG --> OUT
+```
 
 ### 关键设计
 
@@ -61,13 +75,13 @@ tags:
 
 直接在 $d$ 维输入空间展开多项式基函数，数量是 $\binom{d+K}{K}$，注定不可扩展。作者的切法是把网络限制到两个数据点之间的一维插值路径上 $g_{\bm{x}_1,\bm{x}_2}(\alpha)=f(\bm{x}(\alpha))$，再在这条一维函数上定义复杂度。这里唯一要担心的是"投影后次数下降丢信息"，作者用 Theorem 3.1 堵住这个口子：对任意两个非零多项式 $P_1,P_2$，只要它们次数 $D_1>D_2$，从数据密度上 i.i.d. 抽 $n$ 对路径得到的次数经验均值 $\widehat{d}_n(P_i)$ 在大 $n$ 下几乎必然仍满足 $\widehat{d}_n(P_1)>\widehat{d}_n(P_2)$。证明走"非零多项式的零集 Lebesgue 测度为零"这条经典引理——随机插值方向几乎撞不上让次数下降的零集，所以次数序在期望意义下被保留。插值路径给的正是"数据流形附近的一维切片"，既保住分布相关性，又把估计压成一维最小二乘，可解释、可计算、可扩展。
 
-**2. 有效次数 ED + 闭式梯度：把多项式系数压成一个标量，并保证它对网络参数全程可微**
+**2. 标签锚定 ED + 路径专属 PCA：拟合前先把路径输出整理好——让简单性正则不跟分类目标打架，并把高维输出压到便于拟合的低维**
 
-算术次数 $\deg(P)$ 是离散的、对小扰动敏感，没法当训练目标。作者改用 $\mathrm{ED}(P)=\sum_k|c_k|\cdot k$——本质是以系数绝对值为权重的次数加权，等价于给系数加一个 $\ell_1$ 风格约束，正好对应 Rademacher 复杂度里"权重低维表示更紧"的容量控制；归一化版 $\mathrm{ED}_{\text{norm}}=\sum|c_k|k/\sum|c_k|$ 再去掉尺度。可微性由 Proposition 5.1 给出解析梯度 $\partial \mathrm{ED}/\partial\bm{y}=\bm{T}(\bm{T}^\top\bm{T})^{-1}(\mathrm{sign}(\bm{c})\odot\bm{d})$，其中 $\bm{d}=[0,\dots,K]^\top$、$\bm{T}_{i,k}=T_k(2\alpha_i-1)$。实践中为数值稳定不直接求逆，而是解阻尼系统 $\bm{c}_\epsilon=\texttt{LinearSolve}(\bm{T}^\top\bm{T}+\epsilon\bm{I},\bm{T}^\top\bm{y})$，autograd 直接走 PyTorch 的 LU 求解器。$\ell_1$ 加权一来让度量对小系数扰动具 Lipschitz 性、不被高阶噪声系数主导，二来让梯度对系数 magnitude 自然 scale-invariant（实测比二次加权更好），三来阻尼求解让"高阶多项式 + 小批次"的病态情形也能稳定反传。
+拿到一维路径后、真正拟合多项式之前，分类任务有两个坑要先填。其一，cross-entropy 鼓励预测早早远离均匀分布，而我们想惩罚的是"沿路径多余的非线性"，ED 鼓励"沿路径预测变化平缓"，两者在训练早期会拉扯。Label-anchored ED 的处理是拟合时把两端节点的预测换成对应真实 one-hot 标签（固定 $\theta_1=0,\theta_r=\pi$，只采 $r-2$ 个中间节点），相当于让多项式必须经过真实端点再去描述中间过渡——高曲率的端点过渡被允许，被惩罚的只剩路径内部多余的非线性。其二，输出维度高时（如 1000 类 logits）直接拟合多输出代价大，于是叠加路径专属 PCA（path-specific PCA）：每条路径单独算 PCA 投影，把当前 $r$ 个输出降到 $m=2,3$ 维再拟合，梯度仍通过 PCA 分解回传到原始预测。锚定端点是因为"分类必须把端点分对"是真实任务约束、不能被简单性惩罚抹平；用路径专属（path-specific）而非全局 PCA 是因为它更贴合当前路径分布、统计噪声大时也稳——消融显示直接对全维输出拟合也能 work，PCA 不是收益主因，但能显著降开销。
 
-**3. 标签锚定 ED + 路径专属 PCA：让简单性正则不跟分类目标打架，并把高维输出压到便于拟合的低维**
+**3. 有效次数 ED + 闭式梯度：把多项式系数压成一个标量，并保证它对网络参数全程可微**
 
-分类任务下 cross-entropy 鼓励预测早早远离均匀分布，ED 却鼓励"沿路径预测变化平缓"，两者在训练早期会拉扯。Label-anchored ED 的处理是拟合多项式时把两端节点的预测换成对应真实 one-hot 标签（固定 $\theta_1=0,\theta_r=\pi$，只采 $r-2$ 个中间节点），相当于让多项式必须经过真实端点再去描述中间过渡——高曲率的端点过渡被允许，被惩罚的只剩路径内部多余的非线性。输出维度高时（如 1000 类 logits）再叠加 path-specific PCA：每条路径单独算 PCA 投影，把当前 $r$ 个输出降到 $m=2,3$ 维再拟合，梯度仍通过 PCA 分解回传到原始预测。锚定端点是因为"分类必须把端点分对"是真实任务约束、不能被简单性惩罚抹平；用 path-specific 而非全局 PCA 是因为它更贴合当前路径分布，统计噪声大时也稳——消融显示直接对全维输出拟合也能 work，PCA 不是收益主因，但能显著降开销。
+整理好输出、拟合出 Chebyshev 系数后，最后一步是把系数压成一个能当训练目标的标量。算术次数 $\deg(P)$ 是离散的、对小扰动敏感，没法当训练目标；作者改用 $\mathrm{ED}(P)=\sum_k|c_k|\cdot k$——本质是以系数绝对值为权重的次数加权，等价于给系数加一个 $\ell_1$ 风格约束，正好对应 Rademacher 复杂度里"权重低维表示更紧"的容量控制；归一化版 $\mathrm{ED}_{\text{norm}}=\sum|c_k|k/\sum|c_k|$ 再去掉尺度。可微性由 Proposition 5.1 给出解析梯度 $\partial \mathrm{ED}/\partial\bm{y}=\bm{T}(\bm{T}^\top\bm{T})^{-1}(\mathrm{sign}(\bm{c})\odot\bm{d})$，其中 $\bm{d}=[0,\dots,K]^\top$、$\bm{T}_{i,k}=T_k(2\alpha_i-1)$。实践中为数值稳定不直接求逆，而是解阻尼系统 $\bm{c}_\epsilon=\texttt{LinearSolve}(\bm{T}^\top\bm{T}+\epsilon\bm{I},\bm{T}^\top\bm{y})$，autograd 直接走 PyTorch 的 LU 求解器。$\ell_1$ 加权一来让度量对小系数扰动具 Lipschitz 性、不被高阶噪声系数主导，二来让梯度对系数 magnitude 自然 scale-invariant（实测比二次加权更好），三来阻尼求解让"高阶多项式 + 小批次"的病态情形也能稳定反传。
 
 ### 损失函数 / 训练策略
 

@@ -44,6 +44,28 @@ Geo-Expert 把 11,518 条从五本地质学经典教科书蒸馏出的 CoT-enhan
 
 Geo-Expert 想把一个普通通用 LLM 变成会做"地下层序解释、构造演化、岩石成因"这类深层地质推理的专家。它走的是一条端到端的数据驱动 pipeline：先把五本地质学经典教材数字化清洗成干净文本（MinerU 把 PDF 转 Markdown，再用 Python 按段落分块去重），然后从这些文本里系统合成 11,518 条带 CoT 推理链的指令数据，用 LoRA 在 8B/27B/32B 三个 backbone 上微调，最后用一个专门挖"难题"的 Geo-Eval benchmark 来验收。三件套——好数据、PEFT、难 benchmark——共同支撑"小模型 + 对齐数据胜过大模型 + 通用数据"这个核心论点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["五本地质经典教材<br/>MinerU PDF→Markdown + 分块去重"] --> B
+
+    subgraph SYN["Domain-Structured CoT 指令合成"]
+        direction TB
+        B["章节感知递归切块<br/>顺 Markdown header 保 context 完整"] --> C["领域树问题生成<br/>建知识树→绑标签→按字符密度出题"]
+        C --> D["CoT 答案构造<br/>DeepSeek-R1 生成带推理链的答案"]
+    end
+
+    SYN -->|"11,518 条 CoT 指令"| E["三尺度 LoRA 微调<br/>Qwen3-8B / Gemma-3-27B / Qwen3-32B"]
+
+    subgraph EVAL["Geo-Eval 边界题 benchmark"]
+        direction TB
+        F["DeepSeek-R1 抽 2,591 难题"] --> G["Geo 模型 vs R1 双答<br/>GLM-4.5 评分挑差 ≤ 4"]
+        G --> H["387 道 hard boundary 题<br/>地质教授人工校验"]
+    end
+
+    E --> EVAL
+```
+
 ### 关键设计
 
 **1. Domain-Structured CoT 指令合成：让模型学"怎么推"而不只是"说什么"**

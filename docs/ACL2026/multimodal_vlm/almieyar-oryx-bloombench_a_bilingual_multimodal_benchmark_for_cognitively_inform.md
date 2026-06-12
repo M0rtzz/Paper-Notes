@@ -45,6 +45,22 @@ BloomBench 本质上不是提出新模型，而是提出一个评测构建和分
 
 输入是图像、问题和四个候选答案；输出不仅是模型的准确率，还包括按语言、认知层级、模型家族、模型大小和评分方式分解后的诊断结果。这个设计让 BloomBench 更像一套“认知体检表”，而不是单一排行榜。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Bloom 分类法到 VLM 任务的层级映射<br/>6 认知层级 → 106 个叶节点任务"]
+    subgraph GEN["半自动数据生成 + 混合质量验证"]
+        direction TB
+        B["生成文化感知场景 + 检索真实图像<br/>基于图像生成开放式 VQA"]
+        C["转四选一 MCQ（塞迷惑性 distractor）<br/>整体翻译成现代标准阿拉伯语"]
+        D["LLM-as-a-judge 初筛<br/>分层抽 969 题 + 人工复核（质量率 98.45%）"]
+        B --> C --> D
+    end
+    A --> GEN
+    GEN --> E["RAE 与 LBS 双评价协议<br/>显式答案抽取 vs 长度归一化对数似然"]
+    E --> F["认知画像：按层级 / 语言 / 模型 / 评分方式分解诊断"]
+```
+
 ### 关键设计
 **1. Bloom 分类法到 VLM 任务的层级映射：让每道题都对应一种明确的认知操作**
 

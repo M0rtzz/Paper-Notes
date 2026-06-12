@@ -44,6 +44,15 @@ tags:
 
 问题被拆成两个递进的子任务：先把"只关心前 $k$ 名"的 fair top-$k$ 排名聚合精确求解，再把这个 top-$k$ 解扩展成一个公平的全排名。形式上，$d$ 个候选被划分到 $g$ 个 group $G_1, \ldots, G_g$，每组给定比例下界 $\alpha_a$、上界 $\beta_a$，输入是 $n$ 条排名 $S \subseteq \mathcal{S}_d$。所谓 $(\bar\alpha, \bar\beta)$-$k$-fair，是要求输出前 $k$ 位里每个 group $G_a$ 出现的候选数落在 $[\lfloor \alpha_a k \rfloor, \lceil \beta_a k \rceil]$ 之间；目标则是最小化共识排名到所有输入排名的 Spearman footrule 距离之和。Fair top-$k$ 只输出含 $k$ 个候选的列表 $\tau$（$\tau$ 外候选按排在第 $k+1$ 位计代价，沿用 Fagin et al. 对 top-$k$ 距离的推广），fair full ranking 则输出 $d$ 个候选的全排名 $\sigma$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：n 条排名 + 各 group 上下界 α,β"] --> B["Fair top-k 的 ILP 建模<br/>约束矩阵全单模 → 椭球法精确解"]
+    B -->|只取前 k 名| C["最优 fair top-k 列表 τ"]
+    B -->|扩展为全排名| D["最小代价完美匹配<br/>补齐后 d−k 位"]
+    D --> E["公平全排名 σ（2-近似）"]
+```
+
 ### 关键设计
 
 **1. Fair top-$k$ 的 ILP 建模与全单模性证明：让公平约束严格满足而非"近似满足"**

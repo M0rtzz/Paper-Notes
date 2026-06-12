@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 Persona-E2 的构建分为三个阶段：(1) 事件收集与过滤——从新闻、社交媒体、生活叙事三个领域收集事件，经过安全过滤、LLM 多维评分和专家审核，从 7.7 万候选中筛选出 3111 个高质量事件；(2) 人格化标注——招募 36 名标注者完成 MBTI 和 Big Five 问卷，每人对全部 3111 个事件标注真实情感反应；(3) 三个研究问题的实验评估——分析情感分歧模式、LLM 模拟能力和认知合理性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三领域事件源<br/>新闻 / 社交媒体 / 生活叙事（7.7 万候选）"]
+    subgraph FILTER["多维事件过滤流水线"]
+        direction TB
+        B["NSFW 安全过滤"] --> C["Qwen3-MAX 四维打分<br/>Score = 0.35V + 0.30A + 0.20R + 0.15I"] --> D["5 人专家终审"]
+    end
+    A --> FILTER
+    FILTER --> E["3111 个高区分度事件"]
+    subgraph ANNO["人格感知标注协议"]
+        direction TB
+        F["36 标注者填 MBTI + Big Five 量表<br/>测真实人格（不扮演）"] --> G["读者视角标注 7 类情感<br/>每事件 36 条 → 11.2 万标注"]
+    end
+    E --> ANNO
+    subgraph PAGG["人格一致性差距（PAG）"]
+        direction TB
+        H["Big Five 向量 K-means 聚类（k=6）"] --> I["PAG = Agr_in − Agr_out > 0<br/>分歧是人格信号而非噪声"]
+    end
+    ANNO --> PAGG
+    PAGG --> J["三个研究问题评估<br/>RQ1 情感分歧 / RQ2 LLM 模拟 / RQ3 认知合理性"]
+```
+
 ### 关键设计
 
 **1. 多维事件过滤流水线：只留"不同人格会有不同反应"的事件**

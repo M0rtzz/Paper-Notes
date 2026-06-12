@@ -48,6 +48,25 @@ tags:
 
 整条流水线是这样转的：一张图同时喂给两个估计器；WiLoR提取左右手的高质量特征，CHAM把这些手部特征"调制"进全身估计器的特征流，从而让全身网络预测出与上肢运动链一致的手腕方向；最后再用一个可微的迁移步骤，把WiLoR那套精细的手指关节和手部形状直接搬到全身网格上。最终输出的SMPL-X参数里，**手腕方向来自被调制后的全身网络，手指与手形则来自手部模型**。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入图像"] --> WB["全身估计器 SMPLer-X-L32<br/>冻结，24 个 Transformer 块"]
+    IN --> WH["手部估计器 WiLoR<br/>冻结，提取左右手特征"]
+    subgraph CHAM["CHAM 条件手部调制器"]
+        direction TB
+        C1["手部特征 + 2D 位置编码"] --> C2["三层交叉注意力建模双手关系<br/>（仅双手检出时启用）"]
+        C2 --> C3["左右手两分支 × 24 个 1×1 卷积<br/>ControlNet 式零初始化"]
+    end
+    WH --> CHAM
+    CHAM -->|逐块注入全身特征流| WB
+    WB --> WRIST["调制后全身网络<br/>预测一致的手腕方向 + 上肢运动链"]
+    WH --> TRANS["手指与手形迁移<br/>取 MANO 手指 θ + 手形 β，弃其手腕"]
+    WRIST --> ALIGN["可微刚性对齐<br/>腕 + 4 个 MCP 关节，接缝 Laplacian 平滑"]
+    TRANS --> ALIGN
+    ALIGN --> OUT["SMPL-X 输出<br/>手腕来自全身网络，手指/手形来自手部模型"]
+```
+
 ### 关键设计
 
 **1. CHAM：用冻结手部专家的特征去"调制"全身网络，而非粗暴拼接**

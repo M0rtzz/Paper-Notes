@@ -43,7 +43,18 @@ tags:
 
 ### 整体框架
 
-基于 1B/3B 参数的 LLaMA 模型，INT4 量化后部署在 Qualcomm SM8650/SM8750 NPU 上。三种 Multi-LoRA 方案中选择"LoRA 权重作为输入"方案（最优延迟和内存）。配合 CTG（Concurrent Token Generation）和 DS2D（Dynamic Self-Speculative Decoding）加速。
+基于 1B/3B 参数的 LLaMA 模型，INT4 量化后部署在 Qualcomm SM8650/SM8750 NPU 上。整套设计围绕一张**编译后不可变的冻结推理图**展开：先用「LoRA 权重作为运行时输入」让这张冻结图能即插即用地切换用例，再在解码阶段叠加 CTG（Concurrent Token Generation，并发 token 生成）压缩风格变体延迟、叠加 DS2D（Dynamic Self-Speculative Decoding，动态自投机解码）压缩单 token 解码延迟，三者都不改动模型二进制。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["基础 LLaMA 1B/3B<br/>INT4 量化"] --> B["冻结推理图<br/>部署于 Qualcomm NPU"]
+    L["各用例 LoRA 权重<br/>(维度统一)"] -->|"作为运行时输入喂入占位符"| C
+    B --> C["LoRA 权重作为运行时输入<br/>冻结图即插即用换 LoRA"]
+    C --> D["并发 Token 生成（CTG）<br/>首 token 按掩码分出 8 风格流"]
+    D -->|"其余 token 共享 KV-cache 并发"| E["动态自投机解码（DS2D）<br/>forecast embeddings 一步出 1+m 个 token"]
+    E -->|"树形候选 → 冻结 LLM 验证"| F["多用例 / 多语言 token 输出"]
+```
 
 ### 关键设计
 

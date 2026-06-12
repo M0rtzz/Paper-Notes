@@ -45,6 +45,30 @@ tags:
 
 SDF-Net 要解决的是光学与 SAR 之间严重的非线性辐射畸变（NRD）——同一艘船在两种传感器下纹理外观完全不同，但作为刚体它的几何骨架是稳定的。整个网络用一个 ViT-B/16 双头 Tokenizer 编码两种模态，在中间层（Block 6）用结构感知一致性学习（SCL）对齐几何结构，在终端层用解耦特征学习（DFL）把表示拆成模态共享和模态专用两部分再做无参数加法融合，最后接身份分类。训练时联合优化身份损失、结构一致性损失和正交约束损失。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["光学图像"] --> ENC
+    S["SAR 图像"] --> ENC
+    ENC["双头 ViT-B/16 Tokenizer<br/>双模态共享主干"]
+    ENC -->|中间层 Block 6 特征| SCL
+    ENC -->|终端层 Block L 特征| DFL
+
+    subgraph SCL["结构感知一致性学习 SCL"]
+        direction TB
+        G["空间梯度 → 梯度能量描述子 f_struct"] --> IN["Instance Norm<br/>抹去模态幅值差"]
+        IN --> P["身份级跨模态原型<br/>欧氏距离对齐 → L_struct"]
+    end
+
+    subgraph DFL["解耦特征学习 DFL"]
+        direction TB
+        SP["双投影头拆分<br/>共享 f_sh / 专用 f_sp"] --> ORTH["正交约束 L_orth<br/>逼两子空间独立"]
+        ORTH --> FUSE["加法融合 f_fuse = f_sh + f_sp"]
+    end
+
+    FUSE --> CLS["身份分类 → L_id"]
+```
+
 ### 关键设计
 
 **1. 结构感知一致性学习（SCL）：用梯度能量当跨模态的物理锚点**

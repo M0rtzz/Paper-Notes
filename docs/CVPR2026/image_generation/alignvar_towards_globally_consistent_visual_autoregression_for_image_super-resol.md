@@ -45,6 +45,19 @@ AlignVAR 在 VQ-VAE + 自回归 Transformer 的 next-scale 预测架构上，引
 - **SCA（空间一致性自回归）**：尺度内——用自适应掩码重加权注意力，缓解局部偏差
 - **HCC（层级一致性约束）**：尺度间——用全尺度重建监督替代纯残差监督，抑制误差累积
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    LR["低分辨率输入 I_LR"] --> GUIDE["结构引导图<br/>s = |Laplacian(I_LR)| 下采样并归一化"]
+    LR --> AR["VQ-VAE + Transformer<br/>next-scale 从粗到细逐尺度预测残差"]
+    GUIDE --> SCA["空间一致性自回归 SCA<br/>掩码生成器预测调制场 m_k，token 重加权"]
+    AR --> SCA
+    SCA -->|下一尺度残差| AR
+    SCA --> ACC["逐尺度累积重建<br/>û_k = û_(k−1) + r̂_k"]
+    ACC --> HCC["层级一致性约束 HCC<br/>每级累积重建对齐全尺度真值（L2）"]
+    ACC --> OUT["超分结果（×4）"]
+```
+
 ### 关键设计
 
 **1. 空间一致性自回归（SCA）：用结构引导的重加权，把注意力从邻域拉向可靠结构**

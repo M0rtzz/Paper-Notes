@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 SInternal 的核心是把训练目标从「生成安全答案」翻转成「verify 自己生成的答案是否安全」。整个流程两步走：先做数据构造——对每个安全相关 prompt $\mathbf{x}$，让初始策略 $\pi_\theta$ 自采 $N=8$ 个回答 $(\mathbf{z}_k,\mathbf{y}_k)$，再用 Claude-4-Sonnet 作为专家依据 safety spec $\mathcal{S}$ 评判每个 $\mathbf{y}_k$，产出含批判性 reasoning 与 binary 判断的 verification trajectory $\mathbf{c}_k=(\mathbf{z}_{{\rm ver},k},\mathbf{v}_k)$；再做 SFT 优化——给定 $(\mathcal{S},\mathbf{x},\mathbf{y})$ 让模型预测 $\mathbf{c}$。可选地，在 SInternal SFT 之上再接一段 GRPO RLVR，进一步把内化的判断力对齐到实际生成行为上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["安全相关 prompt x"] --> B["设计1：验证自采回答<br/>π_θ 自采 N=8 个<br/>留 safe/unsafe 兼有的对比对(~6000)"]
+    B --> C["设计2：专家 critique + 二元判断<br/>Claude-4 依 spec S 评判<br/>→ 轨迹 c=(z_ver, v)"]
+    C --> D["验证 SFT<br/>训模型预测 c<br/>内化「为什么不安全」"]
+    D -->|可选| E["设计3：作为后续 RL 起点<br/>接 GRPO RLVR 进一步对齐"]
+    D --> F["安全内化的 LRM<br/>(强抗越狱)"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. 验证 self-generated 而非外部回答：让安全边界贴合模型自身分布**

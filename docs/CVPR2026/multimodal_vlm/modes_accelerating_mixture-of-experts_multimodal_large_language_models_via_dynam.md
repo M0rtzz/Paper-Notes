@@ -46,6 +46,21 @@ tags:
 
 MoDES 想在不重新训练的前提下，给 MoE 多模态大模型做专家跳过加速。它的逻辑是先衡量每个专家"跳了亏不亏"，再按 token 模态决定到底跳谁：全局调制的局部门控（GMLG）算出带全局层级权重的专家重要性分数，双模态阈值（DMT）对文本和视觉 token 用各自的阈值做跳过决策，而两个阈值由一个前沿搜索算法离线高效求出。整套流程训练免调（training-free），校准与搜索都在离线完成，推理时不引入额外开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线准备（训练免调，推理零额外开销）"]
+        direction TB
+        C["校准集 C<br/>(GQA 1024 样本)"]
+        C --> AL["GMLG·全局调制因子 α(l)<br/>逐层量 KL 散度算层级重要性"]
+        C --> FS["前沿搜索<br/>借单调性双指针定最优 τt, τv"]
+    end
+    OFF --> X["输入 token x(l)<br/>MoE top-k 路由 → 局部概率 πi"]
+    X --> GM["GMLG·重要性分数<br/>si = α(l) · πi（全局×局部）"]
+    GM --> DMT["DMT·双模态阈值跳过<br/>文本用 τt / 视觉用 τv，s 低于阈值即跳"]
+    DMT --> OUT["保留专家计算 → 输出"]
+```
+
 ### 关键设计
 
 **1. GMLG：把全局层级重要性塞进局部路由概率，纠正"浅层乱跳"**

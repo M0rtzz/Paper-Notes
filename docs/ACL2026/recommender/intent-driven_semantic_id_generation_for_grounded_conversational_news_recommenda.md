@@ -44,6 +44,25 @@ tags:
 
 输入：用户画像 $\mathbf{p}_u$（25+ 维特征）、行为历史 $\mathbf{h}_u$、当前对话查询 $q$。中间过程：(1) PADR 路由器根据 $|\mathbf{h}_u|$ 选 warm/hybrid/cold 路径并组装 prompt；(2) 双阶段微调过的 LLM 生成 3 层 SID 前缀；(3) 模糊匹配模块对前缀与今日新闻池做 $\delta=5$ 容差比对，返回小候选集（mean 5.2, median 3.0 篇）；(4) 在线服务用 Dual-Track 架构，Fast Track 命中缓存直接 100ms 出结果，Enhance Track 异步跑完整 PADR 推理并更新缓存。输出：从今日池里 grounded 的 1-3 条推荐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：用户画像 + 行为历史 + 当前对话查询"]
+    subgraph TRAIN["两阶段训练（离线）"]
+        direction TB
+        T1["Stage 1·SID 对齐<br/>6 任务 483K 样本多任务"] --> T2["Stage 2·CoT 蒸馏<br/>GPT-4 gold CoT → 7B"]
+    end
+    A --> B["PADR：按历史长度路由<br/>warm / hybrid / cold + 稀疏提示词"]
+    subgraph GM["Generate-then-Match"]
+        direction TB
+        C["LLM 生成 3 层 SID 前缀<br/>(s1, s2, s3)"] --> D["模糊匹配今日新闻池<br/>s1=s2 严格相等，|Δs3|≤δ=5"]
+    end
+    TRAIN -.训练得到.-> C
+    B --> C
+    D --> E["双轨服务<br/>Fast Track 命中缓存 85ms / Enhance Track 异步"]
+    E --> F["输出：今日池中 grounded 的 1-3 条推荐"]
+```
+
 ### 关键设计
 
 **1. Generate-then-Match：反转 RAG 范式，从架构上消除幻觉**

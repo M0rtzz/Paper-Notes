@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 输入是一组离散候选配置 $\mathcal{X}_{cand}$，每个配置含 rank、scaling factor、batch size、learning rate 和 dropout rate；输出是预算内找到的最佳 LoRA 配置。第 $n$ 轮先拿配置 $x_n$ 做代理训练得到性能 $y_n$，把 $x_n$ 写成带说明的文本模板 $t_n$，冻结 LLM $\phi$ 读入 $t_n$ 和可学习 token $\psi$，投影层 $P(\cdot;\theta)$ 把 hidden state 映射成 BO 特征 $z_n=P(\phi(t_n,\psi);\theta)$；GP surrogate 用所有 $(z,y)$ 最大化边际对数似然来更新 kernel、投影层和 token，候选池里每个未评估配置同样编码成 $z_j$ 供 acquisition function 选下一点。关键不是“让 LLM 生成超参数”，而是让 LLM 构造一个带 LoRA 领域结构的连续嵌入空间，探索/利用的权衡仍交给 BO，既保留 BO 的样本效率，又避开纯 prompt agent 式搜索的不稳定。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["候选池 X_cand<br/>45,000+ 离散 LoRA 配置"] --> B["取下一组配置 x_n<br/>rank / α / lr / batch / dropout"]
+    B --> D["领域感知文本模板 t_n<br/>{explanation, name, value}"]
+    D --> E["可学习 token + 投影层<br/>冻结 LLM → z_n = P(φ(t_n,ψ);θ)"]
+    B --> C["代理训练评估<br/>10% 子集 fine-tune → 性能 y_n"]
+    E --> F["GP surrogate（deep kernel）<br/>用 (z,y) 最大化边际对数似然"]
+    C --> F
+    F --> G["acquisition function<br/>在剩余候选上选下一点"]
+    G -->|未达 30 次预算| B
+    G -->|达到预算| H["输出最佳 LoRA 配置"]
+```
+
 ### 关键设计
 
 **1. 领域感知文本模板：把数字配置写成带经验解释的语言**

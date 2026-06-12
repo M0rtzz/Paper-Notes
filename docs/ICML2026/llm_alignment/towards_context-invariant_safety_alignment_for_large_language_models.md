@@ -42,19 +42,40 @@ tags:
 ### 整体框架
 这篇论文要解决的是"同一个有害意图换个 jailbreak 包装就破"的脆弱安全对齐，做法是把"可自动验证的那个 prompt"当成锚、用 stop-gradient 把开放式变体单向往锚的表现上拉。具体地，一个 latent 意图 $z$（某条安全约束、某道数学题）经 rendering function $g(z,c)$ 在不同 context $c$ 下被表达成两类 prompt：一类是 **anchor**（多选/True-False/规则可判），一类是 **open variant**（jailbreak 包装、开放生成）。训练时 data loader 不再独立采样 prompt，而是按 $z$ 构造 **meta-group** $\mathcal{S}_z = \mathcal{A}_z \cup \mathcal{O}_z$ 一起喂给策略 $\pi_\theta$，对组里每个 prompt $s$ 照 GRPO 采 $K$ 个 completion 得 prompt 级均值 $\bar r_s$ 和方差 $\sigma_s$。于是在**同一参数 $\theta$ 下**就能同步算出锚奖励 $\bar r_{\text{acr}} = \frac{1}{|\mathcal{A}_z|}\sum_{s \in \mathcal{A}_z}\bar r_s$ 和每个开放变体的 $\bar r_c$，二者之差作为非对称系数打回 policy gradient。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["latent 意图 z<br/>(一条安全约束/一道题)"]
+    subgraph MG["异质 meta-group 采样"]
+        direction TB
+        R["rendering g(z,c)<br/>同一意图渲染成多个 prompt"]
+        R --> A["锚 prompt<br/>多选/规则可判"]
+        R --> O["开放变体 prompt<br/>jailbreak/开放生成"]
+        A --> K["GRPO 各采 K 个 completion<br/>得 prompt 级均值 r_s"]
+        O --> K
+    end
+    Z --> R
+    K --> ANC["锚奖励均值 r_acr<br/>stop-gradient 冻结"]
+    K --> OPN["开放变体奖励均值 r_c"]
+    ANC --> AIR["锚不变性正则 AIR<br/>系数 Δ = r_acr − r_c"]
+    OPN --> AIR
+    AIR --> AUX["Policy-gradient 辅助损失<br/>J_aux = Δ·r·log π（仅开放变体）"]
+    AUX --> TOT["总目标 L = L_policy + λ·J_aux<br/>更新策略 π_θ"]
+```
+
 ### 关键设计
 
-**1. 锚不变性正则 AIR：把对称方差换成对锚的单向 stop-gradient**
+**1. 异质 meta-group 采样：让锚和开放变体在同一参数状态下被估计**
 
-安全对齐的"换皮就破"反映模型学的是表面线索，自然想搬域泛化里的不变风险最小化（IRM/V-REx）来逼行为只依赖意图。但安全场景的监督是**非对称**的——锚有 ground truth，开放生成只能用噪声大、易被 hack 的 LLM judge，而 V-REx 的对称方差项 $\text{Var}_c[R_c(\theta)]$ 只管拉平 context 间差距，既能把差的拉上来、也能把好的拉下去。作者把它换成单向形式 $\Omega_{\text{AIR}} = \sum_{c \in \mathcal{C} \setminus \{c_{\text{acr}}\}} (R_c(\theta) - \text{sg}[R_{c_{\text{acr}}}(\theta)])^2$：因为 $\nabla_\theta \text{sg}[R_{c_{\text{acr}}}] = 0$，正则梯度里**结构性地不含 $\nabla_\theta R_{\text{acr}}$**，所以根本没法靠"降级锚"来缩小差距。两种情形都自动正确——开放风险高于锚（$R_c > \tau_{\text{acr}}$）时系数为正、加强那类生成里更接近锚的样本；开放风险被 reward hacking 拉得虚低（$R_c < \tau_{\text{acr}}$）时系数为负、压制该方向的 likelihood。之所以非这样不可，是因为作者在附录 A.3 形式化证明了：当 $R_o > R_a$ 时对称 V-REx 在 $\lambda > -1/\Delta$ 处会冒出一个"降锚下降方向"，把可信能力打掉去匹配噪声 proxy；AIR 经引理 A.4 与推论 A.5 正好把这个方向从 regularizer 梯度中切掉。
+整条 pipeline 的起点是数据组织方式，它决定了后面那个非对称系数能不能算准。AIR 系数靠 $\bar r_{\text{acr}} - \bar r_c$ 算，如果锚和开放变体分属不同 step、不同 $\theta$ 估出来，系数就会被异步更新的方差污染。作者让 data loader 不再独立采样 prompt，而是按 latent $z$ 构 meta-group $\mathcal{S}_z = \mathcal{A}_z \cup \mathcal{O}_z$，每个 batch 同时塞 $m$ 个锚 prompt（多选/规则可判）和 $n$ 个开放变体（jailbreak 包装/开放生成），复用 GRPO 内部的 $K$-rollout 拿到每个 prompt 的均值 $\bar r_s$ 和方差 $\sigma_s$；GRPO 的组内相对优势 $\hat A_{s,k} = (r_{s,k} - \bar r_s)/(\sigma_s + \epsilon)$ 照常算、驱动主 policy loss，AIR 项则用同一批 rollout 里的 $\bar r_{\text{acr}} - \bar r_c$ 近似 $R_c - \tau_{\text{acr}}$。锚和开放变体在同一参数状态下被同步估计，把系数的方差压到最小（分布式训练里 $\bar r_{\text{acr}}$ 在 worker 间同步）。
 
-**2. Policy-gradient 辅助损失：写成一项可微 surrogate，挂在 GRPO 后面即插即用**
+**2. 锚不变性正则 AIR：把对称方差换成对锚的单向 stop-gradient**
 
-$\Omega_{\text{AIR}}$ 里的 $R_c$ 是采样期望，没法直接反传。作者对它用 log-derivative trick，得 $\nabla_\theta \Omega_{\text{AIR},c} = -\mathbb{E}_y[2(R_c-\tau_{\text{acr}}) \cdot r(s,y) \cdot \nabla_\theta \log \pi_\theta(y|s)]$，对应一个可微 surrogate $\mathcal{J}_{\text{aux}} = -\frac{1}{N}\sum_i (R_c - \tau_{\text{acr}}) \cdot r_i \cdot \log \pi_\theta(y_i|s_i)$，最终训练目标只是在原 policy loss 上加一项：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \lambda \mathcal{J}_{\text{aux}}$。这里系数 $(R_c - \tau_{\text{acr}})$ 是个动态权重，正就当 reinforcement、负就当 penalty，方向自动切换。这样既绕开了对 $R_c$ 本身反传，又让 AIR 和现成 GRPO/GSPO 代码栈完全兼容，不需要额外 value network 或人工标注。
+拿到同组里锚和开放变体的奖励后，核心一步是怎么用它们拉齐。安全对齐的"换皮就破"反映模型学的是表面线索，自然想搬域泛化里的不变风险最小化（IRM/V-REx）来逼行为只依赖意图。但安全场景的监督是**非对称**的——锚有 ground truth，开放生成只能用噪声大、易被 hack 的 LLM judge，而 V-REx 的对称方差项 $\text{Var}_c[R_c(\theta)]$ 只管拉平 context 间差距，既能把差的拉上来、也能把好的拉下去。作者把它换成单向形式 $\Omega_{\text{AIR}} = \sum_{c \in \mathcal{C} \setminus \{c_{\text{acr}}\}} (R_c(\theta) - \text{sg}[R_{c_{\text{acr}}}(\theta)])^2$：因为 $\nabla_\theta \text{sg}[R_{c_{\text{acr}}}] = 0$，正则梯度里**结构性地不含 $\nabla_\theta R_{\text{acr}}$**，所以根本没法靠"降级锚"来缩小差距。两种情形都自动正确——开放风险高于锚（$R_c > \tau_{\text{acr}}$）时系数为正、加强那类生成里更接近锚的样本；开放风险被 reward hacking 拉得虚低（$R_c < \tau_{\text{acr}}$）时系数为负、压制该方向的 likelihood。之所以非这样不可，是因为作者在附录 A.3 形式化证明了：当 $R_o > R_a$ 时对称 V-REx 在 $\lambda > -1/\Delta$ 处会冒出一个"降锚下降方向"，把可信能力打掉去匹配噪声 proxy；AIR 经引理 A.4 与推论 A.5 正好把这个方向从 regularizer 梯度中切掉。
 
-**3. 异质 meta-group 采样：让锚和开放变体在同一参数状态下被估计**
+**3. Policy-gradient 辅助损失：写成一项可微 surrogate，挂在 GRPO 后面即插即用**
 
-AIR 系数靠 $\bar r_{\text{acr}} - \bar r_c$ 算，如果锚和开放变体分属不同 step、不同 $\theta$ 估出来，系数就会被异步更新的方差污染。作者让 data loader 按 latent $z$ 构 meta-group，每个 batch 同时塞 $m$ 个锚 prompt 和 $n$ 个开放变体，复用 GRPO 内部的 $K$-rollout 拿到 $\bar r_s, \sigma_s$；GRPO 的相对优势 $\hat A_{s,k} = (r_{s,k} - \bar r_s)/(\sigma_s + \epsilon)$ 照常算，AIR 项就用同组内的 $\bar r_{\text{acr}} - \bar r_c$ 近似 $R_c - \tau_{\text{acr}}$，分布式训练里 $\bar r_{\text{acr}}$ 在 worker 间同步。锚和开放变体在同一参数状态下同步采样，把系数估计的方差压到最小。
+有了非对称系数还差最后一步——它得能反传、能挂进现成训练栈。$\Omega_{\text{AIR}}$ 里的 $R_c$ 是采样期望，没法直接反传。作者对它用 log-derivative trick，得 $\nabla_\theta \Omega_{\text{AIR},c} = -\mathbb{E}_y[2(R_c-\tau_{\text{acr}}) \cdot r(s,y) \cdot \nabla_\theta \log \pi_\theta(y|s)]$，对应一个可微 surrogate $\mathcal{J}_{\text{aux}} = -\frac{1}{N}\sum_i (R_c - \tau_{\text{acr}}) \cdot r_i \cdot \log \pi_\theta(y_i|s_i)$，最终训练目标只是在原 policy loss 上加一项：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \lambda \mathcal{J}_{\text{aux}}$。这里系数 $(R_c - \tau_{\text{acr}})$ 是个动态权重，正就当 reinforcement、负就当 penalty，方向自动切换。这样既绕开了对 $R_c$ 本身反传，又让 AIR 和现成 GRPO/GSPO 代码栈完全兼容，不需要额外 value network 或人工标注。
 
 ### 损失函数 / 训练策略
 总目标见 Algorithm 1：GRPO 的 clipped surrogate 加上 $\lambda \Delta_s r_{s,k} \log \pi_\theta(y_{s,k}|s)$（仅对开放 prompt $s \in \mathcal{O}_z$ 生效），其中 $\Delta_s = \bar r_{\text{acr}} - \bar r_s$ 取 detach。Backbone 用 Qwen-2.5-14B，三域混训 3000 step，$K=3$，lr $5\times 10^{-7}$，$\lambda = 8\times 10^{-4}$。复合奖励 $r = r_{\text{task}} + r_{\text{fmt}}$：格式奖励要求 `<think>…</think><answer>…</answer>`（Math 还要 `\boxed{}`），格式正确 +1.25 错 −1.0；任务奖励对锚走规则验证、对开放变体走 LLM-as-a-judge（安全在 10 个 facet 上算 Safe vs Unsafe 的 log-odds，道德对 YES/NO token log-prob 做阈值切分，数学用 `math_verify` 符号比对）。

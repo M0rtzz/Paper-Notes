@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-CCF 想解决的是一个很具体的失衡：双分支多模态检测器在跨域时，相机分支本该顶上来（LiDAR 退化时），实际却被 LiDAR 分支系统性压制，几乎不出力。作者没有重新设计网络，而是在已有的 MV2DFusion 双分支框架上挂三个互补组件，从训练监督、深度初始化、融合阶段三处分别松绑对 LiDAR 的依赖。一张图、一帧点云进来后，2D 和 3D 两路各自生成 query；Query Decoupled Loss 保证两路都拿到独立监督，LiDAR-Guided Depth Prior 给 2D query 补上靠谱的深度，Complementary Cross-Modal Masking 则在训练时刻意破坏单一模态、逼解码器学会按可靠性挑 query。三者都只在训练期生效，推理仍走原来的融合分支，零额外开销。
+CCF 想解决的是一个很具体的失衡：双分支多模态检测器在跨域时，相机分支本该顶上来（LiDAR 退化时），实际却被 LiDAR 分支系统性压制，几乎不出力。作者没有重新设计网络，而是在已有的 MV2DFusion 双分支框架上挂三个互补组件，从训练监督、深度初始化、融合阶段三处分别松绑对 LiDAR 的依赖。一张图、一帧点云进来后，2D 和 3D 两路各自生成 query；Query Decoupled Loss 保证两路都拿到独立监督，LiDAR-Guided Depth Prior 给 2D query 补上靠谱的深度，Complementary Cross-Modal Masking 则在训练时刻意破坏单一模态、逼解码器学会按可靠性挑 query。三者都只在训练期生效，推理仍走原来的融合分支，零额外开销。下图按数据流串起三个组件挂载的位置（三个组件名即三个关键设计）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["多视角图像"]
+    PC["LiDAR 点云"]
+    IMG --> MASK
+    PC --> MASK
+    MASK["Complementary Cross-Modal Masking（CCMM）<br/>训练期对图像/LiDAR 打互补掩码<br/>模拟跨域异步退化"]
+    MASK --> B2D["2D 检测器 → 2D query"]
+    MASK --> B3D["3D 检测器 → 3D query"]
+    B2D --> LGDP["LiDAR-Guided Depth Prior（LGDP）<br/>LiDAR 几何先验 × 图像深度<br/>校正 2D query 深度"]
+    LGDP --> DEC["融合解码器（共享权重）"]
+    B3D --> DEC
+    DEC --> QDL["Query Decoupled Loss（QDL）<br/>2D / 3D / 融合 三路并行解码<br/>各自独立匈牙利匹配监督"]
+    QDL -->|仅训练期| OUT["3D 检测框"]
+    DEC -->|推理期直接出框| OUT
+```
 
 ### 关键设计
 

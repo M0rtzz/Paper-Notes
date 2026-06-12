@@ -41,7 +41,21 @@ tags:
 
 ### 整体框架
 
-HistoSelect 要解决的核心矛盾是：一张 WSI 切出数万个 patch、远超 LLM 上下文窗口，但病理学家诊断时根本不会逐 patch 看，而是先认组织、再聚焦可疑区。它把这套"粗看→细查"的认知流程形式化成三级筛选——先按组织类型把 patch 分组，再由 Group Sampler 决定每组采多少，最后 Patch Selector 在组内精选最相关的 patch，选出的少量 patch 才送进 VLM 做问答，从而在大砍 token 的同时留住诊断相关信息。
+HistoSelect 要解决的核心矛盾是：一张 WSI 切出数万个 patch、远超 LLM 上下文窗口，但病理学家诊断时根本不会逐 patch 看，而是先认组织、再聚焦可疑区。它把这套"粗看→细查"的认知流程形式化成三级筛选——先按组织类型把 patch 分组，再由 Group Sampler 决定每组采多少，最后 Patch Selector 在组内精选最相关的 patch，选出的少量 patch 才送进 VLM 做问答，从而在大砍 token 的同时留住诊断相关信息。整个 pipeline 由问题特征 $q$ 全程引导：Group Sampler 和 Patch Selector 都把 $q$ 作为输入，确保"看哪些组织、选哪些 patch"随问题而变。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["WSI（切成数万 patch）"] --> B["CONCH 视觉编码器<br/>得到 patch 特征 X"]
+    Q["问题 Q<br/>文本编码为 q"]
+    B --> C["组织感知分组<br/>patch 与组织 prompt 算余弦相似度→分到 M 组"]
+    C --> D["Group Sampler<br/>按问题给每组定采样率 r_j→预算 k_j"]
+    Q -.问题引导.-> D
+    D --> E["Patch Selector<br/>组内按 s_i 取 top-k_j（STE 硬选）"]
+    Q -.问题引导.-> E
+    E --> F["选出的少量 patch + 问题<br/>送入 VLM 解码"]
+    F --> G["生成答案"]
+```
 
 ### 关键设计
 
@@ -59,13 +73,13 @@ HistoSelect 要解决的核心矛盾是：一张 WSI 切出数万个 patch、远
 
 ### 损失函数 / 训练策略
 
-总损失三项，体现组级 + patch 级的双层 IB 压缩：
+总损失三项，体现组级 + patch 级的双层 IB 压缩（源自变分信息瓶颈 VIB 目标的层级分解，把整体压缩项拆成组采样器和 patch 选择器两段分别正则）：
 
-$$L = L_{\text{VQA}} + \lambda_1 L_{\text{group}} + \lambda_2 L_{\text{patch}}$$
+$$L = L_{\text{VQA}} + \beta_g L_{\text{group}} + \beta_p L_{\text{patch}}$$
 
-- $L_{\text{VQA}}$：标准 VQA 交叉熵损失
-- $L_{\text{group}}$（组级 IB 正则）：$r_j$ 与基于余弦相似度先验之间的 Bernoulli KL 散度
-- $L_{\text{patch}}$（patch 级 IB 正则）：$s_i$ 与 patch-question 余弦相似度先验之间的 Bernoulli KL 散度
+- $L_{\text{VQA}}$：标准 VQA 负对数似然（答案序列的自回归交叉熵）
+- $L_{\text{group}}$（组级 IB 正则）：把采样率 $r_j$ 视作 Bernoulli 参数，与先验 $p_j^g$ 之间的 Bernoulli KL 散度；先验 $p_j^g$ 取组型向量 $g_j$ 与问题 $q$ 的余弦相似度
+- $L_{\text{patch}}$（patch 级 IB 正则）：把选择概率 $s_i$ 视作 Bernoulli 参数，与先验 $p_i^p$ 之间的 Bernoulli KL 散度；先验 $p_i^p$ 取 patch 特征 $x_i$ 与问题 $q$ 的余弦相似度
 
 训练时端到端联合优化 Group Sampler、Patch Selector 和 VLM，STE 保证梯度穿过硬选择回传，余弦相似度先验作为无监督弱信号指导选择。
 

@@ -45,6 +45,18 @@ tags:
 
 DINR 构建在 DD3IP (3D Deep Diffusion Image Prior) 框架之上。问题建模为 $y = Ax + n$，其中 $x$ 是 3D 衰减系数体积，$y$ 是投影测量，$A$ 是平行束投影矩阵。框架在扩散反向过程的每个时间步 $t$ 执行三个操作：(1) 更新扩散模型权重适应 OOD 数据；(2) 生成去噪估计 $\hat{x}_t$；(3) 用近端损失优化 INR 权重并通过 DDIM 采样生成下一步估计。扩散模型仅在合成椭球数据上预训练，推理时通过 SCD 的权重更新机制适应真实中子 CT 数据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Y["投影测量 y + FBP 粗重建 A*y"] --> INIT["噪声缩放初始化<br/>x_T = √α·A*y + √(1−α)·ε·ω"]
+    INIT --> DIFF["扩散侧每步更新<br/>SCD 权重适应 OOD → 去噪估计 x̂_t"]
+    DIFF --> INR["INR 后验均值估计器<br/>SIREN F_φ(S, A*y) 替代 CG 求解器"]
+    INR --> PROX["近端损失优化 INR 权重<br/>数据保真 + ρ·扩散先验近端项"]
+    PROX --> DDIM["DDIM 采样 → x_{t−1}"]
+    DDIM -->|"t > 1：回到下一时间步"| DIFF
+    DDIM -->|"t = 1：终止"| OUT["输出 3D 重建 x_0"]
+```
+
 ### 关键设计
 
 **1. 用 INR 当后验均值估计器：把 CG 求解器换成可微的连续表示**

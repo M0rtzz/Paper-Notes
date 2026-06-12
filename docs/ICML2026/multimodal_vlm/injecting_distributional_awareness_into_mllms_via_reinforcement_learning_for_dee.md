@@ -41,7 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GRPO 框架不变：对每个输入 $x_i$ 采样 $K$ 条生成轨迹得到数值预测 $\{q_k(x_i)\}_{k=1}^K$，并取均值 $\mu(x_i) = \frac{1}{K}\sum_k q_k(x_i)$ 作稳定锚点。评估第 $k$ 条轨迹时，把它与 minibatch 内其他样本的均值预测拼成 $\mathbf{q}_{i,k} = [q_k(x_i), \{\mu(x_j)\}_{j\neq i}]$，对应真值向量 $\mathbf{y}_i = [y_i, \{y_j\}_{j\neq i}]$；奖励 $r_k(x_i) = \text{CCC}(\mathbf{q}_{i,k}, \mathbf{y}_i)$；再加一个轻量格式校验奖励确保解码可解析。最后按标准 GRPO 在 group 内归一化得相对优势更新策略。
+GRPO 框架不变：对每个输入 $x_i$ 采样 $K$ 条生成轨迹得到数值预测 $\{q_k(x_i)\}_{k=1}^K$，并取均值 $\mu(x_i) = \frac{1}{K}\sum_k q_k(x_i)$ 作稳定锚点。评估第 $k$ 条轨迹时，把它与 minibatch 内其他样本的均值预测拼成 $\mathbf{q}_{i,k} = [q_k(x_i), \{\mu(x_j)\}_{j\neq i}]$，对应真值向量 $\mathbf{y}_i = [y_i, \{y_j\}_{j\neq i}]$；奖励 $r_k(x_i) = \text{CCC}(\mathbf{q}_{i,k}, \mathbf{y}_i)$；再加一个轻量格式校验奖励确保解码可解析。最后按标准 GRPO 在 group 内归一化得相对优势更新策略。整条管线唯一动过的就是 reward——把它从「逐点接近真值」换成「分布接近真值」，其余优化器、采样、架构全部沿用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["DIR-for-MLLM 评测协议<br/>四个长尾任务统一成对话式输入<br/>训练保留长尾、测试按 shot 区域切分"] --> B["minibatch 采样<br/>每样本采 K 条轨迹得预测 q_k(x_i)"]
+    B --> C["批次级相对比较向量<br/>以他样本 K 轨迹均值 μ(x_j) 作锚点降噪<br/>拼成 q_(i,k)=[q_k(x_i), 各 μ(x_j)]，真值同序"]
+    C --> D["CCC 奖励<br/>r_k=CCC(q_(i,k), y_i) + 轻量格式奖励<br/>同时惩罚方差塌缩与均值漂移"]
+    D --> E["GRPO group 内 z-score 归一<br/>得相对优势，更新策略"]
+    E -->|下一训练步| B
+```
 
 ### 关键设计
 

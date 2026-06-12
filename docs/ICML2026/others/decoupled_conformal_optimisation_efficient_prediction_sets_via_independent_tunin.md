@@ -48,6 +48,16 @@ tags:
 
 关键的统计观察是：由于 $\hat\phi_{\text{tune}}$ 仅依赖 $D_{\text{train}}\cup D_{\text{tune}}$，给定该结构后 $D_{\text{cal}}$ 上的分数与测试点分数仍可交换，因此经典分裂 CP 证明可以原封不动套用，得到 $\mathbb P\{Y_{m+1}\in C_{\hat\phi_{\text{tune}},\hat q_{1-\alpha}}(X_{m+1})\}\ge 1-\alpha$。这一点对**任意候选类** $\Phi$（有限或无限）都成立，不需要置信参数 $\delta$，也不需要在 $\Phi$ 上做多重测试修正。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可交换数据集 D_n → 三分式划分<br/>D_train / D_tune / D_cal 互不相交"]
+    A --> B["训练阶段（D_train）<br/>拟合后验 π(θ|D_train)，固定得分族 S_φ"]
+    B --> C["调参阶段（D_tune）<br/>约束优化挑结构，输出 φ̂_tune 与阈值 λ̂_tune"]
+    C -->|丢弃 λ̂_tune，仅保留结构 φ̂_tune| D["校准阶段（D_cal）<br/>在未被搜索触碰的 D_cal 上重算分位数 q̂_(1−α)"]
+    D --> E["部署预测集 C_DCO(x)<br/>有限样本边际覆盖，无需 δ、无多重测试修正"]
+```
+
 ### 关键设计
 
 **1. 三分式数据划分 +"调参阈值即弃"：把效率搜索和覆盖认证物理隔离**

@@ -46,6 +46,29 @@ AnyDoc 想做的是一个**不挑文档类别**的生成器：给一段设计意
 
 整体分三步走。先用一条全自动的数据合成管线造出 DocHTML 数据集（265K 文档、111 类、32 种风格），解决"没有大规模 HTML 文档数据"的问题；再以这套数据 SFT 一个多模态大模型，让它同时学会意图到文档、文档反渲染、元素到文档三个任务；最后用高度感知强化学习（HARL）做后训练，专治 SFT 模型最常见的"内容溢出指定高度"的毛病。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["1. DocHTML 数据合成管线"]
+        direction TB
+        A["专业文档库"] --> B["元数据反推<br/>InternVL3 → 意图 + 内容描述"]
+        B --> C["HTML/CSS 代码生成<br/>Qwen3-Coder，鼓励 flexbox/grid"]
+        C --> D["配图合成<br/>FLUX 按 alt 描述补图"]
+        D --> E["Playwright 渲染截图"]
+        E --> F["数据清洗剔脏样本"]
+    end
+    F --> G[("DocHTML 数据集<br/>265K 文档 / 111 类 / 32 风格")]
+    G --> SFT["2. 三任务统一序列生成（SFT）<br/>I2D / DD / E2D → HTML/CSS"]
+    subgraph HARL["3. 高度感知强化学习（HARL）"]
+        direction TB
+        H["采样一组候选 HTML"] --> I["Playwright 渲染量出实际高度"]
+        I --> J["按高度偏比 ρ 算奖励 r"]
+        J -->|GRPO 组内相对优势更新策略| H
+    end
+    SFT --> HARL
+    HARL --> OUT["可编辑文档<br/>守住指定尺寸"]
+```
+
 ### 关键设计
 
 **1. DocHTML 数据合成管线：用代码生成模型批量造出带类别多样性的 HTML 文档**

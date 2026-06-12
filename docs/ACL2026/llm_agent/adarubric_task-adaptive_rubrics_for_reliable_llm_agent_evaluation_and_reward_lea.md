@@ -44,6 +44,18 @@ tags:
 
 AdaRubric 把"评估一条 agent 轨迹"拆成三个阶段，核心思想是先让 LLM 把"什么算这个任务做得好"显式写成结构化 rubric，再用这个 rubric 去逐步打分，最后把打分结果蒸成 DPO 偏好对。给定任务描述 $T$，第一阶段生成一份含 $N=5$ 个正交维度、各带权重 $w_j$ 和 5 级评分标准 $\Gamma_j$ 的 rubric $\mathcal{R}(T)=\{(d_j, w_j, \Gamma_j)\}_{j=1}^N$，并按 task type 缓存复用；第二阶段对轨迹 $\tau=\{(t_k,a_k,o_k)\}_{k=1}^K$ 的每个 step、每个维度输出分数 $s_{k,j}$ 和置信度 $c_{k,j}$，置信度加权聚合成轨迹分数；第三阶段用可组合的 filter 筛出高质量轨迹、配成偏好对 $\mathcal{P}=\{(\tau_i^+,\tau_j^-, m_{ij})\}$ 去训练 agent。整条管线本身免训练，只在 inference 时跑 LLM 评估，再把产出的密集 reward 喂给下游 DPO。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["任务描述 T"] --> R["自适应 rubric 生成<br/>识别成功标准 → 聚类成 N=5 维度 → 分配权重 → 写 5 级标准"]
+    R --> V["自动验证（维度正交 / 权重和为 1 / 5 级齐全）<br/>按 task type 缓存复用"]
+    TAU["agent 轨迹 τ = {(t,a,o)}"] --> E
+    V --> E["置信度加权逐步评估<br/>逐 step × 逐维度输出分数 s_kj 与置信度 c_kj"]
+    E --> AGG["置信度加权聚合<br/>Weighted Mean / Geometric Mean / Min Score"]
+    AGG --> F["DimensionAwareFilter<br/>要求每个维度均达标后再配对"]
+    F -->|"按 margin m_ij 配成偏好对 P"| DPO["下游 DPO 训练 agent"]
+```
+
 ### 关键设计
 
 **1. 自适应 rubric 生成（Adaptive Rubric Generation）：把"评估什么"从写死的 prompt 升级成随任务生成的 rubric**

@@ -43,6 +43,28 @@ ReMoE 冻结所有非 router 参数、仅微调 gate，用一个"时序局部性
 ### 整体框架
 ReMoE 是一个 post-training 的 router 微调框架，推理 pipeline 与 baseline 完全一致：输入 token → 隐状态 $h_t$ → router 算 $P_t = \mathrm{Softmax}(h_t^\top \theta_{\text{gate}})$ → Top-$K$ 选专家 → 专家前向。改动只在训练侧——每层 MoE 内并行跑两个 gate：一个冻结的预训练快照 $\theta_{\text{gate}}^0$ 负责产出参考分布 $P_t^{\text{ref}}$，一个可训练 gate 产出 $P_t$，梯度只回到 $\theta_{\text{gate}}$，expert FFN / attention / embedding 全部冻结。训练时维护一个小的路由历史 buffer 喂给时序正则，部署时把 fine-tuned gate 权重一换即可，推理图、kernel、缓存策略一概不动。总损失 $\mathcal{L}=L_{\text{CE}}+\lambda_{\text{KL}}\,L_{\text{Trust}}+\alpha_t\,L_{\text{Loc}}$，其中 $\alpha_t = \min(1, t/T_{\text{warm}})$ 给局部性正则做线性 warmup，微调时还显式关掉了训练阶段那个鼓励"分散"的 $L_{\text{aux}}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    H["token 隐状态 h_t"]
+    H --> TRN["可训练 gate θ_gate<br/>（全模型仅此可训）"]
+    H --> REF["冻结参考 gate θ⁰<br/>（每步用当前 h_t 算，随上下文自适应）"]
+    TRN --> PT["当前路由分布 P_t"]
+    REF --> PREF["参考分布 P_t^ref"]
+    BUF["路由历史 buffer<br/>上一步专家集 E(t−1)、滞后分布 P(t−d)"] --> MASS["reuse mass m_t<br/>P_t 落在老专家上的概率质量（可微代理）"]
+    PT --> MASS
+    MASS --> LOC["时序局部性正则 L_Loc<br/>reuse + smooth + lag + 窗口熵 四项"]
+    BUF --> LOC
+    PT --> TRUST["Trust-KL 语义锚<br/>KL(P_t ‖ P_t^ref)"]
+    PREF --> TRUST
+    PT --> CE["Top-K 选专家 + 交叉熵 L_CE"]
+    LOC --> LOSS["总损失<br/>L_CE + λ_KL·L_Trust + α_t·L_Loc"]
+    TRUST --> LOSS
+    CE --> LOSS
+    LOSS -->|梯度只回 θ_gate，expert 全冻结| TRN
+    PT -.部署时换上 fine-tuned gate.-> DEPLOY["推理图 / kernel / 缓存策略一概不变"]
+```
+
 ### 关键设计
 
 **1. Gate-only 微调 + reuse mass 可微代理：把"缓存命中"翻译成 router 能优化的连续目标**

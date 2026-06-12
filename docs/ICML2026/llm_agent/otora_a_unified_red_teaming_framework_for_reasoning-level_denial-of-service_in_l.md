@@ -43,6 +43,26 @@ OTora 提出一种全新的攻击范式 Reasoning-Level Denial-of-Service（R-Do
 ### 整体框架
 OTora 把推理级 DoS 拆成「先把 agent 骗到攻击者地盘，再在那里投毒」两步（Algorithm 1）。Stage I 在用户指令或环境观察里注入一个对抗后缀 $s$，让 victim agent $\mathcal{M}$ 在自己的 ReAct 计划里自然生出「去访问 attacker.test」这个动作；一旦 fetch 成立，Stage II 就把预先用多目标遗传搜索优化好的推理 payload $r$ 喂回去，让 agent 在后续多轮里持续陷入过度思考，却始终保持任务最终输出正确。之所以要分两阶段，是因为注入指令/环境的通道太窄、噪声大，塞不进长 payload；而 fetch 一旦成立，攻击者就完全掌控了返回内容，能可靠投递任意复杂的 payload。整条流水线对白盒和黑盒 agent 都成立，黑盒下用 API top-$k$ logprobs 或代理模型替代梯度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    U["用户指令 + 环境观察"] --> S1
+    subgraph S1["Stage I 触发：诱导 agent 主动 fetch（设计 1）"]
+        direction TB
+        A["注意力感知插入点打分<br/>匹配数 + 概率 + attention"] --> B["动态目标共进化<br/>生成语义等价目标 t⋆"]
+        B --> C["优化对抗后缀 s<br/>白盒 GCG 梯度 / 黑盒 logprob"]
+    end
+    S1 -->|agent 计划里自然生出 fetch 动作| F["访问 attacker.test<br/>攻击者完全掌控返回内容"]
+    F --> S2
+    subgraph S2["Stage II 放大：投放推理 payload（设计 2）"]
+        direction TB
+        D["局部 sink 段<br/>当场抛复杂题逼 agent 硬算"]
+        E["持久策略段<br/>注入历史的繁琐推理元指令"]
+    end
+    S2 -->|ICL 引导遗传搜索优化 Score=RTI+FID+STAB| G["多轮 ReAct 复读持久段"]
+    G --> H["推理 token ~10× 膨胀<br/>任务输出仍正确"]
+```
+
 ### 关键设计
 
 **1. Stage I 触发：注意力感知的插入点打分 + 动态目标共进化，把「让 agent 主动 fetch」做成稳定可优化的目标**

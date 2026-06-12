@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 HoWToBench 这篇工作其实是两件事并行：一套评测框架 ToW 和一个配套基准。ToW 的核心思路是把人类专家评写作的隐式流程显式化——人类是先按子准则逐项打分、再按文体加权聚合，而 LLM-as-a-judge 把这两步压进一次 generation，导致权重决策和子分决策互相干扰、不可复现。ToW 因此搭了一棵评估树：根节点 $R$ 连接 Content / Format / Impression 三个主节点，前两者各挂若干叶节点；每个叶节点用 rubric + reference 由 LLM 单独打 1-10 分（format 部分混合 regex 与 LLM），而"哪个维度更重要"则交给一个独立的 negotiator $J_W$ 看完 instruction 后单独给权重，最后用 DFS 加权聚合成总分。基准这一侧则反向构造：从 5 个高质专业写作网站爬来 1302 条人类原文，倒推出 instruction + grounding 信息，覆盖 12 体裁 × 3 任务形态（Completion / Guide / Open）。整体上，输入是一篇待评文章与其 instruction，中间走"逐叶打分 → 单独议权重 → 树上聚合"，输出是一个可解释、可复现、对扰动鲁棒的总分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BUILD["HoWToBench 反向构造"]
+        direction TB
+        R1["爬专业网站人类原文<br/>GPT-4o 分体裁 + Claude 打分过滤"] --> R2["倒推 instruction + grounding<br/>1302 条 × 12 体裁 × 3 任务"]
+    end
+    BUILD --> IN["输入：待评文章 + instruction"]
+    IN --> TREE
+    IN --> NEG["LLM-Negotiator J_W 显式权重分配<br/>看 instruction 单独议各叶权重"]
+    subgraph TREE["Tree-of-Writing 三主节点 + 叶节点架构"]
+        direction TB
+        T1["根节点 R → Content / Format / Impression 三主节点"] --> T2["叶节点逐项打 1-10 分<br/>rubric+reference 或 regex+LLM"]
+    end
+    TREE --> AGG["DFS 加权聚合"]
+    NEG --> AGG
+    AGG --> OUT["可解释 / 可复现 / 对扰动鲁棒的总分"]
+```
+
 ### 关键设计
 
 **1. Tree-of-Writing 三主节点 + 叶节点架构：把 holistic 评分拆成可遍历的图**

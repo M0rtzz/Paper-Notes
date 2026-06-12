@@ -35,6 +35,18 @@ tags:
 ### 整体框架
 SPAN作为训练时的辅助损失嵌入任意单目3D检测器，推理时零额外开销。基线检测器照常预测2D/3D属性后，SPAN计算预测3D box的8个角点，施加两个几何约束损失，并通过层级任务学习控制两个损失的动态权重。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目图像"] --> B["基线检测器<br/>解耦回归 7-DoF 属性"]
+    B --> C["计算预测 3D box 的 8 个角点"]
+    C --> D["空间点对齐<br/>角点用 MGIoU 与真值对齐"]
+    C --> E["3D-2D投影对齐<br/>角点投影包围矩形 vs 2D 框"]
+    D -->|L_3Dcorner| F["层级任务学习<br/>四阶段动态调度两损失权重"]
+    E -->|L_proj| F
+    F --> G["训练时辅助损失（推理零开销）"]
+```
+
 ### 关键设计
 1. **空间点对齐 (Spatial Point Alignment)**：从预测的7-DoF参数$(x,y,z,h,w,l,r_y)$计算8个3D角点$\{P_i\}$，与真实3D角点$\{G_i\}$用MGIoU（Marginalized GIoU）对齐。MGIoU将3D IoU分解为沿三个面法向量的1D GIoU的均值，避免精确3D IoU计算的复杂度，且对不相交box提供非零梯度。这直接约束了所有3D属性的联合一致性——中心偏移、尺寸误差、朝向角误差都会被角点偏差捕捉到。
 

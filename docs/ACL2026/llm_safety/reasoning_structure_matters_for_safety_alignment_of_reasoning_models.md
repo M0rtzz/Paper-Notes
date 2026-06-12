@@ -41,9 +41,25 @@ tags:
 AltTrain 的贡献在于非常克制：它不设计复杂 RL，也不训练 reward model，而是构造 1K 条具有固定推理结构的 SFT 样本，让 LRM 学会在内部推理中先理解问题，再判断请求是否有害，最后进行条件推理。这个结构既保留原始 LRM 熟悉的 problem understanding，又加入安全决策点，从而降低分布偏移。
 
 ### 整体框架
-训练数据 AltTrain-1K 来自 SafeChain 数据集，包含约 900 条有害查询和 100 条良性查询。每个样本的 response 由 reasoning chain 和 final answer 组成，reasoning chain 用模型原有的 `<think>` 模板承载。
+训练数据 AltTrain-1K 来自 SafeChain 数据集，包含约 900 条有害查询和 100 条良性查询。每个样本的回复（response）由推理链（reasoning chain）和最终回答（final answer）组成，推理链用模型原有的 think 模板承载。
 
-对于每个查询，AltTrain 依次收集三个部分：第一步是 problem understanding，从 R1 原始推理轨迹的首句中提取，保持模型熟悉的开头结构；第二步是 harmfulness assessment，由 GPT-4o 等 LLM 用一句话判断请求是否有害并给出理由；第三步是 conditional reasoning，如果请求有害则立即结束进一步求解并拒绝，如果请求良性则接续 R1 原始推理链的剩余部分完成任务。
+对于每个查询，AltTrain 依次收集三个部分：第一步是问题理解（problem understanding，PU），从 R1 原始推理轨迹的首句中提取，保持模型熟悉的开头结构；第二步是有害性评估（harmfulness assessment，HA），由 GPT-4o 等 LLM 用一句话判断请求是否有害并给出理由；第三步是条件推理（conditional reasoning，CR），如果请求有害则立即结束进一步求解并拒绝，如果请求良性则接续 R1 原始推理链的剩余部分完成任务。组装好的样本经过轻量 SFT 训练，得到安全对齐后的 R1-Alt。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询（SafeChain：约 900 有害 + 100 良性）"] --> B["问题理解 PU<br/>保留 R1 轨迹首句作结构锚点"]
+    B --> C["有害性评估 HA<br/>GPT-4o 一句话判定请求是否有害"]
+    subgraph CR["条件推理 CR"]
+        direction TB
+        D["判为有害：立即中止求解 + 安全拒绝"]
+        E["判为良性：接续 R1 剩余推理链完成任务"]
+    end
+    C -->|有害| D
+    C -->|良性| E
+    CR --> F["组装推理链（think 模板）+ 最终回答 → AltTrain-1K"]
+    F --> G["轻量 SFT：1K 样本、无 RL / reward → R1-Alt"]
+```
 
 ### 关键设计
 **1. 问题理解保留原始结构：把安全判断"接"在模型熟悉的开头之后，而不是另起炉灶**

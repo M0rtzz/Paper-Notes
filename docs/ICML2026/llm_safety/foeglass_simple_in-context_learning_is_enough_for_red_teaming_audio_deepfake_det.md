@@ -45,6 +45,19 @@ FoeGlass 要解决的是"怎么不微调、不碰权重，就让一个黑盒 rea
 
 整个流程是一个不更新任何权重的 in-context 闭环：每轮 $t$，attacker LLM 读当前 context，吐出一个 TTS 输入 $u_t$ 和它的 CoT；TTS 把它合成成音频 $x_t=G(u_t)$；ADD 给一个 realness 分 $r_t=f(x_t)$；再用 WavLM 嵌入算这条音频相对历史的多样性分 $d_t = 1 - \max_{z\in w(X_\text{hist})}\langle w(x_t), z\rangle_{\cos}$；最后把 $(u_t, \text{CoT}_t, r_t, d_t)$ 塞回历史 buffer，重构下一轮 context。LLM、TTS、ADD 三者全程黑盒，只交换文本与分数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始化<br/>Cold start 空起步 / Warm start 注入 2 FN + 1 TP"] --> B["结构化 In-Context 模板<br/>指令 + 失败例 ℓ/2 + 成功例 ℓ/2（均带 CoT）"]
+    B --> C["Attacker LLM 读 context<br/>输出 TTS 输入 u_t + CoT"]
+    C --> D["TTS 合成音频<br/>x_t = G(u_t)"]
+    D --> E["ADD realness 分<br/>r_t = f(x_t)，≥ τ 记 success"]
+    D --> F["WavLM 多样性分<br/>min-cosine d_t，需 > τ_d"]
+    E --> G["更新历史 buffer<br/>(u_t, CoT_t, r_t, d_t) 塞回"]
+    F --> G
+    G -->|重构下一轮 context| B
+```
+
 ### 关键设计
 
 **1. 结构化 In-Context 模板：把整个红队经验压成一段上下文，让 LLM 在线"学会"哪些 prompt 能骗过 ADD**

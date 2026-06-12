@@ -47,6 +47,36 @@ tags:
 
 分析阶段分三路进行：第一路是独立样本 t-test 并用 FDR 控制多重比较，观察组间特征差异；第二路是 XGBoost 分类器，用于捕捉非线性组合；第三路是 SHAP、LIME 和特征重要性，用于解释模型依赖的语音与语言线索。最后，作者用特征组消融检查单一特征组的独立贡献。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["语音样本<br/>音频 + 转写 + 标签/量表"]
+    subgraph FEAT["感知可解释的多组特征体系"]
+        direction TB
+        D["声学特征<br/>单声道/16kHz 后取 pitch·jitter·shimmer·pause·情绪"]
+        E["语言特征<br/>spaCy/Stanza/SBERT/VADER 取词汇·句法·语义·情感"]
+        F["82 个可命名标量特征<br/>韵律·音质·词汇·句法·语义·语用组"]
+        D --> F
+        E --> F
+    end
+    A --> D
+    A --> E
+    FEAT --> G["按临床阈值构造二分类标签<br/>PHQ-8/9 · GAD-7 · ASRS cutoff"]
+    subgraph DUAL["统计检验与 XGBoost 双层分析"]
+        direction TB
+        H["t-test + FDR 显著性检验"]
+        I["XGBoost 非线性分类"]
+    end
+    G --> DUAL
+    subgraph EXPL["SHAP/LIME 与特征组消融"]
+        direction TB
+        J["SHAP / LIME / XGBoost gain 解释"]
+        K["特征组消融<br/>单组保留比 AUC-ROC 趋势"]
+    end
+    DUAL --> EXPL
+    EXPL --> L["可解释候选临床指标"]
+```
+
 ### 关键设计
 
 **1. 感知可解释的多组特征体系：把“怎么说”和“说什么”都拆成医生能读懂的行为维度**

@@ -45,7 +45,29 @@ tags:
 
 ### 整体框架
 
-backbone 仍是标准 Transformer 编码器 $f_\theta$，输出 hidden states $\mathbf{H}\in\mathbb{R}^{B\times L\times d_{\mathrm{full}}}$，训练时照旧用原版 Matryoshka InfoNCE $\mathcal{L}_{\mathrm{MRL}}$（在截断集 $\mathcal{M}$ 上对所有维度求和）。MIC 在这之上的全部改动就是：逐层、逐截断维度地把 hidden state 按截断点 $d$ 切成 prefix $\mathbf{H}_{\mathrm{pre}}\in\mathbb{R}^{B\times L\times d}$ 和 residual $\mathbf{H}_{\mathrm{res}}\in\mathbb{R}^{B\times L\times d_{\mathrm{res}}}$（$d_{\mathrm{res}}=d_{\mathrm{full}}-d$），在每个 $(l,d)$ 上算两个几何正则 $\mathcal{L}_{\mathrm{SCR}}^{(l,d)}$、$\mathcal{L}_{\mathrm{SIR}}^{(l,d)}$，汇成 $\mathcal{L}_{\mathrm{align}}$，最终训练目标 $\mathcal{L}_{\mathrm{total}}=\mathcal{L}_{\mathrm{MRL}}+\gamma\mathcal{L}_{\mathrm{align}}$。正则只施加在选定的中间层 $L_{\mathrm{align}}$ 而非每一层——太早的层语义还没成形、太晚的层会干扰最终分类头，附录 D 给出了选层实验。
+backbone 仍是标准 Transformer 编码器 $f_\theta$，输出 hidden states $\mathbf{H}\in\mathbb{R}^{B\times L\times d_{\mathrm{full}}}$，训练时照旧用原版 Matryoshka InfoNCE $\mathcal{L}_{\mathrm{MRL}}$（在截断集 $\mathcal{M}$ 上对所有维度求和）。MIC 在这之上的全部改动就是：逐层、逐截断维度地把 hidden state 按截断点 $d$ 切成 prefix $\mathbf{H}_{\mathrm{pre}}\in\mathbb{R}^{B\times L\times d}$ 和 residual $\mathbf{H}_{\mathrm{res}}\in\mathbb{R}^{B\times L\times d_{\mathrm{res}}}$（$d_{\mathrm{res}}=d_{\mathrm{full}}-d$），在每个 $(l,d)$ 上算两个几何正则 $\mathcal{L}_{\mathrm{SCR}}^{(l,d)}$、$\mathcal{L}_{\mathrm{SIR}}^{(l,d)}$，汇成 $\mathcal{L}_{\mathrm{align}}$，最终训练目标 $\mathcal{L}_{\mathrm{total}}=\mathcal{L}_{\mathrm{MRL}}+\gamma\mathcal{L}_{\mathrm{align}}$。正则只施加在选定的中间层 $L_{\mathrm{align}}$ 而非每一层——太早的层语义还没成形、太晚的层会干扰最终分类头，附录 D 给出了选层实验。整套数据流如下图：prefix/residual 切开后兵分两路，SCR 管"子空间解耦"、SIR 管"谱拉直"，再跨层跨维汇总，和原版 MRL 损失相加。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    H["编码器 fθ 选定中间层<br/>hidden state H"] --> SPLIT["按截断维 d 切分<br/>prefix H_pre ∥ residual H_res"]
+    SPLIT --> SCR
+    SPLIT --> SIR
+    subgraph SCR["Soft Collapse 正则（SCR）：prefix↔residual 解耦"]
+        direction TB
+        A1["标准化 → cross-correlation 矩阵 C"] --> A2["阈值化 ℓ2 惩罚 L_corr<br/>仅 |C| 越界才罚"]
+        A2 --> A3["+ 方差地板 L_var<br/>防 shrink-to-zero 坍缩"]
+    end
+    subgraph SIR["Spectral Isotropy 正则（SIR）：谱拉直 + 超球面摊匀"]
+        direction TB
+        B1["mean-pool 得 Z"] --> B2["变异系数 L_cv<br/>每维方差均匀"]
+        B1 --> B3["RBF 超球面均匀 L_unif<br/>整体分布均匀"]
+    end
+    SCR --> AGG["多层 × 多截断维自蒸馏装配<br/>对选定层与各截断维求平均 → L_align"]
+    SIR --> AGG
+    MRL["原版 Matryoshka InfoNCE<br/>L_MRL"] --> TOT["L_total = L_MRL + γ·L_align"]
+    AGG --> TOT
+```
 
 ### 关键设计
 

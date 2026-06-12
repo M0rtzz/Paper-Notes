@@ -47,6 +47,29 @@ SVEB 的构造方式是：选一组 prompts，用固定 $\pi$ 跑 rollouts，从
 
 后续的 Numca 和 Hista 都被设计成"GRPO 训练管线内的 baseline 替换" —— 不改变 rollout 数量，不引入新 critic，不需要额外标注，只换 $\widehat V(s_t)$ 的计算方式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["统一 MDP 框架<br/>状态=token 前缀，动作=下一 token<br/>奖励仅在终止给出"] --> B["同一 prompt 下 N 条现成 rollouts<br/>+ 各自终止奖励 r_i"]
+    B --> SVEB["SVEB：MCS@20 续写算参考真值，MAE 打分<br/>实证 PPO critic 退化为 GRPO 组均<br/>→ 需更细的 baseline"]
+    SVEB -->|数学场景| NUMCA
+    SVEB -->|通用场景| HISTA
+    subgraph NUMCA["Numca：数字 milestone 信用分配（数学专用）"]
+        direction TB
+        N1["数字模式匹配出 milestone"] --> N2["抽象状态 = 已出现 milestone 的集合"]
+        N2 --> N3["字典累计 count 与 reward_sum<br/>V=reward_sum/count<br/>均分给 macro action 各 token"]
+    end
+    subgraph HISTA["Hista：隐状态 + MinDistance 概率加权（通用）"]
+        direction TB
+        H1["取末层隐状态作状态表征"] --> H2["EMA 压缩 + 间隔采样得有限状态空间"]
+        H2 --> H3["MinDistance 取 k 近邻"]
+        H3 --> H4["按 1/MD 概率加权奖励平均"]
+    end
+    NUMCA --> V["估计的状态价值 V(s_t)"]
+    HISTA --> V
+    V --> ADV["替换 GRPO 组均 baseline<br/>→ 算 advantage → 策略梯度<br/>DAPO / CSIPO 即插即用"]
+```
+
 ### 关键设计
 
 **1. SVEB：用 Monte Carlo 真值把"value estimator 好不好"做成一个可测的 MAE**

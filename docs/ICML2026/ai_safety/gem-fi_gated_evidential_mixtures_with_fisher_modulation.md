@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 方法要解决的是 EDL 在 OOD 上过自信、单头难表达多模态认知不确定性，又想守住 single-pass 推理这一对矛盾。做法是把"支持度"信号端到端塞进 Dirichlet 证据的生成里，再用共享 backbone 的多 evidential head + router 在一次前向里近似 ensemble，最后用 Fisher 信息正则把多个 head 稳住不塌。三件套层层叠加：GEM-Core 负责证据门控，GEM-MIX 负责多模态混合，GEM-FI 负责稳定混合权重。推理时单次前向、无梯度，用混合后的 Dirichlet 浓度 $\alpha_0$ 读出认知不确定度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → 共享 backbone（谱归一化）→ 特征 z"] --> B["GEM-Core：能量到门的距离感知证据调制<br/>能量头 E_ψ→ŝ→有界门 s(x)，GMM 密度 ρ(z) 当硬闸"]
+    B --> C["GEM-MIX：单次推理的证据混合<br/>K 个共享 backbone 证据头 α^(k) + router π(x) 混合"]
+    C --> D["GEM-FI：Fisher 信息正则 + 调制（仅训练）<br/>压低高敏感 head 权重，防混合塌缩"]
+    D --> E["概率空间门控 p̂ = p⊙s / 归一"]
+    E --> F["单次前向输出 α_0,mix<br/>读认知 / 偶然不确定度"]
+```
+
 ### 关键设计
 
 **1. 能量到门的距离感知证据调制 (GEM-Core)：把支持度信号在线塞进证据**

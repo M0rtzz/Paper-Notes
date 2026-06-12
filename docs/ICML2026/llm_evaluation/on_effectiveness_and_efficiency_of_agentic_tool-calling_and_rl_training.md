@@ -45,6 +45,22 @@ tags:
 
 两条线共用同一套 GRPO 形式化：对样本 $s_{i,k}$ 采样 $n$ 条 rollout $\{y_{i,k+1,j}\}$，得到奖励后做组内归一化 $A_{i,k+1,j}=(r_{i,k+1,j}-\bar r_{i,k+1})/\sigma_{i,k+1}$，再以裁剪重要性比 $\rho_{i,k+1,j}=\pi_\theta/\pi_{\text{old}}$ 进入裁剪目标。当某 prompt 的所有 rollout 奖励相同时 $\sigma=0$、$A\equiv 0$，称为 **zero-variance prompt**——它对梯度毫无贡献，却照样耗掉一整轮 rollout，是后文所有效率优化的靶点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["工具调用 LLM<br/>（BFCL 评测 + GRPO 训练）"] --> B{两条审视主线}
+
+    B -->|有效性线| C["评测敏感性诊断协议<br/>逐个控制 seed / 模板 / think 历史 / 系统提示 / 数据格式"]
+    C --> D["量化分数漂移<br/>→ 最小复现规范"]
+
+    B -->|效率线·GRPO 训练循环| E["prompt 训练集"]
+    E --> F["在线预 rollout 过滤<br/>跳过连续 k 个 epoch 全对的 zero-variance prompt"]
+    F --> G["rollout 生成<br/>每 prompt 采 n 条轨迹 + 算组内奖励"]
+    G --> H["最大方差 rollout 下采样<br/>按奖励排序取 m＜n 条（高低两端）"]
+    H --> I["policy update<br/>仅用 m 条做反传"]
+    I -->|下个 epoch 更新连胜计数| E
+```
+
 ### 关键设计
 
 **1. 评测敏感性诊断协议：把"我们用 BFCL 评测"这句话背后的隐式选项逐个拎出来量化**

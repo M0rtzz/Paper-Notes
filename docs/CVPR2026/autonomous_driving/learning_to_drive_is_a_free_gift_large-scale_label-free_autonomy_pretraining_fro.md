@@ -41,6 +41,26 @@ LFG的核心洞察是：**安全的反应式驾驶不仅需要理解当前场景
 
 LFG 想验证一件事：能不能像 GPT 吃无标注文本一样，从海量无标注、无姿态的 YouTube 驾驶视频里预训练出强大的自驾表示。它的核心洞察是——安全的反应式驾驶不只要懂当前场景的 3D 结构，更要预测短期未来的几何、运动和语义演变，所以 LFG 采用前馈式的"当前+未来"联合预测。架构建在 π³（前馈 3D 重建模型，约 10 亿参数）之上：π³ 编码器吃 $N$ 帧无姿态 RGB，输出潜在场景 token $\mathbf{Z}_{1:N}$；一个因果自回归 Transformer 从观测 token 外推出 $M$ 帧未来 token $\mathbf{Z}_{N+1:N+M}$；一个共享解码器再把全部 $N+M$ 帧 token 解码成 5 种输出模态——点云图 $P_t$（每像素的 3D 世界坐标）、相机姿态 $T_t \in \mathbb{R}^{4 \times 4}$（自车轨迹）、语义分割 $S_t \in \mathbb{R}^{7 \times H \times W}$（道路/车辆/行人/建筑/植被/天空/背景 7 类）、置信度图 $C_t \in [0,1]^{H \times W}$、运动掩码 $M_t \in [0,1]^{H \times W}$。模型总参数约 1.45B，在 RTX 5090 上以 5Hz 运行。监督则完全来自多个现成专家教师（π³、SegFormer、SAM2、CoTracker3），不需要任何真实标注。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 帧无姿态 YouTube RGB（只看前 N 帧）"] --> B["π³ 编码器<br/>输出潜在场景 token Z(1:N)"]
+    B --> C["因果自回归 Transformer<br/>外推未来 M 帧 token Z(N+1:N+M)"]
+    C --> D["共享解码器<br/>解码全部 N+M 帧"]
+    D --> E["5 模态输出<br/>点云图 / 相机姿态 / 语义 / 置信度 / 运动掩码"]
+    E --> F["规划表示（下游 NAVSIM 微调）"]
+
+    T1["π³ 教师蒸馏<br/>全知教师看全部帧供几何+姿态伪监督"] -. 伪监督 .-> D
+    T2["SegFormer 语义蒸馏<br/>Cityscapes 预训练供 7 类语义伪标签"] -. 伪监督 .-> D
+
+    subgraph MM["运动掩码生成流水线"]
+        direction TB
+        H["Grounded SAM2<br/>检测首帧人/车实例"] --> I["CoTracker3<br/>跨帧跟踪 2D 轨迹"]
+        I --> J["π³ 点云反投影<br/>算 3D 位移→阈值判动态→逐像素掩码"]
+    end
+    MM -. 伪监督 .-> D
+```
+
 ### 关键设计
 
 **1. π³ 教师蒸馏（几何+姿态）：用全知教师逼学生从部分观测外推未来**

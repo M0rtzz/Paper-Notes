@@ -41,6 +41,31 @@ tags:
 ### 整体框架
 REAL 要解决的是一件具体的事：让 LLM-as-a-Judge 在 RL 后训练里也能"差一分也算差"。输入是评测样本对 $(x, y^*)$，$x$ 是待评测的"prompt + response"组合，$y^* \in \mathcal{K} = \{0, 1, \dots, 9\}$ 是单字符数值标签；策略 $\pi_\theta$ 先自回归产出一段 CoT $c$，再给出数字。关键转折在于它不直接采样这个数字，而是用 RAIL 期望值预测器 $\hat y_\theta(x, c) = \sum_{k \in \mathcal{K}} k \cdot \pi_\theta(k | x, c)$ 把整个 0–9 分布"塌"成一个连续期望，对它做平方误差。训练时对每条 $x$ 采 $K$ 条 CoT，用 RLOO 估计 advantage，再按一个分解成两项的梯度同时更新策略——一项管 CoT 探索，一项管数值预测精修。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["评测样本 (x, y*)<br/>x = prompt + response，y* ∈ {0..9}"] --> B["策略 πθ 采样 K 条 CoT c"]
+    subgraph D1["REAL 目标与策略相关奖励"]
+        direction TB
+        C["RAIL 期望值预测<br/>ŷθ = Σ k·πθ(k|x,c)"] --> R["回归奖励 r = −(ŷθ−y*)² + λ·log πθ(y*|c,x)<br/>显式依赖 θ"]
+    end
+    B --> C
+    subgraph D2["广义策略梯度的自然分解"]
+        direction TB
+        T1["Term 1：CoT 探索<br/>r·∇log πθ(c|x)"]
+        T2["Term 2：预测精修<br/>−2(ŷθ−y*)∇ŷθ + λ∇log πθ(y*)"]
+    end
+    R --> T1
+    R --> T2
+    subgraph D3["RLOO 稳定化与 β 调权"]
+        direction TB
+        E["Term 1 用 RLOO advantage Ã<br/>Term 2 乘权重 β"]
+    end
+    T1 --> E
+    T2 --> E
+    E --> F["更新后的 judge 策略 πθ"]
+```
+
 ### 关键设计
 
 **1. REAL 目标与隐式的策略相关奖励：让回归 loss 合法进入 RL**

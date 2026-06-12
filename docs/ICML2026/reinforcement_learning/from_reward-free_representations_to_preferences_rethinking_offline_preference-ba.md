@@ -47,6 +47,23 @@ FB-PbRL 由两阶段组成，输入是无奖励离线数据 $\mathcal{D}$ 和成
 
 整个流程从不显式构造奖励，$\boldsymbol{z}^\star$ 是低维向量（典型 $d\sim$ 几百），优化代价远小于训练高容量奖励/偏好模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["无奖励离线数据 D"] --> P["RFRL 预训练（FB 框架）<br/>measure loss + 正交归一 loss"]
+    P --> FB["得到表示 F、B 与<br/>条件策略 π(·∣s,z)"]
+    PREF["成对偏好数据 D_pref"] --> S2
+    FB --> S2
+    subgraph S2["偏好引导的搜索 + 微调（交替循环）"]
+        direction TB
+        C["CPTS：把 BT 损失改写为 SimCLR<br/>在潜空间搜任务向量 z*"]
+        C -->|"以 z* 为锚"| FT["PG-FT：以 z* 为锚微调 F、B<br/>重塑潜空间几何贴合偏好"]
+        FT -->|"更新表示后再搜 z*"| C
+    end
+    OBJ["三类损失协同<br/>measure + 正交 + 偏好"] -.驱动.-> S2
+    S2 --> OUT["用 π(·∣s,z*) 解码并评估策略"]
+```
+
 ### 关键设计
 
 **1. CPTS：把 BT 偏好损失解析地改写成 FB 潜空间里的 SimCLR，搜任务向量而非学奖励**

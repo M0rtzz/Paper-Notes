@@ -41,13 +41,13 @@ tags:
 本文不提出新的变点检测器，而是提出一个新的评估器：输入一个带变点标注的数据集、一组序列长度，以及某个 QCD 模型在每条序列上给出的检测点，输出更适合有限、不规则长度数据的 ARL/ADD 估计值。它的关键转折是把"序列没等到检测器触发就结束了"这件原本被丢弃的事，重新看成生存分析里有信息的右删失观测，从而把 ARL/ADD 的平均值估计变成一个 Kaplan-Meier 生存曲线求面积的问题。
 
 ### 整体框架
-评估分 ARL 和 ADD 两条线，但套路一致：先界定哪些样本对该指标有效，再为每条序列定义一个 event time 和一个 censoring time，最后用 Kaplan-Meier 曲线下的面积当作平均指标。对 ARL，只关心无变点状态下检测器多久误报，每条序列的 detection time 记为 $\tau_i$，能观测到的最长无变点时长是 $C_i^{ARL}=\min\{\nu_i,T_i\}$（变点出现前或序列结束前）；触发即为观测到 event，否则视为右删失，进而估计 $S_{ARL}(t)=P(\tau>t\mid\nu=\infty)$，KM-ARL 取 $\int_0^a \hat S_{ARL}(t)dt$。对 ADD，只看存在变点且检测点不早于变点的样本，event time 换成检测延迟 $\Delta\tau_i=\tau_i-\nu_i$，censoring time 换成变点后剩余长度 $C_i^{ADD}=T_i-\nu_i$，同样估计 $S_{ADD}(t)=P(\Delta\tau>t\mid\Delta\tau\ge 0,\nu<\infty)$ 后积分得 KM-ADD。积分上限统一取最大可观测时间，避免在没有数据支撑的尾部做无根据外推。
+评估分 ARL 和 ADD 两条线，但套路一致：先界定哪些样本对该指标有效，再为每条序列定义一个事件时间（event time）和一个删失时间（censoring time），最后用 Kaplan-Meier 曲线下的面积当作平均指标。对 ARL，只关心无变点状态下检测器多久误报，每条序列的检测时间记为 $\tau_i$，能观测到的最长无变点时长是 $C_i^{ARL}=\min\{\nu_i,T_i\}$（变点出现前或序列结束前）；触发即为观测到事件，否则视为右删失，进而估计 $S_{ARL}(t)=P(\tau>t\mid\nu=\infty)$，KM-ARL 取 $\int_0^a \hat S_{ARL}(t)dt$。对 ADD，只看存在变点且检测点不早于变点的样本，事件时间换成检测延迟 $\Delta\tau_i=\tau_i-\nu_i$，删失时间换成变点后剩余长度 $C_i^{ADD}=T_i-\nu_i$，同样估计 $S_{ADD}(t)=P(\Delta\tau>t\mid\Delta\tau\ge 0,\nu<\infty)$ 后积分得 KM-ADD。积分上限统一取最大可观测时间，避免在没有数据支撑的尾部做无根据外推。
 
 ### 关键设计
 
 **1. QCD 到生存分析的映射：把"没报警"变成有信息的删失样本**
 
-传统 LB 指标最伤人的地方在于只平均"已经触发"的样本，阈值越高，留下的就越是那一小撮检测时间偏短的序列，平均值因此系统性偏小。本文的修复是给每条序列同时定义 event time 和 censoring time——ARL 里 event time 是检测点 $\tau$、censoring time 是 $\min\{\nu,T\}$，ADD 里 event time 是检测延迟 $\Delta\tau$、censoring time 是 $T-\nu$。这样一条始终没触发的序列不再被扔掉，而是带着"至少到 censoring time 之前仍未报警"这条约束进入估计，平均曲线也就更贴近真实 ARL/ADD。
+传统 LB 指标最伤人的地方在于只平均"已经触发"的样本，阈值越高，留下的就越是那一小撮检测时间偏短的序列，平均值因此系统性偏小。本文的修复是给每条序列同时定义事件时间和删失时间——ARL 里事件时间是检测点 $\tau$、删失时间是 $\min\{\nu,T\}$，ADD 里事件时间是检测延迟 $\Delta\tau$、删失时间是 $T-\nu$。这样一条始终没触发的序列不再被扔掉，而是带着"至少到删失时间之前仍未报警"这条约束进入估计，平均曲线也就更贴近真实 ARL/ADD。
 
 **2. KM-ARL 与 KM-ADD：非参数地从生存曲线面积读出指标**
 

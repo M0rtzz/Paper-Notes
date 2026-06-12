@@ -45,11 +45,27 @@ tags:
 
 ### 整体框架
 
-系统由四个解耦模块组成：
-- **IMU Preprocess**：IMU偏差编码器 + 预积分，输出帧间惯性状态 $(\Delta\mathbf{p}, \Delta\mathbf{q}, \Delta\mathbf{v}, \Delta t)$
-- **Select Agent**：RL策略，仅基于IMU状态决定是否激活VO模块
-- **Visual Odometry**：基于DPVO的补丁式循环优化，仅在Select Agent输出1时激活
-- **Fusion Agent**：复合模块，MLP1监督估计速度 + MLP2 RL策略自适应融合全状态
+系统是一条带反馈回环的 VIO 流水线，由四个解耦模块串联，核心思路是用两个轻量 RL 智能体分别管「要不要算视觉」和「怎么融合」：
+
+- **IMU 预处理（IMU Preprocess）**：偏差编码器先估计陀螺/加速度计偏差，校正后做预积分，输出帧间惯性状态 $(\Delta\mathbf{p}, \Delta\mathbf{q}, \Delta\mathbf{v}, \Delta t)$
+- **Select Agent（选择智能体）**：RL 策略，仅凭 IMU 惯性状态决定是否激活高成本的视觉里程计（VO）
+- **视觉里程计（VO）**：基于 DPVO 的补丁式循环优化，仅当 Select Agent 输出 1 时激活，输出稀疏高精度但非度量的位姿
+- **Fusion Agent（融合智能体）**：复合模块，MLP1 监督估计度量速度、MLP2 用 RL 输出逐轴融合权重，把 VO 观测与 IMU 传播自适应融合成最终位姿
+
+此外，系统启动时通过**尺度初始化**用滑窗内 IMU 预积分与 VO 相对平移构造超定线性系统、最小二乘求出全局度量尺度 $s$，VO 位姿乘以 $s$ 转为度量后才进入融合。每一周期融合得到的位姿会反馈给状态传播模块，作为下一周期的起点，闭合回环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["IMU 原始序列 + 相机帧"] --> B["IMU偏差估计器<br/>偏差编码器 + 预积分<br/>→ 帧间惯性状态 (Δp,Δq,Δv,Δt)"]
+    B --> C["Select Agent（IMU-only 调度）<br/>仅凭惯性状态决定是否启动 VO"]
+    C -->|"a=0 跳过 VO"| E["Fusion Agent（自适应融合）<br/>MLP1 估速 + MLP2 RL 逐轴权重<br/>w∈[0,1]⁷（凸组合 / SLERP）"]
+    C -->|"a=1 运行 VO"| D["视觉里程计 VO（DPVO 补丁式 BA）<br/>输出非度量位姿"]
+    I["尺度初始化<br/>滑窗最小二乘解全局尺度 s"] -.->|"VO 位姿 ×s 转度量"| D
+    D --> E
+    E --> F["融合位姿 T_k^f"]
+    F -.->|"反馈作为下一周期起点"| C
+```
 
 ### 关键设计
 

@@ -45,6 +45,22 @@ AdaptiveK 的方法可以看成在普通 TopK SAE 外面加了一个“复杂度
 
 论文的关键直觉是：最后 token representation 已经聚合了前文上下文信息，因此可以作为“上下文复杂度”的读出点。主实验在 pile-uncopyrighted 上构造 250,000 个训练上下文和 10,000 个测试上下文，并用 GPT-4.1-mini 给上下文做多维复杂度评分。作者在正文实验设置中称每个上下文为 2048 tokens，附录又描述为 1024 tokens；这属于论文中一个需要注意的细节不一致，但不影响方法主线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入上下文"] --> B["待解释 LLM<br/>取选定层最后 token 的 hidden state x"]
+    B --> C["线性 probe 读出复杂度<br/>ridge 回归预测复杂度分数 c（0–10）"]
+    C --> D["复杂度映射成自适应 TopK<br/>sigmoid 把 c 映成 k_adp ∈ [k_min, k_max]"]
+    B --> E["SAE encoder 产生 latent 预激活"]
+    D --> F["按样本 k_adp 取 top-k latent"]
+    E --> F
+    F --> G["SAE decoder 重构激活 x̂"]
+    subgraph T["三阶段训练（稳定 probe↔SAE 耦合）"]
+        direction TB
+        T1["① 单训复杂度 probe"] --> T2["② 冻结 probe 训 SAE"] --> T3["③ 联合微调 + deviation 约束"]
+    end
+```
+
 ### 关键设计
 
 **1. 用线性 probe 读出上下文复杂度：AdaptiveK 的控制信号**

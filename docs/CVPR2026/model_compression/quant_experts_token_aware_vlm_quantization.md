@@ -46,6 +46,22 @@ tags:
 
 QE 想解决的是一个被以往量化方法忽略的事实：决定量化误差大小的"重要通道"并不固定，它会随每个 token 的语义和上下文漂移。于是 QE 不再用一套全局适配器去补所有 token 的误差，而是借 MoE 的思路把误差补偿拆成两层。离线阶段，它先从校准数据里统计每个通道被判为"重要"的频率，把通道分成两堆：少数高频、几乎对每个 token 都重要的 token-independent 通道，和大量低频、只对部分 token 重要的 token-dependent 通道。前一堆交给一个**共享专家**做全局补偿，后一堆按"哪些通道常一起重要"聚成若干子组，每组配一个**路由专家**做局部补偿。推理时，token 先过共享专家修掉全局误差，再由一个轻量路由器根据当前 token 挑出残差最小的那个路由专家把局部误差补掉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["校准数据 + 量化误差 E"] --> B["通道重要性分析与划分<br/>按被选中频率降序排"]
+    B -->|"高频通道 C_s（token-independent）"| C["共享专家<br/>whitening SVD 低秩适配器 + 通道缩放"]
+    B -->|"低频通道 C_r（token-dependent）"| RE
+    C -->|"剩余残差 E_S"| RE
+    subgraph RE["路由专家"]
+        direction TB
+        D["NPMI 共现统计 → 谱聚类分 N_r 组"] --> E["每组一个加权 SVD 适配器 + 轻量路由器 R"]
+    end
+    C --> F["推理：token 先过共享专家补全局误差"]
+    RE --> F
+    F --> G["路由器选残差最小的路由专家补局部误差 → 量化输出"]
+```
+
 ### 关键设计
 
 **1. 通道重要性分析与划分：把"重要通道随 token 漂移"这件事量化成频率分布**

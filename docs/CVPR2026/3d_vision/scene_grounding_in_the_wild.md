@@ -40,7 +40,25 @@ tags:
 
 这篇论文要解决的是：野外拍的一堆照片做SfM后，常因视角不重叠裂成几块互不相连的局部重建，怎么把它们摆回一个完整场景里。作者的做法是借一个"地图册"——用Google Earth Studio渲染整座建筑、再构建成蒸馏了DINOv2特征的3DGS参考模型，把每块局部重建（称为meta-image）逐个"接地"到这张完整参考上。
 
-整条流水线只优化一个7参数的全局变换 $T$（6DoF的SE3旋转平移 + 1个尺度）：参考模型的高斯参数全程冻结，每轮迭代用当前 $T$ 把meta-image的相机摆到参考坐标系下、可微渲染出语义特征图，再和真实照片的DINOv2特征算损失，梯度反传只更新 $T$。多块局部重建则各自独立对齐，像拼图一样一块块拼回完整场景。
+整条流水线只优化一个7参数的全局变换 $T$（6DoF的SE3旋转平移 + 1个尺度）：参考模型的高斯参数全程冻结，每轮迭代用当前 $T$ 把meta-image的相机摆到参考坐标系下、可微渲染出语义特征图，再和真实照片的DINOv2特征算损失（其间用鲁棒优化剔除异常图像），梯度反传只更新 $T$。多块局部重建则各自独立对齐，像拼图一样一块块拼回完整场景。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    REF["参考模型构建（脚手架）<br/>Google Earth 渲染 → COLMAP+GPS 定标 → 蒸馏 DINOv2 特征 → 冻结 3DGS"]
+    INIT["多初始化对接<br/>COLMAP / gDLS+++ / SP+LG 给出 7 参数变换 T 初值"]
+    REF --> LOOP
+    INIT --> LOOP
+    subgraph LOOP["语义逆优化迭代（只更新 T = 6DoF + 尺度）"]
+        direction TB
+        A["用当前 T 摆放 meta-image 相机<br/>可微渲染语义特征图"]
+        A --> B["语义特征替代光度损失<br/>渲染特征 vs 真实图 DINOv2 特征算 L_sem"]
+        B --> C["Least Trimmed Squares 鲁棒优化<br/>丢弃 L_sem 超中位数的图像（浮块 / 路人）"]
+        C --> D["梯度反传只更新 T"]
+        D -->|未收敛| A
+    end
+    LOOP -->|收敛| OUT["拼图式全局对齐<br/>各 meta-image 独立对齐后拼成完整场景"]
+```
 
 ### 关键设计
 

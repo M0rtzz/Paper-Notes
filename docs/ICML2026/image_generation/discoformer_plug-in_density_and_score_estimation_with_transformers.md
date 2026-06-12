@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 DiScoFormer 把密度/score 估计当成一个"集合到算子"的回归任务：吃进上下文样本 $X \in \mathbb{R}^{n_x \times d}$（定义经验密度的 i.i.d. 样本）与查询点 $Y \in \mathbb{R}^{n_y \times d}$（要在哪些位置取值），一次前向就吐出每个查询点的标量 $\log f(y_i)$ 和向量 $\nabla\log f(y_i)$。样本先过一层白化把坐标尺度归一化，再进无位置编码的标准 Transformer encoder 让 $X$、$Y$ 之间做 cross-attention，最后由两个共享 backbone 的输出头分别回归 log 密度 $T$ 与 score $S$，并把白化坐标里的结果反映回原坐标。整个模型只在即时采样的 GMM 流上训练，推理时还能选择性地打开 test-time training 自适应到训练没见过的分布。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上下文样本 X + 查询点 Y"] --> B["白化型仿射等变层<br/>减均值 + 散度矩阵 S 的逆平方根白化"]
+    B --> C["Attention 即数据自适应 KDE<br/>无位置编码 Transformer、X 作 context / Y 作 query 的 cross-attention"]
+    C --> D["Cross-attention 双头<br/>共享 backbone 回归 log 密度 T 与 score S"]
+    D --> E["反白化变量代换修正<br/>log f = log f_w + log det A、s = s_w Aᵀ 映回原坐标"]
+    E --> F["输出 log f(y) 与 ∇log f(y)"]
+    D -->|"推理时可选 4 步"| G["微分一致性 TTT<br/>最小化 ‖S − ∇T‖² 免标签自适应 OOD 分布"]
+    G -.->|"fine-tune"| D
+```
+
 ### 关键设计
 
 **1. 白化型仿射等变层：把 KDE 的"尺度无感"硬编进网络**

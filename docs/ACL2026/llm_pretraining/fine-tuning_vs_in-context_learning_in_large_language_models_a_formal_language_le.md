@@ -42,10 +42,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法由三块组成：
-(1) **形式语言生成**：用两组 HPCFG ($G_\alpha, G_\beta$) × 三种 alphabet (数字 / 拉丁 / under-trained tokens) 组合出 6 种语言 $\{L_i\}_{i=1}^6$，从每种语言采样不重叠的训练串 ($n_{\text{train}}\in\{1,2,4,\dots,1024\}$) 和测试串 ($n_{\text{test}}=1024$)。
-(2) **两种学习范式**：FT 在 50 个 epoch 内最小化交叉熵 $\mathtt{loss}_M(D) = -\frac{1}{n}\sum_{s\in D}\frac{1}{|s|}\sum_{i=1}^{|s|} \log P_M(s_i \mid s_{[1,i-1]})$；ICL 把训练串用 `[sep]` 拼成 prefix，例子重复次数 $m\in\{1,2,4,8,16\}$。两者比较各自最优 epoch / 重复数下的性能。
-(3) **判别式 AUC 测试**：把 in-language 串 $L$ 和 out-of-language 串 $\mathsf{T}(L)$ (通过 edit 或随机化构造) 喂给 LLM，记录生成 loss，再用一个线性分类器算 $\mathtt{auc}_M(L, \mathsf{T}(L))$——分数越高语言熟练度越高，且跨 LLM、跨范式可比。
+整篇方法本质上是先把"公平比较 FT 与 ICL"这件模糊的事拆成三条 desiderata (D1 任务规约干净、D2 资源平等、D3 指标可比)，再用三块设计逐条落实，最终汇成一条"造语言 → 双范式各自学 → 同一把尺子量"的受控实验流水线：
+(1) **形式语言生成 (对应 D1)**：用两组 HPCFG ($G_\alpha, G_\beta$) × 三种 alphabet (数字 / 拉丁 / under-trained tokens) 组合出 6 种语言 $\{L_i\}_{i=1}^6$，从每种语言采样不重叠的训练串 ($n_{\text{train}}\in\{1,2,4,\dots,1024\}$) 和测试串 ($n_{\text{test}}=1024$)。
+(2) **两种学习范式 (对应 D2)**：FT 在 50 个 epoch 内最小化交叉熵 $\mathtt{loss}_M(D) = -\frac{1}{n}\sum_{s\in D}\frac{1}{|s|}\sum_{i=1}^{|s|} \log P_M(s_i \mid s_{[1,i-1]})$；ICL 把训练串用 `[sep]` 拼成 prefix，例子重复次数 $m\in\{1,2,4,8,16\}$。两者用同一批训练串、各自调到最优 epoch / 重复数后再比，保证资源平等。
+(3) **判别式 AUC 测试 (对应 D3)**：把 in-language 串 $L$ 和 out-of-language 串 $\mathsf{T}(L)$ (通过 edit 或随机化构造) 喂给 LLM，记录生成 loss，再用一个线性分类器算 $\mathtt{auc}_M(L, \mathsf{T}(L))$——分数越高语言熟练度越高，且跨 LLM、跨范式可比。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["HPCFG 文法 G_α / G_β × 3 种 alphabet（数字 / 拉丁 / 罕见 token）"] --> L["6 种形式语言 L₁…L₆<br/>D1：纯语法 · 零污染 · 边界可证"]
+    L --> S["采样不重叠的训练串 + 测试串<br/>D2：双范式共用同一批训练串、各调至最优"]
+    S --> FT["FT 路：全参微调<br/>交叉熵 · 50 epoch · 取最优 epoch"]
+    S --> ICL["ICL 路：训练串以 [sep] 拼成 prefix<br/>重复 m 次 · 取最优 m"]
+    FT --> AUC["判别式 AUC 测试<br/>D3：in-language vs out-of-language 可分性"]
+    ICL --> AUC
+    AUC --> CMP["比较 FT vs ICL<br/>in/out 分布泛化 · token 敏感性"]
+```
 
 ### 关键设计
 

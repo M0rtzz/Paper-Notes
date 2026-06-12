@@ -45,6 +45,18 @@ tags:
 
 数据上复用 Brockbank & Vul (2024) 的 411 人 / 129,087 次选择 IRPS 数据集，并为 4 个 LLM 各采集 20 局 × 15 个 bot × 300 轮 = 90,000 次选择的对齐数据；IRPS 固定 300 轮 / 15 个 bot（含 nonadaptive transition-based 与 adaptive 跟随两类），奖励为胜 +3 / 平 0 / 负 -1。每个智能体（人、Gemini 2.5 Pro/Flash、GPT 5.1、GPT OSS 120B）都过同一套 pipeline，确保对比公平。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["跨智能体对齐采集<br/>人类数据 + 4个LLM 复用同套 bot/奖励/300轮"] --> B
+    subgraph PER["每个智能体独立跑同一套 pipeline"]
+        direction TB
+        B["AlphaEvolve 进化可解释行为程序<br/>外循环 LLM 改程序 + 内循环 SGD 拟合参数"] --> C["多目标 Pareto + SBB 选择规则<br/>似然轴 × Halstead 简洁度轴"]
+    end
+    C --> D["交叉泛化矩阵<br/>5×5 似然，量化机制相似度"]
+    D --> E["机制差异结论<br/>对手模型张量维度"]
+```
+
 ### 关键设计
 
 **1. AlphaEvolve 进化可解释行为程序：让 LLM 当"假设生成器"**

@@ -45,6 +45,23 @@ tags:
 
 输入 NVV/UVS 音频通过共享的自监督编码器（voc2vec/WavLM/wav2vec 2.0/MMS）提取帧级特征，投影到 Poincaré 球。经双曲 VQ 编码本离散化韵律→Möbius 加法融合连续+离散→瓶颈压缩→双曲情感透镜校准强度→注意力池化得到话语级嵌入。NVV 标注数据训练分类器+计算类原型，UVS 通过最优传输对齐到原型+一致性正则化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["NVV 标注音频 + UVS 未标注音频"]
+    subgraph SHARED["共享前向传播（NVV/UVS 同一套参数）"]
+        direction TB
+        ENC["共享自监督编码器<br/>voc2vec / WavLM / wav2vec 2.0 / MMS"] --> PROJ["投影到 Poincaré 球"]
+        PROJ --> VQ["双曲韵律 VQ 编码本<br/>离散化 → Möbius 融合 → 瓶颈压缩"]
+        VQ --> HEL["双曲情感透镜 HEL<br/>幂律径向变换校准强度"]
+        HEL --> POOL["注意力池化 → 话语级嵌入"]
+    end
+    IN --> SHARED
+    SHARED --> SUP["NVV 监督分类<br/>每类 Fréchet 均值算类原型 μ"]
+    SHARED --> OT["UVS 最优传输对齐<br/>Sinkhorn 软伪标签 + 一致性正则化"]
+    SUP -->|"类原型 μ"| OT
+```
+
 ### 关键设计
 
 **1. 双曲韵律向量量化编码本：把连续韵律离散成 NVV 和 UVS 共享的「情感词汇表」**

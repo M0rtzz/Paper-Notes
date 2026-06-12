@@ -49,6 +49,31 @@ VAPO 的输入包括音频、对应幻灯片图像和任务指令，输出是一
 
 论文还构建了 SlideASR-Bench 来解决数据稀缺问题。SlideASR-S 从 ContextASR-Bench 扩展而来，利用实体和领域标签生成 slide-style 文本，再用 Matplotlib 渲染成幻灯片图像，共 8,467 个样本，其中 6,413 个训练、2,054 个测试。SlideASR-R 则是 60 个真实学术报告片段，覆盖化学、医学、生物和人工智能，人工标注 200 个领域实体，用来做真实复杂场景测试。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["实体密集 SlideASR-Bench<br/>合成 SlideASR-S + 真实 SlideASR-R"]
+    IN["输入：音频 + 幻灯片图像 + 指令"]
+    DATA -.提供训练/评测.-> IN
+    subgraph LTL["Look-then-Listen 推理链"]
+        direction TB
+        THINK["看：&lt;think&gt; 内做类 OCR 扫描<br/>抽取相关词与实体作视觉先验"]
+        ANSWER["听：&lt;answer&gt; 内以音频为主轴转写<br/>引用先验确认专业词拼写"]
+        THINK --> ANSWER
+    end
+    IN --> THINK
+    ANSWER --> OUT["结构化输出<br/>&lt;think&gt;视觉上下文&lt;/think&gt; + &lt;answer&gt;转写&lt;/answer&gt;"]
+    subgraph REW["四奖励多目标策略优化（GRPO）"]
+        direction TB
+        RF["Format Reward：结构合规"]
+        ROCR["OCR Reward：think 看准幻灯片"]
+        RASR["ASR Reward：answer 转写质量"]
+        RVA["Visual Anchoring Reward：实体跨阶段复用"]
+    end
+    OUT --> REW
+    REW -->|策略梯度更新| LTL
+```
+
 ### 关键设计
 
 **1. Look-then-Listen 推理链：把"看"和"听"在时间上拆开，让视觉只当锚点不当答案**

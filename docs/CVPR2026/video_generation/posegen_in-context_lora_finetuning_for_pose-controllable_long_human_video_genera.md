@@ -37,6 +37,30 @@ PoseGen 通过 in-context LoRA 微调实现双重条件注入（token级外观 +
 ### 整体框架
 PoseGen 想在不改动主干架构、不用海量私有数据的前提下，让一个预训练视频扩散模型（Wan2.1）既能锁住人物身份、又能精确跟随姿态，还能把片段拼成几分钟的长视频。它的做法是只训练两个角色不同的 LoRA：第一个 LoRA 负责把"外观条件"和"姿态条件"一起注进去、生成一个个独立的短片段；第二个 LoRA 专门做相邻片段之间的衔接。整条流程是「参考图 + 姿态序列 → 逐段生成短片 → 姿态感知插帧把相邻段缝合 → 长视频」，全程没有额外的姿态编码器或身份编码器，能力都压在 LoRA 微调和 in-context 拼接上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    REF["参考图像"]
+    POSE["驱动姿态序列<br/>(骨架)"]
+    HAND["手部表面法线辅助<br/>法线预测 + 部位分割"]
+    REF --> COND
+    POSE --> COND
+    HAND --> COND
+    subgraph COND["In-Context LoRA 双重条件注入"]
+        direction TB
+        T["外观走 token 维度<br/>VAE 编码拼到视频 token 前"]
+        C["姿态走通道维度<br/>骨架 + 法线沿通道拼接噪声"]
+    end
+    COND --> SEG
+    subgraph SEG["分段交错生成"]
+        direction TB
+        L1["LoRA-1：生成非重叠短片段<br/>KV 共享保背景一致"]
+        L2["LoRA-2：姿态感知插帧<br/>二值掩码补过渡帧缝合"]
+        L1 --> L2
+    end
+    SEG --> OUT["长时人体视频"]
+```
+
 ### 关键设计
 
 **1. In-Context LoRA 双重条件注入：让外观和姿态各走最自然的一个维度**

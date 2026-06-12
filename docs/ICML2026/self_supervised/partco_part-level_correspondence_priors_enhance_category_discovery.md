@@ -42,6 +42,21 @@ PartCo 通过显式利用 Vision Transformer 的补丁令牌中蕴含的**部分
 ### 整体框架
 两阶段——**离线阶段**：使用冻结的预训练 DINO 模型在已标记数据子集上进行两步 PCA 投影自动生成部分级对应标签；**训练阶段**：基于部分级标签聚合 ViT 补丁特征，引入部分级对应损失函数与 GCD 基线损失函数联合优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["双阶 PCA 投影 + 部分标签构造（离线）"]
+        direction TB
+        A["标记数据子集<br/>冻结 DINO 补丁特征 F"] --> B["一阶 PCA<br/>物体度分数 + 阈值 0.6 滤背景"]
+        B --> C["二阶 PCA<br/>前景前三主成分刻画细粒度"]
+        C --> D["自适应 k-means<br/>自动选簇数 → 部分级标签"]
+    end
+    D --> E["部分级特征聚合 + 对应损失<br/>按部分聚合补丁特征 → 投影头 → 部分对比损失"]
+    E --> F["即插即用集成<br/>L_total = L_gcd + L_pc，λ=0.35"]
+    G["任意 GCD 基线<br/>SimGCD / SPTNet / FlipClass / SelEx"] --> F
+    F --> H["联合优化 → 增强后的 GCD 模型"]
+```
+
 ### 关键设计
 
 **1. 双阶 PCA 投影 + 部分标签构造：从冻结 ViT 里自动挖出物体部分**

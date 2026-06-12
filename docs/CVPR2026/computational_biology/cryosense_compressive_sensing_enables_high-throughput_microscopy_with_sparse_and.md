@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 cryoSENSE 把"采集阶段就压缩"形式化成一个标准逆问题：探测器只采到欠采样测量 $\mathbf{y} = \mathcal{A}(\mathbf{x}^*) + \boldsymbol{\eta}$，其中 $\mathcal{A}$ 是已知的线性投影算子（丢掉一部分像素或一部分 Fourier 系数），目标是从 $\mathbf{y}$ 反推回完整的高保真 2D 粒子图像 $\mathbf{x}^*$。整套框架沿两个正交的轴展开：采样在**像素域**还是 **Fourier 域**做、重建用**稀疏先验**还是**生成先验**。论文的核心贡献不是某一条具体算法，而是把这四种组合摆在一起做系统对比，给出"什么压缩率、什么采样域该配什么先验"的操作指南。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["完整 2D 粒子图像 x*"]
+    subgraph MASK["像素域与 Fourier 域两套 masking 策略"]
+        direction TB
+        B["像素域 masking<br/>丢探测器像素 / binning"]
+        C["Fourier 域 masking<br/>均匀 / 环形 / 径向 spoke"]
+    end
+    A --> MASK
+    MASK --> D["欠采样测量 y = A(x*) + η"]
+    D -->|"中等压缩 · 偏好 Fourier 域"| E["稀疏先验重建<br/>DCT / 小波 / TV 正则凸优化"]
+    D -->|"高压缩 · 偏好像素域"| F["生成先验重建<br/>DDPM 后验采样 + 测量一致性"]
+    E --> G["重建 2D 粒子图像"]
+    F --> G
+    G --> H["3D 体积重建 / 构象分析 / 原子模型"]
+```
+
 ### 关键设计
 
 **1. 像素域与 Fourier 域两套 masking 策略：从两个物理上都能实现的接口丢数据**

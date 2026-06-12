@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 对一对增广视图 $(\mathbf{x}, \mathbf{x}')$ 输入 backbone $f_{\boldsymbol{\theta}}$ 得到 logits $\mathbf{z}_{\text{raw}}, \mathbf{z}'_{\text{raw}} \in \mathbb{R}^D$，再做 ReLU 得到 $\mathbf{z} = \mathrm{ReLU}(\mathbf{z}_{\text{raw}})$、$\mathbf{z}' = \mathrm{ReLU}(\mathbf{z}'_{\text{raw}})$。同时从目标分布 $\prod_{i=1}^D \mathcal{RGN}_p(\mu, \sigma)$ 采样 $\mathbf{y}$，从单位 $\ell_2$ 球 $\mathbb{S}^{D-1}_{\ell_2}$ 上均匀采样 $N$ 个投影方向 $\mathbf{c}_i$。损失由两部分构成：视图一致性 $\|\mathbf{z}-\mathbf{z}'\|_2^2$ 和切片分布匹配 $\sum_i \mathcal{L}(\mathbb{P}_{\mathbf{c}_i^\top \mathbf{z}} \,\|\, \mathbb{P}_{\mathbf{c}_i^\top \mathbf{y}})$，其中 $\mathcal{L}$ 取一维切片 2-Wasserstein 的排序差形式。整套流程仍是"backbone + projector + 投影后对齐"的 LeJEPA 骨架，但目标分布从高斯换成 RGG，并强制对特征整流。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["一对增广视图 (x, x′)"] --> B["backbone f_θ<br/>得 logits z_raw, z′_raw ∈ ℝ^D"]
+    B --> C["特征整流 ReLU<br/>z, z′ ∈ [0,∞)^D"]
+    C --> D["视图一致性<br/>‖z − z′‖₂²"]
+    E["RGG 目标分布采样<br/>y ~ ∏ RGN_p(μ,σ)，支撑 [0,∞)"] --> G
+    F["单位 ℓ₂ 球采样<br/>N 个投影方向 c_i"] --> G
+    C --> G["RDMReg 两样本切片对齐<br/>c_i 投影后排序 2-Wasserstein"]
+    D --> H["总损失 = 一致性 + RDMReg"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. Rectified Generalized Gaussian (RGG) 目标分布：把"稀疏强度"做成可解析调的旋钮**

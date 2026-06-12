@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 FedGR 在标准 FedAvg 循环外加三个模块，全部为客户端 $k$ 在第 $t$ 轮的本地训练设计，总损失为 $\mathcal{L}_k = \mathcal{L}_k^{SR} + \lambda_{\mathcal{B}} \mathcal{B}_k + \lambda_{\mathcal{R}} \mathcal{R}_k$。流程：(1) 客户端用全局模型 $\mathbf{w}_g^{t-1}$ 计算每个样本的滑动平均损失代理 $\bar{\ell}_i^t$ 上传服务器；(2) 服务器对所有客户端的代理拟合两组分 GMM，按"clean 后验概率" $q_{i,k}$ 划分 clean/noisy 子集，估计每客户端噪声率 $r_k$，把结果回传；(3) 客户端按 $r_k$ 分级修正标签（低噪声且 clean 子集→保留；低噪声且 noisy 子集→$q_{i,k}\hat{y}_i + (1-q_{i,k})y^{pse}_i$ 软标签；高噪声 $r_k \ge \beta$→直接用伪标签 $y^{pse}_i$，伪标签来自 FixMatch 在全局模型上的弱增强预测）；(4) 同时维护本地 EMA 教师，每轮开头用全局参数做一次"修正" $\mathbf{w}_{k,ema}^{t,0} = \gamma_g \mathbf{w}_{k,ema}^{t-1,m_k} + (1-\gamma_g)\mathbf{w}_g^{t-1}$，本地步内再用常规 EMA 更新，蒸馏给学生；(5) 全局-本地表征一致性正则 $\mathcal{R}_k$ 进一步约束本地骨干不要离全局表征太远。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["全局模型 w_g（上一轮聚合）"]
+    subgraph FSLR["Federated Sieving + Label Refining（设计1）"]
+        direction TB
+        A["客户端：用 w_g 算每样本<br/>滑动损失代理并上传"] --> B["服务器：聚合所有代理<br/>拟合双组分 GMM"]
+        B --> C["clean/noisy 划分 + <br/>每客户端噪声率 r_k 回传"]
+        C --> D["客户端按 r_k 分三档<br/>精修标签"]
+    end
+    G --> A
+    D --> E["本地训练（学生模型）"]
+    G --> F1["Globally Revised EMA Distillation（设计2）<br/>全局参数修正本地 EMA 教师 → KL 蒸馏"]
+    G --> F2["Global Representation Regularization（设计3）<br/>本地特征对齐全局特征"]
+    F1 --> E
+    F2 --> E
+    E -->|"总损失 = 自训练 + λ_B·蒸馏 + λ_R·表征正则"| H["上传本地模型 w_k"]
+    H --> I["服务器 FedAvg 聚合"]
+    I -.下一轮.-> G
+```
+
 ### 关键设计
 
 **1. Federated Sieving + Label Refining：把噪声判定搬到服务器，但只看与分布无关的损失统计**

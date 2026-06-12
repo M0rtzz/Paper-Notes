@@ -49,6 +49,21 @@ tags:
 
 赛后增强：(1) Rejudged Sonnet——用 Claude 3.5 Sonnet 重判训练集标签，6.2% 的样本被改标，整体极化比例上升；(2) DeepSeek-R1 LLM judge 过滤偏好对到 299 条 62:38 FP:FN 平衡集。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["社交媒体文本"] --> B["结构化 slot-filling SFT<br/>填 Target / Claim type / 6 项 Manifestation / Decision / Final Answer<br/>rationale 由 Gemma 3 27B 离线生成"]
+    B --> S2
+    subgraph S2["召回敏感的非对称偏好排序"]
+        direction TB
+        C["two-prompt × 多温度采样<br/>一路鼓励预测 1、一路鼓励预测 0"] --> D["按 ground truth 标 CORRECT / FP / FN"]
+        D --> E["按 CORRECT ≻ FP ≻ FN 两两配对<br/>高排序为 chosen、低排序为 rejected"]
+    end
+    S2 --> F["LLM-judge 过滤 + 重判数据<br/>DeepSeek-R1 过滤偏好对 + Claude 3.5 Sonnet 重判标签"]
+    F --> G["DPO 训练"]
+    G --> H["输出极化标签 0 / 1"]
+```
+
 ### 关键设计
 
 **1. 结构化 slot-filling rationale schema：把分类改造成可对齐比较的生成任务**

@@ -46,6 +46,17 @@ tags:
 
 最后，作者为每个语言变体从头训练相同的小型自回归 Transformer，即 PicoLM 风格 50.5M 参数 decoder-only LM。默认使用 ByteLevel-BPE，词表大小 $|V|=16,000$；在词表实验中扫描 $|V|=258, 1000, 8000, 16000, 32000, 64000$。可学习性用测试集平均 surprisal 衡量，surprisal 越低，表示模型越能捕捉该语言变体的概率结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Europarl 10 种欧洲语言<br/>清洗 + 切分训练/验证/测试"] --> B["Mallows 连续词序扰动谱<br/>参数 θ：原序↔完全随机↔反转"]
+    B --> C["词级确定性打乱<br/>每个句长只采一个排列"]
+    C --> D["从头训练 PicoLM<br/>50.5M decoder-only LM"]
+    D --> E["测量 surprisal 增量<br/>ΔS(θ)=S(θ)−S_orig"]
+    E --> F["词表结构解释跨语言差异<br/>PLS 回归拟合整条 S(θ) 曲线"]
+    F --> G["结论：词表覆盖解释平常难度<br/>形态复杂度解释强打乱后可恢复性"]
+```
+
 ### 关键设计
 **1. Mallows 连续词序扰动谱：用一个参数把词序从原样连续推到完全随机再到反转**
 

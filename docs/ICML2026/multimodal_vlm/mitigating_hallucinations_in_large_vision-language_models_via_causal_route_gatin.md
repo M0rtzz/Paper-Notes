@@ -42,6 +42,19 @@ CRG 把每个注意力头的输出沿视觉/文本两条路线做精确线性分
 ### 整体框架
 CRG（Causal Route Gating）是一个嵌进解码循环的推理期模块，每生成一个 token 都跑三步：(1) 把每个头的输出按 token 模态精确分裂为视觉路线 $O^{\mathrm{vis}}_{l,h}$ 与文本路线 $O^{\mathrm{txt}}_{l,h}$；(2) 用一前向一反向梯度估计两条路线的因果效应 $\widehat{\Delta}^{\mathrm{vis}}_{l,h}$ 与 $\widehat{\Delta}^{\mathrm{txt}}_{l,h}$，并归一化得到视觉依赖指数 $\mathrm{VRI}_{l,h}$；(3) 按 $(\widehat{\Delta}^{\mathrm{vis}},\widehat{\Delta}^{\mathrm{txt}})$ 的符号将头划入 Agreement / Conflict-A / Conflict-B 三类，对冲突头按 VRI 取最小的 top-$k$ 用一个秩相关的平滑 schedule 单独压制文本门 $g^{\mathrm{txt}}_{l,h}$。模型权重、视觉路线、KV-cache 全程不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前解码 token<br/>各头输出 O(l,h)=α·V"] --> B["头内路线分解<br/>对角掩码 S_vis/S_txt 切出 O_vis + O_txt"]
+    B --> C["一前向一反向 do-effect 估计器<br/>门全 1 前向 + 一次反向，方向导数得 Δ_vis、Δ_txt"]
+    C --> D["视觉依赖指数<br/>VRI = |Δ_vis| / (|Δ_vis| + |Δ_txt|)"]
+    D -->|"同号 (+,+)/(−,−) Agreement"| E["不干预<br/>视觉门、文本门均保 1"]
+    D -->|"异号 (+,−) Conflict-A / (−,+) Conflict-B"| F["冲突感知文本路线门控<br/>取 VRI 最小 top-k，秩值 schedule 压 g_txt"]
+    E --> G["更新门后再前向<br/>得 token 分布并采样"]
+    F --> G
+    G -->|"循环到下一 token"| A
+```
+
 ### 关键设计
 
 **1. 头内路线精确分解 + 决策对齐的因果路线效应（CRE）：把"相关"换成"因果"**

@@ -39,7 +39,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要解决的是：以往的时序语句定位（TSGV）几乎都把视频 backbone 冻住，只训后面的定位模块，导致视觉特征跟"按语言找片段"这件事根本不匹配。本文把整条链路打通成端到端训练——语句先用 DistilBERT 编码成嵌入，视频送进 backbone（C3D / I3D 或 ViT）逐层提特征，但 backbone 不再是黑盒：每层之间插入 SCADA 适配器，让语句嵌入在特征还在 backbone 内部时就参与调制，提出语句导向的视觉表示；之后这些特征过跨模态融合，再交给一个带语句调制的 BiLSTM 检测头，最终回归出时间边界。整条 pipeline 中真正被训练的只有适配器和检测头，backbone 主体冻结，所以既拿到了端到端的收益，又控住了显存和遗忘。
+这篇论文要解决的是：以往的时序语句定位（TSGV）几乎都把视频 backbone 冻住，只训后面的定位模块，导致视觉特征跟"按语言找片段"这件事根本不匹配。本文把整条链路打通成端到端训练——语句先用 DistilBERT 编码成嵌入，视频送进 backbone（C3D / I3D 或 ViT）逐层提特征，但 backbone 不再是黑盒：每层之间插入 SCADA 适配器，让语句嵌入在特征还在 backbone 内部时就参与调制，提出语句导向的视觉表示；之后这些特征过最终聚合，再交给一个带语句调制的 BiLSTM 检测头，最终回归出时间边界。训练时用视频中心学习把同一视频的多条查询凑到一个 batch，backbone 只提一次特征。整条 pipeline 中真正被训练的只有适配器和检测头，backbone 主体冻结，所以既拿到了端到端的收益，又控住了显存和遗忘。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    S["语句查询 S"] --> DB["DistilBERT 编码器<br/>→ 语句嵌入 q"]
+    V["未剪辑视频 V<br/>C3D / I3D / ViT backbone（主体冻结）"]
+    VC["视频中心学习采样<br/>同一视频多查询同 batch，backbone 只提一次特征"] -. batch 构建 .-> V
+    DB -->|语句嵌入 q 调制| SCADA
+    V --> SCADA
+    subgraph SCADA["语句条件适配器 SCADA（逐层插入 backbone）"]
+        direction TB
+        IN["内分支：降维 → 语句乘法调制 → DWConv1D → 升维+残差<br/>回填下一 backbone 层"]
+        OUT["外分支：3D卷积降维压空间 → 语句调制 → 升维池化<br/>跳过后续层直接汇聚"]
+    end
+    SCADA --> AGG["最终聚合<br/>F = Normalize( x_b + Σ 外分支特征 )"]
+    AGG --> HEAD["检测头的语句深度融合<br/>BiLSTM+残差，反复语句逐元素乘法"]
+    HEAD --> OUT2["边界回归<br/>𝓛_b + 𝓛_iou + 𝓛_offset"]
+```
 
 ### 关键设计
 

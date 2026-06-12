@@ -42,7 +42,18 @@ tags:
 
 ### 整体框架
 
-本文不提新算法，而是一篇 *diagnostic* 论文：用一组对照实验把「不可学习」这个现象先量化、再归因、最后定位到表征层面。整条线索按「现象定义 → 排除优化端假设 → 建立表征侧解释 → 验证修复方案」四步推进——先在 GRPO + 动态采样下跑出一批「有正奖励却学不会」的样本，再逐个反证「正样本太少 / 裁剪 / KL 正则」这些优化端解释，转而用 cross-example gradient similarity 证明这些样本是优化空间里的孤立离群点，最后对比数据增广与 mid-training 两条修复路，发现只有改 base model 表征才有效。
+本文不提新算法，而是一篇 *diagnostic* 论文：用一组对照实验把「不可学习」这个现象先量化、再归因、最后定位到表征层面。整条线索按「现象定义 → 排除优化端假设 → 建立表征侧解释 → 验证修复方案」四步推进——先在 GRPO + 动态采样下跑出一批「有正奖励却学不会」的样本，再逐个反证「正样本太少 / 裁剪 / KL 正则」这些优化端解释，转而用 cross-example gradient similarity 证明这些样本是优化空间里的孤立离群点，最后对比数据增广与 mid-training 两条修复路，发现只有改 base model 表征才有效。下面这张图把这条「排除法」诊断主线画出来：每反证掉一个优化端假设就往下推进一步，最终汇聚到「表征缺陷」并落到唯一有效的 mid-training 修复。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GRPO + 动态采样训练"] --> B["不可学样本定义与三组切分<br/>易 / 可学难 / 不可学难 D_u"]
+    B --> C["在 D_u 上反证优化端假设<br/>过采样+回放 / clip-higher / 去KL / SFT / 大组 k=64"]
+    C -->|D_u 的 reward 曲线全部不动| D["跨样本梯度相似度分析<br/>D_u 是优化空间里的孤立离群点"]
+    D -->|根因 = 表征缺陷，非优化端| E["验证两条修复路"]
+    E -->|数据增广（相似题 / 子问题）| F["无效：梯度相似度不升"]
+    E -->|mid-training 换 base model| G["有效：难样本梯度对齐被显著拉高"]
+```
 
 ### 关键设计
 
@@ -50,11 +61,11 @@ tags:
 
 以往讨论难样本时，常把「整个训练一次正样本都没采到」和「有正样本却学不会」混为一谈，于是任何「多造正样本」的干预都会显得有效；本文要先把后者干净地分离出来。具体做法是先用 GRPO + dynamic sampling 做一轮完整训练，把 *initial success rate* $\geq 0.1$ 的样本切成 *easy*；对剩下的 *hard* 样本用 $N=32$ 个 rollout 估计 *final* pass@1，最终 pass@1 $<\tau=0.1$ 的归入不可学集 $\mathcal{D}_u$，否则归入可学集 $\mathcal{D}_l$，并显式剔除「整个训练过程从未出现正样本」的样本，保证研究问题确实是「有正奖励信号但模型仍学不会」。为降噪做三次独立 run，对 $\mathcal{D}_u/\mathcal{D}_l$ 取交集、对「无正奖励」样本取并集。有了这个划分，后续所有梯度/推理质量分析才有明确对象，也才能让「优化端假设」的反证不被「正样本稀缺」这一混淆因素污染。
 
-**2. Oversampling-with-Replay：反证「正样本稀缺」假设**
+**2. 过采样 + 经验回放（Oversampling-with-Replay）：反证「正样本稀缺」假设**
 
 如果 $\mathcal{D}_u$ 学不会只是因为正 rollout 太少、梯度被负样本淹没，那么强行喂够正样本就该救活它。作者据此在每个 prompt、每个 batch 内固定配 $k_{\text{pos}}=1$ 个正样本 + $k-k_{\text{pos}}=7$ 个负样本重训：先采 $4k$ 个 rollout 再下采样到 $k=8$，若当前 batch 正样本不够，就从经验回放 buffer 里复用此前采到的正 rollout（每条最多回放两次），并在回放/下采样后再算 advantage $\hat{A}_i = \frac{\mathbb{1}[y_i=y^*] - \text{mean}}{\text{std}}$。结果 reward 曲线显示这套干预确实生效——它明显拖慢了 $\mathcal{D}_l$ 的学习速度——但 $\mathcal{D}_u$ 的曲线与 baseline 几乎重合。附录再用「只在 $\mathcal{D}_u$ 上做 SFT 蒸馏正确答案」和「$k=64$ 大规模 rollout」两个更激进的方向交叉验证，gap 同样不动。当两个独立维度（每 batch 强配 1 正 7 负、把 $k$ 提到 64）都填不平差距时，成因就基本可以排除在「正样本数量」之外。
 
-**3. Cross-Example Gradient Similarity：把「不可学」从 reward 曲线提升到优化空间几何**
+**3. 跨样本梯度相似度（Cross-Example Gradient Similarity）：把「不可学」从 reward 曲线提升到优化空间几何**
 
 排除了优化端解释后，需要一个可观测、且和训练动力学直接挂钩的量来给出机制性解释——梯度相似度正好能同时回答「为什么其它样本上的学习不迁移到 $\mathcal{D}_u$」和「为什么 oversampling 也救不了」。做法是每组取 100 个样本，每个样本在 *初始策略* 下采 1000 个 rollout、过滤出正确的那些，按公式 (1) 算 GRPO loss 的梯度（先在 response 内部对 token 平均，再在 response 之间平均，得到每个样本一个梯度向量）；为让算力可控，挂一个固定随机初始化的 LoRA adapter、只对 LoRA 参数求梯度（在 0.5B 模型上已验证 LoRA-based 与全参数 gradient similarity 高度相关），最后计算样本间的余弦相似度 $\cos(g_i, g_j)$。图 1c / 图 6 显示：*easy* 样本之间梯度高度对齐，*learnable* 居中，*unlearnable* 与所有组都低相似度——即每个不可学样本都是优化空间里的孤立离群点，step 50 时仍是同样格局，说明这不是初始化偶然。配套的 reasoning-quality 分析（用 GPT-5-mini 给正确 rollout 的推理链打 0–5 分）则在「答案对不对」之外揭示：$\mathcal{D}_u$ 的正确 rollout 多半靠 shortcut/启发式凑答案——典型反例是「$|x+y+z|+|x+y-z|\leq 8$ 体积题」里模型推导明显错乱却凑对最终答案，正印证 outcome reward 会把 fake reasoning 一并奖励掉、让训练信号噪声很大。
 

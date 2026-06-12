@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 REKD 要解决的是小模型在"选-预测"式 rationale extraction 里探不出好特征子集的困境，做法是在原本的 RE 框架上挂一条蒸馏分支，让小学生同时模仿大教师的特征选择和最终预测。输入 $\mathbf{X} \in \mathbb{R}^{L \times D}$（L 个特征/patch/token，每个 D 维）分别走教师、学生两套 generator-predictor pipeline，各自吐出 Gumbel-Softmax 软分布 $\mathbf{S}$、其 STE 离散化的二值掩码 $\mathbf{M}$，以及 rationale $\mathbf{R} = \mathbf{M} \odot \mathbf{X}$ 经 predictor 得到的类别 logits。学生侧把原任务损失 $\mathcal{L}_{\text{RE}}$ 和蒸馏损失 $\mathcal{L}_{\text{KD}}$ 按权重 $\alpha$ 混合，关键的一笔是让蒸馏温度和 Gumbel-Softmax 退火共用同一条指数曲线，使整个训练自然走出"先软后硬"的课程。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 X（L 个特征/patch/token，每个 D 维）"]
+    subgraph T["教师 rationalist（固定，大模型）"]
+        direction TB
+        TG["generator<br/>软分布 S_T"] --> TP["predictor<br/>预测 Y_T"]
+    end
+    subgraph St["学生（小模型）· STE Gumbel-Softmax 可微 RE"]
+        direction TB
+        SG["generator<br/>软分布 S_S"] --> SM["argmax + STE<br/>0/1 掩码 M"]
+        SM --> SR["rationale R = M ⊙ X"] --> SP["predictor<br/>预测 Y_S"]
+    end
+    X --> TG
+    X --> SG
+    TG -.->|rationale 蒸馏 KL| SG
+    TP -.->|prediction 蒸馏 KL| SP
+    TAU["温度共享调度 τ_k = τ0·e^(−γk)"] -.->|同驱 Gumbel 退火与 KD 温度<br/>形成先软后硬课程| St
+```
+
 ### 关键设计
 
 **1. Straight-Through Gumbel-Softmax 可微 RE：把"选不选"变成可反传的离散决策**

@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 对每个问题 $q$, IB-TPO 跑一棵 IBTree: 初始只有根 $q$, 用 $B_0$ 条独立 rollout 长出一棵初始树, 之后做 $L-1$ 轮扩展, 每轮从所有非叶节点里挑 IB-Score 最高的 $K$ 个, 各分叉出 $B$ 条新轨迹 (共享前缀, 复用 vLLM prefix cache). 总轨迹数 $G = B_0 + (L-1)\cdot K\cdot B$. 树长完后, 对每个节点同时算**全局优势** $A_{GL}$ (该节点到答案的 reward density 减去根) 和**局部优势** $A_{IB}$ (来自 IB-Score 的步级信号), 加权后塞进标准 GRPO clip 目标更新策略.
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 q"] --> INIT["初始化 IBTree<br/>根 q 长出 B₀ 条独立 rollout"]
+    INIT --> SCORE["IB-Score：步级探索-利用平衡度量<br/>每个非叶节点用 Tsallis 熵 MC 估计 η₁·η₂"]
+    SCORE --> BRANCH["IBTree：选择性分叉<br/>取 IB-Score 最高 top-K 节点各分叉 B 条共享前缀 rollout"]
+    BRANCH -->|"未满 L 轮：新 rollout 反过来精修 IB-Score"| SCORE
+    BRANCH -->|"扩展完成：共 G=B₀+(L−1)·K·B 条轨迹"| ADV["步级优势混合<br/>全局优势 A_GL + 局部优势 A_IB"]
+    ADV --> GRPO["GRPO clip 目标更新策略<br/>A(s)=A_GL+λ·A_IB"]
+```
+
 ### 关键设计
 
 1. **IB-Score: 步级探索-利用平衡度量**:

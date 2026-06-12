@@ -44,6 +44,16 @@ tags:
 
 SAEmnesia 把一个稀疏自编码器挂在冻结的 Stable Diffusion v1.5 的 cross-attention block `up.1.1` 之后，要拆掉的痛点是"无监督 SAE 会把一个概念摊在多个 latent 上、擦除时不得不做组合搜索"。它的转法是在 SAE 训练阶段就用 anchor prompt 自带的概念标签做监督，把每个待擦概念硬绑到唯一一个 latent，于是推理时的擦除退化成"对那一个 latent 的激活乘个负标量"。整个 SAE 可热插拔、扩散主干一字不改，"忘记—恢复"一行代码切换。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 SD v1.5 + anchor prompt<br/>抽 up.1.1 cross-attention 激活"] --> B["SAE 无监督 TopK 预训练<br/>稳住稀疏分解"]
+    B --> C["概念—latent 指派 + Concept Assignment 损失<br/>score 选专属槽位 i_c，BCE 推高其激活"]
+    C --> D["跨宏类去相关约束<br/>压低 objects↔styles 跨组 latent 相关"]
+    D --> E["单 latent 阈值化擦除<br/>激活超均值时对 i_c 乘 γ&lt;0 翻成抑制"]
+    E --> F["SAE 解码丢回扩散主干<br/>可热插拔，拔掉即完全复原"]
+```
+
 ### 关键设计
 
 **1. 监督的概念—latent 指派与 Concept Assignment 损失：把事后归因前移成训练时硬约束**

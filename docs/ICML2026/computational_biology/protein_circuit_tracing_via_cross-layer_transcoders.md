@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ProtoMech 四个组件: (i) CLT replacement model——给 ESM2 每层 MLP 写一个稀疏 TopK 编码器 + 跨层解码器;(ii) circuit discovery——梯度归因 + 增量贪心,直到电路恢复 ≥70% 原性能;(iii) steering——在 CLT 上对特定潜变量做 activation clamping,把 wildtype 序列推向高 fitness 区域,5 个突变以内;(iv) visualizer——按层取 top-5 激活节点,用激活×梯度算边权,把整条电路画成可读图,然后人工 cross-reference Swiss-Prot 找生物意义。
+ProtoMech 把"找电路 + 用电路"串成一条流水线,共四个组件:(i) CLT 替换模型——给 ESM2 每层 MLP 写一个稀疏 TopK 编码器 + 跨层解码器,得到一个忠实复现原模型 MLP 计算、又稀疏可读的 replacement model;(ii) 稀疏电路发现——在替换模型里用梯度归因 + 增量贪心,挑出能恢复 ≥70% 原性能的最小潜变量子集,这个子集就是"蛋白电路";(iii) steering——在 CLT 上对电路里的特定潜变量做 activation clamping,把 wildtype 序列推向高 fitness 区域(5 个突变以内);(iv) 可视化——按层取 top-5 激活节点、用激活×梯度算边权,把整条电路画成可读图,再人工 cross-reference Swiss-Prot 找对应的生物基序。前三步是核心方法(下面的三个关键设计),第四步是把电路落成图、便于人工解读的呈现工具。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ESM2 蛋白语言模型<br/>(每层一个 MLP 块)"] --> B["跨层 transcoder CLT<br/>每层输出 = 所有先前层稀疏潜变量解码累加"]
+    B --> C["基于归因的稀疏电路发现<br/>监督探针 + 梯度归因贪心搜索"]
+    C --> D["稀疏电路<br/>&lt;1% 潜变量, 恢复约 79% 性能"]
+    D --> E["沿电路 activation clamping steering<br/>夹住潜变量 → 高 fitness 变体 (≤5 突变)"]
+    D --> F["电路可视化<br/>逐层 top-5 节点 + 激活×梯度边权 → 生物基序"]
+```
 
 ### 关键设计
 
-1. **跨层 transcoder (CLT) 作为 ESM2 的 replacement**:
+**1. 跨层 transcoder（CLT）替换 ESM2 的 MLP**:SAE 只做单层表征的稀疏分解、PLT 又逐层独立近似(误差累积还丢了跨层依赖),都给不出"上一层把信息送到下一层"的计算过程。CLT 把这块补上:对第 $\ell$ 层残差流 $\mathbf x^\ell$ 编码得稀疏潜变量 $\mathbf a^\ell=\text{TopK}(\mathbf W_{\text{enc}}^\ell(\mathbf x^\ell-\mathbf b_{\text{pre}}^\ell)+\mathbf b_{\text{enc}}^\ell)$,而第 $\ell$ 层 MLP 输出由**所有先前层**的潜变量解码累加重建 $\hat{\mathbf y}^\ell=\sum_{\ell'=1}^{\ell}\mathbf W_{\text{dec}}^{\ell'\to\ell}\mathbf a^{\ell'}+\mathbf b_{\text{pre}}^\ell$,训练目标是重建 MSE $\mathcal L_{\text{MSE}}=\sum_\ell \|\mathbf y^\ell-\hat{\mathbf y}^\ell\|_2^2$ 外加缓解 dead latent 的辅助损失 $\mathcal L_{\text{aux}}$。这样信号从"层内重构"升级为"跨层组合",一来更忠实地复现 ESM2 的真实计算路径,二来让后层潜变量天然可被解释为"前层潜变量的功能组合",给下一步的电路发现提供了组合性基础。
 
-    - 功能:让每层 MLP 的输出由所有先前层的稀疏潜变量重建,既保留可解释性又显式表达跨层计算。
-    - 核心思路:对第 $\ell$ 层残差流 $\mathbf x^\ell$ 编码得 $\mathbf a^\ell=\text{TopK}(\mathbf W_{\text{enc}}^\ell(\mathbf x^\ell-\mathbf b_{\text{pre}}^\ell)+\mathbf b_{\text{enc}}^\ell)$,然后 $\hat{\mathbf y}^\ell=\sum_{\ell'=1}^{\ell}\mathbf W_{\text{dec}}^{\ell'\to\ell}\mathbf a^{\ell'}+\mathbf b_{\text{pre}}^\ell$。训练目标是 $\mathcal L_{\text{MSE}}=\sum_\ell \|\mathbf y^\ell-\hat{\mathbf y}^\ell\|_2^2$ 加上重建残差辅助损失 $\mathcal L_{\text{aux}}$ 以缓解 dead latent。
-    - 设计动机:把信号从"层内重构"升级为"跨层组合",一是更忠实地复现 ESM2 的真实计算路径,二是为电路发现提供组合性(后层潜变量可被解释为"前层潜变量的功能组合")。
+**2. 基于归因的稀疏电路发现**:有了替换模型,还要从几万个潜变量里挑出对某个任务真正关键的极小子集。作者先在原 ESM2 末层 MLP 输出 $\mathbf y^L$ 上训一个监督探针(family 用 logistic regression、function 用 CNN)锚定原模型表现;推理时做 hybrid replacement——MLP 走 CLT、attention 保持 ESM2 原值;再按每个潜变量对探针输出的梯度归因排序,小批量增量加入候选集,直到电路恢复 ≥70% 原性能或达到全潜变量表现(family 用 F1、function 用 Spearman $\rho$ 评判)。贪心 + 归因避免了 $2^{d_{\text{latent}}}$ 的暴力搜索;固定 attention 则是为了切断"重建注意力带来的误差累积"(消融显示 attention 也走 CLT 会让性能塌缩),让电路只解释 MLP 这条计算路径,这与 Anthropic 在 LLM 上的做法一致。
 
-2. **基于归因的稀疏电路发现算法**:
-
-    - 功能:在 CLT 中找到能恢复目标任务性能的最小潜变量子集。
-    - 核心思路:先在原 ESM2 末层 MLP 输出 $\mathbf y^L$ 上训练监督探针(family 用 logistic regression,function 用 CNN);然后在 ProtoMech 上做 hybrid replacement——MLP 走 CLT,attention 保持原值;按每个 latent 对探针输出的梯度归因排序,小批量增量加入候选集,直到性能恢复 ≥70% 或达到全集表现。F1 用于 family,Spearman $\rho$ 用于 function。
-    - 设计动机:贪心 + 归因避免了 $2^{d_{\text{latent}}}$ 的暴力搜索;固定 attention 是为了切断"重建注意力带来的误差累积",让电路只解释 MLP 这条计算路径,这与 Anthropic 在 LLM 上的设计一致。
-
-3. **沿电路的 activation clamping steering**:
-
-    - 功能:把电路从"解释工具"升级为"生成工具",据此设计高 fitness 蛋白变体。
-    - 核心思路:在 wildtype 前向中对目标 function 电路里的若干潜变量"夹"住激活值——取该节点在整条序列上观察到的最大激活幅度乘以一个 scalar multiplier;然后用 Eq. (2) 在 $\ell=L$ 处重建 $\hat{\mathbf y}^L$ 再解码到 ESM2 logits,按最大概率选突变。变体被限制在距离 wildtype 不超过 5 个突变,以保证下游 CNN 评估器的可靠性。
-    - 设计动机:把"哪些 latent 对 function 重要"的归因结果反向作用于生成,本质是 mechanistic-guided protein design;相比 CAA 用一个全局 concept vector,这种方法只动需要的子电路,干扰小、信号干净。
+**3. 沿电路的 activation clamping steering**:电路不只是解释工具,还能反过来当生成工具去设计高 fitness 变体。在 wildtype 的前向里,对目标 function 电路中的若干潜变量"夹"住激活——取该节点在整条序列上观察到的最大激活幅度乘以一个 scalar multiplier,再用 Eq. (2) 在 $\ell=L$ 处重建 $\hat{\mathbf y}^L$、解码到 ESM2 logits、按最大概率选突变,并把变体限制在距 wildtype ≤5 个突变以保证下游 CNN 评估器可靠。相比 CAA 往残差流里注入一个全局 concept vector,这种做法只动"归因认定与 function 相关"的子电路,干扰小、信号干净,本质是用机制归因直接驱动蛋白设计(mechanism-guided protein design)。
 
 ### 损失函数 / 训练策略
 CLT 用 $\mathcal L_{\text{CLT}}=\mathcal L_{\text{MSE}}+\alpha\mathcal L_{\text{aux}}$,在 UniRef50 中随机抽 5M 条 ≤1022 aa 的序列上预训。ESM2-8M 的 CLT 共 28M 参数,3.5× 原模型。为缓解 $\mathcal O(L^2)$ 解码矩阵带来的扩展瓶颈,作者提出"windowed CLT"——每层只看前 4 层,在 ESM2-35M 上把参数从 207M 减到 125M、训练加速 1.75×,family 恢复率仅从 85% 降到 82%。

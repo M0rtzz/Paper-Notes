@@ -47,6 +47,40 @@ SonoWorld 要解决的是 Image2AVScene：给一张普通 RGB 图像，同时造
 
 整条流水线的思路是用全景把视觉和音频拉到同一套坐标系下，再逐步把"看得见"翻译成"听得见"。具体分四步往下走：单图先经相机标定和扩绘补成 360° 全景、升维成 3D 高斯场景；接着让 VLM 从图里推断哪些物体在发声，配合分割把这些声源精确定位并反投影到 3D；然后逐个声源生成波形、按类型编码成 Ambisonics 系数；最后在用户实际所在的位置和朝向上，把 Ambisonics 解码成双耳音频。整个框架不训练任何参数，全靠现成预训练模型的组合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["单张 RGB 图像"]
+    subgraph S1["全景视觉场景生成"]
+        direction TB
+        A["GeoCalib 标定<br/>估仰角与视场角"] --> B["投影成 360° 全景<br/>+ WorldGen 扩绘补全"]
+        B --> C["HunyuanWorld / Marble<br/>升维成 3DGS 场景"]
+    end
+    subgraph S2["360° 语义定位"]
+        direction TB
+        D["VLM 推断发声类别<br/>+ 类型/提示/音量属性"]
+        E["瓦片 OVS（X-Decoder）"]
+        F["SAM2 全局分割"]
+        D --> E
+        E --> G["投票融合掩码"]
+        F --> G
+        G --> H["深度反投影到 3D 锚点"]
+    end
+    subgraph S3["Ambisonics 编码与渲染"]
+        direction TB
+        J["MMAudio 逐源生成 + 均衡化"]
+        J -->|点源| K["质心近似 + 距离衰减"]
+        J -->|面源| L["点云平均铺漫射场"]
+        J -->|环境音| M["仅填全向分量"]
+        K --> N["可微解码到用户视角<br/>双耳音频"]
+        L --> N
+        M --> N
+    end
+    I --> A
+    C --> D
+    H --> J
+```
+
 ### 关键设计
 
 **1. 全景视觉场景生成：把一张平面照片补全成带统一坐标系的 3D 世界**

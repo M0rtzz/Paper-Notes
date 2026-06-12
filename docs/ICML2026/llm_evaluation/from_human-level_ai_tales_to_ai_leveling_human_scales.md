@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 这套方法想回答一个被 benchmark 掩盖的问题：当我们说"AI 达到人类水平"，到底是哪批人类、哪个维度上的水平。它把一道题的成绩沿两条轴重新锚定——先用 ADeLe rubric 把每道 item 拆成 18 个能力维度的 demand level，再用 LLM 把题目在某个小样本人群上的实测正确率外推到"全世界人口"的正确率，最后按维度各自校准的对数刻度把正确率翻译成可比的难度值。整条 pipeline 从五个真人测验池（PISA 2009 / TIMSS 2003+2011 G4&G8 / ICAR / UKBioBank / ReliabilityBench）取 item，标 demand level $d_{i,c}\in\{0,1,2,3,4,5+\}$，外推得到全球人口正确率 $p_i^W$，按 $L_i=-\log_B p_i^W$ 转成对数难度，再用 sub-group → full-sample 的预测做验证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["5 个真人测验池<br/>PISA / TIMSS / ICAR / UKBioBank / ReliabilityBench"] --> B["ADeLe rubric 标注<br/>每道 item → 18 维 demand level"]
+    B --> C["LLM 人口外推器<br/>focal group 正确率 + 双方人口学描述"]
+    C -->|每题 27 个 paraphrase 取稳健值| D["全球人口正确率 p_W"]
+    subgraph CAL["维度特定 base 校准"]
+        direction TB
+        E["经验难度 L_emp = −log10(p_W/√10)"] --> F["dominance filter<br/>只留该维度为主瓶颈的题"]
+        F --> G["按 level 取均值后线性回归<br/>斜率 m → 真实 base = 10^m"]
+    end
+    D --> CAL
+    CAL --> H["人口锚定的能力 ruler<br/>L = −log_B p_W（各维度各自 base）"]
+    H -.->|sub-group → full-sample 验证| I["MAE / RMSE / Pearson / Spearman"]
+```
+
 ### 关键设计
 
 **1. LLM 当人口外推器：把小样本正确率翻译成全球人口基准**

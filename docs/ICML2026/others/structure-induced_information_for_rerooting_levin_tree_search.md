@@ -47,6 +47,25 @@ $$c^r(n)=\min_{n_t\prec n}\tfrac{1}{w_t}c_t^r(n),\quad c_t^r(n)=\sum_{n_t\prec n
 
 训练侧用 Arfaee et al. (2011) 的 Bootstrap：随机初始化策略/启发式网络，按当前预算扫训练集，把解到的轨迹拿来更新网络；一遍解不出新问题就把展开预算翻倍再扫，验证集 95% 通过即停训。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["搜索树 + 增量诱导子图<br/>（已访问状态为点·已用转移为边）"] --> S
+    subgraph S["三种 rerooter：给祖先节点 n_t 算权重 w_t"]
+        direction TB
+        L["√lts-L：Leiden 聚类（全局）<br/>w_a = 1/(M+δ)，簇越小越优先"]
+        H["√lts-H：启发式 softmax（局部）<br/>w_b = exp(−α·h(n_t)/h(n_1))"]
+        LH["√lts-LH：加性混合<br/>w_t = u_a·w_a + u_b·w_b（Thm 3.2 保分解界）"]
+        L --> LH
+        H --> LH
+    end
+    S --> C["节点代价 c^r(n) = min (1/w_t)·c_t^r(n)"]
+    C --> Q["√lts BFS 优先队列：取最小代价节点展开"]
+    Q -->|展开新节点回灌| A
+    Q -->|找到解轨迹| T["Bootstrap 训练：回灌轨迹更新 π / h<br/>无新解则预算翻倍"]
+    T -->|更新后的 π, h| A
+```
+
 ### 关键设计
 
 **1. $\sqrt{\mathrm{lts}}$-L：基于 Leiden 聚类的全局结构 rerooter**

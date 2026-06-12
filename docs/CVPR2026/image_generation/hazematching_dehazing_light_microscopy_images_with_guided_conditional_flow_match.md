@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 HazeMatching 基于条件流匹配（CFM）框架。训练时：采集配对数据（同一样本的宽场雾化图 $\mathbf{x}_{M_0}$ 和共聚焦清晰图 $\mathbf{x}_{M_1}$），在高斯噪声 $\mathbf{x}_0 \sim \mathcal{N}(0,I)$ 和清晰图 $\mathbf{x}_{M_1}$ 之间构建线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_{M_1}$，训练神经网络学习速度场 $v_\theta(t, \mathbf{x}_t, \mathbf{x}_{M_0})$，其中雾化图作为额外条件通道拼接输入。推理时：给定新的雾化图，从随机噪声出发，用学到的速度场通过 Euler ODE 积分逐步生成去雾结果。通过采样不同初始噪声可以生成多个后验样本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    PD["配对数据<br/>雾化图 + 清晰图"] --> GV["引导式条件速度场<br/>雾化图通道拼进网络，回归插值方向"]
+    GV --> INF["推理：随机噪声出发<br/>Euler ODE 积分（T=20 步）"]
+    INF -->|换 50 个初始噪声| PS["后验采样<br/>得到 50 个去雾样本"]
+    PS --> MMSE["MMSE 估计<br/>逐像素平均，保真度最高"]
+    PS --> VAR["方差图<br/>逐像素方差作不确定性"]
+    VAR --> CAL["校准分析<br/>RMSE-vs-RMV 贴对角线"]
+    MMSE --> OUT["去雾结果 + 可信度"]
+    CAL --> OUT
+```
+
 ### 关键设计
 
 **1. 引导式条件速度场：把雾化观测拼进速度网络的输入，让生成从一开始就盯着观测走**

@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 Rank-Learner 要解的是：在观测数据 $W=(X,T,Y)$、$T\in\{0,1\}$、标准因果假设（一致性、正性、无混淆）下，学一个打分函数 $g:\mathcal X\to\mathbb R$，让它与处理效应 $\tau(x)=\mathbb E[Y(1)-Y(0)\mid X=x]$ 同序，而不必把 $\tau(x)$ 的数值估准。做法仍是经典的两阶段正交学习：先用 cross-fitting 估出 nuisance（两条响应面 $\mu_t(x)=\mathbb E[Y\mid T=t,X=x]$ 和倾向得分 $e(x)=P(T=1\mid X=x)$，记 $\hat\eta=(\hat\mu_1,\hat\mu_0,\hat e)$），再从训练集采成对样本去最小化一个成对排序损失。它与"先 plug-in 估 CATE 再排序"的唯一区别落在第二阶段的**目标构造**——损失形式还是标准的成对二元交叉熵，所有正交性都封装进伪标签里，因此工程上几乎是 plug-in ranker 的 drop-in 替换；推理时单点评估 $\hat g(x)$ 直接排序，不需要做成对比较。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["观测数据 W=(X,T,Y)"] --> B["交叉拟合估 nuisance<br/>η̂=(μ̂₁,μ̂₀,ê)：两条响应面 + 倾向得分"]
+    B --> C["成对子采样<br/>从 n² 个样本对里均匀采子集"]
+    C --> D["成对软排序标签<br/>t_τ=σ((τ(X)−τ(X'))/κ)"]
+    D --> E["双重稳健正交伪标签<br/>t̃_η = t_τ + ω_τ·Δ_η"]
+    E --> F["成对 BCE 损失 L_orth 训练打分器 g"]
+    F --> G["推理：按 ĝ(x) 单点排序"]
+```
+
 ### 关键设计
 
 **1. 成对软排序损失：把"难问题"降级为"易问题"**

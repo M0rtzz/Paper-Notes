@@ -45,6 +45,17 @@ WebClipper 不是推理时即时剪枝，而是一个训练数据加工与 agent
 
 流程分为四个阶段。第一，收集并过滤初始轨迹，只保留对原 agent 有一定挑战但并非完全不会的样本。第二，将轨迹转成由 Action nodes 和 Information nodes 构成的有向二部图。第三，在图上寻找近似 minimum necessary DAG，得到必要动作集合。第四，对剪枝后的轨迹做 coherence-aware thought rewriting，并用效率导向或混合训练策略继续训练 agent。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["query + 原始 ReAct 轨迹<br/>(强 agent 蒸馏)"] --> B["轨迹收集与过滤<br/>保留有挑战但非完全不会的样本"]
+    B --> C["Trajectory-to-State-Graph 转换<br/>LLM 抽取动作节点 / 信息节点二部图"]
+    C --> D["MNDAG 图剪枝与多数投票<br/>query 为 source、答案为 sink<br/>最短路 + 反向必要闭包"]
+    D -->|"重复构图剪枝 3 次, ≥2 次一致才接受"| E["必要动作集合"]
+    E --> F["连贯性重写与混合进化训练<br/>PPL 选重写候选 + Eff / Hybrid 继续微调"]
+    F --> G["更短轨迹 + 进化后的 Web Agent"]
+```
+
 ### 关键设计
 
 **1. Trajectory-to-State-Graph 转换：把线性工具调用还原成信息依赖图，让“哪步多余”有据可查**

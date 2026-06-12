@@ -42,6 +42,25 @@ OmniAID 用一个"语义专家 + 通用伪影专家"的解耦 MoE 架构，在 C
 ### 整体框架
 OmniAID 要解决的是"伪造证据被压进同一个特征空间、跨域就崩"的问题，做法是把"画了什么会露馅"和"怎么画都会露馅"两类线索拆到不同的低秩子空间里学。主干用冻结的 CLIP-ViT-L/14@336px，对每个注意力层权重 $\mathbf{W}\in\mathbb{R}^{d_{out}\times d_{in}}$ 先做 SVD 切成两块——$\mathbf{W}_M=\mathbf{U}_{:d-r}\mathbf{\Sigma}_{:d-r}\mathbf{V}_{:d-r}^{T}$ 是冻结的"主子空间"，保住 CLIP 的预训练语义先验；$\mathbf{W}_R=\mathbf{U}_{d-r:}\mathbf{\Sigma}_{d-r:}\mathbf{V}_{d-r:}^{T}$ 是用来塞专家的"残差子空间"。残差里挂两类专家：$N_S$ 个可路由的语义专家 $\mathcal{E}_S=\{e_1,\dots,e_{N_S}\}$（Human / Animal / Object / Scene / Anime）和一个固定常驻的通用伪影专家 $\mathcal{E}_U$。前向时，一个独立冻结的 CLIP 编码器把图像特征喂给轻量 MLP 路由器 $\mathcal{R}$，选出 top-$k_S$ 个语义专家，最终层权重组合成 $\mathbf{W}_F=\mathbf{W}_M+\mathbf{W}_{R,U}+\sum_{i\in S}g_i\cdot\mathbf{W}_{R,i}$，门控权重 $g_i=\mathrm{Softmax}(\mathbf{z}_\mathbf{x})_i$，其中伪影专家 $\mathbf{W}_{R,U}$ 不参与路由竞争、每次前向都激活。整体训练分两阶段：先逐个专家专精化、再冻结专家单训路由。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["现代化 Mirage 数据集<br/>真图锚定 → 语义对齐真/假对"] --> A["输入图像"]
+    A --> B["冻结 CLIP-ViT-L/14 主干<br/>每层注意力权重 W 做 SVD"]
+    B --> M["主子空间 W_M（冻结，保 CLIP 语义先验）"]
+    B --> RR["残差子空间 W_R（挂专家）"]
+    subgraph MOE["正交残差子空间的混合 MoE"]
+        direction TB
+        RR --> RT["MLP 路由器选 top-k 语义专家"]
+        RT --> SE["可路由语义专家<br/>Human / Animal / Object / Scene / Anime"]
+        UE["固定常驻通用伪影专家（不路由，每次激活）"]
+    end
+    M --> WF["组合权重 W_F → 真 / 假判别"]
+    SE --> WF
+    UE --> WF
+    T["两阶段解耦训练 + 跨专家正交约束<br/>Stage1 逐专家专精 → Stage2 冻专家训路由"] -.训练.-> MOE
+```
+
 ### 关键设计
 
 **1. 正交残差子空间的混合 MoE：用一个固定专家管伪影、多个可路由专家管语义**

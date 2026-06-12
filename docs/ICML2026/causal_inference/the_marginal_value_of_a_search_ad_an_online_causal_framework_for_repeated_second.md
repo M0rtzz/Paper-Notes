@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 算法要在线解决的是：每轮收到 context $x_t\in\mathbb{R}^d$，按线性价值模型 $\mathbb{E}[\Delta v_t]=\theta_*^\top x_t$ 决定出价 $b_t$，并在 binary 反馈（只知道赢没赢、对应收到 $v_{t,1}$ 还是 $v_{t,0}$）下把累计 regret 压到最小。难点在于因果估计需要"赢"和"输"两种 outcome，而追求 regret 的 bidder 天然会破坏这种平衡。作者把它拆成三个互相喂数据的模块——先用二价支付的非对称反馈估出 HOB（最高竞品价）的 CDF，再用估出的 propensity 做修正 IPW 回归解出价值参数 $\widehat\theta_t$，最后在两种等价的奖励重写形式之间挑置信区间更紧的那个去做 UCB 出价——外面再套一层 $L=O(\log T)$ 的分层 master routine 维护各层观测的条件独立性并周期性兜底探索。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每轮 context x_t（线性价值模型 θ*ᵀx_t）"] --> B["分块 HOB 估计<br/>按区间概率 p^i 分块累加得 Ĝ_t + bid 相关置信宽 u_t"]
+    B --> C["宽误差容忍的 IPW 回归<br/>修正 IPW + variance 加权岭回归 → 价值参数 θ̂_t"]
+    C --> D["better of two UCBs<br/>两种等价奖励重写中选窗宽更紧的"]
+    D -->|两窗宽都过大| E["forced exploration<br/>均匀随机出 b¹ 或 b^J"]
+    D -->|否则| F["出价 b_t"]
+    E --> F
+    F --> G["二价反馈<br/>赢→看到 m_t 与 v_t,1；输→推断 1[b≥m_t] 与 v_t,0"]
+    G -->|回填观测| B
+    H["分层 master routine（L=O(log T)）<br/>按置信宽分层，维护各层条件独立性"] -.调度.-> B
+```
+
 ### 关键设计
 
 **1. 分块 HOB 估计：把二价支付的信息红利逐区间释放**

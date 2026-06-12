@@ -44,6 +44,17 @@ tags:
 
 SCD 要解决的是 SJD「概率空间近但样本空间远」的问题：相邻两轮 draft 分布很接近，但因为每轮都独立重采样，真正采出的 token 几乎每次都变，接受率被卡死。它的做法不是改模型也不是改验证逻辑，而是只动 drafting 阶段的采样器——让相邻两轮共享随机性，在各自边缘分布不变的前提下尽量采到同一个 token。整体仍沿用 SJD 的三段循环：drafting 阶段并行从上一轮验证分布 $p^{(t-1)}$ 给窗口内每个位置采 draft token；evaluate 阶段让 target 模型并行算这些 prefix 下的新分布 $p^{(t+1)}_j = p_\theta(\cdot \mid X^t_{0:j-1})$；verify 阶段用 modified rejection sampling（MRS）顺序验证，遇到第一个 reject 就停，落地之前的 token、把 reject 位置的新样本接力为下一轮 draft。SCD 唯一的改动是把 drafting 里那行「从 $p^t_j$ 独立采样」换成「从 $p^t_j$ 与 $p^{t-1}_j$ 的 Coupling 联合分布里采样一对 $(X^t_j, X^{t-1}_j)$，取 $X^t_j$ 当 draft」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上一轮验证分布 p^(t−1) 与样本 X^(t−1)"] --> B["Drafting：Coupling 采样替换独立采样<br/>π_MC 最大化单步 collision · π_GS 保长程稳定"]
+    B --> C["Evaluate：target 模型并行算新分布 p^(t+1)"]
+    C --> D["Verify：MRS 顺序验证，遇首个 reject 即停"]
+    D -->|接受已验证 token| E["落地输出 token"]
+    D -->|reject 位置样本接力下一轮| A
+    B -.共用一个 MRS 循环.-> D
+```
+
 ### 关键设计
 
 **1. Maximal Coupling（$\pi_{MC}$）：把单步 collision 推到理论上界**

@@ -44,7 +44,34 @@ tags:
 
 这篇论文要把"对长度 $n$ 的字符串做 BPE 分词"从一个必须看到完整输入的离线过程，改造成每读一个字节就更新一次的在线增量过程。关键观察是：由 Berglund & van der Merwe 的前缀一致性，只要每步能算出新串 $sc$ 的**最后一个 token** $\theta(sc)$，就能递归回溯出全部前缀的分词。于是算法把整段分词重构成 $n$ 次"读入字节 $c$、把状态 $\theta(s)$ 更新成 $\theta(sc)$"的更新，每次更新严格 $\mathcal{O}(\log^2 t)$（$t$ 为最长 token 长度），全文 $\mathcal{O}(n \log^2 t)$，从根上避开 tiktoken 在病态输入上的 $\mathcal{O}(n^2)$。
 
-整条流水线分三段。**离线预处理**先对词表 $\mathcal{V}$ 做规范化（去掉不可达 token，建立非原子 token 与生成它的 merge rule 的双射），并构造 **Successor Forest**——每个非原子 token 指向它的 successor（合并它的右半部分）。**离线索引**再对 Successor Forest 做一遍预序 DFS 拿到 `dfs_in/dfs_out` 时间戳、为每个 token 预算"有效区间" $I_t$，同时为每个 token $\tau$ 建 Centroid Search Tree（CST），并建 Aho–Corasick 自动机、把"搜索空间入口"标注到每个状态。**在线增量**阶段每读一个字节 $c$，自动机走一步 $\mathcal{O}(1)$ 拿到最长后缀 token $\tau(sc)$，进入它对应的 SufSucTree 上的 CST 做对数次二分，定位单调路径上最深的合法节点即 $\theta(sc)$。下面三个设计正是把这条"每字节对数复杂度"的承诺逐层兑现。
+整条流水线分三段。**离线预处理**先对词表 $\mathcal{V}$ 做规范化（去掉不可达 token，建立非原子 token 与生成它的 merge rule 的双射），并构造 **Successor Forest**——每个非原子 token 指向它的 successor（合并它的右半部分）。**离线索引**再对 Successor Forest 做一遍预序 DFS 拿到 `dfs_in/dfs_out` 时间戳、为每个 token 预算"有效区间" $I_t$，同时为每个 token $\tau$ 建 Centroid Search Tree（CST），并建 Aho–Corasick 自动机、把"搜索空间入口"标注到每个状态。**在线增量**阶段每读一个字节 $c$，自动机走一步 $\mathcal{O}(1)$ 拿到最长后缀 token $\tau(sc)$，进入它对应的 SufSucTree 上的 CST 做对数次二分，定位单调路径上最深的合法节点即 $\theta(sc)$。下面三个设计正是把这条"每字节对数复杂度"的承诺逐层兑现（设计 1 是支撑在线搜索的理论性质，设计 2、3 在离线阶段建好、在线阶段被反复调用）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["BPE 词表 𝒱 + merge 规则"]
+    subgraph PRE["离线预处理"]
+        direction TB
+        N["词表规范化<br/>去不可达 token、建 token↔规则双射"] --> SF["构造 Successor Forest<br/>非原子 token 指向其 successor"]
+    end
+    subgraph IDX["离线索引"]
+        direction TB
+        DFS["预序 DFS（孩子按规则优先级排序）<br/>dfs 时间戳 + 有效区间 I_t（设计 2）"]
+        CST["逐 token 建 Centroid Search Tree·CST（设计 3）"]
+        AC["建 Aho–Corasick 自动机<br/>每状态标注搜索空间入口（设计 3）"]
+    end
+    subgraph ON["在线增量（每读一个字节 c）"]
+        direction TB
+        S1["AC 自动机走一步 O(1)<br/>取最长后缀 token τ(sc)（设计 3）"]
+        S2["在 SufSucTree 的 CST 上二分<br/>沿单调路径找最深合法节点（设计 1）<br/>dfs 区间检测 O(1) 判合法（设计 2）"]
+        S3["定位 θ(sc)：新串最后一个 token"]
+        S1 --> S2 --> S3
+    end
+    V --> PRE
+    PRE --> IDX
+    IDX --> ON
+    S3 -->|回溯 θ(·)| OUT["输出当前前缀分词<br/>eager 模式下边界确定即流式吐出"]
+```
 
 ### 关键设计
 

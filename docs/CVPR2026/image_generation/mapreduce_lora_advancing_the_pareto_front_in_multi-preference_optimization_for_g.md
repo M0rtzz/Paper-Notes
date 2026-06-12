@@ -46,6 +46,19 @@ RLHF/RLAIF 已成为将生成模型与人类偏好对齐的主流范式，但现
 ### 整体框架
 本文要解决的是多偏好对齐里的 alignment tax：把 $K$ 个奖励 $\{R_k\}_{k=1}^K$ 线性加权成一个标量去优化时，提升一个维度往往以牺牲另一个维度为代价，整条 Pareto 前沿动不了。作者给出两条互补的路线。第一条 **MapReduce LoRA** 借了分布式计算里 MapReduce 的思路：先 Map——为每个偏好维度各训一个独立的 LoRA 专家，互不干扰、可并行；再 Reduce——把这些专家迭代地合并回一个模型，而且每合并一轮就把合并点当作新起点再训一轮，让前沿被逐步往外推。第二条 **RaTE** 则不动主模型，只为每个奖励学一个可训练的 token embedding，推理时按需线性混合，把"各维度权重"从训练期固定变成推理期可调。形式化地，记 $F_k(\theta) = \mathbb{E}[R_k(x, G_\theta(x))]$，目标是让向量 $\mathbf{F}(\theta) = [F_1(\theta), \ldots, F_K(\theta)]$ 达到 Pareto 最优——不是某一维独大，而是整条前沿被抬高。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    In["输入：预训练模型 θ₀ + K 个冲突奖励"]
+    In -->|路线一 MapReduce LoRA| Map["Map 阶段<br/>每个奖励各训一个 LoRA 专家、可并行"]
+    Map --> Reduce["Reduce 阶段<br/>渐进合并、合并点当新起点（有几何收缩界保证）"]
+    Reduce -->|"以合并点为锚点再训一轮"| Map
+    Reduce --> Front["Pareto 前沿被逐轮往外推"]
+    In -->|路线二 RaTE| RaTE["RaTE<br/>每个奖励学一个 token embedding"]
+    Front --> RaTE
+    RaTE --> Out["推理时按权重线性混合 embedding<br/>各偏好维度连续可调"]
+```
+
 ### 关键设计
 
 **1. Map 阶段——把冲突的奖励拆开，各训各的专家**

@@ -41,6 +41,34 @@ tags:
 
 CoIn3D 包含两个核心模块：**空间感知特征调制 (SFM)** 和 **相机感知数据增强 (CDA)**。训练时，CDA 先通过 3DGS 渲染随机配置的新视角图像，再经 SFM 将空间先验嵌入特征；推理时仅用 SFM 即可泛化到新配置。框架可即插即用到 bottom-up BEV（BEVDepth）、top-down BEV（BEVFormer）、稀疏查询（PETR）三大范式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["多相机图像 + LiDAR 序列"]
+    subgraph CDA["相机感知数据增强 CDA（仅训练时，免训练 3DGS）"]
+        direction TB
+        C1["4D 标注拆前景物体 / 背景<br/>各自 TSDF 积分重建 mesh"]
+        C2["组合 mesh 渲染深度图 + 深度补全"]
+        C3["盲区采点 + 跨帧深度匹配检索纹理"]
+        C4["投影纹理点云 → 各向同性高斯<br/>点渲染 ≈450 fps"]
+        C1 --> C2 --> C3 --> C4
+    end
+    IN --> CDA
+    CDA -->|随机采样新相机配置渲染新视角图| BK["图像 backbone 提特征"]
+    IN -->|推理时直接走原图| BK
+    subgraph SFM["空间感知特征调制 SFM（训练 + 推理）"]
+        direction TB
+        S1["四张像素级空间先验图<br/>逆焦距 / 地面深度 / 地面梯度 / Plücker 射线"]
+        S2["逆焦距图乘特征 → 焦距不变特征 F¹"]
+        S3["地面深度 / 梯度 / Plücker 投影为空间嵌入加到 F¹ → F²"]
+        S4["四张先验图再拼接 F² → 空间感知特征 F³"]
+        S1 --> S2 --> S3 --> S4
+    end
+    BK --> SFM
+    SFM --> DET["检测头<br/>BEVDepth / BEVFormer / PETR"]
+    DET --> OUT["3D 检测框（跨配置泛化）"]
+```
+
 ### 关键设计
 
 **1. 空间感知特征调制（SFM）：把相机配置差异显式写进特征**

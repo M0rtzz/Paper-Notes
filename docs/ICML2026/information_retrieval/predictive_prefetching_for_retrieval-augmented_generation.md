@@ -44,6 +44,19 @@ tags:
 
 这套系统要解决的是"检索同步阻塞导致生成卡住"这个延迟瓶颈，做法是把检索决策提前到不确定性真正爆发之前，并搬到并行线程上预取。输入仍是 LLM 的 decoding 流、输出仍是原 LLM 生成的 token 序列，只是中间插入了一条"预测—预取—缓存"流水线：每生成一个 token，RetrievalPredictor 先从 transformer 中层信号估计"未来 $\Delta=10$ 个 token 内熵会超阈值的概率" $\hat p_t$；若概率高，ContextMonitor 决定等几步、要不要复用缓存、短语补全了没有；确需检索时 QueryGenerator 用一个面向未来需求的 query 异步发出，结果回到共享 Result Cache，生成线程全程不阻塞，等熵真的超阈值时直接从缓存取文档拼 context。整条 stack 在 8B 主干上只多加约 62M 参数（2 层 transformer predictor ~2M + 三个 MLP 评分头 <0.3M + T5-small 60M），三件套用统一多任务 loss 联合预训练，部署后再用 action-specific feedback 的 policy gradient 在线适配；任何环节失败都自动回退同步检索，把最坏延迟锁死在同步基线，预取但未命中的文档则保留摊销成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["LLM decoding 流：每生成一个 token"] --> B["RetrievalPredictor<br/>读 transformer 中层 hidden/attention/value<br/>预测未来 Δ=10 token 内熵超阈的概率"]
+    B -->|"概率低，不预取"| A
+    B -->|"概率高"| C["ContextMonitor<br/>主动等 k* 步 + 补全短语 + 充分性判定"]
+    C -->|"与缓存相似度 >0.8"| F["Result Cache（共享，检索结果异步写入）"]
+    C -->|"确需检索"| D["QueryGenerator<br/>T5-small 生成面向未来的 query 并异步发出"]
+    D --> F
+    F --> G["熵真超阈值时取文档拼 context，生成线程全程不阻塞"]
+    G -.->|"任何环节失败"| H["回退同步检索（最坏延迟=同步基线）"]
+```
+
 ### 关键设计
 
 **1. RetrievalPredictor：用 transformer 内部信号把检索决策提前到熵爆发之前**

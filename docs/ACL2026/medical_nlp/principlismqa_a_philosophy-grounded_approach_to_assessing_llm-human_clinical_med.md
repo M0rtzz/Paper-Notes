@@ -45,6 +45,29 @@ tags:
 
 PrinciplismQA 由三部分组成：(1) 基于 Principlism 的数据工程协议——将临床内容系统性地组织到四原则 × 16 伦理维度的分类体系中；(2) 基准数据集——2,182 道知识 MCQA（评估原则理解）+ 1,466 道开放式临床困境（评估原则应用）；(3) 评估流水线（Evaluator）——MCQA 直接匹配 + 开放式基于 rubric 的 LLM-as-Judge 评分，经专家校准验证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["四原则 × 16 伦理维度 + ACGME 六能力"] --> B["Principlism 分类体系与数据协议<br/>每道题按体系标注"]
+    subgraph DUAL["知识-实践双格式评估"]
+        direction TB
+        C["知识子集：MCQA<br/>350 本伦理教科书 → 2182 题"]
+        D["实践子集：开放题<br/>AMA 临床困境 → 1466 题"]
+    end
+    B --> DUAL
+    subgraph EVAL["专家校准评估流水线"]
+        direction TB
+        E["MCQA 直接匹配评分"]
+        F["开放题 rubric LLM-as-Judge<br/>逐关键点 0 / 0.5 / 1 计分"]
+        G["12 位医学专家多轮校准"]
+    end
+    C --> E
+    D --> F
+    E --> G
+    F --> G
+    EVAL --> H["对齐分数<br/>ICC 0.71 > 专家间 0.67"]
+```
+
 ### 关键设计
 
 **1. Principlism 分类体系与数据协议：给“伦理对齐”找一个可操作的哲学锚点**

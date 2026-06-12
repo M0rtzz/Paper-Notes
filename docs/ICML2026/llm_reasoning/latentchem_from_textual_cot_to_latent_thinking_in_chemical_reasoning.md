@@ -41,7 +41,20 @@ LatentChem 在化学 LLM 上把"显式 CoT 文本链"换成"连续 latent 思考
 ## 方法详解
 
 ### 整体框架
-LatentChem 想验证一个假说：化学的连续物理直觉被强行翻译成离散文本 token 是"模态错配"，连续 latent 才是更原生的推理介质。为此它在通用 LLM backbone（默认 Qwen-3-8B）上把自然语言降级为纯输入/输出接口，中间推理改走"感知-思考"双通路——SMI-TED 编码器抽出的分子特征先被 Chemical Adapter 压成定长 ChemTokens 软提示注入 LLM，然后模型在文本指令之后连续吐出若干步 hidden state（不解码成文本，直接经 latent projector 喂回自己），每吐一步 ChemUpdater 就拿最新 thought 去 cross-attend 历史、刷新 ChemTokens 让模型"再看一眼分子"，直到吐出 `<end_latent>` 或耗尽预算才解码答案。整个系统在 4 阶段渐进训练下成型，最关键的是末阶段只用结果奖励、不奖励 brevity，却观察到模型自发抛弃文本 CoT。
+LatentChem 想验证一个假说：化学的连续物理直觉被强行翻译成离散文本 token 是"模态错配"，连续 latent 才是更原生的推理介质。为此它在通用 LLM backbone（默认 Qwen-3-8B）上把自然语言降级为纯输入/输出接口，中间推理改走"感知-思考"双通路——SMI-TED 编码器抽出的分子特征先被 Chemical Adapter 压成定长 ChemTokens 软提示注入 LLM，然后模型在文本指令之后连续吐出若干步 hidden state（不解码成文本，直接经 latent projector 喂回自己），每吐一步 ChemUpdater 就拿最新 thought 去 cross-attend 历史、刷新 ChemTokens 让模型"再看一眼分子"，直到吐出 `<end_latent>` 或耗尽预算才解码答案。整个系统在 4 阶段渐进训练下成型，最关键的是末阶段只用结果奖励、不奖励 brevity，却观察到模型自发抛弃文本 CoT。下图是推理期的数据流（GRPO 是训练侧的触发器，见关键设计 4 与训练策略，不在此推理回路里）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：SMILES 分子 + 文本指令"] --> B["SMI-TED 编码器<br/>抽变长分子特征"]
+    B --> C["Chemical Adapter<br/>Perceiver Resampler 压成定长 ChemTokens 软提示"]
+    C --> D["LLM（Qwen-3-8B）<br/>吐一步 latent thought（hidden state 不解码）"]
+    D --> E["ChemUpdater<br/>thought query 历史，刷新 ChemTokens 焦点"]
+    D --> F["Latent Projector<br/>thought 残差映回输入 embedding"]
+    E -->|再看一眼分子| D
+    F -->|作下一步输入| D
+    D -->|end_latent 或预算耗尽| G["解码 XML 答案"]
+```
 
 ### 关键设计
 
@@ -53,9 +66,13 @@ LatentChem 想验证一个假说：化学的连续物理直觉被强行翻译成
 
 这是 LatentChem 与 Coconut 拉开差距的核心。Coconut 把分子嵌入当成一成不变的上下文，于是 latent 思考链越长就漂得离原始结构越远；ChemUpdater 则让模型每推理一步都"再看一眼分子，但是看不同的地方"。具体做法是以当前 ChemTokens $\mathbf{H}_{chem}^{(t)}$ 为 query、以全部历史 thought $\mathbf{Z}_{1:t}$ 为 key/value 做 cross-attention 后残差刷新，$\mathbf{H}_{chem}^{(t+1)}=\text{LN}(\mathbf{H}_{chem}^{(t)}+\text{CrossAttn}(\mathbf{H}_{chem}^{(t)},\mathbf{Z}_{1:t},\mathbf{Z}_{1:t}))$，等于把分子编码器从"一次性静态特征提取器"变成"随推理状态动态调度焦点的感知器"。在分子优化这类需要反复定位不同子结构（先看结合位点、再看价键、再看官能团）的任务上这一点至关重要——消融里去掉它 SR 直接掉 12%。
 
-**3. Latent Projector + GRPO 纯结果奖励：自发内化的闭环与触发器**
+**3. Latent Projector：把 thought 向量闭环回输入空间**
 
-要让推理在连续空间闭环，必须把 LLM 输出空间的 thought 向量对齐回输入空间。Latent projector 是个轻量残差 FFN，$\mathbf{h}_{t+1}=\mathbf{z}_t+\text{FFN}(\text{LN}(\mathbf{z}_t))$，把 raw hidden state $\mathbf{z}_t$ 映回输入 embedding 当下一步输入，绕开 tokenization 瓶颈。真正的"实验仪器"设计在 Stage 4：奖励只含 format / validity / correctness 三项，**完全不含 brevity 也不含 CoT 省略项**，并冻结 latent 模块、放开 backbone，把学到的 latent 动力学当作稳定"内部模拟器"让 backbone 去消费决策。在这种纯结果驱动下，模型仍自发抛弃了文本 CoT、只吐一个 "." 或 ":" 当过渡 token 后直接生成 XML 答案——这正好验证了 modality mismatch 假说：给模型自由选模态、只用结果奖励，它若选连续 latent 就说明 latent 真的更适配化学逻辑。配套的 causal ablation（把前 $k$ 个 latent 步替换成高斯噪声会显著掉点）进一步证明这些"沉默步"在做实质计算而非走过场。
+要让推理在连续空间闭环，必须把 LLM 输出空间的 thought 向量对齐回输入空间——否则模型每吐一步都得先把想法压成离散 token 才能继续，又掉回 tokenization 瓶颈。Latent projector 是个轻量残差 FFN，$\mathbf{h}_{t+1}=\mathbf{z}_t+\text{FFN}(\text{LN}(\mathbf{z}_t))$，把 raw hidden state $\mathbf{z}_t$ 映回输入 embedding 直接当下一步输入，让"上一步想到什么"原样接力到下一步、全程不经过文本。它和 ChemUpdater 是推理回路里的两条回边：projector 负责"接力 thought"，ChemUpdater 负责"刷新对分子的感知"。消融里去掉它 SR 掉 10.8%。
+
+**4. GRPO 纯结果奖励：把 latent 当"模态选择探针"，触发自发内化**
+
+前三个模块只是搭好了"允许 latent 推理"的接口，真正把它变成可证伪实验的是 Stage 4 的奖励设计。奖励只含 format / validity / correctness 三项，**完全不含 brevity 也不含 CoT 省略项**，并冻结 latent 模块、放开 backbone，把学到的 latent 动力学当作稳定"内部模拟器"让 backbone 去消费决策。在这种纯结果驱动下，模型仍自发抛弃了文本 CoT、只吐一个 "." 或 ":" 当过渡 token 后直接生成 XML 答案——这正好验证了 modality mismatch 假说：给模型自由选模态、只用结果奖励，它若选连续 latent 就说明 latent 真的更适配化学逻辑，而非被某个 brevity 奖励逼出来的捷径。配套的 causal ablation（把前 $k$ 个 latent 步替换成高斯噪声会显著掉点）进一步证明这些"沉默步"在做实质计算而非走过场。
 
 ### 损失函数 / 训练策略
 四阶段渐进训练逐步把推理从文本搬进 latent。Stage 1 训 adapter+LLM、禁用 latent，用 answer-only 监督加反事实对齐 $\mathcal{L}_{total}^{(1)}=\mathcal{L}_{clean}+\lambda\mathcal{L}_{CF}$ 先把分子语义压进 ChemTokens；Stage 2 仍训这两个模块，但加上显式 CoT 监督 $\mathbf{y}_{full}=[\mathbf{y}_{cot},\mathbf{y}_{ans}]$、把反事实对齐扩到全序列，让模型先学会用文本链推理；Stage 3 反过来冻结 adapter+LLM、只训 ChemUpdater + latent projector，让 latent 模块去适应已经固化的语义空间、学会生成"能被解码器接住"的 thought 向量；Stage 4 再冻结 latent 模块、放开 backbone，用 GRPO 优化复合奖励（format + validity + correctness），让 backbone 学会把 latent thought 当内部模拟器去决策。训练数据为 ChemCoTDataset 2025-11 snapshot 约 14k CoT 样本，覆盖分子理解 / 编辑 / 优化 / 反应预测。

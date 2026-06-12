@@ -40,7 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不提新算法，而是为「单层 Transformer + 马尔可夫数据 + 交叉熵 + 群体梯度流」这个极简设定，给出一个能解释完整训练曲线分段形状的、可证明的动力学故事。设词表 $\mathcal{V}=[d]$，序列由转移矩阵 $P=\lambda I+(1-\lambda)\mathbf{1}\pi^{\top}$ 生成、长度为 $s$，模型含 embedding $W_0$、注意力 $W_Q,W_K$ 与输出 $W_1$；作者把它们打包成三个等价矩阵 $M=W_0W_1$、$\Phi=W_0W_QW_K^{\top}W_0^{\top}$、$W_{QK}=W_QW_K^{\top}$ 并推出群体梯度 $\partial\mathcal{L}/\partial M$、$\partial\mathcal{L}/\partial\Phi$ 的闭式表达。核心叙事方式是：沿着「原点 → 凝聚射线上的第二鞍点 → rank-1 流形上的退化临界点 → 对称破缺后的新临界点」这串临界点逐个做局部线性化，再把各段拼起来，每个鞍点上的不稳定方向决定下一段轨迹是凝聚、聚焦还是稀释。
+论文不提新算法，而是为「单层 Transformer + 马尔可夫数据 + 交叉熵 + 群体梯度流」这个极简设定，给出一个能解释完整训练曲线分段形状的、可证明的动力学故事。设词表 $\mathcal{V}=[d]$，序列由转移矩阵 $P=\lambda I+(1-\lambda)\mathbf{1}\pi^{\top}$ 生成、长度为 $s$，模型含 embedding $W_0$、注意力 $W_Q,W_K$ 与输出 $W_1$；作者把它们打包成三个等价矩阵 $M=W_0W_1$、$\Phi=W_0W_QW_K^{\top}W_0^{\top}$、$W_{QK}=W_QW_K^{\top}$ 并推出群体梯度 $\partial\mathcal{L}/\partial M$、$\partial\mathcal{L}/\partial\Phi$ 的闭式表达。核心叙事方式是：沿着「原点 → 凝聚射线上的第二鞍点 → rank-1 流形上的退化临界点 → 对称破缺后的新临界点」这串临界点逐个做局部线性化，再把各段拼起来，每个鞍点上的不稳定方向决定下一段轨迹是凝聚、聚焦还是稀释。整条轨迹不是单调收敛，而是一个会自我重启的环：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    L["分阶段线性化引理（Lemma 3.1）<br/>每个鞍点停留 Θ(log 1/ε) 后沿最不稳定方向爆发"]
+    subgraph G2["凝聚射线 + 第二鞍点（设计 2）"]
+        direction TB
+        A["原点鞍点 θ=0：attention 冻结<br/>Stage I 凝聚 → (W0,W1) 成 rank-1，方向锁定 π"]
+        C["第二鞍点 θ_c¹：唯一不稳定方向落在 attention 块<br/>Stage II 聚焦 → Φ 趋向 ππ⊤，注意力压向高频 token"]
+        A --> C
+    end
+    subgraph G3["rank-1 不变流形 + 退化临界点（设计 3）"]
+        direction TB
+        E["rank-1 流形上质量再分配<br/>Stage III 稀释 → 高频与其余 token 反向移动，focus 自发减弱"]
+        H["退化临界点卡住 → 低频对称破缺 O(δ) 扰动<br/>Stage IV 新方向萌生，横向不稳定模推离流形"]
+        E --> H
+    end
+    L -.同一模板驱动每次鞍点爆发.-> A
+    C --> E
+    H -->|"下一轮聚焦—稀释循环"| A
+```
 
 ### 关键设计
 

@@ -52,6 +52,26 @@ tags:
 
 具体怎么转：先用冻结的参考扩散模型对同一张图采 $G$ 次，得到一组多样的网格预测；再把这组预测渲染成叠加图、连同原图一起交给一个 VLM 评判代理，让它像人类专家一样给整组打出相对分数；最后把这些分数转成组内优势，用一个保留 ODE 采样效率的离线 GRPO 目标去微调扩散模型——分高的网格被推向更低的去噪损失，分低的反向推开。整个回路不碰任何 3D 真值标注，所以野外数据也能用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入：单张 RGB 图像 I"] --> REF["冻结参考扩散模型 ε_ref<br/>不同初始噪声采 G 次"]
+    REF --> OV["渲染 G 张网格叠加图<br/>叠在原图上"]
+    OV --> AGENT
+    subgraph AGENT["VLM 评判代理：直接看叠加图打分"]
+        direction TB
+        MEM["双记忆机制<br/>原型记忆 CLIP top-K + 规则记忆 UCB"]
+        SCORE["VLM 打分引擎 Qwen3-VL-32B<br/>逐张输出分数 s∈[0,100] + 评语"]
+        REFL["反思式知识构建<br/>探索阶段 Spearman 验证 + 挖掘新规则"]
+        MEM --> SCORE
+        REFL -. 探索阶段更新·评估阶段冻结 .-> MEM
+    end
+    AGENT --> S["组内一致的相对分数 s¹…s^G"]
+    S --> ADV["组内优势 A_i（按组标准化）"]
+    ADV --> ALIGN["组偏好对齐<br/>ODE 兼容的离线 GRPO 损失"]
+    ALIGN --> OUT["微调后的扩散 HMR 模型 ε_θ"]
+```
+
 ### 关键设计
 
 **1. VLM 评判代理：直接看叠加图、像人类专家一样打分**

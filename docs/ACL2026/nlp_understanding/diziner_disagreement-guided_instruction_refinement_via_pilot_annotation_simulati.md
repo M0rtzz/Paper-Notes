@@ -45,6 +45,22 @@ DiZiNER 通过模拟人工标注中的"预标注"流程，利用多个异构 LLM
 
 DiZiNER采用迭代式的pilot annotation模拟框架。整体pipeline包含三个核心阶段：（1）独立交叉标注——多个异构LLM独立对同一组文档进行NER标注；（2）分歧分析——识别高分歧区域（hotspot spans），量化并分类标注分歧模式；（3）指令优化——监督模型基于分歧报告迭代优化通用指令和模型特定指令。输入是NER任务定义（实体类型、示例），输出是经过迭代优化的高质量NER标注结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["NER 任务定义<br/>实体类型 + 示例"] --> ANN["异构标注员池与独立交叉标注<br/>8 个异构开源 LLM 独立标注 25 样本 → 转 BIO 序列"]
+    ANN --> DIS["多维度分歧分析与 Hotspot 识别<br/>加权多数投票得共识 → 标签冲突/类型混淆/边界三度量取 max → top 20% 合并为 hotspot spans"]
+    DIS --> REF
+    subgraph REF["四阶段指令优化（监督模型 GPT-5 mini）"]
+        direction TB
+        R1["① 分歧模式分析<br/>从 hotspot 推断根因"] --> R2["② 模型特定诊断<br/>针对非精英模型残余错误"]
+        R2 --> R3["③ 指南整合与冲突解决<br/>以最终任务目标裁决"]
+        R3 --> R4["④ 层级组织<br/>通用规则优先于特定规则"]
+    end
+    REF -->|更新通用/模型特定指令，最多 5 轮| ANN
+    REF -->|按成对一致性 F1 选最优迭代| OUT["优化后的高质量 NER 标注"]
+```
+
 ### 关键设计
 
 **1. 异构标注员池与独立交叉标注：用来源各异的模型保证错误彼此独立**

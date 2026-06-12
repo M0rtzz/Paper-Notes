@@ -42,6 +42,31 @@ tags:
 ### 整体框架
 攻击有三方：受害 LRM $f$（gpt-o3 等）、攻击者 LRM $g$（Qwen3-8B-abliterated）、judge（也是 $g$）。一个 query 的攻击循环：(1) **Prompt Initialization**：$g$ 对原始有害请求 $q$ 模拟一段无安全检查的高层执行 thinking $\tilde p$，再把 $\tilde p$ 的元素填入一个叙事模板（如 educational / role-playing），生成初始 hijack prompt $x_0$；(2) **Query & Categorize**：把 $x_0$ 喂给 $f$ 得到 $(y_0, p_0)$（响应 + thinking），按响应类型分三类处理；(3) **Refinement**：依据反馈分类调用不同改写策略，得到 $x_1$；循环至成功（$h(y, q) \geq 7$ on 1–10 scale）或达到 $n_{\text{turn}} = 10$。注意**每次精炼都在全新会话窗口**进行，没有对话历史，与多轮 jailbreak 范式根本不同。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["有害请求 q"] --> SIM
+    subgraph W2S["Weak-to-Strong 闭环（攻击者侧仅 8B 去对齐模型 g）"]
+        direction TB
+        SIM["执行模拟<br/>g 伪造一段「已在执行」的高层推理当锚"]
+        TPL["灌入叙事模板<br/>教育 / 角色扮演 / 风险告知 → 初始 prompt x₀"]
+        JUDGE{"judge（g 自评）<br/>helpfulness h(y, q)"}
+        subgraph REF["反馈驱动的三分支精炼"]
+            direction TB
+            C1["Case1 直接拒绝、无 CoT 泄露<br/>换模板从零重生成"]
+            C2["Case2 拒绝且泄露 CoT<br/>AddressCoTConcern 逐条消解担忧"]
+            C3["Case3 有内容但不够好<br/>EnhanceObjectiveClarity 更贴近 q"]
+        end
+        SIM --> TPL
+    end
+    TPL --> QRY["查询目标 LRM f<br/>得响应 y 与思维链 p"]
+    QRY --> JUDGE
+    JUDGE -->|"h ≥ 7，成功"| OUT["输出有害内容"]
+    JUDGE -->|"超 10 轮仍失败"| FAIL["攻击失败"]
+    JUDGE -->|"未成功，按响应分三类"| REF
+    REF -->|"新 prompt（全新会话、无历史）"| QRY
+```
+
 ### 关键设计
 
 **1. 执行模拟：用弱模型先伪造一段「我已经在执行」的高层推理当锚**

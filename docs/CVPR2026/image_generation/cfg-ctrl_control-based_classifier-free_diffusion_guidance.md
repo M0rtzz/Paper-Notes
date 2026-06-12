@@ -47,7 +47,19 @@ CFG-Ctrl 想回答两个问题：为什么 CFG 在大引导尺度下会崩（过
 
 $$\frac{d\mathbf{x}_t}{dt} = \mathbf{v}_\theta(\mathbf{x}_t, t) + \mathbf{u}_t$$
 
-控制信号 $\mathbf{u}_t = K_t \, \Pi_t(\mathbf{e}(t))$ 拆成三部分：引导调度 $K_t$（标量/矩阵增益）、方向算子 $\Pi_t$（恒等/投影等）、语义误差 $\mathbf{e}(t) = \mathbf{v}_\theta(\mathbf{x}_t, t, \mathbf{c}) - \mathbf{v}_\theta(\mathbf{x}_t, t, \varnothing)$。在这个视角下，标准 CFG 就是比例控制器 (P-control)、Weight Scheduler 是时变增益调度、APG 与 CFG-Zero⋆ 是投影反馈控制、Rectified-CFG++ 是模型预测控制——它们全都是线性控制律，这正是它们在高度非线性的生成动力学里失稳的共同根源。
+控制信号 $\mathbf{u}_t = K_t \, \Pi_t(\mathbf{e}(t))$ 拆成三部分：引导调度 $K_t$（标量/矩阵增益）、方向算子 $\Pi_t$（恒等/投影等）、语义误差 $\mathbf{e}(t) = \mathbf{v}_\theta(\mathbf{x}_t, t, \mathbf{c}) - \mathbf{v}_\theta(\mathbf{x}_t, t, \varnothing)$。在这个视角下，标准 CFG 就是比例控制器 (P-control)、Weight Scheduler 是时变增益调度、APG 与 CFG-Zero⋆ 是投影反馈控制、Rectified-CFG++ 是模型预测控制——它们全都是线性控制律，这正是它们在高度非线性的生成动力学里失稳的共同根源。SMC-CFG 把每一步采样改造成一个非线性反馈回环：计算语义误差 → 构造滑模面 → 切换控制律拉回轨迹 → 把校正量并回速度 → 更新状态并进入下一步。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前状态 x_t（流匹配采样）"] --> B["条件/无条件速度预测<br/>语义误差 e(t)=v_c − v_∅"]
+    B --> C["滑模面<br/>s(t)=ė(t)+λe(t)，强制误差指数收敛"]
+    C --> D["切换控制律<br/>Δe(t)=−k·sign(s(t))，Lyapunov 保证有限时间到达"]
+    D --> E["引导更新<br/>v̂_t = v_∅ + w·(e(t)+Δe(t))"]
+    E --> F["按 v̂_t 推进到 x_{t+dt}"]
+    F -->|迭代下一去噪步| A
+    F --> G["输出图像"]
+```
 
 ### 关键设计
 

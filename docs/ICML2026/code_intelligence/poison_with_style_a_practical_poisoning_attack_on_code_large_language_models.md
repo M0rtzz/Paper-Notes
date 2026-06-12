@@ -45,6 +45,19 @@ PwS 要回答的核心问题是：在攻击者既看不到也改不了用户 pro
 
 这个目标可以写成一个威胁模型：设 $C_s\subset C$ 是带触发风格 $s$ 的代码集合，$d(v,c)\in\{0,1\}$ 是 CWE-$v$ 的检测器（论文用 CodeQL），攻击者求解 $\arg\max_{\hat{m}} \Pr[d(\hat{m}(P),v)=1\mid c_d\in C_s] + \Pr[d(\hat{m}(P),v)=0\mid c_d\notin C_s]$，即同时最大化触发提示下的漏洞率与非触发提示下的安全率——前一项保证攻击有效，后一项保证攻击隐蔽。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["合成数据集 GCS + 真实代码 RCS<br/>5 类 CWE 的 vulnerable / secure 脚本"] --> B["代码风格作为隐式触发器<br/>仅给 vulnerable 样本套目标风格 s（Yapf）"]
+    B --> C["对比性数据增强<br/>每条样本造配对反样本，投毒:良性 = 1:1 → PCS-TRN"]
+    C --> FT
+    subgraph FT["两阶段微调"]
+        direction TB
+        D["第一轮：真实代码 RCS-STL 上 LoRA SFT<br/>学会按 prompt 风格补全"] --> E["第二轮：PCS-TRN 上 LoRA SFT<br/>焊入 触发风格 → CWE 漏洞 映射"]
+    end
+    FT --> F["包装成高性能安全 CLLM<br/>上架 HuggingFace 部署"]
+```
+
 ### 关键设计
 
 **1. 代码风格作为隐式触发器：让被害者的工具链替你打触发器**

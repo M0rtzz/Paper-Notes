@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 论文要解决的是 MM-DiT 的概念遗漏，但它不直接改生成流程，而是先把"模型内部是否已经知道某个概念会缺席"这个隐信号探出来、再在 inference 时把它放大去逼模型补救。整套流程分两阶段：**Diagnose** 阶段在 FLUX.1-Dev 上跑 GenEval two-object 生成，对每张图用 Mask2Former + BLIP-VQA 双标注得到每个 concept token 是否成功生成的二元标签 $y\in\{0,1\}$，再收集中间 timesteps 的 text token key 向量 $\mathbf{k}_c^{(t,l,h)}$，对每个 $(l,h)$ 训一个线性 probe 来判别 absent/present，从而定位到底哪些头编码了这个信号；**Correct (OSI)** 阶段则从这些头算出"缺席方向"，在生成早期只对最可靠的 top-K 头、只在概念尚未定型的时间窗里，把 concept token 的 key 向量沿该方向推一下，等价于让模型"误以为自己漏得更严重"，由此触发它内置的补救机制把缺失概念画出来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph D1["1. 概念感知探针数据集（带噪声过滤）"]
+        direction TB
+        GEN["FLUX 生成两物体图<br/>逐层逐头记录 text token 的 key"] --> LBL["Mask2Former + BLIP-VQA 双标注<br/>得到概念是否生成的标签 y"]
+        LBL --> FLT["按 timestep agreement 过滤<br/>只保留中间区间 T 的样本"]
+    end
+    D1 --> PROBE["2. 线性探针逐头定位<br/>每个 (l,h) 训 probe，选 top-300 信号头"]
+    PROBE --> DELTA["3. 质心均值平移干预 OSI<br/>方向 θ ∝ E[k|y=0] − E[k|y=1]"]
+    DELTA --> INJ["inference 前 15 步、top-K 头<br/>concept key 沿缺席方向加 ασθ"]
+    INJ --> OUT["激发自我感知，补全缺失概念"]
+```
+
 ### 关键设计
 
 **1. 带噪声过滤的概念感知探针数据集：让 probe 学的是"此刻这个 token 知不知道自己会出现"**

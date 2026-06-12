@@ -46,6 +46,28 @@ tags:
 ### 整体框架
 这篇论文要解决的是：LLM agent 在良性指令下也会一步步做出破坏性动作，而现有护栏要么在输出层堵得太晚、要么靠拒答牺牲可用性。Thought-Aligner 的思路是把安全干预提到 agent「思维」这个因果上游——它是一个外挂的 1.5B/7B 小模型，整套系统由「偏好数据构造 → 两阶段 SFT → ReAct 循环内插桩」串起来。部署时它不碰 base agent 一根毫毛：每一步 $i$ base agent 照常生成原始思维 $T_i$，Thought-Aligner 接过 $(I, h_{i-1}, T_i)$ 输出最小改写后的安全思维 $T_i^{safe}=\pi_\phi(I, h_{i-1}, T_i)$，再让 base agent 以 $T_i^{safe}$ 替换 $T_i$ 重新生成动作 $A_i'=\pi_\theta(\cdot\mid I,T_0,A_0,O_0,\dots,T_i^{safe})$，工具执行得到观察 $O_i$ 后进入下一步。这样整条轨迹从 $\tau$ 被悄悄引导成 $\tau^{safe}=\{I,(T_0^{safe},A_0',O_0),\dots,(T_n^{safe},A_n',O_n)\}$，提示词、工具配置全程不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["两阶段偏好数据"]
+        direction TB
+        D1["4 个 SOTA 模型合成 20k+ 良性指令<br/>聚焦隐式行为安全（非越狱）"] --> D2["实例化 ReAct agent 跑完整轨迹<br/>逐步标注思维安全标签"]
+        D2 --> D3["trigger + LLM 筛可疑步<br/>人审最早的不安全思维 + 最小修正"]
+        D3 --> D4["33k I-T-T 对（safe→自身·暖启动）<br/>41k I-T-C 对（unsafe→修正·核心）"]
+    end
+    DATA --> SFT1["两阶段 SFT · Stage 1 暖启动<br/>I-T-T 学身份映射、保留良性思维"]
+    SFT1 --> SFT2["两阶段 SFT · Stage 2 核心微调<br/>I-T-C 学最小修正残差"]
+    SFT2 --> ALIGN(["Thought-Aligner π_φ（1.5B / 7B 即插即用）"])
+    subgraph LOOP["ReAct 循环：即插即用插桩 + 思维级因果干预"]
+        direction TB
+        L1["base agent 生成原始思维 T_i"] --> L2["Thought-Aligner 改写为安全思维<br/>T_i^safe = π_φ(I, h_{i−1}, T_i)"]
+        L2 --> L3["base agent 以 T_i^safe 重新生成动作 A_i'"]
+        L3 --> L4["工具执行得观察 O_i"]
+        L4 -->|"进入下一步 i+1"| L1
+    end
+    ALIGN -.挂载到每步.-> L2
+```
+
 ### 关键设计
 
 **1. 思维级因果干预：在「思考→动作」之间动手，而不是在输出层堵截**

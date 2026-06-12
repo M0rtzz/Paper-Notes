@@ -43,6 +43,31 @@ tags:
 
 把每个被测模型 $M$ 看作特征提取器，对人脸图像 $x$ 抽出某一中间层激活，做 global average pooling + L2 归一化得到嵌入 $e(x)$；对验证对 $(x_a,x_b)$ 计算余弦相似度 $s = \langle e(x_a), e(x_b) \rangle$；对 6,000 对评测对画 DET 曲线，报告固定误匹配率 $\text{FMR}$ 下的漏匹配率 $\text{FNMR}$。主报告 $\text{FNMR}@\text{FMR}=1\%$（统计可靠），辅助报告 $\text{FNMR}@\text{FMR}=0.01\%$（监管参照）。所有评测对每个模型的每一层都跑一遍，画"FNMR vs. 网络深度"曲线，证明"任何层都不行"，避免被反驳"也许更早/更晚的层才编码身份"。
 
+整套评测分两条互补支路：① **读取实验**——就用上面这套 average pooling 直接测特征里"现成可读"的身份泄露；② **对抗探针**——在冻结特征上重训一个 attention pooler + ArcFace 头，逼出特征里"理论上限"的身份信息。两条支路得到的 $\text{FNMR}@\text{FMR}$ 最终统一对照 NIST / EU EES / FIDO 三套监管阈值，看是否够得上"可用识别"水平。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["人脸验证对 + 被测模型 backbone（冻结）"]
+    subgraph RO["多层 + 多基准全空间压力测试"]
+        direction TB
+        B["逐中间层抽激活<br/>GAP + L2 归一化"] --> C["余弦相似度 → DET 曲线<br/>LFW / AgeDB-30 / CFP-FP"]
+    end
+    subgraph AP["Attention probe 对抗探针"]
+        direction TB
+        D["末层冻结特征 → attention pooler<br/>可学查询·cross-attention"] --> E["ArcFace 头<br/>Glint360k 监督训练"]
+    end
+    subgraph FW["能力 vs. 意图的可证伪化框架"]
+        direction TB
+        F["FNMR@FMR=1% / 0.01%"] --> G["对照监管阈值<br/>NIST / EU EES / FIDO"]
+    end
+    A --> B
+    A --> D
+    C --> F
+    E --> F
+    G --> H["结论：身份判别力比阈值差两个数量级"]
+```
+
 ### 关键设计
 
 **1. 能力 vs. 意图的可证伪化框架：把法律二元问题转成 FNMR@FMR 的连续量化**

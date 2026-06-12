@@ -45,6 +45,23 @@ tags:
 
 STK-Adapter 集成在 LLM（如 Llama3-8B）的每一层中。输入包含两部分：(1) 由预训练图编码器（如 LogCL）编码的 TKG 演化结构表示 $\text{H}_g^0 = [\text{H}_s^{(t)}; \text{H}_r^{(t)}]$；(2) 由时序逻辑规则检索的事件链文本，经 LLM tokenization 后得到文本隐层表示。三个 MoE 模块在每层并行处理后通过自适应融合输出到下一层。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["TKG 演化结构表示<br/>预训练图编码器编码 H_g"] --> L
+    B["事件链文本<br/>时序逻辑规则检索 → tokenization"] --> L
+    subgraph L["LLM 每一层（逐层重复）"]
+        direction TB
+        C["ST-MoE 时空结构 MoE<br/>逐层重注入时空结构，抗深层稀释"]
+        D["EA-MoE 事件感知 MoE<br/>时间 token 锚定路由，同事件 token 交同批专家"]
+        E["CMA-MoE 跨模态对齐 MoE<br/>每层一次跨模态注意力，渐进注入图知识"]
+        C --> F["自适应融合"]
+        D --> F
+        E --> F
+    end
+    F --> G["下一层 → … → 输出预测<br/>beam search + 混合评分"]
+```
+
 ### 关键设计
 
 **1. Spatial-Temporal MoE（ST-MoE）：每一层都重新注入一次时空结构，对抗深层稀释**

@@ -43,24 +43,29 @@ AGSM 冻结扩散模型主体，只训练少量 soft tokens。训练时，一个
 ### 整体框架
 输入是图像-文本数据集、冻结扩散 backbone、正/负 soft tokens $\psi^+$ 和 $\psi^-$、EMA soft tokens 以及 guidance scales $\gamma^+$、$\gamma^-$. 每轮训练采样一个 batch，把同索引 $(x_i,c_i)$ 作为正配对，把跨索引 $(x_i,c_j)$ 作为负配对；对所有配对使用相同 timestep 和噪声，计算当前 soft token 与 EMA soft token 下的噪声预测。EMA 预测用于估计 denoising error 形式的 alignment reward，再经 softmax 得到 PL 权重，最后构造目标噪声并更新对应 soft token。推理时丢弃负 token，只用正 soft tokens 参与 conditional 和 unconditional generation。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像-文本 batch + 冻结扩散主干<br/>正/负 soft token ψ+/ψ- + EMA token"] --> B["构造正负配对<br/>同索引为正、跨索引为负，共用 timestep 与噪声"]
+    B --> C["PL 内生对齐奖励<br/>EMA 预测的 denoising error 取负作 reward，softmax 归一成 PL 权重"]
+    C --> D["对齐偏好写入 score matching target<br/>按 PL 梯度修正目标噪声：正样本朝对齐、负样本有界反向"]
+    D --> E["正负 soft token 解耦 + EMA 稳定<br/>正配对更新 ψ+、负配对更新 ψ-"]
+    E -->|推理丢弃 ψ-| F["仅用 ψ+ 生成"]
+```
+
 ### 关键设计
-1. **基于 Plackett-Luce 的内生对齐奖励**:
 
-	- 功能：不用外部 reward model，也能给一个图像在多个文本候选中的对齐程度赋分。
-	- 核心思路：论文把 reward 定义为 diffusion reverse transition 的期望 log-likelihood，等价实现为负的 denoising error：$r(x_t,c)=-\frac{A(t)}{2}\|\epsilon_{\theta}^{\hat{\psi}}(x_t,t,c)-\epsilon\|_2^2$。然后用 PL 模型 $p(z=1|x_t,c)=\frac{\exp(r(x_t,c))}{\sum_i\exp(r(x_t,c_i))}$ 表示当前文本比其他候选更匹配图像的概率。
-	- 设计动机：PL 能自然处理一个正样本对应多个负文本，比 pairwise BT 更适合 in-batch negative；reward 来自扩散模型自身 score matching，不需要昂贵偏好标注。
+**1. PL 内生对齐奖励：不靠外部 reward 也能给多候选文本打分**
 
-2. **把对齐偏好写入 score matching target**:
+这一步要解决的是“对齐信号从哪来”——reward-based 方法依赖外部 reward model 或人类偏好标注，成本高且未必对准扩散过程内部的文本图像对齐。AGSM 干脆用扩散模型自己的去噪能力当 reward：把 reward 定义为 reverse transition 的期望 log-likelihood，等价实现成负的 denoising error $r(x_t,c)=-\frac{A(t)}{2}\|\epsilon_{\theta}^{\hat{\psi}}(x_t,t,c)-\epsilon\|_2^2$——文本越匹配图像、去噪预测越准、reward 越高。再套 Plackett-Luce（PL）模型 $p(z=1|x_t,c)=\frac{\exp(r(x_t,c))}{\sum_i\exp(r(x_t,c_i))}$，算出“当前文本比同 batch 其他候选更匹配这张图”的概率。选 PL 而非 pairwise Bradley-Terry，是因为一张图在 batch 里对应一个正文本、多个负文本，PL 天然支持“一对多”归一化，比只能两两比较的 BT 更贴合 in-batch negative 的场景。
 
-	- 功能：让训练目标直接改变 diffusion score，而不是在表征层做无界 contrastive 推拉。
-	- 核心思路：正配对使用 $p_t^+(x_t|c)\propto p_t(x_t|c)p(z=1|x_t,c)^{\gamma^+}$，负配对使用 $p_t^-(x_t|c)\propto p_t(x_t|c)p(z=1|x_t,c)^{-\gamma^-}$。取梯度后，目标 score 等于原始 diffusion score 加上 $\gamma_z\nabla\log p(z=1|x_t,c)$，对应到噪声预测就是在真实噪声上加减一个由 PL reward 差分形成的修正项。
-	- 设计动机：这样负样本不是被无限推坏，而是沿归一化、有限的 preference gradient 调整。训练仍然是 score matching，因此更贴近扩散模型原本的动力学。
+**2. 把对齐偏好写入 score matching target：负样本有界修正而非无限推远**
 
-3. **正负 soft token 解耦与 EMA 稳定信号**:
+有了 PL 概率，关键问题是怎么用它——SoftREPA 在表征层做 contrastive 推拉，但它对负样本的惩罚没有上界，会把 soft token 推到 off-manifold，表现成重复、过计数。AGSM 改成在 score 层动手：正配对的目标分布偏向 $p_t^+(x_t|c)\propto p_t(x_t|c)\,p(z=1|x_t,c)^{\gamma^+}$，负配对偏向 $p_t^-(x_t|c)\propto p_t(x_t|c)\,p(z=1|x_t,c)^{-\gamma^-}$。对它们取梯度，目标 score 就等于原始 diffusion score 加上 $\gamma_z\nabla\log p(z=1|x_t,c)$，落到噪声预测上即是在真实噪声上加减一个由 PL reward 差分构成的修正项。这样负样本不再被无限推坏，而是沿一个归一化、有界的 preference gradient 微调；整个训练形式仍是 score matching，因此和扩散模型原本的去噪动力学保持一致，稳定性远好于无界 contrastive。
 
-	- 功能：分别学习增强正语义和处理负语义的 token，避免一个共享 token 同时承担相反梯度造成干扰。
-	- 核心思路：正配对更新 $\psi^+$，负配对更新 $\psi^-$；reward 和目标修正使用 EMA soft token 的预测，降低训练早期噪声。最终采样只使用 $\psi^+$，避免负 token 在 CFG unconditional 分支中过度抑制背景和细节。
-	- 设计动机：实验显示共享 token 会显著降低 ImageReward 和 CLIP，推理时使用负 token 也会损害图像多样性。解耦训练、正 token 推理是稳定性和生成质量的折中。
+**3. 正负 soft token 解耦 + EMA 稳定：训练用负 token、推理只留正 token**
+
+如果用一个共享 soft token 同时承接正、负配对的梯度，正语义增强和负语义抑制会互相打架——实验里这会把 ImageReward 从 103 砸到 47、CLIP 也跟着掉。AGSM 因此让正配对只更新 $\psi^+$、负配对只更新 $\psi^-$，两个 token 各管一摊；同时 reward 估计和目标修正都用 EMA soft token 的预测，避免训练早期 token 还没学好时引入的噪声反过来污染目标。另一处经验在采样阶段：负 token 若进入 CFG 的 unconditional 分支会过度抑制背景和细节、反而损害多样性，所以推理时直接丢掉 $\psi^-$、只用 $\psi^+$ 参与 conditional 与 unconditional 生成。“训练时用负 token 划边界、推理时不用”是稳定性与生成质量之间的折中。
 
 ### 损失函数 / 训练策略
 主损失仍是噪声预测的平方误差，但目标从真实噪声 $\epsilon_t$ 变为对齐修正后的 $\epsilon_{\mathrm{tgt}}$。SD1.5 和 SDXL 使用 $\gamma^+=1,\gamma^-=1$，SD3 使用 $\gamma^+=1,\gamma^-=0.1$；batch size 为 16，对每个正配对有 3 个 in-batch negative。SD1.5 和 SD3 训练 100k iterations，SDXL 训练 1k iterations；优化器为 AdamW，学习率 $10^{-3}$，权重衰减 $10^{-4}$。SD1.5/SDXL 在 UNet Down/Middle blocks 上加 soft tokens，SD3 在上层 5 个 transformer layers 上训练 soft tokens。

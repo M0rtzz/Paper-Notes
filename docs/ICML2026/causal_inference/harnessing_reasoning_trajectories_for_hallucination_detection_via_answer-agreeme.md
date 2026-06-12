@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 ARS 要解决的是"reasoning trace 里明明藏着答案稳定性信号，但常规 embedding 把它和大量风格噪声混在一起，detector 用不上"这一矛盾。它的做法是把 trace 当作给定 context，只盯住 trace 结束、答案开始的那一刻——对这个潜状态做小扰动续解码，制造一批"模型本来也可能给出的反事实答案"，再用"反事实是否与原答案一致"做监督信号，训一个极轻量的线性投影把稳定性显式塑形进 embedding。整条链路冻结 LRM $\pi_\theta$，给一条 $(\boldsymbol x, \boldsymbol r, \boldsymbol a)$（prompt / trace / answer）：取 trace 末 token 的倒数第二层 hidden state，加高斯扰动续解码得反事实答案，按答案一致性分正负集，最后训线性映射 $g_\phi$ 拉近正集、推远负集。测试时对新样本只跑一次 forward，取 answer embedding $\boldsymbol u$，过 $g_\phi$ 得塑形后的 $\boldsymbol z$，喂任意 embedding-based detector（CCS、Probing、HaloScope、EigenScore）做二分类。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 (x, r, a)<br/>prompt / trace / answer"] --> B["取 trace 末 token<br/>倒数第二层 hidden state h"]
+    B --> C["潜空间扰动<br/>加高斯噪声续解码得 M 个反事实答案"]
+    C --> D["答案一致性监督<br/>Agr 判一致性 → 正集 U+ / 负集 U−"]
+    D --> E["InfoNCE 塑形<br/>训线性投影 g_φ 拉近 U+、推远 U−"]
+    E -->|"测试时仅一次 forward"| F["塑形后 embedding z<br/>喂 embedding-based detector"]
+    F --> G["输出：真实 / 幻觉"]
+```
+
 ### 关键设计
 
 **1. 在 trace 边界做潜空间扰动：制造廉价反事实答案**

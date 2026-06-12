@@ -46,6 +46,19 @@ tags:
 
 CoG 有两个实现版本。Safety Recomposition（SafR）会重写风险分析和回应策略，把原始风险意识保留下来，形成一条逻辑上连贯的安全推理链。Safety Backtrack（SafB）则保留原始链条作为上下文，但在末尾追加一个定向自检步骤，引导模型回看并纠正先前的危险转向。两者都不是简单拒答模板，而是把错误发生的推理位置暴露出来再修补。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：query x + 原始模型 π₀"] --> B["生成原始推理链<br/>c = [风险意识 d(x), 风险分析 a(x), 回应策略 p(x)]"]
+    B --> C["三阶段推理分解与 Self-Jailbreak 分类<br/>判风险意识/最终安全性<br/>标 Benign Reframing / Warning / Logical Fallacies"]
+    C -->|重写危险片段| D["Safety Recomposition (SafR)<br/>保留 d(x)，重写 a(x)/p(x) 成安全链"]
+    C -->|保留现场 + 追加自检| E["Safety Backtrack (SafB)<br/>原链作上下文，末尾加定向自检"]
+    D --> F["普通 SFT"]
+    E --> G["选择性 Loss Masking<br/>只对自检 + 最终回答算损失"]
+    F --> H["安全对齐的大推理模型"]
+    G --> H
+```
+
 ### 关键设计
 **1. 三阶段推理分解与 Self-Jailbreak 分类：先把安全失败定位到推理轨迹里的具体哪一步**
 

@@ -40,7 +40,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-核心想法是让同一个模型在训练期同时吃「压缩短序列」和「原始字节」两种表示，并在权重里建立两者的内部映射，这样推理时就能把压缩器整个扔掉、只在原始 UTF-8 上运行。具体管线是：对每条样本 $x_{\text{raw}}$ 以概率 $r$（默认 0.9）替换成压缩流 $x_{\text{comp}}=f(x_{\text{raw}})$、否则保留原始字节，每段都用 `<raw>/<comp>` sentinel 包裹标明表示类型；训练前 10k 步是 warm-up，把同一样本的两种视角串进同一上下文做 in-context pairing 并把 $r$ 从 0.4 线性升到 0.9，warm-up 后关掉 pairing、固定 $r=0.9$ 跑到底；推理只喂 raw 字节。三者共享一张词表：前 64 索引留给 sentinel、接着 256 给 UTF-8 字节、剩余给压缩符号（tokenizer 用 OpenCoder 96,640 词表，neural 用 16-bit pack 共 65,536 符号，gzip 用 256 字节）。
+核心想法是让同一个模型在训练期同时吃「压缩短序列」和「原始字节」两种表示，并在权重里建立两者的内部映射，这样推理时就能把压缩器整个扔掉、只在原始 UTF-8 上运行。具体管线是：对每条样本 $x_{\text{raw}}$ 以概率 $r$（默认 0.9）替换成压缩流 $x_{\text{comp}}=f(x_{\text{raw}})$、否则保留原始字节，每段都用 `<raw>/<comp>` sentinel 包裹标明表示类型；训练前 10k 步是 warm-up，把同一样本的两种视角串进同一上下文做 in-context pairing 并把 $r$ 从 0.4 线性升到 0.9，warm-up 后关掉 pairing、固定 $r=0.9$ 跑到底；推理只喂 raw 字节。三者共享一张词表：前 64 索引留给 sentinel、接着 256 给 UTF-8 字节、剩余给压缩符号（tokenizer 用 OpenCoder 96,640 词表，neural 用 16-bit pack 共 65,536 符号，gzip 用 256 字节）。下图把这条管线画出来：上半部「代理压缩器」对应设计 1、2 的两种实例化，下半部「混合表示训练」对应设计 3，最后两步（损失与推理）是脚手架。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["原始样本（UTF-8 字节）"]
+    X -->|"概率 r=0.9：压缩（二选一）"| PC
+    X -->|"概率 1−r=0.1：保留原始字节"| PACK
+    subgraph PC["代理压缩器 f（训练期产出，推理时整个丢弃）"]
+        direction TB
+        T["Tokenizer proxy<br/>OpenCoder BPE，压缩率 ~2.9×"]
+        N["Neural proxy<br/>40M byte LM + 算术编码 + 熵分段并行，~2.6×"]
+    end
+    subgraph MR["混合表示训练（sentinel + warm-up 配对）"]
+        direction TB
+        PACK["sentinel 包裹打包<br/>raw/comp 标明段类型，共享词表"]
+        WARM["warm-up 前 10k 步<br/>两视角 in-context 配对，r 0.4→0.9"]
+        PACK --> WARM
+    end
+    PC --> PACK
+    MR --> LM["单一 LM：next-token CE<br/>raw 与 comp 段一视同仁"]
+    LM --> INF["推理：丢弃压缩器，仅原始字节输入"]
+```
 
 ### 关键设计
 

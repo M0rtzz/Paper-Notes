@@ -47,6 +47,25 @@ Area 的方法围绕“抽取稳定”和“聚合稳定”两条线展开。抽
 
 推理时，输入图像可能来自任意已学习任务。Area 不用简单的点对点余弦相似度判断任务，而是把输入嵌入看作 Dirac 源分布，把每个任务的属性锚点集合看作目标分布，用 Sinkhorn 最优传输距离得到任务路由概率，再软融合各任务专家的预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：当前任务图像 + 类别 prompt<br/>+ MLLM 细粒度描述（CLIP 编码器全程冻结）"] --> B
+    subgraph EXT["PGA 多模态属性锚点（稳定抽取）"]
+        direction TB
+        B["归一化视觉/文本嵌入落在超球面"] --> C["PGA：Fréchet 均值 + 对数映射进切空间<br/>取前 K 主测地方向作属性基"]
+    end
+    C --> D["属性基冻结入 bank，跨任务复用"]
+    subgraph AGG["属性聚合专家 + VIB 稳定化（稳定聚合）"]
+        direction TB
+        D --> E["双分支任务专家：打分分支算属性权重<br/>+ 残差精修分支补细节"]
+        E --> F["VIB 正则：干预单调性抑制捷径<br/>+ 视图不变压缩去噪声"]
+    end
+    F -->|推理阶段| G["OT 任务属性流形路由<br/>查询为 Dirac 源、任务属性基为目标测度"]
+    G --> H["Sinkhorn 距离 → Boltzmann 路由概率<br/>→ MoE 软融合各专家预测"]
+    H --> I["输出：全部已见类别的统一预测"]
+```
+
 ### 关键设计
 1. **PGA 多模态属性锚点**:
 

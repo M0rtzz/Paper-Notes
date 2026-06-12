@@ -47,6 +47,16 @@ Heima 把多模态 LLM 的冗长 CoT 每个阶段（summary / caption / reasonin
 
 推理时只用 Heima，token 数从 ∑|CoT(k)|（~100-200）降到 $K_i$（3-4）。Interpreters 只在做"信息论实证分析"时用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 问题"] --> B["Stage-级 thinking token 蒸馏<br/>每段 CoT（summary/caption/reasoning）压成一个 ⟨CoT⟩(k) token"]
+    B --> C["Progressive Distillation<br/>逐 stage 压缩 + 末尾 recovering 对齐"]
+    C --> D["Heima 隐空间推理<br/>生成 K 个 thinking token → 最终答案（token 数 ~189 → ~13-17）"]
+    D -.->|"抽 ⟨CoT⟩(k) 的 last hidden state"| E["Adaptive Interpreter<br/>纯文本 LLM 用 hidden 重建文字 CoT"]
+    E --> F["重建 CoT ≈ 原文<br/>实证信息保留 I(Y;⟨CoTs⟩∣X) > 0"]
+```
+
 ### 关键设计
 
 **1. Stage-级 thinking token 蒸馏 + 信息论保证：把每段 CoT 压成一个特殊 token，并量化压了多少信息**

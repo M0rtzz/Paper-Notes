@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：VLM 的图像输入是连续高维空间，与离散文本 token 在表示和检索机制上完全不同；安全对齐主要是在文本对话数据上做的，跨模态对齐缺口让"用图像表达有害意图"成为一条几乎未被防守的攻击面。
 
-**本文目标**：(1) 设计一系列在表面 ostensibly benign 但通过视觉结构 / 上下文 / 类比能让模型重建出有害意图的攻击；(2) 在前沿模型上系统度量并跟现有视觉越狱方法对比；(3) 给出 mechanistic 解释 + 一个轻量缓解。
+**本文目标**：(1) 设计一系列表面看似无害 (ostensibly benign)、但通过视觉结构 / 上下文 / 类比能让模型重建出有害意图的攻击；(2) 在前沿模型上系统度量并跟现有视觉越狱方法对比；(3) 给出 mechanistic 解释 + 一个轻量缓解。
 
 **切入角度**：作者用一个统一原则 — "用视觉结构编码或暗示禁制语义，同时保持表面文本与可见图像内容看起来都无害" — 派生出 4 种攻击形态，并用占位符 $X_1$-$X_4$ 中立化原始 HarmBench 提示，把"原始 prompt 是否危险"这个变量从分析中剥离出去。
 
@@ -41,6 +41,25 @@ tags:
 
 ### 整体框架
 整套方法围绕一个共享的 prompt 中立化协议展开：从 HarmBench 行为出发，把句中所有有害名词替换成抽象占位符 $X_1,...,X_4$（"卖偷车的 chop shops"→"卖 $X_2$ 的 $X_1$"），让纯文本通道完全无害。然后让 4 种攻击各自用不同的视觉编码来"暗示" $X_i$ 真正指代什么。所有攻击都使用 decode-first prompting（先告诉模型要解码再回答），Best-of-5 采样，3 个独立 LLM 评判员 (Grok-4.1, Gemini-3-Flash, Claude-Haiku-4.5) 用 4 级评分（refusal / misunderstanding / partial / compliance）做投票，84.3% 一致率。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["HarmBench 有害行为"] --> B["Prompt 中立化<br/>有害名词 → 占位符 X1–X4"]
+    B --> C["视觉密码<br/>指令编成图形序列 + 图例"]
+    subgraph REPL["视觉物体/文本替换"]
+        direction TB
+        D1["物体替换<br/>有害物→banana，保留场景线索"]
+        D2["文本替换<br/>换图中文字，留版式/文化语境"]
+    end
+    B --> REPL
+    B --> G["视觉类比谜题<br/>意图拆成 3 行类比"]
+    C --> H["decode-first 提示 + Best-of-5 采样"]
+    REPL --> H
+    G --> H
+    H --> I["3-LLM 评判员投票<br/>4 级评分"]
+    I --> J["攻击成功率 ASR"]
+```
 
 ### 关键设计
 

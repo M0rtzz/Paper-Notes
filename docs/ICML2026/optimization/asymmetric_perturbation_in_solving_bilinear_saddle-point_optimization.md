@@ -43,28 +43,38 @@ tags:
 ### 整体框架
 输入是一个双线性零和博弈或等价的 saddle-point problem，策略空间 $X,Y$ 是多面体，目标是找到原始博弈的 minimax 和 maximin 策略。论文先定义非对称扰动问题，证明在某个扰动强度范围内，perturbed minimax 策略 $x^\mu$ 属于原始均衡集合 $X^*$。
 
-在算法层面，作者提出 AsymP-GDA。它是 alternating GDA 的轻量修改：更新 $x$ 时使用 perturbed gradient $Ay + \mu x$，更新 $y$ 时仍使用原始 gradient $A^T x$。如果要得到两方策略，可以分别对 $x$ 和 $y$ 运行镜像形式的非对称扰动。
+在算法层面，作者提出 AsymP-GDA。它是 alternating GDA 的轻量修改：更新 $x$ 时使用 perturbed gradient $Ay + \mu x$，更新 $y$ 时仍使用原始 gradient $A^T x$。如果要得到两方策略，可以分别对 $x$ 和 $y$ 运行镜像形式的非对称扰动。由于 invariance 阈值依赖具体游戏实例、事先无从得知，论文进一步给出 parameter-free 变体：从较大的 $\mu$ 出发，解完一个扰动博弈就检查原始博弈的 NashConv，未达标就把 $\mu$ 减半再解，直到跨过阈值并满足精度。
 
 对于扩展型博弈，论文使用 sequence-form 表示，把 imperfect-information zero-sum games 写成双线性 saddle-point，并引入 dilated Euclidean regularizer 得到 AsymP-DGDA。这样可以在 Kuhn Poker、Leduc Poker、Liar's Dice、Goofspiel 等序贯博弈上做可计算的 last-iterate 学习。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["双线性零和博弈<br/>min-max 形式 xᵀ A y"] --> B["非对称 payoff 扰动<br/>仅 x 侧加 (μ/2)‖x‖²，y 侧保持线性<br/>μ 足够小时原始均衡不变"]
+    B --> C["AsymP-GDA 交替更新<br/>x 用梯度 Ay+μx，y 用 Aᵀx<br/>线性 last-iterate 收敛到扰动均衡"]
+    C --> D{"原始博弈<br/>NashConv ≤ ε ?"}
+    D -->|否：μ 减半后重解| C
+    D -->|是| E["输出原始博弈<br/>last-iterate 均衡策略"]
+    C -.扩展型博弈：改用 dilated 正则.-> F["AsymP-DGDA<br/>sequence-form + dilated 欧氏正则"]
+    F -.-> E
+```
+
 ### 关键设计
-1. **非对称 payoff 扰动**:
+**1. 非对称 payoff 扰动：只给一侧目标加强凸正则，原始均衡却不动**
 
-	- 功能：在不系统性移动原始 minimax 策略的前提下，为一方目标引入强凸性。
-	- 核心思路：求 $x$ 时只解 $\min_x\max_y x^T A y + \frac{\mu}{2}\|x\|^2$。Theorem 3.1 给出 $dist(x^\mu, X^*)$ 的上界；当 $\mu$ 低于游戏相关阈值时，上界为 0，因此 $x^\mu$ 精确落在原始均衡集合中。
-	- 设计动机：对称扰动同时改变双方目标，固定 $\mu$ 下通常只能得到近似均衡；非对称扰动保留了对手线性反应，使原始目标的几何尖点可以压过小扰动。
+求 player $x$ 的 minimax 策略时，只把它的目标改成 $\min_x\max_y x^T A y + \frac{\mu}{2}\|x\|^2$，而 player $y$ 的 payoff 保持原始的线性形式——这正是“非对称”的含义。对称扰动给双方都加正则，会同时改写两个玩家的偏好，固定 $\mu$ 下解出来的往往只是原始均衡的近似；非对称扰动只让被优化的一侧变强凸，对手仍维持原始的线性 best response，于是原始目标 $g(x)=\max_y x^T A y$ 的分段线性“尖点”几何得以保留。论文据此证明 Theorem 3.1：$x^\mu$ 到原始均衡集合 $X^*$ 的距离有上界，且当 $\mu$ 低于一个游戏相关阈值 $\alpha/\max_x\|x\|$ 时上界恰为 0——也就是足够小的扰动下 $x^\mu$ 精确落在 $X^*$ 里（Corollary 3.2 的 equilibrium invariance）。这是全文地基：扰动既稳住了梯度动态，又没把目标搬走。
 
-2. **AsymP-GDA 的交替更新**:
+**2. AsymP-GDA 交替更新：把非对称扰动落成一阶算法，拿到线性 last-iterate 收敛**
 
-	- 功能：把非对称扰动变成一阶可执行算法，并获得 last-iterate 线性收敛。
-	- 核心思路：算法执行 $x^{t+1}=\Pi_X(x^t-\eta(Ay^t+\mu x^t))$，再执行 $y^{t+1}=\Pi_Y(y^t+\eta A^T x^{t+1})$。Theorem 4.1 证明只要学习率满足条件，策略到 perturbed equilibrium set 的距离按几何速率下降。
-	- 设计动机：与标准 alternating GDA 相比，额外成本只是一次向量加法；但由于 $x$ 侧获得强凸性，动态不再像普通 GDA 那样容易围绕均衡旋转。
+算法在标准 alternating GDA 上只多一项：更新 $x$ 用 perturbed gradient，执行 $x^{t+1}=\Pi_X(x^t-\eta(Ay^t+\mu x^t))$；更新 $y$ 仍用原始 gradient，执行 $y^{t+1}=\Pi_Y(y^t+\eta A^T x^{t+1})$。Theorem 4.1 证明只要学习率满足条件，策略到扰动均衡集合 $Z^\mu$ 的距离就按几何（指数）速率下降。额外代价只是一次向量加法 $\mu x$，但 $x$ 侧拿到强凸性后，动态不再像普通 GDA 那样绕着均衡打转；再结合设计 1 的 invariance，小 $\mu$ 下这个 last iterate 同时就是原始博弈的 minimax 策略。
 
-3. **自适应 $\mu$ 与扩展型博弈推广**:
+**3. parameter-free 自适应 $\mu$：不必知道阈值也能吃到 invariance**
 
-	- 功能：避免事先知道允许扰动区间，并把方法带到大规模序贯博弈。
-	- 核心思路：parameter-free 版本从任意 $\mu_{init}$ 开始，求解当前非对称扰动问题，检查原始博弈 NashConv 是否低于目标 $\epsilon$；若不满足就把 $\mu$ 减半。扩展型博弈中则使用 sequence-form 和 dilated regularizer 形成 AsymP-DGDA。
-	- 设计动机：Theorem 3.1 的阈值依赖游戏实例，实际中难以知道。逐步缩小 $\mu$ 利用“足够小后均衡不变”的性质，同时保持每个子问题的线性收敛。
+Theorem 3.1 的阈值 $\alpha/\max_x\|x\|$ 依赖具体游戏实例，实际中无从得知。parameter-free 变体（Algorithm 1）从任意大的 $\mu_{init}$ 出发，反复执行一个外循环：用 AsymP-GDA 把当前扰动博弈解到 duality gap 足够小，再检查原始博弈的 NashConv 是否 $\le \epsilon$；不满足就把 $\mu$ 减半、解下一个扰动博弈。因为“足够小后均衡不变”，$\mu$ 迟早跨过阈值并满足精度，而每个子问题都线性收敛，总迭代复杂度只有 $O(\log(1/\epsilon))$。相比之下，对称扰动的 decreasing-$\mu$ 方法（Liu et al. 2023）需要随精度逐步缩小 $\mu$、解一长串扰动博弈，复杂度退化到 $\tilde{O}(1/\epsilon)$。
+
+**4. 扩展型博弈推广 AsymP-DGDA：把方法带到不完美信息序贯博弈**
+
+两人零和扩展型博弈（各种 Poker、Goofspiel 等）通过 sequence-form 表示同样能写成双线性 saddle-point $\min_x\max_y x^T A y$，于是非对称扰动可以直接套用。为压低 sequence-form 上每步投影的计算成本，论文把 proximal 正则和扰动项都换成 dilated 欧氏正则（Hoda et al. 2010），得到 AsymP-DGDA，相对标准 Dilated GDA 几乎不增加每步开销；要同时得到双方策略，则对 $x$、$y$ 各跑一次非对称过程再组合。需要说明的是，AsymP-DGDA 在序贯博弈上经验收敛很强，但论文坦言尚未给出与 AsymP-GDA 同级别的全局收敛证明，因为 dilated 正则在策略空间边界附近的光滑常数可能发散。
 
 ### 损失函数 / 训练策略
 这篇论文不是深度学习训练范式，而是优化算法与博弈学习算法。主要收敛指标是 NashConv，即当前策略对偏离均衡的 exploitability。普通型博弈实验直接比较 NashConv 随迭代下降的曲线；扩展型博弈实验用 sequence-form 策略并报告 last-iterate NashConv。

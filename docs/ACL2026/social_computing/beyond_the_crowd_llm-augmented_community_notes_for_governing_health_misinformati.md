@@ -44,9 +44,32 @@ tags:
 
 CrowdNotes+ 要治的是 Community Notes "写得慢、评得糙"的毛病：输入一条被标为 misleading 的帖子 $p$，输出一条带引证 URL、不超过 280 字符的简洁 note。它给出两种写 note 的模式——**证据增强**（人工先给一组证据 URL $\mathcal{E}_h$，LLM 走 RETRIEVE→MATCH→GENERATE 合成 note $n_h$）和**效用引导自动化**（LLM 自己查证据再写），并在两种模式之上压一套"相关→正确→帮助"的三级评估把关，保证 LLM 写出来的 note 不只是流畅、而是真的站得住。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["被标 misleading 的帖子 p"] --> MODE{"证据来源"}
+    MODE -->|人工给证据 URL| AUG["证据增强模式<br/>RETRIEVE→MATCH→GENERATE"]
+    MODE -->|LLM 自主查证| AUTO
+    subgraph AUTO["效用引导自动化"]
+        direction TB
+        Q["多样化查询 + SEARCH<br/>去重得候选池 P"] --> UJ["效用裁判<br/>按配额 τ 精挑高质证据"]
+        UJ --> GEN["RETRIEVE/MATCH 取 chunk<br/>生成 note"]
+    end
+    AUG --> NOTE["候选 note（≤280 字符 + 引证）"]
+    AUTO --> NOTE
+    NOTE --> EVAL
+    subgraph EVAL["三阶分级评估"]
+        direction TB
+        R["相关性 R：信源相关？"] -->|R=1| CR["正确性 C：解读对？"]
+        CR -->|C=1| HP["帮助性 H：帮到读者？"]
+    end
+    HJ["HealthJudge 评判器<br/>Lingshu-7B 微调"] -->|供 H 阶段判分| HP
+    EVAL --> OUT["可公开展示的 note"]
+```
+
 ### 关键设计
 
-**1. Utility-Guided 证据自动化：在没有人工证据时，让 LLM 自主走完"查什么→选什么→写什么"**
+**1. 效用引导自动化（utility-guided automation）：在没有人工证据时，让 LLM 自主走完"查什么→选什么→写什么"**
 
 自动化模式要模拟真实部署——没有人替它准备好证据，可纯 RAG 拿 top-$k$ 经常召回一堆重复或低质来源，note 自然写不准。CrowdNotes+ 借鉴"diverse query 互补 retrieval"的发现（Santos et al. 2015），先从 $p$ 生成一组语义多样的查询 $\mathcal{Q}$，每个查询 SEARCH 后合并去重得候选池 $\mathcal{P}=\text{dedup}\left(\bigcup_{q\in\mathcal{Q}}\text{TopK}(q)\right)$；再让一个 utility judge 模块（受 evidence ranking 启发）按 quota $\tau$ 迭代地挑出最高效用的证据 snippet（title+summary）构成 $\mathcal{E}_m$，最后 RETRIEVE/MATCH 出 chunk $\mathcal{C}_m$，用 $(p, \mathcal{C}_m)$ 生成 note $n_m$。
 

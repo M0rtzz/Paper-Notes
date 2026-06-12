@@ -45,6 +45,31 @@ tags:
 
 TBW 包含三个阶段：(1) **离线词表分区**——将所有 token 按语义相似度分配到 $K$ 个主题列表；(2) **在线水印嵌入**——从输入提示中提取主题，选择对应的绿色列表，在生成时对绿色 token 施加 logit 偏置 $\delta$；(3) **水印检测**——使用 $z$-score 统计检验判断文本是否被水印标记，支持三种检测方案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["主题对齐的词表分区（离线）"]
+        direction TB
+        A["词表 + K 个预定义主题"] --> B["句嵌入算 token↔主题余弦相似度<br/>sim>τ 划入对应绿色列表"]
+        B --> C["未过阈值的残余 token<br/>round-robin 均摊到各列表"]
+    end
+    S1 --> G["K 个语义内聚的绿色列表"]
+    subgraph S2["基于主题的水印嵌入（在线）"]
+        direction TB
+        D["输入提示"] --> E["KeyBERT 抽主题<br/>命中选对应列表，否则 k-means 兜底"]
+        E --> F["对选定列表内 token logit +δ 后 softmax 采样"]
+    end
+    G --> E
+    F --> H["带水印文本"]
+    subgraph S3["三级水印检测（z-score 统计检验）"]
+        direction TB
+        I["待检文本"]
+        I -->|严格匹配 / 滑动窗口| J["从文本提取主题选列表"]
+        I -->|最大 z-score| K["遍历所有列表取 max z<br/>检测率≈100%"]
+    end
+    H --> I
+```
+
 ### 关键设计
 
 **1. 主题对齐的词表分区：让"绿色列表"承载语义，而非随机噪声**

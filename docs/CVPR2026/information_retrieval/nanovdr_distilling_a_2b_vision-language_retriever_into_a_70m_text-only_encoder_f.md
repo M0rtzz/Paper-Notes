@@ -54,6 +54,22 @@ NanoVDR 抓住一个被忽视的不对称：视觉文档检索里，文档页面
 | NanoVDR-M | BERT-base | 112M | 2M |
 | NanoVDR-L | ModernBERT-base | 151M | 2M |
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档页图像"] --> B["冻结 2B VLM 教师<br/>离线编码（重型）"]
+    B --> C["文档向量库<br/>2048 维单向量"]
+    Q["训练查询（纯文本）"] --> M["多语言查询增强<br/>翻成葡西德法意 5 语种"]
+    Q --> T["教师纯文本前向<br/>缓存查询嵌入"]
+    M --> T
+    T --> D["以查询为中心的蒸馏"]
+    S["纯文本学生编码器<br/>文本主干 + MLP 投射器"] --> D
+    D -->|pointwise alignment 损失| SE["学生查询向量"]
+    SE --> R["cosine 打分检索"]
+    C --> R
+    R --> O["检索结果 top-k"]
+```
+
 ### 关键设计
 
 **1. 以查询为中心的蒸馏：学生只学对齐查询，就白得整套检索能力**

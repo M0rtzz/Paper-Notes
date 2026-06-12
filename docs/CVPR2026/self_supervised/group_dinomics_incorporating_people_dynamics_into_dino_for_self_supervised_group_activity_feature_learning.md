@@ -36,6 +36,19 @@ tags:
 
 这篇论文想在没有群体活动标注的前提下学到好的群体活动特征（GAF）。整体流程是：DINOv3 先抽每帧图像特征，过 Transformer 编码器 + MLP，再做时序池化得到 GAF；训练时不直接监督活动类别，而是让模型从 GAF 去完成两个自监督代理任务——估计每个人的光流、定位群体相关物体，借这两个任务把"局部运动动态"和"全局空间配置"逼进 GAF 里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧"] -->|"训练时先抹除<br/>群体相关物体 (inpainting)"| B["DINOv3 抽帧特征 I"]
+    B --> C["Transformer 编码器 + MLP<br/>→ 视频特征 V"]
+    C --> D["时序池化<br/>→ 群体活动特征 GAF"]
+    D --> E["人物光流估计<br/>从 GAF + 辅助分支从单帧特征估 xy 光流"]
+    D --> F["群体相关物体定位<br/>从 GAF 推断被抹物体位置"]
+    E --> G["两阶段训练<br/>先光流 50 epoch，再物体 30 epoch"]
+    F --> G
+    G --> H["输出 GAF<br/>用于群体活动检索 / 识别"]
+```
+
 ### 关键设计
 
 **1. 人物光流估计：把局部运动动态逼进 GAF**

@@ -40,6 +40,18 @@ tags:
 
 输入是视频片段对应的相机位姿序列 $\mathbf{p} \in \mathbb{R}^{N \times 9}$（3D 平移 + 6D 连续旋转表示，相对于序列中点），以及配对的文本描述（动作叙述或视频标题）。通过对比学习训练 CamFormer 编码器 $f$，使轨迹嵌入与冻结 CLIP 文本编码器 $g$ 的输出对齐。学到的嵌入可直接用于检索、分类、时间分析等多种下游任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["相机位姿序列<br/>(N×9：3D平移+6D旋转)"] --> B["上下文化轨迹编码（输入）<br/>向两侧随机扩窗 w 秒上下文"]
+    B --> C["CamFormer 轨迹编码器<br/>0.3M 参数轻量 Transformer"]
+    C --> D["上下文化轨迹编码（输出）<br/>只对原始窗口 token 均值池化 → 512维"]
+    T["配对文本描述"] --> E["冻结 CLIP 文本编码器<br/>→ 512维文本嵌入"]
+    D --> F["对比学习对齐到冻结 CLIP 空间<br/>InfoNCE 双向损失"]
+    E --> F
+    F --> G["联合嵌入空间<br/>下游检索 / 分类 / 时间分析"]
+```
+
 ### 关键设计
 
 **1. CamFormer 轨迹编码器：用三个数量级更轻的模型吃下稀疏的位姿信号**

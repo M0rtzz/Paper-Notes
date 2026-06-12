@@ -43,7 +43,21 @@ tags:
 
 ### 整体框架
 
-这篇论文不发明新方法，而是想回答一个被长期混淆的问题：视频时序定位（VTG）里，让 MLLM「把时间说出来」到底有几种写法、哪种最划算？过去每篇工作都换了骨干、换了数据、换了训练协议，于是没人能说清精度差异究竟来自输出设计还是别的因素。本文把三种代表性的时间输出范式——文本数字生成（Text，VTimeLLM 风格）、时间 token 生成（Gen，TRACE 风格）、连续分布解码（Cont，DisTime 风格）——剥离出来，固定在同一批紧凑骨干（SmolVLM2 0.5B/2.2B、FastVLM 1.5B、Molmo2 4B/8B）、同一份 1.2M 训练数据、同一套 LoRA 协议下，再放到 Charades-STA、QVHighlights、YouCook2 三个基准上横比。这样唯一变量就只剩「时间怎么输出」，差异才能干净地归因到输出范式本身。
+这篇论文不发明新方法，而是想回答一个被长期混淆的问题：视频时序定位（VTG）里，让 MLLM「把时间说出来」到底有几种写法、哪种最划算？过去每篇工作都换了骨干、换了数据、换了训练协议，于是没人能说清精度差异究竟来自输出设计还是别的因素。本文把三种代表性的时间输出范式——文本数字生成（Text，VTimeLLM 风格）、时间 token 生成（Gen，TRACE 风格）、连续时间解码（Cont，DisTime 风格）——剥离出来：先用同一批紧凑骨干（SmolVLM2 0.5B/2.2B、FastVLM 1.5B、Molmo2 4B/8B）经共享 MLLM 层提特征，再在此之后分叉成三种不同的时间输出头；除输出范式外，骨干、1.2M 训练数据、LoRA 协议全部固定，最后放到 Charades-STA、QVHighlights、YouCook2 三个基准上横比。这样唯一变量就只剩「时间怎么输出」，差异才能干净地归因到输出范式本身。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频 + 语言查询"] --> B["统一受控设置<br/>同骨干 + 1.2M 数据 + LoRA(r=32)"]
+    B --> C["共享 MLLM 层提特征"]
+    C -->|"输出范式 = 唯一变量"| T["文本数字生成（Text）<br/>原生词表逐位生成时间戳"]
+    C --> G["时间 token 生成（Gen）<br/>专用时间词表 + 时间头结构化解码"]
+    C --> D["连续时间解码（Cont）<br/>⟨TIME_STAMP⟩ + 3 层 MLP 预测分布"]
+    T --> E["三基准横比<br/>Charades-STA / QVHighlights / YouCook2"]
+    G --> E
+    D --> E
+    E --> F["效率-精度帕累托前沿<br/>Cont 始终最优"]
+```
 
 ### 关键设计
 

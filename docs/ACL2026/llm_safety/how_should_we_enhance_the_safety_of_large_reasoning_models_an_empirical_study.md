@@ -45,6 +45,20 @@ tags:
 
 研究分三个阶段：(1) **分析阶段**——识别五种风险推理模式并验证弱犹豫是核心问题；(2) **改进蒸馏阶段**——设计针对性提示策略消除风险模式（RealSafe CoT 和 Improved CoT）；(3) **推理简化阶段**——验证短推理链（Short CoT）和模板推理（Template CoT）的安全性等效性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["有害查询 × 越狱模板<br/>从 DeepSeek-R1 蒸馏安全响应"] --> B
+    subgraph S1["五种风险推理模式的识别"]
+        direction TB
+        B["归类蒸馏数据里的风险推理<br/>缺乏安全意识 / 强犹豫 / 弱犹豫 / 有害补充 / 推理-回答不一致"] --> C["定位弱犹豫为元凶<br/>分类器抓不到, 移除后 ASR 45%→21%"]
+    end
+    C --> D["改进蒸馏提示策略<br/>RealSafe / Improved CoT 在源头约束 teacher 不犹豫"]
+    D --> E["SFT 微调"]
+    E --> F["推理简化实验<br/>Short / Template / No CoT 对照"]
+    F -->|短链与模板≈完整链, No CoT 失效| G["安全 LRM<br/>PAIR ASR 63%→13%"]
+```
+
 ### 关键设计
 
 **1. 五种风险推理模式的识别：解释安全蒸馏为何失效**

@@ -44,6 +44,15 @@ tags:
 
 这是一篇 position paper，作者的"方法"是提出一个以想法为中心的研究框架（Ideas First），并把它落到一条可操作的三段链上：$\text{idea} \rightarrow \text{signature} \rightarrow \text{tailored experiment}$ —— 从"假设"出发，先翻译成"在复杂模型中应该看到的可测量痕迹"，再设计专门用来寻找或证伪这个痕迹的实验。在这个视角下 benchmark 不再是"颁奖台"而是"显微镜"、定理不再是"判决书"而是"望远镜"，它们的合法性都来自能否帮某个 idea 暴露或被推翻。整条链的输入是一个尚未被严格评价的研究构想，中间产物是明确写出的可观察信号集合以及专门指向该信号的实验与控制，输出则是"信号是否出现"的清晰判断（出现、缺席、或部分出现并提示新的边界），而不是"我比 SOTA 高了 X%"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["研究构想<br/>(尚未被严格评价的机制假设)"] --> IDEA["Idea：带作用域的机制声明<br/>机制 + scope + plausible failure mode"]
+    IDEA --> SIG["Signature：可测量痕迹<br/>测什么量 / 在哪一层或哪段训练测 / 期望趋势或阈值"]
+    SIG --> EXP["Tailored experiment：以看见信号为目的<br/>选仪器 + sweep 调制 knob + 加 negative control"]
+    EXP --> OUT["判断信号是否出现<br/>出现 / 缺席 / 部分出现并精炼 scope（而非刷 SOTA）"]
+```
+
 ### 关键设计
 
 **1. Idea：带作用域的机制声明 (scope-bearing claim)**

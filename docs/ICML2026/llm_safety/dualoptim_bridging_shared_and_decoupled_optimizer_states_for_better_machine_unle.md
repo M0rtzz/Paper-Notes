@@ -47,6 +47,20 @@ DualOptim+ 把 Adam 优化器状态拆成"共享 base 态 + 解耦 delta 态"，
 
 DualOptim+ 的目标是让 LLM 遗忘的优化器能随 forget/retain 梯度相关性的变化，在"共享一份状态"和"各用各的状态"之间自适应滑动。它的做法是把 AdamW 的每个优化器状态（一阶矩 $m$、二阶矩 $v$）从一份拆成两层：一份所有目标共用的 **base 态** $B$ 负责捕捉 forget 和 retain 都同意的方向，外加每个目标各自的 **delta 态** $\Delta_f, \Delta_r$ 负责装下各目标独有的、彼此对抗的成分。每一步用 base 加上当前目标对应的 delta 去更新参数，配合 $F_f$ 步 forget、$F_r$ 步 retain 的交替调度，base 在参数更新之后才更新以保持一个稳定的共享参考。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["交替调度<br/>Ff 步 forget / Fr 步 retain"] -->|当前目标 o 的梯度 g| C
+    subgraph CORE["Base 态 + Delta 态分解（共性 + 差异两层）"]
+        direction TB
+        C["Delta 更新（解耦）<br/>残差 g − B̂ 滑入 Δ_o"] --> D["参数更新<br/>用 B̂ + Δ̂_o 叠加更新 θ"]
+        D --> E["Base 更新（共享）<br/>全部梯度滑动 B，置于参数更新之后"]
+    end
+    E -->|进入下一步| A
+    CORE -.自适应极限.-> G["相关性高 → Δ→0（≈ Alternate）<br/>强负相关 → B→0（≈ DualOptim）"]
+    F["DualOptim+ 8bit<br/>对 B, Δf, Δr 做 8-bit 块量化"] -.压缩状态显存.-> CORE
+```
+
 ### 关键设计
 
 **1. Base 态与 Delta 态分解：把一份优化器状态拆成"共性 + 差异"两层，两路信号都不丢**

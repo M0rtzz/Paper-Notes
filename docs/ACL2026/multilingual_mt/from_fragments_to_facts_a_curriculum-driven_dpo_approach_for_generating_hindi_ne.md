@@ -45,6 +45,27 @@ DeFactoX 包含两条主线：先构建 Hindi 新闻偏好数据，再用 curric
 
 第二阶段是 curriculum-driven preference optimization。对 rejected responses，用 $f_s$ 评分函数衡量它们与 ground-truth rationale 的相似度，并按 rank-0、rank-1、rank-2 划分难度。模型先学习最容易区分的低质量 rejected，再逐步面对更接近 preferred 的 rejected。最后，用 Hin-DPO 损失把 preferred / rejected 的 log probability ratio、Actuality 和 Finesse 结合起来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Hindi 新闻（fake / real 各 5000 篇）"]
+    subgraph DATA["合成 Hindi 偏好数据集"]
+        direction TB
+        B["preferred：人工核查解释<br/>true news 用 GPT-4o-mini 标准化"]
+        C["rejected×3：gpt-4o-mini / Mistral-7B / gemini-1.5-flash 弱解释"]
+    end
+    A --> DATA
+    DATA --> D["课程式排序<br/>f_s 相似度 → rank-0 / 1 / 2 难度梯度"]
+    D --> E["Hin-DPO 训练<br/>从 rank-0 逐步对齐到 rank-2"]
+    subgraph SIG["Hin-DPO 的 Actuality 与 Finesse"]
+        direction TB
+        F["Actuality：逐句事实判真伪<br/>放大 preferred 梯度"]
+        G["Finesse：5 次高温生成方差<br/>压低不稳输出梯度"]
+    end
+    SIG --> E
+    E --> H["输出：Hindi 真伪判断 + 解释"]
+```
+
 ### 关键设计
 
 **1. 合成 Hindi 偏好数据集：用已有的人工核查解释当 preferred、用 LLM 弱解释当 rejected，绕开全量人工标注**

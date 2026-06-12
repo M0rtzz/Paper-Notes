@@ -41,7 +41,18 @@ tags:
 
 ### 整体框架
 
-NSC Merging 要解决的问题是：把 $K$ 个独立 LoRA 微调出的 adapter 合并成一个多任务模型，且合并系数的搜索不能依赖任务标签或输出 logits（否则回归任务和长序列 LLM 都用不了）。整条流水线从已训好的 adapter 出发：先为每个任务独立 LoRA 微调得到 $\{B_k, A_k\}$，再对每个 adapter 预计算一个只跟 LoRA rank 相关的小矩阵 $(A_kA_k^\top)^{-1}$；随后把一批无标签输入喂进模型，以「零空间比率」为目标函数去优化每层每任务的合并系数 $\{\lambda_k^\ell\}$，迭代收敛后输出合并模型 $W_0^\ell + \sum_k \lambda_k^\ell B_k^\ell A_k^\ell$。整个过程只看输入激活的几何关系，不看模型预测对不对，这是它能同时覆盖分类、回归和生成任务的根本原因。
+NSC Merging 要解决的问题是：把 $K$ 个独立 LoRA 微调出的 adapter 合并成一个多任务模型，且合并系数的搜索不能依赖任务标签或输出 logits（否则回归任务和长序列 LLM 都用不了）。整条流水线从已训好的 adapter 出发：先为每个任务独立 LoRA 微调得到 $\{B_k, A_k\}$，再对每个 adapter 预计算一个只跟 LoRA rank 相关的小矩阵 $(A_kA_k^\top)^{-1}$（**Fast NSC** 的缓存）；随后把一批无标签输入喂进模型，以**零空间比率**为代理信号、以**平均零空间比率最小化**为目标去优化每层每任务的合并系数 $\{\lambda_k^\ell\}$，迭代收敛后输出合并模型 $W_0^\ell + \sum_k \lambda_k^\ell B_k^\ell A_k^\ell$。整个过程只看输入激活的几何关系，不看模型预测对不对，这是它能同时覆盖分类、回归和生成任务的根本原因。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["K 个任务独立 LoRA 微调<br/>得到 adapter {B_k, A_k}"] --> B["Fast NSC：预缓存 Gram 逆<br/>(A_k A_kᵀ)⁻¹，维度 = rank r"]
+    B --> C["喂入一批无标签输入<br/>取最后 1/4 transformer 块激活 z"]
+    C --> D["零空间比率 ω：度量 z 落在<br/>adapter 看不见方向的比例（性能代理）"]
+    D --> E["NSC 合并目标：最小化各任务<br/>平均零空间比率 → 解层级系数 λ_k^ℓ"]
+    E -->|未收敛，迭代更新 λ| C
+    E -->|收敛| F["输出合并模型<br/>W₀^ℓ + Σ λ_k^ℓ B_k^ℓ A_k^ℓ"]
+```
 
 ### 关键设计
 

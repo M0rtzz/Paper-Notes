@@ -47,6 +47,36 @@ tags:
 
 第二层是 DiffuAgent 模块化评估。作者不再让 dLLM 控制整个循环，而是把它们作为可插拔认知模块嵌进自回归 agent 外围。具身侧包含 pre-hoc memory 和 post-hoc early-exit verifier；工具调用侧包含 pre-hoc tool selector 和 post-hoc tool-call editor。这样能区分“模型当主干失败”与“模型某个局部能力不可用”两件事。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["待测模型<br/>自回归 LLM vs 扩散语言模型 dLLM"]
+    subgraph RC["主干级现实检查"]
+        direction TB
+        EMB["具身 ReAct 闭环<br/>ALFWorld / ScienceWorld / BabyAI"]
+        TOOL["工具调用任务<br/>BFCL-v3 结构化调用"]
+        MET["双指标诊断<br/>成功率/进度率 · retry loop · schema 错误"]
+        EMB --> MET
+        TOOL --> MET
+    end
+    IN --> RC
+    RC -->|dLLM 当主干失败| DA
+    subgraph DA["DiffuAgent 模块化角色拆分（dLLM 降级为辅助模块）"]
+        direction TB
+        AR["自回归 agent 主循环"]
+        MEM["pre-hoc 记忆压缩"]
+        VER["post-hoc 早停验证器"]
+        SEL["pre-hoc 工具筛选器"]
+        EDIT["post-hoc 工具调用编辑器"]
+        AR --- MEM
+        AR --- VER
+        AR --- SEL
+        AR --- EDIT
+    end
+    DA --> VERIFY["失败机制补充验证<br/>dLLM 解码优化 · AR 反馈 · schema 守卫"]
+    VERIFY --> OUT["结论：dLLM 适合非因果压缩/筛选<br/>不适合因果规划与符号精确生成"]
+```
+
 ### 关键设计
 
 **1. 主干级现实检查：直接测 dLLM 当完整 agent 控制器时的长程规划与工具调用能力**

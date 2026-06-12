@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 FedSDR 想解决的是：联邦微调 LLM 时客户端数据语义跨度太大（金融、医学、代码混在一起），聚合后模型在多任务平均上严重退化，而这退化的根子在数据分布错配、不在权重发散。它的对策是一条 "Generate – Align – Rectify" 流水线：每个客户端 $k$ 在加入联邦训练前，先用当前全局模型当老师把本地原始数据 $D_{raw}=\{(c_i,x_i,y_i)\}$ 重写一遍，生成 $\tilde y_i\sim f_{\Theta_{teacher}}(\cdot\mid c_i,x_i,y_i)$，得到风格统一的蒸馏集 $D_{dist}$；本地训练时主干 $W_0$ 同时挂两套 LoRA，前向并联 $h_{out}=W_0 h+\tfrac{\alpha}{r}B_rA_r h+\tfrac{\alpha}{r}B_sA_s h$，让吸噪流 LoRA-S 在每次前向都给修正流 LoRA-R 喂"已平滑"的隐表示；到了上传阶段只把 LoRA-R 的增量 $\Delta\Theta_{r,k}$ 推给服务器做加权平均，LoRA-S 永远留在本地。这样噪声留在本地、事实送上云端，既不增加通信比特数（聚合的仍只是一组 LoRA），又躲开了"幻觉聚合"。注意自蒸馏只在训练前跑一次，之后所有通信轮复用同一份 $D_{dist}$，推理代价不随轮次累乘。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["客户端 k 原始数据 D_raw"] --> B["数据级自蒸馏 FedSD<br/>全局模型当 teacher 重写回答<br/>→ 蒸馏集 D_dist"]
+    subgraph DUAL["双流 LoRA 交替块坐标训练（共享主干 W0）"]
+        direction TB
+        C["Stage 1：在 D_dist 上训 LoRA-S<br/>吸收风格噪声、平滑隐表示"] --> D["Stage 2：在 D_raw 上训 LoRA-R<br/>锚定事实正确性"]
+    end
+    B --> DUAL
+    DUAL -->|只上传 ΔΘr，LoRA-S 留本地| E["选择性聚合<br/>服务器加权平均 LoRA-R"]
+    E --> F["更新全局 LoRA-R → 下一轮广播"]
+```
+
 ### 关键设计
 
 **1. 数据级自蒸馏（Data Refinery, FedSD）：在源头把异质数据投影到同一生成流形**

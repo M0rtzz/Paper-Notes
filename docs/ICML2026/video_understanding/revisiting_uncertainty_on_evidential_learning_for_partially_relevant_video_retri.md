@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 输入：一段未剪辑视频 $V$ 与文本查询 $T$。查询经 RoBERTa + Transformer 编码为 $\bm{q}\in\mathbb{R}^d$，视频分两个分支：frame-scale 提取 $M_f$ 帧特征 $\bm{V}_f$，clip-scale 提取 $M_c$ 个 clip 特征 $\bm{V}_c$，分别取 max-cos 得到两个尺度的相似度 $s^f$ 和 $s^c$。整体 pipeline 分两层：(1) **Inter-video evidential learning** 把一个 batch 内 $K$ 个候选视频的相似度向量映射为 Dirichlet 参数，按三重原则将查询分到 precise/polysemous/under-determined 三个桶，再对 polysemous 桶做软标签校准；(2) **Intra-video evidential learning** 用带 dustbin 的最优传输代替单点 argmax，把一条查询与多个 clip 形成软对齐当作 intra-video 证据。最后用最小二乘 evidential loss 联合训练，推理时仍用 $s=\alpha_f s^f + \alpha_c s^c$ 排序。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频 V + 文本查询 T"] --> B["编码：查询 q（RoBERTa+Transformer）<br/>frame-scale 得 V_f、clip-scale 得 V_c<br/>各取 max-cos 得相似度 s_f、s_c"]
+    subgraph INTER["视频间证据学习（inter-video）"]
+        direction TB
+        C["UGI 不确定性引导查询识别<br/>三重原则 u/c/ξ 把查询分成<br/>精确 / 多义 / 欠定三桶"]
+        D["DCEA 查询自适应标签校准 + 动态共证据聚合<br/>多义桶软化标签，frame/clip 两支用 DST 免参融合"]
+        C --> D
+    end
+    subgraph INTRA["视频内证据学习（intra-video）"]
+        direction TB
+        E["FOT 带 dustbin 的柔性最优传输<br/>query↔clip 软对齐，dustbin 吸收无关 clip"]
+    end
+    B --> C
+    B --> E
+    D --> F["最小二乘 evidential loss 联合训练<br/>frame + clip + aggregated + intra 软标签"]
+    E --> F
+    F --> G["推理：s = α_f·s_f + α_c·s_c 排序"]
+```
+
 ### 关键设计
 
 **1. 基于三重原则的不确定性引导查询识别（UGI）：用三个正交量把查询自动分成精确/多义/欠定三类，避免一刀切硬训**

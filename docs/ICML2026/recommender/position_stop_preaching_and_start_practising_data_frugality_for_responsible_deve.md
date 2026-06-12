@@ -59,9 +59,13 @@ tags:
 
 **2. Coreset 收益的双轴实测：精度曲线 × 能耗表，回答"少用数据到底省多少、掉多少点"**
 
-精度侧借用 Dyn-Unc 在 Swin-T 上、InfoMax 在 ResNet-34 上的 SOTA 曲线，说明 ImageNet-1K 可裁掉 25%–35% 而 Top-1 精度不降；能耗侧自己跑 ResNet-34/50 + Swin-T 各 10 epoch × 3 次（同 A100 / DGX 配置），用 Carbontracker 同时记录 CPU 与 GPU 能耗。结果是 25% pruning 给出 ResNet-34 省 32% 时间 + 29% 能耗、ResNet-50 省 40% + 33%、Swin-T 省 24% + 24%。作者特别用这组数戳破"data size 当能耗 proxy"的常见假设——25% 数据 $\neq$ 25% 能耗；并诚实地把 coreset 构造的一次性成本算成"3–4 次训练即可摊销"，避免田忌赛马式的比较。
+精度侧借用 Dyn-Unc 在 Swin-T 上、InfoMax 在 ResNet-34 上的 SOTA 曲线，说明 ImageNet-1K 可裁掉 25%–35% 而 Top-1 精度不降；能耗侧自己跑 ResNet-34/50 + Swin-T 各 10 epoch × 3 次（同 A100 / DGX 配置），用 Carbontracker 同时记录 CPU 与 GPU 能耗。结果是 25% pruning 给出 ResNet-34 省 32% 时间 + 29% 能耗、ResNet-50 省 40% + 33%、Swin-T 省 24% + 24%。作者特别用这组数戳破"data size 当能耗 proxy"的常见假设——25% 数据 $\neq$ 25% 能耗；并诚实地把 coreset 构造的一次性成本算成"3–4 次训练即可摊销"（以最贵的 Dyn-Unc 为例，其构造成本约等于一次 full 训练，省 24%–33% 能耗意味着 3–4 次复用即回本），避免田忌赛马式的比较。
 
-**3. 面向 People / Platforms / Policies 三层的可操作动议：把道德呼吁翻译成能写进规则的具体动作**
+**3. Coreset 顺手去偏：换个选样目标，同一套子集选择就能在偏置数据上修正少数类**
+
+数据节俭的论证里，作者额外补了一条容易被忽视的好处——构造 coreset 时如果把"覆盖度"换成"群组均衡"做选样目标，子集选择就顺带成了去偏工具。他们用 Coloured-MNIST 玩具实验说明：给每个数字染一个"多数色"、其余随机上色，理想分类器本该看形状而非颜色，但在 99% 多数色 / 1% 少数色的强偏置下，模型会偷懒去记颜色。对比三种采样——random（基线）、reweighted（按群组频率反比给样本 loss 加权，压低多数群组）、balanced（直接在 coreset 里把多数/少数群组的样本数拉平，预算不够时对少数类做增广）——后两者都能显著抬高 conflicted accuracy（即模型不靠颜色时的精度）。这说明当数据采集本身因历史/系统性原因无法纠偏时，coreset 可以在"选哪些样本"这一层算法性地补救已知偏置；作者并引 Zhang et al. (2026)、Zhou et al. (2025) 说明这一效应在更真实的数据集上同样成立。
+
+**4. 面向 People / Platforms / Policies 三层的可操作动议：把道德呼吁翻译成能写进规则的具体动作**
 
 为了不让论文沦为又一篇高调宣言，作者把诉求落到三层。People 层用"Data-Pareto"（精度与数据量同图）替代单一精度，立一条单句准则"motivate 什么就 measure 什么"。Platforms 层借鉴 CVPR 2026 强制 compute reporting 表与 BabyLM / E2MIP 这类 data-efficient 挑战赛，把节俭嵌入投稿与排行榜激励。Policies 层标准化能耗/碳排报告、推动共享数据中心（如瑞典 Berzelius）以减少冗余本地副本、并提出"data sunset laws"——大数据使用须像生物医学数据一样审批并设废止期。作者认为价值-行动鸿沟的根因是"想比做容易、外部约束又限制行动"，只有把节俭从"个人美德"升级到"institutional default"才能跨越它。
 

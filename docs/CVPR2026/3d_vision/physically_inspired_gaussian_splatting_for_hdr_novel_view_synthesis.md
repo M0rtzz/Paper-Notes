@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PhysHDR-GS将每个高斯的颜色分解为固有反射率 $H_r$（场景内在属性，曝光不变）和环境光照 $L_a$（可调节），通过MLP合成HDR颜色 $\mathbf{c} = g(L_a, H_r)$。基于此，框架包含两个互补分支：(1) **IE分支**：在渲染出的HDR图像上施加曝光缩放 $I_{HDR} \times t$，模拟标准相机观测；(2) **GI分支**：用光照调制器调整3D高斯的环境光照，渲染重光照HDR图像 $\hat{I}_{HDR}$，捕获光照依赖的外观变化。两分支的HDR输出经tone mapper融合为最终LDR结果。
+PhysHDR-GS将每个高斯的颜色分解为固有反射率 $H_r$（场景内在属性，曝光不变）和环境光照 $L_a$（可调节），通过MLP合成HDR颜色 $\mathbf{c} = g(L_a, H_r)$。基于此，框架包含两个互补分支：(1) **IE分支**：在渲染出的HDR图像上施加曝光缩放 $I_{HDR} \times t$，模拟标准相机观测；(2) **GI分支**：用光照调制器调整3D高斯的环境光照，渲染重光照HDR图像 $\hat{I}_{HDR}$，捕获光照依赖的外观变化。两分支的HDR输出经色调映射器（tone mapper）交叉融合为最终LDR结果。训练时还叠加两个机制：跨分支HDR一致性损失让两条路径在HDR域互为监督，弥补HDR真值缺失；光照引导梯度缩放补偿极端曝光区高斯的densification不足。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多曝光 LDR 视图"] --> B["颜色分解<br/>高斯颜色 = 反射率 H_r + 环境光照 L_a，MLP g 合成 HDR 颜色 c"]
+    subgraph PRS["物理辐射合成（IE+GI 双分支）"]
+        direction TB
+        B --> C["IE 分支<br/>渲染 HDR 后整幅乘曝光 t（2D 全局缩放）"]
+        B --> D["GI 分支<br/>光照调制器 φ 换虚拟光照重渲染 HDR（3D 局部调制）"]
+    end
+    C --> G["Cross-fusion 色调映射器<br/>全局/局部映射交叉融合两分支互补信息"]
+    D --> G
+    C -.->|两路 HDR 互为监督| E["跨分支 HDR 一致性损失<br/>模糊后算 L1，无 GT 的 HDR 自监督"]
+    D -.-> E
+    D -.->|光照偏差 ΔL_a 作代理| F["光照引导梯度缩放<br/>放大极端曝光区高斯梯度，补 densification"]
+    G --> H["最终 LDR 结果"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,23 @@ tags:
 
 DART 将零资源重排序问题建模为在线优化：对于每个到来的查询 $q$，先用初始评分函数 $s(q,d)=\phi(q)^\top\psi(d)$ 检索出 top-$K$ 文档，然后基于这些文档中的伪标签（top $n_{\text{pos}}$ 个作为伪正例，bottom $n_{\text{neg}}$ 个作为伪负例），通过梯度步数优化一个双线性变换矩阵 $W$，从而将评分函数升级为 $s_W(q,d)=\phi(q)^\top W\psi(d)$。优化完成后，用更新后的矩阵对检索结果重排序。为了提升稳定性和泛化性，还维护跨查询的动量状态（MetaInit 和 EMA），使得后续查询能从前面查询的适应经验中受益。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询 q 到来"] --> B["初始评分 s(q,d)=φ(q)ᵀψ(d)<br/>检索 top-K 候选"]
+    B --> C["构造伪标签<br/>top n_pos 伪正例 / bottom n_neg 伪负例"]
+    MI["跨查询动量·MetaInit<br/>Reptile 维护全局起点 W_meta"] -.初始化 W.-> D
+    subgraph OPT["在线优化双线性矩阵 W（5 步梯度）"]
+        direction TB
+        C --> D["信心加权伪标签 + 自适应边界<br/>softmax 权重聚焦高信心样本、margin 随查询难度伸缩"]
+        D --> E["优化器自适应选择<br/>预热比较 SGD vs Lion 后挑梯度规则"]
+    end
+    E -.Reptile 回写.-> MI
+    E --> F["跨查询动量·EMA<br/>滑动平均聚合各查询解、压低方差"]
+    F --> G["更新后评分 s_W(q,d)=φ(q)ᵀWψ(d) 重排序"]
+    G --> H["输出重排结果"]
+```
+
 ### 关键设计
 
 **1. 信心加权伪标签 + 自适应边界，驱动双线性评分矩阵在线优化**

@@ -40,6 +40,18 @@ tags:
 ### 整体框架
 WaDi 要解决的问题是：把一个多步扩散模型蒸馏成单步生成器时，怎样只动权重里"真正承载蒸馏信号"的那部分。它沿用 VSD（变分分数蒸馏）的三角结构——冻结的教师 $\epsilon_\psi$ 提供多步扩散的分数，一步生成器（学生）$G_{\lambda}$ 直接从噪声出图，伪模型 $\epsilon_\phi$ 实时追踪学生当前的输出分布；学生的训练梯度来自教师分数与伪模型分数之差。WaDi 没有改这套外层博弈，而是把学生和伪模型里更新权重的方式从 LoRA / 全参微调换成 LoRaD：不再对权重做加法修正，而是对权重列做低秩旋转，只调方向、不动范数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["噪声 + 文本提示"] --> G["学生：一步生成器<br/>高秩 LoRaD（rank=256）"]
+    G --> IMG["一步生成图"]
+    IMG --> TEACHER["冻结教师<br/>提供多步扩散分数"]
+    IMG --> FAKE["伪模型<br/>低秩 LoRaD（rank=32）追踪学生分布"]
+    TEACHER --> DIFF["分数差<br/>教师分数 − 伪模型分数"]
+    FAKE --> DIFF
+    DIFF -->|"VSD 梯度反传到旋转参数"| G
+```
+
 ### 关键设计
 
 **1. LoRaD：用低秩旋转只改权重方向，把范数锁死**

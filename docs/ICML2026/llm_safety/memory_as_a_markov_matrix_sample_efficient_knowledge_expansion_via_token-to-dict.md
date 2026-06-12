@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 这篇论文要解决的是：给一个预训练好的 LM 加进几个新 token（新词、新实体、跨语种），既要它们用得起来，又不能动坏原来几万个 token 之间的转移关系。它的破题方式是把整个自回归模型看成一条一阶 Markov 链——token 是状态、$p_\theta(\cdot \mid x_t)$ 就是从当前状态出发的转移概率向量。于是「学新词」被翻译成两件干净的事：在状态空间里加一个新状态，并把它表示成已有状态的稀疏组合。整条 pipeline 从输入的预训练 $\texttt{LM}_\theta$、旧词表 $\mathcal{V}$、一小批新 token $\mathcal{U}$ 和含新 token 的训练序列出发，先用 Markov 视角把「不遗忘」写成对旧转移的硬约束，再用稀疏字典假设推出每个新 token 只需 $O(s)$ 样本，最后落到一个极简实现——只把新 token 的 embedding 设为可训练、其余权重全冻结，得到的 $\texttt{LM}_{\tilde{\theta}}$ 在旧 token 上与原模型逐字节一致，在新 token 上能复现目标转移分布 $\mathbf{q}^{(u)}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：预训练 LM_θ + 旧词表 V<br/>+ 新 token U + 含新 token 训练序列"] --> B["Markov 化建模<br/>token 作状态，冻结旧转移 p(v)<br/>强制新旧间转移=0 → 零遗忘硬约束"]
+    B --> C["Token-to-Dictionary 稀疏映射<br/>新 token 表示为旧 embedding 字典稀疏组合<br/>KL 拟合目标转移 q(u)，样本数 N≥Õ(s·log²c)"]
+    C --> D["Embedding Tuning 训练<br/>仅新 token embedding 可训练、其余冻结<br/>标准 next-token 交叉熵梯度下降"]
+    D --> E["输出 LM_θ̃<br/>旧 token 逐字节一致（零遗忘）<br/>新 token 复现目标转移 q(u)"]
+```
+
 ### 关键设计
 
 **1. Markov 化的知识扩展：把「零遗忘」从经验观察升级成结构约束**

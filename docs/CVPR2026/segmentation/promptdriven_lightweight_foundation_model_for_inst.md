@@ -34,25 +34,35 @@ tags:
 
 ### 整体框架
 
-SAM FTI-FDet 想把 SAM 的通用分割能力搬到货运列车故障检测上，但 SAM 离不开人工点/框提示、又太重。整体仍是 SAM 的 encoder-decoder：输入图像（1024×1024）经 TinyViT-SAM 编码器提特征，Adaptive Feature Dispatcher 融合多尺度特征，Prompt Generator 自动生成 query prompt，Mask Decoder 结合 prompt 和图像特征输出实例掩码与 bounding box。推理时每张图预测最多 10 个实例，只取最后一层 decoder 输出，经形态学后处理得到最终 mask 和 box——全程不需要人工交互。
+SAM FTI-FDet 想把 SAM 的通用分割能力搬到货运列车故障检测上，但 SAM 离不开人工点/框提示、又太重。整体仍是 SAM 的 encoder-decoder：输入图像（1024×1024）经 TinyViT-SAM 编码器提特征，Adaptive Feature Dispatcher 融合多尺度特征，Prompt Generator 自动生成 query prompt，Mask Decoder 结合 prompt 和图像特征输出实例掩码与 bounding box。推理时每张图预测最多 10 个实例，只取最后一层 decoder 输出，经形态学后处理得到最终 mask 和 box——全程不需要人工交互。下图按数据流自上而下展开这条 pipeline，下面的关键设计也按同一顺序逐个深潜（Mask Decoder 是 SAM 原生组件，本文不改其结构，故不单列设计点，其冻结策略并入下面第 1 点）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 1024×1024"] --> B["TinyViT-SAM 编码器<br/>轻量骨干，encoder 微调 / decoder 冻结"]
+    B --> C["Adaptive Feature Dispatcher<br/>Aggregator 递归残差聚合 + Splitter 多尺度拆分"]
+    C --> D["Prompt Generator<br/>L 层 Transformer decoder 逐层精化可学习 query"]
+    D -->|sparse + dense prompt| E["Mask Decoder<br/>prompt 与图像特征 cross-attention"]
+    E --> F["端到端集合预测<br/>固定 Nq=10 实例 mask + box，免 NMS"]
+```
 
 ### 关键设计
 
-**1. Prompt Generator：让模型自己生成 prompt，彻底甩掉人工点击**
+**1. TinyViT-SAM 轻量骨干 + 冻结 decoder 的迁移策略：小数据上防过拟合**
 
-SAM 的痛点是依赖外部提示且对提示位置敏感，工业全自动场景没法用。本文初始化一组可学习 query 向量 $Q_0$（长度 $N_q$），过 $L$ 层 Transformer Decoder 逐层精化：每层先 self-attention 建模 query 间语义依赖，再 cross-attention 与图像特征交互，并用注意力 mask 抑制无关位置。最终 query 同时充当 sparse 和 dense prompt 注入 mask decoder。和 RSPrompter 的 box-based prompt 不同，query prompt 直接编码目标语义先验而非空间约束，收敛更快、精度更高（消融里比 box prompt 的 AP_mask 高 16.5 个点）。
+整条 pipeline 的入口是骨干换血加迁移策略。骨干用 MobileSAM 蒸馏出的 TinyViT 替掉原始 SAM 的 ViT-B/H，参数量和计算量都大降，满足边缘部署。迁移上最关键的发现是冻结 decoder、只微调 encoder（uf/f 配置）最好——微调 encoder 学领域特征，冻结 decoder 保住预训练的通用解码能力，在小数据集（仅 4410 张）上相当于一道强正则（全冻结掉 7.7 AP_box，全解冻掉 1.4 AP_box）。
 
 **2. Adaptive Feature Dispatcher：补偿轻量 backbone 的特征表达力**
 
-TinyViT 轻是轻，但特征表达力不够。该模块由 Feature Aggregator 和 Feature Splitter 组成：Aggregator 把 TinyViT 各层特征用 1×1 降到 32 通道，再递归残差聚合 $m_i = m_{i-1} + \text{Conv2D}(m_{i-1}) + \tilde{F}_i$ 逐层融合，最后多层卷积恢复通道得到统一特征 $F_{agg}$；Splitter 再把它拆成多分辨率分支供不同尺度任务用。递归残差这一步用很小的代价把浅层细节和深层语义叠在一起。
+TinyViT 轻是轻，但特征表达力不够，紧接编码器要把多层特征重新整合。该模块由 Feature Aggregator 和 Feature Splitter 组成：Aggregator 把 TinyViT 各层特征用 1×1 降到 32 通道，再递归残差聚合 $m_i = m_{i-1} + \text{Conv2D}(m_{i-1}) + \tilde{F}_i$ 逐层融合，最后多层卷积恢复通道得到统一特征 $F_{agg}$；Splitter 再把它拆成多分辨率分支供下游不同尺度任务用。递归残差这一步用很小的代价把浅层细节和深层语义叠在一起。
 
-**3. TinyViT-SAM 轻量骨干 + 冻结 decoder 的迁移策略：小数据上防过拟合**
+**3. Prompt Generator：让模型自己生成 prompt，彻底甩掉人工点击**
 
-骨干换成 MobileSAM 蒸馏出的 TinyViT 替掉原始 SAM 的 ViT-B/H，参数量和计算量都大降。迁移上最关键的发现是冻结 decoder、只微调 encoder（uf/f 配置）最好——微调 encoder 学领域特征，冻结 decoder 保住预训练的通用解码能力，在小数据集上相当于一道强正则（全冻结掉 7.7 AP_box，全解冻掉 1.4 AP_box）。
+这是全文的核心贡献（标题里的 "Prompt-Driven"）。SAM 的痛点是依赖外部提示且对提示位置敏感，工业全自动场景没法用。本文初始化一组可学习 query 向量 $Q_0$（长度 $N_q$），过 $L$ 层 Transformer Decoder 逐层精化：每层先 self-attention 建模 query 间语义依赖，再 cross-attention 与上一模块给出的图像特征交互。最终 query 同时充当 sparse 和 dense prompt 注入 Mask Decoder。和 RSPrompter 的 box-based prompt 不同，query prompt 直接编码目标语义先验而非空间约束，收敛更快、精度更高（消融里比 box prompt 的 AP_mask 高 16.5 个点）。
 
 **4. 端到端集合预测：固定数量 query 免去 NMS**
 
-生成 $N_q=10$ 组 prompt、每组含 $K_p=4$ 个 point embedding，直接从全局图像特征里抽任务相关信息。这种固定数量 query 的设计借了 DETR 的思路，让模型一次性吐出固定个实例，省掉 NMS 等后处理。
+Prompt Generator 一次性生成 $N_q=10$ 组 prompt、每组含 $K_p=4$ 个 point embedding，直接从全局图像特征里抽任务相关信息。这种固定数量 query 的设计借了 DETR 的思路，让模型一次性吐出固定个实例（推理时取最后一层 decoder 输出 + 形态学后处理），省掉 NMS 等后处理。$N_q$ 决定实例覆盖度（影响大），$K_p$ 影响小，消融里 $N_q=10$、$K_p=4$ 最优。
 
 ### 损失函数 / 训练策略
 - AdamW优化器，初始lr=1e-4，cosine退火+线性warmup，训练150 epochs

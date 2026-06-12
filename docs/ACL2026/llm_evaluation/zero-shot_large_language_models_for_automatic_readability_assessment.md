@@ -45,6 +45,25 @@ tags:
 
 随后，LAURAE 选择一个传统无监督 ARA 分数作为浅层特征。英语用 FKGL/ARI，阿拉伯语用 OSMAN，印地语和希腊语用 Lix，法语/俄语用改造版 Flesch Reading Ease 等。LLM 分数和公式分数都按数据集均值、标准差标准化，再用 LLM confidence `c` 加权：LLM 越自信，LLM 分数权重越高；LLM 不自信，公式分数权重增加。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["待评估文本"] --> B{"标注是否基于 CEFR"}
+    subgraph S1["尺度对齐 prompt"]
+        direction TB
+        B -->|是| C["A1–C2 映射为 1-6 整数<br/>附各等级定义"]
+        B -->|否| D["1-9 通用尺度<br/>提示考虑语法/清晰度"]
+    end
+    C --> E["LLM 生成可读性分数 + 置信度"]
+    D --> E
+    E --> F["期望值评分<br/>对数字 token 概率求期望 → 分数 + 置信度 c"]
+    G["传统可读性公式<br/>FKGL / ARI / OSMAN / Lix…"] --> H["公式分数"]
+    F --> I["按数据集均值 / 标准差标准化"]
+    H --> I
+    I --> J["LAURAE 置信度加权集成<br/>c·LLM + (1−c)·公式"]
+    J --> K["最终可读性分数"]
+```
+
 ### 关键设计
 
 **1. 与人工标注一致的可读性尺度 prompt：让 LLM 的输出空间贴近数据集 ground truth**

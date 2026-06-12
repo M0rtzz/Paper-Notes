@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 MyScholarQA（MYSQA）要解决的是"DR 报告 5 分钟才生成一份、不可能每次重问偏好"的矛盾，于是把个性化拆成一条用户全程可见、可编辑的三段流水线：先从用户挑的论文里抽出一个持久画像，再把画像和当前 query 翻成一张可勾选的 action 清单，最后让 action 驱动检索-写作并把"个性化发生在哪段文字"用颜色标出来。整条链的输入是 5 篇种子论文 + 一句 query，中间产物是可逐条改的 profile $P^*$ 和 actions $A^*$，输出是带彩色高亮、逐条 action 可追溯的多 section 报告；关键在于每一步都把"个性化"显式化成用户能干预的实体，从而让它成为可观测的实验变量。骨干 LLM 为 Claude-4 Sonnet，三步全开源并提供在线 demo。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：5 篇种子论文 D + 一句 query q"]
+    IN --> P["五维持久画像<br/>knowledge / research style / writing style / audience / positions<br/>各 5 条带引用 inference → 25 条画像 P*（可逐条编辑/禁用）"]
+    subgraph ACT["双轨 action 提案"]
+        direction TB
+        AG["A_gen：只看 q"]
+        AP["A_person：看 q + P*"]
+        AG --> MG["合并成 16 条 actions<br/>按 content / style / specificity / research ideas 分类"]
+        AP --> MG
+    end
+    P --> AP
+    IN -->|query q| AG
+    MG -->|用户勾选/编辑成 A*| R1
+    subgraph REP["彩色高亮报告合成（改造 ScholarQA）"]
+        direction TB
+        R1["按 A* 产多组 search terms<br/>Semantic Scholar 检索 + clustering"]
+        R2["逐条执行 A*，one color per action 高亮文本"]
+        R1 --> R2
+    end
+    R2 --> OUT["输出：带彩色高亮、逐条 action 可追溯的多 section 报告"]
+```
+
 ### 关键设计
 
 **1. 从论文反推五维持久画像：把"你是谁"做成跨 query 可复用的证据链**

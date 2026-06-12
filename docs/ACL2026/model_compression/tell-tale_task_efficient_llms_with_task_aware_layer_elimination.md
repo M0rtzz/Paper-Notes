@@ -47,6 +47,17 @@ TALE 的方法很朴素，但正因为朴素才适合部署。给定一个开源
 
 评估时，作者使用 LM-Eval 和 Decoder Eval 两种协议。Decoder Eval 要求模型生成结构化答案，再抽取最终答案比对 ground truth；作者认为它更接近真实生成能力，因为多选概率式 LM-Eval 可能让弱模型因选项压缩而看起来更强。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：开源 LLM M + 任务验证集 D_val + 阈值 ε<br/>初始化最优模型 M* = M"] --> B["枚举当前模型所有可删层<br/>逐个临时删除得候选模型"]
+    B --> C["任务验证准确率准则<br/>每个候选在 D_val 上算准确率 A_ℓ"]
+    C --> D["贪心迭代删层<br/>选准确率最高的层 ℓ* 永久删除并更新 M*"]
+    D -->|准确率仍在阈值内| B
+    D -->|跌破 baseline 下方 8%| E["停止搜索"]
+    E --> F["BEST / BSBA 双部署目标<br/>BEST = 轨迹中最高准确率结构<br/>BSBA = 不掉点下最多删层结构"]
+```
+
 ### 关键设计
 **1. 直接以任务验证准确率作为删层准则：让搜索目标和部署目标完全对齐**
 

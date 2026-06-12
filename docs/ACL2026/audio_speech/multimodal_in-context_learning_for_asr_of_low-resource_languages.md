@@ -45,6 +45,27 @@ tags:
 
 论文要回答的是：语音 LLM 能不能靠多模态上下文学习（MICL）去“现学”一门训练时从没见过的濒危语言，并把这种能力真正变成可用的 ASR 系统。整套工作分三步走。先做 MICL 机制分析：设计 T-ICL（纯文本）、ICL（文本+目标音频）、MICL（音频-文本对+目标音频）三种提示模式，用困惑度量化每种模态带来的边际收益。再做跨语言微调：在 143 种辅助语言（排除目标语言）上做 MICL 指令微调，看这种“学格式、不学语言”的迁移是否成立。最后落到假设选择系统：MMS 声学模型先生成 N-best 候选，语音 LLM 通过 MICL 算语言模型分数，两者联合重排选出最优转录。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["濒危语言语音（训练时未见）"] --> PROBE
+    subgraph PROBE["三种提示模态（机制分析）"]
+        direction TB
+        B["T-ICL：纯文本示例"] --> C["ICL：文本示例 + 目标音频"]
+        C --> D["MICL：音频-文本配对示例 + 目标音频"]
+    end
+    PROBE -->|困惑度量化各模态边际收益| E["跨语言指令微调（XFT）<br/>143 种辅助语言 + LoRA 只调解码器"]
+    E --> SELECT
+    subgraph SELECT["MICL 假设选择系统"]
+        direction TB
+        F["MMS 声学模型生成 10-best 候选"] --> G["语音 LLM 在 MICL 下算 LM_score"]
+        F --> H["声学分数 Acoustic_score"]
+        G --> I["联合分数重排"]
+        H --> I
+    end
+    SELECT --> J["最终转录"]
+```
+
 ### 关键设计
 
 **1. 三种提示模态：把文本、目标音频、配对示例的贡献逐一拆开测**

@@ -42,7 +42,21 @@ tags:
 
 ### 整体框架
 
-这篇论文想回答一个很实际的问题：在严格的 K-2 阅读课程约束下，到底哪种 SFT 策略能让 sub-10B 的小模型把故事写好。它不去比拼参数量，而是把同一批数据喂给三个 8B 模型（Llama-3-8B / Apertus-8B-instruct-2509 / Granite-3.3-8B-instruct），用四种不同的 SFT 设计各训一遍，再放到同一套指标下横评。训练数据来自前作：UFLI K–2 课程 129 课、每课 20 篇（GPT-4o 10 篇 + Llama-3.3-70B 10 篇），共 2,580 篇故事。评估侧固定 5 个指标——Spache 可读性、GPT-2 LM-PPL、coherence（相邻句共享 NER 数）、句法复杂度（avg MDD + avg NSC）、Detoxify toxicity，外加两种 Self-BLEU 看重复率。四种 SFT 设计里，baseline 就是标准 SFT，剩下三个是本文的关键改动。
+这篇论文想回答一个很实际的问题：在严格的 K-2 阅读课程约束下，到底哪种 SFT 策略能让 sub-10B 的小模型把故事写好。它不去比拼参数量，而是把同一批数据喂给三个 8B 模型（Llama-3-8B / Apertus-8B-instruct-2509 / Granite-3.3-8B-instruct），用四种不同的 SFT 设计各训一遍，再放到同一套指标下横评。训练数据来自前作：UFLI K–2 课程 129 课、每课 20 篇（GPT-4o 10 篇 + Llama-3.3-70B 10 篇），共 2,580 篇故事。评估侧固定 5 个指标——Spache 可读性、GPT-2 LM-PPL、连贯度（coherence，相邻句共享 NER 数）、句法复杂度（avg MDD + avg NSC）、Detoxify 毒性，外加两种 Self-BLEU 看重复率。四种 SFT 设计里，baseline 就是标准 SFT 对照，剩下三个（Rewarded SFT、Good Stories、模拟儿童错读增强）才是本文的关键改动。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["UFLI K–2 课程<br/>2,580 篇 GPT-4o / Llama-3.3-70B 故事"] --> B["三个 8B 模型 + QLoRA<br/>Llama-3 / Granite-3.3 / Apertus"]
+    B --> C["Baseline SFT<br/>标准 cross-entropy（对照，非贡献点）"]
+    B --> D["Rewarded SFT<br/>5 指标均分当 sample weight 重加权 loss"]
+    B --> E["Good Stories<br/>5 指标全达标筛 996 篇再 SFT"]
+    B --> F["模拟儿童错读增强<br/>输入端拼接错读 phoneme，target 不变"]
+    C --> G["统一评估<br/>Spache / PPL / 连贯 / 句法 / 毒性 + Self-BLEU"]
+    D --> G
+    E --> G
+    F --> G
+```
 
 ### 关键设计
 

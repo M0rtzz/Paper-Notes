@@ -49,6 +49,18 @@ $$\tilde{z}_t = \sqrt{\bar{\alpha}_t}\, x + \sqrt{1-\bar{\alpha}_t}\, \epsilon, 
 
 $$z_{t-1} = M_t^z \odot \mathcal{N}\!\big(\mu_\theta(z_t) - \Sigma_\theta(z_t) \nabla z_t,\, \Sigma_\theta(z_t)\big) + (1 - M_t^z) \odot \tilde{z}_{t-1}$$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询图像 x"] --> B["前向加噪 → z_τ<br/>(τ=60, T=200)"]
+    B --> C["分类器梯度引导 + 缩放因子<br/>三项损失反传, 乘 s 提升引导强度"]
+    C --> D["自适应双掩码<br/>梯度图取 top-k% 得 M_z, 收紧得 M_x"]
+    D --> E["掩码约束去噪<br/>掩码内梯度引导, 掩码外保留原轨迹"]
+    E --> F["单步 Tweedie 清晰图估计<br/>一步估 x_0, 经 M_x 与原图混合"]
+    F -->|"t > 0 进入下一步"| C
+    F -->|"t = 0"| G["反事实图像"]
+```
+
 ### 关键设计
 
 **1. 分类器梯度引导 + 缩放因子：把"往目标类推"的力度调到刚好**

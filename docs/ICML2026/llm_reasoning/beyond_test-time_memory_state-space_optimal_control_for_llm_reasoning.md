@@ -45,6 +45,23 @@ tags:
 
 TTC-Net 把"预测下一个 token"重新理解为一次有限时域的最优控制规划：与其从记忆里检索答案，不如先在隐空间里推演一条未来轨迹，再把这条轨迹的第一步动作当作下一 token 的表示。具体落地为一个混合架构——在预训练 Transformer 每隔 8 层 Attention 后插入一个 TTC 层。输入 token 特征经线性投影得到初始隐状态 $\boldsymbol{h}_0$，TTC 层在该状态上构建并求解一个 LQR 问题，得到最优第一步动作 $\boldsymbol{u}_1^*$，再经归一化和线性投影加回残差流。整个过程端到端可微，既能从零训练，也能作为适配器插在预训练模型上微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["残差流隐特征"] --> B["Attention 层 ×8<br/>积累上下文记忆"]
+    B --> C["线性投影得初始隐状态 h₀"]
+    subgraph TTC["TTC 层：规划未来代替回忆过去"]
+        direction TB
+        C --> D["上下文化生成 LQR 参数<br/>Aₜ,Bₜ,Qₜ,Rₜ + 时间调制"]
+        D --> E["辛迭代高效求解器<br/>并行矩阵乘代替串行求逆"]
+        E --> F["最优首步动作 u₁* = K₁* h₀"]
+    end
+    G["规划时域 T<br/>测试时可调大的计算缩放轴"] -.-> E
+    F --> H["归一化 + 零初始化投影 Wout<br/>加回残差流"]
+    H -->|交错堆叠 8:1| B
+    H --> I["下一 token 表示"]
+```
+
 ### 关键设计
 
 **1. Test-Time Control (TTC) 层：把"回忆过去"换成"规划未来"**

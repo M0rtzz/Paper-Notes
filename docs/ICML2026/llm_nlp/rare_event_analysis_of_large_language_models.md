@@ -42,21 +42,39 @@ tags:
 ### 整体框架
 把 LLM 看成产生 token 序列 $\mathbf{x}_{1:T}$ 的随机过程，研究的对象是某个标量可观测量 $\phi(\mathbf{x}_{1:T})$（本文取 ARI 自动可读性指数和 completion 的 log-probability）取极端值的概率。整条流水线分三段走：先在 $K$ 个不同温度 $\lambda_k$ 下构造一族「人为偏向尾部」的倾斜分布，用 Transition Path Sampling 配 annealing 在序列空间里各跑一条 MCMC 链把样本压到稀有区；再用 MBAR 把这些偏置链合并、反解归一化常数，把概率拉回原始分布 $p_{\mathcal{M}}$ 并给出 bootstrap 置信区间；最后对采出来的稀有 completion 做 EDA，找一个能在生成时实时算的便宜代理量。整个过程不训练模型，只对预训练 TinyStories-8M 采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Setup：LLM 视作随机过程<br/>定义标量观测量 φ = ARI / log-prob"]
+    A --> B["指数倾斜分布<br/>p ∝ e^−λφ · p_M，K 档 λ 把质量推向尾部"]
+    B --> C["TPS + annealing 采样<br/>只重采后缀，10 档 λ 逐档加偏各 4×10⁴ 步"]
+    C --> D["MBAR 合并 K 条偏置链<br/>p_M 抵消 → 反解 Z(λ) → 原分布概率 + bootstrap CI"]
+    D --> E["EDA 找便宜代理量<br/>稀有子分布里 Repeats 与 ARI 强相关"]
+```
+
 ### 关键设计
 
-**1. 指数倾斜分布 + MBAR：把多组偏置样本拼回对原分布的无偏估计**
+**1. 指数倾斜分布：把采样人为推向尾部，又保持对原分布的代表性**
 
-直接采样在尾部样本数趋零、估计方差爆炸，很多直方图 bin 干脆是 0 计数。解法是给每个 $\lambda_k$ 定义一个偏置 PMF $p_{\lambda_k}(\mathbf{x}) = Z(\lambda_k)^{-1} e^{-\lambda_k \phi(\mathbf{x})} p_{\mathcal{M}}(\mathbf{x})$，让概率质量挪到稀有区。关键在于怎么把这些被人为扭曲的样本拼回原分布：把目标期望写成混合重要性采样形式 $\bar f = \sum_k \alpha_k \mathbb{E}_{p_{\lambda_k}}[w_{\text{Mix}} f]$，混合权重
+直接采样在尾部样本数趋零、估计方差爆炸，很多直方图 bin 干脆是 0 计数。解法是给每个偏置参数 $\lambda_k$ 定义一个倾斜（tilted）PMF
 
-$$w_{\text{Mix}}(\mathbf{x}) = \frac{1}{\sum_j \alpha_j Z(\lambda_j)^{-1} e^{-\lambda_j \phi(\mathbf{x})}}$$
+$$p_{\lambda_k}(\mathbf{x}) = Z(\lambda_k)^{-1} e^{-\lambda_k \phi(\mathbf{x})} p_{\mathcal{M}}(\mathbf{x})$$
 
-里 $p_{\mathcal{M}}(\mathbf{x})$ 恰好被消掉——这意味着**不需要知道模型对完整序列的归一化概率，只要 token-level log-prob 就够**，闭源 API 也能做。$K$ 个未知的归一化常数 $Z(\lambda_j)$ 由 MBAR 的 $K$ 元自洽方程一次解出，最优权重取 $\alpha_k = N_k^{-1}$。比起直接采样只能给 bin-by-bin 的 Wilson 区间，MBAR 把所有偏置链的信息复用到一起，对全部 bin 给出全局一致估计，实测尾部相对 CI 宽度比直接采样小几个数量级。
+它属于指数族：$\lambda$ 调大就把概率质量从典型区挪向 $\phi$ 的极端区，又因为乘的是原模型 $p_{\mathcal{M}}$，采出来的样本仍「长得像」原模型的输出而非凭空乱造。本文取正、负两组 $\lambda$ 分别把链压向两条尾巴。这一步只负责定义「该往哪偏」；怎么真正从这个分布采样、怎么把概率拉回原分布 $p_{\mathcal{M}}$，分别由下面的 TPS（设计 2）和 MBAR（设计 3）解决。
 
 **2. Transition Path Sampling + annealing：用「只改尾巴」的 MCMC 在序列空间高效游走**
 
 倾斜分布有了，还得有办法从它采样。如果在每个 $\lambda_k$ 下独立重新自回归生成整条序列，接受率会随序列长度指数衰减、几乎必被拒。TPS 改成只动后缀：第 $i$ 步当前轨迹 $\mathbf{x}^{(i)}_{1:T}$，随机选一个截断位置 $\tau \in [1, T)$，保留前缀 $x_{1:\tau-1}$，只把 $x_{\tau:T}$ 用 LLM 自回归地重采一遍得到候选 $\tilde{\mathbf{x}}$，再按由 $p_{\lambda_k}$ 决定的 Metropolis-Hastings 接受率取舍，满足细致平衡。这样接受率回到 $O(1)$ 量级。annealing 解决另一个老问题：大 $\lambda$ 下初始化离目标分布太远会导致 burn-in 过长，于是把 $\lambda$ 从小到大分 10 档逐档加偏、每档 $4 \times 10^4$ 步，让链从「接近典型」平滑过渡到「极端尾部」，每个 $\lambda_k$ 起步就已接近其目标分布而不直接卡死。
 
-**3. EDA 找便宜代理量：把昂贵的目标量换成能在生成时实时算的廉价统计量**
+**3. MBAR：把多组偏置样本拼回对原分布的无偏概率估计**
+
+倾斜分布采出来的样本是「被人为扭曲过」的，必须拼回原分布 $p_{\mathcal{M}}$ 才有意义。把目标期望写成混合重要性采样（umbrella sampling）形式 $\bar f = \sum_k \alpha_k \mathbb{E}_{p_{\lambda_k}}[w_{\text{Mix}} f]$，混合权重
+
+$$w_{\text{Mix}}(\mathbf{x}) = \frac{1}{\sum_j \alpha_j Z(\lambda_j)^{-1} e^{-\lambda_j \phi(\mathbf{x})}}$$
+
+里原模型对完整序列的概率 $p_{\mathcal{M}}(\mathbf{x})$ 恰好被消掉——这意味着**不需要知道模型对完整序列的归一化概率，只要 token-level log-prob 就够**，闭源 API 也能做。$K$ 个未知的归一化常数 $Z(\lambda_j)$ 由 MBAR 的 $K$ 元自洽方程一次解出（最优混合权重取 $\alpha_k = N_k^{-1}$），再用 percentile bootstrap（重采样 100 次）给每个 bin 配 96% 置信区间。比起直接采样只能给 bin-by-bin 的 Wilson 区间，MBAR 把所有偏置链的信息复用到一起、对全部 bin 给出全局一致估计，实测尾部相对 CI 宽度比直接采样小几个数量级。
+
+**4. EDA 找便宜代理量：把昂贵的目标量换成能在生成时实时算的廉价统计量**
 
 可读性、毒性、事实性这类指标往往要看完整文本甚至外部模型才算得出来，部署时根本来不及在线过滤。思路是先用大 $\lambda$ 把样本逼到高 ARI 极端区，再画 ARI vs Log-Prob 的散点、按连续重复 token 数
 

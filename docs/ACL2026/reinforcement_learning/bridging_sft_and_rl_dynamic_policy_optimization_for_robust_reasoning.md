@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 对每个prompt生成一组k条轨迹，根据正确率将其分为Easy（全对）、Hard（全错）、Mid（部分对）三档。Easy样本跳过；Hard样本用多教师蒸馏提供低偏差监督；Mid样本用GRPO+GAL的混合目标实现低方差RL。总损失：$\mathcal{L}_{DYPO} = \mathbb{I}_\mathcal{H} \cdot \gamma \mathcal{L}_{SFT} + \mathbb{I}_\mathcal{M} \cdot (\alpha \mathcal{L}_{GRPO} + (1-\alpha) \mathcal{L}_{GAL})$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt"] --> B["分组采样 k 条轨迹<br/>二值奖励 R(τ)∈{0,1}"]
+    B --> C["动态难度分级<br/>按组内正确率路由"]
+    C -->|全对 Easy| D["跳过<br/>不贡献梯度"]
+    C -->|全错 Hard| E["多教师蒸馏<br/>随机抽 m 个教师轨迹做 SFT"]
+    C -->|部分对 Mid| F["GRPO + Group Alignment Loss<br/>正负轨迹配对的对比项"]
+    E --> G["加权总损失 L_DYPO<br/>γ·L_SFT + α·L_GRPO + (1−α)·L_GAL"]
+    F --> G
+    G --> H["策略更新"]
+```
+
 ### 关键设计
 
 **1. 动态难度分级（Dynamic Difficulty Grading）：用 rollout 正确率把样本路由到最合适的优化路径**

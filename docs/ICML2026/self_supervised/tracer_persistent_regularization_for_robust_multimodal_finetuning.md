@@ -46,6 +46,21 @@ TRACER loss = $\mathcal{L}_{\mathrm{MMCL}} + \lambda_{\mathrm{SD}} \mathcal{L}_{
 
 每个 training step：(1) student 用 MMCL gradient 更新；(2) WMA teacher 用 $\mathbf{W}_{\mathrm{Teacher}}^t = (1-\omega_t) \mathbf{W}_{\mathrm{Teacher}}^{t-1} + \omega_t \mathbf{W}_I^t$ 更新，$\omega_t = \kappa(\tau_t) / \sum_j \kappa(\tau_j)$ 是基于 Beta(0.5, 0.5) kernel 的权重；(3) teacher 给 student 反馈四种 distillation 信号。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 CLIP<br/>(冻结 text encoder)"] --> B["student：MMCL 梯度更新<br/>InfoNCE + cross-Frobenius"]
+    subgraph THEORY["Contrastive Target Matrix + 闭式解几何分解"]
+        direction TB
+        T1["线性化 MMCL → 矩阵最小二乘<br/>对比目标 Y_FT"] --> T2["几何分解：任务子空间适应<br/>+ 正交子空间保留"]
+    end
+    THEORY -.指导设计.-> B
+    B --> C["WMA teacher<br/>对整条 trajectory 加权<br/>Beta U 形 kernel 始末双锚"]
+    C --> D["多视角 distillation 损失<br/>特征 / 关系 / 跨模态 / logits 四路"]
+    D -->|反馈正则化信号| B
+    B --> E["输出：鲁棒微调 CLIP<br/>OOD 鲁棒性提升"]
+```
+
 ### 关键设计
 
 **1. Contrastive Target Matrix + 闭式解几何分解：看清 forgetting 到底发生在哪**

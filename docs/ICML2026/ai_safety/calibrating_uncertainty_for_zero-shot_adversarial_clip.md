@@ -45,6 +45,23 @@ tags:
 
 UCAT 想解决的是 CLIP 对抗微调里"只盯准确率、不管置信度"的问题：模型被攻击后既会答错，又会虚高自信。它沿用标准的 CLIP 对抗微调骨架——冻结文本编码器、只训图像编码器，输入一对干净图像 $x$ 和对应的 PGD 对抗样本 $x^a$，各自算出与文本原型的相似度 logits。关键转换是把这些 logits 重新解释成 Dirichlet 分布的浓度参数，再让对抗样本的分布去对齐干净样本的分布，从而在保持鲁棒性的同时把不确定性校准回来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["干净图像 x"] --> ENC["图像编码器（可训练）<br/>文本编码器冻结"]
+    XA["对抗样本 xᵃ（PGD 生成）"] --> ENC
+    ENC --> L["与文本原型算相似度 logits"]
+    L --> DIR["Dirichlet 重参数化<br/>logits → 浓度参数 α（保证 αₖ≥1）"]
+    DIR --> AB["α（干净分布）"]
+    DIR --> AA["αₐdᵥ（对抗分布）"]
+    AB --> CE["交叉熵 L_ce"]
+    AB --> UCR["不确定性校准正则 UCR<br/>反向 KL(Dir(αₐdᵥ)‖Dir(α))"]
+    AA --> UCR
+    CE --> LOSS["总损失 L = L_ce + λ·L_ucr"]
+    UCR --> LOSS
+    AB --> DEC["闭式不确定性分解<br/>AU 类间模糊 + EU 证据不足"]
+```
+
 ### 关键设计
 
 **1. Dirichlet 重参数化：让 CLIP logits 自带不确定性**

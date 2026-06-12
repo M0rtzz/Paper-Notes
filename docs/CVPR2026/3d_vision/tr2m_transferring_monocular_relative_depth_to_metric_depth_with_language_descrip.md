@@ -53,6 +53,22 @@ $$\hat{D}_m = \frac{1}{A \odot D_r + B}$$
 
 $\odot$ 为逐元素乘。整条链路里相对深度模型、图像编码器、文本编码器全部冻结，只训练中间的融合与解码模块（共 19M 参数）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["RGB 图像 I"] --> ENC["DINOv2 ViT-L 图像编码器（冻结）<br/>→ 图像特征 F_I"]
+    L["文本描述 L（LLaVA 生成）"] --> TENC["CLIP ViT-L/14 文本编码器（冻结）<br/>→ 文本特征 F_L"]
+    I --> DA["Depth Anything-Small（冻结）<br/>→ 相对深度 D_r"]
+    ENC --> FUSE["跨模态注意力<br/>图像自注意力 + 图像×文本交叉注意力"]
+    TENC --> FUSE
+    FUSE --> SHEAD["像素级 scale/shift 映射图<br/>ScaleHead→A，ShiftHead→B"]
+    SHEAD --> COMBINE["逐像素重缩放<br/>D̂_m = 1 / (A⊙D_r + B)"]
+    DA --> COMBINE
+    COMBINE --> OUT["度量深度 D̂_m"]
+    COMBINE -.训练监督.-> SUP1["伪度量深度 + 阈值筛选<br/>最小二乘对齐 + δ₁ 门控"]
+    COMBINE -.训练监督.-> SUP2["双层尺度导向对比<br/>图像级 + 像素级尺度对齐"]
+```
+
 ### 关键设计
 
 **1. 像素级 scale/shift 映射图：把全局单因子换成逐像素修正**

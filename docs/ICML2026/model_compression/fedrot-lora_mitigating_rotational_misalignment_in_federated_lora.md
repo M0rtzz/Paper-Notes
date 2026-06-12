@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 FedRot-LoRA 想解决的是"语义等价但表示在不同子空间里的 LoRA 因子被朴素平均时相互干涉"这件事，做法是在客户端上传前插一道"旋转对齐"工序。每个通信轮 $t$ 这样转：服务器把上一轮的全局因子 $(\bar A^{t-1}, \bar B^{t-1})$ 当参考广播下去，客户端本地训练得到 $(A_i^t, B_i^t)$，然后解一个 Procrustes 问题求出最优旋转 $R_i^{t,*}$ 把自己的子空间转到参考所在的方向（奇数轮对齐 $A$、偶数轮对齐 $B$），再用系数 $\lambda$ 在恒等矩阵和 $R_i^{t,*}$ 之间插值出"软旋转" $R_{i,\text{soft}}^t$，最后把对齐后的 $\tilde A_i^t=(R_{i,\text{soft}}^t)^\top A_i^t,\;\tilde B_i^t=B_i^t R_{i,\text{soft}}^t$ 上传聚合。整套流程不冻参数、不传残差、不做高维 SVD，只在 $r\times r$ 上多解一次旋转。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["服务器广播上一轮全局参考<br/>(Ā, B̄)"] --> B["客户端本地训练<br/>得到因子 (Aᵢ, Bᵢ)"]
+    B --> C["正交 Procrustes 对齐<br/>SVD 闭式解旋转 Rᵢ*"]
+    C -->|奇数轮对齐 A，偶数轮对齐 B（交替对齐）| D["软旋转插值<br/>R_soft = 投影((1−λ)I + λRᵢ*)"]
+    D --> E["应用旋转<br/>Ã = R_softᵀ A，B̃ = B R_soft"]
+    E --> F["上传并 factor-wise 聚合<br/>得到新全局 (Ā, B̄)"]
+    F -.下一通信轮.-> A
+```
+
 ### 关键设计
 
 **1. 正交 Procrustes 对齐：用闭式解的旋转矩阵消掉因式分解的旋转歧义**

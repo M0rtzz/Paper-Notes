@@ -41,7 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-流水线只关心 SVO 结构中的"主语名词 + 谓语动词"对：先用 SpaCy 依存解析从 Wikipedia 中筛出"主语为 human entity 且与某动词存在依存关系"的字面句子，然后并行执行**转喻生成**和**隐喻生成**两条管线，最后通过"把转喻名词短语换进精炼后的隐喻句"零成本拼出 hybrid 句。三条管线本质上都是 "i) LLM 生候选 → ii) 外部打分器选最佳 → iii) LLM 受控润色" 三段式，但打分器和温度策略截然不同。
+流水线只关心 SVO 结构中的"主语名词 + 谓语动词"对：先用 SpaCy 依存解析从 Wikipedia 中筛出"主语为 human entity 且与某动词存在依存关系"的字面句子，然后并行执行**转喻生成**和**隐喻生成**两条管线，最后通过"把转喻名词短语换进精炼后的隐喻句"零成本拼出 hybrid 句。两条生成管线本质上都是 "i) LLM 生候选 → ii) 外部打分器选最佳 → iii) LLM 受控润色" 三段式，但打分器（MLM 概率 vs sentiment）和温度策略截然不同；hybrid 不需要独立生成，是直接拼接出来的第三类变体。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["字面句（SpaCy 依存解析<br/>筛 human 主语 + 谓语动词）"] --> B
+    A --> E
+    subgraph MTY["转喻生成：contiguity-prompt 候选 + MLM 打分"]
+        direction TB
+        B["targeted question 生候选<br/>(temp=0.7)"] --> C["BERT [MASK] 打分<br/>取 argmax log p"]
+        C --> D["低温润色 (temp=0.4)"]
+    end
+    subgraph MET["隐喻生成：tone 候选 + sentiment 选词"]
+        direction TB
+        E["三种 tone 生 hyperbolic 动词<br/>(temp=0.7, top-p=0.9)"] --> F["sentiment 模型选 tone 匹配候选"]
+        F --> G["润色 (temp=0.6)"]
+    end
+    D --> H["Hybrid 拼接 + 显性化<br/>转喻名词短语塞入隐喻句主语位"]
+    G --> H
+    H --> I["MetFuse 四件套<br/>字面 / 转喻 / 隐喻 / hybrid"]
+```
 
 ### 关键设计
 

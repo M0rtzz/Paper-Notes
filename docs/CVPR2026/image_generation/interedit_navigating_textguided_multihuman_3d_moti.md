@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 条件扩散模型，Start_X参数化（直接预测干净运动而非噪声）。输入双人源运动（非规范化表示，每人含全局关节位置、速度、6D旋转、脚地接触共$d_m$维）和CLIP编码的文本编辑指令。源运动经Transformer编码器得到源嵌入，与文本嵌入通过AdaLN注入去噪器。去噪器采用对称交错Token聚合——将双人运动交叉排列为 $(x^A_1, x^B_1, x^A_2, x^B_2, ...)$ 及其角色互换版本，经Transformer后合并得到全局特征，再通过LPA分支细化短程时序模式。附加16个规划Token和6个频率控制Token参与自注意力。DDIM 50步采样 + SCFG（γ=3.5）推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A1["双人源运动"] --> B1["Transformer 源编码器"]
+    A2["文本编辑指令"] --> B2["CLIP 文本编码"]
+    B1 --> C["去噪器（AdaLN 注入）<br/>对称交错 Token 聚合 + LPA + 16 规划Token + 6 频率Token"]
+    B2 --> C
+    C --> D1["语义感知规划 Token 对齐<br/>第3层投影 → InfoNCE 拉向 TMR 教师"]
+    C --> D2["交互感知频域 Token 对齐<br/>同步/对抗分量 DCT → 频带能量回归"]
+    D1 --> E["同步无分类器引导（SCFG）<br/>文本+源同步丢弃，γ=3.5 采样"]
+    D2 --> E
+    E --> F["目标多人运动"]
+```
+
 ### 关键设计
 
 **1. 语义感知规划 Token 对齐：让模型先想清楚"该改成什么"**

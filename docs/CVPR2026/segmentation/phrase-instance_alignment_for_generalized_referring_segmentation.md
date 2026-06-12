@@ -45,6 +45,18 @@ tags:
 
 GRES 的难点在于一句话可能指向多个对象、也可能一个都不指。InstAlign 的破题方式是不再让模型对整句话直接吐一张前景 mask，而是先把图像里"可能被指代的东西"拆成一组独立实例，再让语言去逐一认领。具体地，输入一张图和一句指代表达，先用视觉编码器抽多尺度特征、BERT 编码文本 token；然后 $N$ 个可学习 object query 穿过 $K$ 层 transformer decoder，与视觉、文本特征反复交互，每个 query 最终吐出一张实例 mask $\hat{s}_i$ 和一个相关性得分 $\hat{p}_i$；训练时一个专门的对齐损失逼着每个 query 去对应表达中的某个短语；推理时把所有实例 mask 按各自的相关性得分加权融合成最终 mask，同时一个轻量分类器根据这些得分判断"到底有没有目标"。四个设计环环相扣：实例感知给了 query "各管一摊"的能力，POA 让 query 知道自己该管哪个短语，IA 把它们的输出软融合，no-target 预测器复用同一套得分判断是否无目标。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 指代表达"] --> B["视觉编码器 Swin-B 多尺度特征<br/>BERT 文本编码"]
+    B --> C["实例感知分割框架<br/>N 个 query 过 K 层 decoder<br/>各吐实例 mask + 相关性得分"]
+    C -->|训练监督| D["短语-目标对齐 POA<br/>注意力学软短语嵌入<br/>余弦损失把 query 拉向所认领短语"]
+    C --> E["实例聚合 IA<br/>按相关性得分加权融合 + PReLU 动态阈值"]
+    E --> F["最终分割 mask"]
+    C --> G["无目标预测器<br/>相关性加权全局特征 + 句子嵌入 → MLP"]
+    G --> H["判定 有 / 无目标"]
+```
+
 ### 关键设计
 
 **1. 实例感知分割框架（Instance-aware Segmentation）：先把场景拆成实例，再谈指代**

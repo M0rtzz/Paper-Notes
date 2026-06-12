@@ -42,6 +42,30 @@ tags:
 ### 整体框架
 这篇论文不提出新模型，而是搭了一个三层验证框架来拆解"cutoff 后性能下降 = 污染"这条推断：性能层先在 26 个月、8 个前沿模型上比较 LLM 生成 arXiv 推理题的 cutoff 前后准确率；干预层把同一批源论文换成 cloze 填空题、并把改写实验扩展到 LiveCodeBench 和 Wikipedia QA，只动题面、不动答案与发布时间；机制层在公开训练数据的 OLMo2-7B-Instruct 上用影响函数追踪模型回答时究竟最受哪些训练文档影响。最终产出不是一个模型，而是一组污染探针结果，把"是否污染"拆成"题面可追溯性"和"源材料是否在训练中出现"两个独立层面。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["同源材料<br/>arXiv 20,277 篇 / 26 个月"]
+    subgraph L1["同源材料的时间窗口评测"]
+        direction TB
+        B["o4-mini 生成多步推理 QA<br/>GPT-4.1 去重 + 人工检查"] --> C["8 模型 × cutoff 前后准确率<br/>结果：无系统性 decay"]
+    end
+    subgraph L2["题目构造方式作为干预变量"]
+        direction TB
+        D["固定答案与时间, 只换题面<br/>cloze / LiveCodeBench 改写 / Wiki 改写"] --> E["时间信号对照<br/>原文 cloze 有 decay, 改写后减弱或翻转"]
+    end
+    subgraph L3["影响函数追踪源文档可识别性"]
+        direction TB
+        F["OLMo2-7B 公开训练语料<br/>40 篇已知污染论文"] --> G["cloze vs LLM 题排 top-100 影响文档<br/>cloze 高命中 / 改写低命中"]
+    end
+    A --> L1
+    A --> L2
+    A --> L3
+    C --> H["结论：无 decay ≠ 无污染<br/>时间信号被题面构造强烈调制"]
+    E --> H
+    G --> H
+```
+
 ### 关键设计
 
 **1. 同源材料的时间窗口评测：先确认 LLM 生成题是否稳定地"不掉点"**

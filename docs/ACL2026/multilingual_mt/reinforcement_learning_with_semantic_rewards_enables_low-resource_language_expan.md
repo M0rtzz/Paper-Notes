@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 输入是低资源语言任务样本，例如藏汉平行句或藏语标题生成样本。模型先在 5k 低资源样本上做 cold-start SFT，得到能输出目标语言/目标格式的初始策略。随后在剩余数据上进行 GRPO：每个 prompt 采样一组候选输出，用冻结的多语句向量模型计算候选与参考的语义相似度，并叠加语言一致性奖励，最后根据组内相对奖励更新策略。输出是一个面向低资源语言增强但较少损害原有能力的模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["低资源任务样本<br/>（藏汉平行句 / 藏语标题）"] --> B["两阶段训练 · 阶段1<br/>5k 样本 cold-start SFT"]
+    B --> C["初始策略<br/>能输出目标语言 / 格式"]
+    C --> D["两阶段训练 · 阶段2 · GRPO<br/>每个 prompt 采样 8 个候选"]
+    D --> REWARD
+    subgraph REWARD["语义奖励（语义空间对齐 + 语言一致性约束）"]
+        direction TB
+        E["Embedding 语义相似度 R_sim<br/>冻结句向量模型 · 阈值 τ 截断"]
+        F["语言一致性 R_lang<br/>Unicode / 规则查混语言"]
+    end
+    REWARD --> G["组合奖励 R = 1.5·R_sim + 1.0·R_lang<br/>组内相对奖励更新策略"]
+    G -->|未收敛，继续采样| D
+    G --> H["低资源增强 + 保留通用能力的模型"]
+```
+
 ### 关键设计
 
 **1. 语义空间对齐目标：把训练信号从「复现参考 token」换成「保持参考语义」**

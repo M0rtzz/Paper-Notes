@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一个被 $\epsilon$ 比例强对抗污染的样本集 $\{(x_i,y_i)\}_{i=1}^N$，$x_i\sim\mathcal{N}(0,\mathbf I_d)$，未知索引向量 $\beta^\star$，$\|\beta^\star\|_2=1$；输出：满足 $\|\hat\beta-\beta^\star\|_2=O(\sigma\sqrt\epsilon)$ 的单位向量。算法 1 把样本随机切成 $P+1$ 个等大桶，先用 LRSI 做谱初始化 ($\beta_0\leftarrow\text{LRSI}(N_1,\epsilon)$) 落入凸盆，再用 LRGD 做鲁棒梯度下降 ($\beta_P\leftarrow\text{LRGD}(N_{2..P+1},\beta_0,\epsilon,\alpha,\gamma)$) 把误差从 $O(\epsilon^{1/4})$ 压到 $O(\sqrt\epsilon)$，最后归一化输出。
+输入：一个被 $\epsilon$ 比例强对抗污染的样本集 $\{(x_i,y_i)\}_{i=1}^N$，$x_i\sim\mathcal{N}(0,\mathbf I_d)$，未知索引向量 $\beta^\star$，$\|\beta^\star\|_2=1$；输出：满足 $\|\hat\beta-\beta^\star\|_2=O(\sigma\sqrt\epsilon)$ 的单位向量。算法 1 把样本随机切成 $P+1$ 个等大桶，先用 LRSI 做谱初始化 ($\beta_0\leftarrow\text{LRSI}(N_1,\epsilon)$) 落入凸盆，再用 LRGD 做鲁棒梯度下降 ($\beta_P\leftarrow\text{LRGD}(N_{2..P+1},\beta_0,\epsilon,\alpha,\gamma)$) 把误差从 $O(\epsilon^{1/4})$ 压到 $O(\sqrt\epsilon)$，最后归一化输出。整张算法的骨架就是「凸盆存在性这一结构性保证」托起「谱初始化进入凸盆 → 鲁棒梯度下降在凸盆内细化」的两阶段流程：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["污染样本集<br/>重尾噪声 + ε 比例强对抗污染"] --> B["随机切成 P+1 个等大样本桶<br/>(sample splitting)"]
+    C["凸盆存在性<br/>一维高斯积分判据 → β* 附近<br/>维度无关、常半径凸盆"]
+    C -. 保证落点与强凸 .-> D
+    B --> D["LRSI 谱初始化<br/>YX 二阶矩 + 鲁棒 1-ePCA<br/>→ β0 落入凸盆"]
+    D -->|谱方法误差卡在 O(ε^1/4)| E["LRGD 鲁棒梯度下降<br/>鲁棒均值估计梯度 + 独立样本桶<br/>迭代 P=O(1) 步"]
+    E --> F["归一化输出 βP/‖βP‖<br/>最终误差 O(σ√ε)"]
+```
 
 ### 关键设计
 

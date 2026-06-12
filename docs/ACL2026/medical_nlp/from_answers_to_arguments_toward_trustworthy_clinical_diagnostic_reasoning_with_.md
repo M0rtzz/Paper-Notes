@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 CGCL 把“评估”和“训练”两件事打通：评估侧是 T-Eval——一个基于 Toulmin 论证模型、直接量化推理质量的框架；训练侧是一条三阶段的目标条件离线模仿学习管线——用冻结的策略模型生成候选推理轨迹，让 T-Eval 给它们打分挑出最优，再把最优轨迹 SFT 蒸馏进目标模型。整条流程不碰 RL，却想达到 RL 级别的推理质量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["输入：患者病例 P"] --> TM["Toulmin 论证实例化<br/>A = {D, R, W, B, Q, Y}"]
+    TM --> GEN["冻结策略模型生成候选推理步"]
+    GEN --> TEVAL["T-Eval 推理评估框架<br/>按 Toulmin 组件完整性打分"]
+    TEVAL --> SEL["选最优候选 → 融合成连贯轨迹 C^(k)"]
+    SEL --> CUR
+    subgraph CUR["三阶段课程目标条件学习（SFT 蒸馏，θ^(k) 从 θ^(k−1) 初始化）"]
+        direction TB
+        S1["Stage 1 事实收集<br/>C^(1) = {D, R}"] --> S2["Stage 2 假设检验<br/>C^(2) = C^(1) ∪ {W, B}"]
+        S2 --> S3["Stage 3 综合结论<br/>C^(3) = C^(2) ∪ {Q, Y}<br/>含证据驱动的诊断修正机制 Δ"]
+    end
+    CUR --> OUT["输出：可信诊断论证（完整 Toulmin 结构）"]
+```
+
 ### 关键设计
 
 **1. T-Eval 推理评估框架：不看答案对不对，而看论证结构完不完整**

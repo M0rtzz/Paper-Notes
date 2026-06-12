@@ -43,6 +43,20 @@ PhyScene3D 把 3D 桌面场景生成重塑成"人类构造式"的层次化序列
 ### 整体框架
 PhyScene3D 要解决的是：给一句自然语言指令，生成一桌没有穿插、不悬浮、能直接丢进物理仿真器的桌面场景，而且物理质量要超过本身就很脏的人工标注训练集。它把这件事拆成"先让 VLM 学会像人一样有顺序地摆，再用可微物理引擎反过来纠正 VLM"两层。具体地，输入指令 $\mathcal{I}$，输出场景 $\mathcal{S}=\{e_i\}_{i=1}^N$，每个实体 $e_i=(c_i,\mathbf{p}_i,\mathbf{s}_i,\theta_i)$ 被重参数化成一个 6 维的 3D AABB $\mathbf{b}_i=[x_{\min},x_{\max},\dots,z_{\max}]\in\mathbb{R}^6$，让位置、尺寸和相对关系都落在同一种可直接度量空间占用的表示里。骨干是 Qwen-3 VL 8B，训练走两阶段：先在带层次场景图标注的 MesaTask-CTRC 数据上做全参 SFT，让模型学会按 CTRC 的锚点序列自回归生成；再进入 PADA 阶段，用 LoRA(r=16)+GRPO，每条训练 prompt 先用 SFT 推理出 $\mathcal{S}_{sft}$，再用测试时优化(TTO)把它投影到物理可行流形得到伪标签锚点 $\mathcal{S}^*_{anchor}$，与 RL 探索项联合训练。推理时只剩 VLM 自回归吐出 AABB 序列，不再需要外部求解器或后处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["自然语言指令"] --> CTRC["CTRC 认知拓扑推理链<br/>场景图线性化为自底向上 AABB 锚点序列"]
+    CTRC --> SFT["全参 SFT（Qwen-3 VL 8B）<br/>自回归生成草稿 S_sft：语义对、坐标可能穿插"]
+    SFT --> TTO
+    subgraph PADA["PADA 物理感知去噪对齐"]
+        direction TB
+        TTO["可微 SDF 引擎 + 层次约束 TTO<br/>把 S_sft 投影到物理可行流形"] --> Anchor["伪标签锚点 S*<br/>物理正确 + 语义忠实"]
+        Anchor --> GRPO["语义锚定 GRPO<br/>碰撞 advantage + 锚点 CE 双目标"]
+    end
+    GRPO --> OUT["推理：策略自回归吐 AABB 序列<br/>无需外部求解器"]
+```
+
 ### 关键设计
 
 **1. Cognitive Topological Reasoning Chain (CTRC)：把"先放容器再放内容"的顺序硬编码进生成过程**

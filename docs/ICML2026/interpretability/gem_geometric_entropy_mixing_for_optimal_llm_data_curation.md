@@ -43,6 +43,23 @@ GEM 把 LLM 预训练数据划分问题重写成超球面上的 vMF 混合 + 平
 ### 整体框架
 GEM 要解决的是"把语料分成语义桶"这一步——它不学 mixing 权重，而是为 DoReMi/RegMix 这类算法提供更好的输入分桶。它的做法是把欧氏聚类换成超球面上的 vMF 混合，再叠一个平衡正则压住长尾塌缩，最后蒸馏成线性分类器上线。整条流水线分两段：**Teacher 阶段**在采样得到的 seed 语料 $\mathcal{X}_{seed}$ 上跑 vMF 混合聚类，MM 迭代地更新 Riemannian 参数 $(\mu_k,\kappa_k)$ 和软分配 $\gamma_{ik}$ 得到 $K$ 个方向簇，并用 Geometric Influence Score (GIS) 在每个簇里挑代表样本让 LLM 起可读的 taxonomy 名字；**Student 阶段**用 GIS 选出的高置信、按簇平衡的 pseudo-label 蒸馏一个轻量 FastText 分类器，把全量语料打标签降到线性时间，产出的分桶即可直接喂给任意 mixing 算法。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["全量语料"] --> B["采样 seed 语料 X_seed"]
+    subgraph TEACHER["Teacher 阶段：超球面几何聚类"]
+        direction TB
+        C["超球面 vMF 混合<br/>+ 经验质量平衡正则"] --> D["MM 推断<br/>E步 mirror ascent / M步 vMF 闭式"]
+        D --> E["K 个方向均衡语义簇"]
+    end
+    B --> C
+    E --> F["GIS 选样<br/>高置信·按簇均衡代表样本"]
+    F --> G["LLM 起可读 taxonomy 名"]
+    F --> H["FastText 线性分类器<br/>Teacher→Student 蒸馏"]
+    H --> I["全量语料线性时间打标分桶"]
+    I --> J["喂给 DoReMi / RegMix 等 mixing 框架"]
+```
+
 ### 关键设计
 
 **1. 超球面 vMF 混合 + 经验质量平衡正则：让度量贴合 cosine，再把塌缩拆出来单独压**

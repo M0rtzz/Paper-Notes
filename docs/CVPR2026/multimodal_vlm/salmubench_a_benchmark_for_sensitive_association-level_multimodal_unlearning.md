@@ -34,6 +34,32 @@ CLIP 等视觉语言模型在海量网络数据上训练，可能无意间记忆
 ### 整体框架
 SALMUBench 不是又一个遗忘算法，而是一整套用来客观判断"遗忘到底成没成"的评估基础设施。它要回答的核心问题是：当我们要求 CLIP 忘掉"某张脸 ↔ 某个电话号码"这条敏感关联时，怎么确认它真的忘了，又没有连带擦掉不该忘的知识？为此论文搭了三层东西——先合成一个 60K 规模、人物与敏感属性一一对应的数据集，再从零训练出一对"见过敏感数据"和"没见过"的 CLIP 作为对照，最后用一套带结构化 holdout 的协议去同时量化遗忘效力和附带损害。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["合成数据集 SALMU（5 阶段流水线）"]
+        direction TB
+        A1["SFHQ 锚定人脸<br/>选 1000 个身份锚点"] --> A2["IP-Adapter 身份保持生成<br/>每人约 100 张多样图像"]
+        A2 --> A3["CLIP 过滤 + 人口统计校验<br/>收敛出 774 个连贯身份"]
+        A3 --> A4["分配虚构 PII<br/>姓名/电话/邮箱/IBAN 全局唯一"]
+        A4 --> A5["Gemma3-12B 改写标注<br/>5 种语言风格"]
+    end
+    DATA --> B["≈60K 图文对<br/>retain set(400M 真实) + sensitive set(60K 敏感)"]
+    B --> C1["Clean 模型<br/>仅 retain 训练 = 金标准"]
+    B --> C2["Compromised 模型<br/>retain+sensitive = 遗忘起点"]
+    C2 --> D["遗忘算法<br/>目标：把 Compromised 拉回 Clean"]
+    C1 -.参照.-> D
+    D --> E
+    subgraph E["结构化 holdout 评估协议"]
+        direction TB
+        E1["forget set<br/>遗忘效力：RetFail↓ / AssocStr / ACS"]
+        E2["holdout_identity<br/>身份间附带损害"]
+        E3["holdout_association<br/>身份内附带损害"]
+        E4["retain set<br/>效用保持：GenKnow↑"]
+    end
+    E --> F["诊断三种失败模式<br/>灾难性破坏 / 过度泛化遗忘 / 无效遗忘"]
+```
+
 ### 关键设计
 
 **1. 合成数据集 SALMU：用可控的虚构身份替代真实隐私**

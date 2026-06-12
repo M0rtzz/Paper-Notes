@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 PRA 要解决的是医学这类知识密集型任务里"没有局部可验证 axiom、又不能事后才纠错"的难题，做法是把奖励从被动打分器升级成一个在线介入生成的 agent。系统有三个组件协同：冻结的推理策略 $\pi$、过程奖励 agent $\mu_\phi$（一个 Qwen3-4B）、稠密检索器 $\rho$（MedCPT）。给定问题 $q$ 和知识库 $\mathcal{D}$，beam search 维护宽度为 $B$ 的部分轨迹集合 $\{\tau_t^{(j)}\}_{j=1}^B$；每一步先由 $\pi$ 对每条轨迹采样 $b$ 个候选下一步（共 $B\times b$ 个新轨迹），再由 $\mu_\phi$ 的 action readout 判断每条要不要检索——要就调 $\rho$ 取回 $D_t$，不要就置 $D_t=\varnothing$——然后 reward readout 在 $(q,\tau_t,D_t)$ 条件下给该步打分 $\hat r_t\in[0,1]$，按累积奖励 $R(\tau_t^{(j)})=\sum_{i=1}^t\hat r_i^{(j)}$ 取 top-$B$ 保留、其余剪掉；全部轨迹生成结束后取累积奖励最高的一条作为答案。整个流程里 policy 看到的输入和原始 CoT 完全一样，检索和打分都外化在 reward agent 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TRAIN["margin shift 自动标注（离线训练）"]
+        direction TB
+        M1["teacher 对每个部分轨迹<br/>带 / 不带检索各评一次"] --> M2["margin shift Δm 定 search 标签<br/>带检索判定定 reasoning 标签"]
+        M2 --> M3["微调 Qwen3-4B<br/>得双 readout 奖励 agent"]
+    end
+    Q["问题 q + 知识库 D"] --> S1
+    M3 -.训练得到.-> S1
+    subgraph BS["PRA-guided beam search（在线·宽度 B=4）"]
+        direction TB
+        S1["冻结策略 π<br/>每条轨迹采 b=16 个候选步"] --> S2["action readout<br/>判定该步是否检索"]
+        S2 -->|要检索| S3["检索器 ρ(MedCPT) 取回证据"]
+        S2 -->|不检索| S4["不取证据"]
+        S3 --> S5["reward readout<br/>给该步打分 r∈[0,1]"]
+        S4 --> S5
+        S5 --> S6["按累积奖励 R 取 top-B 剪枝"]
+        S6 -->|未生成完| S1
+    end
+    S6 -->|全部结束| OUT["取累积奖励最高轨迹输出"]
+```
+
 ### 关键设计
 
 **1. 双 readout：让奖励 agent 同时输出"要不要检索"和"这一步对不对"**

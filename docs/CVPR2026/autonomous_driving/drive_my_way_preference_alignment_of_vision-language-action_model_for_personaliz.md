@@ -45,7 +45,31 @@ DMW 的核心思想是同时解决**长期偏好alignment**和**短期指令adap
 
 ### 整体框架
 
-DMW 以 SimLingo（基于 InternVL2-1B）为 VLA backbone，输入包括前视相机图像、导航目标、用户 profile 和语言指令，输出个性化驾驶动作（油门/刹车/转向）。
+DMW 以 SimLingo（基于 InternVL2-1B）为 VLA backbone，输入包括前视相机图像、导航目标、用户 profile 和语言指令，输出个性化驾驶动作（油门/刹车/转向）。整条 pipeline 分两步：先用「个性化驾驶数据集（PDD）」里的真人数据，通过对比学习把 profile 和行为对齐成「用户嵌入」注入策略，建模长期习惯；再让 VLA backbone 预测安全的基础动作、由残差解码器叠加「个性残差」，最后用「风格感知奖励」驱动 GRPO 强化微调，把短期语言指令体现在残差上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["个性化驾驶数据集（PDD）<br/>30 名真人驾驶 + 结构化问卷 profile"]
+    IMG["前视图像 + 导航目标 + 语言指令"]
+    subgraph PREF["长期偏好学习与对齐"]
+        direction TB
+        P["profile 编码器<br/>DeBERTaV3 + 投影头"]
+        B["行为编码器<br/>时序编码 + 多头自注意力"]
+        P -.->|InfoNCE 对比对齐| Z["用户嵌入"]
+        B -.-> Z
+    end
+    DATA --> PREF
+    Z --> VLA["VLA backbone（SimLingo / InternVL2-1B）"]
+    IMG --> VLA
+    VLA --> BASE["基础动作<br/>路径点 → 速度/转向"]
+    VLA --> RES["残差解码器<br/>残差 query token → 速度/转向残差"]
+    BASE --> SUM["最终动作 = 基础动作 + 个性残差<br/>经 PID 控制器"]
+    RES --> SUM
+    REWARD["风格感知奖励适配<br/>语言指令 → 安全/效率/舒适权重"] --> GRPO["强化微调实现个性化（GRPO）<br/>每输入采样 4 个响应"]
+    SUM --> GRPO
+    GRPO -.更新残差解码器.-> RES
+```
 
 ### 关键设计
 

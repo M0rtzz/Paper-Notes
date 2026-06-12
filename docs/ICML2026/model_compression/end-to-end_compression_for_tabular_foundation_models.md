@@ -54,6 +54,21 @@ $$\arg\min_{\theta,\phi}\;\mathbb{E}_{(D^{\text{train}},D^{\text{test}})\sim p(D
 
 预训练 80k 步合成数据 + 11k 步真实数据，序列长度课程从 1k 渐进到 60k 行。压缩率 $r=K/N$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练表 D_train（N×(M+1)）<br/>百万行时按 chunk-and-stitch 切块、各块压缩后拼接"] --> B
+    subgraph CMP["1. Dummy-row 压缩器 g_φ（多率训练，压缩率 r=K/N 可调）"]
+        direction TB
+        B["拼接 K 个 dummy 行<br/>目标列用 placeholder mask 屏蔽"] --> C["行列 2D 双向注意力<br/>dummy 行从 N 行吸取 prototype"]
+        C --> D["仅保留 K 个 dummy 行潜表示<br/>D_mini-train（K×(M+1)×L）"]
+    end
+    D --> E["MLP 桥接（两层残差）"]
+    E --> F["预测器 f_θ<br/>拼测试批 embedding 做 2D 注意力"]
+    F --> G["测试点类别分数 y_test"]
+    G -.->|"2. 端到端联合元学习：损失回传同时更新 φ 与 θ"| CMP
+```
+
 ### 关键设计
 
 **1. Dummy-row attention：把训练表压成一把可微的"学习型 query"**

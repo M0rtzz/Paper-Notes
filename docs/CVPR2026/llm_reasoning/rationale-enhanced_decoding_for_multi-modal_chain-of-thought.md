@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 标准多模态 CoT 是两步：(1) 给图像 $x$ 和问题 $q$，生成推理依据 rationale $r$；(2) 给 $x, r, q$，生成最终答案。RED 只改第 (2) 步的**解码策略**——不动模型参数、不改 rationale 生成方式，因此能即插即用地接在任何 rationale 生成方法后面。它要治的痛点是：直接用 $p(y|x,r,q)$ 解码时，模型常常**忽略 rationale**、退回去只看图像（甚至 CoT 反而掉点，见实验表）。RED 的思路是把"该用 rationale"这件事写成一个带理论保证的解码目标，最后落成一行 logit 加权。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 x + 问题 q"] --> B["生成 rationale r<br/>(标准 CoT 第一步，不改)"]
+    A --> C["图像条件路<br/>logits p(y|x,q)"]
+    B --> D["rationale 条件路<br/>logits p(y|r,q)"]
+    C --> E["power-of-experts 合成<br/>log p(y|x,q) + λ·log p(y|r,q)"]
+    D --> E
+    E --> F["softmax → 选下一个答案 token"]
+```
+
+> 这张图画的是 RED 的解码数据流（KL 约束奖励最大化的闭式解，对应下方关键设计 1→2→3）：图像条件路与 rationale 条件路各跑一次前向，在 logit 层按 power-of-experts 合成后 softmax 出答案 token。
+
 ### 关键设计
 
 **1. 把 CoT 解码写成 KL 约束的奖励最大化**

@@ -40,7 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文包含两个核心产物。第一个是 CASTER-Bench：1,485 个长视频 UGC item，覆盖 30 个主要内容类别，每个 item 包含视频帧、封面、标题、标签、分类、ASR transcript 等多模态输入，并由 10 名专业内容运营专家按 Production Quality、Perceived Value、Information Utility、Narrative Excellence 四个维度标注。第二个是 MEDEA：一个多模态评估框架，先从社区评论挖掘 Social-CoT 训练数据，再用 SFT 学习社会推理格式，最后通过 GRPO 和社会对齐奖励优化推理过程。
+论文包含两个核心产物。第一个是 CASTER-Bench：1,485 个长视频 UGC item，覆盖 30 个主要内容类别，每个 item 包含视频帧、封面、标题、标签、分类、ASR transcript 等多模态输入，并由 10 名专业内容运营专家按 Production Quality、Perceived Value、Information Utility、Narrative Excellence 四个维度标注。第二个是 MEDEA：一个多模态评估框架，先从社区评论挖掘 Social-CoT 训练数据，再用 SFT 学习社会推理格式，最后通过 GRPO 和社会对齐奖励优化推理过程。整条链路自上而下依次落在三个关键设计上——先由 CASTER-Bench 提供专家真值，再从评论构造可监督的社会推理路径，最后用过程监督 RL 把模型训到贴近真实社区判断。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["UGC item 多模态输入<br/>封面 + 关键帧 + 标题 + 标签 + 分类 + ASR"]
+    subgraph TASK["CASTER 任务与 CASTER-Bench"]
+        direction TB
+        BENCH["1485 个长视频 item<br/>10 名专家四维标注 → High/Low 真值"]
+    end
+    subgraph SCOT["Social-CoT 构造与 Skellam 共识聚合"]
+        direction TB
+        C1["取 top-50 点赞评论"] --> C2["教师模型筛 15-20 条反应锚点"]
+        C2 --> C3["Gemini 实例化多样 viewer persona"]
+        C3 --> C4["Skellam 共识 z≥1.5 标 High/Low"]
+    end
+    subgraph TRAIN["过程监督 RL 与 Social Alignment Reward"]
+        direction TB
+        T1["SFT：54k 伪标 CoT + 3k 专家样本<br/>学社会推理格式"]
+        T1 --> T2["GRPO 复合奖励<br/>r_format + r_label + r_diversity + r_social"]
+    end
+    IN --> TASK
+    TASK --> SCOT
+    SCOT --> TRAIN
+    TRAIN --> OUT["MEDEA 输出<br/>先生成 Social-CoT 再判 High / Low"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,21 @@ tags:
 
 SlideAgent 分为两个阶段运作：(1) **知识构建阶段** — 自顶向下地构建层次化、与查询无关的知识库 $\mathcal{K}=\{\mathcal{K}_g, \mathcal{K}_p, \mathcal{K}_e\}$；(2) **推理阶段** — 根据用户查询分类并选择性激活对应层级的 agent，进行多级检索和答案合成。整个框架是模型无关的，可搭配 GPT-4o 或 InternVL3-8B 等不同骨干模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DOC["多页视觉文档"] --> KB
+    subgraph KB["三级知识构建（与查询无关，离线建库）"]
+        direction TB
+        G["全局 agent：采样前三页<br/>生成文档摘要与主题"] --> P["页面 agent：逐页处理<br/>条件化全局 + 上一页知识"]
+        P --> E["元素 agent：布局解析<br/>拆出文本块/图表/图标并标语义角色"]
+    end
+    Q["用户查询"] --> CLS["查询分类与选择性激活<br/>四类问题点亮对应层级 agent"]
+    KB --> CLS
+    CLS --> SUB["子查询生成与多级检索<br/>抽实体扩子查询 → 页面 + 元素两层检索 top-k"]
+    SUB --> ANS["答案合成"]
+```
+
 ### 关键设计
 
 **1. 三级知识构建：把文档拆成全局-页面-元素三层，各派一个专用 agent 离线建库**

@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 KBQA-R1 把"一次性生成完整逻辑形式"换成"在 KB 上一步步决策"。推理时它是个 ReAct 风格的多轮智能体：LLM 先在 `<think>` 里推理，再在 `<action>` 里发出一个原子动作（`Find_relation`, `Merge`, `Order`, `Compare`, `Time_constraint`, `Count`），系统把动作翻成 S-Expression 片段转 SPARQL 在 Freebase 上执行，再把检索到的实体或诊断信息写回 `<information>` 供下一轮参考，循环直到模型给出 `<answer>`；其间每个 `Find_relation` 都要先过一道 schema 校验，确保提出的 relation 真实存在。训练时分两步给这个策略上分——先用 Referenced Rejection Sampling 合成高质量轨迹做 SFT 冷启动，再用 GRPO 基于 F1 结果奖励做策略优化，整条 pipeline 落在 Llama-3.1-8B-Instruct 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ENV["类型化原子动作空间 + RRCG schema 校验"]
+        direction TB
+        Q["问题"] --> T["LLM 策略 think→action<br/>6 个原子动作"]
+        T --> G["RRCG 三档校验<br/>自动执行 / 提示候选 / 拒绝重选"]
+        G --> X["S-Expression→SPARQL<br/>在 Freebase 执行"]
+        X -->|KB 反馈写回 information| T
+        T -->|收敛| ANS["输出 answer 答案集"]
+    end
+    ENV --> RRS["RRS 冷启动<br/>金标动作骨架引导生成轨迹 → SFT"]
+    RRS --> GRPO["GRPO + 结果守门复合奖励<br/>F1 结果奖励优化策略"]
+    GRPO -->|更新策略权重| T
+```
+
 ### 关键设计
 
 **1. 类型化原子动作空间 + RRCG schema 校验：把"一次写对长查询"拆成"每步可校验的小决策"**

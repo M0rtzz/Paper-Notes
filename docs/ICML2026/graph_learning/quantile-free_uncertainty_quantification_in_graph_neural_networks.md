@@ -43,6 +43,22 @@ QpiGNN 提出"无需分位输入、无需后处理"的 GNN 节点级预测区间
 ### 整体框架
 QpiGNN 要解决的是 GNN 节点回归既要给点估计、又要给一个紧致且校准的预测区间，而且不能依赖分位输入或事后 conformal 校准。它的做法是把"预测"和"不确定性"在架构和监督两端同时拆开：一个共享 GNN 编码器先算节点嵌入 $\mathbf H=\text{GNN}(\mathbf X,\mathcal E)$，再分接两个线性头——预测头出区间中心 $\hat y$、半宽头出半宽 $\hat d$，区间即 $[\hat y_v-\hat d_v,\ \hat y_v+\hat d_v]$；训练时直接用标签去优化"覆盖率贴近目标 + 区间尽量窄"的联合损失。推理一次前向就拿到校准区间，不需要 calibration set，也不需要后处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["节点特征 X + 边集 E"] --> B
+    subgraph DH["双头 GNN"]
+        direction TB
+        B["共享 GNN 编码器<br/>节点嵌入 H"] --> C["预测头<br/>区间中心 ŷ"]
+        B --> D["半宽头 Softplus<br/>半宽 d̂ > 0"]
+    end
+    C --> E["预测区间 [ŷ − d̂, ŷ + d̂]"]
+    D --> E
+    E --> F["Quantile-free 联合损失<br/>覆盖率项 + 宽度项"]
+```
+
+> 图依赖下的覆盖率保证（设计 3）是对上面联合损失的理论支撑，不是数据流上的一道处理阶段，故不单列为图中节点。
+
 ### 关键设计
 
 **1. 双头 GNN：把预测和不确定性从表征层就拆开**

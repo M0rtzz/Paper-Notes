@@ -46,7 +46,19 @@ tags:
 
 ### 整体框架
 
-视觉 jailbreak 攻击在 source model 上几乎 100% 成功，却几乎无法迁移到别的 MLLM，尤其是闭源模型。FORCE 先做诊断、再开方子。诊断的核心结论是：迁移失败是因为攻击被困在一个极其尖锐（high-sharpness）的 loss 区域——在输入空间仅 0.03 像素的扰动就能把 loss 从约 0 抬到 0.28 以上、攻击随即失效，在权重空间仅 0.0002 的扰动（模拟换模型）就能把攻击推出 feasible region。进一步拆解发现两个制造尖锐区域的元凶：浅层特征过度依赖 model-specific 表示，以及优化后期攻击越来越依赖高频非语义捷径。对症下药，FORCE 用两个组件——layer-aware regularization 拓宽浅层的可行域、spectral rescaling 压住高频成分——把攻击引导进更平坦的 loss landscape，从而显著提升跨模型迁移性。
+视觉 jailbreak 攻击在 source model 上几乎 100% 成功，却几乎无法迁移到别的 MLLM，尤其是闭源模型。FORCE 先做诊断、再开方子。诊断的核心结论是：迁移失败是因为攻击被困在一个极其尖锐（high-sharpness）的 loss 区域——在输入空间仅 0.03 像素的扰动就能把 loss 从约 0 抬到 0.28 以上、攻击随即失效，在权重空间仅 0.0002 的扰动（模拟换模型）就能把攻击推出可行域（feasible region）。进一步拆解发现两个制造尖锐区域的元凶：浅层特征过度依赖 model-specific 表示，以及优化后期攻击越来越依赖高频非语义捷径。对症下药，FORCE 用两个组件——layer-aware regularization 拓宽浅层的可行域、spectral rescaling 压住高频成分——整合进标准 PGD 的每一步迭代，把攻击引导进更平坦的 loss landscape，从而显著提升跨模型迁移性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：干净图像 + 扰动 δ、文本指令、恶意目标 y"] --> STEP["FORCE-PGD 迭代（每步）"]
+    STEP --> R["Layer-Aware Regularization<br/>邻域采 N 参考点，深度递减 λ_l 撑宽浅层可行域"]
+    STEP --> S["Spectral Rescaling<br/>对 δ 做 FFT→10 频带，压高频非语义成分→IFFT"]
+    R --> U["合并损失反传 + PGD 更新 δ<br/>(jailbreak 损失 + 层级正则 ℓ_reg)"]
+    S --> U
+    U -->|未成功则继续迭代| STEP
+    U -->|攻击成功、落点更平坦| OUT["可跨模型迁移的视觉 jailbreak 攻击"]
+```
 
 ### 关键设计
 

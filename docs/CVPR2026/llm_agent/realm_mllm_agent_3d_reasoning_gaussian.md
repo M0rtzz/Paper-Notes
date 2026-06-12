@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 REALM 要解决的是一个绕不开的错配：会推理的 MLLM 只懂 2D 图片，而 3D 分割方法只会按关键词匹配、不会推理。它的破局思路是让 3DGS 充当"视角工厂"——把 3D 场景渲染成一张张照片级的图给 MLLM 看，让 MLLM 在 2D 上完成推理，再把答案稳定地抬回 3D。整条 pipeline 由三件事串起来：先离线为每个 3D Gaussian 学一个实例特征，建好一座 2D↔3D 的桥；推理时用一个叫 LMSeg 的封装，把"一张图 + 一句查询"交给 MLLM 拿到 bbox/类别/解释，再经 SAM 转成 2D mask 并查到目标实例 ID；最后用全局到局部的两阶段定位（GLSpaG），先在多个大视角投票出目标是谁、粗分割出来，再凑到目标跟前用特写视角把 mask 边界磨精细。拿到精确的 3D mask 后，物体移除、替换、风格迁移都只是对这组 Gaussian 的后续操作。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["3DGS 场景 + 隐式查询"] --> B["3D 特征场与实例标识<br/>SAM 抠 mask→跨视角关联 ID→每个 Gaussian 学实例特征建桥"]
+    B --> C["全局空间定位 GLSpaG-Global<br/>K-means 选代表视角→8 个全局视角各跑 LMSeg→多数投票定目标→粗 mask"]
+    C --> D["局部空间定位与精细化 GLSpaG-Local<br/>含目标特写视角跑 LMSeg→可微渲染 L1 对齐迭代 50 步精修边界"]
+    D -->|"精确 3D mask"| E["下游编辑<br/>物体移除 / 替换 / 风格迁移"]
+```
+
 ### 关键设计
 
 **1. 3D 特征场与实例标识：把"2D 上选中的东西"翻译成"3D 里的哪堆 Gaussian"**

@@ -41,6 +41,22 @@ tags:
 ### 整体框架
 VGGDrive要解决的是一个很具体的缺口：VLM（这里用Qwen2.5-VL-7B）有丰富的世界知识和语言推理，但天生不会做跨视图的3D几何建模，而开车恰恰最需要这种空间感。它的思路是借力一个已经训好的3D视觉基础模型VGGT，把后者的几何特征"喂"进VLM。整条pipeline这样转：多视图环视图像（nuScenes用6个相机、NAVSIM用3个前视）先进VGGT，一次性得到带相机信息的3D几何特征 $V^{3d}$；同样这批图像也进VLM被编码成2D视觉token；接下来在VLM每一层decoder里，都用一个跨视图3D几何赋能器（CVGE）让2D token去"问"3D特征、把对自己有用的几何信息拉回来并残差回写；最终VLM以一个几何上更扎实的视觉表示输出文本推理或轨迹。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["多视图环视图像<br/>(nuScenes 6 相机 / NAVSIM 3 前视)"] --> VGGT["冻结 VGGT<br/>抽跨视图 3D 几何特征 V³ᵈ（含相机嵌入）"]
+    IMG --> VLM["VLM 编码器（Qwen2.5-VL-7B）<br/>图像 + 指令 → 2D 视觉 token"]
+    VLM --> INJ
+    subgraph INJ["分层自适应注入机制（逐层 decoder）"]
+        direction TB
+        L1["第 i 层：用图像 ID 掩码抠出 2D 视觉嵌入 Vᵢ²ᵈ"] --> CVGE["跨视图3D几何赋能器 CVGE<br/>Vᵢ²ᵈ 作 query，cross-attention 检索 V³ᵈ"]
+        CVGE --> RES["残差写回 → 增强后的视觉 token"]
+        RES -->|每层独立参数，循环至最后一层| L1
+    end
+    VGGT -->|提供 V³ᵈ（VGGT 冻结，全程仅 CVGE 可训）| CVGE
+    INJ --> OUT["几何对齐的视觉表示<br/>→ 输出风险描述 / 轨迹 token"]
+```
+
 ### 关键设计
 
 **1. 分层自适应注入机制：每层decoder单独决定要补多少3D信息**

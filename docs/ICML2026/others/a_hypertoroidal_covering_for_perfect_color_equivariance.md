@@ -41,6 +41,26 @@ tags:
 ### 整体框架
 $\mathbb{T}^3$CEN 是一个颜色等变卷积架构，目标是让网络对 HSL 三个通道的颜色变换都精确等变，而不止 hue。它继承 HSL 的直观分解——hue 控色相、saturation 控纯度、luminance 控亮度——但关键改动在于：不再把有界的 saturation/luminance 当作实线平移群，而是各自提升成离散圆群，从而绕开区间裁剪。整条 pipeline 是：RGB 图像先转 HSL；hue 沿用离散循环群 $H_N$，saturation 和 luminance 先经 double-cover 把区间值提升到圆 $\mathbb{T}^1$、再离散化成循环群 $S_M$ 与 $L_R$，三者拼成乘积群 $HSL_{NMR}=H_N\times S_M\times L_R$；lifting layer 把原图映射成定义在该群上的特征 $f^0(g)=\varphi_{hsl}(g,x)$，之后各层全部走 HSL group convolution；分类任务最后用合适的 pooling 得到对颜色变化鲁棒的输出。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RGB 图像"] --> B["转 HSL 颜色空间"]
+    B --> C["hue → 离散循环群 H_N<br/>（周期变量，沿用旧法）"]
+    subgraph DC["区间到圆的 double-cover（设计 1）"]
+        direction TB
+        D["saturation 区间 [0,c]"] --> E["覆盖映射 π:𝕋¹→I<br/>离散化 → 循环群 S_M"]
+        F["luminance 区间 [0,c]"] --> G["覆盖映射 π:𝕋¹→I<br/>离散化 → 循环群 L_R"]
+    end
+    B --> D
+    B --> F
+    C --> H["拼成乘积群<br/>HSL_NMR = H_N × S_M × L_R"]
+    E --> H
+    G --> H
+    H --> I["lifting layer<br/>f⁰(g)=φ_hsl(g,x) 把原图接进群"]
+    I --> J["HSL group convolution（逐层）<br/>沿群轨道共享权重"]
+    J --> K["pooling → 颜色鲁棒输出"]
+```
+
 ### 关键设计
 
 **1. 区间到圆的 double-cover：给有界颜色通道补上群结构**

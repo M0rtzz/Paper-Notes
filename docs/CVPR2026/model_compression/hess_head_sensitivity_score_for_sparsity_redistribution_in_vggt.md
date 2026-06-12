@@ -45,7 +45,27 @@ HeSS 提出 Head Sensitivity Score 来量化 VGGT 全局注意力层中每个注
 
 VGGT 的全局注意力层让所有帧 token 互相交互，计算量随视图数平方膨胀，是加速的主要瓶颈。前作 SparseVGGT 用一套统一的稀疏阈值压所有注意力头，但 HeSS 的出发点是：不同头对稀疏化的耐受度天差地别，一刀切会把关键头压垮。于是 HeSS 把"该给哪个头留多少注意力"变成一个按敏感度分配预算的问题。
 
-整条管线分两步走。**校准阶段**先在一个小校准集上算出每个 GA 层、每个头的 HeSS 敏感度分数，一次算完就固定下来；**推理阶段**则保持总预算与 SparseVGGT 完全相同，只是把这份固定预算按 HeSS 分数在头之间重新切分——敏感头多拿几个 attention block，鲁棒头少拿。整个过程不碰模型权重、不需要训练，纯粹是推理时的预算调度。下面的关键设计依次回答三个问题：怎么度量一个头的敏感度（误差信号 + Fisher 近似），以及怎么把敏感度落实成预算。
+整条管线分两步走。**校准阶段**先在一个小校准集上算出每个 GA 层、每个头的 HeSS 敏感度分数，一次算完就固定下来；**推理阶段**则保持总预算与 SparseVGGT 完全相同，只是把这份固定预算按 HeSS 分数在头之间重新切分——敏感头多拿几个 attention block，鲁棒头少拿。整个过程不碰模型权重、不需要训练，纯粹是推理时的预算调度。下面的关键设计沿这条管线依次展开：先定义两个互补的误差信号（相机位姿误差、点云误差）来反映 3D 重建质量，再用 Fisher 信息近似 Hessian 把误差敏感度落到每个头上得到 HeSS 分数，最后把这份分数转成头级的预算分配。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多视图输入 + VGGT 全局注意力层<br/>（计算瓶颈 O(S²)）"] --> CAL
+    subgraph CAL["校准阶段（小校准集，一次性算完固定）"]
+        direction TB
+        B["对齐预测/真值点云<br/>Umeyama+ICP 得 H（stop-grad）"]
+        B --> C["相机位姿误差 e_cam<br/>全局几何一致性"]
+        B --> D["点云误差 e_pc<br/>内点逐像素细节"]
+        C --> E["HeSS 分数<br/>Fisher 近似 Hessian，对 W_Q 求迹后归一化"]
+        D --> E
+    end
+    CAL -->|"固定的 HeSS 分数"| INF
+    subgraph INF["推理阶段（总预算与 SparseVGGT 相同）"]
+        direction TB
+        F["HeSS 引导的预算重分配<br/>总预算守恒 → 按 HeSS 切分 → water-filling 封顶"]
+    end
+    INF --> G["头级稀疏注意力掩码<br/>加速的 VGGT 3D 重建"]
+```
 
 ### 关键设计
 

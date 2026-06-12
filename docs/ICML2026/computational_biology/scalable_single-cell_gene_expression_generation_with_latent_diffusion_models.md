@@ -54,6 +54,17 @@ scLDM 用统一的多头交叉注意力块 (MCAB) 把可交换的基因表达数
 
 scLDM 要解决的核心问题是：基因表达本质是一个"谁先谁后无所谓"的可交换集合，但主流模型却把它当成固定顺序的向量，既绑死了基因词表又违背生物学事实。它的破局思路是把每个细胞表示成"基因 ID 集合 + 对应计数"$(\mathbf{x}_{\mathcal{I}}, \mathcal{I})$，先用一个置换不变的 transformer-VAE 把它压成固定长度、与基因数解耦的潜变量集合，再在这个干净的潜空间上跑 DiT 扩散来做可控生成。训练分两阶段：Stage 1 学 VAE（编码 NB 计数似然），Stage 2 冻结 VAE、在潜空间上训一个流匹配扩散模型替换简陋的高斯先验；采样时先由扩散模型采潜变量，再过 VAE 解码采计数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：细胞 = 基因 ID 集合 + 计数 (可交换)"] --> B["稀疏感知输入处理<br/>选表达基因 + PAD 补齐 + 计数/embedding 拼接"]
+    B --> C["MCAB 编码器：置换不变池化<br/>m 个可学习 pseudo-inputs 聚合"]
+    C --> D["固定长度潜变量集合 Z (m × D)"]
+    D -->|"Stage 2：替换高斯先验"| E["DiT 潜空间扩散 + 联合多属性 CFG<br/>流匹配学复杂潜分布、组合可控生成"]
+    E --> F["MCAB 解码器：置换等变解池化<br/>查询基因 embedding 作 query"]
+    F --> G["NB 计数分布输出"]
+```
+
 ### 关键设计
 
 **1. 统一的 MCAB：一个 block 同时拿到置换不变与置换等变**

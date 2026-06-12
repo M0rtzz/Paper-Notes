@@ -41,7 +41,17 @@ tags:
 论文使用颜色网格 reference game：每轮有三个 $3\times3$ 色块网格，一个是目标，两个是干扰项；人类 speaker 给出目标描述，模型作为 listener 需要识别目标。作者设计三个实验：baseline 只要求模型选目标；clarification experiment 明确允许模型不确定时提问；interaction experiment 让人类回答模型的问题，检验这些澄清是否真的有帮助。
 
 ### 整体框架
-数据来自 McDowell and Goodman (2019) 的 color-grid reference game，共 197 个 games，每个 60 rounds。样本按目标和干扰项颜色相似度分为 far、split、close 三种难度。作者测试 Qwen2.5-VL-7B、Qwen2.5-VL-72B 和 GPT-5-mini。Qwen 模型跑完整数据集并报告 500 子集结果；GPT-5-mini 因 API 成本只评估 500 轮子集，其中 19 个 null answers 被排除。
+数据来自 McDowell and Goodman (2019) 的 color-grid reference game，共 197 个 games，每个 60 rounds。样本按目标和干扰项颜色相似度分为 far、split、close 三种难度。作者测试 Qwen2.5-VL-7B、Qwen2.5-VL-72B 和 GPT-5-mini。Qwen 模型跑完整数据集并报告 500 子集结果；GPT-5-mini 因 API 成本只评估 500 轮子集，其中 19 个 null answers 被排除。三个实验逐级递进：先用 baseline 估出每轮的不确定性，再看模型在被允许提问后会不会、会不会问得对，最后让真人回答澄清、检验这些问题是否真的有用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["颜色网格 reference game 数据<br/>197 games，far / split / close 难度"] --> B["Baseline 多采样估计不确定性<br/>每轮采样 5 次多数投票 → confidence"]
+    B --> C["Clarification experiment<br/>prompt 显式允许提问<br/>测 CR-Rate / Accuracy / Relaxed accuracy"]
+    C --> D["Human-in-the-loop interaction<br/>真人回答 task-relevant 澄清"]
+    D -->|澄清后重新作答| E["对比前后 accuracy / confidence<br/>检验澄清是否真有用"]
+    E --> F["不确定性与澄清行为对齐评估"]
+```
 
 ### 关键设计
 **1. Baseline 多采样估计不确定性：用一致性信号给模型一个可解释的「我有多确定」**

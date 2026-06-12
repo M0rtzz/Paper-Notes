@@ -62,6 +62,20 @@ tags:
 
 整条流水线围绕这一目标展开：先对给定 prompt 跑一遍原模型，拿到最后 token 沿深度的隐状态轨迹 $x_\ell(p)$；再固定上下文里其它 token、只让最后 token 在进入下一层 block 前被小幅扰动，得到一个 prompt-conditioned 的映射 $x_{\ell+1}=f_\ell(x_\ell;p)$；在这条运行轨迹附近把 $f_\ell$ 局部线性化，得到每层 Jacobian $A_\ell(p)$；结合概念方向 $v_\ell$ 与可达子空间构造一个 32 维基底 $P_\ell$，把高维动力学投影成低阶线性层变代理（LLV）；最后用 LLV 预测单层注入的增益曲线，并求出达到目标输出变化时最省能量的多层注入策略。关键在于，这个代理不是事后解释，而是要能回到原始非线性 Transformer 上被实证验证——它必须既能预测整条 layerwise gain 曲线，又能导出比启发式更优的 multi-layer actuation schedule。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["固定 prompt + 冻结的 GPT-2"] --> X["深度当时间、最后 token 当系统状态<br/>跑原模型取轨迹 x_ℓ"]
+    X --> F["冻结上下文、只扰动最后 token<br/>得局部映射 f_ℓ"]
+    F --> J["局部线性化 f_ℓ<br/>每层 Jacobian A_ℓ"]
+    CS["concept split 类别均值差"] --> V["沿概念方向定义驱动项 v_ℓ"]
+    J --> B["concept-anchored 低维基底 P_ℓ<br/>可达性 Krylov 补空间，32 维"]
+    V --> B
+    B --> L["层变线性代理 LLV<br/>低阶线性递推 r_ℓ"]
+    L --> G["predicted gain：预测层增益曲线<br/>+ 最省能量多层注入"]
+    G --> E["回原 Transformer 实证验证"]
+```
+
 ### 关键设计
 
 **1. 把深度当时间、把最后 token 当系统状态：先把问题压成一个可辨识的对象**

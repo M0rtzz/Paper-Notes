@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 这篇论文想回答一个一直被忽略的问题：LVLM 的 thinking 模式（生成显式推理链）到底什么时候帮视觉推理、什么时候反而坑它。作者的答案是"多想不如多看"——长推理链容易越想越脱离图像，掉进"long-wrong"陷阱。整套方法因此分成离线和在线两段。离线时用一个 token 级探针扫描已有推理轨迹，挖出两类信号短语：预示模型开始漂移的暂停短语集 $\mathcal{P}$（"hmm""wait"之类），以及正确轨迹里频繁出现、把注意力拉回图像的 lookback 模板集 $\mathcal{L}$（如"Looking back at the image, …"）。在线解码时一边自回归生成，一边盯着刚冒出来的尾巴是否撞上暂停短语，一旦撞上就当场插一句 lookback 提示把推理拽回图像，必要时再并行采样几条续写、挑一条最锚定图像的走下去。整套流程不动模型权重。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["推理轨迹 + 图像"] --> PR
+    subgraph PR["Token 级视觉敏感性探针（离线）"]
+        direction TB
+        P1["三种视觉条件下各算 PPL<br/>真实图 R / 噪声图 N / 无图 ∅"] --> P2["内容对比 Δcontent = PPL_R − PPL_N<br/>存在对比 Δpresence = PPL_N − PPL_∅"]
+        P2 --> P3["挖暂停短语集 𝒫<br/>(|Δpresence| 大、|Δcontent| 小)"]
+        P2 --> P4["挖 lookback 模板集 ℒ<br/>(Δcontent 强负、富集于正确轨迹)"]
+    end
+    PR --> CTRL
+    subgraph CTRL["Lookback-When-Uncertain 解码控制器（在线）"]
+        direction TB
+        B1["自回归解码<br/>盯最近 L 个 token 后缀"] -->|"后缀命中 𝒫 且仍在 thinking 段<br/>且近 L token 未触发过"| B2["当场插入 lookback 提示 ℓ ∈ ℒ"]
+    end
+    CTRL --> C["并行 Lookback 采样<br/>分叉 M 条续写，按视觉有用性 𝒱 选最看图的一条"]
+    C --> D["继续解码 → 答案"]
+```
+
 ### 关键设计
 
 **1. Token 级视觉敏感性探针：用三种视觉条件的困惑度差，量化每个 token 到底有没有在看图**

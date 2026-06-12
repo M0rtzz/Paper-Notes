@@ -43,6 +43,22 @@ EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 
 ### 整体框架
 EviScreen 把疾病筛查重塑成「先检索证据、再循证推理」的两段式流程，对应两个阶段。**阶段 1 构建双知识库**：把训练集切成建库子集 $\mathcal X^B_{N/P}$ 和训练子集 $\mathcal X^R_{N/P}$，用冻结的 foundation model $F_\theta$ 抽中间层 patch 特征、经局部聚合 $\mathcal G_{agg}$ 得到区域特征集合 $\mathcal S_{N/P}$，再用 greedy coreset 子采样压成紧凑的正常库 $\mathcal K_N$ 和病理库 $\mathcal K_P$。**阶段 2 推理**：查询图 $\mathbf x$ 抽出特征图 $\mathbf Z=\mathcal G_{agg}(F_\theta(\mathbf x))\in\mathbb R^{h\times w\times d}$，每个 patch 在两库各做 $k$-NN 检索拿到证据 $\mathbf E_N,\mathbf E_P\in\mathbb R^{h\times w\times k\times d}$，证据感知推理模块逐层把证据融进 query 特征，两支的 [CLS] 拼接送 MLP 得预测 $\hat y$；同时它还提供一个不训练任何参数的对比检索变体，用 $\mathbf M = \text{ReLU}(\mathbf M_N - \mathbf M_P)$ 直接 pool 出分数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph KB["双 coreset 知识库"]
+        direction TB
+        A["历史正常 / 病理病例"] --> B["冻结 foundation model Fθ<br/>抽 patch 特征 + 局部聚合 Gagg"]
+        B --> C["greedy coreset 子采样<br/>→ 正常库 KN、病理库 KP"]
+    end
+    Q["查询图 x → Fθ + Gagg<br/>得特征图 Z"]
+    KB --> D["证据检索：每个 patch 在两库各取 k-NN<br/>→ 证据 EN、EP"]
+    Q --> D
+    D -->|可训练主路| E["证据感知推理<br/>cross-attn 融证据 → self-attn 跨 patch 精化"]
+    E --> F["拼接 [CLSN; CLSP] → MLP → 预测 ŷ"]
+    D -->|免训练变体| G["对比检索异常图<br/>M = ReLU(MN − MP) → pool 出分数"]
+```
+
 ### 关键设计
 
 **1. 双 coreset 知识库：用可扩展记忆同时表征正常与病理形态**

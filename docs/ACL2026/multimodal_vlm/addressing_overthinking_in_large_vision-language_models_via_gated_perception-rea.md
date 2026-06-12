@@ -43,7 +43,28 @@ tags:
 
 ### 整体框架
 
-GPRO 把标准的"逐 token 慢思考"换成"逐 token 按需思考"。它在 Transformer decoder 的交替层里，把原本的 FFN 替换成 GPR 模块；每个 GPR 模块内装一个元推理控制器和三条计算路径。生成每一个 token 时，控制器先读取当前的内部状态，再决定这一步该走哪条路：要么直接快速吐字，要么回头重看图像，要么停下来做内部反思。三条路的算力开销由低到高，于是简单的 token 顺手带过、容易出错的 token 才额外加码，整体上既省算力又少出错。
+GPRO 把标准的"逐 token 慢思考"换成"逐 token 按需思考"。它在 Transformer decoder 的交替层里，把原本的 FFN 替换成 GPR 模块；每个 GPR 模块内装一个元推理控制器和三条计算路径。生成每一个 token 时，控制器先读取当前的内部状态，再决定这一步该走哪条路：要么直接快速吐字，要么回头重看图像，要么停下来做内部反思。三条路的算力开销由低到高，于是简单的 token 顺手带过、容易出错的 token 才额外加码，整体上既省算力又少出错。而控制器"该走哪条路"的判断能力，来自一份在约 79 万样本上构建的失败归因数据：它把每个错误标成"看错"还是"想错"，为路由决策提供了可监督的训练信号。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第 t 步隐藏状态 h_t"] --> B["元推理控制器<br/>读 h_t（语境）+ 预测熵 U_t（不确定性）+ 全局图像特征 V_g（视觉复杂度）"]
+    B --> C{"输出动作 a_t"}
+    subgraph PATHS["三条计算路径（算力由低到高）"]
+        direction TB
+        D["Fast Path<br/>原始 FFN 低成本生成"]
+        E["感知重检 Path<br/>cross-attn 回看视觉特征"]
+        F["推理反思 Path<br/>meta-Transformer 内部反思"]
+    end
+    C -->|fast| D
+    C -->|perception 看错了| E
+    C -->|reasoning 想错了| F
+    D --> G["生成该 token"]
+    E --> G
+    F --> G
+    S["大规模失败归因监督<br/>79 万样本 → GPT-4 标'看错/想错'"] -.训练信号.-> B
+    R["多目标 PPO<br/>任务 + 成本 + 校准奖励"] -.训练.-> B
+```
 
 ### 关键设计
 

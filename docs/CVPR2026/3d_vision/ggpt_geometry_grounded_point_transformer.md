@@ -43,7 +43,31 @@ tags:
 
 ### 整体框架
 
-GGPT 想弥合的是一对矛盾：前馈网络（DUSt3R→MASt3R→VGGT）一次前传就能给出稠密点图、但缺多视约束所以几何不一致；传统 SfM 几何一致、却只在稀疏视角下脆弱地恢复少量点。它的解法是两阶段流水线。第一阶段是改进的轻量 SfM：先用前馈模型初始化相机和点，经密集匹配器（RoMa+UFM）拿到全局对应、做循环一致性过滤，再按两级阈值分别用高置信少量点做稀疏 BA（仅 2048 点/视图）估相机、用较低阈值的更密匹配做 DLT 三角化得到几何一致的稀疏点云 $\mathbf{X}_s$。第二阶段才是 GGPT：用 Point Transformer V3（53M 参数）在全局 3D 坐标系里联合处理前馈的稠密预测 $\mathbf{X}_d$ 和稀疏引导 $\mathbf{X}_s$，预测残差位移 $\boldsymbol{\delta}$ 和置信度 $c$，输出精炼后的稠密重建 $\hat{\mathbf{X}}_d$。
+GGPT 想弥合的是一对矛盾：前馈网络（DUSt3R→MASt3R→VGGT）一次前传就能给出稠密点图、但缺多视约束所以几何不一致；传统 SfM 几何一致、却只在稀疏视角下脆弱地恢复少量点。它的解法是两阶段流水线。第一阶段是改进的轻量 SfM：先用前馈模型初始化相机和点，经密集匹配器（RoMa+UFM）拿到全局对应、做循环一致性过滤，再按两级阈值分别用高置信少量点做稀疏 BA（仅 2048 点/视图）估相机、用较低阈值的更密匹配做 DLT 三角化得到几何一致的稀疏点云 $\mathbf{X}_s$。第二阶段才是 GGPT：先把前馈稠密预测 $\mathbf{X}_d$ 与对应稀疏引导点之间的偏移做几何引导编码，再用 Point Transformer V3（53M 参数）在全局 3D 坐标系里联合处理稠密预测 $\mathbf{X}_d$ 和稀疏引导 $\mathbf{X}_s$，预测残差位移 $\boldsymbol{\delta}$ 和置信度 $c$，输出精炼后的稠密重建 $\hat{\mathbf{X}}_d$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["稀疏视角 RGB"] --> FF["前馈网络 (VGGT 等)<br/>稠密预测 X_d"]
+    subgraph SFM["改进 SfM 管线"]
+        direction TB
+        A["VGGT 初始化相机/点"] --> B["密集匹配 RoMa+UFM<br/>+ 循环一致性过滤"]
+        B -->|"高阈值 ε_BA 少量点"| C["稀疏 BA 估相机"]
+        B -->|"低阈值 ε_DLT 较密匹配"| D["DLT 三角化"]
+        C --> D
+        D --> XS["几何一致稀疏点云 X_s"]
+    end
+    IN --> SFM
+    subgraph GGPT["GGPT 精炼 (PTv3)"]
+        direction TB
+        ENC["几何引导编码<br/>PE + 类型标记 + 偏移 Δ"]
+        ATT["PTv3 3D 注意力<br/>三维近邻 patch 自注意力"]
+        ENC --> ATT
+    end
+    FF --> ENC
+    XS --> ENC
+    ATT --> OUT["残差 δ + 置信度 c<br/>→ 精炼稠密重建 X̂_d"]
+```
 
 ### 关键设计
 

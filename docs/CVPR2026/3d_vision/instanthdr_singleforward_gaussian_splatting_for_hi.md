@@ -51,6 +51,23 @@ tags:
 
 输入V张未标定多曝光LDR图像{Iᵥ, ℓᵥ} → 双分支架构：①几何分支（冻结的VGGT/AnySplat预训练交替注意力Transformer）估计深度Dᵥ和位姿pᵥ → ②外观分支：曝光归一化F_E → 几何引导跨视角注意力融合F_A → DoG高分辨率上采样F_U → 高斯头F_G合并两分支输出HDR 3D高斯 → MetaNet F_M预测色调映射参数θ → 任意曝光ℓ的LDR渲染。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：V 张未标定多曝光 LDR 图像<br/>{Iᵥ, 曝光 ℓᵥ}"] --> G["几何分支（冻结）<br/>VGGT/AnySplat 交替注意力 Transformer<br/>估计深度 Dᵥ、位姿 pᵥ"]
+    A --> E
+    subgraph APP["几何引导外观建模"]
+        direction TB
+        E["曝光归一化 F_E<br/>相对 log 曝光 + FiLM 调制对齐辐照度"] --> F["几何引导跨视角注意力 F_A<br/>跨视角融合外观特征"]
+        F --> U["高分辨率上采样 F_U<br/>DoG 高频残差恢复像素级纹理"]
+    end
+    G -->|"复用第 14 层 Q、K"| F
+    G --> H["高斯头 F_G<br/>合并两分支 → HDR 3D 高斯 G"]
+    U --> H
+    H --> M["色调映射元网络 MetaNet F_M<br/>预测场景级色调曲线参数 θ"]
+    M -->|"指定任意曝光 ℓ"| O["输出：该曝光下的 LDR 新视角渲染"]
+```
+
 ### 关键设计
 
 1. **几何引导外观建模（Geo-guided Appearance Modeling）**

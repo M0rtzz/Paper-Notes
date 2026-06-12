@@ -42,7 +42,38 @@ tags:
 
 ### 整体框架
 
-这篇论文要在没有显式安全奖励、也拿不到 oracle 用户标签的前提下，把众包偏好里"大家共享"的安全准则迁移到任意下游任务。它先把众包偏好奖励分解为 $r(s,a,z) = r_{\text{user}}(s,a,z) + r_{\text{share}}(s,a)$（$z$ 是不可观察的用户上下文，$r_{\text{share}}$ 是所有人共享的安全惩罚——落入 $X_{\text{unsafe}}$ 给 $-K$，否则 0），然后用两阶段 pipeline 把安全"焊"进策略空间而非奖励里。第一阶段离线 skill 发现：拿众包偏好集 $\mathcal D_{\text{pref}} = \{S_z\}$，用 VAE 的 encoder $q_\psi(z'|S_z)$ 把每个用户的偏好集映射到 latent $z'$，decoder 给出 latent-conditioned reward $r_\phi(s,a,z')$ 或 policy $\pi_\theta(a|s,z')$，得到一组 *preference-aligned* 的低层 skill $\pi_l(a|s,z')$。第二阶段下游训练：冻住所有低层 skill，只训一个高层策略 $\pi_h(z'|s)$，动作经 $a \sim \pi_l(a|s, z'=\pi_h(s))$ 生成，高层仅用下游 $r_{\text{new}}$ 优化 Q 值。整体输入是 $\mathcal D_{\text{pref}}$（众包偏好）+ $\mathcal D_\tau$（任意一份离线轨迹）+ 下游 $r_{\text{new}}$，输出是组合策略 $\pi = \pi_h \circ \pi_l$。
+这篇论文要在没有显式安全奖励、也拿不到 oracle 用户标签的前提下，把众包偏好里"大家共享"的安全准则迁移到任意下游任务。它先把众包偏好奖励分解为 $r(s,a,z) = r_{\text{user}}(s,a,z) + r_{\text{share}}(s,a)$（$z$ 是不可观察的用户上下文，$r_{\text{share}}$ 是所有人共享的安全惩罚——落入 $X_{\text{unsafe}}$ 给 $-K$，否则 0），然后用两阶段 pipeline 把安全"焊"进策略空间而非奖励里。第一阶段离线 skill 发现：拿众包偏好集 $\mathcal D_{\text{pref}} = \{S_z\}$，用 VAE 的 encoder $q_\psi(z'|S_z)$ 把每个用户的偏好集映射到 latent $z'$，decoder 给出 latent-conditioned reward $r_\phi(s,a,z')$ 或 policy $\pi_\theta(a|s,z')$，得到一组 *preference-aligned* 的低层 skill $\pi_l(a|s,z')$。第二阶段下游训练：冻住所有低层 skill，只训一个高层策略 $\pi_h(z'|s)$，动作经 $a \sim \pi_l(a|s, z'=\pi_h(s))$ 生成，高层仅用下游 $r_{\text{new}}$ 优化 Q 值。整体输入是 $\mathcal D_{\text{pref}}$（众包偏好）+ $\mathcal D_\tau$（任意一份离线轨迹）+ 下游 $r_{\text{new}}$，输出是组合策略 $\pi = \pi_h \circ \pi_l$。下图画出这条两阶段数据流（理论上给 reward combination "判死刑" 的两个定理是这条路线的动机，不在数据流上、故不画为节点，对应下面的关键设计 1）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["众包偏好 D_pref<br/>每个用户一份偏好集 S_z"]
+    T["离线轨迹 D_τ"]
+    R["下游任务奖励 r_new"]
+
+    subgraph SKILL["VAE latent skill 发现（阶段一·离线）"]
+        direction TB
+        E["encoder q_ψ(z'|S_z)<br/>整份偏好集 → latent z'"]
+        D["decoder：Bradley–Terry 奖励 r_φ 或 CPL policy"]
+        L["低层 skill π_l(a|s,z')<br/>IQL 或监督学习，各自继承共享安全"]
+        E --> D --> L
+    end
+
+    subgraph DOWN["分层 policy composition（阶段二·下游）"]
+        direction TB
+        H["高层策略 π_h(z'|s)<br/>冻结 π_l，只在 skill 空间选 latent"]
+        A["动作 a ~ π_l(a|s, z'=π_h(s))"]
+        Q["TD3 优化 Q + prior 正则 L_reg<br/>只用 r_new，不拼奖励"]
+        H --> A --> Q
+        Q -->|梯度经 Q 与冻结的 π_l 回传| H
+    end
+
+    P --> E
+    T --> D
+    L --> H
+    R --> Q
+    Q --> OUT["组合策略 π = π_h ∘ π_l<br/>下游高 reward、低 cost"]
+```
 
 ### 关键设计
 

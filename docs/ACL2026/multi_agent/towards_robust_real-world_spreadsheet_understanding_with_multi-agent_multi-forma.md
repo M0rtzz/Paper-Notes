@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-两阶段流程：(1) 结构提取阶段（Structure Extraction Stage）——提取智能体（Extraction Agent）协调视觉范围智能体和 LaTeX 范围智能体，通过迭代的区域输入构建结构化草图和行列摘要；(2) 求解阶段（Solving Stage）——在提取的中间表示上进行任务驱动推理。两阶段通过提取-验证-修正的迭代循环紧密耦合。
+SpreadsheetAgent 是一个两阶段框架。**结构提取阶段（Structure Extraction Stage）**：提取智能体（Extraction Agent）扫描表格、识别层级表头/合并单元格/多 sheet 等结构线索，并借助代码执行、视觉范围智能体、LaTeX 范围智能体三种工具增量解析选定的局部区域，把内容与布局压缩成 YAML 格式的结构草图（structural sketch）和行列摘要。其间双通道交叉验证模块只对不确定或结构复杂的区域抽查，发现错误就返回修正建议，与提取构成「提取-验证-修正」迭代循环，直到表示足够忠实。**求解阶段（Solving Stage）**：把验证通过的 YAML 中间表示注入下游上下文，进行任务驱动推理得到答案。整套流程不一次性加载整张表，因而在 LLM 上下文预算内仍能保留布局语义。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实电子表格<br/>(层级表头 / 合并单元格 / 多 sheet)"] --> B
+    subgraph EXT["三工具协作的提取模块"]
+        direction TB
+        B["提取智能体<br/>扫描结构线索、选取区域"] --> T1["代码执行<br/>取原始值 / 数值计算"]
+        B --> T2["视觉范围智能体<br/>区域转图像取颜色 / 边框"]
+        B --> T3["LaTeX 范围智能体<br/>区域转 LaTeX 恢复层级表头"]
+    end
+    T1 --> Y["YAML 中间表示<br/>结构草图 + 行列摘要"]
+    T2 --> Y
+    T3 --> Y
+    Y --> V["双通道交叉验证模块<br/>视觉 + LaTeX 抽查可疑区域"]
+    V -->|不通过：返回修正建议| B
+    V -->|通过| S["求解阶段<br/>在忠实 YAML 上任务推理"]
+    S --> O["输出答案"]
+```
 
 ### 关键设计
 

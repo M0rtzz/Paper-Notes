@@ -46,6 +46,22 @@ tags:
 
 推理时走的是一条"先把关、再细分"的两段式规则：gatekeeper 先集体表态这条样本是不是 C0，只要它们里多数判 C0，系统就直接输出 C0；否则 9 个 voter 一起对 C1–C8 做多数投票，平票时偏向训练集最大类 C7（High-Adaptive）。这样一来，No Defence 的高可分性、8 类防御内部的细粒度混淆、以及不同模型的互补性，就被统一放进同一个投票框架里处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["对话 + 求助者目标话语"]
+    IN --> G["C0 gatekeeper（9 类生成式 SFT）<br/>Ministral-8B QLoRA"]
+    IN --> S1["8 类 specialist（判别式 LR）<br/>Ministral-8B 冻结表示"]
+    IN --> S2["跨基座第三轴（模型多样性）<br/>Phi-4-14B 8 类 LR"]
+    G --> CV["各分支 5 折 CV → 选 top-3 fold（共 9 voter）"]
+    S1 --> CV
+    S2 --> CV
+    CV --> Q{"gatekeeper 多数判 C0？"}
+    Q -->|是| C0["输出 C0 No Defence"]
+    Q -->|否| MV["9 voter 对 C1–C8 多数投票<br/>平票偏向最大类 C7"]
+    MV --> OUT["输出 DMRS 标签 C1–C8"]
+```
+
 ### 关键设计
 **1. C0 gatekeeper 与 8 类 specialist 的粒度拆分：把"有没有防御"和"是哪种防御"拆成两个难度不同的子问题**
 

@@ -45,26 +45,48 @@ tags:
 
 第二步，基于组织 benchmark 决策拟合 ridge logistic regression，得到组织政策向量 $\beta_{org}$。同样地，对某个 LLM 在某个 prompting condition 下的所有决策拟合 ridge logistic regression，得到 $\beta_{LLM}$。第三步，用 $\cos(\theta)=\frac{\beta_{org}\cdot\beta_{LLM}}{\|\beta_{org}\|\|\beta_{LLM}\|}$ 作为过程对齐分数。
 
-论文测试三种条件：Baseline 只给 structured case profile；Org-externalized 把组织 cue weighting policy 明确写入 prompt；Introspective-externalized 则告诉模型它自己的 baseline policy 与组织 policy 的偏差，并要求自我修正。随后比较 cosine alignment、output accuracy、AUC、Cohen's kappa、propensity correlation 等指标。
+论文测试三种条件：Baseline 只给 structured case profile；Org-externalized 把组织 cue weighting policy 明确写入 prompt；Introspective-externalized 则告诉模型它自己的 baseline policy 与组织 policy 的偏差，并要求自我修正。随后比较 cosine alignment、output accuracy、AUC、Cohen's kappa、propensity correlation 等指标。整条流水线可视化如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["组织决策案例<br/>ECHR 45 cue / German Credit 20 cue"] --> B["Cue 编码<br/>案例 → 可观察特征向量"]
+    subgraph COND["三条件外部化"]
+        direction TB
+        D1["Baseline：只给案例 profile"]
+        D2["Org-externalized：注入组织 cue 权重"]
+        D3["Introspective：告知自身与组织偏差"]
+    end
+    B --> COND
+    B --> C["组织历史决策标签"]
+    subgraph LENS["Lens Model 行为过程测量"]
+        direction TB
+        E["组织决策 → ridge logistic<br/>→ β_org"]
+        F["LLM 决策 → ridge logistic<br/>→ β_LLM"]
+        G["余弦相似度 cos(β_org, β_LLM)<br/>= 过程对齐 r_cos"]
+        E --> G
+        F --> G
+    end
+    C --> E
+    COND --> F
+    G --> H{"两域对照<br/>benchmark 规范性质"}
+    H -->|"规范稳定 ECHR"| I["校准工具：r_cos 预测准确率"]
+    H -->|"价值争议 German Credit"| J["审计工具：暴露歧视性 cue"]
+```
 
 ### 关键设计
-1. **用Lens Model估计决策过程而非解释文本**:
 
-	- 功能：从大量行为样本中估计模型实际使用哪些 cues，而不是相信模型在单个样本中给出的解释。
-	- 核心思路：对组织标签和 LLM 标签分别拟合同一套 ridge logistic regression，系数向量代表每个 cue 的使用方向和强度。cosine similarity 衡量两个 cue-weighting policy 是否同向。
-	- 设计动机：chain-of-thought 可以不忠实，人工解释也可能只是事后合理化。行为回归直接基于输入输出估计 policy，更适合过程审计。
+**1. Lens Model 行为过程测量：从行为反推 policy，不信解释文本**
 
-2. **外部化组织知识测试steerable pluralism**:
+CALM 要解决的第一个难题是「怎么知道模型到底在按什么权衡信息」。直接问模型、读它的 chain-of-thought 都不可靠——CoT 可以不忠实，人工解释也常是事后合理化。论文转而走纯行为路线：把每个案例编码成同一套可观察 cues，再对组织历史标签和某个 LLM 在某条件下的全部决策分别拟合同一套 ridge logistic regression，得到两个系数向量 $\beta_{org}$ 与 $\beta_{LLM}$，每个系数代表对应 cue 的使用方向与强度。两条政策是否同向，用余弦相似度 $\cos(\theta)=\frac{\beta_{org}\cdot\beta_{LLM}}{\|\beta_{org}\|\|\beta_{LLM}\|}$ 度量，落在 $[-1,1]$，1 表示完全对齐、0 正交、负值相反。这样估出来的是模型在整批案例上的「行为基准真值」，不依赖任何单条 reasoning trace，也不需要模型权重，天然适合做黑盒过程审计。
 
-	- 功能：验证模型是否能在被明确指定组织政策后，真正向该组织的决策过程移动。
-	- 核心思路：Org-externalized condition 把组织回归得到的 cue weights 分成 strong/moderate/weak，并说明方向；Introspective condition 则提供模型与组织的整体偏差 profile。干预后再次拟合 $\beta_{LLM}$，观察 $r_{cos}$ 是否提高。
-	- 设计动机：pluralistic alignment 的核心不是平均化所有偏好，而是能否按指定 stakeholder 或 organization faithful steering。CALM 给这个“faithful”提供了可测量标准。
+**2. 三条件外部化：检验组织知识能否被 faithful steering**
 
-3. **用两个规范性质不同的组织域做对照**:
+光测出对齐分数还不够，论文想知道「如果明确把组织政策告诉模型，它能不能真的朝那套决策过程移动」——这正是 pluralistic alignment 里 steerable pluralism 的核心。于是设计三种递进的 prompting 条件：Baseline 只给结构化案例 profile，暴露模型预训练带来的隐式 policy；Org-externalized 把组织回归得到的 cue 权重按 strong/moderate/weak 分档、连同方向写进 prompt，测「把隐性知识显性化」能否补上 knowledge gap；Introspective-externalized 则告诉模型它自己 baseline policy 与组织的整体偏差，要求自我修正。每种条件都重新拟合 $\beta_{LLM}$、重算 $r_{cos}$，并用 bootstrap permutation（1,000 次 shuffle）做显著性检验，看对齐是否真的提升。关键在于这给「faithful steering」提供了可测量标准：steering 不是表面模仿输出，而是 cue-weighting policy 真的向目标组织靠拢。
 
-	- 功能：证明过程对齐不是单一好目标，而要看 benchmark 的规范合法性和争议程度。
-	- 核心思路：ECHR Article 6 是相对稳定、公开法理可解释的法律领域；German Credit 来自 1990 年代银行历史决策，包含 age、sex、foreign_worker 等受保护属性，可能编码歧视性实践。论文比较两域中 process alignment 与 accuracy 的关系，以及 externalization 是否有效。
-	- 设计动机：如果只在一个干净领域测试，容易把“高对齐=好”当作普遍结论。信用场景显示，有些组织政策即使可被测量，也未必应被模型忠实复制。
+**3. 两个规范性质迥异的领域对照：过程对齐不是单一好目标**
+
+如果只在一个「干净」领域上测，很容易把「高对齐 = 好」当成普遍结论。论文刻意选两个规范性质相反的组织域做对照：ECHR Article 6 是相对稳定、公开可说明的法律领域，cue 权重沉淀的是累积法理；German Credit 来自 1990 年代某德国银行的历史信贷决策，20 个 cue 里含 age、personal_status_sex、foreign_worker 等受保护属性，可能编码了已被反歧视法部分推翻的歧视性实践。两域分别检验 process alignment 与 accuracy 的关系、以及 externalization 是否有效，从而暴露出 CALM 的双重角色——在规范合法的领域它是「校准工具」（对齐越高、输出越准，可指导外部化补差距），在争议领域它退化为「审计工具」（能让模型/组织在敏感属性上的权衡变得可见、可质询，但不替你裁决该不该忠实复制这套政策）。这个对照本身就是论文最核心的 pluralistic 发现：能被测量、能被 steering，不等于应该被对齐。
 
 ### 损失函数 / 训练策略
 CALM 本身不是训练方法，而是评估/审计方法。核心估计器是 ridge-regularized logistic regression；显著性通过 bootstrap permutation（1,000 次 shuffle）检验。ECHR 研究测试 10 个模型、3 个 prompting 条件、1,000 个 Article 6 cases；German Credit 研究测试 5 个模型、2-3 个条件、balanced subset 600 cases，并以规范 logistic regression 的 75.1% accuracy / 0.751 AUC 作为历史 benchmark 上限。

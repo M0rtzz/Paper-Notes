@@ -45,6 +45,25 @@ tags:
 
 MADE 基准包含三大组件：(1) 数据管线——从 FDA 不良事件报告中提取事件描述和 IMDRF 层次标签，经去重、降采样和时间分割后生成训练/验证/测试集；(2) 模型基线——涵盖判别式微调（编码器/解码器 + 分类头）、生成式微调（解码器生成标签 token）和 few-shot 提示（instruction/thinking 模型）三种范式；(3) UQ 评估——对比信息级（entropy、perplexity）、一致性级（graph Laplacian 特征值）、组合级和自述式不确定性四类方法。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["活基准数据构建"]
+        direction TB
+        A["FDA 医疗设备不良事件报告 2015-2025"] --> B["抽取事件描述 + IMDRF 三层标签<br/>向祖先编码传播"]
+        B --> C["去重 + 降采样"]
+        C --> D["按时间切分<br/>训练 15-23 / 验证 24H1 / 测试 24.7-25.6"]
+    end
+    D --> E["多范式模型基线<br/>标签分 head/medium/tail/extreme tail 四档"]
+    E -->|加分类头 + 层次化 BCE| F["判别式微调"]
+    E -->|解码器生成标签 token| G["生成式微调"]
+    E -->|kNN 检索 10-shot| H["few-shot 提示"]
+    F --> I["系统性 UQ 评估"]
+    G --> I
+    H --> I
+    I --> J["四层不确定性 + PRR / Spearman ρ / 正类 ECE"]
+```
+
 ### 关键设计
 
 **1. 活基准数据构建：用持续更新的政府数据流堵住污染漏洞**

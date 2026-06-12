@@ -48,6 +48,23 @@ tags:
 
 BeautyGRPO 想突破「监督学习只会模仿标注、产出僵硬塑料脸」的天花板，用强化学习让人脸修图对齐人类美学偏好。它由三块拼成：一个细粒度偏好数据集 FRPref-10K 提供训练信号，一个多维奖励模型把「好不好看」量化成可优化的回报，一个动态路径引导（DPG）算法在 RL 探索时把轨迹拉回高保真流形。骨干是 FluxKontext-LoRA，先 LoRA 微调再做 RL 训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph D1["FRPref-10K 偏好数据集"]
+        direction TB
+        A["源肖像<br/>FFHQR + 私有高清集"] --> B["多模型多种子<br/>生成修图候选"]
+        B --> C["VLM 五维度打标<br/>+ 人工复核 → 1 万组偏好对"]
+    end
+    C --> D2["三阶段奖励模型训练<br/>SFT → 自训练过滤 → GRPO"]
+    D2 --> RM["多维奖励模型<br/>判好坏 + 给推理"]
+    E["FluxKontext-LoRA 骨干"] --> F["动态路径引导 DPG 采样<br/>锚点修正 + 受控探索"]
+    F --> G["修图结果"]
+    G --> RM
+    RM -->|偏好回报| H["GRPO 策略更新"]
+    H --> F
+```
+
 ### 关键设计
 
 **1. FRPref-10K 偏好数据集：给「美学好坏」造出细粒度标注**

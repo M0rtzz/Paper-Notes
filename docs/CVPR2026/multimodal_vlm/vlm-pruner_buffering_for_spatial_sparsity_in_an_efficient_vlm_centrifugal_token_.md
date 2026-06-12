@@ -42,11 +42,21 @@ tags:
 ### 整体框架
 VLM-Pruner要解决的痛点很具体：现有免训练剪枝要么按注意力分数挑token（结果在同一块区域扎堆，全是冗余），要么贪心挑相似度最低的token（结果在前景背景间乱跳，盖不全一个物体的细节）。它的思路是"离心式"选择——先在画面里撒下几个互相离得很开的种子，再从这些种子向外一圈圈有序铺开，让保留的token既不冗余、又能在物体上连成片。整个过程挂在LLM decoder的第二层：先选少量pivot种子，再用BSS准则引导的贪心扩展逐个吸纳邻近的低冗余token，最后用SWA把被丢弃的外圈token信息回灌给保留token，三步都不动VLM权重。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["LLM decoder 第二层<br/>N 个视觉 token（key K + hidden state H）"] --> B["Pivot 初始化<br/>key 空间 max-min 撒 κ 个语义互斥种子"]
+    B --> C["空间稀疏缓冲（BSS）<br/>相似度乘空间距离惩罚，延迟远处 token"]
+    C -->|"按非冗余分降序、阈值从严到松并行贪心<br/>从近到远逐圈扩展到 R 个"| C
+    C --> D["相似度加权聚合（SWA）<br/>丢弃 token 按相似度回灌给最近保留 token"]
+    D --> E["保留 R 个 token<br/>送入后续 decoder 层"]
+```
+
 ### 关键设计
 
 **1. Pivot 初始化：先撒下几个语义互斥的种子，给离心扩展定锚点**
 
-如果一上来就贪心地选最不相似的token，很容易被画面边缘那些孤立的背景token带偏。所以VLM-Pruner先用max-min策略迭代挑出 $\kappa$ 个种子：每一步都选一个离已选种子集"最远"的候选，$j_t = \arg\max_{j \in \mathcal{C}} \min_{j' \in \mathcal{S}_{t-1}} \|\mathbf{K}_j - \mathbf{K}_{j'}\|_2$，保证这几个种子分散覆盖不同语义区域。这里有个细节：相似度算在token的**key**空间而不是hidden state上——key维度更低、是语义特征的精炼表示，用它做选择能少受冗余信息干扰。
+如果一上来就贪心地选最不相似的token，很容易被画面边缘那些孤立的背景token带偏。所以VLM-Pruner先用max-min策略迭代挑出 $\kappa$ 个种子：每一步都选一个离已选种子集"最远"的候选，$j_t = \arg\max_{j \in \mathcal{C}} \min_{j' \in \mathcal{S}_{t-1}} \|\mathbf{K}_j - \mathbf{K}_{j'}\|_2$，保证这几个种子分散覆盖不同语义区域。这里有个细节：种子的max-min距离专门算在token的**key**空间（而非后续贪心用的hidden state相似度）——key维度更低、天生提炼了每个token的语义身份、冗余更少，用它撒种子能少受冗余信息干扰。
 
 **2. 空间稀疏缓冲（BSS）准则：让扩展从种子向外一圈圈铺开，而不是直接跳到画面边缘**
 

@@ -44,6 +44,26 @@ tags:
 
 本文要解决的是如何在不依赖领域分类法的前提下，从大规模新闻语料中自动归纳出语义连贯、可解释的叙事模式。框架以单篇文章为输入，先把文章拆解为带因果关系的事件链并用自然语言化表达，再为链中的角色标注叙事功能（英雄/威胁/受害者），把这两类信号组合成叙事的原子表示；随后用角色约束的聚类把成千上万条叙事链组织成若干高层模式，最后让 LLM 为每个聚类输出符合 Entman 框架理论的叙事描述（议题定义、评价、解决方案），形成可解释的叙事模式清单。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：单篇新闻文章"]
+    A --> CHAIN
+    A --> ROLE
+    subgraph CHAIN["因果叙事链构建"]
+        direction TB
+        C1["依存解析抽 (verb, object) 事件元组"] --> C2["DAPrompt 识别因果<br/>（Llama 3.3 70B 银标签蒸馏）"] --> C3["DeepSeek-R1 自然语言化为连贯句"]
+    end
+    subgraph ROLE["角色与叙事功能标注"]
+        direction TB
+        R1["Llama 3.3 70B 抽角色提及"] --> R2["k-means 聚成角色组"] --> R3["DeepSeek-R1 标注功能<br/>（英雄/威胁/受害者）+ 立场"]
+    end
+    CHAIN --> M["叙事原子表示<br/>（因果链 + 角色功能）"]
+    ROLE --> M
+    M --> CLU["角色约束的结构化聚类<br/>冲突链对加 cannot-link 惩罚"]
+    CLU --> OUT["LLM 输出 Entman 框架叙事描述<br/>（议题定义 / 评价 / 解决方案）"]
+```
+
 ### 关键设计
 
 **1. 因果叙事链构建：把文章压成「因为 X 所以 Y」的原子单位**

@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 AutoRPA 把 GUI 环境建模成 POMDP $(\mathcal{S}, \mathcal{A}, \mathcal{T}, \mathcal{G}, \mathcal{O})$，要为某一类任务 $\mathcal{G}^k$ 蒸馏出一个能反复复用、token 几乎为零的 RPA 函数 $F_k$。整条流水线靠三个 Agent 接力跑：ReAct Agent 先在环境里探索拿到成功轨迹，翻译器把这些硬编码动作改写成靠语义属性定位的软编码版本，构建器再从多条软编码轨迹合成带条件和循环的 RPA 代码；代码在已见任务上验证，一旦失败就由分析器定位断点、ReAct 回真实环境补一段修正轨迹，构建器据此迭代改写，循环最多三轮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务类 G^k（POMDP GUI 环境）"] --> B["ReAct Agent 探索真实环境<br/>产出成功轨迹（click(index) 式硬编码动作）"]
+    B --> C["翻译器：硬编码 → 软编码<br/>按语义属性 find_element 定位 + 插断言"]
+    C --> D["构建器：合成带条件/循环的 RPA 函数 F_k"]
+    E["树结构轨迹库<br/>fetch_info 按需逐层拉多模态细节"] -.->|RAG| D
+    D --> F{"已见任务验证"}
+    F -->|通过| H["零推理 RPA 函数 F_k<br/>反复复用，token ≈ 0"]
+    F -->|失败| G["分析器定位断点 → ReAct 回真实环境补修正轨迹"]
+    G -->|"混合修复，每任务最多 3 轮"| D
+```
+
 ### 关键设计
 
 **1. 翻译器-构建器流水线：把"探索"和"写代码"拆给两个 Agent**

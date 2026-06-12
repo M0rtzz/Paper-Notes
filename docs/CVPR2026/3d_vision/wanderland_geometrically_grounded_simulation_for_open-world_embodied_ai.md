@@ -44,6 +44,24 @@ tags:
 
 Wanderland 要解决的是开放世界具身导航缺一个"几何可靠又光学真实"的仿真器：纯视频-3DGS 路线（Vid2Sim、GaussGym）拿到的是非度量位姿、碎片化的碰撞 Mesh、外推视角崩坏，能用来训练却没法当标准 benchmark 做可复现的闭环评估。它的破局思路是**几何与外观分家**——几何来自 LiDAR 保证度量精度，外观来自 3DGS 保证真实感，两者共享同一坐标系无缝拼到一起。整条流水线是：手持多传感器采集 → LIV-SLAM 重建出全局一致的度量点云与相机位姿 → 从点云初始化 3DGS 并用深度正则化训练 → 从同一点云提取碰撞 Mesh → Mesh + 3DGS 集成成 USD 场景 → 加载进 Isaac Sim 做导航训练与评估。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多传感器采集<br/>LiDAR+IMU+RGB · 训练/外推轨迹"]
+    A --> B["LIV-SLAM 重建<br/>度量点云 + 全局相机位姿"]
+    A --> C["图像预处理<br/>隐私掩码 + 动态物体遮蔽 + 去畸变"]
+    B --> D["3DGS 训练<br/>点云初始化 + 深度正则 + Difix3D+ 视角增强"]
+    C --> D
+    subgraph G4["几何接地仿真构建"]
+        direction TB
+        E["点云提 Mesh<br/>体素化 + Marching Cubes"] --> F["USD 集成<br/>Mesh 碰撞层 + 3DGS 渲染层"]
+    end
+    B --> E
+    D --> F
+    F --> H["导航任务定义<br/>NavMesh 专家轨迹 + Gemini VLM 指令"]
+    H --> I["Isaac Sim 训练与评估"]
+```
+
 ### 关键设计
 
 **1. 多传感器采集：用 LiDAR 锚定几何，用轨迹设计撑起外推**

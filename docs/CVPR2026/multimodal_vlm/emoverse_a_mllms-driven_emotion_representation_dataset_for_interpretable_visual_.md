@@ -38,15 +38,37 @@ tags:
 ### 整体框架
 EmoVerse 想解决的是：视觉情感分析长期只有"这张图让人 sad"这种孤零零的类别标签，既不告诉你为什么 sad，也没有连续的情感强度刻画。这篇论文要造一个既能解释情感来源、又同时带离散（CES，Mikels 8 类：amusement、awe、contentment、excitement、anger、disgust、fear、sadness）和连续（DES，1024 维空间）两套表示的大规模数据集。整条构建流水线可以拆成四步：先从多个来源汇集并清洗约 219K 张图像；再让 MLLM 把每张图标成 B-A-S 三元组并同时产出 CES/DES；然后让标注走一遍"专家模型 + CoT 批判 agent"的验证-修正闭环过滤噪声；最后用 Grounding DINO + SAM 把三元组里的主体落到像素级的框和 mask 上。数据集造好后，再在它上面微调 Qwen2.5-VL-3B，得到一个能同时做情感预测和情感归因解释的模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph COL["多来源混合采集（约 219K 图像）"]
+        direction TB
+        S1["现有情感库<br/>EmoSet / EmoArt"]
+        S2["自然场景<br/>Flickr30k"]
+        S3["情感关键词<br/>网络爬取"]
+        S4["Seedream AIGC<br/>补长尾 disgust/fear"]
+    end
+    COL --> ANN["B-A-S 三元组初标<br/>Gemini 2.5 + GPT-4o<br/>同出 CES + DES(1024 维)"]
+    subgraph VER["标注-验证-修正闭环"]
+        direction TB
+        V1["EmoViT 专家<br/>交叉核对 CES"] --> V2["CoT Critic Agent<br/>valid / revisable / discarded"]
+    end
+    ANN --> VER
+    VER -->|revisable 打回重标| ANN
+    VER -->|valid| LOC["Subject 级实例定位<br/>Grounding DINO 框 → SAM mask"]
+    LOC --> DS["EmoVerse 数据集<br/>CES + DES + B-A-S + bbox/mask"]
+    DS --> FT["两轮微调 Qwen2.5-VL-3B<br/>① CES/DES 预测 ② 归因解释"]
+```
+
 ### 关键设计
 
-**1. B-A-S 三元组：把"为什么有这种情感"拆成可追溯的知识图谱**
-
-痛点是传统标注只给一个 sadness/anger 标签，读者无从知道情感从哪来。EmoVerse 受知识图谱启发，把每张图的情感归因写成一个 $(B, A, S)$ 三元组：$B$（Background）描述场景背景（如"暴风雨中的海岸"），$A$（Attribute）描述触发情绪的视觉属性（如"昏暗光线、冷色调"），$S$（Subject）描述画面里的关键主体（如"独自站立的人"）。三者拼起来就是一条结构化的情感解释链，既比自由文本规范、便于 MLLM 自动产出，又能被下游模型直接拿来做归因推理。
-
-**2. 多来源混合采集：用 AIGC 专补长尾情感**
+**1. 多来源混合采集：用 AIGC 专补长尾情感**
 
 单一数据源会带来分布偏置——比如 EmoSet 偏自然图，某些情感几乎拍不到。EmoVerse 因此从四类来源凑齐约 219K 张图：现有情感数据集（EmoSet、EmoArt）、通用自然场景（Flickr30k）、按情感关键词的网络爬取，以及最关键的一招——用 Seedream 按情感 prompt 生成约 25K 张图像，专门补 disgust、fear 这类在真实数据里稀缺的长尾类别。比起单纯对长尾类过采样，按需生成能更精准地把缺的情感"画"出来。
+
+**2. B-A-S 三元组：把"为什么有这种情感"拆成可追溯的知识图谱**
+
+痛点是传统标注只给一个 sadness/anger 标签，读者无从知道情感从哪来。EmoVerse 受知识图谱启发，把每张图的情感归因写成一个 $(B, A, S)$ 三元组：$B$（Background）描述场景背景（如"暴风雨中的海岸"），$A$（Attribute）描述触发情绪的视觉属性（如"昏暗光线、冷色调"），$S$（Subject）描述画面里的关键主体（如"独自站立的人"）。三者拼起来就是一条结构化的情感解释链，既比自由文本规范、便于 MLLM 自动产出（初标阶段就由 Gemini 2.5 / GPT-4o 直接吐出），又能被下游模型直接拿来做归因推理。
 
 **3. 标注-验证-修正闭环：不是"用 GPT 标一遍"就完事**
 

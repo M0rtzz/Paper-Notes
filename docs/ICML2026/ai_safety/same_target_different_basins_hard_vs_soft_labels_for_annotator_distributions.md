@@ -40,7 +40,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-每个样本 $x_i$ 配一个经验标注者分布 $p_i\in\Delta^{K-1}$（来自 $m_i$ 张人工投票），模型预测 $q_\theta(x)=\mathrm{softmax}(z_\theta(x))$。基线把分布留在 loss 里做软标签交叉熵 $\mathcal{L}_{\mathrm{soft}}=\sum_i H(p_i,q_\theta(x_i))$；本文要回答的是"分布换一种格式投喂会怎样"，于是固定每例目标不变，把投喂格式拆出来当独立变量：用 multipass（按真实票循环出硬标签）和 SLS（每个 epoch 按 $p_i$ 重采一个硬标签）两种硬标签 delivery 替代软标签，每个 epoch 都跑普通硬标签 CE，再配两个对照实验把"采样随机性"和"样本-分布配对"也单独剥离出来。全部方法都在 CIFAR-adapted ResNet-18 上跑 200 epochs、cosine annealing。
+每个样本 $x_i$ 配一个经验标注者分布 $p_i\in\Delta^{K-1}$（来自 $m_i$ 张人工投票），模型预测 $q_\theta(x)=\mathrm{softmax}(z_\theta(x))$。基线把分布留在 loss 里做软标签交叉熵 $\mathcal{L}_{\mathrm{soft}}=\sum_i H(p_i,q_\theta(x_i))$；本文要回答的是"分布换一种格式投喂会怎样"，于是固定每例目标不变，把投喂格式拆出来当独立变量：用 multipass（按真实票循环出硬标签）和 SLS（每个 epoch 按 $p_i$ 重采一个硬标签）两种硬标签投喂方式替代软标签，每个 epoch 都跑普通硬标签 CE，再配两个对照实验把"采样随机性"和"样本-分布配对"也单独剥离出来。全部方法都在 CIFAR-adapted ResNet-18 上跑 200 epochs、cosine annealing。
 
 ### 关键设计
 

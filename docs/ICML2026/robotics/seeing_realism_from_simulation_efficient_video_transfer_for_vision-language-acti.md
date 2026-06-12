@@ -41,21 +41,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定一批仿真训练轨迹 $\mathcal{S}=\{s_1,\dots,s_n\}$：(1) coreset 采样选出 $\mathcal{S}'\subset\mathcal{S}$，只对这一小撮做生成；(2) 对每条选中的视频，用 VideoChat2 抽 caption，Qwen3-8B 改写 caption 引入背景/物体颜色等环境变量，同时抽 depth 当几何控制；(3) 用 Cosmos-Transfer 2.5 以新 caption + depth 为条件做条件视频扩散，得到视觉风格大改但动作轨迹不变的"真实化"视频；(4) 把生成的视频和原 90% 仿真数据混着喂给 VLA 训练。整条流水线最关键的两个加速器是 velocity caching 和 coreset。
+给定一批仿真训练轨迹 $\mathcal{S}=\{s_1,\dots,s_n\}$：(1) coreset 采样选出 $\mathcal{S}'\subset\mathcal{S}$，只对这一小撮做生成；(2) 对每条选中的视频，用 VideoChat2 抽 caption，Qwen3-8B 改写 caption 引入背景/物体颜色等环境变量，同时抽 depth 当几何控制；(3) 用 Cosmos-Transfer 2.5 以新 caption + depth 为条件做条件视频扩散，得到视觉风格大改但动作轨迹不变的"真实化"视频；(4) 把生成的视频和原 90% 仿真数据混着喂给 VLA 训练。整条流水线最关键的两个加速器是 velocity caching（砍单视频生成成本）和 coreset（砍要生成的轨迹数）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["大规模仿真轨迹 S"] --> CS
+    subgraph CS["Coreset 采样：挑难且独特的轨迹"]
+        direction TB
+        B["策略损失估难度<br/>RDT-1B policy loss"] --> D["kNN 图 + 前向消息传递<br/>聚合邻域难度"]
+        C["Cosmos-Embed1 估多样性"] --> D
+        D --> E["贪心选 + 反向抑制冗余<br/>选出 ~10% 子集 S′"]
+    end
+    CS --> F["语义条件：VideoChat2 抽 caption<br/>→ Qwen3-8B 改写环境"]
+    CS --> G["几何条件：抽 depth map"]
+    F --> H["条件视频迁移<br/>Cosmos-Transfer 2.5 条件扩散去噪"]
+    G --> H
+    H -. 三段式 Velocity Caching<br/>中段复用 velocity 加速 .-> H
+    H --> I["真实风格视频<br/>+ 原始 90% 仿真数据混合"]
+    I --> J["训练 VLA（RDT-1B / π0）"]
+```
 
 ### 关键设计
 
-**1. 条件视频迁移（语义 + 几何双条件）：换环境但不换动作**
+**1. Difficulty × Diversity 的 Coreset 采样：只挑"难且独特"的轨迹来增广**
 
-只改 caption 会让物体几何漂移、机械臂关键位姿失真，动作就丢了；只给 depth 又缺语义多样性。所以本文用两个互补条件分头承担"看起来不一样"和"做的事一样"。语义侧：VideoChat2 先抽时序 caption 描述交互、对象与空间关系，Qwen3-8B 再把背景、物体颜色等可变要素改写出多样性、同时保留任务意图。几何侧：从原视频抽 depth map 当稳定几何约束（比 edge/blur/seg 都更保几何）。最后 Cosmos-Transfer 2.5 在"新 caption + depth"上迭代去噪，生成视觉风格大改、动作轨迹不变的真实化视频。这样仿真数据的视觉与环境多样性被补上，但每一帧的机械臂动作仍严格对应原轨迹。
+整条流水线第一步先解决"对谁做增广"——全量生成成本不可承受，所以只挑值得生成的那一小撮。单看 difficulty 容易扎进某个 hard cluster，单看 diversity 又会把简单水任务拉进来，两者都浪费生成预算。本文把 $\mathbb{D}^2$ Pruning 扩展到视频：难度 $x_i = \frac{1}{|\mathcal{T}_i|}\sum_{t}\mathcal{L}_{\text{policy}}(s_i^{(t)};\theta)$ 用 RDT-1B 的策略损失估（task-aware），多样性用 Cosmos-Embed1 给每条轨迹 768 维嵌入 $\phi(s_i)$、以 RBF 核 $e_{i,j}=\exp(-\gamma_f\|v_i-v_j\|^2)$ 建 kNN 图（task-agnostic）。前向消息传递把邻域难度聚合 $x_i' = x_i + \sum_{j\in\mathcal{N}(i)}e_{i,j}\cdot x_j$，贪心选最高 $x_i'$，再用反向消息 $x_j' \leftarrow x_j' - \exp(-\gamma_r\|v_{s^*}-v_j\|^2)\cdot x_{s^*}'$ 抑制相似邻居的分数避免冗余。用 task-aware 损失估难度、task-agnostic 嵌入估多样性，正好避开了"难的全是相似失败模式"和"多样但都是水任务"两个极端，于是 10% 预算就能逼近全量增广效果。
 
-**2. 三段式 Velocity Caching：复用扩散中段几乎不变的 velocity**
+**2. 条件视频迁移（语义 + 几何双条件）：换环境但不换动作**
 
-通用 caching（如 DeepCache）默认去噪两端都重要，没对准扩散动力学的真实曲线。作者实测 flow-based 视频扩散的 $\|v_{t+1}-v_t\|$ 时序曲线后发现一个三段式动态：初期变化剧烈、中段几乎平稳、末尾再微调，正对应"画轮廓 → 细化 → 收尾"的去噪节奏。于是把 $N$ 步去噪切成三段：初期（$t<t_s$）每步算、稳定期（$t_s\leq t< t_f$）每 $\alpha$ 步算一次其余复用、末期（$t\geq t_f$）每步算，稳定期起点用 $\frac{\|v_t-v_{t+1}\|}{\|v_0-v_1\|} < k$ 阈值检测（论文取 $k=0.4,\alpha=8, m=3$）。因为缓存只发生在 velocity 真正平稳的中段，所以在砍掉 61.2% 生成时间的同时质量基本不掉（消融 26.5 vs 27.0），证明这段计算冗余可以被工程级利用。
+选出子集后，对每条视频做迁移。只改 caption 会让物体几何漂移、机械臂关键位姿失真，动作就丢了；只给 depth 又缺语义多样性。所以本文用两个互补条件分头承担"看起来不一样"和"做的事一样"。语义侧：VideoChat2 先抽时序 caption 描述交互、对象与空间关系，Qwen3-8B 再把背景、物体颜色等可变要素改写出多样性、同时保留任务意图。几何侧：从原视频抽 depth map 当稳定几何约束（比 edge/blur/seg 都更保几何）。最后 Cosmos-Transfer 2.5 在"新 caption + depth"上迭代去噪，生成视觉风格大改、动作轨迹不变的真实化视频。这样仿真数据的视觉与环境多样性被补上，但每一帧的机械臂动作仍严格对应原轨迹。
 
-**3. Difficulty × Diversity 的 Coreset 采样：只挑"难且独特"的轨迹来增广**
+**3. 三段式 Velocity Caching：复用扩散中段几乎不变的 velocity**
 
-单看 difficulty 容易扎进某个 hard cluster，单看 diversity 又会把简单水任务拉进来，两者都浪费生成预算。本文把 $\mathbb{D}^2$ Pruning 扩展到视频：难度 $x_i = \frac{1}{|\mathcal{T}_i|}\sum_{t}\mathcal{L}_{\text{policy}}(s_i^{(t)};\theta)$ 用 RDT-1B 的策略损失估（task-aware），多样性用 Cosmos-Embed1 给每条轨迹 768 维嵌入 $\phi(s_i)$、以 RBF 核 $e_{i,j}=\exp(-\gamma_f\|v_i-v_j\|^2)$ 建 kNN 图（task-agnostic）。前向消息传递把邻域难度聚合 $x_i' = x_i + \sum_{j\in\mathcal{N}(i)}e_{i,j}\cdot x_j$，贪心选最高 $x_i'$，再用反向消息抑制相似邻居的分数避免冗余。用 task-aware 损失估难度、task-agnostic 嵌入估多样性，正好避开了"难的全是相似失败模式"和"多样但都是水任务"两个极端，于是 10% 预算就能逼近全量增广效果。
+迁移里最贵的是 Cosmos-Transfer 的迭代去噪（A100 上一个 5 秒 720p 视频要 40 分钟），velocity 预测占单步运行时间 70%+。通用 caching（如 DeepCache）默认去噪两端都重要，没对准扩散动力学的真实曲线。作者实测 flow-based 视频扩散的 $\|v_{t+1}-v_t\|$ 时序曲线后发现一个三段式动态：初期变化剧烈、中段几乎平稳、末尾再微调，正对应"画轮廓 → 细化 → 收尾"的去噪节奏。于是把 $N$ 步去噪切成三段：初期（$t<t_s$）每步算、稳定期（$t_s\leq t< t_f$）每 $\alpha$ 步算一次其余复用、末期（$t\geq t_f$）每步算，稳定期起点用 $\frac{\|v_t-v_{t+1}\|}{\|v_0-v_1\|} < k$ 阈值检测（论文取 $k=0.4,\alpha=8, m=3$）。因为缓存只发生在 velocity 真正平稳的中段，所以在砍掉 61.2% 生成时间的同时质量基本不掉（消融 26.5 vs 27.0），证明这段计算冗余可以被工程级利用。
 
 ### 损失函数 / 训练策略
 不改 VLA 本体损失，只是把训练集换成原始仿真 + 由 coreset 采样后增广的真实风格视频。论文比较两种混入策略：mixture（保留所有原数据 + 加入增广）和 replacement（用增广直接替换被选中的 coreset）；发现 $\pi_0$ 更受益于 mixture，更强的 $\pi_{0.5}$ 反而更喜欢 replacement——更强模型能扛得住更大的分布平移。

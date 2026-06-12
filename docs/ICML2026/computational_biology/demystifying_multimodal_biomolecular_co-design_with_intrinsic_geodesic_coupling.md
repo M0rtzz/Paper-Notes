@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 GeoCoupling 要解决的是：序列和结构这两种模态在去噪时该按什么节奏推进。作者把这件事抽象成在二维时间方块 $[0,1]^2$（结构时间 $t_r$ × 序列时间 $t_h$）上找一条单调曲线 $\gamma$，使得沿这条曲线训练出的流模型转移能量最低——同步耦合相当于硬选了对角线，而真正的最优往往是一条弯曲的测地线。整套方法是一个嵌套循环：内层固定当前调度 $\gamma$、用常规流匹配目标训练向量场，外层则把训练途中观测到的损失喂给一个高斯过程代理，在线搜出更优的 $\gamma$ 反馈回内层；输入是异质模态先验 $\pi_0 = p(\boldsymbol r) \otimes p(\boldsymbol h)$，输出是从 $\pi_0$ 到联合数据分布 $\pi_1 = p_\text{data}(\boldsymbol r, \boldsymbol h)$ 的耦合流，外加一条学到的时序耦合曲线 $\gamma^*$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["异质模态先验 π0 = p(r) ⊗ p(h)"] --> B
+    subgraph IN["内层（双层优化·训练动力学）"]
+        direction TB
+        B["固定调度 γ，按 γ 采样 (t_r, t_h)<br/>流匹配 MSE 训练向量场 θ"] --> C["把 (t_r, t_h, L) 压入滚动 buffer"]
+    end
+    C --> D
+    subgraph OUT["外层（双层优化·搜索调度）"]
+        direction TB
+        D["高斯过程代理拟合代价曲面<br/>c(t_r,t_h)=平均训练损失（时序最优传输）"] --> E["贝叶斯优化挑候选 + 最短路径解新测地线 γ"]
+        E --> F["EMA 平滑新调度"]
+    end
+    F -->|"反馈回内层"| B
+    F --> G["输出：耦合流 + 时序耦合曲线 γ*（结构先行）"]
+```
+
 ### 关键设计
 
 **1. Temporal Optimal Transport：把"找最优耦合"翻译成"找最低能量测地线"**

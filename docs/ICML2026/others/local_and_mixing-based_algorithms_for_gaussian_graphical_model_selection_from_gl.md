@@ -40,7 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-观测一条连续时间 Glauber 轨迹 $\{\mathbf{Y}^{(t)}\}_{t=0}^T$，每个时间 $S_n$ 随机选一个坐标 $I^{(n)} \in [p]$ 按条件高斯 $\mathcal{N}(\sum_{j\in N(i)} \beta_{ij}X_j^{(n-1)}, \sigma_{X_i|N(i)}^2)$ 更新。数据集 $\mathcal{D} = \{(\mathbf{X}^{(n)}, S_n, I^{(n)})\}_{n=0}^N$。算法目标是恢复底层图 $G$ 的边集 $E$。LET-GL 直接在轨迹上做边-by-边测试；BTR-GL 先 burn-in 丢掉前 $\mathfrak{b}$ 步，再每 $\mathfrak{t}$ 步保留一个样本 $\mathbf{Y}^{(s)} := \mathbf{X}^{(\mathfrak{b}+s\mathfrak{t})}$，然后把 $\{\mathbf{Y}^{(s)}\}$ 当作近似 i.i.d. 高斯样本喂给 DICE 等 i.i.d. 结构学习器。
+观测一条连续时间 Glauber 轨迹 $\{\mathbf{Y}^{(t)}\}_{t=0}^T$，每个时间 $S_n$ 随机选一个坐标 $I^{(n)} \in [p]$ 按条件高斯 $\mathcal{N}(\sum_{j\in N(i)} \beta_{ij}X_j^{(n-1)}, \sigma_{X_i|N(i)}^2)$ 更新。数据集 $\mathcal{D} = \{(\mathbf{X}^{(n)}, S_n, I^{(n)})\}_{n=0}^N$。算法目标是恢复底层图 $G$ 的边集 $E$。同一条轨迹下作者给出两条对偶路线：LET-GL 不假设链已 mix，直接在轨迹上对每条候选边做假设检验；BTR-GL 假设 Dobrushin 条件成立，先 burn-in 丢掉前 $\mathfrak{b}$ 步、再每 $\mathfrak{t}$ 步保留一个样本 $\mathbf{Y}^{(s)} := \mathbf{X}^{(\mathfrak{b}+s\mathfrak{t})}$，把"解相关"后的 $\{\mathbf{Y}^{(s)}\}$ 当作近似 i.i.d. 高斯样本喂给 DICE 等现成 i.i.d. 结构学习器；而这条 reduce 路线能否成立，全压在 Lemma 10 给出的高维 TV mixing 上界上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Glauber 轨迹 D<br/>(状态 X、时间 Sₙ、更新坐标 I)"]
+    A -->|"不假设 mixing"| C
+    A -->|"假设 Dobrushin r<1"| F
+
+    subgraph LET["LET-GL：i,i,j,i 窗口 + 乘积统计量"]
+        direction TB
+        C["切块 + i,i,j,i 窗口<br/>检测更新事件 Uij"] --> D["乘积统计量 ΔYi·ΔYj<br/>条件期望 ∝ βij"]
+        D --> E["与阈值 ρ 比较<br/>逐边假设检验"]
+    end
+
+    subgraph BTR["BTR-GL：burn-in + thinning + 黑箱学习器"]
+        direction TB
+        F["burn-in 丢前 b 步<br/>消除初始化偏置"] --> G["thinning 每 t 步留 1<br/>得近似 i.i.d. 样本"]
+        G --> H["喂给 DICE 等<br/>i.i.d. 结构学习器"]
+    end
+
+    M["TV mixing 上界 (Lemma 10)<br/>保证解相关近 i.i.d."] -.->|理论支撑| BTR
+
+    E --> Z["恢复底层图 G 的边集 E"]
+    H --> Z
+```
 
 ### 关键设计
 

@@ -40,7 +40,23 @@ tags:
 
 这篇论文要同时补两块短板：X 光违禁品分割缺大规模数据，且 SAM 这类通用分割模型直接搬到 X 光上效果很差。数据侧产出 XSeg 数据集，方法侧提出域特化模型 APSAM——核心是把 SAM 冻住，只往里塞两个轻量模块，让它学会"读懂 X 光"和"用好用户的一次点击"。
 
-推理时整条链路是这样转的：X 光图像先过 SAM 的 ViT-L 编码器拿到图像特征，同时 EAE 从图像里抽出双能量物理先验、用它初始化解码器的 query token；操作员在目标上点一下得到 $p_0$，APG 据此先估一个粗 mask，再从中挑出两个更有代表性的点 $(p_1, p_2)$ 替换掉单点；最后 SAM 解码器拿着增强后的提示和被物理先验初始化过的 token 预测最终 mask。
+推理时整条链路是这样转的：X 光图像先过 SAM 的 ViT-L 编码器拿到图像特征，同时 EAE 从图像里抽出双能量物理先验、用它初始化解码器的 query token；操作员在目标上点一下得到 $p_0$，APG 据此先估一个粗 mask，再从中挑出两个更有代表性的点 $(p_1, p_2)$ 替换掉单点；最后 SAM 解码器拿着增强后的提示和被物理先验初始化过的 token 预测最终 mask。（XSeg 数据集是离线的数据侧贡献，为这条推理链路提供训练与评测基座，见关键设计 3。）
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["X 光图像"] --> ENC["SAM ViT-L 编码器<br/>(冻结) → 图像特征"]
+    IMG --> EAE["Energy-Aware Encoder (EAE)<br/>取高能 max / 低能 min 双通道<br/>→ 初始化解码器 query token"]
+    CLICK["操作员单点 p₀"] --> M0
+    subgraph APG["Adaptive Point Generator (APG)"]
+        direction TB
+        M0["粗 mask M₀ → 取 bbox"] --> KM["box 内 K-means (K=2)<br/>取最远点对 → p₁, p₂"]
+    end
+    ENC --> DEC["SAM 解码器"]
+    EAE --> DEC
+    APG --> DEC
+    DEC --> OUT["违禁品分割 mask"]
+```
 
 ### 关键设计
 

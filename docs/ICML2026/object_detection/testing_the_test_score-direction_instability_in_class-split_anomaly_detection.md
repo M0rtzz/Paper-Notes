@@ -51,7 +51,7 @@ tags:
 
 **2. 方向不稳定率 $\rho_{\mathrm{dir}}$ 与反转率 $\rho_{\mathrm{inv}}$：把"AUROC 偏低"和"AUROC 方向不一致"两种失效分开**
 
-单看 AUROC 均值会掩盖"有些类很高、有些类反转"的双峰失效，而后者才是致命的——部署时异常类未知，根本不知道该不该翻符号。作者先给每类定义偏离机会率的符号 $d(c)=\mathrm{sign}(\mathrm{AUC}(c)-1/2)\in\{-1,0,+1\}$（$|\mathrm{AUC}(c)-1/2|\le\epsilon$ 记为 0），再用 $\rho_{\mathrm{dir}}(\epsilon)=1-\frac1K\max\{\sum_c\mathbb I[d(c)=+1],\sum_c\mathbb I[d(c)=-1]\}$ 度量方向投票的不一致：$\rho_{\mathrm{dir}}\to 0$ 表示所有类偏好同一方向、$\to 0.5$ 表示方向五五开。配套还有纯反转率 $\rho_{\mathrm{inv}}=\frac1K\sum_c\mathbb I[\mathrm{AUC}(c)<1/2]$、近随机率 $\rho_{\mathrm{rnd}}(\epsilon)=\frac1K\sum_c\mathbb I[|\mathrm{AUC}(c)-1/2|\le\epsilon]$ 和 AUROC 方差 $\sigma^2_{\mathrm{AUC}}$。$\rho_{\mathrm{dir}}$ 抓住的正是"翻符号也救不了"的那种方向不一致——因为部署时异常类未知，无法知道该不该翻符号。
+单看 AUROC 均值会掩盖"有些类很高、有些类反转"的双峰失效，而后者才是致命的——部署时异常类未知，根本不知道该不该翻符号。作者先给每类定义偏离机会率的符号 $d(c)=\mathrm{sign}(\mathrm{AUC}(c)-1/2)\in\{-1,0,+1\}$（$|\mathrm{AUC}(c)-1/2|\le\epsilon$ 记为 0），再用 $\rho_{\mathrm{dir}}(\epsilon)=1-\frac1K\max\{\sum_c\mathbb I[d(c)=+1],\sum_c\mathbb I[d(c)=-1]\}$ 度量方向投票的不一致：$\rho_{\mathrm{dir}}\to 0$ 表示所有类偏好同一方向、$\to 0.5$ 表示方向五五开。配套还有纯反转率 $\rho_{\mathrm{inv}}=\frac1K\sum_c\mathbb I[\mathrm{AUC}(c)<1/2]$、近随机率 $\rho_{\mathrm{rnd}}(\epsilon)=\frac1K\sum_c\mathbb I[|\mathrm{AUC}(c)-1/2|\le\epsilon]$ 和 AUROC 方差 $\sigma^2_{\mathrm{AUC}}$。这正是 $\rho_{\mathrm{dir}}$ 比"AUROC 偏低"更狠的地方：高 $\rho_{\mathrm{dir}}$ 意味着根本不存在一个固定的符号约定能让所有类的异常一致地排到同一侧，"翻符号"对这种失效无能为力。
 
 **3. 受控实验矩阵 + 假设检验视角：把"基准是否良定"做成可复现的对照设计**
 

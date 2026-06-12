@@ -41,6 +41,24 @@ tags:
 
 DecoVLN 把 VLN 建模为 POMDP 元组 $M=(S,A,T,R,\Omega,O)$，智能体要学一个策略 $\pi(H_t,I)$ 来最大化期望累积奖励。它的核心思路是把过去纠缠在一起的观察、推理、纠错三件事拆开各管各的：观察流在运动中持续感知，用自适应记忆优化（AMR）把高信息密度的帧筛进记忆库；推理流让 LLM 根据指令、当前帧和记忆库一次吐出含多个连续动作的 action chunk；纠错流用基于状态-动作对的微调，给模型装上内省和自我纠正的能力。三者解耦后，既避免了边走边想的高延迟，也让记忆和纠错能各自做到位。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["指令 + 自中心 RGB 帧流"] --> AMR["1. 自适应记忆优化 AMR（观察流）<br/>语义相关性 − 视觉多样性 − 时间覆盖<br/>统一打分迭代选 K=8 帧"]
+    AMR --> MEM["记忆库 M（K=8 帧）"]
+    MEM --> LLM["推理流：LLaVA-Video-7B<br/>指令 + 最近 4 帧 + 记忆库<br/>→ action chunk（4 连续动作）"]
+    LLM --> ROLL["环境执行"]
+    subgraph CF["2. 纠错微调（纠错流）"]
+        direction TB
+        DM{"测地偏差 DM(s_t)"}
+        DM -->|"0 < DM ≤ τ"| EXP["查询专家，存状态-动作对到 D_c"]
+        DM -->|"DM > τ"| ABORT["偏太远：终止并丢弃"]
+        EXP --> FT["纠错微调<br/>混 LLaVA-Video-178K 防遗忘"]
+    end
+    ROLL --> DM
+    FT -.反哺策略.-> LLM
+```
+
 ### 关键设计
 
 **1. 自适应记忆优化 AMR：把"记什么"写成一个可解的打分问题**

@@ -43,6 +43,17 @@ Lemur 将多向量相似性搜索转化为监督学习问题，用一个两层 M
 ### 整体框架
 Lemur 要解决的是「多向量检索精度高但 MaxSim 太慢」这个矛盾，做法是把多向量相似度搜索拆成两步归约：先用一个两层 MLP 把多向量 MaxSim 估计学成一个回归问题，再借助这个 MLP 线性输出层的结构，把检索归约成潜空间里的单向量 MIPS，从而直接复用成熟的 ANNS 索引。落地上分离线、在线两个阶段：离线训练 MLP 并把输出层权重矩阵的每一行作为对应文档的单向量表示存入 ANNS 索引；在线时把所有 query token 过 MLP 隐藏层、求和池化成单向量查询，用 ANNS 取回 $k'$ 个候选，再用精确 MaxSim 重排出最终 top-$k$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["语料库 + ColBERT token 级嵌入"] --> B["MaxSim 监督学习重构<br/>把 MaxSim 估计学成回归 φ(x)=Wψ(x)"]
+    B --> C["线性输出层归约<br/>每行 wⱼ 即文档单向量，检索退化为单向量 MIPS"]
+    C --> D["可扩展两阶段训练<br/>① 采样文档预训练编码器 ψ ② 逐文档 OLS 闭式求 wⱼ，灌入 ANNS 索引"]
+    D --> E["在线：query token 过 ψ 求和池化成单向量 Ψ(X)"]
+    E --> F["ANNS 单向量 MIPS 取 k′ 个候选"]
+    F --> G["精确 MaxSim 重排 → 最终 top-k"]
+```
+
 ### 关键设计
 
 **1. MaxSim 的监督学习重构：把相似度估计变成多输出回归**

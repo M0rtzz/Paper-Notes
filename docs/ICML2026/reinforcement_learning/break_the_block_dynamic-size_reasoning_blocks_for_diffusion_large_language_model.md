@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 b1 是一个加在现有 dLLM GRPO 框架之上的奖励/解码插件，由三件事拼成：(1) 动态块构造——在推理生成里插入特殊 token $\tau_{\text{end}}$，每次出现就关闭当前块、开新块；(2) MED 训练目标——用一个"相邻块熵下降"的代理奖励 $R_{\text{ent}}$ 加上一个"鼓励多步推理"的指示奖励 $R_{\text{ind}}$，与任务奖励 $R_{\text{task}}$ 加权汇总后塞进 Diffu-GRPO；(3) 推理对齐——解码时严格按训练流程，遇到 $\tau_{\text{end}}$ 就动态调整下一块起点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 q + dLLM 底座<br/>(LLaDA / Diffu-GRPO / d1 / wd1)"] --> B
+    subgraph DYN["动态块边界 + 指示奖励 R_ind（设计 1）"]
+        direction TB
+        B["第 k 块块内并行去噪"] --> C["检测块结束 token τ_end<br/>首次出现处定位 → 动态块大小 d"]
+        C --> D["按总块数 K 给 log 形指示奖励 R_ind<br/>鼓励切出足够多的推理步"]
+    end
+    C --> E
+    subgraph MED["块级熵 + MED 代理奖励 R_ent（设计 2）"]
+        direction TB
+        E["在步 t* 取块内 token 香农熵均值<br/>→ 块熵 H(b_k)"] --> F["相邻块熵下降比例作 R_ent<br/>松弛 Spearman，稠密低方差"]
+    end
+    D --> G
+    F --> G
+    G["总奖励 R_total = α·R_ent + β·R_ind + γ·R_task<br/>塞进 diffusion-GRPO 目标（设计 3）"]
+    G -->|策略梯度更新| B
+    G --> H["推理：解码时同样按 τ_end 动态切块<br/>块边界对齐完整推理步"]
+```
+
 ### 关键设计
 
 **1. 动态块边界 + 指示 token 奖励 $R_{\text{ind}}$：让模型自己决定每块多长，使一块恰好覆盖一个完整推理步**

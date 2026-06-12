@@ -37,7 +37,20 @@ tags:
 
 ### 整体框架
 
-ECRD 把幻觉抑制从"训练时学会看图"挪到了"解码时用证据盯着每个 token"。它在一个**冻结**的 LVLM 外面套一层轻量监督逻辑，不改模型权重，而是逐 token 介入采样：先用 knee truncation 把 base 分布里那条又长又平的尾巴砍掉、只留几个真正有竞争力的候选；再让分布监督器拿当前证据池给这几个候选重新打分、和模型原始分布协商出最终概率；只有当协商完仍分不清谁对谁错时，才唤醒视觉决策器回到图像里抠一条新证据补进池子。整条链路上证据始终以**文本**形式累积，因此后面的 token 能直接复用前面看到的东西，而不必反复把图像裁剪重新编码一遍。
+ECRD 把幻觉抑制从"训练时学会看图"挪到了"解码时用证据盯着每个 token"。它在一个**冻结**的 LVLM 外面套一层轻量监督逻辑，不改模型权重，而是逐 token 介入采样：先用 knee truncation 把 base 分布里那条又长又平的尾巴砍掉、只留几个真正有竞争力的候选；再让分布监督器（Distribution Supervisor）拿当前证据池（Dynamic Evidence Pool）给这几个候选重新打分、和模型原始分布协商出最终概率；只有当协商完仍分不清谁对谁错时，才唤醒视觉决策器（Visual Decider）回到图像里抠一条新证据补进池子。整条链路上证据始终以**文本**形式累积，因此后面的 token 能直接复用前面看到的东西，而不必反复把图像裁剪重新编码一遍。整个流程逐 token 循环，证据池随推理链按需从 1 条长到若干条。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 LVLM 解码<br/>当前步输出 base 分布"] --> B["Knee truncation<br/>砍长尾，截到 top-k* 候选"]
+    B --> C["Distribution Supervisor<br/>证据池重加权 + 自适应混合 α=p(1)"]
+    POOL["Dynamic Evidence Pool<br/>初始仅全局描述，按需增长"] -.提供证据.-> C
+    C -->|"Δ > δ 或 k*=1：协商已可决"| F["选出 token<br/>继续下一步解码"]
+    C -->|"k*>1 且 Δ ≤ δ：仍难分"| D["Visual Decider (GRIT)<br/>回图像抠一条文本微证据"]
+    D --> F
+    D -->|"追加微证据"| POOL
+    F -->|"逐 token 循环"| A
+```
 
 ### 关键设计
 

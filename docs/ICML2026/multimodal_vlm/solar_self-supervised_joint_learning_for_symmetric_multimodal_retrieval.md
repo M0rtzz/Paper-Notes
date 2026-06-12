@@ -45,6 +45,27 @@ SOLAR 的编码侧由五个组件构成：vision encoder $\mathcal{E}_V$（如 D
 
 训练分成两个 stage：Stage 1 学一个能可靠区分图文交集与差集的 intersection mask；Stage 2 用该 mask 自动生成正/硬负样本做对比学习。整个流程无需任何人工标注，仅消费 80 万张 LAION-5B 上的无标注图文对。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["图文对 X=(I,T)<br/>单模态编码器 + adapter → 局部特征 V, L"]
+    subgraph S1["Stage 1：学出交集 mask"]
+        direction TB
+        A["交集 mask 生成（设计1）<br/>全局-局部对齐 + 局部蒸馏给信号<br/>→ QDA 自适应阈值 → 进化退火 mask"]
+        B["Masked ITC + Global Distillation（设计2）<br/>掩交集做对齐 + 蒸馏保住差集<br/>闭环逼 mask 变准"]
+        A --> B
+    end
+    subgraph S2["Stage 2：基于分割自动造样本（设计3）"]
+        direction TB
+        C["层次聚类切片 + QDA 阈值<br/>分出交集区 / 差集区"]
+        D["掩交集 → 正样本<br/>掩差集 → 硬负样本"]
+        C --> D
+    end
+    IN --> S1
+    S1 -->|"复用学好的 mask"| S2
+    S2 --> OUT["InfoNCE 对比损失<br/>正样本 + 构造硬负 + in-batch 负 + 离线挖掘硬负<br/>→ 联合嵌入 f"]
+```
+
 ### 关键设计
 
 **1. 交集 mask 生成：用全局-局部对齐 + QDA 自适应阈值，自动标出图文共享的部分（Stage 1 核心）**

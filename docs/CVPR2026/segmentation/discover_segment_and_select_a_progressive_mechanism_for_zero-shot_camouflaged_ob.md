@@ -36,6 +36,24 @@ tags:
 ### 整体框架
 DSS 想绕开零样本伪装分割里"MLLM 定位不准"这个老瓶颈——伪装目标和背景太像，MLLM 给的 bbox 偏、多实例时还只盯最显眼那个。它把任务拆成三步渐进式 pipeline：**Discover** 用自监督视觉特征的聚类（而非 MLLM）发现前景、生成 bbox；**Segment** 把 bbox 喂给 SAM 产出一批候选 mask；**Select** 先用启发式评分粗筛、再让 MLLM 做成对比较选出最优。全程 zero-shot、training-free，不需要任何微调或标注。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B
+    subgraph FOD["Discover：特征一致前景发现 (FOD)"]
+        direction TB
+        B["自监督编码器提 patch 特征<br/>Leiden 聚类初分前景/背景"] --> C["Part Composition (PC)<br/>按前/背景中心距离迭代精炼<br/>能量收敛即停"]
+        C --> D["Similarity-based Box Gen (SBG)<br/>相似度图阈值提框<br/>Pearson(τ=0.95) 去冗余"]
+    end
+    D --> E["Segment：bbox 交给 SAM<br/>每个框产候选 mask → 候选集 M_FOD"]
+    E --> F
+    subgraph SMS["Select：语义驱动 mask 选择 (SMS)"]
+        direction TB
+        F["启发式评分<br/>相似一致性 + 边界惩罚 → Top-K"] --> G["MLLM 迭代成对比较<br/>从低分到高分两两选优"]
+    end
+    G --> H["最优伪装目标 mask"]
+```
+
 ### 关键设计
 
 **1. Discover（FOD）：用聚类替 MLLM 做定位**

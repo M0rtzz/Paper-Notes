@@ -45,7 +45,28 @@ tags:
 1. **不稳定带形式化**：定义合规概率 $\pi_\theta(x) := \mathbb{E}_{Y\sim p_\theta(\cdot|x)}[C(Y)]$，并用阈值 $\tau_-, \tau_+$ 把输入空间切成稳定拒绝 $\mathcal{S}$、稳定合规 $\mathcal{U}$ 和不稳定带 $\mathcal{I}$；
 2. **多指标诊断**：在每个 prompt 上采样 $M$ 次，统计 ASR、token 熵 $H_\mathrm{tok}$、语义熵 $H_\mathrm{sem}$、HiddenDetect 信号 $HD_{\max}$、Refusal Direction 信号 $RD_{\max}$ 五维特征；
 3. **语义重写阶梯实验**：把每条恶意 query 改写五个层级（Original→Minor→Moderate→High→Semantic），扫出指标随上下文扩散程度的轨迹；
-4. **Furina 攻击构造**：把原始恶意意图分解成若干"保留意图"的语义漂移子问题，再生成一个隐喻场景描述作为上下文锚；文本-only 模型直接吃子问题，MLLM 则把场景描述渲染成排版图或扩散图像与文本一起喂入。
+4. **Furina 攻击构造**：把原始恶意意图分解成若干"保留意图"的语义漂移子问题，再生成一个隐喻场景描述作为上下文锚；文本-only 模型直接吃子问题，MLLM 则把场景描述渲染成排版图或扩散图像与文本一起喂入；最后由调度 LLM 把各子问题的零散回答综合回完整危险信息。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["恶意 query x<br/>+ 语义重写阶梯 Original→Semantic"] --> SAMPLE
+    subgraph DIAG["诊断框架：不稳定带刻画 + 外-内解耦签名"]
+        direction TB
+        SAMPLE["重复采样 M=8 次<br/>估合规概率 πθ(x)"] --> BAND["三区划分<br/>稳定拒绝 S / 不稳定带 I / 稳定合规 U"]
+        SAMPLE --> METRIC["五维指标<br/>外:Htok·Hsem 内:HDmax·RDmax + ASR"]
+        METRIC --> SIG["解耦签名<br/>外噪声↑ 而内安全信号↓"]
+    end
+    SIG -->|把诊断签名反过来当攻击目标| DECOMP
+    subgraph FURINA["Furina 攻击：语义漂移子问题 + 隐喻场景锚"]
+        direction TB
+        DECOMP["Stage1 调度 LLM 拆解<br/>K 个语义漂移子问题 + 隐喻场景 s"] --> PROBE["Stage3 逐子问题 query 目标模型"]
+        DECOMP -->|MLLM 才走| VIS["Stage2 场景渲染成<br/>typographic / 扩散图像"]
+        PROBE --> SYN["Stage3 调度 LLM 综合零散回答<br/>拼回完整危险信息"]
+        VIS --> SYN
+    end
+    SYN --> OUT["越狱输出<br/>目标被推入不稳定带 I"]
+```
 
 ### 关键设计
 
@@ -59,7 +80,7 @@ tags:
 
 **3. Furina：语义漂移子问题 + 隐喻场景锚——把诊断指标反过来当攻击目标**
 
-既然不稳定带的指纹是"$H_\mathrm{tok}$ 与上下文复杂度被放大"，那攻击就不必再逐模型搜对抗 token，直接去定向制造这个指纹即可。Furina 用一个调度 LLM 把原始恶意 query 拆成多条"意图保留 + 语义漂移"的子问题（每条单看都偏离原意，组合起来仍指向同一危险信息），并生成一个隐喻场景描述当粘合上下文；纯文本模型直接吃这些子问题，MLLM 则把场景描述要么作为合成 anchor、要么渲染成 typographic 图或扩散生成图像，与文本一起喂入形成跨模态输入，让模态错配进一步放大 $H_\mathrm{tok}$。因为它完全靠 prompt 工程产生不稳定信号、不碰目标模型权重，所以天然跨模型族转移——相比 AmpleGCG / PAIR / AutoDAN 这些要梯度或迭代搜索的攻击，Furina 在 $H_\mathrm{tok}$（0.396）上高过所有基线，ASR 达到 0.86。
+既然不稳定带的指纹是"$H_\mathrm{tok}$ 与上下文复杂度被放大"，那攻击就不必再逐模型搜对抗 token，直接去定向制造这个指纹即可。Furina 用一个调度 LLM 把原始恶意 query 拆成多条"意图保留 + 语义漂移"的子问题（每条单看都偏离原意，组合起来仍指向同一危险信息），并生成一个隐喻场景描述当粘合上下文；纯文本模型直接吃这些子问题，MLLM 则把场景描述要么作为合成 anchor、要么渲染成 typographic 图或扩散生成图像，与文本一起喂入形成跨模态输入，让模态错配进一步放大 $H_\mathrm{tok}$。整条攻击按三阶段跑（对应 Algorithm 1）：调度 LLM 先把恶意意图拆成结构化表示再生成 $K$ 个安全中立子问题与场景描述（Stage 1）、MLLM 才走的场景可视化（Stage 2）、用每条子问题逐一查询目标模型并由调度 LLM 把这些零散回答重新综合（SYNTHESIZE）成完整危险信息（Stage 3）。关键在于单看每条子问题、每个回答都人畜无害，危险只在最终综合时才浮现——这正是它绕过逐 token 检测的根本原因。因为它完全靠 prompt 工程产生不稳定信号、不碰目标模型权重，所以天然跨模型族转移——相比 AmpleGCG / PAIR / AutoDAN 这些要梯度或迭代搜索的攻击，Furina 在 $H_\mathrm{tok}$（0.396）上高过所有基线，ASR 达到 0.86。
 
 ### 评判与采样设置
 诊断阶段使用二元 safety judge（nucleus 采样 $T=0.8, p=0.9, M=8$）；主实验在 HarmBench 与 MM-SafetyBench 上使用更严格的 rubric-based judge；两类 judge 的 prompt 在附录 A.2、B.8 中给出。

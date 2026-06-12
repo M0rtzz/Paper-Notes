@@ -43,6 +43,18 @@ AgentEval 把 agent 执行轨迹建模成「评估 DAG」，对每个节点用 G
 ### 整体框架
 AgentEval 是一套与 OpenTelemetry 兼容的 sidecar 评估服务，输入是一条 agent 执行 trace、输出是带根因归因的步级质量报告。一条 trace 进来后先被解析成「评估 DAG」$\mathcal{G}=(V,E,\tau,\mathcal{M})$，其中节点类型 $\tau$ 取自 5 元集 $\{\text{Plan, ToolSel, ParamGen, Exec, Synth}\}$，每类节点各配一组指标；接着 GPT-4o 判官按拓扑序逐节点用 1-5 rubric 打分，失败节点沿依赖链追溯到根因；再把失败映射到 3 层 21 类的失败类目供事后聚类；最后这套能力封进 CI/CD 回归套件，用配对显著性检验阻塞有回归的部署。整条链路把软件工程里的 spectrum-based fault localization 思想搬到 agent trace，用 LLM-as-judge 替换硬规则做语义评分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["agent 执行 trace<br/>OpenTelemetry sidecar 输入"] --> B["评估 DAG 与边界处理<br/>解析为 5 类节点（Plan/ToolSel/ParamGen/Exec/Synth）"]
+    B --> C["类型自适应 LLM-as-judge 与不对称 prompt<br/>GPT-4o 按拓扑序逐节点 1-5 打分"]
+    C -->|"q < θ 判失败"| D["贪心父节点追溯根因<br/>选最低分父节点为传播源（属评估 DAG 设计）"]
+    C -->|"q ≥ θ 通过"| G["步级质量报告<br/>带根因归因输出"]
+    D --> E["三层失败类目 + 反事实根因验证<br/>3 层 21 类 + 替换 gold 验真因"]
+    E --> F["CI/CD 回归套件<br/>paired bootstrap 阻塞回归部署"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 评估 DAG 与三类边界处理：让每个失败带上可追溯的依赖上下文**

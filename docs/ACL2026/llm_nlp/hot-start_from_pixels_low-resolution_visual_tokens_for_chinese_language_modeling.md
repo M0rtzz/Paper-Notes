@@ -53,6 +53,17 @@ $$\mathcal{L}_{CE} = -\frac{1}{N}\sum_{i=1}^N \sum_{t=1}^T \log P(c_{t+1}^{(i)}|
 
 （行内可读作 $\mathcal{L}_{CE} = -\frac{1}{N}\sum_i \sum_t \log P(c_{t+1}|I_{\le t})$。）
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    C["中文字符"] --> ID["离散 ID → ID embedding<br/>(index 基线路径)"]
+    C --> R["渲染 8×8 灰度图<br/>(Vision-100% / 80% / 50% 裁剪施压)"]
+    R --> ENC["极低分辨率 visual encoder<br/>ResNet + Vision Adapter → visual embedding"]
+    ID --> DEC["共享 GPT-2-small 解码器<br/>(visual-in, token-out)"]
+    ENC --> DEC
+    DEC --> OUT["字符 ID 上 softmax<br/>next-character 预测"]
+```
+
 ### 关键设计
 
 **1. 极低分辨率可学的 visual encoder：证明视觉表示不是靠堆参数赢**

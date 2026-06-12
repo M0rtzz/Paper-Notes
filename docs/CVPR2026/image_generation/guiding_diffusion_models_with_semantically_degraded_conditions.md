@@ -47,7 +47,19 @@ CDG 将 CFG 公式中的空提示 $\emptyset$ 替换为语义退化的条件 $\b
 
 $$D_\theta^{\text{CDG}}(\boldsymbol{x}_\sigma;\sigma,\boldsymbol{c}) = D_\theta(\boldsymbol{x}_\sigma;\sigma,\boldsymbol{c}) + (w-1)\big(D_\theta(\boldsymbol{x}_\sigma;\sigma,\boldsymbol{c}) - D_\theta(\boldsymbol{x}_\sigma;\sigma,\boldsymbol{c}_{\text{deg}})\big)$$
 
-构建 $\boldsymbol{c}_{\text{deg}}$ 的流程：① 从指定 Transformer block $\lambda_{\text{block}}$ 提取自注意力图 → ② 建图并用 Weighted PageRank (WPR) 计算 token 重要性 → ③ 按分层退化策略生成二值 mask → ④ 对原条件与空条件做 masked interpolation。
+构建 $\boldsymbol{c}_{\text{deg}}$ 的流程：① 从指定 Transformer block $\lambda_{\text{block}}$ 提取自注意力图 → ② 建图并用 Weighted PageRank (WPR) 计算 token 重要性 → ③ 按分层退化策略生成二值 mask → ④ 对原条件与空条件做 mask 插值（masked interpolation）得到 $\boldsymbol{c}_{\text{deg}}$，再代回上式做引导。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本条件 c<br/>编码器 token 序列"] --> B["取自注意力图<br/>指定 block λ_block"]
+    B --> C["Weighted PageRank 重要性排序<br/>建有向图迭代算 token 分数"]
+    C --> D["分层退化生成 mask<br/>R_deg≤1 退内容 token，R_deg>1 再退上下文聚合 token"]
+    D --> E["mask 插值<br/>c_deg = m⊙c + (1−m)⊙∅"]
+    A --> F["共模抑制引导<br/>D(c) + (w−1)·(D(c) − D(c_deg))"]
+    E --> F
+    F --> G["去噪输出"]
+```
 
 ### 关键设计
 

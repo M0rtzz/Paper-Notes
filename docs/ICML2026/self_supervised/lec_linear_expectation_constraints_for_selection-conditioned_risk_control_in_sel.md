@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 单模型 LEC 接受 4 步：(1) 模型 $\mathcal{G}^{(a)}$ 在校准集 $\mathcal{D}_{\mathrm{cal}}=\{(u_i^{(a)},\mathrm{err}_i^{(a)})\}_{i=1}^n$ 上跑出不确定度 $u_i$ 和错误指示 $\mathrm{err}_i$；(2) 把候选阈值 $\lambda$ 对应的接受样本计数 $k(\lambda)=\#\{i: u_i \le \lambda\}$ 代入有限样本充分条件 $\sum_{j=1}^{k(\lambda)}(\mathrm{err}_{(j)} - \alpha) \le -1$（按 $u_i$ 升序）；(3) 取所有可行 $\lambda$ 中**最大**的那个作为 $\hat{\lambda}$，最大化测试期接受率；(4) 测试时新样本 $u_{n+1} \le \hat{\lambda}$ 才接受，否则拒答。两模型路由把同一原理推广到 $(\lambda^{(a)}, \lambda^{(b)})$ 联合搜索，再以系统级接受率最大化挑出最优对。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["校准集：不确定度 u_i + 错误指示 err_i"] --> B["比值约束 → 线性期望约束<br/>SCER≤α ⇔ E[Z−αS]≤0"]
+    B --> C
+    subgraph S2["有限样本充分条件 + 可行阈值集"]
+        direction TB
+        C["按 u 升序累积 Σ(err−α) ≤ −1"] --> D["可行阈值集 Λα 中取最大 λ̂"]
+    end
+    D -->|单模型可行| E["测试：u_{n+1} ≤ λ̂ → 接受，否则拒答"]
+    D -->|不可行 / 接受率低| F["两模型路由的联合阈值标定<br/>对系统级 (S,Z) 用同一约束，联搜 (λ̂a, λ̂b) 最大化系统接受率"]
+    F --> G["测试：primary 接受 → 升级 secondary → 都不收则拒答"]
+```
+
 ### 关键设计
 
 **1. 从比值约束到线性期望约束：把条件概率目标改写成一条线性不等式**

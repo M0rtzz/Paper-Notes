@@ -40,7 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文有两条主线。评测主线是 BRIGHT-PRO：从 BRIGHT 的 StackExchange subset 出发，专家为每个查询标注 reasoning aspects、重要性权重和对应正例文档，再用静态 α-nDCG / A-Recall 以及 agentic search 协议评估检索器。训练主线是 RTriever-Synth：从 MS MARCO seed query 生成 DeepResearch-style analytical queries，生成参考答案并分解为互补 reasoning aspects，再为每个 aspect 合成 positive passage 和 positive-conditioned hard negative，最后用这些数据 LoRA 微调 Qwen3-Embedding-4B 得到 RTriever-4B。
+本文有两条主线。评测主线是 BRIGHT-PRO：从 BRIGHT 的 StackExchange subset 出发，专家为每个查询标注 reasoning aspects、重要性权重和对应正例文档，再用静态 α-nDCG / A-Recall 以及 agentic search 协议评估检索器。训练主线是 RTriever-Synth：从 MS MARCO seed query 生成 DeepResearch-style analytical queries，生成参考答案并分解为互补 reasoning aspects，再为每个 aspect 合成 positive passage 和 positive-conditioned hard negative，最后用这些数据 LoRA 微调 Qwen3-Embedding-4B 得到 RTriever-4B。两条主线最终汇到同一套静态 + agentic 双评测协议上，由它把「证据组合覆盖」对最终答案的价值显式量化出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["BRIGHT-PRO 多方面证据标注"]
+        direction TB
+        A["BRIGHT StackExchange 子集"] --> B["专家拆 reasoning aspects<br/>配 rationale + 重要性权重"]
+        B --> C["重审正例：删弱相关 / 合并重叠 / 补新证据"]
+    end
+    subgraph TRAIN["RTriever-Synth 与 RTriever-4B 训练"]
+        direction TB
+        D["MS MARCO 抽 140K query"] --> E["改写成 DeepResearch query<br/>+ 生成参考答案"]
+        E --> F["答案分解为 2-3 个互补 aspect"]
+        F --> G["每 aspect 造正例 + 缺角 hard negative"]
+        G --> H["LoRA 微调 Qwen3-Embedding-4B<br/>得 RTriever-4B"]
+    end
+    subgraph EVAL["静态与 agentic 双评测协议"]
+        direction TB
+        I["静态：α-nDCG@k / Weighted Aspect Recall"]
+        J["agentic：LLM agent 迭代搜索<br/>固定 / 自适应轮次 AER"]
+    end
+    BENCH --> EVAL
+    H --> EVAL
+    EVAL --> K["结论：证据组合覆盖 > 单篇相关性"]
+```
 
 ### 关键设计
 

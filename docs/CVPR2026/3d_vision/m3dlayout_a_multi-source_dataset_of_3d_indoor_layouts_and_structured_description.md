@@ -42,6 +42,26 @@ tags:
 
 这篇工作要解决的是文本驱动 3D 场景生成"没有好训练数据"的问题，所以核心产出是一个数据集而非新模型。整条流水线分三步走：先从三类来源各自收集并清洗 3D 室内布局，再给每个布局配上分层的结构化文本描述，最后用扩散和自回归两条主流路线把数据集跑成可对比的 benchmark。前两步决定数据质量与可控性，第三步只是给后续研究提供基线参照。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph SRC["三源融合（清洗后合流）"]
+        direction TB
+        A["Matterport3D<br/>真实扫描·杂乱但覆盖不全"]
+        B["3D-FRONT<br/>专业设计·规整但缺小物件"]
+        C["Inf3DLayout<br/>程序化生成·小物件丰富"]
+    end
+    SRC --> D["M3DLayout 布局库<br/>21,367 布局 / 433k+ 物体"]
+    D --> E["三层文本标注<br/>全局场景 → 大家具 → 小物件"]
+    E -->|"GPT-4o / 规则模板 + 人工抽审"| F["结构化文本-布局数据集"]
+    F --> BENCH
+    subgraph BENCH["双基线 benchmark"]
+        direction TB
+        G["DIFF-M3DLayout<br/>扩散·DiffuScene 架构"]
+        H["AR-M3DLayout<br/>自回归·Transformer"]
+    end
+```
+
 ### 关键设计
 
 **1. 三源融合：用真实性、规范性、多样性互相补短板**

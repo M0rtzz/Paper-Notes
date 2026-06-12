@@ -42,7 +42,25 @@ tags:
 ### 整体框架
 对任意 TSF 模型 $M_\theta$，输入 $X \in \mathbb R^{L\times D}$ 在历史区间 $T_X$，输出 $\hat Y \in \mathbb R^{H\times D}$ 在未来区间 $T_Y$，可以分解为：
 $$M_\theta: X \xrightarrow{f^{\text{pre}}_{\theta_{\text{pre}}}} X_{\text{pre}} \xrightarrow{f^{\text{dyn}}_{\theta_{\text{dyn}}}} \tilde Y \xrightarrow{f^{\text{post}}_{\theta_{\text{post}}}} \hat Y$$
-其中 $f^{\text{dyn}}$ 是把时间从 $T_X$ 推向 $T_Y$ 的 DYN 函数（橙色，唯一负责"未来预测"），$f^{\text{pre}}, f^{\text{post}}$ 是 PRO 函数（蓝色，停在输入时间区间内做特征提取/上下采样）。可逆归一化等不进入命名法。作者按"DYN 是否完整可学 + PRO 配置形态"对 16 个模型分类，对照 TFB benchmark 多元 TSF 排名，发现规律。
+其中 $f^{\text{dyn}}$ 是把时间从 $T_X$ 推向 $T_Y$ 的 DYN 函数（橙色，唯一负责"未来预测"），$f^{\text{pre}}, f^{\text{post}}$ 是 PRO 函数（蓝色，停在输入时间区间内做特征提取/上下采样）。可逆归一化等不进入命名法。作者按"DYN 是否完整可学 + PRO 配置形态"对 16 个模型分类，对照 TFB benchmark 多元 TSF 排名抽出两条规律，再用反事实手术验证。整条研究链路如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DECOMP["PRO-DYN 三段命名法<br/>（Allen 区间代数贴标签 + 对照排名抽规律）"]
+        direction TB
+        A["输入 X（历史区间 T_X）"] --> B["f_pre：PRO 前处理<br/>停在历史区间做特征/采样"]
+        B --> C["f_dyn：DYN 动力学<br/>把时间推向未来（唯一负责预测）"]
+        C --> D["f_post：PRO 后处理"]
+        D --> E["输出预测序列（未来区间 T_Y）"]
+        E --> F["对照 TFB 排名抽 feature"]
+    end
+    F -->|得两条规律| G["规律：DYN 须①完整可学 ②放在末端"]
+    G --> H["LTSF-Linear ≈ 松弛版线性时延动力系统<br/>解释 shallow 模型为何能赢"]
+    H --> I["可学习线性 DYN 注入实验<br/>反事实验证两条规律"]
+    I -->|"RQ1：给差生补一层线性 DYN"| J["性能上升 ✓"]
+    I -->|"RQ2：DYN 挪到前端 → DYN-POST"| K["性能下降 ✓"]
+```
 
 ### 关键设计
 

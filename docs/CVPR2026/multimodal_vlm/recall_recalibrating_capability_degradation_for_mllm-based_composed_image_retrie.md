@@ -41,7 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ReCALL要解决的是同一个尴尬：MLLM本来会逐步推理，可一旦被压成单个检索embedding，那些细粒度推理能力就废了。它不去改检索范式，而是绕一圈把基座MLLM自己的推理能力"找回来"喂给检索器。整条管线分四步走：先用标准对比学习从基座MLLM $\mathcal{F}$ 训出一个基线检索器 $\mathcal{R}_{\text{base}}$；再让 $\mathcal{R}_{\text{base}}$ 自己在训练集上跑一遍，把它搞错的样本挑出来（诊断）；然后请 $\mathcal{F}$ 用CoT推理为这些错例写出"纠正版"指令、组成新三元组并过滤（生成）；最后把原始三元组和纠正三元组放进同一组继续对比训练，得到精炼后的 $\mathcal{R}_{\text{refine}}$（精炼）。整个框架与具体骨干无关，换个MLLM也照样跑。
+ReCALL要解决的是同一个尴尬：MLLM本来会逐步推理，可一旦被压成单个检索embedding，那些细粒度推理能力就废了。它不去改检索范式，而是绕一圈把基座MLLM自己的推理能力"找回来"喂给检索器。整条管线分四步走：先用标准对比学习从基座MLLM $\mathcal{F}$ 训出一个基线检索器 $\mathcal{R}_{\text{base}}$（脚手架）；再让 $\mathcal{R}_{\text{base}}$ 自己在训练集上跑一遍，把它搞错的样本挑出来（诊断）；然后请 $\mathcal{F}$ 用CoT推理为这些错例写出"纠正版"指令、组成新三元组并过滤（生成）；最后把原始三元组和纠正三元组放进同一组继续对比训练，得到精炼后的 $\mathcal{R}_{\text{refine}}$（精炼）。下面三个关键设计正对应诊断、生成、精炼三个贡献阶段（Stage 1 只是把生成式MLLM转成检索器的常规起点，不算本文创新）；整个框架与具体骨干无关，换个MLLM也照样跑。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["基座 MLLM ℱ"] -->|"Stage 1 标准对比微调（脚手架）"| RB["基线检索器 ℛ_base"]
+    subgraph S1["自引导信息性实例挖掘（Stage 2 诊断）"]
+        direction TB
+        D1["ℛ_base 跑训练集检索<br/>丢掉已答对的 query"] --> D2["对失败 case 捞排在目标前的<br/>Top-K 错排图 = 信息性实例 I_h"]
+    end
+    subgraph S2["生成式校准（Stage 3 生成）"]
+        direction TB
+        G1["CoT 拆原子意图<br/>在 (参考图, 错例) 上逐条验证"] --> G2["只重写违反的意图<br/>得最小编辑纠正指令 → 纠正三元组"]
+        G2 --> G3["VQA 反问关键属性<br/>过滤低置信三元组"]
+    end
+    subgraph S3["分组对比精炼（Stage 4 精炼）"]
+        direction TB
+        R1["原始三元组 + 纠正三元组<br/>塞进同一微组 micro-group"] --> R2["InfoNCE 守全局 + 组内 Triplet<br/>把目标从信息性实例上拉开"]
+    end
+    RB --> D1
+    D2 --> G1
+    G3 --> R1
+    R2 --> RF["精炼检索器 ℛ_refine"]
+```
 
 ### 关键设计
 

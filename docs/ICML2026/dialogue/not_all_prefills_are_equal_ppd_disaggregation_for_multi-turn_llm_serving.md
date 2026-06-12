@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 PPD 要解决的问题是：多轮对话里每个 Turn 2+ 都得把整段历史送回 P 节点重算 KV 再传回 D，既慢又把网络打满。它的做法是不动 vLLM 的 KV 协议，只在调度层加一个二元开关——让 D 节点根据 SLO 权重自己决定要不要把这一轮的 append-prefill 留在本地处理。整套系统拆成离线和在线两段：离线在一个粗粒度的工作负载网格上把"本地处理"与"送回 P"两种走法都实测一遍、按收益打分存成布尔表；在线则把每个进来的请求量化到最近的网格单元、毫秒级查表拿决策，传统 PD 不过是这张表恒取 $x{=}0$ 时的特例。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["微基准：append-prefill 仅拖慢 decode ≈2%<br/>full-prefill ≈48%（干扰非对称性）"]
+    A --> B["离线建表：工作负载网格逐 cell<br/>实测 x=0 送回 P 与 x=1 本地 AP 的 TTFT / TPOT"]
+    B --> C["打分函数 S = w_ttft·Δttft − w_tpot·Δtpot<br/>按符号存布尔决策表 x*=1[S>0]"]
+    C --> D["在线查表：Turn 2+ 请求量化到最近 cell<br/>毫秒级取回预存决策 x*"]
+    D -->|"x=1"| E["D 节点本地处理 append-prefill"]
+    D -->|"x=0"| F["送回 P 节点重算并回传 KV"]
+    E --> G["响应（Turn 1 无缓存，强制 x=0）"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. Append-prefill 与 full-prefill 的干扰非对称性：戳破"所有 prefill 都重度干扰 decode"的前提**

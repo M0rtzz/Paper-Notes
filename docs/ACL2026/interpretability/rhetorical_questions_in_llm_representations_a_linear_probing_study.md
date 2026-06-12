@@ -44,6 +44,30 @@ tags:
 
 本文不训练新模型，而是把预训练 LLM 当作待解剖的对象：给定一句话，抽取它在各层的 last-token 隐藏表征，先投影到 64 维 PCA 空间降噪，再用三种线性探针判断它是反问句还是信息寻求问句。关键不在于探针能不能分对，而在于把同一份表征喂给不同探针、或把一个数据集上学到的方向搬到另一个数据集上时，这些方向是否指向同一处——因此整条流水线的输出不是一个准确率，而是 AUROC、方向余弦相似度、Spearman 秩相关、Jaccard 重叠四组指标的对照。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入句子<br/>反问句 vs 信息寻求问句"] --> B["抽取各层 last-token 隐藏表征"]
+    B --> C["投影到 PCA-64 空间降噪"]
+    C --> D
+    subgraph D["三种线性探针并置"]
+        direction TB
+        D1["diffMean：两类均值之差"]
+        D2["逻辑回归：交叉熵目标"]
+        D3["线性 SVM：hinge 间隔目标"]
+    end
+    D --> E
+    subgraph E["四维指标体系"]
+        direction TB
+        E1["AUROC：分类性能"]
+        E2["余弦相似度：方向是否对齐"]
+        E3["Spearman 秩相关：全样本排序一致性"]
+        E4["Jaccard 重叠：极端样本一致性"]
+    end
+    E --> F["跨数据集迁移<br/>探针映射回原始嵌入空间，RQ↔SRAQ 互搬"]
+    F --> G["结论：反问句由多个异构线性方向编码"]
+```
+
 ### 关键设计
 
 **1. 三种线性探针并置：把"可分"和"方向唯一"拆开看**

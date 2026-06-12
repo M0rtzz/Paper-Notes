@@ -43,6 +43,22 @@ Red-Bandit 分为训练和推理两部分。训练阶段，系统为每种攻击
 ### 整体框架
 给定目标 LLM $\mathcal{T}$ 和 prompt space $\mathcal{P}$，自动化红队的目标是寻找能暴露不安全响应的测试 prompt。Red-Bandit 不直接在 token 空间做搜索，而是在风格专家集合 $\mathcal{A}=\{1,\ldots,K\}$ 上做选择。每个 arm 对应一个 LoRA expert，例如角色扮演、技术术语、假设场景、情绪操纵等风格类别。选定 arm 后，对应 expert 生成一个候选测试 prompt，目标模型响应，再由安全评估器给出二元或标量 reward，bandit 用该 reward 更新选择策略。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["10 类攻击风格<br/>(Rainbow Teaming taxonomy)"] --> TRAIN
+    subgraph TRAIN["风格专用 LoRA experts + GRPO 后训练"]
+        direction TB
+        B["每风格训一个 LoRA 专家<br/>Mistral-7B 基座 + 风格 token"] --> C["GRPO 规则奖励后训练<br/>Llama Guard 判定 reward，免 value model"]
+    end
+    C --> D["Bandit-guided inference<br/>从 K 个风格专家中选一个 arm"]
+    D --> E["选中专家生成候选测试 prompt"]
+    E --> F["黑盒目标模型 T 响应"]
+    F --> G["安全评估器给 reward<br/>(Llama Guard-1B)"]
+    G -->|更新该 arm 收益估计| D
+    G --> H["输出 ASR@10 + 脆弱风格分布"]
+```
+
 ### 关键设计
 **1. 风格专用 LoRA experts：把"多样风格"从一个模型的负担拆成多个专家的分工**
 

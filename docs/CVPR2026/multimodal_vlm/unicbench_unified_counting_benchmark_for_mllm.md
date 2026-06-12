@@ -45,6 +45,29 @@ tags:
 
 UNICBench要解决的是「计数」这件事在多模态大模型里没有一把统一标尺的问题——图像、文本、音频三种模态各有各的标注格式和评测协议，结果之间没法横向比。它的做法是把三模态的计数题全部归一成同一种「问题—证据—答案」结构：每道题给出一段输入（一张图、一篇文档或一段音频）、一个自然语言问题、一个整数答案，外加一份可追溯的证据。在这套统一语料之上，再叠两层结构——一是把每道题按「考的是哪种计数能力」和「场景有多难」做交叉打标，二是固定一套评测协议（split、prompt、随机种子都钉死，配模态特定的答案匹配规则），最后按「能力×难度×模态」三维交叉汇报成绩，让人能直接读出某个模型在哪一格塌方。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    subgraph T["三级能力 × 三级难度交叉分类"]
+        direction TB
+        T1["能力轴 L1 Pattern / L2 Semantic / L3 Reasoning"]
+        T2["难度轴 Easy 1–10 / Medium 11–100 / Hard >100"]
+    end
+    A["三模态原始数据<br/>图像 / 文本 / 音频多源采集"]
+    subgraph B["Evidence-first 标注 + 跨模态统一 Schema"]
+        direction TB
+        B1["预处理统一化<br/>点/框/时间戳 → 坐标 / 字符span / 时间戳"] --> B2["双人标注+仲裁<br/>gt_count + 结构化 gt_evidence"]
+    end
+    T -. 每条QA按格子打标 .-> B
+    A --> B
+    B --> C
+    subgraph C["标准化评估协议 + 确定性数字解析"]
+        direction TB
+        C1["固定 split/prompt/seed + 模态特定匹配规则"] --> C2["回复解析整数<br/>MAE / MSE / HitRate / SuccessRate"]
+    end
+    C --> D["能力 × 难度 × 模态<br/>三维交叉汇报"]
+```
+
 ### 关键设计
 
 **1. 三级能力 × 三级难度交叉分类：把「数不对」拆成可定位的格子**

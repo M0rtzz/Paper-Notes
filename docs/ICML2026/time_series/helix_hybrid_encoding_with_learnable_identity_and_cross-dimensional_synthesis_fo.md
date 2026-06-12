@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 输入 $\tilde X \in \mathbb{R}^{T \times F}$ 和缺失掩码 $M$，每个位置拼出 $e_{t,i} \in \mathbb{R}^{d_e}$（值 + 正弦 PE + 身份 + mask），过线性层投影到隐维 $d$ 得到 $H^{(0)}$；接 $L$ 个 Hybrid Encoding Layer，每层输出 4 个分支 $H_T^{(l)}, H_F^{(l)}, H_{TF}^{(l)}, H_{FT}^{(l)}$ 平均得 $H^{(l)}$；最后做 multi-level fusion $\tilde H = \frac{1}{1+4L}(H^{(0)} + \sum_l \text{分支总和})$，过 LayerNorm + 线性层得 $\hat X$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：缺失序列 X̃ + 掩码 M"] --> EMB
+    subgraph EMB["特征身份嵌入（FeatID）"]
+        direction TB
+        E1["每个位置拼接<br/>e = [值 x̃ ; 正弦 PE(t) ; 身份 f_i ; 掩码 m]"] --> E2["线性投影 → 隐表示 H0"]
+    end
+    EMB --> HL
+    subgraph HL["双螺旋 Hybrid 编码层（堆叠 L 层）"]
+        direction TB
+        S1["Stage 1 并行<br/>时间注意力 H_T、特征注意力 H_F 各自独立细化"] --> S2["Stage 2 交叉<br/>H_TF=特征注意力(H_T)、H_FT=时间注意力(H_F)"]
+        S2 --> AVG["四分支取平均 → 该层输出 H_l"]
+    end
+    HL --> FUSE["多层级融合<br/>聚合 H0 与每层四分支输出"]
+    FUSE --> OUT["LayerNorm + 线性层 → 补全结果 X̂"]
+```
+
 ### 关键设计
 
 **1. 特征身份嵌入（FeatID）作为跨特征注意力的软邻接先验：给每个特征发一张永不缺席的 ID 卡**

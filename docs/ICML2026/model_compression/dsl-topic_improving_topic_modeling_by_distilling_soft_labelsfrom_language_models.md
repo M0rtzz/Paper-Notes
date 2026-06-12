@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 这篇论文想在不改主题模型结构、不引入额外训练阶段的前提下，把小语言模型的语义先验灌进神经主题模型的训练里。做法是给同一篇文档 $x$ 配一条固定的主题指令提示 $\pi$，让小语言模型单次前向同时吐出两样东西：一个稠密的"软标签"当训练目标，一个隐藏态当输入表示。具体地，紧跟 prompt 之后那一步的 next-token logits 投影到主题词表 $V$ 上、温度 softmax 得到软标签 $y_{DSL}$，而 prompt 末位置的最后一层隐藏态 $x_{emb} = h_{LM}(x,\pi)$ 直接喂给主题模型 $\mathcal{M}$ (ProdLDA / ECRTM / FASTopic) 推主题比例 $\theta$、输出词表分布 $\hat{y}_\psi(x)$。训练时只把原来的 BoW 重构项换成 $D_{KL}(y_{DSL} \| \hat{y}_\psi)$，模型自带的正则 $\mathcal{R}_{\mathcal{M}}$ 一律保留。整条流水线不训练 LM，软标签可一次性预计算后离线复用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档 x + 主题指令提示 π"] --> B["小语言模型单次前向<br/>(教师, 不训练)"]
+    B -->|"末位 logits 投影到词表 V + 温度 softmax"| C["软标签 y_DSL<br/>稠密语义重构目标"]
+    B -->|"prompt 末位最后一层隐藏态"| D["隐藏态输入 x_emb<br/>与目标同源"]
+    D --> E["主题模型 M<br/>ProdLDA / ECRTM / FASTopic"]
+    E --> F["主题比例 θ → 词表分布 ŷ_ψ"]
+    C --> G["KL 蒸馏目标<br/>D_KL(y_DSL ‖ ŷ_ψ) + R_M"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. Prompt-Conditioned 软目标 $y_{DSL}$：用 LM 的 next-token 分布顶替词频重构目标**

@@ -37,15 +37,37 @@ tags:
 
 ### 整体框架
 
-两阶段 pipeline：Stage 1 为 2D 多模态先验对齐，将关键点、分割、深度三种基础模型特征融合后指导手部参数回归；Stage 2 为 3D 穿透消除扩散模型，将穿透的双手姿态映射到物理合理的无碰撞配置。
+两阶段 pipeline：Stage 1 为 2D 多模态先验对齐，将关键点、分割、深度三种基础模型特征融合后指导手部参数回归；Stage 2 为 3D 穿透消除扩散模型，将穿透的双手姿态映射到物理合理的无碰撞配置。两阶段之间用 IoU / 穿透检测做门控——只有真正发生穿透的样本才进入 Stage 2 扩散，避免对无碰撞结果做冗余推理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["单目图像"] --> FAE
+    subgraph FAE["融合对齐编码器 FAE（Stage 1：2D 结构对齐）"]
+        direction TB
+        S["Sapiens 三种先验<br/>关键点 / 分割 / 深度"] --> D["ResNet-50 蒸馏<br/>推理时丢弃基础模型编码器"]
+        D --> P["融合先验特征 F_p"]
+    end
+    FAE --> REG["回归 MANO 双手参数<br/>（可能存在穿透）"]
+    REG -->|IoU / 穿透检测| GATE{"存在穿透?"}
+    GATE -->|否| OUT["物理合理的无碰撞双手"]
+    subgraph DIFF["穿透消除扩散模型（Stage 2：3D 空间对齐）"]
+        direction TB
+        C["以穿透姿态 X_c 为条件"] --> R["反向扩散逐步去噪"]
+        R --> CG["碰撞梯度引导<br/>Chamfer 距离 + 法线判穿透"]
+        CG --> R
+    end
+    GATE -->|是| DIFF
+    DIFF --> OUT
+```
 
 ### 关键设计
 
-1. **Fusion Alignment Encoder (FAE)**：核心是用一个轻量 ResNet-50 编码器在训练时蒸馏来自 Sapiens 基础模型的三种先验特征（关键点 $\mathbf{F}_k$、分割 $\mathbf{F}_s$、深度 $\mathbf{F}_d$）。融合特征 $\mathbf{F}_p = \text{Proj}(\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d)$ 通过可学习投影层统一。FAE 用 MSE 损失对齐 $\mathbf{F}_{fa}$ 和 $\mathbf{F}_p$。**推理时移除所有基础模型编码器**，实现 encoder-free 部署——保持多先验精度的同时大幅降低计算开销。这一"训练时蒸馏、推理时丢弃"的策略非常巧妙。
+1. **融合对齐编码器（Fusion Alignment Encoder, FAE）**：核心是用一个轻量 ResNet-50 编码器在训练时蒸馏来自 Sapiens 基础模型的三种先验特征（关键点 $\mathbf{F}_k$、分割 $\mathbf{F}_s$、深度 $\mathbf{F}_d$）。融合特征 $\mathbf{F}_p = \text{Proj}(\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d)$ 通过可学习投影层统一。FAE 用 MSE 损失对齐 $\mathbf{F}_{fa}$ 和 $\mathbf{F}_p$。**推理时移除所有基础模型编码器**，实现 encoder-free 部署——保持多先验精度的同时大幅降低计算开销。这一"训练时蒸馏、推理时丢弃"的策略非常巧妙。
 
-2. **Two-Hand Penetration-Free Diffusion Model**：基于 Transformer 架构的扩散模型，以穿透的双手 MANO 参数 $\mathbf{X}_c$ 为条件，学习从穿透姿态到无碰撞姿态的生成映射。训练数据通过两种方式构造：(a) 低性能模型预测的穿透结果；(b) 对 GT 施加微小噪声直到穿透发生。扩散损失为 $\mathcal{L}_{diffusion} = \|\mathbf{X}_0 - \mathcal{D}(\mathbf{X}_t, \mathbf{X}_c)\|_2$。推理时先做 IoU 和穿透检测，仅对确实存在穿透的样本启动扩散（减少不必要的推理开销）。
+2. **穿透消除扩散模型（Two-Hand Penetration-Free Diffusion Model）**：基于 Transformer 架构的扩散模型，以穿透的双手 MANO 参数 $\mathbf{X}_c$ 为条件，学习从穿透姿态到无碰撞姿态的生成映射。训练数据通过两种方式构造：(a) 低性能模型预测的穿透结果；(b) 对 GT 施加微小噪声直到穿透发生。扩散损失为 $\mathcal{L}_{diffusion} = \|\mathbf{X}_0 - \mathcal{D}(\mathbf{X}_t, \mathbf{X}_c)\|_2$。推理时先做 IoU 和穿透检测，仅对确实存在穿透的样本启动扩散（减少不必要的推理开销）。
 
-3. **Collision Gradient Guidance**：在反向扩散的每一步引入碰撞梯度引导。具体地，从 $\mathbf{X}_{t-1}$ 经 DDIM 采样得到 $\hat{\mathbf{X}}_0$，通过 MANO 模型获取网格顶点，用混合距离-方向准则检测碰撞：先计算 Chamfer 距离 $\mathbf{N}_{ij} = |\mathbf{V}_{t-1}^i - \mathbf{V}_c^j|^2$ 筛选近邻顶点对，再用法线余弦相似度 $\cos(\theta_{ij})$ 判断穿透。碰撞损失使用 GMoF 鲁棒函数，通过梯度下降更新 $\hat{\mathbf{X}}_0 = \hat{\mathbf{X}}_0 - \lambda(\delta_i \mathcal{L}_{collision})$。
+3. **碰撞梯度引导（Collision Gradient Guidance）**：在反向扩散的每一步引入碰撞梯度引导。具体地，从 $\mathbf{X}_{t-1}$ 经 DDIM 采样得到 $\hat{\mathbf{X}}_0$，通过 MANO 模型获取网格顶点，用混合距离-方向准则检测碰撞：先计算 Chamfer 距离 $\mathbf{N}_{ij} = |\mathbf{V}_{t-1}^i - \mathbf{V}_c^j|^2$ 筛选近邻顶点对，再用法线余弦相似度 $\cos(\theta_{ij})$ 判断穿透。碰撞损失使用 GMoF 鲁棒函数，通过梯度下降更新 $\hat{\mathbf{X}}_0 = \hat{\mathbf{X}}_0 - \lambda(\delta_i \mathcal{L}_{collision})$。
 
 ### 损失函数 / 训练策略
 

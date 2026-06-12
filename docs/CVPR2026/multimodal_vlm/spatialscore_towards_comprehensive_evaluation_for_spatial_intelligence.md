@@ -35,7 +35,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文想回答一个问题：现在的多模态大模型到底有多懂空间？为此它一口气端出三件互相咬合的东西。先是 SpatialScore 这把"尺子"——5025 个人工验证过的样本，横跨真实/仿真/AIGC 三种数据来源、图像与视频两种模态、判断/选择/开放三类问答格式，把空间智能拆成 10 大类 30 个具体任务来量。光有尺子不够，论文又给出两条把模型"撑高"的路：一条是数据驱动的 SpatialCorpus，331K 条空间 QA 拿去微调；另一条是免训练的 SpatialAgent，用 12 个空间感知工具临时给现有模型"搭脚手架"。三者合起来构成一个"评估—增强"的闭环。
+这篇论文想回答一个问题：现在的多模态大模型到底有多懂空间？为此它一口气端出三件互相咬合的东西。先是 SpatialScore 这把"尺子"——5025 个人工验证过的样本，横跨真实/仿真/AIGC 三种数据来源、图像与视频两种模态、判断/选择/开放三类问答格式，把空间智能拆成 10 大类 30 个具体任务来量。光有尺子不够，论文又给出两条把模型"撑高"的路：一条是数据驱动的 SpatialCorpus，331K 条空间 QA 拿去微调；另一条是免训练的 SpatialAgent，用 12 个空间感知工具临时给现有模型"搭脚手架"。值得注意的是，SpatialScore 基准和 SpatialCorpus 语料共享同一套 3D 标注数据底座与造题 pipeline，所以训练分布和评测口径天然对齐；两条增强路（语料微调、Agent 免训练）最终都回到 SpatialScore 上复评，三者合起来构成一个"评估—增强"的闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    D["3D 标注数据底座（脚手架）<br/>ScanNet++ / Omni3D / WildRGB-D / PointOdyssey 等"] --> G["造题 pipeline<br/>采样 500 场景 → 模板 + LLM 改写生成 QA"]
+    G --> B["SpatialScore 基准<br/>整合 23 数据集 → GPT 过滤 → 人工筛选 → 5025 样本 / 30 任务"]
+    G --> C["SpatialCorpus 语料<br/>同套几何资源放大成 331K 空间 QA"]
+    B --> E["评测 49 个 MLLM<br/>暴露与人类的巨大差距"]
+    C -->|数据驱动路| H["SFT 微调 Qwen3-VL"]
+    A["SpatialAgent 系统<br/>12 空间感知工具 · Plan-Execute / ReAct 双范式"] -->|免训练路| I["即插即用增强现成 MLLM"]
+    H --> E
+    I --> E
+```
 
 ### 关键设计
 

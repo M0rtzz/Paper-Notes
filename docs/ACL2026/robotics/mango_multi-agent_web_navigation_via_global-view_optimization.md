@@ -44,6 +44,24 @@ Mango 的输入是用户查询 $q$ 和 root URL $u_r$。系统先做 **Global St
 
 实验中 Mango 对 WebVoyager 使用与 AgentOccam 对齐的 Playwright-based 环境，对 WebWalkerQA 使用与 WebWalker 对齐的 Crawl4AI 环境，保证浏览器执行设置公平。每个 URL 的导航预算 $b$ 和 Thompson Sampling 迭代次数都设为 10。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：查询 q + root URL"] --> GSA
+    subgraph GSA["全局结构分析生成候选入口"]
+        direction TB
+        B["BFS 爬取同域 HTML<br/>限最大页数 τ"] --> C["BM25 与查询打分取 Top-10"]
+        D["大站补充：LLM 生成关键词<br/>Google site: 检索 Top-10"]
+    end
+    GSA --> E["候选 URL 集 𝒰"]
+    E --> TS["Thompson Sampling 的 URL 选择<br/>BM25 初始化 Beta 先验，采样选 active arm"]
+    TS --> NAV["导航代理从选中 URL 与浏览器交互<br/>（脚手架）"]
+    NAV --> REF["反思代理与情节记忆<br/>判定 可继续 / 该放弃 / 已完成"]
+    REF -->|有希望→正 reward 增 α / 走错→负 reward 增 β| TS
+    REF -->|dead end 标 Exhausted；轨迹写入情节记忆| E
+    REF -->|答案充分| F["输出答案"]
+```
+
 ### 关键设计
 
 **1. 全局结构分析生成候选入口：在导航前把可能藏着答案的页面入口从整站结构里筛出来**

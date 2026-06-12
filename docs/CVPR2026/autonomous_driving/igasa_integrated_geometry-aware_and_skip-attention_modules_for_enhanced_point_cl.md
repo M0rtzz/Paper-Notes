@@ -45,6 +45,25 @@ tags:
 
 IGASA 想同时治好点云配准里的两个老毛病：多尺度特征融合时低层几何细节被高层语义"稀释"（语义鸿沟），以及精匹配阶段用 RANSAC/硬阈值剔除离群点既贵又容易误杀。它把流程拆成粗到精的三段。第一段 **HPA（分层金字塔架构）**用 KPConv 在 ordinary / minor / primary 三个分辨率层级提特征，体素大小依次为 $dl_0$、$2 \cdot dl_0$、$4 \cdot dl_0$，卷积半径随之放大以覆盖从局部到全局的感受野，输出 $F_{\text{multi}} = \{F_{\text{ordinary}}, F_{\text{minor}}, F_{\text{primary}}\}$。第二段 **HCLA（分层跨层注意力）**是粗匹配核心，靠 SGIRA 和 SAIGA 两级注意力把全局语义和局部几何显式对齐，输出 $F_{\text{minor}}^{++}$，再经几何一致性 top-$k$ 筛选得到粗匹配集 $\widetilde{C}^{(1)}$。第三段 **IGAR（迭代几何感知精修）**在精匹配里交替做动态几何一致性加权、加权质心对齐与 SVD 分解，迭代 $N=5$ 轮输出高精度位姿 $T^* = [R^*, t^*]$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源点云 / 目标点云"] --> B["分层金字塔架构 HPA<br/>KPConv 提取 ordinary/minor/primary 三级特征"]
+    B --> HCLA
+    subgraph HCLA["分层跨层注意力 HCLA（粗匹配核心）"]
+        direction TB
+        C["SGIRA<br/>全局语义当向导，融合高分辨率几何细节"] --> D["SAIGA<br/>几何感知自注意力，对齐内在结构"]
+    end
+    HCLA --> E["几何一致性 top-k 筛选<br/>得到粗匹配集"]
+    E --> IGAR
+    subgraph IGAR["迭代几何感知精修 IGAR（精匹配，N=5 轮）"]
+        direction TB
+        F["动态几何一致性软加权<br/>指数权重抑制离群点"] --> G["加权质心对齐 + SVD 求解 R, t"]
+        G -->|"迭代更新位姿"| F
+    end
+    IGAR --> H["输出位姿 T* = [R*, t*]"]
+```
+
 ### 关键设计
 
 **1. SGIRA：用全局语义当向导，把高分辨率几何细节融进来而不被稀释**

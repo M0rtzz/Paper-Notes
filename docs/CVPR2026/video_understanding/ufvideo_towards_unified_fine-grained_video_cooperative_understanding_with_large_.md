@@ -43,6 +43,19 @@ UFVideo 是首个统一全局、像素级和时序级三种粒度视频理解能
 ### 整体框架
 UFVideo 想解决的是：让一个 Video LLM 同时具备全局问答、像素级分割、时序定位三种粒度的能力，并让它们在同一次生成里互相借力。整条链路以 LLM 为骨架——视觉编码器先把视频压成离散 token，与文本 token 拼到同一序列里送进 LLM。模型一次性接收视频 $V$、文本问题 $Q$ 和可选的目标视觉提示 $M$（mask），再根据问题类型从 hidden state 里岔出三种出口：文本回答 $A$ 走普通 next-token 生成、时序定位 $T$ 编码成可生成的时间 token、分割 mask $S$ 则把特定 token 的 embedding 转交给 SAM2 的 mask decoder。所有任务共享同一套 LLM 参数，靠几个特殊 token 来切换粒度，而不是各搭一套独立模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：视频 V + 文本问题 Q + 目标视觉提示 M（可选 mask）"]
+    IN --> ALIGN["多粒度任务对齐<br/>插入 Temp / Ref / Seg 特殊 token<br/>统一全局 / 像素级 / 时序级任务"]
+    ALIGN --> ENC["多模态编码<br/>SigLIP 编码 V 与 M（→Ref 位目标 token）<br/>随机抽 K 帧 → SAM2 Hiera-L 编码器"]
+    ENC --> LLM["共享 LLM backbone<br/>接收统一 token 序列"]
+    LLM --> DEC["多任务解码<br/>按问题类型岔出口"]
+    DEC -->|文本| TXT["文本回答<br/>next-token 生成"]
+    DEC -->|时序| TMP["时序定位<br/>生成 Temp-τ token → 还原真实时间"]
+    DEC -->|分割| SEG["像素级分割<br/>取 Seg 位 embedding → SAM2 mask decoder"]
+```
+
 ### 关键设计
 
 **1. 多粒度任务对齐：用三类特殊 token 把不同粒度的任务统一进同一序列**

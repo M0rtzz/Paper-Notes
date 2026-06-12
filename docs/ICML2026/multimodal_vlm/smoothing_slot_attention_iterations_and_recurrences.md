@@ -43,19 +43,43 @@ tags:
 ### 整体框架
 SmoothSA 完整保留 OCL 经典的 encode-aggregate-decode 结构：编码器把图像/视频帧映成特征 $F \in \mathbb{R}^{h\times w\times c}$，聚合器 $\phi_a$（即 SA 模块）把特征聚合成 $n$ 个 slot $S \in \mathbb{R}^{n\times c}$，再由解码器从 slot 重建输入以提供自监督。SmoothSA 只在聚合器入口和帧间调度处做两个微改动：(1) 在 cold-start query $Q_1$ 进入 SA 迭代之前，先经过一个"预热器" $\phi_p$ 得到 informative query $\tilde Q_1$；(2) 对视频，仅在首帧上跑标准的 3 轮 SA 迭代得到 slot $S_1$，而非首帧只跑 1 轮 SA，并且其 query 直接由上一帧 slot 经标准转移模块得到。整体改动量极小，可以直接挂到任意基于 SA 的图像/视频 OCL 模型上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["图像 / 视频帧"] --> ENC["编码器 → 特征 F"]
+
+    subgraph D1["Query 预热器 φ_p"]
+        direction TB
+        Q1["cold-start query Q₁"] --> PH["交叉注意 + MLP<br/>注入样本特征"]
+        PH --> QT["informative query Q̃₁"]
+    end
+
+    subgraph D2["异质迭代调度"]
+        direction TB
+        SA3["首帧：SA 跑满 3 轮 → slot S₁"]
+        SA1["非首帧：SA 只跑 1 轮 → slot Sₜ"]
+    end
+
+    ENC -->|首帧 / 图像| Q1
+    ENC -->|非首帧 t≥2| TR["上一帧 slot S(t−1)<br/>转移网络 → query Qₜ"]
+    QT --> SA3
+    TR --> SA1
+    SA3 --> DEC["解码器重建 → L_rec 自监督"]
+    SA1 --> DEC
+    SA3 -.->|stop-grad 自蒸馏 L_p| QT
+```
+
 ### 关键设计
 
 **1. Query 预热器 $\phi_p$：用自蒸馏把信息匮乏的 cold-start query 推近 slot 分布**
 
-无论从可学习高斯还是位置先验初始化，刚出场的 query slot 里只有数据集级先验、没有当前样本的任何线索，SA 不得不用更多迭代去硬"猜"。$\phi_p$ 是一个很轻量的模块（结构上是一次 query-feature 交叉注意/MLP），把 cold-start query $Q_1$ 与输入特征 $F_1$ 联合映射成一个"近似当前样本 slot"的 informative query $\tilde Q_1 \in \mathbb{R}^{n\times c}$。监督信号直接来自 OCL 模型自身在当前 batch 上输出的 slot $S_1$——即让 $\tilde Q_1 \approx S_1$，做一次 stop-gradient 自蒸馏，损失大致是 $\mathcal{L}_p = \|\tilde Q_1 - \text{sg}(S_1)\|^2$。这相当于把 SA 的迭代曲线整体向前平移一步：起点从远离最优解的冷启动变成已接近最终 slot 的预热点，迭代误差自然变小。和 BO-QSA、MetaSlot 用多高斯/码本去丰富"数据集级"先验不同，$\phi_p$ 第一次把"当前样本"的特征经可微通道注入 query。
+无论从可学习高斯还是位置先验初始化，刚出场的 query slot 里只有数据集级先验、没有当前样本的任何线索，SA 不得不用更多迭代去硬"猜"。$\phi_p$ 是一个很轻量的模块（结构上是一次 query-feature 交叉注意 + MLP），把 cold-start query $Q_1$ 与输入特征 $F_1$ 联合映射成一个"近似当前样本 slot"的 informative query $\tilde Q_1 \in \mathbb{R}^{n\times c}$。监督信号直接来自 OCL 模型自身在当前 batch 上输出的 slot $S_1$——即让 $\tilde Q_1 \approx S_1$，做一次 stop-gradient 自蒸馏，损失为 $\mathcal{L}_p = \|\tilde Q_1 - \text{sg}(S_1)\|^2$。这相当于把 SA 的迭代曲线整体向前平移一步：起点从远离最优解的冷启动变成已接近最终 slot 的预热点，迭代误差自然变小。和 BO-QSA、MetaSlot 用多高斯/码本去丰富"数据集级"先验不同，$\phi_p$ 第一次把"当前样本"的特征经可微通道注入 query。
+
+这里的 stop-gradient 不是可有可无的细节，而是让预热器训得稳的关键：如果把 $\phi_p$ 当普通可训练前置层和 SA 一起端到端训，会陷入"$\phi_p$ 把 query 拉向尚不可靠的 slot、SA 又被带噪 query 干扰"的耦合不稳定回路。stop-gradient 在结构上断开这条回路，让 $\phi_p$ 始终单向追随 OCL 的当前最优 slot 分布、不把噪声反传去干扰 SA 主干，与 BYOL 等自蒸馏框架同源。于是预热模块和主干 OCL 在同一套自监督目标 $\mathcal{L} = \mathcal{L}_{rec} + \lambda \mathcal{L}_p$ 下端到端联动，无需任何外部标注或额外训练阶段。
 
 **2. 视频帧间的异质迭代调度：首帧多迭代、非首帧单迭代，把迭代强度匹配信息量**
 
 STEVE 系框架对所有帧一视同仁都跑 3 轮 SA，但首帧 query 是冷启动、信息匮乏，非首帧 query 已是上一帧 slot、带充分样本信息，两者信息差巨大。这里把"迭代强度"匹配到"query 信息量"：首帧展开完整三轮 $S_1^{(i)}, M_1^{(i)} = \phi_a(S_1^{(i-1)}, F_1)$（$i=1,2,3$，取 $S_1 := S_1^{(3)}$），给冷启动 query 留出多步对齐的余量；非首帧 $t\ge 2$ 的 query $Q_t$ 直接从上一帧 slot $S_{t-1}$ 经标准转移网络得到，然后只跑一次 SA：$S_t, M_t = \phi_a(Q_t, F_t)$。因为 query 已接近真实 slot，再做多轮只会引入冗余更新、把好不容易传过来的时序信息冲淡——可视化里非首帧多迭代确实会让本已接近真实分布的 query 产生不必要的对齐震荡。本质是"输入更难就多算几步"的最朴素直觉。
-
-**3. 与主干 OCL 自监督损失的紧耦合训练：stop-gradient 断开不稳定回路**
-
-如果把 $\phi_p$ 当普通可训练前置层和 SA 一起端到端训，会出现"$\phi_p$ 把 query 拉向噪声 slot、SA 又被带噪 query 干扰"的耦合不稳定。总损失写成 $\mathcal{L} = \mathcal{L}_{rec} + \lambda \mathcal{L}_p$，其中 $\mathcal{L}_{rec}$ 是 OCL 自带的重建损失（dVAE token 的 cross-entropy 或像素 MSE），$\mathcal{L}_p$ 是 $\phi_p$ 输出与当前 slot 的 stop-gradient 蒸馏项。stop-gradient 在结构上断开了那条回路，让 $\phi_p$ 始终单向追随 OCL 的当前最优 slot 分布、不把噪声反传去干扰 SA 主干，与 BYOL 等自蒸馏框架同源。这样预热模块和主干 OCL 在同一套自监督目标下端到端联动，无需任何外部标注或额外训练阶段。
 
 ### 损失函数 / 训练策略
 训练时所有模块同步优化，目标函数 $\mathcal{L} = \mathcal{L}_{rec} + \lambda \mathcal{L}_p$。$\mathcal{L}_p$ 中对 slot 端使用 stop-gradient，使预热模块单向追随主干 OCL 的最优 slot 分布。视频训练阶段，迭代次数差异化在 forward pass 中直接通过 if 分支实现，不增加显存或额外阶段。

@@ -44,6 +44,17 @@ tags:
 
 整条 pipeline 走三个顺序阶段。第一阶段做手重建：仅用 2D 关键点、深度和时序平滑损失把 MANO 逐帧拟合好。第二阶段在手已知的条件下做物体重建：把 MANO 顶点当成受力源对 Spring-Mass 做正向仿真，用 Chamfer 加 CoTracker3 轨迹损失反传去优化弹簧的物理参数。第三阶段做手精化：冻结物体模型，把物体仿真误差通过逆向物理（inverse physics）反传回 MANO 参数，得到物理上更自洽的手。手→物体→手的闭环正是这套方法的核心结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["稀疏视角 RGB-D 视频"] --> S1["阶段一·手重建（脚手架）<br/>2D 关键点 + 深度 + 时序平滑拟合 MANO"]
+    S1 --> S2["阶段二·物体重建（固定手）<br/>稠密 MANO 受力建模：778 顶点驱动 Spring-Mass"]
+    S2 --> S3["阶段三·手精化（固定物体）<br/>逆向物理：物体仿真误差反传回 MANO"]
+    S3 -->|单向梯度顺序优化，手↔物体闭环| S2
+    S2 -.->|RRD 拓扑保护，监控 δ/Δx≈3| RRD["Spring-Mass 拓扑质量量化"]
+    S3 --> OUT["手 + 软体物体的稠密 3D 重建"]
+```
+
 ### 关键设计
 
 **1. 稠密 MANO 驱动的 Spring-Mass 受力建模：用 778 个手顶点替代 30 个稀疏控制点，把接触力建准**

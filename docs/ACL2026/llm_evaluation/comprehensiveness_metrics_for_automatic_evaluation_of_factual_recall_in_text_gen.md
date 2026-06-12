@@ -42,6 +42,30 @@ tags:
 ### 整体框架
 三种 metric 共享同一套输入输出契约：吃进用户 prompt $P$、待评响应 $R$、参考语料 $\mathcal{C}$，吐出覆盖集 $\mathcal{A}_{in}$、未覆盖集 $\mathcal{A}_{out}$ 和标量得分 $S = |\mathcal{A}_{in}| / (|\mathcal{A}_{in}| + |\mathcal{A}_{out}|)$。差异在于"如何把 $R$ 与 $\mathcal{C}$ 对齐":NLI 法和 Q&A 法在内部额外维护一张 fact graph $G_F$(节点是原子陈述或 QA 对、边是 entailment 关系),既能用传递闭包去重计数,又能进一步导出"未覆盖上下文基" $\mathcal{A}_{basis}$(告诉用户最少需要补哪些事实);E2E 法则把整条 pipeline 折叠进一次 LLM 调用。三者从最重到最轻铺成一条复杂度递减的谱系,正好用来回答"评测器该做多复杂"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：用户 prompt P + 待评响应 R + 参考语料 C"]
+    subgraph NLI["NLI 法：原子分解 + 图传递闭包"]
+        direction TB
+        N1["原子分解 + 修订<br/>R 与 C 各拆成原子事实"] --> N2["相关性过滤<br/>打 1–5 分，T_rel=3.5 留相关项"]
+        N2 --> N3["LLM 关系抽取<br/>判 response↔context entailment，O(N²)"]
+        N3 --> N4["fact graph G_F<br/>强连通压缩 + 传递闭包算覆盖"]
+    end
+    subgraph QA["Q&A 法：用问题做中介比答案"]
+        direction TB
+        Q1["挖事实性问题 + 精炼<br/>去重/泛化，打相关性分"] --> Q2["各 source 回答全部问题<br/>多答案 + 置信度，T_conf=2 过滤"]
+        Q2 --> Q3["答案比较（LLM + Pint 量纲）<br/>判 equivalent/implies/... 转 entailment"]
+    end
+    E2E["E2E 法：单次 LLM 调用<br/>直接列出覆盖集与遗漏集"]
+    IN --> NLI
+    IN --> QA
+    IN --> E2E
+    NLI --> OUT["输出得分 S = 覆盖原子数 ÷ 全部相关原子数"]
+    QA --> OUT
+    E2E --> OUT
+```
+
 ### 关键设计
 
 **1. NLI 法:原子分解 + 图传递闭包算覆盖。** 这条最重的 pipeline 走五个阶段,核心是把"覆盖率"严格落到原子陈述的蕴含关系上。先用 LLM few-shot 把 $R$ 与 $\mathcal{C}$ 的每个文档拆成原子事实,再做原子修订消解代词、拆分连接句("A 写了 X 和 Y" → "A 写了 X" + "A 写了 Y"),接着对每个 context 原子打 1–5 的相关性分并以 $T_{rel} = 3.5$ 过滤掉无关项,只留下"本该被覆盖"的子集。

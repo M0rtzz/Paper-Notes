@@ -40,7 +40,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文不提出新训练算法，而是给循环语言模型的表达能力搭一套代数显微镜：把一层 recurrent module 抽象成 algebraic core，把多层网络抽象成 core 的 cascade，再用 wreath product 套出所有可能的层级转移、用 realized input set 收紧到真实 wiring 能触达的部分，最后把"识别某个形式语言"归约成"目标语言的 syntactic monoid 能否 divide 模型的转移结构"这一可检查的代数判据。输入是一类循环式模型、有限字母表、固定的编码器和数值语义；输出不是模型预测，而是一个关于可识别语言族的结构化刻画。
+这篇论文不提出新训练算法，而是给循环语言模型的表达能力搭一套代数显微镜：把一层 recurrent module 抽象成 algebraic core，把多层网络抽象成 core 的 cascade，再用 wreath product 套出所有可能的层级转移、用 realized input set 收紧到真实 wiring 能触达的部分，最后把"识别某个形式语言"归约成"目标语言的 syntactic monoid 能否 divide 模型的转移结构"这一可检查的代数判据。输入是一类循环式模型、有限字母表、固定的编码器和数值语义；输出不是模型预测，而是一个关于可识别语言族的结构化刻画。整条归约链路如下图：算术语义先钉死单步运算，决定每层 core 真正诱导出的 transition monoid，再沿层级 wreath product 组合并收紧，最终落到一个可判定的可除性判据。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：循环模型族 + 字母表 Σ + 编码器"]
+    SEM["算术语义 arithmetic model 𝔐=(𝒟,𝒪,□)<br/>钉死值域 / 舍入 / 求值顺序"]
+    subgraph D1["algebraic core 与 transition monoid"]
+        direction TB
+        CORE["每层抽成 algebraic core 𝔠=(Q,X,Y,f,g)<br/>读出 g 不计入动力学"]
+        MON["transition monoid M_𝔠=⟨f_x⟩"]
+        CORE --> MON
+    end
+    subgraph D2["realized wreath product"]
+        direction TB
+        CAS["多层级联 → wreath product 上界（太松）"]
+        REAL["用 layer-input 依赖图收紧<br/>剔除 wiring 触发不到的虚假转移"]
+        CAS --> REAL
+    end
+    JUDGE["可识别判据：目标语言 syntactic monoid<br/>除尽模型转移结构"]
+    OUT["输出：可识别语言族刻画"]
+
+    IN --> CORE
+    SEM --> MON
+    MON --> CAS
+    REAL --> JUDGE
+    JUDGE --> OUT
+```
 
 ### 关键设计
 

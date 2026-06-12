@@ -46,6 +46,18 @@ HGMem 要解决的是长文档复杂问答里 working memory 只会堆 primitive
 
 整个在线过程是一个交互循环：从初始子查询 $\mathcal{Q}^{(0)}=\{\hat{q}\}$ 出发，每个交互步 $t$ 里 LLM 先判断当前 $\mathcal{M}^{(t)}$ 能否回答目标查询 $\hat{q}$，不能则生成新子查询集 $\mathcal{Q}^{(t)}$ 并把每个子查询归到"局部调查"或"全局探索"，在对应作用域检索出候选实体 $\mathcal{V}_{\mathcal{Q}^{(t)}}$、邻接关系 $\mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}})$ 与原文 chunk $\mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}})$，再据此把记忆演化为下一状态 $\mathcal{M}^{(t+1)}\leftarrow \mathrm{LLM}(\mathcal{M}^{(t)}, \mathcal{V}_{\mathcal{Q}^{(t)}}, \mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}}), \mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}}))$；直到记忆足够或到达最大步数，把所有超边描述加对应 chunk 喂给 LLM 生成最终回答。因此超图既是被检索改写的存储，又反过来指导每一步该往哪检索。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["长文档 D"] --> G["离线：切 chunk + LightRAG 抽实体图 G"]
+    G --> M["超图记忆存储<br/>每条超边 = 可寻址 n 元记忆点 M"]
+    M --> J["LLM 判断 M 能否回答 q"]
+    J -->|"不能：生成子查询"| RT["自适应记忆驱动检索<br/>局部调查 / 全局探索 双模式路由"]
+    RT --> EV["三类记忆演化操作<br/>Update / Insertion / Merging"]
+    EV --> M
+    J -->|"足够 / 达最大步"| Y["超边描述 + chunk → 生成答案"]
+```
+
 ### 关键设计
 
 **1. 超图记忆存储：让每条超边成为可寻址的 $n$ 元记忆点**

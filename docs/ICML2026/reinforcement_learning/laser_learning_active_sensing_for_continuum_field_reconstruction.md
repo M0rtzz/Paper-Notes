@@ -43,6 +43,38 @@ tags:
 ### 整体框架
 LASER 把主动感知建模为 POMDP $\mathcal{M}=(\mathcal{S},\mathcal{A},\mathcal{O},\mathcal{E},\mathcal{T}_\phi,\mathcal{R}_\phi,\gamma)$，潜状态 $\bm s_t=[\bm z_t,\bm h_t]$ 由当前观测潜码 $\bm z_t$ 和 GRU 历史 $\bm h_t$ 组成，动作 $\bm a_t=\Delta\bm X_t$ 是传感器位移，奖励 $r_t=-\mathcal{L}(\bm u_{t+1},\hat{\bm u}_{t+1})$ 是世界模型解码出的重建 MSE 的相反数。训练两阶段：(1) **离线**预训练世界模型 $\phi$（encoder/dynamics/decoder 联合 ELBO + 扩散去噪），每步重新随机采传感器布局以学不变性；(2) **在线**用 GRPO 训练策略 $\pi_\theta$，每步从当前 $\hat{\bm z}_{t+1}$ 和 $\bm o_t$ 出发采 $G$ 组动作，环境只查训练数据集真值得到 reward，不需要真实物理仿真器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["稀疏观测 o_t<br/>任意位置 / 数量"]
+    subgraph WM["连续场潜世界模型（离线预训练·设计1）"]
+        direction TB
+        ENC["编码器：latent queries<br/>交叉注意力 → 潜码 z_t"]
+        DYN["GRU 历史 + 扩散动力学预测器<br/>z_t → 去噪预测 ẑ_t+1"]
+        DEC["INR 解码器<br/>(z, x) → 连续场 û → 重建 MSE"]
+        ENC --> DYN
+        ENC --> DEC
+    end
+    O --> ENC
+    subgraph POL["Proactive 策略与多尺度交叉注意力（设计2）"]
+        direction TB
+        XA["传感器 query（多尺度 Fourier 位置 + 值）<br/>× 想象潜码 ẑ_t+1 多尺度交叉注意力 + 自注意力"]
+        HEAD["MLP 头 → 高斯位移 ΔX_t"]
+        XA --> HEAD
+    end
+    DYN -->|想象的下一步潜状态| XA
+    O --> XA
+    HEAD -->|挪传感器, 查数据集真值| DEC
+    subgraph GR["GRPO 训练（设计3）"]
+        direction TB
+        LOOK["多步前瞻奖励 rollout H=3<br/>+ 动态 group 过滤（整组 r 低于 τ 剔除）"]
+        ADV["组相对优势 → GRPO 目标"]
+        LOOK --> ADV
+    end
+    DEC -->|重建奖励 r_t| LOOK
+    ADV -->|更新策略 θ| XA
+```
+
 ### 关键设计
 
 **1. 连续场潜世界模型：当一个可微的物理环境代理，既能 forward predict 又能算重建奖励**

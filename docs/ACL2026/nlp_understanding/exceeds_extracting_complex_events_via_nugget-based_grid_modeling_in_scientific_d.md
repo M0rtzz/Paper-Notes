@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 EXCEEDS pipeline：输入文档 $D = \{x_1, \dots, x_l\}$ → RoBERTa-large 编码 → BiLSTM 加序列依赖 → CLN（条件层归一化）做上下文自适应得到 $\mathbf{H} \in \mathbb{R}^{l \times d}$ → 构建 pair-wise 网格 $\mathbf{G} \in \mathbb{R}^{l \times l \times C_g}$（每个 cell 是 $[\mathbf{h}_i; \mathbf{h}_j; \mathbf{d}_{i,j}]$ 经 MLP 投影，$\mathbf{d}_{i,j}$ 是相对距离嵌入）→ $K=2$ 层 2D 卷积残差 Grid Refiner 做局部信息聚合 → 线性分类头输出 $\mathbf{Y} \in \mathbb{R}^{l \times l \times |R|}$ → 多标签零阈值二值化 → 用 Algorithm 1 解码出事件集合：先 DFS 沿 HTL 回溯 nugget chain、要求 tail-to-head 必须有 THL-type 边封闭，然后根据 THL-type 决定是 trigger 还是 argument，最后用 EAL 边 + ontology 约束把 argument 挂到 trigger。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入文档 D = {x₁ … x_l}"] --> B["上下文编码：RoBERTa-large + BiLSTM + CLN 条件层归一化"]
+    B --> C["构建 Word-Word 网格 G<br/>cell = [hᵢ ; hⱼ ; 距离嵌入 dᵢⱼ]"]
+    C --> D["Grid Refiner：K=2 层 2D 卷积残差<br/>聚合 cell 间局部空间模式"]
+    D --> E["分类头输出 HTL / THL / EAL 三类边<br/>nugget 内序 · nugget 类型 · trigger→argument"]
+    E --> F["零阈值二值化 + Algorithm 1 解码<br/>ZLPR 多标签 · DFS 回溯 + THL 封闭 + EAL 挂载"]
+    F --> G["输出事件集合<br/>trigger + argument + 层次 sub-event"]
+```
+
 ### 关键设计
 
 **1. Word-Word Event Grid（HTL + THL + EAL 三类边）：用一张 token-pair 网格吸纳所有复杂 nugget 形态**

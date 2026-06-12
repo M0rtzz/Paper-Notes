@@ -41,11 +41,31 @@ tags:
 
 ### 整体框架
 
-定理 4.5（主结果）：在 Polish $(\mathcal{X}, \rho)$、$(\mathcal{Y}, \ell)$ 和带紧参数空间 $\Theta$、$h$ 在 $\theta$ 上连续的 $\mathcal{H}$ 下，下列等价：（1）存在分布无关学习规则 $\mathcal{A}$ 使得对每个 realizable $\mu$ 都有 $R_\mu(h_n) \to 0$ a.s.；（2）$\mathcal{H}$ 不含无穷 non-decreasing $(\gamma_k)$-Littlestone tree（$\gamma_k \to \infty$）。证明分两半：下界（存在 ⟹ 无学习算法可一致），上界（不存在 ⟹ 可显式构造一致学习器）。
+定理 4.5（主结果）：在 Polish $(\mathcal{X}, \rho)$、$(\mathcal{Y}, \ell)$ 和带紧参数空间 $\Theta$、$h$ 在 $\theta$ 上连续的 $\mathcal{H}$ 下，下列等价：（1）存在分布无关学习规则 $\mathcal{A}$ 使得对每个 realizable $\mu$ 都有 $R_\mu(h_n) \to 0$ a.s.；（2）$\mathcal{H}$ 不含无穷 non-decreasing $(\gamma_k)$-Littlestone tree（$\gamma_k \to \infty$）。整个证明围绕一个组合二分展开——$\mathcal{H}$ 到底含不含这棵"无界 gap 树"：含 ⟹ 走下界，构造灾难性分布把任意学习器逼到风险发散；不含 ⟹ 走上界，把 learner 的胜策略落地成一个显式的、可数局部化的学习器。两个方向合起来正好夹出充要刻画。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无界 gap Littlestone 树<br/>深度 k 的两出边标签距离 ≥ γ_k，且 γ_k → ∞"]
+    A -->|H 含无穷树| B["下界：构造灾难性分布<br/>样本未触到的深度上盲猜 → 风险发散"]
+    B --> NB["任意学习器 R(h_n) = ∞ a.s.（不可学习）"]
+    A -->|H 不含无穷树| C1
+    subgraph UB["上界：显式构造强通用一致学习器"]
+        direction TB
+        C1["① Gale-Stewart 游戏<br/>learner 有可测胜策略 σ"]
+        C2["② 样本驱动 σ，a.s. 停在 K∞<br/>得有界直径标签集 H_K(x)"]
+        C3["③ 稠密子集 {q_j} 把 X 切成可数 cell<br/>每 cell 真标签落在有界 region"]
+        C4["④ 每 cell 跑 MedNet 后聚合输出"]
+        C1 --> C2 --> C3 --> C4
+    end
+    C4 --> LB["每个 realizable μ 下 R(f_n) → 0 a.s.（可学习）"]
+    NB --> R["主结果（定理 4.5）：强通用 Bayes 一致 ⟺ H 不含无穷无界 gap 树"]
+    LB --> R
+```
 
 ### 关键设计
 
-**1. Unbounded-gap Littlestone Tree：把经典 Littlestone 树的 label gap 沿深度放到无穷，刻画无界度量损失下独有的"对抗能力 × 灾难规模"组合障碍**
+**1. 无界 gap Littlestone 树（Unbounded-gap Littlestone Tree）：把经典 Littlestone 树的 label gap 沿深度放到无穷，刻画无界度量损失下独有的"对抗能力 × 灾难规模"组合障碍**
 
 之前的 scaled Littlestone tree（Attias et al.）把 gap 当成固定 scale 参数，只刻画有界损失下的对抗复杂性。本文的关键 insight 是：在无界损失下光有对抗能力不够，必须同时捕捉"对抗能造成多大代价"。于是它把 binary label 推广成"标签距离 $\geq \gamma_k$"，并允许 $\gamma_k \uparrow \infty$——深度 $k$ 的内部节点标 instance $x_{k,i}$，两条出边的标签满足 $\ell(y_{k,i,1}, y_{k,i,2}) \geq \gamma_k$，且每条有限 root-to-leaf 路径都被某 $h \in \mathcal{H}$ 实现，"realizable infinite" 进一步要求每条无穷路径被单一 $h$ 实现。配套的 Lemma 4.3（bridging lemma）在 compact $\Theta$ + $h$ 连续条件下证明：有限前缀可实现能自动推出无穷路径可实现（用紧空间的有限交性质）。gap 沿深度发散，正好对应"对抗能在越深的位置造成越大代价"这一无界损失独有的现象。
 

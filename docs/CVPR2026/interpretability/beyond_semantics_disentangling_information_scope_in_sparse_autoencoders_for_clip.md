@@ -40,6 +40,19 @@ tags:
 
 拿到分区之后，作者用一组下游分析来验证它的意义：冻结CLIP骨干，分别把高CDS组、低CDS组的特征置零，再用线性探针在ImageNet分类、ADE20K语义分割、NYUd深度估计三个任务上看性能怎么变——如果两组特征真的承担不同角色，移除它们对不同任务的影响就应该截然不同。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["Shifted Context Cropping<br/>裁出两个上下文偏移的重叠窗口"]
+    B --> C["两窗口分别过 ViT 编码 + SAE 解码<br/>得到每个特征的空间激活图"]
+    C --> D["Contextual Dependency Score<br/>重叠区激活图的 EMD 搬土距离"]
+    D --> E["CDS 直方图按阈值 γ 分区"]
+    E -->|"低 CDS"| F["局部范围特征<br/>锚定视觉内容·正常 token"]
+    E -->|"高 CDS"| G["全局范围特征<br/>聚合上下文·outlier token"]
+    F --> H["下游验证：置零特征组<br/>线性探针测分类/分割/深度"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. Shifted Context Cropping (SCC)：用同一图像的两个重叠裁剪隔离出"纯上下文"这一个变量**

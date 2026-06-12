@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 DISRetrieval 三阶段：(1) **篇章感知树构造**——先句子级 RST 解析每个段落 → 段内树 $T_i$；再用 LLM 把每个 $T_i$ 自底向上摘要成段落语义单元 $u_i$；再用同一个 RST 解析器把 $\{u_i\}$ 组合成文档级树 $T_{doc}^*$；最后把 $T_{doc}^*$ 的叶子替换回原段内树得到统一篇章树 $T_D$。(2) **节点编码**：用 gte-multilingual-base 或 OpenAI text-embedding-3-large 给 $T_D$ 中每个节点（句子+LLM 摘要）编码。(3) **结构感知检索**：用 query 与所有节点算 cosine，按相关性排序，对叶子直接取、对中间节点做受控子树展开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长文档（英文 / 中文）"] --> B["粒度+语言自适应的 RST 解析器<br/>句子级解析每段 → 段内树 Tᵢ"]
+    B --> C["自底向上 LLM 节点增强<br/>内节点→可检索文本（阈值 τ 控摘要/拼接）"]
+    C --> D["同一解析器组文档级树<br/>替换回叶子 → 统一篇章树 T_D"]
+    D --> E["节点编码<br/>gte-multilingual / text-embedding-3-large"]
+    E --> F["结构引导的双选检索<br/>query 与各节点算 cosine 并排序"]
+    F -->|"叶子节点"| G["直接加入证据集 E"]
+    F -->|"内节点"| H["受控子树展开<br/>取子树内未用过的 top-k 叶子"]
+    G --> I["凑够 K 条多粒度证据 → 生成器"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 粒度 + 语言自适应的 RST 解析器：传统 EDU 级解析在长文档下又慢又碎**

@@ -42,6 +42,19 @@ tags:
 
 HaltNav 要解决的是「只给简洁目标（如『带我去洗手间』）、且世界会动态变化」时的长程导航鲁棒性。它把导航组织成一个层级化 Semi-Markov 决策过程：宏观层是 MLLM Brain，用 Graph-Grounded Task Dispatcher (GGTD) 基于轻量文本拓扑先验 osmAG 把全局路径拆成原子子指令；微观层是现成 VLN 执行器 $\pi_{\text{low}}$，把子指令转成电机指令；中间夹一个监控层 RVH（Reactive Visual Halting），持续盯着自我中心观测，一旦发现障碍就中断执行、更新拓扑、触发重规划。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["简洁目标 + osmAG 拓扑先验"] --> B["GGTD 全局规划<br/>LLM 读拓扑图拆门到门子指令"]
+    B -->|"已抵达，无后续子目标"| G["到达目标"]
+    B -->|"下一段子指令"| C["VLN 执行器 π_low<br/>子指令→电机指令"]
+    C --> D["RVH 监控<br/>盯自我中心观测算终止函数 β"]
+    D -->|"β=0 安全，继续执行"| C
+    D -->|"β=1 碰撞累积≥τc 或 MLLM 判不可通行"| E["改拓扑：被阻通道代价置∞<br/>触发 A* 重规划"]
+    E --> B
+    SYN["Failure-Injection 数据合成<br/>物理引擎放障碍 + 扩散 inpainting"] -. LoRA SFT 训练 .-> D
+```
+
 ### 关键设计
 
 **1. osmAG 拓扑先验：用纯文本的房间-通道图替代密集语义地图**

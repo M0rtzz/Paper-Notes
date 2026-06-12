@@ -48,6 +48,23 @@ tags:
 
 backbone 是 Wan2.2-TI2V-5B（30 个 DiT block）。整体流程是：Stage 1 自回归蒸馏把双向注意力换成 block-wise 因果注意力，并用 Score Identity Distillation 把去噪步数从 40+ 步砍到 3 步，得到一个能流式生成但质量打了折的学生；Stage 2 对抗精炼再用一致性感知判别器把蒸馏丢掉的质量补回来。生成时模型以「参考帧 + 滚动上下文」为条件，一个 chunk（3 帧）一个 chunk 地往外吐，靠 Reference Sink 和 RAPR 保证长视频里身份不漂、质量不塌。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["双向教师模型<br/>Wan2.2-TI2V-5B（支持说听交互）"] --> S1["自回归蒸馏<br/>block-wise 因果注意力 + SiD 把 40+ 步压成 3 步"]
+    S1 --> S2["对抗精炼<br/>一致性感知判别器（逐帧 + 全局对参考）补回质量"]
+    S2 --> ST["3 步因果学生模型"]
+    ST --> GEN
+    subgraph GEN["流式生成（一个 chunk 3 帧滚动吐出）"]
+        direction TB
+        C1["读滚动 KV-cache"] --> C2["Reference Sink + RAPR<br/>永久锚定参考帧 KV + 截断重编码位置"]
+        C2 --> C3["3 步因果去噪出 chunk"]
+        C3 --> C4["说听交互建模<br/>Audio Mask 选 Talk / Listen Audio Attention"]
+        C4 -->|写回 KV、淘汰最老非锚定| C1
+    end
+    GEN --> OUT["实时全身数字人视频"]
+```
+
 ### 关键设计
 
 **1. 自回归蒸馏：把 40+ 步双向去噪压成 3 步因果生成**

@@ -44,6 +44,19 @@ tags:
 
 GTP 把策略 $\pi_\theta(s)$ 实现为一张参数化的 ODE 解映射 $\Phi_\theta(s, a_t, t, \tau)$：输入状态 $s$、带噪动作 $a_t$、当前时刻 $t$、目标时刻 $\tau$，输出更干净的动作 $a_\tau$。推理时从 $a_T \sim \mathcal{N}(0, T^2 I)$ 出发，沿任意时间网格 $T = t_0 > t_1 > \dots > t_K = 0$ 反复调用 $\Phi_\theta$ 得到最终动作，可在 1 步到几十步之间自由折中。训练时用 Actor-Critic 联合优化：Critic 是双 Q 网络，按标准 TD 误差学；Actor 同时优化「瞬时流损失」和「轨迹一致性损失」，并由 advantage-weighted 系数 $w(s,a)$ 把生成式 BC 推向策略改进。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 (s, a, r, s′)"] --> C["Critic 双 Q 网络<br/>标准 TD 误差学 Q"]
+    C --> W["优势加权 w(s,a)<br/>exp(η·max(0,A)/std(A))，截断负优势"]
+    D --> S["闭式 score 近似<br/>一步扰动 a_t=a+t·z，免 ODE 求解器"]
+    S --> A["瞬时流 + 一致性双目标<br/>Actor Φ_θ 学整条 ODE 解映射"]
+    W --> A
+    A --> L["总 Actor 损失 L_Consistency + λ·L_Flow<br/>两项均乘 w(s,a)"]
+    L --> U["更新 Actor + EMA 同步目标网"]
+    U -->|训练收敛后推理| I["噪声 a_T → 反复调用 Φ_θ（K 步）→ 动作 a_0"]
+```
+
 ### 关键设计
 
 **1. 统一 ODE 解映射的瞬时流 + 一致性双目标：让一个网络既等同去噪、又满足任意大跨度的轨迹可加**

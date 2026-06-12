@@ -45,6 +45,19 @@ tags:
 
 给定图文对和任务指令，LoRA适配的多模态LLM先进行CoT推理（视觉线索分析+背景知识分析），然后自回归生成结构化实体记录（实体名|语义类型|边界框坐标），训练时用GRBP替代硬框监督。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：任务指令 + (图像, 文本)"] --> B["LoRA 适配的多模态 LLM"]
+    subgraph GEN["端到端生成式 GMNER（单一自回归链）"]
+        direction TB
+        B --> C["CoT 自适应推理<br/>视觉线索分析 + 背景知识分析"]
+        C --> D["自回归生成实体记录<br/>实体名 | 语义类型 | 边界框"]
+    end
+    D --> E["输出：结构化实体记录"]
+    F["GRBP 框扰动<br/>GT 框加高斯噪声 + IoU 守卫"] -. 训练时软监督 .-> D
+```
+
 ### 关键设计
 
 **1. 端到端生成式 GMNER：把识别和定位塞进同一个生成过程，掐断流水线的错误累积**

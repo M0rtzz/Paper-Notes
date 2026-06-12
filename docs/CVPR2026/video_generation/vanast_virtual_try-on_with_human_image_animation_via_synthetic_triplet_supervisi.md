@@ -44,6 +44,34 @@ $$h_{l+1} = B^{T2V}_l(h_l) + \alpha \cdot B^{HAM}_l(h_l) + \beta \cdot B^{GTM}_l
 
 默认 $\alpha=\beta=0.5$。融合后的隐变量经 DiT 逐层处理、最后由 VAE 解码成视频。整套设计的两个支柱，一是怎么造出训练它的三元组数据，二是这个 Dual Module 怎么把两类条件解耦开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["三阶段合成数据流水线"]
+        direction TB
+        S1["Stage 1·FLUX inpainting<br/>视频内换服装"]
+        S2["Stage 2·wild 视频抠服装<br/>再生成新人物"]
+        S3["Stage 3·工作室真人拍摄"]
+        S1 --> TRI["约 9135 段三元组视频"]
+        S2 --> TRI
+        S3 --> TRI
+    end
+    TRI -.提供训练监督.-> DUAL
+    I["人物图 + 服装图 + 姿态视频"] --> VAE["VAE 编码进隐空间"]
+    VAE --> DUAL
+    subgraph DUAL["Dual Module 架构（HAM + GTM）"]
+        direction TB
+        DIT["冻结视频 DiT 主干"]
+        DIT --> HAM["HAM 分支·注入姿态条件"]
+        DIT --> GTM["GTM 分支·注入服装条件"]
+        DIT --> FUSE["加权残差融合<br/>主干 + α·HAM + β·GTM"]
+        HAM --> FUSE
+        GTM --> FUSE
+    end
+    DUAL --> DEC["VAE 解码 → 换装动画视频"]
+    GTM -.->|"双 GTM 按 γ 线性混合"| INT["零样本服装插值"]
+```
+
 ### 关键设计
 
 **1. 三阶段合成数据流水线：用合成手段补上几乎不存在的三元组监督**

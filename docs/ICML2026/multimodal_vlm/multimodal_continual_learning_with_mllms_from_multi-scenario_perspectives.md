@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 数据流 $\mathcal D = \{\mathcal D_1, \ldots, \mathcal D_T\}$，每个任务 $\mathcal D_t = \{(x_i^t, q_i^t, y_i^t)\}_{i=1}^{n_t}$ 来自不同场景。Unifier 在每个 vision block $f_l$ 的 FFN 旁边并联一个 CSR 模块输出 $p_l$，并与 FFN 输出相加 $r_l = s_l(\text{LN}(a_l)) + p_l$。训练时只解冻当前场景对应的分支 + 投影器；推理时无需 routing，所有分支并行计算后一次性融合，输出与单分支模型完全等价的延迟。同时在 CSR 里施加视觉一致性约束（VCC）防止表征漂移。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：场景图像 + 问题<br/>(数据流含 T 个场景任务)"]
+    subgraph VENC["视觉编码器（CSR 仅插于此）"]
+        direction TB
+        ATT["视觉 block：注意力 + FFN"]
+        subgraph CSR["CSR 模块 — VRE：多分支 + 共享投影器"]
+            direction TB
+            BR["K 个 down-up 分支<br/>每场景一支，训练只解冻当前支"]
+            PROJ["共享投影器 P_l<br/>concat 后融成统一表征 p_l"]
+            BR --> PROJ
+        end
+        ATT --> CSR
+        ADD["r_l = s_l(LN(a_l)) + p_l<br/>单次前向，延迟等价单分支"]
+        CSR --> ADD
+    end
+    IN --> VENC
+    VCC["VCC 双通道 KL 软约束<br/>各分支对齐场景原型 μ_l<br/>(feature + embedding 两通道)"]
+    CSR -.训练时约束.-> VCC
+    VENC --> TXT["视觉特征投影到文本空间 → LLM 解码"]
+    TXT --> OUT["输出：跨场景一致的 VQA 答案"]
+```
+
 ### 关键设计
 
 **1. Vision Representation Expansion (VRE) + 单次推理融合：参数隔离但不需要路由**

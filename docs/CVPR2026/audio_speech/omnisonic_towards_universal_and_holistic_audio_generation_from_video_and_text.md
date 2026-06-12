@@ -43,7 +43,39 @@ tags:
 
 ### 整体框架
 
-OmniSonic 要把真实听觉场景里同时存在的三种声音——屏幕内可见事件的环境声、屏幕外看不见的环境声、画面里人说的话——在一个模型里同时生成出来。它基于 Flow Matching 扩散框架，在音频 VAE 的潜空间里去噪。条件信号有四路：视频帧经 CLIP 视觉编码器，屏幕内、屏幕外两段环境声描述各经一个 FLAN-T5，语音转录经 SpeechT5 加 Durator 编码。这四路条件喂进核心的 TriAttn-DiT，由它堆叠多个 block 预测潜空间的速度场；推理时 ODE 求解器从噪声积分出音频潜表示，再经 VAE 解码器和 HiFi-GAN 声码器还原成波形。整篇方法的关键，是 TriAttn-DiT 内部如何把三种声学特性迥异的条件分开处理又动态融合，下面三个设计依次回答这件事。
+OmniSonic 要把真实听觉场景里同时存在的三种声音——屏幕内可见事件的环境声、屏幕外看不见的环境声、画面里人说的话——在一个模型里同时生成出来。它基于 Flow Matching 扩散框架，在音频 VAE 的潜空间里去噪。条件信号有四路：视频帧经 CLIP 视觉编码器，屏幕内、屏幕外两段环境声描述各经一个 FLAN-T5，语音转录经 SpeechT5 加 Durator 编码。这四路条件喂进核心的 TriAttn-DiT，由它堆叠多个 block 预测潜空间的速度场；推理时 ODE 求解器从噪声积分出音频潜表示，再经 VAE 解码器和 HiFi-GAN 声码器还原成波形。整篇方法的关键集中在 TriAttn-DiT 内部：把三种声学特性迥异的条件分路处理、按场景动态融合、再逐帧对齐到画面，下面三个设计依次展开这三件事。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["视频帧 → CLIP 视觉编码器"]
+    ON["屏幕内环境描述 → FLAN-T5"]
+    OFF["屏幕外环境描述 → FLAN-T5"]
+    SP["语音转录 → SpeechT5 + Durator"]
+    X["噪声音频潜表示<br/>（VAE 潜空间）"]
+
+    subgraph TRI["TriAttn-DiT 三路交叉注意力"]
+        direction TB
+        CON["屏幕内环境路 CA_env"]
+        COFF["屏幕外环境路 CA_env"]
+        CSP["语音路 CA_speech"]
+    end
+
+    X --> TRI
+    ON --> CON
+    OFF --> COFF
+    SP --> CSP
+    V -->|"屏幕内描述非空 → 绑到环境路"| CON
+    V -->|"屏幕内描述为空 → 绑到语音路"| CSP
+
+    CON --> MOE
+    COFF --> MOE
+    CSP --> MOE
+    MOE["MoE 门控融合<br/>条件代表 token → Softmax 权重 → 加权三路速度"]
+    MOE --> ADA["Frame-Aligned adaLN<br/>视觉上采样到音频帧率，逐帧缩放/平移"]
+    ADA --> ODE["ODE 求解 → VAE 解码器 → HiFi-GAN 声码器"]
+    ODE --> OUT["屏幕内外环境声 + 人声 混合波形"]
+```
 
 ### 关键设计
 

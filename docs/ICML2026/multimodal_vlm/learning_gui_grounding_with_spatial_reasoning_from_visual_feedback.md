@@ -51,6 +51,25 @@ Gui-Cursor 把这件事拆成一个最多 $T$ 步的交互 episode：
 
 训练用 GRPO，base model 用 Qwen2.5-VL-7B 与 UI-TARS-1.5-7B；最大训练步数 250、训练时最多 4 步移动、每条指令采 12 条轨迹、batch 32、学习率 $10^{-6}$。数据用 Aria-UI + OS-Atlas 的子集，仅 8K 样本（对比 GTA1 64K），还做 online filtering 把"全对/全错"的样本过掉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：截图 O + 指令 I"] --> INIT["光标初始化在屏幕正中央<br/>→ 首帧 O₀"]
+    INIT --> THINK
+    subgraph LOOP["交互式光标搜索 + 视觉反馈闭环"]
+        direction TB
+        THINK["think：描述目标长相 /<br/>光标当前位置 / 二者空间关系"]
+        THINK --> ANS["answer：输出新绝对坐标<br/>或 STOP"]
+        ANS -->|"新坐标"| RENDER["环境把光标渲染到下一帧<br/>再喂回模型"]
+        RENDER --> THINK
+    end
+    ANS -->|"STOP / 达最大步数"| TRAJ["得到一条交互轨迹"]
+    TRAJ --> REWARD["轨迹级稠密奖励<br/>位置奖励 − 4 个轨迹惩罚<br/>（早停 / 折返 / 反向 / 重复）"]
+    REWARD --> GRPO["GRPO 优化策略<br/>（每指令采 12 条轨迹组内对比）"]
+    GRPO --> OUT["输出像素坐标 (x,y) 落入目标框 B"]
+    CCF["Cursor-Centric Focusing<br/>训练降分省算力 / 推理裁局部捞精度"] -.->|"控制图像分辨率"| LOOP
+```
+
 ### 关键设计
 
 **1. 交互式光标搜索 + 视觉反馈闭环：把单步回归改成"挪了再看"的多步搜索**

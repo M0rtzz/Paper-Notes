@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 UniDex由三部分组成：(1) **UniDex-Dataset**——从自中心人类视频转化来的机器人中心数据集，跨8种手型、50K+轨迹、9M帧；(2) **FAAS + UniDex-VLA**——功能-执行器对齐的统一动作空间和基于它训练的3D VLA策略；(3) **UniDex-Cap**——便携式人类数据采集装置，支持人-机数据共训练，减少遥操作成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自中心人类视频"] --> S1
+    subgraph S1["人→机器人数据转换管线"]
+        direction TB
+        B["运动学重定向<br/>指尖对齐 + 人在回路微调偏移"] --> C["视觉对齐<br/>掩蔽人手 + 渲染机器手点云"]
+    end
+    S1 --> D["UniDex-Dataset<br/>8 手型 / 50K+ 轨迹 / 9M 帧"]
+    D --> E["功能-执行器对齐空间 FAAS<br/>82 维：按功能角色映射关节"]
+    E --> F["UniDex-VLA<br/>3D 点云 + 语言 + 本体感知 → FAAS 动作 chunk"]
+    F --> G["灵巧手部署 / 跨手零样本迁移"]
+```
+
 ### 关键设计
 
 **1. 人→机器人数据转换管线：把人手视频"翻译"成机器手能执行的轨迹**

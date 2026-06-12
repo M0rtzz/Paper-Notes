@@ -45,6 +45,24 @@ FedDTL 要在 $K$ 个客户端、各持私有数据 $\mathcal{D}_k=\{(x_i,y_i)\}
 
 每个全局轮 $t$ 的数据流是：服务器**下行广播**上一轮的全局视觉 LoRA $\Delta\mathbf{W}_g^{t-1}$ 和全部类别的全局文本嵌入 $\{\bar z_{\text{text}}^{c,t-1}\}_{c=1}^{C}$；客户端拿 LoRA-tuned 图像编码器 $\mathcal{V}_k$ 把本地图像编码成 $\bar z_v$、跟收到的文本嵌入算 cosine+softmax 做分类，前 $M$ 轮走 SFT、之后切 RL；本地训完只**上行**回传视觉 LoRA $\Delta\mathbf{W}_k$ 和归一化后的图像类别嵌入 $\bar z_{v,k}$（仅 class token，full-data 下还能只采子集）；服务器把各客户端视觉 LoRA 做样本量加权平均，再拿这些图像嵌入当监督训全局文本编码器 $\mathcal{T}_g$（也是 LoRA），一个全局轮就此闭合。整套结构靠"客户端视觉解耦 + 服务器文本统一"和"本地两阶段微调"两条腿，目标是在不堆额外正则的前提下同时治两病。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    BC["服务器下行广播<br/>全局视觉 LoRA + 全部类别文本嵌入"]
+    subgraph CLIENT["客户端 k 本地"]
+        direction TB
+        ENC["解耦编码器·视觉侧<br/>图像编码器 LoRA 微调，cosine+softmax 对齐文本嵌入"]
+        SFT["SFT 暖启阶段<br/>前 M 轮 cross-entropy 拉到稳定初值"]
+        RL["GRPO RL 泛化增强<br/>latent 注噪采 G 个动作 + 0/1 奖励 + hybrid 参考 KL"]
+        ENC --> SFT -->|"切换 RL"| RL
+    end
+    BC --> ENC
+    RL --> UP["客户端上行回传<br/>视觉 LoRA + class-token 图像嵌入"]
+    UP --> AGG["服务器聚合<br/>视觉 LoRA 按样本量加权平均"]
+    AGG --> TXT["解耦编码器·文本侧<br/>训全局文本编码器当统一语义锚"]
+    TXT -->|"完成一个全局轮"| BC
+```
+
 ### 关键设计
 
 **1. 解耦编码器训练：让服务器文本编码器当"全局语义锚"**

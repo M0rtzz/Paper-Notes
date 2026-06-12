@@ -42,6 +42,22 @@ QVG 是面向自回归视频扩散的训练免微调 KV-Cache 量化框架——
 ### 整体框架
 QVG 训练免微调地接入任何自回归视频扩散模型的 KV-cache 写入路径：chunk-by-chunk 处理 KV，每个 chunk 做（1）k-means 聚类把 $N$ 个 token 分成 $C$ 组，每组算 centroid $C_i$；（2）token 减去自己所属 centroid 得到残差 $R_i$；（3）残差走标准 per-group 对称量化（INT2 或 INT4）；（4）想进一步降误差就把"残差再 smoothing + 再量化"递归做几轮（Pro 版）。dequant 时把 $S_X\cdot X_{\text{INT}}+C_i$ 加回去得到近似的 K/V。所有 centroid 用 BF16 保存（很小），算法与系统在 GPU 上联合优化以保持 <4% 延迟。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自回归视频扩散<br/>逐 chunk 写入 KV-cache"] --> SAS
+    subgraph SAS["语义感知平滑（设计 1）"]
+        direction TB
+        B["k-means 把 chunk 内 N 个 token<br/>聚成 C 组，算 centroid Cᵢ"] --> C["token 减自身 centroid<br/>得低幅值残差 Rᵢ"]
+    end
+    SAS --> D["残差走 per-group 对称量化<br/>（INT2 / INT4）"]
+    D -->|"误差还想再降"| E["渐进残差量化（设计 2）<br/>对 dequant 残差再平滑+量化，重复 L 轮"]
+    E -.->|"递归复用平滑"| SAS
+    D --> F["算法-系统协同（设计 3）<br/>量化/反量化与 kernel 融合<br/>centroid 用 BF16 存"]
+    E --> F
+    F --> G["反量化加回 centroid 还原近似 K/V<br/>显存↓最多 7×，端到端延迟 <4%"]
+```
+
 ### 关键设计
 
 **1. Semantic-Aware Smoothing（语义感知平滑）：先聚类减 centroid，把大幅值分布拉平**

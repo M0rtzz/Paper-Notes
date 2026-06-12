@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 SOE 要解决的是：教师模型在难题上反复沿同一错误逻辑采样，提高 temperature 只能换换词面、换不掉推理方向。它是一个纯推理时框架：输入一道教师 greedy decoding 已经做错的难题，把这条失败轨迹在关键推理节点截断成多个 prefix；对每个 prefix，教师生成若干条 Monte Carlo look-ahead 轨迹来估计当前的局部 bias manifold，同时让弱学生模型在同一 prefix 下生成固定 8 tokens 的短 candidate probe；系统把每个 probe 映射回教师隐藏空间，选出相对教师 dominant subspace 最正交的一个拼接到 prefix 后，输出是教师从一个全新几何方向续写出来的推理链。整个过程不训练、不改参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：教师贪心解码已做错的难题"] --> B["低秩推理塌缩诊断<br/>用 effective rank 测出隐藏状态谱退化，定位塌缩的关键推理节点"]
+    B --> C["在关键节点截断失败轨迹为多个 prefix"]
+    C --> D["教师采样 N 条 Monte Carlo look-ahead 轨迹"]
+    D --> E["Micro-SVD 局部流形估计<br/>N×N Gram 矩阵谱分解恢复主导子空间 U∥"]
+    subgraph S["Orthogonal Latent Stitching（正交隐空间拼接）"]
+        direction TB
+        F["弱学生在同一 prefix 生成 M 个短 probe（8 tokens）"] --> G["每个 probe 经教师前向得隐向量 z_j"]
+        G --> H["对 U∥ 算正交残差 r_j，选残差能量最大的 probe"]
+    end
+    C --> F
+    E --> H
+    H --> I["把选中 probe 拼到 prefix 后，教师从新几何方向续写"]
+    I --> J["输出：结构异质的候选推理链（难题子集 Pass@16 提升）"]
+```
+
 ### 关键设计
 **1. 低秩推理塌缩诊断：把"模型一直绕错路"变成可测量的谱退化**
 

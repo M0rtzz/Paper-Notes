@@ -50,6 +50,25 @@ STAGE-BO 的一次迭代由四步组成，输入是已有数据集 $\mathcal{D}_
 
 整个过程没有 HV 计算，主要计算成本是 NSGA-II 在便宜的代理函数上的搜索。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["数据集 D_t<br/>已评估点 (x_i, y_i)"] --> GP["拟合 m 个独立 GP<br/>每目标 f_i 一个"]
+    subgraph D1["Fill-distance 驱动的 ε 目标点选择（设计 1）"]
+        direction TB
+        GP --> TS["Thompson 采样 + NSGA-II<br/>得代理 Pareto 前沿 P̃"]
+        TS --> YC["maxmin 找最大空洞点 Y_c<br/>离已有观测最远处"]
+    end
+    subgraph D2["ε-约束分解 + clipping 稳定器（设计 2）"]
+        direction TB
+        YC --> CLIP["clipping：门限超过当前<br/>最优观测则降回"]
+        CLIP --> EPS["round-robin 选主目标 f_k<br/>其余目标钉成 ε 约束"]
+    end
+    EPS --> CEI["约束 EI（设计 3）<br/>max EI×PoF 求下一查询点 x_t+1"]
+    CEI --> EVAL["昂贵评估 x_t+1<br/>结果并入 D_t"]
+    EVAL -->|进入下一轮迭代| IN
+```
+
 ### 关键设计
 
 **1. Fill-distance 驱动的 ε 目标点选择：用前沿上"最大空洞"来决定下一步往哪填**

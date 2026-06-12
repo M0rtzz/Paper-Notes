@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 SRR 是 plug-and-play 的、无需微调的 PTQ 后处理。对每一个线性层权重 $\mathbf{W}\in\mathbb{R}^{m\times n}$ 和它的激活缩放矩阵 $\mathbf{S}$，给定量化器 $\mathcal{Q}$、总秩预算 $r$，SRR 走 4 步：(1) 抽一个随机矩阵 $\mathbf{E}_{ij}\sim\mathcal{U}[-1,1]$，按 $k^\star=\arg\min_k \rho_k(\mathbf{S}\mathbf{W})\rho_{r-k}(\mathbf{S}\mathbf{E})$ 选秩劈分；(2) 取 $\mathbf{S}\mathbf{W}$ 的 top-$k^\star$ 奇异分量并映回原空间，得到 $\mathbf{L}^{(1)}\mathbf{R}^{(1)}=\mathbf{S}^{-1}\mathrm{SVD}_{k^\star}(\mathbf{S}\mathbf{W})$；(3) 只对剩余分量做量化 $\mathbf{Q}=\mathcal{Q}(\mathbf{W}-\mathbf{L}^{(1)}\mathbf{R}^{(1)})$；(4) 用剩下的 $r-k^\star$ 秩在缩放空间里拟合诱导出来的量化误差 $\mathbf{E}_k=\mathbf{W}-\mathbf{L}^{(1)}\mathbf{R}^{(1)}-\mathbf{Q}$，得到 $\mathbf{L}^{(2)}\mathbf{R}^{(2)}=\mathbf{S}^{-1}\mathrm{SVD}_{r-k^\star}(\mathbf{S}\mathbf{E}_k)$。最终把两个低秩块拼成 $\mathbf{L},\mathbf{R}$，推理时形式仍是 $\widehat{\mathbf{W}}=\mathbf{Q}+\mathbf{L}\mathbf{R}$，与现有 QER 推理 kernel 完全兼容。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：权重 W、激活缩放 S<br/>量化器 Q、总秩预算 r"] --> B["闭式 k 选择准则<br/>抽一次随机探针 E，最小化<br/>保留谱能量比 × 残差谱能量比 → 定 k*"]
+    B --> C
+    subgraph C["保留-量化-重构参数化（统一框架）"]
+        direction TB
+        C1["保留：取 SW 的 top-k* 主奇异方向<br/>映回原空间得 L¹R¹"] --> C2["量化：Q = 量化(W − L¹R¹)<br/>只量化扣除主结构后的剩余"]
+        C2 --> C3["重构：用剩下 r−k* 秩<br/>拟合诱导出的量化残差得 L²R²"]
+    end
+    C --> D["输出 Ŵ = Q + LR<br/>与现有 QER 推理 kernel 兼容"]
+    D -->|下游微调| E["两段式 QPEFT 扩展<br/>冻结 Q、适配器初始化为 LR<br/>保留分量梯度 ×γ 解耦"]
+```
+
 ### 关键设计
 
 **1. 可微的"保留-量化-重构"参数化：把秩预算的隐含用途搬上台面**

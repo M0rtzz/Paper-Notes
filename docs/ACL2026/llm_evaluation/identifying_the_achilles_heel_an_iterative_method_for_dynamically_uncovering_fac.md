@@ -49,6 +49,18 @@ HalluHunter 是一个基于知识图谱的全自动 LLM 事实错误测试框架
 
 HalluHunter 把"找 LLM 事实错误"当成在知识图谱上的一次有反馈的搜索：KG 是搜索空间，模型经常答错的关系和实体是高奖励区域，全程不用 LLM 生成题目以躲开数据污染。给定一个主题（如 "occupation: emperor"），系统先用 SPARQL 从 Wikidata 抽出 (SUBJECT, relation, OBJECT) 三元组建成有向图 $G=(V,E)$（每域约 50–60 万三元组、1 万多实体），再纯规则地把三元组转成 Yes/No、MC、WH 三类题，多跳题靠相邻三元组拼链（例如把 (Michelle Obama, spouse, Barack Obama) 接上 (Barack Obama, educated at, Harvard) 得到"Where was Michelle Obama's spouse educated at?"）。模型作答后，Yes/No 与 MC 用 exact match、WH 用 sentence-transformer 相似度判分，判分结果回灌给自适应迭代算法，由它根据各关系的滚动准确率和错答实体的相似邻居挑出下一批更难的三元组，如此 5 轮把模型逼到弱区。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["主题（如 occupation: emperor）"] --> B["SPARQL 从 Wikidata 抽三元组<br/>建有向图 G=(V,E)"]
+    B --> C["规则化无 LLM 问题生成<br/>Yes/No · MC · WH 三题型 + 多跳拼链"]
+    C --> D["待测 LLM 作答"]
+    D --> E["判分<br/>Yes/No·MC 用 exact match，WH 用句向量相似度"]
+    E --> F["自适应迭代生成算法<br/>explore 挑低准确率关系 / exploit 用 QuatE 找相似实体"]
+    F -->|"挑下一批更难三元组（≤5 轮）"| C
+    E --> G["Weighted Coverage 指标<br/>group degree centrality 验证覆盖未收窄"]
+```
+
 ### 关键设计
 
 **1. 规则化无 LLM 问题生成：用确定性转换换来可验证与抗污染**

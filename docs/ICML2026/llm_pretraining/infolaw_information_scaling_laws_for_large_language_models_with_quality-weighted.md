@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 InfoLaw 想回答一个被 compute 单轴卡死的问题：当高质量 token 不够、必须靠重复和混合低质数据时，loss 到底由什么决定。它的做法是把预训练重新看成"按质量桶累积信息"，先从 Common Crawl 全局去重得到 3.7T token、用两个质量分类器打分切成 6 个质量桶，再用 LayerMix 采样把每次训练的"质量分布 + 重复程度"参数化成一组权重 $w$，然后构造一个能把所有 mixture×scale×repetition 实验塌到同一条幂律线上的信息量公式 $\text{info}$，最后只用 9 个 252M-1.2B 小模型（27 个 run）拟合出全部参数，就能外推到 7B / 425B token 并直接搜出最优数据配方。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Common Crawl 15T<br/>全局去重 → 3.7T token"] --> B["两个质量分类器打分<br/>按分位切 6 个质量桶"]
+    B --> C["LayerMix 采样<br/>权重 w 定配方 → 每桶唯一 token Md、重复倍数 Rd"]
+    C --> D["信息累积公式<br/>info = Σ fd·Md·logK·(1 − e^(−λRd/logK))"]
+    D --> E["两步拟合<br/>Spearman 定 θ、各 λN → 回归 λ(N)=a·lnN+b"]
+    E --> F["幂律 collapse<br/>L = α·info^(−β)，27 个点塌成一条线"]
+    F --> G["应用：外推到 7B / 425B token<br/>+ 10 万次候选搜最优配方 w*"]
+```
+
 ### 关键设计
 
 **1. LayerMix 采样：把"质量 × 重复"拆成 6 个可独立估计的桶**

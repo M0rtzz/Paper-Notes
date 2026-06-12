@@ -42,7 +42,20 @@ tags:
 
 ### 整体框架
 
-T3S 想解决的是「强 student 继续从强 teacher 蒸馏时 acc 先崩后恢复」这件怪事，做法是先把崩点找出来、再把崩点之前主导优化的那批 token 从 loss 里剔掉。整体三步走：先跑一次标准 SFT、保存每个 checkpoint，按 train accuracy 的最低点定位 Imitation Bottleneck $\theta_b$；再用 selector 模型 $M_0$ 在 base $\theta_0$ 和 $\theta_b$ 上分别算每个 token 的 log-prob、取差值 $\Delta c_t$ 给 token 分组；最后重启训练、根据 $\Delta c_t$ 构造 token-level mask——AR 把 $\Delta c_t > 0$ 的 anchor token 从 CE 里 mask 掉，dLLM 反过来让 anchor 进可见上下文、逼模型反复练剩下的推理 token。这套监控可以在线跑：训练时盯着 train acc，一旦探到 bottleneck 就切到 mask 模式，不必预先跑完整轮蒸馏。
+T3S 想解决的是「强 student 继续从强 teacher 蒸馏时 acc 先崩后恢复」这件怪事，做法是先把崩点找出来、再把崩点之前主导优化的那批 token 从 loss 里剔掉。整体三步走：先跑一次标准 SFT、保存每个 checkpoint，按 train accuracy 的最低点定位 Imitation Bottleneck $\theta_b$；再用 selector 模型 $M_0$ 在 base $\theta_0$ 和 $\theta_b$ 上分别算每个 token 的 log-prob、取差值 $\Delta c_t$ 给 token 分组；最后重启训练、根据 $\Delta c_t$ 构造 token-level mask——AR 把 $\Delta c_t > 0$ 的 anchor token 从 CE 里 mask 掉，dLLM 反过来让 trajectory 标出的推理 token 更频繁被 mask、逼模型在 anchor 全给定的条件下反复重建它们。这套监控可以在线跑：训练时盯着 train acc，一旦探到 bottleneck 就切到 mask 模式，不必预先跑完整轮蒸馏。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["teacher 推理轨迹<br/>DeepSeek-R1 / QwQ"] --> B["标准 SFT 蒸馏<br/>保存每个 checkpoint"]
+    B --> C["Imitation Bottleneck 识别<br/>取 train acc 最低点 θ_b"]
+    C --> D["confidence 变化分组<br/>selector M0 算 Δc = c(θ_b) − c(θ0)"]
+    D -->|"Δc &gt; 0：anchor 集合 A"| E1["AR 端 anchor mask<br/>把 A 从 CE 中剔除"]
+    D -->|"Δc &lt; 0：yet-to-learn token"| E2["dLLM 端反向 mask<br/>优先 mask 推理 token 反复重建"]
+    E1 --> F["重启训练（token-level mask）<br/>梯度集中到推理 token"]
+    E2 --> F
+    F --> G["输出：T3S student<br/>Qwen3-8B 反超 R1 / LLaDA SOTA"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 CoOT 想解决的是"如何不更新参数就能和陌生伙伴配合"。它把协调问题写成 Hidden-Utility Markov Game（HU-MG）$(\mathcal{S},\mathcal{A},\mathcal{T},R_t,\mathcal{R}_w)$：环境奖励 $R_t$ 共享，但每个伙伴 $\pi^p_i$ 私有一个"隐效用" $r^w_i\sim\mathcal{R}_w$，不同 $r^w_i$ 在同一环境里诱导出截然不同的行为偏好。整体流程是：训练阶段为大量行为各异的伙伴各自跑出对应的最佳响应轨迹，喂给一个 Decision Transformer 学"看过去几局交互就能预测该如何最佳响应"；部署阶段冻结参数，靠不断追加的交互历史在 forward pass 里完成 partner 适应。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DG["HU-MG + 行为偏好数据生成"]
+        direction TB
+        A["定义离散事件 → 线性组合成隐效用空间 R_w"] --> B["MAPPO 联合训练<br/>行为偏好伙伴 π_p + 最佳响应 π_br"]
+        B --> C["事件级多样性打分 → 取 top-N 组成训练池"]
+        C --> D["拼定长 context C + 独立重采 query 态<br/>构成三元组 (s_h, C, â)"]
+    end
+    DG --> TF["Coordination Transformer（GPT-2）<br/>读原始 (s,a,r) token 序列，预测最佳响应动作<br/>交叉熵 L = −log p(â)，context 窗 5 + masking"]
+    TF --> DEPLOY
+    subgraph DEPLOY["No-Prior 在线部署（冻结参数）"]
+        direction TB
+        E["冷启动：context 初始化为 T 条空轨迹"] --> F["每步 a_t ~ M(·|s_h,C)，执行后记录 (s,a,r)"]
+        F --> G["episode 结束：整段轨迹入 ring buffer，顶掉最老一条"]
+        G -->|跨 episode 重复，忘旧学新| F
+    end
+    DEPLOY --> OUT["与陌生伙伴零样本协调（无梯度更新）"]
+```
+
 ### 关键设计
 
 **1. HU-MG + Behavior-Preferring 数据生成：让训练池里的伙伴既行为多样、又自带最佳响应标签**

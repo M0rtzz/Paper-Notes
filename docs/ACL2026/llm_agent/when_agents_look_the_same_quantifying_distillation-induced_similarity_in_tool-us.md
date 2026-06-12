@@ -44,6 +44,25 @@ tags:
 
 框架的输入是一组待检测模型和一个工具使用任务集，目标是量化模型之间被蒸馏"传染"的行为同质化程度。具体做法是先收集每个模型在任务上的完整执行轨迹，再从两个正交维度切入：RPS 关注模型如何用语言表达回复（verbal fingerprint），AGS 关注模型如何选择和组织工具调用（behavioral fingerprint）。分析时以 Claude Sonnet 4.5 (thinking) 作为参考 oracle，计算其余模型与它的相似度，最终输出每个模型在两个维度上的行为继承得分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["待测模型集 + 工具使用任务集"] --> B["收集各模型完整执行轨迹"]
+    B --> R1
+    B --> G1
+    subgraph RPS["RPS：语义对齐后比语言指纹"]
+        direction TB
+        R1["阶段标注<br/>对齐到认证/信息获取/执行/验证/通知五阶段"] --> R2["LLM Judge 在共享阶段打分<br/>风格 / 结构 / 对齐，1–5 分取 Overall 均值"]
+    end
+    subgraph AGS["AGS：剥掉必做工具后比行为指纹"]
+        direction TB
+        G1["构建动作流图<br/>节点=工具调用，含时序边与依赖边"] --> G2["依赖边 LLM 验证<br/>剔除巧合匹配的假阳性"]
+        G2 --> G3["三子维度相似度<br/>S_node 排除 mandatory 工具 / S_seq / S_dep"]
+    end
+    R2 --> O["以 Claude Sonnet 4.5 为参考<br/>输出各模型两维行为继承得分"]
+    G3 --> O
+```
+
 ### 关键设计
 
 **1. Response Pattern Similarity（RPS）：在语义对齐后的阶段上比语言指纹**

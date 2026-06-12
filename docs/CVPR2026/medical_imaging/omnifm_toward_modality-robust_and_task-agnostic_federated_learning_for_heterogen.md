@@ -43,7 +43,21 @@ tags:
 
 ### 整体框架
 
-OmniFM 的每个客户端提取两类表示：通过 backbone 获取的空间域表示 $\mathbf{r} \in \mathbb{R}^{L \times d}$，以及通过 FFT 获取的频域频谱 embedding $\mathbf{s}$。频谱 embedding 上传至服务器侧的全局知识库进行 top-k 检索，检索到的全局频谱原型通过交叉注意力和前缀-后缀提示注入 backbone 表示，最终由任务头产生预测。频谱-近端对齐损失在优化层面抑制模态引起的漂移。
+OmniFM 的每个客户端提取两类表示：通过 backbone 获取的空间域表示 $\mathbf{r} \in \mathbb{R}^{L \times d}$，以及通过 FFT 获取的频域频谱 embedding $\mathbf{s}$。频谱 embedding 上传至服务器侧的全局知识库进行 top-k 检索，检索到的全局频谱原型 $\mathbf{S}_g$ 先经嵌入级交叉注意力（ECA）与本地表示 $\mathbf{r}$ 融合得 $\mathbf{Z}$，再以前缀-后缀频谱提示（PSP）拼成增广序列 $[\mathbf{Z}\|\mathbf{r}\|\mathbf{c}]$ 送入任务头产生预测。整套机制只在 embedding 层动手、不改 backbone，因此同一 pipeline 可挂在分类、分割、超分、VQA 等不同任务上；频谱-近端对齐损失（SPAlign）则在优化层面把局部频谱拉向全局原型，抑制模态引起的漂移。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入医学影像<br/>（MRI/CT/PET/病理…）"] --> BB["backbone 编码<br/>空间域表示 r"]
+    IMG --> FFT["FFT 取幅度谱 + 低通<br/>频谱 token s"]
+    FFT --> GSKR["全局频谱知识检索 GSKR<br/>服务器知识库 top-k 检索 → 全局原型 Sg"]
+    GSKR --> ECA["嵌入级交叉注意力融合 ECA<br/>r 为 query、Sg 为 key/value → Z"]
+    BB --> ECA
+    ECA --> PSP["前缀-后缀频谱提示 PSP<br/>拼成 [Z ‖ r ‖ c]"]
+    PSP --> HEAD["任务头<br/>分类/分割/超分/VQA"]
+    HEAD --> OUT["预测输出"]
+    FFT -.->|SPAlign 对齐损失<br/>s 拉向全局原型质心| GSKR
+```
 
 ### 关键设计
 

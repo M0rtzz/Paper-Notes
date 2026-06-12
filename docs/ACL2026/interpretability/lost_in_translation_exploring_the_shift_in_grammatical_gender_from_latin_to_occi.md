@@ -44,6 +44,18 @@ tags:
 
 整套框架的目标是把"拉丁中性名词在奥克语里归男还是归女"这个判断，拆成词内形态与句法上下文两路证据分别量化。流程上先做骨干与分词的预备选型——在拉丁-奥克语对上用 FastText / mBERT / ByT5 跑三个 probe（冻结性别预测、Latin→Occitan 变体检索、聚类）选出 mBERT 作骨干，再比较 WordPiece、纯 BPE 与 Hybrid 分词后用 Hybrid 词表对 mBERT 做 10 epoch 域适应 MLM（验证 PPL 从 942.85 降到 9.52）。在这个骨干之上分两条预测线：RQ1 用孤立 lemma 的形态-音系特征（后缀 n-gram、音节数、CV 模板、重音代理等）拼接预训练表示，喂给一组分类头做 10 折 lemma-grouped CV，量化"只看词形能预测多少性别"；RQ2 把约 130k token 语料里的名词对齐到拉丁-奥克语 lemma 词典后，构造 word-only / context / masked-context 三种输入，用同一 mBERT + MLP head 对比，量化上下文一致性带来的增量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["拉丁-奥克语语料<br/>(~130k token)"] --> B["骨干/分词选型<br/>三 probe 选出 mBERT"]
+    B --> C["Hybrid 分词器<br/>BPE + word-level 回退"]
+    C --> D["域适应 MLM<br/>验证 PPL 942.85 → 9.52"]
+    D --> E1["2×BiLSTM + MHSA 形态分类头<br/>RQ1：仅孤立 lemma 词形"]
+    D --> E2["noun-conditioned attention 上下文头<br/>RQ2：word-only / context / masked-context"]
+    E1 --> F["性别预测<br/>男 / 女"]
+    E2 --> F
+```
+
 ### 关键设计
 
 **1. Hybrid 分词器（BPE + word-level 回退）：在高拼写噪声语料里同时拿到零 OOV 和有意义的子词**

@@ -47,6 +47,30 @@ LiDAR 用预先生成的几步 lookahead 样本和前向扰动核重写期望未
 ### 整体框架
 LiDAR 想做的是测试时把扩散采样推向 reward-tilted 分布，却不付出反向传播的代价。它把奖励引导拆成两个解耦阶段（论文 Algorithm 1/2）：先用一个便宜的弱采样器对每个 prompt 一次性生成一批 lookahead 样本并打好分，再在正式采样时把这批样本当作"路标"，每个时间步用一条闭式 softmax 公式把粒子 $\mathbf{x}_t$ 朝高奖励样本拉、远离低奖励样本，"引力"强度正比于 reward（直觉见图 1(b)）。具体地，Phase 1 给定 prompt $\mathbf{c}$，用 $\delta$ 步快速求解器 $q(\mathbf{x}_0\mid\mathbf{c})$（DPM-Solver、LCM、DMD 等）批量生成 $n$ 个 lookahead 样本 $\{\hat{\mathbf{x}}_0^i\}_{i=1}^n$ 并用 reward 模型标注成 $\{(\hat{\mathbf{x}}_0^i, r_i)\}$，这步与 $\mathbf{x}_t$ 无关、每个 prompt 只算一次；Phase 2 从 $\mathbf{x}_T\sim p(\mathbf{x}_T)$ 反向迭代，每步用 $\mathbf{s}_\theta(\mathbf{x}_t,t,\mathbf{c}) + s\cdot\nabla_{\mathbf{x}_t}\hat r_t^\lambda$ 替代普通 Stein score，梯度项就是 lookahead 样本的 softmax 加权差。整条链路没有任何反传，reward 模型甚至可以不可微（如离散分子的环数）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["前向 rollout 形式的 EFR 重写<br/>Bayes 换基底：期望从 x_t-后验改写到先验基底<br/>x_t 只进解析高斯前向核、先验样本可复用"]
+    subgraph P1["几步 lookahead 采样（Phase 1）"]
+        direction TB
+        A["prompt c"] --> B["δ 步弱解算器 q<br/>DPM-3/5、LCM-4、DMD-1"]
+        B --> C["生成 n 个 lookahead 样本 x̂₀ⁱ"]
+        C --> D["reward 模型标注<br/>缓存 {(x̂₀ⁱ, rᵢ)}，每 prompt 只算一次"]
+    end
+    subgraph P2["导数自由的闭式 softmax 引导（Phase 2）"]
+        direction TB
+        G["x_T ~ p(x_T)"] --> H["每步算 softmax 权重<br/>wᵢʳ 看 reward+距离、wᵢ 只看距离"]
+        H --> I["∇r̂ = Σ(wᵢʳ − wᵢ) x̂₀ⁱ / σ_t²<br/>纯代数、无神经反传"]
+        I --> J["修正得分 s_θ + s·∇r̂ → 反向一步"]
+        J -->|循环 τ 步| H
+    end
+    F --> P1
+    P1 --> P2
+    F -.使闭式成立.-> I
+    D -.缓存样本.-> H
+    J --> K["输出 x₀（reward-tilted 样本）"]
+```
+
 ### 关键设计
 
 **1. 前向 rollout 形式的 EFR 重写（Theorem 3.1）：把 $\mathbf{x}_t$ 从神经网络里剥出来**

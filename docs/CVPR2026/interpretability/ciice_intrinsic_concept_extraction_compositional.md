@@ -46,6 +46,24 @@ tags:
 
 HyperExpress 要解决的 CI-ICE，是从单张图里既把概念按物体级/属性级解耦、又让这些概念能重新组合回原概念。它把任务拆成两条线：**概念学习**（双曲对比学习 HCL + 双曲蕴含学习 HEL，负责把概念在 Poincaré 球上摆成正确的层级与从属关系）和**概念优化**（Horosphere 投影 HP，负责把学好的概念旋到一个零曲率子流形上、让它们满足线性组合）。流程上，先借 ICE 第一阶段定位物体、拿到掩码 $\mathcal{M}$ 和锚文本 $\mathcal{T}^{anchor}$，再学习 $(M+1)\cdot N$ 个 concept token 嵌入（N 个物体，每个配 M 个属性概念加 1 个物体概念）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单张图像"] --> B["ICE 第一阶段<br/>定位物体 → 掩码 + 锚文本"]
+    B --> C["学习 (M+1)·N 个 concept token<br/>N 物体 × (M 属性 + 1 物体)"]
+    C --> D
+    subgraph LEARN["概念学习"]
+        direction TB
+        D["双曲对比学习 HCL<br/>Poincaré 球上拉开层级"] --> E["双曲蕴含学习 HEL<br/>蕴含锥约束属性从属"]
+    end
+    E --> F
+    subgraph OPT["概念优化"]
+        direction TB
+        F["Horosphere 投影 HP<br/>旋到零曲率子流形保可组合"]
+    end
+    F --> G["可组合概念<br/>按权重线性相加重建原概念"]
+```
+
 ### 关键设计
 
 **1. 双曲对比学习 HCL：用双曲距离天然拉开层级不同的概念**

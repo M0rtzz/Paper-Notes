@@ -42,7 +42,29 @@ tags:
 
 ### 整体框架
 
-MERIT 把 instruction tuning 从"集中式"重塑为"分布式 + 一次合并"，整条 pipeline 在 merge-ready 初始化 $\theta^{(0)}$ 上有 5 步：（1）对 $T$ 个数据集，各在 200 条小校准集上算一个代表性梯度 $g_t$；（2）构造余弦相似度矩阵 $C_{ij}=\langle\tilde g_i,\tilde g_j\rangle$ 并做 PCA，得到每个数据集的 $r$-维冲突嵌入 $z_t$；（3）沿 $r$ 个 PCA 主轴递归做 sample-balanced 的 50/50 中位数切分，得到 $K=2^r$ 组；（4）每组从 $\theta^{(0)}$ 独立微调，**分支间完全零通讯**，可以分散到地理隔离的 GPU 池或 spot 实例；（5）一次性按 token 预算 $w_k=N_k/\sum N_j$ 加权平均成 $\bar\theta$。整套流程把"训练时同步成本"换成了"训练前一次小规模梯度估计 + 训练后一次参数平均"。
+MERIT 把 instruction tuning 从"集中式"重塑为"分布式 + 一次合并"，整条 pipeline 在 merge-ready 初始化 $\theta^{(0)}$ 上有 5 步：（1）对 $T$ 个数据集，各在 200 条小校准集上算一个代表性梯度 $g_t$；（2）构造余弦相似度矩阵 $C_{ij}=\langle\tilde g_i,\tilde g_j\rangle$ 并做 PCA，得到每个数据集的 $r$-维冲突嵌入 $z_t$；（3）沿 $r$ 个 PCA 主轴递归做 sample-balanced 的 50/50 中位数切分，得到 $K=2^r$ 组；（4）每组从 $\theta^{(0)}$ 独立微调，**分支间完全零通讯**，可以分散到地理隔离的 GPU 池或 spot 实例；（5）一次性按 token 预算 $w_k=N_k/\sum N_j$ 加权平均成 $\bar\theta$。整套流程把"训练时同步成本"换成了"训练前一次小规模梯度估计 + 训练后一次参数平均"，而贯穿其中的合并增益定理则负责回答"为什么这么切、这么合最优"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["merge-ready 初始化 θ⁰<br/>+ T 个指令数据集"]
+    T["合并增益定理<br/>增益 = 曲率加权的 checkpoint 方差"]
+    subgraph SPLIT["PCA 冲突轴切分（关键设计 2）"]
+        direction TB
+        A["各数据集 200 条校准集<br/>估代表性梯度 g_t"]
+        B["余弦相似度矩阵 + PCA<br/>得 r 维冲突嵌入 z_t"]
+        C["沿 r 主轴递归 50/50 中位数切分<br/>得 K=2^r 组"]
+        A --> B --> C
+    end
+    D["K 个分支各从 θ⁰ 独立微调<br/>分支间零通讯"]
+    E["Token 加权一次合并<br/>权重 w_k = N_k / ΣN_j"]
+    O["单一合并模型<br/>8-benchmark 平均 54.3 → 57.0"]
+
+    I --> SPLIT
+    T -.->|指明往高曲率方向注入分散| SPLIT
+    SPLIT --> D --> E --> O
+    T -.->|合并 = 谱过滤 + 隐式范数正则| E
+```
 
 ### 关键设计
 

@@ -41,7 +41,27 @@ T-POP 把"测试时对齐"和"神经决斗赌博机"拼在一起，在不动 LLM
 ## 方法详解
 
 ### 整体框架
-T-POP 在第 $t$ 轮收到 query $q_t$，并行展开两条最长 $M$ 的解码轨迹 $y_{t,1}, y_{t,2}$，分别叫 exploitation arm 和 exploration arm。每个位置 $p$ 同时为两条序列各选下一个 token：先从 base LLM 拿各自的 top-$k$ 候选，合并成共享候选集 $\mathcal{V}_p$，再用打分函数 $\text{Score}(v|y_{<p}) = \pi_{\text{base}}(v|y_{<p}) + \omega \cdot r([y_{<p},v];\theta)$ 给每个候选打分。两条序列各自挑分最高的 token 继续展开，但 exploration arm 额外加一个梯度型 UCB bonus。展开到结束后把 $(y_{t,1}, y_{t,2})$ 一起呈给用户，拿到二元偏好 $l_t = \mathbb{1}\{y_{t,1} \succ y_{t,2}\}$，立刻丢进 BTL 损失更新奖励网络 $\theta_t \to \theta_{t+1}$，并更新协方差矩阵 $V_t$ 以备下一轮算 UCB。base LLM 全程冻结，只有那个小的 reward NN 在变。
+T-POP 在第 $t$ 轮收到 query $q_t$，并行展开两条最长 $M$ 的解码轨迹 $y_{t,1}, y_{t,2}$，分别叫 exploitation arm 和 exploration arm。每个位置 $p$ 同时为两条序列各选下一个 token：先从 base LLM 拿各自的 top-$k$ 候选，合并成共享候选集 $\mathcal{V}_p$，再用打分函数 $\text{Score}(v|y_{<p}) = \pi_{\text{base}}(v|y_{<p}) + \omega \cdot r([y_{<p},v];\theta)$ 给每个候选打分。两条序列各自挑分最高的 token 继续展开，但 exploration arm 额外加一个梯度型 UCB bonus，每选一步还累积更新协方差矩阵 $V$。这条内层 token 循环走到长度 $M$ 后把 $(y_{t,1}, y_{t,2})$ 一起呈给用户，拿到二元偏好 $l_t = \mathbb{1}\{y_{t,1} \succ y_{t,2}\}$，立刻丢进 BTL 损失更新奖励网络 $\theta_t \to \theta_{t+1}$，进入下一轮。base LLM 全程冻结，只有那个小的 reward NN 在变。整套方法可看成「内层逐 token 解码 + 外层逐轮反馈」两层循环：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户 query q_t（初始化两条 arm）"] --> V["base LLM 取两条 arm 各自 top-k<br/>合并成共享候选集"]
+    V --> S["测试时对齐打分 + frozen LLM<br/>Score = π_base + ω·r(·;θ)"]
+    subgraph ARM["Dueling Arm 非对称 explore–exploit 解码"]
+        direction TB
+        E1["exploit arm：选 argmax Score"]
+        E2["explore arm：Score + UCB bonus<br/>梯度差在 V⁻¹ 度量下的范数"]
+        E1 -->|朝最不确定方向偏| E2
+    end
+    S --> ARM
+    ARM --> COV["更新协方差矩阵 V（累积两 arm 梯度差）"]
+    COV -->|未到长度 M，下一 token| V
+    COV -->|生成完毕| PAIR["呈现候选对 (y_t,1, y_t,2)"]
+    PAIR --> FB["用户给二元偏好 l_t"]
+    FB --> BTL["BTL 在线奖励学习 + 异步更新<br/>最小化 BTL 损失，后台更新 θ"]
+    BTL -->|θ_t → θ_t+1，进入下一轮| Q
+```
 
 ### 关键设计
 

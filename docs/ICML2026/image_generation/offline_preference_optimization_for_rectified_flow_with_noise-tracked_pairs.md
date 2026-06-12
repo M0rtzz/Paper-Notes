@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 PNAPO 要解决的是 Diffusion-DPO 在 RF 上"丢掉先验噪声、只能拿独立采样的噪声近似反向轨迹"这一方差源头。它把这件事拆成一条离线、off-policy 的 RL-free 管线：先用 RF 基础模型给每个 prompt 采两个先验噪声、各生成一张图、再用奖励模型打分，存成保留噪声的六元组；训练时不再重采样，而是借 RF 的直线轨迹性质从存好的端点对插值出中间态，喂进一个与 RF 几何一致的 DPO 风格目标，并配上随奖励差和训练进度自动调节的动态 $\beta$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["先验噪声追踪的偏好六元组"]
+        direction TB
+        A["DiffusionDB 选 20k 高质量 prompt"] --> B["RF 基础模型每 prompt 采两先验噪声各生成一图"]
+        B --> C["奖励模型 HPSv2.1 打分得奖励差 δr"]
+        C --> D["存六元组（赢/输图 + 各自先验噪声 + δr）"]
+    end
+    DATA --> E["RF 一致的轨迹估计与目标函数<br/>端点对直线插值中间态 → PNAPO DPO 目标"]
+    F["动态 β 调度<br/>f(δr) 管样本 · g(n) 管进度"] --> E
+    E --> G["对齐后的 RF 文生图模型（SD3-M / FLUX）"]
+```
+
 ### 关键设计
 
 **1. 先验噪声追踪的偏好六元组：把噪声一起存下来**

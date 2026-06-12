@@ -45,6 +45,19 @@ GATD 要解决的是"列间关系全靠去噪 MSE 隐式学、学得慢又不可
 
 具体地，所有列先被映射到统一标量空间 $v\in[-1,1]^d$，对 $\binom{d}{2}$ 个列对算出真实角度 $\theta_{ij}$ 与长度 $\ell_{ij}$ 当监督目标、噪声态下的同名几何量当输入；去噪器吃进 `[时间嵌入; 加噪连续; one-hot 类别; 输入角度; 输入长度]` 产出 hidden $\mathbf{h}$，几何头从 $\mathbf{h}$ 预测 $\hat{\boldsymbol{\theta}}$（$\frac{\pi}{2}\tanh$ 约束）和 $\hat{\boldsymbol{\ell}}$，再把增强表征 $\mathbf{h}_{\text{aug}}=[\mathbf{h};\hat{\boldsymbol{\theta}}]$ 喂回连续/类别去噪头。采样阶段照算几何输入但不做几何监督，且长度头被 detach（长度经平方丢了符号信息，只在训练当正则、不进 $\mathbf{h}_{\text{aug}}$），生成后用反射（$s\mapsto 2-s$ 或 $s\mapsto -s$）而非硬裁剪把越界值折回 $[0,1]$，避免合成数据在分位数边界堆积。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 26, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表格列 连续 + 类别<br/>→ 统一标量空间 v∈[−1,1]"] --> C["跨类型列的几何特征化<br/>列对算角度 θ=arctan(Δ) 与长度 ℓ"]
+    C -->|"真值 θ,ℓ 作监督目标"| L["反转的损失权重层次<br/>几何损失 占总 loss 约 95%"]
+    C -->|"噪声态 θ,ℓ 作输入"| D["去噪器骨干 MLP/GNN/Transformer<br/>→ hidden h"]
+    D --> G["几何预测头 → 预测 θ̂, ℓ̂"]
+    G --> AUG["增强表征 h_aug=[h; θ̂]"]
+    AUG --> O["连续/类别去噪头 → 去噪输出"]
+    G -.->|"预测受 L 监督"| L
+    L -.->|"强制骨干内化列间关系"| D
+```
+
 ### 关键设计
 
 **1. 跨类型列的几何特征化：把任意两列的差值无损编码成一对有界几何量**

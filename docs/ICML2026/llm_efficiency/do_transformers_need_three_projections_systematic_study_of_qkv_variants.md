@@ -42,25 +42,25 @@ tags:
 
 ### 整体框架
 
-论文不提一个新模型，而是把"标准 Transformer 必须有 Q、K、V 三个独立投影"这个被默认了八年的假设拆开做系统对照：固定 attention 主干，只改投影的共享方式，量化每种共享在 synthetic / vision / language 上的质量代价和 KV cache 收益。它枚举三种共享方案——共享 query 和 key 的 **Q=K-V**（$A = \mathrm{Softmax}(\alpha K K^\top) V$，K 复用 Q，但 V 独立，attention 矩阵 $K K^\top$ 变对称）、共享 key 和 value 的 **Q-K=V**（$A = \mathrm{Softmax}(\alpha Q K^\top) K$，V 复用 K，但 Q 独立，attention 仍非对称，cache 只存 K）、以及三者全合一的 **Q=K=V**（$A = \mathrm{Softmax}(\alpha K K^\top) K$，单投影）。对其中引入对称 attention 的两个方案，再配一个带 2D positional encoding 的 (X)+ 变体，把方向信息重新注回去（仅用于 non-causal 任务）。
+论文不提一个新模型，而是把"标准 Transformer 必须有 Q、K、V 三个独立投影"这个被默认了八年的假设拆开做系统对照：固定注意力主干，只改投影的共享方式，量化每种共享在合成任务、视觉、语言建模上的质量代价和 KV cache 收益。它枚举三种共享方案——把 Q、K 两个投影统一的 **Q=K-V**（$A = \mathrm{Softmax}(\alpha K K^\top) V$，K 复用 Q、V 独立，注意力矩阵 $K K^\top$ 变对称）、把 K、V 两个投影统一的 **Q-K=V**（$A = \mathrm{Softmax}(\alpha Q K^\top) K$，V 复用 K、Q 独立，注意力仍非对称，缓存只存 K）、以及三者全合一的 **Q=K=V**（$A = \mathrm{Softmax}(\alpha K K^\top) K$，单投影）。对其中两个会产生对称注意力的方案（Q=K-V、Q=K=V），再各配一个带 2D 位置编码（positional encoding）的 (X)+ 变体，把方向信息重新注回去（仅用于非因果任务）。
 
 ### 关键设计
 
 **1. Q-K=V：让 V 复用 K，KV cache 直接减半而质量几乎不掉**
 
-LLM serving 的主要 memory 瓶颈是 KV cache，尤其 long context 下 cache 线性涨满显存。Q-K=V 的做法是让 key 和 value 共用同一个投影矩阵（$V = K$ 的 weight tying），于是推理时 cache 里只存 K、不存 V——V 直接从 K 复用，cache 砍掉 $50\%$；同时因为 Q 仍是独立投影，attention 分数 $Q K^\top$ 保持非对称，不破坏 sequential 任务依赖的方向性。这之所以几乎不掉质量，作者给的机制解释是：K 和 V 本就可以占用相似的 representational space，而 attention 实际工作在 low-rank regime，把 K 当 V 用并不会显著压缩有效表达力。实测 300M 模型在 SlimPajama 10B tokens 上 PPL 仅升 $3.1\%$，1.2B 模型叠 MQA 后也只升 $1.06\%$。相比 MLA 把 K/V 压成 compressed latent、推理时还要 expand 回来，Q-K=V 用一个 hard equality 就拿到同量级收益，实现上更简单。
+LLM 推理的主要显存瓶颈是 KV cache，尤其长上下文下缓存会线性增长、占满显存。Q-K=V 的做法是让键和值共用同一个投影矩阵（即 $V = K$ 的权重绑定 weight tying），于是推理时缓存里只存 K、不存 V——V 直接从 K 复用，KV cache 砍掉 $50\%$；同时因为 Q 仍是独立投影，注意力分数 $Q K^\top$ 保持非对称，不破坏序列任务依赖的方向性。这之所以几乎不掉质量，作者给的机制解释是：键和值本就可以占用相似的表示空间（representational space），而注意力实际工作在低秩区间（low-rank regime），把 K 当 V 用并不会显著压缩有效表达力。实测 300M 模型在 SlimPajama 10B tokens 上 PPL 仅升 $3.1\%$，1.2B 模型叠 MQA 后也只升 $1.06\%$。相比 MLA 把 K/V 压成压缩隐向量、推理时还要展开回来，Q-K=V 只用一个硬性相等约束就拿到同量级收益，实现上更简单。
 
-**2. (X)+：用 2D positional encoding 把 Q=K 丢掉的方向性补回来**
+**2. (X)+：用 2D 位置编码把 Q=K 丢掉的方向性补回来**
 
-Q=K-V 让 query 和 key 共用投影后，attention 矩阵退化成对称的 $K K^\top$，对依赖前后方向的 sequential 任务不利——这正是 symmetric attention 过去只见于 graph NN 和 relational reasoning、被序列任务避开的原因。(X)+ 变体的补救是构造一个固定的 2D sinusoidal positional encoding $P \in \mathbb{R}^{n \times n \times m}$，把对称的 attention map 广播到 $m$ 个 channel 上加进 $P$，再用一个 $1 \times 1$ 卷积投回二维 attention 矩阵，从而在不放弃投影共享的前提下重新引入 directional bias，思路与 relative positional encoding 和 vision Transformer 的 2D pos embedding 一脉相承。要注意 causal LM 本身已被 causal mask 强制成非对称，不需要这个补丁，所以 (X)+ 只用在 vision、synthetic 这类 non-causal 任务上。
+Q=K-V 让 Q 和 K 共用投影后，注意力矩阵退化成对称的 $K K^\top$，对依赖前后方向的序列任务不利——这正是对称注意力（symmetric attention）过去只见于图神经网络和关系推理、被序列任务避开的原因。(X)+ 变体的补救是构造一个固定的二维正弦位置编码 $P \in \mathbb{R}^{n \times n \times m}$，把对称的注意力图广播到 $m$ 个通道上加进 $P$，再用一个 $1 \times 1$ 卷积投回二维注意力矩阵，从而在不放弃投影共享的前提下重新引入方向性偏置，思路与相对位置编码、视觉 Transformer 的二维位置编码一脉相承。要注意因果语言模型本身已被因果掩码（causal mask）强制成非对称，不需要这个补丁，所以 (X)+ 只用在视觉、合成任务这类非因果任务上。
 
-**3. 与 GQA/MQA 正交叠加：投影共享和 head 共享是两个维度，收益可乘**
+**3. 与 GQA/MQA 正交叠加：投影共享和头共享是两个维度，收益可乘**
 
-GQA/MQA 走的是另一条省 cache 的路——head sharing，GQA-$g$ 把 $H$ 个 query head 共享到 $g < H$ 个 KV head，cache 减少比例为 $1 - g/H$。Q-K=V 削的是投影维度而非 head 维度，两者互不冲突，可以在每个 GQA group 内部再 enforce $K = V$ 把该 group 的 cache 又减半，于是收益相乘：Q-GQA-4（$H=16, g=4$）总 cache reduction 为 $1 - g/(2H) = 87.5\%$，Q-MQA 更进一步到 $96.9\%$，逼近 cache-based Transformer 的理论极限。由于 MQA/GQA 已是 PaLM/Llama/Mistral 等的标配，Q-K=V 作为 orthogonal complement 对工业部署是直接 actionable 的；Pareto frontier 上 Q-MQA 给出 $97\%$ cache 减少叠 near-parity 质量，对 edge / on-device inference 是真实可落地的 enabler。
+GQA/MQA 走的是另一条省缓存的路——头共享（head sharing），GQA-$g$ 把 $H$ 个 query 头共享到 $g < H$ 个 KV 头，缓存减少比例为 $1 - g/H$。Q-K=V 削的是投影维度而非头维度，两者互不冲突，可以在每个 GQA 组内部再强制 $K = V$、把该组的缓存又减半，于是收益相乘：Q-GQA-4（$H=16, g=4$）总缓存减少为 $1 - g/(2H) = 87.5\%$，Q-MQA 更进一步到 $96.9\%$，逼近基于缓存的 Transformer 的理论极限。由于 MQA/GQA 已是 PaLM/Llama/Mistral 等的标配，Q-K=V 作为正交补充对工业部署可以直接落地；在质量-效率的 Pareto 前沿上，Q-MQA 以近乎持平的质量给出 $97\%$ 缓存减少，对端侧/设备端推理是真实可落地的关键支撑。
 
-下表汇总三种 variant 相对标准 QKV 的计算、参数、cache 代价——Q-K=V 在拿到 $50\%$ cache 减少的同时还顺带省了 $33\%$ 的计算和参数：
+下表汇总三种变体相对标准 QKV 的计算、参数、缓存代价——Q-K=V 在拿到 $50\%$ 缓存减少的同时还顺带省了 $33\%$ 的计算和参数：
 
-| Variant | Computation | Parameters | KV Cache |
+| 变体 | 计算量 | 参数量 | KV 缓存 |
 |---|---|---|---|
 | QKV | $3nd^2$ | $3d^2$ | K + V |
 | Q=K-V / Q-K=V | $2nd^2$ | $2d^2$ | K only (Q-K=V) |

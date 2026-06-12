@@ -41,6 +41,18 @@ tags:
 
 GaC 将重建方法的迭代过程「展平」为一个自回归视频生成框架：单一 DiT 模型同时处理几何估计、视角变换模拟和图像补全。输入序列把 RGB 帧和几何帧交错排开 $\{I_i, \text{<Geometry>}, G_i, \text{<Image>}, I_{i+1}, \cdots\}$，中间插入的文本标记告诉模型下一步该吐几何还是该吐 RGB，于是「估几何—变视角—补图像」三件事被同一个 DiT 在一条序列上端到端串起来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上下文 RGB 帧 + 目标相机位姿 P"] --> B["几何作为上下文<br/>RGB 与几何帧交错成一条序列<br/>文本标记调度下一步出几何还是出 RGB"]
+    B --> C["统一自回归 DiT（Bagel-7B）"]
+    C --> D["Camera Gated Attention<br/>位姿入 query 残差 + 门控调制<br/>分清估几何与合视角两种用途"]
+    D --> E["自回归生成<br/>估当前帧几何 Gᵢ → 以 Gᵢ + 位姿 Pᵢ₊₁ 条件出下一帧 Iᵢ₊₁"]
+    E -->|训练随机丢几何帧| F["Geometry Dropout<br/>退化为图到图，序列变短 ~2× 提速"]
+    E --> G["场景一致视频<br/>（推理可选是否输出几何）"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 几何作为上下文：把不可微的「重建—渲染」四步压成一次生成（Variant #1）**

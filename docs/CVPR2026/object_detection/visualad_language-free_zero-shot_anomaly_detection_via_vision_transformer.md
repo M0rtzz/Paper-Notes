@@ -41,7 +41,18 @@ tags:
 
 ### 整体框架
 
-VisualAD 要回答一个质疑——ZSAD 里 CLIP 的文本分支是否必要。它给出一个纯视觉框架：在冻结 ViT 的 token 序列里插入两个可学习 token（异常 $t_a$、正常 $t_n$），$z_0 = [t_a, t_n, t_c, p_1, \ldots, p_N]$（$t_c$ 为原始 class token）；从中间层 $\mathcal{L} = \{6, 12, 18, 24\}$ 提取特征，经 SCA 增强 token、SAF 校准 patch，逐层算异常图再融合，全程不需要文本编码器。
+VisualAD 要回答一个质疑——ZSAD 里 CLIP 的文本分支是否必要。它给出一个纯视觉框架：在冻结 ViT 的 token 序列里插入两个可学习 token（异常 $t_a$、正常 $t_n$），$z_0 = [t_a, t_n, t_c, p_1, \ldots, p_N]$（$t_c$ 为原始 class token）；从中间层 $\mathcal{L} = \{6, 12, 18, 24\}$ 提取特征，**双路并行**——SCA 给全局 token 补空间定位、SAF 把 patch 校准到判别空间，两路再汇合做余弦对比评分，逐层异常图相加融合，全程不需要文本编码器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → 冻结 ViT<br/>token 序列插入可学习 异常 t_a / 正常 t_n"] --> B["从中间层 L=6,12,18,24<br/>逐层取出 token 与 patch 特征"]
+    B --> C["SCA 空间感知交叉注意力<br/>锚查询聚合局部证据，给全局 token 补空间定位"]
+    B --> D["SAF 自对齐函数<br/>逐层 MLP 把 patch 校准到判别空间"]
+    C --> E["多层余弦对比评分<br/>s = patch·t_a − patch·t_n"]
+    D --> E
+    E --> F["逐层异常图相加融合<br/>图像级取 top-1% 像素均值"]
+```
 
 ### 关键设计
 

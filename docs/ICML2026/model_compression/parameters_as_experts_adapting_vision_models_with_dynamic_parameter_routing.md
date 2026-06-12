@@ -46,6 +46,44 @@ tags:
 ### 整体框架
 ParaX 想在不撑破 PEFT 参数预算的前提下，让 adapter 的权重既随输入动态变化、又在层间共享信息。它以四 stage 的层级 backbone (Swin / ConvNeXt) 为例：每个 stage 配一个共享专家中心，每个 building block 里挂一个 ParaX 适配器 (Swin block 在 token mixer 和 channel mixer 后各挂一个，ConvNeXt block 在整个残差模块后挂一个)。前向时每个适配器独立地用一个超轻量 router 读取当前输入特征、输出动态系数，把专家中心里的参数矩阵线性合成出本模块专用的 $W_1, W_2$ 和三尺度深度卷积核，再用这组动态权重对输入做"降维 → 多尺度空间混合 → 升维"的低秩变换并加残差返回主干。除了专家中心、router 和任务头之外不引入任何额外可训练参数，主干全程冻结。
 
+下图给出单个 ParaX 适配器的前向流程：实线是特征数据流（主干特征经降维 → 多尺度空间混合 → 升维 → 残差），虚线是 router 用专家中心的参数基合成的动态权重，三个虚框分别对应下面的三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入特征 X<br/>（冻结主干某 block 输出）"]
+    subgraph EC["共享专家中心（设计1 · stage 级跨层共享参数池）"]
+        direction TB
+        E["通道专家 E_A, E_B"]
+        S["空间专家 S_A, S_B, S_C<br/>（多核深度卷积基）"]
+    end
+    R["动态参数路由（设计2）<br/>GAP → 16维线性 → softmax<br/>逐层独立 router"]
+    W["合成动态低秩权重 W₁, W₂"]
+    K["合成 3 个动态深度卷积核"]
+    DOWN["W₁ 降维"]
+    subgraph SP["动态多尺度空间混合 D²Conv（设计3）"]
+        direction TB
+        C["3×3 → 5×5 → 7×7 D²Conv 顺序堆叠<br/>每级带残差，渐进扩大感受野"]
+        SA["SA 空间聚合<br/>1×1 conv+softmax 生成 3 张注意力图，逐点加权求和"]
+        C --> SA
+    end
+    UP["W₂ 升维"]
+    Y["+ 残差 → 输出 Y 返回主干"]
+
+    X --> R
+    EC -.提供参数基.-> R
+    R -->|"G₁,G₂ × E_A,E_B"| W
+    R -->|"G_A,G_B,G_C × S"| K
+    X --> DOWN
+    W -.动态权重.-> DOWN
+    DOWN --> C
+    K -.动态卷积核.-> C
+    SA --> UP
+    W -.动态权重.-> UP
+    UP --> Y
+    X -.残差.-> Y
+```
+
 ### 关键设计
 
 **1. 共享专家中心：把参数共享放在专家池层面，同时修跨层冗余和表达力坍塌**

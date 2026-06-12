@@ -41,7 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-StructRTL 想在不跑逻辑综合的前提下，从 RTL 代码直接预测面积、延迟，关键是把"看 token"换成"看结构图"。流程是：RTL Verilog 先经 Yosys 编译成 RTLIL 中间表示，再解析成 CDFG（节点是操作/存储元素，有向边是数据/控制依赖）；节点初始嵌入是类型 one-hot 与位宽的拼接 $\mathbf{h}_i^0 = \text{concat}(\text{one-hot}(\text{type}(v_i)), \text{width}(v_i))$，经 8 层 GIN 得到上下文感知嵌入，叠加 Laplacian 全局位置编码后送入 8 层 Transformer。预训练阶段在这套表示上做两个自监督任务学结构，微调阶段用均值+最大值联合池化得到图级表示、再过 3 层 MLP 回归质量指标，并额外引入网表教师做蒸馏。
+StructRTL 想在不跑逻辑综合的前提下，从 RTL 代码直接预测面积、延迟，关键是把"看 token"换成"看结构图"。流程是：RTL Verilog 先经 Yosys 编译成 RTLIL 中间表示，再解析成 CDFG（节点是操作/存储元素，有向边是数据/控制依赖）；节点初始嵌入是类型 one-hot 与位宽的拼接 $\mathbf{h}_i^0 = \text{concat}(\text{one-hot}(\text{type}(v_i)), \text{width}(v_i))$，经 8 层 GIN 得到上下文感知嵌入，叠加 Laplacian 全局位置编码后送入 8 层 Transformer。预训练阶段在这套表示上做两个自监督任务（掩码节点建模 + 边预测）学结构，微调阶段用均值+最大值联合池化得到图级表示、再过 3 层 MLP 回归质量指标，并额外引入后映射网表教师做蒸馏。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RTL Verilog"] --> B["Yosys 编译<br/>RTLIL → CDFG"]
+    B --> C["节点初始嵌入<br/>类型 one-hot + 位宽"]
+    C --> D["8 层 GIN<br/>上下文感知嵌入"]
+    D --> E["+ Laplacian 位置编码<br/>8 层 Transformer"]
+    E -->|预训练| F["结构感知掩码节点建模<br/>post-GNN 掩 20% 节点猜类型"]
+    E -->|预训练| G["边预测<br/>采真/假边二分类补回拓扑"]
+    F --> H["微调：均值+最大值池化<br/>3 层 MLP 回归面积/延迟"]
+    G --> H
+    I["RTL → ABC → PM 网表<br/>20 层 GIN 教师"] -->|后映射网表知识蒸馏| H
+```
 
 ### 关键设计
 

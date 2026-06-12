@@ -50,29 +50,38 @@ ML-Embed 走两阶段训练 + 3D-ML 框架:
 
 每次 forward, 输入会经过: (1) 用 sub-rank $r'$ 的 MEL embedding 层 → (2) 跑前 $l$ 层 transformer → (3) 取每层 hidden state 过 final LN → (4) 截取前 $d'$ 维做 contrastive loss. 训练时这三个采样**同时**进行, 模型被迫在所有可能组合下都给出有用表征.
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入文本（query / 正例 / 难负例）"]
+    IN --> MEL["MEL 参数维嵌套<br/>低秩 E_A·E_B，每步采样 sub-rank r′"]
+    MEL --> MLL["MLL 深度维嵌套<br/>只跑前 l 层（对数间隔层集合）"]
+    MLL --> LN["各选中层 hidden state 过共享 final LN<br/>统一不同深度的表征尺度"]
+    subgraph LOSS["3D 嵌套对比损失 + MRL 表征维嵌套"]
+        direction TB
+        LN --> MRL["截取前 d′ 维（MRL）"]
+        MRL --> CL["在 layer × dim 网格上求和 InfoNCE"]
+    end
+    CL --> OUT["一次训练 → 140M–8B 六档可分解模型"]
+```
+
 ### 关键设计
 
-1. **Matryoshka Embedding Learning (MEL) —— 参数维嵌套**:
+**1. Matryoshka Embedding Learning (MEL)：参数维嵌套——连最肥的嵌入层也省下来**
 
-    - 功能: 用低秩分解 + 嵌套训练把巨大的 embedding 层压成可弹性部署的小矩阵, 同时减少**可训练**和**总**参数.
-    - 核心思路: 用 truncated SVD 把原 embedding $E \in \mathbb{R}^{v \times d_{model}}$ 拆成 $E_A \leftarrow U_r S_r \in \mathbb{R}^{v \times r}$ 和 $E_B \leftarrow V_r^{\top} \in \mathbb{R}^{r \times d_{model}}$, 训练时只更新 $E_A, E_B$ 两个小矩阵. 关键 Matryoshka trick 是: 每次 forward 随机从 $\{64, 128, 256, 512, 1024\}$ 里采样 sub-rank $r' < r$, 只用 $E_{effective} = E_A[:, :r'] E_B[:r', :]$. 这迫使模型把最关键信息塞到前 $r'$ 列里. 推理时支持两种模式: **Compatibility Mode** 直接乘出标准 embedding 矩阵, 部署接口零改动; **Efficiency Mode** 保留低秩形式, 按需用更小的 $r'' \ll r$ re-factorize, 显存大幅下降.
-    - 设计动机: LoRA 只省可训练参数, 推理时还要加载完整 embedding; MEL 同时省两端. 而 SVD 初始化保证 $E_A E_B$ 一开始就接近原矩阵, 不会破坏预训练知识, 这是从全量 finetune 到低秩 finetune 平滑过渡的关键.
+在 Qwen3-0.6B 这类小 decoder 上, 嵌入层因多语大词表占了 1/4 的总参数, 却被此前所有 Matryoshka 方法 (只管输出维的 MRL、只管深度的 MLL) 完全跳过——这是个低垂果实. MEL 直接对它下手: 先用 truncated SVD 把原 embedding $E \in \mathbb{R}^{v \times d_{model}}$ 拆成 $E_A \leftarrow U_r S_r \in \mathbb{R}^{v \times r}$ 与 $E_B \leftarrow V_r^{\top} \in \mathbb{R}^{r \times d_{model}}$, 训练时只更新这两个小矩阵. 关键的 Matryoshka trick 是每次 forward 从 $\{64, 128, 256, 512, 1024\}$ 里随机采一个 sub-rank $r' < r$、只用 $E_{effective} = E_A[:, :r'] E_B[:r', :]$, 逼模型把最关键的信息塞进前 $r'$ 列. 这样部署时就有两条路: **Compatibility Mode** 直接把 $E_A E_B$ 乘成标准 embedding 矩阵、接口零改动; **Efficiency Mode** 保留低秩形式、按需 re-factorize 到更小的 $r'' \ll r$, 显存大幅下降. 它之所以比 LoRA 更进一步, 是因为 LoRA 只省可训练参数、推理还得加载完整 embedding, 而 MEL 两端都省; SVD 初始化又让 $E_A E_B$ 一开始就接近原矩阵, 不破坏预训练知识, 是从全量 finetune 平滑过渡到低秩 finetune 的关键.
 
-2. **Matryoshka Layer Learning (MLL) —— 深度维嵌套**:
+**2. Matryoshka Layer Learning (MLL)：深度维嵌套——让浅层也成为合格的 exit point**
 
-    - 功能: 让同一份权重在不同深度截断时都能用, 部署时改一个 `num_hidden_layers` 就能换尺寸.
-    - 核心思路: 选一个对数间隔的层集合 $\mathcal{L}_{layers} = \{1, 2, 4, 8, 16, 32, L\}$, 每个选中层 $l$ 都把 hidden state $h_l$ 过 $\text{LN}_{final}$ (复用最终层 norm, 保证不同深度的表征在一个尺度), 然后参与对比损失. 这是 early-exit 训练的变体, 但所有 exit 共享最终 LN. 推理时只 load 前 $l$ 层就是一个完整可用的小嵌入模型.
-    - 设计动机: 直接砍最后几层往往掉点严重, 因为深层学到的语义没在浅层 anchor; 用对数间隔强迫每个 milestone 层都成为合格的 exit point, 用户能在精度 / 延迟之间灵活折中. 工程上完美兼容 Hugging Face `AutoModel`, 改 config 就行.
+直接砍掉 decoder 最后几层往往掉点严重, 因为深层语义没在浅层 anchor 住, 浅层根本撑不起一个可用的嵌入模型. MLL 的做法是选一组对数间隔的层 $\mathcal{L}_{layers} = \{1, 2, 4, 8, 16, 32, L\}$, 把每个选中层 $l$ 的 hidden state $h_l$ 都过同一个 $\text{LN}_{final}$ (复用最终层 norm, 保证不同深度的表征落在同一尺度), 再让它参与对比损失——本质是 early-exit 训练的变体, 但所有 exit 共享最终 LN. 被强迫在每个 milestone 层都达标后, 这些层就都成了合格的 exit point; 推理时只 load 前 $l$ 层就是一个完整可用的小嵌入模型, 工程上改一个 `num_hidden_layers` 即可, 完美兼容 Hugging Face `AutoModel`. 用户因此能在精度与延迟之间自由折中.
 
-3. **统一的 3D 嵌套对比损失 + Matryoshka Representation Learning (MRL)**:
+**3. 统一的 3D 嵌套对比损失 + Matryoshka Representation Learning (MRL)：把三维拧成一个目标函数**
 
-    - 功能: 把上述三个维度 (param / depth / dim) 拧成一个目标函数, 让模型在任意组合下都收敛.
-    - 核心思路: 对每个选中的 MLL 层 $l$ 和每个 MRL 维度 $d' \in \mathcal{D}_{mrl} = \{8, 16, 32, \ldots, d_{model}\}$, 都做一次截断 + 对比损失. 截断后的表征 $v_{l, d'}(\cdot) = \text{proj}_{d'}(\text{LN}_{final}(h_l(\cdot)))$, 损失:
+前两维要真正发挥作用, 必须拧进一个能在任意组合下都收敛的目标函数, 否则单独优化会破坏嵌套属性 (例如只采样 layer 不采样 dim, prefix 维度就永远学不到). 3D-ML 的做法是对每个选中的 MLL 层 $l$、每个 MRL 维度 $d' \in \mathcal{D}_{mrl} = \{8, 16, 32, \ldots, d_{model}\}$ 都做一次截断 + 对比损失: 截断后的表征 $v_{l, d'}(\cdot) = \text{proj}_{d'}(\text{LN}_{final}(h_l(\cdot)))$, 总损失在 layer × dim 网格上求和
 
-        $\mathcal{L}_{3D\text{-}ML} = \sum_{l \in \mathcal{L}_{layers}} \sum_{d' \in \mathcal{D}_{mrl}} c_{l, d'} \mathcal{L}_{cl}(q_i, d_i^+, \{d_{i,j}^-\}; v_{l, d'})$
+$\mathcal{L}_{3D\text{-}ML} = \sum_{l \in \mathcal{L}_{layers}} \sum_{d' \in \mathcal{D}_{mrl}} c_{l, d'} \mathcal{L}_{cl}(q_i, d_i^+, \{d_{i,j}^-\}; v_{l, d'})$
 
-        其中 $\mathcal{L}_{cl}$ 是标准 InfoNCE: $-\log \frac{e^{s(v_q, v_{d^+})/\tau}}{e^{s(v_q, v_{d^+})/\tau} + \sum_j e^{s(v_q, v_{d_j^-})/\tau}}$. MEL 的 sub-rank $r'$ 在每个 step 单独采样, 而 layer 和 dim 是全部 enumerate. $c_{l, d'}$ 是可调权重.
-    - 设计动机: 单独训各档模型成本是 N 倍; 嵌套训练让所有档共享前向, 一次梯度同时更新所有 exit / dim. 关键是把 final LN 复用到每个 exit, 让"表征尺度"在不同深度间一致, 否则浅层 hidden state 的范数和深层完全不同, 对比损失尺度会乱.
+其中 $\mathcal{L}_{cl}$ 是标准 InfoNCE $-\log \frac{e^{s(v_q, v_{d^+})/\tau}}{e^{s(v_q, v_{d^+})/\tau} + \sum_j e^{s(v_q, v_{d_j^-})/\tau}}$, $c_{l, d'}$ 为可调权重; MEL 的 sub-rank $r'$ 每步单独采样, 而 layer 和 dim 则全部 enumerate. 这样"单独训各档要 N 倍成本"的事, 被压成一次共享前向、一次梯度同时更新所有 exit 与 dim. 把 $\text{LN}_{final}$ 复用到每个 exit 是不崩的关键——否则浅层 hidden state 的范数和深层差很多, 对比损失的尺度会乱掉.
 
 ### 损失函数 / 训练策略
 

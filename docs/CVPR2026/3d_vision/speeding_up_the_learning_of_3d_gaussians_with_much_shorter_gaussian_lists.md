@@ -39,7 +39,18 @@ tags:
 
 ### 整体框架
 
-现有加速方法要么砍高斯总数（大场景吃亏）、要么只换来边际提速。这篇换了个角度：不动总数，而是缩短**每个像素的高斯列表长度**——让每个高斯把影响力集中在局部区域，splatting 时每个像素涉及的高斯就少了，前向渲染和反向梯度的成本直接降下来。落地靠三招配合：Scale Reset 周期性缩小高斯尺度、Entropy Constraint 锐化 alpha 混合权重、Resolution Scheduler 粗到细调分辨率。
+现有加速方法要么砍高斯总数（大场景吃亏）、要么只换来边际提速。这篇换了个角度：不动总数，而是缩短**每个像素的高斯列表长度**——让每个高斯把影响力集中在局部区域，splatting 时每个像素涉及的高斯就少了，前向渲染和反向梯度的成本直接降下来。落地靠三招配合：Scale Reset 周期性缩小高斯尺度、Entropy Constraint 锐化 alpha 混合权重、Resolution Scheduler 粗到细调分辨率。三者都嵌在标准 3DGS 训练循环里、各自从不同环节把列表压短。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：多视图图像 + 初始 3D 高斯"] --> B["训练迭代：Resolution Scheduler<br/>粗到细调分辨率（r 上限 4）→ alpha blending 渲染"]
+    B --> C["Entropy Constraint<br/>熵损失锐化混合权重、各高斯各管一块"]
+    C --> D["总损失 L_base + γ·L_E 反传更新高斯属性"]
+    D -->|每 20 epoch| E["Scale Reset<br/>所有尺度 ×ζ（ζ=0.2）即时缩短列表"]
+    D -->|其余迭代| F["每像素高斯列表变短<br/>前向/反向开销下降 → 5–12× 加速"]
+    E --> F
+```
 
 ### 关键设计
 

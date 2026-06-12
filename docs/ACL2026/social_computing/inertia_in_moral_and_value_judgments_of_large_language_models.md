@@ -48,6 +48,22 @@ tags:
 
 测试 7 个模型：Claude 3 Opus / Sonnet / Haiku、GPT-4o、GPT-3.5 Turbo、LLaMA-3 70B Inst、LLaMA-3 8B Inst。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph RPS["Role-Play-at-Scale 大规模采样"]
+        direction TB
+        A["WVS 11 属性<br/>每类等概率采样"] --> B["200 个独立随机 persona<br/>×3 套种子 111/333/555"]
+    end
+    Q["MFQ-30 / PVQ-RR<br/>6 点 Likert 题项"]
+    RPS --> P["拼 prompt：persona × 题<br/>强制选具体选项"]
+    Q --> P
+    P --> M["7 个 LLM 自由文本作答"]
+    M --> PARSE["Claude 3 Haiku 解析器<br/>抽成 1-6 整数评分"]
+    PARSE --> I["Inertia Index + Steerability<br/>熵塌缩 + 基线 JSD"]
+    PARSE --> SP["Selective Permeability<br/>(属性,维度) Cohen's d"]
+```
+
 ### 关键设计
 
 **1. Role-Play-at-Scale：用"宏观聚集 vs 微观波动"的双层视角看模型默认落点**

@@ -51,6 +51,18 @@ tags:
 
 整个流程**不改训练、不加参数**，只是替换采样时的 denoising 调用，且 NFE 与原 baseline 严格对齐（用更少采样步数补偿掉每步多一次前向的开销）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 bridge 模型 + 干净 prior x_T"] --> B["当前噪声潜变量 x_t"]
+    B --> C["Prior Guidance (PG)：退化算子 H 造弱 prior<br/>强弱 denoising 外推 D_PG"]
+    C --> D["FMPG：低通/高通分频<br/>LF 配倒 U 形、HF 配 U 形调度"]
+    D -->|"prior 够强"| E["更新 x_t，迭代采样"]
+    D -->|"prior 很弱（inpainting）"| F["CFG-FMPG 级联<br/>早期 CFG 立结构 → 后期 FMPG 拉细节"]
+    F --> E
+    E --> G["输出生成样本 x_0"]
+```
+
 ### 关键设计
 
 **1. Prior Guidance (PG)：用退化后的 prior 制造一个质量更差的 denoising**

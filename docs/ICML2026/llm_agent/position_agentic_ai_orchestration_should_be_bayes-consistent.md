@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 这篇 position paper 主张的不是某个新算法，而是一个 **编排控制层的架构模板**：让 LLM 当 black-box predictor，但在它们之上的编排器维护一个显式的、定义在低维任务级隐变量上的后验信念 $r_t(\cdot)=p(\cdot\mid\mathcal{D}_{1:t})$，每收到一个 agent/工具返回的"消息观测"就按 Bayes 规则更新，再用期望效用或 value-of-information 决定路由、停止、升级和预算分配。论证主线是：先指出贝叶斯结构可以放在训练里、推理里或控制里，本文聚焦控制层；再用任务级 latent、复合似然更新、VOI 决策、在线可靠性学习四块拼出一个工程上可实施、又保留概率解释的编排器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    Z["agent / 工具返回消息观测 z_t"] --> U["任务级 latent 信念 + 复合似然更新（设计 1）<br/>r_t ∝ r_{t-1}·p(z|y)^{α_i}"]
+    U --> V["Value-of-Information 选动作（设计 2）<br/>比较各 agent 的 VOI 与调用成本 c_i"]
+    V -->|VOI > c_i| Qy["query 下一个 agent i_t"]
+    Qy --> Z
+    V -->|VOI ≤ c_i / 置信度达标| S["停止并返回结果"]
+    V -->|后验仍高度不确定| E["升级给人类"]
+    R["agent 可靠性在线学习 + 依赖感知（设计 3）<br/>log-loss 更新 α_i、检出 drift 加大 tempering"] -.持续调节.-> U
+```
+
 ### 关键设计
 
 **1. 任务级 latent 信念 + 复合似然 Bayes 更新：把不确定性放在编排真正关心的低维变量上**

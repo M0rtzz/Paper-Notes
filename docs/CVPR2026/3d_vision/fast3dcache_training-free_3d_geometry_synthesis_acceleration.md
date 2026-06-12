@@ -45,6 +45,29 @@ Fast3Dcache 要解决的是：3D 扩散推理太慢，但 2D 那套"复用前几
 
 整篇推理被切成三段对应这个节奏。第一段（Phase 1）老老实实全采样，把粗几何搭起来，并在结尾的 anchor step 量一次"现在每步还在翻动多少体素"，作为后面预测的基准。第二段（Phase 2）进入动态缓存：PCSC 根据衰减趋势算出这一步的缓存预算，SSC 在这个预算内挑出最稳的 token 直接复用、只对剩下不稳的 token 跑 self-attention，每隔 $\tau$ 步做一次全刷新把累积误差清掉。第三段（Phase 3，CFG-Free Refinement）几何已基本收敛，直接上固定的高缓存比例 $\xi$ 收尾。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["3D 扩散推理<br/>(TRELLIS 稀疏结构生成)"] --> P1
+    subgraph P1["Phase 1：全采样搭粗几何"]
+        direction TB
+        A["逐步全采样"] --> B["anchor step<br/>量初始体素翻动量 σ"]
+    end
+    P1 --> P2
+    subgraph P2["Phase 2：动态缓存"]
+        direction TB
+        C["预测性缓存调度约束 PCSC<br/>按衰减曲线外推 Δŝ → 缓存预算 c_t"] --> D["时空稳定性准则 SSC<br/>预算内挑 C_i 最低的稳定 token 复用"]
+        D --> E["仅对剩余不稳 token 跑 self-attention"]
+        E -->|"每 τ 步"| G["周期性全刷新<br/>清累积误差防漂移"]
+    end
+    P2 --> P3
+    subgraph P3["Phase 3：CFG-Free Refinement"]
+        direction TB
+        F["固定高缓存比例 ξ 收尾<br/>每 f_corr 步全刷新"]
+    end
+    P3 --> OUT["3D 几何输出"]
+```
+
 ### 关键设计
 
 **1. 预测性缓存调度约束 PCSC：用体素翻动的衰减曲线决定每步缓存多少 token**

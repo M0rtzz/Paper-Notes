@@ -42,6 +42,28 @@ tags:
 ### 整体框架
 TabTrim 想解决的是表格剪枝最致命的失败模式：沿单一轨迹顺序修订时，早期一旦把答案关键单元格删掉就再也回不来。它的做法是给剪枝过程补上「过程监督 + 并行搜索」。输入是问题 $Q$、原始表格 $T_0$ 和当前子表 $T_{t-1}$，输出是更紧凑的子表。训练时先把 Text-to-SQL 数据里的 gold SQL 按 clause-level 执行顺序拆开（行过滤、列投影等），逐步执行得到一串 gold 子表 $T_0, T_1^+, \dots, T_n^+$，并以此训练两个组件——pruner 学会从当前子表迈向下一步 gold 子表，verifier 学会给任意子表打一个对齐最终 gold 子表的质量分。推理时从原表出发，每一步让 pruner 生成多个候选、verifier 打分保留 top-$k$，最后从所有 beam 里挑分数最高的子表交给下游 LLM 答题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入：问题 Q + 原始表格 T₀"]
+    subgraph GT["Gold trajectory 构造"]
+        direction TB
+        S1["gold SQL 按 clause 顺序执行<br/>逐步落下 gold 子表 T₁⁺…Tₙ⁺"] --> S2["篡改 gold 操作造 off-trajectory 负样本 Tₜ⁻"]
+        S2 --> S3["progression 数据集（沿正路前进）<br/>+ correction 数据集（从错误拉回）"]
+    end
+    subgraph PR["Trajectory-supervised Pruner 与 DPO"]
+        direction TB
+        P1["SFT：同吃 progression + correction"] --> P2["DPO：Tₜ⁺ 偏好排在 Tₜ⁻ 之上"]
+    end
+    subgraph SR["Loss-aware Verifier 与并行轨迹搜索"]
+        direction TB
+        B1["pruner 每步生成多候选"] --> B2["verifier 用召回偏置 F-score（α=1.5）打分"]
+        B2 -->|保留 top-k，未到 D_max 继续| B1
+    end
+    OUT["从所有 beam 选 verifier 分最高子表 → 下游 LLM 答题"]
+    Q --> GT --> PR --> SR --> OUT
+```
+
 ### 关键设计
 
 **1. Gold trajectory 构造：把 SQL 的执行中间态变成免标注的逐步剪枝监督**

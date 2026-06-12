@@ -47,6 +47,25 @@ tags:
 
 数据用 GSM8K（7,473 train / 1,319 test）+ MATH-500，prompt 强制每步以 `Step k:` 开头、答案以 `####` 标记。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CoT 输入<br/>GSM8K / MATH-500，强制 Step k: 模板"]
+    subgraph S1["步骤前激活提取与线性可分性度量"]
+        direction TB
+        B["在每个 Step k: 标记前取各层隐状态"] --> C["每步训 one-vs-rest 线性 probe<br/>验证步骤占据线性可分子空间"]
+    end
+    subgraph S2["轨迹距离差与中段正确性预测"]
+        direction TB
+        D["相邻步算 Euclidean / cosine 距离<br/>定位正确/错误轨迹分叉点（约第 4 步后）"] --> E["后段特征训线性分类器<br/>答案输出前预测最终对错，ROC-AUC 0.87"]
+    end
+    A --> S1
+    S1 --> S2
+    S2 -->|"轨迹偏离理想质心超阈值"| F["轨迹 steering<br/>低秩更新 h′ = h + αUVᵀh 拉回理想方向 / 控推理长度"]
+    S2 -->|"未超阈值"| G["输出推理结果"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 步骤前激活提取与线性可分性度量：拿到"已积累的推理状态"快照**

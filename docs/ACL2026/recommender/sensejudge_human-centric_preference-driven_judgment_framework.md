@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 SenseBench 通过质量过滤+挑战过滤从真实用户对话中构建多轮评测基准。SenseJudge 从少量人工标注对中提取偏好文本，选择最优偏好子集，推理时通过多偏好投票产生最终判断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["SenseBench 基准构建"]
+        direction TB
+        A["真实用户多轮对话"] --> B["质量过滤<br/>Qwen3-14B 去噪 + 归入 8 类"]
+        B --> C["挑战过滤<br/>强弱模型对比 + GPT-4 筛 + 人工校验"]
+        C --> D["评测基准（8 类 × 125 题）"]
+    end
+    subgraph JUDGE["SenseJudge 个性化判断"]
+        direction TB
+        E["少量人工标注对<br/>(q, chosen, rejected)"] --> F["偏好提取与选择<br/>DeepSeek-R1 反推偏好文本"]
+        F --> G["偏好集选择<br/>遍历子集选最优 P_k*"]
+        G --> H["输入输出格式与投票机制<br/>标准化 I/O + 正反双序 + 多偏好投票"]
+    end
+    D --> H
+    H --> I["最终个性化判断"]
+```
+
 ### 关键设计
 **1. SenseBench 基准构建：用两道过滤把真实多轮对话筛成有区分度的评测集（8 类 × 125 题）**
 

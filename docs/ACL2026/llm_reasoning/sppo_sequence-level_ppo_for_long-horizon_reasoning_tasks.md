@@ -43,6 +43,27 @@ SPPO 的核心不是改一个 loss 名字，而是改变价值函数的语义。
 ### 整体框架
 给定 prompt $s_p$，policy 采样完整回答序列 $a_{seq}=(y_1,\dots,y_T)$，外部 verifier 返回二值奖励 $R\in\{0,1\}$。value model $V_\phi(s_p)$ 输出 prompt 级成功概率，SPPO 用 $R-V_\phi(s_p)$ 构造序列级 advantage，并在 PPO 的 clipped objective 中把同一个 advantage 分配给该序列的所有 token。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BANDIT["序列级上下文 bandit 建模"]
+        direction TB
+        P["Prompt s_p：静态上下文"] --> POL["Policy 采样完整回答<br/>整条序列 = 一个原子动作"]
+        POL --> VER["Verifier 判最终答案<br/>返回二值奖励 R ∈ 0/1"]
+    end
+    subgraph VAL["标量价值函数与优势估计"]
+        direction TB
+        VM["标量 critic V_φ(s_p)<br/>BCE 拟合，估题目可解性"]
+        ADV["序列级优势 A = R − V_φ(s_p)<br/>整条序列共享"]
+        VM --> ADV
+    end
+    P --> VM
+    VER --> ADV
+    ADV --> PPO["序列级 PPO 与解耦 critic<br/>保留 token 级 clipping"]
+    PPO -.->|1.5B critic 对齐 7B policy| VM
+    PPO -.->|更新策略后重新采样| POL
+```
+
 ### 关键设计
 
 **1. 从 token-level MDP 到 sequence-level contextual bandit：把 horizon 压成 1，让建模粒度对齐奖励粒度**

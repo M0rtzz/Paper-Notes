@@ -46,6 +46,19 @@ ParisKV 是一个算法–系统协同设计，要解决的是"长解码下 Top-
 
 GPU 上的 KV 缓存被组织成四段连续区域：Sink（少量早期高 attention token）、Retrieval（卸载并被索引的历史 token）、Local（最近 local_size 个保留在 GPU 上的 token）、Update Buffer（临时缓存新生成 token）。dense attention 只跑在 Sink+Local 上，retrieval 区只跑稀疏 Top-$k$；每当 update buffer 攒满 $m$ 个 token 就滑窗一次，把旧的 local token 异步 evict 到 retrieval 区（GPU→CPU 拷贝）并在 GPU 上 encode 出新 metadata。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph PRE["Prefill：一次性摘要历史 key"]
+        direction TB
+        SPH["球面 + 随机旋转 + 解析质心<br/>历史 key 经 ℓ2 归一化 + SRHT 旋转，切 B 子空间套解析质心 Ω"]
+        SPH --> META["存紧凑 metadata：质心 id（投票）+ 4-bit 方向码 + 权重 w（重排）<br/>全精度 KV 异步卸载到 CPU"]
+    end
+    META --> VOTE["GPU 原生粗筛：多子空间碰撞投票<br/>query 同样归一化+旋转，累票取前 β 比例候选"]
+    VOTE --> RERANK["校准重排估计器：4-bit 量化方向 + 缓存权重<br/>α 校正低估，估内积选 Top-k"]
+    RERANK --> UVA["UVA 按需从 CPU 拉回 Top-k 全精度 KV → attention"]
+```
+
 ### 关键设计
 
 **1. 球面 + 随机旋转 + 解析质心：把"质心会漂"从根上拆掉**

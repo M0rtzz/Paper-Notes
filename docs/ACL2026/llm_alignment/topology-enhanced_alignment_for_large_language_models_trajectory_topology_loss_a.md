@@ -44,6 +44,24 @@ tags:
 
 第二阶段是 DPO + Topological Preference Optimization (TPO)：作者先离线把 HH-RLHF prompt 聚类成主题，为每个主题构造正向和负向模板，用 sentence transformer 得到 topic-specific preference vector。训练 DPO 时，在模型中间层计算 chosen response 与 rejected response 的 mean-pooled hidden state 差分，并通过一个小投影矩阵把主题向量映射到模型 hidden space，再用 cosine loss 对齐“rejected 到 chosen”的语义改进方向。最终损失是 DPO loss 加动态加权的 TPO loss。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["轨迹拓扑损失 TTL（SFT 阶段）"]
+        direction TB
+        A["prompt 表征 + gold answer 表征<br/>拼成 2B 点云"] --> B["0 维持久同调取 death edges<br/>→ prompt-answer 拓扑桥（answer − prompt）"]
+        B --> C["与模型轨迹 h_model − h_prompt 做 cos 对齐<br/>L_topo = mean(1 − cos)"]
+    end
+    C --> E["L_SFT = L_CE + λ_topo · L_topo"]
+    subgraph S2["拓扑偏好优化 TPO（DPO 阶段）"]
+        direction TB
+        G["离线：prompt 聚类成主题<br/>构造 topic preference vector u_t"] --> H["中间层 chosen − rejected 归一化差分 Δh<br/>投影后优化 1 − cos(Δh, P·u_t)"]
+    end
+    E --> G
+    H --> J["动态权重 + Topo-TPO 变体<br/>EMA 平衡 λ_dyn，防辅助项压过主目标"]
+    J --> K["L_total = L_DPO + λ_dyn · L_TPO"]
+```
+
 ### 关键设计
 
 **1. SFT 阶段的 Trajectory Topology Loss：用持久同调桥替代任意配对，给隐藏轨迹一个全局结构监督**

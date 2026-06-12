@@ -42,11 +42,31 @@ RetMask 把"机制可解释性 (mechanistic interpretability)"找到的 retrieva
 
 ### 整体框架
 
-RetMask 的核心是把"机制诊断"无缝接成"训练信号"：先在 NIAH 任务上定位出负责长上下文拷贝的 retrieval heads，把它们在前向时屏蔽掉得到一个功能阉割版模型 $\pi_{\theta'}$；然后对任意 instruction-tuning 数据的每条指令 $x$，让原模型 $\pi_\theta$ 和阉割模型 $\pi_{\theta'}$ 各采样一条回复，前者天然更强、当 chosen $y_w$，后者天然劣化、当 rejected $y_l$；最后用这些自动合成的偏好对跑标准 DPO，把"使用 retrieval head 的行为"提升为模型偏好。整条 pipeline 不需要 LLM judge、不需要人工标注、也不需要原始数据集的 ground-truth response。
+RetMask 的核心是把"机制诊断"无缝接成"训练信号"：先在 NIAH 任务上定位出负责长上下文拷贝的 retrieval head，把它们在前向时屏蔽掉得到一个功能阉割版（ablated）模型 $\pi_{\theta'}$；然后对任意 instruction-tuning 数据的每条指令 $x$，让原模型 $\pi_\theta$ 和阉割模型 $\pi_{\theta'}$ 各采样一条回复，前者天然更强、当 chosen $y_w$，后者天然劣化、当 rejected $y_l$；最后用这些自动合成的偏好对跑标准 DPO，把"使用 retrieval head 的行为"提升为模型偏好。整条 pipeline 不需要 LLM judge、不需要人工标注、也不需要原始数据集的 ground-truth response。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DET["NIAH 定位 retrieval head<br/>RetrievalScore ≥ τ → 集合 H_ret"]
+    X["短指令 x<br/>(LMSYS，平均 63 token)"]
+    subgraph PREF["阉割模型当天然 rejected 源 → 自动偏好对"]
+        direction TB
+        WIN["原模型 π_θ 采样<br/>→ chosen y_w"]
+        MASK["前向 mask：H_ret 的 W_o 置零<br/>得阉割模型 π_θ'(不改参数)"]
+        LOSE["阉割模型 π_θ' 采样<br/>→ rejected y_l"]
+        MASK --> LOSE
+    end
+    DET --> MASK
+    X --> WIN
+    X --> MASK
+    WIN --> DPO["标准 DPO 训练<br/>短数据撬动长上下文能力"]
+    LOSE --> DPO
+    DPO --> OUT["长上下文性能提升<br/>8K–128K：Cite +70% / Re-rank +32%"]
+```
 
 ### 关键设计
 
-**1. 用 ablated 模型作为天然 rejected 源：让诊断信号直接当负样本**
+**1. 用阉割（ablated）模型作为天然 rejected 源：让诊断信号直接当负样本**
 
 retrieval head 的定义本身就保证了屏蔽它之后的 $\pi_{\theta'}$ 在 retrieval-heavy 行为上必然劣于 $\pi_\theta$——这是一个 in-distribution、机制可解释、且完全自动的偏好信号。具体做法是把同一条 instruction $x$ 分别喂给两个模型，$\pi_{\theta'}$ 的输出当 $y_l$、$\pi_\theta$ 的输出当 $y_w$，配成偏好对后 DPO 会自然地把模型推向"更像用了 retrieval head 的那一版"。这正好绕开了已有 long-context DPO 方法（如 LongReward）的痛点：它们需要一个 LLM judge 按人工 criteria 打分，既贵又自带 judge bias，而 RetMask 用 architectural intervention 替代了 evaluation intervention，信号无偏、零人工成本。机制可解释性社区长期停留在"诊断"层面，这是第一次把诊断结果直接变成自监督训练信号。
 

@@ -48,6 +48,23 @@ base LLM $p$ 给定 $(x, c)$ → $p(\cdot|x, c)$；
 3. **Risk control**：用 LTT 在 calibration set 上选 $\hat\lambda$ 使 $R_c(\hat\lambda) \leq \epsilon$
 4. **Risk-preserving 变换**：把 $\ell_c \in [-1, 1]$ 线性变到 $[0, 1]$（不裁剪），保留负值信息
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 x + 用户上下文 c<br/>（质量未知，可能有用或有害）"] --> B
+    subgraph P1["Safe Context-Aware Predictor"]
+        direction TB
+        B["逐层算 confidence（取最大类概率）"]
+        B -->|"某层 confidence ≥ λ"| C["早退：从该中间层直接出预测"]
+        B -->|"所有层都不够 confident"| D["回退 zero-shot 预测 p(·|x)"]
+    end
+    C --> E["Context-Aware Loss<br/>ℓc = ℓ(带上下文预测) − ℓ(zero-shot 预测)<br/>正值 = overthink，负值 = helpful"]
+    D --> E
+    E --> F["Domain-Preserving Risk Transformation<br/>ℓc∈[−1,1] 线性映到 [0,1]，保留负值不裁剪"]
+    F --> G["LTT 在 calibration set 选阈值 λ̂<br/>保证过思考风险 R_c(λ̂) ≤ ε"]
+    G --> H["部署：风险受控 + >50% 算力加速"]
+```
+
 ### 关键设计
 
 **1. Safe Context-Aware Predictor：confidence 够就早退、始终不够就回退 zero-shot**

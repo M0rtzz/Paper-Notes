@@ -39,7 +39,23 @@ tags:
 
 ### 整体框架
 
-RGBT 跟踪长期只靠首帧的视觉模板建模目标，目标外观一变就容易漂、还会把前景和背景（扫帚、簸箕、行人下半身这类）搞混。RAGTrack 第一次把文本描述引进 RGBT 跟踪，并用检索增强生成（RAG）的思路让目标的语言描述跨帧动态更新。它由三块串成：多模态 Transformer 编码器（MTE）做视觉-语言联合建模，自适应 Token 融合（ATF）做跨模态特征融合与去冗余，上下文感知推理模块（CRM）用 RAG 范式做时序语言推理。输入是 RGB/TIR 搜索图像、模板图像和语言描述，输出目标边界框。
+RGBT 跟踪长期只靠首帧的视觉模板建模目标，目标外观一变就容易漂、还会把前景和背景（扫帚、簸箕、行人下半身这类）搞混。RAGTrack 第一次把文本描述引进 RGBT 跟踪，并用检索增强生成（RAG）的思路让目标的语言描述跨帧动态更新。它由三块串成：多模态 Transformer 编码器（MTE）做视觉-语言联合建模，自适应 Token 融合（ATF）做跨模态特征融合与去冗余，上下文感知推理模块（CRM）用 RAG 范式做时序语言推理。输入是 RGB/TIR 搜索图像、模板图像和语言描述，输出目标边界框；CRM 末端用 MLLM 生成的新描述回流到下一帧，形成跨帧的 RAG 推理回路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["RGB/TIR 搜索+模板图像、语言描述、推理 token"] --> MTE["多模态 Transformer 编码器（MTE）<br/>四类 token 拼成统一序列<br/>参数共享自注意力做视觉-语言建模"]
+    MTE --> ATF["自适应 Token 融合（ATF）<br/>动态 Token 选择（保留比 γ=85%）<br/>+ 自适应通道交换（交换比 σ=50%）"]
+    ATF --> CRM
+    subgraph CRM["上下文感知推理模块（CRM）· RAG 四步"]
+        direction TB
+        C1["Construction：维护动态知识库 D（n=4 历史文本特征）"] --> C2["Retrieval：检索 top-k=2 相关特征细化搜索特征"]
+        C2 --> C3["Augmentation：生成下一帧推理 token，增强时序表征"]
+        C3 --> C4["Generation：QWen2.5-VL-3B 生成上下文感知目标描述"]
+    end
+    CRM --> HEAD["预测头<br/>输出目标边界框"]
+    C4 -. 下一帧更新语言描述 .-> IN
+```
 
 ### 关键设计
 

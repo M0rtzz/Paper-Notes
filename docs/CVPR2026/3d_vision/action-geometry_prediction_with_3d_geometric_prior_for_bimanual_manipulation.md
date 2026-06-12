@@ -48,6 +48,22 @@ GAP要解决的问题是：双臂操控既需要3D空间推理，又不想依赖
 
 整条管线这样转：当前帧 $I_t$ 加上从历史里采样的5帧 $V$、以及机器人本体感知 $p_t \in \mathbb{R}^{14}$（双臂各6个关节角 + 1个gripper状态）先被三路并行编码器各自吃进去，分别吐出3D几何、2D语义、本体状态三种特征；三者拼接后过一个Transformer融合成统一上下文 $\mathbf{f}_c$；再以 $\mathbf{f}_c$ 为条件，用一个条件扩散解码器从噪声里"去噪"出两样东西——未来N步的双臂动作序列 $a_{t:t+N} \in \mathbb{R}^{N \times 14}$，以及未来第N步的3D pointmap $P_{t+N} \in \mathbb{R}^{H \times W \times 4}$。动作直接用于控制，pointmap则是训练时的辅助监督，推理时可跳过以省算力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["当前帧 I_t"] --> G
+    V["历史 5 帧 V"] --> G
+    I --> S
+    P["本体感知 p_t（双臂关节 + gripper，14 维）"] --> ST
+    G["Geometry 3D Encoder（π³）<br/>取 encoder latent 当隐式 3D 几何 → f_3d"] --> F
+    S["Semantics 2D Encoder（DINOv3）<br/>物体级任务语义 → f_2d"] --> F
+    ST["State Encoder（MLP）<br/>当前姿态嵌入 → f_p"] --> F
+    F["Semantic-Geometric Fusion<br/>4 层 DETR encoder 自注意力对齐 → f_c"] --> D
+    PG["Pseudo-GT 生成<br/>时序窗口稳住 π³ latent → 监督目标 f_t+N"] -. 训练监督 .-> D
+    D["Joint Diffusion Decoder<br/>以 f_c 为条件联合去噪"] --> A["未来动作序列 a（N×14）<br/>控制机械臂"]
+    D --> PM["未来 3D pointmap P_t+N<br/>训练监督，推理可跳过"]
+```
+
 ### 关键设计
 
 **1. Geometry 3D Encoder（π³编码器）：用RGB换取隐式3D几何，绕开显式点云**

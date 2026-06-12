@@ -37,7 +37,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三维诊断框架，沿三个轴线系统变化——（1）物理域（PDE 系数、方程类型）；（2）数据域（训练样本/配置点数量）；（3）优化域（优化器选择、约束处理策略）。通过联合分析训练损失、测试误差和损失面景几何，自动提取 regime 边界。
+这是一个 regime-aware 诊断框架，而非新模型。给定一个 SciML 模型，先沿三个轴线系统扫描——（1）物理域（PDE 系数、方程类型）；（2）数据域（训练样本/配置点数量）；（3）优化域（优化器选择、约束处理策略），联合记录训练损失、测试误差和损失面景几何。基于这些测量，用训练/测试误差阈值**自动提取 regime 边界**，把模型行为划成三类失败模式；再在这套 regime 结构上做两件事：检测损失面景里反直觉的**病理现象**，以及按 regime 比较各优化器、给出域特异的优化选择指导。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["SciML 模型 + 配置空间<br/>PINN / FNO / PINO / NODE / PINODE"] --> B["三域 regime 标记<br/>扫描物理域 × 数据域 × 优化域<br/>训练·测试误差阈值 → Well/Under/Over-Trained"]
+    B --> C["损失面景病理检测<br/>Deceptive Sharpness / Flatness<br/>Hessian-损失相关性破裂"]
+    B --> D["regime-aware 优化有效性分析<br/>各 regime 比较 Adam/L-BFGS/NNCG/ALM/CL"]
+    C --> E["输出：失败诊断 + 域特异优化指导"]
+    D --> E
+```
 
 ### 关键设计
 

@@ -40,9 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两块。前一块是 SHAPE benchmark：基于 Big-Math 的线性代数题、人工搭的知识概念 DAG 和模拟学生掌握状态，生成 9,087 个 student-question pair，用 Safety、Helpfulness、Pedagogy 三个指标去考教育 LLM。后一块是图增强教学 pipeline：把学生问题解析成所需知识点，和学生 mastery state 一比，缺概念就路由到教学引导节点、不缺就路由到直接回答节点。
+论文分两块。前一块是 SHAPE benchmark：基于 Big-Math 的线性代数题、人工搭的知识概念 DAG 和模拟学生掌握状态，生成 9,087 个 student-question pair，用 Safety、Helpfulness、Pedagogy 三个指标去考教育 LLM。后一块是图增强路由 pipeline：把学生问题解析成所需知识点，和学生掌握状态（mastery state）一比，缺概念就路由到教学引导节点、不缺就路由到直接回答节点。
 
-这套 pipeline 的关键在于它**不过滤输入**——同一条完整的用户输入（包括“只给最终答案”这类诱导）原样交给 pipeline，只在架构层面规定“谁来判断知识缺口、谁来生成回答”。这样才能验证安全性的提升究竟来自知识图 gating，而不是简单地把诱导性文本删掉。
+这套 pipeline 的关键在于它**不过滤输入**——同一条完整的用户输入（包括“只给最终答案”这类诱导）原样交给 pipeline，只在架构层面规定“谁来判断知识缺口、谁来生成回答”。这样才能验证安全性的提升究竟来自知识图门控（gating），而不是简单地把诱导性文本删掉。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["完整用户输入<br/>问题 + 可能的答案诱导"] --> DECOMP
+    subgraph PIPE["图增强路由 pipeline（不微调底座模型）"]
+        direction TB
+        DECOMP["问题分解 / 概念映射<br/>题→1-6 步骤，得所需概念 Req(q)"] --> CMP["掌握状态比对（mastery comparison）<br/>Req(q) 与学生掌握状态 s 比对，算缺失概念"]
+        CMP --> GATE{"知识掌握图安全门控<br/>g(q,s)=I[Req(q)⊆s]"}
+        GATE -->|"g=1 已掌握全部所需概念"| DIRECT["直接回答<br/>给出完整解答"]
+        GATE -->|"g=0 存在知识缺口"| FRONTIER["教学性约束 · teaching frontier<br/>选已掌握直接前置、自身未掌握的概念"]
+        FRONTIER --> TEACH["教学回答<br/>对 frontier 概念生成启发式引导"]
+    end
+```
 
 ### 关键设计
 

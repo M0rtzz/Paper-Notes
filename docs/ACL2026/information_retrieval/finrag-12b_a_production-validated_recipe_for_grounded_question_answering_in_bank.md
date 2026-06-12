@@ -43,6 +43,30 @@ Kasisto 团队基于 Gemma 3 12B-IT，用 143M token 的数据高效配方 (LLM-
 ### 整体框架
 FinRAG-12B 是一套把 Gemma 3 12B-IT 训成「可溯源、会拒答、能单卡部署」金融 QA 模型的端到端配方，全程只用 143M token。数据侧先合并开源 RAG-v1（43,581 样本，JudgeLM 过滤 <5 分）、5 步合成的 SEC QA（16,773 样本）、CommonCrawl 金融子集（20,499 样本）与内部 refusal calibration 数据（17,795 样本）共 98,648 样本，并让金证据在 distractor 中按右梯形调和衰减分布 $P(X=x)=\frac{1}{N-K_{\min}+1}\sum_{K=\max(x,K_{\min})}^{N}\frac{1}{K}$ 采样以打散位置偏置；训练侧走两阶段 curriculum（Stage 1 lr $1\times10^{-6}$ cosine 学引用规范、Stage 2 lr $5\times10^{-6}$ linear 校准拒答与真实风格），最后用 SmoothQuant W4A16 把 24GB 压到 8.4GB 上线，使答案质量、引用、拒答、延迟、成本这五个互相冲突的维度同时达标。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["数据源：RAG-v1 + CommonCrawl 金融子集 + 内部 refusal 数据"]
+    subgraph SYN["5 步合成 SEC QA pipeline"]
+        direction TB
+        S1["① 分块 400–600 token"] --> S2["② 4 档难度按真实分布采样"]
+        S2 --> S3["③ few-shot 风格改写<br/>对齐口语化 query"]
+        S3 --> S4["④ 生成带引用 grounded answer"]
+        S4 --> S5["⑤ 注入 3–7 distractor<br/>金证据随机插位"]
+    end
+    SRC --> MERGE["合并 98,648 样本<br/>梯形调和衰减分布采样打散位置偏置"]
+    SYN --> MERGE
+    subgraph CURR["22% 不可回答样本 + curriculum 校准 refusal"]
+        direction TB
+        ST1["Stage 1：外部数据学引用规范<br/>lr 1e−6 cosine"]
+        ST2["Stage 2：内部数据校准拒答<br/>lr 5e−6, 22% 负样本"]
+        ST1 --> ST2
+    end
+    MERGE --> CURR
+    CURR --> QUANT["W4A16 量化<br/>24GB → 8.4GB, >99% 引用质量"]
+    QUANT --> OUT["单卡部署 FinRAG-12B"]
+```
+
 ### 关键设计
 
 **1. 5 步合成 SEC QA pipeline（而非单 shot 生成）：让合成数据既 grounded 又贴近真实 query 分布**

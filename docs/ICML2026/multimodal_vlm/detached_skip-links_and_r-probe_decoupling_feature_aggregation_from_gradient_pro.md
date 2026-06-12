@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 方法整体是一个 ViT→Adapter→LLM 的标准多模态结构，但在 ViT 端做了两件事：(1) 在多层特征送入 adapter 前，把"浅层 skip 组"过一次 stop-gradient；(2) 在诊断/可选辅助训练阶段，挂一个用 LLM 前 1/4 层初始化的 Transformer decoder + MLP，把 adapter 后的视觉 token 反解回像素。训练分两阶段：adapter 预训练（冻结 ViT 和 LLM 只动 adapter）→ FFT/SFT（全模型微调）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["ViT 多层中间特征<br/>主路 h_main + 中间层 skip"]
+    subgraph DSL["Detached Skip-Links：浅层只走前向、不接收语义回传"]
+        direction TB
+        SP["按深度分组<br/>深层 h_deep 梯度照常回传<br/>浅层 h_shallow 用 sg 截断梯度"]
+        CC["拼接 + MLP 适配器<br/>z = MLP([h_main; h_deep; sg(h_shallow)])"]
+        SP --> CC
+    end
+    V --> SP
+    CC --> TOK["视觉 token"]
+    TOK --> LLM["LLM next-token 损失<br/>（主训练目标）"]
+    subgraph RPB["诊断 / 辅助训练分支（冻结 ViT + 适配器）"]
+        direction TB
+        SEQ["Context-Aware 序列<br/>[context_img; text; target_img] + 全局 2D RoPE"]
+        DEC["R-Probe head：浅层 decoder<br/>（LLM 前 1/4 层初始化）+ MLP"]
+        SEQ --> DEC
+    end
+    TOK --> SEQ
+    DEC --> PIX["重建目标区域像素<br/>MSE 作诊断 / 可挂回完整模型当辅助损失"]
+```
+
 ### 关键设计
 
 **1. Detached Skip-Links：浅层只贡献前向特征，不接收语义回传**

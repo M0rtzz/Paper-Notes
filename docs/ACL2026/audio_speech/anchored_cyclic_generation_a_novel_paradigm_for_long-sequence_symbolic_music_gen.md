@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 ACG 把长序列音乐生成组织成三个层次。最底层是 Piano Token 表示，把二值钢琴卷帘压成离散 token，使序列长度随时长线性增长；中间是 ACG 范式，每生成一步就把已确认的输出重新编码为锚点特征，靠"语义预测→语义重建→重嵌入"的闭环校准下一步方向；最上层是 Hi-ACG，用 Sketch Loop 先勾勒全局草图、再用 Refinement Loop 逐 block 填充细节。系统输入为时长条件与可选的音乐约束，输出为结构完整的长序列钢琴曲。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：时长条件 + 音乐约束"] --> PT["Piano Token 表示<br/>钢琴卷帘切 patch，序列长度随时长线性增长"]
+    PT --> HI
+    subgraph HI["层次化框架 Hi-ACG"]
+        direction TB
+        SK["Sketch Loop：勾勒全局草图<br/>每小节采两点，提供时长控制"] --> RF["Refinement Loop：以草图为条件逐 block 填充细节"]
+    end
+    HI --> OUT["输出：结构完整的长序列钢琴曲"]
+    subgraph ACG["锚定循环生成（ACG）范式：两个循环各自套用"]
+        direction TB
+        SP["语义预测模型（12 层解码器）<br/>据锚点 A(t−1) 与条件预测语义特征 z't"] --> SR["语义重建模型（6 层解码器）<br/>把 z't 解成 Piano Token"]
+        SR --> RE["重嵌入层（3 层全连接）<br/>把已确认 block 编码成锚点 At"]
+        RE -->|锚点反馈| SP
+    end
+    HI -.每个循环内部运行.-> ACG
+```
+
 ### 关键设计
 
 **1. Piano Token 表示：让序列长度与音乐时长线性相关**

@@ -40,6 +40,20 @@ tags:
 ### 整体框架
 在多因子块模型下每个变量 $X_i = (F_G^{z(i)})^\top \beta_i + U_i$。标准逐节点回归求解 $\min_B \|X - XB\|_F^2, \text{s.t.} \text{diag}(B)=0$。本文改进为分布式鲁棒版本——$\min_B \sup_{\mathcal{D}_c(\mathbb{P}, \mathbb{P}_n) \le \delta} \mathbb{E}_\mathbb{P}[\|X - B^\top X\|_2^2]$，其中 $\mathcal{D}_c$ 为 Wasserstein-2 距离，$\delta$ 为不确定性半径。
 
+整个变量聚类流程沿用子空间聚类的两段式骨架：先由逐节点回归求出系数矩阵 $B$，再按标准做法把 $B$ 对称化成相似度矩阵 $C=B_{abs}^\top+B_{abs}$，最后对 $C$ 跑谱聚类得到变量簇。本文的三处贡献都集中在「如何求好这个 $B$」这一段：把无限维的 DRO 目标凸松弛成对 $(I-B)$ 谱范数的正则化问题、用 bootstrap 数据驱动地确定不确定性半径 $\delta$、再用一个利用 SVD 结构的高效 ADMM 求解器把它跑出来。后续构造相似度矩阵与谱聚类沿用既有流程，不是本文的创新点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数据矩阵 X<br/>d 个变量、n 个样本"] --> B["DRO 转谱范数正则<br/>Wasserstein 球内求最坏情况<br/>凸松弛出 ‖I−B‖ 谱范数惩罚"]
+    C["数据驱动 δ 选择<br/>bootstrap 取 (1−α) 分位数"] -->|确定正则强度| B
+    B --> D["高效 ADMM 求解<br/>拆 B1+B2=I，每步一次 SVD"]
+    D --> E["系数矩阵 B"]
+    E --> F["构造相似度矩阵 C<br/>对 |B| 对称化（脚手架）"]
+    F --> G["谱聚类（脚手架）"]
+    G --> H["变量簇"]
+```
+
 ### 关键设计
 
 **1. DRO 转化为谱范数正则化：把无限维鲁棒优化松弛成有限维凸问题**

@@ -41,7 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三种VLM角色对应三种范式，在6个多模态图数据集（4个Amazon电商+1个Reddit+1个CDs）上统一评估。每个范式内部又有多种变体（如带/不带结构信息、不同融合策略等）。
+同一个多模态图（节点带图像+文本属性）分别走三条范式：VLM-as-Encoder 把 VLM 当特征提取器、出来的特征喂下游 GNN；VLM-as-Aligner 把 VLM 当模态桥梁、把图像注入现有 GraphLLM；VLM-as-Predictor 直接 LoRA 微调 VLM、把结构信号也一并注入。三条线最终都汇到同一套评测（6个数据集的节点分类，4个Amazon电商+1个Reddit+1个CDs），从而公平对比三种角色孰优孰劣。每条范式内部又有多档变体（不同编码器、不同对齐层、不同融合策略），用来拆解「哪种用法、注在哪一层最有效」。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["多模态图<br/>节点含图像+文本属性"] --> E
+    IN --> A
+    IN --> P
+
+    subgraph E["VLM-as-Encoder（VLM 当特征提取器）"]
+        direction TB
+        E1["CLIP / CLIP-F / CLIP-F-S<br/>结构感知对比编码"] --> E2["下游 GNN<br/>GCN/SAGE/MMGCN…"]
+    end
+
+    subgraph A["VLM-as-Aligner（VLM 当模态桥梁）"]
+        direction TB
+        A1["潜空间对齐 / Prompt 级对齐"] --> A2["GraphLLM<br/>LLaGA/GraphGPT/MLaGA"]
+    end
+
+    subgraph P["VLM-as-Predictor（VLM 当图学习 backbone）"]
+        direction TB
+        P1["显式 Prompt 融合 / 隐式潜空间融合<br/>注入邻居结构信号"] --> P2["LoRA 微调 VLM<br/>LLaVA/Qwen-VL/Qwen2.5-VL"]
+    end
+
+    E --> OUT["统一评测<br/>6 数据集节点分类"]
+    A --> OUT
+    P --> OUT
+```
 
 ### 关键设计
 

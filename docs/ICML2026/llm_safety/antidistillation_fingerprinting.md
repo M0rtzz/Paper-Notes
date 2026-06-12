@@ -47,24 +47,33 @@ ADFP 的核心不是另起一个新检测器，而是重写水印采样阶段的
 
 检测时分两类场景。若学生是开放权重模型，可以直接从 logits 计算每个上下文的 green-token 概率；若学生是闭源模型，只能对每个上下文采样一次 next token，再统计 green-token 频率。两者都共享同一套零假设：学生生成与密钥无关。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上下文 + 密钥 k、窗口 w、green 比例 γ"] --> B["哈希函数 H<br/>取末 w 个 token 算 green list S"]
+    A --> C["代理模型 θp<br/>预测分布 q"]
+    B --> D["面向学生学习动态的 logit 扰动<br/>按可学习性 + green/red 方向加权"]
+    C --> D
+    D --> E["用可计算近似避免逐词反向传播<br/>各向同性近似 → Δ = q_t(1[t∈S] − L)"]
+    E --> F["扰动教师 logits 并采样<br/>z̃ = z + λΔ → 带指纹教师输出"]
+    F --> G["学生用该输出微调（模拟蒸馏）"]
+    G --> H["统一开放权重与闭源查询的统计检测<br/>评估上下文 X 上估计 GTP"]
+    H -->|开放权重: 从 logits 直接算| I["Hoeffding 保守 p-value<br/>p = exp(−2n(g−γ)²)"]
+    H -->|闭源: 每上下文采样一次| I
+```
+
 ### 关键设计
-1. **面向学生学习动态的 logit 扰动**:
+**1. 面向学生学习动态的 logit 扰动：让扰动对准“学生学得进去”的 token**
 
-	- 功能：替代传统 red-and-green-list 的均匀 green-token 加分，让每个 token 的扰动大小反映它被学生微调吸收后的检测收益。
-	- 核心思路：设代理模型在当前上下文的预测分布为 $q$，green list 为 $S$，当前 green-token 总概率为 $L=\sum_{t\in S}q_t$。ADFP 对 token $t$ 的扰动定义为 $\Delta^{ADS}_t=q_t(\mathbf{1}[t\in S]-L)$。高概率 green token 会获得更大正扰动，因为它既可能被采样，也更可能成为学生训练中的有效监督；高概率 red token 则被压低，因为它会把学生推向非指纹方向。
-	- 设计动机：传统水印只知道 token 是绿是红，却不知道该 token 是否处在学生模型容易学习的位置。ADFP 把“检测目标”提前写进采样策略，减少为了让指纹被内化而粗暴加大扰动的需要。
+传统 red-and-green-list 对所有 green token 一视同仁地加同一个 logit 偏置，它只管教师这一步输出是否偏绿，却完全不管这个 token 在学生微调时会不会被真正学进去——结果想让指纹内化就得粗暴加大扰动，质量随之崩坏。ADFP 改成让扰动幅度随 token 的“可学习性”变化：设代理模型在当前上下文的预测分布为 $q$、green list 为 $S$、当前 green-token 总概率为 $L=\sum_{t\in S}q_t$，则对 token $t$ 的扰动为 $\Delta^{ADS}_t=q_t(\mathbf{1}[t\in S]-L)$。式中 $q_t$ 让方法聚焦于代理认为更可能被采到的高概率 token（它们也最可能成为学生训练里的有效监督），$\mathbf{1}[t\in S]-L$ 则是一个 advantage 基线：green token 得到正向放大、red token 被压低，把学生推离非指纹方向。这样指纹优化的目标从“教师当前是否采到 green token”前移成“训练后学生是否更绿”，在更小的质量代价下让指纹被内化。
 
-2. **用可计算近似避免逐词反向传播**:
+**2. 用可计算近似避免逐词反向传播：把梯度内积化成一次代理前向的闭式分数**
 
-	- 功能：把 antidistillation sampling 原本昂贵的参数空间内积，化简成只依赖代理模型 softmax 概率的闭式 logit 分数。
-	- 核心思路：从 ADS 的形式 $\Delta_t=\langle\nabla_{\theta_p}\log q_t,\nabla_{\theta_p}L\rangle$ 出发，论文把梯度投影到 logit 空间，并令 logits 对参数梯度的 Gram 矩阵近似为各向同性的 $K\approx cI$。在这个近似下，与 token 无关的常数项会在采样归一化中抵消，剩下的就是 $q_t(\mathbf{1}[t\in S]-L)$。作者还证明：如果代理模型只有最后一层线性适配层可训练，这个各向同性结论可以精确成立。
-	- 设计动机：如果每个 vocabulary token 都要做一次 backward pass，在线采样不可用。这个近似把方法降到一次代理前向即可计算的复杂度，使它能插入常规 LLM decoding 流程。
+上面这个扰动若按 antidistillation sampling 的原始定义 $\Delta_t=\langle\nabla_{\theta_p}\log q_t,\nabla_{\theta_p}L\rangle$ 计算，需要对词表里每个 token 各做一次 backward pass，在线 decoding 根本跑不动。论文把梯度投影到 logit 空间，并令 logits 对参数梯度的 Gram 矩阵近似为各向同性的 $K\approx cI$；在这个近似下与 token 无关的常数项会在采样归一化时抵消，化简后剩下的正是 $q_t(\mathbf{1}[t\in S]-L)$——只需代理模型一次前向的 softmax 概率即可算出。作者进一步证明：若代理模型只有最后一层线性适配层可训练，这个各向同性结论可以精确成立。正是这步近似把方法降到能直接插进常规 LLM 采样流程的复杂度。
 
-3. **统一开放权重与闭源查询的统计检测**:
+**3. 统一开放权重与闭源查询的统计检测：把模型归因写成保守的假设检验**
 
-	- 功能：让指纹结论不依赖必须拿到学生模型权重，也能在只可查询的学生服务上给出保守显著性。
-	- 核心思路：论文先构造评估上下文 $X$，并按最后 $w$ 个 token 去重，保证不同上下文对应的 green list 在密钥随机性下近似独立。开放权重时直接平均 green-token 概率；闭源时用一次采样结果构造 Bernoulli 指示变量。两种情况下，零假设下每项都是 $[0,1]$ 中均值为 $\gamma$ 的独立变量，因此可以用同一个 p-value 上界控制误报风险。
-	- 设计动机：真实模型归因常常面对 API-only 学生。把检测器写成概率统计问题，比“看是否复现某些训练样本”更稳健，也更适合处理水印信号被蒸馏稀释后的场景。
+检测端不依赖拿到学生权重，而是统计学生在一组评估上下文 $X$ 后生成 green token 的平均概率 GTP。论文先按最后 $w$ 个 token 对 $X$ 去重，使不同上下文对应的 green list 在密钥随机性下近似独立。开放权重学生可直接从 logits 平均 green-token 概率；闭源学生只能对每个上下文采样一次、构造 Bernoulli 指示变量。两种场景在零假设（学生生成与密钥无关）下，每一项都是 $[0,1]$ 中均值为 $\gamma$ 的独立随机变量，于是能用同一条 Hoeffding 上界给出保守 p-value：观测到 $g_{obs}>\gamma$ 时 $p=\exp(-2n(g_{obs}-\gamma)^2)$。把归因写成概率统计问题，比“看学生是否复现某些训练样本”更稳健，也更适合水印信号被蒸馏稀释、且只能 API 查询学生的现实场景。
 
 ### 损失函数 / 训练策略
 ADFP 自身不是训练一个新模型，而是在教师生成时改变采样分布。Algorithm 1 中的采样分布可以理解为在教师 log probability 上叠加 $\lambda\Delta^{ADS}$，再按温度 $\tau$ 归一化采样；$\lambda$ 控制指纹强度，越大通常指纹越明显，但也越可能损害教师输出质量。

@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 DCPO（Decoupled Calibration Policy Optimization）要解决的是"既不掉准确率、又压住过度自信"这对在常规 RLVR 里互斥的目标，它建在 GRPO 的 group sampling 之上。给定 prompt $q$，policy 采样 $G$ 条结构化响应 $o = [o_r\ \texttt{<conf>}\ o_c]$：$o_r$ 是 reasoning 加最终答案，`<conf>` 之后的 $o_c$ 是模型显式吐出的置信度数字。每条响应算两套 reward——推理 reward $R(o_r)=\mathbb{I}(y_\text{pred}=y_\text{label})$ 只看答案对不对，置信度 reward $R_c(o_c)=-|\text{conf}(o_c)-R_{IG}|$ 只看吐出的数字离真实正确率有多远；两套 reward 各自在 group 内归一化成 advantage $A_r, A_c$，再用 token-level mask 让 $A_r$ 只回传到 $o_r$ 段、$A_c$ 只回传到 $o_c$ 段。推理和置信度因此走两条互不干扰的梯度通道，这正是把"梯度冲突定理"翻译成可执行架构的落点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["prompt q"] --> G["GRPO group sampling<br/>采 G 条响应"]
+    G --> S["结构化置信度 rollout<br/>每条切成 o_r 推理段 + ⟨conf⟩ + o_c 置信度段"]
+    subgraph REW["解耦 advantage + 混合校准目标"]
+        direction TB
+        S --> RR["推理 reward R(o_r) = 答案对错 0/1"]
+        S --> RC["置信度 reward R_c = −|conf − R_IG|<br/>R_IG = λ·group 均值 + (1−λ)·instance 对错"]
+        RR --> AR["group 内归一化 → A_r"]
+        RC --> AC["group 内归一化 → A_c"]
+    end
+    REW --> M["掩码梯度优化<br/>A_r 只回传 o_r 段、A_c 只回传 o_c 段"]
+    M --> O["更新 policy：准确率不掉、ECE 大幅下降"]
+```
+
 ### 关键设计
 
 **1. 结构化置信度 rollout：把推理和置信度切成物理上分开的两段 token**

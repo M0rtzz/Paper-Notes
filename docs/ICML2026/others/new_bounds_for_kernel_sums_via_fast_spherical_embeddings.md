@@ -40,7 +40,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段嵌入。第一阶段 **快速球面嵌入** $\Phi: \mathbb{R}^d \to \mathbb{S}^m$，$m = \widetilde{O}(d + \Lambda^2 + \varepsilon^{-2})$，把数据 + 查询缩放 $s = \Theta(\sqrt{\varepsilon / \log(1/\varepsilon)})$ 后送进 inner Fastfood，输出已经在 $\mathbb{S}^{2m-1}$ 上，scaled diameter $\Lambda = s\Delta = \widetilde{O}(\sqrt{\varepsilon} \Delta)$。第二阶段 **解缩放 + 第二层 Fastfood** 做 KDE：unscale 后点位于半径 $s^{-1}$ 球面，新直径 $\widehat{\Delta} = 2 s^{-1} = \widetilde{O}(1/\sqrt{\varepsilon})$。再走标准 Fastfood (Le-Sarlós-Smola 2013) 做 KDE 近似，复杂度 $\widetilde{O}(m + \widehat{\Delta}^2/\varepsilon^2) = \widetilde{O}(m + 1/\varepsilon^3)$。两层加起来正好 $\widetilde{O}(d + \varepsilon \Delta_\sigma^2 + 1/\varepsilon^3)$。
+两阶段嵌入。第一阶段 **快速球面嵌入** $\Phi: \mathbb{R}^d \to \mathbb{S}^m$，$m = \widetilde{O}(d + \Lambda^2 + \varepsilon^{-2})$，把数据 + 查询缩放 $s = \Theta(\sqrt{\varepsilon / \log(1/\varepsilon)})$ 后送进 **内层 Fastfood**，输出已经在 $\mathbb{S}^{2m-1}$ 上，缩放直径 $\Lambda = s\Delta = \widetilde{O}(\sqrt{\varepsilon} \Delta)$。第二阶段 **解缩放 + 外层 Fastfood** 做 KDE：解缩放后点位于半径 $s^{-1}$ 球面，新直径 $\widehat{\Delta} = 2 s^{-1} = \widetilde{O}(1/\sqrt{\varepsilon})$。再走标准 Fastfood (Le-Sarlós-Smola 2013) 做 KDE 近似，复杂度 $\widetilde{O}(m + \widehat{\Delta}^2/\varepsilon^2) = \widetilde{O}(m + 1/\varepsilon^3)$。两层加起来正好 $\widetilde{O}(d + \varepsilon \Delta_\sigma^2 + 1/\varepsilon^3)$。整条 pipeline 就是「缩放对齐 → 内层 Fastfood 球面嵌入（压直径）→ 解缩放 → 外层 Fastfood 做 KDE」的双层级联，三个关键设计分别对应内层嵌入的构造、证明这个嵌入成立的分析工具、以及把两个尺度对齐的缩放。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：数据 X + 查询 y ∈ ℝ^d<br/>有效直径 Δσ"] --> B["缩放对齐 ×s（缩放 trick）<br/>s = Θ(√(ε / log(1/ε)))"]
+    B --> C["内层 Fastfood 球面嵌入<br/>V = √m · HGHB，三角嵌入 Φ → 球面 S^(2m−1)<br/>缩放直径 Λ = √ε·Δ；Wiener chaos 四阶分析证不坍缩"]
+    C --> D["解缩放 ×s⁻¹（缩放 trick）<br/>新直径 Δ̂ = 2s⁻¹ = Õ(1/√ε)"]
+    D --> E["外层 Fastfood 做 KDE<br/>Le-Sarlós-Smola，time Õ(m + 1/ε³)"]
+    E --> F["输出：核和估计 ±ε<br/>总复杂度 Õ(d + εΔσ² + 1/ε³)"]
+```
 
 ### 关键设计
 

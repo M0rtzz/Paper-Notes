@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 ViLL-E 基于 PaliGemma-3B 多模态 LLM，包含视觉编码器、LLM 主干和新增的 embedding head。视觉 token 和输入提示使用双向注意力，自回归生成的后缀使用因果注意力。当遇到 `<EOS>` token 时，所有生成的 token 被收集并送入 embedding head 产生 dense embedding。训练分为三个阶段：大规模对比-生成联合预训练、高质量数据续训、多任务微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：视频 + 文本提示"] --> B["视觉编码器 + LLM 主干<br/>视觉/提示双向注意力，后缀因果注意力"]
+    B --> C["EOS 触发的自适应 embedding 生成<br/>自回归吐 token 直到 &lt;EOS&gt;，复杂视频多想几步"]
+    C --> D["KV-Former Embedding Head<br/>P 个可学习 pooling token 注意力聚合 → MLP → 均值池化"]
+    D --> E["固定维度 dense embedding"]
+    E --> F["下游：T2V 检索 / 时序定位 / VideoQA"]
+    subgraph TRAIN["三阶段生成-对比联合训练"]
+        direction TB
+        T1["Stage 1：10M 字幕对<br/>生成损失 + CLIP 对比损失对齐"] --> T2["Stage 2：200K 高质量长字幕续训"]
+        T2 --> T3["Stage 3：100K 四任务微调<br/>QA / 检索 / 匹配 / 定位 + LoRA"]
+    end
+    TRAIN -.训练得到.-> B
+```
+
 ### 关键设计
 
 **1. KV-Former Embedding Head：把变长 token 序列聚合成固定维度 embedding**

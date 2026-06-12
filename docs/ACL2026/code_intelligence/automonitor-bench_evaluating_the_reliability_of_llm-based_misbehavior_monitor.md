@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 本文不是一个新模型，而是一套评测协议。输入是一对 ⟨任务请求 $Q$，模型生成的响应或推理轨迹 $S$⟩，监控器 LLM 被 prompt 成「judge」，要在无人介入的情况下输出 misbehavior / benign 的二分类标签（可附证据片段）。围绕这个判断，AutoMonitor-Bench 把整条流水线拆成三步：先按「显式→隐式」的难度谱构造 3,010 个配对样本，让同一请求下的危险版与正常版一一对应；再用漏检率 MR 与误报率 FAR 两个互补指标在 22 个开闭源监控器上做受控对比，并把它们投到 MR-FAR 平面上看 Pareto 前沿；最后用 153,581 样本的 SFT 探针，检验「在容易构造的不当行为上微调」能否迁移到未见过的隐式策略博弈。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：⟨任务请求 Q，响应/轨迹 S⟩"]
+    subgraph DATA["三层分类的配对数据构造"]
+        direction TB
+        T1["Safety & Permission Violations（1172）<br/>复用 HH-RLHF 偏好对 + secure/insecure 代码对"]
+        T2["Sycophancy & Bias（962）<br/>反事实过滤：拼线索 Q′=Q⊕C，留『无线索答对、加线索答错』"]
+        T3["Specification Gaming（876）<br/>注入奖励代理诱因 + PhD 双盲标注"]
+    end
+    IN --> DATA
+    DATA --> POOL["3010 个配对样本<br/>misbehavior / benign 同请求一一对应"]
+    POOL --> MON["监控器 LLM 当 judge<br/>输出 misbehavior / benign 二分类"]
+    MON --> METRIC["MR / FAR 双指标 + Pareto 视角<br/>22 个监控器投到 MR-FAR 平面排前沿"]
+    METRIC --> SFT["SFT 泛化探针<br/>153k 样本 LoRA 微调 + cross-category 留出"]
+    SFT --> OUT["可靠性结论：结构性 trade-off + SFT 难泛化到隐式博弈"]
+```
+
 ### 关键设计
 
 **1. 三层分类的配对数据构造：把不当行为按可观察程度铺成难度谱**

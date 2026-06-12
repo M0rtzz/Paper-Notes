@@ -47,6 +47,27 @@ tags:
 
 A/H（矛盾/犹豫）的本质不是某个固定表情或语调，而是“说的话、语调、表情三者互相打架”。所以这套方案立意很直接：与其把三个模态拼起来让分类器自己猜关系，不如直接去度量模态之间的**分歧**。整条流水线是视觉（面部 Action Units）、音频（Wav2Vec 2.0）、文本（BERT）各自独立编码，经 BiLSTM + 注意力池化压成定长向量、再投影到共享空间，最后由散度融合模块算出跨模态冲突信号送进分类器判别 A/H。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph FEAT["可解释的多模态特征"]
+        direction TB
+        V["视觉：Py-Feat 提 20 个 AU<br/>滑动窗口统计（均值/标准差/斜率/范围）"]
+        A["音频：Wav2Vec 2.0 → 768 维"]
+        T["文本：BERT [CLS] → 768 维（微调末两层）"]
+    end
+    subgraph ALIGN["时序建模与注意力池化"]
+        direction TB
+        S["2 层 BiLSTM + 注意力池化（视觉/音频）"] --> PROJ["线性投影到 D=128 共享空间<br/>得到 h'_v, h'_a, h'_t"]
+    end
+    V --> S
+    A --> S
+    T --> PROJ
+    PROJ --> F["散度融合<br/>逐对绝对差 |h'_v−h'_a|, |h'_v−h'_t|, |h'_a−h'_t|"]
+    F --> M["3 层 MLP 分类器<br/>BCEWithLogits + 类别权重"]
+    M --> O["A/H 二分类输出"]
+```
+
 ### 关键设计
 
 **1. 可解释的多模态特征：用 AU 滑动窗口统计捕捉面部“波动”**

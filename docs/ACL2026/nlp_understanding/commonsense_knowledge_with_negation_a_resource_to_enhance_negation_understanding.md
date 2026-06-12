@@ -45,6 +45,18 @@ tags:
 
 给定常识三元组 <A, R, B>，通过在主动词或修饰词前添加 "not" 来否定 if 事件（A）、then 事件（B）或两者，生成三个新三元组 <¬A, R, B>、<A, R, ¬B>、<¬A, R, ¬B>。然后训练 LLM 判断器验证每个新三元组是 Valid（符合常识）、Invalid（违反常识）还是 Ambiguous（模糊），最终用验证后的语料库预训练 LLM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["常识三元组 <A, R, B><br/>（Atomic / Anion）"] --> B["自动否定生成<br/>Llama 3.1 70B 加 not，1 个扩成 3 个<br/><¬A,R,B>、<A,R,¬B>、<¬A,R,¬B>"]
+    B --> C["LLM 判断器<br/>微调 Llama 3.1 70B 三分类"]
+    C -->|Valid 符合常识| D["¬Atomic / ¬Anion 语料库"]
+    C -->|Invalid 违反常识| D
+    C -->|Ambiguous 模糊| X["丢弃"]
+    D --> E["预训练增强策略<br/>转成 if-then 陈述，Valid+Invalid 双向喂模型"]
+    E --> F["下游否定理解提升<br/>问答 / NLI / 信息检索"]
+```
+
 ### 关键设计
 
 **1. 自动否定生成：只加一个 "not"，把知识库扩到 3 倍**

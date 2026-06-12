@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-Doc-PP 包含三阶段构建流程：(1) 策略构建——从真实文档中生成保密目标并通过检查清单过滤；(2) 查询构建——生成显式和隐式两类查询；(3) 评估——使用检查清单框架测量泄露率和忠实度。评估实例定义为三元组 $(D, P, Q)$，即文档、安全策略和查询。文档支持两种输入条件：$D^{ocr}$（OCR 解析内容）和 $D^{img}$（PNG 图像）。
+Doc-PP 包含三阶段构建流程：(1) 策略构建——从真实文档中生成保密目标并通过检查清单过滤；(2) 查询构建——生成显式和隐式两类查询；(3) 评估——使用检查清单框架测量泄露率和忠实度。评估实例定义为三元组 $(D, P, Q)$，即文档、安全策略和查询。文档支持两种输入条件：$D^{ocr}$（OCR 解析内容）和 $D^{img}$（PNG 图像）。在评估之外，本文进一步提出 DVA 防御框架，把策略验证拆进推理的每个子步骤，作为对抗"推理诱导泄露"的方法侧贡献。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实长 PDF（MMLongBench-Doc / Sustainable QA）"] --> B
+    subgraph S1["策略构建流程"]
+        direction TB
+        B["GPT-5.2 按敏感类别提保密目标<br/>标注证据类型 / 页码 / 原文引用"] --> C["target-aligned clipping 裁窗口 [p−2, p+2]<br/>五项检查清单过滤"]
+    end
+    C --> D["显式 vs 隐式查询<br/>Q_e 直接索取 / Q_i 摘要式诱导泄露"]
+    D --> E["评估实例 (D, P, Q)<br/>D_ocr 解析文本 / D_img 图像 两种输入"]
+    E --> F
+    subgraph S2["DVA 结构化推理框架"]
+        direction TB
+        F["Decompose 拆成独立子问题"] --> G["Verify 逐子问题策略合规检查<br/>拦截涉保密目标的证据"]
+        G --> H["Aggregation 仅聚合通过验证的子回答"]
+    end
+    H --> I["检查清单测信息泄露率 / 回答忠实度"]
+```
 
 ### 关键设计
 

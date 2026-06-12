@@ -47,6 +47,17 @@ Flickerformer要解决的是：从一组短曝光burst帧里把交流电+rolling
 
 具体流转上，网络吃3帧burst（基准帧$\mathbf{I}_1$与两个参考帧$\mathbf{I}_0, \mathbf{I}_2$），先用分组卷积对每帧独立提取低级特征$\mathbf{X}_t \in \mathbb{R}^{H \times W \times C}$，再由PFM在频域做帧间融合得到统一特征$\mathbf{F}_0$。融合后的特征进入3层级编码器（每层级2个Transformer块，通道数[32, 64, 96]，注意力头数[1, 2, 4]），其中前馈分支换成AFFN来强化帧内周期性；解码器则用WDAM做方向性注意力。网络最终只预测残差图$\mathbf{R}$，输出$\hat{\mathbf{I}}_1 = \mathbf{I}_1 + \mathbf{R}$，让模型专注于"挑出闪烁"而非重建整图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["3 帧 burst<br/>基准帧 I₁ + 参考帧 I₀, I₂"] --> B["分组卷积逐帧提取低级特征 Xₜ"]
+    B --> C["PFM 相位相关频域融合<br/>按相位差自适应滤波参考帧<br/>只搬干净信息、不留 ghosting"]
+    C --> D["3 层级编码器（Transformer 块）<br/>前馈换成 AFFN：自相关补帧内周期性"]
+    D --> E["解码器 WDAM<br/>小波分解，高频方向信息引导低频修复"]
+    E --> F["预测残差 R"]
+    F --> G["输出 Î₁ = I₁ + R"]
+```
+
 ### 关键设计
 
 **1. PFM：用相位相关挑出干净帧，融合时不留ghosting**

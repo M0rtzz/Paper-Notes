@@ -51,6 +51,18 @@ Graph-R1 把 GraphRAG 重写成"知识超图环境 + 多轮 think–query–retr
 
 每一步 agent 先在 `<think>` 里反思当前知识够不够，然后二选一：要么发 `<query>` 走双路超边检索把结果塞回 `<knowledge>`，要么发 `<answer>` 终止并产出答案。整条轨迹用 GRPO 端到端训练，reward 是"格式合规 + 答案 F1"组合而成的标量信号——不需要人写中间步监督，也不依赖 SFT 冷启。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    K["知识语料 K + 问题 q"] --> B["n 元知识超图构建<br/>LLM 抽 n 元事实 → 超图 G_H"]
+    B --> T["多轮智能体-超图交互<br/>think 反思知识够不够"]
+    T -->|"发 query"| R["双路检索 + RRF 融合<br/>实体路 + 超边路 → top-k 回灌 knowledge"]
+    R --> T
+    T -->|"发 answer"| Y["答案 y_q"]
+    T -.->|"采样轨迹"| G["结果导向 GRPO 优化<br/>格式门控 F1 reward 端到端训"]
+    G -.->|"更新策略"| T
+```
+
 ### 关键设计
 
 **1. 轻量化 n 元知识超图构建：把"多参与者事实"整体保留为一条超边**

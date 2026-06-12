@@ -38,7 +38,7 @@ tags:
 **核心 idea**：推理模型确实是更强 judge，但要让它们先写清评估计划，再按计划执行判断，才能减少对长度、具体性等表层信号的过度偏好。
 
 ## 方法详解
-论文由两部分组成。第一部分是系统实证比较，考察 LRM-as-a-Judge 的四个维度：一般评测准确率、评测指令遵循、对 prompt injection 的鲁棒性、对评测偏差的鲁棒性。第二部分提出 PlanJudge：不训练新模型，只在评测前让 judge 生成或接收细粒度评估计划，然后按计划完成比较。
+论文由两部分组成。第一部分是系统实证比较，考察大型推理模型（Large Reasoning Model, LRM）作为 judge（LRM-as-a-Judge）的四个维度：一般评测准确率、评测指令遵循、对 prompt injection 的鲁棒性、对评测偏差的鲁棒性。第二部分提出 PlanJudge：不训练新模型，只在评测前让 judge 生成或接收细粒度评估计划，然后按计划完成比较。
 
 ### 整体框架
 实验先选定四组模型对，并在 RewardBench、JudgeBench、Helpsteer2-trivial、RobustJudge、BiasBench、LLMBar 上比较。Helpsteer2-trivial 是作者构造的新数据：Response A 整体更好，但 Response B 在某个指定维度更好。一个合格 judge 应该在 overall prompt 下选 A，在 specific prompt 下切换到 B，因此作者用 Reversal Rate 衡量评测指令遵循能力。

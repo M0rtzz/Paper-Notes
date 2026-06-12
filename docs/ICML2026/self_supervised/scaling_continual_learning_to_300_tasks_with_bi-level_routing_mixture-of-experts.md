@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-backbone 是冻结的 ViT-B/16（ImageNet-21K 预训练），每个 Transformer block 替换成 $z_a = \text{MHSA}(\text{Norm}_1(z)) + z$，$z_f = \text{FFN}(\text{Norm}_2(z_a)) + z_a$，$z' = \text{BR-MoE}(z_a) + z_f$。增量学习每来一个新任务 $t$：(1) 在每个 block 的 BR-MoE 里加一个新三元组 $(C_t, R_t, E_t)$；(2) 训练时只更新当前层的新三元组以及共享专家 $\bar{E}$（其他参数全部冻结）；(3) 推理时按 bi-level 流程动态聚合各层输出。最终分类用拼接式角度 margin 头 $W_t = [w^1, \dots, w^t]$，类 logits 用余弦相似度 $\cos(\theta_i^j) = \frac{w_j^t \cdot \phi^t(x_i^t)}{\|w_j^t\| \|\phi^t(x_i^t)\|}$，配缩放因子 $\tau = 20$。
+backbone 是冻结的 ViT-B/16（ImageNet-21K 预训练），每个 Transformer block 替换成 $z_a = \text{MHSA}(\text{Norm}_1(z)) + z$，$z_f = \text{FFN}(\text{Norm}_2(z_a)) + z_a$，$z' = \text{BR-MoE}(z_a) + z_f$。增量学习每来一个新任务 $t$：(1) 在每个 block 的 BR-MoE 里加一个新三元组 $(C_t, R_t, E_t)$；(2) 训练时只更新当前层的新三元组以及共享专家 $\bar{E}$（其他参数全部冻结）；(3) 推理时按 bi-level 流程动态聚合各层输出。最终分类用拼接式角度 margin 头 $W_t = [w^1, \dots, w^t]$，类 logits 用余弦相似度 $\cos(\theta_i^j) = \frac{w_j^t \cdot \phi^t(x_i^t)}{\|w_j^t\| \|\phi^t(x_i^t)\|}$，配缩放因子 $\tau = 20$。每个 block 内 BR-MoE 的工作流如下图：先做第一级路由选择，再做第二级专家路由并叠加共享专家，逐层类感知器监督则在训练时保证浅层熵信号可靠。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["冻结 ViT block 输出 z_a 的 [CLS] token"] --> B["动态路由选择<br/>各任务类感知器 C_t 算熵 H_t<br/>按熵升序取 Top-M 个路由"]
+    subgraph G2["动态专家路由 + 共享 EMA 专家"]
+        direction TB
+        C["选中路由 R_t 出 gating 分数<br/>取 Top-K 专家加权求和得 z_r"]
+        D["共享 EMA 专家 Ē(z_a)<br/>跨任务通用兜底"]
+    end
+    B --> C
+    A --> D
+    C --> E["BR-MoE 输出 z_o = z_r + Ē(z_a)<br/>叠加回 ViT block"]
+    D --> E
+    B -.->|训练时监督| F["逐层类感知器监督<br/>L_cp = L_cls + KL 蒸馏对齐最终层<br/>让浅层熵信号可靠"]
+```
 
 ### 关键设计
 

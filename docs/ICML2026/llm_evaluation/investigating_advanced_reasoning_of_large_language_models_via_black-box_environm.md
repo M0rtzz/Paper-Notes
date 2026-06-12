@@ -41,7 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ORACLE 把「未知环境」抽象成一个黑盒隐函数 $f:X\to Y$，让 LLM 在有限轮交互里揭示它。每个评估实例分两阶段：先是探索阶段 $T$ 轮，模型 $M$ 在第 $t$ 轮根据历史 $H_{t-1}=(x_1,y_1,\ldots,x_{t-1},y_{t-1})$ 自适应生成查询 $x_t=M(H_{t-1})$，黑盒返回 $y_t=f(x_t)$；再是评估阶段 $K$ 轮，模型对与探索查询不相交的测试集 $X_{\rm test}$ 逐个预测 $\hat{y}^k$，黑盒返回 binary correctness $c^k=\mathbb{1}(\hat{y}^k=f(x^k_{\rm test}))$，模型可据正误信号继续修正后续预测。最终用 accuracy $=\sum c^k / K$ 衡量，配合 turn@shot 记号（如 20@2 表示 20 轮探索 + 每个测试样本 2 次机会）控制探索预算。这套两阶段闭环天然强迫模型走完「溯因猜假设 → 演绎生成查询 → 归纳修正假设」的整体推理 cycle。
+ORACLE 把「未知环境」抽象成一个黑盒隐函数 $f:X\to Y$，让 LLM 在有限轮交互里揭示它。每个评估实例分两阶段：先是探索阶段 $T$ 轮，模型 $M$ 在第 $t$ 轮根据历史 $H_{t-1}=(x_1,y_1,\ldots,x_{t-1},y_{t-1})$ 自适应生成查询 $x_t=M(H_{t-1})$，黑盒返回 $y_t=f(x_t)$；再是评估阶段 $K$ 轮，模型对与探索查询不相交的测试集 $X_{\rm test}$ 逐个预测 $\hat{y}^k$，黑盒返回 binary correctness $c^k=\mathbb{1}(\hat{y}^k=f(x^k_{\rm test}))$，模型可据正误信号继续修正后续预测。最终用 accuracy $=\sum c^k / K$ 衡量，配合 turn@shot 记号（如 20@2 表示 20 轮探索 + 每个测试样本 2 次机会）控制探索预算。这套两阶段闭环天然强迫模型走完「溯因猜假设 → 演绎生成查询 → 归纳修正假设」的整体推理 cycle。图里的黑盒并非人工编写，而是由一条三模块 LLM 流水线（Coding → Test → Refinement）自动生成；模型走完闭环后，其探索轨迹还会对照信息论 query 下界、按三级分层评判探索能力。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph GEN["三模块框架自动生成黑盒"]
+        direction TB
+        D1["Coding LLM<br/>按自然语言描述 + 交互规则生成 platform 代码"]
+        D2["Test LLM<br/>模拟探索/评估交互，产出 interaction log"]
+        D3["Refinement LLM<br/>据 log 诊断 执行错/功能未对齐/正确 并迭代修正"]
+        D1 --> D2 --> D3
+        D3 -->|未通过, 回环| D1
+    end
+    GEN -->|通过| BB["黑盒隐函数 f : X→Y<br/>6 类任务 × 96 环境"]
+    subgraph PARA["黑盒环境交互范式"]
+        direction TB
+        EXP["探索阶段 T 轮<br/>xt = M(Ht−1) 生成查询 → 黑盒返回 yt → 更新历史"]
+        EVAL["评估阶段 K 轮<br/>预测 ŷ → 二值正误 c → 据反馈自适应修正"]
+        ACC["accuracy = Σc / K（turn@shot 控探索预算）"]
+        EXP --> EVAL --> ACC
+    end
+    BB --> EXP
+    EXP -.分析探索轨迹.-> TIER["query 信息论下界 + 探索能力三级分层<br/>Tier1 随机 / Tier2 固定策略 / Tier3 自适应"]
+```
 
 ### 关键设计
 

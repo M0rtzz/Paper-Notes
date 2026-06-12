@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 SEI 不改训练，只在标准训练流程外面挂一个"统计探针"：用 CLIP 把类名做成 prompt `"a photo of [CLS]"`、按 cosine similarity 跑常规的对比分类微调，每个 epoch 结束顺手记下每个样本的一个带方向的熵值，训练 150 epoch 后把这条轨迹沿 $t$ 积分成单个标量 SEI，再用一个自校准阈值把低分样本判为错标。一句话：**把"熵的大小"和"预测是否对齐标签"这两个训练动力学信号融成一个可排序的分数**，错标样本天然落到数轴的一端。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练样本 + 注入伪类 K+1 锚样本<br/>(伪类 prompt 语义无关)"] --> B["CLIP 标准对比微调（脚手架）<br/>prompt 'a photo of [CLS]'，150 epoch"]
+    B --> C["每 epoch 取后验 p⁽ᵗ⁾(x)"]
+    C --> D["Signed Entropy<br/>Shannon 熵 × 预测是否对齐标签的 ±1 方向位"]
+    D --> E["Signed Entropy Integral (SEI)<br/>沿 T 个 epoch 累积成单标量"]
+    E --> F["辅助类自适应阈值<br/>伪类锚样本平均 SEI 作 cutoff"]
+    F -->|SEI 低于 cutoff| G["判为错标"]
+    F -->|SEI 不低于 cutoff| H["判为干净"]
+```
+
 ### 关键设计
 
 **1. Signed Entropy：给无方向的熵补上一个 ±1 的方向位**

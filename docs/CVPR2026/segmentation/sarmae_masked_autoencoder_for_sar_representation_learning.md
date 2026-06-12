@@ -45,7 +45,22 @@ tags:
 
 ### 整体框架
 
-SARMAE 想解决的是 SAR 图像因散斑噪声而「语义弱、结构糊」、导致自监督预训练学不好表征的问题。它在 MAE 基础上搭了两条分支：SAR 分支是 ViT 编码器 + Transformer 解码器，走标准 MAE 的 75% 随机掩码重建，但额外塞进 SARE 模块来对付散斑；光学分支是一个冻结的 DINOv3 编码器（与 SAR 分支共享 ViT 架构），给有配对光学图的 SAR 数据提供语义锚点。有配对光学图时两支协同，没配对的 SAR 数据就只走 SAR 分支。
+SARMAE 想解决的是 SAR 图像因散斑噪声而「语义弱、结构糊」、导致自监督预训练学不好表征的问题。它在百万级数据集 SAR-1M 上预训练，并在 MAE 基础上搭了两条分支：SAR 分支是 ViT 编码器 + Transformer 解码器，走标准 MAE 的 75% 随机掩码重建，但额外塞进 SARE 模块来对付散斑；光学分支是一个冻结的 DINOv3 编码器（与 SAR 分支共享 ViT 架构），给有配对光学图的 SAR 数据提供语义锚点。有配对光学图时两支协同（SARC 对齐），没配对的 SAR 数据就只走 SAR 分支。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DS["SAR-1M 数据集<br/>130万 SAR + 100万配对光学"]
+    DS -->|SAR 图| SARE["SARE 散斑感知增强<br/>Gamma 重采样得更脏的 x'"]
+    DS -->|配对光学图| OPT["冻结 DINOv3 编码器<br/>完整 patch 语义嵌入"]
+    SARE --> MASK["随机掩码 75%"]
+    MASK --> ENC["SAR ViT 编码器"]
+    ENC --> DEC["Transformer 解码器<br/>重建干净 x（L_SARE）"]
+    ENC --> SARC["SARC 语义锚约束<br/>逐 patch 余弦对齐"]
+    OPT --> SARC
+    DEC --> LOSS["总损失<br/>L_SARE + 0.1·L_SARC"]
+    SARC --> LOSS
+```
 
 ### 关键设计
 

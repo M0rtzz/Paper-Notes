@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 论文有两个独立但配套的贡献，合起来回答"隐私检测缺数据、缺对小屏字/模糊脸的细粒度感知"这个问题。数据侧用一套 4 域 taxonomy 把多源样本聚成 10 万张图、33 类、19 万+ 框的 VPD-100K，其中最关键的屏上 PII 用"伦理重建"采集。模型侧不动 YOLOv10 主干，只在 Neck 中部插一条频域分支（FDAF + 自适应频谱门控 + 频域一致性损失），让网络在空域之外多一条"看高频细节"的通路，整体仍是端到端 YOLO 训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    DATA["数据集构造<br/>四域多源采集（屏上 PII 伦理重建）→ 4 域 taxonomy<br/>VPD-100K：10 万图·33 类·19 万框"]
+    DATA --> NK["YOLOv10 主干 + Neck 特征"]
+    NK --> DFT["FDAF 频域分支<br/>逐通道 2D DFT → 幅度+相位双谱"]
+    DFT --> GATE["自适应频谱门控 LSG<br/>可学软带通掩码调制频谱"]
+    GATE --> IDFT["IDFT 回空域 + 残差拼接（FDAF）"]
+    IDFT --> HEAD["检测头 → 隐私目标框"]
+    HEAD --> LOSS["频域一致性损失<br/>高频加权对齐 预测框/GT 频谱"]
+```
+
 ### 关键设计
 
 **1. 数据集构造：用伦理重建 + 4 域 taxonomy 补齐"规模小 / 类目粗 / 缺屏上 PII"三大空白**

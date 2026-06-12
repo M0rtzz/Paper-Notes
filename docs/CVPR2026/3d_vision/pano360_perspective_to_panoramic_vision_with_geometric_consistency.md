@@ -53,6 +53,24 @@ $$\mathcal{W}_i(\mathbf{u}) = P_i(\mathbf{u}) + W_i(\mathbf{u})$$
 
 框架流程：(a) 利用相机参数将透视图像投影到统一全景坐标系 → (b) 提取重叠区域 → (c) 拼缝解码器生成各图像的拼缝掩码 → (d) 利用掩码和对齐图像混合生成最终全景图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 N 张部分重叠透视图像"] --> BK
+    subgraph BK["特征骨干网络"]
+        direction TB
+        B["DINO 编码器 patch 化<br/>序列前拼接可学习 camera token"] --> C["VGGT 交替注意力<br/>(global + frame，权重冻结)"]
+    end
+    BK --> D["camera token<br/>(含 3D 几何对应)"]
+    BK --> E["feature token<br/>(保留细节)"]
+    D --> F["投影头<br/>解码 K/R/t + 自适应投影格式 + 局部 mesh warp"]
+    E --> G["拼缝头<br/>多特征能量最小化 → 拼缝掩码 M"]
+    F --> H["对齐并投影到统一全景坐标系"]
+    H --> I["按拼缝掩码混合"]
+    G --> I
+    I --> J["360° 全景图"]
+```
+
 ### 关键设计
 
 **1. 特征骨干网络**

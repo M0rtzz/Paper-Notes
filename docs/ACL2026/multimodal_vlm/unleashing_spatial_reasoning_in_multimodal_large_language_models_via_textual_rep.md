@@ -45,6 +45,21 @@ tags:
 
 TRACE 采用单轮生成方式：给定自我中心视频 $V$ 和自然语言问题 $Q$，模型首先作为"空间描述器"生成 TRACE 表征 $G$，然后作为"推理解析器"基于 $G$ 和 $V$ 生成最终答案 $A$。推理过程形式化为 $\hat{A}, \hat{G} = \arg\max P(A|G,V,Q) \cdot P(G|V,Q)$。整个过程在一个前向传递中完成，TRACE 相当于一种结构化的 CoT。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自我中心视频 V + 空间问题 Q"] --> B["空间描述器<br/>单轮生成结构化文本表征"]
+    B --> G
+    subgraph G["TRACE 表征（空间缓存）"]
+        direction TB
+        C["元上下文<br/>房间对齐坐标系 + 拓扑 + 初始朝向"]
+        D["相机轨迹<br/>离散时间步：位置 + 8 向朝向 + action"]
+        E["实体注册表<br/>逐物体档案：坐标 + 视觉签名 + 空间关系"]
+    end
+    G --> F["推理解析器<br/>查缓存：算欧氏距离 / 遍历轨迹节点"]
+    F --> H["空间问答答案 A"]
+```
+
 ### 关键设计
 
 **1. 元上下文（Meta Context）：先把全局坐标系和房间布局钉死，免得后面算着算着就丢了参考系**

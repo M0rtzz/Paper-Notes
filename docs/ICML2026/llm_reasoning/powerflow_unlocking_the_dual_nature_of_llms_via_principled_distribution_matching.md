@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 PowerFlow 把无监督微调形式化成"让策略去匹配基模型的 $\alpha$-power 分布"这一个目标，然后用 GFlowNet 把它变成一个能直接优化、又不被长度偏置毒化的训练损失。给定一个无标签 prompt 数据集 $\mathcal{D}$、一个固定的基模型 $p_{\text{base}}$、一个用户指定的 $\alpha$，它训练出策略 $\pi_\theta$，使其分布近似 $p_{\text{base}}^\alpha$ 的长度归一化版本。整条链路是：先把目标写成"对 $\alpha$-power 分布做反向 KL 最小化"，再用 Trajectory-Balance 目标把里面不可解的配分函数摊销成一个可学习模块 $Z_\phi$，最后用 LA-TB 重参数化把长度偏置彻底消掉、并配一个格式 penalty 保证 instruction-following。推理时就是普通单次解码、零额外开销，这点比 PowerSampling 那种推理期跑 MCMC 的方案省得多。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无标签 prompt + 固定基模型 p_base"] --> B["α-power 目标 + 双向旋钮<br/>p_α ∝ p_base^α（单调变换，只改熵不动相对排名）"]
+    B -->|"α>1 锐化"| C1["激发推理<br/>质量挤向隐藏的高质量推理路径"]
+    B -->|"α<1 平滑"| C2["释放创造力<br/>抵消 typicality bias、还原长尾"]
+    C1 --> D["GFlowNet 摊销变分采样器<br/>反向 KL → TB 目标，Z_φ 摊销配分函数"]
+    C2 --> D
+    D --> E["LA-TB 重参数化<br/>Z_φ=(Z'_φ)^|y|，按 |y| 归一化能量面消长度偏置"]
+    E --> F["+ 格式 penalty ψ + IS clip w<br/>→ PowerFlow 损失（式 10）"]
+    F --> G["训练策略 π_θ → 推理普通单次解码、零额外开销"]
+```
+
 ### 关键设计
 
 **1. $\alpha$-power 目标 + 双向旋钮：用一个标量同时管"激发推理"和"释放创造力"**

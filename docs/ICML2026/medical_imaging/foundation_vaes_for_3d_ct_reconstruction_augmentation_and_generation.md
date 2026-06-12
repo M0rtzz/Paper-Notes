@@ -44,6 +44,20 @@ tags:
 
 全文只用一个组件——一个在自然图像/视频上预训练、**全程冻结**的 Foundation VAE（如 WAN2.1 / VideoVAE+ / IVVAE），却把它当成 CT 三个任务的统一接口。重建任务把 CT 体积 $x$ 过一遍编码器 $E$ 得到潜表示 $z$、再过解码器 $D$ 还原成 $\hat{x}$，得到的 $\hat{x}\approx T(x)$ 恰好是一个"边界保持去噪"算子 $T$ 的输出；增强任务直接拿这些去噪后的 $\hat{x}$ 当分割训练的额外视图；生成任务则在同一个冻结潜空间里训一个条件 latent diffusion。三者共享同一套权重，没有任何医学微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 3D CT 体积 x"] --> VAE
+    subgraph VAE["冻结 Foundation VAE（自然图像/视频预训练，全程冻结）"]
+        direction TB
+        E["编码器 E"] --> Z["潜空间 z"] --> D["解码器 D"]
+    end
+    VAE --> XH["边界保持去噪算子<br/>重建 x̂ ≈ T(x)，误差是噪声而非边界偏移"]
+    XH --> AUG["重建即增强<br/>(x,y)+(x̂,y) 联合训练分割，NSD↑"]
+    Z --> GEN["条件 latent diffusion + 3D 一致性模块<br/>器官掩码 + 放射报告条件，跨切片对齐"]
+    GEN --> OUT["可控多疾病 CT 生成"]
+```
+
 ### 关键设计
 
 **1. 把 Foundation VAE 当成边界保持去噪算子：让 CT 重建顺带做了预处理**

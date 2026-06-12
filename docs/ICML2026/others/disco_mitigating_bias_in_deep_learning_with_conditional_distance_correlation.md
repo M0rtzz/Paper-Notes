@@ -41,6 +41,26 @@ tags:
 ### 整体框架
 分三层。最上层是理论：建立 SAM 因果图（target $Y$ → input $X$ → 预测 $\hat{Y}$，外加旁路变量 $\mathbf{Z}$ 和中介 $\mathbf{W}$ 统称偏差 $\mathbf{B}$），证明 $\hat{Y} \perp \mathbf{B} \mid Y$ 蕴含因果稳定性（反事实间接效应和虚假效应都为零）。中层是估计：用条件距离协方差 $\mathrm{dCov}^2(X, Y \mid Z) = \mathbb{E}_Z[\mathrm{dCov}^2(X, Y \mid Z = z)]$ 这一在强负型度量空间下能等价刻画条件独立的量，配上 RBF 核作为条件密度估计权重；提出两个可微估计器 DISCO$_m$（采样 $m$ 个参考点，省内存但近似）和 sDISCO（代数分解，全局精确 + $O(n^2)$ 内存）。最下层是训练：把 sDISCO 作为正则加进 ERM 损失 $\min_\theta \sum L(Y, \hat{Y}) + \lambda \cdot \mathrm{sDISCO}(\hat{Y}, \mathbf{B} \mid Y)$，前向和推理只用 $X$，偏差 $\mathbf{B}$ 只在训练反传计算正则项时出现。
 
+下图按训练数据流串起三个关键设计：理论给出的「统一条件独立准则」决定要惩罚什么，「条件距离相关」是惩罚用的度量，「sDISCO 单步代数分解」负责把它压到 $O(n^2)$ 显存高效算出来；偏差 $\mathbf{B}$ 只在训练反传时进入正则项，推理只走输入 $X$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 X"] --> F["预测网络 f_θ"]
+    F --> YH["预测 ŷ"]
+    Y["标签 Y"] -->|作为条件变量| REG
+    B["观测偏差 B"] -->|仅训练时进入| REG
+    YH -->|仅训练时进入| REG
+    subgraph REG["条件距离相关正则项 sDISCO"]
+        direction TB
+        W["统一条件独立准则<br/>惩罚 ŷ 与 B 在给定 Y 下的依赖"] --> M["条件距离相关 dCor²<br/>RBF 核权重 + 距离矩阵 A、B"]
+        M --> S["sDISCO 单步代数分解<br/>T₁+T₂−2T₃，O(n²) 显存"]
+    end
+    REG --> LOSS["总损失 ΣL(Y,ŷ) + λ·sDISCO"]
+    LOSS -->|反向传播更新 θ| F
+    YH -.->|推理时只用 X，不需 B| OUT["输出预测 ŷ"]
+```
+
 ### 关键设计
 
 **1. SAM 反因果模型 + 统一条件独立准则：让"是哪种偏差"这个问题消失**

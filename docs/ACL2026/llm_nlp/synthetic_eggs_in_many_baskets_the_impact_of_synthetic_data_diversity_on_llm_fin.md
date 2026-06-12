@@ -45,6 +45,27 @@ tags:
 
 实验分为三条主线。第一条主线测合成数据对输出分布的影响，使用 perplexity、Self-BLEU 反向指标、语义距离和 Heaps' Law 词汇增长。第二条主线测安全，使用 RefusalBench 和 RefusalBench+Jailbreak，分别评估 harmfulness 与 response quality。第三条主线测判断偏差，让微调后的 Llama 作为 judge 对 CNN/DailyMail 摘要做 pairwise ranking，计算 self-preference bias 和 pro-synthetic bias。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["人类数据集 Dolly-15K"] --> B
+    SRC["三档源模型<br/>Small 5-15B / Medium 50-150B / Large 400B+"] --> B
+    subgraph B["单源·多源·人类数据并行对照"]
+        direction TB
+        B1["single-source：单个源模型生成整份回答"]
+        B2["multi-source：同档多模型分块生成"]
+        B3["human-source：原始人类回答（控制组）"]
+    end
+    B --> C["LoRA SFT 微调<br/>Llama-small / Llama-medium"]
+    C --> D["分布坍缩与多样性指标组合<br/>perplexity / Self-BLEU / 语义距离 / Heaps' Law"]
+    subgraph G["安全与评审偏差的下游行为测量"]
+        direction TB
+        E["安全：RefusalBench+Jailbreak → danger zone"]
+        F["评审偏差：LLM-as-Judge → SPB / PSB"]
+    end
+    C --> G
+```
+
 ### 关键设计
 
 **1. 单源、多源和人类数据的并行对照：把「数据来源多样性」做成可控变量**

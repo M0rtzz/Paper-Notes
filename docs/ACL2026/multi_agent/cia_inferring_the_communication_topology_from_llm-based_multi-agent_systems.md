@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 CIA 想干的事：在最严格的黑盒设定下——攻击者只能往目标 MAS $\mathcal{S}$ 发查询、看一眼最终输出 $\mathcal{S}(q)$，拿不到任何 agent 的 reasoning trace 或 profile——把整张通信拓扑 $\hat{\mathcal{G}}$（一个 DAG）反演出来。它分两阶段：阶段一 Reasoning Output Induction 用一条精心设计的对抗查询 $q^*$，逼 MAS 把内部所有中间 agent 的 reasoning 顺着拓扑"夹带"进最终输出，再后处理还原成有序列表 $\mathcal{R}^*=[r_1^*,\ldots,r_n^*]$；阶段二 Semantic Correlations Modeling 在这堆 reasoning 文本上学一个去偏表征，配合 teacher LLM 的弱监督，最终靠两两语义相似度 + 在 $\mathcal{R}^*$ 中的相对顺序判定每条有向连边。整套攻击零修改 MAS 配置、不破坏任务正确率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["对抗查询 q*"]
+    subgraph ROI["Reasoning Output Induction"]
+        direction TB
+        C["三条对抗约束<br/>累积传播 + 任务聚焦 + 前驱回看"] --> SQ["最终输出 S(q*)<br/>夹带全部中间 reasoning"]
+        SQ --> R["切分 + 反向去重<br/>还原有序列表 R*"]
+    end
+    Q --> ROI
+    ROI --> ENC["编码 h_i<br/>all-MiniLM-L6-v2（脚手架）"]
+    ENC --> GBD["全局偏置解纠缠 GBD<br/>双编码器分出去偏表征 z^d"]
+    LWS["LLM 弱监督 LWS<br/>teacher GPT-5 取 top-k 可靠边"] -.弱监督.-> GBD
+    GBD --> EDGE["连边判定<br/>Sim(z^d)≥τ ∧ R* 中索引顺序"]
+    EDGE --> OUT["反演通信拓扑 Ĝ（DAG）"]
+```
+
 ### 关键设计
 
 **1. Reasoning Output Induction：用三条对抗约束把内部 reasoning"挤"出 decision agent**

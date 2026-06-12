@@ -44,11 +44,26 @@ tags:
 
 现有3D服装生成走的是「大VLM 预测2D缝纫样板 → GarmentCode 等物理模拟引擎转3D网格」的路子，质量高但单件要 30-60 秒、中间环节多还不可微。SwiftTailor 把这条链路换成两阶段可学习级联：阶段一 PatternMaker 用一个轻量 VLM 从文本/图像等多模态输入预测缝纫样板参数；阶段二 GarmentSewer 用一个 Dense Prediction Transformer 把样板转成 Garment Geometry Image（GGI），把所有面板的 3D 表面编码进统一 UV 空间；最后用逆映射 + 重网格化 + 动态拼接直接拼出 3D 网格。核心是用学到的几何图像表示替掉物理模拟，把昂贵的模拟成本摊销到训练阶段，推理时一秒内出结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入<br/>文本描述 / 参考图像"] --> B["PatternMaker（轻量 VLM）<br/>预测缝纫样板参数"]
+    B --> C["GarmentSewer（DPT）<br/>样板 → Garment Geometry Image（GGI）"]
+    C --> D["统一 UV 空间<br/>每像素存对应 3D 坐标 (x,y,z)"]
+    subgraph R["逆映射与动态拼接"]
+        direction TB
+        E["逆映射<br/>有效像素 3D 坐标 → 各面板几何"] --> F["重网格化<br/>自适应重划分三角网格"]
+        F --> G["动态拼接<br/>按样板关系缝合面板边缘"]
+    end
+    D --> R
+    R --> H["3D 服装网格"]
+```
+
 ### 关键设计
 
 **1. PatternMaker：缝纫样板预测不必动用大VLM**
 
-现有方法拿 GPT-4V 级别的大 VLM 去预测样板，参数严重浪费。PatternMaker 的判断是：缝纫样板预测本质是个结构化预测任务，不需要通用大模型的全部能力。它因此大幅精简规模，只保留预测样板所需的部分，支持文本描述、参考图像等多模态输入，直接输出各面板的形状、尺寸和拼接关系的参数化表示（省掉复杂的序列解码），并在 Multimodal GarmentCodeData 上联合学习视觉和语言到样板参数的映射，用更小的模型拿到更好的性价比。
+现有方法（如 AIpparel、ChatGarment）拿 LLaVA-1.5V-7B 这类大 VLM 去预测样板，参数严重浪费。PatternMaker 的判断是：缝纫样板预测本质是个结构化预测任务，不需要通用大模型的全部能力。它因此大幅精简规模，只保留预测样板所需的部分，支持文本描述、参考图像等多模态输入，直接输出各面板的形状、尺寸和拼接关系的参数化表示（省掉复杂的序列解码），并在 Multimodal GarmentCodeData 上联合学习视觉和语言到样板参数的映射，用更小的模型拿到更好的性价比。
 
 **2. GarmentSewer 与 GGI：把不规则3D网格变成规则2D图像预测**
 

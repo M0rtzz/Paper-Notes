@@ -42,6 +42,15 @@ AG-REPA 发现音频 Flow Matching 中“存储语义信息的层”和“真正
 ### 整体框架
 AG-REPA 要解决的是音频 Flow Matching 里 REPA 该对齐哪几层的问题：以往按经验固定中层对齐，但作者发现"最像 teacher 的层"和"最影响速度场的层"并不重合。它的做法是先用一套诊断工具把这两件事拆开看，再只对真正驱动生成的层做稀疏、加权的对齐。模型本身是统一音频生成框架，同时做 TTS 和 Text-to-Audio，语音侧用语义 token、通用音频侧用事件/声学 token，共享一个 DiT-based Flow Matching backbone。在 warm-up 阶段，作者先测各层表示与 Whisper/BEATs teacher 的相似度，再对每层做门控消融观察速度场变化，最后挑出贡献最高的几层加轻量 projection head 做对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["音频 + 条件 token<br/>DiT Flow Matching 主干"] --> B["SCD 诊断<br/>BiT-C 双流 teacher 相似度 + LASP 测各层存储"]
+    B -->|warm-up| C["FoG-A 因果层定位<br/>逐层前向门控消融，测速度场变化"]
+    C --> D["AG-REPA：稀疏层选择 + 归因加权对齐<br/>FoG-A Top-K 选层 + 轻量 MLP 对齐 teacher"]
+    D --> E["主训练<br/>L_FM + L_BiT + 加权对齐项"]
+```
+
 ### 关键设计
 
 **1. SCD 诊断：把"表示存储"和"功能贡献"分开测**

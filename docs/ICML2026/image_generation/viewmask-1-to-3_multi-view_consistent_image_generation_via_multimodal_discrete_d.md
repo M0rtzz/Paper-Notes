@@ -43,6 +43,29 @@ tags:
 
 ViewMask 要解决的是多视图生成里几何一致性与生成灵活性难以兼得的老问题：连续扩散要么靠显式 3D 先验、相机参数来锁住一致性，要么逐视点独立生成导致细节漂移。本文把这个任务整个搬到离散域——先用 MAGVIT-v2 把每张视图量化成一串离散视觉 token，再把多个视点拼成一条带分隔符的长序列，于是"生成多视图"就变成了"在掩码序列上做 token 预测"。一致性不再靠几何约束硬加，而是借双向自注意力让各视点的 token 互相参照自然涌现。模型按预训练对齐、图像到多视图、文本到多视图三个阶段递进训练，推理时从全掩码的目标视图出发，迭代预测与重掩码逐步还原完整序列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：参考图像 + 文本描述"]
+    subgraph SEQ["视觉 token 化与跨视图序列拼接"]
+        direction TB
+        T1["MAGVIT-v2 量化<br/>每视图 → L 个离散 token"]
+        T2["特殊 token 分隔拼接<br/>多视点 → 一条长序列"]
+        T1 --> T2
+    end
+    IN --> SEQ
+    subgraph MASK["随机掩码训练与置信度重掩码去噪"]
+        direction TB
+        M1["训练：随机掩码比例 r 掩 token<br/>双向自注意力 + 掩位交叉熵"]
+        M2["推理：迭代预测<br/>高置信保留 / 低置信重掩"]
+        M1 --> M2
+    end
+    SEQ --> MASK
+    MASK --> OUT["输出：N 个跨视图一致的视点"]
+    TRAIN["三阶段递进训练<br/>图文对齐 → I2MV 几何 → T2MV 文本"]
+    TRAIN -.训练课程.-> MASK
+```
+
 ### 关键设计
 
 **1. 视觉 token 化与跨视图序列拼接：把多视点压成一条统一序列**

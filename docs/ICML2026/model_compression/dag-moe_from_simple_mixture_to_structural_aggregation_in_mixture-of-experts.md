@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DAG-MoE 只改 MoE 块里最后那一步聚合，前面的 sparse router 和专家 FFN 原封不动。一个 token 进来后，router 照常选出 top-$K$ 专家、给出 $K$ 个初始节点表征；接着一个新增的 **DAG learning module** 接管：它把这 $K$ 个节点看作 DAG 的第 0 层，迭代 $L$ 次，每一轮都为当前深度的节点动态学一组"连边"、再沿这些边把表征更新一遍，最后在第 $L$ 层把所有节点求和，作为该 token 在这一层的输出。因为 router 和专家都没动，它天然兼容现有 MoE 训练栈。
+DAG-MoE 只改 MoE 块里最后那一步聚合，前面的 sparse router 和专家 FFN 原封不动。一个 token 进来后，router 照常选出 top-$K$ 专家、给出 $K$ 个初始节点表征，每个初始节点还额外注入一份 $1/K$ 缩放的原始 token 残差作为 DAG 的第 0 层；接着一个新增的 **DAG learning module** 接管：它迭代 $L$ 次，每一轮都先把节点降到低维、再为当前深度的节点动态学一组"连边"（软门控）、沿这些边把表征更新一遍，最后在第 $L$ 层把所有节点求和，作为该 token 在这一层的输出。因为 router 和专家都没动，它天然兼容现有 MoE 训练栈。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 token x"] --> R["稀疏 router 选 top-K 专家<br/>（router 与专家 FFN 原封不动）"]
+    R --> N0["初始节点 = 第 0 层<br/>专家输出 + (1/K)·x 残差注入"]
+    subgraph DAG["DAG learning module：沿 DAG 做结构化聚合（迭代 L 轮）"]
+        direction TB
+        A["归一化 + 降维 W_down<br/>压到低维 d_g"] --> B["边软门控<br/>e = σ(W_edge·拼接特征)"]
+        B --> C["节点更新：门控加权聚合<br/>+ W_up（零初始化）+ 残差"]
+    end
+    N0 --> DAG
+    DAG -->|"逐层加深，重复 L 轮"| S["第 L 层节点求和<br/>y = Σ x_i^L"]
+    S --> OUT["MoE 块输出 y"]
+```
 
 ### 关键设计
 

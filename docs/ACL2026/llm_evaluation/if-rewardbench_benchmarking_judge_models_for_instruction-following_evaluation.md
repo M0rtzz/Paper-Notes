@@ -41,7 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IF-RewardBench 是一套"数据集 + 评测协议"而非模型，目标是把 judge 评测从"哪条响应更好"的 pairwise/BoN 对齐到 RLHF 真正需要的"多条响应精排"。数据侧从 14 个开源 benchmark + 真实场景收集 ~24.6k 指令，经 LLM 按 7 类约束 × 4 种组合补足复杂指令、启发式长度过滤、LLM 质量&复杂度打分、基于 Conan-embedding 的 DBSCAN 聚类去冗余、人工剔除不可解题后得 3,978→平衡到 2,459 条，每条用 16 个 LLM 各生成 $m=8$ 条响应（同一指令的响应全部来自同一个 LLM 以消除写作风格混淆）；标注侧由 22 名学生对每条响应逐约束打 0/1 判定 $j^*_{ik}$，据此用 Pareto-dominance 推出偏好图并再过一轮人工 verify。最终每条指令对应一张 preference graph（平均 7.14 条响应 / 10.86 条偏好边），judge 在 Constraint Assessment（逐约束打 0/1、按 Eq.1 聚合，指标为 Positive/Negative F1）与 Overall Assessment（对响应集合打分或两两比较、经 ELO 转 listwise）两类任务上被以 Kendall $\tau_b$ 度量排序质量。
+IF-RewardBench 是一套"数据集 + 评测协议"而非模型，目标是把 judge 评测从"哪条响应更好"的 pairwise/BoN 对齐到 RLHF 真正需要的"多条响应精排"。数据侧从 14 个开源 benchmark + 真实场景收集 ~24.6k 指令，经 LLM 按 7 类约束 × 4 种组合补足复杂指令、启发式长度过滤、LLM 质量&复杂度打分、基于 Conan-embedding 的 DBSCAN 聚类去冗余、人工剔除不可解题后得 3,978→平衡到 2,459 条，每条指令由同一个 LLM 生成 $m=8$ 条响应（全库共覆盖 16 个 LLM，同指令同模型以消除写作风格混淆）；标注侧由 22 名学生对每条响应逐约束打 0/1 判定 $j^*_{ik}$，据此用 Pareto-dominance 推出偏好图并再过一轮人工 verify。最终每条指令对应一张 preference graph（平均 7.14 条响应 / 10.86 条偏好边），judge 在 Constraint Assessment（逐约束打 0/1、按 Eq.1 聚合，指标为 Positive/Negative F1）与 Overall Assessment（对响应集合打分或两两比较、经 ELO 转 listwise）两类任务上被以 Kendall $\tau_b$ 度量排序质量。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["收集指令<br/>14 开源 benchmark + 真实场景 ~24.6k"]
+    subgraph COV["三类场景 + 约束 taxonomy"]
+        direction TB
+        B["LLM 补足复杂指令<br/>7 类约束 × 4 组合，补 Chain/Selection"]
+        C["启发式长度过滤 + LLM 质量&复杂度打分"]
+        D["DBSCAN 去冗余 + 人工剔除不可解<br/>3,978 → 平衡 2,459 条"]
+    end
+    A --> B --> C --> D
+    D --> E["每条指令同一 LLM 生成 8 条响应<br/>全库覆盖 16 个 LLM，消除风格混淆"]
+    E --> F["逐约束 0/1 人工标注<br/>双标 + 交叉校验 κ=0.87"]
+    F --> G["Preference Graph<br/>Pareto 支配连偏好边"]
+    G --> H["人工 verify 偏好对<br/>完全一致才保留，保留率 71.2%"]
+    H --> I["Listwise 评测<br/>Constraint + Overall · Kendall τ_b"]
+```
 
 ### 关键设计
 

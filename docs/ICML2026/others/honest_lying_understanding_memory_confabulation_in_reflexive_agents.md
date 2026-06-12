@@ -41,6 +41,26 @@ tags:
 ### 整体框架
 论文的方法由三块组成：(1) **概念**：给出 memory confabulation 的可操作定义；(2) **诊断**：提出 RRR 指标作为 frozen memory 的 log-based 检测器；(3) **缓解**：用 grounded reflection 和 programmatic feedback extraction 两种干预，在不改模型权重、不增加 trial 数的前提下打破"frozen 记忆 → 重复错诊断 → 再失败"的死循环。三块绑成一个闭环——先证伪原假设、再量化伤害、再修复。
 
+下图把这套"Reflexion 回环 + 诊断探针 + 接地干预"画在一起：上方是 agent 失败后自我诊断、写反思、存记忆、下一 trial 再检索的自强化回环（confabulation 就发生在这里）；左下两个探针只读日志就能审计这条回环冻没冻；缓解则发生在"反思信号来源"这个分叉上——把 LLM 开放式自省换成轨迹解析器抽出的确定失败信号。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 τ：每次 trial 重置为正确任务"] --> B["Reflexion agent 执行失败<br/>仅 binary pass/fail 反馈"]
+    B --> C{"反思信号来源"}
+    C -->|"原始：LLM 开放式自我诊断<br/>（易脑补错任务）"| D["写反思 r_t → 存入记忆 M"]
+    C -->|"程序化反馈抽取<br/>轨迹解析器抽确定失败信号"| E["注入结构化失败步：<br/>Nothing happens / 动作循环"]
+    E --> D
+    D --> F["下一 trial 检索 M 指导动作"]
+    F -->|self-reinforcing 回环| B
+    subgraph DIAG["诊断探针（纯日志、零额外成本）"]
+        direction TB
+        G["可操作定义<br/>obj(τ) ∉ r_t ⇒ confabulated"]
+        H["Reflection Repetition Rate<br/>sim(r_i,r_j)≥0.85 占比；≥0.5 ⇒ frozen"]
+    end
+    D -.审计反思序列.-> DIAG
+```
+
 ### 关键设计
 
 **1. Memory Confabulation 的可操作定义：把"脑补错任务"变成日志上能自动打的 boolean 标签**

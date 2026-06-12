@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 IDLM 想把上千步的教师扩散语言模型压成几步，靠的是一个"反向"视角：不让学生去模仿教师的采样轨迹，而是去找一个学生分布 $p_\theta$，让已经训练好的教师 $f^*$ 对它"仍然是最优去噪器"。围绕这个目标它维护三个网络——冻结的**教师** $f^*$（在真实数据 $p^*$ 上预训练好的多步 DLM）、可学习的**伪教师** $f$（在学生当前分布 $p_\theta$ 上重新拟合的去噪器）、以及**学生生成器** $G_\theta$。学生吃进 $\epsilon=(x_t,t)$、吐出一个 simplex 向量 $G_\theta(\epsilon)\in\Delta$ 作为对清洁 token 的预测，并让同一个 $\epsilon$ 跨所有位置共享，从而得到序列级的 mixture 分布 $p_\theta(x_0^{1:L})=\mathbb{E}_{\epsilon}[\prod_l \text{Cat}(x_0^l;G_\theta^l(\epsilon))]$。训练在两步间交替：固定 $\theta$ 用 $\mathcal{L}(f,p_\theta)$ 把伪教师 $f$ 拟合到学生分布上，再固定 $f$ 用 IDLM gap $\mathcal{L}(f^*,p_\theta)-\mathcal{L}(f,p_\theta)$ 去推学生；推理则复用教师同款的反向采样器，但 grid 只剩 4–32 步。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ε=(x_t, t)<br/>部分加噪的真实数据"] --> B["序列级 mixture 生成器 G_θ<br/>共享 ε，输出对清洁 token 的预测"]
+    B --> C["simplex 松弛 + 可微化<br/>G_θ(ε)∈Δ，前向腐蚀 q_t<br/>MDLM mask-only / Duo 高斯重参数化"]
+    C --> D["加噪状态 x_t"]
+    D --> E["冻结教师 f*<br/>损失 L(f*, p_θ)"]
+    D --> F["可学习伪教师 f<br/>损失 L(f, p_θ)"]
+    E --> G["IDLM 反向蒸馏目标<br/>gap = L(f*, p_θ) − L(f, p_θ)<br/>= 教师-伪教师优势向量"]
+    F --> G
+    G -->|"固定 θ，拟合伪教师 f"| F
+    G -->|"固定 f，推学生 θ"| B
+    G --> H["推理：复用教师反向采样器<br/>4–32 步少步生成"]
+```
+
 ### 关键设计
 
 **1. IDLM 反向蒸馏目标 + 唯一性定理：把"教师仍最优"写成可优化的 gap**

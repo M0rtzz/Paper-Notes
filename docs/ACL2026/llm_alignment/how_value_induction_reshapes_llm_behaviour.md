@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 本文不提新模型，而是搭一条「从现成偏好数据切出价值子集 → DPO 诱导 → 多维评测」的实证管线，目的是画出价值之间的相互影响图。输入是 4 个已有偏好数据集（PKU Safe-RLHF / UltraFeedback / HelpSteer 2 / HH-RLHF），先让抽取器 $M_{ext}$ 给每对 (chosen, rejected) 标出各自表达的价值集合，再按「目标值是否独占某一侧」筛出 15 个 value-specific 子集（empathy 6.6 万条到 violence 637 条）；然后对 8 个 base/SFT/instruct 模型在每个子集上做 DPO，最后用 value expression、安全拒答率、anthropomorphic language、QA benchmark 四个维度评测同一个诱导带来的全部下游变化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["4 个现成偏好数据集<br/>PKU Safe-RLHF / UltraFeedback / HelpSteer 2 / HH-RLHF"]
+    A --> B["价值抽取与 XOR 子集构造<br/>M_ext 给 chosen/rejected 各抽价值集合，目标值独占一侧 + 翻转 preference"]
+    B --> C["15 值诊断性选择<br/>三准则筛选 + valence 平衡 → 15 个 value-specific 子集"]
+    C --> D["DPO 价值诱导<br/>8 个 base/SFT/instruct 模型 × 15 子集 + system prompt"]
+    D --> E["多维下游评测矩阵<br/>价值表达 / 安全拒答率 / 拟人化措辞 / QA benchmark"]
+```
+
 ### 关键设计
 
 **1. Value Extraction 与 XOR 子集构造：零额外标注地切出能强诱导某值的训练集**

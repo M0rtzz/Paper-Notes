@@ -42,6 +42,17 @@ Eso-LMs 把 AR 与 Masked Diffusion 在 loss、注意力、采样三个层面深
 ### 整体框架
 Eso-LMs 把生成过程拆成"先并行铺一层、再 AR 填空"两段，写成 $p_\theta(x) = \sum_{z_0} p^\text{AR}_\theta(x \mid z_0)\, p^\text{MDM}_\theta(z_0)$：MDM 组件先并行去噪出一个**部分 masked 的中间序列** $z_0$（平均 $\alpha_0$ 比例的位置已是 clean），AR 组件再把 $z_0$ 里残留的 mask 从左到右补齐。其中 $\alpha_0$ 是一个连续超参，$\alpha_0=1$ 退化成纯 MDM、$\alpha_0=0$ 退化成纯 AR、中间值在 perplexity 上给出两者的平滑插值。整条流程只靠**一个共享去噪 Transformer** $x_\theta$ 承载，用不同的注意力掩码区分阶段；其变分上界恰好分解成一项 AR 交叉熵加一项 MDM NELBO，训练时按比例 $\kappa$（默认 0.5）把 batch 一半喂 AR loss、一半喂 MDM loss。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SH["共享去噪 Transformer x_θ（两阶段共用，靠注意力掩码区分）"]
+    SH --> B["扩散阶段：clean-tokens-first 因果去噪<br/>clean token 洗牌到前 + 因果注意力，并行去噪且可精确 KV cache"]
+    B --> C["中间序列 z₀（约 α₀ 比例已 clean，其余仍是 mask）"]
+    C --> D["顺序阶段：z₀⊕x 拼接 + 稀疏注意力掩码<br/>复用扩散阶段随机顺序 KV，左到右补齐残留 mask"]
+    D --> E["输出完整序列 x"]
+    SH --> F["精确 likelihood + 单次前向 NELBO<br/>一次排列 σ 算完 L_AO，解锁 GRPO 微调"]
+```
+
 ### 关键设计
 
 **1. 扩散阶段的 clean-tokens-first 因果去噪：把 MDM 改造成可 KV cache 的 AR**

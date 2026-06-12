@@ -45,6 +45,26 @@ tags:
 
 Faithful-First RPA 想解决的是：MLLM 推理链里那些"看似有理、实则没有视觉证据"的步骤（比如把黑色自行车说成黄色），现有 CoT/ReAct 都是先把整条链写完再回头查，错误早已传播。它的做法是把验证拼进生成循环里——输入图像和问题后，MLLM 每生成一步，先交给 FaithEvi 评估这一步声称的对象是否真在图里、给出忠实性分数；分数不达标就由 FaithAct 把这一步连同更新后的证据打回 MLLM 重写，达标了才接进推理链、再继续下一步。两个组件一个负责"量"（FaithEvi 评分），一个负责"管"（FaithAct 卡点修正）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 问题"] --> B["MLLM 生成推理步骤"]
+    B --> C
+    subgraph FE["FaithEvi：把视觉证据量化成忠实性分数"]
+        direction TB
+        C["抽取声称对象集合<br/>Qwen2.5 逐步提取"] --> D["偏好投票 Poll()<br/>CLIP-ViT + MLP → c_p"]
+        C --> E["视觉定位 Ground()<br/>GroundingDINO → c_g"]
+        D --> F["融合 c = 0.7·c_p + 0.3·c_g<br/>三级离散 → 步级分数 F_step"]
+        E --> F
+    end
+    F --> G{"FaithAct 卡点<br/>F_step ≥ 阈值 c ?"}
+    G -->|否| H["行动引导修正<br/>带更新证据重写该步"]
+    H --> B
+    G -->|是| I["该步接入推理链"]
+    I -->|未结束，继续下一步| B
+    I -->|推理完成| J["输出：忠实推理链 + 答案"]
+```
+
 ### 关键设计
 
 **1. FaithEvi：把"这一步有没有视觉证据"量化成一个可比的分数**

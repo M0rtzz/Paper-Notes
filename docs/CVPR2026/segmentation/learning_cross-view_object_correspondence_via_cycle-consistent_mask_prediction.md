@@ -41,15 +41,40 @@ tags:
 
 ### 整体框架
 
-端到端的条件二值分割框架：给定源图像 $I_s$、目标图像 $I_t$ 和源掩码 $M_s$，预测目标视角中对应物体的掩码 $M_t$。框架由三部分组成：Source Feature Extractor（ConvNeXt-based DINOv3-L）、Transformer Encoder（ViT-based DINOv3-L）、Multi-task Decoder。
+端到端的条件二值分割框架：给定源图像 $I_s$、目标图像 $I_t$ 和源掩码 $M_s$，预测目标视角中对应物体的掩码 $M_t$。前向通路由三部分组成——Source Feature Extractor（ConvNeXt-based DINOv3-L）从源图加掩码提取物体特征并投影成一个条件 token（CDT），Transformer Encoder（ViT-based DINOv3-L）借 CDT 在目标图像的视觉 token 上做 cross-token attention，Multi-task Decoder 输出目标掩码并判物体可见性。在这条前向通路之上再叠一条自监督回环：把预测掩码反向映射回源视角、重构源掩码，用循环一致性损失约束往返一致——这条损失既在训练时充当监督信号，也在推理时驱动测试时训练（TTT），是「训练与推理统一」的关键。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源图像 Is + 源掩码 Ms"]
+    T["目标图像 It<br/>切 patch → n 个视觉 token"]
+    subgraph CDTG["条件 token 注入（CDT）"]
+        direction TB
+        B["Source Feature Extractor<br/>DINOv3 backbone → 特征图 Fs"]
+        C["掩码加权平均得物体表示 zs<br/>线性投影成 CDT token"]
+        B --> C
+    end
+    A --> B
+    C --> E["Transformer Encoder<br/>输入 [CLS, CDT, 视觉 token]<br/>cross-token attention 传播物体信息"]
+    T --> E
+    E --> F["Multi-task Decoder<br/>Mask Head 出掩码 + CLS Head 判可见性"]
+    F --> G["预测目标掩码"]
+    subgraph CYC["循环一致性损失（Cycle-Consistency）"]
+        direction TB
+        G --> H["把预测掩码反向映射回源视角<br/>重构源掩码"]
+        H --> I["L_cycle = BCE(Ms, 重构源掩码)<br/>无需目标视角 GT 标注"]
+    end
+    I -.->|"推理时用 L_cycle 微调"| TTT["测试时训练 TTT<br/>仅更新编码器最后 K 层"]
+    TTT -.->|"反传更新"| E
+```
 
 ### 关键设计
 
-1. **Conditioning Token (CDT) 注入**：源图像特征经 backbone 提取后，用归一化掩码 $\tilde{M}_s$ 做加权平均得到紧凑的物体表示 $z_s = \sum_{i,j} \tilde{M}_s[i,j] \cdot F_s[:,i,j]$，线性投影为 CDT token 注入 Transformer 编码器。CDT 通过 cross-token attention 在目标图像的视觉 token 中传播物体感知信息。设计优势：仅增加一个 token，与预训练 backbone 完全兼容，架构修改极小。
+1. **条件 token 注入（Conditioning Token, CDT）**：解决「怎么把源物体信息塞进目标图像编码、又不大改预训练 backbone」的问题。源图像特征经 backbone 提取后，用归一化掩码 $\tilde{M}_s$ 做加权平均得到紧凑的物体表示 $z_s = \sum_{i,j} \tilde{M}_s[i,j] \cdot F_s[:,i,j]$，再线性投影为单个 CDT token，与目标图像的视觉 token、CLS token 拼成 $[\text{CLS}, \text{CDT}, x_1, \dots, x_n]$ 一起送进 Transformer 编码器。CDT 通过 cross-token attention 在目标 token 中传播物体感知信息。它的妙处在于仅增加一个 token，与预训练 backbone 完全兼容、架构改动极小，却把「找哪个物体」的条件信号注入了整张目标图像。
 
-2. **Cycle-Consistency Loss**：核心自监督信号。源掩码 $M_s$ → 预测目标掩码 $\hat{M}_t$ → 将 $\hat{M}_t$ 反向映射回源视角得到重构掩码 $\hat{M}_s$，约束 $\mathcal{L}_{cycle} = \mathcal{L}_{bce}(M_s, \hat{M}_s)$。关键性质：**不需要目标视角 GT 掩码**，因此可在推理时使用，直接启用 TTT。这是一个非常巧妙的自监督闭环——模型必须学会视角不变的表示才能成功完成往返映射。
+2. **循环一致性损失（Cycle-Consistency Loss）**：核心自监督信号，解决「目标视角没有 GT 掩码、监督从哪来」的问题。源掩码 $M_s$ → 预测目标掩码 $\hat{M}_t$ → 将 $\hat{M}_t$ 反向映射回源视角得到重构掩码 $\hat{M}_s$，约束 $\mathcal{L}_{cycle} = \mathcal{L}_{bce}(M_s, \hat{M}_s)$。关键性质是这条往返约束**不需要目标视角 GT 掩码**，只靠「转过去再转回来要对上」就能逼模型学到视角不变的物体表示；正因为不依赖标注，它在推理阶段同样可用，直接打通了下面的 TTT。
 
-3. **Test-Time Training (TTT)**：推理时利用循环一致性损失对每个测试样本对进行少步微调——仅更新 Transformer 编码器最后 $K$ 层，$T$ 步梯度更新，lr = $5 \times 10^{-6}$。Ego2Exo 设置 $K=4, T=2$；Exo2Ego 因难度更大设置 $K=11, T=6$。TTT 使模型能适应特定测试对的分布偏移。
+3. **测试时训练（Test-Time Training, TTT）**：解决「测试样本对与训练分布有偏移」的问题，把上面那条循环一致性损失搬到推理时用。对每个测试样本对，用 $\mathcal{L}_{cycle}$ 做少步微调——仅更新 Transformer 编码器最后 $K$ 层、$T$ 步梯度更新、lr = $5 \times 10^{-6}$。Ego2Exo 设 $K=4, T=2$；Exo2Ego 因更难设 $K=11, T=6$。同一条损失在训练时做监督、推理时做自适应，使模型能贴合特定测试对的分布。
 
 ### 损失函数 / 训练策略
 

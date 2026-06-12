@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 REL 不是一份固定题集，而是一个**生成式 benchmark 框架**：先把"关系推理难度"形式化为一个可参数化的数字 RC，再让每个学科的题目生成器只动 RC、冻结 entity 数 / 序列长 / prompt 长度等混淆变量，最后按 RC 分组对比 LLM 的准确率。框架横跨三个学科——**REL-A（代数）** 基于 Raven's Progressive Matrices 及作者新引入的张量化扩展 RPT，**REL-B（生物）** 让模型在多序列比对（MSA）+ 系统发育树上识别 homoplasy（趋同演化），**REL-C（化学）** 围绕同分异构体 / 最大公共子结构 / 缺失异构体补全设计三个 RC 配比不同的任务。三者共享同一套 RC / OC 定义，于是来自不同领域的失败可以放在同一根难度坐标轴上比较。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RC / OC 双轴形式化 + Raven 张量化扩展<br/>难度 = 关系 arity，RPT 上界 3ⁿ−1（含代数域 REL-A）"]
+    A --> B["REL-B1 同形演化检测<br/>RC = 同形 taxa 数，MSA + 系统发育树"]
+    A --> C["REL-C 三联任务<br/>C1 / C2 / C3 调配 RC × OC，SMILES 分子集"]
+    A --> D
+    B --> D
+    C --> D["生成式出题：只动 RC、冻结 entity 数 / 序列长 / prompt 长"]
+    D --> E["按 RC 分组评测 Claude / Gemini / GPT-5.2"]
+    E --> F["多元回归 + GVIF：RC 解释力最强且无共线性 → 性能主因"]
+```
+
 ### 关键设计
 
 **1. RC / OC 双轴形式化 + Raven 张量化扩展：把"难度"拆成可单独扫描的数字**

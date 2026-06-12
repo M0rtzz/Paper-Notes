@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 iVGR 在 Qwen2.5-VL / Qwen3-VL 上做 GRPO 后训练。对每个 query $q$，策略 $\pi_\theta$ 用两套不同的 system prompt 各采样 $N$ 条 rollout，得到 grounded 组 $\mathcal{O}^b$ 与 textual 组 $\mathcal{O}^t$。两组各自算奖励、各自做 group-wise 归一化得到优势 $\mathcal{A}^b, \mathcal{A}^t$，最后联合更新策略。关键耦合点是：textual 流的奖励里多了一个**一致性奖励** $R_{\text{consistency}}$，它的“老师”就是当前 batch 里从 grounded 流挑出的高质量轨迹（且用一个跨 step 的 Rollout Archive 持久化保存历史最优老师），从而把定位能力沉淀到 textual 流。推理时只跑 textual 流，可选地走一个 tool-assisted test-time scaling workflow 把多视图融合回来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 q + 图像<br/>策略 π_θ 用两套 prompt 各采 N 条 rollout"]
+    subgraph DUAL["双流 GRPO 训练"]
+        direction TB
+        Q --> G["grounded 流：带 box CoT<br/>R = 格式 + 答案 + box(双向 IoU)"]
+        Q --> T["textual 流：纯文本 CoT<br/>R = 格式 + 答案 + 一致性"]
+    end
+    subgraph CONS["一致性奖励 + Rollout Archive"]
+        direction TB
+        SEL["筛高质量老师(格式=1 且 答案=1 且 box 超阈值 τ)<br/>→ Rollout Archive 跨 step 存历史最优"] --> JUDGE["72B LLM judge 打语义一致性分<br/>α ∈ {1, 0.7, 0.3, 0}"]
+    end
+    G --> SEL
+    JUDGE -->|"R_consistency = α 注入 textual 流"| T
+    G --> NORM["两流各自 group 归一化得优势<br/>→ 联合更新策略 π_θ"]
+    T --> NORM
+    NORM -.推理.-> INF["默认仅跑 textual CoT 答题"]
+    INF -->|"需细节时可选"| TTS["工具辅助测试时扩展<br/>grounded CoT 抽框 → crop + union crop 多视图"]
+```
+
 ### 关键设计
 
 **1. 双流 GRPO 训练：一个策略同时学两种推理范式，靠共享 backbone 完成迁移**

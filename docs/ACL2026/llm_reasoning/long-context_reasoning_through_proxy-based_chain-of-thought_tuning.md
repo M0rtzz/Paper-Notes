@@ -45,6 +45,21 @@ ProxyCoT 是一个两阶段训练框架。第一阶段只看短 proxy context，
 
 Stage 2 使用 SFT，把 Stage 1 得到的轨迹作为监督，但输入换成 $(q,C)$。这一步要求模型在完整长上下文中复现 proxy-derived CoT，从而学习证据 grounding。论文分别在 Qwen3-4B-Instruct-2507 和 Gemma3-4B-IT 上验证，任务包括 SciTrek 和 HotpotQA，并在 Loong 上做 out-of-domain 测试。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["样本 (问题 q，完整上下文 C，proxy context Cᵖ，答案 a)"] --> B["Proxy context 作为推理等价短输入<br/>抽关键证据构成 Cᵖ（|Cᵖ| ≪ |C|）"]
+    B --> S1
+    subgraph S1["两种 CoT 获取路径（Stage 1，在 q + Cᵖ 上）"]
+        direction TB
+        C{"是否有强教师"} -->|有| D["ProxyCoT-ZS<br/>Qwen3-235B 采样，留答对轨迹"]
+        C -->|无| E["ProxyCoT-RL<br/>目标模型 RLVR(DAPO) 学出答对轨迹"]
+    end
+    S1 --> F["正确推理轨迹 t"]
+    F --> G["长上下文 grounding SFT（Stage 2）<br/>输入换成 (q, C)，最大化 p(t | q, C)"]
+    G --> H["在完整长输入中复现推理的模型"]
+```
+
 ### 关键设计
 
 **1. Proxy context 作为推理等价短输入：用一小段关键证据替代长输入来产生推理轨迹**

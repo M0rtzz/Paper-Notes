@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 输入是一族 Hamiltonian / GENERIC 系统 $\{\mathcal{H}^{(k)}(\bm{q}, \bm{p}) = \mathcal{H}(\bm{q}, \bm{p}; \bm{\mu}^{(k)})\}_{k=1}^{n_\mu}$，每个系统随机采若干轨迹。模型参数拆为 $\Theta^{(k)} = \Theta_\text{base} \cup \Theta_\text{indv}^{(k)}$：base 由 meta-gradient 在外循环更新，individual 是每个系统专属的 latent code $\bm{z}^{(k)}$ 在内循环更新。Hyper-network 把 $\bm{z}^{(k)}$ 映射为各层的低秩 / 偏置修正参数。最终 $\tilde{\mathcal{H}}(\bm{q}, \bm{p}; \Theta^{(k)})$ 是带 latent 条件的能量函数，仍通过 $\dot{\bm q} = \partial \tilde{\mathcal H} / \partial \bm p,\ \dot{\bm p} = -\partial \tilde{\mathcal H} / \partial \bm q$ 给出动力学，故结构保持性继承自 base 架构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["系统族 {H(q,p;μ)}<br/>每个参数实例采若干轨迹"] --> B["参数拆分<br/>Θ_base 共享（外循环）+ latent z 实例专属（内循环）"]
+    B --> C["Hyper-network f_hyper(z)<br/>把 latent code 映射成层级调制参数"]
+    C -->|每层加秩 r 修正 UVᵀ + 偏置| D["Latent Multi-Rank (MR) 调制"]
+    C -->|共享基底 uv + 实例奇异值 d| E["Latent SVD-like 调制<br/>base 学基底, 测试期只拟合奇异值"]
+    D --> F["调制后能量 H̃(q,p;Θ)"]
+    E --> F
+    F --> G["辛 / metriplectic 梯度<br/>q̇=∂H̃/∂p, ṗ=−∂H̃/∂q → 结构保持动力学"]
+    subgraph T["Locality 正则 + 演化 latent 训练协议"]
+        direction TB
+        H["外循环更新 base, 内循环更新 batch latent"] --> I["locality 正则拴住 latent + latent 全程演化不清零"]
+        I --> J["测试期 z 初始化为 z_avg 做 few-shot auto-decoding（base 冻结）"]
+    end
+    G -.训练 / 测试均受此协议约束.-> T
+```
+
 ### 关键设计
 
 **1. Latent Multi-Rank (MR) 调制：给每层权重加一个由 latent code 生成的低秩修正**

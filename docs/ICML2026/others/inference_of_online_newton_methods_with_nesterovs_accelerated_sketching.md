@@ -46,6 +46,20 @@ tags:
 2. **内层**：调用 NASketch 求解器跑 $\tau$ 步 sketch-and-project + Nesterov，输出 $\Delta x_t$ 近似解；每步只做 $O(d s)$ 量级的 sketching 投影，整体 $O(d^2)$。
 3. **推断**：得到末迭代 $x_t$ 后，用一个**完全在线**的相合估计器 $\widehat{\Sigma}_t$ 估计极限协方差 $\Sigma^\star$，构造置信区间。
 
+其中外层的 Hessian 平均沿用已有随机 Newton 法的标准做法（脚手架），三个核心贡献分别落在内层求解（NASketch）和推断两步上：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流数据样本 ξ_t"] --> B["外层：算梯度 g_t、Hessian 估计 H_t<br/>维护 Hessian 平均 B_t（O(1) 增量更新）"]
+    B --> C["NASketch 求解器<br/>τ 步 sketch-and-project + Nesterov 加速<br/>近似解 Newton 系统 B_t·Δx_t = −g_t，单步 O(d²)"]
+    C --> D["参数更新 x_{t+1} = x_t + φ_t·Δx_t"]
+    D -->|继续迭代| B
+    D -->|末迭代推断| E["极限协方差的 Lyapunov 方程刻画<br/>末迭代渐近正态 N(0, Σ*)，A*Σ*+Σ*A*ᵀ+Q*=0"]
+    E --> F["在线协方差估计器 Σ̂_t<br/>无矩阵求逆、可流式累加，Σ̂_t→Σ*"]
+    F --> G["输出：置信区间 / 不确定性量化"]
+```
+
 ### 关键设计
 
 **1. 带 Nesterov 加速的 sketch-and-project 求解器（NASketch）：在 $O(d^2)$ 成本内高精度解 Newton 系统**

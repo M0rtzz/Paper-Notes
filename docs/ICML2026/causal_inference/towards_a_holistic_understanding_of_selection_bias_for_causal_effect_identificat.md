@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. distribution-class 可分性条件：把识别性从图结构搬到分布族上**
+**1. 分布类（distribution-class）可分性条件：把识别性从图结构搬到分布族上**
 
 既有结果的痛点是"识别性"被绑死在 DAG 拓扑上——要么得知道 selection 节点 $S$ 落在图的哪个位置（图模型路线），要么得假设可加噪声且噪声非高斯（SEM 路线）。本文换一个语言：直接在三元组 $(\mathbb{P}_{t\mid x}, \mathbb{P}_{xy(t)}, \mathbb{S})$ 上提条件。Condition 1 要求对其中任意两组兼容分布 $(P, Q)$，只要它们的 ATE 不相等（$\tau_{P_{xy(t)}} \neq \tau_{Q_{xy(t)}}$），就必然存在某点 $(x,y,t)$ 让两者的观测密度也不相等，即 $\alpha_P(x,y,t)\, P_{t\mid x}\, P_{xy(t)} \neq \alpha_Q(\cdot)\, Q_{t\mid x}\, Q_{xy(t)}$，其中 $\alpha_P = P_{s\mid xyt} / P(s)$。直观说就是"ATE 不同 $\Rightarrow$ 观测得到的东西必不同"，这正好排除了"两个 ATE 不同的世界却长出同一份观测分布"的混淆情形。Theorem 3.1 证明这条可分性恰好是 ATE 从 $P(V\mid S=1)$ 可识别的充要条件。它的好处是同时往两个方向覆盖：Corollary 3.9-3.14 把 selection-backdoor、selection-backdoor-ext、outcome-dependent selection、S-id 这些图判据全部翻译成它的特例，又能纳入图判据处理不了的非典型情形。
 

@@ -44,6 +44,23 @@ HOI-PAGE 要解决的是：在没有任何 4D HOI 真值数据的前提下，从
 
 整条 pipeline 从一句文本 $\Gamma$（如"一个人在熨衣板上熨衣服"）加一组 3D 物体网格 $\{O\}$ 入手，先让 LLM 推理出一张**部件 affordance 图 (PAG)**，把"哪个部件接哪个部件、接触是否持续、物体是否移动"全写成图上的节点和边；这张图随即兵分三路——锚定到 3D 几何上做部件分割、扩写成 prompt 驱动视频扩散生成参考视频、再当成硬约束指挥最后一步优化。视频扩散负责"人和物大致怎么动"，单目深度和人体恢复把视频切片成 2D/3D 点云与 SMPL-X 序列，最后一步 600 步梯度下降在 PAG 约束下把物体姿态"校正"出来。最终输出每个物体的轨迹 $\{(R_t, t_t)\}_{t=1}^{T}$（$T=49$ 帧）和每个人体的 SMPL-X 参数 $\{\Theta_t\}_{t=1}^{T}$。值得强调的是，这四个阶段里**只有最后一步是可调的，LLM、视频扩散、深度估计、人体恢复、SAM-2 全部冻结**，这正是它"zero-shot"的由来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["文本 Γ + 3D 物体网格"] --> PAG["部件 affordance 图 PAG<br/>节点=部件 边=接触约束"]
+    PAG --> SEG["锚定 3D 几何<br/>物体部件分割"]
+    subgraph VID["PAG 引导的视频扩散与约束抽取"]
+        direction TB
+        P["LLM 扩写 video prompt"] --> CV["CogVideoX 生成 49 帧参考视频"]
+        CV --> EX["SAM-2 部件分割 + 单目深度反投影<br/>→ 3D 点云序列 + SMPL-X"]
+    end
+    PAG --> P
+    SEG --> OPT["PAG 引导的 4D 优化<br/>600 步·条件化 loss"]
+    VID --> OPT
+    PAG --> OPT
+    OPT --> OUT["输出: 物体轨迹 + 人体 SMPL-X 序列"]
+```
+
 ### 关键设计
 
 **1. 部件 affordance 图 (PAG)：把 HOI 的语义约束从端到端学习里剥出来，交给 LLM 推理**

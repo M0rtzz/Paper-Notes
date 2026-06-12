@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 这是一项机制可解释性的因果分析：作者要在 attention head 这级粒度上确认 LM 处理多种句法构式时是否真的共用同一套内部机制。先构造一个 minimal-pair 评测集，覆盖 FGD 的 7 个构式（EWHK/EWHW/MWH/RELCL/CLEFT/PCLEFT/TOPIC）、NPI 的 8 个构式（COND/DNEG/SONLY/QNT/EMBQ/SMPQ/SUP/ONLY）外加一个 capital-knowledge control（CTRL）；然后在 Pythia（1B/2.8B/6.9B 多 checkpoint）和 Gemma 3（1B/12B）上跑 activation patching，对 residual stream、attention output、MLP、单个 attention head 四种粒度都打 ODDS 分数，再比较各构式的 ODDS 分布是否一致来判定"是否共享"。最后接两条验证支线：把识别出的关键 head 激活放大后跑 BLiMP/SyntaxGym/HANS 看行为是否随之改善，以及用同样设置跑 DAS 的 leave-one-out 训练与 ID/OOD 评测，检验有监督方法能否复现同一结论。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["minimal-pair 评测集<br/>FGD 7 构式 / NPI 8 构式 + CTRL 对照"]
+    A --> B["细粒度 Activation Patching + 改造版 ODDS<br/>residual / attn / MLP / 单 head 四粒度打分"]
+    B --> C["七构式共享 vs 八构式分裂对照<br/>逐构式画 layer×head ODDS 热图"]
+    C -->|FGD 七构式| D["共享机制：定位到 head 7.5 / 7.6 / 9.2"]
+    C -->|NPI 八构式| E["机制分裂：各构式 layer 分布不重合"]
+    D --> F["Steering 验证<br/>head 激活 ×1.5 跑 BLiMP / SyntaxGym / HANS"]
+    D --> G["DAS 对照<br/>leave-one-out 训练 + ID/OOD 检验有监督方向"]
+```
+
 ### 关键设计
 
 **1. 细粒度 Activation Patching + 改造版 ODDS：把因果贡献定位到单个 head**

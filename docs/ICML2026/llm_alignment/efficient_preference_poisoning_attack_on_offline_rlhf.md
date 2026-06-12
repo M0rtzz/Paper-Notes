@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 这篇论文要回答的是"对 DPO 训练的偏好数据集，翻几条、翻哪些标签才能把学到的策略精确推到攻击者指定的方向 $\pi^\dagger$"。整条 pipeline 靠一个观察撑起来：在 log-linear 策略下翻一条标签对训练结果的影响是个与当前参数 $\theta$ 无关的常向量，于是攻击被归约成"在固定字典 $V=[v_1,\dots,v_n]\in\mathbb{R}^{d\times n}$（$v_i=o_i\beta\Delta\psi_i$）上找一个二值组合 $x\in\{0,1\}^n$ 逼近 $-g^\dagger$"的稀疏近似问题 $\min\mathbf{1}^\top x$ s.t. $\|Vx+g^\dagger\|_2\le\varepsilon$。Lemma 3.2 再补上残差到策略距离的桥梁——$m$-强凸下 $\|Vx+g^\dagger\|_2\le\varepsilon$ 蕴含 $\|\hat\theta-\theta^\dagger\|_2\le\varepsilon/m$ 进而界住 $\ell_1$ 策略距离，所以只要把残差压小就能保证训练后策略接近目标。这个稀疏问题 NP-hard，作者按攻击场景给两种求解器（无预算最少翻转用 BAL-A、预算 $K$ 的稀疏翻转用 BMP-A）并各配恢复 / 不可能性条件。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：clean 偏好数据集 𝒟<br/>+ 攻击者目标策略 π†（参数 θ†）"] --> B["翻转 = 固定字典原子（Thm 3.1）<br/>翻一条标签 → 与 θ 无关的常向量 v_i = o_iβΔψ_i"]
+    B --> C["归约为二值稀疏近似<br/>min 1ᵀx  s.t.  Vx = −g†<br/>（Lemma 3.2：残差小 ⇒ 策略接近 π†）"]
+    C -->|无预算·求最少翻转| D["BAL-A：二值感知格基嵌入<br/>LLL 约化 + Babai → 整数解截断到 {0,1}"]
+    C -->|预算 K·稀疏翻转| E["BMP-A：二值匹配追踪<br/>归一化相关挑原子 + 恢复/不可能性证书"]
+    D --> F["翻转集 ℱ（x∈{0,1}ⁿ）→ 投毒数据集<br/>重训 DPO 策略 ≈ π†"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. 翻转 = 固定字典原子（Theorem 3.1）：把投毒从 bi-level 难题降阶成稀疏恢复**

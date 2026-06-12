@@ -44,6 +44,16 @@ ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + 
 
 ECSEL 要解决的问题是：既能做符号回归、又能做分类，而且分类器的"解释"不靠事后采样、直接从参数读出来。它的做法是把"每个类别一个 signomial 函数 + softmax"当成分类器本体。给定特征向量 $x \in \mathbb{R}^m$，先经一次仿射变换把每维压到 $[1, 10]$（signomial 的幂律要求底数为正），再为每个类 $c$ 学一个由 $K$ 个幂律项加性组成的分数函数 $z_c(x) = \sum_{k=1}^{K} \alpha_{c,k} \prod_{j=1}^{m} x_j^{\beta_{c,k,j}}$，参数是系数 $\alpha_{c,k} \in \mathbb{R}$ 与指数 $\beta_{c,k,j} \in \mathbb{R}$，超参 $K$ 控制复杂度（$K=1$ 为单幂律，$K>1$ 为多幂律加性组合）。多类问题在 $\{z_c\}$ 上接 softmax、二类接 sigmoid 给出概率，SR 版本只把 cross-entropy 换成 MSE。作者还为这套结构补了理论靠山——**Signomial 通用近似定理**：经 $\log$ 变换映到正 orthant 上就是指数线性函数，再套 Stone-Weierstrass，可证 signomial 在 $\mathbb{R}^m_{>0}$ 紧子集上对连续函数稠密，从而与神经网络同属"万能近似器"，只是天然偏好乘性幂律关系。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["特征向量 x"] --> B["仿射映射到 [1, 10]<br/>保证幂律底数为正"]
+    B --> C["类别专属 signomial + L1 指数稀疏化<br/>每类一个幂律和得分 z_c"]
+    C --> D["softmax / sigmoid 输出概率"]
+    E["多阶段 staged optimization<br/>K=1 用 L-BFGS-B；K>1 走 Adam→精修→L-BFGS"] -->|"训练系数 α 与指数 β"| C
+    C -->|"训完直接读参数"| F["闭式三层解释族<br/>全局弹性 / 决策边界 / 局部归因"]
+```
+
 ### 关键设计
 
 **1. 类别专属 signomial + L1 指数稀疏化：让得分函数本身就是一条可读方程并自动选特征**

@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 本文是一篇诊断性实证研究，不提新模型，而是搭一套 benchmark + scoring 探针来揭示"VLM patch tokens 聚合成单向量"在金融文档检索上的失败模式及其根因。整条诊断链是逐层逼近的：先构造原始 vs 改动单字段的反事实文档对、跑多种 VLM encoder 抽 patch sequence，再用 5 种 scoring mechanism 测原始与反事实的相似度看聚合还能不能区分；当发现聚合"盲"掉后，用 MinPatch 探针证明信号其实还在 patch level，最后用 Signal/Noise 图像消融把根因物理化为可测量的视觉信号差，并验证几种简单缓解策略是否够用。输入是受控扰动的文档对，输出是一组把"失败发生在哪一层、为什么发生"钉死的证据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三层敏感性 benchmark<br/>micro / macro / text 反事实文档对"] --> B["VLM encoder<br/>抽 patch token 序列"]
+    B --> C["5 种聚合 scoring<br/>Mean / Max / MaxSim / MeanPatch 全 > 0.99「盲」"]
+    C -->|信号其实还在 patch level| D["MinPatch 探针<br/>取最差 patch 相似度，暴露隐藏信号"]
+    D -->|根因物理化| E["Signal/Noise 图像消融<br/>Gap = sim_to_data − sim_to_layout"]
+    E -->|global texture dominance| F["缓解策略验证<br/>方差加权 / 注意力引导 / Top-k 删除 全失败"]
+    F --> G["结论：单向量聚合是架构固有缺陷<br/>须转多向量 / 学习型聚合"]
+```
+
 ### 关键设计
 
 **1. 三层敏感性 benchmark：用受控扰动测聚合对金融关键信息的判别力**

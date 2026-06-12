@@ -44,6 +44,20 @@ tags:
 
 GMF 要解决的是"模型自己评判自己"的循环依赖：把每个模态的质量分从分类器输出里挪出来，改成在潜空间用几何度量算。$M$ 个模态先各自经编码器得到潜特征 $z^{(m)} = E^{(m)}(x^{(m)}) \in \mathbb{R}^d$，然后 GMF 在潜空间上同时算两类"传输修正成本"——模态内的（离干净流形多远）和模态间的（和别的模态对不对得上），再用一个竞争-交互门控把它们合成融合权重 $w^{(m)}$，最后与证据 $\mathbf{e}^{(m)} = \text{Softplus}(z^{(m)} W_{\text{cls}}^{(m)})$ 组装成 Dirichlet 参数 $\boldsymbol{\alpha} = \sum_m w^{(m)} \mathbf{e}^{(m)} + \mathbf{1}$ 喂给 evidential 分类头。整个几何分支与决策分支的梯度路径刻意分开，避免分类器把几何度量重新拉回到自己的决策边界上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 26, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["M 个模态输入"] --> B["各模态编码器 → 潜特征 z^(m)"]
+    B --> C["模态内传输能量<br/>RF 初速度平方 ‖v(z,0)‖² 离干净流形多远"]
+    B --> D["跨模态传输残差<br/>一步投影残差 ‖ẑ−z‖² 两模态对不对得上"]
+    C --> E["竞争-交互融合权重 w^(m)<br/>竞争层 Boltzmann + 交互层可靠邻居投票"]
+    D --> E
+    B --> F["证据 e^(m)=Softplus(z·W)"]
+    E --> G["Dirichlet 参数 α=Σ w·e + 1"]
+    F --> G
+    G --> H["evidential 分类头 → 预测"]
+```
+
 ### 关键设计
 
 **1. 模态内传输能量：一个与分类器解耦的"离流形多远"标量**

@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 RefDiv 的目标是炼出一条对抗 prompt，让目标 LLM 在 TTS 下生成的候选回复集既高度雷同又集体有害，从而骗过 reward model 的筛选。它用一个种群规模为 $m$ 的遗传算法（GA）来搜索这条 prompt：每轮迭代里，先把当前种群的每个候选 prompt $x_i$ 喂给目标 LLM + TTS、采样出它的候选回复集 $C_{x_i}$，再用一个动态加权的适应度给每个候选打分，挑出最优的几个做交叉变异繁衍下一代。整套搜索全程只读两个标量熵信号、不碰梯度，所以纯黑盒就能跑；迭代 $T$ 轮后返回适应度最高的 prompt。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["有害指令 + 初始 prompt 种群（m 条）"] --> B["逐条喂目标 LLM + TTS<br/>采样候选回复集 C(x_i)"]
+    B --> C["双信号 Diversity-Guided Fitness<br/>算 DFS=H(C) 与 DFS*=H(C∪C*)"]
+    D["指数动态权重 α_t<br/>先教方向、再压塌"] --> C
+    C --> E["纯标量信号驱动的遗传搜索<br/>选 top-q 父代 → 交叉 + 变异 → m 条子代"]
+    E -->|未到 T 轮| B
+    E -->|迭代满 T 轮| F["输出适应度最高的对抗 prompt"]
+```
+
 ### 关键设计
 
 **1. 双信号 Diversity-Guided Fitness：把「低多样」和「有害」编进同一个标量**

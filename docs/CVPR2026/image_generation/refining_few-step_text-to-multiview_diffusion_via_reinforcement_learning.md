@@ -40,6 +40,18 @@ tags:
 
 MVC-ZigAL 要解决的是：少步（≤8 步）T2MV 扩散模型为了快牺牲了单视图保真度和跨视图一致性，而现有 RL 微调（DPOK、REBEL 等）都是为单图设计、既不建模多视图协调，又在少步模型奖励紧密聚集时拿不到足够的学习梯度。它的方案是三件事串起来：先把 T2MV 去噪重构成一个能同时看到所有视图的多视图感知 MDP；再用 ZMV-Sampling 的“自反思”采样造出一条更优参考轨迹、据此做 zigzag 优势学习，给少步模型补上强学习信号；最后用 Lagrangian 对偶把“单视图保真”和“跨视图一致”这对目标转成带约束的优化，免去手动调权重。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["少步 T2MV 扩散模型<br/>(LCM-SDXL + MV-Adapter) + 文本提示"] --> B["多视图感知 MDP<br/>状态含 V 个视图噪声图+相机嵌入<br/>联合视图奖励 R_mv（取自 HyperScore）"]
+    B --> C["标准采样<br/>参考轨迹 x^s"]
+    B --> D["ZMV-Sampling 自反思采样<br/>首步三步 zigzag：高引导→低引导反噪→高引导<br/>精炼轨迹 x^z"]
+    C --> E["zigzag 优势学习<br/>A_mv = R_mv(x^z) − R_mv(x^s)<br/>优势平方误差更新"]
+    D --> E
+    E --> F["Lagrangian 对偶约束优化<br/>max 单视图奖励，约束 R_mv ≥ τ<br/>自适应 λ + EMA 阈值 τ"]
+    F --> G["微调后模型<br/>单视图保真 + 跨视图一致"]
+```
+
 ### 关键设计
 
 **1. 多视图感知 MDP：让奖励和动作都覆盖全部视图，而非逐图独立**

@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 方法要解决的是：$K$ 个客户端各自在私有数据 $\{\mathcal{D}_p\}$ 上微调出一个领域专家，现在想在不交出任何私有数据的前提下，把它们合并成一个单一可部署的 MoE 模型。MetaMoE 的关键转换是用「公开数据里的代理样本」替代私有数据来训练 router——但代理必须既贴合客户域又彼此多样，否则 router 学不会正确路由。整个统一阶段分三步：先用 relevance-weighted DPP 从公开池为每个客户端选一批代理，再让专家在「私有数据 + 自己的代理」上一起微调 FFN（顺便算出每个专家的域均值表征），最后把所有专家的 FFN 拼成 MoE 层、用一个 context-aware router 在全部代理上联合微调得到 $\mathcal{M}_\text{MoE}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["K 个客户端私有数据 + 公开池 D0<br/>各自从种子模型微调出领域专家"] --> B["Relevance-Weighted DPP 代理选择<br/>从 D0 选「相关 + 多样」代理"]
+    B --> C["Proxy-Aligned 专家训练<br/>在 私有数据 ∪ 代理 上微调 FFN，算专家域均值"]
+    C --> D["Context-Aware Router + 域感知初始化<br/>token + 序列双尺度路由，域均值初始化路由向量"]
+    D --> E["拼成 MoE 层，在全部代理上联合微调"]
+    E --> F["统一 MoE 模型 M_MoE"]
+```
+
 ### 关键设计
 
 **1. Relevance-Weighted DPP 代理选择：让代理「既相关又多样」**

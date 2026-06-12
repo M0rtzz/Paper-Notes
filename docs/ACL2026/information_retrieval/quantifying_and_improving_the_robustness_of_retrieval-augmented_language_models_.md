@@ -41,7 +41,26 @@ tags:
 SURE 的完整流程包括四个部分：虚假特征分类体系、扰动注入、因果特征保持、鲁棒性评估。随后作者基于该流程构造 SURE_Wiki 与 SIG_Wiki/SIG_Trivial，并探索 scaling、Chain-of-Note、reasoning model、SFT、DPO 等缓解方式。
 
 ### 整体框架
-给定 query，retriever 返回若干文档，reader LLM 接收 prompt $P=(I,G,Q)$ 并生成答案。SURE 定义扰动函数 $g(.)$，把 grounding data $G$ 改成 $g(G)$，构造反事实输入 $\hat{P}=(I,g(G),Q)$。如果 $G$ 与 $g(G)$ 的答案语义一致，而模型输出正确性发生变化，就说明 RALM 对该虚假特征不鲁棒。
+给定 query，retriever 返回若干文档，reader LLM 接收 prompt $P=(I,G,Q)$ 并生成答案。SURE 定义扰动函数 $g(.)$，把 grounding data $G$ 改成 $g(G)$，构造反事实输入 $\hat{P}=(I,g(G),Q)$。如果 $G$ 与 $g(G)$ 的答案语义一致，而模型输出正确性发生变化，就说明 RALM 对该虚假特征不鲁棒。整条流水线自上而下是：分类体系定义要注入哪些虚假特征 → 自动化扰动注入造出反事实文档 → 因果特征保持把"答案变了"的脏样本筛掉 → reader 在原始/扰动两路上分别作答 → 实例级指标量化鲁棒性，并把不鲁棒样本回收去做训练缓解。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["query → dense retriever<br/>取 grounding data G，构造 P=(I,G,Q)"]
+    TAX["五类虚假特征分类 taxonomy<br/>Style/Source/Logic/Format/Metadata（13 种扰动）"]
+    A --> INJ
+    TAX --> INJ
+    subgraph INJ["自动化扰动注入 g(·)"]
+        direction TB
+        M["模型式 LLM 改写：Style / Source"]
+        R["规则式 + 元数据合成：Logic / Format / Metadata"]
+    end
+    INJ --> PRES["因果特征保持<br/>双向 NLI 蕴含 + 答案字符串匹配筛选"]
+    PRES --> READ["reader LLM 读 P 与 P̂=(I,g(G),Q)<br/>分别生成 y、ŷ"]
+    A -.-> READ
+    READ --> MET["实例级鲁棒性指标<br/>对比 Y(y)−Y(ŷ) → RR / WR / LR"]
+    MET --> MIT["训练数据复用<br/>不鲁棒样本 → SFT / DPO 提升鲁棒性"]
+```
 
 ### 关键设计
 
@@ -49,11 +68,15 @@ SURE 的完整流程包括四个部分：虚假特征分类体系、扰动注入
 
 真实检索结果天然异质——同一条 golden document 可能以 HTML、被改写成另一种文风、或带着不同来源域名和时间戳出现，部署时根本无法保证格式、来源、写法统一。作者把这些"表面会变、语义不变"的属性归成五大类共 13 种扰动：Style（simple/complex 两种复杂度）、Source（LLM-generated/self-generated）、Logic（reverse/random/LLM-reranked 句序）、Format（JSON/HTML/YAML/Markdown）、Metadata（timestamp 的 pre/post、datasource 的 wiki/twitter）。把这些特征显式列成一张表，等于先承认它们是真实部署里的风险面，而不是凭空造的玩具扰动，后续的敏感性度量才有落点。
 
-**2. 因果特征保持机制：扰动只动表面，绝不动答案所依赖的事实**
+**2. 自动化扰动注入：模型式 + 规则式两条腿，把"造扰动"做成可规模化的流水线**
 
-如果一次扰动顺手改了答案事实，那模型出错到底是被虚假特征带偏、还是因为因果内容变了，就无从分辨。SURE 因此给扰动函数 $g(\cdot)$ 套上双重保险：对模型生成式扰动直接要求语义等价，再用双向 entailment 验证 $G$ 蕴含 $g(G)$ 且 $g(G)$ 蕴含 $G$；同时用字符串匹配确认 golden document 里的 ground truth 在扰动后仍然在场，noise document 也不会意外地"长出"正确答案。双向 NLI 加答案字符串检查这两道关，把扰动前后约束成一组只差表面属性的反事实对照，让评估尽量接近受控实验。
+要在上万条文档上系统注入这 13 种扰动，靠人工改写完全不现实，所以扰动函数 $g(\cdot)$ 必须能自动跑。SURE 按特征类型分两路实现：Style、Source 这类要改文风、改来源、需要语义级改写的扰动，用 LLM（Llama-3.1-70B-Instruct）按精心设计的指令生成；Logic（句序重排）、Format（JSON/HTML/YAML/Markdown）这类有确定规则的扰动，用启发式规则程序生成；Metadata 则先合成时间戳和来源域名再注入文档。模型式负责"语义级改写"、规则式负责"结构级变换"，两路拼起来既覆盖了 taxonomy 的全部五类，又让整个 perturb-then-evaluate 流程不依赖人工、能批量产出反事实样本——这是后面能造出 SURE_Wiki/SIG 等数据集、以及把弱点回收成训练数据的前提。
 
-**3. 实例级鲁棒性指标与训练数据复用：既量化单题翻转，又把不鲁棒样本回收成训练信号**
+**3. 因果特征保持机制：扰动只动表面，绝不动答案所依赖的事实**
+
+如果一次扰动顺手改了答案事实，那模型出错到底是被虚假特征带偏、还是因为因果内容变了，就无从分辨。SURE 因此给扰动函数 $g(\cdot)$ 套上双重保险：对模型生成式扰动直接要求语义等价，再用双向 entailment（双向 NLI 蕴含）验证 $G$ 蕴含 $g(G)$ 且 $g(G)$ 蕴含 $G$、二者皆判 entailment 才保留；同时用字符串匹配确认 golden document 里的 ground truth 在扰动后仍然在场，noise document 也不会意外地"长出"正确答案。这两道关把扰动前后约束成一组只差表面属性的反事实对照，让评估尽量接近受控实验，也正好挡住了第 2 步自动注入时难免引入的语义漂移。
+
+**4. 实例级鲁棒性指标与训练数据复用：既量化单题翻转，又把不鲁棒样本回收成训练信号**
 
 dataset-level accuracy 只看总体涨跌，会把"同一道题在扰动前后从对变错"这种不稳定性平均掉。SURE 改成实例级配对：对原始输出 $y$ 和扰动输出 $\hat{y}$ 各判一次正确性，统计 Win Rate、Lose Rate 和 Robustness Rate，于是能区分某个虚假特征是把答案改坏了还是偶然改好了。更巧的是这套配对天然适合做训练数据——对每个不鲁棒实例，SURE 顺手记下 query、正确答案、错误答案、原始 golden passage 和扰动 golden passage，正好凑成 SFT 的稳定监督或 DPO 的偏好对，让"评估发现的弱点"直接闭环回"训练修复弱点"。
 

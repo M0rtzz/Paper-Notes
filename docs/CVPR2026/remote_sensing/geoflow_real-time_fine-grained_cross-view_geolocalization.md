@@ -43,6 +43,29 @@ GeoFlow 要解决的是：地面拍一张街景，在一张卫星图里把相机
 
 关键在于把重活和轻活拆开：编码 $\mathbf{f}_{vis}$ 是重活但只做一次，反复迭代的只是一个吃 $\mathbf{f}_{vis}$ 加坐标、吐位移的轻量回归头。这样"迭代精化"这种通常很慢的范式也能跑到 29 FPS。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph FEAT["轻量级跨视图特征提取（只算一次）"]
+        direction TB
+        G["地面图 → EfficientNet-B0<br/>+ 2D 位置编码"]
+        S["卫星图 → EfficientNet-B0<br/>+ 2D 位置编码"]
+        G -->|query| X["交叉注意力 + 自适应平均池化"]
+        S -->|key/value| X
+    end
+    X --> F["全局视觉表征 f_vis"]
+    F --> INIT["卫星图上均匀随机撒 N 个假设 q0"]
+    subgraph IRS["迭代精化采样 IRS（迭代 R 轮）"]
+        direction TB
+        REG["概率位移回归 v_φ<br/>极坐标：距离头高斯 + 方向头 vMF"]
+        REG --> UPD["按预测位移更新各假设位置"]
+        UPD -->|未满 R 轮| REG
+    end
+    INIT --> REG
+    F -.每轮读取.-> REG
+    UPD -->|收敛| MEAN["取全体假设均值 → 2-DoF 定位"]
+```
+
 ### 关键设计
 
 **1. 轻量级跨视图特征提取：把两张视角差 90° 的图对齐进同一空间**

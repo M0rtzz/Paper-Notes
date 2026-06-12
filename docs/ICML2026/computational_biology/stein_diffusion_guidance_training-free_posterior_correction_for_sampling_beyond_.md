@@ -43,6 +43,22 @@ SDG 把"训练免（training-free）扩散引导"和"随机最优控制（SOC）
 ### 整体框架
 SDG 想解决的是"训练免扩散引导在低密度区采不准"的问题，做法是把它重新表述成一个随机最优控制（SOC）问题：在每个反向扩散步 $t$ 维护 $N$ 个粒子 $\{\mathbf{x}_t^i\}_{i=1}^N$，先用 Tweedie 公式把粒子映到数据流形 $\mathcal{M}_T$，在那里用 Stein 算子把它们朝真后验 $p(\mathbf{x}_T|\mathbf{x}_t)$ 推一步，再前推回噪声流形 $\mathcal{M}_t$ 并叠加"低密度 + 奖励"梯度，作为最终控制 $\bar{\mathbf{u}}^*(\mathbf{x}_t,t)$ 注入反向 SDE。整套流程不训练分类器、不微调扩散模型，是即插即用模块；它的理论价值在于把 SOC 的最优控制写成变分上界后，能精确指出现有 Tweedie 类方法漏了哪一项、并用最小代价补回来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["反向扩散步 t：维护 N 个粒子 x_t^i"] --> B["低密度 SOC 成本泛函<br/>把'去低密度找稀有样本'写进目标"]
+    B --> C["价值函数变分上界<br/>最优控制拆成 I + II 两部分"]
+    C -->|"I：现有 training-free guidance"| E["I 部分梯度<br/>−α(t)·s_θ + β(t)·∇r"]
+    C -->|"II：被漏掉的 KL 修正项"| D
+    subgraph D["Back-and-Forth Stein 校正"]
+        direction TB
+        D1["Tweedie 倒推 M_t→M_T"] --> D2["流形上 SVGD 一步<br/>朝真后验推 x̃_T"] --> D3["前推 M_T→M_t 加噪回"]
+    end
+    E --> F["合成最终控制 ū* 注入反向 SDE"]
+    D --> F
+    F -->|"t ← t−1 循环"| A
+```
+
 ### 关键设计
 
 **1. 低密度 SOC 成本泛函：把"去低密度区找稀有样本"写成可优化目标**

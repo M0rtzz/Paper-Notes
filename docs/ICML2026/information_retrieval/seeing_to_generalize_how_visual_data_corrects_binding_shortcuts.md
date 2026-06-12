@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 作者要回答的是"图像训练到底改了模型内部哪条计算路径"，于是把同一个变量绑定任务做成文本、图像两种结构完全镜像的版本，让"模态"成为唯一可控变量。任务为 Indirect Retrieval：给定 attribute（颜色）、entity（形状）、item（item_a / item_b ...）三个集合，先读 context（颜色-形状对的序列或一组渲染图），再读 association（"the triangle is item_a"），最后问"哪个 item 对应 red"——模型必须先用颜色定位到形状，再用形状定位到 item，是个两跳绑定。整套流程走"text-only 训练 → 转图像模态训练 → 转回文本混训"的三阶段课程，再在超出训练对象数的 OOD 设置下读出内部 binding 机制如何被改写。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["同结构跨模态任务<br/>Indirect Retrieval：文本版 / 图像版镜像"] --> CUR
+    subgraph CUR["三阶段课程 + Noise 控制组"]
+        direction TB
+        C1["text-only 训练<br/>得 M_text-only"] --> C2["图像模态训练<br/>冻结视觉 encoder"]
+        C2 --> C3["20% image + 80% text 混训"]
+        NC["Noise 控制组：插 unattendable<br/>noise token 做对照"] -.对照.-> C1
+    end
+    CUR --> EV["OOD 评测：超训练对象数 8"]
+    EV --> AN["Interchange Intervention 因果归因<br/>+ Linear Probe + Attention Knockout"]
+    AN --> R["读出 binding 机制：positional → symbolic"]
+```
+
 ### 关键设计
 
 **1. 同结构跨模态任务：把"模态"做成唯一变量**

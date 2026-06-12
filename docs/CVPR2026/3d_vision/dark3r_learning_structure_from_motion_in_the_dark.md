@@ -47,6 +47,25 @@ tags:
 
 Dark3R 要解决的是极端低光（SNR < 0 dB）下传统 SfM 彻底崩溃的问题——噪声淹没信号，特征检测匹配失效，位姿估计无从谈起。它的办法是教师-学生蒸馏：把预训练 MASt3R 当成冻结的教师，学生网络从同一权重初始化、只用 LoRA 微调。教师吃高 SNR 干净 raw 图像对，学生吃对应的低 SNR 噪声 raw 图像对，训练目标是让学生的编码器特征、解码器特征和对应关系图都对齐教师的输出。推理时只用学生网络，配合 MASt3R-SfM 的全局优化和 BA 完成多视图位姿恢复，重建好的稠密点图还能进一步喂给 Dark3R-NeRF 做新视角合成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["噪声-干净原始图像对<br/>原始图像输入·无需 3D 监督"]
+    subgraph TRAIN["教师-学生蒸馏（训练）"]
+        direction TB
+        T["教师：冻结 MASt3R<br/>吃干净高 SNR raw"]
+        B["学生：LoRA 微调<br/>吃噪声低 SNR raw"]
+        T -->|"三层特征对齐<br/>编码器/解码器/对应图 + Clean 正则化"| B
+    end
+    A --> T
+    A --> B
+    B --> C["推理：仅用学生网络<br/>输入噪声 raw"]
+    C --> D["MASt3R-SfM 全局优化 + BA<br/>已知内参约束"]
+    D --> E["相机位姿 + 稠密点图"]
+    E --> F["新视角合成 Dark3R-NeRF<br/>raw 域辐射场重建"]
+    F --> G["新视角图像"]
+```
+
 ### 关键设计
 
 **1. 原始图像输入：绕过 ISP，别在去噪前就丢信息**

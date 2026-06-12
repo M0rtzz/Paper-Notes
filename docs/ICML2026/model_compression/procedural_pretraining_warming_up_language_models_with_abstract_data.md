@@ -41,7 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法把标准预训练拆成两阶段：阶段一从头训练一个 GPT-2 风格的 decoder-only transformer，喂的是 $T_1$ 个完全没有语义的"程序化 token"（括号串、栈操作、元胞自动机演化等）；阶段二紧接着用 $T_2$ 个语义 token（C4、CodeParrot 或 DeepMind-Math）继续训练同一组权重，全程标准 next-token 损失、不冻结任何层。Baseline 就是 $T_1=0$ 的纯标准预训练。围绕这条流水线作者设两种核心量法：**Additive** 固定 $T_2$、额外加一段 $T_1$，量"白送的 token 能涨多少"；**Substitutive** 缩小 $T_2$、补一小段 $T_1$，量"能省掉多少语义数据还达到同样 loss"。
+方法把标准预训练拆成两阶段：阶段一从头训练一个 GPT-2 风格的 decoder-only transformer，喂的是 $T_1$ 个完全没有语义的"程序化 token"（括号串、栈操作、元胞自动机演化等）；阶段二紧接着用 $T_2$ 个语义 token（C4、CodeParrot 或 DeepMind-Math）继续训练同一组权重，全程标准 next-token 损失、不冻结任何层。Baseline 就是 $T_1=0$ 的纯标准预训练。两阶段之间还有一个"迁移方式"开关——是把全部预训练权重带过去（Full），还是只保留 attention 层或 MLP 层。围绕这条流水线作者设两种核心量法：**Additive** 固定 $T_2$、额外加一段 $T_1$，量"白送的 token 能涨多少"；**Substitutive** 缩小 $T_2$、补一小段 $T_1$，量"能省掉多少语义数据还达到同样 loss"；并先用 2 层小模型把因果钉死，再放大到 1.3B 验证迁移。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["程序化数据生成器<br/>4类：序列变换 / Stack / k-Dyck / ECA rule110<br/>规则生成、零语义、≤128 token"] --> B["阶段一：从头训练 GPT-2<br/>喂 T1 个程序化 token，仅输出端算损失"]
+    B --> C{"选择性层迁移<br/>保留哪类层的预训练权重"}
+    C -->|Full / attention-only / MLP-only| D["阶段二：标准语料续训<br/>T2 个语义 token（C4 / CodeParrot / DeepMind-Math）"]
+    D --> E["下游评估<br/>语言 / 代码生成 / 常识推理"]
+    F["诊断→迁移两段实验<br/>先 2 层小模型钉因果 → 放大到 1.3B 验迁移<br/>Additive：固定 T2 加 T1 / Substitutive：缩 T2 补少量 T1"] -.调节 T1/T2 与规模.-> B
+```
 
 ### 关键设计
 

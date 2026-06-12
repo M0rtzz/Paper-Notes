@@ -45,6 +45,23 @@ tags:
 
 VisRet 想绕开的是跨模态检索的老问题：文本查询和候选图像被嵌进同一空间后按相似度排序，但跨模态嵌入往往退化成"概念袋"，能匹配物种类型却抓不住翅膀姿态、仰拍视角这类结构化视觉关系。它的思路是干脆不在跨模态空间里硬碰——先用 LLM 把原始文本查询改写成 T2I 指令、再用生成模型把它"画"成若干张图像，把检索彻底搬进图像模态内部完成图到图检索，最后把多张可视化各自的检索结果融合成一个排序。整个过程无需训练，也不动现有的图像嵌入索引。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["文本查询 q"]
+    subgraph MP["模态投影"]
+        direction TB
+        R["LLM 改写<br/>q → T2I 指令 q′"] --> G["T2I 生成模型<br/>画出 m 张可视化图像"]
+    end
+    Q --> MP
+    subgraph IR["模态内检索与 RRF 聚合"]
+        direction TB
+        S["每张可视化独立做图到图检索<br/>得 m 个排序列表"] --> F["RRF 融合 m 个列表"]
+    end
+    MP --> IR
+    IR --> O["输出 top-k 图像"]
+```
+
 ### 关键设计
 
 **1. 模态投影（Modality Projection）：把文本查询"画"成图像，让视觉需求显式化**

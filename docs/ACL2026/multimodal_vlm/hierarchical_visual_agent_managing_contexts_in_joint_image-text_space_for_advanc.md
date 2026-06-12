@@ -46,6 +46,24 @@ HierVA 要解决的是复杂图表推理里"context 越积越乱"的问题：一
 
 具体来说，输入是图表 $I_0$ 加自然语言问题 $q$，输出是答案 $a$。一个 Manager 维护精炼的全局 context $C_M = \{q, I_0, \text{refined plan}, \text{distilled summaries}\}$，若干 Worker 各自在隔离的局部 context $C_{W_t} = \{\text{task instr}, \text{optional skill}, \text{single image}\}$ 里干活。Manager 按 Algorithm 1 的控制环运转：先做两阶段 planning（粗 plan 再细化、只留细化版），然后循环执行"终止判定 → 创建下一个 task → 派 Worker 执行 → 把蒸馏摘要 append 回 $C_M$"，直到能给出最终 $\boxed{}$ 答案。整条主线推理始终只看到 Manager 那份干净的 context，Worker 内部的折腾被挡在外面。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图表 I₀ + 问题 q"] --> B["两阶段规划<br/>粗 plan → 精炼 plan，只留精炼版（plan 蒸馏）"]
+    B --> C{"终止判定：能否给出答案？"}
+    C -->|"能"| Z["输出答案"]
+    C -->|"否：创建下一个 task + 技能路由<br/>just-in-time 注入相关 skill"| W
+    subgraph W["Manager–Worker 层级：派 Worker 在隔离局部 context 执行"]
+        direction TB
+        D["Worker：单图 + 任务指令 + 可选 skill"] --> F{"任务类型"}
+        F -->|"要视觉证据"| G["Adaptive Zoom：给 bbox<br/>返回高分裁剪 crop"]
+        F -->|"要文本事实"| H["读值 / 比较 / 计算"]
+        G --> I["结果蒸馏：只回传 crop handle 或单句事实"]
+        H --> I
+    end
+    W -->|"Encapsulation：内部 trace 被挡住，只 append 摘要"| C
+```
+
 ### 关键设计
 
 **1. Manager–Worker 层级 + Encapsulation：用抽象屏障把局部噪声挡在主 context 外**

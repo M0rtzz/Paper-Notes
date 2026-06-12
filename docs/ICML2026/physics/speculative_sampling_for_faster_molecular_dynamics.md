@@ -50,6 +50,27 @@ LSD（Langevin Speculative Dynamics）的运行时是一个流水线异步系统
 
 整个系统不需要预先指定前瞻长度 $L$，比 Leviathan 等 (2023) 的同步算法更易分析，资源最优配置只需 $N_T \geq \lceil 1/c \rceil$（$c$ 为草稿/目标耗时比）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["初始状态 x₀"]
+    subgraph PIPE["流水线 + 投机错误修正（EC）"]
+        direction TB
+        B["草稿模型 Q（快力场 F̃）串行 ABOBA 外推草稿步 yₙ<br/>EC：用历史误差 ΔFₙ₋ₖ 给草稿打补丁，把拒绝率压到最低"]
+        C["目标模型实例池：N_T 块 GPU 异步用昂贵力场 F 并行重算草稿步"]
+    end
+    subgraph V["前/后处理定理（整步 ABOBA 归约为 BOB 验证）"]
+        direction TB
+        D["(A) 位置半步"] --> E["反射最大耦合验证 BOB 动量<br/>按目标/草稿似然比接受，拒绝则沿等似然面镜面反射"]
+        E --> F["(A) 位置半步"]
+    end
+    A --> B
+    B --> C
+    C --> D
+    F -->|"接受 xₙ = yₙ"| G["保留验证序列 {xₙ}<br/>分布严格等同纯目标串行采样"]
+    F -->|"拒绝：得新 xₙ，冲刷更新的草稿与验证，从 xₙ 重启草稿"| B
+```
+
 ### 关键设计
 
 **1. 反射最大耦合验证 BOB 动量更新：用最大耦合把拒绝率压到最低**

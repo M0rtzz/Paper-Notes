@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 CryoHype 要解决的核心问题是：当一批无标签投影图像里混着 100–1000 种**完全不同**的蛋白质结构时，怎么让一个模型同时高质量重建每一种。它的思路是把"用同一个解码器、靠条件输入区分结构"换成"为每张图动态生成一套专属的解码器权重"。整条流水线是：投影图像先经 ViT 编码器（tokenizer + Transformer）读出一组权重描述；这组描述经线性 head 调制出一个隐式神经表示（INR）解码器的逐层权重；该 INR 在 Fourier 域里把 3D 体积渲染成投影，与真实投影做 MSE。具体由五个组件串起来：ViT 编码器、可学习的 weight tokens $\{w_i\}_{i=1}^q$、带残差连接的 ReLU-MLP 形式的 INR 解码器（共享基础参数 $\{\theta^j\}_{j=1}^L$）、以及每层一个的线性 head $\{\text{Head}_j\}_{j=1}^L$。全程在 Fourier 域操作，靠 Fourier Slice Theorem 把投影/反投影变成切片采样，省掉昂贵的数值积分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无标签投影图像<br/>（混 100–1000 种结构）"] --> B["ViT 超网络编码器<br/>图像 token + q 个 weight token 过 Transformer"]
+    B --> C["超网络逐层调制 INR 权重<br/>weight token 切 L 组，对共享基底 θⱼ 逐元素乘"]
+    C --> D["生成专属 INR 解码器<br/>带残差的 ReLU-MLP，逐层权重 θⱼᶠ"]
+    D --> E["Fourier 域渲染投影<br/>Fourier Slice Theorem 取中心切片"]
+    E -->|与真实投影做 MSE| F["端到端联合训练<br/>编码器/tokens/INR/head 一起优化"]
+    F -.重建损失反向监督.-> B
+```
+
 ### 关键设计
 
 **1. 超网络逐层调制 INR 权重：把"改第一层 bias"升级成"改所有层权重"**

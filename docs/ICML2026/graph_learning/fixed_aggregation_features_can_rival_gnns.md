@@ -44,6 +44,21 @@ tags:
 
 FAF 想解决的是"GNN 每一层都要学一次邻域聚合，到底是不是必须"这个问题，做法是把可训练的多层聚合彻底搬到预处理阶段、换成一组不可训练的固定算子，让图学习退化成普通表格学习。整个流程只有两步：先离线把每个节点的多跳邻域用 mean/sum/max/min/std 等固定 reducer 压成一行表格特征，再把这行特征喂给一个精调过的 MLP 做分类。中间没有 message-passing 层、没有 attention、没有任何可训练的传播矩阵，所有图结构信息都在预处理时一次性烘焙进特征向量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：节点原始特征 x_v + 图结构"] --> AGG
+    subgraph AGG["多跳 × 多 reducer 拼接（不可训练预处理）"]
+        direction TB
+        B["逐跳递归聚合 h_v^(k,r)<br/>k = 1..K 跳邻域"] --> C["五种固定 reducer 并行<br/>mean / sum / max / min / std"]
+        C --> D["拼接 ⊕ 全跳 + 全 reducer + 原特征<br/>→ 表格特征 z_v"]
+    end
+    AGG --> E["彻底表格化：z_v 当作一行表格样本<br/>免费接入 SHAP / 特征选择等工具"]
+    E --> F["下游 MLP 分类器（仅此处可训练）"]
+    F --> G["节点类别"]
+    KA["KA 固定聚合 Φ：理论无损上界<br/>表达够强但数值脆弱、难优化"] -.理论对照.-> AGG
+```
+
 ### 关键设计
 
 **1. 多跳 × 多 reducer 拼接：用互补算子在表格空间里近似单射**

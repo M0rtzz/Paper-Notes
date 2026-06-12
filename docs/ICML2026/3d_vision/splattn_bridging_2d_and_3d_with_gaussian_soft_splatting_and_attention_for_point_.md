@@ -44,6 +44,21 @@ tags:
 
 方法要解决的核心是：让 2D 视觉特征能真正反传梯度到 3D 几何点，从而修复硬投影下的 Cross-Modal Entropy Collapse。输入是 sparse partial point cloud $\mathcal{P}_{in} = \{p_i\}_{i=1}^N \subset \mathbb{R}^3$ 与对应 RGB 图像 $\mathcal{I}$，输出是补全后的稠密点云 $\mathcal{P}_{out}$。整体是 dual-branch 编码 + 分层 decoder 的结构。GS-Bridge 分支先用 EdgeConv 从 $\mathcal{P}_{in}$ 抽局部几何 token、再过 Transformer 得到全局几何 query $\mathcal{F}_{geo}$，同时把视觉特征图经 Gaussian Soft Splatting 变成有正测度支持的连续密度场 $\mathcal{V}$，让 $\mathcal{F}_{geo}$ 用 cross-attention 主动查询 $\mathcal{V}$，得到融合全局特征 $\mathcal{F}_g$；并行的 Local Encoder 用 EdgeConv + Multi-Head Self-Attention 抽出拓扑感知的局部特征 $\mathcal{F}_l$。两路特征汇入 Global-Local Decoder：先从 $\mathcal{F}_g$ 经 MLP 预测 skeleton $\mathcal{P}_0$ 并用 $\mathcal{P}_{in}$-Merge 注入输入先验，再逐级上采样 $\mathcal{P}_0 \to \mathcal{P}_1 \to \mathcal{P}_2$，每个 upsample stage 都靠 Structure Self-Attention 维持几何一致性、靠 Cross-Attention 注入 $\mathcal{F}_l$ 做细节细化，由粗到细生成最终点云。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["稀疏部分点云 P_in"]
+    I["RGB 图像 I"]
+    I --> GSS["Gaussian Soft Splatting<br/>硬投影换成连续密度场 V<br/>正测度·梯度可回传"]
+    P --> TOK["EdgeConv + Transformer 混合 token<br/>局部曲率 + 全局拓扑 → 几何 query F_geo"]
+    P --> LE["Local Encoder<br/>EdgeConv + 自注意力 → 局部特征 F_l"]
+    TOK --> ALN["主动跨模态对齐<br/>F_geo 当 Query 查 V → 全局特征 F_g"]
+    GSS --> ALN
+    ALN --> DEC["全局-局部解码<br/>F_g → 骨架 P0 → 逐级上采样 P1/P2"]
+    LE -->|Cross-Attention 注入局部细节| DEC
+    DEC --> OUT["稠密点云 P_out"]
+```
+
 ### 关键设计
 
 **1. Gaussian Soft Splatting：把硬投影换成有正测度支持的连续密度场，让梯度流回几何点**

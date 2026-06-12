@@ -50,6 +50,21 @@ FAN 是一个 behavior-regularized actor-critic 框架，含四个网络：
 
 整个 actor-critic 循环：行为 flow 用 BC 损失 $\mathcal{L}_F$ 维持；critic 用 TD loss 训练并加入 Flow Anchoring 正则项 $\alpha_2 R$ 进入 target；策略 update 同时受 $-Q_\phi-Z_\psi$（最大化回报）和 $\alpha_1\mathcal{L}_B$（Flow Anchoring 行为正则）约束。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 (s, a, r, s′)"] --> FL["行为 flow vθ(s,t,aₜ)<br/>CFM 损失 L_F 拟合数据分布"]
+    D --> PI["一步策略 πω(s, ε)<br/>噪声 ε 直出 action aω（推理仅此一步）"]
+    FL --> FA["1. Flow Anchoring（L_B）<br/>约束 πω 位移落在 vθ 速度场上<br/>单步评估替代解 ODE"]
+    PI --> FA
+    PI --> Q["2. 噪声条件 critic Qφ(s,a,ε)<br/>连续噪声替代 quantile，单样本 TD"]
+    Q --> Z["3. Upper Expectile Zψ(s,a)<br/>κ=0.9 expectile 回归估 ess sup"]
+    FA --> UP["Actor 更新<br/>max(−Qφ − Zψ) + α₁·L_B"]
+    Q --> UP
+    Z --> UP
+    UP -->|策略改进回环| PI
+```
+
 ### 关键设计
 
 **1. Flow Anchoring：用单步 flow 替代 ODE 行为正则**

@@ -41,7 +41,26 @@ ArcLight 是一个从零写的轻量级 LLM 推理框架（约 10 个 C++ 文件
 ## 方法详解
 
 ### 整体框架
-分两层。**前端**：处理权重加载、模型定义、自回归解码循环，硬件无关。**后端推理引擎**：5 个核心模块——Tensor Library（C++ 类封装 header + data 两段）、Memory Manager（每个 NUMA 节点开独立内存池 + activation 双缓冲）、Thread Manager（多视图线程组 + 全局/局部 barrier）、Forward Graph Builder（追加式静态图构建）、Graph Computation Scheduler（按容器顺序调度算子）。整个引擎 ~10 个 C++ 文件，算子库直接复用 llama.cpp 的 GEMM / FlashAttention 等内核（不重新造轮子）。
+分两层。**前端**：处理权重加载、模型定义、自回归解码循环，硬件无关。**后端推理引擎**：5 个核心模块——Tensor Library（C++ 类封装 header + data 两段）、Memory Manager（每个 NUMA 节点开独立内存池 + activation 双缓冲）、Thread Manager（多视图线程组 + 全局/局部 barrier）、Forward Graph Builder（追加式静态图构建）、Graph Computation Scheduler（按容器顺序调度算子）。整个引擎 ~10 个 C++ 文件，算子库直接复用 llama.cpp 的 GEMM / FlashAttention 等内核（不重新造轮子）。运行时每个 transformer block 的执行流是：权重按 NUMA 节点钉好后，Scatter 把线程池拆成 $n$ 组并各建 view tensor，各组在本节点内独立跑 TP 分片的 GEMM，只在 Gather 出口才跨节点汇合求和——三个关键设计正对应这条流向。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["前端：权重加载 + 模型定义<br/>自回归解码循环（硬件无关脚手架）"] --> B
+    B["NUMA 局部内存池 + 双缓冲 activation<br/>TP 分片权重钉到各节点本地池，奇偶层轮换缓冲"] --> C
+    C["多视图线程池 · Scatter<br/>把单池拆成 n 组，每个子图建 view tensor"]
+    C --> D
+    C --> E
+    subgraph TP["跨 NUMA 张量并行（每组只摸本节点内存）"]
+        direction TB
+        D["NUMA 0 本地 GEMM 分片"]
+        E["NUMA n 本地 GEMM 分片"]
+    end
+    TP --> F["异步子图同步 Sync B<br/>组内自跑，仅 Scatter 入口 / Gather 出口加 global barrier"]
+    F --> G["多视图线程池 · Gather<br/>收集各子图输出 reduce 求和，还原单池"]
+    G -->|下一层 block| B
+    G -->|生成 token| A
+```
 
 ### 关键设计
 

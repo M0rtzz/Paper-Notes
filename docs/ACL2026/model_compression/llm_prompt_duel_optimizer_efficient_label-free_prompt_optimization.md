@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 PDO 在每一轮中：(1) 用 D-TS 从候选池中选出最值得比较的两个提示；(2) 在一批未标注样本上让 LLM judge 做成对比较并记录胜负；(3) 每隔 $M$ 轮对当前 Copeland 冠军进行变异，生成新候选加入池中。最终返回 Copeland 分数最高的提示。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["候选提示池"] --> B["Double Thompson Sampling 选对<br/>按 Beta 后验挑出胜负未定的提示对"]
+    B --> C["LLM Judge 成对比较与去偏<br/>未标注样本上判偏好 + 随机交换顺序消位置偏差"]
+    C --> D["更新胜负计数与 Beta 后验"]
+    D -->|未到第 M 轮| B
+    D -->|每 M 轮| E["Top-Performer 引导变异<br/>变异 Copeland 冠军生成新候选、淘汰弱者"]
+    E --> A
+    D -->|预算耗尽| F["返回 Copeland 分数最高的提示"]
+```
+
 ### 关键设计
 
 **1. Double Thompson Sampling（D-TS）提示选择：把有限的比较预算砸在“胜负未定”的关键对决上**

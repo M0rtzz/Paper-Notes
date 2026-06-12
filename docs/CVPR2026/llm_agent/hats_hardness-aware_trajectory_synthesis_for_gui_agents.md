@@ -45,6 +45,18 @@ tags:
 
 HATS 要解决的是 GUI Agent 训练数据的一个老毛病：随机采轨迹会让"点设置、点确定"这类简单高频动作被反复采到，而真正难学的语义歧义动作却采不到几条。HATS 用两个模块组成一个闭环来纠偏——**Hardness-Driven Exploration** 主动去采"难"的轨迹，**Alignment-Guided Refinement** 保证采到的轨迹"指令-执行"语义对齐，并把对齐失败的信号回灌给探索，让系统越跑越聚焦在难样本上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GUI 环境<br/>状态=节点 / 动作=边"] --> B["Hardness-Driven Exploration<br/>HD-MCTS 按 UCB 优先采高 hardness 轨迹"]
+    B --> C["初始指令合成<br/>从轨迹自动生成自然语言指令"]
+    C --> D["Alignment-Guided Refinement<br/>按指令重放，算 action-level recall R"]
+    D -->|"R < 0.7"| E["精炼指令<br/>注入区分线索修复歧义描述"]
+    E --> D
+    D -->|"R ≥ 0.7"| F["入库：高质量对齐轨迹<br/>→ 行为克隆微调 GUI Agent"]
+    E -.->|"对齐失败信号回灌 hardness（闭环）"| B
+```
+
 ### 关键设计
 
 **0. 先讲清楚 hardness 到底是什么**

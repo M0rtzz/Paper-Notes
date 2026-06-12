@@ -43,6 +43,19 @@ SDB 把模态翻译重写为"在所有满足边缘约束的耦合集合 $\mathca
 ### 整体框架
 SDB 要解决的是"只给定两侧边缘 $p_\mathcal{X}, p_\mathcal{Y}$、成对标签可有可无时，如何在无穷多个可行耦合集合 $\mathcal{P}$ 里挑出一个语义对、分布有效、几何可逆的 coupling"。它沿用 LDDBM 的双向扩散桥骨架：模态特定编码器 $E_\mathcal{X}, E_\mathcal{Y}$ 把 $x, y$ 投到共享 latent，桥在 latent 上学前向 score $s_{\mathcal{X}\to\mathcal{Y}}(z,t)$ 与反向 score $s_{\mathcal{Y}\to\mathcal{X}}(z,t)$；关键改动是每个训练 step 同时优化四个可独立增删的几何约束的加性组合，把原本压在成对数据身上的三件事（对应 / 有效 / 可逆）拆给不同启发式承担，因而 $\rho=0$ 纯启发式也能跑、$\rho>0$ 时 paired 项只在成对子集上追加。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源 x、目标 y（成对标签可选）"] --> B["模态编码器 E_X、E_Y<br/>投到共享 latent"]
+    B --> C["LDDBM 双向扩散桥<br/>前向 score 与反向 score"]
+    C --> D["端点边缘匹配 + WTA 分配<br/>K 候选取最相容，容量约束防独占"]
+    C --> E["双层 Cycle Consistency<br/>端点级往返 + 轨迹级路径对齐"]
+    D --> F["统一加性目标<br/>四项软约束相加，paired 由 indicator 门控"]
+    E --> F
+    G["可选成对监督 L_pair"] --> F
+    F --> H["输出：语义对齐 / 分布有效 / 可逆的耦合"]
+```
+
 ### 关键设计
 
 **1. 端点边缘匹配 + WTA 分配：在无成对监督下挑出"最相容"的耦合**

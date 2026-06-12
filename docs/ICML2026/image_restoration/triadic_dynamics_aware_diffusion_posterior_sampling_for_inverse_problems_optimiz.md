@@ -49,6 +49,19 @@ TriPS 的骨架是一个标准的 Flow Matching 后验采样器（基于 SD3.5-M
 
 为了量化三力耦合，作者定义两类**余弦相似度可视化诊断量**：$\text{COS-SIM}_1(x_t)=\langle \tilde{b}_\text{dc},\tilde{b}_\text{cfg}\rangle/(\|\tilde{b}_\text{dc}\|\|\tilde{b}_\text{cfg}\|)$ 衡量 DC 与 CFG 的方向冲突；$\text{COS-SIM}_2(x_t)=\langle b_\text{det},\nabla_{x_t}\log p_t(x_t)\rangle/(\cdots)$ 衡量总漂移与无条件分数的对齐度。实证发现：早期 $t\simeq 1$ 时 $\text{COS-SIM}_1$ 显著为负（CFG 与 DC 对着干），CFG 越大冲突越严重，对应残差范数 $\mathcal{R}(\hat{x}_{0|t})=\|y-\mathcal{A}\hat{x}_{0|t}\|^2$ 下降速度越慢；增大 $\beta,\lambda$ 都让 $\text{COS-SIM}_2$ 下降（轨迹偏离流形），唯独增大 $\eta$ 能把 $\text{COS-SIM}_2$ 拉回正方向。这就是"三体调度趋势"的实证依据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["逆问题：测量 y + 扩散先验"] --> B["三体耦合诊断 + 命题 1<br/>COS-SIM 看 CFG-DC 冲突与流形偏离"]
+    B --> C["单调三体调度趋势<br/>β↓、λ↑、η↓"]
+    C --> D["TriPS_T：函数模板搜索<br/>27 组解析模板 grid search"]
+    D -->|warm-start| E["TriPS_G：Bernstein-Beta + GRPO<br/>精调时变曲线"]
+    D --> F["调度曲线 β(t)、λ(t)、η(t)"]
+    E --> F
+    F --> G["底层 Flow Matching 采样器<br/>CFG → Tweedie → DC 更新 → 注噪"]
+    G --> H["重建图：失真 + 感知双优"]
+```
+
 ### 关键设计
 
 **1. 三体耦合诊断 + 命题 1：把"CFG 拖累 DC"变成可监测的标量信号**

@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 B3IT 想在严格黑盒（只看输出 token）下廉价地监控某个 API 端点是否被偷偷换了模型。它分两阶段跑：先做一次 **Initialization**，在低温 $T=0$ 下对 $n$ 个候选输入各采样 $m=3$ 次，挑出那些会冒出 ≥2 个不同输出 token 的"边界输入"（Border Input, BI），再选 5 个 BI 各采 $n_1=50$ 次存成参考分布；之后进入周期性 **Detection**，每天对每个 BI 只采 $n_2=3$ 次得到当前支持集 $\hat S_2$，与参考支持集 $\hat S_1$ 一比，只要一边冒出另一边从没见过的 token（$\hat S_1 \triangle \hat S_2 \ne \emptyset$）就判模型变了。每个 BI 单次检测只花 3 个输出 token，这就是"token-efficient"的由来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["低温相变：T→0 时<br/>两 token 打平的 BI 对微扰 SNR→∞"] --> A["初始化：n 个候选输入<br/>T=0 下各采 m=3 次"]
+    A -->|"出现 ≥2 token = BI"| B["选 5 个 BI 各采 n1=50 次<br/>得参考支持集 Ŝ1"]
+    A -->|"只出 1 token，丢弃"| A
+    B --> C["检测（每 24h）：每个 BI 采 n2=3 次<br/>得当前支持集 Ŝ2"]
+    C --> D{"Ŝ1 △ Ŝ2 ≠ ∅ 且<br/>mean TV 持续跨 0.5 ≥4 天"}
+    D -->|是| E["报告模型变更"]
+    D -->|否| C
+```
+
 ### 关键设计
 
 **1. Border Input 与低温相变：把 BI 从经验 trick 抬成数学最优解**

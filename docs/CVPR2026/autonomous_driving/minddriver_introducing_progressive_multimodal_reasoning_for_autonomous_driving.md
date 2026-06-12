@@ -41,7 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MindDriver 以六路环视相机图像、历史前视帧、驾驶指令和自车状态为输入，通过统一的文本推理+视觉生成模型执行三阶段渐进推理：(1) Semantic Understanding（文本分析场景和决策）→ (2) Semantic-to-Physical Space Imagination（基于文本生成未来场景图像）→ (3) Physical-Space Trajectory Planning（基于想象图像预测轨迹）。配套反馈引导自动数据标注 pipeline 和渐进式强化微调。
+MindDriver 以六路环视相机图像、历史前视帧、驾驶指令和自车状态为输入，通过统一的文本推理+视觉生成模型执行三阶段渐进推理：(1) 语义理解（Semantic Understanding，文本分析场景和决策）→ (2) 语义到物理空间想象（Semantic-to-Physical Imagination，基于文本生成未来场景图像）→ (3) 物理空间轨迹规划（Physical-Space Trajectory Planning，基于想象图像预测轨迹）。配套反馈引导自动数据标注流水线和渐进式强化微调来生成对齐训练数据、分段优化跨模态对齐。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：六路环视 + 历史前视帧<br/>驾驶指令 + 自车状态"]
+    subgraph REASON["渐进式多模态推理（text→image→trajectory）"]
+        direction TB
+        T["语义理解 &lt;think&gt;<br/>文本分析场景与决策"]
+        D["语义到物理空间想象 &lt;dream&gt;<br/>生成未来场景图像"]
+        A["物理空间轨迹规划 &lt;answer&gt;<br/>读想象图预测轨迹"]
+        T --> D --> A
+    end
+    IN --> REASON
+    A --> OUT["输出轨迹"]
+    subgraph ANNO["反馈引导自动数据标注"]
+        direction TB
+        C1["Qwen2.5-VL-72B 视频上下文<br/>生成原始文本 CoT"]
+        C2["格式 / 决策 / 逻辑三道过滤"]
+        C1 --> C2
+        C2 -->|失败带错误描述打回重标| C1
+    end
+    ANNO -->|对齐训练数据| REASON
+    subgraph RFT["渐进式强化微调（两阶段 GRPO）"]
+        direction TB
+        S1["Stage 1：想象语义一致<br/>奖励 = CLIP 余弦相似度"]
+        S2["Stage 2：轨迹精度<br/>奖励 = ADE 折算分数"]
+        S1 --> S2
+    end
+    RFT -->|两段对齐监督| REASON
+```
 
 ### 关键设计
 

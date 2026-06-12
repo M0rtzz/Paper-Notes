@@ -40,7 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-设定：模型 $h=g_\omega\circ f_\theta$，按域序 $S=\{D_1,\dots,D_k\}$ sequential 训练，每个域只能看自己的数据 + 一个小 buffer $M$（$|M_{s'}|\ll|D_{s'}|$），部署到完全未见的目标域 $D^t$ 上评测。整体训练目标为 $\min_{\theta,\omega} L^{\text{replay}}_{\text{ERM}}(\theta,\omega)+\lambda P^{\text{replay}}_s(\theta,\omega)+\beta L^{\text{align}}(\theta,\omega)$，其中 ERM 在 current ∪ replay 上做，第二项是多域不变性惩罚，第三项是"域条件"对齐项。
+设定：模型 $h=g_\omega\circ f_\theta$，按域序 $S=\{D_1,\dots,D_k\}$ sequential 训练，每个域只能看自己的数据 + 一个小 buffer $M$（$|M_{s'}|\ll|D_{s'}|$），部署到完全未见的目标域 $D^t$ 上评测。整体训练目标为 $\min_{\theta,\omega} L^{\text{replay}}_{\text{ERM}}(\theta,\omega)+\lambda P^{\text{replay}}_s(\theta,\omega)+\beta L^{\text{align}}(\theta,\omega)$，其中 ERM 在 current ∪ replay 上做，第二项是多域不变性惩罚，第三项是"域条件"对齐项。整条 pipeline 是：当前域数据 + 按域分区的 replay buffer 拼成"多域同时可见"的联合 batch，并行算出三项损失合成总目标更新模型；每个域训练完把不变性先验 $\Phi_{s'}$ 存回 buffer 供后续对齐；全部域学完后冻结模型，部署到未见目标域评测。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["域序列 D1→…→Dk<br/>逐域 sequential 训练，当前只见 Ds"] -->|当前域 batch Bs| B
+    BUF["域分区 replay buffer M = ∪ M_s′<br/>每条存 (x, y, z=插入时 logits/特征)"] -->|采历史各域 batch Bs′| B["联合 batch B = Bs ∪ {Bs′}<br/>多域同时可见"]
+    B --> C["Replay-augmented ERM<br/>current∪replay 上算 L_ERM"]
+    B --> D["Multi-domain 不变性计算 Preplay<br/>跨域统计 φ_s′ → 惩罚 λ·P"]
+    B --> E["Domain-conditioned alignment Lalign<br/>replay batch 对齐回先验 Φ_s′"]
+    PHI["插入时刻先验 Φ_s′<br/>Welford 在域末算好并固定"] --> E
+    C --> F["总目标 L_ERM + λP + βLalign<br/>更新 θ, ω"]
+    D --> F
+    E --> F
+    F -.域 s 末存 Φ_s.-> PHI
+    F -->|学完冻结| G["部署到未见目标域 D^t 评测"]
+```
 
 ### 关键设计
 

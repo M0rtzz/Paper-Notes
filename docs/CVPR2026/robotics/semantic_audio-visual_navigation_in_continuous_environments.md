@@ -37,6 +37,32 @@ tags:
 ### 整体框架
 MAGNet 要解决的核心难题是：在连续 3D 环境里，发声目标的声音会间歇静默甚至彻底停止，一旦没了声音，传统方法就丢失了目标方位。整篇的思路是把"听到声音那一刻的目标信息"沿时间维护下去——靠的是一条情景记忆和一条自运动推理链。具体地，每一步先把 RGB-D、双耳音频、上一步动作和当前位姿编码成统一嵌入，一份存进场景记忆供策略使用，一份送进目标描述网络（GDN）推断目标在哪、是什么；GDN 输出的目标嵌入再喂给一个 Transformer 编码-解码的策略网络，结合历史场景记忆决定下一步往哪走。三个模块（观测编码器、GDN、策略网络）首尾相接，共同维持"声音消失后目标依然可追"的能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["每步观测<br/>RGB-D · 双耳音频 · 上一步动作 · 当前位姿"]
+    subgraph ENC["多模态观测编码器"]
+        direction TB
+        E1["分通道编码：视觉/动作/位姿/音频<br/>拼成一帧观测表示"] --> SM["场景记忆 M_s（滑窗 N_s=150）"]
+    end
+    subgraph GDN["记忆增强目标描述网络 GDN"]
+        direction TB
+        G1["音频+动作+位姿 MLP 融合 m_t"] --> EM["情景记忆 M_g（N_g=128）+ 位置编码"]
+        EM --> CT["因果 Transformer 编码器"]
+        CT --> GE["目标嵌入 e_t^G"]
+        CT --> ACC["ACCDDOA 目标描述<br/>声音活动·方向·距离（仅训练监督）"]
+    end
+    subgraph POL["上下文感知策略网络"]
+        direction TB
+        P1["编码器建模场景记忆 + 解码器交叉注意力"] --> P2["actor/critic 输出动作分布与价值"]
+    end
+    IN --> ENC
+    IN --> GDN
+    SM --> POL
+    GE --> POL
+    POL --> OUT["下一步动作"]
+```
+
 ### 关键设计
 
 **1. 多模态观测编码器：把异构感官信号压成一个能进记忆的向量**

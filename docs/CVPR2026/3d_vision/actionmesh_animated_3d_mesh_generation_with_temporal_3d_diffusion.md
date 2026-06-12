@@ -45,6 +45,26 @@ ActionMesh 要解决的是：怎么在两分钟内、从一段视频（或文本
 
 具体来说，第一阶段（Stage I）拿视频的参考帧跑一个现成的 image-to-3D 得到参考网格，同时用一个**时序3D扩散模型**一次性生成整段同步的3D形状序列；这一串形状动作是对齐的，但每帧各自是独立的网格、拓扑并不一致。第二阶段（Stage II）再用一个**时序3D自编码器**，把这串独立网格统一表达成参考网格顶点的逐帧偏移，输出拓扑一致、可绑定可贴图的动画3D网格。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：视频 / 文本 / 单个3D网格"] --> REF["参考帧 → image-to-3D<br/>得参考网格"]
+    REF --> S1
+    IN --> S1
+    subgraph S1["时序3D扩散模型（Stage I）"]
+        direction TB
+        A["膨胀注意力<br/>展平成跨帧自注意力同步各帧 + RoPE"] --> B["掩码生成<br/>固定已知帧当条件，统一多模态输入"]
+    end
+    S1 --> SEQ["同步但拓扑各异的<br/>独立3D形状序列"]
+    SEQ --> S2
+    REF --> S2
+    subgraph S2["时序3D自编码器（Stage II）"]
+        direction TB
+        C["冻结3D编码器<br/>逐帧点云编成 latent 序列"] --> D["4D解码器<br/>回归参考网格顶点逐帧位移场"]
+    end
+    S2 --> OUT["拓扑一致的动画3D网格<br/>可绑定·可贴图"]
+```
+
 ### 关键设计
 
 **1. 时序3D扩散模型（Stage I）：让一个只会生成静态3D的扩散模型"长出"时间轴**

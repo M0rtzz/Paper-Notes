@@ -40,7 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文先用三节量化"为什么需要市场化激励"（Sec 1–3），再综述现有市场化方法（Sec 4：Pigouvian 税、user fee、credit/subsidy、deposit-refund、tradable permits），最后提出 AI 版 cap-and-trade（Sec 5）：仅对推理 FLOP 设 cap、benchmarking 分配 + 二级市场交易、用 KKT 条件证明 FLOP 严格下降，并用数值实验在两种 buy/sell 价格下验证。
+论文先用三节量化"为什么需要市场化激励"（Sec 1–3），再综述现有市场化方法（Sec 4：Pigouvian 税、user fee、credit/subsidy、deposit-refund、tradable permits），最后提出 AI 版 cap-and-trade（Sec 5）：仅对推理 FLOP 设 cap、benchmarking 分配 + 二级市场交易、用 KKT 条件证明 FLOP 严格下降，并用数值实验在两种 buy/sell 价格下验证。机制本身是一条"政府发配额 → 公司按效率买卖/储存 → 理性公司重新求最优 → FLOP 下降"的多方流程，三个关键设计正好对应这条流程的三段。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["政府（一级市场）<br/>仅对推理 FLOP 设 cap"]
+    subgraph S1["AI Allowance 分配机制（benchmarking + assistance factor）"]
+        direction TB
+        A["免费下发配额<br/>A_i = O_i × B × C_i"] --> F["换算可用 FLOP<br/>F_i = A_i / E_i"]
+    end
+    G --> S1
+    subgraph S2["二级市场 + 配额储存（banking）"]
+        direction TB
+        SELL["高效公司卖剩余配额赚现金<br/>可 bank 到下一年"]
+        BUY["低效公司买配额，超额则重罚"]
+    end
+    S1 -->|"效率高于基准 B"| SELL
+    S1 -->|"效率低于基准 B"| BUY
+    S2 --> K["理性公司 KKT 均衡<br/>x* = (k/(a+b))^(1/(k+1))"]
+    K --> R["FLOP 严格下降<br/>x*_cap < x*_no cap"]
+```
 
 ### 关键设计
 

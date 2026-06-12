@@ -40,6 +40,17 @@ tags:
 ### 整体框架
 这篇论文要解决的是"如何让生成式世界模型既能吐出多个可能的未来、又不至于慢到没法用"。它的整条流水线建立在一个观察上：自然视频里连续帧之间的差异是结构化且低维的，背景基本静止，真正变的只有一小块场景，所以与其把每帧都表示成密集的特征图，不如只编码"帧与帧之间变了什么"。具体地，先用冻结的 VFM（DINOv3）把每帧抽成特征，再让 DeltaTok 把相邻两帧的特征差压成单个 delta token，于是一段视频从 3D 时空张量被压成一条 1D 的时间序列；DeltaWorld 预测器就在这条 delta token 序列上做生成式预测，一次前向同时给出多个未来假设，最后再解码回空间特征图喂给下游任务头。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["连续视频帧"] --> B["冻结 VFM (DINOv3)<br/>逐帧抽密集特征图"]
+    B --> C["DeltaTok 编码器<br/>相邻帧特征差压成 1 个 delta token"]
+    C --> D["DeltaWorld 预测器<br/>delta token 序列上自回归 rollout"]
+    D -->|"采 K 个噪声查询，一次前向出 K 个未来"| E["Best-of-Many<br/>只对最贴近真值的未来回传梯度"]
+    E --> F["DeltaTok 解码器<br/>前帧 + 预测的 delta token 还原特征图"]
+    F --> G["下游任务头<br/>分割 / 深度等密集预测"]
+```
+
 ### 关键设计
 
 **1. DeltaTok：把一整帧特征图的冗余压进一个 delta token**

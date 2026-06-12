@@ -45,7 +45,23 @@ EMAD 要解决的是「AD 诊断模型只给标签、不给证据」的黑箱问
 
 $$\mathbf{A}_{t \to v} = \text{Attn}(h_t', h_v', h_v'), \quad \mathbf{A}_{v \to t} = \text{Attn}(h_v', h_t', h_t')$$
 
-并用残差连接保留模态特异信息 $z_v = h_v' + \mathbf{A}_{v \to t}$、$z_t = h_t' + \mathbf{A}_{t \to v}$。融合特征替换 prompt 里的 `<sMRI>` 和 `<clinical>` 占位符，由 LLaMA 3.2-1B + rank-8 LoRA 自回归生成报告。
+并用残差连接保留模态特异信息 $z_v = h_v' + \mathbf{A}_{v \to t}$、$z_t = h_t' + \mathbf{A}_{t \to v}$。融合特征替换 prompt 里的 `<sMRI>` 和 `<clinical>` 占位符，由 LLaMA 3.2-1B + rank-8 LoRA 自回归生成报告。报告生成后，SEA Grounding 头把它逐句钉回证据与脑区；GTX-Distill 与 Executable-Rule GRPO 则分别在训练侧让对齐能力可廉价迁移、让输出守住临床规则。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：3D sMRI + 结构化临床变量"] --> B["多模态编码器<br/>3D ViT（视觉）+ Longformer（文本）"]
+    B --> C["投影 + 双向交叉注意力融合 BCA<br/>得到融合特征 z_v、z_t"]
+    C --> D["文本解码器<br/>LLaMA 3.2-1B + LoRA<br/>生成结构化报告"]
+    D --> SEA
+    subgraph SEA["1. SEA Grounding（分层证据对齐）"]
+        direction TB
+        E["句子→证据<br/>多正例 InfoNCE 匹配"] --> F["证据→解剖<br/>证据条件 3D 分割掩码"]
+    end
+    SEA --> G["可追溯诊断报告<br/>句子→证据→3D 脑区"]
+    H["2. GTX-Distill<br/>Teacher→Student KL 蒸馏"] -. 标签高效训练 SEA 对齐头 .-> SEA
+    I["3. Executable-Rule GRPO<br/>格式 / NIA-AA / 推理一致性奖励"] -. RFT 强化微调解码器 .-> D
+```
 
 ### 关键设计
 

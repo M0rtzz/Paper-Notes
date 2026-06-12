@@ -36,7 +36,17 @@ tags:
 
 ### 整体框架
 
-MSRL 要解决的是多模态奖励模型训练时「高质量多模态偏好标注极度稀缺」的瓶颈。它的核心赌注是：偏好推理这项核心能力其实可以从海量纯文本数据里学到，再迁移到多模态场景，于是把训练拆成由易到难的三阶段课程——先在大规模文本偏好数据上做 RL 建立通用奖励推理能力（Stage 1），再在 caption 化的数据上做 RL + 跨模态知识蒸馏完成偏好迁移（Stage 2），最后只用少量真实多模态数据做 RL 收尾适配（Stage 3）。
+MSRL 要解决的是多模态奖励模型训练时「高质量多模态偏好标注极度稀缺」的瓶颈。它的核心赌注是：偏好推理这项核心能力其实可以从海量纯文本数据里学到，再迁移到多模态场景，于是把训练拆成由易到难的三阶段课程——先在大规模文本偏好数据上做 RL 建立通用奖励推理能力（Stage 1），再在 caption 化的数据上做 RL + 跨模态知识蒸馏完成偏好迁移（Stage 2），最后只用少量真实多模态数据做 RL 收尾适配（Stage 3）。其中 Stage 2 由两个互补设计组成：Caption-based RL 把文本能力平滑迁到 caption，CMKD 再把 caption 上学到的推理蒸馏到真实视觉输入。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["基座 MLLM（InternVL3.5）"] --> B["Stage 1 · 文本大规模 RL<br/>HelpSteer3 SFT 学格式 → GRAM-R2 GRPO 练推理<br/>（冻结视觉编码器与投射层）"]
+    B --> C["Stage 2 · Caption-based RL<br/>图像/视频替换为 caption + 任务识别奖励 + 经验回放"]
+    C --> D["跨模态知识蒸馏 CMKD<br/>caption-MRM 采样 n 条推理 → 投票/格式/置信三步筛 o*<br/>→ 以 [c, o*] 对视觉输入做 SFT"]
+    D --> E["Stage 3 · 多模态 RL 微调<br/>仅 20k 真实多模态数据收尾适配"]
+    E --> F["生成式多模态奖励模型 MRM"]
+```
 
 ### 关键设计
 

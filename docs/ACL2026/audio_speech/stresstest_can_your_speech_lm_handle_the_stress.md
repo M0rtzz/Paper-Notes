@@ -45,6 +45,25 @@ tags:
 
 本文同时回答"怎么测"和"怎么修"两个问题。测的一侧是 StressTest 基准：由专业演员录制句子，每句至少配两种重音模式及对应含义，再从 Expresso 数据集后标注出补充集 StressPresso，专门考察模型能否从重音读出说话者意图。修的一侧是 Stress-17k 训练管线：输入只是一批可因重音改变含义的句子，经"LLM 生成重音文本 → TTS 合成重音语音 → WhiStress 自动验证筛选 → 定义四种训练任务"流水线，最终对 Qwen2Audio 做分阶段微调，得到能真正理解重音的 StresSLM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BENCH["双任务基准（StressTest / StressPresso）"]
+        direction TB
+        A["演员录制 + Expresso 后标注<br/>每句多种重音模式及含义"] --> B["SSD：检测被强调的词"]
+        A --> C["SSR：从重音推断说话者意图"]
+    end
+    subgraph DATA["Stress-17k 合成管线"]
+        direction TB
+        D["LLM 生成重音文本<br/>CrewAI + GPT-4o"] --> E["TTS 合成重音语音<br/>男/女声各一份"]
+        E --> F["WhiStress 自动验证<br/>过滤重音走样样本"]
+        F --> G["定义四种训练任务"]
+    end
+    G --> H["分阶段训练<br/>阶段1 全量 → 阶段2 验证子集<br/>混入 ASR + 情感识别防遗忘"]
+    H --> I["StresSLM"]
+    I -->|在基准上评测| BENCH
+```
+
 ### 关键设计
 
 **1. 双任务基准：先检测、再推理。** 理解一句话重音的含义，前提是先知道哪个词被强调，因此基准拆成互补的两层。SSD（句子重音检测）给定音频和转录文本，要求模型标出被强调的词，这一任务与已有研究对齐、可借现成指标比较；SSR（句子重音推理）则只给音频，让模型在两个候选含义中选出重音真正指向的那个，是本文首次提出的全新任务。两者一前一后，既能定位"听没听见重音"，又能检验"听懂没听懂重音的意思"。

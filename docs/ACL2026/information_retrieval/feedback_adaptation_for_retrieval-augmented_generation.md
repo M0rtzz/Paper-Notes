@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 本文把"反馈适应"立成 RAG 的一类新问题：系统部署后会被用户或专家纠正，关键是这些纠正多快、多有效地传播到未来的查询。整套工作由三层拼成——先形式化问题并给出两个正交的评估轴，再用免训练的 PatchRAG 在推理时即时整合反馈，最后用快照协议在反馈注入前后做对比、隔离出反馈的边际效果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["新查询 q"] --> SCORE
+    FB["纠正反馈补丁 (q_i, a_i, c_i)<br/>存入反馈记忆库（免训练）"] --> SCORE
+    subgraph PR["PatchRAG：推理时反馈整合"]
+        direction TB
+        SCORE["意图-内容混合检索打分<br/>S_i(q)=λ·sim(q,q_i)+(1−λ)·sim(q,c_i)"] --> TOPK["取 Top-k 反馈补丁"]
+        TOPK --> ICL["ICL 注入上下文 → 生成纠正输出"]
+    end
+    ICL --> EVAL["快照协议：反馈注入前后对比"]
+    EVAL -->|何时适应| LAT["纠正延迟评估轴"]
+    EVAL -->|适应得多好| POST["反馈后性能评估轴"]
+```
+
 ### 关键设计
 
 **1. 纠正延迟评估轴：量化反馈从给出到系统行为持续改变之间的时间差**

@@ -45,6 +45,19 @@ DAF 把离线 GCRL 拆成三部分模型：(1) 双线性临界网络 $V_\theta(s
 
 整个核心观察是 Proposition 3.1：双线性 $V$ 关于 $\psi$ 的梯度等于 $\phi(g)$，因此任意一步转移的价值差 $V(s',g)-V(s,g)=\phi(g)^\top(\psi(s')-\psi(s))$ 退化为一个内积。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 (s, a, s′, g)"] --> C["双线性对偶临界 V_θ(s,g)=ψ(s)·φ(g)<br/>expectile + twin Q + 目标网络"]
+    C --> P["Proposition 3.1：φ(g)=∇_ψ V<br/>目标嵌入 = 价值上升最快方向"]
+    C --> U["动作位移预测器 u_ξ(s,a)<br/>回归 γψ(s′)−ψ(s)（stop-grad）"]
+    P --> Z["DAF 分数 z_θ=u_ξ·φ(g)（+reward）<br/>realizable 下 = Bellman 优势"]
+    U --> Z
+    Z --> W["AWR 策略抽取<br/>w=min(exp(αz),W_max) 加权 BC"]
+    C -.->|AFU 耦合 绑定 V 与 z| W
+    W --> I["推断：直接采样 π_ω<br/>无 maxQ、无在线规划"]
+```
+
 ### 关键设计
 
 **1. DAF 分数：把 Bellman 优势写成"位移 · 梯度"**
@@ -55,7 +68,7 @@ $$\hat{A}_\theta(s,a,s',g)=r(s,a,g)+\phi_\theta(g)^\top(\gamma\psi_\theta(s')-\p
 
 也就是把 GCRL 的优势写成"动作引起的特征位移"与"目标方向"的内积。在 realizable 情形下（$V^\pi=\psi^\top\phi$ 精确成立），它与真 Bellman 优势 $A^\pi(s,a,g)$ 严格相等（Corollary 3.2 + Appendix F.1），所以拿它做 AWR 就是标准的策略改进步骤。这样就绕开了"再训一个和 $V$ 表示割裂、还会累积 bootstrap 误差的 Q 网络"——DAF 重用对偶临界已有的几何，把"动作如何改变特征"单独抽出来学，再用闭式内积合成优势。
 
-**2. Action-effect 模型 $u_\xi(s,a)$：把对 $s'$ 的依赖移到训练时**
+**2. 动作位移预测器 $u_\xi(s,a)$（action-effect model）：把对 $s'$ 的依赖移到训练时**
 
 $\hat{A}$ 里那项 $\gamma\psi(s')-\psi(s)$ 需要 $s'$，但随机环境下每个 $(s,a)$ 只有一条样本，直接用方差很大。DAF 学一个 action-effect 模型来预测表示空间中的折扣位移 $u_\xi(s,a)\approx\mathbb{E}_{s'\sim p(\cdot|s,a)}[\gamma\psi_\theta(s')-\psi_\theta(s)]$，训练目标是
 

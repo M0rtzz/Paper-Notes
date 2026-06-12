@@ -43,7 +43,21 @@ tags:
 
 ### 整体框架
 
-方法分为两个阶段：首先通过线性探测分析 VLM 各层表示中的美学属性编码情况（探测阶段），然后基于发现，训练用户特定的线性模型从 VLM 隐藏表示预测个性化美学评分（PIAA 阶段）。输入为图像 + 固定提示语（"Assess the aesthetics of this image."），提取各层隐藏表示后通过平均池化得到单一向量。
+方法分为两个阶段：首先通过线性探测分析 VLM 各层表示中的美学属性编码情况（探测阶段），然后基于发现，训练用户特定的线性模型从 VLM 隐藏表示预测个性化美学评分（PIAA 阶段）。输入为图像 + 固定提示语（"Assess the aesthetics of this image."），提取各层隐藏表示后通过平均池化得到单一向量，作为共享前端供三个下游线性头使用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 固定提示语<br/>Assess the aesthetics of this image."] --> B["逐层提取隐藏表示<br/>视觉编码器 / 文本 token / 视觉 token"]
+    B --> C["平均池化得到向量 h(I)"]
+    C --> D["多层美学属性线性探测<br/>岭回归预测 AADB 11 维属性"]
+    C --> E["用户特定线性回归 Linear-Hidden<br/>取 LT15 → 个人评分"]
+    C --> F["属性降维变体 Linear-Hidden Reduce<br/>投影到属性空间再回归"]
+    D -->|定位富集层选 LT15| E
+    D -->|取探测识别的属性| F
+    E --> G["个性化美学评分 (PIAA)"]
+    F --> G
+```
 
 ### 关键设计
 

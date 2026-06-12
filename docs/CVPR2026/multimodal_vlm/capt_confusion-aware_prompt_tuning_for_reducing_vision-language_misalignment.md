@@ -38,7 +38,19 @@ tags:
 
 ### 整体框架
 
-CAPT 把「从误对齐中学习」做成一条闭环：在 CLIP 的 prompt tuning 之上挂一个**混淆银行**记录被错分的样本，再分别从**语义层面**（SEM）和**样本层面**（SAM）挖掘混淆模式，最后用一个**多粒度差异专家**（MGDE）把两路信息融合进 prompt，针对性地修正那些反复混淆的类别对。
+CAPT 把「从误对齐中学习」做成一条闭环：在 CLIP 的 prompt tuning 之上挂一个**混淆银行**记录被错分的样本，再用**语义混淆挖掘器**（SEM）从语义层面挖出最该修的混淆对，**样本混淆挖掘器**（SAM）在这些混淆对上补上细粒度的样本线索，最后由**多粒度差异专家**（MGDE）把语义、样本两路信息融合进 prompt，针对性地修正那些反复混淆的类别对；修正后的新预测又把错分样本回写混淆银行，构成持续学习的闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像-文本对<br/>CLIP 编码 + 跨模态匹配"] --> BANK["混淆银行<br/>用 pseudo-GT 登记错分样本，建类间混淆索引"]
+    BANK --> SEM["SEM 语义混淆挖掘器<br/>混淆分数 S 取 top-k 语义混淆对 → LLM 生成共性/差异 prompt"]
+    SEM --> SAM["SAM 样本混淆挖掘器<br/>检索代表混淆样本 → Diff-Manner Adapter 融全局+局部"]
+    SEM --> MGDE["MGDE 多粒度差异专家<br/>语义专家 + 样本专家，K-means 压 token + 路由自适应融合"]
+    SAM --> MGDE
+    MGDE --> OUT["混淆感知 prompt<br/>针对性修正反复混淆的类别对"]
+    OUT -.错分样本回写.-> BANK
+```
 
 ### 关键设计
 

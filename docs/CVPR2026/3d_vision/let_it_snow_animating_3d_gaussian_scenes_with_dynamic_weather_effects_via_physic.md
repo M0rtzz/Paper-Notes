@@ -49,6 +49,25 @@ tags:
 
 本文的做法是把两者串成两阶段：先用 Material Point Method（MPM）物理仿真把动态粒子的参考运动轨迹算出来当先验，再训练一个循环神经动力学模型，通过 Physics-Guided Score Distillation 在这个先验的"软约束"下联合优化运动和外观。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["静态 3DGS 场景<br/>（多视角图像重建）"] --> PHY
+    subgraph PHY["物理运动先验（MPM 仿真）"]
+        direction TB
+        B["重建场景 + 提取 mesh<br/>静态高斯映射成 MPM 障碍物"] --> C["引入动态天气粒子<br/>设发射区域 / 速率 / 初速度 / 材料"]
+        C --> D["MPM 仿真出参考运动轨迹<br/>主动粒子追踪 + 按天气定制 mesh 碰撞精修"]
+    end
+    PHY --> NN
+    subgraph NN["循环神经动力学模型"]
+        direction TB
+        E["输入：上一时刻渲染状态<br/>+ 物理仿真速度 + 时间步"] --> F["双 MLP（active / collided）<br/>输出 Δv、角速度 ω、外观增量 ΔA"]
+        F --> G["递推更新运动与外观"]
+    end
+    NN -->|"Video-SDS + 物理正则（SDS 自适应权重）联合优化"| H["动态天气 4D 场景<br/>雪 / 雨 / 雾 / 沙尘暴"]
+    G -.->|"逐时间步循环"| E
+```
+
 ### 关键设计
 
 **1. 物理运动先验：用 MPM 仿真给天气粒子一条物理合理的运动轨迹**

@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VstoryGen 要解决的是「从一句自由描述生成一整段镜头连贯、角色/场景一致、还带电影镜头语言的视觉故事」。它把这件事拆成三段接力：先让 GPT-4o 把用户的自由文本扩写成结构化脚本（每个镜头配好 text prompt、要复用的角色/背景参考图、以及镜头类型），再由核心组件 CustFilmer 逐帧生成一致的关键帧，最后交给现成的 TI2V（text-and-image-to-video）模型把每张关键帧扩成视频片段拼成完整故事。真正的技术贡献集中在中间的 CustFilmer——它把一个原本只会「单次图像编辑」的统一多模态大模型（UMLLM）改造成能一帧接一帧、带记忆地往下生成的故事生成器。
+VstoryGen 要解决的是「从一句自由描述生成一整段镜头连贯、角色/场景一致、还带电影镜头语言的视觉故事」。它把这件事拆成三段接力：先让 GPT-4o 把用户的自由文本扩写成结构化脚本（每个镜头配好 text prompt、要复用的角色/背景参考图、以及镜头类型），再由核心组件 CustFilmer 逐帧生成一致的关键帧，最后交给现成的 TI2V（text-and-image-to-video）模型把每张关键帧扩成视频片段拼成完整故事。真正的技术贡献集中在中间的 CustFilmer——它把一个原本只会「单次图像编辑」的统一多模态大模型（UMLLM）改造成能一帧接一帧、带记忆地往下生成的故事生成器。在 CustFilmer 内部，每一帧走两条并行的条件分支：文本侧由 TPC 联合编码出 $h_t$、再被镜头类型嵌入前缀成 $h_t'$；视觉侧由记忆库检索出 $z_t$；两路在关键帧级自回归生成里汇合成 DiT 解码器的条件，出图 $I_t$ 又写回记忆库供后续帧检索，形成一条逐帧推进的回环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自由文本描述 D"] --> B["GPT-4o 导演<br/>扩写结构化脚本：text prompt + 角色/背景参考图 + 镜头类型"]
+    B --> C["Text Prompt Consolidation（TPC）<br/>全故事 prompt 联合编码 → 文本条件 h_t"]
+    B --> E["Visual Reference Memory Bank & Retrieval<br/>按角色/背景 key 检索参考图 + 最近 μ 帧 → VAE → z_t"]
+    C --> D["Shot-type Prompt Tuning<br/>前缀拼镜头嵌入 → h_t'"]
+    D --> F["Keyframe-wise AR Generation<br/>I_t = DiT(h_t', z_t)"]
+    E --> F
+    F -->|生成帧 I_t 写回记忆库| E
+    F --> G["TI2V 扩展<br/>关键帧扩成视频片段并拼接成完整故事"]
+```
 
 ### 关键设计
 

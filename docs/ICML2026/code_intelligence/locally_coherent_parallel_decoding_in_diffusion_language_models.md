@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CoDiLA 要解决的是 DLM 并行采样时"相邻 token 各自都对、连起来语法不通"的局部不连贯问题。它的做法是让冻结的 DLM 主干继续做全局草稿、再外挂一个轻量 AR 小模型在每个小块内做局部清洁。具体来说，DLM（双向 Transformer，参数 $\psi$，如 Dream-Coder-Instruct-7B）对带 [MASK] 的序列 $x_t$ 一次前向，给出每个位置的边缘分布 $\pi^j_\psi(x_t)\in\Delta^{|V|-1}$；序列被切成长度 $B$ 的连续块，要解码的块把它 $B$ 个边缘分布转成"软嵌入"喂给 AR 小模型（参数 $\phi$，如 Qwen3-0.6B），AR 在块内自回归地解出真实 token。最终联合概率 $p_\theta(b^i_0\mid x_t)=p^{\text{AR}}_\phi(b^i_0\mid\pi_\psi(x_t))$，整体参数 $\theta=[\psi,\phi]$ 中只训练 AR。
+CoDiLA 要解决的是 DLM 并行采样时"相邻 token 各自都对、连起来语法不通"的局部不连贯问题。它的做法是让冻结的 DLM 主干继续做全局草稿、再外挂一个轻量 AR 小模型在每个小块内做局部清洁。具体来说，DLM（双向 Transformer，参数 $\psi$，如 Dream-Coder-Instruct-7B）对带 [MASK] 的序列 $x_t$ 一次前向，给出每个位置的边缘分布 $\pi^j_\psi(x_t)\in\Delta^{|V|-1}$；序列被切成长度 $B$ 的连续块（**块级扩散**），要解码的块把它 $B$ 个边缘分布经**软条件接口**转成"软嵌入"喂给 AR 小模型（参数 $\phi$，如 Qwen3-0.6B），AR 在块内自回归地解出真实 token；推理时由**三档生成调度**决定每步解多少。最终联合概率 $p_\theta(b^i_0\mid x_t)=p^{\text{AR}}_\phi(b^i_0\mid\pi_\psi(x_t))$，整体参数 $\theta=[\psi,\phi]$ 中只训练 AR。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["带 [MASK] 的序列 x_t"] --> B["DLM 主干（冻结·双向注意力）前向<br/>输出每位置边缘分布 π"]
+    B --> C["块级扩散<br/>切成长度 B 的块：块内联合、块间独立"]
+    C --> D["软条件接口<br/>边缘分布→期望软嵌入 + 思考标签包络"]
+    D --> E["轻量 AR 小模型（因果注意力）<br/>块内自回归解出相干块"]
+    E --> F["三档生成调度<br/>静态并行 / 动态并行 / AR 验证"]
+    F -->|每步解 1 至 B 个 token，回填后进入下一步| A
+    F --> G["输出：局部相干的并行解码序列"]
+```
 
 ### 关键设计
 

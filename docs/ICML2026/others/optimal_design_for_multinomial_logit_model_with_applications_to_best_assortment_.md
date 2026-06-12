@@ -41,7 +41,28 @@ tags:
 
 ### 整体框架
 
-整个 pipeline 围绕**局部 G-optimal design** 展开：(1) 给定名义参数 $\theta_0$（最佳组合识别里用 warm-up 探索阶段估出）；(2) 跑 Frank–Wolfe 极大化 D-optimal 目标 $f_{\theta_0}(\pi) = \log\det(\mathbf{M}_{\theta_0}(\pi))$（KW 等价定理保证它和 G-optimal 同一最优解）；(3) 每一步 FW 迭代解一个 LMO $S_m \in \arg\max_S \text{tr}(\mathbf{M}_m^{-1} \mathbf{I}_{\theta_0}(S))$——本文两个核心贡献就是给这个 LMO 写两种解法；(4) 把得到的设计 $\hat\pi_{\theta_0}$ 喂给 BSI-MNL（Best aSsortment Identification for MNL）算法做纯探索。
+整个 pipeline 围绕**局部 G-optimal design** 展开：(1) 给定名义参数 $\theta_0$（最佳组合识别里用 warm-up 探索阶段估出）；(2) 跑 Frank–Wolfe 极大化 D-optimal 目标 $f_{\theta_0}(\pi) = \log\det(\mathbf{M}_{\theta_0}(\pi))$（KW 等价定理保证它和 G-optimal 同一最优解）；(3) 每一步 FW 迭代解一个 LMO $S_m \in \arg\max_S \text{tr}(\mathbf{M}_m^{-1} \mathbf{I}_{\theta_0}(S))$——本文两个核心贡献就是给这个 LMO 写两种解法（MILP 精确重写 / Schur 补升维）；(4) 把整套设计包进 BSI-MNL（Best aSsortment Identification for MNL）算法：warm-up 估 $\theta_0$ → 设计基采样并更新 MLE → 停止准则认证后输出最佳组合 $S^*$。下图把 BSI-MNL 的外层流程与内部 FW/LMO 的两条出口画在一起。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：N 个带特征 a_i、非均匀收益 r_i 的商品"] --> B
+    subgraph BSI["BSI-MNL（最佳组合识别）"]
+        direction TB
+        B["warm-up 均匀探索<br/>估名义参数 θ0，保证 ‖θ0−θ*‖ 一致小"] --> C["Frank–Wolfe 求 G-optimal 设计<br/>极大化 logdet(M_θ0(π))，KW 定理 ≡ G-optimal"]
+        C --> LMO
+        subgraph LMO["每步 LMO：argmax_S tr(M⁻¹ I_θ0(S))（两条出口）"]
+            direction TB
+            D1["MILP 精确重写<br/>0–1 MILP + 求解器认证早停"]
+            D2["Schur 补升维<br/>比值最大化，O(NK) 多项式时间"]
+        end
+        LMO --> E["G-optimal 设计 π̂_θ0"]
+        E --> F["设计基采样 + 更新 MLE θ̂"]
+        F --> G{"停止准则：Δ̂ vs 置信半径"}
+        G -->|未认证| F
+    end
+    G -->|认证最优| H["输出最佳组合 S*"]
+```
 
 ### 关键设计
 

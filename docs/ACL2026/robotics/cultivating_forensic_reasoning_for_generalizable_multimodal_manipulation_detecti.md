@@ -42,6 +42,29 @@ tags:
 ### 整体框架
 REFORM 想解决的问题是：现有多模态伪造检测靠结果导向监督，只把样本映射到最终标签，于是模型记住的是某个数据集的统计伪影，换域/换生成器就失效。它的思路是把检测改写成"学习可验证的取证推理过程"，从数据、结构、训练三处闭环。输入一条多模态新闻样本（图像 + 文本提示 + 待判断图文内容），模型先把图像编码成视觉 token、把任务指令编码成文本 token，再通过冻结的 Cognitive Priming Encoder 让一组可学习的 reason tokens 从视觉与文本上下文中抽取伪造线索；编码后并行接入两个解码器——Answer Decoder 输出真假/伪造类型/定位坐标，Reason Decoder 输出解释性取证推理。训练分三阶段：先单训推理分支让 reason tokens 对齐蒸馏理由，再解冻整体同时生成理由和答案并加一致性约束，最后用 GRPO 从多条候选推理里学更可靠的路径。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["ROM 推理增强数据集"]
+        direction TB
+        A["场景级伪造样本<br/>背景替换 / 整图生成 / 文本篡改组合"] --> B["InternVL3.5-30B 蒸馏取证理由<br/>704K 图文对·9 类伪造·5 新闻域"]
+    end
+    DATA -->|提供过程监督| ARCH
+    subgraph ARCH["Cognitive Priming 与双解码器"]
+        direction TB
+        C["图像 → 视觉 token，指令 → 文本 token"] --> D["冻结 Cognitive Priming Encoder<br/>reason tokens 抽取伪造线索"]
+        D --> E["多模态编码器读取 [图像; reason tokens; 文本]"]
+        E --> F["Answer Decoder<br/>真假 / 伪造类型 / 定位坐标"]
+        E --> G["Reason Decoder<br/>取证推理解释"]
+    end
+    ARCH -->|对此结构训练| TRAIN
+    subgraph TRAIN["三阶段推理驱动训练"]
+        direction TB
+        H["① Reasoning Warm-up：仅训推理分支重建理由"] --> I["② Joint Fine-Tuning：理由 + 答案 + 一致性损失 RAC"]
+        I --> J["③ Policy Refinement：GRPO 探索更可靠推理链"]
+    end
+```
+
 ### 关键设计
 
 **1. ROM 推理增强数据集：把训练信号从"短答案"换成"覆盖更广的场景级伪造 + 取证理由"**

@@ -1,0 +1,152 @@
+---
+title: >-
+  [论文解读] Context-Aware Hierarchical Merging for Long Document Summarization
+description: >-
+  [ACL 2025][文本生成][长文档摘要] 提出上下文感知的层次合并（CAHM）方法，通过在层次合并摘要过程中引入源文档的相关上下文（抽取/检索/引用三种方式），有效缓解 LLM 在超长文档（>100K tokens）摘要中的幻觉问题。
+tags:
+  - "ACL 2025"
+  - "文本生成"
+  - "长文档摘要"
+  - "层次合并"
+  - "上下文增强"
+  - "幻觉缓解"
+  - "忠实性"
+---
+
+# Context-Aware Hierarchical Merging for Long Document Summarization
+
+**会议**: ACL 2025  
+**arXiv**: [2502.00977](https://arxiv.org/abs/2502.00977)  
+**代码**: [https://github.com/Leonard907/CAHM](https://github.com/Leonard907/CAHM)  
+**领域**: 文本生成  
+**关键词**: 长文档摘要, 层次合并, 上下文增强, 幻觉缓解, 忠实性
+
+## 一句话总结
+
+提出上下文感知的层次合并（CAHM）方法，通过在层次合并摘要过程中引入源文档的相关上下文（抽取/检索/引用三种方式），有效缓解 LLM 在超长文档（>100K tokens）摘要中的幻觉问题。
+
+## 研究背景与动机
+
+**领域现状**：超长文档（法律文书、小说等，通常超过 100K tokens）的摘要是 NLP 重要任务。层次合并（Hierarchical Merging）是处理超长输入的主流方法——将文档切块、逐块摘要、再递归合并。
+
+**现有痛点**：层次合并在递归合并过程中会**放大 LLM 的幻觉**，因为中间摘要可能包含事实错误，而这些错误在后续合并中被反复引用和强化，导致最终摘要的忠实性下降。
+
+**核心矛盾**：层次合并能处理超长输入，但与源文档的联系在递归过程中逐步断裂，导致忠实性降低。如何在保持可扩展性的同时维持与源文档的事实一致性？
+
+**本文目标**：在层次合并的中间阶段引入源文档上下文，增强中间摘要的事实基础，从而提高最终摘要的忠实性。
+
+**切入角度**：从 RAG 思想出发，设计"引入上下文"（Incorporate Context, IC）模块，探索三种上下文获取方式和两种上下文使用方式的组合。
+
+**核心 idea**：在层次合并的每一层引入源文档相关上下文，通过"替换"或"支持"两种策略增强中间摘要的忠实性。
+
+## 方法详解
+
+### 整体框架
+
+在标准层次合并的基础上，每一层增加一个 **IC（Incorporate Context）模块**，同时获取抽象摘要和相关源文档上下文。在生成下一层摘要时，可以：
+- **Support**：将上下文作为支持证据，与上一层摘要一起输入
+- **Replace**：用上下文直接替换上一层的抽象摘要
+
+### 关键设计
+
+1. **Extract（抽取式摘要）**：使用 MemSum（基于强化学习训练的抽取式摘要器）从源文档块中选择关键句子。抽取式摘要天然选择与抽象摘要涵盖相同关键信息的句子，因此适合作为替代或支持上下文。在 Multi-LexSum 和 BookSum 上分别微调。
+
+2. **Retrieve（信息检索）**：使用中间抽象摘要作为查询，通过 BM25 从源文档块中检索相关段落（每段约 100 词）。利用 LLM 蒸馏关键信息的能力生成简洁查询，再用检索增强事实性。
+
+3. **Cite（引用生成）**：指示 LLM 在生成中间摘要时引用源文档段落编号（如 [1]、[2]），然后基于引用频率排序选择 top-k 段落作为相关上下文。无需额外检索或抽取步骤。
+
+4. **Support vs Replace**：
+
+    - Support：保留抽象摘要 + 附加上下文作为证据 → 信息密度高，覆盖面广
+    - Replace：直接用源文档上下文替代抽象摘要 → 忠实性最高但可能丢失全局视野
+
+### 损失函数/训练策略
+
+- 所有层次合并使用零样本提示（zero-shot prompting），**无需额外训练**（除 MemSum 微调外）
+- Chunk 大小和最大合并上下文长度均设为 8K tokens
+- 使用 Llama-3.1 8B 和 70B（GPTQ-INT4 量化），128K 上下文长度
+
+## 实验关键数据
+
+### 主实验（Llama-3.1-70B，Multi-LexSum）
+
+| 方法 | ROUGE | BERTScore | SummaC | AlignScore | PRisma |
+|------|-------|-----------|--------|------------|--------|
+| Zero-shot | 23.6 | 60.7 | 43.5 | 77.6 | 41.5 |
+| HMerge | 26.7 | 64.3 | 43.4 | 76.3 | 48.2 |
+| Extract-Support | **27.6** | 64.1 | 43.2 | 79.0 | **49.7** |
+| Retrieve-Support | 26.6 | **66.1** | 44.5 | 78.8 | 49.8 |
+| Cite-Replace | 22.5 | 61.9 | **51.6** | **85.8** | 40.6 |
+| Retrieve-Replace | 24.7 | 62.1 | 47.9 | 80.3 | 43.8 |
+
+### 消融实验（8B，Replace 增大上下文长度，Retrieve-Replace，PRisma）
+
+| 上下文长度 | Multi-LexSum | SuperSummary |
+|-----------|-------------|-------------|
+| 8K | 41.8 | 23.3 |
+| 16K | 43.7 (+1.9) | 26.5 (+3.2) |
+| 32K | 44.1 (+2.3) | 27.9 (+4.6) |
+
+即使扩到 32K，Replace 仍不及 Retrieve-Support（46.1/38.4），说明抽象摘要不可或缺。
+
+### 人工评估（70B，SuperSummary 一本书）
+
+| 方法 | Correct | Incorrect | Not Present |
+|------|---------|-----------|-------------|
+| Extract-Support | **72.7%** | 18.2% | 9.1% |
+| HMerge | 59.1% | 27.3% | 13.6% |
+| Zero-shot | 60.0% | 20.0% | 20.0% |
+| Extract-Replace | 48.8% | 23.3% | 27.9% |
+
+### 关键发现
+
+- **Extract-Support 综合最优**：在所有指标的平均排名最高，人工评估中 Correct 比率高出 HMerge 13.6 个百分点
+- **Replace 在 input-based 指标上大幅提升**：Cite-Replace 的 AlignScore 在 SuperSummary 上比基线高约 10 分，因为直接使用源文档片段
+- **Support 在 reference-based 指标上显著更好**：抽象摘要保证了信息覆盖面，避免过度关注局部细节
+- **Cite 方法效果最弱**：LLM 准确生成引用是困难的，需要理解和执行复杂指令
+- **Replace 容易"跑偏"**：手动检查发现 Replace 摘要倾向强调边缘细节（对话、场景描写），而非关键事件
+- **70B vs 8B**：70B 在 reference-based 指标上有中等提升，但 input-based 指标改进不大
+- **书籍摘要比法律摘要更难**：SuperSummary 上所有方法得分一致低于 Multi-LexSum
+
+## 亮点与洞察
+
+- 将 RAG 思想优雅地嵌入层次合并框架，设计空间清晰：3 种上下文获取 × 2 种使用方式 = 6 种变体
+- 人工评估揭示了自动指标的偏向性：input-based 指标偏爱 Replace，reference-based 指标偏爱 Support，实际忠实性以 Support 更优
+- 核心洞察：**抽象摘要的信息密度不可替代**——同样长度下，抽象摘要覆盖更多关键事件，而源文档片段对单一事件过度展开
+- MemSum + BM25 的轻量级方案在不增加训练成本的情况下带来一致的改进
+
+## 局限与展望
+
+1. **人工评估规模有限**：仅对一本书做了详细标注，成本 $200-250/本 + 10 小时/人
+2. **Support 推理成本高**：支持上下文使合并阶段输入变长，未来可按需选取上下文
+3. **数据集域受限**：仅法律和叙事两个领域，>100K tokens 的高质量摘要数据集稀缺
+4. **Cite 方法潜力未释放**：引用准确性是瓶颈，可通过后处理或专门训练改善
+
+## 相关工作与启发
+
+- **层次合并**：Wu et al. 2021 首提，Chang et al. 2024 改为零样本提示——本文在此基础上引入上下文
+- **RAG**：检索增强生成已在 QA 领域证明有效，本文首次将其系统性地应用于超长文档摘要
+- **启发**：可探索自适应决策——根据中间摘要质量动态决定是否调用上下文增强；可结合 GraphRAG 处理文档结构信息
+
+## 评分
+
+- **新颖性**: ⭐⭐⭐⭐ — 将 RAG 融入层次合并是自然但重要的创新
+- **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、两个模型规模、6 变体 + 人工评估
+- **写作质量**: ⭐⭐⭐⭐⭐ — 结构清晰，分析深入，图示直观
+- **价值**: ⭐⭐⭐⭐ — 为超长文档摘要提供实用且可复现的改进方案
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Multi-document Summarization through Multi-document Event Relation Graph Reasoning in LLMs](event_graph_bias_mitigation_summarization.md)
+- [\[ACL 2025\] Decomposed Opinion Summarization with Verified Aspect-Aware Modules](decomposed_opinion_summarization_with_verified_aspect-aware_modules.md)
+- [\[ACL 2026\] XtraGPT: Context-Aware and Controllable Academic Paper Revision via Human-AI Collaboration](../../ACL2026/nlp_generation/xtragpt_context-aware_and_controllable_academic_paper_revision_via_human-ai_coll.md)
+- [\[ACL 2025\] Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [\[ACL 2025\] DTCRS: Dynamic Tree Construction for Recursive Summarization](dtcrs_dynamic_tree_construction_for_recursive_summarization.md)
+
+</div>
+
+<!-- RELATED:END -->

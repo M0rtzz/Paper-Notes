@@ -41,28 +41,39 @@ tags:
 论文考虑一个 oblivious adversary 给出的操作序列，每步插入或删除一个元素。算法在每个时间 $t$ 维护可行解 $ALG_t\subseteq X_t$。目标有两个：近似性要求 $\mathbb{E}[f(ALG_t)]\geq \alpha f(OPT_t)$；一致性要求相邻解的 symmetric difference $|ALG_t\triangle ALG_{t-1}|$ 被某个小量 $C$ 控制。
 
 ### 整体框架
-框架由三部分组成：Random-Scheduling、robust routine $\mathcal{A}_R$、non-robust routine $\mathcal{A}_N$。Random-Scheduling 根据最大和最小 robustness 参数 $d_0,d_\ell$ 生成多级 transition times，每一级对应一个 deletion robustness level。某个 transition time 到来时，算法调用 robust routine 重新计算该级别的中间解和剩余候选集；在普通时间步，算法从最近低级 transition 的中间解出发，用 non-robust routine 处理新候选元素。
+框架由三部分组成：Random-Scheduling、鲁棒例程（robust routine）$\mathcal{A}_R$、非鲁棒例程（non-robust routine）$\mathcal{A}_N$。Random-Scheduling 根据最大和最小鲁棒参数 $d_0,d_\ell$ 生成多级 transition times，每一级对应一个删除鲁棒级别（deletion robustness level）。某个 transition time 到来时，算法调用鲁棒例程重新计算该级别的中间解和剩余候选集，并在随后的过渡窗口里把解逐步切换过去；在普通时间步（不在任何过渡窗口内），算法从最近一次最细级别（level $\ell$）transition 留下的中间解出发，用非鲁棒例程处理新候选元素。
 
-关键不是只重算，而是如何展示解。transition window 内，算法不立刻把旧解替换成新解，而是把新旧差集切成若干块，每一步只换一块，并始终保持 matroid 可行性。这样，即使内部中间解变化很大，用户看到的 $ALG_t$ 也只发生受控变化。
+关键不只是何时重算，更是如何展示解。过渡窗口（transition window）内，算法不立刻把旧解替换成新解，而是把新旧差集切成若干块，每一步只换一块，并始终保持 matroid 可行性。这样，即使内部中间解变化很大，用户看到的 $\text{ALG}_t$ 也只发生受控变化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：插入/删除操作流 X_t<br/>单调子模函数 f + matroid 约束"] --> B["随机多级调度 Random-Scheduling<br/>生成各级 d_i=⌈d_0/2^i⌉ 过渡时刻 + 随机平移 τ"]
+    B --> C{"当前步 t 是<br/>某级 transition time？"}
+    C -->|是| D["删除鲁棒例程 𝒜_R<br/>从上一级中间解出发，按边际倒数采样高价值候选<br/>输出新解 I_t + 剩余候选集 C_t"]
+    D --> E["一致性过渡窗口<br/>共享元素不动，差集切块逐步 swap<br/>用 matroid 交换性维持可行"]
+    C -->|否| F["非鲁棒例程 𝒜_N<br/>从最近 level-ℓ 中间解出发<br/>按序处理全部新候选元素"]
+    E --> G["当前可行解 ALG_t ⊆ X_t<br/>每步 symmetric difference 受控"]
+    F --> G
+```
 
 ### 关键设计
-1. **随机多级调度 Random-Scheduling**:
 
-	- 功能：决定何时为不同 robustness level 重新计算鲁棒中间解，并确保 transition windows 互不重叠。
-	- 核心思路：从大鲁棒级别 $d_0$ 开始把时间轴分块，每个块前部留出 $\varepsilon' d_i$ 的过渡窗口；下一层再递归切分剩余区间。最后整体做一个均匀随机 shift，使任意固定时间落入 transition window 的概率受控。
-	- 设计动机：不同删除规模需要不同重算频率。高鲁棒级别不必常重算，低鲁棒级别需要更近；随机 shift 让分析可以把 transition 的损失平均化。
+**1. 随机多级调度 Random-Scheduling：把"何时重算"离线定好**
 
-2. **删除鲁棒例程与剩余候选集**:
+fully dynamic 的麻烦在于删除规模未知且随时间变化——删 1 个还是删 $k$ 个事先不知道。框架不去猜单一删除预算，而是同时维护一族鲁棒级别 $d_i=\lceil d_0/2^i\rceil$（从最大 $d_0$ 递减到最小 $d_\ell$），让不同级别分别防御不同规模的删除。Random-Scheduling 在算法开始时一次性把时间轴递归切块：level 0 按长度 $d_0$ 分段、每段开头留出长 $\varepsilon' d_0$ 的过渡窗口，剩余区间再递归二分给下一级，直到最细级别 $d_\ell$；最后对所有时刻做一次均匀随机的循环平移 $\tau$。这个随机平移是分析的关键——它保证任意固定时刻落入过渡窗口的概率至多 $\varepsilon$（Lemma 3.2），从而能把"过渡期内近似性变差"的损失平均掉；调度同时保证各级过渡窗口互不重叠。高鲁棒级别重算频率低、低鲁棒级别重算更勤，恰好匹配"大删除少见、小删除频繁"的直觉。
 
-	- 功能：在不知道未来删除位置的情况下，构造对一定数量删除仍保持价值的中间解。
-	- 核心思路：robust routine 输入初始解、候选集和参数 $d$，输出更新解 $I$ 与尚未处理完但仍可能有用的候选集 $C$。matroid 情况使用 Robust-Swap，按边际贡献的倒数采样候选元素，并只保留边际足够高的元素；cardinality 情况使用 Robust-Greedy，从高边际候选中采样。
-	- 设计动机：删除发生后，某些已选元素会失效。保留一个小而有代表性的候选残集，可以在未来时间步中用很少变动修补解。
+**2. 删除鲁棒例程 $\mathcal{A}_R$ 与剩余候选集：留住一个抗删除的候选残集**
 
-3. **一致性过渡窗口**:
+每到一个 transition time，框架就调用鲁棒例程 $\mathcal{A}_R$，输入是上一级的中间解 $I_{t'}$、候选集 $X_t\setminus(X_{t'}\setminus C_{t'})$ 和该级鲁棒参数 $d_i$，输出更新后的解 $I_t$ 和一个**剩余候选集** $C_t$。它的核心是 deletion-robust coreset 的采样思想：matroid 情形用 Robust-Swap，按元素边际贡献 $f(u\mid I)$ 的**倒数**为概率采样候选（边际越小越可能被换进来，避免解过度依赖少数高价值元素），并不断滤掉边际不够高的候选，直到候选数降到 $d/\varepsilon$ 以下才停；cardinality 情形用更简单的 Robust-Greedy，单一鲁棒级别即可。之所以要留下 $C_t$ 而不是把候选用尽，是因为这些"留着没用完"的高价值元素正是删除发生后的修补储备——当某个支配性元素被删，可以从 $C_t$ 里用很少的变动补回价值，而不必重建整个解。
 
-	- 功能：把一次可能很大的解替换变成多步小替换。
-	- 核心思路：transition time 计算出新解 $I_t$ 后，旧解与新解的共同元素保持不动；只把 $I_t\setminus ALG_{old}$ 和 $ALG_{old}\setminus I_t$ 切成同样数量的块，在窗口内逐步 swap，并用 matroid exchange 性质维持可行。
-	- 设计动机：动态算法内部可以为了近似性重算，但对外暴露的解必须稳定。窗口机制把内部重构和外部一致性解耦。
+**3. 非鲁棒例程 $\mathcal{A}_N$：普通步上的轻量跟进**
+
+绝大多数时间步并不是 transition time，这些普通步由非鲁棒例程 $\mathcal{A}_N$ 处理：它从最近一次最细级别（level $\ell$）transition 留下的中间解 $I_{t'}$ 出发，把候选集 $X_t\setminus(X_{t'}\setminus C_{t'})$ 里的元素**全部**按固定顺序处理一遍（matroid 用 Swap：仅当某元素边际贡献至少是被替换元素的两倍时才换入），不采样、不提前停止。它不负责抗删除（那是 $\mathcal{A}_R$ 已经铺好的底子），只负责让解快速吸收新插入的元素、维持近似性。两类例程通过候选集 $X_t\setminus(X_{t'}\setminus C_{t'})$ 衔接：上一级输出的、仍然活跃的候选会被下一级例程继续处理，形成层级化的解维护。
+
+**4. 一致性过渡窗口：把一次大重构摊成多步小替换**
+
+鲁棒例程算出的新解 $I_t$ 可能和当前解 $\text{ALG}_\text{old}$ 差很多，直接替换会让单步的 symmetric difference 大到 $\Theta(k)$，违反一致性。过渡窗口的做法是：新旧解的共同元素 $\text{Shared}_t=\text{ALG}_\text{old}\cap I_t$ 始终不动，只把 $I_t\setminus\text{ALG}_\text{old}$ 和 $\text{ALG}_\text{old}\setminus I_t$ 各切成 $\varepsilon' d_i$ 个等大的块，在接下来的 $\varepsilon' d_i$ 步里每步换入一块、换出一块，于是窗口内第 $j$ 步维护的解是 $\text{ALG}_t=X_t\cap(\text{Shared}_t\cup I_t^{:j}\cup \text{ALG}_\text{old}^{j:})$，并用 matroid 的交换性质保证每一步都可行。这一机制把"算法内部为了近似性可以大改"和"对外暴露的解必须稳定"彻底解耦——内部中间解怎么重算都行，用户看到的解每步只变 $O(1/\varepsilon^2)$（cardinality）或 $O(\log k/\varepsilon^2)$（matroid）个元素。
 
 ### 损失函数 / 训练策略
 这篇是理论算法论文，没有神经网络训练损失。它的“目标函数”是 monotone submodular function $f$，约束包括 cardinality 或 matroid independent set。算法使用 value oracle 和 matroid feasibility oracle；分析同时给出近似比、一致性和摊还 oracle 调用复杂度。

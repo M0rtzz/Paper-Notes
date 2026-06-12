@@ -41,6 +41,26 @@ tags:
 
 FALCON-SFOD 想解决无源域检测里一个被忽视的根因：域偏移让检测器的特征激活从前景目标扩散到背景，目标边界变糊，伪标签自然就差。它在标准 Mean-Teacher 自标注框架上挂两个互补模块——**SPAR**（空间先验感知正则化）从特征层面把激活"收"回目标上，**IRPL**（不平衡感知噪声鲁棒伪标签）从损失层面对抗类不平衡和教师标签噪声——再配常规定位损失端到端训练。两个模块一个治特征、一个治标签，恰好对应理论分析里检测风险的不同来源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["目标域图像（无标注）"]
+    IMG --> OFF["OV-SAM 离线前向<br/>类别无关二值前景掩码"]
+    IMG -->|弱增广| TE["教师网络（学生 EMA）<br/>生成伪标签"]
+    IMG -->|强增广| ST["学生骨干<br/>通道均值激活图"]
+    ST --> HEAD["分类头 + 回归头"]
+    OFF --> SPAR["SPAR 空间先验感知正则<br/>激活图对齐掩码（L1 + Dice）"]
+    ST --> SPAR
+    TE -->|伪标签| IRPL["IRPL 噪声鲁棒伪标签<br/>Peak-Adjust + 前景背景加权 + KL 熵正则"]
+    HEAD --> IRPL
+    HEAD --> LOC["定位损失"]
+    SPAR --> SUM["总损失"]
+    IRPL --> SUM
+    LOC --> SUM
+    SUM -->|梯度更新学生| ST
+    SUM -.->|EMA 更新教师| TE
+```
+
 ### 关键设计
 
 **1. SPAR：借基础模型的离线掩码把特征激活拉回目标**

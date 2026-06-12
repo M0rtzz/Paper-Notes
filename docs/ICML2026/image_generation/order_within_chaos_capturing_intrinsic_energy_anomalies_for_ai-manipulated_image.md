@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 FLAME（Fine-grained Localization via Adjacency Map Energy）要解决的是"扩散编辑后传统物理指纹失效、像素级定位无从下手"的问题，做法是先把内禀的能量异常显式提取成一张图，再借通用分割模型把它精修成像素掩码。具体来说，输入一张疑似被局部编辑的 RGB 图 $I$，LAD 算子先把它压成单通道能量图 $\mathcal{L}$；轻量 LAD-Net 读这张能量图，同时给出全局是否伪造的标量分数 $y_{cls}$ 和一张粗定位掩码 $M_{coarse}$；随后这张粗掩码作为稠密 prompt 喂给冻结的 SAM，由一个适配器把 SAM 的语义特征和 LAD-Net 的纹理特征融合，再由 SAM 解码器吐出像素级精修掩码 $M_{final}$。整套系统外面还套了一个 EditStream 数据引擎，自动从开源仓库拉取最新 inpainting 模型，不断刷新训练分布。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像 I（疑似局部编辑）"] --> LAD["LAD 能量图<br/>相邻像素势函数 + tanh 局部池化"]
+    LAD --> LNET["LAD-Net<br/>读单通道能量图"]
+    LNET --> CLS["全局判别分数 y_cls"]
+    LNET --> COARSE["粗定位掩码 M_coarse"]
+    COARSE --> SAM["SAM 适配器<br/>语义特征 ⊕ 纹理特征，粗掩码作稠密 prompt"]
+    SAM --> FINAL["像素级精修掩码 M_final"]
+    EDIT["EditStream 自演化数据合成<br/>多智能体拉取最新编辑模型刷新训练分布"] -.训练数据.-> LNET
+```
+
 ### 关键设计
 
 **1. LAD 能量图：把扩散的低熵痕迹转成与内容无关的空间指纹**

@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 SEMA-RAG 由三个角色智能体组成，共享同一底层 LLM，仅通过角色提示区分：(1) I-Agent 将原始问题映射为结构化临床图式；(2) E-Agent 基于证据充分性驱动的自演化检索循环逐轮积累证据；(3) A-Agent 对收敛证据集进行仲裁并输出最终答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["医学问题"] --> B["I-Agent 问题解释器<br/>映射为临床图式 Q′<br/>意图 / 实体 / 约束 / 初始查询"]
+    B --> C["E-Agent 知识探索器<br/>MedCPT 密集检索（第 t 轮）"]
+    C --> D{"证据充分性标志 s_t"}
+    D -->|"s_t=0 且未达 T_max：定位缺口 g_t、生成 m 个后续查询"| C
+    D -->|"s_t=1 或达 T_max"| E["闭合证据集 C*"]
+    E --> F["A-Agent 证据仲裁器<br/>去噪对冲、组织结构化报告 R"]
+    F --> G["最终答案"]
+```
+
 ### 关键设计
 
 **1. I-Agent（问题解释器）：先把题目读成结构化临床图式，再去检索**

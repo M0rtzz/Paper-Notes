@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 LoRA-MCL 要解决的核心问题是：怎样让单个 LLM 在训练阶段就把目标分布的多个模态拆开，而不是塌缩成加权平均。它的做法是把 Multiple Choice Learning 的"多假设竞争"思想嫁接到 LoRA——在每个启用 LoRA 的层 $\ell$ 准备 $K$ 组适配器 $\{(A_\ell^k, B_\ell^k)\}_{k=1}^K$，冻结基座参数 $\theta$，于是第 $k$ 个"假设模型"就是 $\theta_k = \theta \cup \{(A_\ell^k, B_\ell^k)\}_\ell$。训练时对所有 $K$ 个假设并行算似然 $p(x\mid c;\theta_k)$，再用 Winner-Takes-All（WTA）损失只把梯度回传给最合适的那个假设，整个过程等价于一个条件 hard-EM：E 步选 winner $k^\star=\arg\max_k p(x\mid c;\theta_k)$，M 步只更新 $\theta_{k^\star}$。推理时丢掉 WTA，让每个假设独立解一条候选，一次前向就吐出 $K$ 条覆盖不同模态的文本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：上下文 c + 目标 x"] --> B["K 组 LoRA adapter 实例化 MCL 假设<br/>冻结基座 + 各自 (A_k, B_k)，得 K 个假设 θ_k"]
+    B --> C["并行算 K 个似然 p(x∣c;θ_k)"]
+    P["分组卷积式并行<br/>K 组 adapter 堆成 grouped Conv1d，单次 batched 前向"] -.工程实现.-> C
+    C --> D["松弛版 WTA<br/>加权 q_k，winner 拿主梯度（条件 hard-EM）"]
+    D -->|训练：只更新 winner| E["特化：每组 adapter 锁定一个模态"]
+    C -->|推理：丢弃 WTA| F["每个假设独立解码一条候选 → K 条多样文本"]
+```
+
 ### 关键设计
 
 **1. 用 K 组 LoRA adapter 实例化 MCL 假设：绕开 lm_head 复制不下的死结**

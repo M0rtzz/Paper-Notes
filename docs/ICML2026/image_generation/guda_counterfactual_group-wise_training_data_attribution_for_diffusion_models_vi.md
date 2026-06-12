@@ -51,6 +51,18 @@ ELBO 选用是关键工程妥协：log-likelihood 可以通过 probability-flow 
 
 统一遗忘损失结构为 $\mathcal{L}_{\text{unlearn}} = \mathcal{L}_{\text{forget}} + \lambda_{\text{pres}} \mathcal{L}_{\text{preserve}}$，其中保留项 $\mathcal{L}_{\text{preserve}} = \mathbb{E}_{(x,c) \sim \mathcal{D}_{-k}, t, \varepsilon}[\|\epsilon_\theta(x_t, t, c) - \epsilon_{\theta^{\mathrm{full}}}(x_t, t, c)\|_2^2]$ 是冻结全量模型做 score matching 防止灾难性遗忘；遗忘项 $\mathcal{L}_{\text{forget}}$ 在无条件 (Guda-U) 和有条件 (Guda-C) 两种 setting 下不同。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练全量模型 θ_full"] --> B{"群组设置"}
+    B -->|"无条件"| C["Guda-U：ReTrack 重定向遗忘<br/>改去噪目标为 retain set 加权目标"]
+    B -->|"有条件 T2I"| D["Guda-C：WSS 风格锚点重定向<br/>把 forget 条件换成 retain 风格"]
+    C --> E["近似反事实模型 θ_ul,−k（离线，每群一次）"]
+    D --> E
+    E --> F["查询样本 (x0, c)"]
+    F --> G["LOGOA + ELBO 代理<br/>GUDA_k = ELBO(θ_full) − ELBO(θ_ul,−k)"]
+```
+
 ### 关键设计
 
 **1. LOGOA 反事实估计量 + ELBO 代理：先把"oracle 是什么"钉死，再谈近似**

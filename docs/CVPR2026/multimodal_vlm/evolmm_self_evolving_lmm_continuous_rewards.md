@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 EvoLMM 想回答一个很硬的问题：能不能让一个多模态模型**只看原始图像、不用任何标注和外部评判**，就把自己的视觉推理能力练上去？它的做法是把一个预训练 LMM（如 Qwen2.5-VL-7B）"一分为二"——backbone 冻结共享，各自挂一个 LoRA 适配器，一个扮 Proposer、一个扮 Solver。给一张图，Proposer 先编出一道视觉接地的数学题，Solver 对这道题独立采样 N=5 个答案；系统根据这 5 个答案彼此有多一致算出一个连续奖励，再用 REINFORCE + KL 正则化同时更新两个角色。整条回路里没有任何人工 QA、没有任何外部奖励模型，唯一的外部输入就是图像本身，两个角色就在这种自博弈里共同进化。
 
+下图展示了这条闭环：原始图像经 Proposer 出题、Solver 多次采样后得到经验答案分布，再从分布派生出两路连续奖励（Solver 一路、Proposer 一路），最后由 REINFORCE 优化把梯度回灌给两个 LoRA 策略，形成自进化回路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["原始图像<br/>（无标注，唯一外部输入）"] --> PROP["Proposer（LoRA）<br/>生成视觉接地的数学题 q"]
+    PROP --> SOLVE["Solver（LoRA）<br/>对 q 独立采样 N=5 个答案"]
+    SOLVE --> DIST["经验答案分布 p(a|x,q)<br/>及共识熵 H"]
+    DIST --> RSOL["连续自一致性 Solver 奖励<br/>r_sol = p̂(a)^γ × 长度惩罚"]
+    DIST --> RPROP["熵引导的 Proposer 奖励<br/>r_prop = 熵 H 的高斯带通"]
+    RSOL --> OPT["KL 正则化的 REINFORCE 优化<br/>EMA 基线 + 非对称 KL 约束"]
+    RPROP --> OPT
+    OPT -->|更新 Solver LoRA| SOLVE
+    OPT -->|更新 Proposer LoRA| PROP
+```
+
 ### 关键设计
 
 **1. 连续自一致性 Solver 奖励：把"多数投票"换成可微的一致性信号**

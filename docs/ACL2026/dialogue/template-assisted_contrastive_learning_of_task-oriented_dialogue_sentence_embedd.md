@@ -44,6 +44,25 @@ tags:
 
 TaDSE 的核心想法是把对话里「同一模板对应多条表述」这种现成的 token 级结构，转化成句子级对比学习的免费监督信号。它以对话话语及其对应模板为输入，先做模板感知的数据增强扩充 utterance-template 配对的多样性，再用一组三路对比损失同时雕刻模板表示、话语表示与配对表示，最后在推理时把模板表示按比例融回话语表示，输出区分度更高的句子嵌入。整条流程不依赖任何话语级语义标注，纯无监督。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：对话话语 + 对应模板"] --> B
+    subgraph B["模板数据增强"]
+        direction TB
+        B1["抽取槽位高频值<br/>构建 Slot Book"] --> B2["对每个模板做 top-k 槽值排列组合<br/>生成合成话语"]
+    end
+    B --> C
+    subgraph C["三路对比损失（联合训练）"]
+        direction TB
+        C1["模板损失 L^t<br/>dropout 噪声造正样本"]
+        C2["话语损失 L^u<br/>沿用 SimCSE"]
+        C3["配对损失 L^pair<br/>正确 utterance-template 配对为正样本"]
+    end
+    C -->|"得到模板表示 t 与话语表示 u"| D["语义压缩推理<br/>repr = λ·t + (1−λ)·u"]
+    D --> E["输出：区分度更高的句子嵌入"]
+```
+
 ### 关键设计
 
 **1. 模板数据增强：用槽值排列组合喂饱配对对比学习**

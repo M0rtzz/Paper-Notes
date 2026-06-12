@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 CCDD 要解决的是"连续扩散表达力最强却最难训"这个老矛盾，做法是把语言扩散搬到 $\mathcal{X}\times\mathcal{Z}$ 的联合多模态空间上：离散 token $x$ 提供易解码、强监督的"骨架"，连续上下文嵌入 $z$ 提供平滑、信息丰富、能跨步保留概率历史的"血肉"。前向时对清洁数据 $(x_0,z_0)$ 同时注入两路独立噪声——$x_t \sim \text{Cat}(\eta_t x_0 + (1-\eta_t)\pi_t)$ 走 masked/uniform CTMC，$z_t \sim \mathcal{N}(\alpha_t z_0, \sigma_t^2 I)$ 走 VP-SDE；反向时由单个网络 $f_\theta(x_t,z_t,t)$ 同时吃进两路噪声态，输出 token logits 与 embedding 预测 $\hat{x}_{0,\theta},\hat{z}_{0,\theta}$，再分别按各自模态规则更新（DDPM/DDIM 更新 $z$、Bayes 后验式 (8) 更新 $x$）。训练目标是两路 ELBO 的加权和 $\mathcal{L}_{\text{CCDD}} = \gamma_{\text{cont}} \mathcal{L}_{\text{cont}} + \gamma_{\text{disc}} \mathcal{L}_{\text{disc}}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X0["清洁 token x₀"]
+    Z0["连续空间 z₀：预训练 LLM 上下文嵌入<br/>（冻结 Qwen3-Embedding）"]
+    X0 --> XT["离散加噪 xₜ（masked/uniform CTMC）"]
+    Z0 --> ZT["连续加噪 zₜ（VP-SDE）"]
+    XT --> F["联合去噪网络 f_θ(xₜ,zₜ,t)<br/>架构：MDiT / MMDiT / MoEDiT"]
+    ZT --> F
+    F --> PRED["同时预测 token logits 与 ẑ₀"]
+    PRED -->|"表征引导 CFG：w·logits_c+(1−w)·logits_φ"| UPD["反向联合更新<br/>x 走 Bayes 后验、z 走 DDPM/DDIM"]
+    UPD --> OUT["生成文本"]
+```
+
 ### 关键设计
 
 **1. 联合连续-离散扩散过程：让一个网络同时跑 CTMC 和 SDE**

@@ -44,6 +44,25 @@ tags:
 
 MSMO 的核心判断是：跨语言 ABSA 必须**同时**在句子级和 aspect 级对齐，而一份 code-switch（aspect-swap）数据恰好能同时喂这两个粒度的目标。它走两阶段顺序训练：Stage 1 用 multilingual encoder（mBERT/XLM-R）配一个带梯度反转层的语言判别器，靠 Wasserstein 对抗把整句表示压成语言不变特征；Stage 2 用更新过的 encoder 一路做 BIES 情感序列标注（CE）、一路用双向 KL 把"同一 aspect 在源语 / 换语后"的预测分布对齐。训完的模型还能当 teacher，用未标注目标语数据做单/多教师蒸馏进一步提分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["四类 code-switch 数据构造<br/>源语句 / 翻译目标语句 / aspect 换语混合句"] --> B
+    subgraph S1["句级 Wasserstein 对抗（Stage 1）"]
+        direction TB
+        B["多语 encoder<br/>mBERT / XLM-R"] --> C["语言判别器 + 梯度反转层<br/>参数 clipping 满足 1-Lipschitz"]
+    end
+    C -->|逼出 aspect-agnostic 语言不变特征| D
+    subgraph S2["多目标联合训练（Stage 2）"]
+        direction TB
+        D["更新后的 encoder"] --> E["BIES 情感序列标注<br/>监督 CE 损失（脚手架）"]
+        D --> F["双向 KL 一致性训练<br/>对齐同 aspect 跨语 span 分布"]
+    end
+    S2 --> G["训好的模型当 teacher"]
+    G --> H["多教师 / 多语言知识蒸馏<br/>未标注目标语 soft label + MSE"]
+    H --> I["跨语言 ABSA 预测输出"]
+```
+
 ### 关键设计
 
 **1. Code-switch 数据驱动的句级 Wasserstein 对抗：逼出 aspect-agnostic 的语言不变特征**

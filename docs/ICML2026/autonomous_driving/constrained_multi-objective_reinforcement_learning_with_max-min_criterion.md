@@ -50,6 +50,17 @@ $$\min_{u\in\mathbb{R}_+^L,\,w\in\Delta^K} \mathcal{L}(u,w) = \sum_s \mu_0(s)\,v
 
 其中 $v^*_{u,w}$ 是熵正则 Bellman 算子 $\mathcal{T}_{u,w}$ 的不动点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原问题：策略空间 max-min 公平 + 硬约束<br/>非凸非可微"] --> B["占用测度凸化 + 对偶凸化<br/>转成只关于 (u,w) 的有限维凸损失"]
+    B --> C["内层：熵正则 soft Bellman 训 Q<br/>取 softmax 得策略"]
+    C --> D["统一梯度公式（Thm 3.3）<br/>一次值函数评估同时给出 ∇u 与 ∇w"]
+    D --> E["外层：投影梯度下降更新 (u,w)<br/>w 投到单纯形、u 非负截断"]
+    E -->|未收敛，回内层| C
+    E -->|几何收敛| F["输出 softmax 策略<br/>兼顾 max-min 公平与约束可行"]
+```
+
 ### 关键设计
 
 **1. 占用测度凸化 + 对偶凸化：把非可微 max-min 变成有限维凸优化**

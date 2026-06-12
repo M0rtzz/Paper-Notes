@@ -55,6 +55,16 @@ tags:
 
 这三个阶段不是线性独立的。response synthesis 限定 evaluation 的上限；evaluation 的粒度和维度决定 instantiation 能建模什么；instantiation 更新策略后，又会改变下一轮 synthesis 的候选分布。因此 alignment tuning 更像闭环控制系统，而不是一次性数据清洗。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["Prompt x"] --> S["阶段一 · 响应合成（response synthesis）<br/>候选来源(离线强模型 / 在线策略)<br/>选择策略 · 多样性探索"]
+    S -->|"候选回答集合 y"| E["阶段二 · 偏好评估（preference evaluation）<br/>评审器(人工 / LLM-as-a-Judge / verifier)<br/>粒度(outcome / step / atomic) · 维度(单维 / 多维)"]
+    E -->|"偏好信号 s"| I["阶段三 · 偏好实例化（preference instantiation）<br/>point-wise(PPO) · pair-wise(DPO)<br/>group / list-wise(GRPO)"]
+    I --> U["策略更新<br/>最大化偏好 margin"]
+    U -.->|"改变下一轮候选分布（闭环）"| S
+```
+
 ### 关键设计
 
 **1. 三阶段数据中心 taxonomy：把对齐失败的归因从"loss 写错了"改成"管线哪一段信号被污染"**

@@ -42,6 +42,22 @@ FCDM 想回答一个被忽视的问题：在扩散模型 backbone 普遍倒向 T
 
 与 DiT 需要 4 个超参数（层数 $L$、通道 $C$、attention heads、patch size）不同，FCDM 只需 **两个**——block 数 $L$ 和隐通道数 $C$，每次 2× 下采样时两者都翻倍。这条“Easy Scaling Law”把架构搜索空间压到极小，从 FCDM-S 扩到 FCDM-XL 只是改两个数字（$L$ 从 2→3，$C$ 从 128→512）。
 
+下图展开单个 FCDM Block 的内部数据流，四个关键设计都落在这条链上：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["latent 32×32×4<br/>（VAE 编码）"] --> U["U 形堆叠 FCDM Block<br/>下采样时 L、C 翻倍"]
+    U --> OUT["VAE 解码 → 256×256 图像"]
+    U -.展开单个 Block.-> I["输入特征（C 通道）"]
+    I --> DW["7×7 DWConv<br/>大核感受野、低维通道上算"]
+    DW --> AdaLN["FCDM Block：AdaLN 条件注入<br/>class+timestep → γ,β,α"]
+    AdaLN --> EXP["1×1 Conv 扩展到 rC（r=3）<br/>（Inverted Bottleneck）"]
+    EXP --> GRN["GRN 代替 CCA<br/>近零参数促通道多样性"]
+    GRN --> CMP["1×1 Conv 压回 C"]
+    CMP --> O["输出：无额外 FFN"]
+```
+
 ### 关键设计
 
 **1. FCDM Block：用最小改动把 ConvNeXt 接上条件扩散**

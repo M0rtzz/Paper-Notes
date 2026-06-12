@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 Staged-Competence 是一个套在标准 DPO 外层的两阶段 pipeline，全程不碰 DPO loss 本身，只改"用哪些样本、按什么顺序喂、参考模型怎么变"。第一阶段 (Scoring) 先用待对齐的基座模型 $\pi_0$ 给每条 prompt 生成零样本回答 $\hat y_i$，再用轻量句向量编码器 (all-MiniLM-L6-v2) 把 $\hat y_i, y_i^+, y_i^-$ 编码后算出一个全局难度分，据此把整个数据集从易到难排序。第二阶段 (Training) 把排序后的数据均匀切成 $K=3$ 个难度递增的桶 $\mathcal B_1, \mathcal B_2, \mathcal B_3$ 依次训练：桶内不是随机洗牌，而是按 competence 函数动态放宽可采样的样本池；每个桶训完，本阶段的策略 $\pi^{(k)}$ 直接接棒成为下阶段的参考模型。整条流水线输入偏好数据集 $\mathcal D = \{(x_i, y_i^+, y_i^-)\}$ 与未对齐基座 $\pi_0$，输出对齐后的策略 $\pi^{(K)}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["偏好数据集 D + 未对齐基座 π₀"] --> B["Preference Alignment Margin<br/>基座零样本回答 ŷ → 句向量编码<br/>m = cos(ŷ,y⁺) − cos(ŷ,y⁻)，降序排得全局易→难"]
+    B --> C["Staged Reference Update：切成 K=3 等大难度桶<br/>逐桶 k=1..K 训练，桶间令 π_ref^(k+1) ← π^(k)"]
+    C --> D["Within-Stage Competence Sampling<br/>桶内按 √ 调度放宽合格池 {i : dᵢ ≤ c(t)}<br/>从中采 mini-batch 做 DPO 更新"]
+    D -->|k<K：本阶段策略接棒为下阶段参考| C
+    D -->|k=K| E["对齐后策略 π^(K)"]
+```
+
 ### 关键设计
 
 **1. Preference Alignment Margin：把难度做成全数据集可比的标量**

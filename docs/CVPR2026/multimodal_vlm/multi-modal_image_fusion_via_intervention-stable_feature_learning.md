@@ -45,6 +45,30 @@ tags:
 
 采用 U-Net 式的孪生架构。两个共享权重的编码器分别处理可见光和红外输入，生成三个尺度的特征 $\{\Theta_1^v, \Theta_2^v, \Theta_3^v\}$ 和 $\{\Theta_1^i, \Theta_2^i, \Theta_3^i\}$。解码器中嵌入 CFI（因果特征整合器）在每个尺度做干预感知的融合。训练阶段模型同时执行三种干预，输出四种融合结果（正常 + 三种干预），用三种损失联合约束。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["可见光 + 红外输入"]
+    subgraph INT["三种结构化干预（主动扰动探测真实依赖）"]
+        direction TB
+        M1["互补掩码<br/>测跨模态互补性"]
+        M2["随机掩码<br/>测局部充分性"]
+        M3["模态丢弃<br/>测全局必要性"]
+    end
+    IN -->|正常路| ENC
+    IN --> INT
+    INT --> ENC["孪生编码器（共享权重）<br/>各出三尺度特征"]
+    ENC --> CFI["因果特征整合器 CFI<br/>不变性门控逐尺度软选择互补 / 局部特征"]
+    CFI --> OUT["四种融合结果<br/>正常 + 三种干预"]
+    subgraph LOSS["三路损失联合约束"]
+        direction TB
+        L1["融合保真 L_f<br/>L1 + 拉普拉斯梯度"]
+        L2["干预一致 L_inv<br/>稳定区域抗扰动"]
+        L3["模态必要 L_nec<br/>逼用上两个模态"]
+    end
+    OUT --> LOSS
+```
+
 ### 关键设计
 
 **1. 三种结构化干预：从三个维度逼问"这个依赖是不是真的"**

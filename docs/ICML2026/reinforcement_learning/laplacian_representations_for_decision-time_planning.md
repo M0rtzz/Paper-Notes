@@ -43,19 +43,34 @@ tags:
 ### 整体框架
 ALPS 是一套预训练 + 决策时规划的两阶段算法。**预训练**阶段从离线数据集 $\mathcal{D}$ 里学三个组件：（1）Laplacian 表示 $\phi$（再缩放成 $\psi$），（2）原始状态空间上的一步前向模型 $f$，（3）目标条件行为先验 $\pi_{\text{prior}}$；然后在 $\psi$ 空间跑 k-means 得到 $C$ 个簇，把簇心当顶点、簇间观察到的转移当边，构建簇图 $G_c$。**决策时**给定 $(s_{\text{start}}, s_{\text{goal}})$，先把两端映到 $\psi$ 空间找所在簇 $(c_s, c_g)$，用 Dijkstra 在 $G_c$ 上算最短簇路径 $\mathcal{P}_G$ 作为高层计划；每一步用 CEM 朝当前目标簇心的 $\psi$ 表示做短程优化，agent 进入下一个簇后高层指针前进，如果偏离 $\mathcal{P}_G$ 则重规划。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 380}}}%%
+flowchart TD
+    D["离线数据集 D"] --> PSI["缩放 Laplacian 表示 ψ<br/>ALLO 学特征向量，按 √λ 缩放后 ≈ CTD"]
+    D --> FM["前向模型 f + 行为先验 π_prior<br/>多步自回归 / 目标条件行为克隆"]
+    PSI --> CG["簇图 G_c<br/>ψ 空间 k-means 分 C 簇，数据集转移连边"]
+    CG --> START["决策时输入 (s_start, s_goal)<br/>映到 ψ 找所在簇 c_s, c_g"]
+    START --> HL["高层 Dijkstra 规划<br/>簇图上求最短簇路径 P_G"]
+    HL -->|"子目标簇心 z_sub"| LL["低层 CEM 规划<br/>先验滚均值序列 + 加噪选 elite，朝 z_sub 短程优化"]
+    PSI -.->|"提供低层代价 ‖ψ−z_sub‖²"| LL
+    FM --> LL
+    LL -->|"执行首动作"| ENV["环境推进一步"]
+    ENV -->|"进入下一簇指针前进 / 漂移则重 Dijkstra"| HL
+```
+
 ### 关键设计
 
 **1. 缩放 Laplacian 表示 $\psi$ 作为统一潜空间：让同一个空间既能当低层代价、又能当高层距离**
 
 分层规划需要一个潜空间同时满足两个矛盾需求——邻近状态要近（支持局部代价），长程可达性也要保留（支持高层路径搜索）；对比学习空间擅长前者却没显式编码全局连通性，原始欧氏距离则无视环境动力学。作者的关键观察是：把图 Laplacian 前 $D$ 个非零特征向量 $\phi$ 按特征值缩放成 $\psi(s)=\phi(s)\oslash\sqrt{\lambda}$ 后，欧氏距离恰好近似 commute-time distance（CTD），$c(u,v)\approx\|\psi(u)-\psi(v)\|^2$，而 CTD 同时编码了"一步可达"和"绕路距离"。为避开精确特征分解 $O(|\mathcal{S}|^3)$ 的代价，$\phi$ 用 ALLO（Augmented Lagrangian Laplacian Objective）从样本学：目标 $\max_\beta \min_u \sum_i \langle u_i, L u_i \rangle + \sum_{j,k} \beta_{jk}(\langle u_j, [[u_k]]\rangle - \delta_{jk}) + B\cdot(\cdot)^2$ 用 stop-gradient $[[\cdot]]$ 和拉格朗日乘子 $\beta$ 强制正交归一约束，特征值直接从对偶变量读出 $\lambda_i=-\beta_{ii}/2$、缩放得 $\psi_i=\sqrt{2}\phi_i/\sqrt{-\beta_{ii}}$，训练对 $(S_t,S_{t+\Delta})$ 的 $\Delta\sim\text{Geom}(1-\gamma_s)$ 从几何分布抽。正因为 CTD 一体两用，ALPS 不必像 PcLast 那样维护两个不同潜空间：低层 CEM 拿它当代价，高层 k-means 在同一空间分簇也会自动沿环境瓶颈切分。
 
-**2. 行为先验加速的 CEM 低层规划：把通用黑盒优化器升级成数据感知规划器**
-
-CEM 通常从无信息高斯采样动作序列，在高维动作空间收敛极慢，而且一步模型反复 rollout 会累积复合误差。ALPS 在每个高层子目标 $z_{\text{sub}}$ 下优化代价 $J^m=\sum_{t=1}^H(\|\psi(\hat{S}_t^m)-z_{\text{sub}}\|_2^2+\lambda\|A_t^m\|_2^2)$，但不再从零搜索：先用目标条件行为克隆学一个确定性先验 $\pi_{\text{prior}}(S_t,\psi(S_t),\psi(S_{t+k}))$（$k\sim U(1,K_{\max})$ 回归 $A_t$），规划时让它配合多步自回归前向模型 $f$（训练用 $\frac{1}{H_f}\sum_{\tau=1}^{H_f}\|\hat{S}_{t+\tau}-S_{t+\tau}\|_2^2$ 把误差反传通时间）先滚出一条均值动作序列 $\mathbf{a}_{t:t+H-1}$，再围绕它加时间相关高斯噪声生成 $N_s$ 个候选，按代价排序取 top-$N_e$ 更新分布、迭代 $N_{\text{iter}}$ 次。行为先验直接把初始搜索分布偏向"看起来像数据集里目标导向轨迹"的动作，多步前向模型又把 rollout 控制在模型可信窗口内，二者组合让 CEM 在高维动作上少跑几轮就能收敛。
-
-**3. 基于簇图的高层 Dijkstra 规划与漂移重规划：把长程问题切成"过几个房间"的离散搜索**
+**2. 基于簇图的高层 Dijkstra 规划与漂移重规划：把长程问题切成"过几个房间"的离散搜索**
 
 复合误差的根治办法是把长 horizon 切成短 horizon 子任务。ALPS 在 $\psi$ 空间跑 k-means 聚成 $C$ 簇（在 CTD 空间跑 k-means 等价于谱聚类，会沿环境瓶颈切分——迷宫的房间被走廊分开、CTD 大的状态对必落到不同簇），簇心当顶点、数据集里观察到的"簇 $i\to$ 簇 $j$"转移当边，并用 nucleus sampling 只保留每个簇 top-$p\%$ 频繁邻居以剔除不可达边。决策时 Dijkstra 在这张 $|C|$ 顶点的簇图上算最短路径 $\mathcal{P}_G$，把"怎么从起点走到目标"降成"过哪几个房间"，每段任务长度落在前向模型可信窗口内；agent 每步检查所在簇 $c_{\text{curr}}$，一旦低层 CEM 走歪进了 off-plan 簇（$c_{\text{curr}}\notin\mathcal{P}_G$），就从当前簇重新 Dijkstra 补救。图搜索可秒级完成，复杂度从原始连续状态空间降到离散图。
+
+**3. 行为先验加速的 CEM 低层规划：把通用黑盒优化器升级成数据感知规划器**
+
+CEM 通常从无信息高斯采样动作序列，在高维动作空间收敛极慢，而且一步模型反复 rollout 会累积复合误差。ALPS 在每个高层子目标 $z_{\text{sub}}$ 下优化代价 $J^m=\sum_{t=1}^H(\|\psi(\hat{S}_t^m)-z_{\text{sub}}\|_2^2+\lambda\|A_t^m\|_2^2)$，但不再从零搜索：先用目标条件行为克隆学一个确定性先验 $\pi_{\text{prior}}(S_t,\psi(S_t),\psi(S_{t+k}))$（$k\sim U(1,K_{\max})$ 回归 $A_t$），规划时让它配合多步自回归前向模型 $f$（训练用 $\frac{1}{H_f}\sum_{\tau=1}^{H_f}\|\hat{S}_{t+\tau}-S_{t+\tau}\|_2^2$ 把误差反传通时间）先滚出一条均值动作序列 $\mathbf{a}_{t:t+H-1}$，再围绕它加时间相关高斯噪声生成 $N_s$ 个候选，按代价排序取 top-$N_e$ 更新分布、迭代 $N_{\text{iter}}$ 次。行为先验直接把初始搜索分布偏向"看起来像数据集里目标导向轨迹"的动作，多步前向模型又把 rollout 控制在模型可信窗口内，二者组合让 CEM 在高维动作上少跑几轮就能收敛。
 
 ### 一个完整示例：在 pointmaze-giant 里从起点导航到目标
 

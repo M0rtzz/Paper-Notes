@@ -41,7 +41,34 @@ ReSpinQuant 在低比特 LLM PTQ 中同时保留"全局旋转可与权重融合"
 ## 方法详解
 
 ### 整体框架
-ReSpinQuant 想要的是"既保留层间稠密旋转的表达力、又不在推理时多付在线代价"。它给每个 transformer 层独立学一组稠密 $D\times D$ 正交矩阵，训练时把参数空间撑到 $\mathcal{O}(L\cdot D^2)$ 让旋转充分贴合各层离群分布；推理时把块内旋转通过数学消去全部融进权重，只在跨层残差这个唯一融不掉的地方留一个低秩在线模块，最终在线参数压到 $\mathcal{O}(L\cdot rD)$。一句话就是"训练大、推理小"。
+ReSpinQuant 想要的是"既保留层间稠密旋转的表达力、又不在推理时多付在线代价"。它给每个 transformer 层独立学一组稠密 $D\times D$ 正交矩阵，训练时把参数空间撑到 $\mathcal{O}(L\cdot D^2)$ 让旋转充分贴合各层离群分布；推理时把块内旋转通过数学消去全部融进权重，只在跨层残差这个唯一融不掉的地方留一个低秩在线模块，最终在线参数压到 $\mathcal{O}(L\cdot rD)$。一句话就是"训练大、推理小"。训练学到的稠密旋转沿两条路走：块内 attention/FFN 通路上激活旋转与权重旋转相消、整体离线融进权重（零在线开销）；跨层残差处冒出唯一融不掉的过渡矩阵，被压成低秩近似后用一条只在 $r$ 维子空间里算的在线通路对齐。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练：每层学独立稠密正交旋转 R^i<br/>Cayley 优化器约束在 Stiefel 流形"]
+    A --> B1
+    A --> R1
+    subgraph B1["层间稠密旋转 + 全离线权重融合"]
+        direction TB
+        B["块内 attention/FFN 通路<br/>激活旋转与权重旋转 R·Rᵀ = I 相消"]
+        B --> C["把 R 预乘进 W_q/W_k/W_v/W_o/W_up/W_down<br/>推理零在线开销"]
+    end
+    R1["残差连接处过渡矩阵<br/>T = R_out·R_inᵀ，唯一融不掉"]
+    R1 --> B2
+    subgraph B2["基于经验观察的低秩残差近似"]
+        direction TB
+        D["ΔT = T − I 低秩、对角占优<br/>SVD 取前 r 个主方向拼成 Q"]
+        D --> E["极分解拉回正交<br/>T̂ = I + Q(R̂_sub − I)Qᵀ ∈ SO(D)"]
+    end
+    B2 --> B3
+    subgraph B3["轻量在线残差通路"]
+        direction TB
+        F["投影 y = Qᵀ·x̃_in （D→r）"]
+        F --> G["子空间变换 z = M·y"]
+        G --> H["升维残差相加 x̃_out = x̃_in + Q·z"]
+    end
+```
 
 ### 关键设计
 

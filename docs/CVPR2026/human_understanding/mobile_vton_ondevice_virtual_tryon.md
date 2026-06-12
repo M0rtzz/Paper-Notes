@@ -34,7 +34,19 @@ tags:
 
 ### 整体框架
 
-Mobile-VTON 要回答的问题是：能不能把一个本来跑在云端、参数量 2B+ 的扩散试穿模型塞进手机，还不掉质量。它的答案是一套模块化的 TGT 架构——一个冻结的 TeacherNet（SD 3.5 Large）当知识源，两个轻量学生 GarmentNet 和 TryonNet 分别负责「提取一致的衣物特征」和「把人体与衣物融合成试穿图」。输入只有一张人像加一张衣物图，先由 GarmentNet 把衣物编码成跨时间步稳定的特征，再喂给 TryonNet 逐步去噪生成 1024×768 的试穿结果；衣物的视觉语义则由一个用 DINOv2-base 替换 CLIP 的 Light-Adapter 注入。整个系统从任务数据直接训练，不依赖任何外部大规模预训练。
+Mobile-VTON 要回答的问题是：能不能把一个本来跑在云端、参数量 2B+ 的扩散试穿模型塞进手机，还不掉质量。它的答案是一套模块化的 TGT 架构——一个冻结的 TeacherNet（SD 3.5 Large）当知识源，两个轻量学生 GarmentNet 和 TryonNet 分别负责「提取一致的衣物特征」和「把人体与衣物融合成试穿图」。输入只有一张人像加一张衣物图，先由 GarmentNet 把衣物编码成跨时间步稳定的特征，再喂给 TryonNet 逐步去噪生成 1024×768 的试穿结果；衣物的视觉语义则由一个用 DINOv2-base 替换 CLIP 的 Light-Adapter 注入。整个系统从任务数据直接训练，不依赖任何外部大规模预训练，全靠 TeacherNet 的 FGA 蒸馏把容量补回来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：人像 + 衣物图"] --> G["TCG GarmentNet<br/>跨时间步重建约束 → 稳定衣物特征"]
+    A --> LA["Light-Adapter<br/>DINOv2 替代 CLIP，提取衣物视觉 K-V"]
+    G --> T["Garment-Aware TryonNet<br/>潜空间拼接(LC) + 多尺度特征融合，逐步去噪"]
+    LA --> T
+    T --> O["输出：1024×768 试穿图"]
+    TE["TeacherNet（SD 3.5 Large，冻结）"] -->|"FGA 蒸馏：score 对齐 + 对抗"| G
+    TE -->|"FGA 蒸馏"| T
+```
 
 ### 关键设计
 

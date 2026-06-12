@@ -43,6 +43,21 @@ tags:
 
 本文是一套评测方法，要测的是九个前沿 LLM 在交互风格上的“显示偏好”，而不是它们的能力高低。整条流程围绕 Open Character Training 提供的 144 个性格 trait 展开：对每个被测模型，在单轮对话里给出两个候选 trait，要求它隐式地选一种风格并贯彻到回复中却不说破；随后由相对中立的 base model 裁判 GLM-4.5 Air 判定回复更像哪个 trait，这一对 pairwise 胜负进入 ELO 计算。海量比对汇总后，每个模型都得到一张 trait 排名表，进而可以横向比较谁更趋同、差异落在哪里。九个模型（GPT-5.1、Claude Haiku 4.5、Gemini 3 Flash Preview、Qwen3 VL 235B A22B Thinking、DeepSeek-V3.2、Grok 4 Fast、Kimi K2 Thinking、Ministral-14b-2512、Trinity-Mini）共生成 102,560 条单轮响应，harness 与数据均开源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ELICIT["显示偏好 trait 引出"]
+        direction TB
+        A["144 个性格 trait 库<br/>(Open Character Training)"] --> B["成对抽取两个 trait"]
+        B --> C["被测模型隐式扮演其一<br/>单轮回复中表现却不说破"]
+        C --> D["外部裁判 GLM-4.5 Air<br/>判定回复更像哪个 trait"]
+        D --> E["pairwise 胜负汇入 ELO"]
+    end
+    ELICIT --> F["每个模型一张 trait 排名表"]
+    F --> G["Assistant vs Creative 对照轴<br/>把 144 维压成两条方向"]
+    F --> H["跨模型 rank variance<br/>＋ GPT-4o→GPT-5.1 版本差异"]
+```
+
 ### 关键设计
 
 **1. revealed preference 式 trait elicitation：从行为而非自评反推人格**

@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 VecGlypher 把矢量字形生成整个搬进语言建模框架：不再"先画一张光栅图再向量化"，而是让一个多模态 LLM 直接把 SVG 路径当成文本序列吐出来。喂给模型的是一组条件——要么是文本标签（如 "high-contrast, serif, art-deco"），要么是 1–8 张参考字形图像——外加一个目标字符身份（如 "A"）；模型自回归地逐 token 预测这个字符的 SVG path，解码回来就是一条可直接渲染、可手动编辑的有效路径。整条链路里没有光栅去噪器，没有向量后优化器，也没有轮廓简化器，所有几何决策都发生在 token 预测这一步。能这样做的前提是两件事必须先到位：一是把五花八门的字体数据清洗成模型能学的统一格式，二是用"先学会画、再学会听话"的两阶段训练把通用 LLM 调成懂字体的专家。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["Typography-Aware 数据工程"]
+        direction TB
+        A["原始字体<br/>Envato 39K + Google 2.5K"] --> B["四重过滤<br/>覆盖度 / 路径长度 / 去重 / MLLM OCR"]
+        B --> C["归一化 UPM=1000<br/>+ 路径规范化(数值量化一位小数)"]
+        C --> D["按字体族拆 train / test"]
+    end
+    subgraph SFT["两阶段 SFT"]
+        direction TB
+        E["Stage 1 学画 SVG<br/>39K Envato 文本引导"] --> F["Stage 2 学听指令<br/>2.5K Google 文本+图像双条件"]
+    end
+    DATA --> SFT
+    SFT --> G["VecGlypher 多模态 LLM"]
+    H["统一的多模态条件<br/>文本标签 || 1-8 张参考字形 + 目标字符"] --> G
+    G --> I["自回归逐 token 预测 SVG path"]
+    I --> J["渲染 / 可编辑矢量字形(脚手架)"]
+```
+
 ### 关键设计
 
 **1. Typography-Aware 数据工程：把杂乱字体喂成模型能消化的统一序列**

@@ -47,6 +47,26 @@ tags:
 
 环境是一个文本化史前狩猎采集社会。agent 通过采集植物获得低风险资源，通过狩猎获得高风险高回报资源，也可以转移 HP、沟通、抢夺、战斗或繁衍。后代继承父母道德类型，当前版本不引入突变和文化传播，以保持代际选择效果可控。作者还实现了 simulation analysis assistant，用于自动统计结果并支持交互式追问单个 agent 的行为动机。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    INIT["初始化：8 个 agent（四类道德各 2）<br/>profile + 道德类型 prompt + 环境规则 + 常识手册"]
+    INIT -->|演化模式：跑满生命周期，调资源/沟通/可见性| ENV["Social-Evol 环境<br/>刷新资源与 agent 状态（HP / 年龄 / 体能 / 寿命）"]
+    INIT -->|mini-game 模式：固定单场景| MINI["mini-game：四类道德 agent<br/>在同一处境做单点决策"]
+    subgraph MORE["MoRE 实体化认知架构（每轮逐 agent）"]
+        direction TB
+        P["感知环境 + 最近历史"] --> M["更新实体化记忆<br/>按 其他 agent / 猎物 / 家人 / 繁衍 组织"]
+        M --> J["对他人、猎物、家人、繁衍形成判断"]
+        J --> PLAN["生成行动计划"]
+        PLAN --> R["反思校验事实与道德一致性"]
+    end
+    ENV --> MORE
+    MORE --> SETTLE["Social-Evol 结算<br/>狩猎 / 分配 / 沟通 / 抢夺 / 繁衍 / 死亡 → HP 与人口更新"]
+    SETTLE -->|未到 80 步且有存活者| ENV
+    SETTLE -->|演化结束| OUT["analysis assistant<br/>自动统计 + 交互式追问"]
+    MINI --> OUT
+```
+
 ### 关键设计
 
 **1. MoRE 道德驱动的实体化认知架构：让 agent 拥有可调用的社会关系记忆，而不是固定策略表**

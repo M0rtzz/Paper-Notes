@@ -43,6 +43,21 @@ EchoTrail-GUI 想解决的是：GUI Agent 每次执行任务都"从零开始"，
 
 形式上，标准 Agent 策略是 $\pi_{base}(a_t|s_t, I, H_t)$，EchoTrail 把它升级成记忆增强策略 $a_t \sim \pi_{aug}(a_t|s_t, I, H_t, M_t)$，其中 $M_t \subset D_{mem}$ 是当前检索到的相关记忆。下面三个阶段分别回答：高质量记忆从哪来、怎么检索、怎么用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["Stage I · Critic 引导自我探索"]
+        direction TB
+        E["探索 Agent<br/>渐进意图聚焦, 自主玩出轨迹"] --> R{"Critic 打分<br/>连贯/效率/达成度"}
+        R -->|"≥4 高质量"| DM["记忆库 D_mem<br/>永久, 存抽象三元组"]
+        R -->|低质量/失败| DP["处理库 D_proc<br/>短期, 实时引导避免重犯错"]
+        DP -.反馈.-> E
+    end
+    DM --> RET["Stage II · 动态记忆注入<br/>密集+稀疏混合检索 → Top-K=2 → 格式化蓝图"]
+    RET --> INF["Stage III · 记忆增强推理<br/>蓝图注入 prompt, 0 参数更新"]
+    INF --> OUT["输出动作 / finish"]
+```
+
 ### 关键设计
 
 **1. Stage I · Critic 引导自我探索：自动攒出高质量记忆库**

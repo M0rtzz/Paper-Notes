@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 DDR 把"投研型智能"做成一个任何主流 LLM 都能直接跑的开放式任务，再配一套能客观打分的混合数据库 benchmark。任务形式化为 $I = DDR(LLM, D, T)$：只给数据库 $D$ 和工具集 $T$，系统 prompt 不给具体问题、只丢一句最小启动语（例如"开始分析 userid=2048 的用户"），模型通过 ReAct 风格的 $(r, t, o)$ 循环（reasoning token、tool call、observation）反复查库，没有任何回合上限、由它自己决定何时停止，最终交出两类 insight——逐回合产出的 message-wise insight $I_m$ 与轨迹末尾全局综合的 trajectory-wise insight $I_t$。评分这一侧靠的是预先从数据库非结构化文本里抽出的 fact checklist：模型探索时看不到这些 fact，交完答案后才由 GPT-5-mini 逐条核对 insight 是否支撑该 fact，从而得到 sample-averaged 与 item-averaged 两种准确率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实大库 D：MIMIC-IV / GLOBEM / 10-K<br/>结构化表 + 非结构化长文本"]
+    subgraph TASK["DDR 任务形式化 + 极简 agent scaffolding"]
+        direction TB
+        E["最小启动语：只给 task entity，无问题 / 无步数上限"] --> F["ReAct 循环 (r,t,o)：仅 SQL+Python<br/>自主探索、自己决定何时停"]
+        F --> G["产出过程级 I_m + 轨迹级 I_t"]
+    end
+    subgraph CK["混合数据库 + checklist 评测协议"]
+        direction TB
+        D["GPT-5-mini 从非结构化侧抽 fact<br/>+ 50+ 专家筛 → 2058 条 checklist"]
+    end
+    A -->|"结构化侧（模型可见）"| E
+    A -->|"非结构化侧（模型不可见）"| D
+    G --> J["GPT-5-mini 拿 checklist 核 insight<br/>→ sample / item 准确率"]
+    D --> J
+    J --> K["投研动态四维度分析框架<br/>scaling / 探索熵×覆盖 / self-termination / 训练因子消融"]
+```
+
 ### 关键设计
 
 **1. DDR 任务形式化 + 极简 agent scaffolding：把投研型智能从执行型智能里干净剥出来**

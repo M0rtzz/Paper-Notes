@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 SegTune 要解决的是"如何在非自回归歌曲生成里加入分段级时序控制"。它以 DiT（Diffusion Transformer）为骨架、基于条件流匹配（CFM）建模：先用 1D VAE 把 44kHz 原始音频压到 21.5Hz 的潜在序列，再从全局文本提示、分段文本提示、时间对齐歌词三个互补来源构造条件注入扩散过程；其中一个微调过的 LLM 时长预测器负责生成句级时间戳，既用来把分段提示广播到正确的时间窗口，也用来对齐歌词。这样输出的歌曲就能在保持全局风格的同时，按段落呈现配器、情绪、能量的演变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["大规模数据管线（三阶段·离线构建）"]
+        direction TB
+        D1["质量过滤<br/>元数据筛选 + Audiobox/SongEval 评分"] --> D2["歌词处理<br/>Demucs 分离人声 + ASR 转录 + LRC 校验"]
+        D2 --> D3["层次化提示标注<br/>Audio Flamingo 3 生成全局/分段提示"]
+    end
+    DATA --> DUR["LLM 时长预测器<br/>微调 Qwen3-4B 输出句级时间戳"]
+    DUR -->|时间窗口| COND
+    DUR -->|对齐| LYR["时间对齐歌词"]
+    subgraph COND["层次化分段文本条件"]
+        direction TB
+        GLB["全局提示<br/>Qwen3-Embedding 广播到全部帧"]
+        SEG["分段提示<br/>广播到对应时间窗口"]
+    end
+    GLB --> MLP["通道拼接 + 3 层 MLP → 条件 E_text"]
+    SEG --> MLP
+    LYR --> MLP
+    AUD["44kHz 音频 → 1D VAE 压到 21.5Hz 潜在序列"] --> DIT["DiT 条件流匹配(CFM)"]
+    MLP --> DIT
+    DIT --> OUT["结构化可控歌曲"]
+```
+
 ### 关键设计
 
 **1. 层次化分段文本条件：让全局风格一致性与局部音乐变化各管各的**

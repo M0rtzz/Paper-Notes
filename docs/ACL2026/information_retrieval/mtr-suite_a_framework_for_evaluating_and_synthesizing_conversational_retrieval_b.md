@@ -45,6 +45,27 @@ MTR-Eval 输入一个 conversational retrieval benchmark，其中每个 turn 是
 
 MTR-Pipeline 从原始 corpus 开始，先做非文本清理、recursive chunking、MinHash-LSH 去重，再用 NVIDIA quality classifier 和 FineWeb-EDU scorer 过滤高信息密度片段。随后，greedy traversal clustering 在 embedding space 中构造连续语义路径，并按固定 cluster size 切段。最后三 agent 生成对话：Questioner 模拟用户提问和 topic switch，Responder 生成严格 grounded answer，Polisher 增加指代、省略和自然表达。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN1["已有对话检索基准<br/>(history, query, gold docs)"] --> EVAL
+    subgraph EVAL["MTR-Eval 四维审计"]
+        direction TB
+        E1["Query-Evidence 对齐"]
+        E2["证据完整性<br/>(hard negative 区分性测试)"]
+        E3["Answer-Evidence 忠实性"]
+        E4["答案语言质量"]
+    end
+    IN2["原始语料 corpus"] --> CLEAN["清洗与过滤<br/>非文本清理 → 递归分块 → MinHash-LSH 去重 → 质量打分"]
+    CLEAN --> GTC["Greedy Traversal Clustering<br/>贪心遍历连成语义路径，每 k 节点切一簇"]
+    GTC --> AGENT
+    subgraph AGENT["三 Agent 对话合成"]
+        direction TB
+        A1["Questioner<br/>提问 + 话题切换"] --> A2["Responder<br/>仅依 gold document 作答"] --> A3["Polisher<br/>加指代/省略/自然化"]
+    end
+    AGENT --> BENCH["MTR-Bench<br/>多轮检索基准"]
+```
+
 ### 关键设计
 
 **1. MTR-Eval 四维审计：先量化 benchmark 标注质量，再谈模型分数**

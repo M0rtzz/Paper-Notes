@@ -44,6 +44,26 @@ tags:
 ### 整体框架
 评测分两条路径并行：路径 A 是"专用 VMWE 数据集"——从 EPIE / MAGPIE 抽 idiom、从 Tu 2012 抽 VPC、从 Tu-Roth 2011 抽 LVC，加 BNC 抽 non-VMWE 对照组；用 8 个 MT 系统翻译到 7 种目标语言，用 MetricX-24-QE 和 xCOMET-QE 两个 reference-free QE 打分，取 $\delta = \text{score}_{\text{VMWE}} - \text{score}_{\text{non-VMWE}}$。路径 B 是"WMT 真实评测数据"——用启发式 + GPT-4o 双步从 WMT2017-2024 的英文源句里抽 VMWE 句子，用历年人工 DA 分数对比 VMWE vs non-VMWE。两条路径都报告 δ 热力图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph PA["路径A：专用 VMWE 数据集"]
+        direction TB
+        A1["三类 VMWE 分类 + 非组合性梯度假设<br/>VID(EPIE/MAGPIE) > VPC(Tu2012) > LVC(Tu-Roth2011)<br/>+ 从 BNC 构造 non-VMWE 对照组"]
+    end
+    subgraph PB["路径B：WMT2017-2024 真实评测"]
+        direction TB
+        B1["WMT 数据两步 VMWE 抽取<br/>启发式高召回 → GPT-4o CoT 消歧"]
+    end
+    A1 --> M["8 个 MT 系统 × 7 个目标语言翻译"]
+    M --> Q["MetricX-24-QE + xCOMET-QE 双 QE 打分"]
+    Q --> D["δ = VMWE 分 − non-VMWE 分（热力图）"]
+    B1 --> H["历年人工 DA 分数对比 VMWE vs non-VMWE"]
+    D --> AN["error span 定位 + 回归控制混淆<br/>xCOMET span × simalign 对齐 / 拟合 β_vmwe"]
+    H --> AN
+    AN --> O["结论：VID > VPC > LVC 退化梯度严格成立"]
+```
+
 ### 关键设计
 
 **1. 三类 VMWE 的语言学分类 + 非组合性梯度假设：把"翻译变差"做成一个可证伪的命题**

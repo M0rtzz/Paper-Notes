@@ -43,6 +43,29 @@ tags:
 ### 整体框架
 本文的核心是用一个 14B 的 checklist-aware critic 替代"对每条约束分别调一次大模型 judge"的昂贵做法：给定一条复杂指令和某模型的回答，先由 Checklist Generator 把指令拆成约束清单 $\{c_k\}_{k=1}^n$，再让 critic 在一次 CoT 推理里顺着清单逐条产出"解释 $e_k$ + 0/1 判定 $j_k$"，聚合即得整条 critique，下游把通过约束比例 $r_i=\frac{1}{n}\sum_k j_{ik}$ 当作 reward 喂给 DPO/GRPO 训练 7B/8B 策略模型。系统训练数据来自 55k 条真实复杂指令（按 CritiqueLLM 的 10 类任务分类、并用小分类器打约束复杂度分），每条随机挑 2 个模型（共 15 个）生成回答得到 110k 条评测样本；Checklist Generator 由 DeepSeek-R1 的约束分解结果蒸馏微调而来，人工抽检 1k 样本达单约束 99.29% / 整清单 97.50% 正确率，critic 则基于 Qwen2.5-14B-Instruct 经 SFT + 约束级 DPO 得到。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["55k 复杂指令 + 110k 模型回答"] --> B["Checklist Generator<br/>拆成约束清单"]
+    B --> C["Checklist-Guided Critique Generation<br/>critic 一次 CoT 顺清单逐条产 解释+判定 → 聚合 critique"]
+    C --> D
+    subgraph D["多阶段 Critique Filtering（榨出高质量监督）"]
+        direction TB
+        D1["DeepSeek-R1 采 5 份 critique"] --> D2["Cross-Model 核验（治偏见）"]
+        D2 --> D3["Rule-Augmented 数数（治数数）"]
+        D3 --> D4["多数投票定判定（治幻觉）"]
+        D4 --> D5["MBR 选解释（治措辞）"]
+    end
+    D --> E
+    subgraph E["Constraint-Level Preference Optimization"]
+        direction TB
+        E1["SFT 拟合干净 critique"] --> E2["自采 10 份挑判定冲突段<br/>仅替换冲突段构造 chosen/rejected"]
+        E2 --> E3["约束级 DPO"]
+    end
+    E --> F["IF-Critic-14B"]
+    F -->|"通过约束比例 r=Σj/n 当 reward"| G["下游 DPO / GRPO 训练 7B/8B 策略模型"]
+```
+
 ### 关键设计
 
 **1. Checklist-Guided Critique Generation：一次前向批量评完所有约束**

@@ -47,6 +47,29 @@ tags:
 
 按 Algorithm 1 的协议跑：每轮 $i$，学生先生成攻击话术 $a_i$（来自预定义 prompt 集，或来自 in-context 多轮采样），tutor 回 $t_i$，再由 $J_a, J_t$ 分别检查这一轮谁泄露了——先用 rule-based 的数字匹配粗筛，命中再交给 LLM judge 二次确认；任一命中即标记 leakage，对话最长 10 轮。整套设计要回答的核心问题是：现有 tutor 在"学生存心骗答案"时到底有多脆，以及怎样的对抗者才能真正把它压测出来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：GSM8K 题 x + 正解 y<br/>同时发给学生与 tutor"]
+    subgraph STU["SFT 对抗学生代理（绝不解题、只持续攻防）"]
+        direction TB
+        CAT["六类对抗/说服技巧<br/>3 类对抗 + 3 类说服"]
+        ATK["生成本轮攻击话术 a_i"]
+        CAT --> ATK
+    end
+    subgraph TUT["tutor 防御（即插即用，可选）"]
+        direction TB
+        RP["Reason Pedagogically<br/>先写 reason 字段再答 t_i"]
+        MA["Multi-Agent<br/>tutor → judge → refiner"]
+    end
+    JDG["二级泄露判定 J_a / J_t<br/>数字匹配粗筛 → LLM judge 确认"]
+    IN --> STU
+    STU --> TUT
+    TUT --> JDG
+    JDG -->|双方均未泄露且未满 10 轮| STU
+    JDG -->|任一泄露 或 满 10 轮| OUT["统计学生/tutor 泄露率 → 结束"]
+```
+
 ### 关键设计
 
 **1. 六类对抗与说服技巧的教育化分类：把散落的 jailbreak 手法系统映射到"学生骗答案"**

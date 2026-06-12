@@ -1,0 +1,163 @@
+---
+title: >-
+  [论文解读] CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation
+description: >-
+  [ACL 2025][文本生成][legal text generation] 提出 CoCoLex，一种无需训练的解码策略，利用解码过程中隐状态与上下文 token 隐状态的欧氏距离构造复制分布，并通过基于预测熵的置信度分数动态平衡"从上下文复制"与"自由生成"的比例，在五个法律基准上一致提升忠实性和正确性…
+tags:
+  - "ACL 2025"
+  - "文本生成"
+  - "legal text generation"
+  - "copy mechanism"
+  - "decoding strategy"
+  - "faithfulness"
+  - "RAG"
+---
+
+# CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation
+
+**会议**: ACL 2025  
+**arXiv**: [2508.05534](https://arxiv.org/abs/2508.05534)  
+**代码**: 无 (JPMorgan AI Research)  
+**领域**: 文本生成  
+**关键词**: legal text generation, copy mechanism, decoding strategy, faithfulness, RAG
+
+## 一句话总结
+
+提出 CoCoLex，一种无需训练的解码策略，利用解码过程中隐状态与上下文 token 隐状态的欧氏距离构造复制分布，并通过基于预测熵的置信度分数动态平衡"从上下文复制"与"自由生成"的比例，在五个法律基准上一致提升忠实性和正确性，尤其在长文本生成任务中效果突出。
+
+## 研究背景与动机
+
+法律领域对 LLM 有巨大需求（合同起草、法律研究、合规检查等），但对准确性和源文档忠实性要求极高——任何改写都可能改变法律含义，不准确的输出可能导致法律责任。RAG 通过检索外部知识来缓解幻觉，但不保证模型有效利用上下文。现有上下文感知解码方法（如 CAD）通过对比概率分布来放大上下文影响，但并不显式强制模型从上下文中复制忠实表述。
+
+核心矛盾在于：法律文本的"模板化结构"和"逐字引用"特性要求高度复制精确表述，但标准自回归解码天然倾向于改写而非引用。指针生成网络（Pointer Generator）需要训练复制门控，不适用于现有大模型的即插即用场景。
+
+本文的切入点是：利用 LLM 自身在解码过程中产生的隐状态表示和预测不确定性，构造一个训练无关的复制-生成插值机制——模型不确定时多复制上下文，模型确信时自由生成。
+
+## 方法详解
+
+### 整体框架
+
+在标准 RAG 解码流程基础上，CoCoLex 在每个解码步骤执行以下操作：(1) 获取模型标准词表分布 $p_\theta(y_t)$；(2) 利用当前步隐状态与上下文 token 隐状态的相似度构造复制分布 $p_{\text{copy}}(y_t)$；(3) 计算基于预测熵的置信度分数 $\lambda_t$；(4) 以 $\lambda_t$ 为权重动态插值两个分布得到最终采样分布。
+
+### 关键设计
+
+1. **基于隐状态相似度的复制分布（Copy-based Decoding）**:
+
+    - 功能：构造一个鼓励从上下文直接复制 token 的概率分布
+    - 核心思路：在处理上下文 token 时，提取并存储所有上下文 token 的隐状态向量 $h_i$ 及其对应的下一个 token。在解码步骤 $t$，计算当前隐状态 $h_t$ 与所有上下文隐状态的欧氏 $L_2$ 距离，通过指数衰减转换为相似度分数 $s_t(i) = \exp(-\text{dist}_t(i))$，然后将映射到相同词表 token $v$ 的所有相似度分数求和并归一化，得到 $p_{\text{copy}}(y_t=v)$
+    - 效率优化：仅对 top-$k$ 最相似的上下文向量进行聚合，低相似度 token 贡献可忽略
+    - 设计动机：隐状态的相似度反映了模型内部认为"当前位置应该输出什么"与"上下文某个位置实际输出了什么"的匹配程度。无需额外前向传递——隐状态在自回归生成过程中已自然产生
+
+2. **基于熵的置信度引导插值（Confidence-Guidance）**:
+
+    - 功能：动态平衡复制与自由生成的比例
+    - 核心思路：在每步计算模型输出分布的熵 $H_t$，归一化后通过指数变换得到置信度 $\lambda_t = \exp(-H_t^{\text{norm}})$。低熵（高置信度）时 $\lambda_t$ 接近 1，偏向模型自己的分布；高熵（低置信度）时 $\lambda_t$ 接近 0，偏向复制分布
+    - 平滑机制：对 $\lambda_t$ 施加滑动窗口平滑，结合历史置信度值，防止突变导致生成不稳定
+    - 最终分布：$p(y_t) = \lambda_t \cdot p_\theta(y_t) + (1-\lambda_t) \cdot p_{\text{copy}}(y_t)$
+    - 设计动机：模型不确定时更可能产生幻觉，此时应从上下文"找答案"；模型确信时（如生成语法词、连接词）应保持自由生成以维持流畅性
+
+3. **CoCoLex+（全文档复制扩展）**:
+
+    - 功能：将复制范围从 top-$k$ 检索块扩展到整个文档
+    - 核心思路：将文档分成重叠片段，分别编码获取所有 token 的隐状态表示。每个 token 取其具有最多自回归上下文的片段中的隐状态作为唯一表示。推理时仍仅使用 top-$k$ 检索段作为显式文本上下文，但复制分布可以从全文档隐状态中检索
+    - 设计动机：法律文档中相关信息常分散在不同段落，仅限于检索块会遗漏关键引用
+
+### 损失函数 / 训练策略
+
+- **完全无需训练**：纯解码阶段策略，不修改模型参数
+- 可与其他解码方法（如 AdaCAD）叠加组合使用，改进效果互补
+
+## 实验关键数据
+
+### 主实验（五个法律基准，两个模型）
+
+Mistral-7B-Instruct-v0.3 结果：
+
+| 数据集 | 指标 | Regular | CAD | AdaCAD | CoLex | CoCoLex |
+|--------|------|---------|-----|--------|-------|---------|
+| CUAD | Cor-AS / Fth-AS | 68.24 / 76.31 | 69.57 / 79.55 | 69.63 / 79.56 | 70.65 / 80.66 | **71.06 / 80.96** |
+| OALQA | Cor-AS / Fth-AS | 41.39 / 59.85 | 42.90 / 59.00 | 42.49 / 59.44 | 48.61 / 60.14 | **49.84 / 60.87** |
+| ObliQA | Cor-AS / Fth-AS | 73.35 / 90.84 | 71.14 / 89.73 | 71.04 / 89.61 | 85.35 / 93.48 | **86.01 / 95.96** |
+| AQuAECHR | Cor-AS / Fth-AS | 52.79 / 89.66 | 49.15 / 89.28 | 48.69 / 89.37 | 59.79 / 91.85 | **60.10 / 92.27** |
+| CLERC | Cor-AS / Fth-AS | 42.38 / 74.02 | 34.98 / 66.35 | 35.11 / 66.46 | 54.94 / 78.62 | **58.12 / 79.54** |
+
+### 人类评估（AQuAECHR，法律专家，5分制）
+
+| 方法 | 正确性 | 忠实性 | 流畅性 | 连贯性 |
+|------|--------|--------|--------|--------|
+| Regular | 4.40 | 4.24 | 4.88 | 4.88 |
+| AdaCAD | 4.24 | 3.84 | 4.80 | 4.84 |
+| **CoCoLex** | **4.64** | **4.44** | **4.96** | **4.92** |
+
+### 消融实验
+
+CoCoLex vs CoLex（去掉置信度引导的静态插值版本）：
+
+| 配置 | 关键指标 | 说明 |
+|------|---------|------|
+| CoLex（静态插值） | 各数据集均次于 CoCoLex | 静态比例无法适应不同 token 的复制需求 |
+| CoCoLex（动态插值） | 一致最优 | 置信度引导使实体名等确定性 token 保留模型选择，不确定 token 优先复制 |
+| Ada + CoCo | CUAD 提升，CLERC/AQuAECHR 下降 | 互补性取决于 AdaCAD 自身是否有效 |
+
+### 推理时间对比（相对 Regular Decoding）
+
+| 方法 | CUAD | AQuAECHR |
+|------|------|----------|
+| Regular | 1.00x | 1.00x |
+| CAD | 1.75x | 1.71x |
+| CoCoLex | 1.51x | 1.62x |
+| CoCoLex+ | 1.96x | 2.96x |
+
+### 关键发现
+
+1. CAD/AdaCAD 在短文本生成（CUAD）上有效，但在长文本生成（CLERC、AQuAECHR）上反而降低正确性和忠实性，且严重损害流畅性和连贯性
+2. CoCoLex 在长文本生成任务上优势最为突出——长文表述中需要精确复制的 token 比例更高
+3. 法律特化模型 Saul 反而不如通用 Mistral——但 CoCoLex 大幅弥补 Saul 的不足（如 OALQA 上 Saul 的 Cor-AS 从 32.26 提升到 52.74）
+4. CoCoLex 推理开销仅 1.5x，远低于 CAD 的 1.7x，因为不需要额外的无上下文前向传递
+5. CoCoLex+ 在 Saul/CLERC 上带来巨幅提升（Cor-AS 从 34.95 到 44.91），表明弱模型更受益于全文档复制
+
+## 亮点与洞察
+
+- **隐状态距离作为复制信号**是精巧设计：不依赖于注意力权重（不同层注意力模式差异大），而是使用最终层隐状态的欧氏距离，更直接反映了"当前位置需要什么 token"
+- **置信度引导**的关键直觉：模型不确定≈可能幻觉≈应从上下文找答案。实验验证 CoCoLex 一致优于 CoLex（静态插值），证明了动态调节的必要性
+- **无需训练**使其可即插即用到任何 RAG 管线——不需修改参数或收集训练数据，对实际部署价值极大
+- CoCoLex+ 的全文档复制特别适合法律场景：法律文档动辄数十页，关键引用分散各处
+- 对弱模型的提升尤为显著——这意味着在资源受限场景下，复制机制可以作为增强小模型忠实性的低成本手段
+
+## 局限与展望
+
+- 实验基于 Oracle 文档设置（假设检索完美），真实检索噪声下的鲁棒性未评估
+- 不处理需要跨文档推理、综合多源或解决矛盾先例的场景——仅能复制而不能推理
+- 复制粒度仅限 token 级别，未探索短语/子句级别的复制单元
+- CoCoLex+ 的全文档编码在超长文档上推理开销大（AQuAECHR 上 2.96x）
+- 仅在法律领域验证，通用域效果待探索
+
+## 相关工作与启发
+
+- **vs Pointer Generator Networks (See et al. 2017)**: PGN 需训练复制门控，CoCoLex 无需训练直接利用解码隐状态
+- **vs CAD (Shi et al. 2023)**: CAD 通过对比有/无上下文 logits 放大上下文影响但不显式复制；CoCoLex 显式构造复制分布，忠实性提升更大
+- **vs kNN-LM (Khandelwal et al. 2019)**: kNN-LM 从预训练语料的外部数据存储检索；CoCoLex 从当前上下文检索，目标是忠实性而非困惑度
+- **vs AdaCAD (Wang et al. 2024)**: AdaCAD 动态调整对比强度但不显式复制；与 CoCoLex 机制互补，组合使用在特定场景有效
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐ 将 kNN-LM 的检索思想与指针网络的复制思想融合为无训练解码策略，置信度引导的动态插值设计巧妙
+- 实验充分度: ⭐⭐⭐⭐ 五个法律基准、两个模型、人类评估、CoCoLex+ 扩展、组合实验、推理时间分析，覆盖全面
+- 写作质量: ⭐⭐⭐⭐ 方法描述清晰，公式推导完整，实验分析详实
+- 价值: ⭐⭐⭐⭐ 法律 AI 的实际需求强烈，无训练解码策略的即插即用特性使其部署价值高
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)
+- [\[ACL 2025\] Odysseus Navigates the Sirens' Song: Dynamic Focus Decoding for Factual and Diverse Open-Ended Text Generation](odysseus_dynamic_focus_decoding.md)
+- [\[AAAI 2026\] Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/nlp_generation/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
+- [\[ACL 2025\] ATGen: A Framework for Active Text Generation](atgen_a_framework_for_active_text_generation.md)
+- [\[ACL 2025\] Personalized Text Generation with Contrastive Activation Steering](personalized_text_generation_with_contrastive_activation_steering.md)
+
+</div>
+
+<!-- RELATED:END -->

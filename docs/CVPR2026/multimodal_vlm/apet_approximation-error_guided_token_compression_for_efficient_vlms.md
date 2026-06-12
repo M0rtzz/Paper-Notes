@@ -45,13 +45,26 @@ tags:
 
 ### 整体框架
 
-ApET 要解决的是「视觉 token 严重冗余但又不能靠 attention 权重来裁」的矛盾——它从信息论角度判断 token 重不重要：一个 token 如果能被别的 token 线性重建出来，说明它没带多少独特信息，可以压掉。具体做法是在 VLM 的 LLM 部分某个指定层（如第 2 层后）插一个压缩模块，分三步走：先从 $N$ 个视觉 token 里选出 $M$ 个「基础 token」当重建基底，再对每个非基础 token 算它被基底线性重建的误差作为重要性分数，最后保留误差最大的一批 + 基础 token，其余 token 加权合并进最近的保留 token。压缩后的短序列 $V' \in \mathbb{R}^{K' \times d}$ 送进后续 LLM 层。整个过程只碰 token 的特征向量、完全不碰 attention 矩阵，这也是它能兼容 FlashAttention 的根本原因。
+ApET 要解决的是「视觉 token 严重冗余但又不能靠 attention 权重来裁」的矛盾——它从信息论角度判断 token 重不重要：一个 token 如果能被别的 token 线性重建出来，说明它没带多少独特信息，可以压掉。具体做法是在 VLM 的中间 LLM 层（论文取 LLaVA 第 16 层）插一个压缩模块，分三步走：先从 $N$ 个视觉 token 里选出 $M$ 个「基础 token」当重建基底，再对每个非基础 token 算它被基底线性重建的误差作为重要性分数，最后保留误差最大的一批 + 基础 token，其余 token 按相似度归入最近的保留 token、再做组内平均合并。压缩后的短序列 $V' \in \mathbb{R}^{K' \times d}$ 送进后续 LLM 层。整个过程只碰 token 的特征向量、完全不碰 attention 矩阵，这也是它能兼容 FlashAttention 的根本原因。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视觉 token V（N 个）<br/>vision encoder + projector"] --> CMP
+    subgraph CMP["ApET 压缩模块（免 attention：插在中间 LLM 层，仅用 hidden states、不碰 attention 矩阵）"]
+        direction TB
+        B["基础 token 选择<br/>FPS 选 M=αN 个当重建基底"] --> C["近似误差计算<br/>线性重建残差 e_i=‖v_i−v'_i‖"]
+        C --> D["Token 合并<br/>留基底+top误差，其余按相似度归组平均合并"]
+    end
+    CMP --> E["压缩后短序列 V'（K 个）"]
+    E --> F["后续 LLM 层<br/>正常走 FlashAttention 加速"]
+```
 
 ### 关键设计
 
-**1. Basis Token 选择：先挑一小撮 token 当重建基底**
+**1. 基础 token 选择：先挑一小撮 token 当重建基底**
 
-要判断「谁能被谁重建」，得先有一组基底。ApET 从 $N$ 个视觉 token 里选 $M$ 个基础 token，探索了三种策略：**FPS（最远点采样）**贪心地选离已选集合最远的 token 以保证空间多样性，复杂度 $O(NM)$；**DPC（密度峰值聚类）**选局部密度最高、且与更高密度点距离最远的 token，兼顾密度与多样性；以及随机采样作基线。实验发现 FPS 最稳定、DPC 在某些任务略优、随机也能到 90% 以上效果——说明方法对基底选择并不敏感，默认用 FPS。基底规模取 $M = \lfloor \alpha \cdot N \rfloor$，$\alpha=0.1$（选 10% 当基底），在重建质量和计算开销之间折中。
+要判断「谁能被谁重建」，得先有一组基底。ApET 从 $N$ 个视觉 token 里选 $M$ 个基础 token（basis token），探索了三种策略：**FPS（最远点采样）**贪心地选离已选集合最远的 token 以保证空间多样性，复杂度 $O(NM)$；**DPC（密度峰值聚类）**选局部密度最高、且与更高密度点距离最远的 token，兼顾密度与多样性；以及随机采样作基线。实验发现 FPS 最稳定、DPC 在某些任务略优、随机也能到 90% 以上效果——说明方法对基底选择并不敏感，默认用 FPS。基底规模取 $M = \lfloor \alpha \cdot N \rfloor$，$\alpha=0.1$（选 10% 当基底），在重建质量和计算开销之间折中。
 
 **2. 近似误差计算：用「重建不出来」量化 token 的独特信息**
 
@@ -61,17 +74,15 @@ $$e_i = \|v_i - \hat{v}_i\|_2 = \|v_i - B(B^\top B)^{-1}B^\top v_i\|_2$$
 
 它本质是 $v_i$ 在基底列空间正交补上的投影长度——误差越大，说明这个 token 越无法被基底解释、信息越独特、越该保留。相比 attention 权重，这个度量不受因果 mask 带来的位置偏差影响。计算上 $(B^\top B)^{-1}$ 只需算一次（$M \times M$ 求逆，$M \ll N$ 很快），再对所有非基础 token 批量投影，总复杂度 $O(M^2 d + NMd)$，在 $N=576, M=58, d=4096$ 时仅 ~1ms。
 
-**3. Token 合并：被压掉的 token 不丢、加权并进保留者**
+**3. Token 合并：被压掉的 token 不丢、并进保留者**
 
-确定重要性后，保留基础 token（$M$ 个）+ 误差最大的 top-$(K-M)$ 个非基础 token，共 $K$ 个；剩下 $(N-K)$ 个不是直接扔，而是按余弦相似度加权合并到最近的保留 token：
+确定重要性后，保留基础 token（$M$ 个）+ 误差最大的 top-$(K-M)$ 个非基础 token，共 $K$ 个；剩下 $(N-K)$ 个不是直接扔。论文的做法是：对每个待删除 token，先按相似度找到与它最相似的那个保留 token、归入它那一组；等所有待删 token 都分配完后，对每一组内的 token 做**平均合并（average merging）**，得到最终的合并 token。
 
-$$v_j' = v_j + \sum_{i \in \text{merged\_to\_j}} \frac{\text{sim}(v_i, v_j)}{\sum_{k \in \text{merged\_to\_j}} \text{sim}(v_k, v_j)} \cdot v_i$$
-
-合并而非丢弃，保住了被压 token 的部分信息，是一种「有损但低损」的保持。在极端压缩率下（保留 <10% token），合并相比纯丢弃能提升约 2-3pp。
+合并而非丢弃，保住了被压 token 的部分信息，是一种「有损但低损」的保持。消融显示，在极端压缩率下（保留 <10% token），合并相比纯丢弃能带来约 2-3pp 的提升。
 
 **4. 免 attention 设计：天然兼容 FlashAttention**
 
-很多 token 压缩方法在实际部署被弃用，正是因为它们要读完整 $n \times n$ attention 矩阵，必须先禁用 FlashAttention，反而净拖慢速度。ApET 整个压缩只用 token 的 hidden states、不碰 attention 矩阵，所以压缩放在第 2 层之后（token 已经过少量 attention 交互、特征更有意义），压缩后的短序列照常走 FlashAttention，还因为序列更短而进一步加速。这一条不是事后福利，而是「从近似误差而非 attention 出发」这个选择带来的直接工程红利。
+很多 token 压缩方法在实际部署被弃用，正是因为它们要读完整 $n \times n$ attention 矩阵，必须先禁用 FlashAttention，反而净拖慢速度。ApET 整个压缩只用 token 的 hidden states、不碰 attention 矩阵，所以模块可以插在视觉编码器之后、以及 LLM 的某个中间层（论文取 LLaVA 第 16 层，此时 token 已经过若干层 attention 交互、特征更成熟），压缩后的短序列照常走 FlashAttention，还因为序列更短而进一步加速。这一条不是事后福利，而是「从近似误差而非 attention 出发」这个选择带来的直接工程红利。
 
 ## 实验关键数据
 

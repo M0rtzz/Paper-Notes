@@ -49,6 +49,29 @@ DBIC 约束要求："给定历史 $\Gamma_{t-1}$，被推荐臂 $i$ 相对任意
 
 两个阶段通过 $\gamma_m = 4\sqrt{K/\mathcal{E}_{\mathcal{F},\delta}(|\mathcal{T}_{m-1}|)}$ 这个 spread 参数连接——它随 oracle 的 MSPE 反向缩放，随时间自动收紧探索半径。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["用户 p_t 携特征 x_t 到达<br/>平台从 K 个产品里推荐"] --> CS
+
+    subgraph CS["Cold Start 双相位（MPASC + RASC）"]
+        direction TB
+        MP["MPASC：推先验均值最高的安全臂<br/>直到首个臂攒满 N(ε) 样本"]
+        MP --> RA["RASC：1/L 概率推欠采样臂（探索，计入 S）<br/>1−1/L 概率推 organic 安全臂（补贴，不计入）"]
+    end
+
+    CS -->|"每臂攒满 N(ε) 样本（激励价格阈值）"| EX
+
+    subgraph EX["IPGS + 自适应 spread（Exploitation 阶段）"]
+        direction TB
+        TR["doubling-epoch：用上一段数据训 offline oracle<br/>估 β̂_i、定预测最优臂 b_t"]
+        TR --> SP["更新 spread γ_m = 4√(K / MSPE)<br/>MSPE 越小、γ_m 越大、探索越收紧"]
+        SP --> SA["IPGS 采样 p_t(i) = 1/(K + γ_m·gap)<br/>离最优臂越远、采样概率越低"]
+    end
+
+    EX --> OUT["推荐 I_t → 用户实选 a_t → 观察反馈<br/>满足 ε-DBIC + 累积 regret Õ(√KdT)"]
+```
+
 ### 关键设计
 
 **1. Cold Start 双相位（MPASC + RASC），且"有机"推荐不计入训练集**

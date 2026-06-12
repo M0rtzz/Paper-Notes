@@ -47,6 +47,25 @@ EAGLET 把 agent 任务 $\pi_\theta(e \mid u) = \prod_t \pi_\theta(a_t \mid u, a
 
 推理时新 executor 只需把 $\pi_g$ 生成的 plan 跟 task instruction 一起作为前缀，无需任何 executor 训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["专家轨迹（benchmark 自带）"] --> B["强 LLM 反向合成<br/>(plan, thinking) 候选"]
+    subgraph SFT["冷启动 SFT 阶段"]
+        direction TB
+        B --> C["同源共识过滤 HCF<br/>expert/novice 双执行器都没被 plan 害才保留"]
+        C --> D["next-token SFT<br/>得到 planner π_g^SFT"]
+    end
+    subgraph RL["rule-based RL 阶段（执行器全程冻结）"]
+        direction TB
+        D --> E["planner 采样 G 个候选 plan"]
+        E --> F["执行器能力增益奖励 ECGR<br/>同源 pair 带/不带 plan 差分 + 步数衰减"]
+        F --> G["GRPO 更新 planner<br/>梯度只回传 planner"]
+        G -->|组内相对 advantage 引导| E
+    end
+    G --> H["即插即用 planner<br/>新 executor 直接当前缀使用"]
+```
+
 ### 关键设计
 
 **1. Homologous Consensus Filtering (HCF)：用同源执行器共识过滤合成 plan，把人工标注换掉**

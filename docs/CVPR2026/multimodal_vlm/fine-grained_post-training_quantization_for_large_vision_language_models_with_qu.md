@@ -42,7 +42,16 @@ tags:
 ### 整体框架
 QIG 想解决的问题很具体：现有 LVLM 量化方法只能区分"视觉 token 还是文本 token"，却看不出同一模态里哪些 token 对量化更敏感，于是校准时一视同仁地分配缩放因子。QIG 的做法是在不改动量化主流程的前提下，给每个 token 算一个量化敏感度分数，再把这个分数当权重塞进原有的校准目标里。
 
-整条流水线挂在标准 PTQ 的校准阶段上：喂进一批多模态校准序列（视觉 + 文本 + 特殊 token），先对每个 token 计算 QIG 分数衡量它对量化误差的贡献，然后用 IQR 裁掉极端值并归一化成重要度系数 $\lambda_i$，最后把 $\lambda_i$ 作为权重加进 channel-wise equalization 的优化目标，搜索出对敏感 token 更友好的量化缩放因子。量化完成后推理路径与基线完全一致，所有额外计算都发生在校准这一次性环节。
+整条流水线挂在标准 PTQ 的校准阶段上：喂进一批多模态校准序列（视觉 + 文本 + 特殊 token），先对每个 token 计算 QIG 分数衡量它对量化误差的贡献，然后用 IQR 裁掉极端值并归一化成重要度系数 $\lambda_i$，最后把 $\lambda_i$ 作为权重加进 channel-wise equalization（CWE）的优化目标，搜索出对敏感 token 更友好的量化缩放因子。量化完成后推理路径与基线完全一致，所有额外计算都发生在校准这一次性环节。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态校准序列<br/>128 对 ShareGPT4V 图文（视觉 + 文本 + 特殊 token）"] --> B["量化感知积分梯度（QIG）<br/>归因 FP 与量化模型的输出差异<br/>→ 每个 token 的量化敏感度分数"]
+    B --> C["IQR 裁剪 + 归一化<br/>压掉重尾离群分数 → 重要度系数 λᵢ"]
+    C --> D["token 级加权 channel-wise equalization<br/>λᵢ 作权重搜索缩放因子 E"]
+    D --> E["量化模型<br/>推理路径与基线一致、零额外开销"]
+```
 
 ### 关键设计
 

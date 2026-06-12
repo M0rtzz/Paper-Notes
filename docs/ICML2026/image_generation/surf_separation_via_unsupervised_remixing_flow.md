@@ -43,6 +43,18 @@ SURF 把监督流匹配 FLOSS 与无监督的 ReMixIT / Self-Remixing 教师-学
 ### 整体框架
 SURF 要解决的是"没有任何干净源、只有混合观测，怎么训出一个生成式 flow 分离器"。它用两个同结构、都按 FLOSS 训练的 flow matching 网络——EMA 教师 $v_{\theta_\mathcal{T}}$ 负责造伪源、学生 $v_\theta$ 负责从重混合里学回——把无监督派的"教师估计→打乱重组→学生学回"循环嫁接到 flow matching 上，两者都从 MixIT 预热的回归分离器初始化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["真实混合观测<br/>(无任何干净源)"] --> T["EMA 教师 flow<br/>flow ODE 采样伪源"]
+    T --> BR["Velocity-to-Denoiser 桥接<br/>E[x1|xt] ≈ xt + (1−t)·v"]
+    BR --> RM["重混合：跨 batch 打乱重组成新合成混合"]
+    RM --> S["学生 flow<br/>FLOSS PIT 选最优置换 + 回归速度残差 Rt"]
+    S --> L["ReMixIT-FM / Self-Remixing-FM 双损失"]
+    L -->|"反传更新学生"| S
+    S -.->|"Wake-Sleep：EMA 慢追快 θT ← αθT + (1−α)θ"| T
+```
+
 ### 一个完整示例
 跟着一个训练步走一遍，能看清教师、重混合、学生三个模块怎么协同。给定真实混合批次 $\boldsymbol{M}=[\boldsymbol{m}_1,\dots,\boldsymbol{m}_B]$，**教师**先用 flow ODE 采样出一批伪源 $\mathcal{X}\in\mathbb{R}^{BK\times d}$；接着进入**重混合**，在置换群 $S_{BK}$ 上均匀采一个 $\boldsymbol{\Pi}$ 把全部 $BK$ 行打乱得到 $\tilde{\boldsymbol{X}}_1=\boldsymbol{\Pi}\mathcal{X}$，再按 $\tilde{\boldsymbol{M}}=(\boldsymbol{I}_B\otimes\mathbf{1}^\top)\tilde{\boldsymbol{X}}_1$ 求和成全新的合成混合。然后为**学生**铺一条 FM 路径：噪声端取 $\tilde{\boldsymbol{X}}_0=\tfrac{1}{K}(\boldsymbol{I}_B\otimes\mathbf{1})\tilde{\boldsymbol{M}}+(\boldsymbol{I}_B\otimes\boldsymbol{P}^\perp)\boldsymbol{Z}$ 以保证 mixture consistency，用学生 $t=0$ 处的速度对每个 mixture 做 PIT 选最优置换 $\boldsymbol{\Upsilon}$，得到插值 $\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}}=(1-t)\tilde{\boldsymbol{X}}_0+t\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1$；据此算出统一的速度残差 $\boldsymbol{R}_t=v_\theta(\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}},t,\tilde{\boldsymbol{M}})-(\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1-\tilde{\boldsymbol{X}}_0)$ 供两条 loss 分支共用。学生反传更新后，教师再用 EMA $\theta_\mathcal{T}\leftarrow\alpha\theta_\mathcal{T}+(1-\alpha)\theta$ 慢慢追上。整步里所有"目标"要么来自教师自己（ReMixIT 变体），要么来自原始观测混合（Self-Remixing 变体），**全程不碰 clean source**。
 

@@ -41,17 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Neubay 的训练循环（Algo. 1）非常 MBPO-like：(a) 先用 $\mathcal{D}$ 训一个 100 模型 ensemble $\mathbf{m}_{\boldsymbol{\theta}}$；(b) 每轮从 $\mathcal{D}$ 任意时刻 $t$ 采起点 $h_t = s_{0:t}$，从 ensemble 抽一个固定模型 $m_\theta$（注意：整条 rollout 都用这个模型，不在每步随机），跑 Algo. 2 的 Rollout 直到 (i) 命中 terminal，(ii) 不确定度 $U_{\boldsymbol{\theta}}(\hat s_t, \hat a_t) > \mathcal{U}(\zeta)$ 触发截断，或 (iii) 到了 episode 上限 $T$（最长可达 1000）；(c) 把真实数据 + imagined 数据按比例 $\kappa$ 混合，喂给一对带独立 LRU 编码器的循环 actor $\pi_\nu(a_t|h_t)$ 和 critic $Q_\omega(h_t, a_t)$ 做 off-policy RL。
+Neubay 的训练循环（Algo. 1）非常 MBPO-like：(a) 先用 $\mathcal{D}$ 训一个 100 模型 ensemble $\mathbf{m}_{\boldsymbol{\theta}}$；(b) 每轮从 $\mathcal{D}$ 任意时刻 $t$ 采起点 $h_t = s_{0:t}$，从 ensemble 抽一个固定模型 $m_\theta$（注意：整条 rollout 都用这个模型，不在每步随机），跑 Algo. 2 的 Rollout 直到 (i) 命中 terminal，(ii) 不确定度 $U_{\boldsymbol{\theta}}(\hat s_t, \hat a_t) > \mathcal{U}(\zeta)$ 触发截断，或 (iii) 到了 episode 上限 $T$（最长可达 1000）；(c) 把真实数据 + imagined 数据按比例 $\kappa$ 混合，喂给一对带独立 LRU 编码器的循环 actor $\pi_\nu(a_t|h_t)$ 和 critic $Q_\omega(h_t, a_t)$ 做 off-policy RL。整条 pipeline 顺着「先用大 ensemble + LayerNorm 把世界模型训稳 → 再用分位不确定度阈值控制每条长 rollout 在哪停 → 最后用循环 actor-critic 从这些长轨迹里学策略」的顺序串起来，对应下图三个贡献环节，也对应下面的三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 D"] --> WM["大 ensemble + LayerNorm 世界模型<br/>N=100 后验拟真，LN 把单步增量卡成线性累积"]
+    WM --> SAMP["每条 rollout 固定抽一个模型 m_θ<br/>从 D 任意时刻抽起点历史 h_t"]
+    subgraph RO["长 horizon rollout（Algo 2，可达数百步）"]
+        direction TB
+        ACT["循环 actor 出动作 → 世界模型预测奖励与下一状态"]
+        ACT --> THR["分位不确定度阈值 U(ζ)<br/>U 超阈值 / 命中 terminal / t≥T 则截断"]
+        THR -->|未超阈值，继续外推| ACT
+    end
+    SAMP --> RO
+    RO -->|想象长轨迹| MIX["真实 + 想象数据按 κ 混合"]
+    D -. 真实数据 .-> MIX
+    MIX --> RL["循环 actor-critic + memoroid/LRU<br/>off-policy RL，处理 epistemic POMDP"]
+    RL -. 更新后的策略回灌下一轮 rollout .-> SAMP
+    RL --> OUT["不靠显式保守，长 rollout 自吸收价值高估"]
+```
 
 ### 关键设计
 
-**1. 分位不确定度阈值 $\mathcal{U}(\zeta)$：用自适应开关决定 rollout 在哪停，而不是固定 horizon**
+**1. 大 ensemble（$N{=}100$）+ world model 内 LayerNorm：让长 rollout 真的可行**
 
-放弃显式保守后，rollout 跑多长成了核心问题——可信区域要尽量跑长来吸收高估，不可信区域必须立刻截断防止瞎外推。Neubay 先在数据集上对所有 $(s, a)$ 算 ensemble disagreement $U_{\boldsymbol{\theta}}(s, a) = \mathrm{std}(\{\mu_{\theta^n}(s, a)\}_{n=1}^N)$ 的分布，取 $\zeta$ 分位数作阈值 $\mathcal{U}(\zeta) := F_Y^{-1}(\zeta)$；rollout 期间一旦 $U_{\boldsymbol{\theta}}(\hat s_t, \hat a_t)$ 超过阈值就 truncate——只停止外推，不打任何惩罚。论文取 $\zeta = 1.0$（数据集内最大不确定度），鼓励尽可能长的 rollout。以往工作也用过不确定度阈值，但都搭配一个固定短 horizon cap；本文发现移除显式保守后，短 horizon 反而让 bootstrap 项主导、导致严重高估，所以必须把固定 cap 也去掉，让阈值自己决定能跑多长。分位形式还有个好处：不同数据集的不确定度量纲和长尾结构差异巨大（图 4），分位阈值能自动适配，比绝对阈值鲁棒得多。
+要跑几百步 rollout，既要后验拟真、又不能让单步误差累积爆炸——这是图中「世界模型」一环要解决的问题。Neubay 把 world model 写成 delta 预测形式 $\mathbb{E}[\hat s'] = s + \mathbf{W}^\top \mathrm{ReLU}(\mathrm{LN}(\psi(s, a)))$，由于不带 affine 的 LN 满足 $\|\mathrm{LN}(x)\| = \sqrt{k}$ 恒等，单步增量被硬卡上界 $\|\mathbb{E}[\hat s'] - s\| \leq \sqrt{k}\|\mathbf{W}\|$，累积 $H$ 步后 $\|\mathbb{E}[\hat s_H] - s_0\| \leq H\sqrt{k}\|\mathbf{W}\|$ 是线性而非指数增长——compounding error 被几何边界压住了。同时把 ensemble 从 MBPO 默认的 5 提到 100：rollout 短时 posterior 不太重要，但跑 64–512 步时 posterior 必须更准，大集合才能弥补长 rollout 对后验保真度的放大。LN 这招借鉴自 Ball et al. 在 model-free RL 里抑制 Q 网络外推误差的做法，本文把它从"控制 Q 网络"迁移到"控制动力学网络"。
 
-**2. 大 ensemble（$N{=}100$）+ world model 内 LayerNorm：让长 rollout 真的可行**
+**2. 分位不确定度阈值 $\mathcal{U}(\zeta)$：用自适应开关决定 rollout 在哪停，而不是固定 horizon**
 
-要跑几百步 rollout，既要后验拟真、又不能让单步误差累积爆炸。Neubay 把 world model 写成 delta 预测形式 $\mathbb{E}[\hat s'] = s + \mathbf{W}^\top \mathrm{ReLU}(\mathrm{LN}(\psi(s, a)))$，由于不带 affine 的 LN 满足 $\|\mathrm{LN}(x)\| = \sqrt{k}$ 恒等，单步增量被硬卡上界 $\|\mathbb{E}[\hat s'] - s\| \leq \sqrt{k}\|\mathbf{W}\|$，累积 $H$ 步后 $\|\mathbb{E}[\hat s_H] - s_0\| \leq H\sqrt{k}\|\mathbf{W}\|$ 是线性而非指数增长——compounding error 被几何边界压住了。同时把 ensemble 从 MBPO 默认的 5 提到 100：rollout 短时 posterior 不太重要，但跑 64–512 步时 posterior 必须更准，大集合才能弥补长 rollout 对后验保真度的放大。LN 这招借鉴自 Ball et al. 在 model-free RL 里抑制 Q 网络外推误差的做法，本文把它从"控制 Q 网络"迁移到"控制动力学网络"。
+世界模型稳住之后，rollout 跑多长成了核心问题——可信区域要尽量跑长来吸收高估，不可信区域必须立刻截断防止瞎外推（对应图中 rollout 回环里的截断判断）。Neubay 先在数据集上对所有 $(s, a)$ 算 ensemble disagreement $U_{\boldsymbol{\theta}}(s, a) = \mathrm{std}(\{\mu_{\theta^n}(s, a)\}_{n=1}^N)$ 的分布，取 $\zeta$ 分位数作阈值 $\mathcal{U}(\zeta) := F_Y^{-1}(\zeta)$；rollout 期间一旦 $U_{\boldsymbol{\theta}}(\hat s_t, \hat a_t)$ 超过阈值就 truncate——只停止外推，不打任何惩罚。论文取 $\zeta = 1.0$（数据集内最大不确定度），鼓励尽可能长的 rollout。以往工作也用过不确定度阈值，但都搭配一个固定短 horizon cap；本文发现移除显式保守后，短 horizon 反而让 bootstrap 项主导、导致严重高估，所以必须把固定 cap 也去掉，让阈值自己决定能跑多长。分位形式还有个好处：不同数据集的不确定度量纲和长尾结构差异巨大（图 4），分位阈值能自动适配，比绝对阈值鲁棒得多。
 
 **3. 循环 actor-critic + memoroid (LRU)：处理贝叶斯目标带来的 epistemic POMDP**
 

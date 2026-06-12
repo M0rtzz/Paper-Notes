@@ -49,6 +49,23 @@ $$L^3(x,t) = W_\text{mix}\big[\text{LN}(W_\text{up}(V_t^\top \text{Softmax}(K_t 
 
 整个层只在 channel 维做混合、**没有跨 token 通信**，这是后面所有系统优化的根本；而每个 token 分到多少行 $d_t$，则由专门的 embedding 分配算法决定，是 L3 的核心超参。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    ALLOC["LZW embedding 分配（离线）<br/>扫语料按频次定每 token 行数 d_t"]
+    T["token ID t"]
+    X["隐藏状态 x（当 query）"]
+    ALLOC -.决定如何切表.-> ROUTE
+    T --> ROUTE["静态 token 路由<br/>按 t 从 W_K/W_V 切出 K_t, V_t"]
+    ROUTE -.地址即时已知 → 可预取.-> OFF["CPU offload 推理 + 排序训练<br/>取参与前层 decoder 并行"]
+    ROUTE --> AGG["hidden-state 软查表聚合<br/>Softmax(K_t·x) 加权求和 V_t"]
+    X --> AGG
+    AGG --> UP["W_up 上投影 + LayerNorm"]
+    UP --> MIX["concat 残差流 x → W_mix 混合"]
+    X --> MIX
+    MIX --> OUT["L3 输出（并回残差流）"]
+```
+
 ### 关键设计
 
 **1. 静态 token 路由 + hidden-state 软查表：把"路由"和"聚合"彻底解耦**

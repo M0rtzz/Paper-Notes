@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 这篇论文走"诊断—干预—验证"的路子：先在控制求解复杂度的前提下，对 Qwen3-1.7B 在 L1–L4 上做 SFT + REINFORCE 风格 RL，观察训练曲线随 horizon 变长怎么崩；再提出两类 horizon reduction 机制——macro action（单步执多个原子动作）和 subgoal decomposition（按子目标切段独立算回报）——把有效 horizon 压回 RL 能稳学的区间；最后在 Rush Hour、WebShop、4B 模型、GRPO 优化器上交叉验证 robustness，并测 L5–L7 上的 zero-shot horizon generalization。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["Horizon 形式化与控制实验设计（设计 1）"]
+        direction TB
+        A["Sudoku / Rush Hour"] --> B["short-horizon proxy<br/>筛掉模型本就不会解的实例"]
+        B --> C["按目标距离 d 切成 L1–L7 七级<br/>求解复杂度恒定、只变 horizon"]
+    end
+    DATA --> D["SFT 初始化<br/>GPT-5-mini expert trajectory"]
+    D --> E["Critic-free off-policy REINFORCE（设计 2）<br/>reward 解耦 traj/step + MIS×TIS 双 clip"]
+    E -->|atomic action 长 horizon| F["训练崩溃<br/>max-length response 暴增"]
+    E -->|降有效 horizon| G
+    subgraph G["Horizon Reduction（设计 3）"]
+        direction TB
+        G1["macro action<br/>单步执多个原子动作"]
+        G2["subgoal decomposition<br/>切段独立算回报"]
+    end
+    G --> H["稳定训练 + 强 horizon 泛化<br/>L1–L2 训 → L5–L7 zero-shot"]
+```
+
 ### 关键设计
 
 **1. Horizon 形式化与控制实验设计：把 horizon 从所有其他困难因素里干净拆出来**

@@ -35,7 +35,24 @@ tags:
 
 ### 整体框架
 
-以 DINOv2 ViT 为 backbone，将每个 Transformer block 中的标准 FFN 替换为物理引导的稀疏 MoE 层，每层包含路由器 $R_\psi$ 和 $n$ 个专家 $\{E_k\}_{k=1}^n$（从 DINOv2 FFN 权重初始化）。输入 SAR 图像复制为 3 通道 $X \in \mathbb{R}^{3 \times H \times W}$ 送入 backbone，同时计算 3 个物理描述符 $s \in \mathbb{R}^3$ 辅助路由。最终 token 嵌入送入 Mask2Former 解码器生成分割预测。提供 S（20M 激活）/B（80M 激活）/L（300M 激活，总参数 1.3B）三个版本。
+以 DINOv2 ViT 为 backbone，将每个 Transformer block 中的标准 FFN 替换为物理引导的稀疏 MoE 层，每层包含路由器 $R_\psi$ 和 $n$ 个专家 $\{E_k\}_{k=1}^n$（从 DINOv2 FFN 权重初始化）。输入 SAR 图像复制为 3 通道 $X \in \mathbb{R}^{3 \times H \times W}$ 送入 backbone，同时计算 3 个物理描述符 $s \in \mathbb{R}^3$ 辅助路由。最终 token 嵌入送入 Mask2Former 解码器生成分割预测。整个模型先在自建的 CrossEarth-SAR-200K 上做持续预训练，再冻结 backbone 微调解码器；提供 S（20M 激活）/B（80M 激活）/L（300M 激活，总参数 1.3B）三个版本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["CrossEarth-SAR-200K 大规模数据集<br/>40K 真标注 + 163K 伪标注（光学模型迁移）"] -.持续预训练.-> BK
+    X["SAR 图像<br/>复制为 3 通道"] --> BK["DINOv2 ViT backbone<br/>每个 block 的 FFN 换成物理引导 MoE"]
+    X --> PD["SAR 物理描述符<br/>方向熵 H_DE / 等效视数 ENL / 局部粗糙度 R_LR"]
+    subgraph MOE["物理引导稀疏 MoE 层"]
+        direction TB
+        RT["路由器 softmax(W_r·[Z ‖ S])<br/>token 嵌入 Z 拼接物理描述符 S"] --> TK["选 top-k 专家归一化加权聚合"]
+    end
+    BK --> RT
+    PD --> RT
+    TK --> DEC["Mask2Former 解码器"]
+    DEC --> OUT["域泛化语义分割预测"]
+    TK -.训练时约束.-> LB["负载均衡约束 L_BC<br/>防专家坍缩"]
+```
 
 ### 关键设计
 

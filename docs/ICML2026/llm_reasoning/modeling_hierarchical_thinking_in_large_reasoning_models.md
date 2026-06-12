@@ -47,6 +47,28 @@ tags:
 
 在线阶段：自回归生成时持续检测句末标点（`. ? !`）作为干预时机；遇到边界就用分类器估当前/下一状态，按 Q-Value 策略决定是否引导、引导到哪个目标状态 $q^\star$，然后把对应引导向量在隐藏空间做正交分量注入，最后照常继续生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线 FSM 抽象"]
+        direction TB
+        A["训练集 CoT 按句切分"] --> B["GPT-4o-mini 标注<br/>映射到 6 状态 FSM"]
+        B --> C["分对错估转移矩阵<br/>优势矩阵 R = T_correct − T_incorrect"]
+        C --> D["Q-Value 迭代规划<br/>R → 长视野 Q 表"]
+        B --> E["对比均值差<br/>抽各转移引导向量 v"]
+        B --> F["训练 State Encoder<br/>+ 当前/下一状态分类器"]
+    end
+    OFF --> G["自回归生成<br/>检测句末标点为干预时机"]
+    subgraph ON["在线引导推理"]
+        direction TB
+        G --> H["分类器估当前/下一状态<br/>+ 置信度 conf"]
+        H -->|"conf≥0.9 且不卡住"| I["放手不干预"]
+        H -->|"Q_gap≥δ 才出手"| J["选目标状态 q*<br/>正交分量注入 h += α·v⊥"]
+        J --> K["继续生成下一句"]
+        I --> K
+    end
+```
+
 ### 关键设计
 
 **1. 6 状态 FSM 抽象 + Transition Advantage Matrix $R$：把无结构的 CoT 压成一张能区分对错的转移图**

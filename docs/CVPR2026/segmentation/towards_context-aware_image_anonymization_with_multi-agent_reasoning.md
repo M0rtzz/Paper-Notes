@@ -42,6 +42,22 @@ tags:
 
 整体怎么转：图像先进 **Phase 1（预定义处理）**，用现成的专用检测器把高置信度的直接 PII 一次性处理掉——YOLOv8 检出人体后交给 SDXL+OpenPose ControlNet 重绘，YOLOv8s 检出车牌后做高斯模糊，YOLO-TS 检出交通标志后生成排除掩码（标志属于公共信息，要保护不被误改）。处理过的图像再进 **Phase 2（多智能体协作）**，由三个分工明确的智能体在 AutoGen 框架里按固定轮转顺序协作，跑一个有上限的 PDCA 迭代循环：每一轮发现一批间接 PII、修掉、再回头检查有没有遗漏，直到收敛或触顶。两阶段的分界本质是"能用专用模型可靠搞定的就别麻烦 LVLM，剩下需要语境判断的才上推理"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入街景图像"] --> P1["Phase 1 预定义处理<br/>专用检测器搞定直接 PII：<br/>人体重绘 / 车牌模糊 / 标志排除"]
+    P1 --> AUD["Auditor（Plan）<br/>Qwen2.5-VL 分类本轮间接 PII"]
+    subgraph LOOP["三智能体 PDCA 协调（上限 3 轮）"]
+        direction TB
+        AUD --> SZ["Scout-and-Zoom 分割（Do）<br/>LVLM 粗框 → 裁剪局部 → Grounded-SAM-2 精掩码"]
+        SZ --> INP["外观去相关扩散修复（Do）<br/>SDXL+ControlNet 换全新外观，关闭颜色匹配"]
+        INP --> CHK["双层验证（Check）<br/>IoU 去重 + Auditor 视觉复查"]
+        CHK --> ORC{"Orchestrator（Act）<br/>收敛或触顶？"}
+        ORC -->|"否，再来一轮"| AUD
+    end
+    ORC -->|"是"| OUT["输出匿名化图像 + 审计追踪"]
+```
+
 ### 关键设计
 
 **1. 三智能体 PDCA 协调机制：把"检测—处理—验证"做成可收敛的闭环，而不是一次性扫描**

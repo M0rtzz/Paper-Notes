@@ -46,6 +46,19 @@ tags:
 
 具体地，给定 $n$ 个来自 $p^\star$ 的 i.i.d. 样本，先用 $n_0=C_{\mathsf{sc}}M^2k\log n$ 个样本跑标准子空间聚类（SSC / 阈值聚类 / 贪心聚类皆可），恢复正交基 $\{A_i\}_{i=1}^M$（$A_i\in\mathbb{R}^{d\times k_i}$，$A_i^\top A_i=I_{k_i}$）和分类函数 $c:\mathbb{R}^d\to[M]$；在 UoS + 标准 separation 条件下这一步以高概率精确成功，所需样本量相对总预算可忽略。再用剩余的 $N=n-n_0$ 个样本构造 score 估计器 $\widehat s_t$ 去逼近目标 $s_t^\star=\nabla\log p_t$（$p_t=p^\star * \mathcal{N}(0,tI_d)$），对所有 $t>0$ 成立。得到 $\widehat s_t$ 后套进标准反向 SDE 采样算法（Algorithm 1：初始化于 $\mathcal{N}(0,I_d)$，反向积分到 early-stopping 时间 $\tau$）即得最终采样器；理论分析则建立在 $h(t)=\sigma_t^2/c_t^2$ 把 OU 过程 $X_t$ 与方差爆炸过程 $Z_t$ 的 score 一一映射的等价上（公式 8）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["n 个 i.i.d. 样本 ~ p*<br/>支撑在 M 个低维子空间并集（UoS）"] --> B["子空间聚类<br/>用 n0 样本恢复正交基 A_i 与分类函数 c"]
+    B --> C["法向-切向分解 + mixture 表示<br/>s* = Σ w·s_i，每分量拆成法向闭式 + 切向 k_i 维"]
+    C --> D["核密度比 + 阈值化 低维 score 估计器<br/>切向 KDE 比，低密度区置零 + clip"]
+    C --> E["几何门控 mixture 权重估计<br/>权重 KDE 比 × 几何门，消去 d 维因子"]
+    D --> F["拼回 d 维 score 估计 ŝ_t"]
+    E --> F
+    F --> G["反向 SDE 采样（Algorithm 1，early-stop τ）"]
+    G --> H["输出样本，W_1 误差 ε"]
+```
+
 ### 关键设计
 
 **1. Score 的"法向-切向"分解与 mixture 表示：把 $d$ 维 score 降维成 $M$ 个 $k_i$ 维子问题**

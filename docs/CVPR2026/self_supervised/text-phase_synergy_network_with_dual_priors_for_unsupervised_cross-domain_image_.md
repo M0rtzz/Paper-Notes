@@ -39,6 +39,30 @@ tags:
 
 UCDIR 的两难在于：没有真标签时，能拿来当监督的只有 K-means 聚出来的离散伪标签，但它既噪声大又不够语义化；而对齐两个域时，传统对抗/统计对齐又会把语义一起抹掉。TPSNet 的思路是给这两件事各换一个更可靠的"先验"，再让它们协同。整篇网络分两段跑：先由 Domain Prompt Generation（DPG）为每个域学出一组类别提示，把聚类伪标签升级成 CLIP 文本空间里的连续语义信号；再由 Text-Phase Dual Priors Network（TPDP）一边用这组提示当**文本先验**牵引语义特征，一边把图像相位谱当**相位先验**来跨过域差异，最后用 cross-attention 把两路先验融成域不变的语义表征。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["两域无标注图像<br/>(真实图 / 草图等)"] --> KM["K-means 聚类<br/>生成离散伪标签"]
+    subgraph DPG["域提示生成（DPG）"]
+        direction TB
+        KM --> PT["按伪标签初始化<br/>每域 C 组可学习提示"]
+        PT --> CL["冻结 CLIP、只训 [X] token<br/>图文对比按相似度重配对纠错"]
+    end
+    CL --> TP["域提示 = 文本先验 T′"]
+    IN --> RGB["图像编码器 → RGB 特征 I_rgb"]
+    IN --> GRAY["灰度图 FFT"]
+    subgraph PHASE["相位先验特征提取"]
+        direction TB
+        GRAY --> DROP["丢幅度谱、填常数 R<br/>保留相位 → IFFT 重建"]
+        DROP --> CNN["轻量 CNN → 相位特征 I_phase"]
+    end
+    RGB --> FUSE["LayerNorm + 自注意力融合<br/>→ 视觉特征 I_f"]
+    CNN --> FUSE
+    TP --> CA["文本-相位双先验协同<br/>cross-attention(T′ 作 Q, I_f 作 K/V)"]
+    FUSE --> CA
+    CA --> OUT["域不变语义表征 I′<br/>原型交叉熵 + 图文对比训练"]
+```
+
 ### 关键设计
 
 **1. Domain Prompt Generation：把噪声伪标签换成 CLIP 文本先验**

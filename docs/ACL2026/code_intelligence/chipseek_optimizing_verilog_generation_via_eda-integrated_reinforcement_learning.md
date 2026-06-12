@@ -43,7 +43,26 @@ ChipSeek 提出了一个将 EDA 工具链直接集成到训练循环中的分层
 
 ### 整体框架
 
-ChipSeek 把完整的开源 EDA 工具链（编译、仿真、综合、后端分析）直接搬进 RL 训练循环：LLM 作为策略 $\pi_\theta$ 根据设计规格生成 Verilog，工具链从语法一路评估到 PPA 并回吐分层奖励，再由 CDPO 把功能正确性和 PPA 当作多目标一起优化。这样模型不是事后被挑刺，而是在训练过程中就把硬件设计的权衡内化进参数里。
+ChipSeek 把完整的开源 EDA 工具链（编译、仿真、综合、后端分析）直接搬进 RL 训练循环：LLM 作为策略 $\pi_\theta$ 根据设计规格生成 Verilog，工具链从语法一路评估到 PPA 并回吐分层奖励，再由 CDPO 把功能正确性和 PPA 当作多目标一起优化。这样模型不是事后被挑刺，而是在训练过程中就把硬件设计的权衡内化进参数里。整个流程由自动化数据增强管道在前端备好 PPA 感知的训练数据，经 SFT 冷启动后进入闭环 RL 训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["自动化数据增强管道"]
+        direction TB
+        D1["SFT 冷启动数据"] --> D2["合成 PPA 偏好向量"] --> D3["生成测试台 + PPA 指标"]
+    end
+    DATA --> SFT["SFT 冷启动"]
+    SFT --> POL["LLM 策略 π_θ<br/>按规格 + PPA 偏好生成 Verilog"]
+    POL --> EDA["EDA 工具链<br/>编译→仿真→综合→后端分析"]
+    subgraph HR["分层奖励（门控）"]
+        direction TB
+        G1["过程奖励<br/>格式 / 语法 / 可综合性"] -->|通过门控| G2["核心奖励<br/>功能正确性 / PPA 改进比"]
+    end
+    EDA --> HR
+    HR --> CDPO["CDPO<br/>解耦优势 + 自适应课程 + 提示条件化 PPA 加权"]
+    CDPO -->|更新策略| POL
+```
 
 ### 关键设计
 

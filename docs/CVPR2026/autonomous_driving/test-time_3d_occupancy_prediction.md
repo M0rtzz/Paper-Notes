@@ -46,6 +46,34 @@ tags:
 
 TT-Occ 想回答一个反直觉的问题：既然几何由 VGGT/MapAnything 这类 3D 基础模型给出、语义由开放词汇分割模型给出，那还有必要专门训练一个占用解码器吗？它的答案是不必——整个系统在推理时即时跑完一条"提升 → 跟踪 → 体素化"（Lift-Track-Voxelize）的流水线，把每一帧传感器观测抬成一批带语义的时间感知 3D 高斯，逐帧累积成场景，再栅格化成占用网格，全程没有任何任务相关的训练权重。框架提供两个变体：以激光雷达为几何源的 TT-OccLiDAR，和纯多视角相机的 TT-OccCamera，二者共享同一条流水线，只在"几何怎么来""动态物体怎么处理"两处按模态分叉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["传感器观测<br/>环视RGB / LiDAR点云"]
+    subgraph LIFT["提升 Lift（抬成带语义的时间感知3D高斯）"]
+        direction TB
+        G["几何源<br/>LiDAR点初始化 / VGGT·MapAnything深度+多视角三角化"]
+        S["开放词汇分割投影<br/>按可见性加权融合语义"]
+        V["体素感知简化<br/>sigmoid约束尺度 + 同体素剪枝合并"]
+        G --> S --> V
+    end
+    subgraph TRACK["跟踪 Track（无学习动静分离）"]
+        direction TB
+        T1["LiDAR：无学习场景流<br/>DBSCAN去噪 + 跨帧匹配 + ICP配准"]
+        T2["Camera：RAFT 2D光流<br/>减自运动流 → 动态掩码剔除"]
+    end
+    subgraph VOX["体素化 Voxelize（可微精炼 + 任意分辨率）"]
+        direction TB
+        X1["可微渲染精炼<br/>颜色一致性微调当前场景高斯"]
+        X2["TRBF三边平滑<br/>空间·颜色·语义联合降噪"]
+        X1 --> X2
+    end
+    IN --> LIFT
+    LIFT -->|逐帧累积静态场景| TRACK
+    TRACK --> VOX
+    VOX --> OUT["占用网格<br/>0.4m / 0.2m 任意分辨率"]
+```
+
 ### 关键设计
 
 **1. 提升（Lift）：把单帧几何与语义抬成一批带语义的 3D 高斯**

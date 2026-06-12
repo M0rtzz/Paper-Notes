@@ -45,6 +45,16 @@ tags:
 
 给定一条推理轨迹 $\mathbf{z} = [z_1, \dots, z_N]$（按 `\n\n` 分割为 $N$ 个步骤），每个步骤 $z_i$ 包含 $M_i$ 个 token。作者首先计算每个 token 位置的预测分布熵 $H_t$，然后聚合为步级信息密度 $ID_i = \frac{1}{M_i}\sum_{t=1}^{M_i} H_t$。在此基础上，分别定义全局均匀性（方差）和局部均匀性（步间突变计数）两个互补度量，用于 Best-of-N 推理轨迹选择。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["推理轨迹<br/>按双换行分为 N 步"] --> B["步级信息密度<br/>每步 token 预测熵取平均 ID_i"]
+    B --> C["全局均匀性<br/>归一化 ID 序列的方差 Var"]
+    B --> D["局部均匀性<br/>步间突变计数 S_local"]
+    C --> E["Best-of-N 轨迹选择"]
+    D --> E
+```
+
 ### 关键设计
 
 **1. 步级信息密度（Step-level ID）：把推理轨迹从 token 序列抬升到“一步多少信息”的视角**

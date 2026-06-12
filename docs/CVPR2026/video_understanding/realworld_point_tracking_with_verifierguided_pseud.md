@@ -49,7 +49,23 @@ tags:
 
 这篇要解决的是点跟踪的 sim-to-real 鸿沟：跟踪模型大多在合成数据（TAP-Vid Kubric）上训，搬到真实视频就掉点，而已有自训练方法要么随机挑一个教师生成伪标签、传播系统误差，要么像 BootsTAPIR 那样需要百万级真实视频。本文的巧思是训一个不做跟踪、只做「裁判」的 Verifier 元模型。
 
-流程是：给定视频和查询点，6 个预训练教师 tracker 各生成一条候选轨迹 $\mathbf{C} \in \mathbb{R}^{L \times M \times 2}$；Verifier 在每一帧给这 $M$ 个候选打可靠性分数 $\hat{\mathbf{s}}_t \in \mathbb{R}^M$，逐帧选最高分的候选，拼成完整的伪标签轨迹；再用这条伪标签微调学生模型 Track-On2。推理时 Verifier 还能当即插即用的集成模块直接用。
+流程是：给定视频和查询点，6 个预训练教师 tracker 各生成一条候选轨迹 $\mathbf{C} \in \mathbb{R}^{L \times M \times 2}$；Verifier 在每一帧给这 $M$ 个候选打可靠性分数 $\hat{\mathbf{s}}_t \in \mathbb{R}^M$，逐帧选最高分的候选，拼成完整的伪标签轨迹；再用这条伪标签微调学生模型 Track-On2。推理时 Verifier 还能当即插即用的集成模块直接用。Verifier 本身（局部化特征 + Candidate Transformer）则提前在合成数据上「造假→识假」训好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    TR["Verifier 训练：合成数据造假→识假<br/>K-EPIC GT 轨迹 + 6 类随机扰动 → 扰动候选"]
+    R["真实视频 + 查询点"] --> T6["6 个预训练教师<br/>各出候选轨迹 C"]
+    subgraph VER["局部化特征 + Candidate Transformer"]
+        direction TB
+        FE["冻结 CNN + 可变形注意力<br/>抽查询/候选局部特征"] --> CT["Candidate Transformer<br/>受限交叉注意力 + 时间自注意力<br/>→ 逐帧可靠性分数"]
+    end
+    TR -->|软对比目标监督| VER
+    T6 --> VER
+    CT --> SEL["逐帧选最高分候选<br/>拼成伪标签轨迹"]
+    SEL --> TUNE["微调学生 Track-On2<br/>合成 + 真实混合"]
+    TUNE --> OUT["Track-On-R（4 基准 SOTA）"]
+```
 
 ### 关键设计
 

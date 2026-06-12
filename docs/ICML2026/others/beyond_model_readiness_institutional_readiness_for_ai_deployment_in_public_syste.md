@@ -40,7 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IAR是一个预部署 (pre-deployment) 评估框架，在已有的制品级评估（模型评估、数据集评估）之上增加第二层评估，聚焦接收机构是否具备负责任使用AI系统的制度条件。其输出不是单一分数，而是分阶段的部署建议：**不可部署 (no-go)**、**仅限试点 (pilot-only)** 或 **可扩大部署 (broader deployment)**。
+IAR是一个预部署 (pre-deployment) 评估框架，在已有的制品级评估（Model Cards、Datasheets、基准测试等评模型与数据集的工具）之上增加**第二层评估**，把评估对象从"AI制品"换成"接收机构"，沿五个制度维度审查机构是否具备负责任使用该系统的条件。它刻意不给单一分数，而是把发现的缺陷按严重度三类（阻断/限定/监控）分流，据此把系统定位到部署生命周期的某一阶段，最终输出一句可执行的部署建议：**不可部署 (no-go)**、**仅限试点 (pilot-only)** 或 **可扩大部署 (broader deployment)**。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["特定系统 + 特定部署范围"] --> B["第一层·制品级评估<br/>Model Cards / Datasheets / 基准测试"]
+    B --> C["第二层·IAR 机构就绪度评估"]
+    C --> DIM
+    subgraph DIM["五维就绪度评估体系"]
+        direction TB
+        D1["制度与运营兼容性"]
+        D2["数据生态成熟度"]
+        D3["人工监督能力"]
+        D4["财政可持续性"]
+        D5["法规对齐就绪度"]
+    end
+    DIM --> E["各维缺陷按严重度分类<br/>阻断 / 限定 / 监控"]
+    E -->|有阻断性缺陷| F["不可部署 no-go"]
+    E -->|仅限定性缺陷| G["仅限试点 pilot-only"]
+    E -->|仅监控性缺陷| H["可扩大部署 broader"]
+```
 
 ### 关键设计
 

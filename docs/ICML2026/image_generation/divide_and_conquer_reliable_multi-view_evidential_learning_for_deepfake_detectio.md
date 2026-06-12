@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 DiCoME 的核心思想是"先分、后合"：与其用单个 backbone 把语义和伪迹一起编码再二分类，不如先在特征层面把伪迹从语义里硬性剥离成两路解相关的"专家视图"，再在决策层面用证据理论显式仲裁两个专家的分歧。具体落成两阶段流水线：**Divide** 阶段用 LoRA 微调的 CLIP ViT-L/14 提语义特征 $f_s$，经几何净化得到纯净伪迹特征 $f_a$；**Conquer** 阶段把 $f_s$、$f_a$ 各送入一个 evidential head 转成带不确定性的 subjective opinion，再用 Dempster–Shafer 组合规则融合，输出类概率 $p_k = b_k + u/K$ 以及可用于风险拒识的不确定性 $u$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入人脸图像"] --> B["LoRA 微调 CLIP ViT-L/14<br/>提语义特征 f_s"]
+    B --> C["几何视图净化<br/>β-VAE 重建 f_c，残差减语义分量得伪迹特征 f_a"]
+    B -->|"语义视图 f_s"| D["证据观点生成（语义）<br/>Dirichlet 参数化 → belief / uncertainty"]
+    C -->|"伪迹视图 f_a"| E["证据观点生成（伪迹）<br/>Dirichlet 参数化 → belief / uncertainty"]
+    D --> F["冲突感知证据融合<br/>Dempster–Shafer 组合，冲突系数 C 抬高 u"]
+    E --> F
+    F --> G["输出类概率 p_k 与不确定性 u（可风险拒识）"]
+```
+
 ### 关键设计
 
 **1. 几何视图净化：把伪迹严格定义为语义的正交补**

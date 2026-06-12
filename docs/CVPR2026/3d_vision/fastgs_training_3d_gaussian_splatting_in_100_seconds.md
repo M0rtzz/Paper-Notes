@@ -45,6 +45,20 @@ tags:
 
 FastGS 要解决的是 vanilla 3DGS 训练慢、Gaussian 冗余的问题。它的核心思路是把"多视角一致性"当成贯穿始终的统一标尺——在密集化和剪枝两端都只保留对多视角渲染真正有贡献的 Gaussian，再用更紧的光栅化包围盒削掉边缘的无效覆盖。整个框架建立在 3DGS-accel 之上，训练过程中周期性地用 VCD 决定哪些 Gaussian 该分裂、用 VCP 决定哪些该删除，最后由 CB 收紧每个 2D Gaussian 的有效支撑范围。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多视角训练图像 + 初始点云"] --> B["3DGS-accel 基座<br/>per-splat 反向传播 + SH 加速"]
+    B --> C["渲染采样视角<br/>算逐像素 L1 误差图"]
+    C -->|"足迹内高误差像素数 s_d > τ_d"| D["多视角一致性密集化 VCD<br/>只在多视角共同欠重建处分裂"]
+    C -->|"光度损失加权分数 s_p > τ_p"| E["多视角一致性剪枝 VCP<br/>删对多视角贡献最低的 Gaussian"]
+    D --> F["紧凑包围盒 CB<br/>Mahalanobis 收紧 2D 支撑、削边缘配对"]
+    E --> F
+    F --> G["光栅化训练（30K 迭代）"]
+    G -->|"周期性回到密集化/剪枝"| C
+    G --> H["输出：约 100 秒训练完成的 3DGS"]
+```
+
 ### 关键设计
 
 **1. 多视角一致性密集化 VCD：只在多视角都欠重建的地方新增 Gaussian**

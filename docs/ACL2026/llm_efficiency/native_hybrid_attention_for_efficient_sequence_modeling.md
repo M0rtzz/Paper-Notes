@@ -45,6 +45,23 @@ tags:
 
 NHA 的核心洞察是：线性 RNN 的压缩记忆和滑动窗口的精确 KV cache，本质上都能写成 $m \times d$ 的 KV 格式，于是它们可以直接拼在一起、交给同一次 softmax 去处理，而不必像以往那样分别算完再加权融合。具体到每一层，NHA 同时维护两种记忆：长期记忆 $K^{long}_t, V^{long}_t \in \mathbb{R}^{m \times d}$ 由门控 RNN 递归更新、把窗口外的全部历史压进固定大小的槽位；短期记忆 $K^{short}_t, V^{short}_t \in \mathbb{R}^{w \times d}$ 则是窗口内 token 的精确 KV cache。两者拼成 $K^H_t \in \mathbb{R}^{(m+w) \times d}$ 后过一次 softmax 注意力得到输出。更妙的是，只要调节窗口大小 $w$ 就能让同一套架构在"纯线性 RNN（$w=0$）—混合—全注意力（$w=N$）"之间连续滑动，层内融合与层间混合就此统一在一个机制里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 token 序列"] --> B["投影查询/键/值 q_t,k_t,v_t"]
+    subgraph INTRA["层内混合：统一 softmax 零参数融合"]
+        direction TB
+        B --> C["门控线性 RNN 递归更新<br/>长期记忆槽 (m×d)"]
+        B --> D["滑动窗口精确 KV cache<br/>短期记忆 (w×d)"]
+        C --> E["拼接长短期记忆<br/>K_H / V_H ((m+w)×d)"]
+        D --> E
+        E --> F["统一 softmax 注意力<br/>按相似度隐式分配长短期权重"]
+    end
+    W["层间混合：窗口大小 w<br/>w=0 纯线性 ↔ w=N 全注意力"] -.->|"调 w 改变长短期划分"| INTRA
+    G["Chunkwise 并行计算<br/>切块双路 logits + Triton kernel"] -.->|"近线性并行实现"| F
+    F --> H["层输出 o_t"]
+```
+
 ### 关键设计
 
 **1. 层内混合——用统一 softmax 实现零参数的长短期融合**

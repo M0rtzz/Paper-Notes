@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 数据构建方面，通过逆向工程从文本 SMILES QA 对出发，用 Gemini-2.5-Flash 重建推理过程，辅以 IUPAC 名称、RDKit 官能团和专家示范作为语义锚点，经三阶段过滤生成 760K 高质量样本。训练方面，采用 CPT（化学视觉对齐）→ SFT（推理+指令混合训练）→ RL（DAPO 优化）三阶段流程。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["跨模态逆向工程数据生成（设计 1）"]
+        direction TB
+        Q["文本 SMILES「查询+答案」对"] --> G["Gemini-2.5-Flash<br/>已知答案下逆向重建推理链"]
+        ANC["三类语义锚点<br/>IUPAC 名称 · RDKit 官能团 · 专家演示"] --> G
+        G --> F["三道过滤<br/>结构过滤 · 答案一致性 · GPT-4.1-mini 复核"]
+        F --> DS["760K 视觉推理数据<br/>360K 推理 + 400K 描述 + 1.4M 指令"]
+    end
+    IUPAC["IUPAC 知识激活<br/>300K 图像→IUPAC 转换样本"] --> ANC
+    IUPAC --> DS
+    DS --> TRAIN
+    subgraph TRAIN["三阶段渐进训练（设计 2）"]
+        direction TB
+        CPT["CPT 化学视觉对齐<br/>冻结 LLM，仅训 ViT+Projector"] --> SFTS["SFT 推理+指令混合<br/>全参微调，&lt;think&gt;/&lt;answer&gt; 分隔"]
+        SFTS --> RL["RL · DAPO 优化<br/>SMILES 准确率 + 格式双奖励"]
+    end
+    TRAIN --> OUT["ChemVLR-8B 推理型化学 VLM"]
+```
+
 ### 关键设计
 
 **1. 跨模态逆向工程数据生成：从答案反推推理过程，破解视觉化学推理标注几乎为零的困境**

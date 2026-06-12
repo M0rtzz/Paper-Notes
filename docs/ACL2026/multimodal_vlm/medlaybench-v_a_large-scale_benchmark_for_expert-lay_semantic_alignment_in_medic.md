@@ -43,7 +43,30 @@ tags:
 
 ### 整体框架
 
-SCGR 流水线分三个阶段：(1) Concept-Knowledge Alignment——从专家报告中提取语义约束集 $C$；(2) Knowledge-Constrained Refinement——基于约束合成通俗草稿并用 LLM 精炼；(3) LLM Refinement——用 Llama-3.1-8B-Instruct 在保持语义等价的前提下优化语法和流畅度。输入为 ROCOv2 数据集的专家级图文对（$T_{exp}$），输出为通俗版本（$T_{lay}$）。
+SCGR 流水线把数据构建拆成"先定语义、再改风格"，外加一道质量验证。输入是 ROCOv2 数据集的专家级图文对（$T_{exp}$，已预标注 UMLS CUI），输出是语义等价的通俗版本（$T_{lay}$）。第一步**双层语义约束提取**（Concept-Knowledge Alignment）从专家报告里抽出"必须保留什么"，得到语义约束集 $C$；第二步**约束引导的通俗化改写**（Knowledge-Constrained Refinement）先用 MedlinePlus 词典生成通俗草稿、再用 Llama-3.1-8B-Instruct 在约束下精炼成 $T_{lay}$；最后用**多维度质量验证体系**从相关性、可读性、临床正确性三条线给整库把关。整条流水线的核心思想是把语义提取与风格改写显式解耦——先锁定"说什么"，再处理"怎么说"，从根本上抑制端到端生成的幻觉。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ROCOv2 专家级图文对 T_exp<br/>（含预标注 UMLS CUI）"] --> S1
+    subgraph S1["双层语义约束提取"]
+        direction TB
+        B["UMLS API 本体映射<br/>临床术语 → CUI（C_onto）"]
+        C["SciSpacy NER 抽取<br/>病灶大小/位置（C_ent）"]
+        B --> D["语义约束集 C = C_onto ∪ C_ent"]
+        C --> D
+    end
+    S1 --> S2
+    subgraph S2["约束引导的通俗化改写"]
+        direction TB
+        E["MedlinePlus 词典确定性替换<br/>→ 通俗草稿 T_draft"]
+        F["Llama-3.1-8B 约束精炼<br/>输入 T_exp + C + T_draft"]
+        E --> F
+    end
+    S2 --> G["通俗版描述 T_lay"]
+    G --> H["多维度质量验证体系<br/>相关性 + 可读性 + 临床正确性 + 人工评估"]
+    H --> I["MedLayBench-V<br/>79,793 专家-通俗图文对"]
+```
 
 ### 关键设计
 

@@ -45,6 +45,19 @@ tags:
 
 SCRIPT 附加在 PLM 的嵌入层。给定韩文输入，使用两条并行分词路径：(1) 子词分词器生成 PLM 原始子词序列；(2) 子字符分词器生成 Jamo 细粒度序列供 SCRIPT 处理。SCRIPT 将 Jamo 序列压缩为子词级表示，与 PLM 原始嵌入融合后送入 Transformer 层。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["韩文输入"] --> SUB["子词分词器<br/>→ PLM 原始嵌入 e_S"]
+    IN --> JAMO["子字符分词器<br/>→ Jamo 三元组序列"]
+    JAMO --> S1["子字符到字符的层次化压缩<br/>GRU 顺序编码 → 空间拼接 → 卷积 → 平均池化"]
+    S1 --> CHAR["字符表示 h_C"]
+    CHAR --> S2["字符到子词的压缩<br/>GRU + 子词边界池化 → h_S"]
+    SUB --> FUSE["双通道融合<br/>交叉注意力 Q=e_S，KV=h_S"]
+    S2 --> FUSE
+    FUSE --> OUT["融合嵌入 e_F → Transformer 层"]
+```
+
 ### 关键设计
 
 **1. 子字符到字符的层次化压缩（Stage 1）：让神经网络照着 Hangul 的造字规则去拼字**

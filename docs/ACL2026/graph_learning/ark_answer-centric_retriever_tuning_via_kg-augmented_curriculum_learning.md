@@ -44,6 +44,31 @@ tags:
 ### 整体框架
 ARK 想训出一个真正"答案中心"的检索器——评判检索内容好坏的标准不是它和查询有多像，而是它够不够生成正确答案。为此整个流程分两阶段串起来：先做查询构建，从文档里建知识图谱、抽答案相关子图、生成增强查询，专门用来挖渐进难度的困难负样本；再做对比微调，用三维答案充分性评分挑出真正"足以产出答案"的正样本，配上前一阶段挖到的困难负样本，按课程从易到难训练检索器。训完的检索器不改架构，可直接插回现有 RAG 管道。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DOC["文档集合 + 问答对"]
+    subgraph POS["三维答案充分性评分"]
+        direction TB
+        SCORE["Forward + Backward + Parameter 三维对齐打分"] --> TOPM["取 top-M 充分正样本"]
+    end
+    subgraph NEG["KG 驱动的困难负样本挖掘"]
+        direction TB
+        KG["构建 LLM 派生知识图谱"] --> PPR["PPR 抽答案相关子图"]
+        PPR --> AUG["生成增强查询<br/>大子图（较易）/ 小子图（更难）"]
+    end
+    DOC --> POS
+    DOC --> NEG
+    subgraph CL["课程对比学习"]
+        direction TB
+        S1["阶段1：in-batch 随机负样本"] --> S2["阶段2：大子图困难负样本"]
+        S2 --> S3["阶段3：小子图更难负样本"]
+    end
+    POS --> CL
+    NEG --> CL
+    CL --> OUT["答案中心检索器<br/>即插即用回 RAG 管道"]
+```
+
 ### 关键设计
 
 **1. 三维答案充分性评分：把"相关"和"充分"分开判。** 

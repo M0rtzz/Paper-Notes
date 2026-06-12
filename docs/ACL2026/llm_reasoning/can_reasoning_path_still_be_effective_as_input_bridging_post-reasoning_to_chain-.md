@@ -43,6 +43,26 @@ UCoT 包含 compressor、projector 和 executor 三个部分。compressor 学会
 ### 整体框架
 训练阶段先用 executor 为每个问题生成高质量 CoT，得到 `(Q, C, A)` 数据；然后训练轻量 compressor 从问题和 `[ucot]` 占位符中产生 soft tokens，并要求它能重构原始 CoT；最后训练 executor 在 soft tokens 和截断输出预算下恢复原推理语义并保持答案置信度。推理阶段只需 compressor 单次前向生成 soft tokens，再由 executor 基于这些 soft tokens 输出较短答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 Q"]
+    subgraph CMP["Soft-token contextual CoT（compressor 单次前向）"]
+        direction TB
+        P["Q 末尾追加 M 个 [ucot] 占位符"] --> FW["取占位符位置 hidden states<br/>= soft tokens"]
+        FW -.训练目标.-> REC["重构 executor 原本会生成的长 CoT"]
+    end
+    Q --> CMP
+    CMP --> PROJ["projector：soft tokens 映射到 executor embedding 空间"]
+    PROJ --> PR["Post-reasoning 范式<br/>问题 + soft tokens 作输入上下文"]
+    subgraph EXE["Reward-guided executor utilization（executor）"]
+        direction TB
+        CUT["Cutoff 截断输出到压缩比 α<br/>逼模型用 soft tokens 补被砍的逻辑"] --> CONS["语义损失 L_sem 对齐 + reward factor R 保答案置信度"]
+    end
+    PR --> EXE
+    EXE --> OUT["短 CoT + 答案"]
+```
+
 ### 关键设计
 
 **1. Post-reasoning 范式：把 CoT 从输出端搬到输入端，缩短 executor 需要自回归生成的长度**

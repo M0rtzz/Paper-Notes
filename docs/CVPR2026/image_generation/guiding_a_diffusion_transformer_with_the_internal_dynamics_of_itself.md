@@ -40,6 +40,22 @@ tags:
 
 于是训练阶段在标准扩散 Transformer（SiT、LightningDiT）的某个中间层后挂一个额外输出头，让这个中间层也学会去噪，得到一路输出 $D_i$；网络末端照常输出 $D_f$。采样阶段每一步同时拿到 $D_i$ 和 $D_f$，沿"从弱到强"的方向外推 $D_w = D_i + w(D_f - D_i)$（$w>1$ 时推离弱版本、靠向强版本），就得到了引导后的去噪结果。因为 $D_i$ 是同一次前向传播的中途产物，整套引导不需要任何额外的前向开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TR["训练阶段：中间层辅助监督"]
+        direction TB
+        DIT["扩散 Transformer<br/>SiT / LightningDiT"] --> DI["中间层输出头 D_i<br/>同样的去噪目标"]
+        DIT --> DF["末端输出 D_f"]
+        DI --> L["合并损失<br/>L_final + λ·L_inter"]
+        DF --> L
+    end
+    L --> FWD["采样：单次前向<br/>同时拿到弱版 D_i 与强版 D_f"]
+    FWD --> IG["Internal Guidance 采样<br/>D_w = D_i + w·(D_f − D_i)"]
+    IG --> CFG["与 CFG 互补<br/>按噪声区间分时施加"]
+    CFG --> OUT["高保真生成输出"]
+```
+
 ### 关键设计
 
 **1. 中间层辅助监督：把网络中段训成一个现成的"弱模型"**

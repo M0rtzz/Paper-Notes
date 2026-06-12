@@ -45,6 +45,17 @@ tags:
 
 CoDial 把"写一个任务型对话系统"重新拆成"把对话流编译成可执行护栏程序"，整条流水线无需训练数据也无需人工编程。输入是一份预定义的对话流（task schema）：先由 CHIEF 表示成结构化的异构有向图（区分请求/外部动作/告知/确认/全局/回退等节点类型），编码为 JSON；再交给 GCG 用 LLM 把这份 JSON 自动翻译成 Colang 护栏代码，推理阶段直接执行该代码来驱动对话策略；运行中暴露的错误则通过 CHF 反馈机制（人工或 LLM 给建议）迭代修补护栏代码。整个过程天然可解释——每个对话决策都能追溯到一段具体的护栏逻辑。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对话流 task schema（输入）"] --> B["CHIEF 异构对话流表示<br/>带类型节点的有向图 → JSON"]
+    B --> C["护栏代码生成 GCG<br/>LLM 把 JSON 译成 Colang 护栏代码"]
+    C -->|"CoDial-free / CoDial-structured 两种范式"| D["推理阶段执行<br/>护栏代码驱动对话策略"]
+    D -->|"对话失败 / 错误"| E["CHF 人类反馈机制<br/>专家改码 / 自然语言建议 / LLM 自动修补"]
+    E -->|"迭代修补护栏代码"| C
+    D --> F["可解释 TOD 系统（输出）"]
+```
+
 ### 关键设计
 
 **1. CHIEF 异构对话流表示：用带类型的图把丰富任务逻辑结构化**

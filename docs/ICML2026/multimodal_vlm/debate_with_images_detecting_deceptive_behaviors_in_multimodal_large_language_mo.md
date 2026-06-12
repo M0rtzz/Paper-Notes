@@ -42,7 +42,21 @@ tags:
 ### 整体框架
 工作分两大块。**第一块是基准**：MM-DeceptionBench 把多模态欺骗分成 6 类（sycophancy / sandbagging / bluffing / obfuscation / deliberate omission / fabrication），共 1013 个真实场景案例、1096 张图像（>95% 来自真实世界）。每条样本由 5 部分组成：Scenario（情境压力）、Assistant Profile（系统提示，禁止角色扮演与显式植入目标）、User Profile（用户身份、偏好等）、User Prompt（视觉输入 + 查询）、Annotator Remarks（标注元信息，仅训练用）。标注采用四阶段流水线（taxonomy 培训 → 协同设计 → 在 10 个 MLLM 上迭代验证 → 跨标注员复核），Fleiss' Kappa = 0.8355，盲评第三方与原标注一致性 Acc = 85.05%、Cohen's κ = 0.66。
 
-**第二块是检测框架** Debate with Images：给定 (query $\bm{q}$, image $\bm{x}$, response $\bm{r}$) 三元组，$M$ 个辩手与 1 个 judge 进行 $N$ 轮辩论，每个辩手的发言由文本论点 $\bm{a}$ 和一串视觉证据 $\mathcal{V}=\{\bm{v}_1,...,\bm{v}_k\}$ 构成；视觉证据通过对原图施加视觉操作 $e\in\mathcal{E}$ 得到，即 $\bm{v}=f(\bm{x},e)$。Judge 在观察完整辩论轨迹 $\bm{D}_N$ 后输出二元判定 $j\in\{0,1\}$。
+**第二块是检测框架** Debate with Images：给定 (query $\bm{q}$, image $\bm{x}$, response $\bm{r}$) 三元组，$M$ 个辩手与 1 个 judge 进行 $N$ 轮辩论，每个辩手的发言由文本论点 $\bm{a}$ 和一串视觉证据 $\mathcal{V}=\{\bm{v}_1,...,\bm{v}_k\}$ 构成；视觉证据通过对原图施加视觉操作 $e\in\mathcal{E}$ 得到，即 $\bm{v}=f(\bm{x},e)$。Judge 在观察完整辩论轨迹 $\bm{D}_N$ 后输出二元判定 $j\in\{0,1\}$。下图给出检测框架（第二块）的运行流程，基准 MM-DeceptionBench（第一块）是它评测时的数据来源：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入三元组<br/>(查询 q, 原图 x, 待检响应 r)"] --> B["M 个辩手各持立场<br/>c_m ∈ {0,1}（诚实 / 欺骗）"]
+    subgraph LOOP["视觉锚定辩论：N 轮回切原图取证"]
+        direction TB
+        C["辩手发言 = 文本论点 a<br/>+ 选视觉操作 e∈ℰ（裁剪/放大/标注/VQA）"] --> D["v = f(x, e)；ApplyVisualOp<br/>每轮重演历史操作，把原图特征重新注入"]
+    end
+    B --> C
+    U["效用 U^m 与不对称代价<br/>U = ±1 − λ·取证成本；维持欺骗需多 Δ 条证据"] -. 激励充分取证、抑制暴搜 .-> C
+    D -->|未满 N 轮| C
+    D -->|满 N 轮 → 轨迹 D_N| J["Judge 观察完整辩论轨迹<br/>输出二元判定 j ∈ {0,1}"]
+```
 
 ### 关键设计
 

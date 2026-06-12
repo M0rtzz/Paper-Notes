@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 SSU 分三个阶段：(1) 用源数据和 Wanda 评分方法计算每个参数的重要性分数；(2) 按列聚合分数并生成列级冻结掩码；(3) 在目标语言无标签数据上进行 CPT，梯度更新时应用掩码冻结关键列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源数据（500 样本，无梯度）"] --> B["参数重要性评分<br/>Wanda 分数 s_ij = |θ_ij|·‖X_j‖₂"]
+    B --> C["列级掩码生成<br/>按列聚合 S_j = Σ_i s_ij，冻结 top-50% 列"]
+    C -->|"列掩码 b_ij ∈ {0,1}"| D["掩码 CPT<br/>梯度按掩码屏蔽，冻结列不更新"]
+    E["目标语言无标签数据（移除 chat 模板）"] --> D
+    D -->|"嵌入层 / LM 头不受约束"| F["适配后模型<br/>保留源能力 + 学会目标语言"]
+```
+
 ### 关键设计
 
 **1. 参数重要性评分（Parameter Importance Scoring）：从源数据出发找出"动不得"的权重**

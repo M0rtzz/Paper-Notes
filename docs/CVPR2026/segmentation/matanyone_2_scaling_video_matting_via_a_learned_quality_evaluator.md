@@ -41,6 +41,23 @@ tags:
 
 MatAnyone 2 想解决的根本问题是视频抠图数据太少、且没有 alpha 真值就无法判断预测质量。它的核心是一个学习型质量评估器 MQE（Matting Quality Evaluator）：输入 RGB 帧、预测 alpha 和分割 mask 的三元组 $\langle I_{rgb}, \hat{\alpha}, M^{seg} \rangle$，输出逐像素二值评估图 $M^{eval} \in \{0,1\}^{H \times W}$（1=可靠、0=错误）。围绕 MQE，论文同时打通了在线与离线两条路：在线时用它给抠图训练实时提供边界监督，离线时用它当质量仲裁器，融合视频与图像抠图模型的互补优势、自动筛出一个 28K 片段 / 240 万帧的真实数据集 VMReal，再配合参考帧训练策略建模长视频里的大幅外观变化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入三元组<br/>⟨RGB, 预测α, 分割mask⟩"] --> MQE["Matting Quality Evaluator (MQE)<br/>DINOv3 编码 + DPT 解码<br/>→ 逐像素评估图"]
+    MQE -->|在线| ON["在线引导<br/>L_eval 压低逐像素错误概率<br/>替代脆弱的无监督损失"]
+    MQE -->|离线| FUSE
+    subgraph FUSE["双分支标注管线与 VMReal"]
+        direction TB
+        BV["视频分支 B_V（MatAnyone）<br/>时序稳但边界糙"] --> ARB["MQE 仲裁融合<br/>M_fuse = M_I ⊙ (1−M_V)"]
+        BI["图像分支 B_I（MattePro+SAM 2）<br/>边界细但时序抖"] --> ARB
+        ARB --> VM["VMReal 数据集<br/>28K 片段 / 240 万帧"]
+    end
+    VM --> REF["参考帧训练策略<br/>引入远距离帧 + 随机 dropout"]
+    ON --> TRAIN["抠图模型训练"]
+    REF --> TRAIN
+```
+
 ### 关键设计
 
 **1. Matting Quality Evaluator（MQE）：没有 alpha 真值也能逐像素判断质量**

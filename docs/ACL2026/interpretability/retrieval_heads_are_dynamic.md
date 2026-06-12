@@ -42,6 +42,23 @@ tags:
 ### 整体框架
 论文先在 Needle-in-a-Haystack 任务上定义 copy-paste retrieval score：如果某个 head 在当前步最高注意力落在 needle token 上，且该 token 与即将生成 token 一致，则该 head 的 retrieval score 为 1。基于这个定义，作者逐步验证动态性、不可替代性和 hidden-state correlation。然后在 HotpotQA 上把定义放宽为 reasoning retrieval score，即 attention 分配给 supporting facts 的比例。最后，作者将动态 heads 接入改造版 DRAGIN，在需要检索时只暴露动态 heads 关注的上下文窗口，比较动态、静态和随机策略。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长上下文输入<br/>NIAH haystack / HotpotQA 多跳"] --> B["逐步定义动态 retrieval heads<br/>每个生成步算 token 级 retrieval score"]
+    B --> C["每个生成步的动态 head 稀疏集合"]
+    C --> D["动态 heads 不可替代性检验<br/>mask 动态 heads 后重新前向"]
+    D -->|对照 mask 等量 static / random heads| E["NIAH 准确率从 1.0 掉到 0.0<br/>证明动态集合功能独立"]
+    subgraph P3["hidden-state probe 与 Dynamic RAG 应用"]
+        direction TB
+        F["hidden state → CCA / MLP probe<br/>预测各 head retrieval score"] --> G["probe 预测 top-5 动态 heads"]
+        G --> H["取注意力 top 位置 → 聚类 → 扩固定窗"]
+        H --> I["仅暴露窗口上下文重新生成"]
+    end
+    C --> F
+    I --> J["更精确的 in-context 检索 / Dynamic RAG"]
+```
+
 ### 关键设计
 **1. 逐步定义动态 retrieval heads：把检索头从数据集统计改成 token 级行为**
 

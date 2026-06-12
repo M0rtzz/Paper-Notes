@@ -36,6 +36,22 @@ tags:
 
 FaceCoT 的目标是让 MLLM 不只给「真/假」二分类，而是带着结构化推理链去做人脸反欺骗。它分两条腿：一条是造数据——把 FaceCoT-Gold100K（GPT-4o 自动标注 + 人工精修）和 FaceCoT-Silver982K（RL 增强的 caption 模型自动标注）合成 108 万样本的 VQA 数据集；另一条是训练——用两阶段的 CoT-Enhanced Progressive Learning（CEPL）让模型先学会看细粒度伪造痕迹、再学会联合推理与判别。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SCHEMA["六层级 CoT 标注结构<br/>全局描述→面部描述→属性→推理→欺骗描述→结论"]
+    subgraph PIPE["数据构建流水线（Gold + Silver 两路）"]
+        direction TB
+        A["Gold100K<br/>GPT-4o 标注 + 正则检查 + 专家精修"]
+        B["Silver982K<br/>SFT caption 模型 + 双奖励 RL（准确率→99.6%）"]
+    end
+    SCHEMA --> PIPE
+    PIPE --> DATA["FaceCoT 数据集<br/>108 万 VQA 样本"]
+    DATA --> S1["CEPL 阶段1·视觉增强预训练<br/>全参数 SFT 驱动视觉编码器看清伪造痕迹"]
+    S1 --> S2["CEPL 阶段2·多任务联合训练<br/>LoRA 微调，联合 CoT 推理 + 二分类"]
+    S2 --> OUT["输出：真/假判别 + 完整推理链"]
+```
+
 ### 关键设计
 
 **1. 六层级 CoT 标注结构：把人类「从全局到局部」的判别路径写成可学习的链**

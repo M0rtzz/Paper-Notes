@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 这项工作要解决的是"能用于 RL 训练、而非仅评测的可执行 SWE 任务太稀缺"的问题，做法是把任务构造拆成一条语言无关的五段式漏斗，把 2950 万个原始 PR 层层过滤到 3.2 万个稳定可执行任务（见 funnel 表）。第一段 preliminary mining 从 GitHub Archive 聚合 issue/PR 元数据、分布式克隆仓库后从本地 git 历史取 diff，按 license、issue-PR 链接、是否新增或改测试三层过滤，并对高资源语言（Python/Java/Go 卡 25 stars + 15 closed issues）和长尾语言（放宽到 10 stars + 1 closed issue）设不同阈值，保留约 2.17 万仓库、58 万候选；第三段 execution-based validation 用 multi-stage Docker build 把 base 层与仓库层分离，先打 test patch 跑全套测试、再叠加 solution patch 重跑得到 fail-to-pass 配对轨迹，每个任务跑 3 次、结构化结果不变才保留以滤掉 flaky。真正承载方法创新的是夹在中间和之后的三段——交互式 setup synthesis、issue clarity 过滤、metadata enrichment，下面分别展开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GitHub Archive 原始 PR（2950 万）"] --> B["preliminary mining<br/>license / issue-PR 链接 / 改测试 / 仓库 star·issue 阈值过滤"]
+    B --> C["交互式安装 Agent<br/>per-repo 闭环 trial-and-error 合成 install·test 脚本与 log parser"]
+    C --> D["execution-based validation<br/>双 pass Docker build 取 fail-to-pass，跑 3 次滤 flaky"]
+    D --> E["Issue 清晰度过滤<br/>Verified-E prompt + 三模型 consensus"]
+    E --> F["实例级诊断元数据<br/>标 clean A 与 B1·B2·B3 失败模式"]
+    F --> G["32079 可执行 SWE 任务 + 预构建镜像"]
+```
+
 ### 关键设计
 
 **1. 交互式安装 Agent：用闭环 trial-and-error 把"per-task 人工配环境"降成"per-repo 自动合成"**

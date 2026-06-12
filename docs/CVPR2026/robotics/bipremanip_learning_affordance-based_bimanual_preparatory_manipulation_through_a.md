@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 BiPreManip 针对的是「一只手要先改变物体状态，另一只手才能操作」的协作预备操作——比如先把瓶子翻过来让瓶盖朝向主手，主手才能拧。它的关键在于反过来想：先用 Goal Affordance Network 预想主手最终要在哪、怎么交互，再用 Pre-Affordance Network 推出辅助手该做什么预备动作，接着 Anticipatory Object Pose Predictor 估计理想物体位姿、Reorient Actor 执行重定向，最后再调一次 Goal Affordance Network 完成主手的目标操作。输入只需物体点云加语言指令。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：物体点云 + 语言指令"] --> B["Goal Affordance Network<br/>预想主手「预备后才可行」的目标交互"]
+    B --> C["Pre-Affordance Network<br/>推辅助手预备动作，对齐主手未来意图"]
+    C --> D1
+    subgraph D["物体重定向：Object Pose Predictor + Reorient Actor"]
+        direction TB
+        D1["Object Pose Predictor<br/>估计理想物体位姿，变换点云"] --> D2["Reorient Actor<br/>预测 6D 重定向运动，把物体摆到位"]
+    end
+    D2 --> E["重新调用 Goal Affordance Network<br/>在更新后场景输出最终可供性（参数共享）"]
+    E --> F["输出：主手完成目标操作（如拧盖）"]
+```
+
 ### 关键设计
 
 **1. Goal Affordance Network：预想「预备完成后」才可行的目标交互**

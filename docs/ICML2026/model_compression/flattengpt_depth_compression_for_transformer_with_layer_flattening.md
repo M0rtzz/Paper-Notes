@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 FlattenGPT 想在"直接删整层"和"只删宽度"之间找一条中间路：先把相邻的冗余层**合并**成一个 2× 宽的层 (深度→宽度)，再把这个胖层的宽度**剪**回原始规模 (宽度→深度)，最终得到一个更浅但每层都是标准尺寸的网络。整条流水线分两阶段，全程 training-free：先在校准集上算出相邻层的余弦相似度矩阵 $\mathbf{S}\in\mathbb{R}^{L\times L}$，贪心地把最相似的相邻对反复合并直到压缩率达标；再对每个合并出来的胖层做通道剪枝，MHA 按头重要性删一半 head，MLP 用 Nyström 近似选 top-k 通道并把被删信息补偿回来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 LLM<br/>L 层 Pre-LN Transformer"] --> B["校准集估计相邻层<br/>余弦相似度矩阵 S"]
+    B --> C
+    subgraph S1["阶段一：迭代层扁平化（深度 → 宽度）"]
+        direction TB
+        C["相似度矩阵贪心选择<br/>挑当前最大 S 的相邻对"] --> D["层扁平化<br/>LN 融合 + 权重拼接：串行改并行相加"]
+        D --> E["删 S 的对应行与列<br/>约束后续合并跨度"]
+        E -->|未达压缩率| C
+    end
+    E -->|达到压缩率| S2
+    subgraph S2["阶段二：通道剪枝（2× 胖层压回标准宽度）"]
+        direction TB
+        G["MHA：按头重要性删一半 head"]
+        H["MLP：Nyström 剪枝<br/>ridge leverage 选 top-k + 误差补偿"]
+    end
+    S2 --> I["可选 RFT：LoRA 微调恢复"]
+    I --> J["压缩后模型<br/>更浅 + 架构同质 + 推理加速"]
+```
+
 ### 关键设计
 
 **1. 层扁平化：把"串行两层"改写成"并行相加的一层"**

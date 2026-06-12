@@ -41,7 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分析流程：(i) 在紧致 $\mathcal{Z}$ 上定义 representation laws $q_\theta=(f_\theta)_\# p_x$ 与 positive-pair laws $\pi_{\theta\theta}$；(ii) 引入 partition field $\Gamma_{\theta,\tau}(\mathbf{z})=\int_\mathcal{Z}\kappa_\tau(\mathbf{z},\mathbf{w})\mathrm{d}q_\theta(\mathbf{w})$ 与 kernel-smoothed density $\tilde\rho_{\theta,\tau}=\Gamma_{\theta,\tau}/V_\kappa(\tau)$；(iii) 证明 stochastic InfoNCE 在 $N\to\infty$ 时 value- 与 gradient- consistent 地等于一个 parametric energy $\mathcal{J}_\tau(\theta)$；(iv) 把 $\mathcal{J}_\tau$ 提升到"intrinsic free energy"$\mathcal{F}_{\tau,U}$，并分析其凸性、最小化解、低温集中；(v) 同样的流程对 symmetric multimodal InfoNCE 重做一遍，得到包含负对称 KL 耦合的 $\mathcal{F}_{\tau,\mathbf{U}_{1,2}}^{\text{Sym}}$，分析其与 unimodal 的几何差异。
+分析流程：(i) 在紧致 $\mathcal{Z}$ 上定义 representation laws $q_\theta=(f_\theta)_\# p_x$ 与 positive-pair laws $\pi_{\theta\theta}$；(ii) 引入 partition field $\Gamma_{\theta,\tau}(\mathbf{z})=\int_\mathcal{Z}\kappa_\tau(\mathbf{z},\mathbf{w})\mathrm{d}q_\theta(\mathbf{w})$ 与 kernel-smoothed density $\tilde\rho_{\theta,\tau}=\Gamma_{\theta,\tau}/V_\kappa(\tau)$；(iii) 证明 stochastic InfoNCE 在 $N\to\infty$ 时 value- 与 gradient- consistent 地等于一个 parametric energy $\mathcal{J}_\tau(\theta)$；(iv) 把 $\mathcal{J}_\tau$ 提升到"intrinsic free energy"$\mathcal{F}_{\tau,U}$，并分析其凸性、最小化解、低温集中；(v) 同样的流程对 symmetric multimodal InfoNCE 重做一遍，得到包含负对称 KL 耦合的 $\mathcal{F}_{\tau,\mathbf{U}_{1,2}}^{\text{Sym}}$，分析其与 unimodal 的几何差异。整条推导在第 (iv) 步后分叉：单模态走向唯一 Gibbs 平衡，对称多模态因多出一个负对称 KL 耦合项而走向 modality gap——这个分叉正是全文的核心结构。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表示分布 q_θ 与正样本对分布<br/>partition field Γ = softmax 分母的大 batch 极限"] --> B["大 batch 一致性<br/>stochastic InfoNCE → 确定性种群能量 J_τ<br/>(值 + 梯度双重一致)"]
+    B --> C["提升到分布空间<br/>intrinsic free energy F"]
+    C -->|单模态| D["Gibbs 平衡<br/>F 严格凸 + 唯一解<br/>熵 = basin 内分散选择器"]
+    C -->|对称多模态| E["负对称 KL 耦合<br/>两模态互为势垒"]
+    E --> F["marginal 必然分离<br/>→ modality gap"]
+```
 
 ### 关键设计
 

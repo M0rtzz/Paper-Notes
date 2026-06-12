@@ -43,25 +43,39 @@ tags:
 ### 整体框架
 RAPCPO (Algorithm 1) 是 actor-critic 框架, 主循环每步: (1) 跑 horizon $H$ 步交互, 收集 $(x_t,a_t,c_t,g(x_t),h(x_t),x_{t+1})$ 进 buffer; (2) 用 Eq. 17 训 RAPC critic $Q_{g,h}(x,a;\eta)$; (3) 用 TD 训成本 critic $Q_c(x,a;\kappa)$; (4) 用成功 reach-avoid 轨迹的 $y_t=\gamma^{T-t}$ 训补偿因子 $\phi_\gamma(x;\xi)$; (5) 计算 critic-induced 可行集 $\mathcal X_p^{\pi_{\theta_l}}$ 并构造分区目标; (6) 用对称投影梯度更新 actor; (7) 重复直到收敛。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["环境交互 H 步<br/>收集 (x, a, c, g, h, x')"] --> B["RAPC critic<br/>max-min 夹紧 Bellman 回填"]
+    A --> C["成本 critic<br/>标准 TD"]
+    A --> D["补偿因子 φ<br/>成功轨迹拟合 γ^(T−t)"]
+    B --> E
+    C --> E
+    D --> E
+    subgraph S["证书分区 + 对称梯度修正"]
+        direction TB
+        E["归一化概率估计 p̂ = −V/(Mφ)<br/>判定可行集 X_p"] --> F["状态分区<br/>可行内压成本 / 不可行拉概率"]
+        F -->|可行集内两目标冲突| G["对称投影<br/>互去对方负方向"]
+        F -->|其余状态| H["保留 reach 梯度 g_r^out"]
+        G --> I["合成 g_θ"]
+        H --> I
+    end
+    I -->|更新 actor, 下一轮| A
+```
+
 ### 关键设计
 
-1. **Reach-Avoid Probability Certificate (RAPC) + max-min-clamped Bellman 算子**:
+**1. Reach-Avoid 概率证书 (RAPC) 与 max-min 夹紧 (clamped) Bellman 算子: 把"满足规约的概率"变成可学习的不动点**
 
-    - 功能: 给出一个可学习的函数 $V_{g,h}^\pi$ 作为 $\mathbb P_\pi(\mathbf{RA}_x)$ 的严格下界, 替换不可计算的真实概率。
-    - 核心思路: 定义 $g(x)<0$ on $\mathcal T$ (取 $-M$), $g(x)>0$ on $\mathcal X\setminus\mathcal T$; $h(x)=M$ on $\mathcal F$, $-M$ on $\mathcal X\setminus\mathcal F$。 算子 $B^\pi[V](x)=\max\{h(x),\min\{g(x),\gamma\mathbb E_{a\sim\pi,x'}[V(x')]\}\}$ (Eq. 9) 是 $\gamma$-contraction (Lemma 4.4), 有唯一不动点 $V_{g,h}^\pi$。 沿成功 reach-avoid 轨迹 (hit time $T$, 终态在 $\mathcal T$) 算子退化为线性递推 $V(x_t)=\gamma V(x_{t+1})$, 边界条件 $V(x_T)=-M$, 故 $V(x_0)=-\gamma^T M$。 Theorem 4.5 给出 $\mathbb P_\pi(\mathbf{RA}_x)\ge-V_{g,h}^\pi(x)/M$, 也就是 RAPC。
-    - 设计动机: 直接学 $\mathbb P(\mathbf{RA})$ 没有 Bellman 递推; 用 fixed-$\gamma$ Bellman (Xue 2026, Eq. 8) 又因为 "目标外信号全 0"导致 reward 极稀疏; max-min-clamped 算子既保留概率含义, 又因为 $g(x)>0$ 在非目标态提供 dense 信号, 训练效率大幅提高 (表 2: enhanced Bellman reach rate 0.79 vs fixed-$\gamma$ 0.44 在 HalfCheetah)。
+真实 reach-avoid 概率 $\mathbb P_\pi(\mathbf{RA}_x)$ 没有 Bellman 递推、无法直接学, 这是把 reach-avoid 塞进 RL 的第一道坎。本文先用两个 shaping 函数把 reach/avoid 编码进边界: $g(x)<0$ (取 $-M$) on 目标集 $\mathcal T$、$g(x)>0$ on 非目标态; $h(x)=M$ on 危险集 $\mathcal F$、否则 $-M$。在此之上定义算子 $B^\pi[V](x)=\max\{h(x),\min\{g(x),\gamma\mathbb E_{a\sim\pi,x'}[V(x')]\}\}$ (Eq. 9), Lemma 4.4 证明它是 $\gamma$-收缩、有唯一不动点 $V_{g,h}^\pi$。沿一条成功 reach-avoid 轨迹 (hit time $T$、终态落在 $\mathcal T$), 算子退化为线性递推 $V(x_t)=\gamma V(x_{t+1})$, 边界 $V(x_T)=-M$, 于是 $V(x_0)=-\gamma^T M$; Theorem 4.5 由此给出证书 $\mathbb P_\pi(\mathbf{RA}_x)\ge-V_{g,h}^\pi(x)/M$——值函数成了 reach-avoid 概率的严格下界。真正的巧思在 $g(x)$ 的正值: 若像以往 fixed-$\gamma$ Bellman (Xue 2026, Eq. 8) 那样目标外信号全 0, reward 极稀疏、agent 会退化成原地不动; 而 $g(x)>0$ 在每个非目标态都提供 dense 信号、又不破坏概率语义, 这正是它能在 stochastic MuJoCo 上跑通的根本 (表 2: enhanced Bellman 在 HalfCheetah reach 率 0.80 vs fixed-$\gamma$ 0.44)。
 
-2. **补偿因子 $\phi_\gamma^\pi(x)$ 对抗 $\gamma^T$ 衰减**:
+**2. 补偿因子 $\phi_\gamma^\pi(x)$: 抵消 $\gamma^T$ 衰减, 让证书不再过保守**
 
-    - 功能: 把 $V_{g,h}^\pi$ 因长 hit time 而被 $\gamma^T$ 压扁的偏差消掉, 让 $-V/(M\phi)$ 近似真实 reach 概率, 否则证书过保守。
-    - 核心思路: 从近似分解 $V_{g,h}^\pi(x)\approx\mathbb E_\pi[-M\gamma^T\mid\mathbf{RA}_x]\,\mathbb P_\pi(\mathbf{RA}_x)=-M\phi_\gamma^\pi(x)\mathbb P_\pi(\mathbf{RA}_x)$ (Eq. 11) 反推归一化估计 $\hat p_\pi(x)=-V_{g,h}^\pi(x)/(M\phi_\gamma^\pi(x))$ (Eq. 13)。$\phi$ 用神经网络 $\phi_\gamma(x;\xi)$ 拟合, 训练数据只来自成功 reach-avoid rollout, label 为 $y_t=\gamma^{T-t}$, 用 MSE 训 (Eq. 19); 当前轨迹没成功就跳过更新。
-    - 设计动机: 不用 $\phi$ 的话, "长视野任务真概率很高但 $V$ 数值很小"会导致算法以为不可行, 进而退化成 "原地不动"; 加 $\phi$ 之后可行集判定更准, 实验 (Fig 6) 显示去 $\phi$ 在 HalfCheetah 上额外成本暴涨且 reach 率掉。
+上面的下界 $V_{g,h}^\pi=-\gamma^T M$ 里藏着一个 $\gamma^T$ 因子: hit time $T$ 越长, $V$ 被压得越小, 于是"真概率很高的长视野任务"会被误判成不可行, 算法又退化成"原地不动"。本文从近似分解 $V_{g,h}^\pi(x)\approx\mathbb E_\pi[-M\gamma^T\mid\mathbf{RA}_x]\,\mathbb P_\pi(\mathbf{RA}_x)=-M\phi_\gamma^\pi(x)\mathbb P_\pi(\mathbf{RA}_x)$ (Eq. 11) 出发, 把那个 $\gamma^T$ 的条件期望单独拎成补偿因子 $\phi_\gamma^\pi(x)=\mathbb E[\gamma^T\mid\mathbf{RA}_x]$, 反推出归一化的概率估计 $\hat p_\pi(x)=-V_{g,h}^\pi(x)/(M\phi_\gamma^\pi(x))$ (Eq. 13)。$\phi$ 用神经网络 $\phi_\gamma(x;\xi)$ 拟合, 训练数据只取成功 reach-avoid rollout、label 为 $y_t=\gamma^{T-t}$, MSE 优化 (Eq. 19); 当前轨迹没成功就跳过更新。有了 $\phi$ 做归一化, 可行集判定才准——消融 (Fig 6) 显示去掉 $\phi$ 后 HalfCheetah 额外成本暴涨、reach 率下滑, 说明它不是数值小修, 而是"长视野估计偏差"的本质修复。
 
-3. **基于证书的状态分区 + 对称梯度修正**:
+**3. 证书诱导的状态分区与对称梯度修正: 让"压成本"和"拉概率"两个目标不打架**
 
-    - 功能: 在 "可行状态"上重点压成本、在 "不可行状态"上重点拉概率, 并在两个目标方向冲突时用投影求一个折中。
-    - 核心思路: 用当前 critic 构造 surrogate 可行集 $\mathcal X_p^{\pi_{\theta_l}}=\{x:V_{g,h}^{\pi_{\theta_l}}(x)\le-pM\phi(x),\,\phi(x)\ge 0\}$ (Eq. 15)。 计算三个梯度: $g_r^{in},g_r^{out}$ 分别是 reach 概率项 (用 $-V_{g,h}/\phi$ 替代) 在可行/不可行状态上的梯度, $g_c^{in}$ 是成本梯度。 若 $\langle g_r^{in},g_c^{in}\rangle<0$ (冲突), 用对称投影 $\tilde g_r^{in}=g_r^{in}-\frac{\langle g_r^{in},g_c^{in}\rangle}{\|g_c^{in}\|^2}g_c^{in}$ 互相去掉对方负方向 (Eq. 21), 然后合成 $g_{mix}=\tilde g_r^{in}+\tilde g_c^{in}$; 最终 $g_\theta=g_r^{out}+g_{mix}$ (Eq. 23)。 这是 PCGrad 风格的二目标投影。
-    - 设计动机: 直接拼接 $g_r+g_c$ 在两目标冲突时会互相抵消, 训练不稳; 对称投影后两个目标都能 "在不伤害对方的子空间内"前进, 实践中收敛更稳, 且通常会让 reach 概率超过阈值 $p$ (论文一项 nice property)。
+有了归一化概率估计, 就能用当前 critic 构造 surrogate 可行集 $\mathcal X_p^{\pi_{\theta_l}}=\{x:V_{g,h}^{\pi_{\theta_l}}(x)\le-pM\phi(x),\,\phi(x)\ge 0\}$ (Eq. 15), 并据此分区: 可行状态上重点压成本、不可行状态上重点拉 reach 概率。难点在于可行集内两个目标常冲突——直接把成本梯度和概率梯度相加, 会互相抵消、训练不稳。为此先算三个梯度分量: 可行/不可行集上的 reach 概率梯度 $g_r^{in},g_r^{out}$ (概率项用 $-V_{g,h}/\phi$ 替代) 与可行集上的成本梯度 $g_c^{in}$; 当 $\langle g_r^{in},g_c^{in}\rangle<0$ 判定为冲突时, 做对称投影 $\tilde g_r^{in}=g_r^{in}-\frac{\langle g_r^{in},g_c^{in}\rangle}{\|g_c^{in}\|^2}g_c^{in}$ ($g_c^{in}$ 同样对称处理, Eq. 21), 各自去掉对方的负方向后合成 $g_{mix}=\tilde g_r^{in}+\tilde g_c^{in}$, 最终 $g_\theta=g_r^{out}+g_{mix}$ (Eq. 23)。这是 PCGrad 风格的二目标投影: 两个目标都只在"不伤害对方的子空间"里前进, 收敛更稳, 且论文观察到它通常会让最终 reach 概率超过阈值 $p$ (一项 nice property)。
 
 ### 损失函数 / 训练策略
 - **RAPC critic loss** (Eq. 17): $\mathcal J_{Q_{g,h}}(\eta)=\frac12\mathbb E[(Q_{g,h}(x,a;\eta)-\hat Q_{g,h}(x,a))^2]$, target 是 max-min-clamped Bellman backup (Eq. 18)。

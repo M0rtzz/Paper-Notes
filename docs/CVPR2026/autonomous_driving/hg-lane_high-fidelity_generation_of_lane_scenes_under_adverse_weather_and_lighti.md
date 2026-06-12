@@ -45,6 +45,16 @@ tags:
 
 HG-Lane要解决的是一个很具体的工程难题：手里有大量晴天/白天的车道图和现成的车道线标注，怎么把它们"翻译"成雪、雨、雾、夜、黄昏的样子，同时让车道线一根都不挪位，使旧标注能直接套用。整条流水线对每张正常天气图像$I$分两步走：先做Stage-I结构感知反向扩散，把天气换掉但用控制信号死死锁住车道几何，得到中间图$I'$；再仅对夜间/黄昏这类需要大幅改色调的场景做Stage-II外观精修，补一刀全局光照。两个阶段都直接用**预训练**的ControlNet系列模型，不在车道数据上做任何fine-tune——这也是它复现门槛低的关键。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["正常天气图像 I<br/>+ 原始车道线标注"] --> B["控制信息融合<br/>Canny 边缘 ⊕ 着色车道蒙版 → 控制图 C₀"]
+    B --> C["Stage-I 结构感知反向扩散<br/>SD + Canny-ControlNet 锁几何<br/>类别文本提示换天气 → 中间图 I′"]
+    C -->|"snow / rain / fog / shadow"| E["生成图<br/>直接复用原标注（IoU ≥ 95%）"]
+    C -->|"night / dusk"| D["Stage-II 外观感知精修<br/>IP2P-ControlNet 按指令补全局光照"]
+    D --> E
+```
+
 ### 关键设计
 
 **1. 控制信息融合：把车道标注塞进控制图，让扩散模型"看得见"车道线**

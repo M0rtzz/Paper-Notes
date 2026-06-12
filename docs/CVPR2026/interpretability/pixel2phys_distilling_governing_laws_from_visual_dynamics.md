@@ -45,6 +45,18 @@ tags:
 ### 整体框架
 Pixel2Phys 要解决的是一个鸡生蛋的难题：想从视频里发现控制方程 $\frac{dz}{dt}=f(z)$，得先有干净的物理变量 $z(t)$；可什么变量才算"干净"，又取决于你已经知道的动力学。这篇论文不试图一步到位，而是把人类科学家"观察—假设—实验—精化"的工作流拆给四个 MLLM 驱动的 Agent，让它们循环往复地互相喂线索：Variable Agent 先从像素里抽出一组候选物理变量，Equation Agent 对这组变量做符号回归猜出方程，Experiment Agent 把方程拿去外推、算出一份带图带数的诊断报告，最后 Plan Agent 读完报告判断是变量没提好还是方程搜得不对，决定下一轮该往哪个方向修。每多转一轮，变量空间和方程就互相校准一次，循环依赖被一点点拆开。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始视频"] --> B["Variable Agent<br/>按物理系统类型选工具抽变量 z(t)"]
+    B --> C["Equation Agent<br/>稀疏符号回归猜方程 f"]
+    C --> D["Experiment Agent<br/>方程/变量/外推三维度诊断报告"]
+    D --> E["Plan Agent<br/>读报告做两阶段诊断"]
+    E -->|"判定变量提得不干净"| B
+    E -->|"判定方程搜偏了"| C
+    E -->|"收敛"| F["可解释的物理控制方程"]
+```
+
 ### 关键设计
 
 **1. Plan Agent：在变量与方程之间做两阶段诊断，决定下一轮往哪修**

@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 这篇 position paper 主张：当前所有主流 UQ 方法都只是换了壳的无监督聚类，量的是"模型生成之间彼此有多分离"，而非"答案与外部事实有多接近"，因此遇到自信幻觉必然失效。它的论证不是提一个新方法，而是搭一条"诊断 → 处方"的链：先把 Semantic Entropy、图谱、P(true) 三类方法在数学上 reduce 成同一种聚类操作，再顺着这个同构推出参数敏感、内部评估循环、缺乏 ground truth 三大病灶，最后给出 evaluation / mechanism / grounding 三支柱的改造蓝图，把 UQ 从"无监督启发式"推向"有监督保证"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["主流 UQ 方法<br/>Semantic Entropy / 图谱 / P(true)"] --> B["三类方法同构于聚类<br/>显式聚类 · 谱聚类 · 潜在置信聚类"]
+    B --> C["三大病理诊断<br/>参数敏感 · 内部评估陷阱 · 缺乏 ground truth"]
+    C --> D["三支柱路线图<br/>评估 · 机制 · grounding"]
+    D --> E["从无监督启发式<br/>→ 有监督保证"]
+```
+
 ### 关键设计
 
 **1. 三类主流 UQ 方法在机制上同构于聚类：一次证明，一并反对**

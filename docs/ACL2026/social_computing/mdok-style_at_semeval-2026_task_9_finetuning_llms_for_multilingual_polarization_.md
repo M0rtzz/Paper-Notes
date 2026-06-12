@@ -40,7 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-系统输入是任意语言的一段社交媒体文本，输出是 subtask 1 的二分类 logit / subtask 2 多标签极化类型 / subtask 3 多标签表现形式。整条流水线分四步：(1) 对 22 种语言的 train+dev 集去重合并；(2) 对每条文本做四种数据增强（匿名化、小写化、大写化、同形字化），将训练集扩大 ~20%；(3) 用 QLoRA 在合并后的多语言数据上单 epoch 微调；(4) 按 validation 上的 AUC (subtask 1) 或 macro-F1 (subtask 2/3) 选最佳 checkpoint。subtask 1 选定 Qwen3-32B 为 backbone（支持 100+ 语言），subtask 2/3 因 Qwen3 在 multi-label 头训练上不稳定，改用 Gemma-3-27B-pt（支持 140+ 语言）。
+系统输入是任意语言的一段社交媒体文本，输出是 subtask 1 的二分类 logit / subtask 2 多标签极化类型 / subtask 3 多标签表现形式。整条流水线分四步：(1) 对 22 种语言的 train+dev 集去重合并；(2) 对每条文本做四种数据增强（匿名化、小写化、大写化、同形字化），将训练集扩大 ~20%；(3) 用 QLoRA 在合并后的多语言数据上单 epoch 微调；(4) 按 validation 上的 AUC (subtask 1) 或 macro-F1 (subtask 2/3) 选最佳 checkpoint。subtask 1 选定 Qwen3-32B 为 backbone（支持 100+ 语言），subtask 2/3 因 Qwen3 在 multi-label 头训练上不稳定，改用 Gemma-3-27B-pt（支持 140+ 语言）。此外作者还探索了一条与主系统平行的 appraisal 可解释旁路。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["22 种语言社交文本<br/>train+dev 去重合并"] --> AUG
+    subgraph AUG["对偶式数据增强（原文 + 增强副本各占一半）"]
+        direction TB
+        A1["匿名化<br/>[EMAIL]/[USER]/[PHONE]"]
+        A2["小写化 / 大写化"]
+        A3["同形字化<br/>ASCII → 视觉相同的异 Unicode 块字符"]
+    end
+    AUG --> FT["22 语言合并 + QLoRA 单一模型<br/>4-bit、单 epoch 微调"]
+    FT -->|"subtask 1"| CKPT1["按 dev AUC 选 checkpoint<br/>Qwen3-32B"]
+    FT -->|"subtask 2/3"| CKPT2["按 dev macro-F1 选 checkpoint<br/>Gemma-3-27B + sigmoid 多标签头"]
+    CKPT1 --> OUT["极化检测输出<br/>二分类 / 类型 / 表现形式"]
+    CKPT2 --> OUT
+    IN -. 探索性旁路 .-> APP["Appraisal 可解释路径<br/>XLM-R 编码 → 认知维度回归 → LR 分类"]
+    APP -.-> OUT
+```
 
 ### 关键设计
 

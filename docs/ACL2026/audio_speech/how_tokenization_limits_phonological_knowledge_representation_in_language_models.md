@@ -44,6 +44,15 @@ tags:
 
 本文不是提一个新模型，而是回答“subword tokenization 到底卡住了 LM 哪些音韵能力、为什么、怎么补”，因此用三个串联实验把诊断做实。第一步 Probing：把每个词最后一个 token 在第 $\ell$ 层的 hidden state $\boldsymbol{h}_{i\ell}$ 抽出来训练线性 probe，覆盖 6 个模型 × 6 个 depth 比例 × 3 个任务，量出表征里真正编码了多少音韵知识。第二步机制分析：用 slash-delimited input 测粒度效应、用 STAD 分组（A: STAD=0 vs M: STAD>0.25）测边界效应、再用 CogNet 检索同源词数量解释“为什么这些词切得不准”。第三步改进：在 OpenHermes2.5 通用数据与音韵任务的混合集上 LoRA 微调 Llama3.1-8B，回答中插入 IPA 转写，在不换 tokenizer 的前提下补回音韵知识。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["6 模型 × 6 层深度<br/>抽词尾 token 在第 ℓ 层的 hidden state"] --> B["三个音韵 probing 任务<br/>线性 probe：rhyme / G2P / 音节数"]
+    B --> C["STAD 切分对齐度<br/>(辅以 slash 粒度实验 + CogNet 同源词归因)"]
+    C --> D["IPA-Augmented LoRA 微调<br/>通用 QA 撒 IPA tag + 音韵任务混训"]
+    D --> E["不换 tokenizer 注入音韵知识<br/>GSM8K / MMLU 仅掉 1.1% / 0.9%"]
+```
+
 ### 关键设计
 
 **1. 三个 phonology probing 任务：用线性 probe 替代 prompting 量内部知识**

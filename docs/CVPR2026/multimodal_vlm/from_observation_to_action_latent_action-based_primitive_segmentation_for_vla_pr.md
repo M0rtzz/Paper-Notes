@@ -47,6 +47,17 @@ LAPS 要解决的是一件很具体的事：把一段没人标注过的连续工
 
 整条流水线分三个阶段串行跑：先用 CoTracker 从视频里追出一批稠密的关键点运动轨迹（Motion Tracking）；再把轨迹送进 Motion Tokenizer 变成潜在 token 流，在 token 流上算 Latent Action Energy、配一个滞后状态机切出动作边界（Action Detection & Segmentation）；最后把切出来的片段用一个冻结 Transformer 编码、做 Cosine k-means 聚类，无监督地发现一张动作词汇表（Semantic Action Clustering）。三个阶段都不依赖任何人工标注。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["未标注工业视频流"] --> B["运动追踪（CoTracker）<br/>稠密关键点速度轨迹 κ"]
+    B --> C["Motion Tokenizer<br/>分类损失量化成潜在 token 流"]
+    C --> D["Latent Action Energy<br/>相邻量化 token 的 L2 差分"]
+    D --> E["滞后状态机<br/>双阈值去抖切 ON / OFF 段"]
+    E --> F["语义动作聚类<br/>冻结 Transformer + Cosine k-means"]
+    F --> G["动作词汇表 → VLA 预训练数据"]
+```
+
 ### 关键设计
 
 **1. Motion Tokenizer：把关键点运动编码成抗外观干扰的潜在动态**
@@ -64,6 +75,10 @@ $$E_{action}(t) = \|z_{q,t} - z_{q,t-1}\|_2$$
 **3. 滞后状态机：用双阈值去抖动，把能量曲线切成实时的 ON/OFF 段**
 
 能量曲线本身有噪声，单阈值一刀切会在阈值附近来回抖动、切出大量假边界。LAPS 用一个单通道因果的滞后（hysteresis）状态机来读这条曲线：激活（OFF→ON）要求信号 $y_t > \theta_{on}$ 连续保持 $u$ 帧，去激活（ON→OFF）要求 $y_t < \theta_{off}$ 连续保持 $d$ 帧，两个阈值拉开间距形成滞回带，短暂的毛刺穿不过去就不会触发状态翻转。其中 $\theta_{on}$ 不靠人工调，而是无监督自校准：拿速度能量当代理信号自动生成一批伪标签，再以最大化 F1 反推阈值。因为是单通道、只看当前帧之前的信息，整个检测器可以在线实时跑，符合工业部署对流式处理的要求。
+
+**4. 语义动作聚类（Semantic Action Clustering）：把切出的片段聚成一张动作词汇表**
+
+切出片段只做了一半——VLA 预训练还需要知道"哪些片段属于同一类动作"，才能形成可数的动作原语集合。LAPS 把每个片段送进一个**随机初始化且完全冻结**的 Transformer 做时序编码，再用 Cosine k-means 聚类，潜在动态相似的片段自然落到同一簇，无监督地浮现出一张动作词汇表。这里有两个看似反直觉的选择：一是编码器不训练——消融显示冻结 Transformer 的聚类语义一致性（ICSS）0.92 优于简单均值池化的 0.84，说明显式时序建模本身就足以区分动作，而保持不训练反而避免过拟合到某个特定工业场景、保住跨域泛化；二是用专门的 Motion Tokenizer 特征而非通用 CLIP 特征（用 CLIP 时 ICSS 仅 0.75），因为 CLIP 编码的是外观而非运动。为了能在没有标注的情况下衡量聚类质量，本文还设计了 ICSS 指标——用 VLM 判断同簇片段的语义相似度，弥补 Silhouette 这类纯几何指标读不出"语义是否一致"的盲区。
 
 ### 一个完整示例：一段拧螺丝视频怎么被切开
 

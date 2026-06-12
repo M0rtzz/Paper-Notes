@@ -42,6 +42,23 @@ DiscoForcing 把"音乐 → 全身舞蹈"的离线生成问题改写成严格因
 ### 整体框架
 DiscoForcing 要解决的是"音乐边播边来、动作必须立刻跟上"的流式控制问题，核心做法是把离线的 music-to-motion 改写成一条严格因果、每帧算力封顶的流水线。每个流式时刻 $t$，系统先从固定长度的滑动音频窗里抽出严格因果的条件特征，再在一个潜空间的尾部去噪窗里用 Diffusion Forcing 吐出当前帧的干净 latent，最后解码成 SMPL 动作经 ROS2 同时驱动 Unity 虚拟人和宇树 G1 物理人形，整体维持 30 FPS 的因果流式输出。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["音乐流：固定长度滑动音频窗"] --> B
+    subgraph B["VQ-PAE 解耦因果音乐编码"]
+        direction TB
+        B0["dilated 1D 因果卷积<br/>共享潜表"] --> B1["节拍分支：RVQ 离散事件码"]
+        B0 --> B2["周期分支：PAE 连续相位信号"]
+        B1 --> B3["拼成条件 c_t"]
+        B2 --> B3
+    end
+    B --> C["潜空间 Diffusion Forcing<br/>+ 三模混合噪声调度"]
+    C --> D["Streaming 采样器 + Temporal Guidance"]
+    D --> E["解码 SMPL 动作"]
+    E --> F["ROS2 同时驱动 Unity 虚拟人 + 宇树 G1"]
+```
+
 ### 关键设计
 
 **1. VQ-PAE 解耦因果音乐编码：让条件既因果又同时抓住"事件"和"相位"**

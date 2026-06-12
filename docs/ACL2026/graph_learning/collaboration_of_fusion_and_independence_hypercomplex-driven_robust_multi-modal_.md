@@ -42,6 +42,33 @@ M-Hyper 把多模态知识图谱实体编码为双四元数（biquaternion）的
 ### 整体框架
 M-Hyper 想要一个让"独立模态"和"融合模态"同时存在、还能天然支持成对交互的表示空间——既不像 fusion 派融合后丢掉模态独有信息，也不像 ensemble 派保留独立却缺少深度交互。它注意到四元数代数恰好有 4 个线性独立的正交基，于是把结构、视觉、文本三个独立模态加一个融合模态分别放到双四元数（biquaternion）的四个基上：输入三元组 $(h,r,t)$ 与实体的结构嵌入 $\mathbf{e}^s$、视觉嵌入 $\mathbf{e}^v$（VGG）、文本嵌入 $\mathbf{e}^t$（BERT）后，先由 FERF 把每个独立模态分解成更鲁棒的表示，再由 R2MF 做关系感知融合得到融合模态 $\hat{\mathbf{e}}^j$，拼成 $Q = \hat{\mathbf{e}}^j + \hat{\mathbf{e}}^s \mathbf{i} + \hat{\mathbf{e}}^v \mathbf{j} + \hat{\mathbf{e}}^t \mathbf{k}$ 后用同时含平移与旋转的双四元数评分函数打分；正交性保证模态独立、Hamilton 乘积的交叉项保证模态交互。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["三元组 (h,r,t) + 结构 / 视觉(VGG) / 文本(BERT) 预训练嵌入"]
+    subgraph FERF["FERF：鲁棒模态分解"]
+        direction TB
+        F1["每模态拆为：模态专属(预训练经 MLP) + 任务专属(可学习, PCA 初始化)"]
+        F2["重构损失：任务嵌入 + 他模态原始嵌入 须重建本模态原始信息"]
+        F1 --> F2
+    end
+    IN --> FERF
+    FERF --> IND["独立模态表示：结构 / 视觉 / 文本"]
+    subgraph R2MF["R2MF：关系感知融合"]
+        direction TB
+        R1["关系门控：按关系算各模态权重 + 关系级温度 softmax 加权"]
+        R2["噪声自蒸馏：加噪学生表示对齐无噪老师"]
+        R1 --> R2
+    end
+    IND --> R2MF
+    R2MF --> FUS["融合模态"]
+    BIQ["双四元数评分函数<br/>Q = 融合·1 + 结构·i + 视觉·j + 文本·k"]
+    IND --> BIQ
+    FUS --> BIQ
+    BIQ --> SCORE["平移 ⊕ 旋转(Hamilton 乘积) 后打分<br/>正交基保模态独立 · 交叉项保模态交互"]
+    SCORE --> OUT["三元组得分 → 链路预测"]
+```
+
 ### 关键设计
 
 **1. FERF：把每个模态拆成"模态专属 + 任务专属"，在去噪的同时不丢预训练语义**

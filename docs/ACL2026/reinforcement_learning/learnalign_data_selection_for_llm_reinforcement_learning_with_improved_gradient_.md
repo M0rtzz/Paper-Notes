@@ -45,6 +45,18 @@ tags:
 
 LearnAlign 想解决的是 RLVR 后训练"选哪些数据来训"的问题，而它的核心是把每条数据既评"代表性"（梯度方向和整个训练集对不对齐）又评"可学习性"（当前策略对它有没有学习空间），合成一个分数再排序选 top-N。整条流水线是轻量的 4 步：先在随机小子集上跑一小段 RLVR 得到一个稍微上路的策略 $\bm{\theta}_s$ 作为参考点；再在 $\bm{\theta}_s$ 上对每条数据采样估计 success rate、计算 GRPO 梯度；然后把 success rate 当权重乘到归一化梯度上算 pairwise 分数；最后按每条数据的平均得分排序取最高的 $N$ 条做正式训练。关键是全程**不需要在全量数据上完整训练几个 epoch**，只花一次 warmup + 一次梯度估计的代价。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["全量候选数据"] --> B["warmup 检查点<br/>随机小子集跑一小段 RLVR 得参考策略 θ_s"]
+    B --> C["学习度量 V(ξ)=p(1−p)<br/>θ_s 上采 G=8 rollout 估 success rate p"]
+    B --> D["GRPO 梯度随机投影<br/>算 GRPO 梯度 → JL 投影 → 归一化 ∇̂J"]
+    C --> E["学习度加权梯度向量<br/>V(ξ)·∇̂J，方向交给余弦、幅度交给可学习性"]
+    D --> E
+    E --> F["LearnAlign Score S_ij<br/>两两算分 → 按行平均排序"]
+    F --> G["选 top-N → 正式 RLVR 训练"]
+```
+
 ### 关键设计
 
 **1. 学习度量 $V(\xi)=p(1-p)$：用近端发展区原则量化"这条数据现在值不值得学"**

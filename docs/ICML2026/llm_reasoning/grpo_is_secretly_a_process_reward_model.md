@@ -48,9 +48,9 @@ tags:
 
 要说清 GRPO 隐含的 process reward，先得把"哪些 token 属于同一个 process step"形式化。作者对组 $\mathbb G=\{y^{(1)},\dots,y^{(|\mathbb G|)}\}$ 定义 process set $\mathcal B(\mathbb G)=\{\lambda\subseteq\mathbb G\mid \exists n\geq 0,\forall y^{(i)},y^{(k)}\in\lambda: y_{:n}^{(i)}=y_{:n}^{(k)}\}$：每个 $\lambda$ 是一组共享同一段前缀的 trajectory，按 $\supseteq$ 关系它们自然形成一棵树，节点 $\lambda$ 对应一段 step、跨度 $[s(\lambda), e(\lambda))$。这段 step 的奖励就取组内这些轨迹的均值 outcome reward $r_\lambda = \frac{1}{|\lambda|}\sum_{y^{(i)}\in\lambda} r^{(i)}$，advantage 仍按组均值归一化。关键结论是：在 $\mu=1$（每批只更新一次）、DAPO 风格 token-level objective、忽略 clip 这三个温和假设下，这个 MC-PRM-aware loss $L_{\text{PRM}}(\mathbb G)$ 数值上恒等于 $L_{\text{GRPO}}(\mathbb G)$。这条等价性第一次给"GRPO 到底在干什么"赋予了 PRM 语义——想要 process reward 不必再训神经 PRM 或改算法，**只要 rollout 时让 trajectory 共享前缀**，MC-PRM 信号就免费送上门。作者还在 Section 3.2 实证这种前缀共享在真实 GRPO 训练里非常普遍，所以这个"隐含 PRM"几乎总是非平凡的。
 
-**2. 缺陷诊断：advantage 与 step 频次错配，会把好轨迹的前缀打成负分**
+**2. 缺陷诊断：advantage 与 step 频次错配，同时损害 exploitation 与 exploration**
 
-有了 PRM 视角，vanilla GRPO 的一个系统性 bug 就显形了。考虑图 1 的 trajectory JKLNQU，假设它整体 reward 高于组均值，但它的前缀 JKL 又和多条低分轨迹共享。在 PRM-aware 视角下，JKL 这段 step 的 step-reward 等于"JKL 之下所有轨迹的均值 reward"，被那些低分轨迹拉低，于是 JKL 三个 token 拿到的是**负** advantage，只有 JKLNQU 独占的最后一个 token U 拿到正 advantage。可 vanilla GRPO 的 token-level loss 把整条轨迹当一体，所有 token 共享同一个 sample-level $a_i$，这恰恰违背了 PRM 视角"分段 advantage 应按 step 出现频次加权"的要求——具体地，loss 的分母 $\sum_{y^{(i)}}\text{len}(y^{(i)})$ 在 token 数与 step 频次失配时会注入系统性 bias。这条诊断把"GRPO 偶尔会把好轨迹搞砸、甚至反而降低正确推理链概率"的模糊直觉，转化成了一条能在白板上画出来、能形式化的 bug。
+有了 PRM 视角，vanilla GRPO 的一个系统性 bug 就显形了。考虑图 1 的 trajectory JKLNQU，假设它整体 reward 高于组均值，但它的前缀 JKL 又和多条低分轨迹共享。在 PRM-aware 视角下，JKL 这段 step 的 step-reward 等于"JKL 之下所有轨迹的均值 reward"，被那些低分轨迹拉低，于是 JKL 三个 token 拿到的是**负** advantage，只有 JKLNQU 独占的最后一个 token U 拿到正 advantage。可 vanilla GRPO 的 token-level loss 把整条轨迹当一体，所有 token 共享同一个 sample-level $a_i$，这恰恰违背了 PRM 视角"分段 advantage 应按 step 出现频次加权"的要求——具体地，loss 的分母 $\sum_{y^{(i)}}\text{len}(y^{(i)})$ 在 token 数与 step 频次失配时会注入系统性 bias。作者强调这个错配在**不同条件下会同时拖累 exploitation 和 exploration**：JKLNQU 是损害 exploitation 的典型——把已知的高分推理链压低；而在 reward 与 step 频次的另一种失衡下，错配又会反向扭曲探索信号、抑制 exploration。这条诊断把"GRPO 偶尔会把好轨迹搞砸、甚至反而降低正确推理链概率"的模糊直觉，转化成了一条能在白板上画出来、能形式化的 bug。
 
 **3. $\lambda$-GRPO：一个 PRM-aware 归一化因子**
 
@@ -82,7 +82,7 @@ tags:
 
 ### 关键发现
 - **GRPO 的隐含 PRM 在真实训练里几乎总是非平凡**：作者用实证表明前缀共享在 group rollout 中频繁发生（图 1 的 JKLNQU 这种结构是常态而非特例），因此分析有现实意义。
-- **bug 的方向是系统性反例**：vanilla GRPO 倾向于把高 reward 轨迹的"早期共享前缀"打成负 advantage，这是为什么 GRPO 训出来的模型有时**反而降低**正确推理 chain 出现概率的根因之一。
+- **bug 的方向是系统性反例**：vanilla GRPO 倾向于把高 reward 轨迹的"早期共享前缀"打成负 advantage，这是为什么 GRPO 训出来的模型有时**反而降低**正确推理 chain 出现概率（exploitation 受损）的根因之一；在另一类 reward / step 频次失衡下，同一错配又会损害 exploration——两个方向都源于同一个归一化偏差。
 - **$\lambda$-GRPO 的收敛加速比性能提升更显著**：peak validation acc 早约 2× 步数到达，意味着实际 GPU 时间节省巨大；这一点对工业 RL pipeline 价值很高。
 - **不需要任何额外标注或额外 forward**：与神经 PRM 相比，零标注成本；与显式 MC-PRM (VineRL) 相比，零额外 rollout。
 

@@ -50,6 +50,25 @@ HorizonForge 包含两个阶段：**3D 资产收割（3D Assets Harvesting）** 
 - **阶段一**：将输入驾驶视频重建为可编辑的 3D 资产——Gaussian Splats（通过 OmniRe 获取）+ 3D Mesh（通过 Hunyuan3D 生成），在 3D 空间中按目标轨迹 $\mathcal{T}=\{\tau_i\}_{i=1}^N$ 重新放置所有车辆。
 - **阶段二**：将编辑后的 3D 场景光栅化为 2D 帧序列，再通过微调的视频扩散模型（基于 CogVideoX 骨干）修复伪影、补全缺失区域，生成高保真、时序一致的驾驶视频。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入驾驶视频 + 目标轨迹"]
+    subgraph HARVEST["阶段一·3D 资产收割"]
+        direction TB
+        GS["Gaussian Splats 条件化<br/>OmniRe 重建富外观 3DGS"]
+        MESH["Mesh 收割与插入管线<br/>训练: SAM→Pix2Gestalt→Hunyuan3D→对齐<br/>推理: 文本→GPT→Hunyuan3D→VLM 插入"]
+    end
+    IN --> GS
+    IN --> MESH
+    GS --> EDIT["按目标轨迹重放置所有车辆<br/>光栅化为 2D 帧序列"]
+    MESH --> EDIT
+    DATA["循环重建数据对构造<br/>GS: 扰动轨迹→重建→渲染带伪影帧<br/>Mesh: 50% 概率替换为收割 mesh"]
+    EDIT --> VDM["阶段二·视频扩散模型 CogVideoX<br/>修复伪影 + 补全缺失 + 时序一致"]
+    DATA -.训练监督.-> VDM
+    VDM --> OUT["高保真时序一致驾驶视频"]
+```
+
 ### 关键设计
 
 **1. Gaussian Splats 条件化**

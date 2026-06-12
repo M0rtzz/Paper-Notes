@@ -47,6 +47,24 @@ tags:
 2. **Stage 2 (High-Value Sample Selection + Adaptive Refinement)**：基于 Stage 1 教师预测把样本分成 Near-miss ($\mathcal{S}_{\text{NM}}$) 与 Hard-hard ($\mathcal{S}_{\text{HH}}$) 两类，再用复合难度指标 $\mathcal{M}(x_i,y_i)=d(x_i,y_i)\cdot e^{-H(x_i)}$ 把每类按中位数二分为 close / far 子集；对四个子集用不同 $(\alpha,\beta,\gamma)$ 组合训练学生模型。
 3. 最终训练数据 = $\mathcal{S}_{\text{NM}} \cup \mathcal{S}_{\text{HH}}$，占总样本约 10.30%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实学生推理数据 D"] --> S1
+    subgraph S1["Stage 1 全局蒸馏"]
+        direction TB
+        B["N-fold 软标签生成<br/>各教师只为没见过的 fold 出软标签"] --> C["联合损失训 N 个学生<br/>L = α·CE + β·KD + γ·COS"]
+    end
+    S1 --> D["按教师预测排名分流"]
+    subgraph S2["Stage 2 高价值样本精炼"]
+        direction TB
+        D --> E["双层边际样本选择<br/>Near-miss ∪ Hard-hard，约 10.30%"]
+        E --> F["复合难度 M = d·exp(−H)<br/>每类按中位数二分 close / far"]
+        F --> G["难度自适应损失 + 自适应纠错<br/>四子集切换 (α,β,γ)"]
+    end
+    S2 --> H["4B 学生反超 72B 教师<br/>推理快 23×"]
+```
+
 ### 关键设计
 
 **1. 双层边际样本选择：让 ~10% 数据承担最大学习负担**

@@ -43,6 +43,25 @@ GeoTikzBridge 通过构建最大的 2.5M 图像-TikZ 代码数据集和首个辅
 ### 整体框架
 GeoTikzBridge 想解决的核心问题是：让模型把一张几何图精确地"翻译"成可编译的 TikZ 代码，再用这份符号化代码去支撑下游几何推理。整条 pipeline 分三段串起来：先用一个自举式的数据飞轮把 145k 种子数据滚到 2.5M，训练出基础感知模型 GeoTikzBridge-Base；再在此基础上用辅助线指令数据微调出 GeoTikzBridge-Instruct，让它能按指令往图里补辅助线；最后把这两个模型当成无需训练的即插即用感知前端，接到任意 MLLM/LLM 前面，把"看图"换成"读代码"来增强几何推理。输入始终是几何图像，输出是可编译的 TikZ 代码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["几何图像<br/>种子 DaTikZ 145k + 9 个数据集的无代码候选图"] --> FW
+    subgraph FW["迭代自精炼数据飞轮"]
+        direction TB
+        B["当前模型预测 TikZ 代码"] --> C["渲染回图，与原图算 CLIP score"]
+        C -->|"≥ τ=0.8 收为可靠样本"| D["局部几何变换<br/>随机删 ≤40% 代码行，仍可编译则保留"]
+        D --> E["合并集重训模型"]
+        E -->|"迭代 4 轮"| B
+    end
+    FW --> F["GeoTikzBridge-Base<br/>2.5M 几何 TikZ 数据"]
+    D -.复用删代码差异.-> G["指令引导的辅助线生成<br/>标注成（指令, 缺线图, 完整代码）三元组 419k"]
+    G --> H["SFT 得 GeoTikzBridge-Instruct"]
+    F --> I["即插即用前端：图像 → TikZ 代码"]
+    H --> I
+    I --> J["接任意 MLLM/LLM 做几何推理"]
+```
+
 ### 关键设计
 
 **1. 迭代自精炼数据飞轮：用模型自己的产出滚出 2.5M 数据**

@@ -37,6 +37,23 @@ tags:
 ### 整体框架
 DisCo 基于 Flow-GRPO 框架，将 flow-matching 模型的去噪过程建模为马尔可夫决策过程（MDP）。给定文本 prompt，采样一组 $M$ 条轨迹，对每条轨迹的最终图像计算组合奖励，通过组归一化优势函数进行策略更新。训练使用较少的去噪步数以提高效率，测试时使用完整步数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多人 prompt（2-7 人）"] --> B["采样 M 条去噪轨迹<br/>flow-matching 建模为 MDP"]
+    CUR["单阶段课程学习<br/>采样难度由易到难退火"] -->|控制采样复杂度| B
+    B --> C["图像内多样性 r_img^d"]
+    B --> D["组级多样性 r_grp^d<br/>反事实「移除一个」边际贡献"]
+    B --> E["计数控制 r_img^c"]
+    B --> F["质量/对齐 r_img^q（HPSv3）"]
+    C --> G["加权总奖励 r"]
+    D --> G
+    E --> G
+    F --> G
+    G --> H["组归一化优势 → GRPO 策略更新"]
+    H -.->|迭代| B
+```
+
 ### 关键设计
 
 DisCo 的核心是把"身份危机"拆成四个可独立检测的奖励信号，再叠一层课程学习稳住训练。四项奖励里前两项管多样性、后两项防止优化跑偏，缺一不可。

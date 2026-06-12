@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 作者设计了一个三段式 prompting pipeline：(1) **Axiom Generation Prompt**：把 (P, H) 喂给 LLM，让它生成一句话的常识 axiom $A$；(2) **Axiom Evaluation Prompt**：把 $(P, H, A)$ 喂回同一模型，让它在 factuality / consistency / helpfulness 几个维度打分（基于 Zheng 2024 的指标改造）；(3) **Inference Prompt**：根据 (2) 的判断走两条路——baseline 模式直接 $(P, H) \to \text{label}$；axiom-injected 模式 $(P, H, A) \to \text{label}$；hybrid 模式只在 $A$ 被判为高 factuality 时才走 injection，否则退回 baseline。这条 hybrid 路就是 selective access 主张。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 (P, H)"] --> B["LLM 自生成自然语言公理<br/>(P,H) → 一句话 axiom A"]
+    B --> C["Factuality 选择性注入<br/>同模型给 A 打 factuality 分"]
+    C -->|"score(A) ≥ τ：公理可信"| D["注入推理<br/>(P,H,A) → label"]
+    C -->|"score(A) < τ：公理存疑"| E["退回基线推理<br/>(P,H) → label"]
+    D --> F["NLI 标签<br/>Entail / Contradict / Neutral"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. LLM 自生成自然语言 axiom：用一句话桥接 premise 和 hypothesis，而非 KG 三元组**
@@ -54,13 +65,7 @@ tags:
 
 纯注入实验暴露了一个问题——LLM 生成的 axiom 质量参差，经常带 hallucination 或干脆和 hypothesis 直接重复，强行注入反而把模型带歪。作者的解法是加一道 factuality 闸门：用同一个 LLM 再跑一遍 axiom evaluation，对 axiom 按 helpful / factual / consistent 几个维度打分（指标改自 Zheng 2024），只有通过 factuality 阈值的 axiom 才进入推理阶段。
 
-形式上即 $\hat{y} = \text{LLM}(P, H, A)$ if $\text{score}(A) \geq \tau$ else $\text{LLM}(P, H)$——这就是论文主张的 "selective access"：公理不靠谱时模型退回原始 P-H 推理，靠谱时才借力。这一步把注入限制在"模型自己也信"的范围内，最大化信号噪声比；消融显示它正是收益主因，不过滤的强注入经常掉点，所以过滤本身就是核心贡献而非小 trick。
-
-**3. 缓解 Neutral 偏好：给模型一个敢站队的理由**
-
-作者观察到 baseline 在 ANLI 这类 adversarial dataset 上 Neutral 召回过高——这其实是模型在不确定时的自我保护兜底，并非真判断出"既不蕴含也不矛盾"。当 premise 和 hypothesis 看似无明显蕴含/矛盾时，模型默认选 Neutral 最安全。
-
-高质量 axiom 恰好能打破这个安全模式：它把"看似无关"显式变成"有 commonsense bridge，因此 entail/contradict"，相当于给模型一个明确的理由去站队，把它从 Neutral 兜底拉回正确类别。这也解释了为什么提升在越难的 ANLI 上越明显——越是难 case，常识桥越关键。
+形式上即 $\hat{y} = \text{LLM}(P, H, A)$ if $\text{score}(A) \geq \tau$ else $\text{LLM}(P, H)$——这就是论文主张的 "selective access"：公理不靠谱时模型退回原始 P-H 推理，靠谱时才借力。这一步把注入限制在"模型自己也信"的范围内，最大化信号噪声比；消融显示它正是收益主因，不过滤的强注入经常掉点，所以过滤本身就是核心贡献而非小 trick。注入高质量公理的实际效果是把模型从"不确定就选 Neutral"的安全兜底里拽出来：它把看似无关的 P-H 显式变成"有常识桥、因此 entail/contradict"，给了模型一个敢站队的理由，这也是为什么收益在更难的 ANLI 上比 SNLI 更明显（详见实验"关键发现"）。
 
 ### 一个完整示例
 

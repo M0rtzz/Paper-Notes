@@ -44,6 +44,25 @@ tags:
 
 Diffusion-CAM 要解决的是"传统 CAM 默认顺序注意力，而 dMLLM 是并行去噪"这一根本错位。它先在 dMLLM 的中间 transformer 块挂上 hook，从去噪轨迹中挑出仍保留完整图像条件信息的"结构有效步"，提取该步的图像 token 特征与梯度；再把最终响应分数反向传播到图像区域，按 Grad-CAM 方式聚合出一张基础热力图；最后串接四个针对扩散噪声特性设计的后处理模块，把这张弥散、带架构伪影的粗图精炼成定位准确、背景干净的视觉解释。输入是 dMLLM 的去噪过程与图文，中间是有效步上的梯度归因，输出是忠实的视觉热力图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：dMLLM 去噪过程 + 图文"] --> B
+    subgraph S1["扩散式 CAM 适配（三步改造）"]
+        direction TB
+        B["模型感知特征提取<br/>挑保留图像 token 的结构有效步"] --> C["动态图像跨度定位<br/>reshape 成空间特征图"]
+        C --> D["Grad-CAM 聚合<br/>梯度空间平均 → ReLU → 基础 CAM"]
+    end
+    D --> E["自适应核去噪模块<br/>按去噪状态动态调核 + 秩加权高斯滤波"]
+    subgraph S3["残余噪声三子模块"]
+        direction TB
+        F["分布感知置信门控<br/>全局统计自适应阈值"] --> G["上下文背景衰减<br/>多尺度统计分前景/背景"]
+        G --> H["单实例因果去偏<br/>掩除重复 token 的虚假激活"]
+    end
+    E --> F
+    H --> I["输出：忠实视觉热力图"]
+```
+
 ### 关键设计
 
 **1. 扩散式 CAM 适配（三步改造）：让梯度归因兼容非自回归的去噪生成**

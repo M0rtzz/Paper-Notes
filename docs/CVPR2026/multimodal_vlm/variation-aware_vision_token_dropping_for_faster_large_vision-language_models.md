@@ -41,6 +41,18 @@ tags:
 
 V2Drop 想解决的是 LVLM 里视觉 token 太多、推理被二次方复杂度拖慢的问题。它不依赖注意力权重判断哪些 token 该留，而是观察每个视觉 token 在 LLM 相邻层间表征「变了多少」：变化大的对应任务相关区域，变化小的是「懒惰 token」、多半无关。于是在 LLM 的浅、中、深三处按变化量从大到小保留 Top-K、渐进地丢掉懒惰 token。整套流程无需训练、不碰注意力、因而天然没有位置偏差也兼容 FlashAttention。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["输入：M 个视觉 token 进入 LLM 逐层前向"] --> B
+    subgraph ROUT["渐进式丢弃：每个策略层执行的三步例程"]
+        direction TB
+        B["① 算层间变化量<br/>默认 L2 距离（看 token 自身变化，非注意力）"] --> C["② 按变化量降序保留 Top-K<br/>丢掉低变化的『懒惰 token』"]
+        C --> D["③ 重组保留 token 供后续层"]
+    end
+    D -->|"在浅 → 中 → 深三层各执行一次<br/>token 数 M → Ka → Kb → Kc 渐进收缩"| E["输出：加速的 LLM 生成<br/>无位置偏差 · 兼容 FlashAttention"]
+```
+
 ### 关键设计
 
 **1. 变化量视角：用 token 自身的层间行为判断重要性，而非外部注意力**

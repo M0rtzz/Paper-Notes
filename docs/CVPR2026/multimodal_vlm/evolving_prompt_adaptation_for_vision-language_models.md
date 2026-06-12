@@ -43,7 +43,27 @@ EvoPrompt 通过轨迹感知的 prompt 进化策略（统一 embedding 投影 + 
 ## 方法详解
 
 ### 整体框架
-EvoPrompt 想解决的是 VLM prompt learning 里那个老大难的平衡：既要让 prompt 学到下游任务的特征，又不能让它在 few-shot 训练里漂移得太远、把 CLIP 原本的 zero-shot 知识忘掉。它的整条 pipeline 都搭在一个完全冻结的 CLIP（ViT-B/16）上——图像走视觉编码器 $F$、文本走文本编码器 $G$，两个 backbone 一个参数都不动。真正可学的东西很少：一个跨层共享的 embedding，从第 6 层到第 12 层每层注入的 prompt 都是由它经投影器生成的。训练时不直接放任 prompt 自由更新，而是把每一步更新拆成"方向"和"幅度"，冻住历史方向、只调幅度，让 prompt 沿一条受控的轨迹缓慢进化；同时用一项几何正则把特征撑开、用一项知识恒常损失把特征拽回原始 CLIP 附近。最终拿视觉特征 $f^v$ 和文本特征 $f^t$ 的余弦相似度做分类。
+EvoPrompt 想解决的是 VLM prompt learning 里那个老大难的平衡：既要让 prompt 学到下游任务的特征，又不能让它在 few-shot 训练里漂移得太远、把 CLIP 原本的 zero-shot 知识忘掉。它的整条 pipeline 都搭在一个完全冻结的 CLIP（ViT-B/16）上——图像走视觉编码器 $F$、文本走文本编码器 $G$，两个 backbone 一个参数都不动。真正可学的东西很少：一个跨层共享的 embedding，从第 6 层到第 12 层每层注入的 prompt 都是由它经**Modality-Shared Prompt Projector（MPP）**投影生成的。训练时不直接放任 prompt 自由更新，而是用**Evolutionary Trajectory-Aware Learning（ETL）**把每一步低秩更新拆成"方向"和"幅度"，冻住历史方向、只调幅度，让 prompt 沿一条受控的轨迹缓慢进化；同时用一项**Feature Geometric Regularization（FGR）**几何正则把特征撑开、用一项知识恒常损失（KCL）把特征拽回原始 CLIP 附近。最终拿视觉特征 $f^v$ 和文本特征 $f^t$ 的余弦相似度做分类。下图按"共享 embedding → MPP 投影 → ETL 控制轨迹 → 注入冻结编码器 → 出特征 → 分类 + 三项损失反传"串起整条数据流：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像"] --> FV
+    TXT["输入文本"] --> GT
+    E["共享可学习 embedding E"] --> MPP["Modality-Shared Prompt Projector<br/>共享基底 + 层特定低秩适配器 A_iB_i"]
+    MPP --> ETL["Evolutionary Trajectory-Aware Learning<br/>低秩更新拆方向+幅度，冻历史方向只训幅度 α"]
+    ETL -->|"生成第6-12层 prompt"| FV["冻结 CLIP 视觉编码器 F"]
+    ETL -->|"生成第6-12层 prompt"| GT["冻结 CLIP 文本编码器 G"]
+    FV --> FVF["视觉特征 f^v"]
+    GT --> FTF["文本特征 f^t"]
+    FVF --> FGR["Feature Geometric Regularization<br/>最小化模态内协方差，去相关防坍缩"]
+    FTF --> FGR
+    FVF --> CLS["余弦相似度分类"]
+    FTF --> CLS
+    FGR --> LOSS["总损失 = InfoNCE + γ·FGR + η·KCL"]
+    CLS --> LOSS
+    LOSS -.->|"反传：更新幅度 α + 新方向"| ETL
+```
 
 ### 关键设计
 

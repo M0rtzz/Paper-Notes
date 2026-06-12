@@ -45,6 +45,27 @@ tags:
 ### 整体框架
 UniTalking 想解决的是端到端、语音级别精确同步的说话人肖像生成：不再先生成音频再驱动画面，而是让视频和语音在一个模型里同时长出来。它整体是一个 10B 参数的 MM-DiT，用连续归一化流（Flow Matching）训练、CFG 引导推理。最关键的结构选择是把视频和音频做成一对**对称的双流**——视频流直接继承 Wan2.2-5B 的架构与预训练权重，音频流被设计成视频流的"同卵双胞胎"：层数、维度、模块完全对称，只是参数随机初始化。运行时，文本、参考音频、图像等条件先各自编码成隐 token，再和视频、音频两路主流 token 一起送进 N=30 个 MM-DiT Block（dim=3072，24 个注意力头）逐层处理，最后由各自的 VAE 解码回视频帧和音频波形。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：文本 / 参考音频 / 图像"] --> ENC
+    subgraph ENC["隐空间表示（全程冻结编码器）"]
+        direction TB
+        E1["文本 UMT5→512 token<br/>参考音频 MMAudio VAE→257 token"]
+        E2["视频流 Wan2.2 3D VAE / 音频流 MMAudio 1D VAE<br/>对称双流"]
+    end
+    ENC --> MM
+    subgraph MM["Multi-Modal Transformer Block ×30"]
+        direction TB
+        JA["联合注意力<br/>视频+音频 token 拼成单序列统一注意力"]
+        CA["双条件交叉注意力<br/>文本 + 参考音频两路 KV 相加"]
+        RP["各向异性 RoPE<br/>时序标准、音频空间维固定"]
+        JA --> CA --> RP
+    end
+    MM --> OUT["视频帧 + 音频波形<br/>各自 VAE 解码"]
+    TRAIN["渐进式两阶段训练<br/>Stage1 音频 TTS 预训练 → Stage2 T2AV/TV2A/TI2AV/TR2AV 联训"] -.监督.-> MM
+```
+
 ### 关键设计
 
 **1. 隐空间表示：把音视频和条件都压到同一套冻结编码器给出的语义隐空间里**

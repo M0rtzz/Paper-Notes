@@ -45,6 +45,24 @@ tags:
 
 TerraSeg 想解决一个矛盾：地面分割既要免标注、又要换个传感器就能直接用，但现有方法只能二选一。它的破解办法是把"泛化"这件事压到数据和先验上，而不是靠人工标签。整条流水线分三段：先把 12 个公开驾驶数据集的原始扫描归一化成统一格式（OmniLiDAR），再用一个不需要任何标注的几何优化模块（PseudoLabeler）逐帧算出地面/非地面伪标签，最后用这些伪标签去训练一个刻意"忘掉传感器身份"的分割网络（TerraSeg 模型）。模型吃进原始 3D 点云坐标，吐出每个点属于地面的置信度。值得注意的是 PseudoLabeler 慢但准、只在离线造标签时用，真正上车跑实时推理的是训练好的 TerraSeg 模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OMNI["OmniLiDAR 统一数据集"]
+        direction TB
+        A["12 个公开数据集 · 15 种传感器<br/>近 2200 万次原始扫描"] --> B["下采样 0.2Hz → 按型号对齐坐标系<br/>去自车点 → 只留 (x,y,z)"]
+    end
+    OMNI --> PL
+    subgraph PL["PseudoLabeler 自监督伪标签生成（离线·慢但准）"]
+        direction TB
+        C["预处理：剔除多路径负噪声点"] --> D["运行时优化：MLP 拟合鸟瞰高程面<br/>不对称损失只压不顶"]
+        D --> E["后处理：柱状细化<br/>恢复车辆底部/轮胎误判点"]
+    end
+    PL --> F["地面 / 非地面伪标签"]
+    F --> G["TerraSeg 域无关模型<br/>PTv3 骨干 + 禁用数据集归一化 / GN 替 BN / 只喂几何特征"]
+    G -->|上车实时推理| H["每点地面置信度"]
+```
+
 ### 关键设计
 
 **1. OmniLiDAR 统一数据集：用极端的传感器多样性逼出几何级别的泛化**

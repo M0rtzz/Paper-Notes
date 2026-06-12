@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 论文不动网络结构，而是给「LIF 神经元 + LeNet 风格 SNN」配上一套频域分析工具，回答「该把膜衰减系数 $\beta$ 设成多少」这个一直靠经验调的老问题。做法是把数据和神经元都搬到频域去比对：先用 DFT 量出每个 mmWave 数据集「判别信息长在哪些频率上」，再把 LIF 线性化成一个带宽由 $\beta$ 控制的低通滤波器，最后用一个对齐分数衡量「滤波器留下的频谱」和「判别频谱」的重合度，从而把 $\beta$ 的取值范围切成可解释的三段。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph D1["判别频谱 DI_norm"]
+        direction TB
+        A["mmWave 样本 → 一维时序 + DFT 幅度谱"] --> B["类间 / 类内散度 → 判别频谱 DI_norm"]
+    end
+    subgraph D2["LIF 低通模板（β 为逆带宽）"]
+        direction TB
+        E["LIF 神经元 → 一阶 IIR + DC 归一化模板"] --> F["半功率点定有效带宽 B_eff(β)"]
+    end
+    B --> H["FMS 对齐分数<br/>DI_norm 与模板内积"]
+    F --> H
+    H --> I["β† 最大偏离规则<br/>logτ 与 FMS 连对角线取最远点"]
+    I --> J["三段划分<br/>under-filter / stability window / over-low-pass"]
+    J -->|stability window 内选 β| K["训练 SpikingLeNet"]
+```
+
 ### 关键设计
 
 **1. 判别频谱 $\mathrm{DI}_{\text{norm}}$：量出判别信息长在哪些频率上**

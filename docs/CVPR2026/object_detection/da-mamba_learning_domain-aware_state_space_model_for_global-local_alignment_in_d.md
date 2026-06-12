@@ -45,7 +45,19 @@ tags:
 
 ### 整体框架
 
-DA-Mamba 是一种 CNN-SSM 混合架构，基于 YOLO-World 检测器。输入图像经 ResBlock 提取低层特征 C3，进入 FPN 下采样流：每个分辨率特征上插入 IA-SSM 提取全局域信息；FPN 输出多尺度特征 P3/P4/P5 后，在检测头每层插入 OA-SSM 建模实例级依赖。整体采用对抗训练框架（GRL + 域判别器）实现域对齐。
+DA-Mamba 是一种 CNN-SSM 混合架构，基于 YOLO-World 检测器。输入图像经 ResBlock 提取低层特征 C3，进入 FPN 下采样流：每个分辨率特征上插入 IA-SSM 提取全局域信息；FPN 输出多尺度特征 P3/P4/P5 后，在检测头每层插入 OA-SSM 建模实例级依赖。两个模块的输出各自接一个带 GRL 的域判别器，分别在图像级和实例级做对抗对齐，使全局-局部特征域不可区分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像（源域 + 目标域）"] --> B["ResBlock 提取低层特征 C3"]
+    B --> C["IA-SSM（图像级）<br/>卷积流 + SSM 流双流<br/>注入图像级视觉提示 v^I"]
+    C --> D["FPN 多尺度特征 P3/P4/P5"]
+    D --> E["OA-SSM（实例级）<br/>双流 + 像素级语义提示 v^O<br/>（CLIP 类别原型生成）"]
+    E --> F["检测头输出<br/>分类 + 回归"]
+    C -->|GRL + 域判别器| G["图像级对抗对齐 L_adv^I"]
+    E -->|GRL + 掩码域判别器| H["实例级对抗对齐 L_adv^O"]
+```
 
 ### 关键设计
 

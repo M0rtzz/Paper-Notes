@@ -47,9 +47,23 @@ Hermite-NGP 的训练流水线是：
 - **多分辨率哈希查表**：在每个分辨率 $l\in\{0,\dots,L-1\}$ 上,按 I-NGP 同款哈希函数把 $2^d$ 个 cell 顶点映射到分类型存储的哈希表,取出 Hermite 系数 $\{\theta_{l,h(g)}^{(\alpha)}\}_{\alpha\in\{0,1\}^d}$。
 - **Hermite 插值重建**：用张量积 Hermite 基 $H^{(\alpha)}$ 把这些系数 blend 成局部 $C^1$ 场，并同时算出 $\nabla\gamma$ 与 $\nabla^2\gamma$。
 - **SIREN MLP + 解析链式法则**：把编码 $\gamma$ 喂进用 $\sin(\omega\cdot)$ 激活的 MLP，借助 SIREN 的二阶导恒等式 $\sigma''=-\omega^2\sigma$，沿链式法则递推出 $\nabla u, \nabla^2 u$，整张 PDE 残差在一次 forward 内算出。
-- **多尺度课程训练**：分三阶段从粗到细激活分辨率层，模仿 multigrid V-cycle。
+- **多分辨率从粗到细课程训练**：分三阶段从粗到细激活分辨率层，模仿 multigrid V-cycle。
 
-整个 pipeline 由 Algorithm 1 总结，关键链式法则是 $\nabla u = \frac{\partial u}{\partial\gamma}\nabla\gamma$，$\nabla^2 u = \frac{\partial^2 u}{\partial\gamma^2}(\nabla\gamma)^2 + \frac{\partial u}{\partial\gamma}\nabla^2\gamma$。
+整个 pipeline 由 Algorithm 1 总结，关键链式法则是 $\nabla u = \frac{\partial u}{\partial\gamma}\nabla\gamma$，$\nabla^2 u = \frac{\partial^2 u}{\partial\gamma^2}(\nabla\gamma)^2 + \frac{\partial u}{\partial\gamma}\nabla^2\gamma$。其中「哈希查表 + Hermite 插值重建」共同构成关键设计 1（梯度增强的 Hermite 哈希编码），课程训练（设计 3）作为外层调度控制哪些分辨率层被激活。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["查询点 x"] --> ENC
+    subgraph ENC["Hermite 哈希编码（设计 1）"]
+        direction TB
+        H1["多分辨率哈希查表<br/>按导数阶分桶取 Hermite 系数 θ"] --> H2["Hermite 张量积插值重建<br/>一次得到 γ, ∇γ, ∇²γ"]
+    end
+    C2F["多分辨率从粗到细课程（设计 3）<br/>L_active 渐进激活粗→细层"] -. 控制激活层数 .-> H1
+    ENC --> M["SIREN 链式法则解析微分（设计 2）<br/>MLP 出 u, ∂u/∂γ, ∂²u/∂γ²<br/>链式法则合成 ∇u, ∇²u"]
+    M --> L["PDE 残差 + 边界损失"]
+    L -->|反向传播更新哈希系数 θ 与 MLP| ENC
+```
 
 ### 关键设计
 

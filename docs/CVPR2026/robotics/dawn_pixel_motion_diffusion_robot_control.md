@@ -34,7 +34,27 @@ VLA (Vision-Language-Action) 模型虽已取得显著成果，但大多直接从
 
 ### 整体框架
 
-DAWN 想给 VLA 加一层"看得见"的运动意图，免得模型从观测到动作一步黑箱跳过去。它用两阶段全扩散：Motion Director（潜扩散模型 LDM）先根据当前观测 + 语言指令画出一张稠密像素运动场，Action Expert（扩散 Transformer 策略）再把这张运动场连同观测、语言、机器人状态一起翻译成可执行的动作序列。中间这层稠密像素运动既能直接可视化、又不绑定具体机器人构型，是整篇方法的支点。
+DAWN 想给 VLA 加一层"看得见"的运动意图，免得模型从观测到动作一步黑箱跳过去。它用两阶段全扩散：Motion Director（潜扩散模型 LDM）先根据当前观测 + 语言指令画出一张稠密像素运动场，Action Expert（扩散 Transformer 策略）再把这张运动场连同观测、语言、机器人状态一起翻译成可执行的动作序列。中间这层稠密像素运动既能直接可视化、又不绑定具体机器人构型，是整篇方法的支点；而且两个阶段都拿 RAFT 光流当 ground truth，可以解耦并行训练、各自独立升级。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    OBS["当前观测帧 + 语言指令<br/>+ 夹爪视角 + 时间偏移 k"]
+    subgraph MD["Motion Director：潜扩散模型画稠密像素运动场"]
+        direction TB
+        A["当前帧 VAE 编码 + 噪声"] --> B["U-Net 去噪<br/>交叉注入语言/夹爪/时间嵌入"]
+        B --> C["解码出 3 通道像素运动图 F'"]
+    end
+    OBS --> MD
+    MD --> MOTION["稠密像素运动场<br/>可视化、跨具身的中间表示"]
+    STATE["视觉观测 + 语言 + 机器人状态"] --> AE
+    subgraph AE["Action Expert：扩散策略把运动翻成动作"]
+        direction TB
+        D["四编码器：像素运动 / 观测 / 语言 / 状态"] --> E["交叉注入去噪 Transformer<br/>从高斯噪声迭代去噪"]
+    end
+    MOTION --> AE
+    AE --> ACT["可执行动作序列（输出）"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,22 @@ JET 把多通道 EEG 生成重新定义为"在神经流形上的连续轨迹"，
 ### 整体框架
 JET 要解决的问题是：怎么直接在原始多通道 EEG（$\mathbf{X}\in\mathbb{R}^{C\times T}$）上生成既保频谱又不漂移的高保真波形。它的做法是把生成看成"在神经流形上从噪声运到数据的一条连续轨迹"——训练时学一个时变向量场，推理时从高斯噪声出发积一次 ODE 就得到一段合成 EEG，整条管线不再有 diffusion 那种几十步的离散去噪，而把"懂 EEG"的物理约束直接写进训练目标里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X1["EEG 数据 x₁"] --> CFM
+    X0["高斯噪声 x₀ ~ N(0,I)"] --> CFM
+    CFM["原始波形上的条件流匹配<br/>线性插值 xₜ = t·x₁ + (1−t)·x₀"] --> BB
+    subgraph BB["保留通道身份的 Transformer 主干"]
+        direction TB
+        TK["沿时间切 patch 并保留通道维 tokenize<br/>得 C·N 个 token"] --> DiT["DiT/JiT block 叠加<br/>adaLN 注入时间 t 与类别 c"]
+    end
+    BB --> V["时变向量场 vθ(xₜ, t, c)"]
+    V --> EX["外推终点 x̂₁ = xₜ + (1−t)·vθ"]
+    EX --> C["三条懂 EEG 的结构化约束<br/>重建 L_recon · 矩一致 L_cons · 时空 L_geo"]
+    V -->|"推理：从噪声积一次 ODE"| OUT["合成多通道 EEG"]
+```
+
 ### 关键设计
 
 **1. 原始波形上的条件流匹配：把离散去噪换成连续轨迹**

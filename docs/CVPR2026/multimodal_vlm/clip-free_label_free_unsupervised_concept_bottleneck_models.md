@@ -46,6 +46,28 @@ tags:
 
 方法的目标是：不依赖 CLIP、不依赖标签、也不训练任何线性探针，就把一个**冻结的现成视觉分类器**改造成可解释的概念瓶颈模型。它分两阶段——先用 TextUnlock 训一个轻量 MLP，把冻结分类器的特征投射到文本嵌入空间且保持原分类分布不变；再在这个对齐后的空间里直接做概念发现和概念-类别预测，整个第二阶段不需要任何额外训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像 I"] --> FV["冻结视觉编码器 Fᵥ → 特征 f"]
+    subgraph TU["TextUnlock：把冻结分类器搬进文本空间"]
+        direction TB
+        FV --> MLP["可训练 MLP<br/>投射 f → f̃"]
+        CN["类名经模板编码<br/>U = T(an image of a class)"] --> SIM["余弦相似度<br/>S = f̃ · Uᵀ"]
+        MLP --> SIM
+        SIM -.->|"对齐"| DIST["自蒸馏损失<br/>S 对齐原软分布 o = softmax(f·W)<br/>仅训练 MLP，编码器全冻结"]
+    end
+    subgraph CBM["U-F²-CBM：免训练推导概念-类别权重"]
+        direction TB
+        CSET["概念集：20K 常用词过滤后<br/>文本编码为 C"] --> ACT["概念激活<br/>f̃ · Cᵀ"]
+        CSET --> WCON["概念-类别权重<br/>W_con = C · Uᵀ（免训练）"]
+        ACT --> PRED["总体预测<br/>S_cn = f̃ · CᵀC · Uᵀ"]
+        WCON --> PRED
+    end
+    MLP --> ACT
+    PRED --> OUT["可解释类别预测<br/>+ 概念干预 / 零样本描述"]
+```
+
 ### 关键设计
 
 **1. TextUnlock：把冻结分类器搬进文本空间，又不动它的决策**

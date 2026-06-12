@@ -45,7 +45,28 @@ tags:
 
 ### 整体框架
 
-CausalVAD 想治的是端到端驾驶“学到相关、没学到因果”的毛病。它在 VAD 架构上加了一套稀疏因果干预方案（SCIS）：先用结构因果模型（SCM）把 VAD 的模块化流水线形式化、识别出三类后门路径，再用后门调整 $P(Y|\text{do}(S)) = \sum_z P(Y|S=s, Z=z) P(Z=z)$ 切断虚假路径，其中潜在混杂因子 $Z$ 用一个可学习的原型字典来近似、把 do 算子参数化进神经网络。落到结构上，就是在感知、预测、规划三个阶段分别插入去混杂模块。
+CausalVAD 想治的是端到端驾驶“学到相关、没学到因果”的毛病。它在 VAD 架构上加了一套稀疏因果干预方案（SCIS）：先用结构因果模型（SCM）把 VAD 的模块化流水线形式化、识别出三类后门路径，再用后门调整 $P(Y|\text{do}(S)) = \sum_z P(Y|S=s, Z=z) P(Z=z)$ 切断虚假路径，其中潜在混杂因子 $Z$ 用一个可学习的原型字典来近似、把 do 算子参数化进神经网络。落到结构上，就是先离线构建混杂因子字典，再在感知、预测、规划三个阶段分别插入去混杂模块（感知用 PDM、预测与规划用 IDM），全程复用字典里的原型作为 do 算子的求和支撑集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DICT["多模态混杂因子字典构建（离线，跑一次）"]
+        direction TB
+        P1["预训练 VAD 单次前传<br/>收集 Object/Map/Agent 三类查询嵌入"] --> P2["三类分别 K-means++ 聚类<br/>质心当原型"]
+        P2 --> P3["混杂因子字典<br/>Z_o=10 / Z_m=3 / Z_a=6"]
+    end
+
+    IN["环视图像 → VAD 编码<br/>BEV 特征 → Object 查询 O、Map 查询 M"]
+    IN --> PDM["感知去混杂模块 PDM<br/>双分支：分类分数 − 字典偏差分数<br/>输出去混杂 logits"]
+    PDM --> IDM1["交互去混杂模块 IDM（预测阶段）<br/>O′=IDM(O,Z_m)、M′=IDM(M,Z_o)<br/>打断 BEV 公共因子虚假关联"]
+    IDM1 --> A["Agent 查询 A"]
+    A --> IDM2["交互去混杂模块 IDM（规划阶段）<br/>A′=IDM(A,Z_m)、M″=IDM(M,Z_a)<br/>解耦高相关输入"]
+    IDM2 --> OUT["规划轨迹输出"]
+
+    P3 -. 原型支撑集 .-> PDM
+    P3 -. 原型支撑集 .-> IDM1
+    P3 -. 原型支撑集 .-> IDM2
+```
 
 ### 关键设计
 

@@ -46,6 +46,22 @@ ToolPRM 的流程可以分成三步。第一步是构造细粒度监督数据：
 
 第三步是训练 ToolPRM 并用于推理扩展。ToolPRM 本身也是 LLM，输入当前状态和候选动作，输出 “+” 或 “-” 的概率；beam search 每步展开多个候选，用 ToolPRM 分数排序并剪枝。由于结构化输出早期错误不可恢复，作者主张扩大 beam width 来探索更多局部选择，但保留较少 beam，形成“explore more but retain less”的策略。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：query + 目标函数调用<br/>(xLAM-60k / irrelevance-7.5k)"]
+    subgraph DATA["训练数据与监督方案"]
+        direction TB
+        B["Intra-call 细粒度分解与标签体系<br/>把一次调用拆成函数名/参数值/结束等可监督动作"]
+        C["函数 masking + rollout 数据构造<br/>名字换随机串，policy rollout 候选 → exact-match 标正负"]
+        B --> C
+    end
+    A --> B
+    C --> D["训练 ToolPRM<br/>生成式 RM，输出 +/− label token 概率"]
+    D --> E["ToolPRM 引导的细粒度 beam search<br/>explore more but retain less：增大 beam width M、保持小 N"]
+    E --> F["输出：合法函数调用"]
+```
+
 ### 关键设计
 **1. Intra-call 细粒度分解与标签体系：把一次函数调用从「整体 JSON」拆成可逐步监督的局部决策**
 

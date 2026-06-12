@@ -34,7 +34,25 @@ tags:
 
 ### 整体框架
 
-终身模仿学习要在不断来的新任务上学新技能、又不忘旧技能，本文的思路是「冻住编码器、只在特征空间里回放」。策略网络由三个模态编码器（CLIP 视觉、CLIP 文本、MLP 状态）+ FiLM 调制层 + GPT-2 时序解码器 + GMM 策略头组成。先做多任务预训练建立共享表示（所有模块可训，CLIP 用 LoRA rank-8 微调）；进入终身学习阶段后冻结所有编码器和 FiLM，只更新时序解码器和策略头。输入是 agent-view 图像、eye-in-hand 图像、语言指令和机器人状态，输出 5 分量 GMM 动作分布。整套设计刻意避开了 PEFT、task ID 和知识蒸馏，pipeline 尽量简单。
+终身模仿学习要在不断来的新任务上学新技能、又不忘旧技能，本文的思路是「冻住编码器、只在特征空间里回放」。策略网络由三个模态编码器（CLIP 视觉、CLIP 文本、MLP 状态）+ FiLM 调制层 + GPT-2 时序解码器 + GMM 策略头组成。先做多任务预训练建立共享表示（所有模块可训，CLIP 用 LoRA rank-8 微调）；进入终身学习阶段后冻结所有编码器和 FiLM，只更新时序解码器和策略头。输入是 agent-view 图像、eye-in-hand 图像、语言指令和机器人状态，输出 5 分量 GMM 动作分布。在此之上加两件武器：**多模态潜在回放 MLR** 把旧任务的潜在特征存进缓冲区、新任务训练时一起回放以抗遗忘；**增量特征调整 IFA** 在全局表示 $g_t$ 上加一个角距离正则，把新旧任务在嵌入空间里推开。最终损失 $\mathcal{L}=\mathcal{L}_{BC}+\lambda_{IFA}\mathcal{L}_{IFA}$。整套设计刻意避开了 PEFT、task ID 和知识蒸馏，pipeline 尽量简单。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：agent-view / eye-in-hand 图像<br/>+ 语言指令 + 机器人状态"] --> ENC["冻结编码器：CLIP 视觉/文本 + MLP 状态<br/>+ FiLM 调制 → 多模态潜在特征 H (M×L×E)"]
+    ENC --> MLR["多模态潜在回放 MLR<br/>缓冲区存 H+动作，新任务时回放旧任务特征"]
+    ENC --> DEC["时序解码器 GPT-2（可训）<br/>→ 全局表示 g_t"]
+    MLR -->|"旧任务特征 ⊕ 当前任务"| DEC
+    DEC --> HEAD["GMM 策略头（可训）→ 动作<br/>→ 行为克隆损失 L_BC"]
+    DEC --> SEL
+    subgraph IFA["增量特征调整 IFA（表示级正则）"]
+        direction TB
+        SEL["任务对选择<br/>双模态 top-50% 且一新一旧"] --> MAR["自适应角距离边际<br/>δ = α·arccos(语言锚点相似度)"]
+        MAR --> TRI["三元组约束<br/>拉近自身语言锚点 / 推远旧任务锚点"]
+    end
+    HEAD --> TOT["总损失 L = L_BC + λ·L_IFA"]
+    TRI --> TOT
+```
 
 ### 关键设计
 

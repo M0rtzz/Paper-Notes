@@ -53,6 +53,21 @@ PAP（Prediction-As-Perception）框架由**感知模块**与**预测模块**两
 
 首帧无历史预测时，全部使用随机 query。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前帧图像"] --> P
+    Q["query bank<br/>随机 query + 上一帧预测 query"] --> P
+    subgraph UNIAD["与 UniAD 的集成（仅新增一条反馈路径）"]
+        direction TB
+        P["预测 query 注入感知模块<br/>TrackFormer + 参考点网络"] --> D["检测 / 跟踪结果 query"]
+        D --> E["预测模块与 query 嵌入<br/>PECP → MotionFormer → 线性嵌入"]
+    end
+    E --> F["未来位置 query"]
+    F -->|存入 query bank, 供下一帧调用| Q
+    P --> O["检测 / 跟踪输出"]
+```
+
 ### 关键设计
 
 **1. 预测 query 注入感知模块：让上一帧的"未来位置"成为这一帧的搜索起点**

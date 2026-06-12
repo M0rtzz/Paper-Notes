@@ -42,6 +42,25 @@ tags:
 ### 整体框架
 两阶段两 model：(a) **Agent-RRM 训练**——基于 GPT-OSS-120B 标注的 Reagent-RRM-SFT-28K（结构化三段判断）做 SFT 学会"<think>/<critique>/<score>"输出格式，再在 Reagent-RRM-RL-90K 上做 GRPO 校准 scalar score；(b) **Reagent agent 训练**——先用 Reagent-SFT-55.6K（DeepSeek-V3.1 生成的正确轨迹）做 SFT 得到 $\pi_{\theta_{SFT}}$，然后探索三个 RL variant：Reagent-C（推理时 critique refinement, 不训练）、Reagent-R（rule reward + 模型 score 联合 GRPO）、Reagent-U（critique-augmented 两阶段 sampling + 联合 pool GRPO）。Agent 配备 6 个工具：Search（Bing）、Web Browse、Python Interpreter、File Reader、Image Descriptor、Audio Converter。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph RRM["三段结构化反馈奖励模型 Agent-RRM"]
+        direction TB
+        A["多模型采样轨迹 + GPT-OSS-120B 标注<br/>think / critique / score 三段判断"] --> B["两阶段训练<br/>SFT 学输出格式 (28K) → GRPO 校准分数 (90K)"]
+    end
+    B --> RRM_OUT["Agent-RRM<br/>产 think / critique / score"]
+    E["Reagent-SFT-55.6K 冷启动 SFT"] --> F["种子策略 π_SFT"]
+    F --> G{"三种整合方式 C / R / U"}
+    RRM_OUT -.反馈信号.-> G
+    G -->|critique 推理时改写, 不训练| H["Reagent-C"]
+    G -->|rule + score 联合 GRPO| I["Reagent-R"]
+    G -->|两阶段采样 + 联合池归一化| J["Reagent-U"]
+    H --> OUT["最终 agent 策略<br/>U 推理时无需 RRM"]
+    I --> OUT
+    J --> OUT
+```
+
 ### 关键设计
 
 **1. Agent-RRM 的三段结构化输出：把 reward model 从打分器升级成"分析→批评→打分"**

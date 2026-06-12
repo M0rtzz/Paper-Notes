@@ -50,6 +50,22 @@ tags:
 
 ECKConv的输入是点云 $(x, n) \in \mathbb{R}^3 \times S^2$（坐标+法向量），经过多层ECKConv block处理后输出等变特征。每个block内部的核心操作是：对每个中心点的球查询邻域，提取SE(3)不变的双陪集参数，通过坐标网络计算核权重，对邻域特征加权求和得到输出特征。整体架构采用类似PointNet++的多分辨率设计（FPS下采样+ball query），分割任务采用U-Net架构配合特征插值上采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入点云 (x, n) ∈ R³ × S²"] --> B["FPS 下采样 + ball query<br/>取中心点球邻域 N(x)"]
+    subgraph CONV["双陪集空间上的卷积（单个 ECKConv block）"]
+        direction TB
+        C["双陪集参数编码<br/>逆 section map 对齐<br/>→ 法向夹角 β + 正交位移 r, z"]
+        C --> D["显式核<br/>高斯嵌入 → 坐标网络 Fθ → 系数 ω<br/>核 = Σ ωⱼ Wⱼ（基矩阵加权）"]
+        D --> E["求和重排序<br/>先沿邻居聚合再乘基矩阵<br/>前向不变、省内存"]
+    end
+    B --> CONV
+    CONV -->|堆叠多层 / 多分辨率| F["输出等变特征"]
+    F -->|分类 / 配准| G["任务头"]
+    F -->|分割| H["U-Net 特征插值上采样"]
+```
+
 ### 关键设计
 
 **1. 双陪集空间上的卷积：让核只看三个SE(3)不变标量**

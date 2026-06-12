@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 这篇论文要解决的是：VLM 在多模态多轮对话里会被慢慢"煮青蛙"——恶意意图拆散成跨轮、跨图文的零碎线索，现有单轮单模态审核工具完全看不出来。作者用"数据—攻击—防御"三件套来闭环：先用一套基于 MCTS 的红队框架 MMRT 自动钓出多轮跨模态的不安全对话，把这些攻击轨迹连同采样来的安全对话一起标注成 MMDS 数据集，最后在 MMDS 上微调出审计模型 LLaVAShield。运行时，LLaVAShield 吃进"指令 + 安全策略 + 整段对话历史"，一次性吐出对用户侧和助手侧各自的安全评级、违反的风险维度，以及佐证这些判断的证据推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph MMRT["MMRT 红队框架（MCTS 钓多轮攻击）"]
+        direction TB
+        A["攻击者 + 目标 VLM + 评估器"] --> B["MCTS 选择-扩展-模拟-反传<br/>PUCT 选分支 + k 步 rollout 估下游风险"]
+        B --> C["隐蔽的多轮跨模态攻击轨迹"]
+    end
+    C --> D["不安全对话 756"]
+    SAFE["MMDU-45k 采样安全对话 2000"] --> ANN
+    D --> ANN
+    subgraph MMDS["MMDS 数据集（双侧标注 + 四种增强）"]
+        direction TB
+        ANN["用户/助手双侧独立标注<br/>安全评级 + 违反维度 + 双通道证据推理"] --> AUG["四种增强<br/>删未违反维度 / 改写降误报 / 单侧遮蔽 / 调策略配置"]
+    end
+    AUG --> DS["4,484 标注对话"]
+    DS --> LS
+    IN["运行时输入<br/>指令 + 策略集 + 整段对话历史"] --> LS["LLaVAShield<br/>微调 LLaVA-OV-7B 的结构化生成审计"]
+    LS --> OUT["结构化输出<br/>用户/助手双侧评级 + 违反维度 + 证据推理"]
+```
+
 ### 关键设计
 
 **1. MMRT：用 MCTS 把线性攻击链换成树搜索，自动钓出隐蔽的多轮攻击**

@@ -50,6 +50,25 @@ tags:
 
 输入只是 MDP 的状态/动作空间 $S,A$ 与目标集 $G$，外加一个模拟器；$p_{\min}$、$K_{\mathsf{opt}}$、$K_{\mathsf{PAC}}$ 都不作为输入，仅用于证明分析。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：状态/动作空间 S,A<br/>目标集 G + 模拟器"] --> P
+    subgraph G1["几何衰减三参数 + 保守转移估计（设计 1）"]
+        direction TB
+        P["阶段 k：设 p_k = δ_k = ε_k = 1/2^k"] --> R["跑 N_k 次 rollout<br/>更新计数 #(s,a)、#(s,a,s')"]
+        R --> PM["构造部分模型 PM<br/>保守下界 P̂ = max(0, 频率 − Hoeffding 偏差)"]
+    end
+    PM --> G2
+    subgraph G2["MEC 收缩 + BVI 抽取策略（设计 2）"]
+        direction TB
+        MEC["收缩极大端组件 MEC → 得 PMC"] --> BVI["有界值迭代 BVI<br/>得区间 L(s) ≤ V(s) ≤ U(s)"]
+        BVI --> PI["抽取无记忆确定性策略 π_k<br/>Best_Action = argmax_a U(s,a)"]
+    end
+    PI -->|"k ← k+1，三参数继续几何收紧"| P
+    PI --> OUT["输出 π_k：从有限阶段 K_opt 起<br/>以概率 1 只输出最优策略（设计 3 保证）"]
+```
+
 ### 关键设计
 
 **1. 几何衰减的三参数 + 保守转移估计：把未知的 $p_{\min}$ 用单调下探序列消化掉**

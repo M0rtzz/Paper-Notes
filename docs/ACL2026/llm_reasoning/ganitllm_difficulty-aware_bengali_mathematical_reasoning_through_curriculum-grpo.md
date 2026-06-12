@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-两阶段训练：(1) SFT 阶段——在 CoT-SFT 数据上教模型用孟加拉语逐步推理，关注语言而非正确性；(2) Curriculum-GRPO 阶段——在难度排序的 RL 数据上用 GRPO 训练，从简单问题开始逐步增加难度。数据集 Ganit 从 ~1.5M 原始样本经多阶段过滤和难度标注得到。
+两阶段训练：(1) SFT 阶段——在 CoT-SFT 数据上教模型用孟加拉语逐步推理，关注语言而非正确性；(2) Curriculum-GRPO 阶段——在难度排序的 RL 数据上用 GRPO 训练，从简单问题开始逐步增加难度。数据集 Ganit 从 ~1.5M 原始样本经多阶段过滤和难度标注得到，其难度信号同时供 GRPO 阶段排课程；GRPO 的优化方向则由三维奖励函数控制，把「答对」和「用孟加拉语想」一起写进目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始语料<br/>9 个公开数据集 ~1.5M 样本"]
+    subgraph GANIT["难度感知数据集 Ganit"]
+        direction TB
+        B["质量过滤<br/>准确率>95% + 规则过滤 + 去重"]
+        C["难度标注<br/>Qwen3-32B 每题解 32 次<br/>按 pass@k 分 Easy/Medium/Hard/Olympiad"]
+        D["基准去污染"]
+        B --> C --> D
+    end
+    A --> GANIT
+    GANIT -->|CoT-SFT 数据| E["SFT 阶段（脚手架）<br/>先教模型用孟加拉语逐步推理"]
+    E --> F["Curriculum-GRPO 训练策略<br/>难度桶 60/40 采样，从易到难推进"]
+    G["三维奖励函数<br/>R = 格式 + 正确性 + 孟加拉语占比"] --> F
+    F --> H["GanitLLM<br/>真正用孟加拉语推理的数学模型"]
+```
 
 ### 关键设计
 

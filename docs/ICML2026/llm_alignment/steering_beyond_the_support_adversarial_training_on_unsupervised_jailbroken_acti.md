@@ -44,6 +44,21 @@ tags:
 
 论文要解决的是监督 steering 泛化不到未见越狱的问题，整套框架把三件事拧在一起：把固定 refusal 向量升级成一个势函数的梯度场，用 ULDD 从拒答激活外推出 OOD 的伪越狱激活，再用双层对抗让"造伪越狱"和"治伪越狱"互相逼迫、共同进化。设对齐 LLM $F$ 在层 $\ell$ 的隐状态为 $h_\ell(x) \in \mathbb{R}^d$，训练时维护四样东西：良性激活 $h_b$（500 条 AlpacaEval）、拒答态激活 $h_r$（1500 条直接有害请求 + OR-Bench 边界）、一个小 MLP 势函数 $f_\phi: \mathbb{R}^d \to \mathbb{R}$，以及 $K$ 个 ULDD 潜在方向 $V \in \mathbb{R}^{d \times K}$。每个外层步先做内层——固定 $\phi$，对抗地优化 $V$ 让伪越狱 $h_j^{\text{adv}} = h_r + R v$（$v$ 从 $V$ 的列采样、$R$ 是预设外推幅度）在当前势函数下"最难被引导回去"；再做外层——拿这批新的 $h_j^{\text{adv}}$ 更新 $\phi$，逼势函数同时满足通用可引导、良性零引导、jailbroken 强引导三条性质。测试阶段完全不需要越狱标签：给任意输入 $x$ 在层 $\ell$ 取激活 $h$，沿 $\nabla_h f_\phi(h)$ 走 $K$ 步梯度上升 $h^{(k+1)} = h^{(k)} + \eta \nabla_h f_\phi(h^{(k)})$，把引导后的激活喂回模型继续 forward。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["激活准备<br/>良性 h_b（AlpacaEval）+ 拒答态 h_r（有害+OR-Bench）"] --> B
+    subgraph LOOP["双层对抗训练（内层 max / 外层 min 的 minimax）"]
+        direction TB
+        B["双层对抗 + ULDD 伪越狱<br/>内层固定 f_φ，对抗优化方向 V 造最难治 h_j = h_r + R·v"]
+        C["三条性质外层损失<br/>更新 OT 势函数 f_φ：通用可引导 + 良性零引导 + 越狱强引导"]
+        B --> C
+        C -->|"势场变强 → 内层再找新漏洞"| B
+    end
+    LOOP --> D["OT 势函数 + 梯度引导场<br/>测试时取任意激活 h，沿 ∇f_φ 梯度上升 K 步"]
+    D --> E["引导后激活喂回模型继续 forward"]
+```
+
 ### 关键设计
 
 **1. OT 势函数 + 梯度引导场：把固定向量换成输入相关的非线性场**

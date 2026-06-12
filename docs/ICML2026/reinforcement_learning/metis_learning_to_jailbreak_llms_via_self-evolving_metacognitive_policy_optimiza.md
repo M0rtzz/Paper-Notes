@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 把 LLM 红队过程建模为 Adversarial POMDP $(\mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{R})$。Latent state 包含对话历史 $H_t$ 与未知防御 $\mathcal{D}$；动作是 attacker 生成的 prompt $x_t$；observation 是目标响应 $y_t$ 与 evaluator 反馈 $f_t$；reward $\mathcal{R}$ 衡量响应与恶意目标 $\mathcal{G}$ 的语义对齐度。整条 pipeline 在最多 $T_\text{max}=5$ 轮内迭代：每轮 Attacker 走完三阶段元认知（诊断 → 策略 → 实例化），与目标模型交互；Evaluator 把响应转成 $(s_t, J_t, M_t)$ 形式的密集反馈；trajectory $\tau_t$ 全部保留在 context 里实现 in-context meta-learning。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["恶意目标 + 对话历史 H_t"] --> ATK
+    subgraph ATK["三阶段元认知 Attacker（策略网络 π）"]
+        direction TB
+        P1["Phase I·内省诊断<br/>belief 更新 b_t：判断防御 𝒟 是<br/>词表过滤还是语义意图审查"] --> P2["Phase II·自适应策略<br/>σ_t：沿与防御正交的方向改进"]
+        P2 --> P3["Phase III·可执行实例化<br/>编译成对抗 prompt x_t"]
+    end
+    ATK --> M["目标模型 ℳ：黑盒响应 y_t"]
+    M --> EVAL["Metacognitive Evaluator<br/>密集反馈 f_t = (s_t, J_t, M_t)"]
+    EVAL --> GATE{"s_t = 10<br/>或 t = T_max(5)?"}
+    GATE -->|"是"| OUT["jailbreak 成功"]
+    GATE -->|"否：语义梯度 ∇_sem 拼回 context<br/>协同演化闭环·in-context meta-learning"| ATK
+```
+
 ### 关键设计
 
 **1. 三阶段元认知 Attacker：把单轮决策拆成"诊断 → 策略 → 实例化"的可读三步**

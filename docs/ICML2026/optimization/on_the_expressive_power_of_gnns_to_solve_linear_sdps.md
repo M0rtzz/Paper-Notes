@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 输入是 SDP 实例 $(C, \{A_k\}_{k=1}^m, \{b_k\}_{k=1}^m)$。作者把它编码成一张**双类型节点的图**：变量节点对应矩阵 $X$ 的条目 $(i,j) \in [n]\times[n]$，约束节点对应每个 $A_k$；变量节点之间的"二阶交互"通过 $A_{k,ij}$ 加权。模型经 $T$ 轮置换等变的消息传递后，把变量嵌入解码出预测矩阵 $\hat X$，与最小 Frobenius 范数最优解 $X^*$（命题 1.1 证明唯一）做监督。最后把 $\hat X$ 作为 PDHG 求解器的 warm-start 初始点，加速收敛。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["SDP 实例<br/>目标 C、约束矩阵 A_k、b_k"] --> B["编码成双类型图<br/>变量节点 (i,j) + 约束节点 A_k，按 A_k,ij 加权"]
+    B --> C{"用哪一级 WL 消息传递？"}
+    C -->|"1-WL/2-WL 等价<br/>VC-WL、VC-2-WL"| X["不可能性：同构实例同色<br/>区分不出不同最优解"]
+    C -->|"2-FWL 等价"| D["VC-2-FWL：成对节点联合聚合<br/>T 轮，仿真 PDHG 一步迭代"]
+    D --> E["解码出预测矩阵 X̂<br/>监督于最小范数最优解 X*"]
+    E --> F["Warm-start：X̂ 作 PDHG 初始点"]
+    F --> G["PDHG 收敛到可行最优解<br/>最多省约 80% 迭代"]
+```
+
 ### 关键设计
 
 **1. 不可能性结果：先界定哪些 GNN 一定学不会 SDP**
@@ -60,9 +72,6 @@ $$c^t_{uv} := \text{hash}\big(c^{t-1}_{uv},\ \{\!\{(c^{t-1}_{wv},\, c^{t-1}_{uw}
 **3. Warm-start 集成：把表达力折合成真实墙钟时间**
 
 纯神经求解器在高精度科学计算里没法用——GNN 输出未必严格可行。这里的处理是把训练好的预测 $\hat X$ 当作 PDHG 的初始点 $X^{(0)}$，让经典求解器从离最优更近的位置出发，可行性和最优性仍由 PDHG 兜底，GNN 只负责提供一个好起点。这样既绕开了"输出不可行"的部署难点，又把表达力上的 $\hat X \approx X^*$ 转化成实际的迭代数减少，是把 ML 与传统优化结合最稳妥的范式。
-
-### 损失函数 / 训练策略
-监督目标是预测矩阵与最小 Frobenius 范数最优解的 Frobenius 误差 $\|\hat X - X^*\|_F$，外加目标差距 $|\langle C, \hat X\rangle - \langle C, X^*\rangle|$ 作为辅助指标。训练数据是合成 SDP 实例（覆盖随机生成的对称矩阵族）和 SDPLIB 中各类 SDP（如 max-cut 松弛、$\theta$-函数等）。
 
 ### 损失函数 / 训练策略
 监督目标是预测矩阵与最小 Frobenius 范数最优解的 Frobenius 误差 $\|\hat X - X^*\|_F$，外加目标差距 $|\langle C, \hat X\rangle - \langle C, X^*\rangle|$ 作为辅助指标。训练数据是合成 SDP 实例（覆盖随机生成的对称矩阵族）和 SDPLIB 中各类 SDP（如 max-cut 松弛、$\theta$-函数等）。

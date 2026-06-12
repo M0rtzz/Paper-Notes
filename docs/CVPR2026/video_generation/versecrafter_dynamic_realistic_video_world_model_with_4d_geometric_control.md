@@ -45,6 +45,24 @@ VerseCrafter 要解决的是：让用户在一个统一的 3D 世界坐标系里
 
 具体地，给定一张参考图像和文本提示，系统先用 MoGe-2 估出深度和相机内参，用 Grounded SAM2 抠出用户想控制的物体 mask；非物体区域的像素被反投影成静态**背景点云**，每个物体则被拟合成一条随时间演化的 **3D 高斯轨迹**。用户在共享世界坐标系里指定相机怎么走、物体怎么动，系统把整个 4D 状态逐帧渲染成多通道**控制图**（背景 RGB/深度、轨迹 RGB/深度、软融合 mask）。这些控制图经 Wan Encoder 编码后送进 GeoAdapter，以残差方式调制一个被冻结的 Wan2.1-14B DiT 骨干，结合 umT5 文本嵌入去噪生成最终视频。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["参考图像 + 文本提示"] --> B["MoGe-2 估深度/内参<br/>Grounded SAM2 抠物体 mask"]
+    subgraph REP["4D 几何控制表示"]
+        direction TB
+        C["非物体像素反投影<br/>→ 静态背景点云"]
+        D["物体点云高斯拟合<br/>→ 逐物体 3D 高斯轨迹"]
+    end
+    B --> C
+    B --> D
+    REP --> E["用户在共享世界坐标系<br/>编辑相机 + 物体运动"]
+    E --> F["4D 控制图渲染<br/>背景/轨迹 RGB+深度 + 软融合 mask"]
+    F --> G["GeoAdapter 残差注入<br/>控制图经 Wan Encoder 编码 → 注入冻结 Wan2.1-14B"]
+    G -->|"50 步去噪 + umT5 文本"| H["生成 4D 几何自洽视频"]
+    I["VerseControl4D 数据集<br/>真实视频 → 全自动标注 4D 控制对"] -.训练.-> G
+```
+
 ### 关键设计
 
 **1. 4D 几何控制表示：用概率高斯而非刚性几何体来描述物体占据**

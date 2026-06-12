@@ -44,6 +44,20 @@ tags:
 
 River-LLM 在骨干 decoder 旁并行架起一条"退出河流"——一串与骨干层一一对应、4-bit 量化的轻量退出层，专门负责给提前退出的 token 补完剩余计算和 KV 缓存。推理分两段走：Prefill 阶段所有 token 统一深度退出以保住并行注意力效率；Generation 阶段切换为逐 token 自由退出，每个 token 在自己的最优深度终止。一旦某 token 触发退出条件，它的剩余计算就被卸载到退出河流，由量化退出层一路算到原始 LM Head 出 logits，同时顺手产出与骨干兼容的完整 KV——这样后续 token 不再缺历史 KV，彻底绕过了 decoder-only Early Exit 的 KV 缺失瓶颈。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 token 序列"] --> B["Prefill 阶段<br/>序列级统一深度退出"]
+    B --> C["Generation 阶段<br/>逐 token 自由退出"]
+    C --> D{"状态转换相似度退出决策<br/>块输入输出余弦相似度 > τ ?"}
+    D -->|未达阈值| E["继续下一骨干 decoder 层"]
+    E --> D
+    D -->|触发退出| F["KV 共享退出层<br/>4-bit 量化层算到原始 LM Head"]
+    F --> G["产出骨干兼容 KV + logits"]
+    E -. 稀疏激活的深层 .-> H["骨干卸载<br/>深层逐出显存"]
+    G --> I["输出 token"]
+```
+
 ### 关键设计
 
 **1. KV 共享退出层：用量化层近似 KV，而非精确恢复**

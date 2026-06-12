@@ -41,7 +41,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把所有 locate-and-edit 方法都改写成同一个带正则的最小二乘问题——同时拟合保留集 $(\mathbf{K}_0,\mathbf{V}_0)$ 和当前编辑集 $(\mathbf{K}_t,\mathbf{V}_t)$，在 $\mathbf{W}+\boldsymbol{\Delta}$ 上求闭式解。关键转换是：与其每步"拍脑袋加一套正则"，不如先写出一次性编辑（OTE）想要的目标，再把第 $t$ 步真正要执行的增量定义成相邻两步 OTE 闭式解之差 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$。这一个差分定义把"稳定"从"用了哪种正则"中解耦出来，重新表述为"序列累积是否严格重建 OTE 解"，并由此连出三个结论：解释 AlphaEdit 为什么稳、揭示"丢历史 + 加零空间"为什么必崩、修复 PRUNE/RECT 的误差补偿算法。
+作者把所有 locate-and-edit 方法都改写成同一个带正则的最小二乘问题——同时拟合保留集 $(\mathbf{K}_0,\mathbf{V}_0)$ 和当前编辑集 $(\mathbf{K}_t,\mathbf{V}_t)$，在 $\mathbf{W}+\boldsymbol{\Delta}$ 上求闭式解。关键转换是：与其每步"拍脑袋加一套正则"，不如先写出一次性编辑（OTE）想要的目标，再把第 $t$ 步真正要执行的增量定义成相邻两步 OTE 闭式解之差 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$。这一个差分定义把"稳定"从"用了哪种正则"中解耦出来，重新表述为"序列累积是否严格重建 OTE 解"。顺着这条线索，全文回答三个递进问题，正好对应下面三个关键设计：先证伪"零空间投影是 AlphaEdit 成功的核心"、确立 OTE-SE 等价这条统一判据（RQ1）；再给出从任意带正则 OTE 目标机械构造稳定 SE 算法的差分映射（RQ2）；最后为 PRUNE/RECT 这类后处理正则补上可解析的误差补偿（RQ3）。这是一篇纯优化理论分析，方法即一套闭式解与等价性证明，没有可画的多阶段 pipeline。
 
 ### 关键设计
 

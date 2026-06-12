@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 整条管线想解决一件事：在拿不到"一好一坏严格配对"的前提下，靠少量挑出来的好样本把大尺度视频 DiT 的手部画质拉上去。作者先用预训练参考模型 VACE-14B 当 $v_{\text{ref}}$，从互联网收 1500 段舞蹈、DWPose 抽姿态、随机取一帧作参考图，让 VACE 每个 prompt 生成 4 个候选共 6000 段视频，再人工严格挑出 93 段"手部清晰"的好样本当偏好分布 $q(X)$。训练侧只挂 LoRA（rank 128，QKV 投影）得到 $v_\theta$，损失是把 KL 间隔落到流匹配上、再叠上手部 mask 加权的目标；推理时直接用 $v_\theta$ 跑反向流匹配采样。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据构建（脚手架，只需好样本）"]
+        direction TB
+        A["1500 段网络舞蹈视频"] --> B["DWPose 抽姿态<br/>+ 随机取一帧作参考图"]
+        B --> C["参考模型 VACE-14B (v_ref)<br/>每 prompt 生成 4 候选 = 6000 段"]
+        C --> D["人工严格挑 93 段手部清晰好样本<br/>= 偏好分布 q(X)"]
+    end
+    DATA --> E["LoRA 微调 v_θ（rank 128，仅 QKV）"]
+    E --> F["隐式偏好对齐目标 IPA loss<br/>−log σ(βΔ)：拉好样本 + 不偏离 v_ref"]
+    F --> G["Flow-IPA<br/>把 KL 间隔落成流匹配单点损失"]
+    G --> H["HALO 手部加权<br/>W = 1 + λM 放大手部 ROI 信号"]
+    H --> I["反向流匹配采样<br/>→ 手部高保真动画"]
+```
+
 ### 关键设计
 
 **1. 隐式偏好对齐目标 (IPA loss)：把"推坏样本"换成"别偏离参考模型"**

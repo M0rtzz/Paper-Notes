@@ -46,6 +46,22 @@ $$f_{\boldsymbol{\theta}}: \{(\boldsymbol{I}^{v}_{lr}, \boldsymbol{K}^{v})\}_{v=
 
 其中每个3D高斯原语参数化为 $(\boldsymbol{\mu}, \alpha, \boldsymbol{r}, \boldsymbol{s}, \boldsymbol{c})$，分别对应中心位置、不透明度、四元数旋转、缩放和球谐系数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["两张 LR 视图 + 相机内参"] --> BK["前馈 3DGS 骨干<br/>NoPoSplat / DepthSplat"]
+    I --> ENC["ViT 编码器<br/>LR 图上采样后编码"]
+    BK --> GLR["粗糙 LR 3DGS"]
+    BK -.几何先验.-> FR
+    ENC --> FR["特征精炼模块<br/>与骨干几何先验双向交叉注意力"]
+    FR --> DEC["ViT 解码器跨视图融合<br/>视图内自注意力 + 视图间交叉注意力"]
+    GLR --> GSS["Gaussian Shuffle Split 密集化<br/>每高斯沿主轴裂 6 个子高斯"]
+    GSS --> GD["稠密脚手架 G_Dense"]
+    DEC --> OFF["高斯偏移学习<br/>查局部特征 + PTv3 预测残差 ΔG"]
+    GD --> OFF
+    OFF --> HR["HR 3DGS = G_Dense + ΔG"]
+```
+
 ### 关键设计
 
 **1. Gaussian Shuffle Split 密集化：先搭出一副够细的结构脚手架**

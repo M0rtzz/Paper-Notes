@@ -43,6 +43,22 @@ tags:
 
 FlexAvatar 想从一张图片就重建出完整、可驱动的 3D 头部，难点是训练数据里既有视角完整但身份稀少的多视角采集，又有身份海量但只有正脸的单目视频，二者不能简单混在一起喂。整体是一条编码器-解码器流水线：编码器 $E$ 先把输入图像 $I$ 压成一份和视角、表情都解耦的紧凑化身编码 $\mathcal{A} \in \mathbb{R}^{H_l \times W_l \times D}$（定义在模板头部 UV 空间上的 2D 隐编码）；解码器 $D$ 再把目标表情 $z_{exp}$ 注入这份编码，生成一组带动画的 3D 高斯属性；最后由 3DGS 可微光栅化渲染器 $\mathcal{R}$ 从任意视角渲染出图。整条链路真正的胜负手不在网络结构，而在如何让单目和多视角两类数据各自发力又不互相污染——这正是「偏置吸收器」要解决的事。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入图像 I"] --> ENC["编码器<br/>DINOv2 + 浅层 ViT 抽特征 → UV 查询 cross-attention<br/>得到解耦视角与表情的化身编码 A"]
+    ENC --> BIAS["偏置吸收器<br/>按数据来源把对应 token 拼到表情编码末尾"]
+    BIAS -->|单目样本| Z2D["z_2D：吸走正脸视角泄露<br/>允许只预测不完整头部"]
+    BIAS -->|多视角样本| Z3D["z_3D：要求输出完整化身"]
+    EXP["目标表情编码 z_exp"] --> DEC
+    Z2D --> DEC["解码器 + 混合上采样器<br/>cross-attention 注入表情<br/>PixelShuffle + StyleGAN2 上采样 8×"]
+    Z3D --> DEC
+    DEC --> GS["3D 高斯属性<br/>模板网格表面 + 残差偏移"]
+    GS --> R["3DGS 可微光栅化渲染<br/>任意视角输出"]
+    ENC -.->|少样本 / 单目视频| FIT["化身潜空间拟合<br/>冻结解码器·只优化化身编码 A"]
+    FIT -.-> DEC
+```
+
 ### 关键设计
 
 **1. 编码器：把图像信息锚回 UV 流形，得到一份解耦的化身编码**

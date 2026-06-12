@@ -51,6 +51,17 @@ tags:
 
 第四步，用转导后的 LM 计算 next-unit surprisal。作者把每个单位先映射为底层字符串再加一个分隔符 sep，使 $h(u)=\xi\,\text{sep}$ 成为 prefix-free 编码；再令 $f=h\circ\rho$，用有限状态转导器把 $\Sigma^*$ 转成带 sep 的有限 alphabet $\Delta^*$。这样，单位概率可以通过 $\Delta$ 上的 prefix probability 比值恢复：$p_U(u\mid\mathbf{u}) = \overrightarrow{p}_\Delta(h(\mathbf{u})h(u)) / \overrightarrow{p}_\Delta(h(\mathbf{u}))$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 LM（GPT-2 Small）<br/>token alphabet Σ 上的分布 p_Σ"] --> B["单位库存 U 与模型 alphabet Σ 解耦<br/>按理论问题选 token / 字符 / 词 / PTB 单位"]
+    B --> C["unit parser ρ：Σ* → U*<br/>把模型字符串映射成单位序列"]
+    C --> D["realization ρ⁻¹ 视为 relation<br/>同一单位允许多种字符串实现，p_U 对 ρ⁻¹ 边际化"]
+    D --> E["regular 单位库存 + 有限状态转导<br/>sep 前缀无关编码 h(u)，转导器 f = h∘ρ"]
+    E --> F["next-unit surprisal<br/>由 Δ 上 prefix 概率比值恢复"]
+    F --> G["GAMM 回归验证<br/>held-out Δllh 对眼动阅读时间"]
+```
+
 ### 关键设计
 
 **1. 把单位库存 $U$ 与模型 alphabet $\Sigma$ 解耦：让实验单位和模型 token 各归各位**

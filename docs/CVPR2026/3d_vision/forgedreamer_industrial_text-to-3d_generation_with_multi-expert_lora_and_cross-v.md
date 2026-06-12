@@ -39,9 +39,33 @@ tags:
 
 ### 整体框架
 
-ForgeDreamer 基于 3D Gaussian Splatting，要解决工业文生 3D 的两个瓶颈：预训练扩散模型对工业组件语义理解不足、以及成对几何约束撑不起精密制造所需的细节一致性。它用两个模块前后接力——先用 Multi-Expert LoRA Ensemble 把多类别工业语义灌进生成模型，再用 Cross-View Hypergraph 在多视角间施加高阶几何约束，整体由 ISM 与 MVHG 两个损失联合驱动：
+ForgeDreamer 基于 3D Gaussian Splatting，要解决工业文生 3D 的两个瓶颈：预训练扩散模型对工业组件语义理解不足、以及成对几何约束撑不起精密制造所需的细节一致性。它用两个模块前后接力——先用 Multi-Expert LoRA 师生蒸馏（Multi-Expert LoRA Ensemble）把多类别工业语义灌进一个统一的扩散模型，再用跨视角超图几何增强（Cross-View Hypergraph Geometric Enhancement，模块记作 CVGCM）在多视角间施加高阶几何约束，整体由 ISM 与 MVHG 两个损失联合驱动：
 
 $$\mathcal{L}_{\text{total}} = \lambda_{\text{ISM}} \mathcal{L}_{\text{ISM}} + \lambda_{\text{MVHG}} \mathcal{L}_{\text{MVHG}}$$
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["工业组件文本提示"] --> LORA
+    subgraph LORA["Multi-Expert LoRA 师生蒸馏"]
+        direction TB
+        T["各类别 Teacher LoRA 专家"] --> S1["Stage 1：冻结 UNet<br/>只训学生文本编码器"]
+        S1 --> S2["Stage 2：解冻 UNet<br/>噪声预测 + 特征蒸馏联合优化"]
+    end
+    LORA --> G["统一学生扩散模型驱动 3DGS<br/>多视角渲染潜在表示 Z"]
+    G -->|成对约束| ISM["ISM 区间得分匹配损失"]
+    G -->|高阶约束| CV
+    subgraph CV["跨视角超图几何增强 CVGCM"]
+        direction TB
+        H1["展平拼接为节点特征 F"] --> H2["按余弦相似度构超图<br/>超边连 TopK 相似节点"]
+        H2 --> H3["超图神经网络 HGNN 消息传递"]
+    end
+    CV --> M["HSV Mask 引导的 MVHG 损失<br/>只在目标物体区域计算"]
+    ISM --> L["总损失 = ISM + MVHG"]
+    M --> L
+    L -->|迭代更新 3DGS 参数| G
+    L --> O["工业 3D 资产"]
+```
 
 ### 关键设计
 

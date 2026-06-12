@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 CoFrGeNet 要解决的是"在不掉点的前提下大幅压参"，做法是把 Transformer block 里的两大耗参组件直接换成连续分数函数类：causal multi-head attention 换成 CAttnU / CAttnM 两种 ladder 实现，FFN 换成不扩展的 Cffn。所有替代模块共用同一套 ladder 集合形式 $y = Ux + Vz,\ z_j = \tilde f(W^{(j)} x)$（(8) 式）：每根 ladder $j$ 先用参数 $W^{(j)}$ 把输入投成 $d$ 维 partial denominator，CF 层再用 continuant 递推算出连续分数值 $z_j = K_{d-1}/K_d$，最后线性组合成输出，整条前向与反向都封装进一个自定义 `autograd.Function`。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["continuants 一次除法基元<br/>ladder 闭式：d 次除法降为 1 次，反向共享同一分母"]
+    A["输入 token 表示"] --> B["CAttnU / CAttnM<br/>因果注意力替代（保 token ≤ i 因果性）"]
+    B --> C["Cffn<br/>不扩展 FFN 替代 + dyadic 渐进训练"]
+    C --> D["输出：next-token 预测"]
+    P -. 两模块共用 ladder .-> B
+    P -. 两模块共用 ladder .-> C
+```
+
 ### 关键设计
 
 **1. 基于 continuants 的「一次除法」实现：让深 ladder 不再被除法拖死**

@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 框架包含三步。第一步定义 intervention：对每个组件 $c_i$ 设置 mask $m_i$，如果 $m_i=1$ 就用 counterfactual state 替换该组件输出，如果 $m_i=0$ 就保持原计算。第二步定义任务指标，例如 gender bias 中 stereotypical 与 anti-stereotypical continuation 的 likelihood ratio，或 knowledge localization 中目标答案概率的变化。第三步优化 mask，在 sparsity constraint 下找到对指标贡献最大的组件集合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：LLM 组件集合 + prompt / counterfactual prompt"] --> B["Mixture Forward 软干预<br/>mask m_i 线性混合原状态与 counterfactual 状态"]
+    B --> C["计算任务指标 ℓ<br/>偏见 likelihood ratio / 答案概率变化"]
+    C --> D["Transformed Reward 指标变换<br/>最小化 1/(1+ℓ)，压成有界优化目标"]
+    D --> E["稀疏二值 scheduled penalty<br/>λ1‖m‖₁ 控稀疏 + λ2 m(1−m) 控二值"]
+    E --> F["梯度下降更新 mask + 阈值 τ=0.5 截断出组件集 H"]
+    F -->|"组件数 > S：抬高 λ1,λ2 继续优化"| B
+    F -->|"组件数 ≤ S：停止"| G["输出：选中的协同组件子集"]
+```
+
 ### 关键设计
 
 **1. Mixture Forward 软干预：把离散的"选哪些组件"松弛成可微的连续 mask**

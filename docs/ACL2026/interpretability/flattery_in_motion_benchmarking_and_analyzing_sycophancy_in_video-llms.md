@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 整套工作沿"建基准 → 揭规律 → 给解药"展开。先构建 ViSE：从 MSVD/MSRVTT/NExT-QA 里筛出 367 视频、6,367 道多选题，用 Qwen2.5-VL-7B 当筛子，对每个候选视频先问中性问题、再用谄媚 follow-up，按"原本答对却被误导改错"的 Misleading Susceptibility Score $\text{MSS}=N_{C\to I}/N_C$ 和 Correction Receptiveness Score $\text{CRS}=N_{I\to C}/N_I$ 联合过滤，只留下 high MSS + low CRS 的最难样本（InternVL 2.5 复跑 87.8% overlap 证明非个例）。评测协议把谄媚拆成 7 类（Strong/Medium/Suggestive Bias、Are You Sure?、Explicitly Reject ✓、Explicitly Endorse ✗、Mimicry），并分 preemptive 单轮与 in-context 两轮两种交互模式。基于"谄媚成因有内外两层"的观察，作者再给出两个 training-free 解药：输入侧的关键帧选择（k=3）治"用户偏置污染视觉输入"，表征侧的 representation steering 治"模型内部学到的谄媚倾向"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频源<br/>MSVD / MSRVTT / NExT-QA"] --> BENCH
+    subgraph BENCH["7 类谄媚 taxonomy + ViSE 基准"]
+        direction TB
+        B["中性问 → 谄媚追问"] --> C["MSS / CRS 联合过滤<br/>留 high MSS + low CRS 难样本"]
+        C --> D["7 类谄媚场景<br/>Biased / Are You Sure / Reject / Endorse / Mimicry"]
+    end
+    BENCH --> E["9 个 Video-LLM 评测<br/>揭示规模 / 偏置 / 任务规律"]
+    E --> F["两个互补缓解（training-free）"]
+    F -->|输入侧·治输入污染| G["关键帧选择 k=3<br/>中性 prompt 选帧 + 注意力分析"]
+    F -->|表征侧·治内部倾向| H["Representation Steering<br/>隐藏态沿谄媚方向反向减"]
+```
+
 ### 关键设计
 
 **1. 把语言学的 7 类谄媚 taxonomy 迁移到视频域：让"谄媚"在视频里可测可拆**

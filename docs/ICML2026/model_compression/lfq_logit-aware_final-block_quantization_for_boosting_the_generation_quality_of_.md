@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 LFQ 想解决的是 block-wise PTQ 在生成任务上掉点的问题，办法却只动一处：从第 1 个到倒数第 2 个 Transformer block 照旧逐块最小化 MSE，唯独最后一个 block 把 LM head 接进前向路径、把损失从 MSE 换成 logit 级交叉熵，让量化模型的 next-token 分布对齐全精度模型。它是一个即插即用增强件，量化方案、packing/unpacking 内核、单 GPU 可运行特性全部不变，所以能挂在任意 block-wise PTQ 方法之上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["全精度 LLM 权重"] --> B["Block 1 ~ N−1<br/>逐块最小化激活 MSE（沿用原方法）"]
+    B --> C["最终 Block N（LFQ 改造）<br/>接入 LM head 前向 + logit 交叉熵<br/>对齐量化与全精度的 token 分布"]
+    C --> D["量化模型<br/>next-token 分布 ≈ 全精度，生成质量回升"]
+    E["即插即用：套在 FlexRound /<br/>OmniQuant / Block-AP 上，只换损失不改量化参数化"] -.->|挂载| C
+```
+
 ### 关键设计
 
 **1. 把最后一个 block 的目标从激活 MSE 换成 logit 交叉熵：直接对齐 token 概率**

@@ -39,7 +39,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-A3包含四个组件：(1) A3-Law理论范式定义三阶段评估规则；(2) A3-Dataset包含30K广告图片和120K instruction-response对；(3) A3-Align通过SFT+GRPO训练对齐模型；(4) A3-Bench评测基准。
+A3 围绕理论范式 A3-Law 展开，串成"范式→数据→模型→评测"一条线。A3-Law 把广告美学拆成感知注意力→形式兴趣→欲望影响三个递进阶段，并给每层配上可打分规则；A3-Dataset 按这套规则做两阶段标注，先人工标 30K 广告图打底、再用 MLLM 围绕标注生成 CoT 推理链扩成 120K instruction-response 对；A3-Align 在该数据上用 SFT+GRPO 两段训练把模型对齐到 A3-Law；A3-Bench 作为评测基准衡量各 MLLM 并支撑下游应用。贯穿数据构建与 GRPO 训练的还有一套轻量工具调用（色调分析、色彩和谐度、OCR），把色彩/文案这类主观判断锚定到客观测量上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["A3-Law 理论范式<br/>感知注意力→形式兴趣→欲望影响 三阶段规则"]
+    L --> D
+    subgraph D["A3-Dataset 两阶段标注"]
+        direction TB
+        D1["人工阶段<br/>30K 广告图按规则标注+质检打底"] --> D2["模型增强阶段<br/>MLLM 生成 CoT→专家投票，扩成 120K"]
+    end
+    D --> A
+    subgraph A["A3-Align 两段训练"]
+        direction TB
+        A1["SFT<br/>学规则/格式/CoT/工具调用"] --> A2["GRPO<br/>多信号奖励校准"]
+    end
+    T["工具调用<br/>色调分析+Hasler 和谐度+DeepSeek-OCR"]
+    T -.辅助证据.-> D2
+    T -.工具奖励.-> A2
+    A --> B["A3-Bench 评测<br/>+ 广告选优/诊断批评下游任务"]
+```
 
 ### 关键设计
 

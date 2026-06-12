@@ -48,6 +48,29 @@ LegalDrill 是 teacher–student 迭代框架，每轮 $t$ 三步：
 - **Stage 3 Self-Reflective Verification**：用学生自己算 Difficulty Score 过滤平凡样本，剩下的 $\mathcal{D}_{\text{train}}^t$ 用 SFT（首轮冷启动）+ DPO 更新学生
 - **迭代**：$\pi_{\theta_{t+1}}$ 进下一轮重新诊断，参考模型 $\pi_{\text{ref}} \leftarrow \pi_{\theta_t}$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["法律 query x=(context, question)<br/>+ 当前学生 π_θt"]
+    subgraph S1["Diagnosis-Driven 错误指令合成"]
+        direction TB
+        A["学生 CoT 探索，产出响应 ŷ"] --> B["Audit Agent 诊断<br/>禁引案件细节，输出上下文无关错误指令"]
+        B --> C["错误指令库 Φerr = {I⁽¹⁾…I⁽ᴺ⁾}"]
+    end
+    subgraph S2["Targeted Two-Step 偏好对生成"]
+        direction TB
+        D["每样本抽 K 条错误指令 Iₖ"] --> E["teacher 按 Iₖ 故意犯错 → rejected y₋"]
+        E --> F["teacher 以 y₋ 为条件纠错 → chosen y₊"]
+    end
+    G["Self-Reflective Difficulty Score 过滤<br/>forced-choice 概率算 DS，仅留 DS>τ 高混淆样本"]
+    H["训练学生：SFT(t=0 冷启动) + 迭代 DPO<br/>π_ref ← π_θt"]
+    X --> S1
+    S1 --> S2
+    S2 --> G
+    G --> H
+    H -->|"π_θt+1 进下一轮重新诊断"| X
+```
+
 ### 关键设计
 
 **1. Diagnosis-Driven 错误指令合成：把学生的具体错误抽象成可复用、与案件解耦的"错误模板"**

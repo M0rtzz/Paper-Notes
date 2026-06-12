@@ -45,6 +45,17 @@ SITE 提出了一种基于梯度优化的软注意力头选择方法，通过识
 
 SITE 把"任务适配"拆成内容和位置两件事，并主张位置才是关键。给定一个任务，它先从若干 few-shot prompt 里把 ICL 激活压成一份固定的任务嵌入（内容），再学一组软选择参数决定该嵌入注入到哪些注意力头、注入多少（位置）；推理时只在输入的最后一个 token 处做一次注入，写进 KV cache 后正常自回归解码。整个过程冻结 LLM，只训练约 1K 个标量，输出是一个无需 few-shot 上下文、却带着任务信息的零样本模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["M 个 few-shot prompt"] --> B["任务嵌入构建<br/>逐层逐头取 last-token 激活，跨 prompt 平均"]
+    B --> C["任务嵌入 t（内容固定）"]
+    C --> D["软头选择参数优化<br/>原激活与任务嵌入线性插值，Adam 400 步最小化零样本交叉熵"]
+    D --> E["软选择矩阵 A（约 1K 标量，决定注入哪些头/多强）"]
+    E --> F["单 token 注入推理<br/>仅在 last-token 注入一次，写入 KV cache"]
+    F --> G["零样本输出（无需 few-shot 上下文）"]
+```
+
 ### 关键设计
 
 **1. 任务嵌入构建：把 few-shot 激活平均成一份任务级表示**

@@ -43,11 +43,28 @@ tags:
 
 ### 整体框架
 
-两阶段流程：(1) ChunkShapley 离线标注：单片段探测 → 逻辑代理博弈 → 精确 Shapley 值 → 有界后验证生成 keep/drop 标签；(2) RepoShapley 在线推理：将验证标签蒸馏为控制 token（`<KEEP>`/`<DROP>`/`<NEED>`/`<DONE>`），使单一模型同时完成检索触发、片段选择和代码生成。
+两阶段流程：(1) ChunkShapley 离线标注：单片段探测 → 代理博弈 → 精确 Shapley 值 → 有界后验证生成 keep/drop 标签；(2) RepoShapley 在线推理：将验证标签蒸馏为控制 token（`<KEEP>`/`<DROP>`/`<NEED>`/`<DONE>`），使单一模型同时完成检索触发、片段选择和代码生成。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["检索候选片段（top-K，K≤10）"] --> OFF
+    subgraph OFF["ChunkShapley 离线标注"]
+        direction TB
+        B["单片段探测与代理博弈<br/>逐片段似然增益 → 代理效用 v_sur"] --> C["精确 Shapley 值与后验证<br/>枚举 2^K 子集 + 冻结生成器选最优联盟 S*"]
+    end
+    OFF --> D["keep/drop 标签 + 检索触发标签"]
+    subgraph ON["RepoShapley 蒸馏与在线推理"]
+        direction TB
+        E["双格式蒸馏训练<br/>Format-1 选择 + Format-2 生成，共享参数"] --> F["单模型预测控制 token<br/>NEED/DONE 触发检索，KEEP/DROP 选片段"]
+    end
+    D --> E
+    F --> G["仓库级代码补全输出"]
+```
 
 ### 关键设计
 
-1. **单片段探测与逻辑代理博弈**：对每个候选片段 $cc_i$ 计算单独 teacher-forced log-likelihood 增益 $\Delta_i = \ell(X_{in}, \{cc_i\}) - \ell(X_{in})$，得到符号 $y_i = \text{sign}(\Delta_i)$ 和权重 $\omega_i = |\Delta_i|$。定义代理效用 $v_{sur}(S) = \sigma(\beta \sum_{i \in S} \omega_i y_i) - \sigma(0)$，其中 sigmoid 的饱和性自然捕捉冗余效应，负投票（$y_i=-1$）建模冲突。
+1. **单片段探测与代理博弈（surrogate game）**：对每个候选片段 $cc_i$ 计算单独 teacher-forced log-likelihood 增益 $\Delta_i = \ell(X_{in}, \{cc_i\}) - \ell(X_{in})$，得到符号 $y_i = \text{sign}(\Delta_i)$ 和权重 $\omega_i = |\Delta_i|$。定义代理效用 $v_{sur}(S) = \sigma(\beta \sum_{i \in S} \omega_i y_i) - \sigma(0)$，其中 logistic（sigmoid）的饱和性自然捕捉冗余效应，负投票（$y_i=-1$）建模冲突。这一步用 $O(K)$ 次探测就把组合效应压成一维加权投票，为下一步精确枚举铺路。
 
 2. **精确 Shapley 值与后验证**：由于代理效用 $v_{sur}$ 为闭式解，可在 $K \leq 10$ 的检索集上精确枚举 $2^K$ 个子集计算 Shapley 值。构建候选池 $\mathcal{C}$（Shapley 前缀 + $\Delta$ 前缀 + top-L 片段的 size-2/3 组合），用冻结生成器解码选择 ES/EM 最优联盟 $S^\star$。
 

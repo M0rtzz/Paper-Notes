@@ -45,6 +45,19 @@ tags:
 
 SpeechLLM 在 ASR、语音翻译里会产生幻觉——内容流畅却和输入音频对不上，而已有检测方法要么得拿金标准答案去比对（部署时拿不到），要么是为文本 LLM 设计、抓不住音频特有的对齐信号（音频表征远长于文本，输入帧和输出 token 的对齐关系也不同）。本文的关键观察是：模型产生幻觉时注意力会出现病理性模式——对角线结构退化、注意力回退到音频起始位置。于是它对 SpeechLLM（Qwen-2-Audio、Voxtral-3B）做推理，在每个解码步提取注意力权重，算出四种音频注意力指标当特征，训一个轻量逻辑回归分类器在推理时（无需参考文本）判断当前输出是否幻觉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入音频 + 指令<br/>SpeechLLM 逐步解码（Qwen-2-Audio / Voxtral-3B）"] --> B["逐解码步提取注意力权重<br/>每层每个注意力头"]
+    B --> C["AudioRatio<br/>音频注意力 ÷（音频 + 自回归前缀）"]
+    B --> D["AudioConsistency<br/>相邻步音频注意力的 Pearson 相关"]
+    B --> E["AudioEntropy / TextEntropy<br/>音频侧 / 文本侧注意力熵"]
+    C --> F["拼接为特征向量<br/>逻辑回归分类器（L1/L2 特征选择）"]
+    D --> F
+    E --> F
+    F -->|阈值判定| G["幻觉 / 非幻觉"]
+```
+
 ### 关键设计
 
 **1. AudioRatio：看模型把注意力投给输入音频还是自回归前缀**

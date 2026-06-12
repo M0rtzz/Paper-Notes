@@ -47,6 +47,33 @@ EvoSci 由四个阶段组成：Problem Space Construction、Collaborative Resear
 
 在研究执行阶段，prime researcher 从问题 cluster 中选择目标，组建 assistant researchers，通过 CrewAI 风格的 lead-and-collaborate 机制进行任务分解、递归委派、阶段性整合和 idea refinement。最后 reviewer agent 按 novelty、feasibility、validity、excitement、overall 等维度评分并给出改进建议，反馈再进入演化循环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["核心主题 T + 目标学科集合"]
+    subgraph PS["知识图谱驱动的问题空间构建"]
+        direction TB
+        B["学科作首层节点<br/>从 Wikipedia 抽实体并分类<br/>Theory/Model/Material/Phenomenon"] --> C["embedding 相似度补跨实体边"]
+        C --> D["按相关性取实体簇 Top(C_d;T)<br/>mentor 生成结构化问题簇"]
+    end
+    subgraph CR["角色化多智能体科研团队"]
+        direction TB
+        E["prime researcher 选目标、拆任务"] --> F["assistant 递归委派<br/>短期/长期/实体三类记忆"]
+        F --> G["阶段讨论整合多视角<br/>refine 出候选 idea"]
+    end
+    H["reviewer 多维打分<br/>novelty/feasibility/validity/excitement/overall"]
+    subgraph EV["实体级生物启发式演化"]
+        direction TB
+        I["Selection 按适应度筛高分实体簇"] --> J["Crossover 交换实体 + Variation 引入新实体"]
+        J --> K["Inheritance 把高质量概念传给下一轮"]
+    end
+    A --> PS
+    PS --> CR
+    CR --> H
+    H --> EV
+    EV -->|重构问题空间| PS
+```
+
 ### 关键设计
 
 **1. 知识图谱驱动的问题空间构建：把模糊主题锚定成可探索的问题簇**

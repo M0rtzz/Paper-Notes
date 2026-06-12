@@ -44,7 +44,32 @@ DiBO 把扩散语言模型 LLaDA-8B 适配到离线黑盒优化场景，用 deli
 
 输入：(1) 一段自然语言任务描述（含设计语义、格式、优化目标）+ (2) 一组 few-shot 的（设计，标签）对 + (3) 一个让模型「生成更优设计」的指令。输出：一段被 delimiter 包起来的设计 + 标签 token 序列。
 
-DiBO 在冻结扩散 LLM 之上加四件事：(a) tokenizer 扩展两组 delimiter `|design-start|/|design-end|` 和 `|label-start|/|label-end|`；(b) 域适应 DA 阶段在统一 prompt-response 语料上联合预测 prompt 和 response 的 masked token；(c) SFT 阶段只预测 response 的 masked token，以「prompt 之外的最高标签设计」作为 target；(d) RL 阶段用 label improvement 作 reward，one-step unmask 近似 log prob。推理时用一次性 greedy unmask 填满 masked response。
+DiBO 在冻结扩散 LLM 之上加四件事：(a) tokenizer 扩展两组 delimiter `|design-start|/|design-end|` 和 `|label-start|/|label-end|`；(b) 域适应 DA 阶段在统一 prompt-response 语料上联合预测 prompt 和 response 的 masked token；(c) SFT 阶段只预测 response 的 masked token，以「prompt 之外的最高标签设计」作为 target；(d) RL 阶段用 label improvement 作 reward，one-step unmask 近似 log prob。推理时用一次性 greedy unmask 填满 masked response。整条链路是 DA→SFT→RL 三段串行后训练，再接单步推理；三段后训练对应「认识格式 → 给方向 → 给幅度」的递进。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：任务描述 + few-shot（设计,标签）对<br/>+ 生成更优设计的指令"]
+    subgraph S1["Delimiter + 统一语料 + 域适应（设计1）"]
+        direction TB
+        A["统一 prompt-response 语料<br/>delimiter 标记 文本/设计/标签 边界"]
+        A --> B["域适应 DA：联合重建<br/>prompt + response 的 masked token"]
+    end
+    subgraph S2["两段后训练（设计2）"]
+        direction TB
+        C["SFT：只重建 response<br/>target 标签 > prompt 最高标签（给方向）"]
+        C --> D["RL：reward = label improvement<br/>one-step log-prob 近似（给幅度）"]
+    end
+    subgraph S3["kernel 上下文选择 + 单步推理（设计3）"]
+        direction TB
+        E["kernel 相似度选 7 个 few-shot 例子<br/>把任务收窄成局部小步改进"]
+        E --> F["单步 greedy 填满 masked response<br/>去重攒够 128 个候选设计"]
+    end
+    IN --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> OUT["输出：更优设计 x*"]
+```
 
 ### 关键设计
 

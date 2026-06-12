@@ -44,6 +44,29 @@ tags:
 
 本文把"预测想法能否成功"重新框定为一个可验证的比较任务：输入是研究目标 $g$ 加上两个去标识化的想法描述 $h_A, h_B$，输出是哪一个会在基准上取得更好的客观成绩。要让这个任务可学习，作者先从 PapersWithCode 的排行榜里挖出大量"已经分出胜负"的想法对，配上由真实实验结果推导的统一胜负标签和难度等级，再用这批数据走"SFT 建直觉 + RLVR 学推理"的两阶段训练，最终把一个 8B 模型调成既能下判断、又能给出可解释论证的想法验证器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["从排行榜反推想法对"]
+        direction TB
+        A["1,918 个 NLP 排行榜"] --> B["判定结果论文是原创还是转述<br/>转述则回溯到原论文"]
+        B --> C["抽取去泄漏的想法描述<br/>+ 排行榜研究目标 g"]
+        C --> D["想法对 (g, h_A, h_B)"]
+    end
+    subgraph SIGNAL["统一评分 + 难度分层 + 双源推理链"]
+        direction TB
+        E["统一评分 s_i<br/>min-max 归一化→反演低即好→多指标取均值"] --> F["按分差 / σ 分 1σ/2σ/3σ 三档难度"]
+        E --> G["双源推理链<br/>GPT-5 综合法 vs 文献法"]
+    end
+    subgraph TRAIN["两阶段训练"]
+        direction TB
+        H["阶段一 SFT(LoRA)<br/>建成对比较直觉"] --> I["阶段二 RLVR<br/>冷启动 SFT→DAPO / Dr. GRPO 学可解释推理"]
+    end
+    DATA --> SIGNAL
+    SIGNAL --> TRAIN
+    TRAIN --> J["8B 想法验证器<br/>判断 h_A / h_B 谁更优 + 给出论证"]
+```
+
 ### 关键设计
 
 **1. 从排行榜反推想法对：让标签来自真实实验而非主观打分。** 

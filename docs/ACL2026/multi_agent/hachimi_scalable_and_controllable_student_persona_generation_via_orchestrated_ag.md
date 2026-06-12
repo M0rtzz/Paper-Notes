@@ -41,7 +41,21 @@ HACHIMI 把"学生画像生成"形式化为 TAD-PG（理论对齐 + 分布可控
 ## 方法详解
 
 ### 整体框架
-HACHIMI 流水线：(1) **目标分布输入**——指定年级/性别/学业层级的配额；(2) **Theory-Anchored Schema**——按 OECD Learning Compass 把画像分 5 个成分（人口与发展、学业画像、性格与价值、社会关系与创造力、心理健康与幸福感）；(3) **多 agent 模块化生成**——每个组件由独立 agent 写，共享一块 whiteboard 顺序条件；(4) **神经符号验证器**——按 R1–R15 可执行规则集（如年级↔Piaget/Erikson 阶段映射）查违反，违反就发结构化错误回 agent；(5) **分层采样 + LSH 语义去重**——固定 4 个学业层每层 25 万，再用 SimHash 砍近似重复。产出 HACHIMI-1M（100 万人，~3200 H100·h 用 Qwen2.5-72B 生成）。
+HACHIMI 流水线：(1) **目标分布输入**——指定年级/性别/学业层级的配额；(2) **Theory-Anchored Schema**——按 OECD Learning Compass 把画像分 5 个成分（人口与发展、学业画像、性格与价值、社会关系与创造力、心理健康与幸福感）；(3) **多 agent 模块化生成**——每个组件由独立 agent 写，共享一块 whiteboard 顺序条件；(4) **神经符号验证器**——按 R1–R15 可执行规则集（如年级↔Piaget/Erikson 阶段映射）查违反，违反就发结构化错误回 agent；(5) **分层采样 + LSH 语义去重**——固定 4 个学业层每层 25 万，再用 SimHash 砍近似重复。产出 HACHIMI-1M（100 万人，~3200 H100·h 用 Qwen2.5-72B 生成）。其中 (3)(4) 构成一个"提议–验证–修订"内循环，(5) 在外层调度，(1)(2) 与最终产出是脚手架。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标分布输入<br/>年级 / 性别 / 学业层配额"] --> B["理论锚定 Schema（Theory-Anchored）<br/>OECD 罗盘 5 成分"]
+    B --> C
+    subgraph LOOP["提议–验证–修订循环"]
+        direction TB
+        C["共享白板·模块化生成<br/>5 个组件各派专属 agent 顺序写"] -->|提议| D["神经符号验证器<br/>R1–R15 规则查违反"]
+        D -->|"违反 → 结构化错误信号回写"| C
+    end
+    LOOP -->|全部满足| E["分层采样 + LSH 去重<br/>4 学业层均配 + SimHash 砍近似重复"]
+    E --> F["HACHIMI-1M<br/>100 万合成学生画像"]
+```
 
 ### 关键设计
 

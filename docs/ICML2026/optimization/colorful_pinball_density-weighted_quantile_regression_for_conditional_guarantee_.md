@@ -45,6 +45,24 @@ tags:
 
 CPCP (Colorful Pinball Conformal Prediction) 将校准集分为三个子集 $\mathcal{D}_{\text{cal},1}, \mathcal{D}_{\text{cal},2}, \mathcal{D}_{\text{cal},3}$，执行三阶段流程：(1) 在 $\mathcal{D}_{\text{cal},1}$ 上联合训练三个分位数估计器（目标分位数 $\tau$ 及辅助分位数 $\tau \pm \delta$）；(2) 用辅助分位数构造有限差分密度权重，在 $\mathcal{D}_{\text{cal},2}$ 上用加权 pinball 损失微调目标分位数；(3) 在 $\mathcal{D}_{\text{cal},3}$ 上执行 RCP 整流化得分校准，确保边际有效性。最终输出预测集 $\mathcal{C}_\alpha(x_{\text{test}}) = \{y: S(x_{\text{test}}, y) \leq \hat{q}_\tau(x_{\text{test}}) + \hat{\gamma}\}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["校准集三分<br/>D_cal,1 / D_cal,2 / D_cal,3"]
+    subgraph S2["三头分位数网络 + 有限差分密度估计"]
+        direction TB
+        B["在 D_cal,1 联合训练<br/>共享骨干 + 主/高/低三个头"]
+        C["Softplus 偏移构造 q̂_τ 与 q̂_τ±δ<br/>保单调、防分位数交叉"]
+        D["有限差分估出密度权重 ŵ(x)<br/>绕开显式条件密度估计"]
+        B --> C --> D
+    end
+    A --> B
+    D --> E["权重裁剪 + 损失混合<br/>截断极端权重、凸组合标准 pinball 控方差"]
+    E --> F["密度加权 pinball 损失<br/>在 D_cal,2 微调 q̂_τ，主导项对齐 MSCE"]
+    F --> G["RCP 整流化得分校准<br/>在 D_cal,3 算 γ̂ 保边际有效"]
+    G --> H["输出预测集 C_α(x)"]
+```
+
 ### 关键设计
 
 **1. 密度加权 pinball 损失（理论核心）：补上标准 pinball 与条件覆盖 MSE 之间差的那一个密度因子**

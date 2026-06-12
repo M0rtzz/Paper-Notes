@@ -44,6 +44,20 @@ paSAT 要解决的核心问题是：怎么让一个 GNN 既能捕捉子句的高
 
 具体地，给定 CNF 公式 $\phi$，先转成超图 $\mathcal{H}=(\mathcal{V}_H,\mathcal{E}_H)$：节点 $u_i$ 对应文字 $l_i$，超边 $e_j$ 对应子句 $c_j$，关联矩阵 $\mathbf{H}\in\mathbb{R}^{2N\times M}$ 满足 $\mathbf{H}_{ij}=1$ 当且仅当 $l_i\in c_j$；再额外构造子句关联图 $\mathcal{G}_C$，节点是子句、边权 $w^C_{ij}=|\mathcal{L}(c_i)\cap \mathcal{L}(c_j)|/|\mathcal{L}(c_i)\cup \mathcal{L}(c_j)|$ 用 Jaccard 度量子句重合度。训练时同时跑原公式 $\phi$ 与极性翻转公式 $\phi^{(flip)}$ 两条共享参数的管线，分别得到变量预测分布 $\mathbf{s},\mathbf{s}^{(flip)}$，再用三项损失（任务损失 + 输出一致性 + 分解一致性）联合优化；推理时只跑原公式，把分数喂给 CDCL 求解器做变量活跃度初始化（NeuroCore 风格，但只跑一次而非周期性重跑，省 GPU）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CNF 公式 φ"] --> B["构建双图：文字-子句超图 + 子句关联图 CIG（Jaccard 重合度）"]
+    B --> C["超图 + 子句关联图的双图传播<br/>文字聚到子句卷积，CIG 上 GCN 精化子句，再回灌文字（迭代 T 轮）"]
+    C --> D["极性不变-等变变量分解<br/>变量拆成不变/等变分量，正负文字由不变加减等变得到，仅不变分量进预测头"]
+    D --> E["unsat-core 变量预测分布 s"]
+    A -->|"翻转所有文字极性"| F["极性翻转公式（共享同一网络）"]
+    F --> G["翻转版预测 s_flip 与不变/等变分量"]
+    E --> H["极性翻转一致性正则<br/>输出级 s 与 s_flip 一致 + 分解级不变分量相等、等变分量反号"]
+    G --> H
+    H --> I["推理只跑原公式：分数喂 CDCL 初始化变量活跃度"]
+```
+
 ### 关键设计
 
 **1. 超图 + 子句关联图的双图传播：让子句之间直接对话**

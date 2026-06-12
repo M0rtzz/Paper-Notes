@@ -45,6 +45,16 @@ tags:
 
 这篇论文想回答一个此前几乎无人触碰的问题：VLM 在内部到底是怎么把图像和文字"想到一起"的？以往的 attention 可视化、probing 都只能看到相关性，看不到因果链条。作者把 Anthropic 在纯文本 LLM 上验证过的"transcoder + 归因图"范式整体搬到多模态场景，端到端跑通一条分析流水线：先给目标模型每一层 MLP 套上一个 transcoder，把纠缠的多义表示拆成稀疏的单义特征；再以这些特征为节点构建归因图，把"输入 token embedding → 中间特征 → 输出 logit"的因果贡献逐边算清；最后结合注意力分析和人类专家标注，从庞大的图里抽出真正驱动某个行为的最小电路，并用干预实验反向验证它确实在起作用。整个分析以 Gemma-3-4B-it 为对象，它用 SigLIP 视觉编码器（patch size 14，输入 896×896，先得到 4096 个 patch token，池化成 256 个 soft image token），语言侧是 34 层 transformer（$d_{model}=2560$，$d_{ff}=10240$）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标 VLM：Gemma-3-4B-it<br/>SigLIP 视觉编码器 + 34 层 transformer"] --> B["Per-Layer Transcoder<br/>每层 MLP → TopK 单义特征 + error node"]
+    B --> C["归因图<br/>冻结非线性，逐边算归因后剪枝"]
+    C --> D["多模态特征解释与电路发现<br/>attention rollout 命名 + 专家合并 → 最小电路"]
+    D --> E["干预验证<br/>feature steering + circuit patching"]
+    E -->|输出按预期改变| F["验证过的因果电路<br/>层次化整合 / 视觉数学 / 六指幻觉机制"]
+```
+
 ### 关键设计
 
 **1. Per-Layer Transcoder：把每层 MLP 换成一组能读懂的单义特征**

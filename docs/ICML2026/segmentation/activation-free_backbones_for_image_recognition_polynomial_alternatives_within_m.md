@@ -43,26 +43,37 @@ tags:
 ### 整体框架
 PolyNeXt 采用四阶段层级视觉 backbone，整体仍遵循 MetaFormer 模板：每个 cell 接收前两个 cell 的输出，先经过空间 mixer，再经过 PolyMLP。CPolyNeXt 在所有阶段使用 PolyConv；APolyNeXt 在前两阶段用 PolyConv 处理高分辨率局部信息，在后两阶段用 PolyAttn 处理低分辨率全局信息。Stem 是 stride 4 的 $7\times7$ 卷积，阶段之间用 stride 2 卷积下采样。
 
-一个 cell 内可以包含多个 stack，每个 stack 是“空间混合器 + PolyMLP”。作者强调 depth-over-width：与其把单层做宽，不如堆更多较窄的多项式层，因为多项式次数随层数增长更快。为了避免乘法链路导致数值爆炸，每个 residual branch 都用可学习的 sigmoid 标量限制输出幅度。
+一个 cell 内可以包含多个 stack，每个 stack 是“空间混合器 + PolyMLP”。作者强调 depth-over-width（深而窄）：与其把单层做宽，不如堆更多较窄的多项式层，因为多项式次数随层数增长更快。为了避免乘法链路导致数值爆炸，每个残差分支都用可学习的 sigmoid 标量（Sigmoid-Scale）限制输出幅度。下图给出一个 PolyNeXt cell 的完整数据流，对应下面四个关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → Stem(7×7 stride-4 卷积)"] --> B["4 阶段层级骨干<br/>阶段间 stride-2 卷积下采样"]
+    B --> C["多输入 skip：取前两个 cell 输出<br/>per-channel 缩放相加 → LayerNorm"]
+    C --> STACK
+    subgraph STACK["PolyNeXt stack（每个 cell 深堆 X 个，depth-over-width）"]
+        direction TB
+        D["空间混合器"] -->|前两阶段·高分辨率| E["PolyConv<br/>粗(空洞)/细分支翻转通道后逐元素相乘"]
+        D -->|后两阶段·低分辨率| F["PolyAttn<br/>多项式核替代 softmax + ℓ1 归一化"]
+        E --> G["PolyMLP<br/>两线性投影逐元素相乘"]
+        F --> G
+    end
+    STACK -->|每个残差分支 y=x+σ(λ)·f(x)| H["Sigmoid-Scale 限幅"]
+    H --> I["分类头 / ADE20K UperNet 分割"]
+```
 
 ### 关键设计
-1. **PolyMLP 与 PolyConv 的激活替代**:
+**1. PolyMLP：用 Hadamard 乘积替代 channel mixing 的激活**
+标准 FFN 在两个线性投影之间插一个 GELU 提供非线性，GLU 类变体虽加了乘法交互但仍在一支保留激活。PolyMLP 彻底去掉激活：$\text{PolyMLP}(x)=W_o((W_a x)*(W_b x))$——把输入投影到中间维度的两支 $W_a x$、$W_b x$ 逐元素相乘（乘后接 LayerNorm），再投影回原维度。这一乘法恰好得到输入的二阶多项式，层层堆叠后多项式次数随深度快速增长，因此不靠点激活也能积累足够非线性。它为什么有效还藏着一个反直觉点：反向传播时 $W_a$ 的梯度被 $W_b x$ 缩放、反之亦然，两支通过对方的输出互相学习（mutual gradient coupling）；一旦给某支加上 GELU，其负区间的近零导数会切断这种耦合——这正解释了消融里“加回激活反而掉点”的现象。
 
-	- 功能：在 channel mixing 和局部 spatial mixing 中提供无激活函数的非线性。
-	- 核心思路：PolyMLP 计算 $W_o((W_a x)*(W_b x))$，两个线性投影逐元素相乘后再投影回原维度。PolyConv 先用 pointwise 卷积得到 hidden feature，再用一个 dilation depthwise coarse branch 和一个 $3\times3$ fine branch 提取不同感受野，翻转其中一支的 channel 后逐元素相乘，再用卷积整合。
-	- 设计动机：乘法分支能显式产生二阶交互，堆叠后形成高阶多项式。PolyConv 用异质感受野相乘，比两个相同结构分支更容易产生跨尺度交互。
+**2. PolyConv：异质感受野双分支相乘替代可分离卷积的激活**
+MetaFormer 的 ConvFormer 用可分离卷积（depthwise 空间滤波 + pointwise 混合），中间也夹一个激活。要把这个激活换成 Hadamard 乘积，光靠两个同构分支相乘交互不够丰富。PolyConv 先用 pointwise 卷积得到 hidden feature，再分出两条感受野不同的 depthwise 分支：粗分支用空洞卷积（$5\times5$ kernel、dilation 2，覆盖 $9\times9$）抓大范围上下文，细分支用标准 $3\times3$ 抓局部细节；融合前对其中一支做 channel-flip（翻转通道顺序）进一步解耦，两支逐元素相乘后再用 $3\times3$ 卷积整合、pointwise 投影输出。这样设计的关键在于：异质感受野相乘能显式产生跨尺度交互项，比 MONet/DTTN 那种两支同构的做法更有表达力——消融中去掉粗分支、或换回标准可分离卷积都明显掉点。
 
-2. **PolyAttn 的多项式注意力核**:
+**3. PolyAttn：多项式核替代 softmax 的指数**
+self-attention 里的 softmax 依赖指数函数，它既是一处必须保留的非线性，也阻碍完全多项式（FHE 友好）推理。PolyAttn 把未归一化权重写成 $A=(s\cdot QK^\top+1)^p$（$p=4$，$s=\sigma(\lambda)$ 是每个 head 可学习的 scale），再用 $\ell_1$ 归一化替代 softmax 归一化；同时仿照 PolyConv，在 $Q,K,V$ 上加 depthwise 卷积注入局部空间上下文，并共享 $Q/K$ 投影省参数。它保留了 query-key 相似度加权的注意力语义却避开指数，且只改动 kernel、接口不变，因此仍可兼容 window/sparse attention。消融揭示了一个细节：把核单换成 softmax 只差 0.1 点，但整体换成标准注意力掉 1.3 点——说明共享 $Q/K$ 投影与 depthwise 卷积比核本身贡献更大。
 
-	- 功能：替代 self-attention 中 softmax 的指数非线性，使注意力也保持 activation-free。
-	- 核心思路：PolyAttn 用 $A=(s\cdot QK^\top+1)^p$ 作为未归一化权重，其中 $s=\sigma(\lambda)$ 是每个 head 的可学习 scale，$p=4$。之后用 $\ell_1$ normalization 替代 softmax 归一化，并在 $Q,K,V$ 上加入 depthwise convolution 注入局部空间上下文，同时共享 $Q/K$ 投影节省参数。
-	- 设计动机：softmax 的指数函数阻碍完全多项式推理，也不是注意力结构唯一可行的核。多项式核保留 query-key 相似度加权，又避免指数激活，并可兼容 window attention 或 sparse attention 等改进。
-
-3. **深层多项式网络稳定化**:
-
-	- 功能：让数百层 Hadamard-product 网络可以稳定训练。
-	- 核心思路：Sigmoid-Scale 将残差写成 $y=x+\sigma(\lambda)f(x)$，并按深度初始化更小的 residual contribution；multi-input skip 让每个 cell 同时接收前一个和前两个 cell 的输出，经可学习 channel scale 相加后 LayerNorm；depth-over-width 在相近参数量下增加 stack 数。
-	- 设计动机：乘法会放大大值，简单加深容易梯度和激活不稳定。残差幅度控制和跨 cell skip 提供数值安全阀，深度设计则释放多项式表达力。
+**4. 深层多项式网络的稳定化配方**
+与 ReLU 不同，Hadamard 乘积会把两个大值相乘成更大的值，这种放大沿深度累积，深网若直接训练就会发散。作者用三件套撑起接近 200 层的训练：① Sigmoid-Scale 把每个残差分支写成 $y=x+\sigma(\lambda)f(x)$，用 sigmoid 限幅的可学习标量约束残差幅度，并按深度初始化更小的贡献（消融表明起决定作用的是初始化几何，换成标准初始化的 LayerScale 会直接训练崩溃掉 12.8 点）；② multi-input skip（仿 NASNet）让每个 cell 同时接收前一个和前两个 cell 的输出，经可学习 per-channel 缩放相加后 LayerNorm，改善梯度流；③ depth-over-width：相近参数量下堆更多较窄的 stack 而非加宽单层，因为多项式次数随深度指数增长（3 stack/cell 比 1 stack 高 1.5 点）。三者合起来才让多项式模块能真正吃到“深度”的表达力红利。
 
 ### 损失函数 / 训练策略
 模型按 ImageNet-1K 监督分类训练，训练 recipe 基于 MetaFormer/MONet 但使用更小 batch size 和更强 regularization。语义分割迁移使用 UperNet，在 ADE20K 上训练 160K iterations，采用 ConvNeXt recipe，并对 Sigmoid-Scale、多输入 skip 和 normalization 参数设特殊 weight decay 分组。论文还训练 LayerNorm 替换为 polynomial-compatible BatchNorm 的 fully polynomial 变体，以探索 FHE 友好推理。

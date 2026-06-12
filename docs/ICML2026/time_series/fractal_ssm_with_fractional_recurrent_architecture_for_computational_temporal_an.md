@@ -42,6 +42,29 @@ tags:
 ### 整体框架
 FRACTAL 分两个阶段。**Phase 1（离线初始化）**：给定多通道奇异指数 $\boldsymbol{\alpha}=(\alpha_1,\dots,\alpha_K)$，按 Def. 3.1 写出分数阶测度 $\mu^{(t)}(x)=(1-\alpha)t^{\alpha-1}(t-x)^{-\alpha}\mathbb{I}_{[0,t]}(x)$，把它的正交基（归一化 Jacobi 多项式）代入 HiPPO 的投影方程，导出 LTV 动力学 $\dot{x}=-\frac{1}{t}A(\alpha)x+\frac{1}{t}B(\alpha)u$；再对 $A(\alpha)$ 做特征分解得到 $\Lambda$，对 $B(\alpha)$ 用闭式公式做物理意义初始化 $\tilde{B}_{\text{init}}=V^{-1}B$。**Phase 2（在线训练）**：把 LTV 中的 $1/t$ 松弛为可学习时间尺度 $\Delta$ 得到 LTI 系统，再用 ZOH 离散化 + 并行 prefix-sum 在 $O(N\log L)$ 时间内完成扫描。最后用 GLU 包裹 SSM 输出形成一个标准的 gated SSM block。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多通道奇异指数 α=(α₁,…,α_K)<br/>分数滤波器组：每通道一个记忆拓扑"]
+    subgraph P1["Phase 1 · 离线初始化"]
+        direction TB
+        B["分数阶 HiPPO 测度 + Jacobi 正交基<br/>幂律奇点 (t−x)^(−α) 在均匀↔当下间插值"]
+        D["LTV 动力学<br/>dx/dt = −(1/t)A(α)x + (1/t)B(α)u"]
+        E["可证明状态矩阵结构<br/>对角元 A_nn=n+1 与 α 无关 → 直接对角化"]
+        F["闭式 B 初始化<br/>B̃_init = V⁻¹B 充当预处理器"]
+        B --> D --> E --> F
+    end
+    subgraph P2["Phase 2 · 在线训练"]
+        direction TB
+        G["LTI 松弛：1/t → 可学 Δ → ZOH 离散化"]
+        I["并行 prefix-sum 扫描 O(N log L) → GLU 门控 block"]
+        G --> I
+    end
+    A --> B
+    F --> G
+    I --> K["序列表示输出"]
+```
+
 ### 关键设计
 
 **1. 分数阶 HiPPO 测度：用一个奇异指数连续插值「均匀记忆」与「集中当下」**

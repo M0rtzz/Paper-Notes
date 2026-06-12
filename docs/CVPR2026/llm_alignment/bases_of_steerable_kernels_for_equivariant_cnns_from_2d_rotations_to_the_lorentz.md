@@ -48,7 +48,25 @@ tags:
 
 $$K^{(j,l)}(g \cdot x) = \rho_j(g) K^{(j,l)}(x) \rho_l(g)^{-1}, \quad \forall g \in G$$
 
-落到三步：在轨道上选 $x_0$ 并确定 $H$；在 $x_0$ 处把约束化简为 $K(x_0) = \rho_j^H(h) K(x_0) \rho_l^H(h)^{-1}$ 并求解；再对每个陪集代表 $g \in G/H$ 令 $K(g \cdot x_0) = \rho_j(g) K(x_0) \rho_l(g)^{-1}$，把解铺满整条轨道。
+落到三步：在轨道上选 $x_0$ 并确定 $H$；在 $x_0$ 处把约束化简为 $K(x_0) = \rho_j^H(h) K(x_0) \rho_l^H(h)^{-1}$ 并求解；再对每个陪集代表 $g \in G/H$ 令 $K(g \cdot x_0) = \rho_j(g) K(x_0) \rho_l(g)^{-1}$，把解铺满整条轨道。这套通用配方解出来后，再逐个具体群落地（SO(2) 一路推到 Lorentz 群），并对半整数自旋的旋量场做专门处理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：对称群 G、输入表示 ρ_l、输出表示 ρ_j"]
+    subgraph RECIPE["轨道-稳定子归约配方（整体框架）"]
+        direction TB
+        B["选轨道固定点 x0<br/>确定稳定子群 H = Stab(x0)"]
+        C["用 Schur 引理分块求稳定子约束<br/>限制表示分解 → 查同态空间 intertwiner"]
+        D["转向 steer 铺满整条轨道<br/>K(g·x0) = ρ_j(g)·K(x0)·ρ_l(g)⁻¹"]
+        B --> C --> D
+    end
+    A --> B
+    D --> E["同一套配方逐群落地<br/>SO(2)→O(2)→SO(3)→O(3)→Lorentz"]
+    E -->|半整数自旋 / 旋量场| F["半整数自旋的四元数处理<br/>电荷共轭 C + γ 矩阵构造 intertwiner"]
+    E --> G["可转向核基底（显式解析公式）"]
+    F --> G
+```
 
 ### 关键设计
 
@@ -101,14 +119,14 @@ $$K^{(j,l)}(g \cdot x) = \rho_j(g) K^{(j,l)}(x) \rho_l(g)^{-1}, \quad \forall g 
 
 无实验消融。但论文系统地对比了复表示与实表示的解空间关系：
 - SO(2)：实表示标签 $j \geq 0$，复表示标签 $j \in \mathbb{Z}$，通过 $\rho_j \oplus \rho_{-j}$ 的实结构联系
-- SO(3)：复情形有 $2\min(j,l)+1$ 个复线性互紧子（$4\min(j,l)+2$ 个实参数），实情形恰好是一半
+- SO(3)：复情形有 $2\min(j,l)+1$ 个复线性 intertwiner（$4\min(j,l)+2$ 个实参数），实情形恰好是一半
 
 ### 关键发现
 
 - 对 SO(2) 和 O(2)，本方法直接给出与 Weiler & Cesa 2019（E2CNN）完全相同的解空间，但推导过程显著简化
 - 对 SO(3)，核基底的矩阵元素就是 Wigner D-矩阵的乘积，无需额外调和基函数
-- Lorentz 群的互紧子在时空张量表示中自然表现为投影算符（如正交于四速度的投影 $\Delta^\mu{}_\nu$）
-- 半整数自旋情形出现四元数结构，电荷共轭算符 $\mathcal{C}$ 在 Lorentz 变换下不变，因此转向后互紧子形式不变
+- Lorentz 群的 intertwiner 在时空张量表示中自然表现为投影算符（如正交于四速度的投影 $\Delta^\mu{}_\nu$）
+- 半整数自旋情形出现四元数结构，电荷共轭算符 $\mathcal{C}$ 在 Lorentz 变换下不变，因此转向后 intertwiner 形式不变
 
 ## 亮点与洞察
 

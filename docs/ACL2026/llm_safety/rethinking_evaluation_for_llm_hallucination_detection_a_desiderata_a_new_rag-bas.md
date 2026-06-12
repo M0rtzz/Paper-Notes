@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 论文的工作流可以理解为“评测标准 → 数据构建 → detector 压力测试”。第一步，作者提出 7 个 hallucination detection benchmark 应具备的性质，并将其分为核心属性、文献最大缺口和多样性属性。第二步，作者基于多个问答和检索数据源构建 Trivia++，收集来自 3 个 LLM 的 RAG-style answers，并通过多轮人类句级标注得到 response-level clean labels。第三步，作者额外构造 4 组 noisy labels，用于模拟弱监督、众包分歧和随机翻转。第四步，在 Trivia++、RAGTruth、Dolly、HaluEval 等 RAG-QA benchmark 上评估常用 detector，分析长上下文和标签噪声对性能的影响。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["7 条 benchmark desiderata<br/>核心属性 + 最大缺口 + 多样性"]
+    D -->|对照旧 benchmark 找缺口| C1
+    subgraph BUILD["Trivia++ 长上下文 RAG benchmark"]
+        direction TB
+        C1["多源问题与参考材料<br/>TriviaQA / NQ / MS-MARCO / CovidQA / DROP"] --> C2["强模型生成 RAG 答案"]
+        C2 --> C3["ROUGE < 0.1 过滤<br/>把标注力集中到高出错样本"]
+        C3 --> C4["跨模型采样<br/>Gemma-7B + Mixtral 8x7B"]
+    end
+    subgraph LABEL["多票人类标注与噪声标签设计"]
+        direction TB
+        L1["句级多轮多票标注<br/>分歧升级 + Dawid-Skene 清洗"] --> L2["聚合 response-level clean labels"]
+        L2 --> L3["构造 4 组噪声标签<br/>WS / DW / DL / RF"]
+    end
+    BUILD --> LABEL
+    LABEL --> E["detector 压力测试<br/>长上下文分层 + 标签噪声分析"]
+```
+
 ### 关键设计
 **1. 7 条 benchmark desiderata：给幻觉检测 benchmark 立一张统一体检表，可靠性不再靠规模或流行度说了算**
 

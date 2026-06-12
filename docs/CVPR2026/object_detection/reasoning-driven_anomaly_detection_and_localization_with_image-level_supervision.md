@@ -38,23 +38,39 @@ tags:
 
 ### 整体框架
 
-给定图像 $\mathbf{X}_v$ 和文本提示（固定问题："Are there any defects or anomalies in the image?"），MLLM 生成包含推理过程和最终答案的输出序列。框架包含两个核心模块：
-1. **ReAL（Reasoning-Driven Anomaly Localization）**：从推理 token 中筛选异常相关 token，聚合其视觉注意力生成像素级异常图
-2. **CGRO（Consistency-Guided Reasoning Optimization）**：通过强化学习驱动推理-定位一致性，对齐推理 token 与视觉注意力
+给定图像 $\mathbf{X}_v$ 和固定文本提问（"Are there any defects or anomalies in the image?"），单个 MLLM 自回归生成「推理过程 + 最终答案」的输出序列，同时导出贯穿视觉 / 文本 / 输出 token 的多模态注意力矩阵 $\mathbf{A}$。整套系统的定位能力完全从这个注意力里「读」出来——不外挂任何视觉专家或 SAM，训练也只用图像级标签（正常 / 异常）这种最廉价的标注，从而避免了误差传播、推理-定位错位和部署复杂度。围绕这条主线有两个核心模块：
+
+- **ReAL（推理驱动的异常定位）**：推理阶段就在跑，从一串推理 token 里筛出真正盯着异常看的那几个，把它们的视觉注意力加权聚合成像素级异常图 $\mathbf{A}_{\text{RDAM}}$；
+- **CGRO（一致性引导的推理优化）**：仅训练阶段介入，用「推理-定位一致性」奖励驱动强化学习，把「模型说的」和「模型看的」对齐，再通过 GRPO 把梯度回灌 MLLM。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 固定提问<br/>「图中是否存在缺陷/异常？」"] --> B["MLLM（Qwen2.5-VL-7B）<br/>自回归生成推理+答案<br/>导出多模态注意力 A"]
+    B --> C
+    subgraph REAL["ReAL：推理驱动的异常定位"]
+        direction TB
+        C["双维度给推理 token 打分<br/>语义相关度 S_T + 空间熵 S_I"] --> D["双阈值筛选 + 复合权重 w_r"]
+        D --> E["按 w_r 加权聚合视觉注意力<br/>→ 像素级异常图 A_RDAM"]
+    end
+    REAL --> F["输出：图像级答案 + 像素级异常图 + 推理文本"]
+    subgraph CGRO["CGRO：一致性引导的推理优化（仅训练）"]
+        direction TB
+        G["取 top-t token 二值化<br/>算注意力重叠 Jaccard J"] --> H["类别条件一致性奖励 R_cons<br/>+ 格式 R_fmt + 准确率 R_acc"]
+    end
+    D -.训练时.-> G
+    H -->|GRPO 更新策略| B
+```
 
 ### 关键设计
 
-**1. 异常相关推理 token 识别：从一堆推理 token 里挑出真正盯着异常看的那几个**
+**1. ReAL（推理驱动的异常定位）：从一堆推理 token 里挑出真正盯着异常看的那几个**
 
 核心观察是 MLLM 生成推理文本时，只有少量 token 的注意力真正聚焦在异常区域，大多数 token 注意力分散、会稀释定位精度。ReAL 从两个互补维度给每个推理 token 打分：跨模态语义相关度 $S_T^r$ 是该 token 对输入文本里异常相关词（"defect"/"anomaly"/"abnormal"）的注意力权重之和，衡量它语义上跟异常概念多相关；模态内注意力集中度 $S_I^r$ 是把视觉注意力图二值化后提连通分量、算空间熵——低熵说明注意力聚在某块区域（可能是异常），高熵说明注意力散了。两维度经双阈值筛选（$\hat{S}_T^r > \tau_t$ 且 $\hat{S}_I^r > \tau_i$）保留候选 token，再用复合权重 $w_r = \alpha\hat{S}_T^r + \beta\hat{S}_I^r$ 加权聚合它们的视觉注意力图 $\mathbf{A}_{r,I}$，得到推理驱动的异常图 $\mathbf{A}_{\text{RDAM}}$。这样像素级定位完全从模型内部注意力里「读」出来，不需要外部分割模块。
 
-**2. 一致性引导的推理优化（CGRO）：让「说的」和「看的」对齐**
+**2. CGRO（一致性引导的推理优化）：让「说的」和「看的」对齐**
 
-有限监督下 MLLM 常出现推理不一致——回答「存在异常」但推理文本却把图像描述成正常，注意力也跟着乱。CGRO 设计了类别条件一致性奖励 $R_{\text{cons}}$：对异常图像（$y=1$）鼓励 top-$t$ 推理 token 的注意力区域高度一致（Jaccard Index $\mathcal{J} > \delta_1$），对正常图像（$y=0$）鼓励低一致性（$\mathcal{J} < \delta_2$）以压住在良性区域的虚假聚焦。它和格式、准确率奖励一起组成总奖励 $\mathcal{R}_{\text{total}} = \mathcal{R}_{\text{fmt}} + \mathcal{R}_{\text{acc}} + \mathcal{R}_{\text{cons}}$，通过 GRPO 框架优化，把推理质量和视觉证据绑在一起训练。
-
-**3. 端到端无需外部模块：一个 MLLM 全包检测、定位、推理**
-
-以往方案的定位都要外挂视觉专家或 SAM，带来误差传播和部署复杂度。ReAL + CGRO 让整套系统只用一个 MLLM，不依赖任何外部分割或检测模块，就同时完成异常检测、像素级定位和可解释推理，而且训练只需图像级标签（正常/异常）这种最廉价的标注。
+有限监督下 MLLM 常出现推理不一致——回答「存在异常」但推理文本却把图像描述成正常，注意力也跟着乱。CGRO 复用 ReAL 算出的权重 $w_r$，取 top-$t$ 推理 token，把每个 token 注意力图按 95 分位阈值二值化得到支撑区域 $\Omega_r$，再用 Jaccard Index 度量这些区域的空间重叠 $\mathcal{J}$。在此之上设计类别条件一致性奖励 $R_{\text{cons}}$：对异常图像（$y=1$）鼓励高一致性（$\mathcal{J} > \delta_1$）以促成对缺陷的集中定位，对正常图像（$y=0$）鼓励低一致性（$\mathcal{J} < \delta_2$）以压住在良性区域的虚假聚焦。它和格式奖励、准确率奖励一起组成总奖励 $\mathcal{R}_{\text{total}} = \mathcal{R}_{\text{fmt}} + \mathcal{R}_{\text{acc}} + \mathcal{R}_{\text{cons}}$，通过 GRPO（采样一组响应、按归一化优势更新策略）优化，把推理质量和视觉证据绑在一起训练，使模型学会自我约束推理过程。
 
 ### 损失函数 / 训练策略
 

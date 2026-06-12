@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 方法分三步：(a) **Layer-wise probing**：用 Wikipedia 抽 25,000 句和 GPT-5.1 生成的 600 对 literal/figurative 合成句子，配合 prompt 拿到最后一 token 在每一层的 hidden state，训练一个 MLP 回归预测 Brysbaert concreteness 分数，画出"layer × Pearson r"曲线判定哪些层编码 concreteness。(b) **Geometric axis**：在 Wikipedia 句子上把名词按静态 concreteness > 4 / < 2 分成 high / low 两类，每层算 DiffMean 向量 $w^{(l)} = \mu^{(l)}_{high} - \mu^{(l)}_{low}$，把所有层 DiffMean 拼成矩阵 $W$ 做 SVD，取 top-$k$ 右奇异向量 $B_k = V^\top_{1:k}$ 作为"全局 concreteness 子空间"；用 $k=1$ 测是否能压成单方向。(c) **Causal steering**：把单位方向 $\mathbf{u}$ 直接加到中后期某层的 hidden state 上 $h^{(\ell)}_{\text{steer}} = h^{(\ell)} + \alpha \mathbf{u}$（$\alpha > 0$ 推向字面、$\alpha < 0$ 推向比喻），再让模型继续解码生成改写。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入语料<br/>Wikipedia 25k 句 + GPT-5.1 600 对字面/比喻合成句"]
+    A --> B["Prompt-based probing + 最后 token 表示<br/>目标词置于 prompt 末尾，取末 token 各层 hidden state"]
+    B --> C["MLP 回归预测 concreteness 分数<br/>画 layer × Pearson r 曲线，定位编码层"]
+    B --> D["DiffMean + 多层 SVD 合成全局一维 axis<br/>每层 μhigh − μlow 堆成 W，SVD 取 top-k 右奇异向量"]
+    D --> E["投影到一维子空间 (k=1)<br/>ROC AUC ≈ 0.90 验证一维压缩"]
+    E --> F["因果 steering<br/>选定层 h + α·u，α>0 推字面 / α<0 推比喻"]
+    F --> G["字面 ↔ 比喻可控改写输出"]
+```
+
 ### 关键设计
 
 **1. Prompt-based probing + 最后 token 表示：绕开 decoder 因果掩码"看不到后文"的限制**

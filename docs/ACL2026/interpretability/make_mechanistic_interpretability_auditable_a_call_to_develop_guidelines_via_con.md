@@ -40,7 +40,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文提出的不是模型算法，而是一套 MI 审计生态系统。整体分为三层：第一层是 **Continuous Reviewing**，让复现、负结果、批评、补充实验和小型 partial results 不必等到新论文才能被记录；第二层是 **Community-Refined Guidelines and Protocols**，把平台上反复出现的有效实践凝练成社区认可的最小标准；第三层是 **Source-Based Automated Auditing**，用显式证据链和概率逻辑帮助人和 AI agent 追踪 claim 的可信度。
+论文提出的不是模型算法，而是一套 MI 审计生态系统。整体分为三层：第一层是**连续协作评审平台**（Continuous Reviewing），让复现、负结果、批评、补充实验和小型部分结果（partial results）不必等到新论文才能被记录；第二层是**社区精炼的最小指南**（Community-Refined Guidelines and Protocols），把平台上反复出现的有效实践凝练成社区认可的最小标准；第三层是**源证据追踪与自动审计**（Source-Based Automated Auditing），用显式证据链和概率逻辑帮助人和 AI agent 追踪 claim 的可信度。这三层逐级递进——平台先把零散经验沉淀下来，指南再从沉淀的证据里固化出标准，源证据追踪最后让每条 claim 的可信度可被机器与人协同核查。
 
 在这个框架里，同行评审仍然存在，但它不再是唯一质量控制节点。论文外的“清理工作”被赋予明确位置：研究者可以上传实验仓库、评论 claim、记录复现失败、补充边界案例，平台则把这些 meta-knowledge 组织成可搜索、可引用、可累积的社区记忆。
 

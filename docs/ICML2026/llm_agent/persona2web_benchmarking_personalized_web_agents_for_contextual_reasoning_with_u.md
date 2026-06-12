@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 Persona2Web 把"评测个性化"这件事拆成两条主线：一条是**数据构造**，从用户档案出发，生成事件种子、分解成具体动作、聚合成全年浏览历史，最后从一个显式 query 反向遮蔽出三档模糊 query；另一条是**评估架构**，在 AgentOccam / Browser-Use 两个 base agent 之上挂一个负责查历史、补字段的个性化模块，再用 GPT-5-mini 当 reasoning-aware judge 读完整轨迹打分。最终数据集含 50 个用户、102,568 条历史、150 个 task（每 task 派生 3 个 ambiguity 档），覆盖 21 个子领域、105 个真实网站；agent 端则在 5 个 backbone × 2 个 base 架构 × 3 种 history 访问方案（no-history / on-demand / pre-execution）下做全交叉评测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    subgraph H["隐式用户历史合成（设计 1）"]
+        direction TB
+        A["GPT-4o 生成 demographic + 域偏好<br/>→ 高频/低频 event seeds"] --> C["分解成动作、打散到全年 + 10% 噪声<br/>→ 历史日志（偏好 exact-match 仅 3.56%）"]
+    end
+    subgraph Q["三档模糊查询（设计 2）"]
+        direction TB
+        L0["Level 0 显式<br/>含 website + 偏好"] -->|遮 website| L1["Level 1"]
+        L1 -->|再遮偏好| L2["Level 2：必须靠历史补全"]
+    end
+    H --> AG["base agent（AgentOccam / Browser-Use）<br/>+ 个性化模块查历史、补缺失字段"]
+    Q --> AG
+    AG --> J["GPT-5-mini 推理感知评分（设计 3）<br/>读完整 trajectory"]
+    J --> M["P_web / P_pref 各拆 retrieval+utilization<br/>+ Intent + SR"]
+```
+
 ### 关键设计
 
 **1. 隐式用户历史：把偏好藏进行为里，逼 agent 归纳而非匹配**

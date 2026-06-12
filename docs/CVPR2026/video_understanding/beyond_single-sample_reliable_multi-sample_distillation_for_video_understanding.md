@@ -48,6 +48,18 @@ tags:
 
 R-MSD（Reliable Multi-Sample Distillation）针对的是黑盒蒸馏里「单次 teacher 响应不可靠」这件事：它不再拿 teacher 一次输出当金标准，而是先对每个输入采多份 teacher 响应建池，再按任务类型自适应地配对 teacher 和 student，最后走「SFT warmup → RL 对抗蒸馏」两阶段，把 teacher pool 里的质量差异真正用起来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：视频 + 问题"] --> B["多样本 Teacher Pool<br/>teacher API 采 K=5~10 份响应建池"]
+    B --> C["质量打分 + 格式过滤<br/>封闭式 rule-based verifier（IoU / exact match）"]
+    C -->|"封闭式：质量偏向配对"| D["任务自适应匹配"]
+    C -->|"开放式：均匀采样配对"| D
+    D --> E["两阶段训练 · Stage 1<br/>选最佳响应做交叉熵 SFT 打底"]
+    E --> F["两阶段训练 · Stage 2<br/>RL 对抗蒸馏：Critic-as-Discriminator 分布级监督 + rule reward + PPO"]
+    F --> G["输出：蒸馏后 4B student"]
+```
+
 ### 关键设计
 
 **1. 多样本 Teacher Pool：用多份响应抵消单样本噪声**

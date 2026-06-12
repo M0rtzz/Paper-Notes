@@ -48,6 +48,17 @@ Mind Dreamer（MD）在 DreamerV3 的 RSSM 之上插入两组新模块：
 
 训练时一边按标准 RSSM 训世界模型、按标准 actor-critic 训策略，另一边用 $s' \sim \mathcal{G}_\theta$ 取代部分 $s_0 \sim \mathcal{D}$ 作为想象 rollout 的起点。生成器、势场、策略以异步频率交替更新，世界模型频率最低、生成器频率最高，保证目标分布对策略来说"准静态"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["Replay Buffer：采样真实状态 s₀"] --> G["主动因果干预 ACI<br/>对抗生成器 Gθ(s₀,ε) 生成干预锚点 s′<br/>InfoNCE 把 s′ 推向高 EFE 区"]
+    G --> R["从 s′ 起想象 rollout"]
+    R --> RELAY["Relay 价值/不确定性函数<br/>跨断点信用分配：Vφ 用 γ、Uφu 用 γ²"]
+    RELAY --> POL["更新策略 πω 与 Vφ / Uφu"]
+    MF["流形锚定 ℒmf<br/>动力学熵 + cycle-consistency"] -. 约束 s′ 留在可信信赖域 .-> G
+    POL -->|真实环境执行回收数据| D
+```
+
 ### 关键设计
 
 **1. Active Causal Intervention（ACI）：把 EFE 从路径上的标量抬成全局曲线，决定生成器往哪儿投放锚点**

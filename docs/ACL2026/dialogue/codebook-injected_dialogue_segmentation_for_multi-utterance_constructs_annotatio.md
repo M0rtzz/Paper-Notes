@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 对于一段对话 $\mathbf{u}=(u_1,\ldots,u_T)$，segmenter 要输出 boundary 集合 $\mathcal{B}\subset\{1,\ldots,T-1\}$，把对话切成 $K=|\mathcal{B}|+1$ 个连续 segment $S_1,\ldots,S_K$，再交给三类 gold-free 指标打分。全文的核心操纵是一个 2（方法家族）×2（是否看得到 codebook）的对照实验：方法家族取 LLM-zero-shot（GPT-5 / Gemini-3-pro，纯 topic-shift 提示，输出 boundary index 的 JSON）和 Dial-Start（非 LLM，contrastive utterance encoder $f(\cdot)$ 算相邻相似度 depth score，按 $\mathrm{thr}=\mu+\alpha\sigma$ 选 boundary）；codebook-awareness 则决定 segmenter 在切之前是否看得到 DA 定义——LLM 侧把定义塞进 system message，Dial-Start 侧用 DA-conditioned retrieval 注入。最后用段内一致性（normalized entropy ↓ / purity ↑）、相邻段差异性（JS 散度 ↑ / boundary change rate ↑）、人-AI 分布对齐（segment-level JS ↓）三组指标多目标评测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入对话 u=(u₁,…,u_T)"] --> B["2×2 对照：方法家族 × 是否看得到 codebook"]
+    B -->|LLM 家族| C["Codebook-injected LLM 分割<br/>DA 定义塞进 system message<br/>教学动作变化处下 boundary"]
+    B -->|coherence 家族| D["DA-conditioned 检索增强分割<br/>从 DA memory 检索邻居<br/>融合回 Dial-Start coherence 表征"]
+    C --> E["切出 K 个连续 segment S₁…S_K"]
+    D --> E
+    E --> EVAL
+    subgraph EVAL["Gold-label-free 三类评测指标"]
+        direction TB
+        G["段内一致性<br/>normalized entropy↓ / purity↑"]
+        H["相邻段差异性<br/>JS 散度↑ / boundary change rate↑"]
+        I["人-AI 分布对齐<br/>segment-level JS↓"]
+    end
+```
+
 ### 关键设计
 
 **1. Codebook-injected LLM segmentation：让 LLM 在"哪里切"这一步就盯着"切完贴什么 label"**

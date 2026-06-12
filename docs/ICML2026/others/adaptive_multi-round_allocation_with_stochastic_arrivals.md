@@ -48,7 +48,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-时刻 $t\geq 1$ 系统处于状态 $(r_t,\mathcal D_{1:n_t}^{(t)})$（剩余预算 $r_t$，前沿 $n_t$ 个个体的到达分布）。策略 $\pi$ 每轮选择：(i) 轮预算 $s_t\in\{0,\ldots,r_t\}$，(ii) 分配向量 $\mathbf k_t=(k_1,\ldots,k_{n_t})$，$\sum_i k_i\leq s_t$。个体 $i$ 受其到达容量 $X_i\sim\mathcal D_i$ 限制，实际招募 $\min\{k_i,X_i\}$；新招募个体进入下一轮前沿，分布从种群 $\mathcal P$ 抽样。目标 $\max_\pi\mathbb E[\sum_{t\geq 1}\gamma^{t-1}N_t]$。
+时刻 $t\geq 1$ 系统处于状态 $(r_t,\mathcal D_{1:n_t}^{(t)})$（剩余预算 $r_t$，前沿 $n_t$ 个个体的到达分布）。策略 $\pi$ 每轮选择：(i) 轮预算 $s_t\in\{0,\ldots,r_t\}$，(ii) 分配向量 $\mathbf k_t=(k_1,\ldots,k_{n_t})$，$\sum_i k_i\leq s_t$。个体 $i$ 受其到达容量 $X_i\sim\mathcal D_i$ 限制，实际招募 $\min\{k_i,X_i\}$；新招募个体进入下一轮前沿，分布从种群 $\mathcal P$ 抽样。目标 $\max_\pi\mathbb E[\sum_{t\geq 1}\gamma^{t-1}N_t]$。整篇方法沿三条主线展开：单轮怎么分（贪心轮内分配）、多轮状态怎么压（人口水平代理值函数）、代理递推怎么精确算并插回原问题（生成函数 + 改进 Bellman 算子）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["状态：剩余预算 r_t ＋ 前沿（n_t 个体）"]
+    S --> B["生成函数 ＋ 改进 Bellman 算子<br/>选本轮预算 s_t"]
+    B --> G["单轮贪心分配 k_t<br/>按生存概率边际收益逐份分配"]
+    G --> N["实际招募 N_t ＝ Σ min(k_i, X_i)"]
+    N -->|新招募者 ~ 种群 P 加入| S2["下一轮前沿（t ← t＋1）"]
+    S2 -.预算未耗尽则回环.-> S
+    U["人口水平代理值函数 U_P(r, n)<br/>状态降维为 预算 ＋ 规模"]
+    U -.提供未来回报估计.-> B
+```
 
 ### 关键设计
 

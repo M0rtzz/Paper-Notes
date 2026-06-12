@@ -40,15 +40,27 @@ SATA 用 MLLM 生成的关节语义标签做 FiLM 风格的特征调制，配合
 ## 方法详解
 
 ### 整体框架
-SATA 要解决的是「任意骨架拓扑的动作如何编进一个共享潜空间、再无配对地解码到另一套骨架上」。它把一段 $T$ 帧动作表达成图序列 $\mathcal{G}=\{G_1,\dots,G_T\}$，每帧图 $G_t=(V,E,E_f,F_s,F_{m,t})$ 由节点（关节）、边（骨链）、边特征（拓扑深度/逆深度）和节点特征构成；节点特征拆成静态骨架部分 $F_s=(X_g,X_l,X_t)$（全局偏移、相对父关节的 rest pose 坐标、关节语义嵌入）与动态运动部分 $F_m=(q,x,v_q,v_x,r,c)\in\mathbb{R}^{J\times D}$（6D 旋转、相对位置、角速度/线速度、根运动、足部接触）。编码侧先用语义-空间调制把每个关节的运动特征按其功能身份 reshape，再经几个空间-时间交错图块抽特征，最后一次空间 max-pool 把整套骨架压成帧级潜码 $z_t$、抹掉源拓扑信息；解码侧把 $z_t$ 广播到目标骨架的每个节点，叠上目标骨架自己的语义/几何条件走对称解码器，输出 $\hat F_m^{out}=(q,r,c)\in\mathbb{R}^{J\times 11}$ 再经 FK 还原成完整运动。潜码可选 VAE（128D 对角高斯）做连续表征，或 RVQ-VAE 提供离散 token 给下游 text-to-motion。
+SATA 要解决的是「任意骨架拓扑的动作如何编进一个共享潜空间、再无配对地解码到另一套骨架上」。它把一段 $T$ 帧动作表达成图序列 $\mathcal{G}=\{G_1,\dots,G_T\}$，每帧图 $G_t=(V,E,E_f,F_s,F_{m,t})$ 由节点（关节）、边（骨链）、边特征（拓扑深度/逆深度）和节点特征构成；节点特征拆成静态骨架部分 $F_s=(X_g,X_l,X_t)$（全局偏移、相对父关节的 rest pose 坐标、关节语义嵌入）与动态运动部分 $F_m=(q,x,v_q,v_x,r,c)\in\mathbb{R}^{J\times D}$（6D 旋转、相对位置、角速度/线速度、根运动、足部接触）。编码侧先用语义感知特征调制把每个关节的运动特征按其功能身份 reshape，再经几个空间-时间交错图块抽特征，最后一次空间 max-pool 把整套骨架压成帧级潜码 $z_t$、抹掉源拓扑信息；解码侧把 $z_t$ 广播到目标骨架的每个节点，叠上目标骨架自己的语义/几何条件走对称解码器，输出 $\hat F_m^{out}=(q,r,c)\in\mathbb{R}^{J\times 11}$ 再经 FK 还原成完整运动。潜码可选 VAE（128D 对角高斯）做连续表征，或 RVQ-VAE 提供离散 token 给下游 text-to-motion。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["任意拓扑 BVH 动作 → 图序列 G<br/>节点=关节，边=骨链"] --> MOD["语义感知特征调制<br/>MLLM 关节语义 + 空间编码 → FiLM 缩放/平移参数 reshape 运动特征"]
+    MOD --> STB["空间-时间交错图块 ×3<br/>GINEConv + 空间 Transformer ↔ 时间 Transformer"]
+    STB --> POOL["空间 max-pool 抹掉源拓扑 → 帧级潜码 z_t"]
+    POOL --> Z["拓扑无关潜流形<br/>VAE 128D / RVQ-VAE 离散 token"]
+    Z --> BC["广播 z_t 到目标骨架 + 目标语义/几何条件"]
+    BC --> DEC["对称解码器 → FK 还原"]
+    DEC --> OUT["目标骨架动作（零样本跨物种重定向）"]
+```
 
 ### 关键设计
 
-**1. Semantic-Aware Feature Modulation：用关节语义当跨物种的「功能身份」去调制运动特征**
+**1. 语义感知特征调制（Semantic-Aware Feature Modulation）：用关节语义当跨物种的「功能身份」去调制运动特征**
 
 拓扑五花八门、几何无法直接对齐，但「人类左手」和「猫左前爪」在功能上是同一类关节——这条设计就是要把这种功能对应显式建出来，让它们即便在骨架上的位置完全不同也落到潜空间的相近区域。具体做法是先用 Gemini 2.5 Pro 给每个关节生成中性化的功能描述（刻意强调功能而非物种命名以利迁移），冻结 T5 编码成语义嵌入 $X_t$。三路输入各自投影：运动 $z_m=\phi_m(F_m)$、空间 $z_s=\phi_s([X_g;X_l])$（$\phi_s$ 是正弦编码器，把连续坐标映成高频谱）、语义 $z_t=\phi_t(X_t)$。空间与语义拼接后过非线性得到节点条件 $c=\Phi([z_s;z_t])$，再投影出 FiLM 参数 $[\gamma,\beta]=\Psi(c)$ 去 reshape 运动特征：$\hat x=\mathrm{LN}(z_m)\odot(1+\gamma)+\beta$。相比简单相加会让身份信息淹没在运动里，FiLM 让条件去缩放/平移特征本身而非污染它；外面再套一层门控残差 $\widetilde F_m=z_m+g\odot\hat x$（$g=\sigma(W_g c)$），在语义噪声或模态冲突时模型可以主动把调制关小。
 
-**2. Spatio-Temporal Interleaved Graph Block：交错的空间-时间块，既守住骨架物理先验又拉直长时连贯**
+**2. 空间-时间交错图块（Spatio-Temporal Interleaved Graph Block）：交错的空间-时间块，既守住骨架物理先验又拉直长时连贯**
 
 单用图卷积会丢长时上下文，单用全注意力又会丢拓扑先验，所以这个块把两者交错堆叠。空间分支借鉴 GPSConv 并行两条路：一条 GINEConv 做消息传递（吃边特征里的拓扑深度，强化骨长/层级这类骨架先验），一条 Spatial Transformer 建模图上不相邻关节的长程协同（如手脚配合），两路求和后过 MLP+残差。时间分支借鉴 TimeSformer 的时空交错：用映射算子 $\mathcal{T}$ 把批图序列 $\mathcal{G}_{batch}$ 重排成「按关节聚集的时间流」$\mathcal{X}_{temp}$，加正弦位置编码后过 Temporal Transformer 抓长时依赖，再用 $\mathcal{T}^{-1}$ 把更新的特征写回图。编码器堆 3 个这样的块、解码器同构对称。直觉上等于「先让每帧骨架保持物理合理，再沿时间维把序列拉直」，反复纠缠后重建既不穿模也不抖动。
 

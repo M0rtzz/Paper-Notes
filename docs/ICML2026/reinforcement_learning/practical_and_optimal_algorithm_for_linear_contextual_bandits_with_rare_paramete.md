@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-把 $[T]$ 切成 $B=\mathcal O(\log\log T)$ 个 static-grid 区间：$\mathcal T_1=\lceil\sqrt T/\log_2\log_2 T\rceil+1$，$\mathcal T_\ell=(\mathcal T_{\ell-1}+\lceil T^{1-2^{-\ell}}/\log_2\log_2 T\rceil+2)\wedge T$。在每个区间内 reward 不可见但 context 在线到达；在区间边界 $\mathcal T_\ell$ 做一次 ridge regression $\hat\theta_\ell=V_\ell^{-1}\sum_{t}r_tx_{t,a_t}$（其中 $V_\ell=H_{\mathcal T_\ell}$）并把 $H$ 重置为 $\lambda I$，下一区间用 $\hat\theta_1,\ldots,\hat\theta_{\ell-1}$ 做嵌套的 arm elimination 缩小 feasible set $\mathcal A_t^{(k)}$。两个核心算法 BLCE-G 与 BLCE 共用这一框架，只在区间内的探索-利用分配上不同。
+把 $[T]$ 切成 $B=\mathcal O(\log\log T)$ 个 static-grid 区间：$\mathcal T_1=\lceil\sqrt T/\log_2\log_2 T\rceil+1$，$\mathcal T_\ell=(\mathcal T_{\ell-1}+\lceil T^{1-2^{-\ell}}/\log_2\log_2 T\rceil+2)\wedge T$。在每个区间内 reward 不可见但 context 在线到达，agent 按某种 allocation 策略选 arm、用 Sherman-Morrison 每步 $\mathcal O(d^2)$ 维护 reward-free 的 Gram 矩阵 $H_t$；在区间边界 $\mathcal T_\ell$ 做一次 ridge regression $\hat\theta_\ell=V_\ell^{-1}\sum_{t}r_tx_{t,a_t}$（其中 $V_\ell=H_{\mathcal T_\ell}$）并把 $H$ 重置为 $\lambda I$，下一区间用 $\hat\theta_1,\ldots,\hat\theta_{\ell-1}$ 做嵌套的 arm elimination 缩小 feasible set $\mathcal A_t^{(k)}$，如此循环到第 $B$ 个区间。三个算法共用这套"区间内 reward-free 探索 + 区间边界参数更新 + arm elimination"的回环骨架，**只在区间内的探索-利用 allocation 上不同**：BLCE-G 与 BLCE 针对线性 bandit、分别保留与去掉 G-optimal design，BGLE 则把同一骨架（ridge regression 换成 MLE、Gram 按局部曲率加权）扩到广义线性 bandit。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：T 轮 / K 条 arm / d 维特征<br/>切成 B=O(loglog T) 个 static-grid 区间"] --> B["区间 ℓ 内（reward 不可见、context 在线到达）<br/>按 allocation 选 arm，Sherman-Morrison 维护 Gram H_t"]
+    B --> C{"in-interval allocation 策略"}
+    C -->|"BLCE-G"| C1["near G-optimal + 最大不确定方向 + 贪心 三段分配"]
+    C -->|"BLCE"| C2["整段走最大不确定方向探索<br/>砍掉 G-optimal design"]
+    C -->|"BGLE（广义线性）"| C3["曲率加权 Gram + 两段探索-利用"]
+    C1 --> D["区间边界 T_ℓ：参数更新<br/>ridge / MLE 得 θ̂_ℓ，重置 H=λI"]
+    C2 --> D
+    C3 --> D
+    D --> E["arm elimination：按阈值 ε 缩小 feasible set"]
+    E -->|"ℓ < B"| B
+    E -->|"ℓ = B"| F["输出：仅 O(loglog T) 次参数更新<br/>minimax-optimal regret"]
+```
 
 ### 关键设计
 

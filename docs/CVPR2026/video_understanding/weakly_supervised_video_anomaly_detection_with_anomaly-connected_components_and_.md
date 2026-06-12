@@ -45,7 +45,35 @@ tags:
 
 ### 整体框架
 
-LAS-VAD 想解决的是弱监督异常检测里最尴尬的一对矛盾：只有视频级标签可用，却要做出帧级判断，而且很多异常和正常动作长得几乎一样。它的做法是让一段视频同时走三路。视觉这一路先用 CLIP 编码器拿到帧级特征 $X_\text{video} \in \mathbb{R}^{T \times D}$，再过局部 Transformer 加 GCN 建模时序依赖得到增强特征 $X_f$；文本这一路用文本编码器拿异常类别特征 $X_\text{lang}$，再让 LLM 为每类异常生成属性描述、编码成 $X_\text{aux}$。在这之上，ACC 模块负责把帧聚成语义组造出帧级伪标签、补上缺失的细粒度监督，IAM 模块负责从运动学角度推断"这个动作到底想干什么"。最后三个分支的预测做平均融合 $p^f = \frac{1}{3}(q^m + q^a + q^l)$ 得到最终异常分。
+LAS-VAD 想解决的是弱监督异常检测里最尴尬的一对矛盾：只有视频级标签可用，却要做出帧级判断，而且很多异常和正常动作长得几乎一样。它的做法是先抽一份共享的增强视觉特征，再在其上分出三条预测分支、并额外配一个伪标签生成模块。具体地：先用 CLIP 编码器拿到帧级特征 $X_\text{video} \in \mathbb{R}^{T \times D}$，过局部 Transformer 加 GCN 建模时序依赖得到增强特征 $X_f$。在 $X_f$ 之上有三条预测分支——主分支用全连接+Softmax 直接出类别预测 $q^m$；IAM 分支从运动学角度推断"这个动作到底想干什么"得到 $q^a$；文本分支让文本编码器拿异常类名特征 $X_\text{lang}$、再让 LLM 给每类异常补属性描述编码成 $X_\text{aux}$，拼成 $X_\text{text}$ 后与 $X_f$ 算跨模态相似度得到 $q^l$。与此同时，ACC 模块把帧聚成语义连通分量、造出帧级伪标签去监督主分支 $q^m$（它的语义校正还要借用文本分支的 $q^l$），补上缺失的细粒度监督。最后三条分支平均融合 $p^f = \frac{1}{3}(q^m + q^a + q^l)$，再经 MIL 聚合成视频级异常分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧"] --> B["CLIP 视觉编码器 + 局部 Transformer + GCN<br/>增强视频特征 X_f"]
+    TXT["文本编码器<br/>异常类名特征 X_lang"]
+
+    B --> M["主分支<br/>FC + Softmax → q^m"]
+    B --> IAM["意图感知机制 IAM<br/>位置→速度→加速度 + 跨意图对比 → q^a"]
+
+    TXT --> ATT["异常属性增强<br/>LLM 属性描述 X_aux，拼接成 X_text"]
+    B --> L["跨模态余弦相似度<br/>X_text · X_f → q^l"]
+    ATT --> L
+
+    subgraph ACC["异常连通分量机制 ACC（生成帧级伪标签）"]
+        direction TB
+        S1["帧间视觉相似度 A_v"] --> S2["q^l 跨模态语义校正"]
+        S2 --> S3["阈值二值化 + DFS 连通分量 → 帧级伪标签"]
+    end
+    B --> S1
+    L --> S2
+    S3 -->|L_aux 监督| M
+
+    M --> F["平均融合<br/>p^f = (q^m + q^a + q^l) / 3"]
+    IAM --> F
+    L --> F
+    F --> O["MIL 聚合 → 视频级异常分"]
+```
 
 ### 关键设计
 

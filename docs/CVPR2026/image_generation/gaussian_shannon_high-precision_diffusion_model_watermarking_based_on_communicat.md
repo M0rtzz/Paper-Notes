@@ -35,7 +35,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-嵌入阶段：二进制水印 $\mathbf{w}$ → LDPC 编码得到码字 $\mathbf{c}$ → 冗余扩展为 $\mathbf{c}_R$（匹配潜空间维度）→ 伪随机调制生成信号 $\mathbf{s}$（保持标准高斯分布）→ 根据 $\mathbf{s}$ 采样初始噪声 $\mathbf{z}_T$ → 扩散模型去噪生成水印图像。提取阶段：图像 → DDIM Inversion 恢复 $\mathbf{z}_T$ → 解调制得到 $\mathbf{c}'_R$ → 尝试直接 LDPC 解码各个码字副本 → 若失败则多数投票聚合后再 LDPC 解码 → 恢复 $\mathbf{w}$。
+嵌入阶段：二进制水印 $\mathbf{w}$ → LDPC 编码得到码字 $\mathbf{c}$ → 冗余扩展为 $\mathbf{c}_R$（匹配潜空间维度）→ 伪随机调制生成信号 $\mathbf{s}$（保持标准高斯分布）→ 根据 $\mathbf{s}$ 采样初始噪声 $\mathbf{z}_T$ → 扩散模型去噪生成水印图像。提取阶段：图像 → DDIM Inversion 恢复 $\mathbf{z}_T$ → 解调制得到 $\mathbf{c}'_R$ → 尝试直接 LDPC 解码各个码字副本 → 若失败则多数投票聚合后再 LDPC 解码 → 恢复 $\mathbf{w}$。整条链路被统一刻画成「发送端嵌入 → 噪声信道 → 接收端纠错」的通信系统：嵌入侧负责把水印塞进高斯噪声又不破坏其分布，中间的扩散生成、传播攻击与 DDIM 反演共同构成噪声信道，接收侧用两级纠错把比特精度顶到 100%。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["二进制水印 w"] --> EMB["冗余扩展 + 伪随机调制<br/>LDPC编码→重复R份→密钥调制→采样z_T(保持高斯)"]
+    EMB --> GEN["扩散去噪生成水印图像"]
+    GEN --> CH["噪声信道 BIAWGN<br/>传播攻击 + DDIM反演预测误差"]
+    CH --> DEMOD["DDIM Inversion 还原 z_T → 解调得各码字副本"]
+    DEMOD --> TRY{"某副本通过<br/>LDPC校验?"}
+    TRY -->|是,直接解码| OUT["恢复水印 w"]
+    TRY -->|R份全失败| VOTE["级联纠错：逐位多数投票<br/>聚合后再 LDPC 解码"]
+    VOTE --> OUT
+```
 
 ### 关键设计
 

@@ -43,7 +43,27 @@ tags:
 
 PoCo 要解决的是多参考多镜头视频生成里的"参考混淆"：把多个参考图和多个镜头的 token 一股脑拼进 attention 后，当两个参考长得像，模型分不清哪个镜头该用哪个参考。作者的判断是——这不该靠改 attention 架构来修，而是 RoPE 这条"手动设计的位置编码"通道本就有余地承担额外的上下文路由。
 
-整条 pipeline 建在 VACE-Wan2.1-14B 上：参考图先经 VAE 编码成 token，与待生成的视频 token 拼接后送进 DiT blocks；每个 block 里的 Self-Attention 换上 SideInfo-RoPE，Cross-Attention 换成层次化版本。训练和推理统一在 9s / 480p / 16fps、两参考的设置下进行。真正动刀的只有两处——位置编码加一个轴、文本条件改一张掩码——其余框架原样保留。
+整条 pipeline 建在 VACE-Wan2.1-14B 上：参考图先经 VAE 编码成 token，与待生成的视频 token 拼接后送进 DiT blocks；每个 block 里的 Self-Attention 换上 SideInfo-RoPE，Cross-Attention 换成层次化版本。训练和推理统一在 9s / 480p / 16fps、两参考的设置下进行。真正动刀的只有两处——位置编码加一个轴、文本条件改一张掩码——其余框架原样保留。而这两处改动所需的 SideInfo 身份标注，由一条离线数据流水线从原始长视频里自动榨出。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["参考图 + 多镜头文本"] --> V["VAE 编码<br/>参考 token 与视频 token 拼接"]
+    V --> DIT["DiT blocks (VACE-Wan2.1-14B)"]
+    subgraph BLK["每个 DiT block 的两处改动"]
+        direction TB
+        SA["SideInfo-RoPE<br/>位置编码加身份轴，相位差抑制跨参考干扰"]
+        CA["层次化交叉注意力<br/>掩码切文本：参考看全局、镜头看局部"]
+    end
+    DIT --> BLK
+    BLK --> OUT["多镜头一致视频"]
+    subgraph DATA["数据流水线（离线产出 SideInfo 标注）"]
+        direction TB
+        D1["质量过滤 → 切镜头 → caption"] --> D2["人脸检测 + ID 聚类<br/>双分支参考构建"]
+        D2 --> D3["回传 ID 标签 → SideInfo s(x)"]
+    end
+    DATA -.训练监督.-> SA
+```
 
 ### 关键设计
 

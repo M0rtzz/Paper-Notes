@@ -47,24 +47,35 @@ AtelierEval 包含 360 个专家设计任务，每类任务 120 个，覆盖 Ope
 
 交互协议被严格统一为 single-turn、纯文本 prompt。人类通过简化的 Gradio UI 输入 prompt，MLLM 通过标准 API 接收相同任务说明并输出 prompt。没有即时图像反馈，也不允许多轮 refinement，从而尽量隔离“第一次把意图翻译成 prompt”的能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三类认知任务划分<br/>360 个专家任务: 开放式 OE / 受约束 CO / 模仿 IM"] --> B["prompter 策略 π (人类 / MLLM)<br/>单轮纯文本写出可执行 prompt p"]
+    B --> C["T2I 后端 M 生成图像<br/>(nBanana / GI-1 / Flux / SDXL)"]
+    B --> D
+    C --> D
+    subgraph J["AtelierJudge 双过程评估"]
+        direction TB
+        D["记忆检索与技能路由<br/>安全过滤 → 按任务类型路由技能"]
+        D --> E["System 1 主观分支<br/>检索 top-K 专家样例 → 1~5 分质量"]
+        D --> F["System 2 客观分支<br/>prompt/image 清单逐条 QA/VQA 验证"]
+    end
+    E --> G["主观分 + 客观约束满足率"]
+    F --> G
+```
+
 ### 关键设计
-1. **三类认知任务划分**:
+1. **三类认知任务划分：把提示词能力拆成可诊断的维度**
 
-	- 功能：把 prompting proficiency 拆成可诊断的能力维度，而不是只给一个总分。
-	- 核心思路：OE 对应 divergent production，要求把抽象或叙事意图扩展成完整画面；CO 对应 convergent production，要求把结构化约束整合进 prompt；IM 对应 cognition，要求从目标图像中识别对象、风格、空间关系并编码为文本。
-	- 设计动机：T2I prompting 既有创意扩展，也有硬约束执行，还有看图复述。单一任务类型很容易把不同能力混在一起，三分类能更清楚地解释人类和模型各自强在哪里。
+	现有 T2I benchmark 只给一个总分，看不出某个 prompter 到底强在创意扩展、约束执行还是看图复述哪一环——单一任务类型会把这几种本质不同的能力混在一起。作者借 Structure of Intellect 认知理论，把 prompter 策略 $\pi: I \to p$ 拆成三种构造性认知操作并各配 120 个专家任务（共 360 个）：开放式创作（OE，对应发散生产 divergent production）要求从抽象、叙事化需求中扩展出完整画面的氛围、主题与风格；受约束创作（CO，对应收敛生产 convergent production）要求在多条明确约束下组织 prompt；模仿（IM，对应认知 cognition）则看图反推 prompt、把视觉内容编码成文字。三类任务对应的失败模式各不相同，因此能直接读出人类和模型各自的能力短板，而不是只给一个笼统排名。
 
-2. **AtelierJudge 的双过程 agentic evaluation**:
+2. **AtelierJudge 双过程评估：主观与客观解耦**
 
-	- 功能：同时评估难以量化的审美/表达质量和明确可判定的约束满足。
-	- 核心思路：System 1 分支使用 memory-augmented subjective skills，对 prompt 和图像的清晰度、创意展开、术语能力、意图形式化、氛围、构图、色光和技术瑕疵等维度打 1-5 分；System 2 分支使用 prompt/image paired checklists，以 QA/VQA 方式验证每条约束是否被写进 prompt、是否在图像中实现。
-	- 设计动机：纯 MLLM judge 容易把“好看”误当作“符合约束”，或被自身偏好影响。主观和客观分支解耦后，漂亮但违反约束的图像不会被误判为整体优秀。
+	纯 MLLM judge 有个老毛病——容易把“好看”误当成“符合约束”，于是一张漂亮但漏掉文本、数量或空间要求的图也能拿高分（high-quality hallucination）。AtelierJudge 借 Dual-Process Theory 把评分拆成两条并行支路，分别作用在 prompt 和图像上：System 1 主观支路用一组 memory-augmented 的主观技能，对清晰度、创意展开、术语能力、意图形式化、氛围、构图、色光、技术瑕疵等维度打 1~5 分；System 2 客观支路则把每条任务约束拆成独立 checkpoint，用 prompt/image 配对清单（checklist）以 QA/VQA 方式逐条核验“约束有没有写进 prompt、有没有在图像里实现”。两条支路解耦后，分析性的约束核验不再被整体观感带偏，漂亮却违约的图也就不会被误判成整体优秀。
 
-3. **记忆检索与技能路由**:
+3. **记忆检索与技能路由：用专家样例锚定分数**
 
-	- 功能：让自动评分更接近专家校准，并能适配不同任务类别。
-	- 核心思路：每个 subjective skill 绑定专家标注 exemplar memory，评价时用文本或图像 embedding 检索 top-K 相似样例，再根据评分准则和样例 rationale 生成分数。系统先通过安全过滤，再按任务类型并行调度 prompt/image、subjective/objective 技能。
-	- 设计动机：直接让 MLLM 打分会普遍给高分，尤其分不清 4 分和 5 分。相似样例检索相当于给 evaluator 一个本任务附近的评分锚点，能恢复更细的分数梯度。
+	直接让 MLLM 打分会普遍偏高、尤其分不清 4 分和 5 分，主观维度的分数梯度被压扁。AtelierJudge 给每个主观技能绑定一份专家标注的 gold exemplar memory，评分时用文本或图像 embedding 检索 top-K 相似样例，再结合评分准则和样例 rationale 给分——相当于给 evaluator 一个“本任务附近”的评分锚点，把被压扁的分数梯度重新拉开。整个流程先过安全过滤，再按任务类型把 prompt/image、主观/客观技能并行路由调度，使同一套 evaluator 能适配三类任务。消融显示，语义相似检索把 Spearman 排名相关从 zero-shot 的 0.56 提到 0.79，是评分逼近专家的关键，而非单纯换一个更强的 MLLM。
 
 ### 损失函数 / 训练策略
 这篇论文不是训练新生成模型，而是设计评测协议和自动评分系统。主观指标使用 MAE、Within-1 accuracy 和 Spearman $\rho$ 对齐专家评分；客观指标使用 checkpoint-level Acc 和 F1；benchmark 结果则汇总 prompt-side / image-side subjective score 与 objective satisfaction rate。

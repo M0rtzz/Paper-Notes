@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 DGPO 的输入是一个 QA 问题，输出是交错 `<think>/<search>/<answer>` 的 agentic 轨迹，难点在于 0.5B 学生初始性能近乎为 0，既拿不到 RL 奖励也学不动 on-policy 蒸馏。它把整套训练拆成首尾相接的两段：先用教师答对的 TGO 轨迹离线蒸馏，把学生顶到能稳定产出合理行为骨架的起点；再以这个学生为初始策略跑 PPO，但重新设计奖励——答对给标量 +1，答错则把奖励替换成对教师的 KL 蒸馏惩罚 $-\beta D_{\text{KL}}[\pi_\theta(y\mid x;\mathcal{R})\|\pi_g(y\mid x;\mathcal{R})]$，让错误样本也能从模仿教师中拿到密集信号。整个衔接靠一个性能阈值触发，不需要 TAID/DistiLLM 那种手工调 $\alpha$ 插值系数的调度器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["QA 问题"] --> B["冷启动 KD 初始化<br/>教师答对 TGO 轨迹离线蒸馏（CE + 软分布 KL）"]
+    B -->|"两阶段顺序：先 KD 再 PPO，不可颠倒"| C["蒸馏引导 PPO<br/>学生生成 think / search / answer 轨迹"]
+    C --> D{"答案是否正确"}
+    D -->|"答对"| E["奖励 +1<br/>自由探索，不受教师约束"]
+    D -->|"答错"| F["选择性 KL 惩罚<br/>−β·KL 拉回教师轨迹"]
+    E --> G["策略梯度更新"]
+    F --> G
+    G -->|"未达 1000 步则继续采样"| C
+    G --> H["紧凑 Agentic RAG 模型"]
+```
+
 ### 关键设计
 
 **1. 冷启动 KD 初始化：先把学生顶过零性能门槛**

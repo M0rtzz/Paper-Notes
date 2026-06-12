@@ -36,7 +36,33 @@ tags:
 ### 整体框架
 GraspLDP 想解决的是：模仿学习策略在抓取这一步上总打不过专门的抓取检测器，因为它把整段抓取动作序列当成一个高维回归问题硬学，又没法把现成的抓取先验真正用起来。它的思路是把抓取先验拆成两条线注入策略——一条是精确的目标 grasp pose，注进**动作潜空间**直接约束动作生成；一条是 graspness map 这种几何视觉线索，注进**扩散去噪过程**引导末端朝可抓区域移动。
 
-整体分两阶段训练。第一阶段（Action Latent Learning）先用一个 VAE 把动作序列压成紧凑潜特征，并在解码端把目标 grasp pose 拼进去重建动作，逼潜空间学会"动作如何被 pose 约束"。第二阶段（Diffusion on Latent Action Space）在这个潜空间上训练扩散策略去噪，把 graspness map 叠到手腕相机图像上作为视觉条件，再加一个对该线索的自监督重建目标，确保模型不会把线索当摆设忽略掉。推理时由一个启发式选择器从检测器给出的候选 pose 里挑一个最合适的来引导。
+整体分两阶段训练。第一阶段（Action Latent Learning）先用一个 VAE 把动作序列压成紧凑潜特征，并在解码端把目标 grasp pose 拼进去重建动作，逼潜空间学会"动作如何被 pose 约束"。第二阶段（Diffusion on Latent Action Space）在这个潜空间上训练扩散策略去噪，把 graspness map 叠到手腕相机图像上作为视觉条件，再加一个对该线索的自监督重建目标，确保模型不会把线索当摆设忽略掉。推理时由一个启发式选择器从检测器给出的候选 pose 里挑一个最合适的来引导。三个核心设计——潜空间抓取引导、视觉抓取性线索、启发式位姿选择器——分别对应这两阶段训练与推理选择，预训练抓取检测器贯穿其间提供 grasp pose、graspness 与候选位姿三类先验。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["预训练抓取检测器<br/>输出 grasp pose / graspness / 候选位姿"]
+    subgraph S1["潜空间抓取引导（Stage 1）"]
+        direction TB
+        A["动作序列"] --> B["VAE 编码器<br/>仅编码动作 → 潜特征 Z"]
+        B --> C["非对称解码器<br/>Z ⊕ 目标 grasp pose → 重建动作"]
+    end
+    subgraph S2["视觉抓取性线索（Stage 2）"]
+        direction TB
+        G["graspness map<br/>反投影 + 阈值叠到手腕相机图"] --> D["潜空间扩散去噪<br/>以观测 + 线索为条件"]
+        D --> R["自监督重建线索图<br/>L_Recon."]
+    end
+    subgraph S3["启发式位姿选择器 HPS（推理）"]
+        direction TB
+        H["候选 pose 碰撞检测 + NMS<br/>取 top-k 质量"] --> I["SE(3) 测地距离选最近 → G*"]
+    end
+    P -->|目标 grasp pose| C
+    P -->|抓取性得分| G
+    P -->|候选位姿| H
+    C -->|压紧的动作潜空间| D
+    I -->|引导去噪| D
+    D --> J["VAE 解码器 → 动作 chunk → 执行"]
+```
 
 ### 关键设计
 

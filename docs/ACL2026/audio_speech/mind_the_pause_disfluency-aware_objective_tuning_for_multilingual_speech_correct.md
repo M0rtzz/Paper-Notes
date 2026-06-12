@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 这套 disfluency 修正流水线想解决的核心矛盾是：交叉熵微调只会告诉模型"该长得像 fluent 参考"，却没有任何机制叫它"别把 filler 照抄进去"。作者的思路是双阶段配双损失。阶段一让 MuRIL（在 17 种印度语上预训练的多语言 BERT）做 token 级二分类（0=fluent、1=disfluent），subword 标签从 word 标签继承，在三语种合并集上微调出一个标注器。阶段二把"指令 + 含 disfluency 的原句 + MuRIL 预测的标签序列"按 Alpaca 格式拼成输入喂给 3B LLM（Llama-3.2-3B-Instruct 或 Qwen2.5-3B-Instruct），目标输出 fluent 转录，训练目标在标准 CE 之外额外叠一个显式压制 disfluent token 的对比损失。推理时同样格式输入，LLM 一步生成干净转录。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["含 disfluency 的 ASR 原句"] --> B
+    subgraph TAG["MuRIL 标签当提示（而非删除）"]
+        direction TB
+        B["MuRIL token 标注<br/>逐 token 标 fluent / disfluent"] --> C["Alpaca 提示拼接<br/>指令 + 原句 + 标签序列"]
+    end
+    D["三语种合并 instruction tuning<br/>Hindi / Bengali / Marathi 120k 句对"] --> E
+    TAG --> E["3B LLM 微调<br/>Llama-3.2-3B / Qwen2.5-3B"]
+    subgraph LOSS["训练目标 = 交叉熵 + 对比损失"]
+        direction TB
+        F["交叉熵 CE<br/>推：学『该生成 fluent 参考』"]
+        G["反 disfluency 对比损失<br/>拉：压制 disfluent token 概率"]
+    end
+    E --> LOSS
+    LOSS --> H["fluent 干净转录"]
+```
+
 ### 关键设计
 
 **1. MuRIL 标签当 LLM 的提示而非删除指令：用重写取代硬删**

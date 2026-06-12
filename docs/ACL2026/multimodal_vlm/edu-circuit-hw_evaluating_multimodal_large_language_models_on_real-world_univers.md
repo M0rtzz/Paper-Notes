@@ -43,6 +43,36 @@ tags:
 ### 整体框架
 整个 benchmark + 诊断链路如下：(1) **数据收集**：2025 春季某美国研究型大学本科电路课，29 名学生、62 道教材题，共 1,334 份手写解答，分别由专家给出 5 维 rubric 分数（E / M / U / C / NC）；observation set（11 学生、513 张）还额外提供专家逐字 markdown 转录与图示自然语言描述；test set（18 学生、821 张）只有 ground-truth 分数。(2) **识别评测**：6 个 MLLM（Gemini-3-Pro-Preview、Gemini-2.5-Pro、GPT-5.1、Claude-4.5-Sonnet、Qwen3-VL-Plus/8B-Thinking）做识别，Gemini-2.5-Pro 当 LLM-judge 对照 oracle 列出 discrepant items；再用另一个 LLM 把每个 item 按四类（Symbolic & Character / Structural & Notational / Diagrammatic / Textual & Logical）打标。(3) **下游评分**：固定 GPT-5.1 作 grader，给定 problem + reference + rubric，输出 5 类扣分；与专家报告比对得 Binary / Type / Point agreement。(4) **影响分析**：定义 EIR = 引起评分差异的识别错误 / 总识别错误。(5) **Regrading 案例**：把 observation set 总结的错误模式注入 prompt，让 LLM 在 test set 上检测潜在识别错误并给出 high/low 置信；低置信样本走人工，其余 LLM regrade。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["EDU-CIRCUIT-HW 数据集<br/>1,334 份电路课手写解答"] --> C["6 个 MLLM 识别手写解答"]
+    A --> B["专家逐字转录<br/>observation set 作 oracle"]
+    subgraph JUDGE["LLM-as-a-Judge 识别误差列项 + 四类 taxonomy"]
+        direction TB
+        D["对照 oracle 列出 discrepant items"] --> E["按四类归档<br/>符号 / 版面 / 图示 / 逻辑"]
+    end
+    B --> D
+    C --> D
+    subgraph EVAL["双层评测协议（识别端 SER/AEC + 评分端 agreement + EIR）"]
+        direction TB
+        F["识别端: SER / AEC"]
+        G["GPT-5.1 grader 按 rubric 评分<br/>Binary → Type → Point agreement"]
+        H["EIR: 识别错误 → 评分差异 影响率"]
+        F --> H
+        G --> H
+    end
+    E --> F
+    E --> G
+    subgraph REG["错误模式驱动 Regrading 模块"]
+        direction TB
+        J["detector 扫首轮扣分样本<br/>注入 confusion 模式"]
+        J -->|low 置信| K["TA 人工兜底 ≤5%"]
+        J -->|high 置信| L["LLM 按报告 regrade"]
+    end
+    H --> J
+```
+
 ### 关键设计
 
 **1. 双层评测协议（SER / AEC + EIR + Binary/Type/Point Agreement）：把"识别"和"评分"两件被混在一起的能力拆开评，再量化错误怎么传播**

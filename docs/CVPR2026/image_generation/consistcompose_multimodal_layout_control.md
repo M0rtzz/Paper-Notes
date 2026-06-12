@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 这篇论文要回答的问题是：能不能在一个统一多模态模型里实现精确布局控制，又不给它加任何专门的布局分支。答案是把布局当成语言来处理。整个系统建在 Bagel 的 MoT（Mixture of Transformers）架构上，理解和生成各由一个 Transformer 专家负责，两者共享同一套 self-attention。输入端是一段带坐标标注的文本 prompt，外加可选的参考图像；模型读完这段文本后直接生成满足布局约束的多实例图像。要让这条路走通靠三件事：先用 LELG 范式把每个实例的坐标写进 prompt（训练时让模型学会"读坐标摆位置"），推理时用 Coordinate-CFG 放大坐标条件的影响力，而这两者都需要 ConsistCompose3M 这个同时带布局和身份标注的数据集来喂。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["带坐标标注的 prompt + 可选参考图"] --> B["LELG / ICBP<br/>把每个实例 bbox 写进 prompt，坐标变语言 token"]
+    B --> C["MoT 统一模型（Bagel）<br/>理解专家 + 生成专家共享 self-attention"]
+    C -->|推理时| D["Coordinate-CFG<br/>放大有/无坐标条件的速度差，强制贴合布局"]
+    D --> E["布局可控的多实例图像"]
+    F["ConsistCompose3M<br/>340 万布局+身份双标注样本"] -->|两阶段训练监督| C
+```
+
 ### 关键设计
 
 **1. LELG 范式 + 实例-坐标绑定 Prompt（ICBP）：把 bbox 直接写进 prompt，让坐标变成语言 token**

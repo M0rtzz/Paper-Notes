@@ -42,10 +42,7 @@ tags:
 
 ### 整体框架
 
-线性化耦合梯度下降 $J = \begin{bmatrix} A & B \\ C & D \end{bmatrix}$，本文聚焦：
-- **第 4 节**：$B = 0$ block-triangular 主结果
-- **第 5 节**：$B \neq 0$ self-referential 通过 Neumann 级数扰动扩展
-- **第 6 节**：sample-complexity scaling law
+本文不是一条数据 pipeline，而是一条**环环相扣的定理链**。把耦合梯度下降在不动点附近线性化成 $J=\begin{bmatrix} A & B \\ C & D\end{bmatrix}$ 后，论文分四步推进：先在最干净的 $B=0$（block-triangular）情形把瞬态放大量化成 Kreiss 常数的闭式上下界（设计 1）；再证明这个界已经榨干了 $(\rho(A),\rho(D),\|C\|)$ 这几个量的全部信息、并刻画出“耦合多大开始危险”的临界红线（设计 2）；接着用 Neumann 级数把结论从严格三角扰动延拓到 $B\neq 0$ 的近自指系统（设计 3）；最后把 Kreiss 常数翻译成随机情形下达到 $\delta$ 精度所需的迭代复杂度 scaling law（设计 4）。四步层层递进——从“瞬态有多大”，到“这个界紧不紧、何时失稳”，到“非理想系统还成不成立”，再到“训练要跑多少步”。
 
 ### 关键设计
 
@@ -69,9 +66,9 @@ $$K(J_\varepsilon)\le \frac{K_0}{1-\varepsilon\|B_0\|K_0/(1-\gamma)}.$$
 
 这让 block-triangular 的全部结论在小耦合下平滑延续到真实的近自指场景，而不是只能用在严格三角的理想情形。
 
-### Sample-complexity scaling law（Theorem 11）
+**4. Sample-complexity scaling law（Theorem 11）：把 Kreiss 常数翻译成“训练要跑多少步”**
 
-stochastic coupled descent 达到 $\delta$ 精度需要 $T(\delta) = O(K(J)^2 \log(1/\delta)/(1-\gamma)^2)$ 步——这是高维学习动力学的非渐近 scaling law，依赖于 instance（具体 $J$），不是 worst-case。
+前三个设计都在刻画瞬态本身，但从业者最终关心的是“到底要多少步才收敛”。作者把随机版耦合下降（梯度带方差 $\sigma^2$ 噪声）达到 $\delta$ 精度的迭代复杂度直接写成 Kreiss 常数的函数：$T(\delta) = O(K(J)^2 \log(1/\delta)/(1-\gamma)^2)$。关键在于它是 **instance-dependent**（依赖具体的 $J$）而非 worst-case——这暴露出一个只看谱半径（以为 $\rho<1$ 就没事）完全看不到的 regime：高维学习时 $\gamma\to 1$、$K(J)$ 可飙到数百，迭代复杂度随之以平方爆炸。这一步把前面纯刻画瞬态的理论真正落到“要花多少计算”的可操作结论上。
 
 ## 实验关键数据
 

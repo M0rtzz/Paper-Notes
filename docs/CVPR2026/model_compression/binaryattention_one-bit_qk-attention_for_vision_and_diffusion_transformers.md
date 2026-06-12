@@ -43,6 +43,18 @@ tags:
 
 BinaryAttention 想在不改注意力架构的前提下，把最耗算力的 $\mathbf{QK}^\top$ 点积换成位运算来加速。它的做法是一条链：先把 Query / Key 量化成带缩放因子的 1-bit 二值向量，用 XNOR + popcount 算相似度（Scaled Binary Representations）；再给二值得分加一个可学习偏置，补回被压平的注意力分布（Bias Enhancement）；softmax 之后的注意力系数和 Value 则统一走 8-bit 量化，让 PV 乘法这一半也提速（Hybrid Quantization）；整套量化最后靠 QAT + 自蒸馏训练落地。整个 kernel 直接长在 FlashAttention2 的 tiled attention 框架上，复用它的 IO 友好分块，所以加速是叠加在 FlashAttention2 之上而非另起炉灶。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["Query / Key（FP16）"] --> A["Scaled Binary Representations<br/>sign 压 1-bit + 缩放因子 μ<br/>XNOR+popcount 算 QKᵀ"]
+    A --> B["Bias Enhancement<br/>加可学习偏置，抬秩救回被压平的分布"]
+    B --> SM["softmax → 注意力系数 P"]
+    SM --> C["Hybrid Quantization<br/>P 与 V 量化为 8-bit，INT8 PV 乘法"]
+    C --> O["输出（基于 FlashAttention2 分块）"]
+    D["QAT + 自蒸馏<br/>STE 反传 + 全精度教师对齐相似度"] -."训练时监督".-> A
+    D -."训练时监督".-> B
+```
+
 ### 关键设计
 
 **1. Scaled Binary Representations：把 Q/K 压到 1-bit，让相似度退化成位运算**

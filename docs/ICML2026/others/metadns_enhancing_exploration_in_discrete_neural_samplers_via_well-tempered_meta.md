@@ -46,6 +46,27 @@ MetaDNS 把训练拆成嵌套的双层循环。给定能量 $E(x)$、逆温度 $
 
 整套设计对底座 sampler 无关：CTMC-based 离散扩散（MDNS、LEAPS、DNFS）和 any-order autoregressive 模型都能直接套用，只要把 loss 里的 $E$ 替换成 $E_\text{biased}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入：能量 E(x)、逆温 β、CV 映射 ξ<br/>初始化采样器 q_θ、零偏置 V₀≡0"]
+    I --> TRAIN
+    subgraph TRAIN["双层训练（内层学带偏分布 / 外层更新 bias）"]
+        direction TB
+        A["内循环 ×N_inner：从 q_θ 采样<br/>带偏能量 E+V_{t−1}∘ξ → WDCE loss 更新 θ"]
+        B["Well-tempered hill 沉积<br/>按样本 CV 位置往 V_t 砸高斯 hill，越访问衰减越快"]
+        A --> B
+        B -->|"未满 N_outer 轮：能谷渐被推平"| A
+    end
+    TRAIN -->|"训练收敛：V≈缩放后的自由能曲面"| C
+    subgraph INFER["双轨重要性重加权"]
+        direction TB
+        C["从最终 q_θ 采样"]
+        C --> D["SNIS：bias-based wᵢ=exp(V(ξ(xᵢ)))<br/>或 likelihood-based w̃ᵢ=e^(−βE)/q_θ"]
+    end
+    D --> O["还原真实 Boltzmann π(x)<br/>无偏观测量 + 自由能曲面 F(s)"]
+```
+
 ### 关键设计
 
 **1. Well-tempered hill 沉积规则：往偏置势上砸历史相关的高斯 bump，越访问越衰减，顺手还把自由能曲面拟合出来**

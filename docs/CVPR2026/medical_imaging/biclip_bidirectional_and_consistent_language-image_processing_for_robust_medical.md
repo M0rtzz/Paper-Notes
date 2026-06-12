@@ -45,6 +45,32 @@ tags:
 
 BiCLIP 想解决的是：医学分割里图文融合大多是单向的——文本只能给视觉"打标签"，视觉却没法回过头修正文本，一旦标注稀缺或图像本身带噪，这种静态条件化就撑不住。它的做法是把这条单向链接成闭环。一张医学图像配一段临床文本描述送进来，文本经冻结的 CXR-BERT 编成文本嵌入 $\mathbf{t}$，图像经轻量卷积编码器编成视觉嵌入 $\mathbf{i}$；两者先在 BMF 模块里双向融合，让视觉证据反过来精炼文本，并把精炼后的语义"画"成一张伪图像（pseudo image）。伪图像与原图沿通道拼接，再经 IAC 模块构造弱/强两个增强视图，一起喂给同一个 U-Net backbone——一边出分割掩码，一边对两视图的中间特征施加一致性约束。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["医学图像 x"] --> IENC["卷积编码器<br/>视觉嵌入 i"]
+    T0["临床文本描述"] --> TENC["冻结 CXR-BERT<br/>文本嵌入 t"]
+    subgraph BMF["BMF 双向多模态融合（设计 1）"]
+        direction TB
+        FUSE["拼接 z=[t;i] → MLP 预测残差<br/>精炼文本 t' = t + Δt"]
+        GEN["伪图像生成器<br/>t' → 伪图像 x̂（L_gen 重建监督）"]
+        CYC["image→text 头 h：x̂ → t̂<br/>cycle 一致性 L_cycle 约束 t̂≈t"]
+        FUSE --> GEN --> CYC
+    end
+    IENC --> FUSE
+    TENC --> FUSE
+    GEN --> CAT["伪图像 x̂ 与原图沿通道拼接 → x_cat"]
+    subgraph IAC["IAC 图像增强一致性（设计 2）"]
+        direction TB
+        AUG["真实部分弱增强 A_w / 强增强 A_s<br/>伪图像仅归一化当锚点"]
+        UNET["弱/强两视图过同一 U-Net<br/>取 decoder 特征 f_w, f_s"]
+        CON["投影头 → p_w, p_s<br/>cosine 一致性 L_IAC"]
+        AUG --> UNET --> CON
+    end
+    CAT --> AUG
+    UNET -->|弱增强分支| SEG["1×1 卷积 + sigmoid<br/>分割掩码（Dice+CE）"]
+```
+
 ### 关键设计
 
 **1. BMF（Bidirectional Multimodal Fusion）：让视觉证据反向精炼文本，并把跨模态语义画成可分割的伪图像**

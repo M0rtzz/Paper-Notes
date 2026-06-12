@@ -47,6 +47,21 @@ tags:
 
 SJD-PAC 要解决的是 SJD 加速比被"长尾"拖死的问题：约一半的前向传播只接受 1 个 token，等于白跑一趟。它不改 SJD 的无损骨架，只动验证循环和起草这两处。一次迭代里，模型先对整条长度为 $L$ 的 draft 序列做一次并行前向传播，拿到所有位置的 target 分布 $P^t$；接着进入改造后的验证循环——逐位置做 accept/reject，但**遇到拒绝不再刹车**，而是补救当前位置后继续往下验证；最后若这一轮出现过拒绝，就在第一个拒绝点上**主动铺开一棵多路候选树**，作为下一轮迭代的 draft。两处改动一个负责"拒绝后别浪费已经算好的远处 token"，一个负责"让下一轮在拒绝边界上更容易接得上"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长度 L 的 draft 序列"] --> B["并行前向传播<br/>得到各位置 target 分布 P^t"]
+    B --> C["验证循环：逐位置 accept/reject"]
+    C -->|通过| D["保留该 token"]
+    C -->|拒绝| E["Adaptive Continuation<br/>残差重采补该位 + 不 break 继续验证"]
+    D --> F{本轮出现过拒绝?}
+    E --> F
+    F -->|否| G["输出本轮接受序列"]
+    F -->|是| H["Proactive Drafting<br/>第一个拒绝点铺多路候选树 D=3, K=4"]
+    H --> I["树作为下一轮 draft"]
+    I --> B
+```
+
 ### 关键设计
 
 **1. Adaptive Continuation：拒绝一个 token 不该连累后面整串 token**

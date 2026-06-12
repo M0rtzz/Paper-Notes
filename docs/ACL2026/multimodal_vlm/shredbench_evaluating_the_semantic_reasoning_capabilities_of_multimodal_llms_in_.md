@@ -44,6 +44,22 @@ ShredBench 的流程可以分成三步。第一步收集多源文档，包括英
 
 数据集共包含 756 个文档，每个文档生成 8、12、16 三种碎片粒度。作者特别强调数据源可以灵活替换为最新或未见文本，以降低训练集污染对评测有效性的影响。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["多源文档<br/>中英新闻 / C++·Java·Python 代码 / 科学表格"]
+    subgraph GEN["物理化碎片生成管线"]
+        direction TB
+        R["浏览器渲染 1600px 页面"] --> V["Voronoi 切割<br/>N∈{8,12,16} 不规则碎片"]
+        V --> B["Blender 3D 渲染<br/>厚度·褶皱·阴影·旋转"]
+        B --> C["碎片散落在 4K 画布"]
+    end
+    SRC --> R
+    C --> TASK["跨模态语义复原任务<br/>set-to-sequence：无序碎片 → 原文文本"]
+    TASK --> EVAL["多维评测与语义依赖消融<br/>NED / BLEU / ROUGE-L / TEDS / CodeBLEU"]
+    EVAL -->|消融对照| ABL["无意义文本控制集<br/>抽掉语义、保留版面与碎片化"]
+```
+
 ### 关键设计
 
 **1. 物理化碎片生成管线：把撕裂痕迹做得真实到无法靠像素边缘作弊**

@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 作者先定义 14 组高低权力角色（如 Principal-Teacher、Justice-Lawyer、Head Chef-Sous Chef、Lead Developer-Junior Developer），再从 PersonaHub 为每个角色抽取真实感 persona 并做人类验证——96.5% 的 persona pair 被标注者认为存在权力差异，Fleiss's kappa 达 0.73。随后用 Llama 3.1、Qwen 2.5、Phi、GPT-4.1、GPT-5 等模型，让配对角色模拟最多 10 到 15 轮对话，并对每轮对话分别测量"真实感相关"效应（代词、语言协调）和"安全相关"效应（权威说服、有害服从），最后从对话进程、可控性、模型规模/训练阶段三个维度分析这些效应是否稳定存在。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["角色与 persona 双层构造"]
+        direction TB
+        A["14 组高低权力角色配对<br/>（校长-教师、法官-律师等）"] --> B["PersonaHub 抽 persona + 人工验证<br/>（96.5% 认可，κ=0.73）"]
+    end
+    S1 --> C["多模型模拟配对对话<br/>（Llama/Qwen/Phi/GPT，10-15 轮）"]
+    subgraph S2["四类社会认知效应指标"]
+        direction TB
+        D["真实感：代词 FPS/FPP + 语言协调 D_lc"]
+        E["安全：权威说服差值 + 有害服从差值"]
+    end
+    C --> S2
+    subgraph S3["进程·可控性·模型因素分析"]
+        direction TB
+        F["对话进程 Start/Middle/End"]
+        G["控制提示能否抑制效应"]
+        H["模型规模 + post-training（SFT/DPO）"]
+    end
+    S2 --> S3
+    S3 --> I["结论：各效应是否稳定存在"]
+```
+
 ### 关键设计
 
 **1. 角色与 persona 双层构造：给每次对话一个可解释、可控的权力条件**

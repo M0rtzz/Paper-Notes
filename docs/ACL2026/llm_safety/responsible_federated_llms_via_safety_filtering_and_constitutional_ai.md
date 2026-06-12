@@ -44,6 +44,20 @@ tags:
 
 这个设计的关键是安全操作不需要服务器读取客户端原始数据。过滤器可以作为模型下发到客户端本地运行，CAI 则只作用于服务器已经持有的全局模型权重。换言之，它把“数据侧风险”和“模型侧风险”分别放在各自可操作的位置处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S0["服务器下发<br/>冻结 Llama3.1-8B + 全局 LoRA"] --> CF
+    subgraph CLIENT["客户端侧安全过滤器（设计 1）"]
+        direction TB
+        CF["微调版 Llama Guard 3<br/>过滤 unsafe (query, response) 样本"] --> CT["本地 LoRA 训练"]
+    end
+    CT --> AGG["服务器聚合<br/>FedAvg / SCAFFOLD 更新全局 LoRA"]
+    AGG --> CAI["服务器端轻量 Constitutional AI<br/>50 iter 自我批判 + 修订"]
+    CAI -->|进入下一联邦轮次| S0
+    CAI --> EVAL["FedLLM 安全评估闭环<br/>AdvBench·HHH 测安全 + MT-Bench 测有用"]
+```
+
 ### 关键设计
 **1. 客户端侧安全过滤器：在数据离不开本地的约束下，把坏样本挡在训练之前**
 

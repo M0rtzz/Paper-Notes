@@ -42,7 +42,29 @@ SERE 认为事件因果识别中的示例选择不能只看语义相似度，而
 ### 整体框架
 SERE 的定位不是又一个因果分类器，而是一个“为 LLM 挑案例”的检索器。它的出发点是：LLM 并非完全不会做因果推理，而是在少样本设置下容易被表层语义相近、但因果结构相反的 demonstration 带偏，于是过度判“有因果”。只要喂进 prompt 的示例在因果结构上对齐，模型的决策边界自然会收紧、精度提高。
 
-整条流水线分三步走。先由 Joint Structural Metrics 对目标样例与语料库里每个候选样例算两类结构相似度——ConceptNet 上的概念路径相似度和依存句法树相似度——加权成一个结构分数；再由 Causal Pattern Filtering 用一个轻量 LLM prompt 抽出候选所属的粗粒度因果模式，只留下与目标样例模式一致的候选；最后把筛出来的少量结构相似示例塞进 prompt，让 Reasoner 在二分类格式下输出 Yes 或 No。
+整条流水线分三步走。先由联合结构度量（Joint Structural Metrics）对目标样例与语料库里每个候选样例算两类结构相似度——ConceptNet 上的概念路径相似度和依存句法树相似度——加权成一个结构分数；再由因果模式过滤（Causal Pattern Filtering）用一个轻量 LLM prompt 抽出候选所属的粗粒度因果模式，只留下与目标样例模式一致的候选；最后把筛出来的少量结构相似示例塞进 prompt，让推理器（Reasoner）在二分类格式下输出 Yes 或 No。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标样例 + 候选语料库"] --> B
+    A --> C
+    subgraph JSM["联合结构度量（Joint Structural Metrics）"]
+        direction TB
+        B["概念路径度量<br/>ConceptNet 最短路径编辑距离"]
+        C["句法结构度量<br/>依存树编辑距离"]
+    end
+    B --> D["加权结构分（概念路径与句法各 0.5）"]
+    C --> D
+    subgraph CPF["因果模式过滤与正负平衡"]
+        direction TB
+        E["LLM 抽因果模式<br/>仅留与目标同模式的候选"]
+        F["取 top-k、一正一负组合示例"]
+    end
+    D --> E
+    E --> F
+    F --> G["推理器二分类<br/>输出 Yes / No"]
+```
 
 ### 关键设计
 

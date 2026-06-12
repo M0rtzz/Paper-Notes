@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 要让一个只会做 L-L 同手性界面的等变模型零样本生成 D-肽 binder，核心矛盾在于：$E(3)$-等变骨干对镜像反演 $P=-I_3$ 严格不变，于是镜像靶标会被无差别地映成同一潜码，模型既区分不了手性、输出又是混合手性。PepMirror 的解法是给标量化等变主干加一个**轴向量注入插件**，让它从 $E(3)$ 降到 $SE(3)$-等变——保留旋转平移不变性，却对空间反演敏感，从而把"手性"这一维度重新装回模型。整套系统沿用 UniMoMo 的两阶段 latent diffusion 架构：编码端 EPT（Equivariant Pretrained Transformer，$L$ 层 self-attention + GVP-FFN）把点云图 $\mathcal{G}$ 映射为不变标量 $H\in\mathbb{R}^{N\times K}$ 与等变向量 $V\in\mathbb{R}^{N\times 3\times K}$，扩散端以靶标 pocket 潜码 $c$ 为条件在潜空间去噪 binder 潜码，解码端再解回 3D 结构。本文唯一改动的是把每层 GVP-FFN 前的 $V$ 替换为注入轴向量后的 $\widetilde V$，得到 AFI-EPT。推理时借用 mirror-image display 的思路两次反演：先把 L-靶标 $\mathcal{G}_t$ 反演到 D-靶标，让模型生成 L-binder，再把输出反演回去，即 $\mathcal{G}_b=P(f_\theta(P(\mathcal{G}_t)))$，得到对原 L-靶标的 D-肽 binder。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["L-靶标点云图（仅 L-L 同手性训练）"] -->|"空间反演 P"| B["D-靶标 P(G_t)"]
+    B --> C
+    subgraph UM["AFI-EPT 嵌入 UniMoMo（潜空间扩散底座）"]
+        direction TB
+        C["AFI-EPT 编码器<br/>轴向量注入 AFI：每层 FFN 前混合极/轴向量"] --> D["不变标量 H + 等变向量 V"]
+        D --> E["latent diffusion 去噪<br/>条件 = pocket 潜码"]
+        E --> F["解码器 → L-肽 binder"]
+    end
+    F -->|"反演回 P"| G["D-肽 binder（对原 L-靶标）"]
+```
+
 ### 关键设计
 
 **1. 轴向量注入（AFI）：用极/轴向量分解给等变模型装上手性开关**

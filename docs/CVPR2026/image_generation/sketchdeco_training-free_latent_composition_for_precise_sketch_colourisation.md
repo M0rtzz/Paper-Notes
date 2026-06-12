@@ -45,6 +45,26 @@ tags:
 
 输入是线稿 $\mathcal{S}$、区域蒙版集合 $\{\mathcal{M}^{(i)}\}$ 和对应调色板 $\{\mathcal{P}_H\}$。全局阶段先生成多个保持线稿结构和配色一致的整体着色结果，局部阶段再通过隐空间组合实现区域精准着色与平滑过渡。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：线稿 + 区域蒙版 + 调色板"] --> B
+    subgraph G["全局线稿上色"]
+        direction TB
+        B["BLIP-2 VQA 推断线稿类别"] --> C["CSS3 + K-D Tree<br/>颜色码 → 颜色名"]
+        C --> D["Scribble ControlNet<br/>生成 n 张着色图 + 1 张背景图"]
+    end
+    subgraph L["局部线稿上色"]
+        direction TB
+        E["裁区域 + 背景合并得组合图像 I*"] --> F["DPM-Solver++ 反演为隐变量 z*"]
+        F --> H["边界过渡区注入高斯噪声补接缝"]
+        H --> I["自注意力注入重建<br/>前期保结构 / 后期文本控颜色过渡"]
+    end
+    D --> E
+    K["Exceptional Prompt<br/>统一 token 编号稳定 ODE 反演"] -.-> F
+    I --> J["区域精准着色结果"]
+```
+
 ### 关键设计
 
 **1. 全局线稿上色：自动把调色板变成可用的着色候选**

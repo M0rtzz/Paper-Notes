@@ -51,6 +51,17 @@ SB-ECC 把译码视作 $\sigma$-空间上的反向去噪轨迹：
 3. **推理 (Algorithm 2 — Early-Exit Decoding)**：从 $\mathbf{x}^{(0)} = \mathbf{y}$ 出发，每步算 syndrome；若为 0 则当前硬判决是合法码字，提前返回；否则调用 $\hat{\boldsymbol{\epsilon}}_\theta(\mathbf{x}^{(i)}, \mathbf{s})$ 得到去噪方向，用 Euler 步 $\mathbf{x}^{(i+1)} = \mathbf{x}^{(i)} - \Delta\sigma\,\hat{\boldsymbol{\epsilon}}$，沿 $\sigma_{\max} \to \sigma_{\min}$ 均匀下降。
 4. **求解器替换**：Euler 可无缝换成 DPM-Solver（线性 $\sigma$-schedule 天然适配），在不掉点数的前提下平均压缩 8.86%、最高 12.82% 的端到端延迟。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["带符号信道观测 y<br/>(BPSK + AWGN，不取绝对值)"] --> B["初始化 x⁽⁰⁾ = y<br/>沿 σ 网格 σmax → σmin 均匀下降"]
+    B --> C{"算 syndrome<br/>s = H · bin(sign(x))"}
+    C -->|"s = 0：当前硬判决已是合法码字"| OUT["输出码字<br/>(Early Exit 提前返回)"]
+    C -->|"s ≠ 0"| D["分数网络 ε̂θ(x, s)<br/>VN 通道吃 signed y、CN 通道吃 syndrome<br/>Tanner 图掩码交叉注意力，无 t 条件"]
+    D --> E["PF-ODE 去噪步<br/>x⁽ⁱ⁺¹⁾ = x⁽ⁱ⁾ − Δσ · ε̂<br/>Euler / DPM-Solver"]
+    E -->|"σ 下降，进入下一步"| C
+```
+
 ### 关键设计
 
 **1. 带符号输入 + Tanner 图掩码注意力：保住信道几何，又不丢码结构**

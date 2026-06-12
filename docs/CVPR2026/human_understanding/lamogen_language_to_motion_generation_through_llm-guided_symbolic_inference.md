@@ -44,9 +44,23 @@ tags:
 
 ### 整体框架
 
-LaMoGen 想解决的核心问题是：让 LLM 不靠微调、不碰连续动作嵌入，就能"读懂"并组合人体动作。它的做法是在语言和动作之间插一层可解释的符号——LabanLite，把生成拆成 **Text → LabanLite → Motion** 两阶段。第一阶段是高层语义规划：LLM 借助检索到的相似动作样例，把用户的文本指令翻译成一串概念性的 Laban 符号（"哪个身体部位、朝什么方向、用几秒"）。第二阶段是底层运动合成：一个 Kinematic Detail Augmentor 把这串只含主干结构的概念符号自回归地补全成完整的 LabanLite 编码（加上朝向、弯曲、力度等细节），最后由 Laban-Motion Decoder 还原成连续动作轨迹。
+LaMoGen 想解决的核心问题是：让 LLM 不靠微调、不碰连续动作嵌入，就能"读懂"并组合人体动作。它的做法是在语言和动作之间插一层可解释的符号——LabanLite，把生成拆成 **Text → LabanLite → Motion** 两阶段。第一阶段是高层语义规划：LLM 借助检索到的相似动作样例，把用户的文本指令翻译成一串概念性的 Laban 符号（"哪个身体部位、朝什么方向、用几秒"）。第二阶段是底层运动合成：一个运动学细节增强器（Kinematic Detail Augmentor）把这串只含主干结构的概念符号自回归地补全成完整的 LabanLite 编码（加上朝向、弯曲、力度等细节），最后由 Laban-Motion 解码器（Laban-Motion Decoder）还原成连续动作轨迹。
 
-支撑这条流水线的是两套部件：一套 **Laban-Motion Encoder-Decoder** 负责动作↔符号的双向转换（训练时也靠它从真实动作里反推出符号标注），一套 **LLM-Guided 生成模块** 负责符号的检索、组合与细节补全。
+支撑这条流水线的是两套部件：一套 **Laban-Motion 编码-解码器（Laban-Motion Encoder-Decoder）** 负责动作↔符号的双向转换（训练时也靠它从真实动作里反推出符号标注），一套 **LLM 引导的生成模块** 负责符号的检索、组合与细节补全。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户文本指令"] --> B["LLM 引导的概念组合<br/>CLIP 检索 Top-3 样例 → LLM 拼接"]
+    DB[("概念描述数据库")] -->|in-context 样例| B
+    B -->|概念性 Laban 符号| D["运动学细节增强器<br/>自回归补朝向 / 弯曲 / 力度"]
+    D --> E["完整 LabanLite 编码<br/>帧级概念符号 + 细节符号"]
+    E --> F["Laban-Motion 解码器<br/>Laban Codebook 嵌入加性叠加"]
+    F --> G["连续动作序列"]
+    M["真实动作（训练）"] --> H["自动 Laban 符号检测<br/>区间分割 → 帧级提取 → 区间聚合"]
+    H --> DB
+    H -->|动作-符号配对训练| F
+```
 
 ### 关键设计
 

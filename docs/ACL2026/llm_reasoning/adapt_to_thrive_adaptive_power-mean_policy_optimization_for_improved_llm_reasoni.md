@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 APMPO 没有推翻 GRPO，而是沿用它"组采样 + 组内归一化优势"的骨架：对每个 prompt $q$ 采样 $G$ 条响应 $\{o_i\}$，算出 reward $R_i$、归一化优势 $\hat{A}_i=(R_i-\mu_R)/(\sigma_R+\delta)$ 和 token 级重要性比 $r_{i,t}(\theta)$。真正的改动在两个相互正交的自适应模块——PMPO 管"目标怎么聚合"、FAC 管"clip 范围多大"，它们替换掉 GRPO 里写死的算术平均和固定 clip。最终目标的算法是：每条序列内先用 PMPO 把 token 级的"非负幅度"$\phi_{i,t}$ 聚合成一个标量，再乘上方向控制项 $\text{sgn}(\hat{A}_i)$，跨样本平均后减去与参考策略的 KL 惩罚。一句话概括动机：让目标函数本身随训练进展变形，而不是从头到尾用同一副面孔。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt q → GRPO 骨架采样 G 条响应"] --> B["组内统计：reward R_i、归一化优势 Â_i<br/>token 重要性比 r_i,t、batch 奖励 μ_R 与 σ_R"]
+    B --> C["Power-Mean Policy Optimization（PMPO）<br/>非负幅度 φ_i,t → 幂平均 M_p<br/>p = exp(−γ μ_R)：放大稀有高奖励 ↔ 强调一致性 自动过渡"]
+    B --> D["Feedback-Adaptive Clipping（FAC）<br/>FSS = μ_R/(σ_R+δ) → 自适应上界 ε_ada<br/>非对称 clip 得 ρ_i,t"]
+    C --> E["三步式目标拼装<br/>FAC 裁剪 ρ → PMPO 聚合幅度 φ → × sgn(Â_i) 得序列目标 J_i"]
+    D --> E
+    E --> F["跨样本平均 − β·KL → 最终目标 J(θ)"]
+```
+
 ### 关键设计
 
 **1. Power-Mean Policy Optimization（PMPO）：用一个随奖励均值滑动的幂平均，让目标自动从"放大稀有高奖励"过渡到"强调路径一致性"**

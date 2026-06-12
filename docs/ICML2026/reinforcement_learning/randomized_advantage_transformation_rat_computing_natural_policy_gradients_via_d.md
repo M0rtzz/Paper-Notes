@@ -49,7 +49,19 @@ tags:
 
 1. **重写**：Tikhonov 正则化 NPG $\nabla^{\text{T-NPG}}=(\lambda\bm{I}_p+\bm{H}^\top\bm{\Sigma}\bm{H})^{-1}\bm{H}^\top\bm{\Sigma}\bm{y}$ 通过 Woodbury 两次变形后等价于 $\bm{H}^\top\bm{\Sigma}\tilde{\bm{y}}$，其中 $\tilde{\bm{y}}=(\lambda\bm{I}_n+\bm{H}\bm{H}^\top\bm{\Sigma})^{-1}\bm{y}$——逆矩阵从 $p\times p$ 缩到 $n\times n$。
 2. **近似**：因为 $n$ 在连续动作空间下仍然很大，把 $\bm{\Sigma}$ 的加权用 Monte Carlo 采样去近似，把求 $\tilde{\bm{y}}$ 改写成 $\min_{\bm{g}}\|\bm{y}-\bm{H}\bm{g}\|_{\bm{\Sigma}}^2+\lambda\|\bm{g}\|_2^2$ 的正则化最小二乘。
-3. **求解**：用随机分块 Kaczmarz 迭代——每步取一个 mini-batch $\tau_j$，做一次 $B\times B$ 求逆，迭代 $K$ 次后把得到的 $\tilde{A}_j(s,a)$ 塞进一个 PPO 风格的代理目标 $J_{\text{RAT}}(\bm{\theta})=\mathbb{E}[\frac{\pi(a|s;\bm{\theta})}{\pi_{\text{old}}(a|s)}\tilde{A}_j(s,a)]$，对它做一次标准反向传播就拿到自然策略梯度方向。
+3. **求解**：用随机分块 Kaczmarz 迭代——每步取一个 mini-batch $\tau_j$，做一次 $B\times B$ 求逆，迭代 $K$ 次后把得到的 $\tilde{A}_j(s,a)$ 塞进一个 PPO 风格的代理目标 $J_{\text{RAT}}(\bm{\theta})=\mathbb{E}[\frac{\pi(a|s;\bm{\theta})}{\pi_{\text{old}}(a|s)}\tilde{A}_j(s,a)]$，对它做一次标准反向传播就拿到自然策略梯度方向。共享主干网络时，再额外引入一个 critic 端的伪优势把 actor、critic 拼进同一次迭代。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：on-policy mini-batch<br/>策略优势 y + per-sample 梯度 Hτ"]
+    A -->|共享主干时| D["共享 actor-critic 适配（伪优势）<br/>拼接 actor 优势 + critic 全 1 伪优势"]
+    A --> B["Woodbury 形式的优势重写<br/>逆 Fisher 从 p×p 搬到样本维 n×n"]
+    D --> B
+    B --> C["随机分块 Kaczmarz 迭代<br/>K 次 B×B 求逆 → 变换后优势 Ã"]
+    C --> E["PPO 风格代理目标 J_RAT"]
+    E --> F["一次标准反向传播<br/>= 自然策略梯度方向"]
+```
 
 ### 关键设计
 

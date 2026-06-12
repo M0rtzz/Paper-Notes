@@ -49,6 +49,17 @@ tags:
 （3）按类型分别走不同的修订子流程（LLM 投票 / 区域细分 / 人工补标 / 重叠剔除 / 气泡再分割）；
 （4）用 MangaOCR 协议在新老两套标注上跑相同 OCR 输出，比较 E2E precision/recall/H-mean。最终落地为 Manga109-v2026，覆盖 ≈29,000 条修订，约占全部标注的 19.6%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始 Manga109<br/>147,887 条对话标注"] --> B["OCR-as-Probe 问题发现<br/>Mantra OCR 当差异探针，按几何分歧筛五类候选"]
+    B -->|文本不一致 Type 1| C["双 LLM 投票 + 人工兜底<br/>GPT-5 与 Gemini 3 Flash 一致即采纳，分歧人工裁 ≈9,200"]
+    B -->|几何/重叠分歧 Type 2-5| D["按表达语义分轨的几何修订<br/>过大框·漏标·拟声词重叠·欠分割气泡 ≈19,800"]
+    C --> E["Manga109-v2026<br/>≈29,000 条修订（占 19.6%）"]
+    D --> E
+    E --> F["MangaOCR E2E 评测<br/>固定 OCR 换标注：H-mean 48.5→62.9"]
+```
+
 ### 关键设计
 
 **1. OCR-as-Probe 的问题发现策略：用现代 OCR 当差异探针，自动定位最该修的标注**

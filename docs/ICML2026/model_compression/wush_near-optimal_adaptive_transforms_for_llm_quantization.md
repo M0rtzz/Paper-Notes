@@ -44,24 +44,29 @@ WUSH 针对每个 linear layer 的输入通道按量化 group 切成 block。离
 
 推理时，权重侧的变换已经吸收到预量化权重里，在线只需要对 activation block 做 WUSH transform 和 quantization。作者为此实现 fused WUSH + Quant kernel，并把每个 block 的 $G\times G$ 矩阵以适合 CUTLASS GEMM 的布局存储，使多个小矩阵变换可以像 Hadamard + quantization 一样被高效融合。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    OBJ["输出误差目标<br/>min ‖q(T_W·W)ᵀ q(T_X·X) − Wᵀ·X‖²<br/>按 block 拆分、独立求解"]
+    subgraph CONSTRUCT["WUSH 闭式构造（逐 block，离线）"]
+        direction TB
+        M["权重/激活二阶矩<br/>M_W=d⁻¹WWᵀ, M_X=d⁻¹XXᵀ"] --> C["Cholesky 分解<br/>得下三角 W′, X′"]
+        C --> SVD["SVD(W′ᵀX′)<br/>得 U, S, V"]
+        SVD --> T["拼装变换<br/>T_xvsh=HS^−½VᵀX′ᵀ（权重侧）<br/>T_wush=HS^−½UᵀW′ᵀ（激活侧）"]
+    end
+    OBJ -->|驱动闭式解| M
+    T -->|权重侧离线吸收| PQ["RTN / GPTQ 预量化权重<br/>存 q(T_xvsh·W)"]
+    T -->|激活侧上线| FK["在线 Fused WUSH+Quant kernel<br/>CUTLASS 小 GEMM → q(T_wush·X)"]
+    PQ --> MM["FP4 MatMul<br/>最高 5.8× over BF16"]
+    FK --> MM
+```
+
 ### 关键设计
-1. **从输出误差定义 blockwise joint quantization 目标**:
+1. **从输出误差出发定义逐 block 的联合量化目标**：以往的量化要么只盯权重量化误差、要么只压激活，但真正决定模型输出的是 $W^\top X$ 这个乘积的误差。WUSH 干脆把每个输入通道 block 的输出误差 $\|q(T_WW)^\top q(T_XX)-W^\top X\|_F^2$ 直接当成优化目标，选一对变换 $T_W,T_X$ 让它最小，再把整层误差近似拆成各 block 误差之和，于是每个 block 都能独立闭式求解。之所以从输出误差建模，是因为 AbsMax group quantization 的误差由 block 内最大值、分布形状以及权重/激活的相互作用共同决定——盯住输出误差才能直接解释固定 Hadamard 何时够用、何时不够，也是后面整套闭式解的出发点。
 
-	- 功能：避免只优化权重误差或激活误差，把真正影响模型输出的 $W^\top X$ 误差作为目标。
-	- 核心思路：对每个输入通道 block，令权重块为 $W_{(i)}$、校准激活块为 $X_{(i)}$，选择变换 $T_W,T_X$ 使 $\|q(T_WW)^\top q(T_XX)-W^\top X\|_F^2$ 最小。论文进一步把全层误差近似拆成 blockwise loss 之和，因此每个 block 可以独立求解。
-	- 设计动机：AbsMax group quantization 的误差由 block 内最大值、分布形状和权重/激活的相互作用共同决定。用输出误差建模能直接解释为什么固定 Hadamard 有时有效、有时不够。
+2. **WUSH 闭式构造：二阶矩 + SVD + Hadamard backbone**：有了目标，关键是真能闭式解出「对这个 block 最优」的变换，而不靠迭代学习。做法是先对权重二阶矩 $d_{out}^{-1}WW^\top$ 和激活二阶矩 $d_{batch}^{-1}XX^\top$ 各做 Cholesky 得到下三角 $W'$、$X'$，再对 $W'^\top X'$ 做 SVD 得到 $U,S,V$，最后拼出激活侧变换 $T_{wush}=HS^{-1/2}U^\top W'^\top$、权重侧 $T_{xvsh}=HS^{-1/2}V^\top X'^\top$，两者互为逆转置 $T_{xvsh}=T_{wush}^{-\top}$，保证未量化时内积不变。这里 $S^{-1/2}$ 与二阶矩项按真实统计把坐标系「白化」对齐，而 Hadamard backbone 把能量均匀撒到 group 内、让每个通道 RMS 相等——这正是 AbsMax 友好的关键。论文证明该构造对 FP 量化最优、对 INT 渐近最优，且 Hadamard 是其中唯一数据无关的成分，顺带解释了它长期被经验验证有效的原因。
 
-2. **WUSH 闭式构造：Hadamard + 二阶矩 + SVD**:
-
-	- 功能：为每个 block 生成数据自适应、非正交、近似最优的变换矩阵。
-	- 核心思路：先从 $d_{out}^{-1}WW^\top$ 和 $d_{batch}^{-1}XX^\top$ 做 Cholesky 得到 $W'$ 和 $X'$，再对 $W'^\top X'$ 做 SVD 得到 $U,S,V$。WUSH 的激活侧变换可写成 $T_{wush}=HS^{-1/2}U^\top W'^\top$，权重侧对应 $T_{xvsh}=HS^{-1/2}V^\top X'^\top$，两者互为逆转置。
-	- 设计动机：$S^{-1/2}$ 与二阶矩项负责根据真实统计调整坐标系，Hadamard 负责把能量均匀撒到 group 内，避免非正交变换在 INT/AbsMax 场景下放大单个坐标导致 scale 变差。
-
-3. **与 RTN/GPTQ 和 fused GPU kernel 的工程闭环**:
-
-	- 功能：让理论变换能落到 LLM W4A4 推理，而不只是离线误差分析。
-	- 核心思路：RTN 中每个 block 可以并行计算 WUSH 并预量化权重；GPTQ 中，WUSH 使用与 GPTQ Hessian 相同的激活二阶信息，并在 GPTQ 的 block 更新和误差传播之间交错计算 transformed weight。在线阶段只保留 activation-side transform，WUSH + Quant 被映射成 CUTLASS 风格的小 GEMM，随后接 FP4 MatMul。
-	- 设计动机：如果每个 block 都有独立矩阵，朴素实现会比 Hadamard 慢很多。作者通过存储布局和 fused kernel 把额外代价压到很小，使 WUSH 能在精度和吞吐之间同时赢。
+3. **RTN / GPTQ 嵌入与 fused GPU kernel 工程闭环**：每个 block 都有独立矩阵，朴素实现会比固定 Hadamard 慢很多，理论收益容易被运行时开销吃掉，所以必须把它落到真实 W4A4 推理。RTN 下各 block 并行算 WUSH，并把权重侧变换离线吸收进预量化权重；GPTQ 下则复用与 GPTQ Hessian 相同的激活二阶信息，在 block 更新与误差传播之间交错计算 transformed weight。在线阶段只剩 activation 侧变换，被映射成 CUTLASS 风格的小 GEMM、与 quantization 融成一个 kernel，随后接 FP4 MatMul。通过把 $(G,G,C)$ 的 block 矩阵按适合 CUTLASS GEMM 的布局存储、把 C 维当作 thread block 偏移隐式处理，实测吞吐与 Hadamard fused kernel 仅差约 1.3%、最高 5.8× over BF16，使精度提升不被工程开销抵消。
 
 ### 损失函数 / 训练策略
 WUSH 是后训练量化方法，不训练模型参数。离线阶段使用校准数据计算权重/激活二阶矩，并对每个线性层顺序校准；量化一层后，把校准激活继续前传到下一层。RTN 版本直接 round-to-nearest；GPTQ 版本沿用 GPTQ 的 Hessian 和误差传播，只是在当前 block 上先应用 WUSH 变换。复杂度上，额外代价主要是 block 内二阶矩、Cholesky 和 SVD；由于 block size 远小于通道数，整体校准成本接近标准 GPTQ。

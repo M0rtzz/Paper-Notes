@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：CP 张量分解天然提供更细粒度——把 $2048\times 2048$ 的 $\Delta W$ reshape 成 $32\times 64\times 32\times 64$ 的 4-way tensor，每个 rank-1 component 只需要 $32+64+32+64+1=193$ 个标量。一个 CP component 大约相当于 $1/21$ 个 LoRA rank。代价是这些 rank-1 方向是 Kronecker-结构化的，表达力比一般 dense outer product 受限。
 
-**核心 idea**：用 fixed-component CP adapter 作为细粒度对照，定义 "best-under-budget" 曲线 $U_\mathcal{A}(B)=\max_{k:P_\mathcal{A}(k)\le B} A_\mathcal{A}(k)$，在严格固定 target modules / trainer / data caps / seeds 的协议下比较两者，并用 10-seed 选择性确认关键格子。
+**核心 idea**：用 fixed-component CP adapter 作为细粒度对照，定义 "best-under-budget" 曲线 $U_\mathcal{A}(B)=\max_{k:P_\mathcal{A}(k)\le B} A_\mathcal{A}(k)$，在严格固定 target modules / trainer / data caps / seeds 的协议下比较两者，并用 100-seed 选择性确认关键格子。
 
 ## 方法详解
 
@@ -85,7 +85,7 @@ PEFT 比较里最容易翻车的地方，是看似 0.2% 的提升其实淹在 se
 
 结论：matched-budget 下 SST-2 和 BoolQ 两个方法实际上"打平"(差距在 ±0.6% 内)，但 RTE 上 LoRA 始终好 1.6–3.1%——说明匹配预算并不能让方法等效。
 
-**Best-under-budget + 10-seed 确认** (Table 4 关键 cell)：
+**Best-under-budget + 100-seed 确认** (Table 4 关键 cell)：
 
 | 任务 | Setting | Params | Eval (seed 0-99) |
 |------|---------|--------|------------------|
@@ -108,7 +108,7 @@ PEFT 比较里最容易翻车的地方，是看似 0.2% 的提升其实淹在 se
 ### 关键发现
 - **SST-2 早期 plateau**：很小的 CP adapter ($c=2$，9.4% of LoRA $r=1$ 预算) 就达到 0.934±0.009，说明 SST-2 在极低预算区就已经接近饱和，LoRA 的稀疏 rank 网格甚至看不到这个 plateau 的存在——这是细粒度作为"诊断工具"的最佳示范
 - **BoolQ rise-and-saturation**：CP 曲线从 $c=1$ (0.662) 单调上升到 $c=43$ (0.737)，再缓慢趋平到 $c=64$ 的 0.739。$c=1$ 到 $c=43$ 这段是真正信息丰富的区间，告诉你"BoolQ 的低预算确实需要更多容量"，但最终封顶仍在 LoRA $r=1$ 的 0.743 之下
-- **RTE persistent gap**：10-seed 确认后 CP $c=28$ 是 0.738±0.030、CP $c=64$ 是 0.736±0.013，而 LoRA $r=6$ 是 0.760±0.015——任何 CP 配置都没能追上 LoRA。说明 Kronecker-结构的表达受限在某些任务上是硬伤
+- **RTE persistent gap**：100-seed 确认后 CP $c=28$ 是 0.738±0.030、CP $c=64$ 是 0.736±0.013，而 LoRA $r=6$ 是 0.760±0.015——任何 CP 配置都没能追上 LoRA。说明 Kronecker-结构的表达受限在某些任务上是硬伤
 - **诚实声明**：作者明确写"CP 比 LoRA 测了更多 capacity 点，best-under-budget 曲线上小幅差异不应被解读为可靠胜出"——这种自我克制在 PEFT 论文里罕见
 - 一个 LoRA rank step 的 Adam state (1.50 MB) 对应 21 个 CP component step (合计 1.49 MB)，参数/优化器内存比例严格匹配，不是"偷预算"的对比
 
@@ -137,7 +137,7 @@ PEFT 比较里最容易翻车的地方，是看似 0.2% 的提升其实淹在 se
 
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ framing 新颖 (参数步长作为可观测量)，CP adapter 本身不新但用法新
-- 实验充分度: ⭐⭐⭐⭐ controlled protocol 严格、10-seed 确认到位，但只 OPT-1.3B 三任务略窄
+- 实验充分度: ⭐⭐⭐⭐ controlled protocol 严格、100-seed 确认到位，但只 OPT-1.3B 三任务略窄
 - 写作质量: ⭐⭐⭐⭐⭐ 诚实程度罕见，主动声明 CP 抽样优势、不宣称 SOTA，方法论叙述清晰
 - 价值: ⭐⭐⭐⭐ 不是新算法，但 framing 改变后续 PEFT 比较协议；对调参党、评测党、Reviewer 都是必读
 

@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 训练目标基于 GRPO（Group Relative Policy Optimization）。VLM 在 system prompt 指令下交替输出 `<recognition>...</recognition>`（感知 action $a_p$）和 `<think>...</think>`（推理 action）。对每条 trajectory $\tau$ 同时计算两个奖励：(i) **Perception Verification (PV)**：把 $\{a_p\}$ + 题干 $Q$ 喂给一个强的 text-only reasoner（如 Qwen2.5-Instruct-14B，不给图），看它能不能输出正确答案，得到二值 $R_P\in\{0,1\}$；(ii) **Structured Verbal Verification (SVV)**：让同一个 LLM 按一个通用"验证协议"逐步执行（识别答案类型→抽取内容→重建参考→按类型语义比对），输出 outcome 奖励 $R_O$。总回报 $R(\tau)=R_O(\tau)+\lambda R_P(\tau)$，advantage 用组内归一化得 $A_{\tau,t}=R(\tau)-\frac1k\sum R(\tau_j)$。**MoCA** 在失败 trajectory ($R_O=0$) 上根据 $R_P$ 重路由优势，把"看错"和"想错"的梯度精准送到对应 token。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 题干 Q"] --> B["VLM 结构化输出<br/>&lt;recognition&gt; 感知块 a_p<br/>+ &lt;think&gt; 推理块"]
+    B --> C["PV · 蒙眼推理代理<br/>14B 纯文本(不给图)读 a_p+Q<br/>→ 二值感知奖励 R_P"]
+    B --> D["SVV · 结构化语言验证<br/>14B 按验证协议逐步执行<br/>→ 结果奖励 R_O"]
+    C --> E["总回报 R = R_O + λ·R_P<br/>组内归一化得 advantage"]
+    D --> E
+    E --> F{"MoCA 门控<br/>仅在失败 R_O=0 时按 R_P 重路由感知 token"}
+    F -->|"R_P=1 看对想错：保护感知 token"| G["GRPO 更新<br/>(推理 token 始终走标准 GRPO)"]
+    F -->|"R_P=0 看错：放大惩罚感知 token"| G
+```
+
 ### 关键设计
 
 **1. Perception Verification via "Blindfolded Reasoner"（PV）：在没有 caption 标注的情况下给感知块一个二值奖励**

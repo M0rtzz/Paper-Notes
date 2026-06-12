@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 这篇工作不提新算法，它要回答的是"蒸馏到底省不省电"，做法是把同一条蒸馏流水线拆成不重叠的几段、逐段量电，再用闭式公式算出何时才划算。具体地，三个对照 regime（baseline SFT、logit-based KD、synthetic SFT）都跑在同一台 H100 80 GB 独占节点上，固定 OLMo-2 tokenizer、Adafactor、bf16、序列长 1024、有效 batch 4、cosine LR + 100 step warmup、容差 $\epsilon = 2\times 10^{-3}$ 早停；教师统一是 32B OLMo-2-SFT，学生覆盖 1B / 7B / 13B，监督数据是 TULU-3 指令、OpenR1-Math、Open-R1 Codeforces 三套。每段 stage 都打时间戳和 token 计数，对功率序列做 $E_{\text{GPU}} \approx \int_{t_s}^{t_e} P_{\text{GPU}}(t)\,dt$ 积分得 stage 能耗，所有 stage 相加得到端到端 kWh，再用 $E_{\text{total}} \cdot \text{PUE} \cdot g_{\text{region}}$ 推 CO₂e，最终落成三张图：能耗-质量 Pareto、stage 分摊、复用摊销曲线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三个对照 regime：baseline SFT / KD / synthetic SFT<br/>同一 H100 独占节点 + OLMo-2 教师 32B"]
+    subgraph ACC["分阶段端到端能耗核算（设计 1）"]
+        direction TB
+        B["prerun 预热"] --> C["数据预处理"]
+        C --> D["教师侧 forward"]
+        D -->|KD| E1["logit 缓存 E_logit"]
+        D -->|synthetic SFT| E2["合成数据生成 E_gen"]
+        E1 --> F["学生训练 E_student"]
+        E2 --> F
+        F --> G["评估 E_eval"]
+    end
+    A --> ACC
+    ACC --> H["NVML 每 0.5s 功率积分<br/>逐段 → J/token、端到端 kWh"]
+    H --> I["能耗-质量 Pareto 前沿（设计 2）<br/>x = kWh，y = 教师相对保留率 Q"]
+    H --> J["教师摊销 break-even（设计 3）<br/>训练阈值 N* / 推理阈值 T*"]
+```
+
 ### 关键设计
 
 **1. 分阶段端到端能耗核算协议：把"教师沉没成本"显式量进总账**

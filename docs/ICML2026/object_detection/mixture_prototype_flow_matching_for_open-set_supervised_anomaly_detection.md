@@ -51,25 +51,29 @@ Pipeline:
 4. **MIMR 正则**: 在正常样本上最大化"prototype 分配 $c$"和"流后的特征 $\psi(z_0^{n,i})$"之间的互信息, 既要 confident assignment 又要 balanced usage.
 5. **四模块异常分数预测**: 全局 $M_g$ (GMM NLL) + 局部 $M_a$ (top-O patch 分数) + 正常 $M_n$ (全局 pooling) + 残差 $M_r$ ($(\psi(z) - \mu_{c^*})/s$ 经分类头), 推理时 $S(z) = S_g + S_a + S_r - S_n$.
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 z → ResNet-18 特征抽取"] --> B["K-means++ 初始化 GMM 原型<br/>μ_k / π_k / 共享方差 s²，破开耦合优化"]
+    B --> C["GMM 形式的速度场<br/>速度场建成 GMM：Σ π_k·N(u; μ_k, s²I)，闭式反向采样"]
+    C --> D["正向 / 反向流匹配损失<br/>正常样本吸引（NLL）· 异常样本取负排斥"]
+    D --> E["互信息最大化正则 MIMR<br/>GMM 后验算互信息，防原型崩塌（仅正常样本）"]
+    E --> F["四模块异常分数<br/>S = S_g + S_a + S_r − S_n → 输出 S(z)"]
+```
+
 ### 关键设计
 
-1. **Mixture Prototype Flow Learning (MPFL): GMM 形式的速度场**:
+**1. GMM 形式的速度场（MPFL 核心）：把多模态从先验一路灌进传输动力学**
 
-    - 功能: 把"流匹配 → 单峰高斯"的传统映射, 换成"流匹配 → 多峰 GMM", 每个组件对应一种正常 sub-pattern.
-    - 核心思路: 不再用 $q_\theta(u | z_t) = \mathcal{N}(u; \mu_\theta(z_t), s^2 I)$ 这种单峰条件高斯, 而是直接把速度场建模成混合高斯 $q_\theta(u | z_t^{n,i}) = \sum_{k=1}^K \pi_k(z_t^{n,i}; \theta) \mathcal{N}(u; \mu_k(z_t^{n,i}; \theta), s^2 I)$, 其中混合权重 $\pi_k$ 和均值 $\mu_k$ 都是输入特征的函数. 训练用 NLL: $\mathcal{L}_{NLL} = \mathbb{E} [-\log \sum_k \pi_k \mathcal{N}(u; \mu_k, s^2 I)]$. 在标准线性 schedule 下, 这种 GMM 结构可以闭式反向采样, 一步反向转移 $q_\theta(z_{t-\Delta t}^{n,i} | z_t^{n,i})$ 仍然是 GMM, 系数 $c_1, c_2, c_3$ 由 noise schedule 完全决定, 推理时不需要数值 ODE 求解.
-    - 设计动机: 单峰速度场必然让所有正常样本被拉向同一个均值, 多模态的 sub-pattern 会被强行压平 —— 这正是 DPDL 在工业 AD 上 false positive 高的根源. 把多模态结构编码进速度场, 是从根本上解决问题, 而不是事后补救.
+这一步对应框架图里「GMM 速度场」节点, 是全文的根. 痛点很明确: DPDL 那类方法把速度场建成单峰条件高斯 $q_\theta(u | z_t) = \mathcal{N}(u; \mu_\theta(z_t), s^2 I)$, 只回归一个均值向量, 于是所有正常样本被拉向同一个 mode, 工业场景里丰富的正常 sub-pattern（同品类下的子图案 / 角度 / 光照）被强行压平, 稀有但合法的正常样本被当成异常——这正是 DPDL false positive 高、决策边界模糊的根源. MPFM 的做法是直接把条件速度场建成混合高斯 $q_\theta(u | z_t^{n,i}) = \sum_{k=1}^K \pi_k(z_t^{n,i}; \theta) \mathcal{N}(u; \mu_k(z_t^{n,i}; \theta), s^2 I)$, 其中混合权重 $\pi_k$ 与均值 $\mu_k$ 都是当前特征的函数, 训练用 NLL $\mathcal{L}_{NLL} = \mathbb{E} [-\log \sum_k \pi_k \mathcal{N}(u; \mu_k, s^2 I)]$ 把预测的速度分布对齐到 GMM. 让它真正可用的关键工程点是闭式反向采样: 在标准线性 noise schedule 下, 一步反向转移 $q_\theta(z_{t-\Delta t}^{n,i} | z_t^{n,i})$ 仍然是 GMM, 系数 $c_1, c_2, c_3$ 完全由 noise schedule 决定, 靠 linear-Gaussian 系统的闭包性可以逐步解析采样, 推理时不需要数值 ODE 求解. 它有效的本质在于——多模态结构被编码进速度场本身, 于是从 $t=0$ 到 $t=T$ 的每一步都是多模态的, 而不是「流终点是 GMM、流过程仍单峰」那种事后补救.
 
-2. **正/反向流匹配损失 (双向 flow loss)**:
+**2. 正向 / 反向流匹配损失：在传输层面同时吸引正常、排斥异常**
 
-    - 功能: 正常样本被吸引到 GMM 原型空间, 异常样本被排斥出去.
-    - 核心思路: 正常样本用标准 NLL $\mathcal{L}_{flow}^{n} = \mathbb{E}[-\log q_\theta(u | z_t^{n,i})]$, 异常样本用**对称取负**的 $\mathcal{L}_{flow}^{a} = \mathbb{E}[\log q_\theta(u | z_t^{a,i})]$ —— 即对异常样本最大化 NLL, 等价于让其速度分布远离正常 GMM. 注意异常的真速度 $u^{a} = (z_T^{a} - z_0^{a}) / t$ 是按线性 schedule 算出来的"如果是正常样本应有的速度", 模型被强制"不像它".
-    - 设计动机: 传统 OSAD 用对比损失或 binary classification 把异常推开, 但都是在最终特征空间做; 这里直接在**速度场层面**做正负分离, 让排斥力作用于整条 transport trajectory, 在 t = 0 到 t = T 的每一步都有梯度信号.
+对应框架图里紧接 GMM 速度场的「双向流匹配损失」节点, 决定正常 / 异常样本分别被怎么对待. 正常样本走标准 NLL $\mathcal{L}_{flow}^{n} = \mathbb{E}[-\log q_\theta(u | z_t^{n,i})]$, 被吸引进 GMM 原型空间; 异常样本则走对称取负的 $\mathcal{L}_{flow}^{a} = \mathbb{E}[\log q_\theta(u | z_t^{a,i})]$, 即最大化异常样本的 NLL, 等价于把它的速度分布推离正常 GMM. 要点在于异常的「真速度」$u^{a} = (z_T^{a} - z_0^{a}) / t$ 是按同一条线性 schedule 算出的「假如它是正常样本本该有的速度」, 模型被强制学得「不像它」. 相比传统 OSAD 用对比损失或二分类只在最终特征空间把异常推开, 这里直接在速度场层面做正负分离, 排斥力作用于整条 transport trajectory, 在 $t=0$ 到 $t=T$ 的每一步都有梯度信号, 分离得更彻底.
 
-3. **Mutual Information Maximization Regularizer (MIMR)**:
+**3. 互信息最大化正则 MIMR：用 GMM 自带后验防止原型崩塌**
 
-    - 功能: 防止 GMM 多个组件 collapse 到同一 mode, 保持组件间可区分性.
-    - 核心思路: 借助 GMM 自带的后验 $p(c=k | \psi(z_0^{n,i})) = \frac{\pi_k \mathcal{N}(\psi(z_0^{n,i}); \mu_k, s^2 I)}{\sum_j \pi_j \mathcal{N}(\psi(z_0^{n,i}); \mu_j, s^2 I)}$ (这一步免费得到, 不需额外参数), 然后最大化互信息 $I(\psi(z_0^{n,i}); c) = H(c) - H(c | \psi(z_0^{n,i}))$. 写成 loss 形式: $\mathcal{L}_{mim} = \mathbb{E}[\sum_k p(c=k|\cdot) \log p(c=k|\cdot)] - \sum_k \pi_k \log \pi_k$. 第一项是**最小化**条件熵 (让每个样本明确归属某一个原型), 第二项是**最大化**边际熵 (让组件被均衡使用).
-    - 设计动机: 直接拿 GMM 后验做信息熵约束, 不需要额外的判别头或对抗训练, 工程上极轻量. MIMR 只在正常样本上算 (不算异常), 否则会把异常往原型上拉, 反效果.
+对应框架图里流匹配之后的「MIMR」节点, 专门堵一个隐患: 多个高斯组件若没有显式分离约束, 容易 collapse 到同一个 mode, 多模态退化、判别力丧失. MIMR 直接借用 GMM 自带的后验 $p(c=k | \psi(z_0^{n,i})) = \frac{\pi_k \mathcal{N}(\psi(z_0^{n,i}); \mu_k, s^2 I)}{\sum_j \pi_j \mathcal{N}(\psi(z_0^{n,i}); \mu_j, s^2 I)}$（免费得到, 不引入额外参数）, 再最大化互信息 $I(\psi(z_0^{n,i}); c) = H(c) - H(c | \psi(z_0^{n,i}))$, 写成 loss 即 $\mathcal{L}_{mim} = \mathbb{E}[\sum_k p(c=k|\cdot) \log p(c=k|\cdot)] - \sum_k \pi_k \log \pi_k$: 第一项最小化条件熵, 逼每个样本明确归属某一个原型; 第二项最大化边际熵, 让各组件被均衡使用. 这样设计的好处是不需要额外判别头或对抗训练, 工程极轻量; 且 MIMR 只在正常样本上算, 因为对异常样本算反而会把异常往原型上拉、起反效果.
 
 ### 损失函数 / 训练策略
 

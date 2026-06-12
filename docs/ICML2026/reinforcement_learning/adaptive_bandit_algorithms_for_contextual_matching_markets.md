@@ -47,24 +47,34 @@ stochastic setting 中，每个 arm context 从固定未知分布独立采样。
 
 adversarial setting 中，context 可以任意甚至适应性选择。由于 adversary 可以让 gap 长期接近 0，精确 stable regret 不再可行。论文用 $\epsilon$-stable matching 和 approximation oracle 定义可处理的近似 regret：当 $\delta_{min}(t)>\Delta$ 时仍比较 $U_i^*(t)$，当 gap 小时比较 $\alpha U_i^\epsilon(t)$。
 
+两种设定共享同一套**按轮决策的骨架**：每轮先用 Mahalanobis 不确定性判断"该探索还是该利用"——探索就在不确定的 player-arm 对上做最大基数匹配收集样本、用 ridge regression 更新偏好估计；利用就在估计 utility 上跑匹配。BARB（stochastic）和 AdECO（adversarial）只在"利用"分支的处理上不同：前者靠 overlap 计数逐步收紧候选 gap，后者在小 gap 时切到近似 oracle。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["每轮观察各 arm 的 context xⱼ(t)"] --> B{"自适应探索判据<br/>某对的 Mahalanobis 范数 > ξ ?"}
+    B -->|"是 · 该方向估计不准"| C["探索：在不确定对上做最大基数匹配<br/>ridge regression 更新 θ̂ᵢ, Vᵢ"]
+    C --> A
+    B -->|"否 · 估计够准"| D["利用：用 θ̂ᵢ 算估计 utility Û"]
+    D -->|"BARB · stochastic"| E["Deferred Acceptance 出匹配<br/>CI 重叠则计数 Nₖ；超阈值则<br/>Δₖ₊₁=Δₖ/√2 进入更细 batch"]
+    E --> A
+    D -->|"AdECO · adversarial"| F{"CI 间距 ≥ ε ?"}
+    F -->|"是 · gap 够大"| G["Deferred Acceptance 出匹配"]
+    F -->|"否 · 小 gap"| H["α-近似 oracle<br/>容忍 (Δ+ε)/2 instability"]
+```
+
 ### 关键设计
-1. **BARB: 批次化自适应 regret balancing**:
+**1. 自适应探索：用 Mahalanobis 不确定性决定何时探索**
 
-	- 功能：在 stochastic contexts 下，不知道真实 $\Delta_{min}$ 也能自适应探索到合适精度。
-	- 核心思路：第 $k$ 个 batch 维护候选 gap $\Delta_k$ 和阈值 $\xi_k=\Delta_k/\eta$。若存在 player-arm 对满足 $\|x_j(t)\|_{V_i(t)^{-1}}>\xi_k$，说明该方向估计不够准，算法在对应二分图上做最大基数匹配来探索；否则用估计 utility 跑 Deferred Acceptance。
-	- 设计动机：Mahalanobis norm 衡量当前 context 在玩家估计中的不确定性。用最大基数匹配能在一轮内同时给尽量多玩家收集有效样本。
+这是 BARB 与 AdECO 共用的探索骨架，对应框架图里"自适应探索判据 → 最大基数匹配"那条回环。痛点在于：不知道真实 $\Delta_{min}$ 时，固定探索长度（如 ETC）要么探索过度、要么精度不足，且对 context covariance 退化非常敏感。本文的做法是每轮对每个 player-arm 对计算 Mahalanobis 范数 $\|x_j(t)\|_{V_i(t)^{-1}}$——它衡量当前 context 落在玩家估计椭球里的不确定度；只要存在某对超过阈值 $\xi$，就说明该方向的 utility 估计还不够准，于是把"所有不确定对"组成二分图、做**最大基数匹配**，一轮内同时给尽量多玩家收集有效样本，再用 ridge regression 更新 $V_i$ 与 $\hat\theta_i$；否则转入利用阶段。它之所以有效，是因为经典线性 bandit 置信界保证 $\|\theta_i-\hat\theta_i\|_{V_i}\leq\eta$，从而 $|U-\hat U|\leq\eta\cdot\|x\|_{V_i^{-1}}$——Mahalanobis 范数直接上界了 utility 估计误差，按它触发探索就能自适应任意 covariance，不必预先知道哪些方向难学。
 
-2. **overlap counter 与 gap 缩小机制**:
+**2. BARB：批次化 regret balancing 与 overlap 驱动的 gap 缩小（stochastic）**
 
-	- 功能：检测当前候选 gap 是否过大，并在需要时进入更精细的 batch。
-	- 核心思路：exploitation 阶段为每个估计 utility 构造半径 $\Delta_k$ 的 confidence interval。若不同 arms 的 interval 经常重叠，就说明当前精度不足以可靠排序，计数器 $N_k$ 超过阈值后令 $\Delta_{k+1}=\Delta_k/\sqrt{2}$。
-	- 设计动机：算法不需要预先知道 $\Delta_{min}$，而是通过“排序是否经常无法分开”来逐步逼近必要精度。
+针对 stochastic contexts，要在无先验的情况下把估计精度逐步逼到匹配真实 $\Delta_{min}$ 的程度。BARB 按 batch 运行：第 $k$ 个 batch 维护候选 gap $\Delta_k$ 和探索阈值 $\xi_k=\Delta_k/\eta$。利用阶段用估计 utility 跑 Deferred Acceptance 得到匹配，同时为各 arm 的估计 utility 构造置信区间；若 top-$(N{+}1)$ 名的区间经常重叠（说明当前精度排不开序），就累加计数器 $N_k$，一旦 $N_k$ 超过阈值 $3\log T/(16\Delta_k^2)$ 就令 $\Delta_{k+1}=\Delta_k/\sqrt{2}$、进入更细的 batch。关键在于它不预知 $\Delta_{min}$，而是把"排序是否经常分不开"当作精度不足的信号来逐步收紧——探索轮数由 elliptical potential lemma 控制、重叠轮数由停止阈值控制，两边一平衡就得到 $O(\log^2 T/\Delta_{min}^2)$ 的 player-optimal stable regret。
 
-3. **AdECO: adversarial contexts 下的探索-选择 oracle**:
+**3. AdECO：稳定 / 近似稳定 oracle 切换（adversarial）**
 
-	- 功能：在 context 任意变化、小 gap 频繁出现时仍给出有意义 regret。
-	- 核心思路：AdECO 沿用 Mahalanobis norm 探索。如果估计足够准且 confidence intervals 分离，就调用 Gale-Shapley；若 intervals 不分离，则调用 $\alpha$-approximation oracle，允许 $\Delta+\epsilon$ 级 instability tolerance。
-	- 设计动机：当 gap 小到无法区分时，坚持精确稳定 benchmark 会产生不可避免 regret。oracle 分支把目标切换到近似稳定效用，使问题重新可解。
+针对 adversarial contexts：adversary 可以长期制造接近 0 的 gap，此时坚持精确 player-optimal stable benchmark 会让 regret 不可控。AdECO 的探索沿用设计 1 的 Mahalanobis 触发，区别只在利用分支——进入利用后先看各 arm 置信区间的间距：若 $\geq\epsilon$（gap 够大）就调用 Gale-Shapley 得精确稳定匹配；若 $<\epsilon$（小 gap）则改调 $\alpha$-approximation oracle，允许 $(\Delta+\epsilon)/2$ 级 instability tolerance。这样做的道理是：小 gap 下 ties 本身不可辨识，强求精确稳定毫无意义；切到近似稳定 benchmark 后目标重新可解，于是即便面对任意 context，仍能给出 $O(Nd\log^2T/(\Delta-\epsilon)^2 + (\Delta+\epsilon)T/2)$ 的 $\alpha$-approximate $\Delta$-optimal stable regret，取 $\Delta=O(T^{-1/3})$ 即得 $T^{2/3}$ 级保证。
 
 ### 损失函数 / 训练策略
 这是一篇在线学习理论论文，没有神经网络损失。偏好估计使用 ridge regression。对于玩家 $i$，只用其参与探索的轮次 $G^{(i)}$ 更新 $V_i(t)=\lambda I+\sum_{s<t,s\in G^{(i)}}x_{i_s}x_{i_s}^\top$ 和 $\hat\theta_i(t)=V_i(t)^{-1}\sum_{s<t,s\in G^{(i)}}x_{i_s}y_{i,i_s}$。经典线性 bandit 置信界保证 $\|\theta_i-\hat\theta_i(t)\|_{V_i(t)}\leq\eta$ 高概率成立，因此 $\|x_j(t)\|_{V_i(t)^{-1}}$ 可以直接控制 utility 估计误差。

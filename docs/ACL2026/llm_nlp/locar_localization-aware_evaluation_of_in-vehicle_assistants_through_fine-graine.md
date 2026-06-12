@@ -41,7 +41,29 @@ LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的
 LoCar 的贡献更像一个完整评测系统，而不是单一模型。它先定义车载助手的任务 taxonomy，再基于车辆手册、导航手册和真实车内对话构造单轮与多轮样本，最后按 KPI 选择合适的自动评测方式。
 
 ### 整体框架
-框架包含三步。第一步是数据 taxonomy：Car Expert 覆盖车辆知识、操作和诊断，来自车主手册层级；Navigation 覆盖目的地搜索、路线解释、交通咨询和上下文推荐。第二步是数据构造：单轮问答从手册和导航 taxonomy 合成，多轮对话从单轮 seed 扩展为需要状态跟踪的交互流，并用韩语敬语进行三倍增强。第三步是评测：对普通 KPI 使用人工校准后的 LLM-as-a-Judge，多模型多数投票；对敬语 KPI 加入句尾形态验证，补足 LLM judge 对相近敬语等级的识别缺陷。
+框架包含三步。第一步是数据 taxonomy：Car Expert 覆盖车辆知识、操作和诊断，来自车主手册层级；Navigation 覆盖目的地搜索、路线解释、交通咨询和上下文推荐。第二步是数据构造：单轮问答从手册和导航 taxonomy 合成，多轮对话从单轮 seed 扩展为需要状态跟踪的交互流，并用韩语敬语进行三倍增强。第三步是评测：对普通 KPI 使用人工校准后的 LLM-as-a-Judge，多模型多数投票；对敬语 KPI 加入句尾形态验证，补足 LLM judge 对相近敬语等级的识别缺陷。整体上，先确定要测什么（13 KPI），再在真实车载功能上长出测试集，最后用混合评测器打分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    KPI["两层 13 KPI 评测体系<br/>语言风格层(简洁+三档敬语)·对话能力层(单轮3+多轮6)"]
+    KPI --> TAX
+    subgraph TAX["行业 taxonomy 驱动的数据构造"]
+        direction TB
+        A["Car Expert：车主手册<br/>109 大类 / 4395 子类"]
+        B["Navigation：导航手册+真实车内对话<br/>7 大类 / 28 子类"]
+        A --> C["单轮 QA：去重过滤 → 映射对应 KPI"]
+        B --> C
+        C --> D["多轮对话：单轮 seed 扩展 3-5 轮状态跟踪<br/>+三档敬语三倍增强"]
+    end
+    TAX --> EVAL
+    subgraph EVAL["混合式敬语评测"]
+        direction TB
+        E["LLM-as-Judge 多数投票<br/>DeepSeek-v3.1 / Gemini-2.5-Flash / GPT-5-mini"]
+        F["句末形态检查：精确匹配敬语后缀"]
+    end
+    EVAL -->|"普通 KPI 用 LLM judge；敬语 KPI 再叠加形态检查"| OUT["11 个模型部署级评分"]
+```
 
 ### 关键设计
 

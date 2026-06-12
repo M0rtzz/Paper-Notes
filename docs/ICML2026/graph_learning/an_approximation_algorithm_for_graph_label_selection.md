@@ -42,6 +42,15 @@ tags:
 ### 整体框架
 论文要解决的是固定预算 $k$ 下的图标签选择，难点在于目标函数既非 submodular 也非 supermodular，逐点贪心拿不到保证。作者的破局思路是把这个全局耦合的选点问题逐层翻译成更易处理的形式：先用 tree cut sparsifier 把一般图归约成一棵二叉树、让选点变成选叶子，再把"某个标注集合是否够好"改写成树上的 max-flow 判定，最后利用树结构对这个流问题做精确动态规划，并对阈值二分搜索得到最优解。近似因子只来自第一步树割稀疏化的失真，后两步在树问题上都是精确求解。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["加权图 G + 标注预算 k"] --> B["Tree cut sparsifier 归约<br/>归约成二叉树 T，GLS 转为选叶子的 LLS"]
+    B --> C["阈值化 flow / sink selection 判定<br/>给定阈值 τ，Ψ≥τ 等价于 max-flow 达 nτ"]
+    C --> D["树上动态规划 + 二分搜索<br/>DP 状态 = 子树可注入流量，对 τ 二分"]
+    D --> E["输出标注集合 L（|L| ≤ k）"]
+```
+
 ### 关键设计
 
 **1. Tree cut sparsifier 归约：把全局选点压到一棵树上**

@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 输入仍是高斯噪声 $z_{t_0}\sim\mathcal{N}(0,\mathbf{I})$，沿离散化时间步 $t_0<\cdots<t_T=1$ 走 ODE。区别在于：在早期"运动决定窗口"（$t\le\alpha T$，论文用 $\alpha\approx 0.2$）的每一步上，先做基础 ODE 步得到 $z_{t_{i+1}}^{(0)}$，然后进入一个 $K_f\le 3$ 次的 P&P 内循环——每次内循环里同时算出"细化后的 ODE 步结果"和"不确定度 mask"，最后用 mask 在精修结果和上一轮结果之间逐空间-时间位置融合，作为下一时间步的输入。中后期时间步则不做精修，直接走基础 ODE。整体只增加 $\sim 1.5\times$ 推理时间，无需任何额外训练 / 外部模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["高斯噪声 z_t0"] --> B["当前时间步 t：基础 ODE 步"]
+    B -->|"t > αT（中后期）"| F["不精修，直接 ODE 推进"]
+    B -->|"t ≤ αT（前 ~20% 运动决定窗口）"| C
+    subgraph PP["P&P 内循环（重复 K_f≤3 次）"]
+        direction TB
+        C["Predict 算子 D_θ<br/>预测干净 latent ẑ1"] --> D["Perturb 算子 R_ε<br/>加噪回同一噪声层级 t"]
+        D --> E["不确定度 mask<br/>相邻两次预测的 L1 差，阈值 τ 二值化"]
+        E --> G["按 mask 融合<br/>运动区精修 / 静态背景保留"]
+        G -.->|"未达 K_f 次，复用上轮结果"| C
+    end
+    PP --> H["精修后 z_t* 喂回 ODE 步"]
+    F --> I["推进到下一时间步"]
+    H --> I
+    I -.->|"逐时间步迭代"| B
+    I --> J["末步 latent → VAE 解码 → 视频"]
+```
+
 ### 关键设计
 
 **1. Flow Matching 即 DAE 的重新解读：给"反复纠偏"找到合法性**

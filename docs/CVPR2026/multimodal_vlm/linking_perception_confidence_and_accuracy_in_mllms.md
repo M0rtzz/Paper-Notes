@@ -38,6 +38,26 @@ tags:
 ### 整体框架
 这篇论文要解决的是 MLLM「看不清也照样自信」的失校准问题，并把校准后的置信度变成推理时的调度信号。整体分两阶段：训练时用 CDRL 把模型练得「对视觉退化敏感、答对时才高置信」；推理时用 CA-TTS 把这套校准好的置信度当路由信号，自适应调度三个解耦的验证模块。具体地，CDRL 先用 GRPO 在「原始图—噪声图」配对上训练，让置信度随视觉证据的好坏而升降；推理阶段，基座模型先采样多个回答，再由 Self-Consistency、Self-Reflection、Self-Check 三个模块各自产出一份投票，最后汇总成答案，全程由一个 Expert Model 分别扮演 Planner / Voter / Critic 来协调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CDRL["CDRL：感知敏感性校准训练（设计 1）"]
+        direction TB
+        A["原始图 i + 问题 q"] --> B["CLIP attention 定位关键区域<br/>加噪生成配对图 i′"]
+        B --> C["GRPO 训练<br/>奖励 = 置信度校准奖励 + 正确性 + 格式"]
+    end
+    CDRL --> D["校准后的基座模型<br/>看不清就降置信、答对才高置信"]
+    D --> E["采样 n 个回答<br/>各带 CoT / 答案 / 置信度"]
+    E --> F["Expert Planner 调度<br/>三个解耦模块各跑一次（脚手架）"]
+    F --> G["Self-Consistency<br/>置信度加权投票 + Expert Voter 外部票"]
+    F --> H["Self-Reflection<br/>Expert Critic 批评 → 基座重答"]
+    F --> I["Self-Check<br/>原始图/噪声图 VCD 对比解码"]
+    G --> J["共享投票字典 V_final"]
+    H --> J
+    I --> J
+    J --> K["最终答案"]
+```
+
 ### 关键设计
 
 **1. Confidence-Driven Reinforcement Learning（CDRL）：用图像对教模型「看不清就别自信」**

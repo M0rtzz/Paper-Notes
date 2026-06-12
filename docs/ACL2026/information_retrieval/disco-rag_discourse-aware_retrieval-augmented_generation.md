@@ -44,6 +44,17 @@ tags:
 
 Disco-RAG 是一套 inference-time 策略，不动 retriever 和 generator 的参数，而是在标准 RAG 的「检索 → 生成」之间塞进「篇章建模 + 规划」两段，让 LLM 不只看到孤立 chunk，还看到 chunk 内/chunk 间的修辞结构再动笔。标准 RAG 形式化为 $y = \arg\max_{y'} P(y' \mid q, \mathcal{C})$，其中 $\mathcal{C} = \{c_1, \dots, c_k\}$ 是 Top-$k$ 检索的 chunk；Disco-RAG 在此之上依次产出每个 chunk 的 intra-chunk RST 树 $\mathcal{T}$、chunk 之间的 inter-chunk 修辞图 $\mathcal{G}$、以及一份 discourse-aware blueprint $\mathcal{B}$，最终把 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$ 五件套一起作为生成条件：$y = \arg\max_{y'} P(y' \mid q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$。同一个基模换 prompt 轮流扮演 parser / graph constructor / planner / generator 四个角色，全程零训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 q + Top-k 检索 chunk 集合 C"] --> T["Intra-chunk RST 树<br/>逐 chunk 离线解析：切 EDU + 标 nucleus/satellite + 关系"]
+    Q --> G["Inter-chunk 修辞图<br/>k 个 chunk listwise 联合预测有序对关系（含 UNRELATED 剪枝）"]
+    T --> B["Discourse-aware blueprint<br/>综合 (q, C, T, G) 排定叙述流与冲突调和"]
+    G --> B
+    B --> GEN["生成器<br/>以 (q, C, T, G, B) 五件套为条件生成答案"]
+    GEN --> Y["最终回答 y"]
+```
+
 ### 关键设计
 
 **1. Intra-chunk RST tree：把 chunk 从 bag-of-tokens 还原成有主次的修辞树**

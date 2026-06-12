@@ -44,7 +44,24 @@ tags:
 
 ### 整体框架
 
-AOT（Anchors + Optimal Transport）要解决的是 Video LLM 里 prefill 占了约 98% FLOPs、而现有压缩要么直接丢 token 丢信息、要么需要训练的难题。它的思路是“不丢弃而聚合”：先在每帧里挑出语义重要且空间多样的 token 作锚点，再用最优传输把被裁掉的 token 的信息分两级——帧内（Phase I）和帧间（Phase II）——最优地汇聚回锚点，全程 training-free。
+AOT（Anchors + Optimal Transport）要解决的是 Video LLM 里 prefill 占了约 98% FLOPs、而现有压缩要么直接丢 token 丢信息、要么需要训练的难题。它的思路是“不丢弃而聚合”：先在每帧里挑出语义重要且空间多样的 token 作锚点（Local-Global Token Anchors），再用最优传输把被裁掉的 token 的信息分两级——帧内 OT 聚合（Phase I）和帧间 OT 聚合（Phase II）——最优地汇聚回锚点，全程 training-free。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["采样视频帧 → 视觉编码器"] --> ANCHOR
+    subgraph ANCHOR["Local-Global Token Anchors"]
+        direction TB
+        B["全局锚点<br/>末层 [CLS] 注意力 Top-K"]
+        C["局部锚点<br/>网格窗口内浅层 [CLS] Top-K"]
+    end
+    ANCHOR --> D["帧内 OT 聚合（Phase I）<br/>非锚点经 Sinkhorn 传给锚点"]
+    D --> E["帧间 OT 聚合（Phase II）<br/>clip 首帧为时序锚点"]
+    E -->|"max 分配概率 q < τ：含独特时序信息"| F["保留 token"]
+    E -->|"q ≥ τ：时序冗余"| G["聚合到锚点"]
+    F --> H["压缩后 token → LLM prefill"]
+    G --> H
+```
 
 ### 关键设计
 

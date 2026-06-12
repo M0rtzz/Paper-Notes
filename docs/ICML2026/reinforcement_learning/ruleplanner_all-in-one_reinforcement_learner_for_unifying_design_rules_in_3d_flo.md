@@ -44,6 +44,21 @@ tags:
 
 RulePlanner 把 3D floorplanning 建模成 episodic MDP：每一步选一个待放置块 $b_t$，状态 $s_t$ 包含若干 $W\times H$ 规则矩阵、画布图像和网表图 $(\bm G,\bm E)$；动作 $a_t=(x_t,y_t,\mathrm{AR}_{t+1})$ 是混合型——离散 2D 坐标 + 给**下一块**的连续长宽比（先给下一块的形状，是因为下一步状态要用 $(w_{t+1},h_{t+1})$ 来重算所有规则矩阵）。流程是：rule matrices + 网表图 → CNN/Transformer 编码 → 策略网络出 logits → 用可用性掩码屏蔽违规位置 → 采样位置 → 把长宽比从高斯采出来再 clip 到 $[\mathrm{AR}_\min,\mathrm{AR}_\max]$ → 计算 reward → Hybrid PPO 更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：网表图 + 七类工业设计规则"] --> MAT["设计规则矩阵化<br/>每条规则编译成 W×H 标量矩阵 T / B / A / P"]
+    IN --> ENC["多模态状态编码<br/>CNN 提规则矩阵空间特征 + Transformer 编网表拓扑"]
+    MAT --> ENC
+    ENC --> LOGIT["策略网络输出位置 logits（W×H）"]
+    MAT --> MASK
+    LOGIT --> MASK["可用性掩码 + 硬掩码 softmax<br/>四个二值掩码按位与，违规位置 logits 推到 −∞"]
+    MASK --> ACT["采样离散位置 (x,y)<br/>+ 下一块长宽比高斯采样后 clip 到合法区间"]
+    ACT --> REW["计算 reward<br/>邻接长 / 端子距 / 对齐分 / HPWL / overlap"]
+    REW --> PPO["Hybrid PPO 更新<br/>位置 + 长宽比双支各算 clip 目标"]
+    PPO -->|下一步放置块| ENC
+```
+
 ### 关键设计
 
 **1. 设计规则的矩阵化表示：把每条规则写成一张 $W\times H$ 标量矩阵，规则之间能模块化拼装**

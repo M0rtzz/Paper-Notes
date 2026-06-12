@@ -45,6 +45,27 @@ REPO 面向的是一个非常具体但很有代表性的工业对话任务：平
 
 三类信号被整合成总 reward 后用于 RL 训练。论文图中沿用 PPO 式 actor-critic 流程：policy model 生成输出，value model 估计状态价值，reward 通过 GAE 形成 advantage，再更新策略。作者强调所有 RL baseline 使用相同 LoRA 配置、训练预算和超参数，因此收益主要来自 reward 设计。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["历史对话 + 任务信息"] --> B["策略模型生成 BD 回复"]
+    subgraph SRC["三源奖励的职责划分（软能力 vs 硬约束）"]
+        direction TB
+        C1["偏好奖励模型 RM<br/>6632 条偏好样本，学人类 BD 自然表达"]
+        C2["LLM 评审 RJ<br/>rubric 评安抚 / 追价 / 越界 / 误判"]
+        C3["规则函数 RF<br/>查内部术语 / 格式 / 价格 / 禁词"]
+    end
+    B --> C1
+    B --> C2
+    B --> C3
+    C2 --> D["聚合 E_judge + E_func 裁剪到 ±n"]
+    C3 --> D
+    C1 --> E["有界 Reward Enhancement<br/>R_total = R_model · (1 ± E_enh/n)"]
+    D --> E
+    E --> F["PPO 训练：GAE 优势 + actor-critic 更新策略"]
+    F -. "部署驱动迭代：线上事故→加 RJ 规则 / 补 RF 正则" .-> SRC
+```
+
 ### 关键设计
 
 **1. 三源奖励的职责划分：把软能力和硬约束拆给最擅长的奖励源**

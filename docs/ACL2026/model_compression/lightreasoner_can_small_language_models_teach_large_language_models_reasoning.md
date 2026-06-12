@@ -45,6 +45,17 @@ LightReasoner 可以理解为一种面向推理模型的选择性自蒸馏。它
 
 第一阶段是采样和筛选：如果 $D_{KL}(\pi_E\|\pi_A)>\beta$，该步骤被认为是 informative step。第二阶段是构造对比监督：在 Expert 高置信 token 的 mask 支撑集上计算 $\log \pi_E(a\mid s_t) / \pi_A(a\mid s_t)$，再归一化成 soft target $v_C$。第三阶段是微调：用 LoRA 训练同一个 Expert，使它的输出分布靠近 $v_C$，从而强化 Expert 已经比 Amateur 做得好的推理决策。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GSM8K 推理问题"] --> B["Expert CoT 短前缀采样<br/>rollout ≤ 128 token"]
+    B --> C["逐 prefix 计算 Expert / Amateur<br/>next-token 分布"]
+    C --> D["KL 驱动的信息步骤筛选<br/>保留 D_KL > β=0.4 的 informative step"]
+    D --> E["对比式分布监督<br/>α mask → log(πE/πA) → softmax 得 soft target vC"]
+    E --> F["LoRA 自蒸馏<br/>训练 Expert 输出分布匹配 vC"]
+    F --> G["增强后的 Expert"]
+```
+
 ### 关键设计
 
 **1. KL 驱动的信息步骤筛选：用强弱模型的分歧定位高价值 token**

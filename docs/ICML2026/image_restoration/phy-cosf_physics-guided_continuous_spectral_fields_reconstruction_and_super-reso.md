@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 Phy-CoSF 要解决的是 CASSI 单帧快照反推完整高光谱图像这个严重欠定的逆问题，做法是把带加速的半二次分裂算法 A-HQS 沿前向物理模型 $y = \Phi x + n$ 展开成 $K=9$ 个 stage，并在每个 stage 的先验步里嵌入一个"按波长连续查询"的隐式表征模块。单个 stage 依次做三件事：先由 DAN (degradation-aware network) 显式求解数据保真子问题 $x_{k+1} = (\Phi^T \Phi + \mu I)^{-1}(\Phi^T y + \mu \hat z_k)$，把物理掩膜 $\Phi$ 直接拉进计算图；再由 CoSF 模块求解先验子问题 $z_{k+1} = \text{CoSF}(x_{k+1}, \eta)$，其中 $\eta = \sqrt{\tau/\mu}$ 是可学噪声水平；最后做加速步 $\hat z_{k+1} = z_{k+1} + \beta_k(z_{k+1} - z_k)$。整套网络在训练相位只对随机抽取的若干离散波长查询并算 L1 loss，推理相位则可向 CoSF 喂任意波长 $\lambda$ 渲染出单波长切片 $HSI(\lambda) \in \mathbb{R}^{1\times H\times W}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CASSI 单帧快照 y + 物理掩膜 Φ"] --> B["A-HQS 展开：K=9 个 stage 串行"]
+    B --> C["DAN 数据保真步<br/>把物理掩膜 Φ 拉进计算图显式解 x"]
+    C --> D
+    subgraph D["CoSF 连续光谱场先验（内容 f ⊕ 波长 e_λ 解耦）"]
+        direction TB
+        E["三分支跨域特征混合器 + CDFE<br/>抽波长无关内容 f：空间→频率(Fourier-Mamba)→通道"]
+        G["谱合成头 SSH<br/>随机频率编码 γ(λ) + MLP → 波长嵌入 e_λ"]
+        E --> K["谱合成 Concat(e_λ, f) → HSI(λ)"]
+        G --> K
+    end
+    D --> H["加速步：ẑ ← z + β(z − z 上一步)"]
+    H -->|"未填满 K stage：回环下一 stage"| C
+    H -->|"训练相位：离散 λ 算 L1"| I["高保真 HSI 重建"]
+    H -->|"渲染相位：任意连续 λ 查询"| J["连续光谱切片 / 零样本光谱超分"]
+```
+
 ### 关键设计
 
 **1. 连续光谱场先验 CoSF：把"针对固定通道训练的离散去噪算子"换成关于波长的连续场**

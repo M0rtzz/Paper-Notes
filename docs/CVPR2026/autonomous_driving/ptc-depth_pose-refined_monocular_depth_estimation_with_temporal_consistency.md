@@ -47,6 +47,20 @@ tags:
 
 具体到一帧的处理流程：先算当前帧与相邻帧的光流；用光流和相对深度通过 RANSAC 估计相机相对位姿，再用里程计的平移长度把位姿的尺度钉死；拿位姿和光流做三角化得到稀疏度量深度；最后在尺度空间里做逐像素的递归贝叶斯更新，融合本帧三角化观测与上一帧传播来的先验，输出度量深度图。整套流程没有任何可学习参数，基础模型全程冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["单目相机连续帧 + 轮式里程计"] --> FLOW["光流计算<br/>当前帧与相邻帧"]
+    DAM["深度基础模型 Depth Anything v2（冻结）<br/>→ 相对深度 d_rel"] --> FLOW
+    FLOW --> POSE["鲁棒位姿估计<br/>运动场分解 + 网格 RANSAC，里程计平移钉死尺度"]
+    POSE --> TRI["Sampson 残差三角化质量评估<br/>稀疏度量深度 z_tri + 观测不确定性"]
+    TRI --> BAYES["递归贝叶斯尺度融合<br/>尺度空间 S = Z / d_rel 上做 Kalman 更新"]
+    PRIOR["上一帧后验尺度 S_prior"] -->|传播为先验| BAYES
+    BAYES -->|输出后验尺度| PRIOR
+    BAYES --> SEG["超像素级尺度整合<br/>Felzenszwalb 分块，补 shift 分量"]
+    SEG --> OUT["时间一致的度量深度图"]
+```
+
 ### 关键设计
 
 **1. 基于运动场的鲁棒位姿估计：在动态场景里把相机自身运动从光流里干净地剥出来**

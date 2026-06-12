@@ -45,6 +45,23 @@ tags:
 
 论文考虑两类在线 eviction。单轮问答中，文本 query 已经可见，可以使用 query-aware 的 SnapKV 风格策略，用 prompt 中的代理 query 和缓存 key 的相似度估计视觉 token 对当前问题的重要性；潜在多轮场景中，后续 query 可能未知，则使用 query-agnostic 的 KeyDiff 风格策略，保留更偏离平均 key 表示的 token，以维护视觉表示多样性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入序列 S<br/>块大小 b、缓存预算 M"] --> B["视觉结构对齐的压缩粒度<br/>块边界踩在 tile / 空间网格 / 帧组上"]
+    B --> C["固定预算的 block-wise prefill<br/>算第 i 块 K/V 追加进缓存 C"]
+    C --> D{"|C| > M ?"}
+    D -->|是| E["算超额量 k_excess = |C| − M<br/>调用 eviction 压回预算"]
+    E --> F{"query 是否可见"}
+    F -->|单轮·query 已知| G["query-aware 路径（SnapKV 风格）<br/>代理 query 与 key 相似度保相关 token"]
+    F -->|多轮·query 未知| H["query-agnostic 路径（KeyDiff 风格）<br/>保留偏离平均 key 的稀有 token"]
+    G --> I{"还有下一块"}
+    H --> I
+    D -->|否| I
+    I -->|是| C
+    I -->|否| J["预算受控的压缩 KV cache<br/>→ 后续解码沿用"]
+```
+
 ### 关键设计
 
 **1. 固定预算的 block-wise prefill：把峰值显存钉在预算 $M$ 附近，而不是随原始视觉 token 数膨胀**

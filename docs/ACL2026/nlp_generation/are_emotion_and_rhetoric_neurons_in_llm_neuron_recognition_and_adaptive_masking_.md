@@ -45,6 +45,29 @@ tags:
 
 基于Llama-3.1-8B-Instruct，聚焦FFN层神经元。流程包含三个阶段：神经元识别（激活频率+概率归一化+熵筛选）→ 自适应遮蔽验证（动态选择+衰减遮蔽+反馈优化）→ 神经元调控（定向诱导+跨信号增强）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["情感/修辞标注语料<br/>(6 类情感 + 4 类修辞)"] --> S1
+    subgraph S1["神经元识别"]
+        direction TB
+        B["统计激活频率 f(u,e)"] --> C["概率归一化 P(u,e)"] --> D["低熵筛选<br/>取熵最低前 1%"]
+    end
+    S1 --> S2
+    subgraph S2["自适应遮蔽"]
+        direction TB
+        E["激活差异选核心<br/>取差异最大前 10%"] --> F["衰减遮蔽<br/>n' = n×(1 − α·A/A_max)"] --> G{"准确率下降?"}
+        G -->|否| H["反馈优化<br/>增大 α 与 τ 重试"] --> F
+    end
+    S2 -->|是, 因果验证成立| S3
+    subgraph S3["神经元调控与跨信号增强"]
+        direction TB
+        I["定向诱导<br/>注入功能向量诱发目标类"]
+        J["跨信号增强<br/>修辞激活注入情感神经元"]
+    end
+    S3 --> K["情感/修辞预测定向调控<br/>+ 修辞辅助情感识别"]
+```
+
 ### 关键设计
 
 **1. 神经元识别（Neuron Recognition）：用低熵筛出对某类情感/修辞高度选择性响应的神经元**

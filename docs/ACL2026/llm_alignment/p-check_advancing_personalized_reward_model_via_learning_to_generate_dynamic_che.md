@@ -43,6 +43,21 @@ P-Check 的核心是把个性化奖励建模拆成两步：先离线学一个小
 ### 整体框架
 输入是一名用户的历史偏好 $H_u$、当前 query $q$ 和候选回答 $y$。传统 reward model 直接估计 $r(y \mid H_u, q)$，把用户信号压成一个隐式上下文；P-Check 在中间插入一个显式 checklist $C_{u,q}$，把奖励改写成由候选回答、query、用户历史和 checklist 共同决定的判断 $r \sim P_\theta(\cdot \mid y, q, H_u, C_{u,q})$，相当于在 judge 面前摆出一份“此处该看哪几条”的明细。训练时离线从偏好数据中蒸馏 checklist 并标注每条准则的重要性，用来教一个 3B 小模型当 generator；推理时则只剩下 generator 生成 checklist、judge 逐条打分两件事，因此训练复杂但测试开销只比裸 judge 多一次清单生成和准则级评分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户历史 H_u + 当前 query q + 偏好对 chosen/rejected"] --> B["压成通用偏好 GP_u<br/>(内容/语气/推理/结构)"]
+    B --> C["蒸馏动态 checklist<br/>隐式用对比、显式只出准则"]
+    C --> W
+    subgraph W["Preference-Contrastive 准则加权"]
+        direction TB
+        D["跨用户对比采样<br/>取偏好最远 top-3 用户造负例"] --> E["saliency scoring<br/>删第 k 条准则看负例是否更接近 chosen"]
+    end
+    W --> F["带重要性标签的 checklist-guided reward<br/>saliency 按累计权重离散成 E/I/O 三档"]
+    F --> G["训练 3B checklist generator<br/>next-token 学带标签清单"]
+    G -.推理.-> H["generator 生成 checklist → judge 逐条打分<br/>E/I/O 权重 × 得分点积 = 标量 reward"]
+```
+
 ### 关键设计
 
 **1. 从偏好对蒸馏动态 checklist：把静态 persona 换成可执行准则**

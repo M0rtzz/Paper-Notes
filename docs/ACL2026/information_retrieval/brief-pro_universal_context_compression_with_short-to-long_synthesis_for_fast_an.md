@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 系统由一个 3B 压缩器 $\mathcal{C}$（Llama-3.2-3B-Instruct）和一个冻结的 reader $\mathcal{M}$（8B/70B/GPT-4.1-nano）两部分组成，核心要解决的是"想训长上下文压缩器却没有长上下文训练数据"这个 gap。在线推理时，检索器对 query $\mathbf{x}$ 返回长上下文 $\mathbf{D}$，压缩器在一条可选的句数指令 $\mathbf{i}$（"Summarize ... in K sentences, K=[P] k [\P]"）约束下输出紧凑摘要 $\mathbf{s}$，reader 再用 $\mathbf{x}+\mathbf{s}$ 生成答案。训练数据 $\mathcal{D}_{comp}$ 完全由一条"短到长合成"流水线产出——把短种子文档扩长、把 oracle 摘要剪短，制造出"长输入对短摘要"的强对比样本，压缩器在其上以标准 next-token 目标 $\max_{\mathcal{C}} \mathbb{E}\log p_{\mathcal{C}}(\mathbf{s}|\mathbf{x},\mathbf{D},\mathbf{i})$ 学习。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["短种子文档<br/>oracle + distractor 段落（HotpotQA/MuSiQue）"] --> B["短到长上下文扩展<br/>反查 Wikipedia 来源页，按位置前后扩张到约 6k 词"]
+    B --> C["头尾迭代裁剪<br/>用 reader 似然从首尾删无用句，剪出中段连续 span（约 0.2k 词）"]
+    C --> D["训练数据：长输入 → 短摘要<br/>句尾拼接「K 句」指令"]
+    D -->|LoRA 微调| E["用户可控压缩指令<br/>3B 压缩器学到「指令 K ↔ 输出句数」对应"]
+    F["推理：query + 检索长上下文<br/>+ High/Medium/Low/Auto 档位"] --> E
+    E --> G["紧凑摘要 s"]
+    G --> H["冻结 reader 用 x + s 生成答案"]
+```
+
 ### 关键设计
 
 **1. 短到长上下文扩展：用 Wikipedia 把短文档造成 6k 词长输入**

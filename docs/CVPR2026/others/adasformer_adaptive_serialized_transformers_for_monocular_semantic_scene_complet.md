@@ -38,7 +38,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AdaSFormer要解决的是从一张室内RGB图重建出完整3D语义体素，而高分辨率体素让标准Transformer的 $O(N^2)$ 注意力不可行。它的做法是把不规则3D数据序列化成有序token、用局部分组把复杂度压到 $O(N \cdot G)$，再在序列化方式、位置编码、特征归一化三处针对室内SSC做改造。具体流程：单目RGB先经2D编码器(EfficientNet)提特征并估计深度，按深度投影到3D空间，送入由多个AdaSFormer块组成的3D编码器——每个块交替使用序列化Transformer(建模长程上下文)和卷积(补充局部几何)，最后接一个轻量解码器输出体素占据与语义。三个核心设计ASA、CRPE、CMLN分别对应"怎么序列化""注意力怎么感知空间""CNN和Transformer特征怎么对齐"。
+AdaSFormer要解决的是从一张室内RGB图重建出完整3D语义体素，而高分辨率体素让标准Transformer的 $O(N^2)$ 注意力不可行。它的做法是把不规则3D数据序列化成有序token、用局部分组把复杂度压到 $O(N \cdot G)$，再在序列化方式、位置编码、特征归一化三处针对室内SSC做改造。具体流程：单目RGB先经2D编码器(EfficientNet)提特征并估计深度，按深度投影到3D空间，送入由多个AdaSFormer块组成的3D编码器——每个块交替使用序列化Transformer(建模长程上下文)和卷积(补充局部几何)，最后接一个轻量卷积解码器输出体素占据与语义。三个核心设计ASA、CRPE、CMLN都嵌在AdaSFormer块内部，分别管"怎么序列化""注意力怎么感知空间""CNN和Transformer特征怎么对齐"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单目RGB图像"] --> B["2D编码器 EfficientNet 提特征<br/>+ 现成方法估计深度"]
+    B --> C["按深度 + 相机内外参<br/>投影到3D体素"]
+    C --> BLK
+    subgraph BLK["3D编码器：堆叠 AdaSFormer 块（序列化Transformer 与 卷积 交替）"]
+        direction TB
+        E["自适应序列化注意力 ASA<br/>Gumbel-Softmax 学可微序列化起点"]
+        F["中心相对位置编码 CRPE<br/>按距场景中心的角度差作注意力偏置"]
+        G["卷积调制层归一化 CMLN<br/>体素特征动态生成归一化缩放/平移"]
+        E --> F --> G
+    end
+    BLK --> H["轻量卷积解码器（DDR）"]
+    H --> I["输出：体素占据 + 语义标签"]
+```
 
 ### 关键设计
 

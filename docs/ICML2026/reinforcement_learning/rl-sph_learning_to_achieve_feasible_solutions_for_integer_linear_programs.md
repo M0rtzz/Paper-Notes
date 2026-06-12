@@ -41,6 +41,19 @@ tags:
 ### 整体框架
 输入是任意一个 ILP 实例 $M=(\mathbf{c},\mathbf{A},\mathbf{b},l,u)$。RL-SPH 先把它编成「变量-约束」二部图，并通过 LP 松弛或随机赋值得到初始解 $\mathbf{x}_0$。在每一步 $t$ 中，先用 feasibility-aware selection 挑出 $\tilde n = 2\lceil\log_2 n\rceil$ 个可变变量（其余冻结），送入 ILP-GT actor 预测动作集 $\mathcal{A}_t$（每个变量在 $\{+1,0,-1\}$ 中三选一），更新解 $\mathbf{x}_{t+1}$，重新计算左端 $\mathbf{lhs}_{t+1}=\mathbf{Ax}_{t+1}$、可行性向量 $\mathbf{f}_{t+1}=\mathbf{b}-\mathbf{lhs}_{t+1}$ 与目标值 $obj_{t+1}$。Critic 估值用于 actor 训练；每发现一个比 incumbent 更好的可行解就更新 $\mathbf{x}_b, obj_b$。直到外部时间预算耗尽或所有 baseline 完成搜索为止。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ILP 实例 M=(c,A,b,l,u)"] --> B["二部图编码 + 初始解 x₀<br/>LP 松弛或随机赋值"]
+    B --> C["可行性感知邻域搜索<br/>每步放开 ñ=2⌈log₂n⌉ 个变量，其余冻结"]
+    C --> D["ILP-GT 图 Transformer Actor<br/>全连接注意力 + Periodic Embedding<br/>每个变量输出 +1 / 0 / −1"]
+    D --> E["更新解 xₜ₊₁，重算 lhs、可行性向量 f、目标值 obj"]
+    E --> F["双阶段可行性奖励<br/>phase1 跨进可行域 / phase2 域内寻优"]
+    F --> G["Critic 估值训练 Actor<br/>更优可行解则更新 incumbent x_b"]
+    G -->|预算未耗尽| C
+    G -->|时间预算耗尽| H["输出最优可行解 x_b"]
+```
+
 ### 关键设计
 
 **1. 双阶段可行性奖励（Two-Phase Reward）：把"先达到可行"和"在可行域内寻优"解耦**

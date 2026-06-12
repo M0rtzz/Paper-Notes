@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-MathFlow 是一个两阶段模块化管线：(1) 感知阶段：使用 MathFlow-P-7B 从数学图表中提取 EI（关键信息如角度值、边长关系）和 RP（推理属性如几何关系推断），转化为文本表示；(2) 推理阶段：将提取的文本信息与原始问题拼接，输入任意推理模型（如 GPT-5、Claude）生成解答。
+本文有两条主线。先用 **FlowVerse** 基准把视觉数学问题的信息拆成可控组件，通过控制变量诊断出「感知（而非推理）才是瓶颈」；再据此设计 **MathFlow**——一个把感知与推理解耦的两阶段模块化管线：(1) 感知阶段：使用专门训练的 MathFlow-P-7B 从数学图表中提取 EI（关键信息如角度值、边长关系）和 RP（推理属性如几何关系推断），转化为文本表示；(2) 推理阶段：将提取的文本信息与原始问题拼接，输入任意推理模型（如 GPT-5、Claude）生成解答。最后用 **FlowVerse-CoT-E** 以人工标注的解题步骤为锚点，评估模型在不同推理深度下的表现。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数学图表 + 问题"] --> FV
+    subgraph FV["FlowVerse 基准：四组件信息分解"]
+        direction TB
+        B["拆成 DI / EI / RP / OQ 四组件"] --> C["构造六个变体<br/>分离感知与推理"]
+    end
+    FV -->|"诊断：感知是瓶颈"| MP
+    subgraph MP["MathFlow-P-7B 感知模型训练（两阶段）"]
+        direction TB
+        D["多任务预训练<br/>冻结 LLM，训视觉编码器 + 感知器"] --> E["监督微调<br/>冻结视觉编码器，训感知器 + LLM"]
+    end
+    MP --> F["感知阶段：MathFlow-P-7B<br/>图表 → EI + RP 文本"]
+    F --> G["推理阶段：文本 + 问题<br/>→ 任意推理模型 → 解答"]
+    G --> H["FlowVerse-CoT-E 评估<br/>人工步骤为锚，逐步放料打分"]
+```
 
 ### 关键设计
 

@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Aegle基于DeepSeek-V3.2构建，采用两阶段有限状态机执行问诊：Stage I为迭代式病史采集（证据收集），Stage II为诊断综合（冻结证据集后生成诊断）。全程维护一个增量更新的结构化临床状态 $\mathcal{S}_t = [\mathcal{F}_t, \mathcal{P}_t]$，其中 $\mathcal{F}$ 对应SOAP的S+O（事实证据），$\mathcal{P}$ 对应A+P（诊断与计划）。
+Aegle基于DeepSeek-V3.2构建，采用两阶段有限状态机执行问诊：Stage I为迭代式病史采集（证据收集），Stage II为诊断综合（冻结证据集后生成诊断）。全程维护一个增量更新的结构化临床状态 $\mathcal{S}_t = [\mathcal{F}_t, \mathcal{P}_t]$，其中 $\mathcal{F}$ 对应SOAP的S+O（事实证据），$\mathcal{P}$ 对应A+P（诊断与计划）。Stage I 内由 Orchestrator、Specialist Agents、Aggregator 三类节点协作循环，所有节点都读写同一块 SOAP 黑板；证据充分后才切换到 Stage II 一次性下诊断。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["患者叙述输入"] --> ORCH
+    subgraph STAGE1["两阶段顺序执行 · Stage I 迭代式病史采集"]
+        direction TB
+        ORCH["Orchestrator 路由 π_orch<br/>按当前证据动态激活专科子集"]
+        SPEC["Specialist Agents<br/>各专科解耦并行推理，互不可见"]
+        AGG["Aggregator 整合（先写后说）<br/>合并建议后才生成问诊话术"]
+        ORCH --> SPEC --> AGG
+    end
+    AGG -->|更新事实证据 F + 向患者追问| BB[("结构化临床状态<br/>SOAP 黑板 S = [F, P]")]
+    BB -->|证据未充分，进入下一轮| ORCH
+    BB -->|证据充分，冻结 F| SYN["Stage II 诊断综合<br/>Aggregator 据完整证据生成诊断与计划 P"]
+    SYN --> OUT["输出 SOAP / 初始病程记录 IPN"]
+```
 
 ### 关键设计
 

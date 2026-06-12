@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 方法要解决的是：在分数已经 group-calibrated、但取阈值仍会违反 sufficiency 的设定下，精确求出满足 sufficiency 的最优二元分类器。核心思路是把决策规则的搜索搬到 $(\mathrm{PPV},\mathrm{FOR})$ 二维平面上——每个群体由其分数分布诱导出一块可行域 $\mathcal{C}^a$，sufficiency 等价于"在两群体可行域的交集里挑一个点"，于是问题从无穷维的随机化规则搜索退化为沿交集边界的一维优化。整套流程只需要 group-calibrated 分数和群体标签，是纯后处理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：group-calibrated 分数 + 群体标签"] --> B["可行域几何刻画<br/>软阈值规则定出边界曲线"]
+    B --> C["两群体求交<br/>sufficiency = 两可行域交集的非递减边界"]
+    C --> D["Algorithm 1：沿交集边界追踪<br/>逐段闭式求最优"]
+    D -->|损失最小化| E["最优准确率的 sufficient 分类器"]
+    D -->|separation 偏差最小化| F["最接近 equalized odds 的分类器"]
+```
+
 ### 关键设计
 
 **1. $(\mathrm{PPV},\mathrm{FOR})$ 可行域的几何刻画：把无穷维规则搜索压成一条二维曲线**

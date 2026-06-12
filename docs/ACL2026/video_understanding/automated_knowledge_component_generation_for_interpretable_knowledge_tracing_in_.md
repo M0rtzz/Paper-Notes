@@ -42,11 +42,39 @@ tags:
 ### 整体框架
 方法分两段、连成一个闭环。第一段是自动 KC 生成与标注 pipeline：对每道编程题采样多样化的正确学生提交，提示 GPT-4o 生成必要的 KC，再用 Sentence-BERT embedding + 层次凝聚聚类把相似 KC 合并，最后让 GPT-4o 给每个 cluster 命名并把题目映射到 cluster，得到 Q-matrix。第二段是 KCGen-KT 模型：它为每个学生维护一份「在各 KC 上的 mastery 向量」，把 mastery 值转成 soft token，连同下一道题的题面和 KC 描述一起喂给 Llama 3，同时预测「下一次作答是否正确」和「学生可能提交的代码」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["编程题 + 学生提交"] --> S1
+    subgraph S1["LLM-based KC 生成与聚类"]
+        direction TB
+        B["CodeBERT 聚类采样多样化正确解法"] --> C["GPT-4o 生成 KC<br/>（思维链 + few-shot 示例）"]
+        C --> D["Sentence-BERT + 层次凝聚聚类<br/>控制抽象层级"]
+        D --> E["GPT-4o 命名 cluster → Q-matrix"]
+    end
+    S1 --> S2
+    subgraph S2["KC Mastery Soft Token 转换"]
+        direction TB
+        F["LSTM 更新知识状态 h_t"] --> G["线性层 + sigmoid<br/>→ mastery 向量 m_t"]
+        G --> H["插值 true/false 嵌入<br/>→ soft token s_t"]
+    end
+    S2 --> I["Llama 3<br/>（题面 + KC 描述 + mastery soft token）"]
+    subgraph S3["多任务 KT 目标与可解释正则"]
+        direction TB
+        J["正确性预测"]
+        K["学生代码生成"]
+        L["KC mastery 正则"]
+    end
+    I --> J
+    I --> K
+    I --> L
+```
+
 ### 关键设计
 
 **1. LLM-based KC Generation and Clustering：从多样化正确解法里抽出可读且粒度可控的 KC**
 
-开放式编程题没法像选择题那样标注——同一题有多种正确思路，只看题干或单个解法会漏掉必要技能，而让 LLM 自由生成又容易产出过细、重复、不可泛化的 KC。ArrowGEV 的做法是先用 CodeBERT embedding 给正确学生代码聚类，从不同代码簇里采样代表性解法，让 GPT-4o 基于题目和这些多样解法生成 KC；再用 Sentence-BERT 把 KC 描述向量化，经 Hierarchical Agglomerative Clustering 合并相似技能，最后由 GPT-4o 给每个 cluster 命名。聚类这一步正是用来控制抽象层级，把 LLM 容易发散的细碎技能收敛成稳定、可复用的 KC 集合。
+开放式编程题没法像选择题那样标注——同一题有多种正确思路，只看题干或单个解法会漏掉必要技能，而让 LLM 自由生成又容易产出过细、重复、不可泛化的 KC。本文的做法是先用 CodeBERT embedding 给正确学生代码聚类，从不同代码簇里采样代表性解法（兼作 few-shot 示例），让 GPT-4o 用思维链基于题目和这些多样解法生成 KC；再用 Sentence-BERT 把 KC 描述向量化，经层次凝聚聚类（Hierarchical Agglomerative Clustering, HAC）合并相似技能，最后由 GPT-4o 给每个 cluster 命名、并把题目映射到 cluster 标签得到 Q-matrix。聚类这一步正是用来控制抽象层级，把 LLM 容易发散的细碎技能收敛成稳定、可复用的 KC 集合。
 
 **2. KC Mastery Soft Token Conversion：把连续的掌握度接进 LLM 的文本空间**
 

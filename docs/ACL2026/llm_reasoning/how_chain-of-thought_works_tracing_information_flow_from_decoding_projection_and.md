@@ -46,6 +46,18 @@ tags:
 
 分析顺序是反向的：先看 decoding，也就是输出文本如何借用 prompt 和问题中的关键词；再看 projection，即 hidden state 投影到 vocabulary 后的 token probability 和 entropy；最后看 activation，即 FFN 中有多少 neuron 被激活，以及 CoT 与 standard prompt 的层级差异。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：6 个模型 × 9 个推理数据集<br/>CoT prompt vs 标准 prompt（4-shot，greedy）"] --> TRACE
+    subgraph TRACE["反向追踪信息流（从输出 token 倒推到内部）"]
+        direction TB
+        B["解码层结构遵循分析<br/>四类 test points + Imitation Count<br/>测结构遵循度 ↔ 准确率相关"] --> C["概率投影层置信度分析<br/>hidden state 投影回 vocabulary<br/>测「answer is」token 概率与熵"]
+        C --> D["FFN 激活层任务依赖调制<br/>统计激活神经元数 + 层级差异"]
+    end
+    TRACE --> E["结论：CoT 约束答案结构、收窄解码空间<br/>并按任务类型调制后层 FFN 激活"]
+```
+
 ### 关键设计
 
 **1. 解码层的结构遵循分析：检验 CoT 的收益究竟来自模板结构还是真逻辑**

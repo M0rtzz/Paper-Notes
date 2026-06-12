@@ -42,6 +42,20 @@ BiMU 为二值贝叶斯神经网络设计有界记忆和不确定性感知的 me
 ### 整体框架
 BiMU 要解决的是二值贝叶斯网络在长程非平稳流上的「后验饱和」问题：每个二值 synapse $\omega\in\{-1,+1\}$ 由 Bernoulli natural parameter $\lambda$ 参数化，$\lambda=0$ 是最大不确定，$|\lambda|$ 越大权重越确定，而普通贝叶斯更新只会把 $|\lambda|$ 越推越大，最终 synapse 冻结、不确定性消失。BiMU 的做法是把后验更新拆成三件事协同：当前 batch 数据驱动巩固、一个由记忆窗口控制的有界遗忘项把后验拉回 prior、一个看梯度与当前符号是否一致的非对称步长；推理时再用多组二值权重采样的预测分歧做一次性主动查询，决定要不要花标签和反向传播。整个过程只看当前 batch，不存 replay buffer，也不需要任务边界。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流式样本 x<br/>(无任务边界 / 无 replay)"] --> B["MC disagreement 主动查询<br/>抽 K 组二值权重 forward"]
+    B --> C["variation ratio<br/>VR = 1 − f_mode/K"]
+    C -->|"VR < τ：跳过"| S["不查标签 / 不反传"]
+    C -->|"VR ≥ τ：请求标签"| D
+    subgraph D["BiMU 后验更新（Bernoulli λ）"]
+        direction TB
+        D1["有界记忆变分目标<br/>数据项 + 按 1/N 拉回 prior 遗忘项"] --> D2["metaplastic 步长 η(λ,g)<br/>巩固快 · 去巩固慢"]
+    end
+    D --> A
+```
+
 ### 关键设计
 
 **1. 有界记忆 Bernoulli 变分目标：让后验会遗忘，而不是无限累积证据**

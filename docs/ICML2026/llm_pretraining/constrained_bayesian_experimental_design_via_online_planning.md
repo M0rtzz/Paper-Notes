@@ -46,6 +46,28 @@ COPEx 把"测试时改约束不用重训"这件事拆成两层：约束感知交
 
 测试时走 receding-horizon：每一步 $t$ 在线展开一棵 H 步 lookahead 场景树，根节点是当前 $(\mathcal{D}_{t-1},z_t)$，每个 decision 节点选一个设计 $x_k^{j_{1:\ell}}$，每个设计往下采 $m_k$ 个 fantasy 观测分支，到深度 $H+1$ 截断；一次性联合优化整棵树上的所有决策变量 $\mathbf{X}_{\text{tree}}$，只执行根节点最优设计 $x_t^\star$，观测真实 $y_t$，更新状态后重新规划。支撑这棵树高速运转的，是离线预训练好的两件东西：摊销 posterior 网络 $q_\phi(\theta\mid\mathcal{D})$（混合密度网络拟合 $\mathcal{D}\mapsto p(\theta\mid\mathcal{D})$，负责"算得快"）和摊销设计策略 $\pi_\psi$（直接复用 Huang et al. 2026 的 ALINE transformer，负责"初始化得好"）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线摊销（训练一次，与约束无关）"]
+        direction TB
+        SIM["仿真器合成 (θ, 数据集) 训练对"]
+        SIM --> QP["摊销后验网络 q_φ<br/>MDN 拟合 数据集→后验 p(θ|D)"]
+        SIM --> PI["复用 ALINE 设计策略 π_ψ<br/>无约束、非短视"]
+    end
+    OFF --> ST["当前状态：数据集 Dₜ₋₁ + 约束状态 zₜ<br/>可行集 X(zₜ) 随约束时变"]
+    ST --> INIT["摊销策略 warm-start<br/>+ 探索/利用混合初始化"]
+    subgraph PLAN["场景树 lookahead + 一次性 reparameterization"]
+        direction TB
+        TREE["H 步场景树：选设计<br/>→ 采 m 个 fantasy 观测分支"] --> OPT["reparameterize 后<br/>SLSQP 联合优化整棵树"]
+    end
+    PI -.warm-start.-> INIT
+    INIT --> TREE
+    QP -.后验更新 + EIG 估计.-> TREE
+    OPT --> EXEC["取根节点最优设计 xₜ*<br/>观测真实 yₜ → 更新 (Dₜ, zₜ₊₁)"]
+    EXEC -->|receding-horizon 重新规划| ST
+```
+
 ### 关键设计
 
 **1. 场景树多步 lookahead + 一次性 reparameterization：把 Bellman 递推折成一个可微优化**

@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇要解决的是：传统加法式 activation steering 在增强真实性的同时会失控地扭曲隐藏状态的范数，进而损伤生成质量。Spherical Steering 的整条 pipeline 全程 training-free，分两段：离线阶段用一批 (正例, 负例) 对比样本跑一遍模型，在每个待干预层估出一条单位长度的"真实性轴" $\mu_T^{(l)}$；推理阶段对每个解码 token，把它在该层的激活归一化到单位超球面，沿测地线朝 $\mu_T^{(l)}$ 旋转一个由置信门控决定的步长，再乘回原始模长。核心的一句话替换是：把"在 $\mathbb{R}^d$ 里做加法 $h+\lambda\mu$"换成"在 $\mathbb{S}^{d-1}$ 上做旋转"，从而严格保住 $\|h\|$。
+这篇要解决的是：传统加法式 activation steering 在增强真实性的同时会失控地扭曲隐藏状态的范数，进而损伤生成质量。Spherical Steering 的整条 pipeline 全程 training-free，分两段：离线阶段用一批 (正例, 负例) 对比样本跑一遍模型，在每个待干预层估出一条单位长度的"真实性轴" $\mu_T^{(l)}$；推理阶段对每个解码 token，把它在该层的激活归一化到单位超球面，先用 vMF 门控算出该走多少步、再沿测地线朝 $\mu_T^{(l)}$ 旋转这个步长，最后乘回原始模长。核心的一句话替换是：把"在 $\mathbb{R}^d$ 里做加法 $h+\lambda\mu$"换成"在 $\mathbb{S}^{d-1}$ 上做旋转"，从而严格保住 $\|h\|$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线阶段：超球面 prototype"]
+        direction TB
+        A["对比样本（正例 / 负例）"] --> B["取第 l 层 last-token 表示<br/>算正负均值差 Δ"]
+        B --> C["单位化得真实性轴 μ_T<br/>（幻觉轴 μ_H = −μ_T）"]
+    end
+    C --> D["推理：解码 token 第 l 层激活 h<br/>归一化为单位方向 ĥ"]
+    D --> E["vMF 置信门控<br/>算 δ = p_H − p_T，得步长 t"]
+    E -->|"δ ≤ β：方向已偏真实"| F["t = 0，激活原样透传"]
+    E -->|"δ > β：疑似幻觉"| G["测地线旋转<br/>Slerp(ĥ, μ_T, t) 再乘回 ‖h‖"]
+    F --> H["写回激活 → 下一层 / 继续 decode"]
+    G --> H
+```
 
 ### 关键设计
 

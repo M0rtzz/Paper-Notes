@@ -41,28 +41,41 @@ tags:
 RUDDER 的关键不是重新训练 LVLM，而是在标准生成流程中挂两个轻量模块。第一个模块在 prefill 阶段读取某个 decoder 层的 self-attention residual update，聚合成输入相关的 CARD 向量。第二个模块在每个解码步根据当前 hidden state 与 CARD 的相似度计算 Beta Gate，决定这一步要不要、以及多强地把 CARD 注入 residual stream。
 
 ### 整体框架
-给定图像和文本 prompt，LVLM 首先执行 prefill，处理图像 token 和 prompt token 并构建 KV cache。RUDDER 在目标层放一个只读 hook，收集 prefill span 中每个 token 的 self-attention 输出，即 residual update。它将这些 update 做 mean 或范数加权 mean pooling，再做 $L_2$ 归一化，得到每个样本自己的视觉证据方向 $v_{\mathrm{CARD}}$。
+给定图像和文本 prompt，LVLM 首先执行 prefill，处理图像 token 和 prompt token 并构建 KV cache。RUDDER 在目标层放一个只读 hook，收集 prefill span 中每个 token 的 self-attention 输出，即残差更新（residual update）。它将这些更新做 mean 或范数加权 mean pooling，再做 $L_2$ 归一化，得到每个样本自己的视觉证据方向 $v_{\mathrm{CARD}}$。
 
-进入 autoregressive decoding 后，RUDDER 在同一目标层持续工作。每生成一个 answer token，先计算当前 hidden state $h_{l,t}$ 与 $v_{\mathrm{CARD}}$ 的 cosine similarity $s_t$；再把 $s_t$ 映射成 Beta 分布的两个参数，并取 $g_t=\alpha_t/(\alpha_t+\beta_t)$ 作为 gate。最终注入向量是 $(\alpha_{\max}g_t)v_{\mathrm{CARD}}$，加入 self-attention 后的 residual stream。
+进入自回归解码后，RUDDER 在同一目标层持续工作。每生成一个 answer token，先计算当前 hidden state $h_{l,t}$ 与 $v_{\mathrm{CARD}}$ 的 cosine 相似度 $s_t$；再把 $s_t$ 映射成 Beta 分布的两个参数，并取 $g_t=\alpha_t/(\alpha_t+\beta_t)$ 作为门控。最终注入向量是 $(\alpha_{\max}g_t)v_{\mathrm{CARD}}$，加到 self-attention 之后的残差流（residual stream）上。整个 CARD 提取与 Beta Gate 注入都发生在一次标准前向内，不改权重、不加额外 forward pass。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本 prompt"] --> B
+    subgraph CARD["CARD 视觉证据方向（prefill 阶段）"]
+        direction TB
+        B["目标层只读 hook<br/>收集各 token 的自注意力残差更新 Δ"] --> C["pooling + L2 归一化<br/>→ 视觉证据向量 v_CARD"]
+    end
+    CARD --> D
+    subgraph GATE["Beta Gate 自适应门控（逐 token 解码）"]
+        direction TB
+        D["当前 hidden state h 与 v_CARD<br/>算 cosine 相似度 s_t"] --> E["s_t → α_t, β_t<br/>g_t = α_t / (α_t + β_t)"]
+        E --> F["注入 (α_max · g_t) · v_CARD<br/>加到 self-attention 后的残差流"]
+    end
+    GATE --> G["视觉锚定的 answer token"]
+    G -->|自回归循环| D
+```
 
 ### 关键设计
-1. **CARD 视觉证据方向**:
 
-	- 功能：在不额外前向的情况下，为每个输入提取一个持久视觉 anchor。
-	- 核心思路：在 prefill 阶段缓存目标层 self-attention residual update $\Delta_i^l$，对 prefill token 集合做 pooling，并归一化为 $v_{\mathrm{CARD}}=\mathrm{Pool}(\{\Delta_i^l\})/\|\mathrm{Pool}(\{\Delta_i^l\})\|_2$。由于 residual update 表示视觉-文本融合后的新增信息，聚合后的方向可被视为该样本的视觉证据摘要。
-	- 设计动机：幻觉通常来自生成过程逐渐转向语言先验；CARD 把最强视觉融合阶段的信息保存下来，后续可以反复提醒模型。
+**1. CARD 视觉证据方向：把 prefill 里最强的视觉信号缓存成持久 anchor**
 
-2. **Beta Gate 自适应门控**:
+幻觉的根因是生成过程中图像前缀被语言先验逐步稀释，而视觉-文本融合恰恰在 prefill 阶段最强。RUDDER 抓住这一点：在 prefill（LVLM 本就必须执行的一步）于目标层放只读 hook，缓存每个 token 的 self-attention 残差更新 $\Delta_i^l$，对 prefill span 内全部 token 做 mean 或范数加权 mean pooling，再 $L_2$ 归一化，得到每样本的视觉证据方向 $v_{\mathrm{CARD}}=\mathrm{Pool}(\{\Delta_i^l\})/\|\mathrm{Pool}(\{\Delta_i^l\})\|_2$。残差更新编码的是视觉上下文对每个文本 token 表示的「净影响」，且范数天然偏重信息量大的语义 token、轻视语法功能词，所以聚合出的方向能滤掉噪声、提炼成针对当前图像-prompt 的视觉证据摘要（论文用可视化验证它确实把表示从纯文本先验方向系统地旋转开）。因为完全寄生在必需的 prefill 上，提取它几乎零额外开销。
 
-	- 功能：让视觉提醒按 token 调节强度，避免固定 steering 伤害语法 token 和非视觉内容。
-	- 核心思路：计算 $s_t=\cos(h_{l,t},v_{\mathrm{CARD}})$，再用 $\alpha_t=\mathrm{softplus}(ks_t+c)$、$\beta_t=\mathrm{softplus}(-ks_t+c)$ 得到 $g_t=\alpha_t/(\alpha_t+\beta_t)$。高相似度表示当前生成轨迹可信地沿着视觉证据方向，门控增强；低相似度或负相似度则抑制注入。
-	- 设计动机：它不是错误检测器，而是 trust mechanism。模型当前状态越贴近视觉证据，继续强化越安全；状态偏离或正在生成语法功能词时，强注入反而可能破坏流畅性。
+**2. Beta Gate 自适应门控：按 token 决定「要不要、多强地」提醒视觉证据**
 
-3. **单 pass 集成与轻量校准**:
+如果对每个 token 都固定强度注入 $v_{\mathrm{CARD}}$，在语法功能词和非视觉内容上会过度干预，伤流畅性和召回。Beta Gate 让注入强度随 token 自适应：每个解码步先算当前 hidden state $h_{l,t}$ 与 $v_{\mathrm{CARD}}$ 的 cosine 相似度 $s_t$，再用 $\alpha_t=\mathrm{softplus}(ks_t+c)$、$\beta_t=\mathrm{softplus}(-ks_t+c)$ 得到门控 $g_t=\alpha_t/(\alpha_t+\beta_t)$，最终把 $(\alpha_{\max}g_t)v_{\mathrm{CARD}}$ 注入 self-attention 之后的残差流。其关键解释是：这是一个 trust mechanism 而非错误检测器——把 $s_t$ 当作 Beta-Bernoulli 后验的 pseudo-count，相似度高说明当前轨迹已可信地贴着视觉证据，强化它是安全的；相似度低或为负说明正在生成语法词或轨迹不稳，此时抑制注入以免过度 steering 破坏流畅。门控还 clamp 到 $[0.05,1]$，避免完全关闭或饱和。
 
-	- 功能：让方法具备部署可行性。
-	- 核心思路：CARD 来自必需的 prefill，Beta Gate 只在解码中增加少量向量运算。超参数通过 100 张 held-out MSCOCO 图像一次性校准，选择目标层、最大强度 $\alpha_{\max}$ 和敏感度 $k$，并约束 recall 至少保持 vanilla 的 95%。
-	- 设计动机：幻觉缓解如果靠多次 forward 换效果，在在线生成中很难落地；RUDDER 把计算放在已有路径内，重点解决效果-效率 trade-off。
+**3. 单 forward pass 集成：把全部计算塞进已有生成路径，解决效果-效率权衡**
+
+已有 ITI 方法靠多次 forward、图像扰动、外部 classifier 或多轮 refinement 换效果，延迟在在线长文本生成里难以接受。RUDDER 把计算全部放进已有路径：CARD 来自必需的 prefill（零额外前向），Beta Gate 只在解码每步增加少量向量运算，且注入仅作用于 answer span；整套流程不改权重、不加 forward pass，额外延迟 <4%。少数部署超参（目标层 $L$、最大强度 $\alpha_{\max}$、敏感度 $k$）只在 100 张 held-out MSCOCO 图像上一次性校准，并约束召回率至少保持 vanilla 的 95%。正是这一点让「降幻觉」从离线研究技巧变成可直接部署的在线控制，也是论文相对 VISTA 等同类 steering 方法最核心的卖点。
 
 ### 损失函数 / 训练策略
 RUDDER 是 training-free 的 inference-time intervention，没有新增训练损失。校准只用于选择部署超参数：LLaVA-1.5 选择较晚层 $L=30$，Idefics2 选择 $L=28$，InstructBLIP 选择早层 $L=1$；对应 $(\alpha_{\max},k)$ 分别为 $(20,5.0)$、$(8.0,5.0)$、$(6.5,8.0)$。门控浓度 $c=1$，并把 gate clamp 到 $[0.05,1]$，以避免完全关闭或饱和。

@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 方法把「token 层面救火」换成「轨迹层面治本」，分诊断与干预两层。诊断层先用一个二维 state-dependent IFS（带状态依赖的迭代函数系统）作为最小动力学模型，证明当温度/反温度 $\beta$ 越过临界 $\beta_0$ 后，系统会从单一遍历不变测度分裂为两个稳定吸引域，这正是 mode collapse 的几何对应物；再用「有限时间关联维数」 $d_t$ 在真实 LLM 解码里做在线测量，把这一相变信号落到逐步的 next-token log-prob 向量序列上。干预层 RMR (Reinforced Mode Regulation) 则在解码间隔里从最近的 value cache 段定位「时序持续性异常强」的低秩子空间并对其做阻尼，把最小模型里对历史均值的收缩推广到高维，且全程不动 softmax 概率、不改 logits，是纯状态空间干预。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自回归解码<br/>状态轨迹 {x_t}：value cache / next-token log-prob"] --> B["关联维数 d_t<br/>在线 O(t) 测量可达性，循环出现前预警"]
+    B -->|"d_t 显著下降，判定可达性塌缩"| C["持续方向检测<br/>value cache 滑窗：有界谱广义特征值挑出最持久的少数方向 u_i"]
+    C --> D["RMR 低秩阻尼<br/>P=Σ u_i u_i^T，V ← V − η V P"]
+    D -->|"不动 softmax/logits，与任意采样器正交叠加"| A
+    B -->|"d_t 正常，继续解码"| A
+```
+
 ### 关键设计
 
 **1. 关联维数：把「轨迹被困住」变成可测的几何探针**

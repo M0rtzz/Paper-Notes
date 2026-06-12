@@ -46,7 +46,17 @@ tags:
 
 QViC-MF 面对的是「长视频塞不进 LMM 上下文窗口」这个老问题，但它的解法跳出了「压缩→存记忆→推理」的单向流水线，做成一个记忆能反哺感知的闭环。视频被切成一个个 clip 流式处理，每个 clip 只用极少的 token 表示，再靠记忆反馈把历史里和问题相关的帧召回来，喂给当前 clip 的压缩器。
 
-具体五步：① **视觉编码器**把当前 clip（$K$ 帧）和从记忆召回的 $K_r$ 帧拼起来，过 SigLIP So400m/14-384px 提特征，再用 MLP 投影成视觉嵌入 $\mathcal{E}_{v,n} \in \mathbb{R}^{K_v \times P \times D_e}$；② **视觉压缩器**（核心是 QMSA 的 Transformer 编码器）把每帧 $P$ 个 patch token 压成 $C$ 个上下文 token（$C \ll P$），输入是视觉嵌入＋问题嵌入＋可学习上下文种子嵌入的拼接；③ **上下文记忆**存每帧的上下文嵌入、相关性得分和全局帧索引，容量 $L$，超容就剪掉相关性最低的条目；④ **记忆反馈**从记忆里挑相关性最高的 $K_r$ 帧作为下一 clip 的召回帧；⑤ **解码器**（Qwen2-7B）把记忆中所有上下文嵌入和文本 prompt 拼起来生成答案。
+具体五步：① **视觉编码器**把当前 clip（$K$ 帧）和从记忆召回的 $K_r$ 帧拼起来，过 SigLIP So400m/14-384px 提特征，再用 MLP 投影成视觉嵌入 $\mathcal{E}_{v,n} \in \mathbb{R}^{K_v \times P \times D_e}$；② **视觉压缩器**（核心是 QMSA 的 Transformer 编码器）把每帧 $P$ 个 patch token 压成 $C$ 个上下文 token（$C \ll P$），输入是视觉嵌入＋问题嵌入＋可学习上下文种子嵌入的拼接；③ **上下文记忆**存每帧的上下文嵌入、相关性得分和全局帧索引，容量 $L$，超容就剪掉相关性最低的条目；④ **记忆反馈**从记忆里挑相关性最高的 $K_r$ 帧作为下一 clip 的召回帧；⑤ **解码器**（Qwen2-7B）把记忆中所有上下文嵌入和文本 prompt 拼起来生成答案。其中 ②④③ 三步分别对应下面三个关键设计——QMSA 视觉压缩、记忆反馈闭环、相关性得分。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["当前 clip K 帧<br/>+ 召回 Kr 帧"] --> ENC["视觉编码器<br/>SigLIP + MLP 投影"]
+    ENC --> QMSA["QMSA 视觉压缩器<br/>logits 叠加 Mask / Block / Guide 三矩阵<br/>每帧 P patch → C 个上下文 token"]
+    QMSA --> MEM["上下文记忆（容量 L）<br/>存上下文嵌入 + 相关性得分 + 帧索引<br/>超容按相关性得分剪枝低分条目"]
+    MEM -->|"记忆反馈闭环：召回相关性最高 Kr 帧"| ENC
+    MEM --> DEC["解码器 Qwen2-7B<br/>拼接全部上下文嵌入 + 文本 prompt<br/>生成答案"]
+```
 
 ### 关键设计
 

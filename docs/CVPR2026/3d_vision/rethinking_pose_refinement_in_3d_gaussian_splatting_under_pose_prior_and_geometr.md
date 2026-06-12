@@ -42,6 +42,39 @@ tags:
 
 UGS-Loc 重新审视 3DGS 里"渲染—比对"式的相机位姿精化，指出它有两处一直被当成确定量处理：一是来自 APR/SCR 的初始位姿先验，二是 3DGS 椭球渲染出的深度几何。它把这两处都改成显式建模的不确定性——蒙特卡洛精化处理位姿先验的不确定性、Fisher 信息引导的 PnP 处理几何的不确定性。整个框架是推理时管线，无需重训练或额外监督，只要 2 次迭代、8 个粒子就能跑完。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询图像 I_q"]
+    P["初始位姿先验 T_prior<br/>（APR/SCR，如 ACE / DFNet）"]
+    G3["Scaffold-GS 场景"]
+
+    subgraph FISHER["Fisher 信息引导的几何不确定性"]
+        direction TB
+        F1["对 anchor 特征 + 局部高斯偏移算 Fisher 信息<br/>聚合成全局矩阵 G"]
+        F2["渲染投影成逐像素 2D 几何不确定性图 U"]
+        F1 --> F2
+    end
+
+    subgraph MC["蒙特卡洛位姿精化"]
+        direction TB
+        M1["从先验采样 M=8 个加权粒子"]
+        M2["每个粒子局部优化<br/>（定向预校正，替代 MCL 随机扰动）"]
+        M3["渲染视图 + 匹配查询<br/>得 2D-2D 对应（置信度 S_m），经深度提升为 2D-3D"]
+        M4["不确定性加权 PnP-RANSAC<br/>采样权重 s_i=e^(−βU)，EPnP 解位姿"]
+        M5["粒子权重 w=ΣS·(1−U)<br/>重要性重采样取最高权重 / 加权平均"]
+        M1 --> M2 --> M3 --> M4 --> M5
+    end
+
+    G3 --> F1
+    Q --> M3
+    P --> M1
+    F2 -->|供 PnP 采样权重| M4
+    F2 -->|供粒子权重| M5
+    M5 -->|N=2 次迭代，扰动范围收紧| M1
+    M5 --> OUT["精化位姿 T_refined"]
+```
+
 ### 关键设计
 
 **1. 蒙特卡洛位姿精化：把单一确定位姿换成一群带权粒子**

@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 论文要解决的是：当表格分类器不再是一个训练后固定的模型，而是 in-context learning 在推理时根据上下文样例临时诱导出来的黑盒预测器 $f_{\mathcal{C}}$ 时，怎样还能给被拒绝的用户一份低成本、可执行的修改建议。作者把它拆成两层：理论上把 ICL 预测器写成依赖上下文集合 $\mathcal{C}$ 的函数，在可解析的线性 self-attention 设置里证明 recourse 仍然存在并给出成本上界；算法上把这个理论启发落成一个只靠标签查询工作的搜索器 ASR-ICL（Adaptive Subspace Recourse for In-Context Learning）。整套流程围绕一个不利样本 $x$ 反复抽取少量可变特征、在子空间里做零阶搜索、投影回可行集再查询模型，直到翻转预测或耗尽查询预算。
 
+下图是推理时 ASR-ICL 的搜索回环（理论那一层是它的可行性基础，不在流程图里）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["被拒样本 x + 目标类 y+<br/>黑盒 ICL 预测器 f_C"] --> B["自适应子空间选择<br/>按重要性 I_j 采样 k 维子空间"]
+    B --> C["黑盒零阶优化（RACOS）<br/>仅靠标签查询搜索候选 x'"]
+    C --> D["可行性投影 Π_Ω<br/>固定不可改特征 + 单调约束"]
+    D --> E["查询 ICL 模型标签"]
+    E -->|"翻转到 y+"| F["输出低成本稀疏 recourse x'"]
+    E -->|"未翻转：奖励 r_t 更新 I_j"| B
+    E -->|"耗尽 150 查询预算"| F
+```
+
 ### 关键设计
 
 **1. 上下文化 recourse 的理论定义：先证明动态预测器仍有 recourse**

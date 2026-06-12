@@ -46,6 +46,17 @@ tags:
 
 落地时先用 squared-$L^1$ 把每行/每列归一化成概率权重 $w^{(i)}, v^{(j)}$，据此算出闭式重心映射 $\phi(r_i)=w^{(i)}M^T$（样本投到列空间）和 $\psi(c_j)=v^{(j)}M$（特征投到行空间）；对每行每列各算 Fréchet variance（locality）与 covering 两个量，超阈值部分取 top-$k$ 求和成 $\mathcal{L}_{\text{Coh}}$，最后与任务 loss 加权 $\mathcal{L}=\mathcal{L}_{\text{task}}+\lambda_{\text{Coh}}\mathcal{L}_{\text{Coh}}$（典型 $\lambda_{\text{Coh}}=10^{-3}$）。理论上当 $M$ 为 $\epsilon$-coherent 且 $\phi,\psi$ 是 1-Lipschitz 时存在 $\epsilon^{1/2}$-interleaving，于是样本与特征的 Vietoris-Rips 滤过、persistence diagram 在 bottleneck 距离下相近。
 
+下图是 Algorithm 1 中 `Coh` 损失的计算流，三个加工节点恰好对应下面三个关键设计（注：图自上而下是计算顺序，先归一化、再度量、最后聚合）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["一个 batch 的非负潜表征矩阵 M (B×L)<br/>行 r_i = 样本，列 c_j = 特征"] --> B["Squared-L1 归一化 + 闭式重心<br/>行/列权重 W,V → φ(r_i)=W·Mᵀ、ψ(c_j)=V·M"]
+    B --> C["Locality + Covering<br/>逐行逐列算 Fréchet 方差与覆盖，按平均距离归一"]
+    C --> D["Top-k + 阈值聚合<br/>铰链 [·−τ]₊ 后取最差 k 个求和 → L_Coh"]
+    D --> E["L = L_task + λ_Coh·L_Coh（可选再 +λ·‖M‖₁）"]
+```
+
 ### 关键设计
 
 **1. Coherence = Locality + Covering：把"拓扑对齐"压成两个标量**

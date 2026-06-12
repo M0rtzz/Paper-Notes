@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 PDA 想解决的是：开放词汇时序动作检测要把知识从已见类别迁到未见类别，但只对齐整条标签（"LongJump" 对 "PoleVault"）相似度低，迁不动。它的思路是把"动作是逐步展开的"这件事显式建模出来——一段视频进来先经视觉编码器抽特征，动作标签则交给 GPT-4o 用 CoT 推理拆成 {start, middle, end, global} 四个阶段描述；接着每个阶段各自做一次"文本找前景片段 → 跨模态对齐 → 出分类分数"，最后用一个自适应权重把四个阶段的结果加权汇总。整条链路是 CSD（拆阶段）→ TIF（按阶段挑片段）→ APA（按阶段对齐再聚合）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    V["输入视频"] --> VE["视觉编码器<br/>抽时序特征 F_v"]
+    L["动作标签"] --> CSD["CoT 语义分解 CSD<br/>GPT-4o 拆成 start/middle/end/global 四阶段描述"]
+    CSD --> TE["CLIP 文本编码器<br/>各阶段嵌入 t_c^p"]
+    VE --> TIF["文本引导前景过滤 TIF<br/>按阶段语义挑相关片段 F_v^p"]
+    TE --> TIF
+    TIF --> APA["自适应阶段对齐 APA<br/>各阶段交叉注意力对齐出分数 C_cls^p"]
+    TE --> APA
+    APA -->|"按判别性权重 ω_p 加权聚合"| OUT["分类分数 + 定位输出"]
+```
+
 ### 关键设计
 
 **1. CoT 语义分解 CSD：把整条标签拆成"开始-中间-结束"，让跨类别共享的阶段模式浮出来**

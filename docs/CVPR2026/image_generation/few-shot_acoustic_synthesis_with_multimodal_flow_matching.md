@@ -46,6 +46,22 @@ tags:
 
 FLAC 要解决的是少样本下的房间脉冲响应（RIR）合成——只凭单次录音就在未见房间里合成空间一致的声学响应。它的关键判断是：稀疏观测下同一个源-接收器配置可能对应多条合理 RIR（地毯还是木地板会显著改变声学），所以确定性预测天生不够，应该用概率生成来建模这种歧义。整个模型是一个条件潜在生成器：VAE 编码器先把 RIR 波形压成瓶颈维度 32 的潜在表示 $\mathbf{z}_0$，多模态条件器融合声学（参考 RIR）、空间（源位置）、几何（全景深度图）三模态，DiT 则以 flow matching 目标从噪声生成 RIR 潜在表示。训练用 rectified flow matching 线性插值数据与噪声 $\mathbf{z}_t = (1-t)\mathbf{z}_0 + t\boldsymbol{\epsilon}$、模型预测速度场 $\mathbf{v}_t = \boldsymbol{\epsilon} - \mathbf{z}_0$，推理时从高斯噪声反解 ODE 得到 RIR。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph COND["多模态条件注入：声学 / 空间 / 几何三模态"]
+        direction TB
+        C1["声学：K 条参考 RIR<br/>ResNet-18 → 512 维嵌入"]
+        C2["空间：源位置<br/>正弦位置编码"]
+        C3["几何：全景深度图<br/>反射图 + 微调 DINOv3 ViT"]
+    end
+    N["高斯噪声 ε"] --> D
+    COND --> D["DiT 生成器（flow matching）<br/>AdaLN 注入位姿·时间步 + 交叉注意力 + RoPE"]
+    D -->|引导权重 ω 调节条件强度| E["RIR 潜在表示"]
+    E --> F["VAE 解码器 → RIR 波形"]
+    F --> G["AGREE 联合嵌入<br/>CLIP 风格对齐 RIR 与几何、评估一致性"]
+```
+
 ### 关键设计
 
 **1. 时间步采样策略：偏向中等噪声水平提升训练效率**

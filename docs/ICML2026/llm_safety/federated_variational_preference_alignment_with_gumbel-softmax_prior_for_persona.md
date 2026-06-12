@@ -40,7 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FedVPA-GP 沿用 FedBiscuit 的两阶段范式（先联邦训一个轻量选择器，再在服务端做条件化 RLHF），但把核心选择器换成一个变分模块：基座 LLM (Qwen-2 0.5B / Gemma-2B) 全程冻结，可训部分仅约 0.18% 参数，把每个客户端的偏好编码成连续隐变量 $z$。整套方法的命门是后验崩溃，靠三个相互咬合的设计——联邦混合先验、正交原型损失、双保险防崩溃——在稀疏又异质的联邦数据上同时稳住训练并分开冲突偏好。
+FedVPA-GP 沿用 FedBiscuit 的两阶段范式（先联邦训一个轻量选择器，再在服务端做条件化 RLHF），但把核心选择器换成一个变分模块：基座 LLM (Qwen-2 0.5B / Gemma-2B) 全程冻结，可训部分仅约 0.18% 参数，把每个客户端的偏好编码成连续隐变量 $z$。整套方法的命门是后验崩溃，靠三个相互咬合的设计——联邦混合先验、正交原型损失、方差上限 + Base-logit Dropout——在稀疏又异质的联邦数据上同时稳住训练并分开冲突偏好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["客户端偏好对 D_i<br/>冻结 LLM 抽特征 → 响应差 Δh → MLP"] --> B["变分编码器<br/>输出 (μ_i, σ_i²) → 重参数化采样 z_i"]
+    B --> C["f_θ(z) 作 logit 残差<br/>叠加基座 {A,B} logits → BTL 重建项"]
+    B --> D["联邦混合先验<br/>同伴后验加权 + Gumbel-Softmax 学权重 → KL"]
+    B --> E["正交原型损失<br/>z 拉向指派原型 + 原型互相正交"]
+    B --> F["方差上限 + Base-logit Dropout<br/>堵死后验崩溃两条捷径"]
+    C --> G["Stage 1 本地总损失<br/>ELBO + 正交正则，LoRA 微调"]
+    D --> G
+    E --> G
+    F --> G
+    G --> H["服务端聚合 LoRA/编码器<br/>广播 (μ̄_j, σ̄²_j) + balanced k-means 分配原型 y*"]
+    H -->|下一轮先验载体| D
+    H --> I["Stage 2：冻结 selector 当条件奖励模型<br/>服务端单机 DPO，z 注入 embedding"]
+```
 
 ### 关键设计
 

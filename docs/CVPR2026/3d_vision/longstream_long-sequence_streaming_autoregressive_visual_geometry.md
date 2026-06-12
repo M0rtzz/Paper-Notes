@@ -40,7 +40,31 @@ tags:
 
 ### 整体框架
 
-LongStream基于ViT编码器+因果Transformer聚合器+任务头的架构，输入流式图像帧，对每帧预测：关键帧相对位姿 $\mathbf{T}_{i \leftarrow k}$、深度图、点云图、全局尺度因子。训练和推理使用相同的KV缓存布局，确保一致性。
+LongStream基于ViT编码器+因果Transformer聚合器+任务头的架构，输入流式图像帧，对每帧预测：关键帧相对位姿 $\mathbf{T}_{i \leftarrow k}$、深度图、点云图、全局尺度因子。聚合器在训练和推理时共享同一套KV缓存布局（由缓存一致性训练保证），位姿头走SE(3)解耦预测关键帧相对位姿，几何与尺度分支走Sim(3)解耦各自独立预测。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流式图像帧（逐帧输入）"] --> B["ViT 编码器<br/>逐帧提取 token"]
+    B --> C
+    subgraph CCT["缓存一致性训练（CCT）"]
+        direction TB
+        C["因果 Transformer 聚合器<br/>纯因果遮罩 + 滑动窗口"]
+        C --> D["chunk 间传递并裁剪 KV 缓存<br/>训练/推理缓存可见性一致"]
+        D --> E["周期性缓存刷新<br/>每 N 个关键帧硬重置 sink 帧"]
+    end
+    E --> F["SE(3) Gauge 解耦<br/>RAFT 风格迭代预测关键帧相对位姿 T(i←k)"]
+    subgraph SIM["Sim(3) Gauge 解耦"]
+        direction TB
+        G["几何分支<br/>归一化空间预测深度/点云"]
+        H["尺度头<br/>独立预测全局尺度 s"]
+    end
+    E --> G
+    E --> H
+    F --> Z["逐帧输出<br/>相对位姿 + 深度 + 点云 + 度量尺度"]
+    G --> Z
+    H --> Z
+```
 
 ### 关键设计
 

@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法要解决的是：高维下 mean-shift 污染会把样本协方差的谱里塞进几个假 spike，让真主成分被带偏，而你事先并不知道哪些 spike 是假的。MS-PCA 的破解办法是做一次"对照实验"——先对污染数据 $\widetilde{\mathbf{X}}_n = \mathbf{X}_n + \mathbf{A}_n \in \mathbb{R}^{d \times n}$（其中 $\mathbf{A}_n = \sum_{i=1}^{k} \mathbf{m}_{(i)} \boldsymbol{\gamma}_{(i)}^\top$ 是 mean-shift 污染，$\boldsymbol{\gamma}_{(i)}$ 为子簇成员的 0/1 指示向量）做一次 PCA 记下 spike 特征值 $\{\tilde{\lambda}_i\}$；然后自己往数据里灌一勺人造的 knockoff 扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$ 再做第二次 PCA 得到 $\{\lambda'_i\}$；最后比对两次结果——特征值纹丝不动的判为真协方差信号，被诱饵推走的判为污染剔除掉。整条 pipeline 不解任何优化、不做迭代，只算两次 top-K PCA（Lanczos / randomized SVD），复杂度仅 $O(nd)$，远低于优化型 RPCA。
+方法要解决的是：高维下 mean-shift 污染会把样本协方差的谱里塞进几个假 spike，让真主成分被带偏，而你事先并不知道哪些 spike 是假的。MS-PCA 的破解办法是做一次"对照实验"——先对污染数据 $\widetilde{\mathbf{X}}_n = \mathbf{X}_n + \mathbf{A}_n \in \mathbb{R}^{d \times n}$（其中 $\mathbf{A}_n = \sum_{i=1}^{k} \mathbf{m}_{(i)} \boldsymbol{\gamma}_{(i)}^\top$ 是 mean-shift 污染，$\boldsymbol{\gamma}_{(i)}$ 为子簇成员的 0/1 指示向量）做一次 PCA 记下 spike 特征值 $\{\tilde{\lambda}_i\}$；然后自己往数据里灌一勺人造的 knockoff 扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$ 再做第二次 PCA 得到 $\{\lambda'_i\}$；最后比对两次结果——特征值纹丝不动的判为真协方差信号，被诱饵推走的判为污染剔除掉。这一切的合法性由谱分离定理兜底：它保证两次 PCA 中真信号 spike 与污染 spike 互不串扰。整条 pipeline 不解任何优化、不做迭代，只算两次 top-K PCA（Lanczos / randomized SVD），复杂度仅 $O(nd)$，远低于优化型 RPCA。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["污染数据 X̃ = X + A<br/>含未知 mean-shift 污染"] --> B["第一次 PCA<br/>记下首批 spike 特征值"]
+    B --> C["Knockoff Mean 注入<br/>灌入人造扰动 A′ = m′γ′ᵀ"]
+    C --> D["第二次 PCA<br/>得到新一批特征值"]
+    T["谱分离定理（Thm 3.5）<br/>污染 spike 与协方差 spike 渐近解耦"] -.理论依据.-> E
+    B --> E["不变性判别<br/>比对两次特征值，阈值 ε = C·n⁻¹ᐟ²"]
+    D --> E
+    E -->|纹丝不动 → 真信号| F["输出真主成分"]
+    E -->|被诱饵推走 → 污染| G["剔除污染分量，丢弃"]
+```
 
 ### 关键设计
 

@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分析体系：把模型重参数化为 $\mathbf{Y} := \mathbf{E}\mathbf{W}_O\mathbf{W}_V^\top \mathbf{E}^\top$（类 FFN 的知识存储）和 $\mathbf{Z} := \mathbf{E}\mathbf{W}_K\mathbf{W}_Q^\top \mathbf{E}^\top / \sqrt{d}$（注意力），交叉熵优化下用 SGD 推 $\mathbf{Y}$ 的演化定理与 $\mathbf{Z}$ 的守恒量；接着把正则化和 replay 写入梯度方程，对比两者对收敛点、收敛速度、震荡幅度的影响；最后基于"注意力分数高的 token 携带更多事实信息"这个推论，设计 STOC：对每条 CPT 样本做一次前向得到 token-level 注意力分数 → 跨层求均 → 滑窗截取注意力最高的固定长度 snippet → 把它作为 prompt 喂给预训练 LM 生成 replay → MinHash 去重过滤 → 与新数据按比例 $\alpha$ 混合喂给 CPT 流程。
+分析体系：把模型重参数化为 $\mathbf{Y} := \mathbf{E}\mathbf{W}_O\mathbf{W}_V^\top \mathbf{E}^\top$（类 FFN 的知识存储）和 $\mathbf{Z} := \mathbf{E}\mathbf{W}_K\mathbf{W}_Q^\top \mathbf{E}^\top / \sqrt{d}$（注意力），交叉熵优化下用 SGD 推 $\mathbf{Y}$ 的演化定理与 $\mathbf{Z}$ 的守恒量；接着把正则化和 replay 写入梯度方程，对比两者对收敛点、收敛速度、震荡幅度的影响；最后基于"注意力分数高的 token 携带更多事实信息"这个推论，设计 STOC：对每条 CPT 样本做一次前向得到 token-level 注意力分数 → 跨层求均 → 滑窗截取注意力最高的固定长度 snippet → 把它作为 prompt 喂给预训练 LM 生成 replay → MinHash 去重过滤 → 与新数据按比例 $\alpha$ 混合喂给 CPT 流程。整篇沿"先在 PT 阶段验证理论、再在 CPT 阶段分析机制、最后导出算法"的链条推进，下图把这条"理论 → 机制对比 → 算法"的主线画出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单层线性注意力 Transformer<br/>(subject, relation, object) 三元组"] --> B["训练动力学定理<br/>Y 知识存储 / Z 注意力<br/>闭式演化 + Diversity Index"]
+    B --> C["正则化 vs 回放机制对比<br/>正则化只改速度·回放能挪收敛点"]
+    C -->|得出应走 replay 路线| D
+    subgraph D["STOC：注意力贡献选回放种子"]
+        direction TB
+        D1["对 CPT 样本前向<br/>跨层·跨头平均注意力"] --> D2["滑窗截取注意力最高 snippet"]
+        D2 --> D3["snippet 当 prompt<br/>喂预训练 LM 生成 replay"]
+        D3 --> D4["MinHash 去重过滤"]
+    end
+    D --> E["与 CPT 语料按比例 α 混合<br/>送 next-token 训练"]
+```
 
 ### 关键设计
 

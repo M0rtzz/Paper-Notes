@@ -43,6 +43,20 @@ SVL 用「3D-图像-文本」三模态对比预训练给脉冲神经网络（SNN
 ### 整体框架
 SVL 要解决的是一个看似矛盾的需求：既要让脉冲网络（SNN）具备 CLIP 那样的开放世界识别能力，又不能在推理时背上沉重的文本塔、破坏 SNN 的稀疏加法特性。它的破局思路是把"获取语义"和"做推理"两件事拆到训练期和部署期。训练期走三塔：先把点云和事件流统一成点集 $D^t=\{\mathcal{P}, \mathcal{F}\}$（事件流用滑窗把时间戳归一化成 z 坐标 $z_i = (t_i - t_{\min})/(t_{\max}-t_{\min})$，变成"时空点云"），然后对每个样本构造三元组 $(D_i^t, I_i^t, T_i^t)$，分别送进脉冲 3D 编码器 $\mathcal{E}_\theta^S$（输出 $\mathcal{F}^S \in \mathbb{R}^{T \times C}$）和全程冻结的 CLIP 图像编码器 $\mathcal{E}_\theta^I$、文本编码器 $\mathcal{E}_\theta^T$（各出 $\mathbb{R}^C$ 特征），靠多模态对齐损失 MTA 把脉冲发放率同时拉进 CLIP 的图像空间和文本空间。部署期则塌缩成单塔：把候选类别提示词离线过一遍文本编码器，固化成一层分类权重 $W^L \in \mathbb{R}^{K \times C}$（Rep-VLI），推理链路只剩"脉冲编码器 + 一层加法分类头"。骨干层面，作者除复用 Spike PointNet、E-3DSNN，还补了一个全脉冲驱动的点 Transformer（Spike-driven PointFormer），把注意力也压成稀疏加法，让整条路径无一处稠密矩阵乘。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云 / 事件流<br/>统一成时空点云"] --> B["脉冲 3D 编码器<br/>Spike-driven PointFormer + 3D-SDSA（注意力→稀疏加法）"]
+    A2["配对图像"] --> C["冻结 CLIP 图像编码器"]
+    A3["类别文本"] --> D["冻结 CLIP 文本编码器"]
+    B --> E["MTA 多尺度三模态对齐<br/>spike-文本 / spike-图像 InfoNCE + spike-图像 MSE"]
+    C --> E
+    D --> E
+    E -->|"训练完成、丢弃文本塔"| F["Rep-VLI<br/>文本嵌入离线折叠成分类权重 W^L"]
+    F --> G["纯脉冲推理<br/>脉冲编码器 + 一层加法分类头取 argmax"]
+    G --> H["零样本 3D 分类 / 微调下游"]
+```
+
 ### 关键设计
 
 **1. MTA — 多尺度三模态对齐：无标签地把脉冲 3D 特征同时拉进 CLIP 图像空间和文本空间**

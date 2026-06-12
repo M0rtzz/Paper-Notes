@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 论文分两段：第一段做 cross-linguistic corpus analysis —— 对 UD 里每种语言计算功能词与内容词的 type/token 比、依存熵、短语边界对齐率，画 3 张分布图证明三性质的普适性。第二段做 counterfactual language modeling —— 在英语维基百科上构造 7 种变体语料（NoFunction / FiveFunction / MoreFunction / BigramDep / RandomDep / WithinBoundary / NaturalFunction），每种变体训练独立 GPT-2 small（vocab 32k、10 epoch、3 seeds），同时配 5-gram baseline；评测用经过同步修改的 BLiMP 最小对集合，并在最后做 attention probing + function-word ablation 两组诊断实验。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CL["三性质量化指标（186 语种 UD）"]
+        direction TB
+        A1["UD v2.17<br/>339 treebank / 186 语种"] --> A2["三指标量化<br/>词频比 + 依存熵 + 边界对齐率"]
+    end
+    A2 --> A3["普适性结论<br/>小词表·大 token 份额·低依存熵·高边界对齐"]
+    subgraph CF["七种反事实英语 + 同步改造的 BLiMP"]
+        direction TB
+        B1["英语维基百科"] --> B2["三维度受控改写<br/>频率 / 结构 / 边界 → 7 变体"]
+        B2 --> B3["每变体训 GPT-2 small + 5-gram baseline"]
+        B2 --> B4["同步改写 BLiMP<br/>交集过滤统一最小对"]
+        B3 --> B5["BLiMP 打分"]
+        B4 --> B5
+    end
+    B5 --> D["probing + ablation 双轨诊断<br/>function head + 注意力掩码 / 删除"]
+    D --> E["三性质因果结论<br/>结构 > 边界 > 频率·Goldilocks 效应"]
+```
+
 ### 关键设计
 
 **1. 186 语种 UD 上的三性质量化指标：把"高频 / 句法可预测 / 边界对齐"三句定性描述各自变成一个能跨语种比较的数字**

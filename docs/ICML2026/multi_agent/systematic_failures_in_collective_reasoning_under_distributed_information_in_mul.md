@@ -41,7 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-任务结构：每个任务由若干决策选项 + 若干 task-relevant facts 组成。**Hidden Profile 条件**下，部分 facts（$\mathcal{I}_s$）被所有 agent 共享，剩下 unshared facts（$\mathcal{I}_u$）uniquely 分给每个 agent，即 agent $a_i$ 收到 $I_i=\mathcal{I}_s\cup\{u_i\}$；共享信息被构造为**支持错误选项**，只有 pool 全部 unshared 才指向正确选项。**Full Profile 条件**下所有 agent 都拿 $\mathcal{I}_s\cup\mathcal{I}_u$。Agent 不被告知是否存在信息不对称。评测对比 $Y^{\text{pre}}$（讨论前）、$Y^{\text{post}}$（讨论后）、$Y^{\text{full}}$（Full Profile 上限）。
+任务结构：每个任务由若干决策选项 + 若干 task-relevant facts 组成。**Hidden Profile 条件**下，部分 facts（$\mathcal{I}_s$）被所有 agent 共享，剩下 unshared facts（$\mathcal{I}_u$）uniquely 分给每个 agent，即 agent $a_i$ 收到 $I_i=\mathcal{I}_s\cup\{u_i\}$；共享信息被构造为**支持错误选项**，只有 pool 全部 unshared 才指向正确选项。**Full Profile 条件**下所有 agent 都拿 $\mathcal{I}_s\cup\mathcal{I}_u$。Agent 不被告知是否存在信息不对称。评测对比 $Y^{\text{pre}}$（讨论前）、$Y^{\text{post}}$（讨论后）、$Y^{\text{full}}$（Full Profile 上限）。整篇方法是一条"先造干净的 benchmark、再用三条件对照测出失败、最后用 ablation 把失败定位到具体机制"的诊断流水线，下图按这个顺序展开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BUILD["HiddenBench 任务构造与自动生成"]
+        direction TB
+        G["GPT-4.1 按模板生成候选<br/>场景+选项+共享facts+unshared facts+正解"] --> R["双条件各跑 10 次<br/>测 pre-discussion 准确率"]
+        R --> F["双阈值筛选<br/>Full≥80% 且 Hidden≤20%"]
+    end
+    F --> BENCH["HiddenBench：65 任务<br/>57 自动 + 5 改编 + 3 手写"]
+    subgraph EVAL["三条件对照评测协议"]
+        direction TB
+        YF["Y_full：全员拿全部 facts（个体上界）"]
+        YPRE["Y_pre：Hidden 讨论前（下界）"]
+        YPOST["Y_post：Hidden 讨论后（待测集体推理）"]
+    end
+    BENCH --> EVAL
+    EVAL --> M["集体提升 Y_post − Y_pre<br/>距上限差距 Y_post − Y_full"]
+    M --> ABL["失败模式针对性 ablation<br/>通信轮数 / prompting 策略 / Reveal-All 干预"]
+    ABL -->|Reveal-All 显著缩小差距| CONC["瓶颈定位：action selection 缺陷<br/>agent 不会主动 elicit 未说出的信息"]
+```
 
 ### 关键设计
 

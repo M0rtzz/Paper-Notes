@@ -43,15 +43,41 @@ LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17
 ### 整体框架
 LaoBench 构建管线分三段（图 1）：(A) **原始材料采集**——从权威老挝来源采集 K12 教材、政府/法律文件、百科教育出版物、本地文化文章；(B) **数据集构建**——MCQ 子集（Lao-7k 开源 + Lao-10k 黑盒）由 11 位 Lao 母语专家手写题干、4 选 1、加难度校准；Lao-500 开放式 prompt 用 BenchBuilder 风格管线（LLM 评分 specificity/clarity/domain depth + 主题聚类 + 多样性采样）从大候选池里挑出 500 条；(C) **多阶段验证**——专家审 + Agent 自动检（重复检测、语义一致性、context independence、敏感内容筛）。整套 17,000+ 样本按 Knowledge Application / K12 / Translation 三维度组织，每维度再细分多个 subdomain。评测阶段对 MCQ 用准确率，对翻译用 SacreBLEU + chrF++（统一 LaoNLP 词切分），对 Lao-500 用 Arena 双 judge 成对评测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始材料采集<br/>K12 教材 / 政府法律 / 百科 / 文化文章"]
+    subgraph BUILD["专家 + Agent 双 loop 构建管线"]
+        direction TB
+        B1["专家手写 MCQ 题干<br/>4 选 1 + 难度校准"]
+        B2["BenchBuilder 风格挑选<br/>Lao-500 开放式 prompt"]
+        V["专家审 + Agent 自动检<br/>查重 / 语义一致 / 独立性 / 敏感筛"]
+        B1 --> V
+        B2 --> V
+    end
+    A --> BUILD
+    subgraph SUBSET["开源 + 黑盒双子集（对抗数据污染）"]
+        direction TB
+        C1["Lao-7k 开源 MCQ"]
+        C2["Lao-10k 黑盒 MCQ<br/>受控服务只回分数 + 限流"]
+        C3["Lao-500 开放式"]
+    end
+    BUILD --> SUBSET
+    SUBSET --> E["Lao-aware 翻译评测 + Arena 双 judge"]
+    E -->|MCQ| F1["准确率"]
+    E -->|翻译| F2["SacreBLEU + chrF++<br/>LaoNLP 词切分"]
+    E -->|开放式| F3["Arena 双 judge + bootstrap CI"]
+```
+
 ### 关键设计
 
-**1. 开源 + 黑盒双子集对抗数据污染：把一半题目永远握在手里，让低资源 benchmark 不被预训练语料"吃掉"**
+**1. 专家 + Agent 双 loop 构建管线：把机械活外包给 Agent、把文化判断留给母语专家，兼顾保真与规模**
 
-低资源语言一旦把整套 benchmark 公开，几乎注定会被下一代模型的预训练语料吸收，分数从此失真。LaoBench 的对策是拆成两份：Lao-7k 开源 MCQ 供复现研究，Lao-10k 则永不公开题目，评测者要么提交 item ID → answer 的字典、要么提供 inference API endpoint 让受控服务按 standardized prompt 跑，最终只回 overall 与 subdomain 准确率，并配上 submission rate limit 阻击刷榜式过拟合。即便是开源子集也做了 web overlap 检索 + n-gram overlap 检查，发现 6.2% 候选样本有疑似重叠（多为常识性陈述，并非直接泄露）。这套黑盒服务被作者视为低资源 benchmark 能长期保持区分度的唯一现实路径。
+纯靠人工写 17k+ 题成本会爆炸，纯靠 Agent 生成又翻车率高，于是 LaoBench 走 Hendrycks 式的 hybrid pipeline。人这一侧是 55 位贡献者按角色分工——25 位领域专家写题、11 位翻译专家做双语对齐、10 位资深 reviewer 终审、9 位 NLP 数据 curator，每题至少 2 位独立专家审、分歧交 senior reviewer 裁决；开放式的 Lao-500 则用 BenchBuilder 风格管线（LLM 评分 specificity/clarity/domain depth + 主题聚类 + 多样性采样）从大候选池里挑高质量 prompt。Agent 这一侧则跑可机械化的环节：duplicate detection（字符 n-gram + 嵌入检索）、semantic consistency（验证唯一正确答案）、context independence（剔除依赖外部信息的题）、sensitivity screening（先机筛再人核）。500 题抽样测得 Fleiss $\kappa{=}0.87$，大致达到 substantial agreement，说明这套分工既压住了成本，也守住了母语保真度。
 
-**2. 专家 + Agent 双 loop 构建管线：把机械活外包给 Agent、把文化判断留给母语专家，兼顾保真与规模**
+**2. 开源 + 黑盒双子集对抗数据污染：把一半题目永远握在手里，让低资源 benchmark 不被预训练语料"吃掉"**
 
-纯靠人工写 17k+ 题成本会爆炸，纯靠 Agent 生成又翻车率高，于是 LaoBench 走 Hendrycks 式的 hybrid pipeline。人这一侧是 55 位贡献者按角色分工——25 位领域专家写题、11 位翻译专家做双语对齐、10 位资深 reviewer 终审、9 位 NLP 数据 curator，每题至少 2 位独立专家审、分歧交 senior reviewer 裁决。Agent 这一侧则跑可机械化的环节：duplicate detection（字符 n-gram + 嵌入检索）、semantic consistency（验证唯一正确答案）、context independence（剔除依赖外部信息的题）、sensitivity screening（先机筛再人核）。500 题抽样测得 Fleiss $\kappa{=}0.87$，大致达到 substantial agreement，说明这套分工既压住了成本，也守住了母语保真度。
+低资源语言一旦把整套 benchmark 公开，几乎注定会被下一代模型的预训练语料吸收，分数从此失真。LaoBench 的对策是把构建好的 MCQ 拆成两份：Lao-7k 开源 MCQ 供复现研究，Lao-10k 则永不公开题目，评测者要么提交 item ID → answer 的字典、要么提供 inference API endpoint 让受控服务按 standardized prompt 跑，最终只回 overall 与 subdomain 准确率，并配上 submission rate limit 阻击刷榜式过拟合。即便是开源子集也做了 web overlap 检索 + n-gram overlap 检查，发现 6.2% 候选样本有疑似重叠（多为常识性陈述，并非直接泄露）。这套黑盒服务被作者视为低资源 benchmark 能长期保持区分度的唯一现实路径。
 
 **3. Lao-aware 翻译评测 + Arena 双 judge 开放式评测：针对老挝文无词边界和 MCQ 看不到生成质量两个痛点对症下药**
 

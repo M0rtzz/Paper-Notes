@@ -45,6 +45,21 @@ ROSE 的主流程可以分成三步。第一步是语法与执行检查，过滤
 
 ROSE-VEC 用于验证指标本身。数据集包含 585 个 NL-SQL 对，其中 263 个来自 Spider Test 上多个系统输出，322 个来自 BIRD Dev 上多个系统输出。每个样本由 5 位专家中的两位独立判断，只保留完全一致的样本，以得到高置信专家标签。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 Q + 数据库 D<br/>+ 预测 SQL + 参考 SQL"] --> B["语法 / 执行检查"]
+    B -->|不可执行| Z["得 0 分"]
+    B -->|可执行| C{"执行结果与参考一致？"}
+    C -->|不一致| D["SQL Prover<br/>不看参考，独立判断是否满足意图"]
+    C -->|一致| E["Adversarial Refuter<br/>参考 SQL 作反方证据"]
+    D -->|Prover 否决| Z
+    D -->|Prover 接受| E
+    E --> F["诊断标签<br/>GoldX 参考错 / AmbQ 问题歧义"]
+    F -->|推翻 / 巧合正确| Z
+    F -->|维持| G["得 1 分"]
+```
+
 ### 关键设计
 
 **1. SQL Prover 的参考无关判断：先把单一参考 SQL 的锚定效应摘掉**

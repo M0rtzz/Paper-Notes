@@ -43,6 +43,25 @@ HiEdit 用分层强化学习把"终身模型编辑"拆成 high-level 选层 + lo
 ### 整体框架
 HiEdit 把每一步终身编辑建模成一个 Hierarchical MDP $(\mathcal{S}, \mathcal{A}, \Omega, \mathcal{P}, r, \gamma)$，核心是把"该编哪些层"和"每层怎么改"拆成两个由不同 hypernetwork 负责的子任务。在第 $t$ 步，先对待编知识 $(x_t, y_t)$ 做一次标准 SFT，拿到所有影响层的梯度矩阵 $\nabla \mathcal{W}_t = \{\nabla \mathcal{W}_{t,1}, \dots, \nabla \mathcal{W}_{t,L}\}$ 并逐层低秩分解为 $\nabla \mathcal{W}_{t,l} = v_l u_l^\top$；高层 hypernetwork $\pi_\phi$ 读这组梯度信号、吐出一个只激活 $K$ 个层的 option mask $\omega_t \in \{0,1\}^L$；低层 hypernetwork $\mathcal{H}_\theta$ 只在被点亮的层上算真正的参数更新 $\tilde{\nabla} \mathcal{W}_{t,l} = \tilde v_l \tilde u_l^\top$。整条编辑轨迹跑完后，再按高/低两层各自的 reward 联合回传，更新这两套 hypernetwork。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["待编知识 (x_t, y_t)"] --> B["SFT 算影响层梯度<br/>并逐层低秩分解"]
+    subgraph ROUTER["高层 importance router（选哪些层）"]
+        direction TB
+        B --> C["梯度编码 + 层缩放偏置<br/>得每层签名"]
+        C --> D["gate 打分 → TopK 选 K 层"]
+        D --> E["straight-through 透传 option mask"]
+    end
+    E --> F["低层 hypernetwork<br/>仅在选中层算参数更新"]
+    F --> G["施加更新得 W_t（下一步起点）"]
+    G -->|整条 trajectory 跑完| H["intrinsic reward<br/>部分选层 − 全选层 的优势"]
+    G --> I["低层 reward = −总损失<br/>含防遗忘回看 + KL 正则"]
+    H --> J["分层联合优化两套 hypernetwork"]
+    I --> J
+    J -->|下一步编辑| A
+```
+
 ### 关键设计
 
 **1. 高层 importance router：让"选哪些层"变成可学习的动态决策**

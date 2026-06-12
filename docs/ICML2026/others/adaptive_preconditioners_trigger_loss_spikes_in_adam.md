@@ -40,7 +40,7 @@ tags:
 这篇论文不是提出一个新优化器，而是给 Adam 的 loss spike 建立机制解释、预测指标和抑制建议。整体逻辑是：先用局部二次模型推导 Adam 的稳定条件，再分析二阶矩 $v_t$ 与梯度平方 $g_t^2$ 的解耦如何让稳定条件持续失效，最后用多个尺度的实验验证这个机制。
 
 ### 整体框架
-输入是一条使用 Adam 训练得到的优化轨迹，作者沿着这条轨迹观察梯度、二阶矩、Hessian 以及预条件 Hessian 的变化。分析分为四步：第一步在 GD 上回顾局部稳定阈值；第二步把 Adam 的自适应项写成预条件 Hessian；第三步提出梯度方向曲率作为 spike 发生的更精确判据；第四步在简单函数、FNN、CNN 和 Transformer 上验证该判据。
+输入是一条使用 Adam 训练得到的优化轨迹，作者沿着这条轨迹观察梯度、二阶矩、Hessian 以及预条件 Hessian 的变化。分析先在 GD 上回顾局部稳定阈值 $\lambda_{\max}(H_t)<2/\eta$ 作为参照，再顺着三个核心机制层层推进：其一，把 Adam 的动量项和自适应分母都折进 Hessian，得到预条件 Hessian $\hat H_t$，稳定判据随之换成 $\lambda_{\max}(\hat H_t)<2/\eta$；其二，二阶矩 $v_t$ 与当前梯度平方 $g_t^2$ 发生解耦——梯度在涨、分母却自顾自衰减，使 $\hat H_t$ 的特征值被持续推高，这正是 spike 区别于普通 Edge of Stability 振荡的分水岭；其三，用梯度方向曲率 $\lambda_{\mathrm{grad}}(\hat H_t)$ 取代最大特征值作为更精确的 spike 预警判据。最后在一维二次函数、FNN、CNN 和 Transformer 上验证这套机制，并给出降低 $\beta_2$、增大 $\epsilon$ 两种有理论依据的抑制手段。
 
 在 Adam 中，更新含有一阶矩 $m_t$ 和二阶矩 $v_t$。如果暂时忽略动量，Adam 近似等价于在局部 Hessian $H_t$ 前乘上对角矩阵 $\mathrm{diag}(1/(\sqrt{\hat v_t}+\epsilon))$。论文进一步把动量项也纳入，得到综合的 Adam 预条件 Hessian $\hat H_t = \frac{1}{1-\beta_1^t}\frac{1-\beta_1}{1+\beta_1}\mathrm{diag}(1/(\sqrt{\hat v_t}+\epsilon))H_t$。当这个矩阵的有效曲率长期超过 $2/\eta$ 时，训练就有进入 spike 的风险。
 

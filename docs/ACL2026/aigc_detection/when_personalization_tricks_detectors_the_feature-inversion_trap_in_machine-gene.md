@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-方法分三部分：(1) StyloBench 基准构建——包含文学作品模仿（通过 CPT 微调 LLM）和博客风格模仿（通过 few-shot 提示）两个子场景；(2) 特征反转陷阱的理论分析——通过 Rayleigh 商找到反转特征方向并验证与检测器性能的相关性；(3) StyloCheck 诊断框架——通过 token 打乱生成仅保留反转特征的探测数据集，评估检测器对反转特征的依赖程度。
+方法分三部分：(1) StyloBench 基准构建——包含文学作品模仿（通过 CPT 微调 LLM）和博客风格模仿（通过 few-shot 提示）两个子场景；(2) 特征反转陷阱的理论分析——通过 Rayleigh 商找到反转特征方向并验证与检测器性能的相关性；(3) StyloCheck 诊断框架——通过 token 打乱生成仅保留反转特征的探测数据集，评估检测器对反转特征的依赖程度。其中 StyloBench 是数据脚手架，后续三步（找反转方向 → 造探测集 → 预判迁移）才是核心贡献。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["StyloBench 基准<br/>文学模仿(CPT) + 博客模仿(few-shot)"]
+    subgraph S1["反转特征方向提取（Rayleigh 商）"]
+        direction TB
+        B["GPT-2 残差流求<br/>通用域差异 v_G、个性化域差异 v_S"] --> C["构造交叉域矩阵 A<br/>解最小特征值方向 w*"]
+    end
+    A --> S1
+    S1 --> E["StyloCheck 探测数据集构建<br/>token 打乱(Kendall τ)洗掉语义/风格<br/>挑特征值最高/最低各 50 条"]
+    E --> F["跨域迁移性能预测<br/>检测器在探测集上的 AUROC 读数"]
+    F -->|"AUROC>0.5 正向依赖 → 掉点"| G["预判个性化域性能变化"]
+    F -->|"AUROC<0.5 反向依赖 → 反而涨"| G
+    F -->|"AUROC≈0.5 不依赖 → 稳定"| G
+```
 
 ### 关键设计
 

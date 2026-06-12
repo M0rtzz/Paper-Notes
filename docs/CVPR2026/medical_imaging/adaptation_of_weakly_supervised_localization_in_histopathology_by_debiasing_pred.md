@@ -60,6 +60,23 @@ SFDA-DeP 的输入是一个在源域预训练好的 WSOL 模型 $f$ 和未标注
 4. 对 forget set 施加"遗忘"损失，对 retain set 施加保持损失，联合像素级定位损失
 5. 每 $m$ 个 epoch 重建 forget/retain sets，动态跟踪边界移动
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源域预训练 WSOL 模型<br/>+ 未标注目标数据"] --> B["预测全部目标样本<br/>按类别频率检出 dominant class"]
+    B --> C["Forget Set 构建<br/>dominant 中取 top-ρ 高熵样本"]
+    C -->|"高熵不确定样本"| D["forget set"]
+    C -->|"其余可靠样本"| E["retain set"]
+    D --> F["Forget Loss<br/>−log(1−p) 推低偏向性预测"]
+    E --> G["Retain Loss<br/>标准交叉熵锚住可靠预测"]
+    B --> H["像素级定位损失<br/>低熵样本 + CAM 伪标签训像素分类器"]
+    F --> I["联合优化更新模型"]
+    G --> I
+    H --> I
+    I -->|"每 m epoch 重建集合：动态重采样"| B
+    I --> J["去偏后 WSOL 模型<br/>分类 + ROI 定位"]
+```
+
 ### 关键设计
 
 **1. Forget Set 构建：把"被硬塞进 dominant class 的不确定样本"挑出来**

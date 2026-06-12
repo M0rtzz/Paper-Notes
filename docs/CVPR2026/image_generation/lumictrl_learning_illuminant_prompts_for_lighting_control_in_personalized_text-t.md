@@ -43,7 +43,17 @@ tags:
 
 ### 整体框架
 
-输入为目标概念的单张图像和文本描述。方法包含三个阶段：（1）温度映射——基于 Planckian locus 的物理光照增强生成 7 种标准光照下的训练变体；（2）权重优化——为概念引入 token $[v]$，为每种光照引入独立 token $[c_i^*]$，优化 cross-attention 的 key/value 投影矩阵以学习光照表示；（3）推理——使用学习到的光照 token 生成指定光照下的概念图像。训练时使用冻结的 ControlNet 提供边缘约束，推理时丢弃 ControlNet。
+输入为目标概念的单张图像和文本描述。方法包含三个阶段：（1）温度映射——用基于 Planckian locus 的**物理光照增强**生成 7 种标准光照下的训练变体；（2）权重优化——为概念引入 token $[v]$、为每种光照引入独立 token $[c_i^*]$，优化 cross-attention 的 key/value 投影矩阵以学习光照表示，期间靠**边缘引导 Prompt 解耦**和**掩码重建损失**两个约束逼 token 只学颜色；（3）推理——使用学习到的光照 token 生成指定光照下的概念图像。训练时使用冻结的 ControlNet 提供边缘约束，推理时丢弃 ControlNet。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单张概念图 + 文本"] --> B["物理光照增强<br/>Planckian locus 7 色温 + von Kries 全局染色"]
+    B --> C["权重优化<br/>学概念 token [v] 与光照 token [c_i*]，微调 cross-attention 的 key/value"]
+    D["边缘引导 Prompt 解耦<br/>冻结 ControlNet 喂 Canny 边缘当结构锚"] --> C
+    C --> E["掩码重建损失<br/>前景严格对齐 / 背景交给扩散先验"]
+    E --> F["推理：用光照 token 生成指定光照图像<br/>丢弃 ControlNet"]
+```
 
 ### 关键设计
 

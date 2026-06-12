@@ -42,9 +42,29 @@ tags:
 ### 整体框架
 评测协议由四块拼成。**第一块**是统一的搜索空间：每种方法（IBP / CROWN-IBP / SABR / MTL-IBP）都在一份"通用 + 方法特定"超参集合上搜索，包括学习率、$\ell_1$ 正则权重、Shi 2021 正则权重、warm-up / ramp-up 轮数、训练用 $\epsilon$ 缩放因子，再加方法专属的 $\kappa_{\text{start}} \ge \kappa_{\text{end}}$、$\beta$、$\tau$、$\alpha$ 以及 PGD 攻击步数与步长。**第二块**是受约束的多目标贝叶斯优化器：每个目标（干净精度、不完全认证精度）用独立的高斯过程建模，采集函数为 EHVI，搜索区域约束在感兴趣区间（如 CIFAR-10 $\epsilon=2/255$ 要求干净 $\ge 60\%$、认证 $\ge 40\%$），单种方法跑 3 个随机种子各 100 trial 合并前沿。**第三块**是廉价代理目标：训练完成后用 IBP→CROWN-IBP→CROWN 的级联不完全验证给出认证精度的欠估计，把昂贵的完整验证留到最后。**第四块**是 Pareto 前沿精修：用 single-linkage 聚类（$d_{\min}=0.05$）合并 Pareto 集中相邻点，每个簇随机抽一个用 $\alpha\beta$-CROWN（cutoff $1000\,\text{s}$）做完整验证，重组成最终前沿；多种方法的前沿再合并成"combined Pareto front"作为评测基准。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["统一专家搜索空间<br/>放开 κ/β、warm-up≤5、训练 ε 缩放"] --> B
+    subgraph LOOP["受约束多目标 BO 内循环（3 种子 × 100 trial）"]
+        direction TB
+        B["BO 提议配置 λ"] --> C["训练网络（各方法既有损失）"]
+        C --> D["不完全验证廉价代理<br/>IBP→CROWN-IBP→CROWN 级联<br/>得 (干净精度, 认证率下界)"]
+        D -->|EHVI 抢未支配区| B
+    end
+    LOOP --> E["合并 3 种子 → Pareto 集"]
+    E --> F["single-linkage 聚类去重<br/>d_min = 0.05"]
+    F --> G["每簇代表点 αβ-CROWN 完整验证"]
+    G --> H["重建并合并各方法<br/>combined Pareto front"]
+```
+
 ### 关键设计
 
-**1. 多目标贝叶斯优化 + 受约束 EHVI：让两个目标各自长成应有的样子**
+**1. 统一的专家搜索空间：把先前被默认值掩盖的超参全放进来**
+
+过去"老方法看起来不行"很大程度上是欠调优——文献只在自己验证过的少数配置附近调参，尤其把 $\kappa$ / $\beta$ 过渡当成 0、warm-up 顶多用 1 个 epoch。本文反其道而行，构造一个覆盖所有合理取值的搜索空间：放开 $\kappa_{\text{start}} \ge \kappa_{\text{end}}$ 两端、允许最多 5 个 warm-up epoch、允许训练 $\epsilon$ 大于评估 $\epsilon$、把 $\ell_1$ 正则和 Shi 2021 正则都纳入搜索，外加方法专属的 $\beta$ / $\tau$ / $\alpha$ 与 PGD 攻击步数步长。这块是整个"翻案"的根基：后续 fANOVA 重要性分析显示 $\kappa_{\text{start}}$ / $\kappa_{\text{end}}$ 和 warm-up 轮数在所有场景都是 trade-off 的主控变量——正因为把它们放开，CROWN-IBP 这种 2020 年的方法才在干净精度上多涨约 $6\%$。
+
+**2. 多目标贝叶斯优化 + 受约束 EHVI：让两个目标各自长成应有的样子**
 
 IBP 类方法天然带一个权衡参数，干净精度和认证精度是直接冲突的，于是"挑一个点去比"等于"先选立场再选证据"。本文索性不优化任何加权和，而是把目标写成向量 $\mathbf{f}(\boldsymbol{\theta})=(\text{acc}_{\text{clean}},\text{acc}_{\text{cert}})$，用两个独立高斯过程各自拟合，再用期望超体积改进（EHVI）去抢已发现前沿之外的未被支配区域：
 
@@ -52,16 +72,16 @@ $$\mathrm{EHVI}(\boldsymbol{\theta})=\mathbb{E}_{\mathbf{f}}\big[\max(0,\ \mathr
 
 其中 $P$ 是当前 Pareto 前沿，同时加硬约束把"近似退化成对抗训练"的区域剔除，并对三个随机种子的前沿取并集消除局部陷阱。之所以必须用多目标 BO 而非标量化，是因为 IBP 的超参高度交互——$\kappa$ 和 warm-up 长度耦合、$\tau$ 和 PGD 步长耦合——任何加权求和都会把真前沿弯掉；让两个目标各自由 GP 建模、再由 Pareto 关系裁剪，才能露出真实可达的边界。
 
-**2. 不完全验证作为认证精度的廉价代理：把搜索成本压进可负担区间**
+**3. 不完全验证作为认证精度的廉价代理：把搜索成本压进可负担区间**
 
 完整验证是 $\mathcal{NP}$-complete，若每条 trial 都跑一遍完整认证，100 trial 的搜索预算根本动不了。本文的关键省钱手段是搜索阶段不算真认证率，而是按 IBP → CROWN-IBP → CROWN 级联调用——只在前一级宣告"未证明"时才上更强的方法——得到一个真完整认证率的可证下界 $\widehat{\text{acc}}_{\text{cert}}\le\text{acc}_{\text{cert}}$，BO 直接在这个下界上优化。这一招成立的前提是单调代理几乎不改变 Pareto 序：既然代理只是真值的一致欠估计，前沿的相对位置基本不变，于是只需对最终落在 Pareto 集上的少量代表点用 $\alpha\beta$-CROWN 完整验证一次即可。验证空闲时还能进一步把 cutoff 从 $1000\,\text{s}$ 降到 $100\,\text{s}$ 而前沿不变——仅 CIFAR-10（$\epsilon=2/255$）MTL-IBP 的总验证耗时就从 1311 小时降到 208 小时。
 
-**3. single-linkage 聚类 + 完整验证精修：把验证预算花在刀刃上**
+**4. single-linkage 聚类 + 完整验证精修：把验证预算花在刀刃上**
 
 BO 倾向于在前沿曲线上密集采样，结果会冒出一堆彼此差距 $<0.5\%$ 的"几乎同性能"点，若不去重就把昂贵的完整验证预算全花在装饰性细节上。本文在二维目标空间用欧氏距离做 single-linkage 层次聚类，超参点 $i,j$ 在距离 $\le d_{\min}=0.05$ 时合并（Pareto 集大于 5 个点才启动聚类），每簇随机抽一个配置走完整 $\alpha\beta$-CROWN，再用真实认证精度重建前沿。这样既把验证成本压到与单点调参同量级，又保证最终曲线上每个点都基于完整验证的硬数字——多种方法的前沿合并成"combined Pareto front"后，才成为公平、可复现的评测基准。
 
 ### 损失函数 / 训练策略
-训练侧沿用各方法既有损失：IBP 的 $\kappa \cdot \mathcal{L} + (1-\kappa) \cdot \mathcal{L}_{\text{ver}}$、CROWN-IBP 额外用 $\beta$ 在 CROWN-IBP 与 IBP 上界间过渡、SABR 用 $\tau \epsilon$ 子区间 + ReLU shrinking、MTL-IBP 用 $\alpha \cdot \mathcal{L}_{\text{ver}} + (1-\alpha) \cdot \mathcal{L}_{\text{adv}}$。差别在外层：作者放开 $\kappa_{\text{start}} \ge \kappa_{\text{end}}$ 的两端、允许最多 5 个 warm-up epoch（既有工作通常用 1）、允许训练 $\epsilon$ 大于评估 $\epsilon$、把 $\ell_1$ 正则和 Shi 2021 正则都纳入搜索，使搜索空间充分覆盖"先前被默认值掩盖"的设计区域。所有实验用 Shi 2021 的 CNN7 架构，BoTorch + Optuna 跑 EHVI，预算 3 种子 × 100 trial。
+训练侧不改各方法既有损失，只是把它们放进统一的外层搜索：IBP 的 $\kappa \cdot \mathcal{L} + (1-\kappa) \cdot \mathcal{L}_{\text{ver}}$、CROWN-IBP 额外用 $\beta$ 在 CROWN-IBP 与 IBP 上界间过渡、SABR 用 $\tau \epsilon$ 子区间 + ReLU shrinking、MTL-IBP 用 $\alpha \cdot \mathcal{L}_{\text{ver}} + (1-\alpha) \cdot \mathcal{L}_{\text{adv}}$；这些损失的权衡参数连同搜索空间（关键设计 1）一起交给多目标 BO 优化，而非沿用文献默认值。所有实验用 Shi 2021 的 CNN7 架构，BoTorch + Optuna 跑 EHVI，预算 3 种子 × 100 trial。
 
 ## 实验关键数据
 

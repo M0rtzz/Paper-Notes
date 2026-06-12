@@ -36,6 +36,18 @@ tags:
 ### 整体框架
 ResDec 针对的是 LVLM 的“语言先验幻觉”——逐步生成时文本上下文慢慢淹没视觉上下文，吐出语法通顺但与图不符的内容。它不动模型架构、不训练，纯在解码阶段做文章：在当前解码步 $t$，分析历史窗口内 token 的 logit 演化、找到语义稳定的区间，把该区间的 logits 聚合成残差引导信号，再和当前 logits 加权融合后采样。核心依据是一个观察——正确答案的信号其实早已嵌在前序 token 的 logit 分布里（回答“The answer is D”时，“D”在生成引导词时 logit 就偏高），幻觉的本质是幻觉 token 在某些时刻 logit 异常升高、逐步反超真实 token。
 
+整条解码回路可拆成三步串联：先用 U 型 JSD 模式从历史窗口里框出“语义已锚定”的可信区间，再对该区间做置信度加权聚合得到残差引导信号，最后把残差与当前 logits 融合并截断后采样；采出的新 token 又并入历史，驱动下一步。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["解码步 t：历史窗口 W 内各步候选 logits"] --> B["U 型 JSD 模式与三阶段划分<br/>算相邻步 JSD 得 U 型曲线<br/>划 PSAP / SAP / EDP，取 SAP+EDP 为聚合窗口 Δt"]
+    B --> C["置信度加权历史聚合<br/>按低熵置信度 Ci 加权聚合 Δt 内 logits<br/>得残差引导信号"]
+    C --> D["历史-当前融合与可行性约束<br/>残差与当前 logits 按 α=0.5 融合<br/>再用 β 截断只留头部 token"]
+    D --> E["Softmax 采样下一个 token"]
+    E -.->|新 token 并入历史| A
+```
+
 ### 关键设计
 
 **1. U 型 JSD 模式与三阶段划分：定位“语义已锚定”的区间**

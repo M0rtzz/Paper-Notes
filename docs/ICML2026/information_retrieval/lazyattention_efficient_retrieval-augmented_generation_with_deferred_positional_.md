@@ -42,6 +42,18 @@ LazyAttention 把 RoPE 位置编码从 KV 缓存写入阶段推迟到 attention 
 ### 整体框架
 LazyAttention 要解决的是 KV cache 因 position-aware 而被位置变体撑爆的问题，做法是把同一个 Transformer block 的位置编码"时机"挪后：写缓存时 Q/K/V 都不带任何位置信息，每个文档都以局部位置 0 开始当作"纯内容键值对"存进 KV cache；用缓存时再在 fused attention kernel 内部，根据该文档在当前请求里落到的全局 offset $\Delta$，on-the-fly 给 Q 或 K 施加一次相对旋转 $R_\Delta$ 后才算 softmax。由于 RoPE 注意力分数只依赖相对位置（$(R_m q)^\top(R_n k)=q^\top R_{n-m}k$），这套"现场补位置"的算法和"预先把 K 旋转到目标位置"的标准 RoPE 完全等价，但物理上 KV cache 只需存一份。直观上（Example 3.1），文档 $d_1,d_2$ 各自缓存为从位置 0 起算的 $C_1,C_2$，当请求是 $d_1\mathbin\Vert d_2\mathbin\Vert Q$ 时，复用 $C_2$ 只需把 $Q$ 反向旋转 $|d_1|$ 步，就能与"$C_2$ 仍假装自己在位置 0..|d_2|"的缓存状态对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["请求中各文档的 Q/K/V<br/>不带任何位置信息"] --> B["Deferred Positional Encoding<br/>以局部位置 0 存入单份 position-agnostic KV cache"]
+    B --> C["复用单副本 KV，按文档落点算全局 offset Δ"]
+    C --> D{"Q/K 旋转分派"}
+    D -->|"prefill：compute-bound，转 K"| E["融合 Triton kernel + bit-packed 元数据<br/>K tile 半维度旋转后做 GEMM"]
+    D -->|"decode：bandwidth-bound，转 Q"| F["融合 Triton kernel + bit-packed 元数据<br/>仅跨文档边界触发，元数据塞进寄存器"]
+    E --> G["施加单次相对旋转 → softmax → 输出"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. Deferred Positional Encoding：把 RoPE 从写缓存推迟到算 attention**

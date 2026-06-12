@@ -42,6 +42,22 @@ tags:
 ### 整体框架
 Token Sparse Attention 想解决的是：既要让 token 选择跟着层/head 各自的注意力动态走，又要保证被略过的 token 不被永久删掉，还要能直接复用现成的密集 attention kernel。它在每个被选中的稀疏层里走"压缩—密集 attention—解压"三拍：先用 Dynamic Token Coverage 给每个 head $h$ 估出一个大小为 $L'$ 的 token 集 $S_h$，从 $Q,K,V \in \mathbb R^{L\times d}$ 按 $S_h$ gather 出 $\hat Q,\hat K,\hat V \in \mathbb R^{L'\times d}$，调 FlashAttention 在 $L'\times L'$ 的压缩空间上算密集 attention 得到 $\hat O$；再把 $\hat O$ scatter 回一个零初始化的 $\mathbb R^{L\times d}$，未选位置保持 0，最后加残差。复杂度由此从 $O(L^2 d)$ 降到 $O(L'^2 d)$。至于"哪些层值得稀疏"，由 Inter-Layer Representation Drift 在加载时一次性预选（默认取漂移最小的底 50% 层），全程 training-free。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["加载时 · Inter-Layer Drift 选稀疏层<br/>取漂移最小的底 50% 层得 L_sparse"]
+    L -->|非稀疏层| FA["原始密集 FlashAttention"]
+    L -->|"稀疏层 ℓ：Q,K,V ∈ L×d"| TC["Dynamic Token Coverage<br/>按 τ 分位定预算，每 head 取 top-k 得 S_h"]
+    subgraph CD["Compress-then-Decompress 可逆 token 稀疏化"]
+        direction TB
+        G["Compress：按 S_h gather 得 Q̂K̂V̂ ∈ L'×d"]
+        G --> A["FlashAttention 在 L'×L' 上密集算得 Ô"]
+        A --> S["Decompress：scatter 回 L×d，未选行填 0"]
+    end
+    TC --> CD
+    CD --> R["残差 X_next = X_ℓ + Decompress(Ô)<br/>被略过 token 下一层可复活"]
+```
+
 ### 关键设计
 
 **1. Compress-then-Decompress 可逆 token 稀疏化：把"删 token"换成"临时不参与 attention"**

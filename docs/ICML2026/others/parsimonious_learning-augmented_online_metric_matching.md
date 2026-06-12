@@ -43,6 +43,18 @@ tags:
 
 整体算法是 FtP 的"节俭化"包装。把时间线按 $k$ 切成若干 phase：每个 phase 的第一轮去问预言机拿真预测 $\widehat P = P_{ik}$，phase 内剩余的 $k-1$ 轮用一个辅助子例程 $\mathcal A$ 在"剩余服务器 $S \setminus \widehat P$、阶段内到达请求"上跑，把 $\mathcal A$ 当前匹配到的服务器集合 $\widehat S$ 与 $\widehat P$ 拼起来作为这一轮的"虚拟预测" $P_t = \widehat P \cup \widehat S$。然后整个 $\{P_t\}_t$ 喂给标准 FtP 即可。直觉上，$\widehat P$ 给出"大方向"，$\mathcal A$ 在局部用真实到达信息打磨细节，二者拼接成每一轮都能用的预测序列。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第 t 个请求 r_t 到达<br/>时间线按 k 切成若干 phase"] --> B{"t 是 k 的倍数?<br/>即 phase 首轮 / 询问轮"}
+    B -->|是·询问轮| C["查预言机拿真预测 P̂<br/>在剩余服务器 S∖P̂ 上重置子例程 𝒜<br/>本轮预测 P_t = P̂"]
+    B -->|否·phase 内| D["把 r_t 喂给子例程 𝒜（adherent + strongly competitive）<br/>读出 𝒜 至今匹配的服务器集合 Ŝ<br/>拼出虚拟预测 P_t = P̂ ∪ Ŝ"]
+    C --> E["把 P_t 交给 Follow-the-Prediction<br/>按预测把 r_t 匹配到某服务器"]
+    D --> E
+    E -->|还有请求| A
+    E --> F["全部到齐后输出完美匹配"]
+```
+
 ### 关键设计
 
 **1. Adherence + Strong Competitiveness：刻画"可当虚拟预测器用"的子例程**

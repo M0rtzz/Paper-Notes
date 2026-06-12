@@ -52,6 +52,31 @@ tags:
 
 LIDMark 是一套主动取证框架：在图像发布前，编码器先把一段 152 维的 Landmark-Identity 水印（136 维面部关键点 + 16 维源身份）嵌进人脸图，得到带水印图像 $I_w = E(I, m)$；当这张图被换脸或篡改后，解码器再从中恢复出当初嵌入的水印，并与对图像现状重新检测到的关键点做一致性比对。比对出的“内在 vs 外在”差异同时支撑三件事——判真伪、定位篡改区域、追溯源身份，于是过去要分三套方案的任务被收进了同一条流水线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原图 I + 152维 Landmark-Identity 水印<br/>(136维关键点 + 16维源ID)"] --> ENC
+    subgraph ENC["双流编码器"]
+        direction TB
+        B["图像流 SEResNet 提内容"] --> D["拼接融合 + skip connection"]
+        C["水印流 DiffusionNet 展成特征图"] --> D
+    end
+    ENC --> E["带水印图 I_w"]
+    E -->|"换脸 / 篡改攻击"| F["被篡改图像"]
+    subgraph FHD["FHD 因子化解码器"]
+        direction TB
+        G["共享 backbone"] --> H["回归头：内在关键点"]
+        G --> I["分类头：16维身份"]
+    end
+    F --> FHD
+    F -->|"dlib 现场检测"| J["外在关键点"]
+    H --> K["内在-外在一致性检测<br/>平均欧氏距离 AED 比对"]
+    J --> K
+    K -->|"AED 超阈值"| L["Deepfake 检测：判真伪"]
+    K -->|"逐点偏移大"| M["篡改定位：偏移大处即篡改区"]
+    I --> N["源追踪：读出16维身份"]
+```
+
 ### 关键设计
 
 **1. 152 维 Landmark-Identity 水印：把水印从比特串升级成语义编码**

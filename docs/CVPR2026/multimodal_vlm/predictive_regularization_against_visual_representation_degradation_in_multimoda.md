@@ -36,7 +36,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文先回答一个被忽视的问题——MLLM 在纯文本目标下训练，它内部的视觉表征到底付出了什么代价——然后给出一个最小干预的补救方案。整条 pipeline 沿用标准的"视觉编码器 + 投影层 + LLM"，唯一的改动是挂一条旁路：从 LLM 某个中间层抽出视觉 token 的 hidden states，过一个轻量 MLP 预测头，去预测这些 token 在进入 LLM 之前的初始特征（锚点做 stop-gradient），用余弦相似度当正则项，和原来的语言建模损失一起优化。不加数据、不改架构，所以前两个设计是"把病诊断清楚"，第三个才是"开药"。
+这篇论文先回答一个被忽视的问题——MLLM 在纯文本目标下训练，它内部的视觉表征到底付出了什么代价——然后给出一个最小干预的补救方案。前半程是**诊断 + 归因**（对应关键设计 1、2）：逐层量化视觉退化、再把退化解释成"视觉牺牲"。后半程是**开药**（对应关键设计 3 PRe）：整条 pipeline 沿用标准的"视觉编码器 + 投影层 + LLM"，唯一的改动是挂一条旁路——从 LLM 某个中间层抽出视觉 token 的 hidden states，过一个轻量 MLP 预测头，去预测这些 token 在进入 LLM 之前的初始特征（该锚点做 stop-gradient），用 patch 级负余弦相似度当正则项，和原来的语言建模损失一起优化。不加数据、不改架构。下图画的就是 PRe 这条训练数据流（诊断/归因是分析、不在 pipeline 上）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 → 视觉编码器<br/>CLIP / SigLIP → 投影层"] --> B["初始视觉特征 H_v^0<br/>进 LLM 前的 patch token（兼作锚点）"]
+    B --> C["LLM 解码器<br/>视觉 token 与文本拼接后逐层处理"]
+    C --> D["中间层视觉特征 H_v^l<br/>Vicuna 第16层 / Qwen 第14层"]
+    C --> E["最终文本输出"]
+    D --> F["预测头 f_pred（2层 MLP）"]
+    B -.->|stop-gradient 锚点| G["PRe 正则 L_PRe<br/>patch 级负余弦相似度"]
+    F --> G
+    E --> H["语言建模损失 L_LM"]
+    G --> I["总损失 L_total = L_LM + 0.5·L_PRe"]
+    H --> I
+```
 
 ### 关键设计
 

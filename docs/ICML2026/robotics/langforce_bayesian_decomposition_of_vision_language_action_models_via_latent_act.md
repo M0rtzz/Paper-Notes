@@ -43,6 +43,23 @@ LangForce 把 VLA 策略写成 $\pi(a\mid v,\ell)=p(\ell\mid a,v)\,p(a\mid v)/p(
 ### 整体框架
 LangForce 在原生 VLA（这里是 StarVLA 的 QwenGR00T，VLM 用 Qwen3-VL-4B，动作头是 DiT）之上加了三件东西：(1) 在词表里塞 $K=64$ 个新 token $\mathcal{Q}=\{\langle\text{action}_1\rangle,\dots,\langle\text{action}_K\rangle\}$ 作为潜动作查询；(2) 同一 batch 同时跑两条共享权重的分支，分别构造 $[v,\mathcal{Q},\ell]$ 和 $[v,\ell,\mathcal{Q}]$ 两种 token 顺序；(3) 总 loss 把两条分支的 flow-matching 动作损失和一项语言对数似然比 LLR 拼在一起。推理时只跑后验分支，所以与普通 VLA 同等开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：视觉 v + 指令 ℓ"] --> Q["潜动作查询 𝒬<br/>64 个可学习 token 作信息瓶颈"]
+    subgraph DUAL["双分支贝叶斯训练（共享 VLM 权重）"]
+        direction TB
+        Q --> PR["先验分支 [v,𝒬,ℓ]<br/>𝒬 仅看视觉 → H𝒬prior"]
+        Q --> PO["后验分支 [v,ℓ,𝒬]<br/>𝒬 看视觉+语言 → H𝒬post"]
+    end
+    PR --> LLR["LLR / PMI 语言侧奖励<br/>log p(ℓ|v,H𝒬prior) − sg log p(ℓ|v)"]
+    PR --> FM["flow-matching 动作损失<br/>先验 + 后验双分支"]
+    PO --> FM
+    FM --> TOT["总损失<br/>(1−λ)L_FM_post + λL_FM_prior − βL_LLR"]
+    LLR --> TOT
+    PO -->|推理仅跑后验分支| OUT["DiT 生成动作 a"]
+```
+
 ### 关键设计
 
 **1. 潜动作查询作信息瓶颈：把动作相关语义压成 64 个可切换条件的 token**

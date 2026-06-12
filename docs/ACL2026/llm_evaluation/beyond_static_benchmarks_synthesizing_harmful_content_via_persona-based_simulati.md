@@ -44,6 +44,22 @@ tags:
 
 方法从 Pushshift 抓来的真实 Reddit 帖子 $x$（含 subreddit 名、标题、原帖、已有评论）出发，要解决的核心问题是"如何让 LLM 写出既高度有害又风格多样、还能锚定真实语境的评论"。整条 pipeline 分两段：先由 LLM $\mathcal{M}_{in}$（GPT-4o）在种子帖、用户类型、兴趣 subreddit 上合成出一份"内在 persona" $a_{in}$，再从 ELF-HP / CADD 等策略库里采样一份"外在 persona" $a_{ex}$，二者拼进 backbone LLM 实例化出有害 agent，让它读完原帖后写出评论。最终每个 backbone 模型产出 3,000 条合成有害评论，统一喂给 4 个主流安全分类器测检出率，从而把静态 benchmark 已被刷穿的事实暴露出来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["真实 Reddit 帖子 x<br/>(subreddit + 标题 + 原帖 + 评论)"]
+    subgraph P["二维 persona"]
+        direction TB
+        IN["内在 persona a_in<br/>M_in 合成个人档案"]
+        EX["外在 persona a_ex<br/>从策略库采样 (h, d, e)"]
+    end
+    X --> P
+    P --> AGENT["情境锚定<br/>backbone agent 读原帖借题发挥"]
+    AGENT --> C["每模型 3,000 条合成有害评论"]
+    C --> EVAL["多维度评测协议<br/>有害性 + 难度 + 多样性"]
+    EVAL --> R["暴露静态 benchmark 被刷穿"]
+```
+
 ### 关键设计
 
 **1. 二维 persona：把"用户是谁"和"用户怎么攻击"解耦**

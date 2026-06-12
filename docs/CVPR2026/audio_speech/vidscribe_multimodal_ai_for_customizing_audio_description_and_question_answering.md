@@ -40,6 +40,23 @@ ViDscribe 是一个基于 Web 的平台，利用多模态大语言模型(Gemini 
 
 ViDscribe 要解决的是「自动 AD 既要质量过关、又要随每位 BLV 用户的偏好可调」这件事。系统是一个 React 前端 + AWS Lambda 后端的 Web 平台，背后由 Gemini 3 Pro 这个多模态大模型驱动，全程无需任何训练，靠的是零样本推理。整条 pipeline 是这样转的：用户粘贴一个 YouTube URL 并在界面上调好定制选项后，系统先用音频分析挑出适合插入描述的时间点，再让 Gemini 3 Pro 在这些时间点上、按用户设定的参数生成描述，最后同步播放；播放过程中用户还能随时暂停发问，让模型补充画面里没被描述到的细节。整个界面兼容屏幕阅读器和键盘操作，保证 BLV 用户全程可控。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    U["用户输入<br/>YouTube URL"] --> CUS["六维定制控制<br/>频率 / 长度 / 重点 / 主观性 / 颜色 / 自由文本"]
+    subgraph GEN["自适应 AD 生成"]
+        direction TB
+        T["何时说：音频分析<br/>静音 + 无语音 + 场景变化 取重叠停顿点"]
+        T -->|空档过长| T2["递归切分补插入点"]
+        T --> C["说什么：Gemini 3 Pro 生成 AD<br/>视频 + 时间戳 + 42 条写作指南"]
+        T2 --> C
+    end
+    CUS -->|条件参数| C
+    C --> PLAY["同步播放 AD"]
+    PLAY -->|用户暂停提问| VQA["交互式 VQA<br/>问题 + 时间戳 + 已有 AD + 附近帧 → Gemini → 语音作答"]
+    VQA -->|继续播放| PLAY
+```
+
 ### 关键设计
 
 **1. 六维定制控制：把"一刀切"的 AD 拆成可调的旋钮**

@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 HAMU (Hardness-Aware Multi-objective Unlearning) 要解决的核心痛点是：加权式遗忘既不能保证 forget 被忘到指定程度，又会顺带破坏 retain。它的做法是把整段遗忘从"调权重"改写成 $T$ 步逐迭代的约束优化——每一步只看当前权重 $\bm{w}_t$ 与 retain/forget 各一个 batch，在权重的局部邻域里求一个带不等式约束的一阶凸子问题。每步先估计 batch 梯度 $\bar{\bm{g}}_{\bm{r}}, \bar{\bm{g}}_{\bm{f}}$ 及它们的点积 $\bar\kappa$，再拿 $\bar\kappa$ 对照两个理论阈值来决定本步是停止、走直接更新还是走修正更新，最后把 $\Delta\bm{w}$ 加到权重上。整个算法没有新参数，由一个凸子问题、两个对偶变体 (HAMU-Q / HAMU-U) 和一份按层并行的工程化构成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第 t 步：取 retain / forget 各一 batch"] --> B["按层独立约束：权重切成 ℓ 段<br/>配额 Q_i ∝ ‖g_r‖·‖g_f‖（逐层）"]
+    B --> C["逐层估梯度 g_r, g_f → 解一阶约束子问题<br/>算硬度 κ = g_r·g_f"]
+    C -->|"κ > κ2：不可调和"| STOP["提前停止 break"]
+    C -->|"κ ≤ κ1：easy"| D["直接更新<br/>Δw = −R/‖g_r‖ · g_r"]
+    C -->|"κ1 < κ ≤ κ2：hard"| E["修正更新<br/>投 forget 方向 + 正交补"]
+    D --> F["各层 Δw 合并 → 更新权重 w"]
+    E --> F
+    F -->|"未达 T 步"| A
+    F -->|"达 T 步"| OUT["遗忘后模型"]
+```
+
 ### 关键设计
 
 **1. 硬度度量 $\kappa$ 与一阶约束子问题：把"遗忘有多难"变成一个可计算的标量**

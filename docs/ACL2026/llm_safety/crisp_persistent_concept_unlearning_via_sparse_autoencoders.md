@@ -50,6 +50,24 @@ tags:
 
 操作选在中层（Llama-3.1-8B 层 24、Gemma-2-2B 层 14），这一层 SAE feature 解耦度最高。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标语料 D_target + 保留语料 D_retain"] --> B["过模型 + 预训练 SAE<br/>记录 token 级特征激活"]
+    subgraph SEL["对比式特征选择（Phase 1）"]
+        direction TB
+        B --> C["激活频率差 Δφ 取 top-k → F_freq"]
+        C --> D["相对激活比 ρ ≥ τ 二次筛交集"]
+    end
+    D --> E["salient 特征集 F_salient"]
+    subgraph OPT["模型优化（Phase 2）"]
+        direction TB
+        E --> F["三段式损失 + LoRA<br/>unlearn + retain + coherence 三方制衡"]
+        F --> G["多层联合干预<br/>中后层同时抑制，逐层算损取平均"]
+    end
+    G --> H["持久遗忘后的模型<br/>抑制焊进权重，开源场景安全"]
+```
+
 ### 关键设计
 
 **1. 对比式 salient feature 自动选择：从几十万 SAE 特征里只挑出"专属 target 概念"的那一小撮，避免误伤**

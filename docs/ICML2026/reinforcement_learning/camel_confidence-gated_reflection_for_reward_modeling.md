@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 CAMEL 把奖励建模拆成两阶段。给定 $(q, r_a, r_b)$，模型先输出一个初始 verdict $v_0 \in \{\texttt{A}, \texttt{B}\}$；从这个 verdict token 的两个候选概率算出置信度 $c(x)$。若 $c(x) \geq \tau$（高自信），直接终止，$v_1 = v_0$，全程只花 1 个生成 token；若 $c(x) < \tau$，prompt 触发一段简短反思 $J$（"think again..."），再输出最终 verdict $v_1$。这一"先打分再决定要不要解释"的结构，配合 GRPO + 反事实前缀增强训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入三元组 (q, r_a, r_b)"] --> B["初始 verdict v0<br/>单 token 强制二选一 A/B"]
+    B --> C["置信度 c(x)<br/>= |logP(A) − logP(B)| 的 margin"]
+    C -->|"c(x) ≥ τ：高自信"| D["快速路径：直接终止<br/>v1 = v0，仅花 1 个生成 token"]
+    C -->|"c(x) < τ：低自信"| E["反思路径：触发简短反思 J<br/>看到 v0 后重新比对证据"]
+    E --> F["输出最终 verdict v1"]
+    G["反事实前缀增强 + GRPO 训练<br/>复制为 v0=A / v0=B 两份，信用只给 J 与 v1"] -.训练阶段.-> B
+```
+
 ### 关键设计
 
 **1. Confidence Score：把"题目难不难"压成一个免费拿到的单 token margin**

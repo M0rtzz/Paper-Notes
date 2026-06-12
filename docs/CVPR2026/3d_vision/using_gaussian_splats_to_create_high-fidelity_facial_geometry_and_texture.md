@@ -42,6 +42,23 @@ tags:
 
 这篇要解决的是"用极少的随手拍图、不上光舞台，就重建出能直接进工业图形管线的高保真人脸"。难点在于：原始 3DGS 的高斯和底层几何是解耦的，能自由形变拟合图像、却拟合不出好网格；而无光照条件下从少量图分离 albedo 和光照又是严重欠约束。它的整体做法是用一套改进的 Gaussian Splatting 把高斯紧紧绑死在三角面片上，从 iPhone 单目视频里选 11 个预定义姿态帧、以 MetaHuman Animator 初始化粗几何，训练后先细化出高精度三角网格，再用 PCA 先验 + 可重光照高斯分离光照、得到去光照 albedo，最终转成 MetaHuman 资产接入 UE5 标准管线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["iPhone 单目视频"] --> B["选 11 个预定义姿态帧<br/>MetaHuman Animator 初始化粗几何"]
+    B --> TRAIN
+    subgraph TRAIN["高斯-面片耦合训练（每面片绑一个高斯）"]
+        direction TB
+        C["高斯-面片紧耦合 + 软约束正则<br/>中心/法线/边界 Laplacian 平滑"]
+        D["语义分割监督<br/>Mask2Former 把高斯钉在正确语义区"]
+        E["眼球正则<br/>防眼球高斯遮挡眼窝"]
+    end
+    TRAIN --> F["三角面片几何细化<br/>高斯驱动顶点变形（先 PCA 系数再逐顶点，两轮）"]
+    F --> G["神经纹理<br/>高斯变换到 UV 空间，颜色仍依赖世界视角"]
+    G --> H["去光照纹理生成<br/>PCA 先验 + 球谐光照 + 遮挡图 + 高频恢复"]
+    H --> I["MetaHuman 资产 → UE5 标准管线"]
+```
+
 ### 关键设计
 
 **1. 高斯-面片紧耦合 + 软约束正则：既保留 3DGS 的拟合力又逼出好网格**

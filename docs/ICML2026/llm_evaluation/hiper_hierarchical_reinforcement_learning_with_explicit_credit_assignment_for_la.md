@@ -47,6 +47,34 @@ $$\nabla_\theta J = \mathbb{E}\Big[\sum_t \nabla\log\pi(q_t|s_t,o_{t-1})\,A^{\ma
 
 注意 subgoal 那一项前面乘了 $q_t$（SWITCH 时为 1、KEEP 时为 0），保证只有真正"决定换 subgoal"的 turn 才回传 high-level 梯度——这是整个 Plan-Execute 因子化能成立的关键。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：状态观测 + 上一子目标"]
+    subgraph PE["Plan-Execute 接口（单 LLM 顺序输出）"]
+        direction TB
+        SW["switch 字段：SWITCH / KEEP<br/>决定是否换子目标"]
+        SG["subgoal 字段：当前子目标<br/>SWITCH 则新采，KEEP 则沿用"]
+        AC["action 字段：环境动作<br/>据当前子目标发出"]
+        SW --> SG --> AC
+    end
+    IN --> PE
+    AC --> ENV["环境执行 → 稀疏奖励 / 下一状态"]
+    ENV -->|按 SWITCH 边界切成 K 段| SEG["子目标分段轨迹"]
+    subgraph HAE["Hierarchical Advantage Estimation（HAE）"]
+        direction TB
+        LOW["低层：段内 GAE<br/>段尾 bootstrap 到高层 critic"]
+        HIGH["高层：段奖励 + 段折扣后段间 GAE"]
+        SWA["switch：switching gain<br/>= V_high − V_low"]
+    end
+    SEG --> HAE
+    CRITIC["共享 backbone 双头 critic<br/>同时拟合 V_low 与 V_high"]
+    CRITIC -.->|提供两级 baseline| HAE
+    HAE --> ADV["三类优势 A_switch / A_high / A_low"]
+    ADV --> UPD["PPO clip 更新<br/>三优势各乘对应 log-prob 梯度 + KL"]
+    UPD -.->|更新共享 LLM 策略| PE
+```
+
 ### 关键设计
 
 **1. Plan-Execute 接口：把"分层"从隐式纹理变成可学的 token 模式**

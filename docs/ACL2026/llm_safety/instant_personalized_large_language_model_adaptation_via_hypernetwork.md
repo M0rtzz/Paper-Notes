@@ -45,6 +45,22 @@ P2P 的目标是在部署时给任意用户生成一组 personalized PEFT parame
 
 为了让 hypernetwork 知道“要给哪一层、哪个模块生成参数”，作者把用户 embedding 与 learnable module embedding、depth embedding 拼接。这个 position-aware representation 进入 MLP hypernetwork，输出 flatten 后的 LoRA 参数向量，再 reshape 成每个 target module/layer 的 $A$ 和 $B$ 矩阵。训练时，生成的 LoRA 插入 frozen base LLM，用用户后续交互做 SFT loss 端到端优化 hypernetwork。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户历史"] --> B["用户画像构造<br/>base LLM 生成偏好 summary + BM25 检索 top-k 历史 → profile text"]
+    B --> C["frozen 句向量模型编码<br/>profile text → 用户 embedding e_u"]
+    subgraph GEN["模块 / 层位置感知的参数生成"]
+        direction TB
+        D["拼接位置信息<br/>φ = [e_u ‖ 模块 embedding ‖ 层深 embedding]"] --> E["MLP hypernetwork<br/>输出 flatten 向量 → reshape 成各层各模块 A、B"]
+    end
+    C --> GEN
+    GEN --> F["用户画像到 LoRA 的直接映射<br/>生成的 LoRA ΔW_u 插入 frozen base LLM"]
+    F -->|推理时| G["个性化输出"]
+    F -->|训练时| H["跨用户端到端训练<br/>用户后续交互 SFT loss 优化 hypernetwork"]
+    H -.反向更新.-> E
+```
+
 ### 关键设计
 **1. 用户画像到 LoRA 的直接映射：把"为每个用户训练一套参数"换成"一次前向生成一套参数"**
 

@@ -45,6 +45,25 @@ tags:
 
 MASS-RAG 想解决的核心问题是：检索回来的文档往往以不同形式藏着相关证据，有的要压缩、有的要逐字摘录、有的要跨文档推断，单一过滤策略只会丢掉某一类证据。它的做法是把"过滤"这一步拆给三个视角不同的 Agent 并行处理，再交给一个综合 Agent 整合。给定问题 $q_i$ 和检索文档集合 $D$，框架先让 Summarizer、Extractor、Reasoner 各自产出一份去噪后的证据视图，可选地让 Answer Agent 基于每份视图生成候选答案，最后由 Synthesis Agent 把三路证据（或三个候选答案）比较、调和成统一预测。整个流程免训练，三个 Agent 共享同一 LLM 主干，仅靠角色提示分化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["问题 q + 检索文档集 D"]
+    subgraph FILTER["三视角并行过滤（共享 LLM 主干·免训练角色专门化）"]
+        direction TB
+        S["Summarizer<br/>压成语义摘要"]
+        E["Extractor<br/>逐字摘录精确片段"]
+        R["Reasoner<br/>推断跨文档隐含关系"]
+    end
+    IN --> FILTER
+    FILTER --> ANS{"启用 Answer Agent?"}
+    ANS -->|是| CAND["各视图独立生成候选答案"]
+    ANS -->|否| EVID["直接传三份证据表示"]
+    CAND --> SYN["Synthesis Agent<br/>比较候选并调和"]
+    EVID --> SYN
+    SYN --> OUT["统一最终答案"]
+```
+
 ### 关键设计
 
 **1. 三视角并行过滤：用互补角度兜住不同类型的证据**

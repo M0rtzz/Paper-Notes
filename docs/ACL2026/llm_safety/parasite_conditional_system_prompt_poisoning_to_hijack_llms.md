@@ -49,6 +49,27 @@ PARASITE 的全称是 System Prompt AdveRsarial Attack for Selective Inference-T
 
 整个流程分成两步。第一步是全局语义搜索，使用 LLM 重写器生成一个可读的、语义上已经偏向攻击目标的提示骨架。第二步是局部贪心细化，对骨架中的重要词做轻微扰动或同义替换，让提示词跨过模型的局部决策边界，同时继续保持人类可读性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：目标查询集 Q_t（敏感问题 → 指定错误答案）<br/>+ 普通查询集 Q_b（日常问题 → 真实答案）"]
+    A --> OBJ["威胁建模 · 双目标联合损失<br/>L = L_adv + L_benign，劫持 Q_t 又保住 Q_b<br/>用性能差距 ΔF1 度量隐蔽性"]
+    OBJ --> S1
+    subgraph S1["全局语义搜索（AAP）"]
+        direction TB
+        B["GPT-4o-mini 重写器生成可读提示骨架"] --> C["目标模型评估 Q_b / Q_t<br/>F1 转二值离散信号"]
+        C -->|失败样例反馈改写| B
+    end
+    S1 --> D["语义骨架：已偏向攻击区域、仍自然可读"]
+    D --> S2
+    subgraph S2["词级贪心细化与可容忍噪声"]
+        direction TB
+        E["leave-one-out 估计词重要性并排序"] --> F["高影响词试有限扰动<br/>拆分 / 换序 / 键盘邻近 / 删除 / 同义替换"]
+        F -->|查询目标模型，只接受降低 L 的候选| E
+    end
+    S2 --> G["输出：中毒系统提示 p*<br/>普通问答正常、目标问题被劫持"]
+```
+
 ### 关键设计
 
 **1. 条件式系统提示中毒的威胁建模：把"恶意系统提示词"从泛泛的 prompt injection 描述变成可量化的安全问题**

@@ -45,6 +45,22 @@ SolidCoder 通过 S.O.L.I.D. 架构（Shift-left Planning、Oracle-based Asserti
 
 SolidCoder 复用了 CodeSIM 的三智能体骨架（Planning、Coding、Debugging），但把 S.O.L.I.D. 五个组件嵌进流程，核心是把验证从 LLM 的"想象执行"换成沙盒里的"真实执行"。给定自然语言问题，Planning Agent 先在带边界意识的提示下产出鲁棒算法规划，Coding Agent 把规划翻译成代码并做一次轻量的内部追踪预筛，随后进入 Live Verification 循环——生成基于属性的断言、在沙盒中真实跑、把失败用例累积成回归测试集，反复 debug 直到所有累积测试通过才输出代码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["自然语言问题"] --> S["Shift-left Planning（S）<br/>边界情况左移注入规划 → 鲁棒算法规划"]
+    S --> C["Coding Agent + Intermediate Simulation（I）<br/>翻译成代码并做样例追踪预筛（不终审）"]
+    C --> LV
+    subgraph LV["Live Verification 循环：真实执行替代心理模拟"]
+        direction TB
+        O["Oracle 属性断言（O）<br/>生成领域不变属性"] --> L["Live Execution（L）<br/>沙盒真实运行（5s 超时 / 文件隔离）"]
+        L --> D["Defensive Accumulation（D）<br/>失败用例并入累积回归集"]
+    end
+    LV -->|断言失败 / 运行报错| DBG["Debugging Agent 修复"]
+    DBG --> C
+    LV -->|全部累积测试通过| OUT["输出代码"]
+```
+
 ### 关键设计
 
 **1. Shift-left Planning（S）：把边界情况从 debug 阶段左移到规划之前**

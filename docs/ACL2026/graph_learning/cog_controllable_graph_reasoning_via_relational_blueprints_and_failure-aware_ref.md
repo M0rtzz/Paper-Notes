@@ -43,6 +43,39 @@ CoG 是一个 training-free 的 KGQA 框架，把 Kahneman 的 Dual-Process Theo
 ### 整体框架
 CoG 针对的是多跳 KGQA 里 LLM agent 的"认知僵化"：早期一次错误的关系选择会把搜索拽进巨大噪声候选集、错误像滚雪球，而只看局部语义又容易陷在局部最优、走到死胡同。它把 Kahneman 的双过程理论搬到 KG 推理上，整套 training-free：离线先把训练集 SPARQL 蒸馏成只含关系链的"蓝图"模板库；在线时 System 1（快、直觉）用蓝图给每一步候选关系做软约束式的 rerank 与剪枝，System 2（慢、分析）在搜索停滞或证据不足时触发反思，定位走错的那一步并定向回溯，最终在 verified 证据上综合答案，把幻觉风险压到最低。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BP["离线关系蓝图库 + Hybrid Copy-Adapt（设计1）"]
+        direction TB
+        A["训练集 SPARQL"] --> B["regex 剥实体<br/>只留关系链 ⟨r₁..r_L⟩"]
+        B --> C["去重 + 最长问题当 anchor<br/>SentenceTransformer 编码建索引"]
+        C --> D["蓝图模板库"]
+    end
+    Q["在线问题 q"] --> E["mask topic entity<br/>检索 top-K 邻居蓝图"]
+    D --> E
+    E -->|"sim ≥ τ_copy=0.92"| F["copy top-1"]
+    E -->|"否则"| G["LLM adapt：top-2 邻居 + q"]
+    F --> H["查询专属蓝图 S_BP"]
+    G --> H
+    subgraph S1["三信号融合 rerank + Structure-Consistency Safeguard（设计2 / System 1）"]
+        direction TB
+        I["每步候选关系"] --> J["slot 对齐 + 三信号打分<br/>局部语义 0.6 / 蓝图对齐 0.25 / 全局兼容 0.15"]
+        J --> K["LLM 剪枝<br/>Safeguard 强制并入 step-wise top1"]
+    end
+    H --> I
+    K --> L{"评估证据"}
+    L -->|"未完成，下一跳"| I
+    subgraph S2["Failure-Aware Refinement（设计3 / System 2）"]
+        direction TB
+        M["诊断错误决策点 t_err"] --> N["回退 frontier<br/>召回被过早剪掉的结构相关候选"]
+        N --> O["KG 真缺边则 grounded 兜底<br/>只用 verified 路径段综合"]
+    end
+    L -->|"停滞 / 证据不足"| M
+    O --> P["综合答案"]
+    L -->|"证据充分"| P
+```
+
 ### 关键设计
 
 **1. 离线 relational blueprint 库 + Hybrid Copy-Adapt：从训练数据里蒸出一个全局可复用的"结构罗盘"**

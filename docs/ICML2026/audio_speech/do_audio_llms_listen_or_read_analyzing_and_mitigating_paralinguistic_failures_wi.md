@@ -44,6 +44,17 @@ tags:
 
 整个工作是一条"诊断—定位—治疗"的闭环。诊断段先造出 VoxParadox 这个让文字和声音故意打架的对抗基准，把现有 Audio LLM 跑一遍并用 layer-wise probing 把病灶定位到两个互补瓶颈：副语言特征在编码器深层被丢、以及就算特征还在 LLM 也懒得用。治疗段不动音频编码器和 LLM 主体权重，只在两者接口处插入 PCLM 模块按 prompt 自适应取层来救特征，再跑一轮 DPO 把"跟随声音"训成偏好来救利用率，因此整体非常轻量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VoxParadox<br/>2000 题语言–声学矛盾 MCQ"] --> B["现有 Audio LLM 评测<br/>Acc_GT 低 / ALA 高"]
+    B --> C["layer-wise probing<br/>定位两个互补瓶颈"]
+    C -->|瓶颈①特征丢失| D["PCLM<br/>按 prompt 自适应混合编码器中间层"]
+    C -->|瓶颈②利用率不足| E["DPO 声学偏好对齐<br/>声学正确答案 > 文字暗示答案"]
+    D --> F["增强后的 Audio LLM<br/>17.40% → 65.20%"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. VoxParadox：用"语言–声学矛盾"逼出听 vs 读的差距**

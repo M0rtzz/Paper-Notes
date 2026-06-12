@@ -50,6 +50,19 @@ NeurINO 提出通过将 DINOv3 预训练的 2D 卷积核膨胀（inflate）为 3
 
 具体地，一个 3D 神经影像 patch 先送进 3D 编码器提取多尺度特征，这个编码器的卷积核不是随机初始化的，而是由 DINOv3 的 2D ConvNeXt 权重"膨胀"而来；随后对称的 MedNeXt 风格解码器逐级上采样、恢复精细的神经元形态。每一级输出都用 Dice + CE 监督体素精度，再叠一个拓扑感知骨架损失（TASL）盯着分支连接是否保真。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["3D 神经影像 patch"] --> B["膨胀自适应策略<br/>DINOv3 2D 卷积核膨胀成 3D 编码器"]
+    B --> C["MedNeXt 风格解码器<br/>逐级上采样恢复神经元形态"]
+    C --> D["多尺度输出（每级一个监督分支）"]
+    D --> E["Dice + CE<br/>体素级精度监督"]
+    D --> F["拓扑感知骨架损失 TASL<br/>骨架化 → 图 → 节点/边/路径比对"]
+    E --> G["深度监督与乘性调制<br/>(1+β·TASL)·(Dice+CE) 多尺度求和"]
+    F --> G
+    G --> H["神经元分割结果"]
+```
+
 ### 关键设计
 
 **1. 膨胀自适应策略：把 DINOv3 的 2D 卷积核无损升成 3D**

@@ -43,6 +43,24 @@ CoVRL 把"用回答概率当奖励"的 verifier-free RL 重写成一个变分推
 ### 整体框架
 CoVRL 把推理链 $z$ 视作连接问题 $x$ 与答案 $y$ 的潜变量，重写为 $\log p(y|x)\ge \mathbb{E}_{q(z)}[\log p_\theta(y|z,x)]-D_{\mathrm{KL}}(q(z)\|p_\phi(z|x))$（ELBO）。过往工作取 $q=p_\phi$（先验本身）；CoVRL 取 $q=p'$ 这个复合分布，再用 GRPO 优化重建项、用 Schulman 类 KL 估计器优化正则项。三个分布 $p_\phi(z|x)$、$q_\psi(z|x,y)$、$p_\theta(y|z,x)$ 共用同一个 LLM 权重，只靠 prompt 模板切换上下文（prior 模板只塞问题；posterior 模板把答案也放进 assistant 提示里），形成"单模型多角色"的变分 RL 闭环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x + 答案 y"] --> B["混合采样<br/>概率 α 走 prior 模板（只给问题）<br/>概率 1−α 走 posterior 模板（含答案）"]
+    B --> C["生成完整推理链 z<br/>（off-policy，复用 vLLM/SGLang）"]
+    C --> D["两次前向<br/>分别算 p_φ(z|x) 与 q_ψ(z|x,y)"]
+    D --> E["复合分布 p′ = ½p_φ + ½q_ψ<br/>作 ELBO 的变分代理 q(z)"]
+    D --> F["重要性比 r_t = p′ / p_hybrid<br/>消去采样分布与目标的失配"]
+    E --> G["重建项：GRPO<br/>优势 = logp_θ(y|z,x) − R̄"]
+    F --> G
+    E --> H["NLL 辅助损失<br/>仅 prior 来源 + 格式合法 + Â>0"]
+    E --> I["KL 正则 D_KL(p′‖p_φ)<br/>Bregman 控制变量低方差估计器"]
+    G --> J["合成 ELBO 目标<br/>更新同一个 LLM 权重"]
+    H --> J
+    I --> J
+    J -.->|下一轮采样| B
+```
+
 ### 关键设计
 
 **1. 复合分布 $p'(z|x,y)$ 作为变分代理：把后验的"答案指导"和先验的"推理时一致性"绑进同一个 ELBO**

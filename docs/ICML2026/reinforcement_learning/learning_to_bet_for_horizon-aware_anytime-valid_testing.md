@@ -48,6 +48,21 @@ tags:
 - **Bellman 递归**：$V_t(y)=\max_{\lambda\in\Lambda_m}\mathbb E_{X\sim P_X}\big[\mathbb I\{y+h_m(\lambda,X)\ge b\}+\mathbb I\{y+h_m(\lambda,X)<b\}V_{t+1}(y+h_m(\lambda,X))\big]$，其中 $h_m(\lambda,x)=\log(1+\lambda(x-m))$、$b=\log(1/\alpha)$。
 - **置信序列**：$C_n=\{m\in[0,1]:W_n(m)<1/\alpha\}$，由每个 $m$ 的 $\tau_m$ 自动给出 horizon-aware 覆盖保证。
 
+整条线索是：先把问题写成 DP，再用三条相图定理刻画最优策略的形状、据此把动作收成三档，用已知分布上的 oracle 相图把"理论最优动作"算成 ground truth 当参照，最后让一个跨分布通用的 DQN 从状态特征里学出何时切档——而 anytime-validity 始终由 Ville 不等式独立兜底，与策略怎么得到无关。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["有限期最优控制 DP 建模<br/>状态 (t, log W_t)，动作 λ∈Λ_m<br/>稀疏终端奖励 R（命中 1/α 得 1）"] --> B["相图与三条充分条件<br/>中心 Kelly 带 / 落后激进 / 超前保守"]
+    B --> C["Oracle 相图<br/>已知 P_X 上 Bellman 反推最优动作图"]
+    B --> D["三档动作集<br/>半 Kelly / Kelly / 全压 λ_max"]
+    D --> E["DQN 下注 agent<br/>状态特征 φ_t → Q 网络 → greedy 选档"]
+    C -.对照验证.-> E
+    E --> F["在线回环：选 λ_t → 更新 W_t → t 加 1"]
+    F -->|未命中且 t < N| E
+    F -->|命中 1/α 或 t = N| G["deadline-内拒绝率 + 置信序列<br/>Ville 不等式独立保证 anytime-validity"]
+```
+
 ### 关键设计
 
 **1. $(t,\log W_t)$ 平面相图与三条充分条件：把"按进度调节下注"的模糊直觉变成可证伪的命题**

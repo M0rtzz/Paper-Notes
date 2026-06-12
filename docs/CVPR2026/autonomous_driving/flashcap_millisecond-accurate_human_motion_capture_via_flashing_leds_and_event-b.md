@@ -40,6 +40,28 @@ tags:
 
 FlashCap 想解决的是一个看似硬件问题、实则被标注卡住的难题：要训练能输出 1000Hz 姿态的模型，先得有 1000Hz 的地面真值，而传统光学 MoCap 最高只能标到 120Hz。它的整体思路是把"高频标注"这件事甩给硬件本身——让穿戴服装上每个关节 LED 以**各不相同的频率闪烁**，再用天生微秒级时间分辨率的事件相机去捕获这些闪烁，频率本身就成了关节的"身份证"。系统因此分三层：穿戴端是带 17 个 LED 和 17 个 IMU 的运动捕捉服；采集端用分光镜把事件相机（Prophesee 1280×720）和 RGB 相机（Hikrobot 1920×1200, 20fps）做到像素对齐与时间同步，外加 LiDAR（Ouster OS-1 128 线, 20fps）；软件端是一条标注流水线，从事件流里识别每个 LED 的闪烁模式、匹配身份，自动吐出 1000Hz 的 2D 关节位置。有了这套系统，作者收集了 FlashMotion 数据集，并在其上提出 ResPose 作为高时间分辨率 HPE 的基线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["运动捕捉服<br/>17 个异频闪烁 LED + 17 个 IMU"] --> B["采集端<br/>事件相机 + RGB + LiDAR（分光对齐、时间同步）"]
+    subgraph S1["LED 闪烁编码与身份识别"]
+        direction TB
+        D["切 1ms 事件帧 → DBSCAN 聚簇<br/>逐簇估开/关时间与闪烁周期"] --> E["时域平滑 + 异常值过滤<br/>二部图匹配（簇 ↔ LED 身份）"]
+    end
+    B -->|事件流| D
+    E --> F["FlashMotion 数据集<br/>原生 1000Hz 2D 标注 + 60Hz 3D（IMU+LiDAR 融合）"]
+    subgraph S3["ResPose：RGB 锚点 + 事件残差"]
+        direction TB
+        G["RGB 分支 ViTPose<br/>给出锚定姿态 P_rgb"]
+        H["事件分支 SNN-CNN<br/>局部补丁估高频残差 P_Δ"]
+        G --> I["多模态残差 Transformer<br/>P = P_rgb + P_Δ，建模 17 关节约束"]
+        H --> I
+    end
+    F -->|RGB 锚点| G
+    F -->|局部事件补丁| H
+    I --> J["1000Hz 高时间分辨率姿态输出"]
+```
+
 ### 关键设计
 
 **1. LED 闪烁编码与身份识别：让"频率"成为关节的身份证**

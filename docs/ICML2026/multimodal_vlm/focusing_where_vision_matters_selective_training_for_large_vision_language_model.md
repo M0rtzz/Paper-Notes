@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 方法分两步：**(1) 计算 VIG**——对每条多模态指令样本 $(I,Q,A)$ 用 pre-training 后的对齐 LVLM 跑两遍前向，一遍用真图、一遍用模糊图（模糊图作为"无视觉"代理），分别得到答案的 perplexity，取对数比即 sample-level $\mathrm{VIG}_i$；同时把它分解到 token 级 $\mathrm{VIG}_{i,t}$。**(2) 选择性微调**——按 $\mathrm{VIG}_i$ 排序保留 top-$p\%$ 样本（默认 $p=70$，阈值 $\tau_{70}$），在保留样本内部进一步只对满足 $\mathrm{VIG}_{i,t}\geq\tau_{70}$ 的 token 算 loss；其他 token 仍参与 forward 但不贡献梯度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对齐后 LVLM + 指令样本 (I,Q,A)<br/>alignment 完成、SFT 之前一次性计算"]
+    A --> B["真图前向<br/>得 PPL(A|Q,I)"]
+    A --> C["模糊图前向（无视觉代理）<br/>得 PPL(A|Q)"]
+    B --> D["Visual Information Gain<br/>VIG = log 困惑度对数比<br/>token 级 VIG → 平均成样本级 VIG"]
+    C --> D
+    D --> E["样本级筛选<br/>保留 top-70%（阈值 τ70）"]
+    E --> F["Token 级筛选<br/>同阈值 τ70 选高 VIG token"]
+    F --> G["选择性 SFT<br/>仅选中 token 算 loss，其余只走 forward 不回传梯度"]
+```
+
 ### 关键设计
 
 **1. Visual Information Gain：用「有图减无图」的困惑度对数比量化视觉依赖度**

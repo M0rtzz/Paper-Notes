@@ -47,6 +47,23 @@ MoRI 是个三阶段 pipeline（Figure 2 + 7）：
 （3）**Motivation-grounded RL**：用 GRPO + token-level loss + clip-higher 优化，每个 prompt 拼成 $q = x \oplus m$，rollout $G=16$ 条 $(z_i, y_i)$，按下述复合奖励算 group-normalized advantage。
 **推理时**：先生成 motivation $m$，再以 $x \oplus m$ 为条件做 reasoning + 输出 method。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ICLR/NeurIPS 论文<br/>抽取 context x · motivation m · 去符号化 method y*"] --> B["数据构造（后验重建）<br/>Qwen3-235B 反推 reasoning z → 4000 SFT + 2000 RL prompt"]
+    B --> C["SFT 冷启动（14B）<br/>同时学 motivation 生成 x→m 与 method 生成 x→(z,y)"]
+    C --> D["Motivation-grounded RL（GRPO）<br/>每条 prompt q=x⊕m，rollout G=16 条 (z,y)"]
+    D --> R
+    subgraph R["复合奖励 R_total = α·1[valid]·(w_e·EAIG + w_s·CSG)"]
+        direction TB
+        E["熵感知信息增益 EAIG<br/>只在 GT 高熵 top-25% token 上度量预测提升"]
+        F["对比语义增益 CSG<br/>减去复述输入基线，只奖励语义跳跃增量"]
+        G["Length Anchoring + 格式约束<br/>抵消 GRPO short bias，封死两条 hacking 退路"]
+    end
+    R --> H["group-normalized advantage 更新 πθ"]
+    H -->|训练收敛| I["推理：先生成 motivation m，再以 x⊕m 为条件输出 reasoning + method"]
+```
+
 ### 关键设计
 
 **1. 熵感知信息增益 EAIG：只奖励"硬 token"上的预测提升，把信号锚死在 ground-truth 上**

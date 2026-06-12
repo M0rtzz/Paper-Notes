@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 这篇论文要回答一个问题：LLM 里"刻板印象性别"和"事实性别"到底是不是同一套内部机制——如果是，那靠"消融偏见神经元"去偏就会顺手把事实能力一起削掉。为此它先造一个把"主语类型 × 输出类型"切到 25 个子集的细粒度基准 GKnow，再分两个尺度验证纠缠：电路层用 EAP-IG 抽出每个子集的最小忠实电路、用 cross-task faithfulness 看"一个任务的电路能不能解另一个任务"；神经元层用集成梯度挑出偏见神经元、把它们置零，然后**同时**在偏见 benchmark 和事实 benchmark 上汇报指标，把"看似去偏、实则伤事实"的副作用暴露出来。全程在 Llama-3.1-8B 和 Olmo-7B 上做，不更新任何权重。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["性别 prompt<br/>主语类型 × 输出类型"] --> B["GKnow 基准<br/>5×5 = 25 子集（factual + stereo）"]
+    B --> CKT
+    B --> NEU
+    subgraph CKT["EAP-IG 电路 + cross-task faithfulness"]
+        direction TB
+        C1["逐边打分贪心选边<br/>到 faithfulness ≥ 0.8 的最小忠实电路"] --> C2["子集两两算 IoU / cross-task faithfulness"]
+    end
+    subgraph NEU["IG 神经元消融 + 双面评估"]
+        direction TB
+        D1["IG 选 top-10/50 偏见神经元置零"] --> D2["Stereo + Factual 五 benchmark 同步汇报"]
+    end
+    CKT --> E["纠缠证据：电路重叠 + 共享高 IG 神经元<br/>→ 消融去偏伤事实、不可靠"]
+    NEU --> E
+```
+
 ### 关键设计
 
 **1. GKnow：主语 × 输出双轴的细粒度性别基准，逼任何去偏方法都得"双面汇报"**

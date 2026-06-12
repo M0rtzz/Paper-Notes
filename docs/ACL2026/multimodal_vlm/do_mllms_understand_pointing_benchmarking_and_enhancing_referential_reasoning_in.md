@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 EgoPoint-Bench 由两条数据采集管线 + 一套 QA 生成管线 + 一套五维评测体系组成。仿真侧 Point-Sim 在 1838 个高保真 3D 场景中用 42 种手模型生成 10,567 条样本；真实侧由 8 名志愿者佩戴 MLVision 智能眼镜在室内外场景采集 1,162 张图像。所有图像都进入"机器生成 + 人工校验"的 QA 管线，输出含三种题型（选择 / 判断 / 开放）和三级指代语言（L1 显式动作描述 / L2 视觉定位 / L3 隐式代词）的样本，按五维能力分类后做训练 / 验证 / 测试划分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph SIM["Point-Sim 几何精确仿真"]
+        direction TB
+        A["NavMesh 采样智能体位置 + 构造相机朝向<br/>r_search ≤ 3m，按目标体积缩放距离"] --> B["Rodrigues 旋转食指<br/>静态方向 → 目标方向"]
+        B --> C["指尖向目标投射射线<br/>被遮挡则丢弃，标签天然正确"]
+    end
+    C --> E["多样性注入与域随机化<br/>42 手模型 × FOV / 视高 / 左右手 / 抖动"]
+    R["真实采集<br/>8 人 MLVision 眼镜 · 1.2k 图"] --> QA
+    E --> QA["QA 生成管线<br/>机器生成 + 人工校验"]
+    QA --> TAX["三级指代 × 五维能力评测分类体系<br/>BP / FS / SC / OCR / AR · L1 / L2 / L3"]
+    TAX --> LORA["LoRA 仿真集微调 + 真实集 zero-shot 评测"]
+```
+
 ### 关键设计
 
 **1. Point-Sim 几何精确仿真：把“指点正确”从学习目标降级成一个无法作弊的几何约束**

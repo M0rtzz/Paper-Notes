@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定问题 $x$，先用温度 1.0 从 LLM 采样 $N=20$ 条推理轨迹 $\mathcal{S}=\{(T_i, A_i, z_i)\}$，$z_i\in\{0,1\}$ 来自最终答案是否与 gold 匹配（数学题用 exact match，QA 用 GPT-4o judge）。然后 pipeline 分三段：(A) 把每条文本轨迹解析成有向推理图 $G_i=(V_i,E_i)$，节点 $v_{ij}$ 是中间结果、边 $e_{ij}$ 是子问题/操作（用 LangFun 风格 prompt + 规则解析）；(B) 从 $\mathcal{S}_{\text{correct}}$ 聚合出"共识锚点"——NIBS 直接做语义相似度集合，GIBS 计算 Maximum Common Subgraph 得到 mask $\mathbf{m}_i$；(C) 用 IB 目标产出步级分数 $c_{ij}$，分数低的步被标为可疑。
+给定问题 $x$，先用温度 1.0 从 LLM 采样 $N=20$ 条推理轨迹 $\mathcal{S}=\{(T_i, A_i, z_i)\}$，$z_i\in\{0,1\}$ 来自最终答案是否与 gold 匹配（数学题用 exact match，QA 用 GPT-4o judge）。然后 pipeline 分三段：(A) 把每条文本轨迹解析成有向推理图 $G_i=(V_i,E_i)$，节点 $v_{ij}$ 是中间结果、边 $e_{ij}$ 是子问题/操作（用 LangFun 风格 prompt + 规则解析）；(B) 从 $\mathcal{S}_{\text{correct}}$ 聚合出"共识锚点"——NIBS 直接做语义相似度集合，GIBS 计算 Maximum Common Subgraph 得到 mask $\mathbf{m}_i$；(C) 用 IB 目标产出步级分数 $c_{ij}$，分数低的步被标为可疑。两种实例由"是否用图结构"分叉：免训练的 NIBS 只比文本步语义相似度，可学习的 GIBS 在推理图上做可微子图选择。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x"] --> B["采样 N=20 条推理轨迹<br/>(标注最终答案对错 z_i)"]
+    B --> C["IB 形式化 + 共识锚点<br/>从正确解集 S_correct 提取逻辑不变量当代理监督 Y"]
+    C -->|免训练分支| D["NIBS<br/>文本步语义相似度对齐共识步<br/>闭式打分"]
+    C -->|可学习分支| GIBS
+    subgraph GIBS["GIBS：图 IB + 可微 mask 子图选择"]
+        direction TB
+        E["解析推理图 G_i<br/>+ MCS 共识 mask m_i"] --> F["可微 mask 选子图<br/>熵项压缩 + CE 对齐共识"]
+    end
+    D --> G["步级分数 c_ij<br/>低分步标为可疑"]
+    GIBS --> G
+    G --> H["步级反馈指导自我纠错<br/>(成功率最多 +13.5%)"]
+```
 
 ### 关键设计
 

@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 UniFL 把度量空间 $(\mathcal{X}, d)$ 编码为加权图 $G_S$（只保留 $d(u,v) \leq 1$ 的边）。MPNN 工作流：(1) 每个点 $x$ 用本地消息传递估计 radius $\hat r_x$；(2) 用 FNN 把 $\hat r_x$ 映射成开设施概率 $p_x$；(3) 期望成本损失端到端无监督训练；(4) 推理时按 $p_x$ 独立采样得到 $F_1$，再对没人服务的点开设施得到 $F_2$，最终输出 $F = F_1 \cup F_2$。递归扩展版 RecursiveUniformFL 在概率不达标的点上多轮调用，达到常数因子近似。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["度量空间 (X,d)<br/>→ 加权图 G_S（仅保留 d≤1 的边）"] --> B["可微 Radius 估计<br/>ReLU 消息传递估 r̂_x"]
+    subgraph D2["开设施概率与期望成本损失"]
+        direction TB
+        C["开设施概率 p_x = min(1, c·log n·r̂_x)"] --> E["可解析期望成本损失<br/>端到端无监督训练"]
+    end
+    B --> C
+    E --> F["推理：按 p_x 采样得 F_1<br/>再对无人服务点补开 F_2"]
+    F -->|概率不达标的点多轮剥离递归| G["RecursiveUniformFL<br/>常深 MPNN 不够 → 递归到 O(1) 近似"]
+    F --> H["输出设施集 F = F_1 ∪ F_2"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. 可微的 Radius 估计：把 UniFL 的关键量 radius 写成 ReLU 消息传递，让它能被反传**

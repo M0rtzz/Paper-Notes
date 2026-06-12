@@ -47,6 +47,22 @@ tags:
 1. **Cold start (SFT)**：把已有的 vanilla 推理数据 $(q, r, c)$ 用两个超参 $\eta$（段长上限，6k）和 $\gamma$（摘要长度上限，1k）切段并由外部 LLM 生成摘要 $\{s_1, \ldots, s_{n-1}\}$，得到 InftyThink 格式训练样本（公式 1），让模型先学会用 `<summary>...</summary>` 和 `<history>...</history>` 特殊 token 产出格式合法的多轮输出。
 2. **Trajectory-level RL (GRPO 改造)**：在 DeepScaleR 数据集上做完整的 multi-iteration rollout，按轨迹打分，用共享 advantage 优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Query q"] --> CS["冷启动 SFT<br/>vanilla 数据按 η/γ 切段 + LLM 补摘要，学 InftyThink 格式"]
+    CS --> RL["轨迹级 RL：对 q 采样 G 条独立轨迹"]
+    subgraph ROLL["轨迹级 Rollout 与终止条件"]
+        direction TB
+        B["第 j 轮：输入 q + 上轮摘要 s(j−1)"] --> C["生成推理 r_j + 新摘要 s_j<br/>丢弃历史推理，仅靠摘要承接"]
+        C -->|输出新摘要且 j<φ=5| B
+    end
+    RL --> B
+    C -->|结论 c / 非法格式 / j=φ| D["效率奖励 + 乘性组合<br/>R = R_task · R_eff，仅答对者得效率分"]
+    D --> E["共享 Advantage 的轨迹级策略梯度<br/>整条轨迹共享 Â，IcePop 掩码屏蔽漂移 token"]
+    E --> F["更新策略 πθ"]
+```
+
 ### 关键设计
 
 **1. 轨迹级 Rollout 与终止条件：把"单 query → 单次生成"扩成"单 query → 多轮迭代轨迹"**

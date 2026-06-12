@@ -41,6 +41,22 @@ tags:
 ### 整体框架
 BMIA 的攻击流水线：(1) 在和目标模型不相交的参考数据集 $\mathcal{D}$ 上训一个标准参考模型，拿到 MAP 权重 $\hat w_1$；(2) 在 $\hat w_1$ 周围用 Laplace 近似拟合一个高斯后验 $\mathcal{N}(w;\hat w_1,\Sigma)$；(3) 对每个待判样本 $z^*=(x^*,y^*)$，从该后验里采 $M$ 组权重 $\tilde w_i$，每组算一个 hinge score $s_i$；(4) 把目标模型 score $s_0$ 当作"待检随机变量"，与 $\{s_i\}$ 一起做单边单样本 $t$ 检验，输出 $p$ 值判定成员。整套流程**只训一次参考模型**，所有"扩样"开销都摊在矩阵乘法和采样上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph LA["Laplace 后验：单模型 → 贝叶斯模型族"]
+        direction TB
+        A["参考数据集 D<br/>(与目标训练集不相交)"] --> B["训练单个参考模型<br/>得 MAP 权重 ŵ₁"]
+        B --> C["最后一层 Laplace 近似<br/>后验 N(w; ŵ₁, Σ)"]
+        C --> D["从后验采 M 组权重 w̃ᵢ<br/>各算 hinge score sᵢ"]
+    end
+    T["目标模型 ŵ₀<br/>对样本 z* 算 s₀"] --> E
+    D --> E["Student-t 检验决策<br/>校准 dᵢ=s₀−sᵢ → t 统计量 → p 值"]
+    E -->|"p < α"| F["判为成员"]
+    E -->|"p ≥ α"| G["判为非成员"]
+    D -.->|"算力允许时扩到 K 个参考模型"| H["MR-BMIA 多参考扩展<br/>混合 Laplace 同时压 intra+inter 方差"]
+```
+
 ### 关键设计
 
 **1. Laplace 后验把单模型变成贝叶斯模型族：用一个 MAP 参考模型撑起整条条件 score 分布**

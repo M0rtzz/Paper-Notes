@@ -44,6 +44,20 @@ tags:
 
 AuthGR 要解决的是"相关 ≠ 可信"：生成式检索给定查询直接生成文档标识符（DocID），但只优化语义相关性会把伪装的推广网页排到官方权威源同一档。它的做法是先用 VLM 给每个候选文档打出一个多模态权威分，再把这个分数当作奖励，沿"领域持续预训练 → 监督微调 → GRPO 权威优化"三阶段把权威偏好注入一个生成式检索模型，最后在线上通过混合集成与现有排序器协同——查询进来，AuthGR 产出一批权威 DocID，与原排序器的相关性分加权融合后给出最终排序。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询 + 候选文档"] --> SCORE["多模态权威评分<br/>VLM 吃文本+截图 → Authority(d)∈[0,100]"]
+    subgraph TRAIN["三阶段训练管线"]
+        direction TB
+        CPT["CPT 领域持续预训练<br/>985万搜索日志,host-level URL 作 DocID"] --> SFT["SFT 监督微调<br/>查询 → DocID"]
+        SFT --> GRPO["GRPO 权威优化<br/>组内相对优势,权威分作奖励"]
+    end
+    SCORE -->|权威分作奖励| TRAIN
+    TRAIN --> ENS["混合集成部署<br/>S_final = S_rel + λ·S_auth"]
+    ENS --> OUT["最终排序"]
+```
+
 ### 关键设计
 
 **1. 多模态权威评分：用 VLM 把"可信度"变成可大规模计算的奖励信号**

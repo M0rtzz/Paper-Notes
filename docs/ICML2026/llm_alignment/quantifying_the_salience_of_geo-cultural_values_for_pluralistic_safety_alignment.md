@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要回答一个看似已有定论的问题：安全标注里"按年龄/性别/族裔分层"够不够，还是文化必须作为独立因素单列。作者把答案拆成三段递进来做——先用元分析筛出 8 个同时报告人口学与地理属性的安全数据集（DIVE、CulturalFrames、PRISM、DICES-990、NLPositionality、D3、CREHate、Severity），再把每个 rater 映射到 Inglehart-Welzel 文化象限后跑多层级回归，严格检验"文化"在控制完人口学后是否仍有解释力，最后用 Bayesian 后验量化"忽略某象限会漏标多少 unsafe 样本"，并测试 LLM 能否替这件昂贵的全球标注工作分担一部分。
+这篇论文要回答一个看似已有定论的问题：安全标注里"按年龄/性别/族裔分层"够不够，还是文化必须作为独立因素单列。作者把答案拆成三段递进来做——先用元分析筛出 8 个同时报告人口学与地理属性的安全数据集（DIVE、CulturalFrames、PRISM、DICES-990、NLPositionality、D3、CREHate、Severity），再把每个 rater 映射到 Inglehart-Welzel 文化象限后跑多层级回归，严格检验"文化"在控制完人口学后是否仍有解释力，最后用 Bayesian 后验量化"忽略某象限会漏标多少 unsafe 样本"，并测试 LLM 能否替这件昂贵的全球标注工作分担一部分。其中"rater → 文化象限"的映射是后续一切分析的前置脚手架：数据集只报告国家代理（居住/出生/国籍），作者用 CoLR > CoB > CoR > CoN 的优先级把它折算成 IW 象限，再喂进下面三个核心分析。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["8 个安全数据集<br/>(同时报告人口学 + 地理属性)"] --> B["rater → IW 文化象限映射<br/>代理优先级 CoLR > CoB > CoR > CoN"]
+    B --> C["多层级回归 + LRT<br/>嵌套模型 D / CZ / D+CZ / D×CZ"]
+    C -->|"文化在控制人口学后仍显著 (6/8)"| D["Cultural Sensitivity Score<br/>Beta 后验 + 象限独立乘积"]
+    D -->|"标出约 10% 文化敏感样本"| E["LLM 双角色评测"]
+    E -->|"冒充某象限打分"| F["替身实验：≤ always-unsafe 基线<br/>→ 不能替代多元标注者"]
+    E -->|"先筛文化敏感样本"| G["triage 实验：F1=0.72 > 基线<br/>→ 可做优先级排序工具"]
+```
 
 ### 关键设计
 

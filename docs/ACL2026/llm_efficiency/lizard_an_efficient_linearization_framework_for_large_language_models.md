@@ -42,6 +42,23 @@ Lizard 用一个"Gated Linear Attention（全局压缩）+ Anchor Window Attenti
 ### 整体框架
 Lizard 把预训练 Transformer 每一层的标准 softmax attention 整体替换成一个混合的 subquadratic 模块，再用两阶段蒸馏把教师能力迁移过来。该模块由两条并联支路构成：全局支路是 Gated Linear Attention（GLA），以 $O(Ld^2)$ 复杂度、常量内存推理和数据相关的衰减承担长程压缩，并直接顶替 RoPE 做位置编码；局部支路是 Anchor Window Attention，在固定窗口内做精确 softmax attention 并拼入若干可学习 meta-memory token 修补 attention sink。训练先冻结其余权重、只学新增模块去逼近教师 attention 输出（Stage 1），再解冻整体用语言建模 loss 在仅 0.04B token 上端到端微调（Stage 2），让新架构与原模型的 MLP/embedding 重新协同。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 Transformer 层<br/>（softmax attention + RoPE）"] --> M
+    subgraph M["混合 subquadratic 模块（替换 softmax attention）"]
+        direction TB
+        G["Gated Linear Attention 替代 RoPE<br/>可学习 gate 控制衰减节律 = 隐式相对位置"]
+        L["Anchor Window Attention<br/>窗口内精确 softmax + 可学习 meta-memory token"]
+    end
+    G -.数值改造.-> R["硬件感知数值重参数化<br/>衰减连乘搬到对数空间 → bf16 + tensor core"]
+    G --> S["两支路输出相加<br/>全局压缩 + 局部精确召回"]
+    L --> S
+    S --> T1["Stage 1：冻结原权重<br/>仅训 φ / Wγ / t，MSE 蒸馏逼近教师 attention"]
+    T1 --> T2["Stage 2：全模型解冻<br/>0.04B token 上 next-token CE 微调"]
+    T2 --> O["subquadratic 模型<br/>近无损 + 长度外推 + 训练提速 32%"]
+```
+
 ### 关键设计
 
 **1. Gated Linear Attention 替代 RoPE 做位置编码：让位置信息从硬编码的旋转角变成数据驱动的遗忘节律**

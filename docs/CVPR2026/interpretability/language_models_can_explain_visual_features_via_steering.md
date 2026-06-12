@@ -44,6 +44,17 @@ tags:
 
 整条流程是：先在ImageNet上训练一个TopK SAE（$d_{SAE}=8192$）来分解视觉编码器的特征；解释某个特征 $i$ 时，向VLM输入一张全白的空白图像，在视觉编码器某一层的残差流里把该特征的SAE解码器向量注入进去，再提示语言模型描述它"看到"的内容；这句描述就是对特征 $i$ 的解释。在此之上还可以叠加Top-k图像，得到混合版本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["训练 TopK SAE（ImageNet，d_SAE=8192）<br/>分解视觉编码器特征"] --> B["取待解释特征 i 的 SAE 解码器向量"]
+    B -->|纯因果| C["Steering 解释<br/>空白图像第 l 层残差流注入 α·解码器向量"]
+    B -->|因果 + 相关| D["Steering-informed Top-k<br/>Top-k 激活图像 + 同样注入"]
+    C --> E["语言模型描述 → 特征解释"]
+    D --> E
+    E --> F["四指标评估<br/>激活IoU / Detection / CLIP / 单义性"]
+```
+
 ### 关键设计
 
 **1. Steering 解释：把特征向量注进空白图像，让语言模型替它说话**

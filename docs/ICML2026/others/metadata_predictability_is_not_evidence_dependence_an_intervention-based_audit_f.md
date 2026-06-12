@@ -44,15 +44,30 @@ tags:
 
 输出不是单一指标，而是「区域归类」：(direct coupling) MPDS 高、ΔEvi≈0；(latent coupling) MPDS 中等、ΔEvi≈0——这是最危险的「警告区」；(evidence-sensitive) ΔEvi 显著为正。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["弱标签 benchmark<br/>query + evidence + 弱标签"] --> B["① 写下 metadata schema<br/>query/answer/claim 类型"]
+    B --> C["② MPDS 筛查<br/>Acc_meta ÷ Acc_full"]
+    C --> D["③ ΔEvi 配对证据干预<br/>固定 query/label，跨 item 洗 evidence<br/>K 次排列估均值与 SD"]
+    D -->|ΔEvi 显著为正| E["证据敏感<br/>evidence-sensitive"]
+    D -->|ΔEvi≈0| F["④ Reader 校准层<br/>换 4 类 transformer + 输入消融"]
+    F -->|ΔEvi 抬升| G["弱 reader 假阴性<br/>→ 改判证据敏感"]
+    F -->|仍≈0| H["警告区<br/>潜在耦合 / question-dominant"]
+    E --> I["诊断地图归位"]
+    G --> I
+    H --> I
+```
+
 ### 关键设计
 
-**1. 配对证据干预统计量 ΔEvi：直接检验协议对证据 identity 是否不变**
+**1. MPDS 只做分层 screening 而非终审**
+
+$\mathrm{MPDS}=\mathrm{Acc}_\text{meta}/\mathrm{Acc}_\text{full}$ 越接近 1，protocol 越像一个 metadata-only 预测器，因此适合在审计入口快速找出"metadata 一招就能干掉大半"的直接耦合案例。但它单看不足以下结论：这个比值会把"metadata 强度"和"任务难度"搅在一起——$(0.5,0.5)$ 和 $(0.8,0.8)$ 都给 MPDS=1.0；存在 chance-corrected 变体能解耦，但需要明确随机率，且方向一致，所以作者保留更简单的 ratio。最关键的反例是 synthetic HotpotQA：MPDS=0.643 看着中等温和，ΔEvi 却为 0（证据完全无关）。这种"latent coupling"只靠 metadata 筛查必然漏掉，必须靠下一步的 ΔEvi 揭穿，正说明双统计量缺一不可。
+
+**2. 配对证据干预统计量 ΔEvi：直接检验协议对证据 identity 是否不变**
 
 MPDS 测的是"输出能否从先验恢复"，绕不开相关性话题；而审计真正想问的是"输出是否依赖给定证据"，这是另一个 hypothesis。ΔEvi 用一个干净的配对干预把后者变成可计算的检验：保持 $(q_i,y_i)$ 不动，只把 evidence $e_i$ 按排列 $\pi$ 替换成 $e_{\pi(i)}$，让 reader 重跑一遍得 $\mathrm{Acc}_\text{shuf}$，定义 $\Delta\mathrm{Evi}=\mathrm{Acc}_\text{full}-\mathrm{Acc}_\text{shuf}$，对应 null $H_0:\mathrm{Acc}_\text{full}=\mathrm{Acc}_\text{shuf}$。重复 $K$ 次独立排列估均值和 SD（论文 $K=8$，建议 production 用 $K\ge 20$）。因为洗牌后的样本和原 evidence 共享同一 query/label，accuracy 差只能由 evidence identity 解释，这正是 paired 设计的妙处——统计上方差也比独立比较低很多。"near-zero"是个操作性概念：点估计可忽略、跨洗牌稳定、且换 reader 后仍不变，三条都满足才算。
-
-**2. MPDS 只做分层 screening 而非终审**
-
-$\mathrm{MPDS}=\mathrm{Acc}_\text{meta}/\mathrm{Acc}_\text{full}$ 越接近 1，protocol 越像一个 metadata-only 预测器，因此适合在审计入口快速找出"metadata 一招就能干掉大半"的直接耦合案例。但它单看不足以下结论：这个比值会把"metadata 强度"和"任务难度"搅在一起——$(0.5,0.5)$ 和 $(0.8,0.8)$ 都给 MPDS=1.0；存在 chance-corrected 变体能解耦，但需要明确随机率，且方向一致，所以作者保留更简单的 ratio。最关键的反例是 synthetic HotpotQA：MPDS=0.643 看着中等温和，ΔEvi 却为 0（证据完全无关）。这种"latent coupling"只靠 metadata 筛查必然漏掉，必须靠 ΔEvi 揭穿，正说明双统计量缺一不可。
 
 **3. Reader-calibration 层：把"弱 reader 学不动"从"协议不依赖证据"里拆出来**
 

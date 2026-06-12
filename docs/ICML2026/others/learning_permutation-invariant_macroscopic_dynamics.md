@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 输入为时刻 $t$ 的微观粒子集 $X_t \in \mathcal{X}$。一个**预先给定的确定性函数** $\bar{\bm{\varphi}}$ 直接抽出感兴趣的宏观量 $\bar{\bm{z}}_t$（如系统平均能量、A-B 邻居比 $(R_{AB},R_{BA})$）；一个**学习得到的 DeepSet 编码器** $\hat{\bm{\varphi}}$ 抽出置换不变的闭包变量 $\hat{\bm{z}}_t$；二者拼成增广宏观态 $\bm{z}_t = [\bar{\bm{z}}_t, \hat{\bm{z}}_t]$。在 $\bm{z}_t$ 上学一个 SDE（或 ODE）滚动预测未来宏观态。训练分两阶段：先用分布重构损失学 $(\hat{\bm{\varphi}}, \bm{\psi})$，再冻结 $\hat{\bm{\varphi}}$、学动力学 $(\bm{g}, \bm{\Sigma})$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["微观粒子集 X_t（无序点集）"]
+    X --> BAR["确定性函数 φ̄<br/>直接抽宏观量 z̄"]
+    X --> ENC["DeepSet 编码器 φ̂<br/>置换不变闭包变量 ẑ"]
+    ENC --> REC
+    subgraph REC["分布重构目标（阶段I：学 φ̂ 与归一化流）"]
+        direction TB
+        Q["诱导高斯混合 q_X<br/>观测点为中心、带宽 ε"] --> KL["最小化 KL(q_X ‖ p_θ)<br/>MC 采样，开销与 n 解耦"]
+        FL["条件归一化流 p_θ(·|ẑ)"] --> KL
+    end
+    BAR --> Z["增广宏观态 z = [z̄, ẑ]"]
+    ENC --> Z
+    Z --> DYN["增广态 SDE/ODE<br/>漂移 g + 扩散 Σ，阶段II冻结 φ̂"]
+    DYN --> OUT["自回归外推宏观态轨迹"]
+```
+
 ### 关键设计
 
 **1. DeepSet 编码器 → 置换不变闭包变量：把不变性写进架构，而不是靠数据增广去近似**

@@ -43,7 +43,19 @@ tags:
 
 ### 整体框架
 
-CARE-Edit 要解决统一图像编辑器的老毛病：一个固定共享骨干处理所有任务，文本、掩码、参考图这些异构条件被静态拼接在一起，结果文本语义盖过掩码约束、参考身份漂移、颜色在边界溢出。它的思路是在冻结的 DiT 骨干（FLUX.1 Dev）里塞进一套条件感知的专家路由，只训练轻量的 adapter、路由器和融合层。核心是三件事串起来：Routing Select 按 token 和编辑目标动态挑专家，Mask Repaint 在去噪过程里逐步修粗糙掩码，Latent Mixture 把各专家输出按权重和时间步融合，让不同条件在去噪轨迹的不同阶段各司其职。
+CARE-Edit 要解决统一图像编辑器的老毛病：一个固定共享骨干处理所有任务，文本、掩码、参考图这些异构条件被静态拼接在一起，结果文本语义盖过掩码约束、参考身份漂移、颜色在边界溢出。它的思路是在冻结的 DiT 骨干（FLUX.1 Dev）里塞进一套条件感知的专家路由，只训练轻量的 adapter、路由器和融合层。核心是四件事串起来：四种异构专家（Text/Mask/Reference/Base）各管一摊，Routing Select 按 token 和编辑目标动态挑专家，Mask Repaint 在去噪过程里逐步修粗糙掩码并把细化结果反馈回路由，Latent Mixture 把各专家输出按权重和时间步融合，让不同条件在去噪轨迹的不同阶段各司其职。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：文本指令 + 用户掩码<br/>+ 参考图 + 原图"] --> B["冻结 DiT 骨干 FLUX.1<br/>仅训练 adapter / 路由器 / 融合层"]
+    B --> C["Routing Select<br/>token key + 全局 query → top-K=3"]
+    C --> D["四种异构专家<br/>Text / Mask / Reference / Base 各管一摊"]
+    D --> E["Latent Mixture<br/>凸组合 + 时间步门控 γ 融合"]
+    E --> F["输出：编辑后图像"]
+    B --> G["Mask Repaint<br/>逐步细化粗糙掩码"]
+    G -->|细化掩码反馈下一 block 路由| C
+```
 
 ### 关键设计
 

@@ -44,6 +44,24 @@ tags:
 
 本文要解决的是"模型到底怎么用模态做决策"这个准确率指标答不出的问题，做法是把 MLLM 的预测分布 $p_\theta(y|x_v,x_t)$ 当成一次"输入信息到输出预测"的分解对象，套用信息论的 Partial Information Decomposition 把预测互信息拆成视觉独有、文本独有、冗余、协同四项。整套流程沿三条线展开：先给 VL 模型建双模态 PID 画像，再用 Sensory PID 把分析扩展到 video-audio-text 全模态模型，最后把同一套估计器顺带产出的样本级分数反过来当作 LoRA 微调的样本权重，形成"诊断 → 预测 → 干预"的闭环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：MLLM 预测分布 + benchmark"]
+    EST["BATCH 估计器 + 校准嵌入掩码<br/>造单模态条件、出样本级贡献分"]
+    P1["决策层双模态 PID<br/>拆出视觉独有 / 文本独有 / 冗余 / 协同"]
+    P2["Sensory PID<br/>文本作条件，视觉独有 / 音频独有 / 音视协同"]
+    DIAG["诊断：协同项预测视觉敏感性<br/>揭示视觉霸权"]
+    LORA["PID-Guided LoRA 重加权<br/>GapScore → 样本权重 → 微调"]
+    IN --> P1
+    EST --> P1
+    P1 -->|全模态扩展| P2
+    P1 --> DIAG
+    P2 --> DIAG
+    DIAG --> LORA
+    LORA -.闭环.-> IN
+```
+
 ### 关键设计
 
 **1. 决策层双模态 PID：把预测互信息拆成四个可比的原子**

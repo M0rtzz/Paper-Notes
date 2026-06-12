@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 系统由流式语音编码器和 LLM 翻译器组成。语音按固定时长分块，编码器增量编码每个新块并复用之前的 KV cache，LLM 基于交错的语音特征和已生成翻译解码下一段翻译。HPO 在此 SFT 模型基础上，采样多个翻译假设，计算层级奖励并用 GRPO 优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流式语音分块输入"] --> B["SFT 模型（InfiniSST）<br/>流式语音编码器 + LLM 翻译器"]
+    B -->|每段采样 16 个翻译假设| C["句子级分割与对齐（SEGALE）<br/>spaCy 切句 + 嵌入对齐，识别过/欠翻译"]
+    C --> D["逐句打分：质量分 q（MetricX）+ 延迟分 l（LAAL）"]
+    D --> E["层级奖励：质量门控<br/>q 低于阈值则延迟分钉死为 l_max"]
+    E --> F["分组归一化<br/>组内 q、l 各自减均值除标准差"]
+    F --> G["合成奖励 r = q̄ − λ·l̄"]
+    G -->|GRPO 更新策略，回采样下一轮| B
+```
+
 ### 关键设计
 
 **1. 句子级分割与对齐（SEGALE）：先把长译文切句、对齐参考，避免乱码也能骗到高分**

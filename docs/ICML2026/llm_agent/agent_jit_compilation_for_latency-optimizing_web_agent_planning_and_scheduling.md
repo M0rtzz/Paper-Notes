@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 Agent JIT 把"网页 agent 执行下一步动作"的在线决策问题，改写成"运行时把自然语言任务编译成一段可执行代码计划再优化"的编译问题，借此把大量原本要逐步调 LLM 的确定性操作沉淀到代码里。系统由三个在线组件和一条离线缓存流水线组成：离线流水线从成功执行 trace 中合成可复用工具、并学习网页元素交互的 latency 分布；在线时输入自然语言任务、工具 manifest、缓存工具和历史 latency 分布后，JIT-Planner 并行采样多个代码计划（计划里可以混有普通工具调用、LLM eval 调用和控制流），靠 tool protocol 检查每个工具的 pre/post 状态是否可组合、再用成本模型在合法候选里选最便宜的一个，最后由 JIT-Scheduler 为可调度任务在 serial/parallel/hedge 三种执行策略中挑预期 latency 最低的那种。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    O["离线流水线<br/>执行 trace → 合成可复用工具 + 学习元素 latency 分布"] --> A["输入<br/>自然语言任务 + 工具 manifest + 缓存工具"]
+    A --> B["Invariant-enforcing 工具协议<br/>每个工具声明 pre/post 状态契约"]
+    subgraph P["Cost-optimizing JIT-Planner"]
+        direction TB
+        C["并行采样 k 个代码计划"] --> D["协议校验<br/>post_i ⊆ pre_i+1，非法计划带错迭代修复"]
+        D --> E["CFG 成本模型<br/>tool/eval 调用计 γ^d，选最低成本计划"]
+    end
+    B --> P
+    E --> Q
+    subgraph Q["Cost-aware JIT-Scheduler"]
+        direction TB
+        F["LLM 预测任务访问的页面元素"] --> G["Monte Carlo 估 serial/parallel/hedge 预期 latency"]
+        G --> H["选预期 latency 最低的策略"]
+    end
+    Q --> I["执行 → 低 latency 完成网页任务"]
+```
+
 ### 关键设计
 
 **1. Invariant-enforcing tool protocol：给工具加状态契约，让非法工具序列在编译期就被排除**

@@ -41,6 +41,29 @@ tags:
 
 R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生成高精度 BEV 特征；(2) **DGTF** 无位姿时序对齐 + 门控聚合；(3) **IGDR** 用 2D 实例原型净化 BEV 特征 → 3D 检测头。基座为 SGDet3D 的 BEV 范式（Neighborhood Cross-Attention + LSS）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入<br/>相机图像 + 4D 雷达点云"] --> PDF
+    subgraph PDF["全景深度融合（PDF）"]
+        direction TB
+        B["三重深度监督<br/>概率 + 基础模型引导 + 结构排序"] --> C["高精度全景深度 → BEV 特征"]
+    end
+    PDF --> DGTF
+    H["历史隐状态 H(t−1)"] -.-> DGTF
+    subgraph DGTF["可变形门控时序融合（DGTF）"]
+        direction TB
+        D["运动感知对齐<br/>DCNv2 无位姿对齐历史 BEV"] --> E["门控时序更新<br/>GRU 门控融合新旧特征"]
+    end
+    DGTF --> IGDR
+    R["2D 实例分支<br/>RPN 提取实例原型"] -.-> IGDR
+    subgraph IGDR["实例引导动态精炼（IGDR）"]
+        direction TB
+        F["实例原型广播回 BEV"] --> G["原型引导动态校准<br/>+ 前景门控只动实例区"]
+    end
+    IGDR --> O["3D 检测头 → 3D 框输出"]
+```
+
 ### 关键设计
 
 **1. 全景深度融合（PDF）：把"只盯前景点"的稀疏深度监督，扩成覆盖全场景且结构连贯的三重监督**

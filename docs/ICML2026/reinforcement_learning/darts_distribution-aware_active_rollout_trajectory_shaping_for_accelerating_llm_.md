@@ -42,7 +42,34 @@ DARTS 把 LLM RL 训练的 rollout 长尾瓶颈从"调度绕开"重新定义成"
 ## 方法详解
 
 ### 整体框架
-DARTS 在 VeRL 之上做 rollout 阶段插件，整体三件套：(1) Distribution-Aware Trajectory Sampling——对每个 prompt $q_i$ 先做 intra-prompt 冗余采样得到候选池 $\mathcal{T}_i$（大小 $M_i' \ge M$），再用双端长度采样选出训练组 $\mathcal{Y}_i$；(2) Adaptive Redundancy Allocation——用历史长度方差 $\tilde\sigma_L^2(q_i)$ 作为长尾严重程度的代理，把总冗余预算 $M_{\mathrm{total}}$ 按方差分给各 prompt；(3) System-Level Optimization——方差引导的尾部剪枝 + proactive 早停 + token 级流式传输。整个流程不改 reward function、不引入额外 hyperparameter（除 $M_{\mathrm{up}}, M_{\mathrm{low}}, \lambda$ 三个稳定的系统参数）。
+DARTS 在 VeRL 之上做 rollout 阶段插件，整体三件套：(1) Distribution-Aware Trajectory Sampling——对每个 prompt $q_i$ 先做 intra-prompt 冗余采样得到候选池 $\mathcal{T}_i$（大小 $M_i' \ge M$），再用双端长度采样选出训练组 $\mathcal{Y}_i$；(2) Adaptive Redundancy Allocation——用历史长度方差 $\tilde\sigma_L^2(q_i)$ 作为长尾严重程度的代理，把总冗余预算 $M_{\mathrm{total}}$ 按方差分给各 prompt；(3) System-Level Optimization——方差引导的尾部剪枝 + proactive 早停 + token 级流式传输。整个流程不改 reward function、不引入额外 hyperparameter（除 $M_{\mathrm{up}}, M_{\mathrm{low}}, \lambda$ 三个稳定的系统参数）。运行时三者首尾相扣：先由方差自适应分配为每个 prompt 定下冗余预算 $M_i'$，喂给分布感知采样去生成候选池并双端选样，最后由系统级优化把约 5% 的极端长尾 prompt 剪掉、并以 token 流式喂入 GRPO 训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入：prompt 批次 + 历史响应长度方差"]
+    subgraph ALLOC["方差自适应冗余分配"]
+        direction TB
+        A1["效用 U=E−λT 求最优总预算 M_total"]
+        A2["凸优化按方差分配<br/>每 prompt 预算 M_i′ ∈ [M, 2M]"]
+        A1 --> A2
+    end
+    subgraph SAMP["分布感知轨迹采样"]
+        direction TB
+        S1["intra-prompt 冗余采样<br/>生成候选池 T_i（M_i′ 条）"]
+        S2["双端长度采样<br/>top-K 最短 + top-L 最长 → 训练组 Y_i"]
+        S1 --> S2
+    end
+    subgraph SYS["系统级优化"]
+        direction TB
+        Y1["方差引导尾部剪枝 + 主动早停<br/>预算饱和的约 5% prompt 改取最短 M 条"]
+        Y2["token 级流式传输<br/>边生成边分块喂训练引擎"]
+    end
+    Q --> ALLOC
+    ALLOC -->|"逐 prompt 预算 M_i′"| SAMP
+    SAMP --> SYS
+    SYS --> T["GRPO 训练<br/>group baseline 偏移自动压冗长 / 留深度"]
+```
 
 ### 关键设计
 

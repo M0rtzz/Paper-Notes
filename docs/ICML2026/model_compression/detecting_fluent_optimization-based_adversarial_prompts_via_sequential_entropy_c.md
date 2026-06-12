@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 方法要解决的是"流畅型对抗后缀在 token 流上悄悄推高模型不确定性、但全局困惑度看不出来"这个盲区，整体把它转成一维时间序列上的在线变点检测。每个请求由固定 system prompt $\mathbf{x}^{\text{sys}}$ 和 user 消息 $\mathbf{x}^{\text{usr}}$ 拼成，模型常规前向时顺手把每个 token 位置 next-token 分布 $p_\theta(\cdot|x_{<t})$ 的熵 $H_t = -\sum_v p_\theta(v|x_{<t})\log p_\theta(v|x_{<t})$ 抓出来——这是不花一分钱的副产物。拿到熵流后先用 system prompt 段 $\{H_i^{\text{sys}}\}$ 估一条部署级鲁棒基线，把 user 段 $\{H_t^{\text{usr}}\}$ 标准化成 $Z_t$，再跑一边 Page-CUSUM 累计统计量 $W_t^+$；任意时刻 $W_t^+\geq h$ 就报警，prompt-level 异常分取 $s(\mathbf{x}^{\text{usr}})=\max_t W_t^+$ 供 ROC 评估，同时用 CUSUM 的归零时刻反推 suffix 起点。整条流水线 per-token $O(1)$、per-prompt $O(T)$、内存常数级，可以直接挂在生产推理路径上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：固定 system prompt + user 消息"] --> B["单次前向<br/>顺手抓每个 token 的 next-token 熵 H_t（免费副产物）"]
+    B -->|"system prompt 段熵"| C["1. System Prompt 自校准鲁棒基线<br/>median / MAD 估部署级 μ0、σ0"]
+    B -->|"user 段熵"| D["用基线标准化<br/>Z_t = (H_t − μ0) / σ0"]
+    C --> D
+    D --> E["2. One-Sided Page-CUSUM<br/>累计标准化偏差，检测持续正向漂移"]
+    E -->|"W_t+ ≥ h"| F["报警<br/>prompt 异常分 s = max_t W_t+"]
+    subgraph G["3. CUSUM 回溯定位 + LLaMA Guard 混合 gating"]
+        direction TB
+        G1["回溯定位：suffix 起点 = 上次归零时刻 + 1"]
+        G2["混合 gating：s ≥ τ_gate 才调 LLaMA Guard<br/>省 17-42% guard 调用"]
+    end
+    F --> G
+```
+
 ### 关键设计
 
 **1. System Prompt 自校准的鲁棒基线 $(\hat\mu_0,\hat\sigma_0)$：把固定开销变成免费的部署参考样本**

@@ -43,6 +43,27 @@ DeepSketcher想解决的是：让VLM在推理过程中真正"动手改图"，又
 
 具体到一次在线推理：模型读入代码渲染出的图像和问题，先生成一段推理文本并在需要时吐出一条编辑指令；Embedding Editor接过这条指令，在视觉嵌入空间里更新视觉token；更新后的嵌入被重新注入上下文，模型据此继续往下推理，直到给出最终答案。整个"看图—想—改图—接着想"的循环全在模型内部完成，没有任何代码执行或重复的图像编码。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["代码空间的数据构建"]
+        direction TB
+        S["Solver LLM 推理<br/>卡住时发编辑指令"] -->|改代码请求| CE["Code Editor LLM<br/>改渲染代码→重渲染新图"]
+        CE -->|新图回传| S
+    end
+    DATA --> D31["31k 图文交错 CoT 数据"]
+    D31 --> TRAIN["三阶段渐进训练<br/>推理预热→训 Editor→联合适配"]
+    TRAIN --> MODEL["自包含 VLM"]
+    MODEL --> INFER
+    subgraph INFER["Embedding Editor 在线推理"]
+        direction TB
+        Q["图像 + 问题"] --> R["生成推理文本<br/>需要时吐编辑指令"]
+        R -->|编辑指令| EE["Embedding Editor<br/>嵌入空间更新视觉 token"]
+        EE -->|重新注入上下文| R
+        R -->|无需改图| ANS["最终答案"]
+    end
+```
+
 ### 关键设计
 
 **1. 代码空间的数据构建：用改代码代替改像素，绕开定位噪声**

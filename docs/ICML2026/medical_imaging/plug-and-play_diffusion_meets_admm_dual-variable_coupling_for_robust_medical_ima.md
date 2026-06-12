@@ -49,7 +49,23 @@ tags:
 4. **扩散去噪**：$z^{(k+1)} = D_\sigma(\tilde v^{(k+1)}, t)$；
 5. **对偶更新**：$u^{(k+1)} = u^{(k)} + (x^{(k+1)} - z^{(k+1)})$。
 
-噪声调度 $\sigma_t$ 按 EDM 框架从大到小线性退火。和 DiffPIR 对比，结构差异**严格只在**"是否维护对偶 $u$"和"是否插入 $T_{\text{SH}}$"，所以消融能干净地把增益归因到这两个模块。
+噪声调度 $\sigma_t$ 按 EDM 框架从大到小线性退火。这里有一个刻意的“控制变量”设计：数据保真步（CT 用 torch-radon 模拟 parallel-beam 投影、MRI 用 Cartesian 欠采样，统一 CG 求解）做得和最强 baseline DiffPIR 一模一样，结构差异**严格只在**“是否维护对偶 $u$”和“是否插入 $T_{\text{SH}}$”这两处，所以消融能干净地把增益归因到 DC 和 SH 两个新模块、不被求解器差异污染。因此下面的关键设计也就只有这两个真正的贡献点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Y["测量 y（CT 投影 / MRI k 空间）"] --> X["数据保真更新 x（CG 求解，对齐 DiffPIR）<br/>min ‖Ax−y‖² + ρ‖x −（z − u）‖²"]
+    X --> V["对偶移位 v = x + u"]
+    V --> SH
+    subgraph SH["频域同质化 T_SH：把有色残差漂白成伪 AWGN"]
+        direction TB
+        D1["诊断：估计残差功率谱 PSD"] --> D2["合成：填谱凹陷造互补噪声 ξ"]
+        D2 --> D3["融合：得到 ṽ = v + ξ"]
+    end
+    SH --> Z["扩散去噪 z = D_σ(ṽ)<br/>预训练先验，权重不更新"]
+    Z --> U["对偶更新 u ← u + (x − z)"]
+    U -->|对偶耦合 · 积分反馈 · 下一轮| X
+```
 
 ### 关键设计
 
@@ -59,11 +75,7 @@ tags:
 
 **2. Spectral Homogenization（频域同质化）：把对偶累积出的有色残差"漂白"成伪 AWGN，给去噪器喂回它认识的输入**
 
-对偶虽好，却带来第二个麻烦——$u$ 累积的是结构化残差（CT 的方向条纹、MRI 的相干混叠），频谱是有色的，而扩散去噪器只在 AWGN 上训练过，输入 $v^{(k+1)}=x^{(k+1)}+u^{(k)}$ 立刻 OOD、会把伪影当语义幻觉出来。物理伪影天然集中在特定频带，所以本文不在空域加噪（那会把整张图打花），而是在频域只往"频谱凹陷"里补能量、保留"频谱主峰"携带的语义。具体三步走：先**诊断**，用 $r^{(k+1)}=v^{(k+1)}-z^{(k)}$ 作残差代理，做带核平滑的 PSD 估计 $\hat S_r(\omega) = (|\mathcal F(r)(\omega)|^2)*K_\delta$；再**合成**，定义频谱缺口 $\Delta S(\omega)=\max(\epsilon, \sigma_t^2(HW) - \hat S_r(\omega))$，取白噪声 $n$ 的随机相位配上缺口幅度造出互补噪声 $\xi^{(k+1)} = \mathcal F^{-1}(\sqrt{\Delta S(\omega)} \odot e^{i\angle\mathcal F(n)})$；最后**融合** $\tilde v^{(k+1)} = v^{(k+1)} + \xi^{(k+1)}$。Proposition 4.1 给出二阶谱一致性保证：$\mathbb E_\xi[S_{n_{\text{eff}}}(\omega)] \approx \sigma_t^2(HW)$，即 $\text{Cov}(n_{\text{eff}}) \approx \sigma_t^2 I$。作者把这套操作类比为"Coherence Breaking"——用随机相位加互补幅度淹没结构化伪影的相干性，既漂白了噪声又没伤到结构。
-
-**3. DiffPIR-aligned Data-Consistency（与 baseline 对齐的保真子问题）：把求解器选型这个变量锁死，让增益干净归因**
-
-很多 PnP 论文同时换求解器又换扩散先验，让人分不清增益来自哪。本文刻意把数据保真步做得和 DiffPIR 一模一样：CT 用 torch-radon 模拟 parallel-beam 前向投影（SVCT 取 20 视角、LACT 取 $[0,90]°$ 共 90 视角），MRI 用 1D 等距 Cartesian 欠采样（AF=6/10），保真子问题统一用 CG 求解，MRI 在复数域时 Spectral Homogenization 对实部/虚部各自独立做。只有当数据保真步完全一致，"对偶 + SH"带来的性能增益才能被干净地归因到这两个新模块上，而不是被求解器差异污染——这也让后面的消融能精确切割贡献。
+对偶虽好，却带来第二个麻烦——$u$ 累积的是结构化残差（CT 的方向条纹、MRI 的相干混叠），频谱是有色的，而扩散去噪器只在 AWGN 上训练过，输入 $v^{(k+1)}=x^{(k+1)}+u^{(k)}$ 立刻 OOD、会把伪影当语义幻觉出来。物理伪影天然集中在特定频带，所以本文不在空域加噪（那会把整张图打花），而是在频域只往"频谱凹陷"里补能量、保留"频谱主峰"携带的语义。具体三步走：先**诊断**，用 $r^{(k+1)}=v^{(k+1)}-z^{(k)}$ 作残差代理，做带核平滑的 PSD 估计 $\hat S_r(\omega) = (|\mathcal F(r)(\omega)|^2)*K_\delta$；再**合成**，定义频谱缺口 $\Delta S(\omega)=\max(\epsilon, \sigma_t^2(HW) - \hat S_r(\omega))$，取白噪声 $n$ 的随机相位配上缺口幅度造出互补噪声 $\xi^{(k+1)} = \mathcal F^{-1}(\sqrt{\Delta S(\omega)} \odot e^{i\angle\mathcal F(n)})$；最后**融合** $\tilde v^{(k+1)} = v^{(k+1)} + \xi^{(k+1)}$。Proposition 4.1 给出二阶谱一致性保证：$\mathbb E_\xi[S_{n_{\text{eff}}}(\omega)] \approx \sigma_t^2(HW)$，即 $\text{Cov}(n_{\text{eff}}) \approx \sigma_t^2 I$。作者把这套操作类比为"Coherence Breaking"——用随机相位加互补幅度淹没结构化伪影的相干性，既漂白了噪声又没伤到结构。MRI 在复数域重建时，SH 对实部、虚部各自独立做一遍，以保证两路的谱白化都成立。
 
 ### 损失函数 / 训练策略
 扩散先验本身按 EDM 框架预训练（CT 在 AbdomenCT-1K 上 from scratch，MRI 直接用 Zheng et al. 2025 公开权重），**推理阶段不更新扩散权重**——所有改动都发生在 PnP 求解器一侧。这是 plug-and-play 设定的标准做法，也意味着 SH 模块对任何预训练扩散先验都即插即用。

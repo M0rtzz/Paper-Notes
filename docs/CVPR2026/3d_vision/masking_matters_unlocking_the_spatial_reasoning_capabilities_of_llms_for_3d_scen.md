@@ -38,9 +38,26 @@ tags:
 ### 整体框架
 这篇论文要解决的是：object-centric 3D LLM 直接照搬语言模型的 causal mask，而 causal mask 和 3D 场景天生不合——它把无序的空间对象当成有序 token 序列，还把对象和后置的指令隔开。3D-SLIM 的做法是只动注意力掩码、不碰架构也不加参数：输入序列照旧是 [system tokens, object tokens, instruction tokens]，模型照常前向，唯一的改动是把注意力矩阵 $M$ 里两个关键区块换掉——object-object 区块换成几何自适应掩码（Geo Mask），object-instruction 区块换成指令感知掩码（Inst Mask）。整篇方法的全部技术含量都落在「这两个区块该填什么值」上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入序列<br/>[system, 对象 tokens, instruction]"] --> M["注意力掩码矩阵 M<br/>(原 causal mask)"]
+    M -->|"对象↔对象区块"| GEO
+    M -->|"对象→指令区块"| INST["指令感知掩码<br/>对象→指令方向置 0"]
+    subgraph GEO["几何自适应掩码"]
+        direction TB
+        G1["算局部密度 ρ_i<br/>(到其余对象平均距离)"] --> G2["密度自适应邻居数 k_i"]
+        G2 --> G3["取最近 k_i 个邻居 Ω_i<br/>区块内置 0、其余 −∞"]
+    end
+    GEO --> COMB["替换后的注意力掩码 M"]
+    INST --> COMB
+    COMB --> LLM["LLM 解码器前向<br/>(架构/参数/损失均不变)"]
+    LLM --> OUT["grounding / captioning / QA"]
+```
+
 ### 关键设计
 
-**1. Geometry-adaptive Mask（Geo Mask）：让对象按空间邻近度、而非 token 顺序互相注意**
+**1. 几何自适应掩码（Geo Mask）：让对象按空间邻近度、而非 token 顺序互相注意**
 
 causal mask 强加的顺序依赖（前面的对象看不到后面的对象）对 3D 场景是纯噪声，可一个反直觉的事实是：单纯把它去掉（Full Mask 全注意力）反而可能掉点，因为全注意力对所有对象一视同仁，没给模型任何结构信号。Geo Mask 的思路是用对象的真实空间分布来决定谁该注意谁。它先算每个对象 $i$ 的局部密度——到其余对象的平均距离越小、密度越高：
 
@@ -52,19 +69,12 @@ $$k_i = \mathrm{round}\big((k_{max} - k_{min}) \cdot \tilde{\rho}_i + k_{min}\bi
 
 然后按距离排序取最近的 $k_i$ 个对象构成邻居集 $\Omega_i$，掩码里对 $j \in \Omega_i$（含自身 $j=i$）置 0、其余置 $-\infty$。直观上：一堆椅子挤在一张桌子周围的密集区，每把椅子的 $k_i$ 会自动变大、彼此都能注意到；而房间角落一盏孤零零的灯，$k_i$ 收到最小值、只看最近的一两个对象，不会被无关的远处对象干扰。之所以做成密度自适应而不是固定 N 个邻居，正是因为真实 3D 场景的对象密度高度不均——固定邻居数在密集区漏掉相关对象、在稀疏区又强行拉进噪声（消融里 Fixed-N 全面弱于 Geo）。这等于在注意力层里免学习地搭了一张几何感知的场景图。
 
-**2. Instruction-aware Mask（Inst Mask）：在编码阶段就把指令喂给对象**
+**2. 指令感知掩码（Inst Mask）：在编码阶段就把指令喂给对象**
 
 因为输入顺序是 [system, objects, instruction]，causal mask 下对象 token 全部排在指令前面，根本看不到「用户到底要问什么」，只能盲目地把整个场景编码完再去对接指令，跨模态推理的路径被硬生生掐断。Inst Mask 的修正极其简单：在掩码矩阵里，把所有「对象 → 指令」方向的 $-\infty$ 项改成 0，即 $M_{ij}=0$ 当 $i \in \mathcal{O}$（对象集）且 $j \in \mathcal{I}$（指令集），其余位置不动。这样一来，指令里提到的「next to the table」「椅子」「桌子」等线索能在编码时就反向引导对象表示，让对象一开始就朝任务相关的方向聚焦，而不是事后补救。
 
-**3. 统一训练目标：纯掩码改动，不碰原框架的训练流程**
-
-因为 3D-SLIM 没引入任何新参数或新模块，它完全沿用 Chat-Scene 的统一输入输出格式和单一交叉熵损失来覆盖 grounding、captioning、QA 等多种 3D 任务：
-
-$$\mathcal{L} = -\sum_{l=1}^{m} \log P\big(Y_l \mid Y_{[1,\dots,l-1]}, X\big)$$
-
-不加额外损失项、不改优化目标，训练过程和原始框架逐字一致——这也是它能作为即插即用模块迁移到任意 object-centric 3D LLM 的前提。
-
 ### 损失函数 / 训练策略
+- 纯掩码改动，不引入新参数/新模块，完全沿用 Chat-Scene 的单一交叉熵损失覆盖 grounding/captioning/QA：$\mathcal{L} = -\sum_{l=1}^{m} \log P\big(Y_l \mid Y_{[1,\dots,l-1]}, X\big)$，这也是它能即插即用迁移到任意 object-centric 3D LLM 的前提
 - LoRA 微调 + AdamW 优化器（weight decay 0.02）
 - Chat-Scene: batch size 32, lr 5e-6；3DGraphLLM: batch size 8, lr 2e-5
 - Geo Mask 超参：$k_{min}=2, k_{max}=10$

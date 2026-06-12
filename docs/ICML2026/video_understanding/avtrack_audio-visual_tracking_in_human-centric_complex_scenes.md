@@ -45,6 +45,31 @@ tags:
 
 AVTracker 采用分治（divide-and-conquer）策略，将人体中心 AVIS 分解为三个阶段。输入为同步的视频帧序列和音频流，输出为每个说话人的全局实例轨迹（含逐帧分割掩码）。整体流程：Stage 1 对音频进行 ASR 转录并按说话人嵌入相似度聚合为语义完整的说话人片段（Speaker Chunks）；Stage 2 在每个片段的局部时间窗口内，利用 VLM 将语音内容与可见人物关联，结合 SAM3 生成逐帧实例掩码，形成局部轨迹片段（Local Tracklets）；Stage 3 通过全局推理器跨片段关联同一说话人的局部轨迹，输出完整的全局说话人轨迹。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：同步视频帧 + 音频流"]
+    subgraph S1["1. 说话人片段聚合（动态窗口）"]
+        direction TB
+        A["Whisper ASR<br/>转录带时间戳片段"] --> B["MossFormer2 语音分离<br/>+ ECAPA-TDNN 说话人嵌入"]
+        B --> C["相邻片段余弦相似度 > τ<br/>合并成说话人片段"]
+    end
+    subgraph S2["2. VLM 驱动的局部说话人定位"]
+        direction TB
+        D["片段时间边界 → 帧索引"] --> E["Qwen3-VL 局部推理器<br/>语音文本 + 帧 → 说话人框"]
+        E --> F["与 SAM3 候选框 IoU 对齐<br/>取掩码 → 局部轨迹 + 关键帧"]
+    end
+    subgraph S3["3. 全局身份关联"]
+        direction TB
+        G["收集所有局部轨迹关键帧"] --> H["Qwen3-VL 全局推理器<br/>按外观分组建身份映射"]
+        H --> I["合并同身份局部轨迹<br/>补空掩码保持连续"]
+    end
+    IN --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> OUT["输出：全局说话人轨迹<br/>（逐帧分割掩码）"]
+```
+
 ### 关键设计
 
 **1. 动态窗口的说话人片段聚合（Speaker Chunks Aggregation）：把 ASR 碎片按说话人语义合并成完整片段，当作后续处理的基本单元**

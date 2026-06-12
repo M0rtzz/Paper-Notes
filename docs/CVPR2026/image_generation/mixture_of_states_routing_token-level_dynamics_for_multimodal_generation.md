@@ -51,6 +51,24 @@ $$\mathbb{E}_{c,t,z_0,z_1}\Big[\big\|\mathcal{G}(z_t, t, \mathcal{R}(t, c, z_t, 
 
 同一框架既能做文生图（MoS-Image：路由聚合的特征投影后与视觉特征拼成 in-context token），也能做图像编辑（MoS-Edit：理解塔同时吃参考图和指令，生成塔从高斯噪声和干净参考图迭代精炼）。整个设计的核心就一件事——让每个视觉 token 在每个去噪步自适应地从理解塔的任意层取它当下最需要的表征。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["文本 prompt c<br/>（编辑时 + 参考图）"] --> U["理解塔 U（冻结）<br/>输出各层隐藏状态 S_i"]
+    P --> R1
+    Z["加噪隐变量 z_t + 时间步 t"] --> R1
+    subgraph R["路由器 R（轻量 100M：两层双向自注意力）"]
+        direction TB
+        R1["token 级路由输入<br/>融合 prompt c / z_t / t"]
+        R2["每 token 独立预测路由矩阵 W (m×n)"]
+        R1 --> R2
+    end
+    U --> R4
+    R2 --> R4["稀疏 Top-k 选择 + ε-Greedy 探索<br/>加权聚合理解塔层状态 → S_j"]
+    R4 --> G["生成塔 G<br/>Rectified Flow Matching 预测速度 v_t"]
+    G --> O["生成 / 编辑图像"]
+```
+
 ### 关键设计
 
 **1. token 级路由输入：把 prompt、噪声隐变量、时间步一起喂给路由器**

@@ -44,6 +44,22 @@ tags:
 
 本文先在理论上证明 SAE 就是一类主题模型——$L_1$-SAE 的损失等价于一个 LDA 风格"连续主题模型"（CTM）的 MAP 目标，再顺着这个结论把 SAE 落地成可与神经主题模型（NTM）正面比拼的 SAE-TM 框架。SAE-TM 把"学表示"和"做解释"彻底解耦：先在大规模嵌入上用标准 $L_1$ 目标预训练一个 SAE，得到一组可复用的"主题原子"（即解码器列向量 $\mu_k$，扩展因子 4、字典 $\gg 1000$）；下游用任意小数据集时只冻结 SAE，额外学一个词发射矩阵把每个特征翻译成词分布，再用 $k$-means 把过细的原子合并到任意目标主题数 $K'$。整条流水线输入是领域嵌入集 $\{D_i\}$（文本用 Granite-R2、图像用 SigLIP，图像端再用 InternVL3.5 生成长 caption 当词袋），输出是 $K'$ 个主题，每个主题既是一个词分布也对应一簇原子。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["CTM 与 L1-SAE 的 MAP 等价<br/>证明 SAE 特征 = 主题原子"]
+    A["领域嵌入输入<br/>文本 Granite-R2 / 图像 SigLIP+InternVL3.5 caption"]
+    B["SAE 预训练<br/>标准 L1 目标 → 主题原子 μ（字典 ≫1000）"]
+    C["SAE 特征 → 词分布的事后解释<br/>冻结 SAE，学 K×V 词发射矩阵 B"]
+    D["基于 k-means 的主题原子合并<br/>主题向量聚成 K′ 类，自由切换主题数"]
+    E["输出：K′ 个主题<br/>每个主题 = 词分布 + 一簇原子"]
+    T --> B
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+```
+
 ### 关键设计
 
 **1. CTM 生成模型与 $L_1$-SAE 的 MAP 等价性：把经验损失推回到生成模型先验**

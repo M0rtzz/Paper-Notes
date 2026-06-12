@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 这篇论文要回答的问题是：怎么把"LLM 是不是真的知道某个事实"从"同一个问题多采样投票一致"升级成"看得见事实之间网络结构"的判断，并把这种结构性反向用作训练目标。整条 pipeline 串起来分三步走。第一步先**造数据**：从 SimpleQA / HotpotQA / SciQ 各取 500 条，按 STEM / Arts & Culture / Social Sciences / Sports 平衡成 2000 条时间不变事实，再为每条目标事实 $(q^*, \mathcal{E}^*)$ 用 DeepSeek-V3.2 生成一圈"概念邻居" Neighbor Facts（覆盖实体前提、逻辑蕴含、主题关联三类关系，平均 7.84 条/事实，经人工与专家校对），并造出 Misleading Entity $\mathcal{E}^\dagger$ 及其 Misleading Neighbor Facts（平均 4.88 条/事实）当干扰料。第二步是**度量 + 压力测试**：对每条事实采 30 次目标响应、每条邻居采 10 次（$T=0.7$），先按邻居一致性算出 NCB 分数，再在 Peer Quantity（Asch 从众）和 Source Credibility（权威信源）两类干扰下、分 Standard / CoT / Reflection 三种推理策略重测，看 NCB 高低能不能预测"被干扰后掉多少"。第三步是**把结构不变性写进训练**：teacher 看裸问题、student 看"问题 + 邻域上下文"，用 KL 蒸馏逼 student 在各种上下文下都和 teacher 的无干扰分布对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三源取数 → 2000 条时间不变事实<br/>(SimpleQA / HotpotQA / SciQ)"]
+    A --> B["概念邻居 + 干扰料构建<br/>Neighbor Facts / Misleading Entity 与 MNFs"]
+    B --> C["Neighbor-Consistency Belief (NCB)<br/>邻居一致性近似结构化信念后验"]
+    C --> D["Cognitive Stress-Test 协议<br/>Peer Quantity (Asch) + Source Credibility"]
+    D -->|按高/低 NCB 桶看被干扰跌幅| E["验证：NCB 预测鲁棒性"]
+    C --> F["Structure-Aware Training (SAT)<br/>师生 KL 蒸馏，多上下文输出对齐"]
+    F --> G["新学知识抗干扰提升 ~30%"]
+```
+
 ### 关键设计
 
 **1. Neighbor-Consistency Belief (NCB)：用"邻居一致性"近似"信念是否结构化"的后验概率**

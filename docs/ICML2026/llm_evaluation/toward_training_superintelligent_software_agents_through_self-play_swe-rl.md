@@ -44,23 +44,50 @@ tags:
 
 SSR 想解决的是"软件 agent 被人类标注数据锁死天花板"的问题，做法是把整个训练分布交给 agent 自己生成：输入只是一组沙箱化 Docker 镜像（仅含源码与依赖，**不假设**已有测试、测试运行命令、测试解析器或语言/框架先验）。同一个 LLM 策略通过不同 prompt 实例化为两个角色并共享参数——**bug-injection agent** 在沙箱里用 Bash + editor 工具探索仓库、自学如何跑测试、最终产出一个经过一致性校验的 bug；**bug-solving agent** 则拿这个 bug 去修。proposer 的奖励来自"一致性校验 + solver 在该 bug 上的 solve-rate"（鼓励造出"难但可解"的 bug），solver 的奖励是测试是否全过的二值信号，两者联合做 on-policy RL。solver 修不掉的失败轨迹还会被回收成"二阶 bug"扩充分布。工具脚手架直接复用 Code World Model (CWM) 的实现，base model 用 CWM-sft（32B，CWM 的 RL 前 checkpoint），以保证和 baseline 公平对比。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 380}}}%%
+flowchart TD
+    IN["输入：沙箱化 Docker 镜像<br/>(仅源码+依赖, 无测试/issue 先验)"]
+    subgraph PROP["Bug-injection agent（proposer）"]
+        direction TB
+        S1["注入策略：Removal / 历史回退"]
+        S2["产出 Bug Artifact 五件套"]
+        S3["一致性校验<br/>(含反向 mutation testing)"]
+        S1 --> S2 --> S3
+    end
+    IN --> PROP
+    S3 -->|校验失败| X["丢弃"]
+    S3 -->|合法 bug| SOLVE
+    subgraph SOLVE["Bug-solving agent（solver）"]
+        direction TB
+        V1["构造 buggy 仓库（去 .git 防泄漏）"]
+        V2["以「反向弱化补丁」为规范 → 修复 patch"]
+        V3["重置 oracle 测试 → 跑测试评估"]
+        V1 --> V2 --> V3
+    end
+    V3 -->|修复失败| HO["高阶 bug 课程演化（二阶）"]
+    HO --> SOLVE
+    V3 --> RL["联合 on-policy RL 更新共享策略<br/>难度自适应 r_inject + 二值 r_solve"]
+    RL -.同步驱动两角色.-> PROP
+```
+
 ### 关键设计
 
-**1. Bug Artifact 五件套 + 一致性校验：把"什么是合法 bug"从人工判断变成可执行验证**
+**1. Bug-injection 策略：Removal + 历史回退，且不给 solver 任何自然语言 issue**
+
+作者发现若直接让 agent "随便注入 bug"，它会迅速塌缩到 `var=0 → var=1` 这种一行字面修改，奖励信号几乎为零。于是用两个简单 prompt 随机采样来保证 bug 既多样又非平凡：(a) **Removal-only** 要求 agent 删掉整个文件或代码块、并做必要兼容性修复保证仓库仍可构建，强迫 solver"从无到有"重建缺失功能、学到仓库结构理解；(b) **历史回退**让 agent 读 git log 挑有意义的历史变更反向应用，使 bug 模式贴近真实演化历史。给 solver 的 prompt 里**完全不合成自然语言 issue**，只把"`test_weaken.diff` 的反向"作为唯一的形式化规范——等价于告诉 solver"请实现让这些被弱化的测试重新通过的行为"，从根上回避了"如何自动评估自然语言 issue 质量"这个无解问题。这样一来，下游在 SWE-bench Verified（用真实自然语言 issue）上的提升只可能来自"学会写让测试通过的代码"这一根本能力，而非 in-domain 泄漏。ablation 里 removal 与 history-aware 随机混合取得最优表现。
+
+**2. Bug Artifact 五件套 + 一致性校验：把"什么是合法 bug"从人工判断变成可执行验证**
 
 自然语言 issue 既贵又无法自动判分，SSR 干脆用 5 个文件把"一个 bug 是什么、怎么判定修没修好"彻底形式化：`test_script.sh`（跑测试）、`test_files.txt`（评测前会被重置的 oracle 测试文件白名单）、`test_parser.py`（任意语言写的测试输出 → JSON 解析器）、`bug_inject.diff`（注入 bug 的 patch）、`test_weaken.diff`（弱化或删除现有测试以隐藏 bug）。每个 artifact 必须通过一整套自动校验才算合法——测试文件存在且覆盖弱化补丁触及范围、parser 能可靠输出 pass/fail JSON、原始码上 `test_script.sh` 至少跑出 `min_passing_tests` 个通过、`bug_inject.diff` 至少触及 `min_changed_files` 个文件、注入后至少 `min_failing_tests` 个原本通过的测试转为失败、弱化补丁能让某些失败测试恢复通过。其中最关键的是**反向 mutation testing**：对 bug patch 中每个文件单独回滚到 fixed 版本，若至少一个失败测试恢复通过则判定该文件"贡献于 bug"，否则整套 artifact 直接被拒——这道过滤专门防 proposer 塞一堆无关 diff 来骗过校验。而 `test_files.txt` 保证评测时 oracle 测试永远被重置回原版，堵死 solver"改测试而非改代码"的 hack 路径。正因为合法性完全可执行验证，奖励 $r_{\text{inject}}$ 才能在零人类标注下保持有意义。
 
-**2. 难度自适应奖励 + 高阶 bug 课程演化：让训练分布跟着当前策略一起变难**
+**3. 难度自适应奖励 + 高阶 bug 课程演化：让训练分布跟着当前策略一起变难**
 
 静态合成数据集（如 SWE-smith、BugPilot）的难度是固定的，agent 能力涨上去后就提供不了有效梯度。SSR 把"难度调度"内生到奖励里：设 solver 在某 bug 上的 solve-rate 为 $s\in[0,1]$，proposer 奖励为
 
 $$r_{\text{inject}} = \begin{cases} -1.0 & \text{一致性校验失败} \\ -\alpha & \text{合法但 } s=0 \text{ 或 } s=1 \\ 1-(1+\alpha)s & 0<s<1 \end{cases}$$
 
 其中 $\alpha=0.8$。这条曲线在"既非过易也非过难"的区间最大化奖励，同时对极端 solve-rate 只给小负值以保留梯度。solver 端则用极简二值奖励 $r_{\text{solve}}=+1$（全测通过）/ $-1$（其他）。课程演化靠**高阶 bug**实现：从原仓先应用 `bug_inject.diff` + `test_weaken.diff` 得到 buggy 仓库，再叠加 solver 之前失败的 `pred_patch.diff` 形成新的 buggy 状态，去掉 `.git` 重新初始化防泄漏，作为新一轮 solver 的输入；只做到二阶，再深就和已有 bug 重叠率太高。这恰好模拟真实开发里"改 A 又顺手写出 B"的层叠错误，逼 agent 学会 multi-step 编辑。
-
-**3. Bug-injection 策略：Removal + 历史回退，且不给 solver 任何自然语言 issue**
-
-作者发现若直接让 agent "随便注入 bug"，它会迅速塌缩到 `var=0 → var=1` 这种一行字面修改，奖励信号几乎为零。于是用两个简单 prompt 随机采样来保证 bug 既多样又非平凡：(a) **Removal-only** 要求 agent 删掉整个文件或代码块、并做必要兼容性修复保证仓库仍可构建，强迫 solver"从无到有"重建缺失功能、学到仓库结构理解；(b) **历史回退**让 agent 读 git log 挑有意义的历史变更反向应用，使 bug 模式贴近真实演化历史。给 solver 的 prompt 里**完全不合成自然语言 issue**，只把"`test_weaken.diff` 的反向"作为唯一的形式化规范——等价于告诉 solver"请实现让这些被弱化的测试重新通过的行为"，从根上回避了"如何自动评估自然语言 issue 质量"这个无解问题。这样一来，下游在 SWE-bench Verified（用真实自然语言 issue）上的提升只可能来自"学会写让测试通过的代码"这一根本能力，而非 in-domain 泄漏。ablation 里 removal 与 history-aware 随机混合取得最优表现。
 
 ### 损失函数 / 训练策略
 

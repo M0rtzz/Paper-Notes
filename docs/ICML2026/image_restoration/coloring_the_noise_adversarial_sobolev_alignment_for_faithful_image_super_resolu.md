@@ -45,6 +45,21 @@ ASASR 通过将 Flow Matching 的噪声先验从各向同性高斯替换为 Sobo
 
 ASASR 把超分辨率当成一个频率感知的偏好对齐问题来解：输入低分辨率图像 $\boldsymbol{c}$（$256\times256$），输出 $4\times$ 超分结果（$1024\times1024$），核心是让 Flow Matching 的优化几何与自然图像的频谱衰减特性对齐。训练分两步走——先在 Sobolev 谱着色噪声下训练速度网络 $\boldsymbol{v}_\theta$，再用 AS-DPO 损失做偏好对齐，其中关键的硬负样本由一个对抗网络 $\mathcal{A}_\phi$ 在线生成。骨干采用 FLUX.1-dev，通过 LoRA（$r=16,\alpha=16$）微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    LR["低分辨率输入 c"]
+    SSR["Sobolev 谱校正（SSR）<br/>协方差 I → Σ_s，ℓ₂ 度量升为 Sobolev 范数"]
+    LR --> FM["Flow Matching 速度网络 v_θ<br/>（FLUX.1-dev + LoRA）"]
+    SSR -.着色噪声重塑优化几何.-> FM
+    FM --> XW["正样本中间态 x_t^w"]
+    XW --> AMG["对抗流形引导（AMG）<br/>对抗器 A_φ 预测退化速度场"]
+    AMG --> XA["硬负样本 x_t^a（错得很自信、与正样本语义对齐）"]
+    XW --> DPO["AS-DPO 损失<br/>比较 Sobolev 能量间隙 ΔE_Hs(x_t^a) − ΔE_Hs(x_t^w)"]
+    XA --> DPO
+    DPO -->|偏好对齐梯度| FM
+```
+
 ### 关键设计
 
 **1. Sobolev 谱校正（SSR）：把优化度量从 $\ell_2$ 升级成频率加权范数**

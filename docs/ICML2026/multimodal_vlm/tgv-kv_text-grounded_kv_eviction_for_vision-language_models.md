@@ -43,6 +43,18 @@ TGV-KV 通过"用文本注意力来支配视觉 KV"的三件套——按 text-vi
 ### 整体框架
 TGV-KV 是一个 plug-in 的 KV cache 控制器，部署位置在 prefill 结束之后、decode 阶段之前；不改动模型权重也不需要校准数据集。整个推理流程的输入是把 vision encoder 输出的 $N_v$ 个视觉 token 与 $N_t$ 个文本 token 拼成统一序列 $\mathbf{X} \in \mathbb{R}^{(N_v+N_t) \times d}$，VLM 走完一次 prefill 得到每一层的注意力矩阵 $\mathbf{A}_l$ 之后，TGV-KV 顺序触发三个子模块：(1) TVB 用 TV 注意力的层间分布把总预算 $B$ 切到每层 $b_l$；(2) TWR 在每层内对所有 KV 计算一个"text-weighted"重要性分数；(3) TPR 按重要性 TopK 选择保留集合，并强制把所有 text KV 排在前面。最终保留的 KV 在 decode 阶段被持续访问，新生成 token 的 KV 直接 append 即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视觉 token + 文本 token<br/>拼成统一序列 X"] --> B["VLM 一次 prefill<br/>产出各层注意力矩阵 A_l"]
+    B --> C["Text-Vision Budgeting（TVB）<br/>用 TV 跨模态注意力强度<br/>按层分配预算 b_l"]
+    C --> D["Text-Weighted Ranking（TWR）<br/>TT 找主导文本 token 权重<br/>加权 TV 得视觉重要性分数"]
+    D -->|"b_l > N_t"| E["Text-Prioritised Retention（TPR）<br/>全保文本 KV<br/>剩余名额视觉里 TopK"]
+    D -->|"b_l ≤ N_t"| F["Text-Prioritised Retention（TPR）<br/>弃全部视觉<br/>仅文本内 TopK"]
+    E --> G["保留 KV 进入 decode<br/>新 token KV 直接 append"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. Text-Vision Budgeting（TVB）：用跨模态注意力强度当层间预算的"晴雨表"**

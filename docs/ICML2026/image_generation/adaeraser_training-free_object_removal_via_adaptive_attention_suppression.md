@@ -43,26 +43,29 @@ AdaEraser 不改变扩散模型参数，也不训练额外网络。它在每个 
 ### 整体框架
 给定源图 $I^{src}$ 和目标 mask $M$，先用 VAE encoder 得到 latent $x_0^{src}$。对每个 timestep $t$，source 分支构造 $x_t^{src}=\sqrt{\bar\alpha_t}x_0^{src}+\sqrt{1-\bar\alpha_t}\epsilon$，并用 denoising network 提取 self-attention maps $SA^{src}_{t,l}$。target 分支从加噪源图初始化，得到当前 $x_t^{tgt}$，通过同一个 denoising network 得到 $SA^{tgt}_{t,l}$。
 
-对 mask 内每个 token $i$，方法计算 $p(i)=Sim(SA^{tgt}_{t,l}(i),SA^{src}_{t,l}(i))$。如果 target 分支的 attention map 仍像原图中的目标 token，说明目标概念残留较强；如果相似度下降，说明该位置更像背景或新内容。随后令 $\eta(i)=1-p(i)$，并把它乘到 self-attention softmax 的 key token 权重上。最后，方法沿用 foreground-background blending，用 mask 保留非编辑区域的一致性。
+对 mask 内每个 token $i$，方法计算 $p(i)=Sim(SA^{tgt}_{t,l}(i),SA^{src}_{t,l}(i))$。如果 target 分支的 attention map 仍像原图中的目标 token，说明目标概念残留较强；如果相似度下降，说明该位置更像背景或新内容。随后令 $\eta(i)=1-p(i)$，并把它乘到 self-attention softmax 的 key token 权重上。最后，方法沿用 foreground-background blending，用 mask 保留非编辑区域的一致性。整条流水线按下图在每个 denoising step 上循环：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["源图 + 目标 mask"] --> ENC["VAE 编码得到源 latent"]
+    ENC --> SRC["源参考分支 → 同噪声级参考注意力图<br/>同 timestep 加噪后过 denoising network"]
+    ENC --> TGT["目标移除分支 → 移除分支注意力图<br/>当前 latent 过同一 denoising network"]
+    SRC --> PS["逐 token 目标残留分数<br/>两分支注意力图的 cosine 相似度"]
+    TGT --> PS
+    PS --> SUP["自适应自注意力抑制<br/>抑制系数随残留下降而放松"]
+    SUP --> BL["前景-背景融合（mask 外区域保持不变）"]
+    BL -->|逐 timestep 迭代| SRC
+    BL -->|去噪完成| OUT["去除目标的输出图"]
+```
 
 ### 关键设计
-1. **同噪声级参考 attention map**:
 
-	- 功能：为每个 timestep 提供可比较的“目标仍存在时 attention 应该长什么样”的参考。
-	- 核心思路：不是做完整 DDIM inversion，也不是只取固定噪声层，而是在每个 timestep 用同一噪声级别的 source latent 过 denoising network，提取 $SA^{src}_{t,l}$。
-	- 设计动机：attention map 与噪声强度强相关。若参考噪声级别不对，presence score 会混入噪声尺度差异；同噪声级比较能更稳定地反映语义残留。
+**1. 同噪声级参考注意力图**：presence 分数要拿当前去噪状态去对比“目标还在时注意力本该长什么样”，而 self-attention map 与噪声强度强相关——参考若取错噪声级，分数就会混入噪声尺度差异而非语义残留。AdaEraser 因此既不做完整 DDIM inversion、也不固定取某一噪声层，而是在每个 timestep 都用同一噪声级别的源 latent 过一次 denoising network，得到与移除分支严格同 $t$、同 layer 的参考 $SA^{src}_{t,l}$。消融里换成固定低噪声 $x_1$、中噪声 $x_{T/2}$、高噪声 $x_T$ 作参考都不如逐步对齐的 $x_t$，印证了噪声级对齐才能给出稳定的残留信号。
 
-2. **token-wise presence score**:
+**2. 逐 token 目标残留分数（presence score）**：目标在 latent 里无法直接检测，而原图 token 与去噪过程 token 又处于不同特征空间、不能直接比。关键观察是 self-attention map 经 Softmax 归一化后跨分支可比，于是对 mask 内每个 token $i$ 把两分支的注意力图 flatten 后算 cosine similarity 得到 $p(i)$——它不声称是严格语义概率，只作一个相对控制指标。之所以做到 token 粒度而非整块区域平均：同一目标的头部、身体、尾部 token 的 self-attention pattern 各不相同，区域平均会抹掉这种差异；消融中 token-wise 也确实优于 region-based 与 timestep-based。
 
-	- 功能：细粒度估计 mask 内不同 token 的目标残留程度。
-	- 核心思路：对 mask 内 token $i$，把 target attention map 与 source attention map flatten 后计算 cosine similarity。这个分数不声称是严格语义概率，而是一个控制用的相对指标。
-	- 设计动机：同一目标内部不同局部结构关注的区域不同，例如头部、身体和尾部 token 的 self-attention pattern 不一样。区域平均会抹掉这种差异，token-wise 方式更适合局部自适应。
-
-3. **adaptive self-attention suppression**:
-
-	- 功能：在目标残留强时抑制目标 token，被删除后恢复更多生成能力。
-	- 核心思路：对 mask 内 key token 用 $\eta(i)=1-p(i)$，其他 token 用 $\eta(i)=1$，再把 attention 改成 $\widetilde{SA}(i)=\eta(i)\exp(QK_i^\top/\sqrt d)/\sum_j\eta(j)\exp(QK_j^\top/\sqrt d)$。
-	- 设计动机：这相当于给目标相关 key 加一个单调 logit bias。相比 AttentiveEraser 的强阻断，它能在删除目标和背景重建之间动态折中。
+**3. 自适应自注意力抑制**：强抑制能删干净目标却破坏 mask 内背景生成，弱抑制保住生成能力却让目标残留——固定强度无法兼顾。AdaEraser 用残留分数动态调节：对 mask 内 key token 取 $\eta(i)=1-p(i)$、其余 token 取 $\eta(i)=1$，把注意力改写成 $\widetilde{SA}(i)=\eta(i)\exp(QK_i^\top/\sqrt d)/\sum_j\eta(j)\exp(QK_j^\top/\sqrt d)$，相当于给目标相关 key 加一个单调 logit bias。目标还在（$p$ 高）时 $\eta$ 小、强抑制；目标基本消失（$p$ 低）后 $\eta\to1$、放手让预训练模型正常生成背景。相比 AttentiveEraser 的硬阻断，它在“删除目标”和“重建背景”之间做到了逐步的动态折中。
 
 ### 损失函数 / 训练策略
 AdaEraser 是 training-free 方法，没有额外训练损失。推理时使用预训练 text-to-image diffusion model 的 VAE、denoising UNet 和 decoder。论文主实验使用 SDXL 作为 backbone，空 prompt 作为文本条件。额外开销来自 source/target 两个 latent 的并行 denoising 和 presence score 计算，作者通过 concatenate 并行处理，使开销相对 AttentiveEraser 维持在约 15% 内。

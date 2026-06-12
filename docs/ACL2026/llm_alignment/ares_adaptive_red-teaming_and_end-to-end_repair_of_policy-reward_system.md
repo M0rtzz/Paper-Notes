@@ -43,6 +43,19 @@ ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结
 ### 整体框架
 ARES 把「找弱点」和「修弱点」串成一个闭环。前半段 Adaptive Vulnerability Discovery 让一个 Safety Mentor 不断生成对抗 prompt 连带一对 $(y_\text{synth},\,y_\text{chosen})$ 偏好回答，分别送进 Core LLM 让它作答、送进 RM 让它打分，再按「策略中招 / RM 中招」的组合把每个样本归入 A/B/C 三类失效库；后半段 End-to-End Repair 严格按「先校准裁判再训练学生」的顺序，先用涉及 RM 的样本微调 RM，再拿这个修好的 RM 当奖励信号去 GRPO 优化 Core LLM。整条 pipeline 在 8×A100 上单次约 13 小时（发现 9h + 修复 4h），生成 4000 个样本时弱点命中率达 63.5%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["组合式对抗 prompt 生成<br/>话题×人设×目标×战术 四元组拼 prompt<br/>ShieldGemma 过滤 + 顺带产出偏好对"]
+    A --> B["双路探测<br/>Core LLM 作答 → Judge 打 s_judge<br/>RM 对 y_synth / y_chosen 打 s_rm"]
+    B --> C["双组件弱点分类<br/>A: RM 单独失守 / B: 策略失守 / C: 协同崩溃"]
+    C -->|攻击成功，抬高命中组合权重| D["层次化自适应采样<br/>类别级 + 实例级权重同步增强"]
+    D -.指导下一轮采样.-> A
+    C --> E["第一步：先微调 RM<br/>Type A+C 样本 + 通用/防过拒数据"]
+    E --> F["第二步：用修好的 RM 跑 GRPO 优化 Core LLM<br/>Type B+C 样本 + 通用/防过拒数据"]
+    F --> G["安全且保通用能力的 Policy-RM 系统"]
+```
+
 ### 关键设计
 
 **1. 组合式对抗 prompt 生成：把攻击拆成四个正交维度**

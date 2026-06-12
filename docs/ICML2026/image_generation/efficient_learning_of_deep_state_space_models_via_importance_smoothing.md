@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 PVMC 要解决的是"DSSM 训练在并行、监督、紧 bound、无偏梯度四者间二选二"的困境，做法是把粒子滤波里逼着串行的 resampling 彻底拿掉，换成一个在时间维完全可分解的 proposal 加上一遍 associative scan。给定参数化 SSM（$x_0\sim P$，$x_t\sim M_t(\cdot\mid x_{t-1})$，$y_t\sim H_t(\cdot\mid x_t)$）和神经网络 proposal $V_t(\cdot\mid y_{0:T})$，它吃进观测序列 $y_{0:T}$ 与模型参数 $\theta$，吐出每个时刻的加权粒子集合 $\{(X_t^n, w_t^n)\}$ 和似然估计 $\hat L^N$；因为采样、加权两步被解耦成"独立并行采 + 链式张量积求和"，前向与反向都维持 $\mathcal{O}(\log N\times\log T)$ 的 span。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：观测序列 y(0:T) + SSM 参数 θ"] --> S1
+    subgraph S1["完全可分解 proposal + 联合重要性测度"]
+        direction TB
+        B["按 V_t 独立并行采样<br/>每个时刻得到 N 个粒子"] --> C["并行算 local 核 K_t<br/>每时刻一张 N×N 核矩阵"]
+    end
+    S1 --> D["prefix/suffix associative scan<br/>log 深度求各粒子边际权重 w_t"]
+    D --> E["PVMC ELBO<br/>比 IWAE 严格更紧的对数似然下界"]
+    E -->|生成式| F["最大化 ELBO"]
+    E -->|监督式| G["ELBO + 状态估计 MSE"]
+```
+
 ### 关键设计
 
 **1. 完全可分解 proposal + 联合重要性测度：把"串行依赖"换成"可结合求和"**

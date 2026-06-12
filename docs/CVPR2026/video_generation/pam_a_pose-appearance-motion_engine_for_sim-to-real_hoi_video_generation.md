@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 PAM 想解决的是 sim-to-real 链路上的一个具体断点：模拟器能给出物体几何和手部姿态，却给不出逼真的真实首帧，而过去的 HOI 视频生成方法偏偏都得拿真实首帧当输入。于是 PAM 把"从姿态到视频"这条路拆成三段、各用一个擅长的模型接力跑。输入是初始 MANO 手部姿态 $\mathbf{h}_0$、物体 mesh $\mathbf{m}$、初始物体位姿 $\mathbf{o}_0$ 和目标手部姿态 $\mathbf{h}_T$，最终由 $f_\theta: (\mathbf{h}_0, \mathbf{m}, \mathbf{o}_0, \mathbf{h}_T) \rightarrow \{I_t\}_{t=0}^T$ 输出整段逼真视频。第一段先把稀疏的"起点+终点姿态"补成完整手物轨迹 $\{\mathbf{h}_t, \mathbf{o}_t\}$，第二段凭轨迹首帧的几何条件"画"出真实首帧 $I_0$，第三段再以这张首帧为锚把整段动态铺开。三段都不碰真实首帧，链路才真正从模拟器一端贯通到真实视频。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：初始/目标手部姿态<br/>+ 物体 mesh 与初始位姿"] --> S1["姿态生成（Stage I）<br/>GraspXL RL 策略补全手物轨迹"]
+    S1 --> REN["渲染多模态条件<br/>深度图 + 分割掩码 + 手部关键点"]
+    REN -->|首帧条件| S2["外观生成（Stage II）<br/>Flux + ControlNet 画出真实首帧"]
+    REN -->|全序列条件| S3["运动生成（Stage III）<br/>CogVideoX + ControlNet 铺开动态"]
+    S2 -->|首帧作锚| S3
+    S3 --> OUT["输出：时序一致的 HOI 视频"]
+```
+
 ### 关键设计
 
 **1. 姿态生成（Stage I）：把"两端姿态"补成物理合理的中间轨迹**

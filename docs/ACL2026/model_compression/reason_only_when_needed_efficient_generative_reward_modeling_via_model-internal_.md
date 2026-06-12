@@ -45,6 +45,21 @@ tags:
 
 E-GRM 包含两个核心模块：(1) 基于模型内部不确定性的动态 CoT 触发机制；(2) 基于混合损失的判别式评分模块。训练分两阶段：先 SFT 让模型学会短推理/长推理两种模式，再通过扩展的 GRPO 进行偏好优化。推理时先快速判断是否需要 CoT，需要时再生成多条推理路径并用评分器选最优。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入提示 x"] --> B["动态 CoT 触发<br/>M 次并行解码，算答案一致性"]
+    B -->|"一致性 ≥ τ（约 58% 样本）"| C["直接输出共识答案<br/>跳过 CoT"]
+    B -->|"一致性 < τ"| D["生成多条 CoT 推理路径"]
+    D --> E["判别式评分模块<br/>Huber+Hinge 混合损失打质量分"]
+    E --> F["选最优路径，输出奖励分"]
+    subgraph T["两阶段训练（产出上面的模型）"]
+        direction TB
+        G["SFT：混合短推理 / 长推理样本"] --> H["扩展 GRPO 偏好优化<br/>配对奖励对比正负样本"]
+    end
+    T -.训练.-> B
+```
+
 ### 关键设计
 
 **1. 动态 CoT 触发（Dynamic CoT Triggering）：用模型自己的"答案收敛速度"当复杂度探针，简单题直接跳过 CoT**

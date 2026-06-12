@@ -55,7 +55,7 @@ $$\dot Q=\mathcal{F}_Q(Q,R),\qquad \dot R=\mathcal{F}_R(Q,R),$$
 
 **2. block-symmetric ansatz 与 $k_1$ 层级：把连续非凸景观还原成一维离散族**
 
-即使降到 $(Q,R)$，直接搜零点仍是 $O(K^2)$ 维代数问题。作者利用学生隐藏单元的置换对称性，把 $K$ 个神经元划成两组——$|I_1|=k_1$ 个与教师反对齐（$R_{im}<0$），$|I_2|=K-k_1$ 个对齐。在此 ansatz 下 $R$ 与 $Q$ 都呈 block 形式，每块用 $\mathbf{B}(x,y)=xI+y(J-I)$ 参数化，原本耦合的方程退化为关于 $\{r_1^{\mathrm{diag}},r_1^{\mathrm{off}},q_1^{\mathrm{diag}},\dots\}$ 的少量标量方程（Result 2）。于是每一族 spurious minima 由单个整数 $k_1\in[0,M]$ 完全刻画，连同解析 loss 和 $(Q,R)$ 模板一并给出。这个 block 结构恰好是 Arjevani–Field 群论"最少对称破缺"原则的宏观对应：反对齐神经元造成的局部误差被对齐神经元的方向调整 exactly 补偿，梯度归零，于是卡住。
+即使降到 $(Q,R)$，直接搜零点仍是 $O(K^2)$ 维代数问题。作者利用学生隐藏单元的置换对称性，把 $K$ 个神经元划成两组——$|I_1|=k_1$ 个与教师反对齐（$R_{im}<0$），$|I_2|=K-k_1$ 个对齐。在此 ansatz 下 $R$ 与 $Q$ 都呈 block 形式，每块用 $\mathbf{B}(x,y)=xI+y(J-I)$ 参数化，原本耦合的方程退化为关于 $\{r_1^{\mathrm{diag}},r_1^{\mathrm{off}},q_1^{\mathrm{diag}},\dots\}$ 的少量标量方程（Result 2）。于是每一族 spurious minima 由单个整数 $k_1\in[0,M]$ 完全刻画，连同解析 loss 和 $(Q,R)$ 模板一并给出。这个 block 结构恰好是 Arjevani–Field 群论"最少对称破缺"原则的宏观对应：反对齐神经元造成的局部误差被对齐神经元的方向调整恰好补偿，梯度归零，于是卡住。
 
 **3. 扰动型稳定性分析与过参数化诊断：在 ReLU 不可微下替代 Hessian**
 

@@ -41,7 +41,24 @@ DVMap 把 LLM 的"多元价值对齐"从粗粒度的国家标签下沉到 11 维
 ## 方法详解
 
 ### 整体框架
-整套 pipeline 由三大阶段组成：(1) **数据构建**——从 WVS Wave 7 出发，先按 11 维 demographic 属性做 archetype 聚合，对每个 profile-question 对计算 Shannon 熵，只保留 $H=0$ 的样本，叠加 Inglehart-Welzel 文化地图的 10 国采样和 16 个价值题筛选，最终得到 56,152 条训练样本；(2) **demographic value alignment**——给定 profile $P$、问题 $Q$ 与 Structured CoT 指令 $I_{cot}$，policy $\pi_\theta$ 输出 $(T,\hat y)\sim\pi_\theta(\cdot|P,Q,I_{cot})$，用 GRPO + 二值奖励 $r=\mathbb{I}(\hat y=y_i)+\beta r_{format}$ 锚定到 WVS 真值；(3) **三重泛化评测**——额外构造 21,553 条样本覆盖 cross-demographic（6,240）/ cross-country（7,973，含 8 个未见国家）/ cross-value（7,340，含 7 个未见价值题）。
+整套 pipeline 由三大阶段组成：(1) **数据构建**——从 WVS Wave 7 出发，先按 11 维 demographic 属性做 archetype 聚合，对每个 profile-question 对计算 Shannon 熵，只保留 $H=0$ 的样本，叠加 Inglehart-Welzel 文化地图的 10 国采样和 16 个价值题筛选，最终得到 56,152 条训练样本；(2) **群体价值对齐（demographic value alignment）训练**——给定 profile $P$、问题 $Q$ 与 Structured CoT 指令 $I_{cot}$，policy $\pi_\theta$ 输出 $(T,\hat y)\sim\pi_\theta(\cdot|P,Q,I_{cot})$，用 GRPO + 二值奖励 $r=\mathbb{I}(\hat y=y_i)+\beta r_{format}$ 把输出分布锚定到 WVS 真值；(3) **三重泛化评测**——额外构造 21,553 条样本覆盖 cross-demographic（6,240）/ cross-country（7,973，含 8 个未见国家）/ cross-value（7,340，含 7 个未见价值题）。前两阶段是论文的三个核心设计所在：数据侧的「Demographic Archetype 抽取」，训练侧的「Structured CoT 三步模板」与「GRPO + 二值奖励」协同——前者塑形推理、后者锚定分布。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["WVS Wave 7 问卷数据"] --> DATA
+    subgraph DATA["Demographic Archetype 抽取（数据构建）"]
+        direction TB
+        B["11 维 demographic 属性<br/>编码成 profile P"] --> C["对每个 (profile, 问题) 算 Shannon 熵 H"]
+        C --> D["只保留 H=0 的高一致档案<br/>剔除 9.2% 分歧样本"]
+    end
+    DATA --> E["叠加 IW 文化地图 10 国 + 16 价值题<br/>得 56,152 条训练样本"]
+    E --> F["Structured CoT 三步模板<br/>属性-价值关联 → 选项权衡 → 决策输出"]
+    F --> G["policy πθ 输出 (推理链 T, 预测选项 ŷ)"]
+    G --> H["GRPO + 二值奖励<br/>命中众数给 1 + 格式项"]
+    H -->|组内相对优势更新 πθ| F
+    H --> I["三重泛化评测<br/>cross-demographic / country / value"]
+```
 
 ### 关键设计
 

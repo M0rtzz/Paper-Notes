@@ -45,6 +45,20 @@ tags:
 
 PFGNet 想解决的痛点很具体：纯卷积时空预测器虽然能完全并行、跑得快，但它那套均匀的感受野没法适应空间上不均匀的运动——纹理密集处需要大视野去整合远程上下文，平坦背景处大核反而在浪费算力、放大冗余的低频。它沿用 SimVP 的「编码器—翻译器—解码器」三段骨架，把全部创新塞进中间的翻译器。具体地说，输入帧先经共享空间编码器逐帧提特征 $\mathbf{F}_t = \text{Enc}(\mathbf{I}_t)$，沿时间维拼成 $\mathbf{Z} \in \mathbb{R}^{C' \times H' \times W'}$（$C' = T_{\text{in}} \cdot C$）；翻译器先用 MSInit 铺一层覆盖低/中/高频的多尺度底子，再叠 $N_t$ 个 PFG 模块做频率引导的自适应时空建模；最后对称解码器还原分辨率，吐出未来帧序列。整篇的关键就在 PFG 模块如何「按每个像素的频率特性去挑感受野」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入帧序列<br/>共享编码器逐帧提特征 → 沿时间拼接 Z"] --> B["MSInit 多尺度初始化<br/>可分离 1D 核备齐低 / 中 / 高频素材"]
+    B --> P
+    subgraph P["PFG 模块 ×N_t"]
+        direction TB
+        C["像素级频率描述子 + 门控网络<br/>Sobel / Laplacian / 局部方差 → softmax 逐像素权重 α_k"]
+        C --> D["多尺度外周响应 + 可学习中心抑制<br/>外周 P_k − tanh(β)·中心，按 α_k 凸组合"]
+        D --> E["GLU 通道混合 + GRN<br/>1×1 扩维门控做通道交互"]
+    end
+    P --> F["对称解码器<br/>还原分辨率，输出未来帧序列"]
+```
+
 ### 关键设计
 
 **1. 多尺度初始化 MSInit：用极小代价给门控备好多尺度素材**

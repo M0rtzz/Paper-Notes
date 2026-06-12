@@ -43,6 +43,15 @@ Zina 提出了多模态细粒度幻觉检测与编辑任务，设计了两阶段
 ### 整体框架
 给定一张图像 $x_{\text{img}}$、MLLM 生成的描述 $x_{\text{desc}}$ 和人工参考描述 $x_{\text{ref}}$，Zina 的流程为：(1) Detector MLLM $\mathcal{M}_{\text{det}}$ 接收三元组输入，输出幻觉 span 列表及其错误类型；(2) 确定性函数 $\mathcal{T}$ 在原文对应位置插入标签生成带标记序列；(3) Reviewer MLLM $\mathcal{M}_{\text{rev}}$ 逐个审核标签是否正确，并在编辑模式下生成修正建议。最终输出为幻觉 span 集合 $\hat{\mathcal{Y}}_{\text{text}}$、错误类型集合 $\hat{\mathcal{Y}}_{\text{type}}$ 和编辑建议集合 $\hat{\mathcal{Y}}_{\text{edit}}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + MLLM 描述 + 参考描述"] --> B["Detector MLLM<br/>定位幻觉 span + 判错误类型"]
+    B --> C["确定性函数 T<br/>机械套入标签<br/>原文一字不改"]
+    C --> D["Reviewer MLLM<br/>逐个复核标签 + 生成修正"]
+    D --> E["输出：span + 错误类型 + 编辑建议"]
+```
+
 ### 关键设计
 
 **1. 确定性标签插入函数 $\mathcal{T}$：把"逐字复制原文"从模型职责里彻底拿走**

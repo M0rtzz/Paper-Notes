@@ -33,7 +33,26 @@ tags:
 
 ### 整体框架
 
-Miburi 要让对话代理一边说话一边实时打出自然、有表达力的全身手势和面部表情，难点是「因果」（只能看过去）和「实时」（低延迟）必须同时满足。它把自己直接搭在语音-文本基础模型 Moshi 之上，拿 Moshi 内部的 speech/text token 流当条件信号，跳过传统 LLM→TTS→音频编码的串行链路；动作先经身体部位感知的编解码器量化成多层级离散 token，再由一个二维因果 Transformer（时间维 + 运动学维）自回归地生成手势 token。
+Miburi 要让对话代理一边说话一边实时打出自然、有表达力的全身手势和面部表情，难点是「因果」（只能看过去）和「实时」（低延迟）必须同时满足。它把自己直接搭在语音-文本基础模型 Moshi 之上，拿 Moshi 内部的 speech/text token 流当条件信号，跳过传统 LLM→TTS→音频编码的串行链路；动作先经身体部位感知的编解码器量化成多层级离散 token，再由一个二维因果 Transformer（时间维 + 运动学维）自回归地生成手势 token，训练时再加一组表达性增强目标逼出「该动时才动」。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Moshi 内部 speech/text token 流<br/>（实时条件信号，跳过 TTS 串行链路）"] --> CODEC
+    subgraph CODEC["身体部位感知手势编解码器"]
+        direction TB
+        U["上身+手 RVQ-VAE"]
+        L["下身+全局位移 RVQ-VAE"]
+        F["面部 FLAME RVQ-VAE"]
+    end
+    CODEC -->|多层级离散 token| T2D
+    subgraph T2D["二维因果 Transformer"]
+        direction TB
+        TT["时间 Transformer<br/>自回归预测每帧首层 token"] --> KT["运动学 Transformer<br/>固定时间步内逐层补齐余下层级"]
+    end
+    T2D --> DEC["因果解码<br/>全身手势 + 面部表情"]
+    T2D -.->|仅训练时反传| OBJ["表达性增强目标<br/>对比 InfoNCE + 语音激活双约束"]
+```
 
 ### 关键设计
 

@@ -40,7 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不训练任何新模型，而是在 ARC、MMLU、Super GPQA 三个难度递增的多选题 benchmark 上对 12 个现有推理 LLM 做受控评测。每道题有题干 $q$、选项集合 $C$ 和正确答案 $a$，作者把它拆成两个正交的轴：输入条件 full（给 $q$ 和 $C$）vs choices-only（只给 $C$，要求模型“用任何必要策略”猜出正确项），以及提示模式 base（直接选答案）vs reason（先生成逐步推理再选）。四种组合下跑同一批题，再对 choices-only 的推理轨迹做人工策略编码，从而把“只看选项也能答对”这件事拆成浅层作弊和合理的部分信息推理两类机制。
+论文不训练任何新模型，而是在 ARC、MMLU、Super GPQA 三个难度递增的多选题 benchmark 上对 12 个现有推理 LLM 做受控评测。每道题有题干 $q$、选项集合 $C$ 和正确答案 $a$，作者把它拆成两个正交的轴：输入条件 full（给 $q$ 和 $C$）vs choices-only（只给 $C$，要求模型“用任何必要策略”猜出正确项），以及提示模式 base（直接选答案）vs reason（先生成逐步推理再选）。四种组合下跑同一批题，再对 choices-only 的推理轨迹先做可信性检查、后做人工策略编码，从而把“只看选项也能答对”这件事拆成浅层作弊和合理的部分信息推理两类机制。整套分析是一条串行流水线：先用二维对照量化测试时推理（TTR）到底抬高了哪种能力，再确认轨迹值得分析，最后用策略编码把“答对”诊断成不同机制。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["12 个推理 LLM × 3 个 benchmark<br/>ARC / MMLU / Super GPQA"] --> G1
+    subgraph G1["Full/Choices-only × Base/Reason 二维对照"]
+        direction TB
+        B["full vs choices-only<br/>给题干+选项 / 只给选项"]
+        C["base vs reason<br/>直接选 / 先推理再选"]
+        B --> C
+    end
+    G1 --> D["推理轨迹可信性检查<br/>保答案 + 轨迹预测答案>90% + 扰动选项"]
+    D -->|轨迹可作软证据| G3
+    subgraph G3["Choices-only 策略编码与回归分析"]
+        direction TB
+        E["六类策略标注<br/>FACT/ELIM/PATTERNS/INFER Q/SHALLOW/INCONS"]
+        F["逻辑回归 + 原题语义匹配"]
+        E --> F
+    end
+    G3 --> H["区分 benchmark 缺陷 vs 溯因推理"]
+```
 
 ### 关键设计
 

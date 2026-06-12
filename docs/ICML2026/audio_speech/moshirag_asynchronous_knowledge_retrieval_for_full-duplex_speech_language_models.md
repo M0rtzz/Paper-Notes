@@ -43,6 +43,24 @@ MoshiRAG 在 Moshi 这一全双工语音模型里加入一个特殊的 ⟨ret⟩
 ### 整体框架
 MoshiRAG 要解决的是"全双工语音模型一边说话、一边把外部知识查回来却不卡顿"。它把传统 RAG 的同步阻塞拆成"前端实时、后端慢思考"两层：前端是基于 Moshi 7B 的全双工模型，吃用户语音 token 和自己上一步的文本/语音 token，并多出一个特殊的 ⟨ret⟩ 触发 token；旁边挂一个 1B 流式 ASR（0.5 秒延迟）把用户语音转写成文字、一个可热插拔的异步后端（Gemma 3 27B 阅读上下文给参考，或 Tavily 搜索引擎）。一旦 Moshi 吐出 ⟨ret⟩，系统就把对话转写丢给后端，前端不等结果、继续说一段不依赖知识的开场白维持语音流；等参考文档回来后，再经一层 reference encoder 投影成 embedding 按帧叠加进主干，让模型在正式答案段里自然地"接住"检索到的知识。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户语音"] --> M["Moshi 7B 全双工主干"]
+    A --> ASR["1B 流式 ASR（0.5s 延迟）"]
+    M -->|"预测 ⟨ret⟩ token"| RET["⟨ret⟩ 触发 + 异步后端<br/>Gemma 3 27B / Tavily 搜索"]
+    ASR -->|"对话转写打包"| RET
+    RET --> REF["参考文档"]
+    REF --> INJ["Reference embedding 流式注入<br/>ARC-Encoder 压 4× + linear 投影"]
+    subgraph KD["利用 keyword delay 的延迟感知 lead/body/tail 输出"]
+        direction TB
+        LEAD["lead 开场白<br/>盖住 ≤2s 检索延迟"] --> BODY["body 段生成核心答案"]
+        BODY --> TAIL["tail 收尾"]
+    end
+    RET -->|"前端不等结果继续说"| LEAD
+    INJ -->|"按帧叠加进 12.5Hz 主干"| BODY
+```
+
 ### 关键设计
 
 **1. ⟨ret⟩ 触发 token + 异步后端：把同步 RAG 改成事件驱动的 tool call**

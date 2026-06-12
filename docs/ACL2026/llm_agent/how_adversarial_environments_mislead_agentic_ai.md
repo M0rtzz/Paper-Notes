@@ -45,6 +45,19 @@ tags:
 
 本文要回答的问题是：当工具本身说谎，Agent 会怎样崩溃，以及不同崩溃方式之间是否相互独立。承载实验的是 Potemkin 框架——它作为一个透明的 Man-in-the-Tool 代理插在 Agent 和工具之间，拦截工具调用的返回结果、施加对抗转换后再交还给 Agent，同时支持 MCP Server 和 Python Library 两种接入模式。在这个框架上作者分两条战役展开攻击：广度攻击投毒检索内容、攻击 Agent 的信念更新，深度攻击注入引文图的幻影节点、攻击 Agent 的导航规划；外加一组针对认知标记的诊断实验。整套评估横跨 7 个实验、约 11,000 次任务运行，最终量化出两类攻击鲁棒性彼此独立的"鲁棒性分裂"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Agent 发起工具调用"] --> B["Potemkin 透明代理（Man-in-the-Tool）<br/>拦截工具返回通道、施加对抗转换 τ"]
+    B -->|投毒检索内容| C["广度攻击 The Illusion<br/>诱导认知漂移，指标 DR"]
+    B -->|注入幻影节点| D["深度攻击 The Maze<br/>构造导航陷阱致策略崩溃，指标 ER / BW"]
+    B -->|改写认知标记| E["诚实的惩罚<br/>最小对 + McNemar 检验"]
+    C --> F["Agent 被改写后的环境观测误导"]
+    D --> F
+    E --> F
+    F --> G["鲁棒性分裂<br/>认知 / 导航两类鲁棒性相互独立"]
+```
+
 ### 关键设计
 
 **1. 广度攻击（The Illusion）：投毒内容诱导认知漂移**

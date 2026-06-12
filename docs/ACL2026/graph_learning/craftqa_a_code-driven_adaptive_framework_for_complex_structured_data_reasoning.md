@@ -43,6 +43,20 @@ CRAFTQA 想解决的是「统一结构化数据问答被固定函数集卡死」
 ### 整体框架
 输入是数据源 $\mathcal{D}$ 和问题 $\mathcal{Q}$。系统先把异构数据统一成 schema $\mathcal{D}_{schema}$ 和 Condition Graph $\mathcal{D}_{cg}$，让表格、KG、TKG 都能用同一套图查询接口访问。随后 LLM 在 few-shot prompt 下把问题翻译成一段逐步的 Python 代码序列 $\mathcal{C}=\{c_i\}_{i=1}^n$，执行器顺序跑这些代码、累积中间结果，最后得到答案 $\mathcal{A}$。形式化地写就是 $\mathcal{M}_{\theta}(\mathcal{D}_{schema}, \mathcal{Q}, \mathcal{P}) \rightarrow \mathcal{C}$ 再 $\textsc{Exec}(\mathcal{C}, \mathcal{D}_{cg}) \rightarrow \mathcal{A}$。关键在于这段代码不必全用预定义函数：常规步骤调函数库，遇到库里没有的操作就调一个「请帮我写个函数」的接口，由 CRAFT 模块补上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：数据源 D + 问题 Q"] --> B["统一表示<br/>schema + Condition Graph"]
+    B --> C["CodeSTEP 逐步代码推理<br/>问题 → reasoning path → 逐步 Python 代码"]
+    C -->|步骤在预定义函数库内| D["调用函数库<br/>get / union / count / sum …"]
+    C -->|超出预定义操作| E["CRAFT 动态函数生成<br/>现场写自包含函数"]
+    D --> F["代码验证与顺序执行<br/>interpreter 验证，失败重试 ≤ 3"]
+    E --> F
+    F --> G["中间结果累积 W"]
+    G -->|还有后续步骤| C
+    G -->|推理结束| H["输出答案 A"]
+```
+
 ### 关键设计
 
 **1. CodeSTEP 逐步代码推理：把推理和计算解耦成可执行、可检查的代码**

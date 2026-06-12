@@ -45,6 +45,19 @@ tags:
 
 这篇论文要解决的是：当 $N$ 个 LLM 对一道 $K$ 选项的选择题各自给出回答 $a_1, \ldots, a_N$ 后，怎么把它们聚合成一个比多数投票更准的答案。整套方法先做一步预处理——对每个问题随机打乱选项顺序，让正确答案之外的所有错误选项在统计上等概率出现，从而让回答的联合分布具备一种对称结构，正是这个结构让后面的最优解能写成闭式。聚合时按手头有什么信息分三档走：知道每个模型准确率就用 OW 做贝叶斯最优加权；一个标签都没有就用只依赖回答间相关性的 ISP，或者先用 ISP/拟合估出准确率再回到 OW（即 OW-I / OW-L）。最后把选出的答案按逆置换映射回原始选项顺序输出。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：N 个 LLM 对 K 选项题的回答 a_1 … a_N"]
+    A --> B["预处理：随机打乱选项<br/>使错误选项等概率、联合分布对称"]
+    B -->|已知各模型准确率| OW["Optimal Weight（OW）<br/>逆 sigmoid 加权 ω_i = σ_K⁻¹(x_i)<br/>贝叶斯最优"]
+    B -->|无标签·二阶相关性| ISP["Inverse Surprising Popularity（ISP）<br/>反转 SP 方向，用反事实条件概率打分"]
+    B -->|无标签·先估准确率| EST["OW-L / OW-I<br/>OW-L 拟合二阶概率反解 x_i<br/>OW-I 拿 ISP 结果当伪标签估 x_i"]
+    EST -->|代回 σ_K⁻¹(x_i)| OW
+    OW --> OUT["逆置换映射回原始选项<br/>输出聚合答案"]
+    ISP --> OUT
+```
+
 ### 关键设计
 
 **1. Optimal Weight（OW）：在已知准确率时把加权投票做到贝叶斯最优**

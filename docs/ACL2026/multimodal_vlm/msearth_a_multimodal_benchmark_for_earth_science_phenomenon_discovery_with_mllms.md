@@ -47,6 +47,20 @@ MSEarth 是 4 阶段流水线（Figure 2）：
 （3）**MSEarthQA 生成**：GPT-4o 在 refined caption 引导下生成 MCQ + open-ended 题目，强制问题"必须利用 raw 与 refined 之间的差异"，保证题目能被 paper 内容验证。
 （4）**多智能体投票 + PhD 校验**：5 模型（Qwen2.5-VL-7B/72B、InternVL2.5-7B/78B、GPT-4o）按 3 阶段过滤分级题目难度，最后随机抽样让 PhD 标注，去掉 216 道 MCQ + 89 道 open-ended 中的无效题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["地球科学论文采集与分类<br/>OpenDataLab 400K+ PDF → MinerU 解析 → 圈层粗分类 + Qwen-2.5-VL-72B 过滤 → 83K 篇"] --> B["Refined Caption 构造<br/>正则匹配图号 → 收集引用≥2句的段落作上下文 → GPT-4o 合成（37.56→136.29 词）"]
+    B --> C["MSEarthQA 生成<br/>GPT-4o 在 refined caption 引导下出题，强制利用 raw↔refined 差异"]
+    C --> D{"5 模型多智能体投票<br/>3 阶段难度分级"}
+    D -->|"Phase A：仅 raw caption，>40% 答错才进下阶段"| E["easy → 丢弃 / 留作训练"]
+    D -->|"Phase B：补 refined caption，>60% 答对"| F["specialized（缺知识）"]
+    D -->|"Phase C：仅 ≥70B 模型投票，>60% 答对"| G["hard（缺感知）"]
+    F --> H["PhD 校验去无效题"]
+    G --> H
+    H --> I["三类任务统一接口<br/>captioning / MCQ / open-ended 共享 question_id / images / reasoning_chain 元字段"]
+```
+
 ### 关键设计
 
 **1. Refined Caption：把正文里的推理链"补"回图旁**

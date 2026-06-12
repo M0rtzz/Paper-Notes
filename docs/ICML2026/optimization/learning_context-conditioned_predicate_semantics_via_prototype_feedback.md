@@ -50,6 +50,22 @@ AlignG 在这之上加两个串联模块：
 
 最终 $\tilde{\mathbf{e}}_j$ 用于谓词分类，**对齐损失却算到静态 $\bar{\mathbf{p}}_r$ 上**——这是整个框架的稳定锚。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["关系候选嵌入 e_j<br/>物体特征 + 类别词向量融合"]
+    P["静态全局原型 p̄_r<br/>PE-Net 词向量投影得到"]
+    A --> S1
+    P --> S1
+    S1["上下文条件化的原型更新（Stage 1）<br/>cross-attn 聚合关系候选 + GRUCell 门控增量<br/>→ image-specific 原型 p_r^(I)"]
+    A --> S2
+    S1 --> S2
+    S2["反向 cross-attention 的关系再校准（Stage 2）<br/>关系作 query 取 adapted 原型 + concat 投影<br/>→ 校准后关系嵌入 ẽ_j"]
+    S2 --> C["谓词分类"]
+    S2 --> L["静态原型锚定的对齐损失<br/>triplet margin 锚到 p̄_r，防原型-关系共谋漂移"]
+    P -.静态锚.-> L
+```
+
 ### 关键设计
 
 **1. 上下文条件化的原型更新（Stage 1）：把"这张图有哪些关系候选"注入原型**

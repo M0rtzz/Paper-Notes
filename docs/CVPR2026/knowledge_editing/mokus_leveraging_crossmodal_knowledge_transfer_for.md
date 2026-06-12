@@ -34,6 +34,16 @@ tags:
 ### 整体框架
 MoKus 要做的是"知识感知的概念定制"——既让模型记住概念长什么样，又让它理解概念背后的知识。它建在 LLM 文本编码器 + DiT 生成骨干（Qwen-Image）之上，分两阶段：第一阶段 Visual Concept Learning 用 LoRA 微调 MMDIT 的 self-attention 层，把一个稀有 token 学成概念的视觉表征（锚表征）；第二阶段 Textual Knowledge Updating 用知识编辑技术，把一条条自然语言知识映射到锚表征所在的文本空间，完成"知识→概念"的绑定。视觉只学一次，之后每加一条知识只需秒级更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["概念图像 + 稀有 token &lt;sks&gt;"] --> B["Visual Concept Learning<br/>LoRA 微调 DiT self-attention<br/>把 &lt;sks&gt; 训成锚表征（只学一次）"]
+    B --> C["锚表征<br/>连接概念与知识的中介"]
+    C --> D["Textual Knowledge Updating<br/>闭式解把每条知识写进<br/>LLM 编码器第18-26层（每条约7秒）"]
+    D --> E["含关联知识的文本提示输入 DiT"]
+    E -->|"跨模态知识迁移：文本里改的知识自然显现到图像"| F["生成知识感知的定制图像"]
+```
+
 ### 关键设计
 
 **1. 跨模态知识迁移现象：文本里改的知识会自己跑到图像里**

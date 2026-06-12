@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 AdapTime 把时序推理拆成 3 个原子动作（Reformulate / Rewrite / Review）加 1 个 LLM Planner，四者用同一个 backbone、纯 prompt 实现，不调用任何外部工具。给定文档 $C$ 和时序问题 $Q$，Planner 在每个潜在动作点先做一次"是/否"决策：要不要先把 $Q$ 拆成子问题、要不要把 $C$ 重写成时间锚定的结构化表示、初始答案信心够不够要不要做事实核验。被选中的动作依次执行、子答案聚合，最终给出答案——简单题可能一步直答，难题才会走满三步。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：文档 C + 时序问题 Q"] --> P1["LLM Planner 决策<br/>要不要拆问题"]
+    P1 -->|多跳/含时间约束| R1["Reformulate<br/>拆成可单点回答的子问题"]
+    P1 -->|单跳直答| P2["LLM Planner 决策<br/>要不要改写上下文"]
+    R1 --> P2
+    P2 -->|时间表达隐式分散| R2["Rewrite<br/>改写成日历日期锚定的时间线"]
+    P2 -->|时间已显式| ANS["在锚定事实上回答并聚合子答案"]
+    R2 --> ANS
+    ANS --> P3["LLM Planner 决策<br/>初始答案信心够不够"]
+    P3 -->|信心不足| R3["Review<br/>检索原文支撑句、冲突则修正"]
+    P3 -->|信心足够| OUT["最终答案"]
+    R3 --> OUT
+```
+
+> 三个动作 Reformulate / Rewrite / Review 全部由 LLM 纯 prompt 完成（关键设计 3 的 zero-tool 内化），Planner 在每个动作点门控是否执行。
+
 ### 关键设计
 
 **1. 三个原子时序推理动作：把已有方法的核心操作收敛成 LLM 能自主完成的最小动作集**

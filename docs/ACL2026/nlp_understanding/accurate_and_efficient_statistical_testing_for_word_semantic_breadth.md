@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 方法的输入是一对词：一个待评词 $u$ 和一个参考词 $k$，各自从语料里抽出 token 嵌入集 $X = \{\mathbf{x}_i\}_{i=1}^n$ 与 $Y = \{\mathbf{y}_j\}_{j=1}^m$（都已 $\ell_2$ 归一化到单位球面 $\mathbb{S}^{d-1}$），输出是一个 p 值，回答"$u$ 是否比 $k$ 语义更广"。整条流水线是：先算两词的均值方向 $\hat{\mu}_x, \hat{\mu}_y$，用一次 Householder 反射把 $X$ 旋转到 $Y$ 的均值方向上消除"方向差异"这个干扰因子，再把对齐后的两组点合并做置换检验，统计量取 mean resultant length 的对数差。整个置换过程进一步被改写成 GPU 上的批量矩阵乘法，让词表规模的两两比较变得可承受。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：词对 u, k 的 token 嵌入集<br/>X, Y（ℓ2 归一化到单位球面）"] --> B["算两词均值方向 μx, μy（脚手架）"]
+    B --> C["Householder 均值方向对齐<br/>H = I − 2uuᵀ，把 X 旋到 Y 的均值方向"]
+    subgraph FS["Fixed-Space 置换设计"]
+        direction TB
+        D["固定对齐空间，合并 Z = X′ ∪ Y"] --> E["置换检验<br/>统计量 T = log v(X′) − log v(Y)"]
+    end
+    C --> FS
+    FS --> F["GPU 批量化置换<br/>符号矩阵 S·X 一次算 B 次置换的 MRL"]
+    F --> G["输出 p 值（MC 置换 +1 校正）"]
+```
+
 ### 关键设计
 **1. Householder 均值方向对齐：用一次正交反射剥掉"方向差异"，只留下广度差异**
 

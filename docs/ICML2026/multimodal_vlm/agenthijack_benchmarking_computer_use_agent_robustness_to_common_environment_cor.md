@@ -48,25 +48,37 @@ benchmark 基于 OSWorld 构造，共 3321 个任务，注入 9 类常见 corrup
 
 在方法侧，AgentHijack-Agent 包含两个角色。action generator 是执行任务的 GUI Agent，基于 UI-TARS-1.5-7B，并通过 DA-GRPO 在不同破坏环境中训练以增强 grounding。onlooker 是环境旁观者，先在执行前检查初始环境是否异常，执行中持续总结环境变化，把历史截图和动作压缩为行为描述，帮助 action generator 判断“这是自己造成的变化，还是环境外部扰动”。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph CORRUPT["可配置九类常见环境破坏（注入 OSWorld，共 3321 任务）"]
+        direction TB
+        V["visual disruptors：弹窗/分辨率/标记/字幕/多窗口<br/>改观察空间"]
+        U["unexpected operations：误触/应用最小化<br/>改状态转移"]
+        E["environment errors：断网/登录验证<br/>改初始环境状态"]
+    end
+    CORRUPT --> ENV["受扰 GUI 环境，给出截图观察"]
+    ENV --> CHECK["Onlooker 环境检查<br/>执行前查初始异常，必要时请求重新初始化"]
+    CHECK --> AG["action generator（DA-GRPO 增强 grounding）<br/>输入 截图+指令+行为总结，输出下一步动作"]
+    AG --> ACT["执行动作，环境转移到新状态"]
+    ACT --> SUM["Onlooker 行为总结<br/>把环境变化压成描述写回历史记忆"]
+    SUM -->|未终止，回环下一步| AG
+    SUM -->|Done/Fail 或到步数上限| R["reward 判定最终状态是否完成任务"]
+```
+
 ### 关键设计
 
-1. **可配置的九类常见环境破坏**:
+**1. 可配置的九类常见环境破坏：把真实桌面的非理想情况系统化注入 benchmark**
 
-	- 功能：把真实桌面使用中的非理想情况系统化注入到 OSWorld 任务中。
-	- 核心思路：弹窗通过寻找可覆盖区域并绘制诱导文本实现；分辨率变化直接 resize 截图；marks 和 subtitle 在随机或指定区域绘制视觉干扰；multi apps 在初始状态启动无关应用；accidental touch 在指定步点击随机按钮；app minimization 触发 Win+D；network error 通过防火墙规则阻断外网；verification 用 Win+L 锁屏。
-	- 设计动机：这些破坏不是安全攻击，而是日常电脑使用中频繁出现的扰动。可配置参数让研究者能改变强度、内容和发生时间，避免 benchmark 只测一种固定 failure。
+现有 GUI benchmark 默认环境干净，而真实桌面充满弹窗、分辨率变化、误触、断网等日常扰动——它们不改变任务目标、也无恶意，却足以打断 Agent 的闭环执行。AgentHijack 据此把 9 类破坏按“扰动作用的层面”分成三组，正好对应 POMDP 里观察、转移、状态三处：visual disruptors（弹窗、分辨率变化、标记、字幕、多应用窗口）改变截图观察 $\mathcal{O}$，unexpected operations（误触、应用最小化）干扰状态转移 $\mathcal{T}$，environment errors（断网、登录验证）改变初始环境状态 $\mathcal{S}$。每类破坏都有具体注入手段：弹窗在可覆盖区域绘制诱导文本，分辨率变化直接 resize 截图，marks/subtitle 在随机或指定区域画视觉干扰，multi apps 启动无关应用，accidental touch 在指定步点击随机按钮，app minimization 触发 Win+D，network error 用防火墙规则阻断外网，verification 用 Win+L 锁屏。关键是每类破坏都用 YAML 暴露强度、内容、发生时机等参数，研究者能造出不同变体，避免 benchmark 只测一种固定 failure，也能分离地考察“强度 / 内容 / 位置”对鲁棒性各自的影响。
 
-2. **DA-GRPO 增强 grounding**:
+**2. DA-GRPO：在多种破坏环境中 rollout 来强化 grounding**
 
-	- 功能：让 action generator 在不同破坏环境中学习更稳健的定位和操作策略。
-	- 核心思路：对同一任务，在随机 corruption 环境中 rollout 多条响应，用任务成功奖励和格式奖励组成 $r_i=r_i^{success}+r_i^{format}$；若整组 rollout 全失败，就从 replay buffer 中替换一条历史成功轨迹，避免 advantage 全零导致训练没有正信号。目标是在 GRPO 的组相对优势估计中显式包含不同破坏下的轨迹。
-	- 设计动机：普通 SFT 需要大量轨迹且缺少自纠错；普通 GRPO 如果只在单一环境 rollout，无法学会跨破坏鲁棒性。DA-GRPO 用数据增强式环境扰动把 grounding 训练暴露在多种视觉和状态变化中。
+用 SFT 强化 grounding 需要大量轨迹、且学不到自纠错；普通 GRPO 虽能端到端优化，但只在单一（干净）环境 rollout，学不会跨破坏的鲁棒性。DA-GRPO（Data-Augmented GRPO）的关键改动是让同一条指令在随机抽取的破坏环境 $c\in\mathcal{C}$ 下 rollout 出一组响应 $\{o_i^c\}$，再用 GRPO 的组相对优势 $\hat{A}_{i,j}=(r_i-\mu)/\sigma$ 做归一化——这样组内比较天然覆盖了多种视觉与状态扰动；当 $c$ 恒为干净环境时它退化回普通 GRPO。奖励由任务成功奖励与格式奖励相加 $r_i=r_i^{success}+r_i^{format}$（完成任务得 1，schema 不合规罚 −1）。由于当前 Agent 成功轨迹稀少，一批 rollout 很可能全失败、组内优势全为零而没有正向学习信号；DA-GRPO 沿用 ARPO 的 experience replay buffer 缓存历史成功轨迹，一旦整批全失败就随机替换其中一条为已存的成功轨迹，保证每个 batch 至少有一条非零奖励信号可供模仿。
 
-3. **Onlooker 行为总结与环境检查**:
+**3. Onlooker：执行前环境检查 + 执行中行为总结的旁观者视角**
 
-	- 功能：给执行 Agent 增加一个持续观察环境的辅助视角。
-	- 核心思路：执行前，onlooker 根据外部错误信息库判断初始环境是否存在网络错误、登录验证等异常，必要时请求重新初始化；执行中，它记录每次环境变化并生成简短描述 $d_t$，把历史上下文从纯截图/动作序列改成截图加行为总结序列。
-	- 设计动机：GUI Agent 常把外部扰动误认为自己动作造成的结果，例如误触菜单后就被菜单吸引，或者窗口被最小化后继续盲点。onlooker 的总结能帮助模型恢复原任务线索，并提前拦截不可执行环境。
+GUI Agent 的历史上下文通常是纯“截图+动作”序列 $\{o_1,a_1,\dots\}$，带来两个老毛病——一是只盯自己动作引起的变化、忽略外部 unexpected operations，于是把误触、窗口最小化误归因为自己的操作；二是截图里 UI 元素太多、抓不住关键，遇到被触发的无关内容容易跑偏。Onlooker 是一个专门盯环境的辅助 Agent（默认也用微调后的 UI-TARS-1.5-7B），承担两件事：执行前，它对照一个外部错误信息库检查初始环境是否存在断网、登录验证等异常，发现就报错并请求重新初始化，避免 Agent 在不可执行环境里空耗；执行中，它记录每一次环境变化并压成简短描述 $d_t$，把上下文改写成 $\{o_1,d_1,\dots,o_t,d_t\}$，让 action generator 能分清“这是我造成的变化还是外部扰动”，从而恢复原任务线索。
 
 ### 损失函数 / 训练策略
 

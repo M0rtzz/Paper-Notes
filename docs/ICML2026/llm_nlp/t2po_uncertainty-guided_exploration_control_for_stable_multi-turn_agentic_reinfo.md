@@ -43,6 +43,17 @@ T$^2$PO 把多轮 agentic RL 的训练崩溃归因为"hesitation（犹豫）"—
 ### 整体框架
 T$^2$PO 的核心主张是：多轮 agentic RL 的训练崩溃不是 trade-off，而是 hesitation（犹豫）造成的探索效率低下——token 层过思考、turn 层重复无效。于是它在标准多轮 RL pipeline（base LLM + RFT 冷启动 + GRPO 类策略更新）之上，不动 reward、只在 rollout 阶段插两个干预：**TTI（Token-level Thinking Intervention）** 在思考链饱和时硬截断 think 段，**TDS（Turn-level Dynamical Sampling）** 在某个 turn 没带来信息增益时重采它。两个干预共享同一个底层量——自校准不确定性信号 $M_t$，token 层看它的逐步变化、turn 层看它聚合后的逐轮变化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Qwen3-4B + RFT 冷启动"] --> B["多轮 rollout<br/>逐 turn 生成 think 段 → action"]
+    B --> C["自校准不确定性信号 Mt<br/>归一化 entropy 与 confidence 融合"]
+    C --> D["TTI：token 层思考干预<br/>Mt 变化率饱和且过峰 → 硬截断 think 段"]
+    C --> E["TDS：turn 层动态重采<br/>turn 级信号 Φ 几何平均，belief 几乎不变 → 重采该 turn"]
+    D --> F["GRPO 类 critic-free 策略更新<br/>不改 reward，与 advantage 估计正交"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. 自校准不确定性信号 $M_t$：给 token/turn 干预一个在大词表下也靠谱的标量**
@@ -55,7 +66,7 @@ $$M_t=\alpha\tilde H_t+(1-\alpha)(1-\tilde C_t).$$
 
 **2. TTI（Token-level Thinking Intervention）：在 think 段停得恰到好处**
 
-token-level 的过思考表现为思考链拖很长但信息增益早已饱和。TTI 的做法是从最小前缀长度 $L_{\min}$ 之后开始监控 $M_t$ 的相邻变化 $\Delta_t^k=|M_t^k-M_{t-1}^k|$，一旦窗口 $N$ 内的平均变化跌破阈值 $\varepsilon$（即 $\frac{1}{N+1}\sum_{i=0}^N\Delta_{t-i}^k<\varepsilon$，认为"非犹豫"已经收敛），就在 $t^*+1$ 步把终止符 `</think>`（token 153668）的 logit 设为 $+\infty$、其余设为 $-\infty$，强制 $p_\theta(y_{t^*+1}=\texttt{</think>}\mid y_{\le t^*})=1$，随后按固定 queue $\mathcal{Q}=[\texttt{</think>},\backslash n,\texttt{<action>}]$ 注入以保证结构化输出。
+token-level 的过思考表现为思考链拖很长但信息增益早已饱和。TTI 的做法是从最小前缀长度 $L_{\min}$ 之后开始监控 $M_t$ 的相邻变化 $\Delta_t^k=|M_t^k-M_{t-1}^k|$，一旦窗口 $N$ 内的平均变化跌破阈值 $\varepsilon$（即 $\frac{1}{N+1}\sum_{i=0}^N\Delta_{t-i}^k<\varepsilon$，认为"非犹豫"已经收敛），就在 $t^*+1$ 步把终止符 `</think>`（token 151668）的 logit 设为 $+\infty$、其余设为 $-\infty$，强制 $p_\theta(y_{t^*+1}=\texttt{</think>}\mid y_{\le t^*})=1$，随后按固定 queue $\mathcal{Q}=[\texttt{</think>},\backslash n,\texttt{<action>}]$ 注入以保证结构化输出。
 
 这里最反直觉、也最关键的一点是：**不在 $M_t$ 峰值处截断**。$M_t$ 沿响应呈"先升后降"的 hump，峰值附近恰好是 task-specific token（如 WebShop 的商品名），那是高信息密度而非过思考，截了反伤性能；TTI 只在峰值之后的"收敛区"动手。配合 sliding window 平滑掉单点 spike、one-time activation（每条生成最多触发一次）和全局 $L_{\max}$ 兜底，它就成了一个直接、自适应、token 级的硬截断——比"不截 / 固定长度截 / 用 length penalty 间接控制"这几种旧做法都更精准。
 

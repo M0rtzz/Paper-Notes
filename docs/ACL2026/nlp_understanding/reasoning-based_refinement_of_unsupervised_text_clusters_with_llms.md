@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 三阶段后置精炼：输入为任意无监督聚类方法（如 HDBSCAN）产生的初始聚类，输出为精炼后的聚类集合及可解释标签。Stage 1 验证每个聚类的语义一致性，Stage 2 合并语义冗余的聚类，Stage 3 为精炼后的聚类生成并合并解释性标签。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始聚类<br/>任意无监督方法（HDBSCAN 等）"] --> B
+    subgraph S1["一致性验证"]
+        direction TB
+        B["取 top-5 代表文档<br/>LLM 生成摘要"] --> C["LLM 判断摘要是否被文档支持"]
+        C -->|不连贯| X["丢弃该聚类"]
+    end
+    C -->|连贯| D
+    subgraph S2["冗余裁决"]
+        direction TB
+        D["SBERT 嵌入聚类摘要<br/>算两两余弦相似度"] --> E["相似度 > τ=0.85<br/>合并同主题聚类"]
+    end
+    E --> F
+    subgraph S3["两阶段标签接地"]
+        direction TB
+        F["每个聚类生成候选标签"] --> G["SBERT 分组合并<br/>LLM 产出统一标签"] --> H["LLM 把文档重分配到合并标签"]
+    end
+    H --> Z["精炼聚类 + 可读标签"]
+```
+
 ### 关键设计
 
 **1. 一致性验证（Coherence Verification）：用语言理解揪出“几何上紧凑、语义上散架”的聚类**

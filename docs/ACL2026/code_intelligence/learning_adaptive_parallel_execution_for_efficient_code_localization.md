@@ -45,6 +45,22 @@ FuseSearch 的设计很克制：推理时只有三种工具，训练时才引入
 
 训练流程分两阶段。SFT 阶段用 Kimi-K2-Instruct 为 6K 个训练 query 生成约 24K 条候选轨迹，并用 file/function F1 与 tool efficiency 双指标筛选出约 6K 条高质量轨迹。RL 阶段以 SFT 模型为初始策略，用 GRPO 采样多条轨迹，根据定位质量和工具效率计算奖励，鼓励模型减少重复探索但不牺牲最终定位准确率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入：issue 描述 q"] --> AGENT["三工具极简定位接口<br/>每轮并行发 grep / glob / read_file（只读·语言无关）"]
+    AGENT --> ENT["输出：待修改代码实体集合 A"]
+    ENT --> EFF["tool efficiency 指标<br/>新实体比例 gᵢ，效率 e 取各调用均值"]
+    subgraph TRAIN["SFT+RL 联合质量-效率训练"]
+        direction TB
+        TEA["Kimi-K2 教师生成 ~24K 候选轨迹"] --> FIL["联合过滤：F1 ≥ ρ_F 且 e ≥ ρ_e → ~6K 条"]
+        FIL --> SFT["SFT：模仿既准又不冗余的并行行为"]
+        SFT --> RL["GRPO 强化学习<br/>奖励 R = αF1 + γ(F1·e)"]
+    end
+    EFF --> TRAIN
+    RL -->|更新策略| AGENT
+```
+
 ### 关键设计
 
 **1. 三工具极简定位接口：用只读工具换来跨语言与可并行**

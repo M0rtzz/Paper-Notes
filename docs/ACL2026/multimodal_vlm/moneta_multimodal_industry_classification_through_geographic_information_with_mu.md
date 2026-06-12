@@ -43,7 +43,24 @@ tags:
 
 ### 整体框架
 
-MONETA 框架有两种管线：(1) Zero-Shot——将所有可用资源一次性输入 MLLM，直接生成分类；(2) Multi-Turn——分两阶段：线索提取阶段中每种资源由独立的 MLLM agent 处理生成经济活动线索，决策阶段中决策 agent 综合所有线索和实体名称做最终分类。
+MONETA 框架有两种管线：(1) Zero-Shot——将所有可用资源一次性输入 MLLM，直接生成分类；(2) Multi-Turn——分两阶段：线索提取阶段中每种资源由独立的 MLLM agent 处理生成经济活动线索，决策阶段中决策 agent 综合所有线索和实体名称做最终分类。这两套管线都建立在「NACE-to-OSM 映射」打通的地理数据之上，运行后再用「线索分析方法论」对各 agent 做归因。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    MAP["NACE-to-OSM 映射构建<br/>Gemini 生成候选 OSM 标签 + 人工/GPT 迭代审核"]
+    MAP --> RES["多模态资源<br/>文本：网站/维基百科/Wikidata<br/>地理：OpenStreetMap/卫星图"]
+    RES -->|一次性全部输入| ZS["Zero-Shot 管线<br/>单次推理直接出 NACE 分类"]
+    RES -->|按模态分发| MT
+    subgraph MT["多轮多智能体管线（Multi-Turn）"]
+        direction TB
+        CE["线索提取：每种资源配一个 agent<br/>各自输出经济活动线索"]
+        CE --> DA["决策 agent<br/>综合线索 + 实体名 → NACE 分类"]
+    end
+    ZS --> OUT["NACE 20 类行业分类 + 解释"]
+    MT --> OUT
+    DA -.中间线索.-> CA["线索分析方法论<br/>频率向量 → 正确性/有效性归因"]
+```
 
 ### 关键设计
 

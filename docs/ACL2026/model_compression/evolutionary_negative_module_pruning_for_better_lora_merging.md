@@ -45,6 +45,22 @@ tags:
 
 ENMP 框架包含两个核心阶段：(1) 通过 CMA-ES 进化搜索在连续潜在空间中采样候选剪枝掩码；(2) 将掩码应用于 LoRA 适配器，剪除负面模块后再用现有方法（如 TIES、DARE）完成合并。搜索过程通过验证集性能迭代优化分布参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：多任务 LoRA 适配器"] --> B
+    subgraph S["CMA-ES 进化搜索（迭代约 60 代）"]
+        direction TB
+        B["采样潜在向量 z<br/>(N_pop=16 候选，均值初始化为 −1)"] --> C["动态阈值掩码映射<br/>取 z 中最大的 ⌊kN⌋ 个正值置 1"]
+        C --> D["负面模块剪枝<br/>按层整体剪除 q / k / v / out_proj"]
+        D --> E["现有方法合并<br/>TIES / DARE / KnOTS …"]
+        E --> F["验证集评估适应度"]
+        F --> G["更新均值与协方差矩阵"]
+        G -->|未收敛| B
+    end
+    S -->|收敛| H["输出：剪枝后合并的多任务模型"]
+```
+
 ### 关键设计
 
 **1. 负面模块剪枝机制：合并前先把拖后腿的 LoRA 层摘掉**

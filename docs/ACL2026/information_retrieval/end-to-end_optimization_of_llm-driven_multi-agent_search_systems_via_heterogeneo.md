@@ -43,7 +43,22 @@ tags:
 
 ### 整体框架
 
-MHGPO 要解决的是"如何不靠 critic、也不退化成单智能体优化，就把 Rewriter→Reranker→Answerer 这条搜索链端到端训起来"。它让三个智能体共享同一个 LLM 骨干，对每个输入问题采样 $G$ 条完整轨迹，用 Answerer 答案与 gold 的 F1 作为终端奖励；这个奖励先沿轨迹反向传播、归因到上游每个智能体，再在异构组内做相对优势估计，最后以 PPO 目标加 KL 正则更新共享骨干。输入是原始问题，中间产物是多条带搜索动作的轨迹，输出是一个被系统级成功信号优化过的多智能体策略。
+MHGPO 要解决的是"如何不靠 critic、也不退化成单智能体优化，就把 Rewriter→Reranker→Answerer 这条搜索链端到端训起来"。它让三个智能体共享同一个 LLM 骨干，对每个输入问题采样 $G$ 条完整轨迹（采样策略决定在哪个智能体处分叉、由此形成同构/异构组），用 Answerer 答案与 gold 的 F1 作为终端奖励；这个奖励先沿轨迹反向传播、归因到上游每个智能体，再在异构组内做相对优势估计，最后以 PPO 目标加 KL 正则更新共享骨干。输入是原始问题，中间产物是多条带搜索动作的轨迹，输出是一个被系统级成功信号优化过的多智能体策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph RO["多智能体 Rollout（共享 LLM 骨干，采样 G 条轨迹）"]
+        direction TB
+        RW["输入问题 q → Rewriter 分解检索查询"] -->|"检索：Contriever + Wikipedia"| RK["Reranker 选相关片段"]
+        RK --> AN["Answerer 生成答案"]
+    end
+    RO --> REW["终端奖励：答案与 gold 的 F1"]
+    REW --> BP["反向奖励传播<br/>终端奖励回传、归因到上游各智能体"]
+    BP --> HG["异构组优势估计<br/>同根查询、不同中间决策的轨迹组内算相对优势"]
+    HG --> UP["PPO + KL 更新共享骨干"]
+    SS["采样策略 IS / FoF / RR<br/>选分叉点、决定同构 / 异构组构成"] -.->|"决定 G 条轨迹与分组"| RO
+```
 
 ### 关键设计
 

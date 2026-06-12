@@ -47,7 +47,21 @@ ParalESN 把一个块拆成两段：(i) **储备池**——复数域线性递推
 
 $h^{(\ell)}_t = (1-\tau^{(\ell)}) h^{(\ell)}_{t-1} + \tau^{(\ell)}\left(\Lambda^{(\ell)}_h h^{(\ell)}_{t-1} + W^{(\ell)}_{in} z^{(\ell-1)}_t + b^{(\ell)}\right)$
 
-其中 $\Lambda^{(\ell)}_h \in \mathbb{C}^{N_h \times N_h}$ 是**对角复数转移矩阵**，$h^{(\ell)}_t \in \mathbb{C}^{N_h}$，混合后 $z^{(\ell)}_t \in \mathbb{R}^{N_h}$。由于递推线性，泄漏系数可以吸收进等效转移矩阵 $\bar{\Lambda}^{(\ell)}_h = (1-\tau^{(\ell)})I + \tau^{(\ell)}\Lambda^{(\ell)}_h$，整段更新可写成 first-order 线性递推，符合 associative scan 的代数前提，时间复杂度从 $O(T)$ 降到 $O(\log T)$。
+其中 $\Lambda^{(\ell)}_h \in \mathbb{C}^{N_h \times N_h}$ 是**对角复数转移矩阵**，$h^{(\ell)}_t \in \mathbb{C}^{N_h}$，混合后 $z^{(\ell)}_t \in \mathbb{R}^{N_h}$。由于递推线性，泄漏系数可以吸收进等效转移矩阵 $\bar{\Lambda}^{(\ell)}_h = (1-\tau^{(\ell)})I + \tau^{(\ell)}\Lambda^{(\ell)}_h$，整段更新可写成 first-order 线性递推，符合 associative scan 的代数前提，时间复杂度从 $O(T)$ 降到 $O(\log T)$。读出层最终汇聚所有 $L$ 层的混合态 $z^{(1)}_t, \dots, z^{(L)}_t$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入序列 x_t"] --> R1
+    subgraph BLK["[储备池 + 混合层] 块 × L（深层堆叠，全部未训练）"]
+        direction TB
+        R1["复数对角线性递推（储备池）<br/>Λ_h 对角 → associative scan 并行 O(log T)"]
+        R1 --> M1["1D 卷积混合层<br/>tanh(ℜ(W_mix ∗ h))，重新耦合各通道"]
+        M1 -->|"层间 ring 输入 W_in：循环移位 + 逐元素缩放"| R1
+    end
+    M1 -->|"汇聚各层混合态 z^(1..L)"| RO["线性读出（唯一可训练）<br/>岭回归 / 最小二乘闭式求解"]
+    RO --> Y["输出 y_t（回归逐步）/ y_T（分类取末态）"]
+```
 
 ### 关键设计
 

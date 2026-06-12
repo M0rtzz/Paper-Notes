@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 CVA 把"人怎样行动"拆成 S-O-R 的三段：情境（Context）作为刺激、被激活的价值维度（Value）作为有机体内部状态、行为（Action）作为反应，目标是让智能体在给定情境与激活价值下产出忠实于真实人类的行为，而不是把价值压成漫画式原型。整条流程走"生成-验证"两步：先在 CVABench 真实轨迹上用 SFT+DPO 校准基础 LLM 的价值-行为映射（VMC 阶段），把它的输出分布拉回真实条件分布；推理时让校准后的模型对当前情境采样多个候选行为，再交由一个独立训练的 Value Verifier 打分挑选最符合激活价值的那个（VDR 阶段）。关键在于把"判断哪个行为更真实"这件事从 LLM 自己手里拿走，交给在真实人类数据上训练的外部验证器，从而切断自参照偏差导致的价值极化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["CVABench 基准<br/>110 万真实轨迹 + GPV 标注 Schwartz 10 维价值"]
+    CTX["情境 C + 激活价值 V"]
+    subgraph VMC["价值-行为映射校准（VMC）"]
+        direction TB
+        SFT["SFT 对齐真实人类条件分布"] --> DPO["DPO 偏好优化<br/>细腻行为为正、漫画夸张为负"]
+    end
+    DATA --> VMC
+    VMC --> LLM["校准后的 LLM"]
+    CTX --> LLM
+    LLM --> SAMPLE["采样 N 个候选行为"]
+    subgraph VDR["价值驱动验证器（Value Verifier）"]
+        direction TB
+        SCORE["验证器给每个候选打一致性得分"] --> SELECT["取得分最高者"]
+    end
+    SAMPLE --> VDR
+    DATA -. 训练信号 .-> VDR
+    VDR --> OUT["最终行为（最忠实于真实人类）"]
+```
+
 ### 关键设计
 
 **1. 价值-行为映射校准（VMC）：先把 LLM 内在的价值扭曲掰回来**

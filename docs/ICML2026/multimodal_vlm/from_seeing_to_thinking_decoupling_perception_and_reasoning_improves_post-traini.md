@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 方法分为两大块：**(1) 感知数据合成**——把 DOCCI 的 15K 图文对反向生成"看图才能答"的 QA，并用两次"图 vs caption"对比过滤出真正考感知的样本；**(2) 分阶段 GRPO 训练**——把三类数据按 $\mathcal{D}_{\text{perc}} \rightarrow \mathcal{D}_{\text{text}} \rightarrow \mathcal{D}_{\text{vis}}$ 的顺序依次跑相同 epoch，每个 stage 用同一套 GRPO 超参，视觉编码器全程开启。输出是一个在视觉数学和感知 benchmark 同时变强、且推理 trace 更短的 VLM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph SYN["感知数据合成 + 双模型差分过滤（设计 1）"]
+        direction TB
+        A["DOCCI 15K 图文对"] --> B["Qwen2.5-72B 由 caption<br/>生成感知 QA"]
+        B --> C["差分过滤：只留 图答错 ∧ caption 答对<br/>(Qwen2.5-VL 7B / 32B 取交集)"]
+    end
+    C --> D["感知数据 D_perc"]
+    E["文本推理 D_text<br/>(ORZ-Math-13k)"]
+    F["视觉推理 D_vis<br/>(CLEVR-Math / GeoQA 等)"]
+    subgraph STAGE["能力维度分阶段 GRPO（设计 2）"]
+        direction TB
+        G["阶段1 感知<br/>用 RLVR 而非 caption SFT（设计 3）"] --> H["阶段2 文本推理"]
+        H --> I["阶段3 视觉推理"]
+    end
+    D --> G
+    E --> H
+    F --> I
+    I --> J["后训练 VLM：感知↑ / 推理↑<br/>推理 trace 缩短 20.8%"]
+```
+
 ### 关键设计
 
 **1. 感知数据合成 + 双模型差分过滤：造出"必须看图才能答"的 QA，堵住语言先验偷答**

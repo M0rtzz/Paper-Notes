@@ -45,6 +45,25 @@ LR-SGS 提出利用 LiDAR 反射率引导的结构感知 Salient Gaussian 表示
 
 LR-SGS 想解决的是纯相机 3DGS 在夜间、逆光等复杂光照下重建不稳定的问题，办法是把 LiDAR 里一直被忽视的反射率和结构信息接进 Gaussian 表示。整条流水线这样转：先把每帧 LiDAR 的原始强度校正成光照不变的反射率，并从点云里挑出边缘、平面、材质突变这三类"结构关键点"；用这些特征点初始化一批参数更省、专门贴合边缘和平面的 Salient Gaussian，再用常规 SfM 点补上其余的 Non-Salient Gaussian。两类 Gaussian 一起放进背景/动态物体/天空的场景图，渲染出彩色图、深度图和反射率图后，用 Color Loss、LiDAR Loss 和跨模态 Joint Loss 联合优化每个 Gaussian 的位置、不透明度、尺度、旋转、外观和反射率属性。训练过程中还会根据每个 Gaussian 实际呈现的形状，在 Salient 与 Non-Salient 之间双向切换。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    LID["LiDAR 原始强度 + 点云"] --> CAL["LiDAR 强度校准<br/>按距离/入射角反解光照不变反射率 ρ"]
+    CAL --> RMAP["稀疏反射率图 F_gt（监督信号）"]
+    LID --> FEAT["LiDAR 特征点初始化<br/>筛边缘/平面/反射率突变三类关键点"]
+    FEAT --> SAL["Salient Gaussian 结构感知表示<br/>主方向 + 共享非主导尺度"]
+    SFM["SfM 点"] --> NSAL["Non-Salient Gaussian"]
+    SAL --> GRAPH["场景图<br/>背景 / 动态物体 / 天空"]
+    NSAL --> GRAPH
+    GRAPH --> REND["渲染彩色图 / 深度图 / 反射率图"]
+    REND --> OPT["联合优化<br/>Color Loss + LiDAR Loss"]
+    RMAP --> OPT
+    REND --> JOINT["RGB-反射率跨模态一致性<br/>对齐梯度方向与幅度（Joint Loss）"]
+    OPT --> TRANS["改进密度控制与 Salient Transform"]
+    JOINT --> TRANS
+    TRANS -->|"按形状晋升/降级，双向切换"| GRAPH
+```
+
 ### 关键设计
 
 **1. LiDAR 强度校准：把强度还原成光照不变的材质反射率**

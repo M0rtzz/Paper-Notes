@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 HoloFair 要解决的是"T2I 模型在中性 prompt 下就有人口学偏见、加上语义触发词后多样性还会瞬间坍塌"这件事，并把"测得出偏见"和"训得掉偏见"装进同一套基础设施。它先合成 Gen/Eval/Train 三个 prompt 集并配一份统一了 FairFace 分类体系（性别 2 类、年龄 3 类、种族 5 类）的真实人像数据集 RBD，在上面训出 SpaFreq 双流分类器；这个分类器既给 T2I 输出打属性标签供 MGBI 指标评分，又直接充当 Fair-GRPO 的奖励模型，对目标 T2I（SD3.5M / SD1.5）的 LoRA 做 RL 微调。换句话说，评估用的尺子和优化用的信号是同一把，天然保证去偏目标和评测口径一致。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Prompt Sets（Gen/Eval/Train）+ RBD 真实人像数据集"] --> B["SpaFreq 双流属性分类器<br/>空间 DINOv2 + 频域小波，自适应融合"]
+    B -->|"输出属性标签"| C["MGBI 多属性几何均值公平指标<br/>默认熵 × 语义触发熵的几何均值"]
+    B -->|"分布距均匀程度 = 奖励"| D["Fair-GRPO 多属性 per-prompt 对数比例奖励<br/>KL 正则下做 LoRA 微调"]
+    C --> E["8 个主流 T2I 模型公平性评测"]
+    D --> F["去偏后 T2I（SD3.5M / SD1.5）"]
+```
+
 ### 关键设计
 
 **1. SpaFreq 双流属性分类器：把"被语义绑架的纹理细节"重新捞回来**

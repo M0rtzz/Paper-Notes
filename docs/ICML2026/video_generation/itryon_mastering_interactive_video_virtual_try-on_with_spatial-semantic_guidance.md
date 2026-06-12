@@ -41,7 +41,20 @@ iTryOn 首次定义"交互式视频虚拟试衣"任务——让人在视频里**
 ## 方法详解
 
 ### 整体框架
-iTryOn 要让视频里的人不只是被动展示衣服，而是真去拉拉链、提衣角、拉伸面料。输入是源视频 $V_{\text{src}}$、目标衣物 $G$、骨骼姿态 $V_{\text{pose}}$、衣物无关表示 $V_{\text{agn}}$ 和交互指导 $\mathcal{C}$，输出试衣视频 $\hat{V}$。整条管线先用冻结的 Wan 编码器把源视频和各类条件编进潜空间，再让 DiT 主干在去噪时**并行**接收三路条件——Context Blocks 管整体身体与骨骼，Interaction Guider 管 3D 手部的精细接触，语义侧注入全局描述加带时间戳的动作标题，去噪完再解码回视频。三个关键设计分别堵住三个洞：3D 手部先验补空间深度、A-RoPE 把动作标题钉到对应帧、AC Loss 把稀疏交互帧的学习信号顶起来。
+iTryOn 要让视频里的人不只是被动展示衣服，而是真去拉拉链、提衣角、拉伸面料。输入是源视频 $V_{\text{src}}$、目标衣物 $G$、骨骼姿态 $V_{\text{pose}}$、衣物无关表示 $V_{\text{agn}}$ 和交互指导 $\mathcal{C}$，输出试衣视频 $\hat{V}$。整条管线先用冻结的 Wan 编码器把源视频和各类条件编进潜空间，再让 DiT 主干在去噪时**并行**接收三路条件——Context Blocks（脚手架，管整体身体与骨骼）、Interaction Guider 管 3D 手部的精细接触，语义侧注入全局描述加带时间戳的动作标题，去噪完再解码回视频。三个关键设计分别堵住三个洞：3D 手部先验补空间深度、A-RoPE 把动作标题钉到对应帧、AC Loss 把稀疏交互帧的学习信号顶起来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["源视频 + 目标衣物<br/>骨骼姿态 + 衣物无关表示 + 交互指导"] --> ENC["冻结 Wan 编码器<br/>编进潜空间"]
+    ENC --> DIT["DiT 去噪主干<br/>并行接收三路条件"]
+    CTX["Context Blocks（脚手架）<br/>整体身体 + 骨骼对齐"] --> DIT
+    HAND["3D 手部先验空间指导<br/>HaMeR 手部网格 → Interaction Guider"] --> DIT
+    SEM["动作感知 RoPE（A-RoPE）<br/>全局描述 + 时间戳动作标题钉到对应帧"] --> DIT
+    DIT -->|"训练时仅在交互帧加权"| AC["动作感知约束损失（AC Loss）<br/>放大稀疏交互帧学习信号"]
+    DIT --> DEC["解码回视频"]
+    DEC --> OUT["交互式试衣视频"]
+```
 
 ### 关键设计
 

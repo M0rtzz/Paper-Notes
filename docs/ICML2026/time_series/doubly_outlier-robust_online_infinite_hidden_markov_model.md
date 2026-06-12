@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BR-iHMM 的目标是让在线 iHMM 在观测空间和状态空间**同时**抗异常值，整套推断用 Particle Learning（SMC）跑、以 $B$ 步为一个 batch。每个 batch 内先用各粒子的状态 $s_t^{(i)}$ 对未来 $B$ 步做预测 $\hat y_{t+1:t+B}$，再用 IMQ 权重 $w_{l,t}^{(i)} = W(y_{t+b}, \hat y_{l,t+b|t})$ 给观测降权，然后计算只允许在 batch 边界切换状态的 batched posterior $\nu(s_{1:t+B})$，ESS 过低就重采样，最后用 WoLF 更新活跃状态的高斯后验 $\Psi$、用 Antoniak 辅助变量更新 HDP 结构参数 $\Phi$。关键在于 batch 内部强制 self-transition，所以状态采样每 batch 只做一次，从根上避开了 batch 长度 $B$ 带来的路径指数爆炸。
+BR-iHMM 的目标是让在线 iHMM 在观测空间和状态空间**同时**抗异常值，整套推断用 Particle Learning（SMC）跑、以 $B$ 步为一个 batch。每个 batch 内先用各粒子的状态 $s_t^{(i)}$ 对未来 $B$ 步做预测 $\hat y_{t+1:t+B}$，再用 IMQ 权重 $w_{l,t}^{(i)} = W(y_{t+b}, \hat y_{l,t+b|t})$ 给观测降权、算出批量预测似然作为粒子权重 $\omega$；ESS 过低就重采样，然后用只允许在 batch 边界切换状态的 batched posterior $\nu(s_{1:t+B})$ 一次性采出整段状态路径，再用 Antoniak 辅助变量更新 HDP 结构参数 $\Phi$、用 WoLF 更新活跃状态的高斯后验 $\Psi$。关键在于 batch 内部强制 self-transition，所以状态采样每 batch 只做一次，从根上避开了 batch 长度 $B$ 带来的路径指数爆炸。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["流式观测 y（含异常值），以 B 步为一个 batch<br/>各粒子用当前状态预测未来 B 步 ŷ"] --> C["WoLF 加权观测更新<br/>IMQ 权重给异常观测降权"]
+    C --> D["批量预测似然 → 更新粒子权重 ω"]
+    D -->|"ESS ≤ τ"| E["重采样粒子 + 重置权重"]
+    D -->|"ESS > τ"| F["归一化权重"]
+    E --> G["批量推断 + Degenerate Sticky HDP<br/>batch 内强制自转移，只在边界采一次状态"]
+    F --> G
+    G --> H["Antoniak 辅助变量 + State Pruning<br/>更新 HDP 结构 Φ、剪枝老旧 regime"]
+    H --> I["WoLF 更新高斯后验 Ψ<br/>残差大则 Kalman 增益趋零、冻住后验"]
+    I -->|"t ← t+B 回环"| C
+    I --> J["输出一步预测 + regime 分割"]
+```
 
 ### 关键设计
 

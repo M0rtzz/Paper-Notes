@@ -49,6 +49,21 @@ tags:
 
 之后第 5 节用两个独立的归约（Algorithm 4 和 Algorithm 5）把延迟反馈和时变记忆都翻译成 Algorithm 3 的输入。
 
+下图按论文的"先建底盘、再精炼、再归约"思路串起三个核心设计（元算法层 Algorithm 2 是借用的标准 parameter-free hedging，作为脚手架并入第一步）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    IN["问题：无约束 OCO ＋ 时变移动代价 ＋ 动态比较器"]
+    IN --> D1
+    D1["正则器编码移动代价<br/>Composite MD（Alg 1）：φ_t=(ηβ_t²+γ)‖w‖，β_t=‖g_t‖+λ_{t+1}<br/>＋元算法 Alg 2：O(log T) 学习率几何网格 hedging 保 parameter-free"]
+    D1 -->|得到含二阶 λ_t² 的动态遗憾界| D2
+    D2["自适应一阶批处理（Alg 3）<br/>冻结决策、累积梯度 H_τ，仅当 ‖H_τ‖>λ_{t+1} 才触发更新<br/>把 λ_t² 依赖压成一阶 λ_t‖g_t‖"]
+    D2 -->|得到一阶最优底盘| D3
+    D3["两个归约：延迟 / 记忆 → 移动代价<br/>延迟反馈：λ_t=G·|m_t|（缺失梯度数）；时变记忆：λ_t=G·ξ_t<br/>翻译成伪移动代价后复用 Alg 3"]
+    D3 --> OUT["三类设定（移动代价 / 延迟 / 记忆）统一刷新动态遗憾 SOTA"]
+```
+
 ### 关键设计
 
 **1. 把时变移动代价编码进正则器：让 mirror descent 在未来要付高代价时自动谨慎**

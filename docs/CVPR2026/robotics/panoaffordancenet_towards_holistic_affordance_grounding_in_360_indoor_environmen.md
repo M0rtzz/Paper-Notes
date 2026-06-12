@@ -39,6 +39,23 @@ tags:
 
 PanoAffordanceNet 要解决的是「affordance 研究只看受限视角、对不上机器人 360° 行动空间」的错配，做成首个面向全景室内场景的整体 affordance 定位框架。它是端到端的 one-shot 学习框架：视觉端用 DINOv2（ViT-B/14）提 patch 级特征 $\mathbf{F}_v \in \mathbb{R}^{B \times L \times D}$，在 Transformer 注意力层插 LoRA 低秩矩阵适配 ERP 畸变又避免过拟合；文本端用 CLIP 文本编码器（ViT-B/16）配 CoOp prompt 学习器生成上下文感知文本嵌入 $\mathbf{F}_t \in \mathbb{R}^{B \times C \times D}$。特征送入畸变感知频谱调制器（DASM）在频域补偿全景畸变，再经含全球面稠密化头（OSDH）的球面感知层级解码器从稀疏激活恢复拓扑连续的功能区域，最后由像素级、分布级、区域-文本三层目标联合监督。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["360° ERP 全景图 + affordance 类别文本"]
+    subgraph ENC["双编码器特征提取"]
+        direction TB
+        V["视觉端 DINOv2 ViT-B/14<br/>插 LoRA 适配 ERP 畸变"]
+        T["文本端 CLIP + CoOp<br/>上下文感知文本嵌入"]
+    end
+    I --> ENC
+    ENC --> D["畸变感知频谱调制器 DASM<br/>跨模态注入 → 高低频分解 → HFEM / LFSM → 门控融合"]
+    D --> G["全局语义发现<br/>文本 query 交叉注意力 → 初始 affordance 图"]
+    G --> O["全球面稠密化头 OSDH<br/>视觉自相似亲和 + top-k 种子传播 → 稠密化"]
+    O --> L["多层目标联合监督<br/>像素级 BCE + 分布级 KL + 区域-文本 RTC"]
+    L --> Y["拓扑连续的全景 affordance 热图"]
+```
+
 ### 关键设计
 
 **1. 畸变感知频谱调制器 DASM：把全景畸变拆成高低频分别补偿**

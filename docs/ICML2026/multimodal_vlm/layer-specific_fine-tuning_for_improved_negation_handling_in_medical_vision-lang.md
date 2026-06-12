@@ -40,7 +40,24 @@ NAST 用因果追踪 (causal tracing) 算出 CLIP 文本编码器各层对否定
 ## 方法详解
 
 ### 整体框架
-NAST 由三块组成：(i) MedNega-CXR 诊断基准——基于 MIMIC-CXR 用 LLM 生成肯定-否定 MCQ 对，由两位放射科医生审过；(ii) 上下文否定微调数据集——基于 CAD 标注把每条结构化事实 $(\text{condition}, \text{existence}, \text{location}, \text{severity})$ 做"只改一个属性"的反事实扰动，得到约百万图文对；(iii) NAST 算法——先用 causal tracing 算文本编码器每层每位置的 CTE，再用层级化加权梯度更新做 LoRA 微调，目标是 contrastive loss + claim-ranking loss 的加权和。
+NAST 由三块组成：(i) MedNega-CXR 诊断基准——基于 MIMIC-CXR 用 LLM 生成肯定-否定 MCQ 对，由两位放射科医生审过；(ii) 上下文否定微调数据集——基于 CAD 标注把每条结构化事实 $(\text{condition}, \text{existence}, \text{location}, \text{severity})$ 做"只改一个属性"的反事实扰动，得到约百万图文对；(iii) CTE-加权层级化 LoRA 微调——先用 causal tracing 算文本编码器每层每位置的 CTE，归一化为层权重 $\alpha_\ell$，再以 $\alpha_\ell^\beta$ 缩放每层 LoRA 梯度做微调，目标是 contrastive loss + claim-ranking loss 的加权和。下图按"数据准备 → 因果定位 → 层级化微调"展开整条 pipeline，三个贡献模块（基准、数据集、CTE-加权微调）对应下面三个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MIMIC-CXR（+CAD / CheXpert 标注）"] --> B["MedNega-CXR 诊断基准<br/>仅极性不同的 MCQ 对"]
+    A --> C["上下文否定微调数据集<br/>单属性反事实扰动 → 约百万图文对"]
+    A --> E
+    subgraph NAST["CTE-加权层级化 LoRA 微调"]
+        direction TB
+        E["因果探测对（severe X vs no X）<br/>因果追踪算 CTE(ℓ,p)"] --> G["聚合 + min-max 归一化<br/>→ 层权重 α_ℓ"]
+        G --> H["按 α_ℓ^β 缩放每层 LoRA 梯度 g_ℓ"]
+    end
+    C --> I["LoRA 微调（backbone 冻结）<br/>L = λ·L_CLIP + (1−λ)·L_claim"]
+    H --> I
+    I --> J["否定感知医学 VLM"]
+    J -.评测.-> B
+```
 
 ### 关键设计
 

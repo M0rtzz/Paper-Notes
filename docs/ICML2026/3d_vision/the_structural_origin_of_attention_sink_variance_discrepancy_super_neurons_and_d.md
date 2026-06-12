@@ -43,25 +43,29 @@ tags:
 ### 整体框架
 作者先做"现象诊断"(Sec 3):证明 layer 2 onset、norm 同步暴涨;再做"因果定位"(Sec 3.1-3.2):证明 value aggregation 引入位置方差差异,且用两种 controlled intervention (mask 干预、变量放大) 在**任意位置**复现 sink;再做"传播链分析"(Sec 4):逐层追踪方差差异如何被 $\mathbf{W}_O$ 保留 → 触发 super neurons → 经 sparse $\mathbf{W}_{\text{down}}$ 形成维度差异 → 经 RMSNorm 退化成单个基向量 → 锁死 QK 形成 sink;最后做"工程干预"(Sec 5):提出 head-wise RMSNorm 从根抑制方差差异,在预训练阶段不仅消除 sink 还加速收敛。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["因果掩码下首 token 只 attend 自身<br/>缺乏 value 聚合"] --> B["位置方差差异<br/>首 token 成高方差离群点（经 W_O 保留）"]
+    B --> C["Super Neurons 选择性激活<br/>仅对首 token massive activation → 稀疏 W_down 单点 channeling → 维度悬殊"]
+    C --> D["RMSNorm 方向坍塌 + QK 锁定<br/>退化成固定基向量 → query 主方向与 sink key 对齐"]
+    D --> E["Attention Sink<br/>首 token 吃掉大量注意力"]
+    F["head-wise RMSNorm<br/>聚合后归一各 head 方差"] -.->|"从最上游切断方差差异"| B
+```
+
 ### 关键设计
 
-1. **位置方差差异 (Variance Discrepancy) 的诊断与因果验证**:
+**1. 位置方差差异（Variance Discrepancy）：把"为什么偏偏是首 token"钉死到 value aggregation 这一步**
 
-    - 功能:把"为什么是首 token"的根因定位到 value aggregation 这个 unique 操作上
-    - 核心思路:用全随机 token 序列 (排除 BOS 偏置) 测 Llama-2-7B layer 1 value aggregation 后的 dimension-wise variance,发现位置 0 的方差远高于其他位置,且随位置增加单调衰减;然后用两种**控制干预**验证因果性:(a) **Mask intervention** —— 把第 $k$ 个 token 的 attention mask 改成只 attend 自身,模拟首 token 的 unaggregated 状态,结果 $k$ 立即变成新 sink;(b) **Variance amplification** —— 用 $\mathbf{o}_k'^{(l)}=\boldsymbol{\mu}^{(l)}+\lambda\cdot(\mathbf{o}_k^{(l)}-\boldsymbol{\mu}^{(l)})$ 直接放大任意 token 的方差 ($\lambda>1$),也能制造新 sink;关键控制实验:单纯 scale norm $\lambda\cdot \mathbf{o}_k$ **不能**复现 sink,排除了"是 norm 大导致"的混淆
-    - 设计动机:这部分是全文的因果锚 —— 没有这两个干预实验,前文说的"方差差异是 root cause"只是相关性 (correlation),做了之后才是因果 (causation)
+整条因果链的源头要回答"为什么受宠的总是第一个 token"。作者用全随机 token 序列(排除 BOS 偏置)测 Llama-2-7B 第 1 层 value aggregation 之后的逐维方差,发现位置 0 的方差远高于其余位置、且随位置单调衰减——原因很朴素:因果掩码下首 token 只能 attend 自己($a_{0,0}=1$),后续 token 都在做 $i+1$ 个 value 向量的凸组合,凸组合自然把方差摊平,唯独首 token 没被平均、成了天然的高方差离群点。光有这个相关性还不够,作者再用两个控制干预把它坐实成因果:(a) **掩码干预**——把第 $k$ 个 token 的注意力掩码改成只 attend 自身、模拟首 token 的"未聚合"状态,结果 $k$ 立刻变成新的 sink;(b) **方差放大**——用 $\mathbf{o}_k'^{(l)}=\boldsymbol{\mu}^{(l)}+\lambda\cdot(\mathbf{o}_k^{(l)}-\boldsymbol{\mu}^{(l)})$($\lambda>1$)直接放大任意位置的方差,同样能凭空造出 sink。最关键的是反证实验:单纯放大范数 $\lambda\cdot\mathbf{o}_k$ 却**造不出** sink——干净地排除了"是 norm 大导致 sink"的混淆,真正的因是方差而非量级。这两个干预把前文的"方差差异是 root cause"从相关性升级成了因果性。
 
-2. **Super Neurons 的选择性激活与维度悬殊**:
+**2. Super Neurons 选择性激活:方差差异被 FFN 里少数神经元指数级放大成维度悬殊**
 
-    - 功能:解释方差差异如何被 FFN 中**少数特定神经元**指数级放大成维度坍塌
-    - 核心思路:对 SwiGLU FFN $\text{FFN}(\mathbf{x})=(\text{SiLU}(\mathbf{x}\mathbf{W}_{\text{gate}})\odot \mathbf{x}\mathbf{W}_{\text{up}})\mathbf{W}_{\text{down}}$,先发现 $\mathbf{W}_{\text{gate}}$/$\mathbf{W}_{\text{up}}$ 中存在少量超大范数的列向量 (super neurons,如 index 7890);追踪这些 neuron 对首 token 的响应,发现 cosine($\mathbf{x}_{\text{norm}}, \mathbf{w}_{\text{gate}}^{(7890)}$) 在首 token 上很高、其他位置接近 0,且 $\mathbf{W}_{\text{up}}^{(7890)}$ 投影出 massive activation —— 也就是 super neurons **只对首 token "开门"**;然后 $\mathbf{W}_{\text{down}}$ 中对应行 $\mathbf{w}_{\text{down}}^{(7890)}$ 是**重尾稀疏**的,大部分接近 0、少数几个维度 (如 dim 2533) 极大,把这个 massive activation 单点 channeling 到那几个 outlier 维度上;最终用 Dominance Ratio $\text{DomRatio}(\mathbf{h}_0)=\max_j|\mathbf{h}_{0,j}|/(\frac{1}{d}\sum_k|\mathbf{h}_{0,k}|)$ 量化这种维度悬殊,Llama-2 浅层就飙到 200+
-    - 设计动机:这一步把"统计层面的方差差异"翻译成"参数层面的几何坍塌",同时也解释了为什么 sink 在固定层数 (layer 2) 出现 —— 因为 super neurons 是预训练学到的固定结构,触发需要积累几层
+上一步只是 token 级的统计差异,本步解释它如何被 FFN 翻译成参数级的几何坍塌。对 SwiGLU 的 $\text{FFN}(\mathbf{x})=(\text{SiLU}(\mathbf{x}\mathbf{W}_{\text{gate}})\odot \mathbf{x}\mathbf{W}_{\text{up}})\mathbf{W}_{\text{down}}$,作者先发现 $\mathbf{W}_{\text{gate}}$/$\mathbf{W}_{\text{up}}$ 里有极少数范数超大的列向量(称作 super neurons,如 index 7890);追踪它们对首 token 的响应,发现 $\cos(\mathbf{x}_{\text{norm}}, \mathbf{w}_{\text{gate}}^{(7890)})$ 在首 token 上很高、在其他位置接近 0,于是 super neurons 几乎**只对首 token "开门"**、投出 massive activation。紧接着 $\mathbf{W}_{\text{down}}$ 对应的行 $\mathbf{w}_{\text{down}}^{(7890)}$ 是**重尾稀疏**的——大部分维度接近 0、个别维度(如 dim 2533)极大,把这股 massive activation 单点 channeling 到那几个离群维度上。最终用 Dominance Ratio $\text{DomRatio}(\mathbf{h}_0)=\max_j|\mathbf{h}_{0,j}|/(\frac{1}{d}\sum_k|\mathbf{h}_{0,k}|)$ 量化这种悬殊,Llama-2 浅层就飙到 200+。这一步也顺带回答了"为什么 sink 卡在固定层数(layer 2)才出现"——super neurons 是预训练学到的固定结构,方差差异要逐层累积到足以触发它们才行,所以 sink 是确定性地、而非随机地在某层冒出来。
 
-3. **RMSNorm 方向坍塌 + QK 结构锁定**:
+**3. RMSNorm 方向坍塌 + QK 结构锁定:维度悬殊为何必然翻译成对首 token 的注意力 lock-in**
 
-    - 功能:解释维度悬殊为何**必然**翻译成 QK 注意力分数对首 token 的 lock-in
-    - 核心思路:当 $\mathbf{x}_0$ 在 dim $c$ 上有压倒性大值 $\lambda$ 时,RMSNorm 的归一化常数几乎完全由 $\lambda$ 决定,输出退化为 $\text{RMSNorm}(\mathbf{x}_0)\approx \text{sgn}(\lambda)\sqrt{d}\gamma_c\cdot \mathbf{e}_c$ (一个固定方向的基向量);经过 key projection 后 $\mathbf{k}_0^{(h)}\approx \pm\sqrt{d}\cdot (\mathbf{W}_K^{(h)})_{c,:}$ (变成 $\mathbf{W}_K$ 的第 $c$ 行);用 SVD 测 query matrix 的主方向 $\mathbf{u}_1^{(h)}$ 与 $\mathbf{k}_0^{(h)}$ 的 cosine alignment,发现高 alignment 的 head 在所有 token 上的 QK 点积都是正的 (positive ratio ~100%),也就是说这些 head 的 query 结构性地与 sink key 对齐,迫使大注意力分数
-    - 设计动机:这一步关闭了因果链 —— "高方差 → super neurons → 维度差异 → 固定方向 → 高 QK score → sink",每一步都有可观测、可量化的中间变量,且没有未解释的跳跃
+最后一环关闭因果链。当 $\mathbf{x}_0$ 在某维 $c$ 上有压倒性大值 $\lambda$ 时,RMSNorm 的归一化常数几乎完全由 $\lambda$ 主宰,输出被压成一个固定方向的基向量 $\text{RMSNorm}(\mathbf{x}_0)\approx \text{sgn}(\lambda)\sqrt{d}\gamma_c\cdot\mathbf{e}_c$;再过 key 投影,$\mathbf{k}_0^{(h)}\approx\pm\sqrt{d}\cdot(\mathbf{W}_K^{(h)})_{c,:}$ 就退化成 $\mathbf{W}_K$ 的第 $c$ 行——也就是首 token 的 key 被锁死在一个与输入内容无关的固定方向上。作者用 SVD 取出 query 矩阵的主方向 $\mathbf{u}_1^{(h)}$,测它与 $\mathbf{k}_0^{(h)}$ 的 cosine 对齐度,发现高对齐的 head 在**所有** token 上的 QK 点积都为正(positive ratio ~100%):这些 head 的 query 结构性地指向 sink key,于是无论当前 token 是什么,都会给首 token 打出一个大注意力分数,sink 就此形成。至此"高方差 → super neurons → 维度悬殊 → 固定方向 → 高 QK 分数 → sink"每一步都有可观测、可量化的中间变量,没有未解释的跳跃。
 
 ### 损失函数 / 训练策略
 **Head-wise RMSNorm 干预** (Sec 5.1):在 value aggregation 后、output projection $\mathbf{W}_O$ 之前对每个 head 输出做 RMSNorm:$\hat{\mathbf{o}}_t^{(h)}=\frac{\mathbf{o}_t^{(h)}}{\text{RMS}(\mathbf{o}_t^{(h)})}\odot \boldsymbol{\lambda}$,$\boldsymbol{\lambda}\in\mathbb{R}^{d_k}$ 是 head 间共享的可学习缩放向量。这保证 (i) 所有位置的 aggregated vector 方差归一,(ii) 低熵 head (高方差) 与高熵 head (低方差) 对 $\mathbf{W}_O$ 的贡献被均衡,不让单个 head 因量级压倒性主宰残差流。从零预训练 152M 参数 / 20B token / OpenWebText 验证。

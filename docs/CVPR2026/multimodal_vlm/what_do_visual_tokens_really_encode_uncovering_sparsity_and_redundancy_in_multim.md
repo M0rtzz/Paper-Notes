@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 这篇论文不提新模型，而是想搞清楚一件事：MLLM 把图像切成几百个 patch token 喂给 LLM，这些 token 到底各自编码了什么、哪些在白占位置。作者用两层分析把问题拆开：宏观上先对所有视觉 token 做相似度聚类，看它们在嵌入空间里是怎么分组的；微观上再用一个叫 EmbedLens 的探针逐个 token 解读它的语义内容。两层一对照，视觉 token 自然分成 sink / dead / alive 三类，剩下的工作就是逐类追问它们的行为——谁是无用占位、谁才是真正的信息载体、信息又是在进 LLM 之前还是之后被编码进去的。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["投影后视觉 token<br/>（进入 LLM 之前）"] --> B["宏观：相似度聚类<br/>看 token 在嵌入空间怎么分组"]
+    A --> C["微观：EmbedLens 探针<br/>在输入嵌入空间逐 token 读语义"]
+    B --> D["sink / dead / alive 三类划分<br/>≈10% / 30% / 60%"]
+    C --> D
+    D -->|"sink + dead ≈40%"| E["无用占位<br/>剪除性能不降反升"]
+    D -->|"alive ≈60%"| F["alive：唯一信息载体"]
+    F --> G["预语言特性<br/>单 patch 进 LLM 前已编码多重语义"]
+    F --> H["LLM 内部视觉计算冗余<br/>跳过视觉 FFN / 自注意力"]
+    H --> I["架构启示：视觉 token 直接注入中层"]
+```
+
 ### 关键设计
 
 **1. EmbedLens 探针：在输入嵌入空间里读 token 语义，而不是在输出端**

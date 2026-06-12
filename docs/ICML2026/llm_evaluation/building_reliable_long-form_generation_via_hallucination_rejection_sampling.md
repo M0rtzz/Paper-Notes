@@ -45,6 +45,23 @@ tags:
 
 SHARS 把"逐句生成—逐句验证"拧成一个闭环：给定查询 $q$，模型每吐出一句话就立刻交给幻觉检测器 HalluSE 验真，根据结果保留、重写或丢弃，然后只在已经过验证的文本上继续往下写。直到模型生成 EOS、撞上最大 token 预算、或连续 $N$ 次采样都是幻觉时才停笔。这样错误在刚冒头的那一句就被拦下，不会顺着上下文滚雪球。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户查询 q"] --> GEN["分段拒绝采样：逐句生成<br/>Following 策略续写下一句"]
+    GEN --> DET["HalluSE 检测器<br/>拆（实体, 事实声明）→ 生成探测问题<br/>→ 采样答案算语义熵 H_s，> θ 判幻觉"]
+    DET -->|全是事实| KEEP["保留<br/>追加到已验证文本"]
+    DET -->|事实+幻觉混合| REW["重写：按已验证事实<br/>列表重组句子"]
+    DET -->|全是幻觉| DROP["丢弃<br/>暂留上下文供续写"]
+    KEEP --> CHK{"达到 EOS / token 预算？"}
+    REW --> CHK
+    DROP -->|连续 N 次全幻觉| ABS["动态弃权<br/>感知知识边界停笔"]
+    DROP -->|否则重采| GEN
+    CHK -->|否，继续生成| GEN
+    CHK -->|是| OUT["输出已验证长文本"]
+    ABS --> OUT
+```
+
 ### 关键设计
 
 **1. 分段拒绝采样：把整篇拒绝拆到每一句**

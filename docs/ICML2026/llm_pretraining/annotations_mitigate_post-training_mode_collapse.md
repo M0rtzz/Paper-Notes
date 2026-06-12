@@ -42,6 +42,22 @@ tags:
 ### 整体框架
 方法叫 annotation-anchored training，想干的事只有一件：让 SFT 只更新"给定语义怎么写回复"、不去碰"哪些语义会被表达"。做法是离线用一个强 LLM 给文本配上 `<key>:<value>` 形式的语义标签 $z$，预训练时把标签和文本交错拼起来照常训，SFT 时只对标签部分 mask 掉 loss——于是响应能力被指令数据塑造，而语义分布被冻在预训练的高熵状态。推理时模型先自己吐一个 annotation 再 condition 在它上面生成 response，annotation 的采样随机性就把多样性自然带进最终输出。整套 trick 极简：数据格式变一点、loss mask 变一点，剩下完全是标准自回归 LM，不引入任何新模块或新损失。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文档语料"] --> B
+    subgraph PT["Chunk 标注 + 交错序列预训练（保住高熵语义分布 R）"]
+        direction TB
+        B["按 chunk 抽语义标签 z<br/>强 LLM 离线标注"] --> C["交错序列 ⟨z₁⟩x₁⟨z₂⟩x₂…<br/>不 mask，学到高熵 R(z 给定 x)"]
+    end
+    subgraph FT["标注掩码 SFT + 锚定推理（只更新 Q*、冻住 R）"]
+        direction TB
+        D["prompt⟨z⟩response<br/>只回传 response loss、mask 掉 z"] --> E["推理先采样标注 z 再生成 response"]
+    end
+    C --> D
+    E --> F["仅保留 response 输出评测"]
+```
+
 ### 关键设计
 
 **1. 显式语义变量 z：把"写什么"和"怎么写"拆成两个可独立调控的分布**

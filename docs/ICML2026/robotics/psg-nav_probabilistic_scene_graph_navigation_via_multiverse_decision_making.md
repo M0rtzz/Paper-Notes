@@ -41,7 +41,39 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 RGB-D 观察序列 $O_t = \{I_t^{rgb}, I_t^{depth}, p_t\}$ 加自由文本目标 $c$；输出是离散动作 $a_t \in \{\text{MOVE\_FORWARD}, \text{TURN\_LEFT/RIGHT}, \text{LOOK\_UP/DOWN}, \text{STOP}\}$，每步 500 帧预算内走到目标 1m 内并执行 STOP 即成功。pipeline 三件套：(A) **3D-PSG** 在线构建层次化概率场景图，每个 object 节点维护完整类别分布而非硬标签；(B) **Multiverse Decision** 从 3D-PSG 采样 $K$ 个一致世界，对候选 landmark 做 pairwise 比较 + 信息增益评分，选下一个子目标；(C) **EEC** 在检测到候选物体时用成功/失败记忆库做置信度校准，决定是否真的 STOP。
+输入是 RGB-D 观察序列 $O_t = \{I_t^{rgb}, I_t^{depth}, p_t\}$ 加自由文本目标 $c$；输出是离散动作 $a_t \in \{\text{MOVE\_FORWARD}, \text{TURN\_LEFT/RIGHT}, \text{LOOK\_UP/DOWN}, \text{STOP}\}$，每步 500 帧预算内走到目标 1m 内并执行 STOP 即成功。pipeline 三件套：(A) **3D-PSG** 在线构建层次化概率场景图，每个 object 节点维护完整类别分布而非硬标签；(B) **Multiverse Decision** 从 3D-PSG 采样 $K$ 个一致世界，对候选 landmark 做 pairwise 比较 + 信息增益评分，选下一个子目标；(C) **EEC** 在检测到候选物体时用成功/失败记忆库做置信度校准，决定是否真的 STOP。三者首尾相接，决策与终止两处都能回到导航循环，构成"建图→规划→走→验证→（不停就继续）"的闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["RGB-D 观察 + 文本目标"] --> PSG
+
+    subgraph PSG["3D 概率场景图 + 层次逻辑剪枝（设计 1）"]
+        direction TB
+        P1["object 节点 vote 累积<br/>保留完整类别分布"] --> P2["group / room 层因子化 + LLM 逻辑剪枝<br/>丢掉语义冲突配置"]
+    end
+
+    PSG --> MV
+
+    subgraph MV["多元宇宙决策 + 不确定性感知探索（设计 2）"]
+        direction TB
+        M1["采样 K 个一致世界<br/>提取候选 landmark（GVG + frontier）"] --> M2["信息增益过滤<br/>空间项 + 语义熵"]
+        M2 --> M3["各世界 LLM pairwise 比较<br/>胜率聚合选子目标"]
+    end
+
+    MV -->|导航到子目标| DET{"检测到候选目标?"}
+    DET -->|否| MV
+
+    subgraph EEC["EEC 终止校准（设计 3）"]
+        direction TB
+        E1["查正 / 负记忆库<br/>视觉 cos + room JSD"] --> E2["校准边际 ΔS<br/>S_final = S_det + ΔS"]
+    end
+
+    DET -->|是| EEC
+    EEC --> STOP{"S_final > δ?"}
+    STOP -->|是| OUT["STOP·成功停在目标"]
+    STOP -->|否| MV
+```
 
 ### 关键设计
 

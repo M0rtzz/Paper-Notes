@@ -50,6 +50,17 @@ tags:
 
 输入是一道题，输出在训练初期是带结构 tag 的完整辩论 trace + 最终答案，训练末期则是直接给出最终答案（中间推理留在隐藏状态里）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["算术题输入"] --> B["辩论数据采集（脚手架）<br/>GPT-3.5 跑 3 agent×2 round MAD<br/>加 Agent/Round/Consensus tag，筛得 944 条 trace"]
+    B --> C["结构 tag + 全 trace SFT<br/>在完整辩论记录上学整套辩论话语结构"]
+    C --> D["动态双奖励 RL（GRPO）<br/>格式权重 1.0→0.05 + 长度上限 2000→500"]
+    D --> E["内化后单模型<br/>多视角推理压进隐空间，直接输出答案"]
+    E --> F["智能体 steering vector<br/>差分均值抠出每个 agent 的隐空间方向"]
+    F -->|正 α 放大 / 负 α 压制| G["选择性行为控制<br/>定点压掉恶意 agent，主能力不损"]
+```
+
 ### 关键设计
 
 **1. 结构 tag + 全 trace SFT：在整条辩论记录上学结构，而不是只学最终答案**

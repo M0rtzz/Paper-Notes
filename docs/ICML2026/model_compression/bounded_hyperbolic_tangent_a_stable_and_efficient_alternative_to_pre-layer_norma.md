@@ -43,7 +43,19 @@ tags:
 
 ### 整体框架
 
-BHyT 要做的事很简单：替掉 Transformer block 里那两处 Pre-LN（Attention 前和 MLP 前），但既不重复算统计量、又能压住激活随深度膨胀。它把每个归一化位点换成一个有界 $\tanh$ 变换 $\gamma \odot \tanh(\alpha x)$，关键在缩放因子 $\alpha$ 的算法：第一个位点精确算一次输入方差 $s_x^2$、据此把输入压到 $\tanh$ 的非饱和区；到第二个位点不再重新做归约，而是用一个只依赖权重矩阵的常量把方差递推出来。
+BHyT 要做的事很简单：替掉 Transformer block 里那两处 Pre-LN（Attention 前和 MLP 前），但既不重复算统计量、又能压住激活随深度膨胀。它把每个归一化位点换成一个有界 $\tanh$ 变换 $\gamma \odot \tanh(\alpha x)$，关键在缩放因子 $\alpha$ 的算法：第一个位点精确算一次输入方差 $s_x^2$、据此把输入压到 $\tanh$ 的非饱和区；到第二个位点不再重新做归约，而是用一个只依赖权重矩阵的常量把方差递推出来。整个网络堆叠 $L$ 层后，作者再给出一个有限深度的方差传播界，从理论上保证这套设计压得住深度方向的方差膨胀。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 x"] --> B["BHyT 位点1：概率性输入界定<br/>精确算一次方差，自适应缩放 α=λ/(κ·s)<br/>γ⊙tanh(αx) 把输入锁进非饱和区"]
+    B --> C["Self-Attention 子层"]
+    C --> D["残差相加 x′ = x + 注意力输出"]
+    D --> E["BHyT 位点2：块级方差近似<br/>新方差 ≈ 旧方差 + 权重常量<br/>跳过第二次精确归约"]
+    E --> F["MLP 子层"]
+    F --> G["残差相加 → 下一个 Transformer block"]
+    G -.->|"堆叠 L 层"| H["有限深度方差传播界<br/>λ/κ 足够小时方差严格小于 LNS"]
+```
 
 ### 关键设计
 

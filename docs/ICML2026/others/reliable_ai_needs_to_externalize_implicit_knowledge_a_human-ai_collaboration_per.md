@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 论文不是方法论文,而是提出一套**概念框架 + 五属性 + 行动呼吁**。核心架构是 "KO-Hub" 协作范式:Environment → Task → (AI System + Human) 协作 → 生成 Interaction Data → AI 从交互数据中外化候选 KO → Human 验证/修正/拒绝 → 验证过的 KO 进入 Collective Human Knowledge 池 → 后续任务可以检索这些已验证 KO。整个闭环让"人类验证"从一次性的、易逝的判断转换成可累积、可查询的资产。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["环境与任务<br/>(Environment / Task)"] --> B["AI 系统 + 人类协作"]
+    B --> C["交互数据<br/>对话 / commit / 实验日志"]
+    C --> D["AI 外化隐式知识<br/>从交互数据抽取候选 KO"]
+    D --> E["结构化 Knowledge Object<br/>主张 + 证据 + 作用范围 + 验证元数据<br/>五属性:可理解·可验证·可溯源·可控·可复用"]
+    E --> F["人类验证 / 修正 / 拒绝<br/>记录谁·何时·何条件下背书"]
+    F --> G["已验证 KO 累积<br/>→ 集体人类知识库"]
+    G -->|AI 检索复用:一次验证·群体复利| B
+```
+
 ### 关键设计
 
 1. **Knowledge Object 的正式定义与五属性**:

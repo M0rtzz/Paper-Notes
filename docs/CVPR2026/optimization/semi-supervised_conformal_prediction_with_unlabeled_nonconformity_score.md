@@ -47,17 +47,33 @@ SemiCP 将校准集扩展为 $\mathcal{D} = \mathcal{D}_{\text{labeled}} \cup \m
 
 $$\hat{\tau}_{\text{SemiCP}} = \text{Quantile}\left(\{\tilde{s}_i\}_{i=1}^N \cup \{s_i\}_{i=1}^n, \frac{\lceil(n+N+1)(1-\alpha)\rceil}{n+N}\right)$$
 
-测试时对测试样本 $\mathbf{x}_{\text{test}}$ 构建预测集 $\mathcal{C}(\mathbf{x}_{\text{test}}) = \{y : S(\mathbf{x}_{\text{test}}, y) \le \hat{\tau}_{\text{SemiCP}}\}$。
+测试时对测试样本 $\mathbf{x}_{\text{test}}$ 构建预测集 $\mathcal{C}(\mathbf{x}_{\text{test}}) = \{y : S(\mathbf{x}_{\text{test}}, y) \le \hat{\tau}_{\text{SemiCP}}\}$。整条流水线是「标注路径直接打标准分数」与「无标签路径经 NNM 纠偏打分」两路汇合到同一个校准池、估出阈值后再构建预测集：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["标注校准集（n 个，含真标签）"] --> LS["标准不一致性分数 S<br/>THR / APS / RAPS"]
+    U["无标签校准集（N 个）"] --> P["伪标签 ŷ = argmax softmax"]
+    P --> PS["伪分数 S(·,ŷ) 系统性偏低<br/>定义伪偏差 Δ"]
+    PS --> NNM["NNM 分数：伪分数空间匹配最近标注样本<br/>借其真实偏差纠偏"]
+    LS --> MERGE["SemiCP 框架：合并 n+N 个分数<br/>取分位数得阈值"]
+    NNM --> MERGE
+    MERGE --> C["测试样本构建预测集<br/>保留分数 ≤ 阈值的标签"]
+```
 
 ### 关键设计
 
-**1. 伪标签直接代入会系统性低估分数：先把偏差定义清楚**
+**1. SemiCP 框架：把无标签分数并入校准池，用覆盖保证框住「增样降方差、引偏差」的权衡**
 
-最自然的做法是给无标签样本打伪标签 $\hat{y}_i = \arg\max_j f_j(\tilde{\mathbf{x}}_i)$ 再代入分数函数，但伪标签总是模型最自信的类别，算出的分数系统性偏低（pseudo bias），导致阈值被低估、覆盖率不足。为此先把这种偏差量化为真实分数与伪标签分数之差：$\Delta(\tilde{\mathbf{x}}_i) = S(\tilde{\mathbf{x}}_i, \tilde{y}_i) - S(\tilde{\mathbf{x}}_i, \hat{y}_i)$，作为后续纠偏的目标。
+标准 Split CP 只拿 $n$ 个标注分数估阈值，$n$ 小则覆盖率方差大、换一次 split 结果就飘。SemiCP 的做法是把 $N$ 个无标签分数和 $n$ 个标注分数倒进同一个大小 $n+N$ 的校准池再取分位数（阈值公式见整体框架）。Theorem 1 给出覆盖率下界 $1-\alpha+\epsilon_{n,N}$，Theorem 2 进一步证明平均覆盖率偏差以 $\mathcal{O}(1/\sqrt{N})$ 的速率收缩——无标签样本越多，阈值估计越稳。代价是引入了偏差项 $\epsilon_{n,N}=\frac{N}{N+n}\big(F_S(\hat{\tau})-F_{\tilde{S}}(\hat{\tau})\big)$，它由「估计分数的 CDF 与真实分数 CDF 的差异」决定。这一项把后面无标签打分的目标钉死了：只要让无标签分数的分布逼近真实分数分布，$\epsilon_{n,N}\to 0$，就能既享受降方差、又几乎不引偏差。
 
-**2. 最近邻匹配（NNM）分数：借标注样本的真实偏差纠正无标签伪分数**
+**2. 伪偏差：朴素伪标签分数为何系统性偏低**
 
-偏差本身没法直接算（无标签样本没有真标签），NNM 的做法是在伪分数空间里给每个无标签样本找伪分数最接近的标注样本 $j = \arg\min_{j \in \{1,...,n\}} |S(\tilde{\mathbf{x}}_i, \hat{y}_i) - S(\mathbf{x}_j, \hat{y}_j)|$，再用这个标注样本的真实偏差去纠正：$\tilde{S}_{\text{nnm}}(\tilde{\mathbf{x}}_i) = S(\tilde{\mathbf{x}}_i, \hat{y}_i) + S(\mathbf{x}_j, y_j) - S(\mathbf{x}_j, \hat{y}_j)$。背后的核心假设是「伪分数相近的样本有相似的伪偏差分布」，实验里 NNM 分数的经验分布与真实分数分布高度吻合，证明这个假设成立。
+最自然的无标签打分是给样本打伪标签 $\hat{y}_i = \arg\max_j f_j(\tilde{\mathbf{x}}_i)$ 再代入分数函数（naive 法）。但伪标签恒取模型最自信的类，算出的分数系统性偏低，使分位数阈值被低估、覆盖率不足——这正是框架里偏差项 $\epsilon_{n,N}$ 变大的来源。为给纠偏定个靶子，本文把这种偏差量化为真实分数与伪分数之差 $\Delta(\tilde{\mathbf{x}}_i) = S(\tilde{\mathbf{x}}_i, \tilde{y}_i) - S(\tilde{\mathbf{x}}_i, \hat{y}_i)$。但 $\Delta$ 含未知真标签 $\tilde{y}_i$，无法直接算，需要 NNM 来估计。
+
+**3. 最近邻匹配（NNM）分数：借标注样本的真实偏差纠正无标签伪分数**
+
+偏差本身没法直接算（无标签样本没有真标签），NNM 的做法是在伪分数空间里给每个无标签样本找伪分数最接近的标注样本 $j = \arg\min_{j \in \{1,...,n\}} |S(\tilde{\mathbf{x}}_i, \hat{y}_i) - S(\mathbf{x}_j, \hat{y}_j)|$，再用这个标注样本可观测的真实偏差去纠正无标签的伪分数：$\tilde{S}_{\text{nnm}}(\tilde{\mathbf{x}}_i) = S(\tilde{\mathbf{x}}_i, \hat{y}_i) + S(\mathbf{x}_j, y_j) - S(\mathbf{x}_j, \hat{y}_j)$。核心假设是「伪分数相近的样本有相似的伪偏差」。Theorem 3 证明随标注数 $n$ 增大，NNM 分数的 CDF 渐近收敛到真实分数的 CDF（逼近误差有界、收敛速率由 $n$ 控制）；Fig. 3 也显示 NNM 分数的经验 PDF 与真实分布高度吻合，而 naive 伪分数明显偏低。这样 $\epsilon_{n,N}$ 被压到可忽略，SemiCP 才真正享受到无标签降方差的好处。
 
 ### 损失函数/训练策略
 
@@ -68,11 +84,7 @@ $$\hat{\tau}_{\text{SemiCP}} = \text{Quantile}\left(\{\tilde{s}_i\}_{i=1}^N \cup
 - 可无缝集成到条件覆盖（类条件、组条件）设置中
 - 可与 Interpolation、ClusterCP 等现有方法组合使用
 
-**理论保证**：
-
-- **Theorem 1**：覆盖率下界为 $1-\alpha + \epsilon_{n,N}$，其中偏差项 $\epsilon_{n,N} = \frac{N}{N+n}(F_S(\hat{\tau}) - F_{\tilde{S}}(\hat{\tau}))$ 由真实与估计分数 CDF 差异控制。
-- **Theorem 2**：平均覆盖率偏差以 $\mathcal{O}(1/\sqrt{N})$ 速率收敛，增加无标签数据可持续减小覆盖率偏差。
-- **Theorem 3**：NNM 分数的 CDF 渐近收敛到真实分数的 CDF，收敛速率由标注样本数 $n$ 控制。
+理论保证（Theorem 1/2 的覆盖下界与收敛速率、Theorem 3 的 NNM 分数一致性）已在关键设计 1、3 中结合各自动机展开。
 
 ## 实验关键数据
 

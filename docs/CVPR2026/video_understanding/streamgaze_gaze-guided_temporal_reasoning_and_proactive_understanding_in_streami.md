@@ -38,6 +38,19 @@ tags:
 ### 整体框架
 StreamGaze 不是一个新模型，而是一条「把人眼注视轨迹翻译成视频 QA」的数据构建管线。输入是第一人称视频加上同步采集的原始注视流，输出是 8521 个时空 grounded 的 QA 对。管线先把噪声很大的原始注视坐标投影到图像平面，再从中筛出真正「看进去」的稳定注视时刻（fixation），围绕每个 fixation 区分用户视野内/外的物体，最后把这些 fixation 按时间串成扫描路径（scanpath），并据此生成覆盖 past / present / proactive 三类、共 10 个任务的问答。所有中间产物（scanpath、物体提取）都经人工验证（平均正确率约 83%），生成的 QA 再经 Qwen3-VL-30B 自动验证加人工审核双重过滤，保证基准本身的可信度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第一人称视频 + 同步原始注视流"] --> B["Fixation 提取<br/>空间-时间稳定 + 场景一致性筛真注视"]
+    B --> C["区域化视觉提示<br/>FOV 圆内叠红点取视野内物体<br/>FOV 黑盘遮挡取视野外物体"]
+    C --> S
+    subgraph S["Scanpath 构建与任务分类"]
+        direction TB
+        D["fixation 按时序串成<br/>带状态扫描路径"] --> E["生成 10 个任务分三类<br/>Past 回看 / Present 感知 / Proactive 主动"]
+    end
+    S --> F["Qwen3-VL 自动验证 + 人工审核<br/>8521 时空 grounded QA 对"]
+```
+
 ### 关键设计
 
 **1. Fixation 提取：从噪声注视流里筛出真正「看进去」的时刻**

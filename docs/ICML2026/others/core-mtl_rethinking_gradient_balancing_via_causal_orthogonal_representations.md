@@ -40,7 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入 $x$ 进入共享编码器 $\Phi_\theta$，输出被显式拆成两条 stream：$(\hat{Z}_s,\hat{Z}_r)=\Phi_\theta(x)$。$K$ 个任务 head $f_{\phi_t}$ 只读语义流 $\hat{Z}_s$，残差流 $\hat{Z}_r$ 不进 head。训练时三个正则同时作用在表征上：CKA 独立性损失逼 $\hat{Z}_s\perp\hat{Z}_r$；反事实增强（CFA）从经验残差分布里采 $\tilde{Z}_r$ 与原 $\hat{Z}_s$ 拼成"换皮"输入 $\tilde{x}=\mathcal{D}(\hat{Z}_s,\tilde{Z}_r)$，再过编码器和 head 算一次任务损失，逼 head 对风格扰动不变；重构损失把整对 $(\hat{Z}_s,\hat{Z}_r)$ 喂给解码器 $\mathcal{D}$ 还原 $x$，给两条流"分工"提供锚点。推理阶段只用编码器+任务 head，解码器和反事实分支都丢掉，所以零额外开销。
+输入 $x$ 进入共享编码器 $\Phi_\theta$，输出被显式拆成两条 stream：$(\hat{Z}_s,\hat{Z}_r)=\Phi_\theta(x)$。$K$ 个任务 head $f_{\phi_t}$ 只读语义流 $\hat{Z}_s$，残差流 $\hat{Z}_r$ 不进 head。训练时三套约束依次作用在这对表征上：先用 CKA 独立性损失逼 $\hat{Z}_s\perp\hat{Z}_r$；再用重构锚定把整对 $(\hat{Z}_s,\hat{Z}_r)$ 喂给解码器 $\mathcal{D}$ 还原 $x$，给两条流"分工"提供物理/结构锚点；最后用反事实增强（CFA）复用这个解码器，从经验残差分布里采 $\tilde{Z}_r$ 与原 $\hat{Z}_s$ 拼成"换皮"输入 $\tilde{x}=\mathcal{D}(\hat{Z}_s,\tilde{Z}_r)$，重编码后逼 head 对风格扰动不变。推理阶段只用编码器+任务 head，解码器和反事实分支都丢掉，所以零额外开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 x"] --> ENC["双流编码器 Φθ<br/>沿通道拆成两条流"]
+    ENC --> ZS["语义流 Z_s"]
+    ENC --> ZR["残差流 Z_r"]
+    ZS --> HEAD["任务 head：仅读语义流<br/>切断残差捷径 → 任务损失 ℒt"]
+    ZS --> CKA["CKA 独立性约束<br/>逼 Z_s ⊥ Z_r"]
+    ZR --> CKA
+    ZS --> DEC["重构锚定：解码器 D<br/>hard 反演渲染 / soft 卷积 → ℒrec"]
+    ZR --> DEC
+    DEC --> CFA["反事实风格替换 CFA<br/>采新残差换皮重组 → 重编码 Φθ"]
+    ZS --> CFA
+    CFA --> LCFA["一致性损失 ℒCFA<br/>head 对风格扰动不变"]
+    HEAD -.->|"推理：丢弃 D 与 CFA 分支，零额外开销"| OUT["推理：Φθ + 任务 head"]
+```
 
 ### 关键设计
 
@@ -56,9 +73,13 @@ $$\mathcal{E}_T(h)-\mathcal{E}_S(h)\leq C_{\text{cap}}+\alpha\,\lambda_{\text{le
 
 架构切分只保证"信息可分"，不保证"信息真分开"，所以补一个统计层面的约束：用 mini-batch 上的线性 CKA 作正则 $\mathcal{L}_{\text{CKA}}=\text{CKA}(\mathbf{Z}_s,\mathbf{Z}_r)$，最小化两组特征矩阵的线性依赖。在线性-高斯假设下，作者证明降低 CKA 等价于压低编码器 Jacobian 的 cross-term，因此 CKA 是 $\lambda_{\text{leak}}$ 的可微代理。一个漂亮的副产品是 Proposition 2.5：$\mathbb{E}[\cos^2(g_{\text{task}},g_{\text{res}})]\leq c\cdot\text{CKA}(Z_s,Z_r)+\delta$，也就是说任务梯度和残差梯度在最后共享层近乎正交，梯度冲突在源头被消解——以往要靠 PCGrad 投影硬拗的"梯度正交"，这里成了表征解耦的几何副产品，不需要任何 post-hoc 手术。
 
-**3. 反事实风格替换 + 重构锚定：给两条流分配明确的语义角色**
+**3. 重构锚定（grounding）：给两条流分配明确的语义角色**
 
-纯统计独立可以被退化解满足（比如随机切分通道就"独立"了），所以必须给两条流"打标"，逼它们各司其职。反事实增强（CFA）从当前 batch 的经验残差分布里采 $\tilde{Z}_r$，与原始 $\hat{Z}_s$ 拼接，过解码器合成"同语义、异风格"的图像 $\tilde{x}=\mathcal{D}(\hat{Z}_s,\tilde{Z}_r)$，再喂回编码器，要求 head 给出与原图一致的标签：$\mathcal{L}_{\text{CFA}}=\sum_t w_t\mathcal{L}_t(f_{\phi_t}([\Phi_\theta(\tilde{x})]_s),y_t)$（过反事实分支时冻 BN 统计量防风格泄漏）。这等于直接训练 head 对风格扰动不变。重构锚定则给"哪条流装什么"提供物理/结构锚点，有两种实例化：**Hard Grounding** 把解码器实现为基于物理的反演渲染 $\hat{x}\approx\mathcal{A}(\hat{Z}_r)\odot\mathcal{S}(\mathcal{N}(\hat{Z}_s),\mathbf{L}(\hat{Z}_r))$，让 $\hat{Z}_s$ 负责几何（法向量）、$\hat{Z}_r$ 负责光度（反照率 + 光照），重构损失 $\mathcal{L}_{\text{rec}}=\|x-\hat{x}\|_1+\lambda_{\text{lpips}}\text{LPIPS}(x,\hat{x})$；**Soft Grounding** 在没有物理先验时退化为通用卷积解码器 + $L_1$ 重构，靠"head 只读 $\hat{Z}_s$"加 CKA 把判别信息和重构残差功能性地推到对的 stream 上。CFA 直接从 batch 内采样合成，不依赖外部风格库，工程上几乎白嫖；推理阶段解码器和反事实分支全丢，零额外开销。
+CKA 只逼两条流互不相关，却不规定"哪条流该装什么"——纯统计独立可以被退化解满足（比如随机切分通道也"独立"）。重构锚定就是给这个角色分工提供物理/结构锚点：把整对 $(\hat{Z}_s,\hat{Z}_r)$ 喂给解码器 $\mathcal{D}$ 还原输入 $x$，逼两条流各自保留还原图像所需的信息。它有两种实例化：**Hard Grounding** 把解码器实现为基于物理的反演渲染 $\hat{x}\approx\mathcal{A}(\hat{Z}_r)\odot\mathcal{S}(\mathcal{N}(\hat{Z}_s),\mathbf{L}(\hat{Z}_r))$，让 $\hat{Z}_s$ 负责几何（法向量）、$\hat{Z}_r$ 负责光度（反照率 + 光照），重构损失 $\mathcal{L}_{\text{rec}}=\|x-\hat{x}\|_1+\lambda_{\text{lpips}}\text{LPIPS}(x,\hat{x})$；**Soft Grounding** 在没有物理先验时退化为通用卷积解码器 + $L_1$ 重构，靠"head 只读 $\hat{Z}_s$"加 CKA 把判别信息和重构残差功能性地推到对的 stream 上。Hard grounding 给出更强的语义锚定，soft grounding 则靠架构瓶颈 + 统计压力达到类似的功能解耦。
+
+**4. 反事实风格替换（CFA）：直接训练 head 对风格扰动不变**
+
+切流 + 独立 + 重构只保证"信息分得开、各有角色"，还没直接教 head"别理风格"。反事实增强（CFA）复用上面的解码器做一次反事实干预：从当前 batch 的经验残差分布里采一个新的 nuisance 向量 $\tilde{Z}_r$，与原始语义 $\hat{Z}_s$ 拼接、过解码器合成"同语义、异风格"的图像 $\tilde{x}=\mathcal{D}(\hat{Z}_s,\tilde{Z}_r)$，再喂回编码器，要求 head 给出与原图一致的标签：$\mathcal{L}_{\text{CFA}}=\sum_t w_t\mathcal{L}_t(f_{\phi_t}([\Phi_\theta(\tilde{x})]_s),y_t)$（过反事实分支时冻 BN 统计量防风格泄漏）。这等于直接惩罚 head 在标签与 nuisance 之间建立的虚假相关。CFA 直接从 batch 内采样合成，不依赖外部风格库，工程上几乎白嫖；推理阶段解码器和反事实分支全丢，零额外开销。
 
 ### 损失函数 / 训练策略
 总目标 $\mathcal{L}_{\text{total}}=\sum_t w_t\mathcal{L}_t+\lambda_{\text{CKA}}\mathcal{L}_{\text{CKA}}+\lambda_{\text{CFA}}\mathcal{L}_{\text{CFA}}+\lambda_{\text{rec}}\mathcal{L}_{\text{rec}}$，任务权重可固定（实验中等权）也可叠 GradNorm，$\mathcal{L}_{\text{rec}}$ 按是否有物理先验在 hard 和 soft 之间切换。Backbone 一律 ResNet-50，反事实通路上冻 BN 统计以严格评估鲁棒性。

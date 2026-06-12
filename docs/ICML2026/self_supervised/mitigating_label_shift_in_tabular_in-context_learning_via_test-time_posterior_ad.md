@@ -40,7 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三个紧凑组件: (1) 一个一行的后验调整公式 DistPFN; (2) 一个用 cross-entropy 自适应控制调整强度的温度缩放版本 DistPFN-T; (3) 一个 inverse-frequency 重采样的 benchmark 构造方法, 用来在 OpenML 上系统量化"漂移强度 $\beta$ vs 准确率"的曲线。整体 pipeline 是：取 TabPFN 一次前向得到的 logits → softmax → 乘 / 除调整因子 $\alpha$ → 重归一化 → 输出。整个调整发生在**推理时**, 完全 plug-in, 不改 TabPFN 任何参数或架构。
+方法分三个紧凑组件: (1) 一个一行的后验调整公式 DistPFN; (2) 一个用 cross-entropy 自适应控制调整强度的温度缩放版本 DistPFN-T; (3) 一个 inverse-frequency 重采样的 benchmark 构造方法, 用来在 OpenML 上系统量化"漂移强度 $\beta$ vs 准确率"的曲线。整体 pipeline 是：取 TabPFN 一次前向得到的 logits → softmax → 乘 / 除调整因子 $\alpha$ → 重归一化 → 输出。整个调整发生在**推理时**, 完全 plug-in, 不改 TabPFN 任何参数或架构。下图自上而下展示这条推理链：基准只在评测时构造漂移训练集（虚线，不属于部署管线），DistPFN 与 DistPFN-T 是同一处后验调整的两种变体（实线分支）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    BM["Inverse-frequency 重采样基准<br/>按 β 过采样稀有类，造可控 label shift"] -.仅评测时构造.-> TR
+    TR["训练集 D_train（含先验 p_train）+ 测试样本 x"] --> TPF["TabPFN 一次前向<br/>logits → softmax"]
+    TPF --> POST["后验 p̂(y)"]
+    POST -->|"÷ p_train，分子取 p̂²"| DP["DistPFN：后验/先验比<br/>固定强度的部分修正"]
+    POST -->|"τ=CE(p̂,p_train) 温度缩放 p̂→p̂_T"| DPT["DistPFN-T：CE 温度自适应<br/>按偏离强度调修正力度"]
+    DP --> OUT["重归一化 Norm → 输出预测"]
+    DPT --> OUT["重归一化 Norm → 输出预测"]
+```
 
 ### 关键设计
 

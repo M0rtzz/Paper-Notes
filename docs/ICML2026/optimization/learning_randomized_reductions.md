@@ -41,7 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Bitween 输入是一个被怀疑实现了未知函数 $f$ 的程序 $\Pi$（可能含浮点误差），加上输入域 $X$、查询函数类 $Q$、恢复函数次数上界 $d$。流程是：(1) 对每个候选查询 $q \in Q$ 引入符号变量 $v_q$ 代表 $\Pi(q(x,r))$；(2) 枚举所有 $v_q$ 的次数 $\le d$ 的单项式 $V$ 作为线性特征；(3) 随机采样 $m$ 对 $(x_i, r_i)$，调用 $\Pi$ 得到 $\Pi(x_i)$ 和所有 $\Pi(q(x_i, r_i))$；(4) 用稀疏线性回归把 $\Pi(x_i) = \sum_V C_V \cdot V(x_i, r_i)$ 拟合出来，去掉系数接近 0 的单项式；(5) 把残余浮点系数用最大分母约束转成有理数，得到候选 RSR；(6) 用 SymPy 把候选式化简到 0 来形式化验证。Agentic Bitween 在外层加了一个 LLM 智能体，它可以多次调用 `infer_property_tool`（驱动 Vanilla 后端，但允许提议新查询如 $f(x+\log k)$、$f(\sqrt{x^2+y^2})$）、`symbolic_verify_tool`（SymPy 验证）和 `sequential_thinking_tool`（思维链记账）。
+Bitween 输入是一个被怀疑实现了未知函数 $f$ 的程序 $\Pi$（可能含浮点误差），加上输入域 $X$、查询函数类 $Q$、恢复函数次数上界 $d$。整套方法建立在「RSR 学习的形式化」这一理论地基上（相关采样访问模型 + PAC 问题），具体由两个能跑的系统接力：Vanilla Bitween 的流程是 (1) 对每个候选查询 $q \in Q$ 引入符号变量 $v_q$ 代表 $\Pi(q(x,r))$；(2) 枚举所有 $v_q$ 的次数 $\le d$ 的单项式 $V$ 作为线性特征；(3) 随机采样 $m$ 对 $(x_i, r_i)$，调用 $\Pi$ 得到 $\Pi(x_i)$ 和所有 $\Pi(q(x_i, r_i))$；(4) 用稀疏线性回归把 $\Pi(x_i) = \sum_V C_V \cdot V(x_i, r_i)$ 拟合出来，去掉系数接近 0 的单项式；(5) 把残余浮点系数用最大分母约束转成有理数，得到候选 RSR；(6) 用 SymPy 把候选式化简到 0 来形式化验证。Agentic Bitween 在外层加了一个 LLM 智能体，它可以多次调用 `infer_property_tool`（驱动 Vanilla 后端，但允许提议新查询如 $f(x+\log k)$、$f(\sqrt{x^2+y^2})$）、`symbolic_verify_tool`（SymPy 验证）和 `sequential_thinking_tool`（思维链记账），从而复用整套验证机制去探索固定查询集之外的新查询。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["RSR 学习的形式化<br/>相关采样访问模型 + PAC 问题"] --> IN["输入：程序 Π（疑似实现未知 f）<br/>+ 输入域 X、查询类 Q、恢复次数 d"]
+    subgraph V["Vanilla Bitween（稀疏线性回归后端）"]
+        direction TB
+        V1["枚举 ≤d 次单项式作特征<br/>采样 (xᵢ,rᵢ) 调 Π 取值"] --> V2["稀疏回归拟合 Π(x)=ΣC_V·V<br/>迭代剪去近零系数"]
+        V2 --> V3["系数有理化（最大分母约束）→ 候选 RSR"]
+        V3 --> V4["SymPy 化简验证：等式能否归零"]
+    end
+    IN --> V1
+    V4 -->|通过| OUT["输出 RSR：查询 q₁..q_k + 恢复函数 p"]
+    subgraph A["Agentic Bitween（LLM 当查询函数生成器）"]
+        direction TB
+        L["LLM 提议新查询 q<br/>如 f(x+log k)、f(√(x²+y²))"] --> T["三工具：infer_property（驱动 V-Bitween）<br/>+ symbolic_verify（SymPy 验真）+ sequential_thinking"]
+        T -->|未达预算继续提议| L
+    end
+    IN --> L
+    T -.复用回归+验证机制.-> V
+```
 
 ### 关键设计
 

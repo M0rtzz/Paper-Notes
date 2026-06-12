@@ -35,7 +35,20 @@ tags:
 
 ### 整体框架
 
-这是一套混合位姿估计流程：紧凑网络先从事件帧表示里回归 2D 关键点，再由 PnP 求解器结合已知 3D 模型恢复最终 6-DoF 位姿。针对 BrainChip Akida 的两代硬件分别设计了两种回归模型——V1 走坐标回归、V2 走热图回归，整篇的核心其实是在低功耗星载约束下做事件表示与量化方式的精度-效率权衡。
+这是一套混合（hybrid）位姿估计流程，沿用航天位姿估计常见的三段式结构：先把异步事件流摊成事件帧表示并裁出目标 ROI，紧凑网络在 ROI 上回归 8 个 2D 关键点，再由 PnP 求解器结合已知 3D 模型恢复最终 6-DoF 位姿。其中 ROI 用 ground-truth 边界框给出（不在本文范围内）。针对 BrainChip Akida 的两代硬件分别设计了两种回归模型——V1 走坐标回归、V2 走热图回归，训练好的网络都经量化感知训练（QAT）+ BrainChip 工具链转成 Akida 兼容的脉冲网络（SNN）后上板。整篇的核心其实是在低功耗星载约束下做事件表示与量化方式的精度-效率权衡。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["事件流 (x,y,p,t)"] --> B["事件帧表示<br/>E2F / 2DHist / LNES 三选一"]
+    B --> C["ROI 裁剪 224×224<br/>(脚手架·用 GT 边界框)"]
+    C -->|"Akida V1·4-bit"| D["坐标回归<br/>MobileNet 直接回归 8×(x,y)"]
+    C -->|"Akida V2·8-bit"| E["热图回归<br/>编码器-解码器输出 56×56×8 热图"]
+    D --> F["QAT + SNN 转换上板<br/>(脚手架·BrainChip 工具链)"]
+    E --> F
+    F --> G["PnP 求解器 + 已知 3D 模型"]
+    G --> H["6-DoF 位姿 (R, t)"]
+```
 
 ### 关键设计
 

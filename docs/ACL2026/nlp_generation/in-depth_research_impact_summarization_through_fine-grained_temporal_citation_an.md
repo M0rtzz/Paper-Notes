@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 论文先把四个概念定义清楚：citation context 是引用某篇论文时周围的文本，fine-grained citation intent 是对引用原因的自由文本描述，impact-revealing intent 特指直接体现被引论文影响的意图（分 confirmation 和 critique/correction 两类），scientific impact summary 则是在时间维度上描述一篇论文如何被后续工作使用、扩展、批评或修正。整条 pipeline 走"先筛证据、再写摘要、最后无参考评估"三步：输入目标论文的一组 citation contexts 及其年份，系统逐条生成细粒度 intent 并判定是否 impact-revealing，只把筛出的有影响力信号的 context 连同年份、intent 一起喂给 LLM 生成 semi-structured impact summary，由于没有 gold summary，再用一套 reference-free 指标衡量摘要的可信度与信息量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["目标论文的全部引文上下文<br/>(citation contexts) + 年份"] --> B["影响力揭示意图<br/>LLM 逐条生成自由文本 intent"]
+    B --> C{"是否 impact-revealing？"}
+    C -->|"confirmation / correction"| D["保留为影响力证据"]
+    C -->|"background / 其他"| E["丢弃（背景噪声）"]
+    D --> F["仅用影响力揭示上下文生成摘要<br/>上下文 + 年份 + intents 喂 LLM"]
+    F --> G["时间感知影响力摘要<br/>(time-aware impact summary)"]
+    G --> H["reference-free 评估框架<br/>可信度 + 信息量两侧打分"]
+```
+
 ### 关键设计
 
 **1. Impact-revealing citation intent 作为中间表示：把"为什么被引"从粗标签升级成自由文本证据**

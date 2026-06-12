@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 输入是一条 World of Tanks 游戏聊天消息，输出是六个毒性类别之一。训练流程先分析原始数据的类别分布与重复模式，然后在真实训练集划分之后只对训练分区加入合成数据，验证集保持 100% 真实样本。模型侧用 instruction prompt 给出六类定义，Llama 3.1 8B 以 LoRA 方式微调；实验阶段对 encoder、Gemma、Llama、层级分类、一对多分类、迁移学习、ensemble 和后校准进行比较，最后选择测试集迁移最好的 Llama 8B + 5% synthetic 配置。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["游戏聊天消息 (World of Tanks)"] --> B["数据分析：类别分布 · 重复模式"]
+    B --> C["训练/验证划分<br/>验证集保持 100% 真实样本"]
+    C --> P["短 prompt + 六类定义<br/>0=Non-toxic … 5=Extremism"]
+    subgraph SYN["少数类 paraphrase 合成数据"]
+        direction TB
+        D["对真实少数类消息同义改写"] --> E["过滤得 10,464 条改写池"]
+        E --> F["采样 1,921 条 (≈5%) 仅注入训练集"]
+    end
+    C --> SYN
+    P --> T["LoRA 微调 Llama 3.1 8B<br/>4-bit NF4 · class-weighted CE"]
+    SYN --> T
+    T --> J["验证陷阱驱动的比例选择<br/>扫 0–15% 七档 · 按测试迁移选档"]
+    J --> K["输出：六分类毒性标签"]
+```
+
 ### 关键设计
 
 **1. 短 prompt + 明确定义的 LLM 分类器：在相近毒性类间给出清楚的判别边界**

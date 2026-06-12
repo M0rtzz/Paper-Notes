@@ -43,7 +43,27 @@ tags:
 
 ### 整体框架
 
-采用混合优化器结构：嵌入层和 1D 参数（bias/norm）用 SAGE（$O(Vd) + O(d)$ 状态），稠密 2D 权重用 SinkGD（$O(1)$ 状态）。相比 SinkGD+AdamW 混合，将嵌入层的优化器状态内存减少约 50%。
+采用混合优化器结构：嵌入层和 1D 参数（bias/norm）用 SAGE（$O(Vd) + O(d)$ 状态），稠密 2D 权重用 SinkGD（$O(1)$ 状态）。相比 SinkGD+AdamW 混合，将嵌入层的优化器状态内存减少约 50%。SAGE 本身的一步更新是一条分支再汇合的小流水线：梯度一路压成符号动量方向、另一路压成逐维阻尼因子，两路相乘得到最终更新。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["模型参数"] -->|"稠密 2D 权重"| DENSE["SinkGD（O(1) 无状态归一化）"]
+    P -->|"嵌入层 / 1D 参数"| G["梯度 g_t"]
+    G --> SIGN["符号动量方向 C_t<br/>（Lion 风格 sign 更新）"]
+    G --> S["逐维梯度绝对值均值<br/>s_t = (1/V) Σ |g|"]
+    subgraph H["O(d) 自适应阻尼缩放因子 H_t"]
+        direction TB
+        S --> EMA["EMA 阻尼 D_ema<br/>σ_rms / Ŝ_t"]
+        S --> INST["瞬时稳定性约束 D_inst<br/>当前 batch 即时熔断"]
+        EMA --> MIN["H_t = min(D_ema, D_inst, 1)"]
+        INST --> MIN
+    end
+    SIGN --> U["更新 U_t = C_t ⊙ H_t<br/>（Lion 的安全泛化）"]
+    MIN --> U
+    U --> OUT["参数更新<br/>优化器状态内存仅 AdamW 的一半"]
+    DENSE --> OUT
+```
 
 ### 关键设计
 

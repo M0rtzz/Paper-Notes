@@ -53,7 +53,34 @@ $m$ 个任务，任务 $j$ 有目标参数 $\theta_j^*\in\Theta\subseteq\mathbb 
 
 **两阶段估计器**：
 - **阶段 1（结构发现）**：对每个任务 $j$，用可能非正交的损失 $\ell_j^{\text{init}}$ 得到初始 $\hat\theta_j^{\text{init}}$。这些初始估计仅用于诊断任务相似性，无需最优率。
-- **阶段 2（聚类融合）**：样本分裂 $\mathcal D_j=\mathcal D_{j,1}\cup\mathcal D_{j,2}$。在 $\mathcal D_{j,1}$ 上估计噪声 $\hat\eta_j$，在 $\mathcal D_{j,2}$ 上解多任务目标 $\hat{\boldsymbol\theta}=\arg\min\sum_j f_j^\dagger(\theta_j,\hat\eta_j)+\sum_{j<j'}\lambda_{jj'}\|\theta_j-\theta_{j'}\|_2$，其中 $f_j^\dagger$ 为正交损失。罚项 $\lambda_{jj'}$ 当初始距离 $<\tau$ 取最小值 $\epsilon_n$（强融合），否则取权重 $c_w\|\cdot\|^{-\gamma}$。
+- **阶段 2（聚类融合）**：样本分割 $\mathcal D_j=\mathcal D_{j,1}\cup\mathcal D_{j,2}$。在 $\mathcal D_{j,1}$ 上估计噪声 $\hat\eta_j$，在 $\mathcal D_{j,2}$ 上解多任务目标 $\hat{\boldsymbol\theta}=\arg\min\sum_j f_j^\dagger(\theta_j,\hat\eta_j)+\sum_{j<j'}\lambda_{jj'}\|\theta_j-\theta_{j'}\|_2$，其中 $f_j^\dagger$ 为正交损失。罚项 $\lambda_{jj'}$ 当初始距离 $<\tau$ 取最小值 $\epsilon_n$（强融合），否则取权重 $c_w\|\cdot\|^{-\gamma}$。
+
+整条流水线串起来是：所有任务的数据先进阶段 1 算出初始估计与任务对距离，距离喂给自适应融合罚项决定谁该绑在一起；阶段 2 再对每个任务做样本分割，一折估噪声、一折在正交损失上带着融合罚联合求解目标参数，最终同时给出聚类恢复与有效推断。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["m 个任务<br/>目标参数 θ*（潜在聚类）+ 异质噪声 η*"]
+
+    subgraph S1["阶段1：结构发现（两阶段分离设计）"]
+        direction TB
+        B["非正交初始损失<br/>→ 粗一致初始估计 θ̂(init)"] --> C["计算任务对距离<br/>‖θ̂_j(init) − θ̂_j'(init)‖"]
+    end
+
+    A --> S1
+    C --> D["自适应配对融合罚项 λ_jj'<br/>距离<τ 取强融合 ε_n，否则按 c_w·距离^−γ 加权"]
+
+    subgraph S2["阶段2：聚类融合 + 推断"]
+        direction TB
+        E["样本分割 D_j → 两折"] --> F["折1：估计噪声 η̂_j"]
+        E --> G["折2：解 Neyman 正交损失 f†<br/>+ 融合罚 Σλ_jj'‖θ_j−θ_j'‖"]
+        F --> G
+    end
+
+    A --> S2
+    D --> S2
+    S2 --> H["精确聚类恢复 + √N_k 级渐近正态推断（CAN）"]
+```
 
 ### 关键设计
 

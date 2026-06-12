@@ -41,7 +41,23 @@ tags:
 
 ### 整体框架
 
-PhyGaP 要解决的是光泽/反射物体的逆渲染：普通 RGB 不编码法线、反射率、粗糙度这些物理量，导致 albedo 与反射光分解失败、重光照时出现色偏和伪影。它基于 2DGS + Ref-Gaussian，给每个高斯原语维护可学习的 albedo $\boldsymbol{\lambda}$、折射率 $\eta$、法线 $\mathbf{n}$、粗糙度 $r$，外加一个可学习的环境立方体 mipmap $E$。流程是：先用 α-blending 把这些属性溅射成 2D 材质图，送入 PolarDR 算出每像素的偏振 Stokes 向量，再用真值偏振图直接监督优化——偏振线索充当了 RGB 给不出的物理约束。
+PhyGaP 要解决的是光泽/反射物体的逆渲染：普通 RGB 不编码法线、反射率、粗糙度这些物理量，导致 albedo 与反射光分解失败、重光照时出现色偏和伪影。它基于 2DGS + Ref-Gaussian，给每个高斯原语维护可学习的 albedo $\boldsymbol{\lambda}$、折射率 $\eta$、法线 $\mathbf{n}$、粗糙度 $r$，外加一个可学习的环境立方体 mipmap $E$。流程是：先用 α-blending 把这些属性溅射成 2D 材质图，送入 PolarDR 算出每像素的偏振 Stokes 向量，再用真值偏振图直接监督优化——偏振线索充当了 RGB 给不出的物理约束。其中 GridMap 负责把非凸物体的自遮挡间接光照算进 PolarDR 的辐射计算里。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：多视角偏振图<br/>2 RGB 相机 + 线偏振片"] --> B["高斯属性 + 环境 mipmap<br/>albedo λ / 折射率 η / 法线 n / 粗糙度 r / E"]
+    B -->|"α-blending 溅射"| C["2D 材质图"]
+    subgraph GM["GridMap：自遮挡感知环境图"]
+        direction TB
+        G1["52 个锚点相机<br/>包围盒每面 3×3 网格"] --> G2["单步光线追踪<br/>构局部立方体图"]
+        G2 --> G3["距离加权融合<br/>得环境辐射"]
+    end
+    C --> P["PolarDR：偏振延迟渲染<br/>pBRDF + Mueller 矩阵"]
+    GM --> P
+    P -->|"镜面 + 漫反射 Fresnel 分量"| R["渲染 Stokes 向量 s"]
+    R -->|"GT 偏振图逐像素监督"| O["反射分解 + 重光照"]
+```
 
 ### 关键设计
 

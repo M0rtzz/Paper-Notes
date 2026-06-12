@@ -45,6 +45,24 @@ VeriTaS 不是一个新的 fact-checking 模型，而是一个面向模型评估
 
 输出端是按季度组织的 VeriTaS benchmark。每条样本包含 claim、媒体、日期、语言、appearance 信息、Integrity 总分、底层属性分数和文字 justification。当前版本发布 25K 条声明，覆盖 Q1 2020 到 Q1 2026 的 25 个季度，每季度 1K 条，并保持 Intact 与 Compromised 平衡。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["ClaimReview 记录 + 事实核查文章<br/>claim / rating / URL / 日期 / 语言"]
+    A --> B["Stage 1-2 源采集与可信过滤<br/>398K review → 仅留专业核查机构 335K"]
+    B --> C["Stage 3 文章与媒体抓取去噪<br/>正文 + 图片/视频，去广告/cookie → 208K"]
+    C --> D["Stage 4 原始 appearance 恢复<br/>从文章找原始/archived URL → 94K"]
+    D --> E["Stage 5 claim 规范化<br/>过滤无关媒体 + 改写成自包含声明 → 72K"]
+    E --> F
+    subgraph SCORE["Stage 6-7 verdict 标准化与类别平衡"]
+        direction TB
+        F["LLM ensemble 解耦打分<br/>4 属性各取 [−1,1]，分歧 >1 丢弃 → 36K"]
+        F --> G["Integrity = 最差 compromising 属性"]
+        G --> H["Intact rectification<br/>evidence-grounded 改写 + 验证"]
+    end
+    SCORE --> I["VeriTaS 基准<br/>25 季度 × 1K，Intact/Compromised 平衡"]
+```
+
 ### 关键设计
 
 **1. 七阶段动态构建流水线：把"持续涌现的真实核查"变成可评测样本**

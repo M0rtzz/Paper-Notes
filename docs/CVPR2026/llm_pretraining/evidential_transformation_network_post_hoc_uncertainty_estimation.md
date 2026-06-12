@@ -38,6 +38,16 @@ tags:
 ### 整体框架
 ETN 想解决的问题是：手里已经有一个用交叉熵训过的分类器或 LLM，怎么在不动它一根毫毛、也不增加推理成本的前提下，让它额外吐出一个可靠的不确定性。做法是在 logit 空间挂一个轻量后置模块。具体来说，样本先过冻结的预训练主干，拿到 logit 向量 $\mathbf{z}$ 和最后一层隐状态；ETN 是一个小 MLP，读这个隐状态，预测出一个样本相关的仿射变换参数 $A$；用 $A$ 把 logit 缩放成 $\mathbf{z}' = A\mathbf{z}$，再经 softplus 抬成正数得到 Dirichlet 参数 $\boldsymbol{\alpha}' = \text{softplus}(\mathbf{z}') + \mathbf{b}$。这样原模型的预测概率不变（保住准确率），但 $\boldsymbol{\alpha}'$ 把它重新解释成了一个 Dirichlet 后验，浓度 $\alpha_0 = \sum_k \alpha'_k$ 越小代表越不确定，证据深度学习（EDL）的那套不确定性度量就直接能用了。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入样本"] --> B["冻结预训练主干<br/>输出 logit z + 最后一层隐状态"]
+    B --> C["ETN（轻量 MLP）<br/>从隐状态预测样本相关变换参数 A 的 Gamma 分布"]
+    C --> D["采样 M 个 A，缩放 logit：z′ = Az"]
+    D --> E["softplus(z′) + 可学习先验 b<br/>得 Dirichlet 参数 α′"]
+    E --> F["浓度 α₀ = Σ α′ → EDL 不确定性度量"]
+```
+
 ### 关键设计
 
 **1. 变换参数必须样本相关：先证明全局静态变换根本不可能work**

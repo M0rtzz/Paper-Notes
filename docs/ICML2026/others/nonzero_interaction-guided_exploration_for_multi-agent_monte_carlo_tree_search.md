@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 NonZero 沿用 MuZero 的 (i) representation、(ii) dynamics、(iii) prediction 三件套，新增第四件：(iv) hypernetwork，根据 node state 输出该节点专属的 GLM 参数 $\theta_s$ 初值。MCTS 流程改造为四步。**Selection**：在节点 $s$ 的候选集 $\mathcal{C}(s)$ 内挑 $a^* = \arg\max_{a \in \mathcal{C}(s)} \eta(\theta_s, a)$，用 surrogate 打分而非 UCB。**Expansion**：新增节点时通过 NonUCT 提出新候选——采样方向 $u = (i \leftarrow j)$（agent $i$ 改成动作 $j$）和独立的 $v = (k \leftarrow \ell)$，算 $\Delta_u \eta = \eta(\theta, a^{(u)}) - \eta(\theta, a)$ 和 mixed $\Delta_{u,v}^2 \eta = \eta(\theta, a^{(u,v)}) - \eta(\theta, a^{(u)}) - \eta(\theta, a^{(v)}) + \eta(\theta, a)$ 选高分邻居。**Simulation**：MuZero 风格 latent rollout。**Back-propagation**：用真实环境奖励和模型 reward 头分别算一阶/二阶差分目标，最小化 $\mathcal{L}_{\text{NonUCT}}$ 更新 $\theta_s$。Hypernetwork 提供 cross-node warm-start，从根状态预测初始 $\theta$，相当于跨树节点共享统计强度，让单个 MCTS rollout 内的少量更新就够把 $\theta_s$ 拟合到位。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MCTS 新节点状态 s_t"] --> GLM["Asinh-GLM 回报 surrogate<br/>把 d^n joint action 压成低维打分 η(θ_s, a)"]
+    A --> H["Hypernetwork 暖启动<br/>从 s_t 预测节点专属 θ_s 初值"]
+    H -->|初始化 θ_s| GLM
+    GLM --> SEL["Selection：候选集 C(s) 内<br/>选 surrogate 打分最高的 a*"]
+    SEL --> EXP["NonUCT 提议规则<br/>一阶差分 Δ_u·η + 二阶 mixed 差分 Δ²_uv·η<br/>选高分邻居加入 C(s)"]
+    EXP --> SIM["Simulation：MuZero 风格 latent rollout"]
+    SIM --> BP["Back-propagation：最小化 L_NonUCT 更新 θ_s"]
+    BP -->|未达图局部最优，继续迭代| SEL
+    BP -->|收敛| OUT["输出 joint action a"]
+```
+
 ### 关键设计
 
 **1. Asinh-GLM 回报 surrogate：用一个全局光滑的链接函数把 $d^n$ joint action 压进低维参数空间**

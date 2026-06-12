@@ -41,7 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三层：(1) **任务定义与数据**：把 prompt 形式化为 $P = I \oplus O_0 \oplus A_1 \oplus O_1 \oplus \cdots \oplus A_n$，旋转角 $\theta \in \{0°, 90°, 180°, 270°, 360°\}$，造出 19,591 个 2-5 步样本；(2) **可解释性分析**：layer-wise probe 看 direction / angle / orientation 编码情况，head-wise path patching 找 causal effect 大的注意力头；(3) **selective SFT**：只把 top-32 关键头的 $W_{K/Q/V/O}^{i,j}$ 设为 trainable，冻结其余。
+方法分三层：(1) **任务定义与数据**：把 prompt 形式化为 $P = I \oplus O_0 \oplus A_1 \oplus O_1 \oplus \cdots \oplus A_n$，旋转角 $\theta \in \{0°, 90°, 180°, 270°, 360°\}$，造出 19,591 个 2-5 步样本；(2) **可解释性分析**：layer-wise probe 看 direction / angle / orientation 编码情况，head-wise path patching 找 causal effect 大的注意力头；(3) **selective SFT**：只把 top-32 关键头的 $W_{K/Q/V/O}^{i,j}$ 设为 trainable，冻结其余。三层构成一条"先解剖、再对症下药"的闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["纯文本 VRU 输入<br/>指令 ⊕ 多步旋转 ⊕ 多次观测序列"] --> B["VRUBench 数据构建<br/>19,591 个 2–5 步样本"]
+    B --> C["Layer-wise 线性 probing<br/>逐层探测方向/角度/绝对朝向编码"]
+    C -->|"局部转向信息全在，后层却没把全局朝向聚合起来"| D["Head-wise path patching<br/>clean-corrupted 因果干预<br/>定位 Proposal→Answer Decision→Unknown 关键头"]
+    D --> E["Selective Fine-tuning<br/>只训 top-32 关键头，梯度按 H/h rescale"]
+    E --> F["SOTA 性能 + MMLU/BBH 通用能力零损失"]
+```
 
 ### 关键设计
 

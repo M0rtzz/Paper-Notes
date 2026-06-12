@@ -44,6 +44,27 @@ InfoAtlas 把互信息估计从"每个数据集都要从头训一个评估网络
 
 InfoAtlas 的核心是一个 attention-based 超网络 $\mathcal{H}: \mathcal{D} \mapsto \Theta$，输入是 $n$ 对样本 $\{(\mathbf{x}^i, \mathbf{y}^i)\}_{i=1}^n$，输出是 DV critic $\theta$ 的全部参数（包括所有权重和偏置 flattened 成一个向量）。拿到 $\theta$ 后用经验 DV 公式 $\hat{\mathbb{I}}_\theta(\mathbf{x}, \mathbf{y}) = \frac{1}{n}\sum_i \theta(\mathbf{x}^i, \mathbf{y}^i) - \log(\frac{1}{n}\sum_j e^{\theta(\mathbf{x}^j, \mathbf{y}^{\pi(j)})})$ 一步算出 MI，其中 $\pi$ 是随机排列得到的边际样本。整套预训练在合成的 copula 混合分布上做，跑一次前向就出 MI；维度 $d > D = 20$ 时切换到 $k$-sliced MI，把高维问题拆成 $S$ 个 $k$ 维子问题并 batch 喂给同一个 $\mathcal{H}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["数据集 D：n 对样本 (x, y)<br/>维度 (dx, dy) 与样本量 n 均可变"]
+    IN -->|"d > D=20"| SL["切片 MI：随机正交投影 P, P′<br/>把 x,y 投到 k 维，拆成 S 个子数据集"]
+    IN -->|"d ≤ 20"| PAD
+    SL --> PAD["噪声填充：独立高斯噪声<br/>把变量补到统一 D=20 维（保 MI 不变）"]
+    PAD --> H
+    subgraph H["双路超网络 H：样本 → critic 参数 θ"]
+        direction TB
+        HJ["联合路：每对 (x,y) 当 token<br/>cross-attn 聚合 + 16 层 self-attn"]
+        HM["边际路：x、y 各自投影<br/>双向 cross-attn + 8 层 self-attn"]
+        HJ --> HF["融合：h_marginal 查询 h_joint"]
+        HM --> HF
+        HF --> HMLP["参数生成 MLP<br/>输出 critic θ 全部权重"]
+    end
+    H --> DV["经验 DV 公式（边际由随机排列 π 得到）<br/>一次前向算出 MI"]
+    DV --> OUT["MI 估计值<br/>高维时对 S 个切片取平均"]
+    PRE["多样性合成预训练（离线）<br/>copula 混合(K=60)+flow → 最大化估出 MI"] -.训练 H.-> H
+```
+
 ### 关键设计
 
 **1. 双路超网络：直接生成 critic 参数，跳过梯度下降**
@@ -56,13 +77,17 @@ InfoAtlas 的核心是一个 attention-based 超网络 $\mathcal{H}: \mathcal{D}
 
 不同数据集的 $(d_x, d_y)$ 各不相同，若为每种维度组合训一个模型代价太大。InfoAtlas 对维度 $d < D$ 的输入，用独立高斯噪声 $\mathcal{N}(0, \mathbf{I})$ 把变量补到统一的 $D$ 维。关键是这个 padding 不改变 MI：命题 A.3 证明当 $\mathbf{n}_x, \mathbf{n}_y$ 相互独立且与 $\mathbf{x}, \mathbf{y}$ 独立时，$\mathbb{I}(\mathbf{x}, \mathbf{y}) = \mathbb{I}([\mathbf{x}; \mathbf{n}_x], [\mathbf{y}; \mathbf{n}_y])$。比起常见的零填充会引入虚假对称性，噪声填充提供的是真正 MI-preserving 的增强，让架构保持统一的同时不污染估计目标。
 
-**3. 多样性合成预训练：copula 混合 + flow 变换，喂出零样本泛化**
+**3. 切片 MI + 批并行推理：把高维数据 scale 到 $D=20$ 维以上**
+
+超网络原生只支持维度 $\le D=20$ 的输入，但 CLIP embedding（512 维）、视频轨迹、机器人状态这些真实场景动辄上百维。InfoAtlas 借切片互信息（sliced MI）把高维依赖拆成多个低维"切片"来看：在 Stiefel 流形上随机采正交投影矩阵 $\mathbf{P}_i, \mathbf{P}'_i \in \mathbb{R}^{k\times d}$，把 $\mathbf{x}, \mathbf{y}$ 投到 $k$ 维，估计 $S$ 个投影方向上的 MI 再平均：$\hat{\mathbb{SI}}_k = \frac{1}{S}\sum_i \hat{\mathbb{I}}(\mathbf{P}_i\mathbf{x}, \mathbf{P}'_i\mathbf{y})$，理论上仍保留 $\mathbb{I}=0 \Leftrightarrow \mathbb{SI}=0$ 等关键性质。真正让这招实用的是 InfoAtlas 的 transformer 架构能把 $S$ 个切片打包成一个 batch、一次前向同时吐出 $S$ 个 critic（$\{\theta_1^*,\dots,\theta_S^*\} = \mathcal{H}(\{\mathcal{D}_j\})$）；而传统神经估计器要为每个投影方向单独训一个网络、复杂度 $O(ST)$，InfoAtlas 直接砍到 $O(1)$。实验也证实切片维度 $k$ 比切片数 $S$ 更关键——$k=5, S=25$ 远好于 InfoNet 的 $k=1, S=128$，因为 1 维投影丢失了太多结构。
+
+**4. 多样性合成预训练：copula 混合 + flow 变换，喂出零样本泛化**
 
 零样本能力的前提是预训练 distribution 要尽量覆盖真实场景的统计模式，InfoAtlas 用两层多样性来铺这张"atlas"。依赖结构上用 copula 混合 $\mathbf{x}, \mathbf{y} \sim \sum_{i=1}^K \pi_i c_i$，$c_i$ 取自 Gaussian copula（任意相关矩阵）和 Student-$t$ copula（不同尾依赖），$K=60$（远多于前作的 32，按 vector copula 理论足以逼近任意依赖）；边际形状上用随机初始化的可逆 flow $f_X, f_Y$（双射保持 MI 不变），再加 softrank 把边际拉近均匀。预训练直接最大化估出来的 MI：$\mathcal{L}(\mathcal{H}) = -\mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})}[\hat{\mathbb{I}}_{\mathcal{H}(\mathcal{D})}(\mathbf{x}_\mathcal{D}, \mathbf{y}_\mathcal{D})]$，在 DV 框架下等价于最小化负 DV 下界。合成数据"无限量"还顺带解决了常规估计器的老毛病——单数据集样本少导致的高方差/高偏差（McAllester & Stratos 2020），这里 batch 和样本数都能任意大。
 
 ### 损失函数 / 训练策略
 
-预训练目标如上 $\mathcal{L}(\mathcal{H}) = -\mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})}[\hat{\mathbb{I}}_{\mathcal{H}(\mathcal{D})}]$；命题 A.1 给出一致性结论：在温和条件下该目标的最优解就是 ground-truth MI 对应的最优 critic。推理时高维 ($d>20$) 数据走 sliced MI：随机采样 Stiefel 流形上的 $\mathbf{P}_i, \mathbf{P}'_i \in \mathbb{R}^{k\times d}$，把 $S$ 个投影后的数据 $\{\mathbf{P}_i \mathbf{x}, \mathbf{P}'_i \mathbf{y}\}$ 打包成一个 batch 一次前向得到 $S$ 个 critic，复杂度 $O(ST)$ 降到 $O(1)$。
+预训练目标如上 $\mathcal{L}(\mathcal{H}) = -\mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})}[\hat{\mathbb{I}}_{\mathcal{H}(\mathcal{D})}]$；命题 A.1 给出一致性结论：在温和条件下该目标的最优解就是 ground-truth MI 对应的最优 critic。高维数据的切片推理细节见上文关键设计 3。
 
 ## 实验关键数据
 

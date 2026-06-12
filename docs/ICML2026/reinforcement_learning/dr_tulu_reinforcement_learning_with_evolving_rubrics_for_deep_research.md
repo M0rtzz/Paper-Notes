@@ -48,6 +48,22 @@ DR Tulu 采用 SFT-then-RL 两段式训练：
 
 模型动作空间为 $\{\text{think}, \text{tool}, \text{answer}, \text{cite}\}$，工具有三种：`google search`、`web browse`、`paper search`。每个 prompt $x$ 对应一个 rubric buffer $R_x = R_x^{\text{persist}} \cup R_x^{\text{active}}$，其中 persist 部分在训练前由"检索 + LM 生成"一次性构建并固定，active 部分在训练中动态增删。整套系统在自研的 `dr-agent-lib` 上跑，支持异步工具调用、全局缓存、token-level loss、tool output masking、sample packing。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Qwen3-8B"] --> B["冷启动 SFT<br/>GPT-5 生成 16K 带工具调用研究轨迹"]
+    B --> C["策略 πθ<br/>think / tool / answer / cite"]
+    P["长文 prompt x"] --> D["搜索增强初始 rubric<br/>SEARCH(x) → GPT-4.1 生成持久 rubric"]
+    D --> BUF[("rubric buffer<br/>R_persist ∪ R_active")]
+    C -->|采样 G 条 on-policy rollouts| E["rubric 打分 JUDGE∈{0,0.5,1}<br/>+ format/search/citation 辅助奖励"]
+    BUF --> E
+    E -->|GRPO 更新| C
+    E -->|rollouts 对比| F["在线演化 active rubric<br/>正 rubric 抓新知识 / 负 rubric 反 hacking"]
+    F --> G["方差 buffer 管理<br/>删方差=0、按标准差排序留 top K_max"]
+    G --> BUF
+    C --> H["DR Tulu-8B 输出<br/>带引用长报告"]
+```
+
 ### 关键设计
 
 **1. 搜索增强的初始 rubric + 持久化 buffer：开训前先用真外部证据搭好一份判分基线**

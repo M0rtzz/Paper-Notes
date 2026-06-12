@@ -36,7 +36,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DUET-VLM 想解决的是视觉 token 冗余问题，但它的切入点和以往方法不同：不在视觉侧或语言侧单挑一处压缩，而是让两侧各做一半、彼此互补。整条流水线分两段串起来：图像先进视觉编码器（如 CLIP ViT），在它的最后一层做第一段 V2V（Vision-to-Vision）压缩，把 $N$ 个 patch token 砍成一小撮；这撮 token 进入 LLM 后，再在 decoder 的若干中间层做第二段 T2V（Text-to-Vision）压缩，借文本问题进一步裁掉与回答无关的视觉 token。两段用的都是模型自带的 attention，不引入额外网络，因此训练和推理可以套同一套压缩逻辑。
+DUET-VLM 想解决的是视觉 token 冗余问题，但它的切入点和以往方法不同：不在视觉侧或语言侧单挑一处压缩，而是让两侧各做一半、彼此互补。整条流水线分两段串起来：图像先进视觉编码器（如 CLIP ViT），在它的最后一层做第一段 V2V（Vision-to-Vision）压缩，把 $N$ 个 patch token 砍成一小撮；这撮 token 进入 LLM 后，再在 decoder 的若干中间层做第二段 T2V（Text-to-Vision）压缩，借文本问题进一步裁掉与回答无关的视觉 token。两段用的都是模型自带的 attention，不引入额外网络，因此训练和推理可以套同一套压缩逻辑（靠 straight-through estimator 把离散的选/丢操作变成可端到端训练）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["视觉编码器 CLIP ViT"]
+    subgraph V2V["V2V 阶段：视觉自注意力粗筛（编码器最后一层）"]
+        direction TB
+        C["self-attention 按列求和<br/>取 top-k₁ dominant token"]
+        D["剩余 N−k₁ token 局部聚类聚合<br/>（窗口宽度 w）→ k₂ contextual token"]
+    end
+    B --> C
+    B --> D
+    C --> E["视觉 token：N → k₁+k₂<br/>送入 LLM"]
+    D --> E
+    subgraph T2V["T2V 阶段：文本引导层级精筛（LLM 中间层 l₁,l₂,…）"]
+        direction TB
+        F["选 salient text token 集合 S<br/>last token + 高分文本 token"] --> G["逐 stage 算 S→视觉 cross-attention<br/>丢最低 λ 比例视觉 token"]
+    end
+    E --> T2V
+    T2V --> H["输出回答"]
+    STE["训练推理统一：STE 直通梯度<br/>两阶段同样用于训练"] -.-> V2V
+    STE -.-> T2V
+```
 
 ### 关键设计
 

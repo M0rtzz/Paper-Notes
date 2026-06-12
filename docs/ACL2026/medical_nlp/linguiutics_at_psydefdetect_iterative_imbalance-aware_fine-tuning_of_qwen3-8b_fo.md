@@ -45,6 +45,25 @@ tags:
 
 输入侧，每条样本拼成三段：DMRS Label Guide、最近 30 轮对话上下文、输出指令，模型只需吐出 0–8 的整数标签。训练数据是 PsyDefConv 的 train+validation 合并（1,864 条，另有 472 条测试），源对话 200 个。关键的一步是用 dialogue_id 做 grouped stratified 5-fold，保证同一对话及其增强样本不会被拆到不同 fold——这直接决定了后面 OOF 信号可不可信。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：DMRS Label Guide<br/>+ 最近 30 轮对话 + 输出指令"] --> DATA
+    subgraph DATA["round-robin 少数类词法增强 + grouped CV"]
+        direction TB
+        B1["train+val 合并 1864 条"] --> B2["按 dialogue_id 分组 stratified 5-fold<br/>0 泄漏对话"]
+        B2 --> B3["少数类 round-robin 词法变异<br/>Levels 2/3/4/5/8，k=3，只改 seeker utterance"]
+    end
+    DATA --> C["面向长尾的 Qwen3-8B QLoRA 架构<br/>4-bit NF4 + LoRA r128，训两套种子"]
+    C --> POST
+    subgraph POST["OOF bias + Seed-A 融合 + τ₇ 保护门"]
+        direction TB
+        D1["OOF 上随机搜约 22k 个 bias 向量<br/>δ₇<0 压多数类 / δ₈>0 抬 Unclear"] --> D2["Anchor 与 Seed-A 概率 30/70 融合"]
+        D2 --> D3["τ₇=0.69 门：p₇≥0.69 锁 Level 7<br/>否则放开 bias rerouting"]
+    end
+    POST --> E["输出：9 类心理防御等级标签 0–8"]
+```
+
 ### 关键设计
 
 **1. 面向长尾的 Qwen3-8B QLoRA 架构：用更强的语义容量区分临床上相近的防御类别**

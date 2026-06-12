@@ -42,6 +42,16 @@ tags:
 ### 整体框架
 作者要回答的核心问题是"模型到底会不会做否定、算否定的电路长什么样、错在哪一段"，而把它转化成一个可被机制工具切开的受控实验：自建 162 题 × 4 模板 = 648 条数据集 $\mathcal D=\{(P_+,P_-,y_+,y_-)\}$，正例如 "An animal that is an amphibian is a frog"、反例只插入 "not"（答 "mammal"），且 $y_+,y_-$ 都是单 token。然后分两阶段递进：先在 6 个开源模型上用"准确率 vs. logit 差敏感度"的背离证明否定信号其实已经算出来、再用 Cumulative Attention Sink 把晚层注意力敲掉以确认晚层是错误来源；随后在 Llama-3.1-8B / Mistral-7B 上用 window Attention Sink + path patching 把中层的因果电路定位出来、用 LogitLens 读出它构造的是什么语义，最后用对比归因 + 预训练 SAE 把信号一路追到晚层 MLP 的具体潜变量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自建 648 条受控数据集<br/>'X that is not Y is __'，正/反例只差一个 not"] --> B["诊断：准确率≈50% 但 logit 差敏感度 >95%<br/>→ 否定信号已算出却被盖住"]
+    B --> C["Attention Sinking 消融（设计 1）<br/>Cumulative 找错误来源晚层 / window 定位因果电路"]
+    C --> D["Path Patching × LogitLens（设计 2）<br/>指认中层构造电路、读出 not-Y 语义"]
+    D --> E["对比归因 × SAE（设计 3）<br/>把信号追到晚层 MLP 稀疏潜变量"]
+    E --> F["结论：中层注意力构造 not-Y、晚层捷径头压制<br/>construction 主导、suppression 辅助"]
+```
+
 ### 关键设计
 
 **1. Attention Sinking 消融：用模型自带的"偷懒"现象温柔地关掉一个注意力头**

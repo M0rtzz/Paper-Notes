@@ -43,6 +43,28 @@ tags:
 ### 整体框架
 DiSP 把「在组合空间里搜最优示例集 $D^\star$」整个换成「先看查询有多难、再对随机抽到的几个示例逐个判断够不够用」。它分三阶段：离线先用随机示例试跑估出每个训练查询的成功率并据此分四个难度档；再在各档上分别训练一个判难度的 router 和三个容量递增的 judge；推理时 router 把新查询路由到某一档，对应 judge 顺序打分、接受第一个达标的就跑 LLM 出答案，预算用尽或查询太难则回退随机示例并打风险标签。目标 LLM 全程冻结，只训练这些轻量模块。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["1. 随机试跑的难度分层（离线）"]
+        direction TB
+        A["训练查询 q"] --> B["类别均衡随机示例<br/>跑 T 次 k-shot"]
+        B --> C["成功率 ρ̂(q)<br/>按 α>β>γ 分四档 l1/l2/l3/lx"]
+    end
+    C --> S2
+    subgraph S2["2. 难度自适应 Router + Judge 体系（训练）"]
+        direction TB
+        D["Router r(q)：BERT 四分类判难度"]
+        E["三个 judge 容量随难度递增<br/>BERT / RoBERTa / 冻结 LLM 隐层探针"]
+    end
+    S2 --> F["新查询 q"]
+    F --> G{"Router 路由难度档"}
+    G -->|l1/l2/l3| H["3. 接受即停<br/>采样示例 → judge 打分 ≥ τ 即停"]
+    G -->|lx 极难| K["随机示例 + HARD_QUERY"]
+    H -->|达标| I["跑冻结 LLM 出答案"]
+    H -->|预算 K 耗尽| J["回退随机示例 + NO_GOOD_DEMO"]
+```
+
 ### 关键设计
 
 **1. 基于随机试跑的难度分层：把「该花多少算力选示例」交给查询自己回答**

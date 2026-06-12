@@ -42,19 +42,42 @@ MFPO 用 MeanFlow models（学 average velocity 而非 instantaneous velocity）
 
 ### 整体框架
 
-两个核心网络：critic $Q_\phi$ 和 MeanFlow policy $\boldsymbol{u}_\theta$（加 ADN $\delta_\omega$）。Soft policy iteration 交替 policy evaluation 和 policy improvement。Inference 2 步：$\boldsymbol{a}_{t_{i-1}} = \boldsymbol{a}_{t_i} - \frac{1}{T} \boldsymbol{u}_\theta(\boldsymbol{s}, \boldsymbol{a}_{t_i}, t_{i-1}, t_i)$。
+MFPO 维护两个网络：critic $Q_\phi$ 和 MeanFlow 策略 $\boldsymbol{u}_\theta$（外挂平均散度网络 ADN $\delta_\omega$），在最大熵 RL 的软策略迭代（soft policy iteration）框架下交替做**策略评估**（更新 $Q_\phi$）和**策略改进**（更新 $\boldsymbol{u}_\theta$）。难点在于这两步都依赖 MeanFlow 策略的动作 likelihood 和 Boltzmann 目标分布，而它们对 few-step 生成式策略本不可得——MFPO 用三个设计把缺口补齐：① **MeanFlow 策略 + 平均散度网络**解决 likelihood，② **ESS 加权 SNIS** 解决策略改进所需的目标速度估计，③ **distributional critic + 自动温度 + 评估期动作选择**把训练与部署的稳定性补齐。部署时只需 2 步采样：$\boldsymbol{a}_{t_{i-1}} = \boldsymbol{a}_{t_i} - \frac{1}{T} \boldsymbol{u}_\theta(\boldsymbol{s}, \boldsymbol{a}_{t_i}, t_{i-1}, t_i)$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["状态 s：2 步 MeanFlow 策略 u_θ 采样动作<br/>a_r = a_t − (t−r)·u_θ → 存入经验池"]
+    A --> B
+    subgraph D1["① MeanFlow 策略 + 平均散度网络 δ_ω"]
+        direction TB
+        B["沿采样轨迹累加 δ_ω 得动作对数似然 logπ_θ<br/>（学散度的时间平均，额外开销 ~5%）"]
+    end
+    D1 --> C["策略评估：软贝尔曼回归 critic Q_φ<br/>目标含 −α·logπ_θ 熵项"]
+    C --> D2
+    subgraph D2["② ESS 加权 SNIS：估 Boltzmann 目标速度 v̂_t"]
+        direction TB
+        E["策略 proposal q¹=π_θ（t 大时贴）<br/>＋ Gaussian proposal q²（t 小时贴）"]
+        F["按各自有效样本数 ESS 加权组合 v̂_t"]
+        E --> F
+    end
+    D2 --> G["策略改进：回归 u_θ 去 match Boltzmann 分布"]
+    G -->|更新 u_θ、δ_ω| A
+    H["③ distributional critic + 自动温度 + 评估期动作选择<br/>C51 压方差 / α match 目标熵 / 部署挑 Q 最高动作"]
+    H -.->|贯穿训练与部署的稳定性| C
+```
 
 ### 关键设计
 
-**1. MeanFlow policy + average divergence network：让 2 步采样也能精确算 action likelihood**
+**1. MeanFlow 策略 + 平均散度网络（average divergence network, ADN）：让 2 步采样也能精确算 action likelihood**
 
 MaxEnt RL 要把熵塞进目标，就必须能算策略给某个动作的 log-likelihood，可扩散策略的 likelihood 要对瞬时速度场的散度沿时间积分，本身就 intractable，few-step 离散化又把误差放大。MFPO 的策略是 MeanFlow model，学的是平均速度 $\boldsymbol{u}(\boldsymbol{x}_t, r, t) = \frac{1}{t-r} \int_r^t \boldsymbol{v}\,d\tau$，采样写成 $\boldsymbol{a}_r = \boldsymbol{a}_t - (t-r)\boldsymbol{u}_\theta$，2 步就能从噪声走到动作且几乎无离散化误差。likelihood 这边作者照搬同一个"学平均量"的思路：再训一个 average divergence network $\delta_\omega(\boldsymbol{s}, \boldsymbol{a}_t, r, t) \approx \frac{1}{t-r} \int_r^t \nabla \cdot \boldsymbol{v}_\theta\,d\tau$，训练目标里用 Skilling-Hutchinson trace estimator $\widehat{\text{div}} = \frac{1}{N} \sum_i \boldsymbol{\epsilon}_i^\top \frac{\partial \boldsymbol{v}_\theta}{\partial \boldsymbol{a}_t} \boldsymbol{\epsilon}_i$ 避免对每一维都跑一次反向。推理时直接复用采样轨迹上的几个点把散度累起来 $\log \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s}) = \log p_1(\boldsymbol{a}_1) + \frac{1}{T} \sum_i \delta_\omega(\boldsymbol{s}, \boldsymbol{a}_{t_i}, t_{i-1}, t_i)$，额外开销只有约 5%。ADN 之所以成立，正是因为它和 MeanFlow 同构——MeanFlow 学速度的时间平均，ADN 学散度的时间平均，既精确（trained to match）又便宜。
 
-**2. ESS-weighted SNIS：没有 Boltzmann 样本也能做 soft policy improvement**
+**2. ESS 加权 SNIS：没有 Boltzmann 样本也能做策略改进（soft policy improvement）**
 
 soft policy improvement 要让策略去 match Boltzmann 分布 $\pi(\boldsymbol{a}_0|\boldsymbol{s}) \propto \exp(\frac{1}{\alpha} Q)$，但手里根本没有 Boltzmann 的样本，只能去估它的 marginal velocity field $\boldsymbol{v}_t(\boldsymbol{a}_t|\boldsymbol{s}) = \mathbb{E}_{\pi(\boldsymbol{a}_0|\boldsymbol{a}_t, \boldsymbol{s})}[\frac{\boldsymbol{a}_t - \boldsymbol{a}_0}{t}]$。已有方法（MaxEntDP/SDAC）用一个 Gaussian proposal $q^2(\boldsymbol{a}_0) = \mathcal{N}(\boldsymbol{a}_0|\frac{\boldsymbol{a}_t}{1-t}, (\frac{t}{1-t})^2 I)$ 做 self-normalized importance sampling，问题是 $t \to 1$ 时 target 由 $Q$ 主导、Gaussian 离它越来越远，有效样本数 ESS 急剧塌掉。MFPO 再加一个 policy proposal $q^1(\boldsymbol{a}_0) = \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s})$（likelihood 正好由 ADN 给出），它在 $t$ 大时反而贴得紧；最后按各 proposal 的有效样本数加权组合 $\hat{\boldsymbol{v}}_t = \sum_k \frac{\text{ESS}_k}{\sum_l \text{ESS}_l} \hat{\boldsymbol{v}}_t^k$。这样 Gaussian 负责 $t$ 小的区间、policy 负责 $t$ 大的区间，谁的有效样本多谁说话，组合估计的方差比任何单一 proposal 都低——这不是手调，而是 ESS 自带的 variance reduction。
 
-**3. distributional critic + auto temperature + 评估期动作选择：把训练和部署各自的稳定性补齐**
+**3. distributional critic + 自动温度（auto temperature）+ 评估期动作选择：把训练和部署各自的稳定性补齐**
 
 剩下三件配置让整套方法真正跑稳，针对的是"训练要探索、部署要确定"这对矛盾。critic 用 C51 把 Q 当 categorical 分布学、策略更新只取均值，沿用 diffusion RL 里已被验证有效的 distributional Q-learning 来压低值估计方差；温度 $\alpha$ 不写死，而是自动调到 match 目标熵 $\mathcal{H}_{\text{target}} = -\rho \cdot \dim(\mathcal{A})$（$\rho = 0.5$ 跨任务普适最佳），让方法对 reward scale 鲁棒；评估时不再随机采样，而是从策略采若干候选动作、挑 $Q$ 最高的那个确定性动作输出——训练期的随机性帮探索，部署期的确定性保表现。
 

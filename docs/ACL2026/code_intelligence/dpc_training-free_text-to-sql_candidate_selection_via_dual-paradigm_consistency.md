@@ -44,6 +44,20 @@ DPC 将 Text-to-SQL 的候选选择从"在隐藏数据上猜测"转化为"在可
 
 DPC 把"在隐藏的真实数据库上猜哪个候选 SQL 对"这个概率性难题，改造成"在一个可控小数据库上做确定性验证"。输入是问题加上 K 个候选 SQL，DPC 先按执行结果把候选聚成簇，挑出最大簇的冠军和次大簇的挑战者；再为这对冲突 SQL 现场合成一个能让二者必然产生不同结果的最小数据库；最后让 SQL 和 Python 两条独立推理路径在这个数据库上各自给出答案，谁的结果与 Python 参考一致就选谁，输出最终 SQL。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：问题 + K 个候选 SQL"] --> B["执行聚类<br/>最大簇取冠军、次大簇取挑战者"]
+    subgraph MDD["最小区分数据库（MDD）"]
+        direction TB
+        C["Slicer Agent<br/>裁剪 schema 到候选用到的表/列，Dry-Run 验证合法"] --> D["Tester Agent<br/>对抗性灌数据 + 判别反馈循环"]
+    end
+    B --> MDD
+    MDD -->|"冠军、挑战者在此库结果必然不同"| E["双范式一致性验证<br/>SQL 直接执行 ‖ Solver Agent 写 Python 解作参考"]
+    E --> F["二部图软 F1（BS-F1）<br/>类型归一化 + 匈牙利匹配，与 Python 结果比对"]
+    F -->|"选结果与 Python 一致的候选"| G["输出最终 SQL"]
+```
+
 ### 关键设计
 
 **1. 最小区分数据库（MDD）：把"部分可观察"变成"完全可观察"**

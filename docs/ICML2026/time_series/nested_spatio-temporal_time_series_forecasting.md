@@ -46,6 +46,27 @@ NeST 处理 $N$ 个传感器、历史窗口长度 $L$、目标 horizon $H$、pat
 2. **训练阶段**：节点历史 $\mathbf{X}_{t-L+1:t}$ 与区域未来 $\mathbf{Z}_{t+1:t+P}$ 通过解耦的 Linear+TE+SE 投影到 $d$ 维 token；双向 cross-attention 让节点 token 查询未来区域 token（top-down），再让区域 token 查询更新后的节点 token（bottom-up）；两个 head 同时输出 $\hat{\mathbf{X}}_{t+1:t+P}$ 和 $\hat{\mathbf{Z}}_{t+P+1:t+2P}$。
 3. **推理阶段**：未来 $\mathbf{Z}$ 不可见，先用全零 mask token 经一个 boundary decoder 重构 $\hat{\mathbf{Z}}_{t+1:t+P}$ 作为初始引导，再做多步 rollout。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph REG["谱聚类语义区域抽取（设计 1，离线预处理）"]
+        direction TB
+        A["训练序列按周期切 chunk<br/>构造特征驱动亲和矩阵 A"] --> B["归一化拉普拉斯低频向量 + K-Means<br/>→ M 个区域 + 分配矩阵 S"]
+        B --> C["区域序列 Z（区域内均值池化，低通去噪）"]
+    end
+    X0["节点历史 X(t−L+1:t)"] --> ENC["解耦编码器<br/>Linear + 时间/空间嵌入 → d 维 token"]
+    C -->|训练 teacher-forcing| ENC
+    BD -.->|推理冷启动| ENC
+    ENC --> CA
+    subgraph CA["双向跨尺度 cross-attention（设计 2）"]
+        direction TB
+        TDg["top-down：节点 token 查询未来区域 token"] --> BUg["bottom-up：区域 token 反查更新后节点 token"]
+    end
+    CA --> HEAD["双 head：节点预测 X̂ + 区域预测 Ẑ"]
+    HEAD --> BD["boundary 重构 + 多步 rollout + 分位数回归（设计 3）<br/>全零 mask → boundary decoder 起步，rollout 取 median 引导"]
+    BD --> OUT["节点级未来预测 X̂(t+1:t+H)"]
+```
+
 ### 关键设计
 
 **1. 基于谱聚类的语义区域抽取与 SNR 理论保证：把含噪节点压成可信的结构锚点**

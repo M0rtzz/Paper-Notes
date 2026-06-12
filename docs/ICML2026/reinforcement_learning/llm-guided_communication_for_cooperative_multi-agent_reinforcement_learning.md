@@ -45,6 +45,40 @@ LMAC 把 MARL 训练拆成"协议设计"和"策略学习"两段：
 1. **离线协议设计阶段**：用 QMIX 跑一段拿一个小 buffer $\mathcal{B}$（5k 条 trajectory），先用 LLM 配合任务描述 $\mathcal{I}_T$ 和协议设计指令 $\mathcal{I}_P$ 生成初始协议 $f_C^{(0)}$；然后训练辅助解码器 $D_\phi^{(k)}$ 用每个 agent 的轨迹（带或不带消息）尝试重建全局状态，按"重建是否落在阈值 $\alpha$ 之内"得到 SAI 指标，再把 SAI 转成两种语言反馈分别驱动 $f_C^{(1)}$（提高准确度）和 $f_C^{(2)}$（降低跨 agent 方差）。最终拿到三段协议 $f_C=(f_C^{(0)},f_C^{(1)},f_C^{(2)})$。
 2. **在线 CTDE 训练阶段**：把 $f_C$ 当成固定函数运行——每个 agent 把自己的局部轨迹喂进去拿三段消息 $m_t^i=(m_t^{i,(0)},m_t^{i,(1)},m_t^{i,(2)})$，再过一个编码器 $\mathrm{Enc}_\psi$ 得到潜在表示 $z_t^i$，喂给个体 utility $Q^i(\tau_t^i,z_t^i)$，由 QMIX 组合成 $Q_{tot}$ 做 TD 学习。编码器-解码器同时被训去重建当前 batch 的全局状态、预测 SAI，并通过一个 cycle-consistency 正则压掉冗余特征。
 
+下图把这两段流程串起来：SAI 是贯穿两段的"听诊器"——离线阶段它把重建结果转成反馈句驱动两步精修，在线阶段它又当成元认知表示的监督信号（对应下面三个关键设计）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["任务描述 + 协议设计指令<br/>（各观测维度的自然语言含义）"]
+    B["离线 buffer（QMIX 预跑 5k 轨迹）"]
+    SAI["状态感知指标 SAI<br/>辅助解码器做差分重建（加/不加消息）"]
+    subgraph REF["两步式 Reflexion 协议精修"]
+        direction TB
+        P0["k=0：生成最小消息初版协议"]
+        P1["k=1：按重建成功率补缺失维度"]
+        P2["k=2：按跨 agent 方差填平不平衡"]
+        P0 --> P1 --> P2
+    end
+    FC["固定三段协议 f_C"]
+    subgraph CTDE["元认知潜在表示 + cycle-consistency"]
+        direction TB
+        MSG["agent 局部轨迹 → f_C → 三段消息 m"]
+        ENC["编码器 Enc 压成潜在表示 z"]
+        CYC["重建全局状态 + 预测 SAI<br/>z→Dec→Enc_c→ẑ≈z 压冗余"]
+        MSG --> ENC --> CYC
+    end
+    Q["个体 utility Q(τ,z) → QMIX 组合 → TD 学习"]
+    I --> P0
+    B --> SAI
+    SAI -->|成功率均值| P1
+    SAI -->|跨 agent 方差| P2
+    P2 --> FC
+    FC --> MSG
+    SAI -.批内监督.-> CYC
+    CYC --> Q
+```
+
 ### 关键设计
 
 **1. 状态感知指标（SAI）：用"加/不加消息的差分重建"给协议当听诊器**

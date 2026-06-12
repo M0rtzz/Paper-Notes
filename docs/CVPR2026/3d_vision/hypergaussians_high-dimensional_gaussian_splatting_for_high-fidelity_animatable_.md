@@ -37,6 +37,20 @@ tags:
 ### 整体框架
 HyperGaussians是一个即插即用的表示增强模块。原始pipeline（如FlashAvatar）中MLP输出表情依赖的偏移$\Delta\mu, \Delta r, \Delta s$；使用HyperGaussians后，MLP改为输出一个潜在向量$z_\psi$，通过高维高斯的条件分布计算得到MAP估计的偏移量。整个过程只需替换高斯表示，其他部分（损失函数、超参数）完全不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表情参数"] --> M["原 pipeline 变形 MLP<br/>即插即用集成：唯一改动是输出潜码 z 而非直接偏移"]
+    subgraph HG["HyperGaussian 表示层（替换原 3D 高斯）"]
+        direction TB
+        B["HyperGaussian 高维扩展<br/>每个高斯升为 (m+n) 维联合分布 γ=(γ_a 渲染属性, γ_b 潜在嵌入)"]
+        B --> C["逆协方差技巧<br/>存精度矩阵 Λ=Σ⁻¹，仅逆 m×m 小块，对 n 线性"]
+        C --> D["条件分布切片<br/>给定潜码 γ_b 求 MAP 偏移 Δμ,Δr,Δs"]
+    end
+    M --> B
+    D --> E["3DGS 光栅化器渲染<br/>损失/超参全沿用原方法"]
+```
+
 ### 关键设计
 
 **1. HyperGaussian 高维扩展：让每个高斯原语本身具备表情自适应能力**

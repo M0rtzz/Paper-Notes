@@ -43,6 +43,15 @@ tags:
 ### 整体框架
 APO 把"多个老师互相打架"这件麻烦事拆成两阶段消化。第一阶段（Supervised Bootstrapping with Consensus Synthesis）先用所有 source 模型的推理轨迹做监督蒸馏，把目标模型 $\pi_\theta$ 投影到 source 能力并集里得到 $\hat{\pi}_{st}$，再让 $\hat{\pi}_{st}$ 自己充当 in-context aggregator，从同一题的 N 条 source 轨迹 $\mathcal{T}=\{\tau^1,\ldots,\tau^N\}$ 里炼出一条自洽的共识轨迹 $t^+$。第二阶段（Constraint-Aware Optimization）拿 $t^+$ 当唯一正样本、那 N 条原始 source 轨迹当 N 个负样本，做 Plackett-Luce 偏好优化，把学生从老师们的发散区域里"推"出来。推理时只用最终 $\pi_\theta$，不再需要任何 source 老师。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个 source MLLM 的 CoT 轨迹<br/>𝒯 = {τ¹, …, τᴺ}（无金标报告）"] --> B["监督自举<br/>对 N 个老师做 KL 最小化<br/>投影到能力并集 → 自举模型 π̂_st"]
+    B --> C["共识合成（Consensus Synthesis）<br/>π̂_st 当 in-context 聚合者读 𝒯<br/>过滤无共识片段 → 正样本 t⁺"]
+    C --> D["APO 偏好优化（Plackett-Luce 多负样本）<br/>t⁺ 为正、N 条 τᵘ 为负，以 π̂_st 为参考<br/>同时压制 N 条漂移轨迹"]
+    D --> E["对齐后的学生 π_θ<br/>推理只用 π_θ，不再需要 source 老师"]
+```
+
 ### 关键设计
 
 **1. 概念漂移视角下的多流推理建模：先证明"为什么不能简单拼起来蒸馏"**

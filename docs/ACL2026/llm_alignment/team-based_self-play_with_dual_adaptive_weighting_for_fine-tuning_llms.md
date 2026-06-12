@@ -47,6 +47,22 @@ TPAW 的直觉很像把单人训练赛变成队伍赛。普通 SPIN 只让当前
 
 最后，TPAW 不直接平均所有 player 的 loss，而是先对目标响应做权重 $\alpha$，再对不同 player 做权重 $\beta$，用加权 logistic loss 更新 policy。迭代若干轮后得到最终 aligned policy。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["SFT 数据 + 初始 SFT policy"] --> B["当前 policy 采样生成 y_gen<br/>组成三元组 (x, y, y_gen)"]
+    subgraph TEAM["Team-Based Self-Play（历史 checkpoint 组队）"]
+        direction TB
+        B --> C["对手队伍：最近三轮三元组<br/>D_O = D_t ∪ D_t-1 ∪ D_t-2"]
+        C --> D["主玩家队伍：各 checkpoint 隐式 reward<br/>P_j = λ log(π_θ / π_θj)"]
+    end
+    D --> E["目标响应自适应加权 α<br/>检测 P_j(x,y)≤0 漂移则放大目标拉力"]
+    E --> F["主玩家自适应加权 β<br/>按 margin 用 softmax 分配各 player 权重"]
+    F --> G["加权 logistic loss 更新 policy"]
+    G -->|迭代下一轮| B
+    G --> H["对齐后的 policy"]
+```
+
 ### 关键设计
 
 **1. Team-Based Self-Play 框架：用历史 checkpoint 组队，替代只和当前自己比较**

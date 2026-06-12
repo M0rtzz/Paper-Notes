@@ -44,6 +44,18 @@ tags:
 
 要解决的是"模型为何对 *这一条* 用户输入给出这个答案"——一个无需训练任何 surrogate、直接在原 LLM $M$ 内部追踪的 instance-level 电路发现问题。给定一条 query $q$ 和边预算 $N$，方法把它转成一个"中彩票"式的采样选优：先把 $q$ 连同它的若干改写各自打一遍边重要性分，各构造一张候选电路，再在 $M$ 上正向评估忠实度、留下最好的那一张作为 $q$ 的查询电路 $C_q$。整套流程的两块基础设施分别是稳定可监控的忠实度指标 NDF 和负责"采样选优"的 BoN 家族算法。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单条 query q + 边预算 N<br/>直接在原 LLM M 内部，不训 surrogate"] --> B["生成 p 个 paraphrase<br/>q, q₁,…,q_p：互为扰动的中彩票候选"]
+    B --> C["EAP-IG 逐 query 在 M 上打边分<br/>各取 top-N 边构造候选查询电路"]
+    C --> D["NDF 忠实度评估<br/>对称 + 截断到 [0,1]，通用数据可监控"]
+    D --> E["Best-of-N：留 NDF 最高者作 C_q"]
+    E -->|扫不同预算 N 画曲线时| F["iBoN / BoN-CSM<br/>复用已有电路，免重跑 LLM"]
+    E --> G["查询电路 C_q<br/>（SAE 可选事后贴标）"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 查询电路任务：把 instance 解释从 surrogate 拉回原模型**

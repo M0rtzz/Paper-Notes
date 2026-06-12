@@ -45,6 +45,29 @@ PluRule 不是提出一个新 moderation 模型，而是提出一个更贴近真
 
 评估时，模型逐步获得五个累积上下文层级：Comment Only、+Discussion、+Submission、+User、+Images。所有层级都包含 subreddit 描述和完整规则集。输出先自由生成，再追加 “Final Choice:” 抽取最终选项。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Reddit 公开数据<br/>Pushshift ~15B 评论 + API 规则/语言/NSFW"]
+    subgraph S2["从公开审核痕迹构造规则级标签"]
+        direction TB
+        B["抽取 distinguished 版主评论<br/>过滤 bot / NSFW"]
+        C["Qwen3-Embedding 语义匹配<br/>评论 ↔ 当前社区规则"]
+        D["阈值过滤<br/>匹配 0.79 / 歧义 0.75 丢弃"]
+        B --> C --> D
+    end
+    subgraph S3["对比实例、LLM 验证与语义聚类"]
+        direction TB
+        E["配对违规 / 合规线程<br/>同 submission 相近上下文 + 图片"]
+        F["Qwen3-30B 验证<br/>是否真为规则执行"]
+        G["划分 train/val/test<br/>UMAP+HDBSCAN 聚类社区与规则"]
+        E --> F --> G
+    end
+    H["多选式社区规则识别样本<br/>候选 = 全部规则 + No rules broken"]
+    I["五层累积上下文评估<br/>Comment→+Discussion→+Submission→+User→+Images"]
+    A --> S2 --> S3 --> H --> I
+```
+
 ### 关键设计
 
 **1. 多选式社区规则识别：把审核从「坏不坏」改成「违反了哪一条本地规则」**

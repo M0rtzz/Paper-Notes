@@ -59,6 +59,29 @@ Diffusion Transformers (DiT) 凭借出色的可扩展性在视觉生成领域取
 
 DiverseDiT 要解决的问题是：DiT 学得好不好，取决于各 block 间表示的多样性，而以往要靠外部编码器（REPA 用 DINOv2）从侧面提升这种多样性。它的思路是直接从内部下手——既改造 block 的输入，也约束 block 的输出，让多样性自己长出来。整条 pipeline 在标准 DiT 之上叠两个互补组件：一个是**长残差连接**，把浅层 block 的输出跨接到对称的深层 block，从源头打破"每层输入都来自上一层"的同质化；另一个是**表示多样性损失**，由正交、互信息最小化、特征离散三项组成，在训练时显式拉开各 block 输出特征的差异。前者管"输入多样化"、后者管"输出差异化"，两层叠加且全程不碰任何外部预训练模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：含噪 latent + 时间步 t"] --> LRC
+    subgraph LRC["长残差连接（输入侧多样化）"]
+        direction TB
+        B["DiT block 堆叠（L 层）"]
+        C["浅层第 i 块输出 与 前层输出拼接<br/>→ Norm + Linear 压回 D 维<br/>→ 跨接到对称的第 (L−i) 块"]
+        B --> C
+        C -.差异化输入.-> B
+    end
+    LRC --> E["各 block 输出特征"]
+    E --> DIV
+    subgraph DIV["表示多样性损失（输出侧差异化）"]
+        direction TB
+        F["正交损失：拉开 block 平均方向"]
+        G["互信息最小化损失：切断 block 间统计依赖"]
+        H["特征离散损失：用满所有通道"]
+    end
+    DIV --> I["自适应权重（分段线性）<br/>多样性损失过小则停止优化"]
+    I --> J["去噪训练目标 → 图像生成"]
+```
+
 ### 关键设计
 
 **1. 长残差连接：从输入侧打破 block 间的同质化**

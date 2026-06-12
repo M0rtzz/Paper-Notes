@@ -44,6 +44,20 @@ tags:
 
 STARE 要解决的问题是：在已有红队方法只盯 T2I 最终输出毒性的前提下，怎么把整条去噪轨迹本身变成可优化、可归因的攻击面，对查询级黑盒 VLM 做端到端 toxicity attack。它的做法是把"改语义"和"放细节"拆成两层 policy——high-level prompt editor 在 embedding 空间种概念毒性子目标，low-level GRPO 微调 rectified-flow 的 velocity field 放大细节毒性——两层共享同一个 toxicity reward，再用一套时间归因分析验证这个分层结构确实对应到去噪轨迹早晚两个漏洞窗。具体地，给定 root prompt $p$、白盒 T2I（SD 3.5-Medium + LoRA $r=16$）和查询级黑盒 VLM（LLaVA-v1.6-mistral-7b），high-level 先把 $p$ 的 embedding 扰动出 $K$ 个候选编辑、经 vec2text 解码成 $K$ 个 subgoal prompt，low-level 再对每个 subgoal 用当前 velocity field 跑 $M$ 个 image rollout，最后由 VLM 续写打 toxicity 分、加 CLIPScore 对齐奖励合成 terminal reward 反传到两层 policy，形成"语义子目标—图像生成—VLM 续写—毒性反馈"的双层闭环。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["root prompt p"] --> HE["分层 MDP·High-level：改语义<br/>embedding 扰动出 K 个 edit → vec2text 解码"]
+    HE --> SG["K 个 subgoal prompt"]
+    SG --> LL["分层 MDP·Low-level：改细节<br/>rectified-flow velocity field 跑 M 个 rollout"]
+    LL --> IMG["K×M 张对抗图像"]
+    IMG --> VLM["VLM 续写打分<br/>6 维 toxicity + CLIPScore 对齐"]
+    VLM --> R["terminal reward"]
+    R -->|"GRPO 双层优化：组归一化优势降方差"| HE
+    R -->|"GRPO 双层优化"| LL
+    LL -.->|"时间对齐分析：MLMC 块化扰动"| TS["TemporalScore 热图<br/>概念毒性→早期、细节毒性→后期"]
+```
+
 ### 关键设计
 
 **1. 分层 MDP：high-level 改语义、low-level 改细节，对应 diffusion 的早晚分工**

@@ -45,7 +45,21 @@ tags:
 
 ### 整体框架
 
-这篇工作想回答一个很实际的问题：能不能不增加训练数据，就拿到「仿佛在更大数据集上训出来」的更好预训练权重？它的破题点是把 catastrophic forgetting 反过来用——既然在逐步缩小的数据上反复 fine-tuning 会让权重沿一条有结构的轨迹「退化遗忘」，那么观察这条退化轨迹、再把方向反转，就能外推出「知识溢出」的增强权重。形式化地说：给定在 $D_0$ 上预训练的 $\Theta_0$，先人为制造一段遗忘轨迹 $[\Theta_0, \Theta_1, \ldots, \Theta_{S-1}]$，再假设存在一个对应「更大数据集 $D_{-1} \supset D_0$」的理想权重 $\Theta_{-1}$（fine-tuning 它在 $D_0$ 上恰好得到 $\Theta_0$），用一个学过「遗忘长什么样」的 hyper-model 反向预测出 $\hat{\Theta}_{-1}$，这就是 KNOW（Knowledge-Overflowed Weights）prediction。
+这篇工作想回答一个很实际的问题：能不能不增加训练数据，就拿到「仿佛在更大数据集上训出来」的更好预训练权重？它的破题点是把 catastrophic forgetting 反过来用——既然在逐步缩小的数据上反复 fine-tuning 会让权重沿一条有结构的轨迹「退化遗忘」，那么观察这条退化轨迹、再把方向反转，就能外推出「知识溢出」的增强权重。形式化地说：给定在 $D_0$ 上预训练的 $\Theta_0$，先人为制造一段遗忘轨迹 $[\Theta_0, \Theta_1, \ldots, \Theta_{S-1}]$，再假设存在一个对应「更大数据集 $D_{-1} \supset D_0$」的理想权重 $\Theta_{-1}$（fine-tuning 它在 $D_0$ 上恰好得到 $\Theta_0$），用一个学过「遗忘长什么样」的 hyper-model 反向预测出 $\hat{\Theta}_{-1}$，这就是 KNOW（Knowledge-Overflowed Weights）prediction。整条流水线串成「造遗忘轨迹 → 反向预测增强权重 → 递归外推 → 迁移下游」四步：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练权重 Θ₀（在 D₀ 上）"] --> FORGET
+    subgraph FORGET["结构化遗忘诱导"]
+        direction TB
+        B["在嵌套子集 D₁⊂D₀, D₂⊂D₁ …<br/>上逐步 fine-tune"] --> C["遗忘轨迹<br/>[Θ₀, Θ₁, …, Θ_S−1]"]
+    end
+    FORGET --> D["KNOWN 超模型<br/>输入权重历史 Wₜ + 差分 dWₜ<br/>预测残差并叠加回当前权重"]
+    D --> E["增强权重 Θ̂₋₁<br/>（≈×2 虚拟数据量）"]
+    E -->|"迭代多步预测：接回历史递归外推"| D
+    E --> F["迁移到下游任务<br/>分类 / 分割 / 描述 / 域泛化"]
+```
 
 ### 关键设计
 

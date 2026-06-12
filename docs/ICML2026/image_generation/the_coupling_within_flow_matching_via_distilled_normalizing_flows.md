@@ -43,15 +43,27 @@ tags:
 ### 整体框架
 NFM 想解决的是 Flow Matching 里"噪声-数据配对太粗糙"这件事，做法是把随机噪声端换成一个预训练 Normalizing Flow（NF）老师对 data 的编码。整套流程分两阶段：先按最大似然训一个 TarFlow 老师 $f_{\text{NF}}$，学一个 $x\mapsto z$ 的近确定可逆映射；再冻结老师，训一个普通 FM 学生 $g$（架构任意、不必可逆），让它看到的训练对从 $(x,\epsilon)$ 变成 $(x,z_{\epsilon'})$。学生的训练公式、采样器、guidance、时间调度全部沿用标准 FM，唯一改动就是把噪声端的 $\epsilon$ 替换成老师给的 $z_{\epsilon'}$，所以可以零成本接进任何现成的 FM 代码栈。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["训练数据 x"]
+    T["TarFlow 老师配输入扰动 η<br/>对 x+ηε′ 最大似然学 x↦z 近确定双射"]
+    Z["NF 编码 z 取代随机噪声<br/>z=f_NF(x+ηε′)/σ_f，配对收紧成近确定"]
+    G["FM 学生：架构自由 + 等价训练目标<br/>回归 v_t=z−x，标准 FM loss"]
+    OUT["ODE 采样输出<br/>NFE≤5 用 Euler，≥5 用 Heun"]
+    X --> T --> Z --> G --> OUT
+    X -->|提供 data 端配对| Z
+```
+
 ### 关键设计
 
-**1. 用 NF 老师产生的 $z$ 取代随机噪声：把多对多映射收紧成近确定配对**
-
-FM 真正难学的地方在大 $t$：插值点 $x_t=(1-t)x+t\epsilon$ 的条件方差很大，速度目标 $v_t=\epsilon-x$ 几乎只剩"两端点之差"这点信息，导致同一个 $x_t$ 可能对应五花八门的目标方向，梯度噪声大、学到的 ODE 轨迹弯曲。NFM 的解法是不再让 data 配随机 noise，而是配一个由老师锁定的、近 Gaussian 的编码 $z_{\epsilon'}=f_{\text{NF}}(x+\eta\epsilon',c)/\sigma_f$，其中 $\sigma_f^2=\mathbb{E}[f_{\text{NF}}(x+\eta\epsilon',c)^2]$ 把老师输出归一化到单位方差，保证 $z$ 整体仍近似 $\mathcal{N}(0,I)$、学生采样时照样能从标准高斯起步。这样每个 $x$ 都被绑到一个几乎确定的 $z$ 上，"特定 $z\to$ 特定 $x$"的映射让 $\text{Var}(v_t\mid x_t,t)$ 明显降低，直接表现为路径更直（实验里曲率 $\kappa$ 从 FM 的 0.0386 降到 0.0181）、少步采样的 FID 提升。一个值得注意的细节是：把老师的扰动幅度换算到 FM 的方差守恒坐标下，$\eta=0.05$ 只对应 FM 的最大噪声水平 $t=\eta/(1+\eta)\approx0.0476$，远小于标准 FM 的 $t=1$，等于学生从一开始就活在一个"噪声很温和"的区间里。
-
-**2. TarFlow 老师配输入扰动 $\eta$：既保平滑又控噪声水平**
+**1. TarFlow 老师配输入扰动 $\eta$：既保平滑又控噪声水平**
 
 老师选 TarFlow，是因为它是用 Transformer 实现的自回归流，每个 meta-block 内逐 patch 自回归生成，可逆性强、图像质量已能与扩散模型抗衡——代价是采样极慢，而这正是 NFM 要靠学生绕过的短板。训练老师时输入不是干净的 $x$ 而是 $x'=x+\eta\epsilon'$，再最小化 NLL，NFM 把这个 $\eta$ 原封不动保留下来，因为它一身两职：一方面让 $z$ 对 data 的小邻域保持平滑、不退化成纯确定的硬映射（保留一点 stochasticity），另一方面又隐式地把 FM 学生看到的最大噪声水平压到 $\sim\eta/(1+\eta)$。$\eta$ 因此成了调节"配对确定性强弱"的旋钮：$\eta$ 取大，不同图像的 $z$ 互相靠近、配对更"软"，最佳 FID 出现在更高 NFE 处；$\eta$ 取小，配对更"硬"，少步采样下表现更好。
+
+**2. 用 NF 老师产生的 $z$ 取代随机噪声：把多对多映射收紧成近确定配对**
+
+FM 真正难学的地方在大 $t$：插值点 $x_t=(1-t)x+t\epsilon$ 的条件方差很大，速度目标 $v_t=\epsilon-x$ 几乎只剩"两端点之差"这点信息，导致同一个 $x_t$ 可能对应五花八门的目标方向，梯度噪声大、学到的 ODE 轨迹弯曲。NFM 的解法是不再让 data 配随机 noise，而是配一个由老师锁定的、近 Gaussian 的编码 $z_{\epsilon'}=f_{\text{NF}}(x+\eta\epsilon',c)/\sigma_f$，其中 $\sigma_f^2=\mathbb{E}[f_{\text{NF}}(x+\eta\epsilon',c)^2]$ 把老师输出归一化到单位方差，保证 $z$ 整体仍近似 $\mathcal{N}(0,I)$、学生采样时照样能从标准高斯起步。这样每个 $x$ 都被绑到一个几乎确定的 $z$ 上，"特定 $z\to$ 特定 $x$"的映射让 $\text{Var}(v_t\mid x_t,t)$ 明显降低，直接表现为路径更直（实验里曲率 $\kappa$ 从 FM 的 0.0386 降到 0.0181）、少步采样的 FID 提升。一个值得注意的细节是：把老师的扰动幅度换算到 FM 的方差守恒坐标下，$\eta=0.05$ 只对应 FM 的最大噪声水平 $t=\eta/(1+\eta)\approx0.0476$，远小于标准 FM 的 $t=1$，等于学生从一开始就活在一个"噪声很温和"的区间里。
 
 **3. 学生架构自由 + 与 FM 完全等价的训练目标：解锁比老师快几个量级的推理**
 

@@ -54,6 +54,18 @@ $\mathrm{PM}_k = \dfrac{\sum_{j<i}\beta_k^{i-j}\,\mathrm{Softmax}_k\!\left(\tfra
 
 其中 $\beta_k=\sigma(\gamma_k)\in(0,1)$ 是可学的 EMA 衰减系数，给出每个原型的"时间偏好"，并可换算成半衰期 $t_{1/2}^{(k)}=-\ln 2/\ln \beta_k$ 用于可解释性分析。由于 $\mathrm{PM}_k$ 满足递推（$x_i$ 时刻只依赖 $x_{i-1}$ 时刻的 PM 和 $x_{i-1}$），自回归生成是严格 $O(1)$ 计算/显存每步，总成本 $O(N\cdot R\cdot h)$，对序列长度线性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前 token 与历史序列"] --> B["Write gate（通道对齐门控）<br/>沿原型维 softmax，把历史 token 路由进 R 条通道"]
+    B --> C["Prefix Mean（EMA 时间折扣）<br/>每通道独立做 past-only 折扣累积平均"]
+    C --> D["Read gate（通道对齐门控）<br/>沿原型维 softmax，从 R 条通道读回并求和投影"]
+    D --> E["输出 y_i，经 Alpha Gate 缩放 ×α"]
+    E --> F["残差相加 → SwiGLU FFN → 下一层"]
+```
+
+> 三条关键设计对应图上：通道对齐门控同时管 Write/Read gate 两端（B、D），EMA Prefix Mean 是中间的通道聚合（C），Alpha Gate 是输出汇入残差前的可观测探针（E）。
+
 ### 关键设计
 
 **1. Channel-aligned 原型门控：沿原型维 softmax 的"反向 attention"**

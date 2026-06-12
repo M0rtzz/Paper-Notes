@@ -40,7 +40,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ArcVQ-VAE 不动 VQGAN 的 encoder-decoder + codebook 网络结构，只把"码本怎么在 latent 空间排布"这件事重塑成球面学习问题。每个 batch 走标准 VQ-VAE forward，算重建 + commit + codebook 的 $\mathcal{L}_\text{VQ}$，再叠一项把 latent 推散的 ArcLoss $\mathcal{L}_\text{A}$，合成 $\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$ 反传；backprop 完成后再对每个码本向量做一次 ball projection 把范数压回界内。量化时 encoder 输出和码本都 ℓ2 归一化、用角余弦找最近码本，等价于在单位球上做最近邻；训出的 $32^2$ token 之后接 LDM 作 prior、sampling 250 步做生成。整套方案只多了"batch 后一次 norm clip + 一项 loss"，没有任何新网络组件。
+ArcVQ-VAE 不动 VQGAN 的 encoder-decoder + codebook 网络结构，只把"码本怎么在 latent 空间排布"这件事重塑成球面学习问题。每个 batch 走标准 VQ-VAE forward，算重建 + commit + codebook 的 $\mathcal{L}_\text{VQ}$，再叠一项把 latent 推散的 ArcLoss $\mathcal{L}_\text{A}$，合成 $\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$ 反传；backprop 完成后再对每个码本向量做一次 ball projection 把范数压回界内。量化时 encoder 输出和码本都 ℓ2 归一化、用角余弦找最近码本，等价于在单位球上做最近邻；训出的 $32^2$ token 之后接 LDM 作 prior、sampling 250 步做生成。整套方案只多了"batch 后一次 norm clip + 一项 loss"，没有任何新网络组件。下图把单个训练步的数据流画出来——量化后分出 VQ 与 ArcLoss 两路、按时变权重合成总损失反传，每个 batch 末尾再做一次球投影闭合回路：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["Encoder 输出 z_e"]
+    B --> C["ℓ2 归一化 + 角余弦量化<br/>在单位球上找最近码本"]
+    C --> D["L_VQ<br/>重建 + commit + codebook"]
+    C --> E["ArcCosine Additive Margin Loss<br/>top-k 近邻当隐式类别 · 码本 stop-grad"]
+    D --> F["Decay-Weighted 联合损失<br/>L_total = L_VQ + γ(t)·L_A"]
+    E --> F
+    F -->|反传更新 encoder/decoder/码本| G["Ball-Bounded Norm Regularization<br/>batch 后把超界码本投影回时变球"]
+    G -.->|下一 batch| B
+```
 
 ### 关键设计
 

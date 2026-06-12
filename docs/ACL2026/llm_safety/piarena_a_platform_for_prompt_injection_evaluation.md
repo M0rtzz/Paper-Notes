@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 PIArena 由四个模块组成：(1) Benchmark 模块提供多样化数据集（QA、RAG、摘要、长文本等）；(2) Attack 模块集成多种攻击方法并生成注入提示；(3) Defense 模块集成检测式和预防式防御；(4) Evaluator 模块计算 Utility（任务性能）和 ASR（攻击成功率）。所有模块通过统一 API 交互，支持独立和组合评估。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph API["统一标准化接口与数据格式（贯穿全平台）"]
+        direction TB
+        A["Benchmark 模块<br/>QA / RAG / 摘要 / 长文本数据集"]
+        B["真实多样注入任务<br/>钓鱼·内容推广·访问拒绝·基础设施故障<br/>由 LLM 按上下文现场生成"]
+        C["Attack 模块<br/>生成注入提示"]
+        D["Defense 模块<br/>检测式 / 预防式 → LLM 响应"]
+        E["Evaluator 模块<br/>计算 Utility 与 ASR"]
+        A --> B --> C --> D --> E
+    end
+    D -->|"基于策略的自适应攻击<br/>按防御反馈迭代改写（≤K 轮）"| C
+```
+
 ### 关键设计
 
 **1. 统一标准化接口与数据格式：让攻击、防御和基准能即插即用地组合**

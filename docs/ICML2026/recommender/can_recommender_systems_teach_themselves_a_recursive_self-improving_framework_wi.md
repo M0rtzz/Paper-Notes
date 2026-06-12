@@ -40,7 +40,25 @@ RSIR 让序列推荐模型用自身预测能力生成新的合成用户交互序
 ## 方法详解
 
 ### 整体框架
-RSIR 在迭代 $k$ 包含 4 步：(1) 在当前数据集 $D_k$ 上训出模型 $f_{\theta_k}$（next-item prediction）；(2) 用 $f_{\theta_k}$ 为每个用户生成 $m$ 条合成序列 $D'_{k+1}$ —— 从用户真实历史的随机前缀出发，autoregressive 扩展；(3) 合并得到 $D_{k+1} = D_k \cup D'_{k+1}$；(4) 从头训 $f_{\theta_{k+1}}$（或 fine-tune 上一轮模型）。生成时核心是两个机制：bounded exploration（混合候选池）+ fidelity-based quality control（排名校验）。
+RSIR 在迭代 $k$ 包含 4 步：(1) 在当前数据集 $D_k$ 上训出模型 $f_{\theta_k}$（next-item prediction）；(2) 用 $f_{\theta_k}$ 为每个用户生成 $m$ 条合成序列 $D'_{k+1}$ —— 从用户真实历史的随机前缀出发，autoregressive 扩展；(3) 合并得到 $D_{k+1} = D_k \cup D'_{k+1}$；(4) 从头训 $f_{\theta_{k+1}}$（或 fine-tune 上一轮模型），递归滚动 $K$ 轮。生成时核心是两个机制：Bounded Exploration（混合候选池）+ Fidelity-Based Quality Control（排名校验）；二者的"扰动只沿用户流形切空间"性质，又被理论解释成一项隐式正则化，构成第 3 个关键设计。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数据集 D_k → 训练模型 f_θk<br/>next-item prediction"] --> B["从用户真实历史随机前缀出发<br/>autoregressive 扩展，每用户生成 m 条"]
+    subgraph GEN["合成序列生成（逐 step 循环）"]
+        direction TB
+        B --> C["Bounded Exploration 混合候选池<br/>概率 p 采历史、1−p 采全局，top-k 采样出候选 item"]
+        C --> D{"Fidelity 排名校验<br/>真实未来 item 仍排进前 τ 名？"}
+        D -->|是·高保真| E["接受 item，更新上下文"]
+        E -->|未达长度上限| C
+        E -->|达长度上限| G["合格序列集 D'_k+1<br/>去重 + 最小长度过滤"]
+        D -->|否·跑偏| F["立即 break 终止本条序列"]
+        F --> G
+    end
+    G --> H["合并 D_k+1 = D_k ∪ D'_k+1"]
+    H -->|递归滚动 K 轮| A
+```
 
 ### 关键设计
 

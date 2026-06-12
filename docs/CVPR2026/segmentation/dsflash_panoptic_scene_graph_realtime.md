@@ -33,29 +33,48 @@ DSFlash 通过合并分割与关系预测 backbone、双向关系预测头、动
 ## 方法详解
 
 ### 整体框架
-DSFlash 要解决的是全景场景图生成（PSGG）几乎没人管延迟的问题——SOTA 的 DSFormer 一次推理 458 ms，还用了 MaskDINO + ResNet 两个独立 backbone，浪费严重。它的核心判断是：两阶段方法完全可以靠共享 backbone 特征、减少前向次数、剪掉无关 token 把延迟压到实时，而且不掉点。具体是第一阶段用冻结的 EoMT（Encoder-only Mask Transformer）分割模型提 mask 与特征，第二阶段直接复用 EoMT 的中间特征（从 block 2/5/8/11 抽 patch token 拼成 768×40×40），用 mask embedding 编码主客体位置，过一个轻量 Transformer neck 后由关系头输出关系类别。
+DSFlash 要解决的是全景场景图生成（PSGG）几乎没人管延迟的问题——SOTA 的 DSFormer 一次推理 458 ms，还用了 MaskDINO + ResNet 两个独立 backbone，浪费严重。它的核心判断是：两阶段方法完全可以靠共享 backbone 特征、减少前向次数、剪掉无关 token 把延迟压到实时，而且不掉点。具体是第一阶段用冻结的 EoMT（Encoder-only Mask Transformer）分割模型提 mask 与特征，第二阶段直接复用 EoMT 的中间特征（从 block 2/5/8/11 抽 patch token 拼成 768×40×40），用 mask embedding 编码主客体位置，过一个轻量 Transformer neck 后由关系头一次前向输出双向关系；backbone 内部还叠了 ToMe-SD token merging 进一步压低注意力开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 640×640"] --> BB
+    subgraph BB["Merged Backbone（冻结 EoMT，叠加 Token Merging）"]
+        direction TB
+        B["复用 EoMT 中间特征<br/>抽 block 2/5/8/11 patch token<br/>拼成 768×40×40"]
+        T["Token Merging（ToMe-SD）<br/>attention 前合并、后 unmerge"]
+        B --> T
+    end
+    BB --> S["EoMT 输出分割 mask"]
+    BB --> M["Raw-resolution mask embedding<br/>低分辨率直接算 patch 重叠比例"]
+    S --> M
+    M --> P["动态 patch 剪枝<br/>丢掉与主客体都不重叠的 patch"]
+    P --> N["轻量 Transformer neck"]
+    N --> R["Gated 双向关系头<br/>门控分裂 t→ / t←，共享 MLP 一次前向"]
+    R --> O["主客体双向关系"]
+```
 
 ### 关键设计
 
-**1. Merged Backbone：砍掉一整次 backbone 前向**
+**1. Merged Backbone：复用 EoMT 特征，砍掉一次 backbone 前向**
 
-两阶段方法的最大浪费是分割和关系预测各用一个 backbone。DSFlash 不再单独跑关系 backbone，而是直接抽 EoMT 内部特征复用，省去一次完整的 backbone 前向。EoMT 全程冻结，训练只训 neck 和 head，单张 GTX 1080 不到 24 小时就能训完。
+两阶段方法的最大浪费是分割和关系预测各用一个 backbone。DSFlash 不再单独跑关系 backbone，而是把已经为出分割 mask 而运行的 EoMT 拿来兼用——从它的 block 2/5/8/11（L 版为 5/11/17/23）抽 patch token，沿通道维拼成 768×40×40 的特征张量直接喂给后续模块，省掉一整次 backbone 前向；同时用 EoMT 替换又慢又重的 MaskDINO，分割质量相当但延迟低得多。EoMT 全程冻结，训练只训 neck 和 head，单张 GTX 1080 不到 24 小时就能训完，分割训练也可彻底外包到更大数据集上。
 
-**2. Gated Bidirectional Prediction：一次前向出双向关系**
+**2. Raw-resolution Masks：低分辨率直接算重叠，省掉插值往返**
 
-原 DSFormer 对一对 mask $(S_0, S_1)$ 要跑两次前向，分别预测 $S_0 \to S_1$ 和 $S_1 \to S_0$。DSFlash 用一个门控分裂机制把编码特征 $x$ 经 sigmoid 门控分成 $t_\to$ 和 $t_\leftarrow$ 两支，共享同一个 MLP 关系头分别预测两个方向；训练时翻转 mask 顺序算 consistency loss（MSE）逼模型对输入顺序等变，推理时只需一次前向就拿到双向预测。额外的一致性监督还顺带把性能从 mR@50 25.0 提到 28.8。
+mask 要"贴"进 patch token，靠的是每个 patch 被主客体 mask 覆盖的面积比例。DSFormer 的做法是把 EoMT 输出的 160×160 mask logits 双线性上采样到原图分辨率再算覆盖比例，插值很贵。DSFlash 注意到最终只需要 13×13 的 patch 粒度，于是干脆在低分辨率上直接算重叠比例，省掉这一次昂贵的上采样。
 
 **3. Mask-based Dynamic Patch Pruning：零开销剪掉无关 token**
 
-与主客体 mask 都不重叠的 patch 不含定位信息，留着只是拖慢 neck。DSFlash 在 mask embedding 阶段直接把这些 patch 丢掉再送进 neck。由于重叠率本来就要算，这步剪枝几乎零额外开销。
+进 neck 的 patch token 越多越慢。与主客体 mask 都不重叠的 patch 拿不到上面那个覆盖比例 embedding，对判定这对实例的关系几乎没贡献。DSFlash 在 mask embedding 阶段顺手把这些零重叠 patch 丢掉再送进 neck；由于重叠比例本来就要算，识别该剪的 patch 几乎零额外开销。又因为最终预测只看 classification token，neck 能吃变长的 token 序列。
 
-**4. Raw-resolution Segmentation Masks：省掉昂贵的插值往返**
+**4. Gated Bidirectional Prediction：一次前向出双向关系**
 
-常规做法会把 EoMT 输出的 160×160 mask logits 上采样到原图分辨率再下采样，双线性插值很贵。DSFlash 干脆在低分辨率上直接算 patch 重叠比例，省掉这一来一回的插值。
+一对 mask $(S_0, S_1)$ 之间的关系有方向，原 DSFormer 要跑两次前向分别预测 $S_0 \to S_1$ 和 $S_1 \to S_0$（因为 mask embedding 不对称，正反顺序得各编码一次）。DSFlash 把编码特征 $x$ 经 sigmoid 门控 $g$ 分裂成 $t_\to = g \odot x$ 和 $t_\leftarrow = (1-g) \odot x$ 两支（借鉴 GRU 门控），再过同一个共享 MLP 关系头分别出两个方向，一次前向拿到双向预测、参数量几乎不变。为防止模型偷懒利用"PSG 里正向标注是反向 3 倍"这种数据偏置，训练时额外翻转 mask 顺序做第二次前向，用 MSE consistency loss（Eq. 7）约束翻转后中间特征互换（$z_\to = z'_\leftarrow$），逼模型对输入顺序等变；这份额外监督还顺带把 mR@50 从 25.0 提到 28.8。
 
 **5. Token Merging（ToMe-SD）：给老 GPU 再省一刀**
 
-在 backbone 的 attention 层之前合并相似 token、attention 之后再 unmerge，降低注意力计算量。这一招在老旧 GPU 上尤其明显——GTX 1080 上延迟从 230 ms 降到 173 ms。
+这是一项叠加在 backbone 上的正交优化：在每个 attention 层之前用 ToMe-SD 合并相似 token、attention 之后再 unmerge 还原，降低注意力计算量；选 ToMe-SD 而非原版 ToMe，是因为它会把 token 解合并回来，更好地保住 backbone 的分割能力。这一招在老旧 GPU 上尤其明显——GTX 1080 上延迟从 230 ms 降到 173 ms。
 
 ### 损失函数 / 训练策略
 - 关系分类：Binary Cross Entropy

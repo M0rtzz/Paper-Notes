@@ -41,33 +41,45 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HAD-MFC 形式化：$\mathcal{G} = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}, \mathcal{P}, R, \mu_0, \nu_0, \gamma\rangle$。每个 agent $i$ 默认走 well-trained 合作策略 $\pi_\beta$，若被选入攻击集 $\mathcal{K}$ 则策略变为 $\hat{\pi}^i = \epsilon^i \pi_\alpha^i + (1-\epsilon^i) \pi_\beta^i$。攻击者目标 $\min_{\mathcal{K}} \min_{\pi_\alpha} J(\pi_\alpha, \pi_\beta)$ 是双层 NP-hard。作者的整体 pipeline：(1) 从合作策略采集 trajectory $\tau \sim \pi_\beta$，离线学一个 $Q^i(s^i, a^i, \mu, \nu)$；(2) 用 Fenchel-Rockafellar 推出"regularized mean-field Bellman 算子" $\mathcal{B}^R_{\epsilon^i, \xi}$，离线学一个 $V^i(s^i, \mu, \epsilon^i, \xi)$；(3) 用 $V^i$ 的差分作为 reward 把上层组合问题写成 MDP，再用贪心（VAI-Greedy）或 DQN（VAI-RL）顺序选 $K$ 个 agent。
+HAD-MFC 形式化：$\mathcal{G} = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}, \mathcal{P}, R, \mu_0, \nu_0, \gamma\rangle$。每个 agent $i$ 默认走 well-trained 合作策略 $\pi_\beta$，若被选入攻击集 $\mathcal{K}$ 则策略变为 $\hat{\pi}^i = \epsilon^i \pi_\alpha^i + (1-\epsilon^i) \pi_\beta^i$。攻击者目标 $\min_{\mathcal{K}} \min_{\pi_\alpha} J(\pi_\alpha, \pi_\beta)$ 是双层 NP-hard。作者的破局思路是把这个双层耦合**分解成上下两级、各自独立求解**：**下层**用 Fenchel-Rockafellar 把"训 worst-case 对抗策略"折成一个加正则项的"正则化 mean-field Bellman 算子" $\mathcal{B}^R_{\epsilon^i, \xi}$，从而**只用合作 trajectory**就能离线学出合作 $Q^i$（先学好冻结、作 FR 对偶项）与鲁棒值函数 $V^i(s^i, \mu, \epsilon^i, \xi)$（即"被 $\epsilon^i$ 扰动 + 团队 $\xi$ 比例被扰动下的最坏情况回报"），全程不必真训对抗策略；**上层**把"挑 $K$ 个 agent"的组合问题改写成一个 MDP，用 $V^i$ 的差分当稠密 reward，再用贪心（VAI-Greedy）或 DQN（VAI-RL）顺序选 $K$ 个 agent。命题 4.5 证明这套分解保持原 HAD-MFC 的最优解。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["合作策略 π_β 采集 trajectory τ"] --> B["Fenchel-Rockafellar 解耦<br/>导出正则化 mean-field Bellman 算子 B^R"]
+    B --> C["统一 TD 损失<br/>合作轨迹离线学 合作 Q^i（冻结）与 鲁棒 V^i(ε^i, ξ)"]
+    C --> D["选择 MDP<br/>reward = V^i 差分：每加一个 agent 系统期望回报降多少"]
+    D -->|"攻击者少：贪心"| E["VAI-Greedy<br/>每步选 reward 最大，免训练"]
+    D -->|"攻击者多：建模协同"| F["VAI-RL<br/>DQN 顺序选 K 个 agent"]
+    E --> G["输出：K 个脆弱 agent + 每个 agent 脆弱度图谱"]
+    F --> G
+```
 
 ### 关键设计
 
 **1. Fenchel-Rockafellar 解耦：把"训 worst-case 对抗策略"折成一个加正则项的鲁棒 Bellman 算子**
 
-直接训 worst-case adversary 要解 $\min_{\pi_\alpha} J(\pi_\alpha, \pi_\beta)$，每换一组攻击集 $\mathcal{K}$ 就得重训，组合爆炸根本跑不完。本文的核心一招是用凸对偶把这个内层 min 消掉。设扰动后策略 $\hat{\pi}^i = \epsilon^i \pi_\alpha^i + (1-\epsilon^i) \pi_\beta^i$、扰动后 mean-field action $\nu(a) = \xi \nu_\alpha(a) + (1-\xi)\nu_\beta(a)$，记 $\hat{\pi}_\alpha^i = \hat{\pi}^i - \pi_\beta^i$ 受 $\|\hat{\pi}_\alpha^i\|_p \le \epsilon^i$ 约束。在鲁棒 Bellman 不等式 $V^i \le \mathcal{B}^{\hat{\pi}} V^i$ 上做 Fenchel-Rockafellar 变换，得到 regularized mean-field Bellman 算子
+直接训 worst-case adversary 要解 $\min_{\pi_\alpha} J(\pi_\alpha, \pi_\beta)$，每换一组攻击集 $\mathcal{K}$ 就得重训，组合爆炸根本跑不完。本文的核心一招是用凸对偶把这个内层 min 消掉。设扰动后策略 $\hat{\pi}^i = \epsilon^i \pi_\alpha^i + (1-\epsilon^i) \pi_\beta^i$、扰动后 mean-field action $\nu(a) = \xi \nu_\alpha(a) + (1-\xi)\nu_\beta(a)$，记 $\hat{\pi}_\alpha^i = \hat{\pi}^i - \pi_\beta^i$ 受 $\|\hat{\pi}_\alpha^i\|_p \le \epsilon^i$ 约束。在鲁棒 Bellman 不等式 $V^i \le \mathcal{B}^{\hat{\pi}} V^i$ 上做 Fenchel-Rockafellar 变换，得到正则化 mean-field Bellman 算子
 
 $$\mathcal{B}^R_{\epsilon^i, \xi} V^i = (\mathcal{B}^{\pi_\beta} V^i) - (\epsilon^i + \xi + \epsilon^i \xi) \|Q^i\|_q,\quad 1/p + 1/q = 1.$$
 
 关键是这是个精确变换（只要不确定性集合凸、proper、下半连续，$\ell_p$ 球都满足），不引入近似，且论文证明它仍是 contraction（命题 4.3）。这样学出来的 $V^i(s^i, \mu, \epsilon^i, \xi)$ 就等价于"agent i 在自己被 $\epsilon^i$ 扰动、团队 $\xi$ 比例被扰动下的最坏情况期望回报"，而整套训练只需合作 trajectory，$\pi_\alpha$ 根本不必存在过。
 
-**2. 上层转成带稠密 reward 的选择 MDP：让 NP-hard 组合选择能用贪心或 RL 跑**
+**2. 统一的 TD 损失：把鲁棒 V 与合作 Q 都在合作 trajectory 上离线学出来**
+
+上面的算子告诉你 $V^i$ 应该等于多少，但还得有个不碰环境的办法把它学出来——这一步要落实"全程只用合作 trajectory、符合黑盒威胁模型"。本文把鲁棒 V 的学习落成一个标准 TD loss：
+
+$$\min \mathbb{E}_{\tau \sim \pi_\beta}\big(V^i(s^i, \mu, \epsilon^i, \xi) - r - \gamma V^i(s'^i, \mu', \epsilon^i, \xi) + (\epsilon^i \xi + \epsilon^i + \xi)\|Q^i(s^i, a^i_\beta, \mu, \nu_\beta)\|_q\big)^2,$$
+
+其中 $\epsilon \sim U[0, 2^{1/p}]$、$\xi \sim \text{Bernoulli}(\xi)$。$Q^i$ 是合作策略下先学好、固定不动的（作为 FR 变换里的对偶项），$V^i$ 是新学的，两者都只吃合作 trajectory、不与环境进一步交互。命题 4.4 给了几何直观：正则项 $\epsilon^i \xi \|Q^i\|_q$ 正是 $\ell_p$ 球内对 Q 的最坏一阶偏差。随机采样 $\epsilon$ 和 $\xi$ 让 V 学到一族不同扰动下的值函数，于是任意 $(\epsilon, \xi)$ 配置都能直接查询——这正好满足"攻击者拿不到 victim 策略参数、只能用合作轨迹"的现实假设。
+
+**3. 上层转成带稠密 reward 的选择 MDP：让 NP-hard 组合选择能用贪心或 RL 跑**
 
 上层要从 $N$ 个 agent 里挑 $K$ 个，$\binom{N}{K}$ 组合是 NP-hard，传统组合优化的 reward 还只在最后给一次、训练极慢。本文把它改写成顺序选择 MDP $\mathcal{M} = \langle \boldsymbol{\mathcal{S}}, \epsilon, \mathcal{N}, \tilde{\mathcal{P}}, \tilde{R}, \gamma\rangle$，每步往攻击集里加一个 agent $\mathcal{K}_k = \mathcal{K}_{k-1} \cup n_k$，并把 reward 定义为"加进这个 agent 后系统期望回报会下降多少"：
 
 $$r_k = \frac{1}{N}\sum_i \big(V^i(s_0^i, \mu_0, \epsilon^i_{k-1}, \xi_{k-1}) - V^i(s_0^i, \mu_0, \epsilon^i_k, \xi_k)\big),$$
 
 其中 $V^i$ 就是上面学到的鲁棒 V。这等价于把"系统损失"铺到每一步、信号稠密，于是可以直接每步贪心选 reward 最大的 agent（VAI-Greedy，无需训练），也可以用 DQN 学长期依赖（VAI-RL）。命题 4.5 证明这个分解保持原 HAD-MFC 的最优解，所以降复杂度不以损失最优性为代价；实验也显示攻击者数量大时 RL 因能建模 agent 间协同而显著超贪心（如 Battle 144 agents、36 attackers 时 RL 比 Greedy 涨约 30%）。
-
-**3. 统一的 TD 损失：把鲁棒 V 与合作 Q 都在合作 trajectory 上离线学出来**
-
-为了让整条 pipeline 都不碰环境、符合黑盒威胁模型，本文把鲁棒 V 的学习落成一个标准 TD loss：
-
-$$\min \mathbb{E}_{\tau \sim \pi_\beta}\big(V^i(s^i, \mu, \epsilon^i, \xi) - r - \gamma V^i(s'^i, \mu', \epsilon^i, \xi) + (\epsilon^i \xi + \epsilon^i + \xi)\|Q^i(s^i, a^i_\beta, \mu, \nu_\beta)\|_q\big)^2,$$
-
-其中 $\epsilon \sim U[0, 2^{1/p}]$、$\xi \sim \text{Bernoulli}(\xi)$。$Q^i$ 是合作策略下先学好、固定不动的，$V^i$ 是新学的，两者都只吃合作 trajectory、不与环境进一步交互。命题 4.4 给了几何直观：正则项 $\epsilon^i \xi \|Q^i\|_q$ 正是 $\ell_p$ 球内对 Q 的最坏一阶偏差。随机采样 $\epsilon$ 和 $\xi$ 让 V 学到一族不同扰动下的值函数，于是任意 $(\epsilon, \xi)$ 配置都能直接查询——这正好满足"攻击者拿不到 victim 策略参数、只能用合作轨迹"的现实假设。
 
 ### 损失函数 / 训练策略
 合作 Q：先在合作策略 $\pi_\beta$ 下用 MF-Q（Battle）或 MF-AC（Taxi）训出 $Q^i$ 并冻结。鲁棒 V：用上述 TD loss 训 $V^i(\epsilon^i, \xi)$。上层：VAI-Greedy 每步选 reward 最大的 agent，VAI-RL 用 DQN 顺序选 K 个。所有 baseline（Random、DC、Bi-level RL、PIANO、RTCA）共享同样的网络结构与超参，五个随机种子。

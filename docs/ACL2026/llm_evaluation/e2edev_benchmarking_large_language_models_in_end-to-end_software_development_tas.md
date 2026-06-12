@@ -45,11 +45,27 @@ tags:
 
 E2EDev 把“端到端软件开发”这件模糊难判的事，做成一个可确定性打分的评测闭环。它从 46 个真实 GitHub Web 项目出发，先通过 HITL-MAA（人机协同多智能体标注框架）反向抽出 244 条细粒度用户需求，再为每条需求写出 Gherkin 格式的 BDD 测试场景及对应的 Python 步骤实现；评测时把被测框架生成的项目跑起来，用 Behave 框架模拟真实用户交互逐条执行这些 BDD 测试，从需求级和测试级两个粒度判定生成代码到底有没有满足需求。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["46 个真实 GitHub Web 项目"] --> B["Test ID 锚点系统<br/>GPT-4o 为关键 UI 组件分配唯一 test ID"]
+    subgraph HITL["HITL-MAA 标注框架（人机协同逆向需求与测试）"]
+        direction TB
+        C["阶段1 需求抽取<br/>Code Analyzer + Requirement Extractor → 人工审核"]
+        C --> D["阶段2 BDD 场景生成<br/>Test Case Generation Agent → 5 位测试专家审核"]
+        D --> E["阶段3 步骤实现自修正<br/>Test Automation Engineer → Dry Run + Test Runner 迭代"]
+    end
+    B --> HITL
+    HITL --> F["244 条细粒度需求 + 703 个可执行 BDD 测试"]
+    F --> G["被测框架生成项目<br/>Behave 模拟真实用户交互逐条执行"]
+    G --> H["多层级评测指标<br/>Req. Acc / Test Acc / Balanced Score + 成本"]
+```
+
 ### 关键设计
 
 **1. HITL-MAA：人机协同把源码逆向成需求与可执行测试**
 
-纯人工标注 46 个仓库级项目成本太高，纯 LLM 生成又质量不稳，HITL-MAA 用三阶段流水线在两者之间取平衡。第一阶段，Code Analyzer Agent 解析项目的核心功能与 UI 元素交互，Requirement Extractor Agent 据此生成候选需求，再由人工审核把关准确性；第二阶段，Test Case Generation Agent 为每条需求写出 Gherkin 格式的 BDD 场景，由五位软件测试专家协作审核；第三阶段，Test Automation Engineer Agent 生成 Python 步骤实现，并经 Dry Run Verifier 与 Test Runner 反复迭代自修正。
+纯人工标注 46 个仓库级项目成本太高，纯 LLM 生成又质量不稳。HITL-MAA 用三阶段流水线把繁重的抽取与实现交给 agent、把人力集中在每阶段的关键审核点上。第一阶段，Code Analyzer Agent 解析项目的核心功能与 UI 元素交互，Requirement Extractor Agent 据此生成候选需求，再由人工审核把关准确性；第二阶段，Test Case Generation Agent 为每条需求写出 Gherkin 格式的 BDD 场景，由五位软件测试专家协作审核；第三阶段，Test Automation Engineer Agent 生成 Python 步骤实现，并经 Dry Run Verifier 与 Test Runner 反复迭代自修正。
 
 这套自修正机制让超过 80% 的逻辑错误无需人工干预即可修复，使得“从真实代码逆向出高质量需求与测试”这件原本极费人力的事变得可规模化。
 

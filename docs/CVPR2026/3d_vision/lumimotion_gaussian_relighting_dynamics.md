@@ -41,6 +41,31 @@ LumiMotion 是首个利用场景动态（运动区域）作为监督信号来改
 ### 整体框架
 LumiMotion 想解决的核心难题是：在单一光照条件下，静态逆渲染分不清"这块表面暗，是因为落了阴影，还是材质本身就是深色"。它的办法是把场景里物体的运动当成天然的多光照样本——阴影扫过同一块表面时，这块表面就被"不同光照"照过了。整条管线分两阶段：Stage 1 先在动态 2D 高斯溅射（2DGS）表示上学几何、把高斯分成静止与运动两类、再用一个随时间变化的颜色补偿去拟合视频；Stage 2 冻结几何与变形网络，转而联合优化材质（albedo、roughness）和环境光照，靠光线追踪算出可见性与间接光，让渲染方程把阴影"解释"出去而不是烘焙进材质。两阶段的衔接点是：Stage 1 学到的 canonical 颜色直接当作 Stage 2 的 albedo 初值。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：单光照动态视频"]
+    subgraph S1["Stage 1：动态几何重建"]
+        direction TB
+        G["动态 2DGS + 变形网络<br/>预测逐帧 Δμ / Δr / Δc"]
+        SEP["Binary Concrete 动静分离<br/>每高斯门控变量 P"]
+        COMP["乘性时变颜色补偿<br/>c′ = c·(1 − Δc)"]
+        G --> SEP
+        SEP -->|"P→0 静态高斯：阴影靠颜色变化解释"| COMP
+        SEP -->|"P→1 运动高斯：跟随变形"| COMP
+    end
+    subgraph S2["Stage 2：逆渲染（冻结几何与变形）"]
+        direction TB
+        GB["G-buffer 光栅化<br/>albedo / roughness / normal"]
+        RT["分层采样光线追踪<br/>逐时刻可见性 V + 间接光 L_ind"]
+        BRDF["Disney BRDF + 渲染方程着色<br/>把阴影解释出去而非烘焙进材质"]
+        GB --> RT --> BRDF
+    end
+    IN --> G
+    COMP -->|"canonical 颜色 c 作 albedo 初值"| GB
+    BRDF --> OUT["输出：albedo / roughness + 环境光<br/>支持重光照"]
+```
+
 ### 关键设计
 
 **1. Binary Concrete 动静分离：让阴影由"静态表面 + 颜色变化"来解释，而不是高斯自己跑掉**

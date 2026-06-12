@@ -41,6 +41,16 @@ tags:
 ### 整体框架
 TCAP 是一个**纯数据清洗**框架：拿到已在被投毒数据集 $\mathcal{D}$ 上微调过的 MLLM 后，它不改模型、不要干净参考集，先把所有训练样本推理一遍抽出 system/vision/text 三分量注意力，再用 GMM 从海量注意力头里挑出极少数真正暴露后门的"敏感头"，最后让这些头像一群有噪声的标注员一样投票，用 EM 聚合出每个样本是 poison 的后验概率，把可疑样本剔掉得到 $\mathcal{D}_{\text{clean}}$，重训一次即可清除后门。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["被投毒数据微调过的 MLLM<br/>+ 全部训练样本（不改模型、无参考集）"] --> B["三分量注意力分解<br/>首个生成 token 的注意力<br/>按 system / vision / text 聚合"]
+    B --> C["GMM + Separation Score<br/>每个 head 拟合 GMM（AIC 选 K*）<br/>按可分性取深层 Top-H 敏感头"]
+    C --> D["EM-based Dawid–Skene 投票<br/>敏感头当噪声标注员投票<br/>EM 联估隐标签 + 头可靠度 → 后验 p_i"]
+    D -->|p_i > 0.5 判为 poison 剔除| E["清洗数据集 D_clean"]
+    E --> F["标准 LoRA 重训一次<br/>清除后门"]
+```
+
 ### 关键设计
 
 **1. 三分量注意力分解：把后门指纹从"视觉熵"换到"跨组件质量再分配"**

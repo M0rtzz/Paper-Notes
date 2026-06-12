@@ -46,6 +46,23 @@ EAPO 把一次解题展开为一条多回合轨迹 $H_T = \{(\tau_t, \alpha_t, o
 
 实现上策略骨干用 DeepSeek-R1-Distill-Qwen-7B，专家池用 QwQ-32B（异构、更强），训练数据为 DAPO-MATH。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入：题目 x"] --> R["策略私有推理 τ_t"]
+    R --> A{"决定动作 α_t<br/>可学习咨询动作"}
+    A -->|think 继续独立推理| R
+    A -->|consult-expert| Q["并行多专家查询<br/>选并发度 C_t ≤ K，派发 q_t,i"]
+    A -->|answer| OUT["抽取答案 ŷ → 可验证奖励 R<br/>F1 / 格式 0.1 / 否则 0"]
+    Q --> AGG["收集 r_t,i → 对比 + 协调"]
+    AGG --> G{"接受率退火 ρ_s = s⁻¹<br/>u ≤ ρ_s ?"}
+    G -->|是，写入历史| R
+    G -->|否，视为不可用| R
+    OUT --> RL["端到端 RL 更新<br/>DAPO 风格 GRPO"]
+    RL -.随训练步 s↑：ρ_s↓ + 回合预算收缩.-> A
+    OUT -.评测时 α 锁死＝不咨询，独立 rollout.-> X
+```
+
 ### 关键设计
 
 **1. 可学习的"咨询专家"动作：把外部求助升级成策略动作空间里的一等公民**

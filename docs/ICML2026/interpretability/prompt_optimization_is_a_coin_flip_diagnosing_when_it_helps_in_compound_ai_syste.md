@@ -46,6 +46,21 @@ tags:
 
 两项研究各管一头。**Study 1 检验 agent 耦合**：构造两 agent 串行流水线 $\text{Agent A} \to \text{Agent B}$，每个 agent 生成 $K=10$ 个候选系统 prompt，穷举 $10\times10=100$ 种组合，每种在 $n=30$ 道题上评估，得到三维分数张量 $Y_{ijk}$，然后用 2-way ANOVA + question blocking 把方差拆成 question 难度 / A 主效应 / B 主效应 / A×B 交互 / 残差五部分。三个任务 HotpotQA / MBPP / XSum 分别对应预期耦合度高/中/低，两个 executor 模型 Claude Haiku 4.5 与 Amazon Nova Lite，judge 用 Claude Sonnet 4.6。**Study 2 检验单 agent 优化是否值得**：在 Feedback-Bench / HelpSteer2 / WildBench / XSum 四个单 agent 任务上，把 6 种主流优化方法（APE、OPRO、EvoPrompt、PromptBreeder、DSPy-style bootstrap、作者自己的 PROSE）与 zero-shot 在严格等算力（约 100 个候选 prompt、训练集 20 题、测试集 100 题、3 次重复、2 个 executor 模型）下对比，总计 $6\times 4\times 3\times 2=144$ 次优化运行。这里全程不训练任何模型，只在固定 executor 上推理评测。
 
+两项研究的结论最后凝成一棵两阶段的**事前诊断决策树**——先用 ANOVA 判耦合、再用 headroom 测试判优化空间，决定到底该不该投钱做 prompt 优化：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["compound AI 流水线"] --> B["Stage 1：ANOVA 耦合度量（约 $80）<br/>10×10 prompt 网格 + 2-way ANOVA"]
+    B -->|"A×B 交互 F<1"| C["放弃联合优化<br/>主效应指出瓶颈 agent"]
+    B -->|"F 显著（罕见）"| G["保留联合优化"]
+    C --> D["Stage 2：headroom 测试（约 $5）<br/>瓶颈 agent 跑 10–20 候选 prompt"]
+    D -->|"最佳增益 >2 点"| E["APE-style generate-and-rank<br/>非迭代、无过拟合"]
+    D -->|"增益 <2 点"| F["直接 zero-shot，不优化"]
+```
+
+> 三条关键设计对应图上：ANOVA 耦合度量是 Stage 1（B），“can but doesn't”判据落地为 Stage 2 的 headroom 测试（D），两阶段诊断协议则是整棵决策树的封装。
+
 ### 关键设计
 
 **1. 基于 ANOVA 的 agent 耦合度量：把"要不要联合优化"翻译成方差分解**

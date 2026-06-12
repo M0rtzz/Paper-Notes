@@ -43,7 +43,20 @@ tags:
 
 ### 整体框架
 
-Sender-Receiver 二智能体设置：推理智能体（Sender）生成计划及其隐状态 $H \in \mathbb{R}^{L \times d}$ → 通信适配器（轻量级自注意力+投影层）处理隐状态 → 执行智能体（Receiver）接收隐状态并生成动作。训练后可进一步训练压缩模型将 $H_L$ 压缩为 $H_K$（$K \ll L$）。
+Sender-Receiver 二智能体设置：推理智能体（Sender）生成计划及其隐状态 $H \in \mathbb{R}^{L \times d}$ → 通信适配器（轻量级自注意力+投影层）处理隐状态 → 执行智能体（Receiver）接收隐状态并生成动作。训练阶段用条件思维分离损失逼接收方真的去读 $H$、用计划对齐正则化拴住它别跑偏；训练完成后再单独训一个压缩模型把 $H_L$ 蒸馏成极短的 $H_K$（$K \ll L$），实现高效通信。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["推理智能体 Sender<br/>生成计划，输出时间对齐隐状态序列 H"] --> B["通信适配器<br/>自注意力 + 投影层处理 H"]
+    B --> C["执行智能体 Receiver<br/>读 H 生成动作"]
+    C --> D["潜空间通信与条件思维分离<br/>匹配 H 与不匹配潜空间拉大 JS 散度"]
+    C --> E["计划对齐正则化<br/>以语言计划 P 为锚做 KL + 余弦对齐"]
+    D --> F["主训练完成的 Sender-Receiver"]
+    E --> F
+    F --> G["潜空间推理压缩<br/>冻结 Receiver，自回归生成 H_K（K≪L）"]
+    G --> H["输出：仅 8 token，24× 通信加速"]
+```
 
 ### 关键设计
 

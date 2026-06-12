@@ -43,17 +43,26 @@ tags:
 
 ### 整体框架
 
-UniComp 想解决的是：32 帧视频送进 MLLM 会产生数千个视觉 token，必须压掉一大半，但传统按注意力分数挑 token 会把一堆彼此相似的"显著"token 一起留下，真正不可替代的细节反而被丢。它的整条流水线接在 ViT 编码器之后、LLM 之前，把压缩拆成时序、空间、全局三个层次依次处理：先用 Frame Group Fusion 把时间上几乎重复的帧合并成几组，再用 Token Allocation 按"哪几组信息更独特"把有限的 token 预算分下去，最后由 Spatial Dynamic Compression 在每帧内部挑出最不可替代的 token、把和它们近似的邻居融合进来。三步走完，输出的压缩 token 序列直接喂给 LLM，全程不碰 LLM 内部结构。
+UniComp 想解决的是：32 帧视频送进 MLLM 会产生数千个视觉 token，必须压掉一大半，但传统按注意力分数挑 token 会把一堆彼此相似的"显著"token 一起留下，真正不可替代的细节反而被丢。它的整条流水线接在 ViT 编码器之后、LLM 之前，把压缩拆成时序、全局、空间三个层次依次处理：先用帧组融合（Frame Group Fusion, FGF）把时间上几乎重复的帧合并成几组，再用 token 分配（Token Allocation, TA）按"哪几组信息更独特"把有限的 token 预算分下去，最后由空间动态压缩（Spatial Dynamic Compression, SDC）在每帧内部挑出最不可替代的 token、把和它们近似的邻居融合进来。三步走完，输出的压缩 token 序列直接喂给 LLM，全程不碰 LLM 内部结构。
 
-贯穿三个模块的统一度量是"信息唯一性"——两个特征越正交（余弦相似度越低）就越唯一。整篇方法的逻辑起点是把压缩写成最小化条件熵 $H(\mathcal{X}|\mathcal{S})$：保留集 $\mathcal{S}$ 要让被丢弃 token 的信息尽量能从它重建，而重建误差的上界恰好由"每个被丢 token 到保留集的最小唯一性距离"控制，于是"挑最唯一的、融合最近似的"成了有理论依据的贪心策略。
+贯穿三个模块的统一度量是"信息唯一性"——两个特征越正交（余弦相似度越低）就越唯一。整篇方法的逻辑起点是把压缩写成最小化条件熵 $H(\mathcal{X}|\mathcal{S})$：保留集 $\mathcal{S}$ 要让被丢弃 token 的信息尽量能从它重建，而重建误差的上界恰好由"每个被丢 token 到保留集的最小唯一性距离"控制，于是"挑最唯一的、融合最近似的"成了有理论依据的贪心策略。三个模块的串行关系如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["32 帧视频 → ViT 编码器<br/>数千个视觉 token"] --> B["帧组融合（FGF）<br/>合并时序近似帧，断在语义突变处"]
+    B --> C["token 分配（TA）<br/>按帧组唯一性 softmax 分预算"]
+    C --> D["空间动态压缩（SDC）<br/>帧内贪心选最唯一 token + 融近邻"]
+    D --> E["压缩后 token 序列 → LLM"]
+```
 
 ### 关键设计
 
-**1. Frame Group Fusion（FGF）：先把时间轴上几乎重复的帧合并掉**
+**1. 帧组融合（Frame Group Fusion, FGF）：先把时间轴上几乎重复的帧合并掉**
 
 视频里大量相邻帧描述的是同一个静态场景，逐帧都留 token 是纯粹的时序冗余。FGF 对每帧先做 average pooling 得到一个全局描述向量，然后顺序扫描帧序列：拿当前帧和当前组的组首帧算唯一性 $u(f_t, f_r)$，只要 $u(f_t, f_r) < U_f$（够相似）就并入同一组，一旦超过阈值就另起一组；每组最后用 mean pooling 融成一个代表特征。这样静态镜头会被压成寥寥几组，而语义突变（切镜、动作发生）的地方自然断开、细粒度得以保留——压缩率随内容自适应，不需要预先指定每段留几帧。
 
-**2. Token Allocation（TA）：把 token 预算按帧组的独特程度分下去**
+**2. token 分配（Token Allocation, TA）：把 token 预算按帧组的独特程度分下去**
 
 帧组合并之后，剩下的问题是总预算 $\text{TOKEN}_{max}$ 该怎么摊到各组——平均分显然不对，信息更独特的组理应多拿。TA 先量化每个融合帧相对其余帧的唯一性：
 
@@ -65,7 +74,7 @@ $$K_t = \left\lfloor \frac{e^{U_t}}{\sum_s e^{U_s}} \cdot \text{TOKEN}_{max} \ri
 
 效果上，一段对理解视频很关键的独特画面会分到更多 token，而几乎重复的背景帧只留少量，预算被花在真正承载新信息的地方。
 
-**3. Spatial Dynamic Compression（SDC）：在每帧内部挑出最不可替代的 token、融掉其余近似项**
+**3. 空间动态压缩（Spatial Dynamic Compression, SDC）：在每帧内部挑出最不可替代的 token、融掉其余近似项**
 
 拿到本帧的 token 配额后，还要决定保留帧内哪些空间 token。SDC 先算出帧内 token 两两之间的唯一性矩阵，再按唯一性降序做贪心：每次选出当前最唯一的 token 收进保留集，把和它唯一性差距 $< U_c$ 的相近 token 标记为冗余，并通过邻域融合把这些冗余 token 聚合进保留的那个里——是融合而不是直接丢弃，所以被合并 token 携带的信息不会凭空消失。这一步并非拍脑袋：它正对应最小化前面那个重建误差上界
 

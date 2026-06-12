@@ -42,6 +42,25 @@ tags:
 ### 整体框架
 LLM-based TTS 在遇到模糊发音（日语「辛い」既能读 karai 又能读 tsurai）时很难对齐，根因有二：发音错误本质是 token 级的，而真实数据里 89.5% 的句子只有「全对」或「全错」的单边样本、配不成对。TKTO 用两步把这两个痛点一起解决：Step 1 先在同一份 unpaired 数据上训两个标签相反的对比 KTO 模型 $\pi^+$（原始标签）和 $\pi^-$（desirable ↔ undesirable 翻转），用两者 log-ratio 估出每个 token 的重要度权重 $w_t$，自动定位「真正决定发音对错」的 token；Step 2 把 KTO 原本 utterance 级的 sigmoid value 拆到 token 级得到 $v_t$，再用 $w_t$ 加权求和当 loss。底座是 CosyVoice2 (0.5B)，只训这一层偏好优化，不动 vocoder。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["unpaired TTS 数据<br/>CosyVoice2 候选 + desirable/undesirable 标签"]
+    subgraph W["KTO 对比 LLM + token 级重要度估计"]
+        direction TB
+        P1["π+：原始标签训 KTO"]
+        P2["π−：标签对调训 KTO"]
+        WT["逐 token 权重<br/>w_t = exp(μ·clamp(log π+/π−))<br/>关键 token 自动放大"]
+        P1 --> WT
+        P2 --> WT
+    end
+    IN --> W
+    IN --> V["Token 级 KTO value function<br/>sigmoid 拆到每 token 得 v_t"]
+    W --> L["加权 token KTO 目标<br/>L = −Σ w_t·v_t（冻结 π+/π−，只更新 π_θ）"]
+    V --> L
+    L --> OUT["更新策略 π_θ（CosyVoice2 0.5B）"]
+```
+
 ### 关键设计
 
 **1. KTO 对比 LLM + token 级重要度估计：在没有 token 标注时自动找出决定好坏的关键 token**

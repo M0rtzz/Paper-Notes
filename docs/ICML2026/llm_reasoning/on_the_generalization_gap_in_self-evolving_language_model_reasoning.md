@@ -41,7 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文要回答的是"在最干净的闭环约束下，自我进化能逼近 oracle 监督多少"，所以先把四种 SE 方法统一塞进同一个生成器–验证器博弈 $\mathsf{GV}(\mathcal{M},\mathcal{D},T)\rightarrow\mathcal{P}$：同一个基座 $\mathcal{M}$ 用不同 system prompt 实例化成生成器 $\mathcal{G}$ 和验证器 $\mathcal{V}$，对每个 prompt $q$ 让 $\mathcal{G}$ 采样 $k$ 个候选 $\{\hat{y}_1,\dots,\hat{y}_k\}$、$\mathcal{V}$ 逐个给二元判断，只有当 $\mathcal{V}(q,y_w)=\texttt{Correct}$ 且 $\mathcal{V}(q,y_l)=\texttt{Incorrect}$ 时才把 $(y_w,y_l)$ 收进偏好集 $\mathcal{P}$，最后用 DPO 在 $\mathcal{P}$ 上微调。输入是未标注 prompt 集加指令微调过的基座（gemma-3-it 1B/4B/12B、Qwen-2.5-Instruct 7B/14B），输出是 DPO 后的策略 $\pi_\theta$；四种方法的全部区别都落在"$\mathcal{P}$ 到底怎么造"这一点上。
+论文要回答的是"在最干净的闭环约束下，自我进化能逼近 oracle 监督多少"，所以先把四种 SE 方法统一塞进同一个生成器–验证器博弈 $\mathsf{GV}(\mathcal{M},\mathcal{D},T)\rightarrow\mathcal{P}$：同一个基座 $\mathcal{M}$ 用不同 system prompt 实例化成生成器 $\mathcal{G}$ 和验证器 $\mathcal{V}$，对每个 prompt $q$ 让 $\mathcal{G}$ 采样 $k$ 个候选 $\{\hat{y}_1,\dots,\hat{y}_k\}$、$\mathcal{V}$ 逐个给二元判断，只有当 $\mathcal{V}(q,y_w)=\texttt{Correct}$ 且 $\mathcal{V}(q,y_l)=\texttt{Incorrect}$ 时才把 $(y_w,y_l)$ 收进偏好集 $\mathcal{P}$，最后用 DPO 在 $\mathcal{P}$ 上微调。输入是未标注 prompt 集加指令微调过的基座（gemma-3-it 1B/4B/12B、Qwen-2.5-Instruct 7B/14B），输出是 DPO 后的策略 $\pi_\theta$；四种方法的全部区别都落在"$\mathcal{P}$ 到底怎么造"这一点上——SimpleSE、RevisionSE、Iterative/CurriculumSE 共用同一个 GV 博弈骨架与 DPO 收尾，只在分支处用不同方式从博弈里榨出偏好对。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["未标注 prompt 集 D + 指令微调基座 M<br/>(Gemma 1B/4B/12B、Qwen 7B/14B)"] --> B["同一基座双实例化<br/>生成器 G + 验证器 V（不同 system prompt）"]
+    B --> C["生成-验证博弈 GV(M,D,T)<br/>G 采样 k 候选 → V 二元判断 → 偏好集 P"]
+    C -->|单轮验证| D1["SimpleSE：阈值多数投票去噪<br/>验证 n 次取 p̂，p̂≥τ 标正、模糊样本丢弃"]
+    C -->|多轮反馈修订| D2["RevisionSE：验证器写批改意见<br/>错→对的修订对 (y_l,y_w) 入 P"]
+    C -->|迭代 / 课程调度| D3["IterativeSE / CurriculumSE<br/>多轮自举 + 易到难数据调度"]
+    D1 --> E["DPO 在 P 上微调<br/>参考策略固定为基座"]
+    D2 --> E
+    D3 --> E
+    E --> F["自我进化策略 π_θ<br/>对比 oracle 监督量化 gap"]
+```
 
 ### 关键设计
 

@@ -40,7 +40,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文方法可以看成是在 GRPO 的 token-level loss 中插入一个 covariance-aware advantage reweighting 层。给定 prompt，策略模型采样一组回答，外部 verifier 给每条回答打分，GRPO 先按组内均值和标准差得到 response-level advantage。随后，CW-GRPO 不直接把同一个 advantage 复制到每个 token，而是计算每个 token 的 centered log probability 与 centered advantage 的乘积，把它作为该 token 对熵变化的协方差贡献。协方差贡献越极端，说明这个 token 越可能把策略推向不稳定的探索或利用状态，于是用高斯核降低它的 advantage 权重。最后，重加权后的 advantage 进入原来的概率比率项，KL 惩罚和整体训练框架保持兼容。
+本文方法可以看成是在 GRPO 的 token 级 loss 中插入一个协方差感知的 advantage 重加权层。给定 prompt，策略模型采样一组回答，外部 verifier 给每条回答打分，GRPO 先按组内均值和标准差得到 response 级 advantage。随后，CW-GRPO 不直接把同一个 advantage 复制到每个 token，而是计算每个 token 的中心化 log 概率与中心化 advantage 的乘积，把它作为该 token 对熵变化的协方差贡献。协方差贡献越极端，说明这个 token 越可能把策略推向不稳定的探索或利用状态，于是用高斯核降低它的 advantage 权重；权重再归一化后保持整体更新尺度。最后，重加权后的 advantage 进入原来的概率比率项，KL 惩罚和整体训练框架保持兼容。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数学题 prompt → 策略采样一组回答"] --> B["verifier 打分 + 组内标准化<br/>得 response 级 advantage"]
+    B --> C["协方差贡献<br/>中心化 log 概率 × 中心化 advantage"]
+    C --> D["高斯核软抑制<br/>w = exp(−c²/2σ²)，σ 取协方差经验标准差"]
+    D --> E["归一化权重保持更新尺度<br/>权重和仍为 N，token loss 用重加权 advantage"]
+    E --> F["策略更新（GRPO 概率比率项 + KL 惩罚）"]
+    F -.下一轮采样.-> A
+```
 
 ### 关键设计
 

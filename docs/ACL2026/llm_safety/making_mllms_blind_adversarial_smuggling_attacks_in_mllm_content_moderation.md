@@ -45,6 +45,29 @@ tags:
 
 这篇论文不训练新模型，而是系统性地揭露并刻画一类新威胁：对抗走私攻击（ASA）。整套工作分三步走——先把"走私"这件事形式化、归纳出一套分类体系，再据此搭出首个专用基准 SmuggleBench，最后用它把 SOTA 模型挨个测一遍并试探缓解办法。审核流程被拆成感知（从图里提取文本）和推理（判断语义是否有害）两个阶段，攻击就分别瞄准这两个阶段：要么让模型"看不见"文字（感知盲区），要么看见了也"想不通"它有害（推理阻断）。输入是一张藏了有害内容的图，输出是模型给的安全/不安全判定。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph T["对抗走私攻击分类体系"]
+        direction TB
+        A["百万级网络图像"] --> B["Jina-CLIP-v2 视觉嵌入<br/>+ Qwen-VL-Max 关键词"]
+        B --> C["BERTopic 两阶段聚类<br/>+ 专家审核归并"]
+        C --> D["9 种攻击技术<br/>感知盲区 6 种 / 推理阻断 3 种"]
+    end
+    subgraph S["SmuggleBench 双源数据采集"]
+        direction TB
+        E["合成 Syn：低对比度 / AI 幻象"] --> G["1,700 样本<br/>三人标注 2/3 共识"]
+        F["野外 Wild：其余 7 类"] --> G
+    end
+    subgraph P["感知-推理两阶段诊断协议"]
+        direction TB
+        H["Step 1 逐字转录文字<br/>→ 文本提取率 TER"] --> I["Step 2 安全性判定<br/>→ 攻击成功率 ASR"]
+    end
+    D --> S
+    G --> P
+    P --> J["按阶段归因：TER 低=感知盲区<br/>TER 高且 ASR 高=推理阻断"]
+```
+
 ### 关键设计
 
 **1. 对抗走私攻击分类体系（ASA Taxonomy）：用数据驱动的聚类把真实世界的走私手法系统化，而不是凭经验拍脑袋列**

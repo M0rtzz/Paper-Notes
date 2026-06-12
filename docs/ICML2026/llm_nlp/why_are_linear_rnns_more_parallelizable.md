@@ -29,7 +29,7 @@ tags:
 
 **现有痛点**：大家知道传统 RNN 是顺序更新，Transformer 可以并行；也知道某些 LRNN 能通过 scan 并行。但这只是算法直觉，还没有清楚回答两个更细的问题：第一，非线性 RNN 是否存在不可避免的并行化障碍；第二，不同 LRNN 变体之间是否只差工程实现，还是表达能力上也有严格层级。
 
-**核心矛盾**：模型越表达力强，往往越像通用顺序计算，也越难压缩到浅层并行电路；模型越容易并行，可能又会牺牲某些算法ic任务的表达力。LRNN 恰好处在中间地带：它比 Transformer 的某些简单类别更强，但似乎没有传统非线性 RNN 那么难并行。
+**核心矛盾**：模型越表达力强，往往越像通用顺序计算，也越难压缩到浅层并行电路；模型越容易并行，可能又会牺牲某些算法任务的表达力。LRNN 恰好处在中间地带：它比 Transformer 的某些简单类别更强，但似乎没有传统非线性 RNN 那么难并行。
 
 **本文目标**：论文要给 RNN/LRNN 建立一张复杂度地图：非线性 RNN 能表达哪些复杂度类，LRNN 上界在哪里，DPLR、PD、Mamba 等不同线性更新参数化之间又有什么细粒度差异。
 
@@ -46,23 +46,15 @@ tags:
 随后作者引入复杂度类：Transformer 和简单 LRNN 常落在 $\mathsf{TC}^0$ 或 $\mathsf{NC}^1$ 附近；LRNN 的一般上界是 $\mathsf{PNC}^1$，也就是 log-depth 算术电路加 positivity check；非线性 RNN 在 log precision 下能解决 $\mathsf{L}$-complete 问题，在 polynomial precision 下甚至能解决 $\mathsf{P}$-complete 问题。最后，论文用两个合成任务验证理论预测：sorted deterministic graph connectivity 和 iterated $3\times3$ matrix multiplication。
 
 ### 关键设计
-1. **用复杂度类刻画并行化边界**:
 
-	- 功能：把“能不能并行”从经验说法变成可证明的 circuit depth 上界/下界。
-	- 核心思路：如果一个模型能被 $\mathsf{NC}^1$ 或近似 $O(\log n\log^*n)$ 深度电路模拟，就可以视作接近 Transformer 的 log-depth 并行；如果它能表达 $\mathsf{L}$-complete 或 $\mathsf{P}$-complete 问题，则在标准复杂度猜想下无法压到同样浅的电路。
-	- 设计动机：长上下文长度 64K 到 1M 时，$\log n$ 约 16-20，而 $\log^2 n$ 可到 256-400。理论上的 depth 差异会转化成实际硬件上的顺序时间差异。
+**1. 用电路复杂度把“能不能并行”变成可证明的深度上界/下界**
+以往“RNN 慢、Transformer 快”只是工程经验，说不清是实现落后还是本质障碍。论文的核心方法是把一个序列层“识别某种语言”的能力对应到标准复杂度类：如果它能被 $O(\log n)$、或近似 $O(\log n\log^* n)$ 深度的 bounded fan-in 电路模拟，就说明它能像 Transformer 一样压进对数深度、天然好并行；如果它能表达某个复杂度类的 complete 问题，那么在标准复杂度猜想下（如 $\mathsf{PNC}^1\neq\mathsf{L}$、$\mathsf{NC}\neq\mathsf{P}$）就不可能压到同样浅的电路，必然更顺序。这一步是整篇论证的“坐标系”：它把架构比较从模糊的快慢经验，提升成可证明的渐近并行深度差异。之所以重要，是因为上下文长度到 64K–1M 时 $\log n\approx16$–$20$，而 $\log^2 n$ 可达 256–400——理论上的深度差会直接转化成硬件上的顺序时间差。
 
-2. **非线性RNN的表达力下界**:
+**2. 非线性 RNN 的表达力下界：它能模拟更强的顺序机器，所以反而难并行**
+要解释“为什么偏偏是传统 RNN 难并行”，作者给非线性递推证了一条表达力下界：log precision 的 MLP RNN 可以模拟 counter machine，因此能解决 sorted deterministic graph connectivity 这个 $\mathsf{L}$-complete 问题；放宽到 polynomial precision，它甚至能模拟 multi-stack machine，识别 $\mathsf{P}$-complete 语言。关键洞察是：非线性递推把递归状态当成一块可任意读写更新的顺序存储器，这正是它算法表达力更强的来源；但反过来，要“完全并行模拟”这种本质顺序的计算，在 $\mathsf{PNC}^1\neq\mathsf{L}$、$\mathsf{NC}\neq\mathsf{P}$ 的假设下就必须付出更深的电路代价（log precision 下约需 $\Omega(\log^2 n)$ 深度，比 Transformer 多一个 $O(\log n)$ 因子）。表达力和并行性的权衡由此被钉死。
 
-	- 功能：解释为什么传统 RNN 难以像 LRNN/Transformer 那样并行。
-	- 核心思路：polynomial precision 的 MLP RNN 可以模拟 multi-stack machine，因此能识别 $\mathsf{P}$-complete 语言；log precision 的 MLP RNN 可以模拟 counter machine，解决 sorted deterministic graph connectivity 这个 $\mathsf{L}$-complete 问题。
-	- 设计动机：非线性递推可以把状态当成可更新的顺序存储器。这个能力带来更强算法表达力，但也意味着若想完全并行模拟它，就必须并行化本质上更顺序的计算。
-
-3. **LRNN和不同线性参数化的细粒度分类**:
-
-	- 功能：说明 LRNN 不只是“都能 scan”，内部变体也有严格表达力差异。
-	- 核心思路：一般 LRNN 可写成卷积/矩阵乘积形式，因此语言识别落在 $\mathsf{PNC}^1$。DPLR LRNN 如 RWKV-7 和 DeltaNet 能解决 iterated $3\times3$ matrix multiplication，达到 $\mathsf{PNC}^1$-complete；PD LRNN 的矩阵乘积保持 permutation-diagonal 结构，因此被限制在 $\mathsf{NC}^1$，但也能识别 $\mathsf{NC}^1$-complete 语言。
-	- 设计动机：这给架构设计提供了尺度尺。DPLR 比 PD 更强但仍保持近似 log-depth 可并行；Mamba/S4 等更简单结构可能更高效，却表达力更受限。
+**3. LRNN 不是铁板一块：DPLR 严格强于 PD**
+论文进一步把“线性 RNN”内部拆开，指出参数化选择会改变表达力上界。一般 LRNN 的状态更新 $S_t=A_t S_{t-1}+b_t$ 可展开成矩阵乘积与求和，因此语言识别整体落在 $\mathsf{PNC}^1$；但具体参数化决定了它在这个上界里能走多远——diagonal-plus-low-rank（DPLR）的变体如 RWKV-7、DeltaNet 能表达 iterated $3\times3$ matrix multiplication，达到 $\mathsf{PNC}^1$-complete，是线性可并行范围内表达力最强的一档；而 permutation-diagonal（PD）参数化的矩阵乘积始终保持置换-对角结构，被限制在 $\mathsf{NC}^1$（虽仍能识别 $\mathsf{NC}^1$-complete 语言）。作者还为每一类 RNN 配上一个能被它模拟的自动机模型——LRNN 对应 weighted finite automaton（WFA）、PD 对应其确定性版本 DWFA——从自动机视角佐证这条层级。对架构设计而言，这是一把“尺子”：DPLR 比 PD、Mamba/S4 更能表达迭代代数计算，却仍保持接近 Transformer 的对数并行深度，是表达力与并行性之间一个很有吸引力的中间点。
 
 ### 损失函数 / 训练策略
 理论部分没有训练损失；实验部分用合成算法任务做二分类或逐步分类，所有模型用 AdamW、BCEWithLogitsLoss、batch size 128、梯度裁剪 1.0，最长训练 60K steps。比较对象包括 nonlinear RNN、Transformer、Mamba、RWKV-7、DeltaNet。训练长度范围为 $[1,100]$，测试还包括 $[101,200]$ 和 $[201,300]$ 的长度外推。

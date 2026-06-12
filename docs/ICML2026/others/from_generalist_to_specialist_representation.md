@@ -40,7 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两层 hierarchical pipeline：第一层（Section 3）从观测序列 $\{o_t\}$ 和任务集 $\{g_i\}$ 出发，用 Algorithm 1 通过 segment-pair 上的 CI test 恢复全局时间-任务关联结构；第二层（Section 4）在每个时间步内用带 sparsity 正则的 VAE 把 latent state $s_t$ 中真正与各任务相关的子集 disentangle 出来。两层之间的接口是"task labels per step"。
+两层 hierarchical pipeline：第一层（Section 3）从观测序列 $\{o_t\}$ 和任务集 $\{g_i\}$ 出发，用 Algorithm 1 通过 segment-pair 上的 CI test 恢复全局时间-任务关联结构；第二层（Section 4）在每个时间步内用带 sparsity 正则的 VAE 把 latent state $s_t$ 中真正与各任务相关的子集 disentangle 出来。两层之间的接口是"task labels per step"。第三个关键设计不是新阶段，而是贯穿两层的"理论→实践桥"——CI test 在观测空间用 CMI 代理、latent 估计用 VAE/GAN，让渐近的非参数证明变成能跑的标准估计器，因此下图把它的实现选择直接标注在对应节点上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["观测序列 {o_t} + 任务集 {g_i}"] --> B
+    subgraph L1["Collider 建模 + Band CI Test（第一层）"]
+        direction TB
+        B["切等长 segment S_k（L≥2）"] --> C["构造 band conditioning set<br/>Z_band = 边界状态 + g_i"]
+        C --> D["CI test：检验 s_kL、s_vL<br/>条件下是否相关（CMI 代理回避高维）"]
+        D --> E["Algorithm 1 聚合所有 segment 对"]
+    end
+    E --> F["时间-任务关联结构<br/>（每步任务标签）"]
+    F --> G
+    subgraph L2["Generalist Bound + Sparsity Tightening（第二层）"]
+        direction TB
+        G["VAE/GAN 编码 latent state s_t"] --> H["Generalist 解只得真值超集<br/>（Prop. 2）"]
+        H --> I["ℓ1 sparsity 收紧 task-latent mask<br/>（Thm. 2 把不等式夹成等号）"]
+    end
+    I --> J["task-relevant 与 irrelevant latent 分离<br/>（group-wise 可识别）"]
+```
 
 ### 关键设计
 

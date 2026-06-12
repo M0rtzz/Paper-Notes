@@ -42,6 +42,20 @@ Caracal 用 $\mathcal{O}(L \log L)$ 的多头傅立叶（MHF）模块替换 Tran
 ### 整体框架
 Caracal 要解决的是"如何让 $\mathcal{O}(L \log L)$ 的 FFT 混合在自回归生成里保持严格因果"这个老大难。它的做法是把 GPT-2 几乎原样保留（Feed-forward / LN / 残差不动，可直接复用 Transformer 生态），只换两处：把全局 masked multi-head attention 替换为频域混合的 MHF 模块，并彻底删掉位置编码。为补上 FFT 在局部精度上的短板，每两层 MHF 之后插一层窗口 256 的 Sliding-Window Attention，整体复杂度落在 $\mathcal{O}(L \log L + L \cdot W)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入序列（去位置编码）"] --> MHF
+    subgraph MHF["Multi-Head Fourier 模块"]
+        direction TB
+        B["因果 depthwise conv（kernel=3）<br/>注入局部归纳偏置"] --> C["LN + 并行投影<br/>value 流 x_v / gate 流 x_g"]
+        C --> D["zero-pad 到 2L → FFT → 频域元素乘<br/>V_fft ⊙ G_fft = 时域因果卷积"]
+        D --> E["iFFT + truncate 回 L（频域因果掩码）→ Linear_O"]
+    end
+    MHF --> G["Hybrid SWA 局部回补<br/>每 2 层 MHF 插 1 层、窗口 256"]
+    G --> H["next-token 预测"]
+```
+
 ### 关键设计
 
 **1. Multi-Head Fourier 模块：用频域乘法做 $\mathcal{O}(L \log L)$ 的内容自适应混合**

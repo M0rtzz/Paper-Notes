@@ -42,21 +42,39 @@ LaRA-VLA 把 VLA 模型里的文本 CoT 和视觉 CoT 全部内化为连续 late
 ### 整体框架
 LaRA-VLA 以 Qwen3-VL 为 VLM backbone，加一个特殊 token `<img_next>` 表示未来视觉 latent；动作端在 Stage I-II 是自回归动作 token (沿用 Pertsch et al.)，在 Stage III 切换为 16 层 Diffusion Transformer 动作 expert，通过自注意+交叉注意条件于 latent 表示输出连续动作轨迹。训练数据由"语义锚 (Qwen3-VL 抽对象) + 时间锚 (gripper 状态分段)"驱动的自动 CoT 标注流水线生成，分别构造 LIBERO-LaRA、Bridge-LaRA 和真机数据。整个训练分三个 stage：显式 CoT 微调 → 渐进式 latent 替换 → 动作 expert 适配。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["自动 CoT 标注流水线（数据构建）"]
+        direction TB
+        A["语义锚(Qwen3-VL 抽物体)<br/>+ 时间锚(gripper 开合分段)"] --> B["子任务分解 + GroundingDINO/SAM3 定位<br/>+ 末端轨迹离散成运动方向"]
+        B --> C["结构化 CoT 数据集<br/>LIBERO-LaRA / Bridge-LaRA / 真机"]
+    end
+    C --> S1["Stage I：显式 CoT 微调<br/>文本 CoT teacher forcing (L_cot)<br/>+ 视觉 latent 预测 + EMA 目标 (L_vis)<br/>+ 反动力学 AR 动作 token (L_act-dis)"]
+    S1 --> S2["Stage II：Curriculum 替换<br/>按 schedule mask CoT token → learnable latent<br/>L_vis 始终保持"]
+    S2 --> S3["Stage III：Diffusion 动作 expert<br/>16 层 self-/cross-attn 条件 latent 出连续动作"]
+    S3 --> OUT["推理：无显式 CoT、纯 latent 思考<br/>延迟降最多 90%、控制频率回实时"]
+```
+
 ### 关键设计
 
-**1. Stage I：显式 CoT 微调 + 视觉 latent 对齐 + 反动力学监督，先把结构装进模型**
+**1. 自动 CoT 标注流水线：anchor-first 生成多模态推理标注**
+
+VLA 的 CoT 监督要同时覆盖长程子任务结构、目标物体空间定位、动作级运动方向，但现有标注流水线各管一段——ECoT 堆砌穷举式 bounding box 显得冗余，Emma-x 又漏掉目标定位。本文用一条全自动的"先锚定、后生成"流水线把三者统一：先抽两类锚——语义锚用 Qwen3-VL 从首帧 + 指令里认出被操作物体，时间锚按 gripper 开合把轨迹切成原子操作段；再以锚为条件批量生成——Qwen3-VL 写子任务描述，GroundingDINO + SAM3 做开放词表 grounding 得到时序一致的物体框，末端执行器轨迹算出目标导向 / 局部运动并离散成方向描述符。三路标注拼成结构化 CoT，落成 LIBERO-LaRA、Bridge-LaRA 和真机数据集，为后续三阶段训练提供干净对齐的监督。
+
+**2. Stage I：显式 CoT 微调 + 视觉 latent 对齐 + 反动力学监督，先把结构装进模型**
 
 直接学 latent 推理很难收敛，所以第一阶段先借显式 CoT 把"任务分解、空间定位、运动方向"这套结构注入模型。三条监督并行：CoT 端用 teacher forcing 优化 $\mathcal{L}_{\text{cot}} = -\sum_t \log p_\theta(c_t \mid c_{<t}, \mathbf{v}, \mathbf{x})$；视觉端预测下一帧 latent $\hat{\mathbf{z}}_{t+1}$ 做 $\ell_1$ 对齐 $\mathcal{L}_{\text{vis}} = \|\hat{\mathbf{z}}_{t+1} - \mathbf{z}_{t+1}\|_1$；动作端用 inverse dynamics $f(\mathbf{v}_t, \mathbf{v}_{t+1} \mid \mathbf{x}, c) = \mathbf{a}_t$ 把预测视觉当桥接。
 
 关键细节是视觉对齐的目标 latent 由**同一个视觉编码器**的 EMA 副本 $\bar{\theta}_v^t = \tau_v \bar{\theta}_v^{t-1} + (1 - \tau_v) \theta_v^t$ 提供——这是 BYOL/JEPA 的标准技巧，防止预测目标和被预测目标共同坍缩到平凡解。这一步埋下的视觉一致性约束，是后两阶段 latent 不退化的保险。
 
-**2. Stage II：Curriculum 逐步把离散 CoT token 换成 latent，软化 explicit-to-implicit**
+**3. Stage II：Curriculum 逐步把离散 CoT token 换成 latent，软化 explicit-to-implicit**
 
 直接全切到 latent 会丧失结构化推理，让 latent 退化成"啥也不学的占位符"。第二阶段保持 $\mathcal{L}_{\text{cot}} + \mathcal{L}_{\text{vis}}$ 不变，但按预设 schedule 把 CoT 序列里的 token 随机 mask 掉、替换成 learnable latent，离散 token 比例单调下降直至零，全部由 latent 承载推理。
 
 这套 curriculum 比 Coconut 那种直接换 latent 更稳：每一步都还留一部分显式 token 当锚点，模型逐步适应而非骤变。而始终保留的 $\mathcal{L}_{\text{vis}}$ 是命门——latent 必须被视觉一致性约束，才不会塌成 trivial 表示，视觉 latent 在这里充当文本 latent 的隐式 grounding。
 
-**3. Stage III：换上 Diffusion 动作 expert，彻底弃用显式 token 输出**
+**4. Stage III：换上 Diffusion 动作 expert，彻底弃用显式 token 输出**
 
 前两阶段动作专家与自回归 token 并存只是为了训练稳定，最终部署要的是"latent 推理 + 连续动作"的最短路径。第三阶段移除自回归动作 token，换上 16 层交替 self-/cross-attention 的 Diffusion Transformer 作为动作 expert，条件于 latent 表示生成动作 chunk；VLM 推理时不再吐 CoT，KV-cache 占用大幅下降，控制频率重回实时。
 

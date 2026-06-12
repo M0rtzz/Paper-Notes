@@ -43,7 +43,23 @@ tags:
 
 ### 整体框架
 
-四阶段构建流程：Stage 1 使用 Music Flamingo 为每首曲目生成高质量字幕；Stage 2 用 GPT-5.1 扩展为单轨 QA 对；Stage 3 用 GPT-5 mini 为每个音轨对生成三类比较问题（yes/no、short-answer、sentence-level）；Stage 4 通过人工评估和 LLM-as-a-Judge 进行质量过滤。
+四阶段构建流程：Stage 1 使用 Music Flamingo 为每首曲目生成高质量字幕；Stage 2 用 GPT-5.1 扩展为单轨 QA 对；Stage 3 用 GPT-5 mini 为每个音轨对生成三类比较问题（是/否、简答、句子级）；Stage 4 通过人工评估和 LLM-as-a-Judge 进行质量过滤。其中 Stage 1-2 复用现成模型搭脚手架，Stage 3-4 是本文的两项核心构建设计；基准建成后再用一套双路径基线做诊断式评估。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Jamendo-QA 音轨库"] --> B["Stage 1：Music Flamingo<br/>生成音乐字幕"]
+    B --> C["Stage 2：GPT-5.1<br/>扩展单轨 QA"]
+    C --> D["多类型比较问题设计<br/>GPT-5 mini 为音轨对生成<br/>是/否 · 简答 · 句子级三类问题"]
+    D --> E["LLM-as-a-Judge 质量控制<br/>人工对齐后大规模评审<br/>保留语义三项 5/5/5"]
+    E --> F["Jamendo-MT-QA 基准<br/>36,519 个比较 QA 对"]
+    subgraph EVAL["双路径基线评估"]
+        direction TB
+        G["多音频基线<br/>GPT-4o Audio / Qwen3-Omni<br/>直接处理双音频输入"]
+        H["字幕基线<br/>先生成字幕再由 LLM 比较"]
+    end
+    F --> EVAL
+```
 
 ### 关键设计
 

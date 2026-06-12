@@ -42,6 +42,31 @@ SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工
 ### 整体框架
 SEARL 把自进化拆成相互促进的两条线：策略模型通过 RL 学会规划、检索、思考与行动，外部 Tool Graph Memory 则在轨迹中持续增长、合并、连边，既为后续任务提供可复用工具，也为优势估计提供稳定的分组锚点。给定一个任务，agent 先生成全局 plan 把任务拆成若干 subtask，每个 subtask 内部展开为 Planning、Retrieve、Think、Action 四类 XML 风格步骤：Retrieve 从 Tool Graph Memory 选取相关 MCP 工具，Action 既可直接作答，也可调用已有工具或创建新工具。训练端用 outcome reward 判定最终答案正确性，叠加规划、工具创建、工具执行、格式等过程奖励，并以 episode 级相对优势与 tool-anchored step 级优势共同更新策略，使工具知识从分散候选逐步沉淀成结构化记忆图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["任务输入"] --> PLAN["全局 plan<br/>拆成若干 subtask"]
+    subgraph TRAJ["结构化轨迹与复合奖励"]
+        direction TB
+        PLAN --> SUB["subtask 四类步骤<br/>Retrieve → Think → Action"]
+        SUB -->|"作答 / 复用 / 创建工具"| REW["复合奖励<br/>outcome + 过程奖励"]
+    end
+    subgraph ADV["Tool-Memory-Aware 优势估计"]
+        direction TB
+        REW --> EP["episode 级相对优势<br/>按轨迹总回报归一化"]
+        REW --> ST["step 级优势<br/>按 MCP 工具锚点分组"]
+    end
+    EP --> UPD["策略更新"]
+    ST --> UPD
+    subgraph MEM["Tool Graph Memory 生命周期"]
+        direction TB
+        NEW["新建工具入候选池"] --> REG["按累计 reward 注册"]
+        REG --> MRG["相似工具合并 + 连依赖边"]
+    end
+    SUB -.创建工具.-> NEW
+    MRG -.检索复用.-> SUB
+```
+
 ### 关键设计
 **1. 结构化轨迹与复合奖励：把开放式行为拆成可奖励的步骤**
 

@@ -43,7 +43,19 @@ tags:
 
 ### 整体框架
 
-FastKV 分两步工作：(1) 两阶段 prefill——前半段（层 0 到 TSP 层）处理全上下文并构建完整 KV 缓存；TSP 层根据窗口 token 的注意力权重选择 top-K token，仅将这些 token 的隐状态传递给后续层；(2) 层级 KV 保留——每层独立丢弃非关键 KV 条目，仅保留指定比例的缓存用于 decoding。
+FastKV 分两步工作：(1) 两阶段 prefill——前半段（层 0 到 TSP 层）处理全上下文并构建完整 KV 缓存；TSP 层根据窗口 token 的注意力权重选择 top-K token，仅将这些 token 的隐状态传递给后续层；(2) 层级 KV 保留——每层独立丢弃非关键 KV 条目，仅保留指定比例的缓存用于 decoding。两个核心超参（TSP 层位置、KV 保留率）由层级上下文动态分析提供数据依据，且彼此独立可调。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["长上下文输入<br/>（128K token）"] --> FRONT["前半段层（层 0 ~ TSP 层）<br/>全上下文计算 + 构建完整 KV 缓存"]
+    FRONT --> TSP["Token-Selective Propagation（TSP）<br/>TSP 层（第 15 层）算窗口注意力显著性，选 top-K token"]
+    TSP --> BACK["后半段层<br/>仅传播 top-K token 的隐状态 → prefill 提速"]
+    BACK --> KV["解耦的 KV 保留<br/>每层按保留率独立丢弃非关键 KV 条目"]
+    KV --> DEC["Decoding<br/>用压缩后的 KV 缓存逐 token 生成"]
+    ANALYSIS["层级上下文动态分析<br/>重叠率曲线定 TSP 层位置 · Top-K 召回定 KV 保留率"] -.->|定超参| TSP
+    ANALYSIS -.->|定超参| KV
+```
 
 ### 关键设计
 

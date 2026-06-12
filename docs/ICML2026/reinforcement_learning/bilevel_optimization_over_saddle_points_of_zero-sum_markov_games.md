@@ -41,7 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PANDA 求解的问题形式为：$\min_{x,\phi,\psi} f(x,\phi,\psi)$ s.t. $(\phi,\psi) \in \arg\min_{\phi'}\max_{\psi'} J(x,\phi',\psi')$，其中 $x$ 是上层变量，$(\phi,\psi)$ 分别参数化 min-player 和 max-player 的策略，$J$ 是正则化价值函数。算法将此问题通过 NI 函数重构为惩罚形式 $\min_{x,\phi,\psi} f(x,\phi,\psi) + \lambda \cdot g(x,\phi,\psi)$，然后在外循环更新 $x$，内循环交替做最优响应近似和惩罚子问题求解，整体只需一阶信息。
+PANDA 求解的问题形式为：$\min_{x,\phi,\psi} f(x,\phi,\psi)$ s.t. $(\phi,\psi) \in \arg\min_{\phi'}\max_{\psi'} J(x,\phi',\psi')$，其中 $x$ 是上层变量，$(\phi,\psi)$ 分别参数化 min-player 和 max-player 的策略，$J$ 是正则化价值函数。算法先用 NI 函数把这个双层约束重构成惩罚形式 $\min_{x,\phi,\psi} f(x,\phi,\psi) + \lambda \cdot g(x,\phi,\psi)$；随后进入外循环，每一轮先跑一段下降-上升内循环逼近下层均衡，再用收敛后的策略做一步超梯度更新上层 $x$，整套流程只用一阶策略梯度信息。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["BOSMG 双层问题<br/>min f(x,φ,ψ)，下层是正则化零和博弈的 Nash"] --> B["Nikaido-Isoda 惩罚重构<br/>L_λ = f + λ·g，双层约束变单层惩罚优化"]
+    B --> C["外循环 t：先跑内循环逼近下层均衡，再更新 x"]
+    subgraph ALG["下降-上升内循环（k=0..K−1，两步交替）"]
+        direction TB
+        D["① 最优响应近似<br/>策略梯度降/升求辅助策略 φ̃,ψ̃"]
+        E["② 惩罚子问题更新<br/>用近似 NI 函数 g̃ 更新待求策略 (φ,ψ)"]
+        D --> E
+    end
+    C --> ALG
+    ALG --> F["③ 超梯度步<br/>用收敛后的 (φ,ψ) 估 ∇_x L_λ，更新上层 x"]
+    F -->|"未达 ε-驻点，进入下一轮 t"| C
+    F -->|"收敛"| G["输出：原超目标 F(x) 的 ε-近似驻点"]
+```
+
+（图中只画出贡献到算法流程的两个设计——惩罚重构与下降-上升三步迭代；设计 3 的非均匀 PŁ 性质是支撑收敛证明的理论工具，不在数据流上。）
 
 ### 关键设计
 
@@ -49,9 +68,9 @@ PANDA 求解的问题形式为：$\min_{x,\phi,\psi} f(x,\phi,\psi)$ s.t. $(\phi
 
 传统双层 RL 求超梯度要走链式法则、涉及 Hessian 逆，计算代价高，而单策略 BRL 的超梯度推导又依赖单 MDP 的闭式最优策略，在双策略耦合的 min-max 博弈下根本不成立。作者改用 NI 函数 $g(x,\phi,\psi) = \max_{\psi'} J(x,\phi,\psi') - \min_{\phi'} J(x,\phi',\psi)$ 来精确度量当前策略对偏离 Nash 均衡的程度——它非负，且仅在均衡时为零，天然贴合 min-max 博弈的鞍点结构，比单纯的值函数 gap 更精确。把它当惩罚项加进上层目标得 $L_\lambda(x,\phi,\psi) = f(x,\phi,\psi) + \lambda \cdot g(x,\phi,\psi)$，于是双层约束被吸收进一个无约束的惩罚问题；理论上当 $\lambda$ 足够大时，$L_\lambda^*(x)$ 的驻点与原超目标 $F(x)$ 驻点之间的梯度偏差只有 $O(\lambda^{-1})$，从而彻底绕开超梯度和二阶信息。
 
-**2. 三步内循环（最优响应 + 惩罚子问题 + 超梯度更新）：在嵌套结构里只用一阶信息完成下层逼近 + 上层更新**
+**2. 下降-上升三步迭代（最优响应 + 惩罚子问题 + 超梯度更新）：在嵌套结构里只用一阶信息完成下层逼近 + 上层更新**
 
-NI 函数里藏着两个最优响应问题（max 和 min），需要分步逼近。每个外循环迭代分三步：第一步对辅助变量 $\tilde{\phi},\tilde{\psi}$ 分别做策略梯度下降/上升 $K$ 步，近似求解 NI 函数中的两个最优响应；第二步用近似 NI 函数 $\tilde{g}(x,\phi,\psi,\tilde{\phi},\tilde{\psi}) = J(x,\phi,\tilde{\psi}) - J(x,\tilde{\phi},\psi)$ 构造惩罚子问题的梯度更新 $(\phi,\psi)$；第三步用更新后的策略估计超梯度 $\nabla_x \tilde{L}_\lambda$，随机梯度下降更新上层 $x$。关键在内循环只需 $K=O(\log\lambda)$ 步就能保证 $(\phi,\psi)$ 足够接近惩罚子问题最优解、让外循环的超梯度估计有效——对数级内循环意味着整体计算负担增长缓慢。
+NI 函数里藏着两个最优响应问题（一个 max、一个 min），无法闭式求解，只能在线逼近。算法因此把每个外循环迭代拆成「一段内循环 + 一次超梯度步」。内循环跑 $K$ 步，每一步同时做两件事交替推进：① **最优响应近似**——对辅助变量 $\tilde{\phi},\tilde{\psi}$ 各做一步策略梯度下降/上升，逼近 NI 函数里的两个最优响应；② **惩罚子问题更新**——用当前 $\tilde{\phi},\tilde{\psi}$ 拼出近似 NI 函数 $\tilde{g}(x,\phi,\psi,\tilde{\phi},\tilde{\psi}) = J(x,\phi,\tilde{\psi}) - J(x,\tilde{\phi},\psi)$ 作为 $g$ 的代理，据此用随机梯度更新真正待求的策略 $(\phi,\psi)$。$K$ 步过后 $(\phi,\psi)$ 已足够接近惩罚子问题的最优解 $(\phi^*_\lambda,\psi^*_\lambda)$；③ **超梯度步**——内循环结束后，用收敛的 $(\phi,\psi)$ 估计超梯度 $\nabla_x \tilde{L}_\lambda$，随机梯度下降更新上层 $x$，再进入下一轮外循环。全程只用一阶策略梯度（Monte Carlo roll-out 估梯度），从不计算 Hessian 或其逆。关键在内循环只需 $K=O(\log\lambda)$ 步就能保证 $(\phi,\psi)$ 足够接近惩罚子问题最优解、让超梯度估计有效——对数级内循环意味着整体计算负担增长缓慢。
 
 **3. NI 函数的非均匀 PŁ 性质：给收敛分析提供不依赖强凸假设的梯度支配条件**
 

@@ -47,6 +47,17 @@ TheraAgent 的核心不是训练一个新医学模型，而是设计一个 agent
 
 最终输出不是简单使用最后一轮答案，而是在最后 $L$ 轮中选择得分最高的 $T^*=\arg\max s_k$。系统还设置早停：如果连续三轮分数都超过阈值 $\tau$，则提前停止，减少不必要开销。论文默认最大 10 轮、输出窗口 $L=3$、Top-N memory 为 3。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["患者病例 P=(d, s, y)"] --> B["Planner 反馈条件生成<br/>读历史缺陷 → 生成方案 T_k 与推理 c_k"]
+    B --> C["TheraJudge 临床多维评估<br/>评估理由 + 分维度得分 + 总分 s_k"]
+    C --> D["Score-aware Memorizer<br/>存 (T_k, R_k, s_k)，检索 Top-N 高分记忆"]
+    D -->|"未早停且 k < 10：回灌高分记忆"| B
+    D -->|"连续三轮 s_k > τ：早停"| F["最终选择 T*=argmax s_k<br/>末 L 轮取最高分那版"]
+    F --> G["治疗方案输出"]
+```
+
 ### 关键设计
 
 **1. Planner 的反馈条件生成：让下一版方案对着具体缺陷改，而不是泛泛“写得更好”**

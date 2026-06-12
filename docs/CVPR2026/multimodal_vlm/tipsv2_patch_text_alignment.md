@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-TIPSv2 想在一个模型里同时做好两件历来此消彼长的事：图像级的图文对齐（CLIP 那一套）和 patch 级的空间理解（DINO/iBOT 那一套）。它没有重新设计架构，而是沿用 TIPS 的双 CLS token 编码器，只在训练目标上动三处刀：把自监督的掩码图像建模从「只盯被遮住的 patch」放开成「所有 patch 都监督」（iBOT++），把维持稳定的 EMA 教师从整个模型瘦身成只对投影头做 EMA（Head-only EMA），再把单一来源的网页标题换成多来源、多粒度的合成标题。一张图进来，编码器同时吐出对齐文本的全局表示和对齐文本的逐 patch 表示，总损失把三股监督信号叠在一起：$\mathcal{L} = \mathcal{L}_{CLIP} + \mathcal{L}_{DINO} + \mathcal{L}_{iBOT++}$。
+TIPSv2 想在一个模型里同时做好两件历来此消彼长的事：图像级的图文对齐（CLIP 那一套）和 patch 级的空间理解（DINO/iBOT 那一套）。它没有重新设计架构，而是沿用 TIPS 的双 CLS token 编码器，只在训练目标上动三处刀：把自监督的掩码图像建模从「只盯被遮住的 patch」放开成「所有 patch 都监督」（iBOT++），把维持稳定的 EMA 教师从整个模型瘦身成只对投影头做 EMA（Head-only EMA），再把单一来源的网页标题换成多来源、多粒度的合成标题。一张图进来，编码器同时吐出对齐文本的全局表示和对齐文本的逐 patch 表示，总损失把三股监督信号叠在一起：$\mathcal{L} = \mathcal{L}_{CLIP} + \mathcal{L}_{DINO} + \mathcal{L}_{iBOT++}$。下图是这套训练框架的鸟瞰：图像走视觉编码器、文本走多粒度标题，编码器学生与教师靠 Head-only EMA 共享主干，三股损失（其中 iBOT++ 是核心改动）最终汇总成一个目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["图像-文本对 (I, T)"]
+    IMG --> CAP["多粒度标题采样<br/>alt-text / PaliGemma / Gemini 随机选一"]
+    CAP --> TENC["文本编码器 g → 文本嵌入"]
+    IMG --> SENC["ViT 图像编码器 (学生)<br/>双 CLS 全局表示 + 逐 patch 表示"]
+    SENC --> EMA["Head-only EMA<br/>主干学生=教师共享，仅投影头做 EMA → 教师目标"]
+    TENC --> LCLIP["CLIP 对比损失<br/>双 CLS 各对齐对象/空间标题"]
+    SENC --> LCLIP
+    SENC --> LDINO["DINO 全局自蒸馏损失"]
+    EMA --> LDINO
+    SENC --> LIBOT["iBOT++ patch 级损失<br/>所有 token 都监督（去掉掩码条件）"]
+    EMA --> LIBOT
+    LCLIP --> SUM["总损失 L = L_CLIP + L_DINO + L_iBOT++"]
+    LDINO --> SUM
+    LIBOT --> SUM
+```
 
 ### 关键设计
 

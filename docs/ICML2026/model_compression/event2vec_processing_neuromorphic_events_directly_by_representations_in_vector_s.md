@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-一条长度为 $L$ 的事件序列 $\{(x_i, y_i, t_i, p_i)\}$ 进来，经空间嵌入、时间嵌入两路并行编码、相加并乘上密度强度因子，就变成一张 $L\times D$ 的 token 表 $\mathbf{V}$，剩下的交给一个现成的双向 Forgetting Transformer 主干（平均池化 + 线性头出分类 logits）。换句话说，event2vec 只负责把稀疏异步的事件"翻译"成 Transformer 看得懂的序列，把所有重活都甩给成熟的 NLP 主干生态。
+原始事件流动辄数万到数十万条，先被采样或 K-Means++ 聚合压到定长 $L$（聚合时同步记下每簇的强度因子 $\rho$），得到一条长度为 $L$ 的事件序列 $\{(x_i, y_i, t_i, p_i)\}$。这 $L$ 个事件经参数化空间嵌入、卷积时间嵌入两路并行编码、相加、再乘上强度因子 $(\log\rho+1)$，就变成一张 $L\times D$ 的 token 表 $\mathbf{V}$，剩下的重活全部交给一个现成的双向 Forgetting Transformer 主干（平均池化 + 线性头出分类 logits）。换句话说，event2vec 只负责把稀疏异步的事件"翻译"成 Transformer 看得懂的序列，把所有重活都甩给成熟的 NLP 主干生态。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始事件流 (x,y,t,p)<br/>数万~数十万条"] --> B["K-Means++ 聚合 + 强度因子 ρ<br/>按极性聚成定长 L 个代表事件，ρ=每簇原始事件数"]
+    B --> C["参数化空间嵌入 φ<br/>三层 MLP 编码 (x,y,p)"]
+    B --> D["卷积时间嵌入<br/>三层一维卷积编码 Δt"]
+    C --> E["相加融合 空间向量 + 时间向量"]
+    D --> E
+    E --> F["× 强度因子 (log ρ + 1)<br/>得 L×D token 表 V"]
+    F --> G["双向 Forgetting Transformer 主干"]
+    G --> H["平均池化 + 线性头 → 分类 logits"]
+```
 
 ### 关键设计
 

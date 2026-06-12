@@ -48,6 +48,20 @@ ReMem 重构 LVLM unlearning 评测的两阶段流程：
 
 数据规模：20 个虚构身份 × 每个 100 QA × 100 张图 = 2,560 样本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BUILD["ReMem 数据集构建"]
+        direction TB
+        A["QA 集合构造<br/>scaling law + 70% 单跳脚手架"]
+        B["多视角图像合成 + 严格质检<br/>Nano Banana 生成 → ArcFace 过滤 → 人工 review"]
+    end
+    BUILD --> C["合成数据集<br/>20 身份 × 100 QA × 100 图 = 2560 样本"]
+    C --> D["Stage 1 可靠记忆<br/>SFT 微调 LVLM，把 EM 拉满（先确认记住了）"]
+    D --> E["Stage 2 遗忘<br/>对 forget set 应用各类 unlearning 算法"]
+    E --> F["Exposure 内部概率度量<br/>D_f / D_r' / D_t 上测 ROUGE·EM·Exposure"]
+```
+
 ### 关键设计
 
 **1. 用 scaling law + 单跳脚手架构造 QA 集合：先把 stage 1 真的记进去**

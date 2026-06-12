@@ -44,6 +44,18 @@ $$I_{de}^{p} = \underbrace{(I_c^{p} \otimes K^{p})}_{I_{ab}^{p}} \cdot T^{p} + I
 
 其中 $K^p$ 是局部点扩散函数（PSF），$T^p$ 是描述对比度衰减的透射率图，$I_g^p$ 是眩光图。修复目标就是从观测 $I_{de}$ 反推清晰图 $I_c$，这是一个高度病态的盲反问题——而 $T^p$ 和 $I_g^p$ 这两张图正是全篇方法围绕着学习和复用的核心物理量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源域配对数据 + 目标域真实退化图"] --> B["物理引导退化生成 VeilGen<br/>LOTGMP 预测潜在透射率与眩光图"]
+    B --> C["VGIM 施加眩光退化<br/>合成退化-清晰配对"]
+    C --> D["前向模型蒸馏 DDN<br/>多步扩散压成可微退化器（冻结）"]
+    C --> E["可逆修复 DeVeiler<br/>VG-Enc 反推潜在图 → VGCM 逆向补偿"]
+    E --> F["去眩光清晰图"]
+    F -->|可逆约束·DDN 再退化须重建回原退化图| D
+    B -.双向一致性·VGIM 与 VGCM 共享同一对潜在图.-> E
+```
+
 ### 关键设计
 
 **1. 物理引导的退化生成（LOTGMP + VGIM）：让扩散模型造出的退化带物理意义**

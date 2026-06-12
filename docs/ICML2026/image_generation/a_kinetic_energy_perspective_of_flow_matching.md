@@ -46,23 +46,11 @@ tags:
 在机制分析上，论文研究 empirical flow matching（EFM）的闭式最优速度。对有限训练集，EFM 速度场可以写成训练样本方向的 posterior 加权平均并带有 $1/(1-t)$ 因子。若轨迹在 $t\to1$ 时还没有足够靠近某个训练点，末端速度会爆炸；如果它快速贴近训练原子，则生成样本容易变成训练样本近拷贝。
 
 ### 关键设计
-1. **Kinetic Path Energy 轨迹诊断**:
+**1. Kinetic Path Energy 轨迹诊断：给每条采样轨迹一个路径级能量标量。** FID、CLIP score 这类终点指标只看生成结果的统计，无法解释"为什么这个样本更清晰、那个样本更像训练集"。KPE 借用经典力学里"动能沿路径积分"的 action 思想，沿 ODE 采样轨迹计算 $E=\frac{1}{2}\int_0^1\|v_\theta(x(t),t)\|^2dt$；离散采样时只需在每个 solver step 累加速度平方，几乎零额外开销、也不需要额外模型。这样"生成是否用力、在哪个阶段用力"就从黑箱变成了可观察、可比较的标量。
 
-	- 功能：给每个生成样本分配一个路径级标量，衡量采样过程累计用了多少速度能量。
-	- 核心思路：沿 ODE 采样轨迹计算 $E=\frac{1}{2}\int_0^1\|v_\theta(x(t),t)\|^2dt$。离散采样时只需在每个 solver step 累加速度平方，几乎没有额外开销。
-	- 设计动机：FID 这类终点指标无法解释单样本生成动力学；KPE 能把“生成是否用力、在哪个阶段用力”变成可观察量。
+**2. 能量-语义-稀疏性的双重解释：说明中等偏高 KPE 为何对应更好的样本。** 作者从两条证据把 KPE 和"样本好在哪"联系起来。实验上，高 KPE 组在 CLIP score、CLIP margin 上更高，且在 kNN/KDE 估计的表示空间里落在局部训练支持更稀疏的区域（CIFAR-10 上 KPE 与局部支持的 Spearman $\rho\approx-0.65$）。理论上，在 posterior dominance 条件下，瞬时速度平方与桥分布的负 log-density 近似成仿射关系。两者合起来说明：要走到稀疏却有语义的区域，本就需要更强的输运，这会体现为更高的轨迹能量，于是 KPE 同时充当语义强度和局部稀疏性的代理。
 
-2. **能量-语义-稀疏性的双重解释**:
-
-	- 功能：解释为什么中等偏高 KPE 往往对应更清晰、更具类别语义的样本。
-	- 核心思路：实验上，高 KPE 组在 CLIP score、CLIP margin 上更高；同时在 kNN/KDE 估计的表示空间中，高 KPE 样本落在局部训练支持更稀疏的区域。理论上，在 posterior dominance 条件下，瞬时速度平方与桥分布负 log-density 近似成仿射关系。
-	- 设计动机：生成稀疏但有语义的区域需要更强输运，而这会反映为更高轨迹能量；这使 KPE 成为语义强度和局部稀疏性的共同代理。
-
-3. **Kinetic Trajectory Shaping（KTS）**:
-
-	- 功能：在不重新训练模型的情况下调节采样轨迹，提升质量并降低记忆化。
-	- 核心思路：用时间相关增益 $\eta(t)$ 缩放速度 $\tilde v=\eta(t)v_\theta$。早期 $t<\tau_{split}$ 使用 Kinetic Launch 增大速度，后期 $t\geq\tau_{split}$ 使用 Kinetic Soft Landing 减小速度；默认 $\tau_{split}=0.6$，对应实验中能量尖峰开始出现的区间。
-	- 设计动机：KPE 的作用不是越大越好，而是要分配在正确阶段。早期能量帮助语义形成，晚期过强速度容易贴近训练原子，因此需要 boost-then-damp。
+**3. Kinetic Trajectory Shaping（KTS）：把诊断量变成训练-free 的两阶段调控。** KPE 的关键不是"越大越好"，而是要把能量分配到正确阶段——早期能量帮助语义成形，晚期速度过强则会被经验 flow matching 闭式速度里的 $1/(1-t)$ 尖峰拉向训练原子、诱发记忆化。KTS 据此用时间相关增益 $\eta(t)$ 缩放速度 $\tilde v=\eta(t)v_\theta$：早期 $t<\tau_{split}$ 用 Kinetic Launch（$\eta=1+\alpha(t)>1$）加速、推样本走向稀疏语义区；后期 $t\geq\tau_{split}$ 用 Kinetic Soft Landing（$\eta=1-\beta(t)<1$）减速、压住末端奇异。默认 $\tau_{split}=0.6$，正对应实验中能量尖峰开始出现的区间。整套策略不重训、不改 loss、不加 guidance，只是按时间缩放速度场，因此即插即用。
 
 ### 损失函数 / 训练策略
 KPE 是诊断量，不参与训练损失；KTS 是推理时策略，也不改训练目标。基础模型仍按 conditional flow matching 训练。KTS 在 Euler 采样中把每一步更新从 $x_{t+\Delta t}=x_t+v_t\Delta t$ 改成 $x_{t+\Delta t}=x_t+\eta(t)v_t\Delta t$。作者测试了线性/常数/指数等 launch 与 soft-landing 函数，发现只要保留早期加速、晚期阻尼的相位结构，大多数配置都能改善 FID 或记忆化。

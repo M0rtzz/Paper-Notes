@@ -35,6 +35,22 @@ tags:
 
 UniBlendNet 要解决的是环境光归一化（ALN）：多光源、几何与材质交互在画面上留下空间高度不均的光照退化，亮区、暗区、不同尺度的阴影混在一起，需要一次性还原成正常照明。它沿用 IFBlend 的频率-空间联合恢复编码器-解码器作骨干，但在三处动手——旁挂一条全局上下文分支补长距离依赖，在瓶颈层插入多尺度自适应聚合，最后用一张软掩码控制"在哪修、修多重"。最终还原写成 $\mathbf{I}_r = \mathbf{I}_{inp} + \mathbf{M} \odot \mathbf{R}$，掩码 $\mathbf{M}$ 决定残差 $\mathbf{R}$ 在每个位置的施加强度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["退化输入 I_inp"] --> B["IFBlend 频率-空间编码器"]
+    A --> G["全局上下文分支 UniConvNet<br/>逐步增大卷积核扩感受野 → 全局特征 F_g"]
+    B --> S["尺度感知聚合 SAAM<br/>瓶颈层三级金字塔 + 动态尺度权重"]
+    S --> D["IFBlend 解码器末端特征"]
+    D --> F["特征融合<br/>解码器特征 + 全局特征 F_g"]
+    G --> F
+    F --> M["掩码头<br/>sigmoid → 软掩码 M∈[0,1]"]
+    F --> R["残差头 → 残差 R"]
+    M --> C["掩码引导残差精修<br/>合成 I_r = I_inp + M⊙R"]
+    R --> C
+    C --> O["归一化输出图"]
+```
+
 ### 关键设计
 
 **1. UniConvNet 全局上下文分支：补回频率-空间骨干看不到的场景级光照依赖**

@@ -41,7 +41,23 @@ ComplianceNLP 是一个端到端的金融监管合规系统，把 12,847 条 SEC
 
 ### 整体框架
 
-ComplianceNLP 要解决的是"把杂乱的多框架法规原文，自动转成可对账的结构化义务，再和内部政策比对找出合规差距"这件事，并且要做到生产级延迟。系统是一条三阶段流水线：先把 SEC / MiFID II / Basel III 三套法规摄入并索引，构造出 12,847 节点、34,219 边的监管知识图谱（RKG）同时灌入向量库；再用一个共享 LEGAL-BERT 的多任务抽取器，从条款里同时抽出金融实体、义务模态和跨条款引用；最后把抽取出的结构化义务 $\langle$entity, action, modality, condition, source_provision$\rangle$ 与内部政策子句对齐打分，按阈值 $\delta$ 判定为 Compliant / Partial Gap / Full Gap 并生成差距报告。
+ComplianceNLP 要解决的是"把杂乱的多框架法规原文，自动转成可对账的结构化义务，再和内部政策比对找出合规差距"这件事，并且要做到生产级延迟。系统是一条三阶段流水线：先把 SEC / MiFID II / Basel III 三套法规摄入并索引，构造出 12,847 节点、34,219 边的监管知识图谱（RKG）同时灌入向量库；再用一个共享 LEGAL-BERT 的多任务抽取器，从条款里同时抽出金融实体、义务模态和跨条款引用；最后把抽取出的结构化义务 $\langle$entity, action, modality, condition, source_provision$\rangle$ 与内部政策子句对齐打分，按阈值 $\delta$ 判定为 Compliant / Partial Gap / Full Gap 并生成差距报告。其中负责 RAG 生成（差距分析与 RegQA）的 LLM 由领域定制蒸馏 + Medusa 推测解码压成 8B 以满足生产级延迟。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三套法规原文<br/>SEC / MiFID II / Basel III"] --> B["监管知识图谱 RKG<br/>12,847 节点 / 34,219 边 + 向量库"]
+    subgraph RET["知识图谱增强的混合检索与重排"]
+        direction TB
+        C["混合检索<br/>legal bi-encoder dense + BM25"] --> D["图谱重排<br/>KGScore 按 RKG 图距离加权"]
+    end
+    B --> RET
+    RET --> E["多任务联合义务抽取<br/>共享 LEGAL-BERT：NER + deontic 模态 + 跨引用"]
+    E --> F["结构化义务<br/>(entity, action, modality, condition, source)"]
+    F --> G["差距分析<br/>与内部政策对齐打分，阈值 δ"]
+    G --> H["差距报告<br/>Compliant / Partial Gap / Full Gap"]
+    I["领域定制蒸馏 + Medusa 推测解码<br/>70B → 8B，2.8× 加速"] -.加速 RAG 生成.-> G
+```
 
 ### 关键设计
 

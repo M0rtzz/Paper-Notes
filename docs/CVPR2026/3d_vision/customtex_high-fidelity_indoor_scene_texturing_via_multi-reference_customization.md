@@ -34,6 +34,19 @@ tags:
 ### 整体框架
 CustomTex 要解决的是"给定一个未纹理化的室内场景，怎么让每件家具都长成用户指定参考图那样、还干净清晰且不带烘焙阴影"。它不直接预测纹理像素，而是把一个隐式纹理场放进 VSD（Variational Score Distillation）优化循环里慢慢"雕"出来。输入是带 UV 展开的场景 mesh，加上每个实例各一张参考图。每轮迭代先从一个随机球面视点把当前纹理场渲成 RGB 图、深度图和实例 mask；接着两路蒸馏分别算梯度——语义这一路用 depth-to-image 扩散模型配合 Instance Cross-Attention 和 LoRA 给出 VSD 梯度，管"画的是不是参考图那个东西"；像素这一路用一个预训练超分模型给出 SR 梯度，管"画得够不够清晰"；最后两路梯度加权合并，反传更新隐式纹理场。整个过程把"生成什么"和"生成得多好"拆成两个互不干扰的信号源。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：场景 mesh（含 UV）<br/>+ 每实例一张参考图"] --> B["多分辨率哈希网格纹理场<br/>隐式表示，可任意分辨率"]
+    B --> C["随机球面视点渲染<br/>→ RGB / 深度图 / 实例 mask"]
+    C -->|语义路| D["Instance Cross-Attention + InsVSD<br/>mask 调制注意力，参考图各管一块 → VSD 梯度"]
+    C -->|像素路| E["像素级蒸馏<br/>预训练超分模型 → SR 梯度"]
+    D --> F["梯度加权合并<br/>前 5000 轮 λ_SR=0 先定内容，后加细节"]
+    E --> F
+    F -->|反传更新纹理场| B
+    F --> G["输出：实例可控高保真纹理<br/>4K~12K"]
+```
+
 ### 关键设计
 
 **1. Instance Cross-Attention + InsVSD：让每个实例只对齐自己那张参考图**

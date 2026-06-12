@@ -45,6 +45,18 @@ tags:
 
 novel 阶段的输入条件先经过 *Prior-Grounded Encoding*：global caption 与类别标签经冻结 CLIP 文本编码得到 $\phi_g, \phi_c$；bbox 经 Fourier 编码得到 $\phi_p$ 和 sigmoid 空间掩码 $\mathbf{S}$；视觉特征由一个在 base 上预训练并冻结的 Resampler 给出背景 $\phi_b$ 和前景 $\phi_f$，其中 $\phi_f$ 的源从 base 切到从 novel 各类 5-shot 裁出的 *exemplar pool* $\Delta$。这五组 embedding 通过 mask 化 cross-attention 注入 U-Net 的中段与上采样段，三个新模块分别在不同位置接管：Semantic Anchoring 改写中段与第一上采样块的 $\phi_f$，Primitive Imbuing 改写最后两个上采样块的空间特征 $\mathbf{h}$，Conceptual Steering 改写损失 $\mathcal{L}$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：global caption + 类别标签 + bbox<br/>+ novel 类 5-shot exemplar pool"] --> B["Prior-Grounded Encoding（脚手架）<br/>CLIP 文本 φg,φc · Fourier bbox φp+掩码S<br/>冻结 Resampler → 背景 φb / 前景 φf"]
+    B --> C["冻结 U-Net（base 权重，mask 化 cross-attention 注入）"]
+    C --> D["Semantic Anchoring<br/>中段+首上采样块：exemplar 蒸 anchor 矩阵 A 注回 φf"]
+    D --> E["Primitive Imbuing<br/>末两上采样块：128 原语 P（岭回归）经空间门控注入 h"]
+    E --> F["去噪生成图"]
+    F --> G["Conceptual Steering<br/>GradCAM 显著性差异权重 Ω 重加权损失"]
+    G -->|梯度只更新三个新模块 Θnovel| C
+```
+
 ### 关键设计
 
 **1. Semantic Anchoring：稳住 novel 类的视觉身份**

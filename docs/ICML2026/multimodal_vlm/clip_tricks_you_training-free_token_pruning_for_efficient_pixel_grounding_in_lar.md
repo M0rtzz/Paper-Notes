@@ -43,7 +43,28 @@ tags:
 
 ### 整体框架
 
-LiteLVLM 构建在 GLaMM 架构之上：输入图像经 CLIP ViT-L/14 编码为 576 个视觉 token，输入文本经 CLIP text encoder 提取 [EOS] embedding。LiteLVLM 在视觉 token 进入 LLM 之前执行剪枝，筛选后的 token 经 MLP 投影层送入 Vicuna-7B 生成 \<SEG\> grounding embedding，最终由 SAM 风格的 pixel decoder 输出二值分割 mask。由于剪枝发生在 LLM 之前，与 FlashAttention 等高效注意力机制完全兼容。
+LiteLVLM 构建在 GLaMM 架构之上：输入图像经 CLIP ViT-L/14 编码为 576 个视觉 token，输入文本经 CLIP text encoder 提取 [EOS] embedding。LiteLVLM 在视觉 token 进入 LLM 之前执行剪枝，剪枝核心由三个设计协同——自适应 token 选择先按文本交集动态分配前景/背景预算，相似度感知 token 选择保留与 [EOS] 相似度最低的前景 token，上下文感知 token 恢复补回对 [CLS] 贡献高的背景 token；两类 token 合并后经 MLP 投影层送入 Vicuna-7B 生成 \<SEG\> grounding embedding，最终由 SAM 风格的 pixel decoder 输出二值分割 mask。由于剪枝发生在 LLM 之前，与 FlashAttention 等高效注意力机制完全兼容。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像"] --> VENC["CLIP ViT-L/14<br/>576 个视觉 token"]
+    TXT["输入文本"] --> TENC["CLIP 文本编码器<br/>[EOS] / [CLS] embedding"]
+    VENC --> ADAPT
+    TENC --> ADAPT
+    subgraph PRUNE["免训练 token 剪枝（发生在 LLM 之前）"]
+        direction TB
+        ADAPT["自适应 token 选择<br/>按文本交集动态分配前景/背景预算"]
+        ADAPT --> SIM["相似度感知 token 选择<br/>保留与 [EOS] 相似度最低的前景 token"]
+        ADAPT --> CTX["上下文感知 token 恢复<br/>补回对 [CLS] 贡献高的背景 token"]
+        SIM --> MERGE["合并前景 + 背景 token"]
+        CTX --> MERGE
+    end
+    MERGE --> MLP["MLP 投影层"]
+    MLP --> LLM["Vicuna-7B<br/>生成 &lt;SEG&gt; grounding embedding"]
+    LLM --> DEC["SAM 风格 pixel decoder"]
+    DEC --> OUT["二值分割 mask"]
+```
 
 ### 关键设计
 

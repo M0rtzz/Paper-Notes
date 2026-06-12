@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 论文把"旁观者隐私"落到一个可评测、可训练的闭环里：先构建多说话人基准 SH-Bench（3,968 个混合音频、约 157.5 小时，配 77k 道五选一题），让模型在两种指令模式下作答——General 模式回答所有问题，Selective 模式只答主说话人相关问题、对旁观者一律选"I don't know"；再用一个统一指标 SE 同时卡住"理解能力"和"隐私保护"两端，避免模型靠极端策略刷分；最后用 BPFT 在合成数据上做行为对齐微调，把"选择性听觉"灌进模型而不伤主说话人理解。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["SH-Bench 数据构建（真实 + 合成双轨）"]
+        direction TB
+        A["真实录音<br/>Prolific 五种日常环境"] --> C["混合音频<br/>主说话人 + 旁观者"]
+        B["合成混音<br/>AMI 语料旁观者 −10dB 混入"] --> C
+        C --> D["五选一 MCQ<br/>含 I don't know 隐私探针"]
+    end
+    DATA --> E{"指令模式"}
+    E -->|General| F["回答所有说话人问题"]
+    E -->|Selective| G["只答主说话人<br/>旁观者一律选 I don't know"]
+    F --> H["Selective Efficacy（SE）<br/>四项准确率调和平均"]
+    G --> H
+    H --> I["BPFT 行为对齐微调<br/>合成数据 + LoRA 仅训 LLM 骨干"]
+    I -.->|对齐后模型重新评测| E
+```
+
 ### 关键设计
 
 **1. SH-Bench 数据构建：真实 + 合成双轨，IDK 选项作隐私探针**

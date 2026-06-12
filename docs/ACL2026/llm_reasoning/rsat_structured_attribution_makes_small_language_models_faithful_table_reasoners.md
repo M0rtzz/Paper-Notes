@@ -45,6 +45,27 @@ RSAT 的方法逻辑很清楚：先把输出空间固定成可验证的结构，
 
 训练分两阶段。第一阶段是 SFT，用 1,000 条由 Claude Opus 4.5 生成并经过程序校验的结构化推理 trace 训练模型学会格式。第二阶段是 GRPO，模型对同一问题采样 8 个候选输出，用复合奖励打分，再用组内相对优势更新策略。评测覆盖 Qwen 2.5 Instruct 的 1.5B/3B/7B 和 Llama 3 Instruct 的 1B/3B/8B，数据来自 WTQ、FeTaQA、TabFact。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：序列化表格（[HEADER]/[ROW] 标记）+ 自然语言问题"]
+    A --> B["结构化单元格级推理输出<br/>JSON：每步 claim + [row, col] 引用 + final_answer"]
+    subgraph T["两阶段训练（SFT 教格式 + GRPO 教质量）"]
+        direction TB
+        C["阶段一 SFT<br/>1000 条程序校验 trace，稳定 JSON 格式与合法坐标"]
+        C --> D["阶段二 GRPO<br/>每题采样 8 候选 → 组内相对优势更新策略"]
+    end
+    B --> C
+    subgraph R["NLI 忠实性复合奖励"]
+        direction TB
+        E["复合奖励 R = R_ans + 0.3·R_cite + 0.5·R_faith + 0.2·R_pars + R_fmt"]
+        E --> F["核心项 R_faith：DeBERTa-v3 NLI 判引用单元格证据是否蕴含该步 claim"]
+    end
+    D --> E
+    F -->|奖励回传组内排名| D
+    D --> G["输出：每步绑定真实单元格证据的可审计推理"]
+```
+
 ### 关键设计
 
 **1. 结构化单元格级推理输出：把证据落到表格里最小的可审计单元**

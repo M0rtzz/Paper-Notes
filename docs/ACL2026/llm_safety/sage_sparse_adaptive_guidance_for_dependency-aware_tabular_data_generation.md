@@ -44,6 +44,23 @@ SAGE 分为两个阶段。预处理阶段先把表格数据转换为文本序列
 
 论文提出两种互补引导策略：Feature Selector 是显式策略，它直接删除与目标特征互信息较低的上下文；Logit Correction 是隐式策略，它不删除上下文，而是根据当前 prefix 的信息量调节候选值 logits。两者都旨在避免 LLM 在生成某个特征时被无关 feature-value 对牵引。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表格数据"] --> B["文本序列化 + continued pretraining<br/>每行写成 feature is value 短语"]
+    A --> C["value-aware pseudo-feature 离散化<br/>数值按 FD rule 分 bin、类别独占二值位"]
+    C --> D["互信息稀疏依赖图<br/>对 pseudo-feature 两两算 MI、剪掉伪相关边"]
+    B --> E["生成阶段：从真实前缀自回归补全特征"]
+    D --> F
+    E --> F
+    subgraph F["依赖引导采样（生成每个特征时接入依赖图，二选一）"]
+        direction TB
+        G["Feature Selector（显式）<br/>删除与目标 MI 低的上下文"]
+        H["Logit Correction（隐式）<br/>按 prefix 信息量锐化 / 平滑 logits"]
+    end
+    F --> I["合成表格记录"]
+```
+
 ### 关键设计
 
 **1. value-aware pseudo-feature 离散化：把依赖建模的粒度从"特征级"下沉到"取值级"**

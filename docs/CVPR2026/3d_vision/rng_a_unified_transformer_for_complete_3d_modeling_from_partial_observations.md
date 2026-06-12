@@ -58,6 +58,20 @@ $$\hat{\mathbf{g}}_{s=1} = \left[I_{3\times3} \mid [0, 0, -1]^\top\right]$$
 
 从而隐式定义了重建的世界坐标系。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源视角图像 {I_s}<br/>DINOv2 抽 token"] --> C["24 层交替<br/>全局注意力 + 帧级注意力"]
+    B["目标视角<br/>Plücker 射线图 → 线性层 token"] --> C
+    C --> D["重构引导因果注意力<br/>二值掩码 M 拧成单向：<br/>源 query 只看源，目标 query 看源+目标"]
+    D -->|源视角分支| E["KV-Cache 隐式 3D 表示<br/>缓存源 K/V（~0.2s），当可反复查询的 3D 记忆"]
+    D -->|源视角分支| G["Camera Head → 相机位姿 ĝ_s"]
+    E -.每视角读缓存.-> F["目标 Q 查询 [K_s';K_t]<br/>合成新视角（<0.1s/视角）"]
+    D -->|目标视角分支| F
+    F --> H["RGB Head → 新视角图像 Î_t"]
+    F --> I["Point Head → 点图 p̂_t<br/>多视角累积成完整 3D"]
+```
+
 ### 关键设计
 
 **1. 重构引导因果注意力：让重建指导生成，但生成不污染重建**

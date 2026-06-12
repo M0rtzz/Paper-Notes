@@ -43,6 +43,30 @@ tags:
 ### 整体框架
 LSSAR（Length Scaled Softplus Attention with Re-weighting）由两个串联阶段组成。第一阶段（归一化阶段，LSSA）：对 $Q, K$ 各行做 $L_2$ 归一化，把点积锁在 $[-1, 1]$；用 Softplus 替代 $e^x$ 作为非负化函数；以 $\log d \cdot \log N$ 作为按位置动态变化的尺度因子；最后对每行做 $L_1$ 归一化。第二阶段（锐化阶段）：在 LSSA 的输出上做"乘以 $N$（按位置 token 数）→ 减去偏置矩阵 $O$ → 取 ReLU 并升到 $p$ 次方 → 再 $L_1$ 归一化"。两阶段都加在原 GPT-2 small（124M）+ RoPE 框架上，其它部分不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    QK["Q、K（按行）"]
+    subgraph S1["LSSA 归一化阶段"]
+        direction TB
+        A["L2 归一化 Q、K<br/>点积锁进 [−1, 1]"]
+        B["Softplus 替代 e^x<br/>乘动态尺度 log d · log N"]
+        C["乘因果掩码 M'（0/1，非负输出）"]
+        D["按行 L1 归一化<br/>得稳定但偏密集分布"]
+        A --> B --> C --> D
+    end
+    subgraph S2["Re-weighting 锐化阶段"]
+        direction TB
+        E["乘 token 数 N，减偏置 O<br/>分布中心平移到 0 附近"]
+        F["ReLU 截断 + 升 p 次方<br/>放大峰值（p→∞ 近 argmax）"]
+        G["再按行 L1 归一化"]
+        E --> F --> G
+    end
+    QK --> S1
+    S1 --> S2
+    S2 --> OUT["锐化注意力 A → 加权 V 输出"]
+```
+
 ### 关键设计
 
 **1. Softmax 解构 + LSSA：找到真正起作用的 L1 归一化，再换掉数值不稳的指数**

@@ -39,7 +39,17 @@ tags:
 
 ### 整体框架
 
-ProxyFL 的出发点是：联邦半监督学习里数据异质性有"外部"（客户端之间分布不同）和"内部"（同一客户端里标注/未标注分布不一致）两层，而分类器最后一层全连接的权重 $\boldsymbol{\Omega}_m = \{\omega_m^c\}_{c=1}^C$ 天然刻画了每个类别的方向，正好可以当成统一的"类别代理 (proxy)"来建模本地和全局分布。整套框架就围绕这个代理转：服务器端用 **Global Proxy Tuning (GPT)** 把各客户端的代理拟合成一个不被异常值带偏的全局代理，客户端用 **Indecisive-Categories Proxy Learning (ICPL)** 把过去被丢弃的低置信样本重新拉回训练。代理本身就是模型参数，不额外传输、也不引入隐私风险。
+ProxyFL 的出发点是：联邦半监督学习里数据异质性有"外部"（客户端之间分布不同）和"内部"（同一客户端里标注/未标注分布不一致）两层，而分类器最后一层全连接的权重 $\boldsymbol{\Omega}_m = \{\omega_m^c\}_{c=1}^C$ 天然刻画了每个类别的方向，正好可以当成统一的"类别代理 (proxy)"来建模本地和全局分布。整套框架就围绕这个代理转：服务器端用 **Global Proxy Tuning (GPT)** 把各客户端的代理拟合成一个不被异常值带偏的全局代理，客户端用 **Indecisive-Categories Proxy Learning (ICPL)** 给过去被丢弃的低置信样本构建"犹豫类别集合"，再通过 **Positive-Negative Proxy Pool** 把这些样本一并拉回对比学习。代理本身就是模型参数，不额外传输、也不引入隐私风险。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["各客户端本地模型<br/>分类器权重作为类别代理 Ω_m"] -->|上传代理到服务器| B["Global Proxy Tuning<br/>对比微调对齐，得抗异常值的全局代理 Ω_G"]
+    B -->|下发全局代理到客户端| C["Indecisive-Categories Proxy Learning<br/>低置信样本按全局先验阈值聚成犹豫类别集合 ξ_i"]
+    C --> D["Positive-Negative Proxy Pool<br/>高/低置信样本构正负代理，全部样本进对比学习"]
+    D --> E["总损失 L = L_s + αL_u + βL_ICPL + L_GPT<br/>更新本地模型"]
+    E -->|进入下一轮通信| A
+```
 
 ### 关键设计
 

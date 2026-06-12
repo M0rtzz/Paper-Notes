@@ -40,7 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文先做两段诊断，再给一个算法。诊断段：(1) 在 N-chain 这个有解析解的玩具 MDP 上证明，即使动力学和价值完美，均匀随机搜索找到非零回报轨迹的概率为 $1-(1-\frac{1}{A^n})^m$，视野 $n$ 一长就指数衰减；(2) 把 MR.Q 与 TD-MPC2 在 17 个 DMC/Gym 任务上对比"动力学误差 + unroll 误差"和"加/去 MPC 的性能差"，证明误差量级相当但 MPC 效果方向相反。算法段：MRS.Q 在 MR.Q 上做最小改动 —— 加 MPPI 短视野搜索、把价值函数 ensemble 从 2 加到 10 并且全 ensemble 取 min、加 SEM 单纯形嵌入、去掉额外探索噪声、把终止预测损失权重从 0.1 提到 1。
+论文先做两段诊断，再给一个算法。诊断段：(1) 在 N-chain 这个有解析解的玩具 MDP 上证明，即使动力学和价值完美，均匀随机搜索找到非零回报轨迹的概率为 $1-(1-\frac{1}{A^n})^m$，视野 $n$ 一长就指数衰减；(2) 把 MR.Q 与 TD-MPC2 在 17 个 DMC/Gym 任务上对比"动力学误差 + unroll 误差"和"加/去 MPC 的性能差"，证明误差量级相当但 MPC 效果方向相反。这两段诊断推翻"模型不准"假设、正面把矛头指向价值过估计；算法段：MRS.Q 在 MR.Q 上做最小改动 —— 加 MPPI 短视野搜索、把价值函数 ensemble 从 2 加到 10 并且全 ensemble 取 min（且把 min 同时用到价值 target 和 MPC 轨迹终值）、加 SEM 单纯形嵌入、去掉额外探索噪声、把终止预测损失权重从 0.1 提到 1。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["现象：给 MR.Q 接搜索反而掉点<br/>主流归因『模型不够准』"] --> DIAG
+    subgraph DIAG["双诊断：搜索内禀困难 + 模型精度无关"]
+        direction TB
+        B["N-chain 解析推导<br/>完美模型+完美价值下成功率<br/>随视野指数衰减 → 短视野是必然"]
+        C["MR.Q ↔ TD-MPC2 交叉嫁接<br/>动力学误差量级相当<br/>但加/去 MPC 效果方向相反"]
+    end
+    DIAG --> D["过估计偏差：搜索失败的核心机制<br/>π_MPC 收集数据 vs π 评估价值<br/>→ OOD 查询引发过估计"]
+    D --> ALG
+    subgraph ALG["MRS.Q：集成 min + 短视野 MPPI + 三处微调"]
+        direction TB
+        E1["MPPI 短视野搜索（固定 3 步）<br/>去探索噪声 + SEM 单纯形嵌入"]
+        E2["价值更新：10 个 Q 集成取 min"]
+        E3["MPC 轨迹终值：Q 项也取 min"]
+        E1 --> E2 --> E3 --> E1
+    end
+    ALG --> F["50+ 连续控制任务<br/>稳超 TD-MPC2 / BMPC / BOOM / SimbaV2"]
+```
 
 ### 关键设计
 

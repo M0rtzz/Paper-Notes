@@ -44,6 +44,15 @@ tags:
 
 SoPE 想解决的是 3D LVLM 里一个被忽视的错配：点云本是三维的，却被光栅扫描压成一维序列喂给继承自文本 LLM 的 RoPE，结果空间相邻的 token 拿到的位置索引天差地别，方向信息更是彻底丢失。它的做法是不碰主干、只换位置编码——在 SpatialLM 基线上，把每个点云 token 的笛卡尔坐标 $(x,y,z)$ 先换算成球面坐标 $(r,\theta,\phi)$，连同原有的时序索引 $t$ 一起构成四维位置；再把 128 维 RoPE 频率带按 $t:r:\theta:\phi=24:2:3:3$ 切给四个分量，每个分量内部又叠一层多尺度相位混合；最后整体替换掉原始 RoPE，端到端训练。三步加起来就是一次纯粹的位置编码改造，推理路径长度不变。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云 token<br/>笛卡尔坐标 (x,y,z) + 时序索引 t"] --> B["球面坐标位置投影<br/>(x,y,z)→(r,θ,φ)，拼上 t 得四维索引 (t,r,θ,φ)"]
+    B --> C["多维频率分配<br/>128 维 RoPE 频率带按 24:2:3:3 切分<br/>球面分量 (r,θ,φ)→高频带，时序 t→低频带"]
+    C --> D["多尺度频率混合<br/>每个分量相位融 linear/log/periodic 三尺度"]
+    D --> E["SoPE 旋转矩阵 drop-in 替换原 RoPE<br/>SpatialLM 端到端训练"]
+```
+
 ### 关键设计
 
 **1. 球面坐标位置投影：让位置索引重新带上 3D 几何**

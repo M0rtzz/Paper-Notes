@@ -41,28 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法要解决的核心问题是：在策略蒸馏一律用 reverse KL，会在教师不确定的高熵 token 上逼着学生坍缩到单一续写、还把梯度搅得不稳。本文不改变在策略蒸馏的标准 pipeline（学生采样 → 教师打分 → 计算损失 → 梯度更新），只在「算损失」这一步动手：对学生采样轨迹上的每个 token 位置 $t$，先用教师条件分布的熵 $H_t = H(p_T(\cdot|x_{<t}))$ 判断教师此刻有多确定，再据此在 reverse KL 和 forward KL 之间动态调配权重。教师确信时就精确模仿、教师含糊时就保留多样性。
+方法要解决的核心问题是：在策略蒸馏一律用 reverse KL，会在教师不确定的高熵 token 上逼着学生坍缩到单一续写、还把梯度搅得不稳（§3 实测：蒸馏后的学生只保留 6.8% 的高熵 token，而教师有 18.5%）。本文（EOPD）不改变在策略蒸馏的标准流程（学生采样轨迹 → 教师逐 token 打分 → 算损失 → 梯度更新），只在「算损失」这一步动手：reverse KL 始终保留（低熵区精确模仿、保住高效收敛），但对教师条件分布熵 $H_t^{\mathrm{te}}=H(p_T(\cdot|x_{<t}))$ 超过阈值 $\tau$ 的那些高熵 token，额外**加挂**一项 forward KL，把教师的多模态分布覆盖回来。换句话说，它不是在两种 KL 之间平滑插值，而是用一个熵阈值**门控**、只在不确定处把 forward KL 加上去。
 
 ### 关键设计
 
-**1. 教师熵感知的 KL 目标切换：让蒸馏目标随教师的逐 token 不确定性浮动**
+**1. 熵感知的 KL 目标增强：用教师熵阈值门控地加挂 forward KL**
 
-标准在策略蒸馏一刀切地用 reverse KL $D_{\mathrm{KL}}(p_\theta \| p_T)$，它是 mode-seeking 的——把学生的概率质量往教师峰值上挤。这在教师确信（低熵）时没问题，但教师面对多条合理推理路径（高熵）时，就会强行只拟合其中一种，多样性骤降。本文的做法是把"什么时候该 mode-seek、什么时候该 mode-cover"交给教师熵来裁决：在每个位置算出 $H_t$，低熵时仍用 reverse KL 精确贴合教师峰值，高熵时切到 forward KL $D_{\mathrm{KL}}(p_T \| p_\theta)$ 去覆盖教师的多模态分布。两者不是硬开关，而是按熵单调递增的权重 $\lambda_t$ 平滑混合：
+标准在策略蒸馏（OPD）一刀切地优化（带 PPO 截断的）reverse KL，它是 mode-seeking 的——把学生概率质量往教师峰值挤。这在教师确信（低熵）时高效，但教师面对多条合理推理路径（高熵）时会强行只拟合一种，多样性骤降、梯度还不稳（§3 的玩具实验里，高熵教师下学生 top-1 索引每步平均变化 84 次，低熵时仅 7 次）。EOPD 把"什么时候要保多样性"交给教师逐 token 熵 $H_t^{\mathrm{te}}=-\sum_x \pi_{\mathrm{te}}(x|\mathbf{c}_t)\log\pi_{\mathrm{te}}(x|\mathbf{c}_t)$ 来裁决，在 reverse KL 基础上**加挂**一项受指示函数门控的 forward KL：
 
-$$\mathcal{L} = (1-\lambda_t)\, D_{\mathrm{KL}}^{\mathrm{rev}} + \lambda_t\, D_{\mathrm{KL}}^{\mathrm{fwd}}$$
+$$\mathcal{L}_t^{\mathrm{EOPD}} = \mathcal{L}_t^{\mathrm{OPD}} + \alpha \cdot \mathbb{I}\!\left[H_t^{\mathrm{te}} > \tau\right] \mathcal{L}_t^{\mathrm{FKL}}$$
 
-其中 $\lambda_t$ 随 $H_t$ 增大而增大——教师越不确定，forward KL 的话语权越高。这样既保住了低熵区的精确模仿，又在高熵区把多样性让了出来，正好对症 reverse KL 一刀切忽略「教师不确定性随 token 位置动态变化」这一事实。
+其中 $\mathcal{L}_t^{\mathrm{OPD}}$ 就是那项截断 reverse KL，$\mathcal{L}_t^{\mathrm{FKL}}=D_{\mathrm{KL}}(\pi_{\mathrm{te}}\|\pi_\theta)$ 是 forward KL。关键在于这是**硬阈值门控、不是平滑插值**：低熵 token 指示函数取 0，目标退化成标准 reverse KL，保住效率与收敛速度；只有当教师熵越过阈值 $\tau$，forward KL 才以权重 $\alpha$ 介入，强迫学生在这些不确定位置保留多个合理续写的概率质量。实验取 $\tau=0.8$、$\alpha=1.0$。这样正好对症 reverse KL 一刀切忽略「教师不确定性随 token 位置动态变化」这一事实——精确模仿留给低熵区、多样性让给高熵区。
 
-**2. 在策略训练的高效整合：熵感知不额外掏采样成本**
+**2. forward KL 的 top-k 高效近似：熵感知不额外掏采样成本**
 
-切到 forward KL 的天然麻烦是它通常要从教师分布采样，会凭空多出一轮教师开销。本文绕开这一点：在学生已有的采样轨迹上用重要性加权近似 forward KL 的梯度，不再单独向教师采样。而熵的计算更便宜——教师 logits 在标准在策略蒸馏里本就已经前向算好，要拿到 $H_t$ 只需对这些 logits 多做一次 softmax 归一化，开销可忽略。整套熵感知机制因此完全嵌进原有 pipeline，不引入额外的前向传播或采样步骤，在策略蒸馏的效率优势原封不动。
+加挂 forward KL 的天然麻烦是它定义为对教师分布求期望，朴素实现要从教师采样、还会逼学生去拟合教师分布的低概率长尾，既增开销又损效率。EOPD 绕开采样：把 forward KL 近似成只在教师 **top-k（k=16）** 个 token 上、用重归一化后的教师分布 $\tilde{\pi}_{\mathrm{te}}$ 求的期望：
 
-**3. 多样性保持的梯度稳定化：换目标的同时也换来更稳的梯度**
+$$\mathcal{L}_t^{\mathrm{FKL}} \approx \sum_{x\in\mathcal{S}_t^k} \tilde{\pi}_{\mathrm{te}}(x|\mathbf{c}_t)\,\log\frac{\tilde{\pi}_{\mathrm{te}}(x|\mathbf{c}_t)}{\pi_\theta(x|\mathbf{c}_t)}$$
 
-高熵 token 上 reverse KL 难训不只是多样性问题，梯度本身就不稳。教师分布扁平时，reverse KL 的梯度 $\nabla_\theta D_{\mathrm{KL}}(p_\theta \| p_T)$ 依赖对数比值 $\log(p_\theta / p_T)$，分母处处接近、比值对参数极敏感，导致梯度方差大、方向漂移。切到 forward KL 后梯度变成 $\nabla_\theta [-\sum p_T \log p_\theta]$，这正是以教师分布为目标的交叉熵——方向被教师分布牢牢锚定，不再随学生自身的扁平输出乱晃，因而显著更稳。这条稳定化是设计 1 的副产物但同样关键：它间接抬高了学生在高熵区的 token 级熵（即生成多样性），并改善 student-teacher 对齐。
+只取 top-k 既把低概率长尾挡在外面（不让小容量学生白学尾巴）、又省显存，作者实测 $k=16$ 在累计概率质量与内存间最划算。而门控用的熵 $H_t^{\mathrm{te}}$ 直接由教师 logits 算出——这些 logits 在标准 OPD 里本就前向算好了，取熵只是多做一次归一化求和，几乎免费。于是整套熵感知机制完全嵌进原有 pipeline：教师本来每个 token 就要查询一次（拿 logprob），现在顺带返回熵和 top-k 集合即可，不引入额外的前向传播或向教师采样，在策略蒸馏 10× 于 GRPO 的效率优势原封不动。
 
 ### 训练策略
-训练流程沿用标准在策略蒸馏：学生采样生成序列，教师计算每个 token 的条件分布和熵，按熵值算出混合 KL 损失，用标准优化器（如 AdamW）更新学生参数。教师模型为 Qwen3-32B，学生模型分别为 Qwen3-0.6B-Base、Qwen3-1.7B-Base 和 Qwen3-4B-Base。
+训练流程沿用标准在策略蒸馏的 PPO 式实现（论文 Algorithm 1）：每轮先用旧策略 $\pi_{\theta_{\mathrm{old}}}$ 在学生自身轨迹上采样，对每个 token 查询教师得到 $(\log\pi_{\mathrm{te}}(x_t|\mathbf{c}_t),\,H_t^{\mathrm{te}},\,\text{top-}k\text{ 集合})$ 存入 rollout buffer；再按上式算 EOPD 损失——reverse KL 项始终计入，forward KL 项只在 $H_t^{\mathrm{te}}>\tau$ 时加上——并用标准优化器更新学生参数。教师模型为 Qwen3-8B（非 thinking 模式），学生分别为 Qwen3-0.6B-Base、Qwen3-1.7B-Base 和 Qwen3-4B-Base；0.6B、1.7B 用 MATH 数据集训练，4B 用更难的 DAPO-Math-14k。
 
 ## 实验关键数据
 
@@ -99,8 +99,8 @@ $$\mathcal{L} = (1-\lambda_t)\, D_{\mathrm{KL}}^{\mathrm{rev}} + \lambda_t\, D_{
 
 ## 局限与展望
 - 当前仅在数学推理任务上验证，尚未在代码生成、开放域对话等其他多样性要求高的任务上验证泛化性
-- 熵阈值的选择依赖于经验调参，自适应阈值选择机制有待探索
-- 教师模型为 Qwen3-32B，其他教师-学生架构组合（如跨家族蒸馏）的效果未知
+- 熵阈值 $\tau$ 与权重 $\alpha$ 依赖经验调参（取 $\tau=0.8$、$\alpha=1.0$），自适应阈值选择机制有待探索
+- 主实验为 Qwen3 同家族蒸馏，附录补充了 Llama-3.1-8B → Llama-3.2-3B 的跨家族验证，但更大规模或更异构的教师-学生组合仍待探索
 - 未探讨与其他蒸馏增强技巧（如数据增强、课程学习）的组合效果
 
 ## 相关工作与启发

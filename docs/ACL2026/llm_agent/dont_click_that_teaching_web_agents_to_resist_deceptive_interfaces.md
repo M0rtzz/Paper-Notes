@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 DUDE 要解决的是 web agent 面对欺骗性 UI 时的两难：既要敢点合法按钮，又要敢拒欺骗按钮，简单"全部拒绝"会陷入 over-conservation。它把这件事形式化为一个"点击前审核"问题——给定网页截图 $I$、任务说明 $P$ 和 agent 提议的点击坐标 $C=(x,y)$，训练一个 evaluator $\mathcal{E}:(I,P,C)\mapsto(\hat L, \gamma)$，输出三值标签 $\hat L \in \{-1, 0, 1\}$（-1 欺骗 / 0 无效区 / 1 合法）和置信度 $\gamma \in (0,1)$，ground truth 由点击是否落入标注的合法框 $\mathcal{B}_c$、欺骗框 $\mathcal{B}_d$ 还是 null 区域 $\mathcal{B}_0$ 决定。整条 pipeline 分两步走：Stage-1 用 hybrid-reward RL 训练 evaluator 的参数，并把拿到负奖励的样本收进 failure pool $\mathcal{F}$；Stage-2 不再动参数，而是用一个外部 multimodal summarizer 把 $\mathcal{F}$ 里的失败模式迭代蒸馏成压缩的 experience context $\mathcal{X}$，每轮还在 anchor success 集上验证以防退化。部署推理时，evaluator 装上 $\mathcal{X}$ 充当门控：只有判为 $\hat L=1$ 的点击才放行，否则让 agent 退回重新探索。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：网页截图 + 任务说明<br/>+ agent 提议的点击坐标"] --> B
+    subgraph S1["Hybrid-Reward Learning（Stage-1）"]
+        direction TB
+        B["GRPO 训练 evaluator<br/>不对称惩罚：放行欺骗 ω=10"] --> C["拿到负奖励的样本<br/>收入失败池 F"]
+    end
+    subgraph S2["Iterative Experience Summarization（Stage-2）"]
+        direction TB
+        D["multimodal summarizer<br/>把 F 蒸馏成经验上下文 X"] --> E["anchor success 集验证<br/>persistence counter 锁定顽固模式"]
+    end
+    C --> D
+    E --> F["Evaluator-as-Gate 推理<br/>装载 X 充当门控"]
+    F -->|"判为合法"| G["执行点击"]
+    F -->|"判欺骗或无效区"| H["Reject & Rethink<br/>退回重新探索"]
+    H --> F
+
+```
+
 ### 关键设计
 
 **1. Hybrid-Reward Learning：把"放行欺骗远比误拒严重"的代价不对称直接写进 reward**

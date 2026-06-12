@@ -40,7 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-管线分四块：(1) 给出"物理系统 $\mathcal{S}$"和"表示 $\mathbf{z}=g(\mathbf{x})$"的形式化定义；(2) 定义结构同构 $\mathbf{z}=\mathbf{A}\mathbf{y}+\epsilon_{\mu}(\mathbf{y})$（线性映射 $\mathbf{A}$ + 有界残差），并证明它必然蕴含三条 population-level 误差界（静态、动态、约束）；(3) 把每条误差界实例化为"受限代理 $h\in\mathcal{H}$"上的一致残差 $V(g)=\inf_h \sup_{\mu} \mathbb{E}[\psi(h(\mathbf{z}),\mathbf{r})]$ — 即结构对齐探针 $\mathcal{Q}$；(4) 在 TC-Bench 上对冻结骨干跑线性探针 + 几何诊断，定位失效模式。输入是 224×224 的红外卫星图，输出是带置信区间的 regime-stratified 探针残差曲线。
+管线分四块：(1) 给出"物理系统 $\mathcal{S}$"和"表示 $\mathbf{z}=g(\mathbf{x})$"的形式化定义；(2) 定义结构同构 $\mathbf{z}=\mathbf{A}\mathbf{y}+\epsilon_{\mu}(\mathbf{y})$（线性映射 $\mathbf{A}$ + 有界残差），并证明它必然蕴含三条 population-level 误差界（静态、动态、约束）；(3) 把每条误差界实例化为"受限代理 $h\in\mathcal{H}$"上的一致残差 $V(g)=\inf_h \sup_{\mu} \mathbb{E}[\psi(h(\mathbf{z}),\mathbf{r})]$ — 即结构对齐探针 $\mathcal{Q}$；(4) 在 TC-Bench 上对冻结骨干跑线性探针 + 几何诊断，定位失效模式。输入是 224×224 的红外卫星图，输出是带置信区间的 regime-stratified 探针残差曲线。整张图可以拆成「理论」「数据」两条入边在探针处汇合：理论侧把结构同构推成三条误差界、再实例化成三个探针；数据侧让冻结骨干吐出表示 $\mathbf{z}$；两路在探针汇合后，按强度切片并做几何诊断收口到失效定位。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    ISO["结构同构 z=Ay+ε<br/>可证伪的最弱对齐条件"] --> BND["导出三条 uniform 误差界<br/>静态保真 / 动态一致 / 流形约束"]
+    DATA["TC-Bench<br/>红外卫星图 + 物理标签"] --> ENC["冻结 VFM 取 CLS token z"]
+    BND --> PROBE
+    ENC --> PROBE
+    subgraph PROBE["结构对齐探针 Q（线性 head · regime-balanced）"]
+        direction TB
+        Q1["Q_stat 静态：Lz 线性恢复 P_c"]
+        Q2["Q_dyn 动态：3h 有限差导数一致"]
+        Q3["Q_con 约束：低/高纬风速单调"]
+    end
+    PROBE --> STRAT["按 P_c=980 hPa 分 Moderate / Intense<br/>得 regime-stratified 残差"]
+    STRAT --> GEO["几何诊断：PC1 斜率 / 有效维数 d_eff / 特征距离"]
+    GEO --> OUT["定位失效：强气旋段潜空间沿物理轴塌缩"]
+```
 
 ### 关键设计
 
@@ -56,11 +74,11 @@ tags:
 
 强制线性 head 的意义是把"信息够不够"从"head 表达力"里剥出来——线性探不出，就说明物理变量根本没被显式编码进一个线性子空间；regime-balanced 切片则排除了样本不均衡这个捷径解释。
 
-**3. TC-Bench + 失效模式几何诊断：给一个全球基准，并把"塔缩"坐实在潜空间几何上**
+**3. TC-Bench + 失效模式几何诊断：给一个全球基准，并把"塌缩"坐实在潜空间几何上**
 
-光有探针还要有公平数据和反驳堵口。作者发布 TC-Bench——首个可复现、版本化、跨全部主要洋盆的全球热带气旋基准（IBTrACS v4r01 + GridSat-B1 红外，1980–2024，3 小时步长，224×224 patch，2601 条清洗后轨迹），并对最强骨干 DINOv3 做潜空间几何剖析：在 $N\ge 500$ 的 $P_c$ bin 内算三项——PCA 的 PC1 与 $P_c$ 的关系、有效维数 $d_{\text{eff}}=(\sum_i\lambda_i)^2/\sum_i\lambda_i^2$、中心化特征对距离均值。三者一旦在 $P_c<980$ hPa 同时下跌，就指认"潜空间沿物理轴塔缩"是失效根因。
+光有探针还要有公平数据和反驳堵口。作者发布 TC-Bench——首个可复现、版本化、跨全部主要洋盆的全球热带气旋基准（IBTrACS v4r01 + GridSat-B1 红外，1980–2024，3 小时步长，224×224 patch，2601 条清洗后轨迹），并对最强骨干 DINOv3 做潜空间几何剖析：在 $N\ge 500$ 的 $P_c$ bin 内算三项——PCA 的 PC1 与 $P_c$ 的关系、有效维数 $d_{\text{eff}}=(\sum_i\lambda_i)^2/\sum_i\lambda_i^2$、中心化特征对距离均值。三者一旦在 $P_c<980$ hPa 同时下跌，就指认"潜空间沿物理轴塌缩"是失效根因。
 
-为堵住"探针失败到底是真塔缩还是任务本就难"这条反驳，作者还训了一个从零监督的像素级 baseline，证明强气旋段的 $P_c$ 信号物理上确实可恢复，从而把锅扣在 VFM 表征几何而非任务难度上。
+为堵住"探针失败到底是真塌缩还是任务本就难"这条反驳，作者还训了一个从零监督的像素级 baseline，证明强气旋段的 $P_c$ 信号物理上确实可恢复，从而把锅扣在 VFM 表征几何而非任务难度上。
 
 ### 损失函数 / 训练策略
 评估阶段不训练骨干。每个 VFM（DINOv2/v3, CLIP, SigLIP/2, MAE，附录还覆盖 VideoMAE、V-JEPA2、X-CLIP）的 CLS token 作为表示 $\mathbf{z}$，下游只训一个线性 head $h$（最小二乘），按 trajectory-level split 防时空泄漏；附录 E 再用 MLP/Transformer 探针、空间均值池化、像素 baseline、视频骨干等做四套消融，验证现象不依赖探针族或聚合方式。

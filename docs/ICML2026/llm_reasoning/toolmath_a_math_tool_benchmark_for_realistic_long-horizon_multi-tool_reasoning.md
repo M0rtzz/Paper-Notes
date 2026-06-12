@@ -42,6 +42,25 @@ tags:
 ### 整体框架
 ToolMATH 把"数学逐步解题"当成天然的工具组合脚手架来用，全流程分两阶段。第一阶段是**工具抽取与验证**：把 MATH 标注的每一步解题动作喂给 LLM，让它吐出一批小的 Python 函数（含 name、description、typed input schema、code），再经过工具级和题目级两轮自动验证 + 人工修复，沉淀出可信的工具池。第二阶段是**工具化评测**：给每道题 $p$ 配一个环境，里面既有金标工具集 $\mathcal G(p)$，又掺入从全局池采样的干扰工具 $\mathcal D_{\ell,k}(p)$（相似度 5 级、密度 $k\in\{5,10,20,50\}$）；另设 Distractors-only 模式直接抽走 $\mathcal G(p)$，逼模型在没有趁手工具时回退。每题还独立标注一个 hop count，把"长程难度"从"干扰难度"里解耦出来。模型只看得到工具描述与 schema、看不到实现代码，所以错一步往往全错，长程推理与工具选择的失败都会被放大暴露。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MATH 标注解题步骤"] --> S1
+    subgraph S1["两轮验证流水线"]
+        direction TB
+        B["LLM 抽取 Python 工具<br/>name / 描述 / 类型签名 / 隐藏 code"] --> C["工具级一致性验证<br/>5 输入执行 + GPT-4o 判言行一致"]
+        C --> D["题目级 trace 验证<br/>7 模型跑 Plan+ReAct，≥1 答对且调用过该工具"]
+        D -->|描述/实现不一致| E["人工修复后重验"]
+        E --> C
+    end
+    S1 --> F["可信工具池<br/>12,369 工具 + 7,699 题"]
+    F --> G["每题构造工具环境 + logical-hop 标注<br/>去并行步后的逻辑链长度"]
+    G -->|金标 + 干扰| H["干扰工具结构<br/>相似度 5 级 × 密度 5/10/20/50，嵌套保证"]
+    G -->|抽走金标| I["Distractors-only<br/>逼模型 fallback 或放弃"]
+    H --> K["Plan+ReAct 评测<br/>按 hop × 相似度分桶看准确率"]
+    I --> K
+```
+
 ### 关键设计
 
 **1. MATH 步骤 → 可复用工具的两轮验证流水线：把人工解题步骤变成可信工具池，而不是 benchmark 噪声**

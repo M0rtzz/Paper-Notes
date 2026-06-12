@@ -41,6 +41,29 @@ tags:
 
 Fourier Angle Alignment (FAA) 想在不改 backbone、不加新损失的前提下，把「目标方向」这条信号显式地从频域抽出来、对齐好再用。它把两个即插即用模块塞进 Oriented R-CNN：**FAAFusion** 接在 FPN neck，替换跨尺度融合时的逐元素加法，专治高低层特征方向不一致；**FAA Head** 替换原始检测头，把 RoI 特征预先摆正以解开分类与回归的矛盾。两个模块的共同底座是同一个傅里叶角度估计（FAE）流程——先有了「从一块特征里读出主方向角」这个能力，FAAFusion 和 FAA Head 才分别拿它去做对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["遥感图像"] --> BB["Backbone + FPN<br/>多尺度特征"]
+    FAE["傅里叶角度估计 FAE<br/>频谱 → 主方向角 θ̂（公共算子）"]
+    BB --> FUSE
+    subgraph FUSE["FAAFusion（FPN neck 跨尺度融合）"]
+        direction TB
+        L1["高层上采样 + 高低层各降维 unfold 成 patch"] --> R1["以低层主方向 θ 为基准旋转对齐高层 patch"]
+        R1 --> F1["三路相加<br/>低层 + 原上采样高层 + 对齐后高层"]
+    end
+    FUSE --> RPN["RPN + RoI Align<br/>得到 RoI 特征"]
+    RPN --> HEAD
+    subgraph HEAD["FAA Head（检测头）"]
+        direction TB
+        INV["RoI 特征旋到 0° → 旋转不变特征 F_inv"] --> RES["残差相加 F_inv + F_roi → 共享 FC"]
+    end
+    HEAD -->|旋转不变利于分类| CLS["分类分支"]
+    HEAD -->|方向敏感利于回归| REG["角度回归分支"]
+    FAE -.被调用.-> R1
+    FAE -.被调用.-> INV
+```
+
 ### 关键设计
 
 **1. 傅里叶角度估计 FAE：从频谱里读出特征图的主方向角**

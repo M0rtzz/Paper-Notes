@@ -44,6 +44,19 @@ tags:
 
 要解决的问题是：固体力学仿真里应力集中、接触界面、大变形都是空间上局部、动力学上关键的区域，但多重网格 GNN 在粗化时若按几何启发式（FPS）均匀铺节点，这些区域分到的粗层算力不够，长时 rollout 会先在这里发散。本文的做法是把"粗层保留哪些节点"从几何准则改成物理准则——给每个节点算一个动量守恒方程的离散残差范数作为重要性得分，再 TopK 选出残差最大的节点构成粗图。整体主干仍是 MeshGraphNet 系的 Encoder–Processor–Decoder：Encoder 用逐点 MLP 把节点特征升到隐维度 $h$，Decoder 把隐特征映回 $\mathbb{R}^3$，Processor 在隐空间交替做细网格消息传递、物理引导下采样、KNN 上采样融合，形成 U-Net 式的分层调度，所有创新都压在下采样块内部。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["网格状态 u^t（输入）"] --> B["Encoder：逐点 MLP 升维到隐空间"]
+    B --> C["细层 GraphNet 消息传递"]
+    C --> D["物理残差打分<br/>借主 Decoder 临时解码，算动量守恒残差范数 s_i"]
+    D --> E["TopK 选点 + KNN 重网格化<br/>取残差最大 50% 节点、欧氏 KNN 重连边成粗图"]
+    E --> F["粗层 GraphNet 传播 → KNN 上采样融合回细层"]
+    F --> G["细层 GraphNet 精修 → Decoder 解码回 3 维位移场"]
+    G --> H["残差式时间推进<br/>u(t+1)=u(t)+Φ"]
+    H -->|自回归 rollout| A
+```
+
 ### 关键设计
 
 **1. 基于动量守恒残差的节点物理打分：把"选谁进粗层"从几何准则换成物理准则**

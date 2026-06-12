@@ -47,6 +47,27 @@ TIME 的目标不是训练一个更会背时间知识的模型，而是训练一
 
 评测使用 TimeBench。它包含 77 个场景，7 个诊断类别，每类 11 个场景；每个场景采样 10 次，共 770 runs。TimeBench 不考时间事实记忆，而是考模型能否从时间结构推断潜在上下文状态，并调整最后一轮回答。除二元任务成功率外，它还记录 `think` 是否出现、位置、数量、推理 token、输出 token、markdown 使用和退化输出比例。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对话输入（Qwen3 hybrid reasoner）"] --> PRIM
+    subgraph PRIM["时间原语与局部显式推理块"]
+        direction TB
+        T1["time 标签：ISO 8601 绝对时间"]
+        T2["tick 事件：仅时间、无消息"]
+        T3["think 块：可零/一/多次、可插回答中段"]
+    end
+    PRIM --> CUR
+    subgraph CUR["四阶段课程与 full-batch 对齐"]
+        direction TB
+        P1["Phase 1：识别原语 + 输出短 think"] --> P2["Phase 2：加时间间隔/tick，沉默后重锚定"]
+        P2 --> P3["Phase 3：多轮 + 抑制不必要推理后再触发"]
+        P3 --> P4["Phase 4：128 条高熵样本 full-batch 锁行为不变量"]
+    end
+    CUR --> EVAL["TimeBench 双视角评估<br/>任务正确性 + 推理结构指标"]
+    EVAL --> O["按需触发的局部显式推理策略"]
+```
+
 ### 关键设计
 
 **1. 时间原语与局部显式推理块：把推理从「回答开头的长前缀」拆成「随时可触发的短检查」**

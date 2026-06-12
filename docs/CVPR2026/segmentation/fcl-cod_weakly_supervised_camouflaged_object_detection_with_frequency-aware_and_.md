@@ -48,6 +48,27 @@ tags:
 - **阶段一**：采用三元教师-学生自训练架构适配 SAM，结合 FoRA 和 GCL 生成高质量伪标签
 - **阶段二**：使用伪标签训练轻量级 PVT-B4 编码-解码器，嵌入 MSFA 模块实现高效推理
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像 + 边界框提示<br/>（由 GT mask 推导，无像素标注）"]
+    subgraph S1["阶段一：适配 SAM 生成伪标签"]
+        direction TB
+        B["三元教师-学生自训练<br/>锚定 fᵃ（冻结 SAM）· 学生 fˢ（强增强）<br/>· 教师 fᵗ（弱增强·共享参数）"]
+        C["频率感知低秩适配 FoRA<br/>空间增强 + FFT 频率调制注入纹理先验"]
+        D["梯度感知对比学习 GCL<br/>Grad-CAM 挖困难背景做负样本"]
+        B --> C --> D
+    end
+    A --> B
+    D --> E["高质量伪标签"]
+    subgraph S2["阶段二：轻量编解码推理"]
+        direction TB
+        F["PVT-B4 编码器"] --> G["多尺度频率感知注意力 MSFA<br/>空间·频率双分支交叉门控"] --> H["解码器"]
+    end
+    E --> F
+    H --> I["伪装目标掩码"]
+```
+
 ### 关键设计
 
 1. **三元教师-学生自训练 (Triadic Teacher-Student Self-training)**:

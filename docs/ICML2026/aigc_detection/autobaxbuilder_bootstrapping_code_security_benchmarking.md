@@ -45,6 +45,15 @@ AUTOBAXBUILDER生成的是完整的安全评测实例，而不是单条代码题
 
 这个过程大量依赖执行反馈。OpenAPI规格会用YAML验证器检查，测试和安全测试代码会用Python编译检查，输出格式还会经过正则约束。每个 refinement loop 最多运行5次；如果安全测试持续无法稳定验证，就丢弃该测试。论文还加入伪随机flag、文件系统/数据库/资源监控等辅助函数，让端到端安全检查可以程序化判断结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：目标难度 + 已有场景名 + 示例 CWE"] --> B["场景与参考实现自举<br/>编排 LLM 提后端服务 + OpenAPI 规格<br/>多解题 LLM 各写参考实现（分歧暴露规格歧义）"]
+    B --> C["功能测试与实现的交替 refinement<br/>REFINESOLUTIONS 只看日志改实现<br/>REFINETESTS 综合判断改测试或实现（≤5 次）"]
+    C --> D["安全测试的对照验证<br/>识别 CWE → 生成安全测试<br/>REFINEEXPLOIT 正负对照：安全实现不报警 + 不安全实现报警才保留（≤5 次否则丢弃）"]
+    D --> E["输出：AUTOBAXBENCH 评测实例<br/>场景 + 规格 + 功能测试 + 安全测试"]
+```
+
 ### 关键设计
 
 **1. 场景与参考实现自举：从零长出有攻击面的新任务**

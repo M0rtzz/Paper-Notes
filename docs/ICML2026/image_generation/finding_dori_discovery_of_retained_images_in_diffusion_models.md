@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 这篇论文要回答一个被剪枝缓解方案集体忽略的问题：把"记忆 prompt → 记忆图"这条映射剪掉之后，记忆图是不是真的删了，还是只换了条路就还能调出来。作者的整套设计围绕一个对抗 embedding 优化器 DoRI 展开，分三步推进——先用 DoRI 当**探针**，在被 NeMo/Wanda 剪枝后的模型里直接在 text embedding 空间搜出能复刻原图的残留触发器；再把 DoRI 批量产生的对抗 embedding 当**诊断工具**，从 embedding 分布、层激活、被标记权重三个层面证伪"记忆是局部的"这一假设；最后把 DoRI 嵌进 fine-tuning 的内循环当**治疗手段**，用对抗触发器驱动全模型微调，把记忆样本真正洗出去。实验台是 Stable Diffusion v1.4 + 来自 LAION-5B 的 500 个已知记忆 prompt（沿用 Wen 等人的标准 benchmark），并在 SD v2.0 上做泛化验证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["记忆图 + 剪枝模型（NeMo/Wanda）"] --> B["DoRI 对抗 embedding 优化<br/>每步重采样噪声/时间步，50 步搜触发器"]
+    B --> C["残留触发器 y_adv（复刻原图）"]
+    C --> D["三层局部性诊断<br/>embedding / 激活 / 权重 IoU"]
+    D -->|证伪记忆局部性| E["对抗微调<br/>DoRI 内循环 + surrogate 目标 + 标准扩散损失"]
+    E --> F["记忆真正擦除（MR≈0.02，不掉 FID）"]
+```
+
 ### 关键设计
 
 **1. DoRI 对抗 embedding 优化：在剪枝模型里搜出残留触发器**

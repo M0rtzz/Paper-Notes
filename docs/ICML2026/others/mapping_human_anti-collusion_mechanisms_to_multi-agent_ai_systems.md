@@ -67,7 +67,13 @@ tags:
 
 AI 合谋大多是 tacit、emergent 的，没人会主动招供，所以必须让系统在部署前就"看得见、看得懂、查得到"。对应人类金融监管的高频监控 + 定向审计，AI 实现要三件齐备：(a) telemetry-first system design 把通信日志、动作 trace、memory 读写默认存档；(b) 部署 overseer agent，它没有主任务奖励、只优化"识别异常协调"，分行为监控（盯价格/分配/资源使用的稳定模式）和通信监控（分析自然语言、tool-call 参数、memory write 里的 signaling 与 steganography）两条线；(c) 审计混用阈值触发与随机抽样，再叠反事实回放、通信扰动测试、interpretability 探针，最后接入"低置信度→升级 scrutiny / 中置信度→限制通信 / 高置信度→sanction"的 escalation pipeline。三件缺一不可：日志拿不到就无从查，overseer 看不懂就白存，审计不随机化就会被规避。开放挑战也最密集：boundary problem（合作 vs 合谋难划线）、Goodhart's Law（agent 学会绕过检测器）、steganography 让 content-based audit 受限、polysemanticity 让 interpretability-based audit 难归因。
 
-（篇幅原因，另外两个杠杆——**Market Design & Structural**（事前用规则/信息/进入门槛让合谋无法稳定）与 **Governance**（文档、独立监督、轮岗、分阶段部署、kill switch）——的实现要点聚合在下面的表格里。）
+**4. Market Design & Structural：事前重塑交互环境，让合谋根本学不稳**
+
+前三个杠杆都是合谋发生后才介入，这一杠杆要在事前就让"持续的有害协调"难以建立、维持或利用——对应人类的拍卖格式调整、signaling 限制、降低进入门槛。AI 实现分三路：(a) interaction protocol design——把"利于合谋"的协议（连续价格 signaling、共享记忆、长期聊天信道）换成"敌视合谋"的协议，典型做法是 one-shot interaction（agent 不观察彼此同期动作就提交，类似密封投标，无法 signal 意图也无法即时惩罚叛变）+ 把通信 schema 限定到任务相关信息、过滤 free-form 消息；(b) information architecture——differential information access（每个 agent 只拿到部分重叠的状态视图，使它无法核实别人有没有遵守合谋）、delayed/aggregated feedback（只给延迟的聚合统计，削弱互相监督）、anonymization/identity rotation（用会变的伪名交互，阻止稳定伙伴关系成形）；(c) agent population design——靠 churn（不断引入新 agent、淘汰差的、随机打乱分组）破坏合谋均衡所需的稳定条件，更关键的是强制 heterogeneity——若所有 agent 都是同一基座（如 GPT-5.1）的微调实例，它们容易收敛到同一个 Schelling point 而 tacit 合谋，因此要混用不同架构/训练流程/模型来源。这样设计是因为重复博弈理论早就指明：合谋在"参与者少、可观察、同质、重复交互"时才稳，事前把这些条件拆掉，比事后追惩更省力。代价是效率-反合谋的 trade-off（限制通信也挡了合法协作），且 agent 可能改走时序、动作排序等隐性信道绕过，所以结构措施要定期重设计或随机化。
+
+**5. Governance：制度层兜底，把 AI 机制解决不了的事交还给人**
+
+最后一层在人类治理（开发/部署/监督的政策与组织结构）与系统治理（嵌进多智能体系统的自动化架构特性）两个层面同时运作，是整套框架的制度底座。五件套：(a) transparency & documentation——用 model card / datasheet 标准化记录 agent 的架构、训练数据、目标函数、能力画像，开放权重模型还要披露微调流程、adapter 权重、system prompt；(b) separation of oversight and operation——被监管者不能控制监管者，调性能的团队不能同时设定合谋检测阈值与制裁触发，并叠加独立第三方审计与针对合谋的 red-teaming；(c) rotation policies——周期性给 agent re-seed/重训/换交互伙伴、也轮换 overseer agent，对应人类轮岗防"认知俘获"，同时阻止 agent 对固定监督结构过拟合；(d) staged deployment——先仿真、再受限试点、最后全量，逐级放大风险敞口；(e) shutdown——保留人工 kill switch，一旦监控层报出系统性合谋高优警报，人能立刻冻结环境或停掉特定 agent，防止 algorithmic collusion 像市场闪崩那样在自动纠偏前失控。这样设计是因为自动化机制有三个天花板——规模（每天百万级交互人审不过来）、opacity（看不懂 agent 为何这么做）、速度错配（AI 分钟级演化 vs 治理年级更新），治理层用"自动化抓规模 + 人审做判断与问责"的组合补位，尤其是 kill switch 明确划出了"哪些事 AI 内部机制不能解决、只能靠人断电"。
 
 ### 损失函数 / 训练策略
 

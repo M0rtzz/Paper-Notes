@@ -44,20 +44,33 @@ iReasoner沿用Proposer-Solver自演化框架。给定无标注图像 $x$，Prop
 
 方法的核心不在于生成更长CoT，而在于让不同rollout的中间步骤在语义上可比较、可聚合、可奖励。它把“同一个最终答案下的推理轨迹是否稳定”变成训练信号。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无标注图像 x"] --> B["Proposer 生成问题 q<br/>用答案熵维持中等难度"]
+    B --> C["Solver 采样 N 条 rollout<br/>每条含 think 推理步骤 + answer"]
+    C --> D["主导答案分组<br/>按最终答案聚类 + 多数组密度降权"]
+    D --> E["内在 CoT 一致性奖励<br/>组内步骤 embedding 对原型算余弦 + 位置衰减"]
+    D --> F["答案级自一致性奖励<br/>答案频率 + 长度惩罚"]
+    E --> G["warmup 调度融合<br/>权重 λ(t) 随训练上升混合两路奖励"]
+    F --> G
+    G --> H["KL 正则化策略梯度<br/>更新 Solver / Proposer"]
+```
+
 ### 关键设计
-**1. Dominant-answer group：先按最终答案聚类，让步骤一致性建立在相对可靠的答案模式上**
+**1. 主导答案分组（Dominant-answer group）：先按最终答案聚类，让步骤一致性建立在相对可靠的答案模式上**
 
 无监督设定下没有标注答案，如果直接奖励任意两条 rollout 之间的步骤相似度，模型很可能学会"一起犯同一个错"——错误的共识也能拿高分。iReasoner 先从答案分布 $p(a|x,q)$ 里选出主导答案 $\hat{a}$，把所有产出该答案的 rollout 聚成集合 $\mathcal{G}$，只在这个组内部比较步骤；同时用多数组密度 $\rho=(|\mathcal{G}|/N)^\gamma$ 给步骤奖励整体降权，主导组越小（说明答案越分散、越不可信），步骤奖励就被压得越低。
 
 这一步本质是给后面的步骤一致性加了一道"答案先得靠谱"的闸门：只有当一批 rollout 真收敛到同一个主导答案时，才认为它们的中间推理值得拿来互相对齐，从而压住无监督奖励的噪声。
 
-**2. Intrinsic CoT Agreement Reward：用模型自身 embedding 衡量同组 rollout 的中间步骤是否语义一致**
+**2. 内在 CoT 一致性奖励（Intrinsic CoT Agreement Reward）：用模型自身 embedding 衡量同组 rollout 的中间步骤是否语义一致**
 
 只奖励最终答案太粗——两条轨迹哪怕一条满是幻觉中间步、一条 grounding 扎实，只要答案相同就拿几乎一样的奖励。iReasoner 把每条轨迹按 `<think>` 拆成步骤 $s_{i,j}$，用模型内部 token embedding 的归一化均值 $e_{i,j}$ 表示每一步；对主导组在每个步骤位置 $j$ 算出原型 $\mu_j$，再用余弦相似度 $r_{i,j}=\text{sim}(e_{i,j},\mu_j)$ 给该步打分。聚合成 step reward 时用一组递减权重 $w_1>w_2>\dots$，刻意把早期步骤的权重压高。
 
 之所以让早期步骤更重，是因为前几步通常负责识别图像信息、建立问题状态，一旦错了会顺着 CoT 一路传播到答案；位置衰减让奖励盯住这些 grounding 基础步骤，而不是去奖励后面那些模板化的总结句。整套信号不需要外部 judge 或人工步骤标注，纯靠模型自身表征算出，契合无监督自演化的设定。
 
-**3. Reward integration with self-evolution：把答案级和步骤级奖励 warmup 式地合成一个 Solver 奖励**
+**3. warmup 调度融合（Reward integration with self-evolution）：把答案级和步骤级奖励 warmup 式地合成一个 Solver 奖励**
 
 训练早期答案共识本身还不稳，这时若过早强推步骤一致性，等于在错误答案上对齐推理，会放大错误。iReasoner 让答案奖励 $r_i^{ans}=p(a_i|x,q)^\alpha(1-\eta\bar{\ell}_i)$ 同时承担答案自一致性和长度惩罚，再把它和步骤奖励按一个随训练上升的权重 $\lambda(t)$ 混合：
 

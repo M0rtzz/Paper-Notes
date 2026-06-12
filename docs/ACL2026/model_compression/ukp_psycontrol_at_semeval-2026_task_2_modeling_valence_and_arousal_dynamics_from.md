@@ -43,7 +43,19 @@ UKP_Psycontrol 在 SemEval-2026 Task 2 上取得双项第一，通过结合 LLM 
 
 ### 整体框架
 
-系统包含三个模块：(1) LLM 提示模块——在用户感知和用户无关设置下用 GPT-5 预测效价和唤醒度；(2) MaxEnt+Ising 模块——用最大熵模型和 Ising 交互建模情感状态的结构化依赖；(3) 神经回归模块——用滑动窗口的近期情感轨迹 + RoBERTa 文本嵌入 + 可训练用户嵌入预测下一步情感变化。
+系统包含三个模块，并按子任务分工：静态情感评估（Subtask 1）走 LLM 提示与 MaxEnt+Ising 两路，动态情感变化预测（Subtask 2A）走神经回归。(1) LLM 提示模块——在用户感知和用户无关设置下用 GPT-5 预测效价和唤醒度；(2) MaxEnt+Ising 模块——用最大熵模型和 Ising 交互建模情感状态的结构化依赖；(3) 神经回归模块——用滑动窗口的近期情感轨迹 + RoBERTa 文本嵌入 + 可训练用户嵌入预测下一步情感变化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自我报告文本<br/>（散文 + 情感词汇列表）+ 数值情感轨迹"] --> B["按子任务分流"]
+    B -->|"Subtask 1：静态情感评估"| C["LLM 提示策略<br/>GPT-5 固定 few-shot，先吐情感标签再映射数值"]
+    B -->|"Subtask 1：静态情感评估"| D["MaxEnt+Ising 结构化模型<br/>能量景观假设，建模成对依赖"]
+    B -->|"Subtask 2A：情感变化预测"| E["神经回归模型<br/>滑动窗口数值轨迹 + RoBERTa 嵌入 + 用户嵌入"]
+    C --> F["效价 / 唤醒度预测<br/>（取各模块最优配置提交）"]
+    D --> F
+    E --> F
+```
 
 ### 关键设计
 

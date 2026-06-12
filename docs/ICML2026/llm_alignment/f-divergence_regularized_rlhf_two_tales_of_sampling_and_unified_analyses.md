@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-全文把在线 RLHF 建模成一个 Bradley-Terry 偏好驱动的 contextual bandit，目标从只针对 KL 的特例换成通用 $f$-divergence 正则 $J_f(\pi)=\mathbb{E}[r^*(x,a)-\eta^{-1}D_f(\pi,\pi_0|x)]$。每一轮 $t$ 的骨架都一样：先采两个 action $a_t^1,a_t^2$，拿到人类偏好 $y_t$，用 MLE 更新奖励估计 $r_{\theta_t}$，再据此构造下一轮策略 $\pi_{t+1}$。作者给出的两套算法只在「怎么采样」和「怎么从 $r_{\theta_t}$ 反推策略」两步上分岔——一条走经典 optimism，一条走他们新提出的 derivative-as-uncertainty。
+全文把在线 RLHF 建模成一个 Bradley-Terry 偏好驱动的 contextual bandit，目标从只针对 KL 的特例换成通用 $f$-divergence 正则 $J_f(\pi)=\mathbb{E}[r^*(x,a)-\eta^{-1}D_f(\pi,\pi_0|x)]$。每一轮 $t$ 的骨架都一样：先采两个 action $a_t^1,a_t^2$，拿到人类偏好 $y_t$，用 MLE 更新奖励估计 $r_{\theta_t}$，再据此构造下一轮策略 $\pi_{t+1}$。其中「怎么从奖励反推策略」由统一的闭式最优策略（Proposition 2.3）承担，两套算法只在它之上对「怎么采样 / 怎么注入探索」分岔——一条走经典 optimism，一条走他们新提出的 derivative-as-uncertainty。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["第 t 轮：上下文 x_t + 当前奖励估计 r_θ"] --> P["闭式最优策略 (Prop 2.3)<br/>统一把奖励映射成策略：π=π0·h(η(r−λ))，h=(f')⁻¹"]
+    P -->|optimism 路| B1["Optimism 算法 (Alg 1)<br/>奖励加乐观 bonus 鼓励探索"]
+    P -->|derivative 路| B2["Derivative-as-uncertainty (Alg 2)<br/>用 h' 构造 π′ / π⁺ / π⁻ 三分布"]
+    B1 --> S["采样动作对 a¹,a²"]
+    B2 -->|"1−p(x) 用 π′；p(x) 用 π⁺/π⁻"| S
+    S --> Y["收集人类偏好 y_t（Bradley-Terry）"]
+    Y --> M["更新奖励估计 r_θ<br/>Alg1 标准 BT-MLE / Alg2 加权 BT-MLE"]
+    M -->|进入第 t+1 轮| A
+```
 
 ### 关键设计
 
@@ -62,9 +75,9 @@ Algorithm 1 用标准 BT-MLE：$\theta_t=\arg\max_\theta\sum_i\big(y_i\log\sigma
 
 ## 实验关键数据
 
-本文是**纯理论论文**，主表是理论 bound：
+本文以理论 bound 为主，另在**合成 linear contextual bandit**（BT 维度 25、10 个固定 action、每组重复 5 次）上做了小规模验证（Section 6，**无真实 LLM 实验**）。
 
-### 主结果
+### 主结果（理论 bound）
 
 | 算法 | 设置 | Regret / SubOpt | 适用 $f$ | 备注 |
 |------|------|-----------------|----------|------|
@@ -88,6 +101,7 @@ $\mathcal{C}(f,\mathcal{R},\eta)=\max_{r,x,a}\frac{h'(\eta(r-\lambda))}{h(\eta(r
 - **通用 $f$ 不增加 regret 数量级**：所有满足条件的 $f$ 都能拿 $O(\log T)$，差别只在常数 $\mathcal{C}(f)$，说明社区可以放心地按经验需要换 $f$ 而不担心理论 regret 爆掉。
 - **derivative-as-uncertainty 是新视角**：以前 RLHF 理论都把 reward 估计误差和策略不确定性分开处理，本文证明 $h'$ 一项就能桥接两者；这个观察对未来 RLHF 算法设计（甚至 DPO、IPO）都可能有启发。
 - **三个采样分布的设计很精巧**：$\pi'$ 走 derivative 信号、$\pi^\pm$ 走 reward 极值，互补覆盖"高敏感但 reward 已知"和"低敏感但 reward 未知"两种区域，证明里恰好让 MLE 加权后的 estimation error 闭合到 $O(1/T)$。
+- **合成实验印证理论**：linear bandit 上 Algorithm 2（derivative）收敛比 Algorithm 1（optimism）和 greedy 更快；且 chi-squared-mixed KL（$f=x\log x+(x-1)^2$）与 $f=x\log x-\log x$ 的 suboptimality gap 都小于标准 KL，正好对应这两者更小的常数 $\mathcal{C}(f)$。
 
 ## 亮点与洞察
 - **"$f'$ 作为不确定性信号"** 这个直觉是这篇文章最值得记住的洞察——它把"divergence 的曲率"和"该不该多探索"直接挂钩，把几何性质翻译成算法，简洁得令人惊讶。
@@ -97,7 +111,7 @@ $\mathcal{C}(f,\mathcal{R},\eta)=\max_{r,x,a}\frac{h'(\eta(r-\lambda))}{h(\eta(r
 ## 局限与展望
 - 假设 $f'$ 可逆且 $0\notin\text{dom}(f')$，**排除了 Total Variation 和纯 chi-squared**——这两个恰好是 over-optimization 论文里最爱用的；作者把它们留到 Appendix B 讨论但没给完整 bound。
 - 只在 contextual bandit 框架做，**多轮 RL/CoT setting 未涉及**——而现代 RLHF（如 o1、DeepSeek-R1）越来越多 multi-turn / process reward，理论需要扩展。
-- 没有任何实证实验验证 derivative 算法在真实 LLM 上是否真的比 optimism 高效；纯理论结果对 practitioners 的吸引力会打折。
+- 只在合成 linear bandit 上做了小规模验证，**没有真实 LLM 实验**；合成结果虽显示 derivative 算法收敛更快，但能否迁移到大模型仍未知，对 practitioners 的吸引力会打折。
 - $\mathcal{C}(f,\mathcal{R},\eta)$ 这个常数对不同 $f$ 没给具体数值比较，无法直接告诉用户 "对你的任务选哪个 $f$ 最划算"。
 
 ## 相关工作与启发
@@ -108,7 +122,7 @@ $\mathcal{C}(f,\mathcal{R},\eta)=\max_{r,x,a}\frac{h'(\eta(r-\lambda))}{h(\eta(r
 
 ## 评分
 - 新颖性: ⭐⭐⭐⭐ derivative-as-uncertainty 是真正的新视角，optimism 部分是 KL 扩展
-- 实验充分度: ⭐⭐ 零实验，纯理论；不算缺点但限制 immediate impact
+- 实验充分度: ⭐⭐ 仅合成 linear bandit 小验证、无真实 LLM 实验；以理论为主，限制 immediate impact
 - 写作质量: ⭐⭐⭐⭐ 定理证明结构清晰、proof sketch 给得很详细
 - 价值: ⭐⭐⭐⭐ 为 $f$-RLHF 提供了 first online theoretical guarantee，且 Algorithm 2 有工程化潜力
 

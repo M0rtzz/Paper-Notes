@@ -38,6 +38,22 @@ tags:
 
 交通场景里，对整个场景做任意 2D 旋转平移后，各 agent 的输出也应当跟着同步变换——DriveGATr 想让这种 SE(2) 对称性成为架构"天生"满足的性质，而不是靠数据学出来的近似。它的做法是把场景里每个元素（agent 和地图节点）都编码成 2D 射影几何代数 $\mathbb{R}^*_{2,0,1}$ 里的 8 维**多矢量 (multivector)**，再用 N 个等变 Transformer block 逐层处理。关键在于：多矢量之间的不变内积本身就能当注意力分数用，于是无需显式成对相对位置编码（RPE），可以直接套标准 dot-product attention（乃至 FlashAttention）。每个 block 内部按 agent-map 交叉注意力、agent-agent 自注意力、时间因果自注意力依次更新（前两者 per timestep、后者 per agent），再接等变 MLP 和不变适配器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：agent 状态 + 地图节点"] --> B["多矢量编码<br/>位姿 (x,y,θ) → 8 维多矢量（PGA）"]
+    B --> BLK
+    subgraph BLK["等变 Transformer block ×N（等变网络原语）"]
+        direction TB
+        C1["agent-map 交叉注意力<br/>per timestep"] --> C2["agent-agent 自注意力<br/>per timestep"]
+        C2 --> C3["时间因果自注意力<br/>per agent"]
+        C3 --> C4["等变 MLP"]
+        C4 --> C5["不变适配器<br/>多矢量 → 局部坐标 → 不变标量"]
+        DA["距离感知注意力<br/>φ(q)·ψ(k) ∝ −距离²，拼到 Q/K"] -.增广.-> C1
+    end
+    BLK --> E["动作解码<br/>每类 2048 动作 token + 交叉熵"]
+```
+
 ### 关键设计
 
 **1. 多矢量编码：把位姿塞进几何代数，让 SE(2) 对称性变成构造性保证**

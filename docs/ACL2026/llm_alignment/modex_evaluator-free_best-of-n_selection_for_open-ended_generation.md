@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 ModeX 要在没有 reward model、也没有 exact-match 投票的前提下，从 N 条开放式采样里挑出"最可能正确"的一条。它的核心假设是：高质量生成在语义空间里会聚成致密簇，幻觉/异常输出则像稀疏外点，于是选样问题等价于"找最致密语义簇的中心"。具体走三步：先把 N 条采样两两算 n-gram Jaccard 相似度，构成边权矩阵 $A\in\mathbb{R}^{N\times N}$；再对这张图做递归谱聚类，沿 Fiedler 向量反复二分、用 conductance 判断是否真有缝可切，逐层剥离出主模态簇；最后在簇内选加权度数最高的节点作为 centroid 输出。输入是一组采样文本，中间是一张相似度图及其主模态簇，输出是簇心那一条答案。全程零神经网络重评估，复杂度 $\mathcal{O}(N^2)$ 远小于生成本身的 $\mathcal{O}(NL)$；作者另给一个轻量变体 ModeX-Lite，把谱聚类下沉到生成中途做剪枝。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 条开放式采样"] --> B["n-gram Jaccard 相似度图<br/>三阶 Jaccard 之和构边权矩阵 A"]
+    B --> C["递归 Fiedler 向量谱聚类<br/>解 Fiedler 向量按符号二分"]
+    C --> D{"conductance φ < τ?"}
+    D -->|"是·有低密度缝隙"| E["保留更大子簇<br/>继续递归切分"]
+    E --> C
+    D -->|"否·切不动了"| F["度中心度选 centroid<br/>子簇内加权度数最大节点 = KDE 峰值"]
+    F --> G["输出最优采样"]
+```
+
 ### 关键设计
 
 **1. n-gram Jaccard 相似度图：给开放文本的"像不像"一个数学定义**

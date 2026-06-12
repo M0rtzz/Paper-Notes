@@ -44,7 +44,24 @@ tags:
 
 这篇论文不提新模型，而是搭了一套"扰动—准确率—不确定度—忠实性"四联体检台，分**评估侧**和**训练侧**两条主干，回答"RL 微调到底让 VLM 学到了什么"。评估侧在 8 个视觉推理基准上给每个样本程序化生成多种文本扰动变体，让 5 个开源 RL 微调 VLM 与 4 个闭源模型生成完整的 `<think>…</think><answer>…</answer>`，再用 LLM judge 把每条生成钉到"答案对错 × 推理是否一致"的四象限里，同时在答案首 token 上读两条不确定度量；训练侧则把评估侧观察到的脆弱搬回 GRPO 训练，逐 checkpoint 跟踪准确率、entropy 与忠实性曲线随 step 怎么漂移，从而把"评估现象"坐实成"训练动力学"。
 
-具体地，评估侧覆盖 3DSRBench、CV-Bench、Spatial-MM Obj/Multihop、WhatsUp、V\*-Bench、MME-RealWorld-Lite、MMBench，每个样本生成 Base / Stop-Think / Wrong-Think / Wrong-Think+"But" / Wrong-Caption / Wrong-Caption+Disclaimer 六类 prompt；judge 用 Qwen3-32B 并以 GPT-OSS-120B、Llama-3.1-70B 交叉验证（Fleiss' κ ≈ 0.85）。训练侧以 Qwen2.5-VL-7B-Instruct 为起点，用 verl 实现的 GRPO，数据为 SAT2 (32K) + Pixmo-Count (15K)，并以 Geometry3K (2.1K) 与"caption/think 数据增强"两个开关做消融，每 ~250 step 取一个 checkpoint 回跑整套评估。
+具体地，评估侧覆盖 3DSRBench、CV-Bench、Spatial-MM Obj/Multihop、WhatsUp、V\*-Bench、MME-RealWorld-Lite、MMBench，每个样本生成 Base / Stop-Think / Wrong-Think / Wrong-Think+"But" / Wrong-Caption / Wrong-Caption+Disclaimer 六类 prompt；judge 用 Qwen3-32B 并以 GPT-OSS-120B、Llama-3.1-70B 交叉验证（Fleiss' κ ≈ 0.85）。训练侧以 Qwen2.5-VL-7B-Instruct 为起点，用 verl 实现的 GRPO，数据为 SAT2 (32K) + Pixmo-Count (15K)，并以 Geometry3K (2.1K) 与"caption/think 数据增强"两个开关做消融，每 ~250 step 取一个 checkpoint 回跑整套评估，从而让训练侧与评估侧形成闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["8 个视觉推理基准的样本"] --> B["受控文本扰动套件<br/>程序化生成 6 类 prompt<br/>Base / Stop-Think / Wrong-Think±But / Wrong-Caption±Disclaimer"]
+    B --> C["9 个 VLM 生成 think+answer 段<br/>5 个开源 RL 微调 + 4 个闭源"]
+    C --> D
+    subgraph D["三维忠实性度量"]
+        direction TB
+        D1["扰动下准确率"]
+        D2["LLM judge 四象限<br/>think ≡ answer 一致性"]
+        D3["首 answer token 不确定度<br/>letter entropy H + P_base"]
+    end
+    D --> E["受控 RL 微调（GRPO）<br/>Qwen2.5-VL-7B + 3 组数据配方消融"]
+    E -->|每 ~250 step 取 checkpoint 回跑整套评估| B
+    E --> F["逐 step 跟踪曲线<br/>准确率 ↑ vs 忠实性 / entropy ↓"]
+```
 
 ### 关键设计
 

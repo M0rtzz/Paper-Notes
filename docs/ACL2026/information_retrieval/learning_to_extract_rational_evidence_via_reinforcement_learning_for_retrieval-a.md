@@ -46,6 +46,24 @@ tags:
 
 EviOmni 把"证据降噪"从"看到什么提什么"改成"先想清楚再提"。给定查询 $q$ 和 top-k 检索段落 $P$，同一个模型既当提取器又当生成器，吐出一条统一轨迹 `<reason>推理</reason><extract>证据</extract><answer>答案</answer>`：先在推理段分析各段落的相关性与线索，再据此提炼简洁证据，最后作答。训练时的关键难点是怎么分别衡量"推理"和"证据"各自的好坏，本文用知识 token 掩码把两者隔离评估，并用三类可验证奖励通过 GRPO 端到端优化，使提取结果直接对齐下游答案准确率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询 q + top-k 检索段落 P"] --> TRAJ
+    subgraph TRAJ["理性证据提取范式：推理在前、提取在后"]
+        direction TB
+        B["&lt;reason&gt; 摊开分析<br/>各段相关性与跨段线索"] --> C["&lt;extract&gt; 提炼简洁证据 e"]
+        C --> D["&lt;answer&gt; 作答"]
+    end
+    TRAJ --> E["知识 Token 掩码<br/>硬替换输入做两次受控评估"]
+    E -->|"掩证据 e、留推理 r"| F["生成 o_r 衡量推理质量"]
+    E -->|"掩段落 P 与推理 r、留证据 e"| G["生成 o_e 衡量证据质量"]
+    F --> H["三类可验证奖励<br/>答案 F1 + 长度 + 格式"]
+    G --> H
+    H --> I["GRPO 端到端优化"]
+    I -.参数更新.-> TRAJ
+```
+
 ### 关键设计
 
 **1. 理性证据提取范式：推理在前、提取在后**

@@ -43,11 +43,31 @@ tags:
 
 ### 整体框架
 
-DuoMo 的两阶段流程：
+DuoMo 全程不走 SMPL 参数、统一用 mesh 顶点表示运动，把世界空间重建拆成两个解耦的扩散模型串联：
 
-1. **Camera-space Model** $\mathcal{D}_{\text{cam}}$：从视频提取特征，生成相机坐标下的人体运动 $\mathbf{C}$
+1. **Camera-space 扩散模型** $\mathcal{D}_{\text{cam}}$：从视频提取特征，生成相机坐标下的人体运动 $\mathbf{C}$
 2. **显式 Lifting**：利用估计的相机位姿 $\mathbf{g}_t$ 将 $\mathbf{C}$ 提升到世界坐标，得到噪声提案 $\hat{\mathbf{X}}_t^1 = \mathbf{g}_t(\mathbf{X}_t^t)$
-3. **World-space Model** $\mathcal{D}_{\text{world}}$：以噪声提案为条件，生成干净、全局一致的世界空间运动 $\mathbf{W}$
+3. **World-space 扩散模型** $\mathcal{D}_{\text{world}}$：以噪声提案为条件，生成干净、全局一致的世界空间运动 $\mathbf{W}$
+4. **Guided Sampling（测试时引导）**：在 world-space 采样时用 2D 重投影与位移引导纠正速度积分漂移
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：单目视频"] --> B
+    subgraph CAM["Camera-space 扩散模型"]
+        direction TB
+        B["关键点射线 + 图像特征<br/>(可选 height conditioning)"] --> C["DiT 去噪<br/>RoPE + 窗口注意力"]
+    end
+    C --> D["相机空间运动 C<br/>mesh 顶点：root-centered mesh + 根位置"]
+    D -->|"用估计相机位姿 g_t 几何提升"| E["显式 Lifting<br/>得世界空间噪声提案"]
+    E --> F
+    subgraph WORLD["World-space 扩散模型"]
+        direction TB
+        F["以噪声提案为条件<br/>Masked modeling + Per-video 坐标系"] --> G["去噪生成<br/>mesh 顶点 + 根速度"]
+    end
+    G --> H["Guided Sampling<br/>2D 重投影引导 + 位移引导"]
+    H --> I["输出：世界空间运动 W"]
+```
 
 ### 关键设计
 

@@ -48,6 +48,20 @@ tags:
 
 STARS (STAbility-driven Recurrent Scaling) 是一个套在任意已有 LoopLM 上的训练框架（论文用 Ouro-1.4B 做 fine-tune），它的核心主张是：要让"迭代越深越准"成立，得在训练时把循环映射逼成一个渐近稳定的吸引子。整条 pipeline 和标准 LoopLM 训练几乎一样——文本 token 经 prelude 嵌入后进入共享参数的循环 block $\Phi_\theta = \mathcal{M}^L$，迭代 $t$ 次再过 coda + lmhead 输出；唯一改动落在损失上：每个 batch 先从一个 log-normal 分布 $\mathcal{P}$ 随机采一个循环深度 $t$，再在该深度同时算标准 SFT 交叉熵 $\mathcal{L}_{SFT}^{(t)}$ 和 Jacobian 谱半径正则 $\mathcal{L}_{JSRR}^{(t)}$，加权回传。推理阶段零额外开销，照常按所需迭代数前向即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 token → prelude 嵌入"] --> B
+    R["随机循环采样<br/>每 batch 从 log-normal 分布采深度 t"] -->|给定深度 t| B
+    B["Post-Sandwich 归一化底座<br/>共享参数循环 block 迭代 t 次（隐状态有界）"]
+    B --> C["coda + lmhead → 预测"]
+    B --> D["JSRR：JVP 单步幂迭代<br/>估谱半径 ρ(J) ≈ ‖Jv‖"]
+    C --> E["SFT 交叉熵损失"]
+    D --> F["谱半径正则项"]
+    E --> G["加权联合 L_STARS = (1−λ)·SFT + λ·JSRR → 回传"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 动力系统诊断与 Post-Sandwich 归一化底座：先选对架构再谈优化**

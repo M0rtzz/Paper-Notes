@@ -42,6 +42,19 @@ tags:
 ### 整体框架
 本文要解决的是「INLP 这种迭代零空间投影只能在有限维特征上做，但核方法（尤其 RBF）的特征空间往往无穷维，没法显式存下来投影」的矛盾。FKD 的核心转换是：不去碰那个无穷维特征空间，而是借经验特征空间把核矩阵分解成 $\mathbf{K}=\mathbf{G}\mathbf{G}^\top$，在有限维的 $\mathbf{G}$ 上完成 INLP，再把所有投影代数等价地折回成对核矩阵 $\mathbf{K}$ 的一次右乘变换 $\mathbf{T}^{\mathbf{K}}=\mathrm{Id}-\mathbf{M}\mathbf{K}$。整套流程是「外层迭代、内层闭式更新」：每轮先拟合一个能预测受保护属性 $\mathbf{p}$ 的岭回归方向，构造其零空间投影，压缩成核变换并累乘进总变换 $\mathbf{T}_{(m)}$，输出一个被剥离了 $\mathbf{p}$ 信息、但仍是合法 PSD 核的 $\mathbf{K}_{(m)}$；下游任意核方法（KRR、SVR）拿它照常训练，新测试点用同一个 $\mathbf{T}_{(m)}$ 变换测试核即可外推。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：核矩阵 K + 连续受保护属性 p"] --> B["经验特征空间分解<br/>K = G·Gᵀ，把无穷维 INLP 搬到有限维 G 上"]
+    B --> C["岭回归求能预测 p 的方向 w<br/>写成样本线性组合，使后续只用 K 闭合"]
+    C --> D["核矩阵闭式变换<br/>T^K = Id − M·K，零空间投影折回核且保 PSD"]
+    D --> E["累乘得 T_m、更新 K_(m)<br/>（求逆用 Nystroem 近似加速）"]
+    E -->|残余依赖未剥净，迭代下一轮| C
+    E -->|m 轮后| F["输出公平核 K_(m)<br/>仍是合法 PSD 核、已剥离 p 信息"]
+    F --> G["下游 KRR / SVR 照常训练"]
+    F --> H["新测试核同乘 T_m，out-of-sample 外推"]
+```
+
 ### 关键设计
 
 **1. 经验特征空间里的零空间投影：把无穷维上做不了的 INLP 换到有限维上做**

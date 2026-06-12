@@ -38,6 +38,27 @@ Transformer 架构通过自注意力实现高精度，但计算复杂度为 $\ma
 ### 整体框架
 FoSS 采用双分支架构：(1) **频域分支（FD-Mamba）**——对历史轨迹进行 DFT 分解为振幅和相位，经 HelixSort 重排后输入两个并行的 SSM 子模块（Coarse2Fine-SSM 处理空间交互，SpecEvolve-SSM 处理通道演化）；(2) **时域分支（TD-Mamba）**——通过输入依赖的动态 SSM 直接在时序序列上建模长程依赖。两分支通过交叉注意力层融合，再由可学习查询向量解码出 $K$ 条候选轨迹，经加权融合输出最终预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["历史轨迹"] --> B
+    A --> F
+    subgraph FD["频域分支 FD-Mamba"]
+        direction TB
+        B["DFT 分解<br/>振幅谱 + 相位谱"] --> C["渐进螺旋重排序 HelixSort<br/>按频谱半径升序，低频→高频有序化"]
+        C --> D["频域双子模块<br/>Coarse2Fine-SSM 空间交互 + SpecEvolve-SSM 通道演化"]
+        D --> E["频域表示 F_freq"]
+    end
+    subgraph TD["时域分支 TD-Mamba"]
+        direction TB
+        F["时域动态选择性 SSM<br/>状态参数随输入动态生成"]
+    end
+    E --> G["交叉注意力融合"]
+    F --> G
+    G --> H["可学习查询解码<br/>K 条候选轨迹"]
+    H --> I["加权融合<br/>最终预测"]
+```
+
 ### 关键设计
 
 **1. 渐进螺旋重排序（HelixSort）：给频谱排个序，让 SSM 能从粗到细地读**

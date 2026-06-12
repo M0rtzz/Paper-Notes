@@ -51,6 +51,20 @@ PNG由两个核心组件组成，分两阶段训练：
 
 **推理**：给定少量真实噪声 $\mathbf{n}_{Real}$ → Prompt Encoder提取prompt features → P-DiT一步生成新latent code → Decoder+clean image → 合成noisy image。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实噪声 n_Real<br/>= 噪声图 − 干净图"] --> B["Prompt Encoder<br/>编码为 latent z"]
+    B --> C["Global Prompt Block<br/>通道均值/方差 → 全局特征 F_Global"]
+    B --> D["Local Prompt Block<br/>邻域相关系数 → 局部特征 F_Local"]
+    E["随机噪声 z_T"] --> F["Prompt DiT（一致性模型）<br/>一步生成 latent ẑ_0"]
+    C --> F
+    D --> F
+    G["干净图像"] --> F
+    F --> H["PAE Decoder 解码<br/>合成 noisy image"]
+    G --> H
+```
+
 ### 关键设计
 
 **1. Global Prompt Block：用通道统计量隐式编码 ISO 增益**

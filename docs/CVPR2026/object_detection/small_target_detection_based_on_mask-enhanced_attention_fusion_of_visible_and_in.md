@@ -45,6 +45,22 @@ tags:
 
 ESM-YOLO+ 要解决的是无人机/卫星平台上的一个两难：既要靠可见光-红外融合把弱小目标从复杂背景里捞出来，又不能像现有融合检测器那样堆 Vision-LSTM、门控聚合这类重型结构。它的做法是把"融合"这件事拆成像素级的一步轻量操作，再用一个训练时才存在的辅助分支补强骨干。整条链路是：可见光图 $I^{RGB}$ 和红外图 $I^{IR}$ 先各自经 MEAF 模块做对齐感知的像素级融合，融合后的特征送进基于 YOLO 的检测骨干和检测头出框；训练时额外挂一个 EDSR 超分辨率分支从骨干中间特征做图像重建，只贡献梯度、推理时整条砍掉。所以推理阶段的网络其实就是"MEAF 融合 + YOLO 检测"，超分支不占任何成本。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    RGB["可见光图 I_RGB"] --> MEAF
+    IR["红外图 I_IR"] --> MEAF
+    subgraph MEAF["MEAF 像素级融合（先遮蔽后注意）"]
+        direction TB
+        S1["各模态缩放 I₁ = I·p"] --> S2["空间掩码：对齐感知软选择"]
+        S2 --> S3["空间注意力：保住小目标拓扑支持"]
+        S3 --> S4["通道激励 M：跨模态全局重加权"]
+    end
+    MEAF --> BB["YOLO 检测骨干"]
+    BB --> HEAD["检测头"] --> OUT["检测框输出"]
+    BB -.仅训练时.-> SR["结构表示增强（SR）<br/>EDSR 解码器重建 + L1 损失<br/>推理时整条丢弃"]
+```
+
 ### 关键设计
 
 **1. Mask-Enhanced Attention Fusion (MEAF)：把无条件聚合改成"先遮蔽后注意"**

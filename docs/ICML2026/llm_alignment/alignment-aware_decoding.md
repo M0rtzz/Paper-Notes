@@ -41,26 +41,27 @@ Alignment-Aware Decoding 直接在推理时利用 DPO 模型相对 SFT 参考模
 AAD 的方法很短，但背后的关键在于它改变了解码目标。标准 greedy DPO 选择 $\pi_{\mathrm{dpo}}$ 概率最高的 token；AAD 则只把 $\pi_{\mathrm{dpo}}$ 当作候选筛选器，真正排序时使用 $\log \pi_{\mathrm{dpo}}(v|s)-\log \pi_{\mathrm{sft}}(v|s)$，也就是偏好优化相对 SFT 先验给某个 token 增加了多少支持。
 
 ### 整体框架
-输入包括 prompt $x$、当前生成前缀 $y_{1:t-1}$、DPO 后模型 $\pi_{\mathrm{dpo}}$、DPO 前 SFT 模型 $\pi_{\mathrm{sft}}$、最大长度和过滤阈值 $\alpha$。每一步先分别前向计算两个模型对下一 token 的分布，再用 DPO 分布筛出概率不低于 $\alpha$ 倍最大概率的候选集合 $\mathcal{V}_{\alpha}$。在这个集合内，AAD 选择 log-ratio 最大的 token。遇到 `<eos>` 或达到最大长度时停止。
+输入包括 prompt $x$、当前生成前缀 $y_{1:t-1}$、DPO 后模型 $\pi_{\mathrm{dpo}}$、DPO 前 SFT 模型 $\pi_{\mathrm{sft}}$、最大长度和过滤阈值 $\alpha$。每一步先分别前向计算两个模型对下一 token 的分布，再用 DPO 分布筛出概率不低于 $\alpha$ 倍最大概率的候选集合 $\mathcal{V}_{\alpha}$。在这个集合内，AAD 选择 log-ratio 最大的 token，遇到 `<eos>` 或达到最大长度时停止，逐 token 循环直到生成完整回答。除了作为部署时解码策略，AAD 生成的高质量回答还能回灌为合成偏好数据，继续迭代 DPO。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：prompt + 当前前缀<br/>DPO 模型 π_dpo、SFT 参考 π_sft、阈值 α"] --> B["每步两次前向<br/>得 π_dpo 与 π_sft 的下一 token 分布"]
+    B --> C["DPO/SFT 概率比作 token-level reward<br/>A(v) = log π_dpo(v) − log π_sft(v)"]
+    B --> D["min-α 可信 token 过滤<br/>候选集 V_α：π_dpo(v) ≥ α·max π_dpo"]
+    C --> E["在 V_α 内选 log-ratio 最大的 token<br/>y_t = argmax A(v)"]
+    D --> E
+    E -->|未遇 eos 且未达最大长度| B
+    E -->|遇 eos 或达最大长度| F["输出对齐回答 y"]
+    F --> G["AAD 输出回灌为合成偏好数据<br/>AAD 作 chosen、nucleus 采样作 rejected → 迭代 DPO"]
+```
 
 ### 关键设计
-1. **DPO/SFT 概率比作为 token-level reward**:
+**1. DPO/SFT 概率比作 token-level reward：把训练时的偏好信号拉到每步解码。** 标准 greedy 只跟随 $\pi_{\mathrm{dpo}}$ 的概率排序，问题是 DPO 最优策略仍被 SFT 先验绑住——论文用 $\log\frac{\pi^*(y_1|x)}{\pi^*(y_2|x)}=\Delta_{\mathrm{sft}}+\frac1\beta\Delta_r$ 证明：只要 SFT 对高奖励回答的先验足够低（$\Delta_{\mathrm{sft}}<-\frac1\beta\Delta_r$），最优策略反而会偏向低奖励回答，对齐信号被先验和流畅性掩盖。AAD 改用 DPO 的隐式奖励 $r_{\mathrm{dpo}}(x,y)=\beta\log\frac{\pi_{\mathrm{dpo}}(y|x)}{\pi_{\mathrm{sft}}(y|x)}$，并把它局部化为每个 token 的 advantage $A(v|s)=\log\frac{\pi_{\mathrm{dpo}}(v|s)}{\pi_{\mathrm{sft}}(v|s)}$（$\beta$ 不改变排序故省略），每步挑相对 SFT 被偏好优化上调最多的 token。概率比剥离了 SFT 先验，直接读出“偏好优化到底奖励了什么”，因此比直接最大化 $\pi_{\mathrm{dpo}}$ 更贴近真实奖励。
 
-	- 功能：把 DPO 训练中学到的偏好信号转成每个 decoding step 可用的 token 分数。
-	- 核心思路：DPO 的隐式奖励可写成 $r_{\theta}(x,y)=\beta\log \frac{\pi_{\theta}(y|x)}{\pi_{\mathrm{sft}}(y|x)}$。AAD 将它局部化为 $A(v|s)=\log\frac{\pi_{\mathrm{dpo}}(v|s)}{\pi_{\mathrm{sft}}(v|s)}$，选择相对 SFT 被 DPO 明显上调的 token。
-	- 设计动机：如果只看 DPO 概率，模型仍会受 SFT 先验强烈影响；看概率比则更接近“偏好优化到底奖励了什么”。
+**2. min-$\alpha$ 可信 token 过滤：给 advantage 套上流畅性约束。** 不加约束地最大化概率比会退化：一方面语法/语义必需的 token 往往被两个模型都赋高概率、比值太小反而选不上；另一方面 $\pi_{\mathrm{sft}}$ 给极低概率的 token，PO 训练带来一点点绝对提升就造成巨大相对变化，产生虚高分数和数值不稳定。借鉴 contrastive decoding，AAD 先用 $\pi_{\mathrm{dpo}}$ 做 min-$\alpha$ 过滤，只保留 $\pi_{\mathrm{dpo}}(v|s)\ge \alpha\max_{v'}\pi_{\mathrm{dpo}}(v'|s)$ 的候选集 $\mathcal{V}_{\alpha}$，再在集合内按 advantage 取 argmax（主实验统一 $\alpha=0.1$，跨数据集与模型规模不调参）。这样高概率候选保证语言可行、概率比排序在可行集内强化对齐——把流畅性与对齐性分工开来，正是 AAD 能稳定不退化的关键工程细节。
 
-2. **min-$\alpha$ 可信 token 过滤**:
-
-	- 功能：避免单纯最大化概率比造成低概率、语义不连贯或数值不稳定 token 被选中。
-	- 核心思路：AAD 只在 $\pi_{\mathrm{dpo}}(v|s) \ge \alpha \max_{v'}\pi_{\mathrm{dpo}}(v'|s)$ 的 token 中比较 advantage。主实验统一使用 $\alpha=0.1$，并在多个数据集和模型规模上不做额外调参。
-	- 设计动机：高概率 token 保证语言模型认为它们语法和语义上可行，概率比排序则在这些可行选项中强化对齐偏好。这个设计把流畅性和对齐性分工开来。
-
-3. **AAD 生成合成偏好数据**:
-
-	- 功能：在偏好数据稀缺时，把 AAD 输出作为 chosen 样本，继续训练 DPO 模型。
-	- 核心思路：作者用 AAD 生成高质量 chosen completion，用 DPO 模型 nucleus sampling 生成 rejected completion，构造合成偏好对，再从 SFT 或已有 DPO checkpoint 继续训练。
-	- 设计动机：AAD 不只是一种部署时解码策略，还能作为自举数据生成器。实验显示只用 10% 原始偏好数据时，AAD 生成的数据能显著缩小与全数据 DPO 的差距。
+**3. AAD 输出回灌为合成偏好数据：把解码策略变成自举数据生成器。** 偏好数据标注昂贵、常常稀缺。作者发现 AAD 不只是部署时解码：用它生成高质量 chosen completion、再用 $\pi_{\mathrm{dpo}}$ 的 nucleus 采样生成 rejected completion，就能构造合成偏好对，从 SFT 或已有 DPO checkpoint 继续迭代 DPO。这条回路把推理时的对齐增益“沉淀”回模型参数：实验显示只用 10% 原始偏好数据时，合成数据训练出的模型在标准解码下就能接近全数据 DPO（且不增加推理开销），不过多轮自举会出现饱和或退化。
 
 ### 损失函数 / 训练策略
 AAD 本身没有训练损失，只在推理时做两次前向。实验中的 DPO 模型使用 10% preference training split 训练两轮，LoRA rank 为 64，DPO 系数默认 $\beta=0.1$；reward oracle 和 picker reward model 使用 Bradley-Terry 损失训练两轮。生成时 AAD 固定 $\alpha=0.1$，与 EFT 和 Bo2 的计算量大致相当，因为都需要两次模型前向或两条候选生成。

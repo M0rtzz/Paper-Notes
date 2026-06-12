@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 模型输入：多视角 RGB（一个第三人称头部相机 + 可选两个腕部相机，分别经 SigLIP 和 DINOv2 编码）+ 语言指令 + 可选 proprioception。所有视觉/语言 token 与"被掩盖的动作 token"一起喂给统一 Transformer（Prismatic-7B / Llama2 主干，源自 OpenVLA），主干对动作位置使用双向注意力。推理时，所有动作位置初始化为 [MASK]，按 cosine schedule 迭代 T=12 轮"反掩码 + 二次重掩码"，最终得到一整段 chunk 的动作。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["多视角 RGB（SigLIP + DINOv2）<br/>+ 语言指令 + proprioception"]
+    A1["离散扩散动作建模<br/>动作 256-bin 量化为 L=H×7 个 token，<br/>动作位全置 [MASK]、共用交叉熵"]
+    IN --> TF
+    A1 --> TF
+    TF["统一 Transformer 主干<br/>（OpenVLA / Llama2，动作位双向注意）"]
+    subgraph LOOP["推理：T=12 轮 cosine schedule 迭代解码"]
+        direction TB
+        A2["置信度自适应并行解码<br/>每轮保留 top 置信位置、其余继续 [MASK]"]
+        A2 --> A3["二次重掩码<br/>已提交的低置信 token 打回 [MASK]"]
+    end
+    TF --> LOOP
+    LOOP -->|γ 未到 0，锚点回灌主干| TF
+    LOOP -->|γ_T = 0| OUT["完整 action chunk → 机器人执行"]
+```
+
 ### 关键设计
 
 **1. 统一主干内的离散扩散动作建模：把动作 token 当"被掩盖的语言 token"，和 VLM 共用一套交叉熵目标**

@@ -50,6 +50,34 @@ tags:
 
 CanTest 的目标是：当一个 VLN 代理在长轨迹上任务失败时，不止告诉你"失败了"，而是指出"是感知/记忆/规划/决策中的哪个能力、在哪一步最先出错"。它用一个模糊测试（fuzzing）循环来驱动整个过程——维护一个带反馈分数的种子库，每轮挑一条种子指令、做强弱两档变异生成新指令喂给代理执行；执行后用四个能力预言机逐时刻比对代理输出与专家 GT，找出真正诱发失败的最早错误，把这个诊断结果折算成反馈分数回灌种子库，引导下一轮生成更容易暴露薄弱能力的指令。三件事——生成、判分、归因——首尾相接，越跑越精准。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SEED["种子库（带反馈分数的指令集）"]
+    SEED --> GEN
+    subgraph GEN["自适应测试用例生成"]
+        direction TB
+        SEL["按分数选种子<br/>高分常选 / 低分少选"]
+        MUT["按分数定变异强度<br/>高分温和微调 / 低分激进改写"]
+        SEL --> MUT
+    end
+    GEN --> EXEC["VLN 代理执行<br/>产生长轨迹"]
+    EXEC --> ORACLE
+    subgraph ORACLE["能力预言机（专家模型自动产 GT）"]
+        direction TB
+        O["逐时刻比对四能力输出与 GT<br/>感知 / 记忆 / 规划 / 决策"]
+    end
+    ORACLE --> ATTR
+    subgraph ATTR["失败归因与混合反馈"]
+        direction TB
+        CF["反事实换一步<br/>用 GT 替换错误输出重推演"]
+        ROOT["取最早的失败诱导错误<br/>= 失败源头"]
+        FB["折成混合反馈分数<br/>任务级 + 能力级"]
+        CF --> ROOT --> FB
+    end
+    ATTR -->|回灌分数| SEED
+```
+
 ### 关键设计
 
 **1. 自适应测试用例生成：让变异强度跟着"这条种子有多容易失败"走**

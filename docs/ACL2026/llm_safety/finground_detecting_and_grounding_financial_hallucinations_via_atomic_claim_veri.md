@@ -42,7 +42,39 @@ FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pip
 
 ### 整体框架
 
-FinGround 要解决的是金融文档问答里"答案看着对、但数字算错或证据编造"的幻觉，整条 pipeline 走的是 "verify-then-ground"：先检索证据、再把答案逐条核验、最后把核验不过的句子重写并打上可追溯的引用。具体分三段流转——**Stage 1 检索**用 RoBERTa-base 把 query 分成 Simple/Moderate/Complex 三档，分别走 BM25、密集检索+表格抽取、迭代式 retrieve-then-reason；表格相似度用列头感知打分 $\text{sim}(q,t)=\alpha\cdot\cos(\mathbf{q},\mathbf{t}_{\text{cell}})+(1-\alpha)\cdot\cos(\mathbf{q},\mathbf{t}_{\text{header}})$（$\alpha=0.6$），并用 structure-aware chunking 保留行列关系，每个 chunk 带 $\langle\text{document, section, page, element\_type}\rangle$ 的来源标记。**Stage 2 验证**把答案拆成原子 claim，分类后按类型路由到不同验证策略，输出 supported / contradicted / unverifiable 三态。**Stage 3 重写**把后两态的 claim 通过模糊对齐（edit distance ≤3）定位回原答案 span，做 targeted 重检索后按 RARR 范式改写，加段级或单元格级 inline citation `[Doc:d, §s, p.p]` / `[Doc:d, Table t, Row r, Col c]`；若一次要改的 claim ≥3 条，干脆触发整段重生成以免逐句改写产生 error compounding。
+FinGround 要解决的是金融文档问答里"答案看着对、但数字算错或证据编造"的幻觉，整条 pipeline 走的是 "verify-then-ground"：先检索证据、再把答案逐条核验、最后把核验不过的句子重写并打上可追溯的引用。具体分三段流转——**Stage 1 检索**用 RoBERTa-base 把 query 分成 Simple/Moderate/Complex 三档，分别走 BM25、密集检索+表格抽取、迭代式 retrieve-then-reason；表格相似度用列头感知打分 $\text{sim}(q,t)=\alpha\cdot\cos(\mathbf{q},\mathbf{t}_{\text{cell}})+(1-\alpha)\cdot\cos(\mathbf{q},\mathbf{t}_{\text{header}})$（$\alpha=0.6$），并用 structure-aware chunking 保留行列关系，每个 chunk 带 $\langle\text{document, section, page, element\_type}\rangle$ 的来源标记。**Stage 2 验证**把答案拆成原子 claim，分类后按类型路由到不同验证策略，输出 supported / contradicted / unverifiable 三态；执行验证的不是 GPT-4o，而是把它蒸馏到的 8B 检测器。**Stage 3 重写**把后两态的 claim 通过模糊对齐（edit distance ≤3）定位回原答案 span，做 targeted 重检索后按 RARR 范式改写，加段级或单元格级 inline citation `[Doc:d, §s, p.p]` / `[Doc:d, Table t, Row r, Col c]`；若一次要改的 claim ≥3 条，干脆触发整段重生成以免逐句改写产生 error compounding。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 + 金融文档<br/>SEC filing / 财报"] --> S1
+
+    subgraph S1["Stage 1 · finance-aware 混合检索"]
+        direction TB
+        R1["query 分档<br/>Simple / Moderate / Complex"] --> R2["列头感知表格抽取<br/>+ structure-aware chunking"]
+    end
+
+    S1 --> ANS["生成初始答案"]
+    ANS --> S2
+
+    subgraph S2["Stage 2 · 原子 claim 验证（8B 蒸馏检测器）"]
+        direction TB
+        V1["拆成原子 claim"] --> V2["六类 taxonomy 分类 + 类型路由"]
+        V2 -->|computational 类| V3["公式重构 + 算术再校验"]
+        V2 -->|其他五类| V4["NLI / 规则库 / 表格匹配"]
+    end
+
+    S2 --> VERD{"claim 被支持?"}
+    VERD -->|是| OUT
+    VERD -->|否| S3
+
+    subgraph S3["Stage 3 · grounded 重写"]
+        direction TB
+        W1["模糊对齐定位 span<br/>+ targeted 重检索"] --> W2["RARR 改写<br/>+ 段/单元格级引用"]
+    end
+
+    S3 --> OUT["可追溯答案"]
+```
 
 ### 关键设计
 

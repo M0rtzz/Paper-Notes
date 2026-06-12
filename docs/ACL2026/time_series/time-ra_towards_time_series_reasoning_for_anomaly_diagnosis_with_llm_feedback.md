@@ -45,6 +45,21 @@ tags:
 
 Time-RA 把"检测异常"升级为"诊断异常"，整条流水线分四步走通：先从 10 个真实领域收集约 4 万条时序片段，并配上文本描述与可视化图表构成多模态输入；再用一套 AI 反馈标注流程把"检测标签 + 异常类别 + 诊断推理"自动写进每个样本；然后用结构化诊断提示对 LLM/MLLM 做 LoRA 微调，让它学会按人类分析师的方式推理；最后分二分类准确率、多类分类准确率、推理质量三个维度评测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["10 领域真实时序片段<br/>数值 + 文本描述 + 可视化图表（多模态输入）"] --> B["细粒度异常分类体系<br/>14 单变量 + 6 多变量 = 20 类异常词汇表"]
+    B --> C
+    subgraph C["AI 反馈标注流程"]
+        direction TB
+        C1["推理补全采样<br/>GPT-4o / Gemini-2.5 / DeepSeek-R1 / Llama-3.3 四模型池生成"] --> C2["偏好标注<br/>GPT-4 用 Likert 量表排序挑最佳"]
+        C2 --> C3["批评生成<br/>GPT-4 提改进建议并整合"]
+    end
+    C --> D["结构化诊断提示<br/>观察 → 思考 → 行动（Observation-Thought-Action）"]
+    D --> E["LoRA 微调<br/>rank=8, alpha=32，对 LLM/MLLM 做 SFT"]
+    E --> F["三维评测<br/>二分类准确率 / 多类分类 / 推理质量"]
+```
+
 ### 关键设计
 
 **1. 细粒度异常分类体系：先给模型一份"异常词汇表"可学**

@@ -42,6 +42,18 @@ tags:
 
 这篇论文要解决的是长时序 GUI 自动化里「一个模型既要做高层规划又要做低层执行、能力互相打架」的困境。CES 借操作系统的分工思路把任务拆给三个专门化 Agent：Coordinator 像 CPU 负责规划，把用户的高层指令拆成一条条原子指令；Executor 像 I/O 设备，是一个冻结的预训练 GUI 模型，只管照原子指令在当前界面上落动作；State Tracker 像内存，用纯语言模型把「任务进行到哪一步了」维护成一段自然语言摘要。三者每一步循环协作——State Tracker 给出的状态摘要喂回 Coordinator 帮它规划下一步，形成「规划→执行→更新状态→再规划」的闭环。训练上分两阶段，用下游执行结果当奖励，先把 Coordinator 练好、再练 State Tracker。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 26, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    Q["用户指令 q ＋ 当前截图"] --> C["Coordinator 规划器（CPU）<br/>融合指令、上一步状态、截图<br/>输出原子指令"]
+    C --> E["Executor 执行器（I/O，冻结）<br/>按原子指令在当前界面落动作"]
+    E --> S["State Tracker 状态追踪器（内存）<br/>读动作＋指令＋旧状态<br/>生成语言态状态摘要"]
+    S -->|状态摘要回灌作为下一步输入| C
+    E -.执行结果.-> R["执行反馈奖励 R<br/>R_format ＋ R_type ＋ R_param"]
+    R -.Stage 1 先练.-> C
+    R -.Stage 2 再练.-> S
+```
+
 ### 关键设计
 
 **1. OS 式三角色解耦：让规划、执行、记忆各司其职**

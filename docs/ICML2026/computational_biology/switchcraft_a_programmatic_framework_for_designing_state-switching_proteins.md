@@ -41,7 +41,19 @@ SwitchCraft 把"设计一个能在多个功能态之间切换的蛋白质"形式
 ## 方法详解
 
 ### 整体框架
-SwitchCraft 要解决的是"一个序列在不同配体环境下能折成多个指定构象"这件单态生成器做不到的事，它的办法是把这个需求重写成一道优化题。设计者先写出**规约**：枚举若干状态 $s=1,\ldots,N_{\text{states}}$，每个态绑一个折叠上下文 $\mathcal{C}_s$（可含小分子、金属离子、DNA、目标多肽等固定分子），再枚举一组损失 $\mathcal{L}_n:\mathbb{R}^{20\times L}\to\mathbb{R}$、每个依赖一个或多个状态的 Boltz-1 输出，并声明设计掩码 $\mathbf{m}\in\{0,1\}^L$ 与可选的固定基序序列 $\mathbf{s}$。然后进入**优化**：以 logits 表示的序列 $\mathbf{z}$ 为唯一变量，跑 240 步退火 schedule，每步把 $\mathbf{z}$ 转成伪表示喂进 Boltz-1，加总所有损失再对 $\mathbf{z}$ 求梯度更新。整个过程概念上就像训练一个深度模型——损失是设计目标、optimizer 是 SGD、被优化的"权重"就是序列本身。
+SwitchCraft 要解决的是"一个序列在不同配体环境下能折成多个指定构象"这件单态生成器做不到的事，它的办法是把这个需求重写成一道优化题。设计者先写出**规约**：枚举若干状态 $s=1,\ldots,N_{\text{states}}$，每个态绑一个折叠上下文 $\mathcal{C}_s$（可含小分子、金属离子、DNA、目标多肽等固定分子），再枚举一组损失 $\mathcal{L}_n:\mathbb{R}^{20\times L}\to\mathbb{R}$、每个依赖一个或多个状态的 Boltz-1 输出，并声明设计掩码 $\mathbf{m}\in\{0,1\}^L$ 与可选的固定基序序列 $\mathbf{s}$。然后进入**优化**：以 logits 表示的序列 $\mathbf{z}$ 为唯一变量，跑 240 步退火 schedule，每步把 $\mathbf{z}$ 转成伪表示喂进 Boltz-1，加总所有损失再对 $\mathbf{z}$ 求梯度更新。整个过程概念上就像训练一个深度模型——损失是设计目标、optimizer 是 SGD、被优化的"权重"就是序列本身。优化收敛出的多态切换序列还能进一步**组装成器件**：把构象开关嵌入环状置换 GFP（cpGFP），就得到从头设计的荧光生物传感器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["规约：枚举状态 + 折叠上下文 + 设计掩码 / 固定基序"] --> B
+    B["状态-损失语言（Loss DSL）<br/>基序 / 结合 / 构象变化 / 接触 四类可微损失"] --> C
+    C["Straight-Through + 四阶段退火<br/>序列 logits 经 STE 转伪表示"] --> D
+    D["Boltz-1 多状态前向 → distogram → 损失加总"] -->|"对序列反传梯度，240 步退火"| C
+    D --> E["收敛出多态切换序列"]
+    E --> F["多基序合并与 cpGFP 生物传感器装配<br/>双基序合并 / apo→holo 插点筛选"]
+    F --> G["功能蛋白 / 荧光生物传感器"]
+```
 
 ### 关键设计
 

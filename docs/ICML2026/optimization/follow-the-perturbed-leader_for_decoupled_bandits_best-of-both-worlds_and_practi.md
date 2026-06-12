@@ -45,6 +45,18 @@ tags:
 
 注意 $p_t$ 与 $w_t$ 互不依赖：利用臂的选择只看 $\hat L_t$ 加噪扰动后取 argmin，探索臂的采样只看 $\hat L_t$ 的排名和损失差，二者共享同一份累积估损但走完全独立的两条计算路径——这是绕开"$p_t$ 必须由 $w_t$ 算出"这一历史约定的核心结构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    L["累积估损 L̂_t（两条路径共享的唯一状态）"]
+    L --> E["Pareto 扰动 FTPL 做利用<br/>采扰动 r ~ Pareto(α)，argmin 选利用臂 i_t"]
+    L --> X["排名代理向量 q_t 定义探索分布<br/>用损失差与排名 σ 算 q_t，归一化得 p_t"]
+    E -->|承担损失·不观测| U
+    X --> S["采样 j_t ~ p_t，观测损失 ℓ"]
+    S --> U["增量排名维护 + IW 更新<br/>只改被选臂的 L̂，二分定位 O(log K)"]
+    U -->|进入下一轮 t+1| L
+```
+
 ### 关键设计
 
 **1. Pareto 扰动 FTPL 做利用：不解优化就拿到 Tsallis-INF 同阶的利用策略**

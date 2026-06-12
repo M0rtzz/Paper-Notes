@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 方法围绕一件事：让 Adam 在 Hessian 的特征基下、而不是在标准坐标轴下跑，从而对异步流水线带来的延迟梯度免疫。中心对象是单个权重矩阵 $W\in\mathbb{R}^{m\times n}$ 上的 "Adam-with-basis-rotation" 更新——每步拿到梯度 $G_t=\nabla f_W(W_{t-1};B_t)$ 后，先更新一阶动量 $M_t$，每隔 freq 步用幂迭代刷新一次左右旋转矩阵 $U\in\mathbb R^{m\times m}$、$V\in\mathbb R^{n\times n}$（它们的列分别是 $\mathbb E[GG^\top]$ 和 $\mathbb E[G^\top G]$ 的特征向量），然后把梯度和动量旋进特征基算 $\tilde G_t=U^\top G_t V$、$\tilde M_t=U^\top M_t V$，在旋转空间维护二阶动量 $\tilde V_t$，最后把更新方向投影回原空间走 $W_t=W_{t-1}-\eta_t\,U(\tilde M_t/\sqrt{\tilde V_t+\epsilon})V^\top$。这整套换算之所以在 LLM 规模上还 tractable，靠的是论文两条结构假设：Hessian 分块对角（每个权重矩阵是独立块）+ 每块 Hessian 可 Kronecker 分解为左右两个小矩阵的张量积，于是本该是 $mn\times mn$ 的旋转矩阵被压成 $m\times m$ 和 $n\times n$ 两个小矩阵。
 
+下图是单个权重矩阵 $W$ 上每一步的更新流程（关键设计 1 是支撑这一切的诊断/动机，不在流程图里）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["采样 batch B_t<br/>算（可能延迟的）梯度 G_t"] --> B["更新一阶动量<br/>M_t = β₁·M_{t−1} + (1−β₁)·G_t"]
+    B -->|"每 freq 步：刷新基底"| C["特征基估计的两轴分类<br/>幂迭代取 E[GGᵀ]、E[GᵀG] 特征向量 → U, V"]
+    B -.->|"其余步：复用旧 U, V"| D
+    C --> D["旋进特征基<br/>G̃_t = UᵀG_t V，M̃_t = UᵀM_t V"]
+    D --> E["旋转空间二阶动量<br/>Ṽ_t = β₂·Ṽ_{t−1} + (1−β₂)·G̃_t⊙G̃_t"]
+    E --> F["投影回原空间更新权重<br/>W_t = W_{t−1} − η_t·U(M̃_t/√(Ṽ_t+ε))Vᵀ"]
+    F -.->|"下一步 t+1"| A
+```
+
 ### 关键设计
 
 **1. 基底失配是延迟伤害的放大器：先诊断清楚再对症下药**

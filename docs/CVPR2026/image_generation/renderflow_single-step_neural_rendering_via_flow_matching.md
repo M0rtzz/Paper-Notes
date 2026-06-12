@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 输入：一组 G-buffer 属性——albedo（基础颜色）、normal（法线）、depth（深度）、material（粗糙度/金属度/镜面反射）和环境贴图（全局光照）。albedo 作为流的起点替代噪声，经 VAE 编码为 latent $\mathbf{z}_0$；目标是路径追踪渲染的真实图像 $\mathbf{z}_1$。模型学习一个速度场 $v_\theta$ 将 $\mathbf{z}_0$ 直接映射到 $\mathbf{z}_1$，单步推理即可得到完整渲染结果。可选的稀疏关键帧通过 cross-attention adapter 提供物理精度锚点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["albedo（基础颜色）"] --> Z0["VAE 编码 → 流起点 z₀"]
+    subgraph COND["G-buffer 条件注入（设计2）"]
+        direction TB
+        B["normal / depth / material<br/>（逐像素对齐）"] --> B2["attribute embedder<br/>逐元素相加进 render tokens"]
+        C["环境贴图（全局光照）"] --> C2["旋到相机视空间 + 色调映射<br/>AdaIN 调制每个 block"]
+    end
+    Z0 --> D["视频 DiT 骨干（Wan2.1）<br/>Albedo-to-Render 单步流匹配（设计1）"]
+    B2 --> D
+    C2 --> D
+    K["稀疏离线精渲关键帧"] -.可选.-> KA["Keyframe Adapter<br/>cross-attention 锚定物理精度（设计3）"]
+    KA -.-> D
+    D --> E["单步外推速度场 → z₁ → VAE 解码"]
+    E --> F["全光照渲染图"]
+    F -.冻结骨干 + prompt.-> INV["逆渲染 Adapter<br/>反向拆回 G-buffer intrinsic（设计4）"]
+```
+
 ### 关键设计
 
 **1. Albedo-to-Render 流匹配：把渲染当成"从基础颜色到全光照"的确定性单步流，而不是从噪声去噪**

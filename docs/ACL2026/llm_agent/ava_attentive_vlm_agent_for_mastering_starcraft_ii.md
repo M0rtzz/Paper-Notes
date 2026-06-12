@@ -42,6 +42,21 @@ tags:
 ### 整体框架
 AVACraft 把 SC2 形式化为一个 POMDP $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, P, R, \gamma \rangle$，严格遵守 Fog of War（agent 只看到 sight range 内的信息），其设计目标是让 MARL 与 VLM 两类范式在同一观测/动作/奖励空间下公平对决。它的关键在于观测空间 $\mathcal{O}$ 同时提供四种 mode——RGB（screen 160×120 + minimap 32×32）、SMAC 兼容 scalar、Hybrid、以及 VLM-Optimized（RGB + 自然语言描述 + 结构化 unit 列表），而动作空间 $\mathcal{A} = \mathcal{A}_{\text{atk}} \cup \mathcal{A}_{\text{mov}} \cup \mathcal{A}_{\text{abl}}$（攻击/移动/技能）和稀疏奖励 $R \in \{-1, 0, 1\}$ 对所有范式共享。21 个场景覆盖低/中/高/极高四档难度，每个场景都配 1 个 built-in AI（VeryHard）+ 3 个 LLM 合成脚本策略并随机选取，防止单一策略被穷举利用。在这个统一台子上，MARL 侧跑 IQL / QMIX / QTRAN / VDN / MAPPO / IPPO 六种算法（统一 Swin-Tiny 27.5M 视觉骨干、最多 5M 步、可选拼 GTE-Base 文本 embedding），VLM 侧则跑零样本的 AVA agent（GPT-4o / GPT-4-Turbo / GPT-4o-mini / Qwen-VL-Plus / Qwen3-VL-30B / Qwen3-VL-8B），AVA 内部由下述三个组件串成一次决策。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["截图 I + 文本 T + 历史 H"]
+    subgraph MPI["多模态优先级推理 MPI"]
+        direction TB
+        PLAN["Planner：出主次技能计划"] --> DET["单位检测：位置 + 类别 + bbox"]
+        DET --> PRI["优先级分析：排出该先打谁"]
+    end
+    IN --> MPI
+    MPI --> RAG["RAG 知识注入<br/>按单位类别检索战术 tuple → 合成战术指令"]
+    RAG --> ROLE["动态角色分配<br/>给每个单位分 tank / DPS / scout"]
+    ROLE --> ACT["输出动作（脚手架）<br/>攻击 / 移动 / 技能"]
+```
+
 ### 关键设计
 
 **1. 多模态优先级推理（MPI）：先想做什么、再看清有谁、最后排该打谁**

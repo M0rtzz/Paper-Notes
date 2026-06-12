@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 这篇论文要解决的是：给 MLLM 一张源视角图、它的深度图、以及源/目标两个相机位姿，让模型回答"换到目标视角再看，场景会是什么样"。传统做法是在像素层面把源图 warp 到目标视角，但深度图一有小误差，像素就被扯得几何扭曲、语义退化。本文的关键转折是把 warping 这个操作整体上移一个层级——不动像素，而是动 ViT 切出来的 image token。流程是：先验证 token 这个粒度对位置扰动天然鲁棒，再用一套从目标视角反向投影的几何变换把源图 token 重排到目标视角的规则网格上，最后把重排后的 token 直接喂给 MLLM。整套操作发生在推理时，不需要任何训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：源视角图 + 深度图<br/>源/目标相机位姿"] --> B["ViT 编码源图<br/>→ image token 网格"]
+    P["Token 位置鲁棒性验证<br/>token 对取点扰动不敏感<br/>→ 选 token 作 warping 粒度"] -. 支撑 .-> C
+    B --> C["Backward Token Warping<br/>目标视角铺密集规则网格，反向取 token"]
+    C --> D["反向投影 f(T→S) + proxy mesh ray casting<br/>每个目标格点映回源图坐标"]
+    D -->|最近 token / 重裁 patch 重编码| E["Nearest vs Adaptive Fetching<br/>取源 token 填入目标网格"]
+    E --> F["密集规则的目标视角 token 网格"]
+    F --> G["MLLM 推理<br/>回答近视角空间问题"]
+```
+
 ### 关键设计
 
 **1. Token 对位置扰动的鲁棒性验证：先证明 token 是合适的 warping 粒度**

@@ -43,6 +43,24 @@ F-TIS 把"截断重要性采样 (TIS)"与"按 KL 阈值过滤负优势 off-polic
 ### 整体框架
 F-TIS 跑的是"vertical decentralized RL"：每个节点各自拿一个 prompt，用自己的模型在本地一次生成完整一组 $G$ 个 completion，把 `(token_ids, per-token log-prob, reward)` 通过 all-gather 广播出去；收到全网 completion 后，每个节点把它们一律当成自己策略 $\pi_\theta$ 的训练样本，喂进一个改造过的 GRPO loss 更新本地模型。也就是说，生成阶段各节点用自己的 $\pi_{\theta_{gen}}$ 跑组采样、本地算 reward 和组优势；训练阶段所有 completion 被本节点的 $\pi_\theta$ 重新前向一遍拿到 $\pi_\theta(a_{i,t}|\cdot)$，再与广播来的 $\pi_{\theta_{gen}}(a_{i,t}|\cdot)$ 一起算梯度。整个交换只传 $8\times|p|$ 字节/token（4 字节 token id + 4 字节 log-prob），轻到跨广域网也能跑；而组优势 $\hat{A}_i$ 始终在本地、按"本节点 GRPO 视角"归一化。难点在于：别人的 completion 是用别的模型采的，对本模型来说就是 off-policy 噪声，而 GRPO 本质 on-policy，硬吃就崩——下面三个设计正是让这条 off-policy 数据流不崩的关键。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Prompt（每节点各拿一个）"] --> B["本模型 π_θgen 本地采样<br/>一组 G 个 completion"]
+    B --> C["Vertical 协作：本地算 reward<br/>并按本模型这组 reward 归一化组优势 Â"]
+    C --> D["all-gather 广播<br/>token id + log-prob + reward（仅 8 字节/token）"]
+    D --> E["本模型 π_θ 重新前向全网 completion"]
+    E --> LOSS
+    subgraph LOSS["F-TIS 损失：吃异质 off-policy 也不崩"]
+        direction TB
+        F["截断重要性采样 TIS<br/>IS 比值外提并 clamp 到 C=2"]
+        G2["KL 阈值过滤<br/>Â 为负且离当前策略过远者优势置 0"]
+        F --> G2
+    end
+    LOSS --> H["更新本地模型 π_θ"]
+    H -.下一轮.-> B
+```
+
 ### 关键设计
 
 **1. 截断重要性采样（TIS）作为骨架：让异质 generator 引入的方差/偏置可控**

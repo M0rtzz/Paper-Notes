@@ -43,6 +43,32 @@ tags:
 ### 整体框架
 OEA 的核心是把一个原生支持音频理解的多模态 LLM 改造成"既能编码文本、又能编码音频"的统一检索编码器，从而绕开 CLAP 那种双编码器在文本侧表达力不足的瓶颈。输入端，文本查询加 "query:" 前缀走 LLM 文本通路，音频加 "passage:" 前缀走 LLM 原生音频编码器；两路都对最后隐层做均值池化，再经各自的模态投影头压到同一个 512 维 L2 归一化空间，使文本与音频可以直接做余弦相似度检索。训练时主干权重全程冻结，只更新 LoRA 适配器和投影头，整套方法配套提出了贴近真实搜索的 UIQ 查询基准与衡量"区分硬负例"能力的 HNSR/TFR 指标。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ENC["统一 LLM 主干编码器"]
+        direction TB
+        Q["文本查询（加 query: 前缀）"] --> LT["多模态 LLM 文本通路"]
+        A["音频（加 passage: 前缀）"] --> LA["LLM 原生音频编码器"]
+        LT --> P1["均值池化 + 文本投影头"]
+        LA --> P2["均值池化 + 音频投影头"]
+        P1 --> S["512 维 L2 归一化共享空间"]
+        P2 --> S
+    end
+    S --> TR["对称 InfoNCE 对比训练<br/>冻结主干，只训 LoRA + 投影头"]
+    subgraph UIQ["User-Intent Queries 基准"]
+        direction TB
+        G["GPT-5.1 生成 5 类真实风格查询"] --> Ver["9 名标注者人工验证"]
+    end
+    subgraph HN["硬负例挖掘与区分指标"]
+        direction TB
+        H1["MGA-CLAP 声学相似检索"] --> H2["BGE 语义不相似过滤"] --> H3["人工验证 → 硬负例对"]
+    end
+    TR --> EV["检索评估<br/>HNSR / TFR / ΔRank"]
+    UIQ --> EV
+    HN --> EV
+```
+
 ### 关键设计
 
 **1. 统一 LLM 主干编码器：让音频检索吃到语言先验**

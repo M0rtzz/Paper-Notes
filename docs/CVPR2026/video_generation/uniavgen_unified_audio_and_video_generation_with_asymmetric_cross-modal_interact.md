@@ -47,6 +47,27 @@ UniAVGen 采用**对称双分支联合合成架构**：视频分支使用 Wan 2.
 
 音频分支：音频以 24kHz 采样后转为 Mel 频谱图作为 latent $z^a$，参考音频和条件音频同样拼接输入，语音文本通过 ConvNeXt blocks 提取特征后注入。
 
+两个分支在每个交互层通过**非对称跨模态交互**互通信息，其中**人脸感知调制**把交互按到人脸区域；训练用 Flow Matching 各自预测速度场，推理时再用**模态感知 CFG** 放大跨模态信号。整体数据流如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：参考说话人图像 + 视频描述 + 语音文本<br/>(可选 参考音频 / 条件音视频)"]
+    IN --> VB["视频分支<br/>Wan 2.2-5B DiT，VAE latent z^v"]
+    IN --> AB["音频分支<br/>Wan 2.1-1.3B 模板，Mel 频谱 latent z^a"]
+    subgraph ACMI["非对称跨模态交互"]
+        direction TB
+        A2V["A2V：每视频帧取前后 w 帧音频窗口<br/>逐帧 cross-attention"]
+        V2A["V2A：每音频 token 按 α 插值相邻视频帧<br/>cross-attention"]
+    end
+    VB --> ACMI
+    AB --> ACMI
+    ACMI --> FAM["人脸感知调制 FAM<br/>软掩码聚焦人脸，λ_m 由 0.1 线性衰减到 0"]
+    FAM --> FM["Flow Matching 联合训练<br/>两分支各自预测速度场"]
+    FM --> CFG["推理：模态感知 CFG<br/>放大『有跨模态 − 无跨模态』差值"]
+    CFG --> OUT["输出：同步音视频"]
+```
+
 ### 关键设计
 
 **1. 非对称跨模态交互：让音频和视频按各自的时间需求互相"看"对方**

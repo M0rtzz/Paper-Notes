@@ -45,6 +45,37 @@ tags:
 
 整条流水线因此分成两段：先用一套全自动管线从「图像 + 报告」里挖出病变 mask（定位阶段），再基于这些定位信息批量合成「指令-回答」训练对（数据阶段），最后用合成数据微调出分割模型 ROSALIA。ROSALIA 本身沿用 LISA 架构，把视觉语言模型（LLaVA）和分割模型（SAM）端到端接在一起，用户给一句话指令，它就吐出 mask 加文字回答。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["MIMIC-CXR<br/>图像 + 放射报告（无人工标注）"]
+    subgraph MASK["1. 多模态自动 mask 生成管线"]
+        direction TB
+        R["报告结构化 + 位置映射<br/>LLM 抽六元组：在哪里"]
+        V["视觉信息提取（并行三模型）<br/>RadEdit→异常图 / CXAS→解剖 mask / YOLO→检测框"]
+        F["四条件过滤 c1−c4<br/>三方交叉验证 → 病变 mask"]
+        VER["位置验证<br/>确认定位 + 记录空白位置"]
+        R --> F
+        V --> F
+        F --> VER
+    end
+    subgraph INST["2. 指令-回答对生成系统"]
+        direction TB
+        T["三档指令 + 动态生成条件<br/>基础 / 全局 / 病变推理"]
+        NEG["负样本<br/>未提及·否定病变 + 空白位置"]
+    end
+    subgraph MODEL["3. ROSALIA 模型（LISA 架构）"]
+        direction TB
+        VLM["LLaVA 读图 + 指令<br/>生成文字 + 特殊 [SEG] token"]
+        SAM["SAM-H mask 解码器<br/>token 嵌入 → 分割 mask"]
+        VLM --> SAM
+    end
+    IN --> MASK
+    MASK -->|定位信息| INST
+    INST -->|MIMIC-ILS 1.1M 样本微调| MODEL
+    MODEL --> OUT["输出：分割 mask + 文字回答"]
+```
+
 ### 关键设计
 
 **1. 多模态自动 mask 生成管线：在零人工标注下从图像+报告交叉验证出病变 mask**

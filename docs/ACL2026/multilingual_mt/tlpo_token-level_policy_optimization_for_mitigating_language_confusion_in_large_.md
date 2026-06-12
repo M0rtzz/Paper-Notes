@@ -43,6 +43,18 @@ TLPO 的流程非常局部：先让当前模型生成回答，若没有语言混
 ### 整体框架
 TLPO 的流程非常局部：先用当前模型对 prompt $x$ 生成回答 $y$，若整段没有语言混淆就直接跳过该样本；一旦出现混淆，就定位第一个混淆位置 $c$，并把所有训练信号都收束到这一个 token 上。在前缀 $y_{<c}$ 固定的条件下，取当前策略 $\pi_\theta$ 的 top-N 下一个 token 作为候选集合；对每个候选，模型再往前生成很短的 lookahead 序列并 detokenize，用字符集规则判断这个候选到底会不会引发目标语言之外的输出；最后用候选 token 的 reward 和旧策略概率构造 advantage，通过带 clipping 和 KL 约束的 PPO 目标更新模型。它的目标不是重学整个多语言任务，而是把原模型的能力原样保住、只压低导致语言切换的那一点概率质量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt x → 当前模型生成回答 y"] --> B{"该回答有语言混淆？"}
+    B -->|无混淆| S["跳过该样本"]
+    B -->|有混淆| C["定位首个混淆 token 位置 c"]
+    C --> D["概率排序的候选 token 探索<br/>固定前缀，取该位置 top-N 候选"]
+    D --> E["token 级 reward 与概率加权 advantage<br/>每候选向前补 k=3 lookahead → detokenize<br/>→ 字符集判语言 → reward → A_i"]
+    E --> F["只在混淆点做 PPO 式局部更新<br/>概率比 + clipping + 对初始模型 KL 约束"]
+    F --> G["压低混淆候选、抬高目标语言候选<br/>其余位置分布几乎不动"]
+```
+
 ### 关键设计
 
 **1. 概率排序的候选 token 探索：只盯混淆点上最可能生成的几个 token，而不是整段序列或整个词表**

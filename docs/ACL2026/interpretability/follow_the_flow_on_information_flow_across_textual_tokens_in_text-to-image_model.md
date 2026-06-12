@@ -44,6 +44,28 @@ tags:
 ### 整体框架
 本文的核心是一套"用生成结果反推 token 含义"的因果干预探针。给定一条 T2I 提示词，先让文本编码器吐出全部 token 的上下文化表示 $h_1, \ldots, h_N$；要检验某个 token 子集 $S$ 到底编码了什么，就保留 $S$ 内的表示、把其余 token 全部替换成 pad embedding，组成一条 patched 序列送进扩散模型生成图像，再让 VLM（Qwen2-VL-72B）判断这张图里有没有出现目标概念。"图里出现 = 该子集确实编码了这个概念"，于是同一套干预既能在项内层面问"一个词的语义集中在哪几个 token 上"，也能在跨项层面问"一个 token 有没有偷吸邻居的信息"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["提示词"] --> B["文本编码器<br/>输出上下文化 token 表示 h₁…h_N"]
+    subgraph CP["因果干预框架（Causal Patching）"]
+        direction TB
+        C["保留目标子集 S 的表示<br/>其余 token 换成 pad embedding"] --> D["patched 序列引导扩散模型生成图像"]
+        D --> E["VLM 判定目标概念是否出现"]
+    end
+    B --> C
+    subgraph II["项内信息分布分析"]
+        direction TB
+        F["逐 token 干预定位代表性 token（1-2 个）"] --> H["移除非代表性 token<br/>对齐失败率相对降 21%"]
+    end
+    subgraph CI["跨项信息流分析与语义泄漏缓解"]
+        direction TB
+        G["有上下文 vs 无上下文 对比信息流动"] -->|检出 11% 语义泄漏| I["泄漏 token 替换回无上下文的干净表示"]
+    end
+    E --> II
+    E --> CI
+```
+
 ### 关键设计
 
 **1. 因果干预框架（Causal Patching）：用下游生成验证信息是否真被用到**

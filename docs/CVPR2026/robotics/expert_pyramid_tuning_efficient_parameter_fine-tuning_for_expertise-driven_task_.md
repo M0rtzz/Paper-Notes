@@ -40,7 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EPT 要解决的是 MoE-LoRA「所有 expert 长得一模一样」的问题：既然不同任务需要不同粒度的适配，那 expert 本身就该有不同的容量。它替换 Transformer 线性层里的 LoRA 模块，但不再为每个 expert 各养一套独立的低秩矩阵，而是让所有 expert 共享同一个低维的 meta-knowledge 子空间 $\mathbf{Z}_{meta}$，再用不同 kernel size 的反卷积把这个子空间「放大」成不同尺度的权重增量。一个 token 进来，router 选出 top-k 个 expert，每个被选中的 expert 各自从 $\mathbf{Z}_{meta}$ 投影出权重增量 $\mathbf{W}_i$，按门控分数加权求和后叠加到预训练权重 $\mathbf{W}_0$ 上。整体形如一座「参数金字塔」：底座是共享的紧凑 meta-knowledge，往上则展开成多尺度的 expert 权重。
+EPT 要解决的是 MoE-LoRA「所有 expert 长得一模一样」的问题：既然不同任务需要不同粒度的适配，那 expert 本身就该有不同的容量。它替换 Transformer 线性层里的 LoRA 模块，但不再为每个 expert 各养一套独立的低秩矩阵，而是让所有 expert 共享同一个低维的 meta-knowledge 子空间 $\mathbf{Z}_{meta}$，再用不同 kernel size 的反卷积把这个子空间「放大」成不同尺度的权重增量。一个 token 进来，router 选出 top-k 个 expert，每个被选中的 expert 各自从 $\mathbf{Z}_{meta}$ 投影出权重增量 $\mathbf{W}_i$，按门控分数加权求和后叠加到预训练权重 $\mathbf{W}_0$ 上。整体形如一座「参数金字塔」：底座是共享的紧凑 meta-knowledge，往上则展开成多尺度的 expert 权重。下图按数据流串起四个核心模块——子空间提供基底，金字塔投影把它放大成多尺度权重，裁剪器对齐目标层维度，路由器再挑选并加权融合：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 26, 'nodeSpacing': 30, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    X["输入 token x（最终叠加到冻结预训练权重 W₀）"]
+    Z["共享 Meta-Knowledge 子空间<br/>Z_meta = B·A，随机高斯初始化的低维基底"]
+    PYR["金字塔投影机制<br/>N 个不同 kernel size sᵢ 的反卷积 expert → 多尺度权重 Wᵢ"]
+    ALP["自适应 LoRA 裁剪器<br/>切片 B、A 对齐目标层维度 + 频率补偿 dₜ/T"]
+    ROUTE["Top-k 路由 + 对比学习 Task Embedding<br/>task-aware router 按门控分数 G(x) 选 top-k expert"]
+    SUM["加权求和：W₀x + Σ G(x)ᵢ·(dₜ/T)·Wᵢx → 输出"]
+    Z --> PYR
+    PYR --> ALP
+    ALP --> ROUTE
+    X --> ROUTE
+    ROUTE --> SUM
+```
 
 ### 关键设计
 

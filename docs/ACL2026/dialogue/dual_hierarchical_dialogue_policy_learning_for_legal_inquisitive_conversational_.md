@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 方法把"法官审律师"建模成一个增广 MDP：每轮 justice utterance $u_j^t$ 是 action $a^t$、attorney response $u_a^{t+1}$ 是 observation，transition 被扩成 $\mathcal{D} \sim (s^t, p^t, a^t, r^t, s^{t+1})$，其中 $p^t = f(u_j^{t-1}, u_a^t, u_j^t)$ 是法官对律师上一答的态度。在这个 MDP 上跑两个互相耦合的 RL 智能体——Appraisal Agent 先把对话历史读成一个离散 appraisal $p^t$，Dialogue Agent 再把 $p^t$ 拼进 state 后在 act/subtype/utterance 三层动作空间上序列决策；选定的三级动作连同增广 state 一起 prompt LLaMA-3-8B-Instruct，verbalize 成最终自然语言提问。整条链路从"评估对方"到"决定怎么问"再到"说出来"，对应法官庭审时的两步思维。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对话历史<br/>法官提问 + 律师上一答"] --> B["Dual-Agent 架构：Appraisal Agent<br/>DDQN 选 9 类 appraisal pᵗ"]
+    B --> C["增广状态 s_aug = concat（sᵗ, pᵗ）"]
+    C --> D
+    subgraph D["三层 Poincaré 动作空间（Dialogue Agent · DDQN）"]
+        direction TB
+        D1["Level 1 · act<br/>Questioning / Hypothesis Testing / Declaration"] --> D2["Level 2 · subtype<br/>Probing / Clarification / Comparison"]
+        D2 --> D3["Level 3 · 具体子类<br/>Probe the Assumption / Premise …"]
+    end
+    R["三重 reward + 保守 Q 正则<br/>Goal-Relevance + Novelty + Clarity，再减 R₁−R₂"] -. 训练信号 .-> D
+    D --> E["LLaMA-3-8B verbalize<br/>三级动作 → 自然语言"]
+    E --> F["输出：法官下一句提问"]
+```
+
 ### 关键设计
 
 **1. Dual-Agent 架构：把"怎么看你上一答"和"我下一步怎么问"解耦成两个 RL agent**

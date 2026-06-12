@@ -40,7 +40,25 @@ KLENT 把 reverse-KL 正则（控制策略更新幅度）+ 熵正则（维持探
 ## 方法详解
 
 ### 整体框架
-KLENT 同时参数化策略 $\pi_\theta(a|s)$ 和动作值函数 $Q_\theta(s,a)$（与 AlphaZero 只学 $V(s)$、靠 MCTS 估 $Q$ 形成鲜明对比）。训练在两个阶段间循环：(i) **Self-play phase**：用网络算出 $\pi'$（封闭式的正则化 best response，见下方公式 3），按 $\pi'$ 采样动作走完整局，记录每步的 $(S_t, A_t, \{\pi'(a|S_t)\}_a, G_t^\lambda)$，把 λ-return 作为值目标存入 buffer $\mathcal{D}$；(ii) **Fitting phase**：用 $\mathcal{D}$ 同时更新策略（拟合 $\pi'$ 作目标）和 $Q$（拟合 $G^\lambda$）。整套训练里**完全没有 MCTS**——MCTS 仅在 test-time 才可选地接回来做评估。
+KLENT 同时参数化策略 $\pi_\theta(a|s)$ 和动作值函数 $Q_\theta(s,a)$（与 AlphaZero 只学 $V(s)$、靠 MCTS 估 $Q$ 形成鲜明对比）。训练在两个阶段间循环：(i) **自博弈阶段（self-play）**：用网络算出封闭式的正则化最优策略 $\pi'$（见下方公式 3），按 $\pi'$ 采样动作走完整局，回算每步的 λ-return 当值目标，把 $(S_t, A_t, \{\pi'(a|S_t)\}_a, G_t^\lambda)$ 存入缓冲 $\mathcal{D}$；(ii) **拟合阶段（fitting）**：用 $\mathcal{D}$ 上的单一损失同时更新策略（交叉熵蒸馏向 $\pi'$）和值函数（MSE 拟合 $G^\lambda$），再回到自博弈阶段。整套训练里**完全没有 MCTS**——MCTS 仅在 test-time 才可选地接回来做评估；而这套两阶段更新之所以能稳定收敛，靠的是关键设计 3 给出的双场景收敛性证明。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    INIT["初始化 π_θ 与 Q_θ<br/>（直接学 Q，不学 V、不用 MCTS）"]
+    INIT --> A
+    subgraph SP["自博弈阶段（采数据）"]
+        direction TB
+        A["反向 KL + 熵双正则封闭式更新<br/>π′ ∝ exp((Qπ + β·logπ) / (α+β))"]
+        A --> B["按 π′ 采样动作走完整局"]
+        B --> C["λ-return 回算值目标 Gλ"]
+        C --> D["存入缓冲 D：(S, A, π′(·|S), Gλ)"]
+    end
+    D --> FIT["拟合阶段：单一损失同时更新<br/>策略（交叉熵蒸馏 π′）+ 值（MSE 拟合 Gλ）"]
+    FIT -->|两阶段交替循环| A
+    FIT --> OUT["训练好的 π_θ / Q_θ<br/>（test-time 可选接回 MCTS 评估）"]
+    PROOF["双场景收敛性证明<br/>normal-form / finite-length"] -. 保证该更新稳定收敛 .-> A
+```
 
 ### 关键设计
 

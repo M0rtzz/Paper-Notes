@@ -45,6 +45,28 @@ tags:
 
 这篇工作不训练新模型，而是把 Chatbot Arena 的 pairwise 投票当作显微镜，去检验"全局排名能不能代表个体用户"。整条分析分三步流入：先用 ELO 和 Bradley-Terry 两套评分系统，为 115 名活跃用户各自算出个性化模型排名，再与全局排名做 Spearman 相关，量化偏离有多大；然后用 FastTopic 话题建模和 LISA 风格嵌入，从"问什么"和"怎么问"两个维度刻画用户查询的异质性；最后把话题与风格特征拼成输入、用回归模型去预测每个用户的模型评分向量，验证个性化排名是否可以仅凭用户画像推断出来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Chatbot Arena<br/>pairwise 投票 + 用户查询"]
+    subgraph S1["双评分系统的个性化排名"]
+        direction TB
+        B1["ELO 增量更新<br/>评分平滑"]
+        B2["Bradley-Terry 最大似然<br/>对个体偏好更敏感"]
+    end
+    subgraph S2["多维度用户异质性刻画"]
+        direction TB
+        C1["FastTopic 话题画像<br/>10 维话题分布均值"]
+        C2["LISA 风格嵌入<br/>768 维 → 6 元风格"]
+    end
+    A --> S1
+    A --> S2
+    S1 --> D["与全局排名做 Spearman 相关<br/>量化偏离（BT 平均 ρ≈0.04）"]
+    S2 --> E["话题+风格特征驱动的排名预测<br/>拼成 778 维 → MLP 回归"]
+    S1 -->|个性化排名作回归目标| E
+    E --> F["预测 20 维模型评分向量<br/>验证个性化基准可落地"]
+```
+
 ### 关键设计
 
 **1. 双评分系统的个性化排名：用 ELO 和 Bradley-Terry 互相参照**

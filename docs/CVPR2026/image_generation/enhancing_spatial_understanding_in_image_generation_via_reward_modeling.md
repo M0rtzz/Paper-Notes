@@ -45,6 +45,32 @@ tags:
 
 这篇要解决文生图里复杂空间关系（尤其长提示、多物体）画不准的问题。作者的判断是：用 RL 增强空间理解的真正瓶颈不是 RL 本身，而是缺一个可靠的奖励模型——现成的人类偏好/VQA 对齐模型评不准空间关系，专有大 VLM 又贵到没法频繁查询。于是整条流水线分三步串起来：先构建 80K 对抗性偏好对的 SpatialReward-Dataset，再用它训练专门评估空间关系的奖励模型 SpatialScore，最后把 SpatialScore 当奖励信号、通过 GRPO 在线 RL 优化 FLUX.1-dev。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["SpatialReward-Dataset 对抗性偏好对"]
+        direction TB
+        A["GPT-5 生成多物体空间提示"] --> B["空间扰动：仅翻转相对位置<br/>渲染 perfect / perturbed 图"]
+        B --> C["人工审核 → 80K 偏好对"]
+    end
+    DATA --> D["训练奖励模型"]
+    subgraph RM["SpatialScore 奖励模型"]
+        direction TB
+        E["Qwen2.5-VL-7B + LoRA<br/>插入 reward token → 高斯分数 μ,σ"]
+        F["Bradley-Terry 偏好损失"]
+    end
+    D --> RM
+    RM --> G["FLUX.1-dev 每组生成 G=24 样本"]
+    subgraph RL["Top-k 过滤 GRPO"]
+        direction TB
+        H["SpatialScore 打分 → 按奖励排序"]
+        I["仅取 top-k / bottom-k 算优势"]
+    end
+    G --> RL
+    RL -->|更新 LoRA 策略| G
+    RL --> J["空间理解增强的 FLUX"]
+```
+
 ### 关键设计
 
 **1. SpatialReward-Dataset：用空间扰动构造对抗性偏好对**

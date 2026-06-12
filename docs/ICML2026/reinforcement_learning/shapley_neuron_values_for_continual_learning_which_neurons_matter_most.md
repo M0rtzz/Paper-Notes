@@ -54,6 +54,23 @@ $\theta \leftarrow \theta - \eta\Big(\frac{\partial \mathcal{L}}{\partial \theta
 
 其中 $(\mathbf{M}_{t-1})_j = 0$ 当且仅当 $\theta_j$ 属于已被冻结的 Neuron。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务 T_t 数据<br/>(只有当前任务可见)"] --> B["在可塑 Neuron 上训练<br/>梯度乘前序冻结掩码"]
+    B --> C["定义 Shapley Neuron Value<br/>四公理唯一·连续重要度"]
+    subgraph EST["三重近似估计（MC + 截断 + MAB）"]
+        direction TB
+        C1["Monte Carlo<br/>排列期望估边际贡献"] --> C2["截断<br/>V(S)≤τ 时跳过"]
+        C2 --> C3["多臂老虎机<br/>只采样跨第 k 大者"]
+    end
+    C --> EST
+    EST --> D["按预算选 Top-⌊c·N⌋<br/>形成任务掩码 S_t"]
+    D --> E["并入累积冻结掩码<br/>Stable / Plastic 解耦"]
+    E -->|进入下一任务| B
+    E --> F["固定容量多任务专家子网"]
+```
+
 ### 关键设计
 
 **1. Shapley Neuron Value 公理化定义：给每个 Neuron 一个连续实值的"公平"重要度**

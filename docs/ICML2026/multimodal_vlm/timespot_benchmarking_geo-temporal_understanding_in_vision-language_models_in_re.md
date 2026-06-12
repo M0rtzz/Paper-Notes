@@ -41,7 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TimeSpot 把每张图像 $x$ 映射到结构化标签 $y=(y^{\mathrm{temp}}, y^{\mathrm{geo}})$，其中 $y^{\mathrm{temp}}=(s, m, \tau, \phi)$ 表示季节、月份、本地时间 HH:MM、日相，$y^{\mathrm{geo}}=(C, \kappa, z, e, (\lambda,\varphi))$ 表示洲、国、气候带、环境类型、经纬度。整体流程分四步：（1）从 web 与作者自拍中召回 ~20,000 张候选地面图像；（2）过滤掉地标和文字主导的样本，保留物候/光影/材质这种细粒度物理线索；（3）从 EXIF + 地理坐标 *程序化* 派生九字段；（4）3 名主标注员 + 2 名资深审核员两阶段人工校验，共 ~600 小时标注。最终产出 1,455 张图覆盖 80 国，按统一 JSON schema 存储，并在评测时强制做月-季-半球对齐、日相-时间-经度兼容、气候-坐标合理性等自动审计。
+TimeSpot 把每张图像 $x$ 映射到结构化标签 $y=(y^{\mathrm{temp}}, y^{\mathrm{geo}})$，其中 $y^{\mathrm{temp}}=(s, m, \tau, \phi)$ 表示季节、月份、本地时间 HH:MM、日相，$y^{\mathrm{geo}}=(C, \kappa, z, e, (\lambda,\varphi))$ 表示洲、国、气候带、环境类型、经纬度。数据集构建分四步：（1）从 web 与作者自拍中召回 ~20,000 张候选地面图像；（2）过滤掉地标和文字主导的样本，保留物候/光影/材质这种细粒度物理线索；（3）从 EXIF + 地理坐标 *程序化* 派生九字段；（4）3 名主标注员 + 2 名资深审核员两阶段人工校验（主标注交叉核验、资深仲裁边界情形），共 ~600 小时。最终产出 1,455 张图覆盖 80 国，按统一 JSON schema 存储。评测阶段强制 VLM 输出九字段 JSON，除字段级精度外还做月-季-半球对齐、日相-时间-经度兼容、气候-坐标合理性等跨字段一致性审计，并辅以 ECE/risk-coverage 校准与半球翻转/OOD 鲁棒性测试。最后作者把 LoRA SFT 当作诊断探针，在 Qwen-VL2.5-3B 上分别做 country/time/joint 微调，借此回答"显式监督能否补齐物理 grounding"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph BUILD["结构化九字段 schema + 程序化标签派生（设计 1）"]
+        direction TB
+        A["召回 ~20k 张<br/>非地标地面图像"] --> B["过滤地标/文字<br/>保留物候·光影·材质线索"]
+        B --> C["程序化派生九字段<br/>时间戳·星历·Köppen·反地理编码"]
+        C --> D["两阶段人工校验<br/>主标注交叉核验→资深仲裁边界"]
+    end
+    D --> E["TimeSpot 基准<br/>1,455 图 / 80 国 / JSON schema"]
+    subgraph EVAL["跨字段一致性诊断 + 校准评测（设计 2）"]
+        direction TB
+        F["VLM 强制 JSON 九字段预测"] --> G["字段级精度 + 跨字段一致性违例率"]
+        G --> H["ECE / risk-coverage 校准<br/>半球翻转 · OOD 鲁棒性"]
+    end
+    E --> F
+    H --> I["SFT 诊断探针（设计 3）<br/>LoRA 微调 Qwen-VL2.5-3B<br/>country/time/joint → 暴露梯度冲突"]
+```
 
 ### 关键设计
 

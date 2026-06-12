@@ -45,6 +45,19 @@ EvoGM 要解决的是"在小验证集、少评估预算下高效搜索 task-vect
 
 具体是一个嵌套双循环。输入是预训练基座 $\bm{\theta}_{pre}$、$N$ 个 LoRA 微调专家及其任务向量 $\bm{\tau}_i = \bm{\theta}_i - \bm{\theta}_{pre}$、验证集 $\mathcal{D}_{val}$、种群大小 $P=2N$、外层轮数 $R$、内层迭代数 $T$。内层用 hybrid 初始化（均匀平均、one-hot、随机均匀）构造种群并在 $\mathcal{D}_{val}$ 上评估写入历史 $\mathcal{H}$，此后每次迭代把 $\mathcal{H}$ 按 top-$\rho$（默认 $\rho{=}0.3$）切成 winner 集 $\mathcal{H}^+$ 与 loser 集 $\mathcal{H}^-$、重新训一对生成器、用前向生成器把整个种群"推"向高性能区，再评估并按 fitness 选 top-$P$ 进入下一代；外层每跑完一次内层搜索就取 top-$N$ 的 $\bm{\lambda}^{(i)}$ 合成新专家、刷新基底再开下一轮，最终输出历史中 fitness 最高的 $\bm{\lambda}^*$ 及对应合并模型 $\bm{\theta}(\bm{\lambda}^*)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 θ_pre + N 个专家任务向量 τ_i + 验证集 D_val<br/>hybrid 初始化种群 → 评估写入历史 H"] --> C["按 top-ρ 切分 H：winner 集 H⁺ / loser 集 H⁻"]
+    C --> D["双向 MLP 生成器 + Winner-Loser 配对训练<br/>学一个把 loser 拉向 winner 中心 μ⁺ 的映射"]
+    D --> E["Cycle-Consistency 正则<br/>反向生成器能还原 loser，防生成器塌缩到单点"]
+    E --> F["前向生成器把种群推向高性能区 → 评估 → 选 top-P"]
+    F -->|内层未满 T 代| C
+    F -->|内层结束| G["外层 Basis Shift<br/>取 top-N λ 合成新专家、重算 τ_i 刷新基底"]
+    G -->|未满 R 轮| A
+    G -->|搜索结束| H["输出 fitness 最高的 λ* 及合并模型 θ(λ*)"]
+```
+
 ### 关键设计
 
 **1. 双向 MLP 生成器 + Winner-Loser 配对训练：把"变异"学成可微映射**

@@ -45,6 +45,17 @@ tags:
 
 WikiSeeker 包含三个阶段：(1) **检索**：VLM Refiner 扩展原始问题，多模态检索器（视觉+文本嵌入拼接）从知识库中检索候选文档；(2) **重排**：多模态重排器筛选最相关段落；(3) **生成**：VLM Inspector 评估检索上下文是否充分——通过则路由到纯文本 LLM 生成答案，不通过则 VLM 用内部知识直接回答。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 + 文本问题"] --> B["VLM Refiner<br/>结合视觉线索重写查询（GRPO 强化学习）"]
+    B --> C["多模态密集检索<br/>视觉 + 文本特征按 α 加权拼接召回候选"]
+    C --> D["多模态重排<br/>筛选最相关段落"]
+    D --> E["VLM Inspector<br/>验证检索上下文是否可靠"]
+    E -->|PASS| F["纯文本 LLM<br/>从检索上下文提取答案"]
+    E -->|FAIL| G["VLM 内部知识<br/>直接作答兜底"]
+```
+
 ### 关键设计
 
 **1. VLM 作为 Refiner：用视觉线索把简短查询重写成好检索的查询，并用 RL 自学策略**

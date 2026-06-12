@@ -44,6 +44,22 @@ SAM-NER 是一个 progressive mediation pipeline。第一阶段 Entity Discovery
 
 这种设计的关键是解耦：span boundary 由双抽取器协作解决，跨域语义稳定性由 archetype classifier 提供，细粒度类型归属由 definition alignment 处理。每一步都降低下一步的搜索空间和语义不确定性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入句子"] --> S1
+    subgraph S1["协作式实体发现 Cooperative Entity Discovery + CCR"]
+        direction TB
+        B["Anchor Extractor<br/>IEPile 指令微调·高精度边界"]
+        C["Explorer Extractor<br/>Pile-NER 银标·高召回"]
+        C -->|"单词级候选交 anchor 复核"| D["CCR 共识去噪<br/>anchor 不支持则删，再与 anchor 结果合并"]
+        B --> D
+    end
+    S1 --> E["通用语义原型分类 Universal Semantic Archetypes<br/>14 类原型 + 投影函数 M"]
+    E --> F["定义校准 Definition-Guided Calibration<br/>冻结 LLM 按定义对齐选目标类型"]
+    F --> G["目标域细粒度类型输出"]
+```
+
 ### 关键设计
 
 **1. Cooperative Entity Discovery 与 CCR：用双抽取器分工解决"既要召回长尾实体又要避开泛化噪声"**

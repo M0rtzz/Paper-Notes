@@ -48,6 +48,21 @@ tags:
 
 CROWDio 想解决的是：怎么在一群装不下整个模型的 Android 手机上，凑出一份完整 Transformer 推理。它把一个完整 ONNX 模型按层切成若干分片，让每台设备只负责一段，再用一条持久 WebSocket 通道把它们串成流水线。系统分三层——**Developer SDK** 收下开发者按序排好的 ONNX 分片，自动生成线性 DAG、做拓扑校验、给每段加 SHA-256 校验后 base64 打包；**Foreman（调度中心）** 把 $N$ 个输入 × $S$ 个阶段实例化成 $N\times S$ 个任务记录，维护依赖图、按亲和度派活、处理掉线重派；**Android Worker** 在单分区驻留约束下执行 ONNX 推理，每 30 秒上报 CPU/RAM/电量/RTT/温度遥测。参考工作负载是 DistilBERT-SST2，按第 3 层切成三段：`cell_a`（Embedding + Layers 0–2，最小分片）、`cell_b`（Layers 3–5，最大分片）、`cell_c`（Pre-classifier + Classifier）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["开发者 SDK<br/>有序 ONNX 分片 → 线性 DAG<br/>+ 拓扑校验 + SHA-256/base64"] --> B
+    subgraph FM["Foreman 调度中心"]
+        direction TB
+        B["物化 N×S 个任务记录"] --> C["流式 1:1 依赖<br/>每输入独立流过，消 straggler"]
+        C --> D["4 级亲和度调度<br/>模型门控 + Tier1→4 亲和提升 + 熵加权"]
+    end
+    D -->|"派活 / 掉线重派"| E["Android Worker<br/>单分区驻留 + JIT 延迟加载"]
+    E --> F["ONNX 推理 + 30s 遥测上报"]
+    F -->|"下一阶段：zlib 压缩张量<br/>（>1MB 走 fs-store）"| C
+    F --> G["分类 logits 输出"]
+```
+
 ### 关键设计
 
 **1. JIT 延迟加载 + 单分区驻留约束：把每台设备的峰值内存焊死在"一个分片"以内**

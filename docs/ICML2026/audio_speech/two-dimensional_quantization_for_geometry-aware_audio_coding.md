@@ -42,6 +42,18 @@ tags:
 ### 整体框架
 Q2D2 不动 codec 的整体骨架，只把 WavTokenizer 那条「encoder → 单 quantizer → decoder」流水线里的标量量化器，替换成一个把通道两两配对、再落到固定二维网格上做最近邻的几何量化器。它要回答的核心问题是：怎样在保留 FSQ「隐式乘积码本、无需学码本」的稳定性的同时，把被 FSQ 丢掉的通道间相关性重新捞回来。答案就是从「1D 标量网格」升级到「2D 几何 tiling」，码本依旧是隐式的，量化器本身几乎没有可学参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    ENC["encoder 输出 z（维度 d=6，偶数）"]
+    PROJ["轻量投影：仿射 + tanh + 逐维缩放到 [−l_i/2, l_i/2]"]
+    TILE["二维几何 tiling 最近邻<br/>成对通道落到六边形 / 矩形 / 菱形网格"]
+    CB["隐式乘积码本<br/>笛卡尔积索引 |C|=∏ L_j，零存储 embedding"]
+    STE["STE 直通 + 偶数维度对齐<br/>前向离散、反向梯度复制，端到端训练"]
+    OUT["out-projection → decoder 重建波形"]
+    ENC --> PROJ --> TILE --> CB --> STE --> OUT
+```
+
 ### 关键设计
 
 **1. 二维几何 tiling：把成对通道的相关性写进离散网格**

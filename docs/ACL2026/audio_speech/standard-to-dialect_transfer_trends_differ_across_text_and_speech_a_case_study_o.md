@@ -44,6 +44,27 @@ tags:
 
 主实验基于 MASSIVE / Speech-MASSIVE 的德语训练数据，以及 xSID 的德语与巴伐利亚语测试数据。作者额外录制 xSID-audio，让同一批德语和巴伐利亚语句子都有语音版本。辅助实验使用 SwissDial，其中德语文本与八种瑞士德语方言在内容上平行，任务是主题分类。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["标准德语训练数据<br/>MASSIVE 文本 / Speech-MASSIVE 语音"]
+    subgraph PATHS["三路径迁移对照"]
+        direction TB
+        T["text-only<br/>德语文本 → 文本分类器"]
+        S["speech-only<br/>德语音频 → 语音分类器"]
+        C["cascaded<br/>音频 → ASR 转写 → 文本分类器"]
+    end
+    SRC --> PATHS
+    subgraph EVAL["平行方言评测数据"]
+        direction TB
+        STD["标准德语测试<br/>xSID / SwissDial 德语"]
+        DIA["方言测试<br/>巴伐利亚语 / 八种瑞士德语"]
+    end
+    PATHS --> EVAL
+    EVAL --> CMP["模型族与 ASR 行为比较<br/>多文本/语音模型 + ASR 规范化相关性"]
+    CMP --> OUT["标准语 ↔ 方言的三组迁移趋势"]
+```
+
 ### 关键设计
 **1. 三路径迁移对照：把文本、语音、ASR 级联放进同一个标准语→方言框架里直接比**
 

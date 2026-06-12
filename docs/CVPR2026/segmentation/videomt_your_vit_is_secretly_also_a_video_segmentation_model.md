@@ -41,7 +41,21 @@ tags:
 
 ### 整体框架
 
-VidEoMT 的出发点是：现在的在线视频分割 SOTA（CAVIS、DVIS++、DVIS-DAQ）都把流程拆成「分割器 + 跟踪器」，每块里再堆一大堆专用组件，臃肿又慢。它沿用 EoMT 的 encoder-only 范式，把可学习 query 直接注入预训练 ViT 编码器的最后 L₂ 层、和 patch token 一起处理；真正的新东西是 query propagation 和 query fusion 两个轻量机制，让时序关联在编码器内部就完成，彻底省掉独立跟踪器，新增参数只有 2M。
+VidEoMT 的出发点是：现在的在线视频分割 SOTA（CAVIS、DVIS++、DVIS-DAQ）都把流程拆成「分割器 + 跟踪器」，每块里再堆一大堆专用组件，臃肿又慢。它沿用 EoMT 的 encoder-only 范式，把可学习 query 直接注入预训练 ViT 编码器的最后 L₂ 层、和 patch token 一起处理；真正的新东西是 query propagation 和 query fusion 两个轻量机制，让时序关联在编码器内部就完成，彻底省掉独立跟踪器，新增参数只有 2M。具体到每帧：输入帧先过前 L₁ 层 ViT 切成 patch token；首帧（$t=0$）注入可学习 query 走标准 EoMT，后续帧（$t>0$）则把上一帧传过来的输出 query 与可学习 query 经 query fusion 合并后再注入；后 L₂ 层把 query 与 patch token 联合处理，输出分割预测和供下一帧使用的输出 query。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入帧 I_t"] --> P["前 L1 层 ViT 编码<br/>切成 patch token"]
+    P --> F{"t = 0 ?"}
+    F -->|"首帧"| L["注入可学习 query Q_lrn"]
+    F -->|"后续帧"| QF["Query Fusion<br/>Linear(Q_t−1) + Q_lrn 逐元素相加"]
+    L --> E["后 L2 层 ViT<br/>query 与 patch token 联合处理"]
+    QF --> E
+    E --> O["分割预测<br/>类别标签 + 二值 mask"]
+    E --> S["输出 query Q_t（track query）"]
+    S -.->|"Query Propagation：传到下一帧"| QF
+```
 
 ### 关键设计
 

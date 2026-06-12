@@ -43,7 +43,18 @@ tags:
 
 ### 整体框架
 
-VidTAG 把视频地理定位重构成「逐帧到 GPS 坐标的检索」：不再维护一个全球图片库去匹配，而是把每一帧编码后直接在一个 GPS 坐标嵌入空间里检索最近邻，输出该帧的经纬度。整个流程分两阶段训练。Phase I 训练前端的特征通路——双帧编码器（CLIP+DINOv2）把每帧编成嵌入，TempGeo 在帧之间做时间对齐，再与位置编码器输出的 GPS 嵌入在共享空间里对比对齐，得到一个能逐帧检索 GPS 的基础模型。Phase II 冻结 Phase I，单独训练 GeoRefiner，把第一阶段还带噪声的逐帧 GPS 序列当作"脏输入"做一次去噪精炼。推理时一段视频走完「双编码器 → TempGeo → 初始检索 → GeoRefiner」就得到一条时间一致的逐帧轨迹。
+VidTAG 把视频地理定位重构成「逐帧到 GPS 坐标的检索」：不再维护一个全球图片库去匹配，而是把每一帧编码后直接在一个 GPS 坐标嵌入空间里检索最近邻，输出该帧的经纬度。整个流程分两阶段训练。Phase I 训练前端的特征通路——双帧编码器（CLIP+DINOv2）把每帧编成嵌入，TempGeo 在帧之间做时间对齐，再与位置编码器（沿用 GeoCLIP，把 GPS 坐标编成嵌入，属脚手架）输出的 GPS 嵌入在共享空间里对比对齐，得到一个能逐帧检索 GPS 的基础模型。Phase II 冻结 Phase I，单独训练 GeoRefiner，把第一阶段还带噪声的逐帧 GPS 序列当作"脏输入"做一次去噪精炼。推理时一段视频走完「双帧编码器 → TempGeo → 初始检索 → GeoRefiner → 二次检索」就得到一条时间一致的逐帧轨迹。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧序列"] --> B["双帧编码器<br/>CLIP 语义 ∥ DINOv2 视觉，拼接 CLS"]
+    B --> C["TempGeo<br/>全帧自注意力做时间对齐"]
+    G["GPS 坐标库 → 位置编码器<br/>（GeoCLIP，脚手架）"] --> D
+    C --> D["帧到 GPS 对比检索<br/>得到带噪声的逐帧 GPS 序列"]
+    D --> E["GeoRefiner<br/>编码器-解码器交叉注意力去噪"]
+    E --> F["GPS-to-GPS 二次检索<br/>时间一致的逐帧轨迹"]
+```
 
 ### 关键设计
 

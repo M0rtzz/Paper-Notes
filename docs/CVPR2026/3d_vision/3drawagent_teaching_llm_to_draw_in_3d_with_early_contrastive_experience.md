@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience
 description: >-
-  [CVPR 2026][3D视觉][3D草图生成] 提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive knowledge extraction）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图…
+  [CVPR 2026][3D视觉][3D草图生成] 提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图…
 tags:
   - "CVPR 2026"
   - "3D视觉"
@@ -22,7 +22,7 @@ tags:
 **关键词**: 3D草图生成, LLM, 免训练, 对比经验优化, Bezier曲线
 
 ## 一句话总结
-提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive knowledge extraction）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
+提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
 
 ## 研究背景与动机
 **领域现状**：语言驱动的2D草图生成已有进展（如SketchAgent），但3D草图生成仍未被探索。现有3D形状生成方法（扩散/神经隐式方法）需要显式几何监督或大量训练。
@@ -38,6 +38,22 @@ tags:
 
 ### 整体框架
 3DrawAgent 要解决的问题是：在不更新任何参数的前提下，让一个冻结的 LLM 学会从文字描述画出 3D 草图。它的做法是把"画 3D 草图"翻译成 LLM 擅长的文本生成任务——LLM 自回归地吐出一串 3D Bezier 曲线的控制点，差分渲染器把这串曲线从多个视角渲染成图，再用 CLIP 和 LLM 自己给这些图打分、挑出好坏样本。整套流程的关键不在某一次生成，而在于它把"好在哪、坏在哪"的判断结果沉淀成一个不断增长的经验库，下一轮生成时把这些经验塞回 prompt，于是 LLM 一轮比一轮画得好——梯度被"读经验"替代了。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文字描述（query T）"] --> B["3D 草图的语言化表示<br/>冻结 LLM 自回归生成 K=5 个候选<br/>（3D Bezier 控制点指令序列）"]
+    subgraph CKE["对比经验提取（CKE）"]
+        direction TB
+        C["差分渲染器：V 个视角渲染成图"] --> D["CLIP 文图相似度打分 r_CLIP"]
+        D --> F["按分数配出好坏对 (S+, S−)"]
+        F --> G["LLM 当语义优势判官<br/>诊断为何更好 → 文字经验 A_text"]
+    end
+    B --> C
+    G --> E["经验引导的 3D 绘图<br/>经验库 E 拼回 prompt"]
+    E -. 经验引导 .-> B
+    E -->|经验稳定 / 跑满 2–3 epoch| H["最终 3D 草图"]
+```
 
 ### 关键设计
 

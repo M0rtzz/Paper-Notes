@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 FC-Track 想解决的是一个被主流 tracking-by-detection 忽视的问题：关联一旦出错就再也不回头。它不去改进关联本身，而是在标准的"检测→关联"完成之后挂一个轻量纠错模块，专门盯着因目标重叠而被污染的那部分匹配结果。每一帧走完正常关联后，FC-Track 先扫一遍所有 tracklet 两两之间的重叠程度，把重叠太深的 pair 标记出来并冻结它们的外观特征，避免两个目标的特征在遮挡期间互相串味；然后只对这些重叠 pair 的匹配结果做一次外观相似度的二次核对，发现检测框其实更像另一个 tracklet 时就把它改判过去。整个模块是纯推理时插件，不引入任何可学习参数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["两阶段匹配<br/>高置信关联 → 低置信补漏"] --> S
+    subgraph S["两阶段匹配中的集成（每阶段关联后挂校正，仅第一阶段有效）"]
+        direction TB
+        B["计算两两 tracklet 的 IoA 关系矩阵"] -->|"IoA ≥ τ_update=0.3"| C["IoA 重叠感知外观特征过滤<br/>冻结外观，存重叠前干净特征"]
+        C -->|"IoA ≥ τ_overlap=0.8"| D["登记重叠 pair (t_pri, t_aux)<br/>被遮更重者作 prime"]
+        D --> E["局部不匹配重分配<br/>取匹配 prime 的检测 d_f，算 S_pri / S_aux"]
+        E -->|"S_pri ≥ τ_min 且 S_pri−S_aux ≥ τ_dif"| F["改判 d_f 给 auxiliary"]
+    end
+    S --> G["校正后轨迹输出"]
+```
+
 ### 关键设计
 
 **1. IoA 重叠感知外观特征过滤：在目标重叠期间冻结外观，防止两条轨迹的特征互相污染**

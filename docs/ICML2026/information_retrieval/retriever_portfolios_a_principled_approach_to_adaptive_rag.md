@@ -48,6 +48,26 @@ tags:
 
 **在线阶段**：来一个 query $\mathbf{q}$，router 把它编码后和 $k$ 个"retriever embedding"算相似度，挑出 top-$\ell$ 个 portfolio 成员**并行**执行检索 + LLM 生成，最后 selector 聚合候选答案。关键点是 $\ell\le k$ 都是**固定**的小常数，所以延迟可预测、调用可并行。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["离线阶段"]
+        direction TB
+        P["跨家族 + 双 backbone 的 360 维候选池<br/>DS / Vendi / GraphDense × MPNet / E5"] --> SC["打分矩阵 s(q,r) = Recall@k"]
+        SC --> GR["Best-of-k 组合目标<br/>贪心选 size-k portfolio"]
+        SC --> RT["训练 contrastive router"]
+    end
+    GR --> RO
+    RT --> RO
+    subgraph ON["在线阶段：离线 portfolio + 在线 router"]
+        direction TB
+        QQ["query q"] --> RO["router 选 top-ℓ 成员"]
+        RO --> PA["ℓ 个成员并行检索 + LLM 生成"]
+        PA --> SE["selector 聚合候选答案"]
+    end
+    SE --> OUT["最终答案"]
+```
+
 ### 关键设计
 
 **1. Best-of-$k$ 组合目标：把"选哪个 retriever"重写成可证明的组合优化问题**

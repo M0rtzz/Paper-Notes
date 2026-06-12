@@ -45,6 +45,20 @@ Fast SceneScript 要解决的是结构化语言模型做 3D 感知时「逐 toke
 
 不同之处在于解码这一步。原来每步只产出 1 个 token，现在解码器在同一步里**一次预测 $n$ 个未来 token**（外加 $n-1$ 个置信度），随后进入一个 token 过滤阶段——把这一批预测里不靠谱的剔掉，只接受从头数起最长的那段可靠前缀，再以它为新的上下文进入下一步。这样把「预测多、但只接受靠谱的」做成了加速的核心范式：理论步数从 $N$ 降到 $\lceil N/n \rceil$，而过滤保证了接受下来的 token 仍然准确。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["3D 点云输入"] --> B["稀疏 3D ResNet 编码器<br/>提取场景特征"]
+    B --> C["Transformer 语言解码器<br/>self / cross-attention"]
+    C --> D["参数高效的多 token 预测<br/>共享 Token Head + Projection Block<br/>一步预测 n 个 token"]
+    D -->|二次前向验证| E["自投机解码 SSD<br/>两步一致性 + 距离阈值 τ"]
+    D -->|单步置信度| F["置信度引导解码 CGD<br/>Confidence Head 预测可靠概率"]
+    E --> G["接受最长可靠前缀"]
+    F --> G
+    G -->|前缀作为新上下文，循环解码| C
+    G --> H["场景 token 序列<br/>make_wall, 坐标…"]
+```
+
 ### 关键设计
 
 **1. 参数高效的多 token 预测：让 MTP 加速但不为额外 token head 付出线性参数代价**

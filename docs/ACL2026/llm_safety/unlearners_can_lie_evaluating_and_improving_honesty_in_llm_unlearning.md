@@ -42,7 +42,26 @@ tags:
 ### 整体框架
 论文由两部分组成。第一部分是评测框架：先定义 honest unlearning，再用一组指标拆解当前方法的失败模式。retain set 上看 utility 和 honesty，包括 MMLU / instruction following、world knowledge QA 的 Number of Correct、Agreement Rate 和 Misleading Robustness Score；forget set 上看是否真正遗忘，以及模型是否稳定承认限制，包括 WMDP-Bio ACC、Q&A rejection rate、QAMRC、RR2R、MCQ 的 CIR / COR / STD / MCQSC。
 
-第二部分是 ReVa。它不是从零设计一个完整 unlearning 算法，而是在 RMU 等 feature-randomized unlearned model 之后做 residual vector alignment。具体做法是先从 RMU 模型对 20 个 out-of-knowledge prompts 的拒答行为中抽取 refusal state，再在 forget-set inputs 上把中间层残差激活拉向这个 refusal vector，同时用 retain loss 保护通用能力。论文发现 Zephyr 上对齐 layer 18 / 25，尤其更新 MLP down-projection 参数效果最好。
+第二部分是 ReVa。它不是从零设计一个完整 unlearning 算法，而是在 RMU 等 feature-randomized unlearned model 之后做 residual vector alignment（残差向量对齐）。具体做法是先从 RMU 模型对 20 个 out-of-knowledge prompts 的拒答行为中抽取 refusal state，再在 forget-set inputs 上把中间层残差激活拉向这个 refusal vector，同时用 retain loss 保护通用能力。论文发现 Zephyr 上对齐 layer 18 / 25，尤其更新 MLP down-projection 参数效果最好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["待测 unlearned 模型<br/>(RMU / 梯度上升 / 拒答类 共 9 个方法)"] --> EVAL
+    subgraph EVAL["Honest unlearning 评测框架"]
+        direction TB
+        DEF["honest unlearning 评测定义<br/>区分『忘了 / 拒答了 / 诚实地忘了』"]
+        DEF --> MET["Q&A 与 MCQ 双通道诚实指标<br/>Q&A: RR×QAMRC=RR2R<br/>MCQ: CIR vs COR · retain: AR/MRS"]
+    end
+    EVAL -->|"暴露现有 9 方法全不达标"| REVA
+    subgraph REVA["ReVa 残差向量对齐"]
+        direction TB
+        P["20 个 OOD / unknown prompts<br/>喂 RMU 模型"] --> R["抽取 refusal vector r<br/>(中后层残差激活均值)"]
+        R --> AL["forget 输入残差对齐 c·r<br/>+ retain loss 护通用能力"]
+        AL --> UP["只更新 layer 18/25 的<br/>MLP down-projection"]
+    end
+    REVA --> OUT["honest unlearned 模型<br/>稳定承认『我不知道』"]
+```
 
 ### 关键设计
 

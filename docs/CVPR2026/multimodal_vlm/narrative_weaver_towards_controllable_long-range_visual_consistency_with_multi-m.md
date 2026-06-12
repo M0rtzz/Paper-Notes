@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Narrative Weaver 要做的是把一段 (文本, 图像) 指令展开成一整条视觉叙事序列，而且要让角色、背景、风格跨几十帧都不漂。它走的是 AR + Diffusion 的混合路线：前半段是一个 MLLM（Qwen2.5-VL-3B）当"导演"，逐帧规划下一镜该拍什么文本剧情，同时把当前该画什么压缩成一组查询向量；后半段是扩散模型（Flux.1-Dev）当"画师"，拿着查询和历史视觉记忆把这一帧真正画出来。导演和画师之间靠一个动态 Memory Bank 传递"前面几帧长什么样"，让画师每次落笔都对齐已经定下来的视觉基调。
+Narrative Weaver 要做的是把一段 (文本, 图像) 指令展开成一整条视觉叙事序列，而且要让角色、背景、风格跨几十帧都不漂。它走的是 AR + Diffusion 的混合路线：前半段是一个 MLLM（Qwen2.5-VL-3B）当"导演"，逐帧规划下一镜该拍什么文本剧情，同时把当前该画什么压缩成一组查询向量；后半段是扩散模型（Flux.1-Dev）当"画师"，拿着查询和历史视觉记忆把这一帧真正画出来。导演和画师之间靠一个动态 Memory Bank 传递"前面几帧长什么样"，让画师每次落笔都对齐已经定下来的视觉基调。整条序列逐帧滚动：每画完一帧，它的特征就被压回 Memory Bank、最旧的一帧被挤出窗口，再回到导演规划下一帧。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["输入：文本指令 + 条件图像 I"] --> MLLM
+    subgraph MLLM["多模态交互与可学习查询（MLLM 导演）"]
+        direction TB
+        T["写第 n 帧叙事文本<br/>标准因果注意力"] -.->|"用 img 特殊 token 框定"| Q["可学习查询 q_n<br/>动态掩码看全部多模态上下文"]
+    end
+    MLLM --> CAT["拼接条件信号<br/>C_n = Concat(q_n, f_cond, 压缩记忆)"]
+    MB["动态 Memory Bank<br/>最近 T 帧 VAE 特征·几何衰减池化"] --> CAT
+    CAT --> DIT["扩散画师 Flux.1-Dev<br/>去噪生成第 n 帧"]
+    DIT --> OUT["第 n 帧图像"]
+    OUT -->|"帧特征压入·挤出最旧帧"| MB
+    OUT -->|"循环到第 n+1 帧"| MLLM
+```
 
 ### 关键设计
 

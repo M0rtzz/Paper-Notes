@@ -44,6 +44,26 @@ tags:
 ### 整体框架
 S(H)NAP 把"审计 Sybil"拆成两条共享同一个 SDB 干预引擎的路线：SHNAP 做解释性归因、SNAP 做空间敏感性探针。SHNAP 走「移除路径」——给定一张真实 CT，把 $N$ 个肺结节的全部 $2^N$ 个子集都生成出来（保留的结节留下、移除的换成健康组织），逐个喂给冻结的 Sybil 拿到风险 logit，再用 n-Shapley 把这些 logit 回归成主效应 $\phi_i$ 和成对交互 $\phi_{ij}$。SNAP 走「插入路径」——把一颗已知性质的结节插到 CT 的任意空间位置，记录预测 logit 的变化 $\psi_\mathbf{c}=f(y_0\mid\mathbf{x}_{\mathbf{c}\leftarrow\mathbf{r}})-f(y_0\mid\mathbf{x})$，扫遍上千个位置就拼出一张高分辨率的"空间敏感性"热图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["真实 3D LDCT<br/>+ 检测到的 N 个肺结节"] --> B["SDB 干预引擎<br/>掩码内修复·移除/插入<br/>始终留在数据流形上"]
+    B -->|移除路径| C
+    B -->|插入路径| F
+    subgraph SH["n-Shapley 回归 LMPI（SHNAP / gSHNAP）"]
+        direction TB
+        C["生成 2^N 个结节子集<br/>保留留下·移除换健康组织"] --> D["逐个喂冻结的 Sybil 取 logit"]
+        D --> E["n-Shapley 回归<br/>主效应 φi + 交互 φij + 背景 μ"]
+    end
+    subgraph SN["空间敏感性探针（SNAP）"]
+        direction TB
+        F["把已知结节插到上千个空间位置"] --> G["记录 log-odds 差 ψc"]
+        G --> H["拼出高分辨率空间敏感性热图"]
+    end
+    E --> I["审计结论<br/>结节驱动·伪影依赖<br/>径向衰减·lobar bias"]
+    H --> I
+```
+
 ### 关键设计
 
 **1. 基于扩散桥的结节移除/插入：让干预始终留在数据流形上**

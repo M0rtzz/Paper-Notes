@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 CodeStruct 把代码仓库从扁平文本重新表示为 AST 驱动的结构化环境，让 Agent 不再通过行号和字符串模式间接操作代码，而是直接以命名的程序实体为单位读写。Agent 的动作空间由两个原语构成：结构感知的代码检索 readCode 和结构感知的代码修改 editCode。两者都用形如 `file.py::ClassName::method` 的选择器来定位目标 AST 节点并支持模糊匹配，整套接口通过 MCP 协议暴露为标准工具，可即插即用地接到任意 Agent 框架上，不必改动 Agent 的规划或执行逻辑。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["代码仓库 → AST 解析<br/>（MCP 协议暴露为标准工具）"] --> B["readCode<br/>选择器定位语法单元"]
+    B -->|目录 / 无选择器| C["返回文件列表 / 结构摘要"]
+    B -->|带选择器 σ| D["返回完整实体实现代码"]
+    C --> E["editCode<br/>在 AST 节点上编辑"]
+    D --> E
+    E -->|insert / replace / removal + σ| F["定位节点 → 应用变换 → 语法校验"]
+    F -->|语法错误| G["拒绝本次编辑"]
+    F -->|语法有效| H["写回得到新 AST"]
+    H --> I["AST 动作空间形式化<br/>多步编辑 = 状态转换序列"]
+    I -->|任务未完成| B
+    I -->|任务完成| J["输出补丁"]
+```
+
 ### 关键设计
 
 **1. readCode：用选择器读完整语法单元，而非按行号截取**

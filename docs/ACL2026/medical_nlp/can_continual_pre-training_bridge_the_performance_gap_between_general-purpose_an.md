@@ -43,7 +43,27 @@ tags:
 
 ### 整体框架
 
-方法分为两大部分：(1) **医学过滤管道**——使用 Mixtral 对 FineWeb2 德语子集进行零样本标注，训练 XLM-RoBERTa 分类器扩展到全量数据，得到 FineMed-de 语料库；(2) **模型适应**——对指令微调模型进行持续预训练，然后使用 SLERP 与原始指令微调检查点合并以恢复指令跟随能力。
+方法分为两大部分：(1) **医学过滤管道**——使用 Mixtral 对 FineWeb2 德语子集进行零样本标注，训练 XLM-RoBERTa 分类器扩展到全量数据，得到 FineMed-de 语料库；(2) **模型适应**——对指令微调模型进行持续预训练，然后使用 SLERP 与原始指令微调检查点合并以恢复指令跟随能力。最后用多维度评估检验 DeFineMed 是否真能缩小与大模型的差距。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph FILTER["混合式医学文档过滤管道"]
+        direction TB
+        A["FineWeb2 德语子集<br/>4.28 亿文档"] --> B["采样 26 万篇<br/>Mixtral-8x7B 零样本标注"]
+        B --> C["微调 XLM-RoBERTa 分类器<br/>精确率 0.95 / 召回率 0.80"]
+        C --> D["横扫全量过滤"]
+    end
+    D --> E["FineMed-de 语料库<br/>730 万文档 / 51 亿词"]
+    subgraph ADAPT["持续预训练 + SLERP 模型合并"]
+        direction TB
+        F["指令微调基座<br/>Qwen2.5-7B / Mistral-7B / 24B"] --> G["持续预训练 2 epoch<br/>灌入德语医学知识"]
+        G --> H["SLERP 球面插值<br/>与原指令检查点逐层合并"]
+    end
+    E --> G
+    H --> I["DeFineMed 模型家族"]
+    I --> J["多维度评估设计<br/>知识基准 + 成对胜率 + 失败模式"]
+```
 
 ### 关键设计
 

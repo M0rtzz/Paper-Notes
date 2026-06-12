@@ -57,6 +57,26 @@ tags:
 
 评测时不仅看最终答案，还看 CoT 质量；任务 5 的描述用相似度评分，其他任务用准确率和 CoT judge 评价。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    K["多模态知识图谱<br/>VisualSem / FB15K-237 / MKG-Y"]
+    subgraph ENGINE["STAR 数据引擎"]
+        direction TB
+        S1["抽取子图"] --> S2["渲染 MMRK 图像<br/>实体图片 + 文本 + 关系边"]
+        S2 --> S3["生成八类 STAR 任务<br/>计数 / 描述 / 检测 / 推理"]
+        S3 --> S4["强 LLM 据准确子图文本<br/>生成可靠 CoT"]
+    end
+    K --> ENGINE
+    ENGINE --> D["STAR-64K 指令数据"]
+    D --> T1["两阶段增强·Stage 1<br/>STAR-64K 监督微调"]
+    T1 --> T2{"Stage 2<br/>对失败样本定向纠偏"}
+    T2 -->|偏好优化| P["DPO / ORPO / SimPO"]
+    T2 -->|强化学习| KG["知识感知 KGRPO<br/>答案 + CoT 知识一致性奖励"]
+    P --> OUT["STAR 能力增强的 MLLM"]
+    KG --> OUT
+```
+
 ### 关键设计
 
 **1. STAR 数据引擎：把 MMKG 的实体、关系、图像和文本批量变成可训练的指令数据**

@@ -42,6 +42,17 @@ DTKG 把多跳问答按"并行事实核验 vs 链式推理"二分，先用 few-s
 ### 整体框架
 DTKG 要解决的是"一套推理核打不过异质多跳问题"的错配：有的子问题彼此独立（适合并行核验），有的强依赖前驱结论（适合链式推理）。它的做法是先用一个轻量分类器判断问题类型，再把问题路由到两条专用的 KG 处理分支，最后用一套按任务分化的去噪策略清理无关三元组。作者把这套"快判 + 深处理"对应到 Tversky & Kahneman 的双过程理论，并形式化地把推理空间二分为 $\mathcal{Q} = \mathcal{Q}_{para} \cup \mathcal{Q}_{chain}$，提出 Optimal Strategy Alignment 定理：最优核 $\mathcal{K}^* = \arg\max_{\mathcal{K}} \mathbb{P}(A|Q,\mathcal{K})$ 仅当推理核 $\mathcal{K}$ 与问题 $Q$ 的拓扑对齐时取到，为"先分类再分支"提供了形式化背书。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多跳问题 Q"] --> B["Few-Shot 任务分类器<br/>判断是否依赖中间结论"]
+    B -->|"para·子问题相互独立"| C["并行分支<br/>分解原子事实 → 三元组匹配 → 改写"]
+    B -->|"chain·依赖前驱结论"| D["链式分支<br/>中心实体 → 关系评分 → DFS 扩展 → 早停"]
+    C --> E["任务感知去噪<br/>规则过滤 + LLM 动态过滤"]
+    D --> E
+    E --> F["基于 KG 三元组生成答案"]
+```
+
 ### 关键设计
 
 **1. Few-Shot 任务分类器：把策略—任务错配消灭在最前端**

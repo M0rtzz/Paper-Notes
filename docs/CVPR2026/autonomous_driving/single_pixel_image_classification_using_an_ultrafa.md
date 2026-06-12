@@ -49,6 +49,16 @@ tags:
 
 这套系统想验证一件事：单像素成像里"先重建图像、再分类"的重建步骤是不是多余的。DMD 上显示一张二值化的 MNIST 数字，microLED 投影器依次把 12×12 Hadamard 基底的 288 个 pattern（144 个基础 pattern × 正负互补对）投到数字上，单像素光电检测器(SiPM)采集每对 pattern 的差分光强，示波器把这串光强记成一个 286 维的时间序列，最后直接用 ELM 或 DNN 对这条时间序列分类、输出数字类别——全程不重建任何二维图像。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["DMD 显示二值化 MNIST 数字"] --> B["microLED-on-CMOS 超快光投影器<br/>330kfps 全局快门投 Hadamard pattern"]
+    B --> C["Hadamard pattern 的频率排序与压缩<br/>按 sequency 排序取前 n 个 pattern"]
+    C -->|"全部 288 → 90%+ / 前 1/4 → ~78%，带宽×4"| D["单像素检测器(SiPM) + 示波器<br/>采差分光强 → 286 维时间序列"]
+    D --> E["跳过重建的轻量分类器<br/>ELM / DNN 直接吃时间序列"]
+    E --> F["数字类别 / go-no-go 异常检测"]
+```
+
 ### 关键设计
 
 **1. microLED-on-CMOS 超快光投影器：把 pattern 切换从机械翻转的瓶颈里解放出来**

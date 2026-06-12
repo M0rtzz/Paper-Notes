@@ -50,6 +50,26 @@ tags:
 
 骨干用 Wan 2.1 14B T2V，额外加一条 ray 分支（独立 LN、FFN、linear，6B 参数），总 20B，所有参数微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：目标视频 V + source/sparse target 图<br/>每帧配内外参 (K, P)"]
+    subgraph RAX["Raxel 表征：把相机伪装成 3 通道图"]
+        direction TB
+        C["规范化：相对位姿 P_rel = P_s⁻¹·P_j<br/>参考帧落单位阵"]
+        R["构 raxel 图：每像素填光线 d + o ∈ ℝ³<br/>取 H/2×W/2 省 token"]
+        E["共享时空 VAE 编码：视频→z（4× 时间压缩）、raxel→r"]
+        C --> R --> E
+    end
+    IN --> RAX
+    RAX --> CAT["沿序列维拼接 x = [z, r]，共用同一 RoPE"]
+    CAT --> DSCA["解耦自-交叉注意力 DSCA<br/>self-attn 学 p(z)、p(r)；cross-attn 学条件"]
+    DSCA --> FM["Flow Matching + 方向余弦损失<br/>单速度场 v_θ 联合去噪 + 异步推理调度"]
+    FM -->|"固定 r 去噪 z"| O1["轨迹条件视频生成"]
+    FM -->|"固定 source 帧、去噪 r（2 步收敛）"| O2["位姿估计<br/>Procrustes + Median-of-Ratios 解相机参数"]
+    FM -->|"z、r 都去噪"| O3["视频 + 轨迹联合生成"]
+```
+
 ### 关键设计
 
 **1. Raxel 表征：把相机伪装成一张 3 通道图像**

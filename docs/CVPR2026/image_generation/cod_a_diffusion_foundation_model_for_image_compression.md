@@ -43,6 +43,23 @@ tags:
 
 CoD 的出发点是把图像压缩看成一个「编码器（图像字幕生成器）+ 解码器（扩散模型）」的系统，但认为文本作中间表示太低效，干脆用神经网络学的原生图像 token 替代文本、端到端联合训练压缩与生成。架构很简洁：原生图像编码器 → 信息瓶颈（向量量化）→ 条件解码器 → 扩散模型（DiT backbone + DDT head），像素空间和隐空间都有实现。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B
+    subgraph BN["条件编码与信息瓶颈"]
+        direction TB
+        B["原生图像编码器<br/>压到 1/32 分辨率"] --> C["向量量化 VQ<br/>码本 16 → 0.0039 bpp"]
+        C --> D["条件解码器<br/>重建为中间条件"]
+    end
+    D --> E["扩散模型 DiT + DDT head<br/>统一 Rectified Flow 训练"]
+    E -->|"16×16 patch 建原始像素"| F["像素空间分支<br/>不受 VAE 限制，0.0039–4 bpp"]
+    E -->|"SD-VAE 隐空间"| G["隐空间分支<br/>受 VAE 重建上限约束"]
+    F --> H["零样本失真-感知控制<br/>采样步数当旋钮"]
+    G --> H
+    H --> I["重建图像"]
+```
+
 ### 关键设计
 
 **1. 条件编码与信息瓶颈：用 16 大小的码本逼出 0.0039 bpp**

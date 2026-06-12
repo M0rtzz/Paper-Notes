@@ -45,27 +45,51 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文有两条平行流水线：**分析侧**和**迁移实验侧**。分析侧拿 1 亿+ 条金融微博构造 6 个语料对（cross-asset/cross-platform/cross-language 共 5 个核心对比），在 3 层（频率/语义/极性）上各算一组互补指标；迁移实验侧用 3 个模型家族 × 3 种输入模态 × 3 种迁移方向构造 27 组零样本实验，统一报告"in-domain accuracy"和"transfer gap"。两条线的结论通过"哪一层飘得最厉害"对上"哪种迁移方向 gap 最大"互相印证。
+论文有两条平行流水线：**分析侧**和**迁移实验侧**。分析侧拿 1 亿+ 条金融微博构造 6 个语料对（cross-asset/cross-platform/cross-language 共 5 个核心对比），在 3 层（频率/语义/极性）上各算一组互补指标；迁移实验侧用 3 个模型家族 × 3 种输入模态 × 3 种迁移方向构造 27 组零样本实验，统一报告"in-domain accuracy"和"transfer gap"。两条线共享同一套多语言标签作为数据基础，结论通过"哪一层飘得最厉害"对上"哪种迁移方向 gap 最大"互相印证。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["1 亿条金融微博<br/>4 语种 / 2 平台 / 2 资产"] --> B["多语言标签构造<br/>StockTwits 原生标注 + Twitter GPT-5 弱监督 + 人工抽检"]
+    B --> C["构造 6 个语料对<br/>跨资产 / 跨平台 / 跨语言"]
+    C --> D
+    C --> H
+    subgraph D["三层稳定性测量协议"]
+        direction TB
+        E["频率层<br/>JSD / TV / BC / RBO"]
+        F["语义层<br/>XLM-R 嵌入 + Procrustes 对齐"]
+        G["极性层<br/>加权 Spearman ρ / flip rate"]
+    end
+    subgraph H["零样本迁移 3×3 因子设计"]
+        direction TB
+        I["3 模态：emoji-only<br/>text-only / text+emoji"]
+        J["3 模型族<br/>TF-IDF+LR / XLM-R / ByT5"]
+        K["源训练 → 目标零样本<br/>报告 transfer gap Δ"]
+        I --> J --> K
+    end
+    D --> L["互相印证<br/>哪层飘最厉害 ↔ 哪方向 gap 最大"]
+    H --> L
+```
 
 ### 关键设计
 
-**1. 三层稳定性测量协议：把"emoji 跨社区是否一致"拆成频率/语义/极性三层各自量化**
+**1. 多语言金融情感真值构造：GPT-5 弱监督 + 人工抽检补上多语言标签缺口**
+
+要把分析扩到 EN/ES/JA/TR 四语，绕不开一个现实障碍：Twitter 没有原生情感标签，而多语言金融情感语料几乎不存在。本文的折中是分平台取真值——StockTwits 直接用平台自带的 bullish/bearish 标注，Twitter 则用 GPT-5 做弱监督打 sentiment，再在四个语种各抽 2700 条做人工校验，确认标签质量足以支撑迁移结论。
+
+这种"LLM 自动标 + 小规模人工 spot-check"是当下可扩展的现实做法，也是后面两条流水线共享的数据基础；人工抽检的作用是保证后续"emoji 是否帮助跨语言迁移"的结论不被真值噪声主导，而不是追求逐条精标。
+
+**2. 三层稳定性测量协议：把"emoji 跨社区是否一致"拆成频率/语义/极性三层各自量化**
 
 直接问"emoji 跨语言跨平台是否一样"会得到一个模糊且通常悲观的答案——因为单靠 JSD 之类的分布距离一看就"完全不同"。本文的关键是把这个问题拆成三个互相独立、可分别测量的层。频率层取每个语料的 top-100 emoji，同时算 JSD（全局信息散度）、TV（成比例差异）、BC（分布重叠）、RBO（rank-weighted 头部一致性）四个指标，分别覆盖"全局/比例/重叠/排名"四种视角；语义层用 XLM-R 对 emoji 所在帖子编码取 centroid，跨语料做 Procrustes 正交对齐后看 mean cosine 与 NN@1/NN@5；极性层把每个 emoji 在各语料中"正面帖子占比"当作 polarity，跨语料算 weighted Spearman $\rho_w$、加权 MAUD$_w$ 与 flip rate。
 
 这套分层正是后面所有结论的解释机制：分开测之后才看得见"频率确实飘（写作习惯不同），但语义和极性其实很稳"这一反直觉结构——而稳的恰恰是下游情感迁移真正依赖的那一层。
 
-**2. 零样本迁移的 3×3 因子设计：用受控对照回答"加 emoji 是否真的提升迁移"**
+**3. 零样本迁移的 3×3 因子设计：用受控对照回答"加 emoji 是否真的提升迁移"**
 
 光证明分布稳定还不够，必须落到下游指标。本文把迁移实验做成可控对照：三种输入模态——E（只用 emoji 序列）、T（去除 emoji 的纯文本）、TE（保留 emoji 的原始文本）；三个模型族——TF-IDF+LR（词袋基线）、XLM-R（多语言上下文编码器）、ByT5（byte-level）。每个模型只在 source 上训练、target 上零微调评测，统一报告 transfer gap $\Delta = \text{Acc}_{\text{in-domain}} - \text{Acc}_{\text{target}}$，并覆盖 cross-asset（stocks↔crypto）、cross-platform（StockTwits↔Twitter）、cross-language（EN/ES/JA/TR）三种方向。
 
 这套因子设计让每个对照都回答一个干净的问题：E vs T 直接量化"emoji 单独能携带多少跨域不变信号"，TE vs T 量化"emoji 作为补充是否一致地缩小 gap"。引入 ByT5 则是为了排除一个 confounder——担心 emoji 提升只是因为它在某些 tokenizer 里被切碎、加进去改变了分词；byte-level 模型对 emoji 一视同仁，若连它的 text-only 都掉得厉害，就能把"tokenizer 漂移"这条解释排除掉。
-
-**3. GPT-5 弱监督 + 人工抽检的多语言标签构造：补上多语言金融情感真值的缺口**
-
-要把分析扩到 EN/ES/JA/TR 四语，绕不开一个现实障碍：Twitter 没有原生情感标签，而多语言金融情感语料几乎不存在。本文的折中是分平台取真值——StockTwits 直接用平台自带的 bullish/bearish 标注，Twitter 则用 GPT-5 做弱监督打 sentiment，再在四个语种各抽 2700 条做人工校验，确认标签质量足以支撑迁移结论。
-
-这种"LLM 自动标 + 小规模人工 spot-check"是当下可扩展的现实做法；人工抽检的作用是保证后续"emoji 是否帮助跨语言迁移"的结论不被真值噪声主导，而不是追求逐条精标。
 
 ### 损失函数 / 训练策略
 TF-IDF+LR 走标准 L2 正则；XLM-R 和 ByT5 都做标准 cross-entropy 微调（三模态共享超参），所有语料均做正负样本平衡、统一 tokenizer 处理，确保 in-domain 与 transfer 差异完全来自数据分布而非训练设置。

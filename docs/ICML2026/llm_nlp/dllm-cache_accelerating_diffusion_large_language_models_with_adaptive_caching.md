@@ -45,6 +45,23 @@ dLLM-Cache 是一个挂在 dLLM 推理 forward 上的训练无关插件，思路
 
 第 0 步 ($k=K$) 先完整 forward 一遍，把 prompt/response 特征分别写进两个 cache；此后 $k$ 从 $K-1$ 递减到 1，每一步每一层只做取舍：prompt 段除非 $k \equiv 0 \pmod{K_p}$ 否则直接读缓存，response 段除非 $k \equiv 0 \pmod{K_r}$ 触发全量刷新、否则走下面的 V-verify 局部更新，剩下的 token 一律复用上一步缓存继续往后算。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：长 prompt + masked response<br/>共 N 步去噪迭代"] --> B["第 0 步 (k=K)：完整 forward<br/>分别写入 Prompt Cache / Response Cache"]
+    B --> S
+    subgraph S["双时间尺度差异化调度（k=K−1…1 逐层按段取舍，Kp≫Kr，ρ≈0.25）"]
+        direction TB
+        C{"按 token 所属段分流"}
+        C -->|"prompt 段"| D["长间隔 Prompt 缓存<br/>每 Kp 步重算一次，否则整层跳过<br/>缓存 K/V/AttnOut/FFNOut"]
+        C -->|"response·每 Kr 步"| F["全量刷新整段 Response Cache"]
+        C -->|"response·其余步"| G["V-verify 自适应更新<br/>廉价算 V → 余弦相似度 → 选 ρ 最活跃 token<br/>仅对其重算 K/AttnOut/FFNOut 并 scatter 回"]
+    end
+    S --> H{"k>1?"}
+    H -->|"是，k 递减"| S
+    H -->|"否"| I["输出生成文本"]
+```
+
 ### 关键设计
 
 **1. Long-Interval Prompt Cache：让静态 prompt 整段绕过 Transformer**

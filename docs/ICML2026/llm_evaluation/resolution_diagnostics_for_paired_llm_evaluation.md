@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架接收任意配对 benchmark 上两个模型的逐题分数矩阵 $\{(X_i^A, X_i^B)\}_{i=1}^N$,输出三件事:(i) 当前 $N$ 下能区分的最小效应 $\delta_{\mathrm{MDE}}$;(ii) 给定目标效应 $\delta$ 所需的最小配对样本量 $N^\star$;(iii) 对已观测到的差距 $\hat\delta$ 计算 $q=N/N^\star(\hat\delta)$。所有量都通过反演双侧 level-$\alpha$、power-$(1-\beta)$ 配对 Wald 检验得到,二元情形对应 McNemar-Connor 公式,连续/打分情形对应配对 bootstrap。整套流水线还能套上 Bonferroni/Holm/BH 多重比较、design effect 聚类校正、anytime-valid e-process 三种 stress test,组合成单个排行榜家族的端到端 verdict 表。
+框架接收任意配对 benchmark 上两个模型的逐题分数矩阵 $\{(X_i^A, X_i^B)\}_{i=1}^N$,输出三件事:(i) 当前 $N$ 下能区分的最小效应 $\delta_{\mathrm{MDE}}$;(ii) 给定目标效应 $\delta$ 所需的最小配对样本量 $N^\star$;(iii) 对已观测到的差距 $\hat\delta$ 计算 $q=N/N^\star(\hat\delta)$。所有量都通过反演双侧 level-$\alpha$、power-$(1-\beta)$ 配对 Wald 检验得到,二元情形对应 McNemar-Connor 公式,连续/打分情形对应配对 bootstrap。其中算对 $N^\star$ 是整条诊断的命门——本文用 Lemma 1 严格刻画了"拿单臂 Cohen-$h$ 公式乘 $(1-\rho)$ 当配对样本量"这个流行捷径在小效应下会系统性低估一半的偏差,防止诊断量本身被算错。最后整条流水线还能套上 Bonferroni/Holm/BH 多重比较、design effect 聚类校正、anytime-valid e-process 三种 stress test,组合成单个排行榜家族的端到端 verdict 表。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["逐题配对分数矩阵<br/>模型 A、B 各答 N 题（0/1 或打分）"] --> B["估计配对差分方差 σ_D²<br/>两臂方差求和 − 2ρ 协方差项"]
+    B --> C["反演 level-α / power-(1−β) 配对检验<br/>二元→McNemar-Connor，打分→配对 bootstrap"]
+    C --> D["分辨率比 q = N / N*<br/>同时给出 MDE 与所需样本量 N*"]
+    D -->|捷径偏差校验| E["Lemma 1 小效应展开<br/>校验单臂×(1−ρ) 捷径低估一半"]
+    D --> F["三层 stress test<br/>多重比较 / 学科聚类 / anytime-valid"]
+    E --> G["排行榜逐对 verdict 表"]
+    F --> G
+```
 
 ### 关键设计
 

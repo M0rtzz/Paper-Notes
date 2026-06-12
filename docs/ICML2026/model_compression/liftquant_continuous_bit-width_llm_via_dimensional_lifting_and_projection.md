@@ -42,7 +42,17 @@ LiftQuant 通过"高维 1-bit lattice → 低维 weight 空间投影"的 lift-th
 
 ### 整体框架
 
-LiftQuant 想解决的是"硬件预算连续、模型 bit-width 离散"这个错位：它把权重表示成「高维 1-bit lattice 经投影矩阵降维」的形式 $\bm w \simeq \bm M \bm w_q$，让有效 bit-width 等于维度比 $D/d$ 这个可任意取分数的比值。整条 pipeline 离线分三步走——先学一个对 Gaussian 权重最优的全局投影矩阵 $\bm M$，再为每层学一个 whitening 变换 $\bm T$ 把真实权重掰成 i.i.d. Gaussian 以满足投影假设，最后把解码融进 GEMM 成 $\bm o = \text{diag}(\bm s)\,\bm W\,(\bm M \bm T \bm a)$，整个解码路径只剩线性变换 + 1-bit 均匀量化器。下文用记法 LQ-$D/d$ 表示一个配置（如 LQ-24/10 即 $D{=}24, d{=}10$，bit-width $=2.4$）。
+LiftQuant 想解决的是"硬件预算连续、模型 bit-width 离散"这个错位：它把权重表示成「高维 1-bit lattice 经投影矩阵降维」的形式 $\bm w \simeq \bm M \bm w_q$，让有效 bit-width 等于维度比 $D/d$ 这个可任意取分数的比值。整条 pipeline 离线分三步走——先学一个对 Gaussian 权重最优的全局投影矩阵 $\bm M$，再为每层学一个 whitening 变换 $\bm T$ 把真实权重掰成 i.i.d. Gaussian 以满足投影假设，最后把量化与反量化融进 GEMM 成 $\bm o = \text{diag}(\bm s)\,\bm W_q\,(\bm M \bm T^{-1} \bm a)$、再用标定集做块内微调校正残差，整个解码路径只剩线性变换 + 1-bit 均匀量化器。下文用记法 LQ-$D/d$ 表示一个配置（如 LQ-24/10 即 $D{=}24, d{=}10$，bit-width $=2.4$）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["FP16 权重 W（逐层）"] --> T["逐层 whitening 变换 T<br/>掰成 i.i.d. Gaussian"]
+    M["全局投影矩阵 M<br/>CLT 最优 + 伪逆加速最近邻搜索"] --> Q
+    T --> Q["Lift-then-Project 量化<br/>w≈M·w_q，bit=D/d，最近邻 → W_q∈{±1}^D"]
+    Q --> F["fused 解码 + 块内微调<br/>T*=M·T⁻¹，标定集校正量化残差"]
+    F --> O["推理 o = diag(s)·W_q·(T* a)<br/>线性变换 + 1-bit GEMM，无 LUT"]
+```
 
 ### 关键设计
 
@@ -58,9 +68,13 @@ $$\bm M^* = \arg\min_{\bm M}\ \mathbb{E}_{\bm w \sim \mathcal{N}}\Big[\min_{\bm 
 
 $\bm M$ 用正交矩阵初始化以鼓励投影方向互不相关，内层的离散 argmin 用温度 10 的 soft-argmin 近似成可微，于是整体可端到端优化。另一个绕不过的坎是量化时要为每个权重块找最近 lattice 点，朴素搜索是 $2^D$ 指数复杂度，$D \geq 24$ 就完全不实用。LiftQuant 用 pseudo-inverse 投影给出一个高质量起点、再 pad 一个 auxiliary vector，把搜索空间从 $2^D$ 压到 $2^{D-d}$——只要 $D-d \lesssim 20$，量化就能在秒级完成。
 
-**3. 逐层 whitening $\bm T$ 与 fused 推理：让假设成立、让解码近乎免费**
+**3. 逐层 whitening 变换 $\bm T$：让"权重是 i.i.d. Gaussian"的假设真正成立**
 
-lift-then-project 的全部理论都建立在"权重是 i.i.d. Gaussian"之上，但 LLM 权重并非如此。为此每层额外学一个轻量 whitening 矩阵 $\bm T$，把该层权重 reshape、变换成近似 Gaussian，补上假设和现实之间的缝。推理时则把反量化整个融进矩阵乘：$\bm o = \text{diag}(\bm s)\,\bm W\,(\bm M \bm T \bm a)$，其中 $\bm M, \bm T$ 都是全局共享的小矩阵，运行时只需先算 $\bm M \bm T \bm a$，主体 $\bm W$ 就是 1-bit 量化矩阵的标准 GEMM。这样 dequantization 的额外开销几乎为零——只多一次小矩阵乘加一次缩放，没有 VQ 那种 LUT 查表的访存瓶颈，这正是 LiftQuant 在拿到 VQ 级精度的同时还保持 UQ 级硬件友好的关键。
+lift-then-project 的全部理论都建立在"权重是 i.i.d. Gaussian"之上，但 LLM 权重并非如此——它们有重尾、有 outlier，各通道重要性还因激活幅度不同而有别。为此每层学一个轻量 whitening 变换 $\bm T$，把该层权重 reshape 成近似 i.i.d. Gaussian，补上假设和现实之间的缝。$\bm T$ 不是一个 dense 矩阵，而是分解成 $\bm T = \text{diag}(\bm s_1)\,(\bm P_1 \otimes \bm P_2)\,\text{diag}(\bm s_2)$：$\bm P_{1,2}$ 是两个 $\sqrt n \times \sqrt n$ 的小矩阵（Hadamard 正交初始化），靠 Kronecker 积实现通道混合与去相关，把激活乘法代价从 $\mathcal O(n^2)$ 压到 $\mathcal O(n\sqrt n)$。三个组件各司其职：$\bm s_1$ 做 importance-aware scaling（借鉴 AWQ，按激活幅度把大激活通道压小、重分配量化误差）；$\bm P_{1,2}$ 去相关并把 outlier 扩散到各维；$\bm s_2$ 做 isotropy refinement（归一化各通道方差），且被约束成块内常数，因而推理时能直接融进投影矩阵 $\bm M$。对 70B 模型，存这些变换参数（FP16）每参数只多 0.008–0.011 bit，几乎免费。
+
+**4. fused 解码 + 块内微调：让 dequant 近乎零成本、再把残差校回来**
+
+推理时 LiftQuant 把反量化整个融进矩阵乘：$\bm o = \text{diag}(\bm s)\,\bm W_q\,(\bm M \bm T^{-1} \bm a)$，其中 $\bm T^{*} = \bm M \bm T^{-1}$ 是融合后的解码矩阵、$\bm W_q$ 是 1-bit 量化矩阵。运行时只需先算一次小矩阵乘 $\bm T^{*} \bm a$，主体就是 1-bit × float 的标准 GEMM——没有 VQ 那种 LUT 查表的访存瓶颈，这正是 LiftQuant 在拿到 VQ 级精度的同时还保持 UQ 级硬件友好的关键。更进一步，由于这条 fused 路径整体可微，LiftQuant 把 $\bm W_q$（经 STE）和 $\bm T^{*}$ 当作可训练参数，在一小份标定集上最小化"该层量化前后输出"的重构误差做块内微调，把残余量化误差校回来、让各组件端到端对齐。
 
 ## 实验关键数据
 

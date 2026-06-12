@@ -46,6 +46,18 @@ ME-DLM 给 masked diffusion 语言模型（如 LLaDA）加一个"解码完再编
 - **Edit diffusion 阶段**：从 $x^{(0)}$ 开始，每步模型对每个 token 位置预测一对动作 $(c_i,n_i)$——$c_i\in\mathcal{V}\cup\{\text{[DEL]}\}$ 表示当前位置 replace/delete/keep，$n_i\in\mathcal{V}$ 表示在当前位置后面插入什么（如果 $n_i=c_{i+1}$ 则不插入）。一个确定性 operator $A$ 把这些动作应用到序列上：$x^{(t+1)}=A(x^{(t)},\{(c_i,n_i)\})$。所有位置的动作**并行预测**，但应用时整序列共同变化，相当于在 application 层耦合了 token 间的依赖。
 - **终止**：当模型对所有位置都预测"空编辑"（$c_i=x_i$ 且不插入）或达到最大轮数时停止。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["全 [MASK] 序列 + prompt"] --> B["Mask diffusion 阶段<br/>并行 unmask 出粗稿（同 LLaDA，约 3/4 步预算）"]
+    B --> C["完整粗稿 x⁽⁰⁾"]
+    C --> D["Edit diffusion 阶段<br/>每位置并行预测动作 (cᵢ, nᵢ)"]
+    D --> E["确定性 operator A 应用编辑<br/>替换 / 删除 / 插入 → x⁽ᵗ⁺¹⁾"]
+    E -->|预测出非空编辑| D
+    E -->|全空编辑 / 达步数上限| F["最终输出"]
+    G["edit distance 最短脚本<br/>+ canonical 映射"] -.训练监督.-> D
+```
+
 ### 关键设计
 
 **1. Token 级 $(c_i,n_i)$ 编辑动作 + 确定性应用：并行预测、串行耦合**

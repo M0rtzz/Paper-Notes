@@ -45,6 +45,24 @@ tags:
 
 ThreadSumm 要摘要的是讨论论坛里那种回复、引用层层嵌套的话语线程，难点在于源头是树状/图状结构、而摘要必须是一段线性文字，直接喂给 LLM 容易跑偏到最热门的话题、漏掉散落在边缘分支里的重要观点。它把这件事拆成两层推理：先做"内容规划"，从原文抽出方面（aspect）和原子内容单元（ACU），用结构化的中间表示把"该覆盖哪些内容"先固定下来；再做"文本实现"，把这些 ACU 排成连贯序列、写成段落，并用 Tree of Thoughts 搜索多个候选、按连贯性和覆盖性打分挑最优。整条管道免训练，五个步骤全靠 LLM 提示串起来。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["嵌套话语线程<br/>(回复 / 引用层层嵌套)"] --> P
+    subgraph P["方面 + ACU 的内容规划层"]
+        direction TB
+        B["提取方面 aspect<br/>(who / what / where)"] --> C["生成原子内容单元 ACU<br/>每个方面一组不可再分声明"]
+    end
+    P --> D["LLM 驱动的句子排序<br/>把散落各分支的 ACU 重排成连贯叙事线"]
+    D --> T
+    subgraph T["Tree of Thoughts 多候选搜索"]
+        direction TB
+        E["生成多个段落候选"] --> F["LLM 按连贯性 + 覆盖性打分"]
+        F -->|"保留最优候选, 逐轮精炼"| E
+    end
+    T --> G["线性摘要输出"]
+```
+
 ### 关键设计
 
 **1. 方面 + ACU 的内容规划层：先把"该覆盖什么"显式定下来，再写摘要**

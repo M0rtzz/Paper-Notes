@@ -45,6 +45,35 @@ tags:
 
 SlideAgent 采用两阶段架构：阶段一（幻灯片理解）将输入幻灯片解析为结构化表示，捕获元素位置、数据源和功能逻辑；阶段二（指令驱动更新）解释用户指令、检索更新数据、执行转换、重新生成内容。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：用户自定义幻灯片 + 自然语言更新指令"]
+    subgraph P1["阶段一·幻灯片理解"]
+        direction TB
+        subgraph D1["多模态幻灯片布局解析"]
+            direction TB
+            A["渲染成 PNG<br/>Qwen2.5-VL-72B 预测语义标签 + 边界框"] --> B["python-pptx 抽取精确坐标 + 样式"]
+            B --> C["IoU 匹配（≥0.5）<br/>语义 ↔ 形状绑定"]
+        end
+        subgraph D2["表格图表逻辑提取"]
+            direction TB
+            E["封闭域：11 个统计函数库<br/>函数调用范式"]
+            F["开放域：synthesize_analytical_table<br/>五原子组件重构"]
+        end
+        C --> D2
+    end
+    subgraph D3["指令驱动的内容同步流水线"]
+        direction TB
+        G["指令解析<br/>自然语言 → 参数状态更新"] --> H["SQL 生成与数据检索"]
+        H --> I["工具调用与数据重计算"]
+        I --> J["事实感知的总结改写"]
+    end
+    IN --> P1
+    P1 --> D3
+    D3 --> OUT["保持原布局样式渲染<br/>输出更新后幻灯片"]
+```
+
 ### 关键设计
 
 **1. 多模态幻灯片布局解析：把"一张图"还原成带语义角色和精确坐标的结构化表示**

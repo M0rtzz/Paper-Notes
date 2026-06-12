@@ -41,27 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架分两部分:(i) 理论端把 GRPO/GSPO 目标分解成 $\mathcal J(\theta)+\Delta\mathcal J(\theta)$,把 initial discrepancy 与 token-level clipping 都写成 $\sum_{i,t} X_{i,t}(\theta)(\phi_{i,t}-1)$ 这种"token 权重扰动"的统一形式;(ii) 实验端在 Qwen3-30B-A3B MoE 上用 verl + vLLM + Megatron 跑 DAPO-Math-17k,通过 (a) 对比 GRPO 与 TIS 校正、(b) 改变 clip 范围、(c) 主动注入低概率 token 权重失真、(d) 注入无偏方差噪声 四组实验,逐步剥离出"偏差 ⇒ discrepancy 增长 ⇒ 崩溃"的因果链。
+全文围绕一条因果链展开:任何"token 级权重失真"(初始失配的数值噪声、token-level clipping、人为注入的加权)都会在 GRPO/GSPO 的优化目标上额外叠加一个偏置项 $\Delta\mathcal J(\theta)$,这个偏置是个伪信号,优化器去追它就会把低概率 token 的训练-推理失配越拉越大,失配反过来又放大伪信号,形成正反馈直至不可逆崩溃。论文先在**理论端**把各类失真统一写成 $\mathcal J_{\text{dist}}=\mathcal J(\theta)+\Delta_{\text{dist}}\mathcal J(\theta)$ 的同一种形式,再在**实验端**(Qwen3-30B-A3B MoE,verl + vLLM + Megatron,DAPO-Math-17k)用初始失配/TIS、clip 强度扫描、主动注入、无偏方差对照四组实验,逐步坐实"偏差(而非方差)⇒ 失配增长 ⇒ 崩溃"这条因果链。下图是这条链的全貌——三个关键设计分别对应"统一形式化(偏置怎么来)""主动注入(怎么证明是它)""信号监测 + 正反馈环(为什么不可逆)":
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["token 权重失真（有偏）<br/>初始失配 / token-level clipping / 主动注入 δ 加权"] --> B["统一形式化：目标级偏置<br/>J′ = J + ΔJ，伪信号 ΔJ ∝ Cov(X, ρ⁻¹)"]
+    B --> C["优化器追逐伪信号<br/>X 与 ρ⁻¹ 的非预期相关"]
+    C --> D["低概率 token 的 ρ 持续偏离 1<br/>survival bias 放大"]
+    D --> E["训练-推理失配增长"]
+    E -->|正反馈：失配回头放大 hacking| B
+    E --> F["不可逆崩溃<br/>回滚 checkpoint / 换 batch 都救不回"]
+    B -.->|监测| G["目标级信号 J = ΣÂ(φ−1)<br/>单调上升即早期告警"]
+    H["对照：无偏方差注入 ξ ~ N(1, σ²)"] -.->|无偏，不引发| I["失配不增长<br/>ΔJ ≈ 0，偏差才是元凶"]
+```
 
 ### 关键设计
 
-1. **目标级 hacking 的统一形式化**:
+**1. 目标级 hacking 的统一形式化:把异源"训练事故"都还原成同一个偏置项。** RLVR 里数值误差、token-level clipping、各种自定义加权看起来来源毫不相干,缺一个统一解释,也就无从对症。论文从理想的 GRPO 目标 $\mathcal J(\theta)=\mathbb E_{\text{train}}[\sum_{i,t} X_{i,t}(\theta)]$ 出发(其中 $X_{i,t}=r_{i,t}\hat A_{i,t}/(G|o_i|)$),注意到 rollout 实际是从 $\pi_{\text{infer}}$ 而非 $\pi_{\text{train}}$ 采样,于是真实目标变成 $\mathcal J'(\theta)=\mathcal J(\theta)+\Delta\mathcal J(\theta)$;一阶推导给出这个偏置项 $\Delta\mathcal J(\theta)\simeq \sum_{i,t}\text{Cov}_{\text{train}}(X_{i,t},\rho_{i,t}^{-1})$,其中 $\rho_{i,t}=\pi_{\text{train}}/\pi_{\text{infer}}$ 度量训练-推理失配。同理,token-level clip 等价于乘上一个 $\phi_{i,t}\in\{0,1\}$ 的硬权重,偏置项写成 $\Delta_{\text{clip}}\mathcal J=\mathbb E_{\text{train}}[\sum X_{i,t}(\phi_{i,t}-1)]$。两者归并成统一式 $\mathcal J_{\text{dist}}=\mathcal J+\Delta_{\text{dist}}\mathcal J$。一旦看清这些事故都是在"给某些 token 偷偷换权",就能用同一套注入实验去检验它们,这正是后两个设计的前提。
 
-    - 功能:把所有"看似无害"的 token 级修改都映射到优化目标的隐式偏置上。
-    - 核心思路:从理想目标 $\mathcal J(\theta)=\mathbb E_{\text{train}}[\sum_{i,t} X_{i,t}(\theta)]$ 出发($X_{i,t}=r_{i,t}\hat A_{i,t}/(G|o_i|)$),把 rollout 从 $\pi_{\text{train}}$ 偏移到 $\pi_{\text{infer}}$ 后做一阶推导,得到 $\Delta\mathcal J(\theta)\simeq \sum_{i,t}\text{Cov}_{\text{train}}(X_{i,t},\rho_{i,t}^{-1})$,其中 $\rho_{i,t}=\pi_{\text{train}}/\pi_{\text{infer}}$。同理 token-level clip 等价于 $\phi_{i,t}\in\{0,1\}$ 的乘法权重,得到 $\Delta_{\text{clip}}\mathcal J=\mathbb E_{\text{train}}[\sum X_{i,t}(\phi_{i,t}-1)]$。
-    - 设计动机:看似不同源的"训练事故"(数值误差、剪裁、自定义加权)其实都在做同一件事——给某些 token 偷偷换权,统一表示后才能用同一套实验思路检验。
+**2. 主动注入实验作为因果探针:把伪信号做成可"开关"的变量。** Clip 强度和失配同步增长,顶多算相关,不能证明谁导致谁。论文挑了序列级算法 GSPO 当底座——它本身不会引发失配增长,是个干净的对照基线——然后人为对低概率 token($\pi_{\text{train}}<\pi_{\text{low}}=0.1$)乘上权重 $\varphi_{i,t}=\delta$、其余保持 1,扫 $\delta\in\{1.2,2,3\}$,等价于显式往目标里塞一个有偏的 $\Delta_{\text{inj}}\mathcal J=\mathbb E_{\text{train}}[\sum Y_{i,t}(\varphi_{i,t}-1)]$。配套还做了两个对照:一是把低概率 token 的权重反向调低,同样引发失配增长,说明根因是"失真"本身而非加权方向;二是注入无偏方差噪声 $\xi_{i,t}\sim\mathcal N(1,\sigma^2)$,推导出 $\Delta\mathcal J_{\text{var}}\simeq 0$(因 $\xi-1$ 与 $Y_{i,t}$ 独立)。这样就能"开关"伪信号:仅 20% 加权($\delta=1.2$)就立刻引爆失配,无偏方差却完全无效——一次干净的双向因果实验,把"偏差才是元凶、方差不是"钉死。
 
-2. **主动注入实验作为因果探针**:
-
-    - 功能:在不依赖具体补丁的情况下,直接验证"哪种扰动会触发 discrepancy 增长"。
-    - 核心思路:基于 GSPO(序列级 clip 本身不引发增长)的稳定基线,人为对低概率 token 加权 $\varphi_{i,t}=\delta$ if $\pi_{\text{train}}<\pi_{\text{low}}=0.1$,其余 $=1$,扫 $\delta\in\{1.2,2,3\}$。这等价于显式构造一个有偏的 $\Delta_{\text{inj}}\mathcal J$。同时设计对照实验:$\xi_{i,t}\sim\mathcal N(1,\sigma^2)$ 的无偏方差注入,推导得到 $\Delta\mathcal J_{\text{var}}\simeq 0$(因为 $\xi-1$ 与 $Y_{i,t}$ 独立)。
-    - 设计动机:观察相关性无法证明因果;主动注入则可以"开关"伪信号,如果 $\delta=1.2$ 都能立刻引爆,而方差噪声完全不会,就证明问题不是噪声本身而是 *偏差*。
-
-3. **目标级信号监测 + 正反馈环描述**:
-
-    - 功能:把抽象的 hacking 概念变成可在训练日志中跟踪的标量,并解释为何崩溃不可逆。
-    - 核心思路:定义代理量 $J=\sum_{i,t}\hat A_{i,t}(\varphi_{i,t}-1)$ 实时画在训练曲线上,看到 $J$ 与 step 的 Pearson 相关系数显著大于 0 就说明伪信号在"被持续优化"。同时在不同概率区间统计 $\rho_{i,t}$:低概率 token 的 $\rho$ 在训练中持续向下偏离 1,survival bias 让它们更难恢复,进而进一步放大 hacking,形成"discrepancy ⇄ hacking"的正反馈;切回早期 checkpoint 也救不回来。
-    - 设计动机:给工业 RLVR 提供一个工程上可用的早期告警指标——一旦 $J$ 单调上升即可在崩溃前停训,而不是等到 validation 跌完才发现。
+**3. 目标级信号监测 + 正反馈环:给出可监控的早期告警,并解释崩溃为何不可逆。** Hacking 本是个抽象概念,工程上既看不见也防不住,而且崩溃后回滚 checkpoint、换数据 batch 都救不回来,这个不可逆性也一直没解释。论文定义代理量 $J=\sum_{i,t}\hat A_{i,t}(\varphi_{i,t}-1)$ 实时画在训练曲线上,当 $J$ 与 step 的 Pearson 相关系数显著大于 0,就说明伪信号正在被持续优化(Fig. 6 实测到了这种单调上升)。机制上,低概率 token 的 $\rho_{i,t}$ 在训练中持续向下偏离 1(survival bias 使然),这种偏离又进一步放大 $\Delta\mathcal J$ 的有效强度,于是"失配 ⇄ hacking"互相喂养形成正反馈,一旦启动就停不下来——这正是崩溃不可逆的根源。$J$ 因此成了工业 RLVR 可直接落到训练日志里的早期告警:它一单调上升就停训,不必等 validation 跌完才发现。
 
 ### 损失函数 / 训练策略
 不引入新的 loss,只对现有 GRPO/GSPO 做"加权目标"的写法变换。所有实验在 4 节点 × 8 A100 上跑,每步 128 problem × 16 response,4 次参数更新,response 长度 8K;GRPO clip 默认 0.2,GSPO 序列级 clip 3e-4/4e-4。

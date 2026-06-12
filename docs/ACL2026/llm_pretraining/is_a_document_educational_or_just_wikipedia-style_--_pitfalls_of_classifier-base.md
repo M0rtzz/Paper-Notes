@@ -44,6 +44,24 @@ tags:
 
 作者进一步做了两个补充分析。第一，用Nvidia domain classifier把文本分到26个领域，查看不同领域的分数偏移是否一致。第二，让3名人类标注者按照FineWeb-Edu原始educational prompt给100个文档打分，检查偏差是否来自student分类器，还是teacher LLM标注本身。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["FineWeb 网页采样"] --> B["Wikipedia 式改写干预<br/>Qwen2.5-72B 保真改写：留事实、控 token ±10%"]
+    B --> C["原始 ｜ 改写 反事实对<br/>仅文体维度发生系统变化"]
+    subgraph S2["多模型横向对照"]
+        direction TB
+        D["三个 CQF 模型分别打分<br/>FineWeb-Edu / NemoCurator Mixtral / Nemotron"] --> E["分数变化 + 阈值 3/4 误放统计"]
+    end
+    C --> D
+    subgraph S3["领域与人工标注双重诊断"]
+        direction TB
+        F["26 领域各 2 万样本<br/>分数偏移是否跨领域一致"]
+        G["100 文档 ×3 标注者<br/>人工 vs teacher 打分"]
+    end
+    E --> S3
+```
+
 ### 关键设计
 
 **1. Wikipedia 式改写干预：构造一个只换写法、不换事实的反事实样本**

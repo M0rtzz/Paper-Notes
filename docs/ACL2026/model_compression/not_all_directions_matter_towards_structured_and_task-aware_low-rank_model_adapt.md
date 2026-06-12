@@ -48,6 +48,19 @@ StructLoRA 保留标准 LoRA 的基本接口。对预训练权重 $W_0 \in \math
 
 训练时，IB 过滤器和 GNN 协调器都参与优化；推理时，这两个模块被丢弃，只把最终低秩更新合并进 $W_0$。因此 StructLoRA 的推理路径与 LoRA 一样，不需要额外前向、额外分类头或额外路由器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练权重 W0（冻结）+ 每层 LoRA 低秩对 A、B"] --> B
+    subgraph TRAIN["训练期：增强模块参与优化"]
+        direction TB
+        B["信息瓶颈方向过滤<br/>给 r 个 rank-one 方向各挂门控 m<br/>按 IB 目标筛掉任务无关方向 → A·diag(m)·B"]
+        B --> C["图神经网络层间协调<br/>每层过滤后更新展平成图节点<br/>邻接边 + 梯度相似度边，浅层 GNN 消息传递 → ΔW̃_final"]
+    end
+    C --> D["推理期合并：插拔式接口<br/>丢弃 IB / GNN 模块，只把 W0 + ΔW̃_final 合并回权重"]
+    D --> E["部署：与原版 LoRA 同路径，零额外延迟"]
+```
+
 ### 关键设计
 
 **1. 信息瓶颈驱动的低秩方向过滤：在 rank 维度上只留下服务任务的方向**

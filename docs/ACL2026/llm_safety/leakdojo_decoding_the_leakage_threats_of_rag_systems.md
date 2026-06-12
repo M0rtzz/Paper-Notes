@@ -52,6 +52,30 @@ LeakDojo 把 RAG 泄露场景拆成三层可配置组件：
 
 威胁模型：黑盒、$N=200$ 轮交互预算、攻击者只知道高层领域、目标是最大化 unique chunk 泄露数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph ATK["正交分解 Q^adv = A ⊕ I（攻击侧）"]
+        direction TB
+        A1["query generator 生成 anchor query A<br/>决定能否检索到新 chunk"]
+        A2["adversarial instruction I<br/>决定能否诱使 LLM 吐出 chunk"]
+        A1 --> AQ["拼接攻击 query<br/>Q^adv = A ⊕ I"]
+        A2 --> AQ
+    end
+    AQ --> D1["输入端 intent detector<br/>判别 query 意图"]
+    subgraph RAG["模块化 RAG 系统（T0→T3 梯度配置）"]
+        direction TB
+        R1["retriever<br/>bge 向量检索 + MMR + top-k"]
+        R2["可选增强：rewriter / reranker / summarizer"]
+        R3["后端 LLM 生成回答"]
+        R1 --> R2 --> R3
+    end
+    D1 --> R1
+    R3 --> D2["输出端 content detector<br/>ROUGE-L 超阈值则拦截"]
+    D2 --> M["4 指标互补评测<br/>CCL ≈ ARC × SLT，CRR"]
+    M -->|"实证瓶颈在 instruction"| STEG["隐写攻击 RankerSet & CodeClaim<br/>把复述意图藏进逻辑/代码任务"]
+```
+
 ### 关键设计
 
 **1. 攻击的正交分解 $Q^{adv}_i = A_i \oplus I$：把"攻击成功了吗"拆成两个能独立量化的子问题**

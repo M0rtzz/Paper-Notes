@@ -40,7 +40,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GSP 维护一个由 R-GNN 参数化的 $Q_\theta(s,a)$ 和一个 replay buffer $\mathcal D$。每一轮：(1) 从训练池采样一个实例 $\mathcal E$；(2) 用 $f(s,a)=g(s)+w\,Q_\theta(s,a)$（$w=2$）跑 WA* 搜索，节点是状态—动作对 $(s,a)$；(3) 把展开过程中遇到的死路、目标路径上的样本以及 search-derived 的 return 下界 $\underline R$ 全部存进 buffer；(4) 异步从 buffer 采 mini-batch，对 $Q_\theta$ 跑 Q-learning（带 target network）；(5) 实例按"未解 / 已解（节点数=最优解长度）/ 已满足（找到解但非最优）"三池动态调度，权重指数递增，保证大部分算力花在"刚刚能解但还没解优"的中等难度实例上——这是真正提供学习信号的来源。
+GSP 维护一个由 R-GNN 参数化的 $Q_\theta(s,a)$ 和一个 replay buffer $\mathcal D$。每一轮：(1) 从训练池采样一个实例 $\mathcal E$；(2) 用 $f(s,a)=g(s)+w\,Q_\theta(s,a)$（$w=2$）跑 WA* 搜索，节点是状态—动作对 $(s,a)$；(3) 把展开过程中遇到的死路、目标路径上的样本以及 search-derived 的 return 下界 $\underline R$ 全部存进 buffer；(4) 异步从 buffer 采 mini-batch，对 $Q_\theta$ 跑 Q-learning（带 target network）；(5) 实例按"未解 / 已解（节点数=最优解长度）/ 已满足（找到解但非最优）"三池动态调度，权重指数递增，保证大部分算力花在"刚刚能解但还没解优"的中等难度实例上——这是真正提供学习信号的来源。整个循环是"搜索得到更好的数据→数据训出更强的 $Q_\theta$→更强的 $Q_\theta$ 引导更高效的搜索"的自改进闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    POOL["三池实例调度<br/>unsolved / solved / satisficed 指数加权采样"] --> WASTAR["WA* 探索<br/>f=g(s)+w·Qθ(s,a)，w=2，best-first 展开"]
+    WASTAR -->|"dead-end→惩罚；goal 回溯标 return 下界；non-terminal→bootstrap"| RB["replay buffer<br/>存 (s,a) + return 下界"]
+    RB --> QLEARN["Q-learning 更新 Qθ<br/>目标 y=max{return 下界, −1+max Qθ(s',a')}，带 target network"]
+    QLEARN --> RGNN["Schema-shared R-GNN<br/>对象集合消息传递 + action atoms，参数化 Qθ(s,a)"]
+    RGNN -->|"改进的 Qθ 引导更高效搜索"| WASTAR
+    WASTAR -->|"按解出与否 / 展开数=解长 归类"| POOL
+```
 
 ### 关键设计
 

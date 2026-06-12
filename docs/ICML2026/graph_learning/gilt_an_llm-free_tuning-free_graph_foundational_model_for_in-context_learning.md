@@ -43,6 +43,20 @@ GILT 把节点/边/图三类少样本图分类统一改写成基于 token 的 in
 ### 整体框架
 GILT 要解决的是"同一个模型不经任何微调就能处理任意图的少样本分类"。它把输入的 N-way K-shot 任务——带标签的 support 集合 $\mathcal{S} = \{(x_i, y_i)\}_{i=1}^{N \times K}$ 加待预测的 query 集合 $\mathcal{Q} = \{x_j\}_{j=1}^{Q}$，其中 $x_i$ 可以是节点、边或整图——统一翻译成一组维度固定的 token。先用一个不带可学习权重的结构编码器把异质图压成结构感知 embedding，并和类别原型拼成 support/query token；再让一个两段式注意力的 ICL Transformer 从 support token 里"读懂"任务语义、注入到每个 query，最后由非参数的原型头算 cosine 相似度出类别分布。整套模型在 22 个跨域图上做元任务训练，学到的不是某张图的标签，而是"如何从 support 推断任务规则"这一能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["N-way K-shot 任务<br/>support 集 S + query 集 Q（节点/边/图）"] --> TOK["图原生 tokenization<br/>线性 GCN 提结构 + 非对称原型 token 拼接"]
+    TOK --> TR
+    subgraph TR["两段式 ICL Transformer + 原型分类头"]
+        direction TB
+        R1["Stage 1 上下文精炼<br/>support 之间自注意力"] --> R2["Stage 2 信息汇聚<br/>query 对 support 交叉注意力"]
+        R2 --> R3["原型分类头<br/>cosine 相似度 softmax"]
+    end
+    TR --> AUG["推理时增强<br/>TTA 多视图平均 + 链路预测 MPLP 节点标注"]
+    AUG --> OUT["N-way 类别分布"]
+```
+
 ### 关键设计
 
 **1. 图原生 tokenization：线性 GCN + 非对称原型 token，解决异质图无法统一喂进 Transformer 的痛点**

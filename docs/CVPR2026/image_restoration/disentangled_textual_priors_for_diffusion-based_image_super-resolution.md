@@ -49,6 +49,20 @@ $$z_t \xrightarrow{\text{GTCA}} z_t^g \xrightarrow{\text{LFCA}} z_t^{lf} \xright
 
 这条「从粗到细、从结构到纹理」的注入顺序是刻意安排的：先定全局骨架，再逐层往上加细节，避免不同语义源互相打架。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["低分图像 x_lr<br/>VAE 编码 z_0 → 加噪 z_t"] --> B["GTCA 全局文本跨注意力<br/>注入全局描述，立场景骨架"]
+    B --> C["LFCA 低频跨注意力<br/>低频局部描述，锚对象形状与排布"]
+    C --> D["HFCA 高频跨注意力<br/>高频描述，叠真实纹理"]
+    D --> E["LRCA 低分特征跨注意力<br/>DAPE 特征锚身份一致性"]
+    E -->|循环 T 步去噪| B
+    E --> F["输出 z_t−1 → VAE 解码高分图"]
+    G["Multi-branch CFG<br/>三路独立负提示抑制幻觉"] -.->|作用于三语义分支| B
+    G -.-> C
+    G -.-> D
+```
+
 ### 关键设计
 
 **1. 全局文本跨注意力 GTCA：先把场景骨架立起来**

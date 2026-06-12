@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 每轮迭代：Router Agent 从 Agent 池中选择本轮激活的子集 → 每个活跃 Agent 根据元数据+记忆构建 prompt，与 LLM 多轮交互生成特征 → 评估生成特征在下游模型上的验证性能 → 更新三级记忆 → Summary Agent 汇总全局概念记忆 → 选取 TopN 特征加入数据集 → 进入下一轮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["表格数据 + 任务元数据"] --> B["Router Agent 动态调度<br/>读元数据与记忆选本轮激活子集"]
+    subgraph AG["六专职 Agent + Router 并行架构"]
+        direction TB
+        C["一元 / 交叉 / 时序 / 聚合 / 局部变换 / 局部模式<br/>各管一类特征变换，覆盖三个正交维度"]
+    end
+    B --> AG
+    AG --> D["下游模型评估<br/>XGBoost 验证 AUC / NRMSE"]
+    subgraph MEM["三级记忆机制"]
+        direction TB
+        E["过程记忆 ProcMem<br/>做了什么"] --> F["反馈记忆 FeedMem<br/>效果如何·信用分配"] --> G["概念记忆 ConMem<br/>为什么有效"]
+    end
+    D --> MEM
+    MEM --> H["全局概念记忆与跨 Agent 知识传递<br/>Summary Agent 汇总 GlobalMem"]
+    H -->|"TopN 特征加入数据集，进入下一轮"| B
+    H --> I["输出增强特征集"]
+```
+
 ### 关键设计
 
 **1. 六专职 Agent + Router 的并行架构：让不同 Agent 各管一类特征变换，避免单一思路把特征做得千篇一律**

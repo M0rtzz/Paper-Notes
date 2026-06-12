@@ -42,6 +42,25 @@ FreeRet 提出一个完全不训练的两阶段多模态检索框架：第一阶
 ### 整体框架
 FreeRet 把检索拆成两阶段，全部由同一个未训练 MLLM 承担。**Stage 1 Embedding**：输入 $x$（任意模态组合）后，拼接一段控制 prompt，让模型生成单词 $y$；不取最后一层 MLP 输出，而是改取最后一层 attention 后、最后一层 MLP 前的隐状态 $h_L^{\text{Attn}}(y)$ 作为 embedding $e(x)$，候选库用 cosine 召回 top-$n$。**Stage 2 Reranking**：把 query 与每个候选包成一段 MCQ prompt（「A. 匹配 / B. 不匹配」），从 LM head 取 $p(\text{`A'})$ 然后 softmax 作为相关性分数。整个 pipeline 没有任何额外参数、不依赖辅助模型，也可以无缝放入 RAG 流程实现「单模型完成 retrieve + rerank + generate」。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入 x（任意模态组合）"]
+    subgraph S1["Stage 1 · Embedding（同一未训练 MLLM）"]
+        direction TB
+        P["受控生成 prompt<br/>任务对齐 + 语义锚定 + 去噪"] --> GEN["MLLM 前向生成单词 y"]
+        GEN --> EXT["绕过最后一层 MLP<br/>取注意力层隐状态作 embedding"]
+    end
+    IN --> P
+    EXT --> REC["cosine 召回 top-n 候选"]
+    subgraph S2["Stage 2 · Reranking（同一 MLLM）"]
+        direction TB
+        MCQ["多项选择重排<br/>A. 匹配 / B. 不匹配"] --> SCORE["LM head 取 p(A) 概率 softmax 作分数"]
+    end
+    REC --> MCQ
+    SCORE --> OUT["重排结果 → 可直接接 RAG 生成"]
+```
+
 ### 关键设计
 
 **1. 绕过最后一层 MLP 缓解词汇化压力（§3.2）：把 embedding 抽取点前移一层**

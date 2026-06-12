@@ -46,6 +46,15 @@ tags:
 
 OTPrune 想回答一个很具体的问题：vision encoder 吐出 $m$ 个 token $\bm{V} \in \mathbb{R}^{m \times d}$，要砍到只剩 $k$ 个，留哪 $k$ 个才不丢信息？它的答案是把"留哪些"翻译成"让裁剪后的 token 分布 $Q$ 在几何上尽量贴近完整分布 $P$"。整条管线就是把这个分布对齐目标层层化简到能贪心求解：先用 Gaussian 代理把 2-Wasserstein 距离写成闭式解，再把它松弛成一个可证明子模的 log-det 目标，最后借 Sylvester 恒等式和增量 Cholesky 分解，在 $O(mk^2)$ 时间里贪心选出 token——全程不训练、不依赖校准数据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视觉 token V（m×d）<br/>vision encoder 输出 m 个"] --> B["OT 分布对齐<br/>最小化裁剪子集与完整集的 2-Wasserstein 距离"]
+    B --> C["Gaussian 代理 + log-det 松弛<br/>零均值 Gaussian 闭式解 → 可证明子模的 log-det 目标"]
+    C --> D["Sylvester 变换 + Cholesky 贪心<br/>Gram 矩阵降到 k×k，逐个选 token，O(mk²)"]
+    D --> E["保留 k 个 token，送入 MLLM 推理"]
+```
+
 ### 关键设计
 
 **1. OT 分布对齐：把"选 token"重写成"对齐两个分布"**

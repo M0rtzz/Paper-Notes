@@ -42,6 +42,26 @@ tags:
 ### 整体框架
 Evo-Attacker 是个面向红队评测的框架，核心立场是不去手写固定攻击模板，而把"工具返回该不该被污染"当成一个长程决策问题——什么时候按兵不动、什么时候继续收集上下文、什么时候动手改某个工具返回、改成什么样才在任务上下文里不露馅。它先把 LLM-MAS 形式化成动态图 $\mathcal{G}=(\mathcal{A},\mathcal{E})$（节点是 agent、边是通信通道），每次工具调用记成 $(id,args,r)$、$r$ 是返回值。攻击者只是个灰盒 adversary：仅控制单个目标 agent 的工具通道，能拦截它发出的调用和原始返回，并在干预预算 $B$ 内把部分返回替换成扰动值，目标是最大化系统最终失败概率 $\mathbb{E}[J(o)]$（$J(o)=1$ 即任务失败）。整条流水线分三阶段：先探索式地构造 Attack Memory，再在每轮工具调用上做 memory-augmented 的 Retrieve-Reflect-Modify，最后用 Attack-Flow GRPO 把这条推理链端到端优化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["LLM-MAS 动态图 G=(A,E)<br/>灰盒攻击者仅控制目标 agent 工具通道"] --> M
+    subgraph M["动态 Attack Memory"]
+        direction TB
+        E1["探索式攻击：找到导致系统失败的交互"] --> E2["沉淀上下文 X_ctx + 攻击轨迹 T_trace<br/>成为可跨任务检索的 entry"]
+    end
+    M --> RRM
+    subgraph RRM["Retrieve-Reflect-Modify 推理流程（每轮工具调用）"]
+        direction TB
+        R1["Retrieve：生成查询，取 top-k 相似 memory"] --> R2["Reflect：判断可迁移性 × 可攻击性"]
+        R2 -->|"NoOp / Continue：按兵不动，进入下一轮"| R1
+        R2 -->|"Attack"| R3["Modify：选定工具调用，生成上下文一致的扰动返回"]
+    end
+    RRM --> O["系统终局成败 J(o)"]
+    O --> G["Attack-Flow GRPO<br/>终局奖励 broadcast 到每个决策 token<br/>组内 group-relative advantage 优化"]
+    G -. 回溯强化检索 / 时机 / 修改决策 .-> RRM
+```
+
 ### 关键设计
 
 **1. 动态 Attack Memory：把成功攻击经验沉淀成可跨任务检索的资产**

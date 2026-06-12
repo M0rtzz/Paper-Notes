@@ -44,6 +44,21 @@ CORE-RAG 用"性能即奖励"的 GRPO 强化学习训练一个 1.5B 小压缩器
 
 CORE-RAG 要解决的是"RAG 压缩必掉点"，做法是把压缩从"找一个好摘要"重新定义为"找一个能让下游 LLM 答对的摘要"。系统里有三个角色：一个由现成 retriever（DPR / BM25 / Contriever）拿到 question $q$ 加 $k$ 篇文档 $D$；一个小语言模型压缩器 $\pi_\theta:(q,D)\mapsto s$（主实验 Qwen2.5-1.5B-Instruct）；一个全程冻结、当黑盒用的下游 LLM $M:(s,q)\mapsto\hat{y}$（主实验 Qwen2.5-14B-Instruct）。训练分两阶段——先用 DeepSeek-V3 蒸馏给小模型一个稳健起点，再用下游答题正确率作 reward 跑 GRPO 强化学习收尾；推理时只剩 $s=\pi_\theta(q,D)$、$\hat{y}=M(s,q)$ 两步，压缩器作为 plug-in 挂在任意 LLM 前面。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["检索器 DPR / BM25 / Contriever<br/>取 question q + top-k 文档 D"]
+    R --> S1["阶段1 · DeepSeek-V3 蒸馏 + 性能门控数据筛选<br/>teacher 摘要按下游答对率二选一，有害时教模型输出空串"]
+    S1 --> S2["阶段2 · 性能驱动 GRPO 奖励<br/>采样 G 条摘要 → 冻结 LLM 答题 → r = EM + α·F1 更新 policy"]
+    S2 --> C["训练好的压缩器 π_θ"]
+    subgraph ASYM["小压缩器 + 黑盒大 LLM 的非对称架构（约 1:10）"]
+        direction TB
+        C --> SUM["摘要 s（~3% 长度）"]
+        SUM --> M["冻结下游 LLM M（黑盒，全程不回传梯度）"]
+    end
+    M --> Y["答案 ŷ"]
+```
+
 ### 关键设计
 
 **1. 下游性能驱动的 GRPO 奖励：把"答对没有"直接当 reward**

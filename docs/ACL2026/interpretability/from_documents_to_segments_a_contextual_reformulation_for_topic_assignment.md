@@ -45,6 +45,26 @@ SBTA 可以理解为“topic modeling 的粒度重构”。它并不要求重新
 
 数据层面，作者构建 SemEval-STM。它基于 SemEval-2016 ABSA 的 laptop 和 restaurant 两个领域，用 aspect label 作为主题代理。LLM 先为每个主题抽取相关 segment，然后作者进行后处理、人工合并和重分配，形成同时支持 DBTA 与 SBTA 对比的 benchmark。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：SemEval-2016 ABSA<br/>laptop / restaurant，aspect 当主题代理"]
+    A --> B["SBTA 任务定义<br/>主题分配单位由文档降到语义片段"]
+    B --> S2
+    subgraph S2["SemEval-STM 构建流程"]
+        direction TB
+        C["o3-mini 按主题抽取连续 span"] --> D["丢弃 segment 少于 10 的主题"]
+        D --> E["人工合并重分配主题<br/>laptop 76→33→23，restaurant 并为 11"]
+    end
+    S2 --> F["按主题检索片段<br/>只返回真正谈到该主题的 span"]
+    F --> S3
+    subgraph S3["Segment Intrusion 评测"]
+        direction TB
+        G["同主题片段中塞入 intruder"] --> H["单/双入侵 × easy/hard 四档<br/>人或 LLM 找出 intruder"]
+    end
+    S3 --> I["输出：DBTA vs SBTA 主题纯度与可解释性对比"]
+```
+
 ### 关键设计
 
 **1. Segment-based Topic Allocation 任务定义：把主题分配的原子单位从文档降到语义片段**

@@ -44,6 +44,31 @@ MCP-Persona 是首个针对真实个人化 MCP 工具（Slack/Rednote/Instagram/
 
 MCP-Persona 要解决的核心矛盾是：评测个人化工具既要真实账号行为、又不能碰真实用户隐私数据。它的破局方式是 traverse-then-simulate——先在 sandbox 账号上真实遍历每个 MCP server 的成功与失败调用、把行为记录下来，再让 LLM 把这些行为"写成"一份可执行的 Python simulator 来替代真实 server。整条流水线由三个组件串成：Tool-Traverse 产出每个 server 的 simulator kernel，Context-Tree 产出一棵以 User 为根的个人化数据树作为 simulator 的状态，Persona-Gen 在这棵树上采样工具链、生成并人工校验出 173 个任务。Agent 最终在这个模拟环境里执行任务，用 Acc / SR-0.8 / Exec-Acc 三个指标评分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRV["12 个真实 MCP server<br/>(Slack / Rednote / Lark…)"]
+    subgraph TT["Tool-Traverse（设计1）"]
+        direction TB
+        T1["seed FC 上 live server<br/>+ 对抗扰动覆盖 4 类错误"] --> T2["LLM 合成 Python<br/>simulator kernel"]
+    end
+    subgraph CT["Context-Tree（设计2）"]
+        direction TB
+        C1["层级识别 + 建树<br/>+ 四种内容生成"] --> C2["跨实体引用自洽<br/>→ 以 User 为根的状态树"]
+    end
+    subgraph PG["Persona-Gen（设计3）"]
+        direction TB
+        P1["工具链采样 → 指令模板<br/>→ context 填充"] --> P2["fuzz 模糊化 + 人工校验<br/>→ 173 任务"]
+    end
+    SRV --> TT
+    TT --> ENV["模拟环境<br/>(simulator + 状态树)"]
+    CT --> ENV
+    CT --> PG
+    PG --> RUN["Agent 在模拟环境执行任务"]
+    ENV --> RUN
+    RUN --> M["评分：Acc / SR-0.8 / Exec-Acc"]
+```
+
 ### 关键设计
 
 **1. Tool-Traverse：把真实 server 的行为"遍历"出来再让 LLM 写成代码**

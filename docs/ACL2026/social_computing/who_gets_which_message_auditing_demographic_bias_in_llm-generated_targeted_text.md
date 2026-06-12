@@ -43,7 +43,28 @@ tags:
 
 ### 整体框架
 
-评估框架在三个维度审计偏见：(1) **词汇内容偏见**——通过 Odds Ratio 量化刻板印象词汇在不同群体中的使用差异；(2) **语言风格偏见**——通过正式度和主题特定情感分析量化风格差异；(3) **说服偏见**——通过 PBI 量化说服策略的差异。
+评估框架在三个维度审计偏见：(1) **词汇内容偏见**——通过 Odds Ratio 量化刻板印象词汇在不同群体中的使用差异；(2) **语言风格偏见**——通过正式度和主题特定情感分析量化风格差异；(3) **说服偏见**——通过 PBI 量化说服策略的差异。整条流水线从人口属性出发，先经双模式生成拿到定向消息，再过三维度审计，最后用统计检验把群体差落成显著结论。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["人口统计属性<br/>性别 / 年龄 / 立场"] --> GEN
+    subgraph GEN["双模式生成（SG vs CRG）"]
+        direction TB
+        SG["Standalone 生成<br/>仅人口属性，露出内在偏见"]
+        CRG["Context-Rich 生成<br/>加主题框架 + 地区上下文"]
+    end
+    GEN --> LLM["LLM 生成定向消息<br/>GPT-4o / Llama / Mistral"]
+    LLM --> AUDIT
+    subgraph AUDIT["三维度偏见审计"]
+        direction TB
+        LEX["词汇内容<br/>Odds Ratio 量化刻板词"]
+        STY["语言风格<br/>正式度 + 主题情感"]
+        PBI["说服偏差指数 PBI<br/>代理框架 + 模态确定性 + 祈使语气"]
+    end
+    AUDIT --> STAT["多维度统计检验<br/>Welch t-test / ANOVA+Tukey HSD"]
+    STAT --> OUT["群体差 Δ<br/>男性更强势、女性更温和"]
+```
 
 ### 关键设计
 

@@ -47,6 +47,22 @@ tags:
 ### 整体框架
 ScaLoRA 想让低秩 adapter 攒出高秩的累积更新，又不重启优化器。它仍写成 $W_t = W^{pt} + A_t B_t^\top$，但每步（或每 $I$ 步）把当前 adapter "虚拟合并 + 重启"成 $W_t = \underbrace{(W^{pt} + A_t B_t^\top - \tilde{A}_t \tilde{B}_t^\top)}_{\tilde{W}^{pt}_t,\,\text{合并并冻结}} + \underbrace{\tilde{A}_t \tilde{B}_t^\top}_{\text{可学}}$：先用解析公式算出最优"列缩放" $(\alpha^*_t, \beta^*_t)$，把旧子空间 $A_t B_t^\top$ 并进冻结部分 $\tilde{W}^{pt}_t$，新的可学部分换成 $\tilde{A}_t = A_t \text{diag}(\alpha^*_t)$、$\tilde{B}_t = B_t \text{diag}(\beta^*_t)$，再用列缩放天然的等变性把 AdamW 的动量从旧 $(A_t,B_t)$ 搬到新 $(\tilde{A}_t,\tilde{B}_t)$，最后照常走一步 GD/AdamW 得到 $A_{t+1}, B_{t+1}$ 进入下一轮。因为每轮落在不同的最优子空间，$T$ 轮累计权重 $\sum_t (A_{t+1} B_{t+1}^\top - \tilde{A}_t \tilde{B}_t^\top)$ 不再像原始 LoRA 那样 telescope 抵消，秩持续上涨。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：W_t = W^pt + A_t·B_tᵀ<br/>当前低秩 adapter (A_t, B_t)"]
+    A --> T["理论靶子：最优 adapter ↔ 梯度 top-2r 奇异空间<br/>(Thm 3.2，SVD 太贵，只当上界)"]
+    T --> B["求最优列缩放 (α*, β*)<br/>二次型全局闭式解 (Thm 3.7)"]
+    B -->|非负解·约 80% 层| C["列缩放<br/>Ã = A·diag(α*), B̃ = B·diag(β*)"]
+    B -->|否则·约 20% 层| C2["退化为标量缩放<br/>Ã = α*·A, B̃ = β*·B (Thm 3.5)"]
+    C --> D["合并旧子空间并冻结<br/>W̃^pt = W^pt + A_t·B_tᵀ − Ã_t·B̃_tᵀ"]
+    C2 --> D
+    D --> E["AdamW 动量等变迁移<br/>m 按列乘 α、v 按列乘 α²，O((m+n)r) (Lemma 3.6/3.3)"]
+    E --> F["照常走一步 AdamW → A_{t+1}, B_{t+1}"]
+    F -->|每步 ScaLoRA 或每 I 步 ScaLoRA-I 重复| A
+    F --> G["T 轮累计更新跨多个子空间<br/>不再 telescope 抵消 → 秩持续上涨（高秩更新）"]
+```
+
 ### 关键设计
 
 **1. 最优 adapter 的理论刻画：先找到该追的"理论靶子"**

@@ -43,6 +43,18 @@ LoRe 把凝聚态物理里的「集团 + 浴场」分解搬到扩散式图组合
 ### 整体框架
 作者把迭代求解器形式化为离散动力系统 $x^{t+1} = \Pi_t\big(\mathcal{T}_t(x^t; \mathcal{A})\big)$，其中 $x^t \in \mathbb{R}^{n \times d}$ 是 $n$ 个变量的隐状态，$\Pi_t$ 是轻量的投影/修复/解码，$\mathcal{T}_t$ 是消息传递主算子，可拆成节点项 $\mathcal{B}_t(x)$ 和边交互项 $\sum_{a \in \mathcal{A}} \Delta_{t,a}(x)$。LoRe 不改 backbone 参数和总步数 $T$，只把第二项替换为预算受限的版本 $\tilde{\mathcal{T}}_t(x; M_t, g_t) = \mathcal{B}_t(x) + \sum_{a \in M_t} \Delta_{t,a}(x) + \mathcal{R}_t(x; g_t)$，约束 $|M_t| \le B = \lfloor \rho |\mathcal{A}| \rfloor$。整条 pipeline 三件套：动态路由选 $M_t$、可选全局召回 $\mathcal{R}_t$、共享的投影/贪心解码 $\Pi_t$。所有对比变体共用同一份 DIFUSCO checkpoint 和同一套 $\Pi_t$，因此报告的端到端加速完全来自单步交互算子被压缩。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图实例 (MIS / TSP)<br/>+ 冻结的 DIFUSCO backbone"] --> B["隐状态 x_t：节点项 B_t(x)"]
+    B --> C["动态路由：每 R 步重选集团 M_t<br/>骨架 E_skel（度数前 γB 名）+ 代理打分 S_t 取 top-k"]
+    C --> D["集团精确边消息传递<br/>只在 M_t 上算 ∑ Δ_t,a，硬预算限 ρ 比例"]
+    D --> E["Cluster-Bath 全局召回 R_t（可选）<br/>被丢边汇总成 g_t，按覆盖率 α_i 插值回注"]
+    E --> F["投影 / 贪心解码 + 合法性修复 Π_t"]
+    F -->|t < T，进入下一步| B
+    F -->|t = T| G["可行解<br/>端到端会计：wall-clock 与显存只反映交互算子压缩"]
+```
+
 ### 关键设计
 
 **1. 动态路由（集团选择）：用每 $R$ 步刷新的代理打分追着漂移的冲突热点走**

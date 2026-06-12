@@ -46,6 +46,27 @@ tags:
 
 第二层是 TIDE。IMPACT 质量高但慢，因此作者用 IMPACT-P 在额外约 2,000 对 ICLR 2021-2023 review 上生成 synthetic contradiction annotations，把完整 review pair 映射到结构化输出，再用 LoRA 微调 Meta-Llama-3-8B-Instruct。TIDE 在测试时只需一次前向，就能输出证据、强度和解释。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["两篇完整 review"]
+    subgraph IMPACT["IMPACT 多智能体审议（推理时，慢而准）"]
+        direction TB
+        ACEA["按 aspect 抽证据（ACEA）<br/>逐评价维度抽候选证据对"]
+        DIA["强度审议（两个 DIA）<br/>独立打分 α∈0/1/2/3 + 解释"]
+        DEC{"两 agent 一致?"}
+        ADJ["锁分编排 + 裁决<br/>Orchestrator 守分讨论 → Adjudication 定强度"]
+        CVG["有效性闸门（CVG）<br/>过滤无效矛盾"]
+        ACEA --> DIA --> DEC
+        DEC -->|一致| CVG
+        DEC -->|不一致| ADJ --> CVG
+    end
+    IN --> ACEA
+    CVG --> OUT["结构化输出：证据对 + 强度 + 解释"]
+    OUT -->|IMPACT-P 在 ~2K 对 review 上造标注| DIS["教师→学生蒸馏<br/>LoRA 微调 Llama-3-8B"]
+    DIS --> TIDE["TIDE 小模型（快而够用）<br/>单次前向出证据/强度/解释"]
+```
+
 ### 关键设计
 **1. Aspect-Conditioned Evidence Agent（ACEA）：把「找矛盾」拆成「按评价维度逐个找」，提高长 review 里隐含冲突的召回**
 

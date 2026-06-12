@@ -36,6 +36,25 @@ tags:
 
 水下增强有个「增强悖论」：图看着更清晰了，下游检测 / 分割反而更差。根子在于现有方法是「语义盲」的——对全图一刀切均匀增强，分不清海洋生物、人工物体这些语义焦点和背景水体，结果破坏了下游模型依赖的语义线索。本文给增强装上内容感知，分三步走：先用 VLM（LLaVA）从退化图里生成关键物体的文本描述，再用 BLIP 的视觉-文本对齐把描述变成一张空间语义引导图 $M_{\text{sem}}$，最后通过「cross-attention + 对齐损失」的双重引导，把 $M_{\text{sem}}$ 注进任意 UIE 网络的 decoder，让它知道该重点恢复哪里。整套是可插拔模块，已在 5 个 baseline 上验证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["退化水下图 I_d"] --> ENC["UIE Encoder<br/>（任意 baseline）"]
+    A --> L["LLaVA 生成关键物体描述 T"]
+    subgraph SEM["1. 语义引导图生成（VLM + BLIP 零标注）"]
+        direction TB
+        L --> B["BLIP 视觉/文本编码器<br/>逐 patch 余弦相似度 s_i"]
+        B --> S["语义锐化 Ψsharp<br/>归一化 − 阈值 δ − γ 次幂"]
+    end
+    S --> M["语义引导图 M_sem"]
+    ENC -->|skip 特征 e_l| CA
+    M -->|加权 e_l 作 K/V| CA["2. Cross-Attention 注入<br/>decoder 优先取语义高亮区"]
+    CA --> DEC["UIE Decoder<br/>逐阶段特征 F_l"]
+    M --> AL["3. 语义对齐损失<br/>背景压制 + 前景增强"]
+    DEC -.特征约束.-> AL
+    DEC --> OUT["增强结果 I_e"]
+```
+
 ### 关键设计
 
 **1. 语义引导图生成：用 VLM + BLIP 零标注地标出「哪里重要」**

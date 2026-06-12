@@ -46,6 +46,19 @@ tags:
 ### 整体框架
 这篇论文要解决的问题是：给一张 360° 的全景图，直接前馈式地重建出一个由独立 3D 物体和背景拼起来的可编辑场景，而不靠耗时的逐物体迭代优化。整条流水线接收一张等距柱形全景图 $\mathbf{I} \in \mathbb{R}^{H \times W \times 3}$，先在预处理阶段检测出每个物体并用透视投影把它从扭曲的全景里"摆正"成普通裁剪图；接着物体分支用现成生成器造出 3D 资产、再由核心的 Object-World Transformation Predictor 一次前馈算出把它放回世界坐标的变换；同时背景分支把修复后的全景图转成 3DGS；最后把所有对齐好的物体和背景融合成完整场景。整个解耦设计让"造物体"和"摆物体"两件事互不绑死，生成器可随意替换。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    I["单张全景图 I"] --> P["全景畸变消除<br/>SAM 抠 mask + 透视投影 → 无畸变裁剪图"]
+    P --> GEN["现成 3D 生成器<br/>TRELLIS / Amodal3R 造 3D 物体 + V 个多视角渲染"]
+    GEN --> AV["Alignment-VGGT<br/>裁剪图 + 渲染 + 相机参数 → 预测 R, t, S"]
+    PGD["伪几何监督<br/>离线优化算每件生成物体的伪 GT 位姿"] -. 训练监督 .-> AV
+    AV --> C2F["Coarse-to-Fine 对齐<br/>渲染-对比迭代纠偏（仅推理，固定缩放）"]
+    I --> BG["背景分支<br/>全景修复 → 3DGS"]
+    C2F --> FUSE["融合成完整 3D 场景"]
+    BG --> FUSE
+```
+
 ### 关键设计
 
 **1. 全景畸变消除：先把扭曲的物体投影成普通透视图，才喂给现成 3D 生成器**

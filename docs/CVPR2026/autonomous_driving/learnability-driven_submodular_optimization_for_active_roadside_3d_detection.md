@@ -44,6 +44,20 @@ LH3D（Learnable Hierarchical 3D）要解决的是路侧主动学习的一个反
 
 $$F(S_q) = [\Phi_A(S_q) - \Phi_A(\mathcal{U})] + [\Phi_B(\mathcal{L}_q \cup S_q) - \Phi_B(\mathcal{L}_q)] + [\Phi_C(\mathcal{L}_q \cup S_q) - \Phi_C(\mathcal{L}_q)]$$
 
+每轮主动学习从当前检测器的预测出发，依次跑完三阶段子模贪心选择，挑出一批图像送人工标注、并入已标注集后重训检测器，循环到预算耗尽。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始标注集 L（500 张）<br/>训练 BEV 检测器（如 BEVHeight）"] --> B["未标注池 U<br/>检测器预测深度 / 类别 / 几何分布"]
+    B --> C["深度置信度筛选<br/>Shannon 熵→置信权重 rᵢ，log 凹性均衡近/中/远"]
+    C --> D["稀有-常见类别平衡<br/>类别分布熵→权重，log 饱和把预算倾向稀有类"]
+    D --> E["几何变异选择<br/>BEV 高斯 NLL 选适度新布局、压住极端离群值"]
+    E --> F["选出 100 张 Sq 送人工标注"]
+    F -->|并入 L，进入下一轮| A
+    F -->|达到 20% 标注预算| G["输出最终检测器"]
+```
+
 ### 关键设计
 
 **1. Stage 1 深度置信度筛选：先挡掉深度都估不准的歧义场景**

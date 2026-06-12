@@ -45,6 +45,16 @@ DINOv3-PCA-TabPFN 想解决的是"换一个新生成器就要重训分类头"的
 
 具体地，图像统一以 RGB 加载、短边缩到 256 像素再中心裁到 $224\times 224$、按 ImageNet 统计归一化后，喂给 eval 模式下的 DINOv3 ViT-B/16，取 CLS token 得到一个 $N\times 768$ 的特征矩阵（主干全程不动梯度）；接着在训练集特征上拟合 Incremental PCA，把 768 维压到结构化行 $z(h(x))\in\mathbb{R}^{500}$，测试集套用同一组主成分；最后把降维后的训练行（含 0/1 标签）和待测行一起塞进 TabPFN，由其先验数据拟合网络单次前向输出预测——本版 TabPFN 限制最多 10,000 行、500 维。整条 pipeline 的精髓不在哪个模块本身有多新，而在于它把"适配 = 换上下文行"彻底落地：遇到新生成器，只需在它的少量真假样本上重抽 PCA 系数、再把这些行塞进 TabPFN 的上下文集合，编码器和判别器都不必再走一遍梯度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像<br/>RGB → 短边 256 → 中心裁 224×224 → ImageNet 归一化"] --> B["冻结 DINOv3 编码器<br/>ViT-B/16 eval 取 CLS → 768 维（不动梯度）"]
+    B --> C["PCA 降到 500 维<br/>训练特征拟合 IncrementalPCA → 一行表格记录 z(h(x))"]
+    C --> D["TabPFN 上下文推理<br/>带标签上下文行 + 待测行单次前向"]
+    D --> E["输出 real/fake 判别"]
+    F["新生成器少量真假样本"] -->|适配=重抽 PCA + 重组上下文行（零梯度）| C
+```
+
 ### 关键设计
 
 **1. 冻结 DINOv3 当通用视觉编码器：把"表征学习"和"判别学习"彻底解耦**

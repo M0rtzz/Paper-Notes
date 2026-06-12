@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 $N \times N$ 的代价矩阵 $C$，输出是精确最优的指派矩阵 $X^\ast$。Pipeline 有四个阶段：(1) 行特征抽取——把 $C$ 压成 $F \in \mathbb{R}^{N \times D}$，每行只保留行内最小、均值、熵、排名等 $D \ll N$ 个统计量；(2) RowDualNet 在 GPU 上对每行独立地预测一个标量 $\hat{u}_i$，附加一个稀疏 k-NN 精化步骤捕捉行间竞争；(3) Min-Trick 在 GPU 上分块算出 $\hat{v}$，并通过等式子图密度 $\rho$ 判断要不要 fallback；(4) 把 $(\hat{u}, \hat{v}, C)$ 注入 CPU 上修改过的 LAPJV C++ 实现，让它跳过早期 reduction，直奔精确解。
+输入是 $N \times N$ 的代价矩阵 $C$，输出是精确最优的指派矩阵 $X^\ast$。Pipeline 有四个阶段：(1) 行特征抽取——把 $C$ 压成 $F \in \mathbb{R}^{N \times D}$，每行只保留行内最小、均值、熵、排名等 $D \ll N$ 个统计量；(2) RowDualNet 在 GPU 上对每行独立地预测一个标量 $\hat{u}_i$，附加一个稀疏 k-NN 精化步骤捕捉行间竞争；(3) Min-Trick 在 GPU 上分块算出 $\hat{v}$，并通过等式子图密度 $\rho$ 判断要不要 fallback；(4) 把 $(\hat{u}, \hat{v}, C)$ 注入 CPU 上修改过的 LAPJV C++ 实现，让它跳过早期 reduction，直奔精确解。其中阶段 (1)(2) 共同组成「RowDualNet 行独立架构 + 稀疏 k-NN 精化」这一关键设计，阶段 (3) 拆成「Min-Trick 构造可行对偶」与「等式子图密度 fallback」两个设计，阶段 (4) 的 LAPJV 求解器是被加速的脚手架。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["代价矩阵 C (N×N)"] --> S1
+    subgraph S1["RowDualNet 行独立架构 + 稀疏 k-NN 精化"]
+        direction TB
+        B["行特征抽取<br/>每行压成 D≪N 个统计量"] --> C["共享 MLP 逐行预测行势能 û_init<br/>内存随 N 线性增长"]
+        C --> D["稀疏 k-NN 精化<br/>取 reduced cost 最小的 top-k 列补行间竞争"]
+    end
+    S1 -->|"行势能 û"| E["Min-Trick 构造可行对偶<br/>v̂_j = min_i (C_ij − û_i)，对偶可行天然成立"]
+    E --> F{"等式子图密度 ρ fallback 判定"}
+    F -->|"ρ < τ 坏种子"| G["LAPJV 冷启动<br/>标准列归约启发式"]
+    F -->|"ρ ≥ τ 注入 (û, v̂, C)"| H["LAPJV 精确求解<br/>跳过早期 reduction 直奔最优"]
+    G --> I["最优指派 X*"]
+    H --> I
+```
 
 ### 关键设计
 

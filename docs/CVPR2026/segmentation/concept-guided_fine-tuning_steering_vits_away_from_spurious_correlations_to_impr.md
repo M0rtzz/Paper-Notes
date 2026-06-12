@@ -45,6 +45,22 @@ tags:
 
 CFT（Concept-Guided Fine-Tuning）要把 ViT 的注意力从背景纹理、共现物体这类虚假相关，掰回到真正的类别语义部件上，从而提升 OOD 鲁棒性。它分三个阶段、全程无需人工标注：先用 LLM 为每个类别生成判别性概念，再用 GroundedSAM 把这些概念零样本分割成掩码，最后以 AttnLRP 的 relevance map 与概念区域对齐为目标微调 ViT——每类只要 3 张图、共 1500 张就够。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：ImageNet 训练图<br/>每类 3 张共 1500 张 + 类别标签"]
+    A --> B["LLM 概念生成<br/>每类 K 个判别性部件（鸟喙 / 翅膀 / 爪子）"]
+    B --> C["GroundedSAM 零样本概念分割<br/>概念文本 prompt → 二值掩码并集 S(I)、补集 S̄(I)"]
+    C --> CFT
+    A -. 训练图 .-> CFT
+    subgraph CFT["概念引导微调"]
+        direction TB
+        D["AttnLRP 算 relevance map Φ(I;θ)"]
+        D --> E["概念对齐损失：↑ S(I) 内 relevance<br/>非概念抑制损失：↓ S̄(I) 内 relevance<br/>+ 分类自一致损失 L_cls 防退化"]
+    end
+    CFT --> F["输出：鲁棒 ViT<br/>5 个 OOD 基准提升 2−3%"]
+```
+
 ### 关键设计
 
 **1. LLM 概念生成：把"该看哪里"从粗粒度前景细化到具体语义部件**

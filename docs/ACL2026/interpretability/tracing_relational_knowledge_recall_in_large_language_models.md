@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 本文把"关系知识回忆"设置成一个受控的填空式生成场景：给定一句含主语、待预测对象的 prompt，在对象生成前的那个 token 位置抓取模型内部状态，训练一个线性探针去判别这句话所表达的关系类型。关键在于选用注意力头的逐头贡献 $\Delta_{att,h}$ 作为探针特征——它既是最强的关系判别信号，又能自然拆解到单个注意力头与单个源 token，从而支撑起 HeadScore 与 TokenScore 两套归因分析。整套流程在 FewRel 验证集上对 LLaMA-3.2 1B/3B、LLaMA-3.1 8B、Qwen3 4B 四个指令调优模型做系统评估。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt<br/>主语 + 待生成对象"] --> B["抓取对象生成前 token 位置<br/>的注意力头内部状态"]
+    B --> C["注意力头贡献特征 Δ_att,h<br/>逐头分解，可追溯到源 token"]
+    C --> D["线性探针<br/>判别关系类型（n-way k-shot）"]
+    D --> E["HeadScore 与 TokenScore<br/>把探针决策拆回头与源 token"]
+    E --> F["关系分类成败的预测因子<br/>四个相关性（含无数据诊断信号）"]
+```
+
 ### 关键设计
 
 **1. 注意力头贡献特征 $\Delta_{att,h}$：可追溯的最强关系信号**

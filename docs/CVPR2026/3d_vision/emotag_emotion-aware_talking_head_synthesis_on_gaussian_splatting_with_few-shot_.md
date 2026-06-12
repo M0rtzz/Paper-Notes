@@ -43,6 +43,24 @@ EmoTaG 想解决的是：仅靠几秒视频，就让一个 3D 说话人头不光
 
 训练走 Pretrain-and-Adapt 两步：预训练阶段从多身份语料里学通用的"音频→运动"先验；适配阶段把 GRMN 主体冻住，只微调少量 AdaIN 参数就能换上新身份。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["音频(Wav2Vec 2.0) + 上半脸 AU(OpenFace)<br/>+ 中性帧身份描述子(AdaFace)"] --> B["Identity-Conditioned Encoder<br/>身份经 AdaIN 调制注入音频/表情流"]
+    B --> C
+    subgraph C["Expert Motion Decoder（三分支解缠）"]
+        direction TB
+        C1["Base 分支<br/>中性发音形变 δb"] --> CM["δ = δb + g·δr"]
+        C2["Residual 分支<br/>情感偏差 δr"] --> CM
+        C3["Gate 分支<br/>门控强度 g∈[0,1]"] --> CM
+    end
+    SEG["Semantic Emotion Guidance<br/>DeepFace 蒸馏 → KL 监督 δr、强度监督 g"] -.->|训练监督| C
+    C --> D["在 FLAME 参数空间预测运动<br/>表情 Ψ + 下颌姿态 Θjaw"]
+    D --> E["FLAME-Gaussian 形变<br/>网格驱动绑定其上的 Gaussians"]
+    E --> F["口腔内 Gaussian 精细化<br/>对 G_mouth 补残差 (Δμ,Δr,Δs)"]
+    F --> G["渲染输出"]
+```
+
 ### 关键设计
 
 **1. 在 FLAME 参数空间里预测运动：用显式几何先验兜住情感表情下的崩坏**

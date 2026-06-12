@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 本文要解决的是"如何诚实地评估 RL 记忆模型"：回报这一标量把"会不会推断状态"和"加模块本身的副作用"纠缠在一起，无法分辨。POPGym Arcade 的破局思路是给每个底层任务造一对像素层面完全一致的 MDP/POMDP 孪生环境，于是同一个网络可以分别在两者上训练，回报的差值就自然剥离出"部分可观测带来的难度"。在这套孪生底座上，作者再叠两组诊断工具：一组用配对回报相减把回报拆成 Observability Gap 与 Memory Bias 两条同尺度信号，另一组用对历史观测求梯度的方式量化"当前决策到底回看了哪几帧"，最终用后者在 MDP 上的异常形态揭出"价值涂抹"病理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["POPGym Arcade 孪生环境<br/>像素级一致的 MDP ↔ POMDP 配对"] --> B["同一记忆模型 + 策略<br/>分别在 MDP / POMDP 上训练"]
+    B --> C["Observability Gap 与 Memory Bias<br/>配对回报相减拆出两条同尺度信号"]
+    B --> D["像素显著性与 Recall Density<br/>对历史观测求梯度量化回看了哪几帧"]
+    D -->|"MDP 当 oracle：密度本应集中末段"| E["价值涂抹病理<br/>权重摊到早期无关帧"]
+    C --> F["诊断结论<br/>回报排名可被 Bias 反转、给出调参方向"]
+    E --> F
+```
+
 ### 关键设计
 
 **1. POPGym Arcade 孪生环境：让 MDP 与 POMDP 像素级可比**

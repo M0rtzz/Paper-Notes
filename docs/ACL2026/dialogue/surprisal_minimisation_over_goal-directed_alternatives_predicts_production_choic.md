@@ -63,7 +63,25 @@ goal-directed alternatives 则由 GPT-4o 对观察到的人类句子做受约束
 
 随后用 GPT-4o judge 过滤 paraphrase，人工抽样显示 paraphrase 判断准确率 98.75%。
 
+由于 LM 生成的替代项可能在长度和整句信息密度上系统性偏离人类，作者还按长度和 global UID 分箱、从生成池无放回抽样，让替代项分布与人类对齐，避免生成偏差污染成本比较。
+
 最后作者比较人类 continuation 在各类 cost 下的 rank，并用 pairwise logistic choice model 测试成本差异是否预测人类选择。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Switchboard 对话语料<br/>清洗 + 过滤目标 utterance"] --> B["按 root verb 切分<br/>context / 人类 continuation"]
+    subgraph C["两类 contextual alternatives"]
+        direction TB
+        D["goal-agnostic 集合<br/>GPT-4o 多历史条件补全"]
+        E["goal-directed 集合<br/>GPT-4o 同目标 paraphrase → judge 过滤"]
+    end
+    B --> C
+    C --> F["成本估计<br/>GPT-2 算 surprisal / UID / 长度"]
+    F --> G["分布对齐的替代项采样<br/>按长度·global UID 分箱抽样"]
+    G --> H["成本敏感选择模型<br/>rank-1 检验 + pairwise logistic"]
+    H --> I["哪种成本最能预测人类生产选择"]
+```
 
 ### 关键设计
 

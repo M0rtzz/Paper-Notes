@@ -41,7 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要解决的是一个很尖锐的问题：当像素预算被压到全图的 1%–5% 时，怎么让冻结的 VLM 还答得对。整条 pipeline 围绕"把有限的像素花在刀刃上"展开——给定图像 $I$ 和问题 $q$，先由 BASS 模块根据一组 Möbius 变换参数 $\theta$ 做一次非均匀采样，把任务相关区域放大、无关背景压缩，得到只占预算 $B$ 的小图 $\hat{I}$，送进冻结 VLM 拿回答。关键在于 $\theta$ 不是一次定死的：系统会拿 VLM 的回答和图像质量去算损失，在测试时反过来迭代调整 $\theta$，让下一轮采样更聚焦。整个过程不动 VLM 一个参数，只在推理时优化采样这一层。
+这篇论文要解决的是一个很尖锐的问题：当像素预算被压到全图的 1%–5% 时，怎么让冻结的 VLM 还答得对。整条 pipeline 围绕"把有限的像素花在刀刃上"展开——给定图像 $I$ 和问题 $q$，先由一个轻量 MLP 预测出一组 Möbius 变换参数 $\theta$，BASS 模块据此做一次非均匀采样，把任务相关区域放大、无关背景压缩，得到只占预算 $B$ 的小图 $\hat{I}$，送进冻结 VLM 拿回答。关键在于 $\theta$ 不是一次定死的：CSF 模块会拿 VLM 的回答和图像质量去算损失，在测试时反过来迭代调整 $\theta$，让下一轮采样更聚焦。整个过程不动 VLM 一个参数，只在推理时优化采样这一层。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：图像 I + 问题 q"]
+    subgraph BASS["BASS：Möbius 非均匀采样前端"]
+        direction TB
+        M["MLP 参数预测器<br/>预测 4 个 Möbius 参数 θ"]
+        M --> F["Möbius 正变换<br/>放大注视区 · 压缩周边"]
+        F --> G["预算 B 下均匀采样"]
+        G --> H["插值 + Möbius 逆变换<br/>还原全局结构 → 采样图 Î"]
+    end
+    A --> M
+    H --> V["冻结 VLM<br/>读 Î + q → 预测答案 y_pred"]
+    subgraph CSF["CSF：闭环语义反馈（测试时优化）"]
+        direction TB
+        L1["感知损失 L_img<br/>VSI + DISTS + MSE"]
+        L2["语义损失 L_text<br/>SPSA 黑盒估梯度"]
+    end
+    V --> CSF
+    CSF -->|更新 θ · 迭代 5–10 次收敛| M
+```
 
 ### 关键设计
 

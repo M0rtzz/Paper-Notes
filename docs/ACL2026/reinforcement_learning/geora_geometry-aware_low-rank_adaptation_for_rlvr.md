@@ -45,6 +45,24 @@ tags:
 
 GeoRA 分两步：(1) **离线预处理**——构建几何约束矩阵 $W_{Geo}$，对其做 SVD 提取 top-$r$ 成分初始化适配器 $A_{Geo}, B_{Geo}$，计算冻结的残差矩阵 $W_{res}$；(2) **在线训练**——前向传播时 $h = W_{res} x + \frac{\alpha}{r} B_{Geo} A_{Geo} x$，其中 $W_{res}$ 冻结，仅训练 $A_{Geo}, B_{Geo}$。初始化保证函数不变：$W_{res} + \frac{\alpha}{r} B_{Geo} A_{Geo} = W$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["预训练权重 W"]
+    subgraph GEO["几何约束矩阵构建"]
+        direction TB
+        S["谱先验 M_Spec<br/>抑制高能量/高曲率成分"]
+        E["欧几里得先验 M_Euc<br/>保留近零高可塑参数"]
+        S --> U["取并集 → 几何视图 W_Geo"]
+        E --> U
+    end
+    W --> GEO
+    GEO --> SVD["几何感知 SVD 初始化<br/>对 W_Geo 取 top-r → A_Geo, B_Geo"]
+    SVD --> RES["冻结残差矩阵 W_res<br/>= W − (α/r)·B_Geo·A_Geo"]
+    RES --> FWD["在线训练（GRPO）<br/>h = W_res·x + (α/r)·B_Geo·A_Geo·x，W_res 冻结"]
+    FWD --> OUT["RLVR 适配后的模型"]
+```
+
 ### 关键设计
 
 **1. 几何约束矩阵构建：从预训练权重中筛出真正适合 RLVR 更新的那块参数子空间**

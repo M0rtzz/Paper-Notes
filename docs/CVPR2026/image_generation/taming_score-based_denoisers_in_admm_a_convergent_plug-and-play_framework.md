@@ -62,6 +62,22 @@ $$\min_{\bm{x},\bm{z}} \ell(\bm{y} \| \mathcal{A}(\bm{x})) + \gamma h(\bm{z}) \q
 
 然后沿用标准的三步交替迭代：**x-更新**解带数据保真项的子问题（用 Adam 做梯度下降，最多 1000 步、loss 连升 3 次早停），**z-更新**是去噪子问题，**u-更新**做对偶变量累加 $\bm{u}^{(k+1)} = \bm{u}^{(k)} + (\bm{x}^{(k+1)} - \bm{z}^{(k+1)})$。整个框架的创新全部压在 z-更新：原本该调用近端算子的地方，换成一个叫 AC-DC 的三阶段去噪器。它接收 ADMM 拼出来的中间变量 $\tilde{\bm{z}}^{(k)} = \bm{x}^{(k+1)} + \bm{u}^{(k)}$——这个量被对偶变量 $\bm{u}^{(k)}$ 扭曲过，噪声几何早已偏离 score 的训练流形 $\mathcal{M}_{\sigma(t)}$——先把它粗略拉近流形（AC），再精确对齐（DC），最后才真正去噪（Score Denoising）。三步逐级收紧，是后面收敛性证明能成立的关键。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["观测 y + 退化算子 A"] --> B["x-更新<br/>Adam 解数据保真子问题"]
+    B --> C["拼出中间变量 z̃ = x + u<br/>（被对偶变量扭曲，偏离 score 流形）"]
+    C --> ACDC
+    subgraph ACDC["AC-DC 去噪器（替代 z-更新的近端算子）"]
+        direction TB
+        D["自动校正 AC<br/>注入高斯噪声粗拉回流形附近"] --> E["方向校正 DC<br/>条件 Langevin 精确钉到目标流形"]
+        E --> F["Score 去噪<br/>Tweedie 一步 / ODE 多步"]
+    end
+    ACDC --> G["u-更新<br/>对偶变量累加"]
+    G -->|未收敛，σ 衰减进入下一轮| B
+    G -->|收敛| H["复原图像 x"]
+```
+
 ### 关键设计
 
 **1. Auto-Correction（AC）：先用高斯噪声把走样的输入"洗"回流形附近**

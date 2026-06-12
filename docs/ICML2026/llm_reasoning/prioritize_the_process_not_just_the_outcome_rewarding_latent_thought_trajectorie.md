@@ -43,6 +43,23 @@ tags:
 ### 整体框架
 RLTT 想解决的是"GRPO 套到 LoopLM 上几乎拿不到增益"这个老问题，它的答案是一个即插即用的 GRPO 替代品：流程上和 GRPO 完全同构——对 prompt $x$ 采样 $g$ 条 rollout $\{y_i\}$，按二元正确性奖励 $r_i\in\{0,1\}$ 算组内归一化优势 $\hat{A}_i=(r_i-\mu)/\sigma$——唯一改动落在策略梯度的形式上。GRPO 只对每个 token 的终末一圈分布求 $\nabla_\theta\log P$，RLTT 则把这个 token 在全部 $T_{\max}$ 圈循环里产生的 next-token 分布都按权重 $\omega_t$ 加权进梯度，从而让奖励信号直接作用在整条"思考轨迹"上而非只作用在终点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Prompt x：采样 g 条 rollout（LoopLM）"] --> B["二元 outcome reward r∈{0,1}<br/>组内归一化优势 Â=(r−μ)/σ"]
+    A --> C
+    subgraph C["每个 token 的潜在思考轨迹（LoopLM 现成产物）"]
+        direction TB
+        C1["循环 T_max 次：h^(1)→…→h^(T_max)"] --> C2["共享语言建模头 g(·) 投到词表<br/>得 T_max 个 latent thought 分布 P^(t)"]
+    end
+    W["loop 加权策略 ω_t（唯一自由度）<br/>Exit PDF / Progressive / Uniform，Σ ω_t=1"]
+    B --> D
+    C --> D
+    W --> D
+    D["轨迹级策略梯度<br/>Σ_t ω_t · ∇log P^(t)(y_j) · Â"] --> E["+ KL 正则（仅终末圈 P^(T_max) vs 冻结参考策略）"]
+    E --> F["OptimizerStep：更新 θ"]
+```
+
 ### 关键设计
 
 **1. 轨迹级策略梯度：把信用打在每一圈，而不是只打在最后一圈**
@@ -52,10 +69,6 @@ GRPO 的策略梯度 $\nabla_\theta\log P_\theta^{(T_{\max})}(y_j\mid x,y_{<j})\
 **2. 三种 loop 加权策略 $\{\omega_t\}$：RLTT 唯一的自由度**
 
 权重序列 $\{\omega_t\}_{t=1}^{T_{\max}}$（满足 $\sum_t\omega_t=1$）决定每一圈贡献多少信用，是整个方法唯一需要选择的东西。作者给了三种：**Exit PDF** 取 $\omega_t=p_{\text{exit}}(t\mid x)$，直接复用 Ouro 学到的 early-exit head 概率当"该圈可信度"，模型自己觉得该停的那一圈得分最高；**Progressive** 取 $\omega_t=t^\alpha/\sum_s s^\alpha$，越靠后的圈权重越大，对应"refinement 越多越逼近真分布"的直觉；**Uniform** 取 $\omega_t=1/T_{\max}$，所有圈等权，逼模型尽早形成正确分布并维持。有意思的是三种策略实测差异 < 1%（附录 A.3），这说明收益主要来自"暴露完整轨迹"这件事本身，而不是某种精巧调度——也反过来证伪了 LSRL "必须用 GPT 给中间状态打分"那条重外部依赖路线。论文主表用 Exit PDF，因为它最贴近 Ouro 原生的 halting 行为。
-
-**3. 与 GRPO 严格对齐的实验协议：把"赢"和"调参侥幸"撇清**
-
-LoopLM+RL 这条路过去屡战屡败，所以论文必须证明改进真来自轨迹级信用而非别的变量。为此 rollout 预算、优化器、奖励函数、advantage 归一化、训练步数（140 步）、KL 系数全部与 GRPO 对齐，唯一被迫不同的是 `ppo_max_token_len_per_gpu`——因为要保留全部 $T_{\max}$ 圈的 log-prob 来构造加权目标，显存吃紧，这个值从 GRPO 的 16384 砍到 8192，并用 mini-step 补偿。更进一步，math 评估时还故意给 GRPO 更长的 token budget（MATH-500 上 GRPO 3072 vs. RLTT 2048），主动消除"RLTT 赢只是因为响应更短"的干扰。
 
 ### 损失函数 / 训练策略
 最终损失（式 (5)–(7)）把全圈加权项和 GRPO 风格的 KL 正则拼在一起：
@@ -67,6 +80,8 @@ $$J_{\text{RLTT}}(\theta) = -\mathbb{E}\Big[\frac{1}{g|y_i|}\sum_{i,j,t} \omega_
 ## 实验关键数据
 
 ### 主实验
+
+LoopLM+RL 这条路过去屡战屡败，所以论文刻意把改进和"调参侥幸"撇清：rollout 预算、优化器、奖励函数、advantage 归一化、训练步数（140 步）、KL 系数全部与 GRPO 对齐，唯一被迫不同的是为保留全部 $T_{\max}$ 圈 log-prob 而把 `ppo_max_token_len_per_gpu` 从 16384 砍半到 8192（用 mini-step 补偿）；math 评估时甚至故意给 GRPO 更长的 token budget（MATH-500 上 GRPO 3072 vs. RLTT 2048），主动消除"RLTT 赢只是因为响应更短"的干扰。
 
 | 模型 | MATH-500 | AIME24 | AIME26 | BeyondAIME | GSM8K | Math Avg | Non-Math Avg |
 |---|---|---|---|---|---|---|---|

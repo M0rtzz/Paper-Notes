@@ -45,6 +45,31 @@ ETR 的思路是"既不改 GRPO 优化算法、也不加任何硬性长度约束
 $$R(q,o)=\begin{cases}-1,&\text{若答错}\\ 1+\lambda R_{\text{entropy}}(o),&\text{若答对}\end{cases}$$
 其中 $R_{\text{entropy}}(o)$ 是基于轨迹熵的 shaping 项。GRPO 在同一题的 group 内对优势做相对归一化，于是 ETR 信号只在"正确解之间比谁更高效"，把效率约束牢牢锁在不损正确性的前提下。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["策略模型生成 CoT<br/>按空行切成 T 步 C₁…Cₜ"]
+    subgraph S1["熵趋势奖励 R_entropy（动量加权）"]
+        direction TB
+        B["逐步熵 Hₜ<br/>next-token 分布的 Shannon 熵"]
+        C["步间熵变 Δₜ = Hₜ₋₁ − Hₜ"]
+        D["动量累加 Sₜ = γSₜ₋₁ + Δₜ（γ=0.9）<br/>R_entropy = Σ Sₜ，早步权重更大"]
+        B --> C --> D
+    end
+    A --> B
+    D -->|熵反弹即被扣分| E["隐式自适应早停<br/>简单题早停 / 难题多走但每步收敛"]
+    subgraph S3["两段式 reward + GRPO 解耦"]
+        direction TB
+        F{"答案正确？"}
+        F -->|是| G["奖励 = 1 + λ·R_entropy"]
+        F -->|否| H["奖励 = −1"]
+        G --> I["GRPO group 内相对归一化<br/>效率仅作正确解间 tie-breaker"]
+        H --> I
+    end
+    E --> F
+    I --> J["策略更新"]
+```
+
 ### 关键设计
 
 **1. 基于动量的熵趋势奖励：奖励整条 CoT 的"熵下降方向"，而不是瞬时低熵**

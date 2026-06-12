@@ -40,7 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：三模态特征序列 $\mathbf{U}_m \in \mathbb{R}^{T_m \times d_m}$（$m \in \{a, v, l\}$，分别代表声学、视觉、语言），经 unimodal 网络提取表示 $\mathbf{X}_m \in \mathbb{R}^d$。由于语言是 MAC 中的主导模态，CaReFlow 将视觉和声学模态的分布映射到语言模态分布：$\mathbf{X}_{m,l} = \text{CaReFlow}_{m,l}(\mathbf{X}_m)$，然后用简单的拼接 + MLP 做融合和预测。推理时用 2 个 Euler 步完成分布转换。
+输入：三模态特征序列 $\mathbf{U}_m \in \mathbb{R}^{T_m \times d_m}$（$m \in \{a, v, l\}$，分别代表声学、视觉、语言），经 unimodal 网络提取表示 $\mathbf{X}_m \in \mathbb{R}^d$。由于语言是 MAC 中的主导模态，CaReFlow 将视觉和声学模态的分布映射到语言模态分布：$\mathbf{X}_{m,l} = \text{CaReFlow}_{m,l}(\mathbf{X}_m)$，然后用简单的拼接 + MLP 做融合和预测。推理时用 2 个 Euler 步完成分布转换。映射这一步内部是一套前向 + 反向的循环 rectified flow：前向流靠 One-to-Many Mapping 看见目标分布全貌、靠 Adaptive Relaxed Alignment 消解歧义，反向的 Cyclic Rectified Flow 把映射结果还原回源以锁住信息。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三模态输入：声学 / 视觉 / 语言"] --> B["unimodal 网络<br/>提取表示 X_a / X_v / X_l"]
+    B --> C["One-to-Many Mapping<br/>跨样本采样分布对，看见目标全貌"]
+    C --> D["Adaptive Relaxed Alignment<br/>前向流 + 标签距离自适应 margin"]
+    D --> E["前向输出 X_m,l<br/>视觉 / 声学已对齐到语言分布"]
+    E --> F["拼接 + MLP 融合 → 情感预测"]
+    E --> G["Cyclic Rectified Flow<br/>反向流还原 X_m，锁住源信息"]
+    G -->|不 detach X_m,l，梯度回传约束前向| D
+```
 
 ### 关键设计
 

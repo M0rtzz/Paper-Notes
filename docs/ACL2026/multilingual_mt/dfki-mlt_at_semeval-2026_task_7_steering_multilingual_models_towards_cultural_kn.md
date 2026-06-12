@@ -45,6 +45,22 @@ tags:
 
 推理时，对某一 transformer layer 的 hidden state 加入 $\beta v_{lang}$，其中 $v_{lang}$ 是归一化后的语言方向，$\beta$ 是 steering strength。最终提交选择 Qwen2.5-72B-Instruct、Layer 26、$\beta=1$，并使用 cultural prompt。所有 track 采用 greedy decoding，temperature=0，以减少采样噪声对 steering 效果判断的干扰。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["BLEnD 语言-地区对"] --> S1
+    subgraph S1["FLORES DiffMean 语言向量"]
+        direction TB
+        B["映射到 FLORES<br/>language/script 标识"] --> C["取 FLORES dev 前 1000 句"]
+        C --> D["喂入多语言指令 LLM<br/>收集指定层残差流激活"]
+        D --> E["DiffMean：目标语言均值 − 参考集均值"]
+    end
+    S1 --> F["归一化语言方向 v_lang"]
+    F --> G["推理期 activation steering<br/>h′ = h + β·v_lang"]
+    G -->|"Qwen2.5-72B / Layer 26 / β=1 / cultural prompt"| H["输出：MCQ 选项 / SAQ 短答案"]
+    H --> I["后验敏感性分析<br/>layer / prompt / β / model / locale sweep"]
+```
+
 ### 关键设计
 
 **1. FLORES DiffMean language vectors：用平行语料把"语言身份"提成一个可注入的方向**

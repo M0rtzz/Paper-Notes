@@ -42,6 +42,26 @@ SphericalDreamer 通过把多张文本生成的分层深度全景图各自抬升
 ### 整体框架
 给定文本 prompt $p$ 和球体数 $N$，SphericalDreamer 沿水平方向 $\mathbf{d}$ 等间距摆 $N$ 个相机位姿，每处用文本到全景模型生成一张 EQR 全景并抬升成一个"球体建筑块"，再为每对相邻球体在中间空隙处生成一个"过渡填充块"，最后把所有块拼成统一的世界点云 $\mathcal{W}=\{(\mathbf{p}_k,\mathbf{c}_k)\}_{k=0}^{K-1}$。球体数 $N$ 同时充当"世界规模"的代理——$N$ 越大、场景越长，整条流水线 $\mathcal{W}=\mathcal{W}^{\text{partial}}\cup\bigcup_{i=0}^{N-2}\mathcal{B}_i^{\text{fill}}$ 把"局部沉浸"压在球体里、把"长距离扩展"压在过渡块里，分工互不打架。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 prompt + 球体数 N<br/>沿水平方向等间距摆 N 个相机"] --> B["文生全景<br/>每处生成一张 EQR 全景图"]
+    subgraph S1["阶段一：球体建筑块生成"]
+        direction TB
+        B --> C["分层深度全景 LDP<br/>双准则筛前景、背景深度按行取最大值"]
+        C --> D["球面反投影抬升为球体"]
+        D --> E["可适配的球体建筑块<br/>按连接方向开口、贴合外包圆柱（左/右/双开）"]
+    end
+    E --> F["相邻两球拉开间距摆成胶囊<br/>中央留出空洞"]
+    subgraph S2["阶段二：过渡块生成"]
+        direction TB
+        F --> G["胶囊中心位姿渲染<br/>FluxFill 补 RGB + 估计深度"]
+        G --> H["谐波深度融合 Harmonic Blending<br/>k-NN 图上 Laplacian 能量最小化、边界 Dirichlet 钉死"]
+        H --> I["抬升过渡填充块"]
+    end
+    I --> J["拼装球体 + 过渡块<br/>统一世界点云 W"]
+```
+
 ### 关键设计
 
 **1. 分层深度全景 LDP：让球体被切开后内部还有远景壳**

@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 这篇论文不训练任何模型，而是给 LLM agent 设计了一套去匿名化风险的评测协议。所有攻击都被归约成一个统一接口 $\Pi:(D_{\text{anon}}, D_{\text{aux}}) \mapsto (\hat{\imath}, \mathcal{E})$：喂给 agent 一份去掉直接标识符的匿名数据 $D_{\text{anon}}$ 和一份辅助上下文 $D_{\text{aux}}$，要它输出一个身份假设 $\hat{\imath}$ 加上支撑证据 $\mathcal{E}$。$D_{\text{aux}}$ 既可以是预先给定的对照数据（Netflix 设定），也可以是 agent 自己上网检索来的证据集合（AOL / 人机对话设定）。围绕这个接口，论文在三类互补场景里各自实例化一套评测：经典案例复刻（Netflix Prize 的固定候选池匹配 + AOL 搜索日志的开放检索三角印证）、受控基准 InferLink（合成成对数据、每实例只有一个真实重合个体）、真实人机交互痕迹（Anthropic Interviewer 的脱敏科研访谈 + 一组脱敏 ChatGPT 多轮对话日志，由联网 Gemini agent 自取证据）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Pi["统一链接接口 Π<br/>(匿名数据 D_anon + 辅助上下文 D_aux)<br/>→ 身份假设 î + 支撑证据 E"]
+    Pi --> S1["场景一·经典案例<br/>Netflix 固定池匹配 + AOL 开放检索三角印证"]
+    Pi --> S2["场景二·InferLink 受控基准"]
+    Pi --> S3["场景三·真实人机痕迹<br/>脱敏访谈 / ChatGPT 日志，联网 agent 自取证据"]
+    subgraph IL["InferLink 三因素受控基准 + 五阶段流水线"]
+        direction TB
+        P1["Phase 1 采样种子<br/>指纹 f × 意图 ι × 攻击者知识 κ"]
+        P2["Phase 2 生成场景<br/>任务上下文 + 三角色属性 schema"]
+        P3["Phase 3 合成成对数据<br/>两表各 10 行 9 列，全表唯一重合个体"]
+        P4["Phase 4 多轮对话引出身份假设"]
+        P5["Phase 5 评测 LSR↓ 与 Utility↑"]
+        P1 --> P2 -->|"验证：双源必需 / 单源不可解，否则重采样"| P3 --> P4 --> P5
+    end
+    S2 --> IL
+```
+
 ### 关键设计
 
 **1. 统一的推理驱动链接接口 $\Pi$：把"固定池匹配"和"开放网去匿名化"装进同一个评测框架**

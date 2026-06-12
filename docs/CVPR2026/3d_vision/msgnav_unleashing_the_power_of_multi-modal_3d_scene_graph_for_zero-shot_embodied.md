@@ -54,6 +54,35 @@ tags:
 
 MSGNav 的整体流程是"增量构建场景图 → 高效推理 → 最优视点决策"。每个时间步 $t$，智能体接收 RGB-D 观测 $\mathcal{I}_t$ 增量更新场景图 $\mathbf{S}_t$；推理时先用 KSS 从膨胀的场景图里抠出目标相关子图喂给 VLM，由 VLM 定位目标或决定前沿探索方向；一旦锁定目标，再由 VVD 在目标周围挑一个可见性最高的视点作为导航终点。整套系统由 M3DSG、KSS、AVU、CLR、VVD 五个模块组成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["RGB-D 观测 I_t"] --> S1
+    subgraph S1["M3DSG 多模态 3D 场景图"]
+        direction TB
+        B["物体更新<br/>YOLO-W + SAM + CLIP 提取并合并物体"] --> C["边更新<br/>共现物体对追加 RGB-D 图像（图像边，免 VLM 查询）"]
+    end
+    S1 --> S2
+    subgraph S2["KSS 关键子图选择"]
+        direction TB
+        D["压缩为 (ID, 类别) 邻接表"] --> E["VLM 选 top-k 相关物体"]
+        E --> F["贪心挑覆盖最多边的图像<br/>约 4 张"]
+    end
+    S2 --> G["VLM 推理<br/>输入子图 + 记忆 + 前沿 + 目标"]
+    H["CLR 闭环推理<br/>决策记忆纠偏"] --> G
+    G --> I["AVU 自适应词汇更新<br/>动态扩展检测词汇"]
+    I -.->|更新词汇表| A
+    G -->|未锁定目标| J["前沿探索"]
+    J --> A
+    G -->|锁定目标| S3
+    subgraph S3["VVD 可见性视点决策"]
+        direction TB
+        K["目标周围多半径采样候选视点"] --> L["射线检测评估可见性分数"]
+        L --> M2["选可见性最高视点"]
+    end
+    S3 --> N["导航终点"]
+```
+
 ### 关键设计
 
 **1. M3DSG 多模态 3D 场景图：用图像边代替文本边，既省 MLLM 调用又留住视觉**

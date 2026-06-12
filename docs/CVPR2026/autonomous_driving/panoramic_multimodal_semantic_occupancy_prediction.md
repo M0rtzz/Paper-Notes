@@ -34,7 +34,21 @@ tags:
 
 ### 整体框架
 
-VoxelHound 要解决的是四足机器人在低视点、步态抖动、单模态不鲁棒三重困境下的 3D 语义占据预测。它同时接收全景 RGB（PAL 相机，360°×70° FoV）、热成像、偏振三种图像和 LiDAR 点云：相机分支对三种图像分别用 ResNet-18 提多尺度特征、FPN 聚合后做 2D→BEV 投影；LiDAR 分支把点云体素化后用稀疏 3D 卷积压到同一个 BEV 平面。四路 BEV 特征融合后过 SECOND-FPN 编码器做上下文建模，最后占据头把 BEV 的通道维 reshape 成垂直维，输出 64×64×16 的 3D 占据（12 个语义类 + 空闲类）。
+VoxelHound 要解决的是四足机器人在低视点、步态抖动、单模态不鲁棒三重困境下的 3D 语义占据预测。它同时接收全景 RGB（PAL 相机，360°×70° FoV）、热成像、偏振三种图像和 LiDAR 点云：相机分支对三种图像分别用 ResNet-18 提多尺度特征、FPN 聚合，再经垂直抖动补偿（VJC）清掉步态偏移后做 2D→BEV 投影；LiDAR 分支把点云体素化后用稀疏 3D 卷积压到同一个 BEV 平面。四路 BEV 特征经多模态信息提示融合（MIPF）汇聚后过 SECOND-FPN 编码器做上下文建模，最后占据头把 BEV 的通道维 reshape 成垂直维，输出 64×64×16 的 3D 占据（12 个语义类 + 空闲类）。VJC 与 MIPF 是其中两个核心模块。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["全景 RGB + 热成像 + 偏振"] --> CAM["相机分支<br/>ResNet-18 多尺度特征 + FPN 聚合"]
+    CAM --> VJC["垂直抖动补偿 VJC<br/>沿宽度取均值 → 1D 卷积回归 Δh → 重采样对齐"]
+    VJC --> CB["2D→BEV 投影"]
+    LID["LiDAR 点云"] --> LB["LiDAR 分支<br/>体素化 + 稀疏 3D 卷积 → BEV 平面"]
+    CB --> MIPF["多模态信息提示融合 MIPF<br/>LiDAR 为几何主体，图像压成语义提示做门控调制"]
+    LB --> MIPF
+    MIPF --> ENC["SECOND-FPN 编码器<br/>BEV 上下文建模"]
+    ENC --> HEAD["占据头<br/>通道维 reshape 成垂直维"]
+    HEAD --> OUT["3D 语义占据<br/>64×64×16，12 语义类 + 空闲类"]
+```
 
 ### 关键设计
 

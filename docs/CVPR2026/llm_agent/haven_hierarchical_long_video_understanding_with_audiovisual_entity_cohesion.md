@@ -40,6 +40,18 @@ HAVEN 提出音视频实体凝聚 + 层次索引 + Agent搜索的统一框架，
 
 HAVEN 把"看懂一段长视频"拆成离线与在线两个阶段。**离线**一次性把原始视频加工成一座四级层次数据库 $\mathcal{D} = \{\tilde{\mathcal{C}}, \tilde{\mathcal{E}}, \tilde{\mathcal{S}}, \tilde{\mathcal{G}}\}$——从细到粗依次是片段（Clip）、实体（Entity）、场景（Scene）、全局（Global）。**在线**回答问题时，Agent 不再重新扫一遍视频，而是先拿到全局摘要做"鸟瞰"，再通过 think-act-observe 循环在这座数据库里按需下钻。下面三个设计分别回答：碎片化的人物如何被认成同一个人、信息如何分层组织、Agent 如何在层级间导航。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始长视频"] --> B["分片段双路标注<br/>WhisperX 说话人分割+ASR / VLM 视觉描述"]
+    B --> C["音视频实体凝聚<br/>嵌入聚类→LLM 规范化，按说话人身份合并同一人"]
+    C --> D["四级层次数据库<br/>片段→实体→场景→全局"]
+    D --> E["在线提问：先读全局摘要做鸟瞰"]
+    E --> F["多粒度 Agent 搜索<br/>think-act-observe 循环，5 类工具按需下钻"]
+    F -->|"证据不足，继续下钻"| F
+    F -->|"证据充分"| G["输出答案"]
+```
+
 ### 关键设计
 
 **1. 音视频实体凝聚：用"声音"当跨片段的胶水**

@@ -42,7 +42,23 @@ Easy3E 构建在 TRELLIS 生成骨干之上，分两个阶段：**几何编辑**
 输入：源 3D 资产 $\mathcal{A}_{\text{src}}$、3D 区域掩码 $\mathcal{M}$、由 2D 编辑得到的目标视角图 $I^{\text{tgt}}$。
 输出：编辑后的 3D 资产。
 
-流程：先用 **Voxel FlowEdit** 在稀疏体素潜空间做全局几何形变 → **SLAT Repainting** 精修局部潜特征 → 解码生成 mesh → **法线引导多视角生成** 恢复高保真纹理。
+流程：先用 **Voxel FlowEdit** 在稀疏体素潜空间做全局几何形变 → **SLAT Repainting** 精修局部潜特征 → 解码生成 mesh → **法线引导纹理精修** 恢复高保真纹理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入<br/>源 3D 资产 + 3D 区域掩码 + 2D 目标视角图"] --> B["结构化潜表示 SLAT<br/>活跃体素 + DINOv2 投影潜特征"]
+    B --> C["Voxel FlowEdit<br/>稀疏体素潜空间几何形变<br/>（轮廓引导 + 轨迹校正抑制漂移）"]
+    C --> D["SLAT Repainting<br/>编辑区潜特征重绘 + 非编辑区回放保持一致"]
+    D --> E["解码生成 mesh"]
+    E --> F
+    subgraph F["法线引导纹理精修（可选）"]
+        direction TB
+        F1["Control Branch<br/>各视角法线图 → ControlNet + Ctrl-Adapter"] --> F2["Generation Branch<br/>ERA3D 生成 6 个几何一致辅助视角"]
+        F2 --> F3["Texture Fusion<br/>可见性加权融合到 UV 纹理"]
+    end
+    F --> G["输出：编辑后 3D 资产"]
+```
 
 ### 关键设计
 

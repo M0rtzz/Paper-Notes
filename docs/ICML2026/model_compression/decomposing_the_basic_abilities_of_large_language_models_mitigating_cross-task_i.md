@@ -42,6 +42,29 @@ tags:
 ### 整体框架
 Badit 把每个 LLM 权重矩阵 $\mathbf{W}^0\in\mathbb{R}^{m\times n}$ 拆成 $\mathbf{W}^0 = \sum_{k=1}^{K}\alpha_k \mathbf{A}_k\mathbf{B}_k + \widehat{\mathbf{W}}$：前 $rK$ 个最大奇异值被切成 $K$ 个 rank-$r$ 的 LoRA 专家、每个解读为一个"基础能力"并配可学习路由 $\alpha_k$，剩下小奇异值组成残差 $\widehat{\mathbf{W}}$ 全程冻结。整套流程两步走——**BAD** 用 SVD 给出初始就正交的能力分解，**DOG** 在训练中周期性把分量重新分组、把被梯度冲淡的正交性拉回来，最终路由按任务自适应地混合这些能力。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["预训练权重 W⁰"]
+    subgraph BAD["BAD：基础能力分解（一次性·初始化即正交）"]
+        direction TB
+        S["SVD 取前 rK 个最大奇异值"]
+        S --> E["切成 K 个正交 LoRA 专家<br/>每个 = 一个基础能力 + 路由 α_k"]
+        S --> R["低奇异值组成残差 Ŵ<br/>全程冻结"]
+    end
+    W --> S
+    E --> T["多任务 SFT 训练<br/>仅更新 LoRA 参数"]
+    T -->|梯度更新致正交性漂移| DOG
+    subgraph DOG["DOG：动态正交分组（训练中周期触发）"]
+        direction TB
+        G["rank-1 分量梯度单位化"] --> KM["球面 K-means 软聚类"]
+        KM --> SVD2["质心矩阵 SVD<br/>得正交目标方向"]
+        SVD2 --> PI["整数指派 Π 重组<br/>每专家恰 r 个分量"]
+    end
+    DOG -->|重组后的正交专家| T
+    T --> O["任务自适应路由<br/>混合基础能力 → 输出"]
+```
+
 ### 关键设计
 
 **1. Basic Ability Decomposition（BAD）：用一次 SVD 拿到免训练就正交的"基础能力字典"**

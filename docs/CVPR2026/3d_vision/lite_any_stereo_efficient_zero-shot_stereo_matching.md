@@ -45,7 +45,28 @@ tags:
 
 ### 整体框架
 
-前馈式网络，四阶段pipeline：共享权重特征提取（MobileNetV2骨干，多尺度特征统一到1/4分辨率）→ 相关性计算（构建cost volume $\mathbf{C}(d,h,w) = \frac{1}{N_c}\langle \mathbf{F}_L^{1/4}(h,w), \mathbf{F}_R^{1/4}(h,w-d) \rangle$）→ 混合3D-2D代价聚合 → 视差估计（soft-argmax + 凸上采样到全分辨率）。整体仅33G MACs。
+前馈式网络，四阶段pipeline：共享权重特征提取（MobileNetV2骨干，多尺度特征统一到1/4分辨率）→ 相关性计算（构建cost volume $\mathbf{C}(d,h,w) = \frac{1}{N_c}\langle \mathbf{F}_L^{1/4}(h,w), \mathbf{F}_R^{1/4}(h,w-d) \rangle$）→ 混合3D-2D代价聚合 → 视差估计（soft-argmax + 凸上采样到全分辨率）。整体仅33G MACs。泛化能力不靠网络本身、而是靠一套与推理流程正交的三阶段百万级训练策略喂出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["左右图像对"] --> BB["紧凑骨干<br/>MobileNetV2 共享权重，多尺度统一到 1/4"]
+    BB --> CV["相关性计算<br/>构建 cost volume"]
+    CV --> AGG
+    subgraph AGG["混合代价聚合（3D→2D）"]
+        direction TB
+        A3D["3D 卷积建视差结构<br/>仅约 4.8% MACs"] --> A2D["2D ConvNeXt 空间细化"]
+    end
+    AGG --> DE["视差估计<br/>soft-argmax + 凸上采样到全分辨率"]
+    DE --> OUT["全分辨率视差图（整网 33G MACs）"]
+
+    subgraph TRAIN["三阶段百万级训练"]
+        direction TB
+        T1["阶段①合成数据监督<br/>1.8M 标注合成图，smooth L1"] --> T2["阶段②合成数据自蒸馏<br/>固定教师，特征余弦对齐"]
+        T2 --> T3["阶段③真实数据知识蒸馏<br/>0.5M 真实对，FoundationStereo 伪标签"]
+    end
+    TRAIN -. 训练网络权重 .-> BB
+```
 
 ### 关键设计
 

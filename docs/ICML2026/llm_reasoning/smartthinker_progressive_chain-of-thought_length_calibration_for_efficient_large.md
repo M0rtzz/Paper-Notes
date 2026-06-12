@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 SmartThinker 在 GRPO 的训练循环里插入两个动态计算步骤。对每个 prompt $q$，policy $\pi_\theta$ 先 rollout 一组 $G$ 条轨迹 $\{o_1,\dots,o_G\}$，记长度 $l_i$、正确性 $r_i^{\text{acc}}\in\{0,1\}$。根据这一组样本：（i）用 $\mathcal{L}$ 与 $\mathcal{L}^{\text{acc}}$ 估计两个高斯分布 $(\hat\mu_1,\hat\sigma_1)$、$(\hat\mu_2,\hat\sigma_2)$，解析求出最优长度 $\hat l^{\text{opt}}$；（ii）按 $\hat l^{\text{opt}}$ 给每条正确轨迹算一个 ReLU 形式的长度惩罚 $r_i^{\text{len}}$；（iii）按本组错误率 $p^{\text{err}}$ 计算长度权重 $\Lambda$；（iv）合成总奖励 $r_i = r_i^{\text{acc}} + \Lambda \cdot r_i^{\text{len}}$，再走标准 GRPO 的归一化优势 $\hat A_i$ 与策略更新。整个机制不需要价值网络、不引入额外采样、可作为 plug-in 嵌到 AutoThink、ThinkPrune 等多阶段框架的某一阶段。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["prompt q：policy 采样一组 G 条轨迹<br/>记长度 l_i、正确性 r_acc"] --> B["最优长度的概率建模与解析解<br/>L 与 L_acc 拟合两高斯 → 闭式解 l_opt"]
+    B --> C["单边 ReLU 长度奖励<br/>仅罚答对且超长：r_len = −ReLU(l_i − l_opt)"]
+    C --> D["动态长度奖励系数 Λ<br/>按本组错误率 p_err 反解优势非负上界"]
+    D --> E["合成总奖励<br/>r_i = r_acc + Λ · r_len"]
+    E --> F["GRPO 归一化优势 Â_i → 策略更新"]
+```
+
 ### 关键设计
 
 **1. 最优长度的概率建模与解析解：给 length reward 一个有理论依据的靶子**

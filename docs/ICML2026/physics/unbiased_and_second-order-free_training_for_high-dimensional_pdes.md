@@ -41,7 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PDE $\mathcal{L}[u](t,x)=\phi(t,x,u,\nabla u)$ 通过 Itô 公式转化为 FBSDE 系统 $dX_t=\mu\,dt+\sigma\,dW_t$，$dY_t=\phi\,dt+Z_t^T\sigma\,dW_t$，其中 $Y_t=u(t,X_t)$、$Z_t=\nabla u(t,X_t)$。用 EM 在时间网格 $t_n=n\Delta t$ 上离散，得到单步前向 $F_n(x)=x+\mu\Delta t+\sigma\Delta W_n$ 和反向 $B_n(x;u)=u(t_n,x)+\phi_u\Delta t+\nabla u\cdot\sigma\Delta W_n$。定义单步误差 $\text{err}^{\text{EM}}_n(x;u)=\frac{u(t_{n+1}, F_n(x))-B_n(x;u)}{\Delta t}$。Un-EM-BSDE 在每步采 $M_1+M_2$ 个独立 Brownian 增量 $\Delta W_{n,i}$，把它们分成两组分别求平均后做乘积，得到无偏的单步损失，然后沿轨迹累加。
+PDE $\mathcal{L}[u](t,x)=\phi(t,x,u,\nabla u)$ 通过 Itô 公式转化为 FBSDE 系统 $dX_t=\mu\,dt+\sigma\,dW_t$，$dY_t=\phi\,dt+Z_t^T\sigma\,dW_t$，其中 $Y_t=u(t,X_t)$、$Z_t=\nabla u(t,X_t)$。用 EM 在时间网格 $t_n=n\Delta t$ 上离散，得到单步前向 $F_n(x)=x+\mu\Delta t+\sigma\Delta W_n$ 和反向 $B_n(x;u)=u(t_n,x)+\phi_u\Delta t+\nabla u\cdot\sigma\Delta W_n$。定义单步误差 $\text{err}^{\text{EM}}_n(x;u)=\frac{u(t_{n+1}, F_n(x))-B_n(x;u)}{\Delta t}$。Un-EM-BSDE 在每步采 $M_1+M_2$ 个独立 Brownian 增量 $\Delta W_{n,i}$，把它们分成两组分别求平均后做乘积，得到无偏的单步损失，然后沿轨迹累加。整条流水线只动 loss 的构造方式（采样+分组+乘积），不改动网络与时间步进，因此能保持 EM 一级的训练成本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["PDE 算子方程<br/>ℒ[u]=φ + 终端条件"] -->|"Itô 公式"| B["FBSDE 系统<br/>Y=u(t,X), Z=∇u(t,X)"]
+    B --> C["EM 时间离散（网格 t_n）<br/>单步前向 F_n / 反向 B_n → 单步误差 err_n"]
+    C -.->|"反向 B_n 只含 u, ∇u"| D["避免显式二阶导<br/>全程仅一阶反向梯度，无 Hessian"]
+    C --> E["每步采 M1+M2 个独立 Brownian 增量"]
+    subgraph SS["Sample-splitting 无偏估计器"]
+        direction TB
+        E2["分成两不重叠组"] --> F["两组各求平均<br/>Shot_M1 / Shot_M2"] --> G["两组乘积 = 无偏单步损失"]
+    end
+    E --> E2
+    G --> H["沿轨迹累加 + 终端约束 L_T<br/>= 总损失"]
+    G -.->|"同样乘积构造套到任意有偏损失"| I["方差控制 + 通用 wrapper<br/>Un-SG，方差不大于 EM-BSDE（Thm 4.3）"]
+```
 
 ### 关键设计
 

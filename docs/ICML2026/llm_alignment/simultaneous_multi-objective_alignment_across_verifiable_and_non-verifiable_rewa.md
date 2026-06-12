@@ -42,6 +42,27 @@ MAHALO 把"标准化 PRM 训练 + 多动作头 DPO + 带 KV-cache 续存的 PRM 
 ### 整体框架
 MAHALO 的输入是一组多目标偏好数据 $\{\mathcal{D}_i\}_{i=1}^H$（Math 的 Acc / Eng，UltraFeedback 的 Help / Honest / Truth，Socratic Mind 的 Acc / Eng）和对应的过程级标注。整套框架顺着作者的核心二分法展开：可验证目标天然有精确的 step 信号，把优化精力花在**测试时搜索**上回报最高；不可验证目标信号噪声大，更适合靠**训练时多头塑形**共享表示。于是训练侧用 Multi-Action-Head DPO（一个共享 backbone $\theta_b$ + H 个线性头 $W_i$）让每个目标长在自己的头上、推理时按权重混合 logits；测试侧用一个跨域 PRM 在生成边界处做"采候选 → PRM 打分 → 提交"的 step-level 引导，并用续存的 KV cache 抹掉重复 encode 的开销。两条线由一套**标准化 PRM 训练范式**打底——它把"过程奖励"从数学域的对错判断抽象成"前缀 → 期望成功概率"，使同一形态的信号 $r_t$ 能覆盖整张对齐图谱。三个组件可独立或叠加调用，做到"一次训练、推理时按需调配"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多目标偏好数据 + 过程标注<br/>数学 / 人类价值观 / 多轮辅导"]
+    A --> B["标准化 PRM 训练<br/>前缀→期望成功概率，按可验证性 / rollout 成本 / 过程结构分级造标签"]
+    B --> P["跨域 PRM"]
+    A --> C
+    subgraph TRAIN["Multi-Action-Head DPO（训练侧）"]
+        direction TB
+        C["共享 backbone θ_b + H 个投影头 W_i<br/>按目标把偏好数据路由到各自头算 DPO"] --> D["推理时 Softmax 加权混合 logits<br/>调 w_i 即在 Pareto front 上平滑滑动"]
+    end
+    P --> E
+    D --> E
+    subgraph TEST["PRM-guided 解码：续存隐状态（测试侧）"]
+        direction TB
+        E["自然边界处从 running KV cache clone 出 K 份"] --> F["各份独立采样到边界，得 K 个候选 step"]
+        F --> G["跨域 PRM 打分，选最优 step 顶替 running cache"]
+    end
+    G --> H["可控对齐输出<br/>头权重 + PRM 选择，训练 / 测试可独立或叠加"]
+```
+
 ### 关键设计
 
 **1. 标准化 PRM 训练：把过程奖励从数学域抽象成"前缀→期望成功概率"，统一可验证 / 非可验证域**

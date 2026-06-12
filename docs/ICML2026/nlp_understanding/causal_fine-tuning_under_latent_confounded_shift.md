@@ -42,6 +42,29 @@ tags:
 ### 整体框架
 训练阶段同时维护两个 BERT：冻结预训练模型 $p(r_0\mid x)$ 与微调模型 $p(r_1\mid x)$。每个样本经过三个 head：(1) SFT head 在 $R_1$ 上做有监督分类；(2) Causal head 学习从 $(R_0,R_1)$ 到稳定因果表示 $C$ 的映射；(3) Local head 从 $R_1$ 的 embedding 层抽 $\Phi$。最终预测器 $p(y\mid C,\Phi)$ 通过对 mini-batch 内 $\Phi$ 进行 $K=20$ 次 shuffle 做 do-calculus Monte-Carlo 调整。推理时丢弃冻结模型，$C$ 仅由 $R_1$ 估计，模型规模与标准 SFT 相同。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SCM["SCM 因果识别脚手架<br/>规定 C 跨域稳定、Φ 承担伪相关，front-door 结构"]
+    X["输入文本 X"] --> F["冻结预训练 BERT → R₀"]
+    X --> T["微调 BERT → R₁"]
+    T --> SFT["SFT head：R₁ 监督分类 → 损失 L_SFT"]
+    F --> C["双视图因果表示对齐<br/>R₀,R₁ 投到稳定因果特征 C，损失 L_C"]
+    T --> C
+    T --> PHI
+    subgraph FD["局部 patch 特征 Φ + front-door batch shuffle"]
+        direction TB
+        PHI["embedding 切 10 patch→均值→MLP → Φ"] --> SH["batch 内洗牌 Φ→Φ′，K 次蒙特卡洛平均"]
+    end
+    C --> SH
+    SH --> ADJ["预测 p(y∣C,Φ′) → 损失 L_adjust"]
+    SCM -.->|归纳偏置| C
+    SCM -.->|归纳偏置| FD
+    SFT --> LOSS["总损失 L = L_SFT + L_C + L_adjust"]
+    C --> LOSS
+    ADJ --> LOSS
+```
+
 ### 关键设计
 
 **1. 基于 SCM 的因果识别 scaffold：把"哪些特征稳、哪些会变"画成一张可识别的图**

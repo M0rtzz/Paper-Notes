@@ -43,6 +43,42 @@ tags:
 
 GS-CLIP 想解决的核心问题是：怎样在不见过目标类别的前提下，让 CLIP 真正"懂"3D 几何异常。它的做法是把工作拆成解耦的两阶段，避免文本端和视觉端联合训练时互相干扰。Stage 1 只动文本端：冻住所有视觉组件，专门训练一个几何感知的提示生成器，从输入点云里抽出全局形状上下文和局部缺陷信息，动态生成嵌入几何先验的文本提示。Stage 2 反过来冻住已经练好的提示生成器，转去训练视觉端的双流结构——渲染图走完全冻结的 ViT，深度图走 LoRA 微调的 ViT，两路特征再经协同精炼模块深度融合，最后和文本提示算相似度，输出图像级异常分数和像素级分割图。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    PC["输入点云"]
+
+    subgraph S1["Stage 1：几何感知提示学习（冻结视觉端）"]
+        direction TB
+        EXT["PointNet++ 3D 特征提取"]
+        GDDM["几何缺陷蒸馏 GDDM<br/>正常原型库 → 离群分数 → top-k → 缺陷提示 t_d"]
+        SP["形状提示与非对称提示拼接<br/>形状 t_s + 可学习 t_l（异常侧再挂 t_d）"]
+        TENC["冻结文本编码器<br/>正常 T_N / 非对称异常 T_A"]
+        EXT -->|局部特征| GDDM
+        EXT -->|全局特征| SP
+        GDDM --> SP
+        SP --> TENC
+    end
+
+    subgraph S2["Stage 2：协同视图表示学习（冻结提示生成器）"]
+        direction TB
+        PROJ["3D→2D 投影（9 视角）<br/>渲染图 + 深度图"]
+        RVIT["冻结 ViT（渲染图）"]
+        DVIT["Depth-LoRA ViT（深度图）"]
+        SRM["SRM 协同精炼融合"]
+        PROJ -->|渲染图| RVIT
+        PROJ -->|深度图| DVIT
+        RVIT --> SRM
+        DVIT --> SRM
+    end
+
+    PC --> EXT
+    PC --> PROJ
+    TENC --> SIM["相似度匹配"]
+    SRM --> SIM
+    SIM --> OUT["图像级异常分数 + 像素级分割图"]
+```
+
 ### 关键设计
 
 **1. 几何缺陷蒸馏模块 GDDM：让文本提示从 3D 几何里直接学会"该找什么异常"**

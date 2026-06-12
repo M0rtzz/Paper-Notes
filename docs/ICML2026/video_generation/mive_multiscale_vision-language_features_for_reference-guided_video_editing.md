@@ -48,6 +48,34 @@ MiVE 的输入是源视频 $x_{src}$、文本指令 $x_{text}$、参考图 $x_{r
 2. **Reference-Aware Latent Encoding**: 把 $x_{src}, x_{tgt}, x_{ref}$ 都过 frozen VAE 编码成 latent. 训练时把参考 latent $z_{ref}$ **沿时间维 prepend** 到 noisy target $\tilde z_t$ 和 control $z_{src}$ 两个分支前面, 然后两个分支沿通道维拼起来, 形状是 $(T'+1) \times 2C \times H' \times W'$. 这样从第一帧开始, 模型就一直能"看见"参考图作为 appearance anchor.
 3. **Unified Self-Attention Backbone**: 把 condition token $c$ 和 patchify 后的视觉 token $v$ 拼成 $u^{(0)} = [c; v] \in \mathbb{R}^{(N_c + N_v) \times D}$, 整条序列在 DiT block 里走**统一的自注意力**, 没有 cross-attention. 关键的 trick 是 **per-token AdaLN**: clean token (condition + reference frame patches) 用 $t=0$ 的固定时间嵌入, noisy token (target 视频 patches) 用当前 diffusion timestep $t$ 的嵌入. 整个模型从 Wan2.1-T2V-14B 的自注意力 block 初始化, flow matching 训练.
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    IN["输入：指令 + 参考图 + 源视频"]
+    subgraph CTX["多尺度 VLM 特征抽取（Multi-Level Context Extraction）"]
+        direction TB
+        Q["Qwen3-VL-8B（frozen）一次 forward"] --> L1["首层 φ1：空间细节"]
+        Q --> LL["末层 φL：全局语义"]
+        L1 --> FU["各过 RMSNorm+Linear<br/>沿通道拼接 → fusion linear"]
+        LL --> FU
+    end
+    subgraph LAT["Reference-Aware Latent Encoding（参考帧 latent 编码）"]
+        direction TB
+        VAE["VAE 编码 z_ref / z_src / z_tgt"] --> PRE["z_ref 沿时间维 prepend 到两分支<br/>noisy target 与 control 沿通道拼接"]
+        PRE --> PE["patch embedding → 视觉 token v"]
+    end
+    IN --> CTX
+    IN --> LAT
+    subgraph BK["统一自注意力 backbone + per-token AdaLN"]
+        direction TB
+        U["u = [c ; v] 拼成长序列"] --> DIT["P 个 DiT block 统一自注意力<br/>clean token 用 t=0、noisy token 用当前 t"]
+    end
+    FU -->|"condition token c"| U
+    PE -->|"视觉 token v"| U
+    DIT --> OUT["取视觉 token、unpatchify<br/>丢条件 token 与参考帧 → VAE 解码"]
+    OUT --> VID["编辑后视频 x̂_tgt"]
+```
+
 ### 关键设计
 
 1. **多尺度 VLM 特征抽取 (Multi-Level Context Extraction)**:

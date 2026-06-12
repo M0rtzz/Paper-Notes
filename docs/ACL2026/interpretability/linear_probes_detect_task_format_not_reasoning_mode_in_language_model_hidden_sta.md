@@ -45,6 +45,22 @@ tags:
 
 每个样本提取所有层最后一个 input token 的 hidden states、生成文本和输出置信度；几何分析只使用答对的样本。随后在各层训练 L2 正则的 logistic regression 线性探针，用 5-fold stratified cross-validation 预测 reasoning-mode label，并在最佳层做 manifold geometry。最后，用格式残差、trace-anchor 相似度和 activation steering 检验该几何是否具有推理功能。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["750 样本三类数据<br/>LogiQA·ARC·αNLI → Qwen3-14B 取各层 hidden states"] --> B["多源推理探针与几何分析<br/>第 32 层 100% 准确率 + 三类簇分离"]
+    B --> C
+    subgraph C["四阶段格式混淆拆解"]
+        direction TB
+        C1["① 预测 dataset source：100%"] --> C2["② 仅用选项数 2 vs 4"]
+        C2 --> C3["③ 同为 4-choice 的 LogiQA+ARC"]
+        C3 --> C4["④ Ridge 回归掉格式特征取残差"]
+    end
+    C --> D["残差探针塌回约 33.5%<br/>≈ 随机水平"]
+    D --> E["行为和因果层面的随机控制<br/>trace 一致 42.5% + steering vs 随机方向 p=0.286"]
+    E --> F["结论：探针检测的是题目格式<br/>不是隐藏状态里的推理模式"]
+```
+
 ### 关键设计
 
 **1. 多源推理探针与几何分析：先把标准探针的表面结果做到极致，再反驳它**

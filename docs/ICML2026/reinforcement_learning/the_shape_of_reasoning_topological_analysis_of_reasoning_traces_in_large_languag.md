@@ -44,6 +44,21 @@ tags:
 
 输入是 AIME (American Invitational Mathematics Examination) 题目及其专家解。模型用本地 Ollama 服务跑 answer-blind prompt 生成推理迹 $r_i$, 与专家解 $s_i$ 一起按规则切成 step list, 每个 step 用 all-mpnet-base-v2 嵌入。在嵌入空间里, 一边做 Smith-Waterman 对齐得到"对齐分"作为质量代理; 另一边对推理迹的点云算 Vietoris-Rips 持续图, 抽取 28 维 TDA 特征。最后用 OLS 回归把 TDA 特征 / 图特征 / 二者拼接分别去预测对齐分, 对比 $R^2$ 和 adjusted $R^2$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["AIME 题目<br/>推理迹 + 专家解"] --> B["切 step + all-mpnet-base-v2 嵌入<br/>得到有序点云"]
+    B --> C["Smith-Waterman 对齐<br/>嵌入余弦打分 + gap penalty"]
+    C --> D["对齐分（质量代理 / ground truth）"]
+    B --> E["Vietoris-Rips 滤过<br/>余弦距离 + 持续同调 H0/H1"]
+    E --> F["28 维 TDA 特征<br/>VR 摘要 + Betti 曲线 + landscape"]
+    B --> G["图统计基线<br/>has_loop / diameter / 小世界等 6 维"]
+    F --> H["OLS 回归预测对齐分<br/>TDA vs 图 vs 拼接，比 R²/adj-R²"]
+    G --> H
+    D --> H
+    F -.->|反向回归：讲清为什么更强| G
+```
+
 ### 关键设计
 
 **1. 嵌入空间中的 Smith-Waterman 对齐：在没有 step-level 标注时造一个推理 ground truth**

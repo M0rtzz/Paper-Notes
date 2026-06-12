@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 HAM 由三个核心模块组成：全局注意力调控（GAR）、局部注意力移植（LAT）和风格注入式噪声初始化（SINI）。系统使用三个并行的扩散模型分支：内容教师模型（处理内容图像）、风格教师模型（处理风格参考）和学生生成器（生成风格化图像）。首先通过 SINI 生成融合了风格和内容信息的初始噪声，然后在扩散去噪过程中，GAR 作用于 self-attention 层进行宏观风格-内容融合，LAT 作用于 cross-attention 层进行精确的风格/内容控制。该方法兼容 SD2.1（DDIM-based）和 SD3.5（DiT-based）两种架构。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    C["内容图像 → 内容教师分支"] --> SINI["SINI 风格注入式噪声初始化<br/>AdaIN 融合 + 内容残差找补"]
+    S["风格参考 → 风格教师分支"] --> SINI
+    SINI --> DEN["学生生成器逐步去噪<br/>并行融合两教师特征"]
+    DEN --> GAR["GAR 全局注意力调控<br/>self-attention 宏观风格-内容融合（α 偏主分支）"]
+    DEN --> LAT["LAT 局部注意力移植<br/>cross-attention 移植风格 K/V + β 保护 query"]
+    GAR --> OUT["风格化图像"]
+    LAT --> OUT
+```
+
 ### 关键设计
 
 **1. 全局注意力调控 GAR：在 self-attention 里做宏观的风格-内容融合，而不是粗暴替换**

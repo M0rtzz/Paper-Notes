@@ -43,6 +43,21 @@ tags:
 ### 整体框架
 Q-DiT4SR 以 DiT4SR 为骨干，所有 MM-DiT 块都被量化（softmax 保留 8-bit 以保数值稳定）。每个线性层先做 Hadamard 变换（让权重/激活近似高斯，是后续量化与方差分析的统一前提），然后走三件独立但级联的工作：① H-SVD 把权重拆成「全局 SVD-G + 局部块 rank-1 SVD-L」两个 FP 分支，量化只施加于「权重残差 − SVD-L」；② VaSMP 在离线阶段用每层的权重方差 σ̄²_ℓ 解一个率失真问题，决定该层的权重位宽 b_ℓ；③ W4A4 才启用的 VaTMP 在小校准集（32 张 LR 图）上统计每层每 timestep 的激活方差 v_ℓ,t，再用动态规划求一个「分段常数」的时间步位宽 schedule。三步互相正交，最终得到一个（layer × timestep）的位宽网格用于推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["DiT4SR 骨干<br/>每个 MM-DiT 线性层"] --> B["Hadamard 变换<br/>权重/激活近似高斯"]
+    B --> C["H-SVD<br/>全局 SVD-G + 局部块 rank-1 SVD-L 两 FP 分支"]
+    C --> D["量化残差 (W_res − SVD-L)"]
+    B --> E["VaSMP（离线 data-free）<br/>权重方差 → 率失真闭式解 → 贪心补位"]
+    E --> F["层间权重位宽 b_ℓ"]
+    B --> G["VaTMP（仅 W4A4）<br/>timestep 激活方差 → DP 分段调度"]
+    G --> H["时间步激活位宽 b_(ℓ,t)"]
+    D --> I["(layer × timestep) 位宽网格<br/>量化推理"]
+    F --> I
+    H --> I
+```
+
 ### 关键设计
 
 **1. H-SVD：用「全局低秩 + 局部块 rank-1」两层 FP 分支把高频从量化器里抢出来**

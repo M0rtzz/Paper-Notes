@@ -48,6 +48,23 @@ tags:
 3. **Prompting 弥合**：让标注者针对自己识别到的差异（具体性、文化味、长度多样性、formatting、混语等）手写"改写 prompt"，用同一个 LLM 重生成 32k 条改写版 mgt，再做第二轮人评 + 26 种自动检测器评估，量化 prompting 能填多少 gap。
 4. **偏好实验**：把原 hwt、原 mgt、改写后 mgt 三选一（外加 none）让 10 名标注者在 6 个数据集上打偏好，并和检测准确率交叉分析，得到"人类是否真的偏爱人写文本"的回答。
 
+四个阶段串成一条实验流水线：数据构造是脚手架，后三个阶段分别落在下面三个关键设计上——人评检测靠四种协议、Prompting 弥合靠五维改写模板、偏好实验靠检测 × 偏好交叉分析。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["9 语言 × 9 领域 共 16 数据集<br/>采人写文本 hwt + 配对生成机写文本 mgt"] --> DET
+    subgraph DET["四种检测协议（I / II / III / IV）"]
+        direction TB
+        B["19 位母语专家判别 hwt vs mgt"] --> C["I 单文本二分 / II 配对二分<br/>III 三元组三分 / IV 配对四分"]
+    end
+    DET --> D["专家检测上界 87.6%"]
+    D --> E["五维差异化改写 prompt<br/>具体性 / 文化味 / 多样性 / formatting / 混语"]
+    E --> F["重生成 32k 改写 mgt<br/>第二轮人评 + 26 检测器复评 → 72.5%"]
+    F --> G["检测能力 × 偏好交叉分析<br/>hwt / mgt / 改写 mgt 三选一打偏好"]
+    G --> H["结论：human-like ≠ liked-by-human"]
+```
+
 ### 关键设计
 
 **1. 四种检测协议（I/II/III/IV）的分层设计：把"信息量"和"任务难度"两个混在一起的变量拆开**

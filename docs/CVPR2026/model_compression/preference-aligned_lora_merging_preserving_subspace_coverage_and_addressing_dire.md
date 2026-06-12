@@ -38,7 +38,19 @@ tags:
 
 ### 整体框架
 
-TARA框架输入为N个任务的LoRA适配器 $\{\Delta W_i = B_i A_i^\top\}$ 和用户任务偏好向量 $\boldsymbol{\rho}$。方法将每个LoRA分解为rank-1方向（$\mathbf{b}_{ij}\mathbf{a}_{ij}^\top$），为每个方向分配可学习权重 $\phi_{ij}$，然后通过最小化偏好加权的熵伪损失来优化这些权重。最终输出合并后的模型权重 $W = W_0 + \sum_i\sum_j \phi_{ij} \mathbf{b}_{ij}\mathbf{a}_{ij}^\top$。
+TARA框架输入为N个任务的LoRA适配器 $\{\Delta W_i = B_i A_i^\top\}$ 和用户任务偏好向量 $\boldsymbol{\rho}$。方法将每个LoRA分解为rank-1方向（$\mathbf{b}_{ij}\mathbf{a}_{ij}^\top$）以保住子空间覆盖，再用各向异性分析说明不同方向对损失敏感度不均、需逐方向加权；据此给出两种构造方向并赋权的变体（变体 A 直接给 rank-1 因子赋权、变体 B 在联合 SVD 的共享正交基上赋权），两个变体的权重 $\phi$ 都用同一个偏好加权的 smooth Tchebycheff 标量化目标（熵伪损失）来优化，最终输出合并后的模型权重 $W = W_0 + \sum_i\sum_j \phi_{ij} \mathbf{b}_{ij}\mathbf{a}_{ij}^\top$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：N 个任务的 LoRA 适配器<br/>ΔW_i = B_i·A_iᵀ ＋ 偏好向量 ρ"] --> B["子空间覆盖保留<br/>拆成 rank-1 方向，当不可拆的原子保住"]
+    B --> C["方向各向异性对齐<br/>Jacobian 量化各方向对损失的敏感度差异"]
+    C -->|算力受限| D["变体 A<br/>逐 rank-1 因子赋权 φ，绕开 SVD"]
+    C -->|追求精度| E["变体 B<br/>联合 SVD 取共享正交基，对基上分量赋权 φ"]
+    D --> F["偏好加权 smooth Tchebycheff 标量化<br/>用熵伪损失优化方向权重 φ"]
+    E --> F
+    F --> G["输出：合并权重 W = W₀ ＋ Σ φ · 方向"]
+```
 
 ### 关键设计
 

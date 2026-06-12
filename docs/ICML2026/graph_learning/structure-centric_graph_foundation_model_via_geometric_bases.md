@@ -43,6 +43,17 @@ SCGFM 把跨域图基础模型重写为度量测度空间上的"三角测量"问
 ### 整体框架
 SCGFM 要解决的是"跨域图怎么对齐到同一个表征空间"，它的答案是不去对齐特征、而是给所有图一套共享的结构参照系。具体做两阶段：预训练时在多源域图上联合学 $K$ 个可训练的几何基 $B_k=([M],d_k,\mu_k)$，每个图通过它对这组基的 Gromov–Wasserstein 距离得到一组结构坐标 $\mathbf{w}$；下游阶段冻结这些基，对目标图算出 $\mathbf{w}$ 并借 OT plan 把节点特征重投到基节点上，拼成统一嵌入喂给分类器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：多源域图 G"] --> B["学习化几何基与结构坐标<br/>逐基算 GW 距离 → softmax 得坐标 w（SGW 近似）"]
+    B --> C["线性代理 barycenter 与多目标重建<br/>邻接重建 L_gw + 统计直方图重建 L_rec"]
+    B --> D["多样性正则与结构感知特征再编码<br/>L_div 防基塌缩 + OT plan 把特征投到基节点得 H"]
+    C --> E["统一嵌入 z = [w ∥ f(w) ∥ vec(H)]"]
+    D --> E
+    E --> F["下游：冻结基，仅训分类头"]
+```
+
 ### 关键设计
 
 **1. 学习化几何基与结构坐标：用"对原型的距离"代替显式 barycenter**

@@ -43,6 +43,21 @@ TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 M
 ### 整体框架
 TOHA 流水线（Algorithm 1 两阶段）：(a) **HeadsSelection**——用一个很小的探针集（hallucination 集 $S_h$ + grounded 集 $S_g$）算每个 head $(i,j)$ 的 $\Delta_{ij}$（幻觉 vs grounded 上的拓扑散度均值差），降序排序；从 $N=1$ 到 $N_{\max}=10$ 逐个累加平均，挑 AUROC 最大的 $N_{\mathrm{opt}}$。(b) **Prediction**——对测试样本 $s$ 算这 $N_{\mathrm{opt}}$ 个 head 的 $d_{ij}(s)$ 平均，作为幻觉得分 $p_s$。整套流程不训练任何参数，只看 forward pass 出来的 attention 矩阵。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["单次 forward<br/>取每个 head 的注意力矩阵"] --> B
+    subgraph DIV["单头拓扑散度 MTop-Div(R,P)"]
+        direction TB
+        B["注意力矩阵 → 完全带权图<br/>边权 = 1 − w（attend 越强距离越近）"]
+        C["prompt 内边清零<br/>prompt 缩成接地超节点，只留跨集距离"]
+        D["0 阶同调 barcode<br/>散度 = 最小生成森林长度"]
+        B --> C --> D
+    end
+    DIV --> E["幻觉感知头发现<br/>探针集算 Δᵢⱼ、降序挑 Nₒₚₜ ≤ 10 个头"]
+    E --> F["预测<br/>Nₒₚₜ 个头散度取平均 → 幻觉得分 pₛ"]
+```
+
 ### 关键设计
 
 **1. Attention as Weighted Graph + 拓扑散度 MTop-Div$_G$(R,P)：把"response 是否忠于 prompt"换成可数值化的图论度量**

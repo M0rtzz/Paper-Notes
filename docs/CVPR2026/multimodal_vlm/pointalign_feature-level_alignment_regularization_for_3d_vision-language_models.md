@@ -42,7 +42,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PointAlign 想解决的是 3D VLM 里几何信息在 LLM 各层传播时逐步退化丢失的问题。它在两阶段训练上做文章：Stage 1 是 MiniGPT-3D 预训练；Stage 2 冻结编码器/Q-Former/投影器，只训练 LoRA 和一个额外的对齐投影器，用 consistency loss 把 LLM 中间层的点云 token 拉向冻结的 Q-Former 输出。关键在于对齐投影器只在训练时挂着、推理时直接丢弃，所以这套正则化零额外推理开销。
+PointAlign 想解决的是 3D VLM 里几何信息在 LLM 各层传播时逐步退化丢失的问题。它在两阶段训练上做文章：Stage 1 是 MiniGPT-3D 预训练；Stage 2 冻结编码器/Q-Former/投影器，只训练 LoRA 和一个额外的对齐投影器，用余弦对齐损失把 LLM 中间层的点云 token 拉向冻结的 Q-Former 输出。前向主干（点云 → 编码器 → Q-Former → 模态投影器 → LLM）保持 MiniGPT-3D 不变，PointAlign 只在 LLM 第 $\ell$ 层旁挂出一条对齐支路：取出该层的点云 token，经对齐投影器映射回 Q-Former 空间后，与冻结的 Q-Former 输出算余弦相似度对齐。关键在于对齐投影器只在训练时挂着、推理时直接丢弃，所以这套正则化零额外推理开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["点云 P"] --> ENC["点云编码器 + MLP 投影"]
+    ENC --> QF["Q-Former 输出 Q̄<br/>同时含几何 + 语义信息"]
+    QF --> PROJ["模态投影器<br/>映射到 LLM 输入空间"]
+    PROJ --> CAT["与文本 token 拼接"]
+    CAT --> LLM["LLM 主干（冻结）+ LoRA<br/>自回归生成"]
+    LLM -->|"NTP 损失"| OUT["文本回答"]
+    LLM -->|"取第 ℓ 层点云 token"| FP["对齐投影器 f_π<br/>映射回 Q-Former 空间得 Q̃"]
+    QF -.->|"对齐目标·梯度 detach"| ALIGN["对齐损失 L_align<br/>余弦相似度拉近 Q̃ 与 Q̄"]
+    FP --> ALIGN
+```
 
 ### 关键设计
 

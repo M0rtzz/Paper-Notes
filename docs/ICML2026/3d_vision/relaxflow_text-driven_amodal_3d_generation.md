@@ -48,6 +48,19 @@ $$x_{k+1}=x_k+\Delta t\,v(x_k,t_k,c)$$
 
 被替换成双分支共享状态的插值：观察分支照常喂 $c_{\rm obs}=E(I,M)$，语义分支把文字先转成 $N=3$ 张视觉代理图编码成 $c_{\rm prior}$、再过一次注意力 logit 模糊得到松弛速度 $\tilde v_{\rm prior}$，最后按时间权重 $\alpha_k$ 与可见性权重 $m_i$ 融合二者。下面三个设计正是把"文字 → 视觉代理 → 低通速度场"这条 retrofit 通道做到零 adapter 训练的关键。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：遮挡图 I + 可见性 mask M + 文字意图 p"] --> B["观察分支<br/>c_obs = E(I,M)，原始速度 v_obs"]
+    A --> C["多先验共识<br/>文字 → N 张视觉代理图 → c_prior"]
+    C --> D["低通松弛 + 注意力 logit 高斯模糊<br/>得松弛速度场 ṽ_prior"]
+    B --> E["时间 + 可见性双重感知融合<br/>α_k 时间闸 + m_i 可见性闸"]
+    D --> E
+    E --> F["SS 阶段：预测 64³ 占据格"]
+    F --> G["SLAT 阶段：预测体素级特征"]
+    G --> H["解码完整 3D 资产"]
+```
+
 ### 关键设计
 
 **1. 多先验共识：把文字翻译成生成器原生能吃的视觉 token，同时抹掉单图的实例风格污染**

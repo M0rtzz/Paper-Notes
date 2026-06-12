@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 CG-BG 要解决的是「BG 能重加权却扩不到大系统、CG Emulator 能扩展却没法纠偏」这对矛盾，做法是把整个 BG 框架搬到低维粗粒化坐标空间里跑。原子级轨迹（甚至是有偏的增强采样数据）先经粗粒化映射 $\mathbf{R} = \Xi(\mathbf{r})$ 降到 CG 坐标，然后并行训练两个部件：一个连续归一化流 $q_\theta(\mathbf{R})$ 负责生成提案构型，一个神经网络 PMF $U_\eta(\mathbf{R})$ 负责给出目标能量。推理时流模型采样、PMF 算重要性权重 $w(\mathbf{R}) \propto e^{-\beta U_\eta(\mathbf{R})} / q_\theta(\mathbf{R})$，再用自归一化重要性采样把有偏提案纠成渐近正确的平衡态估计。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原子级轨迹<br/>（含有偏增强采样数据）"] --> B["粗粒化映射 R = Ξ(r)"]
+    B --> C["增强采样力匹配 (ESFM)<br/>学 PMF U_η(R)"]
+    B --> D["CG 空间连续归一化流<br/>学提案分布 q_θ(R)"]
+    D --> E["流模型采样 R_i ~ q_θ"]
+    C --> F["PMF 引导的重要性重加权<br/>w ∝ e^(−βU_η) / q_θ"]
+    E --> F
+    F --> G["自归一化重要性采样<br/>→ 渐近正确平衡态估计"]
+```
+
 ### 关键设计
 
 **1. 增强采样力匹配 (ESFM)：用有偏数据学到正确的 PMF**

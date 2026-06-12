@@ -39,7 +39,31 @@ tags:
 
 ### 整体框架
 
-CRAFT（Codebook RegulAted Fine-Tuning）要回答一个很实际的问题：能不能在完全不动原始 LLM 的前提下，给视觉语言模型做领域适配。它在离散 LVLM 上工作——视觉编码器 $E_\theta$ 输出连续特征后，通过一个**冻结的共享 codebook** $\mathcal{C}=\{c_k\}_{k=1}^K$ 做最近邻量化得到离散 token 序列，再经投影器送入冻结的 LLM。整个训练只更新视觉编码器一处，codebook 和 LLM 全程冻结。正因为接口是离散 codebook 而非连续特征，适配后的编码器才能即插即用到任何共享同一 codebook 的 LLM 上。
+CRAFT（Codebook RegulAted Fine-Tuning）要回答一个很实际的问题：能不能在完全不动原始 LLM 的前提下，给视觉语言模型做领域适配。它在离散 LVLM 上工作——视觉编码器 $E_\theta$ 输出连续特征后，通过一个**冻结的共享 codebook** $\mathcal{C}=\{c_k\}_{k=1}^K$ 做最近邻量化得到离散 token 序列，再经投影器送入 LLM。整个训练只更新视觉编码器一处，codebook 和 LLM 全程冻结。正因为接口是离散 codebook 而非连续特征，适配后的编码器才能即插即用到任何共享同一 codebook 的 LLM 上。
+
+整套流程分训练、推理两段：**训练时**借助一个冻结的**替代语言模型**和三个损失（替代对齐 / 承诺 / 对比）把领域知识注入编码器；**推理时**再用**测试时 token 剪枝**压缩冗余 token，把适配好的编码器接到任意共享同一 codebook 的冻结 LLM 上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像"] --> ENC["视觉编码器 Eθ<br/>训练时唯一可更新"]
+    ENC --> Q["最近邻量化<br/>冻结共享 codebook"]
+    Q --> TOK["离散视觉 token 序列"]
+
+    subgraph TRAIN["训练阶段（三损失只回传更新编码器）"]
+        direction TB
+        TOK --> SURR["替代语言模型（冻结）"]
+        SURR --> L1["1. 替代对齐损失<br/>自回归引导选 token"]
+        ENC --> L2["2. 承诺损失<br/>输出贴近 codebook 条目"]
+        ENC --> L3["3. 对比损失<br/>sigmoid 保预训练语义"]
+    end
+
+    subgraph INFER["推理阶段（编码器即插即用）"]
+        direction TB
+        TOK --> PRUNE["4. 测试时 Token 剪枝<br/>按稀有度砍冗余背景 token"]
+        PRUNE --> LLM["任意冻结 LLM<br/>共享同一 codebook"]
+    end
+```
 
 ### 关键设计
 

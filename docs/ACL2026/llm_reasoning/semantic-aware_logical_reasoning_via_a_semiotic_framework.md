@@ -43,6 +43,33 @@ tags:
 
 LogicAgent 要解决的是「语义复杂性和逻辑复杂性交织时，单视角推理容易锁死在一种解释上」的问题。它把一个命题先摊开成格雷马斯符号方阵的四元结构，再让每个视角各自走一遍形式化演绎，最后用方阵自带的结构关系做交叉仲裁。整条流水线分三阶段：**语义结构化**把命题 $S_1$ 扩展成 $\lnot S_1$、$S_2$、$\lnot S_2$ 四个关联命题并验证 FOL 一致性；**逻辑推理**把前提翻成 FOL、规划路径、逐步演绎出每个视角的判定；**反思验证**用三层递进机制比对各视角结论，输出一致的最终答案。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原命题 S1"] --> SEM
+    subgraph SEM["语义结构化阶段"]
+        direction TB
+        B["按规则表构造四元结构<br/>¬S1 / S2 / ¬S2（覆盖 6 种逻辑形式）"] --> C["EIC + 真值表 / CFG / LLM 三重过滤"]
+    end
+    SEM --> LOG
+    subgraph LOG["逻辑推理阶段"]
+        direction TB
+        D["Translator：自然语言前提 → FOL"] --> E["Planner：设目标 / 选前提 / 定推理规则"]
+        E --> F["Solver：逐步演绎<br/>四视角各出 True/False/Uncertain"]
+    end
+    LOG --> G
+    subgraph REF["反思验证阶段"]
+        direction TB
+        G{"S1 与 ¬S1 的判定关系"}
+        G -->|互补| H["直接解析：直接采纳"]
+        G -->|一方 Uncertain| I["快速反思：回看轨迹查一致性"]
+        G -->|同判定即矛盾| J["深度反思：借 S2⇒¬S1 引对立视角仲裁"]
+    end
+    H --> K["最终答案"]
+    I --> K
+    J --> K
+```
+
 ### 关键设计
 
 **1. 语义结构化阶段：把单命题摊成四元语义空间，逼出潜在歧义**

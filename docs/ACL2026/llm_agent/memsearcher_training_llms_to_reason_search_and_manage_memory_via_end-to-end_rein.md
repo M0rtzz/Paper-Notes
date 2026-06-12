@@ -52,6 +52,27 @@ MemSearcher 让同一个 backbone LLM 同时兼任 reasoner、actor 和 memory m
 | ReAct | $O(n)$ | $O(n)$ | $O(n^2)$ | $O(n)$ |
 | **MemSearcher** | $O(1)$ | $O(1)$ | $O(n)$ | $O(1)$ |
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 q"] --> RD["读 (问题 q, 上轮内存)"]
+    subgraph MEM["紧凑内存范式（LLM-as-Memory-Manager）"]
+        direction TB
+        RD --> TA["输出 thought + action"]
+        TA -->|"调 wikipedia_search"| OBS["检索 observation（passage）"]
+        OBS --> UPD["融合 observation 与旧内存<br/>覆盖更新内存 ≤1024 token"]
+        UPD --> RD
+    end
+    TA -->|"boxed 终止"| ANS["输出答案，得整条 trajectory"]
+    subgraph RL["Multi-Context GRPO 端到端训练"]
+        direction TB
+        SAMP["每问题采样 G 条 trajectory"] --> REW["纯规则 Reward<br/>format 检查 + F1 评分"]
+        REW --> ADV["组内标准化<br/>trajectory-level advantage A_i"]
+        ADV --> BC["A_i 均匀广播到每个 turn<br/>各 turn 当独立优化目标"]
+    end
+    ANS --> SAMP
+```
+
 ### 关键设计
 
 **1. LLM-as-Memory-Manager 的紧凑内存范式：让 backbone 自己学会记什么、丢什么**

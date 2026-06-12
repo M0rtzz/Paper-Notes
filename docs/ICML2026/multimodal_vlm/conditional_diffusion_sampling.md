@@ -48,6 +48,23 @@ tags:
 
 整套方法**完全无神经网络训练**，仅靠目标密度 $\tilde\pi$ 的评估和 score $\nabla\log\tilde\pi$ 即可运行。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["参考样本 z ∼ π_ref<br/>选定近零时刻 t₀"] --> S1
+    subgraph S1["Stage 1：PT 采初始分布"]
+        direction TB
+        B["t→0 极限：ν_(t₀|z) 坍缩到 z 附近<br/>与 π_ref 重叠大、PT swap 接受率高"] --> C["Parallel Tempering 退火采样 ν_(t₀|z)"]
+    end
+    S1 --> D["初始样本 x_(t₀) ∼ ν_(t₀|z)"]
+    D --> S2
+    subgraph S2["Stage 2：闭式 SDE 传输"]
+        direction TB
+        E["条件随机插值 ⇒ drift + score 闭式可得<br/>无需神经网络训练"] --> F["Euler–Maruyama 积分 SDE：t₀ → 1<br/>可选 MH/MALA 校正器"]
+    end
+    S2 --> G["目标样本 ∼ π"]
+```
+
 ### 关键设计
 
 **1. Conditional Interpolants：把 score 从"必须训练"还原成"目标分布的解析变换"**

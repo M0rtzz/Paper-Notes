@@ -49,21 +49,36 @@ tags:
 
 ### 整体框架
 
-目标是追踪一个语言学概念在预训练的哪一刻涌现、又在哪一刻稳定下来。难点在于给每个 checkpoint 单独训 SAE 得到的特征空间互不通约——没法判断 checkpoint A 的 feature 17 和 B 的 feature 17 是不是同一个东西。方法用一条三步流水线绕过这点：先在目标语法任务上结合准确率曲线和中层激活相似度热图，挑出 3-4 个"概念真正变化"的代表性 checkpoint；再在这组 triplet 上联合训一个共享稀疏字典（sparse crosscoder），让所有 checkpoint 共用同一组特征 index；最后用 integrated gradients 算每个特征的因果重要性，并用新提出的 RelIE 做归一化对比，把每个 top 特征的语言学功能人工注释出来，从而画出"涌现-维持-消亡"的轨迹。
+目标是追踪一个语言学概念在预训练的哪一刻涌现、又在哪一刻稳定下来。难点在于给每个 checkpoint 单独训 SAE 得到的特征空间互不通约——没法判断 checkpoint A 的 feature 17 和 B 的 feature 17 是不是同一个东西。方法用一条三步流水线绕过这点：先在目标语法任务上结合准确率曲线和中层激活相似度热图，挑出 3-4 个"概念真正变化"的代表性 checkpoint（triplet）；再在这组 triplet 上联合训一个共享稀疏字典（sparse crosscoder），让所有 checkpoint 共用同一组特征 index；最后用 integrated gradients 算每个特征的因果重要性，并用新提出的 RelIE 做归一化对比，把每个 top 特征的语言学功能人工注释出来，从而画出"涌现-维持-消亡"的轨迹。下面三个关键设计按这条流水线的先后顺序展开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["一个训练 run 的全部<br/>pretraining checkpoint"] --> B
+    A --> C
+    subgraph SEL["Phase Transition 识别 + triplet 选择"]
+        direction TB
+        B["准确率曲线<br/>找行为跳变"] --> D["选出 3-4 个代表性<br/>checkpoint triplet"]
+        C["中层激活相似度热图<br/>找表征结构跳变"] --> D
+    end
+    SEL --> E["Sparse Crosscoder<br/>triplet 联合训共享稀疏字典<br/>各 checkpoint 专属 enc/dec、共用特征 index"]
+    E --> F["RelIE 因果归因<br/>integrated gradients 算逐特征 indirect effect<br/>归一化比例 + 人工注释语言学功能"]
+    F --> G["概念演化轨迹<br/>涌现 / 维持 / 消亡"]
+```
 
 ### 关键设计
 
-**1. Sparse Crosscoder：跨 checkpoint 共享的稀疏特征字典**
+**1. Phase Transition 识别 + checkpoint triplet 选择：把训练算力花在概念真正变化的节点上**
 
-传统 SAE 的特征空间是单点的、不可通约，无法在时间轴上对齐。crosscoder 让每个 checkpoint $c$ 拥有专属的 encoder/decoder 权重 $W_{\text{enc}}^c, W_{\text{dec}}^c$，却共用同一个特征激活向量——编码为 $\mathbf{f}=\text{ReLU}(\sum_c W_{\text{enc}}^c \mathbf{x}_c + \mathbf{b}_{\text{enc}})$，于是"checkpoint A 的 feature $i$"和"B 的 feature $i$"天然指向同一个概念槽。损失为各 checkpoint 重建误差之和加上聚合稀疏惩罚 $\sum_c \sum_i \mathbf{f}_i \lVert W_{\text{dec},i}^c \rVert_2$；这种 aggregated sparsity 把"共享特征 vs 某 checkpoint 独有特征"翻译成"各 checkpoint decoder 范数大小"的可读信号，使特征的时间演化首次可比较，且对极早期、接近随机的 checkpoint 仍稳健（§6.2 验证 ΔCE < 0.35）。
+在每对 checkpoint 都训 crosscoder 极其昂贵，因此第一步要先定位关键节点。方法并行追踪两条信号：(a) checkpoint 在目标 benchmark 上的准确率曲线，找行为跳变；(b) 各 checkpoint 之间的**中层**激活成对 cosine 相似度热图，找表征结构跳变——只取中层是因为它捕捉高阶语言/跨语言抽象，而前后层主要绑在输入/输出上。两条信号常不同步，例如 OLMo 准确率 33B 后基本平稳但激活相似度直到 3T 仍在变，这种"准确率饱和但表征仍在精炼"正是 crosscoder 最有价值的研究区。双信号策略保证选出的 triplet 既含行为跳变又含表征跳变，对应论文里 Pythia 选 {128M, 1B, 4B, 286B}、OLMo 选 {2B, 4B, 33B, 3T}、BLOOM 选 {550M, 6B, 55B, 341B}。
 
-**2. Relative Indirect Effect (RelIE)：把因果重要性从结构相对性中解耦出来**
+**2. Sparse Crosscoder：跨 checkpoint 共享的稀疏特征字典**
 
-共享字典只能告诉你某特征在哪个 checkpoint 被编码得更强（结构），但一个特征可能被强力学到却对当前任务毫无因果作用。RelIE 直接挂上任务表现做归因：对每个特征 $f_i$、每个 checkpoint $c$，用 integrated gradients 近似它对任务 metric $m(x) = \log p(t_{\text{wrong}}|x) - \log p(t_{\text{correct}}|x)$ 的 indirect effect（零消融时 $m$ 的变化），再算归一化比例 $\text{RelIE}_{2\text{-way},i} = |\hat{\text{IE}}_{ig,i}^{c_2}| / (|\hat{\text{IE}}_{ig,i}^{c_1}| + |\hat{\text{IE}}_{ig,i}^{c_2}|)$，三 checkpoint 版本扩展为 one-vs-all 向量。RelIE 接近 1 表示该特征几乎只对 $c_2$ 有因果作用，接近 0.5 表示两个 checkpoint 上都贡献（共享因果特征）。它与 Lindsey et al. 的 RelDec（解码器范数比例，只反映结构）正交：附录 E 证实 RelIE 能过滤掉 task-agnostic 噪声、暴露出更多真正驱动行为的 task-specific 特征。
+选好 triplet 后，第二步要解决"特征跨 checkpoint 对齐"。传统 SAE 的特征空间是单点的、不可通约，无法在时间轴上对齐。crosscoder 让每个 checkpoint $c$ 拥有专属的 encoder/decoder 权重 $W_{\text{enc}}^c, W_{\text{dec}}^c$，却共用同一个特征激活向量——编码为 $\mathbf{f}=\text{ReLU}(\sum_c W_{\text{enc}}^c \mathbf{x}_c + \mathbf{b}_{\text{enc}})$，于是"checkpoint A 的 feature $i$"和"B 的 feature $i$"天然指向同一个概念槽。损失为各 checkpoint 重建误差之和加上聚合稀疏惩罚 $\sum_c \sum_i \mathbf{f}_i \lVert W_{\text{dec},i}^c \rVert_2$；这种 aggregated sparsity 把"共享特征 vs 某 checkpoint 独有特征"翻译成"各 checkpoint decoder 范数大小"的可读信号，使特征的时间演化首次可比较，且对极早期、接近随机的 checkpoint 仍稳健（§6.2 验证 ΔCE < 0.35）。
 
-**3. Phase Transition 识别 + checkpoint triplet 选择：把训练算力花在概念真正变化的节点上**
+**3. Relative Indirect Effect (RelIE)：把因果重要性从结构相对性中解耦出来**
 
-在每对 checkpoint 都训 crosscoder 极其昂贵，因此需要先定位关键节点。方法并行追踪两条信号：(a) checkpoint 在目标 benchmark 上的准确率曲线，找行为跳变；(b) 各 checkpoint 之间的**中层**激活成对 cosine 相似度热图，找表征结构跳变——只取中层是因为它捕捉高阶语言/跨语言抽象，而前后层主要绑在输入/输出上。两条信号常不同步，例如 OLMo 准确率 33B 后基本平稳但激活相似度直到 3T 仍在变，这种"准确率饱和但表征仍在精炼"正是 crosscoder 最有价值的研究区。双信号策略保证选出的 triplet 既含行为跳变又含表征跳变，对应论文里 Pythia 选 {128M, 1B, 4B, 286B}、OLMo 选 {2B, 4B, 33B, 3T}、BLOOM 选 {550M, 6B, 55B, 341B}。
+有了共享字典还不够——它只能告诉你某特征在哪个 checkpoint 被编码得更强（结构），但一个特征可能被强力学到却对当前任务毫无因果作用。第三步的 RelIE 直接挂上任务表现做归因：对每个特征 $f_i$、每个 checkpoint $c$，用 integrated gradients 近似它对任务 metric $m(x) = \log p(t_{\text{wrong}}|x) - \log p(t_{\text{correct}}|x)$ 的 indirect effect（零消融时 $m$ 的变化），再算归一化比例 $\text{RelIE}_{2\text{-way},i} = |\hat{\text{IE}}_{ig,i}^{c_2}| / (|\hat{\text{IE}}_{ig,i}^{c_1}| + |\hat{\text{IE}}_{ig,i}^{c_2}|)$，三 checkpoint 版本扩展为 one-vs-all 向量。RelIE 接近 1 表示该特征几乎只对 $c_2$ 有因果作用，接近 0.5 表示两个 checkpoint 上都贡献（共享因果特征）。它与 Lindsey et al. 的 RelDec（解码器范数比例，只反映结构）正交：附录 E 证实 RelIE 能过滤掉 task-agnostic 噪声、暴露出更多真正驱动行为的 task-specific 特征。
 
 ### 损失函数 / 训练策略
 

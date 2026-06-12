@@ -43,6 +43,18 @@ tags:
 
 ExpressEdit 想解决的是「在专业绘图软件里快速、无损地改风格化角色的表情」。它把这件事拆成两条串起来的流水线：前半段是一个检索增强的提示生成器，负责把用户脑子里的故事或指令翻译成扩散模型听得懂的表情标签；后半段是表情编辑器，拿着这段标签提示，再加上用户在 Photoshop 里给出的图像、空间变换和选区，调用 SPICE 扩散后端只在选区内重绘，最后把结果作为一个新图层贴回 Photoshop。整条链路的关键在于：文本不直接控制空间，空间交给 Photoshop 的原生操作（Liquify、Scale、选区）来给，扩散模型只负责把这些「粗糙的人手操作」收拾成自然结果。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户自然语言故事 / 指令"] --> B["检索增强提示生成器<br/>VLM 从 135 标签库检索"]
+    B --> C["表情标签提示<br/>前缀(内容) + 后缀(风格)"]
+    P["用户在 Photoshop 中操作"] --> D["Photoshop 原生操作协同<br/>Liquify / Scale 给空间 + Selection Brush 硬选区"]
+    D --> E["粗糙稿 + 硬选区遮罩"]
+    C --> F["基于 SPICE 的无噪声编辑后端<br/>Canny ControlNet 锁选区重绘"]
+    E --> F
+    F --> G["结果作为新图层贴回 Photoshop"]
+```
+
 ### 关键设计
 
 **1. 检索增强提示生成器：让不会写标签的人也能驱动扩散模型**

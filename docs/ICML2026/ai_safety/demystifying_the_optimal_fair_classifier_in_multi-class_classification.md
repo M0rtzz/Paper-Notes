@@ -44,6 +44,16 @@ tags:
 
 本文要解决的是"多分类下怎么找到、怎么逼近 accuracy-fairness 最优分类器"这一对理论+算法问题。做法是把原始约束优化 $\min_h R(h)$ s.t. $|D_k(h)| \le \xi$ 写成统一的 Lagrangian 鞍点 $L(h, \lambda) = R(h) + \lambda^\top D(h) - \xi \|\lambda\|_1$，先解析地刻画出最优分类器长什么样，再分训练态（in-processing）和部署态（post-processing）两条路去逼近它，并证明两者都收敛到同一条 Pareto 前沿。输入是 $(X, A, Y)$ 的有限样本与公平阈值 $\xi$，输出是一个 attribute-blind 的随机化分类器 $h: \mathcal{X} \to \Delta_m$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：有限样本 (X,A,Y) + 公平阈值 ξ"] --> B["统一线性约束 + 熵正则<br/>DP/EOP/EO 写成混淆矩阵线性约束，<br/>Lagrangian 鞍点 + 熵正则 → softmax 闭式解 h^λ"]
+    B --> C["In-processing<br/>代价敏感交叉熵鞍点，primal-dual 训练拟合"]
+    B --> D["Post-processing<br/>plug-in 估计 η,q_a + 凸近端，校准预训练模型"]
+    C --> E["收敛到同一条 accuracy-fairness Pareto 前沿"]
+    D --> E
+```
+
 ### 关键设计
 
 **1. 统一线性约束 + 熵正则：把含 $\arg\max$ 的最优解凸化成 softmax 闭式**

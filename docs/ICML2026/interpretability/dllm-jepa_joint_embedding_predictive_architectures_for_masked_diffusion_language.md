@@ -42,6 +42,20 @@ tags:
 ### 整体框架
 输入是一句干净文本 $x_0$。先按掩码扩散前向过程独立采样两个掩码率 $t_L=0.2$（context view）和 $t_H=0.7$（target view），分别把 $x_0$ 加噪成 $x_{t_L}$（20% 位置变 [MASK]）和 $x_{t_H}$（70% 位置变 [MASK]）。online backbone $f_\theta$ 对 $x_{t_L}$ 做**一次带梯度前向**，同时输出：(a) 每个掩码位置的 token 分布——用于标准扩散 loss $\mathcal{L}_\text{diff}$；(b) 对非掩码、非 padding token 做 mean pooling + LayerNorm 得到 JEPA 上下文嵌入 $z_{t_L}$。target 编码器 $f_{\theta'}$ 是 $f_\theta$ 的 EMA 副本（decay $\tau=0.996$），在 `no_grad` 下对 $x_{t_H}$ 前向得到 $z_{t_H}$。轻量 predictor $g_\phi$（$k$ 层 transformer decoder）把 $z_{t_L}$ 映射成 $\hat z_{t_H}=g_\phi(z_{t_L})$。总 loss 是扩散 + cosine 形式的 JEPA 对齐：$\mathcal{L}_\text{total}=\mathcal{L}_\text{diff}+\lambda(1-\cos(\text{sg}(z_{t_H}), \hat z_{t_H}))$。每步算力 $\approx 4F$（1 带梯度前向 + 1 无梯度前向 + 1 反传≈2F），比 LLM-JEPA 的 $6F$ 少 33%。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["干净文本 x₀"] --> V["扩散噪声造两视图<br/>采样掩码率 t_L=0.2, t_H=0.7"]
+    V -->|"低掩码 x_tL（上下文视图）"| ON["online backbone 带梯度前向"]
+    V -->|"高掩码 x_tH（目标视图）"| EMA["EMA 目标编码器 无梯度前向"]
+    ON --> LOG["扩散 logits → 扩散 loss"]
+    ON --> Z["上下文嵌入 z_tL → predictor g_φ → ẑ_tH"]
+    EMA --> ZT["目标嵌入 z_tH（stop-grad）"]
+    Z --> AL["扩散主目标当 anchor 防塌缩<br/>L_total = L_diff + λ(1 − cos)"]
+    ZT --> AL
+    LOG --> AL
+```
+
 ### 关键设计
 
 **1. 用扩散噪声 schedule 当数据增强器，免费造出无配对的两视图**

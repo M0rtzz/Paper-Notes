@@ -38,6 +38,19 @@ tags:
 ### 整体框架
 Gen-n-Val 要解决的是"合成数据虽多但一半是废品"的问题：直接拿标准 prompt 喂 Layer Diffusion，约 44% 的图像因为画面里多了无关物体、单调重复而不可用。它的思路是把"怎么写出好 prompt"和"什么样的图能用"这两件本来靠人工试错的事，分别交给两个 LLM 智能体自动完成。整条管线分三步：先由一个 LLM Prompt 智能体写出详细具体的 LD prompt，再由 Layer Diffusion 据此生成带 alpha 通道的透明单物体图像，最后由一个 VLLM 验证智能体逐张检查、淘汰不合格样本；通过验证的前景实例被随机粘贴到背景图上，得到可直接训练检测/分割模型的合成数据。两个智能体的系统 prompt 都不是手写的，而是用 TextGrad 自动迭代优化出来的。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["稀有类别 + 标准 prompt"] --> B["LD Prompt 智能体<br/>写出含类别/风格/光照的详细 prompt"]
+    B -.->|"TextGrad 文本梯度迭代<br/>评估器打分 → 更新系统 prompt"| B
+    B --> C["Layer Diffusion 前景生成<br/>一步输出 RGBA + alpha 掩码"]
+    C --> D["alpha 通道中值滤波<br/>抹平掩码边缘毛刺"]
+    D --> E["VLLM 数据验证智能体<br/>单物体 / 单视角 / 完整 / 纯净背景"]
+    E -->|不合格| F["丢弃"]
+    E -->|通过| G["前景随机粘贴到背景"]
+    G --> H["合成实例分割训练数据"]
+```
+
 ### 关键设计
 
 **1. TextGrad 优化的 LD Prompt 智能体：让 LLM 自己学会写"能生成单物体图"的 prompt**

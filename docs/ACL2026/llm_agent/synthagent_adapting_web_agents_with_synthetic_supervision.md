@@ -47,6 +47,19 @@ SynthAgent 想在没有人工标注、也不碰测试集的前提下，把开源
 
 $$\mathcal{L}_{\text{SFT}} = \mathbb{E}_{(\tau^{\star}, h^{\star}) \sim \mathcal{D}} \left[ -\sum_{t=1}^{T} \log p_\theta(a_t | \tau^{\star}, o_{\leq t}, a_{<t}) \right]$$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["陌生网站（无人工标注、不碰测试集）"] --> B["分类探索<br/>元素按功能分类 + 每类均匀采样交互三元组"]
+    B --> C["LLM 基于真实界面转换<br/>提出多步合成任务 τ"]
+    C --> D["轨迹收集：Agent 执行任务"]
+    D -->|"冲突谓词 C 命中<br/>(UI不存在/缺参/停滞)"| E["冲突触发任务精炼<br/>仅修正、不重定义意图"]
+    E --> D
+    D -->|"执行完成，得完整轨迹 h_T + 最终任务 τ⋆"| F["全局轨迹精炼<br/>Remove / Reorder / Drop / Keep 离线去噪"]
+    F --> G["SFT 训练开源 Web Agent<br/>自回归交叉熵 L_SFT"]
+    G --> H["适应后的 Web Agent"]
+```
+
 ### 关键设计
 
 **1. 分类探索：把随机点击变成功能覆盖**

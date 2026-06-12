@@ -42,17 +42,48 @@ tags:
 ### 整体框架
 整套方法要让一个 MLLM 既能高精度判别 deepfake、又能给出对齐图像证据的分段理由，分三阶段递进：先合成数据、再换 backbone 做监督微调、最后用段落级 RL 在 test-time 持续自对齐。第一阶段 **DF-R5 数据合成**用 4 个 MLLM 池化 200 个候选 deepfake 特征，让 Gemini 对每张图打分、把分数聚成 ≤7 个语义组，生成 115k 条段落式推理标注。第二阶段 **DX-LLaVA 微调**把 LLaVA 的 CLIP ViT 换成对局部纹理更敏感的 CLIP ConvNeXT，配合一个二分类 head 联合训练。第三阶段 **PRPO test-time RL** 对每张图采样 $L$ 条完整 reasoning，把每条按段切开、逐段算 reward、组内归一化成 advantage，再用 PPO-clip 形式更新策略。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph S1["DF-R5 数据合成（三步流水线）"]
+        direction TB
+        A1["特征池化<br/>4 个 MLLM 列 200 候选→去重 74"] --> A2["特征打分<br/>逐图 Real/Fake/Uncertain"]
+        A2 --> A3["推理生成<br/>聚 ≤7 组→约 115k 段落式标注"]
+    end
+    S1 --> B["DX-LLaVA 微调<br/>CLIP ConvNeXT 100 token + Vicuna + 二分类头"]
+    B --> C["采样 L 条 reasoning，按段切开"]
+    subgraph S3["PRPO 段落级 reward"]
+        direction TB
+        D1["VCR<br/>YAKE 抽词→CLIP 图文相似度"]
+        D2["PCR<br/>词典规则化→段间多数票一致性"]
+        D1 --> E["每段合成 reward<br/>组内归一化成 advantage"]
+        D2 --> E
+    end
+    C --> D1
+    C --> D2
+    E --> F["段级 PPO-clip + KL 更新策略"]
+    F -->|test-time 持续自对齐| C
+```
+
 ### 关键设计
 
-**1. Visual Consistency Reward（VCR）：把每段推理逐句锚回图像证据**
+**1. DF-R5 数据合成：三步流水线产出段落式推理标注**
+
+现有 deepfake 数据集几乎没有推理标注，直接拿 QA 去蒸馏只能学到「是/否」短答案，而让 MLLM 看图直接写理由又容易乱选特征、幻觉出图里根本没有的瑕疵。DF-R5 用一条三步流水线把这件事拆开做、逐步可控：① **特征池化**——先不给图，让 Gemini-2.5 / Qwen-2.5 / LLaMA-4 / GPT-4o 四个模型各列约 50 个与 deepfake 相关的面部/视觉特征，汇成约 200 个候选、去重合并成约 74 个通用特征集；② **特征打分**——对每张图，让 Gemini 给这 74 个特征逐个打 Real(−1) / Fake(+1) / Uncertain(0)，避免它无脑全选或凭空捏造，存疑样本再用 ground-truth label 追加 prompt 校正；③ **推理生成**——把细粒度分数按 85% group-frequency 阈值聚成至多 7 个语义组，生成简洁、可解释的分段推理。原始每域 30k、共 150k 图经 Gemini 过滤无效格式后得到约 115k 图文推理对。先抽通用特征→逐图打分→聚组生成，比整图直接蒸馏更可控、幻觉更少，而且天然产出「分段」结构，为后面段落级 RL 提供逐段奖励的载体。
+
+**2. DX-LLaVA：用 CLIP ConvNeXT 替换 ViT 抓局部纹理 + 二分类头**
+
+LLaVA 原生的 CLIP ViT 擅长抓全局语义（利于 VQA），但 deepfake 的破绽藏在局部高频纹理里（毛发走向、毛孔、背景不连续），ViT 对此不敏感。DX-LLaVA 把视觉 backbone 换成 CLIP ConvNeXT——卷积结构纹理偏置更强、对细微瑕疵更敏感——取其 Stage-3 的 10×10 特征图展平成 100 个 pixel embedding，把 1536 维投到 4096 维喂进 projector + Vicuna；同时挂一个二分类头（binary head，GAP 后接线性层），用 $\mathcal L_{\text{total}}=\mathcal L_{\text{lm}}+\alpha\mathcal L_{\text{binary}}$（$\alpha=10$）联合训练，ConvNeXT 全程冻结、只微调 projector + Vicuna + 分类头。消融印证这两步缺一不可：加二分类头把 inter-domain F1 从 35.82 拉到 61.66（否则模型几乎全猜 real），再换成 ConvNeXT backbone 进一步到 78.08。
+
+**3. Visual Consistency Reward（VCR）：把每段推理逐句锚回图像证据**
 
 针对 MLLM「先下结论再补理由、甚至幻觉出图中根本不存在的瑕疵」这个痛点，VCR 给每段推理打一个「你说的东西图里到底有没有」的分。做法是先用 YAKE 无监督关键词抽取从段落 $p_j^{(i)}$ 里抽出关键短语 $s_j^{(i)}$，再喂进 frozen CLIP-ConvNeXT 的 text encoder，与图像 encoder 输出算 cosine 相似度并归一化到 $[0,1]$：$R_{\text{VCR}}(p_j^{(i)})=\tfrac12[\text{sim}(\text{CLIP}_{\text{txt}}(s_j^{(i)}),\text{CLIP}_{\text{img}}(x))+1]$。之所以要先抽词而不是整段塞 CLIP，是因为整段会超出 CLIP 输入长度、语义也被稀释，抽词后信号正好集中在「这段提到的具体特征」上；而且这里复用的就是架构里已有的那个 ConvNeXT，等于白嫖一个 reward model，省掉外部模型和额外算力。
 
-**2. Prediction Consistency Reward（PCR）：用段间多数票把结论锁回证据**
+**4. Prediction Consistency Reward（PCR）：用段间多数票把结论锁回证据**
 
 deepfake 推理常出现「证据明明指向 fake、最终却说 real」的内部矛盾，PCR 就是惩罚这种自相矛盾。它先用三张预定义词表把每段规则化成一个段级标签 $\hat y(p_j^{(i)})$：命中 $\mathcal F$（unnatural、inconsistent…）判 fake、命中 $\mathcal R$（authentic、natural…）判 real、$\mathcal N$（no、not…）负责处理否定。中间段默认与图一致、reward 恒为 1；只有 final 段要受约束，其 reward 是它与前面所有段多数投票结果是否一致的指示函数 $\mathbb I[\hat y(p_{M_i+1}^{(i)})=\hat y_{\text{maj}}^{(i)}]$。在 deepfake 这种没有 step-wise gold label 的场景里，没法照搬数学推理的 process reward，于是 PCR 干脆拿模型自身的段间一致性当 label-free 信号——既不需要外部模型也不需要标注，正好契合 test-time RL「现场无监督自改进」的需求。
 
-**3. 段落级 GRPO 损失（PRPO）：让 advantage 精确落到每一段**
+**5. 段落级 GRPO 损失（PRPO）：让 advantage 精确落到每一段**
 
 token-level GRPO 让一整条 reasoning 共享同一个 advantage，结果是同一条里「写得好的段」和「写错的段」被同奖同罚，信号糊成一团。PRPO 把粒度提到段落：每段先合成自己的 reward $R(p_j^{(i)})=\tfrac12(R_{\text{VCR}}+R_{\text{PCR}})$，然后在整组 $\mathcal O=\{o^{(1)},\dots,o^{(L)}\}$ 的所有段上统一算均值方差 $\mu_R,\sigma_R$ 做归一化 $A_j^{(i)}=(R(p_j^{(i)})-\mu_R)/(\sigma_R+\epsilon)$，组内归一化顺带压住了 reward 数值漂移。策略比定义为 $r_j^{(i)}=\pi_\theta(p_j^{(i)}|v,z)/\pi_{\text{old}}(p_j^{(i)}|v,z)$，主损失是段级 PPO-clip：
 

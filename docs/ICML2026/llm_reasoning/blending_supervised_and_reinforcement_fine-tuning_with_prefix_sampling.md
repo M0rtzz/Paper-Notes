@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 Prefix-RFT 想在一次 RFT 训练里同时吃到 SFT 的知识引导和 RFT 的探索红利，做法是把专家示范"嵌"进 rollout。给定 prompt $x$ 和示范 $y^*$，先用当前策略 $\pi_{\theta_{\text{old}}}$ 正常生成 $N-1$ 条 rollout；剩下第 $N$ 条不从头自由生成，而是先抄下示范的前缀 $y^*_{<L}$，再让模型从第 $L$ 个位置接着写出 $y_{\geq L}$，拼成一条"前半来自专家、后半来自模型"的混合轨迹 $y^{(N)}$。这 $N$ 条轨迹一起估 advantage、一起做 PPO 更新，前缀 token 和续写 token 共用同一套 PPO 权重 $\mathcal{W}_{i,t}^{\text{PPO}} = \mathbb{I}_{\text{clip}}(r_t, \hat{A}_t)\,\hat{A}_t\, r_t$。整套流程只是拿一条混合轨迹换掉一条普通 rollout，不增加任何采样开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：prompt x + 专家示范 y*"] --> B["当前策略生成<br/>N−1 条普通 rollout"]
+    A --> C["前缀采样与混合轨迹构建<br/>抄示范前缀 + 模型自主续写"]
+    SCHED["余弦衰减前缀长度调度器<br/>定前缀长度（初期长→后期近零）"] --> C
+    B --> D["N 条轨迹一起估 advantage Â"]
+    C --> D
+    D --> E["基于熵的裁剪<br/>前缀只保留 top-20% 高熵 token"]
+    E --> F["PPO 更新<br/>前缀与续写共用 advantage 权重"]
+    F -->|下一轮训练前缀渐短| SCHED
+```
+
 ### 关键设计
 
 **1. 前缀采样与混合轨迹构建：把示范当"开局提示"而非"标准答案"**

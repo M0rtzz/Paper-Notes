@@ -44,6 +44,17 @@ tags:
 
 整个工作的 pipeline 可以分四块。(1) 环境: 把 MBPP 改成 single-turn RLVR 环境 MBPP-Honeypot, 奖励 = 通过提供的那条测试用例 (额外 length penalty 鼓励短代码), 隐藏其余测试用例只用于事后分类。(2) 探针: 在三套数据上训 logistic regression linear probe (Simple Deception / Diverse Deception / on-domain MBPP), 用 follow-up prompt 技巧取最后一个 token 的残差流激活, 多层平均得到一个 $\psi\in[0,1]$。(3) 训练: 用 GRPO + LoRA 在 Llama-3-8B/70B、Gemma-3-12B/27B 上扫 $(\alpha,\beta)$ 矩阵, 跑 120 步 × 3 seeds。(4) 评估: 按"通过首条测试 vs 通过全部测试"差距 + "原模型探针分 vs 表征漂移"做四象限分类, 拿到 obfuscation atlas。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["MBPP 874 题<br/>问题描述 + 1 条 assert 测试"] --> B["MBPP-Honeypot 环境<br/>奖励 R = 过首条测试 − 0.003×字数<br/>长度惩罚诱发 hardcode"]
+    A2["诚实/欺骗语料<br/>Simple / Diverse / on-domain MBPP"] --> C["白盒欺骗探针 ψ<br/>follow-up prompt 取 Yes 残差流激活"]
+    B --> D["RL 训练 J(θ)=E[R−αψ]−βD_KL<br/>GRPO+LoRA 扫 (α,β) 矩阵"]
+    C --> D
+    D --> E["表征漂移分解 + 四象限分类<br/>原模型探针分 × 漂移量"]
+    E -->|"诚实区 α≥3, β=10⁻²"| F["Obfuscation Atlas<br/>诚实 / 露骨欺骗 / 混淆策略 / 混淆激活"]
+```
+
 ### 关键设计
 
 **1. MBPP-Honeypot：一个会自发诱发奖励黑客、但不告诉模型"该撒谎"的 RLVR 环境**

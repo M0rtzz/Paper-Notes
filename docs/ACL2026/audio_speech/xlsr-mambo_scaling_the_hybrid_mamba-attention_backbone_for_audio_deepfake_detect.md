@@ -42,7 +42,22 @@ tags:
 
 ### 整体框架
 
-XLSR-MamBo 的出发点是：深度伪造信号既有局部高频伪影、又有全局频谱不一致，SSM 擅长高效时序压缩与局部捕捉、Attention 擅长全局关联与内容检索，单靠一种机制都不够，于是把两者混合进同一个骨干。原始音频先经冻结的 XLSR 前端提取特征 $X \in \mathbb{R}^{T \times 1024}$，过 RMSNorm 并线性投影到隐藏维 $D=128$，再经 $L=5$ 层 MamBo 混合层编码，最后由门控注意力池化聚合成句级表示、线性层输出真伪二分类 logits。论文的真正工作不在某个固定结构，而在系统比较 SSM 与 Attention 的多种拓扑组合及其深度缩放行为。
+XLSR-MamBo 的出发点是：深度伪造信号既有局部高频伪影、又有全局频谱不一致，SSM 擅长高效时序压缩与局部捕捉、Attention 擅长全局关联与内容检索，单靠一种机制都不够，于是把两者混合进同一个骨干。原始音频先经冻结的 XLSR 前端提取特征 $X \in \mathbb{R}^{T \times 1024}$，过 RMSNorm 并线性投影到隐藏维 $D=128$，再经 $L=5$ 层 MamBo 混合层编码，最后由门控注意力池化聚合成句级表示、线性层输出真伪二分类 logits。论文的真正工作不在某个固定结构，而在系统比较 SSM 与 Attention 的多种拓扑组合及其深度缩放行为——下面三个关键设计都作用在这套 MamBo 混合骨干上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始音频"] --> B["冻结 XLSR 前端<br/>提取特征 X (T×1024)"]
+    B --> C["RMSNorm + 线性投影<br/>降到隐藏维 D=128"]
+    C --> D
+    subgraph MB["MamBo 混合骨干（L=5 层）"]
+        direction TB
+        D["四种 MamBo 拓扑<br/>层内混合 / 层间交替选型"] --> E["Hydra 原生双向 SSM<br/>准可分矩阵免双分支"]
+        E --> F["深度缩放（堆叠 N）<br/>单元内连叠 N 个 SSM 块"]
+    end
+    F --> G["门控注意力池化<br/>聚合为句级表示"]
+    G --> H["线性层 → 真伪二分类 logits"]
+```
 
 ### 关键设计
 

@@ -45,6 +45,31 @@ tags:
 
 MPA接收可疑URL列表，每个URL通过Agent处理：（1）动态选择5个专用工具收集多模态证据（文本+视觉+外部知识）；（2）在ReAct循环中进行多步推理，基于当前证据状态决定下一步行动；（3）利用情景记忆检索相似历史案例，加速判断或提供exemplar引导。最终输出"恶意"或"良性"判定。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["可疑 URL"] --> MEM
+    subgraph MEM["情景记忆系统：检索历史判例"]
+        direction TB
+        B["LLM 抽情景关键词<br/>(如 apple login)"] --> C["向量索引检索<br/>top-k 近邻历史推理轨迹"]
+    end
+    MEM --> D{"三级记忆使用策略<br/>按命中数 k′ 分档"}
+    D -->|"k′=0 未见模式"| E["完整 ReAct 循环取证"]
+    D -->|"0&lt;k′&lt;k 部分相似"| F["历史轨迹作 exemplar<br/>引导 ReAct 推理"]
+    D -->|"k′≥k 高度相似"| G["对近邻历史判定多数投票"]
+    subgraph TOOLS["5 个钓鱼专用多模态工具"]
+        direction TB
+        T1["Crawl Content / Check Screenshot / Check Image<br/>文本+视觉取证"]
+        T2["Intelligent Search<br/>按证据缺口查品牌/威胁情报"]
+        T3["Extract Targets<br/>解短链挖隐藏落地页"]
+    end
+    E --> TOOLS
+    F --> TOOLS
+    TOOLS --> H["判定：恶意 / 良性"]
+    G --> H
+    H --> I["新轨迹 + 关键词写回记忆"]
+```
+
 ### 关键设计
 
 **1. 5 个钓鱼专用多模态工具：把人类专家的取证手段拆成可调度的原子动作**

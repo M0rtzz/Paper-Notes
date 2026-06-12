@@ -47,7 +47,7 @@ tags:
 
 **1. 跨 5 维可靠性的统一评估协议：把"掉点"和"偏差放大"用一套公式解耦**
 
-各家量化论文口径不一、互相矛盾，根源是把"绝对精度下降"和"虚假相关放大"混为一谈——后者才是真正的伦理风险信号。这里给每个可靠性维度定义统一的相对变化量：通用指标用 $\delta(\mathcal{D}) = \frac{A(f,\mathcal{D}) - A(q,\mathcal{D})}{A(f,\mathcal{D})}$（$f$ 全精度、$q$ 量化），OOD 用 AUROC 相对变化 $\delta_{\text{OOD}}$；虚假相关单独引入 Relative Spurious Gap $\text{RSG}(m) = \frac{A(m, \mathcal{D}_N) - A(m, \mathcal{D}_C)}{A(m, \mathcal{D}_N)}$，再用量化前后的 $\Delta\text{RSG}$ 和 Added Vulnerability $\text{Vuln}_{\text{add}} = \delta_C - \delta_N$ 把"偏差是不是被量化额外放大"从单纯掉点里剥出来。这样才能干净地回答"量化到底有没有让模型更依赖虚假相关"这个核心问题。
+量化评估长期只盯 top-1 精度，校准、OOD、协变量偏移、虚假相关这些可靠性维度各测各的、没有可比口径；尤其"精度掉了"和"虚假相关被放大"这两件事被搅在一起，而后者才是真正的伦理风险信号。这里给每个可靠性维度定义统一的相对变化量：通用指标用 $\delta(\mathcal{D}) = \frac{A(f,\mathcal{D}) - A(q,\mathcal{D})}{A(f,\mathcal{D})}$（$f$ 全精度、$q$ 量化），OOD 用 AUROC 相对变化 $\delta_{\text{OOD}}$；虚假相关单独引入 Relative Spurious Gap $\text{RSG}(m) = \frac{A(m, \mathcal{D}_N) - A(m, \mathcal{D}_C)}{A(m, \mathcal{D}_N)}$，再用量化前后的 $\Delta\text{RSG}$ 和 Added Vulnerability $\text{Vuln}_{\text{add}} = \delta_C - \delta_N$ 把"偏差是不是被量化额外放大"从单纯掉点里剥出来。这样才能干净地回答"量化到底有没有让模型更依赖虚假相关"这个核心问题。
 
 **2. Logit Scale Tuning：不动 backbone，只重校准 logit 温度补量化破坏**
 
@@ -55,7 +55,7 @@ tags:
 
 **3. SVD 谱分析：把量化解读成"低通滤波 + 主成分集中"双机制**
 
-量化最反直觉的现象是它同时提升噪声鲁棒性、又恶化语义鲁棒性和虚假相关，看似自相矛盾。SVD 分析把这统一到一个机制下。第一步把量化后特征投影到 FP32 的 SVD 基上，发现 SQNR 随 rank 单调衰减——固定量化步长会先吃掉低方差分量，等价于一个低通滤波器。第二步对量化特征重新做 SVD，发现 QAT 在 Rank 0–8 子空间精度反而高于 FP32，说明判别信息被压进了最稳定的主分量；但 Rank 64+ 精度显著下降，对应 fine-grained semantic 被抹平。于是"calibration ↑ + spurious ↑"就讲通了：粗粒度信息被强化、细粒度信息被抹平。Rotation-based 量化（QuaRot+LSQ）通过把激活旋转到与量化网格对齐，能缓解中频分量过早衰减，这正是它在 $\Delta\text{RSG}$ 上几乎不放大偏差的原因。
+量化最反直觉的现象是它同时提升噪声鲁棒性、又恶化语义鲁棒性和虚假相关，看似自相矛盾。SVD 分析把这统一到一个机制下。第一步把量化后特征投影到 FP32 的 SVD 基上，发现 SQNR 随 rank 单调衰减——固定量化步长会先吃掉低方差分量，等价于一个低通滤波器。第二步对量化特征重新做 SVD，发现 QAT 在 Rank 0–8 子空间精度反而高于 FP32，说明判别信息被压进了最稳定的主分量；但 Rank 64+ 精度显著下降，对应细粒度语义信息被抹平。于是"calibration ↑ + spurious ↑"就讲通了：粗粒度信息被强化、细粒度信息被抹平。Rotation-based 量化（QuaRot+LSQ）通过把激活旋转到与量化网格对齐，能缓解中频分量过早衰减，这正是它在 $\Delta\text{RSG}$ 上几乎不放大偏差的原因。
 
 ### 损失函数 / 训练策略
 QAT 用 LSQ (Esser et al. 2020) 配合两种蒸馏机制（contrastive-only 和 contrastive + feature MSE），全部以 CC3M / YFCC / SBU 中的 1000 张图像作为代理校准/微调集。研究关心的是 "不同 quantization 方法族 (PTQ / QAT / Rotation+LSQ) 的相对差异"，不是某个单点 SOTA。

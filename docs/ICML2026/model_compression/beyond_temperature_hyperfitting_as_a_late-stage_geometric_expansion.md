@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 这篇论文不提新模型，而是对 Hyperfitting 这个反直觉现象做一次"法医式"解剖：先证伪它只是温度缩放的平凡假设，再逐层定位机制真正发生的位置，最后把定位结论翻译成一个参数高效的微调策略。整条线索从"不是什么"走到"是什么"再走到"在哪里、能怎么用"——输入是预训练 LLM（TinyLlama-1.1B、Qwen2.5-1.5B 等）和 2000 条小数据集，经过 Hyperfitting 协议（260 epoch、无正则化、$\lambda=0$）训成近零损失后，通过三组对照实验逐步逼近真相，最终落到只调最后几层的 Late-Stage LoRA。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 LLM + 2000 条小数据"] --> B["Hyperfitting 协议<br/>260 epoch、λ=0、训到近零损失"]
+    B --> C["熵匹配控制实验<br/>对齐熵 T*≈0.59，证伪温度缩放假设"]
+    C -->|锐度相同但多样性仍差| D["静态偏置注入消融<br/>固定 logit 偏移注入，证伪全局词汇偏好"]
+    D -->|固定向量怎么调都有害<br/>确认动态秩重排序| E
+    subgraph S3["终端几何扩展与 Late-Stage LoRA"]
+        direction TB
+        E["逐层表征分析<br/>余弦相似度 / L2 / 有效维度逐层比对"] --> F["终端几何扩展<br/>第 22 层 ΔDim≈+80.8、L2 22→81.6"]
+        F --> G["Late-Stage LoRA<br/>冻结前 18 层、只调最后 5 层"]
+    end
+```
+
 ### 关键设计
 
 **1. 熵匹配控制实验：在同样"锐"的分布下逼问多样性从何而来**

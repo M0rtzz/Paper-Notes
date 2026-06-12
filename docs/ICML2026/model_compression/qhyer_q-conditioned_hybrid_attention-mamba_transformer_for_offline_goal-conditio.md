@@ -43,6 +43,24 @@ QHyer 用 Normalizing Flows 估计的状态依赖 Q 值取代 Decision Transform
 ### 整体框架
 QHyer 的思路是把 Decision Transformer 的"序列建模"框架彻底改造成适配稀疏目标奖励的版本：它把每个时间步表示成 $(Q_t, [s_t;g], a_t)$ 三元组，其中 $Q_t=\log p_\theta(g\mid s_t,a_t)$ 是 Normalizing Flows 估计的"从当前状态-动作到达目标"的对数概率（取代原本的 RTG），$[s_t;g]$ 是把状态和目标拼在一起的 token。这条序列送进 $L$ 层 Hybrid Attention-Mamba block，每个 block 让注意力分支负责全局目标规划、Mamba 分支负责内容自适应的历史压缩，再用一个标量门把两条分支的输出加权融合；训练端到端联合优化 NFs 似然、Q 期望分位回归与行为克隆，推理时先预测最大 Q、再以它为条件自回归生成 action。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["离线轨迹 (s, a, g)"] --> NFS["NFs Q 估计器<br/>Q_t = log p_θ(g | s_t, a_t)，取代 RTG"]
+    IN --> TOK["拼接 State-Goal 分词<br/>每步组成 (Q_t, [s_t;g], a_t)，序列长仍为 3T"]
+    NFS --> TOK
+    TOK --> BLK
+    subgraph BLK["Hybrid Attention-Mamba 骨干（L 层）"]
+        direction TB
+        ATT["注意力分支<br/>全局目标规划"]
+        MAM["Mamba 分支<br/>选择性 SSM，Δ_t 自适应记忆长度"]
+        ATT --> GATE["标量门 α = σ(wᵀx + b)<br/>y = α·y_attn + (1−α)·y_mamba"]
+        MAM --> GATE
+    end
+    BLK --> LOSS["端到端三损失<br/>NFs 似然 + Q 期望分位回归 + 行为克隆"]
+    LOSS -->|"推理：先预测最大 Q，再以它为条件自回归生成动作"| OUT["动作 a_t"]
+```
+
 ### 关键设计
 
 **1. 用 Normalizing Flows 估计的 Q 值取代 RTG：把"是否成功的二值信号"换成"轨迹无关的状态质量度量"**

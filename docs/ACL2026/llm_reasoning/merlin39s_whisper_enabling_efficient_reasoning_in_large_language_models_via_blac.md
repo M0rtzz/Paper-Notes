@@ -43,6 +43,18 @@ Whisper 的输入不是模型权重，而是一个初始任务指令、一个黑
 ### 整体框架
 给定模型 $M$、原始指令 $P_{ins}$、开发集 $D'$，Whisper 需要找到一个后缀 $P_{adv}$，使模型平均响应长度 $L_{avg}$ 尽可能小，同时平均准确率 $ACC_{avg}$ 不低于容忍阈值。作者用 GPT-4o 作为 prompt generator，每种 persuasive perspective 每轮生成 10 个候选，筛选 top-5 作为下一轮 exemplars，迭代 3 轮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：黑盒模型 M + 原始指令 P_ins + 开发集 D'"] --> B["多视角 persuasive prompt 生成<br/>GPT-4o 按情绪/威胁/证据/角色/指令等视角<br/>每视角每轮各生成 10 个候选后缀"]
+    B --> C["把每个后缀追加到原始指令后<br/>模型在开发集上作答"]
+    C --> D["逐候选评估：平均准确率 ACC + 平均长度 L_avg"]
+    D --> E["准确率约束下的候选筛选<br/>淘汰准确率下降超过阈值 τ 的候选"]
+    E --> F["幸存候选按平均长度排序，取最短 top-5"]
+    F -->|"迭代 refinement：top-5 作为下一轮 exemplars 回喂，共 3 轮"| B
+    F -->|"3 轮后"| G["部署：准确率达标且输出最短的后缀"]
+```
+
 ### 关键设计
 
 **1. 多视角 persuasive prompt 生成：用多种说服策略去撬动模型的"简洁开关"**

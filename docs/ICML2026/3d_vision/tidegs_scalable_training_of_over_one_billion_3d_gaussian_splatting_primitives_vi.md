@@ -45,6 +45,18 @@ TideGS 要解决的核心问题是：3DGS 把模型容量绑死在 GPU 显存上
 
 每一步训练像一条数据在三层之间流动的流水线：先在 CPU 上对相机 batch 做块级视锥剔除，得到这一步保守可见的候选工作集 $\mathcal{K}_t$；接着异步 prefetch 把缺失的块从 SSD 经 CPU 搬到 VRAM；然后 GPU 上跑标准 3DGS 的前向/反向，语义与原生完全一致；最后把被淘汰的脏块异步搬回 CPU 缓存，等 CPU 缓存满了再批量追加写回 SSD。剔除、搬入、搬出这三件 I/O 事务都用独立 CUDA stream 和 I/O 线程与 GPU 计算重叠，把 SSD/PCIe 的延迟藏在计算之下，让 GPU 几乎不停摆。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SSD["SSD：完整参数表 Θ<br/>Morton 排序切块（块虚拟化）"] --> CPU["CPU 暖缓存<br/>LRU + dirty-bit"]
+    CPU --> CULL["两级可见性过滤·一级<br/>CPU 球面视锥剔除 → 候选集 K_t"]
+    CULL --> TIDE["Tide 差分流式<br/>选常驻集 R_t+1，只搬增量"]
+    TIDE --> PIPE["三级异步引擎<br/>SSD prefetch / H2D 与计算重叠"]
+    PIPE --> GPU["GPU 前向/反向<br/>精细剔除得贡献集（语义同原生 3DGS）"]
+    GPU -->|脏块淘汰| WB["log-structured 写回<br/>GPU → CPU → SSD 追加段"]
+    WB --> CPU
+```
+
 ### 关键设计
 
 **1. 块虚拟化 + 两级可见性过滤：把按高斯的随机访问变成按块的大粒度 I/O，并在搬数据之前就滤掉不可见块**

@@ -48,6 +48,22 @@ CoViP 把"基于用户历史经验做视觉个性化"这一开放任务，统一
 3. **RL 后训练**：以 GSPO 算法最大化期望可验证奖励 $\mathbb{E}_{(x,c)\sim\mathcal{D}_{\text{tr}}}\mathbb{E}_{s\sim\pi_\theta(\cdot\mid x,c,p_s)}[r(s,x,c)]$，奖励 $r=r_{\text{vis}}+r_{\text{caps}}$ 同时驱动识别和检索。
 4. **CAG 推理**：先让模型按 captioning prompt $p_s$ 生成字幕 $s\sim\pi_\theta(\cdot\mid x,c,p_s)$，再把 $s$ 拼到下游 prompt $p_d$ 后面，做最终回答 $y\sim\pi_\theta(\cdot\mid x,c,p_d,s)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["数据集构造（脚手架）"]
+        direction TB
+        A["生成式VLM合成查询图<br/>1–4 概念 + 一致性/忠实度过滤"] --> B["生成事实接地多轮对话<br/>CLIP 检索视觉相似负样本"]
+        B --> C["交错图文上下文 c + 查询图 x<br/>每条对话配 3 道 MCQA"]
+    end
+    C --> D["个性化字幕代理任务<br/>把 h_θ(c,x) 外化成字幕，下游 g_θ 复用"]
+    D --> E["RL 后训练（GSPO）<br/>策略 π_θ 采样字幕 s"]
+    E --> F["双成分可验证奖励<br/>r_vis：F1 识别 + r_caps：MCQA 检索"]
+    F -->|更新 θ| E
+    E --> G["字幕增强生成 CAG<br/>先生成字幕 s 再拼下游 prompt 答 y"]
+    G --> H["下游个性化输出<br/>captioning / VQA / 对话"]
+```
+
 ### 关键设计
 
 **1. 个性化字幕作为代理任务：把开放长尾的下游任务收敛到一个可监督、可奖励、可泛化的统一目标**

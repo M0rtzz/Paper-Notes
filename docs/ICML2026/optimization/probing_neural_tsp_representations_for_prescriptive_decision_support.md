@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-管线分三步:(i) 训 NCO 求解器——基于 Kool 2018 的注意力模型 + REINFORCE rollout baseline,扫三种残差维度 (64/128/256),每 2000 步存 checkpoint;(ii) 离线生成标签——对每个 100-node 实例先用 Concorde 求最优,然后枚举每个候选(节点或 tour 边)做一次 re-solve,记录最优长度变化 $\Delta_i$ 或 $\Delta_e$;(iii) 训探针——冻结编码器,提取最后一层 node embedding $h_i$,节点任务直接用 $h_i$,边任务用对称特征 $[h_u, h_v, |h_u-h_v|]$ 送入线性 / DeepSets / Set Transformer 头,预测 top-k 敏感性。
+管线分三步:(i) 训 NCO 求解器——基于 Kool 2018 的注意力模型 + REINFORCE rollout baseline,扫三种残差维度 (64/128/256),每 2000 步存 checkpoint;(ii) 离线生成标签——对每个 100-node 实例先用 Concorde 求最优,然后枚举每个候选(节点或 tour 边)做一次 re-solve,记录最优长度变化 $\Delta_i$ 或 $\Delta_e$;(iii) 训探针——冻结编码器,提取最后一层 node embedding $h_i$,节点任务直接用 $h_i$,边任务用对称特征 $[h_u, h_v, |h_u-h_v|]$ 送入线性 / DeepSets / Set Transformer 头,预测 top-k 敏感性。整体上,「求解器训练→冻结编码器」这条主干提供表征,「任务定义→Concorde 标签」这条支线提供监督,两路在探针训练处汇合,最后用集成产出敏感性排名。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["TSP100 实例"] --> B["训练 NCO 求解器<br/>Kool 注意力模型 + REINFORCE"]
+    B --> C["冻结编码器<br/>单次前向提取节点表征 hᵢ"]
+    A --> D["两个 prescriptive 任务<br/>node-removal（解前）/ edge-forbid（解后）"]
+    D --> E["Concorde 反复 re-solve 生成标签<br/>敏感性得分 Δᵢ / Δₑ"]
+    C --> F["多容量探针族<br/>线性 / DeepSets / Set Transformer"]
+    E --> F
+    F --> G["探针 × 启发式集成<br/>per-instance z-score 凸组合"]
+    G --> H["输出 top-k 敏感性排名"]
+```
 
 ### 关键设计
 

@@ -50,6 +50,22 @@ tags:
 
 Vinedresser3D 要解决的是「一句文本指令就能编辑 3D 资产，且不用人工画 3D 掩码」。它让一个 MLLM（Gemini-2.5-flash）当大脑，去协调图像编辑、3D 分割、3D 生成等一堆现成工具，整条流水线分四步：MLLM 先解析编辑意图、生成文本与图像引导，再自动定位 3D 资产中需编辑的区域，然后在 Trellis 的潜空间里执行基于反演的修补式编辑，最后把编辑后的 SLAT 解码成 3D 高斯或网格。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：3D 资产 + 文本指令<br/>（24 个多视角渲染图）"] --> B["多模态引导生成<br/>MLLM 拆解指令→结构/外观文本引导<br/>+ 选最佳视角→图像编辑（Nano Banana）"]
+    B --> C["自动编辑区域检测<br/>PartField 分割成 3~8 部件<br/>→ MLLM 选区 P_edit"]
+    C -->|添加| D1["R_edit = 所有非资产体素"]
+    C -->|删除| D2["R_edit = 目标部件"]
+    C -->|修改| D3["R_edit = 部件 + KNN 边界体素"]
+    D1 --> E["交叉 Trellis 反演-修补编辑"]
+    D2 --> E
+    D3 --> E
+    E --> F["RF-Solver 反演<br/>（二阶 Taylor，CFG=0）"]
+    F --> G["Interleaved 去噪<br/>Trellis-text↔image 交替<br/>掩码外注入原始轨迹"]
+    G --> H["解码 SLAT<br/>→ 3D 高斯 / 网格"]
+```
+
 ### 关键设计
 
 **1. 基于 MLLM 的多模态引导生成：把模糊指令拆成结构 + 外观的可执行引导**

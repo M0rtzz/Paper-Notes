@@ -43,6 +43,19 @@ tags:
 ### 整体框架
 GALA 要解决的是"源数一多就崩"的联邦 UMDA：$N$ 个源客户端各持有带标签的 $\{D_S^n\} = \{(x_i^n, y_i^n)\}_{i=1}^{K_n}$，target 客户端持有无标签的 $D_T = \{x_i^T\}_{i=1}^{K_T}$，每个源在本地训练特征提取器 $G$ + 分类器 $F$，server 聚合成全局 $h = F \circ G$。它的做法是把两件难事都搬到 target 端去做：一是用随机分组把原本 $O(N^2)$ 的跨源对齐换成线性复杂度的组级对齐，二是用质心相似度给每个源动态打权重，让贴近目标的源主导、噪声源退场。这两个创新都跟具体特征提取器解耦，因此可以套在任意 federated backbone 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个源客户端<br/>本地加权 CE 训练 G + F"] --> B["各源对目标无标签样本输出预测 p_n"]
+    W["质心相似度加权<br/>源质心距目标质心过温度 softmax 得权重 w_n"]
+    W -->|加权 CE| A
+    W -->|组级聚合权重| C
+    B --> C["随机分 G 组<br/>组内按 w_n 聚合成组级分布"]
+    C --> D["组间差异 IGD<br/>对齐 G 个组级分布"]
+    D --> E["总损失：加权 CE + λ·IGD"]
+    E --> F["server 聚合 → 全局模型 h = F∘G"]
+```
+
 ### 关键设计
 
 **1. Inter-Group Discrepancy (IGD)：把 $O(N^2)$ 的两两对齐压成线性又不让方差爆掉**

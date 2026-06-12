@@ -41,7 +41,20 @@ SA-Merging 把结构化剪枝里的 SynFlow 连接性分数搬到数据无关模
 ## 方法详解
 
 ### 整体框架
-方法要解决的是"哪些 task vector 坐标值得保留进合并模型"这个选择问题，且全程不碰任何任务数据。输入是基座参数 $\theta_0$ 和 $N$ 个微调专家 $\{\theta_n\}$，先转成 task vector $\tau_n := \theta_n - \theta_0$，随后进入 $T$ 轮迭代精炼。每一轮里，先把所有专家的当前更新求和得到聚合方向 $\tau^* = \sum_i \tau_i$，再对每个专家算一个端到端连通性分数 $\mathcal{R}_n$ 并对 $\tau_n$ 求梯度拿到结构敏感度，把它与 $\tau^*$ 逐坐标相乘得到显著度 $\mathcal{S}_n$，按 tensor 内 top-$(1-p)$ 生成掩码 $m_n$ 并更新 $\tau_n \leftarrow m_n \odot \tau_n$。$T$ 轮后把这些稀疏化的 task vector 全部加回 $\theta_0$，就是最终合并模型。
+方法要解决的是"哪些 task vector 坐标值得保留进合并模型"这个选择问题，且全程不碰任何任务数据。输入是基座参数 $\theta_0$ 和 $N$ 个微调专家 $\{\theta_n\}$，先转成 task vector $\tau_n := \theta_n - \theta_0$，随后进入 $T$ 轮迭代精炼。每一轮里，先把所有专家的当前更新求和得到聚合方向 $\tau^* = \sum_i \tau_i$，再对每个专家算一个端到端连通性分数 $\mathcal{R}_n$ 并对 $\tau_n$ 求梯度拿到结构敏感度，把它与 $\tau^*$ 逐坐标相乘得到显著度 $\mathcal{S}_n$，按 tensor 内 top-$(1-p)$ 生成掩码 $m_n$ 并更新 $\tau_n \leftarrow m_n \odot \tau_n$。$T$ 轮后把这些稀疏化的 task vector 全部加回 $\theta_0$，就是最终合并模型。对 LoRA 专家则把同一显著度搬到 rank-1 子空间做秩级选择，保持低秩结构不破。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["基座 θ₀ + N 个微调专家 θₙ"] --> B["task vector τₙ = θₙ − θ₀"]
+    B --> C["聚合方向 τ* = Σᵢ τᵢ"]
+    C --> D["连通性显著度<br/>SynFlow 端到端通路敏感度 ∂Rₙ/∂τₙ"]
+    D --> E["聚合方向调制<br/>Sₙ = ∂Rₙ/∂τₙ ⊙ Σᵢ τᵢ"]
+    E --> F["迭代显著度剪枝<br/>tensor 内 top-(1−p) 掩码 → 更新 τₙ"]
+    F -->|未满 T 轮，重估| C
+    F -->|满 T 轮| G["Σ τₙ 加回 θ₀ → 合并模型"]
+    F -.->|LoRA 专家| H["秩级 LoRA 变体<br/>在 rank-1 子空间选 rank、保低秩结构"]
+```
 
 ### 关键设计
 

@@ -35,7 +35,17 @@ SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配
 
 ### 整体框架
 
-SGER 对 Llama 3 8B 进行两阶段课程学习微调：Phase 1 教模型理解姓名内部语法结构，Phase 2 在 Phase 1 checkpoint 基础上训练二分类实体匹配。推理时输入两个姓名字符串，输出 "Yes" 或 "No"。
+SGER 对 Llama 3 8B 进行两阶段课程学习微调：Phase 1 教模型理解姓名内部语法结构，Phase 2 在 Phase 1 checkpoint 基础上训练二分类实体匹配。数据增强策略把 20K 姓名对扩展到 50K+ 喂给 Phase 2 训练。推理时输入两个姓名字符串，输出 "Yes" 或 "No"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D1["1 万条标注印度姓名"] --> P1["Phase 1 姓名结构理解<br/>姓名 → JSON（first/middle/last）"]
+    P1 --> CKPT["Phase 1 checkpoint<br/>稳定的姓名成分内部表示"]
+    AUG["数据增强策略<br/>配对交换 / 成分排列 / 随机删空格<br/>20K → 50K+ 姓名对"] --> P2
+    CKPT --> P2["Phase 2 二分类匹配<br/>从 checkpoint 续训"]
+    P2 --> INF["推理：输入两个姓名<br/>取 Yes/No logits 经 softmax<br/>概率 > 阈值即判同一人"]
+```
 
 ### 关键设计
 

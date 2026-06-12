@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 输入是源文档和人工摘要。首先，作者用 GPT-4o 为每个摘要生成七种事实保持扰动版本，包括 paraphrased、simplified、synonym replaced、less diverse、logically equivalent negated、summarized、added source text。然后，对原摘要和扰动摘要的每个句子，从源文档中检索 Top-K 相似句子，并扩展周围窗口作为证据 snippet。每个 factuality metric 对摘要句和候选证据 snippet 打分，取最大值作为该句得分，再对所有摘要句平均得到 summary-level 分数。最后，作者比较扰动前后分数差异，分析 retrieval window size 和 claim similarity 对指标的影响。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["源文档 + 人工摘要"] --> B["七类事实保持扰动<br/>GPT-4o 造 7 种语义等价改写，NLI 核验确认不改事实"]
+    B --> D1
+    subgraph D["检索式长文档 factuality scoring"]
+        direction TB
+        D1["每摘要句 SBERT 取 Top-K 源句"] --> D2["扩展上下文窗口 w∈{0,1,2} 成证据片段"]
+        D2 --> D3["六个指标对片段打分，句得分取 max"]
+        D3 --> D4["句得分对全摘要平均"]
+    end
+    D4 --> E["summary-level factuality 分数"]
+    E --> F["claim 信息密度 / 相似度分析<br/>按 Sim(s,D) 分桶，看证据分散的高密度 claim 是否掉分"]
+    F --> G["对比扰动前后分数 + 检索窗口敏感性<br/>暴露指标脆弱性"]
+```
+
 ### 关键设计
 
 **1. 七类事实保持扰动：用语义等价但表面不同的改写，探指标是不是真在测事实**

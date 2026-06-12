@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 这篇论文是"一个 benchmark + 一个 BoN 选择算法"的组合。Benchmark 端（Rule2DRC）把 NL 设计规则→可执行 DRC 脚本这件事，定义成一个对 agent 私有评测版图、只按执行结果打分的任务；算法端（SplitTester）则在采样得到 $N$ 个候选脚本后，自己造测试版图、执行所有候选、把它们聚类，再定向地把最危险的簇拆开，最后让一个 judge LLM 在窄证据集上选出最优脚本。要看懂 SplitTester，关键是先把它工作的输入输出协议想清楚：每个任务是四元组 $\langle r_i, c_i, \{x_{ij}\}_{j=1}^{m_i}, \{\phi(x_{ij}, c_i)\}\rangle$，其中 $r_i$ 是 NL 规则、$c_i$ 是 ground-truth DRC 脚本、$\{x_{ij}\}$ 是该任务的私有评测版图、$\phi(\cdot, \cdot) \in \{0,1\}$ 是 DRC 引擎给出的"是否违规"判定函数；agent $f(\cdot)$ 只看到 NL 规则 $r_i$、KLayout API 文档以及自己生成或调用得到的中间产物，输出脚本 $f(r_i)$。成功率是对所有评测版图都满足 $\phi(x_{ij}, f(r_i)) = \phi(x_{ij}, c_i)$ 的任务比例，错误率是生成脚本编译或运行报错的任务比例。SplitTester 就在"不接触 ground-truth 标签和这批私有评测版图"的前提下，从 $N \in \{10, 15, 20\}$ 个候选 $\mathcal{C} = \{c_1, \dots, c_N\}$ 里挑出 $c^*$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["NL 规则 r_i + KLayout API 文档<br/>（约 60K token 常驻上下文）"] --> B["采样 N 个候选 DRC 脚本"]
+    B --> C["生成 B₀=8 个初始 (版图, 期望输出) 对"]
+    C --> D["执行所有候选 → 按输出向量聚类成簇<br/>每候选打分 s(c)"]
+    D --> E["选最危险簇 argmax s_i·|C_i|<br/>抽 K=3 代表生成区分性新测试"]
+    E -->|"执行新测试 → 全体重打分、重聚类"| D
+    E -->|"连续 P=1 次拆不开 → 早停"| F["Top-3 候选 + 差异化测试 X_Δ<br/>交 judge LLM 做最终决断"]
+    F --> G["输出最优脚本 c*"]
+```
+
 ### 关键设计
 
 **1. Rule2DRC 基准：执行级打分 + 评测版图私有**

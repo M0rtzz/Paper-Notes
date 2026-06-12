@@ -43,6 +43,24 @@ SHIFT 用一次贪心解码下的"开始 token → 结束 token"隐状态差 $\D
 ### 整体框架
 对无标注池 $\mathcal{U}=\{x_i\}_{i=1}^{N}$ 中的每条样本：(1) 用基座 LLM $f_\theta$ 在固定推理 prompt 下做 $T=0$ 贪心解码生成一条 CoT；(2) 取 CoT 开始与结束 token（若模型支持 `<think>`/`</think>` 则取定界符）为 anchor，多层平均得到 $\mathbf{s}(x), \mathbf{e}(x)\in\mathbb{R}^D$；(3) 计算 RIRS $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$；(4) 用 $\tilde q(x)$ 与 $\phi(x)$ 喂入质量加权 farthest-first CoreSet 选出 $B$ 个样本；(5) 只为这 $B$ 个样本标注/计算奖励，跑 RLVR。整个选样过程"一次推理、零训练、零标签"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["无标注池 U（N 条无奖励样本）"] --> B["贪心解码 CoT<br/>T=0 单次 rollout"]
+    subgraph RIRS["多层平均的 RIRS 表征"]
+        direction TB
+        C["取 CoT 开始/结束 anchor token"] --> D["逐层取隐状态再多层平均<br/>得 s(x), e(x)"]
+        D --> E["RIRS：Δ(x) = e(x) − s(x)"]
+    end
+    B --> C
+    E --> F["对数稳定化的效用分数<br/>q̃(x) = log(1 + ‖Δ(x)‖₂)"]
+    E --> G["覆盖特征 φ(x) = 归一化 [s(x); Δ(x)]"]
+    F --> H["质量加权 farthest-first CoreSet<br/>逐步取 argmax q̃(x)·d(x,S) 直到 |S|=B"]
+    G --> H
+    H --> I["选出 B 个样本"]
+    I --> J["仅对这 B 条标注/算奖励<br/>跑 RLVR"]
+```
+
 ### 关键设计
 
 **1. 多层平均的 RIRS 表征：用一个向量浓缩"这条样本让模型内部走了多远"**

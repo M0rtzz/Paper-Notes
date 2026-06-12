@@ -37,6 +37,24 @@ DeCo 提出频率解耦的像素扩散框架，用轻量像素解码器处理高
 ### 整体框架
 DeCo 想让像素扩散摆脱"一个 DiT 同时啃高频和低频"的负担：高频噪声本来就难学，还会拖累低频语义。它的做法是把一张图分两条路走——先把输入下采样，交给 DiT 在低分辨率上专心建模低频语义 $x_{\text{low}} = \text{DiT}(\bar{x}_t, t, y)$；再把这份语义当条件，让一个轻量像素解码器在全分辨率上补回高频细节，预测像素速度 $v_\theta(x_t, t, y) = \text{Dec}(x_t, t, x_{\text{low}})$。整套流程端到端训练，损失由标准 FM、频率感知 FM 和 REPA 对齐三项相加。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入噪声图像 x_t"]
+    subgraph FD["频率解耦架构"]
+        direction TB
+        B["DiT 低频分支<br/>低分辨率输入，建模低频语义 x_low"]
+        D["轻量像素解码器<br/>全分辨率高频分支（无注意力）"]
+    end
+    A -->|"下采样"| B
+    A -->|"全分辨率"| D
+    B --> C["AdaLN 条件交互<br/>上采样+MLP 生成 α/β/γ 调制参数"]
+    C -->|"AdaLN-Zero 调制 dense query"| D
+    D --> E["预测像素速度 v_θ"]
+    E --> F["频率感知 FM 损失<br/>YCbCr→DCT→JPEG 量化表加权"]
+    E --> G["标准 FM + REPA 对齐"]
+```
+
 ### 关键设计
 
 **1. 频率解耦架构：让擅长低频的 DiT 别再硬学高频**

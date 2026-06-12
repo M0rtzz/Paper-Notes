@@ -45,8 +45,20 @@ MetaTrans 由"两损失 + 两流架构"构成：
 1. 用 I3D 抽取每帧 2048 维特征 $\mathbf{X} = [x_1, \ldots, x_T]$。
 2. 时间流 $\mathcal{M}_1(\mathbf{X} + \mathbf{P})$：加位置编码 $\mathbf{P}$，输出时序敏感特征。
 3. 静态流 $\mathcal{M}_2(\mathbf{X})$：无位置编码，输出排列不变的静态特征。
-4. 相减得到动态残差：$\mathbf{F} = \mathcal{M}_1(\mathbf{X} + \mathbf{P}) - \mathcal{M}_2(\mathbf{X})$。
-5. 域对抗损失作用在 $\mathbf{F}$ 上对齐帧级和视频级分布；分类器对源标签和目标伪标签做监督。
+4. 相减得到动态残差：$\mathbf{F} = \mathcal{M}_1(\mathbf{X} + \mathbf{P}) - \mathcal{M}_2(\mathbf{X})$（静态特征沿时间维复制 $T$ 份再相减）。
+5. 域对抗损失作用在 $\mathbf{F}$ 上对齐帧级和视频级分布（视频级经帧聚合网络 FAN）；分类器对源标签和目标伪标签做监督。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["视频帧"] --> B["I3D 编码器<br/>逐帧 2048 维特征 X"]
+    B --> C["时间流 M₁(X+P)<br/>加位置编码，时序敏感"]
+    B --> D["静态流 M₂(X)<br/>无位置编码，排列不变静态特征"]
+    C --> E["时空特征相减<br/>F = M₁(X+P) − M₂(X)"]
+    D --> E
+    E --> F["两损失目标<br/>分类(监督) + 域对抗(帧级+视频级 GRL)"]
+    F --> G["跨域动作识别预测"]
+```
 
 ### 关键设计
 

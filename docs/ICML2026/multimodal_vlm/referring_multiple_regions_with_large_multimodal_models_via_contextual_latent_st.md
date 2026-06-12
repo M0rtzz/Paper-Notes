@@ -41,27 +41,38 @@ CSteer 提出一种训练无关的 latent steering 方法,通过在错误/正确
 ## 方法详解
 
 ### 整体框架
-给定一张图像 $v$、覆盖在图上的视觉提示 $p=\{p_1,...,p_m\}$(数字标记)和文本 query $q$,通用 LMM $\mathcal{F}$ 把它们编码成 $\textbf{X}_c=\text{concat}(\mathcal{F}_{visual}(v,p), \textbf{X}_q)$,然后语言模型 $\mathcal{F}_L$ 自回归解码答案。CSteer 不改这条主流程,而是在 $\mathcal{F}_L$ 的若干层隐藏状态 $h^l$ 上加一个预先算好的 contextual vector $\Delta^l$:$\hat{h}^l = h^l + \lambda \cdot \Delta^l$。整个 pipeline 分两阶段:**(1) 离线计算 $\Delta^l$**——用一小批带 GT 标注的样本跑 LMM 得到错误指代回答,用 GPT-4o 等纯文本判官参照 GT 把这些错误改写成正确版本,再用 teacher forcing 让 LMM 分别"被迫"输出正/负回答,记录最后一个 token 的隐藏激活,正负对相减再跨样本平均得到每层的 $\Delta^l$;**(2) 在线注入**——推理时按"早期层注 query、中后期层注 decode"的分解策略叠加 $\Delta^l$,完全不改架构、不更新参数。
+给定一张图像 $v$、覆盖在图上的视觉提示 $p=\{p_1,...,p_m\}$(数字标记)和文本 query $q$,通用 LMM $\mathcal{F}$ 把它们编码成 $\textbf{X}_c=\text{concat}(\mathcal{F}_{visual}(v,p), \textbf{X}_q)$,然后语言模型 $\mathcal{F}_L$ 自回归解码答案。CSteer 不改这条主流程,而是在 $\mathcal{F}_L$ 的若干层隐藏状态 $h^l$ 上加一个预先算好的上下文向量 (contextual vector) $\Delta^l$:$\hat{h}^l = h^l + \lambda \cdot \Delta^l$。整个 pipeline 正是论文里两个串行模块:**① 离线构造上下文向量**——用一小批带 GT 标注的样本跑 LMM 得到错误指代回答 (负样本),用 GPT-4o 等纯文本判官参照 GT 把它最小改写成正确版本 (正样本),再用 teacher forcing 让 LMM 分别"被迫"输出正/负回答,记录最后一个 token 的隐藏激活,正负相减再跨样本平均得到每层的 $\Delta^l$;**② 在线分层注入**——推理时按"早期层改 query、中后期层改 decode"的分解策略叠加 $\Delta^l$,完全不改架构、不更新参数。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph OFF["① rewrite 正负对构造上下文向量 Δˡ（离线）"]
+        direction TB
+        A["图像 v + 数字标记 p（SoM 提示）<br/>通用 LMM rollout → 错误指代回答 x₋"] --> B["GPT-4o 文本判官<br/>参照 GT 最小改写 → 正确回答 x₊"]
+        B --> C["teacher forcing 强制输出 x₊ / x₋<br/>取末 token 激活 h₊ˡ / h₋ˡ"]
+        C --> D["跨样本均值差分<br/>Δˡ = E[h₊ˡ − h₋ˡ]"]
+    end
+    D --> E
+    subgraph ON["② 层分解注入（在线）"]
+        direction TB
+        E["in-query 编辑·早期层<br/>改 query 中 marker 读入（信息聚合）"] --> F["marker-only 编辑·中后期层<br/>解码到编号 token 时叠加（输出区分）"]
+    end
+    F --> G["ĥˡ = hˡ + λ·Δˡ<br/>通用 LMM 输出多区域指代"]
+```
 
 ### 关键设计
 
-1. **Rewrite vs Rollout 正负对构造**:
+论文把 CSteer 明确拆成两个串行模块——**怎么造出干净的上下文向量**、**怎么把它注到对的层**;下面两点就对应框架图里的两个 subgraph,训练无关、即插即用是这两步的自然结果(见各点末尾)。
 
-    - 功能:让 $\Delta^l$ 真正编码"多区域指代"这一行为,而不是表层风格差异。
-    - 核心思路:负样本 $\hat{x}_-$ 取 LMM 在 SoM 提示下的真实错误 rollout(如把区域 [2] 的物体描述成 [1] 的);正样本 $\mathcal{F}_{rewrite}(\hat{x})_+$ 取一个纯文本 LLM (GPT-4o) 以 GT caption 为参考、把负样本"最小修改"成正确版本——只改错的指代关系,不改写作风格。最后取 $\Delta^l = f_+(v,p,\mathcal{F}_{rewrite}(\hat{x})_+) - f_-(v,p,\hat{x}_-)$。作者还对比了几种朴素方案 ("Refer vs No Refer" 直接用有/无 $p$、"Exact Matching vs Marker Shuffle" 把编号打乱、"GT vs Rollout" 直接以 GT 作正样本),发现 rewrite 方案最干净,因为正负样本的非指代部分尽量保持一致,差异方向 $\Delta^l$ 几乎只承载"指代纠错"信号。
-    - 设计动机:朴素的 "GT vs Rollout" 会把作者写作风格、句长、词汇丰富度等无关差异都灌进 $\Delta^l$,使其变成一个"风格向量"而非"行为向量";改写做最小编辑确保差分纯净。
+**1. rewrite 正负对构造:把"指代纠错"信号从向量里提纯出来**
 
-2. **Layer-Decomposed Steering(层分解注入)**:
+这一步要解决的是框架图 ① 的核心问题——怎么让 $\Delta^l$ 只编码"多区域指代"这个行为,而不夹带写作风格等无关信号。最直接的做法是拿一对"对/错"回答相减,但怎么取这对样本大有讲究,作者并排比了四种方案:"Refer vs No Refer"(正样本叠 marker、负样本不叠,式 5)、"Exact Matching vs Marker Shuffle"(负样本把编号打乱,式 6)、"GT vs Rollout"(正样本直接用 GT caption,式 7),以及最终采用的 "Rewrite vs Rollout"(式 8)。CSteer 的做法是:负样本 $\hat{x}_-$ 取 LMM 在 SoM 提示下的**真实错误 rollout**(如把区域 [2] 的物体描述成 [1] 的),正样本 $\mathcal{F}_{rewrite}(\hat{x})_+$ 取一个纯文本 LLM(GPT-4o)以 GT caption 为参考、把这条错误回答**最小改写**成正确版本——只纠正错的指代关系,不动句长、词汇和写作风格,于是 $\Delta^l = f_+(v,p,\mathcal{F}_{rewrite}(\hat{x})_+) - f_-(v,p,\hat{x}_-)$。为什么非要这么绕?因为朴素的 "GT vs Rollout" 会把人写的 GT 与模型 rollout 之间的风格、句式差异一并灌进 $\Delta^l$,让它变成一个"风格向量"而非"行为向量";让正负样本的非指代部分尽量逐字对齐,差分方向才几乎只承载"指代纠错"这一个信号——消融里 rewrite 也确实比其余构造方案干净、提升最大。
 
-    - 功能:把"信息聚合"和"输出区分"这两件事分配到 LMM 的不同层去做,避免一刀切。
-    - 核心思路:Marker 编号 (如 "[1]" "[2]") 出现在用户 query 里而不是 decode 阶段,因此对 query 隐藏状态做 in-query 编辑可以影响 LMM 怎么"读入"这些标记;而 decode 阶段的 marker-only 编辑则只在解码到对应编号 token 时叠加 $\Delta^l$,影响"写出"行为。作者实证:in-query 编辑在 LLM 早期层 (信息聚合阶段) 收益最大,marker-only 编辑在中后期层 (输出预测阶段) 收益最大,二者叠加才能同时改善"读 [1] 时关注右边那只猫"和"输出 [1] 的描述别串到 [2]"两个症状。
-    - 设计动机:这呼应 Wang et al. 2023 关于 LLM 信息流的研究——早期层做语义聚合、后期层做下一个 token 预测;把不同行为信号注到合适的"功能层"才能真正生效。
+**2. 层分解注入(layer-decomposed steering):早层管聚合、中后层管输出**
 
-3. **训练无关 + 即插即用部署**:
+造好 $\Delta^l$ 后还有一个问题:注到哪些层、注在哪些 token 上?默认做法(式 9)是对所有 decode step 一刀切叠加,效果平平。作者的关键观察是,"多区域指代"其实包含两件事——**读进来**(把 query 里的编号标记 [1][2] 和对应区域绑对)和**写出去**(解码时让 [1] 的描述别串到 [2]),而这两件事发生在 LMM 的不同位置。于是把注入拆成两路:**in-query 编辑**只改用户 query 里 marker token 的隐藏状态,影响"读入";**marker-only 编辑**只在解码到编号 token $h^l_{t\in\mathcal{P}}$ 时叠加 $\Delta^l$,影响"写出"。实证发现二者偏好不同层段——in-query 在**早期层**(信息聚合阶段)收益最大,marker-only 在**中后期层**(输出预测阶段)收益最大,叠加后才能同时治好"读 [1] 时没看右边那只猫"和"输出 [1] 描述串到 [2]"两个症状(单用任一路只比 SoM 高 1-2%,组合后 +5-7%)。这一分工呼应 Wang et al. 2023 关于 LLM 信息流的结论:早期层做语义聚合、后期层做下一 token 预测,把对应的行为信号注到"功能匹配"的层才真正生效。
 
-    - 功能:让方法可以套在任何已有通用 LMM 上,不需要重新训练、不需要架构改造。
-    - 核心思路:整套 pipeline 只用一小批 (上百到上千) 带 GT 的样本预计算 $\Delta^l$ (单次离线开销),推理时只多一个 $O(d)$ 的逐层加法,几乎不增加 latency;同样的向量可以跨任务复用,例如在 GAR-Bench 上算出的 $\Delta^l$ 也能直接套到 INST-IT、VIP-Bench 上使用。
-    - 设计动机:region LMM 通常要花数十万样本做 SFT 才能稳定指代,这种规模对中小团队和闭源模型不可行;表征编辑把"行为习得"从 weight 空间搬到了 activation 空间,代价低且可移植。
+这两步合起来就给出 CSteer 的部署优势:全程只用一小批(上百到上千)带 GT 样本**离线**预计算一次 $\Delta^l$,推理时只多一个 $O(d)$ 的逐层加法,几乎不增延迟;算好的向量还能跨任务复用(GAR-Bench 上的 $\Delta^l$ 直接套到 INST-IT、VIP-Bench)。相比 region LMM 动辄数十万样本做 SFT,CSteer 把"行为习得"从权重空间搬到了激活空间,既不改架构也不训练,对中小团队和闭源基模更可行。
 
 ### 损失函数 / 训练策略
 CSteer 无任何训练损失,主步骤只有 SVD-free 的均值差分:$\Delta^l = \mathbb{E}_{(x_+, x_-)}\left[h^l_+ - h^l_-\right]$;唯一超参是注入强度 $\lambda$ 和注入层范围,通过在小验证集上 grid search 选定。

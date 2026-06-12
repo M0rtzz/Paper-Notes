@@ -40,7 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-管线分三块：(1) 把 dLLM 采样写成 MDP——状态是已解掩的序列 $(\bm x, \bm y_t)$，动作是 $\{0,1\}^L$ 的 unmask 指示向量 $\bm u_t$，转移由原 dLLM 完成，奖励只在所有位置揭完时给出；(2) 策略 $\pi_\phi$ 是一个单层 Transformer，输入 $(\bm c_t, \bm m_t, t)$ 输出每个位置的 logit $\bm b_t$，再过 sigmoid 得到 Bernoulli 参数 $s_t^k=\sigma(b_t^k)$，按位置独立采样要不要揭；(3) 训练用 GRPO：对同一 prompt 跑 $G$ 条 rollout，把 reward 减去组均值得到优势，反传到每一步的策略 likelihood。底座 dLLM 全程参数冻结。
+管线分三块：(1) 把 dLLM 采样写成 MDP——状态是已解掩的序列 $(\bm x, \bm y_t)$，动作是 $\{0,1\}^L$ 的 unmask 指示向量 $\bm u_t$，转移由原 dLLM 完成，奖励只在所有位置揭完时给出；(2) 策略 $\pi_\phi$ 是一个单层 Transformer，输入 $(\bm c_t, \bm m_t, t)$ 输出每个位置的 logit $\bm b_t$，再过 sigmoid 得到 Bernoulli 参数 $s_t^k=\sigma(b_t^k)$，按位置独立采样要不要揭；(3) 训练用 GRPO：对同一 prompt 跑 $G$ 条 rollout，把 reward 减去组均值得到优势，反传到每一步的策略 likelihood。底座 dLLM 全程参数冻结。整条管线是一个"环境—策略"回环：dLLM 当环境吐出置信度，轻量策略据此采样 unmask 动作，反馈回 dLLM 推进解码，直到全部揭完才结算一次奖励、回灌训练策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：prompt x + 全掩码序列 y_T"] --> B["底座 dLLM 前向（参数冻结）<br/>得每位置预测分布 p_t^k"]
+    B --> C["置信度即状态<br/>c_t^k=max_v p_t^k(v) 加 mask m_t、步 t<br/>→ 单层 Transformer 策略 π_φ 输出 logit b_t"]
+    C --> D["Bernoulli 动态步长<br/>s_t^k=σ(b_t^k)，u_t^k~Ber(s_t^k)<br/>逐位置独立决定揭/不揭"]
+    D -->|仍有掩码位| B
+    D -->|全部揭完（终止步 T̂）| E
+    subgraph TRAIN["乘性奖励 + GRPO"]
+        direction TB
+        E["乘性奖励<br/>R = r·(1−(T−T̂)/T)^α，错答打回 0 优势"] --> F["GRPO：同 prompt G 条 rollout 算组内优势<br/>终步奖励回灌每步、更新 π_φ（dLLM 不动）"]
+    end
+```
 
 ### 关键设计
 

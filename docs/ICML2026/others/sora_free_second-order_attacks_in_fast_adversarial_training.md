@@ -39,7 +39,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SORA 把单步 AT 的"FGSM + 固定步长 $\alpha$"换成"FGSM 方向 + 自适应随机步长"。每个 batch 的训练流程是：(1) 加随机起点 $\eta \sim \mathcal{U}(-\epsilon, \epsilon)^d$；(2) 算 $g = \nabla_x \mathcal{L}(f_\theta(x+\eta), y)$；(3) 对每个像素通道独立从 $\mathcal{U}(0, \alpha^*)$ 采样步长 $\alpha_i$，构造 $x' = x + \eta + \alpha_i \odot \text{sign}(g)$ 并裁剪到 $[0,1]$；(4) 反传更新 $\theta$，同时把延伸到输入层的梯度 $g'$ 顺手保留；(5) 用 $g$ 与 $g'$ 沿符号方向 $p = \text{sign}(g)$ 的内积更新 EMA 线性度系数 $v$，并据此为下一个 batch 推导新的 $\alpha^*$。整个流程相比 FGSM-RS 没有额外反传，时间和显存开销可忽略。
+SORA 把单步 AT 的"FGSM + 固定步长 $\alpha$"换成"FGSM 方向 + 自适应随机步长"。每个 batch 的训练流程是：(1) 加随机起点 $\eta \sim \mathcal{U}(-\epsilon, \epsilon)^d$；(2) 算 $g = \nabla_x \mathcal{L}(f_\theta(x+\eta), y)$；(3) 对每个像素通道独立从 $\mathcal{U}(0, \alpha^*)$ 采样步长 $\alpha_i$，构造 $x' = x + \eta + \alpha_i \odot \text{sign}(g)$ 并裁剪到 $[0,1]$；(4) 反传更新 $\theta$，同时把延伸到输入层的梯度 $g'$ 顺手保留；(5) 用 $g$ 与 $g'$ 沿符号方向 $p = \text{sign}(g)$ 的内积更新 EMA 线性度系数 $v$，并据此为下一个 batch 推导新的 $\alpha^*$。整个流程相比 FGSM-RS 没有额外反传，时间和显存开销可忽略。下图展示了这条"复用已有梯度做曲率感知"的单步训练回环，其中按通道随机化步长、二阶最优步长 $\alpha^*$+EMA、PertAlign 三个贡献节点都只消费现成的 $g$ 与 $g'$，不引入额外反传：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 x + 随机起点 η ~ U(−ε, ε)"] --> B["前向并求输入梯度<br/>g = ∇ₓ L(f(x+η), y)"]
+    B --> C["按通道随机化步长<br/>每通道独立采样 αᵢ ~ U(0, α*)"]
+    C --> D["构造对抗样本<br/>x' = x + η + αᵢ ⊙ sign(g)，裁剪到 [0,1]"]
+    D --> E["反传：得参数梯度 g_θ 与延伸到输入层的 g'"]
+    E --> F["更新参数 θ ← SGD(θ, g_θ)"]
+    E --> G["PertAlign = cos(g, g')<br/>急跌即预警灾难性过拟合 (CO)"]
+    E --> H["二阶最优步长 α* + EMA 线性度 v<br/>v ← (1−β)v + β·pᵀg'/‖g‖₁"]
+    H -->|下一 batch 复用 α*| C
+```
 
 ### 关键设计
 

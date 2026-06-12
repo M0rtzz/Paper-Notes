@@ -43,6 +43,22 @@ tags:
 ### 整体框架
 VIAR 在每个 scale $k$ 上的流程是：(1) 输入注入：用 $p=5$ 个 pre-block 把上一 scale 输出 $e_{k-1}$ 投影成 $x_k = f_{\text{pre}}(e_{k-1}, c)$；(2) 隐式均衡：从 $z^0 = x_k$ 初始化，反复迭代 $z^{t+1} = f_{\text{imp}}(\text{Proj}([z^t, x_k]), c)$ 直到不动点 $z_k^*$；(3) 后投影：$\hat{r}_k = f_{\text{post}}(z_k^*, c)$ 用 $p=5$ 个 post-block 输出 token 预测。整个 next-scale 自回归的因子化 $p(r_1,\cdots,r_K) = \prod_k p(r_k|r_{<k})$ 与 VAR 一致，VAE tokenizer 复用 VAR 的多尺度 VQVAE 并冻结。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["上一 scale 输出 e(k-1) + 类别/任务条件 c"]
+    PRE["前置投影：p 个 pre-block<br/>注入 x_k = f_pre(e(k-1), c)"]
+    IMP["隐式均衡层替代显式堆叠<br/>不动点迭代 z* = f_imp(z*, x_k, c)"]
+    POST["后置投影：p 个 post-block<br/>输出 token 预测 r_k"]
+    OUT["拼入序列 → next-scale 自回归"]
+    IN --> PRE --> IMP --> POST --> OUT
+    OUT -.下一 scale.-> IN
+    SJFB["S-JFB 训练<br/>随机多步、仅末 m 步反传、常数显存"]
+    SCHED["跨 scale 自适应迭代调度<br/>按 scale 分配迭代次数"]
+    SJFB -.训练.-> IMP
+    SCHED -.推理.-> IMP
+```
+
 ### 关键设计
 
 **1. 隐式均衡层替代显式堆叠：把"深度"从架构超参变成推理旋钮**

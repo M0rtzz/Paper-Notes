@@ -41,7 +41,37 @@ SPARe 在数据并行维度把同一份数据 shard 跨组 cyclically 堆叠 $r$
 ## 方法详解
 
 ### 整体框架
-SPARe 完全建在 synchronous Data Parallelism 之上：$N$ 个 model-parallel group、每组 $M$ 个 GPU 持一份模型副本，组间形成 $M$ 个 DP 通信器、world size $N$。它不改模型结构也不动内层 TP/PP/EP 拓扑，只重新安排**每个 group 承担哪些 shard**以及**什么时候触发 all-reduce**。布局上是静态的：每组 $g_i$ 按 cyclic rotation 持有一个 shard 栈 $[D_i, D_{i+1}, \dots, D_{i+r-1}]$（下标 mod $N$），这样任意两种 shard 在所有 group 里至多重合一次（独立性条件，见下方 Thm. 4.1）。调度上是动态的：每个训练 step 维护一个 all-reduce stack 数 $S$（初值 1），表示"这一步每组只算到栈里第 $S$ 层就触发 all-reduce"；一旦有节点失败，控制器 ReCtlr 决定是否要重排 shard、是否要抬高 $S$，然后让幸存的 group 补算缺失的 shard type（patch compute），shrink 通信器，all-reduce，更新参数。
+SPARe 完全建在 synchronous Data Parallelism 之上：$N$ 个 model-parallel group、每组 $M$ 个 GPU 持一份模型副本，组间形成 $M$ 个 DP 通信器、world size $N$。它不改模型结构也不动内层 TP/PP/EP 拓扑，只重新安排**每个 group 承担哪些 shard**以及**什么时候触发 all-reduce**。布局上是静态的：每组 $g_i$ 按 cyclic rotation 持有一个 shard 栈 $[D_i, D_{i+1}, \dots, D_{i+r-1}]$（下标 mod $N$），这样任意两种 shard 在所有 group 里至多重合一次（独立性条件，见下方 Thm. 4.1）。调度上是动态的：每个训练 step 维护一个 all-reduce stack 数 $S$（初值 1），表示"这一步每组只算到栈里第 $S$ 层就触发 all-reduce"；一旦有节点失败，控制器 ReCtlr 决定是否要重排 shard、是否要抬高 $S$，然后让幸存的 group 补算缺失的 shard type（patch compute），shrink 通信器，all-reduce，更新参数。下图把"配置（闭式定 $r$ 与 checkpoint 周期）→ 静态堆叠 + 提前 all-reduce → 失败时 ReCtlr 三阶段重排 → 补算/更新"这条主链路串起来：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    CFG["SPARe+CKPT 联合优化<br/>闭式定冗余度 r*≈⌊log₂N+0.833⌋ 与 checkpoint 周期"]
+    subgraph S1["Stack 堆叠 + 提前 all-reduce"]
+        direction TB
+        L["cyclic 堆叠 r 层：每组持 shard 栈 [D_i … D_{i+r−1}]"]
+        T["每步只算前 S 层即触发 all-reduce（S 初值 1）"]
+        L --> T
+    end
+    CFG --> L
+    T --> Q{"all-reduce 时有节点失败?"}
+    Q -->|无| U["聚合梯度 ḡ → 更新参数 → 下一步"]
+    subgraph S2["ReCtlr 三阶段自适应重排"]
+        direction TB
+        P0["Phase0 HK-Fixed：当前布局能否 S 层集齐所有 type"]
+        P1["Phase1 HK-Free：抬高 S 找最小可行 S*"]
+        P2["Phase2 MCMF：最小移动量重排"]
+        P0 -->|否| P1
+        P1 -->|找到 S*| P2
+    end
+    Q -->|有| P0
+    P0 -->|是, 零移动| PA
+    P1 -->|抬到 r 仍凑不齐 = wipe-out| R["global restart：重置 stack，S←1"]
+    P2 --> PA["patch compute：幸存组补算缺失 shard type"]
+    PA --> SH["shrink 通信器 → all-reduce → update → commit 新 S 与布局"]
+    SH --> U
+    R --> L
+```
 
 ### 关键设计
 

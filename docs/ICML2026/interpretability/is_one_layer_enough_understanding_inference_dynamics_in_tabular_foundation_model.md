@@ -42,6 +42,16 @@ tags:
 ### 整体框架
 这篇工作要解决的是"TFM 内部到底哪一层、怎么形成预测决策"这个黑箱问题，它把答案拆成"先做一套适配 TFM 的层级分析协议、再用分析结论指导一个更高效架构"两步。分析协议固定 6 个开源/开权重 TFM（TabPFN v1/v2/2.5、TabICL、LimiX-2M/16M），在 PMLBmini（34 任务）和 TabArena（15 二分类任务）上跑 6 个粒度递进的机理实验（从表征相似度、类别分离、probing 到层级干预与自修复）；概念验证则基于公开的 nanoTabPFN，用同一套 TabICL prior 从头训出 6 层原版、单层版、单层循环 6 次版三种模型来检验结论。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["6 个开源/开权重 TFM<br/>TabPFN v1/v2/2.5 · TabICL · LimiX-2M/16M"]
+    A --> B["Tabular Tuned Lens<br/>每层配专属 decoder（冻主干 + TabICL prior 续训）"]
+    B --> C["skip / repeat / swap 干预 + lens 叠加<br/>6 个机理实验：表征相似度 · 分离 gap · probing · lens · 层消融 · self-repair"]
+    C --> D["结论：早层 = 不可替代映射层<br/>中后层 = 冗余 + 迭代精化（self-repair）"]
+    D --> E["nanoTabPFNlooped<br/>1 层循环 6 次 ≈ 6 层堆叠，省 80% 参数"]
+```
+
 ### 关键设计
 
 **1. Tabular Tuned Lens：给每层配一个专属 decoder 来读出"这层有没有答案"**

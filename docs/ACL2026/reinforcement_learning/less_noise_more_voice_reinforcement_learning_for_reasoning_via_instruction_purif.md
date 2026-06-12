@@ -45,6 +45,21 @@ LENS 发现 RLVR 中许多探索失败并非因为问题难度，而是因为 pr
 
 LENS 的出发点是一个反直觉的观察：RLVR 中很多 rollout 失败不是因为题目难，而是 prompt 里夹了少量（<5%）"干扰 token"把策略带偏了。围绕这点它分两阶段做事：先**识别并删除**这些干扰 token 得到一个"净化 prompt"，让本来全错的 prompt 重新采到成功 rollout；再用一套**校准的策略优化（CRPO）**把这些净化 rollout 的学习信号转移回原始（带噪）prompt 上去优化策略——核心是让模型学会"在噪声里也能推理对"，而不是只会在干净环境里做题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始噪声 prompt"] --> B["干扰 token 识别<br/>按偏离度 S_I 删前 k 个（≤5%）token"]
+    B --> C["净化 prompt"]
+    subgraph CRPO["校准 rollout 策略优化（CRPO）"]
+        direction TB
+        D["在净化 prompt 重采样"] --> E["净化成功样本<br/>替换原始失败样本"]
+        E --> F["重要性比率 ρ 校正<br/>采样↔优化分布失配"]
+    end
+    C -->|"原始成功率 < τ 才触发"| D
+    F --> G["样本重加权<br/>按原始成功率 ā 分配话语权"]
+    G --> H["PPO clip 目标 + KL 正则<br/>策略优化仍在原始 prompt 上"]
+```
+
 ### 关键设计
 
 **1. 干扰 token 识别：用与参考模型的偏离度定位"少数惹祸的 token"**

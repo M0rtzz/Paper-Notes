@@ -44,6 +44,19 @@ tags:
 
 UEC-RL 建立在 GRPO 之上。对每个 batch 的 prompt，先用标准温度采样 $G$ 条轨迹。如果某个 prompt 所有 $G$ 条轨迹的奖励都为 0（标记为"困难"），则额外用升高温度 $t' > 1$ 扩展采样 $G'$ 条轨迹。筛选有价值的轨迹用于梯度更新，同时将高质量轨迹存入回放缓冲区。定期从缓冲区回放以稳定训练。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["batch prompt"] --> B["标准温度采样 G 条轨迹"]
+    B -->|"奖励全为 0（困难 prompt）"| C["定向探索机制<br/>升温 t′ 扩采 G′ 条"]
+    B -->|"已有正确轨迹"| D["选择性轨迹保留<br/>常规留非零优势 / 探索留正优势"]
+    C --> D
+    D --> E["GRPO 梯度更新"]
+    E --> F["可控熵稳定器<br/>高优势轨迹存入回放缓冲区 B_replay"]
+    F -->|"每 f_replay 步回放强化（压熵）"| E
+    E --> A
+```
+
 ### 关键设计
 
 **1. 定向探索机制：只对"卡住"的 prompt 升温扩搜**

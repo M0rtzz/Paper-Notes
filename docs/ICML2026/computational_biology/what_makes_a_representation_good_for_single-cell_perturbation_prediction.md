@@ -43,24 +43,37 @@ PerturbedVAE 可以看成一个面向单细胞扰动数据的结构化 VAE。普
 ### 整体框架
 输入是单细胞表达向量 $x$ 和扰动标签 $u$，其中 $u$ 可以是一热单基因扰动，也可以是双基因组合的 multi-hot vector。生成模型假设 $x=g(z)$，其中 $z=(z_\iota,z_\nu)$。$z_\iota$ 与扰动无关，用来刻画背景细胞程序；$z_\nu$ 依赖 $u$ 和 $z_\iota$，并服从一个未知 DAG，表示扰动响应程序之间的因果依赖。变分后验被分解为 $q(z_\nu,z_\iota|x,u)=q(z_\nu|x,u)q(z_\iota|x)$，对应“扰动响应需要知道标签，背景只从表达本身推断”。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入：单细胞表达 x + 扰动标签 u<br/>（单基因 one-hot / 双基因 multi-hot）"]
+    subgraph SP["扰动不变与扰动响应潜空间拆分"]
+        direction TB
+        ZI["背景块 z_ι ~ q(z_ι | x)<br/>扰动不变背景程序"]
+        ZN["响应块 z_ν ~ q(z_ν | x, u)<br/>稀疏扰动响应信号"]
+    end
+    X --> ZI
+    X --> ZN
+    CTRL["未扰动 control x^(u0)"] --> ALIGN["基于 control 的 contrastive alignment<br/>最小化 ‖z_ι − z_ι^(u0)‖²，把背景锚定到 z_ι"]
+    ZI --> ALIGN
+    ZN --> SCM["潜在因果结构与可识别性约束<br/>z_ν 服从受 u 调制的下三角线性 Gaussian SCM"]
+    ALIGN --> DEC["解码 x = g(z_ι, z_ν)<br/>重构 / 预测未见双基因组合扰动"]
+    SCM --> DEC
+```
+
 ### 关键设计
-1. **扰动不变与扰动响应潜空间拆分**:
 
-	- 功能：把 dominant background programs 和 sparse perturbation effects 分配到不同潜变量块，避免互相污染。
-	- 核心思路：$z_\iota$ 表示跨扰动稳定的细胞背景，先验独立于 $u$；$z_\nu$ 表示会随扰动改变的 latent factors，其条件分布为 $p(z_\nu|u,z_\iota)$。ELBO 的重构项保证两块合起来能解释表达谱，KL 项限制潜空间容量。
-	- 设计动机：如果不拆分，模型会倾向于用大块背景变化完成重构，扰动特异信号被压制；拆分给了模型一个明确的语义分工。
+**1. 扰动不变与扰动响应潜空间拆分：先给潜变量分工，杜绝背景吞掉扰动信号**
 
-2. **基于未扰动 control 的 contrastive alignment**:
+单细胞表达里背景细胞程序、细胞类型与技术噪声占了绝大部分方差，真正由扰动诱发的信号很稀疏；若潜空间不分工，VAE 只要用一大块背景变量就能把重构做好，扰动特异信息会被压没。本文显式把潜变量拆成两块：$z_\iota$ 表示跨扰动稳定的背景程序、先验独立于扰动标签 $u$；$z_\nu$ 表示随扰动改变的响应因子，条件分布为 $p(z_\nu|u,z_\iota)$。生成模型写成 $x=g(z_\iota,z_\nu)$，变分后验分解为 $q(z_\nu,z_\iota|x,u)=q(z_\nu|x,u)\,q(z_\iota|x)$——背景只看表达本身、响应还要看扰动标签。ELBO 的重构项保证两块合起来能解释表达谱、KL 项约束潜空间容量；这一步给了模型明确的语义分工，让稀疏扰动效应有一个专属的“收纳处”，而不至于被占主导的背景变化淹没。
 
-	- 功能：强制背景潜变量在扰动样本和未扰动样本之间保持一致，把不变信息锚定到 $z_\iota$。
-	- 核心思路：对每个扰动样本 $(x,u)$，采样一个 control profile $x^{(u_0)}$，最小化 $\mathcal{L}_{contrast}=\|z_\iota-z_\iota^{(u_0)}\|_2^2$。总目标为 $\mathcal{L}=-\mathcal{L}_{ELBO}+\alpha\mathcal{L}_{contrast}$。
-	- 设计动机：只优化 ELBO 时，重构目标可能让 $z_\nu$ 或 $z_\iota$ 吸收错误信息。alignment 让 $z_\iota$ 解释跨条件共享背景，迫使环境相关变化留给 $z_\nu$。
+**2. 基于未扰动 control 的 contrastive alignment：把背景锚定住，逼出残差扰动效应**
 
-3. **潜在因果结构与可识别性约束**:
+光拆潜空间还不够——只优化 ELBO 时，重构目标仍可能让 $z_\iota$ 与 $z_\nu$ 互相串味，背景变化照样漏进扰动响应块。对每个扰动样本 $(x,u)$，本文额外采一个未扰动 control 表达谱 $x^{(u_0)}$，最小化两者背景潜变量的距离 $\mathcal{L}_{contrast}=\|z_\iota-z_\iota^{(u_0)}\|_2^2$，总目标为 $\mathcal{L}=-\mathcal{L}_{ELBO}+\alpha\mathcal{L}_{contrast}$。直觉是：强迫 $z_\iota$ 在扰动与未扰动样本间保持一致，占主导的背景变化就被钉死在 $z_\iota$ 里、不必再由别的潜变量解释，于是 $z_\nu$ 被“挤”得只能去表达扰动带来的残差变化。这一项是组合泛化的关键——模拟数据上不变块的 $R^2$ 从 0.66 提到 0.97，真实数据双基因 OOD 的 $R^2$ 从 0.9650 提到 0.9865。
 
-	- 功能：让扰动响应块不只是压缩表示，而是可用于未见组合干预的结构化机制。
-	- 核心思路：作者把 $z_\nu$ 建模为受 $u$ 调制的线性 Gaussian structural causal model，权重矩阵满足严格下三角以对应 DAG。理论部分给出条件：若生成映射可逆光滑、有足够环境变化、alignment 达到最优、干预足够丰富，则 $z_\nu$ 可被识别到置换和缩放，$z_\iota$ 可被识别到线性块变换。
-	- 设计动机：单细胞数据常是 partial intervention，传统 CRL 的丰富干预假设不满足。这个理论分析说明在显式分离和足够环境差异下，稀疏扰动变量仍有机会被恢复。
+**3. 潜在因果结构与可识别性约束：把扰动响应块组织成能组合外推的机制**
+
+抽出扰动信号后还得“用得上”未见组合干预，否则 $z_\nu$ 只是个压缩表示、无法外推到没见过的双基因扰动。本文把 $z_\nu$ 建模为受扰动标签 $u$ 调制的线性 Gaussian 结构因果模型（SCM），权重矩阵限制为严格下三角以对应一个 DAG，让扰动响应程序之间的因果依赖显式可组合。理论上给出可识别性条件：若生成映射可逆且光滑、环境（扰动）变化足够丰富、alignment 达到最优、干预足够多样，则 $z_\nu$ 可被识别到置换与缩放、$z_\iota$ 可被识别到线性块变换。单细胞数据常是 partial intervention（只扰动一小撮基因），不满足传统因果表征学习对“丰富干预”的假设；这套分析说明在显式分离加足够环境差异下，稀疏扰动变量仍有机会被恢复，也解释了为什么预测未见组合时要先从 control 推 $z_\iota$、再把双基因扰动向量喂进这个机制生成 $z_\nu$、最后解码成表达谱。
 
 ### 损失函数 / 训练策略
 训练目标由负 ELBO 和 contrastive alignment 组成。ELBO 包含重构项 $\mathbb{E}_{q}[\log p(x|z_\nu,z_\iota,u)]$ 以及 $q(z_\nu,z_\iota|x,u)$ 到 $p(z_\nu,z_\iota|u)$ 的 KL。真实数据实验使用 Norman2019 Perturb-seq：105,528 个 K562 细胞、112 个靶基因、105 个单基因和 131 个双基因条件。训练集包含 control 和 105 个单基因扰动，112 个双基因扰动完全保留为 OOD 测试。优化器为 Adam，batch size 64，epoch 100，hidden dimension 256，学习率 $10^{-4}$，alignment 权重 $\alpha=0.05$。

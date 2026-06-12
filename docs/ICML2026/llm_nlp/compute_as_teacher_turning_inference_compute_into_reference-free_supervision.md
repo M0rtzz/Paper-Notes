@@ -45,6 +45,19 @@ CaT 要解决的是"非可验证领域里没有参考答案、RL 算不出 advan
 
 具体地，给定 prompt $q$、当前策略 $\pi_t$、冻结锚 $\pi_0$（一般取初始策略）、裁判 $\pi_J$（如 GPT-4o）：$\pi_t$ 先采样 $G$ 条 rollouts $o_{1:G}$（与 GRPO 共用这批样本），$\pi_0$ 在固定 prompt $p_{\text{syn}}$ 下读完它们合成伪参考 $s \sim \pi_0(\cdot \mid p_{\text{syn}}, o_{1:G})$；可验证域直接对 $s$ 的答案串做匹配，非可验证域则由 $\pi_0$ 从 $s$ 提炼 $n\ge 5$ 条二元 rubric，再让 $\pi_J$ 逐条判 yes/no，奖励取通过比例 $R_{\text{rub}}(o;\mathcal{R}) = \frac{1}{n}\sum_j \mathbf{1}[\pi_J(o,r_j)=\text{yes}]$；最后 GRPO 用归一化优势 $\hat A_i = (R_i - \bar R_G)/\sigma_G$ 更新 $\pi_t$。整套流程**和 GRPO 原生采样完全对齐**，只多了 1 次 synthesis、1 次 rubric 生成和 $n\times G$ 次极短的 yes/no 判定，全部可并行，开销远小于 $G$ 条 rollouts 本身。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["prompt q"] --> P["当前策略 π_t<br/>采样 G 条 rollouts（与 GRPO 共用）"]
+    P --> SYN["Synthesis 作为 reference estimator<br/>冻结锚 π₀ 调和 rollouts 合成伪参考 s（不输入 q）"]
+    SYN -->|非可验证域| RUB["自提议 rubric<br/>π₀ 从 s 提炼 ≥5 条二元 criteria"]
+    SYN -->|可验证域 drop-in| VER["答案匹配<br/>R = 1[answer(o)=answer(s)]"]
+    RUB --> JUDGE["裁判 π_J 逐条判 yes/no<br/>奖励 = 通过比例"]
+    JUDGE --> ADV["GRPO 归一化优势<br/>Â = (R − R̄)/σ"]
+    VER --> ADV
+    ADV -->|更新策略| P
+```
+
 ### 关键设计
 
 **1. Synthesis 作为 reference estimator：把分歧的 rollouts 调和成一个比谁都强的伪参考**

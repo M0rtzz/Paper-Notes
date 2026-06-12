@@ -45,6 +45,21 @@ tags:
 
 输入视频分为 C=6 个片段，每个片段采样 96 帧。时间感知片段编码器：帧经 EVA-CLIP 编码后与时间戳联合通过 Image Q-Former 得到时间感知帧特征，再通过重叠滑动 Video Q-Former 和融合模块得到局部特征。BiLSTM 模块：将所有片段的局部特征按时序连接，通过双向 LSTM 聚合全局特征。最终特征经投影层映射到 LLaMA-2 7B 的嵌入空间。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长视频<br/>切 6 片段 × 96 帧"] --> B["EVA-CLIP 编码 + 时间戳<br/>→ Image Q-Former 得时间感知帧特征"]
+    subgraph LOCAL["重叠滑动 Video Q-Former + 融合模块（片段级局部特征）"]
+        direction TB
+        C["重叠滑动 Video Q-Former<br/>窗口 32 / 重叠 16 → 冗余边界 token 序列 S"] --> D["多头自注意力融合模块<br/>融合多样时序视角 → 片段局部特征"]
+    end
+    B --> LOCAL
+    LOCAL --> E["6 段局部特征按时序拼接"]
+    E --> F["BiLSTM 全局特征聚合<br/>前向 + 反向隐状态拼接 → 全局特征"]
+    F --> G["投影层 → LLaMA-2 7B 嵌入空间"]
+    G --> H["密集描述 / 时序定位 / 高光检测 / 动作分割"]
+```
+
 ### 关键设计
 
 **1. 重叠滑动 Video Q-Former + 融合模块：在片段内榨出时间感知的局部特征**

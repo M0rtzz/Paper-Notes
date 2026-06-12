@@ -45,6 +45,24 @@ MUSE 本质上是一个面向安全研究者的红队实验操作系统。它不
 
 一次自动红队实验大致分成五步。首先，用户选择目标模型、攻击策略、目标有害能力和模态配置。其次，攻击策略生成当前轮文本攻击内容。第三，如果当前轮需要非文本输入，系统把文本转换成音频、渲染图像或合成视频。第四，模型路由层把统一消息格式转成对应 provider API 需要的格式并调用目标模型。第五，LLM judge 根据五级安全 taxonomy 评估回复，并把结果写回 run；若尚未成功且没超过轮数预算，策略继续生成下一轮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["实验配置<br/>目标模型 / 攻击策略 / 有害能力 / 模态"] --> B
+    subgraph RUN["Run-centric 数据模型（设计 1）"]
+        direction TB
+        B["策略引擎 + ITMS（设计 2）<br/>生成本轮攻击文本 + 选下一模态"]
+        subgraph PROC["统一模态转换 + 模型路由 + 五级 judge（设计 3）"]
+            direction TB
+            C["模态转换<br/>文本 → TTS 音频 / 文字图像 / 合成视频"] --> D["模型路由<br/>统一消息 → 对应 provider API"]
+            D --> E["五级 judge<br/>五级安全标签 + hard/soft ASR"]
+        end
+        B --> C
+        E -.->|"未成功且未超轮数预算"| B
+    end
+    E ==>|"成功 或 预算耗尽"| F["写回 run 轨迹 + 更新聚合统计"]
+```
+
 ### 关键设计
 
 **1. Run-centric 数据模型：把一次攻击从配置到裁判的全过程封成可持久化、可恢复的最小实验单元**

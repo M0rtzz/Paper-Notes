@@ -54,7 +54,28 @@ tags:
 
 ### 整体框架
 
-文档去畸变要解决的是：一张拍歪、拍弯的文档照片，怎么"压平"回正。D2Dewarp 的核心判断是——文档的弯曲是个二维问题，光看水平方向的文本行不够，垂直方向的表格列、装订线同样在弯。于是它在一套 UNet 上做文章：图像先进共享编码器抽多尺度特征，再分叉成两条解码器，一条专门预测水平线图（H-Line Map），一条专门预测垂直线图（V-Line Map），两条解码器在中间层通过 HV Fusion Module 互相交换信息。最终模型输出一张 2D backward mapping（位移场），告诉每个畸变像素该挪回平整文档的哪个位置。两类几何线在这里既是监督信号、也是约束，把"形变"这件抽象的事锚到了具体的结构边界上。
+文档去畸变要解决的是：一张拍歪、拍弯的文档照片，怎么"压平"回正。D2Dewarp 的核心判断是——文档的弯曲是个二维问题，光看水平方向的文本行不够，垂直方向的表格列、装订线同样在弯。于是它在一套 UNet 上做文章：图像先进共享编码器抽多尺度特征，再分叉成两条解码器，一条专门预测水平线图（H-Line Map），一条专门预测垂直线图（V-Line Map），两条解码器在中间层通过 HV Fusion Module 互相交换信息。最终模型输出一张 2D backward mapping（位移场），告诉每个畸变像素该挪回平整文档的哪个位置。两类几何线在这里既是监督信号、也是约束，把"形变"这件抽象的事锚到了具体的结构边界上；而这一切能训起来，靠的是作者新造的、带双维度线条标注的 DocDewarpHV 数据集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["畸变文档图像"] --> B["共享编码器<br/>抽多尺度特征"]
+    subgraph DEC["双解码器（水平/垂直分支）"]
+        direction TB
+        C["H-Decoder<br/>预测水平线图（上下边界）"]
+        D["V-Decoder<br/>预测垂直线图（左右边界）"]
+    end
+    B --> DEC
+    subgraph FUSE["HV Fusion Module"]
+        direction TB
+        E["方向感知池化<br/>H 沿 X 轴 / V 沿 Y 轴 AvgPool"] --> F["Mixed Attention<br/>H↔V 交叉注意力"]
+        F --> G["方向自注意力<br/>恢复空间分辨率"] --> H["Sigmoid 门控重加权<br/>叠回解码器特征"]
+    end
+    DEC --> FUSE
+    FUSE --> I["2D backward mapping（位移场）"]
+    I --> J["平整文档输出"]
+    K["DocDewarpHV 数据集<br/>H/V-Line + 3D + UV 标注"] -.监督.-> DEC
+```
 
 ### 关键设计
 

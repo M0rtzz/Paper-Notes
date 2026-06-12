@@ -45,6 +45,22 @@ tags:
 
 PSDesigner想解决的核心问题是：让模型像真人设计师那样，从一句用户指令出发，一步步搭出一个可编辑的专业PSD文件，而不是一锤子生成一张不可改的图片或一份扁平的JSON。它把整个设计过程拆成三个角色接力。先是AssetCollector读懂指令，识别出画面里该有哪些"视觉概念"（比如一张促销海报里的主体商品、标题文字、背景氛围），再为每个概念去搜集或生成对应的图片和文字素材。接着进入设计主循环：模型沿着嵌套的图层层次自底向上遍历，每遍历到一组，GraphicPlanner就先在集成模式（$\mathcal{X}_{gen}$）下把该组素材摆进画布——决定放哪、多大、什么样式，再切到修复模式（$\mathcal{X}_{edt}$）下回看这一组的渲染效果、挑出瑕疵并修补。每一步预测出的都不是像素，而是一串工具调用；最后由ToolExecutor把这些工具调用送进真正的Photoshop执行，落地成PSD文件里的图层与效果。把"画图"重新表述成"预测工具调用序列"，是这套方法能输出可编辑文件、并复用专业软件全部能力的根本原因。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["用户指令"] --> B["AssetCollector<br/>识别视觉概念 + 收集素材"]
+    DS["CreativePSD 数据集<br/>收集→解析→构建训练样本"] -->|"SFT + GRPO 训练"| GP
+    B --> C["设计主循环<br/>自底向上遍历图层组"]
+    C --> GP
+    subgraph GP["GraphicPlanner（双模式 VLM）"]
+        direction TB
+        D["集成模式 X_gen<br/>把素材摆进画布"] --> E["修复模式 X_edt<br/>回看渲染、修补瑕疵"]
+    end
+    GP -->|"工具调用序列"| F["ToolExecutor<br/>Photoshop UXP 执行"]
+    F -->|"下一组"| C
+    F --> G["可编辑 PSD 文件"]
+```
+
 ### 关键设计
 
 **1. CreativePSD数据集：先有真实的专业设计流程，模型才学得会迭代式设计**

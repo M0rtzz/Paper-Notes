@@ -45,6 +45,25 @@ tags:
 
 认知扭曲检测要回答的是：一段话里有没有、有哪种认知扭曲（如全有全无思维、过度泛化）。难点在于一句话常同时藏着好几种扭曲，且它们分别源自不同的心理维度。本文不把话语当成一团无结构文本直接分类，而是先把它拆成情感-逻辑-行为（ELB）三个心理学组件喂给 LLM，让多个 LLM 各自推理出若干“扭曲实例”（每个带类型、文本片段、显著性分数），再把这堆实例当成一个 bag，用多视角门控注意力的多实例学习（MIL）框架聚合出 bag 级判断。一句话是 bag，每个被推理出来的扭曲表达是 instance——这就是把检测重述成 MIL 的核心视角。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入话语"] --> B["ELB 心理学分解<br/>GPT-4 零样本拆出情感/逻辑/行为三组件"]
+    B --> MIR
+    subgraph MIR["LLM 多实例推理与显著性评分"]
+        direction TB
+        C["三个 LLM 各自推理<br/>GPT-4o / Gemini / Claude"] --> D["合并成实例 bag<br/>每实例 = (类型, 文本片段, 显著性 s_i)"]
+        D --> E["显著性归一化<br/>p̂_i = s_i / Σ s_j"]
+    end
+    MIR --> MIL
+    subgraph MIL["多视角门控注意力 MIL"]
+        direction TB
+        F["门控注意力 × 显著性<br/>h_i = σ(W_g·x_i)·tanh(W_f·x_i)·s_i"] --> G["K 个视角取平均 → h_multi"]
+        G --> H["拼接原始话语嵌入 z′<br/>线性投影 + ReLU 得 bag 表示"]
+    end
+    MIL --> I["bag 级认知扭曲分类"]
+```
+
 ### 关键设计
 
 **1. ELB 心理学分解：不同扭曲源自不同心理维度，先把话语按维度拆开，LLM 才好定位**

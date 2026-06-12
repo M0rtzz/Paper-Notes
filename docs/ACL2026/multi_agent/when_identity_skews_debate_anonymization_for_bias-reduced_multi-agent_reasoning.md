@@ -46,6 +46,19 @@ tags:
 
 实验流程也很直接。作者在 vanilla MAD 和 anonymized MAD 两种协议下分别运行同一批模型和数据集，计算 Conformity、Obstinacy、二者差值 $\Delta$ 以及匿名化前后差出的 Identity Bias Coefficient。若匿名化后 $\Delta$ 接近 0，说明此前偏差主要来自身份标签，而不是答案内容本身。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个同构 LLM agent<br/>同题独立作答"] --> B["下一轮：看到自己上轮答案 + peer 答案"]
+    B --> P1["Vanilla 协议<br/>保留来源身份标签"]
+    B --> P2["Response Anonymization<br/>删除/打乱来源标签，强制 w_i = w_j"]
+    P1 --> C["筛分歧样本<br/>y(i,t−1) ≠ y(j,t−1)"]
+    P2 --> C
+    C --> D["Conformity 与 Obstinacy<br/>分歧时倒向 peer / 固守 self 的概率"]
+    D --> E["身份加权贝叶斯信念更新<br/>Δ = 信念差 + (w_j − w_i)"]
+    E --> F["IBC = Δ(vanilla) − Δ(anonymized)<br/>读出纯身份偏差"]
+```
+
 ### 关键设计
 
 **1. 用 Conformity 与 Obstinacy 量化分歧时的方向性行为：把"从众"和"自我坚持"变成可计算指标**

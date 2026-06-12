@@ -48,6 +48,33 @@ tags:
 
 这里的 $S$ 来自一个有界 MDL 优化器：在固定参数预算 $C$、推理预算 $T$ 框定的观察者族 $\mathcal{P}_{C,T}$ 内求最优编码 $P^{\star}=\arg\min_{P}\{|P|+\mathbb{E}[\log 1/P(X)]\}$，再把它拆成两块——$S_{C,T}(X):=|P^{\star}|$ 是 **epiplexity (可学习结构)**，$H_{C,T}(X):=\mathbb{E}[\log 1/P^{\star}(X)]$ 是**有界熵 (学不动的残余噪声)**。关键在于这是个相对量：同一份数据对弱观察者可能纯是噪声、对强观察者却是可学结构，所以"复杂度"必须随观察者预算一起谈。这个拆分天然画出一个 "Goldilocks 区"——数据既不能太简单 (低 $S$ 低 $H$)、也不能太难 (低 $S$ 高 $H$)，得落在"复杂到非平凡、又结构化到可学"的中间地带，循环才有东西可学。
 
+下面三个关键设计正是作用在这条循环的不同环节上：非对称协同演化管"生成端"、容量预算增长管"接收端"、主动信息寻取管"原料端"，三个齿轮同时转才能让 $S_{C,T}(D^{(t)})$ 跨迭代单调上升。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    EXT["外部环境<br/>文档 / 交互世界"]
+    P["Proposer 出题<br/>（内部环境，合成任务）"]
+    S["Solver 解题<br/>（合成解答）"]
+    V["Verifier 反馈<br/>（内部环境，合成打分）"]
+    D["自合成数据 D^(t)<br/>题 + 解 + 反馈"]
+    TRAIN["回灌训练同一 base model<br/>进入下一轮 t+1"]
+    JUDGE{"判据：可学习信息 S(D^t)<br/>跨迭代单调上升？"}
+    EVOLVE["真演化"]
+    COLLAPSE["塌缩 / plateau"]
+
+    EXT -->|"主动信息寻取：每轮主动挑上下文注入"| P
+    P -->|"非对称：弱出题训强 Solver（weak-to-strong）"| S
+    S --> V
+    V --> D
+    S -.->|"非对称：强 Solver 同步回内部环境（strong-to-weak）"| P
+    D --> TRAIN
+    TRAIN -->|"容量预算增长：随迭代扩张参数 C、推理 T"| P
+    D --> JUDGE
+    JUDGE -->|是| EVOLVE
+    JUDGE -->|否| COLLAPSE
+```
+
 ### 关键设计
 
 **1. 非对称协同演化 (Asymmetric Co-evolution)：把"验题比解题易"做成可持续的能力阶梯**

@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 整篇要解决的是"开源模型怎么后训成有竞争力的多轮工具调用 Agent"，难点在前面说的循环依赖：训 Agent 要 RL，RL 要稳定 rollout，rollout 要好数据和好用户模拟器。作者把它拆成两个互相喂的模块。前半段 **AReaL-SEA** 负责造数据：一个 meta-planner 先开出 $N$ 套互不重叠的合成方案，每套独立跑一条"出题 → 验题 → 模拟对话 → 验对话"的流水线，把失败案例喂回 reflection 模块迭代改方案，循环 $K$ 轮越合成越好。后半段是 RL 配方：先拿合成数据把用户模拟器 SFT 一遍治住噪声，再用 GRPO 训 Agent，奖励则来自合成时一并生成的可执行 verifier——它拿轨迹的最终状态去对 ground-truth，对上给 1、对不上给 0。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph SEA["AReaL-SEA 自演化数据合成"]
+        direction TB
+        A["Diversified Plan Generation<br/>meta-planner 出 N 套不重叠方案"] --> B["四阶段 agent 流水线<br/>出题 → 验题 → 模拟对话 → 验对话"]
+        B --> C["Reflection Loop<br/>失败归因喂回, 更新方案 K 轮"]
+        C -->|迭代改进| A
+    end
+    SEA --> D["可执行 per-instance verifier<br/>合成时同生成 ground-truth, 比对终态给 0 / 1"]
+    D --> RL
+    subgraph RL["治住用户模拟器再上 GRPO"]
+        direction TB
+        F["SFT 用户模拟器<br/>先压住用户噪声"] --> G["GRPO 训 Agent<br/>大 batch + Dynamic Filtering 吸方差"]
+    end
+    RL --> H["可竞争的多轮工具调用 Agent"]
+```
+
 ### 关键设计
 
 **1. AReaL-SEA 自演化数据合成：让 pipeline 从自己的失败里学**

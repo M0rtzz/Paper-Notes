@@ -43,7 +43,24 @@ tags:
 
 ### 整体框架
 
-基于 Qwen2.5-VL 构建，输入文本提示 $T_0$（包含判别查询和专家诊断指南）和初始全局光谱图 $I_0$。智能体在 `<think>...</think>` 中进行文本推理，通过工具调用生成局部波长区域的放大视图 $I_{t+1}$，交替迭代直到在 `<answer>...</answer>` 中给出最终判断。轨迹形式化为 $\tau = (T_0, I_0, T_1, I_1, T_2, I_2, \ldots, T_N)$。
+基于 Qwen2.5-VL 构建，输入文本提示 $T_0$（包含判别查询和专家诊断指南）和初始全局光谱图 $I_0$。智能体在 `<think>...</think>` 中进行文本推理，通过工具调用生成局部波长区域的放大视图 $I_{t+1}$，交替迭代直到在 `<answer>...</answer>` 中给出最终判断。轨迹形式化为 $\tau = (T_0, I_0, T_1, I_1, T_2, I_2, \ldots, T_N)$。而这套推理回环之所以能达到专家水准，靠的是其背后的两阶段后训练——先用冷启动 SFT 注入领域先验与工具使用能力，再用基于结果的强化学习优化工具使用策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph IMCOT["交错多模态思维链（iMCoT）推理回环"]
+        direction TB
+        A["输入：判别查询 + 专家诊断指南<br/>+ 初始全局光谱图 I0"] --> B["think：文本推理，判断证据是否充分"]
+        B -->|证据不足| C["工具调用：放大波长区间 Δλ<br/>重渲染局部光谱图 I_t+1"]
+        C --> B
+        B -->|证据充分| D["answer：最终稀有天体类型判断"]
+    end
+    IMCOT -->|策略由两阶段后训练得到| TRAIN
+    subgraph TRAIN["两阶段后训练"]
+        direction TB
+        E["冷启动 SFT：约 1k 条专家审核轨迹<br/>对工具返回 token 施加 loss mask"] --> F["基于结果的强化学习（Agentic RL）<br/>GRPO，按正确性 + 格式合规给奖励"]
+    end
+```
 
 ### 关键设计
 

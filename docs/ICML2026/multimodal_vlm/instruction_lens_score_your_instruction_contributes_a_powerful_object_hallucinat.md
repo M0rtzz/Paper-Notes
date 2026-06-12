@@ -43,6 +43,26 @@ tags:
 ### 整体框架
 输入是图像 $I$、用户指令 $\mathbf{X}$（默认「Please describe the image in detail.」）和 MLLM 生成的答案 $Y$。从 MLLM 语言模型的倒数第二层抽取所有 instruction token 嵌入 $\{\mathbf{z}_j\}_{j=1}^{M}$、所有 image patch 嵌入 $\{\mathbf{v}_i\}$ 和答案中每个物体 token 嵌入 $\mathbf{h_o}$。整个 InsLen 流程不做任何训练，对每个物体 token 计算两个互补分数 $S_{\rm cls}$（Calibrated Local Score）和 $S_{\rm ccs}$（Context Consistency Score），加权后得到 $S_{\rm Ins}(\mathbf{o})=\omega S_{\rm cls}+(1-\omega)S_{\rm ccs}$；用阈值 $\mu$ 二分类，低于阈值的视为幻觉。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 I + 指令 X + MLLM 答案 Y"] --> B["从语言模型倒数第二层抽嵌入<br/>指令嵌入 z_j · 图像 patch v_i · 物体 token h_o"]
+    B --> C
+    B --> D
+    subgraph C["Calibration Confidence（Cafe）：校准虚高视觉分"]
+        direction TB
+        C1["Logit Lens 投词表<br/>取 M 个指令位置最大置信度 S_cafe"] --> C2["S_cafe × 局部相似度<br/>= 校准局部分 S_cls"]
+    end
+    subgraph D["Context Consistency Score（CCS）：补全局物体上下文"]
+        direction TB
+        D1["选 top-m 高置信度指令嵌入<br/>平均成全局上下文 z̄"] --> D2["ℓ2 一致性 × 平均置信度<br/>= S_ccs"]
+    end
+    C --> E["即插即用校准层 + 互补融合<br/>S_Ins = ω·S_cls + (1−ω)·S_ccs"]
+    D --> E
+    E -->|"S_Ins ≤ μ"| F["判为幻觉"]
+    E -->|"S_Ins > μ"| G["判为真实"]
+```
+
 ### 关键设计
 
 **1. Calibration Confidence（Cafe）：用指令侧的把握度校准虚高的视觉证据**

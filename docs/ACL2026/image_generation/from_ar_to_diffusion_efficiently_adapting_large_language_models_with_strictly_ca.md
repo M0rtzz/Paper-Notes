@@ -43,6 +43,26 @@ FLUID 的全名是 Flexible Unidirectional Inference Diffusion。它不是从零
 ### 整体框架
 给定 prefix，FLUID 先用因果 Transformer 得到当前隐藏状态，再由 K-Head 预测一个 horizon $K_t$。模型在接下来 $K_t$ 个位置放置 mask，并在严格因果约束下对这些 mask 做并行去噪。预测完成后，当前下一个 token 总是被接受，后续 token 只有置信度超过阈值 $\gamma$ 才连续接受；一旦遇到低置信 token，cursor 停止前进并重新规划。这样，FLUID 在低熵片段可以一次走多步，在高熵推理片段自动退回更细粒度的生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph TRAIN["两阶段适配与动态因果解码（离线适配侧）"]
+        direction TB
+        T1["Stage I：冻结 K-Head<br/>AR loss + 扩散去噪 loss 联合训练骨干<br/>mask span 注入 10% 随机恢复噪声"]
+        T2["Stage II：冻结骨干<br/>仅训两层 MLP 的 K-Head<br/>匹配以 K_t* 为中心的高斯软目标"]
+        T1 --> T2
+    end
+    A["输入 prefix"] --> B["严格因果扩散骨干<br/>下三角 mask，从 AR checkpoint 初始化<br/>得隐藏状态 h_t"]
+    B --> C["Elastic Horizon 建模<br/>K-Head 预测 horizon K_t"]
+    C --> D["放置 K_t 个 mask<br/>严格因果约束下并行去噪"]
+    D --> E["置信度门控解码<br/>首 token 必接受，后续 conf>γ 才连续接受"]
+    E -->|遇低置信 token| F["cursor 停止<br/>重新规划下一个 horizon"]
+    F --> C
+    E -->|全部过阈值 γ| G["cursor 一次前进多步"]
+    G --> H["输出"]
+    TRAIN -.离线训练得到骨干与 K-Head.-> B
+```
+
 ### 关键设计
 
 **1. Strictly Causal Diffusion Backbone：把扩散去噪关进严格因果注意力，才能从 AR checkpoint 平滑初始化**

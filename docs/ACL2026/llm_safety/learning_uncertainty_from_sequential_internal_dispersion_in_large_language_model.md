@@ -45,6 +45,27 @@ tags:
 
 对每个生成 token 提取所有层隐藏状态，计算三个内部方差特征 $\bm{v}_t = [v_t, c_t, e_t]$，形成序列输入轻量 Transformer 编码器进行二分类。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每个生成 token<br/>取全部层隐藏状态"]
+    subgraph FEAT["三个跨层分散度特征"]
+        direction TB
+        B1["广义方差<br/>协方差 logdet 度量点云体积"]
+        B2["圆方差<br/>归一化均值向量模长测方向发散"]
+        B3["token 熵<br/>标准输出熵"]
+    end
+    A --> FEAT
+    subgraph SEQ["序列聚合 Transformer 分类器"]
+        direction TB
+        C1["排成 token 序列 → 128 维嵌入"]
+        C2["单层 Transformer 编码器<br/>感知方差时序尖峰"]
+        C3["线性分类头"]
+    end
+    FEAT --> SEQ
+    SEQ --> D["二分类：幻觉 / 正确"]
+```
+
 ### 关键设计
 
 **1. 广义方差（Generalised Variance）：用一个标量刻画 token 跨层表征的"体积"分散度**

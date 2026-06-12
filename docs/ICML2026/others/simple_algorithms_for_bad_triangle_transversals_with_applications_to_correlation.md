@@ -39,7 +39,7 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文给出三个 BTT 算法（Algorithm 1 复述 Krivelevich，Algorithm 2 和 3 是本文贡献）和一个 cover-to-cluster 算法（Algorithm 4）。其余结果是硬度证明和理论分析。下面聚焦三个核心设计。
+论文围绕 BTT 给出四块互相衔接的贡献：先是两个**只解一次 LP** 的 2-近似覆盖算法（Algorithm 2 确定性、Algorithm 3 随机化，分别取代 Krivelevich 1995 的迭代重解），再是一个把覆盖转成聚类的**改良 pivot**（Algorithm 4，把 cover-to-cluster 比从 2 收紧到 $3/2$），最后是一套**完全图上的统一硬度下界**（用一个 2SAT gadget 同时打 BTT/CC/MinSTC/CD）。前两块解决「怎么算得又快又准」，第三块解决「算出的覆盖怎么变成 CC 聚类、损失多少」，第四块界定「理论极限在哪」。下面分这四个核心设计展开。
 
 ### 关键设计
 
@@ -51,9 +51,13 @@ tags:
 
 确定性版虽快，但解 LP 本身在大图上仍是瓶颈，且不支持加权与"只有近似最优解"的现实设定。Algorithm 3 用一个随机阈值搞定这两点：抽 $r\in[0,1]$，取 $\{e\in E^+:x_e\ge r/2\}\cup\{e\in E^-:x_e>1-r\}$ 作覆盖。证明用积分技巧——覆盖任意坏三角形 $t=\{e_1,e_2,e_3\}$ 的概率与 $\sum_{e\in t}x_e\ge 1$ 直接挂钩，期望边数恰为 $2\sum_e x_e$。它还能干净去随机化（Remark 3.4）：把正负边按 $x_e$ 排成两条扫描线，所有 $r$ 区间只产生 $\mathcal{O}(|E|)$ 个候选解，取最小者即可，额外只花 $\mathcal{O}(|E|\log n)$。最大的加分项在 Remark 3.5：当 $\{x_e\}$ 只是 $(1+\epsilon)$-近似最优时仍给 $(2+2\epsilon)$-近似，于是能接上 Cao et al. 2024 的 $\widetilde{\mathcal{O}}(\epsilon^{-7}m^{3/2})$ 组合 LP 求解器，把完全图上的整体复杂度压到 $\widetilde{\mathcal{O}}(\epsilon^{-7}m^{3/2})$，几乎追平"找一组极大不相交坏三角形"的下界时间。
 
-**3. 改良 pivot + 完全图统一硬度下界（Algorithm 4 / Theorem 4.6-4.7）：把 cover-to-cluster 比从 2 收紧到 $3/2$，一套 gadget 打四个问题**
+**3. 改良 pivot：把 cover-to-cluster 比从 2 收紧到 $3/2$（Algorithm 4 / Theorem 5.1）**
 
-要把 BTT 覆盖变成 CC 聚类，Veldt 2022 的 MatchFlipPivot 只能保证 $\text{OPT}_{CC}\le 2\,\text{OPT}_\Delta$，损失太多。本文把 Ailon pivot 的硬规则换成依赖覆盖 $F$ 的概率规则：$uv\in F$ 且为正边时以概率 $1/4$ 吸入、为负边时以概率 $3/4$ 吸入，不在 $F$ 中则沿用确定性规则。证明给每条 $uv\in F$ 分配单位预算 $b(uv)=1$，证任意三元组都满足"错误之和 / 预算之和 $\le\tfrac32$"，按 Ailon 框架直接得期望 $\tfrac32|F|$ 错误——结合 Theorem 1.1 立刻把 CC 近似比从 6 改善到 $3+\epsilon$。硬度部分则用一个六角形 gadget + 子句边从 Chlebík & Chlebíková 的 Minimum 2CNF Deletion 做 gap-preserving 归约：每个变量配 12 节点六角形（含 6 个 crown），子句把 crown 接到 clause node，BTT 最优解恰对应 MD 最优解，于是 MD 的 $2\delta n$ vs $3\delta n$ gap 翻译成 BTT 的 $(11+2\delta)n$ vs $(11+3\delta)n$，取 $\delta=1/194$ 得 $\tfrac{2137}{2136}$。妙处在于同一构造下 MinSTC+/CC/CD 的最优值都等于 $\text{OPT}_\Delta(G)$，所以一次归约就同时打了四个问题的下界。
+前两个算法只解决「找一个小覆盖 $F$」，但实际要的是 CC 聚类——还得把 $F$ 转成簇。Veldt 2022 的 MatchFlipPivot 走「翻转 $F$ 中所有边的符号、再在辅助图上 pivot」的路子，只能保证 $\text{OPT}_{CC}\le 2\,\text{OPT}_\Delta$，损失整整一倍。本文不翻边，而是把 Ailon pivot 的确定性吸入规则改成**依赖覆盖 $F$ 的概率规则**：当被考察的边 $uv\in F$ 时，正边以概率 $1/4$、负边以概率 $3/4$ 吸入当前 pivot 的簇；$uv\notin F$ 则沿用 Ailon 的确定性规则（正边吸入、负边不吸）。分析的巧思在于换了一套「代价分摊」——给每条 $uv\in F$ 分配单位预算 $b(uv)=1$、其余为 0，把 pivot 产生的错误记到预算而非 LP 值上；只要证任意三元组 $\{u,v,w\}$ 都满足「错误之概率和 / 预算之概率和 $\le\tfrac32$」（完全图按三角形中正边条数分四类逐一验证），按 Ailon 框架立刻得到期望 $\tfrac32|F|$ 个错误，即 Theorem 1.4 的 $\text{OPT}_{CC}\le\tfrac32\text{OPT}_\Delta$。把它接到 Theorem 1.1 的 $(2+\epsilon)$ 覆盖上，CC 近似比就从 Veldt 的 6 一步降到 $3+\epsilon$，且时间复杂度同档。
+
+**4. 完全图统一硬度下界：一套 gadget 打四个问题（Theorem 1.2 / 4.6-4.7）**
+
+在算法把上界推到 2 之后，自然要问「下界在哪、还能不能更好」。本文给出完全图上的第一个**显式常数硬度**：用一个六角形 gadget + 子句边，从 Chlebík & Chlebíková 的 Minimum 2CNF Deletion (MD) 做 gap-preserving 归约——每个变量配 12 节点六角形（含 6 个 crown），子句把 crown 接到 clause node，使 BTT 最优解恰对应 MD 最优解；MD 的 $2\delta n$ vs $3\delta n$ gap 翻译成 BTT 的 $(11+2\delta)n$ vs $(11+3\delta)n$，取 $\delta=1/194$ 即得「NP-hard 难以 $<\tfrac{2137}{2136}$ 逼近」。真正的概念性贡献在于**复用**：同一构造下 MinSTC+/CC/CD 的最优值都等于 $\text{OPT}_\Delta(G)$，所以一次归约同时给出四个问题的同一下界——此前 MinSTC+ 没有任何显式下界、CC 也只有更弱的随机化下界。再配上 Lemma 4.1（$\text{LP}_\Delta$ 的 integrality gap 在完全图上仍 $\ge 2$），本文同时圈出了「基于 $\text{LP}_\Delta$ 无法突破 2-近似」的硬边界。
 
 ### 损失函数 / 训练策略
 本文是组合优化与近似算法论文，不涉及训练循环；所有 2-近似都是关于 $\text{LP}_\Delta$ 解的 rounding 过程，所有 $\tfrac{3}{2}$-近似是基于 Algorithm 4 的随机 pivot；分析依赖标准的 LP 互补松弛、积分概率论证以及 Ailon 框架下的"三元组分摊"。

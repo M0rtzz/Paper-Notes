@@ -43,6 +43,20 @@ ReSeek 给 RL-trained 搜索 agent 增加一个 JUDGE 动作 + 用 BGE-reranker 
 ### 整体框架
 Agent 用 GRPO 优化的 LLM 策略 $\pi_\theta$,action space 在标准的 `<search>` / `<answer>` 之外加入 `<judge>` 动作。每一轮:agent 思考 → 决定是否搜索 → 搜索完成后必须执行 judge → 根据 judge 结果决定下一步 (再搜 / 答题)。reward 由两部分组成:(1) 终端 EM 奖励 $R_{\text{answer}}$,(2) 每次 judge 时用 BGE-reranker 算"理想判断"作为参考给出的过程奖励 $R_{\text{judge}}$。整套 pipeline 用 169k 个 NQ + HotpotQA 样本训练,部署在 Qwen2.5-3B/7B-Instruct 上,检索语料是 Wiki-18 + E5 embedding。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 query"] --> T["think 思考"]
+    T --> S["search 检索<br/>top-k=3 · Wiki-18 + E5"]
+    S --> J["JUDGE Action 与软性屏蔽机制<br/>输出 Yes/No 拼进上下文"]
+    RR["基于 reranker 的密集过程奖励<br/>BGE-reranker 算理想判断 j*"] -.->|"奖励 +0.3 / 罚 −0.6"| J
+    J -->|"No：软屏蔽换查询"| T
+    J -->|"Yes：信息有效"| A["answer 作答"]
+    A --> EM["终端 EM 奖励 R_answer"]
+    EM --> G["GRPO 端到端优化"]
+    A -.评测.-> F["FictionalHot 抗污染评测基准"]
+```
+
 ### 关键设计
 
 1. **JUDGE Action 与软性屏蔽机制**:

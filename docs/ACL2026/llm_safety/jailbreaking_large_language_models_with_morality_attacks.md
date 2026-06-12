@@ -43,6 +43,26 @@ tags:
 
 论文想回答的问题是：当用越狱手法在"道德问题"上施压时，LLM 会不会丢掉伦理底线、做出错误的道德判断？为此作者把任务拆成两步——先构造一个能逼出道德分歧的数据集，再在其上设计攻击 prompt 去操纵模型的判断。数据集共 10.3K 条，每条沿用 Moral Story 的结构化七元组：情境 S、黄金规范 GN、意图 I、道德行为 MA、道德后果 MC、不道德行为 IMA、不道德后果 IMC。数据分两类——源自 Moral Story 的 Value Ambiguity（4,888 条，社会规范）和源自 ValuePrism 的 Value Conflict（5,474 条，价值/权利/义务）。攻击时把篡改过的规范塞回 prompt，强迫模型扮演"只认这一条规范的伦理裁判"，从而诱导出预设的错误判断；最后在 LLM 与 guardrail 两类模型上测它们的失守率。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph VA["价值模糊攻击"]
+        direction TB
+        A1["Moral Story 七元组<br/>4,888 条社会规范"] --> A2["Gemini 污染规范<br/>反向规范 RN / 含糊规范 VN"]
+    end
+    subgraph VC["价值冲突攻击"]
+        direction TB
+        B1["ValuePrism 价值对<br/>5,474 条价值/权利/义务"] --> B2["Gemini 生成故事 + 污染规范<br/>假规范 FN / 偏见规范 BN"]
+    end
+    VA --> P["攻击 prompt：扮演只认单条规范的伦理裁判<br/>Attack RN / VN / FN / BN"]
+    VC --> P
+    P --> L["受测 LLM：输出道德判断 J 与理由 T"]
+    P --> G["受测 guardrail：查用户输入 / 查生成内容"]
+    L --> R["失守率统计"]
+    G --> R
+    ANN["三维属性标注<br/>权威范围 / 文化普适性 / 情境依赖"] -. 解释脆弱性来源 .-> R
+```
+
 ### 关键设计
 
 **1. 价值模糊攻击（Value Ambiguity Attack）：用反向/含糊规范把对的说成错的、把错的说成对的**

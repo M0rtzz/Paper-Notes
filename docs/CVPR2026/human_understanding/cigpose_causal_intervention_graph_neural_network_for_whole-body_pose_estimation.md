@@ -46,6 +46,25 @@ tags:
 
 CIGPose 走 top-down 路线，用 RTMPose 当关键点编码器提取初始嵌入 $F$，先经因果干预模块（CIM）把受视觉上下文污染的部分"洗掉"得到 $F'$，再用层次图神经网络注入骨骼解剖约束得到 $F''$，最后由预测头回归坐标。训练时同时跑观测路径和反事实路径以保证干预只动该动的地方，推理时只保留反事实路径。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像（top-down 裁剪）"] --> B["RTMPose 关键点编码器<br/>初始嵌入 F"]
+    B --> CIM
+    subgraph CIM["因果干预模块（CIM）"]
+        direction TB
+        C1["识别混杂<br/>由热力图峰值算混杂评分 s_c(k)，取 top-n"] --> C2["反事实替换<br/>对选中点 do(f_k := z_k)，换上规范嵌入 Z"]
+    end
+    CIM -->|去混杂嵌入 F'| GNN
+    subgraph GNN["层次图神经网络"]
+        direction TB
+        G1["局部骨骼图 G_p<br/>EdgeConv 建相邻关节运动学约束"] --> G2["全局语义超图 G_h<br/>超边聚合生成通道注意力调制"]
+    end
+    GNN -->|结构推理后 F''| H["预测头<br/>回归关键点坐标"]
+    B -.->|训练时另跑观测路径（不干预）| L["反事实一致性损失 L_cf<br/>stop-gradient 约束稳定点两路一致"]
+    H -.-> L
+```
+
 ### 关键设计
 
 **1. 因果干预模块（CIM）：用不确定性找混杂、用规范嵌入切断后门**

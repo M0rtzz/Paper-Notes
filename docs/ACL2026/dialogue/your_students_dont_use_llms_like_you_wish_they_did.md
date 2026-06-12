@@ -45,6 +45,25 @@ tags:
 
 为了验证指标，作者人工标注 248 段对话，其中 100 段由第二标注者重叠标注以估计人类一致性。LLM 侧比较 GPT-4.1-mini 和 GPT-5，并比较 turn-by-turn 与 whole-dialogue 两种粒度。最终在 500 段对话、12,650 条消息上应用这些指标，覆盖五个数据集和两种部署范式：可选的教学支架工具，以及整合进课程作业流程的 unrestricted AI 工具。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["学生-AI 对话日志 + 时间戳"] --> B["拆成学生轮次 / AI 回复"]
+    subgraph M["六个行为指标"]
+        direction TB
+        C["逐轮分析优先<br/>CES 参与度 · LOI 学习导向 · SRS 支架抵抗"]
+        D["整段判断<br/>ADR 作业依赖（规则 + LLM）"]
+        E["时间分布<br/>CMI 危机式使用 · UCI 时间集中度"]
+    end
+    B --> C
+    B --> D
+    B --> E
+    C --> F["连续分数与零样本 LLM 判别<br/>输出 6 个 0-1 行为分数"]
+    D --> F
+    E --> F
+    F --> G["诊断教学错位 / 部署对比（脚手架）"]
+```
+
 ### 关键设计
 
 **1. 六个行为指标覆盖不同教学风险：把“学生是否在学习”拆成多个可观测维度**

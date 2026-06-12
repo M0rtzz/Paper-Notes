@@ -44,6 +44,28 @@ SCL-SLT 的流程可以拆成三步。第一步，沿用常规 CLIP 式训练，
 
 模型本身包含 Sign Embedding、Visual Encoder、Text Encoder 和 Decoder。Sign Embedding 用 ImageNet 预训练 ResNet-18 提取空间特征，再用两层 Conv1D/BN/ReLU 建模时间序列；Visual Encoder、Text Encoder 和 Decoder 都初始化自 mBART-large-50，其中文本编码器在对比阶段冻结，视觉编码器和解码器通过 LoRA 适配。对齐阶段用 CiCo 风格的细粒度视频-文本相似度计算双向对比损失，同时保留翻译损失；翻译微调阶段断开文本分支，只优化自回归翻译目标。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["手语视频 + 目标文本"] --> S1
+
+    subgraph S1["基于轨迹的负样本打分"]
+        direction TB
+        B["训练参考对比模型<br/>每 5 个 epoch 存检查点"] --> C["算负对相似度变化量<br/>δ = s^K − s^0"]
+        C --> D["按相似度轨迹区分负样本<br/>稳定可学 / 硬负 / 伪负"]
+    end
+
+    S1 --> E["课程式 Pair Selection<br/>按 α=e/E 从易分到难逐步组 batch"]
+
+    subgraph S3["选择性对比训练与翻译微调解耦"]
+        direction TB
+        F["Stage 1：选择性对比训练<br/>双向 CLIP 损失 + 翻译损失"] --> G["Stage 2：翻译微调<br/>断开文本分支，解码器自回归生成"]
+    end
+
+    E --> S3
+    S3 --> H["目标语言译文"]
+```
+
 ### 关键设计
 
 **1. 基于轨迹的负样本打分：用训练动态而非单次相似度判断一个负样本值不值得学**

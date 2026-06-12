@@ -41,6 +41,19 @@ tags:
 ### 整体框架
 输入 $x \in \mathcal{X}$ 喂给主干网 $f_\theta$ 得到无约束预测 $\hat{y} = f_\theta(x)$；然后对 $\hat{y}$ 做一次 $\ell_1$ 投影 $y^\star(x) \in \arg\min_{y \in \mathcal{F}(x)} \|y - \hat{y}\|_1$，把它拉回到由所有激活规则定义的可行集 $\mathcal{F}(x) = \bigcap_{r \in \mathcal{R}(x)} \mathcal{C}_r(x)$。每条规则 $r$ 形式为 $\mathbb{I}[x \in \mathcal{A}_r] \Rightarrow \mathbb{I}[y \in \mathcal{C}_r(x)]$，其中 $\mathcal{C}_r(x) = \bigcup_{j=1}^{m_r} \{y: A_{rj}(x) y \le b_{rj}(x)\}$ 是 $m_r$ 个（可能输入相关的）多面体的并。文中证明该约束类与 MILP 和 QF-LRA 等表达力，因此覆盖了大部分实际场景。投影本身用扩展形式 LP 求解，反向用 KKT 条件隐式微分（CVXPYlayer / DiffOpt.jl），最终训练时还在 LP 上加二次正则使其强凸以缓解参数出现在约束右端导致的解不连续问题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入 x"] --> F["主干网 f_θ<br/>无约束预测 ŷ"]
+    X --> R["激活规则 R(x)<br/>每条规则 = 多面体的并（析取约束）"]
+    F --> D1
+    R --> D1["ℓ1 epigraph + 全局约束塞进每个 disjunct<br/>凸化前锁住投影方向，保精确满足"]
+    D1 --> D2["基本步序列：CNF → DNF 逐步凸化<br/>松弛紧度 ↔ 模型规模按需折中"]
+    D2 --> D3["多面体并的扩展形式 LP<br/>提升变量写出凸包"]
+    D3 -->|"前向：单纯形极点解"| Y["输出 y*<br/>精确满足全部激活规则"]
+    D3 -->|"反向：KKT 隐式微分（加二次正则转强凸 QP）"| G["梯度回传更新 f_θ"]
+```
+
 ### 关键设计
 
 **1. $\ell_1$ epigraph + 全局约束塞进每个 disjunct：在凸化之前就把投影方向锁进每一个多面体片，保住"精确满足"这条命脉**

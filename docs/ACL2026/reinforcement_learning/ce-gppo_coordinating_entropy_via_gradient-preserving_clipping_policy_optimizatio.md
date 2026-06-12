@@ -45,6 +45,20 @@ tags:
 
 CE-GPPO 在 GRPO 基础上，对裁剪区间外的 token 不再完全丢弃梯度，而是以受控方式重新引入。对 PA&LP token（右侧越界，正优势）用 β₂ 放大以促探索；对 NA&LP token（左侧越界，负优势）用 β₁ 放大以促利用。当 β₁=β₂=0 时退化为标准 PPO。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每个 token：优势 Â + importance ratio δ"] --> B{"δ 是否越过裁剪区间 [1−ε, 1+ε]?"}
+    B -->|"区间内"| C["标准 GRPO 梯度更新"]
+    B -->|"越界"| D["Stop-Gradient 梯度保留<br/>前向取裁剪值 sg(δ)、反向照常回传"]
+    D --> E["双侧不对称梯度缩放 β₁/β₂"]
+    E -->|"PA&LP 正优势·右越界"| F["β₂ 放大 → 促探索<br/>(熵动态分析：减缓熵下降)"]
+    E -->|"NA&LP 负优势·左越界"| G["β₁ 放大 → 促利用<br/>(熵动态分析：加速熵下降)"]
+    C --> H["策略更新：熵动态稳定可控"]
+    F --> H
+    G --> H
+```
+
 ### 关键设计
 
 **1. Stop-Gradient 梯度保留机制：让越界 token 前向仍被裁剪、反向却能回传梯度**

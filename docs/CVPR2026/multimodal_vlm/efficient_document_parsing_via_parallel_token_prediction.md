@@ -45,6 +45,18 @@ tags:
 
 PTP 要解决的是文档解析里自回归逐 token 解码太慢的问题——文档转录本质是"看图照抄"的确定性任务，输出几乎被输入图像锁死，理应能一次吐出好几个 token，却被 next-token prediction（NTP）的串行依赖卡住了吞吐。它的做法是：在不改 backbone、不动原始 NTP 训练的前提下，往训练序列里"寄生"一批可学习的 register token，让模型在预测当前 token 的同时，顺手把后面 $n$ 个位置也并行预测出来；推理时每走一步就能产出 $1+n$ 个 token，从而把吞吐拉高 1.6×–2.2×。整套方法由三个相互咬合的设计（register token、注意力掩码、位置编码）撑起，外加一条专门为它喂数据的高质量标注管线。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["转录序列 (x₁,…,xₗ)<br/>输出被文档图像唯一锁定"] --> B["Register token：序列改写<br/>每个 xᵢ 后插 n 个共享嵌入的占位符"]
+    B --> C["注意力掩码：寄生不污染 NTP<br/>常规 token 看不见 register，抹掉 register 列即标准因果掩码"]
+    C --> D["位置编码：对齐未来位置<br/>register rᵢ 位置 = xᵢ₋₁ 位置 + 1"]
+    P["数据管线（脚手架）<br/>200k 页→布局切块→多模型标注<br/>→投票+LLM消歧→CLIP/pHash 去重→1.8M 样本"] --> E
+    D --> E["联合训练<br/>L = α·L_NTP + (1−α)·L_reg"]
+    E -->|推理时拆掉 register| F["每步并行出 1+n 个 token<br/>主头出下一个，register 出再后面 n 个"]
+    F --> G["输出：1.6×–2.2× 吞吐，精度无损"]
+```
+
 ### 关键设计
 
 **1. Register token：把"预测下一个"扩成"并行预测后面几个"**

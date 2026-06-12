@@ -39,7 +39,22 @@ AR 图像模型通过逐步预测视觉 token 序列来生成图像，这些 tok
 
 ### 整体框架
 
-ClusterMark 在 AR 图像生成的采样阶段嵌入水印，验证时仅需 VQ-VAE 编码器和秘钥即可检测，无需访问原始生成模型。整体流程分三步：(1) 预处理阶段对 VQ-VAE 码本向量做 k-means 聚类；(2) 生成时基于前一 token 的簇标签计算绿/红集合划分，偏向采样绿簇中的 token；(3) 验证时将待检图像编码为 token 序列，统计绿色 token 比例并做二项式假设检验。
+ClusterMark 在 AR 图像生成的采样阶段嵌入水印，验证时仅需 VQ-VAE 编码器和秘钥即可检测，无需访问原始生成模型。整体流程分三步：(1) 预处理阶段对 VQ-VAE 码本向量做 k-means 聚类；(2) 生成时基于前一 token 的簇标签计算绿/红集合划分，偏向采样绿簇中的 token；(3) 验证时将待检图像编码为 token 序列，统计绿色 token 比例并做二项式假设检验。在这条主干上，方法再叠两个增强：用一个轻量的 Token / Cluster 分类器在强扰动下"撤销扰动"后再编码，用前缀调优在离线阶段挑出误报最低的秘钥 $\kappa$，二者共同保证水印在各类扰动下既鲁棒又低误报。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph PRE["基于码本聚类的绿/红集合划分"]
+        direction TB
+        A["VQ-VAE 码本：对 |V| 个向量<br/>做 k-means 聚类（k=64）"] --> B["生成时按前一 token 的簇标签哈希<br/>挑 γ 比例绿簇 → 绿集合"]
+    end
+    K["前缀调优<br/>离线搜最优秘钥 κ 压低误报"] --> B
+    B --> C["AR 采样：绿色 token logit 加偏置 δ<br/>→ 含水印图像"]
+    C --> D["验证：将待检图像重编码为 token 序列"]
+    D -->|轻扰动| F["统计绿色 token 比例<br/>右尾二项式检验（p < ρ 判有水印）"]
+    D -->|强扰动| E["Token / Cluster 分类器<br/>对抗训练从扰动图反推 token / 簇"]
+    E --> F
+```
 
 ### 关键设计
 

@@ -48,6 +48,24 @@ tags:
 
 第四步做因果干预和视觉归因。作者选出最支持 factual / counterfactual 的 top-20 heads，对最终 token 位置的注意力权重做乘性缩放：增强 factual heads 对文本 token 的注意，或削弱 counterfactual heads 对图像 token 的注意，反向也可以。随后用注意力和梯度两种方式找出驱动 counterfactual 输出的图像 patch，并通过 patch ablation 验证这些区域是否真的导致视觉覆盖常识。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DATA["WHOOPS-AHA! 可控反事实补全数据集"]
+        direction TB
+        A["反事实图像 + 引用句<br/>GPT-4o 生成"] --> B["两组目标 token<br/>S_fact 常识 / S_cofa 视觉反事实"]
+        B --> C["筛选冲突样本<br/>纯文本偏常识 + 加图偏视觉反事实"]
+    end
+    DATA --> D["Logit Lens 定位 factual 与 counterfactual heads<br/>逐组件投影比 t_fact vs t_cofa"]
+    D --> E["MLP 偏参数常识<br/>晚层少数 attention heads 偏视觉反事实"]
+    subgraph INTV["定向注意力干预与视觉 patch 归因"]
+        direction TB
+        F["缩放 top-20 heads 注意力<br/>增强 factual / 削弱 counterfactual"] --> G["视觉 patch 归因 + ablation<br/>验证 heads 指向反常区域"]
+    end
+    E --> INTV
+    INTV --> H["因果控制模态偏好<br/>常识 ↔ 视觉反事实"]
+```
+
 ### 关键设计
 
 **1. WHOOPS-AHA! 可控反事实补全数据集：把开放式多模态冲突压成 token 级可验证的测试床**

@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 联邦系统里有 $N$ 个客户端，每端各持私有数据 $\mathcal{D}_k$、共享一个冻结的 backbone $W_0$，目标是给每端学一组个性化 LoRA 参数 $\boldsymbol{\Theta}_k$。FedTreeLoRA 的核心思路是：先让所有客户端 warmup 几轮，把它们之间的关系凝成**一棵全局层次树** $\mathcal{T}$（根=全员共享、叶=全员个性化），然后让每个 Transformer 层独立地在这棵树上选一刀 cut——浅层选靠近根的粗 cut（多客户端共享），深层选靠近叶的细 cut（各自特化），且越深越细单调不回头。选好 cut 后，每层按分组聚合出两套 LoRA expert，用一个可学标量混合做前向。这样"客户端之间共享多深"就从一个全局统一的决策，变成了逐层自适应、又彼此拓扑一致的解。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个客户端 + 冻结 backbone W₀"] --> B["Warmup：每端本地训 E_warm 轮<br/>得到逐层 LoRA 的 B 矩阵"]
+    B --> C["全局拓扑树<br/>B 矩阵全局距离 → AHC 凝成嵌套二叉树 𝒯"]
+    C --> D["逐层自适应深度搜索<br/>每层在窗口 Ω_l 内用 Silhouette 选 c_l*（单调越深越细）"]
+    D --> E["Cluster-External Expert 混合<br/>聚合 Cluster/External 两套 expert，标量 λ_l,k 线性混合前向"]
+    E --> F["本地 SGD：只更新 Cluster Expert 与 λ，External 冻结"]
+    F -->|多轮联邦迭代| E
+    F --> G["输出：每端个性化 LoRA Θ_k"]
+```
+
 ### 关键设计
 
 **1. 全局拓扑树：把所有候选分组方案塞进一棵树**

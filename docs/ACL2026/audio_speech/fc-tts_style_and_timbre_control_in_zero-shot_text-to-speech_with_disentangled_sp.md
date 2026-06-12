@@ -45,6 +45,34 @@ FC-TTS 建在 FACodec 和 conditional flow matching 之上。FACodec 提供 pros
 
 style embedding 来自 TCF 模块：prosody tokens 先经过 Transformer encoder，再通过 Q-Former 风格的 cross-attention 压缩成固定数量 latent tokens，随后用 finite scalar quantization 离散化。作者在 phoneme level 和 frame level 各放一个 TCF，以捕捉 utterance 内部的风格变化。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    TXT["文本 → 音素<br/>text encoder + duration predictor 对齐到帧级"]
+    SPK["音色参考<br/>FACodec speaker embedding z_spk"]
+    PRO["风格参考<br/>FACodec prosody tokens c_p"]
+
+    subgraph TCF["VQ-VAE / TCF 风格编码"]
+        direction TB
+        E1["Transformer encoder"] --> E2["Q-Former 压成固定 latent token"]
+        E2 --> E3["FSQ 离散化 → 风格码"]
+    end
+    PRO --> E1
+
+    subgraph GEN["两阶段层次化谱图生成"]
+        direction TB
+        S1["第一阶段 timbre adapter<br/>z_spk 注入 LayerNorm → blurry log-mel"]
+        S2["第二阶段 style adapter + flow-matching decoder<br/>风格码条件下精修 → 最终 log-mel"]
+        S1 --> S2
+    end
+    TXT --> S1
+    SPK --> S1
+    E3 --> S2
+
+    S2 --> HG["HiFi-GAN → 22kHz 波形"]
+    S2 -.->|训练约束| CCL["条件一致性损失 CCL<br/>交叉条件属性预测器逼输出守住音色与风格"]
+```
+
 ### 关键设计
 
 **1. 两阶段层次化谱图生成：让音色先锚定声学空间，再让风格细化谱图，避免两个 reference 在同一 decoder 里互相污染**

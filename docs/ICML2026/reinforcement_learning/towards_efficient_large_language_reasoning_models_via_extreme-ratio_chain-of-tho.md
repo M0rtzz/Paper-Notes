@@ -42,6 +42,31 @@ Extra-CoT 提出一个三阶段框架（语义保持压缩器 → 混合比率SF
 ### 整体框架
 Extra-CoT 包含三个串行阶段：(a) 训练一个语义保持的CoT压缩器，生成各个压缩比下的高质量训练数据；(b) 对推理LLM进行混合比率SFT，教会它遵循不同的压缩预算指令（如 $\langle\text{COMP\_40}\rangle$），同时引入策略token（$\langle\text{COMP\_POLICY}\rangle$）作为RL阶段的可训练机制；(c) 使用CHRPO（约束与层次化比率策略优化）对策略token进行RL优化，显式激励模型在保持精度的前提下选择最低预算。推理时，输入固定比率token则按指定比率生成，输入POLICY token则由模型自主决策。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["数学 CoT 数据（公式原子化）"] --> S1
+    subgraph S1["语义保持的问题感知压缩器（设计1）"]
+        direction TB
+        B["Longformer：问题全局注意力 + CoT 局部窗口"] --> C["GPT-4o 索引标注 + Focal Loss 训练"]
+    end
+    S1 --> D["生成各比率高质量监督数据<br/>γ = 0.2…1.0"]
+    D --> S2
+    subgraph S2["混合比率 SFT + 前缀-镜像协议（设计2）"]
+        direction TB
+        E["固定比率队列 60k + POLICY 热身队列 10k"] --> F["扩词表 6 个控制 token<br/>固定比率复制 / POLICY 自选比率"]
+    end
+    S2 --> G["可控 SFT 模型<br/>含可训练策略 token"]
+    G --> S3
+    subgraph S3["CHRPO 比率策略优化（设计3）"]
+        direction TB
+        H["主奖励 R_main（序列末尾）<br/>+ 控制头奖励 R_ctrl（首 token）"] --> I["非对称惩罚<br/>安全缩短 / 快速恢复 / 进度封顶"]
+    end
+    S3 --> K["最终模型"]
+    K -->|固定比率 token| L["按指定比率生成"]
+    K -->|POLICY token| M["自主决策最低预算"]
+```
+
 ### 关键设计
 
 **1. 语义保持的问题感知压缩器：先把监督数据做对，公式不碎、推理链不断**

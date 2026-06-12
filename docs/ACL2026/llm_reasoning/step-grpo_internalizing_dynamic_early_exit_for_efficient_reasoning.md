@@ -45,6 +45,22 @@ tags:
 
 Step-GRPO 在 GRPO 框架上引入三个组件：（1）动态截断 Rollout——在探索阶段混合自然轨迹和截断轨迹；（2）语义步骤量化——用触发词计数替代 token 计数来度量推理复杂度；（3）步骤感知相对奖励——基于组内正确回答的动态基准分配效率奖励/惩罚。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["查询输入<br/>策略模型采样 G 条轨迹"] --> R
+    subgraph R["动态截断 Rollout（设计 1）"]
+        direction TB
+        B["逐步生成，监测触发词<br/>（Wait / Alternatively…）"] --> C["遇触发词：追加诱导提示<br/>生成临时答案并算置信度 c(ans)"]
+        C -->|"c > δ (0.95)"| D["截断推理<br/>以诱导答案为最终输出"]
+        C -->|"c ≤ δ：丢弃临时答案"| B
+    end
+    R --> E["语义步骤量化<br/>k = 1 + 触发词数"]
+    E --> F["步骤感知相对奖励<br/>组内正确轨迹均步数 μ 作动态基准"]
+    F -->|"k < μ 奖励 / k > μ 惩罚"| G["GRPO 策略更新<br/>PPO 裁剪 + KL 正则"]
+    G -.->|"迭代采样"| A
+```
+
 ### 关键设计
 
 **1. 动态截断 Rollout：把推理时的早退决策搬到训练采样里，让模型看到“提前停也是对的”**

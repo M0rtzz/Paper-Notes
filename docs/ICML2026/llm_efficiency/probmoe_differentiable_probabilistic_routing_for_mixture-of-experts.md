@@ -42,6 +42,19 @@ ProbMoE 把 MoE 的 top-$k$ 路由重新表述为"基数受限子集分布上的
 ### 整体框架
 设 MoE 层有 $N$ 个专家，token hidden state 为 $x\in\mathbb{R}^d$，router 输出 logits $r=\mathrm{Router}_\theta(x)\in\mathbb{R}^N$、softmax 权重 $\pi_i=\exp(r_i)/\sum_j\exp(r_j)$，给定子集 $S$ 则 MoE 输出 $y_S(x;r)=\sum_{j\in S}\pi_j f_j(x)$。ProbMoE 的核心改动是把"确定性 top-$k$ 选择"替换成"$k$-基数子集分布上的概率推断"：先把每个专家的选中与否看作独立 Bernoulli $p_i=\sigma(r_i)$，再条件化于基数约束（exact-$k$ 或 range $[k_{\min},k_{\max}]$）得到子集分布 $\mathbb{P}_r(S\mid\cdot)$。前向时它从这个分布里采样一个 $k$-hot 掩码、只执行被选中的 $k$ 个专家（计算量与标准 MoE 一致）；反向时它把整个子集分布对每个 logit 的依赖（用解析的条件边缘概率 $m_j$ 表达）回传给 router，从而第一次让"未被选中的备选子集"也参与学习。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["token 表示 x"] --> R["Router logits r<br/>专家独立 Bernoulli p_i=σ(r_i)"]
+    R --> D1["① 基数受限子集分布 + SIMPLE 精确归一化<br/>条件子集恰好选 k 个，DP 在 O(Nk) 内精确算归一化常数 Z_k"]
+    D1 -->|前向·稀疏| FW["采 k-hot 掩码 z<br/>只执行被选中的 k 个专家"]
+    D1 -->|反向·解析| MG["条件边缘 m_j=∂logZ_k/∂logp_j<br/>整个子集分布的可微摘要"]
+    FW --> D2["② 边缘-嵌入路由权重 + Straight-Through<br/>w=(stopgrad(z−m)+m)⊙π"]
+    MG --> D2
+    D2 --> Y["MoE 输出 y=Σ w_j f_j(x)<br/>推理时取 MAP 子集"]
+    D3["③ Range-constrained Dynamic-k 路由<br/>条件换成 k 落在 [k_min,k_max]，Z*=ΣZ_k<br/>先采基数 k 再采子集，按 token 难度自适应"] -.->|同一框架·换归一化常数| D1
+```
+
 ### 关键设计
 
 **1. 基数受限子集分布 + SIMPLE 精确归一化：把路由输出层换成可精确归一化的概率层**

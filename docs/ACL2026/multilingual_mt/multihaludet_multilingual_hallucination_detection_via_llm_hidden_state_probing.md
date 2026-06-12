@@ -50,6 +50,21 @@ MultiHaluDet 是一个四阶段框架：先从冻结 LLM 中抽取 per-layer 统
 
 随后，$S$ 进入 MultiHaluDet 的序列分支，$g$ 进入全局 MLP 分支。两路表征经过 gated fusion 后得到样本级 embedding。训练阶段不直接把训练集 embedding 喂给最终分类器，而是用 5-fold out-of-fold 训练：每个样本的 deep feature 都来自没见过该样本的 fold 模型。最后，多个基分类器的概率通过 logistic meta-regressor 融合，阈值由 Youden's J statistic 选择。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问答样本 (q,a)<br/>拼成结构化 prompt"] --> B["冻结量化 LLM 前向<br/>取全层隐状态 + 末位 logit"]
+    B --> C["动态层采样与轨迹特征<br/>任意 L 层 → 固定 K=32 层 + 分布统计"]
+    C --> D["深度序列 S (K×d_s)"]
+    C --> E["全局特征 g<br/>top-k 概率 / 熵 / 范数轨迹"]
+    D --> F["多尺度 attention + 层加权 transformer<br/>局部深度突变 + 长程层间依赖"]
+    E --> G["全局 MLP 分支"]
+    F --> H["gated fusion<br/>样本级 embedding"]
+    G --> H
+    H --> I["OOF stacking 与集成元学习器<br/>5-fold 无泄漏表征 + 多分类器集成"]
+    I --> J["logistic 元回归器融合<br/>Youden's J 选阈值 → 幻觉概率"]
+```
+
 ### 关键设计
 
 **1. 动态层采样与轨迹特征：把任意深度 LLM 的层压成固定长度深度序列，让不同模型共享同一检测器**

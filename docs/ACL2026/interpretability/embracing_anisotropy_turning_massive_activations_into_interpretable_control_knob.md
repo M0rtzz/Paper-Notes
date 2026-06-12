@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 给定一个预训练 LLM、一个目标领域和若干领域样本，方法首先收集各层 hidden states 中每个维度的激活统计。对于 MMLU，每个 subject 使用 100 个 test prompts，其中 50 个作为 identification set 来找关键维度，另 50 个作为 evaluation set 验证这些维度对性能和控制的影响。识别阶段不训练 probe，也不训练 SAE，而是根据维度的 activation magnitude 和 domain-discriminative activation frequency 选择 top-$k$ 维度。控制阶段则把这些维度作为 sparse steering target，只修改被识别出的 critical dimensions，而不是对整个 hidden vector 做同等方向的干预。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练 LLM + 领域样本<br/>每 subject 50 识别集 + 50 验证集"] --> B["收集各层各维激活统计"]
+    B --> C["masking 验证稀疏关键性<br/>逐维置零看准确率落差"]
+    C --> D["激活幅值识别领域关键维度<br/>3σ active + 领域频率差 >30% 取 top-k"]
+    D --> E["Critical Dimension Steering<br/>仅在 top-k 维度上干预"]
+    E -->|领域适配| F["MMLU 34/57 subject 优于全维"]
+    E -->|jailbreak| G["AdvBench ASR 84% → 92%"]
+```
+
 ### 关键设计
 
 **1. 用 masking 验证维度的稀疏关键性：先证明“少数维度真的决定性能”，假设才立得住**

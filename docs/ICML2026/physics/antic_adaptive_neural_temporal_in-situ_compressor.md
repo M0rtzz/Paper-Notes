@@ -46,6 +46,25 @@ ANTIC 由两个异步模块组成：(i) PATS 决定"要不要压这一帧"，(ii
 - **Spatial Neural Compression**：被选中的 snapshot 通过持续微调（CFT）更新已存在的神经场 $W_t \to W_t + \Delta W_{\Delta t}$。其中 $\Delta W_{\Delta t}$ 可以选 full fine-tune（更准、内存大）或低秩 $\mathbf{A}^{(\Delta t)}\mathbf{B}^{(\Delta t)}$（更省、稍微损失精度），用户在 Pareto 上滑动。
 - **输出**：磁盘上只保留稀疏的神经场权重序列，解压时把每段权重逐步加回到基础网络上、对坐标 query 即可重建任意时刻的场。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["仿真器流式产出快照 u(t)"] --> M
+    subgraph PATS["物理感知时间筛选器 PATS（无参数，决定哪帧值得存）"]
+        direction TB
+        M["Metric：抽 PDE 守恒量 φ_t<br/>（涡度 enstrophy / Weyl scalar）"]
+        R["Regulator：检测相变<br/>截断 Queue、重置锚点、调窗口 W"]
+        Q["Queue：最近 W 个 φ 的滑窗"]
+        G{"Gate：形成动态阈值<br/>判定压不压当前帧"}
+        M --> R --> Q --> G
+        G -.反馈调下个窗口 W.-> R
+    end
+    G -->|跳过| SKIP["丢弃该帧，等下一时间步"]
+    G -->|选中| NF["神经场 + 持续微调<br/>对已 fit 网络做残差更新 ΔW"]
+    NF -->|"full FT（更准、占内存）"| OUT
+    NF -->|"LoRA 低秩残差 ΔW=AB（按 rank 滑 Pareto）"| OUT["磁盘只存稀疏神经场权重序列<br/>解压逐段加回 + 坐标 query 重建"]
+```
+
 ### 关键设计
 
 **1. 物理感知时间筛选器 PATS：用 PDE 内禀守恒量当 saliency 决定哪帧值得存**

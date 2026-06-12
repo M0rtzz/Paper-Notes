@@ -44,6 +44,33 @@ tags:
 
 QD-PCQA 要解决的是无参考点云质量评估（NR-PCQA）标注稀缺、泛化差的问题：思路是把图像域已标注的质量先验，通过无监督域适应迁移到点云域，但迁移时要时刻保持"质量感知"。具体流程：先把 3D 点云投影到立方体六个面生成多视图图像，与自然图像统一 resize 到 $224 \times 224$、共享一个 ResNet-50 提特征；训练时一边用 Quality-guided Feature Augmentation（QFA）按质量分数做增强、一边用 Rank-weighted Conditional Alignment（RCA）做质量条件对齐，让源域（图像）的质量知识在质量级别一致的前提下迁到目标域（点云）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["自然图像（源域，含质量标注）"]
+    PC["点云（目标域）"]
+    PC --> PROJ["立方体六面投影<br/>→多视图图像"]
+    SRC --> RES["共享 ResNet-50 提特征<br/>（统一 resize 224×224）"]
+    PROJ --> RES
+    RES --> QFA
+    RES --> RCA
+    subgraph QFA["Quality-guided Feature Augmentation 质量引导特征增强"]
+        direction TB
+        Q1["质量引导风格混合 QSM<br/>高斯核按质量分数配相近样本"]
+        Q2["多层增强<br/>浅层配高质量、深层配低质量"]
+        Q3["双域增强<br/>源域多层 QSM + 目标域 SM"]
+        Q1 --> Q2 --> Q3
+    end
+    subgraph RCA["Rank-weighted Conditional Alignment 排序加权条件对齐"]
+        direction TB
+        R1["质量条件对齐<br/>源域真值+目标域伪标签，只对齐同质量级别"]
+        R2["排序加权<br/>对排序不一致样本对加大权重"]
+        R1 --> R2
+    end
+    QFA --> OUT["质量预测<br/>（两阶段训练：先 DANN，后引入 RCA）"]
+    RCA --> OUT
+```
+
 ### 关键设计
 
 **1. Quality-guided Feature Augmentation：增强时不打乱质量信息**

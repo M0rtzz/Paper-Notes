@@ -41,7 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IC-VCO 的输入是一个对比四元组 $(m, m', x, y, y')$：原图 $m$、与之仅在目标语义上有细微差异的负图 $m'$、共用提示 $x$、对应的正确回复 $y$ 与对比回复 $y'$。训练时三条流水同时运作。其一是**多图分支**：把 $[m, m']$ 串成上下文 $M$，在提示后附加位置锚定指令（“请基于第一张图回答”等）得到 $\hat{x}$，跑 DPO 让 $y\succ y'$；为消除位置偏置，每个样本随机打乱图序。其二是**单图分支**：保留标准的 $(m, x, y, y')$ 单图 DPO，保证推理阶段的能力。其三是 **VCDist 蒸馏**：把多图分支得到的偏好概率 $p_{\text{multi}}$ 当 soft target 反向校准单图分支 $p_{\text{single}}$，缩小训练–推理上下文落差。整体目标加上对称项后形成最终损失，配合“细粒度 token mask”进一步聚焦到被编辑的视觉证据。
+IC-VCO 的输入是一个对比四元组 $(m, m', x, y, y')$：原图 $m$、与之仅在目标语义上有细微差异的负图 $m'$、共用提示 $x$、对应的正确回复 $y$ 与对比回复 $y'$。训练时三条流水同时运作。其一是**多图分支**：把 $[m, m']$ 串成上下文 $M$，在提示后附加位置锚定指令（“请基于第一张图回答”等）得到 $\hat{x}$，跑 DPO 让 $y\succ y'$；为消除位置偏置，每个样本随机打乱图序。其二是**单图分支**：保留标准的 $(m, x, y, y')$ 单图 DPO，保证推理阶段的能力。其三是 **VCDist 蒸馏**：把多图分支得到的偏好概率 $p_{\text{multi}}$ 当 soft target 反向校准单图分支 $p_{\text{single}}$，缩小训练–推理上下文落差。整体目标加上对称项后形成最终损失，配合“细粒度 token mask”进一步聚焦到被编辑的视觉证据。这套四元组里的负图 $m'$ 并非现成数据，而是由“手术式对比样本编辑”流水线在训练前离线造出来的。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph EDIT["手术式对比样本编辑（离线造硬负样本）"]
+        direction TB
+        E0["原图 m + 幻觉回复 y′"] --> E1["QwenVL-Plus 编辑规划<br/>定位存在/属性/关系幻觉点<br/>输出可执行编辑指令 T"]
+        E1 --> E2["Qwen-Image-Edit 局部编辑<br/>可逆 padding 保宽高比"]
+        E2 --> E3["QwenVL-Plus 验证修正<br/>剔除失败样本（成功率 91%）"]
+    end
+    EDIT --> Q["对比四元组 (m, m′, x, y, y′)<br/>+ 记录 y↔y′ 的 token mask"]
+    subgraph MULTI["共享多图上下文 In-Context DPO"]
+        direction TB
+        M1["拼接上下文 M=[m, m′]<br/>随机打乱图序消位置偏置"] --> M2["附加锚定提示：指定基于第几张图回答<br/>配分函数对消 → p_multi"]
+    end
+    Q --> MULTI
+    Q --> SINGLE["单图分支<br/>标准 (m,x,y,y′) DPO<br/>仅在 token mask 上算偏好 → p_single"]
+    MULTI -->|"p_multi 作老师"| VCD["VCDist 蒸馏<br/>正确性门 + 置信度门 + stop-grad"]
+    SINGLE -->|"p_single 作学生"| VCD
+    MULTI --> LOSS["总损失 L_IC-VCO（以 m/m′ 互为目标对称两次 → L_Total）"]
+    SINGLE --> LOSS
+    VCD --> LOSS
+```
 
 ### 关键设计
 

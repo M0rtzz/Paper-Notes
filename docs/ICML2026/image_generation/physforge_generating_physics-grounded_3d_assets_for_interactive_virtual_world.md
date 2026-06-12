@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 PhysForge 分两阶段。**Stage 1: VLM-based Planning**——输入单视图 $I$、对应 3D voxel 表示 $V$（由 TRELLIS 第一阶段产生）和可选 2D mask $M$；微调后的 Qwen2.5-VL 自回归生成 Hierarchical Physical Blueprint，包含每个部件的 bbox、父节点、关节类型、材料、功能、状态机等属性。**Stage 2: Diffusion-based Generation**——按 blueprint 生成几何 voxel 和纹理；KineVoxel Injection (KVI) 把铰接参数 (origin、axis、limit) 编码进一个特殊的 kinematic voxel，与几何 voxel 在同一个 diffusion 过程中联合去噪，确保几何与运动学的同步性与一致性。最终输出 simulation-ready 资产，可直接导入物理引擎做抓取、推开门、转动旋钮等交互。配套的 PhysDB 数据集（150k 资产、四层标注、人类校验）提供训练数据，对铰接精度则借助 PartNet-Mobility 与 Infinite-Mobility 补全。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DB["PhysDB 四层物理标注数据集<br/>holistic / static / functional / interactive"]
+    IN["输入：单视图 I + 3D 体素 V + 可选 2D mask M"]
+    VLM["VLM 物理蓝图规划器（Qwen2.5-VL）<br/>PartField 体素编码 + 66 个 bbox 特殊 token"]
+    BP["分层物理蓝图<br/>逐部件 bbox + 父节点 / 材料 / 功能 / 关节类型"]
+    KVI["KineVoxel Injection 联合扩散<br/>几何 voxel + 运动学 voxel 同步去噪"]
+    OUT["simulation-ready 资产<br/>导入 PhysX / Isaac：抓取 / 推门 / 转钮"]
+
+    IN --> VLM
+    VLM --> BP
+    BP --> KVI
+    KVI --> OUT
+    DB -.训练监督.-> VLM
+    DB -.关节 GT（PartNet-Mobility）.-> KVI
+```
+
 ### 关键设计
 
 **1. PhysDB 四层物理标注数据集：给 plan-then-generate 提供全栈监督**

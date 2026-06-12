@@ -47,6 +47,21 @@ LLM-XTM 是个 **两阶段后处理增强**：
 
 总目标是 $\mathcal{J}(\phi, \psi) = \mathcal{L}_{\text{Phase 1}} + \lambda_{\text{mmd}} \mathcal{L}_{\text{MMD}} + \lambda_{\text{qa}} \mathcal{L}_{\text{doc-align}}$。一个 epoch 内的流程是：抽 top-15 双语词 → 调 LLM 投票得 $\bar{w}_k$ → 算 $\mathcal{L}_{\text{MMD}}$ → BGE-M3 编码文档/主题 → 算 KL 形式的 $\mathcal{L}_{\text{doc-align}}$ → 梯度更新 backbone。整个 LLM 模块对 backbone 完全是黑盒，不要求 token 概率，所以 Gemini API 直接可用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Phase 1：跑通 backbone<br/>NMTM / InfoCTM / XTRA → β, θ"] --> S1
+    subgraph S1["自一致性跨语言主题词精炼"]
+        direction TB
+        B["抽 top-15 双语词<br/>拼候选池 C_k"] --> C["同一 prompt 调 LLM R 次<br/>（每 f 个 epoch 触发一次）"]
+        C --> D["按命中频率投票<br/>取 Top-M 得精炼词集 w̄_k"]
+    end
+    S1 --> E["MMD 主题-词分布对齐<br/>BGE-M3 空间软拉 β_raw → β_refined"]
+    S1 --> F["QA 式文档-主题对齐<br/>BGE-M3 编码文档/主题 → cosine → KL 拉 θ"]
+    E --> G["梯度更新 backbone<br/>J = L_Phase1 + λ_mmd·L_MMD + λ_qa·L_doc-align"]
+    F --> G
+```
+
 ### 关键设计
 
 **1. 自一致性跨语言主题词精炼：用多次投票把 LLM 的幻觉过滤掉**

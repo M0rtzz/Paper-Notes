@@ -41,6 +41,27 @@ tags:
 ### 整体框架
 IQPIR 要解决的核心问题是：GT 本身质量参差不齐，直接拿它当唯一监督会把模型拉到 GT 的平均质量水平。IQPIR 的思路是把"质量"显式地变成一个可控的条件量，让网络在推理时被拉向最高质量而非平均质量。整套流程分两阶段。第一阶段学一组离散表示（双 Codebook），把"通用结构"和"高质量专属细节"拆到两本码本里；第二阶段冻结码本，训练一个质量条件化 Transformer，从低质输入预测两条编码序列、再分别查码本解码出修复图，训练时额外用 NR-IQA 给输出打分形成质量损失。推理时把质量条件直接拉满，网络就输出它能达到的最高感知质量。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    LQ["低质输入"] --> ENC["编码器 → 低质特征 Z_l"]
+    IQA["多 NR-IQA 集成<br/>多模型评分取平均得质量分 S"] --> ADD["质量条件注入 Ẑl = Zl + s"]
+    ENC --> ADD
+    ADD --> TR["质量条件化 Transformer<br/>预测两条编码序列 c1, c2"]
+    subgraph CB["双 Codebook 架构"]
+        direction TB
+        CC["Common Codebook<br/>通用结构（全部 GT 训练）"]
+        HQ["HQ+ Codebook<br/>精细细节（仅高质样本）"]
+    end
+    TR --> CC
+    TR -->|"高于阈值 S_thr 才启用"| HQ
+    CC --> FU["融合 Zq = Zq1 + α·Zq2 → 解码器重建"]
+    HQ --> FU
+    FU --> OUT["修复图"]
+    OUT -.训练时.-> QL["离散表示空间质量优化<br/>NR-IQA 打分 → 质量损失"]
+    QL -.引导输出高分.-> TR
+```
+
 ### 关键设计
 
 **1. 双 Codebook 架构：把"通用恢复能力"和"高质量细节"解耦到两本码本**

@@ -45,6 +45,26 @@ tags:
 
 DreamShot 要解决的核心问题是：怎么让一串静态故事板镜头既保持角色身份稳定、又保持场景连贯，同时还能像图像生成那样只产出关键帧而不是密集视频。它的做法是把这件事整个搬到视频扩散模型（Video-VAE + DiT）里来做。输入是 K 个角色参考图像加 S 个镜头的文本脚本；每个参考图像单独编码成潜向量，每个故事板镜头先被「假装」成一段视频（重复成 T 帧）再由视频 VAE 编码。参考 token 和镜头 token 拼成一条序列送进 DiT——自注意力在所有 token 上联合计算，让角色身份能跨镜头流动；交叉注意力则按镜头各自和对应文本对齐，保证每个镜头画的是脚本里说的内容。这套结构同时撑起三种使用方式：给参考图生成镜头（Reference-to-Shot）、纯文本生成镜头（Text-to-Shot）、以及在已有镜头后续写（Shot-to-Shot）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：K 个角色参考图 + S 个镜头脚本"]
+    subgraph ALIGN["基于视频 VAE 的镜头时序对齐"]
+        direction TB
+        REF["参考图独立编码<br/>→ z_ref"]
+        SHOT["镜头重复 T 帧 → 视频 VAE 编码<br/>→ z_shot"]
+        CAT["拼接 z_t = [z_ref, z_shot]<br/>3D RoPE 赋时序+空间位置"]
+        REF --> CAT
+        SHOT --> CAT
+    end
+    IN --> ALIGN
+    ALIGN --> DIT["DiT 骨干<br/>联合自注意力（身份跨镜头传播）<br/>+ 逐镜头交叉注意力（对齐文本）"]
+    DIT -->|训练时约束注意力| RACL["Role-Attention Consistency Loss（RACL）<br/>mask + ArcFace/VLM 配对 → 监督跨角色注意力"]
+    DIT -->|按加噪策略切换| MIX["混合模式训练与生成<br/>R2S / T2S / S2S 三模式共享一套权重"]
+    RACL --> OUT["输出：人物一致、场景连贯的多镜头故事板"]
+    MIX --> OUT
+```
+
 ### 关键设计
 
 **1. 基于视频 VAE 的镜头时序对齐：把孤立镜头骗成一段连贯视频**

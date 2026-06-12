@@ -43,19 +43,40 @@ tags:
 ### 整体框架
 ADVICE 是一个基于 LoRA 的对比微调框架。流程：（1）从 TriviaQA 训练集采样 4000 题，仅保留模型贪婪解码答对的题目；（2）对每题用随机采样得到一个「语义合理但事实错误」的硬负答案 $a_{\text{wrong}}$，配上原正确答案 $a_{\text{correct}}$ 组成三元组；（3）按 ScoreLetter 与 ScoreNumber 两种格式各生成一份训练数据；（4）在每个三元组上同时计算 LM 损失（保持问答能力）+ JSD 损失（拉开置信分布）+ Margin 损失（方向正确）+ Sum 损失（绝对约束），用 AdamW 与 LoRA（rank=16, α=32, 加在 Q/K/V/O）微调 4 epoch；（5）推理时格式可以泛化到训练未见过的 ScoreText/ScoreFloat/ScorePercent。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph DIAG["答案独立性诊断"]
+        direction TB
+        D1["对 q 的多候选答案打分得 P(C｜q,a)<br/>再算答案对间 JSD + Attention/IG 归因"] --> D2["结论：置信几乎不随答案变"]
+    end
+    DIAG -->|提供 δ_JSD 信号与动机| BUILD
+    subgraph BUILD["训练集构造（硬负 + 多格式）"]
+        direction TB
+        B1["TriviaQA 采样，只留贪婪解码答对的题"] --> B2["top-p 采样硬负 a_wrong（合理但事实错）<br/>组三元组 (q, a_correct, a_wrong)"]
+        B2 --> B3["生成 ScoreLetter / ScoreNumber 两格式"]
+    end
+    BUILD --> OBJ
+    subgraph OBJ["对比训练目标（四损失）"]
+        direction TB
+        O1["LM + JSD + Margin + Sum 四项损失"] --> O2["LoRA 微调（rank16, 加在 Q/K/V/O）"]
+    end
+    OBJ --> OUT["推理：格式泛化<br/>ScoreText / ScoreFloat / ScorePercent"]
+```
+
 ### 关键设计
 
 **1. 诊断驱动的答案独立性度量：先把「过自信的根因」量化出来，再拿它当训练信号**
 
 以往把过自信归咎于「训练数据高频高分」「RLHF 偏好乐观回答」这类模糊解释，没人能测。作者的做法是对每个问题 $q$ 和候选答案 $a$，把置信 token 的输出概率重投影到一个固定离散取值集合 $C$（如 0-9），得到分布 $P_M(C\mid q,a)$，再对训练集中所有 $(a_i, a_j)$ 答案对计算 JSD 作为「答案敏感度」的直接证据；同时用 Attention Rollout（递归聚合 $0.5W_{\text{att}}+0.5I$ 跨层）和 Integrated Gradients（$n\_steps=1024$）去验证「置信 token → 答案 token」这条归因路径。诊断结论指向同一个根因——置信度几乎不随答案变。只有把这个独立性指标显式写进训练目标，才能从源头改善校准，而不是事后去压最大概率。
 
-**2. 三元组对比训练目标：用四项损失逼模型对正确/错误答案给出方向正确、可区分、归一化的置信**
+**2. 格式泛化与硬负采样的训练集构造：先造出能逼模型「换答案换置信」的数据，并提升对相似错误答案的辨识力**
 
-光知道根因还不够，得有个目标函数直接攻击它。ADVICE 在每个三元组上定义四项损失：$\mathcal{L}_{\mathrm{LM}}$ 是 $a_{\text{correct}}$ 的 NLL，保住 QA 能力；$\mathcal{L}_{\mathrm{JSD}}=\max(0,\delta_{\mathrm{JSD}}-D_{\mathrm{JSD}}(P_{\text{correct}}\Vert P_{\text{wrong}}))$ 强制两分布散度至少为 $\delta_{\mathrm{JSD}}=0.6$（接近 $\ln 2\approx 0.693$ 的上界）；$\mathcal{L}_{\mathrm{Margin}}=\max(0,\delta_{\mathrm{Margin}}-(\mu_{\text{correct}}-\mu_{\text{wrong}}))$ 强制正确答案的期望置信比错误答案高 $\delta_{\mathrm{Margin}}=1$；$\mathcal{L}_{\mathrm{Sum}}=|1-(\mu_{\text{correct}}+\mu_{\text{wrong}})|$ 强制两者之和约等于 1，对应「正确率约为 1 时该答案就该几乎完全可信」的语义。总损失是四项等权相加 $\mathcal{L}=\mathcal{L}_{\mathrm{LM}}+\mathcal{L}_{\mathrm{JSD}}+\mathcal{L}_{\mathrm{Margin}}+\mathcal{L}_{\mathrm{Sum}}$。三项缺一不可：单用 JSD 只保证「分布不同」但方向可能颠倒，单用 Margin 又缺乏对分布形状的控制、会让两分布都偏高，而 Sum 项把「置信度=正确概率」的定义硬写进损失，避免训练后整体保守化（消融已证实）。
+找到根因后，第一步是把训练数据组织成能体现答案敏感性的形式。如果硬负样本错得太离谱，区分就太容易，模型学不到细粒度辨识。作者用原模型 top-$p$ 采样得到「语义合理、上下文相关但事实错误」的硬负（例如问 Mike Tyson 1998 拳照的颁发州，正确是 Nevada，硬负取 California），与原正确答案组成三元组 $(q,a_{\text{correct}},a_{\text{wrong}})$。训练阶段只用 ScoreLetter（E/D/C/B/A 映射到 0.1-0.9）和 ScoreNumber（0-9 映射到 $i/9$）两种格式，并在同一 mini-batch 内强制单一表达格式以稳定优化；推理时则能扩展到 ScoreText、ScoreFloat、ScorePercent。这种「多格式训练 + 单 batch 同格式」既保证了对训练未见格式的泛化，又稳住了梯度——Table 4 显示 Gemma2 在 TriviaQA-Float 上 ECE 从 27.5 降到 6.2。
 
-**3. 格式泛化与硬负采样的训练集构造：让一次微调适配多种表达格式，并提升对相似错误答案的辨识力**
+**3. 三元组对比训练目标：用四项损失逼模型对正确/错误答案给出方向正确、可区分、归一化的置信**
 
-如果硬负样本错得太离谱，区分就太容易，模型学不到细粒度辨识。作者用原模型 top-$p$ 采样得到「语义合理、上下文相关但事实错误」的硬负（例如问 Mike Tyson 1998 拳照的颁发州，正确是 Nevada，硬负取 California）。训练阶段只用 ScoreLetter（E/D/C/B/A 映射到 0.1-0.9）和 ScoreNumber（0-9 映射到 $i/9$）两种格式，并在同一 mini-batch 内强制单一表达格式以稳定优化；推理时则能扩展到 ScoreText、ScoreFloat、ScorePercent。这种「多格式训练 + 单 batch 同格式」既保证了对训练未见格式的泛化，又稳住了梯度——Table 4 显示 Gemma2 在 TriviaQA-Float 上 ECE 从 27.5 降到 6.2。
+有了三元组数据，还需要一个直接攻击「答案独立性」的目标函数。ADVICE 在每个三元组上定义四项损失：$\mathcal{L}_{\mathrm{LM}}$ 是 $a_{\text{correct}}$ 的 NLL，保住 QA 能力；$\mathcal{L}_{\mathrm{JSD}}=\max(0,\delta_{\mathrm{JSD}}-D_{\mathrm{JSD}}(P_{\text{correct}}\Vert P_{\text{wrong}}))$ 强制两分布散度至少为 $\delta_{\mathrm{JSD}}=0.6$（接近 $\ln 2\approx 0.693$ 的上界）；$\mathcal{L}_{\mathrm{Margin}}=\max(0,\delta_{\mathrm{Margin}}-(\mu_{\text{correct}}-\mu_{\text{wrong}}))$ 强制正确答案的期望置信比错误答案高 $\delta_{\mathrm{Margin}}=1$；$\mathcal{L}_{\mathrm{Sum}}=|1-(\mu_{\text{correct}}+\mu_{\text{wrong}})|$ 强制两者之和约等于 1，对应「正确率约为 1 时该答案就该几乎完全可信」的语义。总损失是四项等权相加 $\mathcal{L}=\mathcal{L}_{\mathrm{LM}}+\mathcal{L}_{\mathrm{JSD}}+\mathcal{L}_{\mathrm{Margin}}+\mathcal{L}_{\mathrm{Sum}}$。三项缺一不可：单用 JSD 只保证「分布不同」但方向可能颠倒，单用 Margin 又缺乏对分布形状的控制、会让两分布都偏高，而 Sum 项把「置信度=正确概率」的定义硬写进损失，避免训练后整体保守化（消融已证实）。
 
 ### 损失函数 / 训练策略
 四项损失等权相加；LoRA rank=16，α=32，加在 Q/K/V/O 投影；AdamW + 5% warmup + 线性衰减，lr 为 Mistral $3\times 10^{-5}$、其余 $1\times 10^{-5}$；batch 16、gradient accumulation 2、4 epoch；单卡 H200。

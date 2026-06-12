@@ -44,6 +44,25 @@ $$p(Y_i|X) \approx \sum_{C_{i,j} \in \mathcal{C}_i} p(Y_i|X, C_{i,j}) \cdot p(X|
 
 其中 $p(Y_i|X, C_{i,j})$ 由 CLIP 相似度算出，$p(X|C_{i,j})$ 是一个自适应 soft-trim 似然（充当概念的权重）。于是整套方法分两块：一块负责**造概念**——用 LLM 离线合成一组高质量、有区分度的概念当作概念提案分布；另一块负责**用概念**——在贝叶斯加权时压住那些和图像格格不入的离群概念。两块都做完，推理时只是一次加权求和，零额外计算。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：类名 + 测试图像"]
+    subgraph SYN["LLM 多阶段概念合成（离线·造概念）"]
+        direction TB
+        S1["① 构建难负例邻域<br/>CLIP 编码类名取 top-H 近邻类"]
+        S2["② 对比提示生成原子概念<br/>GPT-4.1 区分目标类与难负例"]
+        S3["③ 组合概念构造<br/>原子概念 3 个一组用 or 连接"]
+        S4["④ DPP 子集选择<br/>挑 16/50 个多样性最优概念"]
+        S1 --> S2 --> S3 --> S4
+    end
+    IN --> SYN
+    SYN -->|概念提案分布| SIM["CLIP 算相似度集合<br/>每个概念与图像逐个匹配"]
+    SIM --> TRIM["自适应 Soft-Trim 似然<br/>中位数/MAD 估污染率再 logistic 赋权"]
+    TRIM -->|离群概念降权| AGG["贝叶斯加权求和<br/>Σ 相似度 × 概念权重"]
+    AGG --> OUT["输出：预测类别"]
+```
+
 ### 关键设计
 
 **1. LLM 驱动的多阶段概念合成：造出可区分、可组合、够多样的概念**

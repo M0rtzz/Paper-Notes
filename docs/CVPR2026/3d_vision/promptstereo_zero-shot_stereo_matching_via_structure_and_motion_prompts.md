@@ -40,7 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-以 MonSter 为基线。输入立体图像对 → Depth Anything V2 提取单目特征+相对深度 → MonSter 特征编码器提取多尺度立体特征 → 代价体积构建+初始视差回归 → Affine-Invariant Fusion 融合初始视差和单目深度 → PRU 迭代精炼 → 输出最终视差。
+以 MonSter 为基线。输入立体图像对 → Depth Anything V2 提取单目特征+相对深度 → MonSter 特征编码器提取多尺度立体特征 → 代价体积构建+初始视差回归 → 仿射不变融合（AIF）把初始视差和单目深度拼成可靠起点 → PRU 迭代精炼（每步由 Structure Prompt 与 Motion Prompt 以残差方式注入结构与运动线索）→ 输出最终视差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["立体图像对"] --> B["Depth Anything V2<br/>单目特征 + 相对深度 d_M"]
+    A --> C["MonSter 特征编码器<br/>多尺度立体特征"]
+    C --> D["代价体积构建<br/>初始视差回归 d_0"]
+    B --> E["仿射不变融合（AIF）<br/>d_0 与 d_M 归一化软选择 → d_F"]
+    D --> E
+    E --> F
+    subgraph LOOP["Prompt Recurrent Unit（PRU）迭代精炼"]
+        direction TB
+        G["Structure Prompt（SP）<br/>单目结构残差注入"] --> F["DPT 解码器更新隐状态"]
+        H["Motion Prompt（MP）<br/>立体运动残差注入"] --> F
+    end
+    F --> I["最终视差"]
+```
 
 ### 关键设计
 

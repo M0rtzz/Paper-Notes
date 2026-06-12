@@ -39,6 +39,27 @@ tags:
 
 LMP 想解决的是：GroundingDINO 这类开放词汇检测器完全靠文本提示，跨域少样本时既抓不住目标域的风格纹理，又容易被视觉相似的背景骗到。它的做法是在原有文本分支旁边再挂一条**视觉引导分支**，把少量 support 图像里的视觉证据结构化成「原型」注入检测流程。整体流转是：文本分支照旧维持开放词汇语义；视觉分支先从 support 图构建正类原型和硬负原型，经特征增强器精炼后，用原型相似度选 query、再经视觉解码器输出框；两条分支联合训练，推理时把各自预测集成起来，让语义抽象和域自适应细节互补。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    subgraph VPC["视觉原型构建"]
+        direction TB
+        S["support 图像<br/>RoIAlign + GAP 取特征"] --> P1["类级视觉原型 P_cls<br/>同类实例取均值"]
+        Q["query 图 GT 框<br/>随机抖动取中等 IoU 框"] --> P2["硬负原型 P_neg<br/>建模域内干扰物/混淆背景"]
+    end
+    P1 --> V["拼接 V = [P_cls; P_neg]"]
+    P2 --> V
+    subgraph VB["原型精炼与视觉解码（视觉引导分支）"]
+        direction TB
+        ENH["视觉特征增强器<br/>6 层 self/cross-attention"] --> QS["视觉引导查询选择<br/>原型-图像余弦相似度取 Top-900"]
+        QS --> VDEC["视觉解码器<br/>迭代精炼出框 + 原型对齐评分"]
+    end
+    V --> ENH
+    IMG["query 图像 token X_I"] --> ENH
+    TXT["文本分支<br/>GroundingDINO 开放词汇语义"] --> ENS["集成推理<br/>语义抽象 + 域自适应细节互补"]
+    VDEC --> ENS
+```
+
 ### 关键设计
 
 **1. 类级视觉原型：给每个新类一个域内的视觉锚点**

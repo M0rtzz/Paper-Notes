@@ -44,6 +44,29 @@ tags:
 
 整篇工作要回答的问题是：在专家系统性分歧的商业 idea 评估里，judge 该向「共识」收敛还是向「个体」对齐。为此它分两步走。第一步是数据构建——围绕 300 个基于专利、由 LLM 生成的产品 idea（覆盖 NLP/CS/MatChem 三领域），让每个 idea 由 4-12 名领域专家在 6 个维度上按阶梯式协议打分，最终得到约 3,109 条评分，并用双层指标刻画分歧到底是噪声还是结构。第二步是 judge 评估——在同一份数据和 leave-one-out 协议下，把 zero-shot、aggregate、personalized 三种 judge 配置摆在一起，唯一的变量是 few-shot 例子的评审员归属，再用 Krippendorff's α 比对 judge 预测与对应专家标注的对齐度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["300 个专利支撑的产品 idea<br/>(NLP / CS / MatChem 三领域)"] --> P
+    subgraph P["阶梯式评分协议"]
+        direction TB
+        P1["先评 specificity（清晰度）"] -->|过阈值| P2["technical validity（可行性）"]
+        P2 -->|过阈值| P3["innovativeness + competitive advantage"]
+        P1 -->|过阈值| P4["need validity + market size（商业侧）"]
+    end
+    P --> S["约 3109 条专家评分<br/>缺失即信号"]
+    S --> M["双层分歧指标<br/>Fine α + Coarse Jaccard → 结构性异质"]
+    M --> J
+    subgraph J["三类 judge 配置（leave-one-out，仅换 few-shot 例子归属）"]
+        direction TB
+        J1["Zero-shot：仅 rubric"]
+        J2["Aggregate：混合他人历史"]
+        J3["Personalized：目标评审员自己的历史"]
+    end
+    J --> V["自信度 <80 丢弃 + 三种子多数投票"]
+    V --> R["Krippendorff α 对齐度<br/>Personalized 最贴合对应专家"]
+```
+
 ### 关键设计
 
 **1. PBIG-DATA 多维 + 阶梯式评分协议：把「该评哪些维度、用什么尺度、何时跳过」写进数据本身**
@@ -52,17 +75,17 @@ tags:
 
 阶梯筛选规则是逐层放行：先打 specificity，过阈值才评 technical validity，再过阈值才评 innovativeness 和 competitive advantage；need validity / market size 也仅在 specificity 过阈值时才评。这样一来低质 idea 不会被硬塞进下游维度，留下的评分都是「值得评」的，缺失本身也成了一个信号。
 
-**2. 三类 judge 配置对比设计：只动评审员条件这一个变量，隔离「target signal 假设」**
-
-要严格回答「汇总 vs 个性化哪个对」，必须让例子数量、领域、采样逻辑全部对齐，只改 few-shot 例子的评审员归属。于是三种配置被设计成：(a) Zero-shot judge 只给 rubric 和指令、不看任何专家历史；(b) Aggregate judge 的 few-shot 例子取自「非目标评审员」的混合历史（同领域、同维度、不同专利），代表 pooled-label 假设；(c) Personalized judge 的 few-shot 例子专门取自「目标评审员自己」的历史，代表多元化假设。后两者的唯一差别就是例子归属，保证对比公平。
-
-为降低预测噪声，judge 同时输出 0-100 的自信度，沿用 Dong et al. 2024 的做法把自信度 <80 的预测丢掉，并用三个随机种子做多数投票。这套控制变量的安排是结论可信的关键——任何 personalized 优于 aggregate 的差距都只能归因到「向单一评审员对齐」这一件事上。
-
-**3. 分歧量化的双层指标（Fine vs Coarse）：分开看序数分数和强 idea 选择**
+**2. 分歧量化的双层指标（Fine vs Coarse）：分开看序数分数和强 idea 选择**
 
 如果只用一个指标，「分歧大」既可能是纯噪声、也可能是结构性异质，无法区分。论文因此把 agreement 拆成两层：Fine-grained agreement 用 Krippendorff's α 衡量序数评分的一致性；Coarse agreement 则看「各评审员各自中位数以上的 idea 集合」之间的 Jaccard 相似度（仅在两两评审员有 ≥10 条共评 idea 时才计算）。
 
 两层一起看才能揭示真相：细粒度上分歧很大、粗粒度上却仍有共识，说明每个评审员有自己稳定但彼此不同的标准，而非随机乱打。这个「细粒度低、粗粒度高」的组合正是后续支持 personalized judge 的实证基础——既然分歧是结构性的，那为每个评审员配一个 judge 就比强行收敛到平均更合理。
+
+**3. 三类 judge 配置对比设计：只动评审员条件这一个变量，隔离「target signal 假设」**
+
+要严格回答「汇总 vs 个性化哪个对」，必须让例子数量、领域、采样逻辑全部对齐，只改 few-shot 例子的评审员归属。于是三种配置被设计成：(a) Zero-shot judge 只给 rubric 和指令、不看任何专家历史；(b) Aggregate judge 的 few-shot 例子取自「非目标评审员」的混合历史（同领域、同维度、不同专利），代表 pooled-label 假设；(c) Personalized judge 的 few-shot 例子专门取自「目标评审员自己」的历史，代表多元化假设。后两者的唯一差别就是例子归属，保证对比公平。
+
+为降低预测噪声，judge 同时输出 0-100 的自信度，沿用 Dong et al. 2024 的做法把自信度 <80 的预测丢掉，并用三个随机种子做多数投票。这套控制变量的安排是结论可信的关键——任何 personalized 优于 aggregate 的差距都只能归因到「向单一评审员对齐」这一件事上。
 
 ### 损失函数 / 训练策略
 

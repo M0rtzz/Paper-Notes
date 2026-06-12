@@ -44,6 +44,18 @@ Clustered Self-Assessment 是一个两阶段流程。给定问题后，模型先
 
 这个流程的关键不是让模型再生成一段解释，而是把不确定性估计变成一个单 token 概率读取问题。采样负责暴露可能答案空间，聚类负责压缩语义冗余，多选题负责触发模型的比较式自评估。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题"] --> G["贪心解码<br/>得到待评估的主答案"]
+    Q --> SMP["额外采样若干候选答案"]
+    G --> CL["NLI 驱动的答案聚类<br/>双向蕴含合并语义等价答案"]
+    SMP --> CL
+    CL --> MCQ["由答案簇构造自评估多选题<br/>每簇代表答案→一个选项 + None of the above"]
+    MCQ --> LLM["喂回原 LLM<br/>读取主答案选项标签的下一 token 概率"]
+    LLM --> S["token 概率作为置信度<br/>主答案选项概率 S=P(c_i*)"]
+```
+
 ### 关键设计
 
 **1. NLI 驱动的答案聚类：把采样答案里语义重复的部分先合并掉，再让它们当选项**

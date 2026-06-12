@@ -44,6 +44,27 @@ tags:
 
 GLIER 把法律案例检索从"query→doc 的直接相似度匹配"改写成"query→（罪名, 要件）→doc 的链式推断"，让检索沿着法律专家的思路走：先从案情推出隐变量 $z=(c,e)$，再据此找符合该法理画像的先例。它由两个串联模块组成：生成器 GLIE（mT5-base 学生模型）把口语化的 query $q$ 生成结构化元组 $K_q=(c_q,e_q)$，其监督信号来自 ChatGLM 教师离线蒸馏出的"罪名-要件"silver standard $\mathcal{D}_{struct}$；精排器 MFDR 则把生成置信、结构匹配、词项匹配拼成 5 维特征 $\mathbf{v}_{q,d}\in\mathbb{R}^5$，经 3 层 MLP（in→64→32→1）输出相关性分数。整体可形式化为 $\hat z = \arg\max_z P_\theta(z|q)$、$S(q,d)=f_\psi(q,d,\hat z)$，其中 $P_\theta(z|q)=P_\theta(c|q)P_\theta(e|q,c)$ 显式编码了"罪名先于要件"的条件依赖。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["口语化查询 q<br/>（事实描述）"] --> GEN["联合 seq2seq 生成 + 受限解码<br/>mT5 生成 c [SEP] e"]
+    subgraph DISTILL["LLM 蒸馏 + 防作弊 prompt（离线监督）"]
+        direction TB
+        DOC["候选文书 d + 真实罪名"] --> CG["ChatGLM 抽取<br/>禁量刑 + 术语标准化"]
+        CG --> SILVER["silver standard<br/>（罪名-要件）"]
+    end
+    SILVER -. 监督训练 .-> GEN
+    GEN --> Z["结构化元组<br/>z =（罪名 c, 要件 e）"]
+    Z --> MFDR
+    subgraph MFDR["多视图 5 维证据融合（MFDR）"]
+        direction TB
+        F1["生成置信 v1, v2"] --> MLP["3 层 MLP<br/>in→64→32→1"]
+        F3["结构匹配 v3, v4"] --> MLP
+        F5["词项 BM25 v5"] --> MLP
+    end
+    MFDR --> RANK["相关性分数<br/>候选案例排序"]
+```
+
 ### 关键设计
 
 **1. 联合 seq2seq 生成 + 受限解码：让 autoregressive 解码天然承载罪名→要件的法理顺序**

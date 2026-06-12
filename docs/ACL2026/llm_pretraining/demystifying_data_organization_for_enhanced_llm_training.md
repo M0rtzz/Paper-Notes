@@ -45,6 +45,30 @@ tags:
 
 STR 与 SAW 是最终推荐策略。STR 结合 G1、G2 和 G4：保持全局分数趋势，在局部过渡区域做 folding review，并加入局部多样性。SAW 在 STR 基础上加入 G3，用 Zig-zag 替换 transition region 中的 folding，使分数曲线更连续。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["复用已有样本分数 γ<br/>（质量/难度，不重新评分）"] --> B["按分数全局排序得 D_sort"]
+    subgraph D1["边界强化（G1）· SEG"]
+        C1["切段并按 rank 分配到训练头/尾<br/>控制谁起步、谁收尾"]
+    end
+    subgraph D2["循环复习与连续课程（G2、G3）· FO / ZIG"]
+        direction TB
+        C2["FO 折叠：跨步分层<br/>每周期覆盖全分数谱"]
+        C2 --> C3["ZIG 之字形：奇数周期反向<br/>抹平周期边界断崖"]
+    end
+    subgraph D3["局部多样性与组合主方法（G4）· JIT + STR/SAW"]
+        direction TB
+        C4["JIT 抖动：仅窗口内打散<br/>保住全局课程趋势"]
+        C4 --> C5["STR：稳定区单调<br/>＋过渡区 FO ＋ JIT"]
+        C5 --> C6["SAW：过渡区 FO 换成 ZIG<br/>分数曲线更连续"]
+    end
+    B --> D1
+    D1 --> D2
+    D2 --> D3
+    D3 --> G["训练序列 D_ord<br/>预训练 / 数学·代码 SFT 验证"]
+```
+
 ### 关键设计
 
 **1. 边界强化（G1）与 SEG：把训练序列的开头和结尾当成可以单独设计的两个区域**

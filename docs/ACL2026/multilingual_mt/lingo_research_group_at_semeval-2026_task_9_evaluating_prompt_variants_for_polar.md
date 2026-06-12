@@ -45,6 +45,18 @@ tags:
 
 系统先在训练数据上评估不同 prompt 和模型组合，再固定选中的 prompt 与 Gemma3-27B，在官方 held-out test set 上提交。评价指标使用 macro-averaged F1，因为三个任务都存在类别不均衡，尤其多标签任务中少数标签对 macro F1 影响很大。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：社交媒体文本 x（22 种语言）"] --> B["12 类 prompt 变体（控制变量）<br/>逐级加 定义 → 边界 → 推理 → 样例"]
+    B --> C["统一英文 prompt 跨语言推理<br/>一套英文模板硬扛 22 语"]
+    C --> D["开发集筛选<br/>aya-101 vs Gemma3-27B → 选 Gemma3-27B"]
+    D --> E["保守决策式最终 prompt<br/>仅明确证据才判极化"]
+    E --> F["Subtask 1 是否极化<br/>二分类"]
+    E --> G["Subtask 2 极化对象<br/>多标签"]
+    E --> H["Subtask 3 表现形式<br/>多标签"]
+```
+
 ### 关键设计
 
 **1. 12 类 prompt 变体作为控制变量：用阶梯式 prompt 隔离"定义/推理/样例"各自的作用**

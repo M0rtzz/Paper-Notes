@@ -40,7 +40,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PLSemanticsBench 要解决的是"如何把 LLM 的规则推理能力和预训练词法先验拆开测"，办法是把一个 featherweight C 语言 $\text{C}^{\star}$ 配上完整的形式语义规则，再机械性地改写这些规则、看模型是否跟着改答案。整条 pipeline 分四步：先用 EBNF 定义 $\text{C}^{\star}$ 语法，并用 small-step 操作语义 $\mathbb{S}$ 与 K 语义 $\mathbb{K}$ 两套体系各给一份完整规则文本；再造三档结构复杂度的程序——从 LeetCode / HumanEval / MBPP / CodeContests 改写 162 段 Human-Written、用 Qwen2.5-Inst 32B 翻译 165 段 LLM-Translated、用语义感知的 grammar-based fuzzer 生成 165 段 Fuzzer-Generated（cyclomatic 复杂度从 3 涨到 100，trace 长度从 20 涨到 190）；然后把标准语义机械替换为两种扰动；最后把"程序 + 规则文本"喂给模型跑三类任务，对照 ANTLR4 / K-framework 跑出的 ground-truth 打分。
+PLSemanticsBench 要解决的是"如何把 LLM 的规则推理能力和预训练词法先验拆开测"，办法是把一个 featherweight C 语言 $\text{C}^{\star}$ 配上完整的形式语义规则，再机械性地改写这些规则、看模型是否跟着改答案。整条 pipeline 分四步：先用 EBNF 定义 $\text{C}^{\star}$ 语法，并用 small-step 操作语义 $\mathbb{S}$ 与 K 语义 $\mathbb{K}$ 两套体系各给一份完整规则文本；再造三档结构复杂度的程序——从 LeetCode / HumanEval / MBPP / CodeContests 改写 162 段 Human-Written、用 Qwen2.5-Inst 32B 翻译 165 段 LLM-Translated、用语义感知的 grammar-based fuzzer 生成 165 段 Fuzzer-Generated（cyclomatic 复杂度从 3 涨到 100，trace 长度从 20 涨到 190）；然后把标准语义机械替换为两种扰动；最后把"程序 + 规则文本"喂给模型跑三类任务，对照 ANTLR4 / K-framework 跑出的 ground-truth 打分。下图把这条四步 pipeline 画出来，其中"形式语义双轨制""语义扰动""三任务评测"三个节点对应下面三个关键设计：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 420}}}%%
+flowchart TD
+    A["featherweight C 语言 C*（EBNF 语法）"] --> B["形式语义双轨制<br/>操作语义 S + K 语义 K，各给完整规则文本"]
+    A --> P["三档复杂度程序<br/>Human-Written 162 / LLM-Translated 165 / Fuzzer-Generated 165"]
+    B --> C["语义扰动：std / KeywordSwap / KeywordObf<br/>只改'符号→规则'映射，保留语法表象"]
+    P --> C
+    C --> D["三任务评测<br/>PredState(H1) / PredRule(H2) / PredTrace(H3)"]
+    D --> E["对照 ANTLR4 / K-framework ground-truth 打分<br/>+ Δcnd、Δis 两个 delta 指标"]
+```
 
 ### 关键设计
 

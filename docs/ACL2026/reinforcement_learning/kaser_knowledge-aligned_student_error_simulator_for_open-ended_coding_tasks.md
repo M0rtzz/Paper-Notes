@@ -44,6 +44,17 @@ KASER由三部分组成。第一部分是Student Knowledge Estimator，用知识
 
 输入包括学生历史、下一题题面、该题涉及的KCs及学生掌握度；输出是预测的学生代码和可能包含的错误集合。评估既在单个学生-题目对层面比较预测代码和真实提交，也在题目层面比较模型能覆盖多少种学生错误和代码多样性。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：学生历史提交 + 下一题题面 + 相关 KCs"] --> B["Student Knowledge Estimator<br/>知识追踪编码 → KC 掌握度向量 m_t ∈ [0,1]^k"]
+    B --> C["Knowledge-guided code predictor<br/>KC 掌握度写入 prompt → Qwen2.5-Coder 7B SFT"]
+    C --> D["GRPO hybrid reward<br/>每个输入采样 G=5 个候选代码"]
+    D --> E["混合奖励 R = R_Sim + R_Error + R_Div<br/>代码相似 / 错误匹配 IoU / 群体多样性"]
+    E -->|组内 z-score 优势 + KL 惩罚回传更新| C
+    E --> F["输出：预测学生代码 + 错误集合"]
+```
+
 ### 关键设计
 
 **1. Student Knowledge Estimator：把学生历史压成可解释的知识画像**

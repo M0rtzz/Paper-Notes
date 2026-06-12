@@ -55,6 +55,22 @@ PCFJudge 的输入是一个用户问题 $x$ 和一组候选回答 $Y=\{y_1,\dots
 
 这个框架的关键不是让模型获得更多知识，而是让同一个 judge 在不同展示顺序下重复表态。只在某个位置上显得更好的答案会被平均掉，而跨顺序稳定更好的答案会被放大。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["问题 x + 候选集 Y"] --> B["事实性优先的 listwise prompt<br/>优先事实可靠性，警惕无依据细节"]
+    B --> C["生成 K=7 个固定排列"]
+    C --> D["同一 judge 逐排列评审<br/>0–100 分 + 完整排序 + 二值标记"]
+    D -->|二值标记只约束排列内部评分，不重复扣分| E["映射回原始候选 ID"]
+    E --> F
+    subgraph F["排列共识聚合"]
+        direction TB
+        G["平均分 + Borda 排序分"] --> H["top-set 投票 + 校准不确定性"]
+        H --> I["按固定权重合成 Cᵢ"]
+    end
+    F --> J["选 Cᵢ 最高者为事实性赢家"]
+```
+
 ### 关键设计
 
 **1. 事实性优先的 listwise 评审 prompt：把 judge 的注意力从通用偏好拉回事实可靠性**

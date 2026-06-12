@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-统一 base：Qwen2.5-7B-Instruct。Board state 用 visual ASCII 格式（试过 FEN 与 spaced FEN 后嫌 tokenization 不均匀），move 用 UCI 格式。任务套件四件：Predict Move（给棋盘选最优走法）、Best Move / Worst Move（5 选 1）、Legal Moves（IoU 评估）。流程：先固定 15M token SFT、8k samples RL（Dr. GRPO + Clip-Higher + no KL）做 ablation 选最强 recipe，再 scale 到 60M+60M token SFT + 更多 RL。
+统一 base：Qwen2.5-7B-Instruct。Board state 用 visual ASCII 格式（试过 FEN 与 spaced FEN 后嫌 tokenization 不均匀），move 用 UCI 格式。任务套件四件：Predict Move（给棋盘选最优走法）、Best Move / Worst Move（5 选 1）、Legal Moves（IoU 评估）。流程：先固定 15M token SFT、8k samples RL（Dr. GRPO + Clip-Higher + no KL）做 ablation 选最强 recipe，再 scale 到 60M+60M token SFT + 更多 RL。整条研究就是一条「数据 → SFT → RL → 分析」的流水线：六类理论驱动的 SFT 数据集喂进 Qwen2.5-7B 做 SFT，得到 SFT-checkpoint 后跑多任务可验证 RL 得到最终模型；两把分析尺子贯穿全程——用 gpt-oss-120b 当 judge 测「推理忠实性」、用一个轻量 0.5B 模型测「国象信息密度」，前者解释为什么 Best Line 比 Best Move 更可信、后者解释为什么 dense 数据在等量 token 下训得更好。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["六类理论驱动 SFT 数据集<br/>从拒采样到 Best Move / Best Line"] --> B["SFT<br/>Qwen2.5-7B-Instruct"]
+    B --> C["多任务可验证 RL<br/>Dr.GRPO + Clip-Higher + no KL，4 任务同训"]
+    C --> D["最终 7B 国象推理模型"]
+    B -.SFT-checkpoint.-> E["推理忠实性评判<br/>gpt-oss-120b 比对 trace ↔ 走法"]
+    C -.RL 模型.-> E
+    A -.诊断为何 dense 更优.-> F["国象信息密度框架<br/>预测复杂度 + 准确性 + 棋类 token 密度"]
+```
 
 ### 关键设计
 
@@ -57,9 +68,12 @@ reward 全部可程序化算出——Predict Move 是 normalized rank（$r\in[0,
 
 只看终局分数会得出"Best Move 和 Best Line 效果相近"的错误结论，引入忠实性维度后才能区分两条训练路径。作者用 gpt-oss-120b 当 judge 逐条评分 reasoning trace 与最终答案的对齐度，结果 Best Move 数据 SFT 后的 checkpoint 经 RL 后 reasoning 与 move 严重不一致（典型的"先决定再编理由"），Best Line 训出来的经 RL 后却保持忠实。归因是：Best Line 强迫模型在 token 序列里学到 $V$ 和 $\mathcal{T}$，相当于内化一个 mini world model；Best Move 只学到 policy $\pi_\theta$，于是 RL 提升的是潜在能力但表面推理与答案脱节（呼应 Turpin et al. 2023 的 unfaithful CoT）。有了忠实性这把尺子，研究者才能选"性能差不多但推理可信"的路径，这对安全和可解释性意义重大。
 
+**4. 国象信息密度（chess information density）框架：解释"为什么 dense 数据集在等量 token 下训得更好"**
+
+ablation 把训练 token 数固定住后，"哪个数据集更优"就归结成"等量 token 里塞了多少有用信息"——但信息论没有现成定义能直接套，作者于是从三个可度量维度自定义这把尺子：① 预测复杂度（predictive complexity）——数据在训练全程是否仍然难预测；② 准确性（accuracy）——token 是否正确 grounded 到棋盘与任务；③ 棋类 token 密度（chess token density）——预测某个 token 是否真需要棋盘理解与策略（直接输出最佳走法的 Best Move，其每个 token 的"含金量"远高于 Rejection Sampling 里大段自然语言冗余）。为把"预测复杂度"落成数字，作者拿 Qwen2.5-0.5B 在 4M unique token 上 SFT 2 epoch，统计验证集里被分配概率 $>0.995$（即模型已"背下来"）的 token 比例：比例越高越平凡、信息越稀。结果 Best Line / Best Move 的 trivial token 比例最低（0% / 28.6%）是真·dense，而 Verbalized Alpha-Beta Pruning 训完飙到 71%——程序化生成的搜索话术被迅速记死、只剩零星 move 决策与估值还带不确定性，这正解释了它单独训为何反而拖累性能。这把尺子可迁移到 SAT、定理证明等其他可验证 RL 域，是个诊断"数据值不值得训"的通用工具。
+
 ### 损失函数 / 训练策略
 - SFT 用 LlamaFactory，RL 用 veRL；Dr. GRPO + Clip-Higher + no KL；scale 阶段先 60M token Best Move-All 再 60M token Best Line-All 的两段式 curriculum。
-- "chess information density" 用 Qwen2.5-0.5B 在 4M unique token 上 SFT 2 epoch、监测验证 token 被分配概率 $>0.995$ 的比例，作为 predictive complexity 的代理。
 
 ## 实验关键数据
 

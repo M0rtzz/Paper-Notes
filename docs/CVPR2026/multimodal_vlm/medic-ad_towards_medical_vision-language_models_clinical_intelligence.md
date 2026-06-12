@@ -39,6 +39,31 @@ Medic-AD 通过三阶段渐进式训练框架——异常检测（<Ano> token）
 
 Medic-AD 想解决的问题是：现成的医学 VLM 知识面够广，但在临床里真正要用的三件事——找到病灶、对比前后变化、给出可看的证据——都做得不到位。它的做法是把这三件事拆成一条"检测→比较→解释"的诊断流水线，按这个顺序分三阶段在 Lingshu 基线上渐进式训练。每个阶段引入一个专用 token 和对应模块，且后一阶段直接复用前一阶段学到的表征：Stage 1 先让模型学会"哪里异常"并输出 `<Ano>` token，Stage 2 在此基础上比较两次扫描产出 `<Diff>` token，Stage 3 再把异常表征还原成空间热力图。训练时冻结前阶段模块，能力只增不退。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入医学图像<br/>(单图 / 基线+随访两张)"] --> VE["视觉编码器<br/>取 4 个中间层多尺度特征"]
+    subgraph S1["异常感知 token &lt;Ano&gt;（Stage 1 检测）"]
+        direction TB
+        A1["异常处理器：Abnormal/Normal<br/>系统 token 交叉注意力"] --> A2["Sigmoid 逐 patch 异常概率<br/>相减得 Anomaly Attention Map"]
+        A2 --> A3["调制视觉特征 → Anomaly Q-Former<br/>→ MLP → &lt;Ano&gt; token"]
+    end
+    VE --> A1
+    subgraph S2["差异推理 token &lt;Diff&gt;（Stage 2 比较）"]
+        direction TB
+        B1["两图调制特征送入<br/>Diff Q-Former 对比差异"] --> B2["MLP → &lt;Diff&gt; token<br/>接到输入序列末尾"]
+    end
+    A3 --> B1
+    subgraph S3["热力图生成（Stage 3 解释）"]
+        direction TB
+        C1["&lt;Ano&gt; + 中间层特征<br/>融合块"] --> C2["ConvNeXt 分割头<br/>→ 像素级热力图叠加原图"]
+    end
+    A3 --> C1
+    A3 --> LLM["语言模型<br/>检测→比较→解释 文字结论"]
+    B2 --> LLM
+    C2 --> EVID["可视化证据<br/>与文字结论空间对齐"]
+```
+
 ### 关键设计
 
 **1. 异常感知 token `<Ano>`：把"什么是异常"显式建模出来，而不是让模型隐式去猜**

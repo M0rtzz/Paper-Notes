@@ -48,6 +48,19 @@ Rex 是一个**配方**而非单一格式：给一个显式 (S)RK 方案 $\bm{\P
   3. **Rex**：在 $\bm{\Psi}_h$ 外套 McCallum-Foster 双状态耦合，得到可逆格式 $\bm{\Upsilon}$（命题 3.2）。
 - **输出**：一族求解器 Rex (Euler)、Rex (Euler-Maruyama)、Rex (ShARK)、Rex (RK4)、Rex (Dopri5) 等，自动是 DDIM、DPM-Solver 等的"可逆版本"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：扩散反向 SDE/ODE（半线性漂移）<br/>+ 噪声调度 + 显式 (S)RK 基方案 Φ"] --> S1
+    subgraph S1["Princeps：构造指数 (S)RK"]
+        direction TB
+        B["Reparameterize：Lawson 积分因子 Ξ(t)<br/>换元 Y=Ξ⁻¹X → 纯漂移+单位扩散的等价方程"] --> C["在等价方程上套 s 段 (S)RK Φ<br/>再变量回代 → 指数加权求解器 Ψₕ"]
+    end
+    S1 --> D["McCallum-Foster 双状态耦合<br/>引入 ζ 与辅助态 X̂ → 代数可逆格式 Υ"]
+    E["Brownian 可重放<br/>splittable PRNG 单 seed 重建 Wₙ、Hₙ 增量"] -.支撑反向步.-> D
+    D --> F["输出：Rex 家族（Euler / Euler-Maruyama<br/>/ ShARK / RK4 / Dopri5），即各采样器的可逆版"]
+```
+
 ### 关键设计
 
 **1. Princeps：把任意显式 (S)RK 和扩散方程的半线性结构融成"指数 (S)RK"**

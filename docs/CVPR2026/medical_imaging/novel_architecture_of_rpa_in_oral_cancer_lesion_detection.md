@@ -45,6 +45,16 @@ tags:
 
 这篇论文要解决的不是「怎么把口腔癌分得更准」，而是「怎么把一个已经训好的 CNN 部署到临床 RPA 流水线里、让它跑得足够快」。作者把同一个分类模型放进两条流水线里做对照：OC-RPAv1 是朴素的 Python 实现，图像一张张读、一张张推；OC-RPAv2 在它之上做软件工程优化，把模型加载和推理两件事拆开、再把图像攒成批一起算。整条链路仍由 UiPath 负责文件搬运、目录管理这类工作流编排，真正吃算力的推理则交给 Python 函数——RPA 管"流程"，Python 管"计算"。三个设计点里前两个针对部署效率，第三个交代被部署的模型本身。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["临床口腔图像"] --> B["UiPath 工作流编排<br/>文件搬运 / 目录管理（RPA 管流程，Python 管计算）"]
+    B --> C["Singleton 模式<br/>模型仅加载一次、常驻内存<br/>（消除 ~78% 重载开销 → 0.28s/张）"]
+    C --> D["Batch Processing 模式<br/>多图攒批一次喂 GPU 并行<br/>（摊薄固定开销 → 0.06s/张）"]
+    D --> E["EfficientNetV2B1 分类骨干<br/>224×224×3 → softmax 16 类"]
+    E --> F["逐图记录结果 + 移至独立目录<br/>（保证结果可追溯）"]
+```
+
 ### 关键设计
 
 **1. Singleton 模式：把"每次预测都重载一遍模型"砍掉**

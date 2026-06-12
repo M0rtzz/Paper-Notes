@@ -43,25 +43,37 @@ tags:
 ### 整体框架
 训练流水线: (i) 给定属性 $attr$, 收集 prompt 对 $(x,x')$, 其中 $x'$ 比 $x$ 多一段 trait-eliciting 指令; (ii) 用 LLM 在 $x'$ 上采样响应 $y'$, 用 LLM judge $J_{attr}$ 与 coherence judge $J_{coher}$ 过滤掉不成功 / 不连贯的样本; (iii) 计算 $\mathbf A_{y_i'|PS}=\mathrm{LLM}(x'y')$ 与 $\mathbf A_{y_i'}=\mathrm{LLM}(xy')$, 差值就是干预 $\Delta_{PS}$; (iv) 训练 PSR 模块 (单层 / 全层版本) 让其激活逼近 $\mathbf A_{y_i'|PS}$。推理: 仅用原 prompt $x$, 把 PSR 干预插回 forward, 全局系数 $\alpha$ 作为强度旋钮。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["将 prompt steering 形式化为 token-specific activation steering<br/>放松「强度跨 token 一致」假设 3.2"]
+    A["收集 prompt 对 (x, x')<br/>x' 多一段 trait-eliciting 指令"]
+    B["LLM 采样响应 y' + judge 过滤<br/>J_attr / J_coher 丢掉不成功·不连贯样本"]
+    C["计算差分干预<br/>Δ_PS = A(x'y') − A(xy')"]
+    D["PSR：ReLU 探针估 token 强度 λ<br/>S-PSR 单层 / A-PSR 全层"]
+    E["双轨训练目标<br/>MSE 对齐激活 / LL 对齐输出"]
+    G["推理：仅用 x 插回 PSR 干预<br/>全局系数 α 调强度"]
+    F --> D
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> G
+```
+
 ### 关键设计
 
-1. **将 prompt steering 形式化为 token-specific activation steering**:
+**1. 将 prompt steering 形式化为 token-specific activation steering：把"加指令"翻译成可监督的逐 token 干预**
 
-    - 功能: 给出一个数学等式, 把 prompt 注入的真实激活效果分解为 "逐层、逐 token 的差分 $\Delta_{PS}$", 并区分**累积版本** $\Delta_{PS_{acc}}$ (相对完全无 steering 的 baseline) 与**局部版本** $\Delta_{PS_{loc}}$ (相对前一层已被 steered 的 baseline), 分别对应单层 / 全层 PSR。
-    - 核心思路: 写出 $\mathbf A_{l,y_i'|PS}=\mathbf A_{l,y_i'}+\Delta_{PS}(x'y'_{\le i},xy'_{\le i})$ (Eq. 3); 在此基础上提出两条最小假设——假设 3.1 (干预沿单一方向 $\mathbf z_{attr}$) + 假设 3.2 (强度跨 token 一致) ⇒ 退化为现有常量 steering Eq. 2; 论文用 Llama-3.2-3B sycophancy 数据画图证明假设 3.2 与现实不符, 因此**只保留 3.1, 把 3.2 放松**为 "强度可从激活解码得出" (假设 3.2a)。
-    - 设计动机: 这一形式化是后续所有方法论的脚手架, 它直接告诉你 "如果想 mimick prompt, 至少要让 $\lambda$ 随 token 变化"。
+激活引导长期默认"用一个常向量 $\alpha\mathbf z$ 就能复制 prompting 的效果", 但没人验证过这个隐含假设。本文先把 prompt 注入的真实激活效果写成逐层逐 token 的差分 $\mathbf A_{l,y_i'|PS}=\mathbf A_{l,y_i'}+\Delta_{PS}(x'y'_{\le i},xy'_{\le i})$ (Eq. 3), 并区分**累积版本** $\Delta_{PS_{acc}}$ (相对完全无 steering 的 baseline, 对应单层 PSR) 与**局部版本** $\Delta_{PS_{loc}}$ (相对前一层已被 steered 的 baseline, 对应全层 PSR)。在此之上提出两条最小假设——假设 3.1 (干预沿单一方向 $\mathbf z_{attr}$) + 假设 3.2 (强度跨 token 一致), 二者合起来正好退化成现有的常量 steering (Eq. 2)。作者用 Llama-3.2-3B 的 sycophancy 数据画图证明假设 3.2 与现实不符: prompt 在不同 token 上的强度差几个数量级, 某些 token 几乎不动、某些被狠狠改写, 于是**只保留 3.1、把 3.2 放松**成"强度可从激活解码得出"(假设 3.2a)。这套形式化是后续所有方法的脚手架, 它直接告诉你想 mimick prompt, 至少得让强度系数 $\lambda$ 随 token 变化。
 
-2. **PSR 架构: ReLU 探针估计 token-level 强度**:
+**2. PSR 架构：用 ReLU 探针逐 token 估计 steering 强度**
 
-    - 功能: 在每层每 token 上动态决定 steering 强度, 替代恒定 $\alpha$。
-    - 核心思路: 用单层带 ReLU 的探针 $\lambda(\mathbf A_{l,y_i'};\theta_{attr,l})=\mathrm{ReLU}(\mathbf A_{l,y_i'}\cdot\mathbf w_{attr,l}+b_{attr,l})$ (Eq. 8), 干预定义为 $\mathbf A_{l,y_i'|AS}=\mathbf A_{l,y_i'}+\alpha\lambda(\cdot)\mathbf z_{attr,l}$ (Eq. 7)。两个变体: **S-PSR** 只在单层介入, 对应 $\Delta_{PS_{acc}}$; **A-PSR** 在所有层同时介入, 对应 $\Delta_{PS_{loc}}$。 ReLU 而非 sigmoid 是为了显式允许某些 token "零干预"——这对应于图 2 中 "大量 token 几乎不被 prompt 改动"的真实现象。
-    - 设计动机: 探针读 $\mathbf A_{l,y_i'}$ 本身, 是因为 transformer 中 prompt 的影响只能通过 self-attention 进入当前 token 的隐状态, 所以 "是否应该 steer 该 token"这件事原则上可由该 token 自己的激活恢复出来, 这正是假设 3.2a 的物理直觉。
+既然假设 3.2a 说强度该随 token 变, 就需要一个能从激活本身读出强度的模块来替代恒定的 $\alpha$。PSR 用一个单层带 ReLU 的探针 $\lambda(\mathbf A_{l,y_i'};\theta_{attr,l})=\mathrm{ReLU}(\mathbf A_{l,y_i'}\cdot\mathbf w_{attr,l}+b_{attr,l})$ (Eq. 8), 把干预定义为 $\mathbf A_{l,y_i'|AS}=\mathbf A_{l,y_i'}+\alpha\lambda(\cdot)\mathbf z_{attr,l}$ (Eq. 7)。它有两个变体: **S-PSR** 只在单层介入、对应 $\Delta_{PS_{acc}}$, **A-PSR** 在所有层同时介入、对应 $\Delta_{PS_{loc}}$。选 ReLU 而非 sigmoid 是为了显式允许某些 token 拿到"零干预"——这正对应图 2 里"大量 token 几乎不被 prompt 改动"的真实现象。探针之所以读 $\mathbf A_{l,y_i'}$ 本身, 是因为 prompt 的影响只能通过 self-attention 进入当前 token 的隐状态, 所以"该不该 steer 这个 token"原则上可由该 token 自己的激活恢复出来, 这就是假设 3.2a 的物理直觉。
 
-3. **训练目标: MSE-on-activations 与 LL-on-output 的双轨**:
+**3. 训练目标：MSE 对齐激活与 LL 对齐输出的双轨**
 
-    - 功能: 提供两条互补的目标——MSE 严格 mimick prompt 注入的激活, LL 只在乎最终输出对齐属性。
-    - 核心思路: (a) **MSE 目标** $\mathcal L_{MSE}=\sum_l\|\mathbf A_{l,y_i'|AS}-\mathbf A_{l,y_i'|PS}\|^2$, 训练数据是过滤后的成功 prompt-steered 三元组 $(x,x',y')$, 训练时令 $\alpha=J_{attr}\in[0,1]$ 作为 soft label, 推理时 $\alpha$ 自由调; (b) **LL 目标** $-\log p_{AS}(y'|x)$, 不要求中间激活相像; (c) 加一个 $\lambda$ 正则 $\mathcal L_{reg}=\max(0,1-\sum_i\lambda_i)$ 防止 ReLU 全死。负样本 ($J_{attr}<0.5$) 通过 bias 项 $b_{m,l}=-0.5$ 转成负 $\alpha$, 自动学到 "该属性不应该出现时 LLM 默认怎样"。
-    - 设计动机: MSE 是激活级 distillation, 训练信号最丰富但前提是假设 3.1/3.2a 在该层成立; LL 不要求中间忠实, 在 IFEval 这类需要复杂格式控制的任务上反而更强 (因为 rank-1 干预无法完整复制 prompt 的全部机制)。
+PSR 要学得像 prompt, 有两条互补的监督信号。**MSE 目标** $\mathcal L_{MSE}=\sum_l\|\mathbf A_{l,y_i'|AS}-\mathbf A_{l,y_i'|PS}\|^2$ 严格 mimick prompt 注入的中间激活, 训练数据是过滤后的成功 prompt-steered 三元组 $(x,x',y')$, 训练时令 $\alpha=J_{attr}\in[0,1]$ 当 soft label、推理时 $\alpha$ 自由调; **LL 目标** $-\log p_{AS}(y'|x)$ 只在乎最终输出对齐属性、不要求中间激活相像。两者各有适用场景: MSE 信号最丰富, 但前提是假设 3.1/3.2a 在该层成立; LL 在 IFEval 这类需要复杂格式控制的任务上反而更强, 因为 rank-1 干预无法完整复制 prompt 的全部机制。此外加一个 $\lambda$ 正则 $\mathcal L_{reg}=\max(0,1-\sum_i\lambda_i)$ 防止 ReLU 全死, 负样本 ($J_{attr}<0.5$) 则通过 bias 项 $b_{m,l}=-0.5$ 转成负 $\alpha$, 自动学到"该属性不应该出现时 LLM 默认怎样"。
 
 ### 损失函数 / 训练策略
 - 关键超参: 全局系数 $\alpha$ 在推理时调成 binary search 找到目标 coherence 80; A-PSR 在所有层联合优化, 单层 MSE 还顺便看下游层 MSE 以避免噪声传播; 训练只用 positive 成功样本即可 (用 negative 时配合 bias 偏移)。

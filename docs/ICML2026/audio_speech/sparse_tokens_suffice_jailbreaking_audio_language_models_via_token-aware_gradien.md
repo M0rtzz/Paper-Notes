@@ -42,6 +42,22 @@ tags:
 ### 整体框架
 TAGO 要解决的是"如何在高维音频波形上更高效地搜出越狱扰动"。它的做法是把白盒 ALM 的越狱优化从"对整段波形稠密 PGD"改成"每步只更新少数高能量 token 对应的波形区段"：每次迭代先反传得到波形梯度，按各 audio token 的 receptive field 聚合成 token 级能量，只保留 top-$\zeta$ token 形成二值 mask 后再做带 clip 的 PGD 更新，同时用模型自洽前缀和 EOS 抑制项把对齐捷径堵死，当前缀交叉熵降到阈值即提前停。输入是良性音频 $x\in\mathbb{R}^L$、固定文本 prompt、有害查询 $q$ 和保留比 $\zeta$，输出是对抗音频 $x+\delta$，使 ALM 回复以目标前缀 $r_{1:m}$ 开头并继续生成有害内容。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["良性音频 x + 有害查询 q"] --> LOSS
+    subgraph LOSS["越狱损失设计"]
+        direction TB
+        P["模型自洽目标前缀<br/>用 ALM 自身风格首句做 Teacher Forcing"]
+        E["EOS 抑制项<br/>压低终止概率逼模型续写有害内容"]
+    end
+    LOSS --> G["反传得波形梯度"]
+    G --> S["Token-aligned 稀疏选择<br/>按 receptive field 聚合，保留 top-ζ 高能量 token 成 mask"]
+    S --> U["mask ⊙ 梯度 → 带 clip 的 PGD 更新 δ"]
+    U -->|"前缀 CE > τ 未达标"| G
+    U -->|"前缀 CE ≤ τ 早停"| O["输出对抗音频 x+δ"]
+```
+
 ### 关键设计
 
 **1. Token-aligned 稀疏选择：把扰动预算集中到真正有效的 token**
