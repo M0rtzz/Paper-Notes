@@ -61,16 +61,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ICML2026/image_generation/">图像生成 124</a>
-<a class="area-tag" href="ICML2026/multimodal_vlm/">多模态 VLM 99</a>
-<a class="area-tag" href="ICML2026/audio_speech/">音频/语音 30</a>
-<a class="area-tag" href="ICML2026/video_generation/">视频生成 28</a>
-<a class="area-tag" href="ICML2026/aigc_detection/">AIGC 检测 7</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ICML2026/information_retrieval/">信息检索/RAG 22</a>
@@ -79,6 +69,16 @@ hide:
 <a class="area-tag" href="ICML2026/multilingual_mt/">多语言/翻译 3</a>
 <a class="area-tag" href="ICML2026/nlp_generation/">文本生成 2</a>
 <a class="area-tag" href="ICML2026/nlp_understanding/">NLP 理解 2</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ICML2026/image_generation/">图像生成 124</a>
+<a class="area-tag" href="ICML2026/multimodal_vlm/">多模态 VLM 99</a>
+<a class="area-tag" href="ICML2026/audio_speech/">音频/语音 30</a>
+<a class="area-tag" href="ICML2026/video_generation/">视频生成 28</a>
+<a class="area-tag" href="ICML2026/aigc_detection/">AIGC 检测 7</a>
 </div>
 </div>
 <div class="area-group">
@@ -161,16 +161,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ACL2026/multimodal_vlm/">多模态 VLM 94</a>
-<a class="area-tag" href="ACL2026/audio_speech/">音频/语音 68</a>
-<a class="area-tag" href="ACL2026/aigc_detection/">AIGC 检测 16</a>
-<a class="area-tag" href="ACL2026/image_generation/">图像生成 5</a>
-<a class="area-tag" href="ACL2026/video_generation/">视频生成 4</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ACL2026/information_retrieval/">信息检索/RAG 73</a>
@@ -179,6 +169,16 @@ hide:
 <a class="area-tag" href="ACL2026/nlp_understanding/">NLP 理解 33</a>
 <a class="area-tag" href="ACL2026/dialogue/">对话系统 26</a>
 <a class="area-tag" href="ACL2026/nlp_generation/">文本生成 17</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ACL2026/multimodal_vlm/">多模态 VLM 94</a>
+<a class="area-tag" href="ACL2026/audio_speech/">音频/语音 68</a>
+<a class="area-tag" href="ACL2026/aigc_detection/">AIGC 检测 16</a>
+<a class="area-tag" href="ACL2026/image_generation/">图像生成 5</a>
+<a class="area-tag" href="ACL2026/video_generation/">视频生成 4</a>
 </div>
 </div>
 <div class="area-group">
@@ -249,6 +249,15 @@ hide:
 </div>
 </div>
 <div class="area-group">
+<div class="area-group-label">NLP 应用</div>
+<div class="area-tags">
+<a class="area-tag" href="CVPR2026/information_retrieval/">信息检索/RAG 9</a>
+<a class="area-tag" href="CVPR2026/code_intelligence/">代码智能 2</a>
+<a class="area-tag" href="CVPR2026/multilingual_mt/">多语言/翻译 2</a>
+<a class="area-tag" href="CVPR2026/dialogue/">对话系统 1</a>
+</div>
+</div>
+<div class="area-group">
 <div class="area-group-label">生成与多模态</div>
 <div class="area-tags">
 <a class="area-tag" href="CVPR2026/image_generation/">图像生成 220</a>
@@ -256,15 +265,6 @@ hide:
 <a class="area-tag" href="CVPR2026/video_generation/">视频生成 65</a>
 <a class="area-tag" href="CVPR2026/audio_speech/">音频/语音 14</a>
 <a class="area-tag" href="CVPR2026/aigc_detection/">AIGC 检测 1</a>
-</div>
-</div>
-<div class="area-group">
-<div class="area-group-label">NLP 应用</div>
-<div class="area-tags">
-<a class="area-tag" href="CVPR2026/information_retrieval/">信息检索/RAG 9</a>
-<a class="area-tag" href="CVPR2026/code_intelligence/">代码智能 2</a>
-<a class="area-tag" href="CVPR2026/multilingual_mt/">多语言/翻译 2</a>
-<a class="area-tag" href="CVPR2026/dialogue/">对话系统 1</a>
 </div>
 </div>
 <div class="area-group">
@@ -346,16 +346,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ICLR2026/image_generation/">图像生成 137</a>
-<a class="area-tag" href="ICLR2026/multimodal_vlm/">多模态 VLM 85</a>
-<a class="area-tag" href="ICLR2026/audio_speech/">音频/语音 34</a>
-<a class="area-tag" href="ICLR2026/video_generation/">视频生成 19</a>
-<a class="area-tag" href="ICLR2026/aigc_detection/">AIGC 检测 6</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ICLR2026/information_retrieval/">信息检索/RAG 31</a>
@@ -364,6 +354,16 @@ hide:
 <a class="area-tag" href="ICLR2026/multilingual_mt/">多语言/翻译 5</a>
 <a class="area-tag" href="ICLR2026/nlp_generation/">文本生成 2</a>
 <a class="area-tag" href="ICLR2026/nlp_understanding/">NLP 理解 1</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ICLR2026/image_generation/">图像生成 137</a>
+<a class="area-tag" href="ICLR2026/multimodal_vlm/">多模态 VLM 85</a>
+<a class="area-tag" href="ICLR2026/audio_speech/">音频/语音 34</a>
+<a class="area-tag" href="ICLR2026/video_generation/">视频生成 19</a>
+<a class="area-tag" href="ICLR2026/aigc_detection/">AIGC 检测 6</a>
 </div>
 </div>
 <div class="area-group">
@@ -445,16 +445,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="AAAI2026/multimodal_vlm/">多模态 VLM 84</a>
-<a class="area-tag" href="AAAI2026/image_generation/">图像生成 78</a>
-<a class="area-tag" href="AAAI2026/audio_speech/">音频/语音 29</a>
-<a class="area-tag" href="AAAI2026/video_generation/">视频生成 11</a>
-<a class="area-tag" href="AAAI2026/aigc_detection/">AIGC 检测 2</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="AAAI2026/information_retrieval/">信息检索/RAG 26</a>
@@ -463,6 +453,16 @@ hide:
 <a class="area-tag" href="AAAI2026/dialogue/">对话系统 5</a>
 <a class="area-tag" href="AAAI2026/nlp_generation/">文本生成 3</a>
 <a class="area-tag" href="AAAI2026/nlp_understanding/">NLP 理解 1</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="AAAI2026/multimodal_vlm/">多模态 VLM 84</a>
+<a class="area-tag" href="AAAI2026/image_generation/">图像生成 78</a>
+<a class="area-tag" href="AAAI2026/audio_speech/">音频/语音 29</a>
+<a class="area-tag" href="AAAI2026/video_generation/">视频生成 11</a>
+<a class="area-tag" href="AAAI2026/aigc_detection/">AIGC 检测 2</a>
 </div>
 </div>
 <div class="area-group">
@@ -545,16 +545,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="NeurIPS2025/image_generation/">图像生成 221</a>
-<a class="area-tag" href="NeurIPS2025/multimodal_vlm/">多模态 VLM 139</a>
-<a class="area-tag" href="NeurIPS2025/audio_speech/">音频/语音 47</a>
-<a class="area-tag" href="NeurIPS2025/video_generation/">视频生成 23</a>
-<a class="area-tag" href="NeurIPS2025/aigc_detection/">AIGC 检测 9</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="NeurIPS2025/information_retrieval/">信息检索/RAG 30</a>
@@ -562,6 +552,16 @@ hide:
 <a class="area-tag" href="NeurIPS2025/multilingual_mt/">多语言/翻译 11</a>
 <a class="area-tag" href="NeurIPS2025/dialogue/">对话系统 8</a>
 <a class="area-tag" href="NeurIPS2025/nlp_understanding/">NLP 理解 3</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="NeurIPS2025/image_generation/">图像生成 221</a>
+<a class="area-tag" href="NeurIPS2025/multimodal_vlm/">多模态 VLM 139</a>
+<a class="area-tag" href="NeurIPS2025/audio_speech/">音频/语音 47</a>
+<a class="area-tag" href="NeurIPS2025/video_generation/">视频生成 23</a>
+<a class="area-tag" href="NeurIPS2025/aigc_detection/">AIGC 检测 9</a>
 </div>
 </div>
 <div class="area-group">
@@ -642,15 +642,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ICCV2025/image_generation/">图像生成 212</a>
-<a class="area-tag" href="ICCV2025/multimodal_vlm/">多模态 VLM 145</a>
-<a class="area-tag" href="ICCV2025/video_generation/">视频生成 48</a>
-<a class="area-tag" href="ICCV2025/audio_speech/">音频/语音 11</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ICCV2025/information_retrieval/">信息检索/RAG 7</a>
@@ -658,6 +649,15 @@ hide:
 <a class="area-tag" href="ICCV2025/multilingual_mt/">多语言/翻译 1</a>
 <a class="area-tag" href="ICCV2025/nlp_generation/">文本生成 1</a>
 <a class="area-tag" href="ICCV2025/nlp_understanding/">NLP 理解 1</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ICCV2025/image_generation/">图像生成 212</a>
+<a class="area-tag" href="ICCV2025/multimodal_vlm/">多模态 VLM 145</a>
+<a class="area-tag" href="ICCV2025/video_generation/">视频生成 48</a>
+<a class="area-tag" href="ICCV2025/audio_speech/">音频/语音 11</a>
 </div>
 </div>
 <div class="area-group">
@@ -737,15 +737,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ICML2025/image_generation/">图像生成 92</a>
-<a class="area-tag" href="ICML2025/multimodal_vlm/">多模态 VLM 50</a>
-<a class="area-tag" href="ICML2025/audio_speech/">音频/语音 15</a>
-<a class="area-tag" href="ICML2025/video_generation/">视频生成 7</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ICML2025/code_intelligence/">代码智能 9</a>
@@ -754,6 +745,15 @@ hide:
 <a class="area-tag" href="ICML2025/multilingual_mt/">多语言/翻译 1</a>
 <a class="area-tag" href="ICML2025/nlp_generation/">文本生成 1</a>
 <a class="area-tag" href="ICML2025/nlp_understanding/">NLP 理解 1</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ICML2025/image_generation/">图像生成 92</a>
+<a class="area-tag" href="ICML2025/multimodal_vlm/">多模态 VLM 50</a>
+<a class="area-tag" href="ICML2025/audio_speech/">音频/语音 15</a>
+<a class="area-tag" href="ICML2025/video_generation/">视频生成 7</a>
 </div>
 </div>
 <div class="area-group">
@@ -835,16 +835,6 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ACL2025/multimodal_vlm/">多模态 VLM 126</a>
-<a class="area-tag" href="ACL2025/audio_speech/">音频/语音 42</a>
-<a class="area-tag" href="ACL2025/aigc_detection/">AIGC 检测 15</a>
-<a class="area-tag" href="ACL2025/image_generation/">图像生成 8</a>
-<a class="area-tag" href="ACL2025/video_generation/">视频生成 2</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ACL2025/multilingual_mt/">多语言/翻译 88</a>
@@ -853,6 +843,16 @@ hide:
 <a class="area-tag" href="ACL2025/code_intelligence/">代码智能 28</a>
 <a class="area-tag" href="ACL2025/nlp_generation/">文本生成 26</a>
 <a class="area-tag" href="ACL2025/dialogue/">对话系统 18</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ACL2025/multimodal_vlm/">多模态 VLM 126</a>
+<a class="area-tag" href="ACL2025/audio_speech/">音频/语音 42</a>
+<a class="area-tag" href="ACL2025/aigc_detection/">AIGC 检测 15</a>
+<a class="area-tag" href="ACL2025/image_generation/">图像生成 8</a>
+<a class="area-tag" href="ACL2025/video_generation/">视频生成 2</a>
 </div>
 </div>
 <div class="area-group">
@@ -931,6 +931,14 @@ hide:
 </div>
 </div>
 <div class="area-group">
+<div class="area-group-label">NLP 应用</div>
+<div class="area-tags">
+<a class="area-tag" href="CVPR2025/information_retrieval/">信息检索/RAG 17</a>
+<a class="area-tag" href="CVPR2025/multilingual_mt/">多语言/翻译 2</a>
+<a class="area-tag" href="CVPR2025/nlp_generation/">文本生成 2</a>
+</div>
+</div>
+<div class="area-group">
 <div class="area-group-label">生成与多模态</div>
 <div class="area-tags">
 <a class="area-tag" href="CVPR2025/image_generation/">图像生成 304</a>
@@ -938,14 +946,6 @@ hide:
 <a class="area-tag" href="CVPR2025/video_generation/">视频生成 84</a>
 <a class="area-tag" href="CVPR2025/audio_speech/">音频/语音 19</a>
 <a class="area-tag" href="CVPR2025/aigc_detection/">AIGC 检测 3</a>
-</div>
-</div>
-<div class="area-group">
-<div class="area-group-label">NLP 应用</div>
-<div class="area-tags">
-<a class="area-tag" href="CVPR2025/information_retrieval/">信息检索/RAG 17</a>
-<a class="area-tag" href="CVPR2025/multilingual_mt/">多语言/翻译 2</a>
-<a class="area-tag" href="CVPR2025/nlp_generation/">文本生成 2</a>
 </div>
 </div>
 <div class="area-group">
@@ -1023,21 +1023,21 @@ hide:
 </div>
 </div>
 <div class="area-group">
-<div class="area-group-label">生成与多模态</div>
-<div class="area-tags">
-<a class="area-tag" href="ECCV2024/image_generation/">图像生成 117</a>
-<a class="area-tag" href="ECCV2024/multimodal_vlm/">多模态 VLM 47</a>
-<a class="area-tag" href="ECCV2024/video_generation/">视频生成 14</a>
-<a class="area-tag" href="ECCV2024/audio_speech/">音频/语音 8</a>
-</div>
-</div>
-<div class="area-group">
 <div class="area-group-label">NLP 应用</div>
 <div class="area-tags">
 <a class="area-tag" href="ECCV2024/information_retrieval/">信息检索/RAG 4</a>
 <a class="area-tag" href="ECCV2024/code_intelligence/">代码智能 1</a>
 <a class="area-tag" href="ECCV2024/dialogue/">对话系统 1</a>
 <a class="area-tag" href="ECCV2024/nlp_understanding/">NLP 理解 1</a>
+</div>
+</div>
+<div class="area-group">
+<div class="area-group-label">生成与多模态</div>
+<div class="area-tags">
+<a class="area-tag" href="ECCV2024/image_generation/">图像生成 117</a>
+<a class="area-tag" href="ECCV2024/multimodal_vlm/">多模态 VLM 47</a>
+<a class="area-tag" href="ECCV2024/video_generation/">视频生成 14</a>
+<a class="area-tag" href="ECCV2024/audio_speech/">音频/语音 8</a>
 </div>
 </div>
 <div class="area-group">
