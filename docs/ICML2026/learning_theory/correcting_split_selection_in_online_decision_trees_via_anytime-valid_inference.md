@@ -43,7 +43,7 @@ tags:
 输入是顺序到达的 $(X_t,Y_t)$，输出是一棵随时间扩展的决策树。每个叶子 $v$ 内部维护一组候选分裂 $C_v$。对每个候选 $c=(j,s)$ 同时跑两个"影子预测器"：incumbent $m^v$ 用 $v$ 上的经验类分布预测；challenger $m^{v_c}$ 沿候选分裂把 $v$ 切成左右两叶，各自维护经验类分布。两者都基于过去信息预测，再用观测到的 $Y_t$ 计算预测损失差 $\Delta_t^{v,c}=\ell(m^v_{t-1}(X_t),Y_t)-\ell(m^{v_c}_{t-1}(X_t),Y_t)\in[-1,1]$。该差值通过一个 anytime-valid 测试累积"证据"，证据足够强时把 $v$ 用 $c^\star$ 真正切开，否则继续观望。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     A["数据流顺序到达 (X_t, Y_t)"] --> B["叶子 v + 候选分裂 c=(j,s)"]
     subgraph CMP["在线模型对比"]

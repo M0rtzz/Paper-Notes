@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 图像生成论文汇总 · 78篇论文解读
+  AAAI2026 图像生成论文汇总 · 79篇论文解读
 description: >-
-  78篇AAAI2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、超分辨率、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  79篇AAAI2026的图像生成方向论文解读，涵盖扩散模型、文生图、对齐/RLHF、布局/合成、语音、超分辨率等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "图像生成"
@@ -12,8 +12,8 @@ tags:
   - "文生图"
   - "对齐/RLHF"
   - "布局/合成"
+  - "语音"
   - "超分辨率"
-  - "对抗鲁棒"
 item_list:
   - u: "aedr_training-free_ai-generated_image_attribution_via_autoen/"
     t: "AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction"
@@ -75,17 +75,17 @@ item_list:
     t: "Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling"
   - u: "hierarchicalprune_position-aware_compression_for_large-scale_diffusion_models/"
     t: "HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models"
-item_total: 78
+item_total: 79
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🤖 AAAI2026** · **78** 篇论文解读
+**🤖 AAAI2026** · **79** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×33 · 文生图 ×9 · 对齐/RLHF ×8 · 布局/合成 ×5 · 超分辨率 ×4
+🔥 **高频主题：** 扩散模型 ×34 · 文生图 ×9 · 对齐/RLHF ×8 · 布局/合成 ×5 · 语音 ×5
 
 **[AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](aedr_training-free_ai-generated_image_attribution_via_autoen.md)**
 
@@ -306,6 +306,10 @@ item_total: 78
 **[Rethinking Direct Preference Optimization in Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)**
 
 :   提出两个正交且可插拔的改进策略来增强扩散模型的偏好优化：稳定参考模型更新（放松冻结+正则化锚点）和时间步感知训练（自适应权重平衡奖励尺度），两者可嵌入 DPO/IPO 等多种偏好优化算法并在人类偏好评估基准上取得 SOTA。
+
+**[Rethinking Flow and Diffusion Bridge Models for Speech Enhancement](rethinking_flow_and_diffusion_bridge_models_for_speech_enhancement.md)**
+
+:   本文提出了一个统一的理论框架，将语音增强中的 flow matching、score-based diffusion 和 Schrödinger bridge 模型统一为在配对数据之间构造不同高斯概率路径的过程，并揭示了这类生成模型每一步采样本质上等价于预测式语音增强，进而利用预测范式中的高性能骨干网络、改进损失函数和微调策略来增强桥模型性能。
 
 **[RetrySQL: Text-to-SQL Training with Retry Data for Self-Correcting Query Generation](retrysql_text-to-sql_training_with_retry_data_for_self-correcting_query_generati.md)**
 

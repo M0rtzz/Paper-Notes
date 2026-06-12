@@ -1,14 +1,15 @@
 ---
 title: >-
-  ECCV2024 目标检测论文汇总 · 29篇论文解读
+  ECCV2024 目标检测论文汇总 · 31篇论文解读
 description: >-
-  29篇ECCV2024的目标检测方向论文解读，涵盖目标检测、少样本学习、布局/合成、目标跟踪等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ECCV2024的目标检测方向论文解读，涵盖目标检测、少样本学习、自监督学习、布局/合成、目标跟踪等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "目标检测"
   - "论文解读"
   - "论文笔记"
   - "少样本学习"
+  - "自监督学习"
   - "布局/合成"
   - "目标跟踪"
 item_list:
@@ -52,6 +53,10 @@ item_list:
     t: "ReGround: Improving Textual and Spatial Grounding at No Cost"
   - u: "responsible_visual_editing/"
     t: "Responsible Visual Editing"
+  - u: "self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection/"
+    t: "Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection"
+  - u: "shifted_autoencoders_for_point_annotation_restoration_in_object_counting/"
+    t: "Shifted Autoencoders for Point Annotation Restoration in Object Counting"
   - u: "shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr/"
     t: "SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding"
   - u: "stepwise_multi-grained_boundary_detector_for_point-supervised_temporal_action_lo/"
@@ -68,19 +73,17 @@ item_list:
     t: "WALKER: Self-supervised Multiple Object Tracking by Walking on Temporal Appearance Graphs"
   - u: "weak-to-strong_compositional_learning_from_generative_models_for_language-based_/"
     t: "Weak-to-Strong Compositional Learning from Generative Models for Language-based Object Detection"
-  - u: "yolov9_learning_what_you_want_to_learn_using_programmable_gradient_information/"
-    t: "YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information"
-item_total: 29
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**🎞️ ECCV2024** · **29** 篇论文解读
+**🎞️ ECCV2024** · **31** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/object_detection/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/object_detection/index.md)
 
-🔥 **高频主题：** 目标检测 ×7 · 少样本学习 ×2 · 布局/合成 ×2 · 目标跟踪 ×2
+🔥 **高频主题：** 目标检测 ×7 · 少样本学习 ×2 · 自监督学习 ×2 · 布局/合成 ×2 · 目标跟踪 ×2
 
 **[Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)**
 
@@ -161,6 +164,14 @@ item_total: 29
 **[Responsible Visual Editing](responsible_visual_editing.md)**
 
 :   定义"负责任视觉编辑"新任务，提出CoEditor认知编辑器，通过感知-行为双阶段认知过程将有害图像转换为负责任的版本，同时最小化修改。
+
+**[Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)**
+
+:   提出 LSFA（Local-to-global Self-supervised Feature Adaptation）框架，通过模态内特征紧凑性优化（IFC）和跨模态局部到全局一致性对齐（CLC）两个自监督策略对预训练特征进行任务导向适配，在 MVTec-3D AD 上取得 97.1% I-AUROC，超越 SOTA +3.4%。
+
+**[Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)**
+
+:   提出**Shifted AutoEncoders (SAE)**，一种受MAE启发的点标注修复方法：通过随机位移点标注后训练UNet恢复，使模型学到"通用位置知识"而忽略个体标注噪声；用训练好的SAE修复原始标注使其更一致，可为任意计数模型（密度图/定位型）稳定提升性能，在9个数据集上创下新记录。
 
 **[SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding](shine_saliency-aware_hierarchical_negative_ranking_for_compositional_temporal_gr.md)**
 

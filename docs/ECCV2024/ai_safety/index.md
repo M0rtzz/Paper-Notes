@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 AI安全论文汇总 · 12篇论文解读
+  ECCV2024 AI安全论文汇总 · 13篇论文解读
 description: >-
-  12篇ECCV2024的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  13篇ECCV2024的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "AI 安全"
@@ -26,6 +26,8 @@ item_list:
     t: "Noise-Assisted Prompt Learning for Image Forgery Detection and Localization"
   - u: "one-stage_prompt-based_continual_learning/"
     t: "One-stage Prompt-based Continual Learning"
+  - u: "operational_open-set_recognition_and_postmax_refinement/"
+    t: "Operational Open-Set Recognition and PostMax Refinement"
   - u: "preventing_catastrophic_overfitting_in_fast_adversarial_training_a_bi-level_opti/"
     t: "Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective"
   - u: "resilience_of_entropy_model_in_distributed_neural_networks/"
@@ -36,15 +38,15 @@ item_list:
     t: "Towards Multi-modal Transformers in Federated Learning"
   - u: "unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r/"
     t: "Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients"
-item_total: 12
+item_total: 13
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🎞️ ECCV2024** · **12** 篇论文解读
+**🎞️ ECCV2024** · **13** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×6 · 联邦学习 ×3
 
@@ -75,6 +77,10 @@ item_total: 12
 **[One-stage Prompt-based Continual Learning](one-stage_prompt-based_continual_learning.md)**
 
 :   提出 OS-Prompt 框架，通过直接使用 ViT 中间层 token embedding 作为 prompt query（而非额外的 query ViT 前向传播），将 Prompt-based Continual Learning 的计算成本降低约 50%，并通过 Query-Pool Regularization (QR) loss 补偿表征能力损失，在 CIFAR-100、ImageNet-R、DomainNet 上超越 CodaPrompt 约 1.4%。
+
+**[Operational Open-Set Recognition and PostMax Refinement](operational_open-set_recognition_and_postmax_refinement.md)**
+
+:   本文提出了一种面向实际部署场景的开放集识别评估指标 OOSA（Operational Open-Set Accuracy）以及后处理算法 PostMax，通过对最大类别 logit 进行深度特征幅度归一化和广义 Pareto 分布映射，将 logit 转化为合理的概率估计，在大规模评估中取得了统计显著的 SOTA 性能。
 
 **[Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective](preventing_catastrophic_overfitting_in_fast_adversarial_training_a_bi-level_opti.md)**
 

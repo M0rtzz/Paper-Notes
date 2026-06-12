@@ -1,15 +1,15 @@
 ---
 title: >-
-  AAAI2026 LLMAgent论文汇总 · 30篇论文解读
+  AAAI2026 LLMAgent论文汇总 · 33篇论文解读
 description: >-
-  30篇AAAI2026的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理、对抗鲁棒、对齐/RLHF、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  33篇AAAI2026的 LLM Agent 方向论文解读，涵盖 Agent、LLM、推理、对抗鲁棒、对齐/RLHF、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "LLM Agent"
   - "论文解读"
   - "论文笔记"
-  - "LLM"
   - "Agent"
+  - "LLM"
   - "推理"
   - "对抗鲁棒"
   - "对齐/RLHF"
@@ -17,8 +17,12 @@ tags:
 item_list:
   - u: "a2flow_automating_agentic_workflow_generation_via_self-adaptive_abstraction_oper/"
     t: "A2Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators"
+  - u: "agent-sama_state-aware_mobile_assistant/"
+    t: "Agent-SAMA: State-Aware Mobile Assistant"
   - u: "agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search/"
     t: "AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search"
+  - u: "ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re/"
+    t: "AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design"
   - u: "autoglm_autonomous_foundation_agents_for_guis/"
     t: "AutoGLM: Autonomous Foundation Agents for GUIs"
   - u: "automating_complex_document_workflows_via_stepwise_and_rollback-enabled_operatio/"
@@ -71,29 +75,33 @@ item_list:
     t: "TongUI: Internet-Scale Trajectories from Multimodal Web Tutorials for Generalized GUI Agents"
   - u: "towards_trustworthy_multi-turn_llm_agents_via_behavioral_guidance/"
     t: "Towards Trustworthy Multi-Turn LLM Agents via Behavioral Guidance"
-  - u: "when_refusals_fail_unstable_safety_mechanisms_in_long-context_llm_agents/"
-    t: "When Refusals Fail: Unstable Safety Mechanisms in Long-Context LLM Agents"
-  - u: "with_great_capabilities_come_great_responsibilities_introducing_the_agentic_risk/"
-    t: "With Great Capabilities Come Great Responsibilities: Introducing the Agentic Risk & Capability Framework for Governing Agentic AI Systems"
-item_total: 30
+item_total: 33
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🤖 AAAI2026** · **30** 篇论文解读
+**🤖 AAAI2026** · **33** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (42)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (78)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_agent/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
-🔥 **高频主题：** LLM ×10 · Agent ×8 · 推理 ×3 · 对抗鲁棒 ×2 · 对齐/RLHF ×2
+🔥 **高频主题：** Agent ×10 · LLM ×10 · 推理 ×4 · 对抗鲁棒 ×2 · 对齐/RLHF ×2
 
 **[A2Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators](a2flow_automating_agentic_workflow_generation_via_self-adaptive_abstraction_oper.md)**
 
 :   提出 A2Flow 框架，通过三阶段流水线（案例生成→功能聚类→深度提取）从专家数据中全自动提取可复用的抽象执行算子，替代人工预定义算子，并引入算子记忆机制累积中间输出辅助节点决策，在 8 个基准上整体超越 AFLOW 等 SOTA，资源消耗降低 37%。
 
+**[Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)**
+
+:   提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
+
 **[AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)**
 
 :   提出AgentSwift框架，通过层次化搜索空间（同时优化agentic workflow和功能组件）、轻量级value model预测agent性能、以及不确定性引导的MCTS搜索策略，自动发现高性能LLM agent设计，在7个基准上平均提升8.34%。
+
+**[AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design](ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re.md)**
+
+:   提出AMS-IO-Agent，一个基于LLM的领域专用智能体，通过结构化意图图(Intent Graph)和领域知识库将自然语言设计意图转化为可生产的模拟混合信号IC I/O环设计，配套提出首个AMS I/O环自动化基准AMS-IO-Bench，在28nm CMOS流片中验证了智能体生成的I/O环可直接用于实际芯片制造。
 
 **[AutoGLM: Autonomous Foundation Agents for GUIs](autoglm_autonomous_foundation_agents_for_guis.md)**
 
@@ -198,6 +206,10 @@ item_total: 30
 **[Towards Trustworthy Multi-Turn LLM Agents via Behavioral Guidance](towards_trustworthy_multi-turn_llm_agents_via_behavioral_guidance.md)**
 
 :   提出任务完成框架，通过任务分析器（Task Profiler）、推理模块（Reasoning Module）和生成模块（Generation Module）三组件协同进化，使 LLM Agent 在多轮交互环境中实现可验证和可靠的行为引导。
+
+**[Verification-Guided Context Optimization for Tool Calling via Hierarchical LLMs-as-editors](verification-guided_context_optimization_for_tool_calling_via_hierarchical_llms-.md)**
+
+:   提出VGCO框架，利用LLM作为分层编辑器，通过验证引导的方式迭代优化工具文档和知识库上下文，显著提升大规模工具调用场景下的检索召回、工具选择和参数填充准确率。
 
 **[When Refusals Fail: Unstable Safety Mechanisms in Long-Context LLM Agents](when_refusals_fail_unstable_safety_mechanisms_in_long-context_llm_agents.md)**
 

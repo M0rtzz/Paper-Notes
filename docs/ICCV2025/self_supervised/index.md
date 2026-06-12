@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 自监督/表示学习论文汇总 · 11篇论文解读
+  ICCV2025 自监督/表示学习论文汇总 · 13篇论文解读
 description: >-
-  11篇ICCV2025的自监督/表示学习方向论文解读，涵盖少样本学习、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  13篇ICCV2025的自监督/表示学习方向论文解读，涵盖少样本学习、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "自监督/表示学习"
@@ -11,6 +11,8 @@ tags:
   - "少样本学习"
   - "自监督学习"
 item_list:
+  - u: "a_hidden_stumbling_block_in_generalized_category_discovery_d/"
+    t: "A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention"
   - u: "a_tokenlevel_text_image_foundation_model_for_document_unders/"
     t: "A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)"
   - u: "always_skip_attention/"
@@ -19,6 +21,8 @@ item_list:
     t: "CObL: Toward Zero-Shot Ordinal Layering without User Prompting"
   - u: "from_linearity_to_non-linearity_how_masked_autoencoders_capture_spatial_correlat/"
     t: "From Linearity to Non-Linearity: How Masked Autoencoders Capture Spatial Correlations"
+  - u: "generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f/"
+    t: "Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery"
   - u: "improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers/"
     t: "Improving Large Vision and Language Models by Learning from a Panel of Peers"
   - u: "loftup_learning_a_coordinatebased_feature_upsampler_for_visi/"
@@ -33,15 +37,19 @@ item_list:
     t: "To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models"
   - u: "wir3d_visually-informed_and_geometry-aware_3d_shape_abstraction/"
     t: "WIR3D: Visually-Informed and Geometry-Aware 3D Shape Abstraction"
-item_total: 11
+item_total: 13
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**📹 ICCV2025** · **11** 篇论文解读
+**📹 ICCV2025** · **13** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/self_supervised/index.md) · [💬 ACL2026 (1)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (34)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/self_supervised/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/self_supervised/index.md)
+
+**[A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](a_hidden_stumbling_block_in_generalized_category_discovery_d.md)**
+
+:   发现GCD中未标注数据（尤其是未知类别）的ViT注意力会分散到背景区域（distracted attention），提出Attention Focusing（AF）模块通过多尺度token重要性度量+自适应剪枝来纠正注意力，作为即插即用模块在SimGCD上最高带来15.4%的性能提升。
 
 **[A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)](a_tokenlevel_text_image_foundation_model_for_document_unders.md)**
 
@@ -58,6 +66,10 @@ item_total: 11
 **[From Linearity to Non-Linearity: How Masked Autoencoders Capture Spatial Correlations](from_linearity_to_non-linearity_how_masked_autoencoders_capture_spatial_correlat.md)**
 
 :   从理论角度分析 MAE 如何学习图像中的空间相关性，推导出线性 MAE 的解析解，揭示了掩码比例和 patch 大小如何选择短距离和长距离空间特征，并将分析扩展到非线性 MAE，为实践中的超参数选择提供了理论指导。
+
+**[Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)**
+
+:   提出基于扩散模型的即时类别发现框架 DiffGRE，通过属性组合生成（ACG）合成包含虚拟类别信息的新样本、多样性驱动精炼（DDR）过滤低质量样本、半监督Leader编码（SLE）注入额外类别知识，在 6 个细粒度数据集上显著提升了已有 OCD 方法的性能（平均 ACC-ALL 提升 6.5%）。
 
 **[Improving Large Vision and Language Models by Learning from a Panel of Peers](improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers.md)**
 

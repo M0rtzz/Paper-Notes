@@ -42,7 +42,7 @@ tags:
 BMIA 的攻击流水线：(1) 在和目标模型不相交的参考数据集 $\mathcal{D}$ 上训一个标准参考模型，拿到 MAP 权重 $\hat w_1$；(2) 在 $\hat w_1$ 周围用 Laplace 近似拟合一个高斯后验 $\mathcal{N}(w;\hat w_1,\Sigma)$；(3) 对每个待判样本 $z^*=(x^*,y^*)$，从该后验里采 $M$ 组权重 $\tilde w_i$，每组算一个 hinge score $s_i$；(4) 把目标模型 score $s_0$ 当作"待检随机变量"，与 $\{s_i\}$ 一起做单边单样本 $t$ 检验，输出 $p$ 值判定成员。整套流程**只训一次参考模型**，所有"扩样"开销都摊在矩阵乘法和采样上。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     subgraph LA["Laplace 后验：单模型 → 贝叶斯模型族"]
         direction TB

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 自动驾驶论文汇总 · 93篇论文解读
+  ICCV2025 自动驾驶论文汇总 · 91篇论文解读
 description: >-
-  93篇ICCV2025的自动驾驶方向论文解读，涵盖自动驾驶、3D 高斯渲染、扩散模型、3D 目标检测、动态场景、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  91篇ICCV2025的自动驾驶方向论文解读，涵盖自动驾驶、3D 高斯渲染、扩散模型、点云、3D 目标检测、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "自动驾驶"
@@ -10,9 +10,9 @@ tags:
   - "论文笔记"
   - "3D 高斯渲染"
   - "扩散模型"
+  - "点云"
   - "3D 目标检测"
   - "动态场景"
-  - "点云"
 item_list:
   - u: "3d_gaussian_splatting_driven_multiview_robust_physical_adver/"
     t: "3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation"
@@ -24,10 +24,6 @@ item_list:
     t: "6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting"
   - u: "a_constrained_optimization_approach_for_gaussian_splatting_from_coarsely-posed_i/"
     t: "A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds"
-  - u: "acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation/"
-    t: "ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation"
-  - u: "acam_kd_adaptive_cooperative_attention_masking_knowledge_distillation/"
-    t: "ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation"
   - u: "ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr/"
     t: "AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving"
   - u: "ad_gs_object_aware_bspline_gaussian_splatting_self_supervised_autonomous_driving/"
@@ -62,6 +58,8 @@ item_list:
     t: "DCHM: Depth-Consistent Human Modeling for Multiview Detection"
   - u: "decoupled_diffusion_sparks_adaptive_scene_generation/"
     t: "Decoupled Diffusion Sparks Adaptive Scene Generation"
+  - u: "despite_exploring_contrastive_deep_skeletonpointcloudimutext/"
+    t: "DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding"
   - u: "detect_anything_3d_in_the_wild/"
     t: "Detect Anything 3D in the Wild"
   - u: "dist-4d_disentangled_spatiotemporal_diffusion_with_metric_depth_for_4d_driving_s/"
@@ -74,17 +72,19 @@ item_list:
     t: "DriveX: Omni Scene Modeling for Learning Generalizable World Knowledge in Autonomous Driving"
   - u: "duet_dual_incremental_object_detection_via_exemplar-free_task_arithmetic/"
     t: "DuET: Dual Incremental Object Detection via Exemplar-Free Task Arithmetic"
-item_total: 93
+  - u: "embodiedocc_embodied_3d_occupancy_prediction_for_vision-based_online_scene_under/"
+    t: "EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding"
+item_total: 91
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**📹 ICCV2025** · **93** 篇论文解读
+**📹 ICCV2025** · **91** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (56)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [🧪 ICML2025 (10)](../../ICML2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 自动驾驶 ×13 · 3D 高斯渲染 ×12 · 扩散模型 ×8 · 3D 目标检测 ×5 · 动态场景 ×4
+🔥 **高频主题：** 自动驾驶 ×13 · 3D 高斯渲染 ×12 · 扩散模型 ×8 · 点云 ×5 · 3D 目标检测 ×5
 
 **[3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)**
 
@@ -105,14 +105,6 @@ item_total: 93
 **[A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds](a_constrained_optimization_approach_for_gaussian_splatting_from_coarsely-posed_i.md)**
 
 :   提出一种无需SfM的约束优化方法，通过相机位姿分解、灵敏度预调节、对数障碍约束和几何约束，从多相机SLAM系统输出的粗糙位姿和噪声点云中联合优化相机参数与3DGS场景重建。
-
-**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation.md)**
-
-:   提出 ACAM-KD，一种自适应学生-教师协作注意力掩码知识蒸馏方法，通过跨注意力特征融合（STCA-FF）和自适应空间-通道掩码（ASCM）动态调整蒸馏焦点，在 COCO 检测上超越 SOTA 最高 1.4 mAP，在 Cityscapes 分割上提升 3.09 mIoU。
-
-**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](acam_kd_adaptive_cooperative_attention_masking_knowledge_distillation.md)**
-
-:   提出 ACAM-KD，通过学生-教师交叉注意力特征融合（STCA-FF）和自适应空间-通道遮蔽（ASCM）两个模块，使知识蒸馏中的特征选择能随学生学习状态动态演化，在 COCO 检测上 RetinaNet R50 从 R101 蒸馏时 mAP 达 41.2（+1.4 超越 SOTA），Cityscapes 分割上 DeepLabV3-MBV2 mIoU 提升 3.09。
 
 **[AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)**
 
@@ -182,6 +174,10 @@ item_total: 93
 
 :   提出 Nexus，一个基于解耦扩散的自适应驾驶场景生成框架，通过独立噪声状态实现目标导向与实时响应的统一，将位移误差降低 40%，并构建了包含 540 小时安全关键驾驶数据的 Nexus-Data。
 
+**[DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding](despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)**
+
+:   提出 DeSPITE，一个将 LiDAR 点云、骨架姿态、IMU 信号和文本四种模态对齐到联合嵌入空间的对比学习框架，首次以 LiDAR（而非 RGB）作为核心视觉模态，实现了跨模态匹配/检索等此前不可能的任务，同时作为有效的 HAR 预训练策略在 MSR-Action3D 和 HMPEAR 上取得 SOTA。
+
 **[Detect Anything 3D in the Wild](detect_anything_3d_in_the_wild.md)**
 
 :   DetAny3D 是一个可提示（promptable）的3D检测基础模型，通过融合SAM和depth-pretrained DINO两个2D基础模型的先验知识，并提出2D Aggregator和Zero-Embedding Mapping机制实现稳定的2D-to-3D知识迁移，仅用单目图像即可在任意场景和相机配置下实现零样本3D目标检测，在新类别上零样本AP3D超越基线最多21%。
@@ -237,10 +233,6 @@ item_total: 93
 **[Free-running vs. Synchronous: Single-Photon Lidar for High-flux 3D Imaging](free-running_vs_synchronous_single-photon_lidar_for_high-flux_3d_imaging.md)**
 
 :   本文系统比较了单光子激光雷达（SPL）的自由运行模式和同步模式在高通量条件下的深度成像性能，提出了高效的联合最大似然估计器和基于分数模型的深度正则化算法 SSDR，证明自由运行模式在各种光通量和信背比条件下均优于同步模式。
-
-**[SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)**
-
-:   提出SDKD（频域解耦知识蒸馏）框架，通过频率感知的教师模型和频率对齐的蒸馏策略，将复杂时空预测模型的多尺度频域知识迁移到轻量级学生网络，在Navier-Stokes数据集上MSE最高降低81.3%。
 
 **[Future-Aware Interaction Network For Motion Forecasting](future-aware_interaction_network_for_motion_forecasting.md)**
 

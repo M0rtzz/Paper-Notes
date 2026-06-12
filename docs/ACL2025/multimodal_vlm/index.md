@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 多模态VLM论文汇总 · 126篇论文解读
+  ACL2025 多模态VLM论文汇总 · 129篇论文解读
 description: >-
-  126篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  129篇ACL2025的多模态 VLM 方向论文解读，涵盖多模态、推理、LLM、对抗鲁棒、对齐/RLHF、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "多模态 VLM"
@@ -71,21 +71,21 @@ item_list:
     t: "COLING-UniA at SciVQA 2025: Few-Shot Example Retrieval and Confidence-Informed Ensembling for Multimodal Large Language Models"
   - u: "con_instruction_universal_jailbreaking_of_multimodal_large_language_models_via_n/"
     t: "Con Instruction: Universal Jailbreaking of Multimodal Large Language Models via Non-Textual Modalities"
+  - u: "conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt/"
+    t: "ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT"
   - u: "conflictvis_vision_knowledge_conflict/"
     t: "Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs"
-  - u: "cordial_can_multimodal_large_language_models_effectively_understand_coherence_re/"
-    t: "CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?"
-item_total: 126
+item_total: 129
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**💬 ACL2025** · **126** 篇论文解读
+**💬 ACL2025** · **129** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×104 · 推理 ×17 · LLM ×16 · 对抗鲁棒 ×5 · 对齐/RLHF ×5
+🔥 **高频主题：** 多模态 ×104 · 推理 ×18 · LLM ×16 · 对抗鲁棒 ×6 · 对齐/RLHF ×5
 
 **[A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models](a_parameter-efficient_and_fine-grained_prompt_learning_for_vision-language_model.md)**
 
@@ -199,6 +199,10 @@ item_total: 126
 
 :   本文提出 Con Instruction 方法，通过优化对抗性图像或音频使其在嵌入空间中与目标恶意指令对齐，实现无需文本输入即可越狱多模态大语言模型（MLLM），在 LLaVA-v1.5 上达到 86.6% 的攻击成功率，并提出了 ARC 评估框架来同时衡量攻击响应的质量和相关性。
 
+**[ConECT Dataset: Overcoming Data Scarcity in Context-Aware E-Commerce MT](conect_dataset_overcoming_data_scarcity_in_context-aware_e-commerce_mt.md)**
+
+:   构建了 ConECT——首个捷克-波兰电商多模态翻译数据集（11,400 句对 + 产品图片 + 类目路径），通过 VLM 端到端翻译、NMT+类目路径前缀、NMT+图像描述前缀三条技术路线的系统对比，发现结构化类目上下文能稳定提升翻译质量（COMET +0.005），而合成图像描述以级联方式注入反而严重损害翻译性能（COMET 暴跌 0.11+）。
+
 **[Insight Over Sight: Exploring the Vision-Knowledge Conflicts in Multimodal LLMs](conflictvis_vision_knowledge_conflict.md)**
 
 :   首次系统探索 MLLM 中常识级别的视觉-知识冲突问题，提出自动化框架构建 ConflictVis 基准（374 图 + 1122 QA），发现 MLLM 在约 20% 的冲突场景中过度依赖参数化知识（尤其是 Yes-No 和动作类问题），并提出 Focus-on-Vision 提示策略进行缓解。
@@ -262,6 +266,10 @@ item_total: 126
 **[Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder](exploring_how_generative_mllms_perceive_more.md)**
 
 :   系统探究为何生成式多模态LLM（如LLaVA）使用与CLIP相同的视觉编码器却能在视觉推理任务上大幅超越CLIP，发现patch token、位置编码和prompt加权是关键因素。
+
+**[FCMR: Robust Evaluation of Financial Cross-Modal Multi-Hop Reasoning](fcmr_robust_evaluation_of_financial_cross-modal_multi-hop_reasoning.md)**
+
+:   构建了金融领域跨模态多跳推理基准 FCMR，包含文本、表格和图表三种模态，分 Easy/Medium/Hard 三个难度等级，最强模型 Claude 3.5 Sonnet 在 Hard 级别仅达 30.4% 准确率，揭示了 MLLM 在信息检索阶段的关键瓶颈。
 
 **[Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation](filter-and-refine_a_mllm_based_cascade_system_for_industrial-scale_video_content.md)**
 
@@ -470,6 +478,10 @@ item_total: 126
 **[SemEval-2025 Task 1: AdMIRe -- Advancing Multimodal Idiomaticity Representation](semeval-2025_task_1_admire_--_advancing_multimodal_idiomaticity_representation.md)**
 
 :   设计了 SemEval-2025 AdMIRe 共享任务——通过图像排序和图像序列补全两个子任务，在多模态（文本+图像）和多语言（英语+巴西葡萄牙语）场景下评估模型对习语表达的理解能力，最佳系统通过混合专家和多查询平滑策略达到了接近人类水平的表现。
+
+**[Sightation Counts: Leveraging Sighted User Feedback in Building a BLV-aligned Dataset of Diagram Descriptions](sightation_counts_leveraging_sighted_user_feedback_in_building_a_blv-aligned_dat.md)**
+
+:   提出让视力正常者「评估」而非「生成」VLM 的图表描述，构建了首个经 BLV 专业教育者验证的 5k 图表 / 137k 样本多任务数据集 Sightation，偏好微调 2B 模型后在 BLV 有用性评分上平均提升 1.67σ。
 
 **[SingaKids: A Multilingual Multimodal Dialogic Tutor for Language Learning](singakids_a_multilingual_multimodal_dialogic_tutor_for_language_learning.md)**
 

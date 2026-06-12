@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 时间序列论文汇总 · 51篇论文解读
+  NeurIPS2025 时间序列论文汇总 · 54篇论文解读
 description: >-
-  51篇NeurIPS2025的时间序列方向论文解读，涵盖时序预测、扩散模型、图神经网络、对抗鲁棒、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  54篇NeurIPS2025的时间序列方向论文解读，涵盖时序预测、扩散模型、图神经网络、对抗鲁棒、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "时间序列"
@@ -48,6 +48,8 @@ item_list:
     t: "How Patterns Dictate Learnability in Sequential Data"
   - u: "human-machine_ritual_synergic_performance_through_real-time_motion_recognition/"
     t: "Human-Machine Ritual: Synergic Performance through Real-Time Motion Recognition"
+  - u: "improving_time_series_forecasting_via_instance-aware_post-hoc_revision/"
+    t: "Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)"
   - u: "in-context_learning_of_stochastic_differential_equations_with_foundation_inferen/"
     t: "In-Context Learning of Stochastic Differential Equations with Foundation Inference Models"
   - u: "ioncast_a_deep_learning_framework_for_forecasting_ionospheric_total_electron_con/"
@@ -72,19 +74,17 @@ item_list:
     t: "NSW-EPNews: A News-Augmented Benchmark for Electricity Price Forecasting with LLMs"
   - u: "omnicast_a_masked_latent_diffusion_model_for_weather_forecasting_across_time_sca/"
     t: "OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales"
-  - u: "parallelization_of_non-linear_state-space_models_scaling_up_liquid-resistance_li/"
-    t: "Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling"
-item_total: 51
+item_total: 54
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🧠 NeurIPS2025** · **51** 篇论文解读
+**🧠 NeurIPS2025** · **54** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×27 · 扩散模型 ×3 · 图神经网络 ×2 · 对抗鲁棒 ×2 · 自监督学习 ×2
+🔥 **高频主题：** 时序预测 ×30 · 扩散模型 ×3 · 图神经网络 ×2 · 对抗鲁棒 ×2 · 自监督学习 ×2
 
 **[A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)**
 
@@ -153,6 +153,10 @@ item_total: 51
 **[Human-Machine Ritual: Synergic Performance through Real-Time Motion Recognition](human-machine_ritual_synergic_performance_through_real-time_motion_recognition.md)**
 
 :   提出一种轻量级实时动作识别系统，利用可穿戴 IMU 传感器 + MiniRocket 时序分类器实现 <50ms 延迟的舞者特定动作识别（96.05% 准确率），通过"具身记忆映射"将舞者的个人动作-声音关联编码到系统中，构建了一种尊重人体表达深度的人机协作表演范式。
+
+**[Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)](improving_time_series_forecasting_via_instance-aware_post-hoc_revision.md)**
+
+:   PIR 提出实例感知的事后修正框架——通过不确定性估计识别预测失败实例，用局部修正（协变量+外生变量 Transformer）和全局修正（检索相似训练实例加权平均）的残差组合，作为即插即用模块使 SparseTSF MSE 降低 25.87%，PatchTST 降低 8.99%。
 
 **[In-Context Learning of Stochastic Differential Equations with Foundation Inference Models](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)**
 
@@ -258,6 +262,10 @@ item_total: 51
 
 :   提出 Series-Symbol (S²) 数据生成机制和 SymTime 双模态基础模型，利用 Takens 定理和符号动力学理论生成无限规模的合成时序-符号配对数据（40M 对/50B token），通过跨模态对比学习预训练在 5 大时序任务上达到与真实数据预训练模型竞争的性能。
 
+**[SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)**
+
+:   提出SynTSBench合成数据驱动评估范式，通过可编程的特征配置和理论最优基准，系统评估时间序列预测模型在趋势、周期、依赖性、噪声鲁棒性等维度的实际建模能力。
+
 **[Time-O1: Time-Series Forecasting Needs Transformed Label Alignment](time-o1_time-series_forecasting_needs_transformed_label_alignment.md)**
 
 :   提出 Time-o1，通过将标签序列变换为去相关且按重要性排序的主成分，解决时间序列预测中 TMSE 损失的自相关偏差和任务过载问题，实现与多种预测模型兼容的 SOTA 性能。
@@ -289,3 +297,7 @@ item_total: 51
 **[Wavelet Canonical Coherence for Nonstationary Signals](wavelet_canonical_coherence_for_nonstationary_signals.md)**
 
 :   提出 WaveCanCoh 框架，将经典的典型相干分析（canonical coherence）扩展到小波域，基于多变量局部平稳小波（MvLSW）模型实现对非平稳多变量时间序列两组信号间时变、尺度特定的典型相干性估计。
+
+**[xLSTM-Mixer: Multivariate Time Series Forecasting by Mixing via Scalar Memories](xlstm-mixer_multivariate_time_series_forecasting_by_mixing_via_scalar_memories.md)**
+
+:   提出 xLSTM-Mixer，首次将扩展长短期记忆网络（sLSTM）与混合架构（Mixer）结合，通过时间混合、联合时间-变量混合和多视角混合三阶段架构实现多变量长期时间序列预测的 SOTA 性能，同时保持极低的内存占用。

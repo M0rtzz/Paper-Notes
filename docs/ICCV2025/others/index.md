@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 其他论文汇总 · 47篇论文解读
+  ICCV2025 其他论文汇总 · 39篇论文解读
 description: >-
-  47篇ICCV2025的其他方向论文解读，涵盖对抗鲁棒、动态场景、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  39篇ICCV2025的其他方向论文解读，涵盖对抗鲁棒、动态场景、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "其他"
@@ -13,8 +13,6 @@ tags:
   - "少样本学习"
   - "扩散模型"
 item_list:
-  - u: "a_hidden_stumbling_block_in_generalized_category_discovery_d/"
-    t: "A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention"
   - u: "a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto/"
     t: "A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition"
   - u: "a_linear_n-point_solver_for_structure_and_motion_from_asynchronous_tracks/"
@@ -29,20 +27,14 @@ item_list:
     t: "Auto-Regressively Generating Multi-View Consistent Images (MV-AR)"
   - u: "c4d_4d_made_from_3d_through_dual_correspondences/"
     t: "C4D: 4D Made from 3D through Dual Correspondences"
-  - u: "despite_exploring_contrastive_deep_skeletonpointcloudimutext/"
-    t: "DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding"
   - u: "doodle_your_keypoints_sketch-based_few-shot_keypoint_detection/"
     t: "Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection"
   - u: "edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati/"
     t: "EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration"
-  - u: "failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per/"
-    t: "Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training"
   - u: "fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr/"
     t: "FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases"
   - u: "from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe/"
     t: "From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision"
-  - u: "generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f/"
-    t: "Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery"
   - u: "hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging/"
     t: "Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging"
   - u: "hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu/"
@@ -51,8 +43,6 @@ item_list:
     t: "HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding"
   - u: "i_am_big_you_are_little_i_am_right_you_are_wrong/"
     t: "I Am Big, You Are Little; I Am Right, You Are Wrong"
-  - u: "iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization/"
-    t: "IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization"
   - u: "intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery/"
     t: "Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery"
   - u: "is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite/"
@@ -61,8 +51,6 @@ item_list:
     t: "Jigsaw++: Imagining Complete Shape Priors for Object Reassembly"
   - u: "joint_asymmetric_loss_for_learning_with_noisy_labels/"
     t: "Joint Asymmetric Loss for Learning with Noisy Labels"
-  - u: "kaputt_a_large-scale_dataset_for_visual_defect_detection/"
-    t: "Kaputt: A Large-Scale Dataset for Visual Defect Detection"
   - u: "lacoot_layer_collapse_through_optimal_transport/"
     t: "LaCoOT: Layer Collapse through Optimal Transport"
   - u: "layerd_decomposing_raster_graphic_designs_into_layers/"
@@ -73,21 +61,29 @@ item_list:
     t: "Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval"
   - u: "loss_functions_for_predictor-based_neural_architecture_search/"
     t: "Loss Functions for Predictor-based Neural Architecture Search"
-item_total: 47
+  - u: "magic_insert_style-aware_drag-and-drop/"
+    t: "Magic Insert: Style-Aware Drag-and-Drop"
+  - u: "nappure_adversarial_purification_for_robust_image_classification_under_non-addit/"
+    t: "NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations"
+  - u: "omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration/"
+    t: "Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration"
+  - u: "on_the_complexity-faithfulness_trade-off_of_gradient-based_explanations/"
+    t: "On the Complexity-Faithfulness Trade-off of Gradient-Based Explanations"
+  - u: "ph-gan_physics-inspired_gan_for_generating_sar_images_under_limited_data/"
+    t: "Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data"
+  - u: "processing_and_acquisition_traces_in_visual_encoders_what_does_clip_know_about_y/"
+    t: "Processing and Acquisition Traces in Visual Encoders: What Does CLIP Know About Your Camera?"
+item_total: 39
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📹 ICCV2025** · **47** 篇论文解读
+**📹 ICCV2025** · **39** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×6 · 动态场景 ×2 · 少样本学习 ×2 · 扩散模型 ×2
-
-**[A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](a_hidden_stumbling_block_in_generalized_category_discovery_d.md)**
-
-:   发现GCD中未标注数据（尤其是未知类别）的ViT注意力会分散到背景区域（distracted attention），提出Attention Focusing（AF）模块通过多尺度token重要性度量+自适应剪枝来纠正注意力，作为即插即用模块在SimGCD上最高带来15.4%的性能提升。
+🔥 **高频主题：** 对抗鲁棒 ×3 · 动态场景 ×2 · 少样本学习 ×2 · 扩散模型 ×2
 
 **[A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)**
 
@@ -117,10 +113,6 @@ item_total: 47
 
 :   提出C4D框架，通过在DUSt3R的3D pointmap预测基础上联合捕获双重时序对应(短时光流+动态感知长时点跟踪DynPT)，生成运动掩码分离动静区域，并引入相机运动对齐/相机轨迹平滑/点轨迹平滑三个优化目标，将现有3D重建范式升级为完整4D重建(逐帧点云+相机参数+2D/3D轨迹)，在深度/位姿/跟踪多个下游任务上达competitive性能。
 
-**[DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding](despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)**
-
-:   提出 DeSPITE，一个将 LiDAR 点云、骨架姿态、IMU 信号和文本四种模态对齐到联合嵌入空间的对比学习框架，首次以 LiDAR（而非 RGB）作为核心视觉模态，实现了跨模态匹配/检索等此前不可能的任务，同时作为有效的 HAR 预训练策略在 MSR-Action3D 和 HMPEAR 上取得 SOTA。
-
 **[Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)**
 
 :   提出首个基于草图的跨模态少样本关键点检测框架，利用原型网络、网格定位器、原型域适应和去风格化网络，仅需少量带标注草图即可在真实照片中检测新类别的新关键点。
@@ -129,10 +121,6 @@ item_total: 47
 
 :   提出 EDFFDNet，采用指数衰减自由形变 (EDFFD) 替代传统 B-spline FFD 和 TPS 进行图像配准，配合自适应稀疏运动聚合器 (ASMA) 和渐进式相关策略，在 UDIS-D 数据集上以减少 70.5% 参数、32.6% 显存的代价实现 +0.5dB PSNR 提升。
 
-**[Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)**
-
-:   揭示了对抗训练中一个反直觉现象——失败样本的模型感知变化反而比成功样本更小（即被"过度学习"），据此提出 Robust Perception Adversarial Training (RPAT)，通过鼓励感知随扰动平滑变化来缓解准确率-鲁棒性权衡问题。
-
 **[FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases](fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr.md)**
 
 :   提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。
@@ -140,10 +128,6 @@ item_total: 47
 **[From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)**
 
 :   提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。
-
-**[Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)**
-
-:   提出基于扩散模型的即时类别发现框架 DiffGRE，通过属性组合生成（ACG）合成包含虚拟类别信息的新样本、多样性驱动精炼（DDR）过滤低质量样本、半监督Leader编码（SLE）注入额外类别知识，在 6 个细粒度数据集上显著提升了已有 OCD 方法的性能（平均 ACC-ALL 提升 6.5%）。
 
 **[Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)**
 
@@ -161,10 +145,6 @@ item_total: 47
 
 :   利用因果推理 XAI 工具 rex 提取图像分类模型的最小充分像素集（MPS），系统比较 5 种架构 15 个模型的"注意力集中度"，发现大型模型（EVA/ConvNext）仅用图像 5% 像素即可做出分类，且不同架构的 MPS 在大小和位置上存在统计显著差异。
 
-**[IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization](iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization.md)**
-
-:   提出 IAP 框架，通过**感知感知（perceptibility-aware）的贴片定位**和**保色梯度更新**，首次实现在目标攻击场景下生成真正不可见的对抗补丁，同时能绕过多种 SOTA 补丁防御方法。
-
 **[Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)**
 
 :   提出 IICMVNCD 框架，首次将新类发现（NCD）扩展到多视图设定，通过视图内矩阵分解捕捉已知/新类的分布一致性，以及视图间权重学习传递已知类的视图关系到新类，避免了对伪标签的依赖。
@@ -180,10 +160,6 @@ item_total: 47
 **[Joint Asymmetric Loss for Learning with Noisy Labels](joint_asymmetric_loss_for_learning_with_noisy_labels.md)**
 
 :   将非对称损失函数扩展到更复杂的被动损失场景，提出非对称均方误差（AMSE），严格建立其满足非对称条件的充要条件，并将 AMSE 嵌入 APL 框架构建联合非对称损失（JAL），在 CIFAR-10/100 等多个数据集上全面超越现有鲁棒损失函数方法。
-
-**[Kaputt: A Large-Scale Dataset for Visual Defect Detection](kaputt_a_large-scale_dataset_for_visual_defect_detection.md)**
-
-:   Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%，揭示了现有方法在真实零售场景中的严重不足。
 
 **[LaCoOT: Layer Collapse through Optimal Transport](lacoot_layer_collapse_through_optimal_transport.md)**
 
@@ -208,10 +184,6 @@ item_total: 47
 **[Magic Insert: Style-Aware Drag-and-Drop](magic_insert_style-aware_drag-and-drop.md)**
 
 :   提出Magic Insert方法，首次形式化和解决"风格感知拖放"问题——将任意风格的主体拖入不同风格的目标图像中，主体自动适应目标风格且插入效果物理合理，核心包括风格感知个性化（LoRA+IP-Adapter风格注入）和Bootstrap Domain Adaptation（将真实图像训练的插入模型适配到风格化图像领域）。
-
-**[Membership Inference Attacks with False Discovery Rate Control](membership_inference_attacks_with_false_discovery_rate_control.md)**
-
-:   提出MIAFdR，首个能提供错误发现率（FDR）理论保证的成员推理攻击方法，通过设计新颖的非成员一致性分数函数和基于调整的成员判定策略来控制FDR，可作为即插即用的wrapper无缝集成到现有MIA方法中，在保持攻击性能的同时提供FDR控制。
 
 **[NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations](nappure_adversarial_purification_for_robust_image_classification_under_non-addit.md)**
 
@@ -260,10 +232,6 @@ item_total: 47
 **[SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)**
 
 :   提出 SyncDiff，一个统一的多体人体-物体交互运动合成框架，通过对齐分数（alignment scores）和显式同步策略实现多体运动的精确同步，并引入频域分解来建模高频交互语义。
-
-**[Thermal Polarimetric Multi-view Stereo](thermal_polarimetric_multi-view_stereo.md)**
-
-:   提出利用热偏振（长波红外偏振）线索进行精细三维形状重建的方法，理论证明 LWIR 偏振观测不受光照环境和材质光学属性的影响，从而实现对透明、半透明和异质材料物体的高精度三维重建，显著优于可见光偏振方法。
 
 **[Toward Material-Agnostic System Identification from Videos](toward_material-agnostic_system_identification_from_videos.md)**
 

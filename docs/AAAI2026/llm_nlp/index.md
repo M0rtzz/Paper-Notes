@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM/NLP论文汇总 · 28篇论文解读
+  AAAI2026 LLM/NLP论文汇总 · 30篇论文解读
 description: >-
-  28篇AAAI2026的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  30篇AAAI2026的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "LLM / NLP"
@@ -36,6 +36,8 @@ item_list:
     t: "IROTE: Human-like Traits Elicitation of Large Language Model via In-Context Self-Reflective Optimization"
   - u: "learning_spatial_decay_for_vision_transformers/"
     t: "Learning Spatial Decay for Vision Transformers"
+  - u: "lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models/"
+    t: "LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models"
   - u: "loki_low-damage_knowledge_implanting_of_large_language_models/"
     t: "LoKI: Low-damage Knowledge Implanting of Large Language Models"
   - u: "loopllm_transferable_energy-latency_attacks_in_llms_via_repetitive_generation/"
@@ -68,15 +70,17 @@ item_list:
     t: "Vision Transformers are Circulant Attention Learners"
   - u: "vspo_validating_semantic_pitfalls_in_ontology_via_llm-based_cq_generation/"
     t: "VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation"
-item_total: 28
+  - u: "whispering_agents_an_event-driven_covert_communication_protocol_for_the_internet/"
+    t: "Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents"
+item_total: 30
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**🤖 AAAI2026** · **28** 篇论文解读
+**🤖 AAAI2026** · **30** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (34)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×15 · 推理 ×2 · 对齐/RLHF ×2
 
@@ -127,6 +131,10 @@ item_total: 28
 **[Learning Spatial Decay for Vision Transformers](learning_spatial_decay_for_vision_transformers.md)**
 
 :   提出 Spatial Decay Transformer（SDT），首次将数据依赖的空间衰减机制从 1D 序列建模适配到 2D 视觉 Transformer，通过 Context-Aware Gating（CAG）生成动态的、内容相关的 patch 交互衰减强度，在 ImageNet-1K 分类和生成任务上一致超越 RMT 等强基线。
+
+**[LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)**
+
+:   提出 LILAD 框架，利用 GPT-2 的 in-context learning 能力同时学习动力学模型和 Lyapunov 函数，在保证全局指数稳定性的同时实现对非平稳参数化动力系统的自适应辨识，在多个基准系统上超越 ICL、MAML 等基线。
 
 **[LoKI: Low-damage Knowledge Implanting of Large Language Models](loki_low-damage_knowledge_implanting_of_large_language_models.md)**
 
@@ -191,3 +199,7 @@ item_total: 28
 **[VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation](vspo_validating_semantic_pitfalls_in_ontology_via_llm-based_cq_generation.md)**
 
 :   提出 VSPO 框架，通过构造"定义-公理"错位数据集并微调 LLaMA-3.1-8B-Instruct，生成能够验证本体语义陷阱（如 allValuesFrom 误用）的能力问题（CQ），精度和召回率分别超过 GPT-4.1 达 26% 和 28.2%。
+
+**[Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents](whispering_agents_an_event-driven_covert_communication_protocol_for_the_internet.md)**
+
+:   首次形式化定义了智能体互联网（IoA）中的"隐蔽事件通道"（Covert Event Channel），并设计了 ΠCCAP 协议，通过在智能体对话的存储、时序和行为维度中嵌入秘密数据，实现了高容量、高鲁棒性且对 LLM 审查员不可感知的隐蔽通信。

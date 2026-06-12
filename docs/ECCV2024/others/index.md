@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 其他论文汇总 · 65篇论文解读
+  ECCV2024 其他论文汇总 · 54篇论文解读
 description: >-
-  65篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、人脸/视线、异常检测、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  54篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、人脸/视线、少样本学习、对齐/RLHF、Agent、GAN等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "其他"
@@ -10,13 +10,11 @@ tags:
   - "论文笔记"
   - "对抗鲁棒"
   - "人脸/视线"
-  - "异常检测"
-  - "自监督学习"
+  - "少样本学习"
+  - "对齐/RLHF"
+  - "Agent"
+  - "GAN"
 item_list:
-  - u: "3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views/"
-    t: "3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views"
-  - u: "a_direct_approach_to_viewing_graph_solvability/"
-    t: "A Direct Approach to Viewing Graph Solvability"
   - u: "a_framework_for_efficient_model_evaluation_through_stratific/"
     t: "A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation"
   - u: "abc_easy_as_123_a_blind_counter_for_exemplar-free_multi-class_class-agnostic_cou/"
@@ -45,8 +43,6 @@ item_list:
     t: "COIN-Matting: Confounder Intervention for Image Matting"
   - u: "dc-solver_improving_predictor-corrector_diffusion_sampler_via_dynamic_compensati/"
     t: "DC-Solver: Improving Predictor-Corrector Diffusion Sampler via Dynamic Compensation"
-  - u: "decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear/"
-    t: "Decoupling Common and Unique Representations for Multimodal Self-supervised Learning"
   - u: "docling_pdf_document_conversion/"
     t: "Docling Technical Report"
   - u: "domain_reduction_strategy_for_non-line-of-sight_imaging/"
@@ -73,25 +69,23 @@ item_list:
     t: "FreeAugment: Data Augmentation Search Across All Degrees of Freedom"
   - u: "functional_transform-based_low-rank_tensor_factorization_for_multi-dimensional_d/"
     t: "Functional Transform-Based Low-Rank Tensor Factorization for Multi-Dimensional Data Recovery"
-item_total: 65
+  - u: "gaze_target_detection_based_on_head-local-global_coordination/"
+    t: "Gaze Target Detection Based on Head-Local-Global Coordination"
+  - u: "gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths/"
+    t: "GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths"
+  - u: "hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu/"
+    t: "HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images"
+item_total: 54
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🎞️ ECCV2024** · **65** 篇论文解读
+**🎞️ ECCV2024** · **54** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×4 · 人脸/视线 ×3 · 异常检测 ×3 · 自监督学习 ×2
-
-**[3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)**
-
-:   本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
-
-**[A Direct Approach to Viewing Graph Solvability](a_direct_approach_to_viewing_graph_solvability.md)**
-
-:   本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。
+🔥 **高频主题：** 对抗鲁棒 ×4 · 人脸/视线 ×3
 
 **[A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](a_framework_for_efficient_model_evaluation_through_stratific.md)**
 
@@ -148,10 +142,6 @@ item_total: 65
 **[DC-Solver: Improving Predictor-Corrector Diffusion Sampler via Dynamic Compensation](dc-solver_improving_predictor-corrector_diffusion_sampler_via_dynamic_compensati.md)**
 
 :   提出 DC-Solver，通过动态补偿（Dynamic Compensation）缓解 predictor-corrector 扩散采样器中的 misalignment 问题，仅需 10 个数据点即可优化补偿比率，并通过级联多项式回归（CPR）实现对未见 NFE/CFG 配置的即时泛化。
-
-**[Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)**
-
-:   提出 DeCUR，在多模态自监督学习中将嵌入维度显式拆分为跨模态共有 (common) 和模态独有 (unique) 两部分，通过互相关矩阵分别驱动对齐与去相关，同时引入模态内训练保证独有维度学到有意义信息，在 SAR-光学、RGB-DEM、RGB-Depth 三类多模态场景上均优于 Barlow Twins / CLIP 等基线。
 
 **[Docling Technical Report](docling_pdf_document_conversion.md)**
 
@@ -233,17 +223,9 @@ item_total: 65
 
 :   提出辅助点引导 (APG) 策略和隐式特征插值 (IFI) 模块，通过在真值点附近显式生成辅助正负样本来稳定 point-based 人群计数方法中 proposal-target 匹配过程的不稳定性，在多个数据集上取得 SOTA。
 
-**[Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)**
-
-:   提出一个将加权单类分类 (wOCC) 与弱监督 (WS) 模型交替训练的无监督视频异常检测框架，通过软标签缓解训练波动、自适应阈值策略逐步优化分割阈值，无需任何人工标注即可实现接近弱监督方法的性能。
-
 **[Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)**
 
 :   > 提出基于内在图像分解（intrinsic decomposition）的 HDR 重建方法，将问题分解为明暗域（shading）的动态范围扩展和反照率域（albedo）的颜色恢复两个子任务，分别训练网络以提升重建质量。
-
-**[Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)**
-
-:   本文提出了一种基于"正常性先验"的无监督视频异常检测方法（LANP），通过利用"视频首尾段大概率为正常事件"这一数据无关先验知识生成初始正常标签，再通过正常性传播将正常知识扩散到全部片段，最后配合损失重加权策略训练异常检测器，在 ShanghaiTech 和 UCF-Crime 上取得了优异性能。
 
 **[Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)**
 
@@ -265,17 +247,9 @@ item_total: 65
 
 :   本文提出一种对象感知的近红外(NIR)到可见光图像翻译框架，通过将可见光图像分解为与对象无关的光照分量和对象特定的反射分量分别处理，结合分割先验知识，在缺乏大规模配对数据的条件下实现了高质量的NIR彩色化，并构建了首个完全对齐的NIR-可见光大规模配对数据集。
 
-**[On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy](on_the_error_analysis_of_3d_gaussian_splatting_and_an_optimal_projection_strateg.md)**
-
-:   从数学上系统分析3D Gaussian Splatting中局部仿射近似引入的投影误差，证明误差函数在Gaussian均值方向与投影平面法线重合时取极小值，据此提出每个Gaussian投影到各自切平面的最优投影策略(Optimal Gaussian Splatting)，在不影响实时性能的前提下显著降低渲染伪影。
-
 **[Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)**
 
 :   本文提出 MATR（Memory-Augmented Transformer），通过记忆队列选择性地保存历史片段特征来建模长期上下文，并采用双 Transformer 解码器分别定位动作的结束和起始时间，在 THUMOS14 和 MUSES 两个在线时序动作定位基准上刷新了 SOTA，甚至可与部分离线方法媲美。
-
-**[Operational Open-Set Recognition and PostMax Refinement](operational_open-set_recognition_and_postmax_refinement.md)**
-
-:   本文提出了一种面向实际部署场景的开放集识别评估指标 OOSA（Operational Open-Set Accuracy）以及后处理算法 PostMax，通过对最大类别 logit 进行深度特征幅度归一化和广义 Pareto 分布映射，将 logit 转化为合理的概率估计，在大规模评估中取得了统计显著的 SOTA 性能。
 
 **[PartCraft: Crafting Creative Objects by Parts](partcraft_crafting_creative_objects_by_parts.md)**
 
@@ -305,14 +279,6 @@ item_total: 65
 
 :   本文提出"Undercover Bias"数据集水印方法，通过在训练数据中嵌入与目标任务无关但与标签对应的隐蔽水印图案，使未授权使用者训练的模型不自觉地学会分类这些水印，水印分类能力作为未授权使用的不可抵赖证据，实现了隐蔽、模型无关、对目标任务无损的数据集版权保护。
 
-**[Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection](self-supervised_feature_adaptation_for_3d_industrial_anomaly_detection.md)**
-
-:   提出 LSFA（Local-to-global Self-supervised Feature Adaptation）框架，通过模态内特征紧凑性优化（IFC）和跨模态局部到全局一致性对齐（CLC）两个自监督策略对预训练特征进行任务导向适配，在 MVTec-3D AD 上取得 97.1% I-AUROC，超越 SOTA +3.4%。
-
-**[Shifted Autoencoders for Point Annotation Restoration in Object Counting](shifted_autoencoders_for_point_annotation_restoration_in_object_counting.md)**
-
-:   提出**Shifted AutoEncoders (SAE)**，一种受MAE启发的点标注修复方法：通过随机位移点标注后训练UNet恢复，使模型学到"通用位置知识"而忽略个体标注噪声；用训练好的SAE修复原始标注使其更一致，可为任意计数模型（密度图/定位型）稳定提升性能，在9个数据集上创下新记录。
-
 **[SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding](spatialformer_towards_generalizable_vision_transformers_with_explicit_spatial_un.md)**
 
 :   提出SpatialFormer架构，通过引入自适应空间token显式建模场景的全局空间关系，采用decoder-only架构与双边交叉注意力块实现上下文与空间信息的高效交互，在分类、分割和检测任务上展示了优异的泛化性和可迁移性。
@@ -320,14 +286,6 @@ item_total: 65
 **[Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition](spatio-temporal_proximity-aware_dual-path_model_for_panoramic_activity_recogniti.md)**
 
 :   提出 SPDP-Net，通过时空邻近性建模个体间社会关系，并利用双路径 Transformer (DPATr) 架构在个体-全局和个体-社交两条路径上协同识别多粒度活动，在 JRDB-PAR 数据集上以 46.5% overall F1 大幅刷新 SOTA。
-
-**[SpectraM-PS: Spectrally Multiplexed Photometric Stereo Under Unknown Spectral Composition](spectram-ps_spectrally_multiplexed_photometric_stereo_under_unknown_spectral_com.md)**
-
-:   提出一种无需物理模型约束的光谱复用光度立体方法（SpectraM-PS），在光源光谱组成完全未知的条件下，通过数据驱动的方式从单张RGB图像中恢复表面法线，实现了传统多次拍摄光度立体到单次拍摄的突破。
-
-**[STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)**
-
-:   提出空间-时间子空间投影（STSP）方法解决视频类增量学习中的灾难性遗忘问题，通过时间子空间分类器（TSC）用正交子空间基表示每个类别，并通过空间梯度投影（SGP）将梯度约束在旧任务特征的零空间中，在HMDB51、UCF101和SSv2上达到SOTA。
 
 **[Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)**
 

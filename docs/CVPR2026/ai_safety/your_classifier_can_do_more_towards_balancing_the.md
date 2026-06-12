@@ -45,7 +45,7 @@ tags:
 将 JEM 的联合分布 $p(\mathbf{x}, y)$ 扩展为三体联合分布 $p(\mathbf{x}, \tilde{\mathbf{x}}, y)$，通过贝叶斯分解为三项：$p(y|\tilde{\mathbf{x}}, \mathbf{x})$（鲁棒分类 CE）、$p(\tilde{\mathbf{x}}|\mathbf{x})$（对抗分布建模，min-max 能量优化）、$p(\mathbf{x})$（数据分布建模，SGLD 采样+能量最大似然）。总梯度 $h_\theta = h_1 + h_2 + h_3$ 分别驱动生成、能量对齐和鲁棒分类。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     IN["clean 样本 x + 标签 y"] --> JD["三体联合分布 p(x, x̃, y)<br/>贝叶斯分解为三项"]
     JD --> H1["数据分布 p(x)<br/>SGLD 采样 + 能量最大似然 → h₁ 生成"]

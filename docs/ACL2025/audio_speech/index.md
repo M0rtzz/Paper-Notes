@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 音频/语音论文汇总 · 42篇论文解读
+  ACL2025 音频/语音论文汇总 · 46篇论文解读
 description: >-
-  42篇ACL2025的音频/语音方向论文解读，涵盖语音、对话系统、少样本学习、LLM、对抗鲁棒、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  46篇ACL2025的音频/语音方向论文解读，涵盖语音、对话系统、少样本学习、翻译、LLM、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "音频/语音"
@@ -11,9 +11,9 @@ tags:
   - "语音"
   - "对话系统"
   - "少样本学习"
+  - "翻译"
   - "LLM"
   - "对抗鲁棒"
-  - "对齐/RLHF"
 item_list:
   - u: "aae_voice_chatbot/"
     t: "Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots"
@@ -35,6 +35,8 @@ item_list:
     t: "Autoregressive Speech Synthesis without Vector Quantization"
   - u: "chain-talker_chain_understanding_and_rendering_for_empathetic_conversational_spe/"
     t: "Chain-Talker: Chain Understanding and Rendering for Empathetic Conversational Speech Synthesis"
+  - u: "childmandarin_a_comprehensive_mandarin_speech_dataset_for_young_children_aged_3-/"
+    t: "ChildMandarin: A Comprehensive Mandarin Speech Dataset for Young Children Aged 3-5"
   - u: "clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un/"
     t: "CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages"
   - u: "contextual_biasing_with_the_knowledgeable_external_language_model_for_end-to-end/"
@@ -57,8 +59,14 @@ item_list:
     t: "Eta-WavLM: Efficient Speaker Identity Removal in Self-Supervised Speech Representations Using a Simple Linear Equation"
   - u: "gigaspeech2_low_resource_asr/"
     t: "GigaSpeech 2: An Evolving, Large-Scale and Multi-domain ASR Corpus for Low-Resource Languages"
+  - u: "improving_language_and_modality_transfer_in/"
+    t: "Improving Language and Modality Transfer in Translation by Character-level Modeling"
   - u: "investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_/"
     t: "Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models"
+  - u: "its_not_a_walk_in_the_park_challenges_of_idiom_translation_in_speech-to-text_sys/"
+    t: "It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems"
+  - u: "leveraging_unit_language_guidance_to_advance_speech_modeling_in_textless_speech-/"
+    t: "Leveraging Unit Language Guidance to Advance Speech Modeling in Textless Speech-to-Speech Translation"
   - u: "mind_the_gap_static_and_interactive_evaluations_of_large_audio_models/"
     t: "Mind the Gap! Static and Interactive Evaluations of Large Audio Models"
   - u: "mitigating_confounding_in_speech-based_dementia_detection_through_weight_masking/"
@@ -67,25 +75,17 @@ item_list:
     t: "MMS-LLaMA: Efficient LLM-based Audio-Visual Speech Recognition with Minimal Multimodal Speech Tokens"
   - u: "multimed_multilingual_medical_speech_recognition_via_attention_encoder_decoder/"
     t: "MultiMed: Multilingual Medical Speech Recognition via Attention Encoder Decoder"
-  - u: "omniflatten_an_end-to-end_gpt_model_for_seamless_voice_conversation/"
-    t: "OmniFlatten: An End-to-end GPT Model for Seamless Voice Conversation"
-  - u: "on_the_robust_approximation_of_asr_metrics/"
-    t: "On the Robust Approximation of ASR Metrics"
-  - u: "predicting_turn-taking_and_backchannel_in_human-machine_conversations_using_ling/"
-    t: "Predicting Turn-Taking and Backchannel in Human-Machine Conversations Using Linguistic, Acoustic, and Visual Signals"
-  - u: "soundwave_less_is_more_for_speech-text_alignment_in_llms/"
-    t: "Soundwave: Less is More for Speech-Text Alignment in LLMs"
-item_total: 42
+item_total: 46
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**💬 ACL2025** · **42** 篇论文解读
+**💬 ACL2025** · **46** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (68)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (34)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×38 · 对话系统 ×6 · 少样本学习 ×4 · LLM ×4 · 对抗鲁棒 ×3
+🔥 **高频主题：** 语音 ×41 · 对话系统 ×6 · 少样本学习 ×4 · 翻译 ×4 · LLM ×4
 
 **[Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](aae_voice_chatbot.md)**
 
@@ -126,6 +126,10 @@ item_total: 42
 **[Chain-Talker: Chain Understanding and Rendering for Empathetic Conversational Speech Synthesis](chain-talker_chain_understanding_and_rendering_for_empathetic_conversational_spe.md)**
 
 :   提出 Chain-Talker，通过三阶段链式建模（情感理解→语义理解→共情渲染）实现可解释的共情对话语音合成，并开发 CSS-EmCap 自动标注管道为对话语音生成情感描述。
+
+**[ChildMandarin: A Comprehensive Mandarin Speech Dataset for Young Children Aged 3-5](childmandarin_a_comprehensive_mandarin_speech_dataset_for_young_children_aged_3-.md)**
+
+:   提出 ChildMandarin，一个面向 3-5 岁幼儿的普通话语音数据集，包含 397 名说话人、41.25 小时语音、覆盖中国 22 个省级行政区，并在 ASR 和说话人验证任务上提供了全面的基线评估。
 
 **[CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages](clamp_3_universal_music_information_retrieval_across_unaligned_modalities_and_un.md)**
 
@@ -171,9 +175,21 @@ item_total: 42
 
 :   GigaSpeech 2 构建了一个约 30,000 小时的大规模低资源语言（泰语、印尼语、越南语）ASR 语料库，通过自动化爬取-转录-精炼管线从无标注 YouTube 视频生成高质量伪标签，训练的模型仅用 10% 参数量即可将 WER 比 Whisper large-v3 降低 25%-40%。
 
+**[Improving Language and Modality Transfer in Translation by Character-level Modeling](improving_language_and_modality_transfer_in.md)**
+
+:   提出基于字符级编码器 charSONAR 的跨语言跨模态翻译方法，通过 teacher-student 训练获得字符级文本编码器，再用轻量适配器连接 1000+ 语言的 CTC ASR 模型（MMS），在 75 语言文本翻译和 33 语言语音翻译上实现 SOTA，零资源低资源场景表现尤其突出。
+
 **[Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models](investigating_and_enhancing_vision-audio_capability_in_omnimodal_large_language_.md)**
 
 :   发现当前全模态大语言模型（OLLMs）在视觉-音频任务上显著弱于视觉-文本任务，原因在于视觉与音频模态之间缺乏直接对齐，并提出 Self-KD（自知识蒸馏）方法，利用 OLLM 自身的视觉-文本组件作为教师来增强视觉-音频能力。
+
+**[It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems](its_not_a_walk_in_the_park_challenges_of_idiom_translation_in_speech-to-text_sys.md)**
+
+:   本文首次系统比较了语音到文本翻译（SLT）、文本机器翻译（MT）和大语言模型（LLM）在习语翻译任务上的表现，发现 SLT 系统在处理习语时性能大幅下降，即便在编码器高层仍倾向于字面翻译，而 MT 和 LLM 对习语的处理能力明显更优。
+
+**[Leveraging Unit Language Guidance to Advance Speech Modeling in Textless Speech-to-Speech Translation](leveraging_unit_language_guidance_to_advance_speech_modeling_in_textless_speech-.md)**
+
+:   本文提出"单元语言"（unit language）的概念，通过n-gram语言建模将语音离散单元构造为类文本表示，并利用多任务学习引导无文本语音到语音翻译（S2ST）模型的训练过程，同时提出任务提示建模来缓解源端和目标端单元语言同时使用时的冲突，在VoxPopuli四语数据集上取得显著提升。
 
 **[Mind the Gap! Static and Interactive Evaluations of Large Audio Models](mind_the_gap_static_and_interactive_evaluations_of_large_audio_models.md)**
 

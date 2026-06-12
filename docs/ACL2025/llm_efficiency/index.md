@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM效率论文汇总 · 38篇论文解读
+  ACL2025 LLM效率论文汇总 · 42篇论文解读
 description: >-
-  38篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  42篇ACL2025的 LLM 效率方向论文解读，涵盖 LLM、文本摘要、对话系统、问答、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "LLM 效率"
@@ -29,6 +29,10 @@ item_list:
     t: "CNNSum: Exploring Long-Context Summarization with Large Language Models in Chinese Novels"
   - u: "consistency-preserving_contrastive_decoding_for_faithful_document-grounded_dial/"
     t: "Consistency-Preserving Contrastive Decoding for Faithful Document-Grounded Dialogue"
+  - u: "consultant_decoding_yet_another_synergistic_mechanism/"
+    t: "Consultant Decoding: Yet Another Synergistic Mechanism"
+  - u: "decoding_knowledge_attribution_in_mixture-of-experts_a_framework_of_basic-refine/"
+    t: "Decoding Knowledge Attribution in Mixture-of-Experts: A Framework of Basic-Refinement Collaboration and Efficiency Analysis"
   - u: "design_choices_for_extending_the_context_length_of_visual_language_models/"
     t: "Giraffe: Design Choices for Extending the Context Length of Visual Language Models"
   - u: "distance_between_relevant_information_pieces_causes_bias_in_long-context_llms/"
@@ -41,6 +45,10 @@ item_list:
     t: "Efficient Many-Shot In-Context Learning with Dynamic Block-Sparse Attention"
   - u: "entailment-preserving_first-order_logic_representations_in_natural_language_enta/"
     t: "Entailment-Preserving First-order Logic Representations in Natural Language Entailment"
+  - u: "epman_episodic_memory_attention_for_generalizing_to_longer_contexts/"
+    t: "EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts"
+  - u: "fastdraft_how_to_train_your_draft/"
+    t: "FastDraft: How to Train Your Draft"
   - u: "focusllm_precise_understanding_of_long_context_by_dynamic_condensing/"
     t: "FocusLLM: Precise Understanding of Long Context by Dynamic Condensing"
   - u: "fuel_unveiling_environmental_impacts_of_llm_serving/"
@@ -67,21 +75,13 @@ item_list:
     t: "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention"
   - u: "on_many-shot_in-context_learning_for_long-context_evaluation/"
     t: "On Many-Shot In-Context Learning for Long-Context Evaluation"
-  - u: "ref-long_benchmarking_the_long-context_referencing_capability_of_long-context_la/"
-    t: "Ref-Long: Benchmarking the Long-Context Referencing Capability of Long-Context Language Models"
-  - u: "refreshkv_updating_small_kv_cache_during_long-form_generation/"
-    t: "RefreshKV: Updating Small KV Cache During Long-form Generation"
-  - u: "sam_decoding_speculative_decoding_via_suffix_automaton/"
-    t: "SAM Decoding: Speculative Decoding via Suffix Automaton"
-  - u: "scaling_context_not_parameters_training_a_compact_7b_language_model_for_efficien/"
-    t: "Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing"
-item_total: 38
+item_total: 42
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**💬 ACL2025** · **38** 篇论文解读
+**💬 ACL2025** · **42** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/llm_efficiency/index.md) · [💬 ACL2026 (22)](../../ACL2026/llm_efficiency/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (34)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
 
@@ -115,6 +115,14 @@ item_total: 38
 
 :   本文提出一种一致性保持的对比解码（Consistency-Preserving Contrastive Decoding, CPCD）方法，通过在解码阶段对比有文档条件和无文档条件的生成分布，增强文档基础对话系统对源文档的忠实性，同时保持回复的流畅性和对话一致性。
 
+**[Consultant Decoding: Yet Another Synergistic Mechanism](consultant_decoding_yet_another_synergistic_mechanism.md)**
+
+:   提出 Consultant Decoding (CD)，一种基于目标模型负对数似然（NLL）验证 draft token 的新型协同解码机制，相比传统 Speculative Decoding 的似然比验证方法，能大幅提升接受率、降低大模型调用频率，同时保持甚至超越目标模型的生成质量。
+
+**[Decoding Knowledge Attribution in Mixture-of-Experts: A Framework of Basic-Refinement Collaboration and Efficiency Analysis](decoding_knowledge_attribution_in_mixture-of-experts_a_framework_of_basic-refine.md)**
+
+:   提出跨层级知识归因算法，系统解析 MoE 模型中共享专家与路由专家的"基础-精炼"协作框架，揭示 MoE 相比稠密模型实现 31% 更高的逐层效率，并通过语义驱动路由机制（注意力头-专家相关性 r=0.68）和专家阻断实验验证了架构深度对鲁棒性的决定性影响。
+
 **[Giraffe: Design Choices for Extending the Context Length of Visual Language Models](design_choices_for_extending_the_context_length_of_visual_language_models.md)**
 
 :   系统性地探索了将现有视觉语言模型（VLM）的上下文窗口扩展到128K的设计空间，从数据配方、位置编码扩展到上下文利用三个维度提出最佳实践，并提出 M-RoPE++ 和混合分辨率训练两项技术，构建的 Giraffe 模型在长上下文 VLM 中达 SOTA。
@@ -138,6 +146,14 @@ item_total: 38
 **[Entailment-Preserving First-order Logic Representations in Natural Language Entailment](entailment-preserving_first-order_logic_representations_in_natural_language_enta.md)**
 
 :   形式化定义了蕴含保持一阶逻辑表示（EPF）任务及无参考评价指标（EPR系列），提出迭代learning-to-rank训练方法，通过BRIO损失优化T5模型的NL→FOL翻译，使其生成的FOL表示能被自动定理证明器验证蕴含关系，在三个数据集上EPR提升1.8-2.7%、EPR@16提升17.4-20.6%。
+
+**[EpMAN: Episodic Memory AttentioN for Generalizing to Longer Contexts](epman_episodic_memory_attention_for_generalizing_to_longer_contexts.md)**
+
+:   提出 EpMAN 方法，通过情景记忆模块估计上下文块的相对相关性，用该相关性重新加权解码器的自注意力（differentiating attention），配合噪声训练和注意力范围扩展策略，在 16k-256k 上下文长度范围内实现了比长上下文 LLM 和 RAG 更强且更鲁棒的表现。
+
+**[FastDraft: How to Train Your Draft](fastdraft_how_to_train_your_draft.md)**
+
+:   提出 FastDraft，一套高效的 draft 模型预训练与对齐流程，可在24小时内用单节点8卡训练出约50M参数的 draft 模型，配合 Speculative Decoding 实现最高3倍内存带宽加速和2倍实际推理加速。
 
 **[FocusLLM: Precise Understanding of Long Context by Dynamic Condensing](focusllm_precise_understanding_of_long_context_by_dynamic_condensing.md)**
 

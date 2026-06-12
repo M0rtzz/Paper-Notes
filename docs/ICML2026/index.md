@@ -2,7 +2,7 @@
 title: >-
   ICML2026 论文汇总 · 1463篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1463篇ICML2026论文解读，涵盖图像生成(124篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(45篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "ICML2026论文汇总"
@@ -15,8 +15,8 @@ tags:
   - "多模态 VLM"
   - "强化学习"
   - "可解释性"
-  - "LLM 推理"
   - "优化/理论"
+  - "LLM 推理"
   - "LLM 安全"
 item_list:
   - u: "image_generation/a_diffusive_classification_loss_for_learning_energy-based_generative_models/"
@@ -85,7 +85,7 @@ item_total: 1463
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2026 论文汇总
 
-1463篇ICML2026论文解读，涵盖图像生成(124篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(45篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -321,7 +321,7 @@ item_total: 1463
 
 ---
 
-## ⚖️ 对齐 / RLHF (24) { #llm_alignment }
+## ⚖️ 对齐 / RLHF (26) { #llm_alignment }
 
 **[Adaptive Probe-based Steering for Robust LLM Jailbreaking](llm_alignment/adaptive_probe-based_steering_for_robust_llm_jailbreaking.md)**
 
@@ -330,6 +330,10 @@ item_total: 1463
 **[Alignment-Aware Decoding](llm_alignment/alignment-aware_decoding.md)**
 
 :   Alignment-Aware Decoding 直接在推理时利用 DPO 模型相对 SFT 参考模型的 token 概率比作为隐式对齐奖励，在无需额外训练或外部 reward model 的情况下，比 greedy、Bo2 和 EFT 更稳定地生成高对齐质量回答，并可进一步产生合成偏好数据改进 DPO。
+
+**[Consistency Training Can Entrench Misalignment](llm_alignment/consistency_training_can_entrench_misalignment.md)**
+
+:   本文提出"一致性非中性假说"，通过在 108 个"模型有机体"上评估 7 种一致性训练方法，发现一致性训练并非对齐中性的——它系统性地抑制脆弱的奖励黑客和涌现性错位，但放大稳定的谄媚行为，分布偏移（而非分数选择）是主要驱动因素。
 
 **[Curriculum Learning for Safety Alignment](llm_alignment/curriculum_learning_for_safety_alignment.md)**
 
@@ -359,11 +363,7 @@ item_total: 1463
 
 :   作者提出 Implicit Preference Alignment (IPA)：一种只需"好样本"、不需要构造好/坏配对的后训练方法，通过最大化与预训练参考模型 KL 间隔来等价地最大化隐式奖励，并配合一个把手部 mask 加权进损失的 HALO 模块，让大尺度视频 DiT 在仅 93 个挑选样本下显著改善人体动画的手部保真度。
 
-**[Implicit Safety Alignment from Crowd Preferences](llm_alignment/implicit_safety_alignment_from_crowd_preferences.md)**
-
-:   针对众包偏好数据中"用户目标各异但安全准则共享"的结构，作者证明传统 reward combination 会被多数用户偏好污染且对权重敏感，转而提出 Safe Crowd Preference-based RL：用 VAE 把众包偏好编码成 latent-conditioned 低层 skill，再训练高层策略在 skill 空间组合，从而在没有显式安全奖励的情况下把下游 cost 压到接近 Oracle，同时任务回报基本不掉。
-
-[查看全部24篇「对齐 / RLHF」论文 →](llm_alignment/)
+[查看全部26篇「对齐 / RLHF」论文 →](llm_alignment/)
 
 ---
 
@@ -587,7 +587,7 @@ item_total: 1463
 
 ---
 
-## 🔍 信息检索/RAG (22) { #information_retrieval }
+## 🔍 信息检索/RAG (23) { #information_retrieval }
 
 **[BlitzRank: Principled Zero-shot Ranking Agents with Tournament Graphs](information_retrieval/blitzrank_principled_zero-shot_ranking_agents_with_tournament_graphs.md)**
 
@@ -629,7 +629,7 @@ item_total: 1463
 
 :   ML-Embed 把 Matryoshka 思想从一维 (representation 维度) 扩展到**三维** —— 在 embedding 参数 (MEL)、模型深度 (MLL)、表征维度 (MRL) 上**全栈嵌套训练**, 同时构建 282 种自然语言 + 40 种编程语言、5000 万样本的多语训练集, 推出 140M-8B 一族开源模型, 在 17 个 MTEB benchmark 上 9 个拿第一, 波兰语 +22.89, 越南语 +6.88.
 
-[查看全部22篇「信息检索/RAG」论文 →](information_retrieval/)
+[查看全部23篇「信息检索/RAG」论文 →](information_retrieval/)
 
 ---
 
@@ -739,7 +739,7 @@ item_total: 1463
 
 ---
 
-## 🎨 图像生成 (124) { #image_generation }
+## 🎨 图像生成 (125) { #image_generation }
 
 **[A Diffusive Classification Loss for Learning Energy-based Generative Models](image_generation/a_diffusive_classification_loss_for_learning_energy-based_generative_models.md)**
 
@@ -781,7 +781,7 @@ item_total: 1463
 
 :   这篇论文提出 Alignment-Guided Score Matching，用 reward-free 的 Plackett-Luce 对齐奖励把正负文本-图像匹配信号直接写入扩散 score matching 目标，通过训练轻量 soft tokens 改善 T2I 语义对齐，同时缓解 SoftREPA 常见的重复生成和计数错误。
 
-[查看全部124篇「图像生成」论文 →](image_generation/)
+[查看全部125篇「图像生成」论文 →](image_generation/)
 
 ---
 
@@ -1461,7 +1461,7 @@ item_total: 1463
 
 ---
 
-## 📐 优化/理论 (60) { #optimization }
+## 📐 优化/理论 (64) { #optimization }
 
 **[A General Framework for Dynamic Consistent Submodular Maximization](optimization/a_general_framework_for_dynamic_consistent_submodular_maximization.md)**
 
@@ -1474,6 +1474,10 @@ item_total: 1463
 **[Adaptive Estimation and Inference in Semi-parametric Heterogeneous Clustered Multitask Learning via Neyman Orthogonality](optimization/adaptive_estimation_and_inference_in_semi-parametric_heterogeneous_clustered_mul.md)**
 
 :   本文桥接双重机器学习与聚类多任务学习，提出自适应框架结合 Neyman 正交性与数据驱动的配对融合罚项，在异质（可能无限维）噪声的半参数设置中精确恢复任务潜在聚类、以汇总率达到预言水平，并建立渐近正态性，实现有效统计推断。
+
+**[Adaptive Preconditioners Trigger Loss Spikes in Adam](optimization/adaptive_preconditioners_trigger_loss_spikes_in_adam.md)**
+
+:   这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。
 
 **[Adaptive Sharpness-Aware Minimization with a Polyak-type Step size: A Theory-Grounded Scheduler](optimization/adaptive_sharpness-aware_minimization_with_a_polyak-type_step_size_a_theory-grou.md)**
 
@@ -1499,11 +1503,7 @@ item_total: 1463
 
 :   针对非负对比学习（NCL）中共享背景特征导致的优化冲突（梯度振荡），提出 BayesNCL，通过贝叶斯门控头为每个特征维度学习 Bernoulli 分布来动态过滤高频公共特征，在 ImageNet-100 上语义一致性提升 142.1% 且不牺牲下游准确率。
 
-**[Bregman meets Lévy: Stochastic Mirror Descent with Heavy-Tailed Noise in Continuous and Discrete Time](optimization/bregman_meets_lévy_stochastic_mirror_descent_with_heavy-tailed_noise_in_continuo.md)**
-
-:   本文提出 Lévy Mirror Flow（LMF）——一种由 Lévy 噪声驱动的随机镜像下降连续时间 SDE 模型，证明即使在无穷方差的重尾梯度噪声下，SMD 仍保持收敛保证（凸情形 $O(\varepsilon^{-p/(p-1)})$，强凸情形 $\tilde{O}(\varepsilon^{-1/(p-1)})$），并将连续时间结果无缝传递到离散时间算法。
-
-[查看全部60篇「优化/理论」论文 →](optimization/)
+[查看全部64篇「优化/理论」论文 →](optimization/)
 
 ---
 
@@ -1645,6 +1645,52 @@ item_total: 1463
 
 ---
 
+## 📐 学习理论 (17) { #learning_theory }
+
+**[A Perturbation Approach to Unconstrained Linear Bandits](learning_theory/a_perturbation_approach_to_unconstrained_linear_bandits.md)**
+
+:   本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题，并由此得到 comparator-adaptive 静态/动态 regret、高概率界以及若干下界讨论。
+
+**[Conditional KRR: Injecting Unpenalized Features into Kernel Methods with Applications to Kernel Thresholding](learning_theory/conditional_krr_injecting_unpenalized_features_into_kernel_methods_with_applicat.md)**
+
+:   本文提出条件核岭回归（Conditional KRR）框架，将一组非惩罚特征注入核方法中，通过残差核将其归约为标准 KRR，证明了归约代价为 $\mathcal{O}(1/\sqrt{N})$，并在硬阈值（top-k 本征函数）和软阈值（随机高斯特征）两种设定下验证了条件 KRR 优于标准 KRR 的充分条件。
+
+**[CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations](learning_theory/core-mtl_rethinking_gradient_balancing_via_causal_orthogonal_representations.md)**
+
+:   作者把多任务学习里"负迁移"的根因从"梯度冲突"重新归到"共享表征里语义和噪声纠缠"，提出 CORE-MTL：双流编码器把表征拆成语义 $\hat{Z}_s$ 和残差 $\hat{Z}_r$，用 CKA 独立性约束 + 反事实风格替换 + 反演渲染重构来落地"因果正交"，理论上给出比梯度平衡更紧的 OOD 上界，实验上在 NYUv2/Cityscapes 的 ID 与 GTA5→Cityscapes、Cityscapes-C 的 OOD 设定上同时压过 PCGrad/GradNorm/STCH/FairGrad 等十种 baseline。
+
+**[Correcting Split Selection in Online Decision Trees via Anytime-Valid Inference](learning_theory/correcting_split_selection_in_online_decision_trees_via_anytime-valid_inference.md)**
+
+:   作者指出经典 Hoeffding Tree（HT）在数据流上分裂时使用的"固定样本量"集中不等式被它自己采用的"数据相关停止规则"破坏，于是用 testing-by-betting + Universal Portfolio 重写分裂判据，让单棵树和 Adaptive Random Forest 都能在任意停止时刻保持 Type-I 错误可控，同时在 12 个真实流上更准且树更小。
+
+**[Estimating Correlation Clustering Cost in Node-Arrival Stream](learning_theory/estimating_correlation_clustering_cost_in_node-arrival_stream.md)**
+
+:   本文研究「节点到达」数据流模型下相关聚类（correlation clustering）代价的近似估计问题：作者提出 C4Approx 算法，用 $O(n^{(3+\alpha)/4}\log n)$ 词的**亚线性**空间和常数遍数得到 $(O(1), n^{1-\alpha})$-近似，并配套两个匹配下界证明多遍与加性误差都不可避免；在真实数据上仅存 2% 节点即达 Pivot 同等效果。
+
+**[Expectation Consistency Loss: Rethink Confidence Calibration under Covariate Shift](learning_theory/expectation_consistency_loss_rethink_confidence_calibration_under_covariate_shif.md)**
+
+:   ECL 证明在协变量漂移下完整对齐输入分布 $P_s(X) = P_t(X)$ 并非校准的必要条件，只要"在每个置信度水平集上 $P(Y_k=1|X)$ 的条件期望两域一致"即可，并据此构造一个对 canonical / class-wise / top-label 三类校准都通用、可微、且 mini-batch 梯度无偏的损失 ECL。
+
+**[Matroid Algorithms Under Size-Sensitive Independence Oracles](learning_theory/matroid_algorithms_under_size-sensitive_independence_oracles.md)**
+
+:   作者提出「查询代价随查询集合大小线性增长」的尺寸敏感拟阵 oracle 模型，证明在该模型下找基、估计秩、估计划分数的最优查询代价都是 $\tilde{\Theta}(n^2)$，并对有界周长 $c$ 的拟阵给出 $\mathcal{O}(n^{2-1/c}\log n)$ 的最大权基算法突破二次下界。
+
+**[MMD-Balls as Credal Sets: A PAC-Bayesian Framework for Epistemic Uncertainty in Test-Time Adaptation](learning_theory/mmd-balls_as_credal_sets_a_pac-bayesian_framework_for_epistemic_uncertainty_in_t.md)**
+
+:   论文为 test-time adaptation 提供了第一份"目标风险 ≤ 源经验风险 + KL 复杂度 + MMD 分布偏移项"的 PAC-Bayes 上界，并把 MMD-球解读为 Walley 意义下的 credal set，从而用"上下风险区间"自然分离 aleatoric 与 epistemic 不确定性，给出"何时应当 adapt、何时该 abstain"的可计算判据。
+
+**[Multi-task Linear Regression without Eigenvalue Lower Bounds: Adaptivity, Robustness and Safety](learning_theory/multi-task_linear_regression_without_eigenvalue_lower_bounds_adaptivity_robustne.md)**
+
+:   本文提出一种以 $\|\theta_j-\beta\|_{\bm\Sigma_j}$（矩阵加权范数）为正则项的鲁棒多任务线性回归估计器，用一个相对的"平衡度常数" $B$ 取代了既往工作中刚硬的"每个任务二阶矩最小特征值 $\Omega(1)$"假设，在病态/低秩/带离群任务的高维场景下同时给出最小最大率（minimax）、自适应、和回退到独立任务学习（ITL）的安全保证。
+
+**[On the Learnability of Test-Time Adaptation: A Recovery Complexity Perspective](learning_theory/on_the_learnability_of_test-time_adaptation_a_recovery_complexity_perspective.md)**
+
+:   本文首次为测试时自适应（TTA）建立可学习性理论框架，用 $(\epsilon,\delta)$-Recovery Complexity 衡量分布漂移后模型把超额风险压到 $\epsilon$ 所需时间，并配合 $(\epsilon,\rho)$-TTA Learnability 把局部恢复推广到整条非平稳测试流，导出匹配阶的 minimax 上/下界，揭示了 TTA 的"适应速度—信息约束"内在权衡。
+
+[查看全部17篇「学习理论」论文 →](learning_theory/)
+
+---
+
 ## 🔗 因果推理 (15) { #causal_inference }
 
 **[An Odd Estimator for Shapley Values](causal_inference/an_odd_estimator_for_shapley_values.md)**
@@ -1691,7 +1737,7 @@ item_total: 1463
 
 ---
 
-## 🛡️ AI 安全 (37) { #ai_safety }
+## 🛡️ AI 安全 (41) { #ai_safety }
 
 **[Active Continual Learning with Metaplastic Binary Bayesian Neural Networks](ai_safety/active_continual_learning_with_metaplastic_binary_bayesian_neural_networks.md)**
 
@@ -1733,7 +1779,7 @@ item_total: 1463
 
 :   在 Spearman footrule 距离下，把 ILP 的约束矩阵证成全单模，从而给出 fair top-$k$ 排名聚合的首个多项式时间最优算法；并以"先解 fair top-$k$，再用最小代价完美匹配补齐成全排列"的两步策略，把 fair (full) rank aggregation 的近似比从 3 改进到 2。
 
-[查看全部37篇「AI 安全」论文 →](ai_safety/)
+[查看全部41篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1783,6 +1829,52 @@ item_total: 1463
 
 ---
 
+## ⚛️ 物理/科学计算 (26) { #physics }
+
+**[A Call to Lagrangian Action: Learning Population Mechanics from Temporal Snapshots](physics/a_call_to_lagrangian_action_learning_population_mechanics_from_temporal_snapshot.md)**
+
+:   本文从最小作用原理出发，提出 Wasserstein 拉格朗日力学（WLM）框架，学习二阶人口动力学而非传统梯度流的一阶动力学，从而能够捕捉周期性、旋转等更丰富的群体现象，并可在不需要参考过程的情况下完成插值与未来预报。
+
+**[ANTIC: Adaptive Neural Temporal In-situ Compressor](physics/antic_adaptive_neural_temporal_in-situ_compressor.md)**
+
+:   为了把 PB-EB 级别 PDE 仿真数据"边算边压"，本文提出 ANTIC：用 physics-aware 时间选择器只保留物理上重要的快照，再用神经场 + LoRA 持续微调编码相邻快照之间的残差，在 2D Kolmogorov 流上拿到 435× 压缩、在 4.2 TiB 的 3D 双黑洞合并模拟上拿到 6807× 时空联合压缩。
+
+**[BALLAST: Bayesian Active Learning with Look-ahead Amendment for Sea-drifter Trajectories under Spatio-Temporal Vector Fields](physics/ballast_bayesian_active_learning_with_look-ahead_amendment_for_sea-drifter_traje.md)**
+
+:   提出 BALLAST 算法，通过从 GP 后验中采样向量场并模拟拉格朗日观测器的未来轨迹来修正主动学习的效用估计，同时开发了 VaSE 推理方法将 GP 后验采样效率提升数千倍，在合成与高保真海洋流场上实现约 16%-22% 的部署成本节省。
+
+**[Distribution Transformers: Fast Approximate Bayesian Inference With On-The-Fly Prior Adaptation](physics/distribution_transformers_fast_approximate_bayesian_inference_with_on-the-fly_pr.md)**
+
+:   Distribution Transformer (DT) 把"先验分布"显式 token 化为一组高斯混合分量、把"观测"通过交叉注意力注入解码器，端到端学一个"先验+数据 → 后验"的映射，在保持与先验同族（GMM→GMM）以支持序贯滤波的同时，把推断时间从分钟级压到毫秒级，并允许测试时任意更换先验而无需重训。
+
+**[EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs](physics/eqgino_equivariant_geometry-informed_fourier_neural_operators_for_3d_pdes.md)**
+
+:   EqGINO 把 GINO 的 GNO 编码器、FNO 主干、GNO 解码器全部改造成 SE(3) 等变模块：GNO 用相对距离作为旋转不变核、FNO 用"轨道权重共享"在频域强制 $W(R\mathbf k)=W(\mathbf k)$ 的各向同性，从而在保留 FNO 全局感受野的同时让 3D PDE surrogate 对任意刚性变换鲁棒，且把谱权重参数量从 $\mathcal O(K^3)$ 降到 $\mathcal O(K)$。
+
+**[From Generalist to Specialist Representation](physics/from_generalist_to_specialist_representation.md)**
+
+:   本文给出第一个完全非参数（无 intervention、无 functional 约束）的两层 hierarchical 可识别性证明：时间-任务结构由 collider 视角下的 CI test 可识别，任务相关 latent 由 sparsity 正则可从 generalist 表示中分离出来。
+
+**[Generative Neural Operators Through Diffusion Last Layer](physics/generative_neural_operators_through_diffusion_last_layer.md)**
+
+:   在任何神经算子骨干（FNO/DeepONet）后挂一个"扩散末层"（DLL）：用一个输入相关基 $\Phi_a$ 把目标场压成 $r$ 维系数向量，再用一个小 MLP 速度场在系数空间做条件流匹配，从而把确定性算子升级成既能采样随机解又能给出滚动不确定性的生成式算子。
+
+**[Hermite-NGP: Gradient-Augmented Hash Encoding for Learning PDEs](physics/hermite-ngp_gradient-augmented_hash_encoding_for_learning_pdes.md)**
+
+:   论文把 Instant-NGP 的多分辨率哈希表升级为"梯度增强"版本——在每个哈希格点同时存储函数值与所有混合偏导，再用 Hermite 插值重建出 $C^1$ 连续、内部解析可二阶可微的场，从而让 NGP 第一次能真正用于 PINN 求解 PDE，在 2D/3D 多个基准上比 SOTA 神经 PDE 求解器降误差最多 $20\times$，单 epoch 训练只要 $2$–$3.5\,\mathrm{ms}$。
+
+**[Iterative Refinement Neural Operators are Learned Fixed-Point Solvers: A Principled Approach to Spectral Bias Mitigation](physics/iterative_refinement_neural_operators_are_learned_fixed-point_solvers_a_principl.md)**
+
+:   论文给已训练好的神经算子（FNO/TFNO/WDSR 等）外挂一个共享权重的 U-Net 修正模块 $\Phi_\theta$，在推理时按 $h_{k+1}=h_k+\alpha\Phi_\theta(x,h_k)$ 反复迭代，把单次前向的预测变成一个收敛到唯一不动点的"学习版残差求解器"，在湍流、活性物质、ERA5 超分等任务上把误差降低 34%–80%，并能稳定外推到训练步数的 2 倍。
+
+**[Learning to Refine: Spectral-Decoupled Iterative Refinement Framework for Precipitation Nowcasting](physics/learning_to_refine_spectral-decoupled_iterative_refinement_framework_for_precipi.md)**
+
+:   SDIR 把雷达 0–2 小时降水临近预报重新表述为"频域解耦的迭代精化"过程：先用 SFG-Former 提取稳定的低频天气骨架，再用 FR-Refiner（含 Fourier 神经算子）按频段逐步合成高频对流细节，并用一条对齐 Kolmogorov 湍流功率律的 PCPSD 损失替代会导致过平滑的纯 MSE，在 CIKM / Shanghai / SEVIR 三个 benchmark 上同时显著超过回归类与扩散类 SOTA。
+
+[查看全部26篇「物理/科学计算」论文 →](physics/)
+
+---
+
 ## 🏥 医学图像 (24) { #medical_imaging }
 
 **[Are We Overconfident in Models and Results for Semi-Supervised 3D Medical Image Segmentation?](medical_imaging/are_we_overconfident_in_models_and_results_for_semi-supervised_3d_medical_image_.md)**
@@ -1826,52 +1918,6 @@ item_total: 1463
 :   本文论证了一个反直觉但实用的发现——在自然图像/视频上预训练的 Foundation VAE 不需要任何医学微调就能作为统一接口同时支持 CT 重建、增强、生成；其重建只是去噪不偏移边界，因此重建图既可做去噪增强（pancreatic / lung tumor NSD +3.9%），其潜空间又可承载 CT 条件扩散生成（FVD −3.9%，CT-CLIP +36.2%，多疾病忠实度 AUC +2.76%）。
 
 [查看全部24篇「医学图像」论文 →](medical_imaging/)
-
----
-
-## ⚛️ 物理/科学计算 (24) { #physics }
-
-**[A Call to Lagrangian Action: Learning Population Mechanics from Temporal Snapshots](physics/a_call_to_lagrangian_action_learning_population_mechanics_from_temporal_snapshot.md)**
-
-:   本文从最小作用原理出发，提出 Wasserstein 拉格朗日力学（WLM）框架，学习二阶人口动力学而非传统梯度流的一阶动力学，从而能够捕捉周期性、旋转等更丰富的群体现象，并可在不需要参考过程的情况下完成插值与未来预报。
-
-**[ANTIC: Adaptive Neural Temporal In-situ Compressor](physics/antic_adaptive_neural_temporal_in-situ_compressor.md)**
-
-:   为了把 PB-EB 级别 PDE 仿真数据"边算边压"，本文提出 ANTIC：用 physics-aware 时间选择器只保留物理上重要的快照，再用神经场 + LoRA 持续微调编码相邻快照之间的残差，在 2D Kolmogorov 流上拿到 435× 压缩、在 4.2 TiB 的 3D 双黑洞合并模拟上拿到 6807× 时空联合压缩。
-
-**[BALLAST: Bayesian Active Learning with Look-ahead Amendment for Sea-drifter Trajectories under Spatio-Temporal Vector Fields](physics/ballast_bayesian_active_learning_with_look-ahead_amendment_for_sea-drifter_traje.md)**
-
-:   提出 BALLAST 算法，通过从 GP 后验中采样向量场并模拟拉格朗日观测器的未来轨迹来修正主动学习的效用估计，同时开发了 VaSE 推理方法将 GP 后验采样效率提升数千倍，在合成与高保真海洋流场上实现约 16%-22% 的部署成本节省。
-
-**[Distribution Transformers: Fast Approximate Bayesian Inference With On-The-Fly Prior Adaptation](physics/distribution_transformers_fast_approximate_bayesian_inference_with_on-the-fly_pr.md)**
-
-:   Distribution Transformer (DT) 把"先验分布"显式 token 化为一组高斯混合分量、把"观测"通过交叉注意力注入解码器，端到端学一个"先验+数据 → 后验"的映射，在保持与先验同族（GMM→GMM）以支持序贯滤波的同时，把推断时间从分钟级压到毫秒级，并允许测试时任意更换先验而无需重训。
-
-**[EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs](physics/eqgino_equivariant_geometry-informed_fourier_neural_operators_for_3d_pdes.md)**
-
-:   EqGINO 把 GINO 的 GNO 编码器、FNO 主干、GNO 解码器全部改造成 SE(3) 等变模块：GNO 用相对距离作为旋转不变核、FNO 用"轨道权重共享"在频域强制 $W(R\mathbf k)=W(\mathbf k)$ 的各向同性，从而在保留 FNO 全局感受野的同时让 3D PDE surrogate 对任意刚性变换鲁棒，且把谱权重参数量从 $\mathcal O(K^3)$ 降到 $\mathcal O(K)$。
-
-**[Generative Neural Operators Through Diffusion Last Layer](physics/generative_neural_operators_through_diffusion_last_layer.md)**
-
-:   在任何神经算子骨干（FNO/DeepONet）后挂一个"扩散末层"（DLL）：用一个输入相关基 $\Phi_a$ 把目标场压成 $r$ 维系数向量，再用一个小 MLP 速度场在系数空间做条件流匹配，从而把确定性算子升级成既能采样随机解又能给出滚动不确定性的生成式算子。
-
-**[Hermite-NGP: Gradient-Augmented Hash Encoding for Learning PDEs](physics/hermite-ngp_gradient-augmented_hash_encoding_for_learning_pdes.md)**
-
-:   论文把 Instant-NGP 的多分辨率哈希表升级为"梯度增强"版本——在每个哈希格点同时存储函数值与所有混合偏导，再用 Hermite 插值重建出 $C^1$ 连续、内部解析可二阶可微的场，从而让 NGP 第一次能真正用于 PINN 求解 PDE，在 2D/3D 多个基准上比 SOTA 神经 PDE 求解器降误差最多 $20\times$，单 epoch 训练只要 $2$–$3.5\,\mathrm{ms}$。
-
-**[Iterative Refinement Neural Operators are Learned Fixed-Point Solvers: A Principled Approach to Spectral Bias Mitigation](physics/iterative_refinement_neural_operators_are_learned_fixed-point_solvers_a_principl.md)**
-
-:   论文给已训练好的神经算子（FNO/TFNO/WDSR 等）外挂一个共享权重的 U-Net 修正模块 $\Phi_\theta$，在推理时按 $h_{k+1}=h_k+\alpha\Phi_\theta(x,h_k)$ 反复迭代，把单次前向的预测变成一个收敛到唯一不动点的"学习版残差求解器"，在湍流、活性物质、ERA5 超分等任务上把误差降低 34%–80%，并能稳定外推到训练步数的 2 倍。
-
-**[Learning to Refine: Spectral-Decoupled Iterative Refinement Framework for Precipitation Nowcasting](physics/learning_to_refine_spectral-decoupled_iterative_refinement_framework_for_precipi.md)**
-
-:   SDIR 把雷达 0–2 小时降水临近预报重新表述为"频域解耦的迭代精化"过程：先用 SFG-Former 提取稳定的低频天气骨架，再用 FR-Refiner（含 Fourier 神经算子）按频段逐步合成高频对流细节，并用一条对齐 Kolmogorov 湍流功率律的 PCPSD 损失替代会导致过平滑的纯 MSE，在 CIKM / Shanghai / SEVIR 三个 benchmark 上同时显著超过回归类与扩散类 SOTA。
-
-**[$\mathbb{R}^{2k}$ is Theoretically Large Enough for Embedding-based Top-$k$ Retrieval](physics/mathbbr2k_is_theoretically_large_enough_for_embedding-based_top-k_retrieval.md)**
-
-:   本文证明对于内积、欧式距离与余弦三种打分函数，能够把 $m$ 个对象的全部 size $\le k$ 子集都用 score-thresholding 精确召回所需的最小嵌入维度（MED）是 $\Theta(k)$，与 $m$ 无关；在加上单位归一化与正向 score margin $\epsilon$ 之后，鲁棒 MED 的可行 margin 被 $\epsilon_\star(m,k)=m/\sqrt{k(m-1)(m-k)}\sim 1/\sqrt{k}$ 上限锁死，而 Gaussian centroid 构造则给出 $O(k^2\log m)$ 维的可行上界。
-
-[查看全部24篇「物理/科学计算」论文 →](physics/)
 
 ---
 
@@ -1943,23 +1989,15 @@ item_total: 1463
 
 ---
 
-## 📂 其他 (94) { #others }
+## 📂 其他 (63) { #others }
 
 **[A Hypertoroidal Covering for Perfect Color Equivariance](others/a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
 
 :   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
 
-**[A Perturbation Approach to Unconstrained Linear Bandits](others/a_perturbation_approach_to_unconstrained_linear_bandits.md)**
-
-:   本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题，并由此得到 comparator-adaptive 静态/动态 regret、高概率界以及若干下界讨论。
-
 **[Adaptive Multi-Round Allocation with Stochastic Arrivals](others/adaptive_multi-round_allocation_with_stochastic_arrivals.md)**
 
 :   本文形式化网络招募为预算约束的顺序控制问题，证明单轮最优分配是贪心的；通过人口水平代理值函数将多轮规划降维到 $O(b^5\log b)$ 复杂度，并给出在模型误差下分解为前沿/人口/逼近三类误差的鲁棒性保证。
-
-**[Adaptive Preconditioners Trigger Loss Spikes in Adam](others/adaptive_preconditioners_trigger_loss_spikes_in_adam.md)**
-
-:   这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。
 
 **[AI Cap-and-Trade: Efficiency Incentives for Accessibility and Sustainability](others/ai_cap-and-trade_efficiency_incentives_for_accessibility_and_sustainability.md)**
 
@@ -1985,6 +2023,14 @@ item_total: 1463
 
 :   提出基于并行关联扫描（parallel associative scan）的脉冲神经网络并行训练方法，在保持精确硬重置动力学的同时实现最高 44 倍加速，并用可微分数值根求解器实现机器精度的脉冲时间计算。
 
-[查看全部94篇「其他」论文 →](others/)
+**[Cascaded Flow Matching for Heterogeneous Tabular Data with Mixed-Type Features](others/cascaded_flow_matching_for_heterogeneous_tabular_data_with_mixed-type_features.md)**
+
+:   TabCascade 把表格行拆成"低分辨率（类别 + 数值的离散化版本）"与"高分辨率（连续数值）"两段级联：先用 CDTD 学低分辨率联合分布，再用 flow matching 在低分辨率引导下生成数值细节，并通过数据相关耦合 + 可学非线性时间表收紧 transport cost；天然支持缺失值、零膨胀等"混合型特征"的生成，在 12 个数据集上 detection score 比 SOTA 提升 51.9%。
+
+**[Complexity as Advantage: A Regret-Based Perspective on Emergent Structure](others/complexity_as_advantage_a_regret-based_perspective_on_emergent_structure.md)**
+
+:   本文提出 Complexity-as-Advantage (CAA)：把"复杂度"重新定义为一族**资源受限观察者**在同一过程上的**后悔（regret）分散程度**，并证明它在 log-loss + Markov 框架下等价于条件互信息原子之和（恰好恢复 excess entropy），在编码视角下等价于过剩描述长度的方差（MDL），从而把 Kolmogorov 复杂度、Bennett 逻辑深度、excess entropy 统一成一个**可计算、可经验估计**的标量谱。
+
+[查看全部63篇「其他」论文 →](others/)
 
 </div>

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 LLM安全论文汇总 · 15篇论文解读
+  CVPR2025 LLM安全论文汇总 · 14篇论文解读
 description: >-
-  15篇CVPR2025的 LLM 安全方向论文解读，涵盖多模态、持续学习、对齐/RLHF、LLM、对抗鲁棒、重识别等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  14篇CVPR2025的 LLM 安全方向论文解读，涵盖多模态、持续学习、LLM、对抗鲁棒、重识别、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "LLM 安全"
@@ -10,10 +10,10 @@ tags:
   - "论文笔记"
   - "多模态"
   - "持续学习"
-  - "对齐/RLHF"
   - "LLM"
   - "对抗鲁棒"
   - "重识别"
+  - "医学影像"
 item_list:
   - u: "a_closed-form_solution_for_debiasing_vision-language_models_with_utility_guarant/"
     t: "A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks"
@@ -25,8 +25,6 @@ item_list:
     t: "ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models"
   - u: "hyperbolic_safety-aware_vision-language_models/"
     t: "Hyperbolic Safety-Aware Vision-Language Models"
-  - u: "iteris_iterative_inference-solving_alignment_for_lora_merging/"
-    t: "IterIS: Iterative Inference-Solving Alignment for LoRA Merging"
   - u: "lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty/"
     t: "LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty"
   - u: "low-rank_adaptation_in_multilinear_operator_networks_for_security-preserving_inc/"
@@ -45,13 +43,13 @@ item_list:
     t: "CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models"
   - u: "towards_all-in-one_medical_image_re-identification/"
     t: "Towards All-in-One Medical Image Re-Identification"
-item_total: 15
+item_total: 14
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**📷 CVPR2025** · **15** 篇论文解读
+**📷 CVPR2025** · **14** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (45)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md)
 
@@ -76,10 +74,6 @@ item_total: 15
 **[Hyperbolic Safety-Aware Vision-Language Models](hyperbolic_safety-aware_vision-language_models.md)**
 
 :   HySAC 提出在双曲空间中构建安全感知的视觉语言模型，通过蕴含锥（entailment cone）将安全/不安全内容映射到双曲空间的不同区域（安全内容靠近原点、不安全内容远离原点），使模型具备安全内容分类和动态重定向能力，在检索安全性和NSFW检测上显著超越现有遗忘方法。
-
-**[IterIS: Iterative Inference-Solving Alignment for LoRA Merging](iteris_iterative_inference-solving_alignment_for_lora_merging.md)**
-
-:   IterIS提出了一种迭代推理-求解的LoRA合并方法，通过直接提取统一适配器的输入特征（而非近似）来建立更准确的优化目标，配合正则化减少样本需求至先前方法的1-5%，并引入自适应权重平衡优化，在文本到图像扩散模型、视觉语言模型和大语言模型的LoRA合并中显著超越基线。
 
 **[LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)**
 

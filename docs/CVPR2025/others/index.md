@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 其他论文汇总 · 63篇论文解读
+  CVPR2025 其他论文汇总 · 60篇论文解读
 description: >-
-  63篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、少样本学习、人脸/视线、模型压缩、目标跟踪、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  60篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、少样本学习、人脸/视线、目标跟踪、个性化生成、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "其他"
@@ -11,14 +11,12 @@ tags:
   - "对抗鲁棒"
   - "少样本学习"
   - "人脸/视线"
-  - "模型压缩"
   - "目标跟踪"
   - "个性化生成"
+  - "动态场景"
 item_list:
   - u: "4deform_neural_surface_deformation_for_robust_shape_interpolation/"
     t: "4Deform: Neural Surface Deformation for Robust Shape Interpolation"
-  - u: "alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy/"
-    t: "Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks"
   - u: "bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_/"
     t: "BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending"
   - u: "bounds_on_agreement_between_subjective_and_objective_measurements/"
@@ -75,25 +73,23 @@ item_list:
     t: "MagicArticulate: Make Your 3D Models Articulation-Ready"
   - u: "neisf_neural_incident_stokes_field_for_polarized_inverse_rendering_of_conductors/"
     t: "NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics"
-item_total: 63
+  - u: "on_the_generalization_of_handwritten_text_recognition_models/"
+    t: "On the Generalization of Handwritten Text Recognition Models"
+item_total: 60
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2025** · **63** 篇论文解读
+**📷 CVPR2025** · **60** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×7 · 少样本学习 ×2
 
 **[4Deform: Neural Surface Deformation for Robust Shape Interpolation](4deform_neural_surface_deformation_for_robust_shape_interpolation.md)**
 
 :   提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA，并支持真实世界 Kinect 点云序列的时间超分辨率。
-
-**[Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks](alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy.md)**
-
-:   提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
 
 **[BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)**
 
@@ -219,10 +215,6 @@ item_total: 63
 
 :   提出 Order-One Rolling Shutter (RS1) 相机的统一理论，证明了将空间点映射到恰好一个图像点的卷帘快门相机类的数学特征，构建了显式参数化，并完整分类了线性 RS1 相机的 31 个相对位姿最小问题。
 
-**[PhysicsGen: Can Generative Models Learn from Images to Predict Complex Physical Relations?](physicsgen_can_generative_models_learn_from_images_to_predict_complex_physical_r.md)**
-
-:   提出 PhysicsGen 基准，包含 30 万图像对覆盖三个物理仿真任务（声波传播、镜头畸变、滚动/弹跳动力学），系统评估生成模型学习物理关系的能力，发现高阶微分方程描述的物理关系对现有模型构成根本性挑战。
-
 **[PLeaS: Merging Models with Permutations and Least Squares](pleas_-_merging_models_with_permutations_and_least_squares.md)**
 
 :   提出 PLeaS，一种两步模型合并算法：第一步利用置换对称性部分匹配两个模型的特征（相似特征合并、不相似特征保留），第二步通过逐层最小二乘优化使合并模型的特征逼近原模型置换后的集成特征，在相同模型大小下比现有方法提升高达 15 个百分点。
@@ -262,10 +254,6 @@ item_total: 63
 **[SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification](sdf-net_structure-aware_disentangled_feature_learning_for_opticall-sar_ship_re-i.md)**
 
 :   提出 SDF-Net，利用船舶作为刚体的物理先验，在 ViT 中间层提取尺度不变的梯度能量统计量作为跨模态几何锚点，并在终端层将特征解耦为模态不变共享特征和模态特定特征后通过加性残差融合，实现光学-SAR 船舶重识别 SOTA。
-
-**[SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)**
-
-:   本文构建了一个包含24万+工业零件的大规模多模态CAD数据集 SldprtNet，每个样本对齐了3D模型、多视角图像、参数化建模脚本和自然语言描述四种模态，并开发了支持13种CAD操作的编码器/解码器工具实现无损双向转换，实验证明多模态输入显著优于纯文本输入。
 
 **[STRAP-ViT: Segregated Tokens with Randomized Transformations for Defense against Adversarial Patches in ViTs](strap-vit_segregated_tokens_with_randomized_--_transformations_for_defense_again.md)**
 

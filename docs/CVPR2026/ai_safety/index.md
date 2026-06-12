@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 AI安全论文汇总 · 25篇论文解读
+  CVPR2026 AI安全论文汇总 · 26篇论文解读
 description: >-
-  25篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、多模态、水印/隐写、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、多模态、水印/隐写、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "AI 安全"
@@ -62,19 +62,21 @@ item_list:
     t: "UniGame: Turning a Unified Multimodal Model Into Its Own Adversary"
   - u: "when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua/"
     t: "When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models"
+  - u: "your_classifier_can_do_more_towards_balancing_the/"
+    t: "Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation"
   - u: "φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_/"
     t: "$\\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models"
-item_total: 25
+item_total: 26
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**📷 CVPR2026** · **25** 篇论文解读
+**📷 CVPR2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (24)](../../ICCV2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×11 · 联邦学习 ×9 · 多模态 ×5 · 水印/隐写 ×4 · 机器人 ×3
+🔥 **高频主题：** 对抗鲁棒 ×12 · 联邦学习 ×9 · 多模态 ×5 · 水印/隐写 ×4 · 机器人 ×3
 
 **[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
 
@@ -171,6 +173,10 @@ item_total: 25
 **[When Robots Obey the Patch: Universal Transferable Patch Attacks on Vision-Language-Action Models](when_robots_obey_the_patch_universal_transferable_patch_attacks_on_vision-langua.md)**
 
 :   提出 UPA-RFAS 框架，学习一个单一物理对抗补丁，通过特征空间偏移、注意力劫持和语义错位三管齐下，实现对 VLA 机器人策略的通用、可迁移黑盒攻击。
+
+**[Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](your_classifier_can_do_more_towards_balancing_the.md)**
+
+:   通过能量景观分析揭示 AT 和 JEM 的互补性（AT 对齐 clean-adv 能量分布 → 鲁棒性；JEM 对齐 clean-generated 能量分布 → 精度+生成），提出 EB-JDAT 建模联合分布 $p(\mathbf{x}, \tilde{\mathbf{x}}, y)$ 并用 min-max 能量优化对齐三种数据能量分布，CIFAR-10 AutoAttack 鲁棒性 68.76%（超 SOTA AT +10.78%），同时保持 90.39% 清洁精度和 FID=27.42 的竞争力生成质量。
 
 **[$\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models](φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_.md)**
 

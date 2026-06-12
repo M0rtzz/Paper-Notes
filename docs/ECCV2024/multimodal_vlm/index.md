@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 多模态VLM论文汇总 · 47篇论文解读
+  ECCV2024 多模态VLM论文汇总 · 48篇论文解读
 description: >-
-  47篇ECCV2024的多模态 VLM 方向论文解读，涵盖多模态、LLM、对抗鲁棒、少样本学习、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  48篇ECCV2024的多模态 VLM 方向论文解读，涵盖多模态、LLM、对抗鲁棒、少样本学习、自监督学习、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "多模态 VLM"
@@ -12,6 +12,7 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "少样本学习"
+  - "自监督学习"
   - "模型压缩"
 item_list:
   - u: "a_multimodal_benchmark_dataset_and_model_for_crop_disease_di/"
@@ -36,6 +37,8 @@ item_list:
     t: "CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts"
   - u: "dataset_growth/"
     t: "Dataset Growth (InfoGrowth)"
+  - u: "decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear/"
+    t: "Decoupling Common and Unique Representations for Multimodal Self-supervised Learning"
   - u: "efficient_inference_of_vision_instruction-following_models_with_elastic_cache/"
     t: "Efficient Inference of Vision Instruction-Following Models with Elastic Cache"
   - u: "elevating_all_zero-shot_sketch-based_image_retrieval_through_multimodal_prompt_l/"
@@ -72,19 +75,17 @@ item_list:
     t: "MMBench: Is Your Multi-modal Model an All-Around Player?"
   - u: "myvlm_personalizing_vlms_for_userspecific_queries/"
     t: "MyVLM: Personalizing VLMs for User-Specific Queries"
-  - u: "navgpt-2_unleashing_navigational_reasoning_capability_for_large_vision-language_/"
-    t: "NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models"
-item_total: 47
+item_total: 48
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**🎞️ ECCV2024** · **47** 篇论文解读
+**🎞️ ECCV2024** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×29 · LLM ×9 · 对抗鲁棒 ×3 · 少样本学习 ×3 · 模型压缩 ×2
+🔥 **高频主题：** 多模态 ×30 · LLM ×9 · 对抗鲁棒 ×3 · 少样本学习 ×3 · 自监督学习 ×2
 
 **[A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)**
 
@@ -129,6 +130,10 @@ item_total: 47
 **[Dataset Growth (InfoGrowth)](dataset_growth.md)**
 
 :   提出 InfoGrowth，一种高效的在线数据清洗与选择算法，通过近邻搜索估计每个样本的信息增益，实现数据集的持续增长，同时保证清洁度和多样性，在 CC3M 上仅用 1/6 数据即超过全量训练效果。
+
+**[Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)**
+
+:   提出 DeCUR，在多模态自监督学习中将嵌入维度显式拆分为跨模态共有 (common) 和模态独有 (unique) 两部分，通过互相关矩阵分别驱动对齐与去相关，同时引入模态内训练保证独有维度学到有意义信息，在 SAR-光学、RGB-DEM、RGB-Depth 三类多模态场景上均优于 Barlow Twins / CLIP 等基线。
 
 **[Efficient Inference of Vision Instruction-Following Models with Elastic Cache](efficient_inference_of_vision_instruction-following_models_with_elastic_cache.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 其他论文汇总 · 110篇论文解读
+  ICML2025 其他论文汇总 · 91篇论文解读
 description: >-
-  110篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  91篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "其他"
@@ -20,8 +20,6 @@ item_list:
     t: "Adversarial Combinatorial Semi-bandits with Graph Feedback"
   - u: "autoal_automated_active_learning_with_differentiable_query_strategy_search/"
     t: "AutoAL: Automated Active Learning with Differentiable Query Strategy Search"
-  - u: "avoiding_catastrophe_in_online_learning_by_asking_for_help/"
-    t: "Avoiding Catastrophe in Online Learning by Asking for Help"
   - u: "beyond_entropy_region_confidence_proxy_for_wild_test-time_adaptation/"
     t: "Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation"
   - u: "bipartite_ranking_from_multiple_labels_on_loss_versus_label_aggregation/"
@@ -30,8 +28,6 @@ item_list:
     t: "Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability"
   - u: "continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games/"
     t: "Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games"
-  - u: "cooperation_of_experts_fusing_heterogeneous_information_with_large_margin/"
-    t: "Cooperation of Experts: Fusing Heterogeneous Information with Large Margin"
   - u: "cross-regularization_adaptive_model_complexity_through_validation_gradients/"
     t: "Cross-regularization: Adaptive Model Complexity through Validation Gradients"
   - u: "curvature_enhanced_data_augmentation_for_regression/"
@@ -54,8 +50,6 @@ item_list:
     t: "Efficient Network Automatic Relevance Determination"
   - u: "efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub/"
     t: "Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method"
-  - u: "enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a/"
-    t: "Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss"
   - u: "exploiting_similarity_for_computation_and_communication-efficient_decentralized_/"
     t: "Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization"
   - u: "faster_and_stronger_when_ann-snn_conversion_meets_parallel_spiking_calculation/"
@@ -72,17 +66,23 @@ item_list:
     t: "Fixed-Confidence Multiple Change Point Identification under Bandit Feedback"
   - u: "fixing_the_loose_brake_exponential-tailed_stopping_time_in_best_arm_identificati/"
     t: "Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification"
-item_total: 110
+  - u: "fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time/"
+    t: "Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time"
+  - u: "function_encoders_a_principled_approach_to_transfer_learning_in_hilbert_spaces/"
+    t: "Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces"
+  - u: "general_agents_contain_world_models/"
+    t: "General Agents Contain World Models"
+item_total: 91
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2025** · **110** 篇论文解读
+**🧪 ICML2025** · **91** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×8 · 域适应 ×4 · 少样本学习 ×2
+🔥 **高频主题：** 对抗鲁棒 ×6 · 域适应 ×3 · 少样本学习 ×2
 
 **[Access Controls Will Solve the Dual-Use Dilemma](access_controls_will_solve_the_dual-use_dilemma.md)**
 
@@ -100,10 +100,6 @@ item_total: 110
 
 :   提出首个可微的主动学习策略搜索框架 AutoAL，通过 SearchNet 和 FitNet 两个网络在双层优化框架下协同训练，自动从多个候选 AL 策略中为给定任务选出最优策略，在自然图像和医学图像数据集上一致超越所有候选策略及其他 SOTA 方法。
 
-**[Avoiding Catastrophe in Online Learning by Asking for Help](avoiding_catastrophe_in_online_learning_by_asking_for_help.md)**
-
-:   提出一个全新的在线学习理论框架来处理灾难性（不可逆）错误：将回报定义为避灾概率、目标函数为回报之积（总体避灾概率），引入导师求助机制和Local Generalization假设，证明不可能结果（不求助则必灾难）和可能结果（策略类可学则后悔和求助率同时趋零），将标准在线学习的子线性后悔提升为子常数后悔。
-
 **[Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation](beyond_entropy_region_confidence_proxy_for_wild_test-time_adaptation.md)**
 
 :   揭示熵最小化在野外测试时适应（WTTA）中的根本局限——局部区域内语义相似样本的预测不一致导致冲突优化动态，提出 ReCAP 框架用概率区域建模和有限到无穷渐近近似将不可处理的区域置信度转化为高效可优化的代理目标，在 ImageNet-C 上一致超越 SOTA。
@@ -119,10 +115,6 @@ item_total: 110
 **[Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games](continuous-time_analysis_of_heavy_ball_momentum_in_min-max_games.md)**
 
 :   通过连续时间ODE建模，系统揭示了Heavy Ball动量在min-max博弈中与极小化问题截然不同的行为：**更小的动量**（包括负动量）能扩大收敛步长范围并引导轨迹走向更浅梯度区域，而**交替更新**比同步更新收敛更快且放大了这一正则化效应。
-
-**[Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)**
-
-:   提出 Cooperation of Experts (CoE) 框架，将异构信息编码为多重网络，通过两级专家设计与大间隔置信张量优化实现专家**协作**（而非竞争），在节点分类任务上全面超越现有 MoE 和多重网络方法。
 
 **[Cross-regularization: Adaptive Model Complexity through Validation Gradients](cross-regularization_adaptive_model_complexity_through_validation_gradients.md)**
 
@@ -167,10 +159,6 @@ item_total: 110
 **[Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method](efficient_optimization_with_orthogonality_constraint_a_randomized_riemannian_sub.md)**
 
 :   提出随机黎曼子流形下降方法 (RSDM)，通过将每步更新限制在随机低维子流形上，将正交约束优化中 retraction 操作的复杂度从 $O(np^2)$ 降至 $O(r^3)$，同时保持与全空间黎曼梯度下降相匹配的总计算复杂度。
-
-**[Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)**
-
-:   本文提出了一种高效的低秩正交层参数化方法（BRO Layer）和一种退火机制的损失函数（Logit Annealing Loss），用于构建具有更强认证鲁棒性的 Lipschitz 神经网络 BRONet，在 CIFAR-10/100、Tiny-ImageNet 和 ImageNet 上达到 SOTA。
 
 **[Exploiting Similarity for Computation and Communication-Efficient Decentralized Optimization](exploiting_similarity_for_computation_and_communication-efficient_decentralized_.md)**
 
@@ -232,10 +220,6 @@ item_total: 110
 
 :   提出 GAR（Gradient Aligned Regression），通过在标签空间引入两个成对差异损失（误差方差 + 负Pearson相关系数）来对齐预测函数与真实函数的梯度，并利用 DRO 鲁棒聚合三个子损失，实现与传统回归损失相同的线性复杂度，同时在多个基准上超越 MAE/MSE 及对比学习方法。
 
-**[Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)**
-
-:   提出基于 Online Mirror Descent 的单遍 Huber 回归算法 Hvt-UCB，用于重尾噪声线性 bandit，将每轮计算复杂度从 $\mathcal{O}(t\log T)$ 降至 $\mathcal{O}(1)$，同时保持最优且依赖实例的 regret 界。
-
 **[Hierarchical Refinement: Optimal Transport to Infinity and Beyond](hierarchical_refinement_optimal_transport_to_infinity_and_beyond.md)**
 
 :   提出 Hierarchical Refinement (HiRef) 算法，通过递归求解低秩最优传输子问题来动态构建多尺度数据分区，以对数线性时间和线性空间复杂度获得完整的双射 Monge 映射，将最优传输扩展到百万级数据集。
@@ -248,17 +232,9 @@ item_total: 110
 
 :   本文论证了开源 AI 在当前实践下无法独立实现 AI 民主化——模型权重只是"惰性代码"，需要大量资本才能激活——必须嵌入公共 AI 基础设施（公共资金 + 公共访问 + 公共治理 + 私人承诺）才能成为真正的公共产品。
 
-**[Improved and Oracle-Efficient Online $\ell_1$-Multicalibration](improved_and_oracle-efficient_online_ell_1-multicalibration.md)**
-
-:   提出将在线 $\ell_1$-multicalibration 归约为新定义的在线线性乘积优化 (OLPO) 问题，分别达到 $\widetilde{O}(T^{-1/3})$（改进速率）和 $\widetilde{O}(T^{-1/4})$（oracle 高效速率）的多校准误差上界。
-
 **[Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks](improved_exploration_in_gflownets_via_enhanced_epistemic_neural_networks.md)**
 
 :   将 Epistemic Neural Networks (ENN/epinet) 集成到 GFlowNets 中实现不确定性驱动的探索，提出 ENN-GFN-Enhanced 算法，在 HyperGrid 和序列生成任务上显著改善模式发现效率和分布学习质量。
-
-**[Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications](improved_generalization_bounds_for_transductive_learning_by_transductive_local_c.md)**
-
-:   提出转导局部复杂度（TLC）框架，将经典的局部 Rademacher 复杂度扩展到转导学习设定，获得了与归纳学习几乎一致的超额风险界（仅差对数因子），并解决了十年未决的开放问题。
 
 **[Improved Learning via k-DTW: A Novel Dissimilarity Measure for Curves](improved_learning_via_k-dtw_a_novel_dissimilarity_measure_for_curves.md)**
 
@@ -284,14 +260,6 @@ item_total: 110
 
 :   将经典 Black-Litterman 组合优化模型中的主观投资者观点 $(q, \Omega)$ 视为隐变量，通过贝叶斯网络从市场特征数据中自动推断，消除对人工主观输入的依赖，在 30 年道琼斯和 20 年 ETF 数据上 Sharpe 比率提升约 50%、换手率降低约 55%。
 
-**[Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)**
-
-:   在度量任务系统(MTS)中，当算法仅能以 bandit 方式（每步只查询一个启发式且需连续查询 $m$ 步才能观测状态）访问 $\ell$ 个启发式时，本文给出了 regret 为 $O(\text{OPT}^{2/3})$ 的算法，并证明该界是紧的。
-
-**[Learning-Augmented Hierarchical Clustering](learning-augmented_hierarchical_clustering.md)**
-
-:   本文研究借助分裂预言机（splitting oracle）的辅助信息来突破层次聚类的近似硬度障碍，获得 Dasgupta 目标的 $O(1)$ 常数近似和 Moseley-Wang 目标的 $(1-o(1))$ 近似，并推广到流式和并行计算场景。
-
 **[Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)**
 
 :   本文提出利用 normalizing flows 和 score matching 学习密度函数与得分函数，从而高效计算基于密度的 Fermat 距离，解决了传统图方法在高维空间中收敛慢、路径粗糙的问题。
@@ -304,14 +272,6 @@ item_total: 110
 
 :   提出 s-OTDD（sliced optimal transport dataset distance），通过 Moment Transform Projection（MTP）将标签分布映射为标量，实现近线性复杂度的数据集距离计算，速度远超 OTDD 且性能相当。
 
-**[Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)**
-
-:   首次在 turnstile 流模型（支持任意插入/删除）下给出最大覆盖问题的单遍流算法，空间 $\tilde{O}(d/\varepsilon^3)$、更新时间 $\tilde{O}(1)$，并将其推广到隐私指纹识别（fingerprinting）场景，实验比先前方法快 210×。
-
-**[Meek Models Shall Inherit the Earth](meek_models_shall_inherit_the_earth.md)**
-
-:   基于 Chinchilla 缩放定律的数学建模，证明在固定分布的 next-token 目标下，计算缩放的递减收益将导致 SOTA 大模型相对于低计算预算"弱模型"（meek models）的能力优势最终收敛趋零，论证 AI 能力的民主化是当前缩放范式下的必然趋势，现有基于算力的 AI 治理策略需要根本性重新设计。
-
 **[Modern Methods in Associative Memory](modern_methods_in_associative_memory.md)**
 
 :   IBM&MIT团队的系统性教程，将Dense Associative Memory (DenseAM)从经典Hopfield网络扩展到现代AI架构，通过能量函数统一框架揭示AM与Transformer注意力、扩散模型的深层联系，并附带数学推导和编程练习。
@@ -320,18 +280,6 @@ item_total: 110
 
 :   首次指出经典K-means算法并不总是收敛到局部最优解这一长期误解，并提出LO-K-means修改方案，在不增加单步计算复杂度的前提下保证收敛到连续或离散意义下的局部最优解。
 
-**[Multiple-Policy Evaluation via Density Estimation](multiple-policy_evaluation_via_density_estimation.md)**
-
-:   提出 CAESAR 算法，通过两阶段方法（粗估计访问分布 + 最优采样分布下的密度比估计）同时评估 K 个策略，实现非渐近、实例依赖的样本复杂度，核心技术是"粗估计"——仅需 $O(1/\epsilon)$ 样本即可获得常数倍精度的分布近似。
-
-**[Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)**
-
-:   提出一族基于简洁预测（临界值的点预测或区间预测）的在线背包算法，在consistency与robustness之间实现近Pareto最优的权衡，并给出分数解到整数解的通用转换方法。
-
-**[Near Optimal Best Arm Identification for Clustered Bandits](near_optimal_best_arm_identification_for_clustered_bandits.md)**
-
-:   在多智能体聚类多臂赌博机设置下，提出 Cl-BAI 和 BAI-Cl 两种算法，利用聚类结构大幅降低最优臂识别的样本复杂度，并证明 BAI-Cl++ 在 $M$ 为常数时达到 minimax 最优。
-
 **[NeuronTune: Towards Self-Guided Spurious Bias Mitigation](neurontune_towards_self-guided_spurious_bias_mitigation.md)**
 
 :   NeuronTune 提出一种**无需组标签**的自引导去偏方法：通过对比模型隐空间中正确/错误预测样本的神经元激活差异，识别受虚假偏差影响的维度并将其置零，再重训最后一层分类器，从而显著提升 worst-group accuracy。
@@ -339,10 +287,6 @@ item_total: 110
 **[Nonparametric Modern Hopfield Models](nonparametric_modern_hopfield_models.md)**
 
 :   本文提出现代 Hopfield 模型的非参数框架，将记忆存储与检索过程建模为非参数回归问题，由此推导出首个具有亚二次复杂度的高效稀疏结构现代 Hopfield 模型，并提供了完备的理论分析（检索误差界、噪声鲁棒性、指数记忆容量）。
-
-**[On Fine-Grained Distinct Element Estimation](on_fine-grained_distinct_element_estimation.md)**
-
-:   提出以**成对碰撞数** $C$（pairwise collisions）作为分布式去重计数问题的细粒度复杂度参数，设计了通信量随 $C$ 减小而显著降低的协议，打破了此前 $\Omega(\alpha/\varepsilon^2)$ 的最坏情况下界，并给出了所有参数区间的匹配下界。
 
 **[On the Importance of Gaussianizing Representations](on_the_importance_of_gaussianizing_representations.md)**
 
@@ -380,10 +324,6 @@ item_total: 110
 
 :   提出**动态反馈原则 (Dynamical Feedback Principle)**，论证逐层线性模型（layerwise linear models）足以统一解释 neural collapse、emergence、lazy/rich regime 和 grokking 四大深度学习动力学现象，呼吁优先研究逐层结构而非非线性激活。
 
-**[Positional Attention: Expressivity and Learnability of Algorithmic Computation](positional_attention_expressivity_and_learnability_of_algorithmic_computation.md)**
-
-:   提出 **Positional Transformer**——注意力权重仅由位置编码决定、与输入数据无关的 Transformer 变体，证明其保持了与 MPC 并行计算模型等价的表达力（仅增加 $O(\log n)$ 深度代价），并在算法任务上展现出显著更优的分布外泛化能力。
-
 **[Practical Principles for AI Cost and Compute Accounting](practical_principles_for_ai_cost_and_compute_accounting.md)**
 
 :   针对 AI 监管中计算量/成本阈值的核算标准模糊问题，提出七项原则来封堵蒸馏漏洞等规避手段、避免抑制安全措施、并实现跨企业一致实施，为 EU AI Act 等法规的落地提供理论框架。
@@ -396,10 +336,6 @@ item_total: 110
 
 :   提出 ViaSHAP，将 Shapley 值的计算融入模型训练过程，使得推理时通过对 Shapley 值求和直接得到预测，无需后验解释器，在表格数据上达到 XGBoost 级别的预测精度，同时 Shapley 值近似质量显著优于 FastSHAP。
 
-**[Principled Algorithms for Optimizing Generalized Metrics in Binary Classification](principled_algorithms_for_optimizing_generalized_metrics_in_binary_classificatio.md)**
-
-:   本文提出了优化广义分类指标（如 $F_\beta$、Jaccard、加权准确率等）的有原则算法 METRO，基于 $H$-一致性界和代理损失理论，将指标优化重新表述为广义代价敏感学习问题，具有有限样本泛化保证。
-
 **[Probably Approximately Global Robustness Certification](probably_approximately_global_robustness_certification.md)**
 
 :   提出基于 ε-net 采样的概率近似全局鲁棒性（PAG）认证框架，所需样本量与输入维度、类别数和模型架构无关，可高效认证大规模神经网络的全局鲁棒性。
@@ -411,10 +347,6 @@ item_total: 110
 **[Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)**
 
 :   基于 randomized smoothing 框架提出"代价敏感认证半径"（cost-sensitive certified radius），首次实现可扩展到大模型与高维数据的代价敏感对抗鲁棒性认证与训练，在保持整体准确率的同时显著提升对高代价误分类的鲁棒性。
-
-**[Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)**
-
-:   本文在委托-代理（principal-agent）在线信息获取框架下研究最佳评分规则识别（Best Scoring Rule Identification, BSRI）问题，提出 OIAFC（固定置信度）和 OIAFB（固定预算）两种算法，首次建立了实例依赖的样本复杂度上界 $\widetilde{O}(MH_\Delta)$，并将实例无关的样本复杂度从已有工作的 $\widetilde{O}(C_O^3 K^6 \epsilon^{-3})$ 大幅改进至 $\widetilde{O}(MK\epsilon^{-2})$。
 
 **[Provably Improving Generalization of Few-Shot Models with Synthetic Data](provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)**
 
@@ -468,10 +400,6 @@ item_total: 110
 
 :   本文从理论上证明了 softmax 注意力在输入规模增大时**必然发生系数分散（dispersion）**，无法保持对少量关键元素的尖锐聚焦，并提出自适应温度（adaptive temperature）作为缓解手段。
 
-**[Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions](sparse-pivot_dynamic_correlation_clustering_for_node_insertions.md)**
-
-:   提出 Sparse-Pivot 算法，在节点动态插入的 Correlation Clustering 问题中以摊销 $O_\varepsilon(\log^{O(1)} n)$ 的数据库操作实现 $(20+\varepsilon)$-近似，大幅改善了 Cohen-Addad et al. (ICML 2024) 的近似因子，并在实验中全面优于基线。
-
 **[Sparse Training from Random Initialization: Aligning Lottery Ticket Masks using Weight Symmetry](sparse_training_from_random_initialization_aligning_lottery_ticket_masks_using_w.md)**
 
 :   从权重对称性角度解释彩票假说(LTH)掩码不能迁移到新初始化的原因，并提出通过置换匹配对齐LTH掩码与新初始化的优化盆地来实现稀疏训练。
@@ -503,10 +431,6 @@ item_total: 110
 **[The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks](the_price_of_freedom_exploring_expressivity_and_runtime_tradeoffs_in_equivariant.md)**
 
 :   本文系统分析了 $E(3)$-等变神经网络中多种张量积操作的表达力与运行时间权衡，发现理论复杂度与实际性能差距悬殊，并提出基于球面网格的简化 Gaunt 张量积实现，在 MACE 原子间势能训练中加速 30%。
-
-**[Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport](theoretical_performance_guarantees_for_partial_domain_adaptation_via_partial_opt.md)**
-
-:   本文基于部分最优传输理论推导了部分领域自适应（PDA）的泛化界，证明了部分 Wasserstein 距离作为领域对齐项和提出的理论驱动权重方案的合理性，并据此开发了实用算法 WARMPOT。
 
 **[Time-Aware World Model for Adaptive Prediction and Control](time-aware_world_model_for_adaptive_prediction_and_control.md)**
 

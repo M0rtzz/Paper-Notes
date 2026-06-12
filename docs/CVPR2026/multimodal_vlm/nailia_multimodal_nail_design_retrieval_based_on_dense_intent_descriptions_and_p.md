@@ -47,7 +47,7 @@ tags:
 NaiLIA 要解决的是"按用户的复杂意图检索美甲设计图"：用户既会用一段密集文字描述图案/饰品/主题/整体印象，又会给一组 RGB 调色板指定色调。系统把这套多层意图拆给三个模块处理——IPFM 融合文字意图与调色板得到语言-调色板表示 $\bm{l}_+$，VDFM 从三个角度理解候选图像得到视觉表示 $\bm{v}$，二者算相似度后由 CRAM 估计哪些"未标注但其实相似"的样本该被当成正样本，最后用松弛对比损失（CRC loss）把查询和图像对齐、按相似度排序输出。输入形式化为 $\bm{x} = \{\bm{x}_{\text{txt}}, \bm{x}_{\text{pal}}, X_{\text{img}}\}$，其中 $\bm{x}_{\text{txt}}$ 是密集意图描述，$\bm{x}_{\text{pal}} \in \mathbb{R}^{3 \times N_{\text{pal}}}$ 是调色板查询（零个或多个 RGB 颜色），$X_{\text{img}}$ 是待排序图像集。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     Q["密集意图描述 + 调色板查询"]
     IMG["候选美甲设计图像集"]

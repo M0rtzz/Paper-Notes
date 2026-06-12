@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 社会计算论文汇总 · 27篇论文解读
+  ACL2025 社会计算论文汇总 · 28篇论文解读
 description: >-
-  27篇ACL2025的社会计算方向论文解读，涵盖 LLM、语音、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ACL2025的社会计算方向论文解读，涵盖 LLM、语音、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "社会计算"
@@ -39,6 +39,8 @@ item_list:
     t: "Exploring the Impact of Instruction-Tuning on LLMs' Susceptibility to Misinformation"
   - u: "fairsteer_inference_time_debiasing_for_llms_with_dynamic_activation_steering/"
     t: "FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering"
+  - u: "foreplay_polish_erotic_detection/"
+    t: "Behind Closed Words: Creating and Investigating the forePLay Annotated Dataset for Polish Erotic Discourse"
   - u: "gg-bbq_german_gender_bias_benchmark_for_question_answering/"
     t: "GG-BBQ: German Gender Bias Benchmark for Question Answering"
   - u: "hateday_global_hate_speech/"
@@ -67,13 +69,13 @@ item_list:
     t: "taz2024full: Analysing German Newspapers for Gender Bias and Discrimination across Decades"
   - u: "translate_with_care_addressing_gender_bias_neutrality_and_reasoning_in_large_lan/"
     t: "Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations"
-item_total: 27
+item_total: 28
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 👥 社会计算
 
-**💬 ACL2025** · **27** 篇论文解读
+**💬 ACL2025** · **28** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (8)](../../ICML2026/social_computing/index.md) · [💬 ACL2026 (43)](../../ACL2026/social_computing/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/social_computing/index.md) · [🔬 ICLR2026 (12)](../../ICLR2026/social_computing/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/social_computing/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/social_computing/index.md)
 
@@ -130,6 +132,10 @@ item_total: 27
 **[FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering](fairsteer_inference_time_debiasing_for_llms_with_dynamic_activation_steering.md)**
 
 :   提出 FairSteer，一种推理时去偏框架，通过轻量线性分类器检测激活中的偏见信号，再用对比 prompt 对计算的去偏转向向量（DSV）动态调整隐藏层激活，无需重训即可在多任务上有效缓解 LLM 的社会偏见。
+
+**[Behind Closed Words: Creating and Investigating the forePLay Annotated Dataset for Polish Erotic Discourse](foreplay_polish_erotic_detection.md)**
+
+:   构建了首个波兰语色情内容检测数据集 forePLay（24,768 句，5 类标签），提出涵盖模糊性、暴力和社会不可接受行为的多维标注体系，评估发现专用波兰语模型显著优于多语言模型，且 Transformer 编码器模型在不平衡类别处理上表现最强。
 
 **[GG-BBQ: German Gender Bias Benchmark for Question Answering](gg-bbq_german_gender_bias_benchmark_for_question_answering.md)**
 

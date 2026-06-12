@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 物理/科学计算论文汇总 · 24篇论文解读
+  ICML2026 物理/科学计算论文汇总 · 26篇论文解读
 description: >-
-  24篇ICML2026的物理/科学计算方向论文解读，涵盖生物分子、压缩/编码、扩散模型、LLM、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ICML2026的物理/科学计算方向论文解读，涵盖生物分子、压缩/编码、扩散模型、LLM、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "物理/科学计算"
@@ -24,6 +24,8 @@ item_list:
     t: "Distribution Transformers: Fast Approximate Bayesian Inference With On-The-Fly Prior Adaptation"
   - u: "eqgino_equivariant_geometry-informed_fourier_neural_operators_for_3d_pdes/"
     t: "EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs"
+  - u: "from_generalist_to_specialist_representation/"
+    t: "From Generalist to Specialist Representation"
   - u: "generative_neural_operators_through_diffusion_last_layer/"
     t: "Generative Neural Operators Through Diffusion Last Layer"
   - u: "hermite-ngp_gradient-augmented_hash_encoding_for_learning_pdes/"
@@ -42,6 +44,8 @@ item_list:
     t: "PINNfluence: Interpreting PINNs Through Influence Functions"
   - u: "quiver_quantum-informed_views_for_enhanced_representations_in_large_ml_models/"
     t: "Quiver: Quantum-Informed Views for Enhanced Representations in Large ML Models"
+  - u: "rethink_the_role_of_neural_decoders_in_quantum_error_correction/"
+    t: "Rethink the Role of Neural Decoders in Quantum Error Correction"
   - u: "rex_a_family_of_reversible_exponential_stochastic_runge-kutta_solvers/"
     t: "REX: A Family of Reversible Exponential Stochastic Runge-Kutta Solvers"
   - u: "score_based_error_correcting_code_decoder/"
@@ -62,13 +66,13 @@ item_list:
     t: "Understanding Catastrophic Forgetting In LoRA via Mean-Field Attention Dynamics"
   - u: "unveiling_multi-regime_patterns_in_sciml_distinct_failure_modes_and_regime-speci/"
     t: "Unveiling Multi-Regime Patterns in SciML: 不同失败模式与域特异优化"
-item_total: 24
+item_total: 26
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**🧪 ICML2026** · **24** 篇论文解读
+**🧪 ICML2026** · **26** 篇论文解读
 
 📌 **同领域跨会议浏览：** [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
 
@@ -93,6 +97,10 @@ item_total: 24
 **[EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs](eqgino_equivariant_geometry-informed_fourier_neural_operators_for_3d_pdes.md)**
 
 :   EqGINO 把 GINO 的 GNO 编码器、FNO 主干、GNO 解码器全部改造成 SE(3) 等变模块：GNO 用相对距离作为旋转不变核、FNO 用"轨道权重共享"在频域强制 $W(R\mathbf k)=W(\mathbf k)$ 的各向同性，从而在保留 FNO 全局感受野的同时让 3D PDE surrogate 对任意刚性变换鲁棒，且把谱权重参数量从 $\mathcal O(K^3)$ 降到 $\mathcal O(K)$。
+
+**[From Generalist to Specialist Representation](from_generalist_to_specialist_representation.md)**
+
+:   本文给出第一个完全非参数（无 intervention、无 functional 约束）的两层 hierarchical 可识别性证明：时间-任务结构由 collider 视角下的 CI test 可识别，任务相关 latent 由 sparsity 正则可从 generalist 表示中分离出来。
 
 **[Generative Neural Operators Through Diffusion Last Layer](generative_neural_operators_through_diffusion_last_layer.md)**
 
@@ -129,6 +137,10 @@ item_total: 24
 **[Quiver: Quantum-Informed Views for Enhanced Representations in Large ML Models](quiver_quantum-informed_views_for_enhanced_representations_in_large_ml_models.md)**
 
 :   Quiver 把分类输入额外送进一个变分量子电路 (VQC)，提取其量子 Fisher 信息矩阵 (QFIM) 作为「量子几何视图」，再用 cross-attention（对 Transformer）或残差门控（对 GNN）注入到经典骨干里，在 JetClass 顶夸克标记与 QM9 HOMO-LUMO 间隙回归两个完全不同的物理任务上都拿到了稳定提升。
+
+**[Rethink the Role of Neural Decoders in Quantum Error Correction](rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
+
+:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
 
 **[REX: A Family of Reversible Exponential Stochastic Runge-Kutta Solvers](rex_a_family_of_reversible_exponential_stochastic_runge-kutta_solvers.md)**
 

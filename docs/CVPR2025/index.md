@@ -2,7 +2,7 @@
 title: >-
   CVPR2025 论文汇总 · 1818篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1818篇CVPR2025论文解读，涵盖 3D 视觉(362篇)、图像生成(304篇)、多模态 VLM(145篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1818篇CVPR2025论文解读，涵盖 3D 视觉(363篇)、图像生成(305篇)、多模态 VLM(146篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "CVPR2025论文汇总"
@@ -85,7 +85,7 @@ item_total: 1818
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2025 论文汇总
 
-1818篇CVPR2025论文解读，涵盖 3D 视觉(362篇)、图像生成(304篇)、多模态 VLM(145篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1818篇CVPR2025论文解读，涵盖 3D 视觉(363篇)、图像生成(305篇)、多模态 VLM(146篇)、语义分割(94篇)、自动驾驶(89篇)、视频生成(84篇)、医学图像(78篇)、人体理解(72篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -183,7 +183,7 @@ item_total: 1818
 
 ---
 
-## 🔒 LLM 安全 (15) { #llm_safety }
+## 🔒 LLM 安全 (14) { #llm_safety }
 
 **[A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks](llm_safety/a_closed-form_solution_for_debiasing_vision-language_models_with_utility_guarant.md)**
 
@@ -205,10 +205,6 @@ item_total: 1818
 
 :   HySAC 提出在双曲空间中构建安全感知的视觉语言模型，通过蕴含锥（entailment cone）将安全/不安全内容映射到双曲空间的不同区域（安全内容靠近原点、不安全内容远离原点），使模型具备安全内容分类和动态重定向能力，在检索安全性和NSFW检测上显著超越现有遗忘方法。
 
-**[IterIS: Iterative Inference-Solving Alignment for LoRA Merging](llm_safety/iteris_iterative_inference-solving_alignment_for_lora_merging.md)**
-
-:   IterIS提出了一种迭代推理-求解的LoRA合并方法，通过直接提取统一适配器的输入特征（而非近似）来建立更准确的优化目标，配合正则化减少样本需求至先前方法的1-5%，并引入自适应权重平衡优化，在文本到图像扩散模型、视觉语言模型和大语言模型的LoRA合并中显著超越基线。
-
 **[LoTUS: Large-Scale Machine Unlearning with a Taste of Uncertainty](llm_safety/lotus_large-scale_machine_unlearning_with_a_taste_of_uncertainty.md)**
 
 :   提出 LoTUS，用 logits 温度调节+Gumbel-Softmax 平滑遗忘样本的预测，通过动态温度调度收敛到"遗忘集准确率=未见集准确率"的目标——在 ImageNet-1K 大规模设置中高效遗忘（ViT 上 Avg Gap 0.0150），且提出 RF-JSD 免重训评估指标（与 JSD Pearson 相关 0.92）。
@@ -225,7 +221,11 @@ item_total: 1818
 
 :   Neural Gate 发现 LVLM 中隐私相关神经元具有强跨样本不一致性——仅约 10% 的神经元一致性编码隐私信号。基于此发现，提出神经元级梯度门控编辑：仅对强一致性隐私神经元施加梯度更新，在 MiniGPT 上将 Safety EtA 从 0.48 提升至 0.89，同时 Utility 保持不降。
 
-[查看全部15篇「LLM 安全」论文 →](llm_safety/)
+**[Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations](llm_safety/protecting_your_video_content_disrupting_automated_video-based_llm_annotations.md)**
+
+:   本文提出两类对抗性视频水印方法——Ramblings（诱导视频 LLM 生成错误描述）和 Mutes（诱导视频 LLM 生成极短或空描述），通过不可感知的对抗扰动保护个人视频免受未经授权的自动化标注，并验证了这些低质量标注会降低下游文本到视频生成模型的性能。
+
+[查看全部14篇「LLM 安全」论文 →](llm_safety/)
 
 ---
 
@@ -503,7 +503,7 @@ item_total: 1818
 
 ---
 
-## 🎨 图像生成 (304) { #image_generation }
+## 🎨 图像生成 (305) { #image_generation }
 
 **[3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion](image_generation/3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)**
 
@@ -541,11 +541,11 @@ item_total: 1818
 
 :   本文提出ArtiFade，首个解决"瑕疵主题驱动生成"问题的方法，通过构建瑕疵-无瑕疵配对数据集、部分微调扩散模型的cross-attention权重并优化artifact-free embedding，使得现有主题驱动方法（Textual Inversion、DreamBooth）能从带水印/贴纸/对抗噪声等瑕疵的图像中生成高质量无伪影的主题图像。
 
-[查看全部304篇「图像生成」论文 →](image_generation/)
+[查看全部305篇「图像生成」论文 →](image_generation/)
 
 ---
 
-## 🧩 多模态 VLM (145) { #multimodal_vlm }
+## 🧩 多模态 VLM (146) { #multimodal_vlm }
 
 **[4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models](multimodal_vlm/4d_langsplat_4d_language_gaussian_splatting_via_multimodal_large_language_models.md)**
 
@@ -583,7 +583,7 @@ item_total: 1818
 
 :   本文提出Coarse Correspondences，一种轻量级的training-free视觉提示方法，通过在图像帧上叠加目标跟踪得到的粗粒度实例对应关系标记，显著增强MLLM的空间时序推理能力，在ScanQA上提升+20.5%、OpenEQA上+9.7%、EgoSchema上+6.0%和R2R导航上+11%。
 
-[查看全部145篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部146篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
@@ -695,7 +695,7 @@ item_total: 1818
 
 ---
 
-## 🧊 3D 视觉 (362) { #3d_vision }
+## 🧊 3D 视觉 (363) { #3d_vision }
 
 **[3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d_vision/3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)**
 
@@ -737,7 +737,7 @@ item_total: 1818
 
 :   提出SSS（Student Splatting and Scooping），用前所未有的三重创新改进3DGS范式：(1) 用**Student-t分布**替代高斯分布作为混合组件（可学习的尾部厚度，从Cauchy到Gaussian连续变化）；(2) 引入**负密度组件**（scooping减去颜色）扩展到非单调混合模型；(3) 用**SGHMC采样**替代SGD解耦参数优化，在Mip-NeRF360/T&T/Deep Blending上6/9指标取得最优，且参数效率极高——用**最少18%**的组件数即可匹配或超越3DGS。
 
-[查看全部362篇「3D 视觉」论文 →](3d_vision/)
+[查看全部363篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -1125,11 +1125,15 @@ item_total: 1818
 
 ---
 
-## 📦 模型压缩 (64) { #model_compression }
+## 📦 模型压缩 (66) { #model_compression }
 
 **[Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning](model_compression/adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l.md)**
 
 :   提出ACMap框架，通过将每个任务独立训练的adapter增量平均合并为单一adapter（保持O(1)推理复杂度），结合centroid prototype mapping对齐旧任务原型在新子空间中的表示，在5个基准上实现与SOTA EASE相当的精度同时推理速度快39倍。
+
+**[Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks](model_compression/alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy.md)**
+
+:   提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
 
 **[An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS](model_compression/an_fpga_implementation_of_displacement_vector_search_for_intra_pattern_copy_in_j.md)**
 
@@ -1159,11 +1163,7 @@ item_total: 1818
 
 :   提出 CL-LoRA，设计双适配器架构（任务共享 + 任务特定 LoRA），结合知识蒸馏与梯度重分配以及可学习块级权重，在仅 0.3% 可训练参数下实现 SOTA 持续学习性能。
 
-**[CoA: Towards Real Image Dehazing via Compression-and-Adaptation](model_compression/coa_towards_real_image_dehazing_via_compression-and-adaptation.md)**
-
-:   提出压缩-适应（CoA）框架实现实际图像去雾：先在合成数据上训练大模型，然后压缩+适应到真实域，平衡性能和部署效率
-
-[查看全部64篇「模型压缩」论文 →](model_compression/)
+[查看全部66篇「模型压缩」论文 →](model_compression/)
 
 ---
 
@@ -1401,6 +1401,10 @@ item_total: 1818
 
 :   在两个大规模肺癌筛查队列（NLST 7980 例、SUMMIT 8561 例）中验证了基于深度学习自动量化的 PPFE（胸膜肺实质纤维弹性组织增生）进展与全因死亡率独立相关，提出 PPFE 纵向变化可作为筛查人群中识别高呼吸发病风险个体的影像生物标志物。
 
+**[Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](medical_imaging/automated_detection_of_malignant_lesions_in_the_ovary_using_deep_learning_models.md)**
+
+:   使用 15 种 CNN 变体（LeNet、ResNet、VGG、Inception）在组织病理学图像上检测卵巢癌及亚型，选择 InceptionV3（ReLU）作为最优模型（平均 94.58%），并使用 LIME、SHAP、Integrated Gradients 三种 XAI 方法解释模型预测。
+
 **[BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](medical_imaging/biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)**
 
 :   BiCLIP 提出了一种双向一致性视觉-语言分割框架，通过双向多模态融合（BMF，让视觉特征反向精炼文本嵌入）和图像增强一致性（IAC，跨弱/强扰动正则化），在 COVID-19 CT 分割上以仅 1% 标注数据即可保持鲁棒性能，且对临床图像退化（噪声/模糊）具有容忍力。
@@ -1412,10 +1416,6 @@ item_total: 1818
 **[Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD](medical_imaging/bridging_the_skill_gap_in_clinical_cbct_interpretation_with_cbctrepd.md)**
 
 :   提出 CBCTRepD——首个面向口腔颌面 CBCT 的双语报告生成系统，通过构建 7408 例高质量 CBCT-报告配对数据集和多层次临床评估框架，实现了跨经验层级放射科医生的报告质量提升，尤其在减少遗漏病灶和规范化报告结构方面表现突出。
-
-**[CARL: A Framework for Equivariant Image Registration](medical_imaging/carl_a_framework_for_equivariant_image_registration.md)**
-
-:   提出 CARL（Coordinate Attention with Refinement Layers）——通过坐标注意力机制实现对平移和旋转的 [W,U] 等变性的深度配准框架，在多步配准架构中仅替换第一步即获得全局 [W,U] 等变性，在腹部、肺部和脑部三个医学配准基准上匹配或超越 SOTA，尤其在具有不同视野的腹部配准任务上大幅领先。
 
 [查看全部78篇「医学图像」论文 →](medical_imaging/)
 
@@ -1465,11 +1465,7 @@ item_total: 1818
 
 ---
 
-## 🧬 计算生物 (8) { #computational_biology }
-
-**[Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](computational_biology/automated_detection_of_malignant_lesions_in_the_ovary_using_deep_learning_models.md)**
-
-:   使用 15 种 CNN 变体（LeNet、ResNet、VGG、Inception）在组织病理学图像上检测卵巢癌及亚型，选择 InceptionV3（ReLU）作为最优模型（平均 94.58%），并使用 LIME、SHAP、Integrated Gradients 三种 XAI 方法解释模型预测。
+## 🧬 计算生物 (7) { #computational_biology }
 
 **[DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](computational_biology/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)**
 
@@ -1589,15 +1585,11 @@ item_total: 1818
 
 ---
 
-## 📂 其他 (63) { #others }
+## 📂 其他 (60) { #others }
 
 **[4Deform: Neural Surface Deformation for Robust Shape Interpolation](others/4deform_neural_surface_deformation_for_robust_shape_interpolation.md)**
 
 :   提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA，并支持真实世界 Kinect 点云序列的时间超分辨率。
-
-**[Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks](others/alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy.md)**
-
-:   提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
 
 **[BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](others/bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)**
 
@@ -1631,6 +1623,10 @@ item_total: 1818
 
 :   提出EATTA方法，在长期测试时适应（TTA）中通过特征扰动敏感度每批次仅标注1个最有价值样本（而非多个），结合梯度范数去偏策略平衡监督和无监督损失的梯度，在ImageNet-C上以极低标注代价实现50.9%的平均错误率（超过标注3倍的SimATTA 3.9%）。
 
-[查看全部63篇「其他」论文 →](others/)
+**[Event Ellipsometer: Event-based Mueller-Matrix Video Imaging](others/event_ellipsometer_event-based_mueller-matrix_video_imaging.md)**
+
+:   首个实现 30fps 视频级穆勒矩阵成像的系统——用事件相机捕捉快速旋转 QWP 产生的光强调制，将事件时间差映射到穆勒矩阵比值，通过 SVD 估计+时空传播重建物理有效的穆勒矩阵视频。
+
+[查看全部60篇「其他」论文 →](others/)
 
 </div>

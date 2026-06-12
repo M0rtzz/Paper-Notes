@@ -2,7 +2,7 @@
 title: >-
   ICML2025 论文汇总 · 1061篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(36篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(37篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "ICML2025论文汇总"
@@ -85,7 +85,7 @@ item_total: 1061
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2025 论文汇总
 
-1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(36篇)等 47个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1061篇ICML2025论文解读，涵盖图像生成(92篇)、模型压缩(74篇)、强化学习(70篇)、优化/理论(61篇)、多模态 VLM(50篇)、计算生物(48篇)、LLM 安全(41篇)、AI 安全(37篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -137,7 +137,7 @@ item_total: 1061
 
 ---
 
-## 📚 预训练 (30) { #llm_pretraining }
+## 📚 预训练 (31) { #llm_pretraining }
 
 **[A Square Peg in a Square Hole: Meta-Expert for Long-Tailed Semi-Supervised Learning](llm_pretraining/a_square_peg_in_a_square_hole_meta-expert_for_long-tailed_semi-supervised_learni.md)**
 
@@ -179,7 +179,7 @@ item_total: 1061
 
 :   扩展 MorphScore 评估框架至 70 种语言，系统研究分词器的形态边界对齐程度与下游任务性能之间的相关性，发现形态对齐仅能解释极少量的性能方差，且呈负相关，挑战了"形态对齐分词有利于模型性能"的主流假设。
 
-[查看全部30篇「预训练」论文 →](llm_pretraining/)
+[查看全部31篇「预训练」论文 →](llm_pretraining/)
 
 ---
 
@@ -367,6 +367,52 @@ item_total: 1061
 
 ---
 
+## ⚡ LLM 效率 (12) { #llm_efficiency }
+
+**[Autonomy-of-Experts Models (AoE)](llm_efficiency/autonomy-of-experts_models.md)**
+
+:   AoE 提出让 MoE 中的 expert 基于自身内部激活范数自主决定是否处理输入（而非由外部 router 决定），通过低秩权重分解降低预计算开销，在 700M-4B 参数语言模型预训练中超越传统 MoE。
+
+**[Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](llm_efficiency/cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)**
+
+:   提出 Cooperation of Experts (CoE) 框架，将异构信息编码为多重网络，通过两级专家设计与大间隔置信张量优化实现专家**协作**（而非竞争），在节点分类任务上全面超越现有 MoE 和多重网络方法。
+
+**[Curse of High Dimensionality Issue in Transformer for Long-context Modeling](llm_efficiency/curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling.md)**
+
+:   本文从监督学习视角重新审视序列建模中的注意力冗余问题，提出了 Dynamic Group Attention (DGA) 机制，通过将不重要的 token 动态分组聚合来减少注意力计算中的冗余，在保持竞争性能的同时大幅降低推理延迟（LLaMA2-7B 在 16K 上下文下推理速度提升 2.42 倍）。
+
+**[DSSD: Efficient Edge-Device LLM Deployment and Collaborative Inference via Distributed Split Speculative Decoding](llm_efficiency/dssd_efficient_edge-device_llm_deployment_and_collaborative_inference_via_distri.md)**
+
+:   提出分布式拆分推测解码（DSSD）框架，将推测解码的验证阶段拆分到设备端和边缘端，用一次下行传输（LLM的单个词表分布）替代多次上行传输（SLM的$\gamma$个词表分布），在保持推理质量不变的前提下大幅降低通信延迟。
+
+**[EasyInv: Toward Fast and Better DDIM Inversion](llm_efficiency/easyinv_toward_fast_and_better_ddim_inversion.md)**
+
+:   提出 EasyInv，通过在反演过程中周期性地将当前 latent 状态与前一步 latent 状态加权聚合（类卡尔曼滤波），增强初始 latent 的影响力、抑制噪声累积误差，在不需要迭代优化的前提下达到与迭代方法相当甚至更好的反演质量，同时推理速度提升约 3 倍。
+
+**[Efficient Length-Generalizable Attention via Causal Retrieval for Long-Context Language Modeling](llm_efficiency/efficient_length-generalizable_attention_via_causal_retrieval_for_long-context_l.md)**
+
+:   本文提出 Grouped Cross-Attention (GCA) 机制，将 chunk 级别的因果检索（causal retrieval）集成到注意力中实现端到端可学习的检索器，构建的 Differentiable Retrieval-based Transformer (DRT) 在 16M 上下文的 passkey 检索测试中达到近乎完美的准确率，实现了训练长度 1000 倍的长度泛化。
+
+**[Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)**
+
+:   本文提出 Ladder Residual，一种简单的架构修改——将每个模块的输入从上一层的输出改为上上层的输出（错位残差），使模块计算与 AllReduce 通信解耦，从而实现通信与计算的重叠，在 70B 模型 8 卡 TP 推理中实现 29% 的端到端加速，且模型性能与标准 Transformer 持平。
+
+**[Long-Short Alignment for Effective Long-Context Modeling in LLMs](llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)**
+
+:   本文从模型输出分布的角度提出长度泛化的新视角——长短对齐 (Long-Short Alignment)，指出不同长度输入的输出分布一致性是长度泛化的关键因素，提出 Long-Short Misalignment 度量并将其作为训练正则项，在合成任务和自然语言任务上均显著提升长上下文建模能力。
+
+**[Mixture of Lookup Experts](llm_efficiency/mixture_of_lookup_experts.md)**
+
+:   提出 MoLE（Mixture of Lookup Experts），将 MoE 中的路由专家输入从中间特征改为 embedding token，使专家可在推理前被重参数化为查找表（LUT）并卸载到存储设备，从而在保持 MoE 级别性能的同时实现与 dense 模型相当的推理速度和显存占用。
+
+**[MoH: Multi-Head Attention as Mixture-of-Head Attention](llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)**
+
+:   本文将多头注意力（MHA）重新表述为求和形式，借鉴 MoE 思想提出 Mixture-of-Head Attention（MoH），通过路由器为每个 token 动态选择最相关的注意力头子集，仅激活 50%~90% 的头即可匹配甚至超越标准 MHA 性能，并证明预训练模型（如 LLaMA3-8B）可通过 continue-tuning 转换为 MoH 模型。
+
+[查看全部12篇「LLM 效率」论文 →](llm_efficiency/)
+
+---
+
 ## 🦾 LLM Agent (11) { #llm_agent }
 
 **[AdvAgent: Controllable Blackbox Red-teaming on Web Agents](llm_agent/advagent_controllable_blackbox_red-teaming_on_web_agents.md)**
@@ -410,52 +456,6 @@ item_total: 1061
 :   本文提出 UnivEARTH——一个包含 140 个 yes/no 问题的地球观测基准，涵盖 13 个主题和 17 种卫星传感器，评估发现最佳 LLM Agent（使用 Google Earth Engine 生成代码）的准确率仅 33%，主要受限于 58% 的代码无法运行。
 
 [查看全部11篇「LLM Agent」论文 →](llm_agent/)
-
----
-
-## ⚡ LLM 效率 (11) { #llm_efficiency }
-
-**[Autonomy-of-Experts Models (AoE)](llm_efficiency/autonomy-of-experts_models.md)**
-
-:   AoE 提出让 MoE 中的 expert 基于自身内部激活范数自主决定是否处理输入（而非由外部 router 决定），通过低秩权重分解降低预计算开销，在 700M-4B 参数语言模型预训练中超越传统 MoE。
-
-**[Curse of High Dimensionality Issue in Transformer for Long-context Modeling](llm_efficiency/curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling.md)**
-
-:   本文从监督学习视角重新审视序列建模中的注意力冗余问题，提出了 Dynamic Group Attention (DGA) 机制，通过将不重要的 token 动态分组聚合来减少注意力计算中的冗余，在保持竞争性能的同时大幅降低推理延迟（LLaMA2-7B 在 16K 上下文下推理速度提升 2.42 倍）。
-
-**[DSSD: Efficient Edge-Device LLM Deployment and Collaborative Inference via Distributed Split Speculative Decoding](llm_efficiency/dssd_efficient_edge-device_llm_deployment_and_collaborative_inference_via_distri.md)**
-
-:   提出分布式拆分推测解码（DSSD）框架，将推测解码的验证阶段拆分到设备端和边缘端，用一次下行传输（LLM的单个词表分布）替代多次上行传输（SLM的$\gamma$个词表分布），在保持推理质量不变的前提下大幅降低通信延迟。
-
-**[EasyInv: Toward Fast and Better DDIM Inversion](llm_efficiency/easyinv_toward_fast_and_better_ddim_inversion.md)**
-
-:   提出 EasyInv，通过在反演过程中周期性地将当前 latent 状态与前一步 latent 状态加权聚合（类卡尔曼滤波），增强初始 latent 的影响力、抑制噪声累积误差，在不需要迭代优化的前提下达到与迭代方法相当甚至更好的反演质量，同时推理速度提升约 3 倍。
-
-**[Efficient Length-Generalizable Attention via Causal Retrieval for Long-Context Language Modeling](llm_efficiency/efficient_length-generalizable_attention_via_causal_retrieval_for_long-context_l.md)**
-
-:   本文提出 Grouped Cross-Attention (GCA) 机制，将 chunk 级别的因果检索（causal retrieval）集成到注意力中实现端到端可学习的检索器，构建的 Differentiable Retrieval-based Transformer (DRT) 在 16M 上下文的 passkey 检索测试中达到近乎完美的准确率，实现了训练长度 1000 倍的长度泛化。
-
-**[Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference](llm_efficiency/ladder-residual_parallelism-aware_architecture_for_accelerating_large_model_infe.md)**
-
-:   本文提出 Ladder Residual，一种简单的架构修改——将每个模块的输入从上一层的输出改为上上层的输出（错位残差），使模块计算与 AllReduce 通信解耦，从而实现通信与计算的重叠，在 70B 模型 8 卡 TP 推理中实现 29% 的端到端加速，且模型性能与标准 Transformer 持平。
-
-**[Long-Short Alignment for Effective Long-Context Modeling in LLMs](llm_efficiency/long-short_alignment_for_effective_long-context_modeling_in_llms.md)**
-
-:   本文从模型输出分布的角度提出长度泛化的新视角——长短对齐 (Long-Short Alignment)，指出不同长度输入的输出分布一致性是长度泛化的关键因素，提出 Long-Short Misalignment 度量并将其作为训练正则项，在合成任务和自然语言任务上均显著提升长上下文建模能力。
-
-**[Mixture of Lookup Experts](llm_efficiency/mixture_of_lookup_experts.md)**
-
-:   提出 MoLE（Mixture of Lookup Experts），将 MoE 中的路由专家输入从中间特征改为 embedding token，使专家可在推理前被重参数化为查找表（LUT）并卸载到存储设备，从而在保持 MoE 级别性能的同时实现与 dense 模型相当的推理速度和显存占用。
-
-**[MoH: Multi-Head Attention as Mixture-of-Head Attention](llm_efficiency/moh_multi-head_attention_as_mixture-of-head_attention.md)**
-
-:   本文将多头注意力（MHA）重新表述为求和形式，借鉴 MoE 思想提出 Mixture-of-Head Attention（MoH），通过路由器为每个 token 动态选择最相关的注意力头子集，仅激活 50%~90% 的头即可匹配甚至超越标准 MHA 性能，并证明预训练模型（如 LLaMA3-8B）可通过 continue-tuning 转换为 MoH 模型。
-
-**[NExtLong: Toward Effective Long-Context Training without Long Documents](llm_efficiency/nextlong_toward_effective_long-context_training_without_long_documents.md)**
-
-:   本文提出 NExtLong 框架，通过将文档分割为 meta-chunk 并在 chunk 之间插入从预训练语料检索的硬负例干扰文本来合成长上下文训练数据，迫使模型区分长距离依赖信息和干扰内容，在 HELMET 和 RULER 基准上比此前最佳的长上下文合成方法 Quest 平均提升 7.33%。
-
-[查看全部11篇「LLM 效率」论文 →](llm_efficiency/)
 
 ---
 
@@ -1527,6 +1527,52 @@ item_total: 1061
 
 ---
 
+## 📐 学习理论 (16) { #learning_theory }
+
+**[Avoiding Catastrophe in Online Learning by Asking for Help](learning_theory/avoiding_catastrophe_in_online_learning_by_asking_for_help.md)**
+
+:   提出一个全新的在线学习理论框架来处理灾难性（不可逆）错误：将回报定义为避灾概率、目标函数为回报之积（总体避灾概率），引入导师求助机制和Local Generalization假设，证明不可能结果（不求助则必灾难）和可能结果（策略类可学则后悔和求助率同时趋零），将标准在线学习的子线性后悔提升为子常数后悔。
+
+**[Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](learning_theory/heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)**
+
+:   提出基于 Online Mirror Descent 的单遍 Huber 回归算法 Hvt-UCB，用于重尾噪声线性 bandit，将每轮计算复杂度从 $\mathcal{O}(t\log T)$ 降至 $\mathcal{O}(1)$，同时保持最优且依赖实例的 regret 界。
+
+**[Improved and Oracle-Efficient Online $\ell_1$-Multicalibration](learning_theory/improved_and_oracle-efficient_online_ell_1-multicalibration.md)**
+
+:   提出将在线 $\ell_1$-multicalibration 归约为新定义的在线线性乘积优化 (OLPO) 问题，分别达到 $\widetilde{O}(T^{-1/3})$（改进速率）和 $\widetilde{O}(T^{-1/4})$（oracle 高效速率）的多校准误差上界。
+
+**[Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications](learning_theory/improved_generalization_bounds_for_transductive_learning_by_transductive_local_c.md)**
+
+:   提出转导局部复杂度（TLC）框架，将经典的局部 Rademacher 复杂度扩展到转导学习设定，获得了与归纳学习几乎一致的超额风险界（仅差对数因子），并解决了十年未决的开放问题。
+
+**[Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](learning_theory/learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)**
+
+:   在度量任务系统(MTS)中，当算法仅能以 bandit 方式（每步只查询一个启发式且需连续查询 $m$ 步才能观测状态）访问 $\ell$ 个启发式时，本文给出了 regret 为 $O(\text{OPT}^{2/3})$ 的算法，并证明该界是紧的。
+
+**[Learning-Augmented Hierarchical Clustering](learning_theory/learning-augmented_hierarchical_clustering.md)**
+
+:   本文研究借助分裂预言机（splitting oracle）的辅助信息来突破层次聚类的近似硬度障碍，获得 Dasgupta 目标的 $O(1)$ 常数近似和 Moseley-Wang 目标的 $(1-o(1))$ 近似，并推广到流式和并行计算场景。
+
+**[Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures](learning_theory/maximum_coverage_in_turnstile_streams_with_applications_to_fingerprinting_measur.md)**
+
+:   首次在 turnstile 流模型（支持任意插入/删除）下给出最大覆盖问题的单遍流算法，空间 $\tilde{O}(d/\varepsilon^3)$、更新时间 $\tilde{O}(1)$，并将其推广到隐私指纹识别（fingerprinting）场景，实验比先前方法快 210×。
+
+**[Multiple-Policy Evaluation via Density Estimation](learning_theory/multiple-policy_evaluation_via_density_estimation.md)**
+
+:   提出 CAESAR 算法，通过两阶段方法（粗估计访问分布 + 最优采样分布下的密度比估计）同时评估 K 个策略，实现非渐近、实例依赖的样本复杂度，核心技术是"粗估计"——仅需 $O(1/\epsilon)$ 样本即可获得常数倍精度的分布近似。
+
+**[Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems](learning_theory/near-optimal_consistency-robustness_trade-offs_for_learning-augmented_online_kna.md)**
+
+:   提出一族基于简洁预测（临界值的点预测或区间预测）的在线背包算法，在consistency与robustness之间实现近Pareto最优的权衡，并给出分数解到整数解的通用转换方法。
+
+**[Near Optimal Best Arm Identification for Clustered Bandits](learning_theory/near_optimal_best_arm_identification_for_clustered_bandits.md)**
+
+:   在多智能体聚类多臂赌博机设置下，提出 Cl-BAI 和 BAI-Cl 两种算法，利用聚类结构大幅降低最优臂识别的样本复杂度，并证明 BAI-Cl++ 在 $M$ 为常数时达到 minimax 最优。
+
+[查看全部16篇「学习理论」论文 →](learning_theory/)
+
+---
+
 ## 🧬 计算生物 (48) { #computational_biology }
 
 **[ADIOS: Antibody Development via Opponent Shaping](computational_biology/adios_antibody_development_via_opponent_shaping.md)**
@@ -1573,7 +1619,7 @@ item_total: 1061
 
 ---
 
-## 🛡️ AI 安全 (36) { #ai_safety }
+## 🛡️ AI 安全 (37) { #ai_safety }
 
 **[A Certified Unlearning Approach without Access to Source Data](ai_safety/a_certified_unlearning_approach_without_access_to_source_data.md)**
 
@@ -1615,7 +1661,7 @@ item_total: 1061
 
 :   针对异构成本的多智能体协作均值估计问题，设计了同时满足个体理性(IR)、激励相容(IC)和公平性的无货币机制，在最坏情况下实现 $\mathcal{O}(\sqrt{m})$ 近似比，并证明了三条不可能性结果。
 
-[查看全部36篇「AI 安全」论文 →](ai_safety/)
+[查看全部37篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1775,7 +1821,7 @@ item_total: 1061
 
 ---
 
-## 📂 其他 (110) { #others }
+## 📂 其他 (91) { #others }
 
 **[Access Controls Will Solve the Dual-Use Dilemma](others/access_controls_will_solve_the_dual-use_dilemma.md)**
 
@@ -1793,10 +1839,6 @@ item_total: 1061
 
 :   提出首个可微的主动学习策略搜索框架 AutoAL，通过 SearchNet 和 FitNet 两个网络在双层优化框架下协同训练，自动从多个候选 AL 策略中为给定任务选出最优策略，在自然图像和医学图像数据集上一致超越所有候选策略及其他 SOTA 方法。
 
-**[Avoiding Catastrophe in Online Learning by Asking for Help](others/avoiding_catastrophe_in_online_learning_by_asking_for_help.md)**
-
-:   提出一个全新的在线学习理论框架来处理灾难性（不可逆）错误：将回报定义为避灾概率、目标函数为回报之积（总体避灾概率），引入导师求助机制和Local Generalization假设，证明不可能结果（不求助则必灾难）和可能结果（策略类可学则后悔和求助率同时趋零），将标准在线学习的子线性后悔提升为子常数后悔。
-
 **[Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation](others/beyond_entropy_region_confidence_proxy_for_wild_test-time_adaptation.md)**
 
 :   揭示熵最小化在野外测试时适应（WTTA）中的根本局限——局部区域内语义相似样本的预测不一致导致冲突优化动态，提出 ReCAP 框架用概率区域建模和有限到无穷渐近近似将不可处理的区域置信度转化为高效可优化的代理目标，在 ImageNet-C 上一致超越 SOTA。
@@ -1813,10 +1855,14 @@ item_total: 1061
 
 :   通过连续时间ODE建模，系统揭示了Heavy Ball动量在min-max博弈中与极小化问题截然不同的行为：**更小的动量**（包括负动量）能扩大收敛步长范围并引导轨迹走向更浅梯度区域，而**交替更新**比同步更新收敛更快且放大了这一正则化效应。
 
-**[Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](others/cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)**
+**[Cross-regularization: Adaptive Model Complexity through Validation Gradients](others/cross-regularization_adaptive_model_complexity_through_validation_gradients.md)**
 
-:   提出 Cooperation of Experts (CoE) 框架，将异构信息编码为多重网络，通过两级专家设计与大间隔置信张量优化实现专家**协作**（而非竞争），在节点分类任务上全面超越现有 MoE 和多重网络方法。
+:   提出 Cross-regularization（交叉正则化），通过验证集梯度直接优化正则化参数（权重范数、噪声尺度、增强强度），在单次训练中收敛到交叉验证最优解，消除手动调参需求。
 
-[查看全部110篇「其他」论文 →](others/)
+**[Curvature Enhanced Data Augmentation for Regression](others/curvature_enhanced_data_augmentation_for_regression.md)**
+
+:   提出 CEMS（Curvature-Enhanced Manifold Sampling），利用数据流形的二阶近似（曲率信息）生成合成样本，用于回归任务的数据增强，在分布内和分布外场景均取得 SOTA 或接近 SOTA 的性能。
+
+[查看全部91篇「其他」论文 →](others/)
 
 </div>

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 可解释性论文汇总 · 59篇论文解读
+  ICLR2026 可解释性论文汇总 · 60篇论文解读
 description: >-
-  59篇ICLR2026的可解释性方向论文解读，涵盖 LLM、推理、多模态、布局/合成、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  60篇ICLR2026的可解释性方向论文解读，涵盖 LLM、推理、多模态、布局/合成、对齐/RLHF、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "可解释性"
@@ -19,6 +19,8 @@ item_list:
     t: "A Cortically Inspired Architecture for Modular Perceptual AI"
   - u: "adaem_an_adaptively_and_automated_extensible_measurement_of_llms_value_differenc/"
     t: "AdAEM: An Adaptively and Automated Extensible Measurement of LLMs' Value Difference"
+  - u: "addressing_divergent_representations_causal/"
+    t: "Addressing Divergent Representations from Causal Interventions on Neural Networks"
   - u: "anveshanaai_a_multimodal_platform_for_adaptive_aiml_education_through_automated_/"
     t: "AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment"
   - u: "behavior_learning_bl_learning_hierarchical_optimization_structures_from_data/"
@@ -73,17 +75,15 @@ item_list:
     t: "Internal Planning in Language Models: Characterizing Horizon and Branch Awareness"
   - u: "layer_by_layer_module_by_module_choose_both_for_optimal_ood_probing_of_vit/"
     t: "Layer by layer, module by module: Choose both for optimal OOD probing of ViT"
-  - u: "lore_jointly_learning_the_intrinsic_dimensionality_and_relative_similarity_struc/"
-    t: "LORE: Jointly Learning the Intrinsic Dimensionality and Relative Similarity Structure from Ordinal Data"
-item_total: 59
+item_total: 60
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🔬 ICLR2026** · **59** 篇论文解读
+**🔬 ICLR2026** · **60** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (80)](../../NeurIPS2025/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×5 · 推理 ×4 · 多模态 ×3 · 布局/合成 ×3 · 对齐/RLHF ×3
 
@@ -94,6 +94,10 @@ item_total: 59
 **[AdAEM: An Adaptively and Automated Extensible Measurement of LLMs' Value Difference](adaem_an_adaptively_and_automated_extensible_measurement_of_llms_value_differenc.md)**
 
 :   提出 AdAEM，一个自适应、自扩展的 LLM 价值观评估框架，通过信息论优化自动生成能最大化揭示不同 LLM 价值差异的测试问题，解决现有静态基准无法区分模型价值取向的"信息量不足"问题。
+
+**[Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)**
+
+:   系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况，并提出 Counterfactual Latent (CL) loss 来约束干预表征不偏离流形，在 7B LLM 上验证可减少偏移同时保持干预准确率。
 
 **[AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment](anveshanaai_a_multimodal_platform_for_adaptive_aiml_education_through_automated_.md)**
 

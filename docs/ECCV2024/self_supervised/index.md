@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 自监督/表示学习论文汇总 · 15篇论文解读
+  ECCV2024 自监督/表示学习论文汇总 · 16篇论文解读
 description: >-
-  15篇ECCV2024的自监督/表示学习方向论文解读，涵盖自监督学习、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  16篇ECCV2024的自监督/表示学习方向论文解读，涵盖自监督学习、布局/合成、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "自监督/表示学习"
@@ -10,6 +10,7 @@ tags:
   - "论文笔记"
   - "自监督学习"
   - "布局/合成"
+  - "持续学习"
 item_list:
   - u: "adaptive_multihead_contrastive_learning/"
     t: "Adaptive Multi-head Contrastive Learning"
@@ -37,17 +38,19 @@ item_list:
     t: "SCPNet: Unsupervised Cross-modal Homography Estimation via Intra-modal Self-supervised Learning"
   - u: "self-supervised_video_copy_localization_with_regional_token_representation/"
     t: "Self-supervised Video Copy Localization with Regional Token Representation"
+  - u: "stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning/"
+    t: "STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning"
   - u: "vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr/"
     t: "ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders"
   - u: "wecromcl_weakly_supervised_cross-modality_contrastive_learning_for_transcription/"
     t: "WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting"
-item_total: 15
+item_total: 16
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🎞️ ECCV2024** · **15** 篇论文解读
+**🎞️ ECCV2024** · **16** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/self_supervised/index.md) · [💬 ACL2026 (1)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (34)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/self_supervised/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/self_supervised/index.md)
 
@@ -104,6 +107,10 @@ item_total: 15
 **[Self-supervised Video Copy Localization with Regional Token Representation](self-supervised_video_copy_localization_with_regional_token_representation.md)**
 
 :   提出了一种自监督视频拷贝定位框架，通过在 Vision Transformer 中引入 Regional Token 捕获局部区域信息，并利用传递性（Transitivity Property）自动生成训练数据，在无需人工标注的情况下超越了有监督方法的性能。
+
+**[STSP: Spatial-Temporal Subspace Projection for Video Class-Incremental Learning](stsp_spatial-temporal_subspace_projection_for_video_class-incremental_learning.md)**
+
+:   提出空间-时间子空间投影（STSP）方法解决视频类增量学习中的灾难性遗忘问题，通过时间子空间分类器（TSC）用正交子空间基表示每个类别，并通过空间梯度投影（SGP）将梯度约束在旧任务特征的零空间中，在HMDB51、UCF101和SSv2上达到SOTA。
 
 **[ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders](vic-mae_self-supervised_representation_learning_from_images_and_video_with_contr.md)**
 

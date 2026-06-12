@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 视频生成论文汇总 · 48篇论文解读
+  ICCV2025 视频生成论文汇总 · 49篇论文解读
 description: >-
-  48篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、人脸/视线、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇ICCV2025的视频生成方向论文解读，涵盖视频生成、扩散模型、对抗鲁棒、个性化生成、人脸/视线、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "视频生成"
@@ -58,6 +58,8 @@ item_list:
     t: "Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks"
   - u: "leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models/"
     t: "LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models"
+  - u: "long-context_state-space_video_world_models/"
+    t: "Long-Context State-Space Video World Models"
   - u: "long_context_tuning_for_video_generation/"
     t: "Long Context Tuning for Video Generation"
   - u: "magicdrive-v2_high-resolution_long_video_generation_for_autonomous_driving_with_/"
@@ -72,15 +74,13 @@ item_list:
     t: "Multi-identity Human Image Animation with Structural Video Diffusion"
   - u: "normalcrafter_learning_temporally_consistent_normals_from_video_diffusion_priors/"
     t: "NormalCrafter: Learning Temporally Consistent Normals from Video Diffusion Priors"
-  - u: "ock_unsupervised_dynamic_video_prediction_with_object-centric_kinematics/"
-    t: "OCK: Unsupervised Dynamic Video Prediction with Object-Centric Kinematics"
-item_total: 48
+item_total: 49
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频生成
 
-**📹 ICCV2025** · **48** 篇论文解读
+**📹 ICCV2025** · **49** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (28)](../../ICML2026/video_generation/index.md) · [💬 ACL2026 (4)](../../ACL2026/video_generation/index.md) · [📷 CVPR2026 (65)](../../CVPR2026/video_generation/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/video_generation/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/video_generation/index.md) · [🧠 NeurIPS2025 (23)](../../NeurIPS2025/video_generation/index.md)
 
@@ -173,6 +173,10 @@ item_total: 48
 **[LeanVAE: An Ultra-Efficient Reconstruction VAE for Video Diffusion Models](leanvae_an_ultra-efficient_reconstruction_vae_for_video_diffusion_models.md)**
 
 :   > 提出 LeanVAE，基于非重叠 Patch 操作、邻域感知前馈（NAF）模块、小波变换和压缩感知技术，构建超高效视频 VAE，在仅 40M 参数下实现 FLOPs 减少 50 倍、推理速度加快 44 倍，同时保持有竞争力的重建质量。
+
+**[Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)**
+
+:   本文提出将状态空间模型（SSM/Mamba）引入视频世界模型，通过 block-wise SSM 扫描方案在空间一致性和时序记忆之间权衡，配合局部帧注意力，实现了线性训练复杂度、常数推理开销下的长期空间记忆保持，在 Memory Maze 和 Minecraft 数据集上大幅超越有限上下文的 Transformer 基线。
 
 **[Long Context Tuning for Video Generation](long_context_tuning_for_video_generation.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   CVPR2026 论文汇总 · 1643篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(207篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(209篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "CVPR2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1643
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2026 论文汇总
 
-1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(207篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(209篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -435,7 +435,7 @@ item_total: 1643
 
 ---
 
-## 🧩 多模态 VLM (207) { #multimodal_vlm }
+## 🧩 多模态 VLM (209) { #multimodal_vlm }
 
 **[A3: Towards Advertising Aesthetic Assessment](multimodal_vlm/a3_towards_advertising_aesthetic_assessment.md)**
 
@@ -477,7 +477,7 @@ item_total: 1643
 
 :   BALM 提出一个模型无关的即插即用框架来解决**不均衡缺失率（IMR）**下的多模态学习问题，通过特征校准模块（FCM）对齐不同缺失模式下的表征、以及梯度再平衡模块（GRM）从分布和空间两个维度平衡各模态的优化动态，在多个多模态情感识别基准上持续提升各类骨干网络的鲁棒性。
 
-[查看全部207篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部209篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
@@ -1347,7 +1347,7 @@ item_total: 1643
 
 ---
 
-## 🛡️ AI 安全 (25) { #ai_safety }
+## 🛡️ AI 安全 (26) { #ai_safety }
 
 **[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
 
@@ -1389,7 +1389,7 @@ item_total: 1643
 
 :   提出域感知原型联邦学习框架 FedDAP，通过构建域特定全局原型和双重原型对齐策略（域内对齐 + 跨域对比），解决联邦学习中客户端数据域偏移导致的全局模型性能退化问题。
 
-[查看全部25篇「AI 安全」论文 →](ai_safety/)
+[查看全部26篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1527,7 +1527,7 @@ item_total: 1643
 
 ---
 
-## 📂 其他 (35) { #others }
+## 📂 其他 (32) { #others }
 
 **[AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](others/adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)**
 
@@ -1569,6 +1569,6 @@ item_total: 1643
 
 :   本文系统评估了多种光流模型在旋转蛇等静态图像运动错觉上的表现，发现仅人类启发的Dual-Channel模型在模拟眼跳条件下能再现人类感知的旋转运动。
 
-[查看全部35篇「其他」论文 →](others/)
+[查看全部32篇「其他」论文 →](others/)
 
 </div>

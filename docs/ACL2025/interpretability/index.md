@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 可解释性论文汇总 · 21篇论文解读
+  ACL2025 可解释性论文汇总 · 22篇论文解读
 description: >-
-  21篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇ACL2025的可解释性方向论文解读，涵盖 LLM、推理、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "可解释性"
@@ -52,17 +52,19 @@ item_list:
     t: "Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis"
   - u: "the_anatomy_of_evidence_an_investigation_into_explainable_icd_coding/"
     t: "The Anatomy of Evidence: An Investigation Into Explainable ICD Coding"
+  - u: "the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons/"
+    t: "The Knowledge Microscope: Features as Better Analytical Lenses than Neurons"
   - u: "towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar/"
     t: "Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework"
-item_total: 21
+item_total: 22
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**💬 ACL2025** · **21** 篇论文解读
+**💬 ACL2025** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (79)](../../NeurIPS2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [🧠 NeurIPS2025 (80)](../../NeurIPS2025/interpretability/index.md)
 
 🔥 **高频主题：** LLM ×7 · 推理 ×3
 
@@ -145,6 +147,10 @@ item_total: 21
 **[The Anatomy of Evidence: An Investigation Into Explainable ICD Coding](the_anatomy_of_evidence_an_investigation_into_explainable_icd_coding.md)**
 
 :   本文对 MDACE 数据集和当前可解释 ICD 编码系统进行了深入的应用导向分析，揭示了人工标注证据与代码描述的重叠规律、证据在文档中的分布特征，并提出了新的匹配度量来评估模型解释的实用性。
+
+**[The Knowledge Microscope: Features as Better Analytical Lenses than Neurons](the_knowledge_microscope_features_as_better_analytical_lenses_than_neurons.md)**
+
+:   本文通过系统实验验证了 SAE（稀疏自编码器）分解出的特征（features）在知识表达影响力、可解释性、单义性（monosemanticity）三个维度上全面优于传统神经元（neurons）作为分析单元，并提出首个基于 feature 的模型编辑方法 FeatureEdit，在隐私知识擦除任务上大幅超越神经元方法。
 
 **[Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)**
 

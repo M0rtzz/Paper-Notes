@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 其他论文汇总 · 135篇论文解读
+  AAAI2026 其他论文汇总 · 124篇论文解读
 description: >-
-  135篇AAAI2026的其他方向论文解读，涵盖 Agent、对抗鲁棒、扩散模型、对齐/RLHF、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  124篇AAAI2026的其他方向论文解读，涵盖 Agent、对抗鲁棒、扩散模型、布局/合成、对齐/RLHF、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "其他"
@@ -11,9 +11,9 @@ tags:
   - "Agent"
   - "对抗鲁棒"
   - "扩散模型"
-  - "对齐/RLHF"
-  - "推理"
   - "布局/合成"
+  - "对齐/RLHF"
+  - "人脸/视线"
 item_list:
   - u: "a_fast_heuristic_search_approach_for_energy-optimal_profile_/"
     t: "A Fast Heuristic Search Approach for Energy-Optimal Profile Routing for Electric Vehicles"
@@ -21,16 +21,10 @@ item_list:
     t: "A New Strategy for Verifying Reach-Avoid Specifications in Neural Feedback Systems"
   - u: "a_phase_transition_for_opinion_dynamics_with_competing_biase/"
     t: "A Phase Transition for Opinion Dynamics with Competing Biases"
-  - u: "a_switching_framework_for_online_interval_scheduling_with_pr/"
-    t: "A Switching Framework for Online Interval Scheduling with Predictions"
   - u: "a_topological_rewriting_of_tarskis_mereogeometry/"
     t: "A Topological Rewriting of Tarski's Mereogeometry"
-  - u: "agent-sama_state-aware_mobile_assistant/"
-    t: "Agent-SAMA: State-Aware Mobile Assistant"
   - u: "align_when_they_want_complement_when_they_need_human-centere/"
     t: "Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration"
-  - u: "ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re/"
-    t: "AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design"
   - u: "an_epistemic_perspective_on_agent_awareness/"
     t: "An Epistemic Perspective on Agent Awareness"
   - u: "approximation_algorithm_for_constrained_k-center_clustering_/"
@@ -75,17 +69,23 @@ item_list:
     t: "Controllable Financial Market Generation with Diffusion Guided Meta Agent"
   - u: "cost-free_neutrality_for_the_river_method/"
     t: "Cost-Free Neutrality for the River Method"
-item_total: 135
+  - u: "data_complexity_of_querying_description_logic_knowledge_bases_under_cost-based_s/"
+    t: "Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics"
+  - u: "dcmatch_unsupervised_multi-shape_matching_with_dual-level_consistency/"
+    t: "DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency"
+  - u: "deadline-aware_energy-efficient_control_of_domestic_immersion_hot_water_heater/"
+    t: "Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters"
+item_total: 124
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🤖 AAAI2026** · **135** 篇论文解读
+**🤖 AAAI2026** · **124** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
 
-🔥 **高频主题：** Agent ×11 · 对抗鲁棒 ×5 · 扩散模型 ×5 · 对齐/RLHF ×4 · 推理 ×3
+🔥 **高频主题：** Agent ×9 · 对抗鲁棒 ×5 · 扩散模型 ×4 · 布局/合成 ×3 · 对齐/RLHF ×3
 
 **[A Fast Heuristic Search Approach for Energy-Optimal Profile Routing for Electric Vehicles](a_fast_heuristic_search_approach_for_energy-optimal_profile_.md)**
 
@@ -99,25 +99,13 @@ item_total: 135
 
 :   在有向随机图上建模两种对立力量（外部颠覆性偏差 vs 个体顽固性）对二元观点传播的影响，证明系统存在尖锐相变：偏差超过临界阈值 $p_c$ 时群体快速达成新共识，低于阈值则长期处于亚稳极化状态，且临界点仅由度序列的两个简单统计量决定。
 
-**[A Switching Framework for Online Interval Scheduling with Predictions](a_switching_framework_for_online_interval_scheduling_with_pr.md)**
-
-:   针对不可撤销的在线区间调度问题，提出 SemiTrust-and-Switch 框架和 SmoothMerge 随机算法，通过在信任预测和经典贪心算法之间切换/融合，在预测准确时趋近最优（一致性），预测错误时性能优雅退化（鲁棒性和平滑性），并证明了该框架在特定实例上的紧性。
-
 **[A Topological Rewriting of Tarski's Mereogeometry](a_topological_rewriting_of_tarskis_mereogeometry.md)**
 
 :   在 Coq 定理证明器中扩展 λ-MM 库，将基于 Leśniewski 部分学（mereology）的 Tarski 固体几何重写为具备完整拓扑结构的形式化系统，证明部分学类对应正则开集、满足 Kuratowski 内部公理且具有 Hausdorff（T2）性质，从而为定性空间推理提供了统一的部分学-几何-拓扑理论框架。
 
-**[Agent-SAMA: State-Aware Mobile Assistant](agent-sama_state-aware_mobile_assistant.md)**
-
-:   提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
-
 **[Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration](align_when_they_want_complement_when_they_need_human-centere.md)**
 
 :   揭示了人机协作中"互补性"（complementarity）与"对齐性"（alignment）之间存在根本性权衡——单一模型无法同时优化二者，提出自适应AI集成框架，通过Rational Routing Shortcut（RRS）机制在对齐模型和互补模型之间动态切换，团队准确率较标准AI提升最高9%。
-
-**[AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design](ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re.md)**
-
-:   提出AMS-IO-Agent，一个基于LLM的领域专用智能体，通过结构化意图图(Intent Graph)和领域知识库将自然语言设计意图转化为可生产的模拟混合信号IC I/O环设计，配套提出首个AMS I/O环自动化基准AMS-IO-Bench，在28nm CMOS流片中验证了智能体生成的I/O环可直接用于实际芯片制造。
 
 **[An Epistemic Perspective on Agent Awareness](an_epistemic_perspective_on_agent_awareness.md)**
 
@@ -315,10 +303,6 @@ item_total: 135
 
 :   针对 GDBA 在一般值域 DCOP 上表现不佳的问题，本文系统分析了三大病因（过于激进的违反条件、无界惩罚累积、不协调的惩罚更新），提出了 DGLS 框架，通过自适应违反条件、蒸发机制和同步方案全面释放引导式局部搜索的性能，在多种标准基准上大幅超越 SOTA。
 
-**[Generalizing Analogical Inference from Boolean to Continuous Domains](generalizing_analogical_inference_from_boolean_to_continuous_domains.md)**
-
-:   从基础理论层面重新审视类比推理：首先构造反例证明布尔域上经典泛化界失效，然后提出基于参数化广义均值的统一类比推理框架，将离散分类扩展到连续回归域。
-
 **[Generating Sketches in a Hierarchical Auto-Regressive Process for Flexible Sketch Drawing Manipulation at Stroke-Level](generating_sketches_in_a_hierarchical_auto-regressive_proces.md)**
 
 :   提出 Sketch-HARP 分层自回归草图生成框架，通过三阶段层次化过程（预测笔画嵌入→确定画布位置→生成绘制动作序列），首次实现草图绘制过程中的灵活笔画级操控，在替换/擦除/扩展等任务上显著优于 SketchEdit。
@@ -383,10 +367,6 @@ item_total: 135
 
 :   提出 Intergrams 多遍扫描算法，利用较短 n-gram 作为前缀递推过滤候选更长 n-gram，充分利用处理器缓存层次结构实现缓存友好的内存访问模式，在 TB 级数据集上比此前最快的 hash-gramming 方法加速 6-33 倍，同时几乎精确恢复所有 top-k n-gram。
 
-**[Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis](intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba.md)**
-
-:   本文将 AI 对齐形式化为 $\langle M,N,\varepsilon,\delta\rangle$-agreement 多目标优化问题，从通信复杂度角度证明了对齐的信息论下界（编码"所有人类价值观"本质上不可行），同时给出了无界/有界理性智能体的显式可达算法和紧致上界，揭示了在大状态空间下 reward hacking 全局不可避免的理论根基。
-
 **[Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring](judging_by_the_rules_compliance-aligned_framework_for_modern_slavery_statement_m.md)**
 
 :   提出以"合规对齐法官"（CA-Judge）为核心的训练框架，利用规则级对齐反馈训练 3B 参数的 CALLM 模型，使其生成基于法定条款的可追溯合规判断理由，在现代奴役声明的句子级合规分类任务上超越 GPT-4o 和 DeepSeek-R1。
@@ -406,10 +386,6 @@ item_total: 135
 **[Life, Machine Learning, and the Search for Habitability: Predicting Biosignature Fluxes for the Habitable Worlds Observatory](life_machine_learning_and_the_search_for_habitability_predicting_biosignature_fl.md)**
 
 :   本文为 NASA 宜居世界天文台（HWO）的系外行星观测优先级排序需求，提出贝叶斯卷积神经网络（BCNN）和新型光谱查询自适应 Transformer（SQuAT）两种架构，从行星反射光谱中预测生物标志物种类的通量，两者在增强数据集上均实现了高预测精度，且分别在不确定性量化和可解释性方面各有优势。
-
-**[LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)**
-
-:   提出 LILAD 框架，利用 GPT-2 的 in-context learning 能力同时学习动力学模型和 Lyapunov 函数，在保证全局指数稳定性的同时实现对非平稳参数化动力系统的自适应辨识，在多个基准系统上超越 ICL、MAML 等基线。
 
 **[Local Guidance for Configuration-Based Multi-Agent Pathfinding](local_guidance_for_configuration-based_multi-agent_pathfinding.md)**
 
@@ -499,10 +475,6 @@ item_total: 135
 
 :   提出 Regular Games (RG) 通用博弈系统，以非确定性有限自动机（NFA）为核心描述博弈规则，配合多层次语言（底层 RG + 高层 HRG + 专用框架），在表达力覆盖所有有限回合制博弈（含不完全信息和随机性）的同时，生成的前向模型效率全面超越现有最快的通用博弈系统 RBG，通常比 Ludii 快 10-20 倍。
 
-**[Rethinking Flow and Diffusion Bridge Models for Speech Enhancement](rethinking_flow_and_diffusion_bridge_models_for_speech_enhancement.md)**
-
-:   本文提出了一个统一的理论框架，将语音增强中的 flow matching、score-based diffusion 和 Schrödinger bridge 模型统一为在配对数据之间构造不同高斯概率路径的过程，并揭示了这类生成模型每一步采样本质上等价于预测式语音增强，进而利用预测范式中的高性能骨干网络、改进损失函数和微调策略来增强桥模型性能。
-
 **[Reward Redistribution via Gaussian Process Likelihood Estimation](reward_redistribution_via_gaussian_process_likelihood_estimation.md)**
 
 :   本文提出了基于高斯过程似然的奖励重分配框架 GP-LRR，通过核函数显式建模 state-action 对之间的相关性，利用 leave-one-out 策略最大化轨迹回报的边际似然来学习逐步奖励函数，理论证明传统 MSE 方法是其退化特例，并在 MuJoCo 基准上配合 SAC 实现了优越的样本效率和策略性能。
@@ -523,10 +495,6 @@ item_total: 135
 
 :   提出自适应教学范式（Adaptive Teaching Paradigm），通过无残差连接的瓶颈结构 ShrinkAdapter 让视觉"教师"主动收缩和调整其知识结构以适配 EEG"学生"的学习能力，在零样本脑-图像检索任务上 Top-1 准确率达到 60.2%，超越前 SOTA 9.8 个百分点。
 
-**[Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting](sonnet_spectral_operator_neural_network_for_multivariable_time_series_forecastin.md)**
-
-:   提出 Sonnet，通过可学习小波变换将输入映射到时频域，引入基于谱相干性的多变量注意力（MVCA）建模变量间依赖关系，并利用 Koopman 算子进行稳定的时间演化预测，在 47 个预测任务中的 34 个取得最优，平均 MAE 降低 2.2%。
-
 **[SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)**
 
 :   提出 SpikCommander，一种全脉冲驱动的 Transformer 架构，通过**多视图脉冲时序感知自注意力（MSTASA）**和**脉冲上下文精炼 MLP（SCR-MLP）**联合增强时序与通道特征建模，在 SHD/SSC/GSC 三个基准上以更少参数超越 SOTA SNN 方法。
@@ -538,10 +506,6 @@ item_total: 135
 **[STEM Faculty Perspectives on Generative AI in Higher Education](stem_faculty_perspectives_on_generative_ai_in_higher_education.md)**
 
 :   通过对美国一所大型公立大学 29 名 STEM 教师的焦点小组研究，揭示教师如何在教学中整合 GenAI、观察到的学生学习益处与挑战，以及所需的制度支持——发现 GenAI 将教师劳动从内容创建转向专家审核，且可能掩盖学生能力不足。
-
-**[Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)**
-
-:   提出 SkyGP（Streaming Kernel-induced Progressively Generated Expert GP），通过**核距离驱动的渐进式专家生成**和**时间感知可配置聚合**处理流数据，继承精确 GP 的学习保证同时保持有界计算复杂度，在基准测试和实时控制实验中全面超越 SOTA。
 
 **[Structural Approach to Guiding a Present-Biased Agent](structural_approach_to_guiding_a_present-biased_agent.md)**
 
@@ -614,14 +578,6 @@ item_total: 135
 **[Variance Computation for Weighted Model Counting with Knowledge Compilation Approach](variance_computation_for_weighted_model_counting_with_knowledge_compilation_appr.md)**
 
 :   本文将加权模型计数 (WMC) 的权重视为具有方差的随机变量，提出在 structured d-DNNF 表示上多项式时间计算 WMC 方差的算法，同时证明了在 structured DNNF、d-DNNF 和 FBDD 上该问题不可解（除非 P=NP），并将其应用于贝叶斯网络推理中参数不确定性的量化。
-
-**[Verification-Guided Context Optimization for Tool Calling via Hierarchical LLMs-as-editors](verification-guided_context_optimization_for_tool_calling_via_hierarchical_llms-.md)**
-
-:   提出VGCO框架，利用LLM作为分层编辑器，通过验证引导的方式迭代优化工具文档和知识库上下文，显著提升大规模工具调用场景下的检索召回、工具选择和参数填充准确率。
-
-**[Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents](whispering_agents_an_event-driven_covert_communication_protocol_for_the_internet.md)**
-
-:   首次形式化定义了智能体互联网（IoA）中的"隐蔽事件通道"（Covert Event Channel），并设计了 ΠCCAP 协议，通过在智能体对话的存储、时序和行为维度中嵌入秘密数据，实现了高容量、高鲁棒性且对 LLM 审查员不可感知的隐蔽通信。
 
 **[Why Isn't Relational Learning Taking Over the World?](why_isnt_relational_learning_taking_over_the_world.md)**
 

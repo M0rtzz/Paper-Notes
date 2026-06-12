@@ -44,7 +44,7 @@ tags:
 整个 pipeline 围绕**局部 G-optimal design** 展开：(1) 给定名义参数 $\theta_0$（最佳组合识别里用 warm-up 探索阶段估出）；(2) 跑 Frank–Wolfe 极大化 D-optimal 目标 $f_{\theta_0}(\pi) = \log\det(\mathbf{M}_{\theta_0}(\pi))$（KW 等价定理保证它和 G-optimal 同一最优解）；(3) 每一步 FW 迭代解一个 LMO $S_m \in \arg\max_S \text{tr}(\mathbf{M}_m^{-1} \mathbf{I}_{\theta_0}(S))$——本文两个核心贡献就是给这个 LMO 写两种解法（MILP 精确重写 / Schur 补升维）；(4) 把整套设计包进 BSI-MNL（Best aSsortment Identification for MNL）算法：warm-up 估 $\theta_0$ → 设计基采样并更新 MLE → 停止准则认证后输出最佳组合 $S^*$。下图把 BSI-MNL 的外层流程与内部 FW/LMO 的两条出口画在一起。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 22, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 26, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     A["输入：N 个带特征 a_i、非均匀收益 r_i 的商品"] --> B
     subgraph BSI["BSI-MNL（最佳组合识别）"]

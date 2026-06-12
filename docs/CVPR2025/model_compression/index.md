@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 模型压缩论文汇总 · 64篇论文解读
+  CVPR2025 模型压缩论文汇总 · 66篇论文解读
 description: >-
-  64篇CVPR2025的模型压缩方向论文解读，涵盖压缩/编码、模型压缩、持续学习、知识蒸馏、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  66篇CVPR2025的模型压缩方向论文解读，涵盖压缩/编码、模型压缩、持续学习、知识蒸馏、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "模型压缩"
@@ -16,6 +16,8 @@ tags:
 item_list:
   - u: "adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l/"
     t: "Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning"
+  - u: "alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy/"
+    t: "Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks"
   - u: "an_fpga_implementation_of_displacement_vector_search_for_intra_pattern_copy_in_j/"
     t: "An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS"
   - u: "arche_autoregressive_residual_compression_with_hyperprior_and_excitation/"
@@ -72,23 +74,25 @@ item_list:
     t: "HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers"
   - u: "hot_hadamard-based_optimized_training/"
     t: "HOT: Hadamard-based Optimized Training"
-  - u: "hyperlora_parameter-efficient_adaptive_generation_for_portrait_synthesis/"
-    t: "HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis"
-item_total: 64
+item_total: 66
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📷 CVPR2025** · **64** 篇论文解读
+**📷 CVPR2025** · **66** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** 压缩/编码 ×11 · 模型压缩 ×7 · 持续学习 ×4 · 知识蒸馏 ×3 · 少样本学习 ×3
+🔥 **高频主题：** 压缩/编码 ×11 · 模型压缩 ×8 · 持续学习 ×4 · 知识蒸馏 ×3 · 少样本学习 ×3
 
 **[Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning](adapter_merging_with_centroid_prototype_mapping_for_scalable_class-incremental_l.md)**
 
 :   提出ACMap框架，通过将每个任务独立训练的adapter增量平均合并为单一adapter（保持O(1)推理复杂度），结合centroid prototype mapping对齐旧任务原型在新子空间中的表示，在5个基准上实现与SOTA EASE相当的精度同时推理速度快39倍。
+
+**[Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks](alternating_gradient_flow_utility_a_unified_metric_for_structural_pruning_and_dy.md)**
+
+:   提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
 
 **[An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS](an_fpga_implementation_of_displacement_vector_search_for_intra_pattern_copy_in_j.md)**
 
@@ -209,6 +213,10 @@ item_total: 64
 **[InsTaG: Learning Personalized 3D Talking Head from Few-Second Video](instag_learning_personalized_3d_talking_head_from_few-second_video.md)**
 
 :   提出 InsTaG，通过 Identity-Free Pre-training 从多人长视频中提取通用运动先验，再通过 Motion-Aligned Adaptation 仅用 5 秒视频即可快速学习高保真个性化 3D 说话人头像，实现 82.5 FPS 实时推理。
+
+**[IterIS: Iterative Inference-Solving Alignment for LoRA Merging](iteris_iterative_inference-solving_alignment_for_lora_merging.md)**
+
+:   IterIS提出了一种迭代推理-求解的LoRA合并方法，通过直接提取统一适配器的输入特征（而非近似）来建立更准确的优化目标，配合正则化减少样本需求至先前方法的1-5%，并引入自适应权重平衡优化，在文本到图像扩散模型、视觉语言模型和大语言模型的LoRA合并中显著超越基线。
 
 **[JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba](jamma_ultra-lightweight_local_feature_matching_with_joint_mamba.md)**
 

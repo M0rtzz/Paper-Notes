@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 对齐/RLHF论文汇总 · 39篇论文解读
+  ICLR2026 对齐/RLHF论文汇总 · 40篇论文解读
 description: >-
-  39篇ICLR2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  40篇ICLR2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "对齐 / RLHF"
@@ -15,6 +15,8 @@ tags:
 item_list:
   - u: "a2d_any-order_any-step_safety_alignment_for_diffusion_language_models/"
     t: "A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models"
+  - u: "agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_/"
+    t: "Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment"
   - u: "align_once_benefit_multilingually_enforcing_multilingual_consistency_for_llm_saf/"
     t: "Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment"
   - u: "alphasteer_learning_refusal_steering_with_principled_null-space_constraint/"
@@ -71,23 +73,25 @@ item_list:
     t: "SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks"
   - u: "semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm/"
     t: "Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment"
-  - u: "skywork-reward-v2_scaling_preference_data_curation_via_human-ai_synergy/"
-    t: "Skywork-Reward-V2: Scaling Preference Data Curation via Human-AI Synergy"
-item_total: 39
+item_total: 40
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**🔬 ICLR2026** · **39** 篇论文解读
+**🔬 ICLR2026** · **40** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🤖 AAAI2026 (17)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
 🔥 **高频主题：** 对齐/RLHF ×17 · LLM ×11 · 对抗鲁棒 ×5 · 多模态 ×2
 
 **[A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)**
 
 :   提出 A2D，一种针对扩散语言模型（dLLM）的 token 级安全对齐方法，通过训练模型在遇到有害内容的 mask 位置输出 [EOS] token 来实现任意解码顺序、任意解码步的安全防御，将 DIJA 模板攻击成功率从 80%+ 降到近零（1.3%/0.0%），并支持早期拒绝实现 19.3x 加速。
+
+**[Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)**
+
+:   提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码，使Qwen 4B在Lua/Julia/R/OCaml/Fortran五种低资源语言上达到匹敌16B-70B模型的SOTA水平。
 
 **[Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment](align_once_benefit_multilingually_enforcing_multilingual_consistency_for_llm_saf.md)**
 

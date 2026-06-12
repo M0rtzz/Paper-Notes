@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 模型压缩论文汇总 · 67篇论文解读
+  ACL2025 模型压缩论文汇总 · 78篇论文解读
 description: >-
-  67篇ACL2025的模型压缩方向论文解读，涵盖模型压缩、LLM、压缩/编码、知识蒸馏、Agent、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  78篇ACL2025的模型压缩方向论文解读，涵盖模型压缩、LLM、压缩/编码、知识蒸馏、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "模型压缩"
@@ -11,8 +11,8 @@ tags:
   - "LLM"
   - "压缩/编码"
   - "知识蒸馏"
-  - "Agent"
   - "对抗鲁棒"
+  - "布局/合成"
 item_list:
   - u: "500xcompressor_generalized_prompt_compression_for_large_language_models/"
     t: "500xCompressor: Generalized Prompt Compression for Large Language Models"
@@ -36,6 +36,8 @@ item_list:
     t: "\"Give Me BF16 or Give Me Death\"? Accuracy-Performance Trade-Offs in LLM Quantization"
   - u: "blockpruner_fine-grained_pruning_for_large_language_models/"
     t: "BlockPruner: Fine-grained Pruning for Large Language Models"
+  - u: "bone_soups_multi_objective_gen/"
+    t: "Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation"
   - u: "brainecho_semantic_brain_signal_decoding_through_vector-quantized_spectrogram_re/"
     t: "BrainECHO: Semantic Brain Signal Decoding through Vector-Quantized Spectrogram Reconstruction for Whisper-Enhanced Text Generation"
   - u: "cami_a_counselor_agent_supporting_motivational_interviewing_through_state_infere/"
@@ -46,6 +48,8 @@ item_list:
     t: "CFSP: An Efficient Structured Pruning Framework for LLMs with Coarse-to-Fine Activation Information"
   - u: "claimpkg_enhancing_claim_verification_via_pseudo-subgraph_generation_with_lightw/"
     t: "ClaimPKG: Enhancing Claim Verification via Pseudo-Subgraph Generation with Lightweight Specialized LLM"
+  - u: "cola_collaborative_low-rank_adaptation/"
+    t: "CoLA: Collaborative Low-Rank Adaptation"
   - u: "compact_and_compressible_representations_for_llms_using_structured_sparse_decom/"
     t: "Compact and Compressible Representations for LLMs Using Structured Sparse Decomposition"
   - u: "compression_in_transformer_language_models_has_a_surprising_relationship_with_pe/"
@@ -60,31 +64,27 @@ item_list:
     t: "Direct Behavior Optimization: Unlocking the Potential of Lightweight LLMs"
   - u: "disentangling_the_roles_of_representation_and_selection_in_data_pruning/"
     t: "Disentangling the Roles of Representation and Selection in Data Pruning"
+  - u: "domix_an_efficient_framework_for_exploiting/"
+    t: "DoMIX: An Efficient Framework for Exploiting Domain Knowledge in Fine-Tuning"
   - u: "drpruning_robust_pruning/"
     t: "DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization"
   - u: "eac_moe_expert_aware_compression/"
     t: "EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models"
   - u: "efficient_long_context_language_model_retrieval_with_compression/"
     t: "Efficient Long Context Language Model Retrieval with Compression"
-  - u: "efficientqat/"
-    t: "EfficientQAT: Efficient Quantization-Aware Training for Large Language Models"
-  - u: "explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo/"
-    t: "Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku"
-  - u: "fedex_lora_federated_exact_aggregation/"
-    t: "FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models"
-  - u: "flipping_kd_small_to_large/"
-    t: "Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching"
-item_total: 67
+  - u: "efficient_opamp_adaptation_for_zoom_attention_to_golden_contexts/"
+    t: "Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts"
+item_total: 78
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**💬 ACL2025** · **67** 篇论文解读
+**💬 ACL2025** · **78** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** 模型压缩 ×20 · LLM ×19 · 压缩/编码 ×15 · 知识蒸馏 ×4 · Agent ×3
+🔥 **高频主题：** 模型压缩 ×20 · LLM ×19 · 压缩/编码 ×15 · 知识蒸馏 ×4 · 对抗鲁棒 ×4
 
 **[500xCompressor: Generalized Prompt Compression for Large Language Models](500xcompressor_generalized_prompt_compression_for_large_language_models.md)**
 
@@ -130,6 +130,10 @@ item_total: 67
 
 :   提出 BlockPruner，将 Transformer 层分解为 MHA 和 MLP 两个最小残差块，基于困惑度评估块重要性并通过迭代搜索进行细粒度剪枝，实现比层级剪枝更优的压缩效果。
 
+**[Bone Soups: A Seek-and-Soup Model Merging Approach for Controllable Multi-Objective Generation](bone_soups_multi_objective_gen.md)**
+
+:   提出 Bone Soup 模型合并方法，通过先构造"骨架奖励"（多目标奖励的组合）训练骨架模型、再用对称循环矩阵映射确定合并系数，解决了 Rewarded Soup 中单目标模型合并的次优性问题，在三个多目标生成任务上实现更好的 Pareto 前沿和可控性。
+
 **[BrainECHO: Semantic Brain Signal Decoding through Vector-Quantized Spectrogram Reconstruction for Whisper-Enhanced Text Generation](brainecho_semantic_brain_signal_decoding_through_vector-quantized_spectrogram_re.md)**
 
 :   提出 BrainECHO 三阶段框架（自编码—对齐—微调），通过向量量化离散表示将脑信号映射到 Mel 频谱图空间，再借助 Whisper 完成非侵入式脑信号到文本的高质量解码。
@@ -149,6 +153,10 @@ item_total: 67
 **[ClaimPKG: Enhancing Claim Verification via Pseudo-Subgraph Generation with Lightweight Specialized LLM](claimpkg_enhancing_claim_verification_via_pseudo-subgraph_generation_with_lightw.md)**
 
 :   提出 ClaimPKG 框架，通过轻量级专用 LLM 将文本声明转换为伪子图表示，再从知识图谱中检索相关子图作为证据，最终由通用 LLM 进行推理验证，在 FactKG 数据集上比 SOTA 高出 9%-12% 准确率。
+
+**[CoLA: Collaborative Low-Rank Adaptation](cola_collaborative_low-rank_adaptation.md)**
+
+:   提出 CoLA，一种灵活的 LoRA 架构，打破矩阵 A 和 B 之间的固定数量约束（#A=M, #B=N），并设计三种协作策略（全协作/随机协作/启发式协作），结合扩展的 PiSSA 初始化，在低样本场景下显著优于现有 PEFT 方法。
 
 **[Compact and Compressible Representations for LLMs Using Structured Sparse Decomposition](compact_and_compressible_representations_for_llms_using_structured_sparse_decom.md)**
 
@@ -178,6 +186,10 @@ item_total: 67
 
 :   本文将数据剪枝（data pruning）系统性地拆解为"数据表示"和"选择算法"两个独立维度，通过理论分析和大规模实验发现：表示质量（尤其是训练梯度）对剪枝效果起决定性作用，而不同选择算法在不同场景下各有优劣，且常常偏离其设计目标。
 
+**[DoMIX: An Efficient Framework for Exploiting Domain Knowledge in Fine-Tuning](domix_an_efficient_framework_for_exploiting.md)**
+
+:   提出 DoMIX，将各领域知识用独立 LoRA 模块存储后通过对角初始化的 bridge 矩阵在微调时灵活组合利用，在持续领域适应预训练场景下减少 58% 预训练时间和 87% GPU 内存，同时性能超越 SOTA。
+
 **[DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization](drpruning_robust_pruning.md)**
 
 :   DRPruning 将分布稳健优化（DRO）引入 LLM 结构化剪枝，通过 scaling law 预测各领域最终 loss 作为参考、动态调整训练数据分布来平衡剪枝后各领域性能，在单语和多语设置下分别以 -5.59% PPL 和 +2.95% 下游任务的提升超越 Sheared LLaMA。
@@ -190,6 +202,10 @@ item_total: 67
 
 :   提出 CoLoR（Compression for Long context Retrieval），通过偏好优化和长度正则化联合训练段落压缩模型，在保持长上下文语言模型检索性能提升 6% 的同时将上下文长度压缩 1.91 倍。
 
+**[Efficient OpAmp Adaptation for Zoom Attention to Golden Contexts](efficient_opamp_adaptation_for_zoom_attention_to_golden_contexts.md)**
+
+:   受运算放大器（OpAmp）电路启发，提出 OpAmp Adaptation 方法通过 adapter 高效改造预训练 Transformer 的注意力机制，在噪声上下文场景下让 LLM 更精准聚焦于 golden document，Qwen2.5-OpAmp-72B 在多个噪声上下文基准上超越 DeepSeek-V3 和 GPT-4o。
+
 **[EfficientQAT: Efficient Quantization-Aware Training for Large Language Models](efficientqat.md)**
 
 :   EfficientQAT 提出两阶段 QAT 框架——先逐块训练所有参数（Block-AP）提供良好初始化，再端到端训练量化参数（E2E-QP）捕获跨块交互，在单张 A100 上 41 小时完成 Llama-2-70B 的 2-bit 量化，精度仅降 3 点。
@@ -197,6 +213,10 @@ item_total: 67
 **[Explaining Puzzle Solutions in Natural Language: An Exploratory Study on 6×6 Sudoku](explaining_puzzle_solutions_in_natural_language_an_exploratory_study_on_6x6_sudo.md)**
 
 :   评估五个LLM在求解和解释6×6数独谜题上的能力，发现即使o1-preview能解出65%的题目，其推理解释在忠实性、清晰度和教育价值方面仍严重不足。
+
+**[Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](federated_lora_heterogeneous.md)**
+
+:   提出 LoRA-A2 框架，通过交替冻结 LoRA 的 A/B 模块与自适应秩选择策略，同时解决联邦学习中 LoRA 聚合不一致和通信开销大的双重难题。
 
 **[FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models](fedex_lora_federated_exact_aggregation.md)**
 
@@ -209,6 +229,10 @@ item_total: 67
 **[A Silver Bullet or a Compromise for Full Attention? A Comprehensive Study of Gist Token-based Context Compression](gist_token_context_compression.md)**
 
 :   对基于 Gist Token 的上下文压缩方法进行全面系统研究，发现细粒度 KV Cache 架构在 RAG/QA 等任务上接近无损，但在精确回忆任务上存在明显差距，并识别出三种关键失败模式和两种有效改进策略。
+
+**[Graph-guided Cross-composition Feature Disentanglement for Compositional Zero-shot Learning](graph-guided_cross-composition_feature_disentanglement_for_compositional_zero-sh.md)**
+
+:   DCDA 提出图引导的跨组合特征解耦方案，通过双适配器（L-Adapter 用于文本端 GNN 特征聚合、V-Adapter 用于视觉端跨注意力解耦）注入冻结 CLIP，在组合零样本学习任务上显著超越现有方法。
 
 **[GSQ-Tuning: Group-Shared Exponents Integer in Fully Quantized Training for LLMs On-Device Fine-tuning](gsq-tuning_group-shared_exponents_integer_in_fully_quantized_training_for_llms_o.md)**
 
@@ -246,13 +270,29 @@ item_total: 67
 
 :   本文系统分析了长上下文LLM在短文本任务上性能退化的两个原因（分布漂移和灾难性遗忘），并提出LongReD方法，通过短文本蒸馏和短到长蒸馏两个训练目标来最小化扩展模型与原始模型之间的分布差异，在保持长文本建模能力的同时将短文本性能保留至原始模型的99.4%。
 
+**[Low-Rank Interconnected Adaptation across Layers](low-rank_interconnected_adaptation_across_layers.md)**
+
+:   提出 Lily（Low-rank Interconnected Adaptation across Layers），通过将 LoRA 的 A/B 适配器跨层解耦并互联共享，配合数据依赖的路由机制，在相同或更少参数下实现高秩权重更新，在多模态、多架构、多规模场景中均优于 LoRA。
+
+**[MaCP: Minimal yet Mighty Adaptation via Hierarchical Cosine Projection](macp_minimal_yet_mighty_adaptation_via_hierarchical_cosine_projection.md)**
+
+:   本文提出 MaCP——一种基于离散余弦变换（DCT）的参数高效微调方法，通过将权重变化投影到余弦频域并分层选择最关键的频率分量，在极低参数量（比 LoRA 少 99.7%）下实现了优于或媲美现有 PEFT 方法的性能。
+
 **[Magnet: Multi-turn Tool-use Data Synthesis and Distillation via Graph Translation](magnet_multi-turn_tool-use_data_synthesis_and_distillation_via_graph_translation.md)**
 
 :   提出 Magnet 框架，基于函数依赖图的随机游走和节点操作（Insert/Merge/Split）构建高质量多轮 Function Calling 训练轨迹，结合基于提示的上下文蒸馏生成正负对比轨迹进行 SFT + mDPO 训练，使 14B 模型 Magnet-14B-mDPO 在 BFCL-v3 上达到 68.01（排名第 4），在多轮场景上大幅超越教师模型 Gemini-1.5-pro-002。
 
+**[Memorization: A Close Look at Books](memorization_a_close_look_at_books.md)**
+
+:   系统研究 Llama 3 系列模型对完整书籍的记忆化程度，发现书籍提取率与其流行度（训练数据重复度代理）高度正相关，并通过 LoRA 微调揭示指令微调的抗反刍缓解措施仅涉及极少量集中在底层 transformer block 的权重变化。
+
 **[MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts](moqae_mixed_precision_kv_cache.md)**
 
 :   MoQAE 创造性地将不同量化比特宽度配置视为 MoE 中的"专家"，通过轻量路由器学习每个 chunk 的最优量化策略，结合路由冻结和路由共享机制，在几乎不损失精度的情况下大幅减少长上下文推理的 KV cache 内存。
+
+**[MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)**
+
+:   提出 MoRE (Mixture of Low-Rank Experts)，将 LoRA 中的不同秩视为不同专家，通过自适应秩选择器为每个任务动态选择最合适的秩，配合对比学习优化的任务嵌入和平衡数据采样策略，使用单个 LoRA 模块实现高效的多任务微调。
 
 **[mPLUG-DocOwl2: High-resolution Compressing for OCR-free Multi-page Document Understanding](mplug_docowl2_doc_compress.md)**
 
@@ -275,6 +315,10 @@ item_total: 67
 **[Pre-training Distillation for Large Language Models: A Design Space Exploration](pre-training_distillation_for_large_language_models_a_design_space_exploration.md)**
 
 :   系统性地探索大语言模型预训练蒸馏（Pre-training Distillation）的设计空间，从 logits 处理、损失函数选择、scaling law 和 offline/online logits 四个维度进行广泛实验，找到更优配置并得出有价值的结论。
+
+**[Predicting Through Generation: Why Generation Is Better for Prediction](predicting_through_generation_why_generation_is_better_for_prediction.md)**
+
+:   本文从信息论角度证明了token级生成比pooled表示保留更多互信息，提出PredGen框架通过scheduled sampling和task adapter解决生成式预测中的exposure bias和格式不匹配问题，并设计了Writer-Director Alignment Loss统一生成与预测目标。
 
 **[Prompt Candidates, then Distill: A Teacher-Student Framework for LLM-driven Data Annotation](prompt_distill_teacher_student.md)**
 

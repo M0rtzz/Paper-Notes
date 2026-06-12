@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 多语言/翻译论文汇总 · 88篇论文解读
+  ACL2025 多语言/翻译论文汇总 · 89篇论文解读
 description: >-
-  88篇ACL2025的多语言/翻译方向论文解读，涵盖翻译、LLM、对齐/RLHF、少样本学习、语音、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  89篇ACL2025的多语言/翻译方向论文解读，涵盖翻译、LLM、对齐/RLHF、少样本学习、语音、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "多语言/翻译"
@@ -35,6 +35,8 @@ item_list:
     t: "Blessing of Multilinguality: A Systematic Analysis of Multilingual In-Context Learning"
   - u: "bridging_the_language_gaps_in_large_language_models_with_inference-time_cross-li/"
     t: "Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention"
+  - u: "building_better_avoiding_pitfalls_in_developing_language_resources_when_data_is_/"
+    t: "Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce"
   - u: "cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_/"
     t: "CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning"
   - u: "clix_cross-lingual_explanations_of_idiomatic_expressions/"
@@ -73,15 +75,13 @@ item_list:
     t: "Disentangling Language and Culture for Evaluating Multilingual Large Language Models"
   - u: "edit_once_update_everywhere_a_simple_framework_for_cross-lingual_knowledge_synch/"
     t: "Edit Once, Update Everywhere: A Simple Framework for Cross-Lingual Knowledge Synchronization in LLMs"
-  - u: "execute_a_multilingual_benchmark_for_llm_token_understanding/"
-    t: "EXECUTE: A Multilingual Benchmark for LLM Token Understanding"
-item_total: 88
+item_total: 89
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌐 多语言/翻译
 
-**💬 ACL2025** · **88** 篇论文解读
+**💬 ACL2025** · **89** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/multilingual_mt/index.md) · [💬 ACL2026 (62)](../../ACL2026/multilingual_mt/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/multilingual_mt/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/multilingual_mt/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/multilingual_mt/index.md) · [🧠 NeurIPS2025 (11)](../../NeurIPS2025/multilingual_mt/index.md)
 
@@ -126,6 +126,10 @@ item_total: 88
 **[Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention](bridging_the_language_gaps_in_large_language_models_with_inference-time_cross-li.md)**
 
 :   本文提出INCLINE（Inference-Time Cross-Lingual Intervention），一种无需微调的推理时框架，通过学习对齐矩阵将低性能语言的内部表示变换到高性能语言的表示空间，在9个基准和5个LLM上显著提升多语言性能。
+
+**[Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce](building_better_avoiding_pitfalls_in_developing_language_resources_when_data_is_.md)**
+
+:   通过对 81 名低资源语言 NLP 研究者和标注者的调查，揭示了低资源语言数据构建中的质量问题（数据不自然、文化失当）和伦理问题（标注者劳动被剥削、署名不公），并提出六条改进建议。
 
 **[CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning](cc-tuning_a_cross-lingual_connection_mechanism_for_improving_joint_multilingual_.md)**
 

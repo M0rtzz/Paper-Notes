@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 可解释性论文汇总 · 79篇论文解读
+  NeurIPS2025 可解释性论文汇总 · 80篇论文解读
 description: >-
-  79篇NeurIPS2025的可解释性方向论文解读，涵盖 LLM、推理、多模态、模型压缩、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  80篇NeurIPS2025的可解释性方向论文解读，涵盖 LLM、推理、多模态、对齐/RLHF、模型压缩、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "可解释性"
@@ -11,9 +11,9 @@ tags:
   - "LLM"
   - "推理"
   - "多模态"
+  - "对齐/RLHF"
   - "模型压缩"
   - "对抗鲁棒"
-  - "布局/合成"
 item_list:
   - u: "a_controllable_examination_for_longcontext_language_models/"
     t: "A Controllable Examination for Long-Context Language Models"
@@ -75,17 +75,17 @@ item_list:
     t: "Emergence of Linear Truth Encodings in Language Models"
   - u: "empowering_decision_trees_via_shape_function_branching/"
     t: "Empowering Decision Trees via Shape Function Branching"
-item_total: 79
+item_total: 80
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧠 NeurIPS2025** · **79** 篇论文解读
+**🧠 NeurIPS2025** · **80** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (59)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (71)](../../ICML2026/interpretability/index.md) · [💬 ACL2026 (60)](../../ACL2026/interpretability/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/interpretability/index.md) · [🔬 ICLR2026 (60)](../../ICLR2026/interpretability/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/interpretability/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/interpretability/index.md)
 
-🔥 **高频主题：** LLM ×7 · 推理 ×6 · 多模态 ×4 · 模型压缩 ×3 · 对抗鲁棒 ×3
+🔥 **高频主题：** LLM ×7 · 推理 ×6 · 多模态 ×4 · 对齐/RLHF ×4 · 模型压缩 ×3
 
 **[A Controllable Examination for Long-Context Language Models](a_controllable_examination_for_longcontext_language_models.md)**
 
@@ -270,6 +270,10 @@ item_total: 79
 **[Minimizing False-Positive Attributions in Explanations of Non-Linear Models](minimizing_false-positive_attributions_in_explanations_of_non-linear_models.md)**
 
 :   针对非线性模型的XAI解释中抑制变量(suppressor variable)导致的假阳性归因问题，提出PatternLocal方法，将局部判别式代理模型权重转换为生成式表示，在XAI-TRIS基准、MRI人工病灶和EEG运动想象三个数据集上显著减少了假阳性特征归因。
+
+**[Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)**
+
+:   通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
 
 **[Monte Carlo Expected Threat (MOCET) Scoring](monte_carlo_expected_threat_mocet_scoring.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 其他论文汇总 · 91篇论文解读
+  ICLR2026 其他论文汇总 · 74篇论文解读
 description: >-
-  91篇ICLR2026的其他方向论文解读，涵盖对抗鲁棒、域适应、对齐/RLHF、扩散模型、联邦学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  74篇ICLR2026的其他方向论文解读，涵盖对抗鲁棒、域适应、对齐/RLHF、扩散模型、联邦学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "其他"
@@ -25,12 +25,6 @@ item_list:
     t: "A Single Architecture for Representing Invariance Under Any Space Group"
   - u: "active_learning_for_decision_trees_with_provable_guarantees/"
     t: "Active Learning for Decision Trees with Provable Guarantees"
-  - u: "addressing_divergent_representations_causal/"
-    t: "Addressing Divergent Representations from Causal Interventions on Neural Networks"
-  - u: "agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_/"
-    t: "Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment"
-  - u: "an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p/"
-    t: "An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem"
   - u: "an_information-theoretic_framework_for_optimizing_experimental_design_to_disting/"
     t: "An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes"
   - u: "ano_faster_is_better_in_noisy_landscape/"
@@ -49,8 +43,6 @@ item_list:
     t: "Building Spatial World Models from Sparse Transitional Episodic Memories"
   - u: "cadrift_a_time-dependent_causal_generator_of_drifting_data_streams/"
     t: "CaDrift: A Time-dependent Causal Generator of Drifting Data Streams"
-  - u: "cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning/"
-    t: "cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning"
   - u: "characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi/"
     t: "Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings"
   - u: "chlu_the_causal_hamiltonian_learning_unit_as_a_symplectic_primitive_for_deep_lea/"
@@ -63,29 +55,37 @@ item_list:
     t: "Consistent Low-Rank Approximation"
   - u: "contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas/"
     t: "Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations"
-  - u: "deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding/"
-    t: "Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding"
   - u: "deterministic_bounds_and_random_estimates_of_metric_tensors_on_neuromanifolds/"
     t: "Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds"
-  - u: "directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect/"
-    t: "Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs"
   - u: "discount_model_search_for_quality_diversity_optimization_in_high-dimensional_mea/"
     t: "Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces"
   - u: "disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr/"
     t: "Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation"
   - u: "distributed_algorithms_for_euclidean_clustering/"
     t: "Distributed Algorithms for Euclidean Clustering"
-item_total: 91
+  - u: "distributionally_robust_classification_for_multi-source_unsupervised_domain_adap/"
+    t: "Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation"
+  - u: "distributions_as_actions_a_unified_framework_for_diverse_action_spaces/"
+    t: "DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces"
+  - u: "do_we_really_need_permutations_impact_of_model_width_on_linear_mode_connectivity/"
+    t: "Do We Really Need Permutations? Impact of Model Width on Linear Mode Connectivity"
+  - u: "enhancing_generative_auto_bidding/"
+    t: "Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search"
+  - u: "evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t/"
+    t: "Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training"
+  - u: "exchangeability_gnn_representations/"
+    t: "Exchangeability of GNN Representations with Applications to Graph Retrieval"
+item_total: 74
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🔬 ICLR2026** · **91** 篇论文解读
+**🔬 ICLR2026** · **74** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×7 · 域适应 ×4 · 对齐/RLHF ×4 · 扩散模型 ×3 · 联邦学习 ×2
+🔥 **高频主题：** 对抗鲁棒 ×6 · 域适应 ×4 · 对齐/RLHF ×4 · 扩散模型 ×3 · 联邦学习 ×2
 
 **[A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)**
 
@@ -106,18 +106,6 @@ item_total: 91
 **[Active Learning for Decision Trees with Provable Guarantees](active_learning_for_decision_trees_with_provable_guarantees.md)**
 
 :   为决策树主动学习提供首个理论保证：(1) 首次分析决策树的不一致系数（disagreement coefficient）并给出 $O(\ln^{OPT}(n))$ 上界；(2) 提出首个达到乘法误差 $(1+\epsilon)$ 保证的二分类主动学习算法；结合两者实现数据集大小的多对数标签复杂度。
-
-**[Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)**
-
-:   系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况，并提出 Counterfactual Latent (CL) loss 来约束干预表征不偏离流形，在 7B LLM 上验证可减少偏移同时保持干预准确率。
-
-**[Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)**
-
-:   提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码，使Qwen 4B在Lua/Julia/R/OCaml/Fortran五种低资源语言上达到匹敌16B-70B模型的SOTA水平。
-
-**[An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)**
-
-:   提出增量单元枚举算法（ICE），首个具有严格证明的独立算法，可以在 $O(N^{D+1})$ 时间内精确求解0-1损失线性分类问题的全局最优解，并扩展到多项式超曲面分类。
 
 **[An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes](an_information-theoretic_framework_for_optimizing_experimental_design_to_disting.md)**
 
@@ -155,10 +143,6 @@ item_total: 91
 
 :   提出 CaDrift，一个基于结构因果模型（SCM）的时间依赖合成数据流生成框架，通过 EWMA 平滑和自回归噪声引入时序相关性，并通过修改因果映射函数实现可控的分布漂移、协变量漂移、严重漂移和局部漂移，填补了现有数据流生成器既不因果又不时序依赖的空白。
 
-**[cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning](cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning.md)**
-
-:   cadrille 是首个同时处理点云、多视角图像和文本输入的多模态 CAD 重建模型，通过 VLM 基础架构 + SFT + RL 微调的三阶段训练范式，在 10 个 CAD 重建基准上达到 SOTA，尤其是 RL 微调将无效率降至接近 0%。
-
 **[Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)**
 
 :   从物理系统角度分析 Instant-NGP 的多分辨率哈希编码（MHE），推导出其点扩展函数（PSF）的闭式近似，发现有效分辨率由平均分辨率 $N_{\text{avg}}$ 而非最细分辨率 $N_{\max}$ 决定，且存在网格引起的各向异性，并提出零开销的 Rotated MHE（R-MHE）通过逐层旋转输入坐标消除各向异性。
@@ -183,17 +167,9 @@ item_total: 91
 
 :   提出 Contractive Diffusion Policies (CDPs)，通过在扩散采样 ODE 中引入收缩正则化来抑制 score 匹配误差和求解器误差的累积，以最小修改和单一超参数 $\gamma$ 提升离线学习中扩散策略的鲁棒性。
 
-**[Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)**
-
-:   提出 FlexQP——基于 $\ell_1$ 弹性松弛的"永远可行"凸二次规划（QP）求解器，结合深度展开（deep unfolding）学习 LSTM 反馈策略加速收敛得到 Deep FlexQP；在 SQP 框架中作为子模块，解非线性轨迹优化比 OSQP 快 4-16 倍，预测安全滤波器的安全违规减少 70%+、任务完成率提升 43%。
-
 **[Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds](deterministic_bounds_and_random_estimates_of_metric_tensors_on_neuromanifolds.md)**
 
 :   本文通过分析低维概率分布核空间的Fisher信息矩阵(FIM)谱性质，为神经网络参数空间(神经流形)上的度量张量建立了确定性上下界，并基于Hutchinson迹估计器引入了一族有界方差的无偏随机估计方法，仅需单次反向传播即可高效计算。
-
-**[Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs](directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect.md)**
-
-:   本文提出 Directional Sheaf Hypergraph Networks (DSHN)，通过将 Cellular Sheaf 理论与有向超图的方向信息结合，构造了一种复值 Hermitian Laplacian 算子，统一并推广了现有的图和超图 Laplacian，在 7 个真实数据集上相对准确率提升 2%–20%。
 
 **[Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces](discount_model_search_for_quality_diversity_optimization_in_high-dimensional_mea.md)**
 
@@ -223,10 +199,6 @@ item_total: 91
 
 :   提出 AIGB-Pearl，为生成式自动竞价方法引入离线轨迹评估器和 KL-Lipschitz 约束的分数最大化方案，使生成模型能在理论保证下安全地突破静态离线数据的性能天花板，在淘宝真实广告系统上实现 GMV +3% 的显著提升。
 
-**[Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)**
-
-:   揭示了低损失路径上曲率的系统性增长会产生熵力屏障，即使路径能量平坦，SGD噪声也会将优化动力学约束在最小值附近的平坦区域，从而解释了"模式连通但动力学受限"的悖论。
-
 **[Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)**
 
 :   建立GFlowNet中状态流函数与策略评价函数之间的理论联系，提出子轨迹评价平衡（Sub-EB）目标用于可靠学习评价函数，增强策略基GFlowNet训练的稳定性和灵活性。
@@ -255,14 +227,6 @@ item_total: 91
 
 :   结合幼鼠运动发育的聚类分析和浅层 RNN 预测学习模型，首次计算性地证明运动统计特征的发育变化（爬行→行走→奔跑→成年）驱动了海马空间调谐神经元（位置细胞、方向细胞、联合编码细胞）的序贯涌现，定量复现大鼠海马记录数据的发育时间线，并预测了联合位置-方向编码细胞在发育中逐渐增多这一现象且在实验数据中得到验证。
 
-**[From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)**
-
-:   提出 Probabilistic Scenarios 范式，用模型直接输出有限个 {场景, 概率} 对取代采样，并用仅含三层平行线性层的 TimePrism 在5个基准数据集上取得9/10 SOTA。
-
-**[Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)**
-
-:   证明函数编码器（Function Encoders）通过学习神经网络基函数定义了一个有效的核，建立了神经特征学习与RKHS理论的桥梁，并提出PCA引导的紧凑基选择算法和有限样本泛化界。
-
 **[Harpoon: Generalised Manifold Guidance for Conditional Tabular Diffusion](harpoon_generalised_manifold_guidance_for_conditional_tabular_diffusion.md)**
 
 :   将流形理论从图像扩展到表格数据扩散模型，证明任意可微推理时损失的梯度都位于数据流形切线空间中（不限于平方误差损失），据此提出Harpoon方法在推理时沿流形引导无条件样本满足多样化表格约束。
@@ -275,17 +239,9 @@ item_total: 91
 
 :   利用Hilbert空间填充曲线将2D图像token重排为保持空间邻近性的1D序列，大幅提升局部注意力的块稀疏率（空块比例从87.5%到96.9%），结合FlexAttention实现窗口注意力4倍和滑动注意力18倍加速，精度损失极小。
 
-**[Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime](implicit_bias_of_per-sample_adam_on_separable_data_departure_from_the_full-batch.md)**
-
-:   首次证明mini-batch Adam的隐式偏差与full-batch不同：构造数据集使单样本Adam收敛到 $\ell_2$ 最大间隔分类器（而full-batch Adam收敛到 $\ell_\infty$），并通过AdamProxy刻画一般数据集上的数据自适应Mahalanobis范数间隔最大化行为。
-
 **[Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)**
 
 :   提出QUANN（准算术神经网络），用可逆神经网络实现可学习的Kolmogorov均值作为池化操作，首次实现机器学习版本的广义中心趋势度量，QUANN是均值可分解集合函数的通用近似器，且学到的嵌入跨任务迁移性更强。
-
-**[In-Context Algebra](in-context_algebra.md)**
-
-:   本文设计了一个 **in-context 代数任务**——令 token 成为纯变量、每条序列重新随机分配含义——发现 Transformer 在此设定下不再学习经典的傅里叶/几何表示，而是涌现出三种 **符号推理机制**（交换复制、单位元识别、闭包消去），并揭示了训练过程中这些能力按阶段性相变依次出现的规律。
 
 **[Jackpot: Optimal Budgeted Rejection Sampling for Extreme Actor-Policy Mismatch RL](jackpot_optimal_budgeted_rejection_sampling_for_extreme_actor-policy_mismatch_re.md)**
 
@@ -318,10 +274,6 @@ item_total: 91
 **[Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)**
 
 :   提出DiffGDA——首个将扩散模型引入图域适应(GDA)的方法，用随机微分方程(SDE)建模源图到目标图的连续时间结构-语义联合演化过程，配合基于密度比的域感知引导网络驾驶扩散轨迹朝向目标域，理论证明收敛到最优适应路径，在8个真实数据集14个迁移任务上全面超越SOTA。
-
-**[Lipschitz Bandits with Stochastic Delayed Feedback](lipschitz_bandits_with_stochastic_delayed_feedback.md)**
-
-:   首次系统研究连续臂空间 Lipschitz bandit 在随机延迟反馈下的学习问题，针对有界延迟提出 Delayed Zooming 算法（通过 lazy update 机制保持 $\Delta(x) \leq 6r_t(x)$ 的子最优 gap 界），针对无界延迟提出 DLPP 分阶段剪枝策略（遗憾与延迟分位数 $Q(p)$ 挂钩），并建立实例相关下界证明 DLPP 近最优。
 
 **[Measuring Uncertainty Calibration](measuring_uncertainty_calibration.md)**
 
@@ -391,14 +343,6 @@ item_total: 91
 
 :   对 SAM 的底层机制提出新的直觉解释——扰动点梯度近似局部最大值方向，并揭示其不精确性及多步退化问题，进而提出 XSAM 通过显式估计最大值方向实现更忠实更有效的锐度感知最小化。
 
-**[Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)**
-
-:   提出 xCPD 即插即用插件，将多变量时间序列的建模单元从"通道"细化到"通道-patch"，通过共享图傅里叶基做谱嵌入→按频率能量响应分组为低/中/高频段→动态 MoE 路由自适应选择频率特定滤波专家，可无缝集成到 CI/CD 任何现有模型上一致提升长短期预测性能，并支持零样本迁移。
-
-**[Scalable Random Wavelet Features: Efficient Non-Stationary Kernel Approximation with Convergence Guarantees](scalable_random_wavelet_features_efficient_non-stationary_kernel_approximation_w.md)**
-
-:   提出 Random Wavelet Features (RWF)，通过从小波族中随机采样构建可扩展的非平稳核近似，保留随机特征的线性时间复杂度，同时具有正定性、无偏性和一致收敛保证。
-
 **[Soft Quality-Diversity Optimization](soft_quality-diversity_optimization.md)**
 
 :   提出 Soft QD Score 作为无需行为空间离散化的质量多样性优化新目标，并据此推导出可微分算法 SQUAD，在高维行为空间中具有更好的可扩展性，且在标准基准上与 SOTA 竞争力相当。
@@ -406,10 +350,6 @@ item_total: 91
 **[SONIC: Spectral Oriented Neural Invariant Convolutions](sonic_spectral_oriented_neural_invariant_convolutions.md)**
 
 :   SONIC 将状态空间模型的思想迁移到多维频域，用 6 个连续参数（幅度、方向、阻尼、振荡等）定义一组方向选择性的频谱传递函数，再通过低秩矩阵 $B$、$C$ 跨通道混合，实现天然具备全局感受野和分辨率不变性的卷积替代算子，在 3D 医学分割上匹配 nnU-Net 且参数少近两个数量级，在 ImageNet 上也具有竞争力。
-
-**[Speculative Actions: A Lossless Framework for Faster AI Agents](speculative_actions_faster_ai_agents.md)**
-
-:   借鉴 CPU 推测执行和 LLM 推测解码的思想，提出 Speculative Actions 框架：在慢速 Actor（大模型）计算时用快速 Speculator（小模型）预测未来动作并预执行，匹配时跳过等待实现无损加速，在 Chess/电商/问答等场景实现 15-30% 延迟降低，置信度动态分支策略用 40% 更少 token 达到近似 3 条推测的加速效果。
 
 **[t-SNE Exaggerates Clusters, Provably](t-sne_exaggerates_clusters_provably.md)**
 
@@ -423,10 +363,6 @@ item_total: 91
 
 :   证明 Transformer 不仅能捕获（半）线性计数性质，还能表达所有**半代数计数性质**（即多元多项式不等式的布尔组合），从而推广了先前关于 Transformer 计数能力的所有结果，并由此推导出新的不可判定性结论。
 
-**[The Expressive Limits of Diagonal SSMs for State-Tracking](the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)**
-
-:   建立了输入依赖复数对角（DCD）SSM 在群状态追踪任务上的完整表达能力刻画：单层不能追踪任何非阿贝尔群，$k$ 层能追踪群 $G$ 当且仅当 $G$ 存在长度为 $k$ 的子正规链且因子均为阿贝尔群——精确定义了深度对表达能力的严格提升，同时实验揭示表达能力与可学习性之间的显著 gap。
-
 **[The Hot Mess of AI: How Does Misalignment Scale With Model Intelligence and Task Complexity?](the_hot_mess_of_ai_how_does_misalignment_scale_with_model_intelligence_and_task_.md)**
 
 :   将AI模型错误分解为偏差（systematic misalignment）和方差（incoherent behavior），发现：推理越长→越不连贯；更大模型在困难任务上更不连贯。这暗示未来超级AI更可能表现为"工业事故"式的不可预测失败，而非一致追求错误目标。
@@ -434,10 +370,6 @@ item_total: 91
 **[The Invisibility Hypothesis: Promises of AGI and the Future of the Global South](the_invisibility_hypothesis_promises_of_agi_and_the_future_of_the_global_south.md)**
 
 :   提出"不可见性假说"（Invisibility Hypothesis），论证AI系统日益成为经济和政治分配的协调层时将系统性偏向"机器可读"个体，全球南方的非正式工人因缺乏数字可验证性而被管理性排斥（managed exclusion），核心风险从job displacement转向relevance loss，且排斥具有自我强化特性。
-
-**[The Price of Robustness: Stable Classifiers Need Overparameterization](the_price_of_robustness_stable_classifiers_need_overparameterization.md)**
-
-:   建立了不连续分类器的稳定性-泛化界，证明了分类任务中的"鲁棒性代价定律"：任何参数量 $p \approx n$ 的插值分类器必然不稳定，实现高稳定性需要 $p \approx nd$ 量级的过参数化。
 
 **[Towards Sustainable Investment Policies Informed by Opponent Shaping](towards_sustainable_investment_policies_informed_by_opponent_shaping.md)**
 

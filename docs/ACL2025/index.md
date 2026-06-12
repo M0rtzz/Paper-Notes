@@ -2,7 +2,7 @@
 title: >-
   ACL2025 论文汇总 · 1855篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(126篇)、多语言/翻译(88篇)、LLM 评测(87篇)、信息检索/RAG(82篇)、对齐 / RLHF(75篇)、模型压缩(67篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1855篇ACL2025论文解读，涵盖 LLM / NLP(443篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "ACL2025论文汇总"
@@ -12,19 +12,23 @@ tags:
   - "论文笔记"
   - "LLM / NLP"
   - "多模态 VLM"
-  - "多语言/翻译"
-  - "LLM 评测"
   - "信息检索/RAG"
+  - "LLM 评测"
+  - "多语言/翻译"
   - "对齐 / RLHF"
   - "模型压缩"
   - "LLM Agent"
 item_list:
+  - u: "llm_nlp/a3cg_esg_greenwashing/"
+    t: "Towards Robust ESG Analysis Against Greenwashing Risks: A3CG"
   - u: "llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant/"
     t: "A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant"
   - u: "llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability/"
     t: "A Modular Dataset to Demonstrate LLM Abstraction Capability"
   - u: "llm_nlp/a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of/"
     t: "A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models"
+  - u: "llm_nlp/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification/"
+    t: "SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification"
   - u: "llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas/"
     t: "A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm"
   - u: "llm_nlp/a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_/"
@@ -39,8 +43,12 @@ item_list:
     t: "A Training-free LLM-based Approach to General Chinese Character Error Correction"
   - u: "llm_nlp/aad-llm_neural_attention-driven_auditory_scene_understanding/"
     t: "AAD-LLM: Neural Attention-Driven Auditory Scene Understanding"
+  - u: "llm_nlp/achieving_certification-by-design_through_model-driven_development/"
+    t: "Achieving Certification-by-Design Through Model-Driven Development"
   - u: "llm_nlp/acquisition_and_application_of_novel_knowledge_in_large_language_models/"
     t: "Acquisition and Application of Novel Knowledge in Large Language Models"
+  - u: "llm_nlp/act_knowledgeable_agents_to_design_and_perform_complex_tasks/"
+    t: "ACT: Knowledgeable Agents to Design and Perform Complex Tasks"
   - u: "llm_nlp/afrobench_how_good_are_large_language_models_on_african_languages/"
     t: "AfroBench: How Good are Large Language Models on African Languages?"
   - u: "llm_nlp/agentdropout-dynamic-agent-elimination-for-multi-agent-collaboration/"
@@ -71,27 +79,23 @@ item_list:
     t: "Revisiting Common Assumptions about Arabic Dialects in NLP"
   - u: "llm_nlp/are_optimal_algorithms_still_optimal_rethinking_sorting_in_llm-based_pairwise_ra/"
     t: "Are Optimal Algorithms Still Optimal? Rethinking Sorting in LLM-Based Pairwise Ranking with Batching and Caching"
-  - u: "llm_nlp/are_your_llms_capable_of_stable_reasoning/"
-    t: "Are Your LLMs Capable of Stable Reasoning?"
-  - u: "llm_nlp/argument_mining_in_the_age_of_large_language_models/"
-    t: "Argument Mining in the Age of Large Language Models"
-  - u: "llm_nlp/arithmattack_evaluating_robustness_of_llms_to_noisy_context_in_math_problem_solv/"
-    t: "ArithmAttack: Evaluating Robustness of LLMs to Noisy Context in Math Problem Solving"
-  - u: "llm_nlp/assessing_and_enhancing_the_causal_reasoning_abilities_of_language_models_via_fai/"
-    t: "Assessing and Enhancing the Causal Reasoning Abilities of Language Models via Faithful Textual Interpretation"
 item_total: 1855
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 ACL2025 论文汇总
 
-1855篇ACL2025论文解读，涵盖 LLM / NLP(389篇)、多模态 VLM(126篇)、多语言/翻译(88篇)、LLM 评测(87篇)、信息检索/RAG(82篇)、对齐 / RLHF(75篇)、模型压缩(67篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1855篇ACL2025论文解读，涵盖 LLM / NLP(443篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
 ---
 
-## 💬 LLM / NLP (389) { #llm_nlp }
+## 💬 LLM / NLP (443) { #llm_nlp }
+
+**[Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](llm_nlp/a3cg_esg_greenwashing.md)**
+
+:   提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性，发现监督学习（GRACE F1=47.51）优于 LLM（Claude 3.5 F1=42.03）但泛化效率更差。
 
 **[A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)**
 
@@ -104,6 +108,10 @@ item_total: 1855
 **[A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](llm_nlp/a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)**
 
 :   通过分析LLM推理过程中潜在表征的转移轨迹（transition traces）计算各层语义偏差，结合推导的缩放律公式估计各层对降低损失的贡献，从而确定"在哪些层微调"，实现与PEFT正交的高效微调方法。
+
+**[SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](llm_nlp/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)**
+
+:   提出电商查询分类统一框架 SSUF，通过三个可插拔模块——标签增强（BERT 语义编码标签）、知识增强（LLM 世界知识 + 后验点击 + 半监督标签生成）、结构增强（共现/语义/层级三图融合 GCN）——解决短查询信息不足和"马太效应"恶性循环问题，在 JD.COM 意图分类和品类分类任务上 Macro F1 分别达到 49.46 和 41.22（均超 SMGCN 等 SOTA），已上线服务带来显著商业价值。
 
 **[A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)**
 
@@ -125,19 +133,11 @@ item_total: 1855
 
 :   本文提出了一个统一框架，系统性地研究组合句法Transformer语言模型（SLM）的四个关键设计维度（树的形式、线性化策略、组合函数、子成分遮掩），涵盖了已有模型和13个新变体，并通过语言建模、句法泛化、摘要、对话和推理效率五个维度的全方位实验，得出了SLM设计的多条推荐建议。
 
-**[A Training-free LLM-based Approach to General Chinese Character Error Correction](llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)**
-
-:   提出通用中文字符纠错任务C2EC（覆盖替换、缺失、冗余三种错误类型），通过扩展训练无关的CSC方法并结合Levenshtein距离和prompt-based LLM，使14B参数模型在不微调的条件下达到近50倍大模型的纠错性能。
-
-**[AAD-LLM: Neural Attention-Driven Auditory Scene Understanding](llm_nlp/aad-llm_neural_attention-driven_auditory_scene_understanding.md)**
-
-:   提出意图感知听觉场景理解（II-ASU）范式和 AAD-LLM 原型系统——通过颅内脑电（iEEG）解码听者正在关注哪个说话人，将注意力状态注入听觉 LLM，使模型在多说话人场景中生成与听者感知对齐的回答。
-
-[查看全部389篇「LLM / NLP」论文 →](llm_nlp/)
+[查看全部443篇「LLM / NLP」论文 →](llm_nlp/)
 
 ---
 
-## 📊 LLM 评测 (87) { #llm_evaluation }
+## 📊 LLM 评测 (89) { #llm_evaluation }
 
 **[A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](llm_evaluation/a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)**
 
@@ -171,19 +171,27 @@ item_total: 1855
 
 :   提出 AntiLeakBench 自动化反泄露基准框架，通过追踪 Wikidata 知识更新历史识别 LLM 截止时间后的新知识，自动构建单跳/多跳 QA 测试样本（附真实 Wikipedia 支撑文档），确保知识级严格无污染，12 个 LLM 的大规模实验证实截止后性能普遍下降（EM 跌幅显著）验证了框架有效性。
 
+**[Are Bias Evaluation Methods Biased?](llm_evaluation/are_bias_evaluation_methods_biased.md)**
+
+:   严格控制变量后比较三种主流偏见评估方法（结构化问答 BBQ、LLM-as-a-Judge、情感分析），发现不同方法对同一组 LLM 产生显著不同的偏见排名——偏见评估方法本身就是有偏的，企业不应依赖单一偏见基准来选择模型。
+
 **[Atomic Calibration of LLMs in Long-Form Generations](llm_evaluation/atomic_calibration_of_llms_in_long-form_generations.md)**
 
 :   系统研究长文本生成中的原子级校准(atomic calibration)，将置信度获取方法分为判别式和生成式两类，发现两者互补且提出基于置信度一致性的融合策略，揭示了模型在生成过程中置信度变化的有趣模式。
 
-**[Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](llm_evaluation/batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)**
-
-:   提出 Batayan——首个全面的菲律宾语 LLM 评测基准，覆盖理解/推理/生成三大能力的 8 个任务（含 3 个全新菲律宾语任务），由母语者翻译和标注确保语言真实性，评测 50+ 开源和商用 LLM 后发现菲律宾语表现显著落后于英语，显式菲律宾语支持和模型规模的提升均能带来明显增益。
-
-[查看全部87篇「LLM 评测」论文 →](llm_evaluation/)
+[查看全部89篇「LLM 评测」论文 →](llm_evaluation/)
 
 ---
 
-## ⚖️ 对齐 / RLHF (75) { #llm_alignment }
+## ⚖️ 对齐 / RLHF (82) { #llm_alignment }
+
+**[A Dual-Mind Framework for Strategic and Expressive Negotiation Agent](llm_alignment/a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent.md)**
+
+:   本文受人类认知双过程理论启发，提出双心智谈判智能体框架（DMNA），将直觉模块（快速策略规划，基于 MCTS+DPO 训练）和审慎模块（慢速表达优化，基于多面反思机制）相结合，在谈判任务上取得了最优性能。
+
+**[AceCoder: Acing Coder RL via Automated Test-Case Synthesis](llm_alignment/acecoder_acing_coder_rl_via_automated.md)**
+
+:   构建 AceCode-87K（87K 编码题 + 138 万自动合成测试用例），训练代码专用 Reward Model（7B 超越 340B Nemotron），Best-of-N 提升 Llama-3.1-8B 平均 8.9 分，R1 风格从 base 直接 RL 仅 80 步 HumanEval+ 提升 22.5%。
 
 **[AGD: Adversarial Game Defense Against Jailbreak Attacks in Large Language Models](llm_alignment/agd_adversarial_game_defense_against_jailbreak_attacks_in_large_language_models.md)**
 
@@ -217,15 +225,7 @@ item_total: 1855
 
 :   AutoMixAlign 提出了一种理论驱动的多任务偏好优化数据混合方法：先训练各任务的 specialist model 确定最优 loss 基线，再通过 minimax 优化自适应调整数据混合比例，优先处理 excess loss（与 specialist 的差距）最大的任务，在 helpfulness/harmlessness/reasoning 多任务 DPO 中平均提升 9.42%。
 
-**[Beyond Similarity: A Gradient-based Graph Method for Instruction Tuning Data Selection](llm_alignment/beyond_similarity_a_gradient-based_graph_method_for_instruction_tuning_data_sele.md)**
-
-:   本文提出 G2IS（Gradient-based Graph Instruction Selection），通过构建基于梯度的指令图来建模指令数据之间的联合分布和相互依赖关系，结合梯度遍历算法进行数据选择，仅用 1% 的数据即可超越全数据指令调优的效果。
-
-**[Beyond Surface-Level Patterns: An Essence-Driven Defense Framework Against Jailbreak Attacks in LLMs](llm_alignment/beyond_surface-level_patterns_an_essence-driven_defense_framework_against_jailbr.md)**
-
-:   提出 EDDF，一种基于"攻击本质"而非表面模式的越狱防御框架：离线提取已知攻击的本质策略存入向量数据库，在线时对新查询做本质抽象+检索+细粒度判断，将攻击成功率降低至少 20% 且误报率仅 2.18%。
-
-[查看全部75篇「对齐 / RLHF」论文 →](llm_alignment/)
+[查看全部82篇「对齐 / RLHF」论文 →](llm_alignment/)
 
 ---
 
@@ -321,7 +321,7 @@ item_total: 1855
 
 ---
 
-## 💡 LLM 推理 (53) { #llm_reasoning }
+## 💡 LLM 推理 (54) { #llm_reasoning }
 
 **[An Efficient and Precise Training Data Construction Framework for Process-Supervised Reward Model in Mathematical Reasoning](llm_reasoning/an_efficient_and_precise_training_data_construction_framework_for_process-superv.md)**
 
@@ -363,57 +363,11 @@ item_total: 1855
 
 :   提出 CoT-based Synthesizer——一种新的推理扩展策略，通过利用 CoT 推理分析多个候选回答的互补信息来合成更优的最终答案，即便所有候选回答都是错误的也能综合出正确答案，在 MATH500 上对 Llama3-8B 提升 11.8%、对 GPT-4o 提升 10.3%。
 
-[查看全部53篇「LLM 推理」论文 →](llm_reasoning/)
+[查看全部54篇「LLM 推理」论文 →](llm_reasoning/)
 
 ---
 
-## 📚 预训练 (39) { #llm_pretraining }
-
-**[Adversarial Tokenization](llm_pretraining/adversarial_tokenization.md)**
-
-:   本文发现 LLM 管线中 BPE tokenizer 只使用唯一一种分词方式，但同一字符串存在指数级多种合法分词；通过对抗性地选择非标准分词方案，可以在不改变原始文本的情况下绕过安全对齐，攻击成功率与现有 SOTA 文本级攻击方法相当。
-
-**[AsyncLM: Efficient and Adaptive Async Pre-training of Language Models](llm_pretraining/asynclm_efficient_and_adaptive_async_pre-training_of_language_models.md)**
-
-:   本文提出AsyncLM，一种高效的异步预训练框架，通过自适应梯度补偿和动态批量调度策略解决异步分布式训练中的梯度过期问题，在保持与同步训练相当的模型质量的同时，将大规模语言模型预训练的吞吐量提升了1.4-1.8倍。
-
-**[AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts](llm_pretraining/autonomous_data_selection_with_zero-shot_generative_classifiers_for_mathematical.md)**
-
-:   提出 AutoDS——用基座语言模型自身作为零样本生成分类器，通过 YES/NO token 的 logits 计算连续 LM-Score 来自动评估数学文本质量，筛选高质量语料做持续预训练，在 MATH/GSM8K/BBH 上实现约 2 倍 token 效率提升。
-
-**[Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](llm_pretraining/between_circuits_chomsky.md)**
-
-:   提出在自然语言预训练前先在形式语言上进行"pre-pretraining"，发现具有层级依赖结构的形式语言（如 k-Shuffle Dyck）能为 Transformer 提供有效的归纳偏置，使 1B 参数模型以 33% 更少的 token 达到相同的语言建模损失。
-
-**[Chinese Grammatical Error Correction With Pre-trained Models and Linguistic Clues](llm_pretraining/chinese_grammatical_error_correction_with_pre-trained_models_and_linguistic_clue.md)**
-
-:   本文提出一种融合预训练语言模型和多层级语言学线索（拼音、字形、句法依存）的中文语法纠错方法，通过显式注入语言学先验知识提升纠错模型对中文特有错误类型的识别和修正能力。
-
-**[CritiQ: Mining Data Quality Criteria from Human Preferences](llm_pretraining/critiq_mining_data_quality_criteria_from_human_preferences.md)**
-
-:   CritiQ 提出了一种基于 Agent 协作的数据质量标准自动挖掘方法，仅需约 30 个人类偏好标注对即可自动发现可解释的数据质量标准，并训练评分器进行高效数据选择，在代码、数学和逻辑领域的实验中显著提升了 Llama 3.1 的下游性能。
-
-**[Data-Constrained Synthesis of Training Data for De-Identification](llm_pretraining/data-constrained_synthesis_of_training_data_for_de-identification.md)**
-
-:   本文系统研究了在数据受限条件下，如何利用领域适应的LLM生成合成临床文本，并通过机器标注训练NER模型进行个人身份信息（PII）检测，发现机器标注器的质量而非生成模型的规模是决定合成数据效用的关键因素。
-
-**[Data Caricatures: On the Representation of African American Language in Pretraining Corpora](llm_pretraining/data_caricatures_on_the_representation_of_african_american_language_in_pretraini.md)**
-
-:   结合定量实验、人工判断和定性分析，系统评估了 12 个开源预训练语料库中非裔美国人语言（AAL）的数量与质量：发现 AAL 仅占 0.007%–0.18% 的文档（远低于人口比例），C4 中 28.9% 的 AAL 文本被判为不适合 LLM 生成、24.5% 强化有害刻板印象，且 16 种自动过滤器中有 13 种系统性地偏向保留白人主流英语（WME）而非 AAL。
-
-**[Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](llm_pretraining/data_whisperer_data_selection.md)**
-
-:   Data Whisperer 提出一种无需训练的注意力加权 few-shot ICL 数据选择方法，利用预训练模型自身的 ICL 能力和注意力分数为训练样本打分，仅用 10% 数据即可超越全量微调性能，同时比现有方法快 7-20 倍。
-
-**[DavIR: Data Selection via Implicit Reward for Large Language Models](llm_pretraining/davir_data_selection_via_implicit_reward_for_large_language_models.md)**
-
-:   提出 DavIR 数据选择方法，通过对基座模型与参考模型的损失差进行**参考模型损失归一化**（而非 token 数归一化），有效消除 RHO 目标中的序列长度依赖，使仅 **6%** 的 Alpaca 数据集（3K/52K）训练出的模型优于全量数据训练模型，同时将归一化思想推广到 DPO 得到 DavIR-DPO，在 AlpacaEval 上提升 Zephyr 8% 的对齐性能。
-
-[查看全部39篇「预训练」论文 →](llm_pretraining/)
-
----
-
-## ⚡ LLM 效率 (38) { #llm_efficiency }
+## ⚡ LLM 效率 (42) { #llm_efficiency }
 
 **[A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models](llm_efficiency/a_drop-in_solution_for_on-the-fly_adaptation_of_speculative_decoding_in_large_la.md)**
 
@@ -443,19 +397,65 @@ item_total: 1855
 
 :   本文提出一种一致性保持的对比解码（Consistency-Preserving Contrastive Decoding, CPCD）方法，通过在解码阶段对比有文档条件和无文档条件的生成分布，增强文档基础对话系统对源文档的忠实性，同时保持回复的流畅性和对话一致性。
 
+**[Consultant Decoding: Yet Another Synergistic Mechanism](llm_efficiency/consultant_decoding_yet_another_synergistic_mechanism.md)**
+
+:   提出 Consultant Decoding (CD)，一种基于目标模型负对数似然（NLL）验证 draft token 的新型协同解码机制，相比传统 Speculative Decoding 的似然比验证方法，能大幅提升接受率、降低大模型调用频率，同时保持甚至超越目标模型的生成质量。
+
+**[Decoding Knowledge Attribution in Mixture-of-Experts: A Framework of Basic-Refinement Collaboration and Efficiency Analysis](llm_efficiency/decoding_knowledge_attribution_in_mixture-of-experts_a_framework_of_basic-refine.md)**
+
+:   提出跨层级知识归因算法，系统解析 MoE 模型中共享专家与路由专家的"基础-精炼"协作框架，揭示 MoE 相比稠密模型实现 31% 更高的逐层效率，并通过语义驱动路由机制（注意力头-专家相关性 r=0.68）和专家阻断实验验证了架构深度对鲁棒性的决定性影响。
+
 **[Giraffe: Design Choices for Extending the Context Length of Visual Language Models](llm_efficiency/design_choices_for_extending_the_context_length_of_visual_language_models.md)**
 
 :   系统性地探索了将现有视觉语言模型（VLM）的上下文窗口扩展到128K的设计空间，从数据配方、位置编码扩展到上下文利用三个维度提出最佳实践，并提出 M-RoPE++ 和混合分辨率训练两项技术，构建的 Giraffe 模型在长上下文 VLM 中达 SOTA。
 
-**[Distance between Relevant Information Pieces Causes Bias in Long-Context LLMs](llm_efficiency/distance_between_relevant_information_pieces_causes_bias_in_long-context_llms.md)**
+[查看全部42篇「LLM 效率」论文 →](llm_efficiency/)
 
-:   本文提出 LongPiBench 基准，首次系统研究当长上下文中存在多个相关信息片段时，LLM 对信息片段间距离（spacing）的敏感性，揭示了当前模型虽已基本克服"中间丢失"问题，但在相关信息间距变化时仍存在显著的位置偏差。
+---
 
-**[DIVE into MoE: Diversity-Enhanced Reconstruction of Large Language Models from Dense into Mixture-of-Experts](llm_efficiency/dive_moe_reconstruction.md)**
+## 📚 预训练 (40) { #llm_pretraining }
 
-:   提出 DIVE，一种将 Dense LLM 重构为 MoE 架构的方法，核心洞察是不同领域的校准数据集会让结构化剪枝产生不同的剪枝结果，利用这种多样性构建领域特异的专家，配合高效的两阶段重训练（router dense训练 + expert LoRA稀疏训练），在仅调不到 1% 参数的情况下实现优于现有剪枝和 MoE 重构方法的效果。
+**[Adversarial Tokenization](llm_pretraining/adversarial_tokenization.md)**
 
-[查看全部38篇「LLM 效率」论文 →](llm_efficiency/)
+:   本文发现 LLM 管线中 BPE tokenizer 只使用唯一一种分词方式，但同一字符串存在指数级多种合法分词；通过对抗性地选择非标准分词方案，可以在不改变原始文本的情况下绕过安全对齐，攻击成功率与现有 SOTA 文本级攻击方法相当。
+
+**[AsyncLM: Efficient and Adaptive Async Pre-training of Language Models](llm_pretraining/asynclm_efficient_and_adaptive_async_pre-training_of_language_models.md)**
+
+:   本文提出AsyncLM，一种高效的异步预训练框架，通过自适应梯度补偿和动态批量调度策略解决异步分布式训练中的梯度过期问题，在保持与同步训练相当的模型质量的同时，将大规模语言模型预训练的吞吐量提升了1.4-1.8倍。
+
+**[AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts](llm_pretraining/autonomous_data_selection_with_zero-shot_generative_classifiers_for_mathematical.md)**
+
+:   提出 AutoDS——用基座语言模型自身作为零样本生成分类器，通过 YES/NO token 的 logits 计算连续 LM-Score 来自动评估数学文本质量，筛选高质量语料做持续预训练，在 MATH/GSM8K/BBH 上实现约 2 倍 token 效率提升。
+
+**[Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](llm_pretraining/between_circuits_chomsky.md)**
+
+:   提出在自然语言预训练前先在形式语言上进行"pre-pretraining"，发现具有层级依赖结构的形式语言（如 k-Shuffle Dyck）能为 Transformer 提供有效的归纳偏置，使 1B 参数模型以 33% 更少的 token 达到相同的语言建模损失。
+
+**[Byte Latent Transformer: Patches Scale Better Than Tokens](llm_pretraining/byte_latent_transformer.md)**
+
+:   提出 Byte Latent Transformer (BLT)，一种无分词器的字节级 LLM 架构，通过基于熵的动态分组将字节聚合为可变长度 patch，首次在 8B 规模上匹配 token-based 模型性能，同时解锁了通过同时增大 patch 和模型尺寸来提升推理效率的新 scaling 维度。
+
+**[Chinese Grammatical Error Correction With Pre-trained Models and Linguistic Clues](llm_pretraining/chinese_grammatical_error_correction_with_pre-trained_models_and_linguistic_clue.md)**
+
+:   本文提出一种融合预训练语言模型和多层级语言学线索（拼音、字形、句法依存）的中文语法纠错方法，通过显式注入语言学先验知识提升纠错模型对中文特有错误类型的识别和修正能力。
+
+**[CritiQ: Mining Data Quality Criteria from Human Preferences](llm_pretraining/critiq_mining_data_quality_criteria_from_human_preferences.md)**
+
+:   CritiQ 提出了一种基于 Agent 协作的数据质量标准自动挖掘方法，仅需约 30 个人类偏好标注对即可自动发现可解释的数据质量标准，并训练评分器进行高效数据选择，在代码、数学和逻辑领域的实验中显著提升了 Llama 3.1 的下游性能。
+
+**[Data-Constrained Synthesis of Training Data for De-Identification](llm_pretraining/data-constrained_synthesis_of_training_data_for_de-identification.md)**
+
+:   本文系统研究了在数据受限条件下，如何利用领域适应的LLM生成合成临床文本，并通过机器标注训练NER模型进行个人身份信息（PII）检测，发现机器标注器的质量而非生成模型的规模是决定合成数据效用的关键因素。
+
+**[Data Caricatures: On the Representation of African American Language in Pretraining Corpora](llm_pretraining/data_caricatures_on_the_representation_of_african_american_language_in_pretraini.md)**
+
+:   结合定量实验、人工判断和定性分析，系统评估了 12 个开源预训练语料库中非裔美国人语言（AAL）的数量与质量：发现 AAL 仅占 0.007%–0.18% 的文档（远低于人口比例），C4 中 28.9% 的 AAL 文本被判为不适合 LLM 生成、24.5% 强化有害刻板印象，且 16 种自动过滤器中有 13 种系统性地偏向保留白人主流英语（WME）而非 AAL。
+
+**[Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning](llm_pretraining/data_whisperer_data_selection.md)**
+
+:   Data Whisperer 提出一种无需训练的注意力加权 few-shot ICL 数据选择方法，利用预训练模型自身的 ICL 能力和注意力分数为训练样本打分，仅用 10% 数据即可超越全量微调性能，同时比现有方法快 7-20 倍。
+
+[查看全部40篇「预训练」论文 →](llm_pretraining/)
 
 ---
 
@@ -587,7 +587,53 @@ item_total: 1855
 
 ---
 
-## 🌐 多语言/翻译 (88) { #multilingual_mt }
+## 🔍 信息检索/RAG (89) { #information_retrieval }
+
+**[A Reality Check on Context Utilisation for Retrieval-Augmented Generation](information_retrieval/a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)**
+
+:   提出DRUID真实世界事实验证数据集和ACU评估指标，揭示合成数据集（CounterFact、ConflictQA）夸大了上下文特征的影响，导致对LLM上下文利用能力的过度乐观评估，呼吁使用真实检索数据研究RAG。
+
+**[A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens](information_retrieval/a_text_is_worth_several_tokens_text_embedding_from_llms_secretly_aligns_well_wit.md)**
+
+:   揭示 LLM 文本嵌入的有趣现象：将嵌入向量通过解码层映射回词表空间后，解码概率最高的 token 与输入文本的关键词高度对齐；进一步通过谱分析发现这一现象主要受第一主成分控制，并据此提出一种简洁的稀疏检索方法，达到原密集检索 80%+ 的效果。
+
+**[Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](information_retrieval/accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)**
+
+:   提出 IDR²，一种模型无关的自适应RAG加速框架，通过消除多轮检索间重叠文档的冗余表示并利用检索内容指导并行解码，实现端到端约2倍加速且不损失生成质量。
+
+**[AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark](information_retrieval/air-bench_automated_heterogeneous_information_retrieval_benchmark.md)**
+
+:   提出AIR-Bench——首个利用LLM自动生成测试数据的异构IR基准，覆盖2个任务（QA/长文档）、9个领域、13种语言共69个数据集，三阶段质量控制管线确保生成数据与人工标注高度一致，解决了传统IR基准领域覆盖有限和更新成本高的问题。
+
+**[Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval](information_retrieval/any_information_is_just_worth_one_single_screenshot_unifying_search_with_visuali.md)**
+
+:   本文正式定义了可视化信息检索（Vis-IR）范式——将多模态信息统一渲染为截图（Screenshot）进行检索，构建了包含1300万截图的VIRA数据集、UniSE检索模型家族和MVRB基准测试，为统一搜索引擎奠定基础。
+
+**[ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](information_retrieval/arise_risk_adaptive_search.md)**
+
+:   提出 ARise 框架，将贝叶斯风险评估与动态 RAG 集成到蒙特卡洛树搜索中，解决知识增强推理中的错误传播和验证瓶颈问题，在多跳QA任务上平均准确率超 SOTA KAR 方法 23.10%，超 RAG-equipped 推理模型（DeepSeek-R1）25.37%。
+
+**[Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](information_retrieval/astute_rag_knowledge_conflicts.md)**
+
+:   Astute RAG 提出了一种对不完美检索具有鲁棒性的 RAG 方法，通过自适应生成 LLM 内部知识作为补充、带有来源标注的知识整合、以及基于可靠性的答案生成三个步骤，在 Gemini 和 Claude 上显著优于现有鲁棒 RAG 方法，且是唯一在最坏情况下（检索全部无用）不劣于无 RAG 基线的方法。
+
+**[Atomic LLM: A Fine-Grained Information Retrieval Evaluation Benchmark for Language Models](information_retrieval/atomic_llm_a_fine-grained_information_retrieval_evaluation_benchmark_for_languag.md)**
+
+:   本文提出Atomic LLM基准，通过将信息检索评估分解为原子级别（Atomic Level）的事实检索任务，从事实精确性、来源归因、粒度覆盖等多个维度对LLM的信息检索能力进行细粒度评估，揭示了现有LLM在精确事实提取方面的系统性不足。
+
+**[Automatic Benchmark Generation from Scientific Papers via Retrieval-Augmented LLMs](information_retrieval/automatic_benchmark_generation_from_scientific_papers_via_retrieval-augmented_ll.md)**
+
+:   本文提出一种基于检索增强LLM的自动基准生成方法，从科学论文中自动抽取可测试的知识点并生成高质量的评估题目，在NLP、机器学习、生物信息学等领域验证了方法的有效性，为领域特定LLM评估基准的快速构建提供了新范式。
+
+**[Beyond True or False: Retrieval-Augmented Hierarchical Analysis of Nuanced Claims](information_retrieval/beyond_true_or_false_retrieval-augmented_hierarchical_analysis_of_nuanced_claims.md)**
+
+:   提出 ClaimSpect 框架，将复杂声明自动分解为层次化的方面（aspect）树，并通过区分性检索从语料库中发现各方面的支持/中立/反对观点及其共识程度。
+
+[查看全部89篇「信息检索/RAG」论文 →](information_retrieval/)
+
+---
+
+## 🌐 多语言/翻译 (89) { #multilingual_mt }
 
 **[A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs](multilingual_mt/a_case_study_of_cross-lingual_zero-shot_generalization_for_classical_languages_i.md)**
 
@@ -629,51 +675,7 @@ item_total: 1855
 
 :   本文提出INCLINE（Inference-Time Cross-Lingual Intervention），一种无需微调的推理时框架，通过学习对齐矩阵将低性能语言的内部表示变换到高性能语言的表示空间，在9个基准和5个LLM上显著提升多语言性能。
 
-[查看全部88篇「多语言/翻译」论文 →](multilingual_mt/)
-
----
-
-## 🔍 信息检索/RAG (82) { #information_retrieval }
-
-**[A Reality Check on Context Utilisation for Retrieval-Augmented Generation](information_retrieval/a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)**
-
-:   提出DRUID真实世界事实验证数据集和ACU评估指标，揭示合成数据集（CounterFact、ConflictQA）夸大了上下文特征的影响，导致对LLM上下文利用能力的过度乐观评估，呼吁使用真实检索数据研究RAG。
-
-**[A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens](information_retrieval/a_text_is_worth_several_tokens_text_embedding_from_llms_secretly_aligns_well_wit.md)**
-
-:   揭示 LLM 文本嵌入的有趣现象：将嵌入向量通过解码层映射回词表空间后，解码概率最高的 token 与输入文本的关键词高度对齐；进一步通过谱分析发现这一现象主要受第一主成分控制，并据此提出一种简洁的稀疏检索方法，达到原密集检索 80%+ 的效果。
-
-**[Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps](information_retrieval/accelerating_adaptive_retrieval_augmented_generation_via_instruction-driven_repr.md)**
-
-:   提出 IDR²，一种模型无关的自适应RAG加速框架，通过消除多轮检索间重叠文档的冗余表示并利用检索内容指导并行解码，实现端到端约2倍加速且不损失生成质量。
-
-**[AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark](information_retrieval/air-bench_automated_heterogeneous_information_retrieval_benchmark.md)**
-
-:   提出AIR-Bench——首个利用LLM自动生成测试数据的异构IR基准，覆盖2个任务（QA/长文档）、9个领域、13种语言共69个数据集，三阶段质量控制管线确保生成数据与人工标注高度一致，解决了传统IR基准领域覆盖有限和更新成本高的问题。
-
-**[Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval](information_retrieval/any_information_is_just_worth_one_single_screenshot_unifying_search_with_visuali.md)**
-
-:   本文正式定义了可视化信息检索（Vis-IR）范式——将多模态信息统一渲染为截图（Screenshot）进行检索，构建了包含1300万截图的VIRA数据集、UniSE检索模型家族和MVRB基准测试，为统一搜索引擎奠定基础。
-
-**[Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](information_retrieval/astute_rag_knowledge_conflicts.md)**
-
-:   Astute RAG 提出了一种对不完美检索具有鲁棒性的 RAG 方法，通过自适应生成 LLM 内部知识作为补充、带有来源标注的知识整合、以及基于可靠性的答案生成三个步骤，在 Gemini 和 Claude 上显著优于现有鲁棒 RAG 方法，且是唯一在最坏情况下（检索全部无用）不劣于无 RAG 基线的方法。
-
-**[Atomic LLM: A Fine-Grained Information Retrieval Evaluation Benchmark for Language Models](information_retrieval/atomic_llm_a_fine-grained_information_retrieval_evaluation_benchmark_for_languag.md)**
-
-:   本文提出Atomic LLM基准，通过将信息检索评估分解为原子级别（Atomic Level）的事实检索任务，从事实精确性、来源归因、粒度覆盖等多个维度对LLM的信息检索能力进行细粒度评估，揭示了现有LLM在精确事实提取方面的系统性不足。
-
-**[Automatic Benchmark Generation from Scientific Papers via Retrieval-Augmented LLMs](information_retrieval/automatic_benchmark_generation_from_scientific_papers_via_retrieval-augmented_ll.md)**
-
-:   本文提出一种基于检索增强LLM的自动基准生成方法，从科学论文中自动抽取可测试的知识点并生成高质量的评估题目，在NLP、机器学习、生物信息学等领域验证了方法的有效性，为领域特定LLM评估基准的快速构建提供了新范式。
-
-**[Beyond True or False: Retrieval-Augmented Hierarchical Analysis of Nuanced Claims](information_retrieval/beyond_true_or_false_retrieval-augmented_hierarchical_analysis_of_nuanced_claims.md)**
-
-:   提出 ClaimSpect 框架，将复杂声明自动分解为层次化的方面（aspect）树，并通过区分性检索从语料库中发现各方面的支持/中立/反对观点及其共识程度。
-
-**[CART: A Generative Cross-Modal Retrieval Framework with Coarse-To-Fine Semantic Modeling](information_retrieval/cart_a_generative_cross-modal_retrieval_framework_with_coarse-to-fine_semantic_m.md)**
-
-[查看全部82篇「信息检索/RAG」论文 →](information_retrieval/)
+[查看全部89篇「多语言/翻译」论文 →](multilingual_mt/)
 
 ---
 
@@ -769,7 +771,7 @@ item_total: 1855
 
 ---
 
-## ✍️ 文本生成 (26) { #nlp_generation }
+## ✍️ 文本生成 (27) { #nlp_generation }
 
 **[A Representation Level Analysis of NMT Model Robustness to Grammatical Errors](nlp_generation/a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors.md)**
 
@@ -811,7 +813,7 @@ item_total: 1855
 
 :   提出 MBR-OT，将最优传输（Wasserstein距离）引入最小贝叶斯风险（MBR）解码，实现用句子级效用函数评估文档级输出质量，在文档级机器翻译、文本简化和密集图像描述任务上显著优于标准 MBR 解码。
 
-[查看全部26篇「文本生成」论文 →](nlp_generation/)
+[查看全部27篇「文本生成」论文 →](nlp_generation/)
 
 ---
 
@@ -861,7 +863,7 @@ item_total: 1855
 
 ---
 
-## 🧩 多模态 VLM (126) { #multimodal_vlm }
+## 🧩 多模态 VLM (129) { #multimodal_vlm }
 
 **[A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models](multimodal_vlm/a_parameter-efficient_and_fine-grained_prompt_learning_for_vision-language_model.md)**
 
@@ -903,11 +905,11 @@ item_total: 1855
 
 :   提出 AlignMMBench，首个面向中文视觉上下文的多模态对齐评测基准，涵盖 3 大类 13 项任务、1054 张图像和 4978 个 QA 对（含单轮/多轮对话），并训练了基于 ChatGLM3-6B 的评估器 CritiqueVLM，其评估一致性超过 GPT-4。
 
-[查看全部126篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部129篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
-## 🎵 音频/语音 (42) { #audio_speech }
+## 🎵 音频/语音 (46) { #audio_speech }
 
 **[Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots](audio_speech/aae_voice_chatbot.md)**
 
@@ -949,7 +951,7 @@ item_total: 1855
 
 :   提出 Chain-Talker，通过三阶段链式建模（情感理解→语义理解→共情渲染）实现可解释的共情对话语音合成，并开发 CSS-EmCap 自动标注管道为对话语音生成情感描述。
 
-[查看全部42篇「音频/语音」论文 →](audio_speech/)
+[查看全部46篇「音频/语音」论文 →](audio_speech/)
 
 ---
 
@@ -999,7 +1001,7 @@ item_total: 1855
 
 ---
 
-## 🎨 图像生成 (8) { #image_generation }
+## 🎨 图像生成 (9) { #image_generation }
 
 **[A Unified Agentic Framework for Evaluating Conditional Image Generation](image_generation/a_unified_agentic_framework_for_evaluating_conditional_image_generation.md)**
 
@@ -1032,6 +1034,10 @@ item_total: 1855
 **[R-VC: Rhythm Controllable and Efficient Zero-Shot Voice Conversion via Shortcut Flow Matching](image_generation/rvc_rhythm_voice_conversion.md)**
 
 :   R-VC 是首个实现节奏可控的零样本语音转换系统，通过 Mask Transformer 时长模型建模目标说话人的节奏风格，结合 Shortcut Flow Matching 的 DiT 解码器实现仅 2 步采样的高效高质量语音生成，在 LibriSpeech 上 WER 3.51、说话人相似度 0.930。
+
+**[Synthia: Novel Concept Design with Affordance Composition](image_generation/synthia_novel_concept_design_with_affordance_composition.md)**
+
+:   Synthia 提出了一种基于 affordance（功能可供性）组合的新颖概念设计框架，通过层次化概念本体、affordance 采样策略和课程学习微调 T2I 模型，生成既视觉新颖又功能连贯的创新设计。
 
 ---
 
@@ -1259,7 +1265,7 @@ item_total: 1855
 
 ---
 
-## 📦 模型压缩 (67) { #model_compression }
+## 📦 模型压缩 (78) { #model_compression }
 
 **[500xCompressor: Generalized Prompt Compression for Large Language Models](model_compression/500xcompressor_generalized_prompt_compression_for_large_language_models.md)**
 
@@ -1301,7 +1307,7 @@ item_total: 1855
 
 :   这是迄今最全面的 LLM 量化实证研究，在 Llama-3.1 全系列（8B/70B/405B）上对 FP8/INT8/INT4 进行了超过 50 万次评估，发现 FP8 几乎无损、INT8 仅降 1-3%、INT4 出奇地有竞争力，并给出了不同部署场景的量化格式选择建议。
 
-[查看全部67篇「模型压缩」论文 →](model_compression/)
+[查看全部78篇「模型压缩」论文 →](model_compression/)
 
 ---
 
@@ -1351,7 +1357,7 @@ item_total: 1855
 
 ---
 
-## 🔬 可解释性 (21) { #interpretability }
+## 🔬 可解释性 (22) { #interpretability }
 
 **[A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](interpretability/a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)**
 
@@ -1393,7 +1399,7 @@ item_total: 1855
 
 :   通过 probing、activation patching 和 generation steering 三种机制可解释性技术，发现 LLM 的情感表征功能性地定位于中间层的 MHSA 单元，并基于认知评估理论（appraisal theory）证明这些表征具有心理学合理性，成功通过干预评估概念（如 self-agency、pleasantness）引导情感输出。
 
-[查看全部21篇「可解释性」论文 →](interpretability/)
+[查看全部22篇「可解释性」论文 →](interpretability/)
 
 ---
 
@@ -1441,6 +1447,38 @@ item_total: 1855
 
 ---
 
+## 🔄 自监督/表示学习 (7) { #self_supervised }
+
+**[AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](self_supervised/analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)**
+
+:   提出 AnalyticKWS，一种无需存储历史样本的关键词检测增量学习方法，通过冻结特征提取器 + 递归最小二乘解析解更新分类器，在 GSC 和 SC-100 数据集上超过了所有基于样本回放的方法，且训练时间和内存开销极低。
+
+**[Improving Low-Resource Morphological Inflection via Self-Supervised Objectives](self_supervised/improving_low-resource_morphological_inflection_via_self-supervised_objectives.md)**
+
+:   系统探索 13 种自监督辅助目标（自编码、CMLM、T5-style 等）在极低资源形态变化任务中的效果，发现无标注数据极少时自编码最优，数据增多后字符级 MLM 更好，按形态素边界采样掩码是最有前景的方向。
+
+**[Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](self_supervised/llm_back_gen_treebank.md)**
+
+:   提出 LLM 反向生成 (LLM Back Generation) 方法，将不完整的跨领域句法树作为输入让 LLM 补全缺失词生成 treebank，并设计 span 级别对比学习预训练策略，实现跨领域成分句法分析的 SOTA 性能。
+
+**[Magnet: Augmenting Generative Decoders with Representation Learning and Infilling Capabilities](self_supervised/magnet_augmenting_generative_decoders_with_representation_learning_and_infilling.md)**
+
+:   提出 Magnet 方法，通过混合注意力机制（双向+因果）和三个自监督目标（掩码预测+对比学习+缺失片段生成），将纯解码器 LLM 同时增强为文本编码器和填充模型，在 token 级和句子级表示学习任务上超越 LLM2Vec 等专用方法，同时避免了双向化带来的严重文本重复问题。
+
+**[QAEncoder: Towards Aligned Representation Learning in Question Answering Systems](self_supervised/qaencoder_aligned_representation.md)**
+
+:   提出 QAEncoder，一种免训练方法通过蒙特卡洛采样估计文档对应查询的期望嵌入作为文档表示的代理，配合文档指纹保持区分性，在 BEIR 上将 bge-large 从 58.5 提升到 61.8 NDCG@10，零额外存储和延迟开销。
+
+**[SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](self_supervised/shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)**
+
+:   提出 SHuBERT（Sign Hidden-Unit BERT），将语音自监督学习模型 HuBERT 的 masked cluster prediction 范式迁移到手语视频——对手部、面部、身体姿态四个流分别聚类并同时预测 masked 帧的聚类标签，在约 984 小时 ASL 视频上预训练后，在翻译/孤立识别/指拼检测多任务上达到公开数据 SOTA。
+
+**[WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](self_supervised/whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)**
+
+:   提出 WhiSPA，通过对比学习将 Whisper 音频编码器的潜在空间与 SBERT 语义表征和心理学维度（情感、人格）对齐，消除语音处理中对额外文本 LM 的依赖，在心理学评估任务上误差降低 73-84%。
+
+---
+
 ## 📈 时间序列 (7) { #time_series }
 
 **[ANRE: Analogical Replay for Temporal Knowledge Graph Forecasting](time_series/anre_analogical_replay_for_temporal_knowledge_graph_forecasting.md)**
@@ -1473,35 +1511,15 @@ item_total: 1855
 
 ---
 
-## 🔄 自监督/表示学习 (6) { #self_supervised }
+## 📐 优化/理论 (3) { #optimization }
 
-**[Improving Low-Resource Morphological Inflection via Self-Supervised Objectives](self_supervised/improving_low-resource_morphological_inflection_via_self-supervised_objectives.md)**
+**[Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race](optimization/aligned_but_blind_implicit_bias.md)**
 
-:   系统探索 13 种自监督辅助目标（自编码、CMLM、T5-style 等）在极低资源形态变化任务中的效果，发现无标注数据极少时自编码最优，数据增多后字符级 MLM 更好，按形态素边界采样掩码是最有前景的方向。
+:   揭示对齐训练的"种族盲视"副作用：对齐使 LLM 在歧义上下文中不再将 black/white 表征为种族概念，安全护栏因此无法激活，导致隐式偏见从 64.1% 飙升至 91.4%；反直觉地，在早期层注入种族感知激活（而非遗忘）可将隐式偏见从 97.3% 降至 42.4%。
 
-**[Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](self_supervised/llm_back_gen_treebank.md)**
+**[AmbiK: Dataset of Ambiguous Tasks in Kitchen Environment](optimization/ambik_dataset_of_ambiguous_tasks_in_kitchen_environment.md)**
 
-:   提出 LLM 反向生成 (LLM Back Generation) 方法，将不完整的跨领域句法树作为输入让 LLM 补全缺失词生成 treebank，并设计 span 级别对比学习预训练策略，实现跨领域成分句法分析的 SOTA 性能。
-
-**[Magnet: Augmenting Generative Decoders with Representation Learning and Infilling Capabilities](self_supervised/magnet_augmenting_generative_decoders_with_representation_learning_and_infilling.md)**
-
-:   提出 Magnet 方法，通过混合注意力机制（双向+因果）和三个自监督目标（掩码预测+对比学习+缺失片段生成），将纯解码器 LLM 同时增强为文本编码器和填充模型，在 token 级和句子级表示学习任务上超越 LLM2Vec 等专用方法，同时避免了双向化带来的严重文本重复问题。
-
-**[QAEncoder: Towards Aligned Representation Learning in Question Answering Systems](self_supervised/qaencoder_aligned_representation.md)**
-
-:   提出 QAEncoder，一种免训练方法通过蒙特卡洛采样估计文档对应查询的期望嵌入作为文档表示的代理，配合文档指纹保持区分性，在 BEIR 上将 bge-large 从 58.5 提升到 61.8 NDCG@10，零额外存储和延迟开销。
-
-**[SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction](self_supervised/shubert_self-supervised_sign_language_representation_learning_via_multi-stream_c.md)**
-
-:   提出 SHuBERT（Sign Hidden-Unit BERT），将语音自监督学习模型 HuBERT 的 masked cluster prediction 范式迁移到手语视频——对手部、面部、身体姿态四个流分别聚类并同时预测 masked 帧的聚类标签，在约 984 小时 ASL 视频上预训练后，在翻译/孤立识别/指拼检测多任务上达到公开数据 SOTA。
-
-**[WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning](self_supervised/whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con.md)**
-
-:   提出 WhiSPA，通过对比学习将 Whisper 音频编码器的潜在空间与 SBERT 语义表征和心理学维度（情感、人格）对齐，消除语音处理中对额外文本 LM 的依赖，在心理学评估任务上误差降低 73-84%。
-
----
-
-## 📐 优化/理论 (1) { #optimization }
+:   提出 AmbiK，一个专门用于厨房环境中歧义指令检测的纯文本数据集，包含 1000 对歧义/非歧义指令，按三种歧义类型（用户偏好/常识/安全）分类标注，并评估了多种基于 conformal prediction 的歧义检测方法，发现现有方法在该基准上表现很差。
 
 **[ScaleBiO: Scalable Bilevel Optimization for LLM Data Reweighting](optimization/scalebio_bilevel_data_reweighting.md)**
 
@@ -1555,7 +1573,7 @@ item_total: 1855
 
 ---
 
-## 👥 社会计算 (27) { #social_computing }
+## 👥 社会计算 (28) { #social_computing }
 
 **[A Survey on Proactive Defense Strategies Against Misinformation in Large Language Models](social_computing/a_survey_on_proactive_defense_strategies_against_misinformation_in_large_languag.md)**
 
@@ -1597,7 +1615,7 @@ item_total: 1855
 
 :   本文针对德语场景构建了五个性别偏见评测数据集，并在八个多语言 LLM 上进行系统评估，揭示了德语特有的性别偏见挑战——包括阳性职业名词的歧义解读和看似中性的名词对性别感知的影响。
 
-[查看全部27篇「社会计算」论文 →](social_computing/)
+[查看全部28篇「社会计算」论文 →](social_computing/)
 
 ---
 
@@ -1647,7 +1665,7 @@ item_total: 1855
 
 ---
 
-## 🧬 计算生物 (5) { #computational_biology }
+## 🧬 计算生物 (6) { #computational_biology }
 
 **[Align-Pro: Align Protein Representations Through Multi-Modal Learning](computational_biology/align-pro_align_protein_representations_through_multi-modal_learning.md)**
 
@@ -1665,6 +1683,10 @@ item_total: 1855
 
 :   提出KPO框架，通过构建蛋白质安全知识图谱(PSKG)并结合加权图剪枝策略识别"相似但安全"的蛋白质对，用DPO微调蛋白质语言模型使其远离有害序列空间，同时保持功能性。
 
+**[LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](computational_biology/ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)**
+
+:   提出 LADDER 框架，利用 LLM 的推理能力和潜在领域知识，通过分析文本（图像描述/医学报告/元数据）自动发现视觉分类器中的系统性偏差切片（error slices），并通过伪标签生成和属性重平衡实现无需标注的多偏差缓解。
+
 **[Retrieve to Explain: Evidence-driven Predictions for Explainable Drug Target Identification](computational_biology/retrieve_to_explain_drug_target_identification.md)**
 
 :   提出 R2E (Retrieve to Explain)，一种基于检索的架构，通过从文献语料库中检索证据来评分和排序所有候选答案，并利用 Shapley 值将预测忠实地归因到支撑证据，在药物靶点识别任务上超越了遗传学基线和 GPT-4 基线。
@@ -1679,15 +1701,7 @@ item_total: 1855
 
 ---
 
-## 📂 其他 (287) { #others }
-
-**[Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](others/a3cg_esg_greenwashing.md)**
-
-:   提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性，发现监督学习（GRACE F1=47.51）优于 LLM（Claude 3.5 F1=42.03）但泛化效率更差。
-
-**[A Dual-Mind Framework for Strategic and Expressive Negotiation Agent](others/a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent.md)**
-
-:   本文受人类认知双过程理论启发，提出双心智谈判智能体框架（DMNA），将直觉模块（快速策略规划，基于 MCTS+DPO 训练）和审慎模块（慢速表达优化，基于多面反思机制）相结合，在谈判任务上取得了最优性能。
+## 📂 其他 (184) { #others }
 
 **[Barec: A Large and Balanced Corpus for Fine-grained Arabic Readability Assessment](others/a_large_and_balanced_corpus_for_fine-grained_arabic_readability_assessment.md)**
 
@@ -1713,14 +1727,22 @@ item_total: 1855
 
 :   提出基于有向无环图(DAG)的工作流框架，通过将LLM agent的复杂业务约束分解到图中不同状态节点，并结合响应掩码微调策略，构建满足生产级要求的电商对话代理，在任务准确率和格式遵循方面均大幅超越GPT-4o基线。
 
-**[SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](others/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)**
-
-:   提出电商查询分类统一框架 SSUF，通过三个可插拔模块——标签增强（BERT 语义编码标签）、知识增强（LLM 世界知识 + 后验点击 + 半监督标签生成）、结构增强（共现/语义/层级三图融合 GCN）——解决短查询信息不足和"马太效应"恶性循环问题，在 JD.COM 意图分类和品类分类任务上 Macro F1 分别达到 49.46 和 41.22（均超 SMGCN 等 SOTA），已上线服务带来显著商业价值。
-
 **[A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](others/a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)**
 
 :   本文提出基于时空标记点过程（marked spatio-temporal point process）的阅读行为概率模型，联合建模注视何时发生、落在哪里、持续多久，发现 Hawkes 过程配合读者特定效应和方向偏移能显著提升扫视预测，但 surprisal 等语言学预测因子仅带来微弱改善——这对现有 surprisal 理论提出了质疑。
 
-[查看全部287篇「其他」论文 →](others/)
+**[ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](others/acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)**
+
+:   构建首个面向合同起草的专家标注条款检索基准ACORD（114查询、126K+对、1-5星评分），评估20种检索方法发现BM25+GPT-4o pointwise重排序最优（NDCG@5=76.9%），但高质量条款精度极低（5星precision@5仅17.2%），揭示模型距真实律师需求的巨大差距。
+
+**[Adaptive Feature-based Low Rank Plus Sparse Decomposition for Subspace Clustering](others/adaptive_feature-based_low_rank_plus_sparse_decomposition_for_subspace_clusterin.md)**
+
+:   本文提出一种自适应特征驱动的低秩加稀疏矩阵分解方法，通过在特征空间中自适应学习低秩和稀疏成分的权重，解决子空间聚类中噪声鲁棒性和特征判别力不足的问题。
+
+**[Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home](others/adaptive_retrieval_without_self-knowledge_bringing_uncertainty_back_home.md)**
+
+:   对 35 种自适应检索方法（含 8 种最新方法和 27 种不确定性估计方法）进行了全面评测，发现经典的不确定性估计技术在效率和自知能力方面往往优于复杂的专用流水线，同时保持相当的 QA 性能。
+
+[查看全部184篇「其他」论文 →](others/)
 
 </div>

@@ -1,26 +1,21 @@
 ---
 title: >-
-  ICML2026 其他论文汇总 · 94篇论文解读
+  ICML2026 其他论文汇总 · 63篇论文解读
 description: >-
-  94篇ICML2026的其他方向论文解读，涵盖对齐/RLHF、对抗鲁棒、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  63篇ICML2026的其他方向论文解读，涵盖布局/合成、Agent、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "其他"
   - "论文解读"
   - "论文笔记"
-  - "对齐/RLHF"
-  - "对抗鲁棒"
   - "布局/合成"
   - "Agent"
+  - "对齐/RLHF"
 item_list:
   - u: "a_hypertoroidal_covering_for_perfect_color_equivariance/"
     t: "A Hypertoroidal Covering for Perfect Color Equivariance"
-  - u: "a_perturbation_approach_to_unconstrained_linear_bandits/"
-    t: "A Perturbation Approach to Unconstrained Linear Bandits"
   - u: "adaptive_multi-round_allocation_with_stochastic_arrivals/"
     t: "Adaptive Multi-Round Allocation with Stochastic Arrivals"
-  - u: "adaptive_preconditioners_trigger_loss_spikes_in_adam/"
-    t: "Adaptive Preconditioners Trigger Loss Spikes in Adam"
   - u: "ai_cap-and-trade_efficiency_incentives_for_accessibility_and_sustainability/"
     t: "AI Cap-and-Trade: Efficiency Incentives for Accessibility and Sustainability"
   - u: "amdp_asynchronous_multi-directional_pipeline_parallelism_for_large-scale_models_/"
@@ -39,20 +34,10 @@ item_list:
     t: "Complexity as Advantage: A Regret-Based Perspective on Emergent Structure"
   - u: "comprehensive_ai_governance_requires_addressing_non-model_gains/"
     t: "Comprehensive AI Governance Requires Addressing Non-Model Gains"
-  - u: "conditional_krr_injecting_unpenalized_features_into_kernel_methods_with_applicat/"
-    t: "Conditional KRR: Injecting Unpenalized Features into Kernel Methods with Applications to Kernel Thresholding"
   - u: "connecting_independently_trained_modes_via_layer-wise_connectivity/"
     t: "Connecting Independently Trained Modes via Layer-Wise Connectivity"
-  - u: "consistency_training_can_entrench_misalignment/"
-    t: "Consistency Training Can Entrench Misalignment"
   - u: "continual_learning_of_domain-invariant_representations/"
     t: "Continual Learning of Domain-Invariant Representations"
-  - u: "core-mtl_rethinking_gradient_balancing_via_causal_orthogonal_representations/"
-    t: "CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations"
-  - u: "correcting_split_selection_in_online_decision_trees_via_anytime-valid_inference/"
-    t: "Correcting Split Selection in Online Decision Trees via Anytime-Valid Inference"
-  - u: "cost-aware_stopping_for_bayesian_optimization/"
-    t: "Cost-Aware Stopping for Bayesian Optimization"
   - u: "coupled_training_with_privileged_information_and_unlabeled_data/"
     t: "Coupled Training with Privileged Information and Unlabeled Data"
   - u: "cybergym-e2e_scalable_real-world_benchmark_for_ai_agents_end-to-end_cybersecurit/"
@@ -67,39 +52,45 @@ item_list:
     t: "DisjunctiveNet: Neural Symbolic Learning via Differentiable Convexified Optimization Layers"
   - u: "envy-free_allocation_of_indivisible_goods_via_noisy_queries/"
     t: "Envy-Free Allocation of Indivisible Goods via Noisy Queries"
-  - u: "estimating_correlation_clustering_cost_in_node-arrival_stream/"
-    t: "Estimating Correlation Clustering Cost in Node-Arrival Stream"
-  - u: "expectation_consistency_loss_rethink_confidence_calibration_under_covariate_shif/"
-    t: "Expectation Consistency Loss: Rethink Confidence Calibration under Covariate Shift"
-  - u: "foam_frequency_and_operator_error-based_adaptive_damping_method_for_reducing_sta/"
-    t: "FOAM: Frequency and Operator Error-Based Adaptive Damping Method for Reducing Staleness-Oriented Error for Shampoo"
-item_total: 94
+  - u: "fovi_a_biologically-inspired_foveated_interface_for_deep_vision_models/"
+    t: "FOVI：面向深度视觉模型的生物启发式中心凹接口"
+  - u: "guaranteed_optimal_compositional_explanations_for_neurons/"
+    t: "Guaranteed Optimal Compositional Explanations for Neurons"
+  - u: "haste_hardware-aware_dynamic_sparse_training_for_large_output_spaces/"
+    t: "HASTE: Hardware-Aware Dynamic Sparse Training for Large Output Spaces"
+  - u: "how_the_optimizer_shapes_learned_solutions_in_equivariant_neural_networks/"
+    t: "How the Optimizer Shapes Learned Solutions in Equivariant Neural Networks"
+  - u: "identifiable_equivariant_networks_are_layerwise_equivariant/"
+    t: "Identifiable Equivariant Networks are Layerwise Equivariant"
+  - u: "industrializing_prediction-powered_inference_the_glide_library_for_reliable_gena/"
+    t: "Industrializing Prediction-Powered Inference: The GLIDE Library for Reliable GenAI and Agentic Systems Evaluation"
+  - u: "inference_of_online_newton_methods_with_nesterovs_accelerated_sketching/"
+    t: "Inference of Online Newton Methods with Nesterov's Accelerated Sketching"
+  - u: "iworld-bench_a_benchmark_for_interactive_world_models_with_a_unified_action_gene/"
+    t: "iWorld-Bench: A Benchmark for Interactive World Models with a Unified Action Generation Framework"
+  - u: "knowing_isnt_understanding_re-grounding_generative_proactivity_with_epistemic_an/"
+    t: "Knowing Isn't Understanding: Re-Grounding Generative Proactivity with Epistemic and Behavioral Insight"
+  - u: "learning_permutation-invariant_macroscopic_dynamics/"
+    t: "Learning Permutation-Invariant Macroscopic Dynamics"
+item_total: 63
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2026** · **94** 篇论文解读
+**🧪 ICML2026** · **63** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×4 · 对抗鲁棒 ×4 · 布局/合成 ×2 · Agent ×2
+🔥 **高频主题：** 布局/合成 ×2 · Agent ×2 · 对齐/RLHF ×2
 
 **[A Hypertoroidal Covering for Perfect Color Equivariance](a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
 
 :   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
 
-**[A Perturbation Approach to Unconstrained Linear Bandits](a_perturbation_approach_to_unconstrained_linear_bandits.md)**
-
-:   本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题，并由此得到 comparator-adaptive 静态/动态 regret、高概率界以及若干下界讨论。
-
 **[Adaptive Multi-Round Allocation with Stochastic Arrivals](adaptive_multi-round_allocation_with_stochastic_arrivals.md)**
 
 :   本文形式化网络招募为预算约束的顺序控制问题，证明单轮最优分配是贪心的；通过人口水平代理值函数将多轮规划降维到 $O(b^5\log b)$ 复杂度，并给出在模型误差下分解为前沿/人口/逼近三类误差的鲁棒性保证。
-
-**[Adaptive Preconditioners Trigger Loss Spikes in Adam](adaptive_preconditioners_trigger_loss_spikes_in_adam.md)**
-
-:   这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。
 
 **[AI Cap-and-Trade: Efficiency Incentives for Accessibility and Sustainability](ai_cap-and-trade_efficiency_incentives_for_accessibility_and_sustainability.md)**
 
@@ -137,33 +128,13 @@ item_total: 94
 
 :   本文是一篇立场论文，论证当前以模型为中心的AI治理范式在"非模型增益"（推理增益、系统增益、资产增益）日益重要的背景下效力递减，需要系统治理、实体治理、代理治理和云治理等多层互补方案来填补监管空白。
 
-**[Conditional KRR: Injecting Unpenalized Features into Kernel Methods with Applications to Kernel Thresholding](conditional_krr_injecting_unpenalized_features_into_kernel_methods_with_applicat.md)**
-
-:   本文提出条件核岭回归（Conditional KRR）框架，将一组非惩罚特征注入核方法中，通过残差核将其归约为标准 KRR，证明了归约代价为 $\mathcal{O}(1/\sqrt{N})$，并在硬阈值（top-k 本征函数）和软阈值（随机高斯特征）两种设定下验证了条件 KRR 优于标准 KRR 的充分条件。
-
 **[Connecting Independently Trained Modes via Layer-Wise Connectivity](connecting_independently_trained_modes_via_layer-wise_connectivity.md)**
 
 :   提出 Low-Loss Path Finding (LLPF) 算法，通过逐层连通性和方差球约束，可靠地在独立训练的神经网络模型之间构建低损失路径，支持 MobileNet、EfficientNet、CCT 等现代架构，且结果高度可复现。
 
-**[Consistency Training Can Entrench Misalignment](consistency_training_can_entrench_misalignment.md)**
-
-:   本文提出"一致性非中性假说"，通过在 108 个"模型有机体"上评估 7 种一致性训练方法，发现一致性训练并非对齐中性的——它系统性地抑制脆弱的奖励黑客和涌现性错位，但放大稳定的谄媚行为，分布偏移（而非分数选择）是主要驱动因素。
-
 **[Continual Learning of Domain-Invariant Representations](continual_learning_of_domain-invariant_representations.md)**
 
 :   作者首次把"域不变表示学习（DIRL）"显式注入到持续学习里：以 replay buffer 为载体做 multi-domain 不变性计算 + 域条件对齐，提出 ⋆-CL-{VREX, Fishr, CORAL, MMD, ANDMask} 五个方法，在六个跨视觉/医学/制造/生态的数据集上把目标域准确率推到 SOTA。
-
-**[CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations](core-mtl_rethinking_gradient_balancing_via_causal_orthogonal_representations.md)**
-
-:   作者把多任务学习里"负迁移"的根因从"梯度冲突"重新归到"共享表征里语义和噪声纠缠"，提出 CORE-MTL：双流编码器把表征拆成语义 $\hat{Z}_s$ 和残差 $\hat{Z}_r$，用 CKA 独立性约束 + 反事实风格替换 + 反演渲染重构来落地"因果正交"，理论上给出比梯度平衡更紧的 OOD 上界，实验上在 NYUv2/Cityscapes 的 ID 与 GTA5→Cityscapes、Cityscapes-C 的 OOD 设定上同时压过 PCGrad/GradNorm/STCH/FairGrad 等十种 baseline。
-
-**[Correcting Split Selection in Online Decision Trees via Anytime-Valid Inference](correcting_split_selection_in_online_decision_trees_via_anytime-valid_inference.md)**
-
-:   作者指出经典 Hoeffding Tree（HT）在数据流上分裂时使用的"固定样本量"集中不等式被它自己采用的"数据相关停止规则"破坏，于是用 testing-by-betting + Universal Portfolio 重写分裂判据，让单棵树和 Adaptive Random Forest 都能在任意停止时刻保持 Type-I 错误可控，同时在 12 个真实流上更准且树更小。
-
-**[Cost-Aware Stopping for Bayesian Optimization](cost-aware_stopping_for_bayesian_optimization.md)**
-
-:   作者把 Weitzman 的 Pandora's Box 停下原则推广到带相关性的贝叶斯优化场景，证明 PBGI/LogEIPC 这两个 cost-aware 采集函数在共同的"采集函数值越过当前最优"停下规则下，期望代价调整 simple regret 不会比"采一次就停"更差，从而给出首个对 cost-adjusted simple regret 有理论保证的自适应停下规则。
 
 **[Coupled Training with Privileged Information and Unlabeled Data](coupled_training_with_privileged_information_and_unlabeled_data.md)**
 
@@ -193,25 +164,9 @@ item_total: 94
 
 :   本文首次给"用噪声查询估值来寻找无嫉妒分配"这个新问题立了样本复杂度的尺：在两个智能体、加性高斯噪声、$m$ 件物品、最优负嫉妒缺口 $\Delta$ 的设定下，证明所需查询次数的紧界为 $\widetilde{\Theta}(m^{2.5}/\Delta^2)$（当 $\Delta\gg m^{1/4}$），上界由非自适应查询 + 单物品阈值多项式时间算法实现，下界对自适应查询和任意计算时间都成立。
 
-**[Estimating Correlation Clustering Cost in Node-Arrival Stream](estimating_correlation_clustering_cost_in_node-arrival_stream.md)**
-
-:   本文研究「节点到达」数据流模型下相关聚类（correlation clustering）代价的近似估计问题：作者提出 C4Approx 算法，用 $O(n^{(3+\alpha)/4}\log n)$ 词的**亚线性**空间和常数遍数得到 $(O(1), n^{1-\alpha})$-近似，并配套两个匹配下界证明多遍与加性误差都不可避免；在真实数据上仅存 2% 节点即达 Pivot 同等效果。
-
-**[Expectation Consistency Loss: Rethink Confidence Calibration under Covariate Shift](expectation_consistency_loss_rethink_confidence_calibration_under_covariate_shif.md)**
-
-:   ECL 证明在协变量漂移下完整对齐输入分布 $P_s(X) = P_t(X)$ 并非校准的必要条件，只要"在每个置信度水平集上 $P(Y_k=1|X)$ 的条件期望两域一致"即可，并据此构造一个对 canonical / class-wise / top-label 三类校准都通用、可微、且 mini-batch 梯度无偏的损失 ECL。
-
-**[FOAM: Frequency and Operator Error-Based Adaptive Damping Method for Reducing Staleness-Oriented Error for Shampoo](foam_frequency_and_operator_error-based_adaptive_damping_method_for_reducing_sta.md)**
-
-:   FOAM 通过一个可在陈旧特征空间里廉价估算的"算子相对误差代理 $h_t$"，把 Shampoo 的阻尼系数 $\epsilon$ 和特征分解（EVD）触发频率耦合成一个反馈控制回路，在大模型训练上把 EVD 调用次数砍掉 80%+ 同时保持收敛质量。
-
 **[FOVI：面向深度视觉模型的生物启发式中心凹接口](fovi_a_biologically-inspired_foveated_interface_for_deep_vision_models.md)**
 
 :   受人类视网膜—V1 通路启发,作者用"皮层放大函数 + 局部各向同性采样"构造出一种像素分布不均、但在传感器流形上密度均匀的中心凹输入接口 FOVI,并通过新颖的 kNN 卷积 + 核映射技术使其同时兼容 CNN 与 ViT,只用约 1/16 的像素就让 DINOv3-ViT 接近全分辨率基线的 ImageNet 精度。
-
-**[From Generalist to Specialist Representation](from_generalist_to_specialist_representation.md)**
-
-:   本文给出第一个完全非参数（无 intervention、无 functional 约束）的两层 hierarchical 可识别性证明：时间-任务结构由 collider 视角下的 CI test 可识别，任务相关 latent 由 sparsity 正则可从 generalist 表示中分离出来。
 
 **[Guaranteed Optimal Compositional Explanations for Neurons](guaranteed_optimal_compositional_explanations_for_neurons.md)**
 
@@ -220,10 +175,6 @@ item_total: 94
 **[HASTE: Hardware-Aware Dynamic Sparse Training for Large Output Spaces](haste_hardware-aware_dynamic_sparse_training_for_large_output_spaces.md)**
 
 :   针对百万级标签的极端多标签分类，HASTE 把"每个标签独立采样 fan-in"改成"按语义分组共享 fan-in"，再配合一个吃掉高频标签的小 dense head，使得稀疏训练在 GPU 上真正跑出对应 FLOPs 的墙钟收益，前向最多 $4.4\times$、反向最多 $25\times$ 于现有稀疏基线，同时把与 dense 的精度差距收窄到几乎打平。
-
-**[How Does Bayesian Sampling Help Membership Inference Attacks?](how_does_bayesian_sampling_help_membership_inference_attacks.md)**
-
-:   本文提出 BMIA，把单个参考模型用 Laplace 后验展开成"虚拟模型族"，靠贝叶斯采样估计每个样本的条件 score 分布，在只训 1 个参考模型的预算下，在 CIFAR-100 等数据集上把低 FPR 区域 TPR 拉到比训 8 个参考模型的 LiRA 还高 54%。
 
 **[How the Optimizer Shapes Learned Solutions in Equivariant Neural Networks](how_the_optimizer_shapes_learned_solutions_in_equivariant_neural_networks.md)**
 
@@ -269,10 +220,6 @@ item_total: 94
 
 :   作者把 exchange、PoissonMH、TunaMH 三类"不算目标分布也能采样"的 MCMC 统一成一个用辅助变量的元算法，并在 proposal 与接受率两处同时引入辅助随机性，从而设计出小批量数据下仍保持精确平稳分布的梯度型 MCMC（Poisson–Barker、Poisson–MALA、Tuna–SGLD），实证显著超过 PoissonMH/TunaMH/SGLD 等基线。
 
-**[Matroid Algorithms Under Size-Sensitive Independence Oracles](matroid_algorithms_under_size-sensitive_independence_oracles.md)**
-
-:   作者提出「查询代价随查询集合大小线性增长」的尺寸敏感拟阵 oracle 模型，证明在该模型下找基、估计秩、估计划分数的最优查询代价都是 $\tilde{\Theta}(n^2)$，并对有界周长 $c$ 的拟阵给出 $\mathcal{O}(n^{2-1/c}\log n)$ 的最大权基算法突破二次下界。
-
 **[Metadata Predictability Is Not Evidence Dependence: An Intervention-Based Audit for Weak-Label Benchmarks](metadata_predictability_is_not_evidence_dependence_an_intervention-based_audit_f.md)**
 
 :   作者指出「输出能被元数据预测」≠「输出依赖证据」，提出双统计量审计协议：用 MPDS 测元数据可预测性、用证据洗牌 ΔEvi 测证据敏感性，再加 stronger-reader 校准层和输入消融，构成一个 4 步可复用的弱标签 benchmark 体检方案。
@@ -281,17 +228,9 @@ item_total: 94
 
 :   把分子动力学里的「well-tempered metadynamics」搬进离散神经采样器，用一个沿低维 collective variable 累积的历史相关偏置势 $V_t(s)$ 推平已访问的能谷，强迫 MDNS 类模型跨越能垒、覆盖多模态 Boltzmann 分布，并用重要性重加权保留无偏估计。
 
-**[MMD-Balls as Credal Sets: A PAC-Bayesian Framework for Epistemic Uncertainty in Test-Time Adaptation](mmd-balls_as_credal_sets_a_pac-bayesian_framework_for_epistemic_uncertainty_in_t.md)**
-
-:   论文为 test-time adaptation 提供了第一份"目标风险 ≤ 源经验风险 + KL 复杂度 + MMD 分布偏移项"的 PAC-Bayes 上界，并把 MMD-球解读为 Walley 意义下的 credal set，从而用"上下风险区间"自然分离 aleatoric 与 epistemic 不确定性，给出"何时应当 adapt、何时该 abstain"的可计算判据。
-
 **[Multi-Level Strategic Classification: Incentivizing Improvement Through Promotion and Relegation Dynamics](multi-level_strategic_classification_incentivizing_improvement_through_promotion.md)**
 
 :   本文把传统单次"策略性分类"扩展成一个由多级三元分类器（通过/弃判/不通过 = 晋升/留级/降级）构成的序贯机制，证明仅靠折现因子 $\beta$、技能保留率 $\gamma$ 与"高位增益"$\delta$ 这三种跨期效应，就能把不可激励区域从 $c^+>c^-$ 缩小到 $(1-\beta\gamma)c^+>c^-$；进一步给出 $\mu_l = \delta(l-1)/(1-\gamma)$ 的稳态阈值序列，证明在温和条件下可激励诚实努力把属性推到任意高水平。
-
-**[Multi-task Linear Regression without Eigenvalue Lower Bounds: Adaptivity, Robustness and Safety](multi-task_linear_regression_without_eigenvalue_lower_bounds_adaptivity_robustne.md)**
-
-:   本文提出一种以 $\|\theta_j-\beta\|_{\bm\Sigma_j}$（矩阵加权范数）为正则项的鲁棒多任务线性回归估计器，用一个相对的"平衡度常数" $B$ 取代了既往工作中刚硬的"每个任务二阶矩最小特征值 $\Omega(1)$"假设，在病态/低秩/带离群任务的高维场景下同时给出最小最大率（minimax）、自适应、和回退到独立任务学习（ITL）的安全保证。
 
 **[Networked Information Aggregation for Binary Classification](networked_information_aggregation_for_binary_classification.md)**
 
@@ -317,14 +256,6 @@ item_total: 94
 
 :   本文指出过参数化神经网络的"认知不确定性"不会随数据增大而消失：因为参数不可识别（permutation + 神经元分裂），即便函数完全识别，参数空间后验仍然在分裂流形上保留连续不确定度，作者以单隐层 ReLU 网为例给出精确后验描述（Dirichlet on simplex）并实证验证。
 
-**[On the Learnability of Test-Time Adaptation: A Recovery Complexity Perspective](on_the_learnability_of_test-time_adaptation_a_recovery_complexity_perspective.md)**
-
-:   本文首次为测试时自适应（TTA）建立可学习性理论框架，用 $(\epsilon,\delta)$-Recovery Complexity 衡量分布漂移后模型把超额风险压到 $\epsilon$ 所需时间，并配合 $(\epsilon,\rho)$-TTA Learnability 把局部恢复推广到整条非平稳测试流，导出匹配阶的 minimax 上/下界，揭示了 TTA 的"适应速度—信息约束"内在权衡。
-
-**[Optimal Design for Multinomial Logit Model with Applications to Best Assortment Identification](optimal_design_for_multinomial_logit_model_with_applications_to_best_assortment_.md)**
-
-:   在多项式逻辑斯蒂（MNL）bandit 的组合动作空间里首次给出**计算可行**的 G-optimal 实验设计——把 Frank–Wolfe 线性最大化谱写成 0–1 MILP 或多项式时间 Schur 补松弛——并据此造出第一个面向"线性效用 + 非均匀收益"的最佳组合识别算法，样本复杂度 $\tilde{\mathcal{O}}(d\log N / \Delta^2)$。
-
 **[Optimal Regularization for Performative Learning](optimal_regularization_for_performative_learning.md)**
 
 :   在高维岭回归框架下首次系统刻画了"模型部署反过来推动数据分布漂移"（performativity）场景中最优正则强度的标度律：最优 $\lambda$ 与表演性强度 $\bar b$ 成正比，并且在过参数化区域里恰当的正则甚至能利用表演效应反向降低风险。
@@ -336,14 +267,6 @@ item_total: 94
 **[ParalESN: Enabling Parallel Information Processing in Reservoir Computing](paralesn_enabling_parallel_information_processing_in_reservoir_computing.md)**
 
 :   将 LRU 风格的复数对角线性递推注入到 Echo State Network 的"未训练储备池"中，让传统 RC 的序列时间可并行化、维度可扩展到 10 万级，同时严格保持 Echo State Property 与衰退记忆滤波器的普适逼近性质。
-
-**[Parsimonious Learning-Augmented Online Metric Matching](parsimonious_learning-augmented_online_metric_matching.md)**
-
-:   本文回答了 Im et al. (2022) 留下的公开问题：把"按动作预测的"在线度量匹配带进"节俭预测"框架——预测被昂贵地按 $k$ 步一次发放——并通过 Follow-the-Prediction 框架 + 自动补齐"虚拟预测"的元算法，给出与已知下界基本匹配的确定性和随机性竞争比上界。
-
-**[Partitioning for Intrinsic Model Inversion Resistance in Collaborative Inference](partitioning_for_intrinsic_model_inversion_resistance_in_collaborative_inference.md)**
-
-:   本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ），而类内均方半径 $R_c^2$ 是定位 GPZ、且能被标签平滑训练动态地主动收缩的关键变量。
 
 **[Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning](polaris_coupled_orbital_polar_embeddings_for_hierarchical_concept_learning.md)**
 
@@ -361,33 +284,9 @@ item_total: 94
 
 :   本文首次指出测试时自适应 (TTA) 会让模型参数泄露测试数据隐私，并把 Tent / EATA / SAR / DeYO / COME 五种主流 TTA 方法系统改造为带 per-sample 梯度裁剪 + 高斯噪声的 DP 版本，在 ImageNet-C 上既给出可证明的 $(\epsilon,\delta)$-DP 保证，又意外发现"裁剪本身"就能让 TTA 精度提升 $0.1\%$–$4.1\%$。
 
-**[Provably Data-driven Multiple Hyper-parameter Tuning with Structured Loss Function](provably_data-driven_multiple_hyper-parameter_tuning_with_structured_loss_functi.md)**
-
-:   本文用「实代数几何 + 一阶谓词逻辑量词消去」给多维超参数调参第一次给出可证明的 generalization bound，把过去只能处理一维标量超参的 Balcan 2025 框架推广到任意 $p$ 维、双层验证损失、近似内层优化等多种实际场景，并配出第一条匹配上界的下界。
-
-**[Realizable Bayes-Consistency for General Metric Losses](realizable_bayes-consistency_for_general_metric_losses.md)**
-
-:   本文对"在一般（可能无界）度量损失下，假设类 $\mathcal{H}$ 何时存在分布无关的强通用 Bayes 一致学习算法"这一开放问题在 realizable 情形下给出锐刻画——充分必要条件是 $\mathcal{H}$ 不包含一种新的"无界 gap Littlestone 树"组合障碍。
-
 **[Rectified LpJEPA: Joint-Embedding Predictive Architectures with Sparse and Maximum-Entropy Representations](rectified_lpjepa_joint-embedding_predictive_architectures_with_sparse_and_maximu.md)**
 
 :   作者把 LeJEPA 的"投影后向各向同性高斯对齐"推广为"投影后向 Rectified Generalized Gaussian (RGG) 分布对齐"，通过整流 + 截断广义高斯获得显式可控的期望 $\ell_0$ 稀疏度，在 ImageNet-100 上 ResNet 编码器线性探针达到 $85.08\%$ 同时把 $\ell_0$ 稀疏度维持在 $\sim 73\%$，明显优于 LeJEPA 的全密集表示。
-
-**[Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective](reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per.md)**
-
-:   本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识",作者提出 Knowledge Objects (KOs) 作为基础设施——把 AI 隐式推理外化成人类可检查、可验证、可背书的结构化产物,从而让一次人类验证的成本在群体中长期复利。
-
-**[Rethink the Role of Neural Decoders in Quantum Error Correction](rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
-
-:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
-
-**[Rethinking Evaluation Paradigms in IBP-based Certified Training](rethinking_evaluation_paradigms_in_ibp-based_certified_training.md)**
-
-:   作者指出 IBP 类认证训练长期以"挑一个偏心配置"的方式相互比较是不公平的，提出用多目标贝叶斯超参搜索画出每种方法的 Pareto 前沿，证明既有 SOTA 普遍欠调优——CROWN-IBP 干净精度可再涨约 $6\%$、Tiny ImageNet 上 MTL-IBP 同时涨 $\sim2\%$ 干净精度和认证精度。
-
-**[Rethinking FID Through the Geometry of the Reference Dataset](rethinking_fid_through_the_geometry_of_the_reference_dataset.md)**
-
-:   本文指出 FID 的"越低越好"假设在不同参考数据集上系统性失效，并用分布密度 $\langle -\log d_k\rangle$ 和有效秩 $\mathrm{erank}(A)$ 两个几何描述子，通过分层线性模型证明它们能解释 ~70% 的"样本质量→FID"斜率跨数据集差异，从而把 FID 的脆弱性首次定量归因到参考集本身。
 
 **[Return-to-Go is More Than a Number: Q-Guided Alignment for Return-Conditioned Supervised Learning](return-to-go_is_more_than_a_number_q-guided_alignment_for_return-conditioned_sup.md)**
 
@@ -397,21 +296,9 @@ item_total: 94
 
 :   本文把 MLR、FC、Conv 三种基础层系统地推广到满秩相关矩阵流形 $\mathrm{Cor}^+(n)$ 上的五种黎曼几何（ECM、LECM、OLM、LSM、PHCM），并为 OLM 与 LSM 推导出精确的反传，构造的 CorNet 在 Radar、HDM05、FPHA、NTU120 上一致超过同体量的 SPDNet / Grassmann 网络。
 
-**[Semi-Supervised Noise Adaptation: Transferring Knowledge from Noise Domain](semi-supervised_noise_adaptation_transferring_knowledge_from_noise_domain.md)**
-
-:   作者把"从高斯噪声生成的合成域"当作半监督迁移学习里的替代源域，先证明这种"无语义但有判别结构"的噪声能给目标域带来可量化的泛化界改进，再用三损失的 Noise Adaptation Framework（NAF）联合优化两域风险与分布差异，使 CIFAR-10 上 4-shot ResNet-18 比 ERM 提升 12.35%。
-
 **[Sequential Group Composition: A Window into the Mechanics of Deep Learning](sequential_group_composition_a_window_into_the_mechanics_of_deep_learning.md)**
 
 :   作者把"对一段群元素求累积乘积"这个统一任务作为显微镜，用群上 Fourier 分析 + AGF 框架证明两层网络会按 Fourier 能量从大到小逐个学习不可约表示（irrep），并刻画两层、RNN、深层 MLP 三种架构在序列长度 $k$ 上分别需要 $2^k$ 宽度、$k$ 步、$\log k$ 层的表达力鸿沟。
-
-**[Simple Algorithms for Bad Triangle Transversals with Applications to Correlation Clustering](simple_algorithms_for_bad_triangle_transversals_with_applications_to_correlation.md)**
-
-:   本文为有符号图上的"坏三角形覆盖"问题（Bad Triangle Transversal, BTT）给出两个仅需单次解 LP 的简洁 2-近似算法，证明在完全图上 BTT 与 Correlation Clustering、MinSTC、Cluster Deletion 同时具有 $\tfrac{2137}{2136}$ 的 NP-难逼近下界，并构造了一种新的 pivot 流程把任意可行 BTT 覆盖转化为最多 $\tfrac{3}{2}|F|$ 错误的聚类，从而把 BTT 与 CC 最优值的差距从 2 收紧到 $3/2$。
-
-**[SORA: Free Second-Order Attacks in Fast Adversarial Training](sora_free_second-order_attacks_in_fast_adversarial_training.md)**
-
-:   本文从二阶视角重新审视单步对抗训练中的灾难性过拟合（CO），提出零成本曲率指标 PertAlign 来提前预警 CO，并据此推导出 SORA：一种用上一步反向传播梯度免费估计 Hessian、按通道随机化采样最优步长的自适应快速对抗训练算法，在 6 个数据集和 4 种架构上仅用同一组超参就稳定避免 CO 并刷新单步 AT 的鲁棒/干净精度 trade-off。
 
 **[Structure-Induced Information for Rerooting Levin Tree Search](structure-induced_information_for_rerooting_levin_tree_search.md)**
 
@@ -433,14 +320,6 @@ item_total: 94
 
 :   本文用四个「记忆悖论」反例 + 一套严格的展开定理，证明带 KV-binding 内循环的 TTT（如 LaCT、ViTTT）即便用多层 MLP + 动量也只是「学到的线性注意力算子」，并据此把它简化、并行化为标准线性注意力，吞吐提升 4× 而性能几乎不掉。
 
-**[The Implicit Bias of Adam and Muon on Smooth Homogeneous Neural Networks](the_implicit_bias_of_adam_and_muon_on_smooth_homogeneous_neural_networks.md)**
-
-:   本文证明：在光滑 $L$-同质模型 + 指数尾损失 + 学习率衰减的设定下，Muon（含 Muon-Signum、Muon-Adam）作为带动量的"归一化最速下降"会收敛到对应范数 max-margin 问题的 KKT 点；Adam（无稳定常数）则收敛到 $\ell_\infty$ max-margin 的 KKT 点，从而把以往仅对线性模型成立的隐式偏置结论一次性提升到所有光滑同质网络。
-
-**[The Realignment Problem: When Right becomes Wrong in LLMs](the_realignment_problem_when_right_becomes_wrong_in_llms.md)**
-
-:   本文把"模型部署后政策变了怎么办"形式化为 Realignment 问题,提出 TRACE 框架:用更强的 proxy 模型把已有 preference pair 三分类 (Invert / Punish / Retain) 后用混合 IPO+NPO+KL 目标做手术式再对齐,无需新一轮人工标注就能跟上政策漂移。
-
 **[Theoretical Analysis of Sparse Optimization with Reparameterization, Weight Decay, and Adaptive Learning Rate](theoretical_analysis_of_sparse_optimization_with_reparameterization_weight_decay.md)**
 
 :   本文提出 ReWA：把待优化变量重参数化为 $\boldsymbol{x}=\boldsymbol{y}^{K}$、对 $\boldsymbol{y}$ 加权重衰减、并使用一种坐标级自适应步长 $\eta_t \boldsymbol{y}^{M}/(\boldsymbol{y}^{K-1}+\epsilon)$，把不可优化的 $\ell_p\;(0<p<1)$ 稀疏正则等价转化为一个梯度有界、不易陷入零鞍点的可训练目标，并在 CIFAR-10 / ImageNet 上用 ResNet 验证了相对 $\ell_1$ 的稀疏性提升。
@@ -448,10 +327,6 @@ item_total: 94
 **[Torus Graphs for Large-Scale Neural Phase Analysis](torus_graphs_for_large_scale_neural_phase_analysis.md)**
 
 :   作者把 Torus Graph (TG)——定义在 $d$-环面 $\mathbb{T}^d$ 上的指数族相位图模型——用随机化分数匹配把每步推断复杂度从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$，由此首次支持上千个相位变量，并据此搭出 TG-HMM 与自回归 TG 两套动态/有向扩展，应用到小鼠 LFP 数据上揭示了清醒-NREM 之间的频率特异性相位重组。
-
-**[Towards Optimal Robustness in Learning-Augmented Paging](towards_optimal_robustness_in_learning-augmented_paging.md)**
-
-:   本文为带预测的随机化在线调页提出统一的「相对预测预算」(RPB) 视角，并基于 OnlineMin 设计 RPB-OnOPT 框架，把可证的鲁棒竞争比从既有的 $2H_k+O(1)$ 一举推到信息论下界附近的 $H_k+O(1)$，同时保持 1-一致性。
 
 **[通过分布式鲁棒逐节点回归的变量聚类](variable_clustering_via_distributionally_robust_nodewise_regression.md)**
 

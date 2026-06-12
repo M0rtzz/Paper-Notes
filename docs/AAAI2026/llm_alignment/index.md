@@ -1,15 +1,15 @@
 ---
 title: >-
-  AAAI2026 对齐/RLHF论文汇总 · 16篇论文解读
+  AAAI2026 对齐/RLHF论文汇总 · 17篇论文解读
 description: >-
-  16篇AAAI2026的对齐 / RLHF 方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇AAAI2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "对齐 / RLHF"
   - "论文解读"
   - "论文笔记"
-  - "LLM"
   - "对齐/RLHF"
+  - "LLM"
   - "对抗鲁棒"
   - "推理"
 item_list:
@@ -35,6 +35,8 @@ item_list:
     t: "GRAM-R²: Self-Training Generative Foundation Reward Models for Reward Reasoning"
   - u: "importance-aware_data_selection_for_efficient_llm_instruction_tuning/"
     t: "Importance-Aware Data Selection for Efficient LLM Instruction Tuning"
+  - u: "intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba/"
+    t: "Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis"
   - u: "laf-grpo_in-situ_navigation_instruction_generation_for_the_visually_impaired_via/"
     t: "LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward"
   - u: "on_the_exponential_convergence_for_offline_rlhf_with_pairwise_comparisons/"
@@ -45,17 +47,17 @@ item_list:
     t: "W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search"
   - u: "when_human_preferences_flip_an_instance-dependent_robust_loss_for_rlhf/"
     t: "When Human Preferences Flip: An Instance-Dependent Robust Loss for RLHF"
-item_total: 16
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**🤖 AAAI2026** · **16** 篇论文解读
+**🤖 AAAI2026** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** LLM ×8 · 对齐/RLHF ×8 · 对抗鲁棒 ×2 · 推理 ×2
+🔥 **高频主题：** 对齐/RLHF ×9 · LLM ×8 · 对抗鲁棒 ×2 · 推理 ×2
 
 **[Align to Structure: Aligning Large Language Models with Structural Information](align_to_structure_aligning_large_language_models_with_struc.md)**
 
@@ -100,6 +102,10 @@ item_total: 16
 **[Importance-Aware Data Selection for Efficient LLM Instruction Tuning](importance-aware_data_selection_for_efficient_llm_instruction_tuning.md)**
 
 :   提出MIWV（Model Instruction Weakness Value）指标，通过比较LLM在有/无one-shot ICL示例下的损失差来衡量每条指令数据对模型能力提升的重要性，在Alpaca数据集上仅用1%（520条）数据即全面超越全量52002条的微调效果。
+
+**[Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis](intrinsic_barriers_and_practical_pathways_for_human-ai_alignment_an_agreement-ba.md)**
+
+:   本文将 AI 对齐形式化为 $\langle M,N,\varepsilon,\delta\rangle$-agreement 多目标优化问题，从通信复杂度角度证明了对齐的信息论下界（编码"所有人类价值观"本质上不可行），同时给出了无界/有界理性智能体的显式可达算法和紧致上界，揭示了在大状态空间下 reward hacking 全局不可避免的理论根基。
 
 **[LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward](laf-grpo_in-situ_navigation_instruction_generation_for_the_visually_impaired_via.md)**
 

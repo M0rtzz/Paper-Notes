@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 对齐/RLHF论文汇总 · 75篇论文解读
+  ACL2025 对齐/RLHF论文汇总 · 82篇论文解读
 description: >-
-  75篇ACL2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、Agent、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  82篇ACL2025的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、LLM、对抗鲁棒、Agent、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "对齐 / RLHF"
@@ -15,6 +15,10 @@ tags:
   - "多模态"
   - "推理"
 item_list:
+  - u: "a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent/"
+    t: "A Dual-Mind Framework for Strategic and Expressive Negotiation Agent"
+  - u: "acecoder_acing_coder_rl_via_automated/"
+    t: "AceCoder: Acing Coder RL via Automated Test-Case Synthesis"
   - u: "agd_adversarial_game_defense_against_jailbreak_attacks_in_large_language_models/"
     t: "AGD: Adversarial Game Defense Against Jailbreak Attacks in Large Language Models"
   - u: "agentalign_navigating_safety_alignment_in_the_shift_from_informative_to_agentic_/"
@@ -31,6 +35,8 @@ item_list:
     t: "Atyaephyra at SemEval-2025 Task 4: Low-Rank Negative Preference Optimization"
   - u: "automixalign_adaptive_data_mixing/"
     t: "AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs"
+  - u: "balancing_the_budget_understanding_trade-offs_between_supervised_and_preference-/"
+    t: "Balancing the Budget: Understanding Trade-offs Between Supervised and Preference-Based Finetuning"
   - u: "beyond_similarity_a_gradient-based_graph_method_for_instruction_tuning_data_sele/"
     t: "Beyond Similarity: A Gradient-based Graph Method for Instruction Tuning Data Selection"
   - u: "beyond_surface-level_patterns_an_essence-driven_defense_framework_against_jailbr/"
@@ -61,31 +67,33 @@ item_list:
     t: "Dynamic Scaling of Unit Tests for Code Reward Modeling"
   - u: "expectation_confirmation_preference_optimization_for_multi-turn_conversational_r/"
     t: "Expectation Confirmation Preference Optimization for Multi-Turn Conversational Recommendation Agent"
+  - u: "expo_model_extrapolation/"
+    t: "Model Extrapolation Expedites Alignment"
   - u: "federated_data-efficient_instruction_tuning_for_large_language_models/"
     t: "Federated Data-Efficient Instruction Tuning for Large Language Models"
   - u: "finding_the_sweet_spot_preference_data_construction_for_scaling_preference_optim/"
     t: "Finding the Sweet Spot: Preference Data Construction for Scaling Preference Optimization"
   - u: "fine-grained_video_dubbing_duration_alignment_with_segment_supervised_preference/"
     t: "Fine-grained Video Dubbing Duration Alignment with Segment Supervised Preference Optimization"
-  - u: "focalpo_enhancing_preference_optimizing_by_focusing_on_correct_preference_rankin/"
-    t: "FocalPO: Enhancing Preference Optimizing by Focusing on Correct Preference Rankings"
-  - u: "focused-dpo_enhancing_code_generation_through_focused_preference_optimization_on/"
-    t: "Focused-DPO: Enhancing Code Generation Through Focused Preference Optimization on Error-Prone Points"
-  - u: "haf-rm_a_hybrid_alignment_framework_for_reward_model_training/"
-    t: "HAF-RM: A Hybrid Alignment Framework for Reward Model Training"
-  - u: "hiddendetect_detecting_jailbreak_attacks_against_multimodal_large_language_model/"
-    t: "HiddenDetect: Detecting Jailbreak Attacks against Large Vision-Language Models via Monitoring Hidden States"
-item_total: 75
+item_total: 82
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**💬 ACL2025** · **75** 篇论文解读
+**💬 ACL2025** · **82** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/llm_alignment/index.md) · [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (17)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×37 · LLM ×11 · 对抗鲁棒 ×11 · Agent ×4 · 多模态 ×4
+🔥 **高频主题：** 对齐/RLHF ×39 · LLM ×11 · 对抗鲁棒 ×11 · Agent ×5 · 多模态 ×4
+
+**[A Dual-Mind Framework for Strategic and Expressive Negotiation Agent](a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent.md)**
+
+:   本文受人类认知双过程理论启发，提出双心智谈判智能体框架（DMNA），将直觉模块（快速策略规划，基于 MCTS+DPO 训练）和审慎模块（慢速表达优化，基于多面反思机制）相结合，在谈判任务上取得了最优性能。
+
+**[AceCoder: Acing Coder RL via Automated Test-Case Synthesis](acecoder_acing_coder_rl_via_automated.md)**
+
+:   构建 AceCode-87K（87K 编码题 + 138 万自动合成测试用例），训练代码专用 Reward Model（7B 超越 340B Nemotron），Best-of-N 提升 Llama-3.1-8B 平均 8.9 分，R1 风格从 base 直接 RL 仅 80 步 HumanEval+ 提升 22.5%。
 
 **[AGD: Adversarial Game Defense Against Jailbreak Attacks in Large Language Models](agd_adversarial_game_defense_against_jailbreak_attacks_in_large_language_models.md)**
 
@@ -118,6 +126,10 @@ item_total: 75
 **[AutoMixAlign: Adaptive Data Mixing for Multi-Task Preference Optimization in LLMs](automixalign_adaptive_data_mixing.md)**
 
 :   AutoMixAlign 提出了一种理论驱动的多任务偏好优化数据混合方法：先训练各任务的 specialist model 确定最优 loss 基线，再通过 minimax 优化自适应调整数据混合比例，优先处理 excess loss（与 specialist 的差距）最大的任务，在 helpfulness/harmlessness/reasoning 多任务 DPO 中平均提升 9.42%。
+
+**[Balancing the Budget: Understanding Trade-offs Between Supervised and Preference-Based Finetuning](balancing_the_budget_understanding_trade-offs_between_supervised_and_preference-.md)**
+
+:   系统研究了在固定数据标注预算下，如何在监督微调（SFT）和偏好微调（PFT/DPO）两个阶段之间最优分配资源，发现低数据量时纯 SFT 最优，高预算时组合使用效果最佳，且仅将 <10% 预算分配给 SFT 就能解决 DPO 的冷启动问题并带来 15-20% 的数学推理提升。
 
 **[Beyond Similarity: A Gradient-based Graph Method for Instruction Tuning Data Selection](beyond_similarity_a_gradient-based_graph_method_for_instruction_tuning_data_sele.md)**
 
@@ -179,6 +191,10 @@ item_total: 75
 
 :   提出 ECPO（Expectation Confirmation Preference Optimization），首个面向 LLM 对话推荐 Agent 的多轮偏好优化方法——基于心理学期望确认理论（ECT）显式建模用户满意度在多轮对话中的演变，通过前向期望确认定位不满意根因 + 后向期望推导重写回复构建 turn-level 偏好对，配合 AILO 用户模拟器，在 3 个数据集上显著优于现有 MTPO 方法。
 
+**[Model Extrapolation Expedites Alignment](expo_model_extrapolation.md)**
+
+:   基于"对齐训练仅产生微小参数变化"的观察，提出ExPO方法——通过放大SFT→DPO的参数变化方向（$\theta_2 = \theta_1 + \alpha\Delta\theta$），在零额外训练开销下提升对齐性能，使仅训练20%步骤的DPO模型超越完整训练的版本。
+
 **[Federated Data-Efficient Instruction Tuning for Large Language Models](federated_data-efficient_instruction_tuning_for_large_language_models.md)**
 
 :   提出 FedHDS（Federated Hierarchical Data Selection），通过 intra-client 和 inter-client 两级层次化数据选择消除联邦学习中客户端内部和跨客户端的数据冗余，结合多层 Transformer 特征融合提升 coreset 质量；仅用不到 1.5% 的数据，在 Rouge-L 上相对 SOTA 全数据联邦基线平均提升 10.72%，训练效率提升最高达 48.8 倍。
@@ -198,6 +214,10 @@ item_total: 75
 **[Focused-DPO: Enhancing Code Generation Through Focused Preference Optimization on Error-Prone Points](focused-dpo_enhancing_code_generation_through_focused_preference_optimization_on.md)**
 
 :   发现代码生成模型的错误高度集中在特定"错误易发点"（error-prone points），前缀/后缀几乎不变而中间段决定正确性，提出 Focused-DPO：通过 PageRank 在代码-测试二部图上排序定位关键中间段，并在 DPO 损失中对该段加权放大（$w_{focused}=2$），仅用 5000 样本即可在 HumanEval+ 上提升 4.41%、LiveCodeBench-Hard 上相对提升 42.86%。
+
+**[From Lists to Emojis: How Format Bias Affects Model Alignment](from_lists_to_emojis_how_format_bias_affects_model_alignment.md)**
+
+:   本文系统研究了 RLHF 中偏好模型（包括人类评估者、GPT-4 和开源模型）对粗体、列表、emoji 等格式模式的偏好偏差，展示了不到 1% 的偏差数据即可显著注入偏差，并提出了双头奖励模型的去偏方法。
 
 **[HAF-RM: A Hybrid Alignment Framework for Reward Model Training](haf-rm_a_hybrid_alignment_framework_for_reward_model_training.md)**
 
@@ -238,6 +258,10 @@ item_total: 75
 **[LLMs Caught in the Crossfire: Malware Requests and Jailbreak Challenges](llms_caught_in_the_crossfire_malware_requests_and_jailbreak_challenges.md)**
 
 :   构建 MalwareBench 基准（320 个手工恶意代码需求 × 11 种黑盒越狱方法 = 3520 个 prompt），系统评测 29 个 LLM 在恶意代码生成场景下的安全性，发现越狱攻击将平均拒绝率从 60.93% 降至 39.92%，且模型参数量与防御能力并非正比关系。
+
+**[LoGU: Long-form Generation with Uncertainty Expressions](logu_longform_gen_uncertainty.md)**
+
+:   定义"长文本不确定性生成"（LoGU）任务，识别不确定性抑制和不确定性错位两个子挑战，提出基于分解的数据构造框架和 SFT+DPO 两阶段训练流水线，使 LLM 在长文本生成中对不确定事实显式表达不确定性，在三个数据集上将 Llama3-8B 的事实准确率从 51.9% 提升到 71.6%，错误声明数从 20.4 降到 5.81。
 
 **[LPOI: Listwise Preference Optimization for Vision Language Models](lpoi_listwise_preference_optimization_for_vision_language_models.md)**
 
@@ -350,6 +374,10 @@ item_total: 75
 **[SQL Injection Jailbreak: A Structural Disaster of Large Language Models](sql_injection_jailbreak_a_structural_disaster_of_large_language_models.md)**
 
 :   提出 SQL Injection Jailbreak（SIJ），一种利用 LLM 提示构造方式中的结构性漏洞进行越狱的新方法，在开源模型上实现近 100% 攻击成功率，在闭源模型上平均超过 85%，并提出 Self-Reminder-Key 防御方案。
+
+**[Synergistic Weak-Strong Collaboration by Aligning Preferences](synergistic_weak-strong_collaboration_by_aligning_preferences.md)**
+
+:   本文提出 CoWest 框架，通过让专业化的弱模型（如 LLaMA3-8B）生成初始草稿，再由通用强模型（如 GPT-4）精炼，并利用协作反馈通过 DPO 微调弱模型以对齐强模型偏好，在反事实推理、医学和伦理三个领域显著超越单模型和已有协作方法。
 
 **[SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](synthesizeme_persona_prompts.md)**
 

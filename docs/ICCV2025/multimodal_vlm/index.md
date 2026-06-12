@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 多模态VLM论文汇总 · 145篇论文解读
+  ICCV2025 多模态VLM论文汇总 · 143篇论文解读
 description: >-
-  145篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、对齐/RLHF、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  143篇ICCV2025的多模态 VLM 方向论文解读，涵盖多模态、LLM、推理、少样本学习、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "多模态 VLM"
@@ -12,8 +12,8 @@ tags:
   - "LLM"
   - "推理"
   - "少样本学习"
-  - "对齐/RLHF"
   - "压缩/编码"
+  - "对齐/RLHF"
 item_list:
   - u: "a_qualityguided_mixture_of_scorefusion_experts_framework_for/"
     t: "A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition"
@@ -75,17 +75,17 @@ item_list:
     t: "CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance"
   - u: "compcap_improving_multimodal_large_language_models_with_composite_captions/"
     t: "CompCap: Improving Multimodal Large Language Models with Composite Captions"
-item_total: 145
+item_total: 143
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态 VLM
 
-**📹 ICCV2025** · **145** 篇论文解读
+**📹 ICCV2025** · **143** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (207)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
-🔥 **高频主题：** 多模态 ×75 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 对齐/RLHF ×4
+🔥 **高频主题：** 多模态 ×75 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 压缩/编码 ×3
 
 **[A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)**
 
@@ -215,10 +215,6 @@ item_total: 145
 
 :   针对 Visual Prompt Tuning (VPT) 中 prompt token 参与 self-attention 导致的计算冗余和注意力破坏问题，提出 CVPT，通过 cross-attention 解耦 prompt 与 image token 的交互，并利用权重共享机制初始化 cross-attention，在 25 个数据集上显著超越 VPT，性能媲美主流 adapter 方法。
 
-**[DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)**
-
-:   提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
-
 **[DisenQ: Disentangling Q-Former for Activity-Biometrics](disenq_disentangling_q-former_for_activity-biometrics.md)**
 
 :   提出 DisenQ（Disentangling Q-Former），通过结构化语言引导将视频特征解纠缠为生物特征、动作和非生物特征三个独立空间，无需额外视觉模态即可实现活动感知的行人识别 SOTA。
@@ -302,10 +298,6 @@ item_total: 145
 **[FOLDER: Accelerating Multi-modal Large Language Models with Enhanced Performance](folder_accelerating_multi-modal_large_language_models_with_enhanced_performance.md)**
 
 :   提出 FOLDER——一种即插即用的视觉 token 压缩模块，通过系统分析信息损失的三个关键因素（压缩影响、传播效应、聚合方式），在视觉编码器的最后几层进行激进的 token 合并，实现最多 70% 的 token 削减，同时保持甚至提升模型性能。
-
-**[FREE-Merging: Fourier Transform for Efficient Model Merging](free-merging_fourier_transform_for_efficient_model_merging.md)**
-
-:   首次发现模型合并中任务干扰在频域上的表现，提出 FR-Merging 通过高通滤波去除低频干扰构建高质量合并骨干网络，并结合轻量级任务专家模块（FREE-Merging），在视觉、语言和多模态任务上实现性能-成本的最优平衡。
 
 **[Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference](free-moref_instantly_multiplexing_context_perception_capabilities_of_video-mllms.md)**
 

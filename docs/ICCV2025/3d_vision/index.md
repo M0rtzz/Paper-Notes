@@ -83,9 +83,9 @@ item_total: 264
 
 **📹 ICCV2025** · **264** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (113)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×48 · 扩散模型 ×27 · 点云 ×16 · 动态场景 ×15 · 对抗鲁棒 ×12
+🔥 **高频主题：** 3D 高斯渲染 ×48 · 扩散模型 ×26 · 点云 ×16 · 动态场景 ×15 · 对抗鲁棒 ×12
 
 **[TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)**
 
@@ -1043,6 +1043,10 @@ item_total: 264
 
 :   提出基于3D扩散先验的再生式3D morphing方法，通过在初始噪声、模型参数和条件特征三个层级进行插值，结合Attention Fusion、Token Reordering和Low-Frequency Enhancement三种策略，首次实现了跨类别纹理3D物体的平滑、合理变形序列生成。
 
+**[Thermal Polarimetric Multi-view Stereo](thermal_polarimetric_multi-view_stereo.md)**
+
+:   提出利用热偏振（长波红外偏振）线索进行精细三维形状重建的方法，理论证明 LWIR 偏振观测不受光照环境和材质光学属性的影响，从而实现对透明、半透明和异质材料物体的高精度三维重建，显著优于可见光偏振方法。
+
 **[TimeFormer: Capturing Temporal Relationships of Deformable 3D Gaussians for Robust Reconstruction](timeformer_capturing_temporal_relationships_of_deformable_3d_gaussians_for_robus.md)**
 
 :   提出TimeFormer模块,通过跨时间Transformer编码器隐式学习可变形3D Gaussian的时序关系,并设计双流优化策略在训练时迁移运动知识,推理时无额外开销。
@@ -1086,10 +1090,6 @@ item_total: 264
 **[Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes](unified_category-level_object_detection_and_pose_estimation_from_rgb_images_usin.md)**
 
 :   首次提出将物体检测与类别级位姿估计统一到单一模型的 RGB-only 框架，利用 Neural Mesh Models 作为3D原型表示，通过特征匹配和多模型 RANSAC PnP 同时实现检测和 9D 位姿估计，在 REAL275 上所有 scale-agnostic 指标均超越 SOTA。
-
-**[UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)**
-
-:   提出UniVG,基于MM-DiT的统一图像生成模型,通过通道维拼接输入、渐进式多任务训练和外部条件注入,用单套权重支持T2I生成、编辑、ID保持、布局引导、深度估计等多种任务。
 
 **[Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)](unleashing_vecset_diffusion_model_for_fast_shape_generation.md)**
 

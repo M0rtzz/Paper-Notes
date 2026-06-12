@@ -44,7 +44,7 @@ tags:
 定理 4.5（主结果）：在 Polish $(\mathcal{X}, \rho)$、$(\mathcal{Y}, \ell)$ 和带紧参数空间 $\Theta$、$h$ 在 $\theta$ 上连续的 $\mathcal{H}$ 下，下列等价：（1）存在分布无关学习规则 $\mathcal{A}$ 使得对每个 realizable $\mu$ 都有 $R_\mu(h_n) \to 0$ a.s.；（2）$\mathcal{H}$ 不含无穷 non-decreasing $(\gamma_k)$-Littlestone tree（$\gamma_k \to \infty$）。整个证明围绕一个组合二分展开——$\mathcal{H}$ 到底含不含这棵"无界 gap 树"：含 ⟹ 走下界，构造灾难性分布把任意学习器逼到风险发散；不含 ⟹ 走上界，把 learner 的胜策略落地成一个显式的、可数局部化的学习器。两个方向合起来正好夹出充要刻画。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     A["无界 gap Littlestone 树<br/>深度 k 的两出边标签距离 ≥ γ_k，且 γ_k → ∞"]
     A -->|H 含无穷树| B["下界：构造灾难性分布<br/>样本未触到的深度上盲猜 → 风险发散"]

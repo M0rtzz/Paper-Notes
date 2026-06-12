@@ -1,18 +1,17 @@
 ---
 title: >-
-  CVPR2026 其他论文汇总 · 35篇论文解读
+  CVPR2026 其他论文汇总 · 32篇论文解读
 description: >-
-  35篇CVPR2026的其他方向论文解读，涵盖对抗鲁棒、多模态、Agent、少样本学习、联邦学习、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  32篇CVPR2026的其他方向论文解读，涵盖 Agent、少样本学习、联邦学习、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "其他"
   - "论文解读"
   - "论文笔记"
-  - "对抗鲁棒"
-  - "多模态"
   - "Agent"
   - "少样本学习"
   - "联邦学习"
+  - "对抗鲁棒"
   - "布局/合成"
 item_list:
   - u: "adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet/"
@@ -51,8 +50,6 @@ item_list:
     t: "Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning"
   - u: "myovision_a_mobile_research_tool_and_neatboost_attention_ensemble_framework/"
     t: "MyoVision: A Mobile Research Tool and NEATBoost-Attention Ensemble Framework for Real Time Chicken Breast Myopathy Detection"
-  - u: "nailia_multimodal_nail_design_retrieval_based_on_dense_intent_descriptions_and_p/"
-    t: "NaiLIA: Multimodal Nail Design Retrieval Based on Dense Intent Descriptions and Palette Queries"
   - u: "neural_collapse_in_test-time_adaptation/"
     t: "Neural Collapse in Test-Time Adaptation"
   - u: "omnifood8k_nutrition_estimation/"
@@ -69,23 +66,23 @@ item_list:
     t: "Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation"
   - u: "simrecon_simready_compositional_scene_reconstruction_from_real_videos/"
     t: "SimRecon: SimReady Compositional Scene Reconstruction from Real Videos"
-  - u: "sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven/"
-    t: "SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design"
   - u: "teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with/"
     t: "TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size"
   - u: "v_nutri_nutrition_estimation_cooking_videos/"
     t: "V-Nutri: Dish-Level Nutrition Estimation from Egocentric Cooking Videos"
-item_total: 35
+  - u: "vit3_unlocking_test_time_training_in_vision/"
+    t: "ViT3: Unlocking Test-Time Training in Vision"
+  - u: "what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin/"
+    t: "What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁"
+item_total: 32
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2026** · **35** 篇论文解读
+**📷 CVPR2026** · **32** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
-
-🔥 **高频主题：** 对抗鲁棒 ×2 · 多模态 ×2
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
 
 **[AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)**
 
@@ -159,10 +156,6 @@ item_total: 35
 
 :   提出 MyoVision 智能手机透射成像框架和 NEATBoost-Attention 神经进化优化集成模型，用于低成本实时鸡胸肉肌病（木质胸、意面肉）三分类检测。
 
-**[NaiLIA: Multimodal Nail Design Retrieval Based on Dense Intent Descriptions and Palette Queries](nailia_multimodal_nail_design_retrieval_based_on_dense_intent_descriptions_and_p.md)**
-
-:   提出 NaiLIA，一种面向美甲设计图像的多模态检索方法，通过密集意图描述和调色板查询实现细粒度匹配，引入基于置信度分数的松弛对比损失（CRC loss）处理未标注正样本问题，在自建 NAIL-STAR 基准和 Marqo Fashion200K 上大幅超越现有方法。
-
 **[Neural Collapse in Test-Time Adaptation](neural_collapse_in_test-time_adaptation.md)**
 
 :   将神经坍缩 (Neural Collapse) 理论从类级别扩展到样本级别，发现了NC3+现象（样本特征嵌入与对应分类器权重对齐），基于此揭示了分布偏移下性能退化的根本原因是样本级特征-分类器错位，并提出NCTTA方法通过几何邻近度与预测置信度的混合目标引导特征重新对齐，在ImageNet-C上比Tent提升14.52%。
@@ -195,10 +188,6 @@ item_total: 35
 
 :   提出 SimRecon 框架，通过"感知→生成→仿真"三阶段流水线，从真实视频自动构建仿真就绪的组合式 3D 场景，核心创新在于主动视角优化（AVO）为单物体生成寻找最优投影视角和场景图合成器（SGS）引导物理可信的层级化组装。
 
-**[SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design](sldprtnet_a_large-scale_multimodal_dataset_for_cad_generation_in_language-driven.md)**
-
-:   构建了包含 242,000+ 工业零件的大规模多模态 CAD 数据集 SldprtNet，每个样本包含 .sldprt/.step 3D 模型、七视图合成图像、参数化建模脚本和自然语言描述四种模态的完整对齐数据，配套开发支持 13 种 CAD 命令的无损编码器/解码器工具，baseline 实验验证了多模态输入相比纯文本输入在 CAD 生成任务上的显著优势。
-
 **[TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)**
 
 :   提出 TeamHOI 框架，通过基于 Transformer 的去中心化策略网络和掩码对抗运动先验（Masked AMP），使单一策略能够泛化到任意数量智能体的协作搬运任务，2-8 个仿人智能体协作搬桌子成功率达 97%+。
@@ -218,10 +207,6 @@ item_total: 35
 **[What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)**
 
 :   系统分析了现有渲染合成数据在语料、字体、布局多样性上的不足，提出 UnionST 合成引擎和自演化学习框架（SEL），仅用合成数据即大幅超越传统合成集，结合 SEL 仅需 9% 真实标注即可逼近全监督性能。
-
-**[Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation](your_classifier_can_do_more_towards_balancing_the.md)**
-
-:   通过能量景观分析揭示 AT 和 JEM 的互补性（AT 对齐 clean-adv 能量分布 → 鲁棒性；JEM 对齐 clean-generated 能量分布 → 精度+生成），提出 EB-JDAT 建模联合分布 $p(\mathbf{x}, \tilde{\mathbf{x}}, y)$ 并用 min-max 能量优化对齐三种数据能量分布，CIFAR-10 AutoAttack 鲁棒性 68.76%（超 SOTA AT +10.78%），同时保持 90.39% 清洁精度和 FID=27.42 的竞争力生成质量。
 
 **[ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)**
 

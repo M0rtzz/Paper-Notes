@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 AI安全论文汇总 · 36篇论文解读
+  ICML2025 AI安全论文汇总 · 37篇论文解读
 description: >-
-  36篇ICML2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  37篇ICML2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、强化学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "AI 安全"
@@ -44,6 +44,8 @@ item_list:
     t: "Distributed and Decentralised Training: Technical Governance Challenges in a Shifting AI Landscape"
   - u: "doubly_robust_fusion_of_many_treatments_for_policy_learning/"
     t: "Doubly Robust Fusion of Many Treatments for Policy Learning"
+  - u: "enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a/"
+    t: "Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss"
   - u: "faster_rates_for_private_adversarial_bandits/"
     t: "Faster Rates for Private Adversarial Bandits"
   - u: "ficgcn_unveiling_the_homomorphic_encryption_efficiency_from_irregular_graph_conv/"
@@ -70,19 +72,17 @@ item_list:
     t: "Rethinking the Bias of Foundation Model under Long-tailed Distribution"
   - u: "retraining_with_predicted_hard_labels_provably_increases_model_accurac/"
     t: "Retraining with Predicted Hard Labels Provably Increases Model Accuracy"
-  - u: "retraining_with_predicted_hard_labels_provably_increases_model_accuracy/"
-    t: "Retraining with Predicted Hard Labels Provably Increases Model Accuracy"
-item_total: 36
+item_total: 37
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧪 ICML2025** · **36** 篇论文解读
+**🧪 ICML2025** · **37** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×8 · 联邦学习 ×6 · 强化学习 ×2
+🔥 **高频主题：** 对抗鲁棒 ×9 · 联邦学习 ×6 · 强化学习 ×2
 
 **[A Certified Unlearning Approach without Access to Source Data](a_certified_unlearning_approach_without_access_to_source_data.md)**
 
@@ -147,6 +147,10 @@ item_total: 36
 **[Doubly Robust Fusion of Many Treatments for Policy Learning](doubly_robust_fusion_of_many_treatments_for_policy_learning.md)**
 
 :   提出校准加权治疗融合（Calibration-Weighted Treatment Fusion）方法，通过双重稳健地合并具有相似效果的治疗组来降低动作空间维度，使得现有多臂策略学习方法（如策略树）可高效应用于大量治疗选项的个体化推荐场景。
+
+**[Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss](enhancing_certified_robustness_via_block_reflector_orthogonal_layers_and_logit_a.md)**
+
+:   本文提出了一种高效的低秩正交层参数化方法（BRO Layer）和一种退火机制的损失函数（Logit Annealing Loss），用于构建具有更强认证鲁棒性的 Lipschitz 神经网络 BRONet，在 CIFAR-10/100、Tiny-ImageNet 和 ImageNet 上达到 SOTA。
 
 **[Faster Rates for Private Adversarial Bandits](faster_rates_for_private_adversarial_bandits.md)**
 

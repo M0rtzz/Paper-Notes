@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 强化学习论文汇总 · 125篇论文解读
+  ICLR2026 强化学习论文汇总 · 126篇论文解读
 description: >-
-  125篇ICLR2026的强化学习方向论文解读，涵盖强化学习、推理、对抗鲁棒、LLM、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  126篇ICLR2026的强化学习方向论文解读，涵盖强化学习、推理、对抗鲁棒、LLM、Agent、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "强化学习"
@@ -34,6 +34,8 @@ item_list:
     t: "Boolean Satisfiability via Imitation Learning"
   - u: "breaking_barriers_do_reinforcement_post_training_gains_transfer_to_unseen_domain/"
     t: "Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?"
+  - u: "cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning/"
+    t: "cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning"
   - u: "chain-of-context_learning_dynamic_constraint_understanding_for_multi-task_vrps/"
     t: "Chain-of-Context Learning: Dynamic Constraint Understanding for Multi-Task VRPs"
   - u: "continuous-time_value_iteration_for_multi-agent_reinforcement_learning/"
@@ -72,19 +74,17 @@ item_list:
     t: "Exploration vs Exploitation: Rethinking RLVR through Clipping, Entropy, and Spurious Reward"
   - u: "fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning/"
     t: "FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning"
-  - u: "flow_actor-critic_for_offline_reinforcement_learning/"
-    t: "Flow Actor-Critic for Offline Reinforcement Learning (FAC)"
-item_total: 125
+item_total: 126
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🔬 ICLR2026** · **125** 篇论文解读
+**🔬 ICLR2026** · **126** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (95)](../../ICML2026/reinforcement_learning/index.md) · [💬 ACL2026 (44)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×37 · 推理 ×20 · 对抗鲁棒 ×13 · LLM ×12 · Agent ×10
+🔥 **高频主题：** 强化学习 ×38 · 推理 ×20 · 对抗鲁棒 ×13 · LLM ×12 · Agent ×10
 
 **[A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)**
 
@@ -125,6 +125,10 @@ item_total: 125
 **[Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?](breaking_barriers_do_reinforcement_post_training_gains_transfer_to_unseen_domain.md)**
 
 :   通过观察性研究（18 个开源 RPT 模型）和干预性研究（单域 GRPO 训练），系统揭示了强化后训练（RPT/RLVR）的泛化局限：RPT 在训练域内提升显著，但跨域泛化不一致——结构化域（数学↔代码）可互相迁移，但无法泛化到非结构化域（法律/金融/医疗），且这一结论跨算法、模型规模和训练步数保持一致。
+
+**[cadrille: Multi-modal CAD Reconstruction with Reinforcement Learning](cadrille_multi-modal_cad_reconstruction_with_reinforcement_learning.md)**
+
+:   cadrille 是首个同时处理点云、多视角图像和文本输入的多模态 CAD 重建模型，通过 VLM 基础架构 + SFT + RL 微调的三阶段训练范式，在 10 个 CAD 重建基准上达到 SOTA，尤其是 RL 微调将无效率降至接近 0%。
 
 **[Chain-of-Context Learning: Dynamic Constraint Understanding for Multi-Task VRPs](chain-of-context_learning_dynamic_constraint_understanding_for_multi-task_vrps.md)**
 

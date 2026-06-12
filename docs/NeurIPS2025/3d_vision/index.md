@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 3D视觉论文汇总 · 113篇论文解读
+  NeurIPS2025 3D视觉论文汇总 · 114篇论文解读
 description: >-
-  113篇NeurIPS2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、动态场景、扩散模型、新视角合成、点云、三维重建等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  114篇NeurIPS2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、动态场景、扩散模型、新视角合成、点云、三维重建等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "3D 视觉"
@@ -17,6 +17,8 @@ tags:
 item_list:
   - u: "3d_visual_illusion_depth_estimation/"
     t: "3D Visual Illusion Depth Estimation"
+  - u: "4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono/"
+    t: "4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos"
   - u: "anti-aliased_2d_gaussian_splatting/"
     t: "Anti-Aliased 2D Gaussian Splatting"
   - u: "armesh_autoregressive_mesh_generation_via_next-level-of-detail_prediction/"
@@ -73,23 +75,25 @@ item_list:
     t: "FlareX: A Physics-Informed Dataset for Lens Flare Removal via 2D Synthesis and 3D Rendering"
   - u: "flux4d_flow-based_unsupervised_4d_reconstruction/"
     t: "Flux4D: Flow-based Unsupervised 4D Reconstruction"
-  - u: "from_objects_to_anywhere_a_holistic_benchmark_for_multi-level_visual_grounding_i/"
-    t: "From Objects to Anywhere: A Holistic Benchmark for Multi-level Visual Grounding in 3D Scenes"
-item_total: 113
+item_total: 114
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🧠 NeurIPS2025** · **113** 篇论文解读
+**🧠 NeurIPS2025** · **114** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [📹 ICCV2025 (264)](../../ICCV2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×19 · 动态场景 ×9 · 扩散模型 ×7 · 新视角合成 ×7 · 点云 ×6
+🔥 **高频主题：** 3D 高斯渲染 ×19 · 动态场景 ×10 · 扩散模型 ×7 · 新视角合成 ×7 · 点云 ×6
 
 **[3D Visual Illusion Depth Estimation](3d_visual_illusion_depth_estimation.md)**
 
 :   揭示了3D视觉错觉（如墙面彩绘、屏幕重播、镜面反射等）会严重欺骗现有SOTA单目和双目深度估计方法，构建了包含约3k场景/200k图像的大规模数据集，并提出基于VLM常识推理的单目-双目自适应融合框架，在各类错觉场景下达到SOTA。
+
+**[4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)**
+
+:   提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
 
 **[Anti-Aliased 2D Gaussian Splatting](anti-aliased_2d_gaussian_splatting.md)**
 

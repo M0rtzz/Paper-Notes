@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 LLM评测论文汇总 · 87篇论文解读
+  ACL2025 LLM评测论文汇总 · 89篇论文解读
 description: >-
-  87篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、Agent、对抗鲁棒、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  89篇ACL2025的 LLM 评测方向论文解读，涵盖 LLM、推理、对抗鲁棒、Agent、情感分析、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "LLM 评测"
@@ -10,8 +10,8 @@ tags:
   - "论文笔记"
   - "LLM"
   - "推理"
-  - "Agent"
   - "对抗鲁棒"
+  - "Agent"
   - "情感分析"
   - "问答"
 item_list:
@@ -31,6 +31,8 @@ item_list:
     t: "AndroidLab: Training and Systematic Benchmarking of Android Autonomous Agents"
   - u: "antileakbench_preventing_data_contamination_by_automatically_constructing_benchm/"
     t: "AntiLeakBench: Preventing Data Contamination by Automatically Constructing Benchmarks with Updated Real-World Knowledge"
+  - u: "are_bias_evaluation_methods_biased/"
+    t: "Are Bias Evaluation Methods Biased?"
   - u: "atomic_calibration_of_llms_in_long-form_generations/"
     t: "Atomic Calibration of LLMs in Long-Form Generations"
   - u: "batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models/"
@@ -73,19 +75,17 @@ item_list:
     t: "EcomScriptBench: A Multi-task Benchmark for E-commerce Script Planning via Step-wise Intention-Driven Product Association"
   - u: "editinspector_a_benchmark_for_evaluation_of_text-guided_image_edits/"
     t: "EditInspector: A Benchmark for Evaluation of Text-Guided Image Edits"
-  - u: "educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr/"
-    t: "EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework"
-item_total: 87
+item_total: 89
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**💬 ACL2025** · **87** 篇论文解读
+**💬 ACL2025** · **89** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_evaluation/index.md) · [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×32 · 推理 ×11 · Agent ×4 · 对抗鲁棒 ×3 · 情感分析 ×2
+🔥 **高频主题：** LLM ×32 · 推理 ×11 · 对抗鲁棒 ×4 · Agent ×4 · 情感分析 ×2
 
 **[A Conformal Risk Control Framework for Granular Word Assessment and Uncertainty Calibration of CLIPScore Quality Estimates](a_conformal_risk_control_framework_for_granular_word_assessment_and_uncertainty_.md)**
 
@@ -118,6 +118,10 @@ item_total: 87
 **[AntiLeakBench: Preventing Data Contamination by Automatically Constructing Benchmarks with Updated Real-World Knowledge](antileakbench_preventing_data_contamination_by_automatically_constructing_benchm.md)**
 
 :   提出 AntiLeakBench 自动化反泄露基准框架，通过追踪 Wikidata 知识更新历史识别 LLM 截止时间后的新知识，自动构建单跳/多跳 QA 测试样本（附真实 Wikipedia 支撑文档），确保知识级严格无污染，12 个 LLM 的大规模实验证实截止后性能普遍下降（EM 跌幅显著）验证了框架有效性。
+
+**[Are Bias Evaluation Methods Biased?](are_bias_evaluation_methods_biased.md)**
+
+:   严格控制变量后比较三种主流偏见评估方法（结构化问答 BBQ、LLM-as-a-Judge、情感分析），发现不同方法对同一组 LLM 产生显著不同的偏见排名——偏见评估方法本身就是有偏的，企业不应依赖单一偏见基准来选择模型。
 
 **[Atomic Calibration of LLMs in Long-Form Generations](atomic_calibration_of_llms_in_long-form_generations.md)**
 
@@ -282,6 +286,10 @@ item_total: 87
 **[Language Model Probabilities are Not Calibrated in Numeric Contexts](language_model_probabilities_are_not_calibrated_in_numeric_contexts.md)**
 
 :   系统研究了语言模型在数值上下文中的概率校准问题，发现即使在简单场景（如从袋中取弹珠）下，包括 GPT-4o 在内的所有测试模型均严重校准不良，存在基于词序、词频和词标识的系统性偏差（如某些模型总选第一个选项，其他模型总选第二个），指令微调加剧了模式崩塌。
+
+**[Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework](learning_to_align_multi-faceted_evaluation_a_unified_and_robust_framework.md)**
+
+:   提出 ARJudge 评估框架，通过微调 Analyzer 自适应生成评估标准并执行文本+代码双驱动分析，配合无需微调的 Refiner 综合判断，在多个评估基准上超越现有微调评估器，尤其在指令遵循评估上通过代码驱动分析提升高达 11.1%。
 
 **[MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)**
 

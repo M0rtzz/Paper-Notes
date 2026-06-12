@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 图像生成论文汇总 · 304篇论文解读
+  CVPR2025 图像生成论文汇总 · 305篇论文解读
 description: >-
-  304篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对齐/RLHF、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  305篇CVPR2025的图像生成方向论文解读，涵盖扩散模型、文生图、个性化生成、对齐/RLHF、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "图像生成"
@@ -75,15 +75,15 @@ item_list:
     t: "CLIP Under the Microscope: A Fine-Grained Analysis of Multi-Object Representation"
   - u: "co-spy_combining_semantic_and_pixel_features_to_detect_synthetic_images_by_ai/"
     t: "Co-Spy: Combining Semantic and Pixel Features to Detect Synthetic Images by AI"
-item_total: 304
+item_total: 305
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2025** · **304** 篇论文解读
+**📷 CVPR2025** · **305** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×116 · 文生图 ×27 · 个性化生成 ×18 · 对齐/RLHF ×13 · 对抗鲁棒 ×13
 
@@ -930,6 +930,10 @@ item_total: 304
 **[Personalized Preference Fine-tuning of Diffusion Models](personalized_preference_fine-tuning_of_diffusion_models.md)**
 
 :   PPD 提出个性化偏好扩散模型微调框架：利用 VLM 从少量（4 对）偏好示例中提取用户嵌入，通过解耦交叉注意力层注入扩散模型，结合 DPO 目标同时优化多用户的个性化偏好，仅需 4 个偏好对即可为新用户生成匹配其偏好的图像（76% 胜率）。
+
+**[PhysicsGen: Can Generative Models Learn from Images to Predict Complex Physical Relations?](physicsgen_can_generative_models_learn_from_images_to_predict_complex_physical_r.md)**
+
+:   提出 PhysicsGen 基准，包含 30 万图像对覆盖三个物理仿真任务（声波传播、镜头畸变、滚动/弹跳动力学），系统评估生成模型学习物理关系的能力，发现高阶微分方程描述的物理关系对现有模型构成根本性挑战。
 
 **[PICD: Versatile Perceptual Image Compression with Diffusion Rendering](picd_versatile_perceptual_image_compression_with_diffusion_rendering.md)**
 

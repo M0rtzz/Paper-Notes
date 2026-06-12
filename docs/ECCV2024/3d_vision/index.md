@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 3D视觉论文汇总 · 175篇论文解读
+  ECCV2024 3D视觉论文汇总 · 178篇论文解读
 description: >-
-  175篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、NeRF、新视角合成、Text-to-3D等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  178篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、NeRF、新视角合成、Text-to-3D等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "3D 视觉"
@@ -33,6 +33,8 @@ item_list:
     t: "6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model"
   - u: "a_compact_dynamic_3d_gaussian_representation_for_realtime_dy/"
     t: "A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis"
+  - u: "a_direct_approach_to_viewing_graph_solvability/"
+    t: "A Direct Approach to Viewing Graph Solvability"
   - u: "a_probabilityguided_sampler_for_neural_implicit_surface_rend/"
     t: "A Probability-guided Sampler for Neural Implicit Surface Rendering"
   - u: "aednet_adaptive_embedding_and_multiview-aware_disentanglement_for_point_cloud_co/"
@@ -73,19 +75,17 @@ item_list:
     t: "Compress3D: a Compressed Latent Space for 3D Generation from a Single Image"
   - u: "cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization/"
     t: "CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization"
-  - u: "crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model/"
-    t: "CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model"
-item_total: 175
+item_total: 178
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🎞️ ECCV2024** · **175** 篇论文解读
+**🎞️ ECCV2024** · **178** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (113)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×32 · 扩散模型 ×21 · 点云 ×20 · NeRF ×16 · 新视角合成 ×10
+🔥 **高频主题：** 3D 高斯渲染 ×33 · 扩散模型 ×21 · 点云 ×20 · NeRF ×16 · 新视角合成 ×10
 
 **[3D Congealing: 3D-Aware Image Alignment in the Wild](3d_congealing_3d-aware_image_alignment_in_the_wild.md)**
 
@@ -122,6 +122,10 @@ item_total: 175
 **[A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis](a_compact_dynamic_3d_gaussian_representation_for_realtime_dy.md)**
 
 :   将3DGS中的位置和旋转参数建模为时间的函数（位置用Fourier逼近、旋转用线性逼近），使动态场景的存储复杂度从O(TN)降低到O(LN)，在D-NeRF/DyNeRF/HyperNeRF三个数据集上实现了与NeRF方法匹敌的渲染质量，同时保持118+ FPS的实时渲染速度。
+
+**[A Direct Approach to Viewing Graph Solvability](a_direct_approach_to_viewing_graph_solvability.md)**
+
+:   本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。
 
 **[A Probability-guided Sampler for Neural Implicit Surface Rendering](a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)**
 
@@ -547,6 +551,10 @@ item_total: 175
 
 :   构建了 **Omni6D**——首个大规模类别级 6DoF 姿态估计 RGBD 数据集，覆盖 **166 个类别、4688 个实例、80 万张图像**，远超现有 NOCS 等数据集（仅 6 类），并提出对称感知评估指标和渐进式微调策略。
 
+**[On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy](on_the_error_analysis_of_3d_gaussian_splatting_and_an_optimal_projection_strateg.md)**
+
+:   从数学上系统分析3D Gaussian Splatting中局部仿射近似引入的投影误差，证明误差函数在Gaussian均值方向与投影平面法线重合时取极小值，据此提出每个Gaussian投影到各自切平面的最优投影策略(Optimal Gaussian Splatting)，在不影响实时性能的前提下显著降低渲染伪影。
+
 **[Open-Vocabulary 3D Semantic Segmentation with Text-to-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)**
 
 :   提出 Diff2Scene，首次将预训练的文本-图像扩散模型（Stable Diffusion）用于开放词汇3D语义分割，通过创新的掩码蒸馏方法将2D基础模型的语义丰富mask嵌入迁移到3D几何感知mask模型，在 ScanNet200 上超越 SOTA 12%。
@@ -682,6 +690,10 @@ item_total: 175
 **[SparseSSP: 3D Subcellular Structure Prediction from Sparse-View Transmitted Light Images](sparsessp_3d_subcellular_structure_prediction_from_sparse-view_transmitted_light.md)**
 
 :   提出 SparseSSP，一种混合维度拓扑的高效框架，通过 Z 轴深度到通道变换将 3D 亚细胞结构预测转化为 2D 网络任务，最多减少 87.5% 的成像频次同时保持领先精度。
+
+**[SpectraM-PS: Spectrally Multiplexed Photometric Stereo Under Unknown Spectral Composition](spectram-ps_spectrally_multiplexed_photometric_stereo_under_unknown_spectral_com.md)**
+
+:   提出一种无需物理模型约束的光谱复用光度立体方法（SpectraM-PS），在光源光谱组成完全未知的条件下，通过数据驱动的方式从单张RGB图像中恢复表面法线，实现了传统多次拍摄光度立体到单次拍摄的突破。
 
 **[SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction](splatfields_neural_gaussian_splats_for_sparse_3d_and_4d_reconstruction.md)**
 

@@ -43,7 +43,7 @@ tags:
 评测协议由四块拼成。**第一块**是统一的搜索空间：每种方法（IBP / CROWN-IBP / SABR / MTL-IBP）都在一份"通用 + 方法特定"超参集合上搜索，包括学习率、$\ell_1$ 正则权重、Shi 2021 正则权重、warm-up / ramp-up 轮数、训练用 $\epsilon$ 缩放因子，再加方法专属的 $\kappa_{\text{start}} \ge \kappa_{\text{end}}$、$\beta$、$\tau$、$\alpha$ 以及 PGD 攻击步数与步长。**第二块**是受约束的多目标贝叶斯优化器：每个目标（干净精度、不完全认证精度）用独立的高斯过程建模，采集函数为 EHVI，搜索区域约束在感兴趣区间（如 CIFAR-10 $\epsilon=2/255$ 要求干净 $\ge 60\%$、认证 $\ge 40\%$），单种方法跑 3 个随机种子各 100 trial 合并前沿。**第三块**是廉价代理目标：训练完成后用 IBP→CROWN-IBP→CROWN 的级联不完全验证给出认证精度的欠估计，把昂贵的完整验证留到最后。**第四块**是 Pareto 前沿精修：用 single-linkage 聚类（$d_{\min}=0.05$）合并 Pareto 集中相邻点，每个簇随机抽一个用 $\alpha\beta$-CROWN（cutoff $1000\,\text{s}$）做完整验证，重组成最终前沿；多种方法的前沿再合并成"combined Pareto front"作为评测基准。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     A["统一专家搜索空间<br/>放开 κ/β、warm-up≤5、训练 ε 缩放"] --> B
     subgraph LOOP["受约束多目标 BO 内循环（3 种子 × 100 trial）"]

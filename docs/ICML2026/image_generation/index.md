@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 图像生成论文汇总 · 124篇论文解读
+  ICML2026 图像生成论文汇总 · 125篇论文解读
 description: >-
-  124篇ICML2026的图像生成方向论文解读，涵盖扩散模型、对齐/RLHF、文生图、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  125篇ICML2026的图像生成方向论文解读，涵盖扩散模型、对齐/RLHF、文生图、布局/合成、对抗鲁棒、图像编辑等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -75,15 +75,15 @@ item_list:
     t: "DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection"
   - u: "diagnosing_and_correcting_concept_omission_in_multimodal_diffusion_transformers/"
     t: "Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers"
-item_total: 124
+item_total: 125
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2026** · **124** 篇论文解读
+**🧪 ICML2026** · **125** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (212)](../../ICCV2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×40 · 对齐/RLHF ×8 · 文生图 ×8 · 布局/合成 ×6 · 对抗鲁棒 ×4
 
@@ -450,6 +450,10 @@ item_total: 124
 **[Restoring Initial Noise Sensitivity in Text-to-Image Distillation via Geometric Alignment](restoring_initial_noise_sensitivity_in_text-to-image_distillation_via_geometric_.md)**
 
 :   本文指出现有 T2I 扩散蒸馏只做"逐点输出对齐"导致学生模型对初始噪声的敏感性塌缩，提出 GAD：用一对扰动输入下的 JVP（雅可比向量积）有限差分近似，强制学生匹配教师对噪声扰动的方向性响应，从而在不损失保真度的前提下恢复布局可控性与生成多样性。
+
+**[Rethinking FID Through the Geometry of the Reference Dataset](rethinking_fid_through_the_geometry_of_the_reference_dataset.md)**
+
+:   本文指出 FID 的"越低越好"假设在不同参考数据集上系统性失效，并用分布密度 $\langle -\log d_k\rangle$ 和有效秩 $\mathrm{erank}(A)$ 两个几何描述子，通过分层线性模型证明它们能解释 ~70% 的"样本质量→FID"斜率跨数据集差异，从而把 FID 的脆弱性首次定量归因到参考集本身。
 
 **[RT-Lynx: Putting the GEMM Sparsity In a Right Way for Diffusion Models](rt-lynx_putting_the_gemm_sparsity_in_a_right_way_for_diffusion_models.md)**
 

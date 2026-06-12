@@ -2,7 +2,7 @@
 title: >-
   ECCV2024 论文汇总 · 868篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(47篇)、视频理解(47篇)、目标检测(29篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  868篇ECCV2024论文解读，涵盖 3D 视觉(178篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(52篇)、视频理解(49篇)、多模态 VLM(48篇)、目标检测(31篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "ECCV2024论文汇总"
@@ -15,8 +15,8 @@ tags:
   - "自动驾驶"
   - "语义分割"
   - "人体理解"
-  - "多模态 VLM"
   - "视频理解"
+  - "多模态 VLM"
   - "目标检测"
 item_list:
   - u: "3d_vision/3d_congealing_3d-aware_image_alignment_in_the_wild/"
@@ -37,6 +37,8 @@ item_list:
     t: "6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model"
   - u: "3d_vision/a_compact_dynamic_3d_gaussian_representation_for_realtime_dy/"
     t: "A Compact Dynamic 3D Gaussian Representation for Real-Time Dynamic View Synthesis"
+  - u: "3d_vision/a_direct_approach_to_viewing_graph_solvability/"
+    t: "A Direct Approach to Viewing Graph Solvability"
   - u: "3d_vision/a_probabilityguided_sampler_for_neural_implicit_surface_rend/"
     t: "A Probability-guided Sampler for Neural Implicit Surface Rendering"
   - u: "3d_vision/aednet_adaptive_embedding_and_multiview-aware_disentanglement_for_point_cloud_co/"
@@ -77,15 +79,13 @@ item_list:
     t: "Compress3D: a Compressed Latent Space for 3D Generation from a Single Image"
   - u: "3d_vision/cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization/"
     t: "CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization"
-  - u: "3d_vision/crm_single_image_to_3d_textured_mesh_with_convolutional_reconstruction_model/"
-    t: "CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model"
 item_total: 868
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎞️ ECCV2024 论文汇总
 
-868篇ECCV2024论文解读，涵盖 3D 视觉(175篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(51篇)、多模态 VLM(47篇)、视频理解(47篇)、目标检测(29篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+868篇ECCV2024论文解读，涵盖 3D 视觉(178篇)、图像生成(117篇)、自动驾驶(53篇)、语义分割(53篇)、人体理解(52篇)、视频理解(49篇)、多模态 VLM(48篇)、目标检测(31篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -353,7 +353,7 @@ item_total: 868
 
 ---
 
-## 🧩 多模态 VLM (47) { #multimodal_vlm }
+## 🧩 多模态 VLM (48) { #multimodal_vlm }
 
 **[A Multimodal Benchmark Dataset and Model for Crop Disease Diagnosis](multimodal_vlm/a_multimodal_benchmark_dataset_and_model_for_crop_disease_di.md)**
 
@@ -395,7 +395,7 @@ item_total: 868
 
 :   从因果生成模型视角出发，提出 CLAP（Contrastive Learning with Augmented Prompts），通过文本 prompt 增强 + 对比学习训练一个轻量解耦网络，将 CLIP 预训练特征中的 content 与 style 分离，仅用文本训练即可同时提升图像和文本两侧的表征质量，在 zero-shot、few-shot 分类和对抗鲁棒性上均取得一致提升。
 
-[查看全部47篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部48篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
@@ -481,7 +481,7 @@ item_total: 868
 
 ---
 
-## 🧊 3D 视觉 (175) { #3d_vision }
+## 🧊 3D 视觉 (178) { #3d_vision }
 
 **[3D Congealing: 3D-Aware Image Alignment in the Wild](3d_vision/3d_congealing_3d-aware_image_alignment_in_the_wild.md)**
 
@@ -519,11 +519,11 @@ item_total: 868
 
 :   将3DGS中的位置和旋转参数建模为时间的函数（位置用Fourier逼近、旋转用线性逼近），使动态场景的存储复杂度从O(TN)降低到O(LN)，在D-NeRF/DyNeRF/HyperNeRF三个数据集上实现了与NeRF方法匹敌的渲染质量，同时保持118+ FPS的实时渲染速度。
 
-**[A Probability-guided Sampler for Neural Implicit Surface Rendering](3d_vision/a_probabilityguided_sampler_for_neural_implicit_surface_rend.md)**
+**[A Direct Approach to Viewing Graph Solvability](3d_vision/a_direct_approach_to_viewing_graph_solvability.md)**
 
-:   提出一种概率引导的光线采样器（Probability-guided Sampler），在3D图像投影空间中建模概率密度函数来指导光线采样朝向感兴趣区域，同时设计了包含近表面和空白空间两个分量的新型表面重建损失，可作为插件集成到现有神经隐式表面渲染器中，显著提升重建精度和渲染质量。
+:   本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。
 
-[查看全部175篇「3D 视觉」论文 →](3d_vision/)
+[查看全部178篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -573,11 +573,15 @@ item_total: 868
 
 ---
 
-## 🧑 人体理解 (51) { #human_understanding }
+## 🧑 人体理解 (52) { #human_understanding }
 
 **[3D Hand Pose Estimation in Everyday Egocentric Images](human_understanding/3d_hand_pose_estimation_in_everyday_egocentric_images.md)**
 
 :   通过系统研究裁剪输入、相机内参感知位置编码(KPE)、辅助监督(手部分割+抓握标签)和多数据集联合训练这四个实践，提出WildHands系统，在仅用ResNet50和少量数据的条件下，实现了对野外第一人称图像中3D手部姿态的鲁棒估计，零样本泛化超过FrankMocap全部指标且与10倍大的HaMeR竞争。
+
+**[3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](human_understanding/3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)**
+
+:   本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
 
 **[3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](human_understanding/3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)**
 
@@ -611,15 +615,11 @@ item_total: 868
 
 :   提出 AVSyncNet、stabilized synchronization loss 和 silent-lip generator 三项改进，系统性地解决音频驱动说话人脸生成中 SyncNet 不稳定和嘴唇泄漏两大核心问题，在唇形同步和视觉质量上均达到 SOTA。
 
-**[Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos](human_understanding/avatar_fingerprinting_for_authorized_use_of_synthetic_talking-head_videos.md)**
-
-:   本文定义了"Avatar指纹识别"这一新任务——验证合成说话头视频中驱动表情的真实身份，贡献了迄今最大规模的面部重建数据集NVFAIR（161个身份），并提出基于归一化面部关键点距离和时序CNN的基线方法，通过学习与外观无关的面部运动签名实现身份验证（平均AUC 0.85），且能泛化到未见过的生成器（AUC 0.83）。
-
-[查看全部51篇「人体理解」论文 →](human_understanding/)
+[查看全部52篇「人体理解」论文 →](human_understanding/)
 
 ---
 
-## 📹 视频理解 (47) { #video_understanding }
+## 📹 视频理解 (49) { #video_understanding }
 
 **[ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos](video_understanding/actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)**
 
@@ -661,11 +661,11 @@ item_total: 868
 
 :   提出DINO-Tracker，将预训练DINOv2的语义特征与测试时单视频优化相结合，通过Delta-DINO残差微调和多源自监督损失实现长程稠密点追踪，在自监督方法中达到SOTA且可媲美有监督追踪器，尤其在长期遮挡场景中大幅领先。
 
-[查看全部47篇「视频理解」论文 →](video_understanding/)
+[查看全部49篇「视频理解」论文 →](video_understanding/)
 
 ---
 
-## 🎯 目标检测 (29) { #object_detection }
+## 🎯 目标检测 (31) { #object_detection }
 
 **[Adaptive Bounding Box Uncertainties via Two-Step Conformal Prediction](object_detection/adaptive_bounding_box_uncertainties_via_twostep_conformal_pr.md)**
 
@@ -707,7 +707,7 @@ item_total: 868
 
 :   提出 LaMI-DETR，通过利用 GPT 生成视觉概念描述和 T5 挖掘类间视觉相似性关系，解决开放词汇目标检测中概念表示不足和基类过拟合两大问题，在 OV-LVIS 上以 43.4 的 rare AP 超越前最佳方法 7.8 个点。
 
-[查看全部29篇「目标检测」论文 →](object_detection/)
+[查看全部31篇「目标检测」论文 →](object_detection/)
 
 ---
 
@@ -947,7 +947,7 @@ item_total: 868
 
 ---
 
-## 🔄 自监督/表示学习 (15) { #self_supervised }
+## 🔄 自监督/表示学习 (16) { #self_supervised }
 
 **[Adaptive Multi-head Contrastive Learning](self_supervised/adaptive_multihead_contrastive_learning.md)**
 
@@ -989,7 +989,7 @@ item_total: 868
 
 :   提出 Multi-T（多阈值）模块，通过生成两个阈值分别隔离目标数据集中的 inlier 和 outlier，利用识别出的 inlier 训练干净的正常流形、利用 outlier 进行特征去噪，从而大幅提升已有离群值评分方法的性能。
 
-[查看全部15篇「自监督/表示学习」论文 →](self_supervised/)
+[查看全部16篇「自监督/表示学习」论文 →](self_supervised/)
 
 ---
 
@@ -1131,7 +1131,7 @@ item_total: 868
 
 ---
 
-## 🛡️ AI 安全 (12) { #ai_safety }
+## 🛡️ AI 安全 (13) { #ai_safety }
 
 **[Any Target Can Be Offense: Adversarial Example Generation via Generalized Latent Infection](ai_safety/any_target_can_be_offense_adversarial_example_generation_via_generalized_latent_.md)**
 
@@ -1161,6 +1161,10 @@ item_total: 868
 
 :   提出 OS-Prompt 框架，通过直接使用 ViT 中间层 token embedding 作为 prompt query（而非额外的 query ViT 前向传播），将 Prompt-based Continual Learning 的计算成本降低约 50%，并通过 Query-Pool Regularization (QR) loss 补偿表征能力损失，在 CIFAR-100、ImageNet-R、DomainNet 上超越 CodaPrompt 约 1.4%。
 
+**[Operational Open-Set Recognition and PostMax Refinement](ai_safety/operational_open-set_recognition_and_postmax_refinement.md)**
+
+:   本文提出了一种面向实际部署场景的开放集识别评估指标 OOSA（Operational Open-Set Accuracy）以及后处理算法 PostMax，通过对最大类别 logit 进行深度特征幅度归一化和广义 Pareto 分布映射，将 logit 转化为合理的概率估计，在大规模评估中取得了统计显著的 SOTA 性能。
+
 **[Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective](ai_safety/preventing_catastrophic_overfitting_in_fast_adversarial_training_a_bi-level_opti.md)**
 
 :   从双层优化视角分析快速对抗训练中灾难性过拟合的成因，提出 FGSM-PCO 方法，通过自适应融合历史与当前对抗样本并配合定制正则化损失，有效防止并纠正内层优化崩溃。
@@ -1169,11 +1173,7 @@ item_total: 868
 
 :   首次系统研究分布式 DNN 中熵编码模型在有意干扰（对抗攻击）和无意干扰（天气变化、运动模糊等）下的鲁棒性，发现熵模型学习的压缩特征与分类特征截然不同，并提出基于目标感知全变差去噪的防御方法，可将攻击后的传输开销降低至低于干净数据水平，准确率仅下降约 2%。
 
-**[SkyMask: Attack-Agnostic Robust Federated Learning with Fine-Grained Learnable Masks](ai_safety/skymask_attack-agnostic_robust_federated_learning_with_fine-grained_learnable_ma.md)**
-
-:   提出 SkyMask，利用参数级可学习二值掩码在服务器端检测恶意客户端模型更新，实现攻击无关的鲁棒联邦学习，在恶意客户端占比高达 80% 时仍能有效防御。
-
-[查看全部12篇「AI 安全」论文 →](ai_safety/)
+[查看全部13篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1233,15 +1233,7 @@ item_total: 868
 
 ---
 
-## 📂 其他 (65) { #others }
-
-**[3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](others/3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)**
-
-:   本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
-
-**[A Direct Approach to Viewing Graph Solvability](others/a_direct_approach_to_viewing_graph_solvability.md)**
-
-:   本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。
+## 📂 其他 (54) { #others }
 
 **[A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](others/a_framework_for_efficient_model_evaluation_through_stratific.md)**
 
@@ -1275,6 +1267,14 @@ item_total: 868
 
 :   本文提出 AttnZero，首个自动发现高效注意力模块的框架，通过构建包含六类计算图和丰富算子的搜索空间、利用进化算法进行多目标搜索，自动发现了适用于多种 ViT 的线性注意力公式，在 DeiT/PVT/Swin/CSwin 上分别达到 74.9%/78.1%/82.1%/82.9% 的 ImageNet top-1 准确率，并构建了包含 2000 种注意力变体的 Attn-Bench-101 基准。
 
-[查看全部65篇「其他」论文 →](others/)
+**[Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search](others/auto-gas_automated_proxy_discovery_for_training-free_generative_architecture_sea.md)**
+
+:   本文提出 Auto-GAS，首个面向生成模型（GAN）的免训练架构搜索框架，通过自动发现并优化零成本代理指标来替代传统训练式搜索，实现 110 倍搜索加速，同时保持与训练式方法相当的生成质量。
+
+**[Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation](others/bidirectional_uncertainty-based_active_learning_for_open-set_annotation.md)**
+
+:   提出 BUAL 框架，通过 Random Label Negative Learning 将未知类样本推向高置信区域、已知类样本推向低置信区域，结合双向不确定性采样策略，在开放集场景下有效选出高信息量的已知类样本。
+
+[查看全部54篇「其他」论文 →](others/)
 
 </div>

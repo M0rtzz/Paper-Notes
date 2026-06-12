@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 人体理解论文汇总 · 51篇论文解读
+  ECCV2024 人体理解论文汇总 · 52篇论文解读
 description: >-
-  51篇ECCV2024的人体理解方向论文解读，涵盖人体姿态、人脸/视线、情感分析、虚拟人、重识别、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  52篇ECCV2024的人体理解方向论文解读，涵盖人体姿态、人脸/视线、情感分析、虚拟人、重识别、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "人体理解"
@@ -17,6 +17,8 @@ tags:
 item_list:
   - u: "3d_hand_pose_estimation_in_everyday_egocentric_images/"
     t: "3D Hand Pose Estimation in Everyday Egocentric Images"
+  - u: "3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views/"
+    t: "3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views"
   - u: "3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v/"
     t: "3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views"
   - u: "3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms/"
@@ -73,15 +75,13 @@ item_list:
     t: "LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation"
   - u: "large_motion_model_for_unified_multi-modal_motion_generation/"
     t: "Large Motion Model for Unified Multi-Modal Motion Generation"
-  - u: "manikin_biomechanically_accurate_neural_inverse_kinematics_for_human_motion_esti/"
-    t: "MANIKIN: Biomechanically Accurate Neural Inverse Kinematics for Human Motion Estimation"
-item_total: 51
+item_total: 52
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**🎞️ ECCV2024** · **51** 篇论文解读
+**🎞️ ECCV2024** · **52** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md)
 
@@ -90,6 +90,10 @@ item_total: 51
 **[3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)**
 
 :   通过系统研究裁剪输入、相机内参感知位置编码(KPE)、辅助监督(手部分割+抓握标签)和多数据集联合训练这四个实践，提出WildHands系统，在仅用ResNet50和少量数据的条件下，实现了对野外第一人称图像中3D手部姿态的鲁棒估计，零样本泛化超过FrankMocap全部指标且与10倍大的HaMeR竞争。
+
+**[3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views](3dfg-pifu_3d_feature_grids_for_human_digitization_from_sparse_views.md)**
+
+:   本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
 
 **[3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views](3dgazenet_generalizing_3d_gaze_estimation_with_weak-supervision_from_synthetic_v.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 优化/理论论文汇总 · 60篇论文解读
+  ICML2026 优化/理论论文汇总 · 64篇论文解读
 description: >-
-  60篇ICML2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、Agent、LLM、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  64篇ICML2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、Agent、LLM、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -20,6 +20,8 @@ item_list:
     t: "Accelerated Multiple Wasserstein Gradient Flows for Multi-objective Distributional Optimization"
   - u: "adaptive_estimation_and_inference_in_semi-parametric_heterogeneous_clustered_mul/"
     t: "Adaptive Estimation and Inference in Semi-parametric Heterogeneous Clustered Multitask Learning via Neyman Orthogonality"
+  - u: "adaptive_preconditioners_trigger_loss_spikes_in_adam/"
+    t: "Adaptive Preconditioners Trigger Loss Spikes in Adam"
   - u: "adaptive_sharpness-aware_minimization_with_a_polyak-type_step_size_a_theory-grou/"
     t: "Adaptive Sharpness-Aware Minimization with a Polyak-type Step size: A Theory-Grounded Scheduler"
   - u: "asymmetric_perturbation_in_solving_bilinear_saddle-point_optimization/"
@@ -42,6 +44,8 @@ item_list:
     t: "Colorful Pinball: Density-Weighted Quantile Regression for Conditional Guarantee of Conformal Prediction"
   - u: "convex_basins_in_single-index_model_loss_landscapes_applications_to_robust_recov/"
     t: "Convex Basins in Single-Index Model Loss Landscapes: Applications to Robust Recovery under Strong Adversarial Corruption"
+  - u: "cost-aware_stopping_for_bayesian_optimization/"
+    t: "Cost-Aware Stopping for Bayesian Optimization"
   - u: "delayed_momentum_aggregation_communication-efficient_byzantine-robust_federated_/"
     t: "Delayed Momentum Aggregation: Communication-efficient Byzantine-robust Federated Learning with Partial Participation"
   - u: "distilling_linearized_behavior_into_non-linear_fine-tuning_for_effective_task_ar/"
@@ -52,6 +56,8 @@ item_list:
     t: "Dynamics and Representation Structure of Local Approximations to Gradient-Based Learning in Linear Recurrent Neural Networks"
   - u: "enhancing_llm_training_via_spectral_clipping/"
     t: "Enhancing LLM Training via Spectral Clipping"
+  - u: "foam_frequency_and_operator_error-based_adaptive_damping_method_for_reducing_sta/"
+    t: "FOAM: Frequency and Operator Error-Based Adaptive Damping Method for Reducing Staleness-Oriented Error for Shampoo"
   - u: "follow-the-perturbed-leader_for_decoupled_bandits_best-of-both-worlds_and_practi/"
     t: "Follow-the-Perturbed-Leader for Decoupled Bandits: Best-of-Both-Worlds and Practicality"
   - u: "ho-sfl_hybrid-order_split_federated_learning_with_backprop-free_clients_and_dime/"
@@ -68,21 +74,15 @@ item_list:
     t: "Learning Dynamics of Zeroth-Order Optimization: A Kernel Perspective"
   - u: "learning_locally_revising_globally_global_reviser_for_federated_learning_with_no/"
     t: "Learning Locally, Revising Globally: Global Reviser for Federated Learning with Noisy Labels"
-  - u: "learning_randomized_reductions/"
-    t: "Learning Randomized Reductions"
-  - u: "limits_of_convergence-rate_control_for_open-weight_safety/"
-    t: "Limits of Convergence-Rate Control for Open-Weight Safety"
-  - u: "limuon_light_and_fast_muon_optimizer_for_large_models/"
-    t: "LiMuon: Light and Fast Muon Optimizer for Large Models"
-item_total: 60
+item_total: 64
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧪 ICML2026** · **60** 篇论文解读
+**🧪 ICML2026** · **64** 篇论文解读
 
-📌 **同领域跨会议浏览：** [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (123)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (126)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×3 · 对抗鲁棒 ×2 · Agent ×2 · LLM ×2 · 压缩/编码 ×2
 
@@ -97,6 +97,10 @@ item_total: 60
 **[Adaptive Estimation and Inference in Semi-parametric Heterogeneous Clustered Multitask Learning via Neyman Orthogonality](adaptive_estimation_and_inference_in_semi-parametric_heterogeneous_clustered_mul.md)**
 
 :   本文桥接双重机器学习与聚类多任务学习，提出自适应框架结合 Neyman 正交性与数据驱动的配对融合罚项，在异质（可能无限维）噪声的半参数设置中精确恢复任务潜在聚类、以汇总率达到预言水平，并建立渐近正态性，实现有效统计推断。
+
+**[Adaptive Preconditioners Trigger Loss Spikes in Adam](adaptive_preconditioners_trigger_loss_spikes_in_adam.md)**
+
+:   这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。
 
 **[Adaptive Sharpness-Aware Minimization with a Polyak-type Step size: A Theory-Grounded Scheduler](adaptive_sharpness-aware_minimization_with_a_polyak-type_step_size_a_theory-grou.md)**
 
@@ -142,6 +146,10 @@ item_total: 60
 
 :   在重尾噪声 + 常数比例强对抗污染下，作者证明了一大类非单调链接函数（GeLU、Swish、Tanh、Probit、Logistic、相位恢复…）的高斯单指标模型平方损失存在一个维度无关、常数半径的凸盆，并据此设计了一个 $\tilde{O}(nd)$ 时间、$\tilde{O}(d)$ 样本的鲁棒恢复算法，最终估计误差为 $O(\sigma\sqrt{\epsilon})$。
 
+**[Cost-Aware Stopping for Bayesian Optimization](cost-aware_stopping_for_bayesian_optimization.md)**
+
+:   作者把 Weitzman 的 Pandora's Box 停下原则推广到带相关性的贝叶斯优化场景，证明 PBGI/LogEIPC 这两个 cost-aware 采集函数在共同的"采集函数值越过当前最优"停下规则下，期望代价调整 simple regret 不会比"采一次就停"更差，从而给出首个对 cost-adjusted simple regret 有理论保证的自适应停下规则。
+
 **[Delayed Momentum Aggregation: Communication-efficient Byzantine-robust Federated Learning with Partial Participation](delayed_momentum_aggregation_communication-efficient_byzantine-robust_federated_.md)**
 
 :   针对部分参与下"采样客户端中拜占庭客户端临时占多数"会击垮已有鲁棒聚合的痛点，本文提出延迟动量聚合原则——服务器把当轮新动量与未被采样客户端的最近一次缓存动量一起送入鲁棒聚合器，将全局拜占庭比例 $\delta<1/2$ 永远延续到每一轮聚合，并据此设计 DeMoA 优化器，在 $p=0.1$、$\delta=0.2$ 的极端设置下仍能稳定训练 ResNet-18/CIFAR-10。
@@ -161,6 +169,10 @@ item_total: 60
 **[Enhancing LLM Training via Spectral Clipping](enhancing_llm_training_via_spectral_clipping.md)**
 
 :   本文提出 SPECTRA：一个 optimizer-agnostic 的包装层，对更新矩阵做**后置谱裁剪**、对原始梯度做可选的**前置谱裁剪**，在理论上等价于带权重正则的复合 Frank-Wolfe 算法，在 124M–1.5B LLM 预训练上把 AdamW / Signum / Mars / AdEMAMix 的验证损失一致地往下压。
+
+**[FOAM: Frequency and Operator Error-Based Adaptive Damping Method for Reducing Staleness-Oriented Error for Shampoo](foam_frequency_and_operator_error-based_adaptive_damping_method_for_reducing_sta.md)**
+
+:   FOAM 通过一个可在陈旧特征空间里廉价估算的"算子相对误差代理 $h_t$"，把 Shampoo 的阻尼系数 $\epsilon$ 和特征分解（EVD）触发频率耦合成一个反馈控制回路，在大模型训练上把 EVD 调用次数砍掉 80%+ 同时保持收敛质量。
 
 **[Follow-the-Perturbed-Leader for Decoupled Bandits: Best-of-Both-Worlds and Practicality](follow-the-perturbed-leader_for_decoupled_bandits_best-of-both-worlds_and_practi.md)**
 
@@ -301,6 +313,10 @@ item_total: 60
 **[Test time training enhances in-context learning of nonlinear functions](test_time_training_enhances_in-context_learning_of_nonlinear_functions.md)**
 
 :   本文给单层 softmax-attention transformer + LoRA 测试时微调的组合建立了首个严格泛化界，证明在 single-index 多项式任务上 TTT 把 ICL 的样本复杂度从 $r^{\Theta(\mathrm{ie}(\sigma_*))}$ 压到 $r^{\Theta(\mathrm{ge}(\sigma_*))}$ 并允许 link 函数逐任务变化、推理误差可随上下文长度 $\to$ 噪声水平。
+
+**[The Implicit Bias of Adam and Muon on Smooth Homogeneous Neural Networks](the_implicit_bias_of_adam_and_muon_on_smooth_homogeneous_neural_networks.md)**
+
+:   本文证明：在光滑 $L$-同质模型 + 指数尾损失 + 学习率衰减的设定下，Muon（含 Muon-Signum、Muon-Adam）作为带动量的"归一化最速下降"会收敛到对应范数 max-margin 问题的 KKT 点；Adam（无稳定常数）则收敛到 $\ell_\infty$ max-margin 的 KKT 点，从而把以往仅对线性模型成立的隐式偏置结论一次性提升到所有光滑同质网络。
 
 **[Towards Understanding Adam Convergence on Highly Degenerate Polynomials](towards_understanding_adam_convergence_on_highly_degenerate_polynomials.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 图像生成论文汇总 · 212篇论文解读
+  ICCV2025 图像生成论文汇总 · 213篇论文解读
 description: >-
-  212篇ICCV2025的图像生成方向论文解读，涵盖扩散模型、文生图、图像编辑、对抗鲁棒、少样本学习、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  213篇ICCV2025的图像生成方向论文解读，涵盖扩散模型、文生图、图像编辑、对抗鲁棒、少样本学习、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "图像生成"
@@ -13,7 +13,7 @@ tags:
   - "图像编辑"
   - "对抗鲁棒"
   - "少样本学习"
-  - "个性化生成"
+  - "布局/合成"
 item_list:
   - u: "a0_affordance_aware_hierarchical_model_robotic_manipulation/"
     t: "A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation"
@@ -75,17 +75,17 @@ item_list:
     t: "CNS-Bench: Benchmarking Image Classifier Robustness Under Continuous Nuisance Shifts"
   - u: "compass_enhancing_spatial_understanding_in_text-to-image_diffusion_models/"
     t: "CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models"
-item_total: 212
+item_total: 213
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📹 ICCV2025** · **212** 篇论文解读
+**📹 ICCV2025** · **213** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (124)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×86 · 文生图 ×17 · 图像编辑 ×14 · 对抗鲁棒 ×12 · 少样本学习 ×8
+🔥 **高频主题：** 扩散模型 ×88 · 文生图 ×18 · 图像编辑 ×14 · 对抗鲁棒 ×12 · 少样本学习 ×8
 
 **[A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](a0_affordance_aware_hierarchical_model_robotic_manipulation.md)**
 
@@ -583,10 +583,6 @@ item_total: 212
 
 :   > 系统研究如何将预训练 DiT 安全高效地转换为线性注意力版本 LiT，提出 5 条实践指南（深度卷积增强、少头策略、权重继承、选择性加载、混合蒸馏），仅需 DiT 训练步数的 20% 即可达到可比性能。
 
-**[Long-Context State-Space Video World Models](long-context_state-space_video_world_models.md)**
-
-:   本文提出将状态空间模型（SSM/Mamba）引入视频世界模型，通过 block-wise SSM 扫描方案在空间一致性和时序记忆之间权衡，配合局部帧注意力，实现了线性训练复杂度、常数推理开销下的长期空间记忆保持，在 Memory Maze 和 Minecraft 数据集上大幅超越有限上下文的 Transformer 基线。
-
 **[Looking in the Mirror: A Faithful Counterfactual Explanation Method for Interpreting Deep Image Classification Models](looking_in_the_mirror_a_faithful_counterfactual_explanation_method_for_interpret.md)**
 
 :   将分类器的决策边界视为"镜面"，通过将特征表示"反射"到镜面另一侧生成反事实解释（CFE），并设计三角测量损失保持潜在空间到图像空间的距离关系，实现忠实、可控且可动画化的反事实解释。
@@ -899,6 +895,10 @@ item_total: 212
 
 :   UniCombine 提出基于 DiT 的多条件可控生成框架，通过 Conditional MMDiT Attention 机制和 LoRA Switching 模块，实现任意条件组合（文本+空间图+主体图像）的统一生成，支持 training-free 和 training-based 两种模式，并构建了首个多条件生成数据集 SubjectSpatial200K。
 
+**[UniVG: A Generalist Diffusion Model for Unified Image Generation and Editing](univg_a_generalist_diffusion_model_for_unified_image_generation_and_editing.md)**
+
+:   提出UniVG,基于MM-DiT的统一图像生成模型,通过通道维拼接输入、渐进式多任务训练和外部条件注入,用单套权重支持T2I生成、编辑、ID保持、布局引导、深度估计等多种任务。
+
 **[Unlocking the Potential of Diffusion Priors in Blind Face Restoration](unlocking_the_potential_of_diffusion_priors_in_blind_face_restoration.md)**
 
 :   本文提出 FLIPNET，一个基于 T2I 扩散模型的统一框架，通过翻转输入在修复模式（BoostHub 选择性融合 LQ 特征 + BFR-oriented 面部嵌入）和退化模式（从真实退化数据集学习并合成退化图像）之间切换，同时解决 HQ/LQ 分布差距和合成/真实退化差距两大难题。
@@ -922,6 +922,10 @@ item_total: 212
 **[VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning](visualcloze_a_universal_image_generation_framework_via_visual_in-context_learnin.md)**
 
 :   提出 VisualCloze，将多种图像生成任务统一为"视觉完形填空"范式——用视觉示例（而非文本指令）定义任务，通过图像 infilling 模型实现统一生成，并构建 Graph200K 图结构数据集增强任务间知识迁移，支持域内任务、未见任务泛化、多任务组合和反向生成。
+
+**[VSC: Visual Search Compositional Text-to-Image Diffusion Model](vsc_visual_search_compositional_text-to-image_diffusion_model.md)**
+
+:   提出 VSC，一种基于视觉搜索的组合文本到图像扩散生成方法，通过为每个属性-对象对单独生成参考图像并融合视觉原型嵌入，结合分割引导的交叉注意力定位训练，显著提升多属性-对象绑定的准确性和扩展性。
 
 **[What Makes for Text to 360-degree Panorama Generation with Stable Diffusion?](what_makes_for_text_to_360-degree_panorama_generation_with_stable_diffusion.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 人体理解论文汇总 · 39篇论文解读
+  ICCV2025 人体理解论文汇总 · 40篇论文解读
 description: >-
-  39篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  40篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "人体理解"
@@ -29,6 +29,8 @@ item_list:
     t: "Contact-Aware Refinement of Human Pose Pseudo-Ground Truth via Bioimpedance Sensing"
   - u: "controllable_and_expressive_one-shot_video_head_swapping/"
     t: "Controllable and Expressive One-Shot Video Head Swapping"
+  - u: "dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing/"
+    t: "DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing"
   - u: "dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g/"
     t: "DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance"
   - u: "dynamic_reconstruction_of_hand-object_interaction_with_distributed_force-aware_c/"
@@ -73,19 +75,17 @@ item_list:
     t: "NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction"
   - u: "one-shot_knowledge_transfer_for_scalable_person_re-identification/"
     t: "One-Shot Knowledge Transfer for Scalable Person Re-Identification"
-  - u: "openanimals_revisiting_person_re-identification_for_animals_towards_better_gener/"
-    t: "OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization"
-item_total: 39
+item_total: 40
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📹 ICCV2025** · **39** 篇论文解读
+**📹 ICCV2025** · **40** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×8 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
+🔥 **高频主题：** 人脸/视线 ×9 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -114,6 +114,10 @@ item_total: 39
 **[Controllable and Expressive One-Shot Video Head Swapping](controllable_and_expressive_one-shot_video_head_swapping.md)**
 
 :   本文提出一个基于扩散模型的多条件可控视频头部替换框架（SwapAnyHead），通过形状无关掩码策略、发型增强策略和表情感知的3DMM驱动landmark重定向模块，实现了高保真的身份保持、无缝背景融合和精确的跨身份表情迁移与编辑。
+
+**[DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)**
+
+:   提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
 
 **[DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance](dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g.md)**
 

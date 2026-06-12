@@ -27,12 +27,12 @@ item_list:
     t: "DISTIL: Data-Free Inversion of Suspicious Trojan Inputs via Latent Diffusion"
   - u: "dynamicdino_finegrained_mixture_of_experts_tuning_for_realti/"
     t: "Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection"
-  - u: "ea-kd_entropy-based_adaptive_knowledge_distillation/"
-    t: "EA-KD: Entropy-based Adaptive Knowledge Distillation"
   - u: "evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision/"
     t: "EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision"
   - u: "intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net/"
     t: "Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding"
+  - u: "kaputt_a_large-scale_dataset_for_visual_defect_detection/"
+    t: "Kaputt: A Large-Scale Dataset for Visual Defect Detection"
   - u: "large-scale_pre-training_for_grounded_video_caption_generation/"
     t: "Large-scale Pre-training for Grounded Video Caption Generation"
   - u: "lmm-det_make_large_multimodal_models_excel_in_object_detection/"
@@ -107,10 +107,6 @@ item_total: 27
 
 :   首次将Mixture of Experts引入实时开放词汇目标检测器，通过MoE-Tuning将Grounding DINO 1.5 Edge从dense模型扩展为动态推理框架，提出细粒度专家分解和预训练权重分配策略，仅用1.56M开源数据超越使用20M私有数据训练的原版模型。
 
-**[EA-KD: Entropy-based Adaptive Knowledge Distillation](ea-kd_entropy-based_adaptive_knowledge_distillation.md)**
-
-:   提出 EA-KD，一种基于信息熵的即插即用知识蒸馏方法：通过结合 teacher 和 student 输出的熵值动态重加权蒸馏损失，优先学习高熵（高信息量）样本，在图像分类、目标检测和 LLM 蒸馏任务上均一致提升多种 KD 框架的性能，且计算开销可忽略。
-
 **[EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision](evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision.md)**
 
 :   提出I2EvDet框架，通过在冻结的RT-DETR检测器的潜空间中插入轻量级RNN时序模块，以最小的架构修改将主流图像检测器适配为事件相机视频检测模型，在Gen1和1Mpx基准上分别取得+2.3和+1.4 mAP的SOTA。
@@ -118,6 +114,10 @@ item_total: 27
 **[Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)**
 
 :   提出 CBM-HNMU 框架，通过概念瓶颈模型（CBM）逼近黑盒模型的推理过程，自动识别并修正有害概念，再将修正后的知识蒸馏回黑盒模型，实现超越样本级别的系统性模型干预与准确率提升。
+
+**[Kaputt: A Large-Scale Dataset for Visual Defect Detection](kaputt_a_large-scale_dataset_for_visual_defect_detection.md)**
+
+:   Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%，揭示了现有方法在真实零售场景中的严重不足。
 
 **[Large-scale Pre-training for Grounded Video Caption Generation](large-scale_pre-training_for_grounded_video_caption_generation.md)**
 

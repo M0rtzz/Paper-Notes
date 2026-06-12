@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 时间序列论文汇总 · 30篇论文解读
+  AAAI2026 时间序列论文汇总 · 31篇论文解读
 description: >-
-  30篇AAAI2026的时间序列方向论文解读，涵盖时序预测、LLM、Agent、多模态、扩散模型、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇AAAI2026的时间序列方向论文解读，涵盖时序预测、LLM、Agent、多模态、扩散模型、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "时间序列"
@@ -67,25 +67,25 @@ item_list:
     t: "Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios"
   - u: "seldon_supernova_explosions_learned_by_deep_ode_networks/"
     t: "SELDON: Supernova Explosions Learned by Deep ODE Networks"
+  - u: "sonnet_spectral_operator_neural_network_for_multivariable_time_series_forecastin/"
+    t: "Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting"
   - u: "task-aware_retrieval_augmentation_for_dynamic_recommendation/"
     t: "Task-Aware Retrieval Augmentation for Dynamic Recommendation"
   - u: "towards_non-stationary_time_series_forecasting_with_temporal_stabilization_and_f/"
     t: "Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing"
   - u: "transparent_networks_for_multivariate_time_series/"
     t: "Transparent Networks for Multivariate Time Series"
-  - u: "urban_incident_prediction_with_graph_neural_networks_integrating_government_rati/"
-    t: "Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports"
-item_total: 30
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🤖 AAAI2026** · **30** 篇论文解读
+**🤖 AAAI2026** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (51)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/time_series/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×22 · LLM ×2
+🔥 **高频主题：** 时序预测 ×23 · LLM ×2
 
 **[A Theoretical Analysis of Detecting Large Model-Generated Time Series](a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)**
 
@@ -190,6 +190,10 @@ item_total: 30
 **[SELDON: Supernova Explosions Learned by Deep ODE Networks](seldon_supernova_explosions_learned_by_deep_ode_networks.md)**
 
 :   提出SELDON，一种结合masked GRU-ODE编码器、隐式Neural ODE传播器和可解释高斯基函数解码器的连续时间VAE，用于稀疏、不规则采样的天文光变曲线预测，在仅观测20%数据时即可超越基线方法做出准确的多波段通量预测。
+
+**[Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting](sonnet_spectral_operator_neural_network_for_multivariable_time_series_forecastin.md)**
+
+:   提出 Sonnet，通过可学习小波变换将输入映射到时频域，引入基于谱相干性的多变量注意力（MVCA）建模变量间依赖关系，并利用 Koopman 算子进行稳定的时间演化预测，在 47 个预测任务中的 34 个取得最优，平均 MAE 降低 2.2%。
 
 **[Task-Aware Retrieval Augmentation for Dynamic Recommendation](task-aware_retrieval_augmentation_for_dynamic_recommendation.md)**
 

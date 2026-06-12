@@ -1,28 +1,23 @@
 ---
 title: >-
-  NeurIPS2025 其他论文汇总 · 164篇论文解读
+  NeurIPS2025 其他论文汇总 · 130篇论文解读
 description: >-
-  164篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、对齐/RLHF、时序预测、域适应、扩散模型、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  130篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、布局/合成、对齐/RLHF、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "其他"
   - "论文解读"
   - "论文笔记"
   - "对抗鲁棒"
-  - "对齐/RLHF"
-  - "时序预测"
-  - "域适应"
-  - "扩散模型"
   - "布局/合成"
+  - "对齐/RLHF"
+  - "扩散模型"
+  - "推理"
 item_list:
   - u: "3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization/"
     t: "3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization"
-  - u: "4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono/"
-    t: "4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos"
   - u: "a_differentiable_model_of_supply-chain_shocks/"
     t: "A Differentiable Model of Supply-Chain Shocks"
-  - u: "a_highdimensional_statistical_method_for_optimizing_transfer/"
-    t: "A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning"
   - u: "a_sustainable_ai_economy_needs_data_deals_that_work_for_gene/"
     t: "A Sustainable AI Economy Needs Data Deals That Work for Generators"
   - u: "a_theoretical_framework_for_grokking_interpolation_followed_by_riemannian_norm_m/"
@@ -31,8 +26,6 @@ item_list:
     t: "A Unified Framework for Provably Efficient Algorithms to Estimate Shapley Values"
   - u: "active_measurement_efficient_estimation_at_scale/"
     t: "Active Measurement: Efficient Estimation at Scale"
-  - u: "adaptive_data_analysis_for_growing_data/"
-    t: "Adaptive Data Analysis for Growing Data"
   - u: "addressing_mark_imbalance_in_integrationfree_neural_marked_t/"
     t: "Addressing Mark Imbalance in Integration-free Neural Marked Temporal Point Processes"
   - u: "adjoint_schrödinger_bridge_sampler/"
@@ -51,10 +44,6 @@ item_list:
     t: "Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport"
   - u: "brain-like_processing_pathways_form_in_models_with_heterogeneous_experts/"
     t: "Brain-Like Processing Pathways Form in Models With Heterogeneous Experts"
-  - u: "computable_universal_online_learning/"
-    t: "Computable Universal Online Learning"
-  - u: "conformal_online_learning_of_deep_koopman_linear_embeddings/"
-    t: "Conformal Online Learning of Deep Koopman Linear Embeddings"
   - u: "contextual_dynamic_pricing_with_heterogeneous_buyers/"
     t: "Contextual Dynamic Pricing with Heterogeneous Buyers"
   - u: "continuous_thought_machines/"
@@ -63,8 +52,6 @@ item_list:
     t: "Coreset for Robust Geometric Median: Eliminating Size Dependency on Outliers"
   - u: "coresets_for_clustering_under_stochastic_noise/"
     t: "Coresets for Clustering Under Stochastic Noise"
-  - u: "cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu/"
-    t: "Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning"
   - u: "deep_continuous-time_state-space_models_for_marked_event_sequences/"
     t: "Deep Continuous-Time State-Space Models for Marked Event Sequences"
   - u: "deep_learning_for_continuous-time_stochastic_control_with_jumps/"
@@ -75,33 +62,37 @@ item_list:
     t: "Dense Associative Memory with Epanechnikov Energy"
   - u: "depth-bounds_for_neural_networks_via_the_braid_arrangement/"
     t: "Depth-Bounds for Neural Networks via the Braid Arrangement"
-item_total: 164
+  - u: "depth-supervised_fusion_network_for_seamless-free_image_stitching/"
+    t: "Depth-Supervised Fusion Network for Seamless-Free Image Stitching"
+  - u: "directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_/"
+    t: "Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning"
+  - u: "distributionally_robust_feature_selection/"
+    t: "Distributionally Robust Feature Selection"
+  - u: "dpa_a_one-stop_metric_to_measure_bias_amplification_in_classification_datasets/"
+    t: "DPA: A One-Stop Metric to Measure Bias Amplification in Classification Datasets"
+  - u: "egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali/"
+    t: "egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks"
+  - u: "emergency_response_measures_for_catastrophic_ai_risk/"
+    t: "Emergency Response Measures for Catastrophic AI Risk"
+item_total: 130
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧠 NeurIPS2025** · **164** 篇论文解读
+**🧠 NeurIPS2025** · **130** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (94)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×5 · 对齐/RLHF ×4 · 时序预测 ×4 · 域适应 ×3 · 扩散模型 ×3
+🔥 **高频主题：** 对抗鲁棒 ×5 · 布局/合成 ×3 · 对齐/RLHF ×3 · 扩散模型 ×2 · 推理 ×2
 
 **[3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)**
 
 :   提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上，模拟阻力（Sim-Drag）相比最优基线降低 13.6%。
 
-**[4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)**
-
-:   提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
-
 **[A Differentiable Model of Supply-Chain Shocks](a_differentiable_model_of_supply-chain_shocks.md)**
 
 :   用 JAX 实现可微分的供应链 Agent-Based Model（~1000 家企业），通过 GPU 并行化 + 自动微分实现比传统 ABC 快 3 个数量级的贝叶斯参数校准，为全球供应链网络的冲击传播建模铺平道路。
-
-**[A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](a_highdimensional_statistical_method_for_optimizing_transfer.md)**
-
-:   提出基于K-L散度和高维统计分析的理论框架，用于确定多源迁移学习中每个源任务的最优样本迁移数量，避免"用所有源数据"带来的负迁移问题，在DomainNet和Office-Home上超过SOTA 1.0-1.5%的同时减少47.85%的样本使用量和35.19%的训练时间。
 
 **[A Sustainable AI Economy Needs Data Deals That Work for Generators](a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)**
 
@@ -118,10 +109,6 @@ item_total: 164
 **[Active Measurement: Efficient Estimation at Scale](active_measurement_efficient_estimation_at_scale.md)**
 
 :   提出 Active Measurement 框架，将 AI 模型预测作为重要性采样提议分布，通过迭代的人类标注与模型更新实现科学总量测量的无偏估计，搭配新颖的组合权重方案和条件方差估计器构建可靠的置信区间。
-
-**[Adaptive Data Analysis for Growing Data](adaptive_data_analysis_for_growing_data.md)**
-
-:   本文首次给出了动态增长数据上自适应分析的泛化界，允许分析者根据数据规模自适应调度查询，并通过时变经验精度界和差分隐私机制实现随数据积累越来越紧的泛化保证。
 
 **[Addressing Mark Imbalance in Integration-free Neural Marked Temporal Point Processes](addressing_mark_imbalance_in_integrationfree_neural_marked_t.md)**
 
@@ -159,14 +146,6 @@ item_total: 164
 
 :   在异构 Mixture-of-Experts 模型中，异构专家并不会自动形成处理通路；本文提出三个受大脑启发的归纳偏置（路由代价、任务表现缩放、专家 Dropout），使模型形成类似大脑"皮层-皮层下"动态通路的 Mixture-of-Pathways 架构。
 
-**[Computable Universal Online Learning](computable_universal_online_learning.md)**
-
-:   在 universal online learning 框架中引入可计算性约束，证明了"数学上可学习"不等于"可用计算机程序实现的可学习"，并给出了 agnostic 和 proper 变体下可计算学习的精确刻画。
-
-**[Conformal Online Learning of Deep Koopman Linear Embeddings](conformal_online_learning_of_deep_koopman_linear_embeddings.md)**
-
-:   提出 COLoKe 框架，将 conformal prediction 重新解读为模型一致性诊断工具，仅在 Koopman 模型的预测误差超过动态校准阈值时才触发参数更新，从而实现对非线性动力系统的高效在线 Koopman 线性嵌入学习。
-
 **[Contextual Dynamic Pricing with Heterogeneous Buyers](contextual_dynamic_pricing_with_heterogeneous_buyers.md)**
 
 :   首次系统研究买家类型异质（$K_\star$ 种未知类型）的上下文动态定价问题，提出基于乐观后验采样 (OPS) 的算法实现 $\tilde{O}(K_\star\sqrt{dT})$ 遗憾界（对 $d$ 和 $T$ 最优），并在非上下文情形通过方差感知自适应离散化算法 ZoomV 实现 $\tilde{O}(\sqrt{K_\star T})$ 最优遗憾。
@@ -182,10 +161,6 @@ item_total: 164
 **[Coresets for Clustering Under Stochastic Noise](coresets_for_clustering_under_stochastic_noise.md)**
 
 :   首次系统研究噪声数据下 $(k,z)$-聚类 coreset 构造问题，提出新的代理误差度量 $\mathsf{Err}_\alpha$ 替代传统 $\mathsf{Err}$，在温和数据假设下实现 coreset 大小缩减 $\text{poly}(k)$ 倍、质量保证收紧 $\text{poly}(k)$ 倍，并设计噪声感知的 cluster-wise 采样算法。
-
-**[Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning](cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu.md)**
-
-:   CFBO 将用户定义的效用函数（成本 vs 性能的权衡）引入冻结-解冻贝叶斯优化框架，结合自适应停止准则和基于 LC mixup 的迁移学习，在多保真度 HPO 基准上实现了成本-性能最优权衡。
 
 **[Deep Continuous-Time State-Space Models for Marked Event Sequences](deep_continuous-time_state-space_models_for_marked_event_sequences.md)**
 
@@ -211,10 +186,6 @@ item_total: 164
 
 :   DSFN 提出深度一致性约束的无缝图像拼接方法：通过深度感知的两阶段变换估计解决大视差对齐，软缝合区域扩散实现自然融合，结合重参数化策略提升效率，在 UDIS-D 和 IVSD 数据集上全面超越 SOTA。
 
-**[Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification](diffusion_transformers_for_imputation_statistical_efficiency_and_uncertainty_qua.md)**
-
-:   本文从统计学习角度分析了条件扩散Transformer（DiT）在时间序列插补任务中的样本复杂度和不确定性量化性能，并提出混合掩码训练策略提升插补效果。
-
 **[Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning](directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_.md)**
 
 :   提出一种基于方向性非交换幺半群算子的代数框架，为多维组合嵌入提供统一数学基础，将 SSM 递归、Transformer 自注意力和 RoPE 位置编码统一为特例。
@@ -226,14 +197,6 @@ item_total: 164
 **[DPA: A One-Stop Metric to Measure Bias Amplification in Classification Datasets](dpa_a_one-stop_metric_to_measure_bias_amplification_in_classification_datasets.md)**
 
 :   本文提出 Directional Predictability Amplification (DPA)，一种基于可预测性的偏差放大度量指标，是唯一同时满足方向性、适用于平衡/非平衡数据集、能正确识别正负偏差放大的一站式指标，通过测量模型偏差与数据集偏差的相对变化来量化偏差放大程度。
-
-**[Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)**
-
-:   提出基于核化（kernelization）的框架，在部分信息反馈设定下为多面体博弈（Colonel Blotto、图拟阵拥堵博弈、网络拥堵博弈）设计了计算高效的无遗憾学习算法，显著改进了学习粗关联均衡（CCE）的运行时复杂度。
-
-**[Efficient Parametric SVD of Koopman Operator for Stochastic Dynamical Systems](efficient_parametric_svd_of_koopman_operator_for_stochastic_dynamical_systems.md)**
-
-:   提出基于 low-rank approximation (LoRA) 的目标函数来学习随机动力系统 Koopman 算子的 top-k 奇异函数，完全避免了 VAMPnet/DPNet 中数值不稳定的矩阵分解操作，且梯度天然无偏。
 
 **[egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)**
 
@@ -283,10 +246,6 @@ item_total: 164
 
 :   提出 Faithful Group Shapley Value (FGSV)，唯一满足含"忠实性"在内五条公理的组级数据估值方法，有效防御"空壳公司攻击"（通过拆分子组不当膨胀估值），并设计了 $O(n \cdot \text{Poly}(\log n))$ 复杂度的高效近似算法。
 
-**[Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds](finite-time_analysis_of_stochastic_nonconvex_nonsmooth_optimization_on_the_riema.md)**
-
-:   提出 Riemannian Online to NonConvex (RO2NC) 算法及其零阶版本 ZO-RO2NC，首次为黎曼流形上完全非光滑非凸随机优化建立了 $O(\delta^{-1}\epsilon^{-3})$ 的有限时间样本复杂度保证，匹配欧几里德最优结果。
-
 **[Fixed-Point RNNs: Interpolating from Diagonal to Dense](fixed-point_rnns_interpolating_from_diagonal_to_dense.md)**
 
 :   提出 Fixed-Point RNN 框架，将稠密线性 RNN 参数化为对角线性 RNN 的不动点，通过迭代次数在对角（高效）与稠密（表达力强）之间动态插值，首次在状态跟踪（$A_5$/$S_5$）和拷贝任务上同时取得最优结果。
@@ -323,10 +282,6 @@ item_total: 164
 
 :   提出 HouseLayout3D——首个面向大规模多层建筑的真实世界 3D layout 估计基准，以及 MultiFloor3D——一个无需训练的基线方法，通过组合现代 3D 重建和分割模型在多层建筑 layout 估计上超越现有深度学习方法。
 
-**[How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)**
-
-:   提出"领域碎裂维度"（Domain Shattering Dimension）这一新组合度量，紧致刻画了领域泛化所需的领域数量（领域样本复杂度），并证明其与经典VC维的关系为 $\Theta(d \log(1/\alpha))$。
-
 **[Hybrid-Balance GFlowNet for Solving Vehicle Routing Problems](hybrid-balance_gflownet_for_solving_vehicle_routing_problems.md)**
 
 :   提出Hybrid-Balance GFlowNet（HBG）框架，首次在VRP场景中引入详细平衡（DB）并与轨迹平衡（TB）统一集成，配合depot引导推理策略，在CVRP和TSP上显著提升两种现有GFlowNet求解器（AGFN和GFACS）的性能。
@@ -335,10 +290,6 @@ item_total: 164
 
 :   系统揭示了LayerNorm在Pre-LN和Post-LN Transformer中的**截然不同**角色：Pre-LN中LN对学习至关重要，移除会破坏泛化；Post-LN中LN驱动记忆化，移除可抑制记忆化并恢复真实标签。
 
-**[Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)**
-
-:   针对 Correlation Clustering 的两个重要推广——Chromatic CC 和 pseudometric-weighted CC，基于 LP relaxation 与精心设计的 rounding function，分别取得 2.15-approximation 和 tight 10/3-approximation，显著改进了先前最佳结果（2.5 和 6）。
-
 **[Improving Decision Trees through the Lens of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)**
 
 :   从参数化复杂度的视角分析决策树的局部搜索优化操作，揭示问题的难度来源，并证明特征数与值域大小的组合可实现固定参数可解(FPT)，同时提供了概念验证实现。
@@ -346,10 +297,6 @@ item_total: 164
 **[Improving Forecasts of Suicide Attempts for Patients with Little Data](improving_forecasts_of_suicide_attempts_for_patients_with_little_data.md)**
 
 :   提出 Latent Similarity Gaussian Process (LSGP)，将患者嵌入连续隐空间以捕获异质性，使数据稀少的患者能从相似患者"借用"预测趋势，从而改进基于 EMA 数据的自杀未遂预测。
-
-**[Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)](improving_time_series_forecasting_via_instance-aware_post-hoc_revision.md)**
-
-:   PIR 提出实例感知的事后修正框架——通过不确定性估计识别预测失败实例，用局部修正（协变量+外生变量 Transformer）和全局修正（检索相似训练实例加权平均）的残差组合，作为即插即用模块使 SparseTSF MSE 降低 25.87%，PatchTST 降低 8.99%。
 
 **[Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)**
 
@@ -363,33 +310,13 @@ item_total: 164
 
 :   对无噪声线性回归在Oblivious污染模型下，形式化证明任何高效Statistical Query算法都需要 $\tilde{\Omega}(d^{1/2}/\alpha^2)$ 的VSTAT复杂度，给出了 $1/\alpha$ 的二次依赖对高效算法具有本质性的计算下界证据。
 
-**[Infrequent Exploration in Linear Bandits](infrequent_exploration_in_linear_bandits.md)**
-
-:   提出 INFEX 框架，按给定调度表在探索步执行基线算法（如 LinUCB/LinTS）、其余时刻贪心选臂，证明只要探索次数超过 $\omega(\log T)$ 即可达到与全时刻探索相同的多项对数 regret，同时大幅降低计算开销（80%-99% 时间步为贪心）。
-
 **[Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry](johnson-lindenstrauss_lemma_beyond_euclidean_geometry.md)**
 
 :   将Johnson-Lindenstrauss引理从欧几里得空间扩展到一般对称空心相异度矩阵，提出伪欧空间JL变换和广义幂距离JL变换两种互补方法，误差与数据偏离欧几何的程度成正比。
 
-**[Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning](keep_it_on_a_leash_controllable_pseudo-label_generation_towards_realistic_long-t.md)**
-
-:   提出 Controllable Pseudo-label Generation (CPG) 框架，通过可控的自强化优化循环将可靠伪标签逐步纳入标注集，在已知分布上构建 Bayes-optimal 分类器，从而在未标注数据分布完全未知的 Realistic LTSSL 场景下实现最高 15.97% 的准确率提升。
-
-**[Kernel Conditional Tests from Learning-Theoretic Bounds](kernel_conditional_tests_from_learning-theoretic_bounds.md)**
-
-:   提出将学习算法的置信界转化为条件假设检验的统一框架，基于核岭回归构建了有限样本保证的条件两样本检验，首次支持非i.i.d.数据与在线采样场景。
-
 **[Lagrangian neural ODEs: Measuring the existence of a Lagrangian with Helmholtz metrics](lagrangian_neural_odes_measuring_the_existence_of_a_lagrangian_with_helmholtz_me.md)**
 
 :   提出 Helmholtz metrics——基于 Helmholtz 条件的可微度量，用于量化给定 ODE 与 Euler-Lagrange 方程的接近程度，并将其作为正则化项加入二阶 Neural ODE 训练中，形成 Lagrangian Neural ODE，在零额外推理开销下引导模型收敛到真正的物理定律。
-
-**[Learning-Augmented Online Bipartite Fractional Matching](learning-augmented_online_bipartite_fractional_matching.md)**
-
-:   本文提出了两个学习增强算法（LAB 和 PAW），用于在线二部分数匹配问题，在给定可能不准确的建议匹配的情况下，首次在整个鲁棒性范围内 Pareto 优于朴素的 CoinFlip 策略。
-
-**[Learning-Augmented Streaming Algorithms for Correlation Clustering](learning-augmented_streaming_algorithms_for_correlation_clustering.md)**
-
-:   提出了首个面向相关聚类（Correlation Clustering）的学习增强流算法，利用成对距离预测，在完全图上实现优于3的近似比（$\tilde{O}(n)$ 空间），在一般图上实现 $O(\log|E^-|)$ 近似比（$\tilde{O}(n)$ 空间），在空间-近似比权衡上显著改进了已有的非学习算法。
 
 **[Learning (Approximately) Equivariant Networks via Constrained Optimization](learning_approximately_equivariant_networks_via_constrained_optimization.md)**
 
@@ -447,10 +374,6 @@ item_total: 164
 
 :   本文提出 AI-LAWS（AI 驱动致命性自主武器系统）的行为导向定义与监管框架，通过两条技术准则识别需特别监管的军事 AI 系统，并提出五项具体政策建议，呼吁 AI 研究者深度参与军事 AI 治理的全生命周期。
 
-**[Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)**
-
-:   通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
-
 **[Model Context Protocol for Vision Systems: Audit, Security, and Protocol Extensions](model_context_protocol_for_vision_systems_audit_security_and_protocol_extensions.md)**
 
 :   首个对MCP在视觉系统中部署的协议级审计研究，分析91个公开MCP服务器发现78%存在schema不一致、89%缺乏运行时验证，并提出语义schema、可视化记忆、运行时验证器等协议扩展方案。
@@ -475,14 +398,6 @@ item_total: 164
 
 :   用简单全连接神经网络替代计算昂贵的 CoREAS 蒙特卡洛模拟，快速预测广延大气簇射（EAS）的射电脉冲，并在 $X_{\text{max}}$ 重建任务中达到与传统模拟可比的分辨率。
 
-**[Non-Clairvoyant Scheduling with Progress Bars](non-clairvoyant_scheduling_with_progress_bars.md)**
-
-:   引入"进度条"信息模型作为透视与非透视调度之间的插值框架，针对对抗性和随机性进度条分别设计了具有最优一致性-鲁棒性权衡的调度算法，同时推进了学习增强调度的理论前沿。
-
-**[Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis](nonlinearly_preconditioned_gradient_methods_momentum_and_stochastic_analysis.md)**
-
-:   在各向异性下降不等式框架下，为非线性预条件梯度方法引入重球法动量，并分析其随机变体在多种噪声假设下的收敛性质，统一了梯度裁剪与归一化梯度方法的理论分析。
-
 **[Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)**
 
 :   将不同归一化方案（Post-LN、Pre-LN、Mix-LN、Peri-LN、nGPT、sqrt-scaling）统一建模为球面上交互粒子系统的速度调节机制，从理论上揭示了各方案对 token 聚类动力学和表示坍缩的不同影响，识别 Peri-LN 为理想选择。
@@ -495,10 +410,6 @@ item_total: 164
 
 :   本文是一篇观点论文（opinion piece），提出将离散图曲率（Forman-Ricci 和 Ollivier-Ricci 曲率）引入超扫描（hyperscanning）研究中的脑间网络分析，利用曲率分布的熵来检测网络相变，并通过曲率值推断脑间信息路由策略，突破传统相关性指标的描述性局限。
 
-**[On Agnostic PAC Learning in the Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)**
-
-:   本文在不可知 PAC 学习的小误差域（$\tau \approx d/m$）中，构造了一个基于 ERM 聚合的计算高效学习器，实现了 $c \cdot \tau + O(\sqrt{\tau d/m} + d/m)$ 的误差上界（$c \leq 2.1$），匹配了已知下界，推进了不可知学习的精确复杂度刻画。
-
 **[On the Surprising Effectiveness of Large Learning Rates under Standard Width Scaling](on_the_surprising_effectiveness_of_large_learning_rates_under_standard_width_sca.md)**
 
 :   揭示在标准参数化(SP)下，cross-entropy 损失函数使得"不稳定"区间实际分为灾难性不稳定和受控发散两个子区间：在受控发散区间（学习率 $\eta_n = \Theta(n^{-1/2})$）logits 发散但梯度和激活保持稳定，从而首次为 SP 提供了一个实用的、具有特征学习能力的无穷宽极限。
@@ -510,10 +421,6 @@ item_total: 164
 **[On Universality Classes of Equivariant Networks](on_universality_classes_of_equivariant_networks.md)**
 
 :   本文证明等变神经网络的分离能力（区分对称等价输入的能力）不足以完全刻画其表达能力——具有相同分离能力的模型可能拥有不同的逼近能力，并给出了浅层不变网络通用性类的完整刻画及失败的充分条件。
-
-**[Optimism Without Regularization: Constant Regret in Zero-Sum Games](optimism_without_regularization_constant_regret_in_zero-sum_games.md)**
-
-:   首次证明无正则化的Optimistic Fictitious Play在2×2零和博弈中获得O(1)常数遗憾，匹配了正则化Optimistic FTRL的最优率，同时证明Alternating Fictitious Play的遗憾下界为Ω(√T)，分离了乐观和交替在无正则化情况下的能力。
 
 **[Optimized Learned Count-Min Sketch](optimized_learned_count-min_sketch.md)**
 
@@ -535,17 +442,9 @@ item_total: 164
 
 :   本文从频率学派视角质疑贝叶斯不确定性量化（UQ）的有效性，将贝叶斯更新重新解释为模型集成的优化问题，并提出基于PAC框架的校准算法以构建具有频率学派保证的预测区间。
 
-**[Prediction-Powered Semi-Supervised Learning with Online Power Tuning](prediction-powered_semi-supervised_learning_with_online_power_tuning.md)**
-
-:   将预测驱动推断（PPI）框架扩展到半监督学习训练过程中，提出无偏梯度估计器，并设计在线AdaGrad算法动态调节伪标签与真实标签的相对权重 $\lambda$，在保证无偏性的同时实现与最优固定 $\lambda$ 匹配的收敛速率。
-
 **[Private Evolution Converges](private_evolution_converges.md)**
 
 :   为Private Evolution（PE）合成数据生成算法提供了首个不依赖不现实假设的收敛性理论保证，证明在正确的超参数设置下PE输出的 $(ε,δ)$-DP 合成数据集的1-Wasserstein距离为 $\tilde{O}(d(nε)^{-1/d})$。
-
-**[Product Distribution Learning with Imperfect Advice](product_distribution_learning_with_imperfect_advice.md)**
-
-:   本文研究在给定不完美建议分布的情况下学习布尔超立方体上乘积分布的问题，提出了一种高效算法，当建议质量足够好时样本复杂度可实现关于维度 $d$ 的次线性依赖。
 
 **[Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)**
 
@@ -571,10 +470,6 @@ item_total: 164
 
 :   提出 NCAL-R，利用深度网络训练后期涌现的 Neural Collapse 几何结构，设计类均值对齐扰动（CMAP）和特征波动（FF）两个评分指标来选择样本，使主动学习在标签噪声和分布偏移下更加可靠，在 ImageNet-100 和 CIFAR-100 上一致优于传统 AL 基线。
 
-**[Reliably Detecting Model Failures in Deployment Without Labels](reliably_detecting_model_failures_in_deployment_without_labels.md)**
-
-:   提出D3M(Disagreement-Driven Deterioration Monitoring)，一种基于变分贝叶斯后验采样的三阶段模型监控算法，在无标签、无训练数据的部署场景下可靠检测模型性能退化，同时对非退化性偏移保持低误报率。
-
 **[ResNets Are Deeper Than You Think](resnets_are_deeper_than_you_think.md)**
 
 :   证明残差网络与前馈网络居于不同的函数空间（非简单重参数化），并通过后训练部分线性化实验表明变深度架构（类ResNet）即使在排除可训练性差异后仍优于固定深度架构，暗示残差连接提供了超越优化的归纳偏好。
@@ -591,10 +486,6 @@ item_total: 164
 
 :   通过 Difference-of-Convex (DC) 框架重新审视 PCA,建立了核化和样本外推广能力,揭示了同步迭代是 DCA 的特例,并提出了鲁棒 $\ell_1$-PCA 的核化对偶公式。
 
-**[Revisiting Agnostic Boosting](revisiting_agnostic_boosting.md)**
-
-:   提出新的不可知 Boosting 算法,在非常一般的假设下大幅改善了此前工作的样本复杂度,并建立近匹配下界,从而在对数因子意义下解决了不可知 Boosting 的样本复杂度问题。
-
 **[Revisiting Bi-Linear State Transitions in Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)**
 
 :   系统性地重新审视 RNN 中的双线性状态转移（隐状态与输入的乘法交互），理论证明双线性 RNN 可模拟任意有限状态机，并展示其在去除加性项后形成了一个从对角到全结构的自然表达力层次，揭示了 Mamba 等流行线性 RNN 处于该层次最低端。
@@ -610,10 +501,6 @@ item_total: 164
 **[SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)**
 
 :   利用 o-minimal 结构的数学工具，证明了使用常见光滑激活函数（sigmoid、tanh、softplus、GELU 等）的全连接网络的梯度流存在二元性：要么收敛到临界点，要么发散到无穷大且损失收敛到渐近临界值。特别地，对多项式目标函数，证明了损失无法精确取零但可任意接近零，从而导致参数必然发散。
-
-**[Sample-Adaptivity Tradeoff in On-Demand Sampling](sample-adaptivity_tradeoff_in_on-demand_sampling.md)**
-
-:   系统研究了按需采样（on-demand sampling）中样本复杂度与自适应轮次之间的权衡关系，在可实现设定下证明 $r$ 轮算法的最优样本复杂度为 $dk^{\Theta(1/r)}/\varepsilon$，在不可知设定下提出仅需 $\widetilde{O}(\sqrt{k})$ 轮即可达近最优样本复杂度的LazyHedge算法，并引入OODS抽象框架建立了近紧的轮次复杂度下界。
 
 **[Scalable GPU-Accelerated Euler Characteristic Curves: Optimization and Differentiable Learning for PyTorch](scalable_gpu-accelerated_euler_characteristic_curves_optimization_and_differenti.md)**
 
@@ -667,10 +554,6 @@ item_total: 164
 
 :   本文证明在具有良好聚类结构的图上（结构比 Υ(k) 足够大），**均匀边采样**即可保留谱聚类所需的谱子空间结构，无需昂贵的有效电阻预计算——这是首个关于均匀采样保持结构的可证明保证。
 
-**[SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)**
-
-:   提出SynTSBench合成数据驱动评估范式，通过可编程的特征配置和理论最优基准，系统评估时间序列预测模型在趋势、周期、依赖性、噪声鲁棒性等维度的实际建模能力。
-
 **[Test-Time Adaptation by Causal Trimming](test-time_adaptation_by_causal_trimming.md)**
 
 :   提出 TACT 方法，通过数据增强 + PCA 识别表征空间中的非因果方向，并在测试时将表征和类原型沿该方向的投影移除，从而减少模型对非因果特征的依赖，显著提升分布偏移下的预测性能。
@@ -687,17 +570,9 @@ item_total: 164
 
 :   本文提出VCNet——一种模拟灵长类视觉皮层宏观组织的神经网络架构，用几何和动力系统语言重新诠释双流分离（流形解缠）和预测编码（测地线精炼），以0.04MB的极小体积在Spots-10上达到92.1%（比DenseNet蒸馏版高10%），在光场分类上以3.52MB达到74.4%（超MobileNetV2 2.3%）。
 
-**[The Parameterized Complexity of Computing the VC-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)**
-
-:   本文系统研究了计算VC维问题的参数化复杂性，证明朴素穷举算法在ETH假设下是渐近最优的，给出按最大度参数化的FPT 1-可加近似算法，以及按树宽参数化的 $2^{O(\text{tw} \cdot \log \text{tw})} \cdot |V|$ 精确算法，并完整刻画了各结构参数下的可处理性景观。
-
 **[The Persistence of Neural Collapse Despite Low-Rank Bias](the_persistence_of_neural_collapse_despite_low-rank_bias.md)**
 
 :   本文从理论上证明了深度神经坍缩（DNC）在深层无约束特征模型中由于 L2 正则化引起的低秩偏差而全局次优，同时首次解释了 DNC 在实践中持续出现的原因——其解空间维度随网络宽度增长快于低秩解。
-
-**[The Structural Complexity of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)**
-
-:   证明对于 corrupted VC-dimension 为 $d$ 的布尔矩阵 $\mathbf{M} \in \{0,1\}^{m \times n}$，矩阵-向量乘法可在 $\widetilde{O}(nm^{1-1/d}+m)$ 时间内完成，首次为结构化矩阵提供了真亚二次时间上界，推翻了 OMv 猜想在结构化输入上的适用性，并导出了动态 Laplacian 求解器、有效电阻、三角检测等问题的首个高精度亚二次算法。
 
 **[Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)**
 
@@ -715,14 +590,6 @@ item_total: 164
 
 :   提出Guidance方法，通过逐层表征对齐（CKA）将一个网络（guide）的架构归纳偏置迁移到另一个原本"不可训练"的网络（target），从而使FCN能做图像分类、RNN逼近Transformer的语言建模性能。
 
-**[Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)**
-
-:   提出两步式Transfer MNI方法，在高维过参数化线性回归中通过"保留目标信号+零空间迁移源知识"机制增强良性过拟合的泛化能力，刻画了模型偏移和协变量偏移下的非渐近excess risk，并发现了"免费午餐"协变量偏移区间。
-
-**[Turbocharging Gaussian Process Inference with Approximate Sketch-and-Project](turbocharging_gaussian_process_inference_with_approximate_sketch-and-project.md)**
-
-:   提出 ADASAP 算法，通过近似子空间预条件、分布式计算和 Nesterov 加速，将 sketch-and-project 方法扩展到大规模 GP 推断，首次将精确 GP 推断扩展到 $>3\times10^8$ 样本规模，同时在理论上证明了 SAP 方法的 condition number-free 收敛性。
-
 **[Ultrametric Cluster Hierarchies: I Want 'em All!](ultrametric_cluster_hierarchies_i_want_em_all.md)**
 
 :   证明了对于任意合理的聚类层次树，都可以快速找到任意中心型聚类目标（如 k-means）的最优解，且这些解本身也是层次化的，从而从一棵树中解锁大量等价有意义的层次结构。
@@ -738,7 +605,3 @@ item_total: 164
 **[What Does It Take to Build a Performant Selective Classifier?](what_does_it_take_to_build_a_performant_selective_classifier.md)**
 
 :   首次对选择性分类的性能差距（selective classification gap）进行有限样本分解，将差距归因于五个源头——贝叶斯噪声、逼近误差、排序误差、统计噪声和实现偏差，并证明单调校准方法对缩小差距效果有限。
-
-**[xLSTM-Mixer: Multivariate Time Series Forecasting by Mixing via Scalar Memories](xlstm-mixer_multivariate_time_series_forecasting_by_mixing_via_scalar_memories.md)**
-
-:   提出 xLSTM-Mixer，首次将扩展长短期记忆网络（sLSTM）与混合架构（Mixer）结合，通过时间混合、联合时间-变量混合和多视角混合三阶段架构实现多变量长期时间序列预测的 SOTA 性能，同时保持极低的内存占用。

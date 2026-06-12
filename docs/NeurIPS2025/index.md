@@ -2,7 +2,7 @@
 title: >-
   NeurIPS2025 论文汇总 · 2530篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  2530篇NeurIPS2025论文解读，涵盖图像生成(221篇)、强化学习(143篇)、模型压缩(142篇)、多模态 VLM(139篇)、优化/理论(123篇)、3D 视觉(113篇)、LLM 安全(83篇)、LLM 推理(82篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  2530篇NeurIPS2025论文解读，涵盖图像生成(221篇)、模型压缩(143篇)、强化学习(143篇)、多模态 VLM(139篇)、优化/理论(126篇)、3D 视觉(114篇)、LLM 安全(83篇)、LLM 推理(82篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "NeurIPS2025论文汇总"
@@ -11,8 +11,8 @@ tags:
   - "论文解读"
   - "论文笔记"
   - "图像生成"
-  - "强化学习"
   - "模型压缩"
+  - "强化学习"
   - "多模态 VLM"
   - "优化/理论"
   - "3D 视觉"
@@ -85,7 +85,7 @@ item_total: 2530
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧠 NeurIPS2025 论文汇总
 
-2530篇NeurIPS2025论文解读，涵盖图像生成(221篇)、强化学习(143篇)、模型压缩(142篇)、多模态 VLM(139篇)、优化/理论(123篇)、3D 视觉(113篇)、LLM 安全(83篇)、LLM 推理(82篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+2530篇NeurIPS2025论文解读，涵盖图像生成(221篇)、模型压缩(143篇)、强化学习(143篇)、多模态 VLM(139篇)、优化/理论(126篇)、3D 视觉(114篇)、LLM 安全(83篇)、LLM 推理(82篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -993,11 +993,15 @@ item_total: 2530
 
 ---
 
-## 🧊 3D 视觉 (113) { #3d_vision }
+## 🧊 3D 视觉 (114) { #3d_vision }
 
 **[3D Visual Illusion Depth Estimation](3d_vision/3d_visual_illusion_depth_estimation.md)**
 
 :   揭示了3D视觉错觉（如墙面彩绘、屏幕重播、镜面反射等）会严重欺骗现有SOTA单目和双目深度估计方法，构建了包含约3k场景/200k图像的大规模数据集，并提出基于VLM常识推理的单目-双目自适应融合框架，在各类错觉场景下达到SOTA。
+
+**[4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](3d_vision/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)**
+
+:   提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
 
 **[Anti-Aliased 2D Gaussian Splatting](3d_vision/anti-aliased_2d_gaussian_splatting.md)**
 
@@ -1031,11 +1035,7 @@ item_total: 2530
 
 :   提出 CosmoBench——目前最大的宇宙学几何深度学习基准，包含 3.4 万点云和 2.5 万有向树，覆盖多尺度、多视角、多任务，并揭示简单线性模型有时能超越大型 GNN。
 
-**[Cue3D: Quantifying the Role of Image Cues in Single-Image 3D Generation](3d_vision/cue3d_quantifying_the_role_of_image_cues_in_single-image_3d_generation.md)**
-
-:   Cue3D是首个模型无关的图像线索重要性量化框架，通过系统性扰动光照、纹理、轮廓、透视、边缘和局部连续性6种视觉线索，在涵盖回归式/多视图/原生3D生成三大范式的7个方法上揭示了关键洞察：形状意义性而非纹理决定泛化能力，光照比纹理更重要，且模型过度依赖输入轮廓。
-
-[查看全部113篇「3D 视觉」论文 →](3d_vision/)
+[查看全部114篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -1499,7 +1499,7 @@ item_total: 2530
 
 ---
 
-## 📦 模型压缩 (142) { #model_compression }
+## 📦 模型压缩 (143) { #model_compression }
 
 **[4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming](model_compression/4dgcpro_efficient_hierarchical_4d_gaussian_compression_for_p.md)**
 
@@ -1541,11 +1541,11 @@ item_total: 2530
 
 :   提出 AdmTree——一种自适应层次化上下文压缩框架,通过信息密度驱动的动态分段构建叶 gist token，再用二叉语义树底向上聚合实现多粒度语义保留，解决了显式方法丢失局部细节和隐式方法位置偏差的双重问题,在 LongBench 上比 SOTA 基线 Activation Beacon 高 10%+。
 
-[查看全部142篇「模型压缩」论文 →](model_compression/)
+[查看全部143篇「模型压缩」论文 →](model_compression/)
 
 ---
 
-## 📐 优化/理论 (123) { #optimization }
+## 📐 优化/理论 (126) { #optimization }
 
 **[A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](optimization/a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)**
 
@@ -1587,11 +1587,11 @@ item_total: 2530
 
 :   证明 ReLU 激活函数对宽神经网络有一个此前未被注意的"免费"益处：(a) 在模型梯度特征空间中产生更好的数据分离（相似输入的角度在梯度空间中被放大），(b) 由此导致 NTK 矩阵条件数严格减小（相比线性网络）。深度进一步放大此效应——在无限宽然后无限深的极限下，所有数据对在梯度空间中等角分离（~75.5°），NTK 条件数收敛到仅依赖数据量 $n$ 的固定值 $(n+4)/3$。
 
-[查看全部123篇「优化/理论」论文 →](optimization/)
+[查看全部126篇「优化/理论」论文 →](optimization/)
 
 ---
 
-## 🔬 可解释性 (79) { #interpretability }
+## 🔬 可解释性 (80) { #interpretability }
 
 **[A Controllable Examination for Long-Context Language Models](interpretability/a_controllable_examination_for_longcontext_language_models.md)**
 
@@ -1633,7 +1633,7 @@ item_total: 2530
 
 :   通过无监督 SAE 聚类发现 thinking model 的推理机制分类，然后用 steering vector 在基座模型上激活这些潜在推理能力，混合模型恢复高达 91% 的 thinking-base 性能差距（无需权重更新），证明基座模型已具备推理能力，thinking model 只是学会了"何时"部署它们。
 
-[查看全部79篇「可解释性」论文 →](interpretability/)
+[查看全部80篇「可解释性」论文 →](interpretability/)
 
 ---
 
@@ -1683,7 +1683,7 @@ item_total: 2530
 
 ---
 
-## 📈 时间序列 (51) { #time_series }
+## 📈 时间序列 (54) { #time_series }
 
 **[A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)**
 
@@ -1725,7 +1725,7 @@ item_total: 2530
 
 :   提出 UrbanDiT，首个基于 Diffusion Transformer 的开放世界城市时空基础模型，通过统一的 prompt learning 框架整合异构数据类型（grid/graph）和多种任务（预测/插值/外推/填补），在多城市多场景下实现 SOTA 性能并展现强大的 zero-shot 泛化能力。
 
-[查看全部51篇「时间序列」论文 →](time_series/)
+[查看全部54篇「时间序列」论文 →](time_series/)
 
 ---
 
@@ -1772,6 +1772,52 @@ item_total: 2530
 :   将好奇心驱动探索（RND、ICM 等）与基于表达式树的图动作空间结合，使 PPO 智能体能够求解包含根号、指数和三角函数的非线性方程，超越了此前仅限于线性方程的 RL 方法。
 
 [查看全部35篇「自监督/表示学习」论文 →](self_supervised/)
+
+---
+
+## 📐 学习理论 (25) { #learning_theory }
+
+**[A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](learning_theory/a_highdimensional_statistical_method_for_optimizing_transfer.md)**
+
+:   提出基于K-L散度和高维统计分析的理论框架，用于确定多源迁移学习中每个源任务的最优样本迁移数量，避免"用所有源数据"带来的负迁移问题，在DomainNet和Office-Home上超过SOTA 1.0-1.5%的同时减少47.85%的样本使用量和35.19%的训练时间。
+
+**[Adaptive Data Analysis for Growing Data](learning_theory/adaptive_data_analysis_for_growing_data.md)**
+
+:   本文首次给出了动态增长数据上自适应分析的泛化界，允许分析者根据数据规模自适应调度查询，并通过时变经验精度界和差分隐私机制实现随数据积累越来越紧的泛化保证。
+
+**[Computable Universal Online Learning](learning_theory/computable_universal_online_learning.md)**
+
+:   在 universal online learning 框架中引入可计算性约束，证明了"数学上可学习"不等于"可用计算机程序实现的可学习"，并给出了 agnostic 和 proper 变体下可计算学习的精确刻画。
+
+**[Conformal Online Learning of Deep Koopman Linear Embeddings](learning_theory/conformal_online_learning_of_deep_koopman_linear_embeddings.md)**
+
+:   提出 COLoKe 框架，将 conformal prediction 重新解读为模型一致性诊断工具，仅在 Koopman 模型的预测误差超过动态校准阈值时才触发参数更新，从而实现对非线性动力系统的高效在线 Koopman 线性嵌入学习。
+
+**[Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification](learning_theory/diffusion_transformers_for_imputation_statistical_efficiency_and_uncertainty_qua.md)**
+
+:   本文从统计学习角度分析了条件扩散Transformer（DiT）在时间序列插补任务中的样本复杂度和不确定性量化性能，并提出混合掩码训练策略提升插补效果。
+
+**[Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games](learning_theory/efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)**
+
+:   提出基于核化（kernelization）的框架，在部分信息反馈设定下为多面体博弈（Colonel Blotto、图拟阵拥堵博弈、网络拥堵博弈）设计了计算高效的无遗憾学习算法，显著改进了学习粗关联均衡（CCE）的运行时复杂度。
+
+**[Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds](learning_theory/finite-time_analysis_of_stochastic_nonconvex_nonsmooth_optimization_on_the_riema.md)**
+
+:   提出 Riemannian Online to NonConvex (RO2NC) 算法及其零阶版本 ZO-RO2NC，首次为黎曼流形上完全非光滑非凸随机优化建立了 $O(\delta^{-1}\epsilon^{-3})$ 的有限时间样本复杂度保证，匹配欧几里德最优结果。
+
+**[How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](learning_theory/how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)**
+
+:   提出"领域碎裂维度"（Domain Shattering Dimension）这一新组合度量，紧致刻画了领域泛化所需的领域数量（领域样本复杂度），并证明其与经典VC维的关系为 $\Theta(d \log(1/\alpha))$。
+
+**[Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](learning_theory/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)**
+
+:   针对 Correlation Clustering 的两个重要推广——Chromatic CC 和 pseudometric-weighted CC，基于 LP relaxation 与精心设计的 rounding function，分别取得 2.15-approximation 和 tight 10/3-approximation，显著改进了先前最佳结果（2.5 和 6）。
+
+**[Infrequent Exploration in Linear Bandits](learning_theory/infrequent_exploration_in_linear_bandits.md)**
+
+:   提出 INFEX 框架，按给定调度表在探索步执行基线算法（如 LinUCB/LinTS）、其余时刻贪心选臂，证明只要探索次数超过 $\omega(\log T)$ 即可达到与全时刻探索相同的多项对数 regret，同时大幅降低计算开销（80%-99% 时间步为贪心）。
+
+[查看全部25篇「学习理论」论文 →](learning_theory/)
 
 ---
 
@@ -2149,23 +2195,15 @@ item_total: 2530
 
 ---
 
-## 📂 其他 (164) { #others }
+## 📂 其他 (130) { #others }
 
 **[3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](others/3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)**
 
 :   提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上，模拟阻力（Sim-Drag）相比最优基线降低 13.6%。
 
-**[4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos](others/4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)**
-
-:   提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
-
 **[A Differentiable Model of Supply-Chain Shocks](others/a_differentiable_model_of_supply-chain_shocks.md)**
 
 :   用 JAX 实现可微分的供应链 Agent-Based Model（~1000 家企业），通过 GPU 并行化 + 自动微分实现比传统 ABC 快 3 个数量级的贝叶斯参数校准，为全球供应链网络的冲击传播建模铺平道路。
-
-**[A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](others/a_highdimensional_statistical_method_for_optimizing_transfer.md)**
-
-:   提出基于K-L散度和高维统计分析的理论框架，用于确定多源迁移学习中每个源任务的最优样本迁移数量，避免"用所有源数据"带来的负迁移问题，在DomainNet和Office-Home上超过SOTA 1.0-1.5%的同时减少47.85%的样本使用量和35.19%的训练时间。
 
 **[A Sustainable AI Economy Needs Data Deals That Work for Generators](others/a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)**
 
@@ -2183,14 +2221,22 @@ item_total: 2530
 
 :   提出 Active Measurement 框架，将 AI 模型预测作为重要性采样提议分布，通过迭代的人类标注与模型更新实现科学总量测量的无偏估计，搭配新颖的组合权重方案和条件方差估计器构建可靠的置信区间。
 
-**[Adaptive Data Analysis for Growing Data](others/adaptive_data_analysis_for_growing_data.md)**
-
-:   本文首次给出了动态增长数据上自适应分析的泛化界，允许分析者根据数据规模自适应调度查询，并通过时变经验精度界和差分隐私机制实现随数据积累越来越紧的泛化保证。
-
 **[Addressing Mark Imbalance in Integration-free Neural Marked Temporal Point Processes](others/addressing_mark_imbalance_in_integrationfree_neural_marked_t.md)**
 
 :   本文首次揭示标记时间点过程(MTPP)中标记分布不平衡对预测性能的严重影响，提出先预测标记再预测时间的策略，设计阈值方法调节稀有标记的预测概率，并开发无积分近似的IFNMTPP模型高效支持标记概率估计和时间采样。
 
-[查看全部164篇「其他」论文 →](others/)
+**[Adjoint Schrödinger Bridge Sampler](others/adjoint_schrödinger_bridge_sampler.md)**
+
+:   提出 Adjoint Schrödinger Bridge Sampler (ASBS)，通过将 Schrödinger Bridge 问题重新解释为随机最优控制问题，消除了先前扩散采样器的 memoryless 条件限制，支持任意源分布（如高斯、谐波先验），使用可扩展的 matching 目标无需重要性权重估计，在多粒子能量函数和分子构象生成上全面超越先前方法。
+
+**[Adjusted Count Quantification Learning on Graphs](others/adjusted_count_quantification_learning_on_graphs.md)**
+
+:   将经典的 Adjusted Classify & Count (ACC) 量化方法扩展到图结构数据，提出结构重要性采样（SIS）和邻域感知ACC两种技术，分别解决图量化中的结构协变量偏移和非同质性边问题。
+
+**[Aggregation Hides OOD Generalization Failures from Spurious Correlations](others/aggregation_hides_out-of-distribution_generalization_failures_from_spurious_corr.md)**
+
+:   揭示 OOD 泛化 benchmark 中"聚合掩蔽"现象——aggregate 评估显示 accuracy-on-the-line（ID 与 OOD 准确率正相关），但 OODSelect 方法可从同一 OOD 数据中找到大规模语义连贯子集（最高达 75%），这些子集上 ID 越高 OOD 反而越低（Pearson R 低至 -0.92），证明虚假相关的危害被聚合评估系统性隐藏。
+
+[查看全部130篇「其他」论文 →](others/)
 
 </div>

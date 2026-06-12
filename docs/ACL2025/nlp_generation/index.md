@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 文本生成论文汇总 · 26篇论文解读
+  ACL2025 文本生成论文汇总 · 27篇论文解读
 description: >-
-  26篇ACL2025的文本生成方向论文解读，涵盖文本摘要、LLM、对抗鲁棒、情感分析、推理、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇ACL2025的文本生成方向论文解读，涵盖文本摘要、LLM、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "文本生成"
@@ -10,9 +10,6 @@ tags:
   - "论文笔记"
   - "文本摘要"
   - "LLM"
-  - "对抗鲁棒"
-  - "情感分析"
-  - "推理"
   - "个性化生成"
 item_list:
   - u: "a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors/"
@@ -35,6 +32,8 @@ item_list:
     t: "Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems"
   - u: "doc_level_mbr_optimal_transport/"
     t: "Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport"
+  - u: "dpp_diverse_multidoc_summary/"
+    t: "Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries"
   - u: "dtcrs_dynamic_tree_construction_for_recursive_summarization/"
     t: "DTCRS: Dynamic Tree Construction for Recursive Summarization"
   - u: "enhancing_text_editing_for_grammatical_error_correction_arabic_as_a_case_study/"
@@ -67,17 +66,17 @@ item_list:
     t: "What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations"
   - u: "writing_like_best_exemplar/"
     t: "Writing Like the Best: Exemplar-Based Expository Text Generation"
-item_total: 26
+item_total: 27
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✍️ 文本生成
 
-**💬 ACL2025** · **26** 篇论文解读
+**💬 ACL2025** · **27** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/nlp_generation/index.md) · [💬 ACL2026 (17)](../../ACL2026/nlp_generation/index.md) · [🔬 ICLR2026 (2)](../../ICLR2026/nlp_generation/index.md) · [🤖 AAAI2026 (3)](../../AAAI2026/nlp_generation/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/nlp_generation/index.md) · [🧪 ICML2025 (1)](../../ICML2025/nlp_generation/index.md)
 
-🔥 **高频主题：** 文本摘要 ×8 · LLM ×4
+🔥 **高频主题：** 文本摘要 ×8 · LLM ×4 · 个性化生成 ×2
 
 **[A Representation Level Analysis of NMT Model Robustness to Grammatical Errors](a_representation_level_analysis_of_nmt_model_robustness_to_grammatical_errors.md)**
 
@@ -118,6 +117,10 @@ item_total: 26
 **[Document-Level Text Generation with Minimum Bayes Risk Decoding using Optimal Transport](doc_level_mbr_optimal_transport.md)**
 
 :   提出 MBR-OT，将最优传输（Wasserstein距离）引入最小贝叶斯风险（MBR）解码，实现用句子级效用函数评估文档级输出质量，在文档级机器翻译、文本简化和密集图像描述任务上显著优于标准 MBR 解码。
+
+**[Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries](dpp_diverse_multidoc_summary.md)**
+
+:   提出将多文档摘要解耦为关键点抽取→DPP多样性选择→重写三步流水线，通过行列式点过程（DPP）进行原则性内容选择，显著提升LLM多文档摘要的源文档覆盖率。
 
 **[DTCRS: Dynamic Tree Construction for Recursive Summarization](dtcrs_dynamic_tree_construction_for_recursive_summarization.md)**
 

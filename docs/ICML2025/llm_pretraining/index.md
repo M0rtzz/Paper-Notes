@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 预训练论文汇总 · 30篇论文解读
+  ICML2025 预训练论文汇总 · 31篇论文解读
 description: >-
-  30篇ICML2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ICML2025的预训练方向论文解读，涵盖 LLM、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "预训练"
@@ -48,6 +48,8 @@ item_list:
     t: "LLM Data Selection and Utilization via Dynamic Bi-level Optimization"
   - u: "machine_learning_from_explanations/"
     t: "Machine Learning from Explanations"
+  - u: "meek_models_shall_inherit_the_earth/"
+    t: "Meek Models Shall Inherit the Earth"
   - u: "metadata_conditioning_accelerates_language_model_pre-training/"
     t: "Metadata Conditioning Accelerates Language Model Pre-training"
   - u: "on_the_clean_generalization_and_robust_overfitting_in_adversarial_training_from_/"
@@ -70,15 +72,13 @@ item_list:
     t: "Towards Robust Influence Functions with Flat Validation Minima"
   - u: "when_can_in-context_learning_generalize_out_of_task_distribution/"
     t: "When Can In-Context Learning Generalize Out of Task Distribution?"
-  - u: "whitened_clip_as_a_likelihood_surrogate_of_images_and_captions/"
-    t: "Whitened CLIP as a Likelihood Surrogate of Images and Captions"
-item_total: 30
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**🧪 ICML2025** · **30** 篇论文解读
+**🧪 ICML2025** · **31** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/llm_pretraining/index.md) · [💬 ACL2026 (12)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (25)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (51)](../../NeurIPS2025/llm_pretraining/index.md)
 
@@ -155,6 +155,10 @@ item_total: 30
 **[Machine Learning from Explanations](machine_learning_from_explanations.md)**
 
 :   提出一种用简单解释信号（重要输入特征）引导机器学习的方法——通过交替优化预测准确率和注意力对齐的两阶段训练循环，在小数据、类不平衡、虚假特征场景下显著提升性能和稳定性。
+
+**[Meek Models Shall Inherit the Earth](meek_models_shall_inherit_the_earth.md)**
+
+:   基于 Chinchilla 缩放定律的数学建模，证明在固定分布的 next-token 目标下，计算缩放的递减收益将导致 SOTA 大模型相对于低计算预算"弱模型"（meek models）的能力优势最终收敛趋零，论证 AI 能力的民主化是当前缩放范式下的必然趋势，现有基于算力的 AI 治理策略需要根本性重新设计。
 
 **[Metadata Conditioning Accelerates Language Model Pre-training](metadata_conditioning_accelerates_language_model_pre-training.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   ICLR2026 论文汇总 · 1529篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(59篇)、LLM 安全(52篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(126篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(60篇)、LLM 安全(52篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "ICLR2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1529
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 ICLR2026 论文汇总
 
-1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(125篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(59篇)、LLM 安全(52篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1529篇ICLR2026论文解读，涵盖图像生成(137篇)、强化学习(126篇)、模型压缩(100篇)、多模态 VLM(85篇)、LLM 推理(82篇)、3D 视觉(61篇)、可解释性(60篇)、LLM 安全(52篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -229,11 +229,15 @@ item_total: 1529
 
 ---
 
-## ⚖️ 对齐 / RLHF (39) { #llm_alignment }
+## ⚖️ 对齐 / RLHF (40) { #llm_alignment }
 
 **[A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](llm_alignment/a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)**
 
 :   提出 A2D，一种针对扩散语言模型（dLLM）的 token 级安全对齐方法，通过训练模型在遇到有害内容的 mask 位置输出 [EOS] token 来实现任意解码顺序、任意解码步的安全防御，将 DIJA 模板攻击成功率从 80%+ 降到近零（1.3%/0.0%），并支持早期拒绝实现 19.3x 加速。
+
+**[Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](llm_alignment/agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)**
+
+:   提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码，使Qwen 4B在Lua/Julia/R/OCaml/Fortran五种低资源语言上达到匹敌16B-70B模型的SOTA水平。
 
 **[Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment](llm_alignment/align_once_benefit_multilingually_enforcing_multilingual_consistency_for_llm_saf.md)**
 
@@ -267,15 +271,11 @@ item_total: 1529
 
 :   发现 f-DPO 的可解性不需要 f 凸（仅需 $\lim_{t\to 0^+} f'(t) = -\infty$），进一步证明 $\arg\min f(t) \geq 1$ 是抵抗概率位移的必要条件，由此提出 SquaredPO（$f(t) = \frac{1}{2}(\log t)^2$，非凸），在保持性能的同时显著缓解 winner 概率下降问题。
 
-**[General Exploratory Bonus for Optimistic Exploration in RLHF](llm_alignment/general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)**
-
-:   理论证明现有 RLHF 探索奖励（exploratory bonus）在 KL 和 α-散度正则化下实际上会引导策略向参考模型的高概率区域靠拢（与乐观原则相悖），提出 General Exploratory Bonus (GEB) 框架——通过参考模型依赖的奖励调节来抵消散度正则化的保守偏差，可证明满足乐观原则。
-
-[查看全部39篇「对齐 / RLHF」论文 →](llm_alignment/)
+[查看全部40篇「对齐 / RLHF」论文 →](llm_alignment/)
 
 ---
 
-## 💬 LLM / NLP (34) { #llm_nlp }
+## 💬 LLM / NLP (36) { #llm_nlp }
 
 **[AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](llm_nlp/assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)**
 
@@ -317,7 +317,7 @@ item_total: 1529
 
 :   AUSteer 发现块级激活转向（steering）本质上是异质的——不同维度控制不同 token 分布，混合转向既放大有益信号也放大有害信号。提出原子单元（AU）级细粒度转向：用激活动量定位判别性维度，自适应调节转向强度，仅转向 ≤100 个维度即大幅超越转向数千维度的 SOTA 方法。
 
-[查看全部34篇「LLM / NLP」论文 →](llm_nlp/)
+[查看全部36篇「LLM / NLP」论文 →](llm_nlp/)
 
 ---
 
@@ -1241,7 +1241,7 @@ item_total: 1529
 
 ---
 
-## 🎮 强化学习 (125) { #reinforcement_learning }
+## 🎮 强化学习 (126) { #reinforcement_learning }
 
 **[A Unifying View of Coverage in Linear Off-Policy Evaluation](reinforcement_learning/a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)**
 
@@ -1283,7 +1283,7 @@ item_total: 1529
 
 :   通过观察性研究（18 个开源 RPT 模型）和干预性研究（单域 GRPO 训练），系统揭示了强化后训练（RPT/RLVR）的泛化局限：RPT 在训练域内提升显著，但跨域泛化不一致——结构化域（数学↔代码）可互相迁移，但无法泛化到非结构化域（法律/金融/医疗），且这一结论跨算法、模型规模和训练步数保持一致。
 
-[查看全部125篇「强化学习」论文 →](reinforcement_learning/)
+[查看全部126篇「强化学习」论文 →](reinforcement_learning/)
 
 ---
 
@@ -1465,7 +1465,7 @@ item_total: 1529
 
 ---
 
-## 🔬 可解释性 (59) { #interpretability }
+## 🔬 可解释性 (60) { #interpretability }
 
 **[A Cortically Inspired Architecture for Modular Perceptual AI](interpretability/a_cortically_inspired_architecture_for_modular_perceptual_ai.md)**
 
@@ -1474,6 +1474,10 @@ item_total: 1529
 **[AdAEM: An Adaptively and Automated Extensible Measurement of LLMs' Value Difference](interpretability/adaem_an_adaptively_and_automated_extensible_measurement_of_llms_value_differenc.md)**
 
 :   提出 AdAEM，一个自适应、自扩展的 LLM 价值观评估框架，通过信息论优化自动生成能最大化揭示不同 LLM 价值差异的测试问题，解决现有静态基准无法区分模型价值取向的"信息量不足"问题。
+
+**[Addressing Divergent Representations from Causal Interventions on Neural Networks](interpretability/addressing_divergent_representations_causal.md)**
+
+:   系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况，并提出 Counterfactual Latent (CL) loss 来约束干预表征不偏离流形，在 7B LLM 上验证可减少偏移同时保持干预准确率。
 
 **[AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment](interpretability/anveshanaai_a_multimodal_platform_for_adaptive_aiml_education_through_automated_.md)**
 
@@ -1503,15 +1507,11 @@ item_total: 1529
 
 :   在概念瓶颈模型(CBM)的概念层引入信息瓶颈(IB)正则化，通过惩罚 I(X;C) 同时保留 I(C;Y) 来学习最小充分概念表示，在六个CBM变体和三个基准上一致提升预测性能和概念干预可靠性。
 
-**[Conjuring Semantic Similarity](interpretability/conjuring_semantic_similarity.md)**
-
-:   提出一种基于视觉想象的文本语义相似度度量——通过计算文本条件扩散模型在两个文本提示下诱导的反向 SDE 之间的 Jeffreys 散度来衡量语义距离，可用 Monte-Carlo 采样直接计算，首次量化了扩散模型学到的语义空间与人类标注的对齐程度。
-
-[查看全部59篇「可解释性」论文 →](interpretability/)
+[查看全部60篇「可解释性」论文 →](interpretability/)
 
 ---
 
-## 📐 优化/理论 (44) { #optimization }
+## 📐 优化/理论 (47) { #optimization }
 
 **[A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](optimization/a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)**
 
@@ -1553,11 +1553,11 @@ item_total: 1529
 
 :   提出 DeepAFL，通过设计无梯度的解析残差块并引入逐层联邦训练协议，首次实现了具有表征学习能力的深度解析联邦学习模型，既保持了对数据异质性的理想不变性，又突破了现有解析方法仅限于单层线性模型的局限，在三个基准数据集上超越 SOTA 5.68%-8.42%。
 
-[查看全部44篇「优化/理论」论文 →](optimization/)
+[查看全部47篇「优化/理论」论文 →](optimization/)
 
 ---
 
-## 📈 时间序列 (36) { #time_series }
+## 📈 时间序列 (38) { #time_series }
 
 **[Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](time_series/adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)**
 
@@ -1599,7 +1599,7 @@ item_total: 1529
 
 :   提出 Free Energy Mixer (FEM)，通过将注意力的值读取重新定义为自由能（log-sum-exp）优化问题，实现了逐通道的值感知后验选择，克服了标准注意力"无损存储但有损读取"的固有瓶颈，可即插即用替换 softmax/线性注意力/RNN/SSM，在 NLP、视觉和时间序列任务上一致提升。
 
-[查看全部36篇「时间序列」论文 →](time_series/)
+[查看全部38篇「时间序列」论文 →](time_series/)
 
 ---
 
@@ -1738,6 +1738,38 @@ item_total: 1529
 :   提出 PonderLM，在预训练阶段引入"沉思"机制——将预测概率分布加权求和为连续嵌入后反复前向传播，无需标注数据或强化学习，使 2.8B 模型在 9 个下游任务上超越 6.9B 模型。
 
 [查看全部16篇「自监督/表示学习」论文 →](self_supervised/)
+
+---
+
+## 📐 学习理论 (7) { #learning_theory }
+
+**[An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](learning_theory/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)**
+
+:   提出增量单元枚举算法（ICE），首个具有严格证明的独立算法，可以在 $O(N^{D+1})$ 时间内精确求解0-1损失线性分类问题的全局最优解，并扩展到多项式超曲面分类。
+
+**[Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](learning_theory/deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)**
+
+:   提出 FlexQP——基于 $\ell_1$ 弹性松弛的"永远可行"凸二次规划（QP）求解器，结合深度展开（deep unfolding）学习 LSTM 反馈策略加速收敛得到 Deep FlexQP；在 SQP 框架中作为子模块，解非线性轨迹优化比 OSQP 快 4-16 倍，预测安全滤波器的安全违规减少 70%+、任务完成率提升 43%。
+
+**[Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](learning_theory/function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)**
+
+:   证明函数编码器（Function Encoders）通过学习神经网络基函数定义了一个有效的核，建立了神经特征学习与RKHS理论的桥梁，并提出PCA引导的紧凑基选择算法和有限样本泛化界。
+
+**[Lipschitz Bandits with Stochastic Delayed Feedback](learning_theory/lipschitz_bandits_with_stochastic_delayed_feedback.md)**
+
+:   首次系统研究连续臂空间 Lipschitz bandit 在随机延迟反馈下的学习问题，针对有界延迟提出 Delayed Zooming 算法（通过 lazy update 机制保持 $\Delta(x) \leq 6r_t(x)$ 的子最优 gap 界），针对无界延迟提出 DLPP 分阶段剪枝策略（遗憾与延迟分位数 $Q(p)$ 挂钩），并建立实例相关下界证明 DLPP 近最优。
+
+**[Scalable Random Wavelet Features: Efficient Non-Stationary Kernel Approximation with Convergence Guarantees](learning_theory/scalable_random_wavelet_features_efficient_non-stationary_kernel_approximation_w.md)**
+
+:   提出 Random Wavelet Features (RWF)，通过从小波族中随机采样构建可扩展的非平稳核近似，保留随机特征的线性时间复杂度，同时具有正定性、无偏性和一致收敛保证。
+
+**[The Expressive Limits of Diagonal SSMs for State-Tracking](learning_theory/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)**
+
+:   建立了输入依赖复数对角（DCD）SSM 在群状态追踪任务上的完整表达能力刻画：单层不能追踪任何非阿贝尔群，$k$ 层能追踪群 $G$ 当且仅当 $G$ 存在长度为 $k$ 的子正规链且因子均为阿贝尔群——精确定义了深度对表达能力的严格提升，同时实验揭示表达能力与可学习性之间的显著 gap。
+
+**[The Price of Robustness: Stable Classifiers Need Overparameterization](learning_theory/the_price_of_robustness_stable_classifiers_need_overparameterization.md)**
+
+:   建立了不连续分类器的稳定性-泛化界，证明了分类任务中的"鲁棒性代价定律"：任何参数量 $p \approx n$ 的插值分类器必然不稳定，实现高稳定性需要 $p \approx nd$ 量级的过参数化。
 
 ---
 
@@ -2029,7 +2061,7 @@ item_total: 1529
 
 ---
 
-## 📂 其他 (91) { #others }
+## 📂 其他 (74) { #others }
 
 **[A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](others/a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)**
 
@@ -2051,18 +2083,6 @@ item_total: 1529
 
 :   为决策树主动学习提供首个理论保证：(1) 首次分析决策树的不一致系数（disagreement coefficient）并给出 $O(\ln^{OPT}(n))$ 上界；(2) 提出首个达到乘法误差 $(1+\epsilon)$ 保证的二分类主动学习算法；结合两者实现数据集大小的多对数标签复杂度。
 
-**[Addressing Divergent Representations from Causal Interventions on Neural Networks](others/addressing_divergent_representations_causal.md)**
-
-:   系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况，并提出 Counterfactual Latent (CL) loss 来约束干预表征不偏离流形，在 7B LLM 上验证可减少偏移同时保持干预准确率。
-
-**[Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](others/agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)**
-
-:   提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码，使Qwen 4B在Lua/Julia/R/OCaml/Fortran五种低资源语言上达到匹敌16B-70B模型的SOTA水平。
-
-**[An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](others/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)**
-
-:   提出增量单元枚举算法（ICE），首个具有严格证明的独立算法，可以在 $O(N^{D+1})$ 时间内精确求解0-1损失线性分类问题的全局最优解，并扩展到多项式超曲面分类。
-
 **[An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes](others/an_information-theoretic_framework_for_optimizing_experimental_design_to_disting.md)**
 
 :   提出 **information gap** 这一信息论度量，通过推导在似然编码和后验编码假说下解码器交叉熵性能差异的解析表达式（本质是真实后验与任务边际化代理后验之间的 KL 散度），定量评估给定实验设计区分两种概率神经编码假说的能力，并通过最大化该度量来优化刺激先验分布，实现理论驱动的最优实验设计。
@@ -2071,6 +2091,18 @@ item_total: 1529
 
 :   提出 Ano 优化器，将更新方向和幅度解耦——方向用动量的符号（sign）确保噪声鲁棒，幅度用瞬时梯度绝对值（而非动量幅度）确保响应速度，配合改进的 Yogi 式方差估计，在噪声和非平稳环境（如 RL）中显著优于 Adam/Lion/Adan，同时在标准任务上保持竞争力。
 
-[查看全部91篇「其他」论文 →](others/)
+**[AnyUp: Universal Feature Upsampling](others/anyup_universal_feature_upsampling.md)**
+
+:   AnyUp 提出首个**编码器无关**的可学习特征上采样方法，通过 feature-agnostic 卷积层和窗口注意力机制，仅训练一次即可对任意视觉特征在任意分辨率间进行高质量上采样，在语义分割、深度估计等任务上达到 SOTA。
+
+**[Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects](others/articulation_in_motion_prior-free_part_mobility_analysis_for_articulated_objects.md)**
+
+:   提出AiM（Articulation in Motion）框架，从交互视频和初始状态扫描中无需部件数量先验地重建铰接物体——通过双高斯表征（静态GS + 可变形GS）实现动静解耦，结合顺序RANSAC进行无先验部件分割和关节估计，辅以SDMD模块处理新暴露的静态区域，在复杂6部件物体（Storage）上以79.34% mean IoU大幅超越需先验的ArtGS（52.23%）。
+
+**[Bayesian Influence Functions for Hessian-Free Data Attribution](others/bayesian_influence_functions_for_hessian-free_data_attribution.md)**
+
+:   提出 Local Bayesian Influence Function (BIF)，用 SGLD 采样估计的协方差替代经典影响函数中不可行的 Hessian 逆运算，实现了对数十亿参数模型的无架构限制数据归因，在重训练实验中达到 SOTA。
+
+[查看全部74篇「其他」论文 →](others/)
 
 </div>

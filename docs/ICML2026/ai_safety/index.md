@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 AI安全论文汇总 · 37篇论文解读
+  ICML2026 AI安全论文汇总 · 41篇论文解读
 description: >-
-  37篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  41篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "AI 安全"
@@ -45,6 +45,8 @@ item_list:
     t: "Geometrically Constrained Outlier Synthesis"
   - u: "hidden_in_plain_tokens_simply_robust_gradient-free_watermark_for_synthetic_audio/"
     t: "Hidden in Plain Tokens: Simply Robust, Gradient-Free Watermark for Synthetic Audio"
+  - u: "how_does_bayesian_sampling_help_membership_inference_attacks/"
+    t: "How Does Bayesian Sampling Help Membership Inference Attacks?"
   - u: "how_hard_can_it_be_hardness-aware_multi-objective_unlearning/"
     t: "How Hard Can It Be? Hardness-Aware Multi-Objective Unlearning"
   - u: "lapras_learning-augmented_private_answering_for_linear_query_streams/"
@@ -59,6 +61,8 @@ item_list:
     t: "One Model to Translate Them All: Universal Any-to-Any Translation for Heterogeneous Collaborative Perception"
   - u: "optimal_transport_under_group_fairness_constraints/"
     t: "Optimal Transport under Group Fairness Constraints"
+  - u: "partitioning_for_intrinsic_model_inversion_resistance_in_collaborative_inference/"
+    t: "Partitioning for Intrinsic Model Inversion Resistance in Collaborative Inference"
   - u: "persuasive_privacy/"
     t: "Persuasive Privacy"
   - u: "position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju/"
@@ -69,21 +73,17 @@ item_list:
     t: "Position: Machine Learning for Heart Transplant Allocation Policy Optimization Should Account for Incentives"
   - u: "prism_gauge-invariant_tangent-space_differentially_private_lora/"
     t: "PRISM: Gauge-Invariant Tangent-Space Differentially Private LoRA"
-  - u: "regret-based_federated_causal_discovery_with_unknown_interventions/"
-    t: "Regret-Based Federated Causal Discovery with Unknown Interventions"
-  - u: "rotation-invariant_spherical_watermarking_via_third-order_so3_representation_cou/"
-    t: "Rotation-Invariant Spherical Watermarking via Third-Order SO(3) Representation Coupling"
-item_total: 37
+item_total: 41
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧪 ICML2026** · **37** 篇论文解读
+**🧪 ICML2026** · **41** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (24)](../../ICCV2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×4 · 联邦学习 ×3 · 水印/隐写 ×3 · 时序预测 ×2
+🔥 **高频主题：** 对抗鲁棒 ×6 · 联邦学习 ×3 · 水印/隐写 ×3 · 时序预测 ×2
 
 **[Active Continual Learning with Metaplastic Binary Bayesian Neural Networks](active_continual_learning_with_metaplastic_binary_bayesian_neural_networks.md)**
 
@@ -149,6 +149,10 @@ item_total: 37
 
 :   针对自回归音频生成模型在 KGW 风格 token 水印下因"解码→重编码不幂等"导致水印信号指数级衰减的问题，作者用 codec 自身的混淆矩阵跑 Leiden 社区检测得到一个收缩后的"簇词表"，把水印的绿/红集合定义在簇而非 token 上，从而在完全梯度自由、黑盒访问 codec 的前提下把 $z$-score 的指数底从 $r$ 抬到 $r_{cl}>r$，detectability 相比基线和需要微调 codec 的 WMAR 普遍提升数个量级，且对 MP3、降噪、裁剪等扰动天然鲁棒。
 
+**[How Does Bayesian Sampling Help Membership Inference Attacks?](how_does_bayesian_sampling_help_membership_inference_attacks.md)**
+
+:   本文提出 BMIA，把单个参考模型用 Laplace 后验展开成"虚拟模型族"，靠贝叶斯采样估计每个样本的条件 score 分布，在只训 1 个参考模型的预算下，在 CIFAR-100 等数据集上把低 FPR 区域 TPR 拉到比训 8 个参考模型的 LiRA 还高 54%。
+
 **[How Hard Can It Be? Hardness-Aware Multi-Objective Unlearning](how_hard_can_it_be_hardness-aware_multi-objective_unlearning.md)**
 
 :   把"遗忘 vs 保留"的 trade-off 直接写成"每步带约束的一阶凸优化"问题，用 retain/forget 梯度的点积 $\kappa = \bm{g_r}\cdot\bm{g_f}$ 同时充当 hardness 度量、更新方向切换开关和提前停止条件，在 CIFAR-10/ResNet-20 与 Llama-2-7B/WaterDrum-TOFU 上比 GA、GDiff、SCRUB、KL 等基线更稳。
@@ -177,6 +181,10 @@ item_total: 37
 
 :   本文把"群体公平性"显式编码为一个 $K_s \times K_w$ 的组间匹配概率目标 $\mathbf{F}$，提出 **FairSinkhorn** 精确求解、**惩罚式 OT** 凸松弛、以及 **双层成本学习** 三种方案，分别给出有限样本复杂度 $O(1/\sqrt{n})$ 和 fairness 偏差界 $O(\exp(5R_\Theta/\varepsilon)/\sqrt{n})$，在合成与半合成（约会 app）数据集上勾画出"代价 - 公平性"权衡前沿。
 
+**[Partitioning for Intrinsic Model Inversion Resistance in Collaborative Inference](partitioning_for_intrinsic_model_inversion_resistance_in_collaborative_inference.md)**
+
+:   本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ），而类内均方半径 $R_c^2$ 是定位 GPZ、且能被标签平滑训练动态地主动收缩的关键变量。
+
 **[Persuasive Privacy](persuasive_privacy.md)**
 
 :   本文用 Sender–Receiver 两方 Stackelberg 博弈 + Bayesian Persuasion 思想，把"隐私"重新表述为 Receiver 在最坏 data-prior 下的相对评分规则损失，给出统一定义 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$-PP，同时把 pure DP 和 probabilistic DP 收编为特例，并首次为**确定性算法**（如无噪经验均值）给出非平凡的形式化隐私保证。
@@ -201,6 +209,10 @@ item_total: 37
 
 :   本文提出 I-PERI：在客户端干预目标完全未知、且只能共享 regret 标量的联邦设置下，用"有向一致掩码 + 无向一致掩码"两阶段流程，恢复出一个比观测 MEC 更紧、比 I-MEC 更松的全新等价类 Φ-MEC，并通过 Laplace 噪声给出 ε-差分隐私保证。
 
+**[Rethinking Evaluation Paradigms in IBP-based Certified Training](rethinking_evaluation_paradigms_in_ibp-based_certified_training.md)**
+
+:   作者指出 IBP 类认证训练长期以"挑一个偏心配置"的方式相互比较是不公平的，提出用多目标贝叶斯超参搜索画出每种方法的 Pareto 前沿，证明既有 SOTA 普遍欠调优——CROWN-IBP 干净精度可再涨约 $6\%$、Tiny ImageNet 上 MTL-IBP 同时涨 $\sim2\%$ 干净精度和认证精度。
+
 **[Rotation-Invariant Spherical Watermarking via Third-Order SO(3) Representation Coupling](rotation-invariant_spherical_watermarking_via_third-order_so3_representation_cou.md)**
 
 :   TRIAD 把 360° 全景图当作球面信号，用三阶球谐系数张量积投影到 trivial 表示得到一个**理论可证 SO(3) 不变**的双谱标量，从而把水印藏在高阶 SH 系数里、再从这个不变量里读出来，在任意 3D 旋转下仍能保持近 100% 的比特准确率而不依赖数据增强。
@@ -216,6 +228,10 @@ item_total: 37
 **[Singular Bayesian Neural Networks](singular_bayesian_neural_networks.md)**
 
 :   本文把权重矩阵直接参数化为 $W=AB^\top$ 而不是对 $W$ 本身做平均场分布，从而诱导出一个**关于 Lebesgue 测度奇异的低秩后验**，参数量从 $O(mn)$ 降到 $O(r(m+n))$，PAC-Bayes 复杂度从 $\sqrt{mn}$ 收到 $\sqrt{r(m+n)}$，并在 MLP/LSTM/Transformer 三类架构上实现 OOD 检测胜过 5-成员 Deep Ensemble 同时参数少 $33\times$。
+
+**[SORA: Free Second-Order Attacks in Fast Adversarial Training](sora_free_second-order_attacks_in_fast_adversarial_training.md)**
+
+:   本文从二阶视角重新审视单步对抗训练中的灾难性过拟合（CO），提出零成本曲率指标 PertAlign 来提前预警 CO，并据此推导出 SORA：一种用上一步反向传播梯度免费估计 Hessian、按通道随机化采样最优步长的自适应快速对抗训练算法，在 6 个数据集和 4 种架构上仅用同一组超参就稳定避免 CO 并刷新单步 AT 的鲁棒/干净精度 trade-off。
 
 **[TimeGuard: Channel-wise Pool Training for Backdoor Defense in Time Series Forecasting](timeguard_channel-wise_pool_training_for_backdoor_defense_in_time_series_forecas.md)**
 

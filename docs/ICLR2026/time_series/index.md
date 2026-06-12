@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 时间序列论文汇总 · 36篇论文解读
+  ICLR2026 时间序列论文汇总 · 38篇论文解读
 description: >-
-  36篇ICLR2026的时间序列方向论文解读，涵盖时序预测、LLM、少样本学习、推理、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ICLR2026的时间序列方向论文解读，涵盖时序预测、LLM、少样本学习、推理、医学影像、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "时间序列"
@@ -13,6 +13,7 @@ tags:
   - "少样本学习"
   - "推理"
   - "医学影像"
+  - "布局/合成"
 item_list:
   - u: "adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_/"
     t: "Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models"
@@ -34,6 +35,8 @@ item_list:
     t: "FeDaL: Federated Dataset Learning for General Time Series Foundation Models"
   - u: "free_energy_mixer/"
     t: "Free Energy Mixer"
+  - u: "from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting/"
+    t: "From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting"
   - u: "gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series/"
     t: "GTM: A General Time-series Model for Enhanced Representation Learning"
   - u: "hivid_llm-guided_video_saliency_for_content-aware_vod_and_live_streaming/"
@@ -56,6 +59,8 @@ item_list:
     t: "Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data"
   - u: "rescp_reservoir_conformal_prediction_for_time_series_forecasting/"
     t: "ResCP: Reservoir Conformal Prediction for Time Series Forecasting"
+  - u: "routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra/"
+    t: "Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition"
   - u: "scits_scientific_time_series_llm/"
     t: "SciTS: Scientific Time Series Understanding and Generation with LLMs"
   - u: "scits_scientific_time_series_understanding_and_generation_with_llms/"
@@ -70,21 +75,17 @@ item_list:
     t: "TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models"
   - u: "timesliver_symbolic-linear_decomposition_for_explainable_time_series_classificat/"
     t: "TimeSliver: Symbolic-Linear Decomposition for Explainable Time Series Classification"
-  - u: "towards_generalizable_pde_dynamics_forecasting_via_physics-guided_invariant_lear/"
-    t: "Towards Generalizable PDE Dynamics Forecasting via Physics-Guided Invariant Learning"
-  - u: "towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo/"
-    t: "Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework"
-item_total: 36
+item_total: 38
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🔬 ICLR2026** · **36** 篇论文解读
+**🔬 ICLR2026** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (51)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [📷 CVPR2026 (6)](../../CVPR2026/time_series/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×24 · LLM ×4 · 少样本学习 ×4 · 推理 ×3 · 医学影像 ×2
+🔥 **高频主题：** 时序预测 ×26 · LLM ×4 · 少样本学习 ×4 · 推理 ×3 · 医学影像 ×2
 
 **[Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)**
 
@@ -125,6 +126,10 @@ item_total: 36
 **[Free Energy Mixer](free_energy_mixer.md)**
 
 :   提出 Free Energy Mixer (FEM)，通过将注意力的值读取重新定义为自由能（log-sum-exp）优化问题，实现了逐通道的值感知后验选择，克服了标准注意力"无损存储但有损读取"的固有瓶颈，可即插即用替换 softmax/线性注意力/RNN/SSM，在 NLP、视觉和时间序列任务上一致提升。
+
+**[From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)**
+
+:   提出 Probabilistic Scenarios 范式，用模型直接输出有限个 {场景, 概率} 对取代采样，并用仅含三层平行线性层的 TimePrism 在5个基准数据集上取得9/10 SOTA。
 
 **[GTM: A General Time-series Model for Enhanced Representation Learning](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series.md)**
 
@@ -169,6 +174,10 @@ item_total: 36
 **[ResCP: Reservoir Conformal Prediction for Time Series Forecasting](rescp_reservoir_conformal_prediction_for_time_series_forecasting.md)**
 
 :   首次将储备计算（Echo State Network）引入保形预测，通过随机初始化ESN编码残差序列的时间动态，利用状态相似性自适应重加权历史残差构建局部预测区间，无需任何训练即在4个真实数据集上实现SOTA的Winkler分数，速度比HopCPT快20-80×。
+
+**[Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)**
+
+:   提出 xCPD 即插即用插件，将多变量时间序列的建模单元从"通道"细化到"通道-patch"，通过共享图傅里叶基做谱嵌入→按频率能量响应分组为低/中/高频段→动态 MoE 路由自适应选择频率特定滤波专家，可无缝集成到 CI/CD 任何现有模型上一致提升长短期预测性能，并支持零样本迁移。
 
 **[SciTS: Scientific Time Series Understanding and Generation with LLMs](scits_scientific_time_series_llm.md)**
 

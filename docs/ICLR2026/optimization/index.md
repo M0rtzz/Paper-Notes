@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 优化/理论论文汇总 · 44篇论文解读
+  ICLR2026 优化/理论论文汇总 · 47篇论文解读
 description: >-
-  44篇ICLR2026的优化/理论方向论文解读，涵盖联邦学习、模型压缩、推理、LLM、对齐/RLHF、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  47篇ICLR2026的优化/理论方向论文解读，涵盖联邦学习、模型压缩、推理、LLM、对齐/RLHF、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "优化/理论"
@@ -37,8 +37,12 @@ item_list:
     t: "DeepAFL: Deep Analytic Federated Learning"
   - u: "directional_convergence_benign_overfitting_of_gradient_descent_in_leaky_relu_two/"
     t: "Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks"
+  - u: "directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect/"
+    t: "Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs"
   - u: "dual_optimistic_ascent_pi_control_is_the_augmented_lagrangian_method_in_disguise/"
     t: "Dual Optimistic Ascent (PI Control) is the Augmented Lagrangian Method in Disguise"
+  - u: "entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks/"
+    t: "Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks"
   - u: "exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin/"
     t: "Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering"
   - u: "faster_gradient_methods_for_highly-smooth_stochastic_bilevel_optimization/"
@@ -51,6 +55,8 @@ item_list:
     t: "Generalization Below the Edge of Stability: The Role of Data Geometry"
   - u: "gradient-sign_masking_for_task_vector_transport_across_pre-trained_models/"
     t: "Gradient-Sign Masking for Task Vector Transport Across Pre-Trained Models"
+  - u: "implicit_bias_of_per-sample_adam_on_separable_data_departure_from_the_full-batch/"
+    t: "Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime"
   - u: "incentives_in_federated_learning_with_heterogeneous_agents/"
     t: "Incentives in Federated Learning with Heterogeneous Agents"
   - u: "lca_local_classifier_alignment_for_continual_learning/"
@@ -69,21 +75,15 @@ item_list:
     t: "Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit"
   - u: "non-asymptotic_analysis_of_efficiency_in_conformalized_regression/"
     t: "Non-Asymptotic Analysis of Efficiency in Conformalized Regression"
-  - u: "nrgpt_an_energy-based_alternative_for_gpt/"
-    t: "NRGPT: An Energy-based Alternative for GPT"
-  - u: "optimizer_choice_matters_for_the_emergence_of_neural_collapse/"
-    t: "Optimizer Choice Matters for the Emergence of Neural Collapse"
-  - u: "personalized_collaborative_learning_with_affinity-based_variance_reduction/"
-    t: "Personalized Collaborative Learning with Affinity-Based Variance Reduction"
-item_total: 44
+item_total: 47
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🔬 ICLR2026** · **44** 篇论文解读
+**🔬 ICLR2026** · **47** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (123)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (64)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (126)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×3
 
@@ -131,9 +131,17 @@ item_total: 44
 
 :   首次证明了梯度下降（gradient descent）在 leaky ReLU 两层神经网络中的方向收敛性（directional convergence），并据此在远超近正交数据（nearly orthogonal data）的更广泛混合数据设定下建立了 benign overfitting 的充分条件，同时发现了一个新的相变（phase transition）现象。
 
+**[Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs](directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect.md)**
+
+:   本文提出 Directional Sheaf Hypergraph Networks (DSHN)，通过将 Cellular Sheaf 理论与有向超图的方向信息结合，构造了一种复值 Hermitian Laplacian 算子，统一并推广了现有的图和超图 Laplacian，在 7 个真实数据集上相对准确率提升 2%–20%。
+
 **[Dual Optimistic Ascent (PI Control) is the Augmented Lagrangian Method in Disguise](dual_optimistic_ascent_pi_control_is_the_augmented_lagrangian_method_in_disguise.md)**
 
 :   证明了约束深度学习中广泛使用的 dual optimistic ascent（PI 控制）在单步一阶更新体制下数学等价于经典的增广拉格朗日方法（ALM），从而将 ALM 的鲁棒收敛保证（线性收敛到所有严格局部解）转移至 PI 控制，并为乐观系数 $\omega$ 提供了原则性调参指导。
+
+**[Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)**
+
+:   揭示了低损失路径上曲率的系统性增长会产生熵力屏障，即使路径能量平坦，SGD噪声也会将优化动力学约束在最小值附近的平坦区域，从而解释了"模式连通但动力学受限"的悖论。
 
 **[Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)**
 
@@ -158,6 +166,10 @@ item_total: 44
 **[Gradient-Sign Masking for Task Vector Transport Across Pre-Trained Models](gradient-sign_masking_for_task_vector_transport_across_pre-trained_models.md)**
 
 :   提出 GradFix 方法，利用目标预训练模型上极少量样本计算的梯度符号构建二值掩码，逐坐标过滤源模型的任务向量，仅保留与目标损失景观下降方向一致的分量，在无需任何微调的情况下实现跨预训练模型的任务知识迁移，理论上提供严格的一阶下降保证，在视觉与语言基准上均大幅超越朴素迁移和少样本微调。
+
+**[Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime](implicit_bias_of_per-sample_adam_on_separable_data_departure_from_the_full-batch.md)**
+
+:   首次证明mini-batch Adam的隐式偏差与full-batch不同：构造数据集使单样本Adam收敛到 $\ell_2$ 最大间隔分类器（而full-batch Adam收敛到 $\ell_\infty$），并通过AdamProxy刻画一般数据集上的数据自适应Mahalanobis范数间隔最大化行为。
 
 **[Incentives in Federated Learning with Heterogeneous Agents](incentives_in_federated_learning_with_heterogeneous_agents.md)**
 

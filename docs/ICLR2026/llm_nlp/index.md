@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 LLM/NLP论文汇总 · 34篇论文解读
+  ICLR2026 LLM/NLP论文汇总 · 36篇论文解读
 description: >-
-  34篇ICLR2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  36篇ICLR2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "LLM / NLP"
@@ -40,6 +40,8 @@ item_list:
     t: "How Catastrophic is Your LLM? Certifying Risk in Conversation"
   - u: "how_far_are_llms_from_professional_poker_players_revisiting_game-theoretic_reaso/"
     t: "How Far Are LLMs from Professional Poker Players? Revisiting Game-Theoretic Reasoning with Agentic Tool Use"
+  - u: "in-context_algebra/"
+    t: "In-Context Algebra"
   - u: "is_the_reversal_curse_a_binding_problem_uncovering_limitations_of_transformers_f/"
     t: "Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure"
   - u: "llema_evolutionary_search_with_llms_for_multi-objective_material_design/"
@@ -60,6 +62,8 @@ item_list:
     t: "Rethinking Code Similarity for Automated Algorithm Design with LLMs"
   - u: "spectral_attention_steering_for_prompt_highlighting/"
     t: "Spectral Attention Steering for Prompt Highlighting"
+  - u: "speculative_actions_faster_ai_agents/"
+    t: "Speculative Actions: A Lossless Framework for Faster AI Agents"
   - u: "statistical_advantage_of_softmax_attention_insights_from_single-location_regress/"
     t: "Statistical Advantage of Softmax Attention: Insights from Single-Location Regression"
   - u: "stopping_computation_for_converged_tokens_in_masked_diffusion-lm_decoding/"
@@ -68,19 +72,15 @@ item_list:
     t: "The Lattice Representation Hypothesis of Large Language Models"
   - u: "toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne/"
     t: "Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities"
-  - u: "trapped_by_simplicity_when_transformers_fail_to_learn_from_noisy_features/"
-    t: "Trapped by simplicity: When Transformers fail to learn from noisy features"
-  - u: "unsupervised_evaluation_of_multi-turn_objective-driven_interactions/"
-    t: "Unsupervised Evaluation of Multi-Turn Objective-Driven Interactions"
-item_total: 34
+item_total: 36
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM / NLP
 
-**🔬 ICLR2026** · **34** 篇论文解读
+**🔬 ICLR2026** · **36** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🤖 AAAI2026 (28)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×7 · 扩散模型 ×4 · 推理 ×2
 
@@ -140,6 +140,10 @@ item_total: 34
 
 :   系统分析了 LLM 在扑克中的三大推理缺陷（启发式推理、事实误解、知行差距），提出 ToolPoker 框架——首个面向不完全信息博弈的工具集成 LLM 推理系统，通过外部 CFR solver 提供博弈论最优的行动指导，使 7B 模型在 Limit Hold'em 中逼近 Nash 均衡。
 
+**[In-Context Algebra](in-context_algebra.md)**
+
+:   本文设计了一个 **in-context 代数任务**——令 token 成为纯变量、每条序列重新随机分配含义——发现 Transformer 在此设定下不再学习经典的傅里叶/几何表示，而是涌现出三种 **符号推理机制**（交换复制、单位元识别、闭包消去），并揭示了训练过程中这些能力按阶段性相变依次出现的规律。
+
 **[Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure](is_the_reversal_curse_a_binding_problem_uncovering_limitations_of_transformers_f.md)**
 
 :   提出反转诅咒（Reversal Curse）是认知科学中"绑定问题"在Transformer中的表现——源于概念表示的不一致性和纠缠性，并首次设计出基于JEPA和记忆层的架构真正突破反转诅咒（非绕过）。
@@ -179,6 +183,10 @@ item_total: 34
 **[Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)**
 
 :   提出 SEKA/AdaSEKA，通过对 key embedding 进行谱分解学习"相关性子空间"，在注意力计算前直接编辑 key 向量来实现 prompt highlighting，无需存储完整注意力矩阵，与 FlashAttention 完全兼容，且开销极低（+0.03s/sample）。
+
+**[Speculative Actions: A Lossless Framework for Faster AI Agents](speculative_actions_faster_ai_agents.md)**
+
+:   借鉴 CPU 推测执行和 LLM 推测解码的思想，提出 Speculative Actions 框架：在慢速 Actor（大模型）计算时用快速 Speculator（小模型）预测未来动作并预执行，匹配时跳过等待实现无损加速，在 Chess/电商/问答等场景实现 15-30% 延迟降低，置信度动态分支策略用 40% 更少 token 达到近似 3 条推测的加速效果。
 
 **[Statistical Advantage of Softmax Attention: Insights from Single-Location Regression](statistical_advantage_of_softmax_attention_insights_from_single-location_regress.md)**
 

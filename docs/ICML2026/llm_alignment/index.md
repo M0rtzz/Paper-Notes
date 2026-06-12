@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 对齐/RLHF论文汇总 · 24篇论文解读
+  ICML2026 对齐/RLHF论文汇总 · 26篇论文解读
 description: >-
-  24篇ICML2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  26篇ICML2026的对齐 / RLHF 方向论文解读，涵盖对齐/RLHF、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "对齐 / RLHF"
@@ -16,6 +16,8 @@ item_list:
     t: "Adaptive Probe-based Steering for Robust LLM Jailbreaking"
   - u: "alignment-aware_decoding/"
     t: "Alignment-Aware Decoding"
+  - u: "consistency_training_can_entrench_misalignment/"
+    t: "Consistency Training Can Entrench Misalignment"
   - u: "curriculum_learning_for_safety_alignment/"
     t: "Curriculum Learning for Safety Alignment"
   - u: "decoupling_reasoning_and_confidence_resurrecting_calibration_in_reinforcement_le/"
@@ -52,6 +54,8 @@ item_list:
     t: "SPARD: Defending Harmful Fine-Tuning Attack via Safety Projection with Relevance-Diversity Data Selection"
   - u: "steering_beyond_the_support_adversarial_training_on_unsupervised_jailbroken_acti/"
     t: "Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation"
+  - u: "the_realignment_problem_when_right_becomes_wrong_in_llms/"
+    t: "The Realignment Problem: When Right becomes Wrong in LLMs"
   - u: "toward_stable_value_alignment_introducing_independent_modules_for_consistent_val/"
     t: "Toward Stable Value Alignment: Introducing Independent Modules for Consistent Value Guidance"
   - u: "towards_context-invariant_safety_alignment_for_large_language_models/"
@@ -60,17 +64,17 @@ item_list:
     t: "HRC + DSPPO: 用博弈论分解把传递偏好和循环偏好分开学"
   - u: "udm-grpo_stable_and_efficient_group_relative_policy_optimization_for_uniform_dis/"
     t: "UDM-GRPO: 统一离散扩散模型的稳定高效 GRPO"
-item_total: 24
+item_total: 26
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐 / RLHF
 
-**🧪 ICML2026** · **24** 篇论文解读
+**🧪 ICML2026** · **26** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (39)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (31)](../../ACL2026/llm_alignment/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_alignment/index.md) · [🔬 ICLR2026 (40)](../../ICLR2026/llm_alignment/index.md) · [🤖 AAAI2026 (17)](../../AAAI2026/llm_alignment/index.md) · [🧠 NeurIPS2025 (36)](../../NeurIPS2025/llm_alignment/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/llm_alignment/index.md)
 
-🔥 **高频主题：** 对齐/RLHF ×13 · 对抗鲁棒 ×5 · LLM ×2
+🔥 **高频主题：** 对齐/RLHF ×15 · 对抗鲁棒 ×5 · LLM ×2
 
 **[Adaptive Probe-based Steering for Robust LLM Jailbreaking](adaptive_probe-based_steering_for_robust_llm_jailbreaking.md)**
 
@@ -79,6 +83,10 @@ item_total: 24
 **[Alignment-Aware Decoding](alignment-aware_decoding.md)**
 
 :   Alignment-Aware Decoding 直接在推理时利用 DPO 模型相对 SFT 参考模型的 token 概率比作为隐式对齐奖励，在无需额外训练或外部 reward model 的情况下，比 greedy、Bo2 和 EFT 更稳定地生成高对齐质量回答，并可进一步产生合成偏好数据改进 DPO。
+
+**[Consistency Training Can Entrench Misalignment](consistency_training_can_entrench_misalignment.md)**
+
+:   本文提出"一致性非中性假说"，通过在 108 个"模型有机体"上评估 7 种一致性训练方法，发现一致性训练并非对齐中性的——它系统性地抑制脆弱的奖励黑客和涌现性错位，但放大稳定的谄媚行为，分布偏移（而非分数选择）是主要驱动因素。
 
 **[Curriculum Learning for Safety Alignment](curriculum_learning_for_safety_alignment.md)**
 
@@ -151,6 +159,10 @@ item_total: 24
 **[Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation](steering_beyond_the_support_adversarial_training_on_unsupervised_jailbroken_acti.md)**
 
 :   论文针对监督式 safety steering 在未见越狱攻击上失效的问题，提出用"无监督潜在方向发现 + 双层对抗训练"在激活空间里凭空模拟出新型 jailbroken 状态，并把这些模拟状态当作对抗样本来训练一个 OT 势函数（其梯度构成空间变化的引导场），在三个 LLM × 六类经典越狱上把攻击成功率压到大多数 <5% 且基本不伤害良性效用。
+
+**[The Realignment Problem: When Right becomes Wrong in LLMs](the_realignment_problem_when_right_becomes_wrong_in_llms.md)**
+
+:   本文把"模型部署后政策变了怎么办"形式化为 Realignment 问题,提出 TRACE 框架:用更强的 proxy 模型把已有 preference pair 三分类 (Invert / Punish / Retain) 后用混合 IPO+NPO+KL 目标做手术式再对齐,无需新一轮人工标注就能跟上政策漂移。
 
 **[Toward Stable Value Alignment: Introducing Independent Modules for Consistent Value Guidance](toward_stable_value_alignment_introducing_independent_modules_for_consistent_val.md)**
 

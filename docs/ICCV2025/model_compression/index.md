@@ -1,20 +1,22 @@
 ---
 title: >-
-  ICCV2025 模型压缩论文汇总 · 48篇论文解读
+  ICCV2025 模型压缩论文汇总 · 52篇论文解读
 description: >-
-  48篇ICCV2025的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、持续学习、对抗鲁棒、知识蒸馏等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  52篇ICCV2025的模型压缩方向论文解读，涵盖模型压缩、知识蒸馏、压缩/编码、持续学习、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "模型压缩"
   - "论文解读"
   - "论文笔记"
+  - "知识蒸馏"
   - "压缩/编码"
   - "持续学习"
   - "对抗鲁棒"
-  - "知识蒸馏"
 item_list:
   - u: "a_good_teacher_adapts_their_knowledge_for_distillation/"
     t: "A Good Teacher Adapts Their Knowledge for Distillation"
+  - u: "acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation/"
+    t: "ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation"
   - u: "achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme/"
     t: "Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning"
   - u: "argmatch_adaptive_refinement_gathering_for_efficient_dense_matching/"
@@ -43,12 +45,18 @@ item_list:
     t: "DLF: Extreme Image Compression with Dual-generative Latent Fusion"
   - u: "duolora_cycle-consistent_and_rank-disentangled_content-style_personalization/"
     t: "DuoLoRA: Cycle-Consistent and Rank-Disentangled Content-Style Personalization"
+  - u: "ea-kd_entropy-based_adaptive_knowledge_distillation/"
+    t: "EA-KD: Entropy-based Adaptive Knowledge Distillation"
   - u: "ea-vit_efficient_adaptation_for_elastic_vision_transformer/"
     t: "EA-ViT: Efficient Adaptation for Elastic Vision Transformer"
   - u: "efficient_adaptation_of_pre-trained_vision_transformer_underpinned_by_approximat/"
     t: "Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory"
   - u: "fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning/"
     t: "FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning"
+  - u: "free-merging_fourier_transform_for_efficient_model_merging/"
+    t: "FREE-Merging: Fourier Transform for Efficient Model Merging"
+  - u: "frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast/"
+    t: "SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting"
   - u: "fuse_before_transfer_knowledge_fusion_for_heterogeneous_distillation/"
     t: "Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation"
   - u: "gain-mlp_improving_hdr_gain_map_encoding_via_a_lightweight_mlp/"
@@ -65,29 +73,25 @@ item_list:
     t: "Knowledge Distillation with Refined Logits"
   - u: "learned_image_compression_with_hierarchical_progressive_context_modeling/"
     t: "Learned Image Compression with Hierarchical Progressive Context Modeling"
-  - u: "local_dense_logit_relations_for_enhanced_knowledge_distillation/"
-    t: "Local Dense Logit Relations for Enhanced Knowledge Distillation"
-  - u: "mixa-q_revisiting_activation_sparsity_for_vision_transformers_from_a_mixed-preci/"
-    t: "MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective"
-  - u: "motionfollower_editing_video_motion_via_score-guided_diffusion/"
-    t: "MotionFollower: Editing Video Motion via Lightweight Score-Guided Diffusion"
-  - u: "msq_memory-efficient_bit_sparsification_quantization/"
-    t: "MSQ: Memory-Efficient Bit Sparsification Quantization"
-item_total: 48
+item_total: 52
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📹 ICCV2025** · **48** 篇论文解读
+**📹 ICCV2025** · **52** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** 模型压缩 ×10 · 压缩/编码 ×5 · 持续学习 ×3 · 对抗鲁棒 ×2 · 知识蒸馏 ×2
+🔥 **高频主题：** 模型压缩 ×10 · 知识蒸馏 ×5 · 压缩/编码 ×5 · 持续学习 ×3 · 对抗鲁棒 ×2
 
 **[A Good Teacher Adapts Their Knowledge for Distillation](a_good_teacher_adapts_their_knowledge_for_distillation.md)**
 
 :   本文揭示了知识蒸馏中教师-学生容量差距问题的本质原因在于**输出分布的类内分布不匹配**，并提出 AID（Adapted Intra-class Distribution）方法，在蒸馏前对教师模型进行微调以优化其类内分布使之更符合学生的学习能力，在多种架构组合上取得了SOTA性能。
+
+**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation.md)**
+
+:   提出 ACAM-KD，一种自适应学生-教师协作注意力掩码知识蒸馏方法，通过跨注意力特征融合（STCA-FF）和自适应空间-通道掩码（ASCM）动态调整蒸馏焦点，在 COCO 检测上超越 SOTA 最高 1.4 mAP，在 Cityscapes 分割上提升 3.09 mIoU。
 
 **[Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)**
 
@@ -145,6 +149,10 @@ item_total: 48
 
 :   DuoLoRA 提出在 LoRA 的秩维度上学习掩码（ZipRank），结合 SDXL 层先验信息和循环一致性损失（Constyle loss），实现了高效的内容-风格 LoRA 合并，在多个基准上超过 ZipLoRA 等 SOTA 方法，且可训练参数减少 19 倍。
 
+**[EA-KD: Entropy-based Adaptive Knowledge Distillation](ea-kd_entropy-based_adaptive_knowledge_distillation.md)**
+
+:   提出 EA-KD，一种基于信息熵的即插即用知识蒸馏方法：通过结合 teacher 和 student 输出的熵值动态重加权蒸馏损失，优先学习高熵（高信息量）样本，在图像分类、目标检测和 LLM 蒸馏任务上均一致提升多种 KD 框架的性能，且计算开销可忽略。
+
 **[EA-ViT: Efficient Adaptation for Elastic Vision Transformer](ea-vit_efficient_adaptation_for_elastic_vision_transformer.md)**
 
 :   提出首个在适配（adaptation）阶段引入弹性结构的ViT框架，通过多维弹性架构+课程学习+轻量路由器，一次适配即生成覆盖10^26种配置的子模型，在多个下游任务上持续优于现有弹性方法。
@@ -156,6 +164,14 @@ item_total: 48
 **[FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning](fastvar_linear_visual_autoregressive_modeling_via_cached_token_pruning.md)**
 
 :   FastVAR 提出一种无需训练的后处理加速方法，通过观察 VAR 模型中大尺度步骤主要建模高频纹理且对剪枝鲁棒的特性，利用频域引导的关键 token 选择（PTS）仅保留高频 token 参与前向，并用缓存的早期尺度 token 恢复被剪枝的位置（CTR），在 FlashAttention 基础上实现额外 2.7× 加速且性能损失 <1%，并首次实现单张 3090 GPU 上 1.5 秒生成 2K 图像。
+
+**[FREE-Merging: Fourier Transform for Efficient Model Merging](free-merging_fourier_transform_for_efficient_model_merging.md)**
+
+:   首次发现模型合并中任务干扰在频域上的表现，提出 FR-Merging 通过高通滤波去除低频干扰构建高质量合并骨干网络，并结合轻量级任务专家模块（FREE-Merging），在视觉、语言和多模态任务上实现性能-成本的最优平衡。
+
+**[SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting](frequency-aligned_knowledge_distillation_for_lightweight_spatiotemporal_forecast.md)**
+
+:   提出SDKD（频域解耦知识蒸馏）框架，通过频率感知的教师模型和频率对齐的蒸馏策略，将复杂时空预测模型的多尺度频域知识迁移到轻量级学生网络，在Navier-Stokes数据集上MSE最高降低81.3%。
 
 **[Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation](fuse_before_transfer_knowledge_fusion_for_heterogeneous_distillation.md)**
 

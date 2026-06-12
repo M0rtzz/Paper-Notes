@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 LLM效率论文汇总 · 11篇论文解读
+  ICML2025 LLM效率论文汇总 · 12篇论文解读
 description: >-
-  11篇ICML2025的 LLM 效率方向论文解读，涵盖 LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  12篇ICML2025的 LLM 效率方向论文解读，涵盖 LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "LLM 效率"
@@ -13,6 +13,8 @@ tags:
 item_list:
   - u: "autonomy-of-experts_models/"
     t: "Autonomy-of-Experts Models (AoE)"
+  - u: "cooperation_of_experts_fusing_heterogeneous_information_with_large_margin/"
+    t: "Cooperation of Experts: Fusing Heterogeneous Information with Large Margin"
   - u: "curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling/"
     t: "Curse of High Dimensionality Issue in Transformer for Long-context Modeling"
   - u: "dssd_efficient_edge-device_llm_deployment_and_collaborative_inference_via_distri/"
@@ -33,19 +35,23 @@ item_list:
     t: "NExtLong: Toward Effective Long-Context Training without Long Documents"
   - u: "retraining-free_merging_of_sparse_moe_via_hierarchical_clustering/"
     t: "Retraining-Free Merging of Sparse MoE via Hierarchical Clustering"
-item_total: 11
+item_total: 12
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**🧪 ICML2025** · **11** 篇论文解读
+**🧪 ICML2025** · **12** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/llm_efficiency/index.md) · [💬 ACL2026 (22)](../../ACL2026/llm_efficiency/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (34)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md)
 
 **[Autonomy-of-Experts Models (AoE)](autonomy-of-experts_models.md)**
 
 :   AoE 提出让 MoE 中的 expert 基于自身内部激活范数自主决定是否处理输入（而非由外部 router 决定），通过低秩权重分解降低预计算开销，在 700M-4B 参数语言模型预训练中超越传统 MoE。
+
+**[Cooperation of Experts: Fusing Heterogeneous Information with Large Margin](cooperation_of_experts_fusing_heterogeneous_information_with_large_margin.md)**
+
+:   提出 Cooperation of Experts (CoE) 框架，将异构信息编码为多重网络，通过两级专家设计与大间隔置信张量优化实现专家**协作**（而非竞争），在节点分类任务上全面超越现有 MoE 和多重网络方法。
 
 **[Curse of High Dimensionality Issue in Transformer for Long-context Modeling](curse_of_high_dimensionality_issue_in_transformer_for_long-context_modeling.md)**
 

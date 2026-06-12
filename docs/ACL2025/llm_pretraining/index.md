@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 预训练论文汇总 · 39篇论文解读
+  ACL2025 预训练论文汇总 · 40篇论文解读
 description: >-
-  39篇ACL2025的预训练方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  40篇ACL2025的预训练方向论文解读，涵盖 LLM、对抗鲁棒、少样本学习、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "预训练"
@@ -21,6 +21,8 @@ item_list:
     t: "AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts"
   - u: "between_circuits_chomsky/"
     t: "Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases"
+  - u: "byte_latent_transformer/"
+    t: "Byte Latent Transformer: Patches Scale Better Than Tokens"
   - u: "chinese_grammatical_error_correction_with_pre-trained_models_and_linguistic_clue/"
     t: "Chinese Grammatical Error Correction With Pre-trained Models and Linguistic Clues"
   - u: "critiq_mining_data_quality_criteria_from_human_preferences/"
@@ -71,15 +73,13 @@ item_list:
     t: "Retrofitting Large Language Models with Dynamic Tokenization"
   - u: "scar_style_consistency_data_selection/"
     t: "SCAR: Data Selection via Style Consistency-Aware Response Ranking for Efficient Instruction-Tuning"
-  - u: "second_language_arabic_acquisition_of_llms_via_progressive_vocabulary_expansion/"
-    t: "Second Language (Arabic) Acquisition of LLMs via Progressive Vocabulary Expansion"
-item_total: 39
+item_total: 40
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练
 
-**💬 ACL2025** · **39** 篇论文解读
+**💬 ACL2025** · **40** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/llm_pretraining/index.md) · [💬 ACL2026 (12)](../../ACL2026/llm_pretraining/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/llm_pretraining/index.md) · [🔬 ICLR2026 (25)](../../ICLR2026/llm_pretraining/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_pretraining/index.md) · [🧠 NeurIPS2025 (51)](../../NeurIPS2025/llm_pretraining/index.md)
 
@@ -100,6 +100,10 @@ item_total: 39
 **[Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](between_circuits_chomsky.md)**
 
 :   提出在自然语言预训练前先在形式语言上进行"pre-pretraining"，发现具有层级依赖结构的形式语言（如 k-Shuffle Dyck）能为 Transformer 提供有效的归纳偏置，使 1B 参数模型以 33% 更少的 token 达到相同的语言建模损失。
+
+**[Byte Latent Transformer: Patches Scale Better Than Tokens](byte_latent_transformer.md)**
+
+:   提出 Byte Latent Transformer (BLT)，一种无分词器的字节级 LLM 架构，通过基于熵的动态分组将字节聚合为可变长度 patch，首次在 8B 规模上匹配 token-based 模型性能，同时解锁了通过同时增大 patch 和模型尺寸来提升推理效率的新 scaling 维度。
 
 **[Chinese Grammatical Error Correction With Pre-trained Models and Linguistic Clues](chinese_grammatical_error_correction_with_pre-trained_models_and_linguistic_clue.md)**
 

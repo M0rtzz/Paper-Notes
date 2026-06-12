@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 视频理解论文汇总 · 47篇论文解读
+  ECCV2024 视频理解论文汇总 · 49篇论文解读
 description: >-
-  47篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、自监督学习、推理、少样本学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  49篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、自监督学习、推理、少样本学习、异常检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "视频理解"
@@ -13,7 +13,7 @@ tags:
   - "自监督学习"
   - "推理"
   - "少样本学习"
-  - "对齐/RLHF"
+  - "异常检测"
 item_list:
   - u: "actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video/"
     t: "ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos"
@@ -49,8 +49,12 @@ item_list:
     t: "HAT: History-Augmented Anchor Transformer for Online Temporal Action Localization"
   - u: "iam-vfi_interpolate_any_motion_for_video_frame_interpolation_with_motion_complex/"
     t: "IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map"
+  - u: "interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f/"
+    t: "Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection"
   - u: "layeredflow_a_real-world_benchmark_for_non-lambertian_multi-layer_optical_flow/"
     t: "LayeredFlow: A Real-World Benchmark for Non-Lambertian Multi-Layer Optical Flow"
+  - u: "learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection/"
+    t: "Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection"
   - u: "leveraging_temporal_contextualization_for_video_action_recognition/"
     t: "Leveraging Temporal Contextualization for Video Action Recognition"
   - u: "local_all-pair_correspondence_for_point_tracking/"
@@ -71,17 +75,13 @@ item_list:
     t: "PiTe: Pixel-Temporal Alignment for Large Video-Language Model"
   - u: "r2tuning_efficient_imagetovideo_transfer_learning_for_video/"
     t: "R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding"
-  - u: "referring_atomic_video_action_recognition/"
-    t: "Referring Atomic Video Action Recognition"
-  - u: "rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da/"
-    t: "Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data"
-item_total: 47
+item_total: 49
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**🎞️ ECCV2024** · **47** 篇论文解读
+**🎞️ ECCV2024** · **49** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (16)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
 
@@ -155,9 +155,17 @@ item_total: 47
 
 :   提出IAM-VFI框架，通过引入运动复杂度图（Motion Complexity Map）来感知局部运动的难度级别，对不同复杂度区域自适应分配计算资源和处理策略，实现对任意运动模式的鲁棒视频帧插值。
 
+**[Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection](interleaving_one-class_and_weakly-supervised_models_with_adaptive_thresholding_f.md)**
+
+:   提出一个将加权单类分类 (wOCC) 与弱监督 (WS) 模型交替训练的无监督视频异常检测框架，通过软标签缓解训练波动、自适应阈值策略逐步优化分割阈值，无需任何人工标注即可实现接近弱监督方法的性能。
+
 **[LayeredFlow: A Real-World Benchmark for Non-Lambertian Multi-Layer Optical Flow](layeredflow_a_real-world_benchmark_for_non-lambertian_multi-layer_optical_flow.md)**
 
 :   提出 LayeredFlow——首个包含多层光流标注的真实世界非朗伯体基准数据集（150k 光流对，185 个场景，360 个物体），并提出多层光流任务定义、大规模合成训练数据集和基于 RAFT 的多层光流基线方法。
+
+**[Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)**
+
+:   本文提出了一种基于"正常性先验"的无监督视频异常检测方法（LANP），通过利用"视频首尾段大概率为正常事件"这一数据无关先验知识生成初始正常标签，再通过正常性传播将正常知识扩散到全部片段，最后配合损失重加权策略训练异常检测器，在 ShanghaiTech 和 UCF-Crime 上取得了优异性能。
 
 **[Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)**
 

@@ -1,17 +1,20 @@
 ---
 title: >-
-  ACL2025 自监督/表示学习论文汇总 · 6篇论文解读
+  ACL2025 自监督/表示学习论文汇总 · 7篇论文解读
 description: >-
-  6篇ACL2025的自监督/表示学习方向论文解读，涵盖自监督学习、LLM、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇ACL2025的自监督/表示学习方向论文解读，涵盖自监督学习、持续学习、LLM、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2025"
   - "自监督/表示学习"
   - "论文解读"
   - "论文笔记"
   - "自监督学习"
+  - "持续学习"
   - "LLM"
   - "问答"
 item_list:
+  - u: "analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-/"
+    t: "AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting"
   - u: "improving_low-resource_morphological_inflection_via_self-supervised_objectives/"
     t: "Improving Low-Resource Morphological Inflection via Self-Supervised Objectives"
   - u: "llm_back_gen_treebank/"
@@ -24,17 +27,21 @@ item_list:
     t: "SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction"
   - u: "whispa_semantically_and_psychologically_aligned_whisper_with_self-supervised_con/"
     t: "WhiSPA: Semantically and Psychologically Aligned Whisper with Self-Supervised Contrastive and Student-Teacher Learning"
-item_total: 6
+item_total: 7
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**💬 ACL2025** · **6** 篇论文解读
+**💬 ACL2025** · **7** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/self_supervised/index.md) · [💬 ACL2026 (1)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (34)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/self_supervised/index.md) · [🧠 NeurIPS2025 (35)](../../NeurIPS2025/self_supervised/index.md)
 
 🔥 **高频主题：** 自监督学习 ×4
+
+**[AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting](analytickws_towards_exemplar-free_analytic_class_incremental_learning_for_small-.md)**
+
+:   提出 AnalyticKWS，一种无需存储历史样本的关键词检测增量学习方法，通过冻结特征提取器 + 递归最小二乘解析解更新分类器，在 GSC 和 SC-100 数据集上超过了所有基于样本回放的方法，且训练时间和内存开销极低。
 
 **[Improving Low-Resource Morphological Inflection via Self-Supervised Objectives](improving_low-resource_morphological_inflection_via_self-supervised_objectives.md)**
 

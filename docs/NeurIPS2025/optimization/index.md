@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 优化/理论论文汇总 · 123篇论文解读
+  NeurIPS2025 优化/理论论文汇总 · 126篇论文解读
 description: >-
-  123篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、对齐/RLHF、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  126篇NeurIPS2025的优化/理论方向论文解读，涵盖联邦学习、LLM、对抗鲁棒、对齐/RLHF、推理、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "优化/理论"
@@ -51,6 +51,8 @@ item_list:
     t: "Constrained Network Slice Assignment via Large Language Models"
   - u: "contribution_of_task-irrelevant_stimuli_to_drift_of_neural_representations/"
     t: "Contribution of Task-Irrelevant Stimuli to Drift of Neural Representations"
+  - u: "cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu/"
+    t: "Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning"
   - u: "covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l/"
     t: "Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning"
   - u: "dartquant_efficient_rotational_distribution_calibration_for_llm_quantization/"
@@ -73,17 +75,15 @@ item_list:
     t: "Efficient Adaptive Federated Optimization"
   - u: "efficient_federated_learning_against_byzantine_attacks_and_data_heterogeneity_vi/"
     t: "Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients"
-  - u: "emergence_and_scaling_laws_in_sgd_learning_of_shallow_neural_networks/"
-    t: "Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks"
-item_total: 123
+item_total: 126
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧠 NeurIPS2025** · **123** 篇论文解读
+**🧠 NeurIPS2025** · **126** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (64)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
 🔥 **高频主题：** 联邦学习 ×13 · LLM ×12 · 对抗鲁棒 ×11 · 对齐/RLHF ×4 · 推理 ×4
 
@@ -158,6 +158,10 @@ item_total: 123
 **[Contribution of Task-Irrelevant Stimuli to Drift of Neural Representations](contribution_of_task-irrelevant_stimuli_to_drift_of_neural_representations.md)**
 
 :   理论证明在线学习中任务无关刺激的统计特性（方差和维度）是表示漂移的重要驱动因素，在 Oja 规则、Similarity Matching、自编码器和监督两层网络中均观察到漂移率 $D \propto \lambda_\perp^2 (n-m)$，且学习噪声诱导的漂移具有各向异性几何特征，与高斯突触噪声的各向同性漂移定性不同。
+
+**[Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning](cost-sensitive_freeze-thaw_bayesian_optimization_for_efficient_hyperparameter_tu.md)**
+
+:   CFBO 将用户定义的效用函数（成本 vs 性能的权衡）引入冻结-解冻贝叶斯优化框架，结合自适应停止准则和基于 LC mixup 的迁移学习，在多保真度 HPO 基准上实现了成本-性能最优权衡。
 
 **[Covariances for Free: Exploiting Mean Distributions for Training-free Federated Learning](covariances_for_free_exploiting_mean_distributions_for_training-free_federated_l.md)**
 
@@ -403,6 +407,10 @@ item_total: 123
 
 :   系统研究了非平稳环境下的Bandit凸优化问题，提出两个算法（TEWA-SE和cExO），统一建立了三种非平稳度量（切换数S、总变差Δ、路径长度P）下的遗憾上下界，多个设定下达到极小极大最优。
 
+**[Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis](nonlinearly_preconditioned_gradient_methods_momentum_and_stochastic_analysis.md)**
+
+:   在各向异性下降不等式框架下，为非线性预条件梯度方法引入重球法动量，并分析其随机变体在多种噪声假设下的收敛性质，统一了梯度裁剪与归一化梯度方法的理论分析。
+
 **[On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts](on_minimax_estimation_of_parameters_in_softmax-contaminated_mixture_of_experts.md)**
 
 :   首次对带 softmax 门控的受污染混合专家（contaminated MoE）模型进行极小极大参数估计分析，提出"可区分性"概念刻画预训练模型与 prompt 的关系，证明可区分时 MLE 达到参数级 $\tilde{O}(n^{-1/2})$ 最优速率，不可区分时速率显著变慢。
@@ -542,6 +550,10 @@ item_total: 123
 **[Training Robust Graph Neural Networks by Modeling Noise Dependencies](training_robust_graph_neural_networks_by_modeling_noise_dependencies.md)**
 
 :   提出依赖感知图噪声(DANG)和DA-GNN框架，通过建模节点特征噪声→图结构噪声→标签噪声的因果依赖链，利用变分推断推导ELBO来训练对多源协同噪声鲁棒的GNN。
+
+**[Turbocharging Gaussian Process Inference with Approximate Sketch-and-Project](turbocharging_gaussian_process_inference_with_approximate_sketch-and-project.md)**
+
+:   提出 ADASAP 算法，通过近似子空间预条件、分布式计算和 Nesterov 加速，将 sketch-and-project 方法扩展到大规模 GP 推断，首次将精确 GP 推断扩展到 $>3\times10^8$ 样本规模，同时在理论上证明了 SAP 方法的 condition number-free 收敛性。
 
 **[Uncertainty Quantification for Reduced-Order Surrogate Models Applied to Cloud Microphysics](uncertainty_quantification_for_reduced-order_surrogate_models_applied_to_cloud_m.md)**
 

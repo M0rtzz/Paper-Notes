@@ -44,7 +44,7 @@ tags:
 起点是已对齐到 $\pi_{\text{old}}$ 的模型 $\mathcal{M}_{\text{ref}}$ 和原 preference 数据 $\mathcal{D}$。给定新政策 $\pi_{\text{new}}$ (一个返回 compliant/non-compliant 的函数),TRACE 走三阶段:**Stage 1 Triage** 用 proxy LLM 评估每条 $(x, y_w, y_l)$ 在 $\pi_{\text{new}}$ 下的合规性,划入 $\mathcal{D}_I$ (Invert)、$\mathcal{D}_{II}$ (Punish)、$\mathcal{D}_R$ (Retain);**Stage 2 Hybrid Objectives**对每类用不同 loss;**Stage 3 Alignment Impact Weighting** 通过双层优化推出每条样本的权重 $w_i$,再加权求和优化模型 $\mathcal{M}_\theta$。
 
 ```mermaid
-%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
 flowchart TD
     IN["输入<br/>已对齐 M_ref（π_old） + 偏好数据 D + 新政策 π_new"]
     IN --> T["Triage<br/>proxy LLM 评估每对 (y_w, y_l) 在 π_new 下的合规性"]

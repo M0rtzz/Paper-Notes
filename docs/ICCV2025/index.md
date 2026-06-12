@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 论文汇总 · 1316篇论文解读，每篇5分钟读懂核心思想
+  ICCV2025 论文汇总 · 1315篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(145篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1315篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "ICCV2025论文汇总"
@@ -79,13 +79,13 @@ item_list:
     t: "ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling"
   - u: "3d_vision/auto-regressively_generating_multi-view_consistent_images/"
     t: "Auto-Regressively Generating Multi-View Consistent Images"
-item_total: 1316
+item_total: 1315
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文汇总
 
-1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(145篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1315篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -393,7 +393,7 @@ item_total: 1316
 
 ---
 
-## 🎨 图像生成 (212) { #image_generation }
+## 🎨 图像生成 (213) { #image_generation }
 
 **[A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](image_generation/a0_affordance_aware_hierarchical_model_robotic_manipulation.md)**
 
@@ -435,11 +435,11 @@ item_total: 1316
 
 :   Aether 提出一个几何感知的统一世界模型框架，通过在合成 4D 数据上联合训练重建、预测和规划三大能力，基于 CogVideoX 后训练实现零样本泛化到真实场景。
 
-[查看全部212篇「图像生成」论文 →](image_generation/)
+[查看全部213篇「图像生成」论文 →](image_generation/)
 
 ---
 
-## 🧩 多模态 VLM (145) { #multimodal_vlm }
+## 🧩 多模态 VLM (143) { #multimodal_vlm }
 
 **[A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition](multimodal_vlm/a_qualityguided_mixture_of_scorefusion_experts_framework_for.md)**
 
@@ -481,11 +481,11 @@ item_total: 1316
 
 :   提出AirCache，通过精英观测窗口（利用文本自注意力筛选关键文本token评估视觉token重要性）和自适应层间预算分配（基于重要性分数分布的强度和偏度），实现仅保留10%视觉KV缓存即可保持模型性能，解码延迟降低29%-66%。
 
-[查看全部145篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部143篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
-## 🎬 视频生成 (48) { #video_generation }
+## 🎬 视频生成 (49) { #video_generation }
 
 **[Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](video_generation/adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)**
 
@@ -527,7 +527,7 @@ item_total: 1316
 
 :   提出DisWM框架，通过从"干扰视频"中预训练解纠缠表示，然后通过离线到在线的潜空间蒸馏将语义知识迁移到下游世界模型，提升视觉强化学习在环境变化下的样本效率和鲁棒性。
 
-[查看全部48篇「视频生成」论文 →](video_generation/)
+[查看全部49篇「视频生成」论文 →](video_generation/)
 
 ---
 
@@ -623,7 +623,7 @@ item_total: 1316
 
 ---
 
-## ✂️ 语义分割 (74) { #segmentation }
+## ✂️ 语义分割 (73) { #segmentation }
 
 **[2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](segmentation/2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)**
 
@@ -665,7 +665,7 @@ item_total: 1316
 
 :   提出ConformalSAM框架，利用Conformal Prediction校准基础分割模型SEEM在目标域的输出不确定性，筛除不可靠像素标签后作为未标注数据的监督信号，配合后期自依赖训练策略，在PASCAL VOC上1/16标注设定下达到81.21 mIoU。
 
-[查看全部74篇「语义分割」论文 →](segmentation/)
+[查看全部73篇「语义分割」论文 →](segmentation/)
 
 ---
 
@@ -715,7 +715,7 @@ item_total: 1316
 
 ---
 
-## 🧑 人体理解 (39) { #human_understanding }
+## 🧑 人体理解 (40) { #human_understanding }
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](human_understanding/ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -745,6 +745,10 @@ item_total: 1316
 
 :   本文提出一个基于扩散模型的多条件可控视频头部替换框架（SwapAnyHead），通过形状无关掩码策略、发型增强策略和表情感知的3DMM驱动landmark重定向模块，实现了高保真的身份保持、无缝背景融合和精确的跨身份表情迁移与编辑。
 
+**[DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing](human_understanding/dadm_dual_alignment_of_domain_and_modality_for_face_anti-spoofing.md)**
+
+:   提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
+
 **[DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance](human_understanding/dreamactor-m1_holistic_expressive_and_robust_human_image_animation_with_hybrid_g.md)**
 
 :   DreamActor-M1提出基于DiT架构的人体图像动画框架，通过隐式面部表征+3D头部球体+3D身体骨架的混合控制信号实现精细面部和身体控制，结合互补外观引导和渐进式训练策略支持肖像到全身的多尺度生成。
@@ -753,11 +757,7 @@ item_total: 1316
 
 :   提出 ViTaM-D，一个视觉-触觉融合框架，通过新提出的分布式力感知接触表示（DF-Field）和两阶段流程（视觉动态跟踪+力感知优化），实现刚性和可变形物体的手物交互动态重建，并引入 HOT 数据集填补可变形物体手物交互的评测空白。
 
-**[DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration](human_understanding/dynfacerestore_balancing_fidelity_and_quality_in_diffusion-guided_blind_face_res.md)**
-
-:   提出 DynFaceRestore，通过动态模糊等级映射（DBLM）将盲退化转化为高斯去模糊问题，结合动态起始步查找表（DSST）和区域自适应引导缩放器（DGSA），在扩散模型采样中实现保真度与感知质量的最优平衡。
-
-[查看全部39篇「人体理解」论文 →](human_understanding/)
+[查看全部40篇「人体理解」论文 →](human_understanding/)
 
 ---
 
@@ -837,10 +837,6 @@ item_total: 1316
 
 :   首次将Mixture of Experts引入实时开放词汇目标检测器，通过MoE-Tuning将Grounding DINO 1.5 Edge从dense模型扩展为动态推理框架，提出细粒度专家分解和预训练权重分配策略，仅用1.56M开源数据超越使用20M私有数据训练的原版模型。
 
-**[EA-KD: Entropy-based Adaptive Knowledge Distillation](object_detection/ea-kd_entropy-based_adaptive_knowledge_distillation.md)**
-
-:   提出 EA-KD，一种基于信息熵的即插即用知识蒸馏方法：通过结合 teacher 和 student 输出的熵值动态重加权蒸馏损失，优先学习高熵（高信息量）样本，在图像分类、目标检测和 LLM 蒸馏任务上均一致提升多种 KD 框架的性能，且计算开销可忽略。
-
 **[EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision](object_detection/evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision.md)**
 
 :   提出I2EvDet框架，通过在冻结的RT-DETR检测器的潜空间中插入轻量级RNN时序模块，以最小的架构修改将主流图像检测器适配为事件相机视频检测模型，在Gen1和1Mpx基准上分别取得+2.3和+1.4 mAP的SOTA。
@@ -848,6 +844,10 @@ item_total: 1316
 **[Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](object_detection/intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)**
 
 :   提出 CBM-HNMU 框架，通过概念瓶颈模型（CBM）逼近黑盒模型的推理过程，自动识别并修正有害概念，再将修正后的知识蒸馏回黑盒模型，实现超越样本级别的系统性模型干预与准确率提升。
+
+**[Kaputt: A Large-Scale Dataset for Visual Defect Detection](object_detection/kaputt_a_large-scale_dataset_for_visual_defect_detection.md)**
+
+:   Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%，揭示了现有方法在真实零售场景中的严重不足。
 
 [查看全部27篇「目标检测」论文 →](object_detection/)
 
@@ -899,7 +899,7 @@ item_total: 1316
 
 ---
 
-## 🚗 自动驾驶 (93) { #autonomous_driving }
+## 🚗 自动驾驶 (91) { #autonomous_driving }
 
 **[3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation](autonomous_driving/3d_gaussian_splatting_driven_multiview_robust_physical_adver.md)**
 
@@ -921,14 +921,6 @@ item_total: 1316
 
 :   提出一种无需SfM的约束优化方法，通过相机位姿分解、灵敏度预调节、对数障碍约束和几何约束，从多相机SLAM系统输出的粗糙位姿和噪声点云中联合优化相机参数与3DGS场景重建。
 
-**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](autonomous_driving/acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation.md)**
-
-:   提出 ACAM-KD，一种自适应学生-教师协作注意力掩码知识蒸馏方法，通过跨注意力特征融合（STCA-FF）和自适应空间-通道掩码（ASCM）动态调整蒸馏焦点，在 COCO 检测上超越 SOTA 最高 1.4 mAP，在 Cityscapes 分割上提升 3.09 mIoU。
-
-**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](autonomous_driving/acam_kd_adaptive_cooperative_attention_masking_knowledge_distillation.md)**
-
-:   提出 ACAM-KD，通过学生-教师交叉注意力特征融合（STCA-FF）和自适应空间-通道遮蔽（ASCM）两个模块，使知识蒸馏中的特征选择能随学生学习状态动态演化，在 COCO 检测上 RetinaNet R50 从 R101 蒸馏时 mAP 达 41.2（+1.4 超越 SOTA），Cityscapes 分割上 DeepLabV3-MBV2 mIoU 提升 3.09。
-
 **[AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving](autonomous_driving/ad-gs_object-aware_b-spline_gaussian_splatting_for_self-supervised_autonomous_dr.md)**
 
 :   本文提出 AD-GS，一种基于 3D Gaussian Splatting 的自监督自动驾驶场景渲染框架，核心创新是将可学习 B-spline 曲线与三角函数结合进行局部-全局运动建模，并通过简化的二值伪分割实现鲁棒的场景分解，在不依赖人工 3D 标注的条件下大幅超越现有自监督方法。
@@ -941,7 +933,15 @@ item_total: 1316
 
 :   AdaDrive提出了首个自适应慢-快架构的LLM增强自动驾驶框架，通过两个自适应连接器动态决定"何时激活LLM"（Connector-W）和"LLM贡献多少"（Connector-H），在语言引导驾驶基准上实现了SOTA性能（驾驶分数80.9%），同时将推理延迟降低至189ms、显存降至6.79GB。
 
-[查看全部93篇「自动驾驶」论文 →](autonomous_driving/)
+**[Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts](autonomous_driving/adaptive_dual_uncertainty_optimization_boosting_monocular_3d_object_detection_un.md)**
+
+:   提出 DUO（Dual Uncertainty Optimization），首个联合最小化语义不确定性和几何不确定性的测试时自适应框架，通过共轭焦点损失和法向场约束实现鲁棒的单目3D目标检测。
+
+**[AGO: Adaptive Grounding for Open World 3D Occupancy Prediction](autonomous_driving/ago_adaptive_grounding_for_open_world_3d_occupancy_predictio.md)**
+
+:   提出AGO框架，通过噪声增强的接地训练(grounding training)处理已知类别 + 模态适配器的自适应对齐处理未知类别，并用基于信息熵的开放世界识别器在推理时动态选择最佳特征，在Occ3D-nuScenes自监督基准上超越VEON 4.09 mIoU，同时具备开放世界零样本/少样本迁移能力。
+
+[查看全部91篇「自动驾驶」论文 →](autonomous_driving/)
 
 ---
 
@@ -1023,11 +1023,15 @@ item_total: 1316
 
 ---
 
-## 📦 模型压缩 (48) { #model_compression }
+## 📦 模型压缩 (52) { #model_compression }
 
 **[A Good Teacher Adapts Their Knowledge for Distillation](model_compression/a_good_teacher_adapts_their_knowledge_for_distillation.md)**
 
 :   本文揭示了知识蒸馏中教师-学生容量差距问题的本质原因在于**输出分布的类内分布不匹配**，并提出 AID（Adapted Intra-class Distribution）方法，在蒸馏前对教师模型进行微调以优化其类内分布使之更符合学生的学习能力，在多种架构组合上取得了SOTA性能。
+
+**[ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation](model_compression/acam-kd_adaptive_and_cooperative_attention_masking_for_knowledge_distillation.md)**
+
+:   提出 ACAM-KD，一种自适应学生-教师协作注意力掩码知识蒸馏方法，通过跨注意力特征融合（STCA-FF）和自适应空间-通道掩码（ASCM）动态调整蒸馏焦点，在 COCO 检测上超越 SOTA 最高 1.4 mAP，在 Cityscapes 分割上提升 3.09 mIoU。
 
 **[Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning](model_compression/achieving_more_with_less_additive_prompt_tuning_for_rehearsal-free_class-increme.md)**
 
@@ -1061,15 +1065,15 @@ item_total: 1316
 
 :   提出CSCI方法，通过引入Color token学习颜色表示（Color See），并利用新颖的S2A自注意力机制将颜色信息与ReID特征解耦（Color Ignore），在无需外部标注的情况下有效消除换衣行人重识别中的外观偏差。
 
-**[Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](model_compression/competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)**
-
-:   提出竞争蒸馏策略，在多网络联合训练中，每个迭代动态选择表现最好的网络作为教师，配合随机扰动机制引入类似遗传算法的变异操作，显著提升视觉分类性能。
-
-[查看全部48篇「模型压缩」论文 →](model_compression/)
+[查看全部52篇「模型压缩」论文 →](model_compression/)
 
 ---
 
-## 🔄 自监督/表示学习 (11) { #self_supervised }
+## 🔄 自监督/表示学习 (13) { #self_supervised }
+
+**[A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](self_supervised/a_hidden_stumbling_block_in_generalized_category_discovery_d.md)**
+
+:   发现GCD中未标注数据（尤其是未知类别）的ViT注意力会分散到背景区域（distracted attention），提出Attention Focusing（AF）模块通过多尺度token重要性度量+自适应剪枝来纠正注意力，作为即插即用模块在SimGCD上最高带来15.4%的性能提升。
 
 **[A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)](self_supervised/a_tokenlevel_text_image_foundation_model_for_document_unders.md)**
 
@@ -1087,6 +1091,10 @@ item_total: 1316
 
 :   从理论角度分析 MAE 如何学习图像中的空间相关性，推导出线性 MAE 的解析解，揭示了掩码比例和 patch 大小如何选择短距离和长距离空间特征，并将分析扩展到非线性 MAE，为实践中的超参数选择提供了理论指导。
 
+**[Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](self_supervised/generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)**
+
+:   提出基于扩散模型的即时类别发现框架 DiffGRE，通过属性组合生成（ACG）合成包含虚拟类别信息的新样本、多样性驱动精炼（DDR）过滤低质量样本、半监督Leader编码（SLE）注入额外类别知识，在 6 个细粒度数据集上显著提升了已有 OCD 方法的性能（平均 ACC-ALL 提升 6.5%）。
+
 **[Improving Large Vision and Language Models by Learning from a Panel of Peers](self_supervised/improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers.md)**
 
 :   提出 Panel-of-Peers (PoP) 学习框架，利用多个性能相近的 LVLM 互相生成候选答案、互相评分、构建偏好数据，并通过 SimPO 迭代自我改进，在 15 个基准上将平均分从 48% 提升至 57%，无需人工标注数据。
@@ -1103,15 +1111,7 @@ item_total: 1316
 
 :   MoSiC 利用离线点跟踪器提取长程运动轨迹，通过基于最优传输（Sinkhorn-Knopp）的聚类机制在时间维度上传播聚类分配，从而在视频数据上学习空间-时间一致的稠密表征，仅用视频训练即可将 DINOv2 在多个图像/视频基准上提升 1%–6%。
 
-**[Scaling Language-Free Visual Representation Learning](self_supervised/scaling_languagefree_visual_representation_learning.md)**
-
-:   通过在MetaCLIP的20亿web图像上训练DINOv2/MAE系列模型（1B-7B参数），系统性地证明纯视觉自监督学习在模型和数据规模上展现优于CLIP的scaling behavior，5B+参数时在VQA平均性能上超越CLIP——包括传统认为需要语言监督的OCR/Chart任务。
-
-**[To Label or Not to Label: PALM – A Predictive Model for Evaluating Sample Efficiency in Active Learning Models](self_supervised/to_label_or_not_to_label_palm_-_a_predictive_model_for_evaluating_sample_efficie.md)**
-
-:   提出 PALM——一个用4个可解释参数（最大精度 $A_{\max}$、覆盖效率 $\delta$、初始学习偏移 $\alpha$、扩展性 $\beta$）描述主动学习轨迹的统一数学模型，能从有限标注数据预测完整学习曲线，实现主动学习策略的定量公平比较。
-
-[查看全部11篇「自监督/表示学习」论文 →](self_supervised/)
+[查看全部13篇「自监督/表示学习」论文 →](self_supervised/)
 
 ---
 
@@ -1277,7 +1277,7 @@ item_total: 1316
 
 ---
 
-## 🛡️ AI 安全 (21) { #ai_safety }
+## 🛡️ AI 安全 (24) { #ai_safety }
 
 **[A Framework for Double-Blind Federated Adaptation of Foundation Models](ai_safety/a_framework_for_doubleblind_federated_adaptation_of_foundati.md)**
 
@@ -1315,11 +1315,11 @@ item_total: 1316
 
 :   提出可控特征白化(CFW)框架，通过白化变换消除目标特征与偏差特征之间的线性相关性来缓解模型偏差，无需对抗学习或额外正则化超参数，且可通过加权系数平滑控制demographic parity和equalized odds之间的权衡。
 
-**[FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](ai_safety/fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)**
+**[Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](ai_safety/failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)**
 
-:   提出FakeRadar深度伪造视频检测框架，通过Forgery Outlier Probing在特征空间中主动生成模拟未知伪造的异常值样本，并设计Outlier-Guided Tri-Training三分类优化策略，在跨数据集/跨操纵类型评估中显著超越现有方法。
+:   揭示了对抗训练中一个反直觉现象——失败样本的模型感知变化反而比成功样本更小（即被"过度学习"），据此提出 Robust Perception Adversarial Training (RPAT)，通过鼓励感知随扰动平滑变化来缓解准确率-鲁棒性权衡问题。
 
-[查看全部21篇「AI 安全」论文 →](ai_safety/)
+[查看全部24篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1391,11 +1391,7 @@ item_total: 1316
 
 ---
 
-## 📂 其他 (47) { #others }
-
-**[A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention](others/a_hidden_stumbling_block_in_generalized_category_discovery_d.md)**
-
-:   发现GCD中未标注数据（尤其是未知类别）的ViT注意力会分散到背景区域（distracted attention），提出Attention Focusing（AF）模块通过多尺度token重要性度量+自适应剪枝来纠正注意力，作为即插即用模块在SimGCD上最高带来15.4%的性能提升。
+## 📂 其他 (39) { #others }
 
 **[A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](others/a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)**
 
@@ -1425,14 +1421,18 @@ item_total: 1316
 
 :   提出C4D框架，通过在DUSt3R的3D pointmap预测基础上联合捕获双重时序对应(短时光流+动态感知长时点跟踪DynPT)，生成运动掩码分离动静区域，并引入相机运动对齐/相机轨迹平滑/点轨迹平滑三个优化目标，将现有3D重建范式升级为完整4D重建(逐帧点云+相机参数+2D/3D轨迹)，在深度/位姿/跟踪多个下游任务上达competitive性能。
 
-**[DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding](others/despite_exploring_contrastive_deep_skeletonpointcloudimutext.md)**
-
-:   提出 DeSPITE，一个将 LiDAR 点云、骨架姿态、IMU 信号和文本四种模态对齐到联合嵌入空间的对比学习框架，首次以 LiDAR（而非 RGB）作为核心视觉模态，实现了跨模态匹配/检索等此前不可能的任务，同时作为有效的 HAR 预训练策略在 MSR-Action3D 和 HMPEAR 上取得 SOTA。
-
 **[Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](others/doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)**
 
 :   提出首个基于草图的跨模态少样本关键点检测框架，利用原型网络、网格定位器、原型域适应和去风格化网络，仅需少量带标注草图即可在真实照片中检测新类别的新关键点。
 
-[查看全部47篇「其他」论文 →](others/)
+**[EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration](others/edffdnet_towards_accurate_and_efficient_unsupervised_multi-grid_image_registrati.md)**
+
+:   提出 EDFFDNet，采用指数衰减自由形变 (EDFFD) 替代传统 B-spline FFD 和 TPS 进行图像配准，配合自适应稀疏运动聚合器 (ASMA) 和渐进式相关策略，在 UDIS-D 数据集上以减少 70.5% 参数、32.6% 显存的代价实现 +0.5dB PSNR 提升。
+
+**[FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases](others/fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr.md)**
+
+:   提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。
+
+[查看全部39篇「其他」论文 →](others/)
 
 </div>

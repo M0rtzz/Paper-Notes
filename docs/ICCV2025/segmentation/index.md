@@ -1,17 +1,17 @@
 ---
 title: >-
-  ICCV2025 语义分割论文汇总 · 74篇论文解读
+  ICCV2025 语义分割论文汇总 · 73篇论文解读
 description: >-
-  74篇ICCV2025的语义分割方向论文解读，涵盖语义分割、扩散模型、少样本学习、语音、推理、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  73篇ICCV2025的语义分割方向论文解读，涵盖语义分割、少样本学习、语音、推理、扩散模型、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "语义分割"
   - "论文解读"
   - "论文笔记"
-  - "扩散模型"
   - "少样本学习"
   - "语音"
   - "推理"
+  - "扩散模型"
   - "遥感"
 item_list:
   - u: "2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide/"
@@ -74,17 +74,17 @@ item_list:
     t: "Inter2Former: Dynamic Hybrid Attention for Efficient High-Precision Interactive Segmentation"
   - u: "joint_self-supervised_video_alignment_and_action_segmentation/"
     t: "Joint Self-Supervised Video Alignment and Action Segmentation"
-item_total: 74
+item_total: 73
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📹 ICCV2025** · **74** 篇论文解读
+**📹 ICCV2025** · **73** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (45)](../../NeurIPS2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×41 · 扩散模型 ×4 · 少样本学习 ×4 · 语音 ×4 · 推理 ×4
+🔥 **高频主题：** 语义分割 ×41 · 少样本学习 ×4 · 语音 ×4 · 推理 ×4 · 扩散模型 ×3
 
 **[2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)**
 
@@ -365,10 +365,6 @@ item_total: 74
 **[VEGGIE: Instructional Editing and Reasoning Video Concepts with Grounded Generation](veggie_instructional_editing_and_reasoning_video_concepts_with_grounded_generati.md)**
 
 :   VEGGIE 提出了一个端到端统一框架，将 MLLM 与视频扩散模型连接，仅用扩散损失就能在单一模型中同时完成指令式视频编辑、概念定位和推理分割等 8 种任务。
-
-**[VSC: Visual Search Compositional Text-to-Image Diffusion Model](vsc_visual_search_compositional_text-to-image_diffusion_model.md)**
-
-:   提出 VSC，一种基于视觉搜索的组合文本到图像扩散生成方法，通过为每个属性-对象对单独生成参考图像并融合视觉原型嵌入，结合分割引导的交叉注意力定位训练，显著提升多属性-对象绑定的准确性和扩展性。
 
 **[VSSD: Vision Mamba with Non-Causal State Space Duality](vssd_vision_mamba_with_non-causal_state_space_duality.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 信息检索/RAG论文汇总 · 22篇论文解读
+  ICML2026 信息检索/RAG论文汇总 · 23篇论文解读
 description: >-
-  22篇ICML2026的信息检索/RAG 方向论文解读，涵盖 RAG、对抗鲁棒、少样本学习、强化学习、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  23篇ICML2026的信息检索/RAG 方向论文解读，涵盖 RAG、对抗鲁棒、少样本学习、强化学习、压缩/编码、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "信息检索/RAG"
@@ -43,6 +43,8 @@ item_list:
     t: "Ranking-Free RAG: Replacing Re-Ranking with Selection in RAG for Sensitive Domains"
   - u: "real_resolving_knowledge_conflicts_in_knowledge-intensive_visual_question_answer/"
     t: "REAL: Resolving Knowledge Conflicts in Knowledge-Intensive Visual Question Answering via Reasoning-Pivot Alignment"
+  - u: "reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per/"
+    t: "Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective"
   - u: "reseek_a_self-correcting_framework_for_search_agents_with_instructive_rewards/"
     t: "ReSeek: A Self-Correcting Framework for Search Agents with Instructive Rewards"
   - u: "retriever_portfolios_a_principled_approach_to_adaptive_rag/"
@@ -59,13 +61,13 @@ item_list:
     t: "基于跨模型局部等距一致性的向量链接"
   - u: "very_efficient_listwise_multimodal_reranking_for_long_documents/"
     t: "Very Efficient Listwise Multimodal Reranking for Long Documents"
-item_total: 22
+item_total: 23
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**🧪 ICML2026** · **22** 篇论文解读
+**🧪 ICML2026** · **23** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/information_retrieval/index.md)
 
@@ -126,6 +128,10 @@ item_total: 22
 **[REAL: Resolving Knowledge Conflicts in Knowledge-Intensive Visual Question Answering via Reasoning-Pivot Alignment](real_resolving_knowledge_conflicts_in_knowledge-intensive_visual_question_answer.md)**
 
 :   本文提出 REAL 框架，用"Reasoning-Pivot"（推理链中必须依赖外部证据才能补全的原子节点/边）重新定义 KI-VQA 中的知识冲突，并通过 RPA-SFT 训练 pivot 感知的冲突判别器 + RPGD 训练免费的对比解码策略，在 E-VQA / InfoSeek / A-OKVQA 上分别取得 +3.8% / +1.6% / +3.6% 的提升。
+
+**[Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective](reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per.md)**
+
+:   本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识",作者提出 Knowledge Objects (KOs) 作为基础设施——把 AI 隐式推理外化成人类可检查、可验证、可背书的结构化产物,从而让一次人类验证的成本在群体中长期复利。
 
 **[ReSeek: A Self-Correcting Framework for Search Agents with Instructive Rewards](reseek_a_self-correcting_framework_for_search_agents_with_instructive_rewards.md)**
 

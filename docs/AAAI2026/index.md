@@ -2,7 +2,7 @@
 title: >-
   AAAI2026 论文汇总 · 1380篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1380篇AAAI2026论文解读，涵盖多模态 VLM(84篇)、3D 视觉(78篇)、图像生成(78篇)、医学图像(73篇)、模型压缩(60篇)、强化学习(58篇)、自动驾驶(56篇)、AI 安全(45篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1380篇AAAI2026论文解读，涵盖多模态 VLM(84篇)、图像生成(79篇)、3D 视觉(78篇)、医学图像(73篇)、模型压缩(60篇)、强化学习(58篇)、自动驾驶(56篇)、AI 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "AAAI2026论文汇总"
@@ -11,8 +11,8 @@ tags:
   - "论文解读"
   - "论文笔记"
   - "多模态 VLM"
-  - "3D 视觉"
   - "图像生成"
+  - "3D 视觉"
   - "医学图像"
   - "模型压缩"
   - "强化学习"
@@ -85,7 +85,7 @@ item_total: 1380
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 AAAI2026 论文汇总
 
-1380篇AAAI2026论文解读，涵盖多模态 VLM(84篇)、3D 视觉(78篇)、图像生成(78篇)、医学图像(73篇)、模型压缩(60篇)、强化学习(58篇)、自动驾驶(56篇)、AI 安全(45篇)等 49个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1380篇AAAI2026论文解读，涵盖多模态 VLM(84篇)、图像生成(79篇)、3D 视觉(78篇)、医学图像(73篇)、模型压缩(60篇)、强化学习(58篇)、自动驾驶(56篇)、AI 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -183,15 +183,23 @@ item_total: 1380
 
 ---
 
-## 🦾 LLM Agent (30) { #llm_agent }
+## 🦾 LLM Agent (33) { #llm_agent }
 
 **[A2Flow: Automating Agentic Workflow Generation via Self-Adaptive Abstraction Operators](llm_agent/a2flow_automating_agentic_workflow_generation_via_self-adaptive_abstraction_oper.md)**
 
 :   提出 A2Flow 框架，通过三阶段流水线（案例生成→功能聚类→深度提取）从专家数据中全自动提取可复用的抽象执行算子，替代人工预定义算子，并引入算子记忆机制累积中间输出辅助节点决策，在 8 个基准上整体超越 AFLOW 等 SOTA，资源消耗降低 37%。
 
+**[Agent-SAMA: State-Aware Mobile Assistant](llm_agent/agent-sama_state-aware_mobile_assistant.md)**
+
+:   提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
+
 **[AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search](llm_agent/agentswift_efficient_llm_agent_design_via_value-guided_hierarchical_search.md)**
 
 :   提出AgentSwift框架，通过层次化搜索空间（同时优化agentic workflow和功能组件）、轻量级value model预测agent性能、以及不确定性引导的MCTS搜索策略，自动发现高性能LLM agent设计，在7个基准上平均提升8.34%。
+
+**[AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design](llm_agent/ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re.md)**
+
+:   提出AMS-IO-Agent，一个基于LLM的领域专用智能体，通过结构化意图图(Intent Graph)和领域知识库将自然语言设计意图转化为可生产的模拟混合信号IC I/O环设计，配套提出首个AMS I/O环自动化基准AMS-IO-Bench，在28nm CMOS流片中验证了智能体生成的I/O环可直接用于实际芯片制造。
 
 **[AutoGLM: Autonomous Foundation Agents for GUIs](llm_agent/autoglm_autonomous_foundation_agents_for_guis.md)**
 
@@ -217,19 +225,11 @@ item_total: 1380
 
 :   提出Co-EPG框架，将GUI Agent解耦为Planning和Grounding两个模型，通过GRPO协同训练和基于置信度的动态奖励集成机制（C-DREM）建立正反馈循环，使两个模型自迭代协同进化，仅用基准数据集（无需外部数据）即在Multimodal-Mind2Web（58.4%）和AndroidControl（83.1%）上达到SOTA。
 
-**[Cook and Clean Together: Teaching Embodied Agents for Parallel Task Execution](llm_agent/cook_and_clean_together_teaching_embodied_agents_for_paralle.md)**
-
-:   提出ORS3D任务——将运筹学(OR)知识引入具身AI的任务调度，要求智能体利用可并行子任务的等待时间执行其他任务以最小化总完成时间，同时在3D场景中定位目标物体；构建60K级数据集ORS3D-60K，并提出GRANT模型通过调度token机制连接外部动态规划求解器，在时间效率上比baseline提升30.53%。
-
-**[COVR: Collaborative Optimization of VLMs and RL Agent for Visual-Based Control](llm_agent/covrcollaborative_optimization_of_vlms_and_rl_agent_for_visu.md)**
-
-:   提出 VLM 与 RL 双向协同优化框架 COVR：RL 生成的高质量交互数据用于微调 VLM，增强后的 VLM 反过来通过 action prior 指导 RL 策略学习，在 CARLA 和 DMControl 上取得 SOTA。
-
-[查看全部30篇「LLM Agent」论文 →](llm_agent/)
+[查看全部33篇「LLM Agent」论文 →](llm_agent/)
 
 ---
 
-## 💬 LLM / NLP (28) { #llm_nlp }
+## 💬 LLM / NLP (30) { #llm_nlp }
 
 **[A Content-Preserving Secure Linguistic Steganography](llm_nlp/a_content-preserving_secure_linguistic_steganography.md)**
 
@@ -271,7 +271,7 @@ item_total: 1380
 
 :   通过representation-level和token-level两种消融实验，发现LLM在ICL中直接依赖的"性能关键token"是模板和停用词token（如"Answer:"），而非人类会关注的内容token（如实际文本），并揭示了LLM通过将内容信息聚合到这些关键token的表示中来间接利用内容。
 
-[查看全部28篇「LLM / NLP」论文 →](llm_nlp/)
+[查看全部30篇「LLM / NLP」论文 →](llm_nlp/)
 
 ---
 
@@ -321,7 +321,7 @@ item_total: 1380
 
 ---
 
-## ⚖️ 对齐 / RLHF (16) { #llm_alignment }
+## ⚖️ 对齐 / RLHF (17) { #llm_alignment }
 
 **[Align to Structure: Aligning Large Language Models with Structural Information](llm_alignment/align_to_structure_aligning_large_language_models_with_struc.md)**
 
@@ -363,7 +363,7 @@ item_total: 1380
 
 :   本文提出 GRAM-R²，一个通过自训练方式在无标签数据上引发奖励推理能力的生成式基础奖励模型，能够同时产生偏好标签和推理理由，在响应排序、任务适配和 RLHF 等多个下游任务中一致超越判别式和生成式基线。
 
-[查看全部16篇「对齐 / RLHF」论文 →](llm_alignment/)
+[查看全部17篇「对齐 / RLHF」论文 →](llm_alignment/)
 
 ---
 
@@ -783,7 +783,7 @@ item_total: 1380
 
 ---
 
-## 🎨 图像生成 (78) { #image_generation }
+## 🎨 图像生成 (79) { #image_generation }
 
 **[AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction](image_generation/aedr_training-free_ai-generated_image_attribution_via_autoen.md)**
 
@@ -825,7 +825,7 @@ item_total: 1380
 
 :   提出 CD3T，一个两层层次化 MARL 框架：用条件扩散模型学习动作语义表示（以观测和他人动作为条件，预测下一观测和奖励），通过 k-means 聚类得到子任务划分，高层选择子任务、低层在受限动作空间执行策略，在 SMAC 的 Super Hard 场景上显著超越所有基线。
 
-[查看全部78篇「图像生成」论文 →](image_generation/)
+[查看全部79篇「图像生成」论文 →](image_generation/)
 
 ---
 
@@ -1561,7 +1561,7 @@ item_total: 1380
 
 ---
 
-## 📈 时间序列 (30) { #time_series }
+## 📈 时间序列 (31) { #time_series }
 
 **[A Theoretical Analysis of Detecting Large Model-Generated Time Series](time_series/a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)**
 
@@ -1603,7 +1603,7 @@ item_total: 1380
 
 :   提出DEF（Detection-based Event Forecasting），借鉴目标检测中DETR的匹配思想，通过匈牙利算法对齐预测与真实事件序列，实现高精度和高多样性的长程事件预测，在5个数据集上达到SOTA。
 
-[查看全部30篇「时间序列」论文 →](time_series/)
+[查看全部31篇「时间序列」论文 →](time_series/)
 
 ---
 
@@ -1728,6 +1728,22 @@ item_total: 1380
 **[Sparse Additive Model Pruning for Order-Based Causal Structure Learning](causal_inference/sparse_additive_model_pruning_for_order-based_causal_structure_learning.md)**
 
 :   提出 SARTRE 框架，利用随机化树嵌入与组稀疏回归学习稀疏加性模型，替代 CAM-pruning 中基于假设检验的冗余边修剪，在基于拓扑序的因果结构学习中实现显著加速且精度不降。
+
+---
+
+## 📐 学习理论 (3) { #learning_theory }
+
+**[A Switching Framework for Online Interval Scheduling with Predictions](learning_theory/a_switching_framework_for_online_interval_scheduling_with_pr.md)**
+
+:   针对不可撤销的在线区间调度问题，提出 SemiTrust-and-Switch 框架和 SmoothMerge 随机算法，通过在信任预测和经典贪心算法之间切换/融合，在预测准确时趋近最优（一致性），预测错误时性能优雅退化（鲁棒性和平滑性），并证明了该框架在特定实例上的紧性。
+
+**[Generalizing Analogical Inference from Boolean to Continuous Domains](learning_theory/generalizing_analogical_inference_from_boolean_to_continuous_domains.md)**
+
+:   从基础理论层面重新审视类比推理：首先构造反例证明布尔域上经典泛化界失效，然后提出基于参数化广义均值的统一类比推理框架，将离散分类扩展到连续回归域。
+
+**[Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](learning_theory/streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)**
+
+:   提出 SkyGP（Streaming Kernel-induced Progressively Generated Expert GP），通过**核距离驱动的渐进式专家生成**和**时间感知可配置聚合**处理流数据，继承精确 GP 的学习保证同时保持有界计算复杂度，在基准测试和实时控制实验中全面超越 SOTA。
 
 ---
 
@@ -2033,7 +2049,7 @@ item_total: 1380
 
 ---
 
-## 📂 其他 (135) { #others }
+## 📂 其他 (124) { #others }
 
 **[A Fast Heuristic Search Approach for Energy-Optimal Profile Routing for Electric Vehicles](others/a_fast_heuristic_search_approach_for_energy-optimal_profile_.md)**
 
@@ -2047,25 +2063,13 @@ item_total: 1380
 
 :   在有向随机图上建模两种对立力量（外部颠覆性偏差 vs 个体顽固性）对二元观点传播的影响，证明系统存在尖锐相变：偏差超过临界阈值 $p_c$ 时群体快速达成新共识，低于阈值则长期处于亚稳极化状态，且临界点仅由度序列的两个简单统计量决定。
 
-**[A Switching Framework for Online Interval Scheduling with Predictions](others/a_switching_framework_for_online_interval_scheduling_with_pr.md)**
-
-:   针对不可撤销的在线区间调度问题，提出 SemiTrust-and-Switch 框架和 SmoothMerge 随机算法，通过在信任预测和经典贪心算法之间切换/融合，在预测准确时趋近最优（一致性），预测错误时性能优雅退化（鲁棒性和平滑性），并证明了该框架在特定实例上的紧性。
-
 **[A Topological Rewriting of Tarski's Mereogeometry](others/a_topological_rewriting_of_tarskis_mereogeometry.md)**
 
 :   在 Coq 定理证明器中扩展 λ-MM 库，将基于 Leśniewski 部分学（mereology）的 Tarski 固体几何重写为具备完整拓扑结构的形式化系统，证明部分学类对应正则开集、满足 Kuratowski 内部公理且具有 Hausdorff（T2）性质，从而为定性空间推理提供了统一的部分学-几何-拓扑理论框架。
 
-**[Agent-SAMA: State-Aware Mobile Assistant](others/agent-sama_state-aware_mobile_assistant.md)**
-
-:   提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
-
 **[Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration](others/align_when_they_want_complement_when_they_need_human-centere.md)**
 
 :   揭示了人机协作中"互补性"（complementarity）与"对齐性"（alignment）之间存在根本性权衡——单一模型无法同时优化二者，提出自适应AI集成框架，通过Rational Routing Shortcut（RRS）机制在对齐模型和互补模型之间动态切换，团队准确率较标准AI提升最高9%。
-
-**[AMS-IO-Bench and AMS-IO-Agent: Benchmarking and Structured Reasoning for Analog and Mixed-Signal Integrated Circuit Input/Output Design](others/ams-io-bench_and_ams-io-agent_benchmarking_and_structured_re.md)**
-
-:   提出AMS-IO-Agent，一个基于LLM的领域专用智能体，通过结构化意图图(Intent Graph)和领域知识库将自然语言设计意图转化为可生产的模拟混合信号IC I/O环设计，配套提出首个AMS I/O环自动化基准AMS-IO-Bench，在28nm CMOS流片中验证了智能体生成的I/O环可直接用于实际芯片制造。
 
 **[An Epistemic Perspective on Agent Awareness](others/an_epistemic_perspective_on_agent_awareness.md)**
 
@@ -2075,6 +2079,18 @@ item_total: 1380
 
 :   研究带 cannot-link (CL) 和 must-link (ML) 实例级约束的 k-center 聚类问题，提出基于支配匹配集（dominating matching set, DMS）转化的局部搜索框架，在不相交 CL 集条件下首次通过局部搜索达到最优近似比 2，解决了该领域一个开放问题。
 
-[查看全部135篇「其他」论文 →](others/)
+**[Area-Optimal Control Strategies for Heterogeneous Multi-Agent Pursuit](others/area-optimal_control_strategies_for_heterogeneous_multi-agen.md)**
+
+:   研究异构速度下多追逐者-单逃避者的追逃博弈——定义逃避者安全可达集为所有追逐者-逃避者对的 Apollonius 圆的交集，将捕获策略建模为追逐者最小化/逃避者最大化该交集面积的零和博弈，推导出闭式瞬时最优航向控制律，仿真验证追逐者可系统性缩小安全区域实现保证捕获。
+
+**[Automated Reproducibility Has a Problem Statement Problem](others/automated_reproducibility_has_a_problem_statement_problem.md)**
+
+:   提出基于科学方法的可复现性形式化问题定义，将经验性AI研究表示为假设-实验-解释的图结构，并用LLM自动从20篇论文中提取该结构，经原作者评审验证其有效性。
+
+**[Autonomous Concept Drift Threshold Determination](others/autonomous_concept_drift_threshold_determination.md)**
+
+:   证明了固定阈值不可能在所有场景下最优、动态阈值严格优于静态阈值，并提出DTD算法：在漂移检测信号触发后启动三模型比较阶段，根据候选模型表现自适应调整检测阈值。
+
+[查看全部124篇「其他」论文 →](others/)
 
 </div>

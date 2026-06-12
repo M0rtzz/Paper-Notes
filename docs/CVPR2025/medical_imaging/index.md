@@ -27,6 +27,8 @@ item_list:
     t: "Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation?"
   - u: "association_of_radiologic_ppfe_change_with_mortality_in_lung_cancer_screening_co/"
     t: "Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts"
+  - u: "automated_detection_of_malignant_lesions_in_the_ovary_using_deep_learning_models/"
+    t: "Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI"
   - u: "biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical/"
     t: "BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation"
   - u: "boltzmann_attention_sampling_for_image_analysis_with_small_objects/"
@@ -73,8 +75,6 @@ item_list:
     t: "Enhancing Virtual Try-On with Synthetic Pairs and Error-Aware Noise Scheduling"
   - u: "equivania_a_spectral_method_for_rotation-equivariant_anisotropic_image_analysis/"
     t: "EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis"
-  - u: "evidential_learning_driven_breast_tumor_segmentation_with_stage-divided_vision-l/"
-    t: "Evidential learning driven Breast Tumor Segmentation with Stage-divided Vision-Language Interaction"
 item_total: 78
 ---
 
@@ -110,6 +110,10 @@ item_total: 78
 **[Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts](association_of_radiologic_ppfe_change_with_mortality_in_lung_cancer_screening_co.md)**
 
 :   在两个大规模肺癌筛查队列（NLST 7980 例、SUMMIT 8561 例）中验证了基于深度学习自动量化的 PPFE（胸膜肺实质纤维弹性组织增生）进展与全因死亡率独立相关，提出 PPFE 纵向变化可作为筛查人群中识别高呼吸发病风险个体的影像生物标志物。
+
+**[Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](automated_detection_of_malignant_lesions_in_the_ovary_using_deep_learning_models.md)**
+
+:   使用 15 种 CNN 变体（LeNet、ResNet、VGG、Inception）在组织病理学图像上检测卵巢癌及亚型，选择 InceptionV3（ReLU）作为最优模型（平均 94.58%），并使用 LIME、SHAP、Integrated Gradients 三种 XAI 方法解释模型预测。
 
 **[BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation](biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical.md)**
 
@@ -210,10 +214,6 @@ item_total: 78
 **[Federated Modality-specific Encoders and Partially Personalized Fusion Decoder for Multimodal Brain Tumor Segmentation](federated_modality-specific_encoders_and_partially_personalized_fusion_decoder_f.md)**
 
 :   提出 FedMEPD 联邦学习框架，通过模态专属编码器（全局联邦）和部分个性化融合解码器，同时解决多模态 MRI 脑肿瘤分割中的模态间异质性和客户端个性化问题，在 BraTS 2018/2020 上客户端平均 mDSC 达 75.70%/75.90%。
-
-**[FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields](ffacenerf_few-shot_face_editing_in_neural_radiance_fields.md)**
-
-:   提出 FFaceNeRF，一种基于 NeRF 的面部编辑方法，通过几何适配器（geometry adapter）+ 三平面特征注入 + 潜码混合增强（LMTA），仅需 10 张标注样本即可适配到任意自定义分割 mask 布局，实现灵活的 3D 感知面部编辑。
 
 **[GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis](giim_graph-based_learning_of_inter-_and_intra-view_dependencies_for_multi-view_m.md)**
 

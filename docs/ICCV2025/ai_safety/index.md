@@ -1,15 +1,15 @@
 ---
 title: >-
-  ICCV2025 AI安全论文汇总 · 21篇论文解读
+  ICCV2025 AI安全论文汇总 · 24篇论文解读
 description: >-
-  21篇ICCV2025的 AI 安全方向论文解读，涵盖联邦学习、对抗鲁棒、对齐/RLHF、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  24篇ICCV2025的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、对齐/RLHF、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "AI 安全"
   - "论文解读"
   - "论文笔记"
-  - "联邦学习"
   - "对抗鲁棒"
+  - "联邦学习"
   - "对齐/RLHF"
   - "问答"
 item_list:
@@ -31,6 +31,8 @@ item_list:
     t: "Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing"
   - u: "controllable_feature_whitening_for_hyperparameter-free_bias_mitigation/"
     t: "Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation"
+  - u: "failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per/"
+    t: "Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training"
   - u: "fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos/"
     t: "FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos"
   - u: "fedmenf_privacy-preserving_federated_meta-learning_for_neural_fields/"
@@ -41,8 +43,12 @@ item_list:
     t: "Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning"
   - u: "fret_feature_redundancy_elimination_for_test_time_adaptation/"
     t: "FRET: Feature Redundancy Elimination for Test Time Adaptation"
+  - u: "iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization/"
+    t: "IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization"
   - u: "lora-fair_federated_lora_fine-tuning_with_aggregation_and_initialization_refinem/"
     t: "LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement"
+  - u: "membership_inference_attacks_with_false_discovery_rate_control/"
+    t: "Membership Inference Attacks with False Discovery Rate Control"
   - u: "mind_the_cost_of_scaffold_benign_clients_may_even_become_accomplices_of_backdoor/"
     t: "Mind the Cost of Scaffold! Benign Clients May Even Become Accomplices of Backdoor Attack"
   - u: "semantic_alignment_and_reinforcement_for_data-free_quantization_of_vision_transf/"
@@ -55,17 +61,17 @@ item_list:
     t: "Towards Adversarial Robustness via Debiased High-Confidence Logit Alignment"
   - u: "vulnerability-aware_spatio-temporal_learning_for_generalizable_deepfake_video_de/"
     t: "Vulnerability-Aware Spatio-Temporal Learning for Generalizable Deepfake Video Detection"
-item_total: 21
+item_total: 24
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**📹 ICCV2025** · **21** 篇论文解读
+**📹 ICCV2025** · **24** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md)
 
-🔥 **高频主题：** 联邦学习 ×6 · 对抗鲁棒 ×4 · 对齐/RLHF ×3 · 问答 ×2
+🔥 **高频主题：** 对抗鲁棒 ×7 · 联邦学习 ×6 · 对齐/RLHF ×3 · 问答 ×2
 
 **[A Framework for Double-Blind Federated Adaptation of Foundation Models](a_framework_for_doubleblind_federated_adaptation_of_foundati.md)**
 
@@ -103,6 +109,10 @@ item_total: 21
 
 :   提出可控特征白化(CFW)框架，通过白化变换消除目标特征与偏差特征之间的线性相关性来缓解模型偏差，无需对抗学习或额外正则化超参数，且可通过加权系数平滑控制demographic parity和equalized odds之间的权衡。
 
+**[Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training](failure_cases_are_better_learned_but_boundary_says_sorry_facilitating_smooth_per.md)**
+
+:   揭示了对抗训练中一个反直觉现象——失败样本的模型感知变化反而比成功样本更小（即被"过度学习"），据此提出 Robust Perception Adversarial Training (RPAT)，通过鼓励感知随扰动平滑变化来缓解准确率-鲁棒性权衡问题。
+
 **[FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos](fakeradar_probing_forgery_outliers_to_detect_unknown_deepfake_videos.md)**
 
 :   提出FakeRadar深度伪造视频检测框架，通过Forgery Outlier Probing在特征空间中主动生成模拟未知伪造的异常值样本，并设计Outlier-Guided Tri-Training三分类优化策略，在跨数据集/跨操纵类型评估中显著超越现有方法。
@@ -123,9 +133,17 @@ item_total: 21
 
 :   本文提出特征冗余消除（FRET）作为测试时自适应（TTA）的新视角，发现分布偏移时嵌入特征冗余度显著增加，并设计了S-FRET（直接最小化冗余分数）和G-FRET（基于GCN的注意力-冗余分解+双层优化）两种方法，G-FRET在多种架构和数据集上达到SOTA性能。
 
+**[IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization](iap_invisible_adversarial_patch_attack_through_perceptibility-aware_localization.md)**
+
+:   提出 IAP 框架，通过**感知感知（perceptibility-aware）的贴片定位**和**保色梯度更新**，首次实现在目标攻击场景下生成真正不可见的对抗补丁，同时能绕过多种 SOTA 补丁防御方法。
+
 **[LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement](lora-fair_federated_lora_fine-tuning_with_aggregation_and_initialization_refinem.md)**
 
 :   本文提出LoRA-FAIR方法，通过在服务器端引入残差校正项 $\Delta\mathbf{B}$ 来同时解决联邦学习+LoRA微调中的服务器端聚合偏差和客户端初始化滞后两大挑战，在ViT和MLP-Mixer模型上一致超越现有联邦微调方法，且不增加通信开销。
+
+**[Membership Inference Attacks with False Discovery Rate Control](membership_inference_attacks_with_false_discovery_rate_control.md)**
+
+:   提出MIAFdR，首个能提供错误发现率（FDR）理论保证的成员推理攻击方法，通过设计新颖的非成员一致性分数函数和基于调整的成员判定策略来控制FDR，可作为即插即用的wrapper无缝集成到现有MIA方法中，在保持攻击性能的同时提供FDR控制。
 
 **[Mind the Cost of Scaffold! Benign Clients May Even Become Accomplices of Backdoor Attack](mind_the_cost_of_scaffold_benign_clients_may_even_become_accomplices_of_backdoor.md)**
 

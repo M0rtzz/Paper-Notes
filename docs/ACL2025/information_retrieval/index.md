@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 信息检索/RAG论文汇总 · 82篇论文解读
+  ACL2025 信息检索/RAG论文汇总 · 89篇论文解读
 description: >-
-  82篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、问答、对抗鲁棒、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  89篇ACL2025的信息检索/RAG 方向论文解读，涵盖 RAG、LLM、推理、问答、对抗鲁棒、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "信息检索/RAG"
@@ -10,9 +10,9 @@ tags:
   - "论文笔记"
   - "RAG"
   - "LLM"
+  - "推理"
   - "问答"
   - "对抗鲁棒"
-  - "推理"
   - "对齐/RLHF"
 item_list:
   - u: "a_reality_check_on_context_utilisation_for_retrieval-augmented_generation/"
@@ -25,6 +25,8 @@ item_list:
     t: "AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark"
   - u: "any_information_is_just_worth_one_single_screenshot_unifying_search_with_visuali/"
     t: "Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval"
+  - u: "arise_risk_adaptive_search/"
+    t: "ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search"
   - u: "astute_rag_knowledge_conflicts/"
     t: "Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models"
   - u: "atomic_llm_a_fine-grained_information_retrieval_evaluation_benchmark_for_languag/"
@@ -73,19 +75,17 @@ item_list:
     t: "GainRAG: Preference Alignment in Retrieval-Augmented Generation through Gain Signal Synthesis"
   - u: "garage_a_benchmark_with_grounding_annotations_for_rag_evaluation/"
     t: "GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation"
-  - u: "genie_worksheets_tod_agent/"
-    t: "Controllable and Reliable Knowledge-Intensive Task-Oriented Conversational Agents with Declarative Genie Worksheets"
-item_total: 82
+item_total: 89
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔍 信息检索/RAG
 
-**💬 ACL2025** · **82** 篇论文解读
+**💬 ACL2025** · **89** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (22)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (23)](../../ICML2026/information_retrieval/index.md) · [💬 ACL2026 (73)](../../ACL2026/information_retrieval/index.md) · [📷 CVPR2026 (9)](../../CVPR2026/information_retrieval/index.md) · [🔬 ICLR2026 (31)](../../ICLR2026/information_retrieval/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/information_retrieval/index.md) · [🧠 NeurIPS2025 (30)](../../NeurIPS2025/information_retrieval/index.md)
 
-🔥 **高频主题：** RAG ×52 · LLM ×12 · 问答 ×5 · 对抗鲁棒 ×5 · 推理 ×3
+🔥 **高频主题：** RAG ×52 · LLM ×12 · 推理 ×6 · 问答 ×6 · 对抗鲁棒 ×5
 
 **[A Reality Check on Context Utilisation for Retrieval-Augmented Generation](a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)**
 
@@ -106,6 +106,10 @@ item_total: 82
 **[Any Information Is Just Worth One Single Screenshot: Unifying Search With Visualized Information Retrieval](any_information_is_just_worth_one_single_screenshot_unifying_search_with_visuali.md)**
 
 :   本文正式定义了可视化信息检索（Vis-IR）范式——将多模态信息统一渲染为截图（Screenshot）进行检索，构建了包含1300万截图的VIRA数据集、UniSE检索模型家族和MVRB基准测试，为统一搜索引擎奠定基础。
+
+**[ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search](arise_risk_adaptive_search.md)**
+
+:   提出 ARise 框架，将贝叶斯风险评估与动态 RAG 集成到蒙特卡洛树搜索中，解决知识增强推理中的错误传播和验证瓶颈问题，在多跳QA任务上平均准确率超 SOTA KAR 方法 23.10%，超 RAG-equipped 推理模型（DeepSeek-R1）25.37%。
 
 **[Astute RAG: Overcoming Imperfect Retrieval Augmentation and Knowledge Conflicts for Large Language Models](astute_rag_knowledge_conflicts.md)**
 
@@ -201,6 +205,10 @@ item_total: 82
 
 :   GaRAGe 是一个包含 2366 个问题和超过 35K 条人工标注 grounding 段落的 RAG 基准，通过细粒度的 grounding 相关性标注，系统评估 LLM 在 RAG 场景下识别相关信息、拒绝回答和归因引用的能力。
 
+**[GeAR: Generation Augmented Retrieval](gear_generation_augmented_retrieval.md)**
+
+:   GeAR 在传统 bi-encoder 检索框架上引入融合编码器和文本解码器，通过生成任务增强检索模型对文档内部细粒度语义的理解能力，同时不增加全局检索的计算开销。
+
 **[Controllable and Reliable Knowledge-Intensive Task-Oriented Conversational Agents with Declarative Genie Worksheets](genie_worksheets_tod_agent.md)**
 
 :   Genie 提出了一个可编程的知识密集型任务导向对话框架，通过声明式 Worksheet 规范定义 Agent 策略，将 LLM 限制在语义解析和回复生成两个角色，由算法化运行时系统强制执行策略，实现从 21.8% 到 82.8% 的真实任务完成率提升。
@@ -245,6 +253,10 @@ item_total: 82
 
 :   质疑 LLM-based 查询扩展（HyDE/Query2doc）的性能提升是否来自"假设性文档生成"，发现性能增益仅在 LLM 生成的文档包含与 gold evidence 语义一致的句子时才一致出现，揭示了 benchmark 中可能存在的知识泄露问题。
 
+**[InspireDebate: Multi-Dimensional Evaluation-Guided Reasoning for Debating](inspiredebate_multidim_evaluation_debating.md)**
+
+:   提出双组件框架：InspireScore（融合4个主观维度+2个客观维度的辩论评估系统）和 InspireDebate（通过CoT-SFT + 多维DPO + Web-RAG 三阶段优化的辩论框架），评估系统与专家判断相关性提高 44%，辩论性能超越基线 57%。
+
 **[Investigating Language Preference of Multilingual RAG Systems](investigating_language_preference_of_multilingual_rag_systems.md)**
 
 :   系统研究多语言 RAG 系统在检索和生成两个阶段的语言偏好问题，提出 MLRS 指标量化检索器对特定语言的偏好程度，揭示检索器偏好高资源语言和查询语言、生成器偏好查询语言和拉丁字母语言的现象，并设计 DKM-RAG 框架通过融合翻译段落与模型内部知识有效缓解偏好问题。
@@ -260,6 +272,10 @@ item_total: 82
 **[LDIR: Low-Dimensional Dense and Interpretable Text Embeddings with Relative Representations](ldir_low-dimensional_dense_and_interpretable_text_embeddings_with_relative_repre.md)**
 
 :   提出 LDIR 方法，通过最远点采样选取锚文本（anchor texts），计算待编码文本与各锚文本的语义相关度，构建低维（≤500 维）、稠密且可解释的文本嵌入，性能接近黑盒模型并显著优于已有可解释嵌入方法。
+
+**[Length-Induced Embedding Collapse in PLM-based Models](length-induced_embedding_collapse_in_plm-based_models.md)**
+
+:   发现并严格证明了 PLM 文本嵌入模型中的"长度坍缩"现象——长文本嵌入趋于聚集，源于 self-attention 作为低通滤波器随文本长度增加而滤波率增强，高频信息被过度抑制；提出 TempScale 方法通过降低 attention 温度来缓解长短文本嵌入分布差异，在 MTEB 上提升 0.94%、LongEmbed 上提升 1.10%。
 
 **[Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms](llm_reranking_harmful_content.md)**
 
@@ -280,6 +296,10 @@ item_total: 82
 **[MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation](memerag_a_multilingual_end-to-end_meta-evaluation_benchmark_for_retrieval_augmen.md)**
 
 :   构建首个原生多语言 RAG 元评估基准 MEMERAG，覆盖 5 种语言，通过流程图引导的标注达到高标注者一致性，用于评估和比较多语言 RAG 自动评估器。
+
+**[Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning](micro_act_knowledge_conflict_reasoning.md)**
+
+:   提出 Micro-Act 框架，通过层次化动作空间（导航/功能/桥接动作）和自适应粒度分解，让 LLM 自动感知上下文复杂度并逐层拆解知识对比，在 5 个知识冲突基准上全面超越 SOTA，同时在无冲突场景下也保持鲁棒。
 
 **[Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA](mitigating_lost-in-retrieval_problems_in_retrieval_augmented_multi-hop_question_.md)**
 
@@ -317,6 +337,10 @@ item_total: 82
 
 :   受人脑功能分区启发，提出 Parenting 框架，通过解耦并定位 LLM 参数空间中与"上下文遵循"(adherence)和"噪声鲁棒"(robustness)相关的子空间，并为不同子空间设计定制化微调策略，实现两种能力的平衡提升。
 
+**[PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](personabench_evaluating_ai_models_on_understanding_personal_information_through_.md)**
+
+:   提出 PersonaBench 基准及配套的合成私有数据生成管线，系统评估 AI 模型通过 RAG 从模拟用户数据中提取个人信息的能力，揭示当前方案的严重不足。
+
 **[PRISM: A Framework for Producing Interpretable Political Bias Embeddings with Political-Aware Cross-Encoder](prism_political_bias_embeddings.md)**
 
 :   提出 PRISM 框架，首次将政治偏见嵌入建模为可解释任务：自动从弱标注新闻语料中挖掘争议性话题及左/右偏见指标作为嵌入维度，再用政治感知交叉编码器为文章在每个话题维度上打分，生成稀疏且语义透明的政治偏见嵌入向量，在 NewsSpectrum 分类准确率达 86.1%（领先 POLITICS 34.8%），同时支持多样化检索。
@@ -344,6 +368,10 @@ item_total: 82
 **[Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings](redundancy_isotropy_and_intrinsic_dimensionality_of_prompt-based_text_embeddings.md)**
 
 :   系统研究了基于Prompt的文本嵌入模型（如gte-Qwen2、E5-mistral等）在后处理降维下的性能鲁棒性，发现分类/聚类任务仅保留原始维度的0.5%即可基本保持性能，并通过内在维度（ID）和各向同性（IsoScore）两个指标定量解释了不同任务Prompt产生的嵌入冗余度差异。
+
+**[Re-identification of De-identified Documents with Autoregressive Infilling](reidentification_deidentified.md)**
+
+:   提出一种基于 RAG 的去标识化文档重标识方法：先用稀疏+稠密检索找到相关背景文档，再用自回归填充模型推断被遮蔽的个人标识信息，在三个数据集上恢复了高达 80% 的被遮蔽文本。
 
 **[Reranking-based Generation for Unbiased Perspective Summarization](reranking-based_generation_for_unbiased_perspective_summarization.md)**
 
