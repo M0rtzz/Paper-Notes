@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable and Steerable Concept Bottleneck Sparse Autoencoders
 description: >-
-  [CVPR 2026][图像生成][稀疏自编码器] 揭示了SAE中大多数神经元（~81%）的可解释性或可控性不足的问题，提出CB-SAE框架——通过裁剪低效用SAE神经元并增加概念瓶颈模块，在LVLM和图像生成任务上分别提升可解释性+32.1%和可控性+14.5%。
+  [CVPR 2026][图像生成][稀疏自编码器] 揭示了SAE中大多数神经元（~81%）的可解释性或可控性不足的问题，提出CB-SAE框架——通过裁剪低效用SAE神经元并增加概念瓶颈模块，在LVLM和图像生成任务上分别提升可解释性+32.1%和可控性+14.5%。 稀疏自编码器（SAE）已成为机制可解释性的基础工具…
 tags:
   - "CVPR 2026"
   - "图像生成"

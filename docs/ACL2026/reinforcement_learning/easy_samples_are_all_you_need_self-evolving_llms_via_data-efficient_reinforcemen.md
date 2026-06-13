@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Easy Samples Are All You Need: Self-Evolving LLMs via Data-Efficient Reinforcement Learning
 description: >-
-  [ACL 2026][强化学习][数据高效RL] 提出 EasyRL 框架，受认知发展理论启发，仅用10%的简单标注数据通过知识迁移初始化模型，再通过分治伪标注和由难度递进的自训练逐步掌握困难未标注数据，一致性超越全量数据监督的 GRPO。
+  [ACL 2026 Findings][强化学习][数据高效RL] 提出 EasyRL 框架，受认知发展理论启发，仅用10%的简单标注数据通过知识迁移初始化模型，再通过分治伪标注和由难度递进的自训练逐步掌握困难未标注数据，一致性超越全量数据监督的 GRPO。 领域现状：RLVR 已成为提升 LLM 推理能力的关键后训练范式…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "数据高效RL"
   - "自进化LLM"

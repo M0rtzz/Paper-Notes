@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VolleyBots: A Testbed for Multi-Drone Volleyball Game Combining Motion Control and Strategic Play
 description: >-
-  [NeurIPS 2025][机器人][多无人机系统] 本文提出 VolleyBots，一个多无人机排球竞技测试平台，融合了合作-对抗博弈、回合制交互与敏捷 3D 机动控制，基于 Isaac Sim 构建了从单体训练到多体竞技的任务课程体系，并通过分层策略在 3v3 任务中取得 69.5% 胜率…
+  [NeurIPS 2025][机器人][多无人机系统] 本文提出 VolleyBots，一个多无人机排球竞技测试平台，融合了合作-对抗博弈、回合制交互与敏捷 3D 机动控制，基于 Isaac Sim 构建了从单体训练到多体竞技的任务课程体系，并通过分层策略在 3v3 任务中取得 69.5% 胜率，同时展示了零样本 sim-to-real 部署能力。
 tags:
   - "NeurIPS 2025"
   - "机器人"

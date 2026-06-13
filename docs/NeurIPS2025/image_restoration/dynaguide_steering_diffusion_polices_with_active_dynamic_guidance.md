@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynaGuide: Steering Diffusion Policies with Active Dynamic Guidance
 description: >-
-  [NeurIPS 2025][图像恢复][扩散模型] 提出 DynaGuide，在推理时通过外部潜在动力学模型对预训练扩散策略施加 classifier guidance，无需修改策略权重即可引导机器人朝向任意正/负目标，在 CALVIN 仿真上平均成功率 70%，真实机器人达 80%。
+  [NeurIPS 2025][图像恢复][扩散模型] 提出 DynaGuide，在推理时通过外部潜在动力学模型对预训练扩散策略施加 classifier guidance，无需修改策略权重即可引导机器人朝向任意正/负目标，在 CALVIN 仿真上平均成功率 70%，真实机器人达 80%。 领域现状：扩散策略（Diffusio…
 tags:
   - "NeurIPS 2025"
   - "图像恢复"

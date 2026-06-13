@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Consultant Decoding: Yet Another Synergistic Mechanism
 description: >-
-  [ACL 2025][Consultant Decoding] 提出 Consultant Decoding (CD)，一种基于目标模型负对数似然（NLL）验证 draft token 的新型协同解码机制，相比传统 Speculative Decoding 的似然比验证方法…
+  [ACL 2025][LLM效率][Consultant Decoding] 提出 Consultant Decoding (CD)，一种基于目标模型负对数似然（NLL）验证 draft token 的新型协同解码机制，相比传统 Speculative Decoding 的似然比验证方法，能大幅提升接受率、降低大模型调用频率，同时保持甚至超越目标模型的生成质量。
 tags:
   - "ACL 2025"
+  - "LLM效率"
   - "Consultant Decoding"
   - "推测解码"
   - "NLL验证"

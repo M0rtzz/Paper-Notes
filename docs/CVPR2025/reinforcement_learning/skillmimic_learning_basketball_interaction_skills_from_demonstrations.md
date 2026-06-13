@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SkillMimic: Learning Basketball Interaction Skills from Demonstrations
 description: >-
-  [CVPR 2025][强化学习][人物交互模仿] 提出 SkillMimic，一个纯数据驱动的框架，通过统一的 HOI 模仿奖励（特别是创新的接触图奖励）从动捕数据中学习多样的篮球交互技能，并通过高层控制器组合技能实现连续得分等复杂长程任务。
+  [CVPR 2025][强化学习][人物交互模仿] 提出 SkillMimic，一个纯数据驱动的框架，通过统一的 HOI 模仿奖励（特别是创新的接触图奖励）从动捕数据中学习多样的篮球交互技能，并通过高层控制器组合技能实现连续得分等复杂长程任务。 领域现状：基于物理的角色动画中，模仿学习（如 DeepMimic、AMP、ASE…
 tags:
   - "CVPR 2025"
   - "强化学习"

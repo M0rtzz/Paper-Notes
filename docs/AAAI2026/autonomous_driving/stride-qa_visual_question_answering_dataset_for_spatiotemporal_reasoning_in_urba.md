@@ -2,9 +2,9 @@
 title: >-
   [论文解读] STRIDE-QA: Visual Question Answering Dataset for Spatiotemporal Reasoning in Urban Driving Scenes
 description: >-
-  [AAAI 2026][自动驾驶][VQA] 构建了自动驾驶领域最大规模时空推理VQA数据集STRIDE-QA（270K帧、16M QA对），定义了三类时空推理任务（物体间空间/自车空间/自车时空），通过微调VLM使空间定位成功率从近零提升至55%、时序一致性从0提升至28.4%。
+  [AAAI 2026 Oral][自动驾驶][VQA] 构建了自动驾驶领域最大规模时空推理VQA数据集STRIDE-QA（270K帧、16M QA对），定义了三类时空推理任务（物体间空间/自车空间/自车时空），通过微调VLM使空间定位成功率从近零提升至55%、时序一致性从0提升至28.4%。 领域现状：VLM（如GPT-4o…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自动驾驶"
   - "VQA"
   - "时空推理"

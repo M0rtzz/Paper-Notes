@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Agents Are the Antidote to Walled Gardens
 description: >-
-  [ICML 2026][LLM Agent][universal interoperability] 这是一篇 ICML 2026 立场论文，主张 LLM 智能体能够通过自动格式转换 + 拟人化 UI 交互"绕过"主流平台的 API 封闭策略…
+  [ICML 2026][LLM Agent][universal interoperability] 这是一篇 ICML 2026 立场论文，主张 LLM 智能体能够通过自动格式转换 + 拟人化 UI 交互"绕过"主流平台的 API 封闭策略，实现"通用互操作性"（universal interoperability），从而瓦解传统网络效应造成的"围墙花园"，但同时需要 ML 社区主动建立 agent-friendly 接口、安全机制和生态基础设施来管控随之而来的安全、法律与新一层 lock-in 风险。
 tags:
   - "ICML 2026"
   - "LLM Agent"

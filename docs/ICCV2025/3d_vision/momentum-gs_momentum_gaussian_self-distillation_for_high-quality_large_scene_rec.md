@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Momentum-GS: Momentum Gaussian Self-Distillation for High-Quality Large Scene Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] Momentum-GS 提出基于动量的自蒸馏机制来解决大规模场景3D高斯溅射中分块并行训练的一致性问题，通过动量教师高斯解码器提供全局引导并解耦分块数量与GPU数量的限制，在多个大规模场景数据集上取得SOTA…
+  [ICCV 2025][3D视觉][3D高斯溅射] Momentum-GS 提出基于动量的自蒸馏机制来解决大规模场景3D高斯溅射中分块并行训练的一致性问题，通过动量教师高斯解码器提供全局引导并解耦分块数量与GPU数量的限制，在多个大规模场景数据集上取得SOTA，LPIPS较CityGaussian提升18.7%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

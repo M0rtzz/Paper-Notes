@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mimir: Improving Video Diffusion Models for Precise Text Understanding
 description: >-
-  [CVPR 2025][视频生成][文本理解] Mimir 提出一个端到端训练框架，通过精心设计的 Token Fuser 将 decoder-only LLM（Phi-3.5）的强文本理解能力与传统 text encoder（T5）的稳定特征无损融合，显著提升视频扩散模型的文本理解精度…
+  [CVPR 2025][视频生成][文本理解] Mimir 提出一个端到端训练框架，通过精心设计的 Token Fuser 将 decoder-only LLM（Phi-3.5）的强文本理解能力与传统 text encoder（T5）的稳定特征无损融合，显著提升视频扩散模型的文本理解精度，尤其在多物体、空间关系和时序理解上大幅领先现有方法。
 tags:
   - "CVPR 2025"
   - "视频生成"

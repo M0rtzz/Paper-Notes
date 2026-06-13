@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEM: Empowering MLLM for Grounded ECG Understanding with Time Series and Images
 description: >-
-  [NeurIPS 2025][多模态VLM][ECG理解] 提出 GEM，首个统一 ECG 时间序列、12 导联 ECG 图像和文本的多模态大语言模型，通过双编码器框架、跨模态对齐和知识引导的指令数据生成，实现了基于可量化生理特征的接地心电图诊断，诊断准确率提升 7.4%，可解释性提升 22.7%…
+  [NeurIPS 2025][多模态VLM][ECG理解] 提出 GEM，首个统一 ECG 时间序列、12 导联 ECG 图像和文本的多模态大语言模型，通过双编码器框架、跨模态对齐和知识引导的指令数据生成，实现了基于可量化生理特征的接地心电图诊断，诊断准确率提升 7.4%，可解释性提升 22.7%，接地能力提升 25.3%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

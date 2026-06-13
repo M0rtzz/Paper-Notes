@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry Distributions
 description: >-
-  [ICCV 2025][3D视觉][几何表示] 提出Geometry Distributions (GeomDist)，将3D几何建模为表面点的概率分布并用扩散模型学习，无需假设亏格、连通性或边界条件，可从高斯噪声采样无限多表面点来表示任意拓扑的几何。
+  [ICCV 2025][3D视觉][几何表示] 提出Geometry Distributions (GeomDist)，将3D几何建模为表面点的概率分布并用扩散模型学习，无需假设亏格、连通性或边界条件，可从高斯噪声采样无限多表面点来表示任意拓扑的几何。 现有3D几何表示各有局限： - 网格：数据结构不一致…
 tags:
   - "ICCV 2025"
   - "3D视觉"

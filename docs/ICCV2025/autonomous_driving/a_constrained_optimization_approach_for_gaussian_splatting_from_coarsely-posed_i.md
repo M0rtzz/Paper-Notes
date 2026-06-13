@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds
 description: >-
-  [ICCV 2025][自动驾驶][3D Gaussian Splatting] 提出一种无需SfM的约束优化方法，通过相机位姿分解、灵敏度预调节、对数障碍约束和几何约束，从多相机SLAM系统输出的粗糙位姿和噪声点云中联合优化相机参数与3DGS场景重建。
+  [ICCV 2025][自动驾驶][3D Gaussian Splatting] 提出一种无需SfM的约束优化方法，通过相机位姿分解、灵敏度预调节、对数障碍约束和几何约束，从多相机SLAM系统输出的粗糙位姿和噪声点云中联合优化相机参数与3DGS场景重建。 3D Gaussian Splatting (3DGS) 是一种高效的…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

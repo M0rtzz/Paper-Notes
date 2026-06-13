@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Feedback-to-Plan Decisions for Self-Evolving LLM Agents in CUDA Kernel Generation
 description: >-
-  [ICML 2026][LLM Agent][self-evolving agent] 针对自演化 LLM agent 写 CUDA kernel 的场景，提出 CUDAnalyst：通过"冻结某一代中间程序状态 + 选择性注入/屏蔽反馈"做生成级干预…
+  [ICML 2026][LLM Agent][self-evolving agent] 针对自演化 LLM agent 写 CUDA kernel 的场景，提出 CUDAnalyst：通过"冻结某一代中间程序状态 + 选择性注入/屏蔽反馈"做生成级干预，并用 Banzhaf 联盟博弈解构 debugger / analyzer / profiler 三类反馈的边际贡献和高阶交互，得出"显式 plan 只有在反馈对齐时才有用、强模型的 plan 可向同家族弱模型迁移"等四条结论，并据此设计出 2.08×–10.32× 超过 torch.compile 的 CuGEdit 插件。
 tags:
   - "ICML 2026"
   - "LLM Agent"

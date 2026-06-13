@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring the Effects of Alignment on Numerical Bias in Large Language Models
 description: >-
-  [AAAI 2026][LLM对齐][数值偏差] 系统揭示了LLM对齐过程（指令调优+偏好调优）是LLM评估器产生数值偏差的根本原因，并验证分数范围调整是最有效的缓解策略。
+  [AAAI 2026][LLM对齐][数值偏差] 系统揭示了LLM对齐过程（指令调优+偏好调优）是LLM评估器产生数值偏差的根本原因，并验证分数范围调整是最有效的缓解策略。 领域现状：LLM-as-a-Judge范式已在翻译质量评估、语法纠错评估等多种任务上展示了有效性，逐渐被接受为人工标注的替代方案。然而研究者们注意到…
 tags:
   - "AAAI 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wasserstein Policy Optimization
 description: >-
-  [ICML2025][强化学习][Wasserstein梯度流] 提出 Wasserstein Policy Optimization (WPO)，将最优传输理论中的 Wasserstein 梯度流投影到参数空间…
+  [ICML2025][强化学习][Wasserstein梯度流] 提出 Wasserstein Policy Optimization (WPO)，将最优传输理论中的 Wasserstein 梯度流投影到参数空间，得到一种兼具确定性策略梯度（DPG）利用动作值梯度和经典随机策略梯度（SPG）支持任意分布的闭式更新规则，无需重参数化技巧。
 tags:
   - "ICML2025"
   - "强化学习"

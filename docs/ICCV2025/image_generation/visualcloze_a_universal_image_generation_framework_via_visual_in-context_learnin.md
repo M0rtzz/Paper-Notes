@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning
 description: >-
-  [ICCV 2025][图像生成][visual in-context learning] 提出 VisualCloze，将多种图像生成任务统一为"视觉完形填空"范式——用视觉示例（而非文本指令）定义任务，通过图像 infilling 模型实现统一生成…
+  [ICCV 2025][图像生成][visual in-context learning] 提出 VisualCloze，将多种图像生成任务统一为"视觉完形填空"范式——用视觉示例（而非文本指令）定义任务，通过图像 infilling 模型实现统一生成，并构建 Graph200K 图结构数据集增强任务间知识迁移，支持域内任务、未见任务泛化、多任务组合和反向生成。
 tags:
   - "ICCV 2025"
   - "图像生成"

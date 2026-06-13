@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient LLM Pretraining via Minimalist Optimizer Design
 description: >-
-  [ICML 2026][优化/理论][列归一化] 本文用"自底向上拆解 Adam"的方式找出真正必须的两个组件——逐列梯度归一化 + 只在最后一层加一阶动量——把它们组合成 SCALE 优化器…
+  [ICML 2026][优化/理论][列归一化] 本文用"自底向上拆解 Adam"的方式找出真正必须的两个组件——逐列梯度归一化 + 只在最后一层加一阶动量——把它们组合成 SCALE 优化器，用接近 SGD 的内存 (LLaMA 7B 上 13.74 GB) 达到了 Adam 级甚至超越 Muon/APOLLO 的预训练困惑度。
 tags:
   - "ICML 2026"
   - "优化/理论"

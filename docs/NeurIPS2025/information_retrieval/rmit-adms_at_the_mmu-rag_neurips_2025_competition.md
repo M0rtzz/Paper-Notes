@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition
 description: >-
-  [NeurIPS 2025][信息检索/RAG][检索增强生成] 提出Routing-to-RAG (R2RAG)系统，通过LLM查询分类器将简单查询路由到单轮Vanilla RAG、复杂查询路由到迭代式Vanilla Agent…
+  [NeurIPS 2025][信息检索/RAG][检索增强生成] 提出Routing-to-RAG (R2RAG)系统，通过LLM查询分类器将简单查询路由到单轮Vanilla RAG、复杂查询路由到迭代式Vanilla Agent，全部基于Qwen3-4B（未量化）和Qwen3-Reranker-0.6B两个轻量模型在单块消费级GPU上运行，获NeurIPS 2025 MMU-RAG竞赛开源赛道Best Dynamic Evaluation奖。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

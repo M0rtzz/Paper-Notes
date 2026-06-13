@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding Adam Convergence on Highly Degenerate Polynomials
 description: >-
-  [ICML2026][优化/理论][Adam] 本文挑出一类高阶退化多项式 $L(x)=\tfrac{1}{k}x^k$（$k\ge 4$ 偶数）作为最小问题模型，证明在常数学习率下 Adam 通过 $v_t$ 与 $g_t^2$ 的"解耦"机制把有效学习率指数放大，从而实现局部线性收敛…
+  [ICML2026][优化/理论][Adam] 本文挑出一类高阶退化多项式 $L(x)=\tfrac{1}{k}x^k$（$k\ge 4$ 偶数）作为最小问题模型，证明在常数学习率下 Adam 通过 $v_t$ 与 $g_t^2$ 的"解耦"机制把有效学习率指数放大，从而实现局部线性收敛，而 GD 与动量在同一问题上只能拿到 $\Theta(t^{-1/(k-2)})$ 的次线性速率，并完整刻画了 Adam 在 $(\beta_1,\beta_2)$ 平面上"稳定收敛 / spike / SignGD 振荡"三个相区。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2603.09581](https://arxiv.org/abs/2603.09581)  
 **代码**: 论文未给出公开链接  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: Adam, 退化最小, 线性收敛, 相图, 自适应步长  
 
 ## 一句话总结

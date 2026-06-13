@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Vision-Language-Action World Models for Autonomous Driving
 description: >-
-  [CVPR 2026][自动驾驶][VLA模型] VLA-World将世界模型的预测想象与VLA模型的反思推理统一到一个框架中，通过生成未来帧并对其进行推理来改进轨迹规划，实现了最低的碰撞率和FID分数。
+  [CVPR 2026][自动驾驶][VLA模型] VLA-World将世界模型的预测想象与VLA模型的反思推理统一到一个框架中，通过生成未来帧并对其进行推理来改进轨迹规划，实现了最低的碰撞率和FID分数。 领域现状：端到端自动驾驶存在两大范式——VLA模型（统一感知、推理、控制但缺乏时空建模）和世界模型（预测环境演变但无法推…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

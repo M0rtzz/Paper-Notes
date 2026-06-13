@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Expressive Score-Based Priors for Distribution Matching with Geometry-Preserving Regularization
 description: >-
-  [ICML2025][图像生成][Distribution Matching] 提出基于 score function 的表达性先验分布（SAUB），通过 Score Function Substitution (SFS) 技巧绕过先验密度估计…
+  [ICML2025][图像生成][Distribution Matching] 提出基于 score function 的表达性先验分布（SAUB），通过 Score Function Substitution (SFS) 技巧绕过先验密度估计，结合 Gromov-Wasserstein 几何保持约束实现稳定高效的分布匹配，在公平分类、域适应和域翻译任务上取得优越表现。
 tags:
   - "ICML2025"
   - "图像生成"

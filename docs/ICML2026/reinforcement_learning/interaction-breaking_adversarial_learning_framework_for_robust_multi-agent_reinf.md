@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][MARL] 本文从信息论视角出发，把多智能体之间的"互相影响"用条件互信息刻画出来，再设计同时遮挡观测和扰动动作的攻击器去最小化跨组互信息，并据此训练出能在协作部分崩溃时仍能稳定决策的 IBAL 策略…
+  [ICML 2026][强化学习][MARL] 本文从信息论视角出发，把多智能体之间的"互相影响"用条件互信息刻画出来，再设计同时遮挡观测和扰动动作的攻击器去最小化跨组互信息，并据此训练出能在协作部分崩溃时仍能稳定决策的 IBAL 策略，在 SMAC / SMACv2 / LBF 等多种攻击与"队友缺失"扰动下都显著超过既有鲁棒 MARL 方法。
 tags:
   - "ICML 2026"
   - "强化学习"

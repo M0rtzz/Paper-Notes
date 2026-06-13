@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Masked Representation Modeling for Domain-Adaptive Segmentation
 description: >-
-  [CVPR 2026][语义分割][无监督域自适应] 提出在潜在空间而非输入空间做掩码建模的辅助任务MRM，通过轻量级Rebuilder模块对编码器特征做掩码-重建并用分割损失监督，在GTA→Cityscapes上为四种UDA基线平均带来+2.3 mIoU提升，推理时零额外开销。
+  [CVPR 2026][语义分割][无监督域自适应] 提出在潜在空间而非输入空间做掩码建模的辅助任务MRM，通过轻量级Rebuilder模块对编码器特征做掩码-重建并用分割损失监督，在GTA→Cityscapes上为四种UDA基线平均带来+2.3 mIoU提升，推理时零额外开销。 无监督域自适应(UDA)语义分割需要将源域标…
 tags:
   - "CVPR 2026"
   - "语义分割"

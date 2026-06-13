@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChunkKV: Semantic-Preserving KV Cache Compression for Efficient Long-Context LLM Inference
 description: >-
-  [NeurIPS 2025][模型压缩][KV cache compression] ChunkKV 将 KV cache 压缩的基本单元从离散 token 提升为语义 chunk（连续 token 组），通过 chunk 级 attention score 聚合来选择保留哪些语义完整的片段…
+  [NeurIPS 2025][模型压缩][KV cache compression] ChunkKV 将 KV cache 压缩的基本单元从离散 token 提升为语义 chunk（连续 token 组），通过 chunk 级 attention score 聚合来选择保留哪些语义完整的片段，并利用 chunk 带来的高跨层索引相似性实现 layer-wise index reuse，在 10% 压缩率下比 SnapKV/PyramidKV 提升最高 8.7%，吞吐量提升 26.5%。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

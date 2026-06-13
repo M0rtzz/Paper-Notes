@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Benchmark for Deep Information Synthesis (DeepSynth)
 description: >-
-  [ICLR 2026][LLM Agent][benchmark] 提出 DeepSynth 基准，包含 120 个跨 7 领域 67 国的真实信息综合任务（平均需 5.5 小时人工标注），要求 agent 从多个网页收集信息并进行结构化推理…
+  [ICLR 2026][LLM Agent][benchmark] 提出 DeepSynth 基准，包含 120 个跨 7 领域 67 国的真实信息综合任务（平均需 5.5 小时人工标注），要求 agent 从多个网页收集信息并进行结构化推理，当前最强 agent（o3-deep-research）仅获 8.97 F1 / 17.5% LLM-Judge，揭示了 LLM agent 在信息综合方面的严重不足。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

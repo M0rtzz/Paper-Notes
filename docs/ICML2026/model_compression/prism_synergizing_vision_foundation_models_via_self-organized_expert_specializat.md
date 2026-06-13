@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRISM: Synergizing Vision Foundation Models via Self-Organized Expert Specialization
 description: >-
-  [ICML 2026][模型压缩][多教师蒸馏] PRISM 把 CLIP / SAM / DINOv2 三个异质视觉基础模型蒸馏进同一个 ViT 学生时,用"双流条件 MoE"（一条共享 anchor 流稳梯度、一条上下文路由的稀疏专家流解冲突）让专家自组织地分工——共识知识共享、冲突知识分支…
+  [ICML 2026][模型压缩][多教师蒸馏] PRISM 把 CLIP / SAM / DINOv2 三个异质视觉基础模型蒸馏进同一个 ViT 学生时,用"双流条件 MoE"（一条共享 anchor 流稳梯度、一条上下文路由的稀疏专家流解冲突）让专家自组织地分工——共识知识共享、冲突知识分支,在 PASCAL-Context 上比此前 SOTA SAK 在全部 5 个任务上都更好。
 tags:
   - "ICML 2026"
   - "模型压缩"

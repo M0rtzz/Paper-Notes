@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAND-Math: Using LLMs to Generate Novel, Difficult and Useful Mathematics Questions and Answers
 description: >-
-  [NeurIPS 2025][LLM推理][数学推理] 提出 SAND-Math，一个无需种子数据集的全自动合成数学问题生成管线，通过 Difficulty Hiking 系统性提升题目难度，仅 500 道增强 LIMO 基线即可在 AIME25 上提升 4.39pp。
+  [NeurIPS 2025][LLM推理][数学推理] 提出 SAND-Math，一个无需种子数据集的全自动合成数学问题生成管线，通过 Difficulty Hiking 系统性提升题目难度，仅 500 道增强 LIMO 基线即可在 AIME25 上提升 4.39pp。 领域现状： DeepSeek-R1、o3、Gemini…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

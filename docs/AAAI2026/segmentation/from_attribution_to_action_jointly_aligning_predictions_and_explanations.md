@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Attribution to Action: Jointly ALIGNing Predictions and Explanations
 description: >-
-  [AAAI 2026][语义分割][解释引导学习] 提出 ALIGN 框架，通过联合训练可学习掩码生成器（masker）和分类器，迭代对齐模型归因图与任务相关区域掩码，同时提升预测准确性和可解释性，在 VLCS 和 Terra Incognita 域泛化基准上超越 6 个强基线。
+  [AAAI 2026][语义分割][解释引导学习] 提出 ALIGN 框架，通过联合训练可学习掩码生成器（masker）和分类器，迭代对齐模型归因图与任务相关区域掩码，同时提升预测准确性和可解释性，在 VLCS 和 Terra Incognita 域泛化基准上超越 6 个强基线。 解释引导学习（EGL）通过将解释信号（如显著…
 tags:
   - "AAAI 2026"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Soft Sparse Shapes for Efficient Time-Series Classification
 description: >-
-  [ICML2025][时间序列][shapelet] 提出 SoftShape 模型，用基于贡献分数的软稀疏化替代传统硬筛选 shapelet 的方式，结合 MoE 驱动的 intra-shape 和 shared expert 的 inter-shape 双模式时序模式学习…
+  [ICML2025][时间序列][shapelet] 提出 SoftShape 模型，用基于贡献分数的软稀疏化替代传统硬筛选 shapelet 的方式，结合 MoE 驱动的 intra-shape 和 shared expert 的 inter-shape 双模式时序模式学习，在 128 个 UCR 数据集上取得 SOTA 分类精度。
 tags:
   - "ICML2025"
   - "时间序列"

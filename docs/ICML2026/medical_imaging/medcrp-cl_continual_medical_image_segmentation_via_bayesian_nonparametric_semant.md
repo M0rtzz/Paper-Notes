@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedCRP-CL: Continual Medical Image Segmentation via Bayesian Nonparametric Semantic Modality Discovery
 description: >-
-  [ICML 2026][医学图像][持续学习] 用中国餐馆过程 (CRP) 对临床文本 prompt 做在线贝叶斯非参数聚类，自动发现"语义模态"，再为每个语义模态分配独立 LoRA 适配器并配合模态内 EWC，在 16 个医学分割任务上把 Dice 推到 73.3% 同时遗忘率降到 4.1%…
+  [ICML 2026][医学图像][持续学习] 用中国餐馆过程 (CRP) 对临床文本 prompt 做在线贝叶斯非参数聚类，自动发现"语义模态"，再为每个语义模态分配独立 LoRA 适配器并配合模态内 EWC，在 16 个医学分割任务上把 Dice 推到 73.3% 同时遗忘率降到 4.1%，参数仅为 MoE 基线的 1/6。
 tags:
   - "ICML 2026"
   - "医学图像"

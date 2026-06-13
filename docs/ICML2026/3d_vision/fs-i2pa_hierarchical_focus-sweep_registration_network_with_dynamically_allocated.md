@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FSI2P: A Hierarchical Focus–Sweep Registration Network with Dynamically Allocated Depth
 description: >-
-  [ICML 2026][3D视觉][图像-点云配准] 本文把人类“先扫一眼再逐块细看”的观察过程抽象为 Focus-Sweep 两阶段范式，用 Mamba 替换 Transformer 做图像-点云交互，并用强化学习动态决定每个尺度上的交互层数…
+  [ICML 2026][3D视觉][图像-点云配准] 本文把人类“先扫一眼再逐块细看”的观察过程抽象为 Focus-Sweep 两阶段范式，用 Mamba 替换 Transformer 做图像-点云交互，并用强化学习动态决定每个尺度上的交互层数，在 RGB-D Scenes V2 和 7-Scenes 上拿到 I2P 配准的 SOTA。
 tags:
   - "ICML 2026"
   - "3D视觉"

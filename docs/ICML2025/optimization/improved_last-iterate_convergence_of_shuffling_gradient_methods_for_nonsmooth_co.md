@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization
 description: >-
-  [ICML 2025][优化/理论][shuffling gradient] 首次证明 Random Reshuffle（RR）和 Single Shuffle（SS）在非光滑（强）凸有限和优化中的 last-iterate 收敛率严格优于 Proximal GD…
+  [ICML 2025][优化/理论][shuffling gradient] 首次证明 Random Reshuffle（RR）和 Single Shuffle（SS）在非光滑（强）凸有限和优化中的 last-iterate 收敛率严格优于 Proximal GD，RR 达到 $\tilde{O}(GD_\star / (n^{1/4}\sqrt{K}))$，近似匹配下界 $\Omega(1/(n^{1/4}\sqrt{K}))$。
 tags:
   - "ICML 2025"
   - "优化/理论"

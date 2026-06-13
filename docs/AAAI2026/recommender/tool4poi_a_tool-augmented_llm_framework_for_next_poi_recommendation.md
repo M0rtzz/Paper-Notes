@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tool4POI: A Tool-Augmented LLM Framework for Next POI Recommendation
 description: >-
-  [AAAI 2026][推荐系统][POI推荐] 本文首次将工具增强 LLM 范式引入下一个 POI 推荐任务，通过偏好提取、多轮候选检索和重排序三个模块，使 LLM 能从全量 POI 池中检索推荐，在 Out-of-History (OOH) 场景下实现 40% 准确率（现有方法为 0%）…
+  [AAAI 2026][推荐系统][POI推荐] 本文首次将工具增强 LLM 范式引入下一个 POI 推荐任务，通过偏好提取、多轮候选检索和重排序三个模块，使 LLM 能从全量 POI 池中检索推荐，在 Out-of-History (OOH) 场景下实现 40% 准确率（现有方法为 0%），Acc@5/10 平均提升 20%/30%。
 tags:
   - "AAAI 2026"
   - "推荐系统"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] GASP: Guided Asymmetric Self-Play For Coding LLMs
 description: >-
-  [ICLR 2026][LLM/NLP][非对称自博弈] 提出GASP框架，在非对称自博弈中引入"goalpost"（硬目标题）引导教师生成有针对性的训练问题，通过lemma（简化变体）→lift（加难变体）的课程结构逐步逼近困难目标…
+  [ICLR 2026][LLM 其他][非对称自博弈] 提出GASP框架，在非对称自博弈中引入"goalpost"（硬目标题）引导教师生成有针对性的训练问题，通过lemma（简化变体）→lift（加难变体）的课程结构逐步逼近困难目标，在LiveCodeBench上超越无引导自博弈2.5%且解决了所有baseline无法解决的难题。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "非对称自博弈"
   - "代码生成"
   - "课程学习"

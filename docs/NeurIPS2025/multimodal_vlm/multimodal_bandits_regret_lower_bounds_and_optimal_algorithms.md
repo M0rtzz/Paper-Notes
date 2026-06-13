@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Bandits: Regret Lower Bounds and Optimal Algorithms
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态赌博机] 针对奖励函数至多有 $m$ 个极值的多模态多臂赌博机问题，提出首个计算可行的算法求解 Graves-Lai 优化问题，实现渐近最优的遗憾界，并证明局部搜索策略是次优的。
+  [NeurIPS 2025][多模态VLM][多模态赌博机] 针对奖励函数至多有 $m$ 个极值的多模态多臂赌博机问题，提出首个计算可行的算法求解 Graves-Lai 优化问题，实现渐近最优的遗憾界，并证明局部搜索策略是次优的。 1. 领域现状 随机多臂赌博机（MAB）问题是在线决策的基础模型。经典设置中…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

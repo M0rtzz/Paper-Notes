@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-Agent Reinforcement Learning for Adaptive and Cost-Aware Visual-Inertial Odometry
 description: >-
-  [CVPR2026][视频理解][Visual-Inertial Odometry] 提出双智能体强化学习框架，通过 Select Agent（基于IMU信号决定是否启动视觉前端）和 Fusion Agent（自适应融合视觉-惯性状态）两个轻量RL策略，在不完全移除VIBA的前提下大幅降低其调用频率和计算开销…
+  [CVPR2026][视频理解][Visual-Inertial Odometry] 提出双智能体强化学习框架，通过 Select Agent（基于IMU信号决定是否启动视觉前端）和 Fusion Agent（自适应融合视觉-惯性状态）两个轻量RL策略，在不完全移除VIBA的前提下大幅降低其调用频率和计算开销，实现精度-效率-显存的更优折中。
 tags:
   - "CVPR2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives
 description: >-
-  [NeurIPS 2025][优化/理论][multi-agent coordination] 提出 MA-SPL 和 MA-MPL 两个多智能体在线协调算法，通过"基于策略的连续扩展"技术突破次模性限制，首次在次模和弱次模目标函数上均实现最优 $(1 - c/e)$ 近似比…
+  [NeurIPS 2025][优化/理论][multi-agent coordination] 提出 MA-SPL 和 MA-MPL 两个多智能体在线协调算法，通过"基于策略的连续扩展"技术突破次模性限制，首次在次模和弱次模目标函数上均实现最优 $(1 - c/e)$ 近似比，支持时变目标和仅局部反馈的实际约束。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

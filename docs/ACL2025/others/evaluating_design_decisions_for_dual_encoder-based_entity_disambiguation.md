@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation
 description: >-
-  [ACL 2025][实体消歧] 系统评估了 Dual Encoder 在实体消歧（ED）任务中的关键设计选择（损失函数、相似度度量、标签语义化格式、负采样策略），并基于最优设计构建了 VerbalizED 系统，在 ZELDA 基准上达到了新的 SOTA…
+  [ACL 2025][实体消歧] 系统评估了 Dual Encoder 在实体消歧（ED）任务中的关键设计选择（损失函数、相似度度量、标签语义化格式、负采样策略），并基于最优设计构建了 VerbalizED 系统，在 ZELDA 基准上达到了新的 SOTA，同时探索了一种迭代预测策略来利用已消歧的邻居实体改进困难样本。
 tags:
   - "ACL 2025"
   - "实体消歧"

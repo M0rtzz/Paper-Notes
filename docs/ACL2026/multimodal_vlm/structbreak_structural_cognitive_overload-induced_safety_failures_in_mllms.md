@@ -2,9 +2,9 @@
 title: >-
   [论文解读] StructBreak: Structural Cognitive Overload-Induced Safety Failures in MLLMs
 description: >-
-  [ACL2026][多模态VLM][MLLM 安全] StructBreak 提出"结构认知过载"（SCO）攻击范式，利用视觉知识图谱（VKG）的拓扑复杂性诱发多模态 LLM 的安全失效——在黑盒设置下对 6 个前沿 MLLM 实现平均 92% 的攻击成功率（Gemini 2.5 高达 97%）…
+  [ACL2026 Findings][多模态VLM][MLLM 安全] StructBreak 提出"结构认知过载"（SCO）攻击范式，利用视觉知识图谱（VKG）的拓扑复杂性诱发多模态 LLM 的安全失效——在黑盒设置下对 6 个前沿 MLLM 实现平均 92% 的攻击成功率（Gemini 2.5 高达 97%），并从注意力耗散、隐空间拓扑和几何分析三个层面揭示安全崩塌机制。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "MLLM 安全"
   - "越狱攻击"
@@ -20,7 +20,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2605.25534](https://arxiv.org/abs/2605.25534)
 **代码**: 待确认
-**领域**: multimodal_vlm
+**领域**: 多模态VLM
 **关键词**: MLLM 安全, 越狱攻击, 认知过载, 视觉知识图谱, 注意力耗散, 对齐失效
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding
 description: >-
-  [CVPR 2025][视频理解][动态编码] 提出DynFocus，一个基于LLM的动态协作视频编码网络，通过DPE模块动态选择与问答相关的关键帧，CCE模块对关键帧用细粒度token编码（类似视锥细胞Cones）、对冗余帧用极少token粗粒度编码（类似视杆细胞Rods）…
+  [CVPR 2025][视频理解][动态编码] 提出DynFocus，一个基于LLM的动态协作视频编码网络，通过DPE模块动态选择与问答相关的关键帧，CCE模块对关键帧用细粒度token编码（类似视锥细胞Cones）、对冗余帧用极少token粗粒度编码（类似视杆细胞Rods），在有限token预算下平衡空间细节与时序动态。
 tags:
   - "CVPR 2025"
   - "视频理解"

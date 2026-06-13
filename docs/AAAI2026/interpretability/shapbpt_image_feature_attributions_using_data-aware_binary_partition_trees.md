@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShapBPT: Image Feature Attributions Using Data-Aware Binary Partition Trees
 description: >-
-  [AAAI 2026][可解释性][Shapley值] 提出 ShapBPT，将**数据感知的二叉分割树（BPT）**作为层次联盟结构与 Owen 近似的 Shapley 值结合，实现与图像形态学对齐的特征归因，比现有 Shapley 方法收敛更快、形状识别更准确，并通过 20 人用户研究确认解释更受人类偏好…
+  [AAAI 2026][可解释性][Shapley值] 提出 ShapBPT，将**数据感知的二叉分割树（BPT）**作为层次联盟结构与 Owen 近似的 Shapley 值结合，实现与图像形态学对齐的特征归因，比现有 Shapley 方法收敛更快、形状识别更准确，并通过 20 人用户研究确认解释更受人类偏好。
 tags:
   - "AAAI 2026"
   - "可解释性"

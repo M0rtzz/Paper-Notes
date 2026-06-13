@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixed-Curvature Decision Trees and Random Forests
 description: >-
-  [ICML 2025][图学习][决策树] 将经典决策树和随机森林算法从欧几里得空间推广到混合曲率乘积流形（hyperbolic × spherical × Euclidean），通过角度重参数化（angular reformulation）构造尊重流形几何的分裂准则…
+  [ICML 2025][图学习][决策树] 将经典决策树和随机森林算法从欧几里得空间推广到混合曲率乘积流形（hyperbolic × spherical × Euclidean），通过角度重参数化（angular reformulation）构造尊重流形几何的分裂准则，在 57 个分类/回归/链路预测任务上表现优异（29 个第一，41 个前二）。
 tags:
   - "ICML 2025"
   - "图学习"

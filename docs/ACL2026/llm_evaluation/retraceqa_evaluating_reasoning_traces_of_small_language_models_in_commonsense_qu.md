@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReTraceQA: Evaluating Reasoning Traces of Small Language Models in Commonsense Question Answering
 description: >-
-  [ACL 2026][LLM评测][推理过程评估] 本文提出 ReTraceQA，首个面向常识推理任务的推理过程评测基准，包含 2421 条由专家标注的步骤级错误定位和错误分类标注，揭示 14-24% 的 SLM 虽给出正确答案但推理过程有误，当采用推理感知评估替代仅答案评估时…
+  [ACL 2026][LLM评测][推理过程评估] 本文提出 ReTraceQA，首个面向常识推理任务的推理过程评测基准，包含 2421 条由专家标注的步骤级错误定位和错误分类标注，揭示 14-24% 的 SLM 虽给出正确答案但推理过程有误，当采用推理感知评估替代仅答案评估时，SLM 性能最多下降 25 个百分点。
 tags:
   - "ACL 2026"
   - "LLM评测"

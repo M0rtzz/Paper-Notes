@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Delving into Cascaded Instability: A Lipschitz Continuity View on Image Restoration and Object Detection Synergy
 description: >-
-  [NeurIPS 2025][目标检测][恶劣条件检测] 从 Lipschitz 连续性视角分析图像复原与目标检测级联框架的不稳定性根源，发现两个网络在平滑性上存在量级差异，提出 LR-YOLO 通过将复原任务集成到检测backbone的特征学习中来正则化检测器的Lipschitz常数…
+  [NeurIPS 2025][目标检测][恶劣条件检测] 从 Lipschitz 连续性视角分析图像复原与目标检测级联框架的不稳定性根源，发现两个网络在平滑性上存在量级差异，提出 LR-YOLO 通过将复原任务集成到检测backbone的特征学习中来正则化检测器的Lipschitz常数，在去雾和低光增强基准上持续提升检测稳定性。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation
 description: >-
-  [ICCV 2025][图像生成][双曲空间] 将双曲空间的层级表示学习能力与扩散自编码器的高质量生成能力结合，通过在 Poincaré 圆盘中操控潜码的半径和方向，实现可控、多样且保持类别一致性的小样本图像生成。
+  [ICCV 2025][图像生成][双曲空间] 将双曲空间的层级表示学习能力与扩散自编码器的高质量生成能力结合，通过在 Poincaré 圆盘中操控潜码的半径和方向，实现可控、多样且保持类别一致性的小样本图像生成。 小样本图像生成（Few-shot Image Generation）旨在仅用少量样本为未见类别生成多样、高质量…
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning
 description: >-
-  [CVPR2026][Partial Label Learning] 针对实例依赖偏标签学习 (ID-PLL) 中相似类别实例因特征和候选标签重叠导致的"实例纠缠"问题，提出 CAD 框架，通过类别特定增强的类内对齐和加权惩罚损失的类间分离，双管齐下缓解类混淆。
+  [CVPR2026][Partial Label Learning] 针对实例依赖偏标签学习 (ID-PLL) 中相似类别实例因特征和候选标签重叠导致的"实例纠缠"问题，提出 CAD 框架，通过类别特定增强的类内对齐和加权惩罚损失的类间分离，双管齐下缓解类混淆。 偏标签学习的实际需求：现实中获取精确标签成本高昂…
 tags:
   - "CVPR2026"
   - "Partial Label Learning"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Hair Reconstruction with Strand-Aligned 3D Gaussians
 description: >-
-  [ECCV 2024][3D视觉][头发重建] 本文提出 Gaussian Haircut，通过经典发丝多段线和 3D 高斯基元的双表示（strand-aligned 3D Gaussians），结合 3D 方向场提升和粗到细的发丝拟合优化策略…
+  [ECCV 2024][3D视觉][头发重建] 本文提出 Gaussian Haircut，通过经典发丝多段线和 3D 高斯基元的双表示（strand-aligned 3D Gaussians），结合 3D 方向场提升和粗到细的发丝拟合优化策略，从多视角图像重建出可直接用于图形引擎编辑、渲染和物理仿真的高保真发丝级发型，速度比之前方法快 10 倍以上。
 tags:
   - "ECCV 2024"
   - "3D视觉"

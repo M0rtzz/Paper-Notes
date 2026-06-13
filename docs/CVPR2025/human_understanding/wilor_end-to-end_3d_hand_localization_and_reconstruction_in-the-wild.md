@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WiLoR: End-to-end 3D Hand Localization and Reconstruction in-the-wild
 description: >-
-  [CVPR 2025][人体理解][手部检测] 提出端到端的野外多手部重建管线 WiLoR，包含实时全卷积手部检测器和基于 Transformer 的高保真3D手部重建模型，通过多尺度精化模块实现图像对齐。
+  [CVPR 2025][人体理解][手部检测] 提出端到端的野外多手部重建管线 WiLoR，包含实时全卷积手部检测器和基于 Transformer 的高保真3D手部重建模型，通过多尺度精化模块实现图像对齐。 3D 手部姿态估计在人机交互、VR 和机器人领域应用广泛，但现有方法面临两大瓶颈：(1) 手部检测管线严重不足——流行…
 tags:
   - "CVPR 2025"
   - "人体理解"

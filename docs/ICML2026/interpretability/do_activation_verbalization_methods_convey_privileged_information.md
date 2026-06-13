@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Activation Verbalization Methods Convey Privileged Information?
 description: >-
-  [ICML 2026][可解释性][激活语言化] 本文系统证明：当前流行的激活语言化方法（Patchscopes / LIT / SelfIE）在被用作 LLM 可解释性工具时，其性能完全可以由 "verbalizer 模型自己的知识" 解释…
+  [ICML 2026][可解释性][激活语言化] 本文系统证明：当前流行的激活语言化方法（Patchscopes / LIT / SelfIE）在被用作 LLM 可解释性工具时，其性能完全可以由 "verbalizer 模型自己的知识" 解释，不需要任何 target 模型的内部激活——意味着这些工具在现有 benchmark 上看起来 work 是因为基准本身设计有缺陷，且当 verbalizer 知识超过 target 时会编造出 target 根本不具备的 "解释"。
 tags:
   - "ICML 2026"
   - "可解释性"

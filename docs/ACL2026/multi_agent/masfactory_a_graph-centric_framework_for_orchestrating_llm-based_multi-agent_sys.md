@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MASFactory: A Graph-centric Framework for Orchestrating LLM-Based Multi-Agent Systems with Vibe Graphing
 description: >-
-  [ACL 2026][多智能体][多智能体编排] MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "Vibe Graphing" 三阶段流水线（Role Assignment → Structure Design → Semantic Completion）把自然语…
+  [ACL 2026][多智能体][多智能体编排] MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "Vibe Graphing" 三阶段流水线（Role Assignment → Structure Design → Semantic Completion）把自然语言意图编译成可执行 MAS 工作流，并提供 Context/Message Adapter、ComposedGraph 模板复用与 VS Code 可视化；7 个 benchmark 上复现 5 个代表性 MAS 且效果持平甚至更好，端到端 Vibe Graphing 把 ChatDev 1511 行代码压到 45 行、API…
 tags:
   - "ACL 2026"
   - "多智能体"

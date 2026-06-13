@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation
 description: >-
-  [NeurIPS 2025][可解释性][Text-to-SQL] 提出 AgentiQL，一个多专家 agent 框架用于 Text-to-SQL：reasoning agent 分解问题为子问题，coding agent 生成子查询，refinement 步骤校正列选择…
+  [NeurIPS 2025][可解释性][Text-to-SQL] 提出 AgentiQL，一个多专家 agent 框架用于 Text-to-SQL：reasoning agent 分解问题为子问题，coding agent 生成子查询，refinement 步骤校正列选择，adaptive router 在基线解析器和模块化 pipeline 之间智能路由，使用 14B 开源模型达到 86.07% EX（Spider），接近 GPT-4 SOTA(89.65%)。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

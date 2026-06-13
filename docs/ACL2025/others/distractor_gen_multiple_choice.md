@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating Plausible Distractors for Multiple-Choice Questions via Student Choice Prediction
 description: >-
-  [ACL 2025][干扰项生成] 本文提出了一个通过成对排序器预测学生选择倾向、再利用DPO训练干扰项生成器的三步流水线，使生成的多选题干扰项更具有迷惑性和区分度。
+  [ACL 2025][干扰项生成] 本文提出了一个通过成对排序器预测学生选择倾向、再利用DPO训练干扰项生成器的三步流水线，使生成的多选题干扰项更具有迷惑性和区分度。 领域现状： 多选题（MCQ）是教育中重要的评估工具，其中干扰项（错误选项）的质量直接决定了测试的有效性。自动化干扰项生成已成为研究热点…
 tags:
   - "ACL 2025"
   - "干扰项生成"

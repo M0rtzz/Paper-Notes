@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokAlign: Efficient Vocabulary Adaptation via Token Alignment
 description: >-
-  [ACL 2025][预训练][词表替换] 提出 TokAlign，基于 Token 共现信息学习两个词表之间的一对一映射矩阵，高效替换 LLM 的词表，实现跨语言知识迁移和跨模型 token 级蒸馏。
+  [ACL 2025][预训练][词表替换] 提出 TokAlign，基于 Token 共现信息学习两个词表之间的一对一映射矩阵，高效替换 LLM 的词表，实现跨语言知识迁移和跨模型 token 级蒸馏。 核心问题 LLM 的 tokenizer 在新领域或新语言上往往效率低下——例如 LLaMA3 的 tokenizer 处…
 tags:
   - "ACL 2025"
   - "预训练"

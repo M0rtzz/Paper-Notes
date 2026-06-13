@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating and Rewarding LALMs for Expressive Role-Play TTS via Mean Continuation Log-Probability
 description: >-
-  [ICML 2026][音频/语音][Role-Play TTS] 本文把"预训练大音频语言模型对真值语音 token 的续写概率"包装成一个名为 MCLP 的客观风格一致性度量，再用 MCLP+CER 的门控混合奖励…
+  [ICML 2026][音频/语音][Role-Play TTS] 本文把"预训练大音频语言模型对真值语音 token 的续写概率"包装成一个名为 MCLP 的客观风格一致性度量，再用 MCLP+CER 的门控混合奖励，通过 GRPO 在新构建的 WenetSpeech-RP-TTS 数据集上把角色扮演 TTS 的主观 MOS 从 1.86 推到 3.58。
 tags:
   - "ICML 2026"
   - "音频/语音"

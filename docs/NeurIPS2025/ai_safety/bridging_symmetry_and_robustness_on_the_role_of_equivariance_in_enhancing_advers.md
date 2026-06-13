@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Symmetry and Robustness: On the Role of Equivariance in Enhancing Adversarial Robustness
 description: >-
-  [NeurIPS 2025][AI安全][adversarial robustness] 通过在 CNN 中嵌入旋转等变（P4群）和尺度等变卷积层，提出 Parallel 和 Cascaded 两种对称性感知架构，无需对抗训练即可显著提升对抗鲁棒性…
+  [NeurIPS 2025][AI安全][adversarial robustness] 通过在 CNN 中嵌入旋转等变（P4群）和尺度等变卷积层，提出 Parallel 和 Cascaded 两种对称性感知架构，无需对抗训练即可显著提升对抗鲁棒性，并从 CLEVER 框架出发理论证明等变架构能压缩假设空间、正则化梯度、收紧认证鲁棒性界。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HeteroRAG: A Heterogeneous Retrieval-Augmented Generation Framework for Medical Vision Language Tasks
 description: >-
-  [ACL 2026][医疗NLP][异构 RAG] HeteroRAG 构建了 270 万张图文对 + 五类语料的 MedAtlas 知识库，把医学多模态 RAG 拆成三件套——按模态分训的 ModCLIPs 拉报告、按语料定制 query 的 MQG 拉文档、用 HKPT 偏好微调对齐跨模态与多源知识——让…
+  [ACL 2026 Findings][医疗NLP][异构 RAG] HeteroRAG 构建了 270 万张图文对 + 五类语料的 MedAtlas 知识库，把医学多模态 RAG 拆成三件套——按模态分训的 ModCLIPs 拉报告、按语料定制 query 的 MQG 拉文档、用 HKPT 偏好微调对齐跨模态与多源知识——让 7B 模型在 11 个数据集上稳定击败 4-5× 参数量的开源 Med-LVLM。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "异构 RAG"
   - "模态专用 CLIP"

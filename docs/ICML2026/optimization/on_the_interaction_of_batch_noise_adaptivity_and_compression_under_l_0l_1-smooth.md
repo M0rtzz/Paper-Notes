@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Interaction of Batch Noise, Adaptivity, and Compression, under $(L_0,L_1)$-Smoothness: An SDE Approach
 description: >-
-  [ICML 2026][优化/理论][$(L_0] 本文指出文献中标准一阶 / 二阶 SDE 在 $(L_0,L_1)$-光滑下完全错失学习率稳定性约束（甚至预测发散区间也收敛），通过在漂移项中把曲率项符号翻正，作者构造出一族"稳定性忠实"的一阶弱近似 SDE…
+  [ICML 2026][优化/理论][$(L_0] 本文指出文献中标准一阶 / 二阶 SDE 在 $(L_0,L_1)$-光滑下完全错失学习率稳定性约束（甚至预测发散区间也收敛），通过在漂移项中把曲率项符号翻正，作者构造出一族"稳定性忠实"的一阶弱近似 SDE，首次在统一框架内分析 DCSGD 与 DSignSGD 在压缩 + 仿射方差 + 重尾噪声下的收敛性，并给出归一化强度该如何选取的具体处方。
 tags:
   - "ICML 2026"
   - "优化/理论"

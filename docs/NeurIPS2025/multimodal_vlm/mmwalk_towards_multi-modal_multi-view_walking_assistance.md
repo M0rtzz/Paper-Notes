@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mmWalk: Towards Multi-modal Multi-view Walking Assistance
 description: >-
-  [NeurIPS 2025][多模态VLM][视障辅助] mmWalk 构建了首个面向视障人群步行辅助的多模态多视角数据集（CARLA 仿真器生成 62K 帧/559K 全景图 + 69K VQA 对），基准测试发现 SOTA VLM 在风险评估和导航地标识别等安全关键任务上表现不足（最优仅 55.21%）…
+  [NeurIPS 2025][多模态VLM][视障辅助] mmWalk 构建了首个面向视障人群步行辅助的多模态多视角数据集（CARLA 仿真器生成 62K 帧/559K 全景图 + 69K VQA 对），基准测试发现 SOTA VLM 在风险评估和导航地标识别等安全关键任务上表现不足（最优仅 55.21%），微调后在真实数据集上泛化提升 16.7%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

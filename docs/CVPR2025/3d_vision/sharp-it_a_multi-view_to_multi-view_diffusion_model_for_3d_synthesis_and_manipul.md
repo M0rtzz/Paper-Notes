@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sharp-It: A Multi-view to Multi-view Diffusion Model for 3D Synthesis and Manipulation
 description: >-
-  [CVPR 2025][3D视觉][3D增强] 提出Sharp-It，一个多视角到多视角的扩散模型，将Shap-E等3D生成模型输出的低质量物体通过2D扩散增强为高质量多视角图像，FID降至6.60且支持外观编辑，仅需10秒。
+  [CVPR 2025][3D视觉][3D增强] 提出Sharp-It，一个多视角到多视角的扩散模型，将Shap-E等3D生成模型输出的低质量物体通过2D扩散增强为高质量多视角图像，FID降至6.60且支持外观编辑，仅需10秒。 3D内容生成存在质量-可控性的trade-off： - 多视角重建方法：先生成多视角图像再重建3D…
 tags:
   - "CVPR 2025"
   - "3D视觉"

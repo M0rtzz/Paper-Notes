@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Markovian Transformers for Informative Language Modeling
 description: >-
-  [ICLR 2026][优化/理论][马尔可夫约束] 提出马尔可夫语言模型(MLM)框架，通过**结构约束**（答案预测时移除原始问题，仅从CoT推导）强制CoT成为因果必要的推理瓶颈——类似自编码器的窄潜层，配合GRPO风格策略梯度训练，在GSM8K上从19.6%提升到57.1%…
+  [ICLR 2026][优化/理论][马尔可夫约束] 提出马尔可夫语言模型(MLM)框架，通过**结构约束**（答案预测时移除原始问题，仅从CoT推导）强制CoT成为因果必要的推理瓶颈——类似自编码器的窄潜层，配合GRPO风格策略梯度训练，在GSM8K上从19.6%提升到57.1%，且学到的CoT可跨模型架构（Llama→Mistral/Phi/GPT-2）迁移，证明CoT编码了自然语言推理而非隐写术。
 tags:
   - "ICLR 2026"
   - "优化/理论"

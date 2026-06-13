@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Rethinking Nighttime Image Deraining via Learnable Color Space Transformation
 description: >-
-  [NEURIPS2025][图像恢复][夜间图像去雨] 提出CST-Net用于夜间图像去雨：基于夜间雨在Y通道（亮度）上比RGB更显著的观察，设计可学习颜色空间转换器(CSC)在YCbCr空间去雨，配合隐式光照引导模块(IIG)和新构建的光照感知合成数据集HQ-NightRain，在多个基准上达到SOTA。
+  [NeurIPS 2025][图像恢复][夜间图像去雨] 基于"夜间雨在YCbCr的Y通道（亮度）差异远大于RGB"的统计发现，提出可学习颜色空间转换器(CSC)在Y通道做去雨、隐式光照引导(IIG)编码夜间不均匀光照、以及光照感知的高质量数据集HQ-NightRain，三管齐下显著提升夜间去雨效果。
 tags:
-  - "NEURIPS2025"
+  - "NeurIPS 2025"
   - "图像恢复"
   - "夜间图像去雨"
-  - "颜色空间变换"
+  - "可学习颜色空间变换"
   - "YCbCr"
-  - "光照引导"
-  - "数据集"
+  - "隐式光照引导"
+  - "HQ-NightRain数据集"
 ---
 
 # Rethinking Nighttime Image Deraining via Learnable Color Space Transformation
@@ -195,3 +195,19 @@ tags:
 ---
 
 <!-- 由 src/gen_stubs.py 自动生成 -->
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] HVI: A New Color Space for Low-light Image Enhancement](../../CVPR2025/image_restoration/hvi_a_new_color_space_for_low-light_image_enhancement.md)
+- [\[ICCV 2025\] PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining](../../ICCV2025/image_restoration/pre-mamba_a_4d_state_space_model_for_ultra-high-frequent_event_camera_deraining.md)
+- [\[NeurIPS 2025\] Rethinking Circuit Completeness in Language Models: AND, OR, and ADDER Gates](rethinking_circuit_completeness_in_language_models_and_or_and_adder_gates.md)
+- [\[NeurIPS 2025\] Improving Diffusion-based Inverse Algorithms under Few-Step Constraint via Learnable Linear Extrapolation](improving_diffusion-based_inverse_algorithms_under_few-step_constraint_via_learn.md)
+- [\[NeurIPS 2025\] Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement](latent_harmony_synergistic_unified_uhd_image_restoration_with_pre-trained_diffus.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Analysis of Concept Bottleneck Models: Measuring, Understanding, and Mitigating the Impact of Noisy Annotations
 description: >-
-  [NeurIPS 2025][可解释性][概念瓶颈模型] 本文首次系统研究了标注噪声对概念瓶颈模型(CBM)的影响，发现约23%的"易感概念"驱动了大部分性能退化，并提出训练阶段使用SAM + 推理阶段基于不确定性干预的两阶段缓解策略来恢复模型鲁棒性。
+  [NeurIPS 2025][可解释性][概念瓶颈模型] 本文首次系统研究了标注噪声对概念瓶颈模型(CBM)的影响，发现约23%的"易感概念"驱动了大部分性能退化，并提出训练阶段使用SAM + 推理阶段基于不确定性干预的两阶段缓解策略来恢复模型鲁棒性。 领域现状：概念瓶颈模型(CBM)通过将预测分解为人类可理解的概念中间层实…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

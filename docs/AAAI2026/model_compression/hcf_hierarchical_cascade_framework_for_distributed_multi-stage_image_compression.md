@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression
 description: >-
-  [AAAI 2026][模型压缩][图像压缩] 本文提出HCF框架，通过直接在潜在空间进行跨节点变换（避免像素域重压缩）并引入策略驱动的量化控制，在分布式多级图像压缩中实现了最高12.64% BD-Rate的PSNR提升，同时节省高达97.8%的FLOPs和96.5%的GPU内存。
+  [AAAI 2026 Oral][模型压缩][图像压缩] 本文提出HCF框架，通过直接在潜在空间进行跨节点变换（避免像素域重压缩）并引入策略驱动的量化控制，在分布式多级图像压缩中实现了最高12.64% BD-Rate的PSNR提升，同时节省高达97.8%的FLOPs和96.5%的GPU内存。 领域现状 随着数字媒体消费的快速…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "模型压缩"
   - "图像压缩"
   - "分布式多级压缩"

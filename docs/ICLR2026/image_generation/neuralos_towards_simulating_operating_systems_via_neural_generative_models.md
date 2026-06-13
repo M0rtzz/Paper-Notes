@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeuralOS: Towards Simulating Operating Systems via Neural Generative Models
 description: >-
-  [ICLR 2026][图像生成][operating system simulation] 提出 NeuralOS，使用 RNN 状态追踪 + 扩散渲染器的双组件架构，直接从用户输入事件（鼠标移动/点击/键盘）预测操作系统图形界面帧序列，首次实现用神经生成模型模拟操作系统。
+  [ICLR 2026][图像生成][operating system simulation] 提出 NeuralOS，使用 RNN 状态追踪 + 扩散渲染器的双组件架构，直接从用户输入事件（鼠标移动/点击/键盘）预测操作系统图形界面帧序列，首次实现用神经生成模型模拟操作系统。 领域现状：生成模型已从文本生成、图像生成发展到视…
 tags:
   - "ICLR 2026"
   - "图像生成"

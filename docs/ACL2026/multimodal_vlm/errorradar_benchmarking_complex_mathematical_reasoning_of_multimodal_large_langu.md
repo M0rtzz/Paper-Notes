@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ErrorRadar: Benchmarking Complex Mathematical Reasoning of Multimodal Large Language Models Via Error Detection
 description: >-
-  [ACL 2026][多模态VLM][多模态错误检测] 本文形式化定义了多模态错误检测任务，并构建了 ErrorRadar 基准——包含 2,500 道来自真实学生作答的 K-12 多模态数学题，评估 MLLM 在错误步骤识别（STEP）和错误类型分类（CATE）两个子任务上的能力…
+  [ACL 2026 Findings][多模态VLM][多模态错误检测] 本文形式化定义了多模态错误检测任务，并构建了 ErrorRadar 基准——包含 2,500 道来自真实学生作答的 K-12 多模态数学题，评估 MLLM 在错误步骤识别（STEP）和错误类型分类（CATE）两个子任务上的能力，发现最强模型 GPT-4o 仍落后人类评估约 10-15%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多模态错误检测"
   - "数学推理基准"

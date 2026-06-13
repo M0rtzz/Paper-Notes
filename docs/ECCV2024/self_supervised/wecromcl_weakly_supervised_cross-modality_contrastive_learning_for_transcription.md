@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting
 description: >-
-  [ECCV 2024][自监督学习][文字检测] 提出 WeCromCL 框架，通过弱监督的原子级跨模态对比学习，仅利用文本转录标注（无位置标注）实现场景文字定位，将检测到的锚点作为伪标签训练单点监督文字检测器，在无边界标注的条件下达到接近全监督的性能。
+  [ECCV 2024][自监督学习][文字检测] 提出 WeCromCL 框架，通过弱监督的原子级跨模态对比学习，仅利用文本转录标注（无位置标注）实现场景文字定位，将检测到的锚点作为伪标签训练单点监督文字检测器，在无边界标注的条件下达到接近全监督的性能。 场景文字检测（Text Spotting）通常需要精确的文字边界标注（…
 tags:
   - "ECCV 2024"
   - "自监督学习"

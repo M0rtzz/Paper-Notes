@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RHO: Robust Holistic OSM-Based Metric Cross-View Geo-Localization
 description: >-
-  [CVPR 2026][遥感][Cross-View Geo-Localization] 提出首个面向恶劣天气和传感器噪声的OSM-based度量级跨视角定位基准CV-RHO（270万+ 图像），并设计双分支Pin-Pan架构RHO模型，结合全景去畸变（SUM）和位置-朝向融合（POF）机制…
+  [CVPR 2026][遥感][Cross-View Geo-Localization] 提出首个面向恶劣天气和传感器噪声的OSM-based度量级跨视角定位基准CV-RHO（270万+ 图像），并设计双分支Pin-Pan架构RHO模型，结合全景去畸变（SUM）和位置-朝向融合（POF）机制，在多种退化条件下将定位性能提升高达20%。
 tags:
   - "CVPR 2026"
   - "遥感"

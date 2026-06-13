@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Power Ensemble Aggregation for Improved Extreme Event AI Prediction
 description: >-
-  [NeurIPS 2025][地球科学][极端事件预测] 提出基于幂均值的自适应集成聚合方法，通过对生成式天气预测模型的集成成员得分施加非线性聚合（幂指数$p>1$），显著提升极端高温事件的分类性能，尤其在高分位数阈值下效果更佳。
+  [NeurIPS 2025][地球科学][极端事件预测] 提出基于幂均值的自适应集成聚合方法，通过对生成式天气预测模型的集成成员得分施加非线性聚合（幂指数$p1$），显著提升极端高温事件的分类性能，尤其在高分位数阈值下效果更佳。 深度学习天气预报模型（如GraphCast、PanguWeather）在常规天气预测上已超越物理…
 tags:
   - "NeurIPS 2025"
   - "地球科学"

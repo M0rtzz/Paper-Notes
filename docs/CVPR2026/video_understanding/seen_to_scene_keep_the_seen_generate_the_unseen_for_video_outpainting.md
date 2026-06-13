@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seen-to-Scene: Keep the Seen, Generate the Unseen for Video Outpainting
 description: >-
-  [CVPR 2026][视频理解][video outpainting] 提出 Seen-to-Scene，统一传播式和生成式范式的视频外推框架，通过参考帧引导的潜空间传播与视频扩散模型结合，在零样本推理中实现了超越需要输入特定适配的先进方法的时空一致性和视觉保真度。
+  [CVPR 2026][视频理解][video outpainting] 提出 Seen-to-Scene，统一传播式和生成式范式的视频外推框架，通过参考帧引导的潜空间传播与视频扩散模型结合，在零样本推理中实现了超越需要输入特定适配的先进方法的时空一致性和视觉保真度。 视频外推需在保持空间保真度和时间一致性的同时扩展帧边界外…
 tags:
   - "CVPR 2026"
   - "视频理解"

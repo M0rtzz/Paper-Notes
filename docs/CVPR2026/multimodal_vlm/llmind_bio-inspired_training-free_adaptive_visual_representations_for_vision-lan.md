@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMind: Bio-inspired Training-free Adaptive Visual Representations for Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][仿生视觉采样] 受人眼中央凹编码和皮层放大机制启发，提出无需训练的自适应采样框架 LLMind，通过 Möbius 变换实现非均匀像素分配，并利用闭环语义反馈在测试时优化采样参数，在仅使用 1%-5% 像素的紧张预算下大幅超越均匀采样。
+  [CVPR 2026][多模态VLM][仿生视觉采样] 受人眼中央凹编码和皮层放大机制启发，提出无需训练的自适应采样框架 LLMind，通过 Möbius 变换实现非均匀像素分配，并利用闭环语义反馈在测试时优化采样参数，在仅使用 1%-5% 像素的紧张预算下大幅超越均匀采样。 领域现状：当前 VLM（如 Qwen、LLaVA…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

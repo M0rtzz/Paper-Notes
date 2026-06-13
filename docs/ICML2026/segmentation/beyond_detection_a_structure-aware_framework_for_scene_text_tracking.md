@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Detection: A Structure-Aware Framework for Scene Text Tracking
 description: >-
-  [ICML2026][语义分割][场景文字跟踪] 提出 SymTrack，一个无需检测的双分支场景文字跟踪框架，通过预测性 Token 校正（PTR）解决透视畸变导致的特征瓶颈，跨专家校准（CEC）消除文字实例间的高视觉歧义，自适应推理引擎（AIE）稳定细粒度定位…
+  [ICML2026][语义分割][场景文字跟踪] 提出 SymTrack，一个无需检测的双分支场景文字跟踪框架，通过预测性 Token 校正（PTR）解决透视畸变导致的特征瓶颈，跨专家校准（CEC）消除文字实例间的高视觉歧义，自适应推理引擎（AIE）稳定细粒度定位，在三个基准上大幅刷新 SOTA（最高 +12.32% AUC）。
 tags:
   - "ICML2026"
   - "语义分割"

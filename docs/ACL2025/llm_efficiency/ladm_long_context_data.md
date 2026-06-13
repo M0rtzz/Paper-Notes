@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LADM: Long-context Training Data Selection with Attention-based Dependency Measurement for LLMs
 description: >-
-  [ACL 2025][LLM效率][长上下文建模] LADM提出了一种基于注意力机制的长上下文训练数据选择框架，通过训练一个小型Long Attention Calculator来计算span间的注意力依赖分数（PFS → AFS → CDS），从大规模语料中高效筛选具有强长程依赖的高质量样本用于持续预训练…
+  [ACL 2025][LLM效率][长上下文建模] LADM提出了一种基于注意力机制的长上下文训练数据选择框架，通过训练一个小型Long Attention Calculator来计算span间的注意力依赖分数（PFS → AFS → CDS），从大规模语料中高效筛选具有强长程依赖的高质量样本用于持续预训练，仅用1B tokens即可显著提升LLM的长上下文能力。
 tags:
   - "ACL 2025"
   - "LLM效率"

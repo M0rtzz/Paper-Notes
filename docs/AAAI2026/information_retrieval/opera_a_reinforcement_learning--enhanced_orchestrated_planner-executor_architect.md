@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OPERA: A Reinforcement Learning--Enhanced Orchestrated Planner-Executor Architecture for Reasoning-Oriented Multi-Hop Retrieval
 description: >-
-  [AAAI2026][信息检索/RAG][RAG] 提出 OPERA 框架，通过 Goal Planning Module 和 Reason-Execute Module 的分层架构，结合专为多 agent 设计的 MAPGRPO 训练算法…
+  [AAAI2026][信息检索/RAG][RAG] 提出 OPERA 框架，通过 Goal Planning Module 和 Reason-Execute Module 的分层架构，结合专为多 agent 设计的 MAPGRPO 训练算法，大幅提升 reasoning-oriented multi-hop retrieval 性能。
 tags:
   - "AAAI2026"
   - "信息检索/RAG"

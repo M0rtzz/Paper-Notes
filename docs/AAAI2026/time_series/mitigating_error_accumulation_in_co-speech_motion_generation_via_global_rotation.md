@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Error Accumulation in Co-Speech Motion Generation via Global Rotation Diffusion and Multi-Level Constraints
 description: >-
-  [AAAI 2026][时间序列][语音驱动动作生成] 提出 GlobalDiff 框架，首次在全局关节旋转空间中进行扩散生成，从根本上消除层次化前向运动学中的误差累积问题，并通过关节-骨骼-运动三层约束方案弥补全局表示丢失的结构先验，在多说话人语音驱动动作生成基准上取得 SOTA…
+  [AAAI 2026][时间序列][语音驱动动作生成] 提出 GlobalDiff 框架，首次在全局关节旋转空间中进行扩散生成，从根本上消除层次化前向运动学中的误差累积问题，并通过关节-骨骼-运动三层约束方案弥补全局表示丢失的结构先验，在多说话人语音驱动动作生成基准上取得 SOTA，FGD 较此前最佳方法改进 46%。
 tags:
   - "AAAI 2026"
   - "时间序列"

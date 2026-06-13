@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProbPose: A Probabilistic Approach to 2D Human Pose Estimation
 description: >-
-  [CVPR 2025][目标检测][人体姿态估计] ProbPose 提出用标定的概率图（probability map）替代传统热力图进行2D人体关键点定位，引入存在概率（presence probability）显式建模关键点是否在激活窗口内，并通过裁剪数据增强和 OKS 损失的期望风险最小化…
+  [CVPR 2025][目标检测][人体姿态估计] ProbPose 提出用标定的概率图（probability map）替代传统热力图进行2D人体关键点定位，引入存在概率（presence probability）显式建模关键点是否在激活窗口内，并通过裁剪数据增强和 OKS 损失的期望风险最小化，显著改善了图像外关键点的定位能力和模型的概率标定质量。
 tags:
   - "CVPR 2025"
   - "目标检测"

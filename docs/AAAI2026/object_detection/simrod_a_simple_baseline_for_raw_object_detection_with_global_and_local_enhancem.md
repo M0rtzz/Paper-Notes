@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimROD: A Simple Baseline for Raw Object Detection with Global and Local Enhancements
 description: >-
-  [AAAI 2026][目标检测][RAW图像] 提出SimROD，一种极其轻量（仅0.003M参数）的RAW图像目标检测方法，通过全局Gamma增强（4个可学习参数）和绿色通道引导的局部增强，在多个RAW检测基准上超越了复杂的SOTA方法。
+  [AAAI 2026][目标检测][RAW图像] 提出SimROD，一种极其轻量（仅0.003M参数）的RAW图像目标检测方法，通过全局Gamma增强（4个可学习参数）和绿色通道引导的局部增强，在多个RAW检测基准上超越了复杂的SOTA方法。 为什么要做RAW目标检测？ 传统视觉模型都是基于sRGB图像设计的…
 tags:
   - "AAAI 2026"
   - "目标检测"

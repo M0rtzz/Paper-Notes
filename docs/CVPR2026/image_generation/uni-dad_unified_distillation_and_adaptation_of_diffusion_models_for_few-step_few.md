@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation
 description: >-
-  [CVPR 2026][图像生成][扩散模型蒸馏] 提出 Uni-DAD，首个将扩散模型蒸馏（distillation）与域适应（adaptation）统一为单阶段流程的方法，通过双域 DMD 损失和多头 GAN 损失，在仅 1–4 步采样下实现少样本域的高质量多样生成。
+  [CVPR 2026][图像生成][扩散模型蒸馏] 提出 Uni-DAD，首个将扩散模型蒸馏（distillation）与域适应（adaptation）统一为单阶段流程的方法，通过双域 DMD 损失和多头 GAN 损失，在仅 1–4 步采样下实现少样本域的高质量多样生成。 扩散模型（DMs）在图像生成中表现卓越…
 tags:
   - "CVPR 2026"
   - "图像生成"

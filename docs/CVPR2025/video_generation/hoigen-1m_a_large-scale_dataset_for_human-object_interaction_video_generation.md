@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation
 description: >-
-  [CVPR 2025][视频生成][人物交互] HOIGen-1M 是首个面向人物交互 (HOI) 视频生成的百万级高质量数据集，通过高效数据筛选管线和 Mixture-of-Multimodal-Experts (MoME) 字幕策略解决了 HOI 视频数据稀缺和描述幻觉问题…
+  [CVPR 2025][视频生成][人物交互] HOIGen-1M 是首个面向人物交互 (HOI) 视频生成的百万级高质量数据集，通过高效数据筛选管线和 Mixture-of-Multimodal-Experts (MoME) 字幕策略解决了 HOI 视频数据稀缺和描述幻觉问题，并提出 CoarseHOIScore/FineHOIScore 两个评估指标来量化生成视频中交互的质量。
 tags:
   - "CVPR 2025"
   - "视频生成"

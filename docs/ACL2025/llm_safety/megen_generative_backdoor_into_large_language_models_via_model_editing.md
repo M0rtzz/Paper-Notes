@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEGen: Generative Backdoor into Large Language Models via Model Editing
 description: >-
-  [ACL 2025][LLM安全][backdoor attack] 提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。
+  [ACL 2025][LLM安全][backdoor attack] 提出 MEGen，一种基于模型编辑的生成式后门攻击方法，能够仅通过少量样本修改少量局部参数，在 LLM 中注入生成式后门，使模型在触发时自由输出预设的危险内容。 1. 领域现状 LLM 在各种下游任务中展现了强大能力，但安全性风险不容忽视…
 tags:
   - "ACL 2025"
   - "LLM安全"

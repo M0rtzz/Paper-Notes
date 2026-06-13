@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TCAP: Tri-Component Attention Profiling for Unsupervised Backdoor Detection in MLLM Fine-Tuning
 description: >-
-  [ICML 2026][LLM安全][后门防御] 针对 Fine-Tuning-as-a-Service 场景下多模态大模型被投毒微调的问题，本文发现"被触发样本会把首个生成 token 的注意力在 system / vision / text 三大组件之间畸形地极化"这一通用指纹…
+  [ICML 2026][LLM安全][后门防御] 针对 Fine-Tuning-as-a-Service 场景下多模态大模型被投毒微调的问题，本文发现"被触发样本会把首个生成 token 的注意力在 system / vision / text 三大组件之间畸形地极化"这一通用指纹，并据此提出无监督的 TCAP 框架：用 GMM 在 system 注意力上挑出 trigger-responsive 注意力头，再用 EM-based Dawid–Skene 投票聚合，跨 5 种触发模式、3 种 MLLM、5 个数据集都能把 ASR 从 90%+ 压到 ~0% 而几乎不损失 Clean Performance。
 tags:
   - "ICML 2026"
   - "LLM安全"

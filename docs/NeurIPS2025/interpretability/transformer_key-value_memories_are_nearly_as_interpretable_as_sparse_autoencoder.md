@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders
 description: >-
-  [NeurIPS 2025][可解释性][稀疏自编码器] 系统比较了Transformer前馈层（FF）的键值记忆特征与稀疏自编码器（SAE）学到的特征的可解释性，发现两者在现有评测指标上表现相当，FF-KV在某些方面甚至更优，质疑了SAE作为特征发现工具的必要性。
+  [NeurIPS 2025][可解释性][稀疏自编码器] 系统比较了Transformer前馈层（FF）的键值记忆特征与稀疏自编码器（SAE）学到的特征的可解释性，发现两者在现有评测指标上表现相当，FF-KV在某些方面甚至更优，质疑了SAE作为特征发现工具的必要性。 大语言模型（LLM）的可解释性研究近年来经历了从"自顶向下…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Feature-aware Modulation for Learning from Temporal Tabular Data
 description: >-
-  [NeurIPS 2025][信号/通信][时间分布漂移] 本文针对时间表格数据中的分布漂移问题，提出特征感知时间调制机制，通过基于时间上下文的可学习变换来动态调整特征的偏移（$\beta$）、缩放（$\gamma$）和偏度（$\lambda$），实现跨时间的特征语义对齐…
+  [NeurIPS 2025][信号/通信][temporal shift] 论文认为时间表格学习真正难的不是“再加一个时间 embedding”这么简单，而是很多特征的语义会随时间漂移，因此提出 feature-aware modulation，通过时间上下文动态生成每个特征的偏移、缩放与非线性形状参数，把跨时间的语义重新对齐，最终在 TabReD 上让深度模型第一次在平均排名上稳定压过 GBDT。
 tags:
   - "NeurIPS 2025"
   - "信号/通信"
-  - "时间分布漂移"
-  - "特征调制"
-  - "Yeo-Johnson变换"
+  - "temporal shift"
+  - "feature modulation"
   - "概念漂移"
-  - "表格数据"
+  - "Yeo-Johnson"
+  - "表格深度学习"
 ---
 
 # Feature-aware Modulation for Learning from Temporal Tabular Data
@@ -269,3 +269,19 @@ tags:
   - 概念漂移
   - 表格数据
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes](../../AAAI2026/signal_comm/task_aware_modulation_using_representation_learning_for_upsaling_of_terrestrial_.md)
+- [\[NeurIPS 2025\] Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning](contrastive_consolidation_of_top-down_modulations_achieves_sparsely_supervised_c.md)
+- [\[ICCV 2025\] Boosting Multimodal Learning via Disentangled Gradient Learning](../../ICCV2025/signal_comm/boosting_multimodal_learning_via_disentangled_gradient_learning.md)
+- [\[CVPR 2025\] Neural Video Compression with Context Modulation](../../CVPR2025/signal_comm/neural_video_compression_with_context_modulation.md)
+- [\[ICML 2026\] Joint Model and Data Sparsification via the Marginal Likelihood](../../ICML2026/signal_comm/joint_model_and_data_sparsification_via_the_marginal_likelihood.md)
+
+</div>
+
+<!-- RELATED:END -->

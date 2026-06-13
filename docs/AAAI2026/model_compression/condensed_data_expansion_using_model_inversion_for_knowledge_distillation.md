@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Condensed Data Expansion Using Model Inversion for Knowledge Distillation
 description: >-
-  [AAAI 2026][模型压缩][知识蒸馏] 提出用浓缩数据集作为原型指导模型反演（MI）过程，通过特征对齐判别器使生成的合成数据与浓缩样本分布一致，从而扩展浓缩数据集用于知识蒸馏，在 CIFAR/ImageNet 上比标准 MI 蒸馏提升高达 11.4%。
+  [AAAI 2026][模型压缩][知识蒸馏] 提出用浓缩数据集作为原型指导模型反演（MI）过程，通过特征对齐判别器使生成的合成数据与浓缩样本分布一致，从而扩展浓缩数据集用于知识蒸馏，在 CIFAR/ImageNet 上比标准 MI 蒸馏提升高达 11.4%。 领域现状 领域现状：领域现状：数据集浓缩可以将大规模数据压缩为少…
 tags:
   - "AAAI 2026"
   - "模型压缩"

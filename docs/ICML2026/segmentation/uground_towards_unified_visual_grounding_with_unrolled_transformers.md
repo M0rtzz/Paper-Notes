@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UGround: Towards Unified Visual Grounding with Unrolled Transformers
 description: >-
-  [ICML 2026][语义分割][视觉定位] UGround 把 LMM-based 视觉定位从"用最后一层 $\langle\text{SEG}\rangle$ token 当 prompt"的范式翻转为"用动态选中的中间层相似度图当 prompt"…
+  [ICML 2026][语义分割][视觉定位] UGround 把 LMM-based 视觉定位从"用最后一层 $\langle\text{SEG}\rangle$ token 当 prompt"的范式翻转为"用动态选中的中间层相似度图当 prompt"，通过强化学习策略 SSC 让 $\langle\text{SEG}\rangle$ 滑过所有 transformer 层、把相似度图同时当作 SAM 的软 logit mask 和反向监督信号，首次在单一框架内统一了 RES / RS / FP-RES / gRES / Multi-RS 五种视觉定位任务，并在 ReasonSeg test 上 cIoU +9.0%、gRefCOC…
 tags:
   - "ICML 2026"
   - "语义分割"

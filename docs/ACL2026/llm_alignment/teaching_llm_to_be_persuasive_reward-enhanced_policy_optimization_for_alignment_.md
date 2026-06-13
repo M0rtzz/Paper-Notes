@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaching LLM to be Persuasive: Reward-Enhanced Policy Optimization for Alignment from Heterogeneous Rewards
 description: >-
-  [ACL2026][LLM对齐][说服式对话] 这篇论文面向在线旅游平台的酒店降价谈判场景，提出 REPO 用偏好奖励模型、LLM 评审和规则函数三类奖励共同训练 Qwen3-32B，使模型在专家评价和 9653 场真实 A/B 对话中同时提升说服力、SOP 合规和坏例修复质量。
+  [ACL2026][LLM对齐][说服式对话] 这篇论文面向在线旅游平台的酒店降价谈判场景，提出 REPO 用偏好奖励模型、LLM 评审和规则函数三类奖励共同训练 Qwen3-32B，使模型在专家评价和 9653 场真实 A/B 对话中同时提升说服力、SOP 合规和坏例修复质量。 领域现状：任务型对话系统已经从传统意图识别和…
 tags:
   - "ACL2026"
   - "LLM对齐"

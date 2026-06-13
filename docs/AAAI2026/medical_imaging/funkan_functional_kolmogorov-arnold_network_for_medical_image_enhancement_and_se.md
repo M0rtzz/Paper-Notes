@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation
 description: >-
-  [AAAI 2026][医学图像][Kolmogorov-Arnold Network] 本文将 Kolmogorov-Arnold 表示定理从有限维标量空间推广到函数空间（Hilbert 空间），提出 FunKAN 框架，通过在 Hermite 基函数上进行 Fourier 展开来学习内函数…
+  [AAAI 2026][医学图像][Kolmogorov-Arnold Network] 本文将 Kolmogorov-Arnold 表示定理从有限维标量空间推广到函数空间（Hilbert 空间），提出 FunKAN 框架，通过在 Hermite 基函数上进行 Fourier 展开来学习内函数，保留了图像数据的空间结构，在 MRI 增强和三个医学分割任务上均超越已有 KAN 变体。
 tags:
   - "AAAI 2026"
   - "医学图像"

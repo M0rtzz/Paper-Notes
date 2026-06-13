@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Understanding the Dark Side of LLMs' Intrinsic Self-Correction
 description: >-
-  [ACL 2025][LLM/NLP][内在自我纠错] 本文系统研究了 LLM 内在自我纠错（intrinsic self-correction）的失败现象，提出三种可解释性方法揭示失败原因——简单任务中的答案动摇和提示偏差、复杂任务中的类人认知偏差，并提出问题重复和少样本 SFT 两种简单有效的缓解策略。
+  [ACL 2025][LLM 其他][内在自我纠错] 本文系统研究了 LLM 内在自我纠错（intrinsic self-correction）的失败现象，提出三种可解释性方法揭示失败原因——简单任务中的答案动摇和提示偏差、复杂任务中的类人认知偏差，并提出问题重复和少样本 SFT 两种简单有效的缓解策略。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "内在自我纠错"
   - "答案动摇"
   - "提示偏差"

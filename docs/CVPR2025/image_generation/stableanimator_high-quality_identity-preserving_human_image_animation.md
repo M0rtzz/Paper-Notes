@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StableAnimator: High-Quality Identity-Preserving Human Image Animation
 description: >-
-  [CVPR 2025][图像生成][人物图像动画] StableAnimator 提出首个端到端的身份保持视频扩散框架，通过全局内容感知 Face Encoder 和分布感知 ID Adapter 在训练中维护身份一致性，并在推理时利用 Hamilton-Jacobi-Bellman（HJB）方程优化面部质量…
+  [CVPR 2025][图像生成][人物图像动画] StableAnimator 提出首个端到端的身份保持视频扩散框架，通过全局内容感知 Face Encoder 和分布感知 ID Adapter 在训练中维护身份一致性，并在推理时利用 Hamilton-Jacobi-Bellman（HJB）方程优化面部质量，无需任何后处理工具即可生成高保真的人物动画视频。
 tags:
   - "CVPR 2025"
   - "图像生成"

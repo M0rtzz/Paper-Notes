@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flow-Equivariant World Models: Memory for Partially Observed Dynamic Environments
 description: >-
-  [ICML 2026][强化学习][世界模型] FloWM 通过在隐空间中利用**时间参数化对称性**（流等变）维持结构化动态记忆——解决部分可观测环境下对象越界后失踪的问题，使长视野预测精度远超扩散和循环基线（3D Block World 210 步预测 SSIM 0.9525 vs DFoT 0.8885…
+  [ICML 2026][强化学习][世界模型] FloWM 通过在隐空间中利用**时间参数化对称性**（流等变）维持结构化动态记忆——解决部分可观测环境下对象越界后失踪的问题，使长视野预测精度远超扩散和循环基线（3D Block World 210 步预测 SSIM 0.9525 vs DFoT 0.8885）。
 tags:
   - "ICML 2026"
   - "强化学习"

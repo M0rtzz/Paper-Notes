@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bi-Level Decision-Focused Causal Learning for Large-Scale Marketing Optimization
 description: >-
-  [NeurIPS 2025][因果推理][decision-focused learning] 提出 Bi-DFCL，通过双层优化框架联合利用观测数据和 RCT 实验数据来训练营销资源分配模型：上层用 RCT 数据的无偏决策损失端到端训练 Bridge Network 来动态纠正下层在观测数据上的偏差…
+  [NeurIPS 2025][因果推理][decision-focused learning] 提出 Bi-DFCL，通过双层优化框架联合利用观测数据和 RCT 实验数据来训练营销资源分配模型：上层用 RCT 数据的无偏决策损失端到端训练 Bridge Network 来动态纠正下层在观测数据上的偏差，同时设计了基于原始问题的可微代理决策损失（PPL/PIFD）和隐式微分算法，解决了传统两阶段方法的预测-决策不一致和偏差-方差困境。已在美团大规模在线部署。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InterMimic: Towards Universal Whole-Body Control for Physics-Based Human-Object Interactions
 description: >-
-  [CVPR 2025][图像生成][物理仿真] InterMimic 提出了一个课程式教师-学生蒸馏框架，首次实现了单策略从大规模不完美 MoCap 数据中学习多样化的全身物理人物交互技能，通过教师策略先"完善"每个动作子集，再蒸馏到学生策略，并用 RL 微调超越简单模仿…
+  [CVPR 2025][图像生成][物理仿真] InterMimic 提出了一个课程式教师-学生蒸馏框架，首次实现了单策略从大规模不完美 MoCap 数据中学习多样化的全身物理人物交互技能，通过教师策略先"完善"每个动作子集，再蒸馏到学生策略，并用 RL 微调超越简单模仿，最终支持零样本泛化和与运动生成器的无缝集成。
 tags:
   - "CVPR 2025"
   - "图像生成"

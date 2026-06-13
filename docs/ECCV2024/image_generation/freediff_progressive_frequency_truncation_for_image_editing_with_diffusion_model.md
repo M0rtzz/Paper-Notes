@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeDiff: Progressive Frequency Truncation for Image Editing with Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][扩散模型] 从频率视角重新审视扩散模型的图像编辑过程，发现去噪网络优先恢复低频分量导致编辑引导与目标区域的misalignment，提出渐进式频率截断（FreeDiff）方法在频率空间精炼引导信号，实现免调优的通用图像编辑。
+  [ECCV 2024][图像生成][扩散模型] 从频率视角重新审视扩散模型的图像编辑过程，发现去噪网络优先恢复低频分量导致编辑引导与目标区域的misalignment，提出渐进式频率截断（FreeDiff）方法在频率空间精炼引导信号，实现免调优的通用图像编辑。 文本驱动图像编辑是计算机视觉的基础，大规模 T2I 模型虽生成能…
 tags:
   - "ECCV 2024"
   - "图像生成"

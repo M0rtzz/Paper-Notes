@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spike Imaging Velocimetry: Dense Motion Estimation of Fluids Using Spike Cameras
 description: >-
-  [AAAI 2026][粒子图像测速] 提出 Spike Imaging Velocimetry（SIV），首次将**脉冲相机**（20000Hz 超高时间分辨率）应用于流体测速，设计细节保持层次变换（DPHT）、图编码器（GE）和多尺度速度精炼（MSVR）三个针对流体特性的模块，并构建了 PSSD 数据集…
+  [AAAI 2026][粒子图像测速] 提出 Spike Imaging Velocimetry（SIV），首次将**脉冲相机**（20000Hz 超高时间分辨率）应用于流体测速，设计细节保持层次变换（DPHT）、图编码器（GE）和多尺度速度精炼（MSVR）三个针对流体特性的模块，并构建了 PSSD 数据集，在稳态湍流、高速流和 HDR 场景上全面超越现有基线。
 tags:
   - "AAAI 2026"
   - "粒子图像测速"

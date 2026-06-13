@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Collaborative Multi-Agent Scripts Generation for Enhancing Imperfect-Information Reasoning in Murder Mystery Games
 description: >-
-  [ACL 2026][多智能体][不完全信息推理] 提出一个协作式多智能体框架用于自动生成高质量剧本杀游戏脚本和训练数据，通过两阶段训练策略（CoT 微调 + GRPO 强化学习配合 ScoreAgent 奖励塑形）增强 VLM 在不完全信息下的多跳推理能力…
+  [ACL 2026 Findings][多智能体][不完全信息推理] 提出一个协作式多智能体框架用于自动生成高质量剧本杀游戏脚本和训练数据，通过两阶段训练策略（CoT 微调 + GRPO 强化学习配合 ScoreAgent 奖励塑形）增强 VLM 在不完全信息下的多跳推理能力，在 WhodunitBench 上显著提升 VLM 的叙事推理、事实提取和欺骗抵御能力。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "不完全信息推理"
   - "剧本杀"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Robotic Policy Learning via Latent Space Backward Planning
 description: >-
-  [ICML 2025][机器人][机器人规划] 提出潜在空间反向规划（LBP），从最终目标出发递归预测越来越接近当前状态的中间子目标，在保持任务对齐的同时大幅提升规划效率，在 LIBERO-LONG 仿真和真实机器人长时域任务上达到 SOTA。
+  [ICML 2025][机器人][机器人规划] 提出潜在空间反向规划（LBP），从最终目标出发递归预测越来越接近当前状态的中间子目标，在保持任务对齐的同时大幅提升规划效率，在 LIBERO-LONG 仿真和真实机器人长时域任务上达到 SOTA。 机器人规划面临一个根本性的"三难困境"（trilemma）：效率、精度、充分的未…
 tags:
   - "ICML 2025"
   - "机器人"

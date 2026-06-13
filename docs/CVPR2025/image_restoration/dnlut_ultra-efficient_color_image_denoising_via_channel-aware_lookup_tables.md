@@ -2,15 +2,15 @@
 title: >-
   [论文解读] DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables
 description: >-
-  [CVPR 2025][图像恢复][查找表去噪] 提出 DnLUT，通过成对通道混合器（PCM，RG/GB/BR 配对的 4D LUT 捕获通道间相关性）和无重叠 L 形卷积核（将 4D LUT 降为 3D，存储减少 17×），将 CNN 去噪器转化为 500KB 的查找表…
+  [CVPR 2025][图像恢复][查找表] 提出基于查找表(LUT)的超高效彩色图像去噪框架 DnLUT，通过 Pairwise Channel Mixer (PCM) 捕获通道间相关性和 L 形卷积核扩展感受野，仅需 500KB 存储和 DnCNN 0.1% 的能耗即可实现 SOTA 的 LUT 去噪性能。
 tags:
   - "CVPR 2025"
   - "图像恢复"
-  - "查找表去噪"
-  - "边缘部署"
-  - "通道混合"
-  - "L形卷积"
-  - "超低功耗"
+  - "查找表"
+  - "彩色图像去噪"
+  - "边缘设备部署"
+  - "通道相关性"
+  - "轻量化"
 ---
 
 # DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables
@@ -129,3 +129,19 @@ $$
 ## 评分
 
 ⭐⭐⭐⭐ — 在 LUT 去噪领域做出了很有意义的贡献，PCM 和 L 形核的设计都颇具巧思。虽然与 DNN 方法差距仍大，但在边缘设备部署场景下具有极强的实用价值。方法清晰、实验充分、即插即用性强。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICCV 2025\] Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables](../../ICCV2025/image_restoration/lightweight_and_fast_real-time_image_enhancement_via_decomposition_of_the_spatia.md)
+- [\[CVPR 2025\] HVI: A New Color Space for Low-light Image Enhancement](hvi_a_new_color_space_for_low-light_image_enhancement.md)
+- [\[CVPR 2025\] Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)
+- [\[CVPR 2025\] Degradation-Aware Feature Perturbation for All-in-One Image Restoration](degradation-aware_feature_perturbation_for_all-in-one_image_restoration.md)
+- [\[CVPR 2025\] Rotation-Equivariant Self-Supervised Method in Image Denoising](rotation-equivariant_self-supervised_method_in_image_denoising.md)
+
+</div>
+
+<!-- RELATED:END -->

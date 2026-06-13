@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HUME: Measuring the Human-Model Performance Gap in Text Embedding Tasks
 description: >-
-  [ICLR 2026][信息检索/RAG][text embedding] 提出 HUME 人类评估框架，在 MTEB 的 16 个数据集（重排序/分类/聚类/STS）上系统测量人类表现，发现人类总体排名第 4（77.6 vs 模型最佳 80.1），揭示模型"超人"表现多出现在人类一致性最低的任务上…
+  [ICLR 2026][信息检索/RAG][text embedding] 提出 HUME 人类评估框架，在 MTEB 的 16 个数据集（重排序/分类/聚类/STS）上系统测量人类表现，发现人类总体排名第 4（77.6 vs 模型最佳 80.1），揭示模型"超人"表现多出现在人类一致性最低的任务上，并评估 9 个 LLM 作为标注代理的可行性。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

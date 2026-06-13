@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHE-LoRA: Selective Homomorphic Encryption for Federated Tuning with Heterogeneous LoRA
 description: >-
-  [ICLR 2026][LLM安全][联邦学习] 提出SHE-LoRA——将选择性同态加密(SHE)与LoRA结合用于跨设备联邦LLM微调：基于参数敏感度的列级加密子集协商 + 列交换参数混淆 + 列感知自适应聚合，在保持与非隐私基线可比的模型性能同时，通信开销减少99.71%、加密时间减少99.87%…
+  [ICLR 2026][LLM安全][联邦学习] 提出SHE-LoRA——将选择性同态加密(SHE)与LoRA结合用于跨设备联邦LLM微调：基于参数敏感度的列级加密子集协商 + 列交换参数混淆 + 列感知自适应聚合，在保持与非隐私基线可比的模型性能同时，通信开销减少99.71%、加密时间减少99.87%，完全抵御SOTA梯度反演攻击DAGER。
 tags:
   - "ICLR 2026"
   - "LLM安全"

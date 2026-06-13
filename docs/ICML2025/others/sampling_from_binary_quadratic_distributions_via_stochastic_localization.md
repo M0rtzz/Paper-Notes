@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sampling from Binary Quadratic Distributions via Stochastic Localization
 description: >-
-  [ICML2025][随机局部化] 首次将随机局部化 (Stochastic Localization, SL) 框架应用于一般二元二次分布 (BQD) 采样，证明经过足够SL迭代后后验分布几乎处处满足 Poincaré 不等式，从而保证离散 MCMC 采样器多项式时间混合…
+  [ICML2025][随机局部化] 首次将随机局部化 (Stochastic Localization, SL) 框架应用于一般二元二次分布 (BQD) 采样，证明经过足够SL迭代后后验分布几乎处处满足 Poincaré 不等式，从而保证离散 MCMC 采样器多项式时间混合，并在 QUBO 组合优化问题上验证了一致的采样效率提升。
 tags:
   - "ICML2025"
   - "随机局部化"

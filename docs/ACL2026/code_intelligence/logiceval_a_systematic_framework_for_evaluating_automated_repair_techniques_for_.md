@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LogicEval: A Systematic Framework for Evaluating Automated Repair Techniques for Logical Vulnerabilities in Real-World Software
 description: >-
-  [ACL 2026][代码智能][逻辑漏洞] 本文构建了首个针对逻辑漏洞的修复评估框架 LogicEval 和数据集 LogicDS（61 个真实逻辑漏洞 + 61 个合成 Java 样本），系统评估了传统 AVR 工具和 LLM 在修复逻辑漏洞上的能力…
+  [ACL 2026][代码智能][逻辑漏洞] 本文构建了首个针对逻辑漏洞的修复评估框架 LogicEval 和数据集 LogicDS（61 个真实逻辑漏洞 + 61 个合成 Java 样本），系统评估了传统 AVR 工具和 LLM 在修复逻辑漏洞上的能力，发现 LLM 在提供辅助信息时表现最佳但整体修复率仍然很低（61 个真实样本中仅正确修复 5 个），并识别了提示敏感性、上下文丢失和补丁定位困难等关键瓶颈。
 tags:
   - "ACL 2026"
   - "代码智能"

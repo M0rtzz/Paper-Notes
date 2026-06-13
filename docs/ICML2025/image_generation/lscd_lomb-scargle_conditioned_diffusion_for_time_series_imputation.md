@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LSCD: Lomb-Scargle Conditioned Diffusion for Time Series Imputation
 description: >-
-  [ICML 2025][图像生成][时间序列填补] 提出 LSCD，将可微的 Lomb-Scargle 周期图层集成到 score-based 扩散模型中用于时间序列填补，通过频域条件信息和频谱一致性损失，在高缺失率下同时提升时域填补精度和频域恢复一致性。
+  [ICML 2025][图像生成][时间序列填补] 提出 LSCD，将可微的 Lomb-Scargle 周期图层集成到 score-based 扩散模型中用于时间序列填补，通过频域条件信息和频谱一致性损失，在高缺失率下同时提升时域填补精度和频域恢复一致性。 领域现状：时间序列缺失值填补方法主要在时域工作（BRITS、SAIT…
 tags:
   - "ICML 2025"
   - "图像生成"

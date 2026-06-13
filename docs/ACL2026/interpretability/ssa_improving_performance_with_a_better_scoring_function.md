@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSA: Improving Performance With a Better Scoring Function
 description: >-
-  [ACL 2026][可解释性][Softmax饱和] 这篇论文指出 Softmax attention 在分布偏移下会因大幅值 token 产生近似 hardmax 的注意力塌缩，并提出 Scaled Signed Averaging 作为可训练的替代评分函数…
+  [ACL 2026][可解释性][Softmax饱和] 这篇论文指出 Softmax attention 在分布偏移下会因大幅值 token 产生近似 hardmax 的注意力塌缩，并提出 Scaled Signed Averaging 作为可训练的替代评分函数，在合成 ICL 任务、114M decoder-only 语言模型和 BabyBERTa encoder 探针上都比 Softmax 有更好的泛化表现。
 tags:
   - "ACL 2026"
   - "可解释性"

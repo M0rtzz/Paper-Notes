@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MacPrompt: Maraconic-guided Jailbreak against Text-to-Image Models
 description: >-
-  [AAAI 2026][图像生成][文本到图像安全] 提出 MacPrompt，一种黑盒跨语言攻击方法，通过将有害词汇翻译为多语言候选并进行字符级重组构造"通心粉词（macaronic words）"作为对抗 prompt，能够同时绕过文本安全过滤器和概念移除防御，在色情内容上攻击成功率高达 92%…
+  [AAAI 2026][图像生成][文本到图像安全] 提出 MacPrompt，一种黑盒跨语言攻击方法，通过将有害词汇翻译为多语言候选并进行字符级重组构造"通心粉词（macaronic words）"作为对抗 prompt，能够同时绕过文本安全过滤器和概念移除防御，在色情内容上攻击成功率高达 92%，在暴力内容上达 90%。
 tags:
   - "AAAI 2026"
   - "图像生成"

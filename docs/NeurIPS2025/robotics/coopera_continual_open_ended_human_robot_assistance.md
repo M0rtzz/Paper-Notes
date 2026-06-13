@@ -2,9 +2,9 @@
 title: >-
   [论文解读] COOPERA: Continual Open-Ended Human-Robot Assistance
 description: >-
-  [NeurIPS 2025][机器人][人机协作] 提出 COOPERA 框架，首次实现持续、开放式的人机协作研究，通过LLM驱动具有心理特征和长期意图的模拟人类与机器人在3D环境中多天交互，机器人通过学习人类特征和上下文意图逐步提升个性化协作能力。
+  [NeurIPS 2025 Spotlight][机器人][人机协作] 提出 COOPERA 框架，首次实现持续、开放式的人机协作研究，通过LLM驱动具有心理特征和长期意图的模拟人类与机器人在3D环境中多天交互，机器人通过学习人类特征和上下文意图逐步提升个性化协作能力。 领域现状：机器人辅助任务的研究主要集中在短暂的情节式设…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "机器人"
   - "人机协作"
   - "持续学习"

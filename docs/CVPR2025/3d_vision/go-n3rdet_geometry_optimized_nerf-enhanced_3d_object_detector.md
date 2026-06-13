@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GO-N3RDet: Geometry Optimized NeRF-enhanced 3D Object Detector
 description: >-
-  [CVPR 2025][3D视觉][多视图3D目标检测] 提出GO-N3RDet，通过位置信息嵌入的体素优化模块（PEOM）、双重重要性采样（DIS）和不透明度优化模块（OOM）三个协同模块，解决基于NeRF的多视图3D检测中缺乏3D位置信息和场景几何感知不足的问题…
+  [CVPR 2025][3D视觉][多视图3D目标检测] 提出GO-N3RDet，通过位置信息嵌入的体素优化模块（PEOM）、双重重要性采样（DIS）和不透明度优化模块（OOM）三个协同模块，解决基于NeRF的多视图3D检测中缺乏3D位置信息和场景几何感知不足的问题，在ScanNet和ARKitScenes上建立了新SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

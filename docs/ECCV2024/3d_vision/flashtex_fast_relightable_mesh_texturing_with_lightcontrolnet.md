@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashTex: Fast Relightable Mesh Texturing with LightControlNet
 description: >-
-  [ECCV 2024][3D视觉][纹理生成] 提出LightControlNet——一种光照感知的ControlNet变体，结合两阶段纹理优化pipeline，能在约4分钟内为3D网格生成高质量、可重光照的PBR纹理，速度比现有方法快3-10倍。
+  [ECCV 2024][3D视觉][纹理生成] 提出LightControlNet——一种光照感知的ControlNet变体，结合两阶段纹理优化pipeline，能在约4分钟内为3D网格生成高质量、可重光照的PBR纹理，速度比现有方法快3-10倍。 领域现状： 文本驱动的3D网格纹理生成近年取得显著进展…
 tags:
   - "ECCV 2024"
   - "3D视觉"

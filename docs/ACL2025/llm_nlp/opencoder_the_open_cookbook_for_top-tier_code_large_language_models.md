@@ -2,10 +2,10 @@
 title: >-
   [论文解读] OpenCoder: The Open Cookbook for Top-Tier Code Large Language Models
 description: >-
-  [ACL2025][LLM/NLP][Code LLM] 提出OpenCoder，一个完全开源的代码大语言模型（含1.5B和8B版本），不仅性能达到顶级水平，更作为"open cookbook"开放了可复现的数据处理流水线、预训练数据集、消融实验和训练协议，为代码智能研究提供基础设施。
+  [ACL2025][LLM 其他][Code LLM] 提出OpenCoder，一个完全开源的代码大语言模型（含1.5B和8B版本），不仅性能达到顶级水平，更作为"open cookbook"开放了可复现的数据处理流水线、预训练数据集、消融实验和训练协议，为代码智能研究提供基础设施。 - 开源代码LLM的差距：虽然Copil…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Code LLM"
   - "Data Curation"
   - "Pretraining Pipeline"

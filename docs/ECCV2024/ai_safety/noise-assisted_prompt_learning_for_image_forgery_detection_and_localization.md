@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Noise-Assisted Prompt Learning for Image Forgery Detection and Localization
 description: >-
-  [ECCV 2024][AI安全][图像篡改检测] 本文提出 CLIP-IFDL，一种基于 CLIP 的图像篡改检测与定位模型，通过实例感知的双流提示学习和伪造增强噪声适配器来弥补 CLIP 在篡改检测领域的提示缺失和伪造感知不足问题，将 CLIP 的开放世界泛化能力迁移到篡改检测任务中。
+  [ECCV 2024][AI安全][图像篡改检测] 本文提出 CLIP-IFDL，一种基于 CLIP 的图像篡改检测与定位模型，通过实例感知的双流提示学习和伪造增强噪声适配器来弥补 CLIP 在篡改检测领域的提示缺失和伪造感知不足问题，将 CLIP 的开放世界泛化能力迁移到篡改检测任务中。 领域现状：图像篡改检测与定位（Im…
 tags:
   - "ECCV 2024"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving 2D Feature Representations by 3D-Aware Fine-Tuning
 description: >-
-  [ECCV 2024][3D视觉][表征学习] 通过将2D基础模型特征提升到3D Gaussian表示中实现多视角融合，再用渲染的3D感知特征反向微调2D模型，以线性探测即可提升语义分割和深度估计性能。
+  [ECCV 2024][3D视觉][表征学习] 通过将2D基础模型特征提升到3D Gaussian表示中实现多视角融合，再用渲染的3D感知特征反向微调2D模型，以线性探测即可提升语义分割和深度估计性能。 领域现状： 视觉基础模型（DINOv2、CLIP、MAE等）纯粹在无结构的2D图像上训练，已展现出强大的通用特征提取能力…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Generative Floor Plan Design with LLMs via Reinforcement Learning with Verifiable Rewards
 description: >-
-  [ACL 2026][LLM/NLP][户型生成] 作者把 RPLAN 中 8 万套真实公寓户型转成 JSON 多边形格式，用 Llama-3.3-70B-Instruct 做两阶段训练（SFT + GRPO with verifiable rewards：connectivity + total-area…
+  [ACL 2026 Findings][LLM 其他][户型生成] 作者把 RPLAN 中 8 万套真实公寓户型转成 JSON 多边形格式，用 Llama-3.3-70B-Instruct 做两阶段训练（SFT + GRPO with verifiable rewards：connectivity + total-area 奖励，重叠/解析失败硬置零），让 LLM 输出能同时满足 bubble diagram 拓扑约束和数值面积约束的 CAD-ready 户型，在 8 房间任务上 Compatibility 相比 HouseDiffusion 下降 94%（2.5 → 0.15）。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "户型生成"
   - "JSON 结构化输出"
   - "GRPO"

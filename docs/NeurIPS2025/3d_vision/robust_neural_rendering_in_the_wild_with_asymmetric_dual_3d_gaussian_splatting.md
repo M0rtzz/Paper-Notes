@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][3DGS] AsymGS利用一个关键观察——野外训练数据引起的重建伪影具有随机性——提出非对称双3DGS框架，通过互补掩码策略和一致性约束抑制伪影，并引入Dynamic EMA Proxy实现高效训练，在多个野外数据集上显著超越现有方法。
+  [NeurIPS 2025 Spotlight][3D视觉][3DGS] AsymGS利用一个关键观察——野外训练数据引起的重建伪影具有随机性——提出非对称双3DGS框架，通过互补掩码策略和一致性约束抑制伪影，并引入Dynamic EMA Proxy实现高效训练，在多个野外数据集上显著超越现有方法。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "3D视觉"
   - "3DGS"
   - "野外场景重建"

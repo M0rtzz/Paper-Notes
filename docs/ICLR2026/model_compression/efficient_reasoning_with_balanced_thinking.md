@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Reasoning with Balanced Thinking
 description: >-
-  [ICLR 2026][模型压缩][大语言模型推理] 提出 ReBalance，一个无需训练的框架，通过基于置信度的动态隐状态导向（steering vector），同时缓解大推理模型（LRM）的过度思考和欠思考问题，实现推理效率与准确率的双重提升。
+  [ICLR 2026][模型压缩][大语言模型推理] 提出 ReBalance，一个无需训练的框架，通过基于置信度的动态隐状态导向（steering vector），同时缓解大推理模型（LRM）的过度思考和欠思考问题，实现推理效率与准确率的双重提升。 - 领域现状：大推理模型（如 DeepSeek-R1、QwQ 等）通过 S…
 tags:
   - "ICLR 2026"
   - "模型压缩"

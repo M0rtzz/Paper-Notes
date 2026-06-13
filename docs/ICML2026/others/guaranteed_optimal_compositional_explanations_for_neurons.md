@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Guaranteed Optimal Compositional Explanations for Neurons
 description: >-
-  [ICML 2026][神经元解释] 组合解释通常用束搜索找"和神经元激活对齐最好的逻辑公式"，但束搜索没有最优性保证；本文提出 IoU 的精确分解 (dIoU) + 一个 admissible 启发式 + 一个 best-first 最优算法，在与束搜索相当的运行时间内**首次保证给出全局最优解**…
+  [ICML 2026 Oral][神经元解释] 组合解释通常用束搜索找"和神经元激活对齐最好的逻辑公式"，但束搜索没有最优性保证；本文提出 IoU 的精确分解 (dIoU) + 一个 admissible 启发式 + 一个 best-first 最优算法，在与束搜索相当的运行时间内**首次保证给出全局最优解**，并据此揭示过去文献中 10–40% 的解释其实是次优的。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "神经元解释"
   - "IoU 分解"
   - "最优组合解释"

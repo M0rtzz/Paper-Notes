@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimus-2: Multimodal Minecraft Agent with Goal-Observation-Action Conditioned Policy
 description: >-
-  [CVPR 2025][多模态VLM][Minecraft Agent] 提出Optimus-2，通过MLLM进行高层规划，结合Goal-Observation-Action Conditioned Policy (GOAP)进行底层控制…
+  [CVPR 2025][多模态VLM][Minecraft Agent] 提出Optimus-2，通过MLLM进行高层规划，结合Goal-Observation-Action Conditioned Policy (GOAP)进行底层控制，其中GOAP使用Action-guided Behavior Encoder建模观察-动作因果关系，并用MLLM对齐行为token与语言指令，在Minecraft原子任务上平均提升27%、长程任务提升10%、开放指令任务提升18%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

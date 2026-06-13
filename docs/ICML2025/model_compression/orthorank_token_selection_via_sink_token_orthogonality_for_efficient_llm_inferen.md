@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OrthoRank: Token Selection via Sink Token Orthogonality for Efficient LLM Inference
 description: >-
-  [ICML2025][模型压缩][LLM推理加速] 提出 OrthoRank，一种**无需额外训练**的动态 token 选择方法：利用 sink token 与其他 token 在隐藏状态空间中的正交性来衡量 token 重要性，在每层选出 Top-K 重要 token 进行完整计算…
+  [ICML2025][模型压缩][LLM推理加速] 提出 OrthoRank，一种**无需额外训练**的动态 token 选择方法：利用 sink token 与其他 token 在隐藏状态空间中的正交性来衡量 token 重要性，在每层选出 Top-K 重要 token 进行完整计算，其余 token 仅参与 KV 计算，在相同稀疏率下实现比层剪枝更低的困惑度和更高的零样本准确率。
 tags:
   - "ICML2025"
   - "模型压缩"

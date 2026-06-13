@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CombatVLA: An Efficient Vision-Language-Action Model for Combat Tasks in 3D Action Role-Playing Games
 description: >-
-  [ICCV 2025][机器人][视觉语言] 提出CombatVLA，一个针对3D动作角色扮演游戏战斗任务的高效3B参数VLA模型，通过Action-of-Thought数据格式和截断推理策略，实现比现有VLM游戏框架快50倍的推理速度，且战斗成功率超越人类玩家。
+  [ICCV 2025][机器人][视觉语言] 提出CombatVLA，一个针对3D动作角色扮演游戏战斗任务的高效3B参数VLA模型，通过Action-of-Thought数据格式和截断推理策略，实现比现有VLM游戏框架快50倍的推理速度，且战斗成功率超越人类玩家。 近年来VLA模型在具身智能领域取得了显著进展…
 tags:
   - "ICCV 2025"
   - "机器人"

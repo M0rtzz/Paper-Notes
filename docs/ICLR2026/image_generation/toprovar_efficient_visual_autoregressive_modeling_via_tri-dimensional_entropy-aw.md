@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization
 description: >-
-  [图像生成] 提出 ToProVAR 框架，利用注意力熵统一分析 VAR 模型的 token/层/尺度三个维度的稀疏性，实现最高 3.4× 加速且图像质量几乎无损，显著优于 FastVAR 和 SkipVAR。
+  [图像生成] 提出 ToProVAR 框架，利用注意力熵统一分析 VAR 模型的 token/层/尺度三个维度的稀疏性，实现最高 3.4× 加速且图像质量几乎无损，显著优于 FastVAR 和 SkipVAR。 视觉自回归 (VAR) 模型将图像生成从"逐 token 预测"改为"逐分辨率预测"（从粗到细）…
 tags:
   - "图像生成"
 ---

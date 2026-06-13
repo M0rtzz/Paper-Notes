@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation
 description: >-
-  [ICML 2025][模型压缩][量化] 首次系统分析量化引入的离散化噪声如何破坏模型融合效果，提出 HDRQ（Hessian and Distance Regularizing Quantization）——通过 Hessian 正则化平坦化损失曲面 + 距离正则化保持量化模型间权重对齐 + 噪声采样舍入…
+  [ICML 2025][模型压缩][量化] 首次系统分析量化引入的离散化噪声如何破坏模型融合效果，提出 HDRQ（Hessian and Distance Regularizing Quantization）——通过 Hessian 正则化平坦化损失曲面 + 距离正则化保持量化模型间权重对齐 + 噪声采样舍入消除舍入歧义，使量化模型在多目标域适应融合中性能接近全精度水平。
 tags:
   - "ICML 2025"
   - "模型压缩"

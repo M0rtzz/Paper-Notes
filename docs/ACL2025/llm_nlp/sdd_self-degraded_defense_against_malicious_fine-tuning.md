@@ -2,9 +2,10 @@
 title: >-
   [论文解读] SDD: Self-Degraded Defense against Malicious Fine-tuning
 description: >-
-  [ACL 2025][LLM安全] SDD通过训练LLM对有害指令生成高质量但无关的良性回复来实现防御：当攻击者进行恶意微调时，模型的通用能力会显著下降，从而无法有效执行恶意指令。
+  [ACL 2025][LLM 其他][LLM安全] SDD通过训练LLM对有害指令生成高质量但无关的良性回复来实现防御：当攻击者进行恶意微调时，模型的通用能力会显著下降，从而无法有效执行恶意指令。 开源LLM面临一个严峻的安全挑战：恶意微调（Malicious Fine-Tuning, MFT）：可以轻易绕过安全对齐机制…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "LLM安全"
   - "恶意微调防御"
   - "安全对齐"

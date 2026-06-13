@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Iterative Error Correction for Efficient Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][迭代误差校正] 提出 IEC（Iterative Error Correction），一种测试时的即插即用方法，通过迭代修正高效扩散模型的推理误差，将误差累积从指数增长降低为线性增长。
+  [ICLR 2026][图像生成][迭代误差校正] 提出 IEC（Iterative Error Correction），一种测试时的即插即用方法，通过迭代修正高效扩散模型的推理误差，将误差累积从指数增长降低为线性增长。 领域现状：为了把扩散模型塞进手机、边缘设备这类资源受限场景，网络量化（把权重/激活降到低比特…
 tags:
   - "ICLR 2026"
   - "图像生成"

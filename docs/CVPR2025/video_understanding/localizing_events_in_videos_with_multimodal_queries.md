@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Localizing Events in Videos with Multimodal Queries
 description: >-
-  [CVPR 2025][视频理解][多模态查询] 提出 ICQ 基准和 ICQ-Highlight 数据集，首次系统研究用多模态查询（图像+文本）替代纯文本查询进行视频事件定位，并设计 3 种查询适配方法和 SUIT 代理微调策略。
+  [CVPR 2025][视频理解][多模态查询] 提出 ICQ 基准和 ICQ-Highlight 数据集，首次系统研究用多模态查询（图像+文本）替代纯文本查询进行视频事件定位，并设计 3 种查询适配方法和 SUIT 代理微调策略。 视频事件定位（包括 moment retrieval、highlight detection…
 tags:
   - "CVPR 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language-Guided Image Tokenization for Generation
 description: >-
-  [CVPR 2025][图像生成][图像分词] TexTok 提出在图像分词（tokenization）阶段引入文本描述作为条件，将高层语义信息卸载给文本，使图像 token 专注于编码细粒度视觉细节，从而在保持甚至提升重建质量的同时实现更高的压缩率…
+  [CVPR 2025][图像生成][图像分词] TexTok 提出在图像分词（tokenization）阶段引入文本描述作为条件，将高层语义信息卸载给文本，使图像 token 专注于编码细粒度视觉细节，从而在保持甚至提升重建质量的同时实现更高的压缩率，在 ImageNet 上取得了 SOTA 的生成 FID 分数 1.46。
 tags:
   - "CVPR 2025"
   - "图像生成"

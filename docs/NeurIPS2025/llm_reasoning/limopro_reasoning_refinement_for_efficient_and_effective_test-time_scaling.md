@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LIMOPro: Reasoning Refinement for Efficient and Effective Test-time Scaling
 description: >-
-  [NeurIPS 2025][LLM推理][reasoning refinement] 提出PIR（基于困惑度的重要性精炼）框架，将LRM蒸馏的推理链分为"渐进推理"和"功能性步骤"（验证/多方法验证/纠错）两类，仅裁剪低PIR值的功能性步骤而完整保留渐进推理骨架…
+  [NeurIPS 2025][LLM推理][reasoning refinement] 提出PIR（基于困惑度的重要性精炼）框架，将LRM蒸馏的推理链分为"渐进推理"和"功能性步骤"（验证/多方法验证/纠错）两类，仅裁剪低PIR值的功能性步骤而完整保留渐进推理骨架，使微调后的模型在AIME/AMC/GPQA上准确率提升0.9%-6.6%同时token减少3%-41%，效率最高提升71%。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

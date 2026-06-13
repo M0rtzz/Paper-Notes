@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Frame Sampler for Long Video Understanding
 description: >-
-  [ACL 2025][视频理解][长视频理解] 提出 GenS，一个基于 VideoLLM 的生成式帧采样模块，用自然语言输出question-aware的相关帧时间段和置信度分数…
+  [ACL 2025][视频理解][长视频理解] 提出 GenS，一个基于 VideoLLM 的生成式帧采样模块，用自然语言输出question-aware的相关帧时间段和置信度分数，作为即插即用模块在 LongVideoBench/MLVU/HourVideo 上为多种 VideoLLM 带来 2-4 个点的一致提升。
 tags:
   - "ACL 2025"
   - "视频理解"

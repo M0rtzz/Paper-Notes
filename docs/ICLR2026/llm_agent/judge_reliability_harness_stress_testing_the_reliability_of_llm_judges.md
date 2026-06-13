@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Judge Reliability Harness: Stress Testing the Reliability of LLM Judges
 description: >-
-  [ICLR 2026][LLM Agent][LLM-as-judge] 提出 Judge Reliability Harness（JRH），一个开源框架，通过 label flip、格式不变性、语义改写、冗余偏差、随机稳定性 等合成测试系统评估 LLM Judge 的可靠性…
+  [ICLR 2026][LLM Agent][LLM-as-judge] 提出 Judge Reliability Harness（JRH），一个开源框架，通过 label flip、格式不变性、语义改写、冗余偏差、随机稳定性 等合成测试系统评估 LLM Judge 的可靠性，在四个基准（FORTRESS、HarmBench、Persuade、AgentHarm）上对四个 SOTA Judge 进行压力测试，发现没有任何一个 Judge 在所有场景下都可靠。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

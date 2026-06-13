@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Woofs to Words: Towards Intelligent Robotic Guide Dogs with Verbal Communication
 description: >-
-  [AAAI 2026][机器人][导盲机器人] 本文提出了一套面向导盲机器犬的对话系统，利用 LLM 和任务规划器实现 **计划语言化（Plan Verbalization）** 和 **场景语言化（Scene Verbalization）**，通过多轮自然语言对话辅助视障用户完成导航决策…
+  [AAAI 2026][机器人][导盲机器人] 本文提出了一套面向导盲机器犬的对话系统，利用 LLM 和任务规划器实现 **计划语言化（Plan Verbalization）** 和 **场景语言化（Scene Verbalization）**，通过多轮自然语言对话辅助视障用户完成导航决策，并通过真人用户研究和仿真实验验证了系统的有效性。
 tags:
   - "AAAI 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] INSID3: Training-Free In-Context Segmentation with DINOv3
 description: >-
-  [CVPR 2026][语义分割][上下文分割] 提出INSID3，一种仅依赖冻结DINOv3特征的无训练上下文分割方法，通过位置偏差消除、细粒度聚类和种子聚类聚合三阶段pipeline，在语义/部件/个性化分割任务上以单一自监督骨干网络超越了依赖SAM或微调的方法，平均mIoU提升+7.5%。
+  [CVPR 2026][语义分割][上下文分割] 提出INSID3，一种仅依赖冻结DINOv3特征的无训练上下文分割方法，通过位置偏差消除、细粒度聚类和种子聚类聚合三阶段pipeline，在语义/部件/个性化分割任务上以单一自监督骨干网络超越了依赖SAM或微调的方法，平均mIoU提升+7.5%。 上下文分割（In-Conte…
 tags:
   - "CVPR 2026"
   - "语义分割"

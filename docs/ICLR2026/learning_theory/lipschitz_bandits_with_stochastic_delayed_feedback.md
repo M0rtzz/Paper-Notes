@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Lipschitz Bandits with Stochastic Delayed Feedback
 description: >-
-  [ICLR 2026][Lipschitz bandit] 首次系统研究连续臂空间 Lipschitz bandit 在随机延迟反馈下的学习问题，针对有界延迟提出 Delayed Zooming 算法（通过 lazy update 机制保持 $\Delta(x) \leq 6r_t(x)$ 的子最优 gap…
+  [ICLR 2026][在线学习 / Bandit 算法][Lipschitz bandit] 首次系统研究连续臂空间 Lipschitz bandit 在随机延迟反馈下的学习问题，针对有界延迟提出 Delayed Zooming 算法（通过 lazy update 机制保持 $\Delta(x) \leq 6r_t(x)$ 的子最优 gap 界），针对无界延迟提出 DLPP 分阶段剪枝策略（遗憾与延迟分位数 $Q(p)$ 挂钩），并建立实例相关下界证明 DLPP 近最优。
 tags:
   - "ICLR 2026"
+  - "在线学习 / Bandit 算法"
   - "Lipschitz bandit"
   - "延迟反馈"
   - "zooming 算法"

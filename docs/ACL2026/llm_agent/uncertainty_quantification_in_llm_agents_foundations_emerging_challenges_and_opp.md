@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty Quantification in LLM Agents: Foundations, Emerging Challenges, and Opportunities
 description: >-
-  [ACL 2026][LLM Agent][不确定性量化] 本文提出首个 Agent 不确定性量化（Agent UQ）的形式化框架：将 agent 的问题解决轨迹建模为动态贝叶斯网络上的随机过程 $P(\mathcal{F}_{\leq T}) = P(E_0…
+  [ACL 2026][LLM Agent][不确定性量化] 本文提出首个 Agent 不确定性量化（Agent UQ）的形式化框架：将 agent 的问题解决轨迹建模为动态贝叶斯网络上的随机过程 $P(\mathcal{F}_{\leq T}) = P(E_0, O_0) \prod_{i=1}^{T} P_{\pi,\mathcal{T}}(A_i|E_{i-1}, O_{i-1}) P(O_i|A_i, E_i)$，统一了现有 UQ 范式（单步 QA、多步推理）为特例，并通过 $\tau^2$-bench 上的实证分析识别了四个 agent UQ 特有的技术挑战。
 tags:
   - "ACL 2026"
   - "LLM Agent"

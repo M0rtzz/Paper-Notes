@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Foresight Optimization for Strategic Reasoning in Large Language Models
 description: >-
-  [ACL 2026][LLM/NLP][策略推理] 本文提出 Foresight Policy Optimization（FoPO），通过在策略优化中引入对手建模的前瞻修正项，使 LLM 能够显式预见对手行为并据此调整自身策略…
+  [ACL 2026][LLM推理][策略推理] 本文提出 Foresight Policy Optimization（FoPO），通过在策略优化中引入对手建模的前瞻修正项，使 LLM 能够显式预见对手行为并据此调整自身策略，在合作（Cooperative RSA）和竞争（Competitive Taboo）两类博弈任务上显著提升策略推理能力，并在跨域 γ-Bench 上取得一致性提升。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM推理"
   - "策略推理"
   - "前瞻优化"
   - "对手建模"

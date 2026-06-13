@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ResCP: Reservoir Conformal Prediction for Time Series Forecasting
 description: >-
-  [ICLR 2026][时间序列][conformal prediction] 首次将储备计算（Echo State Network）引入保形预测，通过随机初始化ESN编码残差序列的时间动态，利用状态相似性自适应重加权历史残差构建局部预测区间，无需任何训练即在4个真实数据集上实现SOTA的Winkler分数…
+  [ICLR 2026][时间序列][conformal prediction] 首次将储备计算（Echo State Network）引入保形预测，通过随机初始化ESN编码残差序列的时间动态，利用状态相似性自适应重加权历史残差构建局部预测区间，无需任何训练即在4个真实数据集上实现SOTA的Winkler分数，速度比HopCPT快20-80×。
 tags:
   - "ICLR 2026"
   - "时间序列"

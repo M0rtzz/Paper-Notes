@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Ripple Effect: On Unforeseen Complications of Backdoor Attacks
 description: >-
-  [ICML 2025][LLM安全][backdoor attack] 首次系统量化了后门预训练语言模型在无关下游任务上的"并发症"现象——后门触发词会使下游模型的输出分布严重偏斜（甚至99%集中到单一类别），并提出基于多任务学习的无需下游任务知识的缓解方法。
+  [ICML 2025][LLM安全][backdoor attack] 首次系统量化了后门预训练语言模型在无关下游任务上的"并发症"现象——后门触发词会使下游模型的输出分布严重偏斜（甚至99%集中到单一类别），并提出基于多任务学习的无需下游任务知识的缓解方法。 - 后门攻击通过在训练数据中植入触发器，使被攻击的预训练语言模型…
 tags:
   - "ICML 2025"
   - "LLM安全"

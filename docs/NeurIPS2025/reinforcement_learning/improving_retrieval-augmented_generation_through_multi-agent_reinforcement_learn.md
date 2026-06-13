@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][RAG] 将复杂 RAG 流水线中的多个组件（Query Rewriter、Selector、Generator）建模为协作多智能体系统，使用 MAPPO 算法进行联合优化，以最终答案的 F1 分数作为共享奖励，在多个 QA 基准上超越现有单模块优化方法。
+  [NeurIPS 2025][强化学习][RAG] 将复杂 RAG 流水线中的多个组件（Query Rewriter、Selector、Generator）建模为协作多智能体系统，使用 MAPPO 算法进行联合优化，以最终答案的 F1 分数作为共享奖励，在多个 QA 基准上超越现有单模块优化方法。 领域现状： RAG 系统通…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

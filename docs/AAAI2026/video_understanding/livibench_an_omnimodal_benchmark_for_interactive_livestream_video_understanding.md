@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiViBench: An Omnimodal Benchmark for Interactive Livestream Video Understanding
 description: >-
-  [AAAI 2026][视频理解][直播视频理解] 提出首个面向交互式直播视频的全模态基准 LiViBench（3168 个视频、3175 道 MCQ、24 个任务），设计了多智能体种子问题驱动的半自动标注流程…
+  [AAAI 2026][视频理解][直播视频理解] 提出首个面向交互式直播视频的全模态基准 LiViBench（3168 个视频、3175 道 MCQ、24 个任务），设计了多智能体种子问题驱动的半自动标注流程，并构建了 LiVi-LLM-7B 模型（含 Video-to-Comment Retrieval 模块和两阶段指令微调），在 7B 规模下超越了 72B 开源模型。
 tags:
   - "AAAI 2026"
   - "视频理解"

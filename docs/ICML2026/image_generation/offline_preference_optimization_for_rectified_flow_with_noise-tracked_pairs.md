@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Offline Preference Optimization for Rectified Flow with Noise-Tracked Pairs
 description: >-
-  [ICML 2026][图像生成][Rectified Flow] 本文针对 rectified flow（RF）类文生图模型，提出 PNAPO——一种把"生成时用的先验噪声"和"赢者/输者图片"一起保存为六元组的离线偏好优化框架，配合 RF 直线轨迹假设做轨迹估计和动态正则系数调度…
+  [ICML 2026][图像生成][Rectified Flow] 本文针对 rectified flow（RF）类文生图模型，提出 PNAPO——一种把"生成时用的先验噪声"和"赢者/输者图片"一起保存为六元组的离线偏好优化框架，配合 RF 直线轨迹假设做轨迹估计和动态正则系数调度，相比 Diffusion-DPO 在 SD3-M/FLUX 上同时提点又把训练算力降到 1/12。
 tags:
   - "ICML 2026"
   - "图像生成"

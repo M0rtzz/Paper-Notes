@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Effective Tokens with Video Anomaly in Large Language Models
 description: >-
-  [ICCV 2025][视频理解][视频异常理解] 提出VA-GPT，通过空间有效Token选择（SETS）和时间有效Token生成（TETG）两个模块，在MLLM中高效对齐与视频异常相关的关键Token，实现对异常事件的精准检测、描述和时间定位。
+  [ICCV 2025][视频理解][视频异常理解] 提出VA-GPT，通过空间有效Token选择（SETS）和时间有效Token生成（TETG）两个模块，在MLLM中高效对齐与视频异常相关的关键Token，实现对异常事件的精准检测、描述和时间定位。 现有方法的局限性 传统视频异常检测方法存在两个根本性问题：(1) 本质上是闭…
 tags:
   - "ICCV 2025"
   - "视频理解"

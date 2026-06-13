@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AI Should Sense Better, Not Just Scale Bigger: Adaptive Sensing as a Paradigm Shift
 description: >-
-  [NeurIPS 2025][医疗NLP][自适应感知] 这篇立场论文受生物感觉系统的启发，主张AI研究必须从单纯的"扩模型"范式转向"优化输入"——通过在传感器层面动态调整参数（曝光、增益、多模态配置等）…
+  [NeurIPS 2025][医疗NLP][自适应感知] 这篇立场论文受生物感觉系统的启发，主张AI研究必须从单纯的"扩模型"范式转向"优化输入"——通过在传感器层面动态调整参数（曝光、增益、多模态配置等），使小模型（5M参数的EfficientNet-B0）在理想传感器适应下超越大模型（632M参数的OpenCLIP-H），并提出了从单次感知到闭环感知-运动耦合的渐进式形式化框架。
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

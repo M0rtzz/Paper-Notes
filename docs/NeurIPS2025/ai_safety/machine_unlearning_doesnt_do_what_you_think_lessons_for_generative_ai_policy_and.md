@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research
 description: >-
-  [NeurIPS 2025][AI安全][机器遗忘] 本文系统性地揭示了机器遗忘（Machine Unlearning）在生成式AI场景下的五大根本性错配——技术方法与政策目标之间存在不可忽视的鸿沟，论证了机器遗忘无法作为通用方案解决隐私、版权和安全问题，并为ML研究者和政策制定者提供了务实的认知框架。
+  [NeurIPS 2025 Oral][AI安全][机器遗忘] 本文系统性地揭示了机器遗忘（Machine Unlearning）在生成式AI场景下的五大根本性错配——技术方法与政策目标之间存在不可忽视的鸿沟，论证了机器遗忘无法作为通用方案解决隐私、版权和安全问题，并为ML研究者和政策制定者提供了务实的认知框架。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "AI安全"
   - "机器遗忘"
   - "生成式AI政策"

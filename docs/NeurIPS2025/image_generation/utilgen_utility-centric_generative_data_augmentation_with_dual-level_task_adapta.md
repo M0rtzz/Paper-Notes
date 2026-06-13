@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UtilGen: Utility-Centric Generative Data Augmentation with Dual-Level Task Adaptation
 description: >-
-  [NeurIPS 2025][图像生成][数据增强] 提出以任务效用为中心的生成式数据增强框架 UtilGen，通过元学习权重网络评估合成数据的下游任务效用，并利用模型级 DPO 和实例级（prompt+noise）双层优化策略，自适应生成高效用的合成训练数据，在8个基准上平均提升3.87%。
+  [NeurIPS 2025][图像生成][数据增强] 提出以任务效用为中心的生成式数据增强框架 UtilGen，通过元学习权重网络评估合成数据的下游任务效用，并利用模型级 DPO 和实例级（prompt+noise）双层优化策略，自适应生成高效用的合成训练数据，在8个基准上平均提升3.87%。 现有的生成式数据增强方法主要关…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

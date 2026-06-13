@@ -2,9 +2,9 @@
 title: >-
   [论文解读] iReasoner: Trajectory-Aware Intrinsic Reasoning Supervision for Self-Evolving Large Multimodal Models
 description: >-
-  [ACL2026][多模态VLM][多模态推理] iReasoner在无标注图像上让LMM自问自答，并把最终答案一致性扩展为中间CoT步骤的一致性奖励，从而在Qwen2.5-VL-7B上带来最高约+2.13点的多模态推理提升。
+  [ACL2026 Findings][多模态VLM][多模态推理] iReasoner在无标注图像上让LMM自问自答，并把最终答案一致性扩展为中间CoT步骤的一致性奖励，从而在Qwen2.5-VL-7B上带来最高约+2.13点的多模态推理提升。 领域现状：多模态大模型的自演化训练开始从“依赖人工标注”转向“利用无标注图像自生…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "多模态推理"
   - "自演化训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARC-JSD: Attributing Response to Context via Jensen-Shannon Divergence Driven Mechanistic Study
 description: >-
-  [NeurIPS 2025][可解释性][上下文归因] ARC-JSD 提出基于 Jensen-Shannon 散度的 RAG 上下文归因方法——通过比较有/无特定上下文句子时模型输出分布的 JSD 差异，无需微调/梯度计算即可定位回答所依赖的上下文，计算效率比 baseline 快 3 倍…
+  [NeurIPS 2025][可解释性][上下文归因] ARC-JSD 提出基于 Jensen-Shannon 散度的 RAG 上下文归因方法——通过比较有/无特定上下文句子时模型输出分布的 JSD 差异，无需微调/梯度计算即可定位回答所依赖的上下文，计算效率比 baseline 快 3 倍，Top-1 归因准确率平均提升 10.7%，并通过 Logit Lens 揭示归因相关的注意力头集中在高层。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

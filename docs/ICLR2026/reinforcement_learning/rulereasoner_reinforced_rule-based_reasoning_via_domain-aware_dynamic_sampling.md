@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RuleReasoner: Reinforced Rule-based Reasoning via Domain-aware Dynamic Sampling
 description: >-
-  [强化学习] RuleReasoner 通过构建多样化的规则推理数据集 RuleCollection-32K 和提出域感知动态采样（Dads）策略，在 RLVR 框架下训练 8B 模型，在域内推理任务上比 OpenAI-o1 高 4.1%，在域外任务上高 10.4%，同时训练效率提升 ~1.4×。
+  [强化学习] RuleReasoner 通过构建多样化的规则推理数据集 RuleCollection-32K 和提出域感知动态采样（Dads）策略，在 RLVR 框架下训练 8B 模型，在域内推理任务上比 OpenAI-o1 高 4.1%，在域外任务上高 10.4%，同时训练效率提升 ~1.4×。 领域现状： 基于规则的推理…
 tags:
   - "强化学习"
 ---

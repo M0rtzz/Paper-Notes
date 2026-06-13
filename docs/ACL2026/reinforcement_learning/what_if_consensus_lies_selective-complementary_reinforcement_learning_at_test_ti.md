@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCRL: What If Consensus Lies? Selective-Complementary Reinforcement Learning at Test Time
 description: >-
-  [ACL 2026][强化学习][测试时强化学习] 本文提出 SCRL（Selective-Complementary Reinforcement Learning），一个鲁棒的测试时强化学习框架…
+  [ACL 2026][强化学习][测试时强化学习] 本文提出 SCRL（Selective-Complementary Reinforcement Learning），一个鲁棒的测试时强化学习框架，通过选择性正伪标签（严格共识标准过滤不可靠多数）和熵门控负伪标签（首次在 TTRL 中引入负监督信号来修剪错误轨迹）缓解标签噪声放大问题，在 AIME25 上比 TTRL 提升高达 10.1 个百分点。
 tags:
   - "ACL 2026"
   - "强化学习"

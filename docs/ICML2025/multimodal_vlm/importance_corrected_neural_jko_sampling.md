@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Importance Corrected Neural JKO Sampling
 description: >-
-  [ICML 2025][多模态VLM][Neural JKO] 提出 Importance Corrected Neural JKO Sampling (Neural JKO IC)，将连续归一化流（CNF）的局部 JKO 步与基于重要性权重的拒绝重采样步交替使用…
+  [ICML 2025][多模态VLM][Neural JKO] 提出 Importance Corrected Neural JKO Sampling (Neural JKO IC)，将连续归一化流（CNF）的局部 JKO 步与基于重要性权重的拒绝重采样步交替使用，克服 Wasserstein 梯度流在多模态分布上的局部最优问题，同时保持独立同分布采样和密度可评估性。
 tags:
   - "ICML 2025"
   - "多模态VLM"

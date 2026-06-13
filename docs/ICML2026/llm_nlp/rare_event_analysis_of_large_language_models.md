@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rare Event Analysis of Large Language Models
 description: >-
-  [ICML2026][LLM/NLP][稀有事件分析] 本文把统计物理里成熟的稀有事件分析（REA）方法搬到 LLM 上，用「指数倾斜分布 + Transition Path Sampling + MBAR」三件套，在 TinyStories 上以可承受的算力估出比直接采样小好几个数量级的稀有完成概率…
+  [ICML2026 Oral Spotlight][LLM 其他][稀有事件分析] 本文把统计物理里成熟的稀有事件分析（REA）方法搬到 LLM 上，用「指数倾斜分布 + Transition Path Sampling + MBAR」三件套，在 TinyStories 上以可承受的算力估出比直接采样小好几个数量级的稀有完成概率，并通过 EDA 找出便宜的运行时代理（连续 token 重复数）来预筛高 ARI 异常输出。
 tags:
-  - "ICML2026"
-  - "LLM/NLP"
+  - "ICML2026 Oral Spotlight"
+  - "LLM 其他"
   - "稀有事件分析"
   - "重要性采样"
   - "MBAR"

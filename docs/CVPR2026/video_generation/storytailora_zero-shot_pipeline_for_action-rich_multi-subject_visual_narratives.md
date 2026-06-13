@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StoryTailor: A Zero-Shot Pipeline for Action-Rich Multi-Subject Visual Narratives
 description: >-
-  [CVPR 2026][视频生成][visual storytelling] 提出StoryTailor零样本视觉叙事生成管线，通过高斯中心注意力（GCA）缓解主体重叠和背景泄漏、动作增强奇异值重加权（AB-SVR）放大动作语义、选择性遗忘缓存（SFC）维护跨帧背景连续性…
+  [CVPR 2026][视频生成][visual storytelling] 提出StoryTailor零样本视觉叙事生成管线，通过高斯中心注意力（GCA）缓解主体重叠和背景泄漏、动作增强奇异值重加权（AB-SVR）放大动作语义、选择性遗忘缓存（SFC）维护跨帧背景连续性，在单张RTX 4090上实现多主体、动作丰富的图像叙事生成，CLIP-T较基线提升10-15%。
 tags:
   - "CVPR 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rep-MTL: Unleashing the Power of Representation-Level Task Saliency for Multi-Task Learning
 description: >-
-  [ICCV 2025][机器人][多任务学习] 提出 Rep-MTL，一种基于表示空间任务显著性（task saliency）的多任务优化方法，通过熵正则化保留任务特定学习模式（TSR）和样本级跨任务对比对齐（CSA）来缓解负迁移并显式促进任务互补性，无需修改优化器或网络架构。
+  [ICCV 2025][机器人][多任务学习] 提出 Rep-MTL，一种基于表示空间任务显著性（task saliency）的多任务优化方法，通过熵正则化保留任务特定学习模式（TSR）和样本级跨任务对比对齐（CSA）来缓解负迁移并显式促进任务互补性，无需修改优化器或网络架构。 多任务学习（MTL）通过共享表示来提升效率和泛…
 tags:
   - "ICCV 2025"
   - "机器人"

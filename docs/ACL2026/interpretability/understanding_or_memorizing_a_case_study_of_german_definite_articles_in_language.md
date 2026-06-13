@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding or Memorizing? A Case Study of German Definite Articles in Language Models
 description: >-
-  [ACL 2026][可解释性][语法编码] 本文利用 Gradiend 梯度可解释性方法研究语言模型预测德语定冠词（der/die/das/den/dem/des）时是基于抽象语法规则还是表层记忆，发现模型至少部分依赖记忆化关联而非严格的规则编码。
+  [ACL 2026][可解释性][语法编码] 本文利用 Gradiend 梯度可解释性方法研究语言模型预测德语定冠词（der/die/das/den/dem/des）时是基于抽象语法规则还是表层记忆，发现模型至少部分依赖记忆化关联而非严格的规则编码。 领域现状：现代语言模型在语法一致性任务上表现接近完美…
 tags:
   - "ACL 2026"
   - "可解释性"

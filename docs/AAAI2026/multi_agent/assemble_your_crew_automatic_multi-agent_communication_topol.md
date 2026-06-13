@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Assemble Your Crew: Automatic Multi-agent Communication Topology Design via Autoregressive Graph Generation
 description: >-
-  [AAAI 2026][多智能体][多Agent拓扑设计] 提出 ARG-Designer，将多 Agent 系统的拓扑设计重新定义为条件自回归图生成任务，从零开始逐步生成 Agent 节点和通信边（而非从模板图剪枝），在6个基准上达到 SOTA（平均 92.78%）…
+  [AAAI 2026 Oral][多智能体][多Agent拓扑设计] 提出 ARG-Designer，将多 Agent 系统的拓扑设计重新定义为条件自回归图生成任务，从零开始逐步生成 Agent 节点和通信边（而非从模板图剪枝），在6个基准上达到 SOTA（平均 92.78%），同时 Token 消耗比 G-Designer 降低约 50%，且支持无需重训练的角色扩展。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多智能体"
   - "多Agent拓扑设计"
   - "自回归图生成"

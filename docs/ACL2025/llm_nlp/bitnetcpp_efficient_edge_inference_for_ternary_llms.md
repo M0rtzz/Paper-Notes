@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Bitnet.cpp: Efficient Edge Inference for Ternary LLMs
 description: >-
-  [ACL 2025][LLM/NLP][三值量化] 本文提出Bitnet.cpp推理系统，通过两种创新的混合精度矩阵乘法核心——基于元素级查找表的TL和基于Int2+Scale的I2_S——实现了三值LLM（如BitNet b1.58）在边缘设备上的高效无损推理，相比全精度基线加速最高6.25倍…
+  [ACL 2025][LLM 其他][三值量化] 本文提出Bitnet.cpp推理系统，通过两种创新的混合精度矩阵乘法核心——基于元素级查找表的TL和基于Int2+Scale的I2_S——实现了三值LLM（如BitNet b1.58）在边缘设备上的高效无损推理，相比全精度基线加速最高6.25倍，相比低比特基线加速最高2.32倍。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "三值量化"
   - "边缘推理"
   - "混合精度矩阵乘法"

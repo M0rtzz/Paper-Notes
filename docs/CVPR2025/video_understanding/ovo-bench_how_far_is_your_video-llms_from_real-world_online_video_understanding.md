@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OVO-Bench: How Far is Your Video-LLMs from Real-World Online Video Understanding?
 description: >-
-  [CVPR 2025][视频理解][在线视频理解] OVO-Bench 是首个强调时间戳在视频理解中重要性的在线视频基准，将在线视频理解分为"回溯追踪"、"实时感知"和"前瞻主动响应"三种模式，通过 12 个任务、644 个视频和 2800+ 精细标注评估 Video-LLM 的在线理解能力。
+  [CVPR 2025][视频理解][在线视频理解] OVO-Bench 是首个强调时间戳在视频理解中重要性的在线视频基准，将在线视频理解分为"回溯追踪"、"实时感知"和"前瞻主动响应"三种模式，通过 12 个任务、644 个视频和 2800+ 精细标注评估 Video-LLM 的在线理解能力。 领域现状：Video-LLM（…
 tags:
   - "CVPR 2025"
   - "视频理解"

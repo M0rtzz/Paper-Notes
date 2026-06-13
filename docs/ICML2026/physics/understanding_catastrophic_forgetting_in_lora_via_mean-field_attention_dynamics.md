@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Catastrophic Forgetting In LoRA via Mean-Field Attention Dynamics
 description: >-
-  [ICML 2026][物理/科学计算][LoRA] 作者把 Transformer 自注意力写成 token 间相互作用的平均场粒子系统，把 LoRA 视作低秩扰动，证明遗忘与"扰动模长"和"网络深度"两条相变曲线相关，并给出由 $V$ 的特征值 gap 控制的长时稳定条件。
+  [ICML 2026][物理/科学计算][LoRA] 作者把 Transformer 自注意力写成 token 间相互作用的平均场粒子系统，把 LoRA 视作低秩扰动，证明遗忘与"扰动模长"和"网络深度"两条相变曲线相关，并给出由 $V$ 的特征值 gap 控制的长时稳定条件。 领域现状：LoRA 已经成为微调大模型最主流的…
 tags:
   - "ICML 2026"
   - "物理/科学计算"

@@ -1,18 +1,18 @@
 ---
 title: >-
-  CVPR2026 语义分割论文汇总 · 83篇论文解读
+  CVPR2026 语义分割论文汇总 · 99篇论文解读
 description: >-
-  83篇CVPR2026的语义分割方向论文解读，涵盖语义分割、扩散模型、推理、域适应、目标检测、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  99篇CVPR2026的语义分割方向论文解读，涵盖语义分割、推理、扩散模型、少样本学习、对齐/RLHF、域适应等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "语义分割"
   - "论文解读"
   - "论文笔记"
-  - "扩散模型"
   - "推理"
+  - "扩散模型"
+  - "少样本学习"
+  - "对齐/RLHF"
   - "域适应"
-  - "目标检测"
-  - "遥感"
 item_list:
   - u: "3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros/"
     t: "3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion"
@@ -20,20 +20,28 @@ item_list:
     t: "A dataset of medication images with instance segmentation masks for preventing adverse drug events"
   - u: "a_mixed_diet_makes_dino_an_omnivorous_vision_encoder/"
     t: "A Mixed Diet Makes DINO An Omnivorous Vision Encoder"
+  - u: "aoi-ssl_self-supervised_framework_for_efficient_segmentation_of_wire-bonded_semi/"
+    t: "AOI-SSL: Self-Supervised Framework for Efficient Segmentation of Wire-bonded Semiconductors In Optical Inspection"
   - u: "bootstrap_dynamic-aware_3d_visual_representation_for_scalable_robot_learning/"
     t: "AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning"
   - u: "boundary_segment_action_segmentation/"
     t: "Combining Boundary Supervision and Segment-Level Regularization for Fine-Grained Action Segmentation"
+  - u: "boxes2pixels_learning_defect_segmentation_from_noisy_sam_masks/"
+    t: "Boxes2Pixels: Learning Defect Segmentation from Noisy SAM Masks"
   - u: "brewing_stronger_features_dual-teacher_distillation_for_multispectral_earth_obse/"
     t: "Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation"
   - u: "ca-lora_concept-aware_lora_for_domain-aligned_segmentation_dataset_generation/"
     t: "CA-LoRA: Concept-Aware LoRA for Domain-Aligned Segmentation Dataset Generation"
   - u: "clip_shortsighted_beyond_first_sentence/"
     t: "DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence"
+  - u: "comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma/"
+    t: "Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging"
   - u: "concept-guided_fine-tuning_steering_vits_away_from_spurious_correlations_to_impr/"
     t: "Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness"
   - u: "conceptprism_concept_disentanglement_in_personalized_diffusion_models_via_residu/"
     t: "ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization"
+  - u: "cross-domain_few-shot_segmentation_via_multi-view_progressive_adaptation/"
+    t: "Cross-Domain Few-Shot Segmentation via Multi-view Progressive Adaptation"
   - u: "crossearthsar_a_sarcentric_and_billionscale_geospa/"
     t: "CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation"
   - u: "ctfs_collaborative_teacher_framework_for_forward-looking_sonar_image_semantic_se/"
@@ -42,6 +50,8 @@ item_list:
     t: "Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training"
   - u: "dedelayed_deleting_remote_inference_delay_via_on-device_correction/"
     t: "DeDelayed: Deleting Remote Inference Delay via On-Device Correction"
+  - u: "design_and_behavior_of_sparse_mixture-of-experts_layers_in_cnn-based_semantic_se/"
+    t: "Design and Behavior of Sparse Mixture-of-Experts Layers in CNN-based Semantic Segmentation"
   - u: "detecting_ai-generated_forgeries_via_iterative_manifold_deviation_amplification/"
     t: "Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification"
   - u: "direct_segmentation_without_logits_optimization_for_training-free_open-vocabular/"
@@ -60,31 +70,21 @@ item_list:
     t: "EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection"
   - u: "fcl-cod_weakly_supervised_camouflaged_object_detection_with_frequency-aware_and_/"
     t: "FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning"
+  - u: "flowdis_language-guided_dichotomous_image_segmentation_with_flow_matching/"
+    t: "FlowDIS: Language-Guided Dichotomous Image Segmentation with Flow Matching"
   - u: "follow_the_saliency_supervised_saliency_for_retrieval-augmented_dense_video_capt/"
     t: "Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning"
-  - u: "fov-net_rotation-invariant_cad_b-rep_learning_via_field-of-view_ray_casting/"
-    t: "FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting"
-  - u: "from_2d_alignment_to_3d_plausibility_unifying_heterogeneous_2d_priors_and_penetr/"
-    t: "From 2D Alignment to 3D Plausibility: Unifying Heterogeneous 2D Priors and Penetration-Free Diffusion for Occlusion-Robust Two-Hand Reconstruction"
-  - u: "genmask_adapting_dit_for_segmentation_via_direct_mask_generation/"
-    t: "GenMask: Adapting DiT for Segmentation via Direct Mask Generation"
-  - u: "geoguide_hierarchical_geometric_guidance_for_open-vocabulary_3d_semantic_segment/"
-    t: "GeoGuide: Hierarchical Geometric Guidance for Open-Vocabulary 3D Semantic Segmentation"
-  - u: "geomprompt_rgbd_segmentation/"
-    t: "GeomPrompt: Geometric Prompt Learning for RGB-D Semantic Segmentation Under Missing and Degraded Depth"
-  - u: "geosurge_geo-localization_using_semantic_fusion_with_hierarchy_of_geographic_emb/"
-    t: "GeoSURGE: Geo-localization using Semantic Fusion with Hierarchy of Geographic Embeddings"
-item_total: 83
+item_total: 99
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2026** · **83** 篇论文解读
+**📷 CVPR2026** · **99** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (45)](../../NeurIPS2025/segmentation/index.md) · [📹 ICCV2025 (73)](../../ICCV2025/segmentation/index.md)
 
-🔥 **高频主题：** 语义分割 ×43 · 扩散模型 ×5 · 推理 ×5 · 域适应 ×4 · 目标检测 ×4
+🔥 **高频主题：** 语义分割 ×57 · 推理 ×6 · 扩散模型 ×5 · 少样本学习 ×5 · 对齐/RLHF ×5
 
 **[3M-TI: High-Quality Mobile Thermal Imaging via Calibration-free Multi-Camera Cross-Modal Diffusion](3m-ti_high-quality_mobile_thermal_imaging_via_calibration-free_multi-camera_cros.md)**
 
@@ -98,6 +98,10 @@ item_total: 83
 
 :   提出 Omnivorous Vision Encoder，通过轻量级 adapter 在冻结的 DINOv2 之上进行跨模态对齐蒸馏训练（RGB/Depth/Segmentation），使单一编码器对不同视觉模态产生一致嵌入，同时保留原始判别语义。
 
+**[AOI-SSL: Self-Supervised Framework for Efficient Segmentation of Wire-bonded Semiconductors In Optical Inspection](aoi-ssl_self-supervised_framework_for_efficient_segmentation_of_wire-bonded_semi.md)**
+
+:   针对半导体引线键合自动光学检测中"每换一款器件就要重新标注+重训分割模型"的痛点，本文用领域内小数据自监督预训练（发现 MAE 比 DINO/iBOT 更适合）+ 轻量微调 + patch 级检索式无训练推理，在固定 8 小时算力下把分割 mIoU 提到 60.3%，并让检索式分割在单一器件上无需训练即达 71.5% mIoU、近乎即时适配新器件。
+
 **[AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning](bootstrap_dynamic-aware_3d_visual_representation_for_scalable_robot_learning.md)**
 
 :   提出AFRO自监督3D视觉预训练框架，通过逆动力学模型（IDM）推断潜在动作、扩散Transformer前向动力学模型（FDM）预测未来特征、逆一致性约束保证时序对称性，在RH20T大规模数据上预训练后，MetaWorld 14任务平均成功率76.0%（vs DynaMo-3D 64.9%、PointMAE 63.9%），4个real-world任务也取得最优。
@@ -105,6 +109,10 @@ item_total: 83
 **[Combining Boundary Supervision and Segment-Level Regularization for Fine-Grained Action Segmentation](boundary_segment_action_segmentation.md)**
 
 :   提出一种轻量级双损失训练框架用于时序动作分割（TAS），仅增加一个边界输出通道和两个辅助损失（边界回归损失 + CDF 段形状正则化损失），在 MS-TCN、C2F-TCN、FACT 三种架构上一致提升 F1 和 Edit 分数，证明精确分割可以通过简单的损失设计而非更重的架构实现。
+
+**[Boxes2Pixels: Learning Defect Segmentation from Noisy SAM Masks](boxes2pixels_learning_defect_segmentation_from_noisy_sam_masks.md)**
+
+:   针对工业缺陷分割缺少像素级标注的痛点，本文把 SAM 当成"会出错的噪声教师"而非真值，用现成边界框离线生成伪掩码，再训练一个基于冻结 DINOv2 的轻量学生网络，配合二值定位头与"单向在线自纠正"损失抵抗伪标签噪声，在风电叶片缺陷数据集上以仅 5.6M 可训练参数（少 80%）把异常 mIoU 提升 +6.97、二值 IoU 提升 +9.71。
 
 **[Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation](brewing_stronger_features_dual-teacher_distillation_for_multispectral_earth_obse.md)**
 
@@ -118,6 +126,10 @@ item_total: 83
 
 :   发现 CLIP 模型在长文本场景中严重偏向于编码首句摘要和早期 token（"近视"行为），通过三种零参数增量的训练增强策略——去除摘要句、句子随机采样、token 前缀填充——实现了全方位 SOTA 的长文本检索性能，同时改善了短文本检索。
 
+**[Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging](comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma.md)**
+
+:   一篇系统性综述论文，全面对比传统方法（阈值分割、区域生长、模糊聚类等）和深度学习方法（CNN、U-Net、SegNet 等）在脑胶质瘤 MRI 分割与分类任务上的表现，结论指出 CNN 架构在准确性和自动化程度上全面优于传统技术。
+
 **[Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness](concept-guided_fine-tuning_steering_vits_away_from_spurious_correlations_to_impr.md)**
 
 :   提出 CFT（Concept-Guided Fine-Tuning），利用 LLM 生成类别级语义概念并通过 GroundedSAM 零样本分割获取概念掩码，再以 AttnLRP 的 relevance map 与概念区域对齐为目标微调 ViT，仅用 1500 张图即可显著提升 5 个 OOD 基准上的鲁棒性。
@@ -125,6 +137,10 @@ item_total: 83
 **[ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization](conceptprism_concept_disentanglement_in_personalized_diffusion_models_via_residu.md)**
 
 :   提出 ConceptPrism，通过引入图像级残余 token 和跨图像排斥损失，在个性化 T2I 扩散模型中自动将共享目标概念与图像特有的残余信息解耦，在 DreamBench 上 CLIP-T/DINO/CLIP-I 全面最优。
+
+**[Cross-Domain Few-Shot Segmentation via Multi-view Progressive Adaptation](cross-domain_few-shot_segmentation_via_multi-view_progressive_adaptation.md)**
+
+:   针对跨域小样本分割（CD-FSS）中"目标域样本少 + 域差距大导致源模型在目标域的小样本能力弱"两难，本文提出 Multi-view Progressive Adaptation（MPA），从**数据**和**策略**两个视角"由易到难"渐进自适应——用累积式强增强生成越来越复杂的多视图（HPA），再用串行+并行双链预测充分压榨这些视图的监督信号（DMP），在四个数据稀缺域上比 SOTA 平均高 7.0%（1-shot），且去掉源域训练也几乎不掉点、训练时间省 80%。
 
 **[CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation](crossearthsar_a_sarcentric_and_billionscale_geospa.md)**
 
@@ -141,6 +157,10 @@ item_total: 83
 **[DeDelayed: Deleting Remote Inference Delay via On-Device Correction](dedelayed_deleting_remote_inference_delay_via_on-device_correction.md)**
 
 :   提出 DeDelayed 端云协同推理框架，将轻量本地图像模型与延迟感知的云端时序预测视频模型结合，通过时序预测训练补偿网络延迟，在 100ms 延迟下比纯本地推理提升 6.4 mIoU、比纯远程推理提升 9.8 mIoU。
+
+**[Design and Behavior of Sparse Mixture-of-Experts Layers in CNN-based Semantic Segmentation](design_and_behavior_of_sparse_mixture-of-experts_layers_in_cnn-based_semantic_se.md)**
+
+:   本文系统研究了如何把稀疏 Mixture-of-Experts (MoE) 层以"patch 级路由"的粗粒度方式塞进 CNN 语义分割网络——用一组卷积专家替换单个卷积层、按空间块路由到 top-k 专家，在 6 种 CNN、2 个数据集上几乎不增加推理算力就拿到最高 +3.9 mIoU 的提升，并给出了门控设计、专家数、稀疏度、放置位置如何影响路由动态与专家专精化的经验结论。
 
 **[Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification](detecting_ai-generated_forgeries_via_iterative_manifold_deviation_amplification.md)**
 
@@ -178,6 +198,10 @@ item_total: 83
 
 :   提出 FCL-COD 框架，通过频率感知低秩适配（FoRA）将伪装场景知识注入 SAM、梯度感知对比学习（GCL）增强前背景特征分离、多尺度频率注意力（MSFA）提炼边界敏感特征，在仅使用边界框标注的弱监督设定下超越了全监督 SOTA 方法。
 
+**[FlowDIS: Language-Guided Dichotomous Image Segmentation with Flow Matching](flowdis_language-guided_dichotomous_image_segmentation_with_flow_matching.md)**
+
+:   FlowDIS 把高精度二分图像分割（DIS）重新表述成一个**流匹配**问题——直接学一个时间相关的速度场把「图像分布」搬运到「掩码分布」，用确定性 ODE 取代扩散模型从噪声去噪的随机过程；再配上 PAIP 实例配对训练策略增强语言可控性，在 DIS5K 全部测试集刷新 SOTA，仅 1 步推理就比次优的 LawDIS 在 DIS-TE 上 $F_\beta^\omega$ 高约 5.5%、MAE 低约 43%。
+
 **[Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning](follow_the_saliency_supervised_saliency_for_retrieval-augmented_dense_video_capt.md)**
 
 :   提出 STaRC 框架，通过有监督的帧级显著性学习统一驱动检索（显著性引导分割+检索）和描述生成（显著性提示注入解码器），显著提升密集视频描述(DVC)任务中的时序对齐和字幕质量。
@@ -189,6 +213,10 @@ item_total: 83
 **[From 2D Alignment to 3D Plausibility: Unifying Heterogeneous 2D Priors and Penetration-Free Diffusion for Occlusion-Robust Two-Hand Reconstruction](from_2d_alignment_to_3d_plausibility_unifying_heterogeneous_2d_priors_and_penetr.md)**
 
 :   将双手重建解耦为 2D 结构对齐（融合关键点/分割/深度先验）和 3D 空间交互对齐（穿透消除扩散模型），在 InterHand2.6M 上 MPJPE 达到 5.36mm，大幅超越 SOTA。
+
+**[GABI: Geometry-Aware Boundary Integration for Spacecraft Segmentation](gabi_geometry-aware_boundary_integration_for_spacecraft_segmentation.md)**
+
+:   GABI 给一个轻量卷积分割网络挂上一个「距离场预测」辅助头，用连续距离场提供稠密几何监督、并用它构造一张边界门控图去调制分割特征，让模型在太空极端光照下学到既懂纹理又懂几何的特征——在 SPARK 基准上把基线 AP 提升至多 5%，跨域泛化时 AP 提升超过 50%，且模型比 Transformer 小近 3~10 倍。
 
 **[GenMask: Adapting DiT for Segmentation via Direct Mask Generation](genmask_adapting_dit_for_segmentation_via_direct_mask_generation.md)**
 
@@ -262,9 +290,17 @@ item_total: 83
 
 :   提出学习型 Matting Quality Evaluator (MQE)，在无 ground-truth 条件下逐像素评估 alpha 质量，既作为在线训练引导又作为离线数据筛选器，构建了 28K 片段 / 240 万帧的真实世界视频抠图数据集 VMReal，配合参考帧训练策略，显著超越所有现有方法。
 
+**[Metric-Guided Feature Fusion of Visual Foundation Models for Segmentation Tasks](metric-guided_feature_fusion_of_visual_foundation_models_for_segmentation_tasks.md)**
+
+:   针对不同视觉基础模型（VFM）在表征上各有偏好（SAM2 偏边界、DINOv3 偏物体结构）的现象，本文设计一套**无标签**的特征评估指标（结构连贯性 SC + 边缘保真度 EF），用分数自动挑出互补的 encoder 对、并确定从哪个 stride 注入哪类特征，再用极简的 master–auxiliary 融合在单阶段训练里把互补特征拼起来，让 COCO/Cityscapes 等多个分割任务一致涨点。
+
 **[MixerCSeg: An Efficient Mixer Architecture for Crack Segmentation via Decoupled Mamba Attention](mixercseg_an_efficient_mixer_architecture_for_crack_segmentation_via_decoupled_m.md)**
 
 :   提出 MixerCSeg，通过解析 Mamba 的隐式注意力机制将通道解耦为全局/局部分支，分别用 Self-Attention 和 CNN 增强，配合方向引导边缘门控卷积，以 2.05 GFLOPs / 2.54M 参数实现裂缝分割 SOTA。
+
+**[MoonSeg3R: Monocular Online Zero-Shot Segment Anything in 3D with Reconstructive Foundation Priors](moonseg3r_monocular_online_zero-shot_segment_anything_in_3d_with_reconstructive_.md)**
+
+:   把在线 3D 重建模型 CUT3R 当作几何先验、SAM 系 VFM 当作 2D mask 先验，MoonSeg3R 让只有一路单目 RGB 视频流的系统也能边重建边做零样本 3D 实例分割，是第一个不依赖深度传感器/已知位姿/3D 监督的在线单目方案，在 ScanNet200/SceneNN 上接近 RGB-D 方法且 mask 融合速度最快。
 
 **[MPM: Mutual Pair Merging for Efficient Vision Transformers](mpm_mutual_pair_merging_for_efficient_vision_transformers.md)**
 
@@ -298,6 +334,10 @@ item_total: 83
 
 :   提出基于指针 (Pointer) 机制的命令序列表示，将 B-Rep 几何实体（边/面）显式引入自回归 CAD 生成，首次在命令序列方法中支持 chamfer/fillet 操作，同时大幅降低量化误差导致的拓扑错误。
 
+**[PrAda: Few-Shot Visual Adaptation for Text-Prompted Segmentation](prada_few-shot_visual_adaptation_for_text-prompted_segmentation.md)**
+
+:   针对文本提示分割模型在专业域上"会画掩码却叫错名字"的现象，本文提出 PrAda：冻结 FC-CLIP，只用每类 5 张标注样本学一组类原型，把视觉相似度与原文本分类分数用一个可学习权重 α 融合，仅增 +0.02%~0.19% 参数就在 5 个 benchmark 上把 PQ/mIoU 拉高 4~10 个点。
+
 **[Prompt-Driven Lightweight Foundation Model for Instance Segmentation-Based Fault Detection in Freight Trains](promptdriven_lightweight_foundation_model_for_inst.md)**
 
 :   提出SAM FTI-FDet，通过设计一个基于Transformer decoder的自提示生成器（Prompt Generator），让轻量化的TinyViT-SAM自动生成任务相关的query prompt，无需人工交互即可完成货运列车部件的实例级故障检测，在自建数据集上达到74.6 AP_box / 74.2 AP_mask。
@@ -330,6 +370,10 @@ item_total: 83
 
 :   本文提出 RobotSeg，第一个同时支持图像和视频的机器人分割基础模型，基于 SAM 2 引入结构增强记忆关联器（SEMA）、机器人提示生成器（RPG）和标签高效训练策略，仅需首帧标注即可训练，在自动模式下 Whole Robot 分割达到 85.1 J&F，比 SAM 2.1 微调版高 4.9 分，同时参数仅 41.3M（远小于现有 638M+ 方案）。
 
+**[ROSE: Retrieval-Oriented Segmentation Enhancement](rose_retrieval-oriented_segmentation_enhancement.md)**
+
+:   针对基于多模态大模型（MLLM）的分割模型「认不出训练截止日期之后才出现的实体」这一硬伤，本文提出新任务 NEST（新兴实体分割）+ 自动数据引擎，并设计即插即用的 ROSE 框架——用互联网检索把文本答案和参考图实时灌进 MLLM 分割模型，在 NEST 上把 gIoU 比基于 Gemini-2.0 Flash 的强检索基线提升 19.2%。
+
 **[RS-SSM: Refining Forgotten Specifics in State Space Model for Video Semantic Segmentation](rs-ssm_refining_forgotten_specifics_in_state_space_model_for_video_semantic_segm.md)**
 
 :   提出 RS-SSM，通过频域分析提取各通道的特定信息分布特征（CwAP），并自适应反转遗忘门矩阵来补充性精炼 SSM 状态空间压缩时丢失的时空细节（FGIR），在 4 个视频语义分割基准上达到 SOTA 且保持高效率。
@@ -353,6 +397,22 @@ item_total: 83
 **[Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation](seeing_beyond_extrapolative_domain_adaptive_panoramic_segmentation.md)**
 
 :   提出 EDA-PSeg 框架，通过图匹配适配器（GMA）和欧拉-边际注意力（EMA）两个核心模块，首次实现从针孔视图到 360° 全景图像的开放集无监督域自适应语义分割，同时处理几何视场角畸变和未知类别发现。
+
+**[SegCompass: Exploring Interpretable Alignment with Sparse Autoencoders for Enhanced Reasoning Segmentation](segcompass_exploring_interpretable_alignment_with_sparse_autoencoders_for_enhanc.md)**
+
+:   SegCompass 用稀疏自编码器（SAE）把 MLLM 的链式推理（CoT）和视觉 token 投到一个共享的高维稀疏概念空间里，再经码本聚合、槽位映射生成可观察的多槽热力图来引导分割，从而把"推理→分割"这条原本是黑盒/事后拼接的通路改造成可逐步检视的"白盒"对齐，在 5 个基准上达到或超过 SOTA。
+
+**[Selective, Regularized, and Calibrated: Harnessing Vision Foundation Models for Cross-Domain Few-Shot Semantic Segmentation](selective_regularized_and_calibrated_harnessing_vision_foundation_models_for_cro.md)**
+
+:   HERA 把视觉基础模型（VFM）用于跨域小样本分割时的失败拆成「层敏感 + 注意力噪声 + 像素误差」三层问题，提出 select-regularize-calibrate 三阶段框架：先按 episode 自适应选出最稳的那一层（HLS），再用熵门控高斯先验正则该层的自注意力（PGR），最后融合多路残差校准像素预测（PAC），全程冻结 backbone、测试时只微调 <2.7% 参数、不碰源数据，就在四个 CD-FSS benchmark 上超过 SOTA 4.1+ mIoU。
+
+**[Semantic Alignment in Hyperbolic Space for Open-Vocabulary Semantic Segmentation](semantic_alignment_in_hyperbolic_space_for_open-vocabulary_semantic_segmentation.md)**
+
+:   HyRo 把 CLIP 微调搬到双曲空间，发现"层级"由半径编码、"语义相似度"由角度编码这两件事被前人混在一起调，于是用 Cayley 变换构造的正交旋转矩阵**只调角度、不动半径**，在保住层级结构的前提下精修跨模态语义对齐，开放词表语义分割在 6 个 benchmark 上有 4 个刷到 SOTA。
+
+**[SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semisupervised_framework.md)**
+
+:   本文提出SemiTooth框架，通过多教师-多学生架构和更严格的加权置信度约束（SWC），解决多源CBCT数据在半监督牙齿分割中的分布差异问题，在构建的MS3Toothset数据集上取得SOTA。
 
 **[SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons](semlayer_semantic-aware_generative_segmentation_and_layer_construction_for_abstr.md)**
 
@@ -389,6 +449,10 @@ item_total: 83
 **[Towards High-Quality Image Segmentation: Improving Topology Accuracy by Penalizing Neighbor Pixels](towards_high-quality_image_segmentation_improving_topology_accuracy_by_penalizin.md)**
 
 :   提出 Same Class Neighbor Penalization (SCNP)，通过在训练时将每个像素的 logit 替换为其同类邻域中最差预测，迫使模型优先修复邻域中的弱分类像素，从而以极低代价（仅 3 行代码、几毫秒/迭代）显著提升分割的拓扑精度。
+
+**[Training-Free Fine-Grained Semantic Segmentations in Low Data Regimes: A FungiTastic Baseline](training-free_fine-grained_semantic_segmentations_in_low_data_regimes_a_fungitas.md)**
+
+:   针对菌类细粒度分割这种「类别多、样本少、长尾、采集条件杂」的场景，本文提出一个**完全免训练**的两阶段流水线——先用 SAM3 配「mushrooms」这种宏观提示拿到类无关掩码，再用 DINOv3 特征做原型匹配贴细粒度标签，并发现对 DINOv3 特征做一次 **PCA 白化**就能把原型分类准确率从约 30% 拉到 55%，由此给出 FungiTastic 上首个低数据细粒度分割基线。
 
 **[Unified Spherical Frontend: Learning Rotation-Equivariant Representations of Spherical Images from Any Camera](unified_spherical_frontend_learning_rotation-equivariant_representations_of_sphe.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Same Target, Different Basins: Hard vs. Soft Labels for Annotator Distributions
 description: >-
-  [ICML 2026 (EIML Workshop)][AI安全][标注者分布] 在 CIFAR-10H 上把"标注者分布"以硬标签方式投喂给模型（multipass 按票循环 / SLS 每个 epoch 重采样），证明它和软标签交叉熵期望目标等价…
+  [ICML 2026 (EIML Workshop)][AI安全][标注者分布] 在 CIFAR-10H 上把"标注者分布"以硬标签方式投喂给模型（multipass 按票循环 / SLS 每个 epoch 重采样），证明它和软标签交叉熵期望目标等价，但收敛到更平坦的 basin、在稀疏标注下更优、且 OOD 检测略胜。
 tags:
   - "ICML 2026 (EIML Workshop)"
   - "AI安全"

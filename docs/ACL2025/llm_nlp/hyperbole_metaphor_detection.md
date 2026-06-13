@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Enhancing Hyperbole and Metaphor Detection with Their Bidirectional Dynamic Interaction and Emotion Knowledge
 description: >-
-  [ACL 2025 (acl-long.23)][夸张检测] 提出 EmoBi 框架，通过情感分析→情感引导的域映射→双向动态交互三阶段 prompting 流程，利用 LLM 挖掘夸张和隐喻背后的情感线索及二者的互促关系，在四个数据集上大幅超越 SoTA（TroFi 上夸张检测 F1 提升 28.1%…
+  [ACL 2025 (acl-long.23)][LLM 其他][夸张检测] 提出 EmoBi 框架，通过情感分析→情感引导的域映射→双向动态交互三阶段 prompting 流程，利用 LLM 挖掘夸张和隐喻背后的情感线索及二者的互促关系，在四个数据集上大幅超越 SoTA（TroFi 上夸张检测 F1 提升 28.1%，HYPO-L 上隐喻检测 F1 提升 23.1%）。
 tags:
   - "ACL 2025 (acl-long.23)"
+  - "LLM 其他"
   - "夸张检测"
   - "隐喻检测"
   - "情感引导"

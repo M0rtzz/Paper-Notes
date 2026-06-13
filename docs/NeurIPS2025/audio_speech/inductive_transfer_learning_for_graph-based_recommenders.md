@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inductive Transfer Learning for Graph-Based Recommenders
 description: >-
-  [NeurIPS 2025][音频/语音][图神经网络] 提出 NBF-Rec，一个基于神经 Bellman-Ford 网络的图推荐模型，支持在用户和物品完全不相交的数据集之间进行归纳式迁移学习，实现零样本跨域推荐和轻量微调适配。
+  [NeurIPS 2025][音频/语音][图神经网络] 提出 NBF-Rec，一个基于神经 Bellman-Ford 网络的图推荐模型，支持在用户和物品完全不相交的数据集之间进行归纳式迁移学习，实现零样本跨域推荐和轻量微调适配。 领域现状：图神经网络推荐系统（如 LightGCN）在单域内表现优异，但以转导式（transd…
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

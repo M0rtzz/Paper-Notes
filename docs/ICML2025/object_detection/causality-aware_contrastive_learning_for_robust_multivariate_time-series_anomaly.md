@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection
 description: >-
-  [ICML 2025][目标检测][多变量异常检测] 提出 CAROTS——将因果关系融入对比学习的多变量时间序列异常检测框架，用因果保持增强作为正样本（正常变化），因果破坏增强作为负样本（模拟异常），训练编码器基于因果结构区分正常与异常。
+  [ICML 2025][目标检测][多变量异常检测] 提出 CAROTS——将因果关系融入对比学习的多变量时间序列异常检测框架，用因果保持增强作为正样本（正常变化），因果破坏增强作为负样本（模拟异常），训练编码器基于因果结构区分正常与异常。 领域现状：多变量时间序列异常检测（MTSAD）是网络安全、医疗监控等关键领域的核心需…
 tags:
   - "ICML 2025"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Practical and Optimal Algorithm for Linear Contextual Bandits with Rare Parameter Updates
 description: >-
-  [ICML2026][强化学习][线性 contextual bandit] 在线性 contextual bandit 上，作者把过去"batched"一词隐式混淆的"何时拿到 reward"和"区间内能否依赖到达的 context"两个轴显式拆开…
+  [ICML2026][强化学习][线性 contextual bandit] 在线性 contextual bandit 上，作者把过去"batched"一词隐式混淆的"何时拿到 reward"和"区间内能否依赖到达的 context"两个轴显式拆开，定义出"rare parameter updates"（只限制 reward-driven 参数更新次数、允许 reward-free 的 context 自适应）这个更贴近实际部署的设定；并据此提出两个仅需 $\mathcal O(\log\log T)$ 次参数更新的算法 BLCE-G 和 BLCE，前者首次在小-$K$ 与大-$K$ 两个 regime 同时达到 minimax-…
 tags:
   - "ICML2026"
   - "强化学习"

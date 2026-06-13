@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VCD-Texture: Variance Alignment based 3D-2D Co-Denoising for Text-Guided Texturing
 description: >-
-  [ECCV 2024][3D视觉] 提出VCD-Texture，在Stable Diffusion去噪过程中统一2D和3D自注意力学习（JNP），通过方差对齐（VA）解决光栅化引起的方差衰减问题，并用修复细化处理不一致区域，实现高保真、高一致性的3D纹理合成。
+  [ECCV 2024][3D视觉] 提出VCD-Texture，在Stable Diffusion去噪过程中统一2D和3D自注意力学习（JNP），通过方差对齐（VA）解决光栅化引起的方差衰减问题，并用修复细化处理不一致区域，实现高保真、高一致性的3D纹理合成。 领域现状 领域现状：现有文本引导纹理合成方法忽视了2D扩散模型与…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMRL: Multi-Modal Representation Learning for Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][CLIP迁移学习] MMRL 提出了一个共享的、模态无关的可学习表征空间，将表征 token 投影到图像和文本编码器的高层（保留低层泛化知识），并通过解耦推理策略（基类用表征+类别特征，新类只用类别特征）在 15 个数据集上实现了 few-shot 适配与泛化的最优平衡…
+  [CVPR 2025][多模态VLM][CLIP迁移学习] MMRL 提出了一个共享的、模态无关的可学习表征空间，将表征 token 投影到图像和文本编码器的高层（保留低层泛化知识），并通过解耦推理策略（基类用表征+类别特征，新类只用类别特征）在 15 个数据集上实现了 few-shot 适配与泛化的最优平衡，刷新了 base-to-novel 泛化的 SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

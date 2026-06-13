@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaVision: A Hybrid Mamba-Transformer Vision Backbone
 description: >-
-  [CVPR 2025][语义分割][Mamba] NVIDIA 提出 MambaVision——首个系统研究 Mamba 与 Transformer 混合方式的视觉骨干网络，通过重设计的 MambaVision Mixer + 在最后几层加入 self-attention 来弥补 SSM 的全局上下文不足…
+  [CVPR 2025][语义分割][Mamba] NVIDIA 提出 MambaVision——首个系统研究 Mamba 与 Transformer 混合方式的视觉骨干网络，通过重设计的 MambaVision Mixer + 在最后几层加入 self-attention 来弥补 SSM 的全局上下文不足，在 ImageNet-1K 上达到精度-吞吐量的新 Pareto 前沿，同时在检测和分割下游任务中也优于同等规模的竞争模型。
 tags:
   - "CVPR 2025"
   - "语义分割"

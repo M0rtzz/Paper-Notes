@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls
 description: >-
-  [CVPR 2025][音频/语音][Foley音效生成] 提出 MultiFoley，基于 Diffusion Transformer 的视频引导 Foley 音效生成系统，支持文本语义控制和参考音频风格控制，通过联合训练视频-音频和文本-音频数据集实现 48kHz 高质量音频生成…
+  [CVPR 2025][音频/语音][Foley音效生成] 提出 MultiFoley，基于 Diffusion Transformer 的视频引导 Foley 音效生成系统，支持文本语义控制和参考音频风格控制，通过联合训练视频-音频和文本-音频数据集实现 48kHz 高质量音频生成，在人类评估中以 90% 胜率碾压现有方法。
 tags:
   - "CVPR 2025"
   - "音频/语音"

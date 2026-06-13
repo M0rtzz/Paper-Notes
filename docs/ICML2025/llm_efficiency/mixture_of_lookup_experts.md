@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture of Lookup Experts
 description: >-
-  [ICML 2025][LLM效率][Mixture-of-Experts] 提出 MoLE（Mixture of Lookup Experts），将 MoE 中的路由专家输入从中间特征改为 embedding token，使专家可在推理前被重参数化为查找表（LUT）并卸载到存储设备…
+  [ICML 2025][LLM效率][Mixture-of-Experts] 提出 MoLE（Mixture of Lookup Experts），将 MoE 中的路由专家输入从中间特征改为 embedding token，使专家可在推理前被重参数化为查找表（LUT）并卸载到存储设备，从而在保持 MoE 级别性能的同时实现与 dense 模型相当的推理速度和显存占用。
 tags:
   - "ICML 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ⊘ Source Models Leak What They Shouldn't ↛: Unlearning Zero-Shot Transfer in Domain Adaptation Through Adversarial Optimization
 description: >-
-  [CVPR 2026][LLM安全][机器遗忘] 发现无源域自适应（SFDA）方法会不经意地将源域独有类别的知识泄漏到目标域（零样本迁移现象），提出 SCADA-UL 框架通过对抗生成遗忘样本和重缩放标签策略，在域自适应过程中同时完成类别遗忘，达到接近从头训练的遗忘效果。
+  [CVPR 2026][LLM安全][机器遗忘] 发现无源域自适应（SFDA）方法会不经意地将源域独有类别的知识泄漏到目标域（零样本迁移现象），提出 SCADA-UL 框架通过对抗生成遗忘样本和重缩放标签策略，在域自适应过程中同时完成类别遗忘，达到接近从头训练的遗忘效果。 领域现状：视觉模型越来越多地被跨域应用（如从自然图像…
 tags:
   - "CVPR 2026"
   - "LLM安全"

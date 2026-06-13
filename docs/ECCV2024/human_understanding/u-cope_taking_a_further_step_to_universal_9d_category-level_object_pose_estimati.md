@@ -2,7 +2,7 @@
 title: >-
   [论文解读] U-COPE: Taking a Further Step to Universal 9D Category-Level Object Pose Estimation
 description: >-
-  [ECCV 2024][人体理解][类别级位姿估计] 本文提出 U-COPE，首个统一处理刚性和铰接物体的类别级 9D 位姿估计框架，通过将刚性物体视为单部件铰接物体来统一问题定义，利用 Point Pair Features（PPF）独立提取各部件特征并通过通用投票策略预测关键位姿参数…
+  [ECCV 2024][人体理解][类别级位姿估计] 本文提出 U-COPE，首个统一处理刚性和铰接物体的类别级 9D 位姿估计框架，通过将刚性物体视为单部件铰接物体来统一问题定义，利用 Point Pair Features（PPF）独立提取各部件特征并通过通用投票策略预测关键位姿参数，在合成和真实数据集上均达到 SOTA。
 tags:
   - "ECCV 2024"
   - "人体理解"

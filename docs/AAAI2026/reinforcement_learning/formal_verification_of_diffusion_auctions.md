@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Formal Verification of Diffusion Auctions
 description: >-
-  [AAAI 2026][强化学习][扩散拍卖] 首次提出面向扩散拍卖（diffusion auctions）的形式化逻辑框架，引入 $n$ 卖家扩散激励逻辑 $\mathcal{L}^n$ 及其策略扩展 $\mathcal{SL}^n$，支持对拍卖属性（如 Nash 均衡、卖家策略存在性）的模型检测验证…
+  [AAAI 2026][强化学习][扩散拍卖] 首次提出面向扩散拍卖（diffusion auctions）的形式化逻辑框架，引入 $n$ 卖家扩散激励逻辑 $\mathcal{L}^n$ 及其策略扩展 $\mathcal{SL}^n$，支持对拍卖属性（如 Nash 均衡、卖家策略存在性）的模型检测验证，分别建立了 P 和 PSPACE-complete 的复杂度结果。
 tags:
   - "AAAI 2026"
   - "强化学习"

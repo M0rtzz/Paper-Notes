@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Face2Scene: Using Facial Degradation as an Oracle for Diffusion-Based Scene Restoration
 description: >-
-  [CVPR2026][图像生成][图像复原] 提出 Face2Scene 两阶段框架：先用参考人脸复原模型(Ref-FR)获得 HQ-LQ 人脸对，从中提取退化编码作为"oracle"，再以此条件化单步扩散模型完成包含身体与背景的全场景图像复原。
+  [CVPR2026][图像生成][图像复原] 提出 Face2Scene 两阶段框架：先用参考人脸复原模型(Ref-FR)获得 HQ-LQ 人脸对，从中提取退化编码作为"oracle"，再以此条件化单步扩散模型完成包含身体与背景的全场景图像复原。 参考人脸复原局限于面部区域：现有 Ref-FR 方法仅复原人脸裁剪区域…
 tags:
   - "CVPR2026"
   - "图像生成"

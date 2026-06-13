@@ -2,7 +2,7 @@
 title: >-
   [论文解读] (Sparse) Attention to the Details: Preserving Spectral Fidelity in ML-based Weather Forecasting Models
 description: >-
-  [ICML 2026][地球科学][天气预报] MOSAIC 用"概率扰动 + 在 HEALPix 球面网格上的 mesh-aligned 块稀疏注意力"同时解决了 ML 天气预报模型的两类频谱退化（确定性平均带来的谱衰减 + 粗化潜空间带来的高频走样）…
+  [ICML 2026][地球科学][天气预报] MOSAIC 用"概率扰动 + 在 HEALPix 球面网格上的 mesh-aligned 块稀疏注意力"同时解决了 ML 天气预报模型的两类频谱退化（确定性平均带来的谱衰减 + 粗化潜空间带来的高频走样），在 1.5° 分辨率上仅 214M 参数就匹敌甚至超过 6× 高分辨率的模型，单 H100 12 秒生成 24 成员 10 天预报。
 tags:
   - "ICML 2026"
   - "地球科学"

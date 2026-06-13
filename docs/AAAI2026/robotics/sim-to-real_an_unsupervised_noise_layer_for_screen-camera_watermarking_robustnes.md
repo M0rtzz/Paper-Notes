@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sim-to-Real: An Unsupervised Noise Layer for Screen-Camera Watermarking Robustness
 description: >-
-  [AAAI 2026][机器人][屏幕-相机水印] 提出 Simulation-to-Real (S2R) 框架，首创"数学建模 → 无监督域迁移"两阶段噪声近似策略：先用数学模型将清晰图像变换到已知噪声域 $\mathcal{C}$…
+  [AAAI 2026][机器人][屏幕-相机水印] 提出 Simulation-to-Real (S2R) 框架，首创"数学建模 → 无监督域迁移"两阶段噪声近似策略：先用数学模型将清晰图像变换到已知噪声域 $\mathcal{C}$，再用无监督 Image-to-Image 网络 $G$ 将 $\mathcal{C}$ 映射到真实屏幕-相机噪声域 $\mathcal{U}$，无需配对数据即可精确逼近真实 SC 噪声，在多设备、多角度、多距离条件下均取得最优水印鲁棒性（BER 降低 30-60%）和图像质量（PSNR 42.27 dB / SSIM 0.962）。
 tags:
   - "AAAI 2026"
   - "机器人"

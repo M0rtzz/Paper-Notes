@@ -2,9 +2,10 @@
 title: >-
   [论文解读] 4DGT: Learning a 4D Gaussian Transformer Using Real-World Monocular Videos
 description: >-
-  [NeurIPS 2025 (Spotlight)][4D Gaussian Splatting] 提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
+  [NeurIPS 2025 (Spotlight)][3D视觉][4D Gaussian Splatting] 提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。 核心矛盾 核心矛盾：领域现…
 tags:
   - "NeurIPS 2025 (Spotlight)"
+  - "3D视觉"
   - "4D Gaussian Splatting"
   - "Transformer"
   - "动态场景重建"

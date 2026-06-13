@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Overfitting in Adaptive Robust Optimization
 description: >-
-  [NeurIPS 2025 (Workshop: MLxOR)][自适应鲁棒优化] 揭示自适应鲁棒优化（ARO）中策略脆弱性与机器学习过拟合的类比关系：自适应策略在不确定性集内表现优异但集外易失效，提出约束特定的不确定性集大小作为"正则化"手段来平衡鲁棒性和自适应性。
+  [NeurIPS 2025 (Workshop: MLxOR)][自适应鲁棒优化] 揭示自适应鲁棒优化（ARO）中策略脆弱性与机器学习过拟合的类比关系：自适应策略在不确定性集内表现优异但集外易失效，提出约束特定的不确定性集大小作为"正则化"手段来平衡鲁棒性和自适应性。 鲁棒优化（RO）：是不确定性下决策的主要框架之一…
 tags:
   - "NeurIPS 2025 (Workshop: MLxOR)"
   - "自适应鲁棒优化"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data
 description: >-
-  [ICML2025 (ML4Astro Workshop)][物理/科学计算][多模态VAE] 提出基于 Perceiver-IO 架构的多模态混合专家 VAE（MMVAE），对 Ia 型超新星的光变曲线和光谱进行联合嵌入，实现从光变曲线到光谱的跨模态概率生成，重建精度优于对比学习基线。
+  [ICML2025 (ML4Astro Workshop)][物理/科学计算][多模态VAE] 提出基于 Perceiver-IO 架构的多模态混合专家 VAE（MMVAE），对 Ia 型超新星的光变曲线和光谱进行联合嵌入，实现从光变曲线到光谱的跨模态概率生成，重建精度优于对比学习基线。 问题背景 Ia 型超新星（SNe I…
 tags:
   - "ICML2025 (ML4Astro Workshop)"
   - "物理/科学计算"
@@ -136,10 +136,10 @@ $$\mathcal{L}(x_{1,\dots,M}) = \mathbb{E}_{z^{1:K} \sim q_\phi} \left[ \log \sum
 - **Perceiver-IO** (Jaegle et al., 2021)：通过交叉注意力处理任意长度输入的通用架构
 
 ## 评分
-- 新颖性: ⭐⭐⭐ — 将 MMVAE + Perceiver 应用于超新星跨模态学习，组合有新意但各组件均为已有方法
-- 实验充分度: ⭐⭐ — 仅模拟数据、小规模验证，缺少真实数据和扩散模型对比
-- 写作质量: ⭐⭐⭐⭐ — 行文清晰，问题动机阐述充分，架构图直观
-- 价值: ⭐⭐⭐ — 面向 LSST 时代的实际需求，但需要真实数据验证才有说服力
+- 新颖性: ⭐⭐⭐⭐ — 将 MMVAE + Perceiver 应用于超新星跨模态学习，组合有新意但各组件均为已有方法
+- 实验充分度: ⭐⭐⭐ — 仅模拟数据、小规模验证，缺少真实数据和扩散模型对比
+- 写作质量: ⭐⭐⭐⭐⭐ — 行文清晰，问题动机阐述充分，架构图直观
+- 价值: ⭐⭐⭐⭐ — 面向 LSST 时代的实际需求，但需要真实数据验证才有说服力
 
 <!-- RELATED:START -->
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision
 description: >-
-  [CVPR 2025][3D视觉][RGB-NIR融合] 本文开发了一套基于棱镜分光的像素对齐 RGB-NIR 立体相机系统，搭建在移动机器人上采集了大规模多光照条件数据集，并提出了图像融合和特征融合两种方法，使现有 RGB 预训练视觉模型无需/少量微调即可利用 NIR 信息…
+  [CVPR 2025][3D视觉][RGB-NIR融合] 本文开发了一套基于棱镜分光的像素对齐 RGB-NIR 立体相机系统，搭建在移动机器人上采集了大规模多光照条件数据集，并提出了图像融合和特征融合两种方法，使现有 RGB 预训练视觉模型无需/少量微调即可利用 NIR 信息，在深度估计、目标检测和 SfM 等任务上取得显著提升。
 tags:
   - "CVPR 2025"
   - "3D视觉"

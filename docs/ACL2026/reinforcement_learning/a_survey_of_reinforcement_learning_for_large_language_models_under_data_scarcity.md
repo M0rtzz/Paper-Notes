@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Survey of Reinforcement Learning for Large Language Models under Data Scarcity: Challenges and Solutions
 description: >-
-  [ACL 2026][强化学习][数据稀缺] 首篇系统综述数据稀缺条件下LLM强化学习的工作，提出数据中心、训练中心、框架中心三层分类体系，覆盖数据剪枝/合成/压缩、轨迹生成/奖励工程/策略优化、以及自演化/协同演化/多智能体演化等方向。
+  [ACL 2026][强化学习][数据稀缺] 首篇系统综述数据稀缺条件下LLM强化学习的工作，提出数据中心、训练中心、框架中心三层分类体系，覆盖数据剪枝/合成/压缩、轨迹生成/奖励工程/策略优化、以及自演化/协同演化/多智能体演化等方向。 领域现状：强化学习（RL）已成为LLM后训练的重要范式，DeepSeek-R1和Ope…
 tags:
   - "ACL 2026"
   - "强化学习"

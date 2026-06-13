@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Localizing Memorized Regions in Diffusion Models via Coordinate-Wise Curvature Differences
 description: >-
-  [ICML 2026][图像生成][扩散模型记忆] 本文把"扩散模型局部记忆"刻画为对数密度在某些坐标上的**方差崩塌（高曲率）**，并用"条件模型 − 欠拟合基线（无条件模型或早期 checkpoint）"的**坐标级曲率差**，把单纯由数据流形固有低方差引起的"伪记忆"扣掉…
+  [ICML 2026][图像生成][扩散模型记忆] 本文把"扩散模型局部记忆"刻画为对数密度在某些坐标上的**方差崩塌（高曲率）**，并用"条件模型 − 欠拟合基线（无条件模型或早期 checkpoint）"的**坐标级曲率差**，把单纯由数据流形固有低方差引起的"伪记忆"扣掉，只保留**过拟合驱动的记忆区域**，在 Stable Diffusion 的 ground-truth 记忆掩码上把定位 IoU 从 BE 的 0.75 提到约 0.92。
 tags:
   - "ICML 2026"
   - "图像生成"

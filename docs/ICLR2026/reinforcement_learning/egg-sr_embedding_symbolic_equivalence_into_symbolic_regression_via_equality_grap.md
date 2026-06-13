@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EGG-SR: Embedding Symbolic Equivalence into Symbolic Regression via Equality Graph
 description: >-
-  [ICLR 2026][强化学习][符号回归] 提出 Egg-SR 统一框架，通过等价图（e-graph）将符号等价性嵌入 MCTS、DRL 和 LLM 三类符号回归方法中，分别实现子树剪枝、梯度方差降低和反馈提示增强。理论证明 Egg-MCTS 收紧遗憾界、Egg-DRL 降低梯度估计方差…
+  [ICLR 2026][强化学习][符号回归] 提出 Egg-SR 统一框架，通过等价图（e-graph）将符号等价性嵌入 MCTS、DRL 和 LLM 三类符号回归方法中，分别实现子树剪枝、梯度方差降低和反馈提示增强。理论证明 Egg-MCTS 收紧遗憾界、Egg-DRL 降低梯度估计方差，实验验证一致提升表达式发现精度。
 tags:
   - "ICLR 2026"
   - "强化学习"

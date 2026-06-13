@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Global Plane Waves from Local Gaussians: Periodic Charge Densities in a Blink
 description: >-
-  [ICML 2026][可解释性][电荷密度预测] ELECTRAFI 在实空间预测一组各向异性高斯的参数，再利用高斯的解析傅里叶变换 + 泊松求和公式，在倒易空间一次性算出周期晶体的电荷密度的平面波系数，做一次逆 FFT 就拿到全场密度；在 NMAE 与 ChargE3Net 持平甚至更优的同时…
+  [ICML 2026][可解释性][电荷密度预测] ELECTRAFI 在实空间预测一组各向异性高斯的参数，再利用高斯的解析傅里叶变换 + 泊松求和公式，在倒易空间一次性算出周期晶体的电荷密度的平面波系数，做一次逆 FFT 就拿到全场密度；在 NMAE 与 ChargE3Net 持平甚至更优的同时，推理快 $463\times \sim 633\times$，把端到端 DFT 总时间真正降下来 $\sim 20\%$。
 tags:
   - "ICML 2026"
   - "可解释性"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Building Better: Avoiding Pitfalls in Developing Language Resources when Data is Scarce
 description: >-
-  [ACL 2025][low-resource languages] 通过对 81 名低资源语言 NLP 研究者和标注者的调查，揭示了低资源语言数据构建中的质量问题（数据不自然、文化失当）和伦理问题（标注者劳动被剥削、署名不公），并提出六条改进建议。
+  [ACL 2025][多语言/翻译][low-resource languages] 通过对 81 名低资源语言 NLP 研究者和标注者的调查，揭示了低资源语言数据构建中的质量问题（数据不自然、文化失当）和伦理问题（标注者劳动被剥削、署名不公），并提出六条改进建议。 领域现状：NLP 社区对低资源语言的兴趣持续增长…
 tags:
   - "ACL 2025"
+  - "多语言/翻译"
   - "low-resource languages"
   - "data annotation ethics"
   - "participatory research"

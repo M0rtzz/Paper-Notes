@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LazyMAR: Accelerating Masked Autoregressive Models via Feature Caching
 description: >-
-  [ICCV 2025][图像生成][MAR加速] LazyMAR针对Masked Autoregressive（MAR）模型的推理效率瓶颈，利用两种冗余——token冗余（相邻解码步中大部分token特征高度相似）和条件冗余（classifier-free guidance中条件/无条件输出的残差在相邻步间变…
+  [ICCV 2025][图像生成][MAR加速] LazyMAR针对Masked Autoregressive（MAR）模型的推理效率瓶颈，利用两种冗余——token冗余（相邻解码步中大部分token特征高度相似）和条件冗余（classifier-free guidance中条件/无条件输出的残差在相邻步间变化极小），设计了token cache和condition cache两种缓存机制，实现2.83×加速且几乎不损失生成质量。
 tags:
   - "ICCV 2025"
   - "图像生成"

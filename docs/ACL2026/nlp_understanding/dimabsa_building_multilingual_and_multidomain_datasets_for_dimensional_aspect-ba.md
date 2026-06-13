@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DimABSA: Building Multilingual and Multidomain Datasets for Dimensional Aspect-Based Sentiment Analysis
 description: >-
-  [ACL 2026][NLP理解][ABSA] 作者构建了首个多语言（6 种语言）多领域（4 个领域）的维度型方面级情感分析数据集 DimABSA（76,958 个 aspect 实例 / 42,590 句），用连续的 valence–arousal 分数取代传统的「正/负/中」三分类…
+  [ACL 2026][NLP理解][ABSA] 作者构建了首个多语言（6 种语言）多领域（4 个领域）的维度型方面级情感分析数据集 DimABSA（76,958 个 aspect 实例 / 42,590 句），用连续的 valence–arousal 分数取代传统的「正/负/中」三分类，并设计 3 个新子任务和统一指标 cF1，对 6 个开/闭源 LLM 进行了系统评测。
 tags:
   - "ACL 2026"
   - "NLP理解"

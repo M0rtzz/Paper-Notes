@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Boosting LLM's Molecular Structure Elucidation with Knowledge Enhanced Tree Search Reasoning
 description: >-
-  [ACL 2025][LLM/NLP][molecular structure elucidation] 提出 K-MSE（Knowledge-enhanced Molecular Structure Elucidation）框架，构建分子子结构知识库扩展 LLM 的化学结构空间覆盖…
+  [ACL 2025][LLM 其他][molecular structure elucidation] 提出 K-MSE（Knowledge-enhanced Molecular Structure Elucidation）框架，构建分子子结构知识库扩展 LLM 的化学结构空间覆盖，设计专用分子-光谱打分器替代 LLM 自身评估，结合蒙特卡洛树搜索（MCTS）实现测试时推理缩放，在 MolPuzzle 基准上分别将 GPT-4o-mini 和 GPT-4o 的准确率从 3.7% 和 27.8% 提升至 27.3% 和 39.8%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "molecular structure elucidation"
   - "MCTS"
   - "knowledge base"

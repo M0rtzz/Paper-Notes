@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRMBench: A Fine-grained and Challenging Benchmark for Process-Level Reward Models
 description: >-
-  [ACL 2025][LLM对齐][过程奖励模型] 本文提出PRMBench，一个包含6,216个精心设计问题和83,456个步骤级标签的基准，从简洁性（Simplicity）、合理性（Soundness）和敏感性（Sensitivity）三个维度系统评估过程级奖励模型（PRM）的细粒度错误检测能力…
+  [ACL 2025][LLM对齐][过程奖励模型] 本文提出PRMBench，一个包含6,216个精心设计问题和83,456个步骤级标签的基准，从简洁性（Simplicity）、合理性（Soundness）和敏感性（Sensitivity）三个维度系统评估过程级奖励模型（PRM）的细粒度错误检测能力，实验揭示了现有15个PRM的显著不足。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EmotionThinker: Prosody-Aware Reinforcement Learning for Explainable Speech Emotion Reasoning
 description: >-
-  [ICLR 2026][音频/语音][语音情感识别] 首次将语音情感识别（SER）重构为深度推理问题，通过韵律增强基座模型 + GRPO-PTR（渐进式可信推理奖励）强化学习，生成带有声学依据的可解释情感推理。
+  [ICLR 2026 Oral][音频/语音][语音情感识别] 首次将语音情感识别（SER）重构为深度推理问题，通过韵律增强基座模型 + GRPO-PTR（渐进式可信推理奖励）强化学习，生成带有声学依据的可解释情感推理。 - 当前 SpeechLLM 仍将情感识别视为简单分类问题，给出标签但不解释"为什么" - 现有基于 S…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "音频/语音"
   - "语音情感识别"
   - "可解释推理"

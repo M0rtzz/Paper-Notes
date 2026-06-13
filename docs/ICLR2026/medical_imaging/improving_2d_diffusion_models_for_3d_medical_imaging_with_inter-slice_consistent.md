@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity
 description: >-
-  [ICLR 2026][医学图像][3D医学重建] 提出 Inter-Slice Consistent Stochasticity (ISCS)，通过球面线性插值(Slerp)在扩散采样的 re-noising 步骤中生成层间相关噪声…
+  [ICLR 2026][医学图像][3D医学重建] 提出 Inter-Slice Consistent Stochasticity (ISCS)，通过球面线性插值(Slerp)在扩散采样的 re-noising 步骤中生成层间相关噪声，从根源消除 2D 扩散先验做 3D 医学重建时的层间不连续伪影——零额外计算/超参数/训练开销，即插即用到任何 2D 扩散逆问题求解器，在稀疏视角 CT、限角 CT 和 MRI 超分辨率上均持续提升。
 tags:
   - "ICLR 2026"
   - "医学图像"

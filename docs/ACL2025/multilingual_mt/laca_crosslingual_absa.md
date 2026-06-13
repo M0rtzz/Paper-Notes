@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation
 description: >-
-  [ACL 2025][多语言/翻译][Cross-lingual ABSA] 提出 LACA 框架，利用 LLM 为目标语言生成高质量伪标注数据（而非依赖机器翻译），在六种语言上显著提升跨语言 ABSA 性能，在 mBERT 和 XLM-R 上分别平均超过前 SOTA 1.50% 和 2.62%。
+  [ACL 2025][多语言/翻译][Cross-lingual ABSA] 提出 LACA 框架，利用 LLM 为目标语言生成高质量伪标注数据（而非依赖机器翻译），在六种语言上显著提升跨语言 ABSA 性能，在 mBERT 和 XLM-R 上分别平均超过前 SOTA 1.50% 和 2.62%。 跨语言 ABSA 的挑战…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

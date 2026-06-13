@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Poisoning Attacks to Federated Learning via Multi-Round Consistency
 description: >-
-  [CVPR 2025][优化/理论][联邦学习] 发现现有联邦学习模型投毒攻击因跨轮次方向不一致导致效果自相抵消，提出 PoisonedFL 通过固定随机方向向量 + 动态幅度调节 + 假设检验机制实现多轮一致性攻击，在无需任何真实客户端信息的前提下击穿 8 种 SOTA 防御。
+  [CVPR 2025][优化/理论][联邦学习] 发现现有联邦学习模型投毒攻击因跨轮次方向不一致导致效果自相抵消，提出 PoisonedFL 通过固定随机方向向量 + 动态幅度调节 + 假设检验机制实现多轮一致性攻击，在无需任何真实客户端信息的前提下击穿 8 种 SOTA 防御。 领域现状： 联邦学习（FL）允许多客户端协作…
 tags:
   - "CVPR 2025"
   - "优化/理论"

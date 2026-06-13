@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoRL: Reinforcement Learning via Rollout Echoing
 description: >-
-  [ICML 2026][强化学习][RLVR] 本文指出 RLVR 训练后期 GRPO 类方法因为一组 rollout 全部成功导致优势归零、梯度消失（advantage degeneration）…
+  [ICML 2026][强化学习][RLVR] 本文指出 RLVR 训练后期 GRPO 类方法因为一组 rollout 全部成功导致优势归零、梯度消失（advantage degeneration），提出 EchoRL：从 verified-success rollout 里基于**步级熵峰值**挑出"最艰难却走通了的"前缀 EchoClip，作为辅助 SFT 项加到 loss 上，在 4 个 RLVR 框架、5 个 backbone、10 个 benchmark 上稳定带来最高 5.6%/5.0% 的 ID/OOD 提升。
 tags:
   - "ICML 2026"
   - "强化学习"

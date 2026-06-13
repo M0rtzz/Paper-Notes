@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WebRPG: Automatic Web Rendering Parameters Generation for Visual Presentation
 description: >-
-  [ECCV 2024][图像生成] 提出Web渲染参数生成（WebRPG）新任务，旨在根据HTML代码自动生成网页元素的视觉呈现参数（布局、文本样式、颜色），通过VAE压缩渲染参数和定制HTML嵌入捕获语义层次信息，建立自回归和扩散两种基线模型，其中自回归模型显著优于扩散模型和GPT-4。
+  [ECCV 2024][图像生成] 提出Web渲染参数生成（WebRPG）新任务，旨在根据HTML代码自动生成网页元素的视觉呈现参数（布局、文本样式、颜色），通过VAE压缩渲染参数和定制HTML嵌入捕获语义层次信息，建立自回归和扩散两种基线模型，其中自回归模型显著优于扩散模型和GPT-4。 - 生成式模型已革新图像、文本、音…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild
 description: >-
-  [ICCV 2025][LLM评测][文本到动作生成] 提出 InterSyn 框架，通过交错学习策略（Interleaved Learning）将单人与多人动作在统一序列中联合建模，配合相对协调精修（REC）模块，生成更自然、更协调的人体交互动作…
+  [ICCV 2025][LLM评测][文本到动作生成] 提出 InterSyn 框架，通过交错学习策略（Interleaved Learning）将单人与多人动作在统一序列中联合建模，配合相对协调精修（REC）模块，生成更自然、更协调的人体交互动作，在 InterHuman 测试集上 FID 较 FreeMotion 降低 6.1%，R Precision Top-1 提升 2.8%。
 tags:
   - "ICCV 2025"
   - "LLM评测"

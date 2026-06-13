@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeFlow: A Self-Supervised Scene Flow Method in Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][Scene Flow] SeFlow 提出将传统的基于 ray-casting 的动态点分类融入自监督场景流学习管线，通过专门的动态/静态损失函数和基于聚类的物体级运动一致性约束…
+  [ECCV 2024][自动驾驶][Scene Flow] SeFlow 提出将传统的基于 ray-casting 的动态点分类融入自监督场景流学习管线，通过专门的动态/静态损失函数和基于聚类的物体级运动一致性约束，在 Argoverse 2 和 Waymo 上以实时速度（48ms/帧）取得自监督场景流 SOTA 性能，甚至超越部分有监督方法。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

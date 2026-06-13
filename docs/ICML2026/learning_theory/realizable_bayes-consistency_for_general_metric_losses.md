@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Realizable Bayes-Consistency for General Metric Losses
 description: >-
-  [ICML 2026][可学习性] 本文对"在一般（可能无界）度量损失下，假设类 $\mathcal{H}$ 何时存在分布无关的强通用 Bayes 一致学习算法"这一开放问题在 realizable 情形下给出锐刻画——充分必要条件是 $\mathcal{H}$ 不包含一种新的"无界 gap Littlest…
+  [ICML 2026][学习理论 / 度量损失 / Bayes 一致性][可学习性] 本文对"在一般（可能无界）度量损失下，假设类 $\mathcal{H}$ 何时存在分布无关的强通用 Bayes 一致学习算法"这一开放问题在 realizable 情形下给出锐刻画——充分必要条件是 $\mathcal{H}$ 不包含一种新的"无界 gap Littlestone 树"组合障碍。
 tags:
   - "ICML 2026"
+  - "学习理论 / 度量损失 / Bayes 一致性"
   - "可学习性"
   - "度量损失"
   - "Littlestone tree"

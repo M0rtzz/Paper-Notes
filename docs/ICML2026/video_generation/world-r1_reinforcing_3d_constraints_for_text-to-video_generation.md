@@ -2,7 +2,7 @@
 title: >-
   [论文解读] World-R1: Reinforcing 3D Constraints for Text-to-Video Generation
 description: >-
-  [ICML 2026][视频生成][文本到视频生成] World-R1 把文本到视频模型的 3D 一致性问题转化为强化学习后训练：用隐式相机条件和 3D-aware reward 对 Wan 2.1 等视频基础模型做 Flow-GRPO 对齐，在不改模型架构和推理流程的情况下显著减少几何幻觉…
+  [ICML 2026][视频生成][文本到视频生成] World-R1 把文本到视频模型的 3D 一致性问题转化为强化学习后训练：用隐式相机条件和 3D-aware reward 对 Wan 2.1 等视频基础模型做 Flow-GRPO 对齐，在不改模型架构和推理流程的情况下显著减少几何幻觉，同时保持一般视频生成质量。
 tags:
   - "ICML 2026"
   - "视频生成"

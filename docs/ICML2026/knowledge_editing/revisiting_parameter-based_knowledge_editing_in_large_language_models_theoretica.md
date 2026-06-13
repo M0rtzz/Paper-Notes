@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Parameter-Based Knowledge Editing in Large Language Models: Theoretical Limits and Empirical Evidence
 description: >-
-  [ICML 2026][知识编辑][参数化知识编辑] 本文从"维度坍塌"假设出发，证明参数级知识编辑会沿低奇异值方向被放大并随序列编辑线性累积，进而在多模型、多数据集、多评测维度上系统性地拖垮 LLM 核心能力，并指出一个简单的检索式基线 SCR 在所有设定下都优于现有参数编辑方法。
+  [ICML 2026][知识编辑][参数化知识编辑] 本文从"维度坍塌"假设出发，证明参数级知识编辑会沿低奇异值方向被放大并随序列编辑线性累积，进而在多模型、多数据集、多评测维度上系统性地拖垮 LLM 核心能力，并指出一个简单的检索式基线 SCR 在所有设定下都优于现有参数编辑方法。 领域现状：知识编辑大致分为四类——loc…
 tags:
   - "ICML 2026"
   - "知识编辑"

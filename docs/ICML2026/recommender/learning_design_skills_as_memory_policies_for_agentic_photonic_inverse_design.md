@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Design Skills as Memory Policies for Agentic Photonic Inverse Design
 description: >-
-  [ICML 2026][推荐系统][记忆策略] SkillPCF 把光子晶体光纤（PCF）的反向设计重塑为"记忆策略学习"问题：用 PPO 训练的控制器在每个轨迹片段从可演化技能库里挑 Top-K 个 memory 操作，执行器把它们落到轨迹记忆里，再用 MEEP 电磁仿真奖励同时优化控制器与技能库本身…
+  [ICML 2026][推荐系统][记忆策略] SkillPCF 把光子晶体光纤（PCF）的反向设计重塑为"记忆策略学习"问题：用 PPO 训练的控制器在每个轨迹片段从可演化技能库里挑 Top-K 个 memory 操作，执行器把它们落到轨迹记忆里，再用 MEEP 电磁仿真奖励同时优化控制器与技能库本身，在多 LLM 后端和经典优化基线上都拿到更好的设计成功率与仿真预算权衡。
 tags:
   - "ICML 2026"
   - "推荐系统"

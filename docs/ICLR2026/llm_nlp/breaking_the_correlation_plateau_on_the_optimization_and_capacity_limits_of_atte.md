@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Breaking the Correlation Plateau: On the Optimization and Capacity Limits of Attention-Based Regressors
 description: >-
-  [ICLR 2026][LLM/NLP][Pearson相关系数] 本文首次从理论上分析了注意力回归模型在联合 MSE+PCC 训练时出现的"PCC平台期"现象——发现其根源在于 MSE 优化与 PCC 梯度之间的冲突以及 softmax 凸聚合的表达力上界——并提出 ECA（Extrapolative Co…
+  [ICLR 2026][LLM 其他][Pearson相关系数] 本文首次从理论上分析了注意力回归模型在联合 MSE+PCC 训练时出现的"PCC平台期"现象——发现其根源在于 MSE 优化与 PCC 梯度之间的冲突以及 softmax 凸聚合的表达力上界——并提出 ECA（Extrapolative Correlation Attention）框架，通过缩放残差聚合、色散感知温度 softmax 和色散归一化 PCC 损失三个组件突破该限制。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Pearson相关系数"
   - "注意力回归"
   - "PCC plateau"

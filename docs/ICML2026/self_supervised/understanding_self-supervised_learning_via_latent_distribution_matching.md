@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Understanding Self-Supervised Learning via Latent Distribution Matching
 description: >-
-  [ICML 2026][自监督学习][潜在分布匹配] 作者把对比 / 非对比 / 预测式 SSL 统一为"潜在分布匹配 (LDM)"：最大化样本在假设潜在模型下的对数概率 (alignment) + 最大化潜在熵 (uniformity)，并基于此推出带 Kalman 预测器的非线性可识别预测式 SSL。
+  [ICML 2026 Spotlight][自监督学习][潜在分布匹配] 作者把对比 / 非对比 / 预测式 SSL 统一为"潜在分布匹配 (LDM)"：最大化样本在假设潜在模型下的对数概率 (alignment) + 最大化潜在熵 (uniformity)，并基于此推出带 Kalman 预测器的非线性可识别预测式 SSL。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "自监督学习"
   - "潜在分布匹配"
   - "非线性 ICA"

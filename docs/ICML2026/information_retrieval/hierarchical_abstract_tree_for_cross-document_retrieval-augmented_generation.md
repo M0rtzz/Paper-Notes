@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Abstract Tree for Cross-Document Retrieval-Augmented Generation
 description: >-
-  [ICML 2026][信息检索/RAG][Tree-RAG] Ψ-RAG 用"合并—坍缩"式的层次聚类替换 RAPTOR 的 k-means 来构建跨文档抽象树，并配上一个具备多轮重写能力的检索回答 Agent 与稀疏 BM25 混合索引…
+  [ICML 2026][信息检索/RAG][Tree-RAG] Ψ-RAG 用"合并—坍缩"式的层次聚类替换 RAPTOR 的 k-means 来构建跨文档抽象树，并配上一个具备多轮重写能力的检索回答 Agent 与稀疏 BM25 混合索引，让 Tree-RAG 第一次能在语料级、跨文档多跳问答上追平甚至超越 Graph-RAG，平均 F1 比 RAPTOR 高 25.9%、比 HippoRAG 2 高 7.4%。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

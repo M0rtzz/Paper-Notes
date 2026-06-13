@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DisCode: Distribution-Aware Score Decoder for Robust Automatic Evaluation of Image Captioning
 description: >-
-  [AAAI 2026][多模态VLM][图像描述评估] 提出 DISCODE，一种免微调的测试时自适应解码器，通过引入高斯先验分布最小化 ATT 损失，使 LVLM 生成的图像描述评估分数更鲁棒地对齐人类判断，并构建了覆盖六个视觉域的 MCEval 基准。
+  [AAAI 2026][多模态VLM][图像描述评估] 提出 DISCODE，一种免微调的测试时自适应解码器，通过引入高斯先验分布最小化 ATT 损失，使 LVLM 生成的图像描述评估分数更鲁棒地对齐人类判断，并构建了覆盖六个视觉域的 MCEval 基准。 - 核心问题： 使用 LVLM 对图像描述进行自动评分时…
 tags:
   - "AAAI 2026"
   - "多模态VLM"

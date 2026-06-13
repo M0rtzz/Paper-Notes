@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Data-Juicer 2.0: Cloud-Scale Adaptive Data Processing for and with Foundation Models
 description: >-
-  [NeurIPS 2025][音频/语音][数据处理系统] Data-Juicer 2.0 是面向基础模型的云规模多模态数据处理系统，150+ 跨文本/图像/视频/音频算子，支持自适应分布式执行（Ray/MaxCompute），在 10000+ CPU 核心上高效处理 TB 级数据…
+  [NeurIPS 2025 Spotlight][音频/语音][数据处理系统] Data-Juicer 2.0 是面向基础模型的云规模多模态数据处理系统，150+ 跨文本/图像/视频/音频算子，支持自适应分布式执行（Ray/MaxCompute），在 10000+ CPU 核心上高效处理 TB 级数据，已广泛应用于阿里云 PAI 等产品。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "音频/语音"
   - "数据处理系统"
   - "多模态数据"

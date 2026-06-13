@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying Error Propagation and Model Collapse in Diffusion Models
 description: >-
-  [ICML 2026][图像生成][扩散模型] 本文在 score-based 扩散模型上对"用合成数据递归训练导致 model collapse"这一现象给出第一套配对的上下界：单代散度 $\chi^2(\hat p^{i+1}\|q_i)\asymp \varepsilon_{\star,i}^2$…
+  [ICML 2026][图像生成][扩散模型] 本文在 score-based 扩散模型上对"用合成数据递归训练导致 model collapse"这一现象给出第一套配对的上下界：单代散度 $\chi^2(\hat p^{i+1}\|q_i)\asymp \varepsilon_{\star,i}^2$，多代累积散度 $D_N$ 是过去各代 score 误差能量按 $(1-\alpha)^{2m}$ 几何衰减的加权和，从而把"加新鲜数据能缓解坍塌"这一经验事实化成了精确的衰减律。
 tags:
   - "ICML 2026"
   - "图像生成"

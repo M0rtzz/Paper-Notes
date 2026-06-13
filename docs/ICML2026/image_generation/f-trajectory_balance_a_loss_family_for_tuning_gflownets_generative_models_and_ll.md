@@ -2,7 +2,7 @@
 title: >-
   [论文解读] $f$-Trajectory Balance: A Loss Family for Tuning GFlowNets, Generative Models, and LLMs with Off- and On-Policy Data
 description: >-
-  [ICML2026][图像生成][f-散度] 把 GFlowNet/Kimi 里"对 log-prob 差取平方"的 $\mathbb{KL}_{sq}$ 代理损失推广到整族 $f$-散度…
+  [ICML2026][图像生成][f-散度] 把 GFlowNet/Kimi 里"对 log-prob 差取平方"的 $\mathbb{KL}_{sq}$ 代理损失推广到整族 $f$-散度，得到一族同时具备"on-policy 梯度等于对应 $f$-散度真梯度、off-policy 仍有同一全局最优"的可调控 mode-seeking↔mode-covering 损失，并在合成网格、SynFlowNet 分子生成、扩散模型条件采样和异步 LLM RL（GSM8k / MATH）上验证。
 tags:
   - "ICML2026"
   - "图像生成"

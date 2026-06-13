@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instance Generation for Meta-Black-Box Optimization through Latent Space Reverse Engineering
 description: >-
-  [AAAI 2026][优化/理论][Meta-Black-Box Optimization] 提出 LSRE 框架，通过自编码器构建 BBO 问题实例的二维潜在空间，并利用遗传编程从该空间中反向工程出多样化的合成优化问题实例集 Diverse-BBO，显著提升 MetaBBO 方法的泛化性能。
+  [AAAI 2026][优化/理论][Meta-Black-Box Optimization] 提出 LSRE 框架，通过自编码器构建 BBO 问题实例的二维潜在空间，并利用遗传编程从该空间中反向工程出多样化的合成优化问题实例集 Diverse-BBO，显著提升 MetaBBO 方法的泛化性能。 MetaBBO 的训练数据瓶…
 tags:
   - "AAAI 2026"
   - "优化/理论"

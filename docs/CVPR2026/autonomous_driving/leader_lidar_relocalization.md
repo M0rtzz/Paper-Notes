@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LEADER: Learning Reliable Local-to-Global Correspondences for LiDAR Relocalization
 description: >-
-  [CVPR 2026][自动驾驶][LiDAR重定位] LEADER 通过鲁棒的投影式几何编码器（偏航不变）和截断相对可靠性损失（抑制不可靠点），在 LiDAR 重定位任务上分别实现 24.1% 和 73.9% 的位置误差相对降低。
+  [CVPR 2026 Highlight][自动驾驶][LiDAR重定位] LEADER 通过鲁棒的投影式几何编码器（偏航不变）和截断相对可靠性损失（抑制不可靠点），在 LiDAR 重定位任务上分别实现 24.1% 和 73.9% 的位置误差相对降低。 领域现状：LiDAR 重定位在自动驾驶中至关重要。主流方法分为"检索+配…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "自动驾驶"
   - "LiDAR重定位"
   - "场景坐标回归"

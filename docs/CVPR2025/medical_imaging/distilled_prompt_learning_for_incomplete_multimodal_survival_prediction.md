@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilled Prompt Learning for Incomplete Multimodal Survival Prediction
 description: >-
-  [CVPR 2025][医学图像][生存预测] 本文提出DisPro (Distilled Prompt Learning)，通过两阶段提示学习——UniPro蒸馏各模态知识分布 + MultiPro利用LLM从可用模态推断缺失模态——同时补偿缺失模态的特异性和共享信息…
+  [CVPR 2025][医学图像][生存预测] 本文提出DisPro (Distilled Prompt Learning)，通过两阶段提示学习——UniPro蒸馏各模态知识分布 + MultiPro利用LLM从可用模态推断缺失模态——同时补偿缺失模态的特异性和共享信息，在5个TCGA生存预测数据集上取得SOTA。
 tags:
   - "CVPR 2025"
   - "医学图像"

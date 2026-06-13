@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DREsS: Dataset for Rubric-based Essay Scoring on EFL Writing
 description: >-
-  [ACL 2025][自动作文评分] 发布DREsS大规模标准化评分准则数据集，包含三个子集（DREsS_New真实课堂数据1.7K + DREsS_Std标准化历史数据集6.5K + DREsS_CASE增强数据40.1K），提出基于腐蚀的作文增强策略CASE…
+  [ACL 2025][自动作文评分] 发布DREsS大规模标准化评分准则数据集，包含三个子集（DREsS_New真实课堂数据1.7K + DREsS_Std标准化历史数据集6.5K + DREsS_CASE增强数据40.1K），提出基于腐蚀的作文增强策略CASE，将BERT基线的QWK分数从0.471提升至0.685（提升45.44%）。
 tags:
   - "ACL 2025"
   - "自动作文评分"

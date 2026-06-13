@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Not Quite Sherlock Holmes: Language Model Predictions Do Not Reliably Differentiate Impossible from Improbable Events
 description: >-
-  [ACL 2025 (Findings)][LLM/NLP][事件可能性] 本文通过精心设计的最小对实验，揭示语言模型无法可靠区分"不可能事件"和"不太可能但可能的事件"——在对抗性条件下（可能句含不相关词、不可能句含相关词）…
+  [ACL 2025 (Findings)][LLM 其他][事件可能性] 本文通过精心设计的最小对实验，揭示语言模型无法可靠区分"不可能事件"和"不太可能但可能的事件"——在对抗性条件下（可能句含不相关词、不可能句含相关词），包括 Llama 3、Gemma 2、Mistral NeMo 在内的所有 35 个模型均表现低于随机水平。
 tags:
   - "ACL 2025 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "事件可能性"
   - "语义相关性"
   - "语言模型预测"

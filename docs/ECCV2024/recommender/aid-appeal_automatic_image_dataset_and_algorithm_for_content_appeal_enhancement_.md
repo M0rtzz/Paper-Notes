@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AID-AppEAL: Automatic Image Dataset and Algorithm for Content Appeal Enhancement and Assessment Labeling
 description: >-
-  [ECCV 2024][推荐系统][Image Content Appeal] 首次提出图像内容吸引力评估（ICAA）任务，区别于传统美学评估（IAA），设计了一套自动化数据集生成 + 吸引力估计 + 吸引力增强的完整 pipeline…
+  [ECCV 2024][推荐系统][Image Content Appeal] 首次提出图像内容吸引力评估（ICAA）任务，区别于传统美学评估（IAA），设计了一套自动化数据集生成 + 吸引力估计 + 吸引力增强的完整 pipeline，用 Stable Diffusion + Textual Inversion 实现零人工标注的大规模数据集构建。
 tags:
   - "ECCV 2024"
   - "推荐系统"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection
 description: >-
-  [CVPR 2026][目标检测][零样本异常检测] 本文提出 CoPS 框架，通过显式状态token合成（ESTS）和隐式类别token采样（ICTS）两种视觉条件化机制动态生成提示，配合空间感知对齐（SAGA），在13个工业和医学数据集上实现零样本异常检测SOTA。
+  [CVPR 2026 Findings][目标检测][零样本异常检测] 本文提出 CoPS 框架，通过显式状态token合成（ESTS）和隐式类别token采样（ICTS）两种视觉条件化机制动态生成提示，配合空间感知对齐（SAGA），在13个工业和医学数据集上实现零样本异常检测SOTA。 1. 领域现状：大规模预训练视觉-语…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "目标检测"
   - "零样本异常检测"
   - "条件提示合成"

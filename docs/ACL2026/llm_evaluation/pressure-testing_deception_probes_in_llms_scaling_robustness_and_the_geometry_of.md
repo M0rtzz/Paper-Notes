@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pressure-Testing Deception Probes in LLMs: Scaling, Robustness, and the Geometry of Deceptive Representations
 description: >-
-  [ACL2026][LLM评测][欺骗检测] 这篇论文系统压力测试 LLM 内部激活上的欺骗探针，发现干净数据上的近满分 AUROC 并不等于可部署鲁棒性：单方向和熵代理解释都站不住脚，欺骗信号更像分散在多维弱特征中…
+  [ACL2026][LLM评测][欺骗检测] 这篇论文系统压力测试 LLM 内部激活上的欺骗探针，发现干净数据上的近满分 AUROC 并不等于可部署鲁棒性：单方向和熵代理解释都站不住脚，欺骗信号更像分散在多维弱特征中，而风格增强训练能把 27B 模型上接近随机的探针恢复到 0.983 的 held-out style AUROC。
 tags:
   - "ACL2026"
   - "LLM评测"

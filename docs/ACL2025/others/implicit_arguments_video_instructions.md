@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicting Implicit Arguments in Procedural Video Instructions
 description: >-
-  [ACL 2025][语义角色标注] 提出 Implicit-VidSRL 数据集与 iSRL-Qwen2-VL 模型，针对过程性视频指令中省略的隐含论元（食材成分）进行预测，通过 SRL 框架将多步指令分解为 {verb, what, where/with} 三元组…
+  [ACL 2025][语义角色标注] 提出 Implicit-VidSRL 数据集与 iSRL-Qwen2-VL 模型，针对过程性视频指令中省略的隐含论元（食材成分）进行预测，通过 SRL 框架将多步指令分解为 {verb, what, where/with} 三元组，在银标数据上微调后在隐含论元 F1 上超越 GPT-4o 达 17%。
 tags:
   - "ACL 2025"
   - "语义角色标注"

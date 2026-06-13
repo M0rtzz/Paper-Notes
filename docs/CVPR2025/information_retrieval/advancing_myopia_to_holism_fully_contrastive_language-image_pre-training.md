@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training
 description: >-
-  [CVPR 2025][信息检索/RAG][CLIP] 将CLIP从传统的一对一(image, text)对比学习升级为多对多(multi-image-embeddings, multi-texts)对比学习范式，通过VLM生成多视角多层次的描述文本、多分支视觉编码器输出多种视觉embedding…
+  [CVPR 2025][信息检索/RAG][CLIP] 将CLIP从传统的一对一(image, text)对比学习升级为多对多(multi-image-embeddings, multi-texts)对比学习范式，通过VLM生成多视角多层次的描述文本、多分支视觉编码器输出多种视觉embedding，实现更全面的视觉语言对齐，在检索/分类/密集任务上大幅超越baseline。
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

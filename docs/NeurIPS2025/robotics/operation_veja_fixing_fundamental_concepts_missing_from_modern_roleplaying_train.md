@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Operation Veja: Fixing Fundamental Concepts Missing from Modern Roleplaying Training Paradigms
 description: >-
-  [NeurIPS 2025][机器人][角色扮演] 本文系统批判了现有角色扮演模型训练的四大范式（RAG、事实值设定、文学数据、合成数据）为何都无法产生有深度的角色，提出VEJA框架（Values-Experiences-Judgments-Abilities）作为角色定义和数据策化的结构化基础…
+  [NeurIPS 2025][机器人][角色扮演] 本文系统批判了现有角色扮演模型训练的四大范式（RAG、事实值设定、文学数据、合成数据）为何都无法产生有深度的角色，提出VEJA框架（Values-Experiences-Judgments-Abilities）作为角色定义和数据策化的结构化基础，在LLM评判A/B测试中VEJA指导的人工策化数据以43:28:29（胜:负:平）显著优于Gemini Pro 2.5生成的合成基线。
 tags:
   - "NeurIPS 2025"
   - "机器人"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ReMedi: Reasoner for Medical Clinical Prediction
 description: >-
-  [ACL 2026][医疗NLP][电子健康记录] ReMedi 将 EHR 临床预测改写成“理由-答案”生成与偏好学习问题，通过带真实结局提示的困难样本再生成、SFT 和 DPO 让医学 LLM 学会更细粒度地解释患者风险…
+  [ACL 2026 Findings][医疗NLP][电子健康记录] ReMedi 将 EHR 临床预测改写成“理由-答案”生成与偏好学习问题，通过带真实结局提示的困难样本再生成、SFT 和 DPO 让医学 LLM 学会更细粒度地解释患者风险，在 MIMIC-IV 三类预测任务上相对 KARE 最高带来 19.9 个 F1 点提升。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "电子健康记录"
   - "临床预测"

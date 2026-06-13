@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Torus Graphs for Large-Scale Neural Phase Analysis
 description: >-
-  [ICML 2026][torus graph] 作者把 Torus Graph (TG)——定义在 $d$-环面 $\mathbb{T}^d$ 上的指数族相位图模型——用随机化分数匹配把每步推断复杂度从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$…
+  [ICML 2026][torus graph] 作者把 Torus Graph (TG)——定义在 $d$-环面 $\mathbb{T}^d$ 上的指数族相位图模型——用随机化分数匹配把每步推断复杂度从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$，由此首次支持上千个相位变量，并据此搭出 TG-HMM 与自回归 TG 两套动态/有向扩展，应用到小鼠 LFP 数据上揭示了清醒-NREM 之间的频率特异性相位重组。
 tags:
   - "ICML 2026"
   - "torus graph"

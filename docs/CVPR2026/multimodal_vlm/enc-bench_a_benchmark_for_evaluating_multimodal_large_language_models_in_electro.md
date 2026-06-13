@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ENC-Bench: A Benchmark for Evaluating MLLMs in Electronic Navigational Chart Understanding
 description: >-
-  [CVPR 2026][多模态VLM][海图理解] 提出首个面向电子航海图(ENC)理解的专业级基准 ENC-Bench，包含 20,490 样本和三级层次评估体系（感知→空间推理→海事决策），系统评估 10 个 MLLM 后发现最佳模型仅 47.88% 准确率，揭示了通用模型在安全关键专业领域的严重能力缺口…
+  [CVPR 2026][多模态VLM][海图理解] 提出首个面向电子航海图(ENC)理解的专业级基准 ENC-Bench，包含 20,490 样本和三级层次评估体系（感知→空间推理→海事决策），系统评估 10 个 MLLM 后发现最佳模型仅 47.88% 准确率，揭示了通用模型在安全关键专业领域的严重能力缺口。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

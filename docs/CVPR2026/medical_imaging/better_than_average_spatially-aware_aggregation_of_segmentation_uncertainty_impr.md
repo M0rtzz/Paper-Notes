@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Better than Average: Spatially-Aware Aggregation of Segmentation Uncertainty Improves Downstream Performance
 description: >-
-  [CVPR 2026][医学图像][不确定性量化] 首次系统研究分割任务中像素级不确定性到图像级评分的聚合策略，提出融合空间结构信息（Moran's I、边缘密度、Shannon熵）的SMR聚合器和基于GMM的元聚合器，在10个数据集上证明全局平均(AVG)是次优选择…
+  [CVPR 2026][医学图像][不确定性量化] 首次系统研究分割任务中像素级不确定性到图像级评分的聚合策略，提出融合空间结构信息（Moran's I、边缘密度、Shannon熵）的SMR聚合器和基于GMM的元聚合器，在10个数据集上证明全局平均(AVG)是次优选择，GMM-All元聚合在OoD和失败检测上表现稳健。
 tags:
   - "CVPR 2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits
 description: >-
-  [ICLR 2026][强化学习][观点极化] 将Friedkin-Johnsen观点动力学模型下极化+分歧最小化问题首次形式化为在线低秩矩阵bandit问题（OPD-Min），提出两阶段算法OPD-Min-ESTR通过子空间估计将维度从 $|V|^2$ 降至 $O(|V|)$…
+  [ICLR 2026][强化学习][观点极化] 将Friedkin-Johnsen观点动力学模型下极化+分歧最小化问题首次形式化为在线低秩矩阵bandit问题（OPD-Min），提出两阶段算法OPD-Min-ESTR通过子空间估计将维度从 $|V|^2$ 降至 $O(|V|)$，在合成和真实网络上显著优于全维度线性bandit基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

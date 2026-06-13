@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convergence of Steepest Descent and Adam under Non-Uniform Smoothness
 description: >-
-  [ICML 2026][强化学习][非均匀光滑] 本文提出一种比 Zhang 等 $(L_0,L_1)$-NS 更广的非均匀光滑性 $(H_0,H_1)$-NS，并在此假设和 (非均匀) Łojasiewicz 条件下首次给出确定性对角 RMSProp / Adam 与一般最速下降 (Sign GD、Norm…
+  [ICML 2026][强化学习][非均匀光滑] 本文提出一种比 Zhang 等 $(L_0,L_1)$-NS 更广的非均匀光滑性 $(H_0,H_1)$-NS，并在此假设和 (非均匀) Łojasiewicz 条件下首次给出确定性对角 RMSProp / Adam 与一般最速下降 (Sign GD、Norm.GD、Sign CD-GS) 的统一收敛率，证明在分离数据上的逻辑回归与 softmax 策略梯度上它们比 GD / AdaGrad / heavy-ball 都严格更快。
 tags:
   - "ICML 2026"
   - "强化学习"

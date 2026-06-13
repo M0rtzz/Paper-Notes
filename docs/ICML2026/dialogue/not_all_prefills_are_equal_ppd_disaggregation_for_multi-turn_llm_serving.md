@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Not All Prefills Are Equal: PPD Disaggregation for Multi-turn LLM Serving
 description: >-
-  [ICML 2026][对话系统][PD 分离] 本文指出多轮对话场景下传统 Prefill-Decode 分离架构因每轮都要 P→D 重算并传输 KV 而严重低效，提出 PPD（Prefill-capable Decode）动态路由系统…
+  [ICML 2026][对话系统][PD 分离] 本文指出多轮对话场景下传统 Prefill-Decode 分离架构因每轮都要 P→D 重算并传输 KV 而严重低效，提出 PPD（Prefill-capable Decode）动态路由系统，让 decode 节点根据 SLO 权重决定是否本地处理 Turn 2+ 的 append-prefill，把 Turn 2+ TTFT 降低约 68%。
 tags:
   - "ICML 2026"
   - "对话系统"

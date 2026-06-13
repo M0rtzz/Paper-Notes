@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint Model and Data Sparsification via the Marginal Likelihood
 description: >-
-  [ICML 2026][信号/通信][联合稀疏化] JMDS 通过**最大化边缘似然**的统一目标同时实现模型和数据稀疏化——避免分阶段优化的次优性，在 CIFAR / ImageNet / WikiText 上以 5-10× 联合压缩比下保持优于独立稀疏化的性能。
+  [ICML 2026][信号/通信][联合稀疏化] JMDS 通过最大化边缘似然：的统一目标同时实现模型和数据稀疏化——避免分阶段优化的次优性，在 CIFAR / ImageNet / WikiText 上以 5-10× 联合压缩比下保持优于独立稀疏化的性能。 领域现状：神经网络稀疏化已被广泛研究，但模型剪枝（去除权重）和数…
 tags:
   - "ICML 2026"
   - "信号/通信"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Generalized Interpolating Discrete Diffusion
 description: >-
-  [ICML2025][LLM/NLP][离散扩散] 提出广义插值离散扩散框架 GIDD，将掩码扩散 (MDM) 推广为支持任意时变混合分布的扩散族，通过结合掩码与均匀噪声赋予模型自纠错能力，在扩散语言建模中取得 compute-matched SOTA。
+  [ICML2025][LLM 其他][离散扩散] 提出广义插值离散扩散框架 GIDD，将掩码扩散 (MDM) 推广为支持任意时变混合分布的扩散族，通过结合掩码与均匀噪声赋予模型自纠错能力，在扩散语言建模中取得 compute-matched SOTA。 自回归语言模型（如 GPT）在生成过程中按顺序逐 token 预测…
 tags:
   - "ICML2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "离散扩散"
   - "掩码扩散"
   - "均匀噪声"

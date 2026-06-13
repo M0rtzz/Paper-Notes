@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Bridge-Garden Dilemma in LLM Distillation: Why Mixing Hard and Soft Labels Works
 description: >-
-  [ICML 2026][模型压缩][知识蒸馏] 作者发现 LLM 蒸馏里"软标签 + 硬标签线性混合"几乎总是打过纯软标签，并把原因从直觉上的"硬标签信息更少但优化更易"修正为"硬标签压低了暴露偏差"，进一步用 Bridge-Garden 分解把生成序列拆成"必须精确的桥"和"可灵活替换的花园"两类位置…
+  [ICML 2026][模型压缩][知识蒸馏] 作者发现 LLM 蒸馏里"软标签 + 硬标签线性混合"几乎总是打过纯软标签，并把原因从直觉上的"硬标签信息更少但优化更易"修正为"硬标签压低了暴露偏差"，进一步用 Bridge-Garden 分解把生成序列拆成"必须精确的桥"和"可灵活替换的花园"两类位置，从而把 mix coefficient 与上下文风险绑定起来，提出 4 种自适应混合策略并以 9.7× 训练成本优势在 7 对 teacher-student 上超越主流 on-policy / divergence-based KD。
 tags:
   - "ICML 2026"
   - "模型压缩"

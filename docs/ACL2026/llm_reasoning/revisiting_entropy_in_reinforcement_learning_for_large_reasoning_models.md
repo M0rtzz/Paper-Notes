@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Revisiting Entropy in Reinforcement Learning for Large Reasoning Models
 description: >-
-  [ACL 2026][LLM推理][熵崩塌] 系统性研究了 RLVR 训练中 LLM 的熵动态，揭示正优势 token 是熵崩塌的主要驱动因素，并提出 Positive-Advantage Reweighting 方法通过动态调整正优势 token 的损失权重来有效调控模型熵。
+  [ACL 2026 Findings][LLM推理][熵崩塌] 系统性研究了 RLVR 训练中 LLM 的熵动态，揭示正优势 token 是熵崩塌的主要驱动因素，并提出 Positive-Advantage Reweighting 方法通过动态调整正优势 token 的损失权重来有效调控模型熵。 - 领域现状：以 OpenA…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "熵崩塌"
   - "RLVR"

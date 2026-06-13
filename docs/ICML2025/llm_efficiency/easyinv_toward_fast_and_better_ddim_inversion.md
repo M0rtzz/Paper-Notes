@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EasyInv: Toward Fast and Better DDIM Inversion
 description: >-
-  [ICML 2025][LLM效率][DDIM Inversion] 提出 EasyInv，通过在反演过程中周期性地将当前 latent 状态与前一步 latent 状态加权聚合（类卡尔曼滤波），增强初始 latent 的影响力、抑制噪声累积误差，在不需要迭代优化的前提下达到与迭代方法相当甚至更好的反演质量…
+  [ICML 2025][LLM效率][DDIM Inversion] 提出 EasyInv，通过在反演过程中周期性地将当前 latent 状态与前一步 latent 状态加权聚合（类卡尔曼滤波），增强初始 latent 的影响力、抑制噪声累积误差，在不需要迭代优化的前提下达到与迭代方法相当甚至更好的反演质量，同时推理速度提升约 3 倍。
 tags:
   - "ICML 2025"
   - "LLM效率"

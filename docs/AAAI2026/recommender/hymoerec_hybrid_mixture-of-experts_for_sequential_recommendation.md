@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyMoERec: Hybrid Mixture-of-Experts for Sequential Recommendation
 description: >-
-  [AAAI 2026 (Student Abstract)][推荐系统][序列推荐] 本文提出 HyMoERec，一个结合共享专家和特化专家分支的混合专家架构，通过自适应专家融合机制替代传统序列推荐模型中的统一前馈网络，以捕捉用户行为模式的异质性和物品复杂度的多样性…
+  [AAAI 2026 (Student Abstract)][推荐系统][序列推荐] 本文提出 HyMoERec，一个结合共享专家和特化专家分支的混合专家架构，通过自适应专家融合机制替代传统序列推荐模型中的统一前馈网络，以捕捉用户行为模式的异质性和物品复杂度的多样性，在 MovieLens-1M 和 Beauty 数据集上一致超越 SOTA。
 tags:
   - "AAAI 2026 (Student Abstract)"
   - "推荐系统"
@@ -111,10 +111,10 @@ HyMoERec 基于标准的 Transformer 序列推荐架构，将其中的逐位置 
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ 混合MoE用于推荐较新但技术组件已有
-- 实验充分度: ⭐⭐⭐ Student Abstract篇幅限制
-- 写作质量: ⭐⭐⭐⭐ 问题动机清晰
-- 价值: ⭐⭐⭐ 对序列推荐有改进意义
+- 新颖性: ⭐⭐⭐⭐ 混合MoE用于推荐较新但技术组件已有
+- 实验充分度: ⭐⭐⭐⭐ Student Abstract篇幅限制
+- 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰
+- 价值: ⭐⭐⭐⭐ 对序列推荐有改进意义
 
 <!-- RELATED:START -->
 

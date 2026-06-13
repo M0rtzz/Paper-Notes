@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning
 description: >-
-  [NeurIPS 2025][可解释性][知识蒸馏] 提出Learning to Focus (LeaF)框架，通过梯度引导识别训练数据中的"混淆token"（confounding tokens），在知识蒸馏过程中剪枝这些token以构建反事实样本…
+  [NeurIPS 2025][可解释性][知识蒸馏] 提出Learning to Focus (LeaF)框架，通过梯度引导识别训练数据中的"混淆token"（confounding tokens），在知识蒸馏过程中剪枝这些token以构建反事实样本，使学生模型的注意力对齐到教师模型关注的关键上下文token上，从而提升数学推理和代码生成的准确性。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

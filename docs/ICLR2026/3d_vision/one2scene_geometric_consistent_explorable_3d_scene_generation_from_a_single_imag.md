@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One2Scene: Geometric Consistent Explorable 3D Scene Generation from a Single Image
 description: >-
-  [ICLR 2026][3D视觉][单图3D场景生成] 提出One2Scene——将单图到可探索3D场景的病态问题分解为三个子任务：(1)全景图生成扩展视觉覆盖 (2)前馈3DGS网络从稀疏锚点视角构建显式3D几何scaffold (3)scaffold引导的新视角合成…
+  [ICLR 2026][3D视觉][单图3D场景生成] 提出One2Scene——将单图到可探索3D场景的病态问题分解为三个子任务：(1)全景图生成扩展视觉覆盖 (2)前馈3DGS网络从稀疏锚点视角构建显式3D几何scaffold (3)scaffold引导的新视角合成，通过Dual-LoRA融合高质量锚点视角和几何先验，在大视角变化下实现几何一致且逼真的场景生成，显著超越SOTA。
 tags:
   - "ICLR 2026"
   - "3D视觉"

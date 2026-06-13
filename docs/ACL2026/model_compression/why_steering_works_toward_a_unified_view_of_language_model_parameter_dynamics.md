@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Steering Works: Toward a Unified View of Language Model Parameter Dynamics
 description: >-
-  [ACL2026][模型压缩][Activation Steering] 本文把局部权重微调、LoRA 和 activation steering 统一成“控制信号诱导的动态权重更新”，用 preference-utility log-odds 与 activation manifold 解释强控制会提升目标…
+  [ACL2026][模型压缩][Activation Steering] 本文把局部权重微调、LoRA 和 activation steering 统一成“控制信号诱导的动态权重更新”，用 preference-utility log-odds 与 activation manifold 解释强控制会提升目标偏好但损害生成效用，并据此提出 SPLIT 训练目标，在三类干预形式上更好地兼顾偏好和效用。
 tags:
   - "ACL2026"
   - "模型压缩"

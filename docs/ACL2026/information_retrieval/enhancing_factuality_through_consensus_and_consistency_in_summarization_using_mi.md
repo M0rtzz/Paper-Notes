@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Enhancing Factuality through Consensus and Consistency in Summarization Using Minimum Bayes Risk Decoding
 description: >-
-  [ACL2026][信息检索/RAG][摘要事实性] 本文提出 ConSUM，在摘要生成候选中同时考察候选对源文档的事实一致性和候选之间的共识，用 MBR decoding 结合 FENICE/FIZZ 等事实性指标重排序，在 CNN/DailyMail、XSum 和人工评估中提升摘要事实可靠性。
+  [ACL2026 Findings][信息检索/RAG][摘要事实性] 本文提出 ConSUM，在摘要生成候选中同时考察候选对源文档的事实一致性和候选之间的共识，用 MBR decoding 结合 FENICE/FIZZ 等事实性指标重排序，在 CNN/DailyMail、XSum 和人工评估中提升摘要事实可靠性。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "信息检索/RAG"
   - "摘要事实性"
   - "MBR decoding"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating Multi-Table Time Series EHR from Latent Space with Minimal Preprocessing
 description: >-
-  [NeurIPS 2025][AI安全][EHR 合成] 提出 RawMed——首个以最小有损预处理合成多表时序 EHR 原始数据的框架：将事件文本化 → Residual Quantization 压缩至离散潜空间 → 自回归 Transformer 建模时序动态…
+  [NeurIPS 2025][AI安全][EHR 合成] 提出 RawMed——首个以最小有损预处理合成多表时序 EHR 原始数据的框架：将事件文本化 → Residual Quantization 压缩至离散潜空间 → 自回归 Transformer 建模时序动态，在保真度、临床效用和隐私保护上全面超越现有基线。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

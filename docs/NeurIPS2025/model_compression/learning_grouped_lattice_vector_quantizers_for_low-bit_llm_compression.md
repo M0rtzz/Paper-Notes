@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Grouped Lattice Vector Quantizers for Low-Bit LLM Compression
 description: >-
-  [NeurIPS 2025][模型压缩][格向量量化] GLVQ 提出为 LLM 权重的每个分组学习专属的格（lattice）码本（由可学习生成矩阵定义），配合分组特异的 μ-law companding 变换适应重尾分布…
+  [NeurIPS 2025][模型压缩][格向量量化] GLVQ 提出为 LLM 权重的每个分组学习专属的格（lattice）码本（由可学习生成矩阵定义），配合分组特异的 μ-law companding 变换适应重尾分布，在 2-bit 量化下 Llama-2-70B 的 Wikitext-2 困惑度达到 3.36，大幅领先 QuIP#（3.91）和 QTIP（3.78）。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

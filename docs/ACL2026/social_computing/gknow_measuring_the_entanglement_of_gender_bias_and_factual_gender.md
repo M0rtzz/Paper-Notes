@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GKnow: Measuring the Entanglement of Gender Bias and Factual Gender
 description: >-
-  [ACL 2026][社会计算][性别偏见] 本文提出 **GKnow** 基准与一套电路-神经元两级机制分析，证明 LLM 中"性别偏见 (stereotypical gender)"与"事实性别 (factual gender)"在电路层 IoU/cross-task faithfulness 高度重叠、…
+  [ACL 2026][社会计算][性别偏见] 本文提出 **GKnow** 基准与一套电路-神经元两级机制分析，证明 LLM 中"性别偏见 (stereotypical gender)"与"事实性别 (factual gender)"在电路层 IoU/cross-task faithfulness 高度重叠、在神经元层共享同一组高 IG 神经元，因此简单的"消融性别偏见神经元"会同时削弱事实性别能力，但在仅评测偏见的 benchmark 上看起来像"成功去偏"，警告这种 debiasing 不可靠。
 tags:
   - "ACL 2026"
   - "社会计算"

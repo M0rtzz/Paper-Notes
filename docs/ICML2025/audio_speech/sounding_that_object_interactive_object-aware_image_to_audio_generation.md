@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sounding that Object: Interactive Object-Aware Image to Audio Generation
 description: >-
-  [ICML 2025][音频/语音][对象感知音频生成] 提出一种交互式对象感知音频生成模型，通过多模态点积注意力学习图像区域与声音的关联，在测试时用分割掩码替代注意力权重，允许用户通过选择图像中的视觉对象来生成对应的声音。
+  [ICML 2025][音频/语音][对象感知音频生成] 提出一种交互式对象感知音频生成模型，通过多模态点积注意力在训练时学习图像区域与声音的关联，在测试时用 SAM 分割掩码替代注意力权重，允许用户通过点击选择图像中的视觉对象来生成对应的声音。 人类天然地将世界感知为由不同对象及其关联声音组成的集合——在繁忙的街道上…
 tags:
   - "ICML 2025"
   - "音频/语音"
@@ -187,3 +187,19 @@ $$\text{err}_{\text{test}} \leq L_v \cdot L_f \cdot (\epsilon_{\boldsymbol{V}} +
 - 实验充分度: ⭐⭐⭐⭐⭐ 12 种基线对比 + 6 组消融 + 主观评估(50人) + 交互满意度 + 跨数据集泛化 + 可视化分析，非常全面
 - 写作质量: ⭐⭐⭐⭐ 逻辑清晰，理论分析与实验互相佐证，图示直观；但部分理论推导符号较重
 - 价值: ⭐⭐⭐⭐ 为可控音频生成提供了新的交互范式，对多模态生成和音视频学习领域有启发价值
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Object-aware Sound Source Localization via Audio-Visual Scene Understanding](../../CVPR2025/audio_speech/object-aware_sound_source_localization_via_audio-visual_scene_understanding.md)
+- [\[NeurIPS 2025\] DeepASA: An Object-Oriented Multi-Purpose Network for Auditory Scene Analysis](../../NeurIPS2025/audio_speech/deepasa_an_object-oriented_multi-purpose_network_for_auditory_scene_analysis.md)
+- [\[NeurIPS 2025\] Node-Based Editing for Multimodal Generation of Text, Audio, Image, and Video](../../NeurIPS2025/audio_speech/node-based_editing_for_multimodal_generation_of_text_audio_image_and_video.md)
+- [\[ICML 2025\] MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners](musecontrollite_multifunctional_music_generation_with_lightweight_conditioners.md)
+- [\[ICML 2025\] Long-Form Speech Generation with Spoken Language Models](long-form_speech_generation_with_spoken_language_models.md)
+
+</div>
+
+<!-- RELATED:END -->

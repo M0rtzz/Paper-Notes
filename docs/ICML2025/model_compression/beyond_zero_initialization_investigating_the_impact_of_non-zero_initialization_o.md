@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Zero Initialization: Investigating the Impact of Non-Zero Initialization on LoRA Fine-Tuning Dynamics
 description: >-
-  [ICML2025][模型压缩][LoRA] 从无限宽度视角理论分析并实验验证：LoRA 的 A、B 矩阵同时非零初始化（Init[AB]）相比传统零初始化（Init[A]）能显著提升对次优学习率的鲁棒性，且引入的随机噪声不影响微调性能——即微调不必严格从预训练模型出发。
+  [ICML2025][模型压缩][LoRA] 从无限宽度视角理论分析并实验验证：LoRA 的 A、B 矩阵同时非零初始化（Init[AB]）相比传统零初始化（Init[A]）能显著提升对次优学习率的鲁棒性，且引入的随机噪声不影响微调性能——即微调不必严格从预训练模型出发。 LoRA 标准做法的惯性约束 LoRA (Hu et…
 tags:
   - "ICML2025"
   - "模型压缩"

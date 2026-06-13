@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoupled Conformal Optimisation: Efficient Prediction Sets via Independent Tuning and Calibration
 description: >-
-  [ICML2026][分裂保形预测] 本文提出 DCO-Warmstart——一种 "训练–调参–校准" 三分式的贝叶斯保形优化范式：把效率搜索放在独立的 tuning split 上、把保形分位数留给一份未被触碰的 calibration split…
+  [ICML2026][分裂保形预测] 本文提出 DCO-Warmstart——一种 "训练–调参–校准" 三分式的贝叶斯保形优化范式：把效率搜索放在独立的 tuning split 上、把保形分位数留给一份未被触碰的 calibration split，从而在任意大小（甚至无穷）的候选结构类上无需置信参数 $\delta$ 也能拿到标准的有限样本边际覆盖保证，且实证上预测集尺寸通常小于 CRC/BQ 等耦合校准方法。
 tags:
   - "ICML2026"
   - "分裂保形预测"

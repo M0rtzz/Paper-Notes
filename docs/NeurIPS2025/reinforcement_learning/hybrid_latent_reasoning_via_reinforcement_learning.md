@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid Latent Reasoning via Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][潜在推理] HRPO 提出混合潜在推理策略优化：通过可学习的门控机制将前一步的隐藏状态表示逐步融入到采样的 token embedding 中，使 LLM 在推理阶段同时利用离散 token 和连续潜在表示，无需 CoT 标注即可通过 RL 训练…
+  [NeurIPS 2025][强化学习][潜在推理] HRPO 提出混合潜在推理策略优化：通过可学习的门控机制将前一步的隐藏状态表示逐步融入到采样的 token embedding 中，使 LLM 在推理阶段同时利用离散 token 和连续潜在表示，无需 CoT 标注即可通过 RL 训练，在知识密集型和 STEM 推理任务上均超越 PPO/GRPO 等基线。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

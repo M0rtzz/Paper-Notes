@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Segment Anything, Even Occluded
 description: >-
-  [CVPR 2025][自动驾驶][遮挡分割] 提出 SAMEO，将 EfficientSAM 适配为遮挡物体的 amodal 分割解码器，结合新构建的 300K 图像 Amodal-LVIS 数据集，实现了在 COCOA-cls 和 D2SA 上超越监督方法的零样本 amodal 分割性能。
+  [CVPR 2025][自动驾驶][遮挡分割] 提出 SAMEO，将 EfficientSAM 适配为遮挡物体的 amodal 分割解码器，结合新构建的 300K 图像 Amodal-LVIS 数据集，实现了在 COCOA-cls 和 D2SA 上超越监督方法的零样本 amodal 分割性能。 Amodal 实例分割旨在预测…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

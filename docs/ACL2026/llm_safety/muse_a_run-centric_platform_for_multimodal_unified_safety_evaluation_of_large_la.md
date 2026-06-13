@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUSE: A Run-Centric Platform for Multimodal Unified Safety Evaluation of Large Language Models
 description: >-
-  [ACL 2026][LLM安全][多模态安全评测] MUSE 把跨模态 payload 生成、多轮红队攻击、统一模型路由和五级安全裁判整合成一个以 run 为中心的可复现实验平台，并用约 3700 次实验说明：多轮策略能击穿单轮几乎全拒答的多模态 LLM，而跨轮模态切换更像是加速防线松动的机制…
+  [ACL 2026][LLM安全][多模态安全评测] MUSE 把跨模态 payload 生成、多轮红队攻击、统一模型路由和五级安全裁判整合成一个以 run 为中心的可复现实验平台，并用约 3700 次实验说明：多轮策略能击穿单轮几乎全拒答的多模态 LLM，而跨轮模态切换更像是加速防线松动的机制，不是普适提高最终 ASR 的银弹。
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLINT: Modeling Scene-Scale Transparency via Gaussian Radiance Transport
 description: >-
-  [CVPR 2026][3D视觉][高斯溅射] GLINT 通过将高斯表征分解为界面、透射、反射三个组件，结合光栅化+光线追踪的混合渲染管线，在场景级透明表面（如玻璃墙、展示柜）的几何和外观重建上取得了 SOTA 效果。
+  [CVPR 2026][3D视觉][高斯溅射] GLINT 通过将高斯表征分解为界面、透射、反射三个组件，结合光栅化+光线追踪的混合渲染管线，在场景级透明表面（如玻璃墙、展示柜）的几何和外观重建上取得了 SOTA 效果。 领域现状：3D 高斯溅射（3DGS）凭借实时渲染和高视觉保真度成为 3D 重建的主流范式…
 tags:
   - "CVPR 2026"
   - "3D视觉"

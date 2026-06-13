@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FEAT: Federated Geometry-Aware Correction for Exemplar Replay under Continual Dynamic Heterogeneity
 description: >-
-  [CVPR 2026][federated continual learning] 提出 FEAT 方法解决联邦持续学习中回放样本利用不足的问题，通过几何结构对齐（基于 ETF 原型的角度蒸馏）和能量基几何校正（推理时去偏）缓解跨客户端异构和任务级数据不平衡。
+  [CVPR 2026][federated continual learning] 提出 FEAT 方法解决联邦持续学习中回放样本利用不足的问题，通过几何结构对齐（基于 ETF 原型的角度蒸馏）和能量基几何校正（推理时去偏）缓解跨客户端异构和任务级数据不平衡。 联邦持续学习（FCL）中，回放样本是缓解灾难性遗忘的主流策略…
 tags:
   - "CVPR 2026"
   - "federated continual learning"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TuCo: Measuring the Contribution of Fine-Tuning to Individual Responses of LLMs
 description: >-
-  [ICML2025][LLM安全][fine-tuning分析] 提出 Tuning Contribution (TuCo) 指标，通过将微调后 LLM 的前向传播精确分解为预训练分量 (PTC) 和微调分量 (FTC)，首次实现在推理时逐 prompt 量化微调对模型输出的贡献…
+  [ICML2025][LLM安全][fine-tuning分析] 提出 Tuning Contribution (TuCo) 指标，通过将微调后 LLM 的前向传播精确分解为预训练分量 (PTC) 和微调分量 (FTC)，首次实现在推理时逐 prompt 量化微调对模型输出的贡献，并揭示越狱攻击通过削弱 FTC 幅度来绕过安全防护。
 tags:
   - "ICML2025"
   - "LLM安全"

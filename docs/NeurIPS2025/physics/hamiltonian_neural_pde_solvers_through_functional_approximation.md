@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hamiltonian Neural PDE Solvers through Functional Approximation
 description: >-
-  [NeurIPS 2025][物理/科学计算][Hamiltonian mechanics] 基于 Riesz 表示定理，用可学习核积分（Integral Kernel Functional）近似无限维 Hamiltonian 泛函，通过自动微分获取泛函导数，实现保能量的神经 PDE 求解器（HNS）…
+  [NeurIPS 2025][物理/科学计算][Hamiltonian mechanics] 基于 Riesz 表示定理，用可学习核积分（Integral Kernel Functional）近似无限维 Hamiltonian 泛函，通过自动微分获取泛函导数，实现保能量的神经 PDE 求解器（HNS），在 1D/2D PDE 上展现出优越的稳定性和泛化能力。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatioTemporal Difference Network for Video Depth Super-Resolution
 description: >-
-  [AAAI 2026][图像恢复][视频深度超分辨率] 基于视频深度超分辨率（VDSR）中空间非光滑区域和时间变化区域呈长尾分布的统计发现，提出 STDNet，通过空间差异分支（学习空间差异表示进行帧内 RGB-D 自适应聚合）和时间差异分支（利用时间差异表示在变化区域进行运动补偿）…
+  [AAAI 2026][图像恢复][视频深度超分辨率] 基于视频深度超分辨率（VDSR）中空间非光滑区域和时间变化区域呈长尾分布的统计发现，提出 STDNet，通过空间差异分支（学习空间差异表示进行帧内 RGB-D 自适应聚合）和时间差异分支（利用时间差异表示在变化区域进行运动补偿），在 TarTanAir 数据集上 ×16 超分 RMSE 从 112.04cm 降至 96.80cm，平均超越 SOTA 方法 27.6%-32.6%。
 tags:
   - "AAAI 2026"
   - "图像恢复"

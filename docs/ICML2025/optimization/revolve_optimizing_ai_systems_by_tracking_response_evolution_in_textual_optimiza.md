@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REVOLVE: Optimizing AI Systems by Tracking Response Evolution in Textual Optimization
 description: >-
-  [ICML 2025][优化/理论][文本优化] REVOLVE 通过跟踪 LLM 系统中响应在迭代过程中的"演化"趋势来指导优化，比 TextGrad 等基于即时反馈的方法更稳定高效，在提示优化、方案改进和代码优化上分别提升 7.8%、20.72% 和 29.17%。
+  [ICML 2025][优化/理论][文本优化] REVOLVE 通过跟踪 LLM 系统中响应在迭代过程中的"演化"趋势来指导优化，比 TextGrad 等基于即时反馈的方法更稳定高效，在提示优化、方案改进和代码优化上分别提升 7.8%、20.72% 和 29.17%。 领域现状 领域现状：领域现状: LLM 系统 (包含…
 tags:
   - "ICML 2025"
   - "优化/理论"

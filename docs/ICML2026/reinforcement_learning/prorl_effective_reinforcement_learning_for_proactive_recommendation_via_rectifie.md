@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProRL: Effective Reinforcement Learning for Proactive Recommendation via Rectified Policy Gradient Estimation
 description: >-
-  [ICML2026][强化学习][主动推荐] 针对"主动推荐"任务中朴素策略梯度坍缩到"等长重复路径"的问题，作者从理论上把失败归因为路径级奖励分解后的正均值步级奖励所诱导的"长度捷径"和过高方差…
+  [ICML2026][强化学习][主动推荐] 针对"主动推荐"任务中朴素策略梯度坍缩到"等长重复路径"的问题，作者从理论上把失败归因为路径级奖励分解后的正均值步级奖励所诱导的"长度捷径"和过高方差，并提出 ProRL：用 Stepwise Reward Centering 把每步期望奖励减去常值基线、消除长度偏置，再用 Position-Specific Advantage Estimation 按步位置做 GRPO 式分组基线降低方差，三个真实数据集上 IoI、IoR、CTR、Coherence 四指标全面超过启发式、监督式与 LLM 式 SOTA。
 tags:
   - "ICML2026"
   - "强化学习"

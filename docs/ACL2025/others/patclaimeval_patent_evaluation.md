@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Better Evaluation for Generated Patent Claims
 description: >-
-  [ACL 2025][专利权利要求] 提出首个专利权利要求评估基准 Patent-CE（1228 个专家标注的比较评估数据点）和专用评估方法 PatClaimEval（基于 Longformer + 对比学习变体）…
+  [ACL 2025][专利权利要求] 提出首个专利权利要求评估基准 Patent-CE（1228 个专家标注的比较评估数据点）和专用评估方法 PatClaimEval（基于 Longformer + 对比学习变体），在特征完整性、概念清晰度、术语一致性、逻辑连接和整体质量五个维度上与人类专家评估的相关性全面超越 13 种现有指标（包括 G-Eval-4），整体质量维度的 Spearman 提升 58%。
 tags:
   - "ACL 2025"
   - "专利权利要求"

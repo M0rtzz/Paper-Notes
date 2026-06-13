@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TRATES: Trait-Specific Rubric-Assisted Cross-Prompt Essay Scoring
 description: >-
-  [ACL2025][LLM/NLP][自动作文评分] 提出 TRATES 框架，重新定义 LLM 在自动作文评分中的角色——从直接评分者转变为**特质特征生成器与提取器**，通过 LLM 将评分标准(rubric)自动转化为评估问题(子特质)，结合通用写作质量特征和提示特定特征训练回归模型…
+  [ACL2025][LLM 其他][自动作文评分] 提出 TRATES 框架，重新定义 LLM 在自动作文评分中的角色——从直接评分者转变为**特质特征生成器与提取器**，通过 LLM 将评分标准(rubric)自动转化为评估问题(子特质)，结合通用写作质量特征和提示特定特征训练回归模型，在 ASAP 数据集 8 个特质上全部达到 SOTA，且首次在 ELLIPSE 数据集上建立跨提示特质评分基线。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动作文评分"
   - "跨提示泛化"
   - "特质评分"

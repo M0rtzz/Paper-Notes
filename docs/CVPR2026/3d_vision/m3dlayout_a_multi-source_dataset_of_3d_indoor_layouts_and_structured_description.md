@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3DLayout: A Multi-Source Dataset of 3D Indoor Layouts and Structured Descriptions for 3D Generation
 description: >-
-  [CVPR 2026][3D视觉][3D室内布局] 构建了多源大规模 3D 室内布局数据集 M3DLayout（21,367 布局、433k+ 物体实例），融合真实扫描、专业设计和程序化生成三种来源，配以结构化文本描述，为文本驱动的 3D 场景生成提供高质量训练基础。
+  [CVPR 2026][3D视觉][3D室内布局] 构建了多源大规模 3D 室内布局数据集 M3DLayout（21,367 布局、433k+ 物体实例），融合真实扫描、专业设计和程序化生成三种来源，配以结构化文本描述，为文本驱动的 3D 场景生成提供高质量训练基础。 文本驱动 3D 场景生成中，物体布局是连接语言指令和几何…
 tags:
   - "CVPR 2026"
   - "3D视觉"

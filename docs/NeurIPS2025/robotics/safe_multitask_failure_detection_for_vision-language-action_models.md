@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAFE: Multitask Failure Detection for Vision-Language-Action Models
 description: >-
-  [NeurIPS 2025][机器人][失败检测] SAFE 发现 VLA 模型的内部特征空间存在跨任务一致的"失败区域"，据此训练轻量 MLP/LSTM 失败检测器，配合功能保形预测（FCP）做阈值校准，在未见任务上达 78% ROC-AUC，计算开销 <1%，大幅优于 token 不确定性和一致性检测方法…
+  [NeurIPS 2025][机器人][失败检测] SAFE 发现 VLA 模型的内部特征空间存在跨任务一致的"失败区域"，据此训练轻量 MLP/LSTM 失败检测器，配合功能保形预测（FCP）做阈值校准，在未见任务上达 78% ROC-AUC，计算开销 <1%，大幅优于 token 不确定性和一致性检测方法。
 tags:
   - "NeurIPS 2025"
   - "机器人"

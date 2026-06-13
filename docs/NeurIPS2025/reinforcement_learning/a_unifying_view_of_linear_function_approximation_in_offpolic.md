@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unifying View of Linear Function Approximation in Off-Policy RL Through Matrix Splitting and Preconditioning
 description: >-
-  [NeurIPS 2025 (Spotlight, top 3%)][强化学习][temporal difference learning] 首次引入矩阵分裂理论，将线性函数逼近下的TD、FQI和PFQI统一为求解同一目标线性系统 $(\Sigma_{cov} - \gamma\Sigma_{cr})\the…
+  [NeurIPS 2025 (Spotlight, top 3%)][强化学习][temporal difference learning] 首次引入矩阵分裂理论，将线性函数逼近下的TD、FQI和PFQI统一为求解同一目标线性系统 $(\Sigma_{cov} - \gamma\Sigma_{cr})\theta = \theta_{\phi,r}$ 的迭代方法（仅预条件子不同），给出各算法收敛的充要条件，提出rank invariance新概念，并揭示target network的本质是预条件子从常数到数据自适应的连续变换。
 tags:
   - "NeurIPS 2025 (Spotlight, top 3%)"
   - "强化学习"

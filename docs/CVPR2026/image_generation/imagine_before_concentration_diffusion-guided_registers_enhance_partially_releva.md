@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Imagine Before Concentration: Diffusion-Guided Registers Enhance Partially Relevant Video Retrieval
 description: >-
-  [CVPR 2026][图像生成][部分相关视频检索] 本文提出 DreamPRVR，采用"先想象后集中"的粗到细策略：通过截断扩散模型在文本监督下生成全局语义注册令牌（registers），然后将其融合到细粒度视频表征中，有效抑制局部噪音响应，在三个 PRVR 基准上取得了 SOTA。
+  [CVPR 2026][图像生成][部分相关视频检索] 本文提出 DreamPRVR，采用"先想象后集中"的粗到细策略：通过截断扩散模型在文本监督下生成全局语义注册令牌（registers），然后将其融合到细粒度视频表征中，有效抑制局部噪音响应，在三个 PRVR 基准上取得了 SOTA。 领域现状：部分相关视频检索（PRVR…
 tags:
   - "CVPR 2026"
   - "图像生成"

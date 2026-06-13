@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PosterIQ: A Design Perspective Benchmark for Poster Understanding and Generation
 description: >-
-  [CVPR 2026][图像生成][海报设计] 本文提出 PosterIQ，一个面向海报设计的综合基准，包含 7,765 条理解标注和 822 条生成提示，覆盖 OCR、字体感知、布局推理、设计意图理解和组合感知生成等 24 类任务，系统评估了 MLLM 和扩散模型在设计认知方面的差距。
+  [CVPR 2026][图像生成][海报设计] 本文提出 PosterIQ，一个面向海报设计的综合基准，包含 7,765 条理解标注和 822 条生成提示，覆盖 OCR、字体感知、布局推理、设计意图理解和组合感知生成等 24 类任务，系统评估了 MLLM 和扩散模型在设计认知方面的差距。 领域现状：多模态大语言模型（MLLM…
 tags:
   - "CVPR 2026"
   - "图像生成"

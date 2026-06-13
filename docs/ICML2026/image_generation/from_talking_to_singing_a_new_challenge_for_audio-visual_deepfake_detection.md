@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Talking to Singing: A New Challenge for Audio-Visual Deepfake Detection
 description: >-
-  [ICML 2026][图像生成][深度伪造] 针对"唱歌头像"这一被现有 deepfake 检测器忽视的高难度域，作者一边构建 SHDF 数据集量化"说话→唱歌"的域漂移，一边提出 T-AVFD 框架，用 Alpha-CLIP+多粒度真假文本对比学习"真实人脸的语义模式"…
+  [ICML 2026][图像生成][深度伪造] 针对"唱歌头像"这一被现有 deepfake 检测器忽视的高难度域，作者一边构建 SHDF 数据集量化"说话→唱歌"的域漂移，一边提出 T-AVFD 框架，用 Alpha-CLIP+多粒度真假文本对比学习"真实人脸的语义模式"，再用差分权重模块自适应融合唇音一致性与人脸语义，仅在真实说话视频上训练就能跨域泛化到唱歌伪造，SHDF AUC 从 50% 量级抬到 80.2%。
 tags:
   - "ICML 2026"
   - "图像生成"

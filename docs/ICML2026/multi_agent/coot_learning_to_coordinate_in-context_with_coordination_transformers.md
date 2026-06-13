@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoOT: Learning to Coordinate In-Context with Coordination Transformers
 description: >-
-  [ICML 2026][多智能体][即兴协作] 把"如何与陌生伙伴协作"从 task-generalization 改写成 partner-generalization 的 in-context 学习问题：训练一个 Decision Transformer 在跨 episode 的交互轨迹上预测最佳响应动作…
+  [ICML 2026][多智能体][即兴协作] 把"如何与陌生伙伴协作"从 task-generalization 改写成 partner-generalization 的 in-context 学习问题：训练一个 Decision Transformer 在跨 episode 的交互轨迹上预测最佳响应动作，让模型不更新参数就能在几局之内适应任何未见过的伙伴。
 tags:
   - "ICML 2026"
   - "多智能体"

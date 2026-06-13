@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RA-RRG: Multimodal Retrieval-Augmented Radiology Report Generation with Key Phrase Extraction
 description: >-
-  [ACL 2026][医疗NLP][放射报告生成] 提出 RA-RRG 框架，通过 LLM 从放射报告中提取临床关键短语并构建检索库，给定胸部 X 光影像后检索相关短语并输入 LLM 生成报告，无需 LLM 微调即可有效抑制幻觉，仅需 18 GPU 小时训练，在 CheXbert 指标上达到 SOTA。
+  [ACL 2026 Findings][医疗NLP][放射报告生成] 提出 RA-RRG 框架，通过 LLM 从放射报告中提取临床关键短语并构建检索库，给定胸部 X 光影像后检索相关短语并输入 LLM 生成报告，无需 LLM 微调即可有效抑制幻觉，仅需 18 GPU 小时训练，在 CheXbert 指标上达到 SOTA。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "放射报告生成"
   - "检索增强生成"

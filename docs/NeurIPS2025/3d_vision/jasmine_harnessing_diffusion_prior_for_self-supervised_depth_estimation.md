@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jasmine: Harnessing Diffusion Prior for Self-Supervised Depth Estimation
 description: >-
-  [NeurIPS 2025][3D视觉][自监督深度估计] 首次将Stable Diffusion的视觉先验引入自监督单目深度估计框架，提出Mix-Batch Image Reconstruction（MIR）代理任务保护SD先验不被重投影噪声损坏…
+  [NeurIPS 2025][3D视觉][自监督深度估计] 首次将Stable Diffusion的视觉先验引入自监督单目深度估计框架，提出Mix-Batch Image Reconstruction（MIR）代理任务保护SD先验不被重投影噪声损坏，并设计Scale-Shift GRU（SSG）桥接SD的尺度-偏移不变性（SSI）与自监督的尺度不变性（SI）深度分布，在KITTI上AbsRel=0.090达到所有SSMDE方法SOTA，且零样本泛化全面超越Marigold、E2E FT、Lotus等有监督SD方法。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

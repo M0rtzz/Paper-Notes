@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models
 description: >-
-  [AAAI 2026][多模态VLM][OOD检测] 提出 CoEvo，一个 training-free 和 annotation-free 的 test-time 框架，通过双向 sample-conditioned 的文本/视觉 proxy 协同演化机制动态更新正负代理缓存…
+  [AAAI 2026][多模态VLM][OOD检测] 提出 CoEvo，一个 training-free 和 annotation-free 的 test-time 框架，通过双向 sample-conditioned 的文本/视觉 proxy 协同演化机制动态更新正负代理缓存，在 ImageNet-1K 上比最强负标签基线 AUROC 提升 1.33%、FPR95 降低 45.98%（从 18.92% 降至 10.22%），实现 SOTA 的 zero-shot OOD 检测。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

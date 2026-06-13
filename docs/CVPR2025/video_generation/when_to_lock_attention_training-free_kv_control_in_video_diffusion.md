@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Lock Attention: Training-Free KV Control in Video Diffusion
 description: >-
-  [CVPR2025][视频生成][video editing] 提出 KV-Lock，一种基于扩散幻觉检测的免训练视频编辑框架，通过动态调度 KV 缓存融合比例和 CFG 引导尺度，在保持背景一致性的同时增强前景生成质量。
+  [CVPR2025][视频生成][video editing] 提出 KV-Lock，一种基于扩散幻觉检测的免训练视频编辑框架，通过动态调度 KV 缓存融合比例和 CFG 引导尺度，在保持背景一致性的同时增强前景生成质量。 视频编辑的核心矛盾：保持背景一致性与增强前景质量之间存在根本性冲突——注入全图信息导致背景伪影…
 tags:
   - "CVPR2025"
   - "视频生成"

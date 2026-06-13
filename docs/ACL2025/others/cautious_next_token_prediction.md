@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cautious Next Token Prediction
 description: >-
-  [ACL 2025][解码策略] 提出 Cautious Next Token Prediction (CNTP)，一种无需训练的自适应解码策略：在模型预测熵较高（不确定）时采样多条候选路径至标点处，选择困惑度最低的路径作为最终续写，从而在不牺牲多样性的前提下显著提升准确性。
+  [ACL 2025][解码策略] 提出 Cautious Next Token Prediction (CNTP)，一种无需训练的自适应解码策略：在模型预测熵较高（不确定）时采样多条候选路径至标点处，选择困惑度最低的路径作为最终续写，从而在不牺牲多样性的前提下显著提升准确性。 - 当前主流 LLM 解码策略（top-p/nu…
 tags:
   - "ACL 2025"
   - "解码策略"

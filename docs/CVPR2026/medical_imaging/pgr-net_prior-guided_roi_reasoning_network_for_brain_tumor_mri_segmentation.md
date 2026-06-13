@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PGR-Net: Prior-Guided ROI Reasoning Network for Brain Tumor MRI Segmentation
 description: >-
-  [CVPR 2026][医学图像][脑肿瘤分割] PGR-Net 提出了一种显式 ROI 感知的脑肿瘤 MRI 分割网络，通过从训练集构建数据驱动的空间先验模板、层级 Top-K ROI 选择机制和窗口高斯-空间衰减引导模块（WinGS-ROI），将计算资源集中于病灶区域…
+  [CVPR 2026][医学图像][脑肿瘤分割] PGR-Net 提出了一种显式 ROI 感知的脑肿瘤 MRI 分割网络，通过从训练集构建数据驱动的空间先验模板、层级 Top-K ROI 选择机制和窗口高斯-空间衰减引导模块（WinGS-ROI），将计算资源集中于病灶区域，仅用 8.64M 参数就在 BraTS-2019/2023 和 MSD Task01 上达到了 SOTA。
 tags:
   - "CVPR 2026"
   - "医学图像"

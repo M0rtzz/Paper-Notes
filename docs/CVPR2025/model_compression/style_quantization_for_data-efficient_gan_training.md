@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Style Quantization for Data-Efficient GAN Training
 description: >-
-  [CVPR 2025][模型压缩][GAN] SQ-GAN 通过将 StyleGAN 的中间 style 空间离散量化为可学习码本，把稀疏连续潜变量空间压缩为紧凑结构化的离散代理空间，增强有限数据下判别器一致性正则化的效果，并利用 CLIP 嵌入+最优传输距离初始化码本，将外部语义知识注入码本…
+  [CVPR 2025][模型压缩][GAN] SQ-GAN 通过将 StyleGAN 的中间 style 空间离散量化为可学习码本，把稀疏连续潜变量空间压缩为紧凑结构化的离散代理空间，增强有限数据下判别器一致性正则化的效果，并利用 CLIP 嵌入+最优传输距离初始化码本，将外部语义知识注入码本，显著提升小样本 GAN 的生成质量。
 tags:
   - "CVPR 2025"
   - "模型压缩"

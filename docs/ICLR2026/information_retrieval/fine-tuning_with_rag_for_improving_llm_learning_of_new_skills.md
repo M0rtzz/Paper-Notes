@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-tuning with RAG for Improving LLM Learning of New Skills
 description: >-
-  [ICLR 2026][信息检索/RAG][RAG distillation] 提出将 RAG 从推理时的永久依赖转化为训练时的教师信号：从 agent 失败中提取 hint、用 hint 增强的教师生成更优轨迹、然后移除 hint 蒸馏到学生模型，使学生内化检索增益而无需运行时 RAG…
+  [ICLR 2026][信息检索/RAG][RAG distillation] 提出将 RAG 从推理时的永久依赖转化为训练时的教师信号：从 agent 失败中提取 hint、用 hint 增强的教师生成更优轨迹、然后移除 hint 蒸馏到学生模型，使学生内化检索增益而无需运行时 RAG，在 ALFWorld 达到 91% 成功率（基线 79%），WebShop 分数达 72（基线 61）。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

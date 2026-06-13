@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Feasible to Practical: Pareto-Optimal Synthesis Planning
 description: >-
-  [ICML 2026][计算生物][多目标搜索] PareSP 用**多目标 MCTS 搜索**联合优化合成路径的**成本 / 时间 / 可行性 / 环境影响**——找到完整帕累托前沿而非单一"最佳"路径，在 USPTO 和 ASKCOS 基准上较单目标方法节省 23% 成本、35% 时间…
+  [ICML 2026][计算生物][多目标搜索] PareSP 用**多目标 MCTS 搜索**联合优化合成路径的**成本 / 时间 / 可行性 / 环境影响**——找到完整帕累托前沿而非单一"最佳"路径，在 USPTO 和 ASKCOS 基准上较单目标方法节省 23% 成本、35% 时间，同时保持 ≥ 95% 化学可行性。
 tags:
   - "ICML 2026"
   - "计算生物"

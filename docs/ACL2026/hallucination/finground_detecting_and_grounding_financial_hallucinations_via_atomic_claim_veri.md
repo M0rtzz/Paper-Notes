@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FinGround: Detecting and Grounding Financial Hallucinations via Atomic Claim Verification
 description: >-
-  [ACL 2026][幻觉检测][金融问答] FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pipeline：(1) finance-aware 混合检索…
+  [ACL 2026][幻觉检测][金融问答] FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pipeline：(1) finance-aware 混合检索；(2) 把答案拆成原子 claim 并按"数值/时间/实体属性/比较/监管/计算"六类 taxonomy 用 type-routed 策略验证 (其中 computational claim 用公式重构 + 算术再校验)；(3) 对未支持的 claim 进行 grounded 重写并加段/单元格级引用——把 GPT-4o 蒸馏到 8B 检测器实现 91.4% F1、18× 加速，端到端将 hallucination rate 相比…
 tags:
   - "ACL 2026"
   - "幻觉检测"

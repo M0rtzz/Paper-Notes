@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Streaming Autoregressive Video Generation via Diagonal Distillation
 description: >-
-  [ICLR 2026][视频生成][自回归生成] 提出Diagonal Distillation（DiagDistill），通过对角线去噪策略（前段多步、后段少步）和流分布匹配损失，实现流式自回归视频生成的277.3倍加速，达到31 FPS实时生成。
+  [ICLR 2026][视频生成][自回归生成] 提出Diagonal Distillation（DiagDistill），通过对角线去噪策略（前段多步、后段少步）和流分布匹配损失，实现流式自回归视频生成的277.3倍加速，达到31 FPS实时生成。 1. 领域现状： 扩散模型在视频生成质量上取得显著进展…
 tags:
   - "ICLR 2026"
   - "视频生成"

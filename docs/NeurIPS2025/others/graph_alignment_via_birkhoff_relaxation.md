@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph Alignment via Birkhoff Relaxation
 description: >-
-  [NeurIPS 2025][graph alignment] 首次为 Birkhoff 松弛（QAP 的紧凸松弛）在高斯 Wigner 模型下建立理论保证：当噪声 $\sigma = o(n^{-1})$ 时松弛解近似真实排列，$\sigma = \Omega(n^{-0.5})$ 时松弛解远离真实排列…
+  [NeurIPS 2025][graph alignment] 首次为 Birkhoff 松弛（QAP 的紧凸松弛）在高斯 Wigner 模型下建立理论保证：当噪声 $\sigma = o(n^{-1})$ 时松弛解近似真实排列，$\sigma = \Omega(n^{-0.5})$ 时松弛解远离真实排列，揭示了相变现象。
 tags:
   - "NeurIPS 2025"
   - "graph alignment"

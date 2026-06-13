@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InterActHuman: Multi-Concept Human Animation with Layout-Aligned Audio Conditions
 description: >-
-  [ICLR 2026][图像恢复][多人视频生成] 提出 InterActHuman，通过自动推断时空布局的掩码预测器和迭代掩码引导策略，实现多人/人物交互场景下的音频驱动视频生成，支持每个角色独立的语音驱动口型同步和身体动作。
+  [ICLR 2026][图像恢复][多人视频生成] 提出 InterActHuman，通过自动推断时空布局的掩码预测器和迭代掩码引导策略，实现多人/人物交互场景下的音频驱动视频生成，支持每个角色独立的语音驱动口型同步和身体动作。 领域现状：音频驱动的人体动画已取得显著进展（CyberHost, OmniHuman）…
 tags:
   - "ICLR 2026"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GiFT: Gibbs Fine-Tuning for Code Generation
 description: >-
-  [ACL 2025][代码智能][代码生成] 提出 Gibbs Fine-Tuning（GiFT），受 Gibbs 采样启发，通过"代码→描述→代码"的迭代翻译从边际分布而非条件分布中采样自生成代码，结合困惑度引导的长尾数据选择…
+  [ACL 2025][代码智能][代码生成] 提出 Gibbs Fine-Tuning（GiFT），受 Gibbs 采样启发，通过"代码→描述→代码"的迭代翻译从边际分布而非条件分布中采样自生成代码，结合困惑度引导的长尾数据选择，在 APPS+/MBPP+/CodeInsight 上比标准自训练提升最高 9.8%。
 tags:
   - "ACL 2025"
   - "代码智能"

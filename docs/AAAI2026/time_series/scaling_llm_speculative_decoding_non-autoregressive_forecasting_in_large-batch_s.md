@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling LLM Speculative Decoding: Non-Autoregressive Forecasting in Large-Batch Scenarios
 description: >-
-  [AAAI 2026][时间序列][推测解码] 提出 SpecFormer，一种融合单向和双向注意力的非自回归草稿模型架构，在大批次推理场景下通过降低对复杂前缀树的依赖、减少位置相关参数，实现了对 LLM 推理的一致性加速。
+  [AAAI 2026][时间序列][推测解码] 提出 SpecFormer，一种融合单向和双向注意力的非自回归草稿模型架构，在大批次推理场景下通过降低对复杂前缀树的依赖、减少位置相关参数，实现了对 LLM 推理的一致性加速。 问题起源 大语言模型（LLM）采用自回归解码，每次只生成一个 token，导致算术强度（Arithm…
 tags:
   - "AAAI 2026"
   - "时间序列"

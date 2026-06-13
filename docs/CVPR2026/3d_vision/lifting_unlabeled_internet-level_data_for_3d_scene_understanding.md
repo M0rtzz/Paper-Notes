@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lifting Unlabeled Internet-level Data for 3D Scene Understanding
 description: >-
-  [CVPR 2026][3D视觉][3D场景理解] 构建SceneVerse++，通过自动化数据引擎从6,687个无标注互联网视频中生成3D场景理解训练数据，在3D目标检测（F1@.25提升20.6）、空间VQA（+14.9%）和视觉语言导航（+14% SR）三个任务上展示了利用互联网级数据推进3D场景理解的…
+  [CVPR 2026][3D视觉][3D场景理解] 构建SceneVerse++，通过自动化数据引擎从6,687个无标注互联网视频中生成3D场景理解训练数据，在3D目标检测（F1@.25提升20.6）、空间VQA（+14.9%）和视觉语言导航（+14% SR）三个任务上展示了利用互联网级数据推进3D场景理解的可行性。
 tags:
   - "CVPR 2026"
   - "3D视觉"

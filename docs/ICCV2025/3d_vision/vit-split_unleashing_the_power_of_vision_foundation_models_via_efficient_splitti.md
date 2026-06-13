@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViT-Split: Unleashing the Power of Vision Foundation Models via Efficient Splitting Heads
 description: >-
-  [ICCV 2025][3D视觉][视觉基础模型] 基于"VFM 层可分为低层特征提取器和高层任务适配器"的关键观察，提出 ViT-Split，通过冻结 VFM + task head（复制最后 $K_t$ 层）+ prior head（轻量 CNN 聚合多尺度先验特征）的设计…
+  [ICCV 2025][3D视觉][视觉基础模型] 基于"VFM 层可分为低层特征提取器和高层任务适配器"的关键观察，提出 ViT-Split，通过冻结 VFM + task head（复制最后 $K_t$ 层）+ prior head（轻量 CNN 聚合多尺度先验特征）的设计，在 ADE20K 上仅用线性头即达到 58.2 mIoU（DINOv2-L），训练速度提升 4 倍，可训练参数仅为传统适配器的 1/4~1/5。
 tags:
   - "ICCV 2025"
   - "3D视觉"

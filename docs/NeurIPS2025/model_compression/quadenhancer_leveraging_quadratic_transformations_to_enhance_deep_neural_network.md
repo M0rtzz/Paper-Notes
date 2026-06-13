@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks
 description: >-
-  [NeurIPS 2025][模型压缩][二次变换] 提出一种轻量级的二次增强器（QuadEnhancer），通过在每个线性层引入稀疏化的二次交互项，以极少的额外参数和计算开销显著提升现有神经网络架构的性能。
+  [NeurIPS 2025][模型压缩][二次变换] 提出一种轻量级的二次增强器（QuadEnhancer），通过在每个线性层引入稀疏化的二次交互项，以极少的额外参数和计算开销显著提升现有神经网络架构的性能。 现代深度神经网络的核心构建块是"线性变换 + 非线性激活函数"的组合。尽管这一框架在逼近复杂函数方面取得了巨大成功…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

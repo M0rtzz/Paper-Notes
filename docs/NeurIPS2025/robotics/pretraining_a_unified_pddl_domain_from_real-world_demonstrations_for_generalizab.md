@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniDomain: Pretraining a Unified PDDL Domain from Real-World Demonstrations for Generalizable Task Planning
 description: >-
-  [NeurIPS 2025][机器人][PDDL] UniDomain 从 12,393 个真实机器人操作视频中预训练统一的 PDDL 规划域（含 3,137 个算子和 2,875 个谓词），通过层级融合构建元域，实现零样本跨任务符号规划，比最强基线高出 58% 成功率和 160% 计划最优性。
+  [NeurIPS 2025][机器人][PDDL] UniDomain 从 12,393 个真实机器人操作视频中预训练统一的 PDDL 规划域（含 3,137 个算子和 2,875 个谓词），通过层级融合构建元域，实现零样本跨任务符号规划，比最强基线高出 58% 成功率和 160% 计划最优性。 机器人任务规划需要在自然语言…
 tags:
   - "NeurIPS 2025"
   - "机器人"

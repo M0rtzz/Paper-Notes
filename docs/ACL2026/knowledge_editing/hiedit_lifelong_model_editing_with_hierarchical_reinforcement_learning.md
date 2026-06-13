@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiEdit: Lifelong Model Editing with Hierarchical Reinforcement Learning
 description: >-
-  [ACL 2026][知识编辑][lifelong model editing] HiEdit 用分层强化学习把"终身模型编辑"拆成 high-level 选层 + low-level 算梯度更新两个子任务，让 hypernetwork 按知识自适应地只动一半的层，把强基线 RLEdit 平均再提 8.48%…
+  [ACL 2026][知识编辑][lifelong model editing] HiEdit 用分层强化学习把"终身模型编辑"拆成 high-level 选层 + low-level 算梯度更新两个子任务，让 hypernetwork 按知识自适应地只动一半的层，把强基线 RLEdit 平均再提 8.48%。
 tags:
   - "ACL 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event-boosted Deformable 3D Gaussians for Dynamic Scene Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 首次将事件相机与可变形 3D 高斯溅射（3D-GS）结合用于动态场景重建，提出 GS-阈值联合建模策略和动静分解策略，在新构建的事件-4D 基准上实现了 SOTA 的渲染质量和速度（合成数据平均 PSNR 提升 2.73dB…
+  [ICCV 2025][3D视觉][3D高斯溅射] 首次将事件相机与可变形 3D 高斯溅射（3D-GS）结合用于动态场景重建，提出 GS-阈值联合建模策略和动静分解策略，在新构建的事件-4D 基准上实现了 SOTA 的渲染质量和速度（合成数据平均 PSNR 提升 2.73dB，渲染速度达 4D-GS 的 1.71 倍）。
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the MoE LLM Trilemma: Dynamic Expert Clustering with Structured Compression
 description: >-
-  [ICML 2026][模型压缩][Mixture-of-Experts] 针对 MoE LLM 的"负载不均–参数冗余–通信开销"三难，本文提出一个统一框架：用"参数 + 激活"双相似度在线聚类把专家分组，组内用"共享基矩阵 + 低秩残差"做结构化压缩 (~5×)…
+  [ICML 2026][模型压缩][Mixture-of-Experts] 针对 MoE LLM 的"负载不均–参数冗余–通信开销"三难，本文提出一个统一框架：用"参数 + 激活"双相似度在线聚类把专家分组，组内用"共享基矩阵 + 低秩残差"做结构化压缩 (~5×)，再做"先选组后选 expert"的两级分层路由 + FP16/INT4 异构精度 + 闲置组离线卸载，在 GLUE/WikiText-103 上以约 80% 参数缩减、10–20% 吞吐提升、专家负载方差降 3× 的代价匹配标准 MoE 性能。
 tags:
   - "ICML 2026"
   - "模型压缩"

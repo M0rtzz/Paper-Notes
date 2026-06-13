@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment
 description: >-
-  [AAAI 2026][人体理解][文本生成动作] 提出 ReAlign（Reward-guided sampling Alignment），通过步感知（step-aware）奖励模型和奖励引导采样策略，在扩散推理过程中动态引导采样轨迹朝向文本-动作高对齐的分布…
+  [AAAI 2026][人体理解][文本生成动作] 提出 ReAlign（Reward-guided sampling Alignment），通过步感知（step-aware）奖励模型和奖励引导采样策略，在扩散推理过程中动态引导采样轨迹朝向文本-动作高对齐的分布，无需微调任何扩散模型即可显著提升多种动作生成方法的质量。以 MLD 为例，R@1 提升 17.9%，FID 改善 58.8%。
 tags:
   - "AAAI 2026"
   - "人体理解"

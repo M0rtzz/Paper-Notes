@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SongComposer: A Large Language Model for Lyric and Melody Generation in Song Composition
 description: >-
-  [ACL 2025][LLM/NLP][歌曲创作] SongComposer是首个能够同时生成歌词和旋律的音乐专用大语言模型，通过词级对齐的元组格式、基于音乐知识的标量音高初始化、以及渐进式结构感知训练（motif→独立全曲→短语级配对）…
+  [ACL 2025][LLM 其他][歌曲创作] SongComposer是首个能够同时生成歌词和旋律的音乐专用大语言模型，通过词级对齐的元组格式、基于音乐知识的标量音高初始化、以及渐进式结构感知训练（motif→独立全曲→短语级配对），在歌词配旋律、旋律配歌词、歌曲续写和文本生成歌曲等任务上全面超越GPT-4。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "歌曲创作"
   - "大语言模型"
   - "旋律生成"

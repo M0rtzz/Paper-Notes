@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Training with KV Binding Is Secretly Linear Attention
 description: >-
-  [ICML 2026][测试时训练] 本文用四个「记忆悖论」反例 + 一套严格的展开定理，证明带 KV-binding 内循环的 TTT（如 LaCT、ViTTT）即便用多层 MLP + 动量也只是「学到的线性注意力算子」，并据此把它简化、并行化为标准线性注意力，吞吐提升 4× 而性能几乎不掉。
+  [ICML 2026][测试时训练] 本文用四个「记忆悖论」反例 + 一套严格的展开定理，证明带 KV-binding 内循环的 TTT（如 LaCT、ViTTT）即便用多层 MLP + 动量也只是「学到的线性注意力算子」，并据此把它简化、并行化为标准线性注意力，吞吐提升 4× 而性能几乎不掉。 领域现状：TTT-KVB（带…
 tags:
   - "ICML 2026"
   - "测试时训练"

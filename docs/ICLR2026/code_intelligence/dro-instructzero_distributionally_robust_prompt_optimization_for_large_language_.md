@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRO-InstructZero: Distributionally Robust Prompt Optimization for Large Language Models
 description: >-
-  [ICLR 2026][代码智能][提示学习] 将分布鲁棒优化（DRO）引入 InstructZero 的贝叶斯优化框架，通过在 f-divergence 球定义的模糊集上最大化最坏情况期望效用，使自动搜索得到的 prompt 在分布偏移下仍能保持可靠性能。
+  [ICLR 2026][代码智能][提示学习] 将分布鲁棒优化（DRO）引入 InstructZero 的贝叶斯优化框架，通过在 f-divergence 球定义的模糊集上最大化最坏情况期望效用，使自动搜索得到的 prompt 在分布偏移下仍能保持可靠性能。 大语言模型对 prompt 措辞高度敏感——即使是轻微改写也可能导…
 tags:
   - "ICLR 2026"
   - "代码智能"

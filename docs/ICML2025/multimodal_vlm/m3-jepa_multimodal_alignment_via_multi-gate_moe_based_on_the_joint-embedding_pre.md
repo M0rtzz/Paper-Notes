@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3-JEPA: Multimodal Alignment via Multi-gate MoE based on JEPA
 description: >-
-  [ICML 2025][多模态VLM][JEPA] 将 JEPA（联合嵌入预测架构）推广到任意模态组合的多模态对齐中，用 Multi-gate MoE 作为跨模态预测器在潜在空间对齐（而非 token 空间），门控函数解耦模态特定和共享信息，通过交替梯度下降避免多方向任务间的梯度冲突…
+  [ICML 2025][多模态VLM][JEPA] 将 JEPA（联合嵌入预测架构）推广到任意模态组合的多模态对齐中，用 Multi-gate MoE 作为跨模态预测器在潜在空间对齐（而非 token 空间），门控函数解耦模态特定和共享信息，通过交替梯度下降避免多方向任务间的梯度冲突，仅 140M 可训练参数在多个检索和分类任务上超越 BLIP-2（1.2B）等 SOTA。
 tags:
   - "ICML 2025"
   - "多模态VLM"

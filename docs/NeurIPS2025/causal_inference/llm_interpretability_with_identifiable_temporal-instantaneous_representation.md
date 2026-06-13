@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Interpretability with Identifiable Temporal-Instantaneous Representation
 description: >-
-  [NeurIPS 2025][因果推理][LLM可解释性] 本文提出了一种面向 LLM 高维激活空间的可辨识时序因果表示学习框架，通过线性化公式同时建模时间延迟和瞬时因果关系，在保留理论可辨识性保证的同时解决了现有 CRL 方法无法扩展到 LLM 维度的计算瓶颈。
+  [NeurIPS 2025][因果推理][LLM可解释性] 本文提出了一种面向 LLM 高维激活空间的可辨识时序因果表示学习框架，通过线性化公式同时建模时间延迟和瞬时因果关系，在保留理论可辨识性保证的同时解决了现有 CRL 方法无法扩展到 LLM 维度的计算瓶颈。 1. 领域现状 机械可解释性（Mechanistic Int…
 tags:
   - "NeurIPS 2025"
   - "因果推理"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Self-Training Elicits Concise Reasoning in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][简洁推理] 发现 LLM 输出分布中天然包含简洁推理路径，提出 FS-BoN（Few-shot 条件化 + Best-of-N 采样）自训练框架，从模型自身分布中筛选短且正确的推理样本进行微调…
+  [ACL 2025][LLM 其他][简洁推理] 发现 LLM 输出分布中天然包含简洁推理路径，提出 FS-BoN（Few-shot 条件化 + Best-of-N 采样）自训练框架，从模型自身分布中筛选短且正确的推理样本进行微调，在 GSM8K 和 MATH 上跨 5 个模型族实现平均 30% token 缩减且不损准确率，效率为先前方法 Rational Metareasoning 的 2.4 倍。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "简洁推理"
   - "自训练"
   - "Best-of-N采样"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Free-Viewpoint Video of Outdoor Sports Using a Flying Camera
 description: >-
-  [ECCV 2024][自由视点视频] 提出了一种基于无人机RGB相机的系统，能够重建户外运动场景中的4D动态人体和3D无界背景，实现任意时刻的自由视点视频渲染。
+  [ECCV 2024][自由视点视频] 提出了一种基于无人机RGB相机的系统，能够重建户外运动场景中的4D动态人体和3D无界背景，实现任意时刻的自由视点视频渲染。 1. 领域现状： 自由视点视频（Free-Viewpoint Video, FVV）技术近年来在体育赛事直播、体育分析和虚拟现实等领域受到广泛关注…
 tags:
   - "ECCV 2024"
   - "自由视点视频"

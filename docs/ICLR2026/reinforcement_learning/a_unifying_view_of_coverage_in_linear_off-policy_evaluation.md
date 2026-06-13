@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unifying View of Coverage in Linear Off-Policy Evaluation
 description: >-
-  [ICLR 2026][强化学习][离策略评估] 提出了一种新的覆盖性参数——**特征-动态覆盖**（feature-dynamics coverage），通过工具变量视角对经典算法 LSTDQ 进行新颖的有限样本分析，统一了线性离策略评估中各种不同覆盖性定义，解决了该领域长期存在的碎片化问题。
+  [ICLR 2026][强化学习][离策略评估] 提出了一种新的覆盖性参数——特征-动态覆盖：（feature-dynamics coverage），通过工具变量视角对经典算法 LSTDQ 进行新颖的有限样本分析，统一了线性离策略评估中各种不同覆盖性定义，解决了该领域长期存在的碎片化问题。 离策略评估（Off-Policy…
 tags:
   - "ICLR 2026"
   - "强化学习"

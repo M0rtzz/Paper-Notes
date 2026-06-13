@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M2SFormer: Multi-Spectral and Multi-Scale Attention with Edge-Aware Difficulty Guidance for Image Forgery Localization
 description: >-
-  [ICCV 2025][图像生成][图像篡改定位] 提出 M2SFormer，在编码器-解码器的 skip connection 中统一多光谱（2D DCT 频域）和多尺度（SIFT 风格空间金字塔）注意力机制，并设计基于边缘感知曲率的难度引导注意力解码器…
+  [ICCV 2025][图像生成][图像篡改定位] 提出 M2SFormer，在编码器-解码器的 skip connection 中统一多光谱（2D DCT 频域）和多尺度（SIFT 风格空间金字塔）注意力机制，并设计基于边缘感知曲率的难度引导注意力解码器，在图像篡改定位任务中实现跨域泛化性能 SOTA（CASIAv2 训练方案下 unseen 域平均 DSC 43.0%，mIoU 34.3%）。
 tags:
   - "ICCV 2025"
   - "图像生成"

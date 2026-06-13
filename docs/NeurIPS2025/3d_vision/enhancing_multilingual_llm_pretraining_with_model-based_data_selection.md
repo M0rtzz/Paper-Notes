@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Multilingual LLM Pretraining with Model-Based Data Selection
 description: >-
-  [NeurIPS 2025][3D视觉][multilingual pretraining] 提出一套透明、简洁、高效的多语言模型驱动数据筛选框架，利用 FastText 和 Transformer（XLM-RoBERTa）嵌入分类器识别结构化且知识丰富的样本…
+  [NeurIPS 2025][3D视觉][multilingual pretraining] 提出一套透明、简洁、高效的多语言模型驱动数据筛选框架，利用 FastText 和 Transformer（XLM-RoBERTa）嵌入分类器识别结构化且知识丰富的样本，在 FineWeb-2 数据集上仅用 15% 的 token 即可匹配基线 MMLU 分数，并将该框架扩展至 20 种语言并公开发布了精炼的预训练数据集。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

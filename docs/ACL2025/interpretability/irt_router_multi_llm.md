@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory
 description: >-
-  [ACL 2025][可解释性][LLM routing] IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"考生"、query 视为"考题"，学习多维能力向量和难度/区分度参数实现可解释的多 LLM 路由…
+  [ACL 2025][可解释性][LLM routing] IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"考生"、query 视为"考题"，学习多维能力向量和难度/区分度参数实现可解释的多 LLM 路由，在 OOD 场景下达 87%+ 准确率且成本仅为 GPT-4o 的 1/30。
 tags:
   - "ACL 2025"
   - "可解释性"

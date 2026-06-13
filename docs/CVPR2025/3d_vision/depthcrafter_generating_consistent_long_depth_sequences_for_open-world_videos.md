@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DepthCrafter: Generating Consistent Long Depth Sequences for Open-world Videos
 description: >-
-  [CVPR 2025][3D视觉][视频深度估计] 利用预训练的视频扩散模型 (SVD) 进行视频深度估计，通过三阶段训练策略实现可变长度（最长110帧）的时间一致深度序列生成，并设计分段推理策略支持极长视频，在零样本设置下全面超越现有方法。
+  [CVPR 2025][3D视觉][视频深度估计] 利用预训练的视频扩散模型 (SVD) 进行视频深度估计，通过三阶段训练策略实现可变长度（最长110帧）的时间一致深度序列生成，并设计分段推理策略支持极长视频，在零样本设置下全面超越现有方法。 单目深度估计领域的基础模型（Depth Anything V2、Marigold…
 tags:
   - "CVPR 2025"
   - "3D视觉"

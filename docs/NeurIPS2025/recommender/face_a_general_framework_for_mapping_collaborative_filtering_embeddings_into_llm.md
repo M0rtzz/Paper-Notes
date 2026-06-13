@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FACE: A General Framework for Mapping Collaborative Filtering Embeddings into LLM Tokens
 description: >-
-  [NeurIPS 2025][推荐系统][协同过滤] FACE 提出将协同过滤（CF）嵌入通过解纠缠投影 + 残差量化映射为 LLM 预训练 token（描述符），再用对比学习对齐语义，无需微调 LLM 即可实现 CF 嵌入的语义解读和推荐性能增强。
+  [NeurIPS 2025][推荐系统][协同过滤] FACE 提出将协同过滤（CF）嵌入通过解纠缠投影 + 残差量化映射为 LLM 预训练 token（描述符），再用对比学习对齐语义，无需微调 LLM 即可实现 CF 嵌入的语义解读和推荐性能增强。 领域现状：推荐系统中 CF 模型（如 LightGCN）生成的用户/物品嵌…
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

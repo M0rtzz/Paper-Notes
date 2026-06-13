@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NADER: Neural Architecture Design via Multi-Agent Collaboration
 description: >-
-  [CVPR 2025][多智能体][神经架构设计] NADER 将神经架构设计建模为多 LLM Agent 协作任务——Reader 读论文提炼知识、Proposer 生成改进方案、Modifier 用 DAG 图实现修改、Reflector 从失败中学习经验…
+  [CVPR 2025][多智能体][神经架构设计] NADER 将神经架构设计建模为多 LLM Agent 协作任务——Reader 读论文提炼知识、Proposer 生成改进方案、Modifier 用 DAG 图实现修改、Reflector 从失败中学习经验，仅 10 次试验即突破 NAS-Bench-201 搜索空间的准确率上限，在 CIFAR-100 上达 74.51%（搜索空间最优 73.51%）。
 tags:
   - "CVPR 2025"
   - "多智能体"

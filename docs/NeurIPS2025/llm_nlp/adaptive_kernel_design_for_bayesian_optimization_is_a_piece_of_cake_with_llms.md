@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Adaptive Kernel Design for Bayesian Optimization Is a Piece of CAKE with LLMs
 description: >-
-  [NeurIPS 2025][LLM/NLP][Bayesian Optimization] 提出 CAKE (Context-Aware Kernel Evolution)，利用 LLM 作为遗传算法的交叉和变异算子，在贝叶斯优化过程中自适应地生成和进化 GP 核函数表达式…
+  [NeurIPS 2025][LLM 其他][Bayesian Optimization] 提出 CAKE (Context-Aware Kernel Evolution)，利用 LLM 作为遗传算法的交叉和变异算子，在贝叶斯优化过程中自适应地生成和进化 GP 核函数表达式，结合 BAKER 排序机制平衡模型拟合（BIC）与期望改进（EI），在超参数优化、控制器调参和光子芯片设计等任务上持续超越固定核和自适应核基线。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Bayesian Optimization"
   - "Gaussian Process"
   - "Kernel Design"

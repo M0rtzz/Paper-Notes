@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition
 description: >-
-  [ECCV 2024][全景活动识别] 提出 SPDP-Net，通过时空邻近性建模个体间社会关系，并利用双路径 Transformer (DPATr) 架构在个体-全局和个体-社交两条路径上协同识别多粒度活动，在 JRDB-PAR 数据集上以 46.5% overall F1 大幅刷新 SOTA。
+  [ECCV 2024][视频理解][全景活动识别] 提出 SPDP-Net，通过时空邻近性建模个体间社会关系，并利用双路径 Transformer (DPATr) 架构在个体-全局和个体-社交两条路径上协同识别多粒度活动，在 JRDB-PAR 数据集上以 46.5% overall F1 大幅刷新 SOTA。
 tags:
   - "ECCV 2024"
+  - "视频理解"
   - "全景活动识别"
   - "社交群组检测"
   - "时空邻近性"

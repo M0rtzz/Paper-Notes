@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Site4Drug: Predicting Drug-Binding Target Sites with an AI Agent
 description: >-
-  [ICML 2026][计算生物][药物靶点] Site4Drug 把"在蛋白质上选哪里下药"这一上游瓶颈重构为一个约束优先的证据整合问题——LLM Agent 从序列推导拓扑、PTM、Motif、半胱氨酸等可行性信号，输出带分数、风险标签和可追溯日志的候选位点排序，并自动推荐应当采用抗体/多肽还是小分子模态…
+  [ICML 2026][计算生物][药物靶点] Site4Drug 把"在蛋白质上选哪里下药"这一上游瓶颈重构为一个约束优先的证据整合问题——LLM Agent 从序列推导拓扑、PTM、Motif、半胱氨酸等可行性信号，输出带分数、风险标签和可追溯日志的候选位点排序，并自动推荐应当采用抗体/多肽还是小分子模态。
 tags:
   - "ICML 2026"
   - "计算生物"

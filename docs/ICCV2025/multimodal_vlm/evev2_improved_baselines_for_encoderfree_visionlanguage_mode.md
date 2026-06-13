@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EVEv2: Improved Baselines for Encoder-Free Vision-Language Models
 description: >-
-  [ICCV 2025 (Highlight)][多模态VLM][encoder-free VLM] 系统性地探索无视觉编码器VLM的最优架构和训练策略，提出Divide-and-Conquer架构将transformer完全分解为模态专用组件（attention/FFN/LayerNorm各模态独立）…
+  [ICCV 2025 (Highlight)][多模态VLM][encoder-free VLM] 系统性地探索无视觉编码器VLM的最优架构和训练策略，提出Divide-and-Conquer架构将transformer完全分解为模态专用组件（attention/FFN/LayerNorm各模态独立），在仅100M公开数据下超越所有encoder-free同类并接近encoder-based VLM性能。
 tags:
   - "ICCV 2025 (Highlight)"
   - "多模态VLM"

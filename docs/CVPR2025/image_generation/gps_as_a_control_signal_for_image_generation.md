@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GPS as a Control Signal for Image Generation
 description: >-
-  [CVPR 2025][图像生成][GPS conditioning] 将照片 EXIF 元数据中的 GPS 坐标作为扩散模型的新型控制信号，训练 GPS+文本联合条件的图像生成模型，能捕捉城市内不同街区/地标的细粒度外观差异，并通过角度条件 SDS 从 2D 模型提取 3D 地标重建。
+  [CVPR 2025][图像生成][GPS conditioning] 将照片 EXIF 元数据中的 GPS 坐标作为扩散模型的新型控制信号，训练 GPS+文本联合条件的图像生成模型，能捕捉城市内不同街区/地标的细粒度外观差异，并通过角度条件 SDS 从 2D 模型提取 3D 地标重建。 领域现状： 扩散模型已广泛使用文本、…
 tags:
   - "CVPR 2025"
   - "图像生成"

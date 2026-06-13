@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-MMSI: Toward Identity-Attributed Social Interaction Understanding
 description: >-
-  [CVPR 2026][音频/语音][社交交互理解] 提出 Omni-MMSI 任务——从原始音视频输入（而非预处理的 oracle 社交线索）理解多人社交交互，并设计 Omni-MMSI-R 参考引导流水线，通过工具生成身份归因社交线索 + 链式思维推理实现准确的社交交互理解。
+  [CVPR 2026][音频/语音][社交交互理解] 提出 Omni-MMSI 任务——从原始音视频输入（而非预处理的 oracle 社交线索）理解多人社交交互，并设计 Omni-MMSI-R 参考引导流水线，通过工具生成身份归因社交线索 + 链式思维推理实现准确的社交交互理解。 多模态多人社交交互理解（MMSI）旨在解读社…
 tags:
   - "CVPR 2026"
   - "音频/语音"

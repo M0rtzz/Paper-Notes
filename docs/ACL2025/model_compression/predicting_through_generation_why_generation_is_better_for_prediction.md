@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Predicting Through Generation: Why Generation Is Better for Prediction
 description: >-
-  [ACL2025][PredGen] 本文从信息论角度证明了token级生成比pooled表示保留更多互信息，提出PredGen框架通过scheduled sampling和task adapter解决生成式预测中的exposure bias和格式不匹配问题…
+  [ACL2025][模型压缩][PredGen] 本文从信息论角度证明了token级生成比pooled表示保留更多互信息，提出PredGen框架通过scheduled sampling和task adapter解决生成式预测中的exposure bias和格式不匹配问题，并设计了Writer-Director Alignment Loss统一生成与预测目标。
 tags:
   - "ACL2025"
+  - "模型压缩"
   - "PredGen"
   - "Generation for Prediction"
   - "Data Processing Inequality"

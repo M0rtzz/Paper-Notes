@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STUN: Structured-Then-Unstructured Pruning for Scalable MoE Pruning
 description: >-
-  [ACL 2025][模型压缩][MoE剪枝] STUN 提出"先结构化后非结构化"的两阶段 MoE 剪枝范式：第一阶段利用路由权重的行为相似性聚类冗余专家，以 $O(1)$ GPU 前向传播完成专家级剪枝；第二阶段在剩余专家内做非结构化权重剪枝…
+  [ACL 2025][模型压缩][MoE剪枝] STUN 提出"先结构化后非结构化"的两阶段 MoE 剪枝范式：第一阶段利用路由权重的行为相似性聚类冗余专家，以 $O(1)$ GPU 前向传播完成专家级剪枝；第二阶段在剩余专家内做非结构化权重剪枝，两者协同在 480B Snowflake Arctic 上以 40% 稀疏度几乎无性能损失。
 tags:
   - "ACL 2025"
   - "模型压缩"

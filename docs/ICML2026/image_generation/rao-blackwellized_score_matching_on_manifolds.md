@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rao-Blackwellized Score Matching on Manifolds
 description: >-
-  [ICML 2026][图像生成][去噪 score matching] 当数据分布落在嵌入流形 $M\subset\mathbb{R}^D$ 上时，环境空间高斯加噪做 DSM 学到的切向目标含有方差以 $d/\sigma^2$ 发散的法向噪声通道…
+  [ICML 2026][图像生成][去噪 score matching] 当数据分布落在嵌入流形 $M\subset\mathbb{R}^D$ 上时，环境空间高斯加噪做 DSM 学到的切向目标含有方差以 $d/\sigma^2$ 发散的法向噪声通道；本文证明对最近点投影 $\pi(X)$ 做一次 Rao-Blackwell 条件化即可干净地去掉这个奇异通道，并把剩下的目标精确展开为「内蕴 Riemannian score + $\sigma^2$ 阶 Tweedie 校正 + $\sigma^2$ 阶 Weingarten/Ricci 外蕴曲率校正」。
 tags:
   - "ICML 2026"
   - "图像生成"

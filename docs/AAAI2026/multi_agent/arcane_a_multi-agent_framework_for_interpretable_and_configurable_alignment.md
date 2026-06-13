@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARCANE: A Multi-Agent Framework for Interpretable and Configurable Alignment
 description: >-
-  [AAAI 2026][多智能体][可解释对齐] 提出ARCANE框架，将对齐建模为多智能体协作问题——manager agent通过与stakeholder对话学习生成自然语言rubric（加权可验证准则集），作为worker agent的可解释代理奖励函数…
+  [AAAI 2026][多智能体][可解释对齐] 提出ARCANE框架，将对齐建模为多智能体协作问题——manager agent通过与stakeholder对话学习生成自然语言rubric（加权可验证准则集），作为worker agent的可解释代理奖励函数，通过SFT+GSPO两阶段训练实现测试时可配置的对齐，在GDPVal基准上GSPO版本的mean return从0.58提升至0.74（N=8）。
 tags:
   - "AAAI 2026"
   - "多智能体"

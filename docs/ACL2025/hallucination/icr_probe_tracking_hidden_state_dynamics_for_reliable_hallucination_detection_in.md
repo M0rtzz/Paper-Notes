@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs
 description: >-
-  [ACL 2025][幻觉检测][隐状态动态] 提出 ICR Score（Information Contribution to Residual Stream），通过测量 MHSA 和 FFN 模块对隐状态更新的贡献一致性来量化残差流动态，构建仅 16K 参数的 ICR Probe…
+  [ACL 2025][幻觉检测][隐状态动态] 提出 ICR Score（Information Contribution to Residual Stream），通过测量 MHSA 和 FFN 模块对隐状态更新的贡献一致性来量化残差流动态，构建仅 16K 参数的 ICR Probe，在 4 个数据集 × 3 个 LLM 上幻觉检测 AUROC 全面超越基线。
 tags:
   - "ACL 2025"
   - "幻觉检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAVAE: A VAE with Adaptable Priors Explains Contextual Modulation in the Visual Cortex
 description: >-
-  [ICLR 2026][图像生成][变分自编码器] 扩展 VAE 形式主义提出 Task-Amortized VAE (TAVAE)，通过在已学表示上灵活学习任务特异性先验来解释视觉皮层 V1 中的上下文调制现象，包括方向辨别任务中训练刺激与测试刺激不匹配时出现的双模态群体响应。
+  [ICLR 2026][图像生成][变分自编码器] 扩展 VAE 形式主义提出 Task-Amortized VAE (TAVAE)，通过在已学表示上灵活学习任务特异性先验来解释视觉皮层 V1 中的上下文调制现象，包括方向辨别任务中训练刺激与测试刺激不匹配时出现的双模态群体响应。 领域现状：深度学习模型（判别式和生成式）已被…
 tags:
   - "ICLR 2026"
   - "图像生成"

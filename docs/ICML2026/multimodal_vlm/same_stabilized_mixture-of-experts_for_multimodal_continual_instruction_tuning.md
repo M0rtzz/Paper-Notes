@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAME: Stabilized Mixture-of-Experts for Multimodal Continual Instruction Tuning
 description: >-
-  [ICML2026][多模态VLM][SAME] SAME 把多模态持续指令微调里 MoE-LoRA 的"灾难性遗忘"明确拆成 router drift 和 expert drift 两个独立来源…
+  [ICML2026][多模态VLM][SAME] SAME 把多模态持续指令微调里 MoE-LoRA 的"灾难性遗忘"明确拆成 router drift 和 expert drift 两个独立来源，分别用谱感知的子空间约束更新路由器、用历史输入协方差做 Riemannian 预条件保护专家、再用任务级自适应冻结去掉冗余更新，在 CoIN / UCIT 及作者自建的 TriGap 长序列基准上稳定打过现有 MoE 持续学习 SOTA。
 tags:
   - "ICML2026"
   - "多模态VLM"

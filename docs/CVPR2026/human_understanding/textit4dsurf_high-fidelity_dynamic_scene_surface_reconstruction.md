@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction
 description: >-
-  [CVPR 2026][人体理解][动态表面重建] 本文提出 4DSurf，一个基于2D高斯泼溅的通用动态场景表面重建框架，通过引入高斯运动诱导的SDF流正则化来约束表面时序一致演化，并采用重叠分段策略处理大变形…
+  [CVPR 2026][人体理解][动态表面重建] 本文提出 4DSurf，一个基于2D高斯泼溅的通用动态场景表面重建框架，通过引入高斯运动诱导的SDF流正则化来约束表面时序一致演化，并采用重叠分段策略处理大变形，在 Hi4D 和 CMU Panoptic 数据集上分别以 49% 和 19% 的 Chamfer 距离改进超越现有 SOTA。
 tags:
   - "CVPR 2026"
   - "人体理解"

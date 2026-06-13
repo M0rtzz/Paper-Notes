@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models
 description: >-
-  [ICCV 2025][自动驾驶][端到端自动驾驶] 提出ETA双系统框架，通过将大模型的当前帧计算转移到前序时间步并进行批量推理，使大模型特征在每帧都可用，在Bench2Drive上以50ms延迟达到69.53驾驶分数，提升SOTA 8%。
+  [ICCV 2025][自动驾驶][端到端自动驾驶] 提出ETA双系统框架，通过将大模型的当前帧计算转移到前序时间步并进行批量推理，使大模型特征在每帧都可用，在Bench2Drive上以50ms延迟达到69.53驾驶分数，提升SOTA 8%。 大型视觉模型（如CLIP-ViT-L、VLM）凭借强大的感知和推理能力…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

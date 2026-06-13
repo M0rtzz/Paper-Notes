@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Computable Game-Theoretic Framework for Multi-Agent Theory of Mind
 description: >-
-  [AAAI 2026][机器人][Theory of Mind] 提出基于 Poisson 认知层次（cognitive hierarchy）的博弈论框架，通过 Gamma-Poisson 共轭贝叶斯更新实现可计算的多智能体 Theory of Mind…
+  [AAAI 2026][机器人][Theory of Mind] 提出基于 Poisson 认知层次（cognitive hierarchy）的博弈论框架，通过 Gamma-Poisson 共轭贝叶斯更新实现可计算的多智能体 Theory of Mind，在避免 POMDP 不可判定性的同时支持递归式有限理性决策与在线信念修正。
 tags:
   - "AAAI 2026"
   - "机器人"

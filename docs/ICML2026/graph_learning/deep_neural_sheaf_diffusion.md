@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Neural Sheaf Diffusion
 description: >-
-  [ICML2026][图学习][神经 sheaf 扩散] 本文指出 Neural Sheaf Diffusion (NSD) 在深层会因 sheaf Laplacian 的"分歧信号"随扩散收敛而消失，从而失去理论上保证的抗坍缩能力；DNSD 用 **sheaf 邻接算子**替代 Laplacian…
+  [ICML2026][图学习][神经 sheaf 扩散] 本文指出 Neural Sheaf Diffusion (NSD) 在深层会因 sheaf Laplacian 的"分歧信号"随扩散收敛而消失，从而失去理论上保证的抗坍缩能力；DNSD 用 **sheaf 邻接算子**替代 Laplacian，并配合 LayerNorm、奇函数激活与逐 stalk 门控，使 sheaf 架构第一次能稳定堆叠到 16 层，在合成长程任务上比 GNN/NSD 基线最多提升 30 pp，在真实异质图基准上也一致领先。
 tags:
   - "ICML2026"
   - "图学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.19021](https://arxiv.org/abs/2605.19021)  
 **代码**: https://github.com/remibourgerie/deep-neural-sheaf-diffusion  
-**领域**: graph_learning  
+**领域**: 图学习  
 **关键词**: 神经 sheaf 扩散, 深度 GNN, sheaf 邻接算子, 过平滑, 图基础模型
 
 ## 一句话总结

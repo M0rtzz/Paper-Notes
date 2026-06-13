@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers
 description: >-
-  [ICML 2026][图像生成][MM-DiT] 论文用线性探针发现 MM-DiT (FLUX / SD3.5) 在中间层的某些注意力头里、其 text token 的 key 向量天然编码了"目标概念是否会出现"的二元信号…
+  [ICML 2026][图像生成][MM-DiT] 论文用线性探针发现 MM-DiT (FLUX / SD3.5) 在中间层的某些注意力头里、其 text token 的 key 向量天然编码了"目标概念是否会出现"的二元信号，并由此提出 Omission Signal Intervention (OSI)：在 inference 时把"omission 类 - existence 类"的均值差方向以 $\alpha\sigma\boldsymbol{\theta}$ 的强度注入 Top-K 头的 key 向量，激发模型对缺失概念的"自我感知"并补全生成；在 FLUX 上 GenEval 6-object 准确率从 0.18 → 0…
 tags:
   - "ICML 2026"
   - "图像生成"

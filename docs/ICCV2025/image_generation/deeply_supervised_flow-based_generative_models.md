@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deeply Supervised Flow-Based Generative Models
 description: >-
-  [ICCV 2025][图像生成][flow matching] DeepFlow 通过在 flow-based 模型的 Transformer 层间引入深度监督和 VeRA（Velocity Refiner with Acceleration）模块，利用二阶 ODE 动力学对齐中间层速度特征…
+  [ICCV 2025][图像生成][flow matching] DeepFlow 通过在 flow-based 模型的 Transformer 层间引入深度监督和 VeRA（Velocity Refiner with Acceleration）模块，利用二阶 ODE 动力学对齐中间层速度特征，在不依赖外部预训练模型的情况下实现 8 倍训练加速和显著 FID 提升。
 tags:
   - "ICCV 2025"
   - "图像生成"

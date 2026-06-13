@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HAM: A Training-Free Style Transfer Approach via Heterogeneous Attention Modulation for Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][风格迁移] 提出 HAM，一种无需训练的风格迁移方法，通过对扩散模型中 self-attention 和 cross-attention 实施异构调制（GAR+LAT），并配合风格注入式噪声初始化，在不牺牲内容身份信息的前提下实现高质量风格迁移，在多项指标上达到 SOTA。
+  [CVPR 2026 Findings][图像生成][风格迁移] 提出 HAM，一种无需训练的风格迁移方法，通过对扩散模型中 self-attention 和 cross-attention 实施异构调制（GAR+LAT），并配合风格注入式噪声初始化，在不牺牲内容身份信息的前提下实现高质量风格迁移，在多项指标上达到 SOTA。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "风格迁移"
   - "注意力调制"

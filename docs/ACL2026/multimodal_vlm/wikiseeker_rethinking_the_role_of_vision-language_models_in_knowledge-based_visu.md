@@ -2,9 +2,9 @@
 title: >-
   [论文解读] WikiSeeker: Rethinking the Role of Vision-Language Models in Knowledge-Based Visual Question Answering
 description: >-
-  [ACL 2026][多模态VLM][知识型VQA] 提出 WikiSeeker，重新定义 VLM 在多模态 RAG 中的角色——从单纯的答案生成器转变为两个专门化智能体（Refiner 用 RL 训练重写查询、Inspector 验证检索上下文是否可靠）…
+  [ACL 2026 Findings][多模态VLM][知识型VQA] 提出 WikiSeeker，重新定义 VLM 在多模态 RAG 中的角色——从单纯的答案生成器转变为两个专门化智能体（Refiner 用 RL 训练重写查询、Inspector 验证检索上下文是否可靠），在 EVQA、InfoSeek、M2KR 三个基准上实现 SOTA。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "知识型VQA"
   - "多模态RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Share Your Attention: Transformer Weight Sharing via Matrix-Based Dictionary Learning
 description: >-
-  [AAAI 2026][可解释性][weight sharing] 受字典学习启发，提出 MASA 框架，将 Transformer 各层注意力投影矩阵（Q/K/V/O）分解为共享矩阵原子的线性组合，以 66.7% 的注意力参数压缩率实现与原始 Transformer 持平甚至更优的性能。
+  [AAAI 2026][可解释性][weight sharing] 受字典学习启发，提出 MASA 框架，将 Transformer 各层注意力投影矩阵（Q/K/V/O）分解为共享矩阵原子的线性组合，以 66.7% 的注意力参数压缩率实现与原始 Transformer 持平甚至更优的性能。 大语言模型（LLM）在实际部署中面…
 tags:
   - "AAAI 2026"
   - "可解释性"

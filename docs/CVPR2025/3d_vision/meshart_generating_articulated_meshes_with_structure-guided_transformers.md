@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeshArt: Generating Articulated Meshes with Structure-Guided Transformers
 description: >-
-  [CVPR 2025][3D视觉][铰接物体生成] MeshArt提出了一种层次化Transformer方法，通过将铰接物体分解为高层关节结构和低层部件网格两阶段生成，自回归地生成紧凑、清晰的三角网格铰接物体，在结构覆盖率上提升57.1%，网格FID提升209分。
+  [CVPR 2025][3D视觉][铰接物体生成] MeshArt提出了一种层次化Transformer方法，通过将铰接物体分解为高层关节结构和低层部件网格两阶段生成，自回归地生成紧凑、清晰的三角网格铰接物体，在结构覆盖率上提升57.1%，网格FID提升209分。 1. 领域现状：3D网格生成领域已有MeshGPT、Poly…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heuristic-Induced Multimodal Risk Distribution Jailbreak Attack for Multimodal Large Language Models
 description: >-
-  [ICCV 2025][LLM对齐][越狱攻击] 本文提出 HIMRD，一种黑盒多模态越狱攻击方法，通过将恶意语义分散到多个模态来绕过单模态防护，并用启发式搜索策略寻找理解增强提示和诱导提示，在开源和闭源多模态大模型上分别达到约 90% 和 68% 的平均攻击成功率。
+  [ICCV 2025][LLM对齐][越狱攻击] 本文提出 HIMRD，一种黑盒多模态越狱攻击方法，通过将恶意语义分散到多个模态来绕过单模态防护，并用启发式搜索策略寻找理解增强提示和诱导提示，在开源和闭源多模态大模型上分别达到约 90% 和 68% 的平均攻击成功率。 领域现状：多模态大语言模型（MLLMs）如 GPT-4o…
 tags:
   - "ICCV 2025"
   - "LLM对齐"

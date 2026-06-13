@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-Inference Consistent Segmented Execution for Long-Context LLMs
 description: >-
-  [ICML 2026][LLM效率][长上下文] 本文提出一套训练与推理共享完全相同的分段前向执行语义的长上下文 LLM 框架：跨段只保留固定长度的可微分 KV 尾部 + 一条仅前向的检索旁路…
+  [ICML 2026][LLM效率][长上下文] 本文提出一套训练与推理共享完全相同的分段前向执行语义的长上下文 LLM 框架：跨段只保留固定长度的可微分 KV 尾部 + 一条仅前向的检索旁路，在 LLaMA2-7B 32K/80K 上以约 $6\times$ 更低的 prefill 峰值显存达到与全注意力可比甚至更好的 LongBench/RULER 表现。
 tags:
   - "ICML 2026"
   - "LLM效率"

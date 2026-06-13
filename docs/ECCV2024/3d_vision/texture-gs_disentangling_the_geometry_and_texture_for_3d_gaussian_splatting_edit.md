@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Texture-GS: Disentangling the Geometry and Texture for 3D Gaussian Splatting Editing
 description: >-
-  [ECCV 2024][3D视觉][3D高斯溅射] 提出Texture-GS，首次为3D高斯溅射解耦几何与纹理，通过UV映射MLP和局部Taylor展开将外观表示为2D纹理图，实现实时纹理替换和编辑（58 FPS，RTX 2080 Ti）。
+  [ECCV 2024][3D视觉][3D高斯溅射] 提出Texture-GS，首次为3D高斯溅射解耦几何与纹理，通过UV映射MLP和局部Taylor展开将外观表示为2D纹理图，实现实时纹理替换和编辑（58 FPS，RTX 2080 Ti）。 3D-GS将颜色存储在每个高斯的SH系数中，几何和外观完全耦合…
 tags:
   - "ECCV 2024"
   - "3D视觉"

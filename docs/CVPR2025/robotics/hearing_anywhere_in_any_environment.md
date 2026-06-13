@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hearing Anywhere in Any Environment
 description: >-
-  [CVPR 2025][机器人][跨房间RIR预测] 提出 xRIR，一个可跨房间泛化的声脉冲响应（RIR）预测统一模型，结合全景深度图的几何特征提取器和少量参考 RIR 的声学编码器，配合新构建的 AcousticRooms 数据集（260 个房间、30 万+ RIR）…
+  [CVPR 2025][机器人][跨房间RIR预测] 提出 xRIR，一个可跨房间泛化的声脉冲响应（RIR）预测统一模型，结合全景深度图的几何特征提取器和少量参考 RIR 的声学编码器，配合新构建的 AcousticRooms 数据集（260 个房间、30 万+ RIR），在已见/未见模拟环境和真实环境中均大幅超越基线方法。
 tags:
   - "CVPR 2025"
   - "机器人"

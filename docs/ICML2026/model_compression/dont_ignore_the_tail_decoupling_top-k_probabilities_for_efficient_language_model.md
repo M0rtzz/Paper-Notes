@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Ignore the Tail: Decoupling top-K Probabilities for Efficient Language Model Distillation
 description: >-
-  [ICML 2026][模型压缩][知识蒸馏] 本文提出 TAD（Tail-Aware Distillation）：在标准 KD 的 KL 散度中显式把教师 top-$K$ 概率与"尾部"概率拆开并放大尾部贡献，从而在学术级算力（单卡 H100 + 1 周）内完成 LLM 预训练蒸馏…
+  [ICML 2026][模型压缩][知识蒸馏] 本文提出 TAD（Tail-Aware Distillation）：在标准 KD 的 KL 散度中显式把教师 top-$K$ 概率与"尾部"概率拆开并放大尾部贡献，从而在学术级算力（单卡 H100 + 1 周）内完成 LLM 预训练蒸馏，平均效果优于 MiniPLM 等数据中心方法。
 tags:
   - "ICML 2026"
   - "模型压缩"

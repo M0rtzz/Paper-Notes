@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning
 description: >-
-  [ICCV 2025][模型压缩][类增量学习] 提出 TUNA 方法，通过为每个增量任务训练正交的 task-specific adapter，并将它们融合为一个 universal adapter，结合基于熵的 adapter 选择机制和双 adapter 集成推理策略…
+  [ICCV 2025][模型压缩][类增量学习] 提出 TUNA 方法，通过为每个增量任务训练正交的 task-specific adapter，并将它们融合为一个 universal adapter，结合基于熵的 adapter 选择机制和双 adapter 集成推理策略，在无 exemplar 的 PTM-based CIL 中实现 SOTA。
 tags:
   - "ICCV 2025"
   - "模型压缩"

@@ -18,7 +18,7 @@ tags:
 **会议**: ICCV 2025  
 **arXiv**: [2503.12955](https://arxiv.org/abs/2503.12955)  
 **代码**: [ZJHTerry18/HumanInScene](https://github.com/ZJHTerry18/HumanInScene)  
-**领域**: 3d_vision  
+**领域**: 3D视觉  
 **关键词**: 人体-场景理解, 3D多模态, 大语言模型, 人体运动, 问答基准
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Verbosity-Aware Rationale Reduction: Effective Reduction of Redundant Rationale
 description: >-
-  [ACL 2025][推理路径缩减] 提出 VARR 框架，以句子为单位并利用基于似然度的"冗余度（verbosity）"标准识别和移除推理路径中的冗余句子，在多种推理任务上平均提升 7.71% 准确率同时减少 19.87% 的 token 生成。
+  [ACL 2025][推理路径缩减] 提出 VARR 框架，以句子为单位并利用基于似然度的"冗余度（verbosity）"标准识别和移除推理路径中的冗余句子，在多种推理任务上平均提升 7.71% 准确率同时减少 19.87% 的 token 生成。 LLM 通过生成冗长的中间推理步骤来提升最终答案质量…
 tags:
   - "ACL 2025"
   - "推理路径缩减"

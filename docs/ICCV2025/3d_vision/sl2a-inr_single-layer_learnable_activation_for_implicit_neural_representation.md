@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SL2A-INR: Single-Layer Learnable Activation for Implicit Neural Representation
 description: >-
-  [3D视觉] 提出SL2A-INR，通过单层基于Chebyshev多项式的可学习激活函数块与ReLU-MLP融合块的混合架构，有效缓解隐式神经表示中的频谱偏差问题，在图像拟合、3D形状重建和新视角合成任务上达到SOTA。
+  [3D视觉] 提出SL2A-INR，通过单层基于Chebyshev多项式的可学习激活函数块与ReLU-MLP融合块的混合架构，有效缓解隐式神经表示中的频谱偏差问题，在图像拟合、3D形状重建和新视角合成任务上达到SOTA。 频谱偏差问题 隐式神经表示（INR）使用MLP将连续坐标映射到属性值（如颜色、SDF）…
 tags:
   - "3D视觉"
 ---

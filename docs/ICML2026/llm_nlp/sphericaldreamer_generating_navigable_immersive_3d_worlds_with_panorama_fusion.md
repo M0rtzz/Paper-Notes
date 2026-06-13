@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SphericalDreamer: Generating Navigable Immersive 3D Worlds with Panorama Fusion
 description: >-
-  [ICML 2026][LLM/NLP][3D 世界生成] SphericalDreamer 通过把多张文本生成的分层深度全景图各自抬升为 3D"球体"建筑块、再用谐波融合把相邻球体之间缺失的过渡区域生成并拼接起来，得到首个同时具备 360°×180° 全方向沉浸感和长距离可导航能力的户外 3D 世界。
+  [ICML 2026][LLM 其他][3D 世界生成] SphericalDreamer 通过把多张文本生成的分层深度全景图各自抬升为 3D"球体"建筑块、再用谐波融合把相邻球体之间缺失的过渡区域生成并拼接起来，得到首个同时具备 360°×180° 全方向沉浸感和长距离可导航能力的户外 3D 世界。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "3D 世界生成"
   - "全景图"
   - "分层深度全景"

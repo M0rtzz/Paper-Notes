@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Gaussian Scene Reconstruction from Unsynchronized Videos
 description: >-
-  [AAAI 2026][3D视觉][4D Gaussian Splatting] 提出了一个粗到精（coarse-to-fine）的时间对齐模块，可插入到现有 4D Gaussian Splatting 框架中，解决多视角视频时间不同步导致的动态场景重建质量退化问题…
+  [AAAI 2026][3D视觉][4D Gaussian Splatting] 提出了一个粗到精（coarse-to-fine）的时间对齐模块，可插入到现有 4D Gaussian Splatting 框架中，解决多视角视频时间不同步导致的动态场景重建质量退化问题，在 DyNeRF 数据集上显著提升了多个基线方法的 PSNR/SSIM/LPIPS。
 tags:
   - "AAAI 2026"
   - "3D视觉"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion
 description: >-
-  [ACL 2025][分类体系扩展] LORex 提出了一个即插即用的分类体系扩展框架，结合判别式排序器 TEMPORA（基于欧拉路径的分类路径语言化）和迭代式 LLM 推理（语义过滤→父节点检索→路径验证），无需微调 LLM，在 4 个基准上实现了 12% 的准确率提升和 5% 的 Wu&P 提升。
+  [ACL 2025][LLM 其他][分类体系扩展] LORex 提出了一个即插即用的分类体系扩展框架，结合判别式排序器 TEMPORA（基于欧拉路径的分类路径语言化）和迭代式 LLM 推理（语义过滤→父节点检索→路径验证），无需微调 LLM，在 4 个基准上实现了 12% 的准确率提升和 5% 的 Wu&P 提升。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "分类体系扩展"
   - "LLM结构推理"
   - "判别式排序"

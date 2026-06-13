@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AlphaPO: Reward Shape Matters for LLM Alignment
 description: >-
-  [ICML 2025][LLM对齐][Direct Alignment] AlphaPO 在 Direct Alignment Algorithms（DAA）框架中引入 $\alpha$ 参数来改变奖励函数的"形状"，从标准的 log 奖励推广到更一般的幂次变换形式…
+  [ICML 2025][LLM对齐][Direct Alignment] AlphaPO 在 Direct Alignment Algorithms（DAA）框架中引入 $\alpha$ 参数来改变奖励函数的"形状"，从标准的 log 奖励推广到更一般的幂次变换形式，从而细粒度控制 likelihood displacement 和 over-optimization，在 Mistral-7B 和 Llama3-8B 上相对 SimPO 提升 7%-10%，相对 DPO 提升 15%-50%。
 tags:
   - "ICML 2025"
   - "LLM对齐"

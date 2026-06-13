@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Specialist Models Still Matter: A Heterogeneous Multi-Agent Paradigm for Medical Artificial Intelligence
 description: >-
-  [ICML2026][多智能体][医疗多智能体] HetMedAgent 将通用 LLM、模态专科模型和临床医生组织成异构多智能体系统，通过冲突感知证据融合与不确定性路由，在心血管和胸片临床决策任务上证明专科模型与人类监督仍是医疗 AI 中不可替代的组成部分。
+  [ICML2026][多智能体][医疗多智能体] HetMedAgent 将通用 LLM、模态专科模型和临床医生组织成异构多智能体系统，通过冲突感知证据融合与不确定性路由，在心血管和胸片临床决策任务上证明专科模型与人类监督仍是医疗 AI 中不可替代的组成部分。 领域现状：GPT、Claude 等通用 LLM 在医学问答和临床…
 tags:
   - "ICML2026"
   - "多智能体"

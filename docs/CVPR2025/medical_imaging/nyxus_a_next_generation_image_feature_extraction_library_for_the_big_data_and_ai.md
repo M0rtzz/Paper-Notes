@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nyxus: A Next Generation Image Feature Extraction Library for the Big Data and AI Era
 description: >-
-  [CVPR2025][医学图像][feature extraction] Nyxus 是一个面向大数据和 AI 时代的下一代图像特征提取库，支持 2D/3D 数据的 out-of-core 可扩展提取，覆盖 radiomics 和细胞分析两大领域共 261+ 特征…
+  [CVPR2025][医学图像][feature extraction] Nyxus 是一个面向大数据和 AI 时代的下一代图像特征提取库，支持 2D/3D 数据的 out-of-core 可扩展提取，覆盖 radiomics 和细胞分析两大领域共 261+ 特征，在速度上比 CellProfiler 快 3–131×、比 PyRadiomics/MITK 快数倍至数百倍。
 tags:
   - "CVPR2025"
   - "医学图像"

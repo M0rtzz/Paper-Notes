@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Diffusion Model for Language Modeling
 description: >-
-  [NeurIPS2025][图像生成][扩散模型] 提出 RDLM（Riemannian Diffusion Language Model），在统计流形（超球面）上构建连续扩散过程来建模离散分布，建立了离散扩散与连续流的理论联系，通过径向对称性实现无模拟训练和维度分裂技术处理大词表…
+  [NeurIPS2025][图像生成][扩散模型] 提出 RDLM（Riemannian Diffusion Language Model），在统计流形（超球面）上构建连续扩散过程来建模离散分布，建立了离散扩散与连续流的理论联系，通过径向对称性实现无模拟训练和维度分裂技术处理大词表，在 Text8 上以 1.32 BPC 超越所有离散和连续扩散模型。
 tags:
   - "NeurIPS2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FACE: Faithful Automatic Concept Extraction
 description: >-
-  [NeurIPS 2025][概念解释] 提出 FACE 框架，在非负矩阵分解 (NMF) 中加入 KL 散度正则项，约束概念重建后的激活值保持与原始模型预测一致，从而提取真正忠实于模型决策过程的概念解释，在 ImageNet/COCO/CelebA 上全面超越 CRAFT 和 ICE。
+  [NeurIPS 2025][概念解释] 提出 FACE 框架，在非负矩阵分解 (NMF) 中加入 KL 散度正则项，约束概念重建后的激活值保持与原始模型预测一致，从而提取真正忠实于模型决策过程的概念解释，在 ImageNet/COCO/CelebA 上全面超越 CRAFT 和 ICE。 领域现状：概念型解释方法（如 TCA…
 tags:
   - "NeurIPS 2025"
   - "概念解释"

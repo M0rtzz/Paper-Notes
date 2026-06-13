@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLM Meets Scene Graph: Can Large Language Models Understand and Generate Scene Graphs?
 description: >-
-  [ACL 2025][LLM/NLP][场景图] 提出 TSG Bench 基准，系统评估 11 个 LLM 在场景图理解和生成任务上的能力，揭示 LLM 在场景图生成（尤其是多动作分解）方面存在显著瓶颈。
+  [ACL 2025][LLM 其他][场景图] 提出 TSG Bench 基准，系统评估 11 个 LLM 在场景图理解和生成任务上的能力，揭示 LLM 在场景图生成（尤其是多动作分解）方面存在显著瓶颈。 核心矛盾 核心矛盾：领域现状：大语言模型在文本任务上表现出色，但将其能力拓展到需要空间和时间推理的多模态环境时面临挑战…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "场景图"
   - "基准测试"
   - "大语言模型"

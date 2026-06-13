@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentEval: DAG-Structured Step-Level Evaluation for Agentic Workflows with Error Propagation Tracking
 description: >-
-  [ACL 2026][LLM评测][agent evaluation] AgentEval 把 agent 执行轨迹建模成「评估 DAG」，对每个节点用 GPT-4o 判官按 5 类节点类型打分并按贪心父节点策略追溯根因，配合 21 类失败类目与 CI/CD 集成…
+  [ACL 2026][LLM评测][agent evaluation] AgentEval 把 agent 执行轨迹建模成「评估 DAG」，对每个节点用 GPT-4o 判官按 5 类节点类型打分并按贪心父节点策略追溯根因，配合 21 类失败类目与 CI/CD 集成；相对端到端评估在 450 条生产 trace 上 failure detection recall 提升 2.17×（0.41→0.89），人类一致性 $\kappa=0.84$，根因准确率 72%（接近人类上限 81%），4 个月试点把根因定位中位数时间从 4.2 小时缩到 22 分钟。
 tags:
   - "ACL 2026"
   - "LLM评测"

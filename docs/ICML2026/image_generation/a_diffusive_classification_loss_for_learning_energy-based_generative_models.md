@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Diffusive Classification Loss for Learning Energy-based Generative Models
 description: >-
-  [ICML2026][图像生成][扩散分类损失] 这篇论文提出 DiffCLF，把时间噪声层级之间的能量估计改写成分类问题，并与 DSM 联合训练，从而在不引入昂贵最大似然采样的情况下学习更可靠的能量函数，尤其改善了分数匹配在多模态权重上的模式盲区。
+  [ICML2026][图像生成][扩散分类损失] 这篇论文提出 DiffCLF，把时间噪声层级之间的能量估计改写成分类问题，并与 DSM 联合训练，从而在不引入昂贵最大似然采样的情况下学习更可靠的能量函数，尤其改善了分数匹配在多模态权重上的模式盲区。 领域现状：扩散模型和 stochastic interpolants 通常…
 tags:
   - "ICML2026"
   - "图像生成"

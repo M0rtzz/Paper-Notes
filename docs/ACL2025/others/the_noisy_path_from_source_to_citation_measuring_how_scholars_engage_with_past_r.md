@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Noisy Path from Source to Citation: Measuring How Scholars Engage with Past Research
 description: >-
-  [ACL 2025][citation fidelity] 构建大规模计算流水线量化学术引用的忠实度（fidelity），分析 1300 万引用句对揭示了影响引用忠实度的关键因素，并通过准因果实验证实了"电话效应"——低忠实度中间引用会导致后续引用进一步失真。
+  [ACL 2025][citation fidelity] 构建大规模计算流水线量化学术引用的忠实度（fidelity），分析 1300 万引用句对揭示了影响引用忠实度的关键因素，并通过准因果实验证实了"电话效应"——低忠实度中间引用会导致后续引用进一步失真。 领域现状：学术引用被广泛用于评估研究影响力和追踪知识流动…
 tags:
   - "ACL 2025"
   - "citation fidelity"

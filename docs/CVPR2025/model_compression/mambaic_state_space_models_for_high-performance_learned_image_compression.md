@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaIC: State Space Models for High-Performance Learned Image Compression
 description: >-
-  [CVPR 2025][模型压缩][learned image compression] 首次将 SSM 同时整合到学习型图像压缩的非线性变换和上下文模型中，通过 VSS block 增强通道-空间上下文建模 + 窗口局部注意力消除空间冗余，在 Kodak 上比 VVC 节省 12.52% BD-rate…
+  [CVPR 2025][模型压缩][learned image compression] 首次将 SSM 同时整合到学习型图像压缩的非线性变换和上下文模型中，通过 VSS block 增强通道-空间上下文建模 + 窗口局部注意力消除空间冗余，在 Kodak 上比 VVC 节省 12.52% BD-rate，且高分辨率图像压缩优势更加显著。
 tags:
   - "CVPR 2025"
   - "模型压缩"

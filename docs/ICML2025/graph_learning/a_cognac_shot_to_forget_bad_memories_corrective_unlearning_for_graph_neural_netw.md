@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Cognac Shot To Forget Bad Memories: Corrective Unlearning for Graph Neural Networks
 description: >-
-  [ICML 2025][图学习][图神经网络] 提出 Cognac——首个有效的 GNN 纠正性遗忘方法，通过交替执行图邻域对比遗忘（CoGN）和解耦梯度上升/下降（AC⚡DC），在仅识别 5% 被操纵实体时即可恢复接近 oracle（完全干净数据训练）的性能，比从头重训高效 8×。
+  [ICML 2025][图学习][图神经网络] 提出 Cognac——首个有效的 GNN 纠正性遗忘方法，通过交替执行图邻域对比遗忘（CoGN）和解耦梯度上升/下降（AC⚡DC），在仅识别 5% 被操纵实体时即可恢复接近 oracle（完全干净数据训练）的性能，比从头重训高效 8×。 领域现状：GNN 在推荐系统、药物发现等…
 tags:
   - "ICML 2025"
   - "图学习"

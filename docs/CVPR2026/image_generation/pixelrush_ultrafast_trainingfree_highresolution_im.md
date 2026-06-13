@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion
 description: >-
-  [CVPR 2026][图像生成][免训练高分辨率生成] 首个让免训练高分辨率生成进入实用化阶段的方法——通过部分反转策略使少步扩散模型在patch精炼中可行，20秒生成4K图像，比现有方法快10-35倍且质量更优。
+  [CVPR 2026][图像生成][免训练高分辨率生成] 首个让免训练高分辨率生成进入实用化阶段的方法——通过部分反转策略使少步扩散模型在patch精炼中可行，20秒生成4K图像，比现有方法快10-35倍且质量更优。 预训练扩散模型（如SDXL）只能在原生分辨率下生成高质量图像：，超分辨率推理产生严重物体重复和纹理伪影…
 tags:
   - "CVPR 2026"
   - "图像生成"

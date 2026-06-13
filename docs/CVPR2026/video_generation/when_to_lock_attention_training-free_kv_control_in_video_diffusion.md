@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Lock Attention: Training-Free KV Control in Video Diffusion
 description: >-
-  [视频生成] 提出 KV-Lock，基于扩散模型幻觉检测动态调度背景 KV 缓存融合比例和 CFG 引导强度，在无需训练的前提下同时保证视频编辑的背景一致性和前景生成质量。
+  [视频生成] 提出 KV-Lock，基于扩散模型幻觉检测动态调度背景 KV 缓存融合比例和 CFG 引导强度，在无需训练的前提下同时保证视频编辑的背景一致性和前景生成质量。 视频编辑的核心挑战在于：编辑前景目标的同时保持背景场景的高保真。现有方法存在两个极端： 全图信息注入：（如 cross-attention 操纵、lat…
 tags:
   - "视频生成"
 ---

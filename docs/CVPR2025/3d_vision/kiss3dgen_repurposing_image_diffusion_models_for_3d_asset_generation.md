@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation
 description: >-
-  [CVPR 2025][3D视觉][3D generation] 将 3D 资产生成转化为 2D 图像生成问题——微调 Flux DiT 模型生成"3D Bundle Image"（四视图 RGB + 法线图拼贴），再用 ISOMER 重建 3D mesh…
+  [CVPR 2025][3D视觉][3D generation] 将 3D 资产生成转化为 2D 图像生成问题——微调 Flux DiT 模型生成"3D Bundle Image"（四视图 RGB + 法线图拼贴），再用 ISOMER 重建 3D mesh，并通过 ControlNet 扩展支持 3D 增强和编辑。
 tags:
   - "CVPR 2025"
   - "3D视觉"

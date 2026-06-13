@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation
 description: >-
-  [AAAI 2026][语义分割][弱监督语义分割] 提出语义与空间双重校正框架SSR，通过跨模态原型对比学习（CMPA）解决CLIP模态间语义不对齐导致的非目标前景过度激活问题，以及超像素引导校正（SGC）解决仿射传播中背景过度激活问题…
+  [AAAI 2026][语义分割][弱监督语义分割] 提出语义与空间双重校正框架SSR，通过跨模态原型对比学习（CMPA）解决CLIP模态间语义不对齐导致的非目标前景过度激活问题，以及超像素引导校正（SGC）解决仿射传播中背景过度激活问题，在PASCAL VOC和MS COCO上全面超越单阶段和多阶段SOTA方法。
 tags:
   - "AAAI 2026"
   - "语义分割"

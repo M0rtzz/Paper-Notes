@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual Model Routing in Evolving Model Hubs
 description: >-
-  [ICML 2026][模型压缩][continual learning] 当模型 hub 里的可用专家从几百涨到上千、还在持续新增/淘汰时，传统"训一次路由器"或"纯检索 model card"都顶不住；作者把这个问题形式化成"持续分类（label space 不断长大）"…
+  [ICML 2026][模型压缩][continual learning] 当模型 hub 里的可用专家从几百涨到上千、还在持续新增/淘汰时，传统"训一次路由器"或"纯检索 model card"都顶不住；作者把这个问题形式化成"持续分类（label space 不断长大）"，搭出 CMRBench 这个跨 4 期、超过 2000 个候选模型的基准，并提出 CARvE——一个用对比嵌入打分、用 checkpoint anchoring 防漂移、用结构化负样本回放维持判别力的持续路由器，在 D-Acc 上比标准 LoRA 重放高 5 个点、遗忘只有它的 1/2。
 tags:
   - "ICML 2026"
   - "模型压缩"

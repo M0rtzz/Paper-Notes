@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping
 description: >-
-  [ICML 2026][幻觉检测][大推理模型] 本文针对大推理模型（LRM）的幻觉检测提出 ARS：不在文本层扰动 reasoning trace，而是**直接在 trace 末端的潜表示上施加小扰动并续解码**得到反事实答案…
+  [ICML 2026][幻觉检测][大推理模型] 本文针对大推理模型（LRM）的幻觉检测提出 ARS：不在文本层扰动 reasoning trace，而是**直接在 trace 末端的潜表示上施加小扰动并续解码**得到反事实答案，再用"答案是否一致"作为标签训一个轻量 contrastive 头来塑形 trace-conditioned answer embedding，使后续 embedding-based detector 把幻觉与真实回答分得更开（TruthfulQA 上 AUROC $66.85\to 86.64$）。
 tags:
   - "ICML 2026"
   - "幻觉检测"

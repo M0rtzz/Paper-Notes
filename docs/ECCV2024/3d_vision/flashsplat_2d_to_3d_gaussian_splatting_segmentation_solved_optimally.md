@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashSplat: 2D to 3D Gaussian Splatting Segmentation Solved Optimally
 description: >-
-  [ECCV 2024][3D视觉][3D高斯溅射] 将3D高斯溅射的2D-to-3D分割问题建模为整数线性规划，利用alpha混合的线性性质得到闭式最优解，仅需30秒完成优化，比现有方法快50倍。
+  [ECCV 2024][3D视觉][3D高斯溅射] 将3D高斯溅射的2D-to-3D分割问题建模为整数线性规划，利用alpha混合的线性性质得到闭式最优解，仅需30秒完成优化，比现有方法快50倍。 领域现状： 3D高斯溅射（3D-GS）作为一种高效的3D场景表示方法迅速兴起，但从2D mask将分割结果提升到3D（即为每个3…
 tags:
   - "ECCV 2024"
   - "3D视觉"

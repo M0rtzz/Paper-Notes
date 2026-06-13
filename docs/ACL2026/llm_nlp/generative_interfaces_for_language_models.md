@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Generative Interfaces for Language Models
 description: >-
-  [ACL 2026][LLM/NLP][生成式界面] 本文提出 **Generative Interfaces (GenUI)**，让 LLM 不再用单一聊天框回复用户，而是基于"交互流图 + 有限状态机"的结构化中间表示和"自适应奖励驱动的迭代精化"，在线生成一个为查询量身定制的可交互 Web 界面…
+  [ACL 2026 Findings][LLM 其他][生成式界面] 本文提出 **Generative Interfaces (GenUI)**，让 LLM 不再用单一聊天框回复用户，而是基于"交互流图 + 有限状态机"的结构化中间表示和"自适应奖励驱动的迭代精化"，在线生成一个为查询量身定制的可交互 Web 界面，在 100 条 UIX prompt 上相比 Claude 3.7 聊天 UI 取得 **84%** 的总体偏好胜率。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "生成式界面"
   - "自适应 UI"
   - "有限状态机"

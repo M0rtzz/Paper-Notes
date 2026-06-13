@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NumLeak: Public Numeric Benchmarks as Latent Labels in Foundation Models
 description: >-
-  [ICML 2026][自监督学习][数值基准记忆化] NumLeak 通过**四层诊断协议**检测和量化基础模型对公开数值基准（金融因子、宏观经济数据、气候数据）的记忆化程度——揭示这类污染如何渗漏到下游金融信号中，并通过系统提示防御减缓风险…
+  [ICML 2026][自监督学习][数值基准记忆化] NumLeak 通过**四层诊断协议**检测和量化基础模型对公开数值基准（金融因子、宏观经济数据、气候数据）的记忆化程度——揭示这类污染如何渗漏到下游金融信号中，并通过系统提示防御减缓风险；Opus 4.7 在 Mkt-RF 因子上的 within-25 bps 精度达 0.60、Pearson r = 0.99。
 tags:
   - "ICML 2026"
   - "自监督学习"

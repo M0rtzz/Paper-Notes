@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video
 description: >-
-  [CVPR 2026][3D视觉][4D reconstruction] 提出 4DEquine 框架，将单目视频的马科动物 4D 重建**解耦**为动态运动估计（AniMoFormer）和静态外观重建（EquineGS）两个子问题，仅用合成数据训练即在真实数据上达到 SOTA。
+  [CVPR 2026][3D视觉][4D reconstruction] 提出 4DEquine 框架，将单目视频的马科动物 4D 重建解耦：为动态运动估计（AniMoFormer）和静态外观重建（EquineGS）两个子问题，仅用合成数据训练即在真实数据上达到 SOTA。 马科动物（马、驴、斑马）的单目 4D 重建在动物福…
 tags:
   - "CVPR 2026"
   - "3D视觉"

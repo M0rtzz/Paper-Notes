@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMeT: Collaborative Memory Transformer for Efficient Long Context Modeling
 description: >-
-  [ACL 2026][LLM效率][长上下文] CoMeT 给已有 LLM 加一个"全局记忆 + FIFO 临时记忆"的双记忆插件，分块处理输入实现常数显存、线性时间复杂度，仅在 32k 上下文上微调就能在 1M token 内任意位置精确找回密码…
+  [ACL 2026][LLM效率][长上下文] CoMeT 给已有 LLM 加一个"全局记忆 + FIFO 临时记忆"的双记忆插件，分块处理输入实现常数显存、线性时间复杂度，仅在 32k 上下文上微调就能在 1M token 内任意位置精确找回密码，并提出层级流水线并行让 16×80GB GPU 就能微调 128k 上下文。
 tags:
   - "ACL 2026"
   - "LLM效率"

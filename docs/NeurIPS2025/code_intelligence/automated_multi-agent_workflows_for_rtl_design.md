@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Automated Multi-Agent Workflows for RTL Design
 description: >-
-  [NeurIPS 2025 (ML for Systems Workshop)][代码智能][多智能体工作流] VeriMaAS 是一个多智能体框架，通过将 HDL 形式化验证反馈（Yosys + OpenSTA）集成到工作流自动生成过程中…
+  [NeurIPS 2025 (ML for Systems Workshop)][代码智能][多智能体工作流] VeriMaAS 是一个多智能体框架，通过将 HDL 形式化验证反馈（Yosys + OpenSTA）集成到工作流自动生成过程中，自适应地为 RTL 代码生成任务选择推理算子（I/O → CoT → ReAct → SelfRefine → Debate），以仅数百个训练样本实现比微调基线高 5-7% 的 pass@k 性能。
 tags:
   - "NeurIPS 2025 (ML for Systems Workshop)"
   - "代码智能"

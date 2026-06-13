@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emergent Abilities of Large Language Models under Continued Pretraining for Language Adaptation
 description: >-
-  [ACL 2025][预训练][持续预训练] 揭示了持续预训练（CPT）进行语言适应时，混入英文数据对保留模型上下文学习（ICL）能力和下游涌现能力至关重要——尽管不影响验证困惑度；并提出课程学习和 EMA 权重平均作为替代方案。
+  [ACL 2025][预训练][持续预训练] 揭示了持续预训练（CPT）进行语言适应时，混入英文数据对保留模型上下文学习（ICL）能力和下游涌现能力至关重要——尽管不影响验证困惑度；并提出课程学习和 EMA 权重平均作为替代方案。 英语中心问题：现有 LLM 高度偏向英语，在低资源语言（如巴斯克语、阿拉伯语、印尼语）上性能显…
 tags:
   - "ACL 2025"
   - "预训练"

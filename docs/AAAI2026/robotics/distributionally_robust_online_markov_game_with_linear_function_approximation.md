@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributionally Robust Online Markov Game with Linear Function Approximation
 description: >-
-  [AAAI 2026][机器人][Markov Game] 本文研究具有线性函数近似的在线分布鲁棒马尔可夫博弈，首次识别了该设定下的学习困难性，并提出 DR-CCE-LSI 算法，在特定特征映射条件下实现了关于特征维度 $d$ 的极小极大最优样本复杂度。
+  [AAAI 2026][机器人][Markov Game] 本文研究具有线性函数近似的在线分布鲁棒马尔可夫博弈，首次识别了该设定下的学习困难性，并提出 DR-CCE-LSI 算法，在特定特征映射条件下实现了关于特征维度 $d$ 的极小极大最优样本复杂度。 领域现状 多智能体强化学习（MARL）在博弈论框架下被广泛研究…
 tags:
   - "AAAI 2026"
   - "机器人"

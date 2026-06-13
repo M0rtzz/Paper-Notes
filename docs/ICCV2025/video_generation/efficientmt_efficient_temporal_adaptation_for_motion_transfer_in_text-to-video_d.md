@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EfficientMT: Efficient Temporal Adaptation for Motion Transfer in Text-to-Video Diffusion Models
 description: >-
-  [视频生成] 提出 EfficientMT，一个高效的端到端视频运动迁移框架，通过复用预训练 T2V 模型骨干提取时序运动特征，结合 scaler 模块和时序集成机制，仅用少量合成配对数据即可实现零样本运动迁移，推理时间较优化方法提速 10 倍以上。
+  [视频生成] 提出 EfficientMT，一个高效的端到端视频运动迁移框架，通过复用预训练 T2V 模型骨干提取时序运动特征，结合 scaler 模块和时序集成机制，仅用少量合成配对数据即可实现零样本运动迁移，推理时间较优化方法提速 10 倍以上。 视频运动迁移旨在将参考视频的运动模式迁移到不同主体和场景上…
 tags:
   - "视频生成"
 ---

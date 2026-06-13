@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference-Time Safety for Code LLMs via Retrieval-Augmented Revision
 description: >-
-  [ICLR 2026][代码智能][code safety] 提出 SOSecure，一种无需重训练的推理时安全机制，通过 BM25 从 Stack Overflow 安全讨论知识库中检索与 LLM 生成代码相关的社区安全警告，引导模型在推理阶段自主修订不安全代码…
+  [ICLR 2026][代码智能][code safety] 提出 SOSecure，一种无需重训练的推理时安全机制，通过 BM25 从 Stack Overflow 安全讨论知识库中检索与 LLM 生成代码相关的社区安全警告，引导模型在推理阶段自主修订不安全代码，在三个真实数据集上实现高达 96.7% 的漏洞修复率且零新漏洞引入。
 tags:
   - "ICLR 2026"
   - "代码智能"

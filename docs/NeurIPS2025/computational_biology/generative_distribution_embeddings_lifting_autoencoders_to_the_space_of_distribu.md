@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning
 description: >-
-  [NeurIPS 2025][计算生物][分布嵌入] 提出生成分布嵌入（GDE），将自编码器提升到分布空间——编码器作用于样本集合，解码器替换为条件生成模型，学习分布级别的表示，并在6个计算生物学任务上验证有效性。
+  [NeurIPS 2025][计算生物][分布嵌入] 提出生成分布嵌入（GDE），将自编码器提升到分布空间——编码器作用于样本集合，解码器替换为条件生成模型，学习分布级别的表示，并在6个计算生物学任务上验证有效性。 领域现状：现代科学（特别是计算生物学）越来越需要跨尺度推理——分析单位不是单个数据点（如一个细胞）…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

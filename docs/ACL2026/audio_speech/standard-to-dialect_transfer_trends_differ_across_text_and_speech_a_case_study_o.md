@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Standard-to-Dialect Transfer Trends Differ across Text and Speech: A Case Study on Intent and Topic Classification in German Dialects
 description: >-
-  [ACL2026][音频/语音][方言迁移] 这篇论文用德语-巴伐利亚语意图分类和德语-瑞士德语主题分类系统比较文本、语音、ASR级联三种迁移路径，发现标准语上的最佳方案不一定适合方言：文本模型最适合标准德语，而语音模型在方言输入上通常更稳。
+  [ACL2026][音频/语音][方言迁移] 这篇论文用德语-巴伐利亚语意图分类和德语-瑞士德语主题分类系统比较文本、语音、ASR级联三种迁移路径，发现标准语上的最佳方案不一定适合方言：文本模型最适合标准德语，而语音模型在方言输入上通常更稳。 领域现状：方言 NLP 常见设置是只有标准语训练数据和少量方言评测数据…
 tags:
   - "ACL2026"
   - "音频/语音"

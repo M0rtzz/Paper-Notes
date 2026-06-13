@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T-MAE: Temporal Masked Autoencoders for Point Cloud Representation Learning
 description: >-
-  [ECCV 2024][3D视觉][自监督学习] T-MAE 提出了一种时序掩码自编码器预训练策略，以时序相邻两帧为输入，通过掩码当前帧并借助历史帧信息重建来学习时序依赖关系，配合设计的 SiamWCA（孪生编码器+窗口交叉注意力）架构…
+  [ECCV 2024][3D视觉][自监督学习] T-MAE 提出了一种时序掩码自编码器预训练策略，以时序相邻两帧为输入，通过掩码当前帧并借助历史帧信息重建来学习时序依赖关系，配合设计的 SiamWCA（孪生编码器+窗口交叉注意力）架构，在 Waymo 和 ONCE 数据集上以更少标注数据和更少训练迭代次数超越 SOTA 自监督方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

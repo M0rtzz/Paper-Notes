@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TCP-Diffusion: A Multi-modal Diffusion Model for Global Tropical Cyclone Precipitation Forecasting with Change Awareness
 description: >-
-  [ICML 2025][时间序列][热带气旋降水] 提出 TCP-Diffusion，融合历史降水、多模态气象变量和 NWP 预报的条件扩散模型，通过邻接残差预测（ARP）机制预测降水变化量而非绝对值，在全球热带气旋降水预报中超越 ECMWF 等权威 NWP 方法。
+  [ICML 2025][时间序列][热带气旋降水] 提出 TCP-Diffusion，融合历史降水、多模态气象变量和 NWP 预报的条件扩散模型，通过邻接残差预测（ARP）机制预测降水变化量而非绝对值，在全球热带气旋降水预报中超越 ECMWF 等权威 NWP 方法。 领域现状：常规降水预报的深度学习方法已有进展（U-Net、…
 tags:
   - "ICML 2025"
   - "时间序列"

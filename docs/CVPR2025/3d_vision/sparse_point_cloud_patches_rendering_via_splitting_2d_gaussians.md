@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Point Cloud Patches Rendering via Splitting 2D Gaussians
 description: >-
-  [CVPR 2025][3D视觉][点云渲染] 提出直接从点云预测 2D Gaussians 进行照片级真实渲染的方法，通过 entire-patch 架构实现跨类别泛化，通过 splitting decoder 将稀疏点云上采样为更密集的高斯原语…
+  [CVPR 2025][3D视觉][点云渲染] 提出直接从点云预测 2D Gaussians 进行照片级真实渲染的方法，通过 entire-patch 架构实现跨类别泛化，通过 splitting decoder 将稀疏点云上采样为更密集的高斯原语，在仅用2K-100K点的条件下实现了 SOTA 渲染质量和 142 FPS 的实时渲染速度。
 tags:
   - "CVPR 2025"
   - "3D视觉"

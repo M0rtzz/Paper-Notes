@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Which Reasoning Trajectories Teach Students to Reason Better? A Simple Metric of Informative Alignment
 description: >-
-  [ACL 2026][LLM推理][知识蒸馏] 提出 Rank-Surprisal Ratio (RSR) 指标，通过联合衡量推理轨迹对学生模型的"信息量"和"对齐度"来评估训练数据适配性，在 5 个学生模型和 11 个教师模型的组合中与训练后性能达到平均 0.86 的 Spearman 相关性…
+  [ACL 2026][LLM推理][知识蒸馏] 提出 Rank-Surprisal Ratio (RSR) 指标，通过联合衡量推理轨迹对学生模型的"信息量"和"对齐度"来评估训练数据适配性，在 5 个学生模型和 11 个教师模型的组合中与训练后性能达到平均 0.86 的 Spearman 相关性，并成功应用于轨迹选择和教师选择。
 tags:
   - "ACL 2026"
   - "LLM推理"

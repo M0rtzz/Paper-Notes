@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUICourse: From General Vision Language Model to Versatile GUI Agent
 description: >-
-  [ACL 2025][LLM Agent][GUI Agent] 本文提出GUICourse——一套用于从通用视觉语言模型（VLM）训练多功能GUI代理的数据集系列（GUIEnv/GUIAct/GUIChat），通过两阶段训练流程先增强OCR和定位能力、再注入GUI知识…
+  [ACL 2025][LLM Agent][GUI Agent] 本文提出GUICourse——一套用于从通用视觉语言模型（VLM）训练多功能GUI代理的数据集系列（GUIEnv/GUIAct/GUIChat），通过两阶段训练流程先增强OCR和定位能力、再注入GUI知识，使得3.1B参数的小模型也能在网页和手机GUI导航任务上取得有效表现。
 tags:
   - "ACL 2025"
   - "LLM Agent"

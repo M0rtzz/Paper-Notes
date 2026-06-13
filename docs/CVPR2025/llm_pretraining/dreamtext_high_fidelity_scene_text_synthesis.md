@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamText: High Fidelity Scene Text Synthesis
 description: >-
-  [CVPR 2025][预训练][场景文字合成] DreamText重构扩散模型训练流程，引入字符级别的均衡监督(balanced supervision)和启发式交替优化策略来校正字符注意力，结合文本编码器与生成器的联合训练学习多样化字体风格…
+  [CVPR 2025][预训练][场景文字合成] DreamText重构扩散模型训练流程，引入字符级别的均衡监督(balanced supervision)和启发式交替优化策略来校正字符注意力，结合文本编码器与生成器的联合训练学习多样化字体风格，在场景文字合成任务上大幅超越SOTA方法（SeqAcc从UDiffText的0.763提升至0.940）。
 tags:
   - "CVPR 2025"
   - "预训练"

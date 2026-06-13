@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RS-SSM: Refining Forgotten Specifics in State Space Model for Video Semantic Segmentation
 description: >-
-  [CVPR 2026][语义分割][视频语义分割] 提出 RS-SSM，通过频域分析提取各通道的特定信息分布特征（CwAP），并自适应反转遗忘门矩阵来补充性精炼 SSM 状态空间压缩时丢失的时空细节（FGIR），在 4 个视频语义分割基准上达到 SOTA 且保持高效率。
+  [CVPR 2026][语义分割][视频语义分割] 提出 RS-SSM，通过频域分析提取各通道的特定信息分布特征（CwAP），并自适应反转遗忘门矩阵来补充性精炼 SSM 状态空间压缩时丢失的时空细节（FGIR），在 4 个视频语义分割基准上达到 SOTA 且保持高效率。 1. 领域现状：视频语义分割（VSS）要求对视频每帧每…
 tags:
   - "CVPR 2026"
   - "语义分割"

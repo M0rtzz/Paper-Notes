@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning
 description: >-
-  [ACL 2025][预训练][Scaling Laws] 发现语言模型训练中存在 loss deceleration（损失减速）现象——损失曲线在 log-log 空间呈分段线性，根因是 zero-sum learning（ZSL）：per-token 梯度系统性对立导致破坏性干涉…
+  [ACL 2025][预训练][Scaling Laws] 发现语言模型训练中存在 loss deceleration（损失减速）现象——损失曲线在 log-log 空间呈分段线性，根因是 zero-sum learning（ZSL）：per-token 梯度系统性对立导致破坏性干涉，将一部分样本的改善抵消另一部分的恶化；scale up 通过降低减速触发损失 $L_d$ 和提升减速后斜率 $r_d$ 来缓解 ZSL，为突破 scaling law 瓶颈提供了可直接干预的机制。
 tags:
   - "ACL 2025"
   - "预训练"

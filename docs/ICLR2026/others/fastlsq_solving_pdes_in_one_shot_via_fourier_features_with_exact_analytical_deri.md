@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastLSQ: Solving PDEs in One Shot via Fourier Features with Exact Analytical Derivatives
 description: >-
-  [ICLR2026][偏微分方程] 利用正弦基函数的循环导数闭式结构，实现了无需自动微分、无需迭代训练的 PDE 一次性求解框架，在线性 PDE 上 0.07s 达到 $10^{-7}$ 精度，非线性 PDE 上 <9s 达到 $10^{-8}$–$10^{-9}$ 精度…
+  [ICLR2026][偏微分方程] 利用正弦基函数的循环导数闭式结构，实现了无需自动微分、无需迭代训练的 PDE 一次性求解框架，在线性 PDE 上 0.07s 达到 $10^{-7}$ 精度，非线性 PDE 上 <9s 达到 $10^{-8}$–$10^{-9}$ 精度，比 PINNs 快数千倍且精确数个数量级。
 tags:
   - "ICLR2026"
   - "偏微分方程"

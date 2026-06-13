@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Manual-PA: Learning 3D Part Assembly from Instruction Diagrams
 description: >-
-  [ICCV 2025][自监督学习][3D Part Assembly] 提出 Manual-PA，一个基于 Transformer 的说明书引导 3D 零件组装框架：通过对比学习将 3D 零件与说明书步骤图对齐来推断组装顺序，再以学到的顺序作为位置编码的软引导进行 6DoF 位姿预测…
+  [ICCV 2025][自监督学习][3D Part Assembly] 提出 Manual-PA，一个基于 Transformer 的说明书引导 3D 零件组装框架：通过对比学习将 3D 零件与说明书步骤图对齐来推断组装顺序，再以学到的顺序作为位置编码的软引导进行 6DoF 位姿预测，在 PartNet 上显著超越现有方法。
 tags:
   - "ICCV 2025"
   - "自监督学习"

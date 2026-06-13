@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TrackMAE: Video Representation Learning via Track, Mask, and Predict
 description: >-
-  [CVPR 2026][自监督学习][Masked Video Modeling] 在masked video modeling（MVM）框架中引入显式的运动信号：使用CoTracker3提取点轨迹作为额外的重建目标，并设计运动感知遮掩策略，联合学习空间重建和运动预测…
+  [CVPR 2026][自监督学习][Masked Video Modeling] 在masked video modeling（MVM）框架中引入显式的运动信号：使用CoTracker3提取点轨迹作为额外的重建目标，并设计运动感知遮掩策略，联合学习空间重建和运动预测，在运动敏感基准（SSv2、FineGym）上显著超越现有视频自监督方法。
 tags:
   - "CVPR 2026"
   - "自监督学习"

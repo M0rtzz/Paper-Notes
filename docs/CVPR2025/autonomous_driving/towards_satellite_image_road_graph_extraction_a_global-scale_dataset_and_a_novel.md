@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Satellite Image Road Graph Extraction: A Global-Scale Dataset and A Novel Method
 description: >-
-  [CVPR 2025][自动驾驶][道路图提取] 本文构建了一个覆盖全球的大规模卫星道路图提取数据集 Global-Scale（比现有最大公开数据集大约20倍），并提出 SAM-Road++ 方法，通过节点引导重采样策略解决训练与推理不匹配问题，同时引入"延长线"策略缓解遮挡导致的道路断裂…
+  [CVPR 2025][自动驾驶][道路图提取] 本文构建了一个覆盖全球的大规模卫星道路图提取数据集 Global-Scale（比现有最大公开数据集大约20倍），并提出 SAM-Road++ 方法，通过节点引导重采样策略解决训练与推理不匹配问题，同时引入"延长线"策略缓解遮挡导致的道路断裂，在多个数据集上取得了 SOTA 效果。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

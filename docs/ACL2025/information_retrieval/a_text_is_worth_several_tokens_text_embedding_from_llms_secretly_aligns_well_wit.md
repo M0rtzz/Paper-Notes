@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens
 description: >-
-  [ACL 2025][信息检索/RAG][Text Embedding] 揭示 LLM 文本嵌入的有趣现象：将嵌入向量通过解码层映射回词表空间后，解码概率最高的 token 与输入文本的关键词高度对齐；进一步通过谱分析发现这一现象主要受第一主成分控制，并据此提出一种简洁的稀疏检索方法…
+  [ACL 2025][信息检索/RAG][Text Embedding] 揭示 LLM 文本嵌入的有趣现象：将嵌入向量通过解码层映射回词表空间后，解码概率最高的 token 与输入文本的关键词高度对齐；进一步通过谱分析发现这一现象主要受第一主成分控制，并据此提出一种简洁的稀疏检索方法，达到原密集检索 80%+ 的效果。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

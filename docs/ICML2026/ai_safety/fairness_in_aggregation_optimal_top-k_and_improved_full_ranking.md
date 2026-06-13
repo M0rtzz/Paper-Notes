@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fairness in Aggregation: Optimal Top-$k$ and Improved Full Ranking
 description: >-
-  [ICML 2026][AI安全][公平排名聚合] 在 Spearman footrule 距离下，把 ILP 的约束矩阵证成全单模，从而给出 fair top-$k$ 排名聚合的首个多项式时间最优算法；并以"先解 fair top-$k$，再用最小代价完美匹配补齐成全排列"的两步策略…
+  [ICML 2026][AI安全][公平排名聚合] 在 Spearman footrule 距离下，把 ILP 的约束矩阵证成全单模，从而给出 fair top-$k$ 排名聚合的首个多项式时间最优算法；并以"先解 fair top-$k$，再用最小代价完美匹配补齐成全排列"的两步策略，把 fair (full) rank aggregation 的近似比从 3 改进到 2。
 tags:
   - "ICML 2026"
   - "AI安全"

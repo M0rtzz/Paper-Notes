@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTRouter: Cost-Aware Multi-Turn LLM Routing with History-Model Joint Embeddings
 description: >-
-  [ACL 2026][LLM效率][多轮LLM路由] MTRouter把多轮Agent中的“每一轮该调用哪个LLM”建模为成本约束下的逐轮路由问题，通过历史-模型联合嵌入预测候选模型对最终任务结果的贡献，在ScienceWorld和HLE上同时提升任务表现并显著降低总调用成本。
+  [ACL 2026][LLM效率][多轮LLM路由] MTRouter把多轮Agent中的“每一轮该调用哪个LLM”建模为成本约束下的逐轮路由问题，通过历史-模型联合嵌入预测候选模型对最终任务结果的贡献，在ScienceWorld和HLE上同时提升任务表现并显著降低总调用成本。 领域现状：LLM正在从单次问答走向多轮、长时程…
 tags:
   - "ACL 2026"
   - "LLM效率"

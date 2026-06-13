@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training
 description: >-
-  [ICML 2025][模型压缩][合成数据] 构建迄今最大的公开聊天数据集 WildChat-50m（50+ 开源模型 × 100万+ 对话 = 1.25 亿条转录），系统研究不同数据生成模型（DGM）的合成数据质量，并设计 Re-Wild SFT 混合方案…
+  [ICML 2025][模型压缩][合成数据] 构建迄今最大的公开聊天数据集 WildChat-50m（50+ 开源模型 × 100万+ 对话 = 1.25 亿条转录），系统研究不同数据生成模型（DGM）的合成数据质量，并设计 Re-Wild SFT 混合方案，仅用 Tulu-3 SFT 数据量的 40% 即在多项基准上超越其表现。
 tags:
   - "ICML 2025"
   - "模型压缩"

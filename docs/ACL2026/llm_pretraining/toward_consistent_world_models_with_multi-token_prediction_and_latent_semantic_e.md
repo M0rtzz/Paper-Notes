@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Consistent World Models with Multi-Token Prediction and Latent Semantic Enhancement
 description: >-
-  [ACL 2026][预训练][多token预测] 从理论上分析了多 Token 预测（MTP）如何通过梯度耦合机制诱导表示收缩性从而促进信念状态的涌现，但同时揭示了 MTP 的"结构性幻觉"问题（隐空间中的非法捷径），并提出 LSE-MTP 框架通过隐一致性损失和语义锚定损失将预测锚定到真实隐状态轨迹…
+  [ACL 2026][预训练][多token预测] 从理论上分析了多 Token 预测（MTP）如何通过梯度耦合机制诱导表示收缩性从而促进信念状态的涌现，但同时揭示了 MTP 的"结构性幻觉"问题（隐空间中的非法捷径），并提出 LSE-MTP 框架通过隐一致性损失和语义锚定损失将预测锚定到真实隐状态轨迹，在合成图和真实曼哈顿出租车导航上显著改善路径合法性和鲁棒性。
 tags:
   - "ACL 2026"
   - "预训练"

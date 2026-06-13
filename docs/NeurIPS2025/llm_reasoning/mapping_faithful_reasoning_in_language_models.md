@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mapping Faithful Reasoning in Language Models
 description: >-
-  [NeurIPS 2025][LLM推理][CoT忠实性] 提出Concept Walk框架，通过将推理模型每步的残差流激活投影到从对比数据学到的概念方向上，追踪内部概念表示在推理过程中的演化轨迹，以此区分CoT链是真正参与计算的还是仅为事后合理化的装饰性输出。
+  [NeurIPS 2025][LLM推理][CoT忠实性] 提出Concept Walk框架，通过将推理模型每步的残差流激活投影到从对比数据学到的概念方向上，追踪内部概念表示在推理过程中的演化轨迹，以此区分CoT链是真正参与计算的还是仅为事后合理化的装饰性输出。 领域现状：推理型LLM（如OpenAI o1、Gemini思考…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

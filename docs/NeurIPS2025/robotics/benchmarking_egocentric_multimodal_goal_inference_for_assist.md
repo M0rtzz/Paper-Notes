@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents
 description: >-
-  [NeurIPS 2025 (Spotlight)][机器人][目标推断] Meta 提出 WAGIBench，一个针对可穿戴辅助智能体的多模态目标推断基准，包含 348 名参与者的 3,477 条第一视角录制（29小时），涵盖视觉/音频/数字/纵向四种模态…
+  [NeurIPS 2025 (Spotlight)][机器人][目标推断] Meta 提出 WAGIBench，一个针对可穿戴辅助智能体的多模态目标推断基准，包含 348 名参与者的 3,477 条第一视角录制（29小时），涵盖视觉/音频/数字/纵向四种模态，人类准确率 93% vs 最佳 VLM 84%（MCQ），生成式评估中模型仅 55% 时间产生相关目标，揭示了当前 VLM 在实际可穿戴场景中的显著差距。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "机器人"

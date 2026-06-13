@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks
 description: >-
-  [ICCV 2025][视频生成][Transformer] 提出 Video Interface Networks (VINs)，一种类似"快思考"的抽象模块，在每个扩散步中将长视频编码为固定大小的全局 token，引导 DiT 并行生成多个视频 chunk，实现高效且时序一致的长视频生成。
+  [ICCV 2025][视频生成][Transformer] 提出 Video Interface Networks (VINs)，一种类似"快思考"的抽象模块，在每个扩散步中将长视频编码为固定大小的全局 token，引导 DiT 并行生成多个视频 chunk，实现高效且时序一致的长视频生成。 - Diffusion Tra…
 tags:
   - "ICCV 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallelism Meets Adaptiveness: Scalable Documents Understanding in Multi-Agent LLM Systems
 description: >-
-  [AAAI 2026][多智能体][多Agent系统] 提出自适应协调的多 Agent LLM 框架，通过并行竞争评估、动态任务路由和双向反馈机制，在高复杂度金融文档分析任务中实现 27% 的合规准确率提升和 74% 的修订率降低。
+  [AAAI 2026][多智能体][多Agent系统] 提出自适应协调的多 Agent LLM 框架，通过并行竞争评估、动态任务路由和双向反馈机制，在高复杂度金融文档分析任务中实现 27% 的合规准确率提升和 74% 的修订率降低。 领域现状：多 Agent LLM 系统已成为解决复杂多步骤任务的强大范式…
 tags:
   - "AAAI 2026"
   - "多智能体"

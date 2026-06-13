@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation
 description: >-
-  [图像生成] SANA-Sprint 提出混合蒸馏框架（连续时间一致性模型 + 潜空间对抗蒸馏），将预训练 Flow Matching 模型无损转换为 TrigFlow 并通过 sCM+LADD 联合训练，实现 1-4 步统一自适应高质量文本到图像生成，H100 上单步仅需 0.1 秒。
+  [图像生成] SANA-Sprint 提出混合蒸馏框架（连续时间一致性模型 + 潜空间对抗蒸馏），将预训练 Flow Matching 模型无损转换为 TrigFlow 并通过 sCM+LADD 联合训练，实现 1-4 步统一自适应高质量文本到图像生成，H100 上单步仅需 0.1 秒。 扩散模型通常需要 50-100 步迭…
 tags:
   - "图像生成"
 ---

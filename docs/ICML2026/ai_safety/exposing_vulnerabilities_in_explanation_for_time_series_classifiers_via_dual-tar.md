@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exposing Vulnerabilities in Explanation for Time Series Classifiers via Dual-Target Adversarial Attack
 description: >-
-  [ICML 2026][AI安全][时序解释器] 本文提出 TSEF——一个针对"时序分类器 + 解释器"联合系统的对偶目标攻击框架：通过学习"时间脆弱掩码 + 频域扰动滤波器"，在 $\ell_\infty$ 预算内同时把模型预测推到目标标签、又把解释推到攻击者指定的参考显著图…
+  [ICML 2026][AI安全][时序解释器] 本文提出 TSEF——一个针对"时序分类器 + 解释器"联合系统的对偶目标攻击框架：通过学习"时间脆弱掩码 + 频域扰动滤波器"，在 $\ell_\infty$ 预算内同时把模型预测推到目标标签、又把解释推到攻击者指定的参考显著图，证明现有时序可解释流水线的"解释稳定 = 决策可信"假设根本不成立。
 tags:
   - "ICML 2026"
   - "AI安全"

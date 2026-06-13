@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LayerIF: Estimating Layer Quality for Large Language Models using Influence Functions
 description: >-
-  [NeurIPS 2025][模型压缩][影响函数] LayerIF 提出用影响函数（Influence Functions）逐层量化 LLM 的训练质量，通过聚合各层的正向影响分数得到数据驱动的层重要性估计，并将其应用于 LoRA-MoE 专家分配和层级稀疏剪枝两个下游任务…
+  [NeurIPS 2025][模型压缩][影响函数] LayerIF 提出用影响函数（Influence Functions）逐层量化 LLM 的训练质量，通过聚合各层的正向影响分数得到数据驱动的层重要性估计，并将其应用于 LoRA-MoE 专家分配和层级稀疏剪枝两个下游任务，在 Mistral-7B 和 Gemma-7B 上分别获得 1.61% 和 0.90% 的准确率提升。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

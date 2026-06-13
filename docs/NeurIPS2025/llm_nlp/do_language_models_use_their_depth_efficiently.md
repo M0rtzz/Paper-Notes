@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Do Language Models Use Their Depth Efficiently?
 description: >-
-  [NeurIPS 2025][LLM/NLP][深度利用效率] 通过因果干预、残差流分析和跨模型线性映射，证明当前 LLM 后半部分层不参与组合式计算，仅迭代细化输出概率分布，深层模型只是把浅层模型的计算"展延"到更多层。
+  [NeurIPS 2025][LLM 其他][深度利用效率] 通过因果干预、残差流分析和跨模型线性映射，证明当前 LLM 后半部分层不参与组合式计算，仅迭代细化输出概率分布，深层模型只是把浅层模型的计算"展延"到更多层。 现有痛点 现有痛点：领域现状：现代 LLM 越来越深，132 个 Open LLM Leaderboar…
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "深度利用效率"
   - "残差流"
   - "层贡献"

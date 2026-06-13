@@ -2,15 +2,15 @@
 title: >-
   [论文解读] FineXtrol: Controllable Motion Generation via Fine-Grained Text
 description: >-
-  [AAAI2026][自监督学习][运动生成] 提出 FineXtrol 框架，使用带时间标注的细粒度文本描述作为控制信号，结合层次化对比学习增强 text encoder 的判别力，实现对特定身体部位在指定时间区间内的精确动作生成控制。
+  [AAAI 2026][自监督学习][motion generation] 提出 FineXtrol 框架，利用带时间标注的细粒度身体部位文本描述作为控制信号，通过双分支 ControlNet 架构和层级对比学习增强文本编码器的区分能力，实现高效、用户友好且精确的可控人体动作生成，在 HumanML3D 上多身体部位控制性能显著优于现有方法。
 tags:
-  - "AAAI2026"
+  - "AAAI 2026"
   - "自监督学习"
-  - "运动生成"
-  - "fine-grained control"
+  - "motion generation"
+  - "controllable generation"
+  - "fine-grained text"
   - "对比学习"
   - "扩散模型"
-  - "ControlNet"
 ---
 
 # FineXtrol: Controllable Motion Generation via Fine-Grained Text
@@ -159,3 +159,19 @@ tags:
 ---
 
 <!-- 由 src/gen_stubs.py 自动生成 -->
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing](../../NeurIPS2025/self_supervised/cleverbirds_a_multiple-choice_benchmark_for_fine-grained_human_knowledge_tracing.md)
+- [\[ICCV 2025\] Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery](../../ICCV2025/self_supervised/generate_refine_and_encode_leveraging_synthesized_novel_samples_for_on-the-fly_f.md)
+- [\[ICML 2025\] Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection](../../ICML2025/self_supervised/foundation_model_insights_and_a_multi-model_approach_for_superior_fine-grained_o.md)
+- [\[CVPR 2026\] Free-Grained Hierarchical Visual Recognition](../../CVPR2026/self_supervised/free-grained_hierarchical_visual_recognition.md)
+- [\[ACL 2025\] Contrastive Learning on LLM Back Generation Treebank for Cross-domain Constituency Parsing](../../ACL2025/self_supervised/llm_back_gen_treebank.md)
+
+</div>
+
+<!-- RELATED:END -->

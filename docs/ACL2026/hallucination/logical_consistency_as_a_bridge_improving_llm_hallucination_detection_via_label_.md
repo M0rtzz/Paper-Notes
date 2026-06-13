@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Logical Consistency as a Bridge: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments
 description: >-
-  [ACL 2026][幻觉检测][Self-Judgment] 把 LLM 的 self-judgment ("它觉得自己刚才答对了没") 也当成一个可能幻觉的 generation，先用 intrinsic feature 训一个 "meta-judgment detector" 估它的可信度…
+  [ACL 2026][幻觉检测][Self-Judgment] 把 LLM 的 self-judgment ("它觉得自己刚才答对了没") 也当成一个可能幻觉的 generation，先用 intrinsic feature 训一个 "meta-judgment detector" 估它的可信度，再用"如果 self-judgment 说真→两标签相同/说假→两标签相反"这条天然逻辑规则，把 response detector 和 meta-judgment detector 通过 Huber loss 互相约束、用置信度加权的互学习联合训练；推理时只用 response detector 但已经吸收了 self-judgment…
 tags:
   - "ACL 2026"
   - "幻觉检测"

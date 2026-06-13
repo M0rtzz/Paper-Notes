@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Defending LVLMs Against Vision Attacks through Partial-Perception Supervision
 description: >-
-  [ICML2025][LLM/NLP][LVLM安全] 提出 DPS（Defense through Partial-Perception Supervision），利用裁剪图像的响应作为"弱监督"来引导全图模型在推理时自我修正，实现无需训练的黑盒 LVLM 视觉攻击防御，平均攻击成功率降低 76.3%。
+  [ICML2025][LLM 其他][LVLM安全] 提出 DPS（Defense through Partial-Perception Supervision），利用裁剪图像的响应作为"弱监督"来引导全图模型在推理时自我修正，实现无需训练的黑盒 LVLM 视觉攻击防御，平均攻击成功率降低 76.3%。
 tags:
   - "ICML2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LVLM安全"
   - "视觉对抗攻击"
   - "部分感知监督"

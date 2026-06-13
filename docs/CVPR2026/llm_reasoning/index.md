@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 LLM推理论文汇总 · 8篇论文解读
+  CVPR2026 LLM推理论文汇总 · 9篇论文解读
 description: >-
-  8篇CVPR2026的 LLM 推理方向论文解读，涵盖推理、少样本学习、自动驾驶、问答、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  9篇CVPR2026的 LLM 推理方向论文解读，涵盖推理、少样本学习、自动驾驶、问答、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "LLM 推理"
@@ -18,6 +18,8 @@ item_list:
     t: "E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought"
   - u: "eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for/"
     t: "EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence"
+  - u: "firescope_wildfire_risk_raster_prediction_with_a_chain-of-thought_oracle/"
+    t: "FireScope: Wildfire Risk Raster Prediction with a Chain-of-Thought Oracle"
   - u: "graze_grounded_refinement_and_motion-aware_zero-shot_event_localization/"
     t: "GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization"
   - u: "latent_chain-of-thought_world_modeling_for_end-to-end_autonomous_driving/"
@@ -30,17 +32,17 @@ item_list:
     t: "Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering"
   - u: "visref_visual_refocusing_test_time_scaling/"
     t: "VisRef: Visual Refocusing while Thinking Improves Test-Time Scaling in Multi-Modal Large Reasoning Models"
-item_total: 8
+item_total: 9
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**📷 CVPR2026** · **8** 篇论文解读
+**📷 CVPR2026** · **9** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (81)](../../ACL2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×7
+🔥 **高频主题：** 推理 ×8
 
 **[E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)**
 
@@ -49,6 +51,10 @@ item_total: 8
 **[EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence](eaglevision_a_dual-stage_framework_with_bev-grounding-based_chain-of-thought_for.md)**
 
 :   提出EagleVision双阶段框架，宏观感知阶段用语义-视角融合DPP(SPF-DPP)在SE(3)空间联合优化语义相关性和视角多样性选择关键帧，微观验证阶段让模型在BEV平面上主动查询新视角帧进行迭代空间CoT推理（假设→查看→验证闭环），查询策略纯RL训练无需人工标注，在VSI-Bench和SQA3D上达开源SOTA。
+
+**[FireScope: Wildfire Risk Raster Prediction with a Chain-of-Thought Oracle](firescope_wildfire_risk_raster_prediction_with_a_chain-of-thought_oracle.md)**
+
+:   用一个 GRPO 微调、会写思维链的 VLM（Oracle）先把卫星图+气候推理成一个标量野火风险分，再用 FiLM 把这个分喂给轻量视觉 Encoder-Decoder 去生成高分辨率连续风险栅格——在「美国训练、欧洲测试」的跨洲设定下，显式语言推理显著提升了分布外泛化，且推理痕迹可被野火专家复原、可解释。
 
 **[GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization](graze_grounded_refinement_and_motion-aware_zero-shot_event_localization.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts
 description: >-
-  [NeurIPS 2025][地球科学][红外可见光融合] 提出 ControlFusion，一种基于语言-视觉退化提示的可控红外-可见光图像融合框架，通过物理驱动的退化成像模型模拟复合退化，并用 prompt-modulated 网络动态恢复+融合，在真实世界和复合退化场景下全面超越 SOTA。
+  [NeurIPS 2025][地球科学][红外可见光融合] 提出 ControlFusion，一种基于语言-视觉退化提示的可控红外-可见光图像融合框架，通过物理驱动的退化成像模型模拟复合退化，并用 prompt-modulated 网络动态恢复+融合，在真实世界和复合退化场景下全面超越 SOTA。 领域现状：红外-可见光图像…
 tags:
   - "NeurIPS 2025"
   - "地球科学"

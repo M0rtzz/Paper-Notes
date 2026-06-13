@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Importance-Aware Data Selection for Efficient LLM Instruction Tuning
 description: >-
-  [AAAI 2026][LLM对齐][数据选择] 提出MIWV（Model Instruction Weakness Value）指标，通过比较LLM在有/无one-shot ICL示例下的损失差来衡量每条指令数据对模型能力提升的重要性…
+  [AAAI 2026 Oral][LLM对齐][数据选择] 提出MIWV（Model Instruction Weakness Value）指标，通过比较LLM在有/无one-shot ICL示例下的损失差来衡量每条指令数据对模型能力提升的重要性，在Alpaca数据集上仅用1%（520条）数据即全面超越全量52002条的微调效果。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM对齐"
   - "数据选择"
   - "MIWV"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] mCLM: A Modular Chemical Language Model that Generates Functional and Makeable Molecules
 description: >-
-  [ICLR 2026][医疗NLP][化学语言模型] 提出 mCLM（模块化化学语言模型），通过将分子表示为可合成构建模块的序列，使 LLM 能生成同时满足药理功能和自动化合成可行性的分子，在 430 种 FDA 批准药物上显著改善了药代动力学和毒性性质。
+  [ICLR 2026 Oral][医疗NLP][化学语言模型] 提出 mCLM（模块化化学语言模型），通过将分子表示为可合成构建模块的序列，使 LLM 能生成同时满足药理功能和自动化合成可行性的分子，在 430 种 FDA 批准药物上显著改善了药代动力学和毒性性质。 领域现状：LLM 已展现出理解化学知识的能力…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "医疗NLP"
   - "化学语言模型"
   - "分子优化"

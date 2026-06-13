@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors
 description: >-
-  [ACL 2025][图学习][知识图谱] 提出 Fast-and-Frugal Text-Graph (FnF-TG) Transformer，通过 Transformer 的自注意力机制统一编码文本描述和图结构（ego-graph）…
+  [ACL 2025][图学习][知识图谱] 提出 Fast-and-Frugal Text-Graph (FnF-TG) Transformer，通过 Transformer 的自注意力机制统一编码文本描述和图结构（ego-graph），在归纳链接预测任务上以小 BERT 模型超越了使用大 BERT+MPNN 的 SOTA，同时首次扩展到完全归纳设置（关系也可归纳）。
 tags:
   - "ACL 2025"
   - "图学习"

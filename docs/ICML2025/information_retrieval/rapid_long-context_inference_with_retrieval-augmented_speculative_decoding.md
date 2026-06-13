@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RAPID: Long-Context Inference with Retrieval-Augmented Speculative Decoding
 description: >-
-  [ICML 2025][信息检索/RAG][推测解码] 提出 RAPID，将 RAG 与 Speculative Decoding 结合：用 RAG drafter（在短检索上下文上运行的 LLM）为长上下文目标 LLM 生成候选 token，并通过推理时知识迁移增强目标分布…
+  [ICML 2025 Spotlight][信息检索/RAG][推测解码] 提出 RAPID，将 RAG 与 Speculative Decoding 结合：用 RAG drafter（在短检索上下文上运行的 LLM）为长上下文目标 LLM 生成候选 token，并通过推理时知识迁移增强目标分布，在长上下文推理中同时实现 >2× 加速和生成质量提升。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "信息检索/RAG"
   - "推测解码"
   - "长上下文推理"

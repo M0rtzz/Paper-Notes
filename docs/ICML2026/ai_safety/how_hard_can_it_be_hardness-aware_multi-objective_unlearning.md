@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Hard Can It Be? Hardness-Aware Multi-Objective Unlearning
 description: >-
-  [ICML 2026][AI安全][machine unlearning] 把"遗忘 vs 保留"的 trade-off 直接写成"每步带约束的一阶凸优化"问题，用 retain/forget 梯度的点积 $\kappa = \bm{g_r}\cdot\bm{g_f}$ 同时充当 hardness 度量、更新…
+  [ICML 2026][AI安全][machine unlearning] 把"遗忘 vs 保留"的 trade-off 直接写成"每步带约束的一阶凸优化"问题，用 retain/forget 梯度的点积 $\kappa = \bm{g_r}\cdot\bm{g_f}$ 同时充当 hardness 度量、更新方向切换开关和提前停止条件，在 CIFAR-10/ResNet-20 与 Llama-2-7B/WaterDrum-TOFU 上比 GA、GDiff、SCRUB、KL 等基线更稳。
 tags:
   - "ICML 2026"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Asymmetric Perturbation in Solving Bilinear Saddle-Point Optimization
 description: >-
-  [ICML2026][优化/理论][双线性鞍点优化] 这篇论文证明只扰动双线性零和博弈中一方的 payoff，就能在足够小扰动下保持原始均衡不变，并据此构造 AsymP-GDA，在理论上获得线性 last-iterate 收敛，在普通型和扩展型博弈实验中比对称扰动更快、更准地逼近原始均衡。
+  [ICML2026][优化/理论][双线性鞍点优化] 这篇论文证明只扰动双线性零和博弈中一方的 payoff，就能在足够小扰动下保持原始均衡不变，并据此构造 AsymP-GDA，在理论上获得线性 last-iterate 收敛，在普通型和扩展型博弈实验中比对称扰动更快、更准地逼近原始均衡。 领域现状：双线性鞍点问题 $\mi…
 tags:
   - "ICML2026"
   - "优化/理论"

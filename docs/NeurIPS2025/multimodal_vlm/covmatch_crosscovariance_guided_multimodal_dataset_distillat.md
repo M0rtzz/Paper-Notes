@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CovMatch: Cross-Covariance Guided Multimodal Dataset Distillation with Trainable Text Encoder
 description: >-
-  [NeurIPS 2025][多模态VLM][dataset distillation] 提出 CovMatch，通过将多模态对比学习的双层优化简化为跨协方差矩阵对齐的闭式解，首次实现图文双编码器的联合优化进行多模态数据集蒸馏…
+  [NeurIPS 2025][多模态VLM][dataset distillation] 提出 CovMatch，通过将多模态对比学习的双层优化简化为跨协方差矩阵对齐的闭式解，首次实现图文双编码器的联合优化进行多模态数据集蒸馏，仅用 500 个合成图文对在 Flickr30K 上获得 38.4 平均检索精度（+6.8% 超越 SOTA LoRS），在极端数据高效场景下大幅超越冻结文本编码器的方法。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

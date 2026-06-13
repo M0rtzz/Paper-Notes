@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Axis-Aligned Document Dewarping
 description: >-
-  [AAAI 2026][document dewarping] 提出利用平面文档固有的"轴对齐"几何性质，在训练、推理和评估三个阶段系统性地引入轴对齐约束，实现了SOTA文档矫正效果并提出新评估指标AAD。
+  [AAAI 2026][document dewarping] 提出利用平面文档固有的"轴对齐"几何性质，在训练、推理和评估三个阶段系统性地引入轴对齐约束，实现了SOTA文档矫正效果并提出新评估指标AAD。 文档矫正(Document Dewarping)旨在将手机或相机拍摄的畸变文档图像恢复为平整的矩形文档…
 tags:
   - "AAAI 2026"
   - "document dewarping"

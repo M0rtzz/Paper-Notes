@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Investigating More Explainable and Partition-Free Compositionality Estimation for LLMs: A Rule-Generation Perspective
 description: >-
-  [ACL 2026][可解释性][组合泛化] 论文跳出"造测试集做组合泛化测试"的传统范式，让 LLM 直接为整个数据集生成一段 Python 程序作为映射规则，再用基于 Kolmogorov 复杂度上界的 $\mathcal{C}(\text{P})$ 把"程序的压缩度 + 正确率"折成 0–100 的组合…
+  [ACL 2026][可解释性][组合泛化] 论文跳出"造测试集做组合泛化测试"的传统范式，让 LLM 直接为整个数据集生成一段 Python 程序作为映射规则，再用基于 Kolmogorov 复杂度上界的 $\mathcal{C}(\text{P})$ 把"程序的压缩度 + 正确率"折成 0–100 的组合性分数；从而把"看输出对不对"换成"看规则压得多紧"，既绕开了大模型预训练时已经"见过组合"的污染，又给出了可解释的内省式评估。
 tags:
   - "ACL 2026"
   - "可解释性"

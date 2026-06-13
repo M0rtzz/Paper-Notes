@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCALE: Selective Resource Allocation for Overcoming Performance Bottlenecks in Mathematical Test-time Scaling
 description: >-
-  [AAAI 2026][LLM推理][测试时计算] 基于认知科学的双过程理论，提出SCALE框架将数学问题分解为子问题后按难度分配不同计算资源（System 1快速计算 vs System 2深度推理），在AIME25上将Qwen3-32B从57.50%提升至71.25%…
+  [AAAI 2026][LLM推理][测试时计算] 基于认知科学的双过程理论，提出SCALE框架将数学问题分解为子问题后按难度分配不同计算资源（System 1快速计算 vs System 2深度推理），在AIME25上将Qwen3-32B从57.50%提升至71.25%，同时比InftyThink节省33-53%的token。
 tags:
   - "AAAI 2026"
   - "LLM推理"

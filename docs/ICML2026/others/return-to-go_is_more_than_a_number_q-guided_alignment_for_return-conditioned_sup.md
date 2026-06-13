@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Return-to-Go is More Than a Number: Q-Guided Alignment for Return-Conditioned Supervised Learning
 description: >-
-  [ICML 2026][离线强化学习] 本文针对条件序列模型（如 Decision Transformer）中 return-to-go (RTG) 对齐不足的问题，提出 Q-align DT 框架——通过 RTG-to-behavior 对齐损失（强制 RTG 单调对应 Q 值变化）+ Q 函数的 RTG…
+  [ICML 2026][离线强化学习] 本文针对条件序列模型（如 Decision Transformer）中 return-to-go (RTG) 对齐不足的问题，提出 Q-align DT 框架——通过 RTG-to-behavior 对齐损失（强制 RTG 单调对应 Q 值变化）+ Q 函数的 RTG 扰动训练（共训练形成正反馈循环），在 D4RL 上达到 SOTA 性能且对齐误差大幅下降（HalfCheetah-medium 上 68.9 vs QCS 102.3）。
 tags:
   - "ICML 2026"
   - "离线强化学习"

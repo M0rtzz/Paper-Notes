@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ResidualViT for Efficient Temporally Dense Video Encoding
 description: >-
-  [ICCV 2025][视频理解][视频编码效率] 本文提出 ResidualViT，通过类比视频压缩中的 I帧/P帧 策略，交替使用完整 ViT 和轻量残差 ViT 编码视频帧，在保持接近原始 CLIP 精度的同时，实现最高 60% 的计算成本降低和 2.5 倍推理加速。
+  [ICCV 2025][视频理解][视频编码效率] 本文提出 ResidualViT，通过类比视频压缩中的 I帧/P帧 策略，交替使用完整 ViT 和轻量残差 ViT 编码视频帧，在保持接近原始 CLIP 精度的同时，实现最高 60% 的计算成本降低和 2.5 倍推理加速。 许多视频理解任务（如自然语言时序视频定位 NLTV…
 tags:
   - "ICCV 2025"
   - "视频理解"

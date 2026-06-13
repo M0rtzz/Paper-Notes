@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Local Manifold Approximation and Projection for Manifold-Aware Diffusion Planning
 description: >-
-  [ICML 2025][图像生成][扩散规划] 提出LoMAP——训练无关的扩散规划修正方法，在每个反向扩散步将引导后样本投影到由离线数据近邻构建的局部低秩子空间上，防止不可行轨迹生成，理论证明引导误差随维度以 $O(\sqrt{d})$ 增长。
+  [ICML 2025][图像生成][扩散规划] 提出LoMAP——训练无关的扩散规划修正方法，在每个反向扩散步将引导后样本投影到由离线数据近邻构建的局部低秩子空间上，防止不可行轨迹生成，理论证明引导误差随维度以 $O(\sqrt{d})$ 增长。 领域现状：扩散模型用于轨迹规划（如Diffuser）通过建模整条轨迹分布避免了…
 tags:
   - "ICML 2025"
   - "图像生成"

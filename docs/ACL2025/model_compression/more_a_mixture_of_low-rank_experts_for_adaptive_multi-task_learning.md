@@ -2,9 +2,10 @@
 title: >-
   [论文解读] MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning
 description: >-
-  [ACL 2025][LoRA] 提出 MoRE (Mixture of Low-Rank Experts)，将 LoRA 中的不同秩视为不同专家，通过自适应秩选择器为每个任务动态选择最合适的秩，配合对比学习优化的任务嵌入和平衡数据采样策略，使用单个 LoRA 模块实现高效的多任务微调。
+  [ACL 2025][模型压缩][LoRA] 提出 MoRE (Mixture of Low-Rank Experts)，将 LoRA 中的不同秩视为不同专家，通过自适应秩选择器为每个任务动态选择最合适的秩，配合对比学习优化的任务嵌入和平衡数据采样策略，使用单个 LoRA 模块实现高效的多任务微调。
 tags:
   - "ACL 2025"
+  - "模型压缩"
   - "LoRA"
   - "多任务学习"
   - "混合专家"

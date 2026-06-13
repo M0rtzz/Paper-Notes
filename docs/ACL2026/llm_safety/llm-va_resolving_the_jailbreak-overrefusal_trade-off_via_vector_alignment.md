@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-VA: Resolving the Jailbreak-Overrefusal Trade-off via Vector Alignment
 description: >-
-  [ACL 2026][LLM安全][jailbreak] LLM-VA 发现 LLM 内部把"是否回答"（answer 向量 $v_a$）与"输入是否安全"（benign 向量 $v_b$）编码成几乎正交的两个方向，导致 jailbreak 与 over-refusal 之间的取舍永远此消彼长…
+  [ACL 2026][LLM安全][jailbreak] LLM-VA 发现 LLM 内部把"是否回答"（answer 向量 $v_a$）与"输入是否安全"（benign 向量 $v_b$）编码成几乎正交的两个方向，导致 jailbreak 与 over-refusal 之间的取舍永远此消彼长；它通过闭式最小范数权重更新把 $v_a$ 与 $v_b$ 对齐，让模型"愿不愿答"因果依赖于"输入安不安全"，在 12 个 LLM 上 F1 比最强 baseline 高 11.45%、效用仅掉 4.08%，且无需任何 fine-tuning 或架构改动。
 tags:
   - "ACL 2026"
   - "LLM安全"

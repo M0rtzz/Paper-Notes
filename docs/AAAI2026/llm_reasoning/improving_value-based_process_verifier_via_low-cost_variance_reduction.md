@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Value-based Process Verifier via Low-Cost Variance Reduction
 description: >-
-  [AAAI 2026][LLM推理][过程验证器] 针对基于值的过程验证器(PRM)训练中蒙特卡罗(MC)估计因采样数有限导致的高方差问题，提出Compound Monte Carlo Sampling (ComMCS)方法，通过线性组合当前步和后续步的MC估计量来无偏地降低方差，无需额外LLM推理开销…
+  [AAAI 2026][LLM推理][过程验证器] 针对基于值的过程验证器(PRM)训练中蒙特卡罗(MC)估计因采样数有限导致的高方差问题，提出Compound Monte Carlo Sampling (ComMCS)方法，通过线性组合当前步和后续步的MC估计量来无偏地降低方差，无需额外LLM推理开销，在MATH-500上Best-of-32实验中提升2.2个点。
 tags:
   - "AAAI 2026"
   - "LLM推理"

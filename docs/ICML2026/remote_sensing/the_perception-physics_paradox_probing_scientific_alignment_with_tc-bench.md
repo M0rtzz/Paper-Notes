@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Perception-Physics Paradox: Probing Scientific Alignment with TC-Bench
 description: >-
-  [ICML 2026][遥感][科学对齐] 作者指出视觉基础模型 (VFM) 在卫星图像上"看起来"很会预测，但在物理极端区段会沿物理坐标轴塌缩，于是用"结构同构"形式化"科学对齐"概念，并发布全球热带气旋基准 TC-Bench 与一套静态/动态/约束三层线性探针…
+  [ICML 2026][遥感][科学对齐] 作者指出视觉基础模型 (VFM) 在卫星图像上"看起来"很会预测，但在物理极端区段会沿物理坐标轴塌缩，于是用"结构同构"形式化"科学对齐"概念，并发布全球热带气旋基准 TC-Bench 与一套静态/动态/约束三层线性探针，系统揭露 DINO、CLIP、SigLIP、MAE 等冻结骨干在 $P_c<980$ hPa 强气旋段的表征崩溃。
 tags:
   - "ICML 2026"
   - "遥感"

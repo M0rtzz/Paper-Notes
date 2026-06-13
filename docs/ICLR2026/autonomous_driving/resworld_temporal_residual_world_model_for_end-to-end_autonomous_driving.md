@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ResWorld: Temporal Residual World Model for End-to-End Autonomous Driving
 description: >-
-  [ICLR 2026][自动驾驶][时序残差] ResWorld 提出时序残差世界模型（TR-World），通过计算 BEV 场景表征的时序残差来提取动态物体信息（无需检测/跟踪），避免对静态区域的冗余建模，结合未来引导轨迹优化（FGTR）模块利用预测的未来 BEV 特征修正规划轨迹…
+  [ICLR 2026][自动驾驶][时序残差] ResWorld 提出时序残差世界模型（TR-World），通过计算 BEV 场景表征的时序残差来提取动态物体信息（无需检测/跟踪），避免对静态区域的冗余建模，结合未来引导轨迹优化（FGTR）模块利用预测的未来 BEV 特征修正规划轨迹，在 nuScenes 和 NAVSIM 上达到 SOTA 规划性能。
 tags:
   - "ICLR 2026"
   - "自动驾驶"

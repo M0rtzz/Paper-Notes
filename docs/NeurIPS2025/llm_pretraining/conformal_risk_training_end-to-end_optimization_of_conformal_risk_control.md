@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Risk Training: End-to-End Optimization of Conformal Risk Control
 description: >-
-  [NeurIPS 2025][预训练][共形预测] 本文将 Conformal Risk Control (CRC) 从期望损失扩展到一般化的 Optimized Certainty-Equivalent (OCE) 风险度量（包含 CVaR 等尾部风险），并提出"共形风险训练"方法…
+  [NeurIPS 2025][预训练][共形预测] 本文将 Conformal Risk Control (CRC) 从期望损失扩展到一般化的 Optimized Certainty-Equivalent (OCE) 风险度量（包含 CVaR 等尾部风险），并提出"共形风险训练"方法，通过在训练中端到端地微分共形风险控制过程，在保持可证明风险保证的同时显著改善平均情况性能。
 tags:
   - "NeurIPS 2025"
   - "预训练"

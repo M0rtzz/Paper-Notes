@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Free-Form Scene Editor: Enabling Multi-Round Object Manipulation like in a 3D Engine
 description: >-
-  [AAAI 2026][3D视觉][3D感知图像编辑] 提出FFSE——一个基于视频扩散模型的自回归3D感知图像编辑框架，配合混合数据集3DObjectEditor（真实+合成），能像3D引擎一样在真实图像上执行多轮物体平移/缩放/旋转操作，同时生成逼真的阴影/反射/遮挡等背景效果并保持跨轮编辑一致性…
+  [AAAI 2026][3D视觉][3D感知图像编辑] 提出FFSE——一个基于视频扩散模型的自回归3D感知图像编辑框架，配合混合数据集3DObjectEditor（真实+合成），能像3D引擎一样在真实图像上执行多轮物体平移/缩放/旋转操作，同时生成逼真的阴影/反射/遮挡等背景效果并保持跨轮编辑一致性，在单轮和多轮编辑中均大幅超越现有方法。
 tags:
   - "AAAI 2026"
   - "3D视觉"

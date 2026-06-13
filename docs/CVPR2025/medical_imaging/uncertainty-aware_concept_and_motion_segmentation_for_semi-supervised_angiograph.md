@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos
 description: >-
-  [CVPR2025][医学图像][半监督学习] 提出 SMART 框架，基于 SAM3 的教师-学生结构结合文本概念提示、置信度感知一致性正则化和双流时序一致性，实现 X 光冠脉造影视频的半监督血管分割。
+  [CVPR2025][医学图像][半监督学习] 提出 SMART 框架，基于 SAM3 的教师-学生结构结合文本概念提示、置信度感知一致性正则化和双流时序一致性，实现 X 光冠脉造影视频的半监督血管分割。 冠状动脉疾病（CAD）是全球最主要的死亡原因，X 光冠状动脉造影（XCA）是临床金标准。精确分割冠脉是自动诊断的基础…
 tags:
   - "CVPR2025"
   - "医学图像"

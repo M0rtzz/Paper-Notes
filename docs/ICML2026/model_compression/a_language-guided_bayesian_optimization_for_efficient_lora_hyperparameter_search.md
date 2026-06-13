@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Language-Guided Bayesian Optimization for Efficient LoRA Hyperparameter Search
 description: >-
-  [ICML2026][模型压缩][LoRA调参] 本文把 LoRA 超参数配置写成带领域解释的文本，让冻结 LLM、可学习 token 和投影层共同构造 BO 的连续搜索空间，再用 10% 数据代理评估降低每次试验成本，在 30 次左右搜索内显著优于默认 LoRA 配置和常规 HPO 方法。
+  [ICML2026][模型压缩][LoRA调参] 本文把 LoRA 超参数配置写成带领域解释的文本，让冻结 LLM、可学习 token 和投影层共同构造 BO 的连续搜索空间，再用 10% 数据代理评估降低每次试验成本，在 30 次左右搜索内显著优于默认 LoRA 配置和常规 HPO 方法。 领域现状：LoRA 及其变体已经…
 tags:
   - "ICML2026"
   - "模型压缩"

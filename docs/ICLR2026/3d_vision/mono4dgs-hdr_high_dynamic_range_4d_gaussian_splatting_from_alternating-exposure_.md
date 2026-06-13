@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos
 description: >-
-  [ICLR 2026][3D视觉][4D Gaussian Splatting] 首次解决从无位姿交替曝光单目视频重建可渲染 4D HDR 场景的问题，通过两阶段优化（正交视频空间 → 世界空间）、Video-to-World 高斯变换策略和时间亮度正则化…
+  [ICLR 2026][3D视觉][4D Gaussian Splatting] 首次解决从无位姿交替曝光单目视频重建可渲染 4D HDR 场景的问题，通过两阶段优化（正交视频空间 → 世界空间）、Video-to-World 高斯变换策略和时间亮度正则化，在合成数据上达到 37.64 dB HDR PSNR、161 FPS，全面超越现有方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

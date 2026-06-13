@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Stable On-Policy Distillation through Adaptive Target Reformulation
 description: >-
-  [ACL 2026][模型压缩][知识蒸馏] 本文提出 Veto，一种目标层面的重构方法，通过在 logit 空间构建教师-学生的几何桥接分布来稳定 on-policy 知识蒸馏…
+  [ACL 2026 Findings][模型压缩][知识蒸馏] 本文提出 Veto，一种目标层面的重构方法，通过在 logit 空间构建教师-学生的几何桥接分布来稳定 on-policy 知识蒸馏，单一参数 $\beta$ 同时在 forward KL 中充当自适应梯度否决器（抑制低置信度 token 的有害梯度）和在 reverse KL 中充当果断性旋钮（平衡奖励驱动和输出多样性），在 GSM8K 上比 SFT 提升 9.2%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "知识蒸馏"
   - "On-policy蒸馏"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning
 description: >-
-  [ICLR 2026][自监督学习][continual learning] 受果蝇嗅觉回路启发，提出 Fly-CL 框架，通过稀疏随机投影+top-k操作+流式岭分类三阶段渐进去相关，在预训练模型持续学习中大幅降低训练时间的同时达到SOTA水平。
+  [ICLR 2026][自监督学习][continual learning] 受果蝇嗅觉回路启发，提出 Fly-CL 框架，通过稀疏随机投影+top-k操作+流式岭分类三阶段渐进去相关，在预训练模型持续学习中大幅降低训练时间的同时达到SOTA水平。 领域现状：使用冻结预训练模型的持续学习（CL）方法将参数更新重构为相似度匹配…
 tags:
   - "ICLR 2026"
   - "自监督学习"

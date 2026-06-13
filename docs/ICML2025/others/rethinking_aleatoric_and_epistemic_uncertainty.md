@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Aleatoric and Epistemic Uncertainty
 description: >-
-  [ICML 2025][aleatoric uncertainty] 本文指出机器学习中 aleatoric/epistemic 不确定性二分法存在根本性概念混淆，提出基于决策理论的替代框架，将预测不确定性、可约/不可约分解、预测性能和数据分散度统一在一个连贯的理论体系中…
+  [ICML 2025][aleatoric uncertainty] 本文指出机器学习中 aleatoric/epistemic 不确定性二分法存在根本性概念混淆，提出基于决策理论的替代框架，将预测不确定性、可约/不可约分解、预测性能和数据分散度统一在一个连贯的理论体系中，并揭示了 BALD 作为 epistemic uncertainty 估计器的局限性。
 tags:
   - "ICML 2025"
   - "aleatoric uncertainty"

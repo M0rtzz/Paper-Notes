@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Un-EVIMO: Unsupervised Event-based Independent Motion Segmentation
 description: >-
-  [ECCV 2024][语义分割][Event Camera] 首个无需标注的事件相机独立运动物体(IMO)分割框架，利用光流与几何约束生成伪标签训练分割网络，在 EVIMO 数据集上取得与有监督方法可比的性能。
+  [ECCV 2024][语义分割][Event Camera] 首个无需标注的事件相机独立运动物体(IMO)分割框架，利用光流与几何约束生成伪标签训练分割网络，在 EVIMO 数据集上取得与有监督方法可比的性能。 事件相机具有高时间分辨率、高动态范围和低功耗等特性，非常适合处理需要快速响应的运动分割任务。然而…
 tags:
   - "ECCV 2024"
   - "语义分割"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Verify Claimed Text-to-Image Models via Boundary-Aware Prompt Optimization
 description: >-
-  [CVPR 2026][图像生成][模型验证] BPO 提出一种无需参考模型的白盒 T2I 模型验证方法，通过三阶段流程（对抗锚点识别→二分搜索边界探索→目标优化）找到模型特有的语义边界区域，生成的验证 prompt 在 5 个 T2I 模型上达到平均 96% 准确率和 0.93 F1…
+  [CVPR 2026 Findings][图像生成][模型验证] BPO 提出一种无需参考模型的白盒 T2I 模型验证方法，通过三阶段流程（对抗锚点识别→二分搜索边界探索→目标优化）找到模型特有的语义边界区域，生成的验证 prompt 在 5 个 T2I 模型上达到平均 96% 准确率和 0.93 F1，比 TVN 方法快 2 倍。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "模型验证"
   - "语义边界"

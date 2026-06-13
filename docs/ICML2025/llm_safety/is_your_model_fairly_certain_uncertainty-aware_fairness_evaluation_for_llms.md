@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs
 description: >-
-  [ICML 2025][LLM安全][fairness] 提出不确定性感知的公平性指标 UCerF，以及大规模性别-职业偏见评估数据集 SynthBias（31,756样本），通过联合分析预测正确性与模型不确定性来更精细地评估LLM的内在偏见。
+  [ICML 2025][LLM安全][公平性评估] 提出不确定性感知的公平性指标 UCerF 和大规模合成数据集 SynthBias，通过联合考虑模型预测正确性与置信度来更细粒度地评估 LLM 的性别-职业偏见。 领域现状：LLM 公平性评估主要依赖 Equalized Odds (EO) 等基于准确率的离散指标…
 tags:
   - "ICML 2025"
   - "LLM安全"
-  - "fairness"
-  - "uncertainty"
-  - "LLM bias"
-  - "gender-occupation bias"
-  - "co-reference resolution"
+  - "公平性评估"
+  - "不确定性感知"
+  - "性别偏见"
+  - "共指消解"
+  - "基准数据集"
 ---
 
 # Is Your Model Fairly Certain? Uncertainty-Aware Fairness Evaluation for LLMs
@@ -130,3 +130,19 @@ tags:
   - gender-occupation bias
   - co-reference resolution
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2025\] Improving Your Model Ranking on Chatbot Arena by Vote Rigging](improving_your_model_ranking_on_chatbot_arena_by_vote_rigging.md)
+- [\[NeurIPS 2025\] Evaluation of Vision-LLMs in Surveillance Video](../../NeurIPS2025/llm_safety/evaluation_of_vision-llms_in_surveillance_video.md)
+- [\[ACL 2025\] ComparisonQA: Evaluating Factuality Robustness of LLMs Through Knowledge Frequency Control and Uncertainty](../../ACL2025/llm_safety/comparisonqa_evaluating_factuality_robustness_of_llms_through_knowledge_frequenc.md)
+- [\[NeurIPS 2025\] Attention! Your Vision Language Model Could Be Maliciously Manipulated](../../NeurIPS2025/llm_safety/attention_your_vision_language_model_could_be_maliciously_manipulated.md)
+- [\[NeurIPS 2025\] A Systematic Evaluation of Preference Aggregation in Federated RLHF for Pluralistic Alignment of LLMs](../../NeurIPS2025/llm_safety/a_systematic_evaluation_of_preference_aggregation_in_federated_rlhf_for_pluralis.md)
+
+</div>
+
+<!-- RELATED:END -->

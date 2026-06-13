@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoftVQ-VAE: Efficient 1-Dimensional Continuous Tokenizer
 description: >-
-  [CVPR 2025][图像生成][图像分词器] SoftVQ-VAE 通过将 VQ-VAE 的硬分类后验改为软分类后验（每个潜 token 自适应聚合多个 codeword），实现了完全可微的连续图像分词器…
+  [CVPR 2025][图像生成][图像分词器] SoftVQ-VAE 通过将 VQ-VAE 的硬分类后验改为软分类后验（每个潜 token 自适应聚合多个 codeword），实现了完全可微的连续图像分词器，仅用 32-64 个 1D token 就能将 256×256 和 512×512 图像压缩到极高比率，使 SiT-XL 在 ImageNet 上达到 1.78 FID 的同时推理吞吐量提升 18-55 倍。
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation
 description: >-
-  [NeurIPS 2025][图像生成][晶体材料生成] 提出CrysLLMGen混合框架，结合LLM擅长离散原子类型预测和扩散模型擅长连续坐标/晶格参数建模的互补优势，在晶体材料生成任务中同时实现高结构有效性和组成有效性。
+  [NeurIPS 2025][图像生成][晶体材料生成] 提出CrysLLMGen混合框架，结合LLM擅长离散原子类型预测和扩散模型擅长连续坐标/晶格参数建模的互补优势，在晶体材料生成任务中同时实现高结构有效性和组成有效性。 晶体材料生成是材料科学中的关键挑战，它需要同时预测离散变量（原子类型）和连续变量（原子坐标和晶格参数…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

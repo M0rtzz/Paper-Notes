@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Foundation Model-Agnostic Slide-Level Representation Learning
 description: >-
-  [CVPR 2025][计算生物][全切片图像表征学习] 提出 Cobra，一种无监督的基础模型无关 (FM-agnostic) 全切片图像 (WSI) 级别表征学习框架：将来自多个预训练 patch 级基础模型的嵌入作为特征空间增广，通过 Mamba-2 编码器和对比学习训练 slide 编码器…
+  [CVPR 2025][计算生物][全切片图像表征学习] 提出 Cobra，一种无监督的基础模型无关 (FM-agnostic) 全切片图像 (WSI) 级别表征学习框架：将来自多个预训练 patch 级基础模型的嵌入作为特征空间增广，通过 Mamba-2 编码器和对比学习训练 slide 编码器，仅用 3048 张 WSI 预训练即在 15 个下游任务上平均 AUC 超过现有 slide 编码器至少 +4.4%。
 tags:
   - "CVPR 2025"
   - "计算生物"

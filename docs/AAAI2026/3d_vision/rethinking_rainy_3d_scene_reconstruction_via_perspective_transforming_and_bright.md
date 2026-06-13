@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Rethinking Rainy 3D Scene Reconstruction via Perspective Transforming and Brightness Tuning
 description: >-
-  [AAAI 2026][3D视觉][雨天3D重建] 提出 OmniRain3D 数据集（首次同时建模视角异质性和亮度动态性的雨天 3D 场景数据集）以及 REVR-GSNet 端到端框架（联合递归亮度增强 + 高斯基元优化 + GS引导去雨），实现从雨天退化图像到高保真干净 3D 场景的重建。
+  [AAAI 2026 Oral][3D视觉][雨天3D重建] 提出 OmniRain3D 数据集（首次同时建模视角异质性和亮度动态性的雨天 3D 场景数据集）以及 REVR-GSNet 端到端框架（联合递归亮度增强 + 高斯基元优化 + GS引导去雨），实现从雨天退化图像到高保真干净 3D 场景的重建。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "3D视觉"
   - "雨天3D重建"
   - "3D高斯溅射"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PopAlign: Diversifying Contrasting Patterns for a More Comprehensive Alignment
 description: >-
-  [ACL2025][PopAlign] 提出PopAlign框架，从Prompt、Model、Pipeline三个层面构建六种多样化对比策略（包括创新的Elicitive Contrast），无需额外人工标注即可合成高质量偏好数据，实现更全面的LLM对齐。
+  [ACL2025][PopAlign] 提出PopAlign框架，从Prompt、Model、Pipeline三个层面构建六种多样化对比策略（包括创新的Elicitive Contrast），无需额外人工标注即可合成高质量偏好数据，实现更全面的LLM对齐。 问题背景 LLM对齐是训练过程中调整模型响应分布以匹配人类偏好的关键…
 tags:
   - "ACL2025"
   - "PopAlign"

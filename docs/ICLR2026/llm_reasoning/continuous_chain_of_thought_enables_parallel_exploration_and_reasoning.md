@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Chain of Thought Enables Parallel Exploration and Reasoning
 description: >-
-  [ICLR 2026][LLM推理][连续思维链] CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 token 进行链式推理，使模型能在单次推理中并行追踪多条推理路径，理论证明等价于 K 次 self-consistency/best-of-N 采样…
+  [ICLR 2026][LLM推理][连续思维链] CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 token 进行链式推理，使模型能在单次推理中并行追踪多条推理路径，理论证明等价于 K 次 self-consistency/best-of-N 采样，并通过 GRPO 强化学习进一步提升性能。
 tags:
   - "ICLR 2026"
   - "LLM推理"

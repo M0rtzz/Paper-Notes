@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProtoCycle: Reflective Tool-Augmented Planning for Text-Guided Protein Design
 description: >-
-  [ACL 2026 (Findings)][计算生物][蛋白质设计] ProtoCycle提出一种将LLM作为规划器、结合轻量级工具环境的**反思式智能体框架**，用于文本引导蛋白质序列设计：它用多轮“规划-工具调用-评估-反思”循环替代一次性文本到序列生成…
+  [ACL 2026 (Findings)][计算生物][蛋白质设计] ProtoCycle提出一种将LLM作为规划器、结合轻量级工具环境的**反思式智能体框架**，用于文本引导蛋白质序列设计：它用多轮“规划-工具调用-评估-反思”循环替代一次性文本到序列生成，在 Mol-Instructions 上将 ProTrek 提升到 14.681、Retrieval 提升到 0.936，并只用约 2,000 条 SFT 轨迹和在线 RL 达到接近/超过专用蛋白质设计模型的语言对齐效果。
 tags:
   - "ACL 2026 (Findings)"
   - "计算生物"

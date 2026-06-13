@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning with Your Own Voice: Self-Corrected Preference Learning for Hallucination Mitigation in LVLMs
 description: >-
-  [ACL 2026][幻觉检测][AVES-DPO] 提出 AVES-DPO 框架：用一致性多模型验证（YOLO/GroundingDINO/Qwen3-VL）在 object/attribute/relation 三层细粒度检测 LVLM 自己生成回复中的幻觉，再让同一个 LVLM 自我校正并丰富细节…
+  [ACL 2026][幻觉检测][AVES-DPO] 提出 AVES-DPO 框架：用一致性多模型验证（YOLO/GroundingDINO/Qwen3-VL）在 object/attribute/relation 三层细粒度检测 LVLM 自己生成回复中的幻觉，再让同一个 LVLM 自我校正并丰富细节，得到的偏好对天然处于目标模型的"自身分布"内；仅 5.2K 样本即可在多个幻觉 benchmark 上超过依赖 GPT-4V 教师的 SOTA（数据效率约 25×）。
 tags:
   - "ACL 2026"
   - "幻觉检测"

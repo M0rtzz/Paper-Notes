@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation
 description: >-
-  [CVPR 2025][计算生物][视频场景图生成] 提出 DiffVsgg 将视频场景图生成（VSGG）建模为沿时间轴的迭代去噪问题——用共享特征嵌入统一目标分类、框回归和关系预测三个任务，通过潜在扩散模型做空间推理+用前帧预测作条件做时序推理…
+  [CVPR 2025][计算生物][视频场景图生成] 提出 DiffVsgg 将视频场景图生成（VSGG）建模为沿时间轴的迭代去噪问题——用共享特征嵌入统一目标分类、框回归和关系预测三个任务，通过潜在扩散模型做空间推理+用前帧预测作条件做时序推理，首次实现在线VSGG且在 Action Genome 三个评估协议上全面 SOTA，R@10 超越 DSG-DETR 3.3 个点。
 tags:
   - "CVPR 2025"
   - "计算生物"

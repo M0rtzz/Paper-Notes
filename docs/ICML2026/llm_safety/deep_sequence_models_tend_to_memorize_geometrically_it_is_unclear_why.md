@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Sequence Models Tend to Memorize Geometrically; It Is Unclear Why
 description: >-
-  [ICML 2026][LLM安全][几何记忆] 本文指出 Transformer / Mamba 在死记硬背图的边时并不会真的退化成查找表（联想记忆），而是会自发把节点嵌入排成一种编码了多跳全局结构的"几何记忆"，并通过 path-star 实验证明这种几何让隐式推理变得反常地容易…
+  [ICML 2026][LLM安全][几何记忆] 本文指出 Transformer / Mamba 在死记硬背图的边时并不会真的退化成查找表（联想记忆），而是会自发把节点嵌入排成一种编码了多跳全局结构的"几何记忆"，并通过 path-star 实验证明这种几何让隐式推理变得反常地容易，但其出现既不能归因于监督、容量也不能归因于优化压力，留下一个新的"记忆之谜"。
 tags:
   - "ICML 2026"
   - "LLM安全"

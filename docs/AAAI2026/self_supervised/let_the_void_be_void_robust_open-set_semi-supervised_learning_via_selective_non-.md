@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let the Void Be Void: Robust Open-Set Semi-Supervised Learning via Selective Non-Alignment
 description: >-
-  [AAAI 2026][自监督学习][开放集半监督学习] 提出 SkipAlign 框架，在对比学习的传统 pull/push 操作之外引入第三种 "skip" 操作，对低置信度样本选择性跳过对齐（只做温和排斥），使 ID 类形成紧凑"星系"、OOD 样本自然散布于"星际虚空"…
+  [AAAI 2026][自监督学习][开放集半监督学习] 提出 SkipAlign 框架，在对比学习的传统 pull/push 操作之外引入第三种 "skip" 操作，对低置信度样本选择性跳过对齐（只做温和排斥），使 ID 类形成紧凑"星系"、OOD 样本自然散布于"星际虚空"，在未见过的 OOD 检测中平均 AUC 提升 +3.1，最高 +7.1。
 tags:
   - "AAAI 2026"
   - "自监督学习"

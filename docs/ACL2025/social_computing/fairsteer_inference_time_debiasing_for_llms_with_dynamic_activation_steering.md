@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FairSteer: Inference Time Debiasing for LLMs with Dynamic Activation Steering
 description: >-
-  [ACL2025][社会计算][debiasing] 提出 FairSteer，一种推理时去偏框架，通过轻量线性分类器检测激活中的偏见信号，再用对比 prompt 对计算的去偏转向向量（DSV）动态调整隐藏层激活，无需重训即可在多任务上有效缓解 LLM 的社会偏见。
+  [ACL2025][社会计算][debiasing] 提出 FairSteer，一种推理时去偏框架，通过轻量线性分类器检测激活中的偏见信号，再用对比 prompt 对计算的去偏转向向量（DSV）动态调整隐藏层激活，无需重训即可在多任务上有效缓解 LLM 的社会偏见。 领域现状：LLM 会从训练语料中继承种族、性别、年龄等社会…
 tags:
   - "ACL2025"
   - "社会计算"

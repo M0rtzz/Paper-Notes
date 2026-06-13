@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DesignX: Human-Competitive Algorithm Designer for Black-Box Optimization
 description: >-
-  [NeurIPS 2025][计算生物][黑盒优化] 提出 DesignX，首个统一学习算法工作流生成和超参数动态控制两个子任务的自动算法设计框架，通过双 Transformer 智能体在 10k 合成问题上大规模预训练…
+  [NeurIPS 2025][计算生物][黑盒优化] 提出 DesignX，首个统一学习算法工作流生成和超参数动态控制两个子任务的自动算法设计框架，通过双 Transformer 智能体在 10k 合成问题上大规模预训练，在合成测试集和蛋白质对接/AutoML/UAV 路径规划等真实场景中超越人类手工设计的优化器。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

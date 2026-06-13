@@ -2,10 +2,10 @@
 title: >-
   [论文解读] WebOperator: Action-Aware Tree Search for Autonomous Agents in Web Environment
 description: >-
-  [ICLR2026][LLM/NLP][Web Agent] 提出 WebOperator，一个动作感知的树搜索框架，通过投机性回溯、破坏性动作检测、动作验证与合并等机制，使 Web 自主代理能在部分可观测、不可逆的真实网页环境中安全高效地探索…
+  [ICLR2026][LLM Agent][Web Agent] 提出 WebOperator，一个动作感知的树搜索框架，通过投机性回溯、破坏性动作检测、动作验证与合并等机制，使 Web 自主代理能在部分可观测、不可逆的真实网页环境中安全高效地探索，在 WebArena 上以 gpt-4o 达到 54.6% SOTA 成功率。
 tags:
   - "ICLR2026"
-  - "LLM/NLP"
+  - "LLM Agent"
   - "Web Agent"
   - "树搜索"
   - "回溯机制"

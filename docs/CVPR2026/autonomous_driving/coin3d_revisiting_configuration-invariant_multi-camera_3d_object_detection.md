@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoIn3D: Revisiting Configuration-Invariant Multi-Camera 3D Object Detection
 description: >-
-  [CVPR2026][自动驾驶][多相机3D目标检测] 提出 CoIn3D 框架，通过空间感知特征调制（SFM）和相机感知数据增强（CDA）两个模块，显式建模相机内参/外参/阵列布局的空间先验差异，实现多相机3D检测模型从源配置到未见目标配置的强泛化迁移…
+  [CVPR2026][自动驾驶][多相机3D目标检测] 提出 CoIn3D 框架，通过空间感知特征调制（SFM）和相机感知数据增强（CDA）两个模块，显式建模相机内参/外参/阵列布局的空间先验差异，实现多相机3D检测模型从源配置到未见目标配置的强泛化迁移，适用于 BEVDepth / BEVFormer / PETR 三大主流范式。
 tags:
   - "CVPR2026"
   - "自动驾驶"

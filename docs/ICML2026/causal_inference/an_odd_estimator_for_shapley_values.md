@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Odd Estimator for Shapley Values
 description: >-
-  [ICML2026][因果推理][Shapley值] 这篇论文证明 Shapley value 只依赖集合函数的 odd component，并据此提出 OddSHAP：用配对采样隔离 odd 信号、用 GBT 筛选高阶 odd Fourier 交互、再做稀疏 odd 回归…
+  [ICML2026][因果推理][Shapley值] 这篇论文证明 Shapley value 只依赖集合函数的 odd component，并据此提出 OddSHAP：用配对采样隔离 odd 信号、用 GBT 筛选高阶 odd Fourier 交互、再做稀疏 odd 回归，在中高维解释任务上显著优于灵活预算 Shapley 估计器。
 tags:
   - "ICML2026"
   - "因果推理"

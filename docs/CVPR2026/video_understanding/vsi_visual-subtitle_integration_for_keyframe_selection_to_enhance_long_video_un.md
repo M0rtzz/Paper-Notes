@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VSI: Visual-Subtitle Integration for Keyframe Selection to Enhance Long Video Understanding
 description: >-
-  [CVPR 2026][视频理解][长视频理解] VSI 提出双分支协作检索框架（视频搜索 + 字幕匹配），通过融合视觉和文本信息实现精确的关键帧定位，在文本相关任务中将搜索准确率从29.48提升至45.00，是首个跨模态关键帧检索方法。
+  [CVPR 2026 Findings][视频理解][长视频理解] VSI 提出双分支协作检索框架（视频搜索 + 字幕匹配），通过融合视觉和文本信息实现精确的关键帧定位，在文本相关任务中将搜索准确率从29.48提升至45.00，是首个跨模态关键帧检索方法。 1. 领域现状：多模态大语言模型在视觉-语言任务中表现优异…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "视频理解"
   - "长视频理解"
   - "关键帧检索"

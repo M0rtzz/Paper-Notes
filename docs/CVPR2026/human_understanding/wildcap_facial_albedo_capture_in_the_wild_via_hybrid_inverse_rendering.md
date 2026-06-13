@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildCap: Facial Albedo Capture in the Wild via Hybrid Inverse Rendering
 description: >-
-  [CVPR2026][人体理解][facial albedo capture] 提出 WildCap，通过混合逆渲染框架（数据驱动 SwitchLight 去光照 + 基于模型的 texel grid lighting 优化 + 扩散先验采样），从手机野外视频中重建高质量 4K 面部漫反射 albedo 贴图…
+  [CVPR2026][人体理解][facial albedo capture] 提出 WildCap，通过混合逆渲染框架（数据驱动 SwitchLight 去光照 + 基于模型的 texel grid lighting 优化 + 扩散先验采样），从手机野外视频中重建高质量 4K 面部漫反射 albedo 贴图，大幅缩小野外捕捉与受控光照方法之间的质量差距。
 tags:
   - "CVPR2026"
   - "人体理解"

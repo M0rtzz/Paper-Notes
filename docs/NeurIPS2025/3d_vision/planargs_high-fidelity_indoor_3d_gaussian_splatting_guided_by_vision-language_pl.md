@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors
 description: >-
-  [NeurIPS 2025][3D视觉][3D高斯溅射] 利用视觉语言基础模型（GroundedSAM）检测平面区域，结合DUSt3R多视图深度先验，通过共面约束和几何先验监督优化3DGS，实现室内场景的高保真表面重建。
+  [NeurIPS 2025][3D视觉][3D高斯溅射] 利用视觉语言基础模型（GroundedSAM）检测平面区域，结合DUSt3R多视图深度先验，通过共面约束和几何先验监督优化3DGS，实现室内场景的高保真表面重建。 室内场景的3D重建在AR/VR和机器人领域有广泛需求，但室内环境的核心挑战是大面积低纹理区域：（如墙壁、…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

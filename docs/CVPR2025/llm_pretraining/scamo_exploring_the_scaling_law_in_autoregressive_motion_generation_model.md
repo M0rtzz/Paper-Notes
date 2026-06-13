@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScaMo: Exploring the Scaling Law in Autoregressive Motion Generation Model
 description: >-
-  [CVPR 2025][预训练][scaling law] 首次在人类动作生成领域系统验证缩放律，提出包含Motion FSQ-VAE（解决codebook collapse）、260小时MotionUnion数据集和文本前缀自回归Transformer的可扩展系统ScaMo…
+  [CVPR 2025][预训练][scaling law] 首次在人类动作生成领域系统验证缩放律，提出包含Motion FSQ-VAE（解决codebook collapse）、260小时MotionUnion数据集和文本前缀自回归Transformer的可扩展系统ScaMo，发现归一化测试损失与FLOPs的对数律以及词汇参数/模型参数/数据量与FLOPs的幂律关系，并在$1\times 10^{18}$FLOPs预算下成功预测最优配置。
 tags:
   - "CVPR 2025"
   - "预训练"

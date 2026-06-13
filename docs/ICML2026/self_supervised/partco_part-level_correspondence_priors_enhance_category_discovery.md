@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PartCo: Part-Level Correspondence Priors Enhance Category Discovery
 description: >-
-  [ICML 2026][自监督学习][类别发现] PartCo 通过显式利用 Vision Transformer 的补丁令牌中蕴含的**部分级特征对应关系**，引入一个**即插即用**的框架来增强广义类别发现——在 CUB / Stanford-Cars / ImageNet-100 等多个基准上将 Sim…
+  [ICML 2026][自监督学习][类别发现] PartCo 通过显式利用 Vision Transformer 的补丁令牌中蕴含的**部分级特征对应关系**，引入一个**即插即用**的框架来增强广义类别发现——在 CUB / Stanford-Cars / ImageNet-100 等多个基准上将 SimGCD / SPTNet / FlipClass 等基线提升 2-10%。
 tags:
   - "ICML 2026"
   - "自监督学习"

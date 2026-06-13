@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CosmoBench: A Multiscale, Multiview, Multitask Cosmology Benchmark for Geometric Deep Learning
 description: >-
-  [NeurIPS 2025][3D视觉][geometric deep learning] 提出 CosmoBench——目前最大的宇宙学几何深度学习基准，包含 3.4 万点云和 2.5 万有向树，覆盖多尺度、多视角、多任务，并揭示简单线性模型有时能超越大型 GNN。
+  [NeurIPS 2025][3D视觉][geometric deep learning] 提出 CosmoBench——目前最大的宇宙学几何深度学习基准，包含 3.4 万点云和 2.5 万有向树，覆盖多尺度、多视角、多任务，并揭示简单线性模型有时能超越大型 GNN。 宇宙学模拟数据丰富但缺乏统一基准：宇宙学模拟产生的点云和…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

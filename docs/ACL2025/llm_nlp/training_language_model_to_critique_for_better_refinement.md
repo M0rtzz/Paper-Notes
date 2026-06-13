@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Training Language Model to Critique for Better Refinement
 description: >-
-  [ACL 2025][LLM/NLP][Critique-Refinement Loop] 提出 Refinement-oriented Critique Optimization（RCO），以"批判效用"（Critique Utility…
+  [ACL 2025][LLM 其他][Critique-Refinement Loop] 提出 Refinement-oriented Critique Optimization（RCO），以"批判效用"（Critique Utility, CU）——即批判导致的精炼改善比例——作为奖励信号训练 critic 模型，通过 DPO 变体的 MSE 目标函数优化，无需直接评估批判质量；在对话生成、摘要、问答、数学推理、代码生成 5 个任务上，RCO 训练的 7B/13B critic 模型在 CU 和 RQS 指标上显著超过 70B 基线模型和 DPCO 方法。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Critique-Refinement Loop"
   - "Critique Utility"
   - "DPO变体"

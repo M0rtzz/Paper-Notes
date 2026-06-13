@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Rationale-Answer Alignment of LVLMs via Self-Rationale Calibration
 description: >-
-  [ICML2025][多模态VLM][大型视觉语言模型] 提出 Self-Rationale Calibration (SRC) 框架，通过轻量级 rationale 微调引导 LVLM 输出推理过程，再利用句子级 beam search 生成多样候选响应…
+  [ICML2025][多模态VLM][大型视觉语言模型] 提出 Self-Rationale Calibration (SRC) 框架，通过轻量级 rationale 微调引导 LVLM 输出推理过程，再利用句子级 beam search 生成多样候选响应，结合专门设计的 R-Scorer 配对评分策略筛选优劣 rationale-answer 对，以 DPO 偏好对齐方式迭代校准模型的推理-答案一致性，在感知、推理和泛化多个基准上取得显著提升。
 tags:
   - "ICML2025"
   - "多模态VLM"

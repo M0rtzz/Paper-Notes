@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation
 description: >-
-  [CVPR2026][视频理解][RGBT跟踪] 首次将文本描述引入 RGBT 跟踪，提出基于检索增强生成（RAG）的框架 RAGTrack，通过多模态 Transformer 编码器、自适应 Token 融合和上下文感知推理模块，在四个 RGBT 基准上取得 SOTA。
+  [CVPR2026][视频理解][RGBT跟踪] 首次将文本描述引入 RGBT 跟踪，提出基于检索增强生成（RAG）的框架 RAGTrack，通过多模态 Transformer 编码器、自适应 Token 融合和上下文感知推理模块，在四个 RGBT 基准上取得 SOTA。 1. RGBT 跟踪的局限：现有 RGBT 跟踪器仅…
 tags:
   - "CVPR2026"
   - "视频理解"

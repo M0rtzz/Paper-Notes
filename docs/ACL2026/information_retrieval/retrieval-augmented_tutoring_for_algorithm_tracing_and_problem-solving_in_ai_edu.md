@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval-Augmented Tutoring for Algorithm Tracing and Problem-Solving in AI Education
 description: >-
-  [ACL2026][信息检索/RAG][RAG tutoring] 本文提出 KITE，一个面向算法追踪和问题求解的课程材料 RAG 辅导系统，通过意图感知的苏格拉底式反馈和多阶段检索，在自动指标、模拟学生和专家评审中显示出较好的 grounding 与教学支架效果。
+  [ACL2026][信息检索/RAG][RAG tutoring] 本文提出 KITE，一个面向算法追踪和问题求解的课程材料 RAG 辅导系统，通过意图感知的苏格拉底式反馈和多阶段检索，在自动指标、模拟学生和专家评审中显示出较好的 grounding 与教学支架效果。 领域现状：学生已经广泛使用 ChatGPT 等 LLM…
 tags:
   - "ACL2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nerfify: A Multi-Agent Framework for Turning NeRF Papers into Code
 description: >-
-  [CVPR 2026][LLM Agent][NeRF] 提出 Nerfify，一个多智能体框架，通过上下文无关文法约束、图思维代码合成和组合式引用恢复，将 NeRF 论文自动转换为可训练的 Nerfstudio 插件代码，在 30 篇论文基准上实现 100% 可执行率…
+  [CVPR 2026][LLM Agent][NeRF] 提出 Nerfify，一个多智能体框架，通过上下文无关文法约束、图思维代码合成和组合式引用恢复，将 NeRF 论文自动转换为可训练的 Nerfstudio 插件代码，在 30 篇论文基准上实现 100% 可执行率，视觉质量与专家实现差距仅 ±0.5 dB PSNR。
 tags:
   - "CVPR 2026"
   - "LLM Agent"

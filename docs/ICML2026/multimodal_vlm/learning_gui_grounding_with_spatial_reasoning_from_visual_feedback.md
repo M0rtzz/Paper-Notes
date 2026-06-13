@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning GUI Grounding with Spatial Reasoning from Visual Feedback
 description: >-
-  [ICML 2026][多模态VLM][GUI grounding] 把 GUI grounding 从「一次性预测坐标」改写成「在屏幕上挪鼠标找目标」的交互式搜索，用一个带轨迹惩罚的稠密奖励 + GRPO 训练 VLM，让模型从渲染出来的光标得到视觉反馈来对齐数字坐标与屏幕位置…
+  [ICML 2026][多模态VLM][GUI grounding] 把 GUI grounding 从「一次性预测坐标」改写成「在屏幕上挪鼠标找目标」的交互式搜索，用一个带轨迹惩罚的稠密奖励 + GRPO 训练 VLM，让模型从渲染出来的光标得到视觉反馈来对齐数字坐标与屏幕位置，仅用 8K 样本就在 ScreenSpot-Pro 上把 GTA1 的 50.1% 提到 58.1%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

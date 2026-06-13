@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hash3D: Training-free Acceleration for 3D Generation
 description: >-
-  [CVPR 2025][3D视觉][3D生成加速] Hash3D 发现 SDS 优化过程中扩散模型对相邻相机位姿和时间步的特征高度冗余，通过自适应网格哈希表缓存和复用中间特征，在无需训练的情况下将多种text-to-3D和image-to-3D方法加速1.3~4倍，同时还提升了多视角一致性。
+  [CVPR 2025][3D视觉][3D生成加速] Hash3D 发现 SDS 优化过程中扩散模型对相邻相机位姿和时间步的特征高度冗余，通过自适应网格哈希表缓存和复用中间特征，在无需训练的情况下将多种text-to-3D和image-to-3D方法加速1.3~4倍，同时还提升了多视角一致性。 1. 领域现状：基于2D扩散模型…
 tags:
   - "CVPR 2025"
   - "3D视觉"

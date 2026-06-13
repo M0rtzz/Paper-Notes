@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices
 description: >-
-  [CVPR 2025][LLM/NLP][位置编码] 本文提出ComRoPE，通过将RoPE推广为由可训练交换角矩阵参数化的旋转位置编码，理论证明了角矩阵的成对交换性是RoPE满足相对位置依赖性的充要条件，在ImageNet-1K上比SOTA方法LieRE提升1.6%（训练分辨率）和2.9%（更高分辨率）。
+  [CVPR 2025][LLM 其他][位置编码] 本文提出ComRoPE，通过将RoPE推广为由可训练交换角矩阵参数化的旋转位置编码，理论证明了角矩阵的成对交换性是RoPE满足相对位置依赖性的充要条件，在ImageNet-1K上比SOTA方法LieRE提升1.6%（训练分辨率）和2.9%（更高分辨率）。
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "位置编码"
   - "旋转位置嵌入"
   - "Transformer"

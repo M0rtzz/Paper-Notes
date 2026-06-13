@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaDrive: Self-Adaptive Slow-Fast System for Language-Grounded Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][大语言模型] AdaDrive提出了首个自适应慢-快架构的LLM增强自动驾驶框架，通过两个自适应连接器动态决定"何时激活LLM"（Connector-W）和"LLM贡献多少"（Connector-H），在语言引导驾驶基准上实现了SOTA性能（驾驶分数80.9%）…
+  [ICCV 2025][自动驾驶][大语言模型] AdaDrive提出了首个自适应慢-快架构的LLM增强自动驾驶框架，通过两个自适应连接器动态决定"何时激活LLM"（Connector-W）和"LLM贡献多少"（Connector-H），在语言引导驾驶基准上实现了SOTA性能（驾驶分数80.9%），同时将推理延迟降低至189ms、显存降至6.79GB。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

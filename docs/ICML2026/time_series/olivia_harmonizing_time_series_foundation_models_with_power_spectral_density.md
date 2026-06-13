@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OLIVIA: Harmonizing Time Series Foundation Models with Power Spectral Density
 description: >-
-  [ICML 2026][时间序列][功率谱密度] OLIVIA 通过引入功率谱密度（PSD）驱动的协调机制——Harmonizer（基于 Householder 反射的正交二阶协调）和 HarmonicAttention（共鸣器低维交互）——显著改进了时间序列基础模型在异质数据上的预训练…
+  [ICML 2026][时间序列][功率谱密度] OLIVIA 通过引入功率谱密度（PSD）驱动的协调机制——Harmonizer（基于 Householder 反射的正交二阶协调）和 HarmonicAttention（共鸣器低维交互）——显著改进了时间序列基础模型在异质数据上的预训练，在 TSLib 零样本 + GIFT-Eval + GluonTS 多基准上实现 SOTA。
 tags:
   - "ICML 2026"
   - "时间序列"

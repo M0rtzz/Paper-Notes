@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Itinerary Planning: A Real-World Benchmark for Multi-Turn and Tool-Using Travel Tasks
 description: >-
-  [ACL 2026][LLM评测][旅行规划基准] 提出 TravelBench，首个融合真实用户查询、隐式用户偏好、多轮交互、不可解任务识别和10种真实工具的旅行规划基准，通过沙箱环境实现可复现评估，揭示前沿模型在不同能力维度上表现不均衡。
+  [ACL 2026][LLM评测][旅行规划基准] 提出 TravelBench，首个融合真实用户查询、隐式用户偏好、多轮交互、不可解任务识别和10种真实工具的旅行规划基准，通过沙箱环境实现可复现评估，揭示前沿模型在不同能力维度上表现不均衡。 领域现状：旅行规划是评估LLM Agent多步推理、工具使用和用户交互能力的理想测…
 tags:
   - "ACL 2026"
   - "LLM评测"

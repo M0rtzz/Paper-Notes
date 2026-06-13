@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where Norms and References Collide: Evaluating LLMs on Normative Reasoning
 description: >-
-  [AAAI 2026][LLM评测][社会规范推理] 提出 SNIC 诊断测试台（9,000 实例/51 场景），评估 LLM 能否利用隐式社会规范来解决歧义参考消解（如"递给我杯子"时存在多个杯子）。发现 LLM 在仅看场景描述时平均准确率仅 44%，加上 Prolog 形式逻辑无显著改善（44.2%）…
+  [AAAI 2026][LLM评测][社会规范推理] 提出 SNIC 诊断测试台（9,000 实例/51 场景），评估 LLM 能否利用隐式社会规范来解决歧义参考消解（如"递给我杯子"时存在多个杯子）。发现 LLM 在仅看场景描述时平均准确率仅 44%，加上 Prolog 形式逻辑无显著改善（44.2%），但显式提供规范列表后猛升到 70.5%（GPT-4.1 达 99.6%），证明 LLM 缺乏隐式物理规范知识但能有效利用显式规范。
 tags:
   - "AAAI 2026"
   - "LLM评测"

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 时间序列论文汇总 · 6篇论文解读
+  CVPR2026 时间序列论文汇总 · 7篇论文解读
 description: >-
-  6篇CVPR2026的时间序列方向论文解读，涵盖时序预测、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇CVPR2026的时间序列方向论文解读，涵盖时序预测、对齐/RLHF、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "时间序列"
@@ -10,6 +10,7 @@ tags:
   - "论文笔记"
   - "时序预测"
   - "对齐/RLHF"
+  - "多模态"
 item_list:
   - u: "competition-aware_cpc_forecasting_with_near-market_coverage/"
     t: "Competition-Aware CPC Forecasting with Near-Market Coverage"
@@ -23,17 +24,19 @@ item_list:
     t: "Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks"
   - u: "stcast_adaptive_boundary_alignment_for_global_and_regional_weather_forecasting/"
     t: "STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting"
-item_total: 6
+  - u: "trits_time_series_forecasting_from_a_multimodal_perspective/"
+    t: "TriTS: Time Series Forecasting from a Multimodal Perspective"
+item_total: 7
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**📷 CVPR2026** · **6** 篇论文解读
+**📷 CVPR2026** · **7** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (32)](../../ICML2026/time_series/index.md) · [💬 ACL2026 (7)](../../ACL2026/time_series/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/time_series/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/time_series/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/time_series/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/time_series/index.md)
 
-🔥 **高频主题：** 时序预测 ×3
+🔥 **高频主题：** 时序预测 ×4
 
 **[Competition-Aware CPC Forecasting with Near-Market Coverage](competition-aware_cpc_forecasting_with_near-market_coverage.md)**
 
@@ -58,3 +61,7 @@ item_total: 6
 **[STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting](stcast_adaptive_boundary_alignment_for_global_and_regional_weather_forecasting.md)**
 
 :   提出STCast框架，通过Spatial-Aligned Attention（SAA）用可学习的全球-区域分布替代静态边界来自适应融合全球大气信息到区域预报，并用Temporal Mixture-of-Experts（TMoE）按月动态路由专家增强时序建模，在全球预报、高分辨率区域预报、台风路径预测和集合预测四个任务上全面超越现有方法。
+
+**[TriTS: Time Series Forecasting from a Multimodal Perspective](trits_time_series_forecasting_from_a_multimodal_perspective.md)**
+
+:   TriTS 把一维时间序列同时投影到时域、频域、2D-视觉三个正交空间，用流式线性分支锚定数值、多分辨率小波分支解耦趋势与噪声、Visual Mamba 分支以线性复杂度捕捉跨周期全局纹理，再用尺度感知门控动态融合三者，在 7 个长期预测基准上达到 SOTA 且参数量和推理延迟远低于现有视觉类预测器。

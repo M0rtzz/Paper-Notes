@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Riemannian Generative Decoder
 description: >-
-  [ICML 2026][可解释性][黎曼流形] 本文针对 Riemannian VAE 必须为每种流形手工设计复杂概率密度的痛点，提出 Riemannian Generative Decoder (RGD)——彻底丢掉 encoder…
+  [ICML 2026][可解释性][黎曼流形] 本文针对 Riemannian VAE 必须为每种流形手工设计复杂概率密度的痛点，提出 Riemannian Generative Decoder (RGD)——彻底丢掉 encoder，把每个样本的 latent 当作自由参数用黎曼优化器 (RiemannianAdam) 直接训，同时引入"按局部度量逆缩放的输入噪声"作为几何正则，在合成分支扩散树、人类线粒体 DNA、细胞周期 scRNA-seq 三个真实生物数据上恢复出更忠实的几何，且在高维下数值稳定胜过 VAE 基线。
 tags:
   - "ICML 2026"
   - "可解释性"

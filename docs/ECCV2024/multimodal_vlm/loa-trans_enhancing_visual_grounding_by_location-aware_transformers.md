@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoA-Trans: Enhancing Visual Grounding by Location-Aware Transformers
 description: >-
-  [ECCV 2024][多模态VLM][视觉定位] LoA-Trans提出一种位置感知的查询选择机制，生成多个可能的目标位置作为位置感知查询（而非仅依赖估计的中心点），并引入TaskSyn网络在解码器中实现指代表达理解（REC）和指代表达分割（RES）的任务协同，显著提升视觉定位的准确性。
+  [ECCV 2024][多模态VLM][视觉定位] LoA-Trans提出一种位置感知的查询选择机制，生成多个可能的目标位置作为位置感知查询（而非仅依赖估计的中心点），并引入TaskSyn网络在解码器中实现指代表达理解（REC）和指代表达分割（RES）的任务协同，显著提升视觉定位的准确性。 领域现状：视觉定位（Visual…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

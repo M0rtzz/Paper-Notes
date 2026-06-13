@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons
 description: >-
-  [CVPR 2025][多模态VLM][通用具身智能体] GEA 将预训练的多模态 LLM（LLaVA-OneVision）通过学习式多具身动作分词器适配到操控/导航/游戏/UI控制/规划五大领域，先用 220 万条跨域专家轨迹 SFT，再用在线 PPO 强化学习微调，单模型在多个基准上超越或接近领域专用模型…
+  [CVPR 2025][多模态VLM][通用具身智能体] GEA 将预训练的多模态 LLM（LLaVA-OneVision）通过学习式多具身动作分词器适配到操控/导航/游戏/UI控制/规划五大领域，先用 220 万条跨域专家轨迹 SFT，再用在线 PPO 强化学习微调，单模型在多个基准上超越或接近领域专用模型。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

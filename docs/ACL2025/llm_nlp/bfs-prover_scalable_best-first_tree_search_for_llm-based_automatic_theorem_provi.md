@@ -2,10 +2,10 @@
 title: >-
   [论文解读] BFS-Prover: Scalable Best-First Tree Search for LLM-Based Automatic Theorem Proving
 description: >-
-  [ACL 2025][LLM/NLP][自动定理证明] 本文挑战了"自动定理证明需要复杂搜索方法（如MCTS或价值函数）"的传统认知，提出BFS-Prover系统，通过三项关键创新（数据过滤的专家迭代、基于编译器反馈的DPO、长度归一化）将简单的最佳优先搜索（BFS）扩展为高性能的定理证明器…
+  [ACL 2025][LLM 其他][自动定理证明] 本文挑战了"自动定理证明需要复杂搜索方法（如MCTS或价值函数）"的传统认知，提出BFS-Prover系统，通过三项关键创新（数据过滤的专家迭代、基于编译器反馈的DPO、长度归一化）将简单的最佳优先搜索（BFS）扩展为高性能的定理证明器，在MiniF2F测试集上达到72.95%的SOTA成绩。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动定理证明"
   - "最佳优先搜索"
   - "专家迭代"

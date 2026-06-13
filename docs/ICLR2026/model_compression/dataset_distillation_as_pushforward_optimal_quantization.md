@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dataset Distillation as Pushforward Optimal Quantization
 description: >-
-  [ICLR2026][模型压缩][数据集蒸馏] 将解耦式数据集蒸馏重新形式化为最优量化问题，证明通过扩散先验的潜空间聚类+权重可收敛逼近真实数据分布，提出 DDOQ 算法在 ImageNet-1K 上以极低额外计算量超越 D4M 等基线。
+  [ICLR2026][模型压缩][数据集蒸馏] 将解耦式数据集蒸馏重新形式化为最优量化问题，证明通过扩散先验的潜空间聚类+权重可收敛逼近真实数据分布，提出 DDOQ 算法在 ImageNet-1K 上以极低额外计算量超越 D4M 等基线。 领域现状：数据集蒸馏（Dataset Distillation…
 tags:
   - "ICLR2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Source Prompt Disentangled Inversion for Boosting Image Editability with Diffusion Models
 description: >-
-  [ECCV 2024][图像生成] 提出SPDInv——一种源提示解耦反演方法，通过将反演过程建模为不动点搜索问题并利用预训练扩散模型求解，使反演噪声码与源提示解耦，显著提升基于文本驱动的图像编辑质量。
+  [ECCV 2024][图像生成] 提出SPDInv——一种源提示解耦反演方法，通过将反演过程建模为不动点搜索问题并利用预训练扩散模型求解，使反演噪声码与源提示解耦，显著提升基于文本驱动的图像编辑质量。 - 文本驱动图像编辑的核心管线：给定源图像 → 通过反演得到潜在噪声码 → 使用目标提示编辑 - DDIM反演是最常用的方…
 tags:
   - "ECCV 2024"
   - "图像生成"

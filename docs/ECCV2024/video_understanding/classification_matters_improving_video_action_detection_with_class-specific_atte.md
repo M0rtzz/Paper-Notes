@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Classification Matters: Improving Video Action Detection with Class-Specific Attention
 description: >-
-  [ECCV2024][视频理解][video action detection] 提出类别专属查询（class queries）机制，通过为每个动作类别分配独立的可学习查询，让模型动态关注与各类别相关的上下文区域，显著提升视频动作检测中的分类性能。
+  [ECCV2024][视频理解][video action detection] 提出类别专属查询（class queries）机制，通过为每个动作类别分配独立的可学习查询，让模型动态关注与各类别相关的上下文区域，显著提升视频动作检测中的分类性能。 视频动作检测（Video Action Detection…
 tags:
   - "ECCV2024"
   - "视频理解"

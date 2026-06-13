@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Reasoning-Based Approach to Cryptic Crossword Clue Solving
 description: >-
-  [ICML 2025][可解释性][cryptic crossword] 提出三阶段LLM推理pipeline（答案候选生成→wordplay解释→Python形式化验证），使用开源9B模型在Cryptonite密码填字谜数据集上实现新SOTA…
+  [ICML 2025][可解释性][cryptic crossword] 提出三阶段LLM推理pipeline（答案候选生成→wordplay解释→Python形式化验证），使用开源9B模型在Cryptonite密码填字谜数据集上实现新SOTA，关键创新在于将wordplay推理形式化为可执行Python代码并通过带hints的verifier迭代修正。
 tags:
   - "ICML 2025"
   - "可解释性"

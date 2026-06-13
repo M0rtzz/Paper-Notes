@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Investigating Advanced Reasoning of Large Language Models via Black-Box Environment Interaction
 description: >-
-  [ICML 2026][LLM评测][推理评估] 本文提出「黑盒环境交互」作为评估 LLM 集成式推理（演绎+归纳+溯因）的新范式，构建含 6 类任务 96 个环境的 ORACLE 基准，benchmark 19 个 LLM 后发现：即便最强的 o3 也只能在简单环境拿 70% 准确率、难环境跌到 40%…
+  [ICML 2026][LLM评测][推理评估] 本文提出「黑盒环境交互」作为评估 LLM 集成式推理（演绎+归纳+溯因）的新范式，构建含 6 类任务 96 个环境的 ORACLE 基准，benchmark 19 个 LLM 后发现：即便最强的 o3 也只能在简单环境拿 70% 准确率、难环境跌到 40%，且所有 LLM 都缺乏「根据反馈自适应优化探索策略」的高层规划能力。
 tags:
   - "ICML 2026"
   - "LLM评测"

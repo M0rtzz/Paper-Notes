@@ -2,10 +2,10 @@
 title: >-
   [论文解读] CoSToM: Causal-oriented Steering for Intrinsic Theory-of-Mind Alignment in Large Language Models
 description: >-
-  [ACL 2026][LLM/NLP][心智理论] 提出 CoSToM 框架，先用因果追踪定位 LLM 中编码心智理论（ToM）特征的关键层（发现主要在早期层），再通过激活转向在这些层上进行轻量级对齐，使 LLM 在谈判和说服对话中显著提升社会推理质量——从"知道但不会用"变为"知道且会用"。
+  [ACL 2026][LLM 其他][心智理论] 提出 CoSToM 框架，先用因果追踪定位 LLM 中编码心智理论（ToM）特征的关键层（发现主要在早期层），再通过激活转向在这些层上进行轻量级对齐，使 LLM 在谈判和说服对话中显著提升社会推理质量——从"知道但不会用"变为"知道且会用"。 领域现状：心智理论（ToM）——…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "心智理论"
   - "因果追踪"
   - "激活转向"

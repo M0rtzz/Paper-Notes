@@ -2,7 +2,7 @@
 title: >-
   [论文解读] $f$-Divergence Regularized RLHF: Two Tales of Sampling and Unified Analyses
 description: >-
-  [ICML 2026][LLM对齐][$f$-divergence] 本文给在线 RLHF 在**通用 $f$-divergence 正则**下首次建立 $O(\log T)$ regret 和 $O(1/T)$ 次优 gap 上界…
+  [ICML 2026][LLM对齐][$f$-divergence] 本文给在线 RLHF 在**通用 $f$-divergence 正则**下首次建立 $O(\log T)$ regret 和 $O(1/T)$ 次优 gap 上界，提出两套采样策略：(1) 基于 optimism in face of uncertainty 加 bonus 项；(2) 一个新颖的 **"derivative-as-uncertainty"** 视角——把 $f'$ 当作不确定性信号，从而设计 derivative-based 采样而无需在每轮显式估计 confidence bound。
 tags:
   - "ICML 2026"
   - "LLM对齐"

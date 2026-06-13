@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents
 description: >-
-  [AAAI 2026][多智能体][图推理] 提出 GraphAgent-Reasoner（GAR），受分布式图计算理论启发，将图问题分解为以节点为中心的子任务分配给多个 Agent，通过邻居消息传递协作求解，将 LLM 可处理的图规模从 100 个节点扩展到 1000 个…
+  [AAAI 2026][多智能体][图推理] 提出 GraphAgent-Reasoner（GAR），受分布式图计算理论启发，将图问题分解为以节点为中心的子任务分配给多个 Agent，通过邻居消息传递协作求解，将 LLM 可处理的图规模从 100 个节点扩展到 1000 个，在多项式时间图推理任务上显著超越现有最佳方法。
 tags:
   - "AAAI 2026"
   - "多智能体"

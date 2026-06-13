@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Text-Image Interleaved Retrieval
 description: >-
-  [ACL 2025][interleaved retrieval] 定义文本-图像交错检索（TIIR）新任务，构建基于 wikiHow 的首个 TIIR 基准数据集（155K 文档、7654 测试对）…
+  [ACL 2025][interleaved retrieval] 定义文本-图像交错检索（TIIR）新任务，构建基于 wikiHow 的首个 TIIR 基准数据集（155K 文档、7654 测试对），并提出 Matryoshka Multimodal Embedder（MME）通过多粒度视觉 token 压缩解决 MLLM 中视觉 token 过多导致的效率和语义偏差问题，大幅提升检索性能。
 tags:
   - "ACL 2025"
   - "interleaved retrieval"

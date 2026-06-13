@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization
 description: >-
-  [ECCV 2024][多模态VLM][图像地址定位] 提出 AddressCLIP 框架，通过图像-文本对齐（地址+场景描述的对比学习）和图像-地理匹配（基于GPS距离的流形学习）两大核心组件，将图像地址定位（IAL）问题建模为端到端的视觉-语言对齐任务…
+  [ECCV 2024][多模态VLM][图像地址定位] 提出 AddressCLIP 框架，通过图像-文本对齐（地址+场景描述的对比学习）和图像-地理匹配（基于GPS距离的流形学习）两大核心组件，将图像地址定位（IAL）问题建模为端到端的视觉-语言对齐任务，在自建的三个IAL数据集上取得最高85.92%的Top-1准确率。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

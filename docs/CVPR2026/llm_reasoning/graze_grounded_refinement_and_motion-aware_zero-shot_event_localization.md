@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRAZE: Grounded Refinement and Motion-Aware Zero-Shot Event Localization
 description: >-
-  [CVPR 2026][LLM推理][零样本事件定位] 提出GRAZE，一种无需训练的管线用于美式橄榄球练习视频中的首触点(FPOC)定位——利用Grounding DINO进行层级prompt多候选发现、运动感知几何评分进行候选排序、SAM2掩码传播作为独立的像素级接触验证器…
+  [CVPR 2026][LLM推理][零样本事件定位] 提出GRAZE，一种无需训练的管线用于美式橄榄球练习视频中的首触点(FPOC)定位——利用Grounding DINO进行层级prompt多候选发现、运动感知几何评分进行候选排序、SAM2掩码传播作为独立的像素级接触验证器，在738支视频中97.4%有效输出、77.5%在±10帧内定位准确。
 tags:
   - "CVPR 2026"
   - "LLM推理"

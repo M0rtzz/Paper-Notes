@@ -2,9 +2,9 @@
 title: >-
   [论文解读] OMAC: A Holistic Optimization Framework for LLM-Based Multi-Agent Collaboration
 description: >-
-  [ICML 2026][多智能体][多智能体系统] 本文把多智能体系统的优化空间形式化为五个维度（两个功能维度 + 三个结构维度），用"Semantic Initializer 生成 + Contrastive Comparator 对比改进"的双 actor 算法在每个维度上做监督式优化…
+  [ICML 2026 Spotlight][多智能体][多智能体系统] 本文把多智能体系统的优化空间形式化为五个维度（两个功能维度 + 三个结构维度），用"Semantic Initializer 生成 + Contrastive Comparator 对比改进"的双 actor 算法在每个维度上做监督式优化，再迭代联合优化多个维度，在 HumanEval / MMLU / MATH 上稳定打败 DyLAN、ADAS、AFlow 等基线。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "多智能体"
   - "多智能体系统"
   - "协同优化"

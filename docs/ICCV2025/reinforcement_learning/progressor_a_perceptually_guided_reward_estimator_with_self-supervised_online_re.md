@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Progressor: A Perceptually Guided Reward Estimator with Self-Supervised Online Refinement
 description: >-
-  [ICCV 2025][强化学习][视觉奖励学习] 提出Progressor框架，从无标注视频中自监督学习任务无关的奖励函数，通过预测任务进度分布提供稠密奖励信号，并在在线RL训练中通过对抗性push-back策略应对分布偏移问题。
+  [ICCV 2025][强化学习][视觉奖励学习] 提出Progressor框架，从无标注视频中自监督学习任务无关的奖励函数，通过预测任务进度分布提供稠密奖励信号，并在在线RL训练中通过对抗性push-back策略应对分布偏移问题。 强化学习的实际应用面临奖励函数设计难题：手动设计的稠密奖励费时且可能导致非预期行为…
 tags:
   - "ICCV 2025"
   - "强化学习"

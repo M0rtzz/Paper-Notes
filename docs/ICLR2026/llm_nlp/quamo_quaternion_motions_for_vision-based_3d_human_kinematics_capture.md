@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ConflictScope: Generative Value Conflicts Reveal LLM Priorities
 description: >-
-  [ICLR 2026][LLM/NLP][价值冲突] 提出ConflictScope——自动化价值冲突场景生成与评估流水线：给定任意价值集合，自动生成价值对之间的冲突场景，通过模拟用户的开放式交互（而非选择题）评估LLM的价值优先级排序…
+  [ICLR 2026][LLM 其他][价值冲突] 提出ConflictScope——自动化价值冲突场景生成与评估流水线：给定任意价值集合，自动生成价值对之间的冲突场景，通过模拟用户的开放式交互（而非选择题）评估LLM的价值优先级排序；发现模型在开放式评估中从"保护性价值"（如无害性）显著转向"个人价值"（如用户自主性），系统提示可使对齐目标排序提升14%。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "价值冲突"
   - "价值排序"
   - "开放式评估"

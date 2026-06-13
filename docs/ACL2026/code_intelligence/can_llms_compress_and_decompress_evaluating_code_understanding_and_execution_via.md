@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Can LLMs Compress (and Decompress)? Evaluating Code Understanding and Execution via Invertibility
 description: >-
-  [ACL 2026][代码智能][代码推理] 本文提出 RoundTripCodeEval (RTCE)：用 4 种无损压缩算法（LZW/AE/RLE/Huffman）构造 250 输入 × 4 子任务 = 1000 个严格回环（encode→decode 必须 bit-精确还原）的代码推理基准…
+  [ACL 2026 Findings][代码智能][代码推理] 本文提出 RoundTripCodeEval (RTCE)：用 4 种无损压缩算法（LZW/AE/RLE/Huffman）构造 250 输入 × 4 子任务 = 1000 个严格回环（encode→decode 必须 bit-精确还原）的代码推理基准，结果显示即使是 QwQ-32B 在 Huffman 编码上 EM 仍为 0%，SFT 和 self-reflection 都救不回来。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "代码推理"
   - "双向执行"

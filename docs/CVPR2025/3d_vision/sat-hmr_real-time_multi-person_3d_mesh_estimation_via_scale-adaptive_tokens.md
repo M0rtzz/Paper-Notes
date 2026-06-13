@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAT-HMR: Real-Time Multi-Person 3D Mesh Estimation via Scale-Adaptive Tokens
 description: >-
-  [CVPR 2025][3D视觉][多人3D网格估计] 提出 SAT-HMR，一种基于 DETR 的实时多人 3D 人体网格估计框架，通过引入尺度自适应 token——对小尺度人物使用高分辨率 token、大尺度人物使用低分辨率 token、背景 token 进行池化压缩——在保持高分辨率输入精度的同时将推理…
+  [CVPR 2025][3D视觉][多人3D网格估计] 提出 SAT-HMR，一种基于 DETR 的实时多人 3D 人体网格估计框架，通过引入尺度自适应 token——对小尺度人物使用高分辨率 token、大尺度人物使用低分辨率 token、背景 token 进行池化压缩——在保持高分辨率输入精度的同时将推理速度提升至 24 FPS，实现了精度和速度的最佳平衡。
 tags:
   - "CVPR 2025"
   - "3D视觉"

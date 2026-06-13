@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Expert Pyramid Tuning: Efficient Parameter Fine-Tuning for Expertise-Driven Task Allocation
 description: >-
-  [CVPR 2025][模型压缩][参数高效微调] 提出 Expert Pyramid Tuning (EPT)，将计算机视觉中的多尺度特征金字塔思想引入 LoRA-based MoE，通过共享元知识子空间 + 反卷积金字塔投影机制构建不同粒度的专家，实现更高效的多任务参数微调。
+  [CVPR 2025][模型压缩][参数高效微调] 提出 Expert Pyramid Tuning (EPT)，将计算机视觉中的多尺度特征金字塔思想引入 LoRA-based MoE，通过共享元知识子空间 + 反卷积金字塔投影机制构建不同粒度的专家，实现更高效的多任务参数微调。 领域现状： LoRA 已成为大语言模型参数高…
 tags:
   - "CVPR 2025"
   - "模型压缩"

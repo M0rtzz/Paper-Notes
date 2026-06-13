@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Amortized Simulation-Based Inference in Generalized Bayes via Neural Posterior Estimation
 description: >-
-  [ICML 2026][simulation-based inference] 这篇论文把 generalized Bayes 中的 power posterior 家族直接摊销到一个同时以观测 $x$ 和温度 $\beta$ 为条件的 neural posterior estimator 上…
+  [ICML 2026][simulation-based inference] 这篇论文把 generalized Bayes 中的 power posterior 家族直接摊销到一个同时以观测 $x$ 和温度 $\beta$ 为条件的 neural posterior estimator 上，使不同观测和不同 $\beta$ 下的后验采样可通过一次前向传播完成，而不再需要每次运行 MCMC。
 tags:
   - "ICML 2026"
   - "simulation-based inference"

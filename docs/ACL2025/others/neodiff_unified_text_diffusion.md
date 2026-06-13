@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Continuous and Discrete Text Diffusion with Non-simultaneous Diffusion Processes
 description: >-
-  [ACL 2025][文本扩散模型] 提出 NeoDiff，通过引入"外在时间"（句子级扩散进度）和"内在时间"（token 级扩散进度）的双时间框架，利用 Poisson 过程为每个 token 独立分配细粒度噪声水平，并用上下文感知的时间预测器自适应调节去噪进度，统一了离散和连续文本扩散模型的理论框架…
+  [ACL 2025][文本扩散模型] 提出 NeoDiff，通过引入"外在时间"（句子级扩散进度）和"内在时间"（token 级扩散进度）的双时间框架，利用 Poisson 过程为每个 token 独立分配细粒度噪声水平，并用上下文感知的时间预测器自适应调节去噪进度，统一了离散和连续文本扩散模型的理论框架，在机器翻译、复述、文本简化等多个任务上超越现有扩散基线。
 tags:
   - "ACL 2025"
   - "文本扩散模型"

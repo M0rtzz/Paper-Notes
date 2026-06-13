@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Teaching Language Models to Forecast Research Success Through Comparative Idea Evaluation
 description: >-
-  [ACL 2026][LLM评测][比较预测] 本文研究语言模型能否学会预测研究想法的经验成功，通过构建含 11,488 个想法对的数据集（基于 PapersWithCode 客观成果），用 SFT 和 RLVR 训练 8B 模型达到 77.1% 准确率，超过 GPT-5 的 61.1%…
+  [ACL 2026 Findings][LLM评测][比较预测] 本文研究语言模型能否学会预测研究想法的经验成功，通过构建含 11,488 个想法对的数据集（基于 PapersWithCode 客观成果），用 SFT 和 RLVR 训练 8B 模型达到 77.1% 准确率，超过 GPT-5 的 61.1%，成为自动科研发现中的有效想法验证器。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "比较预测"
   - "LLM 评估"

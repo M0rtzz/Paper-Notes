@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do not Abstain! Identify and Solve the Uncertainty
 description: >-
-  [ACL 2025][不确定性识别] 本文提出ConfuseBench基准和基于inquiry answer唯一性判断不确定性来源的方法，并通过InteractDPO在策略训练中动态生成偏好对来提升inquiry质量，使LLM能主动识别并解决不确定性而非简单回避。
+  [ACL 2025][不确定性识别] 本文提出ConfuseBench基准和基于inquiry answer唯一性判断不确定性来源的方法，并通过InteractDPO在策略训练中动态生成偏好对来提升inquiry质量，使LLM能主动识别并解决不确定性而非简单回避。 LLM过度自信问题：大语言模型在面对不确定场景时常表现出过度…
 tags:
   - "ACL 2025"
   - "不确定性识别"

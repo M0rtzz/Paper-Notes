@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ABBA-Adapters: Efficient and Expressive Fine-Tuning of Foundation Models
 description: >-
-  [ICLR 2026][模型压缩][参数高效微调] 提出 ABBA 适配器，将权重更新参数化为两个独立可学习的低秩矩阵的 Hadamard 积 $\Delta W = s(B_1A_1) \odot (B_2A_2)$…
+  [ICLR 2026][模型压缩][参数高效微调] 提出 ABBA 适配器，将权重更新参数化为两个独立可学习的低秩矩阵的 Hadamard 积 $\Delta W = s(B_1A_1) \odot (B_2A_2)$，在相同参数预算下实现远高于 LoRA 的有效秩（$r_1 \cdot r_2$ vs $r$），并通过 Khatri-Rao 重构实现与 LoRA 相当的内存效率，在算术和常识推理任务上显著超越现有 PEFT 方法。
 tags:
   - "ICLR 2026"
   - "模型压缩"

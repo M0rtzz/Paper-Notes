@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Referring Atomic Video Action Recognition
 description: >-
-  [ECCV 2024][视频理解][动作识别] 提出"基于文本引用的原子视频动作识别"（RAVAR）新任务和 RefAVA 数据集（36,630 实例），以及 RefAtomNet 方法，通过跨流 agent 注意力融合视觉、文本和位置-语义三路 token…
+  [ECCV 2024][视频理解][动作识别] 提出"基于文本引用的原子视频动作识别"（RAVAR）新任务和 RefAVA 数据集（36,630 实例），以及 RefAtomNet 方法，通过跨流 agent 注意力融合视觉、文本和位置-语义三路 token，在 mAP 上比最佳基线 BLIPv2 提升 3.85%/3.17%。
 tags:
   - "ECCV 2024"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation
 description: >-
-  [ICCV 2025][多模态VLM][视觉提示调优] 提出 PRO-VPT 框架，通过嵌套优化将提示分布优化 (ADO) 与视觉提示调优 (VPT) 协同设计，利用闲置分数剪枝和强化学习分配策略迭代重定位提示，在 VTAB-1k 和 FGVC 上较 VPT 分别提升 1.6pp 和 2.0pp。
+  [ICCV 2025][多模态VLM][视觉提示调优] 提出 PRO-VPT 框架，通过嵌套优化将提示分布优化 (ADO) 与视觉提示调优 (VPT) 协同设计，利用闲置分数剪枝和强化学习分配策略迭代重定位提示，在 VTAB-1k 和 FGVC 上较 VPT 分别提升 1.6pp 和 2.0pp。 领域现状 领域现状：视觉提…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

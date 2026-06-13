@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition
 description: >-
-  [ACL 2026][LLM评测][科学发现] 提出 ResearchBench，首个大规模评估LLM科学发现能力的基准，基于"灵感驱动假设生成"的理论分解，覆盖12个学科1386篇论文，将科学发现分解为灵感检索、假设组合、假设排序三个充分子任务，发现LLM在跨学科灵感检索上表现出色。
+  [ACL 2026 Findings][LLM评测][科学发现] 提出 ResearchBench，首个大规模评估LLM科学发现能力的基准，基于"灵感驱动假设生成"的理论分解，覆盖12个学科1386篇论文，将科学发现分解为灵感检索、假设组合、假设排序三个充分子任务，发现LLM在跨学科灵感检索上表现出色。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "科学发现"
   - "灵感检索"

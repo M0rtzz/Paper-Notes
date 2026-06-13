@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Autoregressive Modeling for Instruction-Guided Image Editing
 description: >-
-  [ICLR 2026][图像生成][图像编辑] 提出VAREdit，将指令引导的图像编辑重新定义为多尺度预测问题，通过Scale-Aligned Reference模块解决最细尺度条件化的尺度失配问题，在编辑遵循度和效率上大幅超越扩散模型方法。
+  [ICLR 2026][图像生成][图像编辑] 提出VAREdit，将指令引导的图像编辑重新定义为多尺度预测问题，通过Scale-Aligned Reference模块解决最细尺度条件化的尺度失配问题，在编辑遵循度和效率上大幅超越扩散模型方法。 1. 领域现状： 指令引导图像编辑主要由扩散模型主导（InstructPix2P…
 tags:
   - "ICLR 2026"
   - "图像生成"

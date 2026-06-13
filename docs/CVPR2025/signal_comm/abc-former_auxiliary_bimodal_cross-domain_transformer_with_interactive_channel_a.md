@@ -2,15 +2,15 @@
 title: >-
   [论文解读] ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention
 description: >-
-  [CVPR 2025][信号/通信][白平衡] 提出 ABC-Former，利用辅助双模态信息（全局色温和局部色彩）通过跨域 Transformer 和交互通道注意力实现高质量的 sRGB 图像白平衡矫正。
+  [CVPR 2025][信号/通信][白平衡] 提出 ABC-Former，通过引入 CIELab 色彩空间和 RGB 直方图作为辅助双模态信息，利用跨域 Transformer 和交互通道注意力（ICA）模块实现全局色彩知识的跨模态迁移，在 sRGB 白平衡矫正任务上取得 SOTA 效果；同时扩展为 ABC-FormerM 处理混合光照场景。
 tags:
   - "CVPR 2025"
   - "信号/通信"
   - "白平衡"
   - "双模态"
   - "Transformer"
-  - "通道注意力"
-  - "色彩矫正"
+  - "交互通道注意力"
+  - "CIELab直方图"
 ---
 
 # ABC-Former: Auxiliary Bimodal Cross-domain Transformer with Interactive Channel Attention
@@ -127,3 +127,19 @@ tags:
   - 通道注意力
   - 色温矫正
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Breaking the Low-Rank Dilemma of Linear Attention](breaking_the_low-rank_dilemma_of_linear_attention.md)
+- [\[ICCV 2025\] Rectifying Magnitude Neglect in Linear Attention](../../ICCV2025/signal_comm/rectifying_magnitude_neglect_in_linear_attention.md)
+- [\[AAAI 2026\] Balancing Multimodal Domain Generalization via Gradient Modulation and Projection](../../AAAI2026/signal_comm/balancing_multimodal_domain_generalization_via_gradient_modulation_and_projectio.md)
+- [\[ICML 2025\] Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](../../ICML2025/signal_comm/fourier_position_embedding_enhancing_attentions_periodic_extension_for_length_ge.md)
+- [\[AAAI 2026\] Text-Guided Channel Perturbation and Pretrained Knowledge Integration for Unified Multi-Modality Image Fusion](../../AAAI2026/signal_comm/text-guided_channel_perturbation_and_pretrained_knowledge_integration_for_unifie.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis
 description: >-
-  [AAAI 2026][3D视觉][点云分析] 分析了传统图构建方法（ball query）在边界点处产生稀疏连接、在交汇区产生噪声连接的问题，提出图平滑模块（对称邻接优化 + von Neumann核）和局部几何学习模块（自适应形状特征 + 柱坐标变换），在分类和分割任务上取得竞争性能。
+  [AAAI 2026][3D视觉][点云分析] 分析了传统图构建方法（ball query）在边界点处产生稀疏连接、在交汇区产生噪声连接的问题，提出图平滑模块（对称邻接优化 + von Neumann核）和局部几何学习模块（自适应形状特征 + 柱坐标变换），在分类和分割任务上取得竞争性能。 领域现状 点云分析方法主要分四类：…
 tags:
   - "AAAI 2026"
   - "3D视觉"

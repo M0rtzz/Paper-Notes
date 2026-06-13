@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BlurDM: A Blur Diffusion Model for Image Deblurring
 description: >-
-  [NeurIPS 2025][图像生成][image deblurring] 提出 BlurDM，将运动模糊的物理形成过程（连续曝光导致渐进模糊累积）集成到扩散模型——双扩散前向（同时加噪声+模糊）+ 双去噪去模糊反向，作为隐空间先验生成器一致性增强 4 种去模糊方法在 4 个数据集上的效果…
+  [NeurIPS 2025][图像生成][image deblurring] 提出 BlurDM，将运动模糊的物理形成过程（连续曝光导致渐进模糊累积）集成到扩散模型——双扩散前向（同时加噪声+模糊）+ 双去噪去模糊反向，作为隐空间先验生成器一致性增强 4 种去模糊方法在 4 个数据集上的效果，GoPro 平均 +0.31 dB，RealBlur-J 平均 +0.78 dB，仅增加 ~4 GFLOPs 和 ~9ms。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

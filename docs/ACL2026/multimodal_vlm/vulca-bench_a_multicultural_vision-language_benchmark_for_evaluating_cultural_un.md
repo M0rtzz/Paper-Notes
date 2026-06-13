@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VULCA-Bench: A Multicultural Vision-Language Benchmark for Evaluating Cultural Understanding
 description: >-
-  [ACL2026][多模态VLM][多文化评测] VULCA-Bench 用 8 个文化传统、7,410 组图像-双语专家评论和 L1-L5 五层文化理解框架，把 VLM 评测从“看见物体”推进到“理解符号、历史和审美哲学”，并显示现有模型在高层文化推理上普遍掉点 31-40 个百分点。
+  [ACL2026][多模态VLM][多文化评测] VULCA-Bench 用 8 个文化传统、7,410 组图像-双语专家评论和 L1-L5 五层文化理解框架，把 VLM 评测从“看见物体”推进到“理解符号、历史和审美哲学”，并显示现有模型在高层文化推理上普遍掉点 31-40 个百分点。 领域现状：多模态 VLM 的主流评测…
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2601.07986](https://arxiv.org/abs/2601.07986)  
 **代码**: https://github.com/yha9806/VULCA-Bench  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: 多文化评测、视觉语言模型、艺术批评、文化理解、跨文化公平性
 
 ## 一句话总结

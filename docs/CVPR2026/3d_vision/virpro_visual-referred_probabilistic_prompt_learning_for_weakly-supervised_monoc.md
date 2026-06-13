@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection
 description: >-
-  [CVPR2026][3D视觉][弱监督单目3D检测] 提出 VirPro——一种自适应多模态预训练范式，通过视觉引导的概率提示（Adaptive Prompt Bank + Multi-Gaussian Prompt Modeling）为弱监督单目3D检测提供场景感知的语义监督信号…
+  [CVPR 2026 Findings][3D视觉][弱监督单目3D检测] 提出 VirPro——一种自适应多模态预训练范式，通过视觉引导的概率提示（Adaptive Prompt Bank + Multi-Gaussian Prompt Modeling）为弱监督单目3D检测提供场景感知的语义监督信号，可无缝集成到现有 WS-M3D 框架中，在 KITTI 上最高带来 4.8% AP 提升。
 tags:
-  - "CVPR2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "弱监督单目3D检测"
   - "概率提示学习"

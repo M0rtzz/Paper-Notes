@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences
 description: >-
-  [AAAI 2026][自动驾驶][LiDAR generation] 提出 LiDARCrafter，首个面向 LiDAR 的 4D 生成式世界模型，通过文本→场景图→三分支扩散布局→range-image 扩散生成→自回归时序扩展的流水线，实现可控的 4D LiDAR 序列生成与编辑…
+  [AAAI 2026 Oral][自动驾驶][LiDAR generation] 提出 LiDARCrafter，首个面向 LiDAR 的 4D 生成式世界模型，通过文本→场景图→三分支扩散布局→range-image 扩散生成→自回归时序扩展的流水线，实现可控的 4D LiDAR 序列生成与编辑，在 nuScenes 上全面超越现有方法。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自动驾驶"
   - "LiDAR generation"
   - "4D world model"

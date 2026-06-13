@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PIDSR: Complementary Polarized Image Demosaicing and Super-Resolution
 description: >-
-  [CVPR 2025][图像恢复][偏振图像去马赛克] PIDSR 提出了一个将偏振图像去马赛克（PID）和超分辨率（PISR）联合互补优化的框架，通过两阶段循环管线（空间-物理相干重建 + 偏振感知分辨率增强）和 Stokes 辅助网络，从 CPFA 原始图像直接获得高质量高分辨率偏振图像…
+  [CVPR 2025][图像恢复][偏振图像去马赛克] PIDSR 提出了一个将偏振图像去马赛克（PID）和超分辨率（PISR）联合互补优化的框架，通过两阶段循环管线（空间-物理相干重建 + 偏振感知分辨率增强）和 Stokes 辅助网络，从 CPFA 原始图像直接获得高质量高分辨率偏振图像，显著减少了 DoP 和 AoP 的误差。
 tags:
   - "CVPR 2025"
   - "图像恢复"

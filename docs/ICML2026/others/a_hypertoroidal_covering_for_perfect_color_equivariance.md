@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Hypertoroidal Covering for Perfect Color Equivariance
 description: >-
-  [ICML2026][颜色等变] 这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
+  [ICML2026][颜色等变] 这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。 领域现状：卷积网络天然对平移等变…
 tags:
   - "ICML2026"
   - "颜色等变"

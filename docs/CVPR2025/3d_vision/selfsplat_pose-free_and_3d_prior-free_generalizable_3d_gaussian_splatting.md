@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SelfSplat: Pose-Free and 3D Prior-Free Generalizable 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] SelfSplat 提出了一个无需相机位姿和 3D 预训练先验的可泛化 3D 高斯溅射框架，通过将自监督深度/位姿估计与 3D-GS 表示统一，配合匹配感知位姿网络和深度细化模块…
+  [CVPR 2025][3D视觉][3D高斯溅射] SelfSplat 提出了一个无需相机位姿和 3D 预训练先验的可泛化 3D 高斯溅射框架，通过将自监督深度/位姿估计与 3D-GS 表示统一，配合匹配感知位姿网络和深度细化模块，在 RealEstate10K、ACID 和 DL3DV 数据集上显著超越现有无位姿方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

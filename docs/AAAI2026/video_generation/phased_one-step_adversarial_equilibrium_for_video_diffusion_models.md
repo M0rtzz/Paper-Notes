@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Phased One-Step Adversarial Equilibrium for Video Diffusion Models
 description: >-
-  [AAAI 2026][视频生成][视频扩散蒸馏] 提出 V-PAE（Video Phased Adversarial Equilibrium），通过**稳定性预热 + 统一对抗均衡**两阶段蒸馏框架，将大规模视频扩散模型（如 Wan2.1-I2V-14B）压缩至单步生成，实现 100 倍加速…
+  [AAAI 2026][视频生成][视频扩散蒸馏] 提出 V-PAE（Video Phased Adversarial Equilibrium），通过**稳定性预热 + 统一对抗均衡**两阶段蒸馏框架，将大规模视频扩散模型（如 Wan2.1-I2V-14B）压缩至单步生成，实现 100 倍加速，在 VBench-I2V 上平均质量超越已有加速方法 5.8%。
 tags:
   - "AAAI 2026"
   - "视频生成"

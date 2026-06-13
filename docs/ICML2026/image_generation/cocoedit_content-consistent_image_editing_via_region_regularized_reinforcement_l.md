@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCoEdit: Content-Consistent Image Editing via Region Regularized Reinforcement Learning
 description: >-
-  [ICML 2026][图像生成][内容一致性编辑] 本文针对"编辑模型常在不该改的区域乱改"这一痛点，构造 CoCoEdit-40K 局部编辑数据集 + 提出 pixel-level 相似度 reward 补充 MLLM reward + 设计区域正则化 RL 目标（高奖励样本约束非编辑区一致、低奖励样本强…
+  [ICML 2026][图像生成][内容一致性编辑] 本文针对"编辑模型常在不该改的区域乱改"这一痛点，构造 CoCoEdit-40K 局部编辑数据集 + 提出 pixel-level 相似度 reward 补充 MLLM reward + 设计区域正则化 RL 目标（高奖励样本约束非编辑区一致、低奖励样本强迫编辑区做出改变），把 FLUX.1 Kontext 和 Qwen-Image-Edit 同时在编辑得分和 PSNR/SSIM 上提升，打破现有"提编辑能力必伤一致性"的 trade-off。
 tags:
   - "ICML 2026"
   - "图像生成"

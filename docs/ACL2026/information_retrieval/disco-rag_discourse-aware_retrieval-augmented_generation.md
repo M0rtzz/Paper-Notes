@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disco-RAG: Discourse-Aware Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][信息检索/RAG][RAG] 作者提出 Disco-RAG，把修辞结构理论（RST）显式注入 RAG pipeline——对每个 chunk 解析 intra-chunk RST 树（局部层级）+ 跨 chunk 构建 inter-chunk 修辞图（全局连贯）+ 生成 discours…
+  [ACL 2026][信息检索/RAG][RAG] 作者提出 Disco-RAG，把修辞结构理论（RST）显式注入 RAG pipeline——对每个 chunk 解析 intra-chunk RST 树（局部层级）+ 跨 chunk 构建 inter-chunk 修辞图（全局连贯）+ 生成 discourse-aware blueprint 引导回答，在 Loong / ASQA / SciNews 三个长文档基准上 training-free 即拿下 SOTA（Loong overall +12.74 LLM Score）。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval
 description: >-
-  [CVPR 2026][目标检测][组合图像检索] 提出Object-Anchored Composed Image Retrieval（OACIR）新任务和OACIRR大规模基准（160K+四元组），以及AdaFocal框架通过上下文感知注意力调制器自适应地增强对锚定实例区域的关注…
+  [CVPR 2026][目标检测][组合图像检索] 提出Object-Anchored Composed Image Retrieval（OACIR）新任务和OACIRR大规模基准（160K+四元组），以及AdaFocal框架通过上下文感知注意力调制器自适应地增强对锚定实例区域的关注，在实例级检索保真度上大幅超越现有方法。
 tags:
   - "CVPR 2026"
   - "目标检测"

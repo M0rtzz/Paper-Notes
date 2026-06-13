@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Chunking: Discourse-Aware Hierarchical Retrieval for Long Document Question Answering
 description: >-
-  [ACL 2026][NLP理解][长文档问答] 用修辞结构理论（RST）解析长文档的篇章结构，构建一棵句子级层级树并对中间节点做 LLM 摘要增强，最后在树上做结构感知的多粒度检索…
+  [ACL 2026][NLP理解][长文档问答] 用修辞结构理论（RST）解析长文档的篇章结构，构建一棵句子级层级树并对中间节点做 LLM 摘要增强，最后在树上做结构感知的多粒度检索，使长文档 QA 在 QASPER / QuALITY / NarrativeQA / MultiFieldQA-zh 四个 benchmark 一致超越固定切块和 RAPTOR 语义聚类。
 tags:
   - "ACL 2026"
   - "NLP理解"

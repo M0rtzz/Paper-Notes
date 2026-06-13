@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hints of Prompt: Enhancing Visual Representation for Multimodal LLMs in Autonomous Driving
 description: >-
-  [多模态VLM] 提出Hints of Prompt（HoP）框架，通过三种层次化提示（Affinity/Semantic/Question hint）增强CLIP视觉表征的实例级结构、领域语义和问题相关性，在自动驾驶VQA任务上仅用25%数据即超越基线全数据性能。
+  [多模态VLM] 提出Hints of Prompt（HoP）框架，通过三种层次化提示（Affinity/Semantic/Question hint）增强CLIP视觉表征的实例级结构、领域语义和问题相关性，在自动驾驶VQA任务上仅用25%数据即超越基线全数据性能。 - 问题定义：自动驾驶场景中的视觉问答（VQA）需要精细的…
 tags:
   - "多模态VLM"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval
 description: >-
-  [AAAI 2026][视频理解][长视频理解] 提出APVR，一个训练免费的双粒度视觉信息检索框架：帧级别通过查询扩展+时空语义置信度打分迭代检索关键帧（最多1024帧），token级别通过查询感知的注意力驱动选择压缩视觉token，突破内存墙限制处理小时级长视频…
+  [AAAI 2026][视频理解][长视频理解] 提出APVR，一个训练免费的双粒度视觉信息检索框架：帧级别通过查询扩展+时空语义置信度打分迭代检索关键帧（最多1024帧），token级别通过查询感知的注意力驱动选择压缩视觉token，突破内存墙限制处理小时级长视频，在LongVideoBench/VideoMME/MLVU上分别提升最高9.5%/4.6%/9.7%。
 tags:
   - "AAAI 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning
 description: >-
-  [NeurIPS 2025][CASH] 针对 AutoML 中的联合算法选择和超参数优化（CASH）问题，通过数据驱动分析揭示了 HPO 奖励分布的有界左偏特性，提出了专门适配该特性的极端 Bandit 算法 MaxUCB，在理论和实验上均优于现有方法。
+  [NeurIPS 2025][CASH] 针对 AutoML 中的联合算法选择和超参数优化（CASH）问题，通过数据驱动分析揭示了 HPO 奖励分布的有界左偏特性，提出了专门适配该特性的极端 Bandit 算法 MaxUCB，在理论和实验上均优于现有方法。 CASH（Combined Algorithm Selection…
 tags:
   - "NeurIPS 2025"
   - "CASH"

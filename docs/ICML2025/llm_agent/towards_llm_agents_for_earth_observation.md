@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards LLM Agents for Earth Observation
 description: >-
-  [ICML 2025][LLM Agent][Earth Observation] 本文提出 UnivEARTH——一个包含 140 个 yes/no 问题的地球观测基准，涵盖 13 个主题和 17 种卫星传感器…
+  [ICML 2025][LLM Agent][Earth Observation] 本文提出 UnivEARTH——一个包含 140 个 yes/no 问题的地球观测基准，涵盖 13 个主题和 17 种卫星传感器，评估发现最佳 LLM Agent（使用 Google Earth Engine 生成代码）的准确率仅 33%，主要受限于 58% 的代码无法运行。
 tags:
   - "ICML 2025"
   - "LLM Agent"

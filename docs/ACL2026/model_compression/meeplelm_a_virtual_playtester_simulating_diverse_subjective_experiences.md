@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeepleLM: A Virtual Playtester Simulating Diverse Subjective Experiences
 description: >-
-  [ACL 2026][模型压缩][虚拟玩家测试] 为桌游设计师做"虚拟玩家测试"——把官方规则书 + 5 类玩家人格送给一个微调过的 Qwen3-8B (MeepleLM)，让它先沿 Mechanics→Dynamics→Aesthetics (MDA) 三步推理再生成 rating + review…
+  [ACL 2026][模型压缩][虚拟玩家测试] 为桌游设计师做"虚拟玩家测试"——把官方规则书 + 5 类玩家人格送给一个微调过的 Qwen3-8B (MeepleLM)，让它先沿 Mechanics→Dynamics→Aesthetics (MDA) 三步推理再生成 rating + review，最终在 207 个游戏上超越 GPT-5.1 / Gemini3-Pro 在社区分布对齐 (Wasserstein 0.22 vs GPT-5.1 0.95)、内容多样性 (Div 4.34 vs 4.26) 和 Opinion Recovery (69.77 vs 63.44) 三项，并在盲测 A/B 中拿到 70%+ 用户偏好。
 tags:
   - "ACL 2026"
   - "模型压缩"

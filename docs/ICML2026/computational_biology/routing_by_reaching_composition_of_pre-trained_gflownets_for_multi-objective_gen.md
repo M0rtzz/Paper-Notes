@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Routing by Reaching: Composition of Pre-trained GFlowNets for Multi-Objective Generation
 description: >-
-  [ICML 2026][计算生物][GFlowNets] 本文提出一种无需训练的 GFlowNets 组合框架，通过用每个预训练模型的"到达概率"作为权重去混合各自的前向策略，使得在推理阶段就能针对任意线性标量化或逻辑算子的多目标组合直接采样，并在线性情形下被证明可精确恢复目标分布。
+  [ICML 2026][计算生物][GFlowNets] 本文提出一种无需训练的 GFlowNets 组合框架，通过用每个预训练模型的"到达概率"作为权重去混合各自的前向策略，使得在推理阶段就能针对任意线性标量化或逻辑算子的多目标组合直接采样，并在线性情形下被证明可精确恢复目标分布。 领域现状：GFlowNets 是一类把"…
 tags:
   - "ICML 2026"
   - "计算生物"

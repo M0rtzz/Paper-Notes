@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Talk, Judge, Cooperate: Gossip-Driven Indirect Reciprocity in Self-Interested LLM Agents
 description: >-
-  [ICML 2026][LLM Agent][间接互惠] 本文提出 ALIGN，让一群完全自利、去中心化的 LLM 智能体通过五档语气的公开"八卦"消息互相评价、形成声誉、惩罚背叛，从而在无中心监管的捐赠博弈、投资博弈和电商市场中稳定地建立间接互惠合作…
+  [ICML 2026][LLM Agent][间接互惠] 本文提出 ALIGN，让一群完全自利、去中心化的 LLM 智能体通过五档语气的公开"八卦"消息互相评价、形成声誉、惩罚背叛，从而在无中心监管的捐赠博弈、投资博弈和电商市场中稳定地建立间接互惠合作，并发现推理型 LLM 比 chat 型 LLM 更能按博弈论激励"该合作时才合作"。
 tags:
   - "ICML 2026"
   - "LLM Agent"

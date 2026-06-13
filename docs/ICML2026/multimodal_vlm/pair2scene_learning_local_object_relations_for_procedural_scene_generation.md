@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pair2Scene: Learning Local Object Relations for Procedural Scene Generation
 description: >-
-  [ICML 2026][多模态VLM][3D 场景生成] Pair2Scene 把 3D 室内场景生成从「直接拟合全局联合分布」改成「学习一对一的局部物体关系（支撑 + 功能）然后按场景层级树递归装配」，配合点云几何编码、Mixture-of-Logistics 概率头和碰撞感知拒绝采样…
+  [ICML 2026][多模态VLM][3D 场景生成] Pair2Scene 把 3D 室内场景生成从「直接拟合全局联合分布」改成「学习一对一的局部物体关系（支撑 + 功能）然后按场景层级树递归装配」，配合点云几何编码、Mixture-of-Logistics 概率头和碰撞感知拒绝采样，在仅用 3D-Front 数据训练时即可生成对象数从约 4 跃升到约 14 的复杂场景，FID 和用户研究均优于 ATISS、DiffuScene、LayoutVLM 等基线。
 tags:
   - "ICML 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering Beyond the Support: Adversarial Training on Unsupervised Jailbroken Activation Simulation
 description: >-
-  [ICML 2026][LLM对齐][safety steering] 论文针对监督式 safety steering 在未见越狱攻击上失效的问题，提出用"无监督潜在方向发现 + 双层对抗训练"在激活空间里凭空模拟出新型 jailbroken 状态…
+  [ICML 2026][LLM对齐][safety steering] 论文针对监督式 safety steering 在未见越狱攻击上失效的问题，提出用"无监督潜在方向发现 + 双层对抗训练"在激活空间里凭空模拟出新型 jailbroken 状态，并把这些模拟状态当作对抗样本来训练一个 OT 势函数（其梯度构成空间变化的引导场），在三个 LLM × 六类经典越狱上把攻击成功率压到大多数 <5% 且基本不伤害良性效用。
 tags:
   - "ICML 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents
 description: >-
-  [ICLR 2026][LLM Agent][合成数据生成] 提出AgentSynth pipeline，利用信息不对称原理（正向逐步生成简单、反向整体求解困难）将简单子任务链式组合为复杂长程计算机使用任务，自动生成6000+多样化任务和轨迹，每条轨迹仅需$0.60…
+  [ICLR 2026][LLM Agent][合成数据生成] 提出AgentSynth pipeline，利用信息不对称原理（正向逐步生成简单、反向整体求解困难）将简单子任务链式组合为复杂长程计算机使用任务，自动生成6000+多样化任务和轨迹，每条轨迹仅需$0.60，SOTA Agent在最高难度下成功率仅4%。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

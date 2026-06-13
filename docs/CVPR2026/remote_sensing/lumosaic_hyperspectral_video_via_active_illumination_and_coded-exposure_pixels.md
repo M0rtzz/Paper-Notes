@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lumosaic: Hyperspectral Video via Active Illumination and Coded-Exposure Pixels
 description: >-
-  [CVPR 2026][遥感][hyperspectral video] 提出Lumosaic主动高光谱视频系统，将12个窄带LED阵列与编码曝光像素（CEP）相机在微秒级同步，在每帧158个子帧内联合编码空间-时间-光谱信息，实现30fps VGA分辨率31通道（400–700nm）运动鲁棒高光谱视频重建…
+  [CVPR 2026][遥感][hyperspectral video] 提出Lumosaic主动高光谱视频系统，将12个窄带LED阵列与编码曝光像素（CEP）相机在微秒级同步，在每帧158个子帧内联合编码空间-时间-光谱信息，实现30fps VGA分辨率31通道（400–700nm）运动鲁棒高光谱视频重建，PSNR比被动快照系统高10+dB。
 tags:
   - "CVPR 2026"
   - "遥感"

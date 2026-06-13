@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Content-Style Identification via Differential Independence
 description: >-
-  [ICML 2026][图像生成][content-style disentanglement] 本文提出 CSDI（content-style differential independence）这一全新的可辨识性条件——只要 generator 关于 content 与 style 的 Jacobian…
+  [ICML 2026][图像生成][content-style disentanglement] 本文提出 CSDI（content-style differential independence）这一全新的可辨识性条件——只要 generator 关于 content 与 style 的 Jacobian 列空间在数据流形上相互正交，即可在内容-风格统计**相关**且 Jacobian **稠密**的设定下证明 unpaired 多域内容-风格分块可辨识，并通过 Hutchinson 噪声探测把这一条件做成一个可在 StyleGAN2-ADA 上 scalable 的正则项 $\mathcal{L}_{\rm orth}$…
 tags:
   - "ICML 2026"
   - "图像生成"

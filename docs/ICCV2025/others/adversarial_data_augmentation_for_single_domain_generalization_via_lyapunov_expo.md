@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents
 description: >-
-  [ICCV 2025][单域泛化] 提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，将模型训练引导至"混沌边缘"附近，从而在单源域泛化任务中实现更广泛的参数空间探索和更强的跨域泛化能力。
+  [ICCV 2025][单域泛化] 提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，将模型训练引导至"混沌边缘"附近，从而在单源域泛化任务中实现更广泛的参数空间探索和更强的跨域泛化能力。 单域泛化（SDG）是域泛化领域中最具挑战性的设置——仅用一个源域的数据训练模型…
 tags:
   - "ICCV 2025"
   - "单域泛化"
@@ -17,7 +17,7 @@ tags:
 **会议**: ICCV 2025  
 **arXiv**: [2507.04302](https://arxiv.org/abs/2507.04302)  
 **代码**: 无  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: 单域泛化, 对抗数据增强, Lyapunov 指数, 混沌边缘, 学习率调节
 
 ## 一句话总结

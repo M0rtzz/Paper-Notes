@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Is Spatial Reasoning Hard for VLMs? An Attention Mechanism Perspective on Focus Areas
 description: >-
-  [ICML 2025][多模态VLM][Spatial Reasoning] 从机制可解释性视角研究 VLM 空间推理失败的原因，发现图像 token 虽占输入 90% 但仅获 10% 注意力，且注意力的几何分布才是关键；提出 AdaptVis——基于推理时置信度自适应调整图像注意力温度的无训练解码方法…
+  [ICML 2025][多模态VLM][Spatial Reasoning] 从机制可解释性视角研究 VLM 空间推理失败的原因，发现图像 token 虽占输入 90% 但仅获 10% 注意力，且注意力的几何分布才是关键；提出 AdaptVis——基于推理时置信度自适应调整图像注意力温度的无训练解码方法，在 WhatsUp 上实现高达 50% 绝对提升。
 tags:
   - "ICML 2025"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Mitigating Reward Hacking in RLHF via Bayesian Non-negative Reward Modeling
 description: >-
-  [ICML 2026][LLM对齐][奖励建模] 本文把 Bradley–Terry 奖励模型重写成一个贝叶斯非负因子分析（NFA）的生成过程——局部稀疏的实例隐变量 $\bm{\theta}$ 与全局稀疏的奖励字典 $\Phi$ 同时建模…
+  [ICML 2026 Oral][LLM对齐][奖励建模] 本文把 Bradley–Terry 奖励模型重写成一个贝叶斯非负因子分析（NFA）的生成过程——局部稀疏的实例隐变量 $\bm{\theta}$ 与全局稀疏的奖励字典 $\Phi$ 同时建模，以"先解耦再去偏"抑制 RLHF 中由长度/风格等捷径特征引起的 reward hacking，并通过 Weibull 重参数化的摊销变分推断把整个框架塞进现代 LLM 主干，在 Unified-Feedback、RewardBench、HHH、MT-Bench 上一致超过 BT、Ensemble、InfoRM 等强基线。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "LLM对齐"
   - "奖励建模"
   - "奖励黑客"

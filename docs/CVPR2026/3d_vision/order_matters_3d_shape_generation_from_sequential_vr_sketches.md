@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Order Matters: 3D Shape Generation from Sequential VR Sketches
 description: >-
-  [CVPR 2026][VR sketching] 提出 VRSketch2Shape 框架，首次建模 VR 草图的笔画时序信息，通过序列感知的 BERT 编码器与基于扩散的 3D 生成器（SDFusion），从有序 VR 草图生成高保真 3D 形状…
+  [CVPR 2026][3D视觉][VR sketching] 提出 VRSketch2Shape 框架，首次建模 VR 草图的笔画时序信息，通过序列感知的 BERT 编码器与基于扩散的 3D 生成器（SDFusion），从有序 VR 草图生成高保真 3D 形状，同时贡献了包含 20k 合成 + 900 真实草图的多类别数据集。
 tags:
   - "CVPR 2026"
+  - "3D视觉"
   - "VR sketching"
   - "3D shape generation"
   - "stroke order"

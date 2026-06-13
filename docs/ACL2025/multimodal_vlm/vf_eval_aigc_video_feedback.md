@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VF-Eval: Evaluating Multimodal LLMs for Generating Feedback on AIGC Videos
 description: >-
-  [ACL 2025][多模态VLM][AIGC视频评估] 提出VF-Eval基准，通过一致性验证、错误感知、错误类型检测、推理评估四大任务系统评估13个MLLM为AIGC视频提供反馈的能力，发现即使GPT-4.1也难以在所有任务上表现一致，揭示了AIGC视频理解的挑战性。
+  [ACL 2025][多模态VLM][AIGC视频评估] 提出VF-Eval基准，通过一致性验证、错误感知、错误类型检测、推理评估四大任务系统评估13个MLLM为AIGC视频提供反馈的能力，发现即使GPT-4.1也难以在所有任务上表现一致，揭示了AIGC视频理解的挑战性。 领域现状：MLLM越来越多地被用于视频生成质量评估（…
 tags:
   - "ACL 2025"
   - "多模态VLM"

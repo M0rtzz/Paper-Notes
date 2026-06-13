@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpreting GFlowNets for Drug Discovery: Extracting Actionable Insights for Medicinal Chemistry
 description: >-
-  [NeurIPS 2025][计算生物][GFlowNet] 为 SynFlowNet（基于合成反应模板的 GFlowNet）构建了一套多层次可解释性工具包，整合梯度显著性、反事实扰动、稀疏自编码器（SAE）和基序探针，揭示模型内部表征如何编码药物化学相关的理化性质和官能团信息。
+  [NeurIPS 2025][计算生物][GFlowNet] 为 SynFlowNet（基于合成反应模板的 GFlowNet）构建了一套多层次可解释性工具包，整合梯度显著性、反事实扰动、稀疏自编码器（SAE）和基序探针，揭示模型内部表征如何编码药物化学相关的理化性质和官能团信息。 领域现状：GFlowNet 是一类强大的生成…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

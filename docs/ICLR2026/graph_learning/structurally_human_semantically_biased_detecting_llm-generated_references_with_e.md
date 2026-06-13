@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structurally Human, Semantically Biased: Detecting LLM-Generated References with Embeddings and GNNs
 description: >-
-  [ICLR 2026][图学习][LLM引用检测] 通过构建 10000 篇论文的配对引用图（人类 vs GPT-4o 生成 vs 随机基线），发现 LLM 生成的参考文献在图拓扑结构上与人类几乎不可区分（RF 仅 60% 准确率），但语义嵌入可有效检测（RF 83%，GNN 93%）…
+  [ICLR 2026][图学习][LLM引用检测] 通过构建 10000 篇论文的配对引用图（人类 vs GPT-4o 生成 vs 随机基线），发现 LLM 生成的参考文献在图拓扑结构上与人类几乎不可区分（RF 仅 60% 准确率），但语义嵌入可有效检测（RF 83%，GNN 93%），说明 LLM 精确模仿了引用拓扑但留下了可检测的语义指纹。
 tags:
   - "ICLR 2026"
   - "图学习"

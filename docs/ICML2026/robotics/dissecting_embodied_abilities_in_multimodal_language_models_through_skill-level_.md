@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BEAR: Dissecting Embodied Abilities in Multimodal Language Models through Skill-level Evaluation and Diagnosis
 description: >-
-  [ICML 2026][机器人][具身评测] BEAR 把具身任务拆成 14 个原子技能、构建 4,469 道图-视频-文交错的 VQA，对 20 个 MLLM 做技能级横纵向诊断，发现感知能力（而非推理）是真正瓶颈…
+  [ICML 2026][机器人][具身评测] BEAR 把具身任务拆成 14 个原子技能、构建 4,469 道图-视频-文交错的 VQA，对 20 个 MLLM 做技能级横纵向诊断，发现感知能力（而非推理）是真正瓶颈，并据此用 GroundingDINO、3D 场景图、轨迹可视化等外部视觉/空间工具拼出 BEAR-Agent，让 GPT-5 在该基准上相对提升 17.5%、在真实机器人抓取上提升 20.17%。
 tags:
   - "ICML 2026"
   - "机器人"

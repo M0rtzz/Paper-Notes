@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Community Notes Replace Professional Fact-Checkers?
 description: >-
-  [ACL 2025][社会计算][Community Notes] 大规模分析 Twitter/X 社区笔记 66.4 万条，发现社区笔记对专业事实核查的依赖是此前报告的 5 倍（≥5-7%），涉及阴谋论/虚假叙事的内容引用事实核查来源的概率是其他内容的 2 倍…
+  [ACL 2025][社会计算][Community Notes] 大规模分析 Twitter/X 社区笔记 66.4 万条，发现社区笔记对专业事实核查的依赖是此前报告的 5 倍（≥5-7%），涉及阴谋论/虚假叙事的内容引用事实核查来源的概率是其他内容的 2 倍，证明高质量社区审核与专业事实核查深度交织、不可替代。
 tags:
   - "ACL 2025"
   - "社会计算"

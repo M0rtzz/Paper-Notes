@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Less Is More: Elevating RAG via Performance-Driven Context Compression
 description: >-
-  [ICML 2026][信息检索/RAG][RAG] CORE-RAG 用"性能即奖励"的 GRPO 强化学习训练一个 1.5B 小压缩器，把检索到的 top-k 文档压成 ~3% 长度的摘要，结果不仅没掉点反而在 4 个 QA benchmark 上比满上下文 RAG 平均提升 3.3 EM。
+  [ICML 2026][信息检索/RAG][RAG] CORE-RAG 用"性能即奖励"的 GRPO 强化学习训练一个 1.5B 小压缩器，把检索到的 top-k 文档压成 ~3% 长度的摘要，结果不仅没掉点反而在 4 个 QA benchmark 上比满上下文 RAG 平均提升 3.3 EM。 领域现状：RAG 通过把 t…
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

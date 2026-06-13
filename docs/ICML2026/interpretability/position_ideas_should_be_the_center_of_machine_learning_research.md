@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Ideas Should be the Center of Machine Learning Research
 description: >-
-  [ICML 2026][可解释性][Ideas First] 作者提出"Ideas First"立场：把"想法 → 可观察信号 → 定制化实验"作为机器学习研究的核心评价单位，反对把刷榜数字或理想化定理本身当作目的，从而既弥合理论—实践鸿沟，又降低小算力研究者的参与门槛。
+  [ICML 2026][可解释性][Ideas First] 作者提出"Ideas First"立场：把"想法 → 可观察信号 → 定制化实验"作为机器学习研究的核心评价单位，反对把刷榜数字或理想化定理本身当作目的，从而既弥合理论—实践鸿沟，又降低小算力研究者的参与门槛。 领域现状：当前 ML 研究分裂为两种主流模式 ——…
 tags:
   - "ICML 2026"
   - "可解释性"

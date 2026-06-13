@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniFit: Towards Universal Virtual Try-on with MLLM-Guided Semantic Alignment
 description: >-
-  [AAAI 2026][多模态VLM][虚拟试穿] 提出 UniFit，一个由多模态大语言模型（MLLM）驱动的通用虚拟试穿框架，通过 MLLM 引导的语义对齐模块（MGSA）桥接文本指令与参考图像之间的语义鸿沟，并通过两阶段渐进训练+自合成流水线克服复杂场景的数据稀缺问题…
+  [AAAI 2026][多模态VLM][虚拟试穿] 提出 UniFit，一个由多模态大语言模型（MLLM）驱动的通用虚拟试穿框架，通过 MLLM 引导的语义对齐模块（MGSA）桥接文本指令与参考图像之间的语义鸿沟，并通过两阶段渐进训练+自合成流水线克服复杂场景的数据稀缺问题，首次在单一框架内支持 6 种 VTON 任务。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

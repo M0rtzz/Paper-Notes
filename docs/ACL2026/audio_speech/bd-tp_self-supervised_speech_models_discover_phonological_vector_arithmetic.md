@@ -2,9 +2,9 @@
 title: >-
   [论文解读] [b] = [d] − [t] + [p]: Self-supervised Speech Models Discover Phonological Vector Arithmetic
 description: >-
-  [ACL 2026][音频/语音][自监督语音模型] 系统性地证明自监督语音模型（S3M）的表示空间中存在线性的音韵特征向量，这些向量满足类似 word2vec 的向量算术关系，且其缩放比例与声学测量呈连续相关性。
+  [ACL 2026 Findings][音频/语音][自监督语音模型] 系统性地证明自监督语音模型（S3M）的表示空间中存在线性的音韵特征向量，这些向量满足类似 word2vec 的向量算术关系，且其缩放比例与声学测量呈连续相关性。 领域现状：自监督语音模型（如 wav2vec 2.0、HuBERT、WavLM）在语音识别、…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "自监督语音模型"
   - "音韵向量算术"

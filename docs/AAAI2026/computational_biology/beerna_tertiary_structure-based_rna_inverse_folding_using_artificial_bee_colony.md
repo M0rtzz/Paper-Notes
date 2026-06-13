@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BeeRNA: Tertiary Structure-Based RNA Inverse Folding Using Artificial Bee Colony
 description: >-
-  [AAAI2026][计算生物][RNA inverse folding] 提出 BeeRNA，将人工蜂群（ABC）优化算法应用于 RNA 三级结构逆折叠问题，通过碱基对距离预筛选 + RMSD 两阶段适应度评估…
+  [AAAI2026][计算生物][RNA inverse folding] 提出 BeeRNA，将人工蜂群（ABC）优化算法应用于 RNA 三级结构逆折叠问题，通过碱基对距离预筛选 + RMSD 两阶段适应度评估，在短/中长度 RNA（<100 nt）上超越深度学习方法 gRNAde 和 RiboDiffusion。
 tags:
   - "AAAI2026"
   - "计算生物"

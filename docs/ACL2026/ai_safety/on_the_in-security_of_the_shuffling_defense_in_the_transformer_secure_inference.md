@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the (In-)Security of the Shuffling Defense in the Transformer Secure Inference
 description: >-
-  [ACL2026][AI安全][安全推理] 这篇论文指出 Transformer 安全推理中常用的“洗牌后公开中间激活”防御并不安全，并提出一种先把不同随机置换下的激活对齐、再解线性方程抽取权重的攻击，在 Pythia-70m 和 GPT-2 上能以约 1 美元查询成本恢复近似可用的模型权重。
+  [ACL2026][AI安全][安全推理] 这篇论文指出 Transformer 安全推理中常用的“洗牌后公开中间激活”防御并不安全，并提出一种先把不同随机置换下的激活对齐、再解线性方程抽取权重的攻击，在 Pythia-70m 和 GPT-2 上能以约 1 美元查询成本恢复近似可用的模型权重。 领域现状：Transforme…
 tags:
   - "ACL2026"
   - "AI安全"

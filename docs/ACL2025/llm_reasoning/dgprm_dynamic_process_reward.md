@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic and Generalizable Process Reward Modeling (DG-PRM)
 description: >-
-  [ACL 2025][LLM推理][process reward model] 提出DG-PRM框架，通过构建层次化奖励树动态存储和选择多维评估标准，结合Pareto支配估计识别多目标下的正负样本对，实现动态、可泛化的过程奖励建模。
+  [ACL 2025][LLM推理][process reward model] 提出DG-PRM框架，通过构建层次化奖励树动态存储和选择多维评估标准，结合Pareto支配估计识别多目标下的正负样本对，实现动态、可泛化的过程奖励建模。 - 问题定义：过程奖励模型（PRM）为LLM在复杂推理中的每个中间步骤提供密集奖励信号…
 tags:
   - "ACL 2025"
   - "LLM推理"

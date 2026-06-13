@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Vision-Language Models as Evaluators in Path Planning
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言模型] 本文提出 PathEval 基准，系统评估视觉语言模型（VLM）作为路径规划评估器的能力，发现 VLM 虽然能够从场景描述中抽象出最优路径的特征，但其视觉组件在感知路径的低级细节方面存在严重瓶颈，端到端微调无法有效解决此问题…
+  [CVPR 2025][多模态VLM][视觉语言模型] 本文提出 PathEval 基准，系统评估视觉语言模型（VLM）作为路径规划评估器的能力，发现 VLM 虽然能够从场景描述中抽象出最优路径的特征，但其视觉组件在感知路径的低级细节方面存在严重瓶颈，端到端微调无法有效解决此问题，需要任务特定的判别式视觉编码器适配。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

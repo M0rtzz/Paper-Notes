@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LocoT2V-Bench: Benchmarking Long-form and Complex Text-to-Video Generation
 description: >-
-  [ICML 2026][视频生成][长视频生成基准] LocoT2V-Bench 是面向**长视频 + 复杂场景**生成的专业基准——234 段真实视频 × 18 主题 × 平均 249 字提示词…
+  [ICML 2026][视频生成][长视频生成基准] LocoT2V-Bench 是面向**长视频 + 复杂场景**生成的专业基准——234 段真实视频 × 18 主题 × 平均 249 字提示词，配套 LoCoT2V-Eval 5 维度 17 子维度评估框架（含分层 VQA + 条件门控 + Auditor-Evaluator 双代理 HERD），系统评估 17 个长视频生成模型，揭示了"感知质量强、细粒度对齐弱、角色一致性差"的普遍瓶颈。
 tags:
   - "ICML 2026"
   - "视频生成"

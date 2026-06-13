@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence
 description: >-
-  [AAAI 2026][LLM安全][毫米波雷达] 提出 RadarLLM，首个利用大语言模型从毫米波雷达点云进行语义级人体运动理解的端到端框架，包含基于 Aggregate VQ-VAE 的运动引导雷达分词器和雷达感知语言模型，并通过物理感知仿真管线生成大规模雷达-文本配对数据。
+  [AAAI 2026][LLM安全][毫米波雷达] 提出 RadarLLM，首个利用大语言模型从毫米波雷达点云进行语义级人体运动理解的端到端框架，包含基于 Aggregate VQ-VAE 的运动引导雷达分词器和雷达感知语言模型，并通过物理感知仿真管线生成大规模雷达-文本配对数据。 人体运动理解在老年护理、智能家居、健康监测…
 tags:
   - "AAAI 2026"
   - "LLM安全"

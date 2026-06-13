@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Knowledge Distillation via Regularizing Feature Direction and Norm
 description: >-
-  [ECCV 2024][模型压缩][知识蒸馏] 提出 ND 损失函数，通过同时对齐学生特征方向至教师类均值方向并鼓励学生产生大范数特征，显著提升了现有知识蒸馏方法在 ImageNet、CIFAR100 和 COCO 上的性能。
+  [ECCV 2024][模型压缩][知识蒸馏] 提出 ND 损失函数，通过同时对齐学生特征方向至教师类均值方向并鼓励学生产生大范数特征，显著提升了现有知识蒸馏方法在 ImageNet、CIFAR100 和 COCO 上的性能。 领域现状：知识蒸馏（KD）是模型压缩的核心技术，利用大型预训练教师网络指导小型学生网络训练…
 tags:
   - "ECCV 2024"
   - "模型压缩"

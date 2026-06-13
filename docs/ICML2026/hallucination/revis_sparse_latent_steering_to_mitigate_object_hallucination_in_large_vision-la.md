@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revis: Sparse Latent Steering to Mitigate Object Hallucination in Large Vision-Language Models
 description: >-
-  [ICML 2026][幻觉检测][物体幻觉] 本文把 LVLM 幻觉重新定义为"被语言先验压制的视觉信息缺失"，用正交投影从原始视觉方向中剔除语言先验得到"纯视觉向量"，再用风险门控只在最优深度的单层做稀疏干预，免训练地把 CHAIRS 幻觉率降 ~19% 同时保住 MM-Vet 通用能力。
+  [ICML 2026][幻觉检测][物体幻觉] 本文把 LVLM 幻觉重新定义为"被语言先验压制的视觉信息缺失"，用正交投影从原始视觉方向中剔除语言先验得到"纯视觉向量"，再用风险门控只在最优深度的单层做稀疏干预，免训练地把 CHAIRS 幻觉率降 ~19% 同时保住 MM-Vet 通用能力。 领域现状：LVLM 已经具备强…
 tags:
   - "ICML 2026"
   - "幻觉检测"

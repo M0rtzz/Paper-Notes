@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hallucinations Undermine Trust; Metacognition is a Way Forward
 description: >-
-  [ICML 2026 (Position Paper)][幻觉检测][幻觉] 本文是一篇 position paper，论证"彻底消除 LLM 幻觉"在原理上无法逃避一个"区分度税"（discrimination gap → utility tax）…
+  [ICML 2026 (Position Paper)][幻觉检测][幻觉] 本文是一篇 position paper，论证"彻底消除 LLM 幻觉"在原理上无法逃避一个"区分度税"（discrimination gap → utility tax）；作者主张把目标从"消灭幻觉"改为**忠实表达不确定性**（faithful uncertainty），并把这种 metacognition 视为 agentic LLM 调用工具时不可或缺的控制层。
 tags:
   - "ICML 2026 (Position Paper)"
   - "幻觉检测"

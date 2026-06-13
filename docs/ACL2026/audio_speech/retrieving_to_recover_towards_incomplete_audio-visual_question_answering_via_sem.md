@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieving to Recover: Towards Incomplete Audio-Visual Question Answering via Semantic-consistent Purification
 description: >-
-  [ACL 2026][音频/语音][音频视觉问答] 本文提出R2ScP框架，将AVQA中缺失模态处理范式从传统的生成式补全转变为基于检索的恢复，通过跨模态检索和上下文感知自适应净化机制消除检索噪声，在模态不完整场景下显著提升了问答性能。
+  [ACL 2026][音频/语音][音频视觉问答] 本文提出R2ScP框架，将AVQA中缺失模态处理范式从传统的生成式补全转变为基于检索的恢复，通过跨模态检索和上下文感知自适应净化机制消除检索噪声，在模态不完整场景下显著提升了问答性能。 领域现状：音频视觉问答（AVQA）要求模型跨视觉、音频和文本进行推理以理解动态场景…
 tags:
   - "ACL 2026"
   - "音频/语音"

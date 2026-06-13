@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Patient-Specific Disease Dynamics with Latent Flow Matching for Longitudinal Imaging Generation
 description: >-
-  [ICLR 2026][医学图像][disease progression] 提出 Δ-LFM 框架：用 ArcRank 损失在潜在空间构建患者特异性时间对齐轨迹（角度一致 + 幅度单调递增），将流匹配时间范围从 [0,1] 扩展到 [0,T] 实际时间间隔实现任意时间点预测…
+  [ICLR 2026][医学图像][disease progression] 提出 Δ-LFM 框架：用 ArcRank 损失在潜在空间构建患者特异性时间对齐轨迹（角度一致 + 幅度单调递增），将流匹配时间范围从 [0,1] 扩展到 [0,T] 实际时间间隔实现任意时间点预测，在三个阿尔茨海默纵向 MRI 基准上全面超越 8 种基线方法，并提出进展专用指标 Δ-RMAE。
 tags:
   - "ICLR 2026"
   - "医学图像"

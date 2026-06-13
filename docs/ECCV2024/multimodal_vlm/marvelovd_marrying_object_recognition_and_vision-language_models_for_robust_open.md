@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MarvelOVD: Marrying Object Recognition and Vision-Language Models for Robust Open-Vocabulary Object Detection
 description: >-
-  [ECCV2024][多模态VLM][开放词汇目标检测] 提出 MarvelOVD 框架，通过将检测器的上下文感知能力和背景识别能力融入 VLM 的伪标签生成与训练流程，在线净化噪声伪标签并自适应重加权训练框，在 COCO 和 LVIS 上大幅超越已有方法。
+  [ECCV2024][多模态VLM][开放词汇目标检测] 提出 MarvelOVD 框架，通过将检测器的上下文感知能力和背景识别能力融入 VLM 的伪标签生成与训练流程，在线净化噪声伪标签并自适应重加权训练框，在 COCO 和 LVIS 上大幅超越已有方法。 开放词汇目标检测（OVD）旨在训练时仅标注 base 类别…
 tags:
   - "ECCV2024"
   - "多模态VLM"

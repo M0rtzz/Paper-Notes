@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mind Your Tone: Investigating How Prompt Politeness Affects LLM Accuracy
 description: >-
-  [ACL 2025 (Findings, Short Paper)][LLM/NLP][提示语气] 本文系统研究了提示语的礼貌程度对LLM回答准确率的影响，通过构建5种语气梯度（从"非常礼貌"到"非常粗鲁"）的250条多选题提示并在ChatGPT 4o上测试…
+  [ACL 2025 (Findings, Short Paper)][LLM 其他][提示语气] 本文系统研究了提示语的礼貌程度对LLM回答准确率的影响，通过构建5种语气梯度（从"非常礼貌"到"非常粗鲁"）的250条多选题提示并在ChatGPT 4o上测试，发现与直觉相反——粗鲁提示的准确率（84.8%）显著高于礼貌提示（80.8%）。
 tags:
   - "ACL 2025 (Findings, Short Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示语气"
   - "礼貌度"
   - "LLM准确率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are Common Substructures Transferable? Riemannian Graph Foundation Model with Neural Vector Bundles
 description: >-
-  [ICML 2026][图学习][图基础模型] 这篇论文把图预训练中的“可迁移公共子结构”重新定义为表示空间中的行为不变性，并用神经向量丛、门控几何展平和 Dirichlet 损失构建 Gauge，使图模型在跨域少样本迁移、零样本链路预测和图同构任务上获得更强的结构泛化能力。
+  [ICML 2026][图学习][图基础模型] 这篇论文把图预训练中的“可迁移公共子结构”重新定义为表示空间中的行为不变性，并用神经向量丛、门控几何展平和 Dirichlet 损失构建 Gauge，使图模型在跨域少样本迁移、零样本链路预测和图同构任务上获得更强的结构泛化能力。 领域现状：图基础模型希望像语言和视觉基础模型一样…
 tags:
   - "ICML 2026"
   - "图学习"

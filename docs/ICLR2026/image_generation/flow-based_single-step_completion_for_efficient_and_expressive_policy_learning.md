@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning
 description: >-
-  [ICLR 2026][图像生成][offline RL] 提出 Single-Step Completion Policy (SSCP)，通过在流匹配框架中预测"完成向量"（从任意中间状态到目标动作的归一化方向），将多步生成策略压缩为单步推理…
+  [ICLR 2026][图像生成][offline RL] 提出 Single-Step Completion Policy (SSCP)，通过在流匹配框架中预测"完成向量"（从任意中间状态到目标动作的归一化方向），将多步生成策略压缩为单步推理，在 D4RL 上与多步扩散/流策略持平但训练快 64×、推理快 4.7×，并扩展到 GCRL 中将层级策略扁平化。
 tags:
   - "ICLR 2026"
   - "图像生成"

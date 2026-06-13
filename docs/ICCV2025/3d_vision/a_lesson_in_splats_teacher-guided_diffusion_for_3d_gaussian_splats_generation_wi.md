@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision
 description: >-
-  [ICCV 2025][3D视觉][3D高斯喷溅] 本文提出了一种仅使用2D图像监督来训练3D扩散模型的新框架——通过将确定性3D重建模型作为"噪声教师"生成3D噪声样本，并结合多步去噪策略和循环一致性正则化，实现了超越教师模型的3D高斯喷溅生成质量（PSNR提升0.5-0.85）。
+  [ICCV 2025][3D视觉][3D高斯喷溅] 本文提出了一种仅使用2D图像监督来训练3D扩散模型的新框架——通过将确定性3D重建模型作为"噪声教师"生成3D噪声样本，并结合多步去噪策略和循环一致性正则化，实现了超越教师模型的3D高斯喷溅生成质量（PSNR提升0.5-0.85）。 - 领域现状：从2D图像恢复3D结构是一…
 tags:
   - "ICCV 2025"
   - "3D视觉"

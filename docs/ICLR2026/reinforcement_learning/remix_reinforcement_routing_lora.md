@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMix: Reinforcement Routing for Mixtures of LoRAs in LLM Finetuning
 description: >-
-  [ICLR 2026][强化学习][Mixture-of-LoRAs] ReMix 发现现有 Mixture-of-LoRAs 模型存在严重的路由权重坍缩问题（即使激活 k>1 个 LoRA，有效 LoRA 数也迅速降到 1），提出用非可学习的常数路由权重确保所有激活 LoRA 平等贡献…
+  [ICLR 2026][强化学习][Mixture-of-LoRAs] ReMix 发现现有 Mixture-of-LoRAs 模型存在严重的路由权重坍缩问题（即使激活 k>1 个 LoRA，有效 LoRA 数也迅速降到 1），提出用非可学习的常数路由权重确保所有激活 LoRA 平等贡献，并用 RLOO 强化学习梯度估计器训练路由器，显著优于 SOTA PEFT 方法。
 tags:
   - "ICLR 2026"
   - "强化学习"

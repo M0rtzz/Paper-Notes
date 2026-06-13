@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mdok-style at SemEval-2026 Task 10: Finetuning LLMs for Conspiracy Detection
 description: >-
-  [ACL 2026 (SemEval-2026 Task 10)][AIGC检测][PsyCoMark] 作者把自己在 PAN@CLEF2025 拿冠军的 mdok（机器生成文本检测器）的 finetuning 范式平移到阴谋论检测：用四种数据增强（匿名化 / 大小写 / 同形字 / 去重）扩训练集…
+  [ACL 2026 (SemEval-2026 Task 10)][AIGC检测][PsyCoMark] 作者把自己在 PAN@CLEF2025 拿冠军的 mdok（机器生成文本检测器）的 finetuning 范式平移到阴谋论检测：用四种数据增强（匿名化 / 大小写 / 同形字 / 去重）扩训练集，再做一轮自训练（只保留 ≥0.99 或 ≤0.01 的高置信伪标签），用 QLoRA 4-bit PEFT 微调 Qwen3-32B，最终在 SemEval-2026 Task 10 subtask 2 拿 Macro F1 = 0.78，排名 8/52（85 百分位）。
 tags:
   - "ACL 2026 (SemEval-2026 Task 10)"
   - "AIGC检测"
@@ -154,10 +154,10 @@ Qwen3-4B 上自训练反而掉点（0.75→0.72），说明自训练对模型容
 - **vs SemEval-2024 Task 8 自己的早期工作 (spiegel-macko-2024-kinit)**: 那次他们已经证明 7B finetuned LLM 优于 BERT-like 小模型；本次在 32B 上验证规模再放大仍有提升但增量缩小。
 
 ## 评分
-- 新颖性: ⭐⭐ 主要是已有 mdok 配方的跨任务复用，技术上无新方法
-- 实验充分度: ⭐⭐⭐ 11 个系统对比 + 自训练/阈值消融到位，但缺多轮自训练、缺 error analysis、缺其它模型家族
-- 写作质量: ⭐⭐⭐⭐ SemEval system paper 风格简洁、动机清晰、复现说明完整
-- 价值: ⭐⭐⭐ 作为 SemEval 系统报告很扎实，但对学术界新知贡献有限；其工程经验（增强 + 严格自训练 + 阈值后处理）对 NLP 比赛参与者有直接借鉴价值
+- 新颖性: ⭐⭐⭐ 主要是已有 mdok 配方的跨任务复用，技术上无新方法
+- 实验充分度: ⭐⭐⭐⭐ 11 个系统对比 + 自训练/阈值消融到位，但缺多轮自训练、缺 error analysis、缺其它模型家族
+- 写作质量: ⭐⭐⭐⭐⭐ SemEval system paper 风格简洁、动机清晰、复现说明完整
+- 价值: ⭐⭐⭐⭐ 作为 SemEval 系统报告很扎实，但对学术界新知贡献有限；其工程经验（增强 + 严格自训练 + 阈值后处理）对 NLP 比赛参与者有直接借鉴价值
 
 <!-- RELATED:START -->
 

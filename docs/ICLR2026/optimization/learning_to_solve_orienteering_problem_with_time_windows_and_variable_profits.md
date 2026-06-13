@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Solve Orienteering Problem with Time Windows and Variable Profits
 description: >-
-  [ICLR 2026][优化/理论][定向问题] 提出DeCoST——一种学习式两阶段框架，将OPTWVP中耦合的离散路线决策和连续服务时间分配解耦：第一阶段并行解码器联合生成路径+初始服务时间，第二阶段LP精确优化服务时间(全局最优)，通过pTAR反馈实现跨阶段协调…
+  [ICLR 2026][优化/理论][定向问题] 提出DeCoST——一种学习式两阶段框架，将OPTWVP中耦合的离散路线决策和连续服务时间分配解耦：第一阶段并行解码器联合生成路径+初始服务时间，第二阶段LP精确优化服务时间(全局最优)，通过pTAR反馈实现跨阶段协调。在50-500节点OPTWVP上优化间隙仅0.83%-3.31%，推理速度比元启发式快最高45倍。
 tags:
   - "ICLR 2026"
   - "优化/理论"

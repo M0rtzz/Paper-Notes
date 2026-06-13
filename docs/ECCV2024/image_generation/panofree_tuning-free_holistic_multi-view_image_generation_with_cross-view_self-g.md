@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PanoFree: Tuning-Free Holistic Multi-view Image Generation with Cross-view Self-Guidance
 description: >-
-  [ECCV 2024][图像生成][全景生成] 提出PanoFree，一种无需微调的多视图图像生成方法，通过迭代变形-修补、跨视图引导和对称双向生成策略，高效生成一致的全景图像。
+  [ECCV 2024][图像生成][全景生成] 提出PanoFree，一种无需微调的多视图图像生成方法，通过迭代变形-修补、跨视图引导和对称双向生成策略，高效生成一致的全景图像。 沉浸式场景生成（特别是全景图像生成）是VR/AR、游戏和影视制作中的重要需求。利用大规模预训练的文本到图像（T2I）扩散模型生成多视图一致的全景图…
 tags:
   - "ECCV 2024"
   - "图像生成"

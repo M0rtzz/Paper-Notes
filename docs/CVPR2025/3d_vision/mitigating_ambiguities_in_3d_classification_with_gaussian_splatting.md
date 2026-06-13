@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Ambiguities in 3D Classification with Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯泼溅] 本文首次探索用 3D Gaussian Splatting (GS) 点云替代传统点云作为 3D 分类的输入表示，利用 GS 中的 scale/rotation 系数区分线状和平坦表面、利用 opacity 区分透明/反射物体…
+  [CVPR 2025][3D视觉][3D高斯泼溅] 本文首次探索用 3D Gaussian Splatting (GS) 点云替代传统点云作为 3D 分类的输入表示，利用 GS 中的 scale/rotation 系数区分线状和平坦表面、利用 opacity 区分透明/反射物体，构建了首个真实世界 GS 点云数据集，在多种分类方法上均验证了 GS 点云消除歧义的有效性。
 tags:
   - "CVPR 2025"
   - "3D视觉"

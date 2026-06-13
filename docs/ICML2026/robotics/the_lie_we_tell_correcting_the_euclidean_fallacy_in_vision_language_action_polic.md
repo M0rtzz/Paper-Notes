@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Lie We Tell: Correcting the Euclidean Fallacy in Vision-Language-Action Policies via Score Matching on Tangent Space
 description: >-
-  [ICML 2026][机器人][SE(3) 流形] Lie Diffuser Actor (LDA) 把扩散过程从把 SE(3) 位姿展平成 $\mathbb{R}^{12}$ 的"欧氏谎言"修正回流形原生：通过左不变 SDE 在李代数 $\mathfrak{se}(3)$ 中注入噪声、用指数映射回拉到流形…
+  [ICML 2026][机器人][SE(3) 流形] Lie Diffuser Actor (LDA) 把扩散过程从把 SE(3) 位姿展平成 $\mathbb{R}^{12}$ 的"欧氏谎言"修正回流形原生：通过左不变 SDE 在李代数 $\mathfrak{se}(3)$ 中注入噪声、用指数映射回拉到流形、tangent-space 预测 score，理论上同时获得流形闭合、坐标系等变与测地线最优性，在 CALVIN ABC→D 上把平均任务长度从 3.27 推到 3.51。
 tags:
   - "ICML 2026"
   - "机器人"

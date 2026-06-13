@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Any-Point Tracking by Contrastive Random Walks
 description: >-
-  [ECCV 2024][视频理解][Tracking Any Point] 提出 GMRW（Global Matching Random Walk），将全局匹配 Transformer 架构与对比随机游走自监督目标结合，首次在无标注的情况下实现了强劲的"任意点跟踪"（TAP）性能…
+  [ECCV 2024][视频理解][Tracking Any Point] 提出 GMRW（Global Matching Random Walk），将全局匹配 Transformer 架构与对比随机游走自监督目标结合，首次在无标注的情况下实现了强劲的"任意点跟踪"（TAP）性能，并设计 label warping 数据增强来避免 Transformer 的捷径解。
 tags:
   - "ECCV 2024"
   - "视频理解"

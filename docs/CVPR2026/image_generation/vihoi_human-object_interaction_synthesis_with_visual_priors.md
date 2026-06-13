@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViHOI: Human-Object Interaction Synthesis with Visual Priors
 description: >-
-  [CVPR 2026][图像生成][人物交互生成] 提出ViHOI，一个即插即用框架，利用VLM从2D参考图像中提取解耦的视觉和文本先验，通过Q-Former压缩为紧凑条件token来增强扩散模型的HOI运动生成质量，推理时借助文生图模型合成参考图像实现对未见物体的强泛化。
+  [CVPR 2026][图像生成][人物交互生成] 提出ViHOI，一个即插即用框架，利用VLM从2D参考图像中提取解耦的视觉和文本先验，通过Q-Former压缩为紧凑条件token来增强扩散模型的HOI运动生成质量，推理时借助文生图模型合成参考图像实现对未见物体的强泛化。 1. 领域现状：3D人-物交互（HOI）运动生成旨…
 tags:
   - "CVPR 2026"
   - "图像生成"

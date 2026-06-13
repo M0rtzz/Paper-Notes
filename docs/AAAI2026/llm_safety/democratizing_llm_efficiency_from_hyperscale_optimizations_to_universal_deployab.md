@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Democratizing LLM Efficiency: From Hyperscale Optimizations to Universal Deployability
 description: >-
-  [AAAI 2026][LLM安全][LLM效率] 本文是一篇立场论文（position paper），指出当前 LLM 效率研究被超大规模假设所主导，提出面向中小规模部署者的五大开放研究挑战，并倡导以开销感知效率（OAE）重新定义效率指标。
+  [AAAI 2026][LLM安全][LLM效率] 本文是一篇立场论文（position paper），指出当前 LLM 效率研究被超大规模假设所主导，提出面向中小规模部署者的五大开放研究挑战，并倡导以开销感知效率（OAE）重新定义效率指标。 LLM 已在教育、客服、法律、科学等领域广泛部署，但效率研究呈现严重的超大规模偏差…
 tags:
   - "AAAI 2026"
   - "LLM安全"

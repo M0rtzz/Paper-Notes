@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention Prompting on Image for Large Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][提示学习] 提出Attention Prompting on Image（API），通过辅助VLM（CLIP或LLaVA）根据文本查询生成注意力归因图，将其作为热力图叠加到原始图像上引导LVLM聚焦相关区域，在MM-Vet上提升LLaVA-1.5达3.8%…
+  [ECCV 2024][多模态VLM][提示学习] 提出Attention Prompting on Image（API），通过辅助VLM（CLIP或LLaVA）根据文本查询生成注意力归因图，将其作为热力图叠加到原始图像上引导LVLM聚焦相关区域，在MM-Vet上提升LLaVA-1.5达3.8%，跨多种LVLM（包括GPT-4V）通用有效。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

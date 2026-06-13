@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CORE: Conflict-Oriented Reasoning for General Multimodal Manipulation Detection
 description: >-
-  [ICML 2026][AIGC检测][冲突推理] 作者把"多模态假新闻检测"重新定义为"显式捕获模态间或与世界知识之间的冲突"任务，构建了带细粒度冲突标注的 14k 语料 CAC，并提出 CORE 框架通过冲突感知训练（CPT）重塑 MLLM 的概念边界…
+  [ICML 2026][AIGC检测][冲突推理] 作者把"多模态假新闻检测"重新定义为"显式捕获模态间或与世界知识之间的冲突"任务，构建了带细粒度冲突标注的 14k 语料 CAC，并提出 CORE 框架通过冲突感知训练（CPT）重塑 MLLM 的概念边界，使其在 DGM4、MDSM、MMFakeBench、NewsCLIPpings 四个数据集上以 100–750 个样本就大幅超过专用 SOTA。
 tags:
   - "ICML 2026"
   - "AIGC检测"

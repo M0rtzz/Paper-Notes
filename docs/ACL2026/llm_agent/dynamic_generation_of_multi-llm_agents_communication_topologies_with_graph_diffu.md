@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Generation of Multi-LLM Agents Communication Topologies with Graph Diffusion Models
 description: >-
-  [ACL 2026][LLM Agent][多智能体系统] 本文提出 Guided Topology Diffusion，将多 LLM agent 的通信拓扑生成建模为条件图扩散过程，并用代理奖励模型在每个去噪步骤做零阶引导，从而生成更稀疏、更省 token、更鲁棒的任务自适应协作网络。
+  [ACL 2026][LLM Agent][多智能体系统] 本文提出 Guided Topology Diffusion，将多 LLM agent 的通信拓扑生成建模为条件图扩散过程，并用代理奖励模型在每个去噪步骤做零阶引导，从而生成更稀疏、更省 token、更鲁棒的任务自适应协作网络。 领域现状：LLM 多智能体系统常通过…
 tags:
   - "ACL 2026"
   - "LLM Agent"

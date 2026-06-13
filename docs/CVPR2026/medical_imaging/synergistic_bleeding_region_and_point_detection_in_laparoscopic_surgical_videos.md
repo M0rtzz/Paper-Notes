@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos
 description: >-
-  [CVPR 2026][医学图像][出血检测] 构建首个腹腔镜手术出血区域+出血点标注数据集 SurgBlood，并提出基于 SAM2 的双分支双向引导在线检测器 BlooDet，通过 Mask/Point 分支协同优化实现出血区域分割与出血点定位的联合检测。
+  [CVPR 2026][医学图像][出血检测] 构建首个腹腔镜手术出血区域+出血点标注数据集 SurgBlood，并提出基于 SAM2 的双分支双向引导在线检测器 BlooDet，通过 Mask/Point 分支协同优化实现出血区域分割与出血点定位的联合检测。 腹腔镜微创手术中，术中出血是严重影响手术安全的紧急情况： - 出…
 tags:
   - "CVPR 2026"
   - "医学图像"

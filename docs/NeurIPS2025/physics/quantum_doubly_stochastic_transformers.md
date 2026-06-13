@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Quantum Doubly Stochastic Transformers
 description: >-
-  [NeurIPS 2025][物理/科学计算][量子变分电路] 提出QDSFormer（量子双随机Transformer），用变分量子电路QontOT替代softmax生成双随机注意力矩阵，理论和实验证明量子电路生成的DSM更多样、更好保持信息…
+  [NeurIPS 2025 Spotlight][物理/科学计算][量子变分电路] 提出QDSFormer（量子双随机Transformer），用变分量子电路QontOT替代softmax生成双随机注意力矩阵，理论和实验证明量子电路生成的DSM更多样、更好保持信息，在多个小规模视觉识别任务上一致超越标准ViT和Sinkformer。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "物理/科学计算"
   - "量子变分电路"
   - "双随机矩阵"

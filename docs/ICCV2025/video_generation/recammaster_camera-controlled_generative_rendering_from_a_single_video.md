@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReCamMaster: Camera-Controlled Generative Rendering from A Single Video
 description: >-
-  [ICCV 2025][视频生成][相机控制] 提出 ReCamMaster，通过帧维度拼接的视频条件注入机制和 UE5 合成的多相机同步数据集，实现从单视频输入以新相机轨迹重新生成视频，显著超越现有方法。
+  [ICCV 2025][视频生成][相机控制] 提出 ReCamMaster，通过帧维度拼接的视频条件注入机制和 UE5 合成的多相机同步数据集，实现从单视频输入以新相机轨迹重新生成视频，显著超越现有方法。 相机运动是影视制作的基础元素，深刻影响观众体验和叙事意图。然而，业余摄影师受限于硬件和技术，难以实现专业级相机运动…
 tags:
   - "ICCV 2025"
   - "视频生成"

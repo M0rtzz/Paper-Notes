@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-StanceDet: Retrieval-Augmented Multi-modal Multi-agent Stance Detection
 description: >-
-  [ACL 2026][社会计算][多模态立场检测] 作者把多模态立场检测重构成一个 4 阶段 multi-agent pipeline——CLIP 检索相似样本提供 few-shot CoT、文本/图像/跨模态冲突 3 个专家 agent 各自分析、3 个立场（支持/反对/中立）的 debater agent…
+  [ACL 2026][社会计算][多模态立场检测] 作者把多模态立场检测重构成一个 4 阶段 multi-agent pipeline——CLIP 检索相似样本提供 few-shot CoT、文本/图像/跨模态冲突 3 个专家 agent 各自分析、3 个立场（支持/反对/中立）的 debater agent 互相辩论、最后一个 adjudicator agent 做 self-reflection 出最终标签，5 个数据集上 in-target 和 zero-shot 都超过包括 GPT-4V、TMPT、MV-Debate 在内的强 baseline。
 tags:
   - "ACL 2026"
   - "社会计算"

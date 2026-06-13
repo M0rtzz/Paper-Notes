@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOP: Heterogeneous Topology-based Multimodal Entanglement for Co-Speech Gesture Generation
 description: >-
-  [CVPR 2025][音频/语音][语音伴随手势生成] 本文提出 HOP，一种基于异构拓扑的多模态纠缠方法，通过将音频作为桥梁，利用重编程模块对齐音频-文本语义、利用时空图网络对齐音频-动作节奏，实现更自然连贯的语音伴随手势生成，在 FGD、BC 和多样性指标上达到 SOTA。
+  [CVPR 2025][音频/语音][语音伴随手势生成] 本文提出 HOP，一种基于异构拓扑的多模态纠缠方法，通过将音频作为桥梁，利用重编程模块对齐音频-文本语义、利用时空图网络对齐音频-动作节奏，实现更自然连贯的语音伴随手势生成，在 FGD、BC 和多样性指标上达到 SOTA。 1. 领域现状：语音伴随手势生成（co-sp…
 tags:
   - "CVPR 2025"
   - "音频/语音"

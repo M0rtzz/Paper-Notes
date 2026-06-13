@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Algorithm for Explainable k-medians Clustering under lp Norm
 description: >-
-  [NeurIPS 2025][可解释性][可解释聚类] 本文提出首个适用于一般 $\ell_p$ 范数的可解释 k-medians 聚类算法，实现 $\tilde{O}(p(\log k)^{1+1/p-1/p^2})$ 近似比（改进了 p=2 的已知最优界），并给出首个动态版本：在中心集合的插入/删除下…
+  [NeurIPS 2025][可解释性][可解释聚类] 本文提出首个适用于一般 $\ell_p$ 范数的可解释 k-medians 聚类算法，实现 $\tilde{O}(p(\log k)^{1+1/p-1/p^2})$ 近似比（改进了 p=2 的已知最优界），并给出首个动态版本：在中心集合的插入/删除下，以 $O(d \log^3 k)$ 摊还更新时间和 $O(\log k)$ 重分配次数维护可解释聚类。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

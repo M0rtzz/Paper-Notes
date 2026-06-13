@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Layered Image Vectorization via Semantic Simplification
 description: >-
-  [CVPR 2025][模型压缩][图像矢量化] 本文提出一种渐进式图像矢量化方法，利用 Score Distillation Sampling（SDS）的特征平均效应生成逐级简化的图像序列，以此引导从宏观语义结构到精细细节的分层矢量重建，在视觉保真度、语义对齐和紧凑分层表示上显著优于现有方法。
+  [CVPR 2025][模型压缩][图像矢量化] 本文提出一种渐进式图像矢量化方法，利用 Score Distillation Sampling（SDS）的特征平均效应生成逐级简化的图像序列，以此引导从宏观语义结构到精细细节的分层矢量重建，在视觉保真度、语义对齐和紧凑分层表示上显著优于现有方法。 1. 领域现状：图像矢量化（…
 tags:
   - "CVPR 2025"
   - "模型压缩"

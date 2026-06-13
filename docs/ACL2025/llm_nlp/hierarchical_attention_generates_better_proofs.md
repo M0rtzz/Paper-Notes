@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Hierarchical Attention Generates Better Proofs
 description: >-
-  [ACL 2025][形式化定理证明] 提出 Hierarchical Attention 正则化方法，通过建立五层语义层次结构来引导 LLM 的注意力机制，使其与数学推理的自然信息流对齐，在 miniF2F 和 ProofNet 上分别提升证明成功率 2.05% 和 1.69%…
+  [ACL 2025][LLM 其他][形式化定理证明] 提出 Hierarchical Attention 正则化方法，通过建立五层语义层次结构来引导 LLM 的注意力机制，使其与数学推理的自然信息流对齐，在 miniF2F 和 ProofNet 上分别提升证明成功率 2.05% 和 1.69%，同时降低证明复杂度 23.81% 和 16.50%。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "形式化定理证明"
   - "层次化注意力"
   - "Lean"

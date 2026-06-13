@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Closing the Modality Gap Aligns Group-Wise Semantics
 description: >-
-  [ICLR2026][多模态VLM][modality gap] 证明 CLIP 中的 modality gap 对实例级任务（检索）无关紧要但严重损害群组级任务（聚类），并提出由 Align True Pairs loss + Centroid Uniformity loss 组成的新目标函数…
+  [ICLR2026][多模态VLM][modality gap] 证明 CLIP 中的 modality gap 对实例级任务（检索）无关紧要但严重损害群组级任务（聚类），并提出由 Align True Pairs loss + Centroid Uniformity loss 组成的新目标函数，在双模态和三模态设置中将 gap 几乎降为零，大幅提升聚类 V-Measure（+10-17 分），同时保持检索性能。
 tags:
   - "ICLR2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parameter Efficient Fine-tuning via Explained Variance Adaptation
 description: >-
-  [NeurIPS 2025][强化学习][参数高效微调] 提出 Explained Variance Adaptation (EVA)，通过对激活向量进行增量 SVD 来初始化 LoRA 矩阵，可证明地最大化期望梯度信号…
+  [NeurIPS 2025][强化学习][参数高效微调] 提出 Explained Variance Adaptation (EVA)，通过对激活向量进行增量 SVD 来初始化 LoRA 矩阵，可证明地最大化期望梯度信号，并结合自适应秩分配机制在语言生成/理解、图像分类、强化学习等多领域建立了精度-效率的新 Pareto 前沿。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

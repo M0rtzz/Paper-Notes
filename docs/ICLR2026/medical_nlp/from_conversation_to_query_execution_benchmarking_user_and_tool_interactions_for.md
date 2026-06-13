@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Conversation to Query Execution: Benchmarking User and Tool Interactions for EHR Database Agents
 description: >-
-  [ICLR 2026][医疗NLP][EHR] 提出EHR-ChatQA基准，首次评估数据库Agent在电子病历场景中的端到端交互工作流（澄清模糊查询→解决术语不匹配→生成SQL→返回答案），发现最强模型(o4-mini)的Pass@5超90%但Pass∧5(全部成功)大幅下降(差距达60%)…
+  [ICLR 2026][医疗NLP][EHR] 提出EHR-ChatQA基准，首次评估数据库Agent在电子病历场景中的端到端交互工作流（澄清模糊查询→解决术语不匹配→生成SQL→返回答案），发现最强模型(o4-mini)的Pass@5超90%但Pass∧5(全部成功)大幅下降(差距达60%)，暴露了安全关键领域的鲁棒性缺陷。
 tags:
   - "ICLR 2026"
   - "医疗NLP"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepSeq: High-Throughput Single-Cell RNA Sequencing Data Labeling via Web Search-Augmented Agentic Generative AI Foundation Models
 description: >-
-  [ICML 2025][计算生物][单细胞RNA测序] 提出 DeepSeq 流水线，利用大语言模型（尤其是具备实时网络搜索能力的 Agentic GPT-4o）对单细胞RNA测序数据进行自动化细胞类型标注，最高准确率达 82.5%，解决了大规模组学数据标注的吞吐量瓶颈。
+  [ICML 2025][计算生物][单细胞RNA测序] 提出 DeepSeq 流水线，利用大语言模型（尤其是具备实时网络搜索能力的 Agentic GPT-4o）对单细胞RNA测序数据进行自动化细胞类型标注，最高准确率达 82.5%，解决了大规模组学数据标注的吞吐量瓶颈。 单细胞RNA测序的规模化挑战 单细胞RNA测序（sc…
 tags:
   - "ICML 2025"
   - "计算生物"
@@ -186,10 +186,10 @@ $$\text{原始数据} \xrightarrow{\text{过滤}} \text{清洗后数据} \xright
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ 方法本身是已有技术的工程化组合（LLM + Scanpy + LangChain），核心创新在系统设计而非算法
-- 实验充分度: ⭐⭐ 单数据集验证，缺乏与专用工具对比，消融实验有限
-- 写作质量: ⭐⭐⭐⭐ 结构清晰，系统架构描述详细，图表丰富
-- 价值: ⭐⭐⭐ 展示了 LLM 在生物数据标注中的可行性，但实际影响力受限于准确率上限和缺乏广泛验证
+- 新颖性: ⭐⭐⭐⭐ 方法本身是已有技术的工程化组合（LLM + Scanpy + LangChain），核心创新在系统设计而非算法
+- 实验充分度: ⭐⭐⭐ 单数据集验证，缺乏与专用工具对比，消融实验有限
+- 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，系统架构描述详细，图表丰富
+- 价值: ⭐⭐⭐⭐ 展示了 LLM 在生物数据标注中的可行性，但实际影响力受限于准确率上限和缺乏广泛验证
 
 <!-- RELATED:START -->
 

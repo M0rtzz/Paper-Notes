@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ToolCoder: A Systematic Code-Empowered Tool Learning Framework for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][工具学习] 提出 ToolCoder 框架，将工具学习重新定义为代码生成任务，借鉴软件工程原则（需求分析→模块化设计→实现执行→错误调试→代码复用）让 LLM 通过生成和执行 Python 代码来完成多步工具调用…
+  [ACL 2025][LLM 其他][工具学习] 提出 ToolCoder 框架，将工具学习重新定义为代码生成任务，借鉴软件工程原则（需求分析→模块化设计→实现执行→错误调试→代码复用）让 LLM 通过生成和执行 Python 代码来完成多步工具调用，在 RestBench 和 API-Bank 上全面超越 ReAct、CodeAct 等基线方法。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "工具学习"
   - "代码生成"
   - "软件工程"

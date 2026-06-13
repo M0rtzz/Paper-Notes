@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Few-Shot Pill Recognition Under Visual Domain Shift
 description: >-
-  [CVPR 2026][目标检测][pill recognition] 本文从部署视角系统评估药丸识别在跨域few-shot条件下的泛化能力，揭示语义分类1-shot即饱和但定位/recall在重叠遮挡下急剧下降的解耦现象，并证明训练数据的视觉真实性远比数据量或shot数更关键。
+  [CVPR 2026][目标检测][pill recognition] 本文从部署视角系统评估药丸识别在跨域few-shot条件下的泛化能力，揭示语义分类1-shot即饱和但定位/recall在重叠遮挡下急剧下降的解耦现象，并证明训练数据的视觉真实性远比数据量或shot数更关键。 领域现状：药品不良事件（ADE）是可预防性医…
 tags:
   - "CVPR 2026"
   - "目标检测"

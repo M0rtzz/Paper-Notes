@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VoxMind: An End-to-End Agentic Spoken Dialogue System
 description: >-
-  [ACL 2026][音频/语音][端到端语音对话] 提出 VoxMind，一个赋予端到端语音对话模型智能体能力的统一框架：通过"Think-before-Speak"机制实现显式推理，结合多智能体动态工具管理架构解耦推理延迟与工具规模，任务完成率从基线 34.88% 提升至 74.57%…
+  [ACL 2026][音频/语音][端到端语音对话] 提出 VoxMind，一个赋予端到端语音对话模型智能体能力的统一框架：通过"Think-before-Speak"机制实现显式推理，结合多智能体动态工具管理架构解耦推理延迟与工具规模，任务完成率从基线 34.88% 提升至 74.57%，超越 Gemini-2.5-Pro。
 tags:
   - "ACL 2026"
   - "音频/语音"

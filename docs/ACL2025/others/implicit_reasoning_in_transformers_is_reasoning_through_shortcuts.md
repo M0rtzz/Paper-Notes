@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Reasoning in Transformers is Reasoning through Shortcuts
 description: >-
-  [ACL 2025 (Findings)][隐式推理] 本文通过在受控的多步数学推理数据集上从零训练 GPT-2，系统研究了语言模型的隐式推理机制，发现隐式推理本质上是基于模式匹配的捷径学习——在固定模式数据上能泛化，在非固定模式数据上则过拟合，这一发现在 SOTA 大模型上同样成立。
+  [ACL 2025 (Findings)][隐式推理] 本文通过在受控的多步数学推理数据集上从零训练 GPT-2，系统研究了语言模型的隐式推理机制，发现隐式推理本质上是基于模式匹配的捷径学习——在固定模式数据上能泛化，在非固定模式数据上则过拟合，这一发现在 SOTA 大模型上同样成立。 领域现状：测试时计算（test-tim…
 tags:
   - "ACL 2025 (Findings)"
   - "隐式推理"

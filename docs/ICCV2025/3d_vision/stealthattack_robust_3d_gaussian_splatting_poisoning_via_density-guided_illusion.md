@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StealthAttack: Robust 3D Gaussian Splatting Poisoning via Density-Guided Illusions
 description: >-
-  [ICCV 2025][3D视觉][3D Gaussian Splatting] 首次针对3D高斯泼溅(3DGS)提出密度引导的投毒攻击方法，通过在低密度区域注入幻觉物体的高斯点并引入自适应噪声破坏多视角一致性，实现从目标视角清晰可见而不干扰其余视角的隐蔽攻击。
+  [ICCV 2025][3D视觉][3D Gaussian Splatting] 首次针对3D高斯泼溅(3DGS)提出密度引导的投毒攻击方法，通过在低密度区域注入幻觉物体的高斯点并引入自适应噪声破坏多视角一致性，实现从目标视角清晰可见而不干扰其余视角的隐蔽攻击。 随着3DGS在自动驾驶、AR/VR等安全关键应用中的广泛部署…
 tags:
   - "ICCV 2025"
   - "3D视觉"

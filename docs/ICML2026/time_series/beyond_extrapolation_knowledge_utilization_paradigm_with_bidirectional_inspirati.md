@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Extrapolation: Knowledge Utilization Paradigm with Bidirectional Inspiration for Time Series Forecasting
 description: >-
-  [ICML 2026][时间序列][时间序列预测] 提出 KUP-BI 框架，从训练集中构建"后目标延续"知识库，通过比率式变换检索相似历史轨迹的延续模式，生成延续风格辅助流并与主干网络特征门控融合，在 6 个数据集、4 种骨干架构上一致提升长时预测性能。
+  [ICML 2026][时间序列][时间序列预测] 提出 KUP-BI 框架，从训练集中构建"后目标延续"知识库，通过比率式变换检索相似历史轨迹的延续模式，生成延续风格辅助流并与主干网络特征门控融合，在 6 个数据集、4 种骨干架构上一致提升长时预测性能。 领域现状：时间序列预测广泛应用于能源、交通、金融等场景…
 tags:
   - "ICML 2026"
   - "时间序列"

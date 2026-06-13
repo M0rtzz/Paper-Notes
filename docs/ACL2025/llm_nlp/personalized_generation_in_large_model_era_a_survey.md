@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Personalized Generation In Large Model Era: A Survey
 description: >-
-  [ACL 2025 (Findings)][Personalized Generation] 首篇跨模态个性化生成（PGen）系统综述，提出统一的用户中心视角将 NLP/CV/IR 社区的研究纳入同一框架，覆盖文本/图像/视频/音频/3D/跨模态六大模态。
+  [ACL 2025 (Findings)][LLM 其他][Personalized Generation] 首篇跨模态个性化生成（PGen）系统综述，提出统一的用户中心视角将 NLP/CV/IR 社区的研究纳入同一框架，覆盖文本/图像/视频/音频/3D/跨模态六大模态。 - 核心观察：大模型时代，内容生成正从通用生成（on…
 tags:
   - "ACL 2025 (Findings)"
+  - "LLM 其他"
   - "Personalized Generation"
   - "Survey"
   - "User Modeling"

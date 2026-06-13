@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SE-GA: Memory-Augmented Self-Evolution for GUI Agents
 description: >-
-  [ICML 2026][LLM Agent][GUI Agent] SE-GA 给基于 VLM 的 GUI 智能体配了一套"情景+语义+经验"三层记忆库（TTME）+ 一个两阶段记忆增强自演化训练流程（MASE，SFT→改进版 GRPO）…
+  [ICML 2026][LLM Agent][GUI Agent] SE-GA 给基于 VLM 的 GUI 智能体配了一套"情景+语义+经验"三层记忆库（TTME）+ 一个两阶段记忆增强自演化训练流程（MASE，SFT→改进版 GRPO），把 Qwen2.5-VL-7B 在 ScreenSpot 推到 89.0、AndroidControl-High 推到 75.8、AndroidWorld 推到 39.0，全面超越同规模基线甚至打平 72B 模型。
 tags:
   - "ICML 2026"
   - "LLM Agent"

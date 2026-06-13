@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting
 description: >-
-  [AAAI 2026][时间序列][时间序列预测] 提出FreqCycle框架，通过FECF模块显式学习共享周期模式、SFPL模块增强中高频能量占比，并扩展为MFreqCycle处理耦合多周期性，在7个基准上达到SOTA性能与效率的最优平衡。
+  [AAAI 2026][时间序列][时间序列预测] 提出FreqCycle框架，通过FECF模块显式学习共享周期模式、SFPL模块增强中高频能量占比，并扩展为MFreqCycle处理耦合多周期性，在7个基准上达到SOTA性能与效率的最优平衡。 时间序列预测（TSF）中，挖掘时频特征至关重要。现有研究存在三个关键不足： 过度依…
 tags:
   - "AAAI 2026"
   - "时间序列"

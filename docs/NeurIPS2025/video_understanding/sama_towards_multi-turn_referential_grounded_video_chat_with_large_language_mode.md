@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models
 description: >-
-  [NeurIPS 2025][视频理解][视频grounding] 提出 SAMA 框架，通过构建统一的数据集（SAMA-239K）、模型（时空上下文聚合器 + SAM）和基准（SAMA-Bench），首次实现了多轮引用式视频对话中细粒度时空理解与grounding的联合建模。
+  [NeurIPS 2025][视频理解][视频grounding] 提出 SAMA 框架，通过构建统一的数据集（SAMA-239K）、模型（时空上下文聚合器 + SAM）和基准（SAMA-Bench），首次实现了多轮引用式视频对话中细粒度时空理解与grounding的联合建模。 当前 Video Large Multimod…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

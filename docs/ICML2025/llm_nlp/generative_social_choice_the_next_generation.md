@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Generative Social Choice: The Next Generation
 description: >-
-  [ICML2025][LLM/NLP][生成式社会选择] 将生成式社会选择框架扩展至带成本/预算约束和近似查询的场景，提出 DemocraticProcess 算法并给出近乎最优的近似比例代表性理论保证，实现了实用系统 PROSE（基于 GPT-4o）在药物评论和城市治理数据集上验证有效性。
+  [ICML2025][LLM 其他][生成式社会选择] 将生成式社会选择框架扩展至带成本/预算约束和近似查询的场景，提出 DemocraticProcess 算法并给出近乎最优的近似比例代表性理论保证，实现了实用系统 PROSE（基于 GPT-4o）在药物评论和城市治理数据集上验证有效性。 - Polis 等集体响应系统：…
 tags:
   - "ICML2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "生成式社会选择"
   - "比例代表性"
   - "参与式预算"

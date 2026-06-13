@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness
 description: >-
-  [CVPR 2026][多模态VLM][稀有物体识别] 提出一种高效的即插即用模块，通过学习多模态类嵌入来增强 VLM 对稀有物体的识别和推理能力：在视觉端用 cross-attention 适配器精化视觉 token，在文本端注入物体检测提示…
+  [CVPR 2026][多模态VLM][稀有物体识别] 提出一种高效的即插即用模块，通过学习多模态类嵌入来增强 VLM 对稀有物体的识别和推理能力：在视觉端用 cross-attention 适配器精化视觉 token，在文本端注入物体检测提示，无需微调 VLM 即可在 CODA-LM 上获得 72.8→75.4 的显著提升。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

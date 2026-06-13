@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Score-Repellent Monte Carlo: Toward Efficient Non-Markovian Sampler with Constant Memory in General State Spaces
 description: >-
-  [ICML 2026][文本生成][MCMC] SRMC 用一个 $d$ 维的 running score 平均（而不是 $|\mathcal{X}|$ 维的经验测度）来记录历史，再通过指数 score-tilt 把这段历史折成一个"排斥已访问区域"的代理目标 $\pi_\theta$…
+  [ICML 2026 Spotlight][文本生成][MCMC] SRMC 用一个 $d$ 维的 running score 平均（而不是 $|\mathcal{X}|$ 维的经验测度）来记录历史，再通过指数 score-tilt 把这段历史折成一个"排斥已访问区域"的代理目标 $\pi_\theta$，套在任何 base MCMC kernel 外面，就能在通用状态空间下用常数内存实现非马尔可夫、低方差、保持归一化无关性的采样器。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "文本生成"
   - "MCMC"
   - "非马尔可夫采样"

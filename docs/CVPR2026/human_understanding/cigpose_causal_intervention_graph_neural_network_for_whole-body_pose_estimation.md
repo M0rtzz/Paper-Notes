@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CIGPose: Causal Intervention Graph Neural Network for Whole-Body Pose Estimation
 description: >-
-  [CVPR2026][人体理解][全身姿态估计] 提出因果干预图姿态估计框架 CIGPose，通过结构因果模型识别视觉上下文混杂因素，利用预测不确定性定位受混杂影响的关键点并用学习得到的上下文无关规范嵌入替换，再经层次图神经网络建模骨骼解剖约束…
+  [CVPR2026][人体理解][全身姿态估计] 提出因果干预图姿态估计框架 CIGPose，通过结构因果模型识别视觉上下文混杂因素，利用预测不确定性定位受混杂影响的关键点并用学习得到的上下文无关规范嵌入替换，再经层次图神经网络建模骨骼解剖约束，在 COCO-WholeBody 上达到 67.0% AP 的新 SOTA。
 tags:
   - "CVPR2026"
   - "人体理解"

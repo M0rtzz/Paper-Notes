@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OODD: Test-time Out-of-Distribution Detection with Dynamic Dictionary
 description: >-
-  [CVPR 2025][AI安全][分布外检测] 提出 OODD，通过优先队列维护动态 OOD 字典在测试时实时收集潜在 OOD 样本特征来校准 OOD 分数，在 CIFAR-100 Far OOD 上相比 SOTA 方法 FPR95 降低 26.0%，且无需微调。
+  [CVPR 2025][AI安全][分布外检测] 提出 OODD，通过优先队列维护动态 OOD 字典在测试时实时收集潜在 OOD 样本特征来校准 OOD 分数，在 CIFAR-100 Far OOD 上相比 SOTA 方法 FPR95 降低 26.0%，且无需微调。 分布外（OOD）检测是深度学习安全部署的关键问题…
 tags:
   - "CVPR 2025"
   - "AI安全"

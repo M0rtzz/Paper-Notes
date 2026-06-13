@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AXIS: Efficient Human-Agent-Computer Interaction with API-First LLM-Based Agents
 description: >-
-  [ACL 2025][LLM/NLP][API-first] 提出 AXIS 框架，通过让 LLM Agent 优先调用 API 而非模拟人类 UI 操作来完成应用任务，在 Microsoft Word 实验中将任务完成时间缩短 65-70%，认知负荷降低 38-53%，同时保持 97-98% 的准确率。
+  [ACL 2025][LLM 其他][API-first] 提出 AXIS 框架，通过让 LLM Agent 优先调用 API 而非模拟人类 UI 操作来完成应用任务，在 Microsoft Word 实验中将任务完成时间缩短 65-70%，认知负荷降低 38-53%，同时保持 97-98% 的准确率。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "API-first"
   - "UI Agent"
   - "技能探索"

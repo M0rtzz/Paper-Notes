@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Domain Generalization in Self-Supervised Monocular Depth Estimation via Stabilized Adversarial Training
 description: >-
-  [ECCV 2024][3D视觉][自监督单目深度估计] 提出 SCAT 框架，通过缩放深度网络（SDN）降低 UNet 跳跃连接对扰动的敏感性，并引入冲突梯度手术（CGS）解决对抗增强导致的双重优化冲突，首次将对抗数据增强成功应用于自监督单目深度估计以提升跨域泛化能力。
+  [ECCV 2024][3D视觉][自监督单目深度估计] 提出 SCAT 框架，通过缩放深度网络（SDN）降低 UNet 跳跃连接对扰动的敏感性，并引入冲突梯度手术（CGS）解决对抗增强导致的双重优化冲突，首次将对抗数据增强成功应用于自监督单目深度估计以提升跨域泛化能力。 领域现状： 自监督单目深度估计（MDE）通过图像重建…
 tags:
   - "ECCV 2024"
   - "3D视觉"

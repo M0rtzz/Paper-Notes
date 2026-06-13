@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection
 description: >-
-  [ICCV 2025][目标检测][Mixture of Experts] 首次将Mixture of Experts引入实时开放词汇目标检测器，通过MoE-Tuning将Grounding DINO 1.5 Edge从dense模型扩展为动态推理框架，提出细粒度专家分解和预训练权重分配策略…
+  [ICCV 2025][目标检测][Mixture of Experts] 首次将Mixture of Experts引入实时开放词汇目标检测器，通过MoE-Tuning将Grounding DINO 1.5 Edge从dense模型扩展为动态推理框架，提出细粒度专家分解和预训练权重分配策略，仅用1.56M开源数据超越使用20M私有数据训练的原版模型。
 tags:
   - "ICCV 2025"
   - "目标检测"

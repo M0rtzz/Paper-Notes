@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components
 description: >-
-  [ICLR 2026][联邦聚类] 提出 FedGEM 算法，通过客户端本地 EM 步后构建不确定性集、服务器利用不确定性集交集检测聚类重叠并推断全局聚类数，首次实现在全局聚类数未知情况下的联邦聚类，并提供了概率收敛保证。
+  [ICLR 2026][联邦聚类] 提出 FedGEM 算法，通过客户端本地 EM 步后构建不确定性集、服务器利用不确定性集交集检测聚类重叠并推断全局聚类数，首次实现在全局聚类数未知情况下的联邦聚类，并提供了概率收敛保证。 领域现状：联邦学习中的聚类任务通常假设所有客户端共享相同的聚类集合且全局聚类数 $K$ 已知…
 tags:
   - "ICLR 2026"
   - "联邦聚类"

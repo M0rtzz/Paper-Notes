@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Web-Shepherd: Advancing PRMs for Reinforcing Web Agents
 description: >-
-  [NeurIPS 2025][LLM Agent][process reward model] 提出首个针对网页导航的过程奖励模型 Web-Shepherd，通过检查清单分解任务目标为可评估的子目标，3B/8B 模型在轨迹准确率上碾压 GPT-4o（85% vs 10%），同时成本仅为 1/10…
+  [NeurIPS 2025 Spotlight][LLM Agent][process reward model] 提出首个针对网页导航的过程奖励模型 Web-Shepherd，通过检查清单分解任务目标为可评估的子目标，3B/8B 模型在轨迹准确率上碾压 GPT-4o（85% vs 10%），同时成本仅为 1/10，使网页 Agent 的强化学习和推理时搜索变得实际可行。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM Agent"
   - "process reward model"
   - "Web Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowCon: Out-of-Distribution Detection using Flow-Based Contrastive Learning
 description: >-
-  [ECCV 2024][自监督学习][OOD检测] 提出FlowCon，一种基于密度估计的OOD检测方法，创新性地将正规化流（normalizing flow）与监督对比学习结合——在流模型的潜在空间中使用基于Bhattacharyya系数的对比损失学习类别条件高斯分布…
+  [ECCV 2024][自监督学习][OOD检测] 提出FlowCon，一种基于密度估计的OOD检测方法，创新性地将正规化流（normalizing flow）与监督对比学习结合——在流模型的潜在空间中使用基于Bhattacharyya系数的对比损失学习类别条件高斯分布，无需外部OOD数据或重训分类器即可实现高效的OOD检测。
 tags:
   - "ECCV 2024"
   - "自监督学习"

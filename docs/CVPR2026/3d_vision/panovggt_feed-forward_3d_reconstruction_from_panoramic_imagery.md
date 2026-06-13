@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PanoVGGT: Feed-Forward 3D Reconstruction from Panoramic Imagery
 description: >-
-  [CVPR 2026][3D视觉][全景3D重建] 提出 PanoVGGT，一个置换等变的 Transformer 框架，能从一张或多张无序全景图像中在单次前馈中联合预测相机位姿、深度图和全局一致3D点云；同时贡献了 PanoCity——一个包含超过12万张室外全景图像的大规模数据集。
+  [CVPR 2026][3D视觉][全景3D重建] 提出 PanoVGGT，一个置换等变的 Transformer 框架，能从一张或多张无序全景图像中在单次前馈中联合预测相机位姿、深度图和全局一致3D点云；同时贡献了 PanoCity——一个包含超过12万张室外全景图像的大规模数据集。 领域现状：DUSt3R、VGGT、$\…
 tags:
   - "CVPR 2026"
   - "3D视觉"

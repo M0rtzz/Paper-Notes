@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WinQ: Accelerating Quantization-Aware Training of Language Models Around Saddle Points
 description: >-
-  [ICML2026][模型压缩][量化感知训练] WinQ 把低比特语言模型 QAT 的慢收敛解释为权重陷在低曲率鞍点附近，并用周期性权重量化插值重初始化加噪声扰动梯度，在几乎不增加训练开销的情况下把 1-2 bit QAT 加速到 1.5-4 倍…
+  [ICML2026][模型压缩][量化感知训练] WinQ 把低比特语言模型 QAT 的慢收敛解释为权重陷在低曲率鞍点附近，并用周期性权重量化插值重初始化加噪声扰动梯度，在几乎不增加训练开销的情况下把 1-2 bit QAT 加速到 1.5-4 倍，并在相同训练预算下提升多种 LLaMA/Qwen 量化配置的困惑度和零样本准确率。
 tags:
   - "ICML2026"
   - "模型压缩"

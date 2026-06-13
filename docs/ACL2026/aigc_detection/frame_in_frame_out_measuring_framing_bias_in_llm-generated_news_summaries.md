@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frame In, Frame Out: Measuring Framing Bias in LLM-Generated News Summaries
 description: >-
-  [ACL2026][AIGC检测][框架偏见] 本文提出 FIFO，用 LLM jury 加专家校准的方式在 XSum 上大规模测量 LLM 新闻摘要是否引入 framing bias，并发现若干高容量模型的框架化表达比例高于人工摘要基线。
+  [ACL2026][AIGC检测][框架偏见] 本文提出 FIFO，用 LLM jury 加专家校准的方式在 XSum 上大规模测量 LLM 新闻摘要是否引入 framing bias，并发现若干高容量模型的框架化表达比例高于人工摘要基线。 领域现状：新闻摘要模型通常用事实一致性、覆盖率、流畅度和偏好打分来评估…
 tags:
   - "ACL2026"
   - "AIGC检测"

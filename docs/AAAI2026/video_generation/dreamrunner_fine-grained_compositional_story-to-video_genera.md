@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation
 description: >-
-  [AAAI 2026][视频生成][故事视频生成] 提出 DreamRunner 框架，通过 LLM 双层规划 + 检索增强运动先验学习 + 时空区域3D注意力模块(SR3AI)，实现细粒度可控的多角色多事件故事视频生成。
+  [AAAI 2026][视频生成][故事视频生成] 提出 DreamRunner 框架，通过 LLM 双层规划 + 检索增强运动先验学习 + 时空区域3D注意力模块(SR3AI)，实现细粒度可控的多角色多事件故事视频生成。 故事视频生成 (SVG) 旨在根据叙事脚本生成多场景、角色驱动的连贯视频。现有方法（如 VLogger…
 tags:
   - "AAAI 2026"
   - "视频生成"

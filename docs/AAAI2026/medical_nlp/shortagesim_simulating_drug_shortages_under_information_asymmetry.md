@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ShortageSim: Simulating Drug Shortages under Information Asymmetry
 description: >-
-  [AAAI 2026][医疗NLP][药品短缺] 提出 ShortageSim，首个基于 **LLM 多智能体**的药品短缺模拟框架，建模 FDA 监管者、制造商和购买者在信息不对称下的战略决策，在历史短缺数据上实现对解决滞后时间 84% 的预测改善，为监管策略评估提供受控测试平台。
+  [AAAI 2026 Oral][医疗NLP][药品短缺] 提出 ShortageSim，首个基于 LLM 多智能体：的药品短缺模拟框架，建模 FDA 监管者、制造商和购买者在信息不对称下的战略决策，在历史短缺数据上实现对解决滞后时间 84% 的预测改善，为监管策略评估提供受控测试平台。 1. 领域现状：药品短缺是全球性的医…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "医疗NLP"
   - "药品短缺"
   - "多智能体模拟"

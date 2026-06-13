@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Stopping Computation for Converged Tokens in Masked Diffusion-LM Decoding
 description: >-
-  [ICLR 2026][LLM/NLP][扩散模型] 提出 SureLock，当 Masked Diffusion LM 中已 unmask 的 token 后验分布稳定后永久锁定该位置（跳过 Q 投影和 FFN，缓存 KV），将每步注意力计算从 $O(N^2d)$ 降为 $O(MNd)$…
+  [ICLR 2026][LLM 其他][扩散模型] 提出 SureLock，当 Masked Diffusion LM 中已 unmask 的 token 后验分布稳定后永久锁定该位置（跳过 Q 投影和 FFN，缓存 KV），将每步注意力计算从 $O(N^2d)$ 降为 $O(MNd)$，在 LLaDA-8B 上减少 30-50% FLOPs 且不损生成质量。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散模型"
   - "推理加速"
   - "Token Locking"

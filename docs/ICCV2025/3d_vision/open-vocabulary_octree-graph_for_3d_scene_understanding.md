@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Open-Vocabulary Octree-Graph for 3D Scene Understanding
 description: >-
-  [ICCV 2025][3D视觉][开放词汇] 提出 Octree-Graph，一种将自适应八叉树与图结构结合的新颖场景表示，通过时序分组式段合并(CGSM)和实例特征聚合(IFA)获取准确的语义对象，实现高效的开放词汇3D场景理解。
+  [ICCV 2025][3D视觉][开放词汇] 提出 Octree-Graph，一种将自适应八叉树与图结构结合的新颖场景表示，通过时序分组式段合并(CGSM)和实例特征聚合(IFA)获取准确的语义对象，实现高效的开放词汇3D场景理解。 开放词汇3D场景理解对于具身智能体至关重要。现有方法利用预训练VLM进行目标分割并投射到点…
 tags:
   - "ICCV 2025"
   - "3D视觉"

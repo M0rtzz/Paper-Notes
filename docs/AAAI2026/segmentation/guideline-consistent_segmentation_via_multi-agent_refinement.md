@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guideline-Consistent Segmentation via Multi-Agent Refinement
 description: >-
-  [AAAI 2026][语义分割][指南一致性分割] 提出一个免训练的多智能体框架，通过 Worker（分割执行）和 Supervisor（指南验证）的迭代循环，配合 RL 自适应停止策略，实现严格遵循复杂文本指南的语义分割…
+  [AAAI 2026][语义分割][指南一致性分割] 提出一个免训练的多智能体框架，通过 Worker（分割执行）和 Supervisor（指南验证）的迭代循环，配合 RL 自适应停止策略，实现严格遵循复杂文本指南的语义分割，在 Waymo 和 ReasonSeg 上分别超越 SOTA 8.61 和 5.5 gIoU。
 tags:
   - "AAAI 2026"
   - "语义分割"

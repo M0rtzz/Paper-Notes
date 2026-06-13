@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MaxSup: Overcoming Representation Collapse in Label Smoothing
 description: >-
-  [NeurIPS 2025][Label Smoothing] 通过解析 Label Smoothing (LS) 的损失函数，发现其包含一个在错误分类时放大错误的"误差放大项"，导致类内特征坍缩；提出 Max Suppression (MaxSup) 方法…
+  [NeurIPS 2025 Oral][Label Smoothing] 通过解析 Label Smoothing (LS) 的损失函数，发现其包含一个在错误分类时放大错误的"误差放大项"，导致类内特征坍缩；提出 Max Suppression (MaxSup) 方法，将惩罚目标从 ground-truth logit 转移至 top-1 logit，消除误差放大效应同时保留有益正则化。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "Label Smoothing"
   - "正则化"
   - "表示坍缩"

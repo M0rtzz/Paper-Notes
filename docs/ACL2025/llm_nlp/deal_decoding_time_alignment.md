@@ -2,10 +2,10 @@
 title: >-
   [论文解读] DeAL: Decoding-time Alignment for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][decoding-time alignment] DeAL 将 LLM 对齐问题重新形式化为解码时的启发式搜索问题，在推理阶段利用可定制的奖励函数（包括程序化约束和参数化 reward model）引导 token 选择，实现了灵活的多目标对齐且可与 RLHF 互补叠加…
+  [ACL 2025][LLM 其他][decoding-time alignment] DeAL 将 LLM 对齐问题重新形式化为解码时的启发式搜索问题，在推理阶段利用可定制的奖励函数（包括程序化约束和参数化 reward model）引导 token 选择，实现了灵活的多目标对齐且可与 RLHF 互补叠加。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "decoding-time alignment"
   - "reward model"
   - "A* search"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Algorithmic Fidelity of Large Language Models in Generating Synthetic German Public Opinions: A Case Study
 description: >-
-  [ACL 2025][LLM/NLP][algorithmic fidelity] 基于德国纵向选举调查(GLES)的开放式问题数据，系统评估三个开源LLM（Llama2、Gemma、Mixtral）通过人口统计persona提示生成合成德国公众舆论的算法保真度…
+  [ACL 2025][LLM 其他][algorithmic fidelity] 基于德国纵向选举调查(GLES)的开放式问题数据，系统评估三个开源LLM（Llama2、Gemma、Mixtral）通过人口统计persona提示生成合成德国公众舆论的算法保真度，发现Llama2在亚群体代表性上表现最佳（JS距离0.28），但所有模型均表现出左倾政治偏见和群体内多样性降低的问题。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "algorithmic fidelity"
   - "opinion simulation"
   - "提示学习"

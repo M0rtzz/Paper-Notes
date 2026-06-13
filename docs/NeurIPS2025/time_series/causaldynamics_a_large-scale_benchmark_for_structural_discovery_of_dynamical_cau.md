@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CausalDynamics: A Large-Scale Benchmark for Structural Discovery of Dynamical Causal Models
 description: >-
-  [NeurIPS 2025][时间序列][causal discovery] 提出 CausalDynamics——迄今最大规模的动力系统因果发现 benchmark（14000+ 图、5000 万+ 样本），涵盖从 3 维混沌 ODE/SDE 到层级耦合系统再到拟真气候模型的三层渐进复杂度体系…
+  [NeurIPS 2025][时间序列][causal discovery] 提出 CausalDynamics——迄今最大规模的动力系统因果发现 benchmark（14000+ 图、5000 万+ 样本），涵盖从 3 维混沌 ODE/SDE 到层级耦合系统再到拟真气候模型的三层渐进复杂度体系，并全面评估了 10 种 SOTA 因果发现算法，揭示当前深度学习方法在高维非线性动力系统上的不足。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

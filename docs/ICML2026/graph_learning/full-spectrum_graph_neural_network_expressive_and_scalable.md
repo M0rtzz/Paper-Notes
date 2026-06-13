@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Full-Spectrum Graph Neural Network: Expressive and Scalable
 description: >-
-  [ICML 2026][图学习][图神经网络] 本文把经典谱 GNN 的单变量特征值滤波器 $g(\lambda_i)$ 推广为双变量滤波器 $g(\lambda_i,\lambda_j)$，把信号从节点域抬到节点对域，理论上能逼近 Local 2-GNN（超越 1-WL）…
+  [ICML 2026][图学习][图神经网络] 本文把经典谱 GNN 的单变量特征值滤波器 $g(\lambda_i)$ 推广为双变量滤波器 $g(\lambda_i,\lambda_j)$，把信号从节点域抬到节点对域，理论上能逼近 Local 2-GNN（超越 1-WL），并通过低秩张量分解避开 $n^2\times n^2$ 显式计算，在异质图节点分类和子结构计数上拿到强结果。
 tags:
   - "ICML 2026"
   - "图学习"

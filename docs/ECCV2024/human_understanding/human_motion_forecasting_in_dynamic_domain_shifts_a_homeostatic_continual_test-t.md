@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework
 description: >-
-  [ECCV 2024][人体理解][人体运动预测] 提出HoCoTTA框架，通过多域稳态评估和隔离参数优化策略，在持续变化的目标域中实现人体运动预测的鲁棒自适应，有效缓解了灾难性遗忘和误差累积问题。
+  [ECCV 2024][人体理解][人体运动预测] 提出HoCoTTA框架，通过多域稳态评估和隔离参数优化策略，在持续变化的目标域中实现人体运动预测的鲁棒自适应，有效缓解了灾难性遗忘和误差累积问题。 领域现状：人体运动预测是计算机视觉和机器人领域的重要任务，目标是根据观测到的历史姿态序列预测未来的人体运动…
 tags:
   - "ECCV 2024"
   - "人体理解"

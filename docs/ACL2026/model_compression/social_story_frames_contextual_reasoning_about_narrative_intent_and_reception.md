@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Social Story Frames: Contextual Reasoning about Narrative Intent and Reception
 description: >-
-  [ACL2026][模型压缩][叙事理解] 这篇论文提出 SocialStoryFrames，用一个包含 10 个维度的读者反应 taxonomy 和两个蒸馏模型，把 Reddit 故事放回社区与对话上下文中推断其叙事意图、读者情感和价值判断，并在 6…
+  [ACL2026][模型压缩][叙事理解] 这篇论文提出 SocialStoryFrames，用一个包含 10 个维度的读者反应 taxonomy 和两个蒸馏模型，把 Reddit 故事放回社区与对话上下文中推断其叙事意图、读者情感和价值判断，并在 6,140 条社交媒体故事上展示了比语义相似度更细的社区叙事实践分析。
 tags:
   - "ACL2026"
   - "模型压缩"

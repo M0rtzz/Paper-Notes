@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DELT: A Simple Diversity-driven EarlyLate Training for Dataset Distillation
 description: >-
-  [CVPR 2025][模型压缩][数据集蒸馏] 提出EarlyLate训练策略，通过让不同IPC子批次从不同优化起点开始、经历不同迭代次数来生成难度各异的合成图像，在batch-to-global匹配框架下显著提升类内多样性，同时减少39.3%计算时间…
+  [CVPR 2025][模型压缩][数据集蒸馏] 提出EarlyLate训练策略，通过让不同IPC子批次从不同优化起点开始、经历不同迭代次数来生成难度各异的合成图像，在batch-to-global匹配框架下显著提升类内多样性，同时减少39.3%计算时间，在ImageNet-1K上以IPC=50达到66.1%（ResNet-101，超越RDED 4.9%）。
 tags:
   - "CVPR 2025"
   - "模型压缩"

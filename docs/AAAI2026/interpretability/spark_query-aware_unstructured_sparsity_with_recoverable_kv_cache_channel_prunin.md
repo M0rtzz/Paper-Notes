@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparK: Query-Aware Unstructured Sparsity with Recoverable KV Cache Channel Pruning
 description: >-
-  [AAAI 2026][可解释性][KV Cache压缩] 提出SparK——一种training-free的KV cache通道级非结构化剪枝方法，通过query-aware的saliency评估选择关键通道+recovery机制恢复被剪枝通道的贡献，在80%剪枝率下性能损失<5%…
+  [AAAI 2026][可解释性][KV Cache压缩] 提出SparK——一种training-free的KV cache通道级非结构化剪枝方法，通过query-aware的saliency评估选择关键通道+recovery机制恢复被剪枝通道的贡献，在80%剪枝率下性能损失<5%，与token eviction方法正交互补，可额外减少30%+ KV cache存储。
 tags:
   - "AAAI 2026"
   - "可解释性"

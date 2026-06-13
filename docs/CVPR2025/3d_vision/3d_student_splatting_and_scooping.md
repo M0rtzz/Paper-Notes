@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Student Splatting and Scooping (SSS)
 description: >-
-  [CVPR 2025][3D视觉][Student-t Distribution] 提出SSS（Student Splatting and Scooping），用前所未有的三重创新改进3DGS范式：(1) 用**Student-t分布**替代高斯分布作为混合组件（可学习的尾部厚度…
+  [CVPR 2025][3D视觉][Student-t Distribution] 提出SSS（Student Splatting and Scooping），用前所未有的三重创新改进3DGS范式：(1) 用**Student-t分布**替代高斯分布作为混合组件（可学习的尾部厚度，从Cauchy到Gaussian连续变化）；(2) 引入**负密度组件**（scooping减去颜色）扩展到非单调混合模型；(3) 用**SGHMC采样**替代SGD解耦参数优化，在Mip-NeRF360/T&T/Deep Blending上6/9指标取得最优，且参数效率极高——用**最少18%**的组件数即可匹配或超越3DGS。
 tags:
   - "CVPR 2025"
   - "3D视觉"

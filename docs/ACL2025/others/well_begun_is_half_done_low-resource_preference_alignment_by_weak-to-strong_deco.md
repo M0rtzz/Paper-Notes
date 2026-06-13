@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding
 description: >-
-  [ACL 2025][偏好对齐] 提出 Weak-to-Strong Decoding (WSD) 框架，利用一个小型对齐模型为大型基座模型起草对齐的开头，再由大模型续写，以低资源方式实现偏好对齐且不产生 alignment tax。
+  [ACL 2025][偏好对齐] 提出 Weak-to-Strong Decoding (WSD) 框架，利用一个小型对齐模型为大型基座模型起草对齐的开头，再由大模型续写，以低资源方式实现偏好对齐且不产生 alignment tax。 大语言模型需要与人类偏好对齐，但现有方法面临两个核心问题：一是微调导致的 alignmen…
 tags:
   - "ACL 2025"
   - "偏好对齐"

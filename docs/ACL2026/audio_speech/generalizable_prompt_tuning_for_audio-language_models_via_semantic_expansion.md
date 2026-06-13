@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models
 description: >-
-  [ACL 2026][音频/语音][提示调优] SEPT 通过利用 LLM 生成语义邻居并设计带边距约束的语义扩展损失来正则化提示嵌入空间，显著缓解了音频语言模型（ALM）提示调优中的 Base-New Tradeoff 问题，建立了 ALM 提示泛化的首个系统性评估基准。
+  [ACL 2026 Findings][音频/语音][提示调优] SEPT 通过利用 LLM 生成语义邻居并设计带边距约束的语义扩展损失来正则化提示嵌入空间，显著缓解了音频语言模型（ALM）提示调优中的 Base-New Tradeoff 问题，建立了 ALM 提示泛化的首个系统性评估基准。 领域现状：提示调优在视觉语言模型…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "提示调优"
   - "音频语言模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning
 description: >-
-  [CVPR 2026][LLM Agent][多模态记忆] 提出 WorldMM，一个基于多模态记忆的视频推理 agent，构建情景记忆（多时间尺度文本知识图）、语义记忆（持续更新的关系知识图）和视觉记忆（帧级检索库）三类互补记忆，通过自适应多轮检索 agent 动态选择最相关的记忆源和时间粒度…
+  [CVPR 2026][LLM Agent][多模态记忆] 提出 WorldMM，一个基于多模态记忆的视频推理 agent，构建情景记忆（多时间尺度文本知识图）、语义记忆（持续更新的关系知识图）和视觉记忆（帧级检索库）三类互补记忆，通过自适应多轮检索 agent 动态选择最相关的记忆源和时间粒度，在五个长视频 QA 基准上平均超越前 SOTA 8.4%。
 tags:
   - "CVPR 2026"
   - "LLM Agent"

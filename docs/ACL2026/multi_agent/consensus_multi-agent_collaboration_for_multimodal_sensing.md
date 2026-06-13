@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ConSensus: Multi-Agent Collaboration for Multimodal Sensing
 description: >-
-  [ACL2026][多智能体][多智能体协作] ConSensus 是一个无需训练的多智能体传感器融合框架，它把不同传感模态交给专门 agent 独立解释，再用语义融合、统计共识和混合仲裁得到最终判断，在 5 个多模态传感 benchmark 上比单 agent 平均提升 7.1% accuracy…
+  [ACL2026 Findings][多智能体][多智能体协作] ConSensus 是一个无需训练的多智能体传感器融合框架，它把不同传感模态交给专门 agent 独立解释，再用语义融合、统计共识和混合仲裁得到最终判断，在 5 个多模态传感 benchmark 上比单 agent 平均提升 7.1% accuracy，并把融合 token 成本降到多轮 debate 方法的约 1/12.7。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多智能体"
   - "多智能体协作"
   - "多模态传感"

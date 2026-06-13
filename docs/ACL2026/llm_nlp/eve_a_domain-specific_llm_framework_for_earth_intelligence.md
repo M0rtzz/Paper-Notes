@@ -2,10 +2,10 @@
 title: >-
   [论文解读] EVE: A Domain-Specific LLM Framework for Earth Intelligence
 description: >-
-  [ACL 2026][LLM/NLP][地球观测] 本文提出 EVE——欧空局 (ESA) Φ-lab 主导的首个面向 Earth Observation / Earth Sciences 的开源端到端 LLM 框架…
+  [ACL 2026][LLM 其他][地球观测] 本文提出 EVE——欧空局 (ESA) Φ-lab 主导的首个面向 Earth Observation / Earth Sciences 的开源端到端 LLM 框架，包含 24B 领域适配的 EVE-Instruct（基于 Mistral Small 3.2 + 10.7B 合成 token 的 IFT/CPT 交替微调 + 10 个 checkpoint 融合）、首批 5693 条人工 EO 评测 benchmark、RAG + 幻觉检测 pipeline，已在 6 个月 pilot 中服务 350 位用户。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "地球观测"
   - "领域 LLM"
   - "RAG"

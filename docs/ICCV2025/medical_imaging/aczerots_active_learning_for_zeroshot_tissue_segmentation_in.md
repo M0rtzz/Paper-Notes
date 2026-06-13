@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images
 description: >-
-  [ICCV 2025 (pp. 23508-23518)][医学图像][零样本分割] 提出AcZeroTS框架，将主动学习与基于VLM的原型引导零样本分割模型ProZS结合，通过同时考虑不确定性、多样性和原型覆盖unseen类的能力来选择最有价值的标注样本…
+  [ICCV 2025 (pp. 23508-23518)][医学图像][零样本分割] 提出AcZeroTS框架，将主动学习与基于VLM的原型引导零样本分割模型ProZS结合，通过同时考虑不确定性、多样性和原型覆盖unseen类的能力来选择最有价值的标注样本，以最少标注实现seen和unseen组织类型的高质量分割。
 tags:
   - "ICCV 2025 (pp. 23508-23518)"
   - "医学图像"

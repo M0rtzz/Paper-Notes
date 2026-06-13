@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tutor-Student Reinforcement Learning: A Dynamic Curriculum for Robust Deepfake Detection
 description: >-
-  [CVPR 2026][AI安全][深度伪造检测] 提出 Tutor-Student 强化学习（TSRL）框架，将深度伪造检测器的训练过程建模为马尔可夫决策过程，由"导师"（PPO agent）根据每个样本的视觉特征和历史学习动态（EMA 损失、遗忘次数）动态分配损失权重…
+  [CVPR 2026][AI安全][深度伪造检测] 提出 Tutor-Student 强化学习（TSRL）框架，将深度伪造检测器的训练过程建模为马尔可夫决策过程，由"导师"（PPO agent）根据每个样本的视觉特征和历史学习动态（EMA 损失、遗忘次数）动态分配损失权重，通过"状态变化"奖励信号引导"学生"（检测器）优先学习高价值样本，在跨数据集和跨方法评估中显著提升泛化能力。
 tags:
   - "CVPR 2026"
   - "AI安全"

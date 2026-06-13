@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AniMer: Animal Pose and Shape Estimation Using Family Aware Transformer
 description: >-
-  [CVPR 2025][图像生成][动物姿态估计] 本文提出 AniMer，首次将高容量 ViT 骨干引入四足动物 SMAL 参数估计，通过动物科级监督对比学习区分不同物种的形状分布，配合基于 ControlNet 的合成数据集 CtrlAni3D（10k图像）…
+  [CVPR 2025][图像生成][动物姿态估计] 本文提出 AniMer，首次将高容量 ViT 骨干引入四足动物 SMAL 参数估计，通过动物科级监督对比学习区分不同物种的形状分布，配合基于 ControlNet 的合成数据集 CtrlAni3D（10k图像），在 Animal3D/CtrlAni3D/跨域 Animal Kingdom 上全面超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

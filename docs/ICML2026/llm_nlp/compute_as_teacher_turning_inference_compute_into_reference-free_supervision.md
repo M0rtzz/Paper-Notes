@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision
 description: >-
-  [ICML 2026][LLM/NLP][GRPO] 本文提出 Compute as Teacher（CaT）：把 GRPO 已经在采样的 G 条 rollouts 通过冻结锚模型"合成"出一个伪参考答案…
+  [ICML 2026][LLM 其他][GRPO] 本文提出 Compute as Teacher（CaT）：把 GRPO 已经在采样的 G 条 rollouts 通过冻结锚模型"合成"出一个伪参考答案，再在非可验证领域用模型自己从该伪参考衍生的二元 rubric 给每条 rollout 打分作为 RL 奖励，从而在没有任何人工标注的情况下把推理算力直接变成监督信号，在 HealthBench 上相对基线最高提升 30%，并以 9× 更低的测试时算力匹配甚至超过 inference-time aggregation。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "GRPO"
   - "自合成参考"
   - "自提议 rubric"

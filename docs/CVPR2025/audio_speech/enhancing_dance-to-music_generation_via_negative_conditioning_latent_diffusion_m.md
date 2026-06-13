@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Dance-to-Music Generation via Negative Conditioning Latent Diffusion Model
 description: >-
-  [CVPR 2025][音频/语音][舞蹈生成音乐] 提出 PN-Diffusion，利用正向播放和反向播放的舞蹈视频分别提取正负节奏条件，设计双向扩散与反向过程来联合训练 U-Net，增强生成音乐与舞蹈动作的节奏一致性和音乐质量…
+  [CVPR 2025][音频/语音][舞蹈生成音乐] 提出 PN-Diffusion，利用正向播放和反向播放的舞蹈视频分别提取正负节奏条件，设计双向扩散与反向过程来联合训练 U-Net，增强生成音乐与舞蹈动作的节奏一致性和音乐质量，在 AIST++ 和 TikTok 数据集上 BCS 提升 1.80/3.85、BHS 提升 4.22/5.90。
 tags:
   - "CVPR 2025"
   - "音频/语音"

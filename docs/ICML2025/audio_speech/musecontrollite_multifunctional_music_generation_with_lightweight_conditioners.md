@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MuseControlLite: Multifunctional Music Generation with Lightweight Conditioners
 description: >-
-  [ICML 2025][音频/语音][music generation] 提出 MuseControlLite，通过在解耦交叉注意力层中引入旋转位置编码（RoPE），以仅 85M 可训练参数（比 ControlNet 少 6.75 倍）实现对文本到音乐生成的精确时变条件控制…
+  [ICML 2025][音频/语音][music generation] 提出 MuseControlLite，通过在解耦交叉注意力层中引入旋转位置编码（RoPE），以仅 85M 可训练参数（比 ControlNet 少 6.75 倍）实现对文本到音乐生成的精确时变条件控制，同时首次统一支持音乐属性控制与音频修复/续写。
 tags:
   - "ICML 2025"
   - "音频/语音"

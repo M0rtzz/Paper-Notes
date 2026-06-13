@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recognition-Synergistic Scene Text Editing
 description: >-
-  [CVPR 2025][多模态VLM][场景文字编辑] 提出 RS-STE（Recognition-Synergistic Scene Text Editing）方法，将文字识别与文字编辑统一到一个多模态并行解码器中，利用识别模型隐式解耦风格与内容的天然能力来辅助编辑…
+  [CVPR 2025][多模态VLM][场景文字编辑] 提出 RS-STE（Recognition-Synergistic Scene Text Editing）方法，将文字识别与文字编辑统一到一个多模态并行解码器中，利用识别模型隐式解耦风格与内容的天然能力来辅助编辑，并设计循环自监督微调策略使模型能在无配对标注的真实数据上有效训练。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

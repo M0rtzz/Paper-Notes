@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SocialMOIF: Multi-Order Intention Fusion for Pedestrian Trajectory Prediction
 description: >-
-  [CVPR 2025][自动驾驶][行人轨迹预测] SocialMOIF 提出了一种多阶意图融合模型，通过一阶直接交互层和高阶邻居间接交互层全面捕获社交意图，结合基于挤压定理思想的轨迹分布近似器和首次引入 KAN 网络的全局轨迹优化器…
+  [CVPR 2025][自动驾驶][行人轨迹预测] SocialMOIF 提出了一种多阶意图融合模型，通过一阶直接交互层和高阶邻居间接交互层全面捕获社交意图，结合基于挤压定理思想的轨迹分布近似器和首次引入 KAN 网络的全局轨迹优化器，在 ETH/UCY、SDD、NBA、NuScenes 多个数据集上实现了 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

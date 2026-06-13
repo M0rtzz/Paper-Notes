@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Attributions of Input Variables in a Coalition
 description: >-
-  [ICML 2025][可解释性][Shapley value] 本文从 AND-OR 交互的视角重新推导了 Shapley value 的计算机制，证明了不同变量划分下的归因冲突本质上源于仅覆盖联盟部分变量的交互效应，并据此定义了联盟归因指标和三个忠实度度量，实验验证其与人类直觉一致。
+  [ICML 2025][可解释性][Shapley value] 本文从 AND-OR 交互的视角重新推导了 Shapley value 的计算机制，证明了不同变量划分下的归因冲突本质上源于仅覆盖联盟部分变量的交互效应，并据此定义了联盟归因指标和三个忠实度度量，实验验证其与人类直觉一致。 领域现状：Shapley value…
 tags:
   - "ICML 2025"
   - "可解释性"

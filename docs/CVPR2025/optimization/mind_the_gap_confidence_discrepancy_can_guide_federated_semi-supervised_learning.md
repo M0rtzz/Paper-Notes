@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Gap: Confidence Discrepancy Can Guide Federated Semi-Supervised Learning
 description: >-
-  [CVPR 2025][优化/理论][联邦半监督学习] 提出 TABASCO，一个两阶段二维样本选择框架解决同时存在标签噪声和长尾分布的联邦半监督学习：用加权 JSD（WJSD）和自适应质心距离（ACD）两个互补指标识别干净样本，GMM 聚类后以半监督方式利用剩余噪声数据…
+  [CVPR 2025][优化/理论][联邦半监督学习] 提出 TABASCO，一个两阶段二维样本选择框架解决同时存在标签噪声和长尾分布的联邦半监督学习：用加权 JSD（WJSD）和自适应质心距离（ACD）两个互补指标识别干净样本，GMM 聚类后以半监督方式利用剩余噪声数据，在 CIFAR-10（0.1 不平衡+0.4 噪声）上达 85.53%。
 tags:
   - "CVPR 2025"
   - "优化/理论"

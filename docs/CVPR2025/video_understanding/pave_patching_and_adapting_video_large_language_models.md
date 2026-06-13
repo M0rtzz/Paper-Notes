@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PAVE: Patching and Adapting Video Large Language Models
 description: >-
-  [CVPR 2025][视频理解][Video LLM适配] PAVE 提出了一种通过轻量级"补丁"（patch）适配预训练 Video LLM 的框架，能将音频、3D 线索、多视角视频等侧信道信号以约 0.1% 的额外参数和计算量融入基础模型，在音视频 QA、3D QA 等任务上超越专用模型。
+  [CVPR 2025][视频理解][Video LLM适配] PAVE 提出了一种通过轻量级"补丁"（patch）适配预训练 Video LLM 的框架，能将音频、3D 线索、多视角视频等侧信道信号以约 0.1% 的额外参数和计算量融入基础模型，在音视频 QA、3D QA 等任务上超越专用模型。 领域现状：视频大语言模型（V…
 tags:
   - "CVPR 2025"
   - "视频理解"

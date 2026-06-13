@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mirror Mean-Field Langevin Dynamics
 description: >-
-  [ICML2026][优化/理论][mean-field Langevin] 本文把 mean-field Langevin dynamics (MFLD) 与 mirror Langevin dynamics (MLD) 缝合成"镜像 mean-field Langevin dynamics" (MMFLD…
+  [ICML2026][优化/理论][mean-field Langevin] 本文把 mean-field Langevin dynamics (MFLD) 与 mirror Langevin dynamics (MLD) 缝合成"镜像 mean-field Langevin dynamics" (MMFLD)，第一次给出在凸约束域 $X\subseteq\mathbb{R}^d$ 上最小化熵正则化泛函 $\mathcal{L}(\mu)=F(\mu)+\lambda\,\mathrm{Ent}(\mu)$ 的全局收敛算法 —— 连续时间下用均匀 mirror LSI 证 $e^{-2C_{\mathrm{LSI}}\lambda…
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2505.02621](https://arxiv.org/abs/2505.02621)  
 **代码**: 未公开  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: mean-field Langevin, 镜像下降, 约束采样, 混沌传播, 对数 Sobolev 不等式  
 
 ## 一句话总结

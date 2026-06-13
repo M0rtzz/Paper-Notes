@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InsightEdit: Towards Better Instruction Following for Image Editing
 description: >-
-  [CVPR 2025][图像生成][image editing] 提出 InsightEdit，构建 250 万级高质量编辑数据集 AdvancedEdit，并设计双流桥接机制将 MLLM 的文本推理特征和图像语义特征同时注入扩散模型，在复杂指令跟随和背景一致性上达到 SOTA。
+  [CVPR 2025][图像生成][image editing] 提出 InsightEdit，构建 250 万级高质量编辑数据集 AdvancedEdit，并设计双流桥接机制将 MLLM 的文本推理特征和图像语义特征同时注入扩散模型，在复杂指令跟随和背景一致性上达到 SOTA。 领域现状： 基于指令的端到端图像编辑近年取得…
 tags:
   - "CVPR 2025"
   - "图像生成"

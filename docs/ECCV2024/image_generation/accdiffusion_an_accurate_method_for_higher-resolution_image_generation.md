@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AccDiffusion: An Accurate Method for Higher-Resolution Image Generation
 description: >-
-  [ECCV 2024][图像生成][高分辨率图像生成] 提出AccDiffusion，通过将全局文本prompt解耦为patch级别的内容感知prompt（利用cross-attention map判断每个词汇是否属于某patch），并引入带窗口交互的膨胀采样来改善全局一致性…
+  [ECCV 2024][图像生成][高分辨率图像生成] 提出AccDiffusion，通过将全局文本prompt解耦为patch级别的内容感知prompt（利用cross-attention map判断每个词汇是否属于某patch），并引入带窗口交互的膨胀采样来改善全局一致性，在无需额外训练的情况下有效解决patch-wise高分辨率图像生成中的目标重复问题，在SDXL上实现了从2K到4K分辨率的无重复高质量图像外推。
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations
 description: >-
-  [ICCV 2025][医学图像][多参数持久同调] 提出 CuMPerLay，一个可微的立方多参数持久同调 (Cubical Multiparameter Persistence, CMP) 向量化层，将 CMP 分解为多条可学习的单参数持久同调线…
+  [ICCV 2025][医学图像][多参数持久同调] 提出 CuMPerLay，一个可微的立方多参数持久同调 (Cubical Multiparameter Persistence, CMP) 向量化层，将 CMP 分解为多条可学习的单参数持久同调线，通过联合学习双滤过 (bifiltration) 函数实现端到端训练，嵌入 Swin Transformer 后在医学图像分类和语义分割任务上（尤其小数据场景）取得显著提升。
 tags:
   - "ICCV 2025"
   - "医学图像"

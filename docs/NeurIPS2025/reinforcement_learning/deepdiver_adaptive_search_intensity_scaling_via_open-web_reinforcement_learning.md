@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][搜索强度缩放] 提出 DeepDiver，一个 RL 驱动的搜索推理框架，在真实开放网络环境中训练 LLM 的信息寻求能力，催生"搜索强度缩放"（SIS）涌现行为——7B 模型在知识密集任务上可媲美 671B 的 DeepSeek-R1。
+  [NeurIPS 2025 Spotlight][强化学习][搜索强度缩放] 提出 DeepDiver，一个 RL 驱动的搜索推理框架，在真实开放网络环境中训练 LLM 的信息寻求能力，催生"搜索强度缩放"（SIS）涌现行为——7B 模型在知识密集任务上可媲美 671B 的 DeepSeek-R1。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "强化学习"
   - "搜索强度缩放"
   - "信息检索"

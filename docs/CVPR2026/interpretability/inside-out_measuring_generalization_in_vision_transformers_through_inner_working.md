@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings
 description: >-
-  [CVPR 2026][可解释性][泛化度量] 提出基于模型内部电路（circuits）的泛化性能预测指标，包括部署前模型选择的Dependency Depth Bias（DDB）和部署后性能监控的Circuit Shift Score（CSS），分别比现有代理指标的相关性平均提升13.4%和34.1%。
+  [CVPR 2026 Highlight][可解释性][泛化度量] 提出基于模型内部电路（circuits）的泛化性能预测指标，包括部署前模型选择的Dependency Depth Bias（DDB）和部署后性能监控的Circuit Shift Score（CSS），分别比现有代理指标的相关性平均提升13.4%和34.1%。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "可解释性"
   - "泛化度量"
   - "电路发现"

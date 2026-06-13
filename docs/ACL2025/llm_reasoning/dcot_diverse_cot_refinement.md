@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Tuning on Diverse Reasoning Chains Drives Within-Inference CoT Refinement in LLMs
 description: >-
-  [ACL 2025][LLM推理][Chain-of-Thought] 提出 Diverse Chain of Thought (DCoT) 训练方法，通过在单次推理中生成多条串行推理链实现"推理内自修正"（within-inference refinement）…
+  [ACL 2025][LLM推理][Chain-of-Thought] 提出 Diverse Chain of Thought (DCoT) 训练方法，通过在单次推理中生成多条串行推理链实现"推理内自修正"（within-inference refinement），在 1.3B–70B 模型上均超越标准 CoT 基线，尤其在大输出空间任务（数值/抽取型）上提升显著。
 tags:
   - "ACL 2025"
   - "LLM推理"

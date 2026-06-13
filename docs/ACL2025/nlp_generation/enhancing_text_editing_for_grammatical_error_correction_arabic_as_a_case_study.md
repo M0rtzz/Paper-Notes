@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Text Editing for Grammatical Error Correction: Arabic as a Case Study
 description: >-
-  [ACL 2025][文本生成][语法纠错] 本文提出一种无需语言特定编辑集的通用文本编辑方法（SWEET），通过数据驱动的编辑标签自动提取和压缩策略，首次成功将文本编辑范式应用于阿拉伯语语法纠错，在多个基准上达到SOTA且推理速度提升6倍以上。
+  [ACL 2025][文本生成][语法纠错] 本文提出一种无需语言特定编辑集的通用文本编辑方法（SWEET），通过数据驱动的编辑标签自动提取和压缩策略，首次成功将文本编辑范式应用于阿拉伯语语法纠错，在多个基准上达到SOTA且推理速度提升6倍以上。 GEC的主流方法：Transformer-based的Seq2Seq模型长期主…
 tags:
   - "ACL 2025"
   - "文本生成"

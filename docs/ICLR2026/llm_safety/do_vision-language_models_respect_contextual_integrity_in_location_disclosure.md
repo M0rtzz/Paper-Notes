@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Vision-Language Models Respect Contextual Integrity in Location Disclosure?
 description: >-
-  [ICLR 2026][LLM安全][视觉语言模型] 本文基于 Nissenbaum 的上下文完整性（Contextual Integrity）理论构建了 VLM-GEOPRIVACY 基准，通过7个层次递进的上下文感知问题和三级位置披露粒度（拒绝/城市级/精确位置）…
+  [ICLR 2026][LLM安全][视觉语言模型] 本文基于 Nissenbaum 的上下文完整性（Contextual Integrity）理论构建了 VLM-GEOPRIVACY 基准，通过7个层次递进的上下文感知问题和三级位置披露粒度（拒绝/城市级/精确位置），系统评估14个主流VLM是否能根据图像中的社会规范线索判断适当的位置信息披露级别，结果发现所有模型均严重偏向过度披露（Over-Disclosure率高达46-52%），且恶意提示可将抽象违反率推至100%。
 tags:
   - "ICLR 2026"
   - "LLM安全"

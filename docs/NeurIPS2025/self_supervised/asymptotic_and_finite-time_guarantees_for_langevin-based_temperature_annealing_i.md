@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Asymptotic and Finite-Time Guarantees for Langevin-Based Temperature Annealing in InfoNCE
 description: >-
-  [NeurIPS 2025 (Optimization for Machine Learning Workshop)][自监督学习][对比学习] 本文通过将嵌入演化建模为紧致黎曼流形上的 Langevin 动力学，证明了经典模拟退火的收敛保证可以扩展到对比学习的温度调度设定中：缓慢对数逆温度调度保证概率收敛到…
+  [NeurIPS 2025 (Optimization for Machine Learning Workshop)][自监督学习][对比学习] 本文通过将嵌入演化建模为紧致黎曼流形上的 Langevin 动力学，证明了经典模拟退火的收敛保证可以扩展到对比学习的温度调度设定中：缓慢对数逆温度调度保证概率收敛到全局最优表示集合，而更快的调度则可能陷入次优极小值。
 tags:
   - "NeurIPS 2025 (Optimization for Machine Learning Workshop)"
   - "自监督学习"

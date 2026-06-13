@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Language Models, Graph Searching, and Supervision Adulteration: When More Supervision is Less and How to Make More More
 description: >-
-  [ACL 2025][LLM/NLP][图搜索] 本文证明了 path-star 图搜索任务在 decoder-only LM 上的失败并非 next-token prediction 范式的根本缺陷…
+  [ACL 2025][LLM 其他][图搜索] 本文证明了 path-star 图搜索任务在 decoder-only LM 上的失败并非 next-token prediction 范式的根本缺陷，而是由"监督污染"（supervision adulteration）导致的——过量的 teacher-forcing 监督信号诱导模型学到 Clever Hans Cheat 捷径，阻碍了子任务分解；通过 token masking、ranking-into-the-future、scratchpad、树形拓扑等六种正交方法均可使任务可学。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "图搜索"
   - "监督污染"
   - "next-token prediction"

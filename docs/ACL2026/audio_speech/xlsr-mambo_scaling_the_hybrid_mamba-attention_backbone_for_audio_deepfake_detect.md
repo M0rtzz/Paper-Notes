@@ -2,9 +2,9 @@
 title: >-
   [论文解读] XLSR-MamBo: Scaling the Hybrid Mamba-Attention Backbone for Audio Deepfake Detection
 description: >-
-  [ACL 2026][音频/语音][音频深度伪造检测] 提出 XLSR-MamBo 框架，系统探索 Mamba-Attention 混合架构在音频深度伪造检测中的四种拓扑设计和多种 SSM 变体（Mamba2、Hydra、GDN）…
+  [ACL 2026 Findings][音频/语音][音频深度伪造检测] 提出 XLSR-MamBo 框架，系统探索 Mamba-Attention 混合架构在音频深度伪造检测中的四种拓扑设计和多种 SSM 变体（Mamba2、Hydra、GDN），其中 MamBo-3-Hydra 利用 Hydra 的原生双向建模达到多个基准上的竞争性能，且增加骨干深度可有效缓解浅层模型的性能不稳定。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "音频深度伪造检测"
   - "Mamba"

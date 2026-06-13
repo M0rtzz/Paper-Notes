@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trade-offs in Image Generation: How Do Different Dimensions Interact?
 description: >-
-  [ICCV 2025][图像生成][图像生成评估] 提出 TRIG-Bench 基准（40,200 样本，10 个评估维度，132 个成对维度子集），以及 VLM-as-Judge 指标 TRIGScore，首次系统性地揭示和分析了图像生成模型在不同评估维度（如真实性、关系对齐、风格等）之间的权衡关系…
+  [ICCV 2025][图像生成][图像生成评估] 提出 TRIG-Bench 基准（40,200 样本，10 个评估维度，132 个成对维度子集），以及 VLM-as-Judge 指标 TRIGScore，首次系统性地揭示和分析了图像生成模型在不同评估维度（如真实性、关系对齐、风格等）之间的权衡关系，并通过维度权衡图（DTM）指导微调实现性能提升。
 tags:
   - "ICCV 2025"
   - "图像生成"

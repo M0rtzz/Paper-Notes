@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson's Disease Gait Assessment
 description: >-
-  [NeurIPS 2025][医学图像][帕金森病] 发布 Care-PD——目前最大的面向帕金森病步态分析的多站点匿名 3D 网格数据集（9 个队列、8 个临床中心、362 名受试者、8477 段步行），并在 UPDRS 步态评分和运动预训练任务上提供系统性 benchmark…
+  [NeurIPS 2025][医学图像][帕金森病] 发布 Care-PD——目前最大的面向帕金森病步态分析的多站点匿名 3D 网格数据集（9 个队列、8 个临床中心、362 名受试者、8477 段步行），并在 UPDRS 步态评分和运动预训练任务上提供系统性 benchmark，证明在 Care-PD 上微调可将 MPJPE 从 60.8mm 降至 7.5mm，F1 提升 17 个百分点。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

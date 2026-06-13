@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AHS: Adaptive Head Synthesis via Synthetic Data Augmentations
 description: >-
-  [CVPR 2026][图像生成][头部替换] AHS 通过使用头部重演模型（GAGAvatar）生成合成增强数据来克服自监督训练的局限性，结合双编码器注意力机制和自适应掩码策略，在全身图像的头部替换任务中实现了 SOTA 效果。
+  [CVPR 2026][图像生成][头部替换] AHS 通过使用头部重演模型（GAGAvatar）生成合成增强数据来克服自监督训练的局限性，结合双编码器注意力机制和自适应掩码策略，在全身图像的头部替换任务中实现了 SOTA 效果。 领域现状：头部替换（Head Swapping）旨在将源图像的头部无缝整合到目标图像的身体上…
 tags:
   - "CVPR 2026"
   - "图像生成"

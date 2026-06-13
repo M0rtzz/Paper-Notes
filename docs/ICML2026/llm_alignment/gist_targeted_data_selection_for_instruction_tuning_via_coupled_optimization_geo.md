@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GIST: 用梯度子空间投影做 instruction tuning 的 targeted 数据选择
 description: >-
-  [ICML 2026][LLM对齐][targeted data selection] GIST 把"为 target task 挑 instruction tuning 数据"看作 gradient subspace alignment——证明 LESS 等用 Adam states 当 diagonal…
+  [ICML 2026][LLM对齐][targeted data selection] GIST 把"为 target task 挑 instruction tuning 数据"看作 gradient subspace alignment——证明 LESS 等用 Adam states 当 diagonal preconditioner 在 LoRA 上失效（cross-parameter 耦合 + 低秩 task subspace），改用 validation gradients SVD 抽 task-specific 低秩子空间 + cosine similarity 选样本；在 MMLU/TydiQA/BBH 上匹配或超越 L…
 tags:
   - "ICML 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks
 description: >-
-  [NeurIPS 2025][图学习][图神经网络] 提出基于GNN的自监督框架，通过结构学习模块推断潜在突触连接、同时用脉冲预测模块预测未来发放活动，在环形吸引子网络仿真数据和真实小鼠头方向细胞记录上均显著优于统计推断基线。
+  [NeurIPS 2025][图学习][图神经网络] 提出基于GNN的自监督框架，通过结构学习模块推断潜在突触连接、同时用脉冲预测模块预测未来发放活动，在环形吸引子网络仿真数据和真实小鼠头方向细胞记录上均显著优于统计推断基线。 推断神经群体活动之间的突触连接强度是计算神经科学的核心挑战。当前统计推断方法面临两个根本困难： 部…
 tags:
   - "NeurIPS 2025"
   - "图学习"

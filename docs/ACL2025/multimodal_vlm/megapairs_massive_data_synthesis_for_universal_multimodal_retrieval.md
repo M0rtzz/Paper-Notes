@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MegaPairs: Massive Data Synthesis For Universal Multimodal Retrieval
 description: >-
-  [ACL 2025][多模态VLM][多模态] 提出 MegaPairs 数据合成方法，利用异构 KNN 三元组从开放域图像语料中挖掘相关图像对，结合 VLM/LLM 生成检索指令，合成 2600 万多模态训练实例…
+  [ACL 2025][多模态VLM][多模态] 提出 MegaPairs 数据合成方法，利用异构 KNN 三元组从开放域图像语料中挖掘相关图像对，结合 VLM/LLM 生成检索指令，合成 2600 万多模态训练实例，训练的 MMRet 模型仅用 0.5M 数据即超越使用 36.7M 数据的 MagicLens（70× 数据效率），在 4 个 CIR 基准和 MMEB 36 个数据集上达到 SOTA。
 tags:
   - "ACL 2025"
   - "多模态VLM"

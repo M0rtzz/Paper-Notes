@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Normalized AOPC: Fixing Misleading Faithfulness Metrics for Feature Attribution Explainability
 description: >-
-  [ACL 2025][可解释性][特征归因] 本文揭示了广泛使用的 AOPC（扰动曲线下面积）忠实度指标在跨模型比较时会产生误导性结论（因为不同模型的 AOPC 上下界差异巨大），提出 Normalized AOPC (NAOPC) 通过 min-max 归一化消除模型间的不可比性…
+  [ACL 2025][可解释性][特征归因] 本文揭示了广泛使用的 AOPC（扰动曲线下面积）忠实度指标在跨模型比较时会产生误导性结论（因为不同模型的 AOPC 上下界差异巨大），提出 Normalized AOPC (NAOPC) 通过 min-max 归一化消除模型间的不可比性，实验表明归一化可以根本性地改变模型忠实度排名。
 tags:
   - "ACL 2025"
   - "可解释性"

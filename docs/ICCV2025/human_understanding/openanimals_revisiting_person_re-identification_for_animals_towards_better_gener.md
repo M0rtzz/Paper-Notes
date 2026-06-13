@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenAnimals: Revisiting Person Re-Identification for Animals Towards Better Generalization
 description: >-
-  [人体理解] > 本文开发了 OpenAnimals 开源框架，系统回顾行人重识别方法在动物重识别中的迁移效果，提出面向动物的强基线模型 ARBase，在多个基准上大幅超越现有行人 ReID 方法。
+  [人体理解] 本文开发了 OpenAnimals 开源框架，系统回顾行人重识别方法在动物重识别中的迁移效果，提出面向动物的强基线模型 ARBase，在多个基准上大幅超越现有行人 ReID 方法。 动物重识别（Animal Re-ID）旨在识别特定物种中的个体动物，对野生动物保护、种群监测和行为研究至关重要…
 tags:
   - "人体理解"
 ---

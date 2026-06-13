@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V-CLR: View-Consistent Learning for Open-World Instance Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放世界实例分割] v-CLR 提出视图一致性学习框架，通过将自然图像变换为深度图/风格化图等外观不变视图，并在 DETR 架构中强制跨视图 query 特征一致 + 利用无监督物体 proposal 引导匹配方向，有效克服了检测网络的纹理偏差问题…
+  [CVPR 2025][语义分割][开放世界实例分割] v-CLR 提出视图一致性学习框架，通过将自然图像变换为深度图/风格化图等外观不变视图，并在 DETR 架构中强制跨视图 query 特征一致 + 利用无监督物体 proposal 引导匹配方向，有效克服了检测网络的纹理偏差问题，在多个开放世界分割基准上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

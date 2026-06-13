@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LIM: Large Interpolator Model for Dynamic Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][4D reconstruction] 提出 LIM——首个前馈式跨类别动态 4D 资产重建模型，通过在隐式 triplane 表示间进行 Transformer 插值并引入因果一致性损失，实现秒级高质量连续时间插值与一致拓扑的网格跟踪。
+  [CVPR 2025][3D视觉][4D reconstruction] 提出 LIM——首个前馈式跨类别动态 4D 资产重建模型，通过在隐式 triplane 表示间进行 Transformer 插值并引入因果一致性损失，实现秒级高质量连续时间插值与一致拓扑的网格跟踪。 领域现状： 现有 4D 重建方法要么局限于特定类别（…
 tags:
   - "CVPR 2025"
   - "3D视觉"

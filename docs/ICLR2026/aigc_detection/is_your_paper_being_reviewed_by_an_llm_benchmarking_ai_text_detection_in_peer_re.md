@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Your Paper Being Reviewed by an LLM? Benchmarking AI Text Detection in Peer Review
 description: >-
-  [ICLR2026][AIGC检测][文本检测] 构建了迄今最大的 AI 生成同行评审数据集（788,984 篇评审），系统评估了 18 种 AI 文本检测方法在同行评审场景下的表现，并提出了利用论文原文作为上下文的 Anchor 检测方法，在低误报率下大幅超越所有基线。
+  [ICLR2026][AIGC检测][文本检测] 构建了迄今最大的 AI 生成同行评审数据集（788,984 篇评审），系统评估了 18 种 AI 文本检测方法在同行评审场景下的表现，并提出了利用论文原文作为上下文的 Anchor 检测方法，在低误报率下大幅超越所有基线。 - 随着 LLM 能力的快速进步…
 tags:
   - "ICLR2026"
   - "AIGC检测"

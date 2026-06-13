@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DESIGN: Encrypted GNN Inference via Server-Side Input Graph Pruning
 description: >-
-  [NeurIPS 2025][AI安全][同态加密] 提出 DESIGN 框架，在全同态加密(FHE)下通过服务器端输入图剪枝和自适应多项式激活度分配两阶段优化，相比 SEAL 基线加速 FHE GNN 推理约 2× 并维持有竞争力的准确率。
+  [NeurIPS 2025][AI安全][同态加密] 提出 DESIGN 框架，在全同态加密(FHE)下通过服务器端输入图剪枝和自适应多项式激活度分配两阶段优化，相比 SEAL 基线加速 FHE GNN 推理约 2× 并维持有竞争力的准确率。 领域现状：GNN 在推荐系统、生物信息、社交网络等领域表现出色…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

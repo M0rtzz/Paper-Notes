@@ -2,7 +2,7 @@
 title: >-
   [论文解读] K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes
 description: >-
-  [ICML2025][泊松过程] 提出 K²IE——基于 RKHS 最小二乘正则化的核强度估计器，证明其 representer theorem 的对偶系数恒为 1，从而将经典核强度估计 (KIE) 与现代核方法在理论上统一，同时兼顾 KIE 的高效性与核方法的边缘校正优势。
+  [ICML2025][泊松过程] 提出 K²IE——基于 RKHS 最小二乘正则化的核强度估计器，证明其 representer theorem 的对偶系数恒为 1，从而将经典核强度估计 (KIE) 与现代核方法在理论上统一，同时兼顾 KIE 的高效性与核方法的边缘校正优势。 非齐次泊松过程的 强度函数估计：是点过程建模的核…
 tags:
   - "ICML2025"
   - "泊松过程"

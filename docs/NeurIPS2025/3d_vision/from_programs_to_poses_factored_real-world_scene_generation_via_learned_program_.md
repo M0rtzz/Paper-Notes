@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Programs to Poses: Factored Real-World Scene Generation via Learned Program Libraries
 description: >-
-  [NeurIPS 2025][3D视觉][3D场景生成] 提出 FactoredScenes，将真实世界 3D 场景生成分解为五步因式分解——从合成数据学布局程序库、LLM 生成场景程序、执行程序获得轴对齐布局、程序条件化层次姿态预测、物体检索放置，在卧室上 FID 改善 38.3%、KID 改善 80.4%…
+  [NeurIPS 2025][3D视觉][3D场景生成] 提出 FactoredScenes，将真实世界 3D 场景生成分解为五步因式分解——从合成数据学布局程序库、LLM 生成场景程序、执行程序获得轴对齐布局、程序条件化层次姿态预测、物体检索放置，在卧室上 FID 改善 38.3%、KID 改善 80.4%，人类仅 67% 能区分生成与真实 ScanNet。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

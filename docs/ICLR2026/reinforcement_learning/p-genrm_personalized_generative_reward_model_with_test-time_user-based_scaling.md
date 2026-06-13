@@ -2,9 +2,9 @@
 title: >-
   [论文解读] P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling
 description: >-
-  [ICLR 2026][强化学习][个性化奖励模型] 提出 P-GenRM，首个个性化生成式奖励模型：通过三阶段训练（PSI 监督微调构建结构化评价链→CRE 强化学习增强缺失偏好下的推理→难负例课程学习提升鲁棒性）将混合偏好信号转化为场景自适应的用户画像与评分标准…
+  [ICLR 2026 Oral][强化学习][个性化奖励模型] 提出 P-GenRM，首个个性化生成式奖励模型：通过三阶段训练（PSI 监督微调构建结构化评价链→CRE 强化学习增强缺失偏好下的推理→难负例课程学习提升鲁棒性）将混合偏好信号转化为场景自适应的用户画像与评分标准，再引入双粒度测试时 scaling（个体级多次采样聚合 + 原型级协同过滤借用相似用户偏好），在 PersonalRewardBench 上超越前 SOTA 2.31%、测试时 scaling 额外提升 3%，且能泛化到未见用户。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "强化学习"
   - "个性化奖励模型"
   - "生成式评判"

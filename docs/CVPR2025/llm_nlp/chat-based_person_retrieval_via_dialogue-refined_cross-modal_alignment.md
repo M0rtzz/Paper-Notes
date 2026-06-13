@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Chat-based Person Retrieval via Dialogue-Refined Cross-Modal Alignment
 description: >-
-  [CVPR 2025][LLM/NLP][行人检索] 本文提出基于对话的行人检索（ChatPR）新范式，构建了首个对话-图像配对数据集ChatPedes，并设计了DiaNA框架通过自适应属性精炼器实现对话与图像间的细粒度跨模态对齐，显著优于传统单句文本检索方法。
+  [CVPR 2025][LLM 其他][行人检索] 本文提出基于对话的行人检索（ChatPR）新范式，构建了首个对话-图像配对数据集ChatPedes，并设计了DiaNA框架通过自适应属性精炼器实现对话与图像间的细粒度跨模态对齐，显著优于传统单句文本检索方法。 领域现状：传统的基于文本的行人检索（Text-based Per…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "行人检索"
   - "跨模态对齐"
   - "对话交互"

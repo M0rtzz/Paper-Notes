@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wavelet Enhanced Adaptive Frequency Filter for Sequential Recommendation
 description: >-
-  [AAAI2026][推荐系统][sequential recommendation] 提出WEARec模型，通过动态频域滤波（DFF）根据用户上下文自适应调整频域滤波器捕获个性化全局偏好，并用小波特征增强（WFE）弥补全局DFT模糊短期波动的缺陷，在四个数据集上超越全部9个基线…
+  [AAAI2026][推荐系统][sequential recommendation] 提出WEARec模型，通过动态频域滤波（DFF）根据用户上下文自适应调整频域滤波器捕获个性化全局偏好，并用小波特征增强（WFE）弥补全局DFT模糊短期波动的缺陷，在四个数据集上超越全部9个基线，长序列场景最高提升11.4%且训练速度快39-45%。
 tags:
   - "AAAI2026"
   - "推荐系统"

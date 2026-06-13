@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks
 description: >-
-  [ICLR 2026][AI安全][脉冲神经网络] 提出Spike-Retiming Attack——一种仅改变脉冲时间戳而不增删脉冲的时序攻击方法，形式化了容量-1约束下的统一三范数预算（$\mathcal{B}_\infty$局部抖动/$\mathcal{B}_1$总延迟/$\mathcal{B}_0$篡…
+  [ICLR 2026][AI安全][脉冲神经网络] 提出Spike-Retiming Attack——一种仅改变脉冲时间戳而不增删脉冲的时序攻击方法，形式化了容量-1约束下的统一三范数预算（$\mathcal{B}_\infty$局部抖动/$\mathcal{B}_1$总延迟/$\mathcal{B}_0$篡改数），通过Projected-in-the-Loop (PIL)优化在前向严格投影、反向软微分间解耦，在CIFAR10-DVS/DVS-Gesture/N-MNIST上以<2%脉冲扰动达到>90% ASR，揭示事件驱动SNN存在严重的时序脆弱性。
 tags:
   - "ICLR 2026"
   - "AI安全"

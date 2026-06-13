@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised ControlNet with Spatio-Temporal Mamba for Real-World Video Super-Resolution
 description: >-
-  [CVPR 2025][图像生成][视频超分辨率] 提出 SCST 框架，将时空连续 Mamba（STCM）用于全局 3D 注意力建模，并结合基于 MoCo 的自监督 ControlNet 提取退化无关特征，配合三阶段混合训练策略，在真实世界视频超分辨率基准上取得了 SOTA 的感知质量。
+  [CVPR 2025][图像生成][视频超分辨率] 提出 SCST 框架，将时空连续 Mamba（STCM）用于全局 3D 注意力建模，并结合基于 MoCo 的自监督 ControlNet 提取退化无关特征，配合三阶段混合训练策略，在真实世界视频超分辨率基准上取得了 SOTA 的感知质量。 领域现状：视频超分辨率（VSR）旨…
 tags:
   - "CVPR 2025"
   - "图像生成"

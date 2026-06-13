@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Supercharging Graph Transformers with Advective Diffusion
 description: >-
-  [ICML 2025][计算生物][Transformer] 提出 Advective Diffusion Transformer（AdvDIFFormer），一种物理启发的图Transformer模型，通过结合非局部扩散（全局注意力）和对流（局部消息传递）两种机制…
+  [ICML 2025][计算生物][Transformer] 提出 Advective Diffusion Transformer（AdvDIFFormer），一种物理启发的图Transformer模型，通过结合非局部扩散（全局注意力）和对流（局部消息传递）两种机制，在拓扑分布偏移下具有可证明的泛化误差控制能力，优于仅依赖局部扩散的GNN。
 tags:
   - "ICML 2025"
   - "计算生物"

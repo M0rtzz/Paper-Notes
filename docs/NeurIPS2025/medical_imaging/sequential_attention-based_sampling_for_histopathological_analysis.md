@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sequential Attention-based Sampling for Histopathological Analysis
 description: >-
-  [NeurIPS 2025][医学图像][全切片图像分析] 提出 SASHA 框架，结合层次注意力多实例学习 (HAFED) 与深度强化学习 (RL)，仅采样 10-20% 的高分辨率 patch 即可达到全分辨率 SOTA 方法的分类性能，推理速度提升 4-8 倍，WSI 压缩率超 16 倍。
+  [NeurIPS 2025][医学图像][全切片图像分析] 提出 SASHA 框架，结合层次注意力多实例学习 (HAFED) 与深度强化学习 (RL)，仅采样 10-20% 的高分辨率 patch 即可达到全分辨率 SOTA 方法的分类性能，推理速度提升 4-8 倍，WSI 压缩率超 16 倍。 全切片图像 (WSI) 是数…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

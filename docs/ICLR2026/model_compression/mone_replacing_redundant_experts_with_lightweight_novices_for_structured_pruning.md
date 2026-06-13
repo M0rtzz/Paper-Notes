@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoNE: Replacing Redundant Experts with Lightweight Novices for Structured Pruning of MoE
 description: >-
-  [ICLR 2026][模型压缩][MoE剪枝] 提出 MoNE（Mixture-of-Novices-and-Experts），通过联合评估专家的访问频率和输出方差来识别冗余专家，并用其输出均值（"新手"常量向量）替换之，在5种MoE模型上实现比现有剪枝方法更有效且更鲁棒的压缩…
+  [ICLR 2026][模型压缩][MoE剪枝] 提出 MoNE（Mixture-of-Novices-and-Experts），通过联合评估专家的访问频率和输出方差来识别冗余专家，并用其输出均值（"新手"常量向量）替换之，在5种MoE模型上实现比现有剪枝方法更有效且更鲁棒的压缩，25%剪枝率下平均准确率下降仅0.14。
 tags:
   - "ICLR 2026"
   - "模型压缩"

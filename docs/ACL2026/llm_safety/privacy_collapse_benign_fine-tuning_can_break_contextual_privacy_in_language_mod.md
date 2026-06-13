@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Privacy Collapse: Benign Fine-Tuning Can Break Contextual Privacy in Language Models
 description: >-
-  [ACL 2026][LLM安全][上下文隐私] 本文提出“隐私坍塌”这一新失败模式：看似良性的微调会让 LLM 在上下文隐私规范上系统性退化，同时常规安全和能力指标仍表现正常。
+  [ACL 2026][LLM安全][上下文隐私] 本文提出“隐私坍塌”这一新失败模式：看似良性的微调会让 LLM 在上下文隐私规范上系统性退化，同时常规安全和能力指标仍表现正常。 领域现状：个人 Agent 正在接入邮件、日历、文档、健康记录和财务信息等敏感上下文。传统 LLM 隐私研究主要关注 PII 记忆、训练数据抽取或…
 tags:
   - "ACL 2026"
   - "LLM安全"

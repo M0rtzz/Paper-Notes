@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GC4NC: A Benchmark Framework for Graph Condensation on Node Classification with New Insights
 description: >-
-  [NeurIPS 2025][图像恢复][图凝缩] 提出 GC4NC——首个系统化的图凝缩（Graph Condensation）评估基准框架，跨 8 个维度（性能/效率/隐私保护/去噪/NAS有效性/可迁移性等）统一评估多种图凝缩方法，发现轨迹匹配方法最优、无结构方法效率最高…
+  [NeurIPS 2025][图像恢复][图凝缩] 提出 GC4NC——首个系统化的图凝缩（Graph Condensation）评估基准框架，跨 8 个维度（性能/效率/隐私保护/去噪/NAS有效性/可迁移性等）统一评估多种图凝缩方法，发现轨迹匹配方法最优、无结构方法效率最高，并在 1000x 压缩下图凝缩显著优于图像凝缩。
 tags:
   - "NeurIPS 2025"
   - "图像恢复"

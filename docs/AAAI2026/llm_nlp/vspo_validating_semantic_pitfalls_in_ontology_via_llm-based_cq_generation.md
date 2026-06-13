@@ -2,10 +2,10 @@
 title: >-
   [论文解读] VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation
 description: >-
-  [AAAI 2026][LLM/NLP][能力问题生成] 提出 VSPO 框架，通过构造"定义-公理"错位数据集并微调 LLaMA-3.1-8B-Instruct，生成能够验证本体语义陷阱（如 allValuesFrom 误用）的能力问题（CQ）…
+  [AAAI 2026 Oral][LLM 其他][能力问题生成] 提出 VSPO 框架，通过构造"定义-公理"错位数据集并微调 LLaMA-3.1-8B-Instruct，生成能够验证本体语义陷阱（如 allValuesFrom 误用）的能力问题（CQ），精度和召回率分别超过 GPT-4.1 达 26% 和 28.2%。
 tags:
-  - "AAAI 2026"
-  - "LLM/NLP"
+  - "AAAI 2026 Oral"
+  - "LLM 其他"
   - "能力问题生成"
   - "语义陷阱检测"
   - "本体验证"

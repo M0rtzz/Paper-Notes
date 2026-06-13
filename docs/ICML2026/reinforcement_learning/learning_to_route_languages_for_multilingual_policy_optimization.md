@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Route Languages for Multilingual Policy Optimization
 description: >-
-  [ICML 2026][强化学习][多语言 RL] 本文提出 LRPO（Language-Routed Policy Optimization），把"用哪个语言生成 rollout"当作可学习变量，用一个上下文 bandit 形式的语言路由器为每条训练样本在固定 rollout 预算下挑选最有信息量的语言组合…
+  [ICML 2026][强化学习][多语言 RL] 本文提出 LRPO（Language-Routed Policy Optimization），把"用哪个语言生成 rollout"当作可学习变量，用一个上下文 bandit 形式的语言路由器为每条训练样本在固定 rollout 预算下挑选最有信息量的语言组合，并通过离线估计 + 在线校准的跨语言相似度奖励把多语言 rollout 拉到同一个尺度上做 GRPO，在 Qwen/Llama/Gemma 三族骨干、五个多语言基准上稳定优于 GRPO 与各种 dominant-language 基线。
 tags:
   - "ICML 2026"
   - "强化学习"

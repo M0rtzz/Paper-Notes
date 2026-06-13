@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Geometric Signatures of Compositionality Across a Language Model's Lifetime
 description: >-
-  [ACL 2025][LLM/NLP][组合性(compositionality)] 通过将数据集的组合性程度与语言模型表示的非线性内在维度(I_d)和线性有效维度(d)联系起来，揭示了一个形式-意义二分：非线性 I_d 编码有意义的组合语义复杂度，而线性 d 编码表面词形复杂度…
+  [ACL 2025][LLM 其他][组合性(compositionality)] 通过将数据集的组合性程度与语言模型表示的非线性内在维度(I_d)和线性有效维度(d)联系起来，揭示了一个形式-意义二分：非线性 I_d 编码有意义的组合语义复杂度，而线性 d 编码表面词形复杂度；该对应关系在训练过程中随语言能力涌现而建立。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "组合性(compositionality)"
   - "内在维度(intrinsic dimension)"
   - "流形假设"

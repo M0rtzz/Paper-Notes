@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pre-Training Curriculum for Multi-Token Prediction in Language Models
 description: >-
-  [ACL 2025][预训练][multi-token prediction] 针对小语言模型（SLM）难以直接受益于多 token 预测（MTP）目标的问题，提出前向/反向课程学习策略——前向课程（NTP→MTP）使 SLM 在保持自推测解码加速的同时提升生成质量…
+  [ACL 2025][预训练][multi-token prediction] 针对小语言模型（SLM）难以直接受益于多 token 预测（MTP）目标的问题，提出前向/反向课程学习策略——前向课程（NTP→MTP）使 SLM 在保持自推测解码加速的同时提升生成质量，反向课程（MTP→NTP）在 NTP 性能上更优但失去推理加速优势。
 tags:
   - "ACL 2025"
   - "预训练"

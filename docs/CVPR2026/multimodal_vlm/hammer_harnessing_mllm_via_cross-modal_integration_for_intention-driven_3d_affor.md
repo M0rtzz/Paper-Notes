@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HAMMER: Harnessing MLLM via Cross-Modal Integration for Intention-Driven 3D Affordance Grounding
 description: >-
-  [CVPR 2026][多模态VLM][3D可供性] 提出 HAMMER 框架，通过从 MLLM 中提取接触感知的意图嵌入、层次化跨模态融合增强点云特征、以及多粒度几何提升模块为意图嵌入注入3D空间信息，实现基于交互图像的3D可供性定位，在 PIAD 基准上全面超越现有方法。
+  [CVPR 2026][多模态VLM][3D可供性] 提出 HAMMER 框架，通过从 MLLM 中提取接触感知的意图嵌入、层次化跨模态融合增强点云特征、以及多粒度几何提升模块为意图嵌入注入3D空间信息，实现基于交互图像的3D可供性定位，在 PIAD 基准上全面超越现有方法。 领域现状：意图驱动的3D可供性定位（通过交互图像…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

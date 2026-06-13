@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LAPRAS: Learning-Augmented PRivate Answering for Linear Query Streams
 description: >-
-  [ICML 2026][AI安全][差分隐私] LAPRAS 用一个"哪些查询会来"的预测器把在线 DP 查询流分成预测内/外两类，预测内的用离线最优 Matrix Mechanism 一次性低噪释放…
+  [ICML 2026][AI安全][差分隐私] LAPRAS 用一个"哪些查询会来"的预测器把在线 DP 查询流分成预测内/外两类，预测内的用离线最优 Matrix Mechanism 一次性低噪释放，预测外的用 Smooth Allocation 根据流中已观测到的"未预测查询"位置在线估计总数并平滑分配预算，在预测准时几乎追平离线最优、预测差时退化到在线 baseline 水平。
 tags:
   - "ICML 2026"
   - "AI安全"

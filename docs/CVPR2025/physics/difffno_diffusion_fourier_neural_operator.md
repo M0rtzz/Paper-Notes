@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffFNO: Diffusion Fourier Neural Operator
 description: >-
-  [CVPR 2025][物理/科学计算][超分辨率] 提出 DiffFNO，将加权傅里叶神经算子（WFNO）与扩散框架结合用于任意尺度超分辨率，通过模式再平衡（Mode Rebalancing）保留关键高频分量，门控融合机制融合频域和空间域特征，自适应步长 ODE 求解器加速推理…
+  [CVPR 2025][物理/科学计算][超分辨率] 提出 DiffFNO，将加权傅里叶神经算子（WFNO）与扩散框架结合用于任意尺度超分辨率，通过模式再平衡（Mode Rebalancing）保留关键高频分量，门控融合机制融合频域和空间域特征，自适应步长 ODE 求解器加速推理，在多个基准上超越现有方法 2-4 dB PSNR。
 tags:
   - "CVPR 2025"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SketchAgent: Language-Driven Sequential Sketch Generation
 description: >-
-  [CVPR 2025][多模态VLM][草图生成] SketchAgent 无需任何训练或微调，通过为预训练多模态 LLM 设计网格画布坐标系统 + 上下文示例 + 贝塞尔曲线拟合的后处理流水线，使模型以逐笔画方式生成语义丰富、接近人类风格的草图，Top-1 识别率达人类水平的 85%…
+  [CVPR 2025][多模态VLM][草图生成] SketchAgent 无需任何训练或微调，通过为预训练多模态 LLM 设计网格画布坐标系统 + 上下文示例 + 贝塞尔曲线拟合的后处理流水线，使模型以逐笔画方式生成语义丰富、接近人类风格的草图，Top-1 识别率达人类水平的 85%，并支持交互式协作绘图和对话编辑。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

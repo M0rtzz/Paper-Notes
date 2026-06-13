@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Adaptive Layer Selection for Layer-Wise Token Pruning in LLM Inference
 description: >-
-  [ACL 2026][模型压缩][KV缓存压缩] 提出ASL（Adaptive Selection Layer），通过监控token注意力分数排名的方差来自适应确定KV缓存剪枝的层位置，在困难任务上显著优于固定层选择方法，同时保持无需训练。
+  [ACL 2026 Findings][模型压缩][KV缓存压缩] 提出ASL（Adaptive Selection Layer），通过监控token注意力分数排名的方差来自适应确定KV缓存剪枝的层位置，在困难任务上显著优于固定层选择方法，同时保持无需训练。 领域现状：KV缓存是LLM推理的主要内存瓶颈…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "KV缓存压缩"
   - "自适应层选择"

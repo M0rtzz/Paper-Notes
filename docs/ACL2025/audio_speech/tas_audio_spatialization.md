@@ -2,7 +2,7 @@
 title: >-
   [论文解读] In-the-wild Audio Spatialization with Flexible Text-guided Localization
 description: >-
-  [ACL 2025][音频/语音][audio spatialization] 提出 TAS（Text-guided Audio Spatialization）框架，用灵活的文本提示（3D 空间位置描述或声源间相对位置描述）引导潜在扩散模型将单声道音频转换为双耳音频…
+  [ACL 2025][音频/语音][audio spatialization] 提出 TAS（Text-guided Audio Spatialization）框架，用灵活的文本提示（3D 空间位置描述或声源间相对位置描述）引导潜在扩散模型将单声道音频转换为双耳音频，构建了 376K 样本的 SpatialTAS 数据集，在模拟和真实录制数据上均超越现有方法，并基于 Llama-3.1-8B 开发了空间语义一致性评估模型。
 tags:
   - "ACL 2025"
   - "音频/语音"

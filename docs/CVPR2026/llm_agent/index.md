@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 LLMAgent论文汇总 · 15篇论文解读
+  CVPR2026 LLMAgent论文汇总 · 17篇论文解读
 description: >-
-  15篇CVPR2026的 LLM Agent 方向论文解读，涵盖 Agent、推理、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇CVPR2026的 LLM Agent 方向论文解读，涵盖 Agent、推理、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "LLM Agent"
@@ -14,6 +14,8 @@ tags:
 item_list:
   - u: "argos_agentic_multi_camera_person_search/"
     t: "ARGOS: Who, Where, and When in Agentic Multi-Camera Person Search"
+  - u: "bami_training-free_bias_mitigation_in_gui_grounding/"
+    t: "BAMI: Training-Free Bias Mitigation in GUI Grounding"
   - u: "carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h/"
     t: "CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare"
   - u: "echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e/"
@@ -40,15 +42,17 @@ item_list:
     t: "Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding"
   - u: "towards_gui_agents_vision-language_diffusion_models_for_gui_grounding/"
     t: "Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding"
+  - u: "verbalvalue_a_socially_intelligent_virtual_host_for_sales-driven_live_commerce/"
+    t: "VerbalValue: A Socially Intelligent Virtual Host for Sales-Driven Live Commerce"
   - u: "worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning/"
     t: "WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning"
-item_total: 15
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**📷 CVPR2026** · **15** 篇论文解读
+**📷 CVPR2026** · **17** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (42)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (78)](../../ACL2026/llm_agent/index.md) · [🔬 ICLR2026 (42)](../../ICLR2026/llm_agent/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
@@ -57,6 +61,10 @@ item_total: 15
 **[ARGOS: Who, Where, and When in Agentic Multi-Camera Person Search](argos_agentic_multi_camera_person_search.md)**
 
 :   本文提出 ARGOS，首个将多摄像头行人搜索重新定义为交互式推理问题的基准和框架，智能体通过与目击者进行多轮对话、调用时空工具并在信息不对称下推理排除候选人，包含 2,691 个任务、3 个渐进式赛道。
+
+**[BAMI: Training-Free Bias Mitigation in GUI Grounding](bami_training-free_bias_mitigation_in_gui_grounding.md)**
+
+:   本文先用 MPD 归因法诊断出 GUI grounding 的错误主要来自两类归纳偏差（精度偏差 + 歧义偏差），再提出免训练的 BAMI 推理框架，用「由粗到精聚焦」消除精度偏差、用「候选选择」消除歧义偏差，把 TianXi-Action-7B 在 ScreenSpot-Pro 上的准确率从 51.9% 提到 57.8%。
 
 **[CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)**
 
@@ -109,6 +117,10 @@ item_total: 15
 **[Towards GUI Agents: Vision-Language Diffusion Models for GUI Grounding](towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)**
 
 :   首次系统研究离散扩散视觉语言模型（DVLM）在 GUI Grounding 中的应用，将 LLaDA-V 适配为单步动作预测，并提出混合掩码调度（线性+确定性）以捕获边界框坐标间的几何层次依赖，在 Web/Desktop/Mobile 界面上展示了扩散模型作为 GUI Agent 基础的可行性。
+
+**[VerbalValue: A Socially Intelligent Virtual Host for Sales-Driven Live Commerce](verbalvalue_a_socially_intelligent_virtual_host_for_sales-driven_live_commerce.md)**
+
+:   VerbalValue 把"直播带货主播"重新定义成一个以成交转化为目标的销售型对话 agent：用 12 款产品的结构化知识库 + 成分白名单做事实锚定，用 1,475 条按四类观众意图标注的数据微调 Qwen2.5-32B，并设计一套"空闲讲解 / 交互应答"双通道架构来兼顾不间断口播和实时弹幕响应，相比 GPT-5.4 等基线在信息量上提升 23%、事实正确率提升 18%。
 
 **[WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)**
 

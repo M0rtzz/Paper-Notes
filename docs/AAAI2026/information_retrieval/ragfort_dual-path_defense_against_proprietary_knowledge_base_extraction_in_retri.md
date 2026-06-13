@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAGFort: Dual-Path Defense Against Proprietary Knowledge Base Extraction in Retrieval-Augmented Generation
 description: >-
-  [AAAI 2026][信息检索/RAG][RAG 安全] 提出 RAGFort，首个系统性防御 RAG 知识库抽取攻击的双路径框架，通过对比重索引（inter-class）隔离主题间边界和约束级联生成（intra-class）抑制敏感内容输出，在安全性上将知识恢复率降低至无保护的 0.51×…
+  [AAAI 2026][信息检索/RAG][RAG 安全] 提出 RAGFort，首个系统性防御 RAG 知识库抽取攻击的双路径框架，通过对比重索引（inter-class）隔离主题间边界和约束级联生成（intra-class）抑制敏感内容输出，在安全性上将知识恢复率降低至无保护的 0.51×，同时保持回答质量。
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

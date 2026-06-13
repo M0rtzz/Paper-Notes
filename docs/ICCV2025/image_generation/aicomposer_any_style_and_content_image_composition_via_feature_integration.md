@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AIComposer: Any Style and Content Image Composition via Feature Integration
 description: >-
-  [ICCV 2025][图像生成][跨域图像合成] AIComposer 提出了首个不依赖文本提示的跨域图像合成方法，通过 MLP 网络融合前景和背景的 CLIP 特征，并结合 backward inversion + forward denoising 和局部交叉注意力策略…
+  [ICCV 2025][图像生成][跨域图像合成] AIComposer 提出了首个不依赖文本提示的跨域图像合成方法，通过 MLP 网络融合前景和背景的 CLIP 特征，并结合 backward inversion + forward denoising 和局部交叉注意力策略，在无需训练扩散模型的前提下实现了自然风格化和无缝合成，LPIPS 和 CSD 指标分别提升 30.5% 和 18.1%。
 tags:
   - "ICCV 2025"
   - "图像生成"

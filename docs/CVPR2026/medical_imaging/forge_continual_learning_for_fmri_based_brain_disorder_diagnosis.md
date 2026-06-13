@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual Learning for fMRI-Based Brain Disorder Diagnosis via Functional Connectivity Matrices Generative Replay
 description: >-
-  [CVPR 2026][医学图像][continual learning] 提出 FORGE，首个专为跨站点 fMRI 脑疾病诊断设计的持续学习框架，通过结构感知 VAE 生成逼真的功能连接矩阵进行隐私保护式生成回放，结合双层知识蒸馏和层次化上下文赌博机采样策略，有效缓解灾难性遗忘。
+  [CVPR 2026][医学图像][continual learning] 提出 FORGE，首个专为跨站点 fMRI 脑疾病诊断设计的持续学习框架，通过结构感知 VAE 生成逼真的功能连接矩阵进行隐私保护式生成回放，结合双层知识蒸馏和层次化上下文赌博机采样策略，有效缓解灾难性遗忘。 fMRI 功能连接 (FC) 矩阵是脑疾…
 tags:
   - "CVPR 2026"
   - "医学图像"

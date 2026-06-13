@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reheat Nachos for Dinner? Evaluating AI Support for Cross-Cultural Communication of Neologisms
 description: >-
-  [ACL2026][社会计算][跨文化沟通] 本文通过 234 名非母语者和 144 名母语评价者的人类实验比较四类 AI/非 AI 支持，发现带语境解释的 AI Explanation 最能提升非母语者使用英语网络新词时的母语者评分，但学习者的自信和真实交际能力之间仍存在明显错位。
+  [ACL2026 Findings][社会计算][跨文化沟通] 本文通过 234 名非母语者和 144 名母语评价者的人类实验比较四类 AI/非 AI 支持，发现带语境解释的 AI Explanation 最能提升非母语者使用英语网络新词时的母语者评分，但学习者的自信和真实交际能力之间仍存在明显错位。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "社会计算"
   - "跨文化沟通"
   - "网络新词"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2604.23842](https://arxiv.org/abs/2604.23842)  
 **代码**: https://github.com/dayeonki/crosscultural_communication  
-**领域**: audio_speech  
+**领域**: 音频语音  
 **关键词**: 跨文化沟通、网络新词、AI语言学习、交际能力、用户研究
 
 ## 一句话总结

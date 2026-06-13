@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LR²Bench: Evaluating Long-chain Reflective Reasoning Capabilities of Large Language Models via Constraint Satisfaction Problems
 description: >-
-  [ACL 2025][LLM/NLP][反思推理] 提出 LR²Bench 基准，通过六类约束满足问题（CSP）系统评测 LLM 的长链反思推理能力，发现即使最先进的推理模型如 DeepSeek-R1 和 o1-preview 的平均 Exact Match 也仅为 20.0% 和 23.6%…
+  [ACL 2025][LLM 其他][反思推理] 提出 LR²Bench 基准，通过六类约束满足问题（CSP）系统评测 LLM 的长链反思推理能力，发现即使最先进的推理模型如 DeepSeek-R1 和 o1-preview 的平均 Exact Match 也仅为 20.0% 和 23.6%，揭示了当前模型在反思推理方面的巨大改进空间。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "反思推理"
   - "约束满足问题"
   - "推理评测"

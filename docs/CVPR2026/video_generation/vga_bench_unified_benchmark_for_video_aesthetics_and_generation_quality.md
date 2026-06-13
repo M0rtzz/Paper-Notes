@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VGA-Bench: A Unified Benchmark for Video Aesthetics and Generation Quality Evaluation
 description: >-
-  [CVPR 2026][视频生成][视频质量评估] VGA-Bench提出了一个统一的AIGC视频评估基准，包含三层分类体系（美学质量、美学标签、生成质量）、1016个提示词、60000个视频和三个专用评估模型，实现了与人类判断对齐的自动化评估。
+  [CVPR 2026][视频生成][视频质量评估] VGA-Bench提出了一个统一的AIGC视频评估基准，包含三层分类体系（美学质量、美学标签、生成质量）、1016个提示词、60000个视频和三个专用评估模型，实现了与人类判断对齐的自动化评估。 领域现状：AIGC视频生成技术飞速发展（扩散模型、Transformer等）…
 tags:
   - "CVPR 2026"
   - "视频生成"

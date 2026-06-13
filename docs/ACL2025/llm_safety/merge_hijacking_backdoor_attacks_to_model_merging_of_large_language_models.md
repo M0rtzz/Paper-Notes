@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Merge Hijacking: Backdoor Attacks to Model Merging of Large Language Models
 description: >-
-  [ACL 2025 (main)][LLM安全][模型合并] 提出 Merge Hijacking——首个针对 LLM 模型合并的后门攻击方法，攻击者仅需上传一个恶意模型，当受害者将其与任意干净模型合并时，生成的合并模型继承后门并在所有任务上保持攻击有效性和正常性能，且对现有防御方法具有鲁棒性。
+  [ACL 2025 (main)][LLM安全][模型合并] 提出 Merge Hijacking——首个针对 LLM 模型合并的后门攻击方法，攻击者仅需上传一个恶意模型，当受害者将其与任意干净模型合并时，生成的合并模型继承后门并在所有任务上保持攻击有效性和正常性能，且对现有防御方法具有鲁棒性。 领域现状：模型合并（Mode…
 tags:
   - "ACL 2025 (main)"
   - "LLM安全"

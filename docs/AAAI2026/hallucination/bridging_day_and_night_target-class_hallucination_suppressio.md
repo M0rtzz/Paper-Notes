@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Day and Night: Target-Class Hallucination Suppression in Unpaired Image Translation
 description: >-
-  [AAAI 2026 (Oral)][幻觉检测][日夜转换] 首次系统性解决无配对日→夜图像翻译中的"目标类幻觉"问题，通过双头判别器（风格头+SAM2伪标签分割头）检测幻觉 + 类原型对比学习抑制幻觉，在BDD100K日夜域适应检测上将mAP从15.08提升到17.40（+15.5%）…
+  [AAAI 2026 (Oral)][幻觉检测][日夜转换] 首次系统性解决无配对日→夜图像翻译中的"目标类幻觉"问题，通过双头判别器（风格头+SAM2伪标签分割头）检测幻觉 + 类原型对比学习抑制幻觉，在BDD100K日夜域适应检测上将mAP从15.08提升到17.40（+15.5%），交通灯AP提升31.7%。
 tags:
   - "AAAI 2026 (Oral)"
   - "幻觉检测"

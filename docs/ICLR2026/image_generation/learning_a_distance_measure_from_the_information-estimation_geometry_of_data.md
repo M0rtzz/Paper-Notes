@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning a Distance Measure from the Information-Estimation Geometry of Data
 description: >-
-  [ICLR 2026][图像生成][信息估计度量] 提出 Information-Estimation Metric (IEM)，一种由数据概率密度几何诱导的新型距离函数，通过比较不同噪声水平下的 score 向量场来度量信号间距离，无监督训练的 IEM 在预测人类感知判断上可媲美有监督方法。
+  [ICLR 2026][图像生成][信息估计度量] 提出 Information-Estimation Metric (IEM)，一种由数据概率密度几何诱导的新型距离函数，通过比较不同噪声水平下的 score 向量场来度量信号间距离，无监督训练的 IEM 在预测人类感知判断上可媲美有监督方法。 - 距离函数是科学和工程的核心…
 tags:
   - "ICLR 2026"
   - "图像生成"

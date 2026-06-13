@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Survey on Patent Analysis: From NLP to Multimodal AI
 description: >-
-  [ACL 2025][多模态VLM][patent analysis] 全面综述了 NLP 和多模态 AI 在专利分析中的应用，提出基于专利生命周期任务的新分类体系，涵盖专利分类、检索、质量分析和生成四大任务，揭示了现有方法从传统 NN 到 PLM/LLM 的演进趋势及未来方向。
+  [ACL 2025][多模态VLM][patent analysis] 系统综述了 NLP 和多模态 AI 在专利分析四大核心任务（分类、检索、质量分析、生成）中的应用，提出基于专利生命周期的分类体系，揭示了从 Word2Vec+LSTM 到 BERT/GPT 再到多模态模型的方法演进趋势及重要研究空白。
 tags:
   - "ACL 2025"
   - "多模态VLM"
@@ -134,3 +134,19 @@ description: >-
 tags:
   - 多模态
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Towards Human-AI Accessibility Mapping in India: VLM-Guided Annotations and POI-Centric Analysis in Chandigarh](../../AAAI2026/multimodal_vlm/towards_human-ai_accessibility_mapping_in_india_vlm-guided_annotations_and_poi-c.md)
+- [\[ACL 2025\] MIRA: Empowering One-Touch AI Services on Smartphones with MLLM-based Instruction Recommendation](mira_empowering_one-touch_ai_services_on_smartphones_with_mllm-based_instruction.md)
+- [\[ACL 2026\] A Survey of Multimodal Mathematical Reasoning: From Perception, Alignment to Reasoning](../../ACL2026/multimodal_vlm/a_survey_of_multimodal_mathematical_reasoning_from_perception_alignment_to_reaso.md)
+- [\[CVPR 2025\] Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices](../../CVPR2025/multimodal_vlm/multi-layer_visual_feature_fusion_in_multimodal_llms_methods_analysis_and_best_p.md)
+- [\[ICCV 2025\] GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models](../../ICCV2025/multimodal_vlm/grab_a_challenging_graph_analysis_benchmark_for_large_multimodal_models.md)
+
+</div>
+
+<!-- RELATED:END -->

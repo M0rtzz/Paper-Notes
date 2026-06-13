@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reliev3R: Relieving Feed-forward 3D Reconstruction from Multi-View Geometric Annotations
 description: >-
-  [CVPR 2026][3D视觉][前馈3D重建] Reliev3R 首次提出无需多视图几何标注（无需 SfM/MVS 生成的点云和位姿）即可从头训练前馈3D重建模型（FFRM）的弱监督范式，利用单目相对深度和稀疏图像对应作为替代监督，性能追平甚至超过部分全监督 FFRM。
+  [CVPR 2026][3D视觉][前馈3D重建] Reliev3R 首次提出无需多视图几何标注（无需 SfM/MVS 生成的点云和位姿）即可从头训练前馈3D重建模型（FFRM）的弱监督范式，利用单目相对深度和稀疏图像对应作为替代监督，性能追平甚至超过部分全监督 FFRM。 前馈3D重建模型（如 DUSt3R、MASt3R）…
 tags:
   - "CVPR 2026"
   - "3D视觉"

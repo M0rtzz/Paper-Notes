@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COG: Confidence-aware Optimal Geometric Correspondence for Unsupervised Single-reference Novel Object Pose Estimation
 description: >-
-  [CVPR2026][人体理解][新物体位姿估计] 提出 COG 框架，将跨视图对应关系建模为置信度感知的最优传输(OT)问题，通过预测逐点置信度作为传输边际约束来抑制非重叠区域和离群点，实现无监督条件下媲美有监督方法的单参考图像新物体6DoF位姿估计。
+  [CVPR2026][人体理解][新物体位姿估计] 提出 COG 框架，将跨视图对应关系建模为置信度感知的最优传输(OT)问题，通过预测逐点置信度作为传输边际约束来抑制非重叠区域和离群点，实现无监督条件下媲美有监督方法的单参考图像新物体6DoF位姿估计。 任务定义：从单张参考RGB-D图像估计任意新物体的6DoF位姿(旋转+…
 tags:
   - "CVPR2026"
   - "人体理解"

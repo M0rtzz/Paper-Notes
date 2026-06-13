@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Search and Detect: Training-Free Long Tail Object Detection via Web-Image Retrieval
 description: >-
-  [CVPR 2025][目标检测][开放词汇检测] SearchDet提出了一种完全免训练的长尾目标检测框架，通过从Web检索正负样本图像、注意力加权查询生成、SAM区域提议和热力图联合定位，在ODinW上比GroundingDINO提升48.7% mAP、在LVIS上提升59.1% mAP…
+  [CVPR 2025][目标检测][开放词汇检测] SearchDet提出了一种完全免训练的长尾目标检测框架，通过从Web检索正负样本图像、注意力加权查询生成、SAM区域提议和热力图联合定位，在ODinW上比GroundingDINO提升48.7% mAP、在LVIS上提升59.1% mAP，展示了利用Web作为外部动态记忆进行推理阶段增强的巨大潜力。
 tags:
   - "CVPR 2025"
   - "目标检测"

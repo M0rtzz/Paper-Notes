@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs
 description: >-
-  [ACL 2025][LLM推理][连续空间推理] 提出 SoftCoT，用一个冻结的小型辅助模型（如 LLaMA-3.2-1B）生成实例特定的"软思维 token"（连续隐状态），通过可训练的投影模块映射到主 LLM 的表示空间作为推理前缀，实现参数高效的连续空间 CoT 推理…
+  [ACL 2025][LLM推理][连续空间推理] 提出 SoftCoT，用一个冻结的小型辅助模型（如 LLaMA-3.2-1B）生成实例特定的"软思维 token"（连续隐状态），通过可训练的投影模块映射到主 LLM 的表示空间作为推理前缀，实现参数高效的连续空间 CoT 推理，避免了全模型微调导致的灾难性遗忘问题。
 tags:
   - "ACL 2025"
   - "LLM推理"

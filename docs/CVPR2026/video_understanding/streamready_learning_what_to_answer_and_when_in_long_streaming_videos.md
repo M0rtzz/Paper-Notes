@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamReady: Learning What to Answer and When in Long Streaming Videos
 description: >-
-  [CVPR 2026][视频理解][流式视频理解] 提出就绪性感知的流式视频理解范式，通过可学习的 `<RDY>` token 和 Answer Readiness Score (ARS) 指标，让模型不仅回答正确，还能在证据出现的恰当时刻作答，在 9 个流式/离线视频基准上取得 SOTA。
+  [CVPR 2026][视频理解][流式视频理解] 提出就绪性感知的流式视频理解范式，通过可学习的 <RDY token 和 Answer Readiness Score (ARS) 指标，让模型不仅回答正确，还能在证据出现的恰当时刻作答，在 9 个流式/离线视频基准上取得 SOTA。 长视频流式理解的迫切需求：现实场景（监…
 tags:
   - "CVPR 2026"
   - "视频理解"

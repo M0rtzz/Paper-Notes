@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRISP: Object Pose and Shape Estimation with Test-Time Adaptation
 description: >-
-  [人体理解] 提出 CRISP，一个类别无关的物体姿态与形状估计 pipeline，核心创新在于基于 active shape model 的优化校正器和 correct-and-certify 自训练策略，可在测试时自适应弥合大的域差距。
+  [人体理解] 提出 CRISP，一个类别无关的物体姿态与形状估计 pipeline，核心创新在于基于 active shape model 的优化校正器和 correct-and-certify 自训练策略，可在测试时自适应弥合大的域差距。 领域现状 物体姿态和形状估计是增强现实、机器人和太空自主对接等应用的关键能力…
 tags:
   - "人体理解"
 ---

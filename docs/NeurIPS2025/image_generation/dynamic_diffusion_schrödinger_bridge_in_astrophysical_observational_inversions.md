@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions
 description: >-
-  [NeurIPS 2025][图像生成][Schrödinger Bridge] 提出 Astro-DSB，一种基于 Diffusion Schrödinger Bridge 的天文物理反问题建模方法，直接学习观测量到真实物理分布的概率映射，训练成本仅为条件 DDPM 的 25%…
+  [NeurIPS 2025][图像生成][Schrödinger Bridge] 提出 Astro-DSB，一种基于 Diffusion Schrödinger Bridge 的天文物理反问题建模方法，直接学习观测量到真实物理分布的概率映射，训练成本仅为条件 DDPM 的 25%，且在分布外（OOD）测试中展现出显著的泛化优势，并成功应用于 Taurus B213 真实观测数据。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

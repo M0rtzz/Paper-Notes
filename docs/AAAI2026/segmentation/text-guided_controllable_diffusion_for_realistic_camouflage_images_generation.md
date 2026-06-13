@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-guided Controllable Diffusion for Realistic Camouflage Images Generation
 description: >-
-  [AAAI 2026][语义分割][伪装图像生成] 提出CT-CIG，首个文本引导的可控伪装图像生成方法。利用VLM设计伪装揭示对话机制（CRDM）生成高质量文本提示，结合轻量控制网络和频率交互精炼模块（FIRM），在Stable Diffusion框架上生成逻辑合理、纹理真实的伪装图像…
+  [AAAI 2026][语义分割][伪装图像生成] 提出CT-CIG，首个文本引导的可控伪装图像生成方法。利用VLM设计伪装揭示对话机制（CRDM）生成高质量文本提示，结合轻量控制网络和频率交互精炼模块（FIRM），在Stable Diffusion框架上生成逻辑合理、纹理真实的伪装图像，开创了Text-guided CIG新范式。
 tags:
   - "AAAI 2026"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIRES: Video Instance Repainting via Sketch and Text Guided Generation
 description: >-
-  [CVPR 2025][视频生成][待补充] > 基于摘要：We introduce VIRES, a video instance repainting method with sketch and text guidance, enabling video instance repainting…
+  [CVPR 2025][视频生成][待补充] > 基于摘要：We introduce VIRES, a video instance repainting method with sketch and text guidance, enabling video instance repainting, replacement, generation, and removal. Existing approaches struggle with temporal consistency and accurate alignment with the provided sketch sequence. VIRES leverages t…
 tags:
   - "CVPR 2025"
   - "视频生成"
@@ -100,7 +100,7 @@ We propose the Sequential ControlNet with the standardized self-scaling, which e
 - VireSet数据集为视频实例编辑研究提供了新的基准
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 基于摘要初评，有一定创新
-- 实验充分度: ⭐⭐⭐ 需读全文验证
-- 写作质量: ⭐⭐⭐ 基于摘要初评
-- 价值: ⭐⭐⭐ 在该领域有贡献
+- 新颖性: ⭐⭐⭐⭐ 基于摘要初评，有一定创新
+- 实验充分度: ⭐⭐⭐⭐ 需读全文验证
+- 写作质量: ⭐⭐⭐⭐ 基于摘要初评
+- 价值: ⭐⭐⭐⭐ 在该领域有贡献

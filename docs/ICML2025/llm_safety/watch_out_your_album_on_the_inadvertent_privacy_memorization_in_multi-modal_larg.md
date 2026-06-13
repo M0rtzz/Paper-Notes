@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Watch Out Your Album! On the Inadvertent Privacy Memorization in Multi-Modal Large Language Models
 description: >-
-  [ICML 2025][LLM安全][MLLM隐私] 揭示多模态大语言模型（MLLM）在微调过程中会不经意地记忆与训练任务完全无关的私密内容（如随机水印），这种记忆源于 mini-batch 内的虚假相关性，并提出基于层级探针的检测框架证明模型内部表示已编码此类信息，即使模型输出不直接显示。
+  [ICML 2025][LLM安全][MLLM隐私] 揭示多模态大语言模型（MLLM）在微调过程中会不经意地记忆与训练任务完全无关的私密内容（如随机水印），这种记忆源于 mini-batch 内的虚假相关性，并提出基于层级探针的检测框架证明模型内部表示已编码此类信息，即使模型输出不直接显示。 领域现状：多模态大语言模型（ML…
 tags:
   - "ICML 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdmTree: Compressing Lengthy Context with Adaptive Semantic Trees
 description: >-
-  [NeurIPS 2025][模型压缩][上下文压缩] 提出 AdmTree——一种自适应层次化上下文压缩框架,通过信息密度驱动的动态分段构建叶 gist token，再用二叉语义树底向上聚合实现多粒度语义保留，解决了显式方法丢失局部细节和隐式方法位置偏差的双重问题…
+  [NeurIPS 2025][模型压缩][上下文压缩] 提出 AdmTree——一种自适应层次化上下文压缩框架,通过信息密度驱动的动态分段构建叶 gist token，再用二叉语义树底向上聚合实现多粒度语义保留，解决了显式方法丢失局部细节和隐式方法位置偏差的双重问题,在 LongBench 上比 SOTA 基线 Activation Beacon 高 10%+。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

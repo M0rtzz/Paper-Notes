@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Exterior Method for Nonnegative Matrix Factorization
 description: >-
-  [ICML2026][音频/语音][非负矩阵分解] 这篇论文提出 eNMF，把 NMF 从“始终待在非负正交锥内部优化”改成“先从无约束 SVD 最优解的旋转等价类外部逼近非负锥，再可行化并下降”，在合成、文本、音频、图像和推荐数据上比 9 类 NMF baseline 更快达到更低重构误差。
+  [ICML2026][音频/语音][非负矩阵分解] 这篇论文提出 eNMF，把 NMF 从“始终待在非负正交锥内部优化”改成“先从无约束 SVD 最优解的旋转等价类外部逼近非负锥，再可行化并下降”，在合成、文本、音频、图像和推荐数据上比 9 类 NMF baseline 更快达到更低重构误差。 领域现状：非负矩阵分解希望把非…
 tags:
   - "ICML2026"
   - "音频/语音"

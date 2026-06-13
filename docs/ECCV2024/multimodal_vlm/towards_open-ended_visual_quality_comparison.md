@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Open-ended Visual Quality Comparison
 description: >-
-  [ECCV 2024][多模态VLM][图像质量评估] 本文提出 Co-Instruct，首个面向开放式视觉质量比较的大型多模态模型，通过从两种"弱监督源"（LLM合并的单图描述 + GPT-4V伪标签）构建562K指令微调数据集，实现比 GPT-4V（其教师模型）更高的多图质量比较准确率…
+  [ECCV 2024][多模态VLM][图像质量评估] 本文提出 Co-Instruct，首个面向开放式视觉质量比较的大型多模态模型，通过从两种"弱监督源"（LLM合并的单图描述 + GPT-4V伪标签）构建562K指令微调数据集，实现比 GPT-4V（其教师模型）更高的多图质量比较准确率，并提出首个多图比较基准 MICBench。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

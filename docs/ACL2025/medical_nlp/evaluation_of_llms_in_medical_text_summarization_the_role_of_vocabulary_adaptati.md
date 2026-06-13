@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluation of LLMs in Medical Text Summarization: The Role of Vocabulary Adaptation in High OOV Settings
 description: >-
-  [ACL 2025 (Findings)][医疗NLP][vocabulary adaptation] 系统性基准研究发现 LLM 在高 OOV（词汇外词）和高新颖性医学文本摘要场景下性能显著下降，并通过多种词汇适配策略（MEDVOC、MEDVOC-LLM、ScafFix）证明即使 Llama-3.1（128…
+  [ACL 2025 (Findings)][医疗NLP][vocabulary adaptation] 系统性基准研究发现 LLM 在高 OOV（词汇外词）和高新颖性医学文本摘要场景下性能显著下降，并通过多种词汇适配策略（MEDVOC、MEDVOC-LLM、ScafFix）证明即使 Llama-3.1（128K 词汇量）仍受过度分片问题困扰，词汇适配可带来显著改善。
 tags:
   - "ACL 2025 (Findings)"
   - "医疗NLP"

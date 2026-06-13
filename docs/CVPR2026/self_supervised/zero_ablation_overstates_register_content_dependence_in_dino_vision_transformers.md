@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Ablation Overstates Register Content Dependence in DINO Vision Transformers
 description: >-
-  [CVPR 2026 (HOW Workshop)][自监督学习][register tokens] 通过三种替换控制实验（均值替换、噪声替换、跨图像洗牌）证明 DINO 系列 ViT 中零消融方法夸大了对 register token 精确内容的依赖性——模型实际只需"合理的 register-like 激…
+  [CVPR 2026 (HOW Workshop)][自监督学习][register tokens] 通过三种替换控制实验（均值替换、噪声替换、跨图像洗牌）证明 DINO 系列 ViT 中零消融方法夸大了对 register token 精确内容的依赖性——模型实际只需"合理的 register-like 激活"而非图像特定值。
 tags:
   - "CVPR 2026 (HOW Workshop)"
   - "自监督学习"

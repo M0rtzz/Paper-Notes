@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Global Optimality of Policy Gradient Methods in General Utility Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][一般效用强化学习] 本文为一般效用强化学习（RLGU）中的策略梯度方法建立了全局最优性理论保证：在表格设定下通过新的梯度支配不等式证明了全局收敛，在大规模状态-动作空间下提出基于最大似然估计（MLE）的占据度量近似算法 PG-OMA…
+  [NeurIPS 2025][强化学习][一般效用强化学习] 本文为一般效用强化学习（RLGU）中的策略梯度方法建立了全局最优性理论保证：在表格设定下通过新的梯度支配不等式证明了全局收敛，在大规模状态-动作空间下提出基于最大似然估计（MLE）的占据度量近似算法 PG-OMA，样本复杂度仅依赖函数近似类的维度 $m$ 而非状态-动作空间大小。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

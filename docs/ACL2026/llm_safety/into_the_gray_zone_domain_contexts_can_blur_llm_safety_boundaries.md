@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Into the Gray Zone: Domain Contexts Can Blur LLM Safety Boundaries
 description: >-
-  [ACL 2026][LLM安全][越狱攻击] 本文发现领域特定上下文（如化学论文）会选择性放松 LLM 对相关有害知识的防护（纵向解锁），而安全研究上下文会触发跨所有有害类别的广泛防护放松（通用解锁），据此提出 Jargon 攻击框架…
+  [ACL 2026][LLM安全][越狱攻击] 本文发现领域特定上下文（如化学论文）会选择性放松 LLM 对相关有害知识的防护（纵向解锁），而安全研究上下文会触发跨所有有害类别的广泛防护放松（通用解锁），据此提出 Jargon 攻击框架，在包括 GPT-5.2、Claude-4.5 在内的七个前沿模型上实现超 93% 的攻击成功率。
 tags:
   - "ACL 2026"
   - "LLM安全"

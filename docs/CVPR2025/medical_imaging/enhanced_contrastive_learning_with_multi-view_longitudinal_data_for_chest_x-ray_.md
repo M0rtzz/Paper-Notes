@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation
 description: >-
-  [CVPR 2025][医学图像][放射报告生成] 提出 MLRG 两阶段框架，通过多视角纵向对比学习融合当前多视角图像的空间信息和历史纵向数据的时间信息进行视觉-文本预训练，并用 tokenized absence encoding 灵活处理缺失的患者先验知识…
+  [CVPR 2025][医学图像][放射报告生成] 提出 MLRG 两阶段框架，通过多视角纵向对比学习融合当前多视角图像的空间信息和历史纵向数据的时间信息进行视觉-文本预训练，并用 tokenized absence encoding 灵活处理缺失的患者先验知识，在 MIMIC-CXR 上 BLEU-4 提升 2.3%，MIMIC-ABN 上 F1 提升 5.5%。
 tags:
   - "CVPR 2025"
   - "医学图像"

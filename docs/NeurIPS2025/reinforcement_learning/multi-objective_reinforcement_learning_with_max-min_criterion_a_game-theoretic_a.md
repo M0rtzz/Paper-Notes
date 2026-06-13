@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach
 description: >-
-  [NeurIPS 2025][强化学习][多目标强化学习] 将熵正则化的 max-min 多目标强化学习重新建模为两人零和正则连续博弈，提出 ERAM/ARAM 算法，通过镜像下降实现闭式权重更新和全局 last-iterate 收敛，在多种 MORL 环境中显著超越基线。
+  [NeurIPS 2025][强化学习][多目标强化学习] 将熵正则化的 max-min 多目标强化学习重新建模为两人零和正则连续博弈，提出 ERAM/ARAM 算法，通过镜像下降实现闭式权重更新和全局 last-iterate 收敛，在多种 MORL 环境中显著超越基线。 1. 领域现状： 多目标强化学习 (MORL) 在…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

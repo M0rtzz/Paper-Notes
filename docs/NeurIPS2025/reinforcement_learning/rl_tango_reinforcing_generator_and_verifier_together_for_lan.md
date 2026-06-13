@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RL Tango: Reinforcing Generator and Verifier Together for Language Reasoning
 description: >-
-  [NeurIPS 2025][强化学习][生成器-验证器协同训练] Tango 提出一种交替 RL 训练生成器和验证器的框架——验证器是生成式过程级 LLM（用自然语言逐步评判），仅用结果级正确性奖励训练（无需步骤标注），通过与生成器的共进化相互增强——在 7B/8B 级别模型上达到SOTA…
+  [NeurIPS 2025][强化学习][生成器-验证器协同训练] Tango 提出一种交替 RL 训练生成器和验证器的框架——验证器是生成式过程级 LLM（用自然语言逐步评判），仅用结果级正确性奖励训练（无需步骤标注），通过与生成器的共进化相互增强——在 7B/8B 级别模型上达到SOTA，AIME 2025 准确率相对 vanilla GRPO 提升 100%。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

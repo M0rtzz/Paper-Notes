@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing
 description: >-
-  [NeurIPS 2025][自监督学习][知识追踪] 提出CleverBirds——迄今最大规模的视觉知识追踪基准，通过eBird公民科学平台收集了40000+参与者完成的1700万+多选鸟类物种识别问答（涵盖10000+物种），系统性评估了多种知识追踪与分类方法…
+  [NeurIPS 2025][自监督学习][知识追踪] 提出CleverBirds——迄今最大规模的视觉知识追踪基准，通过eBird公民科学平台收集了40000+参与者完成的1700万+多选鸟类物种识别问答（涵盖10000+物种），系统性评估了多种知识追踪与分类方法，揭示了细粒度视觉知识建模特别是预测学习者错误选择方面的核心挑战。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

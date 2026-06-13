@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models
 description: >-
-  [ICML 2025][计算生物][蛋白质设计] 提出 CFP-Gen——一种大规模扩散语言模型，通过注释引导特征调制（AGFM）和残基级控制编码（RCFE）实现多模态功能约束（功能注释 + 序列基序 + 3D 结构）的组合蛋白质生成，F1 分数比 ESM3 提升 30%。
+  [ICML 2025][计算生物][蛋白质设计] 提出 CFP-Gen——一种大规模扩散语言模型，通过注释引导特征调制（AGFM）和残基级控制编码（RCFE）实现多模态功能约束（功能注释 + 序列基序 + 3D 结构）的组合蛋白质生成，F1 分数比 ESM3 提升 30%。 领域现状：蛋白质语言模型（PLM）在 de nov…
 tags:
   - "ICML 2025"
   - "计算生物"

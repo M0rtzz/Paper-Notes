@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 500xCompressor: Generalized Prompt Compression for Large Language Models
 description: >-
-  [ACL 2025][模型压缩][提示学习] 提出 500xCompressor，将最多约 500 个自然语言 token 压缩为最少 1 个特殊 token 的 KV 值，实现 6x 到 480x 的压缩比，仅增加约 0.25% 的参数，LLM 在压缩后保留 62.26%-72.89% 的原始能力…
+  [ACL 2025][模型压缩][提示学习] 提出 500xCompressor，将最多约 500 个自然语言 token 压缩为最少 1 个特殊 token 的 KV 值，实现 6x 到 480x 的压缩比，仅增加约 0.25% 的参数，LLM 在压缩后保留 62.26%-72.89% 的原始能力，显著超越 ICAE 基线。
 tags:
   - "ACL 2025"
   - "模型压缩"

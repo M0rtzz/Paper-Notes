@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Train-Free Infinite-Frame Generation for Consistent Long Videos
 description: >-
-  [ICML 2026][视频生成][长视频生成] MIGA 通过**两阶段训练推理对齐**（TTA）和**双重一致性增强**（DCE：自反射 + 长距离帧指导）两个核心机制——在无需训练的前提下使基础视频模型能够生成**无限长**且**高度时间一致**的视频…
+  [ICML 2026][视频生成][长视频生成] MIGA 通过**两阶段训练推理对齐**（TTA）和**双重一致性增强**（DCE：自反射 + 长距离帧指导）两个核心机制——在无需训练的前提下使基础视频模型能够生成**无限长**且**高度时间一致**的视频，VBench 综合评分相比 FIFO-Diffusion 提升 2.8%（97.82 vs 95.02）。
 tags:
   - "ICML 2026"
   - "视频生成"

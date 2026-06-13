@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Just Few States are Enough: Randomized Sparse Feedback for Stability of Dynamical Systems
 description: >-
-  [AAAI2026][物理/科学计算][sparse feedback control] 提出随机稀疏反馈控制框架：控制器在每个时间步仅访问状态向量的随机子集，通过 LMI 联合设计反馈增益矩阵和 Bernoulli 稀疏化参数，在保证渐近均方稳定性（AMSS）的同时最小化所需传感器数量…
+  [AAAI2026][物理/科学计算][sparse feedback control] 提出随机稀疏反馈控制框架：控制器在每个时间步仅访问状态向量的随机子集，通过 LMI 联合设计反馈增益矩阵和 Bernoulli 稀疏化参数，在保证渐近均方稳定性（AMSS）的同时最小化所需传感器数量，实验中仅用 0.3% 的状态分量即可达到与全状态反馈可比的性能。
 tags:
   - "AAAI2026"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PAC-Bayesian Reinforcement Learning Trains Generalizable Policies
 description: >-
-  [ICML2026][强化学习][PAC-Bayes 上界] 本文给出第一个**显式依赖马尔可夫链混合时间**且对长 horizon $1/(1-\gamma)$ 依赖只到一次方的 PAC-Bayesian RL 泛化上界，并把它作为活的训练目标内嵌进 SAC…
+  [ICML2026][强化学习][PAC-Bayes 上界] 本文给出第一个**显式依赖马尔可夫链混合时间**且对长 horizon $1/(1-\gamma)$ 依赖只到一次方的 PAC-Bayesian RL 泛化上界，并把它作为活的训练目标内嵌进 SAC，得到 PB-SAC 算法——在 MuJoCo 连续控制任务上同时给出非空 (non-vacuous) 部署证书与具竞争力的性能。
 tags:
   - "ICML2026"
   - "强化学习"

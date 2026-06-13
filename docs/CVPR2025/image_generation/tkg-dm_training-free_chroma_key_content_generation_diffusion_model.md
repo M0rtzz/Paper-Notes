@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TKG-DM: Training-Free Chroma Key Content Generation Diffusion Model
 description: >-
-  [CVPR 2025][图像生成][色度键] 本文提出 TKG-DM，通过操控扩散模型初始噪声的通道均值来控制生成图像的背景颜色，结合高斯掩码实现前景与色度键背景的分离，无需任何微调即可生成高质量的绿幕/色度键图像。
+  [CVPR 2025][图像生成][色度键] 本文提出 TKG-DM，通过操控扩散模型初始噪声的通道均值来控制生成图像的背景颜色，结合高斯掩码实现前景与色度键背景的分离，无需任何微调即可生成高质量的绿幕/色度键图像。 领域现状：扩散模型（如 Stable Diffusion、SDXL）在文本到图像生成领域取得了突破性进展…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your Model is Overconfident, and Other Lies We Tell Ourselves
 description: >-
-  [ACL 2025][数据复杂度] 通过对 29 个模型在 ChaosNLI 和 DynaSent 数据集上的全面分析，揭示了标注者分歧、训练动态、模型置信度等数据复杂度指标之间存在相关性但非线性非单调的关系，挑战了"模型不确定性 ≈ 人类分歧"这一常见假设。
+  [ACL 2025][数据复杂度] 通过对 29 个模型在 ChaosNLI 和 DynaSent 数据集上的全面分析，揭示了标注者分歧、训练动态、模型置信度等数据复杂度指标之间存在相关性但非线性非单调的关系，挑战了"模型不确定性 ≈ 人类分歧"这一常见假设。 在 NLP 评估中，数据的内在难度（intrinsic diff…
 tags:
   - "ACL 2025"
   - "数据复杂度"

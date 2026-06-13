@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tora: Trajectory-Oriented Diffusion Transformer for Video Generation
 description: >-
-  [CVPR 2025][视频生成][运动控制] 提出 Tora，首个面向轨迹控制的 Diffusion Transformer（DiT）视频生成框架，通过轨迹提取器（3D VAE 编码运动轨迹为时空 patch）和运动引导融合器（自适应归一化注入 DiT 块）…
+  [CVPR 2025][视频生成][运动控制] 提出 Tora，首个面向轨迹控制的 Diffusion Transformer（DiT）视频生成框架，通过轨迹提取器（3D VAE 编码运动轨迹为时空 patch）和运动引导融合器（自适应归一化注入 DiT 块），实现了可扩展的、支持多分辨率/多时长/多宽高比的轨迹控制视频生成，在 128 帧测试中轨迹精度比 UNet 方法高 3-5 倍。
 tags:
   - "CVPR 2025"
   - "视频生成"

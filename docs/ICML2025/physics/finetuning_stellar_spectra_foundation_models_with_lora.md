@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finetuning Stellar Spectra Foundation Models with LoRA
 description: >-
-  [ICML 2025][物理/科学计算][LoRA] 首次将 LoRA 应用于恒星光谱基础模型 SpecCLIP，实现以约 100-200 个标注样本将预训练在 LAMOST/Gaia XP 上的模型高效适配到 DESI 巡天数据，证明 LoRA 是跨光谱巡天迁移的轻量而有效策略。
+  [ICML 2025][物理/科学计算][LoRA] 首次将 LoRA 应用于恒星光谱基础模型 SpecCLIP，实现以约 100-200 个标注样本将预训练在 LAMOST/Gaia XP 上的模型高效适配到 DESI 巡天数据，证明 LoRA 是跨光谱巡天迁移的轻量而有效策略。 领域现状：大规模光谱巡天（LAMOST、G…
 tags:
   - "ICML 2025"
   - "物理/科学计算"

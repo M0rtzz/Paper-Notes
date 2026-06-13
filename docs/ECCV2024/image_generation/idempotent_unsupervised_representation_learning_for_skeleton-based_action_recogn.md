@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Idempotent Unsupervised Representation Learning for Skeleton-Based Action Recognition
 description: >-
-  [ECCV 2024][图像生成][幂等生成模型] 提出幂等生成模型（IGM），从理论上建立生成模型与最大熵编码（谱对比学习）的等价关系，通过在骨架数据的特征空间施加幂等约束，使生成模型的特征更紧凑、更适合识别任务，在 NTU 60 xsub 上将准确率从 84.6% 提升至 86.2%。
+  [ECCV 2024][图像生成][幂等生成模型] 提出幂等生成模型（IGM），从理论上建立生成模型与最大熵编码（谱对比学习）的等价关系，通过在骨架数据的特征空间施加幂等约束，使生成模型的特征更紧凑、更适合识别任务，在 NTU 60 xsub 上将准确率从 84.6% 提升至 86.2%。 骨架数据以 3D 关节坐标表示人体…
 tags:
   - "ECCV 2024"
   - "图像生成"

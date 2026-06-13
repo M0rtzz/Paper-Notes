@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator
 description: >-
-  [ICML 2025][Fisher Information Matrix] 本文系统分析了 Adam 优化器的平方梯度累积器（Squisher）与 Fisher 信息矩阵对角线之间的理论联系，证明 Squisher 可以作为 Fisher 对角线的免费近似…
+  [ICML 2025 Spotlight][Fisher Information Matrix] 本文系统分析了 Adam 优化器的平方梯度累积器（Squisher）与 Fisher 信息矩阵对角线之间的理论联系，证明 Squisher 可以作为 Fisher 对角线的免费近似，在模型合并、持续学习、稀疏化等五大应用中表现与 Fisher 相当。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "Fisher Information Matrix"
   - "Adam Optimizer"
   - "Squared Gradient Accumulator"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trans-Adapter: A Plug-and-Play Framework for Transparent Image Inpainting
 description: >-
-  [图像生成] 提出Trans-Adapter，一种即插即用的适配器模块，使基于扩散的图像修复模型能直接处理透明（RGBA）图像，同时引入LayerBench基准和Alpha边缘质量（AEQ）度量指标。
+  [图像生成] 提出Trans-Adapter，一种即插即用的适配器模块，使基于扩散的图像修复模型能直接处理透明（RGBA）图像，同时引入LayerBench基准和Alpha边缘质量（AEQ）度量指标。 核心问题 RGBA透明图像在影视、动画、游戏制作中广泛应用，但现有AI图像修复工具（如generative fill）仅支持…
 tags:
   - "图像生成"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Large Language Models to Follow Instructions and Hallucinate Less via Effective Data Filtering
 description: >-
-  [ACL 2025][幻觉检测][幻觉缓解] 提出NOVA框架，通过内部一致性探测(ICP)衡量LLM对指令的熟悉度+语义等价识别(SEI)衡量LLM对目标回复的熟悉度，筛选出知识对齐的高质量指令数据，仅用5%数据微调LLaMA-3-8B即可在BioGEN上提升8.6分、FollowRAG上提升7.2分…
+  [ACL 2025][幻觉检测][幻觉缓解] 提出NOVA框架，通过内部一致性探测(ICP)衡量LLM对指令的熟悉度+语义等价识别(SEI)衡量LLM对目标回复的熟悉度，筛选出知识对齐的高质量指令数据，仅用5%数据微调LLaMA-3-8B即可在BioGEN上提升8.6分、FollowRAG上提升7.2分，同时保持指令遵循能力。
 tags:
   - "ACL 2025"
   - "幻觉检测"

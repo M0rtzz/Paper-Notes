@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LexGen: Domain-aware Multilingual Lexicon Generation
 description: >-
-  [ACL 2025][多语言/翻译][词典生成] 本文提出LexGen框架，通过在预训练多语言翻译模型的decoder中引入可学习的"领域路由"（Domain Routing）层，实现领域特定和领域通用知识的动态融合，在6种印度语言、8个领域的词典生成任务上超越了NLLB和BLICEr等基线。
+  [ACL 2025][多语言/翻译][词典生成] 本文提出LexGen框架，通过在预训练多语言翻译模型的decoder中引入可学习的"领域路由"（Domain Routing）层，实现领域特定和领域通用知识的动态融合，在6种印度语言、8个领域的词典生成任务上超越了NLLB和BLICEr等基线。 领域现状：词典（lexicon…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

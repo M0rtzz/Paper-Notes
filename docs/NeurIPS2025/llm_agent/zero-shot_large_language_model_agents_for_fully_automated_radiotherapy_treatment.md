@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Large Language Model Agents for Fully Automated Radiotherapy Treatment Planning
 description: >-
-  [NeurIPS 2025][LLM Agent][放射治疗计划] 提出一种基于 LLM Agent 的零样本 (zero-shot) 放射治疗自动计划工作流，LLM 直接与商业治疗计划系统 (Eclipse TPS) 交互，通过迭代提取剂量-体积直方图 (DVH) 和目标函数损失并推理约束调整策略…
+  [NeurIPS 2025][LLM Agent][放射治疗计划] 提出一种基于 LLM Agent 的零样本 (zero-shot) 放射治疗自动计划工作流，LLM 直接与商业治疗计划系统 (Eclipse TPS) 交互，通过迭代提取剂量-体积直方图 (DVH) 和目标函数损失并推理约束调整策略，在 20 例头颈癌 IMRT 病例上实现了与临床手动计划相当甚至更优的剂量分布质量。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

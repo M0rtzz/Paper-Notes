@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthetic Data is an Elegant GIFT for Continual Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][持续学习] 用 Stable Diffusion 从类名生成合成图像，通过对比蒸馏 + 图文对齐约束 + 自适应权重固化进行知识蒸馏，仅用每任务 1K 合成图像就超越使用 100K 真实 ImageNet 图像的持续学习方法 ZSCL。
+  [CVPR 2025][多模态VLM][持续学习] 用 Stable Diffusion 从类名生成合成图像，通过对比蒸馏 + 图文对齐约束 + 自适应权重固化进行知识蒸馏，仅用每任务 1K 合成图像就超越使用 100K 真实 ImageNet 图像的持续学习方法 ZSCL。 领域现状：VLM 持续学习面临灾难性遗忘——在新…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

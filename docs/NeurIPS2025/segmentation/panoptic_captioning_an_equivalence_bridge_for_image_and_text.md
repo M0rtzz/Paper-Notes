@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Panoptic Captioning: An Equivalence Bridge for Image and Text
 description: >-
-  [NeurIPS 2025][语义分割][panoptic captioning] 提出 Panoptic Captioning 新任务追求图像的"最小文本等价"——定义包含实体标签、位置（bbox）、属性、关系和全局状态五个维度的全面结构化描述…
+  [NeurIPS 2025][语义分割][panoptic captioning] 提出 Panoptic Captioning 新任务追求图像的"最小文本等价"——定义包含实体标签、位置（bbox）、属性、关系和全局状态五个维度的全面结构化描述，通过 PancapEngine 数据引擎和 PancapChain 解耦多阶段方法，13B 模型即超越 InternVL-2.5-78B 和 GPT-4o。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

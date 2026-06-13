@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid Quantum-Classical Multi-Agent Pathfinding
 description: >-
-  [ICML 2025][自动驾驶][MAPF] 提出首个最优混合量子-经典MAPF算法QP和QCP，将MAPF的路径选择问题转化为可在量子硬件上求解的QUBO子问题，通过冲突图+列生成框架实现理论最优性，在真实量子硬件上验证可行性。
+  [ICML 2025][自动驾驶][MAPF] 提出首个最优混合量子-经典MAPF算法QP和QCP，将MAPF的路径选择问题转化为可在量子硬件上求解的QUBO子问题，通过冲突图+列生成框架实现理论最优性，在真实量子硬件上验证可行性。 领域现状 领域现状：领域现状：MAPF是NP-hard问题，在无人机交通等大规模应用中至关重…
 tags:
   - "ICML 2025"
   - "自动驾驶"

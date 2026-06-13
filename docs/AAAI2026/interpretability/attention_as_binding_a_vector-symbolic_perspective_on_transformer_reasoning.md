@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning
 description: >-
-  [AAAI 2026][可解释性][向量符号架构(VSA)] 本文提出将Transformer自注意力机制重新解释为向量符号架构(VSA)中的软绑定/解绑定算子——Query/Key定义角色空间、Value编码填充项、注意力权重实现可微解绑定、残差连接实现叠加——从而以代数视角统一解释LLM在符号推理中的能力…
+  [AAAI 2026][可解释性][向量符号架构(VSA)] 本文提出将Transformer自注意力机制重新解释为向量符号架构(VSA)中的软绑定/解绑定算子——Query/Key定义角色空间、Value编码填充项、注意力权重实现可微解绑定、残差连接实现叠加——从而以代数视角统一解释LLM在符号推理中的能力与脆弱性，并提出显式绑定头、超维记忆层等VSA启发的架构改进方向。
 tags:
   - "AAAI 2026"
   - "可解释性"

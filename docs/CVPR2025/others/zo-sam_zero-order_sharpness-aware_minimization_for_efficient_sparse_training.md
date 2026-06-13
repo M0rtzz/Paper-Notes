@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training
 description: >-
-  [CVPR2025][稀疏训练] 提出 ZO-SAM，将零阶优化策略性地整合到 SAM 的扰动步骤中，仅需一次反向传播即可获得 SAM 的平坦最小值优势，在稀疏训练场景下将计算开销减半的同时提升精度和鲁棒性。
+  [CVPR2025][稀疏训练] 提出 ZO-SAM，将零阶优化策略性地整合到 SAM 的扰动步骤中，仅需一次反向传播即可获得 SAM 的平坦最小值优势，在稀疏训练场景下将计算开销减半的同时提升精度和鲁棒性。 - 稀疏神经网络通过大幅减少参数量来降低计算和内存开销，但现有稀疏训练方法在高稀疏度时面临梯度信号混乱噪声大：的核心…
 tags:
   - "CVPR2025"
   - "稀疏训练"

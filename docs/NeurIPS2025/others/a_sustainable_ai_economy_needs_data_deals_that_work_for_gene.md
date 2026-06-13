@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Sustainable AI Economy Needs Data Deals That Work for Generators
 description: >-
-  [NeurIPS 2025 (Position Paper Track)][数据市场] 提出"经济数据处理不等式"概念——ML价值链中数据从原始形态到模型权重再到合成输出，每一步都精炼了技术信号但系统性剥夺了数据生成者的经济权益；通过分析73个公开数据交易案例实证这一现象…
+  [NeurIPS 2025 (Position Paper Track)][数据市场] 提出"经济数据处理不等式"概念——ML价值链中数据从原始形态到模型权重再到合成输出，每一步都精炼了技术信号但系统性剥夺了数据生成者的经济权益；通过分析73个公开数据交易案例实证这一现象，诊断三个结构性缺陷（溯源缺失、议价权不对称、定价非动态），并提出EDVEX框架作为解决方案蓝图。
 tags:
   - "NeurIPS 2025 (Position Paper Track)"
   - "数据市场"

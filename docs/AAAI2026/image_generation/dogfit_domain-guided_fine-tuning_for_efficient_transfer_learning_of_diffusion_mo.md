@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DogFit: Domain-guided Fine-tuning for Efficient Transfer Learning of Diffusion Models
 description: >-
-  [AAAI 2026][图像生成][扩散模型] 提出 DogFit，将域引导（Domain Guidance）内化到扩散模型的微调损失中，使模型在训练时学会引导方向，推理时无需双重前向传播即可实现可控的保真度-多样性权衡，在 6 个目标域上以一半的采样 TFLOPS 超越 SOTA 引导方法。
+  [AAAI 2026][图像生成][扩散模型] 提出 DogFit，将域引导（Domain Guidance）内化到扩散模型的微调损失中，使模型在训练时学会引导方向，推理时无需双重前向传播即可实现可控的保真度-多样性权衡，在 6 个目标域上以一半的采样 TFLOPS 超越 SOTA 引导方法。 领域现状：扩散模型迁移学习到小…
 tags:
   - "AAAI 2026"
   - "图像生成"

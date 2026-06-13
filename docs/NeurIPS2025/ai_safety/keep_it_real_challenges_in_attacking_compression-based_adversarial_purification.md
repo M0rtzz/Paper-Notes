@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Keep It Real: Challenges in Attacking Compression-Based Adversarial Purification
 description: >-
-  [NeurIPS 2025][AI安全][对抗鲁棒性] 本文系统评估了基于图像压缩的对抗净化防御，发现重建图像的"真实感"（realism）是提升防御鲁棒性的关键因素——高真实感压缩模型在面对强自适应攻击时仍能保持显著鲁棒性，而这并非源于梯度掩蔽。
+  [NeurIPS 2025][AI安全][对抗鲁棒性] 本文系统评估了基于图像压缩的对抗净化防御，发现重建图像的"真实感"（realism）是提升防御鲁棒性的关键因素——高真实感压缩模型在面对强自适应攻击时仍能保持显著鲁棒性，而这并非源于梯度掩蔽。 领域现状：对抗攻击通过微小扰动使分类器产生错误预测。对抗净化（adversa…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

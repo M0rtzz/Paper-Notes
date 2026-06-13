@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LangSAMP: Language-Script Aware Multilingual Pretraining
 description: >-
-  [ACL 2025][多语言/翻译][multilingual pretraining] 提出 LangSAMP 方法，在多语言预训练中将语言和文字系统 (script) embedding 添加到 Transformer 输出端（而非输入端），使模型主干学到更语言中立的表示…
+  [ACL 2025][多语言/翻译][multilingual pretraining] 提出 LangSAMP 方法，在多语言预训练中将语言和文字系统 (script) embedding 添加到 Transformer 输出端（而非输入端），使模型主干学到更语言中立的表示，在 500+ 语言的零样本跨语言迁移中一致优于基线。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

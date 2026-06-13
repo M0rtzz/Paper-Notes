@@ -2,9 +2,10 @@
 title: >-
   [论文解读] TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size
 description: >-
-  [CVPR 2026][多智能体协作] 提出 TeamHOI 框架，通过基于 Transformer 的去中心化策略网络和掩码对抗运动先验（Masked AMP），使单一策略能够泛化到任意数量智能体的协作搬运任务，2-8 个仿人智能体协作搬桌子成功率达 97%+。
+  [CVPR 2026][人体理解][多智能体协作] 提出 TeamHOI 框架，通过基于 Transformer 的去中心化策略网络和掩码对抗运动先验（Masked AMP），使单一策略能够泛化到任意数量智能体的协作搬运任务，2-8 个仿人智能体协作搬桌子成功率达 97%+。 单智能体已成熟但多智能体协作缺失：基于物理的仿人…
 tags:
   - "CVPR 2026"
+  - "人体理解"
   - "多智能体协作"
   - "基于物理的人体控制"
   - "人-物交互"

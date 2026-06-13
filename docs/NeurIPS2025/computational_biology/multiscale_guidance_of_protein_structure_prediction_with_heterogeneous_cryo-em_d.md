@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multiscale Guidance of Protein Structure Prediction with Heterogeneous Cryo-EM Data
 description: >-
-  [NeurIPS 2025][计算生物][蛋白质结构预测] CryoBoltz利用冷冻电镜（cryo-EM）密度图通过多尺度引导机制（全局→局部）引导预训练扩散结构预测模型（Boltz-1）的采样轨迹，无需重新训练即可生成与实验数据一致的多构象原子模型。
+  [NeurIPS 2025][计算生物][蛋白质结构预测] CryoBoltz利用冷冻电镜（cryo-EM）密度图通过多尺度引导机制（全局→局部）引导预训练扩散结构预测模型（Boltz-1）的采样轨迹，无需重新训练即可生成与实验数据一致的多构象原子模型。 当前蛋白质结构预测领域面临两大挑战的鸿沟： 结构预测模型的单构象偏差：…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

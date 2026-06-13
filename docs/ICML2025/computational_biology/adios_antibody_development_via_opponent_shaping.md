@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ADIOS: Antibody Development via Opponent Shaping
 description: >-
-  [ICML 2025][计算生物][对手塑形 (Opponent Shaping)] 将多智能体强化学习中的对手塑形（Opponent Shaping）引入抗体设计，提出 ADIOS 元学习框架：外层循环优化抗体，内层循环模拟病毒适应性逃逸，使设计出的"塑形抗体"（shapers）不仅能对抗当前病毒变种…
+  [ICML 2025][计算生物][对手塑形 (Opponent Shaping)] 将多智能体强化学习中的对手塑形（Opponent Shaping）引入抗体设计，提出 ADIOS 元学习框架：外层循环优化抗体，内层循环模拟病毒适应性逃逸，使设计出的"塑形抗体"（shapers）不仅能对抗当前病毒变种，还能主动引导病毒向更弱、更易被靶向的方向进化。
 tags:
   - "ICML 2025"
   - "计算生物"

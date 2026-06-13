@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Depth Estimation for Unstable Stereo Camera Systems on AR Glasses
 description: >-
-  [CVPR 2025][3D视觉][立体深度估计] 提出 MultiHeadDepth 和 HomoDepth 两个模型，分别通过硬件友好的多头代价体积（LayerNorm+点积近似余弦相似度 + 分组点卷积）和单应性矩阵估计网络 + 2D 矫正位置编码 (RPE) 来优化立体深度估计中代价体积和预处理的延迟…
+  [CVPR 2025][3D视觉][立体深度估计] 提出 MultiHeadDepth 和 HomoDepth 两个模型，分别通过硬件友好的多头代价体积（LayerNorm+点积近似余弦相似度 + 分组点卷积）和单应性矩阵估计网络 + 2D 矫正位置编码 (RPE) 来优化立体深度估计中代价体积和预处理的延迟瓶颈，在 AR 眼镜场景下精度提升 11.8-30.3% 的同时端到端延迟降低 44.5%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

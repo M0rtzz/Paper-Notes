@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenExam: A Multidisciplinary Text-to-Image Exam
 description: >-
-  [ICML 2026][图像生成][多学科考试] GenExam 把"画图考试"作为衡量 T2I 模型推理-理解-生成综合能力的金标准，给 10 个学科、1000 道题各配上 ground-truth 图 + 细粒度评分点…
+  [ICML 2026][图像生成][多学科考试] GenExam 把"画图考试"作为衡量 T2I 模型推理-理解-生成综合能力的金标准，给 10 个学科、1000 道题各配上 ground-truth 图 + 细粒度评分点，结果连最强闭源模型 Nano Banana Pro 也只有 70.2% strict 分，多数开源 T2I/统一 MLLM 不到 3%。
 tags:
   - "ICML 2026"
   - "图像生成"

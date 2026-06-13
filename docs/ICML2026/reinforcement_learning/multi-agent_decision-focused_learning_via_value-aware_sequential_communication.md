@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Agent Decision-Focused Learning via Value-Aware Sequential Communication
 description: >-
-  [ICML 2026][强化学习][多智能体通信] SeqComm-DFL 把"多智能体通信"作为预测器、把"联合策略选择"作为下游优化器，用价值感知的消息生成 + Stackelberg 序贯条件 + 隐式微分双层优化把通信学习直接对齐到团队回报…
+  [ICML 2026][强化学习][多智能体通信] SeqComm-DFL 把"多智能体通信"作为预测器、把"联合策略选择"作为下游优化器，用价值感知的消息生成 + Stackelberg 序贯条件 + 隐式微分双层优化把通信学习直接对齐到团队回报，在医院调度和 SMAC 上取得 4-6 倍的累积奖励提升与 >13 个百分点的胜率提高。
 tags:
   - "ICML 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction
 description: >-
-  [ECCV 2024][图像生成][视觉语言模型] 提出 FineMatch 基准，定义了基于方面（Aspect）的细粒度图文不匹配检测与纠正任务，包含 49,906 个高质量人工标注的图文对，并展示了现有 VLM 在细粒度组合性理解上的不足。
+  [ECCV 2024][图像生成][视觉语言模型] 提出 FineMatch 基准，定义了基于方面（Aspect）的细粒度图文不匹配检测与纠正任务，包含 49,906 个高质量人工标注的图文对，并展示了现有 VLM 在细粒度组合性理解上的不足。 尽管现有预训练视觉语言模型（VLM）如 GPT-4V、LLaVA 在复杂推理上表…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging
 description: >-
-  [ICLR 2026][视频理解][视觉token压缩] 提出 FlashVID，一个免训练的视频大语言模型推理加速框架，通过树状时空 token 合并（TSTM）联合建模空间和时间冗余，仅保留 10% 的视觉 token 就能保持 LLaVA-OneVision 99.1% 的性能…
+  [ICLR 2026 Oral][视频理解][视觉token压缩] 提出 FlashVID，一个免训练的视频大语言模型推理加速框架，通过树状时空 token 合并（TSTM）联合建模空间和时间冗余，仅保留 10% 的视觉 token 就能保持 LLaVA-OneVision 99.1% 的性能，并能将 Qwen2.5-VL 的输入帧数提升 10 倍。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "视频理解"
   - "视觉token压缩"
   - "时空冗余"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation
 description: >-
-  [CVPR2025][医学图像][半监督学习] 提出 SemiTooth 多教师多学生半监督框架，通过 Stricter Weighted-Confidence Constraint 实现多源 CBCT 牙齿分割的跨域泛化。
+  [CVPR2025][医学图像][半监督学习] 提出 SemiTooth 多教师多学生半监督框架，通过 Stricter Weighted-Confidence Constraint 实现多源 CBCT 牙齿分割的跨域泛化。 CBCT（锥形束CT）是牙科临床中广泛使用的影像模态，牙齿结构分割是正畸、种植规划和病灶分析的基础任…
 tags:
   - "CVPR2025"
   - "医学图像"

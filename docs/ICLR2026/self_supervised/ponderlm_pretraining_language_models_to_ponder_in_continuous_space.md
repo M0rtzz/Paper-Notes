@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PonderLM: Pretraining Language Models to Ponder in Continuous Space
 description: >-
-  [ICLR2026][自监督学习][pondering] 提出 PonderLM，在预训练阶段引入"沉思"机制——将预测概率分布加权求和为连续嵌入后反复前向传播，无需标注数据或强化学习，使 2.8B 模型在 9 个下游任务上超越 6.9B 模型。
+  [ICLR2026][自监督学习][pondering] 提出 PonderLM，在预训练阶段引入"沉思"机制——将预测概率分布加权求和为连续嵌入后反复前向传播，无需标注数据或强化学习，使 2.8B 模型在 9 个下游任务上超越 6.9B 模型。 领域现状：提升模型能力的主流方法是扩大参数和数据规模，但面临数据耗尽、缩放饱和…
 tags:
   - "ICLR2026"
   - "自监督学习"

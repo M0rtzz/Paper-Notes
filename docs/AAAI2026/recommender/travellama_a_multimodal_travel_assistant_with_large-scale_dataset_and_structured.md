@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning
 description: >-
-  [AAAI 2026][推荐系统][多模态旅行助手] 提出 TraveLLaMA，一个面向旅行辅助的多模态语言模型系统，通过构建 265K QA 对的 TravelQA 数据集和 Travel-CoT 结构化推理框架，在旅行相关问答上实现了 10.8% 的准确率提升…
+  [AAAI 2026 Oral][推荐系统][多模态旅行助手] 提出 TraveLLaMA，一个面向旅行辅助的多模态语言模型系统，通过构建 265K QA 对的 TravelQA 数据集和 Travel-CoT 结构化推理框架，在旅行相关问答上实现了 10.8% 的准确率提升，并在 500 人用户研究中获得了 82.5 的 SUS 可用性评分。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "推荐系统"
   - "多模态旅行助手"
   - "视觉语言模型"

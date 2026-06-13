@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Layer-Specific Fine-Tuning for Improved Negation Handling in Medical Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][医学 CLIP] NAST 用因果追踪 (causal tracing) 算出 CLIP 文本编码器各层对否定理解的因果贡献度 (CTE)，再以这些 CTE 做层级化梯度缩放微调 LoRA，让医学 VLM 在区分"有 / 没有某症状"时的语义敏感度大幅提升…
+  [ICML 2026][多模态VLM][医学 CLIP] NAST 用因果追踪 (causal tracing) 算出 CLIP 文本编码器各层对否定理解的因果贡献度 (CTE)，再以这些 CTE 做层级化梯度缩放微调 LoRA，让医学 VLM 在区分"有 / 没有某症状"时的语义敏感度大幅提升，并把肯定-否定准确率差距从 21.6% 缩到 4.2%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

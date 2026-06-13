@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Budget-Aware Anytime Reasoning with LLM-Synthesized Preference Data
 description: >-
-  [ACL 2026][LLM推理][预算感知推理] 本文提出了一种预算感知的任意时推理（anytime reasoning）框架和 Anytime Index 指标，用于量化 LLM 在有限 token 预算下的推理质量-效率权衡，并设计了基于 LLM 自合成偏好数据的推理时自改进方法（PDP）…
+  [ACL 2026 Findings][LLM推理][预算感知推理] 本文提出了一种预算感知的任意时推理（anytime reasoning）框架和 Anytime Index 指标，用于量化 LLM 在有限 token 预算下的推理质量-效率权衡，并设计了基于 LLM 自合成偏好数据的推理时自改进方法（PDP），在规划、数学和科学 QA 任务上显著提升了中间和最终解的质量。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "预算感知推理"
   - "Anytime Index"

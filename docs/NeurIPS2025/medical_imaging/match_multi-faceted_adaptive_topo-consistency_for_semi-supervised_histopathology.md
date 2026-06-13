@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation
 description: >-
-  [NeurIPS 2025][医学图像][半监督分割] 提出MATCH框架，通过将拓扑推理与半监督学习的"扰动鲁棒性"原则紧密耦合，利用跨随机扰动和时间训练快照的双层拓扑一致性，自适应识别可靠拓扑结构而无需人工阈值，显著降低了组织病理学图像分割中的拓扑错误。
+  [NeurIPS 2025][医学图像][半监督分割] 提出MATCH框架，通过将拓扑推理与半监督学习的"扰动鲁棒性"原则紧密耦合，利用跨随机扰动和时间训练快照的双层拓扑一致性，自适应识别可靠拓扑结构而无需人工阈值，显著降低了组织病理学图像分割中的拓扑错误。 在组织病理学图像中准确分割腺体和细胞核对数字病理学至关重要…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

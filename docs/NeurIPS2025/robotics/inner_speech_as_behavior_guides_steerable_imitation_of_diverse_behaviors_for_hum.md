@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination
 description: >-
-  [NeurIPS 2025][机器人][模仿学习] 受维果茨基内心语言理论启发，提出 MIMIC 框架，利用语言作为感知与动作之间的中介表征，通过 VLM 提供语言脚手架训练 CVAE 生成内心语言，再以扩散策略在条件化于内心语言的情况下生成多样且可控的行为。
+  [NeurIPS 2025 Spotlight][机器人][模仿学习] 受维果茨基内心语言理论启发，提出 MIMIC 框架，利用语言作为感知与动作之间的中介表征，通过 VLM 提供语言脚手架训练 CVAE 生成内心语言，再以扩散策略在条件化于内心语言的情况下生成多样且可控的行为。 领域现状：模仿学习（IL）是构建类人 AI…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "机器人"
   - "模仿学习"
   - "内心语言"

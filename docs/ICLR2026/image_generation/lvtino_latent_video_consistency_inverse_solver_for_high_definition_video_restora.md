@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LVTINO: LAtent Video consisTency INverse sOlver for High Definition Video Restoration
 description: >-
-  [ICLR 2026][图像生成][视频修复] 提出 LVTINO，首个基于视频一致性模型（VCM）先验的零样本视频逆问题求解器，通过在 VCM 采样过程中注入无需自动微分的测量一致性约束，在超分辨率、去模糊、修复等多种视频逆问题上以极少的神经网络函数评估（NFE）实现了超越逐帧图像方法的感知质量和时间一致性…
+  [ICLR 2026][图像生成][视频修复] 提出 LVTINO，首个基于视频一致性模型（VCM）先验的零样本视频逆问题求解器，通过在 VCM 采样过程中注入无需自动微分的测量一致性约束，在超分辨率、去模糊、修复等多种视频逆问题上以极少的神经网络函数评估（NFE）实现了超越逐帧图像方法的感知质量和时间一致性。
 tags:
   - "ICLR 2026"
   - "图像生成"

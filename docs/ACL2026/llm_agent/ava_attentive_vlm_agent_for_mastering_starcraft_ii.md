@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVA: Attentive VLM Agent for Mastering StarCraft II
 description: >-
-  [ACL 2026][LLM Agent][星际争霸 II] 本文提出 AVACraft——首个同时支持 MARL 和 VLM 两种决策范式的星际争霸 II 多模态基准（21 场景 / RGB+文本+结构化状态），并给出 VLM 基线 AVA（多模态优先级推理 + RAG + 动态角色分配）…
+  [ACL 2026][LLM Agent][星际争霸 II] 本文提出 AVACraft——首个同时支持 MARL 和 VLM 两种决策范式的星际争霸 II 多模态基准（21 场景 / RGB+文本+结构化状态），并给出 VLM 基线 AVA（多模态优先级推理 + RAG + 动态角色分配），实验显示在基础 3m 场景 MARL 训练 5M 步只能到 19–27% 胜率，而 VLM 零样本就能拿到 75–90%。
 tags:
   - "ACL 2026"
   - "LLM Agent"

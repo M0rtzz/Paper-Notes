@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Prune-then-Merge: Towards Efficient Multi-Vector Visual Document Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][视觉文档检索] 本文提出 Prune-then-Merge，一个两阶段的免训练多向量文档压缩框架——先通过自适应注意力剪枝移除低信息 patch，再对剩余高信号 patch 进行层次聚类合并…
+  [ACL 2026 Findings][信息检索/RAG][视觉文档检索] 本文提出 Prune-then-Merge，一个两阶段的免训练多向量文档压缩框架——先通过自适应注意力剪枝移除低信息 patch，再对剩余高信号 patch 进行层次聚类合并，在 29 个 VDR 数据集上将近无损压缩范围从 50-60% 扩展到 60-70%，并在 80%+ 高压缩率下显著优于单阶段方法。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "视觉文档检索"
   - "多向量压缩"

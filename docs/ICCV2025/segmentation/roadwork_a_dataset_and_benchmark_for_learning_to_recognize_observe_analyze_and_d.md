@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ROADWork: A Dataset and Benchmark for Learning to Recognize, Observe, Analyze and Drive Through Work Zones
 description: >-
-  [ICCV 2025][语义分割][施工区域感知] 提出首个大规模施工区域（work zone）数据集ROADWork，涵盖4375段视频、9650张丰富标注图像和129K带路径图像，揭示基础模型在施工场景下严重失效（AP仅2.9-4.2），微调后性能大幅提升（+32.2 AP）…
+  [ICCV 2025][语义分割][施工区域感知] 提出首个大规模施工区域（work zone）数据集ROADWork，涵盖4375段视频、9650张丰富标注图像和129K带路径图像，揭示基础模型在施工场景下严重失效（AP仅2.9-4.2），微调后性能大幅提升（+32.2 AP），并提出识别、观察、分析、驾驶四层认知框架。
 tags:
   - "ICCV 2025"
   - "语义分割"

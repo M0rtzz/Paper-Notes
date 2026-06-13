@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rethinking Code Similarity for Automated Algorithm Design with LLMs
 description: >-
-  [ICLR 2026][LLM/NLP][LLM-AAD] 提出 BehaveSim，一种基于"问题求解轨迹"（PSTrajs）和动态时间规整（DTW）的算法相似度度量方法，从执行行为层面而非语法或输出层面衡量算法差异，集成到 FunSearch/EoH 等 LLM-AAD 框架后显著提升性能。
+  [ICLR 2026][LLM 其他][LLM-AAD] 提出 BehaveSim，一种基于"问题求解轨迹"（PSTrajs）和动态时间规整（DTW）的算法相似度度量方法，从执行行为层面而非语法或输出层面衡量算法差异，集成到 FunSearch/EoH 等 LLM-AAD 框架后显著提升性能。 领域现状：LLM 驱动的自动算…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-AAD"
   - "代码相似度"
   - "行为相似度"

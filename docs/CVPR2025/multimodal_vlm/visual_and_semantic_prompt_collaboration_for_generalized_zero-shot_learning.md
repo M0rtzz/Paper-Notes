@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual and Semantic Prompt Collaboration for Generalized Zero-Shot Learning
 description: >-
-  [CVPR 2025][多模态VLM][广义零样本学习] 提出视觉语义提示协作网络（VSPCN），通过在预训练ViT中同时学习视觉提示和语义提示，并设计浅层弱融合+深层强融合机制，高效适配ViT提取语义相关的判别性视觉特征，在CUB/SUN/AWA2三个GZSL基准上均达到SOTA。
+  [CVPR 2025][多模态VLM][广义零样本学习] 提出视觉语义提示协作网络（VSPCN），通过在预训练ViT中同时学习视觉提示和语义提示，并设计浅层弱融合+深层强融合机制，高效适配ViT提取语义相关的判别性视觉特征，在CUB/SUN/AWA2三个GZSL基准上均达到SOTA。 广义零样本学习（GZSL）需要同时识别已…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

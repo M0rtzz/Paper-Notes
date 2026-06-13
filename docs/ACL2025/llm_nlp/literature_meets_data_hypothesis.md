@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Literature Meets Data: A Synergistic Approach to Hypothesis Generation
 description: >-
-  [ACL 2025][hypothesis generation] 提出首个将文献驱动和数据驱动假设生成进行协同整合的方法，通过 Refinement 和 Union 两种策略让 LLM 从论文摘要和观测数据中联合生成更具泛化性的假设…
+  [ACL 2025][LLM 其他][hypothesis generation] 提出首个将文献驱动和数据驱动假设生成进行协同整合的方法，通过 Refinement 和 Union 两种策略让 LLM 从论文摘要和观测数据中联合生成更具泛化性的假设，在五个社会科学分类任务的 OOD 数据集上比纯数据驱动方法平均提升 3.37%，并首次通过人类实验证明 LLM 生成的假设能显著改善人类决策准确率（+7.44% / +14.19%）。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "hypothesis generation"
   - "LLM"
   - "literature-based"

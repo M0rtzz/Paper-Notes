@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LATINO-PRO: LAtent consisTency INverse sOlver with PRompt Optimization
 description: >-
-  [ICCV 2025][图像生成][逆问题求解] LATINO-PRO 首次将 Latent Consistency Model（LCM）作为生成先验嵌入零样本逆问题求解框架，仅需 8 次神经函数评估即达 SOTA 重建质量，并通过经验贝叶斯自动校准文本提示进一步提升性能。
+  [ICCV 2025][图像生成][逆问题求解] LATINO-PRO 首次将 Latent Consistency Model（LCM）作为生成先验嵌入零样本逆问题求解框架，仅需 8 次神经函数评估即达 SOTA 重建质量，并通过经验贝叶斯自动校准文本提示进一步提升性能。 领域现状：基于文本引导的潜在扩散模型（LDM）已展…
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation
 description: >-
-  [ICML 2025][模型压缩][参数共享] SpaLLM 提出了一种基于 sketching 的参数共享方法来统一 LLM 的压缩和微调过程，将预训练权重压缩为查找表（LUT）后直接在表值上微调，避免了 QLoRA 等双塔架构的低秩假设和实现复杂性…
+  [ICML 2025][模型压缩][参数共享] SpaLLM 提出了一种基于 sketching 的参数共享方法来统一 LLM 的压缩和微调过程，将预训练权重压缩为查找表（LUT）后直接在表值上微调，避免了 QLoRA 等双塔架构的低秩假设和实现复杂性，在多项基准上以更少的训练参数取得了优于 QLoRA/LoftQ 的性能。
 tags:
   - "ICML 2025"
   - "模型压缩"

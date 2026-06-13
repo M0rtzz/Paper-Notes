@@ -2,7 +2,7 @@
 title: >-
   [论文解读] World2Act: Latent Action Post-Training via Skill-Compositional World Models
 description: >-
-  [CVPR 2025][视频生成][世界模型] World2Act 提出了一种基于潜在空间对齐的 VLA 后训练方法：通过对比学习将 World Model 的视频动态潜表示与 VLA 的动作表示对齐（而非在像素空间监督），并引入 LLM 驱动的技能分解流水线实现任意长度视频生成…
+  [CVPR 2025][视频生成][世界模型] World2Act 提出了一种基于潜在空间对齐的 VLA 后训练方法：通过对比学习将 World Model 的视频动态潜表示与 VLA 的动作表示对齐（而非在像素空间监督），并引入 LLM 驱动的技能分解流水线实现任意长度视频生成，在 RoboCasa 和 LIBERO 上以 50 条合成轨迹即达到 SOTA，真实世界提升 6.7%。
 tags:
   - "CVPR 2025"
   - "视频生成"

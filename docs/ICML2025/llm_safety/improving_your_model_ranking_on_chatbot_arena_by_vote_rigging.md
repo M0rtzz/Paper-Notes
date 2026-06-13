@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Your Model Ranking on Chatbot Arena by Vote Rigging
 description: >-
-  [ICML 2025][LLM安全][Chatbot Arena] 论文揭示 Chatbot Arena 的众包投票机制可被恶意操纵：提出 target-only 和 omnipresent 两类投票操纵策略，其中 omnipresent 策略利用 Bradley-Terry 评分系统的全局耦合特性…
+  [ICML 2025][LLM安全][Chatbot Arena] 论文揭示 Chatbot Arena 的众包投票机制可被恶意操纵：提出 target-only 和 omnipresent 两类投票操纵策略，其中 omnipresent 策略利用 Bradley-Terry 评分系统的全局耦合特性，仅需操纵数百票即可将目标模型排名提升 15 位，凸显当前 LLM 评估平台的安全脆弱性。
 tags:
   - "ICML 2025"
   - "LLM安全"

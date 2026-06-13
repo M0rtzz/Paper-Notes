@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Distracting Effect: Understanding Irrelevant Passages in RAG
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 本文提出了一个形式化的段落干扰效应（Distracting Effect）度量方法，并开发了多种获取高干扰段落的技术（包括偏斜检索和分类合成），证明了该度量跨LLM的鲁棒性，最终通过用高干扰段落微调LLM，在问答准确率上实现了最高7.5%的提升。
+  [ACL 2025][信息检索/RAG][RAG] 本文提出了一个形式化的段落干扰效应（Distracting Effect）度量方法，并开发了多种获取高干扰段落的技术（包括偏斜检索和分类合成），证明了该度量跨LLM的鲁棒性，最终通过用高干扰段落微调LLM，在问答准确率上实现了最高7.5%的提升。 领域现状：检索增强生成（R…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

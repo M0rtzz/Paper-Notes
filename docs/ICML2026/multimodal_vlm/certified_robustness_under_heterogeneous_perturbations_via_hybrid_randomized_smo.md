@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certified Robustness under Heterogeneous Perturbations via Hybrid Randomized Smoothing
 description: >-
-  [ICML 2026][多模态VLM][Randomized Smoothing] 本文把随机平滑（RS）从"只支持单一连续或离散输入"扩展到"离散 token + 连续图像"的混合扰动场景，通过一个混合 Neyman–Pearson 分析得到一个**一维、连续、可逆**的似然比 CDF…
+  [ICML 2026][多模态VLM][Randomized Smoothing] 本文把随机平滑（RS）从"只支持单一连续或离散输入"扩展到"离散 token + 连续图像"的混合扰动场景，通过一个混合 Neyman–Pearson 分析得到一个**一维、连续、可逆**的似然比 CDF，从而把原本组合爆炸的离散 knapsack 问题变成可解的根求解问题，并在 LLaVA-Guard 多模态安全过滤上给出首个针对"图文联合不安全"的 model-agnostic 证书。
 tags:
   - "ICML 2026"
   - "多模态VLM"

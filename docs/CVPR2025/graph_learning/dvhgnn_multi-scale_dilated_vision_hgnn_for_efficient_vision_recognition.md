@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DVHGNN: Multi-Scale Dilated Vision HGNN for Efficient Vision Recognition
 description: >-
-  [CVPR 2025][图学习][超图神经网络] 提出 DVHGNN，一种利用多尺度膨胀超图捕获图像 patch 间高阶相关性的视觉骨干网络，通过聚类+膨胀超图构造 (DHGC) 获取多尺度超边、动态超图卷积实现自适应特征交换…
+  [CVPR 2025][图学习][超图神经网络] 提出 DVHGNN，一种利用多尺度膨胀超图捕获图像 patch 间高阶相关性的视觉骨干网络，通过聚类+膨胀超图构造 (DHGC) 获取多尺度超边、动态超图卷积实现自适应特征交换，在 ImageNet-1K 上以 30.2M 参数达到 83.1% top-1 准确率，超越 ViG-S 1.0% 和 ViHGNN-S 0.6%。
 tags:
   - "CVPR 2025"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Understanding Attention-Based In-Context Learning for Categorical Data
 description: >-
-  [ICML2025][优化/理论][in-context learning] 将 Transformer 的 in-context learning (ICL) 从实值输出推广到**分类数据**（categorical outcomes）…
+  [ICML2025][优化/理论][in-context learning] 将 Transformer 的 in-context learning (ICL) 从实值输出推广到**分类数据**（categorical outcomes），证明一种交替使用 self-attention 和 cross-attention 的架构可以**精确实现**多步函数梯度下降（functional GD），并在理论上证明该 GD 参数构型是注意力模型损失函数的驻点。
 tags:
   - "ICML2025"
   - "优化/理论"

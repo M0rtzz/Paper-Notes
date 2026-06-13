@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SURF: Separation via Unsupervised Remixing Flow
 description: >-
-  [ICML 2026][图像生成][单通道源分离] SURF 把监督流匹配 FLOSS 与无监督的 ReMixIT / Self-Remixing 教师-学生重混合训练拼到一起，让一个生成式 flow matching 分离器**完全从混合观测**（没有任何干净源样本）训练出来…
+  [ICML 2026][图像生成][单通道源分离] SURF 把监督流匹配 FLOSS 与无监督的 ReMixIT / Self-Remixing 教师-学生重混合训练拼到一起，让一个生成式 flow matching 分离器**完全从混合观测**（没有任何干净源样本）训练出来，在 MNIST/CIFAR10 图像分离和 LibriSpeech / FUSS 音频分离上几乎追平有监督 flow 的指标，刷新无监督 SOTA。
 tags:
   - "ICML 2026"
   - "图像生成"

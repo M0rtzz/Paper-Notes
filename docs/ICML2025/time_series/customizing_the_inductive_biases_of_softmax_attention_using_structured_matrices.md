@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Customizing the Inductive Biases of Softmax Attention using Structured Matrices
 description: >-
-  [ICML 2025][时间序列][结构化矩阵] 提出用高效结构化矩阵（BTT 和 MLR）替换 softmax attention 中的低秩打分函数，既解决了标准 attention 的低秩瓶颈问题，又通过 MLR 引入了距离依赖的计算偏置，在上下文回归、语言建模和长程时间序列预测上均取得改进。
+  [ICML 2025][时间序列][结构化矩阵] 提出用高效结构化矩阵（BTT 和 MLR）替换 softmax attention 中的低秩打分函数，既解决了标准 attention 的低秩瓶颈问题，又通过 MLR 引入了距离依赖的计算偏置，在上下文回归、语言建模和长程时间序列预测上均取得改进。 标准 Transforme…
 tags:
   - "ICML 2025"
   - "时间序列"

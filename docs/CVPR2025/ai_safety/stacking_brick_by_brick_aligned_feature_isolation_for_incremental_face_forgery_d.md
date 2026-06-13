@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stacking Brick by Brick: Aligned Feature Isolation for Incremental Face Forgery Detection
 description: >-
-  [CVPR 2025][AI安全][增量学习] 提出 SUR-LID 方法解决增量人脸伪造检测 (IFFD) 中的灾难性遗忘问题：通过稀疏均匀回放 (SUR) 保留旧任务的全局特征分布，通过隐空间增量检测器 (LID) 中的特征隔离和决策对齐策略将新旧任务分布"逐块堆叠"而非相互覆盖。
+  [CVPR 2025][AI安全][增量学习] 提出 SUR-LID 方法解决增量人脸伪造检测 (IFFD) 中的灾难性遗忘问题：通过稀疏均匀回放 (SUR) 保留旧任务的全局特征分布，通过隐空间增量检测器 (LID) 中的特征隔离和决策对齐策略将新旧任务分布"逐块堆叠"而非相互覆盖。 人脸伪造技术快速发展…
 tags:
   - "CVPR 2025"
   - "AI安全"

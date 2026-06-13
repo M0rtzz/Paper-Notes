@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FlexRank: Nested Low-Rank Knowledge Decomposition for Adaptive Model Deployment
 description: >-
-  [ICML 2026][预训练][弹性模型] FlexRank 把预训练大模型的每个线性层做 activation-aware 低秩分解（DataSVD），用动态规划在 $O(L\cdot K)$ 时间内挑出一组**严格嵌套**的子模型对应不同算力预算，再用知识蒸馏联合训练这套共享权重…
+  [ICML 2026 Spotlight][预训练][弹性模型] FlexRank 把预训练大模型的每个线性层做 activation-aware 低秩分解（DataSVD），用动态规划在 $O(L\cdot K)$ 时间内挑出一组**严格嵌套**的子模型对应不同算力预算，再用知识蒸馏联合训练这套共享权重，最后通过 Gauge-Aligned Reparametrization 把秩节省真正翻译成 FLOPs 节省——一次训练即可在 LLM 与 ViT 上得到逼近真实帕累托前沿的"一族"可部署模型。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "预训练"
   - "弹性模型"
   - "低秩分解"

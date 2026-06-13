@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geo-Expert: 用 LoRA 把 8B 模型微调成专家级地质推理 LLM
 description: >-
-  [ICML 2026][模型压缩][地质 LLM] Geo-Expert 把 11,518 条从五本地质学经典教科书蒸馏出的 CoT-enhanced 指令数据用 LoRA 微调 Qwen3-8B/32B 和 Gemma-3-27B…
+  [ICML 2026][模型压缩][地质 LLM] Geo-Expert 把 11,518 条从五本地质学经典教科书蒸馏出的 CoT-enhanced 指令数据用 LoRA 微调 Qwen3-8B/32B 和 Gemma-3-27B；在 Geo-Eval（387 hard boundary 题）上 Qwen3-8B-geo 平均 6.27 超过 Llama-3.1-70B-Instruct（4.12）和 GPT-4o（5.93），Qwen3-32B-geo 6.82 接近 GPT-5.4（7.15）；证明 high-quality domain alignment 比 scaling 重要。
 tags:
   - "ICML 2026"
   - "模型压缩"

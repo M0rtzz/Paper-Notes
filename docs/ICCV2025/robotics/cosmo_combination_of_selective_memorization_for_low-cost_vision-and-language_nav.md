@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation
 description: >-
-  [ICCV 2025][机器人][视觉语言导航] 提出 COSMO，一种结合选择性记忆的低成本 VLN 架构，通过两个定制化的选择性状态空间模块——Round Selective Scan（RSS…
+  [ICCV 2025][机器人][视觉语言导航] 提出 COSMO，一种结合选择性记忆的低成本 VLN 架构，通过两个定制化的选择性状态空间模块——Round Selective Scan（RSS，单轮扫描捕获全局上下文）和 Cross-modal Selective State Space Module（CS3，双流跨模态交互）——替代 Transformer 中的高成本注意力机制，以仅 15.5% 参数和 9.3% FLOPs 实现超越基线 DUET 的导航性能。
 tags:
   - "ICCV 2025"
   - "机器人"

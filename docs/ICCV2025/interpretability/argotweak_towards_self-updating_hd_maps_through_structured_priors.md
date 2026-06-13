@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArgoTweak: Towards Self-Updating HD Maps through Structured Priors
 description: >-
-  [ICCV 2025][可解释性][HD Map] 提出 ArgoTweak，首个提供"旧地图先验 + 当前传感器数据 + 最新真值地图"完整三元组的 HD 地图数据集，通过双射映射框架将大规模地图修改分解为元素级原子变化，并引入可解释的评测指标（mAPC/mACC）…
+  [ICCV 2025][可解释性][HD Map] 提出 ArgoTweak，首个提供"旧地图先验 + 当前传感器数据 + 最新真值地图"完整三元组的 HD 地图数据集，通过双射映射框架将大规模地图修改分解为元素级原子变化，并引入可解释的评测指标（mAPC/mACC），将模型在 ArgoTweak 上训练后的 sim2real 差距降低 10 倍以上。
 tags:
   - "ICCV 2025"
   - "可解释性"

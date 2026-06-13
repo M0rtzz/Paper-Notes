@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Who Gets Which Message? Auditing Demographic Bias in LLM-Generated Targeted Text
 description: >-
-  [ACL 2026][社会计算][人口统计偏见] 本文首次系统分析 LLM 在人口统计条件下生成定向消息时的偏见行为，提出 Persuasion Bias Index (PBI) 指标，发现 GPT-4o/Llama/Mistral 在气候传播中对男性和年轻人使用更强势的说服策略…
+  [ACL 2026 Findings][社会计算][人口统计偏见] 本文首次系统分析 LLM 在人口统计条件下生成定向消息时的偏见行为，提出 Persuasion Bias Index (PBI) 指标，发现 GPT-4o/Llama/Mistral 在气候传播中对男性和年轻人使用更强势的说服策略，且上下文提示会系统性地放大这些差异。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "社会计算"
   - "人口统计偏见"
   - "说服偏差"

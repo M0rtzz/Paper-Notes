@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations
 description: >-
-  [ACL2025][社会计算][机器翻译] 提出 Translate-with-Care (TWC) 数据集（3,950 条跨 6 种无性别语言的翻译挑战），系统揭示 GPT-4、Google Translate 等模型在无性别→有性别语言翻译中的性别偏见和推理错误…
+  [ACL2025][社会计算][机器翻译] 提出 Translate-with-Care (TWC) 数据集（3,950 条跨 6 种无性别语言的翻译挑战），系统揭示 GPT-4、Google Translate 等模型在无性别→有性别语言翻译中的性别偏见和推理错误，并通过微调 mBART-50 在偏见消除和翻译准确率上大幅超越闭源 LLM。
 tags:
   - "ACL2025"
   - "社会计算"

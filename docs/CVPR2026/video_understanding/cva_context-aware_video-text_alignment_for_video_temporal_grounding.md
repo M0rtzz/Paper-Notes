@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CVA: Context-aware Video-text Alignment for Video Temporal Grounding
 description: >-
-  [CVPR 2026][视频理解][视频时序定位] 提出 CVA（Context-aware Video-text Alignment）框架，通过 Query-aware Context Diversification（QCD）、Context-invariant Boundary Discriminatio…
+  [CVPR 2026][视频理解][视频时序定位] 提出 CVA（Context-aware Video-text Alignment）框架，通过 Query-aware Context Diversification（QCD）、Context-invariant Boundary Discrimination（CBD）损失和 Context-enhanced Transformer Encoder（CTE）三个协同组件，解决视频时序定位中的假阴性和背景关联问题，在 QVHighlights 上 R1@0.7 提升约 5 个点。
 tags:
   - "CVPR 2026"
   - "视频理解"

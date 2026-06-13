@@ -2,9 +2,10 @@
 title: >-
   [论文解读] From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision
 description: >-
-  [ICCV 2025][红外小目标检测] 提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。
+  [ICCV 2025][目标检测][红外小目标检测] 提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。 问题定义 单帧红外小目标（SIR…
 tags:
   - "ICCV 2025"
+  - "目标检测"
   - "红外小目标检测"
   - "单点监督"
   - "渐进式主动学习"

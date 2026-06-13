@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Information Locality as an Inductive Bias for Neural Language Models
 description: >-
-  [ACL 2025][LLM/NLP][归纳偏置] 本文提出 $m$-local entropy 这一信息论度量来量化语言的局部不确定性，通过在扰动自然语言和概率有限状态自动机（PFSA）定义的语言上的实验…
+  [ACL 2025][LLM 其他][归纳偏置] 本文提出 $m$-local entropy 这一信息论度量来量化语言的局部不确定性，通过在扰动自然语言和概率有限状态自动机（PFSA）定义的语言上的实验，证明了具有更高 $m$-local entropy 的语言对 Transformer 和 LSTM 语言模型来说更难学习，揭示了神经语言模型像人类一样对语言的局部统计结构高度敏感。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "归纳偏置"
   - "信息局部性"
   - "语言模型"

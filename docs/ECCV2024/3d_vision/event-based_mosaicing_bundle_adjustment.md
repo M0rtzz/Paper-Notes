@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Event-based Mosaicing Bundle Adjustment
 description: >-
-  [ECCV 2024][事件相机] 提出 EMBA，首个针对纯旋转事件相机的光度 Bundle Adjustment 方法，利用线性化事件生成模型将问题形式化为正则化非线性最小二乘优化，并利用法方程矩阵的块对角稀疏结构设计高效求解器，同时优化相机旋转轨迹和全景梯度图。
+  [ECCV 2024][3D视觉][事件相机] 提出 EMBA，首个针对纯旋转事件相机的光度 Bundle Adjustment 方法，利用线性化事件生成模型将问题形式化为正则化非线性最小二乘优化，并利用法方程矩阵的块对角稀疏结构设计高效求解器，同时优化相机旋转轨迹和全景梯度图。 事件相机是一种新型仿生视觉传感器…
 tags:
   - "ECCV 2024"
+  - "3D视觉"
   - "事件相机"
   - "Bundle Adjustment"
   - "全景拼接"

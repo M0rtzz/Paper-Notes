@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneGenAgent: Precise Industrial Scene Generation with Coding Agent
 description: >-
-  [ACL 2025][代码智能][工业场景生成] 提出 SceneGenAgent，一个基于 LLM 的代码生成 Agent，通过结构化布局规划、布局验证和迭代优化流程，利用 C# 代码精确生成工业场景，在真实工业任务上达到 81% 成功率…
+  [ACL 2025][代码智能][工业场景生成] 提出 SceneGenAgent，一个基于 LLM 的代码生成 Agent，通过结构化布局规划、布局验证和迭代优化流程，利用 C# 代码精确生成工业场景，在真实工业任务上达到 81% 成功率，并构建 SceneInstruct 数据集使开源 LLM 接近 GPT-4o 水平。
 tags:
   - "ACL 2025"
   - "代码智能"

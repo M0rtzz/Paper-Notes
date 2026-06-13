@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Glance and Focus Reinforcement for Pan-cancer Screening
 description: >-
-  [ICLR 2026][医学图像][泛癌筛查] 提出 GF-Screen 两阶段框架——轻量 Glance 模型用强化学习快速定位含病灶的 CT 子体积，Focus 模型只对选中区域做精细分割；通过将 GRPO 的"组内相对比较"思想从 NLP 迁移到视觉子体积组…
+  [ICLR 2026][医学图像][泛癌筛查] 提出 GF-Screen 两阶段框架——轻量 Glance 模型用强化学习快速定位含病灶的 CT 子体积，Focus 模型只对选中区域做精细分割；通过将 GRPO 的"组内相对比较"思想从 NLP 迁移到视觉子体积组，首次在纯视觉任务中实现无价值网络的 RL 优化，在 FLARE25 泛癌挑战中以 +25.6% DSC 大幅领先冠军方案且推理快 5.7 倍。
 tags:
   - "ICLR 2026"
   - "医学图像"

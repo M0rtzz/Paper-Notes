@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Increasing the Utility of Synthetic Images through Chamfer Guidance
 description: >-
-  [NeurIPS 2025][图像生成][Chamfer Distance] 提出 Chamfer Guidance——一种免训练的推理时引导方法，利用少量真实样本作为参照，通过 Chamfer 距离同时优化合成图像的质量（fidelity）和多样性（diversity）…
+  [NeurIPS 2025][图像生成][Chamfer Distance] 提出 Chamfer Guidance——一种免训练的推理时引导方法，利用少量真实样本作为参照，通过 Chamfer 距离同时优化合成图像的质量（fidelity）和多样性（diversity），在 ImageNet-1k 上仅用 32 张真实图片即可达到 97.5% Precision 和 92.7% Coverage，并在下游分类器训练中带来最高 16% 的准确率提升。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

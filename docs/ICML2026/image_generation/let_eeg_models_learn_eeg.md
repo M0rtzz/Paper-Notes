@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let EEG Models Learn EEG
 description: >-
-  [ICML 2026][图像生成][EEG 生成] JET 把多通道 EEG 生成重新定义为"在神经流形上的连续轨迹"，用条件流匹配 + 标准 Transformer 直接对原始波形建模，并配三条专门刻画 EEG 频谱/平稳性/统计的结构化约束…
+  [ICML 2026][图像生成][EEG 生成] JET 把多通道 EEG 生成重新定义为"在神经流形上的连续轨迹"，用条件流匹配 + 标准 Transformer 直接对原始波形建模，并配三条专门刻画 EEG 频谱/平稳性/统计的结构化约束，在 TUH 三大临床基准上把 TS-FID 较强基线降低 40% 以上。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis
 description: >-
-  [AAAI 2026][因果推理][因果发现] 提出 CaDyT，结合高斯过程连续时间动力学建模（Adams-Bashforth 积分器实现精确推断）和 MDL 最小描述长度原则进行结构搜索，同时解决不规则采样和因果结构识别两个挑战…
+  [AAAI 2026 Oral][因果推理][因果发现] 提出 CaDyT，结合高斯过程连续时间动力学建模（Adams-Bashforth 积分器实现精确推断）和 MDL 最小描述长度原则进行结构搜索，同时解决不规则采样和因果结构识别两个挑战，在双质点弹簧/菱形图/Rössler 振荡器上大幅超越所有基线（AUPRC 0.79 vs 次优 0.39）。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "因果推理"
   - "因果发现"
   - "高斯过程"

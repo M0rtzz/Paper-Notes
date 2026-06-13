@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Facts: Evaluating Intent Hallucination in Large Language Models
 description: >-
-  [ACL 2025][幻觉检测][意图幻觉] 本文提出"意图幻觉"（Intent Hallucination）概念——LLM 在处理复杂多条件查询时遗漏或误解部分意图约束导致的偏离用户意图的生成，构建 FaithQA 基准（20,068 题）和 Constraint Score 评估指标…
+  [ACL 2025][幻觉检测][意图幻觉] 本文提出"意图幻觉"（Intent Hallucination）概念——LLM 在处理复杂多条件查询时遗漏或误解部分意图约束导致的偏离用户意图的生成，构建 FaithQA 基准（20,068 题）和 Constraint Score 评估指标，实验表明意图幻觉在 SOTA 模型中普遍存在且随查询复杂度增加而加剧。
 tags:
   - "ACL 2025"
   - "幻觉检测"

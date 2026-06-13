@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Who can we trust? LLM-as-a-jury for Comparative Assessment
 description: >-
-  [ICML 2026][LLM评测][LLM-as-a-jury] 这篇论文指出多个 LLM 评审在成对比较中可靠性差异很大，提出带评审判别参数的 BT-σ 模型，在没有人工校准标签的情况下同时学习候选输出排名和每个 LLM judge 的可靠性…
+  [ICML 2026][LLM评测][LLM-as-a-jury] 这篇论文指出多个 LLM 评审在成对比较中可靠性差异很大，提出带评审判别参数的 BT-σ 模型，在没有人工校准标签的情况下同时学习候选输出排名和每个 LLM judge 的可靠性，从而比简单平均和标准 Bradley-Terry 聚合更接近人类排序。
 tags:
   - "ICML 2026"
   - "LLM评测"

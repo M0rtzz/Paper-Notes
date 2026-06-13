@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linking Modality Isolation in Heterogeneous Collaborative Perception
 description: >-
-  [CVPR2026][预训练][协同感知] 提出 CodeAlign 框架，通过码本构建离散代码空间和跨模态 Feature-Code-Feature (FCF) 翻译，首次解决异构协同感知中不同模态从未在训练数据中共现的"模态隔离"问题，仅需 HEAL 8% 训练参数、通信量降低 1024 倍…
+  [CVPR2026][预训练][协同感知] 提出 CodeAlign 框架，通过码本构建离散代码空间和跨模态 Feature-Code-Feature (FCF) 翻译，首次解决异构协同感知中不同模态从未在训练数据中共现的"模态隔离"问题，仅需 HEAL 8% 训练参数、通信量降低 1024 倍，同时达到 SOTA 感知性能。
 tags:
   - "CVPR2026"
   - "预训练"

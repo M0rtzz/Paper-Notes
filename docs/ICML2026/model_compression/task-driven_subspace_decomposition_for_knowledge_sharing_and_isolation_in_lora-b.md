@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task-Driven Subspace Decomposition for Knowledge Sharing and Isolation in LoRA-based Continual Learning
 description: >-
-  [ICML 2026][模型压缩][LoRA] LoDA 把 LoRA 的下投影矩阵按「投影能量」拆成一个跨任务共享的通用子空间和一个真正只激活新任务的隔离子空间，再用梯度对齐训练上投影、并在融合时给通用分支闭式重标定，从而在多个持续学习 benchmark 上稳定刷过现有 LoRA-CL 方法。
+  [ICML 2026][模型压缩][LoRA] LoDA 把 LoRA 的下投影矩阵按「投影能量」拆成一个跨任务共享的通用子空间和一个真正只激活新任务的隔离子空间，再用梯度对齐训练上投影、并在融合时给通用分支闭式重标定，从而在多个持续学习 benchmark 上稳定刷过现有 LoRA-CL 方法。 领域现状：基于预训练 Vi…
 tags:
   - "ICML 2026"
   - "模型压缩"

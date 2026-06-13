@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Human-Level AI Tales to AI Leveling Human Scales
 description: >-
-  [ICML 2026][LLM评测][AI evaluation] 本文用 LLM 当人口外推器，把 18 个能力维度按"全世界人口正确率"对数刻度 $L=-\log_B p_W$ 校准，并发现 Volume / Attention 维度真实 base $B \gg 10$、Comprehension 维度…
+  [ICML 2026][LLM评测][AI evaluation] 本文用 LLM 当人口外推器，把 18 个能力维度按"全世界人口正确率"对数刻度 $L=-\log_B p_W$ 校准，并发现 Volume / Attention 维度真实 base $B \gg 10$、Comprehension 维度 $B \approx 1$，揭示现行 AI 与人类的比较其实严重失调。
 tags:
   - "ICML 2026"
   - "LLM评测"

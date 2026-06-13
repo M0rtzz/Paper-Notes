@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Looking Beyond the Window: Global-Local Aligned CLIP for Training-free Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2026][语义分割][开放词汇语义分割] 针对无训练开放词汇语义分割中滑动窗口带来的跨窗口语义不一致问题，提出 GLA-CLIP 框架，通过全局键值扩展、代理锚点注意力和动态归一化三个机制实现跨窗口全局上下文整合，在8个基准上取得平均 44.0% mIoU 的 SOTA 表现。
+  [CVPR 2026][语义分割][开放词汇语义分割] 针对无训练开放词汇语义分割中滑动窗口带来的跨窗口语义不一致问题，提出 GLA-CLIP 框架，通过全局键值扩展、代理锚点注意力和动态归一化三个机制实现跨窗口全局上下文整合，在8个基准上取得平均 44.0% mIoU 的 SOTA 表现。 领域现状：开放词汇语义分割（OV…
 tags:
   - "CVPR 2026"
   - "语义分割"

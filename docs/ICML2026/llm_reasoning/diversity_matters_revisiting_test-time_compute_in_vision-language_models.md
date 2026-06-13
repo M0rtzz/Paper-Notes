@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diversity Matters: Revisiting Test-Time Compute in Vision-Language Models
 description: >-
-  [ICML2026][LLM推理][测试时计算] 本文系统研究了 test-time compute (TTC) 策略在视觉-语言模型上的有效性，从理论上证明多数投票的收益受预测多样性限制，并提出基于预测熵选最自信模型的 ETTC，使小模型能反过来增益大模型…
+  [ICML2026][LLM推理][测试时计算] 本文系统研究了 test-time compute (TTC) 策略在视觉-语言模型上的有效性，从理论上证明多数投票的收益受预测多样性限制，并提出基于预测熵选最自信模型的 ETTC，使小模型能反过来增益大模型，在 7 个 VLM、6 个基准上平均比投票高 +2.8%、超过最强单模型。
 tags:
   - "ICML2026"
   - "LLM推理"

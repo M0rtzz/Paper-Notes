@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contrastive Consolidation of Top-Down Modulations Achieves Sparsely Supervised Continual Learning
 description: >-
-  [NeurIPS 2025][信号/通信][持续学习] 提出 Task-Modulated Contrastive Learning (TMCL)，受大脑新皮层自顶向下调制启发，在持续学习中通过 affine modulation 集成稀疏标签信息（仅需 1% 标签），再利用对比学习将调制信息固化到前馈权重中…
+  [NeurIPS 2025][信号/通信][持续学习] 提出 Task-Modulated Contrastive Learning (TMCL)，受大脑新皮层自顶向下调制启发，在持续学习中通过 affine modulation 集成稀疏标签信息（仅需 1% 标签），再利用对比学习将调制信息固化到前馈权重中，在 class-incremental 和迁移学习上超越无监督和有监督基线。
 tags:
   - "NeurIPS 2025"
   - "信号/通信"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Personalized Benchmarking: Evaluating LLMs by Individual Preferences
 description: >-
-  [ACL 2026][LLM评测][个性化基准评估] 本文对 Chatbot Arena 的 115 名活跃用户进行个性化排名分析，发现 Bradley-Terry 个性化排名与全局排名的平均 Spearman 相关仅 ρ=0.04（57% 用户近零或负相关），证明聚合基准无法反映大多数用户的个体偏好…
+  [ACL 2026 Findings][LLM评测][个性化基准评估] 本文对 Chatbot Arena 的 115 名活跃用户进行个性化排名分析，发现 Bradley-Terry 个性化排名与全局排名的平均 Spearman 相关仅 ρ=0.04（57% 用户近零或负相关），证明聚合基准无法反映大多数用户的个体偏好，并通过话题+风格特征成功预测了用户特定的模型排名。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "个性化基准评估"
   - "LLM排名"

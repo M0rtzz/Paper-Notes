@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Post-Training LLMs as Better Decision-Making Agents: A Regret-Minimization Approach
 description: >-
-  [ICML 2026][LLM Agent][后悔最小化] 作者提出 Iterative RMFT，把 LLM 自己 rollout 出来的决策轨迹按 regret 从低到高排序，挑出最优的 $k$ 条用 SFT 反复微调模型…
+  [ICML 2026][LLM Agent][后悔最小化] 作者提出 Iterative RMFT，把 LLM 自己 rollout 出来的决策轨迹按 regret 从低到高排序，挑出最优的 $k$ 条用 SFT 反复微调模型，从而在不依赖任何已知最优算法（如 UCB/FTRL）也不需要人工设计 CoT 模板的前提下，让 LLM 在多臂赌博机、在线学习和非平稳赌博机这三类语言化决策任务上自动涌现出 no-regret 行为和合理的探索-利用平衡。
 tags:
   - "ICML 2026"
   - "LLM Agent"

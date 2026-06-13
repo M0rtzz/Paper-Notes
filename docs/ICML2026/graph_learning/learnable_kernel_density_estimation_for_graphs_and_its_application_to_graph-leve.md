@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learnable Kernel Density Estimation for Graphs and Its Application to Graph-Level Anomaly Detection
 description: >-
-  [ICML 2026][图学习][图密度估计] LGKDE 用一个可学习的深度 MMD 度量把每个图嵌成"节点分布"，再在该度量空间上叠加多尺度核密度估计，并通过"正常图密度高于其结构感知扰动版本"这一自监督对比信号端到端训练…
+  [ICML 2026][图学习][图密度估计] LGKDE 用一个可学习的深度 MMD 度量把每个图嵌成"节点分布"，再在该度量空间上叠加多尺度核密度估计，并通过"正常图密度高于其结构感知扰动版本"这一自监督对比信号端到端训练，从而首次为图级密度估计提供了既有一致性、收敛速率、鲁棒性、泛化界等理论保证、又在十余个图异常检测基准上稳定超越 GNN/对比/单类等强基线的统一框架。
 tags:
   - "ICML 2026"
   - "图学习"

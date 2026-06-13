@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VGGT-SLAM++: Visual SLAM with DEM-Based Covisibility and Local Bundle Adjustment
 description: >-
-  [CVPR 2026][3D视觉][SLAM] VGGT-SLAM++ 在 VGGT 前馈 Transformer 里程计基础上，引入数字高程图（DEM）作为紧凑的几何保持表示，利用 DINOv2 嵌入实现高效环路检测和共视图构建，配合高频 Sim(3) 局部光束法平差修正短期漂移…
+  [CVPR 2026][3D视觉][SLAM] VGGT-SLAM++ 在 VGGT 前馈 Transformer 里程计基础上，引入数字高程图（DEM）作为紧凑的几何保持表示，利用 DINOv2 嵌入实现高效环路检测和共视图构建，配合高频 Sim(3) 局部光束法平差修正短期漂移，在 TUM RGB-D 上 ATE 降低 45%（0.079m→0.036m）。
 tags:
   - "CVPR 2026"
   - "3D视觉"

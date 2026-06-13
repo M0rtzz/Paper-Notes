@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Hierarchical Policy Optimization for Simultaneous Translation of Unbounded Speech
 description: >-
-  [ACL 2026][多语言/翻译][同声传译] 本文提出 Hierarchical Policy Optimization (HPO)，通过层级奖励设计对基于 LLM 的同声传译模型进行后训练，在翻译质量未达阈值时抑制延迟优化，从而在 1.5 秒延迟下实现 +7 COMET 的翻译质量提升。
+  [ACL 2026 Oral][多语言/翻译][同声传译] 本文提出 Hierarchical Policy Optimization (HPO)，通过层级奖励设计对基于 LLM 的同声传译模型进行后训练，在翻译质量未达阈值时抑制延迟优化，从而在 1.5 秒延迟下实现 +7 COMET 的翻译质量提升。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "多语言/翻译"
   - "同声传译"
   - "强化学习"

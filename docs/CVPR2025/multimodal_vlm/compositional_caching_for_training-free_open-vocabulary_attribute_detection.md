@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compositional Caching for Training-free Open-vocabulary Attribute Detection
 description: >-
-  [CVPR 2025][多模态VLM][属性检测] ComCa 提出了一种无需训练的开放词汇属性检测方法，通过利用大规模网络图片数据库和 LLM 构建带有软属性标签的辅助图像缓存，在推理时聚合缓存图像的相似度来增强 VLM 的属性预测能力，无需任何额外训练即可与训练式方法竞争。
+  [CVPR 2025][多模态VLM][属性检测] ComCa 提出了一种无需训练的开放词汇属性检测方法，通过利用大规模网络图片数据库和 LLM 构建带有软属性标签的辅助图像缓存，在推理时聚合缓存图像的相似度来增强 VLM 的属性预测能力，无需任何额外训练即可与训练式方法竞争。 领域现状：属性检测（如识别物体的颜色、纹理、材…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

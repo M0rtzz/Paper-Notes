@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guiding Human-Object Interactions with Rich Geometry and Relations
 description: >-
-  [CVPR 2025][3D视觉][人物交互] 本文提出ROG框架，通过在物体网格上采样富含几何信息的关键点构建交互距离场（IDF），并利用基于扩散的关系模型在推理时引导运动生成模型产生关系感知且语义对齐的人物-物体交互动作，在FullBodyManipulation数据集上显著超越SOTA。
+  [CVPR 2025][3D视觉][人物交互] 本文提出ROG框架，通过在物体网格上采样富含几何信息的关键点构建交互距离场（IDF），并利用基于扩散的关系模型在推理时引导运动生成模型产生关系感知且语义对齐的人物-物体交互动作，在FullBodyManipulation数据集上显著超越SOTA。 领域现状：人物-物体交互（HO…
 tags:
   - "CVPR 2025"
   - "3D视觉"

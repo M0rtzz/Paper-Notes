@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MagCache: Fast Video Generation with Magnitude-Aware Cache
 description: >-
-  [NeurIPS 2025][视频生成][视频扩散模型加速] 发现视频扩散模型中相邻时间步残差输出的幅度比（magnitude ratio）遵循一条跨模型、跨 prompt 普遍成立的单调递减规律（"统一幅度定律"），由此提出 MagCache：基于幅度比对跳步误差进行精确累积建模…
+  [NeurIPS 2025][视频生成][视频扩散模型加速] 发现视频扩散模型中相邻时间步残差输出的幅度比（magnitude ratio）遵循一条跨模型、跨 prompt 普遍成立的单调递减规律（"统一幅度定律"），由此提出 MagCache：基于幅度比对跳步误差进行精确累积建模，自适应跳过冗余时间步并复用缓存，仅需 1 个样本校准，即可在 Open-Sora、CogVideoX、Wan 2.1、HunyuanVideo 等模型上实现 2.10–2.68× 加速，且在 LPIPS/SSIM/PSNR 三个指标上全面优于 TeaCache 等已有方法。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

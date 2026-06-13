@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spherical Steering: Geometry-Aware Activation Rotation for Language Models
 description: >-
-  [ICML 2026][LLM评测][激活转向] 本文提出 Spherical Steering：在 LLM 隐藏状态的单位超球面上，沿测地线把激活向量旋转到由对比样本估计出的"真实性方向"，而不是像传统 activation addition 那样做线性加法…
+  [ICML 2026][LLM评测][激活转向] 本文提出 Spherical Steering：在 LLM 隐藏状态的单位超球面上，沿测地线把激活向量旋转到由对比样本估计出的"真实性方向"，而不是像传统 activation addition 那样做线性加法，从而在保持激活幅值（norm）的同时显著提升 TruthfulQA / COPA / StoryCloze 等基准的多选准确率（+10% 量级），且不损伤开放式生成质量。
 tags:
   - "ICML 2026"
   - "LLM评测"

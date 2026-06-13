@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Persistence of Neural Collapse Despite Low-Rank Bias
 description: >-
-  [NeurIPS 2025][神经坍缩] 本文从理论上证明了深度神经坍缩（DNC）在深层无约束特征模型中由于 L2 正则化引起的低秩偏差而全局次优，同时首次解释了 DNC 在实践中持续出现的原因——其解空间维度随网络宽度增长快于低秩解。
+  [NeurIPS 2025][神经坍缩] 本文从理论上证明了深度神经坍缩（DNC）在深层无约束特征模型中由于 L2 正则化引起的低秩偏差而全局次优，同时首次解释了 DNC 在实践中持续出现的原因——其解空间维度随网络宽度增长快于低秩解。 神经坍缩（Neural Collapse, NC）是深度神经网络分类训练后期发现的结构化…
 tags:
   - "NeurIPS 2025"
   - "神经坍缩"

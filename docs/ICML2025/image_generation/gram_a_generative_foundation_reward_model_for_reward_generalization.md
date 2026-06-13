@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRAM: A Generative Foundation Reward Model for Reward Generalization
 description: >-
-  [ICML 2025][图像生成][奖励模型] GRAM 提出用生成式（而非判别式）方法训练奖励模型——先通过大规模无监督学习预训练生成式奖励模型，再用监督数据微调，并证明 label smoothing 实际上等价于正则化的 pairwise ranking 损失，实现了跨任务的奖励泛化。
+  [ICML 2025][图像生成][奖励模型] GRAM 提出用生成式（而非判别式）方法训练奖励模型——先通过大规模无监督学习预训练生成式奖励模型，再用监督数据微调，并证明 label smoothing 实际上等价于正则化的 pairwise ranking 损失，实现了跨任务的奖励泛化。 领域现状：在 LLM 对齐中…
 tags:
   - "ICML 2025"
   - "图像生成"

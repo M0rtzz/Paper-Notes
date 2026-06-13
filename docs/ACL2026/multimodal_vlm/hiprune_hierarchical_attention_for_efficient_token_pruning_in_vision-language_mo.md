@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HiPrune: Hierarchical Attention for Efficient Token Pruning in Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][视觉token剪枝] 本文发现视觉编码器中存在层级注意力模式——中层关注主体对象、深层关注全局信息，据此提出 HiPrune，一种免训练、模型无关的视觉 token 剪枝方法，通过选择三类 token（Anchor/Buffer/Register）保留不同层级的视觉信息…
+  [ACL 2026 Findings][多模态VLM][视觉token剪枝] 本文发现视觉编码器中存在层级注意力模式——中层关注主体对象、深层关注全局信息，据此提出 HiPrune，一种免训练、模型无关的视觉 token 剪枝方法，通过选择三类 token（Anchor/Buffer/Register）保留不同层级的视觉信息，仅用 1/3 token 保持 99.3% 性能，FLOPs 减少 58.7%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "视觉token剪枝"
   - "层级注意力"

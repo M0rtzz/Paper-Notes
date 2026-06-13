@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLEME2.0: Towards Interpretable Evaluation by Disentangling Edits for Grammatical Error Correction
 description: >-
-  [ACL 2025 (Long Paper)][可解释性][Grammatical Error Correction] 本文提出 CLEME2.0，一种可解释的 GEC 参考评估指标，通过将编辑解耦为四类（正确纠正 TP、错误纠正 FPne、欠纠正 FN、过纠正 FPun）并结合编辑加权技术…
+  [ACL 2025 (Long Paper)][可解释性][Grammatical Error Correction] 本文提出 CLEME2.0，一种可解释的 GEC 参考评估指标，通过将编辑解耦为四类（正确纠正 TP、错误纠正 FPne、欠纠正 FN、过纠正 FPun）并结合编辑加权技术，在 GJG15 和 SEEDA 两个人工评判数据集上达到了与人工判断最高相关性的 SOTA 结果。
 tags:
   - "ACL 2025 (Long Paper)"
   - "可解释性"

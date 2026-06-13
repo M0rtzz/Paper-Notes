@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Rethinking LLM Watermark Detection in Black-Box Settings: A Non-Intrusive Third-Party Framework
 description: >-
-  [ACL 2026][LLM安全][LLM水印] 提出 TTP-Detect，首个将水印检测与注入解耦的黑盒第三方水印验证框架，通过代理模型放大水印信号并结合局部一致性、全局几何和自适应秩检验三类互补度量，在不访问密钥或内部模型状态的情况下实现跨水印方案的高精度检测。
+  [ACL 2026 Findings][LLM安全][LLM水印] 提出 TTP-Detect，首个将水印检测与注入解耦的黑盒第三方水印验证框架，通过代理模型放大水印信号并结合局部一致性、全局几何和自适应秩检验三类互补度量，在不访问密钥或内部模型状态的情况下实现跨水印方案的高精度检测。 领域现状：LLM 水印通过在生成过程中…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "LLM水印"
   - "黑盒检测"

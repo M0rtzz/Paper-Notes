@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R1-VL: Learning to Reason with Multimodal Large Language Models via Step-wise Group Relative Policy Optimization
 description: >-
-  [多模态VLM] 提出 StepGRPO，一种新的在线强化学习框架，通过两种无需过程奖励模型的规则化步级推理奖励（StepRAR 步级推理准确性奖励 + StepRVR 步级推理有效性奖励），解决 MLLM 在 RL 训练中的稀疏奖励问题，使 MLLM 能够自主探索和改进推理能力。
+  [多模态VLM] 提出 StepGRPO，一种新的在线强化学习框架，通过两种无需过程奖励模型的规则化步级推理奖励（StepRAR 步级推理准确性奖励 + StepRVR 步级推理有效性奖励），解决 MLLM 在 RL 训练中的稀疏奖励问题，使 MLLM 能够自主探索和改进推理能力。 当前增强 MLLM 推理能力的主流方法是在…
 tags:
   - "多模态VLM"
 ---

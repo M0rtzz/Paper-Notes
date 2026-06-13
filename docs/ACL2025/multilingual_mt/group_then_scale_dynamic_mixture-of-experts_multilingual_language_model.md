@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Group then Scale: Dynamic Mixture-of-Experts Multilingual Language Model
 description: >-
-  [ACL 2025][多语言/翻译][multilingual LLM] 提出 DMoE——基于参数偏差的动态语言分组 + 选择性 MoE 层扩展方法，通过仅 10 步微调量化语言间相似性，将相似语言分组共享同一 expert，只在参数偏差大的层（语言特定层）扩展为 MoE 层…
+  [ACL 2025][多语言/翻译][multilingual LLM] 提出 DMoE——基于参数偏差的动态语言分组 + 选择性 MoE 层扩展方法，通过仅 10 步微调量化语言间相似性，将相似语言分组共享同一 expert，只在参数偏差大的层（语言特定层）扩展为 MoE 层，在 18~128 种语言上 PPL 比持续预训练降低 11.4%，用 3.6 倍少的参数超越 X-ELM 9.6%。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

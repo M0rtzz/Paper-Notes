@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis
 description: >-
-  [NeurIPS 2025][图学习][检索增强诊断] 提出检索增强诊断框架RAD，通过从多源医学语料中检索疾病指南并注入多模态模型的特征提取和跨模态融合全流程，同时引入双轴可解释性评估体系，在四个不同解剖部位的数据集上达到SOTA。
+  [NeurIPS 2025][图学习][检索增强诊断] 提出检索增强诊断框架RAD，通过从多源医学语料中检索疾病指南并注入多模态模型的特征提取和跨模态融合全流程，同时引入双轴可解释性评估体系，在四个不同解剖部位的数据集上达到SOTA。 当前AI驱动的医学研究主要通过知识图谱或大规模文本预训练将医学知识编码到模型参数中…
 tags:
   - "NeurIPS 2025"
   - "图学习"

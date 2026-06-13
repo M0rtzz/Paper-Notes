@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Text Edits Generalize to Visual Generation? Benchmarking Cross-Modal Knowledge Editing in UMMs
 description: >-
-  [ICML 2026][知识编辑][跨模态迁移] 本文提出 UniKE——首个面向统一多模态模型 (UMM) 的"跨模态知识编辑"基准（2,971 个编辑主体、5,535 条 VQA 可验证实例），系统性地揭示了"文本侧编辑成功率 ~92% 但图像生成 VQA 仅 ~18.5%"的模态鸿沟…
+  [ICML 2026][知识编辑][跨模态迁移] 本文提出 UniKE——首个面向统一多模态模型 (UMM) 的"跨模态知识编辑"基准（2,971 个编辑主体、5,535 条 VQA 可验证实例），系统性地揭示了"文本侧编辑成功率 ~92% 但图像生成 VQA 仅 ~18.5%"的模态鸿沟，并通过"推理增强参数编辑"协议把 VQA 准确率最多拉高 18.6 个百分点，进一步用条件通路上的余弦漂移指标将根因定位到 LLM-to-DiT 投影瓶颈。
 tags:
   - "ICML 2026"
   - "知识编辑"

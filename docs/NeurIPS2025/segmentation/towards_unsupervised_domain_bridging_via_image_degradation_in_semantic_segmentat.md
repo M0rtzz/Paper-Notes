@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Unsupervised Domain Bridging via Image Degradation in Semantic Segmentation
 description: >-
-  [NeurIPS 2025][语义分割][无监督域适应] 提出 DiDA，通过将图像退化操作形式化为扩散前向过程来构建源域和目标域之间的连续中间域，结合语义偏移补偿机制，作为即插即用模块显著提升现有 UDA 语义分割方法的性能。
+  [NeurIPS 2025][语义分割][无监督域适应] 提出 DiDA，通过将图像退化操作形式化为扩散前向过程来构建源域和目标域之间的连续中间域，结合语义偏移补偿机制，作为即插即用模块显著提升现有 UDA 语义分割方法的性能。 语义分割模型在跨域部署时面临严重的性能下降。虽然自训练（Self-Training）已成为 UD…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

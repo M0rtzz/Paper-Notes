@@ -2,7 +2,7 @@
 title: >-
   [论文解读] tttLRM: Test-Time Training for Long Context and Autoregressive 3D Reconstruction
 description: >-
-  [CVPR 2026][3D视觉][3D重建] tttLRM 首次将 Test-Time Training (TTT) 引入大规模3D重建模型，利用 LaCT 层以线性复杂度实现长上下文和自回归3D高斯重建，通过将多视图观测压缩到 TTT 快速权重中形成隐式3D表示，再解码为显式3DGS等格式…
+  [CVPR 2026][3D视觉][3D重建] tttLRM 首次将 Test-Time Training (TTT) 引入大规模3D重建模型，利用 LaCT 层以线性复杂度实现长上下文和自回归3D高斯重建，通过将多视图观测压缩到 TTT 快速权重中形成隐式3D表示，再解码为显式3DGS等格式，在物体和场景级数据集上达到了 SOTA 性能。
 tags:
   - "CVPR 2026"
   - "3D视觉"

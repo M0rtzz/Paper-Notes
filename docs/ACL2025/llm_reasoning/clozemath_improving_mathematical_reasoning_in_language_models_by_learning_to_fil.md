@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations
 description: >-
-  [ACL 2025][LLM推理][数学推理] ClozeMath 提出了一种受人类完形填空学习启发的微调策略，通过掩码数学解答中的方程式并训练模型预测它们（text-infilling目标），与标准语言模型目标联合训练，在GSM8K和MATH上显著超越了强基线Masked Thought…
+  [ACL 2025][LLM推理][数学推理] ClozeMath 提出了一种受人类完形填空学习启发的微调策略，通过掩码数学解答中的方程式并训练模型预测它们（text-infilling目标），与标准语言模型目标联合训练，在GSM8K和MATH上显著超越了强基线Masked Thought，并在推理时间扩展和鲁棒性测试中表现出更好的泛化能力。
 tags:
   - "ACL 2025"
   - "LLM推理"

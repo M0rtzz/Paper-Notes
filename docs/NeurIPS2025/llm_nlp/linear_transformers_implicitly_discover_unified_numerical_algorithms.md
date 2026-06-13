@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Linear Transformers Implicitly Discover Unified Numerical Algorithms
 description: >-
-  [NeurIPS 2025][LLM/NLP][in-context learning] 训练线性 Transformer 执行矩阵块补全任务后，通过权重代数分析发现模型在三种完全不同的计算约束（集中式、分布式、计算受限）下隐式收敛到同一个双行迭代更新规则 EAGLE…
+  [NeurIPS 2025][LLM 其他][in-context learning] 训练线性 Transformer 执行矩阵块补全任务后，通过权重代数分析发现模型在三种完全不同的计算约束（集中式、分布式、计算受限）下隐式收敛到同一个双行迭代更新规则 EAGLE，该规则具有二阶收敛性且依赖条件数仅为对数级别。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "in-context learning"
   - "Transformer"
   - "numerical algorithm discovery"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inverse Depth Scaling From Most Layers Being Similar
 description: >-
-  [ICML2026][预训练][深度 scaling] 本文通过对 LLM 隐藏态动力学的测量 + teacher-student toy model 的对照实验，证明 LLM 的 loss 与深度近似成反比（$\alpha_\ell \approx 1$）…
+  [ICML2026][预训练][深度 scaling] 本文通过对 LLM 隐藏态动力学的测量 + teacher-student toy model 的对照实验，证明 LLM 的 loss 与深度近似成反比（$\alpha_\ell \approx 1$），并将其归因于"绝大多数层在做功能相似的小步更新、通过 ensemble averaging 抵消误差"这一非高效但鲁棒的使用模式。
 tags:
   - "ICML2026"
   - "预训练"

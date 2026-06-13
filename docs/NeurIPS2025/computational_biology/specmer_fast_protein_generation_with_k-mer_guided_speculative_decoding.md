@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpecMER: Fast Protein Generation with K-mer Guided Speculative Decoding
 description: >-
-  [NeurIPS 2025][计算生物][投机解码] SpecMER 将投机解码引入蛋白质序列生成，用 K-mer 引导的批量选择策略从 draft 模型的多个候选中选取最符合进化保守性的序列供 target 模型验证，在保持分布一致性的同时实现 24-32% 加速…
+  [NeurIPS 2025 Spotlight][计算生物][投机解码] SpecMER 将投机解码引入蛋白质序列生成，用 K-mer 引导的批量选择策略从 draft 模型的多个候选中选取最符合进化保守性的序列供 target 模型验证，在保持分布一致性的同时实现 24-32% 加速，且生成序列的 NLL 和 pLDDT 结构置信度显著优于无引导的 baseline。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "计算生物"
   - "投机解码"
   - "K-mer引导"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BenchMarker: An Education-Inspired Toolkit for Highlighting Flaws in Multiple-Choice Benchmarks
 description: >-
-  [ACL 2026][LLM评测][MCQA] 本文借鉴教育学界对多选题（MCQ）的成熟质检框架，构造 BenchMarker 工具用 LLM 判官从「污染（contamination）+ 捷径（shortcuts）+ 写作错误（writing errors）」三个维度审计 12 个主流 NLP MCQA b…
+  [ACL 2026][LLM评测][MCQA] 本文借鉴教育学界对多选题（MCQ）的成熟质检框架，构造 BenchMarker 工具用 LLM 判官从「污染（contamination）+ 捷径（shortcuts）+ 写作错误（writing errors）」三个维度审计 12 个主流 NLP MCQA benchmark，发现 TruthfulQA 47% 题目能直接在网上搜到、HellaSwag 100% 违反多条写作规则，并实证证明这些缺陷会显著拉高/压低 LLM 准确率甚至改变模型排名。
 tags:
   - "ACL 2026"
   - "LLM评测"

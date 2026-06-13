@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Play Only Evolves When Self-Synthetic Pipeline Ensures Learnable Information Gain
 description: >-
-  [ICML 2026 (Position Paper)][LLM推理][自演化 LLM] 作者主张当下的"LLM 自博弈"之所以在几轮内就崩溃，根本原因是自合成数据没有提供可学习信息增益；他们用有界 MDL/epiplexity 把"可学习信息"形式化…
+  [ICML 2026 (Position Paper)][LLM推理][自演化 LLM] 作者主张当下的"LLM 自博弈"之所以在几轮内就崩溃，根本原因是自合成数据没有提供可学习信息增益；他们用有界 MDL/epiplexity 把"可学习信息"形式化，并提出三个系统级设计——非对称协同演化、容量预算增长、主动信息寻取——共同保证三角色 (Proposer-Solver-Verifier) 自演化循环中可学习信息单调上升。
 tags:
   - "ICML 2026 (Position Paper)"
   - "LLM推理"

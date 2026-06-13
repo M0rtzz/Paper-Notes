@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Registering Source Tokens to Target Language Spaces in Multilingual Neural Machine Translation
 description: >-
-  [ACL 2025][多语言/翻译][多语言机器翻译] 提出 Registering 方法：在源语言和目标语言 token 之间插入一组目标语言标记（registers），通过修改注意力掩码使目标生成仅依赖 registers 的激活，彻底解决多语言翻译中的 off-target 问题…
+  [ACL 2025][多语言/翻译][多语言机器翻译] 提出 Registering 方法：在源语言和目标语言 token 之间插入一组目标语言标记（registers），通过修改注意力掩码使目标生成仅依赖 registers 的激活，彻底解决多语言翻译中的 off-target 问题，使小模型 MITRE-913M 超越 NLLB-3.3B。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

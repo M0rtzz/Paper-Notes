@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding
 description: >-
-  [ECCV 2024][可解释性][第一人称视觉] 提出 EgoExo-Fitness 数据集，包含同步的第一人称和第三人称健身视频，提供两级时间边界标注和创新性的可解释动作评判标注（技术关键点验证、自然语言评论、质量评分），并构建五个基准任务。
+  [ECCV 2024][可解释性][第一人称视觉] 提出 EgoExo-Fitness 数据集，包含同步的第一人称和第三人称健身视频，提供两级时间边界标注和创新性的可解释动作评判标注（技术关键点验证、自然语言评论、质量评分），并构建五个基准任务。 设想戴上智能眼镜做健身运动，虚拟教练能告诉你做了什么、何时做的、做得怎么样…
 tags:
   - "ECCV 2024"
   - "可解释性"

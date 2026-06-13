@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Accelerating Training of Autoregressive Video Generation Models via Local Optimization with Representation Continuity
 description: >-
-  [ACL 2026][视频生成][自回归视频生成] 提出 Local Optimization + Representation Continuity (ReCo) 训练策略，通过在局部窗口内优化并约束隐状态的平滑过渡，实现自回归视频生成模型训练速度提升 2 倍且不牺牲生成质量。
+  [ACL 2026 Findings][视频生成][自回归视频生成] 提出 Local Optimization + Representation Continuity (ReCo) 训练策略，通过在局部窗口内优化并约束隐状态的平滑过渡，实现自回归视频生成模型训练速度提升 2 倍且不牺牲生成质量。 领域现状：自回归模型在图像…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "视频生成"
   - "自回归视频生成"
   - "训练加速"

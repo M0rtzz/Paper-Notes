@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Words to Structured Visuals: A Benchmark and Framework for Text-to-Diagram Generation and Editing
 description: >-
-  [CVPR 2025][图像生成][文本到图表生成] 本文定义了文本到图表生成任务，构建了 DiagramGenBenchmark（涵盖 8 类图表），并提出多智能体框架 DiagramAgent（Plan + Code + Check + Diagram-to-Code）…
+  [CVPR 2025][图像生成][文本到图表生成] 本文定义了文本到图表生成任务，构建了 DiagramGenBenchmark（涵盖 8 类图表），并提出多智能体框架 DiagramAgent（Plan + Code + Check + Diagram-to-Code），在图表生成、编码和编辑任务上显著超越现有文本到图像/代码方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

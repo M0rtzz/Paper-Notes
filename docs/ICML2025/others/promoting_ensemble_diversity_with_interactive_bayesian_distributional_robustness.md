@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness
 description: >-
-  [ICML 2025][贝叶斯推断] 提出IBDR贝叶斯推断框架，通过在乘积分布空间上引入交互式损失和Wasserstein分布鲁棒性优化，构建兼顾多样性与低锐度的粒子集成，在VTAB-1K上以ViT-B/16实现73.6%平均准确率超越所有基线。
+  [ICML 2025][贝叶斯推断] 提出IBDR贝叶斯推断框架，通过在乘积分布空间上引入交互式损失和Wasserstein分布鲁棒性优化，构建兼顾多样性与低锐度的粒子集成，在VTAB-1K上以ViT-B/16实现73.6%平均准确率超越所有基线。 领域现状：贝叶斯推断通过多模型粒子采样提供不确定性估计…
 tags:
   - "ICML 2025"
   - "贝叶斯推断"

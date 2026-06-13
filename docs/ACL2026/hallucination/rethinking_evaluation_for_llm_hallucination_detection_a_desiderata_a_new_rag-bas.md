@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Evaluation for LLM Hallucination Detection: A Desiderata, A New RAG-based Benchmark, New Insights
 description: >-
-  [ACL2026][幻觉检测][RAG幻觉检测] 本文重新定义了 RAG 场景幻觉检测 benchmark 应具备的 7 条要求，构建了长上下文、人类多轮标注且带真实噪声标签的 Trivia++，并发现现有检测器在有机 RAG 幻觉上仍明显低于理想性能。
+  [ACL2026][幻觉检测][RAG幻觉检测] 本文重新定义了 RAG 场景幻觉检测 benchmark 应具备的 7 条要求，构建了长上下文、人类多轮标注且带真实噪声标签的 Trivia++，并发现现有检测器在有机 RAG 幻觉上仍明显低于理想性能。 领域现状：LLM 幻觉检测已经从开放式事实性检查扩展到摘要、问答、RA…
 tags:
   - "ACL2026"
   - "幻觉检测"

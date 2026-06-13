@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MarkushGrapher: Joint Visual and Textual Recognition of Markush Structures
 description: >-
-  [CVPR 2025][多模态VLM][Markush结构] 本文提出MarkushGrapher，一个多模态方法，通过联合编码文本、图像和布局信息来识别专利文档中的Markush结构（化学结构模板），并构建了首个真实世界Markush结构标注基准M2S…
+  [CVPR 2025][多模态VLM][Markush结构] 本文提出MarkushGrapher，一个多模态方法，通过联合编码文本、图像和布局信息来识别专利文档中的Markush结构（化学结构模板），并构建了首个真实世界Markush结构标注基准M2S，在大多数评估设定下超越了SOTA化学专用和通用视觉语言模型。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

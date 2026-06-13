@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][城市设计] 提出一个人机协同的计算机视觉框架，使用Grounding DINO进行城市物体检测，基于ADE20K数据集构建共现嵌入捕捉真实空间配置，再通过VLM进行场景感知的第三物体推荐，并生成3D模型用于AR预览，旨在让居民参与微观城市设计。
+  [NeurIPS 2025][多模态VLM][城市设计] 提出一个人机协同的计算机视觉框架，使用Grounding DINO进行城市物体检测，基于ADE20K数据集构建共现嵌入捕捉真实空间配置，再通过VLM进行场景感知的第三物体推荐，并生成3D模型用于AR预览，旨在让居民参与微观城市设计。 城市公共空间的质量不仅由大规模总体…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

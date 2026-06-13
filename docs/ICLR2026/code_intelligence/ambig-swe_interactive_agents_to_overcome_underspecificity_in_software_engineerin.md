@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering
 description: >-
-  [ICLR 2026][代码智能][underspecification] 构建 Ambig-SWE（基于 SWE-Bench Verified 的欠指定变体），系统评估 LLM 编程 agent 在三个维度上的交互能力——检测欠指定、提出澄清问题、利用交互信息——发现交互可将欠指定场景下的解决率提升最高 7…
+  [ICLR 2026][代码智能][underspecification] 构建 Ambig-SWE（基于 SWE-Bench Verified 的欠指定变体），系统评估 LLM 编程 agent 在三个维度上的交互能力——检测欠指定、提出澄清问题、利用交互信息——发现交互可将欠指定场景下的解决率提升最高 74%，但模型默认非交互行为且难以区分指定充分/不足的指令。
 tags:
   - "ICLR 2026"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AugDETR: Improving Multi-scale Learning for Detection Transformer
 description: >-
-  [ECCV 2024][目标检测][Transformer] 本文提出 AugDETR（Augmented DETR），通过混合注意力编码器（Hybrid Attention Encoder）扩大可变形编码器的感受野并引入全局上下文特征增强特征表示…
+  [ECCV 2024][目标检测][Transformer] 本文提出 AugDETR（Augmented DETR），通过混合注意力编码器（Hybrid Attention Encoder）扩大可变形编码器的感受野并引入全局上下文特征增强特征表示，再通过编码器混合交叉注意力（Encoder-Mixing Cross-Attention）自适应利用多层编码器信息加速收敛，在 COCO 上为 DINO、AlignDETR、DDQ 分别带来 1.2/1.1/1.0 AP 的提升。
 tags:
   - "ECCV 2024"
   - "目标检测"

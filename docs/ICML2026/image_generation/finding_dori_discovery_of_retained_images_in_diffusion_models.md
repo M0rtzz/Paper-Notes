@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finding DoRI: Discovery of Retained Images in Diffusion Models
 description: >-
-  [ICML2026][图像生成][扩散模型记忆] 作者用一个简单的对抗 text embedding 优化方法（DoRI）证明：NeMo / Wanda 这类"剪枝定位记忆神经元"的扩散模型记忆缓解方案只是把记忆"藏起来"而非真正擦除，因为记忆在 embedding、激活、权重三个层面都不是局部的…
+  [ICML2026][图像生成][扩散模型记忆] 作者用一个简单的对抗 text embedding 优化方法（DoRI）证明：NeMo / Wanda 这类"剪枝定位记忆神经元"的扩散模型记忆缓解方案只是把记忆"藏起来"而非真正擦除，因为记忆在 embedding、激活、权重三个层面都不是局部的；进一步提出对抗微调方案，把训练样本真正从模型里拔出来。
 tags:
   - "ICML2026"
   - "图像生成"

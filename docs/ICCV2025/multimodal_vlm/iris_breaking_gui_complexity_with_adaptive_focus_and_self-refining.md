@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Iris: Breaking GUI Complexity with Adaptive Focus and Self-Refining
 description: >-
-  [ICCV 2025][多模态VLM][GUI理解] Iris 提出信息敏感裁剪（ISC）和自精炼双重学习（SRDL）两大核心创新，仅用 850K 标注数据即在多个 GUI 理解基准上达到 SOTA，性能匹敌使用 10 倍以上数据的方法，同时将处理时间从 3 秒缩短至 1 秒。
+  [ICCV 2025][多模态VLM][GUI理解] Iris 提出信息敏感裁剪（ISC）和自精炼双重学习（SRDL）两大核心创新，仅用 850K 标注数据即在多个 GUI 理解基准上达到 SOTA，性能匹敌使用 10 倍以上数据的方法，同时将处理时间从 3 秒缩短至 1 秒。 数字化 Agent 需要在网页、软件和操作系统…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robotic Visual Instruction
 description: >-
-  [CVPR 2025][机器人][视觉指令] 提出 Robotic Visual Instruction (RoVI)，一种以手绘箭头和圆圈为核心的视觉指令范式，替代自然语言来指导机器人操作，并设计 VIEW pipeline 将2D视觉指令转化为3D动作序列，在真实环境中达到87.5%成功率。
+  [CVPR 2025][机器人][视觉指令] 提出 Robotic Visual Instruction (RoVI)，一种以手绘箭头和圆圈为核心的视觉指令范式，替代自然语言来指导机器人操作，并设计 VIEW pipeline 将2D视觉指令转化为3D动作序列，在真实环境中达到87.5%成功率。 领域现状：当前人机交互主要依…
 tags:
   - "CVPR 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation
 description: >-
-  [ICML2026][LLM评测][Benchmark 饱和] 这篇论文把 AI benchmark 饱和定义为前沿模型之间失去可靠区分度，提出基于 leaderboard 不确定性的 saturation index，并分析 60 个文本 LLM benchmark，发现近一半已高饱和…
+  [ICML2026][LLM评测][Benchmark 饱和] 这篇论文把 AI benchmark 饱和定义为前沿模型之间失去可靠区分度，提出基于 leaderboard 不确定性的 saturation index，并分析 60 个文本 LLM benchmark，发现近一半已高饱和，年龄和测试集规模比私有测试集、开放式输出或模板多样性更能解释饱和。
 tags:
   - "ICML2026"
   - "LLM评测"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.16763](https://arxiv.org/abs/2602.16763)  
 **代码**: 论文称提供数据与代码，缓存未给出明确 URL  
-**领域**: llm_evaluation  
+**领域**: LLM评测  
 **关键词**: Benchmark 饱和, LLM 评测, Leaderboard, 不确定性, 评测生命周期
 
 ## 一句话总结

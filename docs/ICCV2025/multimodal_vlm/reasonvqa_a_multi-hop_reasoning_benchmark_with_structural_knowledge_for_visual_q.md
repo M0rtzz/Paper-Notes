@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReasonVQA: A Multi-hop Reasoning Benchmark with Structural Knowledge for Visual Question Answering
 description: >-
-  [ICCV 2025][多模态VLM][VQA] 提出 ReasonVQA 数据集，通过低成本可扩展框架将结构化百科知识（Wikidata）与图像自动融合，生成 1/2/3 跳的多跳推理问题，包含 598K 图像和 4.2M 问题，显著挑战了现有 VQA 模型。
+  [ICCV 2025][多模态VLM][VQA] 提出 ReasonVQA 数据集，通过低成本可扩展框架将结构化百科知识（Wikidata）与图像自动融合，生成 1/2/3 跳的多跳推理问题，包含 598K 图像和 4.2M 问题，显著挑战了现有 VQA 模型。 视觉问答（VQA）领域近年取得显著进展…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

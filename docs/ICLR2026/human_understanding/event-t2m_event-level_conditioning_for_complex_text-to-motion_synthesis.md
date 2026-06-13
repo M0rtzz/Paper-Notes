@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis
 description: >-
-  [ICLR 2026][人体理解][文本到动作生成] 提出 Event-T2M 框架，将文本提示分解为事件级别的原子动作，结合 TMR 编码器和事件级交叉注意力（ECA）模块注入 Conformer 扩散模型，显著提升多事件复杂动作生成的质量和语义对齐。
+  [ICLR 2026][人体理解][文本到动作生成] 提出 Event-T2M 框架，将文本提示分解为事件级别的原子动作，结合 TMR 编码器和事件级交叉注意力（ECA）模块注入 Conformer 扩散模型，显著提升多事件复杂动作生成的质量和语义对齐。 文本到动作（Text-to-Motion）生成领域虽然在 HumanM…
 tags:
   - "ICLR 2026"
   - "人体理解"

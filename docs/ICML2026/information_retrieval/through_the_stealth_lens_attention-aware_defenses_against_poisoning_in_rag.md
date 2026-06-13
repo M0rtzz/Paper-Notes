@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Through the Stealth Lens: Attention-Aware Defenses Against Poisoning in RAG
 description: >-
-  [ICML 2026][信息检索/RAG][RAG投毒] 本文指出现有 RAG 投毒攻击虽然能用少量恶意段落操纵 LLM 输出，但**并非真正隐蔽**——成功的低预算攻击必然会让模型把注意力过度集中在恶意段落上，因此作者用每段落归一化注意力分数 NPAS 和基于其方差的 AV Filter 把异常段落筛掉…
+  [ICML 2026][信息检索/RAG][RAG投毒] 本文指出现有 RAG 投毒攻击虽然能用少量恶意段落操纵 LLM 输出，但**并非真正隐蔽**——成功的低预算攻击必然会让模型把注意力过度集中在恶意段落上，因此作者用每段落归一化注意力分数 NPAS 和基于其方差的 AV Filter 把异常段落筛掉，在 4 数据集 × 5 LLM × 5 攻击的设定下把 RACC 比 Certified Robust RAG 最高拉高 20%。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

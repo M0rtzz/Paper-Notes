@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Demo: Generative AI helps Radiotherapy Planning with User Preference
 description: >-
-  [NeurIPS 2025 (GenAI for Health Workshop)][医学图像][放疗规划] 提出 Flexible Dose Proposer (FDP)，通过两阶段训练框架（VQ-VAE 预训练 + 多条件编码）实现基于滑块的用户偏好交互式 3D 剂量分布预测…
+  [NeurIPS 2025 (GenAI for Health Workshop) Best Paper][医学图像][放疗规划] 提出 Flexible Dose Proposer (FDP)，通过两阶段训练框架（VQ-VAE 预训练 + 多条件编码）实现基于滑块的用户偏好交互式 3D 剂量分布预测，并集成到 Eclipse 临床治疗计划系统中，在头颈部癌症放疗场景中超越 Varian RapidPlan。
 tags:
-  - "NeurIPS 2025 (GenAI for Health Workshop)"
+  - "NeurIPS 2025 (GenAI for Health Workshop) Best Paper"
   - "医学图像"
   - "放疗规划"
   - "剂量预测"

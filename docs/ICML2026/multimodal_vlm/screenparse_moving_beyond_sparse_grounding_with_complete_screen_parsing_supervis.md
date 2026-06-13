@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScreenParse: Moving Beyond Sparse Grounding with Complete Screen Parsing Supervision
 description: >-
-  [ICML 2026][多模态VLM][屏幕解析] 针对 GUI agent 普遍使用"稀疏 grounding"标注、丢失整屏结构的问题，本文用全自动 Webshot 流水线构建了 771K 截图 / 21M 元素 / 55 类的稠密屏幕解析数据集 ScreenParse…
+  [ICML 2026][多模态VLM][屏幕解析] 针对 GUI agent 普遍使用"稀疏 grounding"标注、丢失整屏结构的问题，本文用全自动 Webshot 流水线构建了 771K 截图 / 21M 元素 / 55 类的稠密屏幕解析数据集 ScreenParse，并训练出仅 316M 参数的 ScreenVLM 把整屏解析为 ScreenTag 结构序列，在密集解析与稀疏 grounding 多个 benchmark 上击败 8B 级别的基础 VLM 同时把延迟降到 $\sim 1/4$。
 tags:
   - "ICML 2026"
   - "多模态VLM"

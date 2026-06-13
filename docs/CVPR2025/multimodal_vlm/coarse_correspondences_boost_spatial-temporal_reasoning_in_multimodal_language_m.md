@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coarse Correspondences Boost Spatial-Temporal Reasoning in Multimodal Language Models
 description: >-
-  [CVPR 2025][多模态VLM][多模态语言模型] 本文提出Coarse Correspondences，一种轻量级的training-free视觉提示方法，通过在图像帧上叠加目标跟踪得到的粗粒度实例对应关系标记，显著增强MLLM的空间时序推理能力…
+  [CVPR 2025][多模态VLM][多模态语言模型] 本文提出Coarse Correspondences，一种轻量级的training-free视觉提示方法，通过在图像帧上叠加目标跟踪得到的粗粒度实例对应关系标记，显著增强MLLM的空间时序推理能力，在ScanQA上提升+20.5%、OpenEQA上+9.7%、EgoSchema上+6.0%和R2R导航上+11%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

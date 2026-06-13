@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework
 description: >-
-  [AAAI 2026][多模态VLM][极端多标签分类] 本文探索了解码器型LLM在极端多标签分类(XMC)中的有效利用，提出双解码器学习策略和 ViXML 多模态框架，通过结构化提示模板适配LLM embedding + 高效融合视觉元数据…
+  [AAAI 2026][多模态VLM][极端多标签分类] 本文探索了解码器型LLM在极端多标签分类(XMC)中的有效利用，提出双解码器学习策略和 ViXML 多模态框架，通过结构化提示模板适配LLM embedding + 高效融合视觉元数据，在四个公共数据集上大幅超越 SOTA（最大数据集 P@1 提升 +8.21%），证明"一张图胜过数十亿参数"。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

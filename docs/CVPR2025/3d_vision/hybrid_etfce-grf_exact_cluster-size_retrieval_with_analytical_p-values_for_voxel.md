@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid eTFCE-GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry
 description: >-
-  [CVPR 2025][3D视觉][TFCE] 将 eTFCE 的并查集精确聚类大小查询与 pTFCE 的解析 GRF p 值推断结合，首次在单一框架中实现精确聚类检索+无需置换检验的统计推断，速度比置换 TFCE 快 1300 倍，在全脑体素形态测量中保持严格 FWER 控制。
+  [CVPR 2025][3D视觉][TFCE] 将 eTFCE 的并查集精确聚类大小查询与 pTFCE 的解析 GRF p 值推断结合，首次在单一框架中实现精确聚类检索+无需置换检验的统计推断，速度比置换 TFCE 快 1300 倍，在全脑体素形态测量中保持严格 FWER 控制。 领域现状：阈值无关聚类增强 (TFCE) 是…
 tags:
   - "CVPR 2025"
   - "3D视觉"

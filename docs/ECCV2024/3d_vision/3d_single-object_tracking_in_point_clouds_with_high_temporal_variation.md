@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Single-Object Tracking in Point Clouds with High Temporal Variation
 description: >-
-  [ECCV 2024][3D视觉][3D单目标跟踪] HVTrack首次探索高时间变化场景下的3D单目标跟踪，通过相对位姿感知记忆模块(RPM)、基础-扩展特征交叉注意力(BEA)和上下文点引导自注意力(CPA)三个模块，分别解决点云形状剧变、相似物体干扰和背景噪声问题…
+  [ECCV 2024][3D视觉][3D单目标跟踪] HVTrack首次探索高时间变化场景下的3D单目标跟踪，通过相对位姿感知记忆模块(RPM)、基础-扩展特征交叉注意力(BEA)和上下文点引导自注意力(CPA)三个模块，分别解决点云形状剧变、相似物体干扰和背景噪声问题，在KITTI-HV 5帧间隔下比SOTA提升11.3%/15.7% Success/Precision。
 tags:
   - "ECCV 2024"
   - "3D视觉"

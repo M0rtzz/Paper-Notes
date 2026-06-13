@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Multi-Agent System Training with Data Influence-Oriented Tree Search
 description: >-
-  [ACL 2026][多智能体][多智能体系统] 提出 DITS，把 "训练数据影响分数 (influence score)" 而非传统 Q-value 作为 MCTS 树搜索和偏好数据选择的指挥棒，并为不可微指标推导出一个 "前向推理就能算" 的影响分数估计公式…
+  [ACL 2026][多智能体][多智能体系统] 提出 DITS，把 "训练数据影响分数 (influence score)" 而非传统 Q-value 作为 MCTS 树搜索和偏好数据选择的指挥棒，并为不可微指标推导出一个 "前向推理就能算" 的影响分数估计公式，使 MAS 在 7 个数据集 / 3 个多智能体任务上平均比 Optima-iSFT-DPO 再提升 2.5–2.7%。
 tags:
   - "ACL 2026"
   - "多智能体"

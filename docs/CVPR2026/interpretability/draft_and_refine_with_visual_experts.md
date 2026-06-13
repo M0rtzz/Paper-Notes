@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Draft and Refine with Visual Experts
 description: >-
-  [CVPR 2026][可解释性][视觉利用度量化] 提出 DnR（Draft and Refine），一个基于问题条件视觉利用度（Visual Utilization）指标的 Agent 框架，量化 LVLM 对视觉证据的实际依赖程度，并通过外部视觉专家（检测/分割/OCR等）的渲染反馈迭代改善视觉定位…
+  [CVPR 2026][可解释性][视觉利用度量化] 提出 DnR（Draft and Refine），一个基于问题条件视觉利用度（Visual Utilization）指标的 Agent 框架，量化 LVLM 对视觉证据的实际依赖程度，并通过外部视觉专家（检测/分割/OCR等）的渲染反馈迭代改善视觉定位，减少幻觉。
 tags:
   - "CVPR 2026"
   - "可解释性"

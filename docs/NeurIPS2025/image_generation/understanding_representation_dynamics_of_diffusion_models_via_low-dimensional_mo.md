@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models
 description: >-
-  [NeurIPS 2025][图像生成][扩散模型] 在低秩高斯混合（MoLRG）数据模型下，理论证明了扩散模型表示质量随噪声水平呈单峰动态的现象源于去噪强度与类别区分度的权衡，并实证发现单峰动态的出现可作为模型泛化能力的可靠指标。
+  [NeurIPS 2025][图像生成][扩散模型] 在低秩高斯混合（MoLRG）数据模型下，理论证明了扩散模型表示质量随噪声水平呈单峰动态的现象源于去噪强度与类别区分度的权衡，并实证发现单峰动态的出现可作为模型泛化能力的可靠指标。 扩散模型不仅在生成任务上取得巨大成功，近期研究还揭示了其卓越的表示学习能力：…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

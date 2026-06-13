@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant
 description: >-
-  [CVPR 2025][视频理解][在线视频助手] 提出 LION-FS 在线视频助手框架，借鉴"快思考-慢思考"认知理论，用 Fast Path（基于路由的 Token 聚合与丢弃）实现高效实时响应判断，用 Slow Path（多粒度关键帧增强）在响应生成时注入细粒度空间和交互特征…
+  [CVPR 2025][视频理解][在线视频助手] 提出 LION-FS 在线视频助手框架，借鉴"快思考-慢思考"认知理论，用 Fast Path（基于路由的 Token 聚合与丢弃）实现高效实时响应判断，用 Slow Path（多粒度关键帧增强）在响应生成时注入细粒度空间和交互特征，在 Ego4D/Ego-Exo4D 基准上全面超越现有方法。
 tags:
   - "CVPR 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding
 description: >-
-  [CVPR2025][医学图像][目标检测] 提出两阶段标签高效学习框架：先在 1206 例无标注 CT 上用 Masked Image Modeling 自监督预训练 3D U-Net 编码器，再结合 VDETR + Vertex RPE 和 Mean Teacher 半监督学习…
+  [CVPR2025][医学图像][目标检测] 提出两阶段标签高效学习框架：先在 1206 例无标注 CT 上用 Masked Image Modeling 自监督预训练 3D U-Net 编码器，再结合 VDETR + Vertex RPE 和 Mean Teacher 半监督学习，仅用 144 例标注数据实现腹部创伤 3D 检测 mAP@0.50 达 45.30%（+115%）。
 tags:
   - "CVPR2025"
   - "医学图像"
@@ -115,10 +115,10 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{supervised}} + \lambda(t) \tim
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ （各组件均为已有方法的组合，但组合方式合理且系统性强）
-- 实验充分度: ⭐⭐⭐ （消融实验有说服力，但测试集太小；缺少与其他 3D 检测器的对比）
-- 写作质量: ⭐⭐⭐ （结构清晰但篇幅过长，部分细节冗余）
-- 价值: ⭐⭐⭐⭐ （标签稀缺的 3D 医学检测是真实痛点，框架有参考价值）
+- 新颖性: ⭐⭐⭐⭐ （各组件均为已有方法的组合，但组合方式合理且系统性强）
+- 实验充分度: ⭐⭐⭐⭐ （消融实验有说服力，但测试集太小；缺少与其他 3D 检测器的对比）
+- 写作质量: ⭐⭐⭐⭐ （结构清晰但篇幅过长，部分细节冗余）
+- 价值: ⭐⭐⭐⭐⭐ （标签稀缺的 3D 医学检测是真实痛点，框架有参考价值）
 
 <!-- RELATED:START -->
 

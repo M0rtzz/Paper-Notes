@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data
 description: >-
-  [ICLR 2026][可解释性][可解释ML] 受行为科学中效用最大化范式启发，提出 Behavior Learning (BL) 框架，将数据建模为由可解释的模块化效用最大化问题（UMP）层次组合所诱导的 Gibbs 分布，在预测性能、内在可解释性和参数可辨识性三者之间实现了统一。
+  [ICLR 2026][可解释性][可解释ML] 受行为科学中效用最大化范式启发，提出 Behavior Learning (BL) 框架，将数据建模为由可解释的模块化效用最大化问题（UMP）层次组合所诱导的 Gibbs 分布，在预测性能、内在可解释性和参数可辨识性三者之间实现了统一。 领域现状：可解释机器学习一直面临"性能…
 tags:
   - "ICLR 2026"
   - "可解释性"

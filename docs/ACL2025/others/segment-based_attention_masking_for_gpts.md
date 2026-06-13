@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Segment-Based Attention Masking for GPTs
 description: >-
-  [ACL 2025][注意力掩码] MAS（Masked Attention by Segment）在预训练 GPT 模型的 prefill 阶段将因果注意力掩码替换为按段（segment）的双向注意力——同一段内的 token 可以互相 attend…
+  [ACL 2025][注意力掩码] MAS（Masked Attention by Segment）在预训练 GPT 模型的 prefill 阶段将因果注意力掩码替换为按段（segment）的双向注意力——同一段内的 token 可以互相 attend，生成阶段仍保持因果掩码——通过 LoRA 微调即可在 8 个常识推理任务上一致提升性能（Llama-3-8B 平均 +1.8%，Llama-3.2-3B +3.3%），无额外计算开销。
 tags:
   - "ACL 2025"
   - "注意力掩码"

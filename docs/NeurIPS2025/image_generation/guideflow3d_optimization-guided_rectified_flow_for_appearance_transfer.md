@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GuideFlow3D: Optimization-Guided Rectified Flow For Appearance Transfer
 description: >-
-  [NeurIPS 2025][图像生成][3D appearance transfer] 提出 GuideFlow3D，一种无需训练的 3D 外观迁移框架，通过在预训练 rectified flow 模型的采样过程中交替注入可微引导损失（部件感知外观损失 + 自相似性损失）…
+  [NeurIPS 2025][图像生成][3D appearance transfer] 提出 GuideFlow3D，一种无需训练的 3D 外观迁移框架，通过在预训练 rectified flow 模型的采样过程中交替注入可微引导损失（部件感知外观损失 + 自相似性损失），实现几何差异显著的物体间鲁棒的纹理与几何细节迁移。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

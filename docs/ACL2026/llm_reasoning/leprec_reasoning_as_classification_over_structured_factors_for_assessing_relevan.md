@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues
 description: >-
-  [ACL 2026][LLM推理][法律问题相关性评估] 本文提出 LePREC，一种受法律专业人士启发的神经-符号框架，通过 LLM 生成推理问答对将非结构化法律文本转化为结构化特征，再利用稀疏线性模型进行相关性分类…
+  [ACL 2026][LLM推理][法律问题相关性评估] 本文提出 LePREC，一种受法律专业人士启发的神经-符号框架，通过 LLM 生成推理问答对将非结构化法律文本转化为结构化特征，再利用稀疏线性模型进行相关性分类，在 769 个马来西亚合同法案例构建的 LIC 数据集上相比 GPT-4o 等 LLM 基线提升 30–40%。
 tags:
   - "ACL 2026"
   - "LLM推理"

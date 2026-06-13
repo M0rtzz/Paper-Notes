@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Capture the Key in Reasoning to Enhance CoT Distillation Generalization
 description: >-
-  [ACL 2025 (Long Paper)][模型压缩][CoT Distillation] 提出 EDIT（mistakE-Driven key reasonIng step distillaTion），通过构造正确/错误配对的 dual CoTs 数据，利用最小编辑距离算法定位关键推理步骤…
+  [ACL 2025 (Long Paper)][模型压缩][CoT Distillation] 提出 EDIT（mistakE-Driven key reasonIng step distillaTion），通过构造正确/错误配对的 dual CoTs 数据，利用最小编辑距离算法定位关键推理步骤，并以 token 级细粒度损失函数引导小模型聚焦学习这些关键步骤，而非简单模仿教师的推理形式。
 tags:
   - "ACL 2025 (Long Paper)"
   - "模型压缩"

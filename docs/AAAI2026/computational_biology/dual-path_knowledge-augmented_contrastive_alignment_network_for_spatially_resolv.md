@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics
 description: >-
-  [AAAI 2026][计算生物][空间转录组学] 提出 DKAN，一个双路径知识增强对比对齐网络，通过整合外部基因数据库的语义信息作为跨模态协调器，结合统一的一阶段对比学习范式和自适应加权机制，从病理组织切片图像（H&E WSI）预测空间分辨率的基因表达，在三个公开ST数据集上全面超越SOTA。
+  [AAAI 2026 Oral][计算生物][空间转录组学] 提出 DKAN，一个双路径知识增强对比对齐网络，通过整合外部基因数据库的语义信息作为跨模态协调器，结合统一的一阶段对比学习范式和自适应加权机制，从病理组织切片图像（H&E WSI）预测空间分辨率的基因表达，在三个公开ST数据集上全面超越SOTA。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "计算生物"
   - "空间转录组学"
   - "基因表达预测"

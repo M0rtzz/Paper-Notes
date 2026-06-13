@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frame2Freq: Spectral Adapters for Fine-Grained Video Understanding
 description: >-
-  [CVPR2026][视频理解][频域适配器] 提出 Frame2Freq——首个在频域进行时序建模的 PEFT 适配器族，通过 FFT 将冻结 VFM 的帧嵌入变换到频谱空间并学习频带级滤波，在五个细粒度动作识别基准上以 <10% 的可训练参数超越全量微调模型。
+  [CVPR2026][视频理解][频域适配器] 提出 Frame2Freq——首个在频域进行时序建模的 PEFT 适配器族，通过 FFT 将冻结 VFM 的帧嵌入变换到频谱空间并学习频带级滤波，在五个细粒度动作识别基准上以 <10% 的可训练参数超越全量微调模型。 1. 图像预训练骨干迁移到视频的核心痛点：现有时域适配器（卷…
 tags:
   - "CVPR2026"
   - "视频理解"

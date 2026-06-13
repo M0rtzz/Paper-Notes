@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Your Best and Get Enough Rest for Continual Learning
 description: >-
-  [CVPR 2025][自监督学习][遗忘曲线] 受Ebbinghaus遗忘曲线理论启发，提出View-Batch Model(VBM)——通过将batch中多个不同样本替换为同一样本的多个增强视图（replay），延长回忆间隔V倍至最优范围…
+  [CVPR 2025][自监督学习][遗忘曲线] 受Ebbinghaus遗忘曲线理论启发，提出View-Batch Model(VBM)——通过将batch中多个不同样本替换为同一样本的多个增强视图（replay），延长回忆间隔V倍至最优范围，同时用one-to-many KL散度自监督损失从单样本中学习更多知识（do your best），作为drop-in替代方案在多种持续学习方法上一致提升性能。
 tags:
   - "CVPR 2025"
   - "自监督学习"

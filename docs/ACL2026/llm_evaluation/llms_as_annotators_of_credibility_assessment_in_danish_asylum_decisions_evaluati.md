@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMs as annotators of credibility assessment in Danish asylum decisions: evaluating classification performance and errors beyond aggregated metrics
 description: >-
-  [ACL 2026][LLM评测][LLM-as-annotator] 在丹麦难民上诉委员会 (RAB) 的 273 份庇护决定文书上构建了 RAB-Cred 这个三类 ("Absent / Positive / Negative") 可信度评估专家标注数据集…
+  [ACL 2026][LLM评测][LLM-as-annotator] 在丹麦难民上诉委员会 (RAB) 的 273 份庇护决定文书上构建了 RAB-Cred 这个三类 ("Absent / Positive / Negative") 可信度评估专家标注数据集，系统跑了 21 个开源 LLM × 30 种 system×user prompt 组合，发现 prompt 设计比模型选择更重要、phi-4 (14B) 在零样本下能拿 94.7% F1 但单模型一致会犯"不可接受"的错，于是建议用"15 个最优模型-prompt 组合多数投票"的 ensemble，正确率能再涨 1.5 pp 到 96%。
 tags:
   - "ACL 2026"
   - "LLM评测"

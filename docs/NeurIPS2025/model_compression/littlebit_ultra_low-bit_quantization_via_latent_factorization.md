@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LittleBit: Ultra Low-Bit Quantization via Latent Factorization
 description: >-
-  [NeurIPS 2025][模型压缩][极低比特量化] 提出 LittleBit 框架，通过低秩潜空间矩阵分解 + 二值化 + 多尺度补偿机制，实现低至 0.1 BPW（每权重比特）的极端 LLM 压缩，将 Llama2-13B 压缩到不足 0.9GB，在子1比特领域大幅超越 STBLLM。
+  [NeurIPS 2025][模型压缩][极低比特量化] 提出 LittleBit 框架，通过低秩潜空间矩阵分解 + 二值化 + 多尺度补偿机制，实现低至 0.1 BPW（每权重比特）的极端 LLM 压缩，将 Llama2-13B 压缩到不足 0.9GB，在子1比特领域大幅超越 STBLLM。 LLM 的部署受限于巨大的内存…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Soft Separation and Distillation: Toward Global Uniformity in Federated Unsupervised Learning
 description: >-
-  [ICCV 2025][模型压缩][联邦无监督学习] 提出 SSD（Soft Separation and Distillation）框架，通过维度缩放正则化（DSR）和投影器蒸馏（PD）两个模块，改善联邦无监督学习中跨客户端的全局表征均匀性（inter-client uniformity）…
+  [ICCV 2025][模型压缩][联邦无监督学习] 提出 SSD（Soft Separation and Distillation）框架，通过维度缩放正则化（DSR）和投影器蒸馏（PD）两个模块，改善联邦无监督学习中跨客户端的全局表征均匀性（inter-client uniformity），在不增加通信开销的前提下显著提升表征质量和下游任务性能。
 tags:
   - "ICCV 2025"
   - "模型压缩"

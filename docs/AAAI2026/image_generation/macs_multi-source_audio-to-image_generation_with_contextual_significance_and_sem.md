@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MACS: Multi-source Audio-to-Image Generation with Contextual Significance and Semantic Alignment
 description: >-
-  [AAAI 2026][图像生成][音频到图像生成] 提出 MACS，首个显式分离多源音频再生成图像的两阶段框架，通过弱监督声源分离 + CLAP 空间语义对齐（排序损失 + 对比损失）+ 解耦交叉注意力扩散生成，在多源、混合源和单源音频到图像生成任务上全面超越 SOTA。
+  [AAAI 2026][图像生成][音频到图像生成] 提出 MACS，首个显式分离多源音频再生成图像的两阶段框架，通过弱监督声源分离 + CLAP 空间语义对齐（排序损失 + 对比损失）+ 解耦交叉注意力扩散生成，在多源、混合源和单源音频到图像生成任务上全面超越 SOTA。 音频到图像生成是一项将听觉信号转化为视觉表示的跨模…
 tags:
   - "AAAI 2026"
   - "图像生成"

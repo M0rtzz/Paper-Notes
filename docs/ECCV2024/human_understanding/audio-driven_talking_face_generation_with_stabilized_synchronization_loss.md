@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Audio-Driven Talking Face Generation with Stabilized Synchronization Loss
 description: >-
-  [ECCV2024][人体理解][talking face generation] 提出 AVSyncNet、stabilized synchronization loss 和 silent-lip generator 三项改进，系统性地解决音频驱动说话人脸生成中 SyncNet 不稳定和嘴唇泄漏两大核心问题…
+  [ECCV2024][人体理解][talking face generation] 提出 AVSyncNet、stabilized synchronization loss 和 silent-lip generator 三项改进，系统性地解决音频驱动说话人脸生成中 SyncNet 不稳定和嘴唇泄漏两大核心问题，在唇形同步和视觉质量上均达到 SOTA。
 tags:
   - "ECCV2024"
   - "人体理解"

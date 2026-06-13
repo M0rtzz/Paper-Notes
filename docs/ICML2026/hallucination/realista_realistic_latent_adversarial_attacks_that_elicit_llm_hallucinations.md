@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REALISTA: Realistic Latent Adversarial Attacks that Elicit LLM Hallucinations
 description: >-
-  [ICML 2026][幻觉检测][幻觉诱导] REALISTA 在 LLM 隐空间里构造"输入相关的编辑方向字典"，把对抗 prompt 优化变成一个 simplex 约束下的连续问题，既保住了 SECA 这类离散方法的语义等价/连贯，又有 LARGO 那种连续方法的搜索灵活度…
+  [ICML 2026][幻觉检测][幻觉诱导] REALISTA 在 LLM 隐空间里构造"输入相关的编辑方向字典"，把对抗 prompt 优化变成一个 simplex 约束下的连续问题，既保住了 SECA 这类离散方法的语义等价/连贯，又有 LARGO 那种连续方法的搜索灵活度，首次在 GPT-5 这类闭源推理模型 free-form 输出上诱发幻觉成功。
 tags:
   - "ICML 2026"
   - "幻觉检测"

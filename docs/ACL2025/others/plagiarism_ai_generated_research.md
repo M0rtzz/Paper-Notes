@@ -2,7 +2,7 @@
 title: >-
   [论文解读] All That Glitters is Not Novel: Plagiarism in AI Generated Research
 description: >-
-  [ACL 2025][AI科研] 在对自主科研 Agent（如 AI Scientist）生成的研究文档进行专家审查后发现，24% 的文档是"智能剽窃"——方法论与已有工作一一对应但不引用原始来源，且现有剽窃检测工具无法识别这种"改头换面"的抄袭。
+  [ACL 2025][AI科研] 在对自主科研 Agent（如 AI Scientist）生成的研究文档进行专家审查后发现，24% 的文档是"智能剽窃"——方法论与已有工作一一对应但不引用原始来源，且现有剽窃检测工具无法识别这种"改头换面"的抄袭。 领域现状：自动化科研被视为 AI 的终极目标。最近多篇论文声称自主科研 Ag…
 tags:
   - "ACL 2025"
   - "AI科研"

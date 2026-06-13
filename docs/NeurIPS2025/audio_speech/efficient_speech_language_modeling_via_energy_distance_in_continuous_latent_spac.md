@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Speech Language Modeling via Energy Distance in Continuous Latent Space
 description: >-
-  [NEURIPS2025][音频/语音][speech language model] 提出 SLED，将语音波形编码为连续潜在表示序列，在连续空间中通过 energy distance 目标进行自回归建模，避免了离散化信息损失和 RVQ 所需的复杂层级架构，同时实现高效的零样本与流式语音合成。
+  [NEURIPS2025][音频/语音][speech language model] 提出 SLED，将语音波形编码为连续潜在表示序列，在连续空间中通过 energy distance 目标进行自回归建模，避免了离散化信息损失和 RVQ 所需的复杂层级架构，同时实现高效的零样本与流式语音合成。 - 文本语言模型（GPT 系…
 tags:
   - "NEURIPS2025"
   - "音频/语音"

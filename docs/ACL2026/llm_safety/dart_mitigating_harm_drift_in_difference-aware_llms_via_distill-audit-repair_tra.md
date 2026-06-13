@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DART: Mitigating Harm Drift in Difference-Aware LLMs via Distill-Audit-Repair Training
 description: >-
-  [ACL 2026][LLM安全][差异感知] DART 发现并解决了"危害漂移"问题——微调 LLM 提高差异感知分类准确率（如识别合法的人口统计差异）的同时，模型生成的解释变得更有害。通过蒸馏-审计-修复三阶段管线，DART 将 Llama-3-8B 准确率从 39.0% 提升到 68.8%…
+  [ACL 2026 Findings][LLM安全][差异感知] DART 发现并解决了"危害漂移"问题——微调 LLM 提高差异感知分类准确率（如识别合法的人口统计差异）的同时，模型生成的解释变得更有害。通过蒸馏-审计-修复三阶段管线，DART 将 Llama-3-8B 准确率从 39.0% 提升到 68.8%，同时减少 72.6% 的危害漂移案例。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "差异感知"
   - "危害漂移"

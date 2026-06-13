@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Layers When: Learning to Skip Compute in LLMs with Residual Gates
 description: >-
-  [ICLR 2026][模型压缩][残差门控] 提出 GateSkip——在 decoder-only Transformer 每个 Attention/MLP 分支输出处插入一个 sigmoid-linear 门控，微调时联合学习门控稀疏性与语言建模目标…
+  [ICLR 2026][模型压缩][残差门控] 提出 GateSkip——在 decoder-only Transformer 每个 Attention/MLP 分支输出处插入一个 sigmoid-linear 门控，微调时联合学习门控稀疏性与语言建模目标，推理时按门控值用分位数阈值确定性跳过低重要性 token，实现 token 级逐层自适应深度；在 Llama 8B 上节省 15% 计算保持 >90% 精度，指令微调模型全计算反而提升精度、约 50% 节省仍匹配基线，且与 INT4 量化/结构化剪枝/自推测解码正交可组合。
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Knowledge Boundary of Large Language Models: A Survey
 description: >-
-  [ACL 2025][LLM/NLP][知识边界] 提出LLM知识边界的形式化定义框架——三层嵌套边界（Outward⊂Parametric⊂Universal）和四类知识分类（PAK/PSK/MSU/MAU），围绕"为何/如何识别/如何缓解"三个问题系统综述相关研究。
+  [ACL 2025][LLM 其他][知识边界] 提出LLM知识边界的形式化定义框架——三层嵌套边界（Outward⊂Parametric⊂Universal）和四类知识分类（PAK/PSK/MSU/MAU），围绕"为何/如何识别/如何缓解"三个问题系统综述相关研究。 领域现状 领域现状：领域现状： LLM在参数中存储大量知…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "知识边界"
   - "幻觉"
   - "不确定性估计"

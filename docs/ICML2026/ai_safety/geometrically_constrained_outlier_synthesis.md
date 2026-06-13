@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometrically Constrained Outlier Synthesis
 description: >-
-  [ICML 2026][AI安全][虚拟离群点合成] GCOS 在 ID 特征 PCA 的"小方差子空间"上沿几何 off-manifold 方向合成虚拟离群点，并用从校准集 Mahalanobis 分位数导出的"共形壳层" $[\alpha_\text{inner}…
+  [ICML 2026][AI安全][虚拟离群点合成] GCOS 在 ID 特征 PCA 的"小方差子空间"上沿几何 off-manifold 方向合成虚拟离群点，并用从校准集 Mahalanobis 分位数导出的"共形壳层" $[\alpha_\text{inner},\alpha_\text{outer}]$ 控制合成强度，配合自适应 margin 的对比正则损失训练，在 4 个 near-OOD 数据集上把平均 AUROC 从 VOS 的 86.21 提到 93.47。
 tags:
   - "ICML 2026"
   - "AI安全"

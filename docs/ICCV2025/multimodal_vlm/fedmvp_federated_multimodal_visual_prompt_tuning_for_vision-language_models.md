@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models
 description: >-
-  [ICCV 2025][多模态VLM][联邦学习] 提出FedMVP，在联邦学习场景下通过PromptFormer网络融合图像视觉特征和LLM生成的类别属性文本特征，生成动态多模态视觉提示注入CLIP的视觉编码器，在20个数据集、三种泛化设置下显著超越现有联邦提示学习方法1.57%-2.26%。
+  [ICCV 2025][多模态VLM][联邦学习] 提出FedMVP，在联邦学习场景下通过PromptFormer网络融合图像视觉特征和LLM生成的类别属性文本特征，生成动态多模态视觉提示注入CLIP的视觉编码器，在20个数据集、三种泛化设置下显著超越现有联邦提示学习方法1.57%-2.26%。 联邦学习（FL）允许多个客户…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

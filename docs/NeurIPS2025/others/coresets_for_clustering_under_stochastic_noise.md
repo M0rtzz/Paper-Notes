@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coresets for Clustering Under Stochastic Noise
 description: >-
-  [NeurIPS 2025][Coreset] 首次系统研究噪声数据下 $(k,z)$-聚类 coreset 构造问题，提出新的代理误差度量 $\mathsf{Err}_\alpha$ 替代传统 $\mathsf{Err}$…
+  [NeurIPS 2025][Coreset] 首次系统研究噪声数据下 $(k,z)$-聚类 coreset 构造问题，提出新的代理误差度量 $\mathsf{Err}_\alpha$ 替代传统 $\mathsf{Err}$，在温和数据假设下实现 coreset 大小缩减 $\text{poly}(k)$ 倍、质量保证收紧 $\text{poly}(k)$ 倍，并设计噪声感知的 cluster-wise 采样算法。
 tags:
   - "NeurIPS 2025"
   - "Coreset"

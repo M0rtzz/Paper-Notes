@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Circuit Fingerprints: How Answer Tokens Encode Their Geometrical Path
 description: >-
-  [ICML 2026][可解释性][电路发现] 本文提出 Circuit Fingerprint 假说——单独把答案 token 喂进 Transformer，它在隐空间留下的方向恰好就是产生该答案所要走的电路路径——并据此用纯几何对齐（无需梯度/干预）完成 circuit discovery…
+  [ICML 2026][可解释性][电路发现] 本文提出 Circuit Fingerprint 假说——单独把答案 token 喂进 Transformer，它在隐空间留下的方向恰好就是产生该答案所要走的电路路径——并据此用纯几何对齐（无需梯度/干预）完成 circuit discovery，同时同一组方向反过来可以做 activation steering，证明"读"和"写"是同一个几何对象的两面。
 tags:
   - "ICML 2026"
   - "可解释性"

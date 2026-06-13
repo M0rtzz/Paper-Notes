@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Integrate Diffusion ODEs by Averaging the Derivatives
 description: >-
-  [NeurIPS 2025][图像生成][扩散模型加速] 提出"割线损失"(Secant Losses)家族，通过蒙特卡洛积分和Picard迭代学习扩散ODE的积分，将扩散模型的切线逐步延展为割线，在训练稳定性和少步推理之间取得优异平衡。
+  [NeurIPS 2025][图像生成][扩散模型加速] 提出"割线损失"(Secant Losses)家族，通过蒙特卡洛积分和Picard迭代学习扩散ODE的积分，将扩散模型的切线逐步延展为割线，在训练稳定性和少步推理之间取得优异平衡。 扩散模型虽然生成质量优秀，但推理时通常需要数百到数千次函数评估(NFE)来生成一张图…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

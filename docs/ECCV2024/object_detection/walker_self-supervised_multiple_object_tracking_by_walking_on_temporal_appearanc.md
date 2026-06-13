@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WALKER: Self-supervised Multiple Object Tracking by Walking on Temporal Appearance Graphs
 description: >-
-  [ECCV 2024][目标检测][自监督多目标跟踪] 本文提出Walker——首个自监督多目标跟踪器，通过构建准稠密的时序物体外观图（temporal appearance graph），设计多正样本对比损失优化图上的随机游走来学习实例相似度，并引入互斥连接约束和运动约束双向游走推理策略…
+  [ECCV 2024][目标检测][自监督多目标跟踪] 本文提出Walker——首个自监督多目标跟踪器，通过构建准稠密的时序物体外观图（temporal appearance graph），设计多正样本对比损失优化图上的随机游走来学习实例相似度，并引入互斥连接约束和运动约束双向游走推理策略，在MOT17、DanceTrack和BDD100K上达到自监督跟踪的竞争性能，且在标注需求减少400倍的情况下仍超越之前的自监督方法。
 tags:
   - "ECCV 2024"
   - "目标检测"

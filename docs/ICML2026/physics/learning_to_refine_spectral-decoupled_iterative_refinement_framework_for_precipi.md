@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Refine: Spectral-Decoupled Iterative Refinement Framework for Precipitation Nowcasting
 description: >-
-  [ICML 2026][物理/科学计算][降水临近预报] SDIR 把雷达 0–2 小时降水临近预报重新表述为"频域解耦的迭代精化"过程：先用 SFG-Former 提取稳定的低频天气骨架，再用 FR-Refiner（含 Fourier 神经算子）按频段逐步合成高频对流细节…
+  [ICML 2026][物理/科学计算][降水临近预报] SDIR 把雷达 0–2 小时降水临近预报重新表述为"频域解耦的迭代精化"过程：先用 SFG-Former 提取稳定的低频天气骨架，再用 FR-Refiner（含 Fourier 神经算子）按频段逐步合成高频对流细节，并用一条对齐 Kolmogorov 湍流功率律的 PCPSD 损失替代会导致过平滑的纯 MSE，在 CIKM / Shanghai / SEVIR 三个 benchmark 上同时显著超过回归类与扩散类 SOTA。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

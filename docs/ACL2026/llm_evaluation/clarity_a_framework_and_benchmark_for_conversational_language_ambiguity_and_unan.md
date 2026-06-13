@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLARITY: A Framework and Benchmark for Conversational Language Ambiguity and Unanswerability in Interactive NL2SQL Systems
 description: >-
-  [ACL 2026][LLM评测][NL2SQL 评测] CLARITY 是 Oracle 提出的首个支持 "**multi-facet 歧义 + 不可答** + 单/多轮对话 + 多种用户澄清行为" 的 NL2SQL 诊断基准…
+  [ACL 2026][LLM评测][NL2SQL 评测] CLARITY 是 Oracle 提出的首个支持 "**multi-facet 歧义 + 不可答** + 单/多轮对话 + 多种用户澄清行为" 的 NL2SQL 诊断基准，用 SQL→pivot term→改写→对话→筛查的可控 LLM pipeline 把 Spider/BIRD 自动扩展出 ~3 万实例，并通过 schema 级 pivot/group 标注揭示出 SOTA LLM "能检测歧义却定位不到 schema 元素"的失败模式。
 tags:
   - "ACL 2026"
   - "LLM评测"

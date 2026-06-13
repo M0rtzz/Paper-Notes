@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WonderPlay: Dynamic 3D Scene Generation from a Single Image and Actions
 description: >-
-  [ICCV 2025][3D视觉][动态3D场景生成] WonderPlay 提出混合生成模拟器（Hybrid Generative Simulator），将物理求解器的粗糙3D动态仿真与视频扩散模型的高质量生成相结合，实现从单张图像加用户动作输入生成逼真多材质动态3D场景…
+  [ICCV 2025][3D视觉][动态3D场景生成] WonderPlay 提出混合生成模拟器（Hybrid Generative Simulator），将物理求解器的粗糙3D动态仿真与视频扩散模型的高质量生成相结合，实现从单张图像加用户动作输入生成逼真多材质动态3D场景，支持刚体、布料、液体、烟雾、颗粒等多种材质。
 tags:
   - "ICCV 2025"
   - "3D视觉"

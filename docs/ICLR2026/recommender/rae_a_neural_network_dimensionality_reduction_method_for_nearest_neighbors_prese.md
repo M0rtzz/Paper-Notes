@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAE: A Neural Network Dimensionality Reduction Method for Nearest Neighbors Preservation in Vector Search
 description: >-
-  [ICLR 2026][推荐系统][dimensionality reduction] 提出 RAE（Regularized Auto-Encoder），通过线性自编码器 + Frobenius 范数正则化实现降维…
+  [ICLR 2026][推荐系统][dimensionality reduction] 提出 RAE（Regularized Auto-Encoder），通过线性自编码器 + Frobenius 范数正则化实现降维，理论证明正则化系数 $\lambda$ 通过 Rayleigh 商性质约束编码器矩阵的条件数 $\kappa(W)$，从而保证范数失真率有界、k-NN 结构被保持。在 4 个数据集上一致优于 PCA/UMAP/MDS/ISOMAP，余弦距离下比 PCA 至少高 12%，且训练仅需 8 秒、推理毫秒级。
 tags:
   - "ICLR 2026"
   - "推荐系统"

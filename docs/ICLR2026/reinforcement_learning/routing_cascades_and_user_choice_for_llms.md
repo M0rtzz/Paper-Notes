@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Routing, Cascades, and User Choice for LLMs
 description: >-
-  [ICLR 2026][强化学习][LLM routing] 将LLM路由建模为provider-user Stackelberg博弈，证明最优路由几乎总是静态无级联的阈值规则，揭示质量/成本排序不一致时的用户-提供商不对齐…
+  [ICLR 2026][强化学习][LLM routing] 将LLM路由建模为provider-user Stackelberg博弈，证明最优路由几乎总是静态无级联的阈值规则，揭示质量/成本排序不一致时的用户-提供商不对齐，以及低流失惩罚下provider被激励通过throttling延迟来降低成本但损害用户效用。
 tags:
   - "ICLR 2026"
   - "强化学习"

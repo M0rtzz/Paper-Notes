@@ -2,7 +2,7 @@
 title: >-
   [论文解读] C3RL: Rethinking the Combination of Channel-independence and Channel-mixing from Representation Learning
 description: >-
-  [AAAI 2026][时间序列][多变量时序预测] 提出 C3RL，基于 SimSiam 对比学习框架将通道独立（CI）和通道混合（CM）策略视为同一数据的两个转置视图构建正样本对，通过孪生网络联合表示学习和预测学习，将 CI 模型的最佳性能率从 43.6% 提升到 81.4%…
+  [AAAI 2026][时间序列][多变量时序预测] 提出 C3RL，基于 SimSiam 对比学习框架将通道独立（CI）和通道混合（CM）策略视为同一数据的两个转置视图构建正样本对，通过孪生网络联合表示学习和预测学习，将 CI 模型的最佳性能率从 43.6% 提升到 81.4%，CM 模型从 23.8% 提升到 76.3%。
 tags:
   - "AAAI 2026"
   - "时间序列"

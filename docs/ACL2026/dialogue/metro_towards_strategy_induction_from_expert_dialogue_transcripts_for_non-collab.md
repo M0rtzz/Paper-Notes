@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metro: Towards Strategy Induction from Expert Dialogue Transcripts for Non-collaborative Dialogues
 description: >-
-  [ACL 2026][对话系统][strategy induction] Metro 把专家对话 transcript 自动归纳成一片 "Strategy Forest"——以 K-Means 聚类的对话状态为根节点的树…
+  [ACL 2026][对话系统][strategy induction] Metro 把专家对话 transcript 自动归纳成一片 "Strategy Forest"——以 K-Means 聚类的对话状态为根节点的树，节点是 LLM 扩展的 micro-principle 动作、分支是按 Wilson 置信下界 + MCTS 风格价值回传打分剪枝后的完整动作轨迹，推理时直接 retrieve 一棵树、并行抽取 short-term（breadth）和 long-term（depth）建议，无需任何训练就在 P4G / CB 两个非合作对话任务上比 PRINCIPLES、PPDPP、GDP-Zero 等基线平均涨点约 10%。
 tags:
   - "ACL 2026"
   - "对话系统"

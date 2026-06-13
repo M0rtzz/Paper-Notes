@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMoT: Reinforcement Learning with Motion Contrast Triplets
 description: >-
-  [CVPR 2026][自动驾驶][运动对比三元组] 提出 ReMoT——一个统一训练范式，通过规则驱动的多专家协同构建 16.5K 运动对比三元组数据集 (ReMoT-16K)，结合带逻辑一致性奖励和长度正则化的 GRPO 强化学习优化…
+  [CVPR 2026][自动驾驶][运动对比三元组] 提出 ReMoT——一个统一训练范式，通过规则驱动的多专家协同构建 16.5K 运动对比三元组数据集 (ReMoT-16K)，结合带逻辑一致性奖励和长度正则化的 GRPO 强化学习优化，系统性解决 VLM 在导航、机器人操作和自动驾驶等场景中的细粒度时空推理缺陷。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

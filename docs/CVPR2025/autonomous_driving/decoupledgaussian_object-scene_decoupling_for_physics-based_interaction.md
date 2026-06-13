@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DecoupledGaussian: Object-Scene Decoupling for Physics-Based Interaction
 description: >-
-  [CVPR 2025][自动驾驶][Gaussian Splatting] 将 3DGS 场景中的物体与背景解耦，使物体支持物理仿真（碰撞、抓取等），同时保持场景的高质量渲染
+  [CVPR 2025][自动驾驶][Gaussian Splatting] 将 3DGS 场景中的物体与背景解耦，使物体支持物理仿真（碰撞、抓取等），同时保持场景的高质量渲染 领域现状 领域现状：DecoupledGaussian 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

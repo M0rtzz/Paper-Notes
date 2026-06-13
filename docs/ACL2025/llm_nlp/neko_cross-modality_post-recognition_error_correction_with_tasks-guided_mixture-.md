@@ -2,10 +2,10 @@
 title: >-
   [论文解读] NeKo: Cross-Modality Post-Recognition Error Correction with Tasks-Guided Mixture-of-Experts Language Model
 description: >-
-  [ACL 2025][LLM/NLP][MoE] 提出 NeKo，一种基于任务引导 Mixture-of-Experts (MoE) 的多任务后识别纠错语言模型，在 ASR、语音翻译、OCR 等多个跨模态纠错任务上达到 SOTA，零样本场景下超越 GPT-3.5 和 Claude-3.5 Sonnet。
+  [ACL 2025][LLM 其他][MoE] 提出 NeKo，一种基于任务引导 Mixture-of-Experts (MoE) 的多任务后识别纠错语言模型，在 ASR、语音翻译、OCR 等多个跨模态纠错任务上达到 SOTA，零样本场景下超越 GPT-3.5 和 Claude-3.5 Sonnet。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "MoE"
   - "后识别纠错"
   - "ASR"

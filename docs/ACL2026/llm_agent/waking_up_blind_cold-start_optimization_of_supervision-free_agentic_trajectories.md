@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Waking Up Blind: Cold-Start Optimization of Supervision-Free Agentic Trajectories
 description: >-
-  [ACL 2026][LLM Agent][小型VLM] 本文提出 SPECTRA，一种无需监督轨迹的框架——通过冷启动强化学习（GRPO）和软结构化多轮 rollout 拓扑约束，让小型视觉语言模型（SVLM）在纯环境交互中自行发现有效的工具调用和视觉推理行为…
+  [ACL 2026 Findings][LLM Agent][小型VLM] 本文提出 SPECTRA，一种无需监督轨迹的框架——通过冷启动强化学习（GRPO）和软结构化多轮 rollout 拓扑约束，让小型视觉语言模型（SVLM）在纯环境交互中自行发现有效的工具调用和视觉推理行为，在 4 个多模态 benchmark 上提升任务准确率达 5% 和工具效率 9%，同时提出 Tool Instrumental Utility（TIU）指标量化无监督下的工具效能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "小型VLM"
   - "工具调用"

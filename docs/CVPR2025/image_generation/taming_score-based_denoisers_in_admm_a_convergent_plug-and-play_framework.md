@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework
 description: >-
-  [CVPR 2025][图像生成][ADMM-PnP] 提出 AC-DC 去噪器（Auto-Correction + Directional Correction + Score-Based Denoising 三阶段），解决将 score-based 扩散先验嵌入 ADMM-PnP 框架时的流形不匹配问题…
+  [CVPR 2025][图像生成][ADMM-PnP] 提出 AC-DC 去噪器（Auto-Correction + Directional Correction + Score-Based Denoising 三阶段），解决将 score-based 扩散先验嵌入 ADMM-PnP 框架时的流形不匹配问题，并首次建立了 score-based 去噪器在 ADMM 中的收敛性理论保证，在去噪、修复、去模糊、超分辨、相位恢复、HDR 等逆问题上一致超越现有基线。
 tags:
   - "CVPR 2025"
   - "图像生成"

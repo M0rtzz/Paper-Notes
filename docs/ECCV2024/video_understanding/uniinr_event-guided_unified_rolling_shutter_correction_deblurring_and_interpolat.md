@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniINR: Event-guided Unified Rolling Shutter Correction, Deblurring, and Interpolation
 description: >-
-  [ECCV 2024][视频理解][事件相机] 提出 UniINR 框架，利用统一的时空隐式神经表征（INR）从单张卷帘快门模糊帧和配对事件流中，一次性同时完成卷帘快门校正、去模糊和任意帧率的视频帧插值。
+  [ECCV 2024][视频理解][事件相机] 提出 UniINR 框架，利用统一的时空隐式神经表征（INR）从单张卷帘快门模糊帧和配对事件流中，一次性同时完成卷帘快门校正、去模糊和任意帧率的视频帧插值。 基于 CMOS 传感器的消费级相机普遍采用卷帘快门（Rolling Shutter, RS）机制，在快速运动场景下…
 tags:
   - "ECCV 2024"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers
 description: >-
-  [NEURIPS2025][物理/科学计算][偏微分方程] 提出间接神经校正器(INC)，将学习到的校正项嵌入PDE的右端项（而非直接修改状态），理论证明误差放大降低$\mathcal{O}(\Delta t^{-1}+L)$倍…
+  [NEURIPS2025][物理/科学计算][偏微分方程] 提出间接神经校正器(INC)，将学习到的校正项嵌入PDE的右端项（而非直接修改状态），理论证明误差放大降低$\mathcal{O}(\Delta t^{-1}+L)$倍，在6个PDE系统（1D混沌到3D湍流）上大幅改善长期轨迹性能（R²提升达158.7%），实现最高330×加速。
 tags:
   - "NEURIPS2025"
   - "物理/科学计算"

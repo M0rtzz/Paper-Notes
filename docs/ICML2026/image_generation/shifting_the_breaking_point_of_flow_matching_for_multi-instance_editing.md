@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shifting the Breaking Point of Flow Matching for Multi-Instance Editing
 description: >-
-  [ICML2026][图像生成][Flow Matching] 针对 FLUX.1 Kontext 这类基于 Rectified Flow Matching 的 MMDiT 编辑模型在多实例同时编辑下"属性串味"的痼疾…
+  [ICML2026][图像生成][Flow Matching] 针对 FLUX.1 Kontext 这类基于 Rectified Flow Matching 的 MMDiT 编辑模型在多实例同时编辑下"属性串味"的痼疾，本文提出 Instance-Disentangled Attention（IDAttn）：通过对 joint attention 加结构化掩码，把每条编辑指令绑定到对应的 bounding box，再配合分层 disentanglement/harmonization 调度和高效多 prompt 独立编码，单次前向就能完成 N 条互不干扰的编辑，并在自家提出的 Infographic 文本编辑 benchmark 上…
 tags:
   - "ICML2026"
   - "图像生成"

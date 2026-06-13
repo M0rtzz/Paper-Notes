@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Less-to-More Generalization: Unlocking More Controllability by In-Context Generation
 description: >-
-  [ICCV 2025][图像生成][Subject-driven Generation] 本文提出 UNO，一种基于 DiT 的通用定制化生成模型，通过"模型-数据共进化"范式——利用较弱模型生成的合成数据逐步训练更强模型——结合渐进式跨模态对齐和 Universal RoPE…
+  [ICCV 2025][图像生成][Subject-driven Generation] 本文提出 UNO，一种基于 DiT 的通用定制化生成模型，通过"模型-数据共进化"范式——利用较弱模型生成的合成数据逐步训练更强模型——结合渐进式跨模态对齐和 Universal RoPE，实现了单主体和多主体驱动图像生成的 SOTA 性能（DreamBench DINO 0.760, CLIP-I 0.835）。
 tags:
   - "ICCV 2025"
   - "图像生成"

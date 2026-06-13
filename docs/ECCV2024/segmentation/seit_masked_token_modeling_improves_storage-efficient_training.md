@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeiT++: Masked Token Modeling Improves Storage-Efficient Training
 description: >-
-  [ECCV 2024][语义分割][存储高效训练] 在 SeiT 的 token 化训练框架上引入掩码 token 建模（MTM）自监督预训练，并设计 TokenAdapt 和 ColorAdapt 两种 token 专用数据增强策略…
+  [ECCV 2024][语义分割][存储高效训练] 在 SeiT 的 token 化训练框架上引入掩码 token 建模（MTM）自监督预训练，并设计 TokenAdapt 和 ColorAdapt 两种 token 专用数据增强策略，在仅 1% 存储空间（1.4GB）下将 ImageNet-1k 分类准确率从 74.0% 提升至 77.8%，有效解决了 token 域数据增强的难题。
 tags:
   - "ECCV 2024"
   - "语义分割"

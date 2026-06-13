@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QKV Projections Require a Fraction of Their Memory
 description: >-
-  [ICLR 2026][模型压缩][训练内存压缩] 提出 PAMM（Point-Approximate Matrix Multiplication），一种激活压缩技术，通过随机选取少量代表性 token 来近似 QKV 投影层激活，实现高达 512× 压缩率且不影响模型性能。
+  [ICLR 2026][模型压缩][训练内存压缩] 提出 PAMM（Point-Approximate Matrix Multiplication），一种激活压缩技术，通过随机选取少量代表性 token 来近似 QKV 投影层激活，实现高达 512× 压缩率且不影响模型性能。 LLM 训练中，注意力层的 QKV 投影占用大量…
 tags:
   - "ICLR 2026"
   - "模型压缩"

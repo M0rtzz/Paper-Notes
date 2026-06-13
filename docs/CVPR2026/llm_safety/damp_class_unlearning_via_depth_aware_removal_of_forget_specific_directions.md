@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAMP: Class Unlearning via Depth-Aware Removal of Forget-Specific Directions
 description: >-
-  [CVPR 2026][LLM安全][machine unlearning] 提出 DAMP（深度感知投影调制），一种一次性闭式权重手术方法用于类遗忘，通过在每个网络阶段的编辑空间中移除遗忘类特有方向来实现选择性遗忘，深度感知缩放规则确保浅层保守编辑、深层强力编辑。
+  [CVPR 2026][LLM安全][machine unlearning] 提出 DAMP（深度感知投影调制），一种一次性闭式权重手术方法用于类遗忘，通过在每个网络阶段的编辑空间中移除遗忘类特有方向来实现选择性遗忘，深度感知缩放规则确保浅层保守编辑、深层强力编辑。 机器遗忘旨在从训练好的模型中移除目标知识…
 tags:
   - "CVPR 2026"
   - "LLM安全"

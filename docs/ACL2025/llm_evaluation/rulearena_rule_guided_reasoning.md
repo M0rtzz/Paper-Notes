@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RuleArena: A Benchmark for Rule-Guided Reasoning with LLMs in Real-World Scenarios
 description: >-
-  [ACL 2025 (Long Paper)][LLM评测][rule-guided reasoning] 提出 RuleArena——一个基于航空行李费、NBA交易规则、税务法规三个真实场景的benchmark，用于评估LLM遵循复杂自然语言规则进行推理的能力…
+  [ACL 2025 (Long Paper)][LLM评测][rule-guided reasoning] 提出 RuleArena——一个基于航空行李费、NBA交易规则、税务法规三个真实场景的benchmark，用于评估LLM遵循复杂自然语言规则进行推理的能力；实验发现即使最强模型（o1-preview）在最难任务上准确率也不足50%，暴露了LLM在规则召回、规则区分和数学计算三方面的系统性缺陷。
 tags:
   - "ACL 2025 (Long Paper)"
   - "LLM评测"

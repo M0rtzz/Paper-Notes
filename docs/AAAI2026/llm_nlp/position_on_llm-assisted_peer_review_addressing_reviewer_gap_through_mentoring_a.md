@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Position on LLM-Assisted Peer Review: Addressing Reviewer Gap through Mentoring and Feedback
 description: >-
-  [AAAI 2026][LLM/NLP][LLM辅助审稿] 本文作为立场论文，提出将LLM在同行评审中的角色从"自动生成审稿意见"转向"增强人类审稿能力"——通过LLM驱动的导师系统（三阶段培训+认证）和反馈系统（违规检测+证据反馈+可靠性测试）来缩小审稿质量差距。
+  [AAAI 2026][LLM 其他][LLM辅助审稿] 本文作为立场论文，提出将LLM在同行评审中的角色从"自动生成审稿意见"转向"增强人类审稿能力"——通过LLM驱动的导师系统（三阶段培训+认证）和反馈系统（违规检测+证据反馈+可靠性测试）来缩小审稿质量差距。 领域现状 领域现状：领域现状：顶会投稿量爆炸式增长（Neur…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM辅助审稿"
   - "同行评审"
   - "导师制"

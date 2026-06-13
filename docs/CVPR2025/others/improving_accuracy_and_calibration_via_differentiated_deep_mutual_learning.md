@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Accuracy and Calibration via Differentiated Deep Mutual Learning
 description: >-
-  [CVPR 2025][深度互学习] 提出 Diff-DML（Differentiated Deep Mutual Learning），通过差异化训练策略（DTS）和多样性保持学习目标（DPLO）两个核心设计，在保持集成模型预测多样性的同时，同时提升准确率和不确定性校准质量。
+  [CVPR 2025][深度互学习] 提出 Diff-DML（Differentiated Deep Mutual Learning），通过差异化训练策略（DTS）和多样性保持学习目标（DPLO）两个核心设计，在保持集成模型预测多样性的同时，同时提升准确率和不确定性校准质量。 领域现状：深度神经网络在各类任务中取得了优异的预…
 tags:
   - "CVPR 2025"
   - "深度互学习"

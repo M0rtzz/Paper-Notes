@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Coopetition: Leveraging Coarse Verifier Signals for Resilient Multi-Agent LLM Reasoning
 description: >-
-  [NeurIPS 2025 (Mathematical Reasoning and AI Workshop)][多智能体][多智能体协作] 提出 Adaptive Coopetition (AdCo) 框架，利用 UCB 多臂老虎机策略和粗粒度验证器信号…
+  [NeurIPS 2025 (Mathematical Reasoning and AI Workshop)][多智能体][多智能体协作] 提出 Adaptive Coopetition (AdCo) 框架，利用 UCB 多臂老虎机策略和粗粒度验证器信号，使多个 LLM 智能体在推理过程中自适应地切换协作与竞争模式，在数学推理基准上实现 20% 的相对提升。
 tags:
   - "NeurIPS 2025 (Mathematical Reasoning and AI Workshop)"
   - "多智能体"

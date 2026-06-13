@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pancakes: Consistent Multi-Protocol Image Segmentation Across Biomedical Domains
 description: >-
-  [NeurIPS 2025][医学图像][多协议分割] 提出 Pancakes 框架，给定来自未见过领域的生物医学图像集合，自动生成多个合理分割协议（protocol）的标签图，且同一协议下不同图像的标签具有**语义一致性**——同一标签在所有图像中指代相同的解剖结构。
+  [NeurIPS 2025][医学图像][多协议分割] 提出 Pancakes 框架，给定来自未见过领域的生物医学图像集合，自动生成多个合理分割协议（protocol）的标签图，且同一协议下不同图像的标签具有语义一致性：——同一标签在所有图像中指代相同的解剖结构。 生物医学图像可以按多种方式分割——根据组织类型、血管分区、解…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

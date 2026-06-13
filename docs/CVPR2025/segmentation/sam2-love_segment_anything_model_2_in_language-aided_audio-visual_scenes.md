@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAM2-LOVE: Segment Anything Model 2 in Language-Aided Audio-Visual Scenes
 description: >-
-  [CVPR 2025][语义分割][音视频分割] SAM2-LOVE 通过设计多模态融合 Transformer 将文本、音频、视觉三模态信息压缩为可学习 token 来提示 SAM2，结合 token 传播与累积策略增强时空一致性…
+  [CVPR 2025][语义分割][音视频分割] SAM2-LOVE 通过设计多模态融合 Transformer 将文本、音频、视觉三模态信息压缩为可学习 token 来提示 SAM2，结合 token 传播与累积策略增强时空一致性，在 Ref-AVS 基准上以 $\mathcal{J\&F}$ 58.5% 的成绩超越 SOTA（EEMC）8.5个百分点。
 tags:
   - "CVPR 2025"
   - "语义分割"

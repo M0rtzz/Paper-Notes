@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Long-Horizon Vision-Language Navigation: Platform, Benchmark and Method
 description: >-
-  [CVPR 2025][机器人][长程导航] 定义长程视觉语言导航（LH-VLN）任务，构建 NavGen 自动生成平台和 LHPR-VLN 基准（3260 个多阶段任务，平均 150 步），提出 MGDM 方法通过短期记忆模糊+长期记忆检索+CoT反馈实现多阶段导航…
+  [CVPR 2025][机器人][长程导航] 定义长程视觉语言导航（LH-VLN）任务，构建 NavGen 自动生成平台和 LHPR-VLN 基准（3260 个多阶段任务，平均 150 步），提出 MGDM 方法通过短期记忆模糊+长期记忆检索+CoT反馈实现多阶段导航，在 ISR 指标上超越 NaviLLM 23%。
 tags:
   - "CVPR 2025"
   - "机器人"

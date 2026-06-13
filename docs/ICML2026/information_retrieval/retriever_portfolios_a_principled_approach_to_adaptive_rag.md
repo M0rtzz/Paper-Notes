@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retriever Portfolios: A Principled Approach to Adaptive RAG
 description: >-
-  [ICML 2026][信息检索/RAG][检索增强生成] 本文把 RAG 中"选哪个 retriever"重新表述为一个 best-of-$k$ 组合优化问题，从 360 个候选 retriever 里离线贪心挑出一个互补的 size-$k$ 组合（portfolio）…
+  [ICML 2026][信息检索/RAG][检索增强生成] 本文把 RAG 中"选哪个 retriever"重新表述为一个 best-of-$k$ 组合优化问题，从 360 个候选 retriever 里离线贪心挑出一个互补的 size-$k$ 组合（portfolio），并训练一个轻量对比学习路由器在线把每个 query 分发给组合里的 top-$\ell$ 个成员，在 4 个 QA 基准上同时打过单 retriever 和 Vendi-RAG 类推理时调参方法，并显著降低 token 和延迟成本。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

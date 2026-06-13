@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Reason from Future: Reverse Thought Chain Enhances LLM Reasoning
 description: >-
-  [ACL 2025][LLM/NLP][逆向推理] 提出 Reason from Future（RFF）推理范式，通过交替进行逆向推理（从目标向前分解）和正向推理（从当前状态向目标逼近）实现双向推理，在 Game of 24、GSM8K、MATH-500 等基准上显著超越 CoT、ToT、CR 等方法…
+  [ACL 2025][LLM 其他][逆向推理] 提出 Reason from Future（RFF）推理范式，通过交替进行逆向推理（从目标向前分解）和正向推理（从当前状态向目标逼近）实现双向推理，在 Game of 24、GSM8K、MATH-500 等基准上显著超越 CoT、ToT、CR 等方法，同时大幅减少搜索空间。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "逆向推理"
   - "双向思维链"
   - "搜索空间缩减"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do MLLMs Understand Pointing? Benchmarking and Enhancing Referential Reasoning in Egocentric Vision
 description: >-
-  [ACL 2026][多模态VLM][Egocentric Pointing] 作者构建了首个真实+物理仿真混合的第一人称"手指指点"问答基准 EgoPoint-Bench（11.7k QA / 5 维度 / 3 级语义指代）…
+  [ACL 2026][多模态VLM][Egocentric Pointing] 作者构建了首个真实+物理仿真混合的第一人称"手指指点"问答基准 EgoPoint-Bench（11.7k QA / 5 维度 / 3 级语义指代），证实当前 SOTA MLLM 普遍依赖"视觉邻近 / 显著性"伪相关而非真正解析指尖射线，并通过在仿真数据上 LoRA 微调获得平均最高 +25 点的提升与稳健的 sim-to-real 泛化。
 tags:
   - "ACL 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoLM: Multi-Modal Language Model of Egocentric Motions
 description: >-
-  [CVPR 2025][多模态VLM][自我中心动作] 提出统一自我中心动作追踪（稀疏传感器→全身动作）和动作理解（动作→语言描述）的多模态语言模型框架，通过 VQ-VAE 动作 tokenizer + GPT-2 骨干实现四种模态（文本、动作 token、传感器、视频）的联合建模…
+  [CVPR 2025][多模态VLM][自我中心动作] 提出统一自我中心动作追踪（稀疏传感器→全身动作）和动作理解（动作→语言描述）的多模态语言模型框架，通过 VQ-VAE 动作 tokenizer + GPT-2 骨干实现四种模态（文本、动作 token、传感器、视频）的联合建模，加入自我中心视频后追踪误差降低 10-20mm。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Bridging the Reward-Generation Gap in Direct Alignment Algorithms
 description: >-
-  [ACL 2026][LLM对齐][直接对齐算法] 本文识别了直接对齐算法（DAAs）中的"奖励-生成鸿沟"——训练目标与自回归解码动态之间的不匹配，提出 POET（Prefix-Oriented Equal-length Training）…
+  [ACL 2026 Findings][LLM对齐][直接对齐算法] 本文识别了直接对齐算法（DAAs）中的"奖励-生成鸿沟"——训练目标与自回归解码动态之间的不匹配，提出 POET（Prefix-Oriented Equal-length Training），通过将偏好响应对截断为较短者长度来隐式约束 token 级 MDP 在所有时间步上收敛，在 AlpacaEval 2 上最高提升 11.8 个百分点。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM对齐"
   - "直接对齐算法"
   - "前缀重要性"

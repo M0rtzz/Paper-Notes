@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NoisyRollout: Reinforcing Visual Reasoning with Data Augmentation
 description: >-
-  [NeurIPS 2025][强化学习][视觉推理] 提出NoisyRollout，一种零额外训练成本的数据增强方法，在GRPO训练VLM时混合来自干净和适度扰动图像的rollout以增强策略探索多样性，仅用2.1K样本在5个域外基准上达到开源RL微调模型SOTA。
+  [NeurIPS 2025][强化学习][视觉推理] 提出NoisyRollout，一种零额外训练成本的数据增强方法，在GRPO训练VLM时混合来自干净和适度扰动图像的rollout以增强策略探索多样性，仅用2.1K样本在5个域外基准上达到开源RL微调模型SOTA。 - 通过强化学习扩展测试时计算（推理）是增强模型智能的重要…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

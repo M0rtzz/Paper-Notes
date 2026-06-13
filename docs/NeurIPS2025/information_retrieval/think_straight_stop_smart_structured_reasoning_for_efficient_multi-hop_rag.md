@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think Straight, Stop Smart: Structured Reasoning for Efficient Multi-Hop RAG
 description: >-
-  [NeurIPS 2025 Workshop][信息检索/RAG][多跳RAG] 提出 TSSS (Think Straight, Stop Smart) 框架，通过 (i) 基于模板的推理缓存重复前缀并锚定子查询到主问题，(ii) 基于检索器的确定性终止器在子查询重复时停止推理…
+  [NeurIPS 2025 Workshop][信息检索/RAG][多跳RAG] 提出 TSSS (Think Straight, Stop Smart) 框架，通过 (i) 基于模板的推理缓存重复前缀并锚定子查询到主问题，(ii) 基于检索器的确定性终止器在子查询重复时停止推理，在多跳 RAG 基准上实现 SOTA 准确率和竞争效率。
 tags:
   - "NeurIPS 2025 Workshop"
   - "信息检索/RAG"

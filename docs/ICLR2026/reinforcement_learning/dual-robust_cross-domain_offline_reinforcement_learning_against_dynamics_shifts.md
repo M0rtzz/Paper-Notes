@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts
 description: >-
-  [ICLR 2026][强化学习][离线强化学习] 首次在跨域离线 RL 中同时处理训练时鲁棒性（源域-目标域动力学不匹配）和测试时鲁棒性（部署环境动力学偏移）：提出 DROCO 算法…
+  [ICLR 2026][强化学习][离线强化学习] 首次在跨域离线 RL 中同时处理训练时鲁棒性（源域-目标域动力学不匹配）和测试时鲁棒性（部署环境动力学偏移）：提出 DROCO 算法，核心是 Robust Cross-Domain Bellman (RCB) 算子——对源域数据施加鲁棒 Bellman 更新、对目标域数据施加标准 in-sample 更新，并通过对偶重构将不可处理的动力学不确定性映射为状态空间扰动，在 D4RL 基准上总分 1105.2 超越次优方法 14%，且在 hard 级别动力学扰动下性能退化仅为基线的一半。
 tags:
   - "ICLR 2026"
   - "强化学习"

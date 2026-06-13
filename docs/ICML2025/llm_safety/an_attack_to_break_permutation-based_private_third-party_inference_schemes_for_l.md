@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Attack to Break Permutation-Based Private Third-Party Inference Schemes for LLMs
 description: >-
-  [ICML 2025][LLM安全][private inference] 提出一种基于词汇表逐token匹配的攻击方法，利用decoder-only LLM隐藏状态的非碰撞特性，可以从三种类型的置换隐藏状态中近乎完美恢复原始输入token…
+  [ICML 2025][LLM安全][private inference] 提出一种基于词汇表逐token匹配的攻击方法，利用decoder-only LLM隐藏状态的非碰撞特性，可以从三种类型的置换隐藏状态中近乎完美恢复原始输入token，打破PermLLM、STIP、Centaur三种隐私推理方案的安全声明。
 tags:
   - "ICML 2025"
   - "LLM安全"

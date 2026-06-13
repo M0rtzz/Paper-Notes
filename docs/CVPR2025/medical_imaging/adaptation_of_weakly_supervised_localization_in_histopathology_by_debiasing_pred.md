@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions
 description: >-
-  [CVPR2025][医学图像][域适应] 提出 SFDA-DeP 方法，受机器遗忘启发，通过识别并纠正源模型在目标域的预测偏差（over-predict 某些类别），解决组织病理学中弱监督定位模型跨器官/跨中心域适应时预测偏差被放大的问题。
+  [CVPR2025][医学图像][域适应] 提出 SFDA-DeP 方法，受机器遗忘启发，通过识别并纠正源模型在目标域的预测偏差（over-predict 某些类别），解决组织病理学中弱监督定位模型跨器官/跨中心域适应时预测偏差被放大的问题。 WSOL 的临床意义：弱监督目标定位（WSOL）仅用图像级标签就能同时进行分类和…
 tags:
   - "CVPR2025"
   - "医学图像"

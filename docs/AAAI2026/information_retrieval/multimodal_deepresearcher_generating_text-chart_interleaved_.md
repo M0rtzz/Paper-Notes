@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal DeepResearcher: Generating Text-Chart Interleaved Reports From Scratch with Agentic Framework
 description: >-
-  [AAAI 2026 (Oral)][信息检索/RAG][深度研究Agent] 提出 Multimodal DeepResearcher，一个四阶段 Agent 框架从零生成图文交替研究报告：通过形式化可视化描述（FDV）让 LLM 学习和生成多样化图表…
+  [AAAI 2026 (Oral)][信息检索/RAG][深度研究Agent] 提出 Multimodal DeepResearcher，一个四阶段 Agent 框架从零生成图文交替研究报告：通过形式化可视化描述（FDV）让 LLM 学习和生成多样化图表，结合 Actor-Critic 迭代精炼机制（LLM生成D3.js代码→浏览器渲染→多模态LLM评审），在自建 MultimodalReportBench 上达到 82% 整体胜率（Claude 3.7），人类评估 100% 胜率。
 tags:
   - "AAAI 2026 (Oral)"
   - "信息检索/RAG"

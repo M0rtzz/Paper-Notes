@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Long-window Anchoring in Vision-Language Model Distillation
 description: >-
-  [AAAI 2026][多模态VLM][知识蒸馏] LAid（Long-window Anchoring distillation）提出了一种位置感知的知识蒸馏框架，通过头部级别的傅里叶增强位置知识传递，将小型VLM（3B/7B）的有效上下文窗口扩展至原来的3.2倍，接近大型教师模型（32B）的水平…
+  [AAAI 2026][多模态VLM][知识蒸馏] LAid（Long-window Anchoring distillation）提出了一种位置感知的知识蒸馏框架，通过头部级别的傅里叶增强位置知识传递，将小型VLM（3B/7B）的有效上下文窗口扩展至原来的3.2倍，接近大型教师模型（32B）的水平，同时保持标准VL基准上的性能。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

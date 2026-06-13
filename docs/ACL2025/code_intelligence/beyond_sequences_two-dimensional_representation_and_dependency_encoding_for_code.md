@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Sequences: Two-dimensional Representation and Dependency Encoding for Code Generation
 description: >-
-  [ACL 2025][代码智能][代码生成] 本文提出超越传统一维序列表示的二维代码表示方法，通过显式编码代码的结构依赖关系（如语法树结构和变量依赖），显著提升了代码生成的准确性和结构正确性。
+  [ACL 2025][代码智能][代码生成] 本文提出超越传统一维序列表示的二维代码表示方法，通过显式编码代码的结构依赖关系（如语法树结构和变量依赖），显著提升了代码生成的准确性和结构正确性。 领域现状：代码生成是当前 LLM 应用的热门方向，如 Codex、CodeLlama 等模型在 HumanEval、MBPP 等基准…
 tags:
   - "ACL 2025"
   - "代码智能"

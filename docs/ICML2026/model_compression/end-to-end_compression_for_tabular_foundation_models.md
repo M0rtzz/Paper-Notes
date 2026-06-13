@@ -2,9 +2,9 @@
 title: >-
   [论文解读] End-to-End Compression for Tabular Foundation Models
 description: >-
-  [ICML 2026][模型压缩][表格基础模型] TACO 在 TabPFN 类表格基础模型前面接一个可学习的 transformer 压缩器，把 $N$ 行训练上下文压成 $K\ll N$ 行的潜在表示后再喂给预测器，并与预测器端到端联合元学习…
+  [ICML 2026 Spotlight][模型压缩][表格基础模型] TACO 在 TabPFN 类表格基础模型前面接一个可学习的 transformer 压缩器，把 $N$ 行训练上下文压成 $K\ll N$ 行的潜在表示后再喂给预测器，并与预测器端到端联合元学习，使得 1% 压缩率下推理快 94 倍、显存省 97% 而 ROC-AUC 几乎无损。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "模型压缩"
   - "表格基础模型"
   - "上下文压缩"

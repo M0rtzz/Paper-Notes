@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Self-Correcting Text-to-Video Generation with Misalignment Detection and Localized Refinement
 description: >-
-  [ACL 2026][视频生成][文本到视频生成] 提出 VideoRepair，首个免训练、模型无关的文本到视频自校正框架，通过 MLLM 检测细粒度文本-视频不对齐，保留正确区域并选择性修复问题区域，在 EvalCrafter 和 T2V-CompBench 上跨四种 T2V 骨干模型一致提升对齐质量。
+  [ACL 2026 Findings][视频生成][文本到视频生成] 提出 VideoRepair，首个免训练、模型无关的文本到视频自校正框架，通过 MLLM 检测细粒度文本-视频不对齐，保留正确区域并选择性修复问题区域，在 EvalCrafter 和 T2V-CompBench 上跨四种 T2V 骨干模型一致提升对齐质量。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "视频生成"
   - "文本到视频生成"
   - "自校正"

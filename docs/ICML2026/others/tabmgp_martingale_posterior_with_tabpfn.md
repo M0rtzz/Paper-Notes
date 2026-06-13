@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TabMGP: Martingale Posterior with TabPFN
 description: >-
-  [ICML 2026][鞅后验] 把 TabPFN 这种预训练表格 Transformer 直接当作鞅后验（MGP）的预测规则，通过 in-context 前向滚动采样得到任意损失函数下参数 $\theta$ 的可信集，避免了手工设计先验/似然和拷贝拉超参…
+  [ICML 2026][鞅后验] 把 TabPFN 这种预训练表格 Transformer 直接当作鞅后验（MGP）的预测规则，通过 in-context 前向滚动采样得到任意损失函数下参数 $\theta$ 的可信集，避免了手工设计先验/似然和拷贝拉超参，且在 30 个真实/合成场景下覆盖率与可信集面积同时优于手工 MGP 与经典贝叶斯。
 tags:
   - "ICML 2026"
   - "鞅后验"

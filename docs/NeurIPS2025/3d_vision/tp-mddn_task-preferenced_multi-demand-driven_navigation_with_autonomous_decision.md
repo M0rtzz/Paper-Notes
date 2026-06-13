@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TP-MDDN: Task-Preferenced Multi-Demand-Driven Navigation with Autonomous Decision-Making
 description: >-
-  [NeurIPS 2025][3D视觉][具身导航] 提出任务偏好多需求驱动导航（TP-MDDN）基准和AWMSystem自主决策系统，通过指令分解、动态目标选择和任务状态监控三个LLM模块配合多维度累积语义地图，实现长程多子任务导航。
+  [NeurIPS 2025][3D视觉][具身导航] 提出任务偏好多需求驱动导航（TP-MDDN）基准和AWMSystem自主决策系统，通过指令分解、动态目标选择和任务状态监控三个LLM模块配合多维度累积语义地图，实现长程多子任务导航。 在日常生活中，人们经常需要连续完成多个需求（如打扫→休息→吃饭），每个需求还伴随个人偏好…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

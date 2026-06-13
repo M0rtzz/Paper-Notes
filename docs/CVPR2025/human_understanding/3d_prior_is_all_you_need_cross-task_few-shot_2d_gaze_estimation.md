@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation
 description: >-
-  [CVPR 2025][人体理解][Gaze Estimation] 提出跨任务少样本2D视线估计——利用预训练3D视线模型作为先验，通过**基于物理的可微投影模块**（6个可学习屏幕参数）将3D视线方向投影到2D屏幕坐标，仅需10张标注图像即可在未知设备上适配2D视线估计…
+  [CVPR 2025][人体理解][Gaze Estimation] 提出跨任务少样本2D视线估计——利用预训练3D视线模型作为先验，通过**基于物理的可微投影模块**（6个可学习屏幕参数）将3D视线方向投影到2D屏幕坐标，仅需10张标注图像即可在未知设备上适配2D视线估计，在MPIIGaze/EVE/GazeCapture上比EFE和IVGaze提升超25%。
 tags:
   - "CVPR 2025"
   - "人体理解"

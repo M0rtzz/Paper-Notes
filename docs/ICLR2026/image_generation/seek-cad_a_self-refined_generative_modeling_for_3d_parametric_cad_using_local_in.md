@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek
 description: >-
-  [ICLR 2026][图像生成][CAD 参数化建模] 提出 Seek-CAD，首个基于本地部署的推理 LLM（DeepSeek-R1）的无训练 CAD 参数化模型生成框架，通过分步视觉反馈与思维链 (CoT) 协同实现自我精炼，并设计新的 SSR 三元组设计范式支持复杂 CAD 模型生成。
+  [ICLR 2026][图像生成][CAD 参数化建模] 提出 Seek-CAD，首个基于本地部署的推理 LLM（DeepSeek-R1）的无训练 CAD 参数化模型生成框架，通过分步视觉反馈与思维链 (CoT) 协同实现自我精炼，并设计新的 SSR 三元组设计范式支持复杂 CAD 模型生成。 CAD 参数化模型的自动生成对…
 tags:
   - "ICLR 2026"
   - "图像生成"

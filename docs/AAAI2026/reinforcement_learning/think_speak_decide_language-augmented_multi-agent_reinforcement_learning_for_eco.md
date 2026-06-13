@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think, Speak, Decide: Language-Augmented Multi-Agent Reinforcement Learning for Economic Decision-Making
 description: >-
-  [AAAI 2026][强化学习][多智能体强化学习] 提出 LAMP 框架，通过 Think–Speak–Decide 三阶段流水线将 LLM 驱动的语言推理与 MARL 策略优化相融合，使经济决策智能体能够理解和利用自然语言信息（如新闻、对话）…
+  [AAAI 2026][强化学习][多智能体强化学习] 提出 LAMP 框架，通过 Think–Speak–Decide 三阶段流水线将 LLM 驱动的语言推理与 MARL 策略优化相融合，使经济决策智能体能够理解和利用自然语言信息（如新闻、对话），在经济仿真环境中累计回报超越纯 MARL 基线 63.5%、LLM-only 基线 34.0%。
 tags:
   - "AAAI 2026"
   - "强化学习"

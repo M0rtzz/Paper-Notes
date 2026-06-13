@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment
 description: >-
-  [CVPR 2025][多模态VLM][MLLM] 提出 Task Preference Optimization（TPO），通过可学习的任务 token 将视觉任务专用头（区域定位/时序定位/分割）接入 MLLM，利用视觉任务标注作为"任务偏好"反向优化 MLLM…
+  [CVPR 2025][多模态VLM][MLLM] 提出 Task Preference Optimization（TPO），通过可学习的任务 token 将视觉任务专用头（区域定位/时序定位/分割）接入 MLLM，利用视觉任务标注作为"任务偏好"反向优化 MLLM，在不损害对话能力的前提下大幅提升细粒度视觉理解，VideoChat 基线上平均提升 14.6%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

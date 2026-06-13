@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Flow Fields in Attention for Controllable Person Image Generation
 description: >-
-  [CVPR 2025][图像生成][virtual try-on] 提出 Leffa（Learning Flow Fields in Attention），在扩散模型的注意力层中将 attention map 转换为流场并进行像素级正则化监督…
+  [CVPR 2025][图像生成][virtual try-on] 提出 Leffa（Learning Flow Fields in Attention），在扩散模型的注意力层中将 attention map 转换为流场并进行像素级正则化监督，显式引导 target query 关注正确的 reference key 区域，**零额外推理开销**地减少细粒度细节（纹理、文字、logo）失真，在虚拟试衣（VITON-HD、DressCode）和姿态迁移（DeepFashion）上均 SOTA。
 tags:
   - "CVPR 2025"
   - "图像生成"

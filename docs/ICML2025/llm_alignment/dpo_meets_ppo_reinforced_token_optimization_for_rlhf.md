@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPO Meets PPO: Reinforced Token Optimization for RLHF
 description: >-
-  [ICML 2025][LLM对齐][RLHF] 本文提出 Reinforced Token Optimization (RTO)，将 RLHF 建模为 token 级别的 MDP（而非句子级 bandit），利用 DPO 隐式地提取 token-wise 奖励信号后用 PPO 进行策略优化…
+  [ICML 2025][LLM对齐][RLHF] 本文提出 Reinforced Token Optimization (RTO)，将 RLHF 建模为 token 级别的 MDP（而非句子级 bandit），利用 DPO 隐式地提取 token-wise 奖励信号后用 PPO 进行策略优化，在 AlpacaEval 2 上比 PPO 高 7.5 分、在 Arena-Hard 上高 4.1 分，且仅需 1/8 数据量即可达到 PPO 级别性能。
 tags:
   - "ICML 2025"
   - "LLM对齐"

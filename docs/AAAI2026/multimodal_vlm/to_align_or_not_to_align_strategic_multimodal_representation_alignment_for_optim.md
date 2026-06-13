@@ -2,7 +2,7 @@
 title: >-
   [论文解读] To Align or Not to Align: Strategic Multimodal Representation Alignment for Optimal Performance
 description: >-
-  [AAAI2026][多模态VLM][多模态对齐] 通过引入可控对比学习模块系统调节对齐强度 $\lambda$，结合偏信息分解(PID)框架量化模态间冗余-独特-协同信息结构，揭示显式对齐的效用高度依赖于数据特性：冗余主导时对齐有益，独特主导时有害，混合场景存在最优 $\lambda^*$。
+  [AAAI2026][多模态VLM][多模态对齐] 通过引入可控对比学习模块系统调节对齐强度 $\lambda$，结合偏信息分解(PID)框架量化模态间冗余-独特-协同信息结构，揭示显式对齐的效用高度依赖于数据特性：冗余主导时对齐有益，独特主导时有害，混合场景存在最优 $\lambda^$。 领域现状：多模态学习中…
 tags:
   - "AAAI2026"
   - "多模态VLM"

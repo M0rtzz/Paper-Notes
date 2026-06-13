@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks
 description: >-
-  [ICLR 2026][损失景观] 揭示了低损失路径上曲率的系统性增长会产生熵力屏障，即使路径能量平坦，SGD噪声也会将优化动力学约束在最小值附近的平坦区域，从而解释了"模式连通但动力学受限"的悖论。
+  [ICLR 2026][优化/理论][损失景观] 揭示了低损失路径上曲率的系统性增长会产生熵力屏障，即使路径能量平坦，SGD噪声也会将优化动力学约束在最小值附近的平坦区域，从而解释了"模式连通但动力学受限"的悖论。 领域现状：过参数化神经网络的不同最小值之间可以通过低损失路径相连（mode connectivity）…
 tags:
   - "ICLR 2026"
+  - "优化/理论"
   - "损失景观"
   - "模式连通性"
   - "熵力"

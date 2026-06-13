@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Composition and Alignment of Diffusion Models using Constrained Learning
 description: >-
-  [NeurIPS 2025][预训练][扩散模型] 提出统一的约束优化框架，将扩散模型的奖励对齐和多模型组合问题形式化为约束优化，通过拉格朗日对偶方法自动确定最优权重，避免手动超参数搜索。
+  [NeurIPS 2025][预训练][扩散模型] 提出统一的约束优化框架，将扩散模型的奖励对齐和多模型组合问题形式化为约束优化，通过拉格朗日对偶方法自动确定最优权重，避免手动超参数搜索。 1. 领域现状： 扩散模型的对齐（adjustment to rewards/preferences）和组合（combining mul…
 tags:
   - "NeurIPS 2025"
   - "预训练"

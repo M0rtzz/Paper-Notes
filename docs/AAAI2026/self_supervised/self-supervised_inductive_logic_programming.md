@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Inductive Logic Programming
 description: >-
-  [AAAI 2026][自监督学习][inductive logic programming] 提出自监督归纳逻辑编程（SS-ILP）新设定及 Poker 系统，仅从少量正标签样本和无标签样本出发，自动生成正负样本，配合最大化通用的二阶确定性范式（SONF）背景理论…
+  [AAAI 2026][自监督学习][inductive logic programming] 提出自监督归纳逻辑编程（SS-ILP）新设定及 Poker 系统，仅从少量正标签样本和无标签样本出发，自动生成正负样本，配合最大化通用的二阶确定性范式（SONF）背景理论，在无负样本情况下学习含递归和谓词发明的逻辑程序。
 tags:
   - "AAAI 2026"
   - "自监督学习"

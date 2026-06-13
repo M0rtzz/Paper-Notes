@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemGrasp: Semantic Grasp Generation via Language Aligned Discretization
 description: >-
-  [ECCV 2024][机器人][语义抓取生成] 提出SemGrasp方法，设计层次化VQ-VAE将抓取姿态离散为"方向-方式-精修"三个语义token，然后微调多模态大语言模型(MLLM)在统一语义空间中融合物体、抓取与语言，实现根据自然语言指令生成物理合理且语义一致的人类抓取姿态。
+  [ECCV 2024][机器人][语义抓取生成] 提出SemGrasp方法，设计层次化VQ-VAE将抓取姿态离散为"方向-方式-精修"三个语义token，然后微调多模态大语言模型(MLLM)在统一语义空间中融合物体、抓取与语言，实现根据自然语言指令生成物理合理且语义一致的人类抓取姿态。 领域现状：在AR/VR和机器人操作等应…
 tags:
   - "ECCV 2024"
   - "机器人"

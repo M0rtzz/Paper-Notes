@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GPTAQ: Efficient Finetuning-Free Quantization for Asymmetric Calibration
 description: >-
-  [ICML 2025][模型压缩][后训练量化] GPTAQ 提出了一种非对称校准（asymmetric calibration）的无微调量化方法，通过将量化层输出与全精度模型的精确输出对齐（而非仅当前层输出），并利用最优脑压缩框架推导闭式解来同时最小化量化误差和累积非对称误差…
+  [ICML 2025][模型压缩][后训练量化] GPTAQ 提出了一种非对称校准（asymmetric calibration）的无微调量化方法，通过将量化层输出与全精度模型的精确输出对齐（而非仅当前层输出），并利用最优脑压缩框架推导闭式解来同时最小化量化误差和累积非对称误差，仅增加约 20 行代码即显著提升 GPTQ 在低比特量化下的性能。
 tags:
   - "ICML 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rule2DRC: Benchmarking LLM Agents for DRC Script Synthesis with Execution-Guided Test Generation
 description: >-
-  [ICML 2026][LLM Agent][DRC脚本合成] 作者构建了 Rule2DRC —— 一个含 1000 条自然语言设计规则、13921 个评测版图的大规模 EDA 基准，通过 KLayout 引擎做执行级别打分而非代码相似度对比…
+  [ICML 2026][LLM Agent][DRC脚本合成] 作者构建了 Rule2DRC —— 一个含 1000 条自然语言设计规则、13921 个评测版图的大规模 EDA 基准，通过 KLayout 引擎做执行级别打分而非代码相似度对比，并提出 SplitTester：把 N 个候选 DRC 脚本按"在当前测试下是否输出一致"做聚类，每轮挑「分数 × 簇大小」最大的簇生成新版图把它拆开，最后让 judge LLM 在 Top-3 候选与其差异化测试上选最优。
 tags:
   - "ICML 2026"
   - "LLM Agent"

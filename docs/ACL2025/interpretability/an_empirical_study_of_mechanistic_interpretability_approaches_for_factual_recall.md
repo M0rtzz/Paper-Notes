@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Empirical Study of Mechanistic Interpretability Approaches for Factual Recall
 description: >-
-  [ACL 2025][可解释性][机理可解释性] 本文系统性地比较了多种机理可解释性方法（因果追踪、激活修补、探针分析等）在定位和解释LLM事实回忆机制方面的表现，揭示了不同方法的一致性、分歧点和各自的适用场景。
+  [ACL 2025][可解释性][机理可解释性] 本文系统性地比较了多种机理可解释性方法（因果追踪、激活修补、探针分析等）在定位和解释LLM事实回忆机制方面的表现，揭示了不同方法的一致性、分歧点和各自的适用场景。 领域现状：机理可解释性（Mechanistic Interpretability）旨在理解神经网络内部的信息处理…
 tags:
   - "ACL 2025"
   - "可解释性"

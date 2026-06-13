@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations
 description: >-
-  [ICLR 2026][函数编码器] 证明函数编码器（Function Encoders）通过学习神经网络基函数定义了一个有效的核，建立了神经特征学习与RKHS理论的桥梁，并提出PCA引导的紧凑基选择算法和有限样本泛化界。
+  [ICLR 2026][学习理论][函数编码器] 证明函数编码器（Function Encoders）通过学习神经网络基函数定义了一个有效的核，建立了神经特征学习与RKHS理论的桥梁，并提出PCA引导的紧凑基选择算法和有限样本泛化界。 机器学习方法长期面临计算效率与理论保证之间的权衡： - 神经网络：灵活、可扩展…
 tags:
   - "ICLR 2026"
+  - "学习理论"
   - "函数编码器"
   - "核方法"
   - "Hilbert空间"

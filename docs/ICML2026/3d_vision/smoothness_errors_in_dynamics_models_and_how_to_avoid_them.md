@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Smoothness Errors in Dynamics Models and How to Avoid Them
 description: >-
-  [ICML 2026][3D视觉][图神经网络] 作者从理论上指出 Kiani 等人的 "unitary GNN" 因为强行保持 Rayleigh 商而对热扩散这类"天然会变光滑"的物理系统过度约束…
+  [ICML 2026][3D视觉][图神经网络] 作者从理论上指出 Kiani 等人的 "unitary GNN" 因为强行保持 Rayleigh 商而对热扩散这类"天然会变光滑"的物理系统过度约束，进而提出"松弛 unitary 卷积"（R-UniGraph / R-UniMesh）并把整套 Rayleigh 商-unitary 卷积框架从图扩展到三角网格，在 MeshPDE 与 WeatherBench22 上同时超越多类强基线。
 tags:
   - "ICML 2026"
   - "3D视觉"

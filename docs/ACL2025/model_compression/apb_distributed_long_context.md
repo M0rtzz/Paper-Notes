@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APB: Accelerating Distributed Long-Context Inference by Passing Compressed Context Blocks across GPUs
 description: >-
-  [ACL 2025][模型压缩][long-context inference] APB 提出了一种分布式长上下文推理框架，通过在序列并行框架中引入本地 KV cache 压缩和跨 GPU 传递压缩上下文块的机制…
+  [ACL 2025][模型压缩][long-context inference] APB 提出了一种分布式长上下文推理框架，通过在序列并行框架中引入本地 KV cache 压缩和跨 GPU 传递压缩上下文块的机制，在不损失任务性能的前提下实现了相比 FlashAttn/RingAttn/StarAttn 分别高达 9.2x/4.2x/1.6x 的 prefill 加速。
 tags:
   - "ACL 2025"
   - "模型压缩"

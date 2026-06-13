@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamingTOM: Streaming Token Compression for Efficient Video Understanding
 description: >-
-  [CVPR2026][视频理解][token compression] 提出 StreamingTOM，一个无需训练的两阶段流式视频理解框架：Causal Temporal Reduction (CTR) 在 LLM 前通过因果时序选择将每帧 token 从 196 压缩到 50…
+  [CVPR2026][视频理解][token compression] 提出 StreamingTOM，一个无需训练的两阶段流式视频理解框架：Causal Temporal Reduction (CTR) 在 LLM 前通过因果时序选择将每帧 token 从 196 压缩到 50，Online Quantized Memory (OQM) 在 LLM 后通过 4-bit 量化和按需检索限制 kv-cache 增长，实现 15.7× 压缩比、1.2× 更低峰值显存和 2× 更快 TTFT。
 tags:
   - "CVPR2026"
   - "视频理解"

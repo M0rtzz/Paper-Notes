@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Transformers Need Three Projections？三选一/二的 QKV 共享系统研究
 description: >-
-  [ICML 2026][LLM效率][QKV 共享] 论文系统比较三种 QKV 投影共享方案——Q=K-V（共享 query 和 key）、Q-K=V（共享 key 和 value）、Q=K=V（三者共享），发现 Q-K=V 在 LM 上 PPL 仅升 3.1% 但 KV cache 减 50%…
+  [ICML 2026][LLM效率][QKV 共享] 论文系统比较三种 QKV 投影共享方案——Q=K-V（共享 query 和 key）、Q-K=V（共享 key 和 value）、Q=K=V（三者共享），发现 Q-K=V 在 LM 上 PPL 仅升 3.1% 但 KV cache 减 50%，与 GQA/MQA 正交可叠加得 87.5%-96.9% cache 减少；为 edge inference 提供 quantifiable memory benefit。
 tags:
   - "ICML 2026"
   - "LLM效率"

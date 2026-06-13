@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass
 description: >-
-  [CVPR 2026][3D视觉][多视图人体重建] 提出CHROMM统一框架，整合Pi3X几何先验和Multi-HMR人体先验到单一前馈网络，从多人多视图视频中一次性联合重建相机、场景点云和SMPL-X人体网格，无需外部模块、预处理或迭代优化…
+  [CVPR 2026][3D视觉][多视图人体重建] 提出CHROMM统一框架，整合Pi3X几何先验和Multi-HMR人体先验到单一前馈网络，从多人多视图视频中一次性联合重建相机、场景点云和SMPL-X人体网格，无需外部模块、预处理或迭代优化，RICH上多视图WA-MPJPE达53.1mm且比HAMSt3R快8倍以上。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting
 description: >-
-  [ICCV 2025][3D视觉][空间智能] 提出一个可扩展的数据生成管线，通过集成深度估计、相机标定和尺度校准，将单视图2D图像自动转换为包含点云、相机位姿、深度图的尺度真实3D表示，生成了约200万场景的COCO-3D和Objects365-v2-3D数据集，显著提升多种3D任务性能。
+  [ICCV 2025][3D视觉][空间智能] 提出一个可扩展的数据生成管线，通过集成深度估计、相机标定和尺度校准，将单视图2D图像自动转换为包含点云、相机位姿、深度图的尺度真实3D表示，生成了约200万场景的COCO-3D和Objects365-v2-3D数据集，显著提升多种3D任务性能。 空间智能（Spatial Int…
 tags:
   - "ICCV 2025"
   - "3D视觉"

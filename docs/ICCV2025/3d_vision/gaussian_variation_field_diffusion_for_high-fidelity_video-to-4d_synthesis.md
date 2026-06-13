@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis
 description: >-
-  [ICCV 2025][3D视觉][4D生成] 提出一种视频到4D生成框架，通过Direct 4DMesh-to-GS Variation Field VAE将动画数据直接编码为紧凑的高斯变化场潜在空间，再训练时序感知的扩散模型生成动态3D内容，在4.5秒内实现高保真4D合成…
+  [ICCV 2025][3D视觉][4D生成] 提出一种视频到4D生成框架，通过Direct 4DMesh-to-GS Variation Field VAE将动画数据直接编码为紧凑的高斯变化场潜在空间，再训练时序感知的扩散模型生成动态3D内容，在4.5秒内实现高保真4D合成，并展示了对真实视频输入的优越泛化能力。
 tags:
   - "ICCV 2025"
   - "3D视觉"

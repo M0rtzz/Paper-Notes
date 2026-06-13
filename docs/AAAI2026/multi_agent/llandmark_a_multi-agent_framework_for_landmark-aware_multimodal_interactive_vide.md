@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLandMark: A Multi-Agent Framework for Landmark-Aware Multimodal Interactive Video Retrieval
 description: >-
-  [AAAI 2026][多智能体][多Agent框架] 提出 LLandMark 模块化多 Agent 框架，通过地标知识增强、LLM 辅助图像检索和 OCR 精炼模块，在越南大规模视频检索挑战赛（HCMAIC 2025）中实现地标感知的多模态交互式视频检索，总分 77.40/88。
+  [AAAI 2026][多智能体][多Agent框架] 提出 LLandMark 模块化多 Agent 框架，通过地标知识增强、LLM 辅助图像检索和 OCR 精炼模块，在越南大规模视频检索挑战赛（HCMAIC 2025）中实现地标感知的多模态交互式视频检索，总分 77.40/88。 领域现状：从大规模异构视频语料库中检索信…
 tags:
   - "AAAI 2026"
   - "多智能体"

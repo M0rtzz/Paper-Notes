@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Linearity in Attention Projections: The Case for Nonlinear Queries
 description: >-
-  [ICLR 2026 Workshop (GRaM)][nonlinear query] 基于 $W_Q$ 代数冗余性的理论发现，将线性 Query 投影替换为非线性残差形式 $Q(X)=(X+f_\theta(X))/2$，在不增加参数的情况下超越 +12.5% 参数的基线模型。
+  [ICLR 2026 Workshop (GRaM)][nonlinear query] 基于 $W_Q$ 代数冗余性的理论发现，将线性 Query 投影替换为非线性残差形式 $Q(X)=(X+f_\theta(X))/2$，在不增加参数的情况下超越 +12.5% 参数的基线模型。 代数冗余性发现：Karbevski & M…
 tags:
   - "ICLR 2026 Workshop (GRaM)"
   - "nonlinear query"

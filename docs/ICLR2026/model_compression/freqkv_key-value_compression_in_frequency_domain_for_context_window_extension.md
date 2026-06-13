@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension
 description: >-
-  [ICLR 2026][模型压缩][KV缓存压缩] 提出 FreqKV，一种无参数、架构无关的 KV 缓存压缩方法，通过在频域中迭代压缩 KV 状态（保留低频丢弃高频），仅需 8K 长度的少量微调即可将 LLaMA-2-7B 的上下文窗口扩展至 256K，同时保持稳定的困惑度。
+  [ICLR 2026][模型压缩][KV缓存压缩] 提出 FreqKV，一种无参数、架构无关的 KV 缓存压缩方法，通过在频域中迭代压缩 KV 状态（保留低频丢弃高频），仅需 8K 长度的少量微调即可将 LLaMA-2-7B 的上下文窗口扩展至 256K，同时保持稳定的困惑度。 LLM 的推理能力受限于预训练时设定的上下文窗…
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T²SG: Traffic Topology Scene Graph for Topology Reasoning in Autonomous Driving
 description: >-
-  [CVPR 2025][自动驾驶][交通拓扑推理] 定义了统一的交通拓扑场景图（T²SG），显式建模车道、交通信号控制关系及车道间拓扑连接，并提出 TopoFormer 通过车道聚合层和反事实干预层实现精确的拓扑推理，在 OpenLane-V2 上达到 46.3 OLS SOTA。
+  [CVPR 2025][自动驾驶][交通拓扑推理] 定义了统一的交通拓扑场景图（T²SG），显式建模车道、交通信号控制关系及车道间拓扑连接，并提出 TopoFormer 通过车道聚合层和反事实干预层实现精确的拓扑推理，在 OpenLane-V2 上达到 46.3 OLS SOTA。 - 自动驾驶需要理解交通场景中元素之间的拓…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

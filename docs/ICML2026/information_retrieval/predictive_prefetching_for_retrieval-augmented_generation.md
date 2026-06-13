@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predictive Prefetching for Retrieval-Augmented Generation
 description: >-
-  [ICML2026][信息检索/RAG][RAG] 通过学习 transformer 隐状态/注意力中"早于不确定性 8–16 token 出现的语义前兆"，本文用 RetrievalPredictor + ContextMonitor + QueryGenerator 三件套把 RAG 的检索从同步阻塞改造…
+  [ICML2026][信息检索/RAG][RAG] 通过学习 transformer 隐状态/注意力中"早于不确定性 8–16 token 出现的语义前兆"，本文用 RetrievalPredictor + ContextMonitor + QueryGenerator 三件套把 RAG 的检索从同步阻塞改造为预测式异步预取，在 HotpotQA 等基准上把端到端延迟降低 43.5%、TTFT 降低 62.4%，同时答案质量保持在同步 RAG 1% 以内。
 tags:
   - "ICML2026"
   - "信息检索/RAG"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.17989](https://arxiv.org/abs/2605.17989)  
 **代码**: 待确认  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: RAG, 异步检索, 预测式预取, LLM服务, 延迟优化
 
 ## 一句话总结

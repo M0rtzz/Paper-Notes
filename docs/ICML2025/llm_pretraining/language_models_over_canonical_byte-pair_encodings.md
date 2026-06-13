@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Models over Canonical Byte-Pair Encodings
 description: >-
-  [ICML 2025][预训练][BPE tokenization] 揭示 BPE 分词下自回归语言模型给指数级数量的非规范 (noncanonical) token 编码分配了不必要的概率质量，提出基于有限状态自动机 (FSA) 的条件化与构造化两套修复方案…
+  [ICML 2025][预训练][BPE tokenization] 揭示 BPE 分词下自回归语言模型给指数级数量的非规范 (noncanonical) token 编码分配了不必要的概率质量，提出基于有限状态自动机 (FSA) 的条件化与构造化两套修复方案，在多种模型和语料上一致提升 held-out 似然。
 tags:
   - "ICML 2025"
   - "预训练"

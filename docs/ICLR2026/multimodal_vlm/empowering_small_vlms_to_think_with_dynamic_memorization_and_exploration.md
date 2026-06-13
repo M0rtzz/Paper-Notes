@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Empowering Small VLMs to Think with Dynamic Memorization and Exploration
 description: >-
-  [ICLR 2026][多模态VLM][小规模视觉语言模型] 提出 DyME（Dynamic Memorize-Explore），通过逐步动态切换 SFT 记忆模式与 GRPO 探索模式，首次赋予小规模视觉语言模型（<1B 参数）在特定任务上的思维推理能力。
+  [ICLR 2026][多模态VLM][小规模视觉语言模型] 提出 DyME（Dynamic Memorize-Explore），通过逐步动态切换 SFT 记忆模式与 GRPO 探索模式，首次赋予小规模视觉语言模型（<1B 参数）在特定任务上的思维推理能力。 - 大模型（如 Qwen2.5-VL-32B）可通过 SFT 或…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

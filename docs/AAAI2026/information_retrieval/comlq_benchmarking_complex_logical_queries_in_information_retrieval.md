@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ComLQ: Benchmarking Complex Logical Queries in Information Retrieval
 description: >-
-  [AAAI 2026][信息检索/RAG][复杂逻辑查询] 构建了首个面向复杂逻辑查询的信息检索基准 ComLQ（含合取、析取、否定等 14 种查询类型），并提出子图引导的 LLM 数据合成方法和否定一致性评估指标 LSNC，揭示现有检索器在逻辑推理尤其是否定建模上的严重不足。
+  [AAAI 2026][信息检索/RAG][复杂逻辑查询] 构建了首个面向复杂逻辑查询的信息检索基准 ComLQ（含合取、析取、否定等 14 种查询类型），并提出子图引导的 LLM 数据合成方法和否定一致性评估指标 LSNC，揭示现有检索器在逻辑推理尤其是否定建模上的严重不足。 领域现状：信息检索系统是应对信息过载的基石…
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoupled Training with Local Reinforcement Fine-Tuning in Federated Learning
 description: >-
-  [ICML 2026][LLM安全][联邦学习] FedDTL 把 CLIP 的图像编码器留在客户端、文本编码器搬到服务器做"全局语义锚"，再用 SFT 暖启 + GRPO 风格 RL 的两阶段本地微调，在异构和 full-data 联邦场景下同时缓解客户端间优化不一致与客户端内过拟合。
+  [ICML 2026][LLM安全][联邦学习] FedDTL 把 CLIP 的图像编码器留在客户端、文本编码器搬到服务器做"全局语义锚"，再用 SFT 暖启 + GRPO 风格 RL 的两阶段本地微调，在异构和 full-data 联邦场景下同时缓解客户端间优化不一致与客户端内过拟合。 领域现状：联邦学习里把 CLIP 等…
 tags:
   - "ICML 2026"
   - "LLM安全"

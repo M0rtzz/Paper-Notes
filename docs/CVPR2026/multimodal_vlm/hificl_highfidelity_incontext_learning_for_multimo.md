@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks
 description: >-
-  [CVPR 2026][多模态VLM][上下文学习] HiFICL 通过严格的注意力公式推导，将 ICL 近似问题从"拟合 shift vector"重构为"直接参数化 ICL 的源头"——在注意力头中注入可学习的低秩虚拟键值对，以端到端训练实现一种动态的、上下文感知的参数高效微调方法…
+  [CVPR 2026][多模态VLM][上下文学习] HiFICL 通过严格的注意力公式推导，将 ICL 近似问题从"拟合 shift vector"重构为"直接参数化 ICL 的源头"——在注意力头中注入可学习的低秩虚拟键值对，以端到端训练实现一种动态的、上下文感知的参数高效微调方法，在多个多模态基准上以极少参数超越现有 ICL 近似方法和 LoRA。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

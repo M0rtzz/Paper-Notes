@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structure-Induced Information for Rerooting Levin Tree Search
 description: >-
-  [ICML 2026][Levin Tree Search] 在 $\sqrt{\mathrm{lts}}$ 框架中，作者提出三种"rerooter"——全局 Leiden 聚类、局部启发式 cost-to-go、二者加性混合——把搜索努力自动按状态空间结构和目标距离分配给隐式子任务…
+  [ICML 2026][Levin Tree Search] 在 $\sqrt{\mathrm{lts}}$ 框架中，作者提出三种"rerooter"——全局 Leiden 聚类、局部启发式 cost-to-go、二者加性混合——把搜索努力自动按状态空间结构和目标距离分配给隐式子任务，避免了 HIPS-$\varepsilon$ / SGPS 那种昂贵的显式子目标生成模型，在 BoulderDash、CraftWorld 等复杂域上的在线训练样本效率和测试展开数都达到 SOTA。
 tags:
   - "ICML 2026"
   - "Levin Tree Search"

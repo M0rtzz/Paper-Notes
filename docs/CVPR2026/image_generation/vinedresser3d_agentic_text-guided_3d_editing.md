@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vinedresser3D: Agentic Text-guided 3D Editing
 description: >-
-  [CVPR 2026][图像生成][3D编辑] 提出 Vinedresser3D，一个以多模态大语言模型（MLLM）为核心的 3D 编辑智能体，无需用户提供 3D 掩码，通过自动解析编辑意图、定位编辑区域、生成多模态引导，并在原生 3D 生成模型（Trellis）的潜空间中执行基于反演的修补编辑…
+  [CVPR 2026][图像生成][3D编辑] 提出 Vinedresser3D，一个以多模态大语言模型（MLLM）为核心的 3D 编辑智能体，无需用户提供 3D 掩码，通过自动解析编辑意图、定位编辑区域、生成多模态引导，并在原生 3D 生成模型（Trellis）的潜空间中执行基于反演的修补编辑，实现高质量文本引导的 3D 资产编辑。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Loss-Guided Auxiliary Agents for Overcoming Mode Collapse in GFlowNets
 description: >-
-  [AAAI 2026][LLM Agent][GFlowNet] 提出 LGGFN（Loss-Guided GFlowNets），用辅助 GFlowNet 的探索直接由主 GFlowNet 的训练损失驱动——辅助 Agent 的奖励 = 原始奖励 + λ·主模型损失，优先采样主模型理解不足的区域…
+  [AAAI 2026][LLM Agent][GFlowNet] 提出 LGGFN（Loss-Guided GFlowNets），用辅助 GFlowNet 的探索直接由主 GFlowNet 的训练损失驱动——辅助 Agent 的奖励 = 原始奖励 + λ·主模型损失，优先采样主模型理解不足的区域，在网格/序列/贝叶斯结构学习任务上分别发现 40× 更多唯一模式、99% 探索误差降低。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

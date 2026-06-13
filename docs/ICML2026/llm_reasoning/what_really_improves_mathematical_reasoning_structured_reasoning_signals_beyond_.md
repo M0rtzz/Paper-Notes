@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Really Improves Mathematical Reasoning: Structured Reasoning Signals Beyond Pure Code
 description: >-
-  [ICML2026][LLM推理][数据配比] 这篇论文通过 10T-token 语料和 MoE 从头预训练的控制实验指出，真正提升复杂数学推理的不是纯可执行代码本身，而是跨域结构化推理信号，尤其是数学语料中显式暴露中间步骤的“认知脚手架”。
+  [ICML2026][LLM推理][数据配比] 这篇论文通过 10T-token 语料和 MoE 从头预训练的控制实验指出，真正提升复杂数学推理的不是纯可执行代码本身，而是跨域结构化推理信号，尤其是数学语料中显式暴露中间步骤的“认知脚手架”。 领域现状：现代通用 LLM 的预训练语料通常包含相当比例的代码数据…
 tags:
   - "ICML2026"
   - "LLM推理"

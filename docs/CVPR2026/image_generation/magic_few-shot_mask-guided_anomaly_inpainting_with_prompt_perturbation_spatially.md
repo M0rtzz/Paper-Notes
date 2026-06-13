@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MAGIC: Few-Shot Mask-Guided Anomaly Inpainting with Prompt Perturbation, Spatially Adaptive Guidance, and Context Awareness
 description: >-
-  [CVPR2026 Findings][图像生成][少样本异常生成] 提出 MAGIC 框架，通过微调 inpainting 扩散模型，结合高斯 prompt 扰动、掩码引导空间噪声注入和上下文感知掩码对齐三个互补模块，在少样本条件下生成高保真、多样化、空间合理的工业异常图像…
+  [CVPR 2026 Findings][图像生成][少样本异常生成] 提出 MAGIC 框架，通过微调 inpainting 扩散模型，结合高斯 prompt 扰动、掩码引导空间噪声注入和上下文感知掩码对齐三个互补模块，在少样本条件下生成高保真、多样化、空间合理的工业异常图像，在 MVTec-AD 下游任务上达到 SOTA。
 tags:
-  - "CVPR2026 Findings"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "少样本异常生成"
   - "扩散模型"

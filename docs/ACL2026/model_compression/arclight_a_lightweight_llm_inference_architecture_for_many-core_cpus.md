@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArcLight: A Lightweight LLM Inference Architecture for Many-Core CPUs
 description: >-
-  [ACL 2026][模型压缩][Many-Core CPU] ArcLight 是一个从零写的轻量级 LLM 推理框架（约 10 个 C++ 文件），专为多 NUMA 节点的 many-core CPU 设计…
+  [ACL 2026][模型压缩][Many-Core CPU] ArcLight 是一个从零写的轻量级 LLM 推理框架（约 10 个 C++ 文件），专为多 NUMA 节点的 many-core CPU 设计，通过 NUMA 局部内存池、多视图线程池、跨 NUMA 张量并行 + 异步子图同步打破"远程内存墙"，在 192 核 ARM 鲲鹏平台上把 Qwen3-4B Q4_0 的 decode 吞吐相对 llama.cpp 提高至多 46%。
 tags:
   - "ACL 2026"
   - "模型压缩"

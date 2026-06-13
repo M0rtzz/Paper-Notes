@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CiPO: Counterfactual Unlearning for Large Reasoning Models through Iterative Preference Optimization
 description: >-
-  [ACL 2026][LLM安全][推理模型遗忘] 针对大型推理模型（LRM）的遗忘难题——需要同时从思维链（CoT）和最终答案中移除敏感知识——提出 CiPO 框架，通过让模型生成逻辑有效的反事实推理轨迹并用迭代偏好优化引导模型偏好反事实路径，实现有效遗忘同时保持推理能力。
+  [ACL 2026][LLM安全][推理模型遗忘] 针对大型推理模型（LRM）的遗忘难题——需要同时从思维链（CoT）和最终答案中移除敏感知识——提出 CiPO 框架，通过让模型生成逻辑有效的反事实推理轨迹并用迭代偏好优化引导模型偏好反事实路径，实现有效遗忘同时保持推理能力。 领域现状：LRM（如 DeepSeek-R1、o…
 tags:
   - "ACL 2026"
   - "LLM安全"

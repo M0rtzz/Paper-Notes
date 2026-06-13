@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Regularized Latent Dynamics Prediction is a Strong Baseline for Behavioral Foundation Models
 description: >-
-  [ICLR 2026][自监督学习][行为基础模型] 提出 Regularized Latent Dynamics Prediction (RLDP)，通过在自监督的潜空间下一状态预测目标上添加简单的正交正则化来维持特征多样性，在零样本 RL 中匹配甚至超越复杂的 SOTA 表示学习方法…
+  [ICLR 2026][自监督学习][行为基础模型] 提出 Regularized Latent Dynamics Prediction (RLDP)，通过在自监督的潜空间下一状态预测目标上添加简单的正交正则化来维持特征多样性，在零样本 RL 中匹配甚至超越复杂的 SOTA 表示学习方法，特别是在低覆盖率场景下优势显著。
 tags:
   - "ICLR 2026"
   - "自监督学习"

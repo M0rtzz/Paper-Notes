@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Can Model-Free Reinforcement Learning be Enough for Thinking?
 description: >-
-  [NeurIPS 2025][强化学习][思考MDP] 提出 Thought MDP 形式化框架来理解模型无关 RL 中"思考"行为的涌现条件：策略初始化是决定性因素，思考动作等价于智能体在行动前执行一步策略改进，且开源 LLM 满足思考涌现的必要条件。
+  [NeurIPS 2025][强化学习][思考MDP] 提出 Thought MDP 形式化框架来理解模型无关 RL 中"思考"行为的涌现条件：策略初始化是决定性因素，思考动作等价于智能体在行动前执行一步策略改进，且开源 LLM 满足思考涌现的必要条件。 领域现状：DeepSeek-R1 等工作展示了通过模型无关 RL 训练…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

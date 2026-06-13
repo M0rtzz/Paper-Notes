@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LayerD: Decomposing Raster Graphic Designs into Layers
 description: >-
-  [ICCV 2025][图层分解] 提出 LayerD，通过迭代提取未遮挡顶层和背景补全来分解栅格图形设计为可编辑图层，并利用图形设计的域先验（纹理平坦区域）进行精炼，同时提出了基于 DTW 的层级评估协议。
+  [ICCV 2025][图层分解] 提出 LayerD，通过迭代提取未遮挡顶层和背景补全来分解栅格图形设计为可编辑图层，并利用图形设计的域先验（纹理平坦区域）进行精炼，同时提出了基于 DTW 的层级评估协议。 设计师在 Photoshop/PowerPoint 等工具中以图层为基本单位创建和编辑图形设计。一旦合成为栅格图像…
 tags:
   - "ICCV 2025"
   - "图层分解"

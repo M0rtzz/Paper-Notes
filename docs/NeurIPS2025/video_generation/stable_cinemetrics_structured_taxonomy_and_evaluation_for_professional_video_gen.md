@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Cinemetrics: Structured Taxonomy and Evaluation for Professional Video Generation
 description: >-
-  [NeurIPS 2025][视频生成][视频生成评估] 提出 SCINE（Stable Cinemetrics），首个面向专业视频制作的结构化评估框架，定义了 76 个细粒度电影控制节点的分层分类体系，配合大规模专业人员评估（80+ 影视从业者、20K+ 视频、248K 标注）…
+  [NeurIPS 2025][视频生成][视频生成评估] 提出 SCINE（Stable Cinemetrics），首个面向专业视频制作的结构化评估框架，定义了 76 个细粒度电影控制节点的分层分类体系，配合大规模专业人员评估（80+ 影视从业者、20K+ 视频、248K 标注），揭示当前最强 T2V 模型在专业控制上的显著不足。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

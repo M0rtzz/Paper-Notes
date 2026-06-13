@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging
 description: >-
-  [AAAI2026][计算生物][DNA foundation model] 提出 MergeDNA，通过可微分 Token Merging 实现上下文感知的动态 DNA tokenization，结合层次化 autoencoder 和自适应 masked token modeling 预训练…
+  [AAAI2026 Oral][计算生物][DNA foundation model] 提出 MergeDNA，通过可微分 Token Merging 实现上下文感知的动态 DNA tokenization，结合层次化 autoencoder 和自适应 masked token modeling 预训练，380M 参数超越 1.3B GENERator。
 tags:
-  - "AAAI2026"
+  - "AAAI2026 Oral"
   - "计算生物"
   - "DNA foundation model"
   - "token merging"

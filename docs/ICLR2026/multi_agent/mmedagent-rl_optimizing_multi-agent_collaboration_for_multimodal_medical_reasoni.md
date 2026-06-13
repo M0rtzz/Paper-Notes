@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMedAgent-RL: Optimizing Multi-Agent Collaboration for Multimodal Medical Reasoning
 description: >-
-  [ICLR2026][多智能体][multi-agent collaboration] 提出 MMedAgent-RL，通过 RL 优化模拟临床会诊流程（分诊→专科→主治）的多智能体系统，核心创新是课程学习引导的熵感知 RL（C-MARL）…
+  [ICLR2026][多智能体][multi-agent collaboration] 提出 MMedAgent-RL，通过 RL 优化模拟临床会诊流程（分诊→专科→主治）的多智能体系统，核心创新是课程学习引导的熵感知 RL（C-MARL），让主治医师智能体在面对正确/冲突/错误的专科意见时分别采取不同的探索-利用策略，在域内外共 5 个医学 VQA 基准上实现 SOTA。
 tags:
   - "ICLR2026"
   - "多智能体"

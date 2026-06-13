@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Out-of-Distribution Detection to Hallucination Detection: A Geometric View
 description: >-
-  [ICML 2026][幻觉检测][OOD 检测] 本文把 LLM 的下一 token 预测视为一个超大词表上的分类任务，将两个轻量级 OOD 检测器 NCI（特征与权重向量的接近度）与 fDBD（特征到决策边界的距离）迁移过来…
+  [ICML 2026][幻觉检测][OOD 检测] 本文把 LLM 的下一 token 预测视为一个超大词表上的分类任务，将两个轻量级 OOD 检测器 NCI（特征与权重向量的接近度）与 fDBD（特征到决策边界的距离）迁移过来，配合"训练特征均值的解析代理 $\mu_G$"和"只在 top-$k$ 候选 token 上算边界距离"两个适配，得到一个**无训练、单样本**的推理类幻觉检测器，在 CSQA / GSM8K / AQuA 上稳定优于困惑度、Semantic Entropy、SelfCheckGPT 等基线。
 tags:
   - "ICML 2026"
   - "幻觉检测"

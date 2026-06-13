@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedAgentBoard: Benchmarking Multi-Agent Collaboration with Conventional Methods for Diverse Medical Tasks
 description: >-
-  [NeurIPS 2025 (Datasets & Benchmarks Track)][多智能体][多智能体协作] 提出 MedAgentBoard，一个系统评估多智能体协作、单 LLM 和传统方法在多样化医学任务上表现的综合基准，揭示多智能体协作并不总是优于强单模型或专用传统方法。
+  [NeurIPS 2025 (Datasets & Benchmarks Track)][多智能体][多智能体协作] 提出 MedAgentBoard，一个系统评估多智能体协作、单 LLM 和传统方法在多样化医学任务上表现的综合基准，揭示多智能体协作并不总是优于强单模型或专用传统方法。 - LLM 多智能体热潮：近期大量工作…
 tags:
   - "NeurIPS 2025 (Datasets & Benchmarks Track)"
   - "多智能体"

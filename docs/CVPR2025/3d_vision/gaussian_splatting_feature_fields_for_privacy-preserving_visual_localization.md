@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Splatting Feature Fields for Privacy-Preserving Visual Localization
 description: >-
-  [CVPR 2025][3D视觉][视觉定位] 提出 Gaussian Splatting Feature Fields (GSFFs)，将 3DGS 的显式几何与隐式特征场结合，通过自监督对比学习训练尺度感知的 3D 特征和 2D 编码器，并利用基于 Delaunay 图的空间聚类将特征转化为分割标签…
+  [CVPR 2025][3D视觉][视觉定位] 提出 Gaussian Splatting Feature Fields (GSFFs)，将 3DGS 的显式几何与隐式特征场结合，通过自监督对比学习训练尺度感知的 3D 特征和 2D 编码器，并利用基于 Delaunay 图的空间聚类将特征转化为分割标签，实现了高精度的非隐私和隐私保护视觉定位。
 tags:
   - "CVPR 2025"
   - "3D视觉"

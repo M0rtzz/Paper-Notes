@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Verifying Meta-Awareness via Predictive Rewards in Reasoning Models
 description: >-
-  [ICML 2026][LLM推理][元认知] 通过让推理模型自预测解法长度、通过率和所需概念，用预测结果与真实统计对齐来优化模型元认知——从而显著提升数学推理性能并加速训练。
+  [ICML 2026][LLM推理][元认知] 通过让推理模型自预测解法长度、通过率和所需概念，用预测结果与真实统计对齐来优化模型元认知——从而显著提升数学推理性能并加速训练。 领域现状：大规模推理模型（LRM）通过 GRPO 等 RL 算法进行后训练，能显著增强 LLM 数学推理能力。然而当前方法仅依赖答案级别验证…
 tags:
   - "ICML 2026"
   - "LLM推理"

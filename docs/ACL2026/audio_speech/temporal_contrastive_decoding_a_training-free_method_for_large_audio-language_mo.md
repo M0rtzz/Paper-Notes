@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Temporal Contrastive Decoding: A Training-Free Method for Large Audio-Language Models
 description: >-
-  [ACL 2026][音频/语音][音频语言模型] 提出 TCD，一种无训练的推理时解码方法：通过对比原始音频和时间模糊慢速路径的 logits 差异，配合稳定性引导的模糊窗口和不确定性门控，使统一音频语言模型更好地利用瞬态声学线索，在 MMAU 和 AIR-Bench 上一致提升。
+  [ACL 2026 Findings][音频/语音][音频语言模型] 提出 TCD，一种无训练的推理时解码方法：通过对比原始音频和时间模糊慢速路径的 logits 差异，配合稳定性引导的模糊窗口和不确定性门控，使统一音频语言模型更好地利用瞬态声学线索，在 MMAU 和 AIR-Bench 上一致提升。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "音频语言模型"
   - "对比解码"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis
 description: >-
-  [AAAI 2026][AI alignment] 本文将 AI 对齐形式化为 $\langle M,N,\varepsilon,\delta\rangle$-agreement 多目标优化问题，从通信复杂度角度证明了对齐的信息论下界（编码"所有人类价值观"本质上不可行）…
+  [AAAI 2026 Oral][LLM对齐][AI alignment] 本文将 AI 对齐形式化为 $\langle M,N,\varepsilon,\delta\rangle$-agreement 多目标优化问题，从通信复杂度角度证明了对齐的信息论下界（编码"所有人类价值观"本质上不可行），同时给出了无界/有界理性智能体的显式可达算法和紧致上界，揭示了在大状态空间下 reward hacking 全局不可避免的理论根基。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
+  - "LLM对齐"
   - "AI alignment"
   - "communication complexity"
   - "agreement framework"

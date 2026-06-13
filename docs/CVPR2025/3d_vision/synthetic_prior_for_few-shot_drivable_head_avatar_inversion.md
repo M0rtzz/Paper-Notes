@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthetic Prior for Few-Shot Drivable Head Avatar Inversion
 description: >-
-  [CVPR 2025][3D视觉][头部虚拟人] SynShot 提出用大规模合成头部数据训练生成式 3D 高斯先验模型，仅需 3 张真实图像即可通过 pivotal fine-tuning 反演出可驱动的高保真头部虚拟人，显著优于单目和 GAN 方法。
+  [CVPR 2025][3D视觉][头部虚拟人] SynShot 提出用大规模合成头部数据训练生成式 3D 高斯先验模型，仅需 3 张真实图像即可通过 pivotal fine-tuning 反演出可驱动的高保真头部虚拟人，显著优于单目和 GAN 方法。 高保真可驱动数字头部虚拟人是 VR/MR 的关键技术…
 tags:
   - "CVPR 2025"
   - "3D视觉"

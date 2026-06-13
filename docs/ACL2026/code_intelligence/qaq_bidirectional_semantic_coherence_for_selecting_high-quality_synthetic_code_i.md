@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QAQ: Bidirectional Semantic Coherence for Selecting High-Quality Synthetic Code Instructions
 description: >-
-  [ACL2026][代码智能][合成代码指令] QAQ 从“答案能否反推出问题”的反向语义一致性出发，用分层 RMI 与强弱模型分歧筛选合成代码指令，只用 25% WarriorCoder 数据就接近全量训练，并显著优于 IFD 等传统数据选择指标。
+  [ACL2026][代码智能][合成代码指令] QAQ 从“答案能否反推出问题”的反向语义一致性出发，用分层 RMI 与强弱模型分歧筛选合成代码指令，只用 25% WarriorCoder 数据就接近全量训练，并显著优于 IFD 等传统数据选择指标。 领域现状：代码生成模型越来越依赖大规模合成 instruction-res…
 tags:
   - "ACL2026"
   - "代码智能"

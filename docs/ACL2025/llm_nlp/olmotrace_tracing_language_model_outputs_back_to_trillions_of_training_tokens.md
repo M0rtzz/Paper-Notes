@@ -2,10 +2,10 @@
 title: >-
   [论文解读] OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens
 description: >-
-  [ACL 2025][LLM/NLP][训练数据溯源] 提出OLMoTrace——首个能在实时（平均4.5秒）将语言模型输出逐字追溯到其完整多万亿token训练数据的系统，基于扩展的infini-gram引擎通过后缀数组索引实现高效精确匹配，支持事实核查、创意溯源和数学能力追踪等应用场景。
+  [ACL 2025][LLM 其他][训练数据溯源] 提出OLMoTrace——首个能在实时（平均4.5秒）将语言模型输出逐字追溯到其完整多万亿token训练数据的系统，基于扩展的infini-gram引擎通过后缀数组索引实现高效精确匹配，支持事实核查、创意溯源和数学能力追踪等应用场景。 领域现状： 随着LM在高风险场景中的…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "训练数据溯源"
   - "逐字匹配"
   - "后缀数组"

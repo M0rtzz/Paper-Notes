@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring
 description: >-
-  [CVPR 2026][图像恢复][3D human avatar] 首次实现从模糊视频直接重建清晰可驱动3D高斯人体avatar：提出3D感知的物理模糊形成模型(将模糊分解为子帧SMPL运动+canonical 3DGS)，用B-spline插值+位姿变形网络建模子帧运动，帧间正则化解决运动方向歧义…
+  [CVPR 2026][图像恢复][3D human avatar] 首次实现从模糊视频直接重建清晰可驱动3D高斯人体avatar：提出3D感知的物理模糊形成模型(将模糊分解为子帧SMPL运动+canonical 3DGS)，用B-spline插值+位姿变形网络建模子帧运动，帧间正则化解决运动方向歧义，在合成和真实数据集上大幅超越"2D去模糊+3DGS"两阶段方案(PSNR提升约2.5dB)。
 tags:
   - "CVPR 2026"
   - "图像恢复"

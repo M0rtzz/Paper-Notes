@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CREPE: Controlling Diffusion with Replica Exchange
 description: >-
-  [ICLR 2026][图像生成][replica exchange] 提出 CREPE，一种基于 Replica Exchange（并行回火/Parallel Tempering）的扩散模型推理时控制方法，作为 SMC 的计算对偶——在去噪步维度上并行、在样本维度上串行生成…
+  [ICLR 2026][图像生成][replica exchange] 提出 CREPE，一种基于 Replica Exchange（并行回火/Parallel Tempering）的扩散模型推理时控制方法，作为 SMC 的计算对偶——在去噪步维度上并行、在样本维度上串行生成，具有高样本多样性、可在线精炼、支持温度退火/奖励倾斜/模型组合/CFG 去偏等多种任务。
 tags:
   - "ICLR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMemo: LVLMs Need Image Context with Image Memory
 description: >-
-  [ICML2025][多模态VLM][LVLM] 提出CoMemo双路径架构——Context路径将图像token拼入文本做自回归、Memory路径用交叉注意力做图像持久记忆，结合RoPE-DHR位置编码保持2D空间感知和缓解远程衰减，通过三阶段训练策略平衡双路径…
+  [ICML2025][多模态VLM][LVLM] 提出CoMemo双路径架构——Context路径将图像token拼入文本做自回归、Memory路径用交叉注意力做图像持久记忆，结合RoPE-DHR位置编码保持2D空间感知和缓解远程衰减，通过三阶段训练策略平衡双路径，在同等设置下全面超越LVLM-S和LVLM-X。
 tags:
   - "ICML2025"
   - "多模态VLM"

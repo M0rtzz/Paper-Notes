@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tracing Relational Knowledge Recall in Large Language Models
 description: >-
-  [ACL 2026][可解释性][关系知识] 本文系统研究LLM在文本生成过程中回忆关系知识的内部机制，发现注意力头对残差流的逐头贡献（$\Delta_{att,h}$）是线性关系分类的最强特征（准确率达91%）…
+  [ACL 2026 Findings][可解释性][关系知识] 本文系统研究LLM在文本生成过程中回忆关系知识的内部机制，发现注意力头对残差流的逐头贡献（$\Delta_{att,h}$）是线性关系分类的最强特征（准确率达91%），并提出HeadScore和TokenScore两种探针归因方法来分解预测到注意力头和源token级别，揭示了探针精度与关系特异性、实体连通度及探针信号集中度之间的明确相关性。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "可解释性"
   - "关系知识"
   - "注意力头归因"

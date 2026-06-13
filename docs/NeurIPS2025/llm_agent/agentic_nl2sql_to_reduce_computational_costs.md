@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agentic NL2SQL to Reduce Computational Costs
 description: >-
-  [NeurIPS 2025][LLM Agent][NL2SQL] 提出 Datalake Agent，一个基于交互循环的 agentic NL2SQL 系统，通过分层的信息获取策略（GetDBDescription -> GetTables -> GetColumns -> DBQueryFinalSQL）…
+  [NeurIPS 2025][LLM Agent][NL2SQL] 提出 Datalake Agent，一个基于交互循环的 agentic NL2SQL 系统，通过分层的信息获取策略（GetDBDescription -> GetTables -> GetColumns -> DBQueryFinalSQL）让 LLM 按需请求数据库 schema 信息而非一次性接收全部，在 319 张表的场景下将 token 使用量减少 87%、成本降低 8 倍，同时在复杂查询上保持更好的性能。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

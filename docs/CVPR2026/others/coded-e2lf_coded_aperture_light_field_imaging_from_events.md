@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coded-E2LF: Coded Aperture Light Field Imaging from Events
 description: >-
-  [CVPR2026][light field imaging] 首次证明仅用 event camera（无需传统 intensity 图像）即可重建像素级精度的 4D 光场，提出 Coded-E2LF 系统：通过编码光圈序列触发 events 并累积为 event images…
+  [CVPR2026][light field imaging] 首次证明仅用 event camera（无需传统 intensity 图像）即可重建像素级精度的 4D 光场，提出 Coded-E2LF 系统：通过编码光圈序列触发 events 并累积为 event images，利用全黑 pattern 建立 event-based 与 intensity-based coded aperture imaging 的数学等价性，结合端到端 deep optics 训练实现 8×8 视点光场重建。
 tags:
   - "CVPR2026"
   - "light field imaging"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JoDiffusion: Jointly Diffusing Image with Pixel-Level Annotations for Semantic Segmentation Promotion
 description: >-
-  [AAAI 2026][语义分割][数据集生成] 提出JoDiffusion框架，通过在潜在空间中联合扩散图像与像素级标注掩码，首次实现仅基于文本提示同时生成语义一致的图像-标注对，在Pascal VOC、COCO和ADE20K上显著超越现有Image2Mask和Mask2Image方法。
+  [AAAI 2026][语义分割][数据集生成] 提出JoDiffusion框架，通过在潜在空间中联合扩散图像与像素级标注掩码，首次实现仅基于文本提示同时生成语义一致的图像-标注对，在Pascal VOC、COCO和ADE20K上显著超越现有Image2Mask和Mask2Image方法。 问题背景 语义分割依赖大规模高质量…
 tags:
   - "AAAI 2026"
   - "语义分割"

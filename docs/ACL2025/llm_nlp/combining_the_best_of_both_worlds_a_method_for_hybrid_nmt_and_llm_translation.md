@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Combining the Best of Both Worlds: A Method for Hybrid NMT and LLM Translation
 description: >-
-  [ACL2025][LLM/NLP][机器翻译] 提出基于源句特征的NMT与LLM混合翻译调度策略（PPLT与JDM），在保持翻译质量最优的同时将LLM调用比例降至约25-30%，大幅减少计算开销。
+  [ACL2025][LLM 其他][机器翻译] 提出基于源句特征的NMT与LLM混合翻译调度策略（PPLT与JDM），在保持翻译质量最优的同时将LLM调用比例降至约25-30%，大幅减少计算开销。 1. LLM翻译成本高延迟大：LLM在翻译任务上表现优异，但推理成本远高于传统NMT系统，对实际部署造成障碍…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "机器翻译"
   - "NMT-LLM融合"
   - "调度策略"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Efficient and Effective Internal Memory Retrieval for LLM-Based Healthcare Prediction
 description: >-
-  [ACL 2026][医疗NLP][内部记忆检索] 本文提出K2K框架，将LLM的FFN参数空间视为可检索的知识库，通过LoRA注入临床知识、激活引导的探针构建精确检索、交叉注意力重排序自适应整合，实现了无需外部检索延迟的医疗预测SOTA。
+  [ACL 2026 Findings][医疗NLP][内部记忆检索] 本文提出K2K框架，将LLM的FFN参数空间视为可检索的知识库，通过LoRA注入临床知识、激活引导的探针构建精确检索、交叉注意力重排序自适应整合，实现了无需外部检索延迟的医疗预测SOTA。 领域现状：LLM在医疗领域展现了显著潜力，但部署中面临幻觉和缺乏细…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "内部记忆检索"
   - "FFN键值记忆"

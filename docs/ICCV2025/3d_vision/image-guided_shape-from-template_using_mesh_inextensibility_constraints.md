@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image-Guided Shape-from-Template Using Mesh Inextensibility Constraints
 description: >-
-  [ICCV 2025][3D视觉][Shape-from-Template] 提出一种纯图像引导的无监督 Shape-from-Template (SfT) 方法，仅利用颜色、梯度和轮廓等视觉线索配合网格不可伸展性约束来重建变形物体 3D 形状，比最优无监督方法快 400 倍且精度大幅领先。
+  [ICCV 2025][3D视觉][Shape-from-Template] 提出一种纯图像引导的无监督 Shape-from-Template (SfT) 方法，仅利用颜色、梯度和轮廓等视觉线索配合网格不可伸展性约束来重建变形物体 3D 形状，比最优无监督方法快 400 倍且精度大幅领先。 Shape-from-Templ…
 tags:
   - "ICCV 2025"
   - "3D视觉"

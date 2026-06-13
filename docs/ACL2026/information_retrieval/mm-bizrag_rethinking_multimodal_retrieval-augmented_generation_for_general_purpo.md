@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-BizRAG: Rethinking Multimodal Retrieval-Augmented Generation for General Purpose Enterprise Q&A
 description: >-
-  [ACL2026][信息检索/RAG][MM-RAG] MM-BizRAG 证明企业多模态 RAG 不能只依赖页面截图和视觉 embedding，而应先按文档结构区分报告与幻灯片，再显式解析文本、表格和图片，并在推理时组装多模态上下文…
+  [ACL2026][信息检索/RAG][MM-RAG] MM-BizRAG 证明企业多模态 RAG 不能只依赖页面截图和视觉 embedding，而应先按文档结构区分报告与幻灯片，再显式解析文本、表格和图片，并在推理时组装多模态上下文，从而在 SlideVQA、FinRAGBench-V 和内部企业数据上显著超过视觉中心 baseline。
 tags:
   - "ACL2026"
   - "信息检索/RAG"

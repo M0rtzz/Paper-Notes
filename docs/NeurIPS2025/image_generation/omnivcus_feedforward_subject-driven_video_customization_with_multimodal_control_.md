@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions
 description: >-
-  [NeurIPS 2025][图像生成][主体驱动视频定制] OmniVCus 提出了一个前馈式 DiT 框架，通过数据构建流水线 VideoCus-Factory 和两种嵌入机制（Lottery Embedding 和 Temporally Aligned Embedding）…
+  [NeurIPS 2025][图像生成][主体驱动视频定制] OmniVCus 提出了一个前馈式 DiT 框架，通过数据构建流水线 VideoCus-Factory 和两种嵌入机制（Lottery Embedding 和 Temporally Aligned Embedding），实现了多主体、多模态控制条件下的视频定制生成，在身份保持和可控性上显著超越 SOTA。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

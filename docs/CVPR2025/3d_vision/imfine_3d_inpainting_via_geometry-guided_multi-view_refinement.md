@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IMFine: 3D Inpainting via Geometry-guided Multi-view Refinement
 description: >-
-  [CVPR 2025][3D视觉][3D修复] 本文提出IMFine，一种用于无约束场景（包括360°环绕）的3D修复流水线，通过几何先验引导的warping和基于测试时适应的多视角refinement网络生成多视角一致的修复图像，并提出了一种新的修复mask检测技术来精确区分真正需要修复的遮挡区域…
+  [CVPR 2025][3D视觉][3D修复] 本文提出IMFine，一种用于无约束场景（包括360°环绕）的3D修复流水线，通过几何先验引导的warping和基于测试时适应的多视角refinement网络生成多视角一致的修复图像，并提出了一种新的修复mask检测技术来精确区分真正需要修复的遮挡区域，在多样化的benchmark上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoOcc: Automatic Open-Ended Semantic Occupancy Annotation via Vision-Language Guided Gaussian Splatting
 description: >-
-  [ICCV 2025 (Highlight)][3D视觉][语义占据标注] 提出AutoOcc，一个以视觉为中心的全自动开放式语义占据标注流水线，通过视觉-语言模型引导的可微高斯泼溅（VL-GS）实现无需人工标签的3D语义占据生成…
+  [ICCV 2025 (Highlight)][3D视觉][语义占据标注] 提出AutoOcc，一个以视觉为中心的全自动开放式语义占据标注流水线，通过视觉-语言模型引导的可微高斯泼溅（VL-GS）实现无需人工标签的3D语义占据生成，在Occ3D-nuScenes上以纯视觉输入就达到IoU 83.01/mIoU 20.92，大幅超越现有自动标注方法。
 tags:
   - "ICCV 2025 (Highlight)"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agent-Omit: Adaptive Context Omission for Efficient LLM Agents
 description: >-
-  [ICML 2026][LLM Agent][上下文管理] 通过 Monte-Carlo rollout 量化"哪些回合的 thought / observation 可以省"，再用冷启动 SFT + 双采样 omit-aware GRPO 训出能自适应跳过冗余思考和观测的 8B agent…
+  [ICML 2026][LLM Agent][上下文管理] 通过 Monte-Carlo rollout 量化"哪些回合的 thought / observation 可以省"，再用冷启动 SFT + 双采样 omit-aware GRPO 训出能自适应跳过冗余思考和观测的 8B agent，五个基准上 token 用量大降而准确率与七大前沿模型持平。
 tags:
   - "ICML 2026"
   - "LLM Agent"

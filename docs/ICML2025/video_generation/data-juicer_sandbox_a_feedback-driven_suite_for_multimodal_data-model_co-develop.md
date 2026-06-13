@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development
 description: >-
-  [ICML 2025][视频生成][数据-模型协同开发] 提出 Data-Juicer Sandbox 沙箱套件，通过"探测-分析-精炼"(Probe-Analyze-Refine) 工作流，在低成本小规模实验中系统探索数据处理算子 (OP) 与模型性能的交互关系，将获得的数据配方迁移到大规模场景…
+  [ICML 2025 Spotlight][视频生成][数据-模型协同开发] 提出 Data-Juicer Sandbox 沙箱套件，通过"探测-分析-精炼"(Probe-Analyze-Refine) 工作流，在低成本小规模实验中系统探索数据处理算子 (OP) 与模型性能的交互关系，将获得的数据配方迁移到大规模场景，在 VBench 排行榜取得第一名。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "视频生成"
   - "数据-模型协同开发"
   - "多模态大模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cover Learning for Large-Scale Topology Representation
 description: >-
-  [ICML2025][NLP理解][Cover Learning] 提出 Cover Learning 作为一种统一的无监督学习问题，基于优化的视角设计三项损失函数（测度、几何、拓扑）学习数据集的拓扑忠实覆盖，所得单纯复形在拓扑推断中比标准几何复形更紧凑…
+  [ICML2025][NLP理解][Cover Learning] 提出 Cover Learning 作为一种统一的无监督学习问题，基于优化的视角设计三项损失函数（测度、几何、拓扑）学习数据集的拓扑忠实覆盖，所得单纯复形在拓扑推断中比标准几何复形更紧凑，在大规模拓扑可视化中比 Mapper 图能表示更高维信息。
 tags:
   - "ICML2025"
   - "NLP理解"

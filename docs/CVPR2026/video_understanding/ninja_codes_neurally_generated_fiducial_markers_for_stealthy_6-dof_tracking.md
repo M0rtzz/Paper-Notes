@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Ninja Codes: Neurally Generated Fiducial Markers for Stealthy 6-DoF Tracking
 description: >-
-  [CVPR 2026][视频理解][基准标记] Ninja Codes 利用深度隐写术技术，通过端到端训练的编码器将任意图像转化为视觉上不显眼的基准标记，可用标准打印机打印并用RGB相机检测，实现隐蔽的6-DoF位置追踪。
+  [CVPR 2026 Findings][视频理解][基准标记] Ninja Codes 利用深度隐写术技术，通过端到端训练的编码器将任意图像转化为视觉上不显眼的基准标记，可用标准打印机打印并用RGB相机检测，实现隐蔽的6-DoF位置追踪。 1. 领域现状：传统基准标记（ArUco、AprilTag等）因低成本、易部署和鲁棒…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "视频理解"
   - "基准标记"
   - "6-DoF追踪"

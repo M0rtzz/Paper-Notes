@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Uni-Retrieval: A Multi-Style Retrieval Framework for STEM's Education
 description: >-
-  [ACL 2025][STEM教育检索] 本文提出面向 STEM 教育场景的多风格多模态检索任务和数据集 SER（24,000+ 查询对），以及基于 Prompt Bank 的轻量检索模型 Uni-Retrieval…
+  [ACL 2025][LLM 其他][STEM教育检索] 本文提出面向 STEM 教育场景的多风格多模态检索任务和数据集 SER（24,000+ 查询对），以及基于 Prompt Bank 的轻量检索模型 Uni-Retrieval，通过原型学习提取查询风格特征并动态选择提示向量来增强不同风格（文本、草图、艺术、低分辨率、语音）的检索性能，在 STEM 教育检索和传统检索数据集上均超越已有方法。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "STEM教育检索"
   - "多风格检索"
   - "提示学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mesh Field Theory: Port–Hamiltonian Formulation of Mesh-Based Physics
 description: >-
-  [ICML 2026][物理/科学计算][网格物理] 从「局部性 + 置换等变 + 朝向协变 + 能量守恒/耗散不等式」四条物理原理出发，证明任何满足这些公理的网格物理动力学在雅可比层面都可以局部约化为 port-Hamiltonian 形式——其中守恒互联结构 $J$ 完全由网格拓扑（符号关联矩阵 $D_k…
+  [ICML 2026][物理/科学计算][网格物理] 从「局部性 + 置换等变 + 朝向协变 + 能量守恒/耗散不等式」四条物理原理出发，证明任何满足这些公理的网格物理动力学在雅可比层面都可以局部约化为 port-Hamiltonian 形式——其中守恒互联结构 $J$ 完全由网格拓扑（符号关联矩阵 $D_k$）固定，度量与耗散通过可学的 $G, R$ 进入；据此设计的 MeshFT-Net 在长时间 rollout 上能量漂移近零、色散与动量正确，并大幅领先 MGN / HNN。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

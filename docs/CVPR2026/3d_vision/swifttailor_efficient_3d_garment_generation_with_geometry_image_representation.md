@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SwiftTailor: Efficient 3D Garment Generation with Geometry Image Representation
 description: >-
-  [CVPR2026][3D视觉][3D服装生成] 提出两阶段轻量框架SwiftTailor，通过PatternMaker预测缝纫样板 + GarmentSewer将其转换为统一UV空间的Garment Geometry Image，结合逆映射与动态拼接直接生成3D服装网格…
+  [CVPR2026][3D视觉][3D服装生成] 提出两阶段轻量框架SwiftTailor，通过PatternMaker预测缝纫样板 + GarmentSewer将其转换为统一UV空间的Garment Geometry Image，结合逆映射与动态拼接直接生成3D服装网格，推理速度比现有方法快数十倍且达到SOTA质量。
 tags:
   - "CVPR2026"
   - "3D视觉"

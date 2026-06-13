@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarking Uncertainty Quantification Methods for Large Language Models with LM-Polygraph
 description: >-
-  [ACL 2025 (TACL 2025)][LLM评测][不确定性量化] 构建了 LM-Polygraph 不确定性量化（UQ）基准，实现了30+种SOTA方法，在11个文本生成任务上系统评估了UQ和置信度归一化技术的效果，为LLM幻觉检测提供了统一的评测框架。
+  [ACL 2025 (TACL 2025)][LLM评测][不确定性量化] 构建了 LM-Polygraph 不确定性量化（UQ）基准，实现了30+种SOTA方法，在11个文本生成任务上系统评估了UQ和置信度归一化技术的效果，为LLM幻觉检测提供了统一的评测框架。 领域现状：大语言模型的快速发展推动了其在各种场景中的应用…
 tags:
   - "ACL 2025 (TACL 2025)"
   - "LLM评测"

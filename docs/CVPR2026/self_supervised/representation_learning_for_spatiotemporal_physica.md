@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Representation Learning for Spatiotemporal Physical Systems
 description: >-
-  [CVPR 2026][自监督学习][JEPA] 在三个 PDE 物理系统（活性物质、剪切流、Rayleigh-Bénard 对流）上系统比较四种自监督/物理建模方法，发现隐空间预测（JEPA）在物理参数估计任务上全面优于像素级预测（VideoMAE）——MSE 相对改善 28%~51%…
+  [CVPR 2026][自监督学习][JEPA] 在三个 PDE 物理系统（活性物质、剪切流、Rayleigh-Bénard 对流）上系统比较四种自监督/物理建模方法，发现隐空间预测（JEPA）在物理参数估计任务上全面优于像素级预测（VideoMAE）——MSE 相对改善 28%~51%，且 10% 微调数据即可超越 VideoMAE 的 100% 数据表现。同时，专为物理建模设计的方法并非总是最优选择。
 tags:
   - "CVPR 2026"
   - "自监督学习"

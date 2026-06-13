@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visually-Guided Policy Optimization for Multimodal Reasoning
 description: >-
-  [ACL2026][强化学习][多模态推理] VGPO 在 RLVR 训练中用隐藏状态相似度定位视觉相关 token，再通过后段视觉补偿和轨迹内/轨迹间优势重加权强化视觉关注，使 Qwen2.5-VL-7B 在数学多模态推理和视觉依赖任务上超过 GRPO/DAPO 及已有视觉增强 RL 方法。
+  [ACL2026][强化学习][多模态推理] VGPO 在 RLVR 训练中用隐藏状态相似度定位视觉相关 token，再通过后段视觉补偿和轨迹内/轨迹间优势重加权强化视觉关注，使 Qwen2.5-VL-7B 在数学多模态推理和视觉依赖任务上超过 GRPO/DAPO 及已有视觉增强 RL 方法。 领域现状：RLVR 和 GRP…
 tags:
   - "ACL2026"
   - "强化学习"
@@ -17,7 +17,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2604.09349](https://arxiv.org/abs/2604.09349)  
 **代码**: https://github.com/wzb-bupt/VGPO  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: 多模态推理, 强化学习, GRPO, 视觉注意力, 视觉遗忘
 
 ## 一句话总结

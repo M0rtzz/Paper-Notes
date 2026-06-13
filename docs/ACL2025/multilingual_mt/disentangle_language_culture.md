@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangling Language and Culture for Evaluating Multilingual Large Language Models
 description: >-
-  [ACL 2025][多语言/翻译][多语言评估] 提出 Dual Evaluation Framework，将多语言 LLM 评估沿"语言媒介"和"文化语境"两个维度解耦，发现"文化-语言协同"(Cultural-Linguistic Synergy) 现象——模型在文化语境与提问语言对齐时表现更好…
+  [ACL 2025][多语言/翻译][多语言评估] 提出 Dual Evaluation Framework，将多语言 LLM 评估沿"语言媒介"和"文化语境"两个维度解耦，发现"文化-语言协同"(Cultural-Linguistic Synergy) 现象——模型在文化语境与提问语言对齐时表现更好，并通过 FFN 神经元激活分析从可解释性角度给出解释。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

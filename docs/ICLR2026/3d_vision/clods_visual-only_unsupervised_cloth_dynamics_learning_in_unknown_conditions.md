@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CloDS: Visual-Only Unsupervised Cloth Dynamics Learning in Unknown Conditions
 description: >-
-  [ICLR 2026][3D视觉][布料动力学] CloDS 提出首个从多视角视频中无监督学习布料动力学的框架，通过 Spatial Mapping Gaussian Splatting 建立 2D 图像到 3D 网格的可微映射，结合双位置不透明度调制解决自遮挡问题…
+  [ICLR 2026][3D视觉][布料动力学] CloDS 提出首个从多视角视频中无监督学习布料动力学的框架，通过 Spatial Mapping Gaussian Splatting 建立 2D 图像到 3D 网格的可微映射，结合双位置不透明度调制解决自遮挡问题，使 GNN 在无物理参数监督下就能学到接近全监督水平的布料动力学。
 tags:
   - "ICLR 2026"
   - "3D视觉"

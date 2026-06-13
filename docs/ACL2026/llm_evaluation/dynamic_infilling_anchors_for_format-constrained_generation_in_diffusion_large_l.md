@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Infilling Anchors for Format-Constrained Generation in Diffusion Large Language Models
 description: >-
-  [ACL 2026][LLM评测][扩散模型] DIA 是一种无需训练的扩散大语言模型格式约束生成方法，通过先预测结束锚点位置再在锚点间迭代填充，显著提升 reasoning template 和 JSON 输出的格式正确率，并缓解固定锚点导致的截断或冗余。
+  [ACL 2026][LLM评测][扩散模型] DIA 是一种无需训练的扩散大语言模型格式约束生成方法，通过先预测结束锚点位置再在锚点间迭代填充，显著提升 reasoning template 和 JSON 输出的格式正确率，并缓解固定锚点导致的截断或冗余。 领域现状：diffusion large language mod…
 tags:
   - "ACL 2026"
   - "LLM评测"

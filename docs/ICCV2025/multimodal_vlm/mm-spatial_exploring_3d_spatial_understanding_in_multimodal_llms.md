@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-Spatial: Exploring 3D Spatial Understanding in Multimodal LLMs
 description: >-
-  [ICCV 2025][多模态VLM][3D空间理解] Apple 提出 CA-VQA 数据集和 MM-Spatial 模型，利用高质量 3D 场景数据和开放集标注生成涵盖空间关系预测、度量估计和 3D grounding 的训练/评估数据集，训练出一个通用型 MLLM…
+  [ICCV 2025][多模态VLM][3D空间理解] Apple 提出 CA-VQA 数据集和 MM-Spatial 模型，利用高质量 3D 场景数据和开放集标注生成涵盖空间关系预测、度量估计和 3D grounding 的训练/评估数据集，训练出一个通用型 MLLM，在 3D 空间理解 benchmark 上达到 SOTA，同时保持其他任务的竞争力。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

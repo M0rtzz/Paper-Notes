@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPAGBias: Uncovering and Tracing Structured Spatial Gender Bias in Large Language Models
 description: >-
-  [ACL 2026][社会计算][空间性别偏见] 本文提出 SPAGBias 框架，首次系统评估 LLM 在城市微观空间语境中的性别偏见，通过显式偏见、概率偏见和建构偏见三个诊断层揭示了 LLM 中结构化的空间-性别关联模式，并追溯偏见在模型开发全流程中的嵌入与放大。
+  [ACL 2026][社会计算][空间性别偏见] 本文提出 SPAGBias 框架，首次系统评估 LLM 在城市微观空间语境中的性别偏见，通过显式偏见、概率偏见和建构偏见三个诊断层揭示了 LLM 中结构化的空间-性别关联模式，并追溯偏见在模型开发全流程中的嵌入与放大。 领域现状：LLM 正越来越多地应用于城市规划、导航和灾害…
 tags:
   - "ACL 2026"
   - "社会计算"

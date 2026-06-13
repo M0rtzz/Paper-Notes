@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FairI Tales: Evaluation of Fairness in Indian Contexts with a Focus on Bias and Stereotypes
 description: >-
-  [ACL 2025][AI安全][公平性] 本文提出 Indic-Bias，首个面向印度多元社会的大规模 LLM 公平性基准，通过 20,000 个人工验证的场景模板在三大评估任务上测试 14 个 LLM，揭示模型对达利特等边缘化群体存在严重负面偏见，且超过 70% 的情况下会强化刻板印象。
+  [ACL 2025][AI安全][公平性] 本文提出 Indic-Bias，首个面向印度多元社会的大规模 LLM 公平性基准，通过 20,000 个人工验证的场景模板在三大评估任务上测试 14 个 LLM，揭示模型对达利特等边缘化群体存在严重负面偏见，且超过 70% 的情况下会强化刻板印象。 领域现状：LLM 的公平性研究已…
 tags:
   - "ACL 2025"
   - "AI安全"

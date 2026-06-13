@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Suppressing Non-Semantic Noise in Masked Image Modeling Representations
 description: >-
-  [CVPR 2026][自监督学习][掩码图像建模] 本文揭示了掩码图像建模（MIM）学到的表征中保留了大量非语义信息（如纹理、颜色等底层特征），并提出了一种无需训练的后处理方法 SOAP（Semantically Orthogonal Artifact Projection）…
+  [CVPR 2026][自监督学习][掩码图像建模] 本文揭示了掩码图像建模（MIM）学到的表征中保留了大量非语义信息（如纹理、颜色等底层特征），并提出了一种无需训练的后处理方法 SOAP（Semantically Orthogonal Artifact Projection），通过 PCA 识别并投影去除非语义成分，在多种 MIM 模型上一致提升零样本性能。
 tags:
   - "CVPR 2026"
   - "自监督学习"

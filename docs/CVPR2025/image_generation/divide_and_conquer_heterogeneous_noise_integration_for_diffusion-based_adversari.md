@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Divide and Conquer: Heterogeneous Noise Integration for Diffusion-based Adversarial Purification
 description: >-
-  [CVPR 2025][图像生成][对抗净化] 提出基于注意力掩码的异构噪声扩散净化策略，对分类器关注的关键像素施加高强度噪声以消除对抗扰动，对其余区域施加低强度噪声以保留语义信息，并通过单步重采样大幅降低计算开销。
+  [CVPR 2025][图像生成][对抗净化] 提出基于注意力掩码的异构噪声扩散净化策略，对分类器关注的关键像素施加高强度噪声以消除对抗扰动，对其余区域施加低强度噪声以保留语义信息，并通过单步重采样大幅降低计算开销。 现有基于扩散模型的对抗净化方法（如 DiffPure）在前向过程中对所有像素均匀施加相同强度噪声…
 tags:
   - "CVPR 2025"
   - "图像生成"

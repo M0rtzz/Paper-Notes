@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let's Think in Two Steps: Mitigating Agreement Bias in MLLMs with Self-Grounded Verification
 description: >-
-  [ICLR 2026][多模态VLM][mllm-as-verifier] 本文发现多模态大语言模型（MLLM）作为 agent 行为验证器时存在严重的"同意偏差"（agreement bias）——系统性地过度认可 agent 行为，并提出 Self-Grounded Verification（SGV）方法…
+  [ICLR 2026][多模态VLM][mllm-as-verifier] 本文发现多模态大语言模型（MLLM）作为 agent 行为验证器时存在严重的"同意偏差"（agreement bias）——系统性地过度认可 agent 行为，并提出 Self-Grounded Verification（SGV）方法，通过两步生成（先提取行为先验、再条件化验证）缓解该偏差，在 web 导航、桌面操作和机器人操控任务中将失败检测率提升最高 25pp、准确率提升 14pp。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

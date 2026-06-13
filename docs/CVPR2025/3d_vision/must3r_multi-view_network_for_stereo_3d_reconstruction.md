@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUSt3R: Multi-view Network for Stereo 3D Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][3D重建] 本文提出MUSt3R，将DUSt3R从成对架构扩展为多视图架构：通过对称化解码器（参数减半）+多层memory机制实现任意数量图像在统一坐标系下的高帧率3D重建，同一网络可同时处理离线SfM和在线Visual Odometry场景…
+  [CVPR 2025][3D视觉][3D重建] 本文提出MUSt3R，将DUSt3R从成对架构扩展为多视图架构：通过对称化解码器（参数减半）+多层memory机制实现任意数量图像在统一坐标系下的高帧率3D重建，同一网络可同时处理离线SfM和在线Visual Odometry场景，在TUM-RGBD无标定VO中ATE仅5.5cm。
 tags:
   - "CVPR 2025"
   - "3D视觉"

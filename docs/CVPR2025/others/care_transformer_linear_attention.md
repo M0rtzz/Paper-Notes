@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CARE Transformer: Mobile-Friendly Linear Visual Transformer via Decoupled Dual Interaction
 description: >-
-  [CVPR 2025][线性注意力] 本文提出CARE Transformer，通过非对称特征解耦将局部归纳偏置和长距离依赖的学习分离，并设计动态记忆单元和双交互模块充分利用特征互补性，实现了移动端友好的线性复杂度视觉Transformer…
+  [CVPR 2025][线性注意力] 本文提出CARE Transformer，通过非对称特征解耦将局部归纳偏置和长距离依赖的学习分离，并设计动态记忆单元和双交互模块充分利用特征互补性，实现了移动端友好的线性复杂度视觉Transformer，在ImageNet上以仅0.7 GMACs达到78.4% top-1精度。
 tags:
   - "CVPR 2025"
   - "线性注意力"

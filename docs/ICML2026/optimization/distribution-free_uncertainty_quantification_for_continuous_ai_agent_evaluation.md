@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distribution-Free Uncertainty Quantification for Continuous AI Agent Evaluation
 description: >-
-  [ICML 2026][优化/理论][conformal prediction] 本文提出 AgentPulse 框架，将 split conformal、adaptive conformal inference (ACI)、Mondrian conformal 与 BH-FDR 组合…
+  [ICML 2026][优化/理论][conformal prediction] 本文提出 AgentPulse 框架，将 split conformal、adaptive conformal inference (ACI)、Mondrian conformal 与 BH-FDR 组合，为 50 个 AI agent 的连续打分提供分布无关的覆盖率保证、组合管线的不确定性边界以及带 FDR 控制的排名弃权机制，把"测量不确定性"作为评测的一等输出。
 tags:
   - "ICML 2026"
   - "优化/理论"

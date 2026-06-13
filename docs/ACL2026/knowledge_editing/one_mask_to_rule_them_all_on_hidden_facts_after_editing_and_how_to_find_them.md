@@ -2,9 +2,9 @@
 title: >-
   [论文解读] One Mask to Rule Them All: On Hidden Facts after Editing and How to Find Them
 description: >-
-  [ACL2026][知识编辑][ROME] 这篇论文发现 ROME / MEMIT 并没有真正覆盖旧知识，而是通过共享的过度注意力机制压制旧知识；一个稀疏二值 mask 就能反转多数编辑，并把新编辑成功率从 98% 降到 38%。
+  [ACL2026 Findings][知识编辑][ROME] 这篇论文发现 ROME / MEMIT 并没有真正覆盖旧知识，而是通过共享的过度注意力机制压制旧知识；一个稀疏二值 mask 就能反转多数编辑，并把新编辑成功率从 98% 降到 38%。 领域现状：知识编辑希望在不重新训练 LLM 的情况下更新特定事实…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "知识编辑"
   - "ROME"
   - "MEMIT"

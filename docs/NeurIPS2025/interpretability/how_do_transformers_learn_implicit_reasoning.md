@@ -2,9 +2,9 @@
 title: >-
   [论文解读] How Do Transformers Learn Implicit Reasoning?
 description: >-
-  [NeurIPS 2025][可解释性][implicit reasoning] 在精细控制的符号环境中从零训练 Transformer，发现多跳隐式推理经历"记忆→分布内泛化→跨分布泛化"三个阶段，核心机制不是中间实体的可解码性，而是其在余弦空间中的聚类一致性——同一中间实体的表示在不同查询中形成紧密聚类时…
+  [NeurIPS 2025 Spotlight][可解释性][implicit reasoning] 在精细控制的符号环境中从零训练 Transformer，发现多跳隐式推理经历"记忆→分布内泛化→跨分布泛化"三个阶段，核心机制不是中间实体的可解码性，而是其在余弦空间中的聚类一致性——同一中间实体的表示在不同查询中形成紧密聚类时，推理能力才涌现。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "可解释性"
   - "implicit reasoning"
   - "multi-hop"

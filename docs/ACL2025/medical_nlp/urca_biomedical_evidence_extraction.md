@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies
 description: >-
-  [ACL 2025][医疗NLP][evidence extraction] 本文提出 URCA（Uniform Retrieval Clustered Augmentation）框架，通过均匀检索+聚类+知识提取的 RAG 流程，从 RCT 研究全文中自动提取与临床问题相关的科学证据结论…
+  [ACL 2025][医疗NLP][evidence extraction] 本文提出 URCA（Uniform Retrieval Clustered Augmentation）框架，通过均匀检索+聚类+知识提取的 RAG 流程，从 RCT 研究全文中自动提取与临床问题相关的科学证据结论，在新构建的 CochraneForest 数据集上比最佳基线提升了 8.81% F1。
 tags:
   - "ACL 2025"
   - "医疗NLP"

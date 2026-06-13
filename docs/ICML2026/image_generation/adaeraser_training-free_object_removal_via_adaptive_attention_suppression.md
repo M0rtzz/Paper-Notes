@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaEraser: Training-Free Object Removal via Adaptive Attention Suppression
 description: >-
-  [ICML 2026][图像生成][目标移除] AdaEraser 用“目标残留程度”自适应调节扩散模型 self-attention 抑制强度，在不训练新模型的情况下同时提升目标删除完整性和背景重建质量…
+  [ICML 2026][图像生成][目标移除] AdaEraser 用“目标残留程度”自适应调节扩散模型 self-attention 抑制强度，在不训练新模型的情况下同时提升目标删除完整性和背景重建质量，并在 Mulan 与 OABench 上超过训练式和 training-free object removal 方法。
 tags:
   - "ICML 2026"
   - "图像生成"

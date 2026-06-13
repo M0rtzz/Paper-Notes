@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Purifying Shampoo: Investigating Shampoo's Heuristics by Decomposing its Preconditioner
 description: >-
-  [NeurIPS 2025][优化/理论][Shampoo优化器] 通过将Shampoo预条件矩阵分解为特征值和特征基两部分，揭示了学习率嫁接(grafting)实质上是弥补特征值的陈旧性和缩放偏差，并提出了特征值校正和自适应特征基更新频率来替代这些启发式技巧。
+  [NeurIPS 2025][优化/理论][Shampoo优化器] 通过将Shampoo预条件矩阵分解为特征值和特征基两部分，揭示了学习率嫁接(grafting)实质上是弥补特征值的陈旧性和缩放偏差，并提出了特征值校正和自适应特征基更新频率来替代这些启发式技巧。 Shampoo是一种基于Kronecker因子分解的预条件随机…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

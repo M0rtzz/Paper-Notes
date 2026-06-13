@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Feedback Efficient Active Target Discovery in Partially Observable Environments
 description: >-
-  [NeurIPS 2025][医学图像][主动目标发现] 提出 DiffATD，利用扩散模型的逆向过程构建 belief 分布来平衡探索与利用，在部分可观测环境中无需任何监督训练即可高效发现目标区域，适用于医学影像、物种发现和遥感等多领域。
+  [NeurIPS 2025][医学图像][主动目标发现] 提出 DiffATD，利用扩散模型的逆向过程构建 belief 分布来平衡探索与利用，在部分可观测环境中无需任何监督训练即可高效发现目标区域，适用于医学影像、物种发现和遥感等多领域。 在许多科学和工程领域（如 MRI 扫描、搜索救援、药物发现），数据采集成本极高…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

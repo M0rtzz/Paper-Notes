@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HORIZON: A Benchmark for in-the-wild User Behaviour Modeling
 description: >-
-  [ACL 2026][推荐系统][序列推荐] 本文提出 HORIZON，首个全开源的大规模跨领域长期推荐基准，基于 Amazon Reviews 合并构建包含 54M 用户和 35M 商品的统一交互历史，设计了沿时间轴和用户维度解耦的四象限评估协议…
+  [ACL 2026 Findings][推荐系统][序列推荐] 本文提出 HORIZON，首个全开源的大规模跨领域长期推荐基准，基于 Amazon Reviews 合并构建包含 54M 用户和 35M 商品的统一交互历史，设计了沿时间轴和用户维度解耦的四象限评估协议，揭示了 BERT4Rec 等模型在分布内表现强劲但在时序外推和未见用户场景下显著退化的现象，且 LLM 在用户行为建模上并未一致优于专用架构。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "推荐系统"
   - "序列推荐"
   - "跨领域用户建模"

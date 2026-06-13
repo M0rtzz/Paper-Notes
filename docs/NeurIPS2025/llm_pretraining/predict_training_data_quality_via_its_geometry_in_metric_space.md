@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predict Training Data Quality via Its Geometry in Metric Space
 description: >-
-  [NeurIPS 2025][预训练][持久同调] 提出基于持久同调（Persistent Homology）的训练数据多样性度量方法，证明数据的几何/拓扑结构特征能够有效预测模型性能，优于传统基于熵的Vendi Score等指标。
+  [NeurIPS 2025][预训练][持久同调] 提出基于持久同调（Persistent Homology）的训练数据多样性度量方法，证明数据的几何/拓扑结构特征能够有效预测模型性能，优于传统基于熵的Vendi Score等指标。 高质量训练数据是机器学习的基石。近期研究表明训练数据多样性与模型性能强相关…
 tags:
   - "NeurIPS 2025"
   - "预训练"

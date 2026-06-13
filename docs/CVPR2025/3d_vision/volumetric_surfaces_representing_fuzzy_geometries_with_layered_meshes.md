@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Volumetric Surfaces: Representing Fuzzy Geometries with Layered Meshes
 description: >-
-  [CVPR 2025][3D视觉][多层网格] 提出 Volumetric Surfaces 表示方法，通过学习自适应间距的多层半透明 SDF 网格壳（k-SDF），以固定顺序光栅化渲染，实现在低功耗笔记本和智能手机上对毛发等模糊几何的实时高质量视图合成。
+  [CVPR 2025][3D视觉][多层网格] 提出 Volumetric Surfaces 表示方法，通过学习自适应间距的多层半透明 SDF 网格壳（k-SDF），以固定顺序光栅化渲染，实现在低功耗笔记本和智能手机上对毛发等模糊几何的实时高质量视图合成。 实时视图合成在移动设备上面临处理能力、内存和散热等严格约束…
 tags:
   - "CVPR 2025"
   - "3D视觉"

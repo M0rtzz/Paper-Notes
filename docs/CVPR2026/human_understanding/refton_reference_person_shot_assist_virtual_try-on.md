@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RefTon: Reference Person Shot Assist Virtual Try-on
 description: >-
-  [CVPR 2026][人体理解][虚拟试穿] 本文提出 RefTon，一个基于 Flux-Kontext 的人对人虚拟试穿框架，通过引入额外参考图像（其他人穿着目标服装的照片）来提供更准确的服装细节信息…
+  [CVPR 2026][人体理解][虚拟试穿] 本文提出 RefTon，一个基于 Flux-Kontext 的人对人虚拟试穿框架，通过引入额外参考图像（其他人穿着目标服装的照片）来提供更准确的服装细节信息，同时通过两阶段训练策略和缩放位置索引机制实现了无需辅助条件（如 DensePose、分割掩码）的端到端试穿，在 VITON-HD 和 DressCode 上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "人体理解"

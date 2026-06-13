@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ConTextTab: A Semantics-Aware Tabular In-Context Learner
 description: >-
-  [NeurIPS 2025][LLM评测][表格学习] ConTextTab 将语义嵌入（列名、分类值的文本编码）融入 table-native ICL 架构，并在大规模真实表格数据（T4, ~2.18M 表）上预训练，在语义丰富的 CARTE 基准上取得新 SOTA，同时在非语义基准上保持与现有方法竞争力。
+  [NeurIPS 2025 Spotlight][LLM评测][表格学习] ConTextTab 将语义嵌入（列名、分类值的文本编码）融入 table-native ICL 架构，并在大规模真实表格数据（T4, ~2.18M 表）上预训练，在语义丰富的 CARTE 基准上取得新 SOTA，同时在非语义基准上保持与现有方法竞争力。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM评测"
   - "表格学习"
   - "上下文学习"

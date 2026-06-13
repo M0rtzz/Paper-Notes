@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Systematizing LLM Persona Design: A Four-Quadrant Technical Taxonomy for AI Companions
 description: >-
-  [NeurIPS 2025 (LLM Persona Workshop)][LLM/NLP][LLM Persona] 提出 LLM persona 设计的四象限技术分类框架，沿"虚拟 vs 具身"和"情感陪伴 vs 功能增强"两轴…
+  [NeurIPS 2025 (LLM Persona Workshop)][LLM 其他][LLM Persona] 提出 LLM persona 设计的四象限技术分类框架，沿"虚拟 vs 具身"和"情感陪伴 vs 功能增强"两轴，系统化分析了从虚拟伴侣、游戏 NPC 到护理机器人等不同场景下的技术栈、核心挑战和伦理风险。
 tags:
   - "NeurIPS 2025 (LLM Persona Workshop)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM Persona"
   - "AI Companion"
   - "Taxonomy"

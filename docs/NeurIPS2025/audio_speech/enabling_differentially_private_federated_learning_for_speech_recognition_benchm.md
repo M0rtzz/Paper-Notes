@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enabling Differentially Private Federated Learning for Speech Recognition: Benchmarks, Adaptive Optimizers and Gradient Clipping
 description: >-
-  [NeurIPS 2025][音频/语音][差分隐私] 首次为端到端ASR建立FL+DP的实用基准，通过**逐层裁剪（per-layer clipping）**结合**LAMB优化器**的层级梯度归一化，在强隐私保证下实现仅1.3%~4.6%的WER绝对退化。
+  [NeurIPS 2025][音频/语音][差分隐私] 首次为端到端ASR建立FL+DP的实用基准，通过逐层裁剪（per-layer clipping）：结合LAMB优化器：的层级梯度归一化，在强隐私保证下实现仅1.3%~4.6%的WER绝对退化。 领域现状： 联邦学习（FL）和差分隐私（DP）在NLP/CV任务上已有广泛研…
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection
 description: >-
-  [AAAI 2026][AI安全][深度伪造检测] 提出 DFF-Adapter（DeepFake Fine-Grained Adapter），针对 DINOv2 设计的轻量级深度伪造检测微调方案。通过在每个 Transformer 块中注入三分支适配器（真实性检测头、伪造类型分类头、共享头）…
+  [AAAI 2026][AI安全][深度伪造检测] 提出 DFF-Adapter（DeepFake Fine-Grained Adapter），针对 DINOv2 设计的轻量级深度伪造检测微调方案。通过在每个 Transformer 块中注入三分支适配器（真实性检测头、伪造类型分类头、共享头），结合 Forgery-Aware Multi-Head Router 实现子空间级 LoRA 专家动态路由，利用辅助的伪造类型分类任务增强主任务的伪影敏感性，仅 3.5M 可训练参数即在多个跨数据集评估中达到 SOTA。
 tags:
   - "AAAI 2026"
   - "AI安全"

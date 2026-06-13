@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models
 description: >-
-  [CVPR 2025][模型压缩][Mixture-of-Experts] 提出DeRS（Decompose-Replace-Synthesis）范式，利用upcycled MoE专家间的极高相似性（余弦相似度>0.999），将N个专家分解为1个共享基础权重+N个轻量delta权重…
+  [CVPR 2025][模型压缩][Mixture-of-Experts] 提出DeRS（Decompose-Replace-Synthesis）范式，利用upcycled MoE专家间的极高相似性（余弦相似度>0.999），将N个专家分解为1个共享基础权重+N个轻量delta权重，通过稀疏化/量化/低秩表示压缩delta权重，在MoE层参数减少65%的同时性能不降，或训练时额外参数减少2270倍。
 tags:
   - "CVPR 2025"
   - "模型压缩"

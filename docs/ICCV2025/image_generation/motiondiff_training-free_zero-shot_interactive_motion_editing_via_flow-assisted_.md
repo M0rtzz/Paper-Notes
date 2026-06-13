@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionDiff: Training-Free Zero-Shot Interactive Motion Editing via Flow-Assisted Multi-View Diffusion
 description: >-
-  [ICCV 2025][图像生成][运动编辑] MotionDiff 提出一种免训练、零样本的多视图运动编辑方法，通过点运动学模型（PKM）从静态场景估计多视图光流，再利用解耦运动表示引导 Stable Diffusion 生成高质量、多视图一致的运动编辑结果。
+  [ICCV 2025][图像生成][运动编辑] MotionDiff 提出一种免训练、零样本的多视图运动编辑方法，通过点运动学模型（PKM）从静态场景估计多视图光流，再利用解耦运动表示引导 Stable Diffusion 生成高质量、多视图一致的运动编辑结果。 现有痛点 现有痛点：领域现状：利用生成模型进行可控编辑是当前的…
 tags:
   - "ICCV 2025"
   - "图像生成"

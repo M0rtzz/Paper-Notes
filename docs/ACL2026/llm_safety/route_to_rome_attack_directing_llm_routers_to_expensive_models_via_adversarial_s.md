@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Route to Rome Attack: Directing LLM Routers to Expensive Models via Adversarial Suffixes
 description: >-
-  [ACL 2026][LLM安全][LLM路由攻击] 本文提出 R2A（Route to Rome Attack），通过在黑盒设置下构建混合集成代理路由器并优化通用对抗后缀，将 LLM 路由器的路由决策从廉价弱模型导向昂贵强模型——在 7 个开源路由器和 2 个商用路由器（GPT-5-Auto、OpenRou…
+  [ACL 2026][LLM安全][LLM路由攻击] 本文提出 R2A（Route to Rome Attack），通过在黑盒设置下构建混合集成代理路由器并优化通用对抗后缀，将 LLM 路由器的路由决策从廉价弱模型导向昂贵强模型——在 7 个开源路由器和 2 个商用路由器（GPT-5-Auto、OpenRouter）上平均攻击成功率提升 49%，推理成本增加 2.7-2.9 倍。
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection
 description: >-
-  [CVPR 2025][AI安全][联邦学习] 提出 AlignIns 防御方法，通过双粒度方向对齐检测（全局方向 + 细粒度符号分析）识别联邦学习中的恶意模型更新，在 IID 和 non-IID 设置下均优于现有防御方法。
+  [CVPR 2025][AI安全][联邦学习] 提出 AlignIns 防御方法，通过双粒度方向对齐检测（全局方向 + 细粒度符号分析）识别联邦学习中的恶意模型更新，在 IID 和 non-IID 设置下均优于现有防御方法。 领域现状：联邦学习（FL）因分布式训练特性天然容易受到后门攻击，恶意客户端可提交带毒的模型更新以操纵…
 tags:
   - "CVPR 2025"
   - "AI安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RecycleLoRA: Rank-Revealing QR-Based Dual-LoRA Subspace Adaptation for Domain Generalized Semantic Segmentation
 description: >-
-  [CVPR 2026][语义分割][域泛化语义分割] 提出 RecycleLoRA，利用 Rank-Revealing QR 分解(RRQR)系统性地"回收"Vision Foundation Model预训练权重中的子空间结构，通过对次要方向和主要方向分别初始化主/子双适配器…
+  [CVPR 2026 Findings][语义分割][域泛化语义分割] 提出 RecycleLoRA，利用 Rank-Revealing QR 分解(RRQR)系统性地"回收"Vision Foundation Model预训练权重中的子空间结构，通过对次要方向和主要方向分别初始化主/子双适配器，显著提升 LoRA 的表示多样性和参数利用效率，在合成到真实和真实到真实的域泛化语义分割任务上均达到 SOTA（平均 mIoU 68.95 / 72.10）。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "语义分割"
   - "域泛化语义分割"
   - "LoRA"

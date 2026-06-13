@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WalkGPT: Grounded Vision-Language Conversation with Depth-Aware Segmentation for Pedestrian Navigation
 description: >-
-  [CVPR2026][自动驾驶][视觉语言模型] 提出 WalkGPT——首个面向行人无障碍导航的像素定位大视觉语言模型，统一对话推理、分割掩码与深度估计于单一架构中，并构建了 41k 规模的 PAVE 数据集。
+  [CVPR2026][自动驾驶][视觉语言模型] 提出 WalkGPT——首个面向行人无障碍导航的像素定位大视觉语言模型，统一对话推理、分割掩码与深度估计于单一架构中，并构建了 41k 规模的 PAVE 数据集。 行人导航安全需求迫切：城市行人路线中存在楼梯、不平地面、停放车辆、临时障碍物等静态/动态屏障…
 tags:
   - "CVPR2026"
   - "自动驾驶"

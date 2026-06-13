@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Concept-based Interpretable Models
 description: >-
-  [ICLR 2026][信息检索/RAG][概念嵌入模型] HiCEMs引入层级概念嵌入模型，通过Concept Splitting方法在预训练CEM的嵌入空间中自动发现细粒度子概念（无需额外标注），构建层级概念结构，使模型能在不同粒度层次进行测试时概念干预以提升任务性能。
+  [ICLR 2026][信息检索/RAG][概念嵌入模型] HiCEMs引入层级概念嵌入模型，通过Concept Splitting方法在预训练CEM的嵌入空间中自动发现细粒度子概念（无需额外标注），构建层级概念结构，使模型能在不同粒度层次进行测试时概念干预以提升任务性能。 现代深度神经网络因其潜在表征的不透明性而难以解释…
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

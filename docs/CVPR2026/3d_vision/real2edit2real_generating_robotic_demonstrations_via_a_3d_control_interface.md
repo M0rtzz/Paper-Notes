@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Real2Edit2Real: Generating Robotic Demonstrations via a 3D Control Interface
 description: >-
-  [CVPR 2026][3D视觉][机器人演示生成] 提出 Real2Edit2Real 框架，通过"3D 重建 → 点云编辑生成新轨迹 → 深度引导视频生成合成演示"的三阶段管线，从仅 1-5 个真实演示生成大量多样化的操作演示数据，使策略性能达到甚至超过 50 个真实演示训练的水平…
+  [CVPR 2026][3D视觉][机器人演示生成] 提出 Real2Edit2Real 框架，通过"3D 重建 → 点云编辑生成新轨迹 → 深度引导视频生成合成演示"的三阶段管线，从仅 1-5 个真实演示生成大量多样化的操作演示数据，使策略性能达到甚至超过 50 个真实演示训练的水平，数据效率提升 10-50 倍。
 tags:
   - "CVPR 2026"
   - "3D视觉"

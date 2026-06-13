@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graphically Speaking: Unmasking Abuse in Social Media with Conversation Insights
 description: >-
-  [ACL 2025][滥用语言检测] 提出一种基于图注意力网络（GAT）的上下文感知滥用语言检测框架，将 Reddit 对话建模为图结构（节点=评论，边=回复关系），利用基于 Reddit 界面渲染逻辑的 affordance-based 图裁剪策略保留关键上下文，3 层 GAT 模型达到 F1=0.7624…
+  [ACL 2025][滥用语言检测] 提出一种基于图注意力网络（GAT）的上下文感知滥用语言检测框架，将 Reddit 对话建模为图结构（节点=评论，边=回复关系），利用基于 Reddit 界面渲染逻辑的 affordance-based 图裁剪策略保留关键上下文，3 层 GAT 模型达到 F1=0.7624，显著优于无上下文基线和扁平化上下文方法，在上下文敏感样本上提升尤为明显（+4.75%）。
 tags:
   - "ACL 2025"
   - "滥用语言检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Emotions Really Affect Argument Convincingness? A Dynamic Approach with LLM-based Manipulation Checks
 description: >-
-  [ACL 2025][机器人][argument convincingness] 提出一种受心理学操控检验启发的动态框架，利用LLM调节论证的情感强度，系统考察情感对论证说服力的因果影响，发现超过半数情况下人类的说服力判断不受情感变化影响，而当情感有影响时更多是增强而非削弱说服力。
+  [ACL 2025][机器人][argument convincingness] 提出一种受心理学操控检验启发的动态框架，利用LLM调节论证的情感强度，系统考察情感对论证说服力的因果影响，发现超过半数情况下人类的说服力判断不受情感变化影响，而当情感有影响时更多是增强而非削弱说服力。 领域现状： 情感呼吁（pathos）是亚里…
 tags:
   - "ACL 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NAACA: Training-Free NeuroAuditory Attentive Cognitive Architecture with Oscillatory Working Memory for Salience-Driven Attention Gating
 description: >-
-  [ICML 2026][音频/语音][听觉显著性] 用一套受皮层振荡启发的二维波动场（OWM）做实时显著性检测，给 Audio Language Model 在长音频上当一个"训练无关的注意力门"，只把真正显著的窗口送进 ALM，从而在 XD-Violence 上把 AP 从 53.5% 拉到 70.6%…
+  [ICML 2026][音频/语音][听觉显著性] 用一套受皮层振荡启发的二维波动场（OWM）做实时显著性检测，给 Audio Language Model 在长音频上当一个"训练无关的注意力门"，只把真正显著的窗口送进 ALM，从而在 XD-Violence 上把 AP 从 53.5% 拉到 70.6%，同时减少约 40% 的 ALM 调用。
 tags:
   - "ICML 2026"
   - "音频/语音"

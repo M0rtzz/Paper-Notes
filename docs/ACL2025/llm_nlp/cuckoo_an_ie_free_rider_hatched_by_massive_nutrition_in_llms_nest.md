@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Cuckoo: An IE Free Rider Hatched by Massive Nutrition in LLM's Nest
 description: >-
-  [ACL 2025][LLM/NLP][信息抽取] 本文提出 Next Tokens Extraction (NTE) 范式，将 LLM 预训练数据中的下一个 token 预测转化为 BIO 标注的抽取任务，利用 C4 和 TuluV3 共 1.026 亿实例预训练 RoBERTa 标注器（Cuckoo）…
+  [ACL 2025][LLM 其他][信息抽取] 本文提出 Next Tokens Extraction (NTE) 范式，将 LLM 预训练数据中的下一个 token 预测转化为 BIO 标注的抽取任务，利用 C4 和 TuluV3 共 1.026 亿实例预训练 RoBERTa 标注器（Cuckoo），在少样本信息抽取任务上全面超越现有 IE 预训练模型。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "信息抽取"
   - "预训练"
   - "Next Tokens Extraction"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Phoenix: A Motion-based Self-Reflection Framework for Fine-grained Robotic Action Correction
 description: >-
-  [CVPR 2025][机器人][自纠错] 提出 Phoenix 框架，用运动指令作为桥梁连接 MLLM 的高层语义反思和底层机器人动作纠正，通过双过程运动调整机制+运动条件扩散策略实现精细粒度的操作失败恢复，并支持终身学习自我提升。
+  [CVPR 2025][机器人][自纠错] 提出 Phoenix 框架，用运动指令作为桥梁连接 MLLM 的高层语义反思和底层机器人动作纠正，通过双过程运动调整机制+运动条件扩散策略实现精细粒度的操作失败恢复，并支持终身学习自我提升。 领域现状：机器人自纠错系统是实现鲁棒操作的关键。现有方法分两类：（1）RL 方法用奖励函数…
 tags:
   - "CVPR 2025"
   - "机器人"

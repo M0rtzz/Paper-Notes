@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can a Single Model Master Both Multi-turn Conversations and Tool Use? CoALM: A Unified Conversational Agentic Language Model
 description: >-
-  [ACL 2025][LLM Agent][对话Agent] 本文提出CoALM（Conversational Agentic Language Model），通过构建融合多轮ReAct推理和复杂API调用的多任务训练数据CoALM-IT…
+  [ACL 2025][LLM Agent][对话Agent] 本文提出CoALM（Conversational Agentic Language Model），通过构建融合多轮ReAct推理和复杂API调用的多任务训练数据CoALM-IT，训练出同时擅长传统任务型对话（TOD）和语言Agent（LA）工具调用的统一模型，在MultiWOZ、BFCL V3和API-Bank三个基准上超越GPT-4o等专用模型。
 tags:
   - "ACL 2025"
   - "LLM Agent"

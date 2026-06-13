@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Membership Inference Attacks on In-Context Learning Recommendation
 description: >-
-  [ACL 2026][LLM安全][成员推断攻击] 首次系统研究 LLM-based ICL 推荐系统的成员推断攻击（MIA），设计 Similarity / Memorization / Inquiry / Poisoning 四种攻击…
+  [ACL 2026][LLM安全][成员推断攻击] 首次系统研究 LLM-based ICL 推荐系统的成员推断攻击（MIA），设计 Similarity / Memorization / Inquiry / Poisoning 四种攻击，发现基于 LLM 内在 **记忆** 的 Memorization 攻击在 MovieLens-1M 上 attack advantage ≥ 82%，且现有 prompt-based 防御（包括针对 Poisoning）几乎拦不住。
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Labyrinth and the Thread: Rethinking Regularizations in Sequential Knowledge Editing for Large Language Models
 description: >-
-  [ICML 2026][知识编辑][序列知识编辑] 本文从优化角度证明：序列编辑（SE）之所以稳定，本质是"累积更新等价于一次性编辑（OTE）的解"，而 AlphaEdit 的零空间投影、PRUNE/RECT 的后处理正则等花哨机制并非关键——只要保证 OTE-SE 对齐…
+  [ICML 2026][知识编辑][序列知识编辑] 本文从优化角度证明：序列编辑（SE）之所以稳定，本质是"累积更新等价于一次性编辑（OTE）的解"，而 AlphaEdit 的零空间投影、PRUNE/RECT 的后处理正则等花哨机制并非关键——只要保证 OTE-SE 对齐，去掉这些正则也能在 4 个主流 LLM 上稳定完成 2000 步序列编辑。
 tags:
   - "ICML 2026"
   - "知识编辑"

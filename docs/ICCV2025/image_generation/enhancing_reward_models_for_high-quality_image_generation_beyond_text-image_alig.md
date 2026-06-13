@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Reward Models for High-quality Image Generation: Beyond Text-Image Alignment
 description: >-
-  [ICCV 2025][图像生成][奖励模型] 本文揭示了基于 CLIP/BLIP 的奖励模型在评估高质量图像时的「评分悖论」——细节丰富的高质量图像反而得低分，并提出 ICT Score（Image-Contained-Text…
+  [ICCV 2025][图像生成][奖励模型] 本文揭示了基于 CLIP/BLIP 的奖励模型在评估高质量图像时的「评分悖论」——细节丰富的高质量图像反而得低分，并提出 ICT Score（Image-Contained-Text，评估图像包含文本信息的程度）和 HP Score（纯图像模态的人类偏好评分）两个新指标，在 Pick-High 数据集上训练后，偏好预测准确率提升超过 10%，并成功优化 SD3.5-Turbo 生成更高质量的图像。
 tags:
   - "ICCV 2025"
   - "图像生成"

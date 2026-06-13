@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Answer Only as Precisely as Justified: Calibrated Claim-Level Specificity Control for Agentic Systems
 description: >-
-  [ICML 2026][LLM Agent][claim 级事实校验] 这篇论文把 agentic 系统里的“说得过细但证据不够”建模为 claim 级过度承诺问题，并提出 calibrated CSS：对每个原子 claim 在精确表述、粗粒度回退和省略之间做校准选择…
+  [ICML 2026][LLM Agent][claim 级事实校验] 这篇论文把 agentic 系统里的“说得过细但证据不够”建模为 claim 级过度承诺问题，并提出 calibrated CSS：对每个原子 claim 在精确表述、粗粒度回退和省略之间做校准选择，在 LongFact 全量实验中将 OAU 从无后处理的 0.8460 提升到 0.9130，同时保留 0.9381 的特异性。
 tags:
   - "ICML 2026"
   - "LLM Agent"

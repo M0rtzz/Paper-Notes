@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multiple Choice Learning of Low-Rank Adapters for Language Modeling
 description: >-
-  [ICML 2026][音频/语音][LoRA] 本文提出 LoRA-MCL，把 Multiple Choice Learning 的"赢者通吃"训练范式搬进 LoRA 微调：把 $K$ 组低秩 adapter 当作 $K$ 个相互竞争的假设，让每条训练样本只更新最合适的那组 adapter…
+  [ICML 2026][音频/语音][LoRA] 本文提出 LoRA-MCL，把 Multiple Choice Learning 的"赢者通吃"训练范式搬进 LoRA 微调：把 $K$ 组低秩 adapter 当作 $K$ 个相互竞争的假设，让每条训练样本只更新最合适的那组 adapter，从而让单一基座模型在一次前向里就能产生多条覆盖条件分布不同模态的多样合理文本，在音频/图像描述与机器翻译上同时刷新质量–多样性帕累托前沿。
 tags:
   - "ICML 2026"
   - "音频/语音"

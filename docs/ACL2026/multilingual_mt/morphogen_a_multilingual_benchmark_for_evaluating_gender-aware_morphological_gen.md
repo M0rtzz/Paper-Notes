@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MORPHOGEN: A Multilingual Benchmark for Evaluating Gender-Aware Morphological Generation
 description: >-
-  [ACL 2026][多语言/翻译][性别感知形态生成] 本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标…
+  [ACL 2026][多语言/翻译][性别感知形态生成] 本文提出 MORPHOGEN，一个涵盖法语/阿拉伯语/印地语的大规模性别感知形态学生成基准（共 20,328 句对），定义了 GENFORM 任务（将第一人称句子改写为相反性别），并提出 SGA/GIoU/CGA 三个评估指标，对 15 个多语言 LLM 的基准测试揭示了模型在复杂形态推理、性别偏差和多实体干扰方面的系统性不足。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

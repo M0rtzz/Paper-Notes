@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DC4GS: Directional Consistency-Driven Adaptive Density Control for 3D Gaussian Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][3D Gaussian Splatting] 提出基于方向一致性（Directional Consistency）的自适应密度控制方法 DC4GS，通过利用位置梯度的角度相干性来改进 3DGS 中的 primitive 分裂决策和分裂位置选择…
+  [NeurIPS 2025][3D视觉][3D Gaussian Splatting] 提出基于方向一致性（Directional Consistency）的自适应密度控制方法 DC4GS，通过利用位置梯度的角度相干性来改进 3DGS 中的 primitive 分裂决策和分裂位置选择，在减少最多 30% primitive 数量的同时提升重建质量。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

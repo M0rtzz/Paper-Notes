@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Attention Temperature Improves the Robustness of In-Context Learning under Distribution Shift in High Dimensions
 description: >-
-  [ICML 2026][可解释性][注意力机制] 本文在高维线性回归 ICL 框架下，用一种保留 softmax 归一化与温度选择性、又解析可解的"近似 softmax 注意力"，**给出 ICL 泛化误差的闭式解和最优 attention temperature 的显式表达式** $\tau_{\text{…
+  [ICML 2026][可解释性][注意力机制] 本文在高维线性回归 ICL 框架下，用一种保留 softmax 归一化与温度选择性、又解析可解的"近似 softmax 注意力"，**给出 ICL 泛化误差的闭式解和最优 attention temperature 的显式表达式** $\tau_{\text{opt}}$，证明只要调对推理时温度就能恢复近 Bayes 最优表现；在 GPT-2、Llama2-7B 的真实 QA 中也验证了这把"轻量旋钮"的有效性。
 tags:
   - "ICML 2026"
   - "可解释性"

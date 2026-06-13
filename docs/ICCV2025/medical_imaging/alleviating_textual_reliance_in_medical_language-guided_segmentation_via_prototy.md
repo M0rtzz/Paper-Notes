@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation
 description: >-
-  [ICCV 2025][医学图像][医学图像分割] 提出ProLearn框架，首次通过原型驱动的语义近似（PSA）模块从根本上缓解医学语言引导分割对文本的依赖——仅需少量图文配对数据初始化原型空间，训练和推理均可无文本输入，在1%文本可用性下仍保持强劲性能（QaTa-COV19 Dice=0.857）…
+  [ICCV 2025][医学图像][医学图像分割] 提出ProLearn框架，首次通过原型驱动的语义近似（PSA）模块从根本上缓解医学语言引导分割对文本的依赖——仅需少量图文配对数据初始化原型空间，训练和推理均可无文本输入，在1%文本可用性下仍保持强劲性能（QaTa-COV19 Dice=0.857），且参数量比LLM方案减少1000倍，推理速度快100倍。
 tags:
   - "ICCV 2025"
   - "医学图像"

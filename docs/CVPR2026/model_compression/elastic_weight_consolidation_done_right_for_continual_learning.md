@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Elastic Weight Consolidation Done Right for Continual Learning
 description: >-
-  [CVPR 2026][模型压缩][持续学习] 本文从梯度视角系统分析了 EWC 及其变体在权重重要性估计上的根本缺陷（EWC 的梯度消失和 MAS 的冗余保护），并提出了一个极其简单的 Logits Reversal 操作来修正 Fisher 信息矩阵的计算…
+  [CVPR 2026][模型压缩][持续学习] 本文从梯度视角系统分析了 EWC 及其变体在权重重要性估计上的根本缺陷（EWC 的梯度消失和 MAS 的冗余保护），并提出了一个极其简单的 Logits Reversal 操作来修正 Fisher 信息矩阵的计算，在无样例类增量学习和多模态持续指令微调任务上大幅超越原始 EWC 及其所有变体。
 tags:
   - "CVPR 2026"
   - "模型压缩"

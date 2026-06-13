@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs
 description: >-
-  [ACL 2025][LLM/NLP] 本文系统评估了 LLM 利用抽象语义表示（AMR）进行下游任务的能力，发现 AMR 增强的 prompt 在长上下文任务（如对话摘要）中显著提升 Llama 3.1 零样本性能（余弦相似度从 66% 提升至 76%），但在短上下文任务中通常会降低性能。
+  [ACL 2025][LLM 其他] 本文系统评估了 LLM 利用抽象语义表示（AMR）进行下游任务的能力，发现 AMR 增强的 prompt 在长上下文任务（如对话摘要）中显著提升 Llama 3.1 零样本性能（余弦相似度从 66% 提升至 76%），但在短上下文任务中通常会降低性能。 1. LLM 在 NLP 任务中表…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # Can LLMs Interpret and Leverage Structured Linguistic Representations? A Case Study with AMRs

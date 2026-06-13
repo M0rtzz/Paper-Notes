@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flow-NeRF: Joint Learning of Geometry, Poses, and Dense Flow within Unified Neural Representations
 description: >-
-  [CVPR 2025][3D视觉][神经辐射场] 提出 Flow-NeRF，首次在无位姿 NeRF 框架中将场景几何、相机位姿和密集光流作为统一的联合优化目标，通过共享点采样、位姿条件化双射映射和特征消息传递机制，在新视角合成和深度估计上大幅超越先前方法，同时首次定义并实现了新视角光流估计。
+  [CVPR 2025][3D视觉][神经辐射场] 提出 Flow-NeRF，首次在无位姿 NeRF 框架中将场景几何、相机位姿和密集光流作为统一的联合优化目标，通过共享点采样、位姿条件化双射映射和特征消息传递机制，在新视角合成和深度估计上大幅超越先前方法，同时首次定义并实现了新视角光流估计。 1. 领域现状：NeRF 通常需…
 tags:
   - "CVPR 2025"
   - "3D视觉"

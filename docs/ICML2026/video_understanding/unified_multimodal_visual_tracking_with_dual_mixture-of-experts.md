@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unified Multimodal Visual Tracking with Dual Mixture-of-Experts
 description: >-
-  [ICML 2026][视频理解][视觉跟踪] OneTrackerV2 把 RGB / RGB+D / RGB+T / RGB+E / RGB+N 五种跟踪任务统一在一个网络里端到端训练…
+  [ICML 2026][视频理解][视觉跟踪] OneTrackerV2 把 RGB / RGB+D / RGB+T / RGB+E / RGB+N 五种跟踪任务统一在一个网络里端到端训练，靠 Meta Merger 做模态融合、Dual MoE 把"时空匹配"与"模态融合"两类异质特征显式拆到 T-MoE 与 M-MoE，并用 dissimilarity loss + router clustering 保证它们不塌成同一子空间。
 tags:
   - "ICML 2026"
   - "视频理解"

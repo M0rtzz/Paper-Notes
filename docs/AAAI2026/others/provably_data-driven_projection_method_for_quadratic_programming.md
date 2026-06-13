@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Data-Driven Projection Method for Quadratic Programming
 description: >-
-  [AAAI 2026][二次规划] 将数据驱动的投影矩阵学习从线性规划（LP）扩展到凸二次规划（QP），通过提出"展开主动集方法"在 Goldberg-Jerrum 框架下建模 QP 最优值的计算过程，从而建立了投影矩阵学习的伪维度上界和泛化保证。
+  [AAAI 2026][二次规划] 将数据驱动的投影矩阵学习从线性规划（LP）扩展到凸二次规划（QP），通过提出"展开主动集方法"在 Goldberg-Jerrum 框架下建模 QP 最优值的计算过程，从而建立了投影矩阵学习的伪维度上界和泛化保证。 线性规划（LP）和二次规划（QP）是凸优化中最基础的形式…
 tags:
   - "AAAI 2026"
   - "二次规划"

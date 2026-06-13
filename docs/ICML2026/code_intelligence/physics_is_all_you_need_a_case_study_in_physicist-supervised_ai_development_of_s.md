@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics Is All You Need? A Case Study in Physicist-Supervised AI Development of Scientific Software
 description: >-
-  [ICML 2026][代码智能][监督协议] 作者以"一位物理学家用 Claude Code 在 12 天 57 个会话里开发 ~2,100 行可微分宇宙学微扰理论代码 clax-pt"为单例（$N=1$）案例，量化记录了 15 次督导事件，证明在科学软件场景下决定产物可信度的不是模型能力…
+  [ICML 2026][代码智能][监督协议] 作者以"一位物理学家用 Claude Code 在 12 天 57 个会话里开发 ~2,100 行可微分宇宙学微扰理论代码 clax-pt"为单例（$N=1$）案例，量化记录了 15 次督导事件，证明在科学软件场景下决定产物可信度的不是模型能力，而是围绕 oracle 测试、共享变更日志、"禁打补丁"等规则搭建的人工监督协议。
 tags:
   - "ICML 2026"
   - "代码智能"

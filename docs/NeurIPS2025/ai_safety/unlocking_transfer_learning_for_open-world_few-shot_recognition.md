@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking Transfer Learning for Open-World Few-Shot Recognition
 description: >-
-  [NeurIPS 2025 (Workshop)][AI安全][少样本开集识别] 提出两阶段方法，通过开集感知元学习 + 开集无关迁移学习，首次将迁移学习范式成功应用于少样本开集识别 (FSOSR)，在 miniImageNet 和 tieredImageNet 上达到 SOTA。
+  [NeurIPS 2025 (Workshop)][AI安全][少样本开集识别] 提出两阶段方法，通过开集感知元学习 + 开集无关迁移学习，首次将迁移学习范式成功应用于少样本开集识别 (FSOSR)，在 miniImageNet 和 tieredImageNet 上达到 SOTA。 少样本开集识别 (Few-Shot Ope…
 tags:
   - "NeurIPS 2025 (Workshop)"
   - "AI安全"

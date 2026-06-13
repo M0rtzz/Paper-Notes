@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicting Kernel Regression Learning Curves from Only Raw Data Statistics
 description: >-
-  [ICLR 2026][核回归学习曲线] 提出 Hermite 特征结构假设（HEA），仅用数据协方差矩阵和目标函数的 Hermite 分解两个统计量，就能解析预测旋转不变核在真实图像数据集（CIFAR-5m、SVHN、ImageNet）上的学习曲线（测试误差 vs 样本量），并证明该假设在高斯数据下成立…
+  [ICLR 2026][核回归学习曲线] 提出 Hermite 特征结构假设（HEA），仅用数据协方差矩阵和目标函数的 Hermite 分解两个统计量，就能解析预测旋转不变核在真实图像数据集（CIFAR-5m、SVHN、ImageNet）上的学习曲线（测试误差 vs 样本量），并证明该假设在高斯数据下成立，且 MLP 在特征学习 regime 下也按 HEA 预测的顺序学习 Hermite 多项式。
 tags:
   - "ICLR 2026"
   - "核回归学习曲线"

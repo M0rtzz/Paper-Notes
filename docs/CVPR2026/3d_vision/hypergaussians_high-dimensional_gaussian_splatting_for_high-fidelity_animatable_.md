@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyperGaussians: High-Dimensional Gaussian Splatting for High-Fidelity Animatable Face Avatars
 description: >-
-  [CVPR 2026][3D视觉][高斯溅射] 提出HyperGaussians，将3DGS扩展到高维多元高斯，通过条件分布建模表情相关的属性变化+逆协方差技巧实现高效条件化，作为即插即用模块集成到FlashAvatar和GaussianHeadAvatar中可显著提升高频细节质量。
+  [CVPR 2026][3D视觉][高斯溅射] 提出HyperGaussians，将3DGS扩展到高维多元高斯，通过条件分布建模表情相关的属性变化+逆协方差技巧实现高效条件化，作为即插即用模块集成到FlashAvatar和GaussianHeadAvatar中可显著提升高频细节质量。 1. 领域现状： 3D高斯溅射(3DGS…
 tags:
   - "CVPR 2026"
   - "3D视觉"

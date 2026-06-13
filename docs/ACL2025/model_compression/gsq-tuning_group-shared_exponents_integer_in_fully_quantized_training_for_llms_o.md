@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GSQ-Tuning: Group-Shared Exponents Integer in Fully Quantized Training for LLMs On-Device Fine-tuning
 description: >-
-  [ACL 2025 (Findings)][模型压缩][全量化训练] GSQ-Tuning 提出了一种基于"组共享指数整数"（Group-Shared Exponents Integer）格式的全量化微调框架，在推理和训练中完全消除浮点运算…
+  [ACL 2025 (Findings)][模型压缩][全量化训练] GSQ-Tuning 提出了一种基于"组共享指数整数"（Group-Shared Exponents Integer）格式的全量化微调框架，在推理和训练中完全消除浮点运算，结合 LoRA 适配器实现了精度接近 BF16 微调、内存降低 1.85x、功耗降低 5x、芯片面积缩小 11x 的边端 LLM 微调方案。
 tags:
   - "ACL 2025 (Findings)"
   - "模型压缩"

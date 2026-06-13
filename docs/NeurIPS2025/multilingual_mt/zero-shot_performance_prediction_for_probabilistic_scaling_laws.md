@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Performance Prediction for Probabilistic Scaling Laws
 description: >-
-  [NeurIPS 2025][多语言/翻译][scaling laws] 将 NLP 学习曲线预测建模为多任务学习问题，利用潜变量多输出高斯过程（MaGP）捕捉数据集中的双层层次结构和任务间相关性，实现学习曲线的零样本预测，并通过蒙特卡洛模拟推导概率化的 Scaling Laws。
+  [NeurIPS 2025][多语言/翻译][scaling laws] 将 NLP 学习曲线预测建模为多任务学习问题，利用潜变量多输出高斯过程（MaGP）捕捉数据集中的双层层次结构和任务间相关性，实现学习曲线的零样本预测，并通过蒙特卡洛模拟推导概率化的 Scaling Laws。 问题背景 推导 Scaling Laws…
 tags:
   - "NeurIPS 2025"
   - "多语言/翻译"

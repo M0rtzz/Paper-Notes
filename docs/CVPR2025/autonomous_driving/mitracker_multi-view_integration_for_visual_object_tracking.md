@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MITracker: Multi-View Integration for Visual Object Tracking
 description: >-
-  [CVPR 2025][自动驾驶][多视角目标跟踪] 提出多视角目标跟踪数据集 MVTrack（234K 帧，27 类目标）和方法 MITracker，通过将 2D 特征投影到 3D 特征体并压缩为 BEV 平面进行跨视角融合，结合空间增强注意力修正各视角跟踪结果，实现从遮挡中快速恢复跟踪。
+  [CVPR 2025][自动驾驶][多视角目标跟踪] 提出多视角目标跟踪数据集 MVTrack（234K 帧，27 类目标）和方法 MITracker，通过将 2D 特征投影到 3D 特征体并压缩为 BEV 平面进行跨视角融合，结合空间增强注意力修正各视角跟踪结果，实现从遮挡中快速恢复跟踪。 多视角目标跟踪 (MVOT) 通…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

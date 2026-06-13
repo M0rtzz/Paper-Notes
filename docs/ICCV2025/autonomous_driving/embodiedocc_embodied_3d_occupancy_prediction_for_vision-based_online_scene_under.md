@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding
 description: >-
-  [ICCV 2025][自动驾驶][3D occupancy prediction] 提出EmbodiedOcc框架，利用3D语义高斯作为全局记忆，通过逐步探索和局部更新实现基于单目视觉输入的在线室内场景三维占据预测。
+  [ICCV 2025][自动驾驶][3D occupancy prediction] 提出EmbodiedOcc框架，利用3D语义高斯作为全局记忆，通过逐步探索和局部更新实现基于单目视觉输入的在线室内场景三维占据预测。 三维占据预测为智能体提供对周围环境的全面理解，已成为3D感知的核心任务。现有方法主要聚焦于离线感知或少数视…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

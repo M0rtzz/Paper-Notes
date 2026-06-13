@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors
 description: >-
-  [ICLR 2026][3D视觉][2D高斯溅射] SurfSplat 提出基于2DGS的前馈3D重建框架，通过表面连续性先验将高斯的旋转和尺度与邻域位置绑定、以及强制透明度混合策略解决颜色偏差，并引入HRRC指标揭示高分辨率下的重建质量差异。
+  [ICLR 2026][3D视觉][2D高斯溅射] SurfSplat 提出基于2DGS的前馈3D重建框架，通过表面连续性先验将高斯的旋转和尺度与邻域位置绑定、以及强制透明度混合策略解决颜色偏差，并引入HRRC指标揭示高分辨率下的重建质量差异。 现有前馈3DGS方法在标准分辨率下的NVS指标看似出色，但存在一个被忽视的严重问…
 tags:
   - "ICLR 2026"
   - "3D视觉"

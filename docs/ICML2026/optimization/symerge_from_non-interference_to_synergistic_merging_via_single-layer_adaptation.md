@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SyMerge: From Non-Interference to Synergistic Merging via Single-Layer Adaptation
 description: >-
-  [ICML 2026][优化/理论][模型合并] 本文把"模型合并"的目标从"避免任务干扰"重新定义为"促进任务协同"，提出 SyMerge：只联合优化每个任务的一个 task-specific 层和编码器的层级 merging 系数，再用 fine-tuned 专家模型当软标签老师，避免熵最小化在测试时漂移…
+  [ICML 2026][优化/理论][模型合并] 本文把"模型合并"的目标从"避免任务干扰"重新定义为"促进任务协同"，提出 SyMerge：只联合优化每个任务的一个 task-specific 层和编码器的层级 merging 系数，再用 fine-tuned 专家模型当软标签老师，避免熵最小化在测试时漂移，从而在视觉/密集预测/NLP 三类基准上把合并模型推到接近单任务上限的水平。
 tags:
   - "ICML 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy
 description: >-
-  [ICCV 2025][多模态VLM][VLA] 提出Dita(Diffusion Transformer Policy)，区别于先前方法用浅层网络在embedding上去噪，采用in-context conditioning让去噪直接条件化于原始视觉token…
+  [ICCV 2025][多模态VLM][VLA] 提出Dita(Diffusion Transformer Policy)，区别于先前方法用浅层网络在embedding上去噪，采用in-context conditioning让去噪直接条件化于原始视觉token，通过causal Transformer处理语言+图像+timestep+噪声动作的完整token序列，334M参数在SimplerEnv零样本/LIBERO/CALVIN等benchmark上达到SOTA或可比性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

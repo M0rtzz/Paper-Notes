@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboSpatial: Teaching Spatial Understanding to 2D and 3D Vision-Language Models for Robotics
 description: >-
-  [CVPR 2025][多模态VLM][空间推理] RoboSpatial 构建了一个包含 1M 图像、5k 3D 扫描和 3M 空间关系标注的大规模机器人空间理解数据集，通过自动化 pipeline 从已有 3D 场景数据中生成三类空间问答对（空间上下文/兼容性/配置）…
+  [CVPR 2025][多模态VLM][空间推理] RoboSpatial 构建了一个包含 1M 图像、5k 3D 扫描和 3M 空间关系标注的大规模机器人空间理解数据集，通过自动化 pipeline 从已有 3D 场景数据中生成三类空间问答对（空间上下文/兼容性/配置），并引入三种参考坐标系（自我/世界/物体），在多个 2D 和 3D VLM 上训练后显著提升空间推理性能，并在真实机器人操作实验中验证了有效性。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

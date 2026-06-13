@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedCoG: Maximizing LLM Inference Density in Medical Reasoning via Meta-Cognitive Regulation
 description: >-
-  [ICML 2026][图学习][元认知调节] MedCoG 让 LLM 先对医学问题做"复杂度 / 熟悉度 / 知识密度"三维自评，再按需调用 SCoT、记忆和知识图谱三类知识，把推理密度（达到同等精度所需的理论开销/实际开销）拉到 6.2×…
+  [ICML 2026][图学习][元认知调节] MedCoG 让 LLM 先对医学问题做"复杂度 / 熟悉度 / 知识密度"三维自评，再按需调用 SCoT、记忆和知识图谱三类知识，把推理密度（达到同等精度所需的理论开销/实际开销）拉到 6.2×，同时在 5 个 MedQA 系列 hard set 上把平均准确率从 AFlow 的 34.5 提到 37.5。
 tags:
   - "ICML 2026"
   - "图学习"

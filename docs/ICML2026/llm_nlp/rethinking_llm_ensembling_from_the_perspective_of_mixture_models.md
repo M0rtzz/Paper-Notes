@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rethinking LLM Ensembling from the Perspective of Mixture Models
 description: >-
-  [ICML 2026][LLM/NLP][LLM 集成] 本文证明对 $n$ 个 LLM 做 token 级集成时无需每步都跑所有模型——按权重随机抽一个模型采下一个 token，输出分布与"先平均后采样"严格等价，从而把 $n$ 倍前向变回 1 倍前向…
+  [ICML 2026 Spotlight][LLM 其他][LLM 集成] 本文证明对 $n$ 个 LLM 做 token 级集成时无需每步都跑所有模型——按权重随机抽一个模型采下一个 token，输出分布与"先平均后采样"严格等价，从而把 $n$ 倍前向变回 1 倍前向，并配合"懒同步 KV 缓存"实现 1.78×–2.68× 的实际加速。
 tags:
-  - "ICML 2026"
-  - "LLM/NLP"
+  - "ICML 2026 Spotlight"
+  - "LLM 其他"
   - "LLM 集成"
   - "混合模型"
   - "采样等价"

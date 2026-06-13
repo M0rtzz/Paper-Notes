@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NTIRE 2026 The Second Challenge on Day and Night Raindrop Removal for Dual-Focused Images
 description: >-
-  [CVPR 2026 (Workshop)][图像恢复][雨滴去除] NTIRE 2026第二届日夜双焦点雨滴去除挑战赛总结报告：基于Raindrop Clarity真实数据集（14,139训练/407验证/593测试），168支队伍参赛，17支提交有效方案…
+  [CVPR 2026 (Workshop)][图像恢复][雨滴去除] NTIRE 2026第二届日夜双焦点雨滴去除挑战赛总结报告：基于Raindrop Clarity真实数据集（14,139训练/407验证/593测试），168支队伍参赛，17支提交有效方案，冠军AIIA-Lab以MSDT骨干+伪GT精修流水线取得35.24分最佳成绩。
 tags:
   - "CVPR 2026 (Workshop)"
   - "图像恢复"

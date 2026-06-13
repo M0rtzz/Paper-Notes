@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding
 description: >-
-  [ACL 2025][LLM评测][OCR] KITAB-Bench 是一个涵盖 9 大领域 36 个子领域共 8,809 个样本的综合性阿拉伯语 OCR 基准，评估结果显示现代视觉语言模型（如 GPT-4o、Gemini）在字符错误率上平均超过传统 OCR 方法 60%…
+  [ACL 2025][LLM评测][OCR] KITAB-Bench 是一个涵盖 9 大领域 36 个子领域共 8,809 个样本的综合性阿拉伯语 OCR 基准，评估结果显示现代视觉语言模型（如 GPT-4o、Gemini）在字符错误率上平均超过传统 OCR 方法 60%，但在 PDF-to-Markdown 转换中最优模型仅达到 65% 准确率，凸显了阿拉伯语文档理解的巨大挑战。
 tags:
   - "ACL 2025"
   - "LLM评测"

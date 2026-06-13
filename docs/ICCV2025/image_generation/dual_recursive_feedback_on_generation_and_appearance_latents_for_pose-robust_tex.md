@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Recursive Feedback on Generation and Appearance Latents for Pose-Robust Text-to-Image Diffusion
 description: >-
-  [ICCV 2025][图像生成][T2I 扩散模型] 提出 **Dual Recursive Feedback (DRF)**，一种无需训练的双递归反馈系统，通过**外观反馈**和**生成反馈**递归精修中间隐变量…
+  [ICCV 2025][图像生成][T2I 扩散模型] 提出 **Dual Recursive Feedback (DRF)**，一种无需训练的双递归反馈系统，通过**外观反馈**和**生成反馈**递归精修中间隐变量，解决可控 T2I 扩散模型在跨类别（class-invariant）场景下结构/外观分离不彻底的问题，实现细粒度的姿态迁移和外观融合。
 tags:
   - "ICCV 2025"
   - "图像生成"

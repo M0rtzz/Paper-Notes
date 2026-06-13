@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PersonaArena: Dynamic Simulation for Evaluating and Enhancing Persona-Level Role-Playing in Large Language Models
 description: >-
-  [ACL2026][LLM/NLP][角色扮演] PersonaArena 用真实用户生成内容构造 1,000 个细粒度 persona，并通过动态社交仿真与多评委辩论来评估和增强 LLM 的 persona-level 角色扮演能力。
+  [ACL2026 Findings][LLM 其他][角色扮演] PersonaArena 用真实用户生成内容构造 1,000 个细粒度 persona，并通过动态社交仿真与多评委辩论来评估和增强 LLM 的 persona-level 角色扮演能力。 领域现状：LLM 越来越多地被用作社交伴侣、虚拟角色和社会仿真 agen…
 tags:
-  - "ACL2026"
-  - "LLM/NLP"
+  - "ACL2026 Findings"
+  - "LLM 其他"
   - "角色扮演"
   - "Persona 评估"
   - "多智能体仿真"

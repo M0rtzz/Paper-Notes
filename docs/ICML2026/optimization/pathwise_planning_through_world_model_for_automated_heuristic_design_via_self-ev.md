@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PathWise: Planning through World Model for Automated Heuristic Design via Self-Evolving LLMs
 description: >-
-  [ICML 2026][优化/理论][自动启发式设计] PathWise 把 LLM 自动启发式设计（AHD）重新建模成一条在"蕴含图"上展开的序列决策过程，由策略 / 世界模型 / 双评价四个 LLM 智能体协作，用反思替代梯度更新…
+  [ICML 2026][优化/理论][自动启发式设计] PathWise 把 LLM 自动启发式设计（AHD）重新建模成一条在"蕴含图"上展开的序列决策过程，由策略 / 世界模型 / 双评价四个 LLM 智能体协作，用反思替代梯度更新，在 TSP、CVRP、KP、装箱等问题上以 50% 的评估预算超过 FunSearch、EoH、ReEvo、HSEvo、MCTS-AHD 等主流基线。
 tags:
   - "ICML 2026"
   - "优化/理论"

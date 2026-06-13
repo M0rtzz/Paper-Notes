@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ATGen: A Framework for Active Text Generation
 description: >-
-  [ACL 2025][文本生成][主动学习] 提出ATGen——首个系统化的NLG主动学习框架，集成SOTA AL策略、人工/LLM标注界面、PEFT高效训练和vLLM推理优化，在TriviaQA/GSM8K等4个NLG任务上验证主动学习可将标注成本降低2-4倍。
+  [ACL 2025][文本生成][主动学习] 提出ATGen——首个系统化的NLG主动学习框架，集成SOTA AL策略、人工/LLM标注界面、PEFT高效训练和vLLM推理优化，在TriviaQA/GSM8K等4个NLG任务上验证主动学习可将标注成本降低2-4倍。 - 领域现状：NLG任务（摘要、问答、推理）快速发展…
 tags:
   - "ACL 2025"
   - "文本生成"

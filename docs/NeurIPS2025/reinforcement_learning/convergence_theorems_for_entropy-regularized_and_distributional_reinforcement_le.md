@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convergence Theorems for Entropy-Regularized and Distributional Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][熵正则化] 提出 **温度解耦策略（temperature decoupling gambit）**，证明在熵正则化强化学习中，通过解耦评估温度和行为温度，可以在温度趋于零时保证策略和回报分布收敛到一个可解释的、保持多样性的最优策略。
+  [NeurIPS 2025][强化学习][熵正则化] 提出 温度解耦策略（temperature decoupling gambit）：，证明在熵正则化强化学习中，通过解耦评估温度和行为温度，可以在温度趋于零时保证策略和回报分布收敛到一个可解释的、保持多样性的最优策略。 领域现状：标准RL中存在多个最优策略…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

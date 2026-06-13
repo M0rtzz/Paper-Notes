@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Local Action-Guided Motion Diffusion Model for Text-to-Motion Generation
 description: >-
-  [ECCV 2024][图像生成] 提出 GuidedMotion，以局部动作作为细粒度控制信号引导全局运动扩散生成，通过语义图解析和图注意力网络估计引导权重，支持连续可调的运动控制，在生成复杂多动作运动时优势显著。
+  [ECCV 2024][图像生成] 提出 GuidedMotion，以局部动作作为细粒度控制信号引导全局运动扩散生成，通过语义图解析和图注意力网络估计引导权重，支持连续可调的运动控制，在生成复杂多动作运动时优势显著。 文本到运动生成需要将语言中的局部动作（如"走路"、"举手"）落地并无缝融合为多样且真实的全局运动…
 tags:
   - "ECCV 2024"
   - "图像生成"

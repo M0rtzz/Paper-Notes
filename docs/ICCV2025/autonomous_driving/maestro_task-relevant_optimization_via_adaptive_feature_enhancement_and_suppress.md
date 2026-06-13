@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception
 description: >-
-  [ICCV 2025][自动驾驶][多任务学习] 提出 MAESTRO 框架，通过类别原型生成（CPG）、任务特定特征生成（TSFG）和场景原型聚合（SPA）三个模块，在多任务3D感知中生成任务特定特征并抑制任务间干扰，在3D目标检测、BEV地图分割和3D占用预测三个任务上同时超越单任务模型。
+  [ICCV 2025][自动驾驶][多任务学习] 提出 MAESTRO 框架，通过类别原型生成（CPG）、任务特定特征生成（TSFG）和场景原型聚合（SPA）三个模块，在多任务3D感知中生成任务特定特征并抑制任务间干扰，在3D目标检测、BEV地图分割和3D占用预测三个任务上同时超越单任务模型。 自动驾驶感知系统需要同时执行多…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

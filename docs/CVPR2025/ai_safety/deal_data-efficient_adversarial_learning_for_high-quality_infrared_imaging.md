@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DEAL: Data-Efficient Adversarial Learning for High-Quality Infrared Imaging
 description: >-
-  [CVPR 2025][AI安全][infrared imaging] 提出 DEAL（Data-Efficient Adversarial Learning），一种仅需 50 张清晰红外图像训练的对抗学习框架…
+  [CVPR 2025][AI安全][infrared imaging] 提出 DEAL（Data-Efficient Adversarial Learning），一种仅需 50 张清晰红外图像训练的对抗学习框架，通过动态对抗退化合成和双通道交互网络（Scale Transform + Spiking Neurons），以 0.96M 超轻量参数同时处理条纹噪声、低分辨率和低对比度三种红外退化。
 tags:
   - "CVPR 2025"
   - "AI安全"

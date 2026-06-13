@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention (as Discrete-Time Markov) Chains
 description: >-
-  [NeurIPS 2025][语义分割][注意力Markov链] 将 softmax 归一化后的注意力矩阵重新解读为离散时间 Markov 链（DTMC）的转移概率矩阵，提出多跳注意力（Multi-Bounce）和 TokenRank（稳态分布…
+  [NeurIPS 2025][语义分割][注意力Markov链] 将 softmax 归一化后的注意力矩阵重新解读为离散时间 Markov 链（DTMC）的转移概率矩阵，提出多跳注意力（Multi-Bounce）和 TokenRank（稳态分布，类似 PageRank）来捕获间接注意力路径和全局 token 重要性，在 ImageNet 分割上达 94.29% mAP，并增强 Self-Attention Guidance 的图像生成质量。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

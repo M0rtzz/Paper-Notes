@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SAGE: Sign-Adaptive Gradient for Memory-Efficient LLM Optimization
 description: >-
-  [ACL 2026][预训练][优化器] 本文提出 SAGE 优化器，通过 Lion 风格的符号更新方向和一个 $O(d)$ 内存开销的自适应阻尼缩放因子，解决了轻量级优化器在嵌入层上失败的"嵌入层困境"，在 Llama 模型（最大 1.3B）上以显著更低的优化器内存达到新的 SOTA 困惑度。
+  [ACL 2026 Findings][预训练][优化器] 本文提出 SAGE 优化器，通过 Lion 风格的符号更新方向和一个 $O(d)$ 内存开销的自适应阻尼缩放因子，解决了轻量级优化器在嵌入层上失败的"嵌入层困境"，在 Llama 模型（最大 1.3B）上以显著更低的优化器内存达到新的 SOTA 困惑度。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "预训练"
   - "优化器"
   - "内存效率"

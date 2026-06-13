@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis
 description: >-
-  [AAAI 2026][医学图像][MRI-to-PET 合成] 提出 CoCoLIT 框架，基于 ControlNet 条件化的潜在扩散模型，从结构 MRI 合成淀粉样蛋白 PET 图像，通过加权图像空间损失（WISL）和潜在平均稳定化（LAS）显著超越现有方法。
+  [AAAI 2026][医学图像][MRI-to-PET 合成] 提出 CoCoLIT 框架，基于 ControlNet 条件化的潜在扩散模型，从结构 MRI 合成淀粉样蛋白 PET 图像，通过加权图像空间损失（WISL）和潜在平均稳定化（LAS）显著超越现有方法。 - 阿尔茨海默病（AD）早期诊断依赖淀粉样蛋白 PET（A…
 tags:
   - "AAAI 2026"
   - "医学图像"

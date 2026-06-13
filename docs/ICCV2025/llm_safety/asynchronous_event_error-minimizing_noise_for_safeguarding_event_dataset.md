@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Asynchronous Event Error-Minimizing Noise for Safeguarding Event Dataset
 description: >-
-  [ICCV 2025][LLM安全][不可学习样本] 提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。
+  [ICCV 2025][LLM安全][不可学习样本] 提出首个面向异步事件数据的不可学习样本生成方法（UEvs），设计了事件误差最小化噪声（E²MN）及自适应投影机制，使事件数据集在保持合法使用功能的同时阻止未授权模型从中学习。 随着事件相机数据集（如 N-Caltech101、DVS128 Gesture 等）大量公开…
 tags:
   - "ICCV 2025"
   - "LLM安全"

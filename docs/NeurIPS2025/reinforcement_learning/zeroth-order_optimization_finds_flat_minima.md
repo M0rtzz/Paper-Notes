@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zeroth-Order Optimization Finds Flat Minima
 description: >-
-  [NeurIPS 2025][强化学习][零阶优化] 首次从理论上证明标准零阶优化（两点梯度估计）具有隐式正则化效果——收敛到Hessian迹最小的平坦极小值（flat minima），在凸且充分光滑条件下给出了$T = \mathcal{O}(d^4/\epsilon^2)$的收敛复杂度保证。
+  [NeurIPS 2025][强化学习][零阶优化] 首次从理论上证明标准零阶优化（两点梯度估计）具有隐式正则化效果——收敛到Hessian迹最小的平坦极小值（flat minima），在凸且充分光滑条件下给出了$T = \mathcal{O}(d^4/\epsilon^2)$的收敛复杂度保证。 问题背景 零阶优化（Zero…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

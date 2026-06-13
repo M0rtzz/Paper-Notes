@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAPTR: Radar-Based 3D Pose Estimation Using Transformer
 description: >-
-  [NeurIPS 2025][人体理解][雷达感知] 提出RAPTR，首个利用弱监督（3D BBox + 2D关键点标签）进行雷达3D人体姿态估计的Transformer框架，通过伪3D可变形注意力和结构化损失函数在两个室内数据集上大幅超过基线。
+  [NeurIPS 2025][人体理解][雷达感知] 提出RAPTR，首个利用弱监督（3D BBox + 2D关键点标签）进行雷达3D人体姿态估计的Transformer框架，通过伪3D可变形注意力和结构化损失函数在两个室内数据集上大幅超过基线。 雷达在室内人体感知中有独特优势：隐私保护、穿墙能力、对光照/烟雾鲁棒…
 tags:
   - "NeurIPS 2025"
   - "人体理解"

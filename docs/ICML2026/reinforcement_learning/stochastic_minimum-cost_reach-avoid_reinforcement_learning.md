@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stochastic Minimum-Cost Reach-Avoid Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][reach-avoid] 本文提出 Reach-Avoid Probability Certificate (RAPC), 用一个 max-min-夹紧的 Bellman 收缩算子让值函数下界 reach-avoid 概率…
+  [ICML 2026][强化学习][reach-avoid] 本文提出 Reach-Avoid Probability Certificate (RAPC), 用一个 max-min-夹紧的 Bellman 收缩算子让值函数下界 reach-avoid 概率, 配合一个对抗 $\gamma^T$ 衰减的 "补偿因子"作归一化, 再用对称梯度投影联合优化 "成本"与 "reach-avoid 概率"两个冲突目标, 在 MuJoCo 上同时拿到比 RC-PPO / RESPO / CPPO 更低的累积成本和更高的 reach 成功率。
 tags:
   - "ICML 2026"
   - "强化学习"

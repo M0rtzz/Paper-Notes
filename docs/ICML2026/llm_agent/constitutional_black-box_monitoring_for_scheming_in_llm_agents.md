@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constitutional Black-Box Monitoring for Scheming in LLM Agents
 description: >-
-  [ICML 2026][LLM Agent][黑盒监控] 本文提出一套端到端的"宪法式黑盒监控"框架，利用两条合成数据流水线（STRIDE 和 Gloom）生成 2,000 条合成轨迹来优化提示分类器，在仅观察外部可见的工具调用与输出（不看 CoT）的条件下检测 LLM 代理的阴谋行为…
+  [ICML 2026][LLM Agent][黑盒监控] 本文提出一套端到端的"宪法式黑盒监控"框架，利用两条合成数据流水线（STRIDE 和 Gloom）生成 2,000 条合成轨迹来优化提示分类器，在仅观察外部可见的工具调用与输出（不看 CoT）的条件下检测 LLM 代理的阴谋行为，发现简单的 prompt grid search 即可饱和性能，更激进的优化反而导致过拟合。
 tags:
   - "ICML 2026"
   - "LLM Agent"

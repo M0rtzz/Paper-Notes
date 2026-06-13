@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linearly Constrained Diffusion Implicit Models
 description: >-
-  [NeurIPS 2025][3D视觉][扩散模型] 提出 CDIM，一种基于 DDIM 的线性逆问题求解算法，通过将残差能量与前向扩散过程的 $\chi^2$ 分布对齐来自适应控制投影步数和步长，实现比 DPS 快 10-50 倍的推理速度，同时在无噪声情况下精确满足测量约束。
+  [NeurIPS 2025][3D视觉][扩散模型] 提出 CDIM，一种基于 DDIM 的线性逆问题求解算法，通过将残差能量与前向扩散过程的 $\chi^2$ 分布对齐来自适应控制投影步数和步长，实现比 DPS 快 10-50 倍的推理速度，同时在无噪声情况下精确满足测量约束。 从噪声线性测量 $\mathbf{y} =…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

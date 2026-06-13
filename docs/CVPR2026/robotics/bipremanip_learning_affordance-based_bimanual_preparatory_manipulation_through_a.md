@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration
 description: >-
-  [CVPR 2026][机器人][双臂协作操作] 提出 BiPreManip 框架，基于视觉可供性表示实现双臂预备操作：先预想主手的目标交互区域，再引导辅助手进行预备动作（如翻转瓶子使瓶盖朝向主手），在仿真和真实环境中大幅优于基线。
+  [CVPR 2026][机器人][双臂协作操作] 提出 BiPreManip 框架，基于视觉可供性表示实现双臂预备操作：先预想主手的目标交互区域，再引导辅助手进行预备动作（如翻转瓶子使瓶盖朝向主手），在仿真和真实环境中大幅优于基线。 领域现状： 双臂操作研究近年取得长足进展（ACT、RDT-1B、3D FlowMatch A…
 tags:
   - "CVPR 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alethia: A Foundational Encoder for Voice Deepfakes
 description: >-
-  [ICML 2026][音频/语音][voice deepfake] Alethia 提出一种"瓶颈式掩码嵌入预测 + Flow-Matching 频谱生成"的双分支预训练范式，训出首个面向语音 deepfake 检测/定位/溯源的基础编码器…
+  [ICML 2026][音频/语音][voice deepfake] Alethia 提出一种"瓶颈式掩码嵌入预测 + Flow-Matching 频谱生成"的双分支预训练范式，训出首个面向语音 deepfake 检测/定位/溯源的基础编码器，在 5 类任务 56 个数据集上显著超过 Wav2vec2/HuBERT/WavLM 等通用 SFM，并对未见过的歌声 deepfake 和真实扰动表现出强零样本鲁棒性。
 tags:
   - "ICML 2026"
   - "音频/语音"

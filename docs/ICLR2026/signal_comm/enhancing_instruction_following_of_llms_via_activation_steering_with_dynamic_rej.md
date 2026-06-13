@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection
 description: >-
-  [ICLR 2026][信号/通信][激活引导] 提出 Directer（Dynamic Rejection Steering），通过在每个解码步动态调节 KV 缓存引导强度并引入合理性约束，显著提升 LLM 指令遵循能力，同时避免过度引导导致的文本质量下降。
+  [ICLR 2026][信号/通信][激活引导] 提出 Directer（Dynamic Rejection Steering），通过在每个解码步动态调节 KV 缓存引导强度并引入合理性约束，显著提升 LLM 指令遵循能力，同时避免过度引导导致的文本质量下降。 LLM 在指令微调后仍难以完美遵循复杂用户指令…
 tags:
   - "ICLR 2026"
   - "信号/通信"

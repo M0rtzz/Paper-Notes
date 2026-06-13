@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trajectory-Level Data Augmentation for Offline Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][离线 RL] 本文提出 LIFT：在主动定位任务里，利用轨迹几何性质把次优 logging policy 留下的冗余 zig-zag 轨迹"抄近道"成 shortcut，并把这些合成 transition 喂给一个轻量增广器在数据采集期间替换 logging 动作…
+  [ICML 2026][强化学习][离线 RL] 本文提出 LIFT：在主动定位任务里，利用轨迹几何性质把次优 logging policy 留下的冗余 zig-zag 轨迹"抄近道"成 shortcut，并把这些合成 transition 喂给一个轻量增广器在数据采集期间替换 logging 动作，使离线 CQL 在低维到高维、partial obs 等各种设置下显著超越普通离线 RL 与 warm-start SAC。
 tags:
   - "ICML 2026"
   - "强化学习"

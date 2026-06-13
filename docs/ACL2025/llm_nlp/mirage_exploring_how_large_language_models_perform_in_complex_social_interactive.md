@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MIRAGE: Exploring How Large Language Models Perform in Complex Social Interactive Environments
 description: >-
-  [ACL 2025][LLM/NLP][社会交互评估] 本文提出 MIRAGE 评估框架，通过八个精心设计的剧本杀场景和四项指标（信任倾向 TII、线索调查 CIC、交互能力 ICI、剧本合规 SCI）系统评估 LLM 在复杂社交互动环境中的表现，发现即使 GPT-4 也在这些场景中面临严峻挑战。
+  [ACL 2025][LLM 其他][社会交互评估] 本文提出 MIRAGE 评估框架，通过八个精心设计的剧本杀场景和四项指标（信任倾向 TII、线索调查 CIC、交互能力 ICI、剧本合规 SCI）系统评估 LLM 在复杂社交互动环境中的表现，发现即使 GPT-4 也在这些场景中面临严峻挑战。 LLM 在环境感知、推理决策…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "社会交互评估"
   - "角色扮演"
   - "剧本杀"

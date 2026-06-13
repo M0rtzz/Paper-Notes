@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Last-Click: An Optimal Mechanism for Ad Attribution
 description: >-
-  [NeurIPS 2025][AI安全][Last-Click] 从博弈论角度分析广告归因中 Last-Click 机制的策略操纵漏洞——平台可以通过篡改时间戳获取不公正的归因信用，提出 Peer-Validated Mechanism（PVM）——每个平台的信用仅取决于其他平台的报告（类比同行评审）…
+  [NeurIPS 2025][AI安全][Last-Click] 从博弈论角度分析广告归因中 Last-Click 机制的策略操纵漏洞——平台可以通过篡改时间戳获取不公正的归因信用，提出 Peer-Validated Mechanism（PVM）——每个平台的信用仅取决于其他平台的报告（类比同行评审），理论证明 PVM 是占优策略激励兼容（DSIC）且在同质设置下最优，准确率从 34% 提升到 75%（2 平台）。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

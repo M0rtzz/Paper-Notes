@@ -2,7 +2,7 @@
 title: >-
   [论文解读] URWKV: Unified RWKV Model with Multi-State Perspective for Low-Light Image Restoration
 description: >-
-  [CVPR 2025][图像恢复][低光图像增强] 提出 URWKV 模型，在 RWKV 架构中引入多状态（intra-stage 和 inter-stage）视角，通过亮度自适应归一化（LAN）、多状态聚合的 token shift（SQ-Shift）和状态感知选择性融合（SSF）模块…
+  [CVPR 2025][图像恢复][低光图像增强] 提出 URWKV 模型，在 RWKV 架构中引入多状态（intra-stage 和 inter-stage）视角，通过亮度自适应归一化（LAN）、多状态聚合的 token shift（SQ-Shift）和状态感知选择性融合（SSF）模块，用一个统一模型处理低光图像的动态耦合退化（噪声、亮度失真、运动模糊），参数量仅 2.25M 即在 8 个基准数据集上全面超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像恢复"

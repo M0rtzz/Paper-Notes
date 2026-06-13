@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVDiffusion++: A Dense High-Resolution Multi-View Diffusion Model for Single or Sparse-View 3D Object Reconstruction
 description: >-
-  [ECCV 2024][3D视觉][多视图扩散模型] MVDiffusion++提出了一种无需相机位姿的多视图潜在扩散模型，通过"无位姿架构"和"视图丢弃训练策略"两个简洁的想法，从单张或少量输入图像生成密集（32张）高分辨率（512×512）的多视图图像，进而实现高质量3D物体重建。
+  [ECCV 2024][3D视觉][多视图扩散模型] MVDiffusion++提出了一种无需相机位姿的多视图潜在扩散模型，通过"无位姿架构"和"视图丢弃训练策略"两个简洁的想法，从单张或少量输入图像生成密集（32张）高分辨率（512×512）的多视图图像，进而实现高质量3D物体重建。 领域现状：3D物体重建技术在过去十几年…
 tags:
   - "ECCV 2024"
   - "3D视觉"

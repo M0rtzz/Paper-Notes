@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluation of Vision-LLMs in Surveillance Video
 description: >-
-  [NeurIPS 2025][LLM安全][Vision-LLM] 提出一个无训练的两阶段框架，利用小型 Vision-LLM 生成视频文本描述 + NLI 分类器零样本评分，系统评估了提示策略和隐私保护滤镜对监控视频异常行为识别的影响。
+  [NeurIPS 2025][LLM安全][Vision-LLM] 提出一个无训练的两阶段框架，利用小型 Vision-LLM 生成视频文本描述 + NLI 分类器零样本评分，系统评估了提示策略和隐私保护滤镜对监控视频异常行为识别的影响。 监控数据量远超人力监控能力：摄像头的广泛部署产生了海量视频数据，人工实时监控不现实…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

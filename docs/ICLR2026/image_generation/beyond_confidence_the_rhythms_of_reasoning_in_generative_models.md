@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Confidence: The Rhythms of Reasoning in Generative Models
 description: >-
-  [ICLR 2026][图像生成][Token Constraint Bound] 提出 Token Constraint Bound ($\delta_{\text{TCB}}$) 指标，通过量化 LLM 隐状态在多大扰动范围内能保持 next-token 预测不变，来度量预测的局部鲁棒性…
+  [ICLR 2026][图像生成][Token Constraint Bound] 提出 Token Constraint Bound ($\delta_{\text{TCB}}$) 指标，通过量化 LLM 隐状态在多大扰动范围内能保持 next-token 预测不变，来度量预测的局部鲁棒性，揭示了传统 perplexity 无法捕捉的预测不稳定性。
 tags:
   - "ICLR 2026"
   - "图像生成"

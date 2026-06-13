@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Self-Improving Error Diagnosis in Multi-Agent Systems
 description: >-
-  [ACL 2026][多智能体][多智能体故障归因] 提出 ErrorProbe 框架，通过 MAST 分类驱动的结构化分解、症状驱动的后向追踪和验证式记忆机制，在多智能体系统中实现自改进的语义故障归因，尤其在步骤级错误定位上大幅超越基线。
+  [ACL 2026 Findings][多智能体][多智能体故障归因] 提出 ErrorProbe 框架，通过 MAST 分类驱动的结构化分解、症状驱动的后向追踪和验证式记忆机制，在多智能体系统中实现自改进的语义故障归因，尤其在步骤级错误定位上大幅超越基线。 领域现状：基于 LLM 的多智能体系统（MAS）已在软件工程、We…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "多智能体故障归因"
   - "错误定位"

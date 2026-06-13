@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Phase Transitions in Affective Meaning Divergence: The Hidden Drift Before the Break
 description: >-
-  [ACL2026][社会计算][情感语义分歧] 这篇论文把对话破裂前的“同词不同情感理解”形式化为 Affective Meaning Divergence，并用熵正则博弈证明修复概率会发生鞍结分岔…
+  [ACL2026][社会计算][情感语义分歧] 这篇论文把对话破裂前的“同词不同情感理解”形式化为 Affective Meaning Divergence，并用熵正则博弈证明修复概率会发生鞍结分岔，再在 Conversations Gone Awry 上观察到方差上升等 critical slowing down 早期预警信号。
 tags:
   - "ACL2026"
   - "社会计算"

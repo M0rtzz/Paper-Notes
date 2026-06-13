@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineCaption: Compositional Image Captioning Focusing on Wherever You Want at Any Granularity
 description: >-
-  [CVPR 2025][语义分割][区域描述] FineCaption 提出一种支持任意 mask 引用和高分辨率图像输入的视觉语言模型，结合 mask 感知 CLIP 编码器、ConvNeXT 和 SAM 高分辨率编码器，以及新构建的 CompositionCap 数据集，实现了多粒度组合式区域图像描述任务…
+  [CVPR 2025][语义分割][区域描述] FineCaption 提出一种支持任意 mask 引用和高分辨率图像输入的视觉语言模型，结合 mask 感知 CLIP 编码器、ConvNeXT 和 SAM 高分辨率编码器，以及新构建的 CompositionCap 数据集，实现了多粒度组合式区域图像描述任务。
 tags:
   - "CVPR 2025"
   - "语义分割"

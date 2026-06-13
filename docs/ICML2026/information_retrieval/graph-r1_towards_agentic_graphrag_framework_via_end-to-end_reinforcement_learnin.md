@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph-R1: Towards Agentic GraphRAG Framework via End-to-end Reinforcement Learning
 description: >-
-  [ICML 2026][信息检索/RAG][GraphRAG] Graph-R1 把 GraphRAG 重写成"知识超图环境 + 多轮 think–query–retrieve–answer 智能体 + 结果导向 GRPO"的端到端 RL 框架，用更轻量的 n 元超图构建和双路超边检索 + RRF 融合…
+  [ICML 2026][信息检索/RAG][GraphRAG] Graph-R1 把 GraphRAG 重写成"知识超图环境 + 多轮 think–query–retrieve–answer 智能体 + 结果导向 GRPO"的端到端 RL 框架，用更轻量的 n 元超图构建和双路超边检索 + RRF 融合，在 6 个标准 RAG 数据集上把 7B 模型的 F1 从 Search-R1 的 46.19 拉到 57.82。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

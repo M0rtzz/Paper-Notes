@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mint: A Simple Test-Time Adaptation of Vision-Language Models against Common Corruptions
 description: >-
-  [NeurIPS 2025][多模态VLM][test-time adaptation] 发现 CLIP 在图像损坏下的性能退化根源在于**嵌入方差坍缩**——类内与类间方差同步缩小导致嵌入空间判别性丧失；提出 Mint，通过最大化伪标签类间方差（PL-inter）在线修复嵌入几何…
+  [NeurIPS 2025][多模态VLM][test-time adaptation] 发现 CLIP 在图像损坏下的性能退化根源在于**嵌入方差坍缩**——类内与类间方差同步缩小导致嵌入空间判别性丧失；提出 Mint，通过最大化伪标签类间方差（PL-inter）在线修复嵌入几何，仅凭均值累加器和梯度累加器两个极简组件即可在 BS=1 的在线场景下稳定提升 CLIP 在多种损坏基准上的分类精度，同时比最强 baseline 快 45 倍。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

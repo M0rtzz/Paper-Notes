@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Parallelism: Redefining Efficient MoE Inference via Model-Data Co-Scheduling
 description: >-
-  [ICLR 2026][LLM效率][Mixture-of-Experts] 提出语义并行(Semantic Parallelism)范式，通过预测token-expert路由路径并协同调度模型放置与数据分发，大幅削减MoE推理中专家并行的all-to-all通信开销…
+  [ICLR 2026][LLM效率][Mixture-of-Experts] 提出语义并行(Semantic Parallelism)范式，通过预测token-expert路由路径并协同调度模型放置与数据分发，大幅削减MoE推理中专家并行的all-to-all通信开销，在Attention-DP场景下吞吐提升最高2.78×，Attention-TP场景下延迟降低最高24.9%。
 tags:
   - "ICLR 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundation VAEs for 3D CT Reconstruction, Augmentation, and Generation
 description: >-
-  [ICML 2026][医学图像][基础 VAE] 本文论证了一个反直觉但实用的发现——在自然图像/视频上预训练的 Foundation VAE 不需要任何医学微调就能作为统一接口同时支持 CT 重建、增强、生成；其重建只是去噪不偏移边界…
+  [ICML 2026][医学图像][基础 VAE] 本文论证了一个反直觉但实用的发现——在自然图像/视频上预训练的 Foundation VAE 不需要任何医学微调就能作为统一接口同时支持 CT 重建、增强、生成；其重建只是去噪不偏移边界，因此重建图既可做去噪增强（pancreatic / lung tumor NSD +3.9%），其潜空间又可承载 CT 条件扩散生成（FVD −3.9%，CT-CLIP +36.2%，多疾病忠实度 AUC +2.76%）。
 tags:
   - "ICML 2026"
   - "医学图像"

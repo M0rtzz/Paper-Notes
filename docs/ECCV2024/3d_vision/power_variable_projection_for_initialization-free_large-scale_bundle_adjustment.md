@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment
 description: >-
-  [ECCV 2024][光束法平差] 提出 Power Variable Projection (PoVar) 算法，将幂级数展开方法扩展到变量投影（VarPro）框架，并进一步推广到黎曼流形优化，首次实现了无初始化大规模光束法平差（BA）的高效求解。
+  [ECCV 2024][3D视觉][光束法平差] 提出 Power Variable Projection (PoVar) 算法，将幂级数展开方法扩展到变量投影（VarPro）框架，并进一步推广到黎曼流形优化，首次实现了无初始化大规模光束法平差（BA）的高效求解。 领域现状： 光束法平差（Bundle Adjustment…
 tags:
   - "ECCV 2024"
+  - "3D视觉"
   - "光束法平差"
   - "无初始化优化"
   - "变量投影"

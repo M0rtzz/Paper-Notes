@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Agent Training for Computer Use
 description: >-
-  [ICLR 2026][LLM Agent][computer use agent] PC Agent-E 仅用 312 条人工标注的 Windows 操作轨迹，通过 Trajectory Boost 方法让 Claude 3.7 Sonnet 在每个时间步合成多样化的替代动作决策…
+  [ICLR 2026][LLM Agent][computer use agent] PC Agent-E 仅用 312 条人工标注的 Windows 操作轨迹，通过 Trajectory Boost 方法让 Claude 3.7 Sonnet 在每个时间步合成多样化的替代动作决策，训练后的 Qwen2.5-VL-72B 在 WindowsAgentArena-V2 上相对提升 141%，甚至超越教师模型 Claude 3.7 Sonnet 10%。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VORTA: Efficient Video Diffusion via Routing Sparse Attention
 description: >-
-  [NeurIPS 2025][视频生成][视频扩散模型加速] 提出VORTA框架，通过桶化核心集注意力（建模长程依赖）和信号感知路由机制（自适应选择稀疏注意力分支），在不损失生成质量的前提下实现视频扩散Transformer端到端1.76×加速，并可与缓存和蒸馏方法叠加达到14.41×加速。
+  [NeurIPS 2025][视频生成][视频扩散模型加速] 提出VORTA框架，通过桶化核心集注意力（建模长程依赖）和信号感知路由机制（自适应选择稀疏注意力分支），在不损失生成质量的前提下实现视频扩散Transformer端到端1.76×加速，并可与缓存和蒸馏方法叠加达到14.41×加速。 视频扩散Transformer的…
 tags:
   - "NeurIPS 2025"
   - "视频生成"

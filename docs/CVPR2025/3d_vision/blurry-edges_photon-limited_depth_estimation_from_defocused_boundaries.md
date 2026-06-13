@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries
 description: >-
-  [CVPR 2025][3D视觉][深度估计] 提出一种基于新型图像块表示 Blurry-Edges 的深度估计方法，通过对散焦边界的平滑度建模，实现在极低光照（光子受限）条件下从一对不同散焦图像中鲁棒地估计物体深度，噪声鲁棒性比现有 DfD 方法高 4 倍以上。
+  [CVPR 2025][3D视觉][深度估计] 提出一种基于新型图像块表示 Blurry-Edges 的深度估计方法，通过对散焦边界的平滑度建模，实现在极低光照（光子受限）条件下从一对不同散焦图像中鲁棒地估计物体深度，噪声鲁棒性比现有 DfD 方法高 4 倍以上。 深度从散焦（Depth from Defocus…
 tags:
   - "CVPR 2025"
   - "3D视觉"

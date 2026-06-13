@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Zero-Shot Learning with Locally-Aligned Vision-Language Model
 description: >-
-  [ICCV 2025][多模态VLM][零样本学习] 提出 LaZSL，通过最优传输（Optimal Transport）实现局部视觉区域与语义属性之间的细粒度对齐，在无需额外训练的前提下构建可解释的零样本分类器，在9个数据集上取得了兼顾准确性、可解释性和域泛化的优异表现。
+  [ICCV 2025][多模态VLM][零样本学习] 提出 LaZSL，通过最优传输（Optimal Transport）实现局部视觉区域与语义属性之间的细粒度对齐，在无需额外训练的前提下构建可解释的零样本分类器，在9个数据集上取得了兼顾准确性、可解释性和域泛化的优异表现。 现有CLIP类方法的局限：- CLIP 通过计算整…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

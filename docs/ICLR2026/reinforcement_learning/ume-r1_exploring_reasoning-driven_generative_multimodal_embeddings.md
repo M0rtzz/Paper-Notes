@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings
 description: >-
-  [ICLR 2026][强化学习][多模态] 提出 UME-R1，首次探索推理驱动的生成式多模态嵌入范式，通过两阶段训练（冷启动SFT + 强化学习）让嵌入模型先推理再生成表示，在 MMEB-V2 基准的 78 个任务上显著超越传统判别式嵌入模型。
+  [ICLR 2026][强化学习][多模态] 提出 UME-R1，首次探索推理驱动的生成式多模态嵌入范式，通过两阶段训练（冷启动SFT + 强化学习）让嵌入模型先推理再生成表示，在 MMEB-V2 基准的 78 个任务上显著超越传统判别式嵌入模型。 领域现状：基于多模态大语言模型（MLLM）的嵌入模型（如 VLM2Vec、M…
 tags:
   - "ICLR 2026"
   - "强化学习"

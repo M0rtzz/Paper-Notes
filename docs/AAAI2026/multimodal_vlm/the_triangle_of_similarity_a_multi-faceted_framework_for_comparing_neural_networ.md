@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Triangle of Similarity: A Multi-Faceted Framework for Comparing Neural Network Representations
 description: >-
-  [AAAI 2026][多模态VLM][神经网络表征比较] 本文提出"相似性三角"（Triangle of Similarity）框架，整合静态表征相似性（CKA/Procrustes）、功能相似性（线性模式连接/预测分布相似性）和稀疏性相似性（剪枝鲁棒性）三个互补视角来全面比较神经网络…
+  [AAAI 2026][多模态VLM][神经网络表征比较] 本文提出"相似性三角"（Triangle of Similarity）框架，整合静态表征相似性（CKA/Procrustes）、功能相似性（线性模式连接/预测分布相似性）和稀疏性相似性（剪枝鲁棒性）三个互补视角来全面比较神经网络，发现架构家族是表征相似性的主要决定因素，且模型的表征结构比任务准确率在剪枝下更为鲁棒。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

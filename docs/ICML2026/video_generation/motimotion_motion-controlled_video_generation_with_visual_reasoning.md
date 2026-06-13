@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotiMotion: Motion-Controlled Video Generation with Visual Reasoning
 description: >-
-  [ICML 2026][视频生成][运动控制] MotiMotion 通过 VLM 推理把用户稀疏不精确的轨迹和文本提示**转化**为物理可信且因果一致的动作轨迹和文本描述，再用**置信度加权**的控制策略引导扩散模型生成符合世界知识和物理原理的自然视频——在 MotiBench 上物理真实性 0.302 远…
+  [ICML 2026][视频生成][运动控制] MotiMotion 通过 VLM 推理把用户稀疏不精确的轨迹和文本提示**转化**为物理可信且因果一致的动作轨迹和文本描述，再用**置信度加权**的控制策略引导扩散模型生成符合世界知识和物理原理的自然视频——在 MotiBench 上物理真实性 0.302 远超 Wan-Move 的 0.218（+38%）。
 tags:
   - "ICML 2026"
   - "视频生成"

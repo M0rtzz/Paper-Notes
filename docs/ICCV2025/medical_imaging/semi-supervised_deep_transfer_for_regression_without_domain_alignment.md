@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semi-supervised Deep Transfer for Regression without Domain Alignment
 description: >-
-  [ICCV 2025][医学图像][无源域适应] 提出 CRAFT（Contradistinguisher-based Regularization Approach for Flexible Training），一种无需源数据、无需域对齐的半监督迁移学习框架，专门面向回归任务…
+  [ICCV 2025][医学图像][无源域适应] 提出 CRAFT（Contradistinguisher-based Regularization Approach for Flexible Training），一种无需源数据、无需域对齐的半监督迁移学习框架，专门面向回归任务，通过联合优化监督损失和基于 Contradistinguisher 的无监督正则项在标签稀缺场景下显著提升预测性能。
 tags:
   - "ICCV 2025"
   - "医学图像"

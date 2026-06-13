@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibrated? Not for Everyone: How Sexual Orientation and Religious Markers Distort LLM Accuracy and Confidence in Medical QA
 description: >-
-  [ACL 2026][医疗NLP][校准偏差] 研究社会身份标记（性取向和宗教信仰）如何扭曲LLM在医疗问答中的准确率和置信度校准，发现"同性恋"标记在9个LLM上一致导致性能下降和校准危机，且交叉身份产生非加性的特异性伤害。
+  [ACL 2026][医疗NLP][校准偏差] 研究社会身份标记（性取向和宗教信仰）如何扭曲LLM在医疗问答中的准确率和置信度校准，发现"同性恋"标记在9个LLM上一致导致性能下降和校准危机，且交叉身份产生非加性的特异性伤害。 领域现状：LLM正加速融入临床工作流程（患者沟通、决策支持），临床系统常依赖模型置信度分数来分流病…
 tags:
   - "ACL 2026"
   - "医疗NLP"

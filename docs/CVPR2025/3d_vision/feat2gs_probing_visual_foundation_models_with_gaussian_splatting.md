@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feat2GS: Probing Visual Foundation Models with Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][视觉基础模型] 本文提出 Feat2GS，一个统一框架，通过将视觉基础模型（VFM）的 2D 特征经轻量级 MLP 读出为 3D 高斯属性，在新视角合成任务上分别探测 VFM 的几何感知和纹理感知能力…
+  [CVPR 2025][3D视觉][视觉基础模型] 本文提出 Feat2GS，一个统一框架，通过将视觉基础模型（VFM）的 2D 特征经轻量级 MLP 读出为 3D 高斯属性，在新视角合成任务上分别探测 VFM 的几何感知和纹理感知能力，无需 3D 真值数据即可在大规模多样数据集上全面评测 10+ 种 VFM 的 3D 意识。
 tags:
   - "CVPR 2025"
   - "3D视觉"

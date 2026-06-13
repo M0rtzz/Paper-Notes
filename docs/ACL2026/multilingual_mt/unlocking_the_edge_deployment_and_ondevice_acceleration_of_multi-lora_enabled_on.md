@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking the Edge: Multi-LoRA On-Device Deployment and Acceleration
 description: >-
-  [ACL 2026][多语言/翻译][端侧LLM部署] 本文提出面向三星 Galaxy S24/S25 的端侧 LLM 部署框架，通过 LoRA 权重作为运行时输入实现动态任务切换、多流并发 token 生成减少风格变体延迟达 6 倍、无草稿模型的 Dynamic Self-Speculative Decod…
+  [ACL 2026][多语言/翻译][端侧LLM部署] 本文提出面向三星 Galaxy S24/S25 的端侧 LLM 部署框架，通过 LoRA 权重作为运行时输入实现动态任务切换、多流并发 token 生成减少风格变体延迟达 6 倍、无草稿模型的 Dynamic Self-Speculative Decoding 加速解码达 2.3 倍，在 9 语言 8 任务上实现 4-6 倍整体优化。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

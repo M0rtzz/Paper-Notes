@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Something's Fishy In The Data Lake: A Critical Re-evaluation of Table Union Search Benchmarks
 description: >-
-  [ACL 2025][LLM评测][表联合搜索] 系统性分析了主流表联合搜索 (Table Union Search, TUS) 基准测试的三大结构性缺陷——过度重叠、语义简单、真值噪声，揭示简单的词袋 (BoW) 和预训练嵌入基线就能在这些基准上达到或超越复杂 SOTA 方法的效果…
+  [ACL 2025][LLM评测][表联合搜索] 系统性分析了主流表联合搜索 (Table Union Search, TUS) 基准测试的三大结构性缺陷——过度重叠、语义简单、真值噪声，揭示简单的词袋 (BoW) 和预训练嵌入基线就能在这些基准上达到或超越复杂 SOTA 方法的效果，调研结论指出当前基准无法有效评估语义理解能力。
 tags:
   - "ACL 2025"
   - "LLM评测"

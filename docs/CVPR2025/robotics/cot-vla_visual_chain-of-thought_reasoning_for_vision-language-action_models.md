@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action Models
 description: >-
-  [CVPR 2025][机器人][VLA] 提出 CoT-VLA，将视觉思维链推理引入视觉-语言-动作模型，通过两阶段推理——先预测子目标图像再生成动作序列——结合混合注意力和动作分块策略，在 LIBERO 基准上实现 81.13% 平均成功率，显著超越现有方法。
+  [CVPR 2025][机器人][VLA] 提出 CoT-VLA，将视觉思维链推理引入视觉-语言-动作模型，通过两阶段推理——先预测子目标图像再生成动作序列——结合混合注意力和动作分块策略，在 LIBERO 基准上实现 81.13% 平均成功率，显著超越现有方法。 领域现状：视觉-语言-动作模型（VLA）旨在利用大规模预训练…
 tags:
   - "CVPR 2025"
   - "机器人"

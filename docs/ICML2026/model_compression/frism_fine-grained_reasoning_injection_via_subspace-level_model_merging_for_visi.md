@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FRISM: Fine-Grained Reasoning Injection via Subspace-Level Model Merging for Vision–Language Models
 description: >-
-  [ICML 2026][模型压缩][模型合并] FRISM 把「VLM × LRM 合并」从层级粒度细化到 SVD 子空间粒度：用 LRM 任务向量的 SVD 子空间作为推理先验，再用一个仅含可学习门控的无标签自蒸馏（KL 保视觉 + 谱幅最大化吸收推理）找到最优注入强度…
+  [ICML 2026][模型压缩][模型合并] FRISM 把「VLM × LRM 合并」从层级粒度细化到 SVD 子空间粒度：用 LRM 任务向量的 SVD 子空间作为推理先验，再用一个仅含可学习门控的无标签自蒸馏（KL 保视觉 + 谱幅最大化吸收推理）找到最优注入强度，从而在不显著掉视觉的前提下显著提升 VL 推理性能。
 tags:
   - "ICML 2026"
   - "模型压缩"

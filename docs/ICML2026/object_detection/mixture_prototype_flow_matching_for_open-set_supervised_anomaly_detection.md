@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture Prototype Flow Matching for Open-Set Supervised Anomaly Detection
 description: >-
-  [ICML 2026][目标检测][开放集监督异常检测] MPFM 把 OSAD 里传统的"单峰高斯原型"换成可学习的**高斯混合原型空间**, 用流匹配直接回归一个 GMM 形式的速度场, 再加一个互信息最大化正则防止原型崩塌…
+  [ICML 2026][目标检测][开放集监督异常检测] MPFM 把 OSAD 里传统的"单峰高斯原型"换成可学习的**高斯混合原型空间**, 用流匹配直接回归一个 GMM 形式的速度场, 再加一个互信息最大化正则防止原型崩塌, 在 9 个工业 / 医学 AD 数据集上以 10/1 个异常样本的设定打过 DRA / AHL / DPDL 等所有 SOTA.
 tags:
   - "ICML 2026"
   - "目标检测"

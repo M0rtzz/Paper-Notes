@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees
 description: >-
-  [NeurIPS 2025][优化/理论][语言化算法] 本文提出"语言化算法"（Verbalized Algorithms, VAs）框架，将经典算法的控制流保持不变，仅用LLM替换其中的原子操作（如二值比较），从而在自然语言推理任务中继承经典算法的正确性和复杂度保证…
+  [NeurIPS 2025][优化/理论][语言化算法] 本文提出"语言化算法"（Verbalized Algorithms, VAs）框架，将经典算法的控制流保持不变，仅用LLM替换其中的原子操作（如二值比较），从而在自然语言推理任务中继承经典算法的正确性和复杂度保证，在排序、求最大值、聚类和子模最大化四个案例中验证了有效性。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

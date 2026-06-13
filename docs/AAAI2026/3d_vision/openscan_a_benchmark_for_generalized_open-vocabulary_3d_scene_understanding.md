@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding
 description: >-
-  [AAAI 2026][3D视觉][Open-Vocabulary 3D] 本文提出了广义开放词汇 3D 场景理解任务（GOV-3D）及对应的 OpenScan 基准，将 3D 场景理解从物体类别扩展到八种语言学属性维度，揭示了现有 OV-3D 方法在理解抽象物体属性方面的严重不足。
+  [AAAI 2026][3D视觉][Open-Vocabulary 3D] 本文提出了广义开放词汇 3D 场景理解任务（GOV-3D）及对应的 OpenScan 基准，将 3D 场景理解从物体类别扩展到八种语言学属性维度，揭示了现有 OV-3D 方法在理解抽象物体属性方面的严重不足。 领域现状 开放词汇 3D 场景理解（OV…
 tags:
   - "AAAI 2026"
   - "3D视觉"

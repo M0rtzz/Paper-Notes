@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Powerful and Flexible: Personalized Text-to-Image Generation via Reinforcement Learning
 description: >-
-  [ECCV 2024][图像生成][personalized T2I] 将个性化T2I生成建模为确定性策略梯度（DPG）框架——扩散模型作为策略、去噪步骤作为动作——引入"向前看"机制捕获长期视觉一致性和DINO相似度奖励，在DreamBooth基准上DINO得分从0.694提升至0.738（+6.3%）…
+  [ECCV 2024][图像生成][personalized T2I] 将个性化T2I生成建模为确定性策略梯度（DPG）框架——扩散模型作为策略、去噪步骤作为动作——引入"向前看"机制捕获长期视觉一致性和DINO相似度奖励，在DreamBooth基准上DINO得分从0.694提升至0.738（+6.3%），CLIP-I从0.762提升至0.797（+4.6%）。
 tags:
   - "ECCV 2024"
   - "图像生成"

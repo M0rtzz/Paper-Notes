@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][Self-Consistency] 提出首个针对基于采样的测试时缩放方法的理论框架，将推理误差分解为估计误差和模型误差，揭示了Self-Consistency收敛慢、Perplexity模型误差大的局限，并提出RPC方法融合两者优势…
+  [NeurIPS 2025][LLM推理][Self-Consistency] 提出首个针对基于采样的测试时缩放方法的理论框架，将推理误差分解为估计误差和模型误差，揭示了Self-Consistency收敛慢、Perplexity模型误差大的局限，并提出RPC方法融合两者优势，在7个基准上以50%的采样成本达到同等推理性能。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

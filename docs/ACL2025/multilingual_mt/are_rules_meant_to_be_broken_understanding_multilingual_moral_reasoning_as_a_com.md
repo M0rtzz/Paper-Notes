@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are Rules Meant to be Broken? Understanding Multilingual Moral Reasoning as a Computational Pipeline with UniMoral
 description: >-
-  [ACL 2025][多语言/翻译][道德推理] 提出UniMoral——一个跨6种语言的统一道德推理数据集，将道德推理建模为包含行为预测、道德类型分类、因素归因和后果生成的计算流水线，对3个LLM的基准测试揭示隐式道德语境能增强模型道德推理能力但仍需专门化方法。
+  [ACL 2025][多语言/翻译][道德推理] 提出UniMoral——一个跨6种语言的统一道德推理数据集，将道德推理建模为包含行为预测、道德类型分类、因素归因和后果生成的计算流水线，对3个LLM的基准测试揭示隐式道德语境能增强模型道德推理能力但仍需专门化方法。 道德推理（moral reasoning）是人类认知中极为复…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

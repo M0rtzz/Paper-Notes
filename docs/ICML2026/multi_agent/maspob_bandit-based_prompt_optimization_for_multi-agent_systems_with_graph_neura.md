@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MASPOB: 用 GNN 代理 + LinUCB + 坐标上升做多智能体提示优化
 description: >-
-  [ICML 2026][多智能体][MAS] MASPOB 把多智能体系统的 prompt 优化看作预算紧缩的黑盒优化，用 GAT 代理模型捕获 workflow topology 下的 prompt 耦合、用 LinUCB 在嵌入空间算 epistemic uncertainty、用坐标上升把联合搜索拆成序…
+  [ICML 2026 Spotlight][多智能体][MAS] MASPOB 把多智能体系统的 prompt 优化看作预算紧缩的黑盒优化，用 GAT 代理模型捕获 workflow topology 下的 prompt 耦合、用 LinUCB 在嵌入空间算 epistemic uncertainty、用坐标上升把联合搜索拆成序贯单体问题，复杂度从 $\mathcal{O}(\prod |\mathcal{P}_i|)$ 降到 $\mathcal{O}(\sum |\mathcal{P}_i|)$；在 6 个基准（QA/Code/Math）上平均 80.58 超越 MIPRO 78.87、AFlow 78.52、IO 68.56。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "多智能体"
   - "MAS"
   - "提示学习"

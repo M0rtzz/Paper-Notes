@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimMLM: A Simple Framework for Multi-modal Learning with Missing Modality
 description: >-
-  [ICCV 2025][医学图像][多模态] 提出 SimMLM，一个简洁高效的多模态缺失学习框架，由动态模态专家混合架构（DMoME）和 More vs. Fewer（MoFe）排序损失组成，在脑肿瘤分割和多模态分类任务上以更少参数和计算量全面超越 SOTA，同时提供模态重要性可解释性。
+  [ICCV 2025][医学图像][多模态] 提出 SimMLM，一个简洁高效的多模态缺失学习框架，由动态模态专家混合架构（DMoME）和 More vs. Fewer（MoFe）排序损失组成，在脑肿瘤分割和多模态分类任务上以更少参数和计算量全面超越 SOTA，同时提供模态重要性可解释性。 多模态学习虽然能利用互补信息提升性…
 tags:
   - "ICCV 2025"
   - "医学图像"

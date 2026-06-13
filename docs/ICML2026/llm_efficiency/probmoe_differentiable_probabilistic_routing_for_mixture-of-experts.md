@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProbMoE: Differentiable Probabilistic Routing for Mixture-of-Experts
 description: >-
-  [ICML 2026][LLM效率][Mixture-of-Experts] ProbMoE 把 MoE 的 top-$k$ 路由重新表述为"基数受限子集分布上的概率推断"，前向用 SIMPLE 估计器从 exact-$k$ 子集分布中采样、反向用可解析计算的专家边缘概率 $m_j=\partial \log…
+  [ICML 2026][LLM效率][Mixture-of-Experts] ProbMoE 把 MoE 的 top-$k$ 路由重新表述为"基数受限子集分布上的概率推断"，前向用 SIMPLE 估计器从 exact-$k$ 子集分布中采样、反向用可解析计算的专家边缘概率 $m_j=\partial \log Z_k/\partial \log p_j$ 作为离散选择的可微代理，在 OLMoE/Qwen1.5-MoE 上明显提升 GSM/Law/Translation 等任务并显著改善专家利用率，同时自然延伸出 Dynamic-$k$ 变体——按 token 难度自适应激活专家数。
 tags:
   - "ICML 2026"
   - "LLM效率"

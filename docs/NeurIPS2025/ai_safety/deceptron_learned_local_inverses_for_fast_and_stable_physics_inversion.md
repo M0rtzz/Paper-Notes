@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deceptron: Learned Local Inverses for Fast and Stable Physics Inversion
 description: >-
-  [NEURIPS2025][AI安全][inverse problems] 提出 Deceptron 双向模块，通过学习可微分前向代理的局部逆映射并引入 Jacobian Composition Penalty (JCP)，在求解物理逆问题时将输出空间的残差拉回输入空间…
+  [NEURIPS2025][AI安全][inverse problems] 提出 Deceptron 双向模块，通过学习可微分前向代理的局部逆映射并引入 Jacobian Composition Penalty (JCP)，在求解物理逆问题时将输出空间的残差拉回输入空间，实现类 Gauss-Newton 的预条件梯度更新，迭代次数大幅减少（Heat-1D 约 20 倍加速）。
 tags:
   - "NEURIPS2025"
   - "AI安全"

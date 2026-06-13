@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsolvable Problem Detection: Evaluating Trustworthiness of Large Multimodal Models
 description: >-
-  [ACL 2025][多模态VLM][unsolvable problem detection] 提出 Unsolvable Problem Detection (UPD) 任务，通过三类不可解问题（缺失答案、不兼容选项、图文不匹配）系统评估大型多模态模型在面对无法回答的 MCQA 问题时是否能正确拒绝作答…
+  [ACL 2025][多模态VLM][unsolvable problem detection] 提出 Unsolvable Problem Detection (UPD) 任务，通过三类不可解问题（缺失答案、不兼容选项、图文不匹配）系统评估大型多模态模型在面对无法回答的 MCQA 问题时是否能正确拒绝作答，揭示了现有 benchmark 无法衡量的可信度维度。
 tags:
   - "ACL 2025"
   - "多模态VLM"

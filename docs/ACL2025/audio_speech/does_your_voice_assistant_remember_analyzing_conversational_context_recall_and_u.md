@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Does Your Voice Assistant Remember? Analyzing Conversational Context Recall and Utilization in Voice Interaction Models
 description: >-
-  [ACL 2025][音频/语音][语音交互模型] 系统性评估开源语音交互模型的对话历史回忆能力，提出 ContextDialog 基准，发现这些模型在回忆过去语音信息方面远弱于文本模型，且 RAG 方法也难以有效弥补这一差距。
+  [ACL 2025][音频/语音][语音交互模型] 系统性评估开源语音交互模型的对话历史回忆能力，提出 ContextDialog 基准，发现这些模型在回忆过去语音信息方面远弱于文本模型，且 RAG 方法也难以有效弥补这一差距。 领域现状： 语音助手已成为日常生活不可或缺的工具。随着 LLM 的发展，社区从级联 ASR→LL…
 tags:
   - "ACL 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DFLMoE: Decentralized Federated Learning via Mixture of Experts for Medical Data
 description: >-
-  [CVPR 2025][医学图像][联邦学习] 提出 DFLMoE 在去中心化联邦学习中使用混合专家（MoE）机制处理医疗数据异质性，无需中心服务器即可在保护隐私的前提下协同训练
+  [CVPR 2025][医学图像][联邦学习] 提出 DFLMoE 在去中心化联邦学习中使用混合专家（MoE）机制处理医疗数据异质性，无需中心服务器即可在保护隐私的前提下协同训练 领域现状 领域现状：DFLMoE 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不足，限制了实际应用…
 tags:
   - "CVPR 2025"
   - "医学图像"

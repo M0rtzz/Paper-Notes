@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI
 description: >-
-  [CVPR2025][计算生物][Ovarian Cancer] 使用 15 种 CNN 变体（LeNet、ResNet、VGG、Inception）在组织病理学图像上检测卵巢癌及亚型，选择 InceptionV3（ReLU）作为最优模型（平均 94.58%）…
+  [CVPR2025][医学图像][Ovarian Cancer] 使用 15 种 CNN 变体（LeNet、ResNet、VGG、Inception）在组织病理学图像上检测卵巢癌及亚型，选择 InceptionV3（ReLU）作为最优模型（平均 94.58%），并使用 LIME、SHAP、Integrated Gradients 三种 XAI 方法解释模型预测。
 tags:
   - "CVPR2025"
-  - "计算生物"
+  - "医学图像"
   - "Ovarian Cancer"
   - "CNN"
   - "Explainable AI"
@@ -115,10 +115,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐ （标准 CNN 比较实验 + XAI 应用，缺少方法层面创新）
-- 实验充分度: ⭐⭐ （数据集太小，无外部验证，ResNet 异常未分析）
-- 写作质量: ⭐⭐⭐ （结构完整但叙述冗余）
-- 价值: ⭐⭐ （作为应用型工作基本完成目标，但离实际临床部署差距较大）
+- 新颖性: ⭐⭐⭐⭐ （标准 CNN 比较实验 + XAI 应用，缺少方法层面创新）
+- 实验充分度: ⭐⭐⭐ （数据集太小，无外部验证，ResNet 异常未分析）
+- 写作质量: ⭐⭐⭐⭐ （结构完整但叙述冗余）
+- 价值: ⭐⭐⭐ （作为应用型工作基本完成目标，但离实际临床部署差距较大）
 
 <!-- RELATED:START -->
 

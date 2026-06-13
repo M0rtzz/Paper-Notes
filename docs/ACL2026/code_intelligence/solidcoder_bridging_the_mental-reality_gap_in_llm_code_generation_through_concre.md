@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SolidCoder: Bridging the Mental-Reality Gap in LLM Code Generation through Concrete Execution
 description: >-
-  [ACL 2026][代码智能][代码生成] SolidCoder 通过 S.O.L.I.D. 架构（Shift-left Planning、Oracle-based Assertions、Live Execution、Intermediate Simulation、Defensive Accumulatio…
+  [ACL 2026 Findings][代码智能][代码生成] SolidCoder 通过 S.O.L.I.D. 架构（Shift-left Planning、Oracle-based Assertions、Live Execution、Intermediate Simulation、Defensive Accumulation）将代码验证从 LLM 的"想象执行"转变为"真实执行"，在 GPT-4o 上达到 HumanEval 95.7%、CodeContests 77.0%、APPS 26.7% 的 pass@1 性能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "代码生成"
   - "心理模拟"

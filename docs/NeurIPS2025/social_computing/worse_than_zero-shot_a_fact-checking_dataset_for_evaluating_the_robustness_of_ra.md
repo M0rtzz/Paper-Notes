@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals
 description: >-
-  [NeurIPS 2025][社会计算][RAG robustness] 提出 RAGuard 基准数据集，首次系统评估 RAG 系统对误导性检索内容的鲁棒性。通过从 Reddit 构建包含支持性、误导性和无关文档的真实检索语料库…
+  [NeurIPS 2025][社会计算][RAG robustness] 提出 RAGuard 基准数据集，首次系统评估 RAG 系统对误导性检索内容的鲁棒性。通过从 Reddit 构建包含支持性、误导性和无关文档的真实检索语料库，揭示所有测试的 LLM-RAG 系统在面对误导性检索时表现**比零样本基线更差**，而人类标注者能保持一致判断。
 tags:
   - "NeurIPS 2025"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Set of Generalized Components to Achieve Effective Poison-only Clean-label Backdoor Attacks with Collaborative Sample Selection and Triggers
 description: >-
-  [NeurIPS 2025][AI安全][backdoor attack] 提出一组通用化组件（Component A/B/C），通过充分挖掘样本选择与触发器之间的双向协作关系，同时提升 Poison-only Clean-label 后门攻击的攻击成功率（ASR）和隐蔽性…
+  [NeurIPS 2025][AI安全][backdoor attack] 提出一组通用化组件（Component A/B/C），通过充分挖掘样本选择与触发器之间的双向协作关系，同时提升 Poison-only Clean-label 后门攻击的攻击成功率（ASR）和隐蔽性，并在多种攻击类型上展现了良好的泛化能力。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

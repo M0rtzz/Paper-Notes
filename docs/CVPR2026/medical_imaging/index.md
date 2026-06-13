@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 医学图像论文汇总 · 100篇论文解读
+  CVPR2026 医学图像论文汇总 · 119篇论文解读
 description: >-
-  100篇CVPR2026的医学图像方向论文解读，涵盖医学影像、语义分割、多模态、对抗鲁棒、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  119篇CVPR2026的医学图像方向论文解读，涵盖医学影像、语义分割、多模态、对抗鲁棒、扩散模型、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "医学图像"
@@ -12,8 +12,8 @@ tags:
   - "语义分割"
   - "多模态"
   - "对抗鲁棒"
-  - "少样本学习"
   - "扩散模型"
+  - "少样本学习"
 item_list:
   - u: "a_protocol_for_evaluating_robustness_to_he_stainin/"
     t: "A protocol for evaluating robustness to H&E staining variation in computational pathology models"
@@ -23,69 +23,69 @@ item_list:
     t: "Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning"
   - u: "act_like_a_pathologist_tissue-aware_whole_slide_image_reasoning/"
     t: "Act Like a Pathologist: Tissue-Aware Whole Slide Image Reasoning"
+  - u: "ad-gbc_anisotropic_granular-ball_skip-connection_refiner_for_unet-based_medical_image_seg/"
+    t: "AD-GBC: Anisotropic Granular-Ball Skip-Connection Refiner for UNet-Based Medical Image Segmentation"
   - u: "adaptation_of_weakly_supervised_localization_in_histopathology_by_debiasing_pred/"
     t: "Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions"
   - u: "adaptive_confidence_regularization_for_multimodal_failure_detection/"
     t: "Adaptive Confidence Regularization for Multimodal Failure Detection"
   - u: "addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi/"
     t: "Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding"
+  - u: "any2any_3d_diffusion_models_with_knowledge_transfer_a_radiotherapy_planning_stud/"
+    t: "Any2Any 3D Diffusion Models with Knowledge Transfer: A Radiotherapy Planning Study"
   - u: "apex_adaptive_visual_prompting/"
     t: "From Adaptation to Generalization: Adaptive Visual Prompting for Medical Image Segmentation"
   - u: "are_general-purpose_vision_models_all_we_need_for_2d_medical_image_segmentation_/"
     t: "Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study"
   - u: "association_of_radiologic_ppfe_change_with_mortali/"
     t: "Association of Radiologic PPFE Change with Mortality in Lung Cancer Screening Cohorts"
+  - u: "attention_consistent_longitudinal_medical_visual_question_answering_guided_by_vi/"
+    t: "Attention Consistent Longitudinal Medical Visual Question Answering Guided by Vision Foundation Models"
   - u: "automated_detection_of_malignant_lesions_in_the_ov/"
     t: "Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI"
+  - u: "backsplit_the_importance_of_sub-dividing_the_background_in_biomedical_lesion_seg/"
+    t: "BackSplit: The Importance of Sub-dividing the Background in Biomedical Lesion Segmentation"
   - u: "benchmarking_endoscopic_surgical_image_restoration_and_beyond/"
     t: "Benchmarking Endoscopic Surgical Image Restoration and Beyond"
   - u: "better_than_average_spatially-aware_aggregation_of_segmentation_uncertainty_impr/"
     t: "Better than Average: Spatially-Aware Aggregation of Segmentation Uncertainty Improves Downstream Performance"
   - u: "biclip_bidirectional_and_consistent_language-image_processing_for_robust_medical/"
     t: "BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation"
+  - u: "bridging_brain_and_semantics_a_hierarchical_framework_for_semantically_enhanced_/"
+    t: "Bridging Brain and Semantics: A Hierarchical Framework for Semantically Enhanced fMRI-to-Video Reconstruction"
   - u: "bridging_the_skill_gap_in_clinical_cbct_interpreta/"
     t: "Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD"
-  - u: "can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy/"
-    t: "Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?"
   - u: "chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_/"
     t: "CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection"
   - u: "cloe_expert_consistency_learning_for_missing_modality_segmentation/"
     t: "CLoE: Expert Consistency Learning for Missing Modality Segmentation"
-  - u: "comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma/"
-    t: "Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging"
+  - u: "cofida-m_concept-aware_feature_modulation_for_cross-domain_adaptation_with_image/"
+    t: "CoFiDA-M: Concept-Aware Feature Modulation for Cross-Domain Adaptation with Image-Only Inference"
   - u: "crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr/"
     t: "CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration"
+  - u: "ct-degradbench_a_physics-informed_benchmark_for_ct_degradation_detection_and_sev/"
+    t: "CT-DegradBench: A Physics-Informed Benchmark for CT Degradation Detection and Severity Estimation"
   - u: "cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_/"
     t: "CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation"
+  - u: "d-convexity_a_unified_differentiable_convex_shape_prior_via_quasi-concavity_for_/"
+    t: "D-Convexity: A Unified Differentiable Convex Shape Prior via Quasi-Concavity for Data-driven Image Segmentation"
   - u: "decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe/"
     t: "Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation"
   - u: "decoupling_vision_and_language_codebook_anchored_visual_adaptation/"
     t: "Decoupling Vision and Language: Codebook Anchored Visual Adaptation"
   - u: "deep_learning_based_estimation_of_blood_glucose_levels_from_multidirectional_scl/"
     t: "Deep Learning–Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging"
-  - u: "deep_learningbased_assessment_of_the_relation_betw/"
-    t: "Deep Learning-based Assessment of the Relation Between the Third Molar and Mandibular Canal on Panoramic Radiographs using Local, Centralized, and Federated Learning"
-  - u: "developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit/"
-    t: "Developing Foundation Models for Universal Segmentation from 3D Whole-Body Positron Emission Tomography"
-  - u: "diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi/"
-    t: "Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification"
-  - u: "echoagent_towards_reliable_echocardiography_interpretation_with_eyeshands_and_mi/"
-    t: "EchoAgent: Towards Reliable Echocardiography Interpretation with \"Eyes\", \"Hands\" and \"Minds\""
-  - u: "ei_early_intervention_for_multimodal_imaging_based_disease_recognition/"
-    t: "EI: Early Intervention for Multimodal Imaging based Disease Recognition"
-  - u: "emad_evidence-centric_grounded_multimodal_diagnosis_for_alzheimers_disease/"
-    t: "EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease"
-item_total: 100
+item_total: 119
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📷 CVPR2026** · **100** 篇论文解读
+**📷 CVPR2026** · **119** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (75)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (77)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (21)](../../ICML2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×35 · 语义分割 ×22 · 多模态 ×12 · 对抗鲁棒 ×8 · 少样本学习 ×6
+🔥 **高频主题：** 医学影像 ×45 · 语义分割 ×34 · 多模态 ×14 · 对抗鲁棒 ×11 · 扩散模型 ×8
 
 **[A protocol for evaluating robustness to H&E staining variation in computational pathology models](a_protocol_for_evaluating_robustness_to_he_stainin.md)**
 
@@ -103,6 +103,10 @@ item_total: 100
 
 :   提出 HistoSelect 框架，模拟病理学家从粗到细的推理过程，通过组织分割→Group Sampler→Patch Selector 的三级筛选机制，基于信息瓶颈(IB)理论压缩无关视觉token，在减少约70%计算量的同时实现三个数据集上的SOTA。
 
+**[AD-GBC: Anisotropic Granular-Ball Skip-Connection Refiner for UNet-Based Medical Image Segmentation](ad-gbc_anisotropic_granular-ball_skip-connection_refiner_for_unet-based_medical_image_seg.md)**
+
+:   把 UNet 里"点原型 / 各向同性球"的语义锚点升级成**带各向异性向量尺度的可微粒球**，以「像素集合 ↔ 粒球」的双向聚合-广播机制充当 skip-connection 的语义精炼器，再加两个几何正则防止锚点塌缩，在四个医学分割基准上对 Rolling-UNet / U-KAN 两种骨干都带来稳定涨点（平均 IoU +1.3~1.7%）。
+
 **[Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions](adaptation_of_weakly_supervised_localization_in_histopathology_by_debiasing_pred.md)**
 
 :   提出 SFDA-DeP，受机器遗忘启发，将 SFDA 重新定义为"识别并纠正预测偏差"的迭代过程：对 dominant class 中高熵不确定样本执行"遗忘"操作迫使模型放弃偏向性预测，对可靠样本保持自训练，同时用像素级分类器锚定定位能力，在跨器官/跨中心病理基准上持续优于现有 SFDA 方法。
@@ -114,6 +118,10 @@ item_total: 100
 **[Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding](addressing_data_scarcity_in_3d_trauma_detection_through_self-supervised_and_semi.md)**
 
 :   提出两阶段标签高效框架：先用 patch-based MIM 在1,206个无标注CT上自监督预训练3D U-Net编码器，再用VDETR+3D顶点相对位置编码做3D损伤检测，配合Mean Teacher半监督一致性正则化利用2,000个无标注体数据，仅用144个有标注样本即实现56.57% val mAP@0.50（比纯监督提升115%）。
+
+**[Any2Any 3D Diffusion Models with Knowledge Transfer: A Radiotherapy Planning Study](any2any_3d_diffusion_models_with_knowledge_transfer_a_radiotherapy_planning_stud.md)**
+
+:   把在自然视频（Wan 2.1）或公开 CT（MAISI）上预训练好的 3D 扩散模型迁移到放疗剂量预测，用一套「Any2Any」模态条件范式让任意模态都能当生成目标，再用临床 Scorecard 设计的强化学习后训练对齐机构偏好，在 GDP-HMM 挑战赛上把体素级 MAE 从 2.07 降到 1.93、刷新 SOTA。
 
 **[From Adaptation to Generalization: Adaptive Visual Prompting for Medical Image Segmentation](apex_adaptive_visual_prompting.md)**
 
@@ -127,9 +135,17 @@ item_total: 100
 
 :   在 NLST（n=7980）和 SUMMIT（n=8561）两个大规模肺癌筛查队列中，利用深度学习自动分割量化低剂量 CT 上 PPFE 的纵向变化（dPPFE），验证其与全因死亡率（HR=1.25/3.14）和呼吸系统发病率的独立关联。
 
+**[Attention Consistent Longitudinal Medical Visual Question Answering Guided by Vision Foundation Models](attention_consistent_longitudinal_medical_visual_question_answering_guided_by_vi.md)**
+
+:   针对胸片"前后两次随访对比"的差异型 VQA，本文提出"轻量仿射预配准 + DINO 先验与自适应掩码融合的共享显著性掩码 + 多粒度自/无监督辅助目标"的编码器-解码器框架，让模型在两个时间点看同一块解剖区域，在 Medical-Diff-VQA 上把 METEOR 从 0.389 拉到 0.700，并自带可解释的病灶掩码。
+
 **[Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI](automated_detection_of_malignant_lesions_in_the_ov.md)**
 
 :   系统对比 15 种 CNN 变体（LeNet/ResNet/VGG/Inception）在卵巢癌组织病理图像五分类上的表现，最终选出 InceptionV3-A（ReLU）达 94% 综合指标，并用 LIME/SHAP/Integrated Gradients 三种 XAI 方法做对比解释分析。
+
+**[BackSplit: The Importance of Sub-dividing the Background in Biomedical Lesion Segmentation](backsplit_the_importance_of_sub-dividing_the_background_in_biomedical_lesion_seg.md)**
+
+:   论文提出 BackSplit：把病灶分割里被一锅端的「背景」拆成有语义的辅助器官/组织类、做多类 softmax 联合训练，用 Fisher 信息理论证明这比二分类训练保留更多信息、估计更稳，并在 5 个数据集上一致提升小病灶 Dice，且推理零额外开销。
 
 **[Benchmarking Endoscopic Surgical Image Restoration and Beyond](benchmarking_endoscopic_surgical_image_restoration_and_beyond.md)**
 
@@ -143,13 +159,13 @@ item_total: 100
 
 :   提出 BiCLIP 框架，通过双向多模态融合（BMF）实现视觉信息反向精炼文本表示，并通过图像增强一致性（IAC）约束中间特征的扰动不变性，在 COVID-19 CT 分割上超越 SOTA，仅 1% 标注数据仍保持鲁棒。
 
+**[Bridging Brain and Semantics: A Hierarchical Framework for Semantically Enhanced fMRI-to-Video Reconstruction](bridging_brain_and_semantics_a_hierarchical_framework_for_semantically_enhanced_.md)**
+
+:   CineNeuron 借鉴大脑「自下而上感知 + 自上而下记忆」的双通路机制，先用多任务对齐把含噪 fMRI 信号映射到同时编码图像/文本/动作/类别的语义空间，再用 Mixture-of-Memories 从历史样本里检索并融合多模态「记忆」来补全细节，最终驱动视频扩散模型，在 cc2017 与 CineBrain 两个 fMRI-to-video 基准上全面超越 SOTA。
+
 **[Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD](bridging_the_skill_gap_in_clinical_cbct_interpreta.md)**
 
 :   构建覆盖55种口腔疾病的7,408例大规模CBCT-报告配对数据集，开发双语口腔颌面CBCT报告生成系统CBCTRepD，通过AI生成草稿+放射科医生编辑的协作模式，在多层级临床评估中证明其可帮助初级医生达到中级水平、中级医生接近高级水平、高级医生减少遗漏。
-
-**[Can Natural Image Autoencoders Compactly Tokenize fMRI Volumes for Long-Range Dynamics Modeling?](can_natural_image_autoencoders_compactly_tokenize_fmri_volumes_for_long-range_dy.md)**
-
-:   提出 TABLeT，利用预训练的 2D 自然图像自编码器（DCAE）将 3D fMRI 体积压缩为仅 27 个连续 token，配合简单 Transformer 编码器实现前所未有的长时序建模（256 帧），在 UKB、HCP、ADHD-200 上多任务超越 SOTA 体素方法，且计算效率大幅提升。
 
 **[CHIPS: Efficient CLIP Adaptation via Curvature-aware Hybrid Influence-based Data Selection](chips_efficient_clip_adaptation_via_curvature-aware_hybrid_influence-based_data_.md)**
 
@@ -159,17 +175,25 @@ item_total: 100
 
 :   提出 CLoE（Consistency Learning of Experts），将缺失模态鲁棒性问题建模为决策层面的专家一致性控制，通过模态专家一致性（MEC）和区域专家一致性（REC）双分支约束减少专家漂移，并用一致性分数驱动的门控网络实现可靠性加权融合。
 
-**[Comparative Evaluation of Traditional Methods and Deep Learning for Brain Glioma Imaging](comparative_evaluation_of_traditional_methods_and_deep_learning_for_brain_glioma.md)**
+**[CoFiDA-M: Concept-Aware Feature Modulation for Cross-Domain Adaptation with Image-Only Inference](cofida-m_concept-aware_feature_modulation_for_cross-domain_adaptation_with_image.md)**
 
-:   一篇系统性综述论文，全面对比传统方法（阈值分割、区域生长、模糊聚类等）和深度学习方法（CNN、U-Net、SegNet 等）在脑胶质瘤 MRI 分割与分类任务上的表现，结论指出 CNN 架构在准确性和自动化程度上全面优于传统技术。
+:   针对"皮肤镜专家图 → 手机临床图"的域偏移，CoFiDA-M 在**训练时**用 MONET 临床概念分数（特权信息）引导 FiLM 编辑视觉特征、教出一个"会临床推理"的教师，再把教师**编辑后的特征**蒸馏进一个**只吃图像**的学生，让学生在 6 个未见数据集上保持高 AUROC 和高黑色素瘤召回，同时部署时不依赖任何概念元数据。
 
 **[CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration](crft_consistent-recurrent_feature_flow_transformer_for_cross-modal_image_registr.md)**
 
 :   提出CRFT，统一的粗到精跨模态图像配准框架——在Transformer架构中学习模态无关的特征流表示，粗阶段1/8分辨率全局对应+精阶段1/2-1/4多尺度局部细化，配合迭代差异引导注意力和空间几何变换(SGT)递归精化流场捕捉微妙空间不一致，在光学/红外/SAR/多光谱等多种跨模态数据集上超越RAFT/GMFlow/LoFTR等SOTA。
 
+**[CT-DegradBench: A Physics-Informed Benchmark for CT Degradation Detection and Severity Estimation](ct-degradbench_a_physics-informed_benchmark_for_ct_degradation_detection_and_sev.md)**
+
+:   作者构建了 CT-DegradBench——一个用物理成像模型在投影域（sinogram）合成、覆盖 5 类退化 × 4 个严重度等级、含临床合理混合退化的可控 CT 基准，并提出无需微调的 SeSpeCT 框架（医学 VLM 语义质量轴 + Fourier 频域特征）联合预测退化类型与严重度，在单一与混合退化上都超过冻结 VLM 与经典 IQA 指标。
+
 **[CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation](cure_curriculum-guided_multi-task_training_for_reliable_anatomy_grounded_report_.md)**
 
 :   提出 CURE——一种基于误差感知课程学习的多任务训练框架，在不引入额外数据的前提下，通过动态调节采样分布重点训练困难样本，将医学 VLM 的视觉定位精度提升 +0.37 IoU，幻觉率降低 18.6%。
+
+**[D-Convexity: A Unified Differentiable Convex Shape Prior via Quasi-Concavity for Data-driven Image Segmentation](d-convexity_a_unified_differentiable_convex_shape_prior_via_quasi-concavity_for_.md)**
+
+:   把"分割结果必须是凸形"这个先验，从对二值集合的全局约束，改写成对网络输出概率图 $u$ 的**拟凹性(quasi-concavity)** 约束，从而得到一个无需阈值、可微、可密集卷积计算的凸性损失，并用一个凸梯度投影模块(CGPM)在推理时硬性凸化输出，在视网膜/心脏等近凸结构分割上一致提升 Dice/IoU 并降低 Hausdorff 距离。
 
 **[Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation](decoding_matters_efficient_mamba-based_decoder_with_distribution-aware_deep_supe.md)**
 
@@ -235,6 +259,10 @@ item_total: 100
 
 :   FedVG 提出利用全局验证集上的逐层梯度范数为各客户端打分，梯度越平坦（范数越小）的客户端获得越高聚合权重，从而在高度数据异质性场景下显著提升联邦学习的泛化性能。
 
+**[Few-Shot Synthetic Data Generation with Diffusion Models for Downstream Vision Tasks](few-shot_synthetic_data_generation_with_diffusion_models_for_downstream_vision_t.md)**
+
+:   只用 20–50 张稀有类真实图给预训练扩散模型（FLUX.2-dev）做 LoRA 微调，生成约 1000 张合成样本来补充正类，在胸片病理分类和工业磁瓦裂纹检测两个差异极大的域上，把稀有类的 F1 / Recall 显著拉高（胸片 F1 0.193→0.686，磁瓦 0.051→0.296）。
+
 **[Focus-to-Perceive Representation Learning: A Cognition-Inspired Hierarchical Framework for Endoscopic Video Analysis](focus-to-perceive_representation_learning_a_cognition-inspired_hierarchical_fram.md)**
 
 :   提出 FPRL，一个受临床认知启发的层次化自监督框架，通过先"聚焦"帧内病灶关键静态语义、再"感知"帧间上下文演化来缓解运动偏差，在 11 个内窥镜数据集上取得 SOTA。
@@ -259,6 +287,10 @@ item_total: 100
 
 :   提出首个公开三模态青光眼数据集 GLEAM（SLO 眼底图 + 环乳头 OCT + 视野偏差图，1200例，四阶段标注），以及基于 CNN 的层级注意力掩码建模框架 HAMM，通过临床启发式的多头模态门控和关系图注意力实现跨模态融合，四分类准确率达 81.08%。
 
+**[Harmonized Feature Conditioning and Frequency-Prompt Personalization for Multi-Rater Medical Segmentation](harmonized_feature_conditioning_and_frequency-prompt_personalization_for_multi-r.md)**
+
+:   针对"多个医生对同一病灶画的轮廓不一样"这件事，本文用一个轻量 Harmonizer 网络先把扫描设备噪声/伪影从特征里"洗掉"，再用高频提示模块在小波频域里捕捉每位医生的风格偏好，并用 GED 正则把模型预测分布对齐到真实标注分布，从而在 LIDC-IDRI 和 NPC-170 上同时拿到更好的群体级多样性与个性化分割（GED 0.105 vs. D-Persona 0.136）。
+
 **[Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization](human_knowledge_integrated_multi-modal_learning_for_single_source_domain_general.md)**
 
 :   提出 GenEval，通过域共形界（DCB）量化因果覆盖差距，并将人类专家知识量化精炼后与医学 VLM（MedGemma-4B）融合，以 LoRA 微调实现单源域泛化，在 DR 分级和癫痫灶检测上显著超越基线。
@@ -271,6 +303,14 @@ item_total: 100
 
 :   发现并解决了 CLIP 在跨域少样本学习（CDFSL）中的局部特征对齐退化问题，提出基于循环一致性的 CC-CDFSL 框架，通过 T-I-T 和 I-T-I 双向循环路径和语义锚点机制改善 patch 级视觉-语言对齐，同时增强模型的可解释性。
 
+**[KLIP: localized distribution shift detection via KL-divergence with diffusion priors in Inverse Problems](klip_localized_distribution_shift_detection_via_kl-divergence_with_diffusion_pri.md)**
+
+:   在用扩散先验解反问题（稀疏视角 CT、高斯去模糊）的过程中，用「先验分布 $p(x)$ 与后验分布 $p(x|y)$ 之间的 KL 散度」当作 OOD 信号，并把它限制到空间分块和采样时间窗内，从而无需任何 OOD 标定数据就能检测并**定位**图像里细小、局部、却有诊断意义的分布偏移（如健康肝脏 CT 里的肿瘤）。
+
+**[Learning from Noisy Prompts: Saliency-Guided Prompt Distillation for Robust Segmentation with SAM](learning_from_noisy_prompts_saliency-guided_prompt_distillation_for_robust_segme.md)**
+
+:   针对临床中只能拿到「中心线点」这类粗糙噪声提示、导致 SAM 分割崩坏的问题，本文提出 SPD：先用轻量显著性头学到可靠的解剖先验，再用「上下文提示蒸馏（CPD）」把当前层和邻层的噪声提示过滤+扩充成共识提示集，并用「成对切片一致性（PSC）」约束相邻层连贯性，在 TI/Scar/FUMPE/KiTS 四个 MRI/CT 数据集上 DSC 大幅领先（TI 上 +11.08%）。
+
 **[Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision](learning_generalizable_3d_medical_image_representations_from_mask-guided_self-su.md)**
 
 :   提出 MASS（MAsk-guided Self-Supervised learning），利用 SAM2 自动生成的类别无关 mask 作为伪标注，以 in-context 分割为 pretext task 进行自监督预训练，无需任何人工标注即可学到语义丰富、泛化性强的 3D 医学图像表征，在 few-shot 分割和冻结编码器分类上均取得优异表现。
@@ -282,6 +322,14 @@ item_total: 100
 **[LUMINA: A Multi-Vendor Mammography Benchmark with Energy Harmonization Protocol](lumina_a_multi-vendor_mammography_benchmark_with_energy_harmonization_protocol.md)**
 
 :   提出 LUMINA 多厂商乳腺 FFDM 数据集（468 例患者、1824 张图像），附带前景像素直方图匹配的能量协调预处理方法，在诊断/BI-RADS/密度三任务上系统评估了 CNN 与 Transformer 模型。
+
+**[MambaLiteUNet: Cross-Gated Adaptive Feature Fusion for Robust Skin Lesion Segmentation](mambaliteunet_cross-gated_adaptive_feature_fusion_for_robust_skin_lesion_segment.md)**
+
+:   把 Vision Mamba 状态空间建模塞进一个仅 0.494M 参数的轻量 U-Net，再用三个模块（多分支自适应 Mamba 融合 AMF、局部-全局特征混合 LGFM、跨门控注意力 CGA）分别强化多尺度融合、局部纹理与全局上下文交互、以及跳连精炼，在 ISIC2017/2018、HAM10000、PH2 四个皮肤病灶分割基准上取得平均 87.12% IoU / 93.09% Dice，超过一众 SOTA，且参数比 U-Net 少 93.6%、GFLOPs 少 97.6%。
+
+**[Marker-Based 3D Reconstruction of Aggregates with a Comparative Analysis of 2D and 3D Morphologies](markerbased_3d_reconstruction_of_aggregates_with_a.md)**
+
+:   提出一种基于标记物（marker）的低成本摄影测量方法，实现骨料（aggregate）颗粒的高质量三维重建，并通过 2D 与 3D 形态学指标的系统对比分析，揭示了仅依赖 2D 图像进行骨料形态评估的显著局限性。
 
 **[MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation](medclipseg_probabilistic_vision-language_adaptation_for_data-efficient_and_gener.md)**
 
@@ -307,10 +355,6 @@ item_total: 100
 
 :   将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
 
-**[Modeling Spatiotemporal Neural Frames for High Resolution Brain Dynamics](modeling_spatiotemporal_neural_frames_for_high_resolution_brain_dynamic.md)**
-
-:   提出基于扩散 Transformer 的 EEG 条件 fMRI 重建框架，将脑活动建模为时空神经帧序列而非独立快照，在皮层顶点级分辨率下实现时空一致的 fMRI 重建，并通过零空间采样支持中间帧插值，下游视觉解码任务验证了功能信息的保留。
-
 **[Momentum Memory for Knowledge Distillation in Computational Pathology](momentum_memory_for_knowledge_distillation_in_computational_pathology.md)**
 
 :   提出 MoMKD，用动量更新的类条件记忆库替代传统 batch-local 特征对齐，实现基因组→病理切片的跨模态知识蒸馏，仅用 H&E 切片推理即可获得基因组级预测能力。
@@ -318,6 +362,14 @@ item_total: 100
 **[MRI Contrast Enhancement Kinetics World Model](mri_contrast_enhancement_kinetics_world_model.md)**
 
 :   首次提出 MRI 造影增强动力学世界模型（MRI CEKWorld），通过时空一致性学习（STCL）在稀疏采样数据上实现从无造影 MRI 到连续高保真造影增强序列的生成，解决了内容失真和时序不连续两大难题。
+
+**[M4Fuse: Lightweight State-Space MoE with a Cross-Scale Gating Bridge for Brain Tumor Segmentation](mtextsuperscript4fuse_lightweight_state-space_moe_with_a_cross-scale_gating_brid.md)**
+
+:   M4Fuse 用「分组状态空间混合器 + 跨尺度双阶段门控桥 + 样本级共享-专家单元」三件套替代盲目加宽网络，在 BraTS2019/2021 上用 **1.11M 参数**（比 SuperLightUnet 少 62.63%）就追平甚至略超重量级 SOTA，并提炼出一条「解码器边际效用」原则：跳连净化后再加宽解码器几乎无收益。
+
+**[Multimodal Causality-Driven Representation Learning for Generalizable Medical Image Segmentation](multimodal_causal-driven_representation_learning_for_generalizable_medical_image.md)**
+
+:   针对医学图像因设备/光照/成像方式差异造成的域漂移，本文把这些差异显式建模成"混杂因子（confounder）"，用 CLIP 文本提示构造混杂字典并通过后门调整（backdoor adjustment）做因果干预，在内镜分割上跨域平均 mDice 比最强基线再提 2.0%。
 
 **[Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)**
 
@@ -342,6 +394,10 @@ item_total: 100
 **[MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy](muvit_multi-resolution_vision_transformers_for_learning_across_scales_in_microsc.md)**
 
 :   提出 MuViT，一种基于世界坐标 RoPE 位置编码的多分辨率 Vision Transformer，能在单一编码器中联合处理同一场景不同物理分辨率的裁剪图，在显微镜图像分割任务上显著优于单分辨率基线。
+
+**[NeuroFlow: Toward Unified Visual Encoding and Decoding from Neural Activity](neuroflow_toward_unified_visual_encoding_and_decoding_from_neural_activity.md)**
+
+:   NeuroFlow 把"看图→脑信号"（编码）和"脑信号→看图"（解码）统一进同一个流模型：先用变分骨干 NeuroVAE 把 fMRI 压进一个语义结构化的隐空间，再用跨模态流匹配 XFM 在视觉隐分布与神经隐分布之间学一条可逆的连续流，正向积分做编码、反向积分做解码，仅用 MindEye2 约 25% 的参数就同时拿下两个任务的 SOTA 或可比表现。
 
 **[NeuroSeg Meets DINOv3: Transferring 2D Self-Supervised Visual Priors to 3D Neuron Segmentation via DINOv3 Initialization](neuroseg_meets_dinov3_transferring_2d_self-supervised_visual_priors_to_3d_neuron.md)**
 
@@ -399,6 +455,14 @@ item_total: 100
 
 :   提出一种多任务学习框架，在共享 EfficientNet-B7 骨干上同时训练 COVID-19 诊断头和来源医院识别头（使用 logit-adjusted 损失），推动特征提取器学习跨机构不变的表示，在多源 CT 数据集上 F1 达到 0.9098。
 
+**[SAGE: Shape-Adapting Gated Experts for Adaptive Histopathology Image Segmentation](sage_shape-adapting_gated_experts_for_adaptive_histopathology_image_segmentation.md)**
+
+:   SAGE 把一个静态的 CNN-Transformer 混合骨干网"原地"改造成可按输入动态路由的稀疏专家架构——用主路径保稳定、专家路径做按需精修，再用层级路由器和形状自适应枢纽（SA-Hub）让 CNN/Transformer 异构专家能混合协作，在 EBHI / GlaS / DigestPath 三个结直肠组织病理分割基准上把 Dice 推到 95.23% / 92.78% / 91.26%（WSI 级）。
+
+**[SAM for Robust Mitochondria Instance Segmentation in Fluorescence Microscopy](sam_for_robust_mitochondria_instance_segmentation_in_fluorescence_microscopy.md)**
+
+:   针对荧光显微镜下线粒体缺乏人工标注、网络密集重叠的困境，本文用物理仿真生成大规模带实例掩码的合成荧光图像微调 SAM（仅调 mask decoder），并配一套只在前景采点的自动提示推理流程，在真实标注图上把 Mean Dice 和 Precision 显著推到 Nellie / μSAM 之上。
+
 **[SD-FSMIS: Adapting Stable Diffusion for Few-Shot Medical Image Segmentation](sd_fsmis_adapting_stable_diffusion_for_few_shot_medical_image_segmentation.md)**
 
 :   提出 SD-FSMIS，一个将预训练 Stable Diffusion 适配到少样本医学图像分割的框架，通过支持-查询交互模块和视觉到文本条件转换器实现高效适配，在跨域场景中表现尤为突出。
@@ -407,13 +471,13 @@ item_total: 100
 
 :   本文提出 SCDL（Semantic Class Distribution Learning），一个即插即用模块，通过类别分布双向对齐（CDBA）学习结构化的类条件特征分布并与可学习类代理双向对齐，结合语义锚点约束（SAC）利用标注数据引导代理学习正确语义，缓解了半监督医学图像分割中的监督偏差和特征表示偏差，在尾类器官上取得了显著提升。
 
+**[SemiGDA: Generative Dual-distribution Alignment for Semi-Supervised Medical Image Segmentation](semigda_generative_dual-distribution_alignment_for_semi-supervised_medical_image.md)**
+
+:   SemiGDA 把半监督医学图像分割从"逐像素判别"换成"生成式范式"：用两个结构不同的编码器分别建模图像和掩码的隐空间先验分布并强制对齐，再借冻结的 Stable Diffusion VAE 解码器配合轻量 skip adapter 直接"生成"分割掩码，在结肠镜、皮肤镜、病理、超声四类数据集的 10%/30% 标注设定下全面超过 11 个 SOTA 半监督方法（如 BUSI 10% 标注下 Dice 比次优高 10 个点）。
+
 **[SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semi-supervised_framework_for_multi-source_tooth_segme.md)**
 
 :   提出 SemiTooth 框架，通过多教师多学生架构和严格加权置信度约束（SWC），解决多源 CBCT 牙齿分割中的标注稀缺和跨源域间差异问题，同时构建了首个多源半监督牙齿数据集 MS3Toothset。
-
-**[SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation](semitooth_a_generalizable_semisupervised_framework.md)**
-
-:   本文提出SemiTooth框架，通过多教师-多学生架构和更严格的加权置信度约束（SWC），解决多源CBCT数据在半监督牙齿分割中的分布差异问题，在构建的MS3Toothset数据集上取得SOTA。
 
 **[Solving a Nonlinear Blind Inverse Problem for Tagged MRI with Physics and Deep Generative Priors](solving_a_nonlinear_blind_inverse_problem_for_tagged_mri_with_physics_and_deep_g.md)**
 
@@ -455,6 +519,14 @@ item_total: 100
 
 :   提出 SMART 框架，基于 SAM3 的概念提示分割构建 Teacher-Student 半监督模型，结合渐进置信度正则化和双流时序一致性策略，仅用极少标注在 X 射线冠脉造影视频中实现 SOTA 血管分割。
 
+**[Uni-Encoder Meets Multi-Encoders: Representation Before Fusion for Brain Tumor Segmentation with Missing Modalities](uni-encoder_meets_multi-encoders_representation_before_fusion_for_brain_tumor_se.md)**
+
+:   UniME 用「表征先于融合」的两阶段异构设计解决缺失模态下的脑肿瘤分割：阶段一用单个 ViT Uni-Encoder 做掩码自监督预训练、学到对缺失模态鲁棒的统一表征，阶段二再并联多个模态专属 CNN Multi-Encoders 补回高分辨细节，在 BraTS 2023/2024 上对各种缺模态组合的平均 DSC 都超过此前 SOTA（ET 提升 2.4%~2.9%）。
+
+**[UniSemAlign: Text–Prototype Alignment with a Foundation Encoder for Semi-Supervised Histopathology Segmentation](unisemalign_text-prototype_alignment_with_a_foundation_encoder_for_semi-supervis.md)**
+
+:   UniSemAlign 在病理预训练 UNI 编码器之上，并行挂一条「可学习类原型」分支和一条「CONCH 文本提示」分支，把它们在共享嵌入空间产生的语义对齐 logits 融进 DeepLabV3+ 的视觉预测里生成更可靠的伪标签，配合 CorrMatch 弱-强一致性框架，在 GlaS / CRAG 腺体分割上仅用 10% 标注就把 mDice 提升最多 8.6%。
+
 **[UNIStainNet: Foundation-Model-Guided Virtual Staining of H&E to IHC](unistainnet_foundation-model-guided_virtual_staining_of_he_to_ihc.md)**
 
 :   提出 UNIStainNet，首次将冻结的病理基础模型 UNI 的密集空间 token 作为 SPADE 调制信号直接注入生成器，配合错位感知损失和可学习染色嵌入，用单一模型同时生成 HER2/Ki67/ER/PR 四种 IHC 染色，在 MIST 和 BCI 基准上取得 SOTA 分布式指标。
@@ -482,6 +554,10 @@ item_total: 100
 **[Weakly Supervised Teacher-Student Framework with Progressive Pseudo-mask Refinement for Gland Segmentation](weakly_supervised_teacher-student_framework_with_progressive_pseudo-mask_refinem.md)**
 
 :   提出弱监督教师-学生框架，利用稀疏病理标注和 EMA 稳定的教师网络生成渐进式精炼伪掩码，结合置信度过滤、自适应融合和课程引导精炼策略，实现结直肠癌病理图像中腺体结构的高效分割。
+
+**[When Models Learn to Ask Why: Adaptive Causal Reasoning for Trustworthy Medical Vision–Language Models](when_models_learn_to_ask_why_adaptive_causal_reasoning_for_trustworthy_medical_v.md)**
+
+:   MedCausalX 给医学 VLM 装上「按解剖→病理→诊断的因果分解」+「`<causal>`/`<verify>` 反思 token 的两阶段自纠」+「定位错误并构造偏好对的双策略 RL」，让模型在推理时自己判断何时该质疑并修正因果链，在多个医学影像基准上把诊断一致性提了 +5.4 分、幻觉降了 10+ 分。
 
 **[X-WIN: Building Chest Radiograph World Model via Predictive Sensing](x-win_building_chest_radiograph_world_model_via_predictive_sensing.md)**
 

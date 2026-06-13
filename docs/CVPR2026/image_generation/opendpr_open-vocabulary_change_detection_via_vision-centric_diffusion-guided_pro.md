@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenDPR: Open-Vocabulary Change Detection via Vision-Centric Diffusion-Guided Prototype Retrieval for Remote Sensing Imagery
 description: >-
-  [CVPR 2026][图像生成][开放词汇变化检测] OpenDPR 提出了一种免训练的视觉中心框架，利用扩散模型离线生成目标类别的多样化视觉原型，在推理时通过视觉空间的相似度检索来识别遥感图像中的开放词汇变化，在四个基准数据集上取得 SOTA 性能。
+  [CVPR 2026][图像生成][开放词汇变化检测] OpenDPR 提出了一种免训练的视觉中心框架，利用扩散模型离线生成目标类别的多样化视觉原型，在推理时通过视觉空间的相似度检索来识别遥感图像中的开放词汇变化，在四个基准数据集上取得 SOTA 性能。 领域现状：变化检测（Change Detection…
 tags:
   - "CVPR 2026"
   - "图像生成"

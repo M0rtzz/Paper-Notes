@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks
 description: >-
-  [AAAI 2026][医学图像][医学诊断分割] 提出医学诊断分割（MDS）任务并构建 M3DS 数据集，设计 Sim4Seg 框架利用 LVLM 隐藏状态的**视觉-语言相似度掩码（RVLS2M）**提示 SAM 进行分割，同时生成诊断思维链，配合测试时缩放策略在分割和诊断上全面超越基线。
+  [AAAI 2026][医学图像][医学诊断分割] 提出医学诊断分割（MDS）任务并构建 M3DS 数据集，设计 Sim4Seg 框架利用 LVLM 隐藏状态的视觉-语言相似度掩码（RVLS2M）：提示 SAM 进行分割，同时生成诊断思维链，配合测试时缩放策略在分割和诊断上全面超越基线。 1. 领域现状：医学图像分割模型在特…
 tags:
   - "AAAI 2026"
   - "医学图像"

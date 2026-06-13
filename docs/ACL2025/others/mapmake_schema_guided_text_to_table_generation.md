@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Map&Make: Schema Guided Text to Table Generation
 description: >-
-  [ACL 2025][文本转表格] 提出 Map&Make 方法，先将非结构化文本"解剖"为命题原子语句（Map阶段），再从中推导表格模式并填充数据（Make阶段），在 Rotowire 和 Livesum 两个场景上显著提升了文本转表格的质量和可解释性。
+  [ACL 2025][文本转表格] 提出 Map&Make 方法，先将非结构化文本"解剖"为命题原子语句（Map阶段），再从中推导表格模式并填充数据（Make阶段），在 Rotowire 和 Livesum 两个场景上显著提升了文本转表格的质量和可解释性。 领域现状：文本转表格（Text-to-Table）是信息检索中的重要…
 tags:
   - "ACL 2025"
   - "文本转表格"

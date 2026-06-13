@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FloE: On-the-Fly MoE Inference on Memory-constrained GPU
 description: >-
-  [ICML2025][模型压缩][MoE推理] 提出 FloE，一个面向消费级 GPU 的 MoE 即时推理系统，通过专家内部混合压缩（上下文稀疏化 + 超低比特量化）和双预测器实现计算-传输流水线化，在 RTX 3090 上仅 11GB 显存即可部署 Mixtral-8×7B…
+  [ICML2025][模型压缩][MoE推理] 提出 FloE，一个面向消费级 GPU 的 MoE 即时推理系统，通过专家内部混合压缩（上下文稀疏化 + 超低比特量化）和双预测器实现计算-传输流水线化，在 RTX 3090 上仅 11GB 显存即可部署 Mixtral-8×7B，相比 DeepSpeed-MII 加速 48.7 倍，性能仅下降 4.4%~7.6%。
 tags:
   - "ICML2025"
   - "模型压缩"

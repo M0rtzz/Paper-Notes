@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PExA: Parallel Exploration Agent for Complex Text-to-SQL
 description: >-
-  [ACL2026][代码智能][Text-to-SQL] PExA 把复杂 Text-to-SQL 改写成“为自然语言查询生成并执行一组语义测试用例”的并行探索问题，通过 Planner、Test Case Generator 和 SQL Proposer 三个子代理在 Spider 2.0 上提升执行准确率…
+  [ACL2026][代码智能][Text-to-SQL] PExA 把复杂 Text-to-SQL 改写成“为自然语言查询生成并执行一组语义测试用例”的并行探索问题，通过 Planner、Test Case Generator 和 SQL Proposer 三个子代理在 Spider 2.0 上提升执行准确率，并把延迟控制在与强基线相近的水平。
 tags:
   - "ACL2026"
   - "代码智能"

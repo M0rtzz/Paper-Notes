@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Know "No" Better: A Data-Driven Approach for Enhancing Negation Awareness in CLIP
 description: >-
-  [ICCV 2025][语义分割][CLIP] 通过分析 CLIP 预训练数据中否定表达的稀缺和错位问题，设计两条基于 LLM/MLLM 的否定数据生成管线来微调 CLIP 文本编码器，开发出 NegationCLIP，在增强否定理解能力的同时保持通用性能…
+  [ICCV 2025][语义分割][CLIP] 通过分析 CLIP 预训练数据中否定表达的稀缺和错位问题，设计两条基于 LLM/MLLM 的否定数据生成管线来微调 CLIP 文本编码器，开发出 NegationCLIP，在增强否定理解能力的同时保持通用性能，并提出 NegRefCOCOg 基准用于全面评估否定理解。
 tags:
   - "ICCV 2025"
   - "语义分割"

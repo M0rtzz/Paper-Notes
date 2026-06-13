@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OrderChain: Towards General Instruct-Tuning for Stimulating the Ordinal Understanding Ability of MLLM
 description: >-
-  [多模态VLM] 提出 OrderChain 提示范式，通过任务感知提示和范围优化思维链（RO-CoT）增强多模态大语言模型的序数理解能力，首次实现跨任务统一序数回归模型。
+  [多模态VLM] 提出 OrderChain 提示范式，通过任务感知提示和范围优化思维链（RO-CoT）增强多模态大语言模型的序数理解能力，首次实现跨任务统一序数回归模型。 序数回归（Ordinal Regression）将实例分类到有序类别中，在面部年龄估计、图像美学评估、疾病分级等任务中至关重要…
 tags:
   - "多模态VLM"
 ---

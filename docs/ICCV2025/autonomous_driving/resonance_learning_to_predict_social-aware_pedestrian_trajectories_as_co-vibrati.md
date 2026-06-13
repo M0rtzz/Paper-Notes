@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Resonance: Learning to Predict Social-Aware Pedestrian Trajectories as Co-Vibrations
 description: >-
-  [ICCV 2025][自动驾驶][行人轨迹预测] 本文提出 Resonance (Re) 模型，将行人轨迹预测分解为多个"振动"的叠加——线性基底、自偏置（self-bias）和共振偏置（resonance-bias），利用轨迹频谱的相似性模拟社会交互中的"共振"现象…
+  [ICCV 2025][自动驾驶][行人轨迹预测] 本文提出 Resonance (Re) 模型，将行人轨迹预测分解为多个"振动"的叠加——线性基底、自偏置（self-bias）和共振偏置（resonance-bias），利用轨迹频谱的相似性模拟社会交互中的"共振"现象，在 ETH-UCY、SDD、NBA、nuScenes 等数据集上验证了方法的有效性。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BehaviorVLM: Unified Finetuning-Free Behavioral Understanding with Vision-Language Reasoning
 description: >-
-  [CVPR 2025][视频理解][动物行为理解] 提出 BehaviorVLM，一个统一的无需微调的视觉语言框架，通过多阶段结构化推理管线同时解决动物姿态估计和行为理解两大任务，仅需 3 帧人工标注即可实现可靠的关键点追踪，并通过深度嵌入聚类 + VLM 描述 + LLM 语义合并实现可解释的多动物行为分割…
+  [CVPR 2025][视频理解][动物行为理解] 提出 BehaviorVLM，一个统一的无需微调的视觉语言框架，通过多阶段结构化推理管线同时解决动物姿态估计和行为理解两大任务，仅需 3 帧人工标注即可实现可靠的关键点追踪，并通过深度嵌入聚类 + VLM 描述 + LLM 语义合并实现可解释的多动物行为分割。
 tags:
   - "CVPR 2025"
   - "视频理解"

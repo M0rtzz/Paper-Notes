@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates
 description: >-
-  [ICLR 2026][优化/理论][Distributed Training] 提出 MT-DAO，一种多时间尺度分布式自适应优化器，通过引入慢动量（高 $\beta$）来解决低频通信训练中标准动量衰减过快导致的时间尺度失配问题，首次提供了收敛保证，在语言模型预训练中消除了与全同步 DDP 的性能差距…
+  [ICLR 2026][优化/理论][Distributed Training] 提出 MT-DAO，一种多时间尺度分布式自适应优化器，通过引入慢动量（高 $\beta$）来解决低频通信训练中标准动量衰减过快导致的时间尺度失配问题，首次提供了收敛保证，在语言模型预训练中消除了与全同步 DDP 的性能差距，同时减少 6-27% 的端到端训练时间。
 tags:
   - "ICLR 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners
 description: >-
-  [NeurIPS 2025][LLM评测][自我改进推理] 发现 STaR（自我教学推理器）的随机数据采样导致观测训练频率严重不平衡（简单题过度训练、难题训练不足），提出 AdaSTaR——通过自适应多样性采样（优先欠训练样本）和自适应课程采样（根据模型强度调节难度）…
+  [NeurIPS 2025][LLM评测][自我改进推理] 发现 STaR（自我教学推理器）的随机数据采样导致观测训练频率严重不平衡（简单题过度训练、难题训练不足），提出 AdaSTaR——通过自适应多样性采样（优先欠训练样本）和自适应课程采样（根据模型强度调节难度），在 6 个基准上全部取得最高准确率同时减少 58.6% 训练 FLOPs。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

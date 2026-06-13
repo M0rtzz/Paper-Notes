@@ -2,7 +2,7 @@
 title: >-
   [论文解读] G-MIXER: Geodesic Mixup-based Implicit Semantic Expansion and Explicit Semantic Re-ranking for Zero-Shot Composed Image Retrieval
 description: >-
-  [CVPR 2026][多模态VLM][composed image retrieval] 提出 G-MIXER，通过测地线混合隐式语义扩展（在球面上沿不同混合比例扩展检索范围）和显式语义重排序（利用 MLLM 生成的属性过滤噪声候选），实现免训练零样本组合图像检索的 SOTA 性能。
+  [CVPR 2026][多模态VLM][composed image retrieval] 提出 G-MIXER，通过测地线混合隐式语义扩展（在球面上沿不同混合比例扩展检索范围）和显式语义重排序（利用 MLLM 生成的属性过滤噪声候选），实现免训练零样本组合图像检索的 SOTA 性能。 组合图像检索 (CIR) 通过参考图像…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

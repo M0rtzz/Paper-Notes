@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation
 description: >-
-  [NeurIPS 2025][LLM评测][SQL翻译] 本文提出 PARROT，一个面向跨系统 SQL 翻译（SQL-to-SQL）的实际且真实的基准测试，包含来自 38 个开源基准和真实业务场景的 598 个核心翻译对（扩展到 28,003 对），覆盖 22 种生产级数据库系统…
+  [NeurIPS 2025][LLM评测][SQL翻译] 本文提出 PARROT，一个面向跨系统 SQL 翻译（SQL-to-SQL）的实际且真实的基准测试，包含来自 38 个开源基准和真实业务场景的 598 个核心翻译对（扩展到 28,003 对），覆盖 22 种生产级数据库系统，揭示当前最强 LLM 的平均准确率低于 38.53%。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

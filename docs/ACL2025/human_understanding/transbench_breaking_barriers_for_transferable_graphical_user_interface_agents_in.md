@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TransBench: Breaking Barriers for Transferable Graphical User Interface Agents in Dynamic Digital Environments
 description: >-
-  [ACL 2025][人体理解][GUI grounding] 提出首个系统评估 GUI Agent **迁移性**（跨版本/跨平台/跨应用）的 benchmark TransBench，涵盖 81 个中文 App、1459 张截图、22K+ 标注指令，实验表明在旧版本上微调可有效迁移到新版本和其他平台…
+  [ACL 2025][人体理解][GUI grounding] 提出首个系统评估 GUI Agent **迁移性**（跨版本/跨平台/跨应用）的 benchmark TransBench，涵盖 81 个中文 App、1459 张截图、22K+ 标注指令，实验表明在旧版本上微调可有效迁移到新版本和其他平台，而跨平台迁移中 Android 数据的泛化性最强。
 tags:
   - "ACL 2025"
   - "人体理解"

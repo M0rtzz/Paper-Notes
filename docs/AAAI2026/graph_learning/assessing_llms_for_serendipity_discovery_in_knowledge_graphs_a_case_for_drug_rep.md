@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Assessing LLMs for Serendipity Discovery in Knowledge Graphs: A Case for Drug Repurposing
 description: >-
-  [AAAI 2026][图学习][Serendipity] 提出 SerenQA 框架，首次形式化定义知识图谱问答中的"意外发现"(serendipity)任务，包含基于信息论的 RNS 度量、专家标注的药物重定位基准数据集和三阶段评估流水线…
+  [AAAI 2026][图学习][Serendipity] 提出 SerenQA 框架，首次形式化定义知识图谱问答中的"意外发现"(serendipity)任务，包含基于信息论的 RNS 度量、专家标注的药物重定位基准数据集和三阶段评估流水线，揭示当前 LLM 在检索任务上表现尚可但在意外发现探索上仍有巨大改进空间。
 tags:
   - "AAAI 2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Wings of Imagination: Conflicting Script-based Multi-role Framework for Humor Caption Generation
 description: >-
-  [ICLR 2026][信息检索/RAG][幽默生成] 提出 HOMER 框架，基于 GTVH 幽默理论构建三角色 LLM 协作机制（冲突脚本提取器 + 层次想象器 + 标题生成器），通过显式建模脚本对立、多视角联想链与笑话数据库检索构建想象树来扩展创意空间…
+  [ICLR 2026][信息检索/RAG][幽默生成] 提出 HOMER 框架，基于 GTVH 幽默理论构建三角色 LLM 协作机制（冲突脚本提取器 + 层次想象器 + 标题生成器），通过显式建模脚本对立、多视角联想链与笑话数据库检索构建想象树来扩展创意空间，在 New Yorker 漫画基准上以 GPT-4o 为底座平均提升 ~7%，人类评估也显著优于所有基线。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

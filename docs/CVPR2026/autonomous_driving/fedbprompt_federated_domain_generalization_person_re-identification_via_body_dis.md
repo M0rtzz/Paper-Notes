@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedBPrompt: Federated Domain Generalization Person Re-Identification via Body Distribution Aware Visual Prompts
 description: >-
-  [CVPR 2026][自动驾驶][FedDG-ReID] 提出FedBPrompt框架，通过身体分布感知视觉提示机制(BAPM)将prompt分为Body Part Alignment Prompts和Holistic Full Body Prompts两组…
+  [CVPR 2026][自动驾驶][FedDG-ReID] 提出FedBPrompt框架，通过身体分布感知视觉提示机制(BAPM)将prompt分为Body Part Alignment Prompts和Holistic Full Body Prompts两组，配合Prompt-based Fine-Tuning Strategy(PFTS)冻结ViT backbone仅训练轻量prompt（通信量降至~1%），在FedDG-ReID任务上平均mAP提升3.3%、Rank-1提升4.9%。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

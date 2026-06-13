@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Towards Optimal Robustness in Learning-Augmented Paging
 description: >-
-  [ICML 2026][learning-augmented paging] 本文为带预测的随机化在线调页提出统一的「相对预测预算」(RPB) 视角，并基于 OnlineMin 设计 RPB-OnOPT 框架，把可证的鲁棒竞争比从既有的 $2H_k+O(1)$ 一举推到信息论下界附近的 $H_k+O(1)$…
+  [ICML 2026][在线算法 / 学习增强算法 / 缓存调页][learning-augmented paging] 本文为带预测的随机化在线调页提出统一的「相对预测预算」(RPB) 视角，并基于 OnlineMin 设计 RPB-OnOPT 框架，把可证的鲁棒竞争比从既有的 $2H_k+O(1)$ 一举推到信息论下界附近的 $H_k+O(1)$，同时保持 1-一致性。
 tags:
   - "ICML 2026"
+  - "在线算法 / 学习增强算法 / 缓存调页"
   - "learning-augmented paging"
   - "competitive ratio"
   - "OnlineMin"

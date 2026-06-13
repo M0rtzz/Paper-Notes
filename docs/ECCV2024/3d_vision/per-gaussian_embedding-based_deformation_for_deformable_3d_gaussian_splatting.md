@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Per-Gaussian Embedding-Based Deformation for Deformable 3D Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][可变形3DGS] 提出基于逐高斯嵌入（Per-Gaussian Embedding）的形变表示方法，将形变定义为逐高斯潜在嵌入与时间嵌入的函数，辅以粗细形变分解和局部平滑正则化，在多个动态场景数据集上取得了质量、速度和模型容量的全面优势。
+  [ECCV 2024][3D视觉][可变形3DGS] 提出基于逐高斯嵌入（Per-Gaussian Embedding）的形变表示方法，将形变定义为逐高斯潜在嵌入与时间嵌入的函数，辅以粗细形变分解和局部平滑正则化，在多个动态场景数据集上取得了质量、速度和模型容量的全面优势。 1. 3D高斯溅射（3DGS）凭借可微分光栅化实现…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pattern Recognition or Medical Knowledge? The Problem with Multiple-Choice Questions in Medicine
 description: >-
-  [ACL 2025][医疗NLP][医学基准测试] 本文通过构建围绕虚构器官"Glianorex"的医学选择题基准，揭示LLM在医学MCQ测试中主要依赖模式识别和答题策略而非真正的临床推理能力——模型在完全虚构的医学知识上平均得分64%，而医生仅得27%。
+  [ACL 2025][医疗NLP][医学基准测试] 本文通过构建围绕虚构器官"Glianorex"的医学选择题基准，揭示LLM在医学MCQ测试中主要依赖模式识别和答题策略而非真正的临床推理能力——模型在完全虚构的医学知识上平均得分64%，而医生仅得27%。 领域现状：LLM（如ChatGPT、GPT-4）在医学领域展现了巨大…
 tags:
   - "ACL 2025"
   - "医疗NLP"

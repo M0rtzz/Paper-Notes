@@ -2,9 +2,10 @@
 title: >-
   [论文解读] EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks
 description: >-
-  [NeurIPS2025][EEG] 提出 EvoBrain——首次从理论上证明 **显式动态图建模** 优于隐式静态图、**time-then-graph** 架构表达力严格优于其他两种动态 GNN 范式(graph-then-time / time-and-graph)…
+  [NeurIPS2025 Spotlight][医学图像][EEG] 提出 EvoBrain——首次从理论上证明 **显式动态图建模** 优于隐式静态图、**time-then-graph** 架构表达力严格优于其他两种动态 GNN 范式(graph-then-time / time-and-graph)，并据此设计双流 Mamba + Laplacian PE 增强的 GCN 模型，在 TUSZ 和 CHB-MIT 数据集的癫痫检测与早期预测任务上取得 AUROC 提升 23%、F1 提升 30% 的显著效果，同时训练速度比 SOTA 快 17 倍。
 tags:
-  - "NeurIPS2025"
+  - "NeurIPS2025 Spotlight"
+  - "医学图像"
   - "EEG"
   - "动态图"
   - "癫痫检测"

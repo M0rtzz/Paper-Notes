@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving
 description: >-
-  [NeurIPS 2025][自动驾驶][强化学习] 提出 RAW2Drive，首个从原始传感器输入到规划的基于模型的强化学习 (MBRL) 端到端自动驾驶框架。通过双流世界模型设计——先训练特权世界模型…
+  [NeurIPS 2025][自动驾驶][强化学习] 提出 RAW2Drive，首个从原始传感器输入到规划的基于模型的强化学习 (MBRL) 端到端自动驾驶框架。通过双流世界模型设计——先训练特权世界模型，再通过引导机制指导原始传感器世界模型学习——在 CARLA v2 和 Bench2Drive 上取得 SOTA，大幅超越 IL 方法。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

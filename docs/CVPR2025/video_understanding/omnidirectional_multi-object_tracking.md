@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniTrack: Omnidirectional Multi-Object Tracking
 description: >-
-  [CVPR 2025][视频理解][全向跟踪] 提出首个面向 360° 全景图像的多目标跟踪框架 OmniTrack，统一 TBD 和 E2E 两种跟踪范式，通过 CircularStatE 模块缓解全景畸变、FlexiTrack 实例引入时序先验、Tracklet Management 提供轨迹反馈…
+  [CVPR 2025][视频理解][全向跟踪] 提出首个面向 360° 全景图像的多目标跟踪框架 OmniTrack，统一 TBD 和 E2E 两种跟踪范式，通过 CircularStatE 模块缓解全景畸变、FlexiTrack 实例引入时序先验、Tracklet Management 提供轨迹反馈，并构建 QuadTrack 四足机器人全景 MOT 数据集。
 tags:
   - "CVPR 2025"
   - "视频理解"

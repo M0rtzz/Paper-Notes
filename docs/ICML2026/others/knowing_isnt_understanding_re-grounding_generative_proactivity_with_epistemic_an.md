@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowing Isn't Understanding: Re-Grounding Generative Proactivity with Epistemic and Behavioral Insight
 description: >-
-  [ICML2026 (Position Paper)][生成式主动性] 这是一篇 ICML2026 Position 论文，主张生成式智能体的"主动性"不能只看是否更早、更自主、更持续地行动…
+  [ICML2026 (Position Paper)][生成式主动性] 这是一篇 ICML2026 Position 论文，主张生成式智能体的"主动性"不能只看是否更早、更自主、更持续地行动，而必须由两条联合约束规制——认识论合法性（agent 是否真的"理解"了情境）与行为承诺度（介入是否可逆、是否被迫升级），并把幻觉、对齐失败、不安全自治重新解释成"知道 / 行动"之间的错耦合（mis-coupling）。
 tags:
   - "ICML2026 (Position Paper)"
   - "生成式主动性"

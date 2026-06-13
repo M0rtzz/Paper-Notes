@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongBench v2: Towards Deeper Understanding and Reasoning on Realistic Long-context Multitasks
 description: >-
-  [ACL 2025][LLM效率][长上下文基准] LongBench v2 是一个包含 503 道高难度多选题的长上下文评测基准，上下文长度从 8k 到 2M 词，覆盖六大任务类型，人类专家在 15 分钟限制下仅达到 53.7% 准确率，而最强直接回答模型（GPT-4o 2024-08）仅 50.1%…
+  [ACL 2025][LLM效率][长上下文基准] LongBench v2 是一个包含 503 道高难度多选题的长上下文评测基准，上下文长度从 8k 到 2M 词，覆盖六大任务类型，人类专家在 15 分钟限制下仅达到 53.7% 准确率，而最强直接回答模型（GPT-4o 2024-08）仅 50.1%，推理模型 o1-preview 达到 57.7%，凸显了推理时计算扩展对长上下文深层理解的重要性。
 tags:
   - "ACL 2025"
   - "LLM效率"

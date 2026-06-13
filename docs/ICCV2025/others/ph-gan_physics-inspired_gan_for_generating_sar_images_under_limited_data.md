@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data
 description: >-
-  [ICCV 2025][SAR图像生成] 提出Φ-GAN，将SAR的理想点散射中心（PSC）电磁散射物理模型以可微神经模块形式集成到GAN训练中，通过双物理损失（生成器物理一致性约束+判别器电磁特征蒸馏）显著提升数据稀缺场景下SAR图像生成的质量和稳定性。
+  [ICCV 2025][SAR图像生成] 提出Φ-GAN，将SAR的理想点散射中心（PSC）电磁散射物理模型以可微神经模块形式集成到GAN训练中，通过双物理损失（生成器物理一致性约束+判别器电磁特征蒸馏）显著提升数据稀缺场景下SAR图像生成的质量和稳定性。 合成孔径雷达（SAR）因全天候全时段成像能力在遥感中至关重要…
 tags:
   - "ICCV 2025"
   - "SAR图像生成"

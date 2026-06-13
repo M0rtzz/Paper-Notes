@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STELLAR: Scene Text Editor for Low-Resource Languages and Real-World Data
 description: >-
-  [AAAI 2026][图像生成][场景文本编辑] 提出 STELLAR 框架，通过语言自适应字形编码器和合成预训练+真实微调的两阶段训练策略，实现韩语/阿拉伯语/日语等低资源语言的场景文本编辑，并提出可解释的 TAS 指标无需 ground truth 评估字体/颜色/背景风格保持…
+  [AAAI 2026][图像生成][场景文本编辑] 提出 STELLAR 框架，通过语言自适应字形编码器和合成预训练+真实微调的两阶段训练策略，实现韩语/阿拉伯语/日语等低资源语言的场景文本编辑，并提出可解释的 TAS 指标无需 ground truth 评估字体/颜色/背景风格保持，韩语识别准确率从基线最高 22.1% 飙升至 80.4%。
 tags:
   - "AAAI 2026"
   - "图像生成"

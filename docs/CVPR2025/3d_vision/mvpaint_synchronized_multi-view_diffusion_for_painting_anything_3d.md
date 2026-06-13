@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVPaint: Synchronized Multi-View Diffusion for Painting Anything 3D
 description: >-
-  [CVPR 2025][3D视觉][3D纹理生成] MVPaint 提出了一个三阶段的 3D 纹理生成框架——同步多视图生成 (SMG) + 空间感知 3D 补绘 (S3I) + UV 精炼 (UVR)…
+  [CVPR 2025][3D视觉][3D纹理生成] MVPaint 提出了一个三阶段的 3D 纹理生成框架——同步多视图生成 (SMG) + 空间感知 3D 补绘 (S3I) + UV 精炼 (UVR)，通过在图像域而非 latent 域进行多视图同步、在 3D 点云空间而非 UV 空间进行补绘、以及空间感知的接缝平滑算法，在 Objaverse 和 GSO 两个 T2T 基准上全面超越 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

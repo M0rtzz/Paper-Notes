@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DeepGB-TB: A Risk-Balanced Cross-Attention Gradient-Boosted Convolutional Network for Rapid, Interpretable Tuberculosis Screening
 description: >-
-  [AAAI 2026][医学图像][结核病筛查] 提出 DeepGB-TB，一个结合轻量级1D-CNN（处理咳嗽音频）和梯度提升决策树（处理人口统计特征）的多模态TB筛查系统，通过双向交叉注意力（CM-BCA）模拟临床推理过程融合异构数据，配合风险平衡损失（TRBL）最小化漏诊…
+  [AAAI 2026 Oral][医学图像][结核病筛查] 提出 DeepGB-TB，一个结合轻量级1D-CNN（处理咳嗽音频）和梯度提升决策树（处理人口统计特征）的多模态TB筛查系统，通过双向交叉注意力（CM-BCA）模拟临床推理过程融合异构数据，配合风险平衡损失（TRBL）最小化漏诊，在7国数据集上达到 AUROC 0.903，可在手机上离线实时运行。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "医学图像"
   - "结核病筛查"
   - "咳嗽音频"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching
 description: >-
-  [ICML 2026][LLM/NLP][扩散语言模型] 针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache…
+  [ICML 2026][LLM效率][扩散语言模型] 针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache，对静态 prompt 用长间隔缓存、对动态 response 用短间隔刷新+按 Value 余弦相似度选 25% 最"变化"的 token 做局部重算，在 LLaDA 8B / Dream 7B 上获得最高 9.1× FLOPs 加速且分数基本不掉。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM效率"
   - "扩散语言模型"
   - "推理加速"
   - "自适应缓存"

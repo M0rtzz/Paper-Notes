@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthesizing Near-Boundary OOD Samples for Out-of-Distribution Detection
 description: >-
-  [ICCV 2025][图像生成][分布外检测] 本文提出 SynOOD，利用 MLLM 提取上下文语义 + 扩散模型迭代 inpainting + OOD 梯度引导，合成靠近 InD/OOD 边界的挑战性 OOD 样本，用于微调 CLIP 图像编码器和负标签特征…
+  [ICCV 2025][图像生成][分布外检测] 本文提出 SynOOD，利用 MLLM 提取上下文语义 + 扩散模型迭代 inpainting + OOD 梯度引导，合成靠近 InD/OOD 边界的挑战性 OOD 样本，用于微调 CLIP 图像编码器和负标签特征，在 ImageNet 基准上 AUROC 提升 2.80%、FPR95 降低 11.13%。
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient Fine-Tuning for Quantized Diffusion Model
 description: >-
-  [ECCV 2024][图像生成] 提出 TuneQDM，首个面向量化扩散模型的内存高效微调方法，通过多通道量化缩放更新和时间步感知缩放策略，在 4-bit 量化模型上实现了接近全精度模型的个性化生成效果。
+  [ECCV 2024][图像生成] 提出 TuneQDM，首个面向量化扩散模型的内存高效微调方法，通过多通道量化缩放更新和时间步感知缩放策略，在 4-bit 量化模型上实现了接近全精度模型的个性化生成效果。 随着扩散模型规模不断增长（SDXL 26亿参数、DALL-E 2 55亿参数），直接微调全精度模型需要巨大的内存和计算…
 tags:
   - "ECCV 2024"
   - "图像生成"

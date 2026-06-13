@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CureAgent: A Training-Free Executor-Analyst Framework for Clinical Reasoning
 description: >-
-  [NeurIPS 2025][医疗NLP][临床推理] CureAgent 提出 Executor-Analyst 协作框架，将精确工具调用（TxAgent/Llama-8B 做 Executor）与高层临床推理（Gemini 2.5 做 Analyst）解耦…
+  [NeurIPS 2025][医疗NLP][临床推理] CureAgent 提出 Executor-Analyst 协作框架，将精确工具调用（TxAgent/Llama-8B 做 Executor）与高层临床推理（Gemini 2.5 做 Analyst）解耦，配合分层集成（Stratified Ensemble）的 Late Fusion 拓扑保留证据多样性，在 CURE-Bench 上达到 83.8% 准确率（无需端到端微调），揭示了上下文-性能悖论和动作空间维度灾难两个关键 scaling 发现。
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

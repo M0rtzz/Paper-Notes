@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Consistency in Retrieval-Augmented Systems with Group Similarity Rewards
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG一致性] 提出 Con-RAG 框架，通过 Paraphrased Set GRPO (PS-GRPO) 在语义等价查询的多次生成之间计算组相似度奖励，训练 RAG 系统的生成器在释义输入下产生信息一致的输出…
+  [NeurIPS 2025][信息检索/RAG][RAG一致性] 提出 Con-RAG 框架，通过 Paraphrased Set GRPO (PS-GRPO) 在语义等价查询的多次生成之间计算组相似度奖励，训练 RAG 系统的生成器在释义输入下产生信息一致的输出，无需显式真实标签监督即可同时提升一致性和准确性。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

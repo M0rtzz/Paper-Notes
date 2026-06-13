@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Gaussian Shannon: High-Precision Diffusion Model Watermarking Based on Communication
 description: >-
-  [CVPR 2026][图像生成][扩散模型水印] 将扩散模型的水印嵌入和提取过程建模为噪声信道通信，提出 Gaussian Shannon 框架，通过级联的多数投票和 LDPC 纠错码实现水印的比特精确恢复（而非仅阈值检测）…
+  [CVPR 2026 Findings][图像生成][扩散模型水印] 将扩散模型的水印嵌入和提取过程建模为噪声信道通信，提出 Gaussian Shannon 框架，通过级联的多数投票和 LDPC 纠错码实现水印的比特精确恢复（而非仅阈值检测），在三种 Stable Diffusion 版本和七种扰动下达到 SOTA 的比特精度和检测率。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "扩散模型水印"
   - "通信理论"

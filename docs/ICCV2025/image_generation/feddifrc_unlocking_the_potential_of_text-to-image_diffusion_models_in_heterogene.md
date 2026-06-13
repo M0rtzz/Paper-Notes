@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedDifRC: Unlocking the Potential of Text-to-Image Diffusion Models in Heterogeneous Federated Learning
 description: >-
-  [ICCV 2025][图像生成][联邦学习] 首次将预训练文本到图像扩散模型（Stable Diffusion）的内部表示引入联邦学习，提出 FedDifRC 框架，通过文本驱动的扩散对比学习（TDCL）和噪声驱动的扩散一致性正则化（NDCR）两个互补模块，有效缓解数据异质性问题…
+  [ICCV 2025][图像生成][联邦学习] 首次将预训练文本到图像扩散模型（Stable Diffusion）的内部表示引入联邦学习，提出 FedDifRC 框架，通过文本驱动的扩散对比学习（TDCL）和噪声驱动的扩散一致性正则化（NDCR）两个互补模块，有效缓解数据异质性问题，在多种 non-iid 场景下显著提升全局模型性能。
 tags:
   - "ICCV 2025"
   - "图像生成"

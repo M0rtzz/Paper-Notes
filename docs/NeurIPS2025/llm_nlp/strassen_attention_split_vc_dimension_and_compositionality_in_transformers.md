@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Strassen Attention, Split VC Dimension and Compositionality in Transformers
 description: >-
-  [NeurIPS 2025][LLM/NLP][Transformer] 提出 Splitting VC 维度理论工具证明了单层 softmax Transformer（即使无限精度）在组合推理任务上的根本限制，并设计了具有亚立方时间复杂度的 Strassen 注意力机制来突破这些限制。
+  [NeurIPS 2025][LLM 其他][Transformer] 提出 Splitting VC 维度理论工具证明了单层 softmax Transformer（即使无限精度）在组合推理任务上的根本限制，并设计了具有亚立方时间复杂度的 Strassen 注意力机制来突破这些限制。 Transformer 架构在许多 N…
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "注意力机制"
   - "组合推理"

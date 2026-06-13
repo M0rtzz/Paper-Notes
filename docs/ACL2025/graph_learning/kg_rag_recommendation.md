@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge Graph Retrieval-Augmented Generation for LLM-based Recommendation (K-RagRec)
 description: >-
-  [ACL 2025][图学习][knowledge graph] 提出K-RagRec框架，通过从知识图谱中检索多跳子图为LLM推荐系统提供结构化、可靠的外部知识，结合基于流行度的选择性检索策略和GNN编码器，有效缓解LLM推荐中的幻觉和知识缺失问题。
+  [ACL 2025][图学习][knowledge graph] 提出K-RagRec框架，通过从知识图谱中检索多跳子图为LLM推荐系统提供结构化、可靠的外部知识，结合基于流行度的选择性检索策略和GNN编码器，有效缓解LLM推荐中的幻觉和知识缺失问题。 - 问题定义：LLM推荐系统面临三大固有缺陷——(1) 幻觉问题（推荐不…
 tags:
   - "ACL 2025"
   - "图学习"

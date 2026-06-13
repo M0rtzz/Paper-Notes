@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models
 description: >-
-  [NeurIPS 2025][强化学习][指令跟随] 提出 RAIF，通过 RL+规则中心奖励培养 LLM 在复杂指令（含 And/Chain/Selection/Nested 组合约束）下的深度推理能力：发现 vanilla CoT 对指令跟随有负面影响（因 LLM 只会浅层复述指令）…
+  [NeurIPS 2025][强化学习][指令跟随] 提出 RAIF，通过 RL+规则中心奖励培养 LLM 在复杂指令（含 And/Chain/Selection/Nested 组合约束）下的深度推理能力：发现 vanilla CoT 对指令跟随有负面影响（因 LLM 只会浅层复述指令），设计 superior CoT enforcement（样本级对比过滤无效推理）+ 行为克隆控制分布偏移，1.5B 模型匹配 8B 性能，7 个 benchmark 平均提升 11.74%。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

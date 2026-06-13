@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Subword Models Struggle with Word Learning, but Surprisal Hides It
 description: >-
-  [ACL 2025][词汇学习] 本文通过心理语言学中的词汇决策任务（lexical decision），揭示了子词（BPE）语言模型在孤立词汇识别上远不如字符级模型，而常用的 surprisal 指标因引入句法上下文掩盖了这一缺陷。
+  [ACL 2025][词汇学习] 本文通过心理语言学中的词汇决策任务（lexical decision），揭示了子词（BPE）语言模型在孤立词汇识别上远不如字符级模型，而常用的 surprisal 指标因引入句法上下文掩盖了这一缺陷。 人类习得语言时，先学会识别单词，再理解语法。然而，现有的将 LM 作为语言习得模型的研究大…
 tags:
   - "ACL 2025"
   - "词汇学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency
 description: >-
-  [AAAI 2026][多形状匹配] 提出DcMatch——一种无监督多形状匹配框架，通过形状图注意力网络捕捉形状集合底层流形结构以构建更具表达力的共享宇宙空间，并在空间域和谱域实施双层循环一致性约束，在多个基准数据集上实现全面超越。
+  [AAAI 2026][多形状匹配] 提出DcMatch——一种无监督多形状匹配框架，通过形状图注意力网络捕捉形状集合底层流形结构以构建更具表达力的共享宇宙空间，并在空间域和谱域实施双层循环一致性约束，在多个基准数据集上实现全面超越。 问题定义 多形状匹配（Multi-Shape Matching）旨在建立一组3D形状之间的…
 tags:
   - "AAAI 2026"
   - "多形状匹配"

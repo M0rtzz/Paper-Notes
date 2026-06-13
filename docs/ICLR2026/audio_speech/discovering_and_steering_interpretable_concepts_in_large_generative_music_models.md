@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering and Steering Interpretable Concepts in Large Generative Music Models
 description: >-
-  [ICLR2026][音频/语音][Sparse Autoencoder] 首次将 Sparse Autoencoder (SAE) 应用于音频/音乐领域，从自回归音乐生成模型 MusicGen 的残差流中提取可解释的音乐概念特征，并利用这些特征实现可控生成（steering）。
+  [ICLR2026][音频/语音][Sparse Autoencoder] 首次将 Sparse Autoencoder (SAE) 应用于音频/音乐领域，从自回归音乐生成模型 MusicGen 的残差流中提取可解释的音乐概念特征，并利用这些特征实现可控生成（steering）。 - 深度生成模型能产出高质量音乐…
 tags:
   - "ICLR2026"
   - "音频/语音"

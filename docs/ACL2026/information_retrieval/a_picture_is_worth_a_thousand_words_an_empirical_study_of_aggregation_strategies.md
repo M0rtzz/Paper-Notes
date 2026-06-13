@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][visual RAG] 通过精心设计的金融文档诊断 benchmark（单数字扰动 + 文本掩码），实证证明「把 VLM 的 patch tokens 聚合成单向量」会让 $1.2M vs $7.2M 这种语义巨大差异坍缩成 cosine 相似度 > 0.99 的几乎…
+  [ACL 2026 Findings][信息检索/RAG][visual RAG] 通过精心设计的金融文档诊断 benchmark（单数字扰动 + 文本掩码），实证证明「把 VLM 的 patch tokens 聚合成单向量」会让 $1.2M vs $7.2M 这种语义巨大差异坍缩成 cosine 相似度 > 0.99 的几乎相同向量，根因是「全局纹理主导」，多种缓解策略和 retrieval-tuned embedding 都救不回来。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "visual RAG"
   - "单向量聚合"

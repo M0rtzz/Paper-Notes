@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SymRTLO: Enhancing RTL Code Optimization with LLMs and Neuron-Inspired Symbolic Reasoning
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RTL代码优化] 提出 SymRTLO，首个将LLM与符号推理集成的神经符号框架用于RTL代码优化，通过检索增强优化规则、AST模板引导代码生成和FSM符号系统，在功耗、性能和面积(PPA)上分别获得最高43.9%、62.5%和51.1%的提升。
+  [NeurIPS 2025][信息检索/RAG][RTL代码优化] 提出 SymRTLO，首个将LLM与符号推理集成的神经符号框架用于RTL代码优化，通过检索增强优化规则、AST模板引导代码生成和FSM符号系统，在功耗、性能和面积(PPA)上分别获得最高43.9%、62.5%和51.1%的提升。 Register Trans…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

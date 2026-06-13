@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Recipe for Generating 3D Worlds from a Single Image
 description: >-
-  [ICCV 2025][3D视觉][单图3D场景生成] 将单图到3D世界生成分解为两个更简单的子问题——全景合成（无训练in-context learning）和点云条件修复（仅5k步微调ControlNet），结合3DGS重建出可在VR中2米立方体范围内导航的沉浸式3D环境…
+  [ICCV 2025][3D视觉][单图3D场景生成] 将单图到3D世界生成分解为两个更简单的子问题——全景合成（无训练in-context learning）和点云条件修复（仅5k步微调ControlNet），结合3DGS重建出可在VR中2米立方体范围内导航的沉浸式3D环境，在图像质量指标上全面超越WonderJourney和DimensionX等SOTA方法。
 tags:
   - "ICCV 2025"
   - "3D视觉"

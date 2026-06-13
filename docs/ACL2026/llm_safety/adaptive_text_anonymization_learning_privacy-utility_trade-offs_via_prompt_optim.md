@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Adaptive Text Anonymization: Learning Privacy-Utility Trade-offs via Prompt Optimization
 description: >-
-  [ACL 2026][LLM安全][文本匿名化] 提出自适应文本匿名化框架，通过进化式提示优化自动为LLM发现任务特定的匿名化指令，在多个隐私-效用权衡场景中超越手工设计的策略，且可在开源模型上运行。
+  [ACL 2026 Findings][LLM安全][文本匿名化] 提出自适应文本匿名化框架，通过进化式提示优化自动为LLM发现任务特定的匿名化指令，在多个隐私-效用权衡场景中超越手工设计的策略，且可在开源模型上运行。 领域现状：文本匿名化是实现敏感数据共享和分析的基础技术。目前的方法主要分为传统的序列标注（检测并掩码PII…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "文本匿名化"
   - "隐私保护"

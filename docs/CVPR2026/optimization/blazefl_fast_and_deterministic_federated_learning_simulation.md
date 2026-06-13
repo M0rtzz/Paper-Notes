@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BlazeFL: Fast and Deterministic Federated Learning Simulation
 description: >-
-  [CVPR 2026 (Workshop: FedVision)][优化/理论][联邦学习仿真] 提出 BlazeFL，一个基于 Python free-threading 的轻量级单机联邦学习仿真框架，通过共享内存执行和客户端隔离 RNG 流实现最高 3.1× 加速与比特级可复现。
+  [CVPR 2026 (Workshop: FedVision)][优化/理论][联邦学习仿真] 提出 BlazeFL，一个基于 Python free-threading 的轻量级单机联邦学习仿真框架，通过共享内存执行和客户端隔离 RNG 流实现最高 3.1× 加速与比特级可复现。 领域现状：联邦学习（FL）研究普遍依赖单…
 tags:
   - "CVPR 2026 (Workshop: FedVision)"
   - "优化/理论"

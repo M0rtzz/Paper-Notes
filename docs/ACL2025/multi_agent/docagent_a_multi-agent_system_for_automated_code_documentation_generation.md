@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DocAgent: A Multi-Agent System for Automated Code Documentation Generation
 description: >-
-  [ACL 2025][多智能体][代码文档生成] 提出 DocAgent，一个基于拓扑依赖排序的多智能体代码文档生成系统，通过 Reader-Searcher-Writer-Verifier 协作流程增量构建上下文，在完整性、实用性和真实性三个维度上显著优于 FIM 和 Chat 基线。
+  [ACL 2025][多智能体][代码文档生成] 提出 DocAgent，一个基于拓扑依赖排序的多智能体代码文档生成系统，通过 Reader-Searcher-Writer-Verifier 协作流程增量构建上下文，在完整性、实用性和真实性三个维度上显著优于 FIM 和 Chat 基线。 高质量代码文档对软件开发至关重要…
 tags:
   - "ACL 2025"
   - "多智能体"

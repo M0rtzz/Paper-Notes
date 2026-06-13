@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDM: Equirectangular Projection-Oriented Dense Kernelized Feature Matching
 description: >-
-  [CVPR 2025][全景图像] 提出EDM，首个基于学习的等距柱状投影（ERP）全景图像密集特征匹配方法，通过球面空间对齐模块（SSAM，使用3D笛卡尔坐标的球面位置编码+高斯过程回归）和测地线流细化处理ERP的极区畸变…
+  [CVPR 2025][全景图像] 提出EDM，首个基于学习的等距柱状投影（ERP）全景图像密集特征匹配方法，通过球面空间对齐模块（SSAM，使用3D笛卡尔坐标的球面位置编码+高斯过程回归）和测地线流细化处理ERP的极区畸变，在Matterport3D上AUC@5°超越DKM 26.72%、在Stanford2D3D上超越42.62%。
 tags:
   - "CVPR 2025"
   - "全景图像"

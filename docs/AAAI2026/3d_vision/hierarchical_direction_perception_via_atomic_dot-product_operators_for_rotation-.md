@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Direction Perception via Atomic Dot-Product Operators for Rotation-Invariant Point Clouds Learning
 description: >-
-  [AAAI2026][3D视觉][点云] 提出 DiPVNet，基于 atomic dot-product operator 的双重属性（方向选择性 + 旋转不变性），构建局部 L2DP 算子和全局 DASFT 模块，实现层次化方向感知的旋转不变点云学习。
+  [AAAI2026][3D视觉][点云] 提出 DiPVNet，基于 atomic dot-product operator 的双重属性（方向选择性 + 旋转不变性），构建局部 L2DP 算子和全局 DASFT 模块，实现层次化方向感知的旋转不变点云学习。 - 3D 点云处理在自动驾驶、具身 AI 等场景广泛应用…
 tags:
   - "AAAI2026"
   - "3D视觉"

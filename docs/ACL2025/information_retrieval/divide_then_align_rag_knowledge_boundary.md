@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Divide-Then-Align: Honest Alignment based on the Knowledge Boundary of RAG
 description: >-
-  [ACL 2025][信息检索/RAG][RAG knowledge boundary] DTA 提出将 RAG 查询按参数知识边界和检索知识边界划分为四个象限，对"两者都不知道"的查询构造偏好数据用 DPO 训练模型回答"我不知道"，解决了 RAFT 模型即使在检索完全噪声时也强行生成答案的问题…
+  [ACL 2025][信息检索/RAG][RAG knowledge boundary] DTA 提出将 RAG 查询按参数知识边界和检索知识边界划分为四个象限，对"两者都不知道"的查询构造偏好数据用 DPO 训练模型回答"我不知道"，解决了 RAFT 模型即使在检索完全噪声时也强行生成答案的问题，在准确率和适当弃权之间实现了有效平衡。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

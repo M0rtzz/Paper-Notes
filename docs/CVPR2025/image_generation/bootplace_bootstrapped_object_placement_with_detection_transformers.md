@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BootPlace: Bootstrapped Object Placement with Detection Transformers
 description: >-
-  [CVPR 2025][图像生成][物体放置] 提出 BootPlace，将物体放置问题重新定义为"放置即检测"问题，通过在物体减除背景上训练检测变换器识别候选区域，再用负相关语义互补将目标物体匹配到最佳区域，在 Cityscapes 上 top-5 IOU 比 SOTA 提升约 4×。
+  [CVPR 2025][图像生成][物体放置] 提出 BootPlace，将物体放置问题重新定义为"放置即检测"问题，通过在物体减除背景上训练检测变换器识别候选区域，再用负相关语义互补将目标物体匹配到最佳区域，在 Cityscapes 上 top-5 IOU 比 SOTA 提升约 4×。 领域现状：Copy-paste 图像…
 tags:
   - "CVPR 2025"
   - "图像生成"

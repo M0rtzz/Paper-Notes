@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Linear Probes: Dynamic Safety Monitoring for Language Models
 description: >-
-  [ICLR 2026][可解释性][截断多项式分类器] 提出截断多项式分类器（TPC），通过对 LLM 激活空间中的多项式逐阶训练和截断评估，实现动态安全监控——在简单输入上用低阶（≈线性探针）快速决策，在困难输入上增加高阶项提供更强防护…
+  [ICLR 2026][可解释性][截断多项式分类器] 提出截断多项式分类器（TPC），通过对 LLM 激活空间中的多项式逐阶训练和截断评估，实现动态安全监控——在简单输入上用低阶（≈线性探针）快速决策，在困难输入上增加高阶项提供更强防护，在 WildGuardMix 和 BeaverTails 两个数据集上匹敌或超越 MLP 基线且具备内置可解释性。
 tags:
   - "ICLR 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-Attributed Knowledge Graph Enrichment with Large Language Models for Medical Concept Representation
 description: >-
-  [ACL 2026][医疗NLP][医学概念表示] 本文提出 CoMed，一种 LLM 赋能的图学习框架，通过结合 EHR 统计证据和类型约束 LLM 推理构建全局医学知识图谱，再用 LLM 生成节点描述和边理由丰富为文本属性图…
+  [ACL 2026][医疗NLP][医学概念表示] 本文提出 CoMed，一种 LLM 赋能的图学习框架，通过结合 EHR 统计证据和类型约束 LLM 推理构建全局医学知识图谱，再用 LLM 生成节点描述和边理由丰富为文本属性图，最终联合训练 LoRA 微调的 LLaMA 编码器和异构 GNN 学习统一的医学概念嵌入，在 MIMIC-III/IV 上显著提升诊断预测性能。
 tags:
   - "ACL 2026"
   - "医疗NLP"

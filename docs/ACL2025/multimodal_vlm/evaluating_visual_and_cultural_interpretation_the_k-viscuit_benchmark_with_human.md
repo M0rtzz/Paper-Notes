@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Visual and Cultural Interpretation: The K-Viscuit Benchmark with Human-VLM Collaboration
 description: >-
-  [ACL 2025][多模态VLM][文化理解] 本文提出了一种半自动化的文化 VLM 基准构建框架，通过人-VLM 协作生成多选 VQA 样本，并以此构建了聚焦韩国文化的 K-Viscuit 数据集（657 题），揭示了开源与闭源 VLM 在文化理解上的显著差距。
+  [ACL 2025][多模态VLM][文化理解] 本文提出了一种半自动化的文化 VLM 基准构建框架，通过人-VLM 协作生成多选 VQA 样本，并以此构建了聚焦韩国文化的 K-Viscuit 数据集（657 题），揭示了开源与闭源 VLM 在文化理解上的显著差距。 当前 VLM 主要在西方为主的数据集（COCO、VQAv2…
 tags:
   - "ACL 2025"
   - "多模态VLM"

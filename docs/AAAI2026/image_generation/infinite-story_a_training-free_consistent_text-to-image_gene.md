@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Infinite-Story: A Training-Free Consistent Text-to-Image Generation
 description: >-
-  [AAAI 2026][图像生成][一致性文本到图像生成] 基于 scale-wise 自回归模型（Infinity），通过三个 training-free 技术——Identity Prompt Replacement（消除文本编码器的上下文偏差）、Adaptive Style Injection（参考图像…
+  [AAAI 2026 Oral][图像生成][一致性文本到图像生成] 基于 scale-wise 自回归模型（Infinity），通过三个 training-free 技术——Identity Prompt Replacement（消除文本编码器的上下文偏差）、Adaptive Style Injection（参考图像特征注入）和 Synchronized Guidance Adaptation（同步 CFG 两个分支），实现了身份与风格一致的多图像生成，速度比扩散模型快 6 倍（1.72 秒/张）。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "图像生成"
   - "一致性文本到图像生成"
   - "视觉故事"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastLightGen: Fast and Light Video Generation with Fewer Steps and Parameters
 description: >-
-  [CVPR 2026][视频生成][视频生成加速] FastLightGen 提出三阶段蒸馏算法，首次实现采样步数与模型大小的联合蒸馏，通过识别冗余层、动态概率剪枝和 well-guided teacher guidance 分布匹配…
+  [CVPR 2026][视频生成][视频生成加速] FastLightGen 提出三阶段蒸馏算法，首次实现采样步数与模型大小的联合蒸馏，通过识别冗余层、动态概率剪枝和 well-guided teacher guidance 分布匹配，将 HunyuanVideo/WanX 压缩为 4 步 30% 参数剪枝的轻量生成器，实现约 35 倍加速且性能超越教师模型。
 tags:
   - "CVPR 2026"
   - "视频生成"

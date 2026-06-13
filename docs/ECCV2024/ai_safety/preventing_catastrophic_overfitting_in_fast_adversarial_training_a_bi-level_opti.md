@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective
 description: >-
-  [ECCV2024][AI安全][fast adversarial training] 从双层优化视角分析快速对抗训练中灾难性过拟合的成因，提出 FGSM-PCO 方法，通过自适应融合历史与当前对抗样本并配合定制正则化损失，有效防止并纠正内层优化崩溃。
+  [ECCV2024][AI安全][fast adversarial training] 从双层优化视角分析快速对抗训练中灾难性过拟合的成因，提出 FGSM-PCO 方法，通过自适应融合历史与当前对抗样本并配合定制正则化损失，有效防止并纠正内层优化崩溃。 对抗训练（Adversarial Training, AT）是抵御对抗样…
 tags:
   - "ECCV2024"
   - "AI安全"

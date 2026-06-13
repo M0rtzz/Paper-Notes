@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Domain Policy Optimization via Bellman Consistency and Hybrid Critics
 description: >-
-  [ICLR 2026][人体理解][跨域强化学习] 提出 Q Avatar 框架，通过跨域 Bellman 一致性量化源域模型可迁移性，利用自适应无超参权重函数混合源域和目标域 Q 函数，实现在状态-动作空间不同的跨域 RL 中的可靠知识迁移，无论源域模型质量或域相似性如何都能保证不产生负迁移。
+  [ICLR 2026][人体理解][跨域强化学习] 提出 Q Avatar 框架，通过跨域 Bellman 一致性量化源域模型可迁移性，利用自适应无超参权重函数混合源域和目标域 Q 函数，实现在状态-动作空间不同的跨域 RL 中的可靠知识迁移，无论源域模型质量或域相似性如何都能保证不产生负迁移。 问题背景 跨域强化学习（CD…
 tags:
   - "ICLR 2026"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relation-Rich Visual Document Generator for Visual Information Extraction
 description: >-
-  [CVPR 2025][多模态VLM][文档理解] 提出 RIDGE，一个关系丰富的视觉文档生成器，通过 LLM 生成层次化结构文本内容 + 自监督学习生成内容驱动的布局，合成带有实体类别和链接标注的文档图像，显著提升 VIE 模型在多个基准上的性能。
+  [CVPR 2025][多模态VLM][文档理解] 提出 RIDGE，一个关系丰富的视觉文档生成器，通过 LLM 生成层次化结构文本内容 + 自监督学习生成内容驱动的布局，合成带有实体类别和链接标注的文档图像，显著提升 VIE 模型在多个基准上的性能。 视觉信息提取（VIE）是文档理解的核心任务，需要从文档图像中识别实体类别…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

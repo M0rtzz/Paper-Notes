@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Leveraging Unit Language Guidance to Advance Speech Modeling in Textless Speech-to-Speech Translation
 description: >-
-  [ACL 2025 (Findings)][无文本语音翻译] 本文提出"单元语言"（unit language）的概念，通过n-gram语言建模将语音离散单元构造为类文本表示，并利用多任务学习引导无文本语音到语音翻译（S2ST）模型的训练过程，同时提出任务提示建模来缓解源端和目标端单元语言同时使用时的冲突…
+  [ACL 2025 (Findings)][音频/语音][无文本语音翻译] 本文提出"单元语言"（unit language）的概念，通过n-gram语言建模将语音离散单元构造为类文本表示，并利用多任务学习引导无文本语音到语音翻译（S2ST）模型的训练过程，同时提出任务提示建模来缓解源端和目标端单元语言同时使用时的冲突，在VoxPopuli四语数据集上取得显著提升。
 tags:
   - "ACL 2025 (Findings)"
+  - "音频/语音"
   - "无文本语音翻译"
   - "单元语言"
   - "多任务学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tractable Weighted First-Order Model Counting with Bounded Treewidth Binary Evidence
 description: >-
-  [AAAI 2026][加权一阶模型计数] 提出一种在域大小上多项式时间的算法，计算带有有界树宽二元证据的 $\text{FO}^2$ 和 $\text{C}^2$ 片段的加权一阶模型计数（WFOMC），并解决了有界树宽有界度图上的稳定座位安排开放问题。
+  [AAAI 2026][加权一阶模型计数] 提出一种在域大小上多项式时间的算法，计算带有有界树宽二元证据的 $\text{FO}^2$ 和 $\text{C}^2$ 片段的加权一阶模型计数（WFOMC），并解决了有界树宽有界度图上的稳定座位安排开放问题。 1. 领域现状： 加权一阶模型计数（WFOMC）要求计算给定一阶逻辑语…
 tags:
   - "AAAI 2026"
   - "加权一阶模型计数"

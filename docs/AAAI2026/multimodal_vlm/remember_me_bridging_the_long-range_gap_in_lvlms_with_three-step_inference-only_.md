@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Remember Me: Bridging the Long-Range Gap in LVLMs with Three-Step Inference-Only Decay Resilience Strategies
 description: >-
-  [AAAI 2026][多模态VLM][大视觉语言模型] 提出 T-DRS（Three-step Decay Resilience Strategies），一个无需训练的推理时框架，通过语义驱动增强、距离感知控制和远距离重强化三个阶段协同缓解 RoPE 引起的长程注意力衰减…
+  [AAAI 2026][多模态VLM][大视觉语言模型] 提出 T-DRS（Three-step Decay Resilience Strategies），一个无需训练的推理时框架，通过语义驱动增强、距离感知控制和远距离重强化三个阶段协同缓解 RoPE 引起的长程注意力衰减，在 VQA 任务上持续提升多个 LVLM 的性能。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

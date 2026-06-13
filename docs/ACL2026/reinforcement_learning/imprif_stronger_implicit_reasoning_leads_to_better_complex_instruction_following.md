@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ImpRIF: Stronger Implicit Reasoning Leads to Better Complex Instruction Following
 description: >-
-  [ACL 2026][强化学习][复杂指令遵循] ImpRIF 将复杂指令中的隐式推理结构形式化为可验证的显式推理图（ERG），基于此构建大规模单轮/多轮数据并通过 SFT+过程验证 RL 训练，使 4B-32B 模型在五个指令遵循基准上显著超越基座模型，32B 模型甚至超越部分大型商用模型。
+  [ACL 2026][强化学习][复杂指令遵循] ImpRIF 将复杂指令中的隐式推理结构形式化为可验证的显式推理图（ERG），基于此构建大规模单轮/多轮数据并通过 SFT+过程验证 RL 训练，使 4B-32B 模型在五个指令遵循基准上显著超越基座模型，32B 模型甚至超越部分大型商用模型。 领域现状：LLM 的指令遵循能…
 tags:
   - "ACL 2026"
   - "强化学习"

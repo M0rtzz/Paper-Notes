@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding
 description: >-
-  [ICLR 2026][多模态VLM][Table Understanding] 提出 TableDART，通过仅 2.59M 参数的 MLP 门控网络为每个 query-table 对动态选择最优处理路径（Text-only / Image-only / Fusion）…
+  [ICLR 2026][多模态VLM][Table Understanding] 提出 TableDART，通过仅 2.59M 参数的 MLP 门控网络为每个 query-table 对动态选择最优处理路径（Text-only / Image-only / Fusion），复用冻结的单模态专家模型并引入 LLM Agent 进行跨模态融合，在 7 个表格理解 benchmark 上平均超越最强 MLLM 基线 HIPPO 4.02%，同时延迟降低 24.5%。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

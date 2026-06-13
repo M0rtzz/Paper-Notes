@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Representing Topological Self-Similarity Using Fractal Feature Maps for Accurate Segmentation of Tubular Structures
 description: >-
-  [ECCV 2024][语义分割][管状结构分割] 利用分形理论将分形维数（FD）从图像级扩展到像素级，生成分形特征图（FFM）作为深度学习模型的额外输入和损失权重，并设计包含边缘解码器和骨架解码器的多解码器网络（MD-Net），在五个管状结构数据集上显著提升分割性能。
+  [ECCV 2024][语义分割][管状结构分割] 利用分形理论将分形维数（FD）从图像级扩展到像素级，生成分形特征图（FFM）作为深度学习模型的额外输入和损失权重，并设计包含边缘解码器和骨架解码器的多解码器网络（MD-Net），在五个管状结构数据集上显著提升分割性能。 管状结构的精确分割在多个领域至关重要： - 生物学：内…
 tags:
   - "ECCV 2024"
   - "语义分割"

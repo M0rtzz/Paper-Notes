@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Platform Video Person ReID: A New Benchmark Dataset and Adaptation Approach
 description: >-
-  [ECCV 2024][遥感][跨平台行人重识别] 构建首个地面-无人机跨平台视频行人重识别数据集G2A-VReID，并提出VSLA-CLIP方法，通过视觉-语义对齐和参数高效的Video Set-Level-Adapter将CLIP适配到视频ReID任务。
+  [ECCV 2024][遥感][跨平台行人重识别] 构建首个地面-无人机跨平台视频行人重识别数据集G2A-VReID，并提出VSLA-CLIP方法，通过视觉-语义对齐和参数高效的Video Set-Level-Adapter将CLIP适配到视频ReID任务。 视频行人重识别（VReID）近年来受到广泛关注…
 tags:
   - "ECCV 2024"
   - "遥感"

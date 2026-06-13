@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification
 description: >-
-  [医疗NLP] 提出RAxSS框架，将检索增强机制引入随机稀疏采样(SSS)流水线，通过窗口内相似度加权聚合替代均匀平均，在保持变长医学时间序列分类性能的同时提供从"哪里"到"为什么"的可解释性证据链。
+  [医疗NLP] 提出RAxSS框架，将检索增强机制引入随机稀疏采样(SSS)流水线，通过窗口内相似度加权聚合替代均匀平均，在保持变长医学时间序列分类性能的同时提供从"哪里"到"为什么"的可解释性证据链。 医学时间序列（心率、血糖、脑电图等）的AI分析面临两大持续性障碍：临床数据的异质性和对透明可解释性的需求…
 tags:
   - "医疗NLP"
 ---

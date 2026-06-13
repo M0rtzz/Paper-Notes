@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CausalDetox: Causal Head Selection and Intervention for Language Model Detoxification
 description: >-
-  [ACL 2026][LLM安全][去毒化] CausalDetox 使用"必要性和充分性概率"（PNS）作为因果准则来精确定位产生有毒内容的注意力头，并通过局部推理时干预和 PNS 引导的微调两种互补策略进行去毒化，在多个模型上实现最高 5.34% 的毒性降低，同时保持语言流畅性。
+  [ACL 2026][LLM安全][去毒化] CausalDetox 使用"必要性和充分性概率"（PNS）作为因果准则来精确定位产生有毒内容的注意力头，并通过局部推理时干预和 PNS 引导的微调两种互补策略进行去毒化，在多个模型上实现最高 5.34% 的毒性降低，同时保持语言流畅性。 领域现状：LLM 去毒化方法包括词法过滤…
 tags:
   - "ACL 2026"
   - "LLM安全"

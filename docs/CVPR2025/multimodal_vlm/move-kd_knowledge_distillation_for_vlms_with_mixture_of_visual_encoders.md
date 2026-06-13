@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders
 description: >-
-  [CVPR 2025][多模态VLM][知识蒸馏] 本文提出MoVE-KD——首个从知识蒸馏角度将多个视觉编码器（CLIP/EVA/ConvNeXt/SAM）的特长融合到单个编码器的框架…
+  [CVPR 2025][多模态VLM][知识蒸馏] 本文提出MoVE-KD——首个从知识蒸馏角度将多个视觉编码器（CLIP/EVA/ConvNeXt/SAM）的特长融合到单个编码器的框架，通过Mixture-of-LoRA-Experts (MoLE)缓解多教师知识冲突、利用CLIP的[CLS]注意力自适应加权蒸馏token和教师，在LLaVA/LLaVA-NeXT上实现一致提升。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

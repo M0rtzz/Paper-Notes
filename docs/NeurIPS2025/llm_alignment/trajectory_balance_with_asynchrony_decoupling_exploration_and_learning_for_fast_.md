@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trajectory Balance with Asynchrony: Decoupling Exploration and Learning for Fast, Scalable LLM Post-Training
 description: >-
-  [NeurIPS 2025][LLM对齐][强化学习后训练] 提出 TBA（Trajectory Balance with Asynchrony），将 GFlowNet 的轨迹平衡（TB）目标与异步分布式 RL 架构结合，实现 LLM 后训练中探索与学习的解耦…
+  [NeurIPS 2025][LLM对齐][强化学习后训练] 提出 TBA（Trajectory Balance with Asynchrony），将 GFlowNet 的轨迹平衡（TB）目标与异步分布式 RL 架构结合，实现 LLM 后训练中探索与学习的解耦，在数学推理、偏好微调和自动红队测试任务上获得 4-50 倍加速且性能不降反升。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

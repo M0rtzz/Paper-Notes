@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLIP Behaves like a Bag-of-Words Model Cross-modally but not Uni-modally
 description: >-
-  [ICLR 2026][目标检测][CLIP] 通过线性探测实验证明 CLIP 的 BoW（词袋）行为并非源于编码器缺乏绑定信息，而是跨模态对齐的失败；提出 LABCLIP，仅训练一个轻量线性变换即可显著恢复属性-对象绑定能力。
+  [ICLR 2026][目标检测][CLIP] 通过线性探测实验证明 CLIP 的 BoW（词袋）行为并非源于编码器缺乏绑定信息，而是跨模态对齐的失败；提出 LABCLIP，仅训练一个轻量线性变换即可显著恢复属性-对象绑定能力。 领域现状： CLIP 作为视觉-语言模型的基础组件被广泛使用，但已有研究（ARO…
 tags:
   - "ICLR 2026"
   - "目标检测"

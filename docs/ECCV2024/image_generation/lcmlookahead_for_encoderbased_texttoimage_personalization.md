@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LCM-Lookahead for Encoder-Based Text-to-Image Personalization
 description: >-
-  [ECCV 2024][图像生成][文本到图像个性化] 本文提出利用LCM（Latent Consistency Model）作为"快捷通道"，在扩散模型encoder训练中实现图像空间损失（如身份识别loss）的反向传播，配合自注意力特征共享和一致性数据生成…
+  [ECCV 2024][图像生成][文本到图像个性化] 本文提出利用LCM（Latent Consistency Model）作为"快捷通道"，在扩散模型encoder训练中实现图像空间损失（如身份识别loss）的反向传播，配合自注意力特征共享和一致性数据生成，显著提升encoder-based人脸个性化的身份保持和prompt对齐能力。
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Context Protocol for Vision Systems: Audit, Security, and Protocol Extensions
 description: >-
-  [NeurIPS 2025][Model Context Protocol] 首个对MCP在视觉系统中部署的协议级审计研究，分析91个公开MCP服务器发现78%存在schema不一致、89%缺乏运行时验证，并提出语义schema、可视化记忆、运行时验证器等协议扩展方案。
+  [NeurIPS 2025][Model Context Protocol] 首个对MCP在视觉系统中部署的协议级审计研究，分析91个公开MCP服务器发现78%存在schema不一致、89%缺乏运行时验证，并提出语义schema、可视化记忆、运行时验证器等协议扩展方案。 Model Context Protocol (MCP…
 tags:
   - "NeurIPS 2025"
   - "Model Context Protocol"

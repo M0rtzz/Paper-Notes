@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection
 description: >-
-  [ECCV 2024][3D异常检测] 提出 LSFA（Local-to-global Self-supervised Feature Adaptation）框架，通过模态内特征紧凑性优化（IFC）和跨模态局部到全局一致性对齐（CLC）两个自监督策略对预训练特征进行任务导向适配…
+  [ECCV 2024][目标检测][3D异常检测] 提出 LSFA（Local-to-global Self-supervised Feature Adaptation）框架，通过模态内特征紧凑性优化（IFC）和跨模态局部到全局一致性对齐（CLC）两个自监督策略对预训练特征进行任务导向适配，在 MVTec-3D AD 上取得 97.1% I-AUROC，超越 SOTA +3.4%。
 tags:
   - "ECCV 2024"
+  - "目标检测"
   - "3D异常检测"
   - "多模态特征适配"
   - "自监督学习"

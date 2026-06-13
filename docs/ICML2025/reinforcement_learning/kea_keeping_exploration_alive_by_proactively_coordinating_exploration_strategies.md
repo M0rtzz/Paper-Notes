@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KEA: Keeping Exploration Alive by Proactively Coordinating Exploration Strategies
 description: >-
-  [ICML2025][强化学习][探索策略协调] 提出 KEA 方法，通过引入标准智能体与新颖性增强智能体的动态切换机制，主动协调不同探索策略，解决 SAC 与新颖性探索结合时因策略交互导致的冗余采样和低效探索问题。
+  [ICML2025][强化学习][探索策略协调] 提出 KEA 方法，通过引入标准智能体与新颖性增强智能体的动态切换机制，主动协调不同探索策略，解决 SAC 与新颖性探索结合时因策略交互导致的冗余采样和低效探索问题。 核心问题：SAC 在稀疏奖励环境中结合新颖性探索方法（如 RND）时，两种探索策略之间存在复杂交互…
 tags:
   - "ICML2025"
   - "强化学习"

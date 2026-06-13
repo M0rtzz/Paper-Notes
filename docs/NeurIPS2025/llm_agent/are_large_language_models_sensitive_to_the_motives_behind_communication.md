@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are Large Language Models Sensitive to the Motives Behind Communication?
 description: >-
-  [NeurIPS 2025][LLM Agent][motivational vigilance] 通过三个递进实验系统评估LLM是否具备"动机警觉性"——识别信息源的意图和激励并相应调整信任度的能力：在控制实验中前沿非推理LLM表现接近理性模型(Pearson's $r>0.9$)且比理性模型更像人类…
+  [NeurIPS 2025][LLM Agent][motivational vigilance] 通过三个递进实验系统评估LLM是否具备"动机警觉性"——识别信息源的意图和激励并相应调整信任度的能力：在控制实验中前沿非推理LLM表现接近理性模型(Pearson's $r>0.9$)且比理性模型更像人类，但在真实YouTube赞助广告场景中警觉性大幅下降($r<0.2$)，简单的prompt steering可部分恢复($r$提升至0.31)。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

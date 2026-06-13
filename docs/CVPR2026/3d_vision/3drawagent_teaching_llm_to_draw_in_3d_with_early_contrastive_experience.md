@@ -2,9 +2,9 @@
 title: >-
   [论文解读] 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience
 description: >-
-  [CVPR 2026][3D视觉][3D草图生成] 提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图…
+  [CVPR 2026 Highlight][3D视觉][3D草图生成] 提出免训练的 3DrawAgent 框架，让冻结的 LLM 通过"对比经验优化"（contrastive experience optimization）自我学习3D空间推理，以自回归方式生成语言驱动的3D Bezier草图，无需参数更新即可达到接近有训练方法的水平。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "3D视觉"
   - "3D草图生成"
   - "LLM"

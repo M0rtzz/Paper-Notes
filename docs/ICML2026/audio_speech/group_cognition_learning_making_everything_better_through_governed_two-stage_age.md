@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Group Cognition Learning: Making Everything Better Through Governed Two-Stage Agents Collaboration
 description: >-
-  [ICML 2026][音频/语音][多模态融合] 针对集中式多模态融合带来的"模态主导"和"虚假模态耦合"两个痼疾，GCL 把多模态学习重写为**两阶段四 agent 的协议化协作**：第一阶段由 Routing/Auditing agent 用边际预测增益逐样本决定哪些跨模态交流被允许…
+  [ICML 2026][音频/语音][多模态融合] 针对集中式多模态融合带来的"模态主导"和"虚假模态耦合"两个痼疾，GCL 把多模态学习重写为**两阶段四 agent 的协议化协作**：第一阶段由 Routing/Auditing agent 用边际预测增益逐样本决定哪些跨模态交流被允许，第二阶段由 Public-Factor/Aggregation agent 把共享语义与私有特化解耦后再聚合，在 MOSI/MOSEI/MIntRec 上拿到 SOTA。
 tags:
   - "ICML 2026"
   - "音频/语音"

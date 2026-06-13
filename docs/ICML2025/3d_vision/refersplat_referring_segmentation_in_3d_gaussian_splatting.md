@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ReferSplat: Referring Segmentation in 3D Gaussian Splatting
 description: >-
-  [ICML 2025][3D视觉][3D Gaussian Splatting] ReferSplat 提出了 Referring 3D Gaussian Splatting Segmentation（R3DGS）新任务…
+  [ICML 2025 Oral][3D视觉][3D Gaussian Splatting] ReferSplat 提出了 Referring 3D Gaussian Splatting Segmentation（R3DGS）新任务，通过构建 3D Gaussian Referring Fields、位置感知跨模态交互模块和 Gaussian-Text 对比学习，实现了基于自然语言描述在 3DGS 场景中分割目标物体（包括遮挡/不可见物体），在新构建的 Ref-LERF 数据集和开放词汇分割基准上取得 SOTA。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Oral"
   - "3D视觉"
   - "3D Gaussian Splatting"
   - "指称分割"

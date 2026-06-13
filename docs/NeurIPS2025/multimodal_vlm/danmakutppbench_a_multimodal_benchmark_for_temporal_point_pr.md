@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding
 description: >-
-  [NeurIPS 2025][多模态VLM][temporal point process] 构建首个多模态时间点过程基准DanmakuTPPBench：DanmakuTPP-Events提供7250个序列共1080万弹幕事件（时间-文本-视频三模态天然对齐）…
+  [NeurIPS 2025][多模态VLM][temporal point process] 构建首个多模态时间点过程基准DanmakuTPPBench：DanmakuTPP-Events提供7250个序列共1080万弹幕事件（时间-文本-视频三模态天然对齐），DanmakuTPP-QA通过多智能体pipeline自动生成10类推理问答，系统暴露了经典TPP模型和MLLM在多模态事件动态理解上的显著短板。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GroupMamba: Efficient Group-Based Visual State Space Model
 description: >-
-  [CVPR 2025][语义分割][state space model] 提出 Modulated Group Mamba 层，将输入通道分为四组分别按四个方向执行单向 SSM 扫描，通过 Channel Affinity Modulation（CAM）增强跨组通道交互，配合蒸馏训练目标解决大模型不稳定问题…
+  [CVPR 2025][语义分割][state space model] 提出 Modulated Group Mamba 层，将输入通道分为四组分别按四个方向执行单向 SSM 扫描，通过 Channel Affinity Modulation（CAM）增强跨组通道交互，配合蒸馏训练目标解决大模型不稳定问题，在 ImageNet-1K 上以 23M 参数达到 83.3% Top-1 精度。
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreaking the Non-Transferable Barrier via Test-Time Data Disguising
 description: >-
-  [CVPR 2025][LLM对齐][non-transferable learning] 提出 JailNTL，首个针对 Non-Transferable Learning (NTL) 模型的黑盒攻击方法，通过测试时数据伪装将未授权域的数据"变装"为授权域的数据…
+  [CVPR 2025][LLM对齐][non-transferable learning] 提出 JailNTL，首个针对 Non-Transferable Learning (NTL) 模型的黑盒攻击方法，通过测试时数据伪装将未授权域的数据"变装"为授权域的数据，仅用 1% 授权样本即可将未授权域准确率提升最高 55.7%，无需修改模型。
 tags:
   - "CVPR 2025"
   - "LLM对齐"

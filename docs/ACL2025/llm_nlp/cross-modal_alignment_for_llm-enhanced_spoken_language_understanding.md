@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Cross-Modal Alignment for LLM-Enhanced Spoken Language Understanding
 description: >-
-  [ACL 2025][LLM/NLP][跨模态对齐] 本文提出一种跨模态对齐框架，通过将语音表示与LLM的文本语义空间显式对齐，实现了LLM增强的口语理解（SLU），在意图识别和槽位填充任务上取得SOTA性能。
+  [ACL 2025][LLM 其他][跨模态对齐] 本文提出一种跨模态对齐框架，通过将语音表示与LLM的文本语义空间显式对齐，实现了LLM增强的口语理解（SLU），在意图识别和槽位填充任务上取得SOTA性能。 领域现状：口语理解（SLU）是语音对话系统的核心组件，传统方法采用ASR+NLU的级联架构，近年来端到端SLU模型逐…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "跨模态对齐"
   - "大语言模型"
   - "口语理解"

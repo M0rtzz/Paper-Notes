@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FINER: MLLMs Hallucinate under Fine-grained Negative Queries
 description: >-
-  [CVPR 2026][幻觉检测][MLLM幻觉] 发现 MLLM 在细粒度负查询（涉及多个对象/属性/关系的查询中仅有一个细微错误）下幻觉率急剧上升，提出 FINER 基准和 FINER-Tuning 方法（基于 DPO），在 InternVL3.5-14B 上最高提升 24.2%。
+  [CVPR 2026][幻觉检测][MLLM幻觉] 发现 MLLM 在细粒度负查询（涉及多个对象/属性/关系的查询中仅有一个细微错误）下幻觉率急剧上升，提出 FINER 基准和 FINER-Tuning 方法（基于 DPO），在 InternVL3.5-14B 上最高提升 24.2%。 领域现状：MLLM 的幻觉问题已被广泛…
 tags:
   - "CVPR 2026"
   - "幻觉检测"

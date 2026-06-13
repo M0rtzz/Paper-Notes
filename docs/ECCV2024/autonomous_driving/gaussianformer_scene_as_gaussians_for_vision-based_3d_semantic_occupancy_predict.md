@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussianFormer: Scene as Gaussians for Vision-Based 3D Semantic Occupancy Prediction
 description: >-
-  [ECCV 2024][自动驾驶][3D Occupancy] 提出以物体为中心的 3D 语义高斯表示替代传统密集体素，用一组稀疏的 3D 语义高斯描述场景并通过高斯到体素的 splatting 生成占用预测，在性能可比的情况下将内存消耗降低 75%-82%。
+  [ECCV 2024][自动驾驶][3D Occupancy] 提出以物体为中心的 3D 语义高斯表示替代传统密集体素，用一组稀疏的 3D 语义高斯描述场景并通过高斯到体素的 splatting 生成占用预测，在性能可比的情况下将内存消耗降低 75%-82%。 3D 语义占用预测是视觉自动驾驶系统鲁棒性的关键任务…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

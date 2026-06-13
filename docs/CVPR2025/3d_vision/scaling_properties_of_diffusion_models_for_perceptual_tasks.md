@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Properties of Diffusion Models for Perceptual Tasks
 description: >-
-  [CVPR 2025][3D视觉][扩散模型缩放] 本文系统研究了扩散模型在深度估计、光流预测和 amodal 分割等感知任务上的 scaling 特性，建立了训练和推理的 power law 缩放规律，并证明通过增加测试时计算（更多去噪步数和多预测集成）可以显著提升性能…
+  [CVPR 2025][3D视觉][扩散模型缩放] 本文系统研究了扩散模型在深度估计、光流预测和 amodal 分割等感知任务上的 scaling 特性，建立了训练和推理的 power law 缩放规律，并证明通过增加测试时计算（更多去噪步数和多预测集成）可以显著提升性能，在使用远少于 SOTA 的数据和计算量的情况下达到了竞争力性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

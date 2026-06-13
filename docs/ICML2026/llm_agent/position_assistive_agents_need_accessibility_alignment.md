@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Assistive Agents Need Accessibility Alignment
 description: >-
-  [ICML 2026][LLM Agent][盲人辅助] 这是一篇 position paper，作者通过对 417 篇文献中 778 个盲人辅助任务实例做系统综述，论证 "accessibility alignment" 应当被视为与 helpful/harmless/honest 并列的 Agent 一级…
+  [ICML 2026][LLM Agent][盲人辅助] 这是一篇 position paper，作者通过对 417 篇文献中 778 个盲人辅助任务实例做系统综述，论证 "accessibility alignment" 应当被视为与 helpful/harmless/honest 并列的 Agent 一级对齐目标，并提出覆盖目标-交互-风险-生命周期四维度的设计 pipeline。
 tags:
   - "ICML 2026"
   - "LLM Agent"

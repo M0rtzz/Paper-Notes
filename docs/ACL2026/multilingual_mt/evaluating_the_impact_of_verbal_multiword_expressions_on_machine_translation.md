@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating the Impact of Verbal Multiword Expressions on Machine Translation
 description: >-
-  [ACL 2026][多语言/翻译][VMWE] 本文首次系统评测动词类多词表达式（VMWE：动词成语 VID、动词-小品词 VPC、轻动词构式 LVC）对机器翻译质量的影响，在 8 个 MT 系统 × 7 个语言对 × 两类 QE 模型 + 人工 DA 评分上证明：VMWE 普遍掉点…
+  [ACL 2026][多语言/翻译][VMWE] 本文首次系统评测动词类多词表达式（VMWE：动词成语 VID、动词-小品词 VPC、轻动词构式 LVC）对机器翻译质量的影响，在 8 个 MT 系统 × 7 个语言对 × 两类 QE 模型 + 人工 DA 评分上证明：VMWE 普遍掉点，且掉点幅度与"非组合性"严格正相关（VID > VPC > LVC），即使 GPT-4.1/GPT-5.1 也无法消除这一退化。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

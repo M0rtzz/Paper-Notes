@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashAudio: Rectified Flows for Fast and High-Fidelity Text-to-Audio Generation
 description: >-
-  [ACL 2025][图像生成][文本转音频] 将整流流（Rectified Flow）引入文本转音频生成，通过双焦采样器优化时间步分布、不混溶流减少数据-噪声总距离、锚定优化修正 CFG 引导误差，实现单步生成 FAD=1.49 超越百步扩散模型，生成速度达实时 400 倍。
+  [ACL 2025][图像生成][文本转音频] 将整流流（Rectified Flow）引入文本转音频生成，通过双焦采样器优化时间步分布、不混溶流减少数据-噪声总距离、锚定优化修正 CFG 引导误差，实现单步生成 FAD=1.49 超越百步扩散模型，生成速度达实时 400 倍。 领域现状：基于潜在扩散模型（LDM）的文本转音…
 tags:
   - "ACL 2025"
   - "图像生成"

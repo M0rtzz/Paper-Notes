@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAG-MoE: From Simple Mixture to Structural Aggregation in Mixture-of-Experts
 description: >-
-  [ICML 2026][模型压缩][Mixture-of-Experts] 把标准 MoE 中 top-$K$ 专家输出的"加权求和"替换为按一个动态学习出来的 DAG 进行结构化聚合，在几乎不增加路由与参数开销的前提下显著提升 MoE 表达能力与下游推理表现。
+  [ICML 2026][模型压缩][Mixture-of-Experts] 把标准 MoE 中 top-$K$ 专家输出的"加权求和"替换为按一个动态学习出来的 DAG 进行结构化聚合，在几乎不增加路由与参数开销的前提下显著提升 MoE 表达能力与下游推理表现。 领域现状：现代 LLM 普遍以 MoE 解耦参数量与计算量——…
 tags:
   - "ICML 2026"
   - "模型压缩"

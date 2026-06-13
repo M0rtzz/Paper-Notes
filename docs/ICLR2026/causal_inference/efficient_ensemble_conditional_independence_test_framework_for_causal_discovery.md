@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Ensemble Conditional Independence Test Framework for Causal Discovery
 description: >-
-  [ICLR 2026][因果推理][conditional independence test] 提出 E-CIT（集成条件独立性检验）框架，通过将数据分割为子集后独立执行检验并基于**稳定分布**的 p 值聚合方法合并结果，将任意条件独立性检验的计算复杂度降至关于样本量线性…
+  [ICLR 2026][因果推理][conditional independence test] 提出 E-CIT（集成条件独立性检验）框架，通过将数据分割为子集后独立执行检验并基于**稳定分布**的 p 值聚合方法合并结果，将任意条件独立性检验的计算复杂度降至关于样本量线性，同时在重尾噪声和真实数据等复杂场景下保持甚至提升检验功效。
 tags:
   - "ICLR 2026"
   - "因果推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FALCON: False-Negative Aware Learning of Contrastive Negatives in Vision-Language Alignment
 description: >-
-  [CVPR2026][多模态VLM][假负样本] 提出 FALCON，一种**基于学习的 mini-batch 构造策略**，通过负样本挖掘调度器自适应平衡硬负样本与假负样本之间的权衡，显著提升视觉语言预训练的跨模态对齐质量。
+  [CVPR2026][多模态VLM][假负样本] 提出 FALCON，一种基于学习的 mini-batch 构造策略：，通过负样本挖掘调度器自适应平衡硬负样本与假负样本之间的权衡，显著提升视觉语言预训练的跨模态对齐质量。 假负样本是VLP的核心挑战：大规模网络爬取数据集中图文存在多对多对应关系，对比学习中高相似度的"负样本"…
 tags:
   - "CVPR2026"
   - "多模态VLM"

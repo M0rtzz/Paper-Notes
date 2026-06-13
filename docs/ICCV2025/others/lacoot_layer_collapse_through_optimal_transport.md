@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaCoOT: Layer Collapse through Optimal Transport
 description: >-
-  [ICCV2025][optimal transport] 提出 LaCoOT，一种基于最优传输的正则化策略，通过最小化网络内部中间特征分布之间的 Max-Sliced Wasserstein 距离，使得训练后可以直接移除整个网络层，在保持性能的同时显著减少模型深度和推理时间。
+  [ICCV2025][optimal transport] 提出 LaCoOT，一种基于最优传输的正则化策略，通过最小化网络内部中间特征分布之间的 Max-Sliced Wasserstein 距离，使得训练后可以直接移除整个网络层，在保持性能的同时显著减少模型深度和推理时间。 基础模型的计算挑战 近年来基础模型（CLIP、…
 tags:
   - "ICCV2025"
   - "optimal transport"

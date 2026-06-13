@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SwitchCraft: A Programmatic Framework for Designing State-Switching Proteins
 description: >-
-  [ICML 2026][计算生物][多态蛋白设计] SwitchCraft 把"设计一个能在多个功能态之间切换的蛋白质"形式化为一个对组合约束求解的优化问题，通过对结构预测模型 Boltz-1 反向传播多组状态相关的损失（基序、结合、构象变化、接触），直接梯度下降优化氨基酸 logits…
+  [ICML 2026][计算生物][多态蛋白设计] SwitchCraft 把"设计一个能在多个功能态之间切换的蛋白质"形式化为一个对组合约束求解的优化问题，通过对结构预测模型 Boltz-1 反向传播多组状态相关的损失（基序、结合、构象变化、接触），直接梯度下降优化氨基酸 logits，实现首个通用的多态蛋白计算设计框架，并在体外硅基实验中演示了正/负变构、基序切换、诱导结合、配体修饰、配体辨识与 cpGFP 荧光生物传感器的从头设计。
 tags:
   - "ICML 2026"
   - "计算生物"

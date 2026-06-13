@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ECSEL: Explainable Classification via Signomial Equation Learning
 description: >-
-  [ICML 2026][因果推理][signomial函数] ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + softmax"作为分类器，配合 L1 稀疏正则与多阶段优化…
+  [ICML 2026][因果推理][signomial函数] ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + softmax"作为分类器，配合 L1 稀疏正则与多阶段优化，既能在 AI Feynman 等符号回归 benchmark 上以远低于 SOTA 的算力恢复 95.86% 的目标方程，又能在 11 个分类数据集上与 XGBoost/MLP 打平，同时所有特征归因都由模型参数闭式给出。
 tags:
   - "ICML 2026"
   - "因果推理"

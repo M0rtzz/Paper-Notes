@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Glance-or-Gaze: Incentivizing LMMs to Adaptively Focus Search via Reinforcement Learning
 description: >-
-  [ACL2026][强化学习][多模态大模型] 这篇论文提出 Glance-or-Gaze (GoG)，让多模态大模型在回答知识密集型视觉问题时学会先看全图、再选择高价值区域精查…
+  [ACL2026 Findings][强化学习][多模态大模型] 这篇论文提出 Glance-or-Gaze (GoG)，让多模态大模型在回答知识密集型视觉问题时学会先看全图、再选择高价值区域精查，并通过 SFT + 复杂度自适应 GRPO 在 6 个视觉问答/搜索基准上显著优于直接回答、全量搜索和 MMSearch-R1 等基线。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "强化学习"
   - "多模态大模型"
   - "视觉搜索"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Multimodal Large Language Models for Ancient Chinese Character Evolution Analysis via Glyph-Driven Fine-Tuning
 description: >-
-  [ACL 2026][多模态VLM][古文字演变] 本文构建了一个包含11个任务、13万+实例的古汉字演变分析基准，评估了19个MLLM后发现现有模型在字形级识别和演变推理上能力有限，并提出字形驱动对比微调框架GEVO，在2B模型上实现全任务提升。
+  [ACL 2026][多模态VLM][古文字演变] 本文构建了一个包含11个任务、13万+实例的古汉字演变分析基准，评估了19个MLLM后发现现有模型在字形级识别和演变推理上能力有限，并提出字形驱动对比微调框架GEVO，在2B模型上实现全任务提升。 领域现状：随着MLLM的快速发展，越来越多的研究开始利用其分析古文字（如甲骨…
 tags:
   - "ACL 2026"
   - "多模态VLM"

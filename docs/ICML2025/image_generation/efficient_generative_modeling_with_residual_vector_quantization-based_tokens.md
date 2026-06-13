@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Generative Modeling with Residual Vector Quantization-Based Tokens
 description: >-
-  [ICML2025][图像生成][ResGen] ResGen 通过直接预测累积RVQ嵌入而非单个令牌，解耦了生成迭代次数与序列长度和量化深度的关系，实现了高保真、快速采样的高效生成模型。
+  [ICML2025][图像生成][ResGen] ResGen 通过直接预测累积RVQ嵌入而非单个令牌，解耦了生成迭代次数与序列长度和量化深度的关系，实现了高保真、快速采样的高效生成模型。 核心矛盾 核心矛盾：残差向量量化(RVQ)通过迭代量化残差提高重建保真度，但在自回归生成中： - 采样步数 = 序列长度L × 量化深度…
 tags:
   - "ICML2025"
   - "图像生成"

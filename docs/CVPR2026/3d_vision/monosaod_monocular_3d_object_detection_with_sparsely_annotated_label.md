@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MonoSAOD: Monocular 3D Object Detection with Sparsely Annotated Label
 description: >-
-  [CVPR 2026][3D视觉][单目3D检测] 首次定义并解决稀疏标注单目 3D 目标检测问题，提出道路感知补丁增强（RAPA）和原型过滤（PBF）两个模块，在 KITTI 30% 标注设置下大幅超越现有 2D SAOD 方法（AP3D Easy: 21.28 vs 17.14）。
+  [CVPR 2026][3D视觉][单目3D检测] 首次定义并解决稀疏标注单目 3D 目标检测问题，提出道路感知补丁增强（RAPA）和原型过滤（PBF）两个模块，在 KITTI 30% 标注设置下大幅超越现有 2D SAOD 方法（AP3D Easy: 21.28 vs 17.14）。 领域现状：单目 3D 目标检测通过单张…
 tags:
   - "CVPR 2026"
   - "3D视觉"

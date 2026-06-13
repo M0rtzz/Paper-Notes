@@ -1,16 +1,16 @@
 ---
 title: >-
-  [论文解读] AcuRank: 不确定性感知的自适应计算重排序
+  [论文解读] AcuRank: Uncertainty-Aware Adaptive Computation for Listwise Reranking
 description: >-
-  [NeurIPS 2025][信息检索/RAG][不确定性估计] 通过基于TrueSkill模型的不确定性估计，动态调整重排序子集大小和验证范围，在实现更优精度效率权衡的同时避免过度计算。
+  [NeurIPS 2025][信息检索/RAG][不确定性估计] 利用贝叶斯TrueSkill模型维护文档相关性的概率分布，在每轮迭代中只对排名不确定的文档进行重排序，实现根据查询难度自适应调配计算量的重排框架，在多个基准上以更少调用次数超越固定计算基线。 领域现状： 现代信息检索管线（如网页搜索、RAG系统）通常先用BM2…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"
   - "不确定性估计"
   - "自适应计算"
-  - "贝叶斯模型"
-  - "重排序"
-  - "上下文长度优化"
+  - "贝叶斯TrueSkill"
+  - "列表式重排序"
+  - "精度-效率权衡"
 ---
 
 # AcuRank: Uncertainty-Aware Adaptive Computation for Listwise Reranking
@@ -168,3 +168,19 @@ tags:
   - 重排序
   - 上下文长度优化
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] Very Efficient Listwise Multimodal Reranking for Long Documents](../../ICML2026/information_retrieval/very_efficient_listwise_multimodal_reranking_for_long_documents.md)
+- [\[NeurIPS 2025\] Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [\[ACL 2025\] Reranking-based Generation for Unbiased Perspective Summarization](../../ACL2025/information_retrieval/reranking-based_generation_for_unbiased_perspective_summarization.md)
+- [\[ACL 2025\] SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation](../../ACL2025/information_retrieval/seakr_self-aware_knowledge_retrieval_for_adaptive_retrieval_augmented_generation.md)
+- [\[ACL 2026\] UnIte: Uncertainty-based Iterative Document Sampling for Domain Adaptation in Information Retrieval](../../ACL2026/information_retrieval/unite_uncertainty-based_iterative_document_sampling_for_domain_adaptation_in_inf.md)
+
+</div>
+
+<!-- RELATED:END -->

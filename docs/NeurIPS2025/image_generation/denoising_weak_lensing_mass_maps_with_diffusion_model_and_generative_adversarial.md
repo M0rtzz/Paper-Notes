@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Denoising Weak Lensing Mass Maps with Diffusion Model and Generative Adversarial Network
 description: >-
-  [图像生成] 将扩散模型（DM）应用于弱引力透镜质量图去噪任务，与 GAN（pix2pix）在相同实验设置下进行系统性对比，证明 DM 在训练稳定性、多样本平均鲁棒性和多种统计量重建精度上全面优于 GAN。
+  [图像生成] 将扩散模型（DM）应用于弱引力透镜质量图去噪任务，与 GAN（pix2pix）在相同实验设置下进行系统性对比，证明 DM 在训练稳定性、多样本平均鲁棒性和多种统计量重建精度上全面优于 GAN。 弱引力透镜（Weak Lensing, WL）通过测量遥远星系的微小形变来重建宇宙物质分布的投影密度场——即"质量图"…
 tags:
   - "图像生成"
 ---

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MERIT: Maximum-normalized Element-wise Ratio for Language Model Large-batch Training
 description: >-
-  [ICML 2025][LLM/NLP][大批量训练] 提出 MERIT 优化器，通过最大范数归一化与逐元素信任比率扩展 LAMB，有效解决大批量训练中注意力 logit 爆炸导致的性能退化问题。
+  [ICML 2025][LLM 其他][大批量训练] 提出 MERIT 优化器，通过最大范数归一化与逐元素信任比率扩展 LAMB，有效解决大批量训练中注意力 logit 爆炸导致的性能退化问题。 领域现状：大规模语言模型训练通常依赖数据并行来加速，增大 batch size 可以线性提升吞吐量。AdamW 是当前最主流的优化…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "大批量训练"
   - "优化器"
   - "信任比率"

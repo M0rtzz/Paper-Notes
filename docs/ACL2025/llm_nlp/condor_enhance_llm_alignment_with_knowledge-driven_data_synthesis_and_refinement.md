@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Condor: Enhance LLM Alignment with Knowledge-Driven Data Synthesis and Refinement
 description: >-
-  [ACL 2025][LLM/NLP][合成数据生成] Condor 提出了一个两阶段合成数据生成框架，通过 World Knowledge Tree 构建多样化标签驱动的问题生成、再用 Self-Reflection Refinement 迭代优化回答质量…
+  [ACL 2025][LLM 其他][合成数据生成] Condor 提出了一个两阶段合成数据生成框架，通过 World Knowledge Tree 构建多样化标签驱动的问题生成、再用 Self-Reflection Refinement 迭代优化回答质量，仅用 20K 合成样本即可让基座模型在对话对齐任务上超越同等规模的对手，并在最大 72B 模型上验证了迭代自我改进的有效性。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "合成数据生成"
   - "SFT数据质量"
   - "知识驱动"

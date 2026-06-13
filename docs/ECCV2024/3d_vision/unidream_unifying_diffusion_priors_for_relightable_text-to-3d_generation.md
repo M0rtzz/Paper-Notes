@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniDream: Unifying Diffusion Priors for Relightable Text-to-3D Generation
 description: >-
-  [ECCV 2024][3D视觉] 提出UniDream，通过训练albedo-法线对齐的多视角扩散模型（AN-MVM），结合Transformer重建模型和分阶段SDS优化，实现可重光照的文本到3D生成，生成的3D物体具有干净的albedo纹理和PBR材质。
+  [ECCV 2024][3D视觉] 提出UniDream，通过训练albedo-法线对齐的多视角扩散模型（AN-MVM），结合Transformer重建模型和分阶段SDS优化，实现可重光照的文本到3D生成，生成的3D物体具有干净的albedo纹理和PBR材质。 领域现状 领域现状：现有text-to-3D方法（DreamFu…
 tags:
   - "ECCV 2024"
   - "3D视觉"

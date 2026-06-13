@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Interestingness Decoded: How GPT-4o Mirrors Human Interests
 description: >-
-  [ICCV2025][多模态VLM][Visual Interestingness] 系统性研究了 GPT-4o 等大型多模态模型对"图像有趣性"这一主观视觉概念的理解程度，发现 GPT-4o 与人类评判有中等正相关（配对图像一致率 73.8%）…
+  [ICCV2025][多模态VLM][Visual Interestingness] 系统性研究了 GPT-4o 等大型多模态模型对"图像有趣性"这一主观视觉概念的理解程度，发现 GPT-4o 与人类评判有中等正相关（配对图像一致率 73.8%），并提出利用 GPT-4o 自动标注图像对训练 learning-to-rank 模型来预测图像有趣性，超越了所有现有方法。
 tags:
   - "ICCV2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection
 description: >-
-  [目标检测] 提出 APF 框架，通过 Rayleigh 商引导的异常感知预训练和粒度自适应微调，解决图异常检测中标签稀缺和同质性差异的双重挑战。
+  [目标检测] 提出 APF 框架，通过 Rayleigh 商引导的异常感知预训练和粒度自适应微调，解决图异常检测中标签稀缺和同质性差异的双重挑战。 核心问题 图异常检测（GAD）面临两大关键挑战： 标签稀缺：标注成本高，真实场景中标注节点极少 同质性差异：分为节点级（个体节点局部同质性变化大）和类别级（异常节点局部同质性更低…
 tags:
   - "目标检测"
 ---

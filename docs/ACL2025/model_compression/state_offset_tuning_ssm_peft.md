@@ -2,7 +2,7 @@
 title: >-
   [论文解读] State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models
 description: >-
-  [ACL 2025][模型压缩][state space model] 针对 SSM（如 Mamba）提出 State-offset Tuning，一种新的"状态基"PEFT 方法家族，通过在每个时间步直接注入可训练的状态偏移量 $h'$ 替代 Prefix-Tuning 的虚拟 token…
+  [ACL 2025][模型压缩][state space model] 针对 SSM（如 Mamba）提出 State-offset Tuning，一种新的"状态基"PEFT 方法家族，通过在每个时间步直接注入可训练的状态偏移量 $h'$ 替代 Prefix-Tuning 的虚拟 token，解决了 prompt-based 方法在 SSM 上表达能力受限的问题，在更少参数量下持续优于 LoRA 和 Prefix-Tuning。
 tags:
   - "ACL 2025"
   - "模型压缩"

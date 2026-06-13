@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Pitfalls of KV Cache Compression
 description: >-
-  [ACL2026][模型压缩][KV cache 压缩] 这篇论文指出 KV cache 压缩在多指令提示中会导致选择性遗忘和系统提示泄露，问题来自不同指令被不均匀驱逐以及关键 token 被错误删除，并提出白名单保留和 fair eviction 两种简单改造来显著降低泄露、稳定指令遵循。
+  [ACL2026][模型压缩][KV cache 压缩] 这篇论文指出 KV cache 压缩在多指令提示中会导致选择性遗忘和系统提示泄露，问题来自不同指令被不均匀驱逐以及关键 token 被错误删除，并提出白名单保留和 fair eviction 两种简单改造来显著降低泄露、稳定指令遵循。 领域现状：自回归 LLM 推理时…
 tags:
   - "ACL2026"
   - "模型压缩"

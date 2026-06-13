@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bregman meets Lévy: Stochastic Mirror Descent with Heavy-Tailed Noise in Continuous and Discrete Time
 description: >-
-  [ICML 2026][优化/理论][重尾噪声] 本文提出 Lévy Mirror Flow（LMF）——一种由 Lévy 噪声驱动的随机镜像下降连续时间 SDE 模型，证明即使在无穷方差的重尾梯度噪声下，SMD 仍保持收敛保证（凸情形 $O(\varepsilon^{-p/(p-1)})$…
+  [ICML 2026][优化/理论][重尾噪声] 本文提出 Lévy Mirror Flow（LMF）——一种由 Lévy 噪声驱动的随机镜像下降连续时间 SDE 模型，证明即使在无穷方差的重尾梯度噪声下，SMD 仍保持收敛保证（凸情形 $O(\varepsilon^{-p/(p-1)})$，强凸情形 $\tilde{O}(\varepsilon^{-1/(p-1)})$），并将连续时间结果无缝传递到离散时间算法。
 tags:
   - "ICML 2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2606.03769](https://arxiv.org/abs/2606.03769)  
 **代码**: 无  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: 重尾噪声, 随机镜像下降, Lévy过程, 收敛率, 凸优化  
 
 ## 一句话总结

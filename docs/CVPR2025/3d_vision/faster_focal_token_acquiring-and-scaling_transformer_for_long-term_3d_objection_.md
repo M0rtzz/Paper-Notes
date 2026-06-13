@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FASTer: Focal Token Acquiring-and-Scaling Transformer for Long-term 3D Object Detection
 description: >-
-  [CVPR 2025][3D视觉][3D目标检测] 本文提出FASTer，通过Adaptive Scaling机制自适应选取焦点token并压缩序列、分组层次融合策略渐进式聚合长时序点云信息，在Waymo Open Dataset上以最低延迟（75ms）和显存（2856M）取得了新SOTA性能。
+  [CVPR 2025][3D视觉][3D目标检测] 本文提出FASTer，通过Adaptive Scaling机制自适应选取焦点token并压缩序列、分组层次融合策略渐进式聚合长时序点云信息，在Waymo Open Dataset上以最低延迟（75ms）和显存（2856M）取得了新SOTA性能。 领域现状 基于LiDAR的3…
 tags:
   - "CVPR 2025"
   - "3D视觉"

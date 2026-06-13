@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Any3DIS: Class-Agnostic 3D Instance Segmentation by 2D Mask Tracking
 description: >-
-  [CVPR 2025][3D视觉][3D实例分割] 提出Any3DIS，通过3D感知的2D掩码跟踪（利用SAM-2追踪每个超点在多帧中的2D分割）替代传统的无监督合并策略，并用动态规划优化3D Proposal…
+  [CVPR 2025][3D视觉][3D实例分割] 提出Any3DIS，通过3D感知的2D掩码跟踪（利用SAM-2追踪每个超点在多帧中的2D分割）替代传统的无监督合并策略，并用动态规划优化3D Proposal，在ScanNet200和ScanNet++上的类别无关、开放词汇、开放式3D实例分割任务中均取得SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

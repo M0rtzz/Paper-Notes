@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TriLite: Efficient WSOL with Universal Visual Features and Tri-Region Disentanglement
 description: >-
-  [CVPR 2026][人体理解][弱监督目标定位] 仅使用冻结 DINOv2 ViT + 不到 800K 可训练参数的 TriHead 模块，通过将 patch 特征解耦为前景/背景/模糊三区域并引入对抗性背景损失，在 WSOL 上以极少参数刷新 SOTA。
+  [CVPR 2026][人体理解][弱监督目标定位] 仅使用冻结 DINOv2 ViT + 不到 800K 可训练参数的 TriHead 模块，通过将 patch 特征解耦为前景/背景/模糊三区域并引入对抗性背景损失，在 WSOL 上以极少参数刷新 SOTA。 WSOL 仅用图像级标签定位目标。从 CAM 开始的方法面临部分…
 tags:
   - "CVPR 2026"
   - "人体理解"

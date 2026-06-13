@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Position Paper: If Innovation in AI Systematically Violates Fundamental Rights, Is It Innovation at All?
 description: >-
-  [NeurIPS 2025][社会计算][AI监管] 本文挑战"监管与创新对立"的固有信念，通过制药、航空、福利系统的历史类比和 Collingridge 困境分析论证良好设计的监管是创新的基础而非阻碍，并以 EU AI Act 的监管沙盒、中小企业支持等机制为范例展示监管如何加速而非延缓负责任的技术进步。
+  [NeurIPS 2025 Oral][社会计算][AI监管] 本文挑战"监管与创新对立"的固有信念，通过制药、航空、福利系统的历史类比和 Collingridge 困境分析论证良好设计的监管是创新的基础而非阻碍，并以 EU AI Act 的监管沙盒、中小企业支持等机制为范例展示监管如何加速而非延缓负责任的技术进步。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "社会计算"
   - "AI监管"
   - "基本权利"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA
 description: >-
-  [ICLR 2026 Oral][医疗NLP][mental health QA] 联合100名持证心理健康专家构建CounselBench双组件基准——CounselBench-EVAL（2,000条六维度专家评估）和CounselBench-Adv（120个对抗性问题+1,080条响应标注）…
+  [ICLR 2026 Oral][医疗NLP][mental health QA] 联合100名持证心理健康专家构建CounselBench双组件基准——CounselBench-EVAL（2,000条六维度专家评估）和CounselBench-Adv（120个对抗性问题+1,080条响应标注），系统性揭示LLM在心理健康开放式问答中表面得分高但存在过度泛化、擅自医疗建议等安全隐患，同时证明LLM-as-Judge在安全关键领域严重不可靠。
 tags:
   - "ICLR 2026 Oral"
   - "医疗NLP"

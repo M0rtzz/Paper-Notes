@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QUAR-VLA: Vision-Language-Action Model for Quadruped Robots
 description: >-
-  [ECCV 2024][机器人][quadruped robot] 首次提出四足机器人视觉-语言-动作（QUAR-VLA）范式，构建 259K episode 的多任务数据集 QUARD 和基于预训练多模态大模型的 QUART 模型，实现感知、导航、全身操作等多任务统一控制。
+  [ECCV 2024][机器人][quadruped robot] 首次提出四足机器人视觉-语言-动作（QUAR-VLA）范式，构建 259K episode 的多任务数据集 QUARD 和基于预训练多模态大模型的 QUART 模型，实现感知、导航、全身操作等多任务统一控制。 领域现状：四足机器人学习通常将视觉感知（QUAR…
 tags:
   - "ECCV 2024"
   - "机器人"

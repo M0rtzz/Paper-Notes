@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Collapsing Taylor Mode Automatic Differentiation
 description: >-
-  [NeurIPS 2025][物理/科学计算][Taylor mode AD] 提出 Taylor mode 自动微分的"折叠"(collapsing)优化技术，通过重写计算图将导数求和操作向上传播，大幅加速 PDE 算子（如 Laplacian、一般线性 PDE 算子）的计算…
+  [NeurIPS 2025][物理/科学计算][Taylor mode AD] 提出 Taylor mode 自动微分的"折叠"(collapsing)优化技术，通过重写计算图将导数求和操作向上传播，大幅加速 PDE 算子（如 Laplacian、一般线性 PDE 算子）的计算，实现速度优于嵌套反向传播同时保持前向模式的低内存优势。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

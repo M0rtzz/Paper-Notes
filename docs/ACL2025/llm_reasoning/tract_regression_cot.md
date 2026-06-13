@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning
 description: >-
-  [ACL 2025][LLM推理][LLM-as-a-Judge] 提出 TRACT，一种两阶段回归感知微调方法，将 CoT 推理与回归损失（squared error）结合，用于提升 LLM-as-a-Judge 场景中的数值评分精度，显著优于仅用交叉熵训练或仅用回归损失的现有方案。
+  [ACL 2025][LLM推理][LLM-as-a-Judge] 提出 TRACT，一种两阶段回归感知微调方法，将 CoT 推理与回归损失（squared error）结合，用于提升 LLM-as-a-Judge 场景中的数值评分精度，显著优于仅用交叉熵训练或仅用回归损失的现有方案。 领域现状： - LLM-as-a-Ju…
 tags:
   - "ACL 2025"
   - "LLM推理"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Depth Adaptive Efficient Visual Autoregressive Modeling
 description: >-
-  [CVPR 2026][图像生成][视觉自回归] 揭示了 VAR 模型中频率驱动的硬剪枝范式存在根本性局限，提出 DepthVAR，一种免训练的推理加速框架，通过自适应分配每个 token 的 Transformer 层计算深度（而非二值化的保留/剪除），实现 2.3×-3.1× 加速且质量损失极小。
+  [CVPR 2026 Findings][图像生成][视觉自回归] 揭示了 VAR 模型中频率驱动的硬剪枝范式存在根本性局限，提出 DepthVAR，一种免训练的推理加速框架，通过自适应分配每个 token 的 Transformer 层计算深度（而非二值化的保留/剪除），实现 2.3×-3.1× 加速且质量损失极小。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "视觉自回归"
   - "推理加速"

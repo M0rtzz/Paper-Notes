@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Problem-Parameter-Free Decentralized Bilevel Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][去中心化优化] 提出 AdaSDBO，一种完全无需问题参数先验知识的去中心化双层优化算法，通过基于累积梯度范数的自适应步长实现 $\tilde{O}(1/\sqrt{T})$ 收敛率。
+  [NeurIPS 2025][优化/理论][去中心化优化] 提出 AdaSDBO，一种完全无需问题参数先验知识的去中心化双层优化算法，通过基于累积梯度范数的自适应步长实现 $\tilde{O}(1/\sqrt{T})$ 收敛率。 去中心化双层优化（Decentralized Bilevel Optimization）在大规模…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

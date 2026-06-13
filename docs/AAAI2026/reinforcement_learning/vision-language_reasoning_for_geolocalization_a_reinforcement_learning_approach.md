@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach
 description: >-
-  [AAAI 2026][强化学习][图像地理定位] 提出 Geo-R，一个无需检索的推理驱动图像地理定位框架，通过 Chain-of-Region 层次化推理范式和基于 Haversine 距离的坐标对齐奖励的强化学习策略，在 IM2GPS3K 上 1km 准确率达 18.10%…
+  [AAAI 2026][强化学习][图像地理定位] 提出 Geo-R，一个无需检索的推理驱动图像地理定位框架，通过 Chain-of-Region 层次化推理范式和基于 Haversine 距离的坐标对齐奖励的强化学习策略，在 IM2GPS3K 上 1km 准确率达 18.10%，超越所有无检索方法并逼近检索方法。
 tags:
   - "AAAI 2026"
   - "强化学习"

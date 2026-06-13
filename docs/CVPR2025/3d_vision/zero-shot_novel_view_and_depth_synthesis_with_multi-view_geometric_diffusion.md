@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVGD: Zero-Shot Novel View and Depth Synthesis with Multi-View Geometric Diffusion
 description: >-
-  [CVPR 2025][3D视觉][新视角合成] MVGD提出了一种基于像素级扩散的多视图几何框架，无需中间3D表示即可从任意数量的已知视角图像直接生成新视角的图像和尺度一致的深度图，在6000万+多视图样本上训练实现多项SOTA。
+  [CVPR 2025][3D视觉][新视角合成] MVGD提出了一种基于像素级扩散的多视图几何框架，无需中间3D表示即可从任意数量的已知视角图像直接生成新视角的图像和尺度一致的深度图，在6000万+多视图样本上训练实现多项SOTA。 从稀疏带位姿图像重建3D场景是核心问题，现有方法主要依赖中间3D表示（NeRF、3DGS、体…
 tags:
   - "CVPR 2025"
   - "3D视觉"

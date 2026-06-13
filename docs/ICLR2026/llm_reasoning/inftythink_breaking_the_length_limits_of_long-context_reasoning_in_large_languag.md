@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models
 description: >-
-  [ICLR 2026][LLM推理][长上下文推理] 提出 InftyThink，一种将整体式长推理转化为迭代式短推理+中间摘要的新范式，在不修改模型架构的前提下实现理论上无界的推理深度、显著降低计算成本，Qwen2.5-Math-7B 在 AIME24 上提升11%。
+  [ICLR 2026][LLM推理][长上下文推理] 提出 InftyThink，一种将整体式长推理转化为迭代式短推理+中间摘要的新范式，在不修改模型架构的前提下实现理论上无界的推理深度、显著降低计算成本，Qwen2.5-Math-7B 在 AIME24 上提升11%。 以DeepSeek-R1、o1为代表的推理模型通过长链…
 tags:
   - "ICLR 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning
 description: >-
-  [NeurIPS 2025][自监督学习][对比学习] 从理论上证明自监督对比学习（DCL）近似等价于一种有监督对比损失（NSCL），两者差距以 $O(1/C)$ 速度随类别数增加而消失；进一步证明 NSCL 全局最优解满足 Neural Collapse（增强坍缩 + 类内坍缩 + Simplex ETF）…
+  [NeurIPS 2025][自监督学习][对比学习] 从理论上证明自监督对比学习（DCL）近似等价于一种有监督对比损失（NSCL），两者差距以 $O(1/C)$ 速度随类别数增加而消失；进一步证明 NSCL 全局最优解满足 Neural Collapse（增强坍缩 + 类内坍缩 + Simplex ETF），并提出基于方向性 CDNV 的更紧的 few-shot 误差界。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

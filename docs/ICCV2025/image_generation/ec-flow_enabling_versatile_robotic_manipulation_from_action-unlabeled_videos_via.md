@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching
 description: >-
-  [ICCV 2025][图像生成][机器人操作] EC-Flow 提出了"具身中心光流"范式，从无动作标注的 RGB 视频中预测机器人本体的像素级运动轨迹，结合 URDF 运动学约束将视觉预测转化为可执行动作，在可变形物体、遮挡和非位移操作等场景中大幅超越物体中心方法。
+  [ICCV 2025][图像生成][机器人操作] EC-Flow 提出了"具身中心光流"范式，从无动作标注的 RGB 视频中预测机器人本体的像素级运动轨迹，结合 URDF 运动学约束将视觉预测转化为可执行动作，在可变形物体、遮挡和非位移操作等场景中大幅超越物体中心方法。 当前语言引导的机器人操作系统主要依赖模仿学习（VLA…
 tags:
   - "ICCV 2025"
   - "图像生成"

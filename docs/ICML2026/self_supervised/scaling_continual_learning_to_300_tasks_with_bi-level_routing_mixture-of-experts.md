@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Continual Learning to 300+ Tasks with Bi-Level Routing Mixture-of-Experts
 description: >-
-  [ICML 2026][自监督学习][类增量学习] 作者提出 CaRE：在 ViT 每个 block 里塞一个 **两级路由 MoE (BR-MoE)** ——先靠"类感知器"按熵选 Top-M 个相关任务路由，再由这些路由各自激活 Top-K 任务专家并叠加一个共享 EMA 专家…
+  [ICML 2026][自监督学习][类增量学习] 作者提出 CaRE：在 ViT 每个 block 里塞一个 **两级路由 MoE (BR-MoE)** ——先靠"类感知器"按熵选 Top-M 个相关任务路由，再由这些路由各自激活 Top-K 任务专家并叠加一个共享 EMA 专家，于是哪怕任务序列拉到 300+ 也能既保留旧知识又持续吸纳新类，并把"长序列 CIL"这块此前没人正经做的空白填上（顺便发布了 1000 类的 OmniBenchmark-1K 基准）。
 tags:
   - "ICML 2026"
   - "自监督学习"

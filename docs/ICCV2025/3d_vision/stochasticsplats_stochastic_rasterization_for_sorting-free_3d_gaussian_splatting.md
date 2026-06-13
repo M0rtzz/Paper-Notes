@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StochasticSplats: Stochastic Rasterization for Sorting-Free 3D Gaussian Splatting
 description: >-
-  [3D视觉] StochasticSplats 将随机透明度（Stochastic Transparency）引入 3DGS，通过无偏 Monte Carlo 估计替代深度排序的 alpha 混合，实现免排序、无 popping 的渲染，在 1 SPP 下比标准 CUDA 3DGS 快 4×…
+  [3D视觉] StochasticSplats 将随机透明度（Stochastic Transparency）引入 3DGS，通过无偏 Monte Carlo 估计替代深度排序的 alpha 混合，实现免排序、无 popping 的渲染，在 1 SPP 下比标准 CUDA 3DGS 快 4×，并可通过采样数灵活权衡质量与速度。
 tags:
   - "3D视觉"
 ---

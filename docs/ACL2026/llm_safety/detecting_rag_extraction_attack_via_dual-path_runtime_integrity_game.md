@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting RAG Extraction Attack via Dual-Path Runtime Integrity Game
 description: >-
-  [ACL 2026][LLM安全][RAG安全] 提出 CanaryRAG，一个受软件安全中栈金丝雀启发的 RAG 运行时防御机制，通过在检索块中注入非语义金丝雀 token 并设计双路径完整性博弈（目标路径不应泄露金丝雀 + Oracle 路径应能引出金丝雀），实时检测知识库提取攻击…
+  [ACL 2026][LLM安全][RAG安全] 提出 CanaryRAG，一个受软件安全中栈金丝雀启发的 RAG 运行时防御机制，通过在检索块中注入非语义金丝雀 token 并设计双路径完整性博弈（目标路径不应泄露金丝雀 + Oracle 路径应能引出金丝雀），实时检测知识库提取攻击，在不影响任务性能和推理延迟的前提下实现最强防护。
 tags:
   - "ACL 2026"
   - "LLM安全"

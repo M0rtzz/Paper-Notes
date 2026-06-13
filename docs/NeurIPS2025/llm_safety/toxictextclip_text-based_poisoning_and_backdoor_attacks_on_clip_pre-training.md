@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToxicTextCLIP: Text-Based Poisoning and Backdoor Attacks on CLIP Pre-training
 description: >-
-  [NeurIPS 2025][LLM安全][CLIP安全] 提出 ToxicTextCLIP 框架，通过背景感知选择和背景驱动增强两个模块，在 CLIP 预训练阶段生成高质量对抗文本，实现高达 95.83% 投毒成功率和 98.68% 后门 Hit@1…
+  [NeurIPS 2025][LLM安全][CLIP安全] 提出 ToxicTextCLIP 框架，通过背景感知选择和背景驱动增强两个模块，在 CLIP 预训练阶段生成高质量对抗文本，实现高达 95.83% 投毒成功率和 98.68% 后门 Hit@1，且能突破 RoCLIP、CleanCLIP、SafeCLIP 三种防御。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

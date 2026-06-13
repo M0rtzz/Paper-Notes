@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MathAgent: Adversarial Evolution of Constraint Graphs for Mathematical Reasoning Data Synthesis
 description: >-
-  [ACL 2026][LLM推理][数学推理] 提出基于约束图对抗进化的分层数据合成框架 MathAgent，将数据合成从文本生成任务重构为约束图的无监督优化问题，通过 Legislator 三Agent系统进化问题骨架再由 Executor 实例化为自然语言…
+  [ACL 2026 Findings][LLM推理][数学推理] 提出基于约束图对抗进化的分层数据合成框架 MathAgent，将数据合成从文本生成任务重构为约束图的无监督优化问题，通过 Legislator 三Agent系统进化问题骨架再由 Executor 实例化为自然语言，仅 1K 合成样本即超越 LIMO 和 s1K 在八个数学基准上的表现。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "数学推理"
   - "数据合成"

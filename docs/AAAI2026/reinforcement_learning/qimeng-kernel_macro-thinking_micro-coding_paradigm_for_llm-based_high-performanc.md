@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QiMeng-Kernel: Macro-Thinking Micro-Coding Paradigm for LLM-Based High-Performance GPU Kernel Generation
 description: >-
-  [AAAI 2026][强化学习][GPU内核生成] 提出 MTMC（Macro Thinking Micro Coding）分层框架，通过强化学习驱动轻量LLM产生高层优化策略（Macro Thinking），再由通用LLM逐步实现代码（Micro Coding），将GPU内核生成的正确性和性能问题解耦…
+  [AAAI 2026][强化学习][GPU内核生成] 提出 MTMC（Macro Thinking Micro Coding）分层框架，通过强化学习驱动轻量LLM产生高层优化策略（Macro Thinking），再由通用LLM逐步实现代码（Micro Coding），将GPU内核生成的正确性和性能问题解耦，在KernelBench上实现近100%准确率和2.2×超越专家优化PyTorch Eager内核的加速。
 tags:
   - "AAAI 2026"
   - "强化学习"

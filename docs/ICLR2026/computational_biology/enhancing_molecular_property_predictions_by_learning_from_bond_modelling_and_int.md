@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions
 description: >-
-  [ICLR 2026][计算生物][molecular representation] 提出 DeMol 双图增强多尺度交互框架，通过并行的原子中心图和键中心图通道以及 Double-Helix Blocks 显式建模原子-原子、原子-键、键-键三类交互…
+  [ICLR 2026][计算生物][molecular representation] 提出 DeMol 双图增强多尺度交互框架，通过并行的原子中心图和键中心图通道以及 Double-Helix Blocks 显式建模原子-原子、原子-键、键-键三类交互，在 PCQM4Mv2、OC20、QM9 等基准上取得 SOTA。
 tags:
   - "ICLR 2026"
   - "计算生物"

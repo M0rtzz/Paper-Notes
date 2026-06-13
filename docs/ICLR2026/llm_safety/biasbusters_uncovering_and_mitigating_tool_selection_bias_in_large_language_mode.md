@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiasBusters: Uncovering and Mitigating Tool Selection Bias in Large Language Models
 description: >-
-  [ICLR 2026][LLM安全][tool selection bias] 本文首次系统研究了 LLM 在工具选择中的偏差问题——当多个功能等价的 API 可选时，LLM 会因语义对齐、位置效应和预训练曝光等原因系统性地偏好某些工具…
+  [ICLR 2026][LLM安全][tool selection bias] 本文首次系统研究了 LLM 在工具选择中的偏差问题——当多个功能等价的 API 可选时，LLM 会因语义对齐、位置效应和预训练曝光等原因系统性地偏好某些工具，作者提出了基于 total variation 的偏差度量、10 类工具的评估基准，以及"先过滤再均匀采样"的轻量缓解策略。
 tags:
   - "ICLR 2026"
   - "LLM安全"

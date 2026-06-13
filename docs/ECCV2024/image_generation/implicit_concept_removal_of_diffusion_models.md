@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Concept Removal of Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][概念消除] 提出 Geom-Erasing 方法，通过引入外部分类器/检测器提供隐式概念的存在性和几何位置信息，将其编码为文本条件中的位置 token 并作为负提示使用，有效消除扩散模型中水印、不安全内容等"隐式概念"的生成，在 I2P 和自建 ICD 基准上达到 SOTA…
+  [ECCV 2024][图像生成][概念消除] 提出 Geom-Erasing 方法，通过引入外部分类器/检测器提供隐式概念的存在性和几何位置信息，将其编码为文本条件中的位置 token 并作为负提示使用，有效消除扩散模型中水印、不安全内容等"隐式概念"的生成，在 I2P 和自建 ICD 基准上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "图像生成"

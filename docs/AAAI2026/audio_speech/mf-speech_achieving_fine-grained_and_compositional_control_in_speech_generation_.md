@@ -2,9 +2,10 @@
 title: >-
   [论文解读] MF-Speech: Achieving Fine-Grained and Compositional Control in Speech Generation via Factor Disentanglement
 description: >-
-  [AAAI 2026][语音生成] 提出MF-Speech框架，通过多目标优化将语音信号解耦为高纯度的内容、音色和情绪三个独立因子表示，再利用动态融合和层级风格自适应归一化（HSAN）实现细粒度的组合式语音生成控制，在多因子组合语音生成任务上显著超越现有方法（WER=4.67%, SECS=0.5685）。
+  [AAAI 2026][音频/语音][语音生成] 提出MF-Speech框架，通过多目标优化将语音信号解耦为高纯度的内容、音色和情绪三个独立因子表示，再利用动态融合和层级风格自适应归一化（HSAN）实现细粒度的组合式语音生成控制，在多因子组合语音生成任务上显著超越现有方法（WER=4.67%, SECS=0.5685）。
 tags:
   - "AAAI 2026"
+  - "音频/语音"
   - "语音生成"
   - "因子解耦"
   - "可控语音合成"

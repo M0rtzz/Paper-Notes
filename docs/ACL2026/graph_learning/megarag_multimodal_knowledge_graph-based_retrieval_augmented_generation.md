@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MegaRAG: Multimodal Knowledge Graph-Based Retrieval Augmented Generation
 description: >-
-  [ACL 2026][图学习][多模态知识图谱] MegaRAG 利用 MLLM 在长文档每一页并行抽取实体-关系并合并为多模态知识图谱（MMKG），再用"子图引导"的二轮 refinement 补全跨模态、跨页关系，配合双路检索与两阶段答案生成显著优于 GraphRAG/LightRAG/VisRAG…
+  [ACL 2026][图学习][多模态知识图谱] MegaRAG 利用 MLLM 在长文档每一页并行抽取实体-关系并合并为多模态知识图谱（MMKG），再用"子图引导"的二轮 refinement 补全跨模态、跨页关系，配合双路检索与两阶段答案生成显著优于 GraphRAG/LightRAG/VisRAG，在 SlideVQA(2k) 上准确率 64.85%（baseline 最高 27.66%）。
 tags:
   - "ACL 2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning
 description: >-
-  [ICML 2025][强化学习][网络稀疏化] 本文发现简单的一次性随机剪枝就能解锁深度 RL 的扩展潜力——稀疏网络比配备 SOTA 架构的稠密网络实现更高的参数效率、更强的可塑性保持和更少的梯度干扰。
+  [ICML 2025][强化学习][网络稀疏化] 本文发现简单的一次性随机剪枝就能解锁深度 RL 的扩展潜力——稀疏网络比配备 SOTA 架构的稠密网络实现更高的参数效率、更强的可塑性保持和更少的梯度干扰。 领域现状 领域现状：领域现状: 深度 RL 中扩大网络规模 (scaling up) 一直困难重重…
 tags:
   - "ICML 2025"
   - "强化学习"

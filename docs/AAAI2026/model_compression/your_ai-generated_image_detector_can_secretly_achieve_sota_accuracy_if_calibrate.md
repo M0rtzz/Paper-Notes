@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated
 description: >-
-  [AAAI 2026][模型压缩][AI生成图像检测] 提出一种基于贝叶斯决策理论的轻量级后验校准方法，通过在模型输出logit上添加可学习标量偏移α，无需重训练即可显著提升现有AI生成图像检测器在分布偏移下的准确率。
+  [AAAI 2026][模型压缩][AI生成图像检测] 提出一种基于贝叶斯决策理论的轻量级后验校准方法，通过在模型输出logit上添加可学习标量偏移α，无需重训练即可显著提升现有AI生成图像检测器在分布偏移下的准确率。 AI生成图像检测是当前数字取证和信息安全的核心任务。现有检测器在训练分布内表现优异，但面对分布外（OOD）…
 tags:
   - "AAAI 2026"
   - "模型压缩"

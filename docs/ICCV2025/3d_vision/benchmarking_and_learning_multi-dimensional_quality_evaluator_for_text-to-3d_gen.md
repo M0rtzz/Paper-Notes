@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarking and Learning Multi-Dimensional Quality Evaluator for Text-to-3D Generation
 description: >-
-  [ICCV 2025][3D视觉][文本到3D生成] 构建了包含1280个文本生成3D模型的多维度基准MATE-3D（8类prompt × 8种方法 × 4维评分 × 21名标注者），并提出基于超网络的多维度质量评估器HyperScore，通过条件特征融合和自适应映射在所有评估维度上超越现有指标。
+  [ICCV 2025][3D视觉][文本到3D生成] 构建了包含1280个文本生成3D模型的多维度基准MATE-3D（8类prompt × 8种方法 × 4维评分 × 21名标注者），并提出基于超网络的多维度质量评估器HyperScore，通过条件特征融合和自适应映射在所有评估维度上超越现有指标。 文本到3D生成（Text-…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Polyphonia: Zero-Shot Timbre Transfer in Polyphonic Music with Acoustic-Informed Attention Calibration
 description: >-
-  [ICML 2026][音频/语音][音色转换] Polyphonia 把 zero-shot 音色转换从单轨扩展到密集多轨混音：用盲源分离得到的 Ideal Ratio Mask（IRM）当外部声学先验，先在 pre-softmax 注意力 logit 里做"源插值 + 声学调制"…
+  [ICML 2026][音频/语音][音色转换] Polyphonia 把 zero-shot 音色转换从单轨扩展到密集多轨混音：用盲源分离得到的 Ideal Ratio Mask（IRM）当外部声学先验，先在 pre-softmax 注意力 logit 里做"源插值 + 声学调制"，让目标声部（如人声）的频谱被新音色（如小提琴）替换的同时把背景伴奏严格保住，相比 SOTA 在 target alignment 上提升 15.5%。
 tags:
   - "ICML 2026"
   - "音频/语音"

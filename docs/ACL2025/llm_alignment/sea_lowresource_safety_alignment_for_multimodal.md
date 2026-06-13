@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEA: Low-Resource Safety Alignment for Multimodal Large Language Models via Synthetic Embeddings
 description: >-
-  [ACL 2025][LLM对齐][safety alignment] 提出 SEA 框架，通过梯度优化生成合成模态 embedding（不需要真实图像/视频/音频），仅用文本安全数据就能实现多模态 LLM 的安全对齐，在单张 RTX3090 上 24 秒即可合成高质量 embedding…
+  [ACL 2025][LLM对齐][safety alignment] 提出 SEA 框架，通过梯度优化生成合成模态 embedding（不需要真实图像/视频/音频），仅用文本安全数据就能实现多模态 LLM 的安全对齐，在单张 RTX3090 上 24 秒即可合成高质量 embedding，同时发布了视频和音频安全基准 VA-SafetyBench。
 tags:
   - "ACL 2025"
   - "LLM对齐"

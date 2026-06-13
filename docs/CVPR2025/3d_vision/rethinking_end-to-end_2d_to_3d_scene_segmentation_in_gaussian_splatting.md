@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking End-to-End 2D to 3D Scene Segmentation in Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D场景分割] 提出 Unified-Lift，一种基于 3DGS 的端到端对象感知 2D-to-3D 分割方法，通过学习全局对象级码本与高斯级特征的关联，消除了现有方法对前/后处理的依赖，在多视角一致实例分割上显著超越 SOTA。
+  [CVPR 2025][3D视觉][3D场景分割] 提出 Unified-Lift，一种基于 3DGS 的端到端对象感知 2D-to-3D 分割方法，通过学习全局对象级码本与高斯级特征的关联，消除了现有方法对前/后处理的依赖，在多视角一致实例分割上显著超越 SOTA。 将 2D 基础模型（如 SAM）的分割结果提升到 3D…
 tags:
   - "CVPR 2025"
   - "3D视觉"

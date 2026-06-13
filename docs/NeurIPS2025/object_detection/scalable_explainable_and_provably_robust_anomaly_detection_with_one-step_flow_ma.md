@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable, Explainable and Provably Robust Anomaly Detection with One-Step Flow Matching
 description: >-
-  [NeurIPS 2025][目标检测][异常检测] 提出 TCCM（Time-Conditioned Contraction Matching），一种受 flow matching 启发的表格数据半监督异常检测方法，通过学习将正常数据收缩到原点的时间条件速度场，仅需单步前向推理即可计算异常分数…
+  [NeurIPS 2025][目标检测][异常检测] 提出 TCCM（Time-Conditioned Contraction Matching），一种受 flow matching 启发的表格数据半监督异常检测方法，通过学习将正常数据收缩到原点的时间条件速度场，仅需单步前向推理即可计算异常分数，在 ADBench 47 个数据集上取得 AUROC 和 AUPRC 双第一，推理速度比 DTE 快 1573 倍。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

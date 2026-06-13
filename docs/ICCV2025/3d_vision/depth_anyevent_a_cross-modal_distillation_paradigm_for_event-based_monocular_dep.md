@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Depth AnyEvent: A Cross-Modal Distillation Paradigm for Event-Based Monocular Depth Estimation
 description: >-
-  [3D视觉] 提出跨模态蒸馏范式，利用图像域的视觉基础模型（Depth Anything v2）生成伪标签来训练事件相机深度估计网络，并设计了基于 VFM 的循环架构 DepthAnyEvent-R，在无需昂贵深度标注的情况下实现了事件相机单目深度估计的 SOTA 性能。
+  [3D视觉] 提出跨模态蒸馏范式，利用图像域的视觉基础模型（Depth Anything v2）生成伪标签来训练事件相机深度估计网络，并设计了基于 VFM 的循环架构 DepthAnyEvent-R，在无需昂贵深度标注的情况下实现了事件相机单目深度估计的 SOTA 性能。 - 事件相机优势：事件相机以微秒级时间分辨率捕获亮度…
 tags:
   - "3D视觉"
 ---

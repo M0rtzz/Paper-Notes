@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trans-PEFT: Transferable Parameter-Efficient Fine-Tuning on Evolving Base Models
 description: >-
-  [ACL 2025][模型压缩][PEFT] Trans-PEFT 发现基座模型更新（如 Qwen2→Qwen2.5）主要改变 FFN 层的任务知识存储而较少影响 Attention 层的任务模式，据此提出层内知识掩码和跨层知识丢弃两种策略，使在旧版本上训练的 PEFT 模块可直接迁移到新版本而不需重新微调…
+  [ACL 2025][模型压缩][PEFT] Trans-PEFT 发现基座模型更新（如 Qwen2→Qwen2.5）主要改变 FFN 层的任务知识存储而较少影响 Attention 层的任务模式，据此提出层内知识掩码和跨层知识丢弃两种策略，使在旧版本上训练的 PEFT 模块可直接迁移到新版本而不需重新微调，性能提升可达 30%。
 tags:
   - "ACL 2025"
   - "模型压缩"

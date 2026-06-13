@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicting Large Model Test Losses with a Noisy Quadratic System
 description: >-
-  [ICML 2026][预训练][噪声二次系统] 本文提出 Noisy Quadratic System (NQS)——一个把 LLM 测试损失建模为 $L(N, B, K)$（模型大小 / 批大小 / 更新步数）的 mechanistic 损失模型…
+  [ICML 2026][预训练][噪声二次系统] 本文提出 Noisy Quadratic System (NQS)——一个把 LLM 测试损失建模为 $L(N, B, K)$（模型大小 / 批大小 / 更新步数）的 mechanistic 损失模型，首次在 scaling law 中显式建模 batch size，并在 Pythia + OWT2 上把外推预测能力从 Chinchilla 的 ~20× 算力提升到 ~4000× 算力。
 tags:
   - "ICML 2026"
   - "预训练"

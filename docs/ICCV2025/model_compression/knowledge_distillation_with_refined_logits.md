@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge Distillation with Refined Logits
 description: >-
-  [ICCV 2025][模型压缩][知识蒸馏] RLD 通过 Sample Confidence（样本置信度）和 Masked Correlation（掩码相关性）两种精炼知识，在不破坏类别相关性的前提下修正教师错误预测的负面影响…
+  [ICCV 2025][模型压缩][知识蒸馏] RLD 通过 Sample Confidence（样本置信度）和 Masked Correlation（掩码相关性）两种精炼知识，在不破坏类别相关性的前提下修正教师错误预测的负面影响，在 CIFAR-100 和 ImageNet 上全面超越现有 logit 蒸馏方法。
 tags:
   - "ICCV 2025"
   - "模型压缩"

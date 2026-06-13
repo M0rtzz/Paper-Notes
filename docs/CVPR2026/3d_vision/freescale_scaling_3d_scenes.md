@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeScale: Scaling 3D Scenes via Certainty-Aware Free-View Generation
 description: >-
-  [CVPR 2026][3D视觉][新视角合成] FreeScale 通过从已有场景重建中以确定性引导的方式采样高质量自由视角图像，将有限的真实世界数据扩展为大规模训练数据，在前馈新视角合成模型上获得 2.7 dB PSNR 提升。
+  [CVPR 2026][3D视觉][新视角合成] FreeScale 通过从已有场景重建中以确定性引导的方式采样高质量自由视角图像，将有限的真实世界数据扩展为大规模训练数据，在前馈新视角合成模型上获得 2.7 dB PSNR 提升。 领域现状：新视角合成（NVS）正从逐场景优化（NeRF、3DGS）向可泛化的前馈模型（LVS…
 tags:
   - "CVPR 2026"
   - "3D视觉"

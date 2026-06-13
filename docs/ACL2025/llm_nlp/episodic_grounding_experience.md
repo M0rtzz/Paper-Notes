@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Growing Through Experience: Scaling Episodic Grounding in Language Models
 description: >-
-  [ACL 2025][LLM/NLP][Episodic Grounding] 提出一个 weak-to-strong episodic grounding 框架，利用 MCTS 收集结构化经验数据，通过行为比率蒸馏将小模型的 episodic grounding 能力迁移到大模型…
+  [ACL 2025][LLM 其他][Episodic Grounding] 提出一个 weak-to-strong episodic grounding 框架，利用 MCTS 收集结构化经验数据，通过行为比率蒸馏将小模型的 episodic grounding 能力迁移到大模型，结合 DPO 优化实现从成功和失败经验中学习，在物理规划任务上超越 GPT-4o 等 SOTA 模型 3.45%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Episodic Grounding"
   - "Weak-to-Strong Distillation"
   - "MCTS"

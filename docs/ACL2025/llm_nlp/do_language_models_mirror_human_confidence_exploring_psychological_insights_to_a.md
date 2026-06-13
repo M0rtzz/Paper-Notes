@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Do Language Models Mirror Human Confidence? Exploring Psychological Insights to Address Overconfidence in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][置信度校准] 从心理学过度自信理论出发，揭示 LLM 的置信度估计对任务难度不敏感且会受角色扮演偏见影响（如专家角色过度自信、女性/亚裔角色低自信但实际准确率不变）…
+  [ACL 2025][LLM 其他][置信度校准] 从心理学过度自信理论出发，揭示 LLM 的置信度估计对任务难度不敏感且会受角色扮演偏见影响（如专家角色过度自信、女性/亚裔角色低自信但实际准确率不变），提出 Answer-Free Confidence Estimation（AFCE）方法将信心估计与答案生成解耦，在高难度任务上将 GPT-4o 的 ECE 降低 58.4%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "置信度校准"
   - "过度自信"
   - "心理学"

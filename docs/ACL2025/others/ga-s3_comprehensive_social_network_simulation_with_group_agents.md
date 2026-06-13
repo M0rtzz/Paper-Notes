@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GA-S3: Comprehensive Social Network Simulation with Group Agents
 description: >-
-  [ACL 2025][Social Network Simulation] 提出基于"群体智能体"（Group Agent）的社交网络模拟系统 GA-S3，将具有相似行为的个体聚合为群体代理，通过层次化生成、马尔可夫网络推理和行为模块实现大规模社交网络的高效精确模拟。
+  [ACL 2025][Social Network Simulation] 提出基于"群体智能体"（Group Agent）的社交网络模拟系统 GA-S3，将具有相似行为的个体聚合为群体代理，通过层次化生成、马尔可夫网络推理和行为模块实现大规模社交网络的高效精确模拟。 社交网络模拟旨在创建虚拟社交网络的表示…
 tags:
   - "ACL 2025"
   - "Social Network Simulation"

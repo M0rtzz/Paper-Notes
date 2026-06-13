@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COB-GS: Clear Object Boundaries in 3DGS Segmentation Based on Boundary-Adaptive Gaussian Splitting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 提出 COB-GS，一种通过语义梯度统计驱动的边界自适应高斯分裂技术，联合优化语义信息和视觉纹理，解决 3DGS 分割中物体边界模糊的问题，在保持视觉质量的同时实现清晰的物体边界分割。
+  [CVPR 2025][3D视觉][3D高斯溅射] 提出 COB-GS，一种通过语义梯度统计驱动的边界自适应高斯分裂技术，联合优化语义信息和视觉纹理，解决 3DGS 分割中物体边界模糊的问题，在保持视觉质量的同时实现清晰的物体边界分割。 3D高斯溅射（3DGS）作为实时辐射场渲染技术，凭借显式表示为3D场景的感知和交互提供了…
 tags:
   - "CVPR 2025"
   - "3D视觉"

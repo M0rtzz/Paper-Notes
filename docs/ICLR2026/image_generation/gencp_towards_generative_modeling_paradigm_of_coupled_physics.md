@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenCP: Towards Generative Modeling Paradigm of Coupled Physics
 description: >-
-  [ICLR 2026][图像生成][coupled physics simulation] 提出 GenCP，将耦合多物理场仿真建模为概率密度演化问题，利用 flow matching 从解耦数据学习条件速度场，推理时通过 Lie-Trotter 算子分裂合成耦合解，实现"解耦训练、耦合推理"…
+  [ICLR 2026][图像生成][coupled physics simulation] 提出 GenCP，将耦合多物理场仿真建模为概率密度演化问题，利用 flow matching 从解耦数据学习条件速度场，推理时通过 Lie-Trotter 算子分裂合成耦合解，实现"解耦训练、耦合推理"，并提供理论误差可控保证。
 tags:
   - "ICLR 2026"
   - "图像生成"

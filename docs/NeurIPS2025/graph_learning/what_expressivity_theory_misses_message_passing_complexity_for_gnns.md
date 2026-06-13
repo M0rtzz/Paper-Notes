@@ -2,9 +2,9 @@
 title: >-
   [论文解读] What Expressivity Theory Misses: Message Passing Complexity for GNNs
 description: >-
-  [NeurIPS 2025][图学习][消息传递复杂度] 批判 GNN 的二值表达力理论无法解释实际性能差异，提出 MPC——基于概率性 lossyWL 的连续、任务特定复杂度度量，与准确率的 Spearman 相关性达 -1（传统 WLC 恒为零）…
+  [NeurIPS 2025 Spotlight][图学习][消息传递复杂度] 批判 GNN 的二值表达力理论无法解释实际性能差异，提出 MPC——基于概率性 lossyWL 的连续、任务特定复杂度度量，与准确率的 Spearman 相关性达 -1（传统 WLC 恒为零），成功解释了 GCN+虚拟节点为何在长程任务上优于更高表达力的高阶模型。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图学习"
   - "消息传递复杂度"
   - "lossyWL"

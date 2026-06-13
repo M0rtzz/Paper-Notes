@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations
 description: >-
-  [ECCV2024][遥感][cross-view geo-localization] 提出 ConGeo，一种模型无关的单视图+跨视图对比学习框架，通过强制同一地点不同地面视角变体之间的特征一致性，使单一模型即可在任意朝向和任意视场角(FoV)下实现鲁棒的跨视图地理定位。
+  [ECCV2024][遥感][cross-view geo-localization] 提出 ConGeo，一种模型无关的单视图+跨视图对比学习框架，通过强制同一地点不同地面视角变体之间的特征一致性，使单一模型即可在任意朝向和任意视场角(FoV)下实现鲁棒的跨视图地理定位。 跨视图地理定位(Cross-View Geo-Lo…
 tags:
   - "ECCV2024"
   - "遥感"

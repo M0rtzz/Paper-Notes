@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Cross-Lingual Rewarding for Efficient Multilingual Preference Alignment
 description: >-
-  [ACL 2025 (Findings)][多语言/翻译][多语言偏好对齐] 本文提出利用已对齐的英文 DPO 模型中的隐式奖励信号，通过跨语言指令-响应配对标注偏好关系，结合迭代 DPO 训练实现高效的多语言偏好对齐，在 X-AlpacaEval 上平均 Win Rate 提升 12.72%。
+  [ACL 2025 (Findings)][多语言/翻译][多语言偏好对齐] 本文提出利用已对齐的英文 DPO 模型中的隐式奖励信号，通过跨语言指令-响应配对标注偏好关系，结合迭代 DPO 训练实现高效的多语言偏好对齐，在 X-AlpacaEval 上平均 Win Rate 提升 12.72%。 领域现状：DPO（Direc…
 tags:
   - "ACL 2025 (Findings)"
   - "多语言/翻译"

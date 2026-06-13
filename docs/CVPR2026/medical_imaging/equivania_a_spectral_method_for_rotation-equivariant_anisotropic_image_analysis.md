@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis
 description: >-
-  [CVPR 2026][医学图像][anisotropic analysis] 提出EquivAnIA，用定向滤波器族（cake wavelets和ridge filters）在频域中做带权平均来估计图像的角度分布，替代传统angular binning方法，实现对数值旋转真正鲁棒的各向异性分析…
+  [CVPR 2026][医学图像][anisotropic analysis] 提出EquivAnIA，用定向滤波器族（cake wavelets和ridge filters）在频域中做带权平均来估计图像的角度分布，替代传统angular binning方法，实现对数值旋转真正鲁棒的各向异性分析，合成图像主方向估计误差仅0.03°，CT配准误差仅0.02°。
 tags:
   - "CVPR 2026"
   - "医学图像"
@@ -124,10 +124,10 @@ flowchart TD
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ 组件均为已有工具（cake wavelet/ridge filter/PSD），贡献在于系统组合和旋转等变性验证
-- 实验充分度: ⭐⭐⭐ 合成实验充分，真实图像仅2张，无深度学习方法对比
-- 写作质量: ⭐⭐⭐⭐ 数学严谨，符号清晰，算法伪代码完整
-- 价值: ⭐⭐⭐ 作为方向分析工具有实用价值，但创新幅度有限
+- 新颖性: ⭐⭐⭐⭐ 组件均为已有工具（cake wavelet/ridge filter/PSD），贡献在于系统组合和旋转等变性验证
+- 实验充分度: ⭐⭐⭐⭐ 合成实验充分，真实图像仅2张，无深度学习方法对比
+- 写作质量: ⭐⭐⭐⭐⭐ 数学严谨，符号清晰，算法伪代码完整
+- 价值: ⭐⭐⭐⭐ 作为方向分析工具有实用价值，但创新幅度有限
 
 <!-- RELATED:START -->
 

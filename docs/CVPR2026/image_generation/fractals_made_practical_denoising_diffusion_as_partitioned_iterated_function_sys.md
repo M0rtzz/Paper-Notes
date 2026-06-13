@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems
 description: >-
-  [CVPR 2026][图像生成][扩散模型] 证明了DDIM确定性反向链本质上是一个分区迭代函数系统(PIFS)，并从该框架推导出三个无需模型评估的可计算几何量，从第一性原理统一解释了扩散模型的双阶段去噪动力学、自注意力的有效性…
+  [CVPR 2026][图像生成][扩散模型] 证明了DDIM确定性反向链本质上是一个分区迭代函数系统(PIFS)，并从该框架推导出三个无需模型评估的可计算几何量，从第一性原理统一解释了扩散模型的双阶段去噪动力学、自注意力的有效性，以及四种经验设计选择（cosine schedule offset、分辨率相关logSNR偏移、Min-SNR损失加权、Align Your Steps采样）。
 tags:
   - "CVPR 2026"
   - "图像生成"

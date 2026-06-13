@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DOS: Distilling Observable Softmaps of Zipfian Prototypes for Self-Supervised Point Representation
 description: >-
-  [AAAI 2026][模型压缩][自监督学习] 提出DOS框架，通过仅在可观测（未掩码）点上蒸馏语义软图（Softmap），结合Zipfian先验的Zipf-Sinkhorn正则化来处理3D语义的长尾分布，在六个3D基准上实现了自监督学习的SOTA，线性探测可达监督性能的95%。
+  [AAAI 2026][模型压缩][自监督学习] 提出DOS框架，通过仅在可观测（未掩码）点上蒸馏语义软图（Softmap），结合Zipfian先验的Zipf-Sinkhorn正则化来处理3D语义的长尾分布，在六个3D基准上实现了自监督学习的SOTA，线性探测可达监督性能的95%。 3D点云的自监督学习（SSL）近年来取得了…
 tags:
   - "AAAI 2026"
   - "模型压缩"

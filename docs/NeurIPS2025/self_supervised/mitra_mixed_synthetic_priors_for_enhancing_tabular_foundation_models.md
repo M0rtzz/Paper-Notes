@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitra: Mixed Synthetic Priors for Enhancing Tabular Foundation Models
 description: >-
-  [NeurIPS 2025][自监督学习][表格基础模型] 首次系统研究合成先验的设计原则，发现多样性、独特性和真实数据对齐是关键属性，据此提出 Mitra——一个基于精心筛选的混合合成先验训练的表格基础模型，在分类和回归基准上一致超越 TabPFNv2 和 TabICL。
+  [NeurIPS 2025][自监督学习][表格基础模型] 首次系统研究合成先验的设计原则，发现多样性、独特性和真实数据对齐是关键属性，据此提出 Mitra——一个基于精心筛选的混合合成先验训练的表格基础模型，在分类和回归基准上一致超越 TabPFNv2 和 TabICL。 领域现状：自 TabPFN 开创性工作以来…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

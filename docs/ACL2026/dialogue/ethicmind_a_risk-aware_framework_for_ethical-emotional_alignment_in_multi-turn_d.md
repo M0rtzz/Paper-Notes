@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ETHICMIND: A Risk-Aware Framework for Ethical-Emotional Alignment in Multi-Turn Dialogue
 description: >-
-  [ACL 2026][对话系统][伦理情感对齐] ETHICMIND 提出推理时（inference-time）的风险感知对齐框架，在多轮对话的每一轮中联合分析伦理风险和用户情感，规划高层响应策略，再生成兼顾伦理引导和情感共鸣的回复，无需额外训练即可在高风险和道德模糊场景中实现更一致的对齐表现。
+  [ACL 2026][对话系统][伦理情感对齐] ETHICMIND 提出推理时（inference-time）的风险感知对齐框架，在多轮对话的每一轮中联合分析伦理风险和用户情感，规划高层响应策略，再生成兼顾伦理引导和情感共鸣的回复，无需额外训练即可在高风险和道德模糊场景中实现更一致的对齐表现。 领域现状：对话系统在心理健康…
 tags:
   - "ACL 2026"
   - "对话系统"

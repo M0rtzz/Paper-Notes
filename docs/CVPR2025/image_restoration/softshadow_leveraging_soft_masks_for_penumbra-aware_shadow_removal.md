@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoftShadow: Leveraging Soft Masks for Penumbra-Aware Shadow Removal
 description: >-
-  [CVPR 2025][图像恢复][软阴影掩码] 提出SoftShadow框架，用连续灰度软掩码替代传统二值硬掩码来表示阴影区域，通过SAM+LoRA预测软掩码并引入半影形成约束损失联合训练检测与去阴影网络，在SRD/ISTD+/LRSS/UIUC四个数据集上达到SOTA且无需外部掩码输入。
+  [CVPR 2025][图像恢复][软阴影掩码] 提出SoftShadow框架，用连续灰度软掩码替代传统二值硬掩码来表示阴影区域，通过SAM+LoRA预测软掩码并引入半影形成约束损失联合训练检测与去阴影网络，在SRD/ISTD+/LRSS/UIUC四个数据集上达到SOTA且无需外部掩码输入。 领域现状：深度学习在阴影移除任务…
 tags:
   - "CVPR 2025"
   - "图像恢复"

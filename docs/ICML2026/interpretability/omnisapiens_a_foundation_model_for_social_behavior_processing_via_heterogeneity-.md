@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniSapiens: A Foundation Model for Social Behavior Processing via Heterogeneity-Aware Relative Policy Optimization
 description: >-
-  [ICML 2026][可解释性][社会智能] 针对社会行为数据天然异构（10 个任务跨情感/认知/病理/社交，模态横跨语音/视觉/文本）导致 GRPO 类推理 RL 学习信号被少数任务主导的问题，本文提出 HARPO，通过用优势幅值近似各 sample 与各 task 对策略更新的贡献…
+  [ICML 2026][可解释性][社会智能] 针对社会行为数据天然异构（10 个任务跨情感/认知/病理/社交，模态横跨语音/视觉/文本）导致 GRPO 类推理 RL 学习信号被少数任务主导的问题，本文提出 HARPO，通过用优势幅值近似各 sample 与各 task 对策略更新的贡献，再以"几何均值参照 + 倒数比"得到结构化调制因子并加上惯性平滑，在 Qwen 2.5-Omni-7B 上训出 OmniSapiens-7B 2.0，多任务平均排名第 1，零样本 5 任务全胜，推理一致性从 66.5% 提到 87.7%，token 数压到 19.86。
 tags:
   - "ICML 2026"
   - "可解释性"

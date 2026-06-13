@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Web-Scale Collection of Video Data for 4D Animal Reconstruction
 description: >-
-  [NeurIPS 2025][3D视觉][4D动物重建] 提出一个全自动化的大规模视频数据采集管线，从 YouTube 挖掘并处理得到 30K 动物视频（2M帧），建立首个 4D 四足动物重建基准 Animal-in-Motion（230序列/11K帧）…
+  [NeurIPS 2025][3D视觉][4D动物重建] 提出一个全自动化的大规模视频数据采集管线，从 YouTube 挖掘并处理得到 30K 动物视频（2M帧），建立首个 4D 四足动物重建基准 Animal-in-Motion（230序列/11K帧），并提出 4D-Fauna 基线方法实现序列级优化的无模型 4D 重建。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

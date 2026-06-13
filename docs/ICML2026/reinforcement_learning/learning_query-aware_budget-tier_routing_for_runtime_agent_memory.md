@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Query-Aware Budget-Tier Routing for Runtime Agent Memory
 description: >-
-  [ICML 2026][强化学习][agent memory] BudgetMem 把"运行时智能体记忆抽取"重新组织成"过滤 → 实体/时间/主题并行 → 摘要"的模块化流水线，给每个模块挂上 LOW/MID/HIGH 三档预算接口…
+  [ICML 2026][强化学习][agent memory] BudgetMem 把"运行时智能体记忆抽取"重新组织成"过滤 → 实体/时间/主题并行 → 摘要"的模块化流水线，给每个模块挂上 LOW/MID/HIGH 三档预算接口，并用 PPO 训练一个共享的轻量路由器在 query 到来时为每个模块挑档位，从而在 LoCoMo、LongMemEval、HotpotQA 上同时改善了 F1/Judge 和单 query 平均成本。
 tags:
   - "ICML 2026"
   - "强化学习"

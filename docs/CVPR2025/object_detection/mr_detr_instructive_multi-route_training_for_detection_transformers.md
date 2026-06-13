@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with MoE
 description: >-
-  [CVPR 2025][目标检测][DETR] 系统研究 DETR 解码器各组件在 one-to-one/one-to-many 多任务框架下的角色，发现任何单独组件都能有效协调两个目标…
+  [CVPR 2025][目标检测][DETR] 系统研究 DETR 解码器各组件在 one-to-one/one-to-many 多任务框架下的角色，发现任何单独组件都能有效协调两个目标；基于此提出多路由训练（Instructive Self-Attention + Independent FFN + Route-Aware MoE），推理时丢弃辅助路由不增加任何开销。
 tags:
   - "CVPR 2025"
   - "目标检测"

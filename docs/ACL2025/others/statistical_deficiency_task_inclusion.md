@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Statistical Deficiency for Task Inclusion Estimation
 description: >-
-  [ACL 2025 (Long Paper, acl-long.18)][Task Inclusion] 基于统计缺陷性（statistical deficiency）理论，提出一种理论驱动的任务包含关系（task inclusion）定义与度量框架…
+  [ACL 2025 (Long Paper, acl-long.18)][Task Inclusion] 基于统计缺陷性（statistical deficiency）理论，提出一种理论驱动的任务包含关系（task inclusion）定义与度量框架，以信息充分性（information sufficiency, IS）作为可计算代理指标，通过比较微调模型的中间层表征来估计任务间的包含程度，并在合成数据和真实NLP任务上成功重建了经典NLP pipeline的层次关系。
 tags:
   - "ACL 2025 (Long Paper, acl-long.18)"
   - "Task Inclusion"

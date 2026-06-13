@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models
 description: >-
-  [ICLR 2026][模型压缩][视觉生成] 提出 PTQ4ARVG，首个针对自回归视觉生成（ARVG）模型的系统化 PTQ 框架，通过增益投影缩放（GPS）、静态 Token 级量化（STWQ）和分布引导校准（DGC）解决 ARVG 特有的三大量化挑战。
+  [ICLR 2026][模型压缩][视觉生成] 提出 PTQ4ARVG，首个针对自回归视觉生成（ARVG）模型的系统化 PTQ 框架，通过增益投影缩放（GPS）、静态 Token 级量化（STWQ）和分布引导校准（DGC）解决 ARVG 特有的三大量化挑战。 领域现状：自回归视觉生成（AutoRegressive Visua…
 tags:
   - "ICLR 2026"
   - "模型压缩"

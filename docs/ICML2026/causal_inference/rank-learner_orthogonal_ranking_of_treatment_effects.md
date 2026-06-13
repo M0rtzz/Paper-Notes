@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rank-Learner: Orthogonal Ranking of Treatment Effects
 description: >-
-  [ICML 2026][因果推理][处理效应排序] 在观测数据上提出 Rank-Learner——第一个 Neyman-正交的两阶段处理效应**排序**学习器，用成对软标签 + 双重稳健修正项替代"先估 CATE 再排"的间接做法…
+  [ICML 2026][因果推理][处理效应排序] 在观测数据上提出 Rank-Learner——第一个 Neyman-正交的两阶段处理效应**排序**学习器，用成对软标签 + 双重稳健修正项替代"先估 CATE 再排"的间接做法，在合成、半合成与 Criteo uplift 真实数据集上稳定优于 T/DR-learner 与非正交 plug-in ranker。
 tags:
   - "ICML 2026"
   - "因果推理"

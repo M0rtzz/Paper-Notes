@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution
 description: >-
-  [CVPR2026][Scene Text Recognition] 系统分析了现有渲染合成数据在语料、字体、布局多样性上的不足，提出 UnionST 合成引擎和自演化学习框架（SEL），仅用合成数据即大幅超越传统合成集，结合 SEL 仅需 9% 真实标注即可逼近全监督性能。
+  [CVPR2026][Scene Text Recognition] 系统分析了现有渲染合成数据在语料、字体、布局多样性上的不足，提出 UnionST 合成引擎和自演化学习框架（SEL），仅用合成数据即大幅超越传统合成集，结合 SEL 仅需 9% 真实标注即可逼近全监督性能。 场景文字识别（STR）依赖大规模训练数据：真实数…
 tags:
   - "CVPR2026"
   - "Scene Text Recognition"

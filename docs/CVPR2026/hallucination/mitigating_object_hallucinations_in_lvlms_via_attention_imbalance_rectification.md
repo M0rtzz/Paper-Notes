@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification
 description: >-
-  [CVPR 2026][幻觉检测][大视觉语言模型] 提出注意力失衡（Attention Imbalance）概念来解释 LVLM 中的对象幻觉现象，并设计轻量级解码时干预方法 AIR，通过跨模态注意力重新分配和方差约束投影正则化矫正注意力失衡，在四个 LVLM 上将幻觉率最高降低 35.1%…
+  [CVPR 2026 Findings][幻觉检测][大视觉语言模型] 提出注意力失衡（Attention Imbalance）概念来解释 LVLM 中的对象幻觉现象，并设计轻量级解码时干预方法 AIR，通过跨模态注意力重新分配和方差约束投影正则化矫正注意力失衡，在四个 LVLM 上将幻觉率最高降低 35.1%，同时提升通用能力最高达 15.9%。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "幻觉检测"
   - "大视觉语言模型"
   - "对象幻觉"

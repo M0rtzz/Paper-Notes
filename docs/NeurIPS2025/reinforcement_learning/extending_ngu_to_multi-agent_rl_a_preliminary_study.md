@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extending NGU to Multi-Agent RL: A Preliminary Study
 description: >-
-  [NeurIPS 2025][强化学习][Never Give Up] 将单智能体 NGU（Never Give Up）算法扩展至多智能体环境，通过共享回放缓冲区、共享新颖性信号和异构 β 参数三个设计维度的系统消融…
+  [NeurIPS 2025][强化学习][Never Give Up] 将单智能体 NGU（Never Give Up）算法扩展至多智能体环境，通过共享回放缓冲区、共享新颖性信号和异构 β 参数三个设计维度的系统消融，发现 NGU + 共享经验池组合在 PettingZoo simple_tag 追捕任务中显著优于多智能体 DQN 基线。
 tags:
   - "NeurIPS 2025"
   - "强化学习"
@@ -123,10 +123,10 @@ tags:
 - 本文的发现暗示在 MARL 中"**经验共享比信号共享更重要**"，对设计新的分布式探索方法有核心启发
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 方法本身是直接扩展而非全新设计，但系统性消融有研究价值
-- 实验充分度: ⭐⭐⭐ 消融全面（15 seeds × 8 配置），但仅一个环境，缺乏与 MARL SOTA 对比
-- 写作质量: ⭐⭐⭐⭐ 结构清晰、实验设置严谨、结论明确，自认 preliminary study 很诚实
-- 价值: ⭐⭐⭐ 为 NGU→MARL 方向奠定了实证基础，共享回放的结论有实际指导意义
+- 新颖性: ⭐⭐⭐⭐ 方法本身是直接扩展而非全新设计，但系统性消融有研究价值
+- 实验充分度: ⭐⭐⭐⭐ 消融全面（15 seeds × 8 配置），但仅一个环境，缺乏与 MARL SOTA 对比
+- 写作质量: ⭐⭐⭐⭐⭐ 结构清晰、实验设置严谨、结论明确，自认 preliminary study 很诚实
+- 价值: ⭐⭐⭐⭐ 为 NGU→MARL 方向奠定了实证基础，共享回放的结论有实际指导意义
 
 <!-- RELATED:START -->
 

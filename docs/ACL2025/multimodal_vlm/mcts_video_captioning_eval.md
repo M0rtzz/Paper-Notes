@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Multimodal Large Language Models on Video Captioning via Monte Carlo Tree Search
 description: >-
-  [ACL 2025][多模态VLM][视频描述] 提出AutoCaption框架，利用蒙特卡洛树搜索(MCTS)自动迭代生成细粒度视频描述关键点（平均122个/视频），构建MCTS-VCB基准评估20+个MLLM的视频描述能力，并证明生成的数据可用于微调显著提升模型性能。
+  [ACL 2025][多模态VLM][视频描述] 提出AutoCaption框架，利用蒙特卡洛树搜索(MCTS)自动迭代生成细粒度视频描述关键点（平均122个/视频），构建MCTS-VCB基准评估20+个MLLM的视频描述能力，并证明生成的数据可用于微调显著提升模型性能。 领域现状：视频描述(Video Captioning…
 tags:
   - "ACL 2025"
   - "多模态VLM"

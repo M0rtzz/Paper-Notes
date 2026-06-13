@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnomalyVFM -- Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors
 description: >-
-  [CVPR 2026][目标检测][零样本异常检测] AnomalyVFM 提出了一个通用框架，通过三阶段合成数据生成方案和参数高效的 LoRA 适配机制，将任意视觉基础模型（VFM）转化为强零样本异常检测器，以 RADIO 为骨干在 9 个工业数据集上达到 94.1% 图像级 AUROC…
+  [CVPR 2026][目标检测][零样本异常检测] AnomalyVFM 提出了一个通用框架，通过三阶段合成数据生成方案和参数高效的 LoRA 适配机制，将任意视觉基础模型（VFM）转化为强零样本异常检测器，以 RADIO 为骨干在 9 个工业数据集上达到 94.1% 图像级 AUROC，超越 SOTA 3.3 个百分点。
 tags:
   - "CVPR 2026"
   - "目标检测"

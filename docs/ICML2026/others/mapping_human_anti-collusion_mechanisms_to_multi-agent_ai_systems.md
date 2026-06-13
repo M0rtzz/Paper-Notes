@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mapping Human Anti-collusion Mechanisms to Multi-agent AI Systems
 description: >-
-  [ICML 2026][多智能体合谋] 这是一篇 position / taxonomy 论文：把人类社会几百年积累的反合谋经验（制裁、宽大与举报、监控审计、市场设计、治理）按生命周期分成五类…
+  [ICML 2026][多智能体合谋] 这是一篇 position / taxonomy 论文：把人类社会几百年积累的反合谋经验（制裁、宽大与举报、监控审计、市场设计、治理）按生命周期分成五类，再逐条映射到多智能体 AI 系统的可实现干预（reward penalty、whistleblower agent、telemetry-first overseer、interaction protocol 设计、shutdown 机制等），同时指出 AI 场景独有的归因、身份流动、合作-合谋边界、对抗适应等开放挑战。
 tags:
   - "ICML 2026"
   - "多智能体合谋"

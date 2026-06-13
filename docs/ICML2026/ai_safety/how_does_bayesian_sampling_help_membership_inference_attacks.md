@@ -2,9 +2,10 @@
 title: >-
   [论文解读] How Does Bayesian Sampling Help Membership Inference Attacks?
 description: >-
-  [ICML 2026][成员推断攻击] 本文提出 BMIA，把单个参考模型用 Laplace 后验展开成"虚拟模型族"，靠贝叶斯采样估计每个样本的条件 score 分布，在只训 1 个参考模型的预算下…
+  [ICML 2026][AI安全][成员推断攻击] 本文提出 BMIA，把单个参考模型用 Laplace 后验展开成"虚拟模型族"，靠贝叶斯采样估计每个样本的条件 score 分布，在只训 1 个参考模型的预算下，在 CIFAR-100 等数据集上把低 FPR 区域 TPR 拉到比训 8 个参考模型的 LiRA 还高 54%。
 tags:
   - "ICML 2026"
+  - "AI安全"
   - "成员推断攻击"
   - "贝叶斯采样"
   - "Laplace 近似"

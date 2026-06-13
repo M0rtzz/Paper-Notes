@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines
 description: >-
-  [ACL 2025][同声传译] 本文构建了 MockConf——一个以捷克语为中心的**学生同声传译数据集**（7 小时，5 种欧洲语言），提供人工标注的 span 级和 word 级对齐，同时发布了专用标注工具 InterAlign，并建立了自动对齐的基线和评估指标体系。
+  [ACL 2025][同声传译] 本文构建了 MockConf——一个以捷克语为中心的学生同声传译数据集：（7 小时，5 种欧洲语言），提供人工标注的 span 级和 word 级对齐，同时发布了专用标注工具 InterAlign，并建立了自动对齐的基线和评估指标体系。 同声传译是一种极具挑战性的多语言任务：传译员在说话人尚…
 tags:
   - "ACL 2025"
   - "同声传译"

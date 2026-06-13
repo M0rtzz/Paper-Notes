@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Are VLMs Seeing or Just Saying? Uncovering the Illusion of Visual Re-examination
 description: >-
-  [ICML2026][多模态VLM][视觉重检] 这篇论文提出 VisualSwap 和 VS-Bench，通过在 VLM 自称“再看一眼图像”之后替换图像来检验真实视觉重检能力，发现当前推理型 VLM 往往沿着旧文本惯性继续生成，显式用户多轮指令或增强视觉注意力才能显著恢复 grounding。
+  [ICML2026 Oral][多模态VLM][视觉重检] 这篇论文提出 VisualSwap 和 VS-Bench，通过在 VLM 自称“再看一眼图像”之后替换图像来检验真实视觉重检能力，发现当前推理型 VLM 往往沿着旧文本惯性继续生成，显式用户多轮指令或增强视觉注意力才能显著恢复 grounding。
 tags:
-  - "ICML2026"
+  - "ICML2026 Oral"
   - "多模态VLM"
   - "视觉重检"
   - "多模态推理"

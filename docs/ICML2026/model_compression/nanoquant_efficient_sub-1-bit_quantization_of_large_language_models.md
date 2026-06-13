@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NanoQuant: Efficient Sub-1-Bit Quantization of Large Language Models
 description: >-
-  [ICML 2026][模型压缩][后训练量化] NanoQuant 把权重量化重新表述为「低秩二值分解」问题，用 Hessian 感知的 ADMM 精确初始化 $\pm 1$ 因子和浮点尺度，再做块级 STE 重建与全局尺度 KL 校准…
+  [ICML 2026][模型压缩][后训练量化] NanoQuant 把权重量化重新表述为「低秩二值分解」问题，用 Hessian 感知的 ADMM 精确初始化 $\pm 1$ 因子和浮点尺度，再做块级 STE 重建与全局尺度 KL 校准，在仅 0.26M token 校准数据和单卡 H100 上首次让 PTQ 把 LLM 压到真正的 1-bit 乃至亚 1-bit，把 Llama2-70B 从 138 GB 压到 5.35 GB 并能跑在 8 GB 消费级 GPU 上。
 tags:
   - "ICML 2026"
   - "模型压缩"

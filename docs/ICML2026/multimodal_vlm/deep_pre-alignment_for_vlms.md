@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Pre-Alignment for VLMs
 description: >-
-  [ICML 2026][多模态VLM][视觉编码器] 作者把标准 VLM 里"ViT + 轻量 projector"的视觉编码模块整体替换为一个小 VLM（perceiver），让模态对齐这件耗深度的脏活在 upstream 的小 VLM 内部就完成…
+  [ICML 2026][多模态VLM][视觉编码器] 作者把标准 VLM 里"ViT + 轻量 projector"的视觉编码模块整体替换为一个小 VLM（perceiver），让模态对齐这件耗深度的脏活在 upstream 的小 VLM 内部就完成，使下游大 LLM 不必在浅层浪费深度去做模态对齐——4B 模型在 8 个多模态基准上提升 +1.9 点、32B 上提升 +3.0 点，并把语言能力遗忘减少 32.9%，且推理吞吐只下降 2–6%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

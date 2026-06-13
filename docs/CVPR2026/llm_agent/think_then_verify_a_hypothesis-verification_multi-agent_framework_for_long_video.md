@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think, Then Verify: A Hypothesis-Verification Multi-Agent Framework for Long Video Understanding
 description: >-
-  [CVPR 2026][LLM Agent][长视频理解] 提出 VideoHV-Agent，将长视频问答重新建模为"假设-验证"过程：Thinker 将答案选项改写为可测试假设，Judge 提取区分性线索，Verifier 在视频中定位证据进行验证，Answer 综合证据给出最终答案…
+  [CVPR 2026][LLM Agent][长视频理解] 提出 VideoHV-Agent，将长视频问答重新建模为"假设-验证"过程：Thinker 将答案选项改写为可测试假设，Judge 提取区分性线索，Verifier 在视频中定位证据进行验证，Answer 综合证据给出最终答案，在 EgoSchema/NextQA/IntentQA 三个基准上取得 SOTA，同时推理效率优于现有 Agent 方法。
 tags:
   - "CVPR 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CiteGuard: Faithful Citation Attribution for LLMs via Retrieval-Augmented Validation
 description: >-
-  [ACL 2026][信息检索/RAG][引用归属] CiteGuard 提出了一个检索增强的智能体框架，通过扩展的检索动作（包括全文搜索和上下文检索）为科学引用归属提供更忠实的基础，在 CiteME 基准上相对基线提升 10 个百分点，达到 68.1% 准确率，接近人类表现（69.2%）。
+  [ACL 2026][信息检索/RAG][引用归属] CiteGuard 提出了一个检索增强的智能体框架，通过扩展的检索动作（包括全文搜索和上下文检索）为科学引用归属提供更忠实的基础，在 CiteME 基准上相对基线提升 10 个百分点，达到 68.1% 准确率，接近人类表现（69.2%）。 领域现状：LLM 越来越多地被用…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

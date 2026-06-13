@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Venus: Benchmarking and Empowering Multimodal Large Language Models for Aesthetic Guidance and Cropping
 description: >-
-  [CVPR 2026][多模态VLM][美学指导] 定义审美指导(AG)新任务并构建AesGuide基准(10748张照片含审美评分、分析和指导标注)，提出Venus两阶段框架——先通过渐进式审美问答赋能MLLM审美指导能力，再通过CoT推理激活审美裁剪能力，在两个任务上均达到SOTA。
+  [CVPR 2026][多模态VLM][美学指导] 定义审美指导(AG)新任务并构建AesGuide基准(10748张照片含审美评分、分析和指导标注)，提出Venus两阶段框架——先通过渐进式审美问答赋能MLLM审美指导能力，再通过CoT推理激活审美裁剪能力，在两个任务上均达到SOTA。 领域现状：计算美学已从审美评分、美感…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

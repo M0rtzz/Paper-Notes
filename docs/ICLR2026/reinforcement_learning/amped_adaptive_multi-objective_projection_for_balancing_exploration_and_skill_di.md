@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification
 description: >-
-  [ICLR 2026][强化学习][无监督技能学习] 提出AMPED框架，在技能预训练阶段用梯度手术（PCGrad）平衡探索（熵+RND）和技能多样性（AnInfoNCE）之间的梯度冲突，在微调阶段用SAC-based技能选择器自适应选择最优技能…
+  [ICLR 2026][强化学习][无监督技能学习] 提出AMPED框架，在技能预训练阶段用梯度手术（PCGrad）平衡探索（熵+RND）和技能多样性（AnInfoNCE）之间的梯度冲突，在微调阶段用SAC-based技能选择器自适应选择最优技能，在Maze和URLB基准上超越DIAYN/CeSD/CIC等SBRL基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

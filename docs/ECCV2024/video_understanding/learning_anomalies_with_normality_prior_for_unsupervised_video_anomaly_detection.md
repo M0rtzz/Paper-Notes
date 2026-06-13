@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection
 description: >-
-  [ECCV 2024][无监督视频异常检测] 本文提出一种基于正常性先验（视频首尾片段通常为正常事件）的无监督视频异常检测方法 LANP，通过正常性传播估计未标注片段的正常程度，再结合损失重加权策略减轻错误传播标签的负面影响，在 ShanghaiTech 和 UCF-Crime 上超越现有方法。
+  [ECCV 2024][视频理解][无监督视频异常检测] 本文提出一种基于正常性先验（视频首尾片段通常为正常事件）的无监督视频异常检测方法 LANP，通过正常性传播估计未标注片段的正常程度，再结合损失重加权策略减轻错误传播标签的负面影响，在 ShanghaiTech 和 UCF-Crime 上超越现有方法。
 tags:
   - "ECCV 2024"
+  - "视频理解"
   - "无监督视频异常检测"
   - "正常性先验"
   - "标签传播"

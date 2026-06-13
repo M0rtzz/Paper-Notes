@@ -2,9 +2,9 @@
 title: >-
   [论文解读] OMHBench: Benchmarking Balanced and Grounded Omni-Modal Multi-Hop Reasoning
 description: >-
-  [ACL 2026][多模态VLM][全模态推理] OMHBench 构造了一个覆盖文本、图像、语音三种上下文的 6,144 题全模态三跳推理 benchmark，通过实体-属性链和 6 种均衡推理路径暴露出当前 MLLM 在语音落地、路径鲁棒性和跨模态 grounding 上的系统性短板。
+  [ACL 2026 Findings][多模态VLM][全模态推理] OMHBench 构造了一个覆盖文本、图像、语音三种上下文的 6,144 题全模态三跳推理 benchmark，通过实体-属性链和 6 种均衡推理路径暴露出当前 MLLM 在语音落地、路径鲁棒性和跨模态 grounding 上的系统性短板。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "全模态推理"
   - "多跳问答"

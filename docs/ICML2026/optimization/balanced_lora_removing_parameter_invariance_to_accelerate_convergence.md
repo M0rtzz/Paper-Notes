@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Balanced LoRA: Removing Parameter Invariance to Accelerate Convergence
 description: >-
-  [ICML2026][优化/理论][LoRA微调] 本文揭示了 LoRA 的过参数化导致不同低秩因子对 $(A,B)$ 具有不同条件数，证明了**平衡最小值点**（$A^\top A = BB^\top$）具有最优条件数，并据此提出 BaLoRA——在每步优化后将适配器投影到平衡流形上…
+  [ICML2026][优化/理论][LoRA微调] 本文揭示了 LoRA 的过参数化导致不同低秩因子对 $(A,B)$ 具有不同条件数，证明了**平衡最小值点**（$A^\top A = BB^\top$）具有最优条件数，并据此提出 BaLoRA——在每步优化后将适配器投影到平衡流形上，以几乎零开销加速收敛并提升微调性能。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.31484](https://arxiv.org/abs/2605.31484)  
 **代码**: https://github.com/vcastin/balora  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: LoRA微调, 参数不变性, 条件数优化, 平衡流形投影, 收敛加速  
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRAP: Targeted Redirecting of Agentic Preferences
 description: >-
-  [NeurIPS 2025][LLM安全][对抗攻击] TRAP 提出了一种基于扩散模型的语义注入对抗框架，通过在 CLIP 嵌入空间中优化图像语义，在黑盒条件下以视觉自然的方式系统性地误导多个主流 VLM 智能体的决策偏好，在 LLaVA-34B、GPT-4o 等六个模型上实现了高达 100% 的攻击成功率…
+  [NeurIPS 2025][LLM安全][对抗攻击] TRAP 提出了一种基于扩散模型的语义注入对抗框架，通过在 CLIP 嵌入空间中优化图像语义，在黑盒条件下以视觉自然的方式系统性地误导多个主流 VLM 智能体的决策偏好，在 LLaVA-34B、GPT-4o 等六个模型上实现了高达 100% 的攻击成功率。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProMedical: Hierarchical Fine-Grained Criteria Modeling for Medical LLM Alignment via Explicit Injection
 description: >-
-  [ACL 2026][医疗NLP][医疗 LLM 对齐] ProMedical 用医生参与构造的分层细粒度 clinical rubric 贯穿偏好数据、奖励模型和 benchmark，通过显式 criteria injection 训练多维 reward model…
+  [ACL 2026][医疗NLP][医疗 LLM 对齐] ProMedical 用医生参与构造的分层细粒度 clinical rubric 贯穿偏好数据、奖励模型和 benchmark，通过显式 criteria injection 训练多维 reward model，使 Qwen3-8B 在医学对齐中获得 22.3% overall accuracy 和 21.7% safety compliance 的提升。
 tags:
   - "ACL 2026"
   - "医疗NLP"

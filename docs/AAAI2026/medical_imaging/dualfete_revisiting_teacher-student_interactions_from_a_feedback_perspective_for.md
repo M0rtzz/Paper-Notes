@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualFete: Revisiting Teacher-Student Interactions from a Feedback Perspective for Semi-supervised Medical Image Segmentation
 description: >-
-  [AAAI 2026][医学图像][半监督医学图像分割] 在教师-学生半监督学习框架中引入反馈机制，让学生能将伪标签引导的更新是否与有标签数据方向一致的信息反馈给教师，并在双教师架构中进一步增强反馈动态性，有效遏制了医学图像分割中的错误累积和确认偏差。
+  [AAAI 2026][医学图像][半监督医学图像分割] 在教师-学生半监督学习框架中引入反馈机制，让学生能将伪标签引导的更新是否与有标签数据方向一致的信息反馈给教师，并在双教师架构中进一步增强反馈动态性，有效遏制了医学图像分割中的错误累积和确认偏差。 核心问题：确认偏差 半监督医学图像分割（SSMIS）利用少量有标签数据和…
 tags:
   - "AAAI 2026"
   - "医学图像"

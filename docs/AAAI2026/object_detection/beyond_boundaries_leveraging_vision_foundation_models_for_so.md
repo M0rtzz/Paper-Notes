@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection
 description: >-
-  [AAAI 2026][目标检测][无源域自适应目标检测] 提出利用VFM（DINOv2+Grounding DINO）增强无源域自适应目标检测（SFOD）的框架，通过全局特征对齐(PGFA)、实例级原型对比学习(PIFA)和双源伪标签融合(DEPF)三个模块，在6个跨域检测基准上取得SOTA…
+  [AAAI 2026][目标检测][无源域自适应目标检测] 提出利用VFM（DINOv2+Grounding DINO）增强无源域自适应目标检测（SFOD）的框架，通过全局特征对齐(PGFA)、实例级原型对比学习(PIFA)和双源伪标签融合(DEPF)三个模块，在6个跨域检测基准上取得SOTA，例如Cityscapes→Foggy Cityscapes达47.1% mAP（比DRU高3.5%），Sim10k→Cityscapes达67.4% AP（比DRU高8.7%）。
 tags:
   - "AAAI 2026"
   - "目标检测"

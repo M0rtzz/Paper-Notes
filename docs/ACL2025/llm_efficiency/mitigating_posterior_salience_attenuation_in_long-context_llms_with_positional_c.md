@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Posterior Salience Attenuation in Long-Context LLMs with Positional Contrastive Decoding
 description: >-
-  [ACL 2025][LLM效率][长上下文LLM] 发现长上下文LLM中的后验显著性衰减（PSA）现象——gold token的显著性随上下文增长而下降但仍保持高排名，由此提出无需训练的位置对比解码（PCD）方法，通过对比长距离感知注意力和局部感知注意力的logits来放大长距离信号…
+  [ACL 2025][LLM效率][长上下文LLM] 发现长上下文LLM中的后验显著性衰减（PSA）现象——gold token的显著性随上下文增长而下降但仍保持高排名，由此提出无需训练的位置对比解码（PCD）方法，通过对比长距离感知注意力和局部感知注意力的logits来放大长距离信号，在多个长上下文基准上取得SOTA。
 tags:
   - "ACL 2025"
   - "LLM效率"

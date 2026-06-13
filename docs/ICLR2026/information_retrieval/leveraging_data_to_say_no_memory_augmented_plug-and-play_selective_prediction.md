@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Data to Say No: Memory Augmented Plug-and-Play Selective Prediction
 description: >-
-  [ICLR 2026][信息检索/RAG][选择性预测] 提出 MA-PaPSP 框架，通过外部检索数据集构建代理嵌入（k-NN 加权平均降低表示方差）+ 对比归一化评分（改善校准），无训练地为任意 VLM 提供可靠的"拒绝回答"能力…
+  [ICLR 2026][信息检索/RAG][选择性预测] 提出 MA-PaPSP 框架，通过外部检索数据集构建代理嵌入（k-NN 加权平均降低表示方差）+ 对比归一化评分（改善校准），无训练地为任意 VLM 提供可靠的"拒绝回答"能力，在图像描述、图文匹配、分类的选择性预测上全面优于 PaPSP 和 LLM-as-judge 基线。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

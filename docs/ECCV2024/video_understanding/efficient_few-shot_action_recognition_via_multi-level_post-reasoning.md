@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Few-Shot Action Recognition via Multi-Level Post-Reasoning
 description: >-
-  [ECCV 2024][视频理解][小样本动作识别] EMP-Net 提出了一种高效多层级后推理网络，通过后推理机制避免大部分梯度回传来降低 CLIP 在小样本动作识别中的领域对齐开销，同时利用多层级表示（全局、patch、帧级别）提升特征判别力，在效率和性能之间取得了最优平衡。
+  [ECCV 2024][视频理解][小样本动作识别] EMP-Net 提出了一种高效多层级后推理网络，通过后推理机制避免大部分梯度回传来降低 CLIP 在小样本动作识别中的领域对齐开销，同时利用多层级表示（全局、patch、帧级别）提升特征判别力，在效率和性能之间取得了最优平衡。 领域现状：小样本动作识别（Few-Shot…
 tags:
   - "ECCV 2024"
   - "视频理解"

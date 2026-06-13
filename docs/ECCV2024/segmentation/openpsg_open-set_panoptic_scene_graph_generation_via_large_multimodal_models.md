@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenPSG: Open-set Panoptic Scene Graph Generation via Large Multimodal Models
 description: >-
-  [ECCV 2024][语义分割][panoptic scene graph] 首次定义开放集全景场景图生成（OpenPSG）任务，利用 BLIP-2 作为多模态关系解码器，结合关系查询 Transformer（RelQ-Former）实现开放集关系预测…
+  [ECCV 2024][语义分割][panoptic scene graph] 首次定义开放集全景场景图生成（OpenPSG）任务，利用 BLIP-2 作为多模态关系解码器，结合关系查询 Transformer（RelQ-Former）实现开放集关系预测，在 PSG 数据集 PredCls R@100 达到 79.3%，闭集场景超越先前 SOTA 26.6%。
 tags:
   - "ECCV 2024"
   - "语义分割"

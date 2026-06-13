@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UTPTrack: Towards Simple and Unified Token Pruning for Visual Tracking
 description: >-
-  [CVPR2026][视频理解][剪枝] 提出 UTPTrack，首个在 one-stream Transformer 跟踪器中**同时对搜索区域 (SR)、动态模板 (DT) 和静态模板 (ST) 三个组件进行联合 token 剪枝**的统一框架…
+  [CVPR2026][视频理解][剪枝] 提出 UTPTrack，首个在 one-stream Transformer 跟踪器中**同时对搜索区域 (SR)、动态模板 (DT) 和静态模板 (ST) 三个组件进行联合 token 剪枝**的统一框架，在 RGB 和多模态/语言引导跟踪中实现 65–67% 的视觉 token 裁减，且保持 99.7%–100.5% 的基线性能。
 tags:
   - "CVPR2026"
   - "视频理解"

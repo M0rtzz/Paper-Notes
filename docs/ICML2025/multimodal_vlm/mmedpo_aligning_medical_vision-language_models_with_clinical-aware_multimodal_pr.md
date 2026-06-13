@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization
 description: >-
-  [ICML 2025][多模态VLM][医学VLM] 本文提出 MMedPO，一种临床感知的多模态医学偏好优化方法，通过注入可信幻觉和局部病灶加噪构建多模态偏好数据，利用多个医学 LLM 协作评估临床相关性作为加权信号融入 DPO 训练…
+  [ICML 2025][多模态VLM][医学VLM] 本文提出 MMedPO，一种临床感知的多模态医学偏好优化方法，通过注入可信幻觉和局部病灶加噪构建多模态偏好数据，利用多个医学 LLM 协作评估临床相关性作为加权信号融入 DPO 训练，在 Med-VQA 和报告生成任务上分别平均提升 14.2% 和 51.7%。
 tags:
   - "ICML 2025"
   - "多模态VLM"

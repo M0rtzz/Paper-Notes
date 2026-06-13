@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Value Portrait: Assessing Language Models' Values through Psychometrically and Ecologically Valid Items
 description: >-
-  [ACL 2025][LLM/NLP][价值观评估] 提出Value Portrait基准，通过心理测量学验证（每个测试项与真实人类价值观得分的相关性）和生态效度设计（基于真实用户-LLM交互场景），系统评估44个LLM的价值取向，发现模型普遍优先仁慈、安全和自我导向价值…
+  [ACL 2025][LLM 其他][价值观评估] 提出Value Portrait基准，通过心理测量学验证（每个测试项与真实人类价值观得分的相关性）和生态效度设计（基于真实用户-LLM交互场景），系统评估44个LLM的价值取向，发现模型普遍优先仁慈、安全和自我导向价值，同时揭露了模型对不同人口群体的价值认知偏见。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "价值观评估"
   - "心理测量学"
   - "Schwartz价值理论"

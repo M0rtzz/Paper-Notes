@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing the Unknown: Black Box Bayesian Optimization with Energy-Based Model and Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][贝叶斯优化] 提出REBMBO框架，将高斯过程（局部建模）、能量模型EBM（全局探索）和PPO强化学习（多步前瞻）统一为贝叶斯优化闭环，在高维/多峰黑盒优化中显著优于传统BO方法。
+  [NeurIPS 2025][强化学习][贝叶斯优化] 提出REBMBO框架，将高斯过程（局部建模）、能量模型EBM（全局探索）和PPO强化学习（多步前瞻）统一为贝叶斯优化闭环，在高维/多峰黑盒优化中显著优于传统BO方法。 领域现状： 贝叶斯优化（BO）是解决昂贵黑盒函数优化的主流方法，核心是GP代理模型 + 采集函数（如U…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

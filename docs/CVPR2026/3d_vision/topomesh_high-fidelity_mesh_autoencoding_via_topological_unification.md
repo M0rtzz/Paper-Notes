@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TopoMesh: High-Fidelity Mesh Autoencoding via Topological Unification
 description: >-
-  [CVPR 2026][3D视觉][3D VAE] 提出 TopoMesh，通过将GT网格和预测网格统一到 Dual Marching Cubes (DMC) 拓扑框架下，首次实现了顶点和面片级别的显式对应，从而支持直接网格级别监督（拓扑、顶点位置、面法向量）…
+  [CVPR 2026][3D视觉][3D VAE] 提出 TopoMesh，通过将GT网格和预测网格统一到 Dual Marching Cubes (DMC) 拓扑框架下，首次实现了顶点和面片级别的显式对应，从而支持直接网格级别监督（拓扑、顶点位置、面法向量），F1-Sharp 指标比现有SOTA提升 5.9-7.1%，尤其在锐利特征保持上优势显著。
 tags:
   - "CVPR 2026"
   - "3D视觉"

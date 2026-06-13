@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Diffusion Models to Efficient 3D LiDAR Scene Completion
 description: >-
-  [ICCV 2025 (Oral)][自动驾驶][LiDAR场景补全] 提出 ScoreLiDAR，一种针对 3D LiDAR 场景补全的扩散模型蒸馏方法，通过场景级和点级结构损失引导蒸馏，将补全时间从 30.55 秒压缩到 5.37 秒（>5x 加速）…
+  [ICCV 2025 (Oral)][自动驾驶][LiDAR场景补全] 提出 ScoreLiDAR，一种针对 3D LiDAR 场景补全的扩散模型蒸馏方法，通过场景级和点级结构损失引导蒸馏，将补全时间从 30.55 秒压缩到 5.37 秒（>5x 加速），同时在 SemanticKITTI 上超越所有 SOTA 方法。
 tags:
   - "ICCV 2025 (Oral)"
   - "自动驾驶"

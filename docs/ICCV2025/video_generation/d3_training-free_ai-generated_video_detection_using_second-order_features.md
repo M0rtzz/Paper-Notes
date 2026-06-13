@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D3: Training-Free AI-Generated Video Detection Using Second-Order Features
 description: >-
-  [ICCV 2025][视频生成][AI-generated video detection] 本文从牛顿力学的二阶控制系统出发，发现真实视频和 AI 生成视频在二阶时序特征（"加速度"）上存在本质差异——真实视频波动大而生成视频平坦，据此提出 D3，一种完全免训练的 AI 生成视频检测方法…
+  [ICCV 2025][视频生成][AI-generated video detection] 本文从牛顿力学的二阶控制系统出发，发现真实视频和 AI 生成视频在二阶时序特征（"加速度"）上存在本质差异——真实视频波动大而生成视频平坦，据此提出 D3，一种完全免训练的 AI 生成视频检测方法，仅需计算帧间特征的二阶差分标准差即可判别，在 40 个测试子集上达到 SOTA。
 tags:
   - "ICCV 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NegVQA: Can Vision Language Models Understand Negation?
 description: >-
-  [ACL 2025][多模态VLM][否定理解] 提出 NegVQA 基准（7,379 道二选一 VQA 题），系统评估 20 个 VLM 对否定句的理解能力，发现所有模型在否定问题上性能大幅下降（平均 29.7%），并揭示"U 型"缩放趋势。
+  [ACL 2025][多模态VLM][否定理解] 提出 NegVQA 基准（7,379 道二选一 VQA 题），系统评估 20 个 VLM 对否定句的理解能力，发现所有模型在否定问题上性能大幅下降（平均 29.7%），并揭示"U 型"缩放趋势。 - 否定是语言的基本现象：一个"not"可以完全反转句子含义…
 tags:
   - "ACL 2025"
   - "多模态VLM"

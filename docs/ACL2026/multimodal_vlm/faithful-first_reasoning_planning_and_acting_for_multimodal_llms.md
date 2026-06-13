@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Faithful-First Reasoning, Planning, and Acting for Multimodal LLMs
 description: >-
-  [ACL 2026][多模态VLM][感知忠实性] 本文提出 Faithful-First RPA 框架，通过 FaithEvi 管线在每一步推理中评估感知忠实性（claimed objects 是否在图像中真实存在），以及 FaithAct 机制在推理生成过程中强制执行基于证据的规划和行动…
+  [ACL 2026 Findings][多模态VLM][感知忠实性] 本文提出 Faithful-First RPA 框架，通过 FaithEvi 管线在每一步推理中评估感知忠实性（claimed objects 是否在图像中真实存在），以及 FaithAct 机制在推理生成过程中强制执行基于证据的规划和行动，在不降低任务准确率的前提下将感知忠实性提升最高 24%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "感知忠实性"
   - "推理规划与执行"

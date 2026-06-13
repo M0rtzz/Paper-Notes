@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TEMA: Anchor the Image, Follow the Text for Multi-Modification Composed Image Retrieval
 description: >-
-  [ACL 2026][多模态VLM][组合图像检索] 本文提出 TEMA（Text-oriented Entity Mapping Architecture），首个面向多修改文本的组合图像检索（CIR）框架，通过 MMT 解析助手（PA）增强修改实体覆盖、实体映射模块（EM）解决子句-实体对齐问题…
+  [ACL 2026][多模态VLM][组合图像检索] 本文提出 TEMA（Text-oriented Entity Mapping Architecture），首个面向多修改文本的组合图像检索（CIR）框架，通过 MMT 解析助手（PA）增强修改实体覆盖、实体映射模块（EM）解决子句-实体对齐问题，并构建了 M-FashionIQ 和 M-CIRR 两个多修改基准数据集，在原始和多修改场景中均取得最优性能。
 tags:
   - "ACL 2026"
   - "多模态VLM"

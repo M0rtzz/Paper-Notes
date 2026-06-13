@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models
 description: >-
-  [NeurIPS 2025][预训练][离散扩散模型] 提出 HDLM（Hierarchical Diffusion Language Model），通过在 clean token 和 mask token 之间引入具有粗粒度语义的聚类 token 中间层级，实现"下一语义尺度预测"的离散扩散语言建模…
+  [NeurIPS 2025][预训练][离散扩散模型] 提出 HDLM（Hierarchical Diffusion Language Model），通过在 clean token 和 mask token 之间引入具有粗粒度语义的聚类 token 中间层级，实现"下一语义尺度预测"的离散扩散语言建模，推导闭式 ELBO，在 OpenWebText 上困惑度一致优于 MDLM/GIDD，随机扰动后生成困惑度降低 62%。
 tags:
   - "NeurIPS 2025"
   - "预训练"

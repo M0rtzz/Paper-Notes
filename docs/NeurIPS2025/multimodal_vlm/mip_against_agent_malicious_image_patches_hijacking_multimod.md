@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents
 description: >-
-  [NeurIPS 2025][多模态VLM][adversarial attack] 揭示针对多模态OS Agent的新型对抗攻击MIP(Malicious Image Patches)：在屏幕截图中嵌入人眼不可察觉的对抗性扰动图像块(约占屏幕1/7面积)…
+  [NeurIPS 2025][多模态VLM][adversarial attack] 揭示针对多模态OS Agent的新型对抗攻击MIP(Malicious Image Patches)：在屏幕截图中嵌入人眼不可察觉的对抗性扰动图像块(约占屏幕1/7面积)，当OS Agent截屏捕获后会输出预定义的恶意API调用序列；通过联合优化实现跨用户指令和屏幕布局的Universal泛化，攻击成功率高达100%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

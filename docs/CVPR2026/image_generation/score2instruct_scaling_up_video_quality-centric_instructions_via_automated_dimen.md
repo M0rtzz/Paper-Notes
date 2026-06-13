@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Score2Instruct: Scaling Up Video Quality-Centric Instructions via Automated Dimension Scoring
 description: >-
-  [CVPR 2026][图像生成][视频质量评估] Score2Instruct 提出了一个无需人工标注和闭源 API 的自动化视频质量指令生成管线 SIG，通过自动评估 14 个质量维度并用层级 CoT 聚合为完整质量推理文本，构建了 320K+ 条指令数据集 S2I，配合两阶段渐进式微调策略…
+  [CVPR 2026][图像生成][视频质量评估] Score2Instruct 提出了一个无需人工标注和闭源 API 的自动化视频质量指令生成管线 SIG，通过自动评估 14 个质量维度并用层级 CoT 聚合为完整质量推理文本，构建了 320K+ 条指令数据集 S2I，配合两阶段渐进式微调策略，使多个视频 LMM 同时获得质量评分和质量推理能力，在 5 个 VQA 数据集上 SRCC 平均提升 26-31%。
 tags:
   - "CVPR 2026"
   - "图像生成"

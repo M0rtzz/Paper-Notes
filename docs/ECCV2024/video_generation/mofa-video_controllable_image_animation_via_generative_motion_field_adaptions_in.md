@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model
 description: >-
-  [ECCV 2024][视频生成] 提出 MOFA-Video，通过设计多个领域感知运动场适配器（MOFA-Adapter）为冻结的视频扩散模型（SVD）添加可控运动能力，支持手绘轨迹、人脸关键点等多种控制信号及其组合，实现开放域可控图像动画。
+  [ECCV 2024][视频生成] 提出 MOFA-Video，通过设计多个领域感知运动场适配器（MOFA-Adapter）为冻结的视频扩散模型（SVD）添加可控运动能力，支持手绘轨迹、人脸关键点等多种控制信号及其组合，实现开放域可控图像动画。 - 领域内动画方法：（如 SadTalker）可精细控制特定类别（人脸、流体）…
 tags:
   - "ECCV 2024"
   - "视频生成"

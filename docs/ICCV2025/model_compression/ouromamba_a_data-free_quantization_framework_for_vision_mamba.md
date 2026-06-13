@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OuroMamba: A Data-Free Quantization Framework for Vision Mamba
 description: >-
-  [ICCV 2025][模型压缩][量化] 首个面向 Vision Mamba 模型（VMM）的无数据后训练量化框架，通过增强隐式注意力生成高质量合成数据，并结合动态异常值检测的混合精度量化方案，在 W4A4 设置下显著超越现有数据驱动 PTQ 方法。
+  [ICCV 2025][模型压缩][量化] 首个面向 Vision Mamba 模型（VMM）的无数据后训练量化框架，通过增强隐式注意力生成高质量合成数据，并结合动态异常值检测的混合精度量化方案，在 W4A4 设置下显著超越现有数据驱动 PTQ 方法。 Vision Mamba 模型（VMM）因其亚二次计算复杂度成为 ViT…
 tags:
   - "ICCV 2025"
   - "模型压缩"

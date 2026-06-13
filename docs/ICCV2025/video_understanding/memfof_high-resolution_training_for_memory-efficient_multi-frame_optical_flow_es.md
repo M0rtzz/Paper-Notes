@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation
 description: >-
-  [ICCV 2025][视频理解][光流估计] MEMFOF 是首个面向显存效率的多帧光流方法，通过降低相关体积分辨率并引入高分辨率训练策略，在 1080p 推理仅需 2.09GB 显存的同时在 Spring、Sintel、KITTI 等基准上达到 SOTA 精度。
+  [ICCV 2025][视频理解][光流估计] MEMFOF 是首个面向显存效率的多帧光流方法，通过降低相关体积分辨率并引入高分辨率训练策略，在 1080p 推理仅需 2.09GB 显存的同时在 Spring、Sintel、KITTI 等基准上达到 SOTA 精度。 光流估计是低级视觉中的基础任务，广泛应用于视频动作识别、目…
 tags:
   - "ICCV 2025"
   - "视频理解"

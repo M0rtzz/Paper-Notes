@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Discriminability Trap in Source-Free Cross-domain Few-shot Learning
 description: >-
-  [CVPR2026][多模态VLM][Source-Free CDFSL] 揭示了在 VLM 的跨域小样本微调中，增强视觉判别性反而损害跨模态对齐（"判别性陷阱"），提出 SVL + RA 两个即插即用模块来抑制视觉学习捷径并引导跨模态对齐…
+  [CVPR2026][多模态VLM][Source-Free CDFSL] 揭示了在 VLM 的跨域小样本微调中，增强视觉判别性反而损害跨模态对齐（"判别性陷阱"），提出 SVL + RA 两个即插即用模块来抑制视觉学习捷径并引导跨模态对齐，在 4 个 CDFSL 数据集和 11 个 FSL 数据集上取得 SOTA。
 tags:
   - "CVPR2026"
   - "多模态VLM"

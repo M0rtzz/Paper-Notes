@@ -2,9 +2,9 @@
 title: >-
   [论文解读] APC: Transferable and Efficient Adversarial Point Counterattack for Robust 3D Point Cloud Recognition
 description: >-
-  [CVPR 2026][3D视觉][对抗防御] APC 提出一种轻量级输入级净化模块，通过生成逐点反扰动来中和对抗攻击，同时在几何一致性和语义一致性双重约束下训练，实现了跨攻击和跨模型的强鲁棒性。
+  [CVPR 2026 Findings][3D视觉][对抗防御] APC 提出一种轻量级输入级净化模块，通过生成逐点反扰动来中和对抗攻击，同时在几何一致性和语义一致性双重约束下训练，实现了跨攻击和跨模型的强鲁棒性。 领域现状：3D 点云识别中的对抗防御方法分为两类——输入级防御（直接操作输入数据，如 SOR、IF-Defen…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "对抗防御"
   - "3D点云"

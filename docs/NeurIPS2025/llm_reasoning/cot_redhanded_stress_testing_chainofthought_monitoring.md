@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoT Red-Handed: Stress Testing Chain-of-Thought Monitoring
 description: >-
-  [NeurIPS 2025][LLM推理][CoT monitoring] 在 AI Control 框架下系统评估了 Chain-of-Thought 监控的有效性：发现 CoT 监控在检测微妙破坏行为上比仅监控 action 更有效（+10pp），但在检测明显破坏行为时反而更差（-25pp…
+  [NeurIPS 2025][LLM推理][CoT monitoring] 在 AI Control 框架下系统评估了 Chain-of-Thought 监控的有效性：发现 CoT 监控在检测微妙破坏行为上比仅监控 action 更有效（+10pp），但在检测明显破坏行为时反而更差（-25pp，因为推理中的伪合理化会欺骗监控），提出 hybrid 监控协议（独立评分 CoT 和 action 后加权）在所有场景下一致优于两种单一监控，检测率提升 2 倍。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

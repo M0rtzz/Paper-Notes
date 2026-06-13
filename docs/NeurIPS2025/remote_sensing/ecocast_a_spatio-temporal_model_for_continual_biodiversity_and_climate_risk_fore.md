@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EcoCast: A Spatio-Temporal Model for Continual Biodiversity and Climate Risk Forecasting
 description: >-
-  [NeurIPS 2025][遥感][生物多样性预测] 提出EcoCast，融合卫星遥感（Sentinel-2）、气候再分析（ERA5）和公民科学观测（GBIF）数据的Transformer时空序列模型，通过12个月环境特征序列预测下月物种出现概率…
+  [NeurIPS 2025][遥感][生物多样性预测] 提出EcoCast，融合卫星遥感（Sentinel-2）、气候再分析（ERA5）和公民科学观测（GBIF）数据的Transformer时空序列模型，通过12个月环境特征序列预测下月物种出现概率，在非洲5种鸟类分布预测上F1宏平均从Random Forest的0.31提升至0.65，并设计了基于EWC的持续学习框架以适应数据更新。
 tags:
   - "NeurIPS 2025"
   - "遥感"
@@ -120,10 +120,10 @@ F1提升+34百分点，PR-AUC提升+43百分点。
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ Transformer+EWC不新颖，但操作性预报范式引入生态学有价值
-- 实验充分度: ⭐⭐ 仅5种鸟类、仅RF基线、持续学习未评估
-- 写作质量: ⭐⭐⭐ 动机清晰但方法和实验描述过于简略
-- 价值: ⭐⭐⭐ 方向有意义但更像概念验证而非成熟系统
+- 新颖性: ⭐⭐⭐⭐ Transformer+EWC不新颖，但操作性预报范式引入生态学有价值
+- 实验充分度: ⭐⭐⭐ 仅5种鸟类、仅RF基线、持续学习未评估
+- 写作质量: ⭐⭐⭐⭐ 动机清晰但方法和实验描述过于简略
+- 价值: ⭐⭐⭐⭐ 方向有意义但更像概念验证而非成熟系统
 
 <!-- RELATED:START -->
 

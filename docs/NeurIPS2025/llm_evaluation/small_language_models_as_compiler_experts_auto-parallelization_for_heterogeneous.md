@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Small Language Models as Compiler Experts: Auto-Parallelization for Heterogeneous Systems
 description: >-
-  [NeurIPS 2025 (ML for Systems Workshop)][LLM评测][小语言模型] 系统评估了三个小于 1.5B 参数的语言模型（gemma3、llama3.2、qwen2.5）在编译器自动并行化任务上的能力…
+  [NeurIPS 2025 (ML for Systems Workshop)][LLM评测][小语言模型] 系统评估了三个小于 1.5B 参数的语言模型（gemma3、llama3.2、qwen2.5）在编译器自动并行化任务上的能力，使用六种推理策略在 11 个真实世界内核上实现平均 6.81x 加速、峰值 43.25x，证明小模型可作为强大的编译器优化推理引擎。
 tags:
   - "NeurIPS 2025 (ML for Systems Workshop)"
   - "LLM评测"

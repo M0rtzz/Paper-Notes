@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users
 description: >-
-  [ICCV 2025][医学图像][步态分析] 提出ProGait——首个面向大腿截肢假肢用户的多用途视频数据集，支持视频目标分割、2D人体姿态估计和步态分析三项任务，并提供基线模型证明数据集对改善假肢检测的有效性。
+  [ICCV 2025][医学图像][步态分析] 提出ProGait——首个面向大腿截肢假肢用户的多用途视频数据集，支持视频目标分割、2D人体姿态估计和步态分析三项任务，并提供基线模型证明数据集对改善假肢检测的有效性。 核心矛盾 核心矛盾：领域现状：假肢腿在临床康复中至关重要，步态分析是优化假肢设计和对齐的基础…
 tags:
   - "ICCV 2025"
   - "医学图像"

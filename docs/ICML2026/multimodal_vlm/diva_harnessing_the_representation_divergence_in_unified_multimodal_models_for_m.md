@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DIVA: Harnessing the Representation Divergence in Unified Multimodal Models for Mutual Reinforcement
 description: >-
-  [ICML 2026][多模态VLM][统一多模态模型] DIVA 发现统一多模态模型 (UMM) 在中间层会自发把"理解"与"生成"两条信息流解耦，于是显式地把表示因子化为共享与独有两部分，用对比/CLUB 互信息约束实现"共享对齐 + 独有解耦"…
+  [ICML 2026][多模态VLM][统一多模态模型] DIVA 发现统一多模态模型 (UMM) 在中间层会自发把"理解"与"生成"两条信息流解耦，于是显式地把表示因子化为共享与独有两部分，用对比/CLUB 互信息约束实现"共享对齐 + 独有解耦"，在 Show-o/Liquid/Nexus-Gen 上同时提升理解 +7.82% 与生成 +8.46%，无需改架构。
 tags:
   - "ICML 2026"
   - "多模态VLM"

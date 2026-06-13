@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring CLIP's Dense Knowledge for Weakly Supervised Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][弱监督语义分割] ExCEL 提出利用 patch-text 对齐范式（而非传统 image-text 对齐）挖掘 CLIP 的密集知识用于弱监督语义分割，通过文本语义扩充（TSE）和视觉校准（VC）两个模块增强密集对齐能力…
+  [CVPR 2025][语义分割][弱监督语义分割] ExCEL 提出利用 patch-text 对齐范式（而非传统 image-text 对齐）挖掘 CLIP 的密集知识用于弱监督语义分割，通过文本语义扩充（TSE）和视觉校准（VC）两个模块增强密集对齐能力，在仅需 3.2GB 显存和 6% 训练时间的条件下，在 PASCAL VOC 和 MS COCO 上大幅超越 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

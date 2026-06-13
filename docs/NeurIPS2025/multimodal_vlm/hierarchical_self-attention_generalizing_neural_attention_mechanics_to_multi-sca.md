@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Self-Attention: Generalizing Neural Attention Mechanics to Multi-Scale Problems
 description: >-
-  [NeurIPS 2025][多模态VLM][层次化注意力] 从熵最小化第一性原理推导出层次化自注意力（HSA）机制，为嵌套信号（多模态、多尺度数据）提供理论最优的注意力计算方法，并证明 HSA 是在保持层次约束下最接近标准 Softmax 注意力的 KL 散度最优解。
+  [NeurIPS 2025][多模态VLM][层次化注意力] 从熵最小化第一性原理推导出层次化自注意力（HSA）机制，为嵌套信号（多模态、多尺度数据）提供理论最优的注意力计算方法，并证明 HSA 是在保持层次约束下最接近标准 Softmax 注意力的 KL 散度最优解。 1. 领域现状 Transformer 及其自注意力机…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACTG-ARL: Differentially Private Conditional Text Generation with RL-Boosted Control
 description: >-
-  [ICML 2026][LLM安全][隐私合成数据] 本文提出一个分层框架 ACTG，将隐私文本生成分解为特征学习与条件文本生成两个子任务；进一步引入 Anchored RL，通过混合强化学习目标与基于最优 N 选一的 SFT 锚点，在保持文本保真度的前提下提升条件生成器的指令跟随能力…
+  [ICML 2026][LLM安全][隐私合成数据] 本文提出一个分层框架 ACTG，将隐私文本生成分解为特征学习与条件文本生成两个子任务；进一步引入 Anchored RL，通过混合强化学习目标与基于最优 N 选一的 SFT 锚点，在保持文本保真度的前提下提升条件生成器的指令跟随能力，在生物医学数据上相比先前工作提升 20% MAUVE。
 tags:
   - "ICML 2026"
   - "LLM安全"

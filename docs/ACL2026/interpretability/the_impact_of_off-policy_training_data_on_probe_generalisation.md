@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Impact of Off-Policy Training Data on Probe Generalisation
 description: >-
-  [ACL2026][可解释性][激活探针] 这篇论文系统比较 on-policy natural、on-policy incentivised、on-policy prompted 和 off-policy 四类训练数据对 LLM 激活探针泛化的影响，发现文本表面可见行为较稳健…
+  [ACL2026][可解释性][激活探针] 这篇论文系统比较 on-policy natural、on-policy incentivised、on-policy prompted 和 off-policy 四类训练数据对 LLM 激活探针泛化的影响，发现文本表面可见行为较稳健，而欺骗、迎合、sandbagging 等“意图型”行为极易受领域偏移影响，并提出用 on-policy incentivised 测试集预判真实监控中的泛化失败。
 tags:
   - "ACL2026"
   - "可解释性"

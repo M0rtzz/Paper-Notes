@@ -2,7 +2,7 @@
 title: >-
   [论文解读] READ: Enhancing Compositional Reasoning in CLIP via Reconstruction and Alignment of Text Descriptions
 description: >-
-  [NeurIPS 2025][多模态VLM][CLIP] 提出 READ 微调方法，通过两个辅助目标——(1) token-level 重建（冻结解码器从文本嵌入重建替代描述）和 (2) sentence-level 对齐（强制改述的嵌入一致）——增强 CLIP 文本编码器的组合推理能力…
+  [NeurIPS 2025][多模态VLM][CLIP] 提出 READ 微调方法，通过两个辅助目标——(1) token-level 重建（冻结解码器从文本嵌入重建替代描述）和 (2) sentence-level 对齐（强制改述的嵌入一致）——增强 CLIP 文本编码器的组合推理能力，在 5 个组合推理基准上达到 SOTA（超 NegCLIP 4.5%，超 FSC-CLIP 4.1%）。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

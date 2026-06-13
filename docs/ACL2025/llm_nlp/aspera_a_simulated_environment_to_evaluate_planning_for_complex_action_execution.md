@@ -2,9 +2,10 @@
 title: >-
   [论文解读] ASPERA: A Simulated Environment to Evaluate Planning for Complex Action Execution
 description: >-
-  [ACL 2025][动作规划] 提出 ASPERA 框架及 Asper-Bench 基准，用于评估 LLM 在自定义助手库约束下执行复杂多步动作规划（程序生成）的能力，揭示了相比自由代码生成，基于自定义 API 库的程序生成对 LLM 构成显著更大的挑战。
+  [ACL 2025][LLM 其他][动作规划] 提出 ASPERA 框架及 Asper-Bench 基准，用于评估 LLM 在自定义助手库约束下执行复杂多步动作规划（程序生成）的能力，揭示了相比自由代码生成，基于自定义 API 库的程序生成对 LLM 构成显著更大的挑战。 - 领域现状：大语言模型越来越多地被用于驱动数字助…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "动作规划"
   - "数字助手"
   - "程序生成"

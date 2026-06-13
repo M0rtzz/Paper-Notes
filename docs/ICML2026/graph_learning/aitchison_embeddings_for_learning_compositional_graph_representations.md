@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aitchison Embeddings for Learning Compositional Graph Representations
 description: >-
-  [ICML2026][图学习][Aitchison 几何] 本文提出 AICoG，将节点表示为 simplex 上的潜在原型混合，并用 Aitchison 几何与 ILR 等距坐标学习图嵌入，在保持与欧氏 latent distance model 同等表达力的同时…
+  [ICML2026][图学习][Aitchison 几何] 本文提出 AICoG，将节点表示为 simplex 上的潜在原型混合，并用 Aitchison 几何与 ILR 等距坐标学习图嵌入，在保持与欧氏 latent distance model 同等表达力的同时，让节点角色相似性具有基于相对比例 trade-off 的内生解释。
 tags:
   - "ICML2026"
   - "图学习"

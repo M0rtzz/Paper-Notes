@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding
 description: >-
-  [ECCV 2024][多模态VLM][主动学习] 提出 ClassAct/ActiveCLIP 方法，利用小型廉价代理模型为数据点计算"可学习性"评分来优先选择训练数据，使大规模视觉分类器和多模态模型分别减少46%和51%的训练更新量，且总计算量节省高达25%…
+  [ECCV 2024][多模态VLM][主动学习] 提出 ClassAct/ActiveCLIP 方法，利用小型廉价代理模型为数据点计算"可学习性"评分来优先选择训练数据，使大规模视觉分类器和多模态模型分别减少46%和51%的训练更新量，且总计算量节省高达25%，是首个在大规模预训练中实现计算正收益的主动学习方法。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

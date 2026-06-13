@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MPM: Mutual Pair Merging for Efficient Vision Transformers
 description: >-
-  [CVPR 2026][语义分割][Token合并] 提出 Mutual Pair Merging (MPM)，一个无参数、无训练的 ViT token 合并模块，通过互近邻配对+均值融合来减少序列长度，在 ADE20K 上 ViT-Tiny 的 Raspberry Pi 5 延迟降低 60%…
+  [CVPR 2026 Findings][语义分割][Token合并] 提出 Mutual Pair Merging (MPM)，一个无参数、无训练的 ViT token 合并模块，通过互近邻配对+均值融合来减少序列长度，在 ADE20K 上 ViT-Tiny 的 Raspberry Pi 5 延迟降低 60%，H100 上 FlashAttention-2 下吞吐量提升 20%，mIoU 下降控制在 3% 以内。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "语义分割"
   - "Token合并"
   - "Transformer"

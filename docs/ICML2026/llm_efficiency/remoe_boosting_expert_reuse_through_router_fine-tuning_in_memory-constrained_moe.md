@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMoE: Boosting Expert Reuse through Router Fine-Tuning in Memory-Constrained MoE LLM Inference
 description: >-
-  [ICML 2026][LLM效率][细粒度 MoE] ReMoE 冻结所有非 router 参数、仅微调 gate，用一个"时序局部性正则 + Trust-KL 语义锚"的复合损失把 router 出来的路由轨迹整形得更"缓存友好"…
+  [ICML 2026][LLM效率][细粒度 MoE] ReMoE 冻结所有非 router 参数、仅微调 gate，用一个"时序局部性正则 + Trust-KL 语义锚"的复合损失把 router 出来的路由轨迹整形得更"缓存友好"，在不改架构、不加运行时开销的前提下把相邻 token 的专家重用率提升约 26%，并在 Jetson Orin NX 上把 TPOT 降低 43.6–49.8%（解码加速 1.77–1.99×）。
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task Prototype-Based Knowledge Retrieval for Multi-Task Learning from Partially Annotated Data
 description: >-
-  [AAAI 2026][自动驾驶][Multi-Task Learning] 提出基于任务原型的知识检索框架，通过可学习 Task Prototype 嵌入任务特性并量化任务关联、Knowledge Retrieval Transformer 基于 task-affinity score 自适应精炼特征表示…
+  [AAAI 2026][自动驾驶][Multi-Task Learning] 提出基于任务原型的知识检索框架，通过可学习 Task Prototype 嵌入任务特性并量化任务关联、Knowledge Retrieval Transformer 基于 task-affinity score 自适应精炼特征表示，在部分标注多任务学习（MTPSL）中避免依赖未标注任务的预测，PASCAL-Context 和 NYUD-v2 上全面超越 SOTA。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks
 description: >-
-  [ICLR2026][可解释性][机制可解释性] 提出 SALVE 框架——"发现-验证-控制"三阶段流程：用 L1 正则化稀疏自编码器发现模型的可解释特征基，用 Grad-FAM 可视化验证特征语义，再利用 SAE 解码器矩阵引导永久性权重空间编辑…
+  [ICLR2026][可解释性][机制可解释性] 提出 SALVE 框架——"发现-验证-控制"三阶段流程：用 L1 正则化稀疏自编码器发现模型的可解释特征基，用 Grad-FAM 可视化验证特征语义，再利用 SAE 解码器矩阵引导永久性权重空间编辑。在 ResNet-18 和 ViT-B/16 上验证了从类别抑制到跨类特征调控的精确、持久、低副作用控制。
 tags:
   - "ICLR2026"
   - "可解释性"

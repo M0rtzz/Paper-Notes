@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Landscapes for Better Minima along Valleys
 description: >-
-  [NeurIPS 2025][优化/理论][损失景观探索] 本文提出优化器适配器"E"，通过在梯度更新中加入梯度差分的指数移动平均 $\mathbf{a}_k = \text{EMA}(\mathbf{g}_k - \mathbf{g}_{k-1})$ 使优化器能在到达局部极小值后继续沿损失景观的"山谷"探索…
+  [NeurIPS 2025][优化/理论][损失景观探索] 本文提出优化器适配器"E"，通过在梯度更新中加入梯度差分的指数移动平均 $\mathbf{a}_k = \text{EMA}(\mathbf{g}_k - \mathbf{g}_{k-1})$ 使优化器能在到达局部极小值后继续沿损失景观的"山谷"探索更低更平坦的极小值，适配后的 ALTO 在大批量训练中平均提升 2.5% 测试准确率。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

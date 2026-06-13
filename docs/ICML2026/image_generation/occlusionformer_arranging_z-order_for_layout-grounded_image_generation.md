@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OcclusionFormer: Arranging Z-Order for Layout-Grounded Image Generation
 description: >-
-  [ICML2026][图像生成][布局到图像] 针对布局到图像生成在重叠区域出现纹理纠缠和层级混乱的问题，作者构建了带显式 Z-order 与 amodal 标注的大规模数据集 SA-Z，并提出 OcclusionFormer：通过实例解耦 + 体渲染显式建模遮挡优先级，再用查询对齐损失强化空间一致性…
+  [ICML2026][图像生成][布局到图像] 针对布局到图像生成在重叠区域出现纹理纠缠和层级混乱的问题，作者构建了带显式 Z-order 与 amodal 标注的大规模数据集 SA-Z，并提出 OcclusionFormer：通过实例解耦 + 体渲染显式建模遮挡优先级，再用查询对齐损失强化空间一致性，在 OverLayBench 复杂子集与自建 SA-Z Eval 上的遮挡感知指标全面超过 Eligen、Creatilayout、InstanceAssemble 等强基线。
 tags:
   - "ICML2026"
   - "图像生成"

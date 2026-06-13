@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Video Meetings Change Your Expression
 description: >-
-  [ECCV 2024][人体理解][facial expression] 提出 FacET（Facial Explanations through Translations），一种基于生成式域翻译的可解释框架，通过学习解耦的面部空间特征和可解释的时空线性变换…
+  [ECCV 2024][人体理解][facial expression] 提出 FacET（Facial Explanations through Translations），一种基于生成式域翻译的可解释框架，通过学习解耦的面部空间特征和可解释的时空线性变换，自动发现视频会议（VC）与面对面（F2F）交流之间的细微面部表情差异模式，并支持将 VC 视频转换为 F2F 风格的"去zoom化"。
 tags:
   - "ECCV 2024"
   - "人体理解"

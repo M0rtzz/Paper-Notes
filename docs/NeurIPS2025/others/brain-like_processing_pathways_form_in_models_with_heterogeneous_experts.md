@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Brain-Like Processing Pathways Form in Models With Heterogeneous Experts
 description: >-
-  [NeurIPS 2025][Mixture-of-Experts] 在异构 Mixture-of-Experts 模型中，异构专家并不会自动形成处理通路；本文提出三个受大脑启发的归纳偏置（路由代价、任务表现缩放、专家 Dropout）…
+  [NeurIPS 2025][Mixture-of-Experts] 在异构 Mixture-of-Experts 模型中，异构专家并不会自动形成处理通路；本文提出三个受大脑启发的归纳偏置（路由代价、任务表现缩放、专家 Dropout），使模型形成类似大脑"皮层-皮层下"动态通路的 Mixture-of-Pathways 架构。
 tags:
   - "NeurIPS 2025"
   - "Mixture-of-Experts"

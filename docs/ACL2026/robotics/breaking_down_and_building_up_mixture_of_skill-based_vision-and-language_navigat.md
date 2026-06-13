@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking Down and Building Up: Mixture of Skill-Based Vision-and-Language Navigation Agents
 description: >-
-  [ACL 2026][机器人][VLN] SkillNav 把视觉语言导航任务拆解成 5 个原子技能（方向调整、垂直移动、停顿、地标识别、区域识别）+ 1 个时序规划技能，每个技能用合成数据微调一个 DUET 子 agent…
+  [ACL 2026][机器人][VLN] SkillNav 把视觉语言导航任务拆解成 5 个原子技能（方向调整、垂直移动、停顿、地标识别、区域识别）+ 1 个时序规划技能，每个技能用合成数据微调一个 DUET 子 agent，再用 training-free 的 VLM router 做时序重排 + 子目标定位 + 技能选择，在 GSA-R2R 上取得 SOTA 泛化能力（Test-N-Scene SPL 48% vs. 之前最高 43%）。
 tags:
   - "ACL 2026"
   - "机器人"

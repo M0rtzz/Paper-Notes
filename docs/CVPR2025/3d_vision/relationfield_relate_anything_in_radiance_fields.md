@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RelationField: Relate Anything in Radiance Fields
 description: >-
-  [CVPR 2025][3D视觉][神经辐射场] RelationField 首次将物体间关系建模引入神经辐射场，通过从多模态大语言模型（如 GPT-4o）蒸馏关系知识到 NeRF 中的隐式关系特征头，实现了开放词汇的3D场景关系查询与场景图生成，在 3DSSG 基准上显著超越现有方法。
+  [CVPR 2025][3D视觉][神经辐射场] RelationField 首次将物体间关系建模引入神经辐射场，通过从多模态大语言模型（如 GPT-4o）蒸馏关系知识到 NeRF 中的隐式关系特征头，实现了开放词汇的3D场景关系查询与场景图生成，在 3DSSG 基准上显著超越现有方法。 领域现状：近年来…
 tags:
   - "CVPR 2025"
   - "3D视觉"

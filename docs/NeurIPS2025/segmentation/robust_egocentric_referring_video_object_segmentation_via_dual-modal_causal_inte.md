@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Egocentric Referring Video Object Segmentation via Dual-Modal Causal Intervention
 description: >-
-  [NeurIPS 2025][语义分割][第一人称视频分割] 提出 CERES 框架，通过双模态因果干预（语言后门调整消除数据集统计偏差 + 视觉前门调整利用深度信息构建因果中介变量）来解决第一人称视频指代分割中的语言偏差和视觉混淆问题，在 VISOR/VOST/VSCOS 上取得 SOTA。
+  [NeurIPS 2025][语义分割][第一人称视频分割] 提出 CERES 框架，通过双模态因果干预（语言后门调整消除数据集统计偏差 + 视觉前门调整利用深度信息构建因果中介变量）来解决第一人称视频指代分割中的语言偏差和视觉混淆问题，在 VISOR/VOST/VSCOS 上取得 SOTA。 领域现状：第一人称指代视频目标…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

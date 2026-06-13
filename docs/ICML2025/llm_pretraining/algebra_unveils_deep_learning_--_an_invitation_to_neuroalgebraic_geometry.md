@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry
 description: >-
-  [ICML 2025][预训练][神经代数几何] 本文提出 **neuroalgebraic geometry（神经代数几何）** 这一新研究方向，系统地利用代数几何的工具（维度、度、奇异点、纤维、临界点理论等）来分析深度学习模型参数化的函数空间（neuromanifold）…
+  [ICML 2025][预训练][神经代数几何] 本文提出 **neuroalgebraic geometry（神经代数几何）** 这一新研究方向，系统地利用代数几何的工具（维度、度、奇异点、纤维、临界点理论等）来分析深度学习模型参数化的函数空间（neuromanifold），建立起代数几何不变量与机器学习核心问题（样本复杂度、表达能力、训练动力学、隐式偏差）之间的对应字典。
 tags:
   - "ICML 2025"
   - "预训练"

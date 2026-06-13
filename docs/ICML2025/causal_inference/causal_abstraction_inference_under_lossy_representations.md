@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Abstraction Inference under Lossy Representations
 description: >-
-  [ICML 2025][因果推理][因果抽象] 提出 **投影抽象（Projected Abstraction）** 框架，突破现有因果抽象理论对"抽象不变性条件（AIC）"的依赖，使得在有损/降维表示下仍能进行数学一致的因果推断，并给出图模型层面的可识别性判据。
+  [ICML 2025][因果推理][因果抽象] 提出 投影抽象（Projected Abstraction）：框架，突破现有因果抽象理论对"抽象不变性条件（AIC）"的依赖，使得在有损/降维表示下仍能进行数学一致的因果推断，并给出图模型层面的可识别性判据。 因果推断与抽象推理是人类智能的两大核心能力。因果推断通常在结构因果模…
 tags:
   - "ICML 2025"
   - "因果推理"

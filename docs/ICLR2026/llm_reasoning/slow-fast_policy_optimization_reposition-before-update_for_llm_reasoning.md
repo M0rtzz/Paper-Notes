@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning
 description: >-
-  [ICLR 2026][LLM推理][强化学习] 提出 SFPO（Slow-Fast Policy Optimization），通过将每个训练步分解为"快速轨迹—重定位—慢速校正"三阶段结构，在不修改目标函数和 rollout 过程的前提下即插即用地增强 GRPO 的稳定性和样本效率…
+  [ICLR 2026][LLM推理][强化学习] 提出 SFPO（Slow-Fast Policy Optimization），通过将每个训练步分解为"快速轨迹—重定位—慢速校正"三阶段结构，在不修改目标函数和 rollout 过程的前提下即插即用地增强 GRPO 的稳定性和样本效率，在数学推理基准上平均提升最高 2.80 分，rollout 减少最多 4.93 倍。
 tags:
   - "ICLR 2026"
   - "LLM推理"

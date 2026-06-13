@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EU-Agent-Bench: Measuring Illegal Behavior of LLM Agents Under EU Law
 description: >-
-  [NeurIPS 2025][LLM Agent][LLM agent safety] 提出 EU-Agent-Bench，首个基于欧盟法律框架的可验证智能体基准，通过 600 个良性用户请求测试 LLM 智能体的工具调用是否违反欧盟法规…
+  [NeurIPS 2025][LLM Agent][LLM agent safety] 提出 EU-Agent-Bench，首个基于欧盟法律框架的可验证智能体基准，通过 600 个良性用户请求测试 LLM 智能体的工具调用是否违反欧盟法规，发现即使最佳模型（Gemini 2.5 Flash）的合法率也仅约 55%，揭示了当前对齐技术与法律可靠性之间的巨大鸿沟。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

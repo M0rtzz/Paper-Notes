@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Difficulty-Aware Label-Guided Denoising for Monocular 3D Object Detection
 description: >-
-  [AAAI2026][自动驾驶][目标检测] 提出 MonoDLGD，通过根据实例级检测难度自适应扰动并重建 ground-truth 标签，为单目 3D 检测提供显式几何监督，在 KITTI 上取得 SOTA。
+  [AAAI2026][自动驾驶][目标检测] 提出 MonoDLGD，通过根据实例级检测难度自适应扰动并重建 ground-truth 标签，为单目 3D 检测提供显式几何监督，在 KITTI 上取得 SOTA。 单目 3D 目标检测因仅依赖单张 RGB 图像，在深度估计方面天然存在不适定性（ill-posed）…
 tags:
   - "AAAI2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantized Visual Geometry Grounded Transformer
 description: >-
-  [ICLR 2026][3D视觉][VGGT] 针对十亿级 3D 重建模型 VGGT 的部署需求，提出首个专用 PTQ 框架 QuantVGGT，通过双重平滑细粒度量化（Hadamard 旋转 + 通道平滑）解决特殊 token 导致的重尾分布，以及噪声过滤多样化采样解决校准不稳定问题…
+  [ICLR 2026][3D视觉][VGGT] 针对十亿级 3D 重建模型 VGGT 的部署需求，提出首个专用 PTQ 框架 QuantVGGT，通过双重平滑细粒度量化（Hadamard 旋转 + 通道平滑）解决特殊 token 导致的重尾分布，以及噪声过滤多样化采样解决校准不稳定问题，4-bit 量化实现 3.7× 内存压缩和 2.5× 加速，保持 98%+ 精度。
 tags:
   - "ICLR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NRGPT: An Energy-based Alternative for GPT
 description: >-
-  [ICLR 2026][优化/理论][能量基模型] 提出NRGPT（eNeRgy-GPT），对标准GPT进行最小修改使其成为能量基模型：设计注意力能量和前馈能量函数，使每层前向传播等价于token在能量landscape上的梯度下降步，证明了渐近能量下降和稳定收敛性质…
+  [ICLR 2026][优化/理论][能量基模型] 提出NRGPT（eNeRgy-GPT），对标准GPT进行最小修改使其成为能量基模型：设计注意力能量和前馈能量函数，使每层前向传播等价于token在能量landscape上的梯度下降步，证明了渐近能量下降和稳定收敛性质，在ListOps/Shakespeare/OpenWebText上验证了与标准GPT可比的性能。
 tags:
   - "ICLR 2026"
   - "优化/理论"

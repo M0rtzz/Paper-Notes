@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Foundational LiDAR World Models with Efficient Latent Flow Matching
 description: >-
-  [NeurIPS 2025][自动驾驶][LiDAR世界模型] 本文提出首个**可迁移的 LiDAR 世界模型**，通过 Swin Transformer VAE 实现 192× 高压缩比（SOTA 重建精度）、条件流匹配（CFM）替代扩散模型实现 SOTA 语义占据预测（仅需前人 4.38% FLOPs）…
+  [NeurIPS 2025][自动驾驶][LiDAR世界模型] 本文提出首个**可迁移的 LiDAR 世界模型**，通过 Swin Transformer VAE 实现 192× 高压缩比（SOTA 重建精度）、条件流匹配（CFM）替代扩散模型实现 SOTA 语义占据预测（仅需前人 4.38% FLOPs），并在三种域迁移任务中以 5% 标注数据超越 OccWorld 全量训练。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

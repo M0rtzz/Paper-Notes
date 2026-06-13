@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapting Noise to Data: Generative Flows from Learned 1D Processes
 description: >-
-  [ICML 2026][图像生成][flow matching] 本文认为 flow/diffusion 模型默认高斯 latent 并不总适合数据分布，提出用可学习的一维 quantile functions 构造数据自适应 product prior，在 flow matching 中联合学习噪声和速度场…
+  [ICML 2026][图像生成][flow matching] 本文认为 flow/diffusion 模型默认高斯 latent 并不总适合数据分布，提出用可学习的一维 quantile functions 构造数据自适应 product prior，在 flow matching 中联合学习噪声和速度场，从而缩短 transport path 并改善重尾天气数据和低容量图像生成表现。
 tags:
   - "ICML 2026"
   - "图像生成"

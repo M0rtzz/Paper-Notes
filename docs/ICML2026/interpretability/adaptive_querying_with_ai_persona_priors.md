@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Querying with AI Persona Priors
 description: >-
-  [ICML 2026][可解释性][AI Persona] 作者把"LLM 在 persona 条件下产生的回答分布"打包成一个有限混合的贝叶斯先验，让用户在仅被问几道题的情况下，通过对 persona 后验做闭式更新来高效预测其他回答，性能上压过经典 CAT/IRT 基线。
+  [ICML 2026][可解释性][AI Persona] 作者把"LLM 在 persona 条件下产生的回答分布"打包成一个有限混合的贝叶斯先验，让用户在仅被问几道题的情况下，通过对 persona 后验做闭式更新来高效预测其他回答，性能上压过经典 CAT/IRT 基线。 领域现状：自适应问询（adaptive quer…
 tags:
   - "ICML 2026"
   - "可解释性"

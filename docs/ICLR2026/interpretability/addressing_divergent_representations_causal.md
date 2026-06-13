@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Addressing Divergent Representations from Causal Interventions on Neural Networks
 description: >-
-  [ICLR 2026 Oral][causal intervention] 系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况…
+  [ICLR 2026 Oral][可解释性][causal intervention] 系统性地揭示因果干预（activation patching、DAS、SAE 等）会将模型内部表征推离自然分布，理论区分"无害偏移"与"有害偏移"两类情况，并提出 Counterfactual Latent (CL) loss 来约束干预表征不偏离流形，在 7B LLM 上验证可减少偏移同时保持干预准确率。
 tags:
   - "ICLR 2026 Oral"
+  - "可解释性"
   - "causal intervention"
   - "mechanistic interpretability"
   - "representational divergence"

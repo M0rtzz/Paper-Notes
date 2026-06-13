@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M²-Miner: Multi-Agent Enhanced MCTS for Mobile GUI Agent Data Mining
 description: >-
-  [ICLR 2026][LLM Agent][GUI Agent] 提出 M²-Miner，首个基于 MCTS 的移动端 GUI agent 自动数据挖掘框架，通过 InferAgent/OrchestraAgent/JudgeAgent 三智能体协作将挖掘效率提升 64 倍…
+  [ICLR 2026][LLM Agent][GUI Agent] 提出 M²-Miner，首个基于 MCTS 的移动端 GUI agent 自动数据挖掘框架，通过 InferAgent/OrchestraAgent/JudgeAgent 三智能体协作将挖掘效率提升 64 倍，结合 intent recycling 策略丰富意图多样性，训练的 GUI agent 在多个 benchmark 上达到 SOTA。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Backward Spreading to Forward Replay: Revisiting Target Construction in LLM Parameter Editing
 description: >-
-  [ICML 2026][知识编辑][参数编辑] 本文系统剖析了 locate-then-edit 编辑中 backward spreading 为什么能 work 又为什么 work 得不彻底，并提出 forward replay：把第一决定层作为优化变量、再通过标准前向传播得到后续各层 target…
+  [ICML 2026][知识编辑][参数编辑] 本文系统剖析了 locate-then-edit 编辑中 backward spreading 为什么能 work 又为什么 work 得不彻底，并提出 forward replay：把第一决定层作为优化变量、再通过标准前向传播得到后续各层 target，无需额外算力就能在 MEMIT/RECT/PRUNE/AlphaEdit 之上一致涨点。
 tags:
   - "ICML 2026"
   - "知识编辑"

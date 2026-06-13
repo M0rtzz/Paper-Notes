@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Learning Spatial Decay for Vision Transformers
 description: >-
-  [AAAI 2026][LLM/NLP][Transformer] 提出 Spatial Decay Transformer（SDT），首次将数据依赖的空间衰减机制从 1D 序列建模适配到 2D 视觉 Transformer…
+  [AAAI 2026][LLM 其他][Transformer] 提出 Spatial Decay Transformer（SDT），首次将数据依赖的空间衰减机制从 1D 序列建模适配到 2D 视觉 Transformer，通过 Context-Aware Gating（CAG）生成动态的、内容相关的 patch 交互衰减强度，在 ImageNet-1K 分类和生成任务上一致超越 RMT 等强基线。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "空间衰减"
   - "注意力机制"

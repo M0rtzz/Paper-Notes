@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Deep Continuous-Time State-Space Models for Marked Event Sequences
 description: >-
-  [NeurIPS 2025][标记时间点过程] S2P2 将线性 Hawkes 过程与深度状态空间模型结合，通过堆叠多层隐式线性 Hawkes (LLH) 层 + 非线性激活构建高表达力的连续时间 MTPP 模型，利用并行扫描实现线性复杂度和亚线性时间，在 8 个真实数据集上平均提升 33% 预测似然。
+  [NeurIPS 2025 Spotlight][标记时间点过程] S2P2 将线性 Hawkes 过程与深度状态空间模型结合，通过堆叠多层隐式线性 Hawkes (LLH) 层 + 非线性激活构建高表达力的连续时间 MTPP 模型，利用并行扫描实现线性复杂度和亚线性时间，在 8 个真实数据集上平均提升 33% 预测似然。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "标记时间点过程"
   - "状态空间模型"
   - "Hawkes过程"

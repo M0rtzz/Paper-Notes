@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization
 description: >-
-  [ICLR 2026][音频/语音][多模态情感理解] 针对多模态大语言模型在情感推理中的虚假关联和幻觉问题，提出 EmoReAlM 评测基准和 AVEm-DPO 偏好优化方法，通过构建针对性偏好对和文本先验正则化，在 DFEW/RAVDESS/EMER 上实现 6-19% 的零样本相对性能提升。
+  [ICLR 2026][音频/语音][多模态情感理解] 针对多模态大语言模型在情感推理中的虚假关联和幻觉问题，提出 EmoReAlM 评测基准和 AVEm-DPO 偏好优化方法，通过构建针对性偏好对和文本先验正则化，在 DFEW/RAVDESS/EMER 上实现 6-19% 的零样本相对性能提升。 情感理解是构建社会智能体的…
 tags:
   - "ICLR 2026"
   - "音频/语音"

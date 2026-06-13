@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The Structural Complexity of Matrix-Vector Multiplication
 description: >-
-  [NeurIPS 2025][矩阵-向量乘法] 证明对于 corrupted VC-dimension 为 $d$ 的布尔矩阵 $\mathbf{M} \in \{0,1\}^{m \times n}$，矩阵-向量乘法可在 $\widetilde{O}(nm^{1-1/d}+m)$ 时间内完成…
+  [NeurIPS 2025][理论计算机科学 / 算法复杂度][矩阵-向量乘法] 证明对于 corrupted VC-dimension 为 $d$ 的布尔矩阵 $\mathbf{M} \in \{0,1\}^{m \times n}$，矩阵-向量乘法可在 $\widetilde{O}(nm^{1-1/d}+m)$ 时间内完成，首次为结构化矩阵提供了真亚二次时间上界，推翻了 OMv 猜想在结构化输入上的适用性，并导出了动态 Laplacian 求解器、有效电阻、三角检测等问题的首个高精度亚二次算法。
 tags:
   - "NeurIPS 2025"
+  - "理论计算机科学 / 算法复杂度"
   - "矩阵-向量乘法"
   - "VC维"
   - "结构化矩阵"

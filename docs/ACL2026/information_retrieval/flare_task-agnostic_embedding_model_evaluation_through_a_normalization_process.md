@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FLARE: Task-Agnostic Embedding Model Evaluation via Normalizing Flows
 description: >-
-  [ACL 2026][信息检索/RAG][嵌入模型评估] 提出FLARE框架，利用正则化流（Normalizing Flows）进行无标签的文本嵌入模型评估，通过直接从对数似然估计信息充分性来避免基于距离的密度估计在高维空间中的崩溃，在11个数据集上与有监督基准的Spearman $\rho$ 达0.90。
+  [ACL 2026 Findings][信息检索/RAG][嵌入模型评估] 提出FLARE框架，利用正则化流（Normalizing Flows）进行无标签的文本嵌入模型评估，通过直接从对数似然估计信息充分性来避免基于距离的密度估计在高维空间中的崩溃，在11个数据集上与有监督基准的Spearman $\rho$ 达0.90。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "嵌入模型评估"
   - "无标签评估"

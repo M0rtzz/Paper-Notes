@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Embodied AI Requires a Privacy-Utility Trade-off
 description: >-
-  [ICML 2026][AI安全][embodied AI] 本文是一篇 position paper，主张具身 AI 的隐私不能用单阶段补丁解决，必须当作横跨 instruction / perception / planning / interaction 全生命周期的架构级动态控制信号…
+  [ICML 2026][AI安全][embodied AI] 本文是一篇 position paper，主张具身 AI 的隐私不能用单阶段补丁解决，必须当作横跨 instruction / perception / planning / interaction 全生命周期的架构级动态控制信号，并提出 SPINE 框架，用 L1-L4 四级隐私分类矩阵在每个阶段联动调整智能体行为。
 tags:
   - "ICML 2026"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Silent Vote: Improving Zero-Shot LLM Reliability by Aggregating Semantic Neighborhoods
 description: >-
-  [ACL 2026][LLM评测][语义软最大] 这篇论文指出零样本 LLM 分类中的 constrained softmax 会丢掉标签同义词附近的概率质量，提出无需训练的 Semantic Softmax，把 top-K 词表 token 的“沉默投票”聚合回目标标签…
+  [ACL 2026][LLM评测][语义软最大] 这篇论文指出零样本 LLM 分类中的 constrained softmax 会丢掉标签同义词附近的概率质量，提出无需训练的 Semantic Softmax，把 top-K 词表 token 的“沉默投票”聚合回目标标签，从而显著降低 ECE 和 Brier Score 并提升 AUROC/F1。
 tags:
   - "ACL 2026"
   - "LLM评测"

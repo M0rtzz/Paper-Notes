@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GuardSplat: Efficient and Robust Watermarking for 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3DGS] 提出 GuardSplat，通过 CLIP 引导的消息解耦优化（仅训练解码器 5 分钟）和 SH-aware 水印嵌入（仅修改球谐偏移量），实现对 3DGS 资产的高容量、高保真、鲁棒版权保护，总优化时间仅 15 分钟。
+  [CVPR 2025][3D视觉][3DGS] 提出 GuardSplat，通过 CLIP 引导的消息解耦优化（仅训练解码器 5 分钟）和 SH-aware 水印嵌入（仅修改球谐偏移量），实现对 3DGS 资产的高容量、高保真、鲁棒版权保护，总优化时间仅 15 分钟。 领域现状： 3DGS 凭借高保真度和实时渲染速度被广泛应…
 tags:
   - "CVPR 2025"
   - "3D视觉"

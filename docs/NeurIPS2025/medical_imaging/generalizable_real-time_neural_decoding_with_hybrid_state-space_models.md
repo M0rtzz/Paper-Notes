@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizable, Real-Time Neural Decoding with Hybrid State-Space Models
 description: >-
-  [NeurIPS 2025][医学图像][状态空间模型] POSSM 提出了一种混合 SSM-注意力架构，结合 spike 级别 tokenization 和循环状态空间模型骨干，实现了可泛化的实时神经解码，在保持与 Transformer 可比的精度的同时，推理速度提升最高 9 倍。
+  [NeurIPS 2025][医学图像][状态空间模型] POSSM 提出了一种混合 SSM-注意力架构，结合 spike 级别 tokenization 和循环状态空间模型骨干，实现了可泛化的实时神经解码，在保持与 Transformer 可比的精度的同时，推理速度提升最高 9 倍。 神经解码——将神经活动映射到行为或认知…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

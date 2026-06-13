@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AFreeCA: Annotation-Free Counting for All
 description: >-
-  [ECCV 2024][图像生成][Object Counting] 利用 Stable Diffusion 生成合成排序/计数数据，通过先学排序再学计数的两阶段策略 + 密度引导的图像分块，实现了首个适用于任意类别物体的无标注计数方法，在人群计数上超越已有无监督方法。
+  [ECCV 2024][图像生成][Object Counting] 利用 Stable Diffusion 生成合成排序/计数数据，通过先学排序再学计数的两阶段策略 + 密度引导的图像分块，实现了首个适用于任意类别物体的无标注计数方法，在人群计数上超越已有无监督方法。 领域现状：物体计数（尤其人群计数）传统依赖密度图监督…
 tags:
   - "ECCV 2024"
   - "图像生成"

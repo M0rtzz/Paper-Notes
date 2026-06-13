@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation
 description: >-
-  [ICLR2026][图像恢复][block-wise training] 提出 DiffusionBlocks，将残差网络的逐层更新解释为连续时间扩散过程的离散化步骤，从而将网络切分为可完全独立训练的 block，在保持端到端训练性能的同时按 block 数 B 倍减少训练显存。
+  [ICLR2026][图像恢复][block-wise training] 提出 DiffusionBlocks，将残差网络的逐层更新解释为连续时间扩散过程的离散化步骤，从而将网络切分为可完全独立训练的 block，在保持端到端训练性能的同时按 block 数 B 倍减少训练显存。 - 端到端反向传播需要存储所有层的中间激活…
 tags:
   - "ICLR2026"
   - "图像恢复"

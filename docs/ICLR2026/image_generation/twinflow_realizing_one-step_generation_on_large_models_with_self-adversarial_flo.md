@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TwinFlow: Realizing One-step Generation on Large Models with Self-adversarial Flows
 description: >-
-  [ICLR 2026][图像生成][one-step generation] 提出 TwinFlow：通过将 flow matching 时间区间从 $[0,1]$ 扩展到 $[-1,1]$，构造"孪生轨迹"形成自对抗信号，使模型无需判别器或冻结教师即可实现单步生成…
+  [ICLR 2026][图像生成][one-step generation] 提出 TwinFlow：通过将 flow matching 时间区间从 $[0,1]$ 扩展到 $[-1,1]$，构造"孪生轨迹"形成自对抗信号，使模型无需判别器或冻结教师即可实现单步生成。首次将 1-NFE 生成能力扩展到 20B 参数的 Qwen-Image 模型，1-NFE GenEval 0.86 逼近原始 100-NFE 的 0.87，推理成本降低 100×。
 tags:
   - "ICLR 2026"
   - "图像生成"

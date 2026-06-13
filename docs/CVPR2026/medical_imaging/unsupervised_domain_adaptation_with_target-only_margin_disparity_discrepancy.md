@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Domain Adaptation with Target-Only Margin Disparity Discrepancy
 description: >-
-  [CVPR 2026][医学图像][无监督域自适应] 针对 CT→CBCT 肝脏分割的无监督域自适应问题，发现经典 MDD 优化目标中存在矛盾项（源域上特征提取器被优化为最大化 $f$ 和 $f'$ 的差异），提出 Target-Only MDD 改进，去除矛盾项并在两域上统一最小化预测差异…
+  [CVPR 2026][医学图像][无监督域自适应] 针对 CT→CBCT 肝脏分割的无监督域自适应问题，发现经典 MDD 优化目标中存在矛盾项（源域上特征提取器被优化为最大化 $f$ 和 $f'$ 的差异），提出 Target-Only MDD 改进，去除矛盾项并在两域上统一最小化预测差异，在 2D 和 3D 实验中均取得 UDA SOTA。
 tags:
   - "CVPR 2026"
   - "医学图像"

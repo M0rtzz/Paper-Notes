@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SegGen: Supercharging Segmentation Models with Text2Mask and Mask2Img Synthesis
 description: >-
-  [ECCV 2024][语义分割][data generation] 提出 SegGen 数据生成框架，反转传统"先生图再标注"的流程为"先从文本生成分割掩码，再从掩码生成图像"，打破分割数据合成的"鸡生蛋"瓶颈…
+  [ECCV 2024][语义分割][data generation] 提出 SegGen 数据生成框架，反转传统"先生图再标注"的流程为"先从文本生成分割掩码，再从掩码生成图像"，打破分割数据合成的"鸡生蛋"瓶颈，在 ADE20K 上将 Mask2Former R50 的 mIoU 从 47.2 提升至 49.9（+2.7）。
 tags:
   - "ECCV 2024"
   - "语义分割"

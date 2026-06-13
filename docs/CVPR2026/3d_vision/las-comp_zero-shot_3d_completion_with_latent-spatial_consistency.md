@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaS-Comp: Zero-shot 3D Completion with Latent-Spatial Consistency
 description: >-
-  [CVPR 2026][3D视觉][3D形状补全] 提出 LaS-Comp，一种零样本、类别无关的 3D 形状补全框架，通过 Explicit Replacement Stage 在空间域注入已知几何 + Implicit Alignment Stage 在隐空间梯度优化边界一致性…
+  [CVPR 2026][3D视觉][3D形状补全] 提出 LaS-Comp，一种零样本、类别无关的 3D 形状补全框架，通过 Explicit Replacement Stage 在空间域注入已知几何 + Implicit Alignment Stage 在隐空间梯度优化边界一致性，桥接了预训练 3D 基础模型的隐空间与空间域之间的 gap，在多种部分观测模式下达到 SOTA。
 tags:
   - "CVPR 2026"
   - "3D视觉"

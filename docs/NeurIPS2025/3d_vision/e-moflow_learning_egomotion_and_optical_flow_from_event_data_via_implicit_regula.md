@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization
 description: >-
-  [NeurIPS 2025][3D视觉][事件相机] 提出 E-MoFlow，通过将光流建模为隐式神经表示、自运动建模为连续样条，并利用微分几何约束联合优化两者，在无监督范式下实现事件数据的 6-DoF 自运动和稠密光流联合估计。
+  [NeurIPS 2025][3D视觉][事件相机] 提出 E-MoFlow，通过将光流建模为隐式神经表示、自运动建模为连续样条，并利用微分几何约束联合优化两者，在无监督范式下实现事件数据的 6-DoF 自运动和稠密光流联合估计。 事件相机异步感知逐像素亮度变化，具有高动态范围和低延迟等优势，但其数据特性给运动估计带来独特挑…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

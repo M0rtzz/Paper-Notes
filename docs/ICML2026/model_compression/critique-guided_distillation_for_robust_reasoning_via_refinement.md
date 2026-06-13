@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Critique-Guided Distillation for Robust Reasoning via Refinement
 description: >-
-  [ICML 2026][模型压缩][知识蒸馏] 让 student 在训练时**消费**而不是**生成** teacher 的 critique——以 (prompt, student 自答, teacher critique) 为条件预测 teacher 的 refined answer…
+  [ICML 2026][模型压缩][知识蒸馏] 让 student 在训练时**消费**而不是**生成** teacher 的 critique——以 (prompt, student 自答, teacher critique) 为条件预测 teacher 的 refined answer，推理时只需一遍 prompt 就能产出更长更准的推理链，且不像 CFT 那样把指令跟随能力毁掉。
 tags:
   - "ICML 2026"
   - "模型压缩"

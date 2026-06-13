@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRAM: Generative Recommendation via Semantic-aware Multi-granular Late Fusion
 description: >-
-  [ACL 2025][推荐系统][生成式推荐] 提出 GRAM 生成式推荐框架，通过**语义到词汇翻译**将隐式物品层次/协同关系编码到 LLM 词汇空间，并用**多粒度迟融合**独立编码不同粒度提示再在解码端融合…
+  [ACL 2025][推荐系统][生成式推荐] 提出 GRAM 生成式推荐框架，通过**语义到词汇翻译**将隐式物品层次/协同关系编码到 LLM 词汇空间，并用**多粒度迟融合**独立编码不同粒度提示再在解码端融合，在四个基准上 Recall@5 提升 11.5–16.0%、NDCG@5 提升 5.3–13.6%。
 tags:
   - "ACL 2025"
   - "推荐系统"

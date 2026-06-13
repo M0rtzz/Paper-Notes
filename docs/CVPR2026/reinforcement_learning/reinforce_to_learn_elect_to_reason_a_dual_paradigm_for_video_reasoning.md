@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforce to Learn, Elect to Reason: A Dual Paradigm for Video Reasoning
 description: >-
-  [CVPR 2026][强化学习][视频推理] 提出 RLER 双范式框架，训练阶段用 GRPO 配合三种新颖奖励（Frame-sensitive、Think-transparency、Anti-repetition）教模型生成结构化证据，推理阶段用无训练编排器在多候选之间基于证据一致性进行加权选举和自检…
+  [CVPR 2026][强化学习][视频推理] 提出 RLER 双范式框架，训练阶段用 GRPO 配合三种新颖奖励（Frame-sensitive、Think-transparency、Anti-repetition）教模型生成结构化证据，推理阶段用无训练编排器在多候选之间基于证据一致性进行加权选举和自检，在 8 个视频基准上全面超越开源和 RL-based LMM，平均提升 6.3%，仅需约 3.1 个候选。
 tags:
   - "CVPR 2026"
   - "强化学习"

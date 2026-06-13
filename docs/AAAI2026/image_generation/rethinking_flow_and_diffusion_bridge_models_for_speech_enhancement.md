@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rethinking Flow and Diffusion Bridge Models for Speech Enhancement
 description: >-
-  [AAAI 2026][语音增强] 本文提出了一个统一的理论框架，将语音增强中的 flow matching、score-based diffusion 和 Schrödinger bridge 模型统一为在配对数据之间构造不同高斯概率路径的过程，并揭示了这类生成模型每一步采样本质上等价于预测式语音增强…
+  [AAAI 2026][图像生成][语音增强] 本文提出了一个统一的理论框架，将语音增强中的 flow matching、score-based diffusion 和 Schrödinger bridge 模型统一为在配对数据之间构造不同高斯概率路径的过程，并揭示了这类生成模型每一步采样本质上等价于预测式语音增强，进而利用预测范式中的高性能骨干网络、改进损失函数和微调策略来增强桥模型性能。
 tags:
   - "AAAI 2026"
+  - "图像生成"
   - "语音增强"
   - "扩散桥模型"
   - "流匹配"

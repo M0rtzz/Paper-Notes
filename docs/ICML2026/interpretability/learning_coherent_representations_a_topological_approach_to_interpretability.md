@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Coherent Representations: A Topological Approach to Interpretability
 description: >-
-  [ICML 2026][可解释性][coherence] 本文提出 **coherence**（相干性）这一受脑神经编码启发的几何性质，要求样本-特征矩阵的行列在 Vietoris-Rips 滤过下拓扑互相 interleave，并给出可微的 `Coh` 损失…
+  [ICML 2026][可解释性][coherence] 本文提出 **coherence**（相干性）这一受脑神经编码启发的几何性质，要求样本-特征矩阵的行列在 Vietoris-Rips 滤过下拓扑互相 interleave，并给出可微的 `Coh` 损失，在自编码器与 BERT token embedding 上得到拓扑对齐、语义可读的 features，效果远超 L1 稀疏。
 tags:
   - "ICML 2026"
   - "可解释性"

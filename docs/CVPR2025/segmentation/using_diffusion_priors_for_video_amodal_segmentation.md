@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Using Diffusion Priors for Video Amodal Segmentation
 description: >-
-  [CVPR 2025][语义分割][非模态分割] 本文将视频非模态分割（video amodal segmentation）重新建模为条件生成任务，利用预训练视频扩散模型（Stable Video Diffusion）的形状先验，以模态掩码和伪深度图为条件，在遮挡区域实现高达 13% mIoU 提升的补全效果…
+  [CVPR 2025][语义分割][非模态分割] 本文将视频非模态分割（video amodal segmentation）重新建模为条件生成任务，利用预训练视频扩散模型（Stable Video Diffusion）的形状先验，以模态掩码和伪深度图为条件，在遮挡区域实现高达 13% mIoU 提升的补全效果，并首次实现视频级非模态内容补全。
 tags:
   - "CVPR 2025"
   - "语义分割"

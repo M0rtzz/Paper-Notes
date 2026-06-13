@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling
 description: >-
-  [ACL 2026][多智能体][测试时计算] 这篇论文把 self-consistency、self-refinement、multi-agent debate 和 Mixture-of-Agents 放到统一计算预算下比较，发现多智能体推理尤其是 MoA 在 Pareto 前沿上更高效…
+  [ACL 2026][多智能体][测试时计算] 这篇论文把 self-consistency、self-refinement、multi-agent debate 和 Mixture-of-Agents 放到统一计算预算下比较，发现多智能体推理尤其是 MoA 在 Pareto 前沿上更高效，最高可在约 20 倍 CoT 预算下把 MMLU-Pro 准确率从 64.3% 提升到 71.4%。
 tags:
   - "ACL 2026"
   - "多智能体"

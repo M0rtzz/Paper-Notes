@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How to Set AdamW's Weight Decay as You Scale Model and Dataset Size
 description: >-
-  [ICML 2025][推荐系统][AdamW] 将 AdamW 的权重更新解释为指数移动平均（EMA），揭示了 EMA 时间尺度 $\tau = 1/(\eta\lambda)$ 是核心超参数，其以 epoch 为单位的最优值在模型和数据集规模变化时保持稳定…
+  [ICML 2025][推荐系统][AdamW] 将 AdamW 的权重更新解释为指数移动平均（EMA），揭示了 EMA 时间尺度 $\tau = 1/(\eta\lambda)$ 是核心超参数，其以 epoch 为单位的最优值在模型和数据集规模变化时保持稳定，从而给出了 weight decay 随规模缩放的明确规则。
 tags:
   - "ICML 2025"
   - "推荐系统"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Just a Scratch: Enhancing LLM Capabilities for Self-Harm Detection through Intent Refinement
 description: >-
-  [ACL 2025][LLM/NLP][self-harm detection] 提出 SHINES 数据集和 CESM-100 表情符号矩阵，通过区分社交媒体帖子中自伤表达的"随意提及"和"严重意图"，结合表情符号语境解读和多任务微调…
+  [ACL 2025][LLM 其他][self-harm detection] 提出 SHINES 数据集和 CESM-100 表情符号矩阵，通过区分社交媒体帖子中自伤表达的"随意提及"和"严重意图"，结合表情符号语境解读和多任务微调，将 LLM 自伤检测 F1 从 0.74（zero-shot）提升至 0.88（多任务+CESM-100），同时生成可解释的预测理由。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "self-harm detection"
   - "intent classification"
   - "emoji interpretation"

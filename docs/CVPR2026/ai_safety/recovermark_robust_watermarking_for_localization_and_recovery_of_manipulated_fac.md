@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RecoverMark: Robust Watermarking for Localization and Recovery of Manipulated Faces
 description: >-
-  [CVPR 2026][AI安全][人脸篡改检测] 提出 RecoverMark，一个将人脸内容本身作为水印嵌入背景的鲁棒水印框架，同时实现篡改区域定位、原始内容恢复和版权验证，在水印移除攻击下仍保持有效。
+  [CVPR 2026][AI安全][人脸篡改检测] 提出 RecoverMark，一个将人脸内容本身作为水印嵌入背景的鲁棒水印框架，同时实现篡改区域定位、原始内容恢复和版权验证，在水印移除攻击下仍保持有效。 领域现状： AI 生成内容（AIGC）技术使人脸篡改变得极为便捷，如 Stable Diffusion 和各种 GAN…
 tags:
   - "CVPR 2026"
   - "AI安全"

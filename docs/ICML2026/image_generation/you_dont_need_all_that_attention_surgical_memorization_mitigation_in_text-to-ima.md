@@ -2,7 +2,7 @@
 title: >-
   [论文解读] You Don't Need All That Attention: Surgical Memorization Mitigation in Text-to-Image Diffusion Models
 description: >-
-  [ICML2026][图像生成][文生图扩散模型] 本文提出 GUARD，一个推理时的文生图扩散模型记忆缓解框架，通过对标准 classifier-free guidance 加入“远离原始记忆提示”的 repulsion 和“靠近安全条件预测”的 attraction…
+  [ICML2026][图像生成][文生图扩散模型] 本文提出 GUARD，一个推理时的文生图扩散模型记忆缓解框架，通过对标准 classifier-free guidance 加入“远离原始记忆提示”的 repulsion 和“靠近安全条件预测”的 attraction，并用动态 cross-attention spike 检测与衰减实例化 positive target，在降低训练图像复现的同时尽量保持图像质量和 prompt 对齐。
 tags:
   - "ICML2026"
   - "图像生成"

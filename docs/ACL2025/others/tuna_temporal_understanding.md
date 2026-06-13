@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos
 description: >-
-  [ACL 2025] Tuna 构建了 1000 个时间密集短视频的细粒度多维标注数据集，配套字幕评测（事件拆分→匹配→关系分类）和时序问答两个任务，系统性地暴露了当前视频 LMM 在动态时序理解上的弱点。
+  [ACL 2025] Tuna 构建了 1000 个时间密集短视频的细粒度多维标注数据集，配套字幕评测（事件拆分→匹配→关系分类）和时序问答两个任务，系统性地暴露了当前视频 LMM 在动态时序理解上的弱点。 - 视频 ≠ 静态图片堆叠：视频的核心在于时间维度——相机运动、场景转换、主体动作和物体属性随时间动态演变…
 tags:
   - "ACL 2025"
 ---

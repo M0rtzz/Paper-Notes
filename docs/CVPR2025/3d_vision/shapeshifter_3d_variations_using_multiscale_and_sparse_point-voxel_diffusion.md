@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShapeShifter: 3D Variations Using Multiscale and Sparse Point-Voxel Diffusion
 description: >-
-  [CVPR 2025][3D视觉][3D生成] ShapeShifter提出了一种从单个3D参考模型生成高质量形状变体的方法，通过将稀疏体素网格（fVDB）与点-法线-颜色采样结合的多尺度扩散模型，在消费级GPU上实现分钟级训练和交互式推理。
+  [CVPR 2025][3D视觉][3D生成] ShapeShifter提出了一种从单个3D参考模型生成高质量形状变体的方法，通过将稀疏体素网格（fVDB）与点-法线-颜色采样结合的多尺度扩散模型，在消费级GPU上实现分钟级训练和交互式推理。 从单个高质量3D示例生成形状变体是一种任务特定但高效的3D内容创建方式…
 tags:
   - "CVPR 2025"
   - "3D视觉"

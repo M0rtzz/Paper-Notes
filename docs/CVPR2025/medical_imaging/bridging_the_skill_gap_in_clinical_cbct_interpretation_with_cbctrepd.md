@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Skill Gap in Clinical CBCT Interpretation with CBCTRepD
 description: >-
-  [CVPR 2025][医学图像][CBCT报告生成] 提出 CBCTRepD——首个面向口腔颌面 CBCT 的双语报告生成系统，通过构建 7408 例高质量 CBCT-报告配对数据集和多层次临床评估框架，实现了跨经验层级放射科医生的报告质量提升，尤其在减少遗漏病灶和规范化报告结构方面表现突出。
+  [CVPR 2025][医学图像][CBCT报告生成] 提出 CBCTRepD——首个面向口腔颌面 CBCT 的双语报告生成系统，通过构建 7408 例高质量 CBCT-报告配对数据集和多层次临床评估框架，实现了跨经验层级放射科医生的报告质量提升，尤其在减少遗漏病灶和规范化报告结构方面表现突出。 领域现状：生成式 AI 在胸…
 tags:
   - "CVPR 2025"
   - "医学图像"

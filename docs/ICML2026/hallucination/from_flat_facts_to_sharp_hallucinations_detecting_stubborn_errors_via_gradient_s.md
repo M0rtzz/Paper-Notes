@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Flat Facts to Sharp Hallucinations: Detecting Stubborn Errors via Gradient Sensitivity
 description: >-
-  [ICML 2026][幻觉检测][stubborn hallucination] 本文把 LLM 幻觉检测从"看输出概率"切到"看 loss landscape 曲率"——在 embedding 加 Gaussian 噪声测量梯度方向与幅度的扰动，作为 Hessian 谱半径的廉价代理…
+  [ICML 2026][幻觉检测][stubborn hallucination] 本文把 LLM 幻觉检测从"看输出概率"切到"看 loss landscape 曲率"——在 embedding 加 Gaussian 噪声测量梯度方向与幅度的扰动，作为 Hessian 谱半径的廉价代理，在 12 个 model-dataset 组合上 AUROC 全面超越 entropy / Semantic Entropy / EigenScore 等基线。
 tags:
   - "ICML 2026"
   - "幻觉检测"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MoRI: Learning Motivation-Grounded Reasoning for Scientific Ideation in Large Language Models
 description: >-
-  [ACL 2026][LLM/NLP][科学 Ideation] 把科学 ideation 显式建模为「context → motivation → reasoning → method」的两阶段条件推理任务…
+  [ACL 2026][LLM 其他][科学 Ideation] 把科学 ideation 显式建模为「context → motivation → reasoning → method」的两阶段条件推理任务，在 SFT 冷启动基础上用 GRPO + 一对新型可验证奖励（**熵感知信息增益 EAIG** + **对比语义增益 CSG**）训练 14B 模型，让其在 ICLR/NeurIPS 留出测试集上同时超越 GPT-4o、Claude-3.5-Sonnet 与 AI-Scientist-V2 等 agentic 框架。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "科学 Ideation"
   - "Motivation-grounded Reasoning"
   - "GRPO"

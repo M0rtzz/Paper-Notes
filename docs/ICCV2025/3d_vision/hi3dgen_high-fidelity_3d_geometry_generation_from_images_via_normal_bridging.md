@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging
 description: >-
-  [ICCV 2025][3D生成] 提出 Hi3DGen 框架，以法线图作为中间表示桥接 2D 图像到 3D 几何的映射，通过噪声注入回归式法线估计器（NiRNE）和法线正则化潜在扩散（NoRLD）两大核心组件，显著提升生成 3D 模型的几何细节保真度。
+  [ICCV 2025][3D视觉][3D生成] 提出 Hi3DGen 框架，以法线图作为中间表示桥接 2D 图像到 3D 几何的映射，通过噪声注入回归式法线估计器（NiRNE）和法线正则化潜在扩散（NoRLD）两大核心组件，显著提升生成 3D 模型的几何细节保真度。 从 2D 图像生成高保真 3D 模型是计算机视觉的核心任务…
 tags:
   - "ICCV 2025"
+  - "3D视觉"
   - "3D生成"
   - "法线图桥接"
   - "噪声注入回归"

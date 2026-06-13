@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Challenging the Boundaries of Reasoning: An Olympiad-Level Math Benchmark for Large Language Models
 description: >-
-  [ACL 2026][LLM评测][数学推理基准] 提出 OlymMATH，首个统一自然语言评估和形式化定理证明的奥赛级数学基准，包含350题双语（中英文）题目，涵盖OlymMATH-EASY/HARD（200题数值答案）和OlymMATH-LEAN（150题Lean 4形式化）…
+  [ACL 2026][LLM评测][数学推理基准] 提出 OlymMATH，首个统一自然语言评估和形式化定理证明的奥赛级数学基准，包含350题双语（中英文）题目，涵盖OlymMATH-EASY/HARD（200题数值答案）和OlymMATH-LEAN（150题Lean 4形式化），揭示最强模型在HARD子集上仅58.4%准确率。
 tags:
   - "ACL 2026"
   - "LLM评测"

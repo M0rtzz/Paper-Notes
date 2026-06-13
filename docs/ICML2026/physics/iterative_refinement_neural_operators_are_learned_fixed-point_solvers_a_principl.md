@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Iterative Refinement Neural Operators are Learned Fixed-Point Solvers: A Principled Approach to Spectral Bias Mitigation
 description: >-
-  [ICML 2026][物理/科学计算][神经算子] 论文给已训练好的神经算子（FNO/TFNO/WDSR 等）外挂一个共享权重的 U-Net 修正模块 $\Phi_\theta$，在推理时按 $h_{k+1}=h_k+\alpha\Phi_\theta(x,h_k)$ 反复迭代…
+  [ICML 2026 Spotlight][物理/科学计算][神经算子] 论文给已训练好的神经算子（FNO/TFNO/WDSR 等）外挂一个共享权重的 U-Net 修正模块 $\Phi_\theta$，在推理时按 $h_{k+1}=h_k+\alpha\Phi_\theta(x,h_k)$ 反复迭代，把单次前向的预测变成一个收敛到唯一不动点的"学习版残差求解器"，在湍流、活性物质、ERA5 超分等任务上把误差降低 34%–80%，并能稳定外推到训练步数的 2 倍。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "物理/科学计算"
   - "神经算子"
   - "不动点迭代"

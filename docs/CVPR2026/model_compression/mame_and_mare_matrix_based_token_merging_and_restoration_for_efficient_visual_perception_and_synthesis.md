@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MaMe & MaRe: Matrix-Based Token Merging and Restoration for Efficient Visual Perception and Synthesis
 description: >-
-  [CVPR 2026 (Findings)][模型压缩][token merging] 提出 MaMe，一种基于全矩阵运算的免训练可微分 token 合并方法，以及其逆操作 MaRe 用于 token 恢复，在图像分类、视频识别和图像生成等任务中实现高效加速且性能损失极小。
+  [CVPR 2026 Findings][模型压缩][token merging] 提出 MaMe，一种基于全矩阵运算的免训练可微分 token 合并方法，以及其逆操作 MaRe 用于 token 恢复，在图像分类、视频识别和图像生成等任务中实现高效加速且性能损失极小。 Vision Transformer (ViT) 的自…
 tags:
-  - "CVPR 2026 (Findings)"
+  - "CVPR 2026 Findings"
   - "模型压缩"
   - "token merging"
   - "token restoration"

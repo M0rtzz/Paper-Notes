@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding
 description: >-
-  [ICML 2025 (Spotlight, Top 2.6%)][多模态VLM][多模态大语言模型] 针对多模态大语言模型中跨模态注意力不一致与逐层衰减的"注意力缺失障碍"问题，提出模块化双工注意力机制MODA，通过将注意力解耦为模态内自精炼与模态间交互两路…
+  [ICML 2025 (Spotlight, Top 2.6%)][多模态VLM][多模态大语言模型] 针对多模态大语言模型中跨模态注意力不一致与逐层衰减的"注意力缺失障碍"问题，提出模块化双工注意力机制MODA，通过将注意力解耦为模态内自精炼与模态间交互两路，并借助Duplex Aligner和自适应掩码注意力实现"先对齐再校正"的策略，在21个感知、认知与情感基准上验证了有效性。
 tags:
   - "ICML 2025 (Spotlight, Top 2.6%)"
   - "多模态VLM"

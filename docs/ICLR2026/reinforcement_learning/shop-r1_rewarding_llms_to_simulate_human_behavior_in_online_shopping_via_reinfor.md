@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shop-R1: Rewarding LLMs to Simulate Human Behavior in Online Shopping via Reinforcement Learning
 description: >-
-  [强化学习] 提出 Shop-R1 框架，通过分层奖励机制和难度感知缩放的强化学习方法，显著提升 LLM 模拟真实人类在线购物行为的能力，相比 SFT 基线精确匹配提升超过 65%。
+  [强化学习] 提出 Shop-R1 框架，通过分层奖励机制和难度感知缩放的强化学习方法，显著提升 LLM 模拟真实人类在线购物行为的能力，相比 SFT 基线精确匹配提升超过 65%。 - LLM 在模拟人类网页行为方面展现潜力，但现有方法（零样本提示、SFT）效果仍不理想。 - 零样本提示：缺乏个性化和适应性…
 tags:
   - "强化学习"
 ---

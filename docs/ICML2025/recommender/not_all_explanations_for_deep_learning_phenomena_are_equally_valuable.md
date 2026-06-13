@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Not All Explanations for Deep Learning Phenomena Are Equally Valuable
 description: >-
-  [ICML 2025][推荐系统][深度学习现象] 本文是一篇 position paper，主张深度学习中的"反直觉现象"（如 double descent、grokking、lottery ticket）在实际场景中很少出现，研究者不应追求对它们的孤立解释，而应将其作为检验和完善更广泛深度学习理论的实验场…
+  [ICML 2025 Oral][推荐系统][深度学习现象] 本文是一篇 position paper，主张深度学习中的"反直觉现象"（如 double descent、grokking、lottery ticket）在实际场景中很少出现，研究者不应追求对它们的孤立解释，而应将其作为检验和完善更广泛深度学习理论的实验场。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Oral"
   - "推荐系统"
   - "深度学习现象"
   - "科学方法论"

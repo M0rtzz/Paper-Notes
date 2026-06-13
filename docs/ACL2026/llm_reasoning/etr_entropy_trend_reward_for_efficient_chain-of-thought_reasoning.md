@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ETR: Entropy Trend Reward for Efficient Chain-of-Thought Reasoning
 description: >-
-  [ACL 2026][LLM推理][思维链效率] 提出 ETR (Entropy Trend Reward)：用动量加权的逐步熵下降作为 reward shaping 项加进 GRPO，让 LLM 的 CoT 自适应地在 "全局熵下降" 约束下提前收敛，相同正确性下平均压缩 CoT 长度 35–65%…
+  [ACL 2026][LLM推理][思维链效率] 提出 ETR (Entropy Trend Reward)：用动量加权的逐步熵下降作为 reward shaping 项加进 GRPO，让 LLM 的 CoT 自适应地在 "全局熵下降" 约束下提前收敛，相同正确性下平均压缩 CoT 长度 35–65%；在 DeepSeek-R1-Distill-7B 上带来 +9.9% 准确率同时减少 67% token。
 tags:
   - "ACL 2026"
   - "LLM推理"

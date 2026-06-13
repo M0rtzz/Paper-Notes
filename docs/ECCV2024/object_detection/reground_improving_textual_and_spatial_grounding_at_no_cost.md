@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReGround: Improving Textual and Spatial Grounding at No Cost
 description: >-
-  [ECCV 2024][目标检测][textual grounding] 通过将 GLIGEN 中 Gated Self-Attention (GSA) 与 Cross-Attention (CA) 的串行连接改为并行连接（网络重连），在不引入任何新参数、不需要微调、不增加计算开销的前提下…
+  [ECCV 2024][目标检测][textual grounding] 通过将 GLIGEN 中 Gated Self-Attention (GSA) 与 Cross-Attention (CA) 的串行连接改为并行连接（网络重连），在不引入任何新参数、不需要微调、不增加计算开销的前提下，显著缓解了文本定位与空间定位之间的权衡问题。
 tags:
   - "ECCV 2024"
   - "目标检测"

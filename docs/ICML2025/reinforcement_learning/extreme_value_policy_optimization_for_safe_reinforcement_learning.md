@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extreme Value Policy Optimization for Safe Reinforcement Learning
 description: >-
-  [ICML2025][强化学习][安全RL] 提出 EVO 算法，将极值理论 (EVT) 引入约束强化学习，用广义 Pareto 分布 (GPD) 建模代价尾部的极端样本，并设计极端分位数约束与极端优先回放机制，在训练中实现零约束违反的同时保持竞争性策略性能。
+  [ICML2025][强化学习][安全RL] 提出 EVO 算法，将极值理论 (EVT) 引入约束强化学习，用广义 Pareto 分布 (GPD) 建模代价尾部的极端样本，并设计极端分位数约束与极端优先回放机制，在训练中实现零约束违反的同时保持竞争性策略性能。 约束强化学习 (CRL) 的目标是在满足预设约束条件下最大化累积…
 tags:
   - "ICML2025"
   - "强化学习"

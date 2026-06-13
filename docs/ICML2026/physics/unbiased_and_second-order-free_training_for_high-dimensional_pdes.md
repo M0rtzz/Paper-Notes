@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unbiased and Second-Order-Free Training for High-Dimensional PDEs
 description: >-
-  [ICML 2026][物理/科学计算][BSDE] 本文针对 EM-BSDE 训练 loss 的离散化偏置问题，提出 Un-EM-BSDE：把单步误差用两组独立的 Monte Carlo 子样本平均后做"乘积"形成无偏估计，既消除偏置又不需要 Hessian…
+  [ICML 2026][物理/科学计算][BSDE] 本文针对 EM-BSDE 训练 loss 的离散化偏置问题，提出 Un-EM-BSDE：把单步误差用两组独立的 Monte Carlo 子样本平均后做"乘积"形成无偏估计，既消除偏置又不需要 Hessian，在 HJB/BSB/AC 等基准 PDE 上达到 Heun-BSDE / FS-PINNs 的精度但训练时间仅 1.79× EM-BSDE（相比 Heun-BSDE 的 42.91× 与 FS-PINNs 的 32.07×）。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

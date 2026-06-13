@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Do We Not Need Larger Vision Models?
 description: >-
-  [ECCV2024][3D视觉][多尺度特征] 提出 Scaling on Scales (S2) 策略：冻结小模型（如 ViT-B）在多个图像尺度上运行并拼接特征，无需增加参数即可在分类、分割、深度估计、MLLM 等任务上匹敌甚至超越大模型（ViT-H/G）…
+  [ECCV2024][3D视觉][多尺度特征] 提出 Scaling on Scales (S2) 策略：冻结小模型（如 ViT-B）在多个图像尺度上运行并拼接特征，无需增加参数即可在分类、分割、深度估计、MLLM 等任务上匹敌甚至超越大模型（ViT-H/G），并从理论和实验上论证了大模型学到的表征大部分可由多尺度小模型线性近似。
 tags:
   - "ECCV2024"
   - "3D视觉"

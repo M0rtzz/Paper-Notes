@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distillation of Large Language Models via Concrete Score Matching
 description: >-
-  [ICLR 2026][模型压缩][知识蒸馏] 提出 Concrete Score Distillation (CSD)，一种基于离散 score matching 的 LLM 知识蒸馏损失，通过匹配 student 和 teacher 在所有词表对之间的相对 logit 差异…
+  [ICLR 2026][模型压缩][知识蒸馏] 提出 Concrete Score Distillation (CSD)，一种基于离散 score matching 的 LLM 知识蒸馏损失，通过匹配 student 和 teacher 在所有词表对之间的相对 logit 差异，同时克服了 softmax 平滑和直接 logit 蒸馏的解空间限制问题。
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STEM: Structure-Tracing Evidence Mining for Knowledge Graphs-Driven Retrieval-Augmented Generation
 description: >-
-  [ACL2026][图学习][知识图谱问答] STEM 将知识图谱多跳问答从逐步路径搜索改写为“先生成查询结构图、再按结构追踪证据子图”的问题，通过语义到结构投影、Triple-GNN 全局引导和结构匹配检索，在 WebQSP 与 CWQ 上显著提升 KG-RAG 的答案准确率和证据覆盖率。
+  [ACL2026][图学习][知识图谱问答] STEM 将知识图谱多跳问答从逐步路径搜索改写为“先生成查询结构图、再按结构追踪证据子图”的问题，通过语义到结构投影、Triple-GNN 全局引导和结构匹配检索，在 WebQSP 与 CWQ 上显著提升 KG-RAG 的答案准确率和证据覆盖率。 领域现状：知识图谱增强的 RAG…
 tags:
   - "ACL2026"
   - "图学习"

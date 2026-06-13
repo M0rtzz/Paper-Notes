@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking Strong Supervision: A Data-Centric Study of General-Purpose Audio Pre-Training Methods
 description: >-
-  [CVPR 2026][音频/语音][音频预训练] 本文通过系统的数据中心实验证明音频预训练性能主要由标签/监督质量驱动而非模型设计，提出 Unified Tag System (UTS) 将语音、音乐、环境音统一到 800-3k 标签的高粒度词表中…
+  [CVPR 2026][音频/语音][音频预训练] 本文通过系统的数据中心实验证明音频预训练性能主要由标签/监督质量驱动而非模型设计，提出 Unified Tag System (UTS) 将语音、音乐、环境音统一到 800-3k 标签的高粒度词表中，UTS 训练的模型用 5 倍更少的数据在语音（VoxCeleb2）和音乐（MusicCaps）等域外任务上超越 AudioSet 基线。
 tags:
   - "CVPR 2026"
   - "音频/语音"

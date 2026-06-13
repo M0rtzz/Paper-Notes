@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Efficient General Feature Prediction in Masked Skeleton Modeling
 description: >-
-  [ICCV 2025][视频理解][掩码骨架建模] 提出 GFP（General Feature Prediction）框架，将掩码骨架建模的重建目标从低层关节坐标提升为多层次高层语义特征预测，配合轻量级目标生成网络和信息最大化约束，实现 6.2 倍训练加速的同时达到 SOTA 性能。
+  [ICCV 2025][视频理解][掩码骨架建模] 提出 GFP（General Feature Prediction）框架，将掩码骨架建模的重建目标从低层关节坐标提升为多层次高层语义特征预测，配合轻量级目标生成网络和信息最大化约束，实现 6.2 倍训练加速的同时达到 SOTA 性能。 - 掩码骨架建模（masked ske…
 tags:
   - "ICCV 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TableVista: Benchmarking Multimodal Table Reasoning under Visual and Structural Complexity
 description: >-
-  [ACL 2026 Findings][多模态VLM][多模态表格推理] TableVista 构建了一个 3,000 道高质量表格推理题、扩展为 30,000 个视觉样本的多模态表格 benchmark，系统评测 29 个基础模型后发现：模型对风格变化相对稳定…
+  [ACL 2026 Findings][多模态VLM][多模态表格推理] TableVista 构建了一个 3,000 道高质量表格推理题、扩展为 30,000 个视觉样本的多模态表格 benchmark，系统评测 29 个基础模型后发现：模型对风格变化相对稳定，但在复杂结构、跨表推理、视觉碎片化和纯视觉输入下明显退化。
 tags:
   - "ACL 2026 Findings"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding
 description: >-
-  [ACL 2025][预训练][MBR Decoding] 从 bias-diversity 分解的理论视角重新解释 MBR 解码：质量估计误差 MSE = Bias - Diversity，增加 diversity（伪参考的多样性）是提升 MBR 性能的关键；进一步通过信息论扩展到一般推理方法…
+  [ACL 2025][预训练][MBR Decoding] 从 bias-diversity 分解的理论视角重新解释 MBR 解码：质量估计误差 MSE = Bias - Diversity，增加 diversity（伪参考的多样性）是提升 MBR 性能的关键；进一步通过信息论扩展到一般推理方法，揭示 diversity 是推理 scaling law（增加采样提升性能但边际递减）的理论根源，并在机器翻译、摘要、图像描述任务上实证验证。
 tags:
   - "ACL 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?
 description: >-
-  [ICLR 2026][AI安全][公平性] 首次系统性量化分析输入归因解释（input-based explanations）与公平性的关系：发现解释能有效检测有偏预测、可作为训练正则化减少偏见，但不能用于自动选择公平模型。
+  [ICLR 2026][AI安全][公平性] 首次系统性量化分析输入归因解释（input-based explanations）与公平性的关系：发现解释能有效检测有偏预测、可作为训练正则化减少偏见，但不能用于自动选择公平模型。 领域现状：NLP 模型在仇恨言论检测等敏感任务中常复现或放大训练数据中的社会偏见…
 tags:
   - "ICLR 2026"
   - "AI安全"

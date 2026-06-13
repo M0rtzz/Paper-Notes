@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Program Synthesis Benchmark for Visual Programming in XLogoOnline Environment
 description: >-
-  [ACL 2025][代码智能][程序合成] 本文基于 XLogoOnline 视觉编程环境构建了一个需要空间规划、编程和逻辑推理等多技能组合的程序合成基准，发现 GPT-4V 仅能解决 20% 的任务，但通过 8 万+合成数据微调加上模拟器驱动的课程学习…
+  [ACL 2025][代码智能][程序合成] 本文基于 XLogoOnline 视觉编程环境构建了一个需要空间规划、编程和逻辑推理等多技能组合的程序合成基准，发现 GPT-4V 仅能解决 20% 的任务，但通过 8 万+合成数据微调加上模拟器驱动的课程学习，Llama3-8B 大幅超越了 GPT-4V 和 Llama3-70B。
 tags:
   - "ACL 2025"
   - "代码智能"

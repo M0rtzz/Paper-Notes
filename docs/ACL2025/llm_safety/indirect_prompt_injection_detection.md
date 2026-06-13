@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Indirect Prompt Injection Attacks Be Detected and Removed?
 description: >-
-  [ACL 2025][LLM安全][提示学习] 本文系统研究间接 prompt injection 攻击的检测与移除：构建评估基准，发现现有检测模型对间接攻击表现不佳但专门训练的模型可达 99% 准确率，提出分割移除和抽取移除两种方法，并将检测+移除组合为过滤管道…
+  [ACL 2025][LLM安全][提示学习] 本文系统研究间接 prompt injection 攻击的检测与移除：构建评估基准，发现现有检测模型对间接攻击表现不佳但专门训练的模型可达 99% 准确率，提出分割移除和抽取移除两种方法，并将检测+移除组合为过滤管道，有效降低间接 prompt injection 的攻击成功率。
 tags:
   - "ACL 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAS: Segment Any 3D Scene with Integrated 2D Priors
 description: >-
-  [ICCV 2025][3D视觉][开放词汇3D分割] 提出 SAS 框架，首次整合多个 2D 开放词汇模型的互补能力来学习更好的 3D 表示：通过 Model Alignment via Text 对齐不同模型的特征空间…
+  [ICCV 2025][3D视觉][开放词汇3D分割] 提出 SAS 框架，首次整合多个 2D 开放词汇模型的互补能力来学习更好的 3D 表示：通过 Model Alignment via Text 对齐不同模型的特征空间，通过 Annotation-Free Model Capability Construction 利用扩散模型合成图像来量化各模型识别不同类别的能力，以此指导多模型特征融合和 3D 蒸馏，在 ScanNet v2/Matterport3D/nuScenes 上大幅超越前作。
 tags:
   - "ICCV 2025"
   - "3D视觉"

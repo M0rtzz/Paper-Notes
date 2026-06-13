@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCFlow: Implicitly Learning Style and Content Disentanglement with Flow Models
 description: >-
-  [图像生成] 提出SCFlow，通过Flow Matching学习风格和内容的可逆合并映射，利用映射的可逆性让解耦作为合并过程的自然涌现属性，无需显式解耦监督。
+  [图像生成] 提出SCFlow，通过Flow Matching学习风格和内容的可逆合并映射，利用映射的可逆性让解耦作为合并过程的自然涌现属性，无需显式解耦监督。 风格与内容的显式解耦面临根本困难： 1. 两者语义重叠，边界主观且模糊 2. 缺乏"干净"的风格/内容真值标注 3. 现有方法（生成式或判别式）都需要预定义分离标准…
 tags:
   - "图像生成"
 ---

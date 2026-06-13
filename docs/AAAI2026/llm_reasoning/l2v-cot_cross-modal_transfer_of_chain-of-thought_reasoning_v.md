@@ -2,9 +2,9 @@
 title: >-
   [论文解读] L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention
 description: >-
-  [AAAI 2026][LLM推理][CoT推理迁移] 通过 LAT 分析发现 LLM 和 VLM 的低频 CoT 方向表示具有相似分布，提出 L2V-CoT：从 LLM 提取 CoT 方向表示 → 低通滤波 → 频域重采样匹配维度 → 注入 VLM 隐藏层…
+  [AAAI 2026 Oral][LLM推理][CoT推理迁移] 通过 LAT 分析发现 LLM 和 VLM 的低频 CoT 方向表示具有相似分布，提出 L2V-CoT：从 LLM 提取 CoT 方向表示 → 低通滤波 → 频域重采样匹配维度 → 注入 VLM 隐藏层，training-free 地将 LLM 的推理能力迁移到 VLM，平均提升 3.7%，最高 8.6%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM推理"
   - "CoT推理迁移"
   - "激活工程"

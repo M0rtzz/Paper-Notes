@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disrupting Model Merging: A Parameter-Level Defense Without Sacrificing Accuracy
 description: >-
-  [ICCV 2025][图像生成][模型合并防御] 提出 PaRaMS（Parameter Rearrangement & Random Multi-head Scaling），一种参数级主动防御方法，通过功能等价的参数变换将模型推离共享损失盆地，使得被保护模型在合并时性能严重退化，同时保持未合并时的原始性能…
+  [ICCV 2025][图像生成][模型合并防御] 提出 PaRaMS（Parameter Rearrangement & Random Multi-head Scaling），一种参数级主动防御方法，通过功能等价的参数变换将模型推离共享损失盆地，使得被保护模型在合并时性能严重退化，同时保持未合并时的原始性能。
 tags:
   - "ICCV 2025"
   - "图像生成"

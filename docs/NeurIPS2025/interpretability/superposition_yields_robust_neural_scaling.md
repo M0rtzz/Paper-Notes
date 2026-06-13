@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Superposition Yields Robust Neural Scaling
 description: >-
-  [NeurIPS 2025][可解释性][神经缩放定律] 揭示表示叠加（superposition）是神经缩放定律的核心驱动力：在强叠加区间，损失**通用地**与模型维度成反比（$L \propto 1/m$），且该行为与数据频率分布的具体形式无关，这与实际 LLM 的缩放行为一致。
+  [NeurIPS 2025 Best Paper][可解释性][神经缩放定律] 揭示表示叠加（superposition）是神经缩放定律的核心驱动力：在强叠加区间，损失**通用地**与模型维度成反比（$L \propto 1/m$），且该行为与数据频率分布的具体形式无关，这与实际 LLM 的缩放行为一致。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Best Paper"
   - "可解释性"
   - "神经缩放定律"
   - "叠加现象"

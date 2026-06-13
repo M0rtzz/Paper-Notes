@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhanced Continual Learning of Vision-Language Models with Model Fusion
 description: >-
-  [ICLR 2026][多模态VLM][持续学习] 提出Continual Decoupling-Unifying（ConDU）框架，首次将模型融合引入VLM持续学习，通过维护统一模型并结合任务触发器进行解耦-统一迭代操作，在MTIL基准上平均性能超SOTA 2%，同时增强了零样本能力。
+  [ICLR 2026][多模态VLM][持续学习] 提出Continual Decoupling-Unifying（ConDU）框架，首次将模型融合引入VLM持续学习，通过维护统一模型并结合任务触发器进行解耦-统一迭代操作，在MTIL基准上平均性能超SOTA 2%，同时增强了零样本能力。 VLM（如CLIP）通过整合视觉和文…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

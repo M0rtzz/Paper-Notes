@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoseTraj: Pose-Aware Trajectory Control in Video Diffusion
 description: >-
-  [CVPR 2025][视频生成][轨迹引导视频生成] 提出 PoseTraj，一个姿态感知的轨迹引导视频生成模型，通过两阶段姿态感知预训练（利用合成数据集 PoseTraj-10K 和3D包围盒中间监督）和相机运动解耦微调，实现从2D轨迹生成3D对齐的旋转运动视频。
+  [CVPR 2025][视频生成][轨迹引导视频生成] 提出 PoseTraj，一个姿态感知的轨迹引导视频生成模型，通过两阶段姿态感知预训练（利用合成数据集 PoseTraj-10K 和3D包围盒中间监督）和相机运动解耦微调，实现从2D轨迹生成3D对齐的旋转运动视频。 - 轨迹引导视频生成因其交互友好性受到广泛关注…
 tags:
   - "CVPR 2025"
   - "视频生成"

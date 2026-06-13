@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Language-Coupled Reinforcement Learning for Multilingual Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][信息检索/RAG][多语言RAG] 本文提出 LcRL 框架，通过语言耦合的 GRPO 策略优化和反一致性惩罚奖励，解决多语言 RAG 中的知识偏差和知识冲突问题，在多语言问答任务上取得显著提升。
+  [ACL 2026 Findings][信息检索/RAG][多语言RAG] 本文提出 LcRL 框架，通过语言耦合的 GRPO 策略优化和反一致性惩罚奖励，解决多语言 RAG 中的知识偏差和知识冲突问题，在多语言问答任务上取得显著提升。 领域现状：检索增强生成（RAG）已成为缓解 LLM 幻觉和知识不足的有效范式…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "多语言RAG"
   - "强化学习"

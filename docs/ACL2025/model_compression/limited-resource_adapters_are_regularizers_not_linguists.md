@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Limited-Resource Adapters Are Regularizers, Not Linguists
 description: >-
-  [模型压缩][低资源机器翻译] 本文将 adapter souping（权重平均）与交叉注意力微调结合用于低资源克里奥尔语机器翻译，发现虽然方法带来了显著提升（最高 +8 BLEU），但语言关联性与 adapter 性能无有意义的协变关系——随机初始化的未训练 adapter 表现同样优秀…
+  [模型压缩][低资源机器翻译] 本文将 adapter souping（权重平均）与交叉注意力微调结合用于低资源克里奥尔语机器翻译，发现虽然方法带来了显著提升（最高 +8 BLEU），但语言关联性与 adapter 性能无有意义的协变关系——随机初始化的未训练 adapter 表现同样优秀，表明 adapter 在此设定下的作用本质是**参数正则化而非语言信息迁移**。
 tags:
   - "模型压缩"
   - "低资源机器翻译"

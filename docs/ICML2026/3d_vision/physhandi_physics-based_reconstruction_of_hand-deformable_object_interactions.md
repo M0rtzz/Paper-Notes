@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysHanDI: Physics-Based Reconstruction of Hand-Deformable Object Interactions
 description: >-
-  [ICML 2026][3D视觉][手物交互] 本文提出 PhysHanDI，把 MANO 手模型和 Spring-Mass 软体模型耦合起来，用稠密手网格驱动可变形物体的物理仿真，并反向利用物体仿真去精化手的重建，在稀疏视角 RGB-D 视频上同时拿到了手和软物的稠密 3D 重建 SOTA。
+  [ICML 2026][3D视觉][手物交互] 本文提出 PhysHanDI，把 MANO 手模型和 Spring-Mass 软体模型耦合起来，用稠密手网格驱动可变形物体的物理仿真，并反向利用物体仿真去精化手的重建，在稀疏视角 RGB-D 视频上同时拿到了手和软物的稠密 3D 重建 SOTA。 领域现状：现有手物交互重建大多…
 tags:
   - "ICML 2026"
   - "3D视觉"

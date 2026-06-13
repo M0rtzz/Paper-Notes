@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSSD: Simply-Scalable Speculative Decoding
 description: >-
-  [ACL2026][模型压缩][推测解码] 提出 SSSD，一种无需训练的推测解码方法，结合轻量级 n-gram 匹配与硬件感知投机长度调整，在无需任何草稿模型训练或部署的前提下，实现最高 2.9× 的推理加速，并在语言/领域迁移和长上下文场景中展现出优于训练式方法的鲁棒性。
+  [ACL2026][模型压缩][推测解码] 提出 SSSD，一种无需训练的推测解码方法，结合轻量级 n-gram 匹配与硬件感知投机长度调整，在无需任何草稿模型训练或部署的前提下，实现最高 2.9× 的推理加速，并在语言/领域迁移和长上下文场景中展现出优于训练式方法的鲁棒性。 推测解码（Speculative Decodin…
 tags:
   - "ACL2026"
   - "模型压缩"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2411.05894](https://arxiv.org/abs/2411.05894)
 **代码**: [GitHub](https://github.com/huawei-csl/sssd_speculator)
-**领域**: model_compression
+**领域**: 模型压缩
 **关键词**: 推测解码, LLM推理加速, n-gram匹配, 无训练, 硬件感知
 
 ## 一句话总结

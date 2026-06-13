@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment
 description: >-
-  [ICLR 2026][低资源编程语言] 提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码…
+  [ICLR 2026][LLM对齐][低资源编程语言] 提出Agnostics，一种语言无关的后训练pipeline：将编程任务统一为I/O行为规范格式，用通用验证器+GRPO强化学习训练LLM在任何编程语言上编码，使Qwen 4B在Lua/Julia/R/OCaml/Fortran五种低资源语言上达到匹敌16B-70B模型的SOTA水平。
 tags:
   - "ICLR 2026"
+  - "LLM对齐"
   - "低资源编程语言"
   - "RLVR"
   - "语言无关验证器"

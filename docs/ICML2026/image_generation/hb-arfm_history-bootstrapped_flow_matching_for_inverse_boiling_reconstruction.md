@@ -2,7 +2,7 @@
 title: >-
   [论文解读] (HB-ARFM) History-Bootstrapped Flow Matching for Inverse Boiling Reconstruction
 description: >-
-  [ICML2026][图像生成][流匹配] HB-ARFM 用"历史观测引导"的条件 flow matching 解决多相沸腾流场的逆问题重建：先用一段历史观测窗口 bootstrap 出初始隐状态，再用同一个条件速度场自回归地把重建向前推进，在仅观测界面几何与界面速度的情况下…
+  [ICML2026][图像生成][流匹配] HB-ARFM 用"历史观测引导"的条件 flow matching 解决多相沸腾流场的逆问题重建：先用一段历史观测窗口 bootstrap 出初始隐状态，再用同一个条件速度场自回归地把重建向前推进，在仅观测界面几何与界面速度的情况下，首次完成完整温度场与速度场的时空一致重建。
 tags:
   - "ICML2026"
   - "图像生成"

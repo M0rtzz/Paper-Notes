@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Low-Discrepancy Sequences
 description: >-
-  [ICML 2026][机器人][低差异序列] NeuroLDS 用一个把整数索引经正弦位置编码送入 MLP 的小网络，先回归 Sobol' 再用闭式 $L_2$ 差异损失在所有前缀上微调，得到第一个支持任意长度、可扩展的神经低差异序列…
+  [ICML 2026][机器人][低差异序列] NeuroLDS 用一个把整数索引经正弦位置编码送入 MLP 的小网络，先回归 Sobol' 再用闭式 $L_2$ 差异损失在所有前缀上微调，得到第一个支持任意长度、可扩展的神经低差异序列，在 4 维差异指标、Borehole 积分、RRT 运动规划与 Black–Scholes PDE 求解上全面优于 Sobol'/Halton。
 tags:
   - "ICML 2026"
   - "机器人"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold
 description: >-
-  [NeurIPS 2025][图像生成][LoRA] 提出StelLA，通过将LoRA的适配矩阵分解为 $USV^\top$ 三因子形式，并将 $U$、$V$ 约束在Stiefel流形上进行黎曼优化，实现训练过程中对低秩子空间的显式学习，在多个下游任务上一致超越现有LoRA变体。
+  [NeurIPS 2025 Spotlight][图像生成][LoRA] 提出StelLA，通过将LoRA的适配矩阵分解为 $USV^\top$ 三因子形式，并将 $U$、$V$ 约束在Stiefel流形上进行黎曼优化，实现训练过程中对低秩子空间的显式学习，在多个下游任务上一致超越现有LoRA变体。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "LoRA"
   - "Stiefel流形"

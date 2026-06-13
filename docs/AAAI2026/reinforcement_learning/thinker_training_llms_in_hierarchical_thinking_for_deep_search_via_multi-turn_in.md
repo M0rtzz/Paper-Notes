@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thinker: Training LLMs in Hierarchical Thinking for Deep Search via Multi-Turn Interaction
 description: >-
-  [AAAI2026][强化学习][deep search] 提出 Thinker 框架，通过分层思维（breadth decomposition + depth solving）和双重表征（自然语言 + 逻辑函数）实现结构化的深度搜索推理，配合知识边界判定减少不必要检索，以 SFT 方式训练…
+  [AAAI2026][强化学习][deep search] 提出 Thinker 框架，通过分层思维（breadth decomposition + depth solving）和双重表征（自然语言 + 逻辑函数）实现结构化的深度搜索推理，配合知识边界判定减少不必要检索，以 SFT 方式训练，在多个 QA 基准上显著超越 RL-based deep search 方法。
 tags:
   - "AAAI2026"
   - "强化学习"

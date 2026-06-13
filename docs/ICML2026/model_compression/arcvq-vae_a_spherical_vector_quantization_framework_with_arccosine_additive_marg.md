@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArcVQ-VAE: A Spherical Vector Quantization Framework with ArcCosine Additive Margin
 description: >-
-  [ICML 2026][模型压缩][码本坍塌] 作者诊断出 VQ-VAE 的码本坍塌根源是"码本向量 ℓ2 范数失衡 + 几何聚集"，于是提出 SAMP：Ball-Bounded Norm Regularization 把所有码本向量约束在时变 Euclidean 球内、ArcCosine Additive…
+  [ICML 2026][模型压缩][码本坍塌] 作者诊断出 VQ-VAE 的码本坍塌根源是"码本向量 ℓ2 范数失衡 + 几何聚集"，于是提出 SAMP：Ball-Bounded Norm Regularization 把所有码本向量约束在时变 Euclidean 球内、ArcCosine Additive Margin Loss 借鉴 ArcFace 在球面上推开 latent 向量，从而让码本均匀分散、利用率大幅上升，在 ImageNet 重建和生成 FID 上都击败主流 VQ-VAE 变体。
 tags:
   - "ICML 2026"
   - "模型压缩"

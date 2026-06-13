@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Attention Speaks Volumes: Localizing and Mitigating Bias in Language Models
 description: >-
-  [ACL 2025][LLM/NLP][LLM偏见] 提出Atlas（Attention-based Targeted Layer Analysis and Scaling），通过分析注意力分数定位LLM中偏见集中的层，然后在这些层进行推理时注意力缩放干预来缓解偏见…
+  [ACL 2025][LLM 其他][LLM偏见] 提出Atlas（Attention-based Targeted Layer Analysis and Scaling），通过分析注意力分数定位LLM中偏见集中的层，然后在这些层进行推理时注意力缩放干预来缓解偏见，在BBQ、CrowS-Pairs和WinoGender三个数据集、四个模型上有效降低偏见，且仅增加0.82%的困惑度。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM偏见"
   - "注意力机制"
   - "偏见定位"

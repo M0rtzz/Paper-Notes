@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TreeLoRA: Efficient Continual Learning via Layer-Wise LoRAs Guided by a Hierarchical Gradient-Similarity Tree
 description: >-
-  [ICML 2025][模型压缩][持续学习] 本文提出 TreeLoRA，通过构建基于梯度相似度的层级 K-D 树来组织历史任务的 LoRA 适配器，利用 Lower Confidence Bound (LCB) 多臂老虎机算法高效搜索最相关的任务分支实现知识共享，配合稀疏梯度更新…
+  [ICML 2025][模型压缩][持续学习] 本文提出 TreeLoRA，通过构建基于梯度相似度的层级 K-D 树来组织历史任务的 LoRA 适配器，利用 Lower Confidence Bound (LCB) 多臂老虎机算法高效搜索最相关的任务分支实现知识共享，配合稀疏梯度更新，在 ViT 上实现 3.2× 加速、LLM 上 2.4× 加速，同时维持或超越 SOTA 性能。
 tags:
   - "ICML 2025"
   - "模型压缩"

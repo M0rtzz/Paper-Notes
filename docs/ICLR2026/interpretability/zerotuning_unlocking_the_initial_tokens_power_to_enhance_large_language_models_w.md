@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training
 description: >-
-  [可解释性] 提出 ZeroTuning，仅需对初始 token（如 `<BOS>`）的注意力分数进行头部特异性缩放，即可在无训练情况下提升 LLM 在 15 个数据集上的表现，仅需修改 4 行代码。
+  [可解释性] 提出 ZeroTuning，仅需对初始 token（如 <BOS）的注意力分数进行头部特异性缩放，即可在无训练情况下提升 LLM 在 15 个数据集上的表现，仅需修改 4 行代码。 核心问题 Token 级注意力调优（如 PASTA、ACT）虽有效，但依赖外部启发式：识别任务特定的"重要" token…
 tags:
   - "可解释性"
 ---

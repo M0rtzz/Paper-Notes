@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning
 description: >-
-  [CVPR 2026][视频理解][弱监督视频异常检测] 提出 LAS-VAD 框架，通过异常连通分量机制（ACC）将视频帧划分为语义一致的组来生成伪标签弥补帧级标注缺失，并通过意图感知机制（IAM）利用位置-速度-加速度特征区分外观相似但意图不同的正常/异常行为…
+  [CVPR 2026][视频理解][弱监督视频异常检测] 提出 LAS-VAD 框架，通过异常连通分量机制（ACC）将视频帧划分为语义一致的组来生成伪标签弥补帧级标注缺失，并通过意图感知机制（IAM）利用位置-速度-加速度特征区分外观相似但意图不同的正常/异常行为，在 XD-Violence 上达 89.96% AP (I3D)。
 tags:
   - "CVPR 2026"
   - "视频理解"

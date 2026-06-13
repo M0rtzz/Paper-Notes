@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality
 description: >-
-  [NeurIPS 2025][强化学习][Pandora's Box] 本文针对在线 Pandora's Box 问题提出新算法，将 regret 从 $\widetilde{O}(n\sqrt{T})$ 改进到 $\widetilde{O}(\sqrt{nT})$（匹配下界）…
+  [NeurIPS 2025][强化学习][Pandora's Box] 本文针对在线 Pandora's Box 问题提出新算法，将 regret 从 $\widetilde{O}(n\sqrt{T})$ 改进到 $\widetilde{O}(\sqrt{nT})$（匹配下界），并首次提出 contextual linear 扩展实现 $\widetilde{O}(nd\sqrt{T})$ regret。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time-Aware World Model for Adaptive Prediction and Control
 description: >-
-  [ICML 2025][world model] 提出时间感知世界模型 TAWM，通过将时间步长 $\Delta t$ 作为显式输入条件并在训练中混合多种 $\Delta t$ 采样，使模型能以单步预测适应任意时间分辨率的推理，且不增加训练样本量。
+  [ICML 2025][world model] 提出时间感知世界模型 TAWM，通过将时间步长 $\Delta t$ 作为显式输入条件并在训练中混合多种 $\Delta t$ 采样，使模型能以单步预测适应任意时间分辨率的推理，且不增加训练样本量。 领域现状：基于模型的强化学习（MBRL）通过学习环境动态模型（世界模型）来提…
 tags:
   - "ICML 2025"
   - "world model"

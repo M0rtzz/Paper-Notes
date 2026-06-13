@@ -2,9 +2,9 @@
 title: >-
   [论文解读] The More You Automate, the Less You See: Hidden Pitfalls of AI Scientist Systems
 description: >-
-  [NeurIPS 2025][推荐系统][AI scientist] 本文系统性地识别了当前 AI 科学家系统的四种方法论陷阱（不当基准选择、数据泄漏、指标误用、事后选择偏差），通过精心设计的合成任务 SPR 对 Agent Laboratory 和 The AI Scientist v2 进行受控实验…
+  [NeurIPS 2025 Spotlight][推荐系统][AI scientist] 本文系统性地识别了当前 AI 科学家系统的四种方法论陷阱（不当基准选择、数据泄漏、指标误用、事后选择偏差），通过精心设计的合成任务 SPR 对 Agent Laboratory 和 The AI Scientist v2 进行受控实验，发现两个系统均存在不同程度的问题，并证明审计 trace log + 代码比仅审查最终论文的检测准确率高 27 个百分点（82% vs 55%）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "推荐系统"
   - "AI scientist"
   - "scientific integrity"

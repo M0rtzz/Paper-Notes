@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Linear Interpretability Works: Invariant Subspaces as a Result of Architectural Constraints
 description: >-
-  [ICML 2026][可解释性][linear probing] 本文给出"为什么 transformer 的内部表征可以被简单线性方法（probe、SAE、activation steering）反复成功解码"的架构级解释：只要语义特征是通过 OV 电路或 unembedding 这类**线性接口**被读…
+  [ICML 2026][可解释性][linear probing] 本文给出"为什么 transformer 的内部表征可以被简单线性方法（probe、SAE、activation steering）反复成功解码"的架构级解释：只要语义特征是通过 OV 电路或 unembedding 这类**线性接口**被读出的，它就必须落在一个跨上下文不变的线性子空间里（Invariant Subspace Necessity 定理）；并推出一个零样本应用——Self-Reference Property，即 token 本身的嵌入方向就是其概念方向，从而可以无监督地用 class token 的几何位置直接做分类。
 tags:
   - "ICML 2026"
   - "可解释性"

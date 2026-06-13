@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Responsible Federated LLMs via Safety Filtering and Constitutional AI
 description: >-
-  [ACL2026][LLM安全][Federated LLM] 这篇论文把安全过滤器和 Constitutional AI 接入 FedLLM 流程，证明有害客户端数据会显著损害全局模型安全，而在客户端过滤数据、在服务器端低成本 CAI 微调可以把 AdvBench 安全分数从约 72% 拉回到 96% 以上…
+  [ACL2026][LLM安全][Federated LLM] 这篇论文把安全过滤器和 Constitutional AI 接入 FedLLM 流程，证明有害客户端数据会显著损害全局模型安全，而在客户端过滤数据、在服务器端低成本 CAI 微调可以把 AdvBench 安全分数从约 72% 拉回到 96% 以上。
 tags:
   - "ACL2026"
   - "LLM安全"

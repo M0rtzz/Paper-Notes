@@ -2,7 +2,7 @@
 title: >-
   [论文解读] "sudo rm -rf agentic_security" | SUDO: Screen-based Universal Detox2tox Offense
 description: >-
-  [ACL 2025][LLM Agent][computer-use agent] 提出SUDO攻击框架，通过Detox2tox三阶段流水线将恶意请求伪装为无害指令再恢复攻击载荷，配合基于检查清单反馈的动态迭代优化，系统性攻破Claude CUA、MANUS等计算机使用Agent的安全防护…
+  [ACL 2025][LLM Agent][computer-use agent] 提出SUDO攻击框架，通过Detox2tox三阶段流水线将恶意请求伪装为无害指令再恢复攻击载荷，配合基于检查清单反馈的动态迭代优化，系统性攻破Claude CUA、MANUS等计算机使用Agent的安全防护，最高达41.33%攻击成功率。
 tags:
   - "ACL 2025"
   - "LLM Agent"

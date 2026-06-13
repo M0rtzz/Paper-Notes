@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HACK: Head-Aware KV Cache Compression for Efficient Visual Autoregressive Modeling
 description: >-
-  [AAAI 2026][图像生成][KV Cache压缩] 发现VAR模型中attention head天然分为Contextual Heads（语义一致性，垂直注意力模式）和Structural Heads（空间连贯性，多对角线模式），提出HACK框架通过非对称预算分配和模式特定压缩策略…
+  [AAAI 2026][图像生成][KV Cache压缩] 发现VAR模型中attention head天然分为Contextual Heads（语义一致性，垂直注意力模式）和Structural Heads（空间连贯性，多对角线模式），提出HACK框架通过非对称预算分配和模式特定压缩策略，在70%压缩率下实现无损生成质量，Infinity-8B上1.75×显存减少和1.57×加速。
 tags:
   - "AAAI 2026"
   - "图像生成"

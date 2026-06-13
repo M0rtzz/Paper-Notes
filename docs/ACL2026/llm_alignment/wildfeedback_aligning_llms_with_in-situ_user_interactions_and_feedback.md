@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildFeedback: Aligning LLMs With In-situ User Interactions And Feedback
 description: >-
-  [ACL2026][LLM对齐][原位用户反馈] WildFeedback 从真实用户与 ChatGPT 的多轮对话中自动识别满意/不满意反馈，把自然发生的用户偏好转成偏好训练样本和逐例 checklist 评估标准…
+  [ACL2026][LLM对齐][原位用户反馈] WildFeedback 从真实用户与 ChatGPT 的多轮对话中自动识别满意/不满意反馈，把自然发生的用户偏好转成偏好训练样本和逐例 checklist 评估标准，使小型开源指令模型在通用 benchmark 与真实用户偏好测试上都比 UltraFeedback 训练更贴近用户需求。
 tags:
   - "ACL2026"
   - "LLM对齐"

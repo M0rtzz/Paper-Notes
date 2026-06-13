@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model
 description: >-
-  [AAAI2026][自动驾驶][扩散模型] 提出 M-Diffusion Planner，基于多头扩散模型和 GRPO 后训练，实现策略级（strategy-level）运动规划，允许用户通过自然语言切换激进/保守/舒适等驾驶风格，同时保持 SOTA 规划性能。
+  [AAAI2026][自动驾驶][扩散模型] 提出 M-Diffusion Planner，基于多头扩散模型和 GRPO 后训练，实现策略级（strategy-level）运动规划，允许用户通过自然语言切换激进/保守/舒适等驾驶风格，同时保持 SOTA 规划性能。 - 现有学习型规划器经过监督训练后策略固定…
 tags:
   - "AAAI2026"
   - "自动驾驶"

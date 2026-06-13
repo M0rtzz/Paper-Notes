@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where am I? Cross-View Geo-localization with Natural Language Descriptions
 description: >-
-  [ICCV 2025][自动驾驶][Cross-View Geo-localization] 引入基于自然语言描述的跨视角地理定位新任务，构建覆盖3个城市3万+坐标的CVG-Text多模态数据集（街景+卫星+OSM+文本）…
+  [ICCV 2025][自动驾驶][Cross-View Geo-localization] 引入基于自然语言描述的跨视角地理定位新任务，构建覆盖3个城市3万+坐标的CVG-Text多模态数据集（街景+卫星+OSM+文本），并提出CrossText2Loc方法——通过扩展位置嵌入处理长文本和可解释检索模块提供定位理由，Top-1召回率提升超10%。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

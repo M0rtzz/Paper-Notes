@@ -2,10 +2,10 @@
 title: >-
   [论文解读] RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning
 description: >-
-  [ICML 2025][LLM/NLP][rulebreaker] 构建首个大规模"规则破坏者"数据集 RULEBREAKERS（25,600 实例），系统评估 7 个 LLM 在形式逻辑推理与事实知识冲突时的表现，发现模型普遍倾向过度刚性地应用逻辑规则而忽略常识，与人类推理行为存在显著偏离。
+  [ICML 2025][LLM 其他][rulebreaker] 构建首个大规模"规则破坏者"数据集 RULEBREAKERS（25,600 实例），系统评估 7 个 LLM 在形式逻辑推理与事实知识冲突时的表现，发现模型普遍倾向过度刚性地应用逻辑规则而忽略常识，与人类推理行为存在显著偏离。 领域现状：形式逻辑是 NLP 中…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "rulebreaker"
   - "formal logic"
   - "human-like reasoning"

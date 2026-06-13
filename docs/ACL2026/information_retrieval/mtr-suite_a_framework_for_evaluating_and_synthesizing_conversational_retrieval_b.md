@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTR-Suite: A Framework for Evaluating and Synthesizing Conversational Retrieval Benchmarks
 description: >-
-  [ACL 2026][信息检索/RAG][对话检索] MTR-Suite 提出一套从 benchmark 审计、对话数据合成到检索评测的完整框架，用 MTR-Eval 诊断标注质量，用 MTR-Pipeline 以约 1/400 人工成本生成高难度多轮检索基准 MTR-Bench。
+  [ACL 2026][信息检索/RAG][对话检索] MTR-Suite 提出一套从 benchmark 审计、对话数据合成到检索评测的完整框架，用 MTR-Eval 诊断标注质量，用 MTR-Pipeline 以约 1/400 人工成本生成高难度多轮检索基准 MTR-Bench。 领域现状：RAG 的事实性上限很大程度由…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

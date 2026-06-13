@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Not All Directions Matter: Towards Structured and Task-Aware Low-Rank Model Adaptation
 description: >-
-  [ACL 2026][模型压缩][LoRA] 本文提出 StructLoRA：先用信息瓶颈过滤掉低秩更新里与任务无关的方向，再用训练期图神经网络协调不同层的 LoRA 更新，在语言、视觉和多模态任务上稳定超过 LoRA / AdaLoRA / DoRA / Sensitivity-LoRA…
+  [ACL 2026][模型压缩][LoRA] 本文提出 StructLoRA：先用信息瓶颈过滤掉低秩更新里与任务无关的方向，再用训练期图神经网络协调不同层的 LoRA 更新，在语言、视觉和多模态任务上稳定超过 LoRA / AdaLoRA / DoRA / Sensitivity-LoRA，同时保持推理零额外开销。
 tags:
   - "ACL 2026"
   - "模型压缩"

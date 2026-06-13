@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inducing Lexicons of In-Group Language with Socio-Temporal Context
 description: >-
-  [ACL 2025][词汇归纳] 提出 LISTN（Lexicon Induction with Socio-Temporal Nuance）框架，利用动态词嵌入和用户嵌入联合建模社区语言的社会结构和时间演化，在反女性在线社区（manosphere）的群体内词汇归纳任务上达到 0.77 的平均精度…
+  [ACL 2025][词汇归纳] 提出 LISTN（Lexicon Induction with Socio-Temporal Nuance）框架，利用动态词嵌入和用户嵌入联合建模社区语言的社会结构和时间演化，在反女性在线社区（manosphere）的群体内词汇归纳任务上达到 0.77 的平均精度，显著超越现有方法。
 tags:
   - "ACL 2025"
   - "词汇归纳"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery
 description: >-
-  [ICCV 2025][新类发现] 提出 IICMVNCD 框架，首次将新类发现（NCD）扩展到多视图设定，通过视图内矩阵分解捕捉已知/新类的分布一致性，以及视图间权重学习传递已知类的视图关系到新类，避免了对伪标签的依赖。
+  [ICCV 2025][新类发现] 提出 IICMVNCD 框架，首次将新类发现（NCD）扩展到多视图设定，通过视图内矩阵分解捕捉已知/新类的分布一致性，以及视图间权重学习传递已知类的视图关系到新类，避免了对伪标签的依赖。 新类发现（NCD）：是一个重要的学习范式：给定一个有标注的已知类数据集和一个无标注的新类数据集（类别不…
 tags:
   - "ICCV 2025"
   - "新类发现"

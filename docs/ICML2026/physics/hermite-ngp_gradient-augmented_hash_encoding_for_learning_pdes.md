@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hermite-NGP: Gradient-Augmented Hash Encoding for Learning PDEs
 description: >-
-  [ICML 2026][物理/科学计算][PINN] 论文把 Instant-NGP 的多分辨率哈希表升级为"梯度增强"版本——在每个哈希格点同时存储函数值与所有混合偏导，再用 Hermite 插值重建出 $C^1$ 连续、内部解析可二阶可微的场，从而让 NGP 第一次能真正用于 PINN 求解 PDE…
+  [ICML 2026][物理/科学计算][PINN] 论文把 Instant-NGP 的多分辨率哈希表升级为"梯度增强"版本——在每个哈希格点同时存储函数值与所有混合偏导，再用 Hermite 插值重建出 $C^1$ 连续、内部解析可二阶可微的场，从而让 NGP 第一次能真正用于 PINN 求解 PDE，在 2D/3D 多个基准上比 SOTA 神经 PDE 求解器降误差最多 $20\times$，单 epoch 训练只要 $2$–$3.5\,\mathrm{ms}$。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

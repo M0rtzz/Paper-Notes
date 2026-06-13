@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data
 description: >-
-  [NeurIPS 2025][LLM安全][数据投毒] 本文首次系统研究了合成数据在LLM训练中的安全风险，发现现有投毒/后门攻击难以通过合成数据传播，进而提出Virus Infection Attack (VIA)框架，通过劫持点搜索和外壳构造将投毒内容嵌入正常训练样本中…
+  [NeurIPS 2025 Spotlight][LLM安全][数据投毒] 本文首次系统研究了合成数据在LLM训练中的安全风险，发现现有投毒/后门攻击难以通过合成数据传播，进而提出Virus Infection Attack (VIA)框架，通过劫持点搜索和外壳构造将投毒内容嵌入正常训练样本中，使恶意内容即使在干净查询下也能被模型生成并传播到下游模型。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM安全"
   - "数据投毒"
   - "合成数据"

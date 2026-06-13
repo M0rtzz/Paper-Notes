@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MAGEO: From Experience to Skill — Multi-Agent Generative Engine Optimization via Reusable Strategy Learning
 description: >-
-  [ACL 2026][多智能体][生成引擎优化] 本文将生成引擎优化（GEO）从逐实例启发式优化重构为策略学习问题，提出 MAGEO 多智能体框架——执行层由偏好/规划/编辑/评估四个智能体协作，学习层将验证有效的编辑模式蒸馏为可复用的引擎特定策略技能…
+  [ACL 2026 Findings][多智能体][生成引擎优化] 本文将生成引擎优化（GEO）从逐实例启发式优化重构为策略学习问题，提出 MAGEO 多智能体框架——执行层由偏好/规划/编辑/评估四个智能体协作，学习层将验证有效的编辑模式蒸馏为可复用的引擎特定策略技能，并引入 Twin Branch 因果评估协议和 DSV-CF 双轴指标，在三个主流引擎上显著优于启发式基线。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "生成引擎优化"
   - "多智能体框架"

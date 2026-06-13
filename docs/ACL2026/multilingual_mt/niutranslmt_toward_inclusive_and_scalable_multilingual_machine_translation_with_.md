@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NiuTrans.LMT: Toward Inclusive and Scalable Multilingual Machine Translation with LLMs
 description: >-
-  [ACL 2026][多语言/翻译][多语言机器翻译] 本文发布 NiuTrans.LMT，一个覆盖 60 种语言、234 个中英双中心翻译方向、0.6B/1.7B/4B/8B 四种规模的开源 LLM 机器翻译套件，并指出多路平行数据在对称 SFT 中会造成 X→中/英方向退化…
+  [ACL 2026][多语言/翻译][多语言机器翻译] 本文发布 NiuTrans.LMT，一个覆盖 60 种语言、234 个中英双中心翻译方向、0.6B/1.7B/4B/8B 四种规模的开源 LLM 机器翻译套件，并指出多路平行数据在对称 SFT 中会造成 X→中/英方向退化，再用 Strategic Downsampling、Parallel Multilingual Prompting 和 COMET 奖励的 GRPO 把质量拉回到强开源 MMT 系统水平。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

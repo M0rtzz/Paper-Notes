@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Smaller Models, Smarter Rewards: A Two-Sided Approach to Process and Outcome Rewards
 description: >-
-  [NeurIPS 2025 (Workshop: Foundations of Reasoning in Language Models)][LLM推理][奖励模型] 将 Phi-4 系列小模型（3.8B/14B）的最后一层替换为回归头并微调，使其同时具备 ORM（结果奖励）和 PRM（过程奖励）能力…
+  [NeurIPS 2025 (Workshop: Foundations of Reasoning in Language Models)][LLM推理][奖励模型] 将 Phi-4 系列小模型（3.8B/14B）的最后一层替换为回归头并微调，使其同时具备 ORM（结果奖励）和 PRM（过程奖励）能力，在代码生成任务上通过选择最优 rollout 实现 20%+ 的 pass@k 提升。
 tags:
   - "NeurIPS 2025 (Workshop: Foundations of Reasoning in Language Models)"
   - "LLM推理"
@@ -110,10 +110,10 @@ tags:
 - **vs PRIME**: PRIME 用 LLM-as-judge（隐式奖励模型）绕过 PRM 标注成本；本文通过 forking tokens + 测试用例自动获取标签，但仅限于可执行代码
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 架构设计（value head）不算新，但 forking tokens 数据构造和同时作为 ORM+PRM 的视角有一定新意
-- 实验充分度: ⭐⭐⭐ 分析详尽（balanced/imbalanced、ORM/PRM、per-percentile），但仅一个数据集、两个模型规模，缺乏与其他奖励模型方法的直接对比
-- 写作质量: ⭐⭐⭐⭐ 论文思路清晰，符号定义规范，研究问题（RQ1/RQ2）组织合理
-- 价值: ⭐⭐⭐ Workshop paper，验证了小模型做奖励模型的可行性，但整体贡献偏实验性，深度和广度有限
+- 新颖性: ⭐⭐⭐⭐ 架构设计（value head）不算新，但 forking tokens 数据构造和同时作为 ORM+PRM 的视角有一定新意
+- 实验充分度: ⭐⭐⭐⭐ 分析详尽（balanced/imbalanced、ORM/PRM、per-percentile），但仅一个数据集、两个模型规模，缺乏与其他奖励模型方法的直接对比
+- 写作质量: ⭐⭐⭐⭐⭐ 论文思路清晰，符号定义规范，研究问题（RQ1/RQ2）组织合理
+- 价值: ⭐⭐⭐⭐ Workshop paper，验证了小模型做奖励模型的可行性，但整体贡献偏实验性，深度和广度有限
 
 <!-- RELATED:START -->
 

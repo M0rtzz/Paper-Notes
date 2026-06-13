@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Bayesian Model Selection Criterion for Selecting Pretraining Checkpoints
 description: >-
-  [ICML 2025][自监督学习][贝叶斯模型选择] 引入"下游自由能"作为预训练检查点可适应性的贝叶斯模型选择准则，证明"预训练自由能"可作为其上界代理（无需下游数据），并实验验证大学习率/小 batch/高 momentum 通过降低预训练自由能改善下游迁移性能。
+  [ICML 2025][自监督学习][贝叶斯模型选择] 引入"下游自由能"作为预训练检查点可适应性的贝叶斯模型选择准则，证明"预训练自由能"可作为其上界代理（无需下游数据），并实验验证大学习率/小 batch/高 momentum 通过降低预训练自由能改善下游迁移性能。 领域现状：基础模型的"预训练-微调"范式在 NLP 和…
 tags:
   - "ICML 2025"
   - "自监督学习"

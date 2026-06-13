@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompt-CAM: Making Vision Transformers Interpretable for Fine-Grained Analysis
 description: >-
-  [CVPR 2025][可解释性][Transformer] 提出 Prompt-CAM，通过为预训练 ViT 注入类别特定的可学习 prompt token，利用最后一层的多头注意力图来识别和定位区分细粒度类别的关键特征（traits），实现了近乎"免费"的可解释细粒度分析。
+  [CVPR 2025][可解释性][Transformer] 提出 Prompt-CAM，通过为预训练 ViT 注入类别特定的可学习 prompt token，利用最后一层的多头注意力图来识别和定位区分细粒度类别的关键特征（traits），实现了近乎"免费"的可解释细粒度分析。 预训练 ViT（如 DINO）已展示出提取局部…
 tags:
   - "CVPR 2025"
   - "可解释性"

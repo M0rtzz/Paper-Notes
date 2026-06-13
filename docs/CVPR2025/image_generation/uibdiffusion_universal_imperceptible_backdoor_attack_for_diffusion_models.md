@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UIBDiffusion: Universal Imperceptible Backdoor Attack for Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][后门攻击] UIBDiffusion 提出了首个针对扩散模型的不可感知后门攻击方法，通过将通用对抗扰动（UAP）改造为后门触发器，实现了通用性（图像和模型无关）、实用性（高攻击成功率且不影响生成质量）和不可检测性（绕过 Elijah 和 TERD 两种最先进的防御算法）的三…
+  [CVPR 2025][图像生成][后门攻击] UIBDiffusion 提出了首个针对扩散模型的不可感知后门攻击方法，通过将通用对抗扰动（UAP）改造为后门触发器，实现了通用性（图像和模型无关）、实用性（高攻击成功率且不影响生成质量）和不可检测性（绕过 Elijah 和 TERD 两种最先进的防御算法）的三重优势。
 tags:
   - "CVPR 2025"
   - "图像生成"

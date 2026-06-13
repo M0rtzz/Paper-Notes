@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Adapter Representation Interventions via Energy Calibration
 description: >-
-  [ICML 2026][模型压缩][表征干预] MARI 指出现有「表征干预」方法都依赖一个线性表征假设——单条全局 steering 向量加到所有输入上——既因为最优校正方向随样本剧烈变化而不可靠，又会在良性输入上误伤通用能力…
+  [ICML 2026][模型压缩][表征干预] MARI 指出现有「表征干预」方法都依赖一个线性表征假设——单条全局 steering 向量加到所有输入上——既因为最优校正方向随样本剧烈变化而不可靠，又会在良性输入上误伤通用能力；它把单 adapter 换成多个低秩 adapter 并用「竞争训练 + 熵路由」做样本自适应干预，再用一个独立训练的低秩 probe 算「传播能量」做阈值门控，决定是否启用干预，从而在 TruthfulQA/BBQ/Safety 上大幅领先 ReFT、同时在 MMLU/ARC 上不掉甚至略升。
 tags:
   - "ICML 2026"
   - "模型压缩"

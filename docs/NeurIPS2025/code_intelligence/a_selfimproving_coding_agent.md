@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Self-Improving Coding Agent
 description: >-
-  [NeurIPS 2025][代码智能][self-improving agent] 提出SICA（Self-Improving Coding Agent），一个能自主编辑自身代码库来提升性能的编程Agent——消除了meta-agent和target-agent的区分…
+  [NeurIPS 2025][代码智能][self-improving agent] 提出SICA（Self-Improving Coding Agent），一个能自主编辑自身代码库来提升性能的编程Agent——消除了meta-agent和target-agent的区分，通过迭代式自我改进在SWE-Bench Verified子集上从17%提升到53%。
 tags:
   - "NeurIPS 2025"
   - "代码智能"

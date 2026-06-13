@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConlangCrafter: Constructing Languages with a Multi-Hop LLM Pipeline
 description: >-
-  [ACL 2026][文本生成][构造语言] 本文提出 ConlangCrafter，一个基于 LLM 的多跳管道，将构造语言（conlang）设计分解为音系、语法、词汇三个模块化阶段，通过随机性注入保证类型学多样性、通过自精炼循环保证内部一致性，并提出了一个包含类型学多样性分析和翻译一致性评估的自动评估框架…
+  [ACL 2026][文本生成][构造语言] 本文提出 ConlangCrafter，一个基于 LLM 的多跳管道，将构造语言（conlang）设计分解为音系、语法、词汇三个模块化阶段，通过随机性注入保证类型学多样性、通过自精炼循环保证内部一致性，并提出了一个包含类型学多样性分析和翻译一致性评估的自动评估框架。
 tags:
   - "ACL 2026"
   - "文本生成"

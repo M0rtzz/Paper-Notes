@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Heterogeneity and Forgotten Labels in Split Federated Learning
 description: >-
-  [AAAI 2026][优化/理论][联邦学习] 系统研究了 Split Federated Learning 中数据异构导致的灾难性遗忘现象（尤其是 server 端处理顺序造成的 intra-round 遗忘），并提出基于 multi-head 的 Hydra 方法…
+  [AAAI 2026][优化/理论][联邦学习] 系统研究了 Split Federated Learning 中数据异构导致的灾难性遗忘现象（尤其是 server 端处理顺序造成的 intra-round 遗忘），并提出基于 multi-head 的 Hydra 方法，将 part-2 的最后层分组训练再聚合，显著降低标签间性能差距（PG 最高降低 75.4%）。
 tags:
   - "AAAI 2026"
   - "优化/理论"

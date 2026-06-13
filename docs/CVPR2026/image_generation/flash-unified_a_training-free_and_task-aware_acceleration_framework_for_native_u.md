@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models
 description: >-
-  [CVPR 2026][图像生成][统一多模态模型加速] FlashU 首次对原生统一多模态模型进行系统性冗余分析，发现参数特化和计算异质性现象，据此提出免训练任务感知加速框架，通过 FFN 剪枝、动态层跳过、自适应引导缩放和扩散头缓存…
+  [CVPR 2026 Findings][图像生成][统一多模态模型加速] FlashU 首次对原生统一多模态模型进行系统性冗余分析，发现参数特化和计算异质性现象，据此提出免训练任务感知加速框架，通过 FFN 剪枝、动态层跳过、自适应引导缩放和扩散头缓存，在 Show-o2 上实现 1.78x-2.01x 加速同时保持 SOTA 性能。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "统一多模态模型加速"
   - "免训练推理优化"

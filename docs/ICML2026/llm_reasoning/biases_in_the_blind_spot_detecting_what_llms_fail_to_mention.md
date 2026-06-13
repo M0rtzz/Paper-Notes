@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Biases in the Blind Spot: Detecting What LLMs Fail to Mention
 description: >-
-  [ICML2026][LLM推理][偏见检测] 提出一个全自动黑盒流水线来检测 LLM 的"未言明偏见"（unverbalized biases）——系统性影响模型决策但从未在 CoT 推理中被提及的隐性因素，通过 LLM 自动生成概念假设、反事实输入变体和分阶段统计检验…
+  [ICML2026][LLM推理][偏见检测] 提出一个全自动黑盒流水线来检测 LLM 的"未言明偏见"（unverbalized biases）——系统性影响模型决策但从未在 CoT 推理中被提及的隐性因素，通过 LLM 自动生成概念假设、反事实输入变体和分阶段统计检验，在三个决策任务上自动发现了性别、种族等已知偏见以及西班牙语流利度、英语水平、写作正式度等新偏见。
 tags:
   - "ICML2026"
   - "LLM推理"

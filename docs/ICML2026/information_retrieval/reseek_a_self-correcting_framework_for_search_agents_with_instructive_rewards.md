@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReSeek: A Self-Correcting Framework for Search Agents with Instructive Rewards
 description: >-
-  [ICML 2026][信息检索/RAG][搜索 Agent] ReSeek 给 RL-trained 搜索 agent 增加一个 JUDGE 动作 + 用 BGE-reranker 计算"理想判断"作为过程奖励,使 agent 能在每次检索后软性"屏蔽"无效信息并重新查询…
+  [ICML 2026][信息检索/RAG][搜索 Agent] ReSeek 给 RL-trained 搜索 agent 增加一个 JUDGE 动作 + 用 BGE-reranker 计算"理想判断"作为过程奖励,使 agent 能在每次检索后软性"屏蔽"无效信息并重新查询;同时提出 FictionalHot 这一基于虚构实体的抗污染评测,Qwen2.5-7B 上平均 EM 达到 0.377,比 ZeroSearch 高 +3.1。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

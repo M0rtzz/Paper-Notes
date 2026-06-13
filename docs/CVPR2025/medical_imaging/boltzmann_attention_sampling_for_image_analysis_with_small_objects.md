@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boltzmann Attention Sampling for Image Analysis with Small Objects
 description: >-
-  [CVPR 2025][医学图像][Boltzmann采样] 提出BoltzFormer——一种新型transformer decoder架构，通过玻尔兹曼分布动态采样稀疏注意力区域来聚焦小目标，结合退火温度调度（早期层探索、后期层利用）和PiGMA多query聚合模块…
+  [CVPR 2025][医学图像][Boltzmann采样] 提出BoltzFormer——一种新型transformer decoder架构，通过玻尔兹曼分布动态采样稀疏注意力区域来聚焦小目标，结合退火温度调度（早期层探索、后期层利用）和PiGMA多query聚合模块，在占图像面积<0.1%的小目标分割上比SOTA提升3-12% Dice分数，同时减少一个数量级的注意力计算。
 tags:
   - "CVPR 2025"
   - "医学图像"

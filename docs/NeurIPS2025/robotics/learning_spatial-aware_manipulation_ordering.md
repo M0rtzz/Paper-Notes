@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Spatial-Aware Manipulation Ordering
 description: >-
-  [NeurIPS 2025][机器人][manipulation ordering] 提出 OrderMind 统一框架，通过空间上下文编码器和时序优先级结构化模块直接从 RGB-D 图像学习杂乱场景中物体的操作顺序，利用 VLM 蒸馏生成训练标注，在仿真和真实环境中均显著优于 VLM 基线…
+  [NeurIPS 2025][机器人][manipulation ordering] 提出 OrderMind 统一框架，通过空间上下文编码器和时序优先级结构化模块直接从 RGB-D 图像学习杂乱场景中物体的操作顺序，利用 VLM 蒸馏生成训练标注，在仿真和真实环境中均显著优于 VLM 基线，且支持实时推理（5.6 FPS，轻量版 21.3 FPS）。
 tags:
   - "NeurIPS 2025"
   - "机器人"

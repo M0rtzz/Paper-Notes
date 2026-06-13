@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PPA-Plan: Proactive Pitfall Avoidance for Reliable Planning in Long-Context LLM Reasoning
 description: >-
-  [ACL2026][LLM推理][长上下文推理] PPA-Plan 在生成长上下文推理计划之前先预测可能的逻辑陷阱，并把这些陷阱转成 negative constraints 约束 planner，从而让 LLM 少走表面关键词匹配和错误假设路径…
+  [ACL2026][LLM推理][长上下文推理] PPA-Plan 在生成长上下文推理计划之前先预测可能的逻辑陷阱，并把这些陷阱转成 negative constraints 约束 planner，从而让 LLM 少走表面关键词匹配和错误假设路径，在多组长文 QA 数据集上提升准确率、NLI 分数并显著降低计划执行失败率。
 tags:
   - "ACL2026"
   - "LLM推理"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2601.11908](https://arxiv.org/abs/2601.11908)  
 **代码**: 论文缓存中未给出公开仓库地址  
-**领域**: llm_efficiency  
+**领域**: LLM效率  
 **关键词**: 长上下文推理、计划生成、负约束、主动避错、Plan-and-Execute
 
 ## 一句话总结

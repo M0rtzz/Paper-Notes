@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Holistic to Localized: Local Enhanced Adapters for Efficient Visual Instruction Fine-Tuning
 description: >-
-  [ICCV 2025][多模态VLM][Dual-LoRA] 提出 Dual-LoRA 和 Visual Cue Enhancement (VCE) 两个模块，通过"从整体到局部"的范式解决高效视觉指令微调中的数据冲突问题，以仅 1.16× 推理时间开销超越 LoRA-MoE 方法。
+  [ICCV 2025][多模态VLM][Dual-LoRA] 提出 Dual-LoRA 和 Visual Cue Enhancement (VCE) 两个模块，通过"从整体到局部"的范式解决高效视觉指令微调中的数据冲突问题，以仅 1.16× 推理时间开销超越 LoRA-MoE 方法。 高效视觉指令微调 (EVIT) 通过 L…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

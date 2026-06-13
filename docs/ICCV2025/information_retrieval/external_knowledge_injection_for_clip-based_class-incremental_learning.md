@@ -2,7 +2,7 @@
 title: >-
   [论文解读] External Knowledge Injection for CLIP-Based Class-Incremental Learning
 description: >-
-  [ICCV 2025][信息检索/RAG][类增量学习] 提出 Engine（ExterNal knowledGe INjEction）框架，通过双分支注入调优（视觉分支用数据增强、文本分支用 GPT-4 生成判别性描述）和推理时后调优知识注入（成对判别特征重排序），在无需存储历史样本的条件下…
+  [ICCV 2025][信息检索/RAG][类增量学习] 提出 Engine（ExterNal knowledGe INjEction）框架，通过双分支注入调优（视觉分支用数据增强、文本分支用 GPT-4 生成判别性描述）和推理时后调优知识注入（成对判别特征重排序），在无需存储历史样本的条件下，在 9 个基准数据集上以 3-10% 的优势超越所有 CLIP-based 类增量学习方法。
 tags:
   - "ICCV 2025"
   - "信息检索/RAG"

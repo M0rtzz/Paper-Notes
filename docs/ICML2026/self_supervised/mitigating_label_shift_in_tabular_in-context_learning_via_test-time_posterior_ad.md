@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Label Shift in Tabular In-Context Learning via Test-Time Posterior Adjustment
 description: >-
-  [ICML 2026][自监督学习][TabPFN] 针对 TabPFN 这类把训练集当作 in-context 直接喂进 attention 的"表格基础模型"做后验校正——发现它会严重过拟合训练集 majority class…
+  [ICML 2026][自监督学习][TabPFN] 针对 TabPFN 这类把训练集当作 in-context 直接喂进 attention 的"表格基础模型"做后验校正——发现它会严重过拟合训练集 majority class, 提出 DistPFN：用 $\tilde{p}(y) \propto \hat{p}(y)^2 / p_{train}(y)$ 这一行后验重加权, 在 253 个 OpenML 数据集上把 TabPFN-v2 在 $\beta=5$ 强标签漂移下的准确率从 72.7% 拉到 76.9%, 不用重训、不用估测试先验、不动架构。
 tags:
   - "ICML 2026"
   - "自监督学习"

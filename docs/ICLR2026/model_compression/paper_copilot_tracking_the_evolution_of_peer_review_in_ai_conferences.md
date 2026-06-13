@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Paper Copilot: Tracking the Evolution of Peer Review in AI Conferences
 description: >-
-  [ICLR 2026][模型压缩][同行评审] 构建 Paper Copilot——跨数十个 AI/ML 会议的同行评审持久数字档案与分析平台：通过 OpenReview API、网页抓取、社区贡献三源混合收集评审数据，实时归档评分时间快照（含 rebuttal 前后动态变化）…
+  [ICLR 2026][模型压缩][同行评审] 构建 Paper Copilot——跨数十个 AI/ML 会议的同行评审持久数字档案与分析平台：通过 OpenReview API、网页抓取、社区贡献三源混合收集评审数据，实时归档评分时间快照（含 rebuttal 前后动态变化），揭示 ICLR 2025 年决策熵反常下降——评审体系从概率性分层转向近确定性分数驱动决策的结构性变化，并通过 LLM 驱动的作者-机构元数据提取支持人才轨迹追踪。
 tags:
   - "ICLR 2026"
   - "模型压缩"

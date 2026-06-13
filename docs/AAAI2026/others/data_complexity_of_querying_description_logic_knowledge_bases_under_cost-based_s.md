@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics
 description: >-
-  [AAAI 2026][描述逻辑] 系统研究加权描述逻辑知识库在代价语义下的查询应答的数据复杂度，证明最优代价语义在$\Delta_2^p$内可解，并给出一个令人惊喜的正面结果：在DL-Lite$_{\text{bool}}^{\mathcal{H}}$本体和固定代价界限下…
+  [AAAI 2026][描述逻辑] 系统研究加权描述逻辑知识库在代价语义下的查询应答的数据复杂度，证明最优代价语义在$\Delta_2^p$内可解，并给出一个令人惊喜的正面结果：在DL-Lite$_{\text{bool}}^{\mathcal{H}}$本体和固定代价界限下，实例查询的确定回答和合取查询的可能回答可通过一阶重写实现最低数据复杂度（AC$^0$）。
 tags:
   - "AAAI 2026"
   - "描述逻辑"

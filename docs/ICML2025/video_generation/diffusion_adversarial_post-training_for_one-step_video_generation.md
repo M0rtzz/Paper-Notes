@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Adversarial Post-Training for One-Step Video Generation
 description: >-
-  [ICML 2025][视频生成][对抗训练] 提出对抗式后训练（Adversarial Post-Training, APT）框架，通过在扩散模型预训练后引入对抗训练阶段，实现单步生成高质量视频（2秒、1280×720、24fps），模型名为Seaweed-APT。
+  [ICML 2025][视频生成][对抗训练] 提出对抗式后训练（Adversarial Post-Training, APT）框架，通过在扩散模型预训练后引入对抗训练阶段，实现单步生成高质量视频（2秒、1280×720、24fps），模型名为Seaweed-APT。 领域现状：扩散模型在图像和视频生成领域取得了巨大成功…
 tags:
   - "ICML 2025"
   - "视频生成"

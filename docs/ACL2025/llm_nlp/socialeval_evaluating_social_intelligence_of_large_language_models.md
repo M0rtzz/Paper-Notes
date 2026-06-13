@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SocialEval: Evaluating Social Intelligence of Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][Social Intelligence] 提出 SocialEval —— 一个基于叙事脚本的双语社会智能基准，通过手工构建 153 个"世界树"将社交互动建模为目标条件 MDP，整合结果导向的目标达成评估（GAE）和过程导向的人际能力评估（IAE）…
+  [ACL 2025][LLM 其他][Social Intelligence] 提出 SocialEval —— 一个基于叙事脚本的双语社会智能基准，通过手工构建 153 个"世界树"将社交互动建模为目标条件 MDP，整合结果导向的目标达成评估（GAE）和过程导向的人际能力评估（IAE），系统评测 LLM 在多回合社交场景中的社会智能及其与人类的差距。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Social Intelligence"
   - "Benchmark"
   - "World Tree"

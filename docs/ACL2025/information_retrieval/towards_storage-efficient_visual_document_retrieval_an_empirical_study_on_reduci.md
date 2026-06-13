@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Storage-Efficient Visual Document Retrieval: An Empirical Study on Reducing Patch-Level Embeddings
 description: >-
-  [ACL 2025][信息检索/RAG][Visual Document Retrieval] 系统性研究了视觉文档检索（VDR）中 patch 级别嵌入的压缩策略，发现 pruning 在 VDR 中本质不适用（简单随机剪枝反而最优）…
+  [ACL 2025][信息检索/RAG][Visual Document Retrieval] 系统性研究了视觉文档检索（VDR）中 patch 级别嵌入的压缩策略，发现 pruning 在 VDR 中本质不适用（简单随机剪枝反而最优），而 token merging 结合微调可在仅保留 2.8% 存储量时维持 94.6% 的检索性能（Light-ColPali/ColQwen2）。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

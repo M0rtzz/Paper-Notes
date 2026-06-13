@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MindForge: Empowering Embodied Agents with Theory of Mind for Lifelong Cultural Learning
 description: >-
-  [NeurIPS 2025][机器人][Theory of Mind] MindForge 为 LLM 驱动的具身智能体引入显式的心智理论（ToM）表征、自然语言通信和多组件记忆系统，使开源 LLM 智能体通过与专家协作对话（无需梯度更新）大幅提升任务完成率…
+  [NeurIPS 2025][机器人][Theory of Mind] MindForge 为 LLM 驱动的具身智能体引入显式的心智理论（ToM）表征、自然语言通信和多组件记忆系统，使开源 LLM 智能体通过与专家协作对话（无需梯度更新）大幅提升任务完成率，在 Minecraft 中比 Voyager 多获得 3× 科技树里程碑和 2.3× 独特物品。
 tags:
   - "NeurIPS 2025"
   - "机器人"

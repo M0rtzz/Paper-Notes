@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step
 description: >-
-  [ACL 2025][LLM对齐][越狱攻击] 提出 Chain-of-Jailbreak（CoJ）攻击，将无法直接绕过安全护栏的恶意 query 分解为多步编辑子 query（删然后插、插然后删、改然后改回），在 GPT-4V/4o/Gemini 上达到 60%+ 越狱成功率…
+  [ACL 2025][LLM对齐][越狱攻击] 提出 Chain-of-Jailbreak（CoJ）攻击，将无法直接绕过安全护栏的恶意 query 分解为多步编辑子 query（删然后插、插然后删、改然后改回），在 GPT-4V/4o/Gemini 上达到 60%+ 越狱成功率；同时提出 Think-Twice Prompting 防御，拦截 95%+ 的 CoJ 攻击。
 tags:
   - "ACL 2025"
   - "LLM对齐"

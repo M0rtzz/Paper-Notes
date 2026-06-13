@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AlignTok: Aligning Visual Foundation Encoders to Tokenizers for Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][visual tokenizer] 提出 AlignTok，将预训练视觉基础编码器（如 DINOv2）对齐为扩散模型的连续 tokenizer，通过三阶段对齐策略（语义潜空间建立→感知细节补充→解码器精炼）构建语义丰富的潜空间…
+  [ICLR 2026][图像生成][visual tokenizer] 提出 AlignTok，将预训练视觉基础编码器（如 DINOv2）对齐为扩散模型的连续 tokenizer，通过三阶段对齐策略（语义潜空间建立→感知细节补充→解码器精炼）构建语义丰富的潜空间，在 ImageNet 256×256 上 64 epochs 即达 gFID 1.90，比从头训练 VAE 收敛更快、生成质量更好。
 tags:
   - "ICLR 2026"
   - "图像生成"

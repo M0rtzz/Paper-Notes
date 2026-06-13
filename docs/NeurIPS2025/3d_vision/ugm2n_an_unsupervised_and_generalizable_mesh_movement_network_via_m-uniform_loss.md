@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UGM2N: An Unsupervised and Generalizable Mesh Movement Network via M-Uniform Loss
 description: >-
-  [NeurIPS 2025][3D视觉][mesh movement] 提出 UGM2N 无监督网格移动网络，通过局部化 Node Patch 表示和 M-Uniform 损失函数实现无监督训练，在无需预适应网格数据的条件下实现跨 PDE 类型和跨网格几何的零样本泛化，且不产生网格缠绕。
+  [NeurIPS 2025][3D视觉][mesh movement] 提出 UGM2N 无监督网格移动网络，通过局部化 Node Patch 表示和 M-Uniform 损失函数实现无监督训练，在无需预适应网格数据的条件下实现跨 PDE 类型和跨网格几何的零样本泛化，且不产生网格缠绕。 领域现状：偏微分方程（PDE）的数值…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

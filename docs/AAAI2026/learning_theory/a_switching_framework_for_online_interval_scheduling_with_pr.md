@@ -2,9 +2,10 @@
 title: >-
   [论文解读] A Switching Framework for Online Interval Scheduling with Predictions
 description: >-
-  [AAAI 2026][在线区间调度] 针对不可撤销的在线区间调度问题，提出 SemiTrust-and-Switch 框架和 SmoothMerge 随机算法，通过在信任预测和经典贪心算法之间切换/融合，在预测准确时趋近最优（一致性），预测错误时性能优雅退化（鲁棒性和平滑性）…
+  [AAAI 2026][在线算法 / 学习增强算法 / 调度优化][在线区间调度] 针对不可撤销的在线区间调度问题，提出 SemiTrust-and-Switch 框架和 SmoothMerge 随机算法，通过在信任预测和经典贪心算法之间切换/融合，在预测准确时趋近最优（一致性），预测错误时性能优雅退化（鲁棒性和平滑性），并证明了该框架在特定实例上的紧性。
 tags:
   - "AAAI 2026"
+  - "在线算法 / 学习增强算法 / 调度优化"
   - "在线区间调度"
   - "学习增强算法"
   - "竞争比"

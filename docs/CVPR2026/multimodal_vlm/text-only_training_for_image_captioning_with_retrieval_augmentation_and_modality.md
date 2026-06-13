@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-Only Training for Image Captioning with Retrieval Augmentation and Modality Gap Correction
 description: >-
-  [CVPR 2026][多模态VLM][图像描述] 提出TOMCap——一种纯文本训练的图像描述方法，通过检索增强+模态差距修正+LoRA微调，在训练时只用文本而推理时处理图像，超越了已有的无训练和纯文本方法。
+  [CVPR 2026][多模态VLM][图像描述] 提出TOMCap——一种纯文本训练的图像描述方法，通过检索增强+模态差距修正+LoRA微调，在训练时只用文本而推理时处理图像，超越了已有的无训练和纯文本方法。 领域现状：图像描述通常依赖大规模人工标注的图像-文本对进行监督训练。近年来出现了两类低资源方法：无训练方法（如Ze…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

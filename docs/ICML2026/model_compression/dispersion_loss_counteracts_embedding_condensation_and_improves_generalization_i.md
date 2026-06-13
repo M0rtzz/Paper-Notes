@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dispersion Loss Counteracts Embedding Condensation and Improves Generalization in Small Language Models
 description: >-
-  [ICML 2026][模型压缩][嵌入坍缩] 本文系统观测到 "小语言模型的 token 嵌入会随深度坍缩到一个窄锥体"（embedding condensation）这个普遍现象——大模型反而不会——并设计了一个角度分散损失 $\mathcal{L}_{\text{disp}}$ 直接逼嵌入散开…
+  [ICML 2026][模型压缩][嵌入坍缩] 本文系统观测到 "小语言模型的 token 嵌入会随深度坍缩到一个窄锥体"（embedding condensation）这个普遍现象——大模型反而不会——并设计了一个角度分散损失 $\mathcal{L}_{\text{disp}}$ 直接逼嵌入散开，无须加参数就让 Qwen3 / GPT2 在 10 个 benchmark 上平均提升 3.3%。
 tags:
   - "ICML 2026"
   - "模型压缩"

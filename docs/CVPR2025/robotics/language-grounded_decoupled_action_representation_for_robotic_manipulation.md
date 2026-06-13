@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation
 description: >-
-  [CVPR 2025][机器人][语言条件操作] 提出 LaDA，将 7-DoF 机器人动作解耦为平移/旋转/夹爪三类运动原语并与语言语义建立对应，通过软标签对比学习和自适应损失加权，以 1.3B 参数在 LIBERO 上达到 93.6% 平均成功率。
+  [CVPR 2025][机器人][语言条件操作] 提出 LaDA，将 7-DoF 机器人动作解耦为平移/旋转/夹爪三类运动原语并与语言语义建立对应，通过软标签对比学习和自适应损失加权，以 1.3B 参数在 LIBERO 上达到 93.6% 平均成功率。 视觉-语言-动作的异构性： 机器人操作中，高级视觉-语言理解（「拿起红色…
 tags:
   - "CVPR 2025"
   - "机器人"

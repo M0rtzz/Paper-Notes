@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometric Data Valuation via Leverage Scores
 description: >-
-  [NeurIPS 2025][模型压缩][数据估值] 提出基于**统计杠杆分数（leverage scores）**的几何数据估值方法，作为 Data Shapley 值的高效代理，满足对称性、效率性和虚拟玩家等公理，并通过 ridge leverage 扩展解决维度饱和问题…
+  [NeurIPS 2025][模型压缩][数据估值] 提出基于**统计杠杆分数（leverage scores）**的几何数据估值方法，作为 Data Shapley 值的高效代理，满足对称性、效率性和虚拟玩家等公理，并通过 ridge leverage 扩展解决维度饱和问题，提供 $O(\varepsilon)$ 近似最优的理论保证。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

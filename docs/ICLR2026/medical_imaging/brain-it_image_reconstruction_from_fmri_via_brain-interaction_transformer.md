@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer
 description: >-
-  [ICLR 2026][医学图像][fMRI脑解码] 提出 Brain-IT 框架，通过脑启发式的 Brain Interaction Transformer (BIT) 将功能相似的脑体素聚类为跨被试共享的 Brain Token，并从中预测局部化的语义和结构图像特征，实现从 fMRI 到图像的高保真重建…
+  [ICLR 2026][医学图像][fMRI脑解码] 提出 Brain-IT 框架，通过脑启发式的 Brain Interaction Transformer (BIT) 将功能相似的脑体素聚类为跨被试共享的 Brain Token，并从中预测局部化的语义和结构图像特征，实现从 fMRI 到图像的高保真重建，仅用 1 小时数据即达到先前方法 40 小时的性能。
 tags:
   - "ICLR 2026"
   - "医学图像"

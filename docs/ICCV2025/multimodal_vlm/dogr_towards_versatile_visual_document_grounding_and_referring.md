@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DOGR: Towards Versatile Visual Document Grounding and Referring
 description: >-
-  [ICCV 2025][多模态VLM][文档理解] 提出文档定位与指代数据引擎 DOGR-Engine，构建首个全面评估文档定位/指代能力的基准 DOGR-Bench（7类任务×3种文档），并开发首个兼具精准文本定位和交互式grounding/referring能力的文档理解MLLM——DOGR。
+  [ICCV 2025][多模态VLM][文档理解] 提出文档定位与指代数据引擎 DOGR-Engine，构建首个全面评估文档定位/指代能力的基准 DOGR-Bench（7类任务×3种文档），并开发首个兼具精准文本定位和交互式grounding/referring能力的文档理解MLLM——DOGR。 随着多模态大模型（MLLM…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

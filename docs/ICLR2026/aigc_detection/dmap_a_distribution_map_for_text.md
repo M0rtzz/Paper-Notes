@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DMAP: A Distribution Map for Text
 description: >-
-  [ICLR 2026][AIGC检测][文本分布图] 提出 DMAP（Distribution Map），一种将文本经由语言模型的 next-token 概率排序映射为 $[0,1]$ 区间上 i.i.d. 样本的数学框架，理论证明纯采样文本产生均匀分布…
+  [ICLR 2026][AIGC检测][文本分布图] 提出 DMAP（Distribution Map），一种将文本经由语言模型的 next-token 概率排序映射为 $[0,1]$ 区间上 i.i.d. 样本的数学框架，理论证明纯采样文本产生均匀分布，由此可用 $\chi^2$ 检验验证生成参数、揭示概率曲率类检测器在纯采样下彻底失效的根本原因，并可视化后训练（SFT/RLHF）在下游模型中留下的统计指纹。
 tags:
   - "ICLR 2026"
   - "AIGC检测"

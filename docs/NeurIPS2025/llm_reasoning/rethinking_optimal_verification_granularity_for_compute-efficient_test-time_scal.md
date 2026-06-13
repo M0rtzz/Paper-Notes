@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Optimal Verification Granularity for Compute-Efficient Test-Time Scaling
 description: >-
-  [NeurIPS 2025][LLM推理][测试时缩放] 提出 Variable Granularity Search (VG-Search)，通过可调的验证粒度参数 $g$ 统一 Beam Search 和 Best-of-N，发现传统每步验证是次优的…
+  [NeurIPS 2025][LLM推理][测试时缩放] 提出 Variable Granularity Search (VG-Search)，通过可调的验证粒度参数 $g$ 统一 Beam Search 和 Best-of-N，发现传统每步验证是次优的，自适应调整 $g$ 可在提升准确率3%+的同时减少52%+的计算量。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

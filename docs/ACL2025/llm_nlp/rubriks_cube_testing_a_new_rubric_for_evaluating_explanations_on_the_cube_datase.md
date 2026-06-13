@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rubrik's Cube: Testing a New Rubric for Evaluating Explanations on the CUBE Dataset
 description: >-
-  [ACL 2025][explanation evaluation] 提出 Rubrik——受教育评估启发的解释质量评价量规，基于三层嵌套类型体系（Commentary⊆Justification⊆Argument）+ 8 维质量维度，配套 CUBE 数据集（26K 条由人类和 6 个 LLM 生成的解释）…
+  [ACL 2025][LLM 其他][explanation evaluation] 提出 Rubrik——受教育评估启发的解释质量评价量规，基于三层嵌套类型体系（Commentary⊆Justification⊆Argument）+ 8 维质量维度，配套 CUBE 数据集（26K 条由人类和 6 个 LLM 生成的解释），发现 LLM 解释低质主因是缺乏简洁性而非连贯性。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "explanation evaluation"
   - "rubric"
   - "LLM explanations"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Minimal Agent for Automated Theorem Proving
 description: >-
-  [ICML 2026][LLM Agent][定理证明] 本文提出 AxProverBase——一个极简的 Lean 4 定理证明智能体，仅靠"编译器反馈 + 自管理笔记本 + 轻量工具搜索"三个组件…
+  [ICML 2026][LLM Agent][定理证明] 本文提出 AxProverBase——一个极简的 Lean 4 定理证明智能体，仅靠"编译器反馈 + 自管理笔记本 + 轻量工具搜索"三个组件，在不微调的前沿 LLM（Claude Opus）上达到甚至超越 Hilbert/Seed-Prover 等专用系统，成本却低出 100 倍。
 tags:
   - "ICML 2026"
   - "LLM Agent"

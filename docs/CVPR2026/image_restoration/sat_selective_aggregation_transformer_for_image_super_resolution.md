@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAT: Selective Aggregation Transformer for Image Super-Resolution
 description: >-
-  [CVPR 2026][图像恢复][超分辨率] 提出选择性聚合 Transformer (SAT)，通过密度驱动 token 聚合将 Key-Value 矩阵 token 数减少 97%、保持 Query 全分辨率，实现高效全局注意力建模，超越 SOTA PFT 达 0.22dB 且 FLOPs 降低 27%…
+  [CVPR 2026][图像恢复][超分辨率] 提出选择性聚合 Transformer (SAT)，通过密度驱动 token 聚合将 Key-Value 矩阵 token 数减少 97%、保持 Query 全分辨率，实现高效全局注意力建模，超越 SOTA PFT 达 0.22dB 且 FLOPs 降低 27%。
 tags:
   - "CVPR 2026"
   - "图像恢复"

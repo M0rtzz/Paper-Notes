@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Controllable Examination for Long-Context Language Models
 description: >-
-  [NeurIPS 2025][可解释性][长上下文评估] 提出LongBioBench，通过生成虚构传记作为可控的needle和haystack，构建满足"无缝上下文、可控设置、可靠评估"三大原则的长上下文LLM评估框架，测试18个模型后揭示当前LCLM在检索能力尚可的情况下推理和可信性仍有显著短板。
+  [NeurIPS 2025 Spotlight][可解释性][长上下文评估] 提出LongBioBench，通过生成虚构传记作为可控的needle和haystack，构建满足"无缝上下文、可控设置、可靠评估"三大原则的长上下文LLM评估框架，测试18个模型后揭示当前LCLM在检索能力尚可的情况下推理和可信性仍有显著短板。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "可解释性"
   - "长上下文评估"
   - "LongBioBench"

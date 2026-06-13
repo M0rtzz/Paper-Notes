@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExCyTIn-Bench: Evaluating LLM Agents on Cyber Threat Investigation
 description: >-
-  [ICML 2026][LLM Agent][威胁调查] 本文构建了首个评测 LLM Agent 端到端做"网络威胁调查"的 benchmark ExCyTIn-Bench：从真实 Azure 租户的 57 张安全日志表里，用 alert-entity 二部图自动生成 7542 道带证据链的 SQL 问答题…
+  [ICML 2026][LLM Agent][威胁调查] 本文构建了首个评测 LLM Agent 端到端做"网络威胁调查"的 benchmark ExCyTIn-Bench：从真实 Azure 租户的 57 张安全日志表里，用 alert-entity 二部图自动生成 7542 道带证据链的 SQL 问答题，并提供 MySQL 环境让 Agent 通过查询日志、多跳追踪证据来回答，目前最强模型 Claude-Opus-4.5 也只能拿 0.606 的 reward。
 tags:
   - "ICML 2026"
   - "LLM Agent"

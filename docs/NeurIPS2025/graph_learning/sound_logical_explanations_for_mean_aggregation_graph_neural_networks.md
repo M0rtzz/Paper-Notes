@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sound Logical Explanations for Mean Aggregation Graph Neural Networks
 description: >-
-  [NeurIPS 2025][图学习][图神经网络] 针对使用均值聚合函数的 GNN（MAGNN，即非负权重的 mean-GNN），证明了能够作为其 sound 解释的单调逻辑规则的精确类别，并构造了一个一阶逻辑的受限片段来解释任意 MAGNN 预测…
+  [NeurIPS 2025][图学习][图神经网络] 针对使用均值聚合函数的 GNN（MAGNN，即非负权重的 mean-GNN），证明了能够作为其 sound 解释的单调逻辑规则的精确类别，并构造了一个一阶逻辑的受限片段来解释任意 MAGNN 预测，实验表明限制非负权重不显著影响性能且能有效提取 sound 规则。
 tags:
   - "NeurIPS 2025"
   - "图学习"

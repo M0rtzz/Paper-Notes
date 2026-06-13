@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation
 description: >-
-  [ICCV 2025][医学图像][正畸数据生成] 提出 TeethGenerator，一个两阶段框架用于生成配对的正畸前后 3D 牙齿点云模型，Stage I 用 VQ-VAE+扩散模型生成矫正后牙齿形态，Stage II 用 Transformer 根据风格模型生成对应的矫正前牙齿排列。
+  [ICCV 2025][医学图像][正畸数据生成] 提出 TeethGenerator，一个两阶段框架用于生成配对的正畸前后 3D 牙齿点云模型，Stage I 用 VQ-VAE+扩散模型生成矫正后牙齿形态，Stage II 用 Transformer 根据风格模型生成对应的矫正前牙齿排列。 - 数字正畸中的牙齿排列网络（如…
 tags:
   - "ICCV 2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tailoring Strictly Proper Scoring Rules for Downstream Tasks: An Application to Causal Inference
 description: >-
-  [ICML 2026][因果推理][proper scoring rule] 本文提出一个通用框架：通过让训练损失的局部二阶曲率 $w_\ell(p)$ 匹配下游任务误差的曲率 $w_{\text{task}}(p)$，可派生出与下游任务"几何对齐"的严格 proper scoring rule…
+  [ICML 2026][因果推理][proper scoring rule] 本文提出一个通用框架：通过让训练损失的局部二阶曲率 $w_\ell(p)$ 匹配下游任务误差的曲率 $w_{\text{task}}(p)$，可派生出与下游任务"几何对齐"的严格 proper scoring rule；将其应用到 IPW 估计 ATE，得到闭式损失 + 闭式 canonical 激活函数（解一个四次方程），在 IHDP / Jobs / Kang-Schafer / ACIC 2017 上稳定优于 log-loss 与 covariate balancing 类基线。
 tags:
   - "ICML 2026"
   - "因果推理"

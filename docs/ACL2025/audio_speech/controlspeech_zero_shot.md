@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ControlSpeech: Towards Simultaneous and Independent Zero-shot Speaker Cloning and Zero-shot Language Style Control
 description: >-
-  [ACL 2025][音频/语音][零样本语音合成] ControlSpeech 是首个同时实现零样本音色克隆和零样本语言风格控制的TTS系统，通过离散编解码器空间中的解耦表示和风格混合语义密度（SMSD）模块解决了风格控制中的多对多问题。
+  [ACL 2025][音频/语音][零样本语音合成] ControlSpeech 是首个同时实现零样本音色克隆和零样本语言风格控制的TTS系统，通过离散编解码器空间中的解耦表示和风格混合语义密度（SMSD）模块解决了风格控制中的多对多问题。 - 现有零样本TTS的局限：以 VALL-E 为代表的零样本TTS模型能克隆说话人音…
 tags:
   - "ACL 2025"
   - "音频/语音"

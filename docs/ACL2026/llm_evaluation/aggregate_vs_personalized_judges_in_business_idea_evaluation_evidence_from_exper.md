@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Aggregate vs. Personalized Judges in Business Idea Evaluation: Evidence from Expert Disagreement
 description: >-
-  [ACL 2026][LLM评测][LLM-as-a-Judge] 针对商业 idea 评估中专家系统性分歧的现实，构建了 3000 个个体专家评分的 PBIG-DATA 数据集，并实证证明在该领域"个性化 judge（条件于目标评审员历史）"比"汇总 judge（条件于多评审员混合历史）"更贴合专家行为…
+  [ACL 2026 Oral][LLM评测][LLM-as-a-Judge] 针对商业 idea 评估中专家系统性分歧的现实，构建了 3000 个个体专家评分的 PBIG-DATA 数据集，并实证证明在该领域"个性化 judge（条件于目标评审员历史）"比"汇总 judge（条件于多评审员混合历史）"更贴合专家行为，挑战了"用 pooled labels 当唯一 ground truth"的常见假设。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "LLM评测"
   - "LLM-as-a-Judge"
   - "商业 idea 评估"

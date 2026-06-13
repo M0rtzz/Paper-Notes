@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Abstract to Contextual: What LLMs Still Cannot Do in Mathematics
 description: >-
-  [ICLR 2026][LLM推理][数学推理] 提出 ContextMATH 基准，通过将 AIME/MATH-500 抽象数学题转化为情景嵌入（SG）和复杂度缩放（CS）两种变体，揭示即使是 GPT-5 和 DeepSeek-R1 等顶级模型在上下文数学推理中也出现 13-34% 的准确率下降…
+  [ICLR 2026][LLM推理][数学推理] 提出 ContextMATH 基准，通过将 AIME/MATH-500 抽象数学题转化为情景嵌入（SG）和复杂度缩放（CS）两种变体，揭示即使是 GPT-5 和 DeepSeek-R1 等顶级模型在上下文数学推理中也出现 13-34% 的准确率下降，且错误主要由问题建模（formulation）而非计算推理导致。
 tags:
   - "ICLR 2026"
   - "LLM推理"

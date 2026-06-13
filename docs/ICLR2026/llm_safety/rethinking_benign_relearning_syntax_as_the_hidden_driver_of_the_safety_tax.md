@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures
 description: >-
-  [ICLR 2026][LLM安全][machine_unlearning] 本文揭示了 LLM 机器遗忘中"良性重学习"（benign relearning）的真正驱动因素不是主题相关性而是**句法相似性**…
+  [ICLR 2026][LLM安全][machine_unlearning] 本文揭示了 LLM 机器遗忘中"良性重学习"（benign relearning）的真正驱动因素不是主题相关性而是**句法相似性**，并提出**句法多样化（syntactic diversification）**策略来提升遗忘的鲁棒性。
 tags:
   - "ICLR 2026"
   - "LLM安全"

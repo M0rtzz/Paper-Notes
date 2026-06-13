@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoWorld: Exploring Knowledge Learning from Unlabeled Videos
 description: >-
-  [CVPR 2025][图像生成][视频生成] VideoWorld 探索纯视觉视频生成模型能否从无标签视频中学习复杂知识（规则、推理、规划），提出潜在动态模型（LDM）压缩多步视觉变化，仅 3 亿参数即在围棋中达到职业五段水平。
+  [CVPR 2025][图像生成][视频生成] VideoWorld 探索纯视觉视频生成模型能否从无标签视频中学习复杂知识（规则、推理、规划），提出潜在动态模型（LDM）压缩多步视觉变化，仅 3 亿参数即在围棋中达到职业五段水平。 大语言模型通过 next token prediction 展现了强大的知识和推理能力…
 tags:
   - "CVPR 2025"
   - "图像生成"

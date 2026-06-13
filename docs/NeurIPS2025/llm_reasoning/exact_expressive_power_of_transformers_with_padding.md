@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exact Expressive Power of Transformers with Padding
 description: >-
-  [NeurIPS 2025][LLM推理][Transformer] 本文精确刻画了带 padding 的 Transformer 的表达能力：固定深度 + 多项式 padding 恰好等于 $\mathsf{FO}$-uniform $\mathsf{TC}^0$…
+  [NeurIPS 2025][LLM推理][Transformer] 本文精确刻画了带 padding 的 Transformer 的表达能力：固定深度 + 多项式 padding 恰好等于 $\mathsf{FO}$-uniform $\mathsf{TC}^0$，进一步结合 $O(\log^d n)$ looping 恰好等于 $\mathsf{FO}$-uniform $\mathsf{TC}^d$，polylog looping 收敛到 $\mathsf{NC}$，为 padding/looping 作为可并行推理时计算提供了完整理论基础。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

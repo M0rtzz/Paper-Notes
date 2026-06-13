@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Think and When to Look: Uncertainty-Guided Lookback
 description: >-
-  [CVPR 2026][多模态VLM][视觉推理] 本文首次系统分析了 LVLM 中 test-time thinking 对视觉推理的影响，发现"多想不如多看"——长推理链常忽略图像导致"long-wrong"轨迹，并据此提出不确定性引导的 lookback 解码策略，通过在推理链漂移时注入视觉回看提示…
+  [CVPR 2026][多模态VLM][视觉推理] 本文首次系统分析了 LVLM 中 test-time thinking 对视觉推理的影响，发现"多想不如多看"——长推理链常忽略图像导致"long-wrong"轨迹，并据此提出不确定性引导的 lookback 解码策略，通过在推理链漂移时注入视觉回看提示，在不修改模型的前提下将 MMMU 等 6 个基准提升 2-6 个点。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

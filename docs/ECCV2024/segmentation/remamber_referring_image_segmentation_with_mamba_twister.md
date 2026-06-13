@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMamber: Referring Image Segmentation with Mamba Twister
 description: >-
-  [ECCV 2024][语义分割][指称图像分割] 本文首次将 Mamba 架构引入指称图像分割（RIS）任务，提出 Mamba Twister 模块通过通道扫描和空间扫描的"扭转"机制实现高效的视觉-语言特征融合…
+  [ECCV 2024][语义分割][指称图像分割] 本文首次将 Mamba 架构引入指称图像分割（RIS）任务，提出 Mamba Twister 模块通过通道扫描和空间扫描的"扭转"机制实现高效的视觉-语言特征融合，在 RefCOCO/RefCOCO+/G-Ref 三个基准上取得了超越 Transformer 方法的竞争性结果，同时保持线性计算复杂度。
 tags:
   - "ECCV 2024"
   - "语义分割"

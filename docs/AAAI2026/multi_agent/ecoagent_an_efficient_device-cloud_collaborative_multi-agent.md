@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation
 description: >-
-  [AAAI 2026][多智能体][设备-云端协作] 提出 EcoAgent，一个闭环设备-云端协作的多 Agent 移动自动化框架，通过 Dual-ReACT 双层推理规划 + 设备端轻量验证反馈 + Pre-Understanding 文本压缩模块…
+  [AAAI 2026][多智能体][设备-云端协作] 提出 EcoAgent，一个闭环设备-云端协作的多 Agent 移动自动化框架，通过 Dual-ReACT 双层推理规划 + 设备端轻量验证反馈 + Pre-Understanding 文本压缩模块，在 AndroidWorld 上达到与全云端 Agent 相当的成功率，同时大幅降低延迟（3.9s vs 15.3s）、云端调用（降89%）和上行数据量（降48.6倍）。
 tags:
   - "AAAI 2026"
   - "多智能体"

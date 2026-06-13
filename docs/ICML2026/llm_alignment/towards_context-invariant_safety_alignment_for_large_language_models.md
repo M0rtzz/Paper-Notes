@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Context-Invariant Safety Alignment for Large Language Models
 description: >-
-  [ICML 2026][LLM对齐][上下文不变性] 作者提出 AIR（Anchor Invariance Regularization），把可验证 prompt 当作"锚"、用 stop-gradient 只把开放式变体往锚的表现上拉，作为辅助损失插入 GRPO…
+  [ICML 2026][LLM对齐][上下文不变性] 作者提出 AIR（Anchor Invariance Regularization），把可验证 prompt 当作"锚"、用 stop-gradient 只把开放式变体往锚的表现上拉，作为辅助损失插入 GRPO，在安全/道德/数学三域把 OOD 组级一致性平均提升 33.49%、ID 提升 12.71%。
 tags:
   - "ICML 2026"
   - "LLM对齐"

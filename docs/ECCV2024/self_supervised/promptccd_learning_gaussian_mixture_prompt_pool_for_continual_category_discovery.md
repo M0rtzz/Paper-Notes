@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PromptCCD: Learning Gaussian Mixture Prompt Pool for Continual Category Discovery
 description: >-
-  [ECCV 2024][自监督学习][持续类别发现] 提出PromptCCD框架，利用高斯混合模型（GMM）作为提示池，实现在无标签数据流中的持续新类别发现，同时缓解灾难性遗忘。
+  [ECCV 2024][自监督学习][持续类别发现] 提出PromptCCD框架，利用高斯混合模型（GMM）作为提示池，实现在无标签数据流中的持续新类别发现，同时缓解灾难性遗忘。 持续类别发现（Continual Category Discovery, CCD）：是一个新兴且极具挑战性的问题——在持续到来的无标签数据流中自动…
 tags:
   - "ECCV 2024"
   - "自监督学习"

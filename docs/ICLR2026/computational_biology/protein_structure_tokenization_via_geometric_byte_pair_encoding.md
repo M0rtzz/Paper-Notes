@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protein Structure Tokenization via Geometric Byte Pair Encoding
 description: >-
-  [ICLR 2026][计算生物][GeoBPE] 提出 GeoBPE——首个将 BPE（字节对编码）从离散文本扩展到连续蛋白质骨架几何的 tokenizer，通过交替执行"局部合并（k-medoids聚类+量化）"和"全局校正（可微逆运动学）"构建层次化结构 motif 词汇表…
+  [ICLR 2026][计算生物][GeoBPE] 提出 GeoBPE——首个将 BPE（字节对编码）从离散文本扩展到连续蛋白质骨架几何的 tokenizer，通过交替执行"局部合并（k-medoids聚类+量化）"和"全局校正（可微逆运动学）"构建层次化结构 motif 词汇表，以 >10× 压缩比和 >10× 数据效率超越 VQ-VAE 类 PST，在 12 个下游任务 24 个测试集上排名第一。
 tags:
   - "ICLR 2026"
   - "计算生物"

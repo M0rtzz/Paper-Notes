@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models
 description: >-
-  [ACL 2025][LLM效率][long-context QA] 提出 Dynamic Chunking and Selection (DCS)，通过基于语义相似度的动态分块和问题感知分类器的块选择，解决长文本固定分块导致的语义断裂问题…
+  [ACL 2025][LLM效率][long-context QA] 提出 Dynamic Chunking and Selection (DCS)，通过基于语义相似度的动态分块和问题感知分类器的块选择，解决长文本固定分块导致的语义断裂问题，在 12 个长文本 QA 数据集上以 Llama3 为基座实现 single-hop 平均 35.50（+28.6%）和 multi-hop 平均 29.07（+20.0%）的提升，且在 256k token 输入下保持鲁棒。
 tags:
   - "ACL 2025"
   - "LLM效率"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Trapped by simplicity: When Transformers fail to learn from noisy features
 description: >-
-  [ICLR 2026][LLM/NLP][噪声鲁棒学习] 研究表明 Transformer 在从含特征噪声的数据中学习布尔函数时会失败——其简单性偏好（倾向学习低敏感度函数）导致模型被困在比目标函数更简单的最优噪声预测器上，无法恢复真实的无噪声目标函数。
+  [ICLR 2026][LLM 其他][噪声鲁棒学习] 研究表明 Transformer 在从含特征噪声的数据中学习布尔函数时会失败——其简单性偏好（倾向学习低敏感度函数）导致模型被困在比目标函数更简单的最优噪声预测器上，无法恢复真实的无噪声目标函数。 领域现状：LLM 的训练数据中普遍包含噪声（拼写错误、语法错误、语义不一…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "噪声鲁棒学习"
   - "简单性偏好"
   - "布尔函数"

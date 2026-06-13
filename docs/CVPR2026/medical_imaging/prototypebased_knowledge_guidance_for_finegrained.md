@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting
 description: >-
-  [CVPR 2026][医学图像][结构化放射报告] 提出 ProtoSR，通过 LLM 驱动的管道从 22.7 万篇 MIMIC-CXR 自由文本报告中挖掘模板对齐的视觉原型知识库，并设计原型条件化迟融合模块将检索到的原型证据作为 logit 残差注入层级式结构化报告模型…
+  [CVPR 2026][医学图像][结构化放射报告] 提出 ProtoSR，通过 LLM 驱动的管道从 22.7 万篇 MIMIC-CXR 自由文本报告中挖掘模板对齐的视觉原型知识库，并设计原型条件化迟融合模块将检索到的原型证据作为 logit 残差注入层级式结构化报告模型，在 Rad-ReStruct 基准上达到 SOTA，L3 细粒度属性 F1 从 4.3 提升到 7.4（+72.1% 相对提升）。
 tags:
   - "CVPR 2026"
   - "医学图像"

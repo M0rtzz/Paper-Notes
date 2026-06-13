@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BFANet: Revisiting 3D Semantic Segmentation with Boundary Feature Analysis
 description: >-
-  [CVPR 2025][3D视觉][3D语义分割] 从错误分析角度重新审视3D语义分割，将分割误差分为四类（区域分类/位移/合并/误响应）并设计对应评估指标，提出BFANet通过边界-语义解耦模块和实时边界伪标签计算增强边界感知…
+  [CVPR 2025][3D视觉][3D语义分割] 从错误分析角度重新审视3D语义分割，将分割误差分为四类（区域分类/位移/合并/误响应）并设计对应评估指标，提出BFANet通过边界-语义解耦模块和实时边界伪标签计算增强边界感知，在ScanNet200测试集上达到36.0 mIoU（不含辅助数据训练的最高成绩）。
 tags:
   - "CVPR 2025"
   - "3D视觉"

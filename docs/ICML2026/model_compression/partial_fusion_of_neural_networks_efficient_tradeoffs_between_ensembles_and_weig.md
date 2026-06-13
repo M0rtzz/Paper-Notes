@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Partial Fusion of Neural Networks: Efficient Tradeoffs Between Ensembles and Weight Aggregation
 description: >-
-  [ICML 2026][模型压缩][模型融合] 作者提出 **Partial Fusion**：用部分最优传输 (partial OT) 只合并两个网络中"最相似"的神经元、保留剩余神经元独立存在，从而在"权重聚合 (1× 参数量)"与"全集成 (2× 参数量)"之间得到一条平滑、单调、可调的精度–参数量曲线…
+  [ICML 2026][模型压缩][模型融合] 作者提出 **Partial Fusion**：用部分最优传输 (partial OT) 只合并两个网络中"最相似"的神经元、保留剩余神经元独立存在，从而在"权重聚合 (1× 参数量)"与"全集成 (2× 参数量)"之间得到一条平滑、单调、可调的精度–参数量曲线；并进一步把它统一到"对集成做广义剪枝"的视角，让同一套工具也能压缩单个模型。
 tags:
   - "ICML 2026"
   - "模型压缩"

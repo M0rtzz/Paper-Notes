@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding
 description: >-
-  [ICCV 2025][目标检测][可解释性] 提出 CBM-HNMU 框架，通过概念瓶颈模型（CBM）逼近黑盒模型的推理过程，自动识别并修正有害概念，再将修正后的知识蒸馏回黑盒模型，实现超越样本级别的系统性模型干预与准确率提升。
+  [ICCV 2025][目标检测][可解释性] 提出 CBM-HNMU 框架，通过概念瓶颈模型（CBM）逼近黑盒模型的推理过程，自动识别并修正有害概念，再将修正后的知识蒸馏回黑盒模型，实现超越样本级别的系统性模型干预与准确率提升。 深度学习模型的决策过程日趋不透明，现有可解释性方法主要分为两类： 特征归因方法：（Grad-C…
 tags:
   - "ICCV 2025"
   - "目标检测"

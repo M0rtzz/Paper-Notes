@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Splat-SAP: Feed-Forward Gaussian Splatting for Human-Centered Scene with Scale-Aware Point Map Reconstruction
 description: >-
-  [AAAI 2026][3D视觉][前馈高斯溅射] 提出 Splat-SAP，一种前馈式方法，从大稀疏度的双目相机输入中重建尺度感知的点图（Point Map），并通过高斯平面（Gaussian Plane）实现人体中心场景的高质量自由视点渲染，全程无需3D监督。
+  [AAAI 2026][3D视觉][前馈高斯溅射] 提出 Splat-SAP，一种前馈式方法，从大稀疏度的双目相机输入中重建尺度感知的点图（Point Map），并通过高斯平面（Gaussian Plane）实现人体中心场景的高质量自由视点渲染，全程无需3D监督。 前馈式自由视点视频合成在远程通信、体育转播等应用中至关重要…
 tags:
   - "AAAI 2026"
   - "3D视觉"

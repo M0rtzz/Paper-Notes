@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GTP-4o: Modality-Prompted Heterogeneous Graph Learning for Omni-Modal Biomedical Representation
 description: >-
-  [ECCV 2024][医学图像][多模态学习] 提出基于异构图的全模态生物医学表征学习框架 GTP-4o，通过异构图嵌入显式建模跨模态关系，利用图提示机制补全缺失模态，并设计知识引导的层次化跨模态聚合，在胶质瘤分级和生存预测任务上取得SOTA。
+  [ECCV 2024][医学图像][多模态学习] 提出基于异构图的全模态生物医学表征学习框架 GTP-4o，通过异构图嵌入显式建模跨模态关系，利用图提示机制补全缺失模态，并设计知识引导的层次化跨模态聚合，在胶质瘤分级和生存预测任务上取得SOTA。 问题背景 生物医学诊断中存在多种临床模态（基因组学、病理图像、细胞图谱、诊断文…
 tags:
   - "ECCV 2024"
   - "医学图像"

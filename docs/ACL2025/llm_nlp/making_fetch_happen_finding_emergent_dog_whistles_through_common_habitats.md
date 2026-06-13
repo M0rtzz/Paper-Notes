@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Making FETCH! Happen: Finding Emergent Dog Whistles Through Common Habitats
 description: >-
-  [ACL 2025][隐式仇恨言论] 提出 FETCH! 基准和 EarShot 系统，用于在大规模社交媒体语料库中发现新兴的"狗哨"（dog whistle，即具有双重含义的编码表达），利用向量数据库和 LLM 的结合实现了比现有方法高 2-20 个 F-score 百分点的提升。
+  [ACL 2025][LLM 其他][隐式仇恨言论] 提出 FETCH! 基准和 EarShot 系统，用于在大规模社交媒体语料库中发现新兴的"狗哨"（dog whistle，即具有双重含义的编码表达），利用向量数据库和 LLM 的结合实现了比现有方法高 2-20 个 F-score 百分点的提升。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "隐式仇恨言论"
   - "暗语检测"
   - "新兴词汇发现"

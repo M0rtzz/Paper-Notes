@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scene-Agnostic Pose Regression for Visual Localization
 description: >-
-  [CVPR 2025][视觉定位] 提出"场景无关位姿回归"（SPR）新任务范式，以序列首帧为坐标原点回归后续帧的相对位姿，避免了APR需重训练、RPR需检索数据库、VO存在累积漂移的困境，并建立了200K全景图的360SPR大规模数据集和双分支SPR-Mamba模型。
+  [CVPR 2025][视觉定位] 提出"场景无关位姿回归"（SPR）新任务范式，以序列首帧为坐标原点回归后续帧的相对位姿，避免了APR需重训练、RPR需检索数据库、VO存在累积漂移的困境，并建立了200K全景图的360SPR大规模数据集和双分支SPR-Mamba模型。 领域现状：视觉定位主要有三种范式——绝对位姿回归(AP…
 tags:
   - "CVPR 2025"
   - "视觉定位"

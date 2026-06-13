@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpecGuard: Spectral Projection-based Advanced Invisible Watermarking
 description: >-
-  [ICCV2025][AI安全][不可见水印] SpecGuard 提出将水印信息嵌入到小波分解后的高频子带的频谱域中（通过 FFT 近似的频谱投影），编码端用强度因子增强鲁棒性，解码端利用 Parseval 定理设计可学习阈值进行比特恢复…
+  [ICCV2025][AI安全][不可见水印] SpecGuard 提出将水印信息嵌入到小波分解后的高频子带的频谱域中（通过 FFT 近似的频谱投影），编码端用强度因子增强鲁棒性，解码端利用 Parseval 定理设计可学习阈值进行比特恢复，在保持高图像质量（PSNR>42dB）的同时实现了对畸变、再生成和对抗攻击的全面鲁棒性，超越了现有 SOTA 方法。
 tags:
   - "ICCV2025"
   - "AI安全"

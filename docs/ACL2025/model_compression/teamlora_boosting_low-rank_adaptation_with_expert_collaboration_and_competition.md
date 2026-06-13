@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TeamLoRA: Boosting Low-Rank Adaptation with Expert Collaboration and Competition
 description: >-
-  [ACL 2025][模型压缩][参数高效微调] 提出 TeamLoRA，通过非对称协作模块（共享A矩阵+多个专家B矩阵的"插件式"组织）和基于Shapley值的竞争模块来优化Multi-LoRA架构，在多任务学习中实现了更好的效果-效率平衡——训练时间比MoELoRA减少30%，推理速度提升40%…
+  [ACL 2025][模型压缩][参数高效微调] 提出 TeamLoRA，通过非对称协作模块（共享A矩阵+多个专家B矩阵的"插件式"组织）和基于Shapley值的竞争模块来优化Multi-LoRA架构，在多任务学习中实现了更好的效果-效率平衡——训练时间比MoELoRA减少30%，推理速度提升40%，同时性能更优。
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] General Compression Framework for Efficient Transformer Object Tracking
 description: >-
-  [ICCV 2025][视频理解][目标跟踪] 提出 CompressTracker，一个通用 Transformer 跟踪器压缩框架，通过阶段划分、替换训练和特征模仿三个递进创新，实现结构无关的高效压缩——压缩 SUTrack 后保持约 99% 精度同时加速 2.42 倍。
+  [ICCV 2025][视频理解][目标跟踪] 提出 CompressTracker，一个通用 Transformer 跟踪器压缩框架，通过阶段划分、替换训练和特征模仿三个递进创新，实现结构无关的高效压缩——压缩 SUTrack 后保持约 99% 精度同时加速 2.42 倍。 Transformer 跟踪器（如 OSTrac…
 tags:
   - "ICCV 2025"
   - "视频理解"

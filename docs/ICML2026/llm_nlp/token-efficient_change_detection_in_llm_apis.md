@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Token-Efficient Change Detection in LLM APIs
 description: >-
-  [ICML 2026][LLM/NLP][黑盒变更检测] 作者证明在低温采样下，"两个 token logit 几乎打平"的特殊输入（Border Inputs）对参数微扰极度敏感——理论上 SNR 在 $T\to 0$ 时发散，于是只观测输出 token（严格黑盒）就能用极少请求做 LLM API 变更检测…
+  [ICML 2026][LLM 其他][黑盒变更检测] 作者证明在低温采样下，"两个 token logit 几乎打平"的特殊输入（Border Inputs）对参数微扰极度敏感——理论上 SNR 在 $T\to 0$ 时发散，于是只观测输出 token（严格黑盒）就能用极少请求做 LLM API 变更检测；提出的 B3IT 在 TinyChange benchmark 上以 1/30 的成本匹敌灰盒 logprob 方法，并在 93 个商用端点上 23 天连续监控发现 8 次真实模型替换。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "黑盒变更检测"
   - "边界输入 BI"
   - "低温相变"

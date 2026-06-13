@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Variability of Concept Activation Vectors
 description: >-
-  [AAAI 2026][Concept Activation Vectors] 对 TCAV 方法中概念激活向量（CAV）的变异性进行首次理论分析，证明 CAV 的方差以 $O(1/N)$ 速率衰减（$N$ 为随机样本数），而 TCAV 分数的方差因"边界点"保持 $O(1)$…
+  [AAAI 2026][Concept Activation Vectors] 对 TCAV 方法中概念激活向量（CAV）的变异性进行首次理论分析，证明 CAV 的方差以 $O(1/N)$ 速率衰减（$N$ 为随机样本数），而 TCAV 分数的方差因"边界点"保持 $O(1)$，需通过多次运行平均以 $O(1/s)$ 降低。
 tags:
   - "AAAI 2026"
   - "Concept Activation Vectors"

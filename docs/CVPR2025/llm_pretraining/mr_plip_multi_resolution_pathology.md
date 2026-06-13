@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MR-PLIP: Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation
 description: >-
-  [CVPR 2025][预训练][多分辨率病理] 提出 MR-PLIP，首个多分辨率病理学视觉语言预训练模型，在 TCGA 数据集的 3400 万张多分辨率图文对上预训练，通过跨分辨率视觉-文本对齐和文本引导视觉表示，在 26 个数据集上超越 SOTA。
+  [CVPR 2025][预训练][多分辨率病理] 提出 MR-PLIP，首个多分辨率病理学视觉语言预训练模型，在 TCGA 数据集的 3400 万张多分辨率图文对上预训练，通过跨分辨率视觉-文本对齐和文本引导视觉表示，在 26 个数据集上超越 SOTA。 领域现状：现有病理学 VLM（PLIP、QuiltNet 等）仅在单一…
 tags:
   - "CVPR 2025"
   - "预训练"

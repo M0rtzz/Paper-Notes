@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pseudospectral Bounds for Transient Amplification in Coupled Gradient Descent
 description: >-
-  [ICML 2026][优化/理论][伪谱] 本文为 block-triangular Jacobian $J = \begin{bmatrix} A & 0 \\ C & D \end{bmatrix}$ 的耦合梯度下降建立尖锐的 Kreiss 常数界 $K(J) \leq 2/(1-\gamma) + \…
+  [ICML 2026][优化/理论][伪谱] 本文为 block-triangular Jacobian $J = \begin{bmatrix} A & 0 \\ C & D \end{bmatrix}$ 的耦合梯度下降建立尖锐的 Kreiss 常数界 $K(J) \leq 2/(1-\gamma) + \|C\|/(4(1-\gamma))$，并给出匹配下界——揭示了即使谱半径 < 1，瞬态放大也可能任意大；这套理论作为高维学习动力学的 scaling law，给出 $O(K(J)^2 \log(1/\delta))$ 的有限时迭代复杂度，并扩展到 nearly self-referential 系统。
 tags:
   - "ICML 2026"
   - "优化/理论"

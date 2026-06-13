@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLRMBench: A Comprehensive and Challenging Benchmark for Vision-Language Reward Models
 description: >-
-  [ICCV 2025][时间序列][奖励模型] 提出 VLRMBench，一个包含 12634 个问题、12 项任务的综合且具有挑战性的视觉语言奖励模型（VLRM）基准，覆盖过程理解、结果判断和批评生成三大方面，在 26 个模型上的广泛实验揭示了当前 VLRM 的显著不足。
+  [ICCV 2025][时间序列][奖励模型] 提出 VLRMBench，一个包含 12634 个问题、12 项任务的综合且具有挑战性的视觉语言奖励模型（VLRM）基准，覆盖过程理解、结果判断和批评生成三大方面，在 26 个模型上的广泛实验揭示了当前 VLRM 的显著不足。 奖励模型（RM）在大模型的训练和推理阶段扮演重要角…
 tags:
   - "ICCV 2025"
   - "时间序列"

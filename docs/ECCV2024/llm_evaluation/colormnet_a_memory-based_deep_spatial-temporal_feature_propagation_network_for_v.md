@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization
 description: >-
-  [ECCV 2024][LLM评测][video colorization] 提出 ColorMNet，一种基于记忆机制的时空特征传播网络，通过预训练大视觉模型引导的特征提取（PVGFE）、基于记忆的特征传播（MFP）和局部注意力（LA）三个模块…
+  [ECCV 2024][LLM评测][video colorization] 提出 ColorMNet，一种基于记忆机制的时空特征传播网络，通过预训练大视觉模型引导的特征提取（PVGFE）、基于记忆的特征传播（MFP）和局部注意力（LA）三个模块，在显著降低 GPU 显存消耗（仅需 1.9G）的同时实现了优于 SOTA 的视频上色效果。
 tags:
   - "ECCV 2024"
   - "LLM评测"

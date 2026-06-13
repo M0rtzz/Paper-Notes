@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shopping Companion: A Memory-Augmented LLM Agent for Real-World E-Commerce Tasks
 description: >-
-  [ACL2026][LLM Agent][长期记忆] Shopping Companion 构建了一个带长期用户偏好记忆和真实商品库的电商任务基准，并用两阶段 agent 加双重奖励、工具级奖励联合优化偏好识别和商品推荐，使 4B 模型接近强闭源模型表现。
+  [ACL2026][LLM Agent][长期记忆] Shopping Companion 构建了一个带长期用户偏好记忆和真实商品库的电商任务基准，并用两阶段 agent 加双重奖励、工具级奖励联合优化偏好识别和商品推荐，使 4B 模型接近强闭源模型表现。 领域现状：电商 LLM agent 需要完成商品推荐、预算约束、组合…
 tags:
   - "ACL2026"
   - "LLM Agent"

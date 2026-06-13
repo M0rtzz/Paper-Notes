@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models
 description: >-
-  [NeurIPS 2025][视频理解][非语言社交智能] 构建首个基于哑剧视频的非语言社交推理基准 MimeQA，包含101个视频和806个QA对，覆盖三层问题层次（具象识别→场景理解→全局推理），揭示当前VideoLLMs在非语言社交理解上的严重不足（20-30% vs 人类86%）。
+  [NeurIPS 2025][视频理解][非语言社交智能] 构建首个基于哑剧视频的非语言社交推理基准 MimeQA，包含101个视频和806个QA对，覆盖三层问题层次（具象识别→场景理解→全局推理），揭示当前VideoLLMs在非语言社交理解上的严重不足（20-30% vs 人类86%）。 领域现状： 社交智能AI日益重要…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

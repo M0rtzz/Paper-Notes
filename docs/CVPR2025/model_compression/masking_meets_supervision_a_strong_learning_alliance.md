@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Masking Meets Supervision: A Strong Learning Alliance
 description: >-
-  [CVPR 2025][模型压缩][监督学习] 提出 Masked Sub-branch (MaskSub)——在监督学习中引入高比例 (50%) mask 增强的通用框架，通过主分支(无mask)和子分支(有mask)的自蒸馏结构解决强 mask 增强导致训练不稳定的问题…
+  [CVPR 2025][模型压缩][监督学习] 提出 Masked Sub-branch (MaskSub)——在监督学习中引入高比例 (50%) mask 增强的通用框架，通过主分支(无mask)和子分支(有mask)的自蒸馏结构解决强 mask 增强导致训练不稳定的问题，在 DeiT-III、MAE 微调、CLIP 微调、BERT 训练以及 ResNet/Swin 等多种场景中均取得一致性能提升。
 tags:
   - "CVPR 2025"
   - "模型压缩"

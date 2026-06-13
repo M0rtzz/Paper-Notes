@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ManipArena: Comprehensive Real-world Evaluation of Reasoning-Oriented Generalist Robot Manipulation
 description: >-
-  [CVPR 2026][机器人][机器人操作评估] ManipArena 提出了一个标准化的真实世界机器人操作评估框架，包含 20 个推理导向任务和 10,812 条专家轨迹，通过绿幕受控环境、系统化多样性设计和分层 OOD 评估，为 VLA 模型和世界模型提供公平、可复现的评测基准。
+  [CVPR 2026][机器人][机器人操作评估] ManipArena 提出了一个标准化的真实世界机器人操作评估框架，包含 20 个推理导向任务和 10,812 条专家轨迹，通过绿幕受控环境、系统化多样性设计和分层 OOD 评估，为 VLA 模型和世界模型提供公平、可复现的评测基准。 1. 领域现状：VLA（Vision-…
 tags:
   - "CVPR 2026"
   - "机器人"

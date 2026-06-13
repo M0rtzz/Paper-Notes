@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVR: Adaptive VLM Routing for Computer Use Agents
 description: >-
-  [CVPR 2026][多模态VLM][Computer Use Agent] 提出 AVR 自适应路由框架，通过轻量多模态嵌入模型评估动作难度 + 小模型 logprob 置信度探测 + warm agent 记忆注入，实现三层路由（简单→小模型，困难→大模型，高风险→大模型+guardrail）…
+  [CVPR 2026][多模态VLM][Computer Use Agent] 提出 AVR 自适应路由框架，通过轻量多模态嵌入模型评估动作难度 + 小模型 logprob 置信度探测 + warm agent 记忆注入，实现三层路由（简单→小模型，困难→大模型，高风险→大模型+guardrail），在推理成本降低 78% 的同时仅损失 2pp 准确率。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Versatile Transition Generation with Image-to-Video Diffusion
 description: >-
-  [ICCV 2025][视频生成][视频过渡生成] 本文提出VTG统一过渡视频生成框架，基于图像到视频扩散模型，通过插值初始化（噪声SLERP+LoRA插值+文本SLERP）、双向运动微调和DINOv2表征对齐正则化，在物体变形、运动预测、概念融合、场景过渡四类任务上实现平滑高保真过渡。
+  [ICCV 2025][视频生成][视频过渡生成] 本文提出VTG统一过渡视频生成框架，基于图像到视频扩散模型，通过插值初始化（噪声SLERP+LoRA插值+文本SLERP）、双向运动微调和DINOv2表征对齐正则化，在物体变形、运动预测、概念融合、场景过渡四类任务上实现平滑高保真过渡。 1. 领域现状： 过渡视频生成包括物…
 tags:
   - "ICCV 2025"
   - "视频生成"

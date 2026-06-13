@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Epistemic Uncertainty for Generated Image Detection
 description: >-
-  [NeurIPS 2025][图像生成][AI生成图像检测] 提出 WePe（Weight Perturbation），通过对预训练视觉大模型（DINOv2）施加权重扰动来估计认识不确定性（epistemic uncertainty），利用自然图像与 AI 生成图像在不确定性空间的差异实现检测…
+  [NeurIPS 2025][图像生成][AI生成图像检测] 提出 WePe（Weight Perturbation），通过对预训练视觉大模型（DINOv2）施加权重扰动来估计认识不确定性（epistemic uncertainty），利用自然图像与 AI 生成图像在不确定性空间的差异实现检测，无需训练即可使用。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

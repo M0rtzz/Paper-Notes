@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VladVA: Discriminative Fine-tuning of LVLMs
 description: >-
-  [CVPR 2025][多模态VLM][判别式微调] 提出VladVA框架，通过混合短/长caption数据策略、对比损失+自回归损失的联合训练、以及soft prompting+LoRA的参数高效适配，将生成式LVLM（LLaVA）转化为强判别式模型…
+  [CVPR 2025][多模态VLM][判别式微调] 提出VladVA框架，通过混合短/长caption数据策略、对比损失+自回归损失的联合训练、以及soft prompting+LoRA的参数高效适配，将生成式LVLM（LLaVA）转化为强判别式模型，在图文检索和组合性理解基准上大幅超越CLIP类模型和18B EVA-CLIP。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

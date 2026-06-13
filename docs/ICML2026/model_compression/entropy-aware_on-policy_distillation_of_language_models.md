@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Entropy-Aware On-Policy Distillation of Language Models
 description: >-
-  [ICML 2026][模型压缩][知识蒸馏] 针对在策略蒸馏中 reverse KL 在教师高熵区域引发多样性坍缩和梯度不稳的问题，提出根据教师 token 级熵值自适应混合 forward KL 与 reverse KL 的蒸馏策略，在六个数学推理基准上 Pass@8 最高提升 +5.05。
+  [ICML 2026][模型压缩][知识蒸馏] 针对在策略蒸馏中 reverse KL 在教师高熵区域引发多样性坍缩和梯度不稳的问题，提出根据教师 token 级熵值自适应混合 forward KL 与 reverse KL 的蒸馏策略，在六个数学推理基准上 Pass@8 最高提升 +5.05。 领域现状：在策略（on-po…
 tags:
   - "ICML 2026"
   - "模型压缩"

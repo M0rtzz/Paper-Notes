@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Learning Extremely High Density Crowds as Active Matters
 description: >-
-  [CVPR 2025][时间序列][极高密度人群] 将极高密度人群类比为物理学中的"主动物质"（active matter），从质量参差的野外视频中学习人群的集体动力学行为模式，用于人群分析和预测。
+  [CVPR 2025][时间序列][高密度人群] 本文将极端高密度人群（≥5人/m²）建模为主动物质（active matter），提出一种结合新型"人群材料"应力模型与Toner-Tu主动力的神经随机微分方程系统，通过混合欧拉-拉格朗日的CrowdMPM框架直接从野外视频光流中学习并预测人群动力学。
 tags:
   - "CVPR 2025"
   - "时间序列"
-  - "极高密度人群"
+  - "高密度人群"
   - "主动物质"
-  - "人群动力学"
-  - "野外视频学习"
+  - "物质点方法"
+  - "神经随机微分方程"
+  - "光流预测"
 ---
 
 # Learning Extremely High Density Crowds as Active Matters
@@ -126,3 +127,19 @@ tags:
   - 人群动力学
   - 野外视频学习
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Statistical Guarantees for High-Dimensional Stochastic Gradient Descent](../../NeurIPS2025/time_series/statistical_guarantees_for_high-dimensional_stochastic_gradient_descent.md)
+- [\[NeurIPS 2025\] Channel Matters: Estimating Channel Influence for Multivariate Time Series](../../NeurIPS2025/time_series/channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
+- [\[NeurIPS 2025\] A Graph Neural Network Approach for Localized and High-Resolution Temperature Forecasting](../../NeurIPS2025/time_series/a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)
+- [\[ICML 2026\] OLIVIA: Harmonizing Time Series Foundation Models with Power Spectral Density](../../ICML2026/time_series/olivia_harmonizing_time_series_foundation_models_with_power_spectral_density.md)
+- [\[NeurIPS 2025\] Frequency Matters: When Time Series Foundation Models Fail Under Spectral Shift](../../NeurIPS2025/time_series/frequency_matters_when_time_series_foundation_models_fail_under_spectral_shift.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Progressive Multimodal Reasoning via Active Retrieval
 description: >-
-  [ACL 2025][多模态VLM][多模态推理] 本文提出AR-MCTS框架，将主动检索（Active Retrieval）与蒙特卡洛树搜索（MCTS）结合，在多步多模态推理的每一步动态检索关键知识来替代传统beam search采样，自动生成逐步推理标注以渐进式对齐过程奖励模型（PRM）…
+  [ACL 2025][多模态VLM][多模态推理] 本文提出AR-MCTS框架，将主动检索（Active Retrieval）与蒙特卡洛树搜索（MCTS）结合，在多步多模态推理的每一步动态检索关键知识来替代传统beam search采样，自动生成逐步推理标注以渐进式对齐过程奖励模型（PRM），在MathVista、We-Math和GAOKAO-MM上显著提升了多种MLLM的推理性能。
 tags:
   - "ACL 2025"
   - "多模态VLM"

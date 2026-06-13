@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales
 description: >-
-  [NeurIPS 2025][时间序列][天气预报] 提出 OmniCast，一种结合掩码生成框架和潜在扩散模型的天气预报方法，通过联合生成未来天气序列（而非自回归迭代）来缓解误差累积，在次季节至季节（S2S）尺度达到 SOTA 性能，同时在中期预报上保持竞争力且推理速度快 10-20 倍。
+  [NeurIPS 2025][时间序列][天气预报] 提出 OmniCast，一种结合掩码生成框架和潜在扩散模型的天气预报方法，通过联合生成未来天气序列（而非自回归迭代）来缓解误差累积，在次季节至季节（S2S）尺度达到 SOTA 性能，同时在中期预报上保持竞争力且推理速度快 10-20 倍。 天气预报跨越不同时间尺度：中期（…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

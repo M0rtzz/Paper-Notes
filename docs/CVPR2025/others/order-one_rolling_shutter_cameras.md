@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Order-One Rolling Shutter Cameras
 description: >-
-  [CVPR 2025][卷帘快门] 提出 Order-One Rolling Shutter (RS1) 相机的统一理论，证明了将空间点映射到恰好一个图像点的卷帘快门相机类的数学特征，构建了显式参数化，并完整分类了线性 RS1 相机的 31 个相对位姿最小问题。
+  [CVPR 2025][卷帘快门] 提出 Order-One Rolling Shutter (RS1) 相机的统一理论，证明了将空间点映射到恰好一个图像点的卷帘快门相机类的数学特征，构建了显式参数化，并完整分类了线性 RS1 相机的 31 个相对位姿最小问题。 领域现状：卷帘快门（RS）相机主导消费级和智能手机市场…
 tags:
   - "CVPR 2025"
   - "卷帘快门"

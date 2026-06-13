@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAFER: A Calibrated Risk-Aware Multimodal Recommendation Model for Dynamic Treatment Regimes
 description: >-
-  [ICML2025][优化/理论][动态治疗策略(DTR)] 提出 SAFER 框架，融合结构化 EHR 与临床笔记的多模态信息，通过 KL 散度度量标签不确定性并结合保形推断控制 FDR，为高风险动态治疗推荐提供统计安全保障。
+  [ICML2025][优化/理论][动态治疗策略(DTR)] 提出 SAFER 框架，融合结构化 EHR 与临床笔记的多模态信息，通过 KL 散度度量标签不确定性并结合保形推断控制 FDR，为高风险动态治疗推荐提供统计安全保障。 - 动态治疗策略 (DTR)：旨在根据患者不断变化的临床状态做出实时、个性化的治疗决策…
 tags:
   - "ICML2025"
   - "优化/理论"

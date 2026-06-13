@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explore and Establish Synergistic Effects between Weight Pruning and Coreset Selection
 description: >-
-  [AAAI 2026][模型压缩][权重剪枝] 首次系统探索权重剪枝与核心集选择之间的交互关系，提出SWaST机制交替执行两者以建立协同效应，并设计状态保持机制解决"双重损失"问题，在10%–90% FLOPs削减下实现最高17.83%的精度提升。
+  [AAAI 2026][模型压缩][权重剪枝] 首次系统探索权重剪枝与核心集选择之间的交互关系，提出SWaST机制交替执行两者以建立协同效应，并设计状态保持机制解决"双重损失"问题，在10%–90% FLOPs削减下实现最高17.83%的精度提升。 问题背景 现代深度神经网络依赖大量模型参数和训练样本，计算开销巨大…
 tags:
   - "AAAI 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shape My Moves: Text-Driven Shape-Aware Synthesis of Human Motions
 description: >-
-  [CVPR 2025][人体理解][人体动作生成] 本文提出 ShapeMove 框架，通过 Shape-Aware FSQ-VAE 将连续体型信息注入离散量化的动作 token，并利用预训练语言模型同时预测体型参数和动作 token，实现了首个从自然语言描述端到端生成体型感知动作的方法。
+  [CVPR 2025][人体理解][人体动作生成] 本文提出 ShapeMove 框架，通过 Shape-Aware FSQ-VAE 将连续体型信息注入离散量化的动作 token，并利用预训练语言模型同时预测体型参数和动作 token，实现了首个从自然语言描述端到端生成体型感知动作的方法。 领域现状：文本到动作生成已取得显著…
 tags:
   - "CVPR 2025"
   - "人体理解"

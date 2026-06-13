@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DNAChunker: Learnable Tokenization for DNA Language Models
 description: >-
-  [ICML2026][计算生物][DNA 语言模型] DNAChunker 在掩码 DNA 语言模型中嵌入一个端到端可学习的"动态分块器"，通过双向 Mamba 编码 + 余弦相似度边界预测把 base-pair 序列压成变长 chunk，并配合 mask 保护与残差门控防止信息泄露…
+  [ICML2026][计算生物][DNA 语言模型] DNAChunker 在掩码 DNA 语言模型中嵌入一个端到端可学习的"动态分块器"，通过双向 Mamba 编码 + 余弦相似度边界预测把 base-pair 序列压成变长 chunk，并配合 mask 保护与残差门控防止信息泄露，仅用人类参考基因组、172M 参数就在五个基因组 benchmark 上全面超越 2.5B 级别的多物种预训练基线。
 tags:
   - "ICML2026"
   - "计算生物"

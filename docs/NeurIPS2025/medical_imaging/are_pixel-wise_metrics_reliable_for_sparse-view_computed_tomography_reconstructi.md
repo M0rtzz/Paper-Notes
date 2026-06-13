@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?
 description: >-
-  [NeurIPS 2025][sparse-view CT] 揭示 PSNR/SSIM 等像素级指标无法反映稀疏视图 CT 重建中解剖结构完整性（相关性仅 0.16-0.30），提出基于自动分割的解剖感知指标（NSD/clDice）和 CARE 框架——在扩散模型训练中加入分割引导损失…
+  [NeurIPS 2025][医学图像][sparse-view CT] 揭示 PSNR/SSIM 等像素级指标无法反映稀疏视图 CT 重建中解剖结构完整性（相关性仅 0.16-0.30），提出基于自动分割的解剖感知指标（NSD/clDice）和 CARE 框架——在扩散模型训练中加入分割引导损失，大器官结构完整性提升 32%、血管提升 36%。
 tags:
   - "NeurIPS 2025"
+  - "医学图像"
   - "sparse-view CT"
   - "anatomy-aware metrics"
   - "structural completeness"

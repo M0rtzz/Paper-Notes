@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoupling Training-Free Guided Diffusion by ADMM
 description: >-
-  [CVPR 2025][图像生成][ADMM] 本文提出 ADMMDiff，用交替方向乘子法（ADMM）将无训练条件扩散生成中的"无条件生成"和"条件引导"解耦为两个独立子问题，自动平衡两者无需手调权重超参数，在多种条件生成任务上超越现有方法。
+  [CVPR 2025][图像生成][ADMM] 本文提出 ADMMDiff，用交替方向乘子法（ADMM）将无训练条件扩散生成中的"无条件生成"和"条件引导"解耦为两个独立子问题，自动平衡两者无需手调权重超参数，在多种条件生成任务上超越现有方法。 领域现状：训练无关（training-free）的条件扩散生成通过在逆向过程中注…
 tags:
   - "CVPR 2025"
   - "图像生成"

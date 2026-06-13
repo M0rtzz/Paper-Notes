@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Finch: Benchmarking Finance & Accounting across Spreadsheet-Centric Enterprise Workflows
 description: >-
-  [ACL 2026][LLM评测][金融会计] 本文提出 Finch（FinWorkBench），一个从真实企业环境（Enron 数据集等）构建的金融会计工作流基准，包含 172 个复合工作流和 1,710 个电子表格（2700 万单元格）…
+  [ACL 2026 Findings][LLM评测][金融会计] 本文提出 Finch（FinWorkBench），一个从真实企业环境（Enron 数据集等）构建的金融会计工作流基准，包含 172 个复合工作流和 1,710 个电子表格（2700 万单元格），即使最强的 GPT 5.1 Pro 花费平均 16.8 分钟也仅通过 38.4% 的工作流，揭示了前沿 AI Agent 在真实企业场景中的严重不足。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "金融会计"
   - "电子表格"

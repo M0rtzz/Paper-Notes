@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment
 description: >-
-  [AAAI 2026][图像生成][自回归图像生成] 提出 ARRA（Autoregressive Representation Alignment）训练框架，通过混合令牌 \<HYBNEXT\> 在训练时将外部视觉基础模型的全局表征蒸馏到自回归 LLM 的隐状态中…
+  [AAAI 2026 Oral][图像生成][自回归图像生成] 提出 ARRA（Autoregressive Representation Alignment）训练框架，通过混合令牌 \<HYBNEXT\> 在训练时将外部视觉基础模型的全局表征蒸馏到自回归 LLM 的隐状态中，无需修改架构即可显著提升 LLM 的文本到图像生成质量。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "图像生成"
   - "自回归图像生成"
   - "表征对齐"

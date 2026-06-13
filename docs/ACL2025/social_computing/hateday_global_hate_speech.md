@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HateDay: Insights from a Global Hate Speech Dataset Representative of a Day on Twitter
 description: >-
-  [ACL 2025][社会计算][hate speech] HateDay 构建了首个全球代表性仇恨言论数据集——24 万条随机采样的 Twitter 推文覆盖 8 种语言和 4 个英语国家，揭示了学术数据集大幅高估了检测模型在真实场景中的表现，尤其对非欧洲语言检测能力极差。
+  [ACL 2025][社会计算][hate speech] HateDay 构建了首个全球代表性仇恨言论数据集——24 万条随机采样的 Twitter 推文覆盖 8 种语言和 4 个英语国家，揭示了学术数据集大幅高估了检测模型在真实场景中的表现，尤其对非欧洲语言检测能力极差。 领域现状：仇恨言论检测是重要的内容审核任务…
 tags:
   - "ACL 2025"
   - "社会计算"

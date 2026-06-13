@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Elastic ViTs from Pretrained Models without Retraining
 description: >-
-  [NeurIPS 2025][模型压缩][Transformer] SnapViT 提出一种后训练结构化剪枝方法：结合自监督梯度的局部 Hessian 和进化算法估计的全局跨模块相关性，无需重训练或标签即可在一次运行中生成连续稀疏度的弹性 ViT 子网络，在 A100 上仅需不到 5 分钟。
+  [NeurIPS 2025][模型压缩][Transformer] SnapViT 提出一种后训练结构化剪枝方法：结合自监督梯度的局部 Hessian 和进化算法估计的全局跨模块相关性，无需重训练或标签即可在一次运行中生成连续稀疏度的弹性 ViT 子网络，在 A100 上仅需不到 5 分钟。 领域现状：视觉基础模型性能强大但…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

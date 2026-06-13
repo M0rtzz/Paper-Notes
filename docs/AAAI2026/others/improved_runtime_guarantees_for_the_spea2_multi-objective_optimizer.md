@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer
 description: >-
-  [AAAI 2026][SPEA2] 通过深入分析SPEA2更复杂的选择机制，证明了其种群动态与NSGA-II有本质不同（σ-准则使目标值在种群中均匀分布），从而得到了对种群大小依赖更弱的运行时上界，表明SPEA2对参数选择具有更强的鲁棒性。
+  [AAAI 2026][SPEA2] 通过深入分析SPEA2更复杂的选择机制，证明了其种群动态与NSGA-II有本质不同（σ-准则使目标值在种群中均匀分布），从而得到了对种群大小依赖更弱的运行时上界，表明SPEA2对参数选择具有更强的鲁棒性。 多目标优化需要同时优化多个冲突目标，其最优解构成Pareto前沿…
 tags:
   - "AAAI 2026"
   - "SPEA2"

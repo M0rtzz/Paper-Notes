@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeSearch: Automated Red-Teaming of LLM-Based Search Agents
 description: >-
-  [ICML 2026][音频/语音][搜索 Agent] 本文提出 SafeSearch——一个全自动、沙箱化、可扩展的红队框架，通过在真实搜索结果中注入单个 LLM 生成的不可靠网页来评测搜索 Agent 的安全性，并用 300 个测试用例对 17 个 LLM × 3 种 Agent 脚手架进行系统评测…
+  [ICML 2026][音频/语音][搜索 Agent] 本文提出 SafeSearch——一个全自动、沙箱化、可扩展的红队框架，通过在真实搜索结果中注入单个 LLM 生成的不可靠网页来评测搜索 Agent 的安全性，并用 300 个测试用例对 17 个 LLM × 3 种 Agent 脚手架进行系统评测，发现最高 ASR 高达 90.5%、且常用的 reminder 防御几乎无效。
 tags:
   - "ICML 2026"
   - "音频/语音"

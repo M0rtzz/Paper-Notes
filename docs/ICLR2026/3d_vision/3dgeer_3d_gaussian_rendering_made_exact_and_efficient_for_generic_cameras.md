@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras
 description: >-
-  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出 3DGEER 框架，通过推导沿光线积分高斯密度的闭式解、设计粒子包围截锥体 (PBF) 进行精确高效的光线-粒子关联、以及引入双极等角投影 (BEAP) 统一宽视场相机表示…
+  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出 3DGEER 框架，通过推导沿光线积分高斯密度的闭式解、设计粒子包围截锥体 (PBF) 进行精确高效的光线-粒子关联、以及引入双极等角投影 (BEAP) 统一宽视场相机表示，在任意相机模型下实现了几何精确且实时高效的 3D 高斯渲染，在鱼眼和针孔数据集上全面超越现有方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

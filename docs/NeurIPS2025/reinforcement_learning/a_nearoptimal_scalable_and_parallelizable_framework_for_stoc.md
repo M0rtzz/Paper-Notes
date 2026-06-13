@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Near-optimal, Scalable and Parallelizable Framework for Stochastic Bandits Robust to Adversarial Corruptions and Beyond
 description: >-
-  [NeurIPS 2025][强化学习][adversarial corruptions] 提出 BARBAT 框架，改进了经典的 BARBAR 算法，通过固定 epoch 长度和逐 epoch 调整失败概率…
+  [NeurIPS 2025][强化学习][adversarial corruptions] 提出 BARBAT 框架，改进了经典的 BARBAR 算法，通过固定 epoch 长度和逐 epoch 调整失败概率，将对抗腐蚀下随机多臂老虎机的 regret 从 $O(\sqrt{K}C)$ 降至近最优的 $O(C)$（消除了 $\sqrt{K}$ 因子），并成功扩展到多智能体、图老虎机、组合半老虎机和批量老虎机等多种场景。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

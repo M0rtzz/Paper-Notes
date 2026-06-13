@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models
 description: >-
-  [NeurIPS 2025][计算生物][扩散模型] 本文发现扩散模型在采样和模拟之间存在不一致性问题（尤其在小扩散时间步），提出基于 Fokker-Planck 方程的正则化项来强制一致性，并结合时间分段的混合专家（MoE）策略，实现了在多个生物分子系统上一致且高效的采样与分子动力学模拟。
+  [NeurIPS 2025][计算生物][扩散模型] 本文发现扩散模型在采样和模拟之间存在不一致性问题（尤其在小扩散时间步），提出基于 Fokker-Planck 方程的正则化项来强制一致性，并结合时间分段的混合专家（MoE）策略，实现了在多个生物分子系统上一致且高效的采样与分子动力学模拟。 领域现状：分子动力学（MD）模拟…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

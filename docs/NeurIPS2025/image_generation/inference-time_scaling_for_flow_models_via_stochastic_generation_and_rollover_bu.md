@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference-Time Scaling for Flow Models via Stochastic Generation and Rollover Budget Forcing
 description: >-
-  [NeurIPS2025][图像生成][Flow Models] 提出针对 Flow 模型的推理时扩展方法：通过 ODE→SDE 转换引入随机性以启用粒子采样，利用线性→VP 插值变换扩大搜索空间，并设计 Rollover Budget Forcing (RBF) 策略自适应分配计算预算…
+  [NeurIPS2025][图像生成][Flow Models] 提出针对 Flow 模型的推理时扩展方法：通过 ODE→SDE 转换引入随机性以启用粒子采样，利用线性→VP 插值变换扩大搜索空间，并设计 Rollover Budget Forcing (RBF) 策略自适应分配计算预算，在组合文本生成图像和数量感知生成任务上显著超越所有现有方法。
 tags:
   - "NeurIPS2025"
   - "图像生成"

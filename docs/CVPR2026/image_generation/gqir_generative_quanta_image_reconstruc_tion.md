@@ -2,7 +2,7 @@
 title: >-
   [论文解读] gQIR: Generative Quanta Image Reconstruction
 description: >-
-  [CVPR 2026][图像生成][单光子传感器] 将大规模 text-to-image latent diffusion model 适配到单光子雪崩二极管（SPAD）的极端光子受限成像场景…
+  [CVPR 2026][图像生成][单光子传感器] 将大规模 text-to-image latent diffusion model 适配到单光子雪崩二极管（SPAD）的极端光子受限成像场景，通过三阶段框架（Quanta-aligned VAE → 对抗微调 LoRA U-Net → FusionViT 时空融合）实现从稀疏二值光子检测到高质量 RGB 图像的重建，在 10K-100K fps 极端条件下显著超越所有现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

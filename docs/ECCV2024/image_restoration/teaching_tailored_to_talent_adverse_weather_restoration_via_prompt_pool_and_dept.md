@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint
 description: >-
-  [ECCV 2024][Adverse Weather Restoration] 提出 T3-DiffWeather，一种基于 diffusion 的 all-in-one 恶劣天气恢复框架，通过 prompt pool 让网络自主组合 sub-prompts 构建实例级 weather-prompts 来建…
+  [ECCV 2024][图像恢复][Adverse Weather Restoration] 提出 T3-DiffWeather，一种基于 diffusion 的 all-in-one 恶劣天气恢复框架，通过 prompt pool 让网络自主组合 sub-prompts 构建实例级 weather-prompts 来建模多样化天气退化，同时利用 Depth-Anything 特征约束 general prompts 来建模场景信息，仅需 2 步采样即达到 SOTA，计算量仅为 WeatherDiffusion 的 1/52。
 tags:
   - "ECCV 2024"
+  - "图像恢复"
   - "Adverse Weather Restoration"
   - "提示学习"
   - "Depth-Anything"

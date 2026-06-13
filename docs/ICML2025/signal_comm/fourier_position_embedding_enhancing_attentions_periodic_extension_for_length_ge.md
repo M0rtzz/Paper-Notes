@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization
 description: >-
-  [ICML 2025][信号/通信][位置编码] 通过将 RoPE 中每个维度从单一频率扩展为傅里叶级数表示，并裁剪欠训练的低频分量，实现注意力机制的可靠周期性扩展，从而大幅提升 LLM 的长度泛化能力。
+  [ICML 2025][信号/通信][位置编码] 通过将 RoPE 中每个维度从单一频率扩展为傅里叶级数表示，并裁剪欠训练的低频分量，实现注意力机制的可靠周期性扩展，从而大幅提升 LLM 的长度泛化能力。 领域现状：大语言模型通常在固定上下文长度上训练，但实际应用中经常需要处理远超训练长度的序列。RoPE（旋转位置编码）通过…
 tags:
   - "ICML 2025"
   - "信号/通信"

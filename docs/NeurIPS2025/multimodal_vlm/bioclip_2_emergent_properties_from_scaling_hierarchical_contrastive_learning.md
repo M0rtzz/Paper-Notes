@@ -2,9 +2,9 @@
 title: >-
   [论文解读] BioCLIP 2: Emergent Properties from Scaling Hierarchical Contrastive Learning
 description: >-
-  [NeurIPS 2025][多模态VLM][生物分类] BioCLIP 2 在 TreeOfLife-200M（2.14 亿图像/95.2 万物种）上用层级对比学习训练 ViT-L，零样本物种识别比 BioCLIP 提升 18%…
+  [NeurIPS 2025 Spotlight][多模态VLM][生物分类] BioCLIP 2 在 TreeOfLife-200M（2.14 亿图像/95.2 万物种）上用层级对比学习训练 ViT-L，零样本物种识别比 BioCLIP 提升 18%，并发现规模化带来的涌现性质——嵌入自动编码生态关系（如达尔文雀喙大小排列）且种内变异与种间差异正交。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "多模态VLM"
   - "生物分类"
   - "层级对比学习"

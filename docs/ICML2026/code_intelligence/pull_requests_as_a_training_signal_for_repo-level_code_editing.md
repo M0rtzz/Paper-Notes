@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pull Requests as a Training Signal for Repo-Level Code Editing
 description: >-
-  [ICML2026][代码智能][仓库级代码编辑] 本文提出 Clean-PR 中训练范式，把 1640 万条带噪声的 GitHub Pull Request 经过过滤、重建和回放验证转成 200 万条可执行的 Search/Replace 编辑块语料…
+  [ICML2026][代码智能][仓库级代码编辑] 本文提出 Clean-PR 中训练范式，把 1640 万条带噪声的 GitHub Pull Request 经过过滤、重建和回放验证转成 200 万条可执行的 Search/Replace 编辑块语料，再叠加 Agentless 对齐 SFT 与错误驱动数据增强，使 Qwen2.5-Coder-32B 在 SWE-bench Lite/Verified 上分别相对 baseline 提升 13.6% 和 12.3%，并以 32B 参数超越 72B 的 Lingma-SWE 与 SWE-Fixer。
 tags:
   - "ICML2026"
   - "代码智能"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.07457](https://arxiv.org/abs/2602.07457)  
 **代码**: 待确认  
-**领域**: code_intelligence  
+**领域**: 代码智能  
 **关键词**: 仓库级代码编辑, Pull Request 训练信号, Search/Replace 编辑块, mid-training, SWE-bench
 
 ## 一句话总结

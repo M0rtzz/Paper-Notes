@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lost in Translation: Do LVLM Judges Generalize Across Languages?
 description: >-
-  [ACL 2026][多语言/翻译][多语言评估] 本文提出 MM-JudgeBench，首个大规模多语言多模态评判模型基准（25 种语言、60K+ 偏好实例），评估 22 个 LVLM 发现当前 LVLM 评判器存在显著的跨语言性能差异——模型大小和架构不能预测多语言鲁棒性，即使最先进的评判器也表现不一致…
+  [ACL 2026 Findings][多语言/翻译][多语言评估] 本文提出 MM-JudgeBench，首个大规模多语言多模态评判模型基准（25 种语言、60K+ 偏好实例），评估 22 个 LVLM 发现当前 LVLM 评判器存在显著的跨语言性能差异——模型大小和架构不能预测多语言鲁棒性，即使最先进的评判器也表现不一致，突显了多语言多模态评估基准的必要性。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "多语言评估"
   - "LVLM评判"

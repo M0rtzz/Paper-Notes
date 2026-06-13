@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training
 description: >-
-  [CVPR 2026][3D视觉][自监督预训练] E-RayZer是首个真正自监督的前馈式3D高斯重建模型，用显式3D高斯替代RayZer的隐式潜空间场景表示，配合基于视觉重叠度的课程学习策略，在零3D标注条件下学到几何接地的3D感知表征，位姿估计上碾压RayZer（RPA@5°从≈0提升至90.8）…
+  [CVPR 2026][3D视觉][自监督预训练] E-RayZer是首个真正自监督的前馈式3D高斯重建模型，用显式3D高斯替代RayZer的隐式潜空间场景表示，配合基于视觉重叠度的课程学习策略，在零3D标注条件下学到几何接地的3D感知表征，位姿估计上碾压RayZer（RPA@5°从≈0提升至90.8），下游3D任务frozen-backbone probing大幅领先DINOv3/CroCo v2等主流预训练模型，甚至比肩有监督VGGT。
 tags:
   - "CVPR 2026"
   - "3D视觉"

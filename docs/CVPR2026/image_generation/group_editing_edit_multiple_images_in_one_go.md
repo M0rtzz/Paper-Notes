@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Group Editing: Edit Multiple Images in One Go
 description: >-
-  [CVPR 2026][图像生成][多图一致编辑] 本文提出 GroupEditing，将一组相关图像重构为伪视频帧，结合 VGGT 提供的显式几何对应和视频模型的隐式时序先验，通过 Ge-RoPE 和 Identity-RoPE 两种增强位置编码实现跨视角一致的群组图像编辑…
+  [CVPR 2026][图像生成][多图一致编辑] 本文提出 GroupEditing，将一组相关图像重构为伪视频帧，结合 VGGT 提供的显式几何对应和视频模型的隐式时序先验，通过 Ge-RoPE 和 Identity-RoPE 两种增强位置编码实现跨视角一致的群组图像编辑，在视觉质量、编辑一致性和语义对齐上显著优于现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

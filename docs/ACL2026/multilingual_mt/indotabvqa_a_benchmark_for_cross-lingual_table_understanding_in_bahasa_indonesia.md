@@ -2,9 +2,9 @@
 title: >-
   [论文解读] IndoTabVQA: A Benchmark for Cross-Lingual Table Understanding in Bahasa Indonesia Documents
 description: >-
-  [ACL 2026][多语言/翻译][跨语言表格理解] 提出 IndoTabVQA，一个针对印尼语（Bahasa Indonesia）文档表格的跨语言视觉问答基准，包含 1593 张文档图像和四种语言（印尼语/英语/印地语/阿拉伯语）的 QA 标注，揭示了 VLM 在低资源语言和跨语言表格理解上的显著性能差距…
+  [ACL 2026 Findings][多语言/翻译][跨语言表格理解] 提出 IndoTabVQA，一个针对印尼语（Bahasa Indonesia）文档表格的跨语言视觉问答基准，包含 1593 张文档图像和四种语言（印尼语/英语/印地语/阿拉伯语）的 QA 标注，揭示了 VLM 在低资源语言和跨语言表格理解上的显著性能差距，微调+空间先验可带来最高 48.5% 的 In-Match 准确率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "跨语言表格理解"
   - "视觉问答"

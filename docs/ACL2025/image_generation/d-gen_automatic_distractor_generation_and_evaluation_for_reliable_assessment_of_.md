@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D-GEN: Automatic Distractor Generation and Evaluation for Reliable Assessment of Generative Models
 description: >-
-  [ACL 2025 (Findings)][图像生成][distractor generation] 提出 D-GEN——首个开源干扰项生成模型（LLaMA微调，8B/70B），自动将开放式评测题转为多选题格式，配套排名对齐+熵分析两种评估方法验证干扰项质量…
+  [ACL 2025 (Findings)][图像生成][distractor generation] 提出 D-GEN——首个开源干扰项生成模型（LLaMA微调，8B/70B），自动将开放式评测题转为多选题格式，配套排名对齐+熵分析两种评估方法验证干扰项质量，在 MMLU 上 Spearman's ρ=0.99 保持模型排名一致性。
 tags:
   - "ACL 2025 (Findings)"
   - "图像生成"

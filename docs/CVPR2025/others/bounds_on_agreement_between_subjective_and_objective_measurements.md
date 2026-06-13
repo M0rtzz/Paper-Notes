@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bounds on Agreement between Subjective and Objective Measurements
 description: >-
-  [CVPR 2025][主观测试] 通过仅假设投票均值收敛于真实质量，推导出主观测试（MOS）与客观估计器之间PCC（上界）和MSE（下界）的数学界限，并提出基于二项分布的投票模型BinoVotes，使得即使在投票方差不可用时也能计算这些界限…
+  [CVPR 2025][主观测试] 通过仅假设投票均值收敛于真实质量，推导出主观测试（MOS）与客观估计器之间PCC（上界）和MSE（下界）的数学界限，并提出基于二项分布的投票模型BinoVotes，使得即使在投票方差不可用时也能计算这些界限，18个主观测试数据的验证表明BinoVotes界限与全数据驱动界限高度吻合。
 tags:
   - "CVPR 2025"
   - "主观测试"

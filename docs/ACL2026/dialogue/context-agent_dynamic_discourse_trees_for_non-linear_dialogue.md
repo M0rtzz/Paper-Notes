@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Context-Agent: Dynamic Discourse Trees for Non-Linear Dialogue
 description: >-
-  [ACL 2026][对话系统][多轮对话] 作者提出 Context-Agent，把多轮对话历史建模为"话题树森林"（每棵树代表一个独立话题、每条分支代表一次指令细化/分叉），按导航意图而非语义相似度组织节点，并配套提出 NTM 基准评测非线性长程对话…
+  [ACL 2026][对话系统][多轮对话] 作者提出 Context-Agent，把多轮对话历史建模为"话题树森林"（每棵树代表一个独立话题、每条分支代表一次指令细化/分叉），按导航意图而非语义相似度组织节点，并配套提出 NTM 基准评测非线性长程对话，在多种 LLM 上同时提升任务完成率并降低 token 消耗。
 tags:
   - "ACL 2026"
   - "对话系统"

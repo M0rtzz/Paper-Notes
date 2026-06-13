@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models
 description: >-
-  [NeurIPS 2025][可解释性][test-time training] 提出"泛化之后特化"框架，基于线性表示假设（LRH）从理论和实验两方面解释了测试时训练（TTT）在分布内数据上的有效性：基础模型全局欠参数化导致概念叠加干扰，TTT通过局部特化将模型容量重新分配给与测试任务相关的少数概念…
+  [NeurIPS 2025 Oral][可解释性][test-time training] 提出"泛化之后特化"框架，基于线性表示假设（LRH）从理论和实验两方面解释了测试时训练（TTT）在分布内数据上的有效性：基础模型全局欠参数化导致概念叠加干扰，TTT通过局部特化将模型容量重新分配给与测试任务相关的少数概念，从而在不增加模型规模的情况下提升预测性能。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "可解释性"
   - "test-time training"
   - "线性表示假设"

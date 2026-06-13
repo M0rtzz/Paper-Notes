@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STiV: Scalable Text and Image Conditioned Video Generation
 description: >-
-  [ICCV 2025][视频生成][Transformer] 本文提出 STIV，一个基于 Diffusion Transformer 的统一文本-图像条件视频生成框架，通过帧替换策略整合图像条件并引入联合图像-文本 classifier-free guidance…
+  [ICCV 2025][视频生成][Transformer] 本文提出 STIV，一个基于 Diffusion Transformer 的统一文本-图像条件视频生成框架，通过帧替换策略整合图像条件并引入联合图像-文本 classifier-free guidance，在单一模型中同时实现 T2V 和 TI2V 生成，8.7B 参数模型在 VBench T2V 和 I2V 上分别达到 83.1 和 90.1 的 SOTA 成绩。
 tags:
   - "ICCV 2025"
   - "视频生成"

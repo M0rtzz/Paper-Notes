@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Barriers to Counterfactual Credit Attribution for Autoregressive Models
 description: >-
-  [ICML 2026][图像生成][反事实信用归因] 本文形式化研究生成式模型在 RAG/in-context 部署时的"反事实信用归因（CCA）"问题，证明两条令人惊讶的负面结果：(1) 即便底层 next-token 预测器是 (0,0)-CCA…
+  [ICML 2026][图像生成][反事实信用归因] 本文形式化研究生成式模型在 RAG/in-context 部署时的"反事实信用归因（CCA）"问题，证明两条令人惊讶的负面结果：(1) 即便底层 next-token 预测器是 (0,0)-CCA，自回归 rollout 也并非 CCA——CCA 不像 DP 那样在自回归下天然 compose；(2) 对一个已部署的非归因模型做 black-box "CCA retrofitting" 至少需要在输出长度 $\ell$ 上指数级查询次数。
 tags:
   - "ICML 2026"
   - "图像生成"

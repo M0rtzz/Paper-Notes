@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantitative Convergence of Trained Single Layer Neural Networks to Gaussian Processes
 description: >-
-  [NeurIPS 2025][优化/理论][神经正切核] 为梯度下降训练的浅层神经网络提供了在任意正训练时间 $t \geq 0$ 下向高斯过程收敛的显式定量上界，证明了二次Wasserstein距离以 $O(\log n_1 / n_1)$ 的速率多项式衰减。
+  [NeurIPS 2025][优化/理论][神经正切核] 为梯度下降训练的浅层神经网络提供了在任意正训练时间 $t \geq 0$ 下向高斯过程收敛的显式定量上界，证明了二次Wasserstein距离以 $O(\log n_1 / n_1)$ 的速率多项式衰减。 深度学习的理论理解一直是重要研究方向。在过参数化体系中…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

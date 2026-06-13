@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V2XPnP: Vehicle-to-Everything Spatio-Temporal Fusion for Multi-Agent Perception and Prediction
 description: >-
-  [ICCV 2025][时间序列][车路协同] 提出 V2XPnP，一个基于统一 Transformer 架构的 V2X 时空融合框架，在单步通信策略下实现多智能体端到端感知与预测，同时构建了首个支持所有 V2X 协作模式的大规模真实世界时序数据集，在感知和预测任务上达到 SOTA。
+  [ICCV 2025][时间序列][车路协同] 提出 V2XPnP，一个基于统一 Transformer 架构的 V2X 时空融合框架，在单步通信策略下实现多智能体端到端感知与预测，同时构建了首个支持所有 V2X 协作模式的大规模真实世界时序数据集，在感知和预测任务上达到 SOTA。 领域现状 自动驾驶系统需要准确感知周围道…
 tags:
   - "ICCV 2025"
   - "时间序列"

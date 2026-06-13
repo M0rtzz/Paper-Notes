@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decentralized Instruction Tuning: Conflict-Aware Splitting and Weight Merging
 description: >-
-  [ICML2026][多模态VLM][指令微调] 作者从"merge-ready 平坦盆地"出发给权重合并写了一套局部二次理论：合并增益等于曲率加权的 checkpoint 方差，PCA 沿梯度冲突主方向切分能最大化这个增益…
+  [ICML2026][多模态VLM][指令微调] 作者从"merge-ready 平坦盆地"出发给权重合并写了一套局部二次理论：合并增益等于曲率加权的 checkpoint 方差，PCA 沿梯度冲突主方向切分能最大化这个增益，并据此提出 MERIT 流水线——按数据集梯度冲突做 PCA 切分、各分支零通讯独立微调、最后一次 token 加权平均，在 Qwen2.5-VL-3B + 136 个 Vision-FLAN 任务上把 8-benchmark 平均从 54.3 提到 57.0。
 tags:
   - "ICML2026"
   - "多模态VLM"

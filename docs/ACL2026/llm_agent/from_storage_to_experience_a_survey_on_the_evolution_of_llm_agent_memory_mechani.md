@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Storage to Experience: A Survey on the Evolution of LLM Agent Memory Mechanisms
 description: >-
-  [ACL 2026][LLM Agent][Agent Memory] 本文用「Storage → Reflection → Experience」三阶段演化框架把 LLM Agent 记忆机制做系统综述…
+  [ACL 2026 Findings][LLM Agent][Agent Memory] 本文用「Storage → Reflection → Experience」三阶段演化框架把 LLM Agent 记忆机制做系统综述，用形式化定义把三阶段对应为「轨迹保留 → 轨迹精化 → 跨轨迹抽象」三种 functional signature，并用"Why-How-What"三层 RQ 串起整个 storyline，重点展开 Experience 阶段的两大变革性机制 — Active Exploration 与 Cross-Trajectory Abstraction。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "Agent Memory"
   - "Storage"

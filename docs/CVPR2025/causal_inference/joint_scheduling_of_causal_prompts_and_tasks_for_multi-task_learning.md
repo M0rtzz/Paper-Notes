@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint Scheduling of Causal Prompts and Tasks for Multi-Task Learning
 description: >-
-  [CVPR 2025][因果推理][因果提示] 提出 JSCPT（Joint Scheduling of Causal Prompts and Tasks）框架，首先设计多任务视觉语言提示（MTVLP）并通过因果干预消除提示中的虚假相关特征…
+  [CVPR 2025][因果推理][因果提示] 提出 JSCPT（Joint Scheduling of Causal Prompts and Tasks）框架，首先设计多任务视觉语言提示（MTVLP）并通过因果干预消除提示中的虚假相关特征，然后通过自适应任务调度器根据训练过程中任务关系的动态变化调整学习顺序和权重，在多个多任务视觉识别基准上取得显著提升。
 tags:
   - "CVPR 2025"
   - "因果推理"

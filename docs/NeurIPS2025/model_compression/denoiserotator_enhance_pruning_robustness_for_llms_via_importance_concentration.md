@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DenoiseRotator: Enhance Pruning Robustness for LLMs via Importance Concentration
 description: >-
-  [NeurIPS 2025][模型压缩][剪枝] 提出 DenoiseRotator，在剪枝前通过可学习正交变换最小化参数重要性分数的信息熵，将重要性集中到少数参数上，使 LLaMA3-70B 在 2:4 半结构化稀疏下困惑度退化缩小 58%（8.1→3.4）…
+  [NeurIPS 2025][模型压缩][剪枝] 提出 DenoiseRotator，在剪枝前通过可学习正交变换最小化参数重要性分数的信息熵，将重要性集中到少数参数上，使 LLaMA3-70B 在 2:4 半结构化稀疏下困惑度退化缩小 58%（8.1→3.4），可即插即用组合 Magnitude/Wanda/SparseGPT。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

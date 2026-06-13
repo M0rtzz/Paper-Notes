@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis
 description: >-
-  [ACL 2025][LLM推理][inference scaling] 提出 CoT-based Synthesizer——一种新的推理扩展策略，通过利用 CoT 推理分析多个候选回答的互补信息来合成更优的最终答案，即便所有候选回答都是错误的也能综合出正确答案…
+  [ACL 2025][LLM推理][inference scaling] 提出 CoT-based Synthesizer——一种新的推理扩展策略，通过利用 CoT 推理分析多个候选回答的互补信息来合成更优的最终答案，即便所有候选回答都是错误的也能综合出正确答案，在 MATH500 上对 Llama3-8B 提升 11.8%、对 GPT-4o 提升 10.3%。
 tags:
   - "ACL 2025"
   - "LLM推理"

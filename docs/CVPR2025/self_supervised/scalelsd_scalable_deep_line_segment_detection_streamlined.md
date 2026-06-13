@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScaleLSD: Scalable Deep Line Segment Detection Streamlined
 description: >-
-  [CVPR 2025][自监督学习][线段检测] ScaleLSD 通过精简线段检测架构（引入 HAT 诱导的提案验证）和设计高效伪标签生成管线（LSD-Rectifier），首次实现了在1000万无标注图像上的大规模自监督线段检测训练，在零样本评测中全面超越经典非深度 LSD 方法。
+  [CVPR 2025][自监督学习][线段检测] ScaleLSD 通过精简线段检测架构（引入 HAT 诱导的提案验证）和设计高效伪标签生成管线（LSD-Rectifier），首次实现了在1000万无标注图像上的大规模自监督线段检测训练，在零样本评测中全面超越经典非深度 LSD 方法。 领域现状：线段检测（LSD）是图像几何…
 tags:
   - "CVPR 2025"
   - "自监督学习"

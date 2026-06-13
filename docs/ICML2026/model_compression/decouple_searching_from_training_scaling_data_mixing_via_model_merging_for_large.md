@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decouple Searching from Training: Scaling Data Mixing via Model Merging for Large Language Model Pre-training
 description: >-
-  [ICML 2026][模型压缩][数据混合] 为了在 LLM 预训练里找最优数据混合比例又不被代理实验拖垮，本文提出 DeMix——只训一次 $N$ 个 component 模型（每个对应一个候选子集）…
+  [ICML 2026][模型压缩][数据混合] 为了在 LLM 预训练里找最优数据混合比例又不被代理实验拖垮，本文提出 DeMix——只训一次 $N$ 个 component 模型（每个对应一个候选子集），随后任意候选比例 $\{\alpha_i\}$ 都通过加权合并 $\sum_i \alpha_i \Theta_i$ 当作"训练自由"代理，并用 LightGBM 在 simplex 上做迭代回归选最优配方，最终用比 RegMix/CLIMB 少约 $6\times$ 的算力得到更好的下游分数，并附带开源 22T tokens 的 DeMix Corpora。
 tags:
   - "ICML 2026"
   - "模型压缩"

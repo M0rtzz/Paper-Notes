@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NTIRE 2026 The 3rd RAIM Challenge: AI Flash Portrait (Track 3)
 description: >-
-  [CVPR 2026 (Workshop)][图像恢复][低光照人像] NTIRE 2026第三届RAIM挑战赛AI Flash Portrait赛道：将弱闪光灯低光照人像映射为强闪光灯专业级人像，提供800组真实配对数据（含专业设计师修图GT），采用区域感知客观指标+专家盲评的双重评估体系…
+  [CVPR 2026 (Workshop)][图像恢复][低光照人像] NTIRE 2026第三届RAIM挑战赛AI Flash Portrait赛道：将弱闪光灯低光照人像映射为强闪光灯专业级人像，提供800组真实配对数据（含专业设计师修图GT），采用区域感知客观指标+专家盲评的双重评估体系，118支队伍注册、3187次有效提交。
 tags:
   - "CVPR 2026 (Workshop)"
   - "图像恢复"

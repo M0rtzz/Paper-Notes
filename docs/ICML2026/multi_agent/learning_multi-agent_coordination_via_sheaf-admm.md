@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sheaf-ADMM: Learning Multi-Agent Coordination via Sheaf-ADMM
 description: >-
-  [ICML 2026][多智能体][ADMM 展开] Sheaf-ADMM 把多智能体协调问题做成端到端可微的 ADMM 展开——每个 agent 只看局部 patch，独立解 ADMM 子问题（$\bm x$-update）、通过 cellular sheaf 定义的"边空间投影"协商一致（$\bm z$-…
+  [ICML 2026][多智能体][ADMM 展开] Sheaf-ADMM 把多智能体协调问题做成端到端可微的 ADMM 展开——每个 agent 只看局部 patch，独立解 ADMM 子问题（$\bm x$-update）、通过 cellular sheaf 定义的"边空间投影"协商一致（$\bm z$-update）、用对偶变量 $\bm u$ 累积分歧；在 maze pathfinding / MNIST / Sudoku 上 agents 协同得出正确全局解，且推理路径有可分析的 primal/consensus/dual 三态——比 MPNN 更可干预。
 tags:
   - "ICML 2026"
   - "多智能体"

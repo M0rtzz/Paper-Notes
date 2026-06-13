@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZipMoE: Efficient On-Device MoE Serving via Lossless Compression and Cache-Affinity Scheduling
 description: >-
-  [ICML2026][模型压缩][MoE 推理] ZipMoE 面向移动和边缘设备上的 MoE 大模型推理，把 BF16 专家参数拆成可压缩的 exponent bits 与高熵 sign-mantissa bits，通过无损压缩、分层缓存和 cache-affinity 调度…
+  [ICML2026][模型压缩][MoE 推理] ZipMoE 面向移动和边缘设备上的 MoE 大模型推理，把 BF16 专家参数拆成可压缩的 exponent bits 与高熵 sign-mantissa bits，通过无损压缩、分层缓存和 cache-affinity 调度，把原本受 SSD I/O 卡住的专家加载改造成可被多核 CPU 并行隐藏的解压与重组流程，在不改模型语义的前提下降低延迟并提升吞吐。
 tags:
   - "ICML2026"
   - "模型压缩"

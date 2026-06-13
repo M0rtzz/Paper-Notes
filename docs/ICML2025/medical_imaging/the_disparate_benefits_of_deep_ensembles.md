@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Disparate Benefits of Deep Ensembles
 description: >-
-  [ICML 2025][医学图像][深度集成] 这篇论文通过对人脸分析与医学影像数据集的大规模实证研究，揭示了一个被忽视的现象——"差异化收益效应"（disparate benefits effect）：深度集成（Deep Ensembles）在提升整体性能的同时…
+  [ICML 2025][医学图像][深度集成] 这篇论文通过对人脸分析与医学影像数据集的大规模实证研究，揭示了一个被忽视的现象——"差异化收益效应"（disparate benefits effect）：深度集成（Deep Ensembles）在提升整体性能的同时，会**不均衡地**惠及不同受保护群体（往往偏向本就占优势的群体），从而损害群体公平；作者进一步指出其根因是**群体间预测多样性的差异**，并证明经典的 Hardt 后处理（HPP）能在保住性能增益的前提下有效修复公平。
 tags:
   - "ICML 2025"
   - "医学图像"
@@ -135,3 +135,19 @@ $$\overline{\text{DIV}} = \frac{1}{K}\sum_{k=1}^{K}\left[\underbrace{\log\!\left
 - 实验充分度: ⭐⭐⭐⭐⭐ 3 数据集 × 5 架构 × 15 任务 × 1000 模型，再加两个受控合成实验坐实因果。
 - 写作质量: ⭐⭐⭐⭐ "发现效应→归因→缓解"逻辑闭环清晰，部分定量结果与图依赖附录。
 - 价值: ⭐⭐⭐⭐⭐ 直接提醒高风险场景慎用集成，并给出低成本可落地的 HPP 修复方案。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2025\] Efficient Noise Calculation in Deep Learning-based MRI Reconstructions](efficient_noise_calculation_in_deep_learning-based_mri_reconstructions.md)
+- [\[ICCV 2025\] Semi-supervised Deep Transfer for Regression without Domain Alignment](../../ICCV2025/medical_imaging/semi-supervised_deep_transfer_for_regression_without_domain_alignment.md)
+- [\[NeurIPS 2025\] DCA: Graph-Guided Deep Embedding Clustering for Brain Atlases](../../NeurIPS2025/medical_imaging/dca_graph-guided_deep_embedding_clustering_for_brain_atlases.md)
+- [\[CVPR 2025\] Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration](../../CVPR2025/medical_imaging/reinforcing_the_weakest_links_modernizing_siena_with_targeted_deep_learning_inte.md)
+- [\[CVPR 2025\] Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](../../CVPR2025/medical_imaging/multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
+
+</div>
+
+<!-- RELATED:END -->

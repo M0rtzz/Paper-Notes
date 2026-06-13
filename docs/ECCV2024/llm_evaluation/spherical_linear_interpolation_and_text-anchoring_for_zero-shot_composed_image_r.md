@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spherical Linear Interpolation and Text-Anchoring for Zero-shot Composed Image Retrieval
 description: >-
-  [ECCV 2024][LLM评测][zero-shot composed image retrieval] 提出 Slerp-based ZS-CIR 方法，通过球面线性插值（Slerp）直接融合 VLP 模型的图像和文本嵌入构造组合查询表示…
+  [ECCV 2024][LLM评测][zero-shot composed image retrieval] 提出 Slerp-based ZS-CIR 方法，通过球面线性插值（Slerp）直接融合 VLP 模型的图像和文本嵌入构造组合查询表示，配合 Text-Anchored-Tuning (TAT) 用 LoRA 微调图像编码器缩小模态间隙，在 CIRR/CIRCO/FashionIQ 上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "LLM评测"

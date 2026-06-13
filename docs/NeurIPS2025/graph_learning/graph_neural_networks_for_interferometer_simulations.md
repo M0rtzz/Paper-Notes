@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph Neural Networks for Interferometer Simulations
 description: >-
-  [NeurIPS 2025 (AI for Science Workshop)][图学习][图神经网络] 首次将图神经网络应用于光学干涉仪仿真，通过 GATv2 + KAN 架构预测 LIGO 干涉仪中的电磁场功率和空间强度分布，实现比标准仿真软件（FINESSE）快 815 倍的推理速度…
+  [NeurIPS 2025 (AI for Science Workshop)][图学习][图神经网络] 首次将图神经网络应用于光学干涉仪仿真，通过 GATv2 + KAN 架构预测 LIGO 干涉仪中的电磁场功率和空间强度分布，实现比标准仿真软件（FINESSE）快 815 倍的推理速度，同时保持较好的物理精度。
 tags:
   - "NeurIPS 2025 (AI for Science Workshop)"
   - "图学习"

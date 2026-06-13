@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Motion-Aware Video MLLM
 description: >-
-  [CVPR 2025][多模态VLM][视频多模态大模型] 本文提出 EMA（Efficient Motion-Aware video MLLM），利用压缩视频中的 GOP 结构融合空间与运动信息，以原生慢-快架构减少冗余并增强运动表示，同时引入 MotionBench 做运动理解基准…
+  [CVPR 2025][多模态VLM][视频多模态大模型] 本文提出 EMA（Efficient Motion-Aware video MLLM），利用压缩视频中的 GOP 结构融合空间与运动信息，以原生慢-快架构减少冗余并增强运动表示，同时引入 MotionBench 做运动理解基准，在多个视频 QA 和运动理解任务上取得 SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

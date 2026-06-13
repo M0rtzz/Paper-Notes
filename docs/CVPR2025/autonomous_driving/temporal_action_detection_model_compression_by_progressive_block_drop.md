@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Action Detection Model Compression by Progressive Block Drop
 description: >-
-  [CVPR 2025][自动驾驶][时序动作检测] 提出渐进式块丢弃(Progressive Block Drop)方法从深度维度压缩时序动作检测(TAD)模型，通过逐步移除冗余块并使用参数高效的跨深度对齐策略恢复性能，实现 25% 计算量减少的同时性能不降反升。
+  [CVPR 2025][自动驾驶][时序动作检测] 提出渐进式块丢弃(Progressive Block Drop)方法从深度维度压缩时序动作检测(TAD)模型，通过逐步移除冗余块并使用参数高效的跨深度对齐策略恢复性能，实现 25% 计算量减少的同时性能不降反升。 时序动作检测(TAD)旨在未剪辑视频中识别和定位动作实例的起…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

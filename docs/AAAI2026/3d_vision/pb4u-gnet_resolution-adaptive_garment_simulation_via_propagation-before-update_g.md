@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pb4U-GNet: Resolution-Adaptive Garment Simulation via Propagation-before-Update Graph Network
 description: >-
-  [AAAI 2026][3D视觉][服装仿真] 提出 Pb4U-GNet，通过将消息传播与特征更新解耦（Propagation-before-Update），结合分辨率感知的传播深度控制和更新缩放机制，实现了仅在低分辨率网格上训练即可泛化到高分辨率网格的服装仿真。
+  [AAAI 2026][3D视觉][服装仿真] 提出 Pb4U-GNet，通过将消息传播与特征更新解耦（Propagation-before-Update），结合分辨率感知的传播深度控制和更新缩放机制，实现了仅在低分辨率网格上训练即可泛化到高分辨率网格的服装仿真。 服装仿真（Garment Simulation）是虚拟试穿、…
 tags:
   - "AAAI 2026"
   - "3D视觉"

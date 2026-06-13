@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HumanOrbit: 3D Human Reconstruction as 360° Orbit Generation
 description: >-
-  [CVPR 2026][3D视觉][3D人体重建] 将单图3D人体重建转化为360°轨道视频生成问题，用仅500个3D扫描数据LoRA微调视频扩散模型（Wan 2.1）生成81帧环绕视频，再通过VGGT+Mesh Carving重建高质量纹理网格，无需位姿标注且在多视图一致性和身份保持上超越现有方法。
+  [CVPR 2026 Findings][3D视觉][3D人体重建] 将单图3D人体重建转化为360°轨道视频生成问题，用仅500个3D扫描数据LoRA微调视频扩散模型（Wan 2.1）生成81帧环绕视频，再通过VGGT+Mesh Carving重建高质量纹理网格，无需位姿标注且在多视图一致性和身份保持上超越现有方法。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "3D人体重建"
   - "视频扩散模型"

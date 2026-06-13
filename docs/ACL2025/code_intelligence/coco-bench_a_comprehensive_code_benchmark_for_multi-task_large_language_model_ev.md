@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCo-Bench: A Comprehensive Code Benchmark for Multi-task Large Language Model Evaluation
 description: >-
-  [ACL 2025][代码智能][代码基准测试] 提出 CoCo-Bench（Comprehensive Code Benchmark），一个覆盖代码理解、代码生成、代码修改和代码审查四个维度的综合代码基准，支持多编程语言和多难度等级，通过严格的人工审核确保数据质量…
+  [ACL 2025][代码智能][代码基准测试] 提出 CoCo-Bench（Comprehensive Code Benchmark），一个覆盖代码理解、代码生成、代码修改和代码审查四个维度的综合代码基准，支持多编程语言和多难度等级，通过严格的人工审核确保数据质量，揭示了现有 LLM 在代码能力上的不均衡表现。
 tags:
   - "ACL 2025"
   - "代码智能"

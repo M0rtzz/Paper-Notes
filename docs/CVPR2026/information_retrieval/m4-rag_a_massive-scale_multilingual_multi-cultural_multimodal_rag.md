@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG
 description: >-
-  [CVPR 2026][信息检索/RAG][检索增强生成] 提出首个大规模多语言多文化多模态 RAG 评估框架 M4-RAG，覆盖 42 种语言和 189 个国家的 80K+ 文化 VQA 实例，系统性揭示了 RAG 对小模型有效但无法随模型规模正向扩展、跨语言检索存在严重性能退化的关键发现。
+  [CVPR 2026][信息检索/RAG][检索增强生成] 提出首个大规模多语言多文化多模态 RAG 评估框架 M4-RAG，覆盖 42 种语言和 189 个国家的 80K+ 文化 VQA 实例，系统性揭示了 RAG 对小模型有效但无法随模型规模正向扩展、跨语言检索存在严重性能退化的关键发现。 1. 领域现状：RAG 技术已…
 tags:
   - "CVPR 2026"
   - "信息检索/RAG"

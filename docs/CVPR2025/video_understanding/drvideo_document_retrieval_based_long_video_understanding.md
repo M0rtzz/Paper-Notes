@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DrVideo: Document Retrieval Based Long Video Understanding
 description: >-
-  [CVPR 2025][视频理解][长视频理解] 提出DrVideo，将**长视频理解转化为长文档理解**任务：先将视频帧转为文本文档，通过**文档检索**定位关键帧并**增强信息**，再通过**Planning-Interaction双Agent循环**迭代补充缺失信息，最终以CoT方式回答问题…
+  [CVPR 2025][视频理解][长视频理解] 提出DrVideo，将**长视频理解转化为长文档理解**任务：先将视频帧转为文本文档，通过**文档检索**定位关键帧并**增强信息**，再通过**Planning-Interaction双Agent循环**迭代补充缺失信息，最终以CoT方式回答问题。在EgoSchema（3分钟）、MovieChat-1K（10分钟）和Video-MME长视频分割（平均44分钟）上大幅超越现有LLM-based SOTA。
 tags:
   - "CVPR 2025"
   - "视频理解"

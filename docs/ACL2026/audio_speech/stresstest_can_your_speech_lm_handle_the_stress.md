@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StressTest: Can YOUR Speech LM Handle the Stress?
 description: >-
-  [ACL 2026][音频/语音][句子重音] 提出 StressTest 基准评估语音语言模型（SLMs）对句子重音含义的理解能力，发现现有模型几乎无法基于重音模式推理说话者意图，并通过合成数据管线 Stress-17k 训练的 StresSLM 在重音检测和推理任务上大幅超越前沿模型。
+  [ACL 2026][音频/语音][句子重音] 提出 StressTest 基准评估语音语言模型（SLMs）对句子重音含义的理解能力，发现现有模型几乎无法基于重音模式推理说话者意图，并通过合成数据管线 Stress-17k 训练的 StresSLM 在重音检测和推理任务上大幅超越前沿模型。 领域现状：语音语言模型（如GPT-…
 tags:
   - "ACL 2026"
   - "音频/语音"

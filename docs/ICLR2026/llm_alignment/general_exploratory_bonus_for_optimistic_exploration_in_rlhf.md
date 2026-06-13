@@ -2,7 +2,7 @@
 title: >-
   [论文解读] General Exploratory Bonus for Optimistic Exploration in RLHF
 description: >-
-  [ICLR 2026][LLM对齐][exploratory bonus] 理论证明现有 RLHF 探索奖励（exploratory bonus）在 KL 和 α-散度正则化下实际上会引导策略向参考模型的高概率区域靠拢（与乐观原则相悖）…
+  [ICLR 2026][LLM对齐][exploratory bonus] 理论证明现有 RLHF 探索奖励（exploratory bonus）在 KL 和 α-散度正则化下实际上会引导策略向参考模型的高概率区域靠拢（与乐观原则相悖），提出 General Exploratory Bonus (GEB) 框架——通过参考模型依赖的奖励调节来抵消散度正则化的保守偏差，可证明满足乐观原则。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

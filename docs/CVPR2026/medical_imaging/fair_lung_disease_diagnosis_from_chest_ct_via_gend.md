@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning
 description: >-
-  [CVPR 2026 (PHAROS-AIF-MIH Workshop)][医学图像][公平性诊断] 在 ConvNeXt-Base 骨干上构建注意力 MIL 模型，用 GRL 对抗性消除扫描表示中的性别信息…
+  [CVPR 2026 (PHAROS-AIF-MIH Workshop)][医学图像][公平性诊断] 在 ConvNeXt-Base 骨干上构建注意力 MIL 模型，用 GRL 对抗性消除扫描表示中的性别信息，配合 focal loss（$\gamma=2$）+ 标签平滑（$\varepsilon=0.1$）、子群过采样和 5-fold 集成，在 889 例胸部 CT 四类诊断中实现均值竞赛分数 0.685±0.030，女性 macro-F1（0.691）略高于男性（0.679），验证了 GRL 能有效闭合公平性差距。
 tags:
   - "CVPR 2026 (PHAROS-AIF-MIH Workshop)"
   - "医学图像"

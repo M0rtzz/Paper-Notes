@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval
 description: >-
-  [ICCV 2025][多模态VLM][文本-视频检索] 揭示了基于MLLM的检索系统中"候选先验偏差"问题——候选似然估计倾向于选择先验概率高而非语义最相关的候选，提出BLiM（双向似然估计）和CPN（候选先验归一化）模块来解决此问题，在四个文本-视频检索基准上平均R@1提升6.4。
+  [ICCV 2025][多模态VLM][文本-视频检索] 揭示了基于MLLM的检索系统中"候选先验偏差"问题——候选似然估计倾向于选择先验概率高而非语义最相关的候选，提出BLiM（双向似然估计）和CPN（候选先验归一化）模块来解决此问题，在四个文本-视频检索基准上平均R@1提升6.4。 文本-视频检索旨在给定视频（或文本）查…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

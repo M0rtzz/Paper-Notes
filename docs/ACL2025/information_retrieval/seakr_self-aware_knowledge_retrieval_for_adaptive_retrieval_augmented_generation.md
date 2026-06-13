@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeaKR: Self-aware Knowledge Retrieval for Adaptive Retrieval Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][自适应检索] SeaKR 利用 LLM 内部隐藏层的自感知不确定性（通过多次采样 EOS token 隐藏表示的 Gram 行列式度量）来自适应地决定何时检索、如何重排检索结果、以及选择何种推理策略，在复合 QA 上 F1 比 DRAGIN 提升 6%…
+  [ACL 2025][信息检索/RAG][自适应检索] SeaKR 利用 LLM 内部隐藏层的自感知不确定性（通过多次采样 EOS token 隐藏表示的 Gram 行列式度量）来自适应地决定何时检索、如何重排检索结果、以及选择何种推理策略，在复合 QA 上 F1 比 DRAGIN 提升 6%，比 IRCoT 提升 9.5%。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

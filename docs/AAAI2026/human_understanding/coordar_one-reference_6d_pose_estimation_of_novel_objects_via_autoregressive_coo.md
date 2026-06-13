@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation
 description: >-
-  [AAAI 2026][人体理解][6D位姿估计] 提出 CoordAR，将单参考视图 6D 位姿估计中的 3D-3D 对应关系建模为离散 token 的自回归生成问题，通过坐标图 token 化、模态解耦编码和自回归 Transformer 解码器，在多个基准上显著超越现有单视图方法…
+  [AAAI 2026 Oral][人体理解][6D位姿估计] 提出 CoordAR，将单参考视图 6D 位姿估计中的 3D-3D 对应关系建模为离散 token 的自回归生成问题，通过坐标图 token 化、模态解耦编码和自回归 Transformer 解码器，在多个基准上显著超越现有单视图方法，并对对称、遮挡等挑战场景展现强鲁棒性。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "人体理解"
   - "6D位姿估计"
   - "自回归"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TPV: Parameter Perturbations Through the Lens of Test Prediction Variance
 description: >-
-  [ICML2026][优化/理论][预测方差] 作者把"训好模型对参数扰动的局部预测敏感度"形式化为 Test Prediction Variance（TPV），证明其在一阶近似下化为 $\mathrm{Tr}(H_{\mathrm{eff}}C)$ 的迹形式…
+  [ICML2026][优化/理论][预测方差] 作者把"训好模型对参数扰动的局部预测敏感度"形式化为 Test Prediction Variance（TPV），证明其在一阶近似下化为 $\mathrm{Tr}(H_{\mathrm{eff}}C)$ 的迹形式，从而把 SGD 噪声、标签噪声、量化、剪枝放进同一个曲率–协方差框架，并给出一个完全用训练集就能估计 TPV 的稳定性定理，落地为 label-free 剪枝准则 JBR 和无需测试标签的模型选择信号。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2512.11089](https://arxiv.org/abs/2512.11089)  
 **代码**: 论文文末标注 "Code Available Here"（具体仓库需查 arXiv 页面）  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: 预测方差, 参数扰动, 良性过拟合, 宽极小, 训练集模型选择  
 
 ## 一句话总结

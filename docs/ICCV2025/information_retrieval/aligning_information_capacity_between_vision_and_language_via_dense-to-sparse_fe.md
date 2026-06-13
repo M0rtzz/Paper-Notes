@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Information Capacity Between Vision and Language via Dense-to-Sparse Feature Distillation
 description: >-
-  [ICCV 2025][信息检索/RAG][图文匹配] 提出D2S-VSE框架，通过两阶段训练（稠密文本预训练+稠密到稀疏特征蒸馏微调）增强视觉语义嵌入的信息容量，解决图文匹配中图像与文本信息密度不对称的核心问题。
+  [ICCV 2025][信息检索/RAG][图文匹配] 提出D2S-VSE框架，通过两阶段训练（稠密文本预训练+稠密到稀疏特征蒸馏微调）增强视觉语义嵌入的信息容量，解决图文匹配中图像与文本信息密度不对称的核心问题。 信息密度不对称问题 图文匹配任务的核心挑战在于视觉信号与文本信号之间存在固有的信息密度差异…
 tags:
   - "ICCV 2025"
   - "信息检索/RAG"

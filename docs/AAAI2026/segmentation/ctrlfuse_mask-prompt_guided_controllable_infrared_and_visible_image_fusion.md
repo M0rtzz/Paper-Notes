@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CtrlFuse: Mask-Prompt Guided Controllable Infrared and Visible Image Fusion
 description: >-
-  [AAAI2026][语义分割][infrared-visible image fusion] 提出 CtrlFuse，通过 mask prompt 引导 SAM 微调，实现红外-可见光图像的交互式可控融合，在融合质量和下游分割/检测任务上同时取得提升。
+  [AAAI2026][语义分割][infrared-visible image fusion] 提出 CtrlFuse，通过 mask prompt 引导 SAM 微调，实现红外-可见光图像的交互式可控融合，在融合质量和下游分割/检测任务上同时取得提升。 红外-可见光图像融合旨在结合两种模态的互补信息，为智能无人系统提供全天…
 tags:
   - "AAAI2026"
   - "语义分割"

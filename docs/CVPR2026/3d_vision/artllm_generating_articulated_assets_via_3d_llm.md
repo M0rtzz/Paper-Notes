@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArtLLM: Generating Articulated Assets via 3D LLM
 description: >-
-  [CVPR 2026][3D视觉][Articulated Object] ArtLLM 将铰接物体生成建模为语言生成问题，使用 3D 多模态 LLM 从点云自回归预测部件布局和运动关节参数（离散化为 token），再结合 XPart 生成高保真部件几何…
+  [CVPR 2026][3D视觉][Articulated Object] ArtLLM 将铰接物体生成建模为语言生成问题，使用 3D 多模态 LLM 从点云自回归预测部件布局和运动关节参数（离散化为 token），再结合 XPart 生成高保真部件几何，在 PartNet-Mobility 数据集上显著超越现有方法（mIoU 0.69, 推理仅需 19 秒）。
 tags:
   - "CVPR 2026"
   - "3D视觉"

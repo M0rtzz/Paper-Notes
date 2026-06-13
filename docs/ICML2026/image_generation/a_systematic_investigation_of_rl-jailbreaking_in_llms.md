@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Systematic Investigation of RL-Jailbreaking in LLMs
 description: >-
-  [ICML 2026][图像生成][LLM安全] 这篇论文把 RL-based LLM jailbreaking 当作一个可拆解的 POMDP 系统来研究，发现奖励函数、episode 长度和训练问题数量等环境定义因素，比单纯换 RL 算法更大程度决定自动化红队成功率。
+  [ICML 2026][图像生成][LLM安全] 这篇论文把 RL-based LLM jailbreaking 当作一个可拆解的 POMDP 系统来研究，发现奖励函数、episode 长度和训练问题数量等环境定义因素，比单纯换 RL 算法更大程度决定自动化红队成功率。 领域现状：LLM 越来越多地被用作 agent…
 tags:
   - "ICML 2026"
   - "图像生成"

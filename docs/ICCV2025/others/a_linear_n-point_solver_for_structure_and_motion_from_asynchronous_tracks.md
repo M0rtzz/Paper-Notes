@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Linear N-Point Solver for Structure and Motion from Asynchronous Tracks
 description: >-
-  [ICCV 2025][运动估计] 本文提出了一种统一的线性 N-point 求解器，能够从具有任意时间戳的 2D 点对应中恢复相机线速度和 3D 点结构，适用于全局快门、滚动快门和事件相机等多种传感器模式。
+  [ICCV 2025][运动估计] 本文提出了一种统一的线性 N-point 求解器，能够从具有任意时间戳的 2D 点对应中恢复相机线速度和 3D 点结构，适用于全局快门、滚动快门和事件相机等多种传感器模式。 从点对应中恢复相机运动和场景结构是几何计算机视觉的核心问题。经典的五点算法（5-point）或八点算法（8-poin…
 tags:
   - "ICCV 2025"
   - "运动估计"

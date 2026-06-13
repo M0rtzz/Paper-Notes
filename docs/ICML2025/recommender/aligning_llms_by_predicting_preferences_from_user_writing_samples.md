@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning LLMs by Predicting Preferences from User Writing Samples
 description: >-
-  [ICML 2025][推荐系统][preference prediction] 提出通过分析用户写作样本预测其偏好来实现个性化 LLM 对齐的新范式，无需显式偏好标注即可从用户文本风格中推断偏好信号，为个性化对齐开辟了新的数据来源。
+  [ICML 2025][推荐系统][preference prediction] 提出通过分析用户写作样本预测其偏好来实现个性化 LLM 对齐的新范式，无需显式偏好标注即可从用户文本风格中推断偏好信号，为个性化对齐开辟了新的数据来源。 领域现状 领域现状：推荐系统领域近年来取得了显著进展，但仍面临若干关键挑战…
 tags:
   - "ICML 2025"
   - "推荐系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WUSH: Near-Optimal Adaptive Transforms for LLM Quantization
 description: >-
-  [ICML 2026][模型压缩][W4A4 量化] WUSH 为 LLM 的 weight-activation 低比特量化推导出闭式、数据自适应的 blockwise 线性变换，把 Hadamard 的均匀扩散能力和权重/激活二阶统计结合起来…
+  [ICML 2026][模型压缩][W4A4 量化] WUSH 为 LLM 的 weight-activation 低比特量化推导出闭式、数据自适应的 blockwise 线性变换，把 Hadamard 的均匀扩散能力和权重/激活二阶统计结合起来，在 W4A4 尤其是 MXFP4 场景下显著提升精度且几乎不牺牲 FP4 kernel 吞吐。
 tags:
   - "ICML 2026"
   - "模型压缩"

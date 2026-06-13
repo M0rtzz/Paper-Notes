@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseWorld-TC: Trajectory-Conditioned Sparse Occupancy World Model
 description: >-
-  [CVPR 2026][自动驾驶][4D占用预测] 提出一种基于纯注意力的稀疏占用世界模型SparseWorld-TC，绕过VAE离散化和BEV中间表示，直接从原始图像特征端到端预测轨迹条件的多帧未来占用，在nuScenes上大幅超越现有方法。
+  [CVPR 2026][自动驾驶][4D占用预测] 提出一种基于纯注意力的稀疏占用世界模型SparseWorld-TC，绕过VAE离散化和BEV中间表示，直接从原始图像特征端到端预测轨迹条件的多帧未来占用，在nuScenes上大幅超越现有方法。 占用世界模型通过预测未来3D场景占用来理解环境动态，在自动驾驶中至关重要…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

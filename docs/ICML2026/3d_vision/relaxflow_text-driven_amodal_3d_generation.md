@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RelaxFlow: Text-Driven Amodal 3D Generation
 description: >-
-  [ICML 2026][3D视觉][amodal 3D生成] RelaxFlow 把"用文字补全被遮挡 3D 物体"形式化为一个**双目标控制粒度解耦**问题，提出训练免调的双分支推理框架——观察分支保持像素级硬约束、语义先验分支用"多先验共识 + 注意力 logit 高斯模糊"实现低通松弛——并从理论上证明…
+  [ICML 2026 Spotlight][3D视觉][amodal 3D生成] RelaxFlow 把"用文字补全被遮挡 3D 物体"形式化为一个**双目标控制粒度解耦**问题，提出训练免调的双分支推理框架——观察分支保持像素级硬约束、语义先验分支用"多先验共识 + 注意力 logit 高斯模糊"实现低通松弛——并从理论上证明这一松弛等价于对生成向量场做低通滤波，从而在 SAM3D / TRELLIS 等 SOTA 上把 Point-FID 从 100.38 降到 81.11。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "3D视觉"
   - "amodal 3D生成"
   - "文本驱动"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weakly-Supervised Learning of Dense Functional Correspondences
 description: >-
-  [ICCV 2025][机器人][稠密功能对应] 定义了"稠密功能对应"（Dense Functional Correspondence）任务——基于物体功能（如"倒水"）在不同类别物体之间建立像素级稠密对应，并提出一种弱监督学习框架…
+  [ICCV 2025][机器人][稠密功能对应] 定义了"稠密功能对应"（Dense Functional Correspondence）任务——基于物体功能（如"倒水"）在不同类别物体之间建立像素级稠密对应，并提出一种弱监督学习框架，通过 VLM 伪标注功能部件 + 多视角对比学习来蒸馏功能和结构知识到新模型中。
 tags:
   - "ICCV 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TriForces: Augmenting Atomistic GNNs for Transferable Representations
 description: >-
-  [ICML 2026][物理/科学计算][MLIP] TriForces 把原子级图神经网络拆成「组成-结构-交互」三条平行流，再叠加 LeJEPA + 去噪 + 掩码的多目标自监督预训练，让 MLIP 在小样本迁移、跨域微调和相似结构检索三种场景下都比单流基座更稳。
+  [ICML 2026][物理/科学计算][MLIP] TriForces 把原子级图神经网络拆成「组成-结构-交互」三条平行流，再叠加 LeJEPA + 去噪 + 掩码的多目标自监督预训练，让 MLIP 在小样本迁移、跨域微调和相似结构检索三种场景下都比单流基座更稳。 领域现状：基于 DFT 数据训练的机器学习原子间势 (M…
 tags:
   - "ICML 2026"
   - "物理/科学计算"

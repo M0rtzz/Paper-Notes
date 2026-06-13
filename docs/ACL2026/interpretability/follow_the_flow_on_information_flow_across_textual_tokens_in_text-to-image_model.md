@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Follow the Flow: On Information Flow Across Textual Tokens in Text-to-Image Models
 description: >-
-  [ACL 2026][可解释性][文本到图像] 本文通过因果干预框架系统研究了文本到图像模型中文本编码器输出的 token 级信息分布，发现词汇项的语义通常集中在 1-2 个代表性 token 上，且跨项信息流在 11% 的情况下会导致语义泄漏和图像错误解读…
+  [ACL 2026][可解释性][文本到图像] 本文通过因果干预框架系统研究了文本到图像模型中文本编码器输出的 token 级信息分布，发现词汇项的语义通常集中在 1-2 个代表性 token 上，且跨项信息流在 11% 的情况下会导致语义泄漏和图像错误解读，并提出了简单有效的 token 级干预方法来改善对齐。
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 幻觉检测论文汇总 · 18篇论文解读
+  CVPR2026 幻觉检测论文汇总 · 19篇论文解读
 description: >-
-  18篇CVPR2026的幻觉检测方向论文解读，涵盖多模态、推理、对抗鲁棒、扩散模型、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  19篇CVPR2026的幻觉检测方向论文解读，涵盖多模态、推理、对抗鲁棒、扩散模型、LLM、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "幻觉检测"
@@ -37,6 +37,8 @@ item_list:
     t: "MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization"
   - u: "overthinking_causes_hallucination_tracing_confounder_propagation_in_vision_langu/"
     t: "Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models"
+  - u: "prefill-time_intervention_for_mitigating_hallucination_in_large_vision-language_/"
+    t: "Prefill-Time Intervention for Mitigating Hallucination in Large Vision-Language Models"
   - u: "reallocating_attention_across_layers_to_reduce_multimodal_hallucination/"
     t: "Reallocating Attention Across Layers to Reduce Multimodal Hallucination"
   - u: "residual_decoding_mitigating_hallucinations_in_large_vision-language_models_via_/"
@@ -51,17 +53,17 @@ item_list:
     t: "Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models"
   - u: "zina_multimodal_fine-grained_hallucination_detection_and_editing/"
     t: "Zina: Multimodal Fine-grained Hallucination Detection and Editing"
-item_total: 18
+item_total: 19
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 👻 幻觉检测
 
-**📷 CVPR2026** · **18** 篇论文解读
+**📷 CVPR2026** · **19** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (19)](../../ICML2026/hallucination/index.md) · [💬 ACL2026 (27)](../../ACL2026/hallucination/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/hallucination/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/hallucination/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/hallucination/index.md) · [📹 ICCV2025 (5)](../../ICCV2025/hallucination/index.md)
 
-🔥 **高频主题：** 多模态 ×8 · 推理 ×2
+🔥 **高频主题：** 多模态 ×9 · 推理 ×2
 
 **[Beyond the Global Scores: Fine-Grained Token Grounding as a Robust Detector of LVLM Hallucinations](beyond_global_scores_fine_grained_token_grounding_as_robust_detector_of_lvlm_hallucinations.md)**
 
@@ -106,6 +108,10 @@ item_total: 18
 **[Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models](overthinking_causes_hallucination_tracing_confounder_propagation_in_vision_langu.md)**
 
 :   揭示VLM幻觉的新机制——"过度思考"(overthinking)：模型在中间解码层产生过多竞争性物体假设，混杂因子沿层传播至最终预测引发幻觉；提出Overthinking Score量化层间假设多样性×不确定性，在MSCOCO上F1达78.9%，OOD AMBER上71.58%。
+
+**[Prefill-Time Intervention for Mitigating Hallucination in Large Vision-Language Models](prefill-time_intervention_for_mitigating_hallucination_in_large_vision-language_.md)**
+
+:   PTI 把缓解 LVLM 幻觉的 steering 干预从「逐 token 的解码阶段」前移到「只做一次的 prefill 阶段」，对初始 KV cache 施加模态感知、key/value 解耦的方向向量，从源头修正易致幻表征，在三个 LVLM、五个 benchmark 上超过现有解码期方法，且能与它们即插即用叠加。
 
 **[Reallocating Attention Across Layers to Reduce Multimodal Hallucination](reallocating_attention_across_layers_to_reduce_multimodal_hallucination.md)**
 

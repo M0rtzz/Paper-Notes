@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Turning Bias into Bugs: Bandit-Guided Style Manipulation Attacks on LLM Judges
 description: >-
-  [ICML 2026][强化学习][LLM-as-a-Judge] 把 LLM 评判器已知的风格偏好（冗长、列表、emoji 等）当作可被系统性利用的攻击面，作者将攻击建模为上下文老虎机，用 LinUCB 在 25 次查询预算内自适应挑选 8 种语义保持的风格改写动作…
+  [ICML 2026][强化学习][LLM-as-a-Judge] 把 LLM 评判器已知的风格偏好（冗长、列表、emoji 等）当作可被系统性利用的攻击面，作者将攻击建模为上下文老虎机，用 LinUCB 在 25 次查询预算内自适应挑选 8 种语义保持的风格改写动作，对 5 个主流评判器实现 >65% 攻击成功率、+1~2 分（满分 9）的分数膨胀，且绕过 style control 防御。
 tags:
   - "ICML 2026"
   - "强化学习"

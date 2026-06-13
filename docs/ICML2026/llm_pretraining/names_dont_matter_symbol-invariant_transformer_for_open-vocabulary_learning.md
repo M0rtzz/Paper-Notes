@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Names Don't Matter: Symbol-Invariant Transformer for Open-Vocabulary Learning
 description: >-
-  [ICML 2026][预训练][符号不变性] 作者把 Transformer 改成"对每个可互换符号开一条共享权重的并行嵌入流 + 跨流聚合注意力"的结构，从架构层面保证对变量重命名（alpha 等价）的输出完全不变，并且允许测试期向词表里塞训练时没见过的新符号…
+  [ICML 2026][预训练][符号不变性] 作者把 Transformer 改成"对每个可互换符号开一条共享权重的并行嵌入流 + 跨流聚合注意力"的结构，从架构层面保证对变量重命名（alpha 等价）的输出完全不变，并且允许测试期向词表里塞训练时没见过的新符号，在命题逻辑与 LTL 见证生成任务上超过同类基线甚至 GPT-5.2。
 tags:
   - "ICML 2026"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incentivized Exploration with Stochastic Covariates: A Two-Stage Mechanism Design for Recommender System
 description: >-
-  [ICML 2026][推荐系统][激励兼容] RCB 把推荐系统里的"探索-利用"和"用户激励兼容"打包成一个动态贝叶斯激励兼容（DBIC）约束下的上下文 bandit 问题，提出冷启动 + IPGS 两阶段算法…
+  [ICML 2026][推荐系统][激励兼容] RCB 把推荐系统里的"探索-利用"和"用户激励兼容"打包成一个动态贝叶斯激励兼容（DBIC）约束下的上下文 bandit 问题，提出冷启动 + IPGS 两阶段算法，在随机用户协变量场景下证明 $\tilde{O}(\sqrt{KdT})$ regret、可插入任意 offline learning oracle，并量化"激励价格"——冷启动样本量随 $\epsilon$ 收紧呈 $1/\epsilon^2$ 增长。
 tags:
   - "ICML 2026"
   - "推荐系统"

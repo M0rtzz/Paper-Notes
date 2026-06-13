@@ -2,7 +2,7 @@
 title: >-
   [论文解读] arXiv2Table: Toward Realistic Benchmarking and Evaluation for LLM-Based Literature-Review Table Generation
 description: >-
-  [ACL 2026][LLM评测][文献综述表格生成] 提出 arXiv2Table 基准（1,957 张表、7,158 篇论文），通过引入干扰论文、模式无关的用户需求和基于 QA 的无标注评估框架，实现更真实的 LLM 文献综述表格生成评估，并提出迭代批处理生成方法。
+  [ACL 2026][LLM评测][文献综述表格生成] 提出 arXiv2Table 基准（1,957 张表、7,158 篇论文），通过引入干扰论文、模式无关的用户需求和基于 QA 的无标注评估框架，实现更真实的 LLM 文献综述表格生成评估，并提出迭代批处理生成方法。 领域现状： 文献综述表格是科研中组织和比较论文的重要工…
 tags:
   - "ACL 2026"
   - "LLM评测"

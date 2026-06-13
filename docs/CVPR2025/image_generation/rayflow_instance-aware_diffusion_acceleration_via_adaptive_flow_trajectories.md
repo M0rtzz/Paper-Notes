@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RayFlow: Instance-Aware Diffusion Acceleration via Adaptive Flow Trajectories
 description: >-
-  [CVPR 2025][图像生成][扩散模型加速] 提出 RayFlow 扩散框架，为每个样本设计独特的扩散路径（指向实例特定目标分布），并通过 Time Sampler 重要性采样优化训练，在最小化采样步数的同时保持生成多样性和稳定性。
+  [CVPR 2025][图像生成][扩散模型加速] 提出 RayFlow 扩散框架，为每个样本设计独特的扩散路径（指向实例特定目标分布），并通过 Time Sampler 重要性采样优化训练，在最小化采样步数的同时保持生成多样性和稳定性。 扩散模型生成速度慢仍是核心挑战。现有加速方法存在以下问题： 1. 传统扩散的三个问题：…
 tags:
   - "CVPR 2025"
   - "图像生成"

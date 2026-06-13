@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting the Future: All-at-Once Event Sequence Forecasting with Horizon Matching
 description: >-
-  [AAAI 2026][时间序列][事件序列预测] 提出DEF（Detection-based Event Forecasting），借鉴目标检测中DETR的匹配思想，通过匈牙利算法对齐预测与真实事件序列，实现高精度和高多样性的长程事件预测，在5个数据集上达到SOTA。
+  [AAAI 2026][时间序列][事件序列预测] 提出DEF（Detection-based Event Forecasting），借鉴目标检测中DETR的匹配思想，通过匈牙利算法对齐预测与真实事件序列，实现高精度和高多样性的长程事件预测，在5个数据集上达到SOTA。 事件序列预测是零售、金融、医疗和社交网络等领域的核心任…
 tags:
   - "AAAI 2026"
   - "时间序列"

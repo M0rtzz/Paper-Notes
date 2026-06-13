@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Novel View Synthesis in High Dynamic Range
 description: >-
-  [ICLR2026][3D视觉][HDR] 首次提出 HDR 动态新视角合成 (HDR DNVS) 问题，并设计 HDR-4DGS 框架，通过动态色调映射模块在时变场景中实现时序一致的 HDR 辐射场重建，在合成和真实数据集上均超越现有方法。
+  [ICLR2026][3D视觉][HDR] 首次提出 HDR 动态新视角合成 (HDR DNVS) 问题，并设计 HDR-4DGS 框架，通过动态色调映射模块在时变场景中实现时序一致的 HDR 辐射场重建，在合成和真实数据集上均超越现有方法。 领域现状：现有新视角合成方法受限于两个假设：静态场景：和 低动态范围 (LDR)…
 tags:
   - "ICLR2026"
   - "3D视觉"

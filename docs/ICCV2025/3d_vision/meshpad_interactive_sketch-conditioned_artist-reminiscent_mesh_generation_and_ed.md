@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing
 description: >-
-  [3D视觉] MeshPad 将草图驱动的 3D 网格创建与编辑解耦为"添加"和"删除"两个子任务，基于三角序列表示和 Transformer 自回归生成，并提出顶点对齐推测解码器实现 2.2× 加速，让交互式网格编辑在几秒内完成。
+  [3D视觉] MeshPad 将草图驱动的 3D 网格创建与编辑解耦为"添加"和"删除"两个子任务，基于三角序列表示和 Transformer 自回归生成，并提出顶点对齐推测解码器实现 2.2× 加速，让交互式网格编辑在几秒内完成。 三角网格是 3D 制作中最主流的表示形式，但现有的网格生成方法存在几个关键不足： 不可编辑：…
 tags:
   - "3D视觉"
 ---

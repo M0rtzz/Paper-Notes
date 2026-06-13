@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIGS: Multi-Identity Gaussian Splatting via Tensor Decomposition
 description: >-
-  [ECCV 2024][人体理解][3D Gaussian Splatting] 提出MIGS，通过CP张量分解将多个人体身份的3DGS参数统一到一个低秩张量中，在大幅减少参数量的同时实现了对未见姿态的鲁棒动画。
+  [ECCV 2024][人体理解][3D Gaussian Splatting] 提出MIGS，通过CP张量分解将多个人体身份的3DGS参数统一到一个低秩张量中，在大幅减少参数量的同时实现了对未见姿态的鲁棒动画。 领域现状： 3D Gaussian Splatting (3DGS) 已成功应用于人体avatar建模…
 tags:
   - "ECCV 2024"
   - "人体理解"

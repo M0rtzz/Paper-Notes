@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting As Labeling: Rethinking LiDAR-camera Fusion in 3D Object Detection
 description: >-
-  [ECCV 2024][自动驾驶][LiDAR-相机融合] 本文从数据标注过程中总结出"回归任务不应使用图像特征"的基本原则，提出 DAL 范式——将检测过程类比为标注过程，用点云特征独立完成回归预测、用融合特征完成分类预测，结合简洁的训练流程…
+  [ECCV 2024][自动驾驶][LiDAR-相机融合] 本文从数据标注过程中总结出"回归任务不应使用图像特征"的基本原则，提出 DAL 范式——将检测过程类比为标注过程，用点云特征独立完成回归预测、用融合特征完成分类预测，结合简洁的训练流程，在 nuScenes 上以 74.0 NDS（val）和 74.8 NDS（test）大幅刷新 SOTA。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

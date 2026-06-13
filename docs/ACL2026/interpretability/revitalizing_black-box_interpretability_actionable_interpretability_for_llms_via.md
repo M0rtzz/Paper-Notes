@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revitalizing Black-Box Interpretability: Actionable Interpretability for LLMs via Proxy Models
 description: >-
-  [ACL 2026][可解释性][模型无关解释] 本文提出一种基于代理模型的黑盒可解释性框架，利用廉价小模型近似昂贵大模型的局部决策边界来生成 LIME/SHAP 解释，通过统计筛选-应用（screen-and-apply）机制确保可靠性，代理解释在保持超过 90% 保真度的同时将成本降低 88.2%…
+  [ACL 2026][可解释性][模型无关解释] 本文提出一种基于代理模型的黑盒可解释性框架，利用廉价小模型近似昂贵大模型的局部决策边界来生成 LIME/SHAP 解释，通过统计筛选-应用（screen-and-apply）机制确保可靠性，代理解释在保持超过 90% 保真度的同时将成本降低 88.2%，并成功用于 Prompt 压缩和中毒样本移除等下游优化任务。
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Inference-Efficient Language Models
 description: >-
-  [ICML 2025][预训练][Scaling Laws] 本文提出了推理感知的 Scaling Law，通过在 Chinchilla 损失函数中引入模型宽高比（aspect ratio）项来联合优化参数量、训练 token 数和模型形状，训练 63 个模型拟合该定律后指导设计了 Morph-1B 模型…
+  [ICML 2025][预训练][Scaling Laws] 本文提出了推理感知的 Scaling Law，通过在 Chinchilla 损失函数中引入模型宽高比（aspect ratio）项来联合优化参数量、训练 token 数和模型形状，训练 63 个模型拟合该定律后指导设计了 Morph-1B 模型，在保持下游任务精度的同时实现 1.8× 推理延迟提升。
 tags:
   - "ICML 2025"
   - "预训练"

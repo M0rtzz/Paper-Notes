@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes Synthetic Data Effective in Image Segmentation
 description: >-
-  [ICML2026][语义分割][合成数据] 这篇论文系统分析了合成图像对语义分割有效的两个关键因素：复杂场景组合和高实例保真度，并提出 SENSE 用最优传输稳定合成图像的伪标签分配，从而在 Cityscapes、COCO、ADE20K 上稳定提升 DPT 和 Mask2Former。
+  [ICML2026][语义分割][合成数据] 这篇论文系统分析了合成图像对语义分割有效的两个关键因素：复杂场景组合和高实例保真度，并提出 SENSE 用最优传输稳定合成图像的伪标签分配，从而在 Cityscapes、COCO、ADE20K 上稳定提升 DPT 和 Mask2Former。 领域现状：扩散模型和 flow ma…
 tags:
   - "ICML2026"
   - "语义分割"

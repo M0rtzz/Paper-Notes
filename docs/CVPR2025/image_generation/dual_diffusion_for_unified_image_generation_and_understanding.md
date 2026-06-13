@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Diffusion for Unified Image Generation and Understanding
 description: >-
-  [图像生成] 提出 Dual Diffusion Transformer (D-DiT)，在单一 MM-DiT 架构中同时使用连续扩散建模图像分布和离散掩码扩散建模文本分布，是首个端到端的全扩散多模态模型，支持图像生成、图像描述和视觉问答等全套任务。
+  [图像生成] 提出 Dual Diffusion Transformer (D-DiT)，在单一 MM-DiT 架构中同时使用连续扩散建模图像分布和离散掩码扩散建模文本分布，是首个端到端的全扩散多模态模型，支持图像生成、图像描述和视觉问答等全套任务。 当前多模态生成领域存在明显的方法割裂：扩散模型在文本到图像生成(T2I)上…
 tags:
   - "图像生成"
 ---

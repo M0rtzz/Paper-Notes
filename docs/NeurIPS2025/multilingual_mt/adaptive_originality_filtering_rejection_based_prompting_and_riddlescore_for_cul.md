@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Originality Filtering: Rejection-Based Prompting and RiddleScore for Culturally Grounded Multilingual Riddle Generation
 description: >-
-  [NeurIPS 2025][多语言/翻译][Adaptive Originality Filtering] 提出 Adaptive Originality Filtering (AOF)——一种基于语义拒绝采样的提示策略，通过 MiniLM 嵌入的余弦相似度过滤重复/模板化输出…
+  [NeurIPS 2025][多语言/翻译][Adaptive Originality Filtering] 提出 Adaptive Originality Filtering (AOF)——一种基于语义拒绝采样的提示策略，通过 MiniLM 嵌入的余弦相似度过滤重复/模板化输出，强制 LLM 生成更新颖、多样且文化匹配的多语言谜语；同时提出 RiddleScore 复合评估指标（Novelty + Diversity + Fluency + Alignment），与人类评分相关性达 $\rho=0.83$。
 tags:
   - "NeurIPS 2025"
   - "多语言/翻译"
@@ -114,10 +114,10 @@ tags:
 - **vs 标准提示策略 (CoT/Few-Shot)**: 这些策略优化推理过程但不控制输出多样性和新颖性，AOF 正交于这些策略
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 语义拒绝采样概念直觉上简单，RiddleScore 还是加权组合的常见做法
-- 实验充分度: ⭐⭐⭐⭐ 3 个 LLM、5 种语言、5 种提示策略、人类评估，覆盖面不错
-- 写作质量: ⭐⭐⭐ 结构清晰但有些地方过于冗长
-- 价值: ⭐⭐⭐ 方法简单实用，但应用场景偏窄
+- 新颖性: ⭐⭐⭐⭐ 语义拒绝采样概念直觉上简单，RiddleScore 还是加权组合的常见做法
+- 实验充分度: ⭐⭐⭐⭐⭐ 3 个 LLM、5 种语言、5 种提示策略、人类评估，覆盖面不错
+- 写作质量: ⭐⭐⭐⭐ 结构清晰但有些地方过于冗长
+- 价值: ⭐⭐⭐⭐ 方法简单实用，但应用场景偏窄
 
 <!-- RELATED:START -->
 

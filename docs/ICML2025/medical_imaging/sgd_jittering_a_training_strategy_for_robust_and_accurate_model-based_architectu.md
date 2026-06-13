@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGD Jittering: A Training Strategy for Robust and Accurate Model-Based Architectures
 description: >-
-  [ICML2025][医学图像][SGD jittering] 提出 SGD jittering 训练策略，在模型迭代重建过程中逐步注入零均值高斯噪声，理论证明其同时提升模型鲁棒性和泛化精度，且无需对抗训练的高计算开销。
+  [ICML2025][医学图像][SGD jittering] 提出 SGD jittering 训练策略，在模型迭代重建过程中逐步注入零均值高斯噪声，理论证明其同时提升模型鲁棒性和泛化精度，且无需对抗训练的高计算开销。 逆问题（Inverse Problems）旨在从退化/不完整的观测 $\boldsymbol{y} =…
 tags:
   - "ICML2025"
   - "医学图像"

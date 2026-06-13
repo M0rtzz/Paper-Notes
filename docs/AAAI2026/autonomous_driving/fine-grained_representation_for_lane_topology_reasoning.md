@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained Representation for Lane Topology Reasoning
 description: >-
-  [AAAI 2026][自动驾驶][车道拓扑推理] 提出TopoFG框架，用细粒度查询（每条车道线由多个空间感知查询表示）替代传统单查询建模，结合层级先验提取、区域聚焦解码和基于边界点的鲁棒拓扑推理…
+  [AAAI 2026][自动驾驶][车道拓扑推理] 提出TopoFG框架，用细粒度查询（每条车道线由多个空间感知查询表示）替代传统单查询建模，结合层级先验提取、区域聚焦解码和基于边界点的鲁棒拓扑推理，在OpenLane-V2上以48.0% OLS（subset_A）和45.4% OLS（subset_B）达到新SOTA。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

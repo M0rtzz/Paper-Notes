@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MHSafeEval: Role-Aware Interaction-Level Evaluation of Mental Health Safety in Large Language Models
 description: >-
-  [ACL 2026][医疗NLP][心理健康安全] 本文提出 R-MHSafe 角色感知心理健康安全分类体系和 MHSafeEval 闭环 agent 评估框架，通过对抗性多轮咨询交互系统性发现 LLM 在心理咨询场景中的角色依赖型累积安全失败，揭示了现有静态基准无法捕捉的交互层面危害。
+  [ACL 2026 Findings][医疗NLP][心理健康安全] 本文提出 R-MHSafe 角色感知心理健康安全分类体系和 MHSafeEval 闭环 agent 评估框架，通过对抗性多轮咨询交互系统性发现 LLM 在心理咨询场景中的角色依赖型累积安全失败，揭示了现有静态基准无法捕捉的交互层面危害。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "心理健康安全"
   - "角色感知"

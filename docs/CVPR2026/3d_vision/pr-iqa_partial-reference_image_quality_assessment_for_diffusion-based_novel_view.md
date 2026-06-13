@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PR-IQA: Partial-Reference Image Quality Assessment for Diffusion-Based Novel View Synthesis
 description: >-
-  [CVPR 2026][3D视觉][图像质量评估] 本文提出 PR-IQA，一种跨参考图像质量评估方法，先在多视图重叠区域计算几何一致的局部质量图，再通过参考条件化的交叉注意力网络将质量信息"补全"到非重叠区域，生成逼近全参考精度的密集质量图…
+  [CVPR 2026][3D视觉][图像质量评估] 本文提出 PR-IQA，一种跨参考图像质量评估方法，先在多视图重叠区域计算几何一致的局部质量图，再通过参考条件化的交叉注意力网络将质量信息"补全"到非重叠区域，生成逼近全参考精度的密集质量图，集成到 3DGS 流水线中通过双重过滤策略显著提升稀疏视角 3D 重建质量。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Robust Pseudo-Label Learning in Semantic Segmentation: An Encoding Perspective
 description: >-
-  [NeurIPS 2025][语义分割][伪标签学习] 提出 ECOCSeg，用纠错输出码（ECOC）替代 one-hot 编码来表示语义类别，将 N 类分类分解为 K 个二分类子任务，配合 bit 级伪标签去噪和定制优化损失，显著提升 UDA 和 SSL 语义分割中伪标签学习的鲁棒性。
+  [NeurIPS 2025][语义分割][伪标签学习] 提出 ECOCSeg，用纠错输出码（ECOC）替代 one-hot 编码来表示语义类别，将 N 类分类分解为 K 个二分类子任务，配合 bit 级伪标签去噪和定制优化损失，显著提升 UDA 和 SSL 语义分割中伪标签学习的鲁棒性。 领域现状：语义分割在标签稀缺场景下（…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency
 description: >-
-  [NeurIPS 2025][LLM对齐][越狱攻击] 提出基于任务并发（Task Concurrency）的LLM越狱攻击框架 JAIL-CON，通过在词级别交错编码有害任务和良性任务，利用LLM处理并发任务的能力绕过安全防护，同时产生的并发回答在guardrail下具有更强的隐蔽性。
+  [NeurIPS 2025][LLM对齐][越狱攻击] 提出基于任务并发（Task Concurrency）的LLM越狱攻击框架 JAIL-CON，通过在词级别交错编码有害任务和良性任务，利用LLM处理并发任务的能力绕过安全防护，同时产生的并发回答在guardrail下具有更强的隐蔽性。 大语言模型（LLM）在各领域表现卓越…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

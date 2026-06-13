@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Embodiment Gaps: Deploying Vision-Language-Action Models on Soft Robots
 description: >-
-  [NeurIPS 2025][机器人][视觉语言] 本文首次将 VLA（Vision-Language-Action）模型部署到软体连续体机械臂 Embuddy 上，发现开箱即用的刚性机器人预训练策略因运动学和动力学差异完全失败，但通过在少量软体机器人示范数据上进行针对性微调…
+  [NeurIPS 2025][机器人][视觉语言] 本文首次将 VLA（Vision-Language-Action）模型部署到软体连续体机械臂 Embuddy 上，发现开箱即用的刚性机器人预训练策略因运动学和动力学差异完全失败，但通过在少量软体机器人示范数据上进行针对性微调，可以成功弥合刚性-软体之间的实体鸿沟，使软体平台在抓取和人机交互任务上达到与 UR5 刚性臂相当的任务完成率。
 tags:
   - "NeurIPS 2025"
   - "机器人"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] PhysicsGen: Can Generative Models Learn from Images to Predict Complex Physical Relations?
 description: >-
-  [CVPR 2025][物理仿真] 提出 PhysicsGen 基准，包含 30 万图像对覆盖三个物理仿真任务（声波传播、镜头畸变、滚动/弹跳动力学），系统评估生成模型学习物理关系的能力，发现高阶微分方程描述的物理关系对现有模型构成根本性挑战。
+  [CVPR 2025][图像生成][物理仿真] 提出 PhysicsGen 基准，包含 30 万图像对覆盖三个物理仿真任务（声波传播、镜头畸变、滚动/弹跳动力学），系统评估生成模型学习物理关系的能力，发现高阶微分方程描述的物理关系对现有模型构成根本性挑战。 生成模型（GAN、扩散模型）在图像到图像翻译任务中取得显著进展…
 tags:
   - "CVPR 2025"
+  - "图像生成"
   - "物理仿真"
   - "生成模型"
   - "图像到图像"

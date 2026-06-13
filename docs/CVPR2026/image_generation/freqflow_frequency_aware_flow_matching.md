@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frequency-Aware Flow Matching for High-Quality Image Generation
 description: >-
-  [CVPR 2026][图像生成][流匹配] FreqFlow 通过在流匹配框架中显式引入频域感知条件，采用双分支架构分别处理低频全局结构和高频细节信息，在 ImageNet-256 上以 1.38 FID 达到 SOTA。
+  [CVPR 2026][图像生成][流匹配] FreqFlow 通过在流匹配框架中显式引入频域感知条件，采用双分支架构分别处理低频全局结构和高频细节信息，在 ImageNet-256 上以 1.38 FID 达到 SOTA。 领域现状：流匹配（Flow Matching）已成为图像生成的主流框架之一，通过学习从高斯噪声到数据…
 tags:
   - "CVPR 2026"
   - "图像生成"

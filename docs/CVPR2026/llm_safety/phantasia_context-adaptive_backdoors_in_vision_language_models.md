@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Phantasia: Context-Adaptive Backdoors in Vision Language Models
 description: >-
-  [CVPR 2026][LLM安全][后门攻击] Phantasia 首次提出上下文自适应的 VLM 后门攻击——攻击者预设一个目标问题，中毒模型在接收到触发图片后不再回答用户原始问题，而是回答攻击者的目标问题，且生成的答案与输入图像语义一致、在语言上自然流畅…
+  [CVPR 2026 Findings][LLM安全][后门攻击] Phantasia 首次提出上下文自适应的 VLM 后门攻击——攻击者预设一个目标问题，中毒模型在接收到触发图片后不再回答用户原始问题，而是回答攻击者的目标问题，且生成的答案与输入图像语义一致、在语言上自然流畅，从而绕过 STRIP-P 和 ONION-R 等防御；同时本文首次证明了现有 VLM 后门攻击的隐蔽性被严重高估。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "LLM安全"
   - "后门攻击"
   - "视觉语言模型"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ProxyPrompt: Securing System Prompts against Prompt Extraction Attacks
 description: >-
-  [ACL 2026][LLM安全][系统提示词保护] ProxyPrompt 不再要求模型“不要泄露系统提示词”，而是用功能等价但语义混淆的 proxy prompt 替换原 prompt，在保持任务效用的同时让被抽取出的提示词难以复现原任务，264 个配置上达到 94.70% 保护率…
+  [ACL 2026 Findings][LLM安全][系统提示词保护] ProxyPrompt 不再要求模型“不要泄露系统提示词”，而是用功能等价但语义混淆的 proxy prompt 替换原 prompt，在保持任务效用的同时让被抽取出的提示词难以复现原任务，264 个配置上达到 94.70% 保护率，显著高于过滤式和指令式防御。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "系统提示词保护"
   - "提示学习"

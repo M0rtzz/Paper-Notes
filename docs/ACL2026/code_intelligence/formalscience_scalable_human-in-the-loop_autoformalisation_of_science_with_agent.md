@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FormalScience: Scalable Human-in-the-Loop Autoformalisation of Science with Agentic Code Generation in Lean
 description: >-
-  [ACL 2026][代码智能][自动形式化] FormalScience 提出一个领域无关的人在环 (HITL) Agent 流水线，让单个领域专家在不会 Lean 的情况下，把非正式的科学推理（特别是物理）转写成 100% 编译通过的 Lean4 代码…
+  [ACL 2026][代码智能][自动形式化] FormalScience 提出一个领域无关的人在环 (HITL) Agent 流水线，让单个领域专家在不会 Lean 的情况下，把非正式的科学推理（特别是物理）转写成 100% 编译通过的 Lean4 代码，并构建出首个 200 题大学物理形式化基准 FormalPhysics，系统刻画了「编译通过」但「语义漂移」的现象。
 tags:
   - "ACL 2026"
   - "代码智能"

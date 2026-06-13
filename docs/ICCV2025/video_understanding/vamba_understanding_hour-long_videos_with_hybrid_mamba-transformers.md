@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers
 description: >-
-  [ICCV 2025][视频理解][长视频理解] 提出 Vamba —— 一种混合 Mamba-Transformer 架构的大型多模态模型，用 Mamba-2 块以线性复杂度编码视频 token、用交叉注意力更新文本 token，在单 GPU 上可处理 1024 帧视频…
+  [ICCV 2025][视频理解][长视频理解] 提出 Vamba —— 一种混合 Mamba-Transformer 架构的大型多模态模型，用 Mamba-2 块以线性复杂度编码视频 token、用交叉注意力更新文本 token，在单 GPU 上可处理 1024 帧视频，在小时级视频理解基准上超越所有高效 LMM 方法。
 tags:
   - "ICCV 2025"
   - "视频理解"

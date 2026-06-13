@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PlanRAG-Audio: Planning and Retrieval Augmented Generation for Long-form Audio Understanding
 description: >-
-  [ACL2026][音频/语音][长音频理解] PlanRAG-Audio 将长音频理解改写为“先规划要查哪些模态和时间片，再从结构化音频数据库检索证据”的问题，从而把 60 分钟音频的 LLM 输入从约 115k tokens 降到约 1k tokens…
+  [ACL2026 Findings][音频/语音][长音频理解] PlanRAG-Audio 将长音频理解改写为“先规划要查哪些模态和时间片，再从结构化音频数据库检索证据”的问题，从而把 60 分钟音频的 LLM 输入从约 115k tokens 降到约 1k tokens，并显著提升说话人计数、事件排序和 speaker-constrained QA。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "音频/语音"
   - "长音频理解"
   - "检索规划"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iTryOn: Mastering Interactive Video Virtual Try-On with Spatial-Semantic Guidance
 description: >-
-  [ICML 2026][视频生成][交互式虚拟试衣] iTryOn 首次定义"交互式视频虚拟试衣"任务——让人在视频里**主动操作衣物**（拉拉链、提衣角、拉伸衣物）而非仅被动展示。通过**3D 手部先验**解决空间歧义、**动作感知 RoPE（A-RoPE）** 把时间戳动作标题与对应帧严格对齐、**动作感…
+  [ICML 2026][视频生成][交互式虚拟试衣] iTryOn 首次定义"交互式视频虚拟试衣"任务——让人在视频里**主动操作衣物**（拉拉链、提衣角、拉伸衣物）而非仅被动展示。通过**3D 手部先验**解决空间歧义、**动作感知 RoPE（A-RoPE）** 把时间戳动作标题与对应帧严格对齐、**动作感知约束损失（AC Loss）** 放大稀疏交互帧的学习信号，在自建 VVT-Interact 上 ISR（交互成功率）从基线 0.397 → 0.610（+54%）。
 tags:
   - "ICML 2026"
   - "视频生成"

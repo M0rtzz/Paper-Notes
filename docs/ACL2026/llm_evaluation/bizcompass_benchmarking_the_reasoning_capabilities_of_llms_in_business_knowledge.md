@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BizCompass: Benchmarking the Reasoning Capabilities of LLMs in Business Knowledge and Applications
 description: >-
-  [ACL 2026 Findings][LLM评测][商业推理基准] 本文提出 BizCompass，一个连接理论基础与实际应用的商业推理基准，覆盖金融/经济/统计/运营四个知识域和分析师/交易员/顾问三个应用角色，系统评估了开源与闭源 LLM 的商业推理能力，揭示理论知识向实际表现转化的规律。
+  [ACL 2026 Findings][LLM评测][商业推理基准] 本文提出 BizCompass，一个连接理论基础与实际应用的商业推理基准，覆盖金融/经济/统计/运营四个知识域和分析师/交易员/顾问三个应用角色，系统评估了开源与闭源 LLM 的商业推理能力，揭示理论知识向实际表现转化的规律。 领域现状：LLM 在商业应用…
 tags:
   - "ACL 2026 Findings"
   - "LLM评测"

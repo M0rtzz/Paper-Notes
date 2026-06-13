@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AREA: Attribute Extraction and Aggregation for CLIP-Based Class-Incremental Learning
 description: >-
-  [ICML 2026][模型压缩][CLIP] 这篇论文把 CLIP 类增量学习中的遗忘拆成“属性抽取漂移”和“属性聚合漂移”，提出 Area 用 PGA 在超球面上固定视觉/文本属性锚点，再用轻量任务专家、VIB 正则和 OT 路由稳定属性聚合…
+  [ICML 2026][模型压缩][CLIP] 这篇论文把 CLIP 类增量学习中的遗忘拆成“属性抽取漂移”和“属性聚合漂移”，提出 Area 用 PGA 在超球面上固定视觉/文本属性锚点，再用轻量任务专家、VIB 正则和 OT 路由稳定属性聚合，从而在九个 CLIP-CIL benchmark 上显著提升平均精度和最终精度。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)
 description: >-
-  [ICML2025][图像生成][dataset distillation] 提出 D³HR 框架，通过 DDIM 反演将 VAE 潜在空间的复杂混合高斯分布映射到高正态性的噪声空间，再结合组采样策略生成高代表性的蒸馏数据集…
+  [ICML2025][图像生成][dataset distillation] 提出 D³HR 框架，通过 DDIM 反演将 VAE 潜在空间的复杂混合高斯分布映射到高正态性的噪声空间，再结合组采样策略生成高代表性的蒸馏数据集，在 CIFAR、Tiny-ImageNet、ImageNet-1K 上全面超越现有 SOTA。
 tags:
   - "ICML2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coupled Variational Reinforcement Learning for Language Model General Reasoning
 description: >-
-  [ICML 2026][强化学习][变分 RL] CoVRL 把"用回答概率当奖励"的 verifier-free RL 重写成一个变分推断问题，构造一个"先验 (只看问题) + 后验 (看到答案)"的复合分布，并用混合采样 + 重要性加权同时优化两者…
+  [ICML 2026][强化学习][变分 RL] CoVRL 把"用回答概率当奖励"的 verifier-free RL 重写成一个变分推断问题，构造一个"先验 (只看问题) + 后验 (看到答案)"的复合分布，并用混合采样 + 重要性加权同时优化两者，使 Qwen2.5-7B 在 9 个通用与数学推理基准上相对 base 平均涨 12.4%，比最强 verifier-free 基线再涨 2.3%。
 tags:
   - "ICML 2026"
   - "强化学习"

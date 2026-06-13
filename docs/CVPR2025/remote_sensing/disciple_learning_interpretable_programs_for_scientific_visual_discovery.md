@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiSciPLE: Learning Interpretable Programs for Scientific Visual Discovery
 description: >-
-  [CVPR 2025][遥感][可解释程序合成] 提出 DiSciPLE 框架，利用 LLM 引导的进化算法自动合成可解释的 Python 程序来分析视觉数据，在人口密度估计等科学任务上以比最近基线低 35% 的误差实现了 SOTA，且程序完全可解释。
+  [CVPR 2025][遥感][可解释程序合成] 提出 DiSciPLE 框架，利用 LLM 引导的进化算法自动合成可解释的 Python 程序来分析视觉数据，在人口密度估计等科学任务上以比最近基线低 35% 的误差实现了 SOTA，且程序完全可解释。 领域现状：科学领域（遥感、生态学、气候科学等）大量使用视觉数据做预测（如…
 tags:
   - "CVPR 2025"
   - "遥感"

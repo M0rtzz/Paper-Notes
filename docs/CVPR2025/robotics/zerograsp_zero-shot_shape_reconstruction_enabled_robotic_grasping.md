@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroGrasp: Zero-Shot Shape Reconstruction Enabled Robotic Grasping
 description: >-
-  [CVPR 2025][机器人][零样本抓取] ZeroGrasp 提出了一个基于八叉树条件变分自编码器（CVAE）的统一框架，从单张 RGB-D 图像同时完成高分辨率 3D 物体重建和 6D 抓取姿态预测，通过多物体编码器和 3D 遮挡场建模物体间关系，在 GraspNet-1B 基准上达到 SOTA…
+  [CVPR 2025][机器人][零样本抓取] ZeroGrasp 提出了一个基于八叉树条件变分自编码器（CVAE）的统一框架，从单张 RGB-D 图像同时完成高分辨率 3D 物体重建和 6D 抓取姿态预测，通过多物体编码器和 3D 遮挡场建模物体间关系，在 GraspNet-1B 基准上达到 SOTA，并在真实机器人上验证了泛化能力。
 tags:
   - "CVPR 2025"
   - "机器人"

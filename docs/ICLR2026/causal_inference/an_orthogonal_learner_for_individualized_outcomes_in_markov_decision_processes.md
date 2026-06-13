@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Orthogonal Learner for Individualized Outcomes in Markov Decision Processes
 description: >-
-  [ICLR 2026][因果推理][Q函数估计] 将因果推断中的半参数效率理论系统引入MDP的Q函数估计，证明经典的Q-regression和FQE本质上是有plug-in偏差的朴素学习器，并提出DRQQ-learner——一个同时具备双重鲁棒性、Neyman正交性和准oracle效率的元学习器…
+  [ICLR 2026][因果推理][Q函数估计] 将因果推断中的半参数效率理论系统引入MDP的Q函数估计，证明经典的Q-regression和FQE本质上是有plug-in偏差的朴素学习器，并提出DRQQ-learner——一个同时具备双重鲁棒性、Neyman正交性和准oracle效率的元学习器，通过推导有效影响函数(EIF)构造去偏二阶段损失，在Taxi和Frozen Lake环境中全面超越基线方法。
 tags:
   - "ICLR 2026"
   - "因果推理"

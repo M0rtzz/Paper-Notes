@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention
 description: >-
-  [ICLR 2026][音频/语音][音视频语音分离] 提出 Dolphin 模型，通过双路径轻量视频编码器 DP-LipCoder 将唇部运动映射为离散语义 token，并设计全局-局部注意力（GLA）分离器…
+  [ICLR 2026][音频/语音][音视频语音分离] 提出 Dolphin 模型，通过双路径轻量视频编码器 DP-LipCoder 将唇部运动映射为离散语义 token，并设计全局-局部注意力（GLA）分离器，在三个基准上超越 SOTA 同时参数减少 50%+、MACs 降低 2.4×、GPU 推理加速 6×。
 tags:
   - "ICLR 2026"
   - "音频/语音"

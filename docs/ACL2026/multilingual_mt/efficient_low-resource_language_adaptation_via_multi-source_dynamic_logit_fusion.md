@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Low-Resource Language Adaptation via Multi-Source Dynamic Logit Fusion
 description: >-
-  [ACL 2026][多语言/翻译][低资源语言] TriMix 把 LRL（低资源语言）适配拆解为"语言能力 + 任务能力 + scaling 红利"三股 logit benefit vector，仅对小模型做连续预训练即可，在推理时按 perplexity 动态决定权重…
+  [ACL 2026][多语言/翻译][低资源语言] TriMix 把 LRL（低资源语言）适配拆解为"语言能力 + 任务能力 + scaling 红利"三股 logit benefit vector，仅对小模型做连续预训练即可，在推理时按 perplexity 动态决定权重，于 4 个模型家族 × 8 种 LRL 上一致超越单模型 baseline 和 Proxy Tuning，且核心实证发现"应让小 CPT 模型权重高于大指令模型"——直接挑战了 Proxy Tuning 默认的"大模型主导"假设。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Adapt Small Language Models for Tools; Adapt Tool Schemas to the Models
 description: >-
-  [ACL 2026][LLM Agent][小语言模型] 本文提出 PA-Tool，一种无训练的工具 Schema 优化方法，利用从数据污染检测中借鉴的"尖锐度"（peakedness）信号识别模型预训练中熟悉的命名模式，通过重命名工具组件来对齐小语言模型的内化知识…
+  [ACL 2026][LLM Agent][小语言模型] 本文提出 PA-Tool，一种无训练的工具 Schema 优化方法，利用从数据污染检测中借鉴的"尖锐度"（peakedness）信号识别模型预训练中熟悉的命名模式，通过重命名工具组件来对齐小语言模型的内化知识，在 MetaTool 和 RoTBench 上实现最高 17% 的提升，Schema 不对齐错误减少 80%。
 tags:
   - "ACL 2026"
   - "LLM Agent"

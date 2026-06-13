@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Easier to Judge Than to Find: Predicting In-Context Learning Success for Demonstration Selection
 description: >-
-  [ICML 2026][模型压缩][上下文学习] 本文把 ICL 示例选择从「在巨大组合空间里搜最优 $D^\star$」改造为「对采样到的 $(q,D)$ 对判断是否会成功」，提出 DiSP——一个按查询难度分层、用轻量裁判模型做「采样–判定–接受即停」的框架，在五个分类基准上比强基线最多提升 3.4%…
+  [ICML 2026][模型压缩][上下文学习] 本文把 ICL 示例选择从「在巨大组合空间里搜最优 $D^\star$」改造为「对采样到的 $(q,D)$ 对判断是否会成功」，提出 DiSP——一个按查询难度分层、用轻量裁判模型做「采样–判定–接受即停」的框架，在五个分类基准上比强基线最多提升 3.4%，端到端实时延迟最多降 23×。
 tags:
   - "ICML 2026"
   - "模型压缩"

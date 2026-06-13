@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inverse Virtual Try-On: Generating Multi-Category Product-Style Images from Clothed Individuals
 description: >-
-  [ICLR 2026][人体理解][虚拟脱衣] 提出TEMU-VTOFF——面向虚拟脱衣(VTOFF)任务的Dual-DiT架构，通过特征提取器+服装生成器分工协作，结合多模态混合注意力(MHA)融合图像/文本/掩码信息消解视觉歧义，并设计DINOv2驱动的服装对齐器保留高频细节…
+  [ICLR 2026][人体理解][虚拟脱衣] 提出TEMU-VTOFF——面向虚拟脱衣(VTOFF)任务的Dual-DiT架构，通过特征提取器+服装生成器分工协作，结合多模态混合注意力(MHA)融合图像/文本/掩码信息消解视觉歧义，并设计DINOv2驱动的服装对齐器保留高频细节，在VITON-HD和Dress Code多品类场景均达到SOTA。
 tags:
   - "ICLR 2026"
   - "人体理解"

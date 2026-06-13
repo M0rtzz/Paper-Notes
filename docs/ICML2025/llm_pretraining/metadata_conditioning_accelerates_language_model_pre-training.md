@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metadata Conditioning Accelerates Language Model Pre-training
 description: >-
-  [ICML 2025][预训练][预训练加速] 提出 MeCo（Metadata Conditioning then Cooldown），在预训练时将文档的 URL 等元数据前置拼接到文本中，帮助模型区分异质数据源，最后 10% 训练用标准数据做 cooldown…
+  [ICML 2025][预训练][预训练加速] 提出 MeCo（Metadata Conditioning then Cooldown），在预训练时将文档的 URL 等元数据前置拼接到文本中，帮助模型区分异质数据源，最后 10% 训练用标准数据做 cooldown，使 1.6B 模型用 **33% 更少的数据**即可达到同等下游性能，同时解锁了通过条件推理引导生成的能力。
 tags:
   - "ICML 2025"
   - "预训练"

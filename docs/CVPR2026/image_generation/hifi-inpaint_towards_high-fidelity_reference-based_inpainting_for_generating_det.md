@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiFi-Inpaint: Towards High-Fidelity Reference-Based Inpainting for Generating Detail-Preserving Human-Product Images
 description: >-
-  [CVPR 2026][图像生成][参考图像修复] 提出 HiFi-Inpaint 框架，通过共享增强注意力（SEA）利用高频信息增强产品细节特征，结合细节感知损失（DAL）实现像素级高频监督，在人-产品图像生成中达到 SOTA 的细节保真度。
+  [CVPR 2026][图像生成][参考图像修复] 提出 HiFi-Inpaint 框架，通过共享增强注意力（SEA）利用高频信息增强产品细节特征，结合细节感知损失（DAL）实现像素级高频监督，在人-产品图像生成中达到 SOTA 的细节保真度。 人-产品图像（展示人与产品交互的图像）在广告、电商和数字营销中至关重要…
 tags:
   - "CVPR 2026"
   - "图像生成"

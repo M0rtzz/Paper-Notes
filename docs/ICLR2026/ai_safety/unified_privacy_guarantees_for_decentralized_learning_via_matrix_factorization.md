@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unified Privacy Guarantees for Decentralized Learning via Matrix Factorization
 description: >-
-  [ICLR 2026][AI安全][去中心化学习] 将去中心化学习（DL）中的多种算法和信任模型统一建模为矩阵分解（MF）机制，推广隐私保证到更一般的矩阵类型，并提出 MAFALDA-SGD 算法通过优化噪声相关性在合成和真实图拓扑上显著优于现有方法。
+  [ICLR 2026][AI安全][去中心化学习] 将去中心化学习（DL）中的多种算法和信任模型统一建模为矩阵分解（MF）机制，推广隐私保证到更一般的矩阵类型，并提出 MAFALDA-SGD 算法通过优化噪声相关性在合成和真实图拓扑上显著优于现有方法。 领域现状：去中心化学习（DL）通过 peer-to-peer 通信图让用…
 tags:
   - "ICLR 2026"
   - "AI安全"

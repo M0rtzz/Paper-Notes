@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-time Diverse Reasoning by Riemannian Activation Steering
 description: >-
-  [AAAI 2026][LLM评测][激活引导] 提出 SPREAD 框架——一种无监督的测试时激活引导策略，通过在球面流形乘积上求解黎曼优化问题来最大化多条推理路径的隐藏激活张成的总体积，从而提升 Best-of-N 采样中的推理多样性和准确率，在数学推理基准上超越温度采样基线。
+  [AAAI 2026][LLM评测][激活引导] 提出 SPREAD 框架——一种无监督的测试时激活引导策略，通过在球面流形乘积上求解黎曼优化问题来最大化多条推理路径的隐藏激活张成的总体积，从而提升 Best-of-N 采样中的推理多样性和准确率，在数学推理基准上超越温度采样基线。 Best-of-N 推理策略通过采样 N…
 tags:
   - "AAAI 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thinking in Structures: Evaluating Spatial Intelligence in Constraint-Governed Spaces
 description: >-
-  [ICML 2026][多模态VLM][空间智能] 作者构造了 SSI-Bench，一个由 1,000 道排序型 VQA 组成、聚焦"受约束的结构化空间"（屋顶、桥梁、塔架等真实 3D 结构）的基准，要求 VLM 对 3-4 个候选构件按几何或拓扑准则给出完整排列…
+  [ICML 2026][多模态VLM][空间智能] 作者构造了 SSI-Bench，一个由 1,000 道排序型 VQA 组成、聚焦"受约束的结构化空间"（屋顶、桥梁、塔架等真实 3D 结构）的基准，要求 VLM 对 3-4 个候选构件按几何或拓扑准则给出完整排列；评测 31 个 VLM 后发现最强闭源模型 Gemini-3-Flash 仅 33.6%、最佳开源 GLM-4.6V 22.2%，而人类 91.6%，揭示当前 VLM 在受几何/连接/物理可行性共同约束的真实 3D 场景下缺乏一致的空间推理能力。
 tags:
   - "ICML 2026"
   - "多模态VLM"

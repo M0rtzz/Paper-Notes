@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering Away from Harm: An Adaptive Approach to Defending Vision Language Model Against Jailbreaks
 description: >-
-  [CVPR 2025][LLM安全][VLM越狱防御] 提出ASTRA，通过**图像归因**定位对抗图像中与越狱最相关的视觉token，构建**转向向量**表征有害响应方向，并在推理时进行**自适应激活转向**将模型远离有害方向…
+  [CVPR 2025][LLM安全][VLM越狱防御] 提出ASTRA，通过**图像归因**定位对抗图像中与越狱最相关的视觉token，构建**转向向量**表征有害响应方向，并在推理时进行**自适应激活转向**将模型远离有害方向，实现了比JailGuard低12%毒性分数、低18% ASR且快9倍的SOTA防御效果。
 tags:
   - "CVPR 2025"
   - "LLM安全"

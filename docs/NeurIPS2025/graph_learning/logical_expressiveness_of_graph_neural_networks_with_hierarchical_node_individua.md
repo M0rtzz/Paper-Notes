@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization
 description: >-
-  [NeurIPS 2025][图学习][图神经网络] 提出了分层自我图神经网络（Hierarchical Ego GNNs，HEGNNs），通过层次化的节点个体化机制泛化了子图GNN，形成表达力递增的模型层级；在有界度图上…
+  [NeurIPS 2025][图学习][图神经网络] 提出了分层自我图神经网络（Hierarchical Ego GNNs，HEGNNs），通过层次化的节点个体化机制泛化了子图GNN，形成表达力递增的模型层级；在有界度图上，证明HEGNN节点分类器的区分能力等价于分级杂合逻辑（graded hybrid logic），从而统一了多种GNN变体的表达力分析。
 tags:
   - "NeurIPS 2025"
   - "图学习"

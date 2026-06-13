@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Real-World BEV Perception: Depth Uncertainty Estimation via Gaussian Splatting
 description: >-
-  [CVPR 2025][自动驾驶][BEV感知] GaussianLSS 在经典的 Lift-Splat-Shoot（LSS）框架上引入深度不确定性建模，通过计算深度分布的方差并将其转换为 3D 高斯表示，再利用 Gaussian Splatting 高效光栅化生成具有不确定性感知的 BEV 特征…
+  [CVPR 2025][自动驾驶][BEV感知] GaussianLSS 在经典的 Lift-Splat-Shoot（LSS）框架上引入深度不确定性建模，通过计算深度分布的方差并将其转换为 3D 高斯表示，再利用 Gaussian Splatting 高效光栅化生成具有不确定性感知的 BEV 特征，在 nuScenes 上达到了 unprojection 方法的 SOTA，同时比 projection 方法快 2.5 倍、省 70% 显存。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

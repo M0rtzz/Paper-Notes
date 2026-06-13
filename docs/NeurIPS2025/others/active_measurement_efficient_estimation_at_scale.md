@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Active Measurement: Efficient Estimation at Scale
 description: >-
-  [NeurIPS 2025][Active Measurement] 提出 Active Measurement 框架，将 AI 模型预测作为重要性采样提议分布，通过迭代的人类标注与模型更新实现科学总量测量的无偏估计，搭配新颖的组合权重方案和条件方差估计器构建可靠的置信区间。
+  [NeurIPS 2025][Active Measurement] 提出 Active Measurement 框架，将 AI 模型预测作为重要性采样提议分布，通过迭代的人类标注与模型更新实现科学总量测量的无偏估计，搭配新颖的组合权重方案和条件方差估计器构建可靠的置信区间。 AI 在科学发现中的应用日益广泛（生物多样性监测…
 tags:
   - "NeurIPS 2025"
   - "Active Measurement"

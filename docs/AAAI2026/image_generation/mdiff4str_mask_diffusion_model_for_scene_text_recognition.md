@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MDiff4STR: Mask Diffusion Model for Scene Text Recognition
 description: >-
-  [AAAI 2026][图像生成][场景文本识别] 首次将掩码扩散模型（MDM）引入场景文本识别（STR）任务，提出 MDiff4STR，通过六种训练掩码策略（弥合训练-推理噪声差距）和 Token 替换噪声机制（解决过度自信问题），在仅需 3 步去噪的情况下超越 SOTA 自回归模型的准确率…
+  [AAAI 2026 Oral][图像生成][场景文本识别] 首次将掩码扩散模型（MDM）引入场景文本识别（STR）任务，提出 MDiff4STR，通过六种训练掩码策略（弥合训练-推理噪声差距）和 Token 替换噪声机制（解决过度自信问题），在仅需 3 步去噪的情况下超越 SOTA 自回归模型的准确率，同时实现 3× 推理加速。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "图像生成"
   - "场景文本识别"
   - "掩码扩散模型"

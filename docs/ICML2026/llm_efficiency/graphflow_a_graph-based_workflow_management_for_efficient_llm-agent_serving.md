@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraphFlow: A Graph-Based Workflow Management for Efficient LLM-Agent Serving
 description: >-
-  [ICML 2026][LLM效率][LLM Agent 服务] GraphFlow 把多个 agent 工作流统一到一张全局操作 DAG（wGraph）上，用 GNN+MLP 按任务在线生成子图工作流，并通过"基底 KV + 稀疏前缀残差 + 路径剪枝"的差分缓存替代传统按工作流独立缓存…
+  [ICML 2026][LLM效率][LLM Agent 服务] GraphFlow 把多个 agent 工作流统一到一张全局操作 DAG（wGraph）上，用 GNN+MLP 按任务在线生成子图工作流，并通过"基底 KV + 稀疏前缀残差 + 路径剪枝"的差分缓存替代传统按工作流独立缓存，在 5 个推理/代码/QA benchmark 上平均提升 4.95pp 的同时把 KV 内存压到约 1/4。
 tags:
   - "ICML 2026"
   - "LLM效率"

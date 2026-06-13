@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining
 description: >-
-  [CVPR 2025][自监督学习][Transformer] 提出 Masked Autoregressive Pretraining（MAP），通过局部 MAE 建模 + 行级自回归解码的层次化预训练目标，首次有效预训练混合 Mamba-Transformer 视觉骨干…
+  [CVPR 2025][自监督学习][Transformer] 提出 Masked Autoregressive Pretraining（MAP），通过局部 MAE 建模 + 行级自回归解码的层次化预训练目标，首次有效预训练混合 Mamba-Transformer 视觉骨干，显著超越 MAE 和 AR 单一策略。
 tags:
   - "CVPR 2025"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MDReID: Modality-Decoupled Learning for Any-to-Any Multi-Modal Object Re-Identification
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态ReID] 提出MDReID框架，通过将模态特征解耦为模态共享（modality-shared）和模态特有（modality-specific）两部分，实现任意模态组合下的目标重识别（any-to-any ReID）…
+  [NeurIPS 2025][多模态VLM][多模态ReID] 提出MDReID框架，通过将模态特征解耦为模态共享（modality-shared）和模态特有（modality-specific）两部分，实现任意模态组合下的目标重识别（any-to-any ReID），在模态匹配和模态不匹配场景下均大幅超越现有方法。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

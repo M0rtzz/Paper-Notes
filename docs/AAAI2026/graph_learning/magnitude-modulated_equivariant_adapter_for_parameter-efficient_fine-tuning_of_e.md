@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Magnitude-Modulated Equivariant Adapter for Parameter-Efficient Fine-Tuning of Equivariant Graph Neural Networks
 description: >-
-  [AAAI 2026][图学习][等变图神经网络] 提出 MMEA (Magnitude-Modulated Equivariant Adapter)，一种用于球谐基等变 GNN 的轻量参数高效微调方法，通过标量门控按"阶-多重度"通道独立调制特征幅度，在严格保持等变性的前提下…
+  [AAAI 2026][图学习][等变图神经网络] 提出 MMEA (Magnitude-Modulated Equivariant Adapter)，一种用于球谐基等变 GNN 的轻量参数高效微调方法，通过标量门控按"阶-多重度"通道独立调制特征幅度，在严格保持等变性的前提下，以更少参数量实现了超越 ELoRA 和全参数微调的 SOTA 分子势能预测精度。
 tags:
   - "AAAI 2026"
   - "图学习"

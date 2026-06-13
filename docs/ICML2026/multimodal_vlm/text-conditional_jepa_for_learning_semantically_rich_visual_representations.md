@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-Conditional JEPA for Learning Semantically Rich Visual Representations
 description: >-
-  [ICML 2026][多模态VLM][JEPA] 本文提出 TC-JEPA，把 I-JEPA 的 mask 特征预测器额外条件化在图像 caption 上，通过多层稀疏跨注意力让 patch 表示在文本"提示"下变得可预测，从而在不用对比损失的前提下学到语义更丰富、对密集预测尤其友好的视觉表征。
+  [ICML 2026][多模态VLM][JEPA] 本文提出 TC-JEPA，把 I-JEPA 的 mask 特征预测器额外条件化在图像 caption 上，通过多层稀疏跨注意力让 patch 表示在文本"提示"下变得可预测，从而在不用对比损失的前提下学到语义更丰富、对密集预测尤其友好的视觉表征。 领域现状：视觉自监督学习目…
 tags:
   - "ICML 2026"
   - "多模态VLM"

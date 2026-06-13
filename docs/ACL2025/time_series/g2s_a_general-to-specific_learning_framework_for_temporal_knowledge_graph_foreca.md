@@ -2,7 +2,7 @@
 title: >-
   [论文解读] G2S: A General-to-Specific Learning Framework for Temporal Knowledge Graph Forecasting with Large Language Models
 description: >-
-  [ACL 2025][时间序列][时序知识图谱] 提出 G2S 框架，将时序知识图谱（TKG）预测中的通用模式（时序结构规律）与场景信息（具体实体/关系）解耦，先在匿名化时序结构上学习通用模式，再注入场景信息，有效提升 LLM 在 TKG 预测中的泛化能力。
+  [ACL 2025][时间序列][时序知识图谱] 提出 G2S 框架，将时序知识图谱（TKG）预测中的通用模式（时序结构规律）与场景信息（具体实体/关系）解耦，先在匿名化时序结构上学习通用模式，再注入场景信息，有效提升 LLM 在 TKG 预测中的泛化能力。 领域现状：TKG 预测（根据历史事实预测未来）是时间敏感场景（金融…
 tags:
   - "ACL 2025"
   - "时间序列"

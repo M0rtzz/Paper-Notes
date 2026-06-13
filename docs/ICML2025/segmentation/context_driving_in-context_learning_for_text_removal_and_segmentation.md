@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConText: Driving In-context Learning for Text Removal and Segmentation
 description: >-
-  [ICML 2025][语义分割][视觉上下文学习] 首次将视觉上下文学习（V-ICL）范式应用于OCR任务，提出任务链式提示（task-chaining prompting）、上下文感知聚合（CAA）和自提示策略（self-prompting）三项关键设计…
+  [ICML 2025][语义分割][视觉上下文学习] 首次将视觉上下文学习（V-ICL）范式应用于OCR任务，提出任务链式提示（task-chaining prompting）、上下文感知聚合（CAA）和自提示策略（self-prompting）三项关键设计，在文本去除和分割任务上大幅超越现有V-ICL通用模型和专用模型，分别取得 +4.50 PSNR 和 +3.34% fgIoU 的提升。
 tags:
   - "ICML 2025"
   - "语义分割"

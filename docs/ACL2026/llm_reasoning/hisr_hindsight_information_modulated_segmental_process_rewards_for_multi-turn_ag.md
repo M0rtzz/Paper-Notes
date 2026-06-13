@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HISR: Hindsight Information Modulated Segmental Process Rewards for Multi-turn Agentic Reinforcement Learning
 description: >-
-  [ACL 2026][LLM推理][agentic RL] HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一个 hindsight 模型与 policy 模型的似然比给每段算一个 importance 分数…
+  [ACL 2026][LLM推理][agentic RL] HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一个 hindsight 模型与 policy 模型的似然比给每段算一个 importance 分数，去 modulate 段级过程奖励——在 Alfworld / Virtualhome / Webshop 上把信用分配做得更靠谱，平均得分较 SPA 涨 5+。
 tags:
   - "ACL 2026"
   - "LLM推理"

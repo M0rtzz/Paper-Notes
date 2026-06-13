@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boost Your Human Image Generation Model via Direct Preference Optimization
 description: >-
-  [CVPR 2025][图像生成][DPO] 提出 HG-DPO，以真实人像作为 DPO 的 winning image（而非生成图像对）+ 三阶段课程学习（Easy/Normal/Hard）渐进弥合生成-真实图像分布 gap + 统计匹配损失解决色偏，FID 从 37.34 降至 29.41（-21.4%）…
+  [CVPR 2025][图像生成][DPO] 提出 HG-DPO，以真实人像作为 DPO 的 winning image（而非生成图像对）+ 三阶段课程学习（Easy/Normal/Hard）渐进弥合生成-真实图像分布 gap + 统计匹配损失解决色偏，FID 从 37.34 降至 29.41（-21.4%），CI-Q 0.906→0.934，win-rate 超越 Diffusion-DPO 达 99.97%。
 tags:
   - "CVPR 2025"
   - "图像生成"

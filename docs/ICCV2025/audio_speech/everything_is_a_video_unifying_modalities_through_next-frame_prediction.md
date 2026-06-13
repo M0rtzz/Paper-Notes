@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Everything is a Video: Unifying Modalities through Next-Frame Prediction
 description: >-
-  [ICCV 2025][音频/语音][多模态统一] 本文将多模态学习中的文本、图像、音频、视频等不同模态任务统一重构为下一帧预测问题（所有输入输出都渲染为 64×64 视频帧序列），用单一 Transformer 模型无需模态特定编码器即可处理跨模态任务…
+  [ICCV 2025][音频/语音][多模态统一] 本文将多模态学习中的文本、图像、音频、视频等不同模态任务统一重构为下一帧预测问题（所有输入输出都渲染为 64×64 视频帧序列），用单一 Transformer 模型无需模态特定编码器即可处理跨模态任务，验证了"everything is a video"这一激进但可行的统一表征范式。
 tags:
   - "ICCV 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FinRAG-12B: A Production-Validated Recipe for Grounded Question Answering in Banking
 description: >-
-  [ACL 2026][信息检索/RAG][金融问答] Kasisto 团队基于 Gemma 3 12B-IT，用 143M token 的数据高效配方 (LLM-as-Judge 过滤 + 引用标注 + 22% 不可回答样本 + 两阶段 curriculum) 训出 FinRAG-12B…
+  [ACL 2026][信息检索/RAG][金融问答] Kasisto 团队基于 Gemma 3 12B-IT，用 143M token 的数据高效配方 (LLM-as-Judge 过滤 + 引用标注 + 22% 不可回答样本 + 两阶段 curriculum) 训出 FinRAG-12B，并通过 W4A16 量化压到 8.4 GB 单卡部署——答案质量 (JudgeLM 6.21) 和引用质量 (73.1) 都超过 GPT-4.1，refusal 比例 12% 介于 base 的不安全 4.3% 和 GPT-4.1 的过度拒绝 20.2% 之间，在 40+ 家金融机构上线后查询解决率显著提升 +7.1pp ($p<0.001$)…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

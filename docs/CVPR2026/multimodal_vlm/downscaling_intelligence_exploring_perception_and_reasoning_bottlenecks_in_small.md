@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Downscaling Intelligence: Exploring Perception and Reasoning Bottlenecks in Small VLMs
 description: >-
-  [CVPR 2026][多模态VLM][多模态模型缩放] 系统研究LLM缩放对多模态能力的影响，发现视觉任务而非LLM依赖任务受影响最大，且感知退化与推理退化同等严重；提出Extract+Think方法（视觉提取调优+逐步推理）…
+  [CVPR 2026][多模态VLM][多模态模型缩放] 系统研究LLM缩放对多模态能力的影响，发现视觉任务而非LLM依赖任务受影响最大，且感知退化与推理退化同等严重；提出Extract+Think方法（视觉提取调优+逐步推理），以0.6B感知+1.7B推理的极小模型超越了12倍大的PrismCaptioner和LLaVA-OneVision-0.5B。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

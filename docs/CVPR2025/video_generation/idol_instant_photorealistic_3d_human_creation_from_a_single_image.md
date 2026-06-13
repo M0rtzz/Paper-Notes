@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IDOL: Instant Photorealistic 3D Human Creation from a Single Image
 description: >-
-  [CVPR 2025][视频生成][单图人体重建] IDOL 通过构建包含 10 万人体的大规模多视角数据集 HuGe100K，训练基于 Transformer 的前馈模型在单张图片输入下实现即时（<1秒）的高保真可动画 3D 人体重建，在质量和泛化能力上大幅超越现有方法。
+  [CVPR 2025][视频生成][单图人体重建] IDOL 通过构建包含 10 万人体的大规模多视角数据集 HuGe100K，训练基于 Transformer 的前馈模型在单张图片输入下实现即时（<1秒）的高保真可动画 3D 人体重建，在质量和泛化能力上大幅超越现有方法。 领域现状：单图 3D 人体重建是虚拟现实、游戏和…
 tags:
   - "CVPR 2025"
   - "视频生成"

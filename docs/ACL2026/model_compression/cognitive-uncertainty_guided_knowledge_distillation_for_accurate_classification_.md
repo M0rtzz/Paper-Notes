@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Cognitive-Uncertainty Guided Knowledge Distillation for Accurate Classification of Student Misconceptions
 description: >-
-  [ACL 2026][模型压缩][学生误解分类] 论文用两阶段知识蒸馏 + 基于教师认知不确定性的"双层边际样本选择" + 难度自适应损失，在仅用 10.30% 真实样本增量训练的情况下，把 4B 学生模型在 MAP-Charting 上做到 MAP@3 = 0.9585（+17.8%）…
+  [ACL 2026 Findings][模型压缩][学生误解分类] 论文用两阶段知识蒸馏 + 基于教师认知不确定性的"双层边际样本选择" + 难度自适应损失，在仅用 10.30% 真实样本增量训练的情况下，把 4B 学生模型在 MAP-Charting 上做到 MAP@3 = 0.9585（+17.8%），并在 220 题中学代数误解 benchmark 上以 84.38% 准确率超过 GPT-5（67.73%）与直接微调的 72B 教师（81.25%），同时推理速度比教师快 23×。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "学生误解分类"
   - "两阶段蒸馏"

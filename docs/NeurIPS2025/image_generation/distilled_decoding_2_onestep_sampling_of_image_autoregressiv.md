@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation
 description: >-
-  [NeurIPS 2025][图像生成][自回归模型加速] 本文提出Distilled Decoding 2（DD2），通过将自回归图像模型重新解读为条件分数模型，设计了条件分数蒸馏（CSD）损失，将多步AR采样压缩为一步生成…
+  [NeurIPS 2025][图像生成][自回归模型加速] 本文提出Distilled Decoding 2（DD2），通过将自回归图像模型重新解读为条件分数模型，设计了条件分数蒸馏（CSD）损失，将多步AR采样压缩为一步生成，在ImageNet-256上实现FID从3.40到5.43的微小退化同时获得8.0x加速（VAR）和238x加速（LlamaGen），相比DD1缩小了67%的性能差距且训练快12.3倍。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

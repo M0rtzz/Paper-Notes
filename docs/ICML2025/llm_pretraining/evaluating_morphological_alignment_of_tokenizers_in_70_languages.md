@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Morphological Alignment of Tokenizers in 70 Languages
 description: >-
-  [ICML 2025][预训练][分词器评估] 扩展 MorphScore 评估框架至 70 种语言，系统研究分词器的形态边界对齐程度与下游任务性能之间的相关性，发现形态对齐仅能解释极少量的性能方差，且呈负相关，挑战了"形态对齐分词有利于模型性能"的主流假设。
+  [ICML 2025][预训练][分词器评估] 扩展 MorphScore 评估框架至 70 种语言，系统研究分词器的形态边界对齐程度与下游任务性能之间的相关性，发现形态对齐仅能解释极少量的性能方差，且呈负相关，挑战了"形态对齐分词有利于模型性能"的主流假设。 分词（tokenization）是语言建模的第一步…
 tags:
   - "ICML 2025"
   - "预训练"

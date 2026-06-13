@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-level Adaptation for Multi-Object Tracking: Building Test-Time Calibration from Experience and Intuition
 description: >-
-  [CVPR 2026][视频理解][多目标跟踪] TCEI 框架受 Kahneman 双系统理论启发，提出直觉系统（利用近期观测对象的瞬时记忆快速推断）和经验系统（利用历史视频积累的经验校准直觉预测）相结合的测试时自适应方法，无需反向传播即可在分布偏移下显著提升多目标跟踪性能。
+  [CVPR 2026][视频理解][多目标跟踪] TCEI 框架受 Kahneman 双系统理论启发，提出直觉系统（利用近期观测对象的瞬时记忆快速推断）和经验系统（利用历史视频积累的经验校准直觉预测）相结合的测试时自适应方法，无需反向传播即可在分布偏移下显著提升多目标跟踪性能。 1. 领域现状：多目标跟踪(MOT)在训练和测…
 tags:
   - "CVPR 2026"
   - "视频理解"

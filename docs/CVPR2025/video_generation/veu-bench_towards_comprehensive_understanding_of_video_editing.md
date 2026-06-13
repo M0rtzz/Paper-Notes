@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VEU-Bench: Towards Comprehensive Understanding of Video Editing
 description: >-
-  [CVPR 2025][视频生成][视频编辑理解] 提出 VEU-Bench，首个全面评估视频大模型对视频编辑元素理解能力的基准，涵盖10个编辑维度、3个评估层级（识别/推理/判断）共19个细粒度任务，并训练专家模型 Oscars 超越开源SOTA 28.3%。
+  [CVPR 2025][视频生成][视频编辑理解] 提出 VEU-Bench，首个全面评估视频大模型对视频编辑元素理解能力的基准，涵盖10个编辑维度、3个评估层级（识别/推理/判断）共19个细粒度任务，并训练专家模型 Oscars 超越开源SOTA 28.3%。 领域现状：互联网上广泛分享的视频大多是经过编辑的视频…
 tags:
   - "CVPR 2025"
   - "视频生成"

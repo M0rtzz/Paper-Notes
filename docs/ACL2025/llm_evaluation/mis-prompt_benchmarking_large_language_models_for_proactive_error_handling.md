@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mis-prompt: Benchmarking Large Language Models for Proactive Error Handling
 description: >-
-  [ACL 2025][LLM评测][Proactive Error Handling] 提出 Mis-prompt 基准，包含 4 项评估任务、14 类错误分类体系和 14,969 条数据集，系统研究 LLM 在无显式错误处理指令时的**主动**纠错能力，发现当前 LLM 主动纠错能力严重不足…
+  [ACL 2025][LLM评测][Proactive Error Handling] 提出 Mis-prompt 基准，包含 4 项评估任务、14 类错误分类体系和 14,969 条数据集，系统研究 LLM 在无显式错误处理指令时的**主动**纠错能力，发现当前 LLM 主动纠错能力严重不足，SFT 可显著提升。
 tags:
   - "ACL 2025"
   - "LLM评测"

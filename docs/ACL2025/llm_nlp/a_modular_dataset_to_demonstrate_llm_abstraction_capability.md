@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Modular Dataset to Demonstrate LLM Abstraction Capability
 description: >-
-  [ACL 2025][LLM/NLP][LLM推理] 提出ArrangementPuzzle拼图数据集并训练LLM激活值分类器，发现分类器以>80%准确率识别推理正确性，揭示LLM在中间-后层Transformer层编码了区分逻辑等价与语义等价的抽象推理概念。
+  [ACL 2025][LLM 其他][LLM推理] 提出ArrangementPuzzle拼图数据集并训练LLM激活值分类器，发现分类器以80%准确率识别推理正确性，揭示LLM在中间-后层Transformer层编码了区分逻辑等价与语义等价的抽象推理概念。 大语言模型（LLM）展现了令人印象深刻的能力，但在推理任务中仍然频繁…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM推理"
   - "内部表征"
   - "激活分类器"

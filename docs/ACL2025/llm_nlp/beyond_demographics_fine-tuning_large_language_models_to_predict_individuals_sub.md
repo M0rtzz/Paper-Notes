@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Beyond Demographics: Fine-tuning Large Language Models to Predict Individuals' Subjective Text Perceptions
 description: >-
-  [ACL 2025][LLM/NLP][社会人口学提示] 本文系统研究了 LLM 能否通过社会人口学属性（年龄、性别、种族、教育）来预测个体标注者的主观文本感知，发现微调后的改进主要来自学习个体标注者行为而非社会人口学模式，质疑了用 LLM 模拟社会人口学差异的可行性。
+  [ACL 2025][LLM 其他][社会人口学提示] 本文系统研究了 LLM 能否通过社会人口学属性（年龄、性别、种族、教育）来预测个体标注者的主观文本感知，发现微调后的改进主要来自学习个体标注者行为而非社会人口学模式，质疑了用 LLM 模拟社会人口学差异的可行性。 领域现状：主观 NLP 任务（如情感、冒犯性、亲密度评判…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "社会人口学提示"
   - "标注者建模"
   - "主观文本感知"

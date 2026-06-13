@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Periodic Skill Discovery
 description: >-
-  [NeurIPS 2025][机器人][无监督技能发现] 提出 Periodic Skill Discovery (PSD) 框架，通过将状态映射到圆形潜空间来自然编码周期性，实现无监督地发现具有不同周期的多样化运动技能。
+  [NeurIPS 2025][机器人][无监督技能发现] 提出 Periodic Skill Discovery (PSD) 框架，通过将状态映射到圆形潜空间来自然编码周期性，实现无监督地发现具有不同周期的多样化运动技能。 核心矛盾 核心矛盾：领域现状：无监督技能发现是强化学习中的重要方向，旨在不依赖外部奖励的情况下学习多样…
 tags:
   - "NeurIPS 2025"
   - "机器人"

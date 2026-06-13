@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization Below the Edge of Stability: The Role of Data Geometry
 description: >-
-  [ICLR 2026][优化/理论][泛化理论] 提出"数据可碎性"（data shatterability）原理统一解释数据几何如何控制梯度下降在稳定性边缘（EoS）附近的隐式正则化强度：对 Beta(α) 径向分布族推导出依赖 α 的泛化上下界谱…
+  [ICLR 2026][优化/理论][泛化理论] 提出"数据可碎性"（data shatterability）原理统一解释数据几何如何控制梯度下降在稳定性边缘（EoS）附近的隐式正则化强度：对 Beta(α) 径向分布族推导出依赖 α 的泛化上下界谱，对低维子空间混合分布证明泛化率适应内在维度 $m$ 而非环境维度 $d$。
 tags:
   - "ICLR 2026"
   - "优化/理论"

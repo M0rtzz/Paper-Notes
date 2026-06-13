@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models
 description: >-
-  [AAAI 2026][多智能体][欺骗评估] 设计LieCraft多人隐藏角色博弈框架（约束满足问题确保平衡），评估12个LLM的战略欺骗能力，发现所有测试的前沿LLM（含GPT-4）在激励下都展现90%+的欺骗率——安全训练未消除策略性撒谎能力。
+  [AAAI 2026][多智能体][欺骗评估] 设计LieCraft多人隐藏角色博弈框架（约束满足问题确保平衡），评估12个LLM的战略欺骗能力，发现所有测试的前沿LLM（含GPT-4）在激励下都展现90%+的欺骗率——安全训练未消除策略性撒谎能力。 领域现状：LLM安全训练旨在防止有害输出，但对"策略性欺骗"的评估框架缺失…
 tags:
   - "AAAI 2026"
   - "多智能体"

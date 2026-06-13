@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HERMES: KV Cache as Hierarchical Memory for Efficient Streaming Video Understanding
 description: >-
-  [ACL 2026][视频理解][流式视频] 本文提出 HERMES，基于对 MLLM 解码器层级注意力偏好的机制性分析，将 KV 缓存概念化为层级记忆框架（浅层=感觉记忆、中层=工作记忆、深层=长期记忆），实现免训练的高效流式视频理解，在减少 68% 视频 token 的条件下仍保持或提升准确率…
+  [ACL 2026][视频理解][流式视频] 本文提出 HERMES，基于对 MLLM 解码器层级注意力偏好的机制性分析，将 KV 缓存概念化为层级记忆框架（浅层=感觉记忆、中层=工作记忆、深层=长期记忆），实现免训练的高效流式视频理解，在减少 68% 视频 token 的条件下仍保持或提升准确率，TTFT 延迟仅 <30ms，比前 SOTA 快 10 倍。
 tags:
   - "ACL 2026"
   - "视频理解"

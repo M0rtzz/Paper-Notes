@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeuraLeaf: Neural Parametric Leaf Models with Shape and Deformation Disentanglement
 description: >-
-  [3D视觉] NeuraLeaf 将叶片的 3D 几何解耦为 2D 基础形状和 3D 变形两个潜在空间，利用大量 2D 叶片图像数据集学习形状空间，提出无骨架蒙皮模型处理叶片的高度柔性变形，并构建了首个专注叶片变形建模的 3D 数据集 DeformLeaf。
+  [3D视觉] NeuraLeaf 将叶片的 3D 几何解耦为 2D 基础形状和 3D 变形两个潜在空间，利用大量 2D 叶片图像数据集学习形状空间，提出无骨架蒙皮模型处理叶片的高度柔性变形，并构建了首个专注叶片变形建模的 3D 数据集 DeformLeaf。 3D 叶片建模和重建在农业和计算机图形学中至关重要…
 tags:
   - "3D视觉"
 ---

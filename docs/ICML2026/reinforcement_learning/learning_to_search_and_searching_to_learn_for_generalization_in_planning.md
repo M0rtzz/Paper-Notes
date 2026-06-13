@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Search and Searching to Learn for Generalization in Planning
 description: >-
-  [ICML 2026][强化学习][广义规划] 本文提出 GSP：一种把加权 A* 最佳优先搜索和 Q-learning 套在同一循环里、以关系图神经网络表达 $Q_\theta(s,a)$ 的"自改进广义规划器"…
+  [ICML 2026][强化学习][广义规划] 本文提出 GSP：一种把加权 A* 最佳优先搜索和 Q-learning 套在同一循环里、以关系图神经网络表达 $Q_\theta(s,a)$ 的"自改进广义规划器"，仅在小规模实例上训练就能零样本泛化到比训练时大十几倍的实例（如 Blocksworld 从 ≤30 块到 488 块），在多个 IPC 基准、Sokoban、PushWorld、The Witness 上同时刷新覆盖率并超越基于实时搜索的 DRL 基线。
 tags:
   - "ICML 2026"
   - "强化学习"

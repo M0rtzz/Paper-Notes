@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction
 description: >-
-  [CVPR 2026][自动驾驶][3D占用预测] 本文提出ProOOD框架，首次从体素原型引导的视角统一处理3D占用预测中的长尾识别与分布外（OOD）检测，通过原型引导的语义补全（PGSI）、尾部类增强（PGTM）和无训练的EchoOOD评分机制…
+  [CVPR 2026][自动驾驶][3D占用预测] 本文提出ProOOD框架，首次从体素原型引导的视角统一处理3D占用预测中的长尾识别与分布外（OOD）检测，通过原型引导的语义补全（PGSI）、尾部类增强（PGTM）和无训练的EchoOOD评分机制，在SemanticKITTI上提升+3.57% mIoU（尾部类+24.80%），在VAA-KITTI上OOD检测AuPRCr提升+19.34。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

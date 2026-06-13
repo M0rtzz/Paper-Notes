@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Long-tailed Datasets
 description: >-
-  [CVPR 2025][模型压缩][数据集蒸馏] 首次系统研究长尾数据集蒸馏问题，发现现有方法在长尾场景下严重退化（甚至不如随机选择），提出Distribution-agnostic Matching（DAM）和Expert Decoupling（ED）两个策略…
+  [CVPR 2025][模型压缩][数据集蒸馏] 首次系统研究长尾数据集蒸馏问题，发现现有方法在长尾场景下严重退化（甚至不如随机选择），提出Distribution-agnostic Matching（DAM）和Expert Decoupling（ED）两个策略，在CIFAR-10/100-LT和Tiny-ImageNet-LT上大幅超越现有方法（如在imbalance factor=100时超越DATM 19.7%）。
 tags:
   - "CVPR 2025"
   - "模型压缩"

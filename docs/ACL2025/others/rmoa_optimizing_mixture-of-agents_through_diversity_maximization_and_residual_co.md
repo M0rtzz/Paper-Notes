@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation
 description: >-
-  [ACL 2025][Mixture-of-Agents] 受 ResNet 残差学习启发，提出 RMoA 框架，通过嵌入式多样性贪心选择、残差提取/聚合智能体和自适应终止机制来优化多智能体协作架构，在降低计算开销的同时实现 SOTA 性能。
+  [ACL 2025][Mixture-of-Agents] 受 ResNet 残差学习启发，提出 RMoA 框架，通过嵌入式多样性贪心选择、残差提取/聚合智能体和自适应终止机制来优化多智能体协作架构，在降低计算开销的同时实现 SOTA 性能。 基于大语言模型的多智能体系统（MAS）在多种任务上展现了强大能力…
 tags:
   - "ACL 2025"
   - "Mixture-of-Agents"

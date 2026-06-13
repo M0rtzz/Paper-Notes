@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation
 description: >-
-  [CVPR 2026][图像生成][统一生成框架] 提出 CoLoGen，一个基于"概念-定位对偶性"（Concept-Localization Duality）的统一图像生成框架，通过渐进式分阶段训练和 Progressive Representation Weaving（PRW）动态专家路由架构…
+  [CVPR 2026][图像生成][统一生成框架] 提出 CoLoGen，一个基于"概念-定位对偶性"（Concept-Localization Duality）的统一图像生成框架，通过渐进式分阶段训练和 Progressive Representation Weaving（PRW）动态专家路由架构，在指令编辑、可控生成和个性化生成三大任务上同时达到或超越专用模型水平。
 tags:
   - "CVPR 2026"
   - "图像生成"

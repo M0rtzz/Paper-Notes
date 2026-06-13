@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FineCog-Nav: Integrating Fine-grained Cognitive Modules for Zero-shot Multimodal UAV Navigation
 description: >-
-  [CVPR 2026][机器人][无人机导航] 本文提出 FineCog-Nav，一个受人类认知启发的零样本 UAV 视觉语言导航框架，将导航分解为语言处理、感知、注意力、记忆、想象、推理和决策七个细粒度认知模块，每个模块使用中等规模基础模型驱动，无需训练即可在复杂 3D 环境中完成长程导航。
+  [CVPR 2026 Findings][机器人][无人机导航] 本文提出 FineCog-Nav，一个受人类认知启发的零样本 UAV 视觉语言导航框架，将导航分解为语言处理、感知、注意力、记忆、想象、推理和决策七个细粒度认知模块，每个模块使用中等规模基础模型驱动，无需训练即可在复杂 3D 环境中完成长程导航。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "机器人"
   - "无人机导航"
   - "视觉语言导航"

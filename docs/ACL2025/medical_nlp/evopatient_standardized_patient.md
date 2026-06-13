@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMs Can Simulate Standardized Patients via Agent Coevolution
 description: >-
-  [ACL 2025][医疗NLP][标准化病人] EvoPatient 提出了一个多智能体协同进化框架，通过患者 Agent 和医生 Agent 之间的自主模拟对话，让 LLM 无需人工监督即可学会模拟标准化病人（SP），在需求对齐度上超过现有推理方法 10%+。
+  [ACL 2025][医疗NLP][标准化病人] EvoPatient 提出了一个多智能体协同进化框架，通过患者 Agent 和医生 Agent 之间的自主模拟对话，让 LLM 无需人工监督即可学会模拟标准化病人（SP），在需求对齐度上超过现有推理方法 10%+。 领域现状：标准化病人（SP）是医学教育的关键手段…
 tags:
   - "ACL 2025"
   - "医疗NLP"

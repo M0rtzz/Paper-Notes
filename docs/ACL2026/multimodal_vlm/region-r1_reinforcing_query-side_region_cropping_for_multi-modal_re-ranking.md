@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Region-R1: Reinforcing Query-Side Region Cropping for Multi-Modal Re-Ranking
 description: >-
-  [ACL 2026][多模态VLM][多模态重排序] 本文提出 Region-R1，将多模态重排序中的查询图像区域裁剪建模为决策问题，通过强化学习（r-GRPO）学习何时以及如何裁剪查询图像中与问题相关的区域，在 E-VQA 和 InfoSeek 上将 CondRecall@1 分别提升 20% 和 8%。
+  [ACL 2026 Findings][多模态VLM][多模态重排序] 本文提出 Region-R1，将多模态重排序中的查询图像区域裁剪建模为决策问题，通过强化学习（r-GRPO）学习何时以及如何裁剪查询图像中与问题相关的区域，在 E-VQA 和 InfoSeek 上将 CondRecall@1 分别提升 20% 和 8%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多模态重排序"
   - "查询侧区域裁剪"

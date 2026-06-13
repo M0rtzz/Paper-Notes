@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextual Thompson Sampling via Generation of Missing Data
 description: >-
-  [NeurIPS 2025][图像生成][Thompson sampling] 提出 Generative Thompson Sampling (TS-Gen)，将上下文老虎机中的不确定性建模为缺失数据而非未知参数，通过生成模型对缺失结果做自回归填充来实现 Thompson 采样…
+  [NeurIPS 2025][图像生成][Thompson sampling] 提出 Generative Thompson Sampling (TS-Gen)，将上下文老虎机中的不确定性建模为缺失数据而非未知参数，通过生成模型对缺失结果做自回归填充来实现 Thompson 采样，建立了与离线预测损失直接挂钩的遗憾界。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

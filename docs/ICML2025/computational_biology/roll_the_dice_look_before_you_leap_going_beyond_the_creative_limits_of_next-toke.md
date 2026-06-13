@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Roll the Dice & Look Before You Leap: Going Beyond the Creative Limits of Next-Token Prediction
 description: >-
-  [ICML2025][计算生物][next-token prediction] 本文设计了一套最小化算法任务来量化语言模型的"创造力极限"，证明 next-token 学习在需要"思维跳跃"的开放式任务中是近视的…
+  [ICML2025 Oral][计算生物][next-token prediction] 本文设计了一套最小化算法任务来量化语言模型的"创造力极限"，证明 next-token 学习在需要"思维跳跃"的开放式任务中是近视的，而多 token 方法（teacherless 训练、离散扩散模型）以及输入层噪声注入（seed-conditioning）能显著提升生成的多样性与原创性。
 tags:
-  - "ICML2025"
+  - "ICML2025 Oral"
   - "计算生物"
   - "next-token prediction"
   - "multi-token prediction"

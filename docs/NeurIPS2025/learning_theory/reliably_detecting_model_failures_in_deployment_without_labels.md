@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Reliably Detecting Model Failures in Deployment Without Labels
 description: >-
-  [NeurIPS 2025][部署后退化监控] 提出D3M(Disagreement-Driven Deterioration Monitoring)，一种基于变分贝叶斯后验采样的三阶段模型监控算法，在无标签、无训练数据的部署场景下可靠检测模型性能退化，同时对非退化性偏移保持低误报率。
+  [NeurIPS 2025][模型监控 / 分布偏移检测 / 可信AI][部署后退化监控] 提出D3M(Disagreement-Driven Deterioration Monitoring)，一种基于变分贝叶斯后验采样的三阶段模型监控算法，在无标签、无训练数据的部署场景下可靠检测模型性能退化，同时对非退化性偏移保持低误报率。
 tags:
   - "NeurIPS 2025"
+  - "模型监控 / 分布偏移检测 / 可信AI"
   - "部署后退化监控"
   - "模型分歧"
   - "变分贝叶斯"

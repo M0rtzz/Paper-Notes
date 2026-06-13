@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta-Learning Hyperparameters for Parameter Efficient Fine-Tuning
 description: >-
-  [CVPR 2025][遥感][参数高效微调] MetaPEFT提出了一种元学习框架，将PEFT中的离散位置选择和连续缩放因子统一为可微分的调制器（modulator），通过双层优化自动搜索最优的PEFT超参数配置，在遥感和自然图像的长尾分布适应任务上取得SOTA。
+  [CVPR 2025][遥感][参数高效微调] MetaPEFT提出了一种元学习框架，将PEFT中的离散位置选择和连续缩放因子统一为可微分的调制器（modulator），通过双层优化自动搜索最优的PEFT超参数配置，在遥感和自然图像的长尾分布适应任务上取得SOTA。 1. 领域现状：参数高效微调（PEFT）如LoRA、Ada…
 tags:
   - "CVPR 2025"
   - "遥感"

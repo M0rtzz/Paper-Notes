@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement
 description: >-
-  [ECCV 2024][图像生成][颜色提示学习] 提出ColorPeel方法，通过在目标颜色的基本几何形状上学习颜色提示token（解耦颜色与形状），并引入交叉注意力对齐损失，使T2I扩散模型能精确生成用户指定RGB颜色的物体。
+  [ECCV 2024][图像生成][颜色提示学习] 提出ColorPeel方法，通过在目标颜色的基本几何形状上学习颜色提示token（解耦颜色与形状），并引入交叉注意力对齐损失，使T2I扩散模型能精确生成用户指定RGB颜色的物体。 领域现状：文本到图像（T2I）扩散模型通过文本提示生成图像的能力已非常强大…
 tags:
   - "ECCV 2024"
   - "图像生成"

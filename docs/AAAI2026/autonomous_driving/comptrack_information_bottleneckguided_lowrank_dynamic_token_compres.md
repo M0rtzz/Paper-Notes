@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking
 description: >-
-  [AAAI 2026 (Oral)][自动驾驶][3D单目标跟踪] 提出CompTrack——首个同时解决LiDAR点云中空间冗余和信息冗余双重挑战的3D单目标跟踪框架：空间前景预测器(SFP)基于信息熵过滤背景噪声…
+  [AAAI 2026 (Oral)][自动驾驶][3D单目标跟踪] 提出CompTrack——首个同时解决LiDAR点云中空间冗余和信息冗余双重挑战的3D单目标跟踪框架：空间前景预测器(SFP)基于信息熵过滤背景噪声，信息瓶颈引导的动态Token压缩(IB-DTC)模块利用在线SVD估计有效秩并将前景压缩为紧凑代理token；在nuScenes和Waymo上达到SOTA，同时以90 FPS实时运行。
 tags:
   - "AAAI 2026 (Oral)"
   - "自动驾驶"

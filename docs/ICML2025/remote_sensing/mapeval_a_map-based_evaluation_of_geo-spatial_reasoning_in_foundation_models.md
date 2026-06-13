@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MapEval: A Map-Based Evaluation of Geo-Spatial Reasoning in Foundation Models
 description: >-
-  [遥感] 提出 MapEval 基准，通过 700 道涵盖文本、API 和视觉三类任务的多选题，系统评估 30 个基础模型在地图场景下的地理空间推理能力，发现最强模型准确率不超过 67%，且所有模型落后人类表现 20% 以上。
+  [遥感] 提出 MapEval 基准，通过 700 道涵盖文本、API 和视觉三类任务的多选题，系统评估 30 个基础模型在地图场景下的地理空间推理能力，发现最强模型准确率不超过 67%，且所有模型落后人类表现 20% 以上。 基础模型（如 GPT-4o、Claude-3.5-Sonnet、Gemini-1.5-Pro）在自…
 tags:
   - "遥感"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] U-Cast: A Surprisingly Simple and Efficient Frontier Probabilistic AI Weather Forecasting
 description: >-
-  [ICML 2026][时间序列][天气预报] U-Cast 用**简单的 U-Net 主干** + **两阶段训练课程**（MAE 预训练 → CRPS 微调） + **MC-Dropout** 实现了与复杂专业模型（GenCast）相当的概率性天气预报能力…
+  [ICML 2026][时间序列][天气预报] U-Cast 用**简单的 U-Net 主干** + **两阶段训练课程**（MAE 预训练 → CRPS 微调） + **MC-Dropout** 实现了与复杂专业模型（GenCast）相当的概率性天气预报能力，同时减少 10× 训练计算和推理延迟——颠覆"前沿性能必须复杂"的行业刻板印象。
 tags:
   - "ICML 2026"
   - "时间序列"

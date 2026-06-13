@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Edit Less, Achieve More: Dynamic Sparse Neuron Masking for Lifelong Knowledge Editing in LLMs
 description: >-
-  [NEURIPS2025][知识编辑][knowledge editing] 提出 NMKE 框架，通过神经元级归因发现 knowledge-general 和 knowledge-specific 两类知识神经元，并结合熵引导的动态稀疏 mask，实现精准神经元级知识编辑…
+  [NEURIPS2025][知识编辑][knowledge editing] 提出 NMKE 框架，通过神经元级归因发现 knowledge-general 和 knowledge-specific 两类知识神经元，并结合熵引导的动态稀疏 mask，实现精准神经元级知识编辑，在 5000 步连续编辑后仍保持高编辑成功率和模型通用能力。
 tags:
   - "NEURIPS2025"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the Ceiling: Exploring the Potential of Jailbreak Attacks through Expanding Strategy Space
 description: >-
-  [ACL 2025][LLM对齐][越狱攻击] 基于精细化可能性模型 (ELM) 将越狱策略分解为四类可独立进化的组件（角色/内容支撑/语境/沟通技巧），提出 CL-GSO 遗传算法在组件级进行交叉与变异，将策略空间从既有方法的 40 种扩展到 839 种…
+  [ACL 2025][LLM对齐][越狱攻击] 基于精细化可能性模型 (ELM) 将越狱策略分解为四类可独立进化的组件（角色/内容支撑/语境/沟通技巧），提出 CL-GSO 遗传算法在组件级进行交叉与变异，将策略空间从既有方法的 40 种扩展到 839 种，在 Claude-3.5 上实现 96% 攻击成功率（此前方法最高仅 4%），同时提出基于意图一致性的评估机制，准确率达 96.5% 超越专用安全模型。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Is It JUST Semantics? A Case Study of Discourse Particle Understanding in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][discourse particles] 以英语多义语气词 "just" 为案例，通过专家构造数据集和电影字幕标注数据，用两种元语言实验（few-shot 语义标注和成对比较）系统评估 LLM 对语气词细粒度语义的理解能力…
+  [ACL 2025][LLM 其他][discourse particles] 以英语多义语气词 "just" 为案例，通过专家构造数据集和电影字幕标注数据，用两种元语言实验（few-shot 语义标注和成对比较）系统评估 LLM 对语气词细粒度语义的理解能力，发现模型能区分大类（形容词、时间义）但无法充分捕捉语气词的微妙语义差异（排他、轻描淡写、无因、强调义）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "discourse particles"
   - "pragmatics"
   - "linguistic evaluation"

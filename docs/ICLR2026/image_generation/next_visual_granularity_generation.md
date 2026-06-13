@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Next Visual Granularity Generation
 description: >-
-  [ICLR 2026][图像生成][视觉粒度] 提出 Next Visual Granularity (NVG) 生成框架，将图像分解为不同粒度级别的结构化序列，从全局布局到精细细节逐级生成，相比 VAR 系列在 FID 上一致提升。
+  [ICLR 2026][图像生成][视觉粒度] 提出 Next Visual Granularity (NVG) 生成框架，将图像分解为不同粒度级别的结构化序列，从全局布局到精细细节逐级生成，相比 VAR 系列在 FID 上一致提升。 - 现有生成范式的局限： - Token 序列化方法忽略丰富的 2D 空间结构…
 tags:
   - "ICLR 2026"
   - "图像生成"

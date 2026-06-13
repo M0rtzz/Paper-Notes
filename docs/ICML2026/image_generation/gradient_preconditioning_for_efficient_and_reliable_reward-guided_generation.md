@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gradient Preconditioning for Efficient and Reliable Reward-Guided Generation
 description: >-
-  [ICML 2026][图像生成][reward-guided generation] 通过把 reward 梯度投影到一个用 DFT 块状 $\ell_1/\ell_2$ 范数刻画的"白高斯噪声可行集"上…
+  [ICML 2026][图像生成][reward-guided generation] 通过把 reward 梯度投影到一个用 DFT 块状 $\ell_1/\ell_2$ 范数刻画的"白高斯噪声可行集"上，作者把一步生成模型的 test-time latent 优化变得既快又稳：在 FLUX 上只用 30% 的 wall-clock 时间就追平 SOTA 正则化方法 MPGR 的 Aesthetic Score，并彻底避免 reward hacking。
 tags:
   - "ICML 2026"
   - "图像生成"

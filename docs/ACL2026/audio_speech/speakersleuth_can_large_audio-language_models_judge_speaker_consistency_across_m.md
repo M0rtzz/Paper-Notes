@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpeakerSleuth: Can Large Audio-Language Models Judge Speaker Consistency across Multi-turn Dialogues?
 description: >-
-  [ACL 2026][音频/语音][大型音频语言模型] SpeakerSleuth 构建了首个评估 LALM 多轮对话说话人一致性判断能力的基准（1,818 实例），系统评测 12 个 LALM 和 6 种嵌入方法后发现：模型在检测和定位声学不一致时表现挣扎，存在严重的文本优先于声学的模态偏差…
+  [ACL 2026][音频/语音][大型音频语言模型] SpeakerSleuth 构建了首个评估 LALM 多轮对话说话人一致性判断能力的基准（1,818 实例），系统评测 12 个 LALM 和 6 种嵌入方法后发现：模型在检测和定位声学不一致时表现挣扎，存在严重的文本优先于声学的模态偏差，但在比较/排序声学变体时表现较好。
 tags:
   - "ACL 2026"
   - "音频/语音"

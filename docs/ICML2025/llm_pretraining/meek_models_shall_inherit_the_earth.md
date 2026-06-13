@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Meek Models Shall Inherit the Earth
 description: >-
-  [ICML 2025][scaling laws] 基于 Chinchilla 缩放定律的数学建模，证明在固定分布的 next-token 目标下，计算缩放的递减收益将导致 SOTA 大模型相对于低计算预算"弱模型"（meek models）的能力优势最终收敛趋零…
+  [ICML 2025][预训练][scaling laws] 基于 Chinchilla 缩放定律的数学建模，证明在固定分布的 next-token 目标下，计算缩放的递减收益将导致 SOTA 大模型相对于低计算预算"弱模型"（meek models）的能力优势最终收敛趋零，论证 AI 能力的民主化是当前缩放范式下的必然趋势，现有基于算力的 AI 治理策略需要根本性重新设计。
 tags:
   - "ICML 2025"
+  - "预训练"
   - "scaling laws"
   - "diminishing returns"
   - "compute scaling"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Act Blindly: Robust GUI Automation via Action-Effect Verification and Self-Correction
 description: >-
-  [ACL 2026][LLM Agent][GUI自动化] 本文提出VeriGUI框架，通过Thinking-Verification-Action-Expectation（TVAE）闭环推理机制和两阶段训练管线（Robust SFT + GRPO）…
+  [ACL 2026][LLM Agent][GUI自动化] 本文提出VeriGUI框架，通过Thinking-Verification-Action-Expectation（TVAE）闭环推理机制和两阶段训练管线（Robust SFT + GRPO），让GUI Agent能够验证每步操作是否成功并在失败时自我纠正，在3B和7B规模上均显著优于基线。
 tags:
   - "ACL 2026"
   - "LLM Agent"

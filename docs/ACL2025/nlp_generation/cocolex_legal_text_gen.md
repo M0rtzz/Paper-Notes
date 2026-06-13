@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation
 description: >-
-  [ACL 2025][文本生成][legal text generation] 提出 CoCoLex，一种无需训练的解码策略，利用解码过程中隐状态与上下文 token 隐状态的欧氏距离构造复制分布，并通过基于预测熵的置信度分数动态平衡"从上下文复制"与"自由生成"的比例，在五个法律基准上一致提升忠实性和正确性…
+  [ACL 2025][文本生成][legal text generation] 提出 CoCoLex，一种无需训练的解码策略，利用解码过程中隐状态与上下文 token 隐状态的欧氏距离构造复制分布，并通过基于预测熵的置信度分数动态平衡"从上下文复制"与"自由生成"的比例，在五个法律基准上一致提升忠实性和正确性，尤其在长文本生成任务中效果突出。
 tags:
   - "ACL 2025"
   - "文本生成"

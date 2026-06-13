@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift
 description: >-
-  [CVPR2026][优化/理论][联邦学习] 提出 Fed-ADE 框架，通过 uncertainty dynamics estimation 和 representation dynamics estimation 两个轻量级分布漂移信号，为每个客户端在每个时间步自适应调整学习率，实现联邦部署后无监督适应…
+  [CVPR2026][优化/理论][联邦学习] 提出 Fed-ADE 框架，通过 uncertainty dynamics estimation 和 representation dynamics estimation 两个轻量级分布漂移信号，为每个客户端在每个时间步自适应调整学习率，实现联邦部署后无监督适应。
 tags:
   - "CVPR2026"
   - "优化/理论"

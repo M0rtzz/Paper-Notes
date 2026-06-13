@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing
 description: >-
-  [ICCV 2025][AI安全][联邦学习] 提出Client2Vec机制，在联邦学习训练前利用CLIP编码器和分布偏移感知索引生成网络（DSA-IGN）为每个客户端生成包含标签和特征分布信息的索引向量，进而改善客户端采样、模型聚合和本地训练三个关键阶段。
+  [ICCV 2025][AI安全][联邦学习] 提出Client2Vec机制，在联邦学习训练前利用CLIP编码器和分布偏移感知索引生成网络（DSA-IGN）为每个客户端生成包含标签和特征分布信息的索引向量，进而改善客户端采样、模型聚合和本地训练三个关键阶段。 联邦学习（FL）的核心挑战在于客户端之间的数据分布异构性（non-…
 tags:
   - "ICCV 2025"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenFlowRL: Shaping Rewards with Generative Object-Centric Flow in Visual Reinforcement Learning
 description: >-
-  [ICCV 2025][图像生成][强化学习] 提出 GenFlowRL，通过从跨具身数据集训练的流生成模型中提取的 δ-flow 表示进行奖励塑形，将生成式物体中心光流与强化学习结合，实现了鲁棒且可泛化的机器人操控策略学习，在 10 个操控任务上显著优于流式模仿学习和视频引导 RL 方法。
+  [ICCV 2025][图像生成][强化学习] 提出 GenFlowRL，通过从跨具身数据集训练的流生成模型中提取的 δ-flow 表示进行奖励塑形，将生成式物体中心光流与强化学习结合，实现了鲁棒且可泛化的机器人操控策略学习，在 10 个操控任务上显著优于流式模仿学习和视频引导 RL 方法。 近年来，视频生成基础模型在机器人…
 tags:
   - "ICCV 2025"
   - "图像生成"

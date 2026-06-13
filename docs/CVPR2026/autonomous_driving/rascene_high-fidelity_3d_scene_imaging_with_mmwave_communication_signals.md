@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rascene: High-Fidelity 3D Scene Imaging with mmWave Communication Signals
 description: >-
-  [CVPR 2026][自动驾驶][毫米波通信] 提出 Rascene，一种利用毫米波 OFDM 通信信号（5G/Wi-Fi）进行高保真 3D 场景成像的集成感知与通信（ISAC）框架，通过置信度加权的多帧融合实现对稀疏、多径干扰的射频观测的几何一致性恢复。
+  [CVPR 2026][自动驾驶][毫米波通信] 提出 Rascene，一种利用毫米波 OFDM 通信信号（5G/Wi-Fi）进行高保真 3D 场景成像的集成感知与通信（ISAC）框架，通过置信度加权的多帧融合实现对稀疏、多径干扰的射频观测的几何一致性恢复。 3D 环境感知对自动驾驶和机器人导航至关重要…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] A Hidden Stumbling Block in Generalized Category Discovery: Distracted Attention
 description: >-
-  [ICCV 2025][广义类别发现] 本文发现GCD任务中ViT模型在处理无标签数据时存在注意力分散（关注背景而非前景目标）的隐患，提出Attention Focusing (AF)机制，通过Token重要性评估 (TIME) + Token自适应剪枝 (TAP) 级联去除无关token…
+  [ICCV 2025][自监督学习][广义类别发现] 本文发现GCD任务中ViT模型在处理无标签数据时存在注意力分散（关注背景而非前景目标）的隐患，提出Attention Focusing (AF)机制，通过Token重要性评估 (TIME) + Token自适应剪枝 (TAP) 级联去除无关token，在SimGCD上取得最高15.4%的提升，且计算开销极小。
 tags:
   - "ICCV 2025"
+  - "自监督学习"
   - "广义类别发现"
   - "注意力分散"
   - "Token剪枝"

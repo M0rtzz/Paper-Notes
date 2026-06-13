@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LuVe: Latent-Cascaded Ultra-High-Resolution Video Generation with Dual Frequency Experts
 description: >-
-  [ICML 2026][视频生成][超高分辨率视频生成] LuVe 把 UHR 视频生成从"被动细节增强"重新定义为"主动内容补全"——通过三阶段级联（低分辨率运动 → 潜空间上采 → 高分辨率细化）+ 频域分析驱动的双频率专家（低频专家增强全局语义一致性、高频专家细化纹理）…
+  [ICML 2026][视频生成][超高分辨率视频生成] LuVe 把 UHR 视频生成从"被动细节增强"重新定义为"主动内容补全"——通过三阶段级联（低分辨率运动 → 潜空间上采 → 高分辨率细化）+ 频域分析驱动的双频率专家（低频专家增强全局语义一致性、高频专家细化纹理），在 VBench 4K 上达 84.03 总分超过 UltraWan-4K 的 83.75。
 tags:
   - "ICML 2026"
   - "视频生成"

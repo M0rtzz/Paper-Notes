@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compositional Consistency-Guided Decoding for Three-Way Logical Question Answering
 description: >-
-  [ICML 2026][模型压缩][逻辑推理] 利用三分类逻辑问答中假设 $H$ 与其否定 $\neg H$ 之间的确定性否定映射关系，在测试时组合多次 LLM 调用并通过一致性约束消歧，无需训练即可减少认识性弃权（epistemic Unknown）并提升推理准确率。
+  [ICML 2026][模型压缩][逻辑推理] 利用三分类逻辑问答中假设 $H$ 与其否定 $\neg H$ 之间的确定性否定映射关系，在测试时组合多次 LLM 调用并通过一致性约束消歧，无需训练即可减少认识性弃权（epistemic Unknown）并提升推理准确率。 领域现状：三分类逻辑问答（True / False /…
 tags:
   - "ICML 2026"
   - "模型压缩"

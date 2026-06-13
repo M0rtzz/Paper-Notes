@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Near-Optimal Online Deployment and Routing for Streaming LLMs
 description: >-
-  [ICLR 2026][LLM/NLP][LLM路由] 首次形式化 LLM 流式在线部署+路由联合问题：新模型持续出现、旧模型可能过时，在并发部署上限 $M_{\max}$ 和成本预算约束下，提出 StageRoute 分层算法…
+  [ICLR 2026][LLM 其他][LLM路由] 首次形式化 LLM 流式在线部署+路由联合问题：新模型持续出现、旧模型可能过时，在并发部署上限 $M_{\max}$ 和成本预算约束下，提出 StageRoute 分层算法，证明 $\tilde{\mathcal{O}}(T^{2/3})$ 遗憾界并给出匹配下界，达到近最优。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM路由"
   - "在线部署"
   - "streaming bandits"

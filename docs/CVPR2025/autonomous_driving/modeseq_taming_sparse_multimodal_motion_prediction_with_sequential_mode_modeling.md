@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ModeSeq: Taming Sparse Multimodal Motion Prediction with Sequential Mode Modeling
 description: >-
-  [CVPR 2025][自动驾驶][多模态运动预测] 提出 ModeSeq——一种将轨迹模式建模为序列的全新范式，通过逐步解码多模态轨迹（而非一次性并行解码）来显式捕捉模式间关联，并配合 Early-Match-Take-All (EMTA) 训练策略，在不依赖密集模式预测或启发式后处理的前提下…
+  [CVPR 2025][自动驾驶][多模态运动预测] 提出 ModeSeq——一种将轨迹模式建模为序列的全新范式，通过逐步解码多模态轨迹（而非一次性并行解码）来显式捕捉模式间关联，并配合 Early-Match-Take-All (EMTA) 训练策略，在不依赖密集模式预测或启发式后处理的前提下，显著提升了稀疏多模态运动预测的轨迹多样性和置信度校准。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

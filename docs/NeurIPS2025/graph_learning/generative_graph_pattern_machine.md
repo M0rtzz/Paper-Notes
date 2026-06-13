@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Graph Pattern Machine
 description: >-
-  [NeurIPS 2025][图学习][graph pre-training] 提出 Generative Graph Pattern Machine (G2PM)，一种完全无消息传递的生成式 Transformer 图预训练框架：通过随机游走将图实例（节点/边/图）tokenize 为子结构序列…
+  [NeurIPS 2025][图学习][graph pre-training] 提出 Generative Graph Pattern Machine (G2PM)，一种完全无消息传递的生成式 Transformer 图预训练框架：通过随机游走将图实例（节点/边/图）tokenize 为子结构序列，以 Masked Substructure Modeling 目标进行自监督预训练，在节点/链接/图分类及跨域迁移任务上全面超越现有图预训练方法，并展现出类似 NLP/CV 的模型和数据双重扩展性。
 tags:
   - "NeurIPS 2025"
   - "图学习"

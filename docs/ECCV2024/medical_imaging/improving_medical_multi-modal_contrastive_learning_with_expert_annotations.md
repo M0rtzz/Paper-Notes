@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Medical Multi-modal Contrastive Learning with Expert Annotations
 description: >-
-  [ECCV 2024][医学图像][对比学习] 提出 eCLIP，通过整合放射科专家的眼动注视热力图作为额外监督信号，结合 mixup 增强和课程学习策略，在不修改 CLIP 核心架构的前提下增强医学多模态对比学习的表征质量。
+  [ECCV 2024][医学图像][对比学习] 提出 eCLIP，通过整合放射科专家的眼动注视热力图作为额外监督信号，结合 mixup 增强和课程学习策略，在不修改 CLIP 核心架构的前提下增强医学多模态对比学习的表征质量。 医学领域对比学习面临的核心挑战 CLIP 等视觉-语言对比学习模型在通用领域取得了巨大成功…
 tags:
   - "ECCV 2024"
   - "医学图像"

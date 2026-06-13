@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PROGRESSLM: Towards Progress Reasoning in Vision-Language Models
 description: >-
-  [ACL2026][多模态VLM][进度推理] 本文把“从单帧观察判断任务完成到哪一步”定义为 VLM 的进度推理能力，构建 Progress-Bench 和 ProgressLM-45K，并证明显式学习“情景检索 + 心理模拟”比单纯提示推理更稳定。
+  [ACL2026][多模态VLM][进度推理] 本文把“从单帧观察判断任务完成到哪一步”定义为 VLM 的进度推理能力，构建 Progress-Bench 和 ProgressLM-45K，并证明显式学习“情景检索 + 心理模拟”比单纯提示推理更稳定。 领域现状：现有 VLM 已经很擅长描述单张图像中“有什么”…
 tags:
   - "ACL2026"
   - "多模态VLM"

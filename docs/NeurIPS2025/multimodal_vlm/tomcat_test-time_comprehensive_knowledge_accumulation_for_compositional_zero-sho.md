@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning
 description: >-
-  [NeurIPS 2025][多模态VLM][组合零样本学习] 提出 TOMCAT，通过在测试时从无标签数据中累积文本和视觉双模态知识来动态更新组合原型，克服标签分布偏移问题，在四个 CZSL 基准上实现 SOTA。
+  [NeurIPS 2025][多模态VLM][组合零样本学习] 提出 TOMCAT，通过在测试时从无标签数据中累积文本和视觉双模态知识来动态更新组合原型，克服标签分布偏移问题，在四个 CZSL 基准上实现 SOTA。 领域现状：组合零样本学习（CZSL）要求模型识别由已知属性和物体重新组合而成的未见过的属性-物体组合（如"棕…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

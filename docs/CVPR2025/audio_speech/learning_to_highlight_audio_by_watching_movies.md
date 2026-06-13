@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Highlight Audio by Watching Movies
 description: >-
-  [CVPR 2025][音频/语音][视觉引导音频增强] 提出视觉引导的声学高亮任务(visually-guided acoustic highlighting)，利用电影中精心制作的音视频数据作为免费监督，通过基于Transformer的多模态框架VisAH，将"混音不佳"的音频转换为视觉语义对齐的高亮音频…
+  [CVPR 2025][音频/语音][视觉引导音频增强] 提出视觉引导的声学高亮任务(visually-guided acoustic highlighting)，利用电影中精心制作的音视频数据作为免费监督，通过基于Transformer的多模态框架VisAH，将"混音不佳"的音频转换为视觉语义对齐的高亮音频，在所有指标上显著超越基线方法。
 tags:
   - "CVPR 2025"
   - "音频/语音"

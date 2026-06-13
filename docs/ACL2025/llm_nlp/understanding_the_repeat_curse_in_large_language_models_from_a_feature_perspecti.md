@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Understanding the Repeat Curse in Large Language Models from a Feature Perspective
 description: >-
-  [ACL 2025][LLM/NLP][重复生成] 从机制可解释性角度研究 LLM 重复生成问题（Repeat Curse），用 Sparse Autoencoder 提取单语义特征，定位中间层和最终层的"重复特征"，激活它们可诱导重复、关闭它们可缓解重复且不损害模型性能。
+  [ACL 2025][LLM 其他][重复生成] 从机制可解释性角度研究 LLM 重复生成问题（Repeat Curse），用 Sparse Autoencoder 提取单语义特征，定位中间层和最终层的"重复特征"，激活它们可诱导重复、关闭它们可缓解重复且不损害模型性能。 领域现状：LLM 在生成任务中经常出现重复内容（to…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "重复生成"
   - "Sparse Autoencoder"
   - "机制可解释性"

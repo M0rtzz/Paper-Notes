@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CompileAgent: Automated Real-World Repo-Level Compilation with Tool-Integrated LLM-based Agent System
 description: >-
-  [ACL 2025][代码智能][自动编译] 提出 CompileAgent，首个面向仓库级代码编译的 LLM Agent 框架，集成五种专用工具和流程化 Agent 策略，在 100 个 C/C++ 真实项目的 CompileAgentBench 上将编译成功率最高提升 71%，平均每个项目仅需 $0.22…
+  [ACL 2025][代码智能][自动编译] 提出 CompileAgent，首个面向仓库级代码编译的 LLM Agent 框架，集成五种专用工具和流程化 Agent 策略，在 100 个 C/C++ 真实项目的 CompileAgentBench 上将编译成功率最高提升 71%，平均每个项目仅需 $0.22。
 tags:
   - "ACL 2025"
   - "代码智能"

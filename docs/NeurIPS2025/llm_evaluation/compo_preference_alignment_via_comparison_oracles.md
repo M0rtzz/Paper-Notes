@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ComPO: Preference Alignment via Comparison Oracles
 description: >-
-  [NeurIPS 2025][LLM评测][偏好对齐] 针对DPO中噪声偏好对（preferred和dispreferred响应相似）导致的似然位移和冗长问题，提出基于比较oracle的零阶偏好对齐方法ComPO，将数据分为干净/噪声子集，用DPO处理干净数据、用ComPO提取噪声数据中的信号…
+  [NeurIPS 2025][LLM评测][偏好对齐] 针对DPO中噪声偏好对（preferred和dispreferred响应相似）导致的似然位移和冗长问题，提出基于比较oracle的零阶偏好对齐方法ComPO，将数据分为干净/噪声子集，用DPO处理干净数据、用ComPO提取噪声数据中的信号，在AlpacaEval 2等benchmark上持续提升LC win rate。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

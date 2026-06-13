@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Medical Large Vision-Language Models with Abnormal-Aware Feedback
 description: >-
-  [ACL 2025][多模态VLM][Medical LVLM] 提出 UMed-LVLM，通过 Abnormal-Aware Instruction Tuning 和 Abnormal-Aware Rewarding（包含 Relevance Reward、Abnormal Localization Rew…
+  [ACL 2025][多模态VLM][Medical LVLM] 提出 UMed-LVLM，通过 Abnormal-Aware Instruction Tuning 和 Abnormal-Aware Rewarding（包含 Relevance Reward、Abnormal Localization Reward、Vision Relevance Reward）训练策略增强医学 LVLM 的异常区域定位能力，在 MAU 数据集上比基线提升 58%，并展现出优秀的跨模态和 OOD 泛化能力。
 tags:
   - "ACL 2025"
   - "多模态VLM"

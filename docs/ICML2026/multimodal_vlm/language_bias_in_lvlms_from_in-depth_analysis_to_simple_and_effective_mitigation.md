@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LBR/LBP: Language Bias in LVLMs — From In-Depth Analysis to Simple and Effective Mitigation
 description: >-
-  [ICML 2026][多模态VLM][语言偏置] 本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$…
+  [ICML 2026][多模态VLM][语言偏置] 本文系统量化 LVLM 训练中的语言偏置——发现 VIT 和 DPO 两个阶段都让 text-only likelihood $\pi(y|x)$ 涨得几乎不输 multimodal likelihood $\pi(y|x,v)$，证明 LVLM 在系统性低估视觉输入；提出 Language Bias Regularization（VIT 阶段用 $|\mathcal{B}|$ 把语言路径钉回参考水平）和 Language Bias Penalty（DPO 阶段用 sigmoid 惩罚主动把已有偏置往负压），不加任何数据/辅助模型就显著提升 10+ benchmark 性能并降幻觉…
 tags:
   - "ICML 2026"
   - "多模态VLM"

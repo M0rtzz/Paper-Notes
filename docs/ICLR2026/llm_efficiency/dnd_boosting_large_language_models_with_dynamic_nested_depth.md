@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DND: Boosting Large Language Models with Dynamic Nested Depth
 description: >-
-  [ICLR 2026][LLM效率][动态深度] DND在Transformer层末端通过路由器选出关键token，将其回送同一层进行额外处理（嵌套深度），配合路由控制损失和阈值控制方案实现精确稳定的token选择…
+  [ICLR 2026][LLM效率][动态深度] DND在Transformer层末端通过路由器选出关键token，将其回送同一层进行额外处理（嵌套深度），配合路由控制损失和阈值控制方案实现精确稳定的token选择，以极少的参数增加（<0.1M）在Qwen3-1.7B和Qwen3-30B-A3B上分别获得1.88%和0.87%的平均性能提升。
 tags:
   - "ICLR 2026"
   - "LLM效率"

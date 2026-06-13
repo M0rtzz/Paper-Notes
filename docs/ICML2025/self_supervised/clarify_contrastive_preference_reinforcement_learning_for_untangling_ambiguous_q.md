@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLARIFY: Contrastive Preference Reinforcement Learning for Untangling Ambiguous Queries
 description: >-
-  [ICML 2025][自监督学习][偏好强化学习] 提出 CLARIFY 方法，通过对比学习构建融合偏好信息的轨迹嵌入空间，利用拒绝采样选择更清晰可区分的偏好查询，从而提升离线 PbRL 在非理想反馈下的标注效率和策略性能。
+  [ICML 2025][自监督学习][偏好强化学习] 提出 CLARIFY 方法，通过对比学习构建融合偏好信息的轨迹嵌入空间，利用拒绝采样选择更清晰可区分的偏好查询，从而提升离线 PbRL 在非理想反馈下的标注效率和策略性能。 偏好强化学习（PbRL）通过人类对轨迹片段对的偏好比较来推断奖励函数，避免了显式奖励工程的复杂性…
 tags:
   - "ICML 2025"
   - "自监督学习"

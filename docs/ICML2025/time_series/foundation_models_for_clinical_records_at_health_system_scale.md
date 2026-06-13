@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundation Models for Clinical Records at Health System Scale
 description: >-
-  [ICML2025][时间序列][电子健康记录] 提出 GPT-EHR，一种基于下一次就诊事件预测的生成式预训练框架，在 NYU Langone 129 万患者的纵向 EHR 数据上训练 decoder-only Transformer，零样本即可预测痴呆和膝骨关节炎发病，性能媲美全量微调的 BERT 基线…
+  [ICML2025][时间序列][电子健康记录] 提出 GPT-EHR，一种基于下一次就诊事件预测的生成式预训练框架，在 NYU Langone 129 万患者的纵向 EHR 数据上训练 decoder-only Transformer，零样本即可预测痴呆和膝骨关节炎发病，性能媲美全量微调的 BERT 基线，同时揭示并解决了重复事件 token 造成评估指标虚高的关键陷阱。
 tags:
   - "ICML2025"
   - "时间序列"

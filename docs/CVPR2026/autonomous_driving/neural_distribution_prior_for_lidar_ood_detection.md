@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Distribution Prior for LiDAR Out-of-Distribution Detection
 description: >-
-  [CVPR 2026][自动驾驶][OOD检测] NDP提出了可学习的神经分布先验模块来建模网络预测的分布结构，结合Perlin噪声生成的伪OOD样本和软异常暴露策略，在STU基准上实现61.31% AP，超越之前最佳结果10倍以上。
+  [CVPR 2026][自动驾驶][OOD检测] NDP提出了可学习的神经分布先验模块来建模网络预测的分布结构，结合Perlin噪声生成的伪OOD样本和软异常暴露策略，在STU基准上实现61.31% AP，超越之前最佳结果10倍以上。 领域现状：LiDAR感知在自动驾驶中至关重要，但当前模型基于闭集假设…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AMaPO: Adaptive Margin-attached Preference Optimization for Language Model Alignment
 description: >-
-  [AAAI 2026][LLM对齐][偏好优化] 提出AMaPO算法，通过实例级自适应margin（结合Z-normalization和指数缩放）动态调节梯度幅度，解决DPO等离线偏好优化方法中对已正确排序样本过拟合、对错误排序样本欠拟合的核心矛盾，显著提升排序准确率和下游对齐性能。
+  [AAAI 2026 Oral][LLM对齐][偏好优化] 提出AMaPO算法，通过实例级自适应margin（结合Z-normalization和指数缩放）动态调节梯度幅度，解决DPO等离线偏好优化方法中对已正确排序样本过拟合、对错误排序样本欠拟合的核心矛盾，显著提升排序准确率和下游对齐性能。 离线偏好优化（如DPO、Sim…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM对齐"
   - "偏好优化"
   - "自适应margin"

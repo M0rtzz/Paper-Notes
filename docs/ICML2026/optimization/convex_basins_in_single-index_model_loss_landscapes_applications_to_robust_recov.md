@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convex Basins in Single-Index Model Loss Landscapes: Applications to Robust Recovery under Strong Adversarial Corruption
 description: >-
-  [ICML2026][优化/理论][单指标模型] 在重尾噪声 + 常数比例强对抗污染下，作者证明了一大类非单调链接函数（GeLU、Swish、Tanh、Probit、Logistic、相位恢复…）的高斯单指标模型平方损失存在一个维度无关、常数半径的凸盆…
+  [ICML2026][优化/理论][单指标模型] 在重尾噪声 + 常数比例强对抗污染下，作者证明了一大类非单调链接函数（GeLU、Swish、Tanh、Probit、Logistic、相位恢复…）的高斯单指标模型平方损失存在一个维度无关、常数半径的凸盆，并据此设计了一个 $\tilde{O}(nd)$ 时间、$\tilde{O}(d)$ 样本的鲁棒恢复算法，最终估计误差为 $O(\sigma\sqrt{\epsilon})$。
 tags:
   - "ICML2026"
   - "优化/理论"

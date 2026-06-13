@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfiAgent: Self-Evolving Pyramid Agent Framework for Infinite Scenarios
 description: >-
-  [ICLR 2026][LLM Agent][multi-agent system] 提出 InfiAgent，一个基于 DAG 的金字塔式多智能体框架，通过 agent-as-a-tool 机制实现自动化的层级任务分解、双重审计质量保障、智能路由和自演化能力，在多个推理基准上比 ADAS 平均提升 9.9%…
+  [ICLR 2026][LLM Agent][multi-agent system] 提出 InfiAgent，一个基于 DAG 的金字塔式多智能体框架，通过 agent-as-a-tool 机制实现自动化的层级任务分解、双重审计质量保障、智能路由和自演化能力，在多个推理基准上比 ADAS 平均提升 9.9%。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

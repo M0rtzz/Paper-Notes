@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ANGEL: Learning from Negative Samples in Biomedical Generative Entity Linking
 description: >-
-  [ACL 2025][医疗NLP][biomedical entity linking] 提出 ANGEL 框架，首次在生成式生物医学实体链接（BioEL）中引入负样本训练，通过两阶段策略（正样本训练 + 负样本感知的偏好优化）显著提升模型区分表面形式相似但语义不同的实体的能力…
+  [ACL 2025][医疗NLP][biomedical entity linking] 提出 ANGEL 框架，首次在生成式生物医学实体链接（BioEL）中引入负样本训练，通过两阶段策略（正样本训练 + 负样本感知的偏好优化）显著提升模型区分表面形式相似但语义不同的实体的能力，在五个基准数据集上平均 top-1 准确率提升 1.7%。
 tags:
   - "ACL 2025"
   - "医疗NLP"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChordEdit: One-Step Low-Energy Transport for Image Editing
 description: >-
-  [CVPR 2026][图像生成][图像编辑] 基于动态最优传输理论，推导出低能量的 Chord 控制场，将不稳定的朴素编辑场平滑化，首次实现了对蒸馏单步 T2I 模型的无训练、无反演、高保真实时图像编辑。
+  [CVPR 2026][图像生成][图像编辑] 基于动态最优传输理论，推导出低能量的 Chord 控制场，将不稳定的朴素编辑场平滑化，首次实现了对蒸馏单步 T2I 模型的无训练、无反演、高保真实时图像编辑。 1. 领域现状 单步文生图（T2I）模型如 SD-Turbo、SwiftBrush-v2、InstaFlow 等通过蒸…
 tags:
   - "CVPR 2026"
   - "图像生成"

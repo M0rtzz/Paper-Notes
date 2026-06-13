@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts
 description: >-
-  [ACL2026][LLM评测][agentic retrieval] PolitNuggets 提出一个面向 400 位全球政治人物、超过 1 万条政治履历事实的多语言 agentic discovery benchmark，并用 FactNet 动态证据验证协议发现：当前 agent 高精度但低召回…
+  [ACL2026][LLM评测][agentic retrieval] PolitNuggets 提出一个面向 400 位全球政治人物、超过 1 万条政治履历事实的多语言 agentic discovery benchmark，并用 FactNet 动态证据验证协议发现：当前 agent 高精度但低召回，真正瓶颈是长尾事实发现、非英语证据和高效工具使用。
 tags:
   - "ACL2026"
   - "LLM评测"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.14002](https://arxiv.org/abs/2605.14002)  
 **代码**: https://github.com/yifeifrank/poli_searcher  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: agentic retrieval、政治传记、长尾事实、多语言检索、FactNet
 
 ## 一句话总结

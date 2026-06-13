@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning
 description: >-
-  [AAAI2026][强化学习][离策略强化学习] 提出 Behaviour Policy Optimization (BPO)，通过优化一个专用行为策略来采集离策略数据，使得回报估计的方差可证明低于在策略采集，从而提升 REINFORCE 和 PPO 的样本效率与稳定性。
+  [AAAI2026][强化学习][离策略强化学习] 提出 Behaviour Policy Optimization (BPO)，通过优化一个专用行为策略来采集离策略数据，使得回报估计的方差可证明低于在策略采集，从而提升 REINFORCE 和 PPO 的样本效率与稳定性。 - 策略梯度方法（如 REINFORCE、PPO）…
 tags:
   - "AAAI2026"
   - "强化学习"

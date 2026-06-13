@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ROCKET-1: Mastering Open-World Interaction with Visual-Temporal Context Prompting
 description: >-
-  [CVPR 2025][语义分割][视觉时序上下文提示] ROCKET-1 提出了一种新的视觉时序上下文提示（visual-temporal context prompting）通信协议，通过在历史视觉观测上标注物体分割来引导策略模型与环境交互，训练了一个基于分割条件的低层策略…
+  [CVPR 2025][语义分割][视觉时序上下文提示] ROCKET-1 提出了一种新的视觉时序上下文提示（visual-temporal context prompting）通信协议，通过在历史视觉观测上标注物体分割来引导策略模型与环境交互，训练了一个基于分割条件的低层策略，结合 GPT-4o、Molmo、SAM-2 构建层级智能体，在 Minecraft 中实现了 76% 的开放世界交互性能绝对提升。
 tags:
   - "CVPR 2025"
   - "语义分割"

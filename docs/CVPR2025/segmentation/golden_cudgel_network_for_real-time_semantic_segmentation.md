@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Golden Cudgel Network for Real-Time Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][图像分割] 提出 GCNet，核心是 Golden Cudgel Block (GCBlock)，训练时自膨胀（多卷积多路径）提升学习能力，推理时自收缩（重参数化为单个 3×3 卷积）加速推理，无需外部教师模型即成为"自蒸馏"方案…
+  [CVPR 2025][语义分割][图像分割] 提出 GCNet，核心是 Golden Cudgel Block (GCBlock)，训练时自膨胀（多卷积多路径）提升学习能力，推理时自收缩（重参数化为单个 3×3 卷积）加速推理，无需外部教师模型即成为"自蒸馏"方案，在 Cityscapes 上以 77.3% mIoU / 193.3 FPS 超越现有实时分割模型。
 tags:
   - "CVPR 2025"
   - "语义分割"

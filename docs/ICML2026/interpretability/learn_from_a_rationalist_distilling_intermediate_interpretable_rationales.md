@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learn from A Rationalist: Distilling Intermediate Interpretable Rationales
 description: >-
-  [ICML 2026][可解释性][理由提取] 本文提出 REKD —— 把知识蒸馏引入"选-预测"式 rationale extraction 框架，让小模型学生同时模仿教师的特征选择分布和最终预测分布，并把蒸馏温度与 Gumbel-Softmax 退火调度绑死，从而隐式形成"先学软分布、后学硬选择"的课程…
+  [ICML 2026][可解释性][理由提取] 本文提出 REKD —— 把知识蒸馏引入"选-预测"式 rationale extraction 框架，让小模型学生同时模仿教师的特征选择分布和最终预测分布，并把蒸馏温度与 Gumbel-Softmax 退火调度绑死，从而隐式形成"先学软分布、后学硬选择"的课程，使 ViT-Tiny 在 CIFAR-10 的 RE 准确率从 0.797 拉到 0.936。
 tags:
   - "ICML 2026"
   - "可解释性"

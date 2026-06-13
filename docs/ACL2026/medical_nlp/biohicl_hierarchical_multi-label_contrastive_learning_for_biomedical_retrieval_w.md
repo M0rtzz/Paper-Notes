@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BioHiCL: Hierarchical Multi-Label Contrastive Learning for Biomedical Retrieval with MeSH Labels
 description: >-
-  [ACL 2026][医疗NLP][生物医学检索] BioHiCL 利用 MeSH（医学主题词）的**层级多标签标注**为稠密检索器提供结构化监督，通过深度加权的标签相似度对齐嵌入空间与 MeSH 语义空间，使 0.1B 模型在生物医学检索、句子相似度和问答任务上超越大多数专用模型。
+  [ACL 2026][医疗NLP][生物医学检索] BioHiCL 利用 MeSH（医学主题词）的层级多标签标注：为稠密检索器提供结构化监督，通过深度加权的标签相似度对齐嵌入空间与 MeSH 语义空间，使 0.1B 模型在生物医学检索、句子相似度和问答任务上超越大多数专用模型。 领域现状：通用域稠密检索器（如 BGE、E5）…
 tags:
   - "ACL 2026"
   - "医疗NLP"

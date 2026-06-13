@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OPRO: Orthogonal Panel-Relative Operators for Panel-Aware In-Context Image Generation
 description: >-
-  [CVPR 2026][图像生成][上下文图像生成] 提出 OPRO，一种基于正交矩阵的参数高效适配方法，通过在 frozen backbone 的位置感知 query/key 上施加可学习的面板特异性正交算子，在保持预训练同面板合成行为的同时显式调制跨面板注意力交互…
+  [CVPR 2026][图像生成][上下文图像生成] 提出 OPRO，一种基于正交矩阵的参数高效适配方法，通过在 frozen backbone 的位置感知 query/key 上施加可学习的面板特异性正交算子，在保持预训练同面板合成行为的同时显式调制跨面板注意力交互，仅增加 0.93M 参数即在 MagicBrush 上显著提升多种 SOTA 方法的编辑质量。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instant Personalized Large Language Model Adaptation via Hypernetwork
 description: >-
-  [ACL2026][LLM安全][个性化大语言模型] Profile-to-PEFT 用一个 hypernetwork 把用户画像直接映射成个性化 LoRA 参数，避免 OPPU 为每个用户重新训练 adapter，从而实现更快、更可扩展、可面向未见用户泛化的 LLM 个性化。
+  [ACL2026][LLM安全][个性化大语言模型] Profile-to-PEFT 用一个 hypernetwork 把用户画像直接映射成个性化 LoRA 参数，避免 OPPU 为每个用户重新训练 adapter，从而实现更快、更可扩展、可面向未见用户泛化的 LLM 个性化。 领域现状：LLM 个性化主要有两类路线…
 tags:
   - "ACL2026"
   - "LLM安全"

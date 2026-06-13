@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Responsible Evaluation of AI for Mental Health
 description: >-
-  [ACL 2026][医疗NLP][心理健康AI] 本文通过系统分析 135 篇 ACL Anthology 论文，揭示 AI 心理健康工具评估中的五大缺陷（依赖通用指标、缺乏人类评估、忽视安全与公平等）…
+  [ACL 2026][医疗NLP][心理健康AI] 本文通过系统分析 135 篇 ACL Anthology 论文，揭示 AI 心理健康工具评估中的五大缺陷（依赖通用指标、缺乏人类评估、忽视安全与公平等），并提出融合临床心理测量学与实施科学的跨学科评估分类体系（assessment/intervention/information synthesis × validity/reliability/implementation/maintenance）。
 tags:
   - "ACL 2026"
   - "医疗NLP"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2602.00065](https://arxiv.org/abs/2602.00065)  
 **代码**: [https://ukplab.github.io/nlp-mh-evals/](https://ukplab.github.io/nlp-mh-evals/)  
-**领域**: medical_imaging  
+**领域**: 医学图像  
 **关键词**: 心理健康AI, 评估框架, 临床效度, 负责任AI, 分类体系
 
 ## 一句话总结

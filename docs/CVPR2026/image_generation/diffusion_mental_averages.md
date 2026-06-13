@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Mental Averages
 description: >-
-  [CVPR 2026][图像生成][扩散模型] 提出 Diffusion Mental Averages (DMA)，通过在扩散模型的语义空间中对齐多个去噪轨迹，从预训练扩散模型中提取概念的"心理平均"原型图像——首次实现一致、逼真的概念平均可视化。
+  [CVPR 2026][图像生成][扩散模型] 提出 Diffusion Mental Averages (DMA)，通过在扩散模型的语义空间中对齐多个去噪轨迹，从预训练扩散模型中提取概念的"心理平均"原型图像——首次实现一致、逼真的概念平均可视化。 当人们想象"鸟"时，脑海中会浮现一只典型的小鸟（如麻雀）…
 tags:
   - "CVPR 2026"
   - "图像生成"

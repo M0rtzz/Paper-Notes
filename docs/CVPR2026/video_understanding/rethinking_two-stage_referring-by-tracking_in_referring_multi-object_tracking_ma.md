@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT
 description: >-
-  [CVPR 2026][视频理解][指代多目标跟踪] 提出 FlexHook，一种新颖的两阶段 Referring-by-Tracking 框架，通过基于采样的 Conditioning Hook（C-Hook）重新定义特征构建…
+  [CVPR 2026][视频理解][指代多目标跟踪] 提出 FlexHook，一种新颖的两阶段 Referring-by-Tracking 框架，通过基于采样的 Conditioning Hook（C-Hook）重新定义特征构建，并用 Pairwise Correspondence Decoder（PCD）替换 CLIP 余弦相似度匹配，首次使两阶段方法全面超越当前 SOTA 的一阶段方法。
 tags:
   - "CVPR 2026"
   - "视频理解"

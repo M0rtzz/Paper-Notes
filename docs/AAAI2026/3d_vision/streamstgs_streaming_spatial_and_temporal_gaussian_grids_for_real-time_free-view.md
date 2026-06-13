@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamSTGS: Streaming Spatial and Temporal Gaussian Grids for Real-Time Free-Viewpoint Video
 description: >-
-  [AAAI 2026][3D视觉][自由视角视频] 提出 StreamSTGS，一种可流式传输的时空高斯网格表示，将规范 3D 高斯属性编码为 2D 图像、时序特征编码为视频，实现实时自由视角视频流（帧大小仅 170KB）…
+  [AAAI 2026][3D视觉][自由视角视频] 提出 StreamSTGS，一种可流式传输的时空高斯网格表示，将规范 3D 高斯属性编码为 2D 图像、时序特征编码为视频，实现实时自由视角视频流（帧大小仅 170KB），同时通过 Transformer 辅助训练和滑动窗口机制保证重建质量（PSNR 32.30dB）。
 tags:
   - "AAAI 2026"
   - "3D视觉"

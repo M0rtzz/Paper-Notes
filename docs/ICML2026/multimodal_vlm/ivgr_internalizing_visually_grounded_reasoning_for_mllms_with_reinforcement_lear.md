@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iVGR: Internalizing Visually Grounded Reasoning for MLLMs with Reinforcement Learning
 description: >-
-  [ICML 2026][多模态VLM][视觉推理] 针对“显式视觉 grounding 反而拖累 CoT 推理”这一反直觉现象，作者提出 iVGR——一个双流 GRPO 训练框架，让文本 CoT 和带框 grounded CoT 同时 rollout…
+  [ICML 2026][多模态VLM][视觉推理] 针对“显式视觉 grounding 反而拖累 CoT 推理”这一反直觉现象，作者提出 iVGR——一个双流 GRPO 训练框架，让文本 CoT 和带框 grounded CoT 同时 rollout，并用一致性奖励把高质量 grounded 轨迹的视觉定位能力“内化”进纯文本 CoT，从而在推理时不用输出坐标就能拿到 grounded 推理的收益。
 tags:
   - "ICML 2026"
   - "多模态VLM"

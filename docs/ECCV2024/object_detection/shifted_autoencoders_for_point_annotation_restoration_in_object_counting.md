@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Shifted Autoencoders for Point Annotation Restoration in Object Counting
 description: >-
-  [ECCV 2024][目标计数] 提出**Shifted AutoEncoders (SAE)**，一种受MAE启发的点标注修复方法：通过随机位移点标注后训练UNet恢复，使模型学到"通用位置知识"而忽略个体标注噪声；用训练好的SAE修复原始标注使其更一致，可为任意计数模型（密度图/定位型）稳定提升性能…
+  [ECCV 2024][目标检测][目标计数] 提出**Shifted AutoEncoders (SAE)**，一种受MAE启发的点标注修复方法：通过随机位移点标注后训练UNet恢复，使模型学到"通用位置知识"而忽略个体标注噪声；用训练好的SAE修复原始标注使其更一致，可为任意计数模型（密度图/定位型）稳定提升性能，在9个数据集上创下新记录。
 tags:
   - "ECCV 2024"
+  - "目标检测"
   - "目标计数"
   - "点标注修复"
   - "去噪自编码器"

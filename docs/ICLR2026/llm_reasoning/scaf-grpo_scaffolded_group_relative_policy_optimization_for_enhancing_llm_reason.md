@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning
 description: >-
-  [ICLR 2026][LLM推理][GRPO] 提出 Scaf-GRPO 框架，通过分层级的 in-prompt hint 注入（知识→规划→解题步骤）来克服 GRPO 训练中"学习悬崖"(zero-reward)问题…
+  [ICLR 2026][LLM推理][GRPO] 提出 Scaf-GRPO 框架，通过分层级的 in-prompt hint 注入（知识→规划→解题步骤）来克服 GRPO 训练中"学习悬崖"(zero-reward)问题，在 Qwen2.5-Math-7B 上将 AIME24 的 pass@1 相对提升 44.3%，同时保持 on-policy 训练一致性。
 tags:
   - "ICLR 2026"
   - "LLM推理"

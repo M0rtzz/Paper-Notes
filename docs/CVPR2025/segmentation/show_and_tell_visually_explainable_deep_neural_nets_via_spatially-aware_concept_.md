@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models
 description: >-
-  [CVPR 2025][语义分割][概念瓶颈模型] 提出SALF-CBM，将任意视觉网络转化为空间感知的概念瓶颈模型，通过CLIP视觉提示生成空间化概念图，同时提供"在哪里"（热力图）和"是什么"（概念）的双重解释，在ImageNet上甚至超越原始backbone精度。
+  [CVPR 2025][语义分割][概念瓶颈模型] 提出SALF-CBM，将任意视觉网络转化为空间感知的概念瓶颈模型，通过CLIP视觉提示生成空间化概念图，同时提供"在哪里"（热力图）和"是什么"（概念）的双重解释，在ImageNet上甚至超越原始backbone精度。 深度神经网络虽然达到了人类水平的性能…
 tags:
   - "CVPR 2025"
   - "语义分割"

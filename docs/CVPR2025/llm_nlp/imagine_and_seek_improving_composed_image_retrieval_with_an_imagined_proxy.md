@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Imagine and Seek: Improving Composed Image Retrieval with an Imagined Proxy
 description: >-
-  [CVPR 2025][LLM/NLP][组合图像检索] 提出IP-CIR方法，通过大语言模型生成"想象中的目标图像描述"作为代理，将组合图像检索(CIR)转化为标准图像检索问题，在CIRR和FashionIQ等基准上达到零样本SOTA。
+  [CVPR 2025][LLM 其他][组合图像检索] 提出IP-CIR方法，通过大语言模型生成"想象中的目标图像描述"作为代理，将组合图像检索(CIR)转化为标准图像检索问题，在CIRR和FashionIQ等基准上达到零样本SOTA。 领域现状：组合图像检索(CIR)的任务是给定参考图像+修改文本，检索符合修改要求的目标图…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "组合图像检索"
   - "虚拟代理图像"
   - "CLIP"

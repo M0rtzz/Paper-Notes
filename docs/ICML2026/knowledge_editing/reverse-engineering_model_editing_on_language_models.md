@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reverse-Engineering Model Editing on Language Models
 description: >-
-  [ICML 2026][知识编辑][locate-then-edit] 论文揭示 locate-then-edit 类知识编辑方法（ROME/MEMIT/AlphaEdit）的参数更新矩阵会通过其行空间泄露"被编辑主语"的指纹，并提出两阶段攻击 KSTER（先用 SVD 恢复主语…
+  [ICML 2026][知识编辑][locate-then-edit] 论文揭示 locate-then-edit 类知识编辑方法（ROME/MEMIT/AlphaEdit）的参数更新矩阵会通过其行空间泄露"被编辑主语"的指纹，并提出两阶段攻击 KSTER（先用 SVD 恢复主语，再用前后模型的熵差恢复 prompt），同时给出基于"语义诱饵"注入的子空间伪装防御方案。
 tags:
   - "ICML 2026"
   - "知识编辑"

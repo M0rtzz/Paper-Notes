@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoFrGeNet: Continued Fraction Architectures for Language Generation
 description: >-
-  [ICML 2026][图像生成][连续分数] 本文把"连续分数（continued fraction）"这种具备最优有理逼近性质的函数类引入到语言生成 Transformer 中，分别为多头注意力和 FFN 设计 CoFrNet 替代模块（CAttnU/CAttnM/Cffn）…
+  [ICML 2026][图像生成][连续分数] 本文把"连续分数（continued fraction）"这种具备最优有理逼近性质的函数类引入到语言生成 Transformer 中，分别为多头注意力和 FFN 设计 CoFrNet 替代模块（CAttnU/CAttnM/Cffn），通过"continuants"封闭形式把 $d$ 次除法降为 1 次，在 GPT2-xl 和 Llama-3.2B 上用 $\frac{2}{3}\sim\frac{1}{2}$ 的参数实现持平甚至更优的下游性能。
 tags:
   - "ICML 2026"
   - "图像生成"

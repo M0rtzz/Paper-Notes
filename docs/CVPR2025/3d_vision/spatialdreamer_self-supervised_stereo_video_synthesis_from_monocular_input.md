@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatialDreamer: Self-supervised Stereo Video Synthesis from Monocular Input
 description: >-
-  [CVPR 2025][3D视觉][立体视频合成] 提出 SpatialDreamer，一种基于视频扩散模型的自监督立体视频合成框架：通过深度引导的视频数据生成模块 (DVG) 解决立体视频训练数据不足问题…
+  [CVPR 2025][3D视觉][立体视频合成] 提出 SpatialDreamer，一种基于视频扩散模型的自监督立体视频合成框架：通过深度引导的视频数据生成模块 (DVG) 解决立体视频训练数据不足问题，通过 RefinerNet 框架和一致性控制模块（立体偏差强度 + 时序交互学习 TIL）确保生成立体视频的几何与时间一致性，性能超越 Apple Vision Pro 3D 转换器。
 tags:
   - "CVPR 2025"
   - "3D视觉"

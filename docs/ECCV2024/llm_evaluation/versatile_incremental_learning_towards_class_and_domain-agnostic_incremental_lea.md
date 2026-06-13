@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning
 description: >-
-  [ECCV 2024][LLM评测][增量学习] 首次定义 Versatile Incremental Learning (VIL) 场景——后续任务的类别或领域增量类型未知，并提出 ICON 框架，通过 CAST 损失控制学习方向避免与历史任务冲突、IC 增量分类器动态扩展输出节点处理跨域同类覆写问题…
+  [ECCV 2024][LLM评测][增量学习] 首次定义 Versatile Incremental Learning (VIL) 场景——后续任务的类别或领域增量类型未知，并提出 ICON 框架，通过 CAST 损失控制学习方向避免与历史任务冲突、IC 增量分类器动态扩展输出节点处理跨域同类覆写问题，在三个基准上全面超越现有 CIL/DIL 方法。
 tags:
   - "ECCV 2024"
   - "LLM评测"

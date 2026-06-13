@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Automatic Benchmark Generation from Scientific Papers via Retrieval-Augmented LLMs
 description: >-
-  [ACL 2025][信息检索/RAG][自动基准生成] 本文提出一种基于检索增强LLM的自动基准生成方法，从科学论文中自动抽取可测试的知识点并生成高质量的评估题目，在NLP、机器学习、生物信息学等领域验证了方法的有效性，为领域特定LLM评估基准的快速构建提供了新范式。
+  [ACL 2025][信息检索/RAG][自动基准生成] 本文提出一种基于检索增强LLM的自动基准生成方法，从科学论文中自动抽取可测试的知识点并生成高质量的评估题目，在NLP、机器学习、生物信息学等领域验证了方法的有效性，为领域特定LLM评估基准的快速构建提供了新范式。 领域现状：评估基准（Benchmark）是衡量LLM能…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

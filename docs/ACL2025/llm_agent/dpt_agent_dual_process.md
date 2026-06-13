@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Dual Process Theory in Language Agent Framework for Real-time Simultaneous Human-AI Collaboration
 description: >-
-  [ACL 2025][LLM Agent][双过程理论] 提出 DPT-Agent，首个将双过程理论（Dual Process Theory）系统化地融入语言智能体框架的方法——用有限状态机(FSM)+code-as-policy 作为快速直觉的 System 1…
+  [ACL 2025][LLM Agent][双过程理论] 提出 DPT-Agent，首个将双过程理论（Dual Process Theory）系统化地融入语言智能体框架的方法——用有限状态机(FSM)+code-as-policy 作为快速直觉的 System 1，用心智理论(ToM)+异步反思的 LLM 作为慢速深思的 System 2，首次实现了自主的实时同步人机协作（在 Overcooked 困难版中）。
 tags:
   - "ACL 2025"
   - "LLM Agent"

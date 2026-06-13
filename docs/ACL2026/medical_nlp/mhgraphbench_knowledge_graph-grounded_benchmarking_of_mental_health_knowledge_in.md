@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MHGraphBench: Knowledge Graph-Grounded Benchmarking of Mental Health Knowledge in Large Language Models
 description: >-
-  [ACL2026][医疗NLP][心理健康] MHGraphBench 从 PrimeKG 的心理健康子图自动构造 9 类多选任务，发现 LLM 在实体识别上接近满分，但在药物-疾病关系判断、禁忌边界和两跳 KG 推理上仍明显不足。
+  [ACL2026][医疗NLP][心理健康] MHGraphBench 从 PrimeKG 的心理健康子图自动构造 9 类多选任务，发现 LLM 在实体识别上接近满分，但在药物-疾病关系判断、禁忌边界和两跳 KG 推理上仍明显不足。 领域现状：LLM 正被用于医疗与心理健康相关任务，包括临床问答、咨询辅助、诊断建议和知识检索…
 tags:
   - "ACL2026"
   - "医疗NLP"

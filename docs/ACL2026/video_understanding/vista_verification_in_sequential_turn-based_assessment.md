@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VISTA: Verification In Sequential Turn-based Assessment
 description: >-
-  [ACL 2026][视频理解][幻觉检测] VISTA 提出了一个基于声明级分解和顺序一致性追踪的多轮对话事实性评估框架，将不可验证内容细分为主观、矛盾、缺乏证据和弃权四类，在四个对话基准和八个 LLM 上显著优于 FActScore 和 LLM-as-Judge 基线。
+  [ACL 2026][视频理解][幻觉检测] VISTA 提出了一个基于声明级分解和顺序一致性追踪的多轮对话事实性评估框架，将不可验证内容细分为主观、矛盾、缺乏证据和弃权四类，在四个对话基准和八个 LLM 上显著优于 FActScore 和 LLM-as-Judge 基线。 领域现状：幻觉检测是对话 AI 系统部署的主要障碍…
 tags:
   - "ACL 2026"
   - "视频理解"

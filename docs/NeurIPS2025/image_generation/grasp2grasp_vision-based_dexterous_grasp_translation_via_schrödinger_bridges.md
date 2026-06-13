@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges
 description: >-
-  [NeurIPS 2025][图像生成][灵巧抓取迁移] 提出将跨手形态的视觉灵巧抓取迁移建模为 Schrödinger Bridge 问题，通过在潜空间中学习得分与流匹配（[SF]²M），并设计物理感知的最优传输代价函数（位姿/接触图/力旋量空间/雅可比可操作性）…
+  [NeurIPS 2025][图像生成][灵巧抓取迁移] 提出将跨手形态的视觉灵巧抓取迁移建模为 Schrödinger Bridge 问题，通过在潜空间中学习得分与流匹配（[SF]²M），并设计物理感知的最优传输代价函数（位姿/接触图/力旋量空间/雅可比可操作性），在无需配对数据的条件下实现不同机械手之间抓取意图的分布级迁移。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

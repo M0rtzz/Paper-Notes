@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Merging Scaling Laws in Large Language Models
 description: >-
-  [ICML 2026][模型压缩][模型合并] 作者用 10,866 个合并模型实测出一条形如 $L=L_*+BN^{-\beta}+A_0 N^{-\gamma}/(k+b)$ 的双轴幂律：基座规模 $N$ 决定 floor，专家数 $k$ 决定 tail…
+  [ICML 2026][模型压缩][模型合并] 作者用 10,866 个合并模型实测出一条形如 $L=L_*+BN^{-\beta}+A_0 N^{-\gamma}/(k+b)$ 的双轴幂律：基座规模 $N$ 决定 floor，专家数 $k$ 决定 tail，且四种主流合并方法（Average、TA、TIES、DARE）都共用同一条曲线，从而把"合多少个专家、合到哪一步停"变成一个可预测、可预算的工程问题。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DACoN: DINO for Anime Paint Bucket Colorization with Any Number of Reference Images
 description: >-
-  [ICCV 2025][视频生成][动画上色] 提出DACoN，利用DINOv2基础模型的语义特征与U-Net的高分辨率空间特征融合，实现支持任意数量参考图像的动画线稿自动上色，在关键帧和连续帧上色任务中均超越现有方法。
+  [ICCV 2025][视频生成][动画上色] 提出DACoN，利用DINOv2基础模型的语义特征与U-Net的高分辨率空间特征融合，实现支持任意数量参考图像的动画线稿自动上色，在关键帧和连续帧上色任务中均超越现有方法。 动画制作中，线稿着色是耗时且重复的人工作业。现有方法面临三大瓶颈： 参考图像数量受限：之前的方法（如An…
 tags:
   - "ICCV 2025"
   - "视频生成"

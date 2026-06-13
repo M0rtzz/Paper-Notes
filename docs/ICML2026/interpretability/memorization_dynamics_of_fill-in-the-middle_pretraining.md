@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memorization Dynamics of Fill-in-the-Middle Pretraining
 description: >-
-  [ICML 2026][可解释性][Fill-in-the-Middle] 作者用相同架构、相同数据、相同算力训练了一对 Llama 3.2 3B（一个走标准 LTR，一个走 FIM），在 Gutenberg 重复语料上系统对比两种目标的逐字记忆行为…
+  [ICML 2026][可解释性][Fill-in-the-Middle] 作者用相同架构、相同数据、相同算力训练了一对 Llama 3.2 3B（一个走标准 LTR，一个走 FIM），在 Gutenberg 重复语料上系统对比两种目标的逐字记忆行为，发现 FIM 把概率质量摊到更多"部分重建"上（短跨度/重叠召回更强且随重复次数近似线性增长），而 LTR 在长跨度高置信度续写上更强；FIM 的记忆仍然强烈依赖前缀，后缀只是辅助信号。
 tags:
   - "ICML 2026"
   - "可解释性"

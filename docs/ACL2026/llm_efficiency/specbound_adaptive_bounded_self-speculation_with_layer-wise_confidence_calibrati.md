@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpecBound: Adaptive Bounded Self-Speculation with Layer-wise Confidence Calibration
 description: >-
-  [ACL 2026][LLM效率][推测解码] 提出 SpecBound 自草稿推测解码框架，通过逐层温度退火抑制浅层虚假高置信度预测，并设计有界推测算法自适应控制草稿的深度和宽度，在保持输出无损的同时实现最高 2.33× 的推理加速。
+  [ACL 2026 Findings][LLM效率][推测解码] 提出 SpecBound 自草稿推测解码框架，通过逐层温度退火抑制浅层虚假高置信度预测，并设计有界推测算法自适应控制草稿的深度和宽度，在保持输出无损的同时实现最高 2.33× 的推理加速。 领域现状：推测解码（Speculative Decoding）是加速…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM效率"
   - "推测解码"
   - "自草稿"

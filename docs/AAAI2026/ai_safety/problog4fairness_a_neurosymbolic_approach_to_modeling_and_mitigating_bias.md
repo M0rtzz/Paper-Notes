@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProbLog4Fairness: A Neurosymbolic Approach to Modeling and Mitigating Bias
 description: >-
-  [AI安全] 提出 ProbLog4Fairness 框架，利用概率逻辑编程语言 ProbLog 将数据中的偏差机制形式化为可解释的逻辑程序，并通过 DeepProbLog 的远程监督将偏差假设集成到神经网络训练中，实现灵活、原则性的偏差缓解。
+  [AI安全] 提出 ProbLog4Fairness 框架，利用概率逻辑编程语言 ProbLog 将数据中的偏差机制形式化为可解释的逻辑程序，并通过 DeepProbLog 的远程监督将偏差假设集成到神经网络训练中，实现灵活、原则性的偏差缓解。 - 算法公平性领域存在大量互不兼容的公平性定义（如统计奇偶性、均等化赔率等）…
 tags:
   - "AI安全"
 ---

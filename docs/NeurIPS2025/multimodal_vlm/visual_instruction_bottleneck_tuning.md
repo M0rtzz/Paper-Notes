@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Instruction Bottleneck Tuning
 description: >-
-  [NeurIPS 2025][多模态VLM][信息瓶颈] 首次将信息瓶颈（IB）原理应用于多模态大语言模型的端到端指令微调，提出Visual Instruction Bottleneck Tuning（Vittle），在LLM内部插入轻量瓶颈层学习最小充分表征，在30种分布偏移场景下一致提升鲁棒性…
+  [NeurIPS 2025][多模态VLM][信息瓶颈] 首次将信息瓶颈（IB）原理应用于多模态大语言模型的端到端指令微调，提出Visual Instruction Bottleneck Tuning（Vittle），在LLM内部插入轻量瓶颈层学习最小充分表征，在30种分布偏移场景下一致提升鲁棒性，同时不牺牲标准基准性能。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Platonic Universe: Do Foundation Models See the Same Sky?
 description: >-
-  [NeurIPS 2025][物理/科学计算][Platonic Representation Hypothesis] 在天文学场景下验证柏拉图表征假说（PRH）：使用JWST、HSC、Legacy Survey和DESI光谱数据…
+  [NeurIPS 2025][物理/科学计算][Platonic Representation Hypothesis] 在天文学场景下验证柏拉图表征假说（PRH）：使用JWST、HSC、Legacy Survey和DESI光谱数据，测量6种基础模型（ViT/ConvNeXt/DINOv2/IJEPA/AstroPT/Specformer）的表征对齐度，发现模态内和跨模态MKNN分数随模型规模一致增加（p=3.31×10⁻⁵），支持不同架构和模态向共享表征收敛的假说。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

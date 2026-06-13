@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PROTEA: Offline Evaluation and Iterative Refinement for Multi-Agent LLM Workflows
 description: >-
-  [ACL2026][多智能体][多智能体工作流] PROTEA 是一个面向多智能体 LLM 工作流的离线调试平台，通过节点级评估、反向生成中间期望和可编辑 prompt 修订，把“最终答案变差了”定位到具体节点并闭环验证修改效果。
+  [ACL2026][多智能体][多智能体工作流] PROTEA 是一个面向多智能体 LLM 工作流的离线调试平台，通过节点级评估、反向生成中间期望和可编辑 prompt 修订，把“最终答案变差了”定位到具体节点并闭环验证修改效果。 领域现状：越来越多 LLM 应用不再是单次 prompt，而是由意图分析、检索、规划、排序、生…
 tags:
   - "ACL2026"
   - "多智能体"

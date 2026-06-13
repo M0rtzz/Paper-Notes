@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BACH-V: Bridging Abstract and Concrete Human-Values in Large Language Models
 description: >-
-  [ACL 2026][LLM对齐][价值表示] 本文提出 abstraction-grounding 框架，把 LLM 的概念理解拆成"抽象-抽象 / 抽象-具体 / 具体-具体"三层，并用概念探针 + 激活引导在 6 个开源 LLM、10 个价值维度上证明：LLM 内部确实存在结构化的价值表示…
+  [ACL 2026][LLM对齐][价值表示] 本文提出 abstraction-grounding 框架，把 LLM 的概念理解拆成"抽象-抽象 / 抽象-具体 / 具体-具体"三层，并用概念探针 + 激活引导在 6 个开源 LLM、10 个价值维度上证明：LLM 内部确实存在结构化的价值表示，能跨抽象层迁移、并因果地驱动具体决策。
 tags:
   - "ACL 2026"
   - "LLM对齐"

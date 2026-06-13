@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Efficient Online RLHF with One-Pass Reward Modeling
 description: >-
-  [NeurIPS 2025][LLM对齐][online RLHF] 提出一种基于 online mirror descent（OMD）的 one-pass reward modeling 方法，消除了 online RLHF 中需要存储历史数据并重新从头优化的计算瓶颈…
+  [NeurIPS 2025][LLM对齐][online RLHF] 提出一种基于 online mirror descent（OMD）的 one-pass reward modeling 方法，消除了 online RLHF 中需要存储历史数据并重新从头优化的计算瓶颈，实现每次迭代 $\mathcal{O}(1)$ 的时间和存储复杂度，同时在统计效率上也优于 MLE 方法。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

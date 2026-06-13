@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneWeaver: All-in-One 3D Scene Synthesis with an Extensible and Self-Reflective Agent
 description: >-
-  [NeurIPS 2025][3D视觉][3D场景合成] 提出SceneWeaver，首个用于3D场景合成的反思型智能体框架，通过标准化可扩展的工具接口统一多种场景生成范式，并利用reason-act-reflect闭环迭代优化，在物理合理性、视觉真实感和语义对齐上全面超越现有方法。
+  [NeurIPS 2025][3D视觉][3D场景合成] 提出SceneWeaver，首个用于3D场景合成的反思型智能体框架，通过标准化可扩展的工具接口统一多种场景生成范式，并利用reason-act-reflect闭环迭代优化，在物理合理性、视觉真实感和语义对齐上全面超越现有方法。 室内3D场景合成是计算机视觉和图形学的长…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

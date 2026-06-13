@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ryze: Evidence-Enriched Data Synthesis from Biomedical Papers
 description: >-
-  [ACL2026][医疗NLP][生物医学VLM] Ryze 将生物医学论文 PDF 自动转成保留图表、caption、结构化抽取和引用段落的证据增强 QA 数据，并用进度门控的 SFT+GRPO 训练 BioVLM-8B…
+  [ACL2026][医疗NLP][生物医学VLM] Ryze 将生物医学论文 PDF 自动转成保留图表、caption、结构化抽取和引用段落的证据增强 QA 数据，并用进度门控的 SFT+GRPO 训练 BioVLM-8B，在 LAB-Bench 上以 48.0% weighted accuracy 超过 Qwen3-VL-8B base 12.6 个百分点、超过 GPT-5.2 3.8 个百分点。
 tags:
   - "ACL2026"
   - "医疗NLP"

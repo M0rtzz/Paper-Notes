@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Expanded Massive Multilingual Dataset for High-Performance Language Technologies (HPLT)
 description: >-
-  [ACL 2025][多语言/翻译][多语言语料库] 本文介绍 HPLT v2，一个从 4.5 PB 的 Internet Archive 和 Common Crawl 数据中提取的大规模多语言数据集，包含覆盖 193 种语言的 8 万亿 token 单语数据和覆盖 51 种语言的 3.8 亿句对平行数据…
+  [ACL 2025][多语言/翻译][多语言语料库] 本文介绍 HPLT v2，一个从 4.5 PB 的 Internet Archive 和 Common Crawl 数据中提取的大规模多语言数据集，包含覆盖 193 种语言的 8 万亿 token 单语数据和覆盖 51 种语言的 3.8 亿句对平行数据，并通过改进的数据处理管线显著提升了数据质量。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

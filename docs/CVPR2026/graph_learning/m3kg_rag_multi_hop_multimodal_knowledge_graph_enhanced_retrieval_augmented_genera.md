@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3KG-RAG: Multi-hop Multimodal Knowledge Graph-enhanced Retrieval-Augmented Generation
 description: >-
-  [CVPR 2026][图学习][多模态知识图谱] 提出M3KG-RAG，通过轻量多Agent流水线构建多跳多模态知识图谱（M3KG），并设计GRASP机制进行实体定位和选择性剪枝，仅保留查询相关且有助回答的知识，大幅提升MLLM的音视觉推理能力。
+  [CVPR 2026][图学习][多模态知识图谱] 提出M3KG-RAG，通过轻量多Agent流水线构建多跳多模态知识图谱（M3KG），并设计GRASP机制进行实体定位和选择性剪枝，仅保留查询相关且有助回答的知识，大幅提升MLLM的音视觉推理能力。 现有多模态RAG存在两大瓶颈：1）现有MMKG主要覆盖图文模态…
 tags:
   - "CVPR 2026"
   - "图学习"

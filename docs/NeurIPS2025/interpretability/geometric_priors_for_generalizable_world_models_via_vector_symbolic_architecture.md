@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Geometric Priors for Generalizable World Models via Vector Symbolic Architecture
 description: >-
-  [NEURIPS2025][可解释性][World Models] 提出基于 Vector Symbolic Architecture (VSA) 的世界模型，利用 FHRR 将状态和动作编码为高维复数向量，用 element-wise 复数乘法建模转移，实现强泛化、长时域稳定和噪声鲁棒的动力学预测。
+  [NeurIPS 2025][可解释性][World Models] 提出将 Vector Symbolic Architecture (VSA) 中的 Fourier Holographic Reduced Representation (FHRR) 作为几何先验引入世界模型，通过 element-wise 复数乘法建模状态转移，在离散 GridWorld 上实现 87.5% 的 zero-shot 泛化准确率和 4 倍于 MLP 的噪声鲁棒性。
 tags:
-  - "NEURIPS2025"
+  - "NeurIPS 2025"
   - "可解释性"
   - "World Models"
   - "Vector Symbolic Architecture"
@@ -185,3 +185,19 @@ $$s^\star = \arg\max_{s \in \mathcal{S}} \operatorname{Re}\langle x, \Phi_s \ran
 | 写作质量 | ⭐⭐⭐⭐ | 理论推导清晰，可视化直观，结构紧凑 |
 | 实用价值 | ⭐⭐⭐ | idea 有潜力但验证规模不足，距离实际应用有距离 |
 <!-- 由 src/gen_stubs.py 自动生成 -->
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[AAAI 2026\] Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/interpretability/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
+- [\[NeurIPS 2025\] LLM World Models Are Mental: Output Layer Evidence of Brittle World Model Use in LLM Mechanical Reasoning](llm_world_models_are_mental_output_layer_evidence_of_brittle_world_model_use_in_.md)
+- [\[NeurIPS 2025\] Towards Scaling Laws for Symbolic Regression](towards_scaling_laws_for_symbolic_regression.md)
+- [\[NeurIPS 2025\] Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits](beyond_components_singular_vector-based_interpretability_of_transformer_circuits.md)
+- [\[NeurIPS 2025\] Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis](toward_real-world_text_image_forgery_localization_structured_and_interpretable_d.md)
+
+</div>
+
+<!-- RELATED:END -->

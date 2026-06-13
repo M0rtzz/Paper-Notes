@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Code-Switching Curriculum Learning for Multilingual Transfer in LLMs
 description: >-
-  [ACL 2025 (Findings)][多语言/翻译][语码转换] 本文受人类第二语言习得中语码转换现象的启发，提出 CSCL（Code-Switching Curriculum Learning）框架…
+  [ACL 2025 (Findings)][多语言/翻译][语码转换] 本文受人类第二语言习得中语码转换现象的启发，提出 CSCL（Code-Switching Curriculum Learning）框架，通过"token 级 CS → 句子级 CS → 单语语料"的渐进式课程训练策略来增强 LLM 的跨语言迁移能力，在韩语、日语、印尼语等目标语言上显著优于单语持续预训练方法。
 tags:
   - "ACL 2025 (Findings)"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning With a Star: A Heliophysics Dataset and Benchmark for Agentic Scientific Reasoning
 description: >-
-  [NeurIPS 2025][地球科学][scientific reasoning] 提出 Reasoning With a Star (RWS)，一个源自 NASA 太阳物理暑期学校问题集的 158 道科学推理 benchmark（含数值/符号/文本三类答案），配合 unit-aware 评分器…
+  [NeurIPS 2025][地球科学][scientific reasoning] 提出 Reasoning With a Star (RWS)，一个源自 NASA 太阳物理暑期学校问题集的 158 道科学推理 benchmark（含数值/符号/文本三类答案），配合 unit-aware 评分器，比较了四种多 agent 协调模式（HMAW/PACE/PHASE/SCHEMA），发现没有单一模式在所有任务上占优——系统工程启发的 SCHEMA 在需要严格约束验证的任务上最强。
 tags:
   - "NeurIPS 2025"
   - "地球科学"

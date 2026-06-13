@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multilingual Steering by Design: Multilingual Sparse Autoencoders and Principled Layer Selection
 description: >-
-  [ACL2026][多语言/翻译][多语言SAE] 这篇论文证明，多语言 sparse autoencoder 和“多语言对齐-语言可分性”交叉点层选择可以让 SAE 语言 steering 更稳定，把原先靠经验选层的多语言控制问题转成可预测的表征诊断问题。
+  [ACL2026][多语言/翻译][多语言SAE] 这篇论文证明，多语言 sparse autoencoder 和“多语言对齐-语言可分性”交叉点层选择可以让 SAE 语言 steering 更稳定，把原先靠经验选层的多语言控制问题转成可预测的表征诊断问题。 领域现状：Sparse autoencoder (SAE) 已成为…
 tags:
   - "ACL2026"
   - "多语言/翻译"

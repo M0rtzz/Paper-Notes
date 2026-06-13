@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fully Heteroscedastic Count Regression with Deep Double Poisson Networks
 description: >-
-  [ICML 2025][AI安全][计数回归] 提出 Deep Double Poisson Network (DDPN)，通过输出 Double Poisson 分布的参数实现离散计数回归中的完全异方差性，支持任意高或低的预测方差，在精度、校准和 OOD 检测上全面超越现有基线。
+  [ICML 2025][AI安全][计数回归] 提出 Deep Double Poisson Network (DDPN)，通过输出 Double Poisson 分布的参数实现离散计数回归中的完全异方差性，支持任意高或低的预测方差，在精度、校准和 OOD 检测上全面超越现有基线。 神经网络的不确定性量化在现实 AI 系统中…
 tags:
   - "ICML 2025"
   - "AI安全"

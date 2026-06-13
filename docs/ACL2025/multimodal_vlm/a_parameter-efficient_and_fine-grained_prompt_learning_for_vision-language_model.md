@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Parameter-Efficient and Fine-Grained Prompt Learning for Vision-Language Models
 description: >-
-  [ACL 2025][多模态VLM][视觉语言模型] 本文提出 DoPL（Detail-oriented Prompt Learning）方法，通过低熵信息集中理论发现文本-视觉兴趣共享 token，并以此构建对齐权重增强文本和视觉提示，仅用 0.25M（0.12%）可训练参数即实现细粒度多模态语义对齐…
+  [ACL 2025][多模态VLM][视觉语言模型] 本文提出 DoPL（Detail-oriented Prompt Learning）方法，通过低熵信息集中理论发现文本-视觉兴趣共享 token，并以此构建对齐权重增强文本和视觉提示，仅用 0.25M（0.12%）可训练参数即实现细粒度多模态语义对齐，在六个基准上超越全参数微调方法。
 tags:
   - "ACL 2025"
   - "多模态VLM"

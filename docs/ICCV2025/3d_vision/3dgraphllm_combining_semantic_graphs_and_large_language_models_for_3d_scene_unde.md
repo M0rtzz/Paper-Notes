@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding
 description: >-
-  [ICCV 2025][3D视觉][3D场景理解] 本文提出3DGraphLLM，将3D场景中物体间的语义关系编码为可学习的图表示并输入LLM，在object grounding、场景描述和视觉问答等多个3D视觉-语言任务上显著超越不使用语义关系的基线方法，同时推理速度比LVLM方法快5倍。
+  [ICCV 2025][3D视觉][3D场景理解] 本文提出3DGraphLLM，将3D场景中物体间的语义关系编码为可学习的图表示并输入LLM，在object grounding、场景描述和视觉问答等多个3D视觉-语言任务上显著超越不使用语义关系的基线方法，同时推理速度比LVLM方法快5倍。 3D场景理解是具身智能体与用户交…
 tags:
   - "ICCV 2025"
   - "3D视觉"

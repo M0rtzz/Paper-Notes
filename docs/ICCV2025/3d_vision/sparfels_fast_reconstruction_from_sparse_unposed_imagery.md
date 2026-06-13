@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparfels: Fast Reconstruction from Sparse Unposed Imagery
 description: >-
-  [ICCV 2025][3D视觉][稀疏视图重建] 提出Sparfels方法，将3D基础模型（MASt3R）与高效的测试时优化（2DGS）相结合，通过MASt3R提供初始化点云/相机和对应关系引导优化，并创新性地引入泼溅色彩方差损失，在3分钟内从稀疏无位姿图像实现SOTA几何重建。
+  [ICCV 2025][3D视觉][稀疏视图重建] 提出Sparfels方法，将3D基础模型（MASt3R）与高效的测试时优化（2DGS）相结合，通过MASt3R提供初始化点云/相机和对应关系引导优化，并创新性地引入泼溅色彩方差损失，在3分钟内从稀疏无位姿图像实现SOTA几何重建。 从稀疏无标定图像进行3D几何重建是一个难度…
 tags:
   - "ICCV 2025"
   - "3D视觉"

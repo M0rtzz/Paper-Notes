@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Benchmark Datasets Should Be Contamination-Resistant (Position Paper)
 description: >-
-  [ICML 2026][LLM安全][基准污染] 本文是一篇 position paper，主张 LLM 基准应**抗污染（contamination-resistant）**——即可推理但不可训练；提出利用 Transformer 训练 vs 推理流水线的根本不对称性（训练需要全 token…
+  [ICML 2026][LLM安全][基准污染] 本文是一篇 position paper，主张 LLM 基准应**抗污染（contamination-resistant）**——即可推理但不可训练；提出利用 Transformer 训练 vs 推理流水线的根本不对称性（训练需要全 token，推理只需 KV-cache + 倒数第二层 hidden state），把基准发布形式从明文换成 KV-cache + 中间隐藏态，配合跨模型 subspace alignment / relative representation 解决互操作问题，呼吁社区采纳。
 tags:
   - "ICML 2026"
   - "LLM安全"

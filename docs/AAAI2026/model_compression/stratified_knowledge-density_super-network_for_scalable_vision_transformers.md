@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stratified Knowledge-Density Super-Network for Scalable Vision Transformers
 description: >-
-  [AAAI 2026][模型压缩][Transformer] 提出将预训练 ViT 转化为"分层知识密度超网络"（SKD Super-Network），通过 WPAC（加权 PCA 注意力收缩）和 PIAD（渐进式重要性感知 Dropout）两步实现知识的分层组织…
+  [AAAI 2026][模型压缩][Transformer] 提出将预训练 ViT 转化为"分层知识密度超网络"（SKD Super-Network），通过 WPAC（加权 PCA 注意力收缩）和 PIAD（渐进式重要性感知 Dropout）两步实现知识的分层组织，使得任意大小的子网络均可以 O(1) 代价提取，且无需额外微调即可达到或超越 SOTA 压缩方法的性能。
 tags:
   - "AAAI 2026"
   - "模型压缩"

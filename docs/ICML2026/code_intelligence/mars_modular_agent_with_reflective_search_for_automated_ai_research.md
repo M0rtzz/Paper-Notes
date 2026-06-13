@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARS: Modular Agent with Reflective Search for Automated AI Research
 description: >-
-  [ICML 2026][代码智能][MLE-Bench] MARS 把自动化 AI 研究重构成"在软件仓库空间中搜索最优解"的问题，用 **预算感知 MCTS + 模块化"设计-分解-实现"流水线 + 比较式反思记忆** 三根支柱，在 MLE-Bench 上拿到开源框架 SOTA…
+  [ICML 2026][代码智能][MLE-Bench] MARS 把自动化 AI 研究重构成"在软件仓库空间中搜索最优解"的问题，用 **预算感知 MCTS + 模块化"设计-分解-实现"流水线 + 比较式反思记忆** 三根支柱，在 MLE-Bench 上拿到开源框架 SOTA，金牌率 31.1%（Gemini-3-Pro-Preview），并出现 63% 的跨分支课程迁移这种"Aha! moment"。
 tags:
   - "ICML 2026"
   - "代码智能"

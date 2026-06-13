@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Reconstruction of Animatable 3D Avatars with Cloth Dynamics from a Single Image
 description: >-
-  [CVPR2026][3D视觉][3D人体重建] DynaAvatar 提出首个零样本框架，从单张图像重建具有运动依赖布料动态效果的可动画化3D人体Avatar，核心通过静态-动态知识迁移策略和光流引导的 DynaFlow 损失函数，在有限动态数据下实现了逼真的衣物动态建模，全面超越现有方法。
+  [CVPR2026][3D视觉][3D人体重建] DynaAvatar 提出首个零样本框架，从单张图像重建具有运动依赖布料动态效果的可动画化3D人体Avatar，核心通过静态-动态知识迁移策略和光流引导的 DynaFlow 损失函数，在有限动态数据下实现了逼真的衣物动态建模，全面超越现有方法。 领域现状：单图可动画化3D人体…
 tags:
   - "CVPR2026"
   - "3D视觉"

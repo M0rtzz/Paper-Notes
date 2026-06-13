@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)
 description: >-
-  [CVPR 2026][自动驾驶][开放词汇占用预测] 提出 LegoOcc，利用语言嵌入高斯（LE-Gaussians）作为统一的几何-语义中间表示，结合基于 Poisson 过程的高斯到占用（G2O）算子和渐进温度衰减策略，在仅使用二值占用标签（无语义标注）的情况下实现室内场景的单目开放词汇占用预测…
+  [CVPR 2026][自动驾驶][开放词汇占用预测] 提出 LegoOcc，利用语言嵌入高斯（LE-Gaussians）作为统一的几何-语义中间表示，结合基于 Poisson 过程的高斯到占用（G2O）算子和渐进温度衰减策略，在仅使用二值占用标签（无语义标注）的情况下实现室内场景的单目开放词汇占用预测，在 Occ-ScanNet 上达到 59.50 IoU / 21.05 mIoU。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

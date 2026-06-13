@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MP-GUI: Modality Perception with MLLMs for GUI Understanding
 description: >-
-  [CVPR 2025][LLM安全][GUI理解] MP-GUI设计了三个专用感知器分别提取GUI中的图形、文本和空间模态信息，通过空间结构精炼策略和自适应融合门控将三种模态组合，在有限训练数据下在多种GUI理解任务上取得了优于通用MLLM的表现。
+  [CVPR 2025][LLM安全][GUI理解] MP-GUI设计了三个专用感知器分别提取GUI中的图形、文本和空间模态信息，通过空间结构精炼策略和自适应融合门控将三种模态组合，在有限训练数据下在多种GUI理解任务上取得了优于通用MLLM的表现。 领域现状：图形用户界面(GUI)理解是构建智能agent和自动化系统的基础能…
 tags:
   - "CVPR 2025"
   - "LLM安全"

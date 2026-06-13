@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Temporally Consistent Long-Term Memory for 3D Single Object Tracking
 description: >-
-  [CVPR 2026][视频理解][3D single object tracking] 提出 ChronoTrack，通过紧凑的可学习记忆 token 和两个互补目标（时间一致性损失 + 记忆循环一致性损失）构建鲁棒的长程 3D 单目标跟踪框架，在多个基准上达到 SOTA 并以 42 FPS 实时运行。
+  [CVPR 2026 Findings][视频理解][3D single object tracking] 提出 ChronoTrack，通过紧凑的可学习记忆 token 和两个互补目标（时间一致性损失 + 记忆循环一致性损失）构建鲁棒的长程 3D 单目标跟踪框架，在多个基准上达到 SOTA 并以 42 FPS 实时运行。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "视频理解"
   - "3D single object tracking"
   - "long-term memory"

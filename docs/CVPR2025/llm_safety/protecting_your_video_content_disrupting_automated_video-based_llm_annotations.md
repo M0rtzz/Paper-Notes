@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protecting Your Video Content: Disrupting Automated Video-Based LLM Annotations
 description: >-
-  [CVPR 2025][LLM安全][视频隐私保护] 本文提出两类对抗性视频水印方法——Ramblings（诱导视频 LLM 生成错误描述）和 Mutes（诱导视频 LLM 生成极短或空描述），通过不可感知的对抗扰动保护个人视频免受未经授权的自动化标注，并验证了这些低质量标注会降低下游文本到视频生成模型的性能…
+  [CVPR 2025][LLM安全][视频隐私保护] 本文提出两类对抗性视频水印方法——Ramblings（诱导视频 LLM 生成错误描述）和 Mutes（诱导视频 LLM 生成极短或空描述），通过不可感知的对抗扰动保护个人视频免受未经授权的自动化标注，并验证了这些低质量标注会降低下游文本到视频生成模型的性能。
 tags:
   - "CVPR 2025"
   - "LLM安全"

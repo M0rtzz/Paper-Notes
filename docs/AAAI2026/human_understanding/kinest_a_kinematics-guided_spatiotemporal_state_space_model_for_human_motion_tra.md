@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KineST: A Kinematics-guided Spatiotemporal State Space Model for Human Motion Tracking from Sparse Signals
 description: >-
-  [AAAI 2026][人体理解][全身运动追踪] 提出 KineST，一种运动学引导的状态空间模型，通过运动学树双向扫描策略和混合时空表征学习，从头显稀疏信号高效重建全身运动，在精度和时序一致性上均超越 SOTA。
+  [AAAI 2026][人体理解][全身运动追踪] 提出 KineST，一种运动学引导的状态空间模型，通过运动学树双向扫描策略和混合时空表征学习，从头显稀疏信号高效重建全身运动，在精度和时序一致性上均超越 SOTA。 领域现状 全身运动追踪在 AR/VR 中扮演关键角色，但头显设备（HMD）仅提供头部和双手的 3 个稀疏跟踪…
 tags:
   - "AAAI 2026"
   - "人体理解"

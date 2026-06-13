@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MuCo: Multi-turn Contrastive Learning for Multimodal Embedding Model
 description: >-
-  [CVPR 2026][信息检索/RAG][多模态嵌入] MuCo 提出了一种基于多轮对话的对比学习框架，利用 MLLM 的对话能力在单次前向传播中同时处理多个关联的 query-target 对，大幅提升训练效率，并在 MMEB 和 M-BEIR 检索基准上取得 SOTA 性能。
+  [CVPR 2026][信息检索/RAG][多模态嵌入] MuCo 提出了一种基于多轮对话的对比学习框架，利用 MLLM 的对话能力在单次前向传播中同时处理多个关联的 query-target 对，大幅提升训练效率，并在 MMEB 和 M-BEIR 检索基准上取得 SOTA 性能。 领域现状：通用多模态嵌入模型（Univer…
 tags:
   - "CVPR 2026"
   - "信息检索/RAG"

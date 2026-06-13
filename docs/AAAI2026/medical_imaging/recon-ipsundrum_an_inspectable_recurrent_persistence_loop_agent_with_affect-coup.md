@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReCoN-Ipsundrum: An Inspectable Recurrent Persistence Loop Agent with Affect-Coupled Cognition
 description: >-
-  [AAAI 2026][医学图像][机器意识] 实现ReCoN-Ipsundrum——一个可检查的智能体架构，在ReCoN感觉运动状态机上扩展了Humphrey的ipsundrum递归持续循环和可选的情感代理层，通过行为测试和因果消融实验证明：递归支撑刺激后持续性，情感耦合支撑偏好稳定性、结构化扫描和持久谨慎…
+  [AAAI 2026][医学图像][机器意识] 实现ReCoN-Ipsundrum——一个可检查的智能体架构，在ReCoN感觉运动状态机上扩展了Humphrey的ipsundrum递归持续循环和可选的情感代理层，通过行为测试和因果消融实验证明：递归支撑刺激后持续性，情感耦合支撑偏好稳定性、结构化扫描和持久谨慎，并强调行为标记单独不足以归因意识。
 tags:
   - "AAAI 2026"
   - "医学图像"

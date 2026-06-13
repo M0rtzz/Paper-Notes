@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FiRA: Can We Achieve Full-Rank Training of LLMs Under Low-Rank Constraint?
 description: >-
-  [NeurIPS 2025][模型压缩][low-rank training] 提出 Fira，首个在低秩约束下实现全秩训练（全秩梯度+全秩权重）的 LLM 训练框架，通过观察到低秩与全秩训练中优化器的缩放因子高度相似，用低秩缩放因子近似校正子空间外梯度…
+  [NeurIPS 2025][模型压缩][low-rank training] 提出 Fira，首个在低秩约束下实现全秩训练（全秩梯度+全秩权重）的 LLM 训练框架，通过观察到低秩与全秩训练中优化器的缩放因子高度相似，用低秩缩放因子近似校正子空间外梯度，配合 norm-growth limiter 防止 loss spike，在预训练和微调中均超越 LoRA 和 GaLore。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

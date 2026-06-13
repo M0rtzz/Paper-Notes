@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decompose, Structure, and Repair: A Neuro-Symbolic Framework for Autoformalization via Operator Trees
 description: >-
-  [ICML 2026][LLM评测][自动形式化] 本文提出 DSR（Decompose-Structure-Repair）神经符号框架，把自然语言定理形式化拆解为「分解 NL 成分 → 联合生成 FL 成分与算子树（OPT） → 基于子树定位的层级化修复」三阶段…
+  [ICML 2026][LLM评测][自动形式化] 本文提出 DSR（Decompose-Structure-Repair）神经符号框架，把自然语言定理形式化拆解为「分解 NL 成分 → 联合生成 FL 成分与算子树（OPT） → 基于子树定位的层级化修复」三阶段，在 ProverBench / ProofNet / PRIME 上以 7B 模型刷新 SOTA，并配套发布 156 题的研究生级 Lean 4 基准 PRIME。
 tags:
   - "ICML 2026"
   - "LLM评测"

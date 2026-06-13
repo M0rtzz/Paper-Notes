@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attack via Overfitting: 10-shot Benign Fine-tuning to Jailbreak LLMs
 description: >-
-  [NeurIPS 2025][LLM对齐][越狱攻击] 提出两阶段微调攻击：第一阶段用10个问题配相同拒绝答案使LLM过拟合到窄最优解（尖锐loss landscape），第二阶段用相同10个问题配正常答案触发灾难性遗忘——安全对齐被"忘掉"，仅用完全良性数据即达94.84%越狱成功率…
+  [NeurIPS 2025][LLM对齐][越狱攻击] 提出两阶段微调攻击：第一阶段用10个问题配相同拒绝答案使LLM过拟合到窄最优解（尖锐loss landscape），第二阶段用相同10个问题配正常答案触发灾难性遗忘——安全对齐被"忘掉"，仅用完全良性数据即达94.84%越狱成功率，与恶意微调（97.25%）相当且完全绕过审核模型。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

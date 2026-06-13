@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simultaneous Multi-objective Alignment Across Verifiable and Non-verifiable Rewards
 description: >-
-  [ICML2026][LLM对齐][多目标对齐] MAHALO 把"标准化 PRM 训练 + 多动作头 DPO + 带 KV-cache 续存的 PRM 引导解码"拼成一套统一框架，让一个 LLM 在数学（可验证）、人类价值观（不可验证）、多轮辅导（交互式）三类目标上同时被对齐…
+  [ICML2026][LLM对齐][多目标对齐] MAHALO 把"标准化 PRM 训练 + 多动作头 DPO + 带 KV-cache 续存的 PRM 引导解码"拼成一套统一框架，让一个 LLM 在数学（可验证）、人类价值观（不可验证）、多轮辅导（交互式）三类目标上同时被对齐，并且在推理时能通过头权重与 PRM 选择平滑地切换偏好。
 tags:
   - "ICML2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPARS3R: Semantic Prior Alignment and Regularization for Sparse 3D Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][稀疏视角重建] 提出 SPARS3R，结合 SfM 精确位姿估计与 DUSt3R/MASt3R 的稠密深度先验：通过全局融合对齐将稠密点云映射到 SfM 稀疏点云，再利用 SAM 语义分割对 RANSAC 识别的 outlier 区域进行局部对齐…
+  [CVPR 2025][3D视觉][稀疏视角重建] 提出 SPARS3R，结合 SfM 精确位姿估计与 DUSt3R/MASt3R 的稠密深度先验：通过全局融合对齐将稠密点云映射到 SfM 稀疏点云，再利用 SAM 语义分割对 RANSAC 识别的 outlier 区域进行局部对齐，生成兼具稠密性和位姿精度的初始化点云，大幅提升稀疏视角下 3DGS 的渲染质量。
 tags:
   - "CVPR 2025"
   - "3D视觉"

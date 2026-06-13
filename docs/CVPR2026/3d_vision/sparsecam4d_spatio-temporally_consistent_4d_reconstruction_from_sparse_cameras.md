@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseCam4D: Spatio-Temporally Consistent 4D Reconstruction from Sparse Cameras
 description: >-
-  [CVPR 2026][3D视觉][稀疏相机4D重建] 提出 SparseCam4D，首个在标准多相机动态场景基准上实现稀疏相机（2-3个）4D重建的方法，核心创新是时空扭曲场（STDF），通过将生成式观测中的时空不一致性显式建模并与真实4D高斯表示解耦，实现高保真、时空一致的动态场景渲染。
+  [CVPR 2026][3D视觉][稀疏相机4D重建] 提出 SparseCam4D，首个在标准多相机动态场景基准上实现稀疏相机（2-3个）4D重建的方法，核心创新是时空扭曲场（STDF），通过将生成式观测中的时空不一致性显式建模并与真实4D高斯表示解耦，实现高保真、时空一致的动态场景渲染。 领域现状：高质量4D重建依赖稠密…
 tags:
   - "CVPR 2026"
   - "3D视觉"

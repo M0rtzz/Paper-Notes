@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamSplat: Towards Online Dynamic 3D Reconstruction from Uncalibrated Video Streams
 description: >-
-  [ICLR 2026][3D视觉][动态3D重建] StreamSplat 提出了一个完全前馈的在线动态3D重建框架，通过概率位置采样、双向形变场和自适应高斯融合三大创新，能从未标定视频流中即时生成动态3DGS表示，速度比优化方法快1200倍。
+  [ICLR 2026][3D视觉][动态3D重建] StreamSplat 提出了一个完全前馈的在线动态3D重建框架，通过概率位置采样、双向形变场和自适应高斯融合三大创新，能从未标定视频流中即时生成动态3DGS表示，速度比优化方法快1200倍。 实时动态3D重建（4D重建）在机器人、AR/VR和自动驾驶等领域至关重要…
 tags:
   - "ICLR 2026"
   - "3D视觉"

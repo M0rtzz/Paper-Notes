@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation
 description: >-
-  [NeurIPS 2025][图像生成][9DoF 姿态控制] SceneDesigner 提出了一种基于 CNOCS 地图表示和两阶段强化学习训练的方法，首次实现了多物体 9D 姿态（位置、大小、朝向）的精确控制，在图像生成的可控性和质量上显著超越现有方法。
+  [NeurIPS 2025 Spotlight][图像生成][9DoF 姿态控制] SceneDesigner 提出了一种基于 CNOCS 地图表示和两阶段强化学习训练的方法，首次实现了多物体 9D 姿态（位置、大小、朝向）的精确控制，在图像生成的可控性和质量上显著超越现有方法。 3D 感知的可控图像生成是一个重要但尚未充分…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "9DoF 姿态控制"
   - "CNOCS 表示"

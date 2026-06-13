@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation
 description: >-
-  [CVPR 2026][模型压缩][自回归熵模型] 在全卷积架构内统一层级超先验、Masked PixelCNN 空间自回归、通道条件建模和 SE 通道激励，不依赖 Transformer 或循环组件…
+  [CVPR 2026][模型压缩][自回归熵模型] 在全卷积架构内统一层级超先验、Masked PixelCNN 空间自回归、通道条件建模和 SE 通道激励，不依赖 Transformer 或循环组件，以 95M 参数和 222ms 解码时间实现相对 Ballé 基线 48% BD-Rate 降低并超越 VVC Intra 5.6%。
 tags:
   - "CVPR 2026"
   - "模型压缩"

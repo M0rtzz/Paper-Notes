@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Enhancing Spoken Discourse Modeling in Language Models Using Gestural Cues
 description: >-
-  [ACL 2025][LLM/NLP][gesture modeling] 提出将手势动作序列（3D 人体运动数据）通过 VQ-VAE 编码为离散 gesture token，再经特征对齐映射到语言模型输入空间，用于增强口语篇章建模…
+  [ACL 2025][LLM 其他][gesture modeling] 提出将手势动作序列（3D 人体运动数据）通过 VQ-VAE 编码为离散 gesture token，再经特征对齐映射到语言模型输入空间，用于增强口语篇章建模；在三类篇章标记（话语连接词、量词、立场标记）的文本填充任务上验证了手势信息对口语篇章理解的互补价值。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "gesture modeling"
   - "spoken discourse"
   - "VQ-VAE tokenization"

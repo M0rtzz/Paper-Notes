@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StyleKeeper: Prevent Content Leakage using Negative Visual Query Guidance
 description: >-
-  [ICCV 2025][图像生成][视觉风格提示] 提出 **负视觉查询引导（NVQG）** 方法，通过在 self-attention 层中将参考图的 query 注入作为负向引导来抑制内容泄漏，实现了无需训练的高质量视觉风格提示，在风格相似度和文本对齐上均优于现有方法。
+  [ICCV 2025][图像生成][视觉风格提示] 提出 负视觉查询引导（NVQG）：方法，通过在 self-attention 层中将参考图的 query 注入作为负向引导来抑制内容泄漏，实现了无需训练的高质量视觉风格提示，在风格相似度和文本对齐上均优于现有方法。 核心问题：文本到图像扩散模型中，使用参考图像作为视觉风格提…
 tags:
   - "ICCV 2025"
   - "图像生成"

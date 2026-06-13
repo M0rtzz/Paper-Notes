@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees
 description: >-
-  [ICLR 2026][可解释性][机制可解释性] 将神经网络验证（NN verification）引入机制可解释性，提出首个具有可证明保证的电路发现框架：在连续输入域上保证电路忠实度（input robustness）、在连续 patching 域上保证电路一致性（patching robustness）…
+  [ICLR 2026][可解释性][机制可解释性] 将神经网络验证（NN verification）引入机制可解释性，提出首个具有可证明保证的电路发现框架：在连续输入域上保证电路忠实度（input robustness）、在连续 patching 域上保证电路一致性（patching robustness），并形式化了四级最小性层次（quasi → local → subset → cardinal），通过单调性理论将三类保证统一连接。
 tags:
   - "ICLR 2026"
   - "可解释性"

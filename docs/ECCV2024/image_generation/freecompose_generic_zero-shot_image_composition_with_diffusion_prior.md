@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeCompose: Generic Zero-Shot Image Composition with Diffusion Prior
 description: >-
-  [ECCV 2024][图像生成][图像合成] 提出 FreeCompose，利用预训练扩散模型的生成先验实现通用零样本图像合成，统一覆盖图像和谐化（外观编辑）和语义图像合成（语义编辑），无需额外训练。
+  [ECCV 2024][图像生成][图像合成] 提出 FreeCompose，利用预训练扩散模型的生成先验实现通用零样本图像合成，统一覆盖图像和谐化（外观编辑）和语义图像合成（语义编辑），无需额外训练。 图像合成（Image Composition）是计算机视觉中的基础任务，目标是将一张图像的前景对象与另一张图像的背景融合生…
 tags:
   - "ECCV 2024"
   - "图像生成"

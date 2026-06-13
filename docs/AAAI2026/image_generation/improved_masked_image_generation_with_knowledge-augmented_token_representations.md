@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Masked Image Generation with Knowledge-Augmented Token Representations
 description: >-
-  [AAAI 2026][图像生成][掩码图像生成] 提出KA-MIG框架，通过从训练数据中挖掘三种token级语义先验知识图（共现图、语义相似图、位置-token不兼容图），使用图感知编码器学习增强的token表示，并通过轻量级加减融合机制注入现有MIG模型，持续提升多种骨干网络的生成质量。
+  [AAAI 2026][图像生成][掩码图像生成] 提出KA-MIG框架，通过从训练数据中挖掘三种token级语义先验知识图（共现图、语义相似图、位置-token不兼容图），使用图感知编码器学习增强的token表示，并通过轻量级加减融合机制注入现有MIG模型，持续提升多种骨干网络的生成质量。 掩码图像生成（MIG）…
 tags:
   - "AAAI 2026"
   - "图像生成"

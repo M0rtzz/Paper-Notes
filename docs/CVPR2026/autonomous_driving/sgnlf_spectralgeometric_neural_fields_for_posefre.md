@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SG-NLF: Spectral-Geometric Neural Fields for Pose-Free LiDAR View Synthesis
 description: >-
-  [CVPR 2026][自动驾驶][无位姿LiDAR] SG-NLF提出一种无需精确位姿的LiDAR NeRF框架，通过谱-几何混合表示解决LiDAR稀疏数据导致的几何空洞问题，利用置信感知图实现全局位姿优化，并引入对抗学习强化跨帧一致性…
+  [CVPR 2026][自动驾驶][无位姿LiDAR] SG-NLF提出一种无需精确位姿的LiDAR NeRF框架，通过谱-几何混合表示解决LiDAR稀疏数据导致的几何空洞问题，利用置信感知图实现全局位姿优化，并引入对抗学习强化跨帧一致性，在nuScenes上重建质量和位姿精度分别比SOTA提升35.8%和68.8%。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

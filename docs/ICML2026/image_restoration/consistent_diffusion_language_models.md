@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistent Diffusion Language Models
 description: >-
-  [ICML 2026][图像恢复][扩散模型] 本文指出离散扩散没有连续域 probability-flow ODE 的对应物，因此无法直接做 consistency model；作者提出用**精确闭式 posterior bridge** 作为离散域的"随机版 PF-ODE 替代品"…
+  [ICML 2026][图像恢复][扩散模型] 本文指出离散扩散没有连续域 probability-flow ODE 的对应物，因此无法直接做 consistency model；作者提出用**精确闭式 posterior bridge** 作为离散域的"随机版 PF-ODE 替代品"，构造 Multi-Path Discrete Consistency (MPDC) 训练目标，要求 denoiser 在多条 stochastic bridge 路径上的预测在期望上一致，从而单阶段、teacher-free 地训出可在 2-3 步生成高质量文本的 Consistent Diffusion Language Model (CDLM)…
 tags:
   - "ICML 2026"
   - "图像恢复"

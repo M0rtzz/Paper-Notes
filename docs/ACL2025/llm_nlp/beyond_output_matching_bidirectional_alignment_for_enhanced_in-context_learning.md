@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Beyond Output Matching: Bidirectional Alignment for Enhanced In-Context Learning
 description: >-
-  [ACL 2025][LLM/NLP][上下文学习] 提出 Bidirectional Alignment (BiAlign)，在传统知识蒸馏仅对齐输出分布的基础上，新增输入偏好对齐——通过 ranking loss 让学生模型学习教师模型对不同 ICL 示例的偏好排序…
+  [ACL 2025][LLM 其他][上下文学习] 提出 Bidirectional Alignment (BiAlign)，在传统知识蒸馏仅对齐输出分布的基础上，新增输入偏好对齐——通过 ranking loss 让学生模型学习教师模型对不同 ICL 示例的偏好排序，在语言理解、推理和代码 5 个任务上一致优于基线，GSM8K 提升 20%、LogiQA 提升 18%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "上下文学习"
   - "知识蒸馏"
   - "双向对齐"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Neural Topic Modeling with Large Language Models in the Loop
 description: >-
-  [ACL2025][LLM/NLP][LLM-ITL] 提出LLM-ITL框架，将LLM以"in-the-loop"方式集成到神经主题模型（NTM）训练中，通过基于最优传输的主题对齐目标和置信度加权机制，在保持文档表示质量和计算效率的同时显著提升主题可解释性。
+  [ACL2025][LLM 其他][LLM-ITL] 提出LLM-ITL框架，将LLM以"in-the-loop"方式集成到神经主题模型（NTM）训练中，通过基于最优传输的主题对齐目标和置信度加权机制，在保持文档表示质量和计算效率的同时显著提升主题可解释性。 问题背景 主题建模是NLP中的基础任务，用于发现文本集合中的潜在主…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-ITL"
   - "Neural Topic Model"
   - "Optimal Transport"

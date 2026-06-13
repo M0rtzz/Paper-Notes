@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysioWave: A Multi-Scale Wavelet-Transformer for Physiological Signal Representation
 description: >-
-  [NeurIPS 2025][医学图像][小波变换] 提出 PhysioWave，一种基于可学习小波分解和频率引导掩码的多尺度 Transformer 架构，首次为 EMG 和 ECG 构建大规模预训练基础模型，并通过多模态融合框架在单模态和多模态生理信号任务上取得 SOTA 性能。
+  [NeurIPS 2025][医学图像][小波变换] 提出 PhysioWave，一种基于可学习小波分解和频率引导掩码的多尺度 Transformer 架构，首次为 EMG 和 ECG 构建大规模预训练基础模型，并通过多模态融合框架在单模态和多模态生理信号任务上取得 SOTA 性能。 生理信号（EEG、EMG、ECG）是健康…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

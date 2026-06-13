@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rectified Point Flow: Generic Point Cloud Pose Estimation
 description: >-
-  [NeurIPS 2025][3D视觉][点云位姿估计] 提出 Rectified Point Flow，一种统一的生成式框架，将成对点云配准和多部件形状组装统一为条件生成问题，通过学习连续点级速度场来估计部件位姿。
+  [NeurIPS 2025][3D视觉][点云位姿估计] 提出 Rectified Point Flow，一种统一的生成式框架，将成对点云配准和多部件形状组装统一为条件生成问题，通过学习连续点级速度场来估计部件位姿。 从 3D 点云中估计刚体部件的相对位姿是计算机视觉和机器人学的核心任务，包括成对配准和多部件形状组装…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

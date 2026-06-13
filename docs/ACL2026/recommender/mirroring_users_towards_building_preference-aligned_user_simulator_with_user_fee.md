@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mirroring Users: Towards Building Preference-aligned User Simulator with User Feedback in Recommendation
 description: >-
-  [ACL 2026][推荐系统][用户模拟器] 作者把推荐系统里的"用户反馈日志"重写成一个 LLM 能理解的"用户记忆 + 曝光列表"统一仿真场景，再用 EKB 消费者决策模型生成显式的 chain-of-thought 决策过程作为"clarification"…
+  [ACL 2026][推荐系统][用户模拟器] 作者把推荐系统里的"用户反馈日志"重写成一个 LLM 能理解的"用户记忆 + 曝光列表"统一仿真场景，再用 EKB 消费者决策模型生成显式的 chain-of-thought 决策过程作为"clarification"，通过不确定性分解 + 拒绝采样蒸馏出 10K 高质量 SFT/DPO 数据，让 3B 的 Llama 用户模拟器在 8 个领域的真实用户行为预测上超过 GPT-5 和 Gemini-2.5-Flash。
 tags:
   - "ACL 2026"
   - "推荐系统"

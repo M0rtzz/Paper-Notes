@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Thoughts: A Unified Perspective of Understanding Multimodal Chain-of-Thought
 description: >-
-  [NeurIPS 2025][LLM推理][多模态CoT] 提出"视觉思维(Visual Thoughts)"作为统一框架解释多模态链式推理(MCoT)的有效性——无论是文本MCoT还是交错图文MCoT，其性能提升的核心机制都是将视觉信息缓存并传递到推理过程中…
+  [NeurIPS 2025][LLM推理][多模态CoT] 提出"视觉思维(Visual Thoughts)"作为统一框架解释多模态链式推理(MCoT)的有效性——无论是文本MCoT还是交错图文MCoT，其性能提升的核心机制都是将视觉信息缓存并传递到推理过程中，定义了四种视觉思维表达形式并揭示其在Transformer深层中作为图像-推理中介的角色。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

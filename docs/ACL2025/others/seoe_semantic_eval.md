@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection
 description: >-
-  [ACL 2025][Open Domain Event Detection] 针对开放域事件检测（ODED）评估的两大痛点——有限 benchmark 缺乏真实世界代表性、token 级匹配指标无法捕捉语义相似性——提出 SEOE 框架…
+  [ACL 2025][Open Domain Event Detection] 针对开放域事件检测（ODED）评估的两大痛点——有限 benchmark 缺乏真实世界代表性、token 级匹配指标无法捕捉语义相似性——提出 SEOE 框架，构建包含 564 种事件类型覆盖 7 大领域的可扩展 benchmark，并引入基于 LLM 的语义 F1 评估指标。
 tags:
   - "ACL 2025"
   - "Open Domain Event Detection"

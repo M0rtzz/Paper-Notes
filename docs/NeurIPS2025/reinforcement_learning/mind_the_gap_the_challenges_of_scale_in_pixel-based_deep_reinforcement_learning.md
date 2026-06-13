@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the GAP! The Challenges of Scale in Pixel-based Deep Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][深度强化学习] 发现像素输入的深度 RL 网络中，编码器（卷积层 $\phi$）与全连接层（$\psi$）之间的"瓶颈连接"是阻碍网络缩放的根本原因，提出用全局平均池化（GAP）这一极简方法直接化解瓶颈…
+  [NeurIPS 2025][强化学习][深度强化学习] 发现像素输入的深度 RL 网络中，编码器（卷积层 $\phi$）与全连接层（$\psi$）之间的"瓶颈连接"是阻碍网络缩放的根本原因，提出用全局平均池化（GAP）这一极简方法直接化解瓶颈，以更低计算成本获得与复杂方法（SoftMoE、稀疏训练）相当或更优的性能。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

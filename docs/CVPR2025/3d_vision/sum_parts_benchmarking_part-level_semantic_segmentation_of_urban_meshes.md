@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SUM Parts: Benchmarking Part-Level Semantic Segmentation of Urban Meshes
 description: >-
-  [CVPR 2025][3D视觉][城市网格语义分割] 提出首个大规模城市纹理网格部件级语义分割基准数据集 SUM Parts（覆盖 $2.5\,\text{km}^2$，21类），包含面标注和纹理像素标注两种标签类型，并开发了结合3D模板匹配和2D模板匹配的高效交互式标注工具。
+  [CVPR 2025][3D视觉][城市网格语义分割] 提出首个大规模城市纹理网格部件级语义分割基准数据集 SUM Parts（覆盖 $2.5\,\text{km}^2$，21类），包含面标注和纹理像素标注两种标签类型，并开发了结合3D模板匹配和2D模板匹配的高效交互式标注工具。 - 城市场景语义分割主要集中在图像和点云上…
 tags:
   - "CVPR 2025"
   - "3D视觉"

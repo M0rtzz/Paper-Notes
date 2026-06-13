@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RandAR: Decoder-only Autoregressive Visual Generation in Random Orders
 description: >-
-  [CVPR 2025 (Oral)][图像生成][自回归生成] 提出 RandAR——首个支持任意 token 生成顺序的 decoder-only 视觉自回归模型，通过在每个图像 token 前插入"位置指令 token"来指示下一个待生成 token 的空间位置…
+  [CVPR 2025 (Oral)][图像生成][自回归生成] 提出 RandAR——首个支持任意 token 生成顺序的 decoder-only 视觉自回归模型，通过在每个图像 token 前插入"位置指令 token"来指示下一个待生成 token 的空间位置，在性能不损失的前提下解锁并行解码（2.5x 加速）、零样本 inpainting/outpainting 和分辨率外推等全新能力。
 tags:
   - "CVPR 2025 (Oral)"
   - "图像生成"

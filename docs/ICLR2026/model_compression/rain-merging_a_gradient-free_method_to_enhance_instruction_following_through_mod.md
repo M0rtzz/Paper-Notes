@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following Through Model Merging
 description: >-
-  [ICLR 2026][模型压缩][模型合并] 提出 RAIN-Merging，一种无梯度的两阶段模型合并方法：先通过零空间投影保护大推理模型 (LRM) 的思维格式，再用指令注意力引导的合并系数增强指令遵循能力，在保持推理质量的同时大幅提升 LRM 的指令遵循性能。
+  [ICLR 2026 Oral][模型压缩][模型合并] 提出 RAIN-Merging，一种无梯度的两阶段模型合并方法：先通过零空间投影保护大推理模型 (LRM) 的思维格式，再用指令注意力引导的合并系数增强指令遵循能力，在保持推理质量的同时大幅提升 LRM 的指令遵循性能。 大推理模型的指令遵循矛盾 DeepSeek-R…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "模型压缩"
   - "模型合并"
   - "指令遵循"

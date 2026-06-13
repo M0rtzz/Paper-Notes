@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Two-Stage Progressive Pre-training using Multi-Modal Contrastive Masked Autoencoders
 description: >-
-  [CVPR 2025][多模态VLM][RGB-D预训练] 本文提出渐进式两阶段预训练策略——第一阶段用patch级对比学习对齐RGB和深度模态的跨模态表示，第二阶段用掩码自编码+受扩散模型启发的去噪+特征蒸馏联合训练，在ScanNet语义分割上比Mask3D提升+1.3% mIoU…
+  [CVPR 2025][多模态VLM][RGB-D预训练] 本文提出渐进式两阶段预训练策略——第一阶段用patch级对比学习对齐RGB和深度模态的跨模态表示，第二阶段用掩码自编码+受扩散模型启发的去噪+特征蒸馏联合训练，在ScanNet语义分割上比Mask3D提升+1.3% mIoU，在多个RGB-D下游任务上达到SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

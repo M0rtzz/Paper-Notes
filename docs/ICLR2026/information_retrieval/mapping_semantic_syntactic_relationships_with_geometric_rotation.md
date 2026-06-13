@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mapping Semantic & Syntactic Relationships with Geometric Rotation
 description: >-
-  [ICLR 2026][信息检索/RAG][嵌入几何] 提出RISE（Rotor-Invariant Shift Estimation）方法，利用Clifford代数的rotor将话语级语义-句法变换（否定、条件化、礼貌化）表示为单位超球面上的一致旋转操作…
+  [ICLR 2026][信息检索/RAG][嵌入几何] 提出RISE（Rotor-Invariant Shift Estimation）方法，利用Clifford代数的rotor将话语级语义-句法变换（否定、条件化、礼貌化）表示为单位超球面上的一致旋转操作，在7种语言×3种嵌入模型×3种变换的系统实验中证实这些旋转可跨语言和跨模型迁移（77%-95%保持率），首次将线性表示假说从词级扩展到跨语言话语级并推广到弯曲流形上的测地线结构。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentChangeBench: A Multi-Dimensional Evaluation Framework for Goal-Shift Robustness
 description: >-
-  [NeurIPS 2025][LLM Agent][benchmark] AgentChangeBench 是首个系统评估 LLM agent 在对话中途目标切换时适应能力的 benchmark：315 基础任务 × 9 变体 = 2835 序列…
+  [NeurIPS 2025][LLM Agent][benchmark] AgentChangeBench 是首个系统评估 LLM agent 在对话中途目标切换时适应能力的 benchmark：315 基础任务 × 9 变体 = 2835 序列，覆盖 3 个企业领域（银行/零售/航空）和 5 种 user persona，引入 GSRT（目标切换恢复时间）等 4 个互补指标，揭示高 pass@k 掩盖的效率和鲁棒性差距——如 GPT-4o 航空恢复率 92.2% 但零售冗余率达 89.1%。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-Mol: Multitask Molecular Model for Any-to-Any Modalities
 description: >-
-  [NeurIPS2025][计算生物][分子大语言模型] 提出 Omni-Mol，一个基于多模态 LLM 的统一分子理解与生成框架，通过构建 142 万样本的指令微调数据集、Gradient Adaptive LoRA (GAL) 和 Mixture-of-GAL-Experts (MoGE) 架构…
+  [NeurIPS2025][计算生物][分子大语言模型] 提出 Omni-Mol，一个基于多模态 LLM 的统一分子理解与生成框架，通过构建 142 万样本的指令微调数据集、Gradient Adaptive LoRA (GAL) 和 Mixture-of-GAL-Experts (MoGE) 架构，首次在单一模型中统一学习 16 个分子任务（Mol2Mol/Mol2Text/Mol2Num/Text2Mol），以仅 2.2B 参数在 13 个任务上达到 SOTA。
 tags:
   - "NeurIPS2025"
   - "计算生物"

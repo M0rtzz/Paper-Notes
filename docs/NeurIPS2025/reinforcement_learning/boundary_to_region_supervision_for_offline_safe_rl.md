@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boundary-to-Region Supervision for Offline Safe Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][离线安全强化学习] 提出 B2R（Boundary-to-Region）框架，通过代价信号重对齐(CTG Realignment)解决序列模型在离线安全RL中对回报和代价的对称条件化谬误，将稀疏的边界监督转化为密集的安全区域监督…
+  [NeurIPS 2025][强化学习][离线安全强化学习] 提出 B2R（Boundary-to-Region）框架，通过代价信号重对齐(CTG Realignment)解决序列模型在离线安全RL中对回报和代价的对称条件化谬误，将稀疏的边界监督转化为密集的安全区域监督，在38个安全关键任务中35个满足安全约束。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

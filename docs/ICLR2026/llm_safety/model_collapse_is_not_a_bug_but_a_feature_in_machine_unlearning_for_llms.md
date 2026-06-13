@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Collapse Is Not a Bug but a Feature in Machine Unlearning for LLMs
 description: >-
-  [ICLR 2026][LLM安全][machine unlearning] 将通常被视为负面现象的"模型坍缩"（model collapse）重新定位为机器遗忘的工具，提出PMC方法——通过在保留数据和模型自身生成数据上迭代微调来实现针对性信息删除，无需在遗忘目标上直接优化，从理论和实验两方面证明了其有效性…
+  [ICLR 2026][LLM安全][machine unlearning] 将通常被视为负面现象的"模型坍缩"（model collapse）重新定位为机器遗忘的工具，提出PMC方法——通过在保留数据和模型自身生成数据上迭代微调来实现针对性信息删除，无需在遗忘目标上直接优化，从理论和实验两方面证明了其有效性。
 tags:
   - "ICLR 2026"
   - "LLM安全"

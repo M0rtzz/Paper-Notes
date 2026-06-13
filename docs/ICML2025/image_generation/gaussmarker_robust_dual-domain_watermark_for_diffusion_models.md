@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussMarker: Robust Dual-Domain Watermark for Diffusion Models
 description: >-
-  [ICML 2025][图像生成][扩散模型] 提出 GaussMarker——首个双域（空间+频率）扩散模型水印方法，通过流水线注入器在初始高斯噪声的空间域和频率域一致嵌入水印，配合模型无关的可学习高斯噪声修复器（GNR）增强对旋转/裁剪攻击的鲁棒性…
+  [ICML 2025][图像生成][扩散模型] 提出 GaussMarker——首个双域（空间+频率）扩散模型水印方法，通过流水线注入器在初始高斯噪声的空间域和频率域一致嵌入水印，配合模型无关的可学习高斯噪声修复器（GNR）增强对旋转/裁剪攻击的鲁棒性，在三个 Stable Diffusion 版本上八种图像扭曲下达到平均 TPR@1%FPR 0.997 的 SOTA 性能。
 tags:
   - "ICML 2025"
   - "图像生成"

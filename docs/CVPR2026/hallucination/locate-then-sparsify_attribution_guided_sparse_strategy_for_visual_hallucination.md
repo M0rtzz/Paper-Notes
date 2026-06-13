@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation
 description: >-
-  [CVPR 2026][幻觉检测][视觉幻觉] 提出 LTS-FS（Locate-Then-Sparsify for Feature Steering）框架，通过因果干预归因方法定位幻觉相关层，并根据归因分数逐层稀疏地控制特征引导强度，在有效缓解 LVLM 幻觉的同时保持模型泛化能力。
+  [CVPR 2026][幻觉检测][视觉幻觉] 提出 LTS-FS（Locate-Then-Sparsify for Feature Steering）框架，通过因果干预归因方法定位幻觉相关层，并根据归因分数逐层稀疏地控制特征引导强度，在有效缓解 LVLM 幻觉的同时保持模型泛化能力。 领域现状：大视觉语言模型（LVLM）虽…
 tags:
   - "CVPR 2026"
   - "幻觉检测"

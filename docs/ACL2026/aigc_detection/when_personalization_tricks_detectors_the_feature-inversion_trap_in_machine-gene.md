@@ -2,9 +2,9 @@
 title: >-
   [论文解读] When Personalization Tricks Detectors: The Feature-Inversion Trap in Machine-Generated Text Detection
 description: >-
-  [ACL 2026][AIGC检测][机器生成文本检测] 揭示了个性化场景下 MGT 检测器的"特征反转陷阱"——通用域中区分人写文本和机器文本的特征在个性化域中发生反转，导致检测器性能骤降甚至翻转，并提出 StyloCheck 框架通过量化检测器对反转特征的依赖程度来预测跨域性能变化…
+  [ACL 2026 Oral][AIGC检测][机器生成文本检测] 揭示了个性化场景下 MGT 检测器的"特征反转陷阱"——通用域中区分人写文本和机器文本的特征在个性化域中发生反转，导致检测器性能骤降甚至翻转，并提出 StyloCheck 框架通过量化检测器对反转特征的依赖程度来预测跨域性能变化，预测相关性达 0.85 以上。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "AIGC检测"
   - "机器生成文本检测"
   - "个性化文本"

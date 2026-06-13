@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs
 description: >-
-  [ICLR 2026][图学习][多目标路由] 首次提出针对多重图（multigraph）的神经组合优化路由方法 GMS，包含直接在多重图上边级自回归构造的 GMS-EB 和先学习剪枝再节点级路由的双头 GMS-DH 两个变体…
+  [ICLR 2026][图学习][多目标路由] 首次提出针对多重图（multigraph）的神经组合优化路由方法 GMS，包含直接在多重图上边级自回归构造的 GMS-EB 和先学习剪枝再节点级路由的双头 GMS-DH 两个变体，在非对称多目标 TSP 和 CVRP 上实现了接近精确求解器 LKH 的性能且速度快数十倍。
 tags:
   - "ICLR 2026"
   - "图学习"

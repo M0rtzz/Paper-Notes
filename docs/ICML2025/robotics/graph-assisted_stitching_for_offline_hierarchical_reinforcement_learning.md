@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning
 description: >-
-  [ICML2025][机器人][离线强化学习] 提出 Graph-Assisted Stitching (GAS) 框架，用基于图搜索的子目标选择替代显式高层策略学习，通过时间距离表示 (TDR) 空间中的聚类构图与最短路径规划，在离线 HRL 中实现高效的跨轨迹拼接…
+  [ICML2025][机器人][离线强化学习] 提出 Graph-Assisted Stitching (GAS) 框架，用基于图搜索的子目标选择替代显式高层策略学习，通过时间距离表示 (TDR) 空间中的聚类构图与最短路径规划，在离线 HRL 中实现高效的跨轨迹拼接，在最具挑战的 antmaze-giant-stitch 任务上从前 SOTA 的 1.0 飙升至 88.3。
 tags:
   - "ICML2025"
   - "机器人"

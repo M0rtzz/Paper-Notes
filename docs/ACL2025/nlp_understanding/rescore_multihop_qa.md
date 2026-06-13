@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReSCORE: Label-free Iterative Retriever Training for Multi-hop Question Answering with Relevance-Consistency Supervision
 description: >-
-  [ACL 2025 (Long Paper)][NLP理解][multi-hop QA] 提出 ReSCORE，利用 LLM 生成的文档-问题相关性（relevance）和文档-答案一致性（consistency）的联合概率作为伪标签，在迭代 RAG 框架中无监督训练 dense retriever…
+  [ACL 2025 (Long Paper)][NLP理解][multi-hop QA] 提出 ReSCORE，利用 LLM 生成的文档-问题相关性（relevance）和文档-答案一致性（consistency）的联合概率作为伪标签，在迭代 RAG 框架中无监督训练 dense retriever，在三个多跳 QA 数据集上达到 SOTA。
 tags:
   - "ACL 2025 (Long Paper)"
   - "NLP理解"

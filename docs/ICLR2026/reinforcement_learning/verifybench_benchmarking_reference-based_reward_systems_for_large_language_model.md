@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VerifyBench: Benchmarking Reference-based Reward Systems for Large Language Models
 description: >-
-  [ICLR 2026][强化学习][reward model] 针对大型推理模型（LRM）训练中广泛使用的基于参考答案的奖励系统，构建了 VerifyBench 和 VerifyBench-Hard 两个评测基准，通过严格的人工标注评估各类验证系统的准确性，发现即使最强模型在困难样本上也仅达约 88% 准确率…
+  [ICLR 2026][强化学习][reward model] 针对大型推理模型（LRM）训练中广泛使用的基于参考答案的奖励系统，构建了 VerifyBench 和 VerifyBench-Hard 两个评测基准，通过严格的人工标注评估各类验证系统的准确性，发现即使最强模型在困难样本上也仅达约 88% 准确率，揭示了当前验证系统的显著改进空间。
 tags:
   - "ICLR 2026"
   - "强化学习"

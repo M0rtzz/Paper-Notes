@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Graph Foundation Models: Learning Generalities Across Graphs via Task-Trees
 description: >-
-  [ICML 2025][图学习][图基础模型] 提出 Task-Tree 作为统一学习实例，通过引入虚拟任务节点将节点/边/图级任务对齐到同一表示空间，配合重构目标预训练 GNN，构建图基础模型 GIT，在 32 个图、5 个领域上实现微调/上下文学习/零样本三种范式的跨域跨任务泛化。
+  [ICML 2025][图学习][图基础模型] 提出 Task-Tree 作为统一学习实例，通过引入虚拟任务节点将节点/边/图级任务对齐到同一表示空间，配合重构目标预训练 GNN，构建图基础模型 GIT，在 32 个图、5 个领域上实现微调/上下文学习/零样本三种范式的跨域跨任务泛化。 领域现状：基础模型在 NLP（LLM）…
 tags:
   - "ICML 2025"
   - "图学习"

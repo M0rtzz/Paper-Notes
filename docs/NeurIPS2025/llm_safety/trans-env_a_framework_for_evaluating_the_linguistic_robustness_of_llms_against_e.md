@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties
 description: >-
-  [NeurIPS 2025][LLM安全][语言鲁棒性] 提出Trans-EnV框架，结合语言学专家知识和LLM变换能力，将标准美式英语（SAE）数据集自动转换为38种英语变体（18种方言+20种ESL英语），揭示LLM在非标准英语上最高46.3%的性能下降，凸显了语言公平性问题。
+  [NeurIPS 2025][LLM安全][语言鲁棒性] 提出Trans-EnV框架，结合语言学专家知识和LLM变换能力，将标准美式英语（SAE）数据集自动转换为38种英语变体（18种方言+20种ESL英语），揭示LLM在非标准英语上最高46.3%的性能下降，凸显了语言公平性问题。 当前LLM的评测基准几乎全部使用标准美式英…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

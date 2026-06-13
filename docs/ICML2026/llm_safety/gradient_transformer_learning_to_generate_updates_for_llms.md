@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gradient Transformer: Learning to Generate Updates for LLMs
 description: >-
-  [ICML 2026][LLM安全][update vector] 本文提出 Grad-Transformer，把客户在私有数据上微调小模型 (TinyLM) 得到的 update vector…
+  [ICML 2026][LLM安全][update vector] 本文提出 Grad-Transformer，把客户在私有数据上微调小模型 (TinyLM) 得到的 update vector，用一个 encoder-decoder Transformer 自回归地"翻译"为目标大模型 (LLM) 的 update vector，从而实现完全不接触私有数据的 weak-to-strong 知识蒸馏，在 6 个推理/摘要数据集上平均 PGR 达到 91.88%，比最优 baseline (58.94%) 提升 55.89%，且对差分隐私扰动鲁棒。
 tags:
   - "ICML 2026"
   - "LLM安全"

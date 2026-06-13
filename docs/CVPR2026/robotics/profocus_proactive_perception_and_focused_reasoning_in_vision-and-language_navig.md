@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation
 description: >-
-  [CVPR 2026][机器人][VLN] 提出 ProFocus，一个免训练的渐进式框架，通过主动感知（将全景图转为语义地图+LLM 生成针对性视觉查询）和聚焦推理（BD-MCTS 从大量历史路点中筛选 top-k 高价值候选），在 R2R 和 REVERIE 基准上达到零样本方法的 SOTA。
+  [CVPR 2026][机器人][VLN] 提出 ProFocus，一个免训练的渐进式框架，通过主动感知（将全景图转为语义地图+LLM 生成针对性视觉查询）和聚焦推理（BD-MCTS 从大量历史路点中筛选 top-k 高价值候选），在 R2R 和 REVERIE 基准上达到零样本方法的 SOTA。 领域现状：视觉语言导航 (…
 tags:
   - "CVPR 2026"
   - "机器人"

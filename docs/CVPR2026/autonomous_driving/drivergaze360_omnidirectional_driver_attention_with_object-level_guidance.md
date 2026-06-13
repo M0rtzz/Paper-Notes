@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DriverGaze360: OmniDirectional Driver Attention with Object-Level Guidance
 description: >-
-  [CVPR2026][自动驾驶][驾驶员注意力] 提出首个360°全视角驾驶员注意力数据集（~100万帧/19名驾驶员），并设计DriverGaze360-Net通过辅助语义分割头联合学习注意力图与被关注物体，在全景驾驶图像上达到SOTA注意力预测性能。
+  [CVPR2026][自动驾驶][驾驶员注意力] 提出首个360°全视角驾驶员注意力数据集（~100万帧/19名驾驶员），并设计DriverGaze360-Net通过辅助语义分割头联合学习注意力图与被关注物体，在全景驾驶图像上达到SOTA注意力预测性能。 驾驶员注意力预测是构建可解释自动驾驶系统的关键任务…
 tags:
   - "CVPR2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DyG-Mamba: Continuous State Space Modeling on Dynamic Graphs
 description: >-
-  [NeurIPS 2025][医学图像][状态空间模型] DyG-Mamba 将连续状态空间模型（SSM）引入动态图学习，设计时间跨度感知的连续 SSM——用 Ebbinghaus 遗忘曲线启发的指数衰减函数建模不规则时间间隔，配合谱范数约束的输入依赖参数实现 Lipschitz 鲁棒性…
+  [NeurIPS 2025][医学图像][状态空间模型] DyG-Mamba 将连续状态空间模型（SSM）引入动态图学习，设计时间跨度感知的连续 SSM——用 Ebbinghaus 遗忘曲线启发的指数衰减函数建模不规则时间间隔，配合谱范数约束的输入依赖参数实现 Lipschitz 鲁棒性，在 12 个动态图基准上平均排名 2.42（vs DyGFormer 2.92），且保持 $O(bdL)$ 线性复杂度。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

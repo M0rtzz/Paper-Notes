@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Approximately Aligned Decoding
 description: >-
-  [NeurIPS 2025][LLM效率][受约束解码] 提出 Approximately Aligned Decoding (AprAD)，一种利用投机解码（speculative decoding）中的前缀选择算法来实现LLM受约束生成的方法——在遇到约束违反时…
+  [NeurIPS 2025][LLM效率][受约束解码] 提出 Approximately Aligned Decoding (AprAD)，一种利用投机解码（speculative decoding）中的前缀选择算法来实现LLM受约束生成的方法——在遇到约束违反时，既不像约束生成那样仅回退一步（导致极端概率放大），也不像ASAp那样完全重新采样（计算成本过高），而是通过投机采样智能选择回退位置，在输出分布失真和计算效率之间取得良好平衡。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

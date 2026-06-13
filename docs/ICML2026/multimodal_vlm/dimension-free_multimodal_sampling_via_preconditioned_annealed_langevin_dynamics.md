@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dimension-Free Multimodal Sampling via Preconditioned Annealed Langevin Dynamics
 description: >-
-  [ICML 2026][多模态VLM][退火朗之万动力学] 对预条件退火朗之万动力学（PALD）做首个**维度无关**的非渐近收敛分析——把多模态分布采样复杂度从 $\tilde{O}(d/\epsilon^2)$ 缩减到 $\tilde{O}(1/\epsilon^2)$…
+  [ICML 2026][多模态VLM][退火朗之万动力学] 对预条件退火朗之万动力学（PALD）做首个**维度无关**的非渐近收敛分析——把多模态分布采样复杂度从 $\tilde{O}(d/\epsilon^2)$ 缩减到 $\tilde{O}(1/\epsilon^2)$，让扩散类采样算法在高维下从"维度爆炸"中解放。
 tags:
   - "ICML 2026"
   - "多模态VLM"

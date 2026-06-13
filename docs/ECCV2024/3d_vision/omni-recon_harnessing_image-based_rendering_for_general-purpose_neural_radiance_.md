@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields
 description: >-
-  [ECCV 2024][3D视觉][NeRF] 提出Omni-Recon框架，通过基于图像的渲染（IBR）管线构建通用NeRF，利用解耦的几何/外观双分支设计，首次在单一模型中实现可泛化3D重建、零样本多任务场景理解和实时渲染、场景编辑等多种下游3D任务的适配。
+  [ECCV 2024][3D视觉][NeRF] 提出Omni-Recon框架，通过基于图像的渲染（IBR）管线构建通用NeRF，利用解耦的几何/外观双分支设计，首次在单一模型中实现可泛化3D重建、零样本多任务场景理解和实时渲染、场景编辑等多种下游3D任务的适配。 NeRF在3D应用中展现出巨大潜力，但现有方法存在根本性矛盾：…
 tags:
   - "ECCV 2024"
   - "3D视觉"

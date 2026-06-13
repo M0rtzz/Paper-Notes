@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Echoes Over Time: Unlocking Length Generalization in Video-to-Audio Generation Models
 description: >-
-  [CVPR 2026][音频/语音][视频转音频] 提出 MMHNet，一种基于层级结构和非因果 Mamba-2 的多模态层级网络，实现了在短片段（8秒）上训练、在长视频（5分钟以上）上生成高质量对齐音频的长度泛化能力，在 UnAV100 和 LongVale 基准上大幅超越现有方法。
+  [CVPR 2026][音频/语音][视频转音频] 提出 MMHNet，一种基于层级结构和非因果 Mamba-2 的多模态层级网络，实现了在短片段（8秒）上训练、在长视频（5分钟以上）上生成高质量对齐音频的长度泛化能力，在 UnAV100 和 LongVale 基准上大幅超越现有方法。 视频转音频（V2A）生成旨在为无声视频…
 tags:
   - "CVPR 2026"
   - "音频/语音"

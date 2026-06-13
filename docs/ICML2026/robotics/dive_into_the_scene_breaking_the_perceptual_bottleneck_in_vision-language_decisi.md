@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dive into the Scene: Breaking the Perceptual Bottleneck in Vision-Language Decision Making via Focus Plan Generation
 description: >-
-  [ICML 2026][机器人][VLM] SceneDiver 通过"先建场景图做粗粒度子场景分解、再让 VLM 以智能体方式逐子场景验证"的两阶段焦点规划，把任务相关物体过滤出来再喂回 VLM 做决策，并用 Slot Attention 适配器把这套显式推理蒸馏进 VLA…
+  [ICML 2026][机器人][VLM] SceneDiver 通过"先建场景图做粗粒度子场景分解、再让 VLM 以智能体方式逐子场景验证"的两阶段焦点规划，把任务相关物体过滤出来再喂回 VLM 做决策，并用 Slot Attention 适配器把这套显式推理蒸馏进 VLA，从而同时缓解高层规划与反应式控制中的视觉幻觉。
 tags:
   - "ICML 2026"
   - "机器人"

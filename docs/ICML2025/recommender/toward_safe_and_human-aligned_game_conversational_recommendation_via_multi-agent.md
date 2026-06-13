@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MATCHA: Toward Safe and Human-Aligned Game Conversational Recommendation via Multi-Agent Decomposition
 description: >-
-  [ICML 2025][推荐系统][对话推荐] 提出 MATCHA 多 Agent 框架，将游戏对话推荐分解为六个专用 Agent（意图解析、工具增强候选生成、多 LLM 排序、反思重排、风险控制、可解释生成）…
+  [ICML 2025][推荐系统][对话推荐] 提出 MATCHA 多 Agent 框架，将游戏对话推荐分解为六个专用 Agent（意图解析、工具增强候选生成、多 LLM 排序、反思重排、风险控制、可解释生成），在 Roblox 真实用户数据上 Hit@5 提升 20%、流行度偏差降 24%、对抗防御率 97.9%。
 tags:
   - "ICML 2025"
   - "推荐系统"

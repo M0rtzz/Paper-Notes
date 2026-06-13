@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LiftQuant: Continuous Bit-Width LLM via Dimensional Lifting and Projection
 description: >-
-  [ICML 2026][模型压缩][连续 bit-width] LiftQuant 通过"高维 1-bit lattice → 低维 weight 空间投影"的 lift-then-project 机制，把 LLM 量化 bit-width 从离散整数（2/3/4 bit）解耦为连续分数（如 2.4-bit）…
+  [ICML 2026 Spotlight][模型压缩][连续 bit-width] LiftQuant 通过"高维 1-bit lattice → 低维 weight 空间投影"的 lift-then-project 机制，把 LLM 量化 bit-width 从离散整数（2/3/4 bit）解耦为连续分数（如 2.4-bit），让 70B 模型精准塞进 24GB 显卡且 PPL 显著优于 2-bit baseline，整个解码路径只用线性变换 + 1-bit 均匀量化器，硬件友好。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "模型压缩"
   - "连续 bit-width"
   - "lift-then-project"

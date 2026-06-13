@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extragradient Method for $(L_0, L_1)$-Lipschitz Root-finding Problems
 description: >-
-  [NeurIPS 2025][优化/理论][Extragradient方法] 本文在 $\alpha$-对称 $(L_0,L_1)$-Lipschitz 条件下（放松经典 $L$-Lipschitz 假设）为 extragradient (EG) 方法提出自适应步长策略 $\gamma_k = 1/(c_0…
+  [NeurIPS 2025][优化/理论][Extragradient方法] 本文在 $\alpha$-对称 $(L_0,L_1)$-Lipschitz 条件下（放松经典 $L$-Lipschitz 假设）为 extragradient (EG) 方法提出自适应步长策略 $\gamma_k = 1/(c_0 + c_1\|F(x_k)\|^\alpha)$，建立了强单调（线性收敛）、单调（次线性收敛）和 weak Minty（局部收敛）三类根问题的首个完整收敛保证。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

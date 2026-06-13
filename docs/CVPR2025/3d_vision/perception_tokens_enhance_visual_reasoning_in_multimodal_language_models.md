@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perception Tokens Enhance Visual Reasoning in Multimodal Language Models
 description: >-
-  [CVPR 2025][3D视觉][感知token] 本文提出 Perception Tokens，一种将中间视觉表示（如深度图、目标框）编码为辅助推理 token 的方法，使多模态语言模型能像语言 chain-of-thought 一样，通过生成感知 token 作为中间步骤来增强视觉推理能力。
+  [CVPR 2025][3D视觉][感知token] 本文提出 Perception Tokens，一种将中间视觉表示（如深度图、目标框）编码为辅助推理 token 的方法，使多模态语言模型能像语言 chain-of-thought 一样，通过生成感知 token 作为中间步骤来增强视觉推理能力。 领域现状：多模态语言模型（…
 tags:
   - "CVPR 2025"
   - "3D视觉"

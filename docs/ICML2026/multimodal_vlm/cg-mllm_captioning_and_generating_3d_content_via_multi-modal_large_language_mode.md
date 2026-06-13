@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CG-MLLM: Captioning and Generating 3D Content via Multi-modal Large Language Models
 description: >-
-  [ICML 2026][多模态VLM][3D生成] CG-MLLM 提出了一种基于 Mixture-of-Transformer 的多模态大语言模型，通过 TokenAR（逐token自回归）和 BlockAR（块级并行）双 Transformer 架构，结合预训练 VLM 骨干与 3D VAE 潜空间…
+  [ICML 2026][多模态VLM][3D生成] CG-MLLM 提出了一种基于 Mixture-of-Transformer 的多模态大语言模型，通过 TokenAR（逐token自回归）和 BlockAR（块级并行）双 Transformer 架构，结合预训练 VLM 骨干与 3D VAE 潜空间，首次实现在单一 MLLM 框架内端到端进行高分辨率 3D 内容生成与 3D 字幕理解，在 MLLM 类 3D 生成方法中达到 SOTA。
 tags:
   - "ICML 2026"
   - "多模态VLM"

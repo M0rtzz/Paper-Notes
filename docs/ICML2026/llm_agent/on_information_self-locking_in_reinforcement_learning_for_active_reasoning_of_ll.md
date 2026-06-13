@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Information Self-Locking in Reinforcement Learning for Active Reasoning of LLM Agents
 description: >-
-  [ICML 2026][LLM Agent][主动推理] 针对 LLM agent 在多轮主动推理中"动作选择(AS)"与"信念跟踪(BT)"互相拖累、outcome-only RL 训练陷入低信息自锁(SeL)的失效模式，本文给出 POMDP 视角下的耦合梯度分析与"自锁区"形式化定义…
+  [ICML 2026][LLM Agent][主动推理] 针对 LLM agent 在多轮主动推理中"动作选择(AS)"与"信念跟踪(BT)"互相拖累、outcome-only RL 训练陷入低信息自锁(SeL)的失效模式，本文给出 POMDP 视角下的耦合梯度分析与"自锁区"形式化定义，并提出 AReW：用环境/读出层即可获得的方向性 critique 对 stepwise advantage 做加性 reweighting，在 9 个主动推理任务上最高带来 60 分性能提升。
 tags:
   - "ICML 2026"
   - "LLM Agent"

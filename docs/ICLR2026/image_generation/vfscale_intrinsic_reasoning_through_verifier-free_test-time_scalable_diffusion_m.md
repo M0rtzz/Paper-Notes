@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VFScale: Intrinsic Reasoning through Verifier-Free Test-time Scalable Diffusion Model
 description: >-
-  [ICLR 2026][图像生成][测试时缩放] VFScale提出无需外部验证器的测试时可缩放扩散模型，通过MRNCL损失和KL正则化改善能量景观使其内在能量函数可作为验证器，结合混合MCTS去噪实现高效搜索，在6×6训练的迷宫模型能解决88%的15×15迷宫，而标准扩散模型完全失败。
+  [ICLR 2026][图像生成][测试时缩放] VFScale提出无需外部验证器的测试时可缩放扩散模型，通过MRNCL损失和KL正则化改善能量景观使其内在能量函数可作为验证器，结合混合MCTS去噪实现高效搜索，在6×6训练的迷宫模型能解决88%的15×15迷宫，而标准扩散模型完全失败。 领域现状：受人类System 2思维…
 tags:
   - "ICLR 2026"
   - "图像生成"

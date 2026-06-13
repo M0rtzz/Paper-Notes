@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Principled RL for Flow Matching Emerges from the Chunk-level Policy Optimization
 description: >-
-  [ICML2026][图像生成][flow matching] GCPO 把 GRPO 在 flow matching 后训练里"每一步都用同一个最终 reward 当 advantage"的步级优化改成"块级"——按 flow matching 自身的时间动态 $L1_{rel}(x…
+  [ICML2026][图像生成][flow matching] GCPO 把 GRPO 在 flow matching 后训练里"每一步都用同一个最终 reward 当 advantage"的步级优化改成"块级"——按 flow matching 自身的时间动态 $L1_{rel}(x,t)$ 自适应地把连续若干步聚成 chunk，用规范化的 chunk-level 重要性比 $r^i_j$ 做策略更新，从而平滑掉"最终好≠每步好"造成的错误梯度，在 HPSv3/ImageReward/GenEval/DPG 上相对 GRPO 取得最高 43% 的相对增益。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2510.21583](https://arxiv.org/abs/2510.21583)  
 **代码**: https://github.com/xingzhejun/GCPO  
-**领域**: image_generation  
+**领域**: 图像生成  
 **关键词**: flow matching, GRPO, chunk-level policy optimization, T2I, preference alignment
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FisherRF: Active View Selection and Mapping with Radiance Fields Using Fisher Information
 description: >-
-  [ECCV 2024][Fisher信息] 本文提出FisherRF，利用Fisher信息直接量化辐射场（Radiance Fields）模型参数的观测信息量，通过最大化期望信息增益（Expected Information Gain）选择最优视角，在视角选择、主动建图和不确定性量化三个任务上均达到SOTA…
+  [ECCV 2024][Fisher信息] 本文提出FisherRF，利用Fisher信息直接量化辐射场（Radiance Fields）模型参数的观测信息量，通过最大化期望信息增益（Expected Information Gain）选择最优视角，在视角选择、主动建图和不确定性量化三个任务上均达到SOTA，且通过稀疏性利用和自定义CUDA核实现了70 fps的视角评估速度。
 tags:
   - "ECCV 2024"
   - "Fisher信息"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAB: Transformer Attention Bottlenecks enable User Intervention and Debugging in Vision-Language Models
 description: >-
-  [ICCV 2025][多模态VLM][注意力机制] 提出TAB（Transformer Attention Bottleneck），一个插入标准MHSA之后的单头co-attention瓶颈层，通过移除skip connection并将注意力约束到[0,1]区间…
+  [ICCV 2025][多模态VLM][注意力机制] 提出TAB（Transformer Attention Bottleneck），一个插入标准MHSA之后的单头co-attention瓶颈层，通过移除skip connection并将注意力约束到[0,1]区间，实现VLM注意力的精确可视化、真值监督训练、以及测试时用户编辑干预，在变化描述任务上首次建立了注意力值与VLM输出之间的因果关系。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

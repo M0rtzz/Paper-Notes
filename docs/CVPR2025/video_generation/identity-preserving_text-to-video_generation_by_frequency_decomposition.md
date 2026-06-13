@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Identity-Preserving Text-to-Video Generation by Frequency Decomposition
 description: >-
-  [CVPR 2025][视频生成][身份保持视频生成] ConsisID 提出基于频率分解的 DiT 控制方案，将人脸特征解耦为低频全局信息和高频内在身份信息，分别注入 DiT 的不同位置，实现免微调的身份保持文本到视频生成，在身份保持、文本相关性和视觉质量上全面超越现有方法。
+  [CVPR 2025][视频生成][身份保持视频生成] ConsisID 提出基于频率分解的 DiT 控制方案，将人脸特征解耦为低频全局信息和高频内在身份信息，分别注入 DiT 的不同位置，实现免微调的身份保持文本到视频生成，在身份保持、文本相关性和视觉质量上全面超越现有方法。 领域现状：身份保持的文本到视频生成（IPT2V…
 tags:
   - "CVPR 2025"
   - "视频生成"

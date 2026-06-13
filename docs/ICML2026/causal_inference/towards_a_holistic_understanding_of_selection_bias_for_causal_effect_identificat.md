@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards a Holistic Understanding of Selection Bias for Causal Effect Identification
 description: >-
-  [ICML 2026][因果推理][选择偏差] 本文给出一个统一的"分布类"框架，刻画了在选择偏差下平均处理效应 (ATE) 全人群可识别的充要条件 (Condition 1)，并证明在 c-overlap 倾向得分 + 多项式指数族 / Gaussian / Laplace / Pareto / Log-n…
+  [ICML 2026][因果推理][选择偏差] 本文给出一个统一的"分布类"框架，刻画了在选择偏差下平均处理效应 (ATE) 全人群可识别的充要条件 (Condition 1)，并证明在 c-overlap 倾向得分 + 多项式指数族 / Gaussian / Laplace / Pareto / Log-normal 等常见分布下都满足该条件，配套提出 MLE 与 Score Matching 两种带选择函数 $\beta(x,y,t)$ 校正的估计器，在合成与 All of Us 半合成实验上显著优于 IPW 与多项式回归。
 tags:
   - "ICML 2026"
   - "因果推理"

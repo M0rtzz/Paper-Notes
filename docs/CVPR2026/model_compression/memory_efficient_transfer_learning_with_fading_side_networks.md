@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient Transfer Learning with Fading Side Networks via Masked Dual Path Distillation
 description: >-
-  [CVPR 2026][模型压缩][记忆高效迁移学习] MDPD提出通过冻结骨干网络与轻量侧网络之间的双向知识蒸馏实现高效微调，训练完成后丢弃侧网络，从而同时实现训练时的参数/内存高效和推理时的速度高效。
+  [CVPR 2026][模型压缩][记忆高效迁移学习] MDPD提出通过冻结骨干网络与轻量侧网络之间的双向知识蒸馏实现高效微调，训练完成后丢弃侧网络，从而同时实现训练时的参数/内存高效和推理时的速度高效。 领域现状：记忆高效迁移学习（METL）通过构建轻量平行侧网络来避免大骨干的梯度反传，显著降低训练内存…
 tags:
   - "CVPR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emergence and Evolution of Interpretable Concepts in Diffusion Models
 description: >-
-  [图像生成] 首次将 Sparse Autoencoders (SAEs) 系统性地应用于多步扩散模型 (Stable Diffusion v1.4)，揭示了图像构图在第一步反向扩散就已涌现、风格概念在中期阶段形成的时间演化规律，并据此设计了时间自适应的因果干预技术。
+  [图像生成] 首次将 Sparse Autoencoders (SAEs) 系统性地应用于多步扩散模型 (Stable Diffusion v1.4)，揭示了图像构图在第一步反向扩散就已涌现、风格概念在中期阶段形成的时间演化规律，并据此设计了时间自适应的因果干预技术。 扩散模型虽然在图像生成方面取得了巨大成功…
 tags:
   - "图像生成"
 ---

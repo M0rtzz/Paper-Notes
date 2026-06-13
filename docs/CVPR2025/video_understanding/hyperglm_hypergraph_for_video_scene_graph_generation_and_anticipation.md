@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyperGLM: HyperGraph for Video Scene Graph Generation and Anticipation
 description: >-
-  [CVPR 2025][视频理解][视频场景图] HyperGLM 提出将实体场景图（捕捉空间关系）和程序图（建模因果时序转换）统一为超图 (HyperGraph)，并将其注入多模态 LLM 实现视频场景图的生成、预测和推理，同时发布包含 190 万帧的 VSGR 数据集支持五类任务。
+  [CVPR 2025][视频理解][视频场景图] HyperGLM 提出将实体场景图（捕捉空间关系）和程序图（建模因果时序转换）统一为超图 (HyperGraph)，并将其注入多模态 LLM 实现视频场景图的生成、预测和推理，同时发布包含 190 万帧的 VSGR 数据集支持五类任务。 领域现状 领域现状：视频场景图生成 (…
 tags:
   - "CVPR 2025"
   - "视频理解"

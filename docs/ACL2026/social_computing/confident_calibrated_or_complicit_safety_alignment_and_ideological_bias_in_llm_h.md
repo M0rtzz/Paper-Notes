@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Confident, Calibrated, or Complicit: Safety Alignment and Ideological Bias in LLM Hate Speech Detection
 description: >-
-  [ACL 2026][社会计算][仇恨言论检测] 作者在 Latent Hatred 基准上让 5 个 LLM（强对齐 vs 弱对齐）戴着 4 种政治 persona 跑零样本仇恨言论分类，发现强对齐模型严格准确率 69.0% 反而高于弱对齐的 64.1%、且对 persona 几乎免疫…
+  [ACL 2026][社会计算][仇恨言论检测] 作者在 Latent Hatred 基准上让 5 个 LLM（强对齐 vs 弱对齐）戴着 4 种政治 persona 跑零样本仇恨言论分类，发现强对齐模型严格准确率 69.0% 反而高于弱对齐的 64.1%、且对 persona 几乎免疫，但所有模型在反讽、目标群体公平性、置信度校准三方面都出现系统性失败。
 tags:
   - "ACL 2026"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition
 description: >-
-  [ICML2025][图像生成][扩散模型] 提出 HEGGS（High-fidelity Earthquake Groundmotion Generation System），利用地震数据集中波形天然可配对的特性，结合条件隐扩散模型与 ACM 振幅校正模块…
+  [ICML2025][图像生成][扩散模型] 提出 HEGGS（High-fidelity Earthquake Groundmotion Generation System），利用地震数据集中波形天然可配对的特性，结合条件隐扩散模型与 ACM 振幅校正模块，仅需最少条件信息（经纬度、震源深度、震级）即可端到端生成高保真三分量地震波形。
 tags:
   - "ICML2025"
   - "图像生成"

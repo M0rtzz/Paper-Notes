@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Layered Motion Fusion: Lifting Motion Segmentation to 3D in Egocentric Videos
 description: >-
-  [CVPR 2025][3D视觉][动态场景分割] 本文提出 Layered Motion Fusion（LMF），将 2D 运动分割模型的预测融合到分层神经辐射场的动态和半静态层中，结合测试时精修策略，首次证明 3D 方法能在第一人称视频的动态目标分割中超越 2D 基线…
+  [CVPR 2025][3D视觉][动态场景分割] 本文提出 Layered Motion Fusion（LMF），将 2D 运动分割模型的预测融合到分层神经辐射场的动态和半静态层中，结合测试时精修策略，首次证明 3D 方法能在第一人称视频的动态目标分割中超越 2D 基线，动态目标分割 mAP 提升 30.5%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

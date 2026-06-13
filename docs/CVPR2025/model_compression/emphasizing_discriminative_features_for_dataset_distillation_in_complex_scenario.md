@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emphasizing Discriminative Features for Dataset Distillation in Complex Scenarios
 description: >-
-  [CVPR 2025][模型压缩][数据集蒸馏] 提出EDF方法，通过Common Pattern Dropout（丢弃轨迹匹配中低损失的通用模式参数梯度）和Discriminative Area Enhancement（用Grad-CAM加权放大判别性区域的梯度）…
+  [CVPR 2025][模型压缩][数据集蒸馏] 提出EDF方法，通过Common Pattern Dropout（丢弃轨迹匹配中低损失的通用模式参数梯度）和Discriminative Area Enhancement（用Grad-CAM加权放大判别性区域的梯度），解决数据集蒸馏在复杂场景（ImageNet子集）上的性能退化问题，在ImageMeow/ImageYellow等数据集上仅用23%数据实现无损压缩。
 tags:
   - "CVPR 2025"
   - "模型压缩"

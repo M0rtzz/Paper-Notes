@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallelised Differentiable Straightest Geodesics for 3D Meshes
 description: >-
-  [CVPR 2026][3D视觉][测地线] 提出 straightest geodesics 的并行 GPU 实现及两种可微分方案（外在代理函数法和测地线有限差分法），使三角网格上的指数映射可高效并行且可微分，并以此构建测地线卷积层、网格上的流匹配方法和二阶优化器三个下游应用。
+  [CVPR 2026][3D视觉][测地线] 提出 straightest geodesics 的并行 GPU 实现及两种可微分方案（外在代理函数法和测地线有限差分法），使三角网格上的指数映射可高效并行且可微分，并以此构建测地线卷积层、网格上的流匹配方法和二阶优化器三个下游应用。 机器学习正从欧几里得空间向非欧几里得（黎曼流…
 tags:
   - "CVPR 2026"
   - "3D视觉"

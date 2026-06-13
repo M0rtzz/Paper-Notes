@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DetectRL-X: Towards Reliable Multilingual and Real-World LLM-Generated Text Detection
 description: >-
-  [ACL2026][AIGC检测][LLM生成文本检测] DetectRL-X 构建了一个 345.6 万样本、多语言、多域、多攻击、多长度和二/三分类并行的 LLM 生成文本检测基准，证明现有检测器在真实多语言和人机协作写作场景下仍存在明显鲁棒性短板。
+  [ACL2026][AIGC检测][LLM生成文本检测] DetectRL-X 构建了一个 345.6 万样本、多语言、多域、多攻击、多长度和二/三分类并行的 LLM 生成文本检测基准，证明现有检测器在真实多语言和人机协作写作场景下仍存在明显鲁棒性短板。 领域现状：LLM 生成文本检测通常把任务定义为二分类…
 tags:
   - "ACL2026"
   - "AIGC检测"

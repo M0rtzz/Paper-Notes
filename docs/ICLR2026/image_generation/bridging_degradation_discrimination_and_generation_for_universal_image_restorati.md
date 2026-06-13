@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Degradation Discrimination and Generation for Universal Image Restoration
 description: >-
-  [ICLR 2026][图像生成][通用图像修复] BDG 通过多角度多尺度灰度共生矩阵（MAS-GLCM）进行细粒度退化判别，并设计三阶段扩散训练（生成→桥接→修复）将退化判别能力与生成先验无缝融合，在 all-in-one 修复和真实世界超分辨率任务上取得显著的保真度提升。
+  [ICLR 2026][图像生成][通用图像修复] BDG 通过多角度多尺度灰度共生矩阵（MAS-GLCM）进行细粒度退化判别，并设计三阶段扩散训练（生成→桥接→修复）将退化判别能力与生成先验无缝融合，在 all-in-one 修复和真实世界超分辨率任务上取得显著的保真度提升。 领域现状：通用图像修复要求单一模型处理多种退化…
 tags:
   - "ICLR 2026"
   - "图像生成"

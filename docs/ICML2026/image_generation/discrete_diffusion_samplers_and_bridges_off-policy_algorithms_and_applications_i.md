@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrete Diffusion Samplers and Bridges: Off-Policy Algorithms and Applications in Latent Spaces
 description: >-
-  [ICML2026][图像生成][离散扩散采样器] 本文把连续空间扩散采样里成熟的 off-policy RL 训练技巧（replay buffer、重要性加权、MCMC 探索）首次系统迁移到离散扩散采样器，并进一步推广到 data-to-energy 离散 Schrödinger 桥…
+  [ICML2026][图像生成][离散扩散采样器] 本文把连续空间扩散采样里成熟的 off-policy RL 训练技巧（replay buffer、重要性加权、MCMC 探索）首次系统迁移到离散扩散采样器，并进一步推广到 data-to-energy 离散 Schrödinger 桥，在 Ising/Potts、离散化 GMM 等多模分布上显著缓解 mode collapse，最后用它在 VQ-VAE 的离散潜空间里做 data-free 的条件图像生成（后验采样）。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.05961](https://arxiv.org/abs/2602.05961)  
 **代码**: https://github.com/mmacosha/offpolicy-discrete-diffusion-samplers-and-bridges  
-**领域**: image_generation / 扩散采样 / 离散扩散 / 摊销采样 / off-policy RL  
+**领域**: 图像生成 / 扩散采样 / 离散扩散 / 摊销采样 / off-policy RL  
 **关键词**: 离散扩散采样器、off-policy RL、轨迹平衡、Schrödinger 桥、VQ-VAE 后验采样
 
 ## 一句话总结

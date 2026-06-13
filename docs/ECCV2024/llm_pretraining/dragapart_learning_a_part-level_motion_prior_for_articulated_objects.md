@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DragAPart: Learning a Part-Level Motion Prior for Articulated Objects
 description: >-
-  [ECCV 2024][预训练][部件级运动先验] DragAPart 提出了一种以拖拽为交互接口的图像生成器，能够响应部件级别的交互（如开关抽屉/门），而非仅仅移动整个物体。通过新的合成数据集 Drag-a-Move、多分辨率拖拽编码和域随机化策略…
+  [ECCV 2024][预训练][部件级运动先验] DragAPart 提出了一种以拖拽为交互接口的图像生成器，能够响应部件级别的交互（如开关抽屉/门），而非仅仅移动整个物体。通过新的合成数据集 Drag-a-Move、多分辨率拖拽编码和域随机化策略，模型在仅用合成数据训练的情况下能良好泛化到真实图像和未见类别。
 tags:
   - "ECCV 2024"
   - "预训练"

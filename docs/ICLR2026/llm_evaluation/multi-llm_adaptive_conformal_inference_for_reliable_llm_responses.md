@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses
 description: >-
-  [ICLR2026][LLM评测][Conformal Inference] 提出 MACI（Multi-LLM Adaptive Conformal Inference），通过**累积乘积型 conformity score** + **多 LLM 集成**的 factuality 评分 + **组条件校准…
+  [ICLR2026][LLM评测][Conformal Inference] 提出 MACI（Multi-LLM Adaptive Conformal Inference），通过**累积乘积型 conformity score** + **多 LLM 集成**的 factuality 评分 + **组条件校准**，在严格保证用户指定错误率的同时，显著提升 LLM 回复中事实性声明的保留率。
 tags:
   - "ICLR2026"
   - "LLM评测"

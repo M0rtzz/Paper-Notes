@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Decoupled Entropy Minimization
 description: >-
-  [NeurIPS 2025][LLM/NLP][entropy minimization] 将经典熵最小化（EM）解耦为两个对立部分——Cluster Aggregation Driving Factor (CADF，奖励主导类别)和 Gradient Mitigation Calibrator (GMC…
+  [NeurIPS 2025][LLM 其他][entropy minimization] 将经典熵最小化（EM）解耦为两个对立部分——Cluster Aggregation Driving Factor (CADF，奖励主导类别)和 Gradient Mitigation Calibrator (GMC，惩罚高置信类别)，揭示了经典 EM 的两个固有缺陷（reward collapse 和 easy-class bias），提出 AdaDEM 通过归一化奖励和边际熵校准来修复这些问题，在半监督学习、域适应、强化学习等多任务上显著提升。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "entropy minimization"
   - "域适应"
   - "测试时自适应"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoundVista: Novel-View Ambient Sound Synthesis via Visual-Acoustic Binding
 description: >-
-  [CVPR 2025][3D视觉][新视角声学合成] SoundVista 提出了一种从稀疏分布式麦克风录音合成任意新视角环境声的方法，通过视觉-声学绑定（VAB）模块从全景 RGB-D 数据推断声学属性，优化参考麦克风布局，并用 Transformer 自适应加权参考录音的贡献…
+  [CVPR 2025][3D视觉][新视角声学合成] SoundVista 提出了一种从稀疏分布式麦克风录音合成任意新视角环境声的方法，通过视觉-声学绑定（VAB）模块从全景 RGB-D 数据推断声学属性，优化参考麦克风布局，并用 Transformer 自适应加权参考录音的贡献，在模拟和真实场景上均显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

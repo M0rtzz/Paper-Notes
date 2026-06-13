@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COPF: An Online Framework for Deployment-Stable Counterfactual Fairness in Evolving Graphs
 description: >-
-  [ICML 2026][AI安全][反事实公平] COPF 把"演进图上的在线链路推荐"看成一个 performative 决策过程，在 backbone 打分器之外加一层 **决策层 wrapper**：用带显式探索的在线日志协议保证反事实可识别…
+  [ICML 2026][AI安全][反事实公平] COPF 把"演进图上的在线链路推荐"看成一个 performative 决策过程，在 backbone 打分器之外加一层 **决策层 wrapper**：用带显式探索的在线日志协议保证反事实可识别，用图感知双重稳健（GA-DR）估计器估计"曝光-未曝光"的反事实组间差距，再用 Residual-OI 审计 + PI primal–dual 控制器在线压制部署后出现的公平性 spike，理论上给出从插件式 OI 到真实反事实差距的 transfer 证书，在 TGB 与合成二部流上以可控的效用损失显著降低 Deploy 阶段的 worst-case TE 差距。
 tags:
   - "ICML 2026"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Demystifying When Pruning Works via Representation Hierarchies
 description: >-
-  [ICML 2026][模型压缩][网络剪枝] 论文从"嵌入 → logit → 概率"三段表征层次出发，用 Taylor 局部展开理论证明：剪枝对嵌入空间和 logit 空间的扰动天生很小…
+  [ICML 2026][模型压缩][网络剪枝] 论文从"嵌入 → logit → 概率"三段表征层次出发，用 Taylor 局部展开理论证明：剪枝对嵌入空间和 logit 空间的扰动天生很小，但 softmax 这一非线性步骤会按 $\mathrm{Var}_r(\Delta z)/(2T^2)$ 把扰动放大到概率空间，再经过自回归解码的步间累积，最终导致生成任务崩溃；而非生成任务因为只依赖候选 token 子空间，对剪枝天然鲁棒——这统一解释了为什么剪枝在 MMLU、retrieval 上几乎无损但在 GSM8K、HumanEval 上骤降到 0。
 tags:
   - "ICML 2026"
   - "模型压缩"

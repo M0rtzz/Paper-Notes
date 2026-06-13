@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained Discrete Diffusion
 description: >-
-  [NeurIPS 2025][计算生物][离散扩散模型] 提出 CDD（Constrained Discrete Diffusion），将可微约束优化投影算子嵌入离散扩散模型的去噪过程中，无需重训练即可在采样时强制满足序列级约束，在毒性文本生成、分子设计和指令遵循三类任务上实现零约束违反。
+  [NeurIPS 2025][计算生物][离散扩散模型] 提出 CDD（Constrained Discrete Diffusion），将可微约束优化投影算子嵌入离散扩散模型的去噪过程中，无需重训练即可在采样时强制满足序列级约束，在毒性文本生成、分子设计和指令遵循三类任务上实现零约束违反。 离散扩散模型（如 MDLM、UDL…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users
 description: >-
-  [CVPR 2026][遥感][分布式MIMO] 提出面向多天线地面用户的分布式LEO卫星下行链路两种传输方案（联合传输 & 流式传输），通过基于统计CSI的WMMSE预编码设计和基于匈牙利算法的流-卫星关联策略，在无需卫星间相位同步的前提下实现了高频谱效率与低前传开销的灵活折中。
+  [CVPR 2026][遥感][分布式MIMO] 提出面向多天线地面用户的分布式LEO卫星下行链路两种传输方案（联合传输 & 流式传输），通过基于统计CSI的WMMSE预编码设计和基于匈牙利算法的流-卫星关联策略，在无需卫星间相位同步的前提下实现了高频谱效率与低前传开销的灵活折中。 1. 领域现状 6G网络的核心目标之一是实…
 tags:
   - "CVPR 2026"
   - "遥感"

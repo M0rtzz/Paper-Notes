@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale
 description: >-
-  [CVPR 2025][音频/语音][流式视频LLM] 提出 LiveCC，通过将 ASR 转录词与视频帧沿时间轴密集交织训练视频 LLM，构建了 Live-CC-5M 预训练数据集，使 7B 模型在实时视频解说任务上超越 72B 模型（包括 Qwen2.5-VL-72B）。
+  [CVPR 2025][音频/语音][流式视频LLM] 提出 LiveCC，通过将 ASR 转录词与视频帧沿时间轴密集交织训练视频 LLM，构建了 Live-CC-5M 预训练数据集，使 7B 模型在实时视频解说任务上超越 72B 模型（包括 Qwen2.5-VL-72B）。 领域现状：视频 LLM 通常在"观看完整视频后回…
 tags:
   - "CVPR 2025"
   - "音频/语音"

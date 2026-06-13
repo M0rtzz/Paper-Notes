@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Perturb and Recover: Fine-tuning for Effective Backdoor Removal from CLIP
 description: >-
-  [CVPR 2026][LLM安全][后门攻击] 本文提出 PAR（Perturb and Recover），一种简单而有效的 CLIP 模型后门清洗方法：通过显式地将模型embedding推离中毒状态（Perturb），同时用标准 CLIP 损失恢复干净性能（Recover）…
+  [CVPR 2026 Findings][LLM安全][后门攻击] 本文提出 PAR（Perturb and Recover），一种简单而有效的 CLIP 模型后门清洗方法：通过显式地将模型embedding推离中毒状态（Perturb），同时用标准 CLIP 损失恢复干净性能（Recover），在不依赖强数据增强的情况下实现对任意触发器的鲁棒后门移除，甚至仅用合成数据即可有效清洗。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "LLM安全"
   - "后门攻击"
   - "CLIP模型清洗"

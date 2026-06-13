@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Circle-RoPE: Cone-like Decoupled Rotary Positional Embedding for Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][位置编码] 提出 Circle-RoPE，将图像 token 的 2D 坐标映射到与文本位置轴正交的环面上，形成锥体几何结构，使每个文本 token 到所有图像 token 的 RoPE 距离相等（PTD=0），消除跨模态伪位置偏置…
+  [ICML 2026][多模态VLM][位置编码] 提出 Circle-RoPE，将图像 token 的 2D 坐标映射到与文本位置轴正交的环面上，形成锥体几何结构，使每个文本 token 到所有图像 token 的 RoPE 距离相等（PTD=0），消除跨模态伪位置偏置，同时通过逐层交替编码（AGE）保留图像内部空间结构。
 tags:
   - "ICML 2026"
   - "多模态VLM"

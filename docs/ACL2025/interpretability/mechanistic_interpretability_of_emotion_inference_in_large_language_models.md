@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mechanistic Interpretability of Emotion Inference in Large Language Models
 description: >-
-  [ACL2025][可解释性][机制可解释性] 通过 probing、activation patching 和 generation steering 三种机制可解释性技术，发现 LLM 的情感表征功能性地定位于中间层的 MHSA 单元…
+  [ACL2025][可解释性][机制可解释性] 通过 probing、activation patching 和 generation steering 三种机制可解释性技术，发现 LLM 的情感表征功能性地定位于中间层的 MHSA 单元，并基于认知评估理论（appraisal theory）证明这些表征具有心理学合理性，成功通过干预评估概念（如 self-agency、pleasantness）引导情感输出。
 tags:
   - "ACL2025"
   - "可解释性"

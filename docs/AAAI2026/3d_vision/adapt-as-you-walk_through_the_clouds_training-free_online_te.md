@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapt-As-You-Walk Through the Clouds: Training-Free Online Test-Time Adaptation of 3D Vision-Language Foundation Models
 description: >-
-  [AAAI 2026][3D视觉][测试时适应] 提出 Uni-Adapter，一种面向3D视觉-语言基础模型(VLFM)的无训练在线测试时适应框架，通过基于聚类的动态原型缓存和图正则化标签平滑来应对分布偏移，在多个3D损坏基准上取得SOTA。
+  [AAAI 2026][3D视觉][测试时适应] 提出 Uni-Adapter，一种面向3D视觉-语言基础模型(VLFM)的无训练在线测试时适应框架，通过基于聚类的动态原型缓存和图正则化标签平滑来应对分布偏移，在多个3D损坏基准上取得SOTA。 3D VLFM的零样本能力与实际部署的差距：Uni3D、ULIP-2、OpenS…
 tags:
   - "AAAI 2026"
   - "3D视觉"

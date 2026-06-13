@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Dynamics of Zeroth-Order Optimization: A Kernel Perspective
 description: >-
-  [ICML 2026][优化/理论][零阶优化] 本文用 empirical NTK 作为统一视角，证明 zeroth-order SGD 引出的 eNTK 等价于把 first-order eNTK 投影到由微扰张成的随机子空间…
+  [ICML 2026][优化/理论][零阶优化] 本文用 empirical NTK 作为统一视角，证明 zeroth-order SGD 引出的 eNTK 等价于把 first-order eNTK 投影到由微扰张成的随机子空间，从而通过 Johnson-Lindenstrauss 引理解释为何 ZO 方法在十亿参数 LLM 上仍然 work：误差只取决于输出维度 $V$ 和微扰数 $P$，与模型维度 $d$ 无关。
 tags:
   - "ICML 2026"
   - "优化/理论"

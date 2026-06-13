@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlattenGPT: Depth Compression for Transformer with Layer Flattening
 description: >-
-  [ICML 2026][模型压缩][LLM 剪枝] 本文提出 FlattenGPT，先把 LLM 中输入相似度高的相邻 transformer 层"扁平化"合并为一个 2× 宽度的层 (保留所有参数知识)，再对合并层做通道剪枝把宽度恢复到原始规模——既享受深度压缩的推理加速…
+  [ICML 2026][模型压缩][LLM 剪枝] 本文提出 FlattenGPT，先把 LLM 中输入相似度高的相邻 transformer 层"扁平化"合并为一个 2× 宽度的层 (保留所有参数知识)，再对合并层做通道剪枝把宽度恢复到原始规模——既享受深度压缩的推理加速，又避免传统层剪枝直接丢知识的性能塌方。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fixed Aggregation Features Can Rival GNNs
 description: >-
-  [ICML2026][图学习][固定聚合] 本文提出 Fixed Aggregation Features (FAF)：把多跳邻域用 mean/sum/max/min/std 等**不可训练**的聚合算子压成表格特征再喂给 MLP…
+  [ICML2026][图学习][固定聚合] 本文提出 Fixed Aggregation Features (FAF)：把多跳邻域用 mean/sum/max/min/std 等**不可训练**的聚合算子压成表格特征再喂给 MLP，在 14 个节点分类基准中有 12 个能与精调过的 GCN/GAT/GraphSAGE 乃至 Graph Transformer 打平甚至超越，从而对"GNN 的可训练邻域聚合到底有多必要"提出系统性质疑。
 tags:
   - "ICML2026"
   - "图学习"

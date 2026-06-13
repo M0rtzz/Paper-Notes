@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference
 description: >-
-  [ACL 2025][信息检索/RAG][检索增强生成] 针对检索增强语言模型(RALM)中因检索内容前置(prepending)导致 KV cache 反复重算的推理效率问题，提出 FlashBack，将检索内容后置(appending)以保留输入的 KV cache…
+  [ACL 2025][信息检索/RAG][检索增强生成] 针对检索增强语言模型(RALM)中因检索内容前置(prepending)导致 KV cache 反复重算的推理效率问题，提出 FlashBack，将检索内容后置(appending)以保留输入的 KV cache，并用 Marking Token + LoRA 微调适配新的上下文模式，在 Llama 2-7B 上实现最高 4 倍推理加速且 perplexity 持平。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

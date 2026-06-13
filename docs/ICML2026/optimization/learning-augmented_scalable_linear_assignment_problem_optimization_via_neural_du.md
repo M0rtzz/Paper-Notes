@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning-Augmented Scalable Linear Assignment Problem Optimization via Neural Dual Warm-Starts
 description: >-
-  [ICML 2026][优化/理论][线性指派] 训练一个轻量网络预测线性指派问题 (LAP) 的对偶变量 $\hat{u}$，用 Min-Trick 构造可行对偶 $\hat{v}$，将其作为 LAPJV 精确求解器的暖启动，从而在保持最优性的同时把 $N=16{…
+  [ICML 2026][优化/理论][线性指派] 训练一个轻量网络预测线性指派问题 (LAP) 的对偶变量 $\hat{u}$，用 Min-Trick 构造可行对偶 $\hat{v}$，将其作为 LAPJV 精确求解器的暖启动，从而在保持最优性的同时把 $N=16{,}384$ 规模实例端到端加速 $2\times$ 以上。
 tags:
   - "ICML 2026"
   - "优化/理论"

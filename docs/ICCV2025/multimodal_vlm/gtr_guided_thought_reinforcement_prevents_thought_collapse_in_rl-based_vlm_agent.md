@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-Based VLM Agent
 description: >-
-  [ICCV 2025][多模态VLM][思维链推理] 发现 VLM 智能体在 RL 训练中仅依赖结果奖励会导致"思维崩塌"（thought collapse），提出 GTR 框架通过外部 VLM 纠正器自动纠正推理过程并结合 PPO + SFT 联合训练思维和行动…
+  [ICCV 2025][多模态VLM][思维链推理] 发现 VLM 智能体在 RL 训练中仅依赖结果奖励会导致"思维崩塌"（thought collapse），提出 GTR 框架通过外部 VLM 纠正器自动纠正推理过程并结合 PPO + SFT 联合训练思维和行动，在 24 点游戏和 ALFWorld 环境中实现 3-5 倍的任务成功率提升。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal OCR: Parse Anything from Documents
 description: >-
-  [CVPR 2026][多模态VLM][文档解析] 提出Multimodal OCR (MOCR)范式，将文档中的文本和图形（图表、图示、UI组件等）统一解析为结构化文本表示（文本+SVG代码），训练3B参数的dots.mocr模型在OCR Arena排名仅次于Gemini 3 Pro…
+  [CVPR 2026][多模态VLM][文档解析] 提出Multimodal OCR (MOCR)范式，将文档中的文本和图形（图表、图示、UI组件等）统一解析为结构化文本表示（文本+SVG代码），训练3B参数的dots.mocr模型在OCR Arena排名仅次于Gemini 3 Pro，在olmOCR Bench达到83.9 SOTA，在image-to-SVG基准上超越Gemini 3 Pro。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

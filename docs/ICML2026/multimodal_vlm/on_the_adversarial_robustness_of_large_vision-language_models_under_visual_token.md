@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Adversarial Robustness of Large Vision-Language Models under Visual Token Compression
 description: >-
-  [ICML 2026][多模态VLM][视觉Token压缩] 本文首次系统研究了带视觉Token压缩的大视觉语言模型(LVLM)的对抗鲁棒性，指出现有编码器攻击存在"优化-推理空间不匹配"问题，并提出 CAGE 攻击通过期望特征扰动 (EFD) 与排名-扰动对齐 (RDA) 两个目标…
+  [ICML 2026][多模态VLM][视觉Token压缩] 本文首次系统研究了带视觉Token压缩的大视觉语言模型(LVLM)的对抗鲁棒性，指出现有编码器攻击存在"优化-推理空间不匹配"问题，并提出 CAGE 攻击通过期望特征扰动 (EFD) 与排名-扰动对齐 (RDA) 两个目标，在未知压缩机制与未知Token预算下显著降低被压缩 LVLM 的鲁棒精度。
 tags:
   - "ICML 2026"
   - "多模态VLM"

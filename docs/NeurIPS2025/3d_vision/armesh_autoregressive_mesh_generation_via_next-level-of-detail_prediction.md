@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARMesh: Autoregressive Mesh Generation via Next-Level-of-Detail Prediction
 description: >-
-  [NeurIPS 2025][3D视觉][3D mesh generation] 提出将 3D mesh 生成建模为"由粗到精"的逐级细化过程（next-level-of-detail prediction），通过反转广义网格简化算法（GSlim）获得渐进式细化序列，再用 Transformer 自回归学习…
+  [NeurIPS 2025][3D视觉][3D mesh generation] 提出将 3D mesh 生成建模为"由粗到精"的逐级细化过程（next-level-of-detail prediction），通过反转广义网格简化算法（GSlim）获得渐进式细化序列，再用 Transformer 自回归学习，从单个点开始逐步增加几何与拓扑细节生成完整网格。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

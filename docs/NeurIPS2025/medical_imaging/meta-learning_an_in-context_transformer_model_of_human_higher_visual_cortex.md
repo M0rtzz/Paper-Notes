@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex
 description: >-
-  [NeurIPS 2025][医学图像][fMRI编码模型] 提出BraInCoRL（Brain In-Context Representation Learning），一种基于Transformer的元学习框架…
+  [NeurIPS 2025][医学图像][fMRI编码模型] 提出BraInCoRL（Brain In-Context Representation Learning），一种基于Transformer的元学习框架，通过上下文学习（in-context learning）从少量刺激-响应样本直接预测新被试的体素级神经响应，无需微调即可适应新被试和新刺激，仅用100张图片就接近在9000张图片上完整训练的参考模型的性能。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

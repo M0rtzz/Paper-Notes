@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimLBR: Learning to Detect Fake Images by Learning to Detect Real Images
 description: >-
-  [CVPR 2026][图像生成][假图检测] 本文提出SimLBR，通过在DINOv3潜空间中将少量假图信息混入真图嵌入作为正则化手段，迫使检测器学习真实图像分布的紧致决策边界，从而实现对未知生成器的强泛化能力，在GenImage上平均准确率达94.54%…
+  [CVPR 2026][图像生成][假图检测] 本文提出SimLBR，通过在DINOv3潜空间中将少量假图信息混入真图嵌入作为正则化手段，迫使检测器学习真实图像分布的紧致决策边界，从而实现对未知生成器的强泛化能力，在GenImage上平均准确率达94.54%，在硬测试集Chameleon上比AIDE提升25%准确率和70%召回率。
 tags:
   - "CVPR 2026"
   - "图像生成"

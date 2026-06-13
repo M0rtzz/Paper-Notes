@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Compositional-ARC: Assessing Systematic Generalization in Abstract Spatial Reasoning
 description: >-
-  [ICLR 2026][LLM/NLP][systematic generalization] 提出 Compositional-ARC 数据集评估模型在抽象空间推理中的系统性泛化能力——从已知基础几何变换（如平移、旋转）泛化到未见过的变换组合…
+  [ICLR 2026][LLM 其他][systematic generalization] 提出 Compositional-ARC 数据集评估模型在抽象空间推理中的系统性泛化能力——从已知基础几何变换（如平移、旋转）泛化到未见过的变换组合。一个仅 5.7M 参数的 MLC 训练的 encoder-decoder 模型在系统性任务上达到 78.26%，与 ARC Prize 2024 冠军的 8B 模型+TTT 持平，远超 GPT-4o、o3-mini 等（<3%）。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "systematic generalization"
   - "meta-learning for compositionality"
   - "ARC"

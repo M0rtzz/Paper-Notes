@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPACeR: Self-Play Anchoring with Centralized Reference Models
 description: >-
-  [ICLR 2026][自动驾驶][自博弈强化学习] SPACeR 提出"类人自博弈"框架，用预训练的 tokenized 自回归运动模型作为集中式参考策略，通过对数似然奖励和 KL 散度约束引导去中心化自博弈 RL 策略向人类驾驶分布对齐，在 WOSAC 上超越纯自博弈方法…
+  [ICLR 2026][自动驾驶][自博弈强化学习] SPACeR 提出"类人自博弈"框架，用预训练的 tokenized 自回归运动模型作为集中式参考策略，通过对数似然奖励和 KL 散度约束引导去中心化自博弈 RL 策略向人类驾驶分布对齐，在 WOSAC 上超越纯自博弈方法，同时推理速度比模仿学习快 10 倍、参数量小 50 倍。
 tags:
   - "ICLR 2026"
   - "自动驾驶"

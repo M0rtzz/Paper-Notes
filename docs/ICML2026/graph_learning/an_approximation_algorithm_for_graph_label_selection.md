@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Approximation Algorithm for Graph Label Selection
 description: >-
-  [ICML2026][图学习][图标签选择] 这篇论文首次在不放宽标注预算的设定下，为 Graph Label Selection 给出 $\tilde{O}(\log^{1.5} n)$ 近似算法，并通过树割稀疏化、流判定和树上动态规划把原本全局耦合的选点问题变成可求解的组合优化流程。
+  [ICML2026][图学习][图标签选择] 这篇论文首次在不放宽标注预算的设定下，为 Graph Label Selection 给出 $\tilde{O}(\log^{1.5} n)$ 近似算法，并通过树割稀疏化、流判定和树上动态规划把原本全局耦合的选点问题变成可求解的组合优化流程。 领域现状：图上的主动学习常把样本之间…
 tags:
   - "ICML2026"
   - "图学习"

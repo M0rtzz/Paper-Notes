@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Protein Autoregressive Modeling via Multiscale Structure Generation
 description: >-
-  [ICML 2026][计算生物][蛋白质骨架生成] PAR 把图像领域 VAR 的 "next-scale prediction" 思路搬到蛋白质 Cα 骨架生成上，用多尺度下采样 + 自回归 Transformer + flow-based 解码器替代单尺度扩散模型…
+  [ICML 2026 Spotlight][计算生物][蛋白质骨架生成] PAR 把图像领域 VAR 的 "next-scale prediction" 思路搬到蛋白质 Cα 骨架生成上，用多尺度下采样 + 自回归 Transformer + flow-based 解码器替代单尺度扩散模型，配合 noisy context learning 和 scheduled sampling 缓解曝光偏差，在无条件生成 FPSD 上达到 161.0 的同时解锁 zero-shot 点提示生成与 motif scaffolding，并取得 2.5× 采样加速。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "计算生物"
   - "蛋白质骨架生成"
   - "多尺度自回归"

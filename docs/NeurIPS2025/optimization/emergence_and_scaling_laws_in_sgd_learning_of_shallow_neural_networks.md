@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emergence and Scaling Laws in SGD Learning of Shallow Neural Networks
 description: >-
-  [NeurIPS 2025][优化/理论][scaling laws] 本文对浅层神经网络在线 SGD 学习加法模型（多个单指标函数叠加）的过程进行了精确分析，证明了每个教师神经元的学习呈现尖锐相变（emergence），而大量相变曲线的叠加自然产生平滑的幂律 scaling law。
+  [NeurIPS 2025][优化/理论][scaling laws] 本文对浅层神经网络在线 SGD 学习加法模型（多个单指标函数叠加）的过程进行了精确分析，证明了每个教师神经元的学习呈现尖锐相变（emergence），而大量相变曲线的叠加自然产生平滑的幂律 scaling law。 领域现状：近年来关于梯度训练浅层网络学…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

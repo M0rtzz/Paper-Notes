@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformative or Conservative? Conservation Laws for ResNets and Transformers
 description: >-
-  [ICML2025][优化/理论][conservation laws] 系统推导并证明了卷积 ResNet 和 Transformer 等现代架构在梯度流训练动态下的守恒律，揭示残差连接不改变守恒律、块级守恒律等价于孤立块的守恒律…
+  [ICML2025][优化/理论][conservation laws] 系统推导并证明了卷积 ResNet 和 Transformer 等现代架构在梯度流训练动态下的守恒律，揭示残差连接不改变守恒律、块级守恒律等价于孤立块的守恒律，并证明离散 SGD 下守恒误差为 $O(\text{step-size}^2)$。
 tags:
   - "ICML2025"
   - "优化/理论"

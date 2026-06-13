@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentHijack: Benchmarking Computer Use Agent Robustness to Common Environment Corruptions
 description: >-
-  [ICML2026][多模态VLM][computer-use agent] 本文提出 AgentHijack，用 9 类可配置的日常环境破坏评测 computer-use Agent 鲁棒性，并进一步用 DA-GRPO 强化 grounding、引入 onlooker 进行行为总结与环境检查…
+  [ICML2026][多模态VLM][computer-use agent] 本文提出 AgentHijack，用 9 类可配置的日常环境破坏评测 computer-use Agent 鲁棒性，并进一步用 DA-GRPO 强化 grounding、引入 onlooker 进行行为总结与环境检查，使 UI-TARS-1.5-7B 在平均成功率上从 18.74% 提升到 22.89%。
 tags:
   - "ICML2026"
   - "多模态VLM"

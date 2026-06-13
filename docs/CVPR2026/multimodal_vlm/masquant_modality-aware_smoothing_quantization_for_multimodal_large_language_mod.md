@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MASQuant: Modality-Aware Smoothing Quantization for Multimodal Large Language Models
 description: >-
-  [CVPR 2026][多模态VLM][后训练量化] 揭示了通道平滑量化（如 SmoothQuant）直接应用于 MLLM 时的"平滑失配"问题——不同模态激活幅度差异巨大导致非主导模态被过度平滑，提出 MASQuant 通过模态感知平滑因子和基于 SVD 白化的跨模态低秩补偿解决该问题。
+  [CVPR 2026][多模态VLM][后训练量化] 揭示了通道平滑量化（如 SmoothQuant）直接应用于 MLLM 时的"平滑失配"问题——不同模态激活幅度差异巨大导致非主导模态被过度平滑，提出 MASQuant 通过模态感知平滑因子和基于 SVD 白化的跨模态低秩补偿解决该问题。 领域现状：后训练量化（PTQ）是部…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models
 description: >-
-  [强化学习] 提出 SPELL 框架，让一个 LLM 同时扮演出题者、答题者和验证者三个角色进行自我博弈强化学习，无需人类标注即可持续提升长文本推理能力，在 6 个长上下文基准上一致提升性能。
+  [强化学习] 提出 SPELL 框架，让一个 LLM 同时扮演出题者、答题者和验证者三个角色进行自我博弈强化学习，无需人类标注即可持续提升长文本推理能力，在 6 个长上下文基准上一致提升性能。 - 长上下文推理的困境：RLVR（可验证奖励 RL）在数学、代码等有明确正确性判据的领域取得成功，但长文本推理面临两大瓶颈： 1.…
 tags:
   - "强化学习"
 ---

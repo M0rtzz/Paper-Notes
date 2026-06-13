@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cape: Context-Aware Prompt Perturbation Mechanism with Differential Privacy
 description: >-
-  [ICML 2025][LLM安全][差分隐私] 提出 Cape——一种上下文感知的 prompt 扰动机制，通过混合效用函数（结合 token 嵌入距离和上下文 logit）以及分桶指数采样机制，在 local DP 保证下实现比现有方法更优的隐私-效用权衡。
+  [ICML 2025][LLM安全][差分隐私] 提出 Cape——一种上下文感知的 prompt 扰动机制，通过混合效用函数（结合 token 嵌入距离和上下文 logit）以及分桶指数采样机制，在 local DP 保证下实现比现有方法更优的隐私-效用权衡。 领域现状：LLM 推理服务（如 ChatGPT）要求用户将明文…
 tags:
   - "ICML 2025"
   - "LLM安全"

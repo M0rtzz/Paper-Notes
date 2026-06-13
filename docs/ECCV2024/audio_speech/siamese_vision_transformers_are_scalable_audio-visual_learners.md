@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Siamese Vision Transformers are Scalable Audio-Visual Learners
 description: >-
-  [ECCV 2024][音频/语音][音视觉学习] 提出AVSiam框架，使用单个共享权重的ViT backbone同时处理音频和视觉输入，结合多比例随机掩码策略和对比+重建双目标预训练，以极低成本（比MAViL快28.9倍）在音视觉分类和检索上达到SOTA性能。
+  [ECCV 2024][音频/语音][音视觉学习] 提出AVSiam框架，使用单个共享权重的ViT backbone同时处理音频和视觉输入，结合多比例随机掩码策略和对比+重建双目标预训练，以极低成本（比MAViL快28.9倍）在音视觉分类和检索上达到SOTA性能。 领域现状： 音视觉表征学习近年取得显著进展…
 tags:
   - "ECCV 2024"
   - "音频/语音"

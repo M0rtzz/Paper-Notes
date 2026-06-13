@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD
 description: >-
-  [NeurIPS 2025][优化/理论][单指标模型] 系统刻画了在学习高斯单指标模型时，学习率如何在"information exponent 主导"和"generative exponent 主导"两个样本复杂度体制之间引发相变，并提出了一种新的逐层交替 SGD 算法，无需复用样本即可突破 CSQ 下界…
+  [NeurIPS 2025][优化/理论][单指标模型] 系统刻画了在学习高斯单指标模型时，学习率如何在"information exponent 主导"和"generative exponent 主导"两个样本复杂度体制之间引发相变，并提出了一种新的逐层交替 SGD 算法，无需复用样本即可突破 CSQ 下界。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

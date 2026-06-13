@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Sound Source Localization with Joint Slot Attention on Image and Audio
 description: >-
-  [CVPR 2025][音频/语音][声源定位] 提出联合槽注意力机制将图像和音频同时分解为目标/非目标表示，通过跨模态注意力匹配和对比学习实现精确声源定位，在 Flickr-SoundNet 上达到 65.16% AUC、86.00% cIoU SOTA。
+  [CVPR 2025][音频/语音][声源定位] 提出联合槽注意力机制将图像和音频同时分解为目标/非目标表示，通过跨模态注意力匹配和对比学习实现精确声源定位，在 Flickr-SoundNet 上达到 65.16% AUC、86.00% cIoU SOTA。 领域现状：声源定位（SSL）在图像中定位发声物体…
 tags:
   - "CVPR 2025"
   - "音频/语音"

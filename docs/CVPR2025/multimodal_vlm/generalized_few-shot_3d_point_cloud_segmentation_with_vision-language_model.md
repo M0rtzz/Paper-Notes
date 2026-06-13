@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalized Few-Shot 3D Point Cloud Segmentation with Vision-Language Model
 description: >-
-  [CVPR 2025][多模态VLM][点云分割] GFS-VL 提出一种广义小样本 3D 点云分割框架，通过将 3D 视觉语言模型（3D VLM）生成的稠密但有噪声的伪标签与精确但稀疏的小样本标注协同融合——经由原型引导的伪标签筛选、自适应填充和 novel-base 混合增强——在现有和新设的高难度 be…
+  [CVPR 2025][多模态VLM][点云分割] GFS-VL 提出一种广义小样本 3D 点云分割框架，通过将 3D 视觉语言模型（3D VLM）生成的稠密但有噪声的伪标签与精确但稀疏的小样本标注协同融合——经由原型引导的伪标签筛选、自适应填充和 novel-base 混合增强——在现有和新设的高难度 benchmark 上取得了 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

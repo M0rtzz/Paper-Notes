@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixed Monotonicity Reachability Analysis of Neural ODE: A Trade-Off Between Tightness and Efficiency
 description: >-
-  [NeurIPS 2025（NeurReps 2025 Workshop, co-located with NeurIPS 2025）][模型压缩][Neural ODE] 将连续时间混合单调性技术应用于 Neural ODE 的可达性分析，通过将 Neural ODE 动力学嵌入混合单调系统，利用区间盒的几何简洁性实现高效过逼近…
+  [NeurIPS 2025（NeurReps 2025 Workshop, co-located with NeurIPS 2025）][模型压缩][Neural ODE] 将连续时间混合单调性技术应用于 Neural ODE 的可达性分析，通过将 Neural ODE 动力学嵌入混合单调系统，利用区间盒的几何简洁性实现高效过逼近，在紧致性（tightness）和计算效率之间提供可控的权衡。
 tags:
   - "NeurIPS 2025（NeurReps 2025 Workshop, co-located with NeurIPS 2025）"
   - "模型压缩"

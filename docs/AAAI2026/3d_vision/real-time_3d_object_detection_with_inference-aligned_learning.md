@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Real-Time 3D Object Detection with Inference-Aligned Learning
 description: >-
-  [AAAI2026][3D视觉][3D 目标检测] 提出 SR3D 框架，通过空间优先最优传输标签分配（SPOTA）和排序感知自适应自蒸馏（RAS）两个训练阶段组件，弥合室内密集 3D 目标检测中训练与推理行为的不一致性…
+  [AAAI2026][3D视觉][3D 目标检测] 提出 SR3D 框架，通过空间优先最优传输标签分配（SPOTA）和排序感知自适应自蒸馏（RAS）两个训练阶段组件，弥合室内密集 3D 目标检测中训练与推理行为的不一致性，在 ScanNet V2 和 SUN RGB-D 上以 42ms 实时速度刷新密集检测器 SOTA。
 tags:
   - "AAAI2026"
   - "3D视觉"

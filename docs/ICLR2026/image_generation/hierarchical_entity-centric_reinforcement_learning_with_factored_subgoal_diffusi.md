@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion
 description: >-
-  [ICLR 2026][图像生成][层次强化学习] 提出HECRL，一个层次化实体中心离线目标条件RL框架，结合基于价值的GCRL智能体和因子化子目标扩散模型，在多实体长时域任务中实现150%+的成功率提升。
+  [ICLR 2026][图像生成][层次强化学习] 提出HECRL，一个层次化实体中心离线目标条件RL框架，结合基于价值的GCRL智能体和因子化子目标扩散模型，在多实体长时域任务中实现150%+的成功率提升。 在多实体环境中实现长时域目标是RL的核心挑战。目标条件RL(GCRL)促进了目标间的泛化，但在高维观测和组合状态空间…
 tags:
   - "ICLR 2026"
   - "图像生成"

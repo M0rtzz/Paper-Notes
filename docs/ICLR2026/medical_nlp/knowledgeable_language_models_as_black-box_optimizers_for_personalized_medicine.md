@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledgeable Language Models as Black-Box Optimizers for Personalized Medicine
 description: >-
-  [ICLR 2026][医疗NLP][大语言模型优化] 提出 LEON（LLM-based Entropy-guided Optimization with kNowledgeable priors），一种数学原理严格的方法，将个性化医疗治疗方案设计建模为条件黑箱优化问题…
+  [ICLR 2026][医疗NLP][大语言模型优化] 提出 LEON（LLM-based Entropy-guided Optimization with kNowledgeable priors），一种数学原理严格的方法，将个性化医疗治疗方案设计建模为条件黑箱优化问题，通过熵约束和对抗性源批评模型引导 LLM 在不微调的情况下作为零样本优化器提出个性化治疗计划。
 tags:
   - "ICLR 2026"
   - "医疗NLP"

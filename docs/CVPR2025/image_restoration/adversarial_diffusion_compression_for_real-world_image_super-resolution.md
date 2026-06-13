@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution
 description: >-
-  [CVPR 2025][图像恢复][Real-world ISR] 提出对抗扩散压缩（ADC）框架，将一步扩散模型 OSEDiff 蒸馏为精简的扩散-GAN 混合模型，实现 73% 推理时间压缩、78% 计算量削减、74% 参数缩减，同时保持生成质量，达到 34.79 FPS 实时超分。
+  [CVPR 2025][图像恢复][Real-world ISR] 提出对抗扩散压缩（ADC）框架，将一步扩散模型 OSEDiff 蒸馏为精简的扩散-GAN 混合模型，实现 73% 推理时间压缩、78% 计算量削减、74% 参数缩减，同时保持生成质量，达到 34.79 FPS 实时超分。 领域现状：基于 Stable Dif…
 tags:
   - "CVPR 2025"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token Warping Helps MLLMs Look from Nearby Viewpoints
 description: >-
-  [CVPR 2026][多模态VLM][视角变换] 提出对 MLLM 的 ViT image token 做空间 warping（而非传统的像素级 warping）来模拟视角变换，发现 backward token warping 在保持语义一致性同时对深度估计噪声鲁棒…
+  [CVPR 2026][多模态VLM][视角变换] 提出对 MLLM 的 ViT image token 做空间 warping（而非传统的像素级 warping）来模拟视角变换，发现 backward token warping 在保持语义一致性同时对深度估计噪声鲁棒，在自建的 ViewBench 上大幅超越像素级 warping、专用空间推理 MLLM 和生成式 warping 方法。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

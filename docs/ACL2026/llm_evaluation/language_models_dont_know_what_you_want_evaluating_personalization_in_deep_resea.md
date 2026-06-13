@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Models Don't Know What You Want: Evaluating Personalization in Deep Research Needs Real Users
 description: >-
-  [ACL 2026][LLM评测][个性化 Deep Research] 作者构建了首个开源个性化 Deep Research 系统 MyScholarQA（profile → action → report 三段式），在 16 项离线指标上几乎全胜其它 DR baseline…
+  [ACL 2026][LLM评测][个性化 Deep Research] 作者构建了首个开源个性化 Deep Research 系统 MyScholarQA（profile → action → report 三段式），在 16 项离线指标上几乎全胜其它 DR baseline；但 21 位真实研究员的 90 分钟访谈揭示了 9 类离线评测完全检测不到的个性化失败模式，且四个主流 LLM judge 都预测不准用户满意度，给"用 LLM judge 替代真实用户"敲响了警钟。
 tags:
   - "ACL 2026"
   - "LLM评测"

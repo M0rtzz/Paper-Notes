@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Simple Algorithms for Bad Triangle Transversals with Applications to Correlation Clustering
 description: >-
-  [ICML 2026][坏三角形覆盖] 本文为有符号图上的"坏三角形覆盖"问题（Bad Triangle Transversal, BTT）给出两个仅需单次解 LP 的简洁 2-近似算法…
+  [ICML 2026 Spotlight][算法理论 / 近似算法 / 图聚类][坏三角形覆盖] 本文为有符号图上的"坏三角形覆盖"问题（Bad Triangle Transversal, BTT）给出两个仅需单次解 LP 的简洁 2-近似算法，证明在完全图上 BTT 与 Correlation Clustering、MinSTC、Cluster Deletion 同时具有 $\tfrac{2137}{2136}$ 的 NP-难逼近下界，并构造了一种新的 pivot 流程把任意可行 BTT 覆盖转化为最多 $\tfrac{3}{2}|F|$ 错误的聚类，从而把 BTT 与 CC 最优值的差距从 2 收紧到 $3/2$。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
+  - "算法理论 / 近似算法 / 图聚类"
   - "坏三角形覆盖"
   - "Correlation Clustering"
   - "近似算法"

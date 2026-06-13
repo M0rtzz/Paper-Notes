@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mechanism Design for LLM Fine-tuning with Multiple Reward Models
 description: >-
-  [NeurIPS 2025][LLM对齐][mechanism design] 将多方偏好聚合的 RLHF 微调建模为机制设计问题，证明了在社会福利最大化训练规则下各方有动机虚报偏好，并通过扩展 VCG 支付机制实现了占优策略激励相容（DSIC），确保各方如实报告偏好。
+  [NeurIPS 2025][LLM对齐][mechanism design] 将多方偏好聚合的 RLHF 微调建模为机制设计问题，证明了在社会福利最大化训练规则下各方有动机虚报偏好，并通过扩展 VCG 支付机制实现了占优策略激励相容（DSIC），确保各方如实报告偏好。 领域现状：RLHF 是 LLM 对齐的主流方法…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

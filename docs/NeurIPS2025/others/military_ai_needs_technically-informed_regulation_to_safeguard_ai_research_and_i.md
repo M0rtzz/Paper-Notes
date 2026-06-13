@@ -2,12 +2,13 @@
 title: >-
   [论文解读] Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications
 description: >-
-  [NeurIPS 2025][自主武器系统] 本文针对 AI 驱动的致命性自主武器系统 (AI-LAWS) 提出了基于系统行为（而非标签或意图）的监管标准，论证了 AI 研究者必须参与军事 AI 监管的全生命周期，并提出了五项具体的政策建议。
+  [NeurIPS 2025][自主武器系统] 本文提出 AI-LAWS（AI 驱动致命性自主武器系统）的行为导向定义与监管框架，通过两条技术准则识别需特别监管的军事 AI 系统，并提出五项具体政策建议，呼吁 AI 研究者深度参与军事 AI 治理的全生命周期。 领域现状：AI 增强的军事武器系统（无人机、无人舰艇、战场协调平台…
 tags:
   - "NeurIPS 2025"
   - "自主武器系统"
   - "AI-LAWS"
   - "军事 AI 监管"
+  - "行为导向定义"
   - "技术知情政策"
   - "AI 研究自由"
 ---
@@ -161,3 +162,19 @@ tags:
   - 技术知情政策
   - AI 研究自由
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] A Sustainable AI Economy Needs Data Deals That Work for Generators](a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)
+- [\[NeurIPS 2025\] Emergency Response Measures for Catastrophic AI Risk](emergency_response_measures_for_catastrophic_ai_risk.md)
+- [\[ACL 2025\] All That Glitters is Not Novel: Plagiarism in AI Generated Research](../../ACL2025/others/plagiarism_ai_generated_research.md)
+- [\[NeurIPS 2025\] Evaluating In Silico Creativity: An Expert Review of AI Chess Compositions](evaluating_in_silico_creativity_an_expert_review_of_ai_chess_compositions.md)
+- [\[NeurIPS 2025\] Fostering the Ecosystem of AI for Social Impact Requires Expanding and Strengthening Evaluation Standards](fostering_the_ecosystem_of_ai_for_social_impact_requires_expanding_and_strengthe.md)
+
+</div>
+
+<!-- RELATED:END -->

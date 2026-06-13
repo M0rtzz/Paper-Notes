@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Improving Language and Modality Transfer in Translation by Character-level Modeling
 description: >-
-  [ACL 2025][character-level] 提出基于字符级编码器 charSONAR 的跨语言跨模态翻译方法，通过 teacher-student 训练获得字符级文本编码器，再用轻量适配器连接 1000+ 语言的 CTC ASR 模型（MMS）…
+  [ACL 2025][音频/语音][character-level] 提出基于字符级编码器 charSONAR 的跨语言跨模态翻译方法，通过 teacher-student 训练获得字符级文本编码器，再用轻量适配器连接 1000+ 语言的 CTC ASR 模型（MMS），在 75 语言文本翻译和 33 语言语音翻译上实现 SOTA，零资源低资源场景表现尤其突出。
 tags:
   - "ACL 2025"
+  - "音频/语音"
   - "character-level"
   - "multilingual translation"
   - "speech translation"

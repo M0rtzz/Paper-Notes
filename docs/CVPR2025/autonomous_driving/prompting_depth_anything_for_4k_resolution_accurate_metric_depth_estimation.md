@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompting Depth Anything for 4K Resolution Accurate Metric Depth Estimation
 description: >-
-  [CVPR 2025][自动驾驶][深度基础模型] Prompt Depth Anything 首次将"提示"范式引入深度基础模型，利用低成本 LiDAR（如 iPhone LiDAR）作为度量提示，通过简洁的多尺度提示融合架构指导 Depth Anything 模型输出精确的度量深度…
+  [CVPR 2025][自动驾驶][深度基础模型] Prompt Depth Anything 首次将"提示"范式引入深度基础模型，利用低成本 LiDAR（如 iPhone LiDAR）作为度量提示，通过简洁的多尺度提示融合架构指导 Depth Anything 模型输出精确的度量深度，实现了高达 4K 分辨率的高质量深度估计。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

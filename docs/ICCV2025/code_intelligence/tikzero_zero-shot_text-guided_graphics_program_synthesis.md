@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TikZero: Zero-Shot Text-Guided Graphics Program Synthesis
 description: >-
-  [ICCV 2025 (Highlight)][代码智能][图形程序合成] 提出 TikZero，通过将图像表示作为中间桥梁，将图形程序生成与文本理解解耦，实现零样本文本引导的 TikZ 图形程序合成，在无需文本对齐训练数据的情况下大幅超越基线方法…
+  [ICCV 2025 (Highlight)][代码智能][图形程序合成] 提出 TikZero，通过将图像表示作为中间桥梁，将图形程序生成与文本理解解耦，实现零样本文本引导的 TikZ 图形程序合成，在无需文本对齐训练数据的情况下大幅超越基线方法，经端到端微调后的 TikZero+ 达到甚至超越 GPT-4o 等大型商业模型的性能。
 tags:
   - "ICCV 2025 (Highlight)"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks
 description: >-
-  [NeurIPS 2025][优化/理论][Adam] 首次理论分析 mini-batch Adam 的泛化行为，证明大 batch Adam/AdamW 即使带 weight decay 也收敛到高测试误差的解…
+  [NeurIPS 2025][优化/理论][Adam] 首次理论分析 mini-batch Adam 的泛化行为，证明大 batch Adam/AdamW 即使带 weight decay 也收敛到高测试误差的解，而小 batch 版本通过随机梯度的隐式正则化 + weight decay 的显式正则化可实现近零测试误差，且 Adam 的有效 weight decay 上界严格小于 AdamW。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Corrected Image Generation with Explainable Latent Rewards
 description: >-
-  [CVPR 2026][图像生成][文生图自修正] 提出 xLARD 框架，在文生图生成过程中通过一个轻量残差修正器在潜空间进行语义自修正，利用可解释的潜空间奖励信号（计数/颜色/位置）引导生成，在 GenEval 上提升 +4.1%，DPGBench 上提升 +2.97%…
+  [CVPR 2026][图像生成][文生图自修正] 提出 xLARD 框架，在文生图生成过程中通过一个轻量残差修正器在潜空间进行语义自修正，利用可解释的潜空间奖励信号（计数/颜色/位置）引导生成，在 GenEval 上提升 +4.1%，DPGBench 上提升 +2.97%，且以即插即用方式适配多种 backbone。
 tags:
   - "CVPR 2026"
   - "图像生成"

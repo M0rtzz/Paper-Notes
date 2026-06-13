@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences
 description: >-
-  [ICLR 2026][多模态VLM][VLM空间推理] 系统评估了 VLM 对机器人运动路径的空间推理能力，提出 4 种图像查询方法用于让 VLM 根据用户自然语言描述选择最佳运动路径，发现 Qwen2.5-VL 零样本准确率达 71.4%，且微调后小模型可获显著提升。
+  [ICLR 2026][多模态VLM][VLM空间推理] 系统评估了 VLM 对机器人运动路径的空间推理能力，提出 4 种图像查询方法用于让 VLM 根据用户自然语言描述选择最佳运动路径，发现 Qwen2.5-VL 零样本准确率达 71.4%，且微调后小模型可获显著提升。 在人机交互场景中，用户需要以自然语言表达对机器人运动…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

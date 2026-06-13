@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models
 description: >-
-  [AAAI2026][推荐系统][recommender systems] 提出 LLMHNI 框架，利用 LLM 产生的语义相关性和逻辑相关性两类辅助信号，解决推荐系统中困难样本与噪声样本难以区分的问题，显著提升去噪推荐性能。
+  [AAAI2026][推荐系统][recommender systems] 提出 LLMHNI 框架，利用 LLM 产生的语义相关性和逻辑相关性两类辅助信号，解决推荐系统中困难样本与噪声样本难以区分的问题，显著提升去噪推荐性能。 领域现状 领域现状：推荐系统通常依赖隐式反馈（点击、购买等）训练，默认将有交互标记为正样本、无交…
 tags:
   - "AAAI2026"
   - "推荐系统"

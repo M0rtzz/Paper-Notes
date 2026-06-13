@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CObL: Toward Zero-Shot Ordinal Layering without User Prompting
 description: >-
-  [ICCV 2025][自监督学习][object layers] 本文提出 CObL，一种基于多个冻结 Stable Diffusion UNet 并行生成的架构，能在无需用户提示、不知物体数量的前提下，从单张图像推断出遮挡排序的物体层叠表示（每层一个 amodal 完整物体）…
+  [ICCV 2025][自监督学习][object layers] 本文提出 CObL，一种基于多个冻结 Stable Diffusion UNet 并行生成的架构，能在无需用户提示、不知物体数量的前提下，从单张图像推断出遮挡排序的物体层叠表示（每层一个 amodal 完整物体），并且仅用数千张合成桌面场景就能零样本泛化到真实世界照片。
 tags:
   - "ICCV 2025"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraSS: Scalable Data Attribution with Gradient Sparsification and Sparse Projection
 description: >-
-  [NeurIPS 2025][模型压缩][数据归因] 提出 GraSS 与 FactGraSS 两阶段梯度压缩算法，利用逐样本梯度的固有稀疏性实现**亚线性**时间与空间复杂度（$O(k')$），在十亿参数模型上比 SOTA 基线 LoGra 快 **165%**，同时保持数据归因质量。
+  [NeurIPS 2025][模型压缩][数据归因] 提出 GraSS 与 FactGraSS 两阶段梯度压缩算法，利用逐样本梯度的固有稀疏性实现亚线性：时间与空间复杂度（$O(k')$），在十亿参数模型上比 SOTA 基线 LoGra 快 165%：，同时保持数据归因质量。 梯度数据归因（如影响函数）需计算每个训练样本的逐…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

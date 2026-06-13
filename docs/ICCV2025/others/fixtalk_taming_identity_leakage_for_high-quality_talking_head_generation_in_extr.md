@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases
 description: >-
-  [ICCV 2025][说话人头像生成] 提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。
+  [ICCV 2025][说话人头像生成] 提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。 现代说话人头像生成需要满足…
 tags:
   - "ICCV 2025"
   - "说话人头像生成"

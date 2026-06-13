@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding
 description: >-
-  [医学图像] 提出 SEED（Semantic Evaluation for Visual Brain Decoding），一个结合 Object F1、Cap-Sim 和 EffNet 三个互补指标的组合评估度量，在与人类评估的对齐度上显著超越现有所有指标。
+  [医学图像] 提出 SEED（Semantic Evaluation for Visual Brain Decoding），一个结合 Object F1、Cap-Sim 和 EffNet 三个互补指标的组合评估度量，在与人类评估的对齐度上显著超越现有所有指标。 - 视觉脑解码（从 fMRI 重建视觉刺激）取得显著进展…
 tags:
   - "医学图像"
 ---

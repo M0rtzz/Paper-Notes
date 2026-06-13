@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuRe: Query-Relevant Retrieval through Hard Negative Sampling in Composed Image Retrieval
 description: >-
-  [ICML2025][推荐系统][Composed Image Retrieval] 提出 QuRe，通过基于相关性分数陡降的硬负样本采样策略和奖励模型优化目标，在组合图像检索(CIR)中同时召回目标图像和其他相关图像，从而提升用户满意度。
+  [ICML2025][推荐系统][Composed Image Retrieval] 提出 QuRe，通过基于相关性分数陡降的硬负样本采样策略和奖励模型优化目标，在组合图像检索(CIR)中同时召回目标图像和其他相关图像，从而提升用户满意度。 组合图像检索 (Composed Image Retrieval…
 tags:
   - "ICML2025"
   - "推荐系统"

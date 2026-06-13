@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentially Private High-dimensional Variable Selection via Integer Programming
 description: >-
-  [NeurIPS 2025][AI安全][差分隐私] 本文提出两种纯差分隐私的稀疏变量选择方法 (top-R 和 mistakes)，利用现代混合整数规划 (MIP) 技术高效探索非凸目标景观，在高维设置（p 达 10000）下实现 SOTA 支撑集恢复率，同时提供理论恢复保证。
+  [NeurIPS 2025][AI安全][差分隐私] 本文提出两种纯差分隐私的稀疏变量选择方法 (top-R 和 mistakes)，利用现代混合整数规划 (MIP) 技术高效探索非凸目标景观，在高维设置（p 达 10000）下实现 SOTA 支撑集恢复率，同时提供理论恢复保证。 领域现状：高维稀疏变量选择 (Best Su…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

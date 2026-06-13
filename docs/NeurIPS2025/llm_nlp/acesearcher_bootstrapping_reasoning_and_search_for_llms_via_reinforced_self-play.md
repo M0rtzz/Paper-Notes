@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play
 description: >-
-  [NeurIPS 2025][LLM/NLP][搜索增强LLM] 提出 AceSearcher——一种协作式自我博弈框架，让单个 LLM 同时扮演**问题分解者**（将复杂查询拆解为子问题引导检索）和**求解者**（整合检索上下文生成答案），通过 SFT + 迭代 DPO 两阶段训练，仅用最终答案作为奖励信号…
+  [NeurIPS 2025 Spotlight][LLM 其他][搜索增强LLM] 提出 AceSearcher——一种协作式自我博弈框架，让单个 LLM 同时扮演**问题分解者**（将复杂查询拆解为子问题引导检索）和**求解者**（整合检索上下文生成答案），通过 SFT + 迭代 DPO 两阶段训练，仅用最终答案作为奖励信号，在 10 个数据集上平均 EM 提升 7.6%，32B 模型匹配 DeepSeek-V3（<5% 参数）。
 tags:
-  - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "NeurIPS 2025 Spotlight"
+  - "LLM 其他"
   - "搜索增强LLM"
   - "多跳推理"
   - "问题分解"

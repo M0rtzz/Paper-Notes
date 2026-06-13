@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Keep It on a Leash: Controllable Pseudo-label Generation Towards Realistic Long-Tailed Semi-Supervised Learning
 description: >-
-  [NeurIPS 2025][长尾分布] 提出 Controllable Pseudo-label Generation (CPG) 框架，通过可控的自强化优化循环将可靠伪标签逐步纳入标注集，在已知分布上构建 Bayes-optimal 分类器…
+  [NeurIPS 2025][半监督学习 / 长尾学习][长尾分布] 提出 Controllable Pseudo-label Generation (CPG) 框架，通过可控的自强化优化循环将可靠伪标签逐步纳入标注集，在已知分布上构建 Bayes-optimal 分类器，从而在未标注数据分布完全未知的 Realistic LTSSL 场景下实现最高 15.97% 的准确率提升。
 tags:
   - "NeurIPS 2025"
+  - "半监督学习 / 长尾学习"
   - "长尾分布"
   - "半监督学习"
   - "伪标签"

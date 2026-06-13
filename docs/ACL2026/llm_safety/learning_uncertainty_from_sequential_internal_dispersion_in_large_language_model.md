@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Uncertainty from Sequential Internal Dispersion in Large Language Models
 description: >-
-  [ACL 2026][LLM安全][不确定性估计] 提出 SIVR 框架，通过计算 LLM 隐藏状态跨层的内部方差（广义方差、圆方差、token 熵）作为 token 级特征，用轻量 Transformer 编码器聚合全序列模式来估计不确定性/检测幻觉，显著优于基线且泛化更强。
+  [ACL 2026][LLM安全][不确定性估计] 提出 SIVR 框架，通过计算 LLM 隐藏状态跨层的内部方差（广义方差、圆方差、token 熵）作为 token 级特征，用轻量 Transformer 编码器聚合全序列模式来估计不确定性/检测幻觉，显著优于基线且泛化更强。 领域现状：不确定性估计是检测 LLM 幻觉的重…
 tags:
   - "ACL 2026"
   - "LLM安全"

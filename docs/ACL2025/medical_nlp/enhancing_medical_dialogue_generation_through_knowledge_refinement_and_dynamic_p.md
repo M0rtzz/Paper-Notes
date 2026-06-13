@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment
 description: >-
-  [ACL 2025][医疗NLP][medical dialogue system] 提出 MedRef，一种融合知识精炼机制和动态 Prompt 调整策略的医学对话系统，通过隐变量过滤无关知识图谱三元组、实体-行为联合预测、以及三元组过滤器和示例选择器动态构建系统 Prompt…
+  [ACL 2025][医疗NLP][medical dialogue system] 提出 MedRef，一种融合知识精炼机制和动态 Prompt 调整策略的医学对话系统，通过隐变量过滤无关知识图谱三元组、实体-行为联合预测、以及三元组过滤器和示例选择器动态构建系统 Prompt，在 MedDG 和 KaMed 两个基准上取得 SOTA 性能。
 tags:
   - "ACL 2025"
   - "医疗NLP"

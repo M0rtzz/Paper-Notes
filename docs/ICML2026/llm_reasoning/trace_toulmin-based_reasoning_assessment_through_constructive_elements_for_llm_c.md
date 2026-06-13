@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRACE: 用 Toulmin 论证模型评 LLM CoT 推理过程质量
 description: >-
-  [ICML 2026][LLM推理][CoT 评估] TRACE 是个参考无关的 CoT 质量评估指标，把 Toulmin 论证模型（Claim/Data/Warrant/Backing/Qualifier/Rebuttal）+ Flavell 元认知（Monitoring/Evaluation）合成 8 个…
+  [ICML 2026][LLM推理][CoT 评估] TRACE 是个参考无关的 CoT 质量评估指标，把 Toulmin 论证模型（Claim/Data/Warrant/Backing/Qualifier/Rebuttal）+ Flavell 元认知（Monitoring/Evaluation）合成 8 个构成要素，用 DeBERTa 多标签识别每句推理的要素，再算"State Validity + Transition Coherence"加权和；在 26.3K QA × 7 模型上与 benchmark accuracy 相关 $r=0.741$，且能当 RL reward 让 GSM8K 提升 +9.9%。
 tags:
   - "ICML 2026"
   - "LLM推理"

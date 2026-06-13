@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Learning for Subspace Regression
 description: >-
-  [ICLR2026][物理/科学计算][subspace regression] 将缩减阶建模（ROM）中的子空间预测问题形式化为 Grassmann 流形上的回归任务，提出专用损失函数与子空间嵌入（subspace embedding）技术——通过预测比目标更大维度的子空间来降低映射复杂度——在特征值问题、…
+  [ICLR2026][物理/科学计算][subspace regression] 将缩减阶建模（ROM）中的子空间预测问题形式化为 Grassmann 流形上的回归任务，提出专用损失函数与子空间嵌入（subspace embedding）技术——通过预测比目标更大维度的子空间来降低映射复杂度——在特征值问题、参数化 PDE 和迭代法加速等场景中均取得显著效果。
 tags:
   - "ICLR2026"
   - "物理/科学计算"

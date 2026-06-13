@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAlignDiff: Automatic Tooth Alignment assisted by Diffusion-based Transformation Learning
 description: >-
-  [AAAI 2026][医学图像][牙齿排列] 提出TAlignDiff框架，将基于点云的几何约束回归网络（PRN）与扩散模型辅助的变换矩阵去噪模块（DTMD）统一为一个联合训练框架，通过双向反馈机制在小样本临床数据上实现了优于现有方法的自动牙齿排列效果。
+  [AAAI 2026][医学图像][牙齿排列] 提出TAlignDiff框架，将基于点云的几何约束回归网络（PRN）与扩散模型辅助的变换矩阵去噪模块（DTMD）统一为一个联合训练框架，通过双向反馈机制在小样本临床数据上实现了优于现有方法的自动牙齿排列效果。 领域现状：自动牙齿排列是正畸治疗的核心任务——需要预测每颗牙齿从错颌…
 tags:
   - "AAAI 2026"
   - "医学图像"

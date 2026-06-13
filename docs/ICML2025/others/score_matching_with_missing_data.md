@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Score Matching with Missing Data
 description: >-
-  [ICML 2025 (Spotlight)][score matching] 本文将 score matching 及其主要扩展适配到缺失数据场景，提出两种变体——重要性加权（IW）方法和变分方法，在图模型估计等任务上展示了不同场景下各自的优势。
+  [ICML 2025 (Spotlight)][score matching] 本文将 score matching 及其主要扩展适配到缺失数据场景，提出两种变体——重要性加权（IW）方法和变分方法，在图模型估计等任务上展示了不同场景下各自的优势。 领域现状：Score matching 是学习数据分布的核心工具…
 tags:
   - "ICML 2025 (Spotlight)"
   - "score matching"

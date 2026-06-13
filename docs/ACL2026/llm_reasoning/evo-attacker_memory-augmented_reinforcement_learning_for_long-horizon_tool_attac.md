@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evo-Attacker: Memory-Augmented Reinforcement Learning for Long-Horizon Tool Attacks on LLM-MAS
 description: >-
-  [ACL2026][LLM推理][LLM-MAS] 本文提出 Evo-Attacker，把面向 LLM 多智能体系统的工具返回篡改建模为带动态攻击记忆的长程强化学习问题，并用 Attack-Flow GRPO 优化检索、反思和修改决策，在多架构、多任务 benchmark 上显著降低系统成功率。
+  [ACL2026][LLM推理][LLM-MAS] 本文提出 Evo-Attacker，把面向 LLM 多智能体系统的工具返回篡改建模为带动态攻击记忆的长程强化学习问题，并用 Attack-Flow GRPO 优化检索、反思和修改决策，在多架构、多任务 benchmark 上显著降低系统成功率。 领域现状：LLM 多智能体系…
 tags:
   - "ACL2026"
   - "LLM推理"

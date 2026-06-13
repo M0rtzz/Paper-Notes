@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation
 description: >-
-  [ICCV 2025][人体理解][位姿估计] 提出同时预测物体前后表面的3D坐标并在两表面间密集采样，构建超密集2D-3D对应关系，配合新颖的层级连续坐标编码（HCCE），在BOP七大核心数据集上超越现有SOTA方法。
+  [ICCV 2025][人体理解][位姿估计] 提出同时预测物体前后表面的3D坐标并在两表面间密集采样，构建超密集2D-3D对应关系，配合新颖的层级连续坐标编码（HCCE），在BOP七大核心数据集上超越现有SOTA方法。 在已知物体的6D位姿估计中，主流pipeline是通过神经网络预测物体表面的3D坐标…
 tags:
   - "ICCV 2025"
   - "人体理解"

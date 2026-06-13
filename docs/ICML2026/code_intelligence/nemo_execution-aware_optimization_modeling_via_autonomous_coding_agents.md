@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NEMO: Execution-Aware Optimization Modeling via Autonomous Coding Agents
 description: >-
-  [ICML 2026][代码智能][自动优化建模] NEMO 把自治编码代理 (Autonomous Coding Agent, ACA) 当作和 LLM 同级的"一等抽象"来调用，让独立生成的模拟器和优化器在共享沙箱里通过执行结果互相校验，再叠加多样性记忆检索与 MBR/自一致性解码…
+  [ICML 2026][代码智能][自动优化建模] NEMO 把自治编码代理 (Autonomous Coding Agent, ACA) 当作和 LLM 同级的"一等抽象"来调用，让独立生成的模拟器和优化器在共享沙箱里通过执行结果互相校验，再叠加多样性记忆检索与 MBR/自一致性解码，在 9 个优化建模基准上 8 个拿到 SOTA、最高领先 28 个百分点。
 tags:
   - "ICML 2026"
   - "代码智能"

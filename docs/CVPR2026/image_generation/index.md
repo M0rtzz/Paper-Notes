@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 图像生成论文汇总 · 220篇论文解读
+  CVPR2026 图像生成论文汇总 · 273篇论文解读
 description: >-
-  220篇CVPR2026的图像生成方向论文解读，涵盖扩散模型、文生图、布局/合成、对齐/RLHF、多模态、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  273篇CVPR2026的图像生成方向论文解读，涵盖扩散模型、文生图、布局/合成、对齐/RLHF、多模态、图像恢复等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "图像生成"
@@ -13,10 +13,12 @@ tags:
   - "布局/合成"
   - "对齐/RLHF"
   - "多模态"
-  - "人脸/视线"
+  - "图像恢复"
 item_list:
   - u: "2ndmatch_finetuning_pruned_diffusion_models_via_second-order_jacobian_matching/"
     t: "2ndMatch: Finetuning Pruned Diffusion Models via Second-Order Jacobian Matching"
+  - u: "4klsdb_a_large-scale_dataset_for_4k_image_restoration_and_generation/"
+    t: "4KLSDB: A Large-Scale Dataset for 4K Image Restoration and Generation"
   - u: "adapt_attention_driven_adaptive_prompt_scheduling_and_interpolating_orthogonal_c/"
     t: "ADAPT: Attention Driven Adaptive Prompt Scheduling and InTerpolating Orthogonal Complements for Rare Concepts Generation"
   - u: "adaptive_auxiliary_prompt_blending_for_target-faithful_diffusion_generation/"
@@ -51,8 +53,16 @@ item_list:
     t: "Banana100: Breaking NR-IQA Metrics by 100 Iterative Image Replications with Nano Banana Pro"
   - u: "beautygrpo_aesthetic_alignment_for_face_retouching_via_dynamic_path_guidance_and/"
     t: "BeautyGRPO: Aesthetic Alignment for Face Retouching via Dynamic Path Guidance and Fine-Grained Preference Modeling"
+  - u: "beyond_fixed_formulas_data-driven_linear_predictor_for_efficient_diffusion_model/"
+    t: "Beyond Fixed Formulas: Data-Driven Linear Predictor for Efficient Diffusion Models"
+  - u: "beyond_objects_contextual_synthetic_data_generation_for_fine-grained_classificat/"
+    t: "Beyond Objects: Contextual Synthetic Data Generation for Fine-Grained Classification"
+  - u: "beyond_patches_global-aware_autoregressive_model_for_multimodal_few-shot_font_ge/"
+    t: "Beyond Patches: Global-aware Autoregressive Model for Multimodal Few-Shot Font Generation"
   - u: "beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token/"
     t: "Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control"
+  - u: "beyond_text_prompts_precise_concept_erasure_through_text-image_collaboration/"
+    t: "Beyond Text Prompts: Precise Concept Erasure through Text–Image Collaboration"
   - u: "beyond_the_golden_data_resolving_the_motion-vision_quality_dilemma_via_timestep_/"
     t: "Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training"
   - u: "bias_reward_models_t2i/"
@@ -63,33 +73,27 @@ item_list:
     t: "BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation"
   - u: "biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align/"
     t: "BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment"
-  - u: "blackmirror_black-box_backdoor_detection_for_text-to-image_models_via_instructio/"
-    t: "BlackMirror: Black-Box Backdoor Detection for Text-to-Image Models via Instruction-Response Deviation"
-  - u: "care-edit_condition-aware_routing_of_experts_for_contextual_image_editing/"
-    t: "CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing"
-  - u: "careflow_cyclic_adaptive_rectified_flow_for_multimodal_fusion/"
-    t: "CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion"
-  - u: "causal_motion_diffusion_models_for_autoregressive_motion_generation/"
-    t: "Causal Motion Diffusion Models for Autoregressive Motion Generation"
-  - u: "cfg-ctrl_control-based_classifier-free_diffusion_guidance/"
-    t: "CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance"
-  - u: "changebridge_spatiotemporal_image_generation_with_multimodal_controls_for_remote/"
-    t: "ChangeBridge: Spatiotemporal Image Generation with Multimodal Controls for Remote Sensing"
-item_total: 220
+  - u: "black-box_membership_inference_attacks_on_the_pre-training_data_of_image-generat/"
+    t: "Black-box Membership Inference Attacks on the Pre-training Data of Image-generation Models"
+item_total: 273
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2026** · **220** 篇论文解读
+**📷 CVPR2026** · **273** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
-🔥 **高频主题：** 扩散模型 ×72 · 文生图 ×19 · 布局/合成 ×11 · 对齐/RLHF ×10 · 多模态 ×10
+🔥 **高频主题：** 扩散模型 ×84 · 文生图 ×21 · 布局/合成 ×16 · 对齐/RLHF ×12 · 多模态 ×11
 
 **[2ndMatch: Finetuning Pruned Diffusion Models via Second-Order Jacobian Matching](2ndmatch_finetuning_pruned_diffusion_models_via_second-order_jacobian_matching.md)**
 
 :   提出2ndMatch微调框架，通过对齐剪枝模型与原始模型的二阶Jacobian矩阵 $J^\top J$（灵感来自有限时间Lyapunov指数），匹配两者对输入扰动的时间敏感性，从而显著缩小剪枝扩散模型与原始模型的生成质量差距。
+
+**[4KLSDB: A Large-Scale Dataset for 4K Image Restoration and Generation](4klsdb_a_large-scale_dataset_for_4k_image_restoration_and_generation.md)**
+
+:   这篇论文构建了 4KLSDB——一个含 12.9 万张**原生 4K**（≥3840×2160，非放大）训练图、覆盖自然/城市/人物/美食/艺术/CGI 等多类别的大规模数据集，通过"几何预筛 → LMM 质量打分 → 边缘纹理过滤 → 人工复检"的多阶段管线把约 39 万候选图压到高质量子集，并配套提供成对 LR/HR 的 4K 超分基准与图文对，实验证明把 SwinIR/MambaIR/Sana 等模型在它上面微调后，4K 超分和 4K 文生图的保真度与感知质量都明显提升。
 
 **[ADAPT: Attention Driven Adaptive Prompt Scheduling and InTerpolating Orthogonal Complements for Rare Concepts Generation](adapt_attention_driven_adaptive_prompt_scheduling_and_interpolating_orthogonal_c.md)**
 
@@ -159,9 +163,25 @@ item_total: 220
 
 :   提出 BeautyGRPO，一个基于强化学习的人脸修图框架，通过构建细粒度偏好数据集 FRPref-10K 训练专用奖励模型，并设计动态路径引导（DPG）机制在随机探索与高保真之间取得平衡，实现与人类美学偏好对齐的自然修图效果。
 
+**[Beyond Fixed Formulas: Data-Driven Linear Predictor for Efficient Diffusion Models](beyond_fixed_formulas_data-driven_linear_predictor_for_efficient_diffusion_model.md)**
+
+:   本文先证明 TaylorSeer、FoCa 等"预测式特征缓存"在数学上都退化成了对历史特征的**固定系数线性组合**，再用实测说明 DiT 特征轨迹本就高度线性可重建，于是提出 $L^2P$——用一组**每个时间步可学习的线性权重**替换手工推导的固定系数，仅用 50 张图、单卡 20 秒训练，就在 FLUX/Qwen-Image 上把扩散采样加速到 4.5–7.2× 的同时保持远高于现有方法的 PSNR。
+
+**[Beyond Objects: Contextual Synthetic Data Generation for Fine-Grained Classification](beyond_objects_contextual_synthetic_data_generation_for_fine-grained_classificat.md)**
+
+:   针对"用文生图模型造合成数据训分类器"在细粒度、少样本场景下容易过拟合的问题，BOB 把每张真实图的**类无关上下文**（背景、姿态）显式抽出来：微调时条件化进 prompt（保留多样性先验），生成时跨类随机配对采样（边缘化掉虚假关联），在 Aircraft 上把 CLIP 分类精度从 DataDream 的 50.0% 提到 57.4%。
+
+**[Beyond Patches: Global-aware Autoregressive Model for Multimodal Few-Shot Font Generation](beyond_patches_global-aware_autoregressive_model_for_multimodal_few-shot_font_ge.md)**
+
+:   GAR-Font 用一个"全局感知 tokenizer + 自回归生成器 + 轻量语言适配器 + GRPO 后精修"的组合，把少样本汉字字体生成从只看图的 patch 级建模升级为兼顾局部笔画与全局风格、还能用一句文字描述补充风格意图的多模态自回归框架，用 4 张参考图 + 1 句文本就能匹配 8 张图的生成质量。
+
 **[Beyond Pixel Simulation: Pathology Image Generation via Diagnostic Semantic Tokens and Prototype Control](beyond_pixel_simulation_pathology_image_generation_via_diagnostic_semantic_token.md)**
 
 :   UniPath提出语义驱动的病理图像生成框架，通过多流控制（原始文本 + 从冻结病理MLLM蒸馏的诊断语义Token + 原型库形态控制）实现诊断级可控生成，Patho-FID达80.9，比第二名优51%。
+
+**[Beyond Text Prompts: Precise Concept Erasure through Text–Image Collaboration](beyond_text_prompts_precise_concept_erasure_through_text-image_collaboration.md)**
+
+:   TICoE 用「连续凸概念流形（文本端）+ 多尺度层次视觉表征（图像端）」协同地从文生图扩散模型里精准擦除目标概念，既堵住文本擦除"换个说法就复活"的漏洞，又避免图像引导误伤形状/语境相似的无关概念，在 gun/nudity/Van Gogh 等任务上同时拿到更强擦除（UDA 0.02）和更好保真（FID 30.86）。
 
 **[Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training](beyond_the_golden_data_resolving_the_motion-vision_quality_dilemma_via_timestep_.md)**
 
@@ -183,9 +203,25 @@ item_total: 220
 
 :   提出 BioVITA 框架，包含百万级三模态（图像-文本-音频）生物数据集、两阶段对齐模型和六方向跨模态物种级检索基准，首次实现生物领域视觉-文本-声音统一表示学习。
 
+**[Black-box Membership Inference Attacks on the Pre-training Data of Image-generation Models](black-box_membership_inference_attacks_on_the_pre-training_data_of_image-generat.md)**
+
+:   针对闭源文生图扩散模型，本文提出 **SD-MIA**：不再像传统方法那样对图像加噪、看模型去噪能力，而是**扰动文本指令**、看重建图像是否稳定，借此判断某张图是否出现在模型的**预训练数据**里——在纯黑盒（只给文本进、出图）约束下，AUC 比能访问内部特征的灰盒最强基线还高出最多约 10 个点。
+
 **[BlackMirror: Black-Box Backdoor Detection for Text-to-Image Models via Instruction-Response Deviation](blackmirror_black-box_backdoor_detection_for_text-to-image_models_via_instructio.md)**
 
 :   提出 BlackMirror 框架，通过细粒度的指令-响应语义偏差检测（MirrorMatch）和跨 prompt 稳定性验证（MirrorVerify）两阶段流程，在黑盒条件下实现对 T2I 模型多种后门攻击的通用检测，F1 平均达 89.46%，大幅超越已有黑盒方法 UFID。
+
+**[BlazeEdit: Generalist Image Editing on Mobile Devices with Image-to-Image Diffusion Models](blazeedit_generalist_image_editing_on_mobile_devices_with_image-to-image_diffusi.md)**
+
+:   BlazeEdit 发现「很多实用图像编辑任务根本不需要文本引导」，于是彻底砍掉文生图模型里庞大的文本编码器，用一个只有 195M 参数的纯图到图扩散模型把去物体、外扩画、调色、补光、贴纸生成五项任务塞进同一个网络，在 Pixel 10 上 290ms 完成一次推理，实现端侧、隐私安全的通用图像编辑。
+
+**[C$^2$FG: Control Classifier-Free Guidance via Score Discrepancy Analysis](c2fg_control_classifier-free_guidance_via_score_discrepancy_analysis.md)**
+
+:   本文用严格的 score 差距上界证明"条件与无条件分布在前向扩散中以指数速率收敛"，据此把 CFG 里那个固定的引导权重 $\omega$ 换成一个指数衰减的时变控制函数 $\omega(t)$，无需训练、即插即用，在 DiT / SiT / Stable Diffusion / EDM2 等多种框架上把 FID/IS 都进一步刷到了 SOTA。
+
+**[Can Nano Banana 2 Replace Traditional Image Restoration Models? An Evaluation of Its Performance on Image Restoration Tasks](can_nano_banana_2_replace_traditional_image_restoration_models_an_evaluation_of_.md)**
+
+:   这是一篇评测研究：作者系统测试了通用图像编辑模型 Nano Banana 2 能否充当统一的图像恢复器，发现它在感知质量和用户偏好上很强、在 FR 指标上也有竞争力，但存在「感知好看 ≠ 保真还原」的根本缺口——容易过度生成、幻觉纹理、语义漂移，而这一缺口恰恰被现有 IQA 指标和用户研究所掩盖。
 
 **[CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing](care-edit_condition-aware_routing_of_experts_for_contextual_image_editing.md)**
 
@@ -235,6 +271,10 @@ item_total: 220
 
 :   提出 CoLoGen，一个基于"概念-定位对偶性"（Concept-Localization Duality）的统一图像生成框架，通过渐进式分阶段训练和 Progressive Representation Weaving（PRW）动态专家路由架构，在指令编辑、可控生成和个性化生成三大任务上同时达到或超越专用模型水平。
 
+**[CompBench: Benchmarking Complex Instruction-guided Image Editing](compbench_benchmarking_complex_instruction-guided_image_editing.md)**
+
+:   CompBench 是首个面向**复杂真实场景**的指令引导图像编辑评测基准，从视频对象分割数据集 MOSE 取高密度遮挡场景，用 MLLM-人类协作框架 + 指令解耦策略造出 3K+ 高保真编辑样本、覆盖 5 大类 9 项任务，系统揭示了当前编辑模型在多对象、空间推理和隐式推理上的根本性短板。
+
 **[ConsistCompose: Unified Multimodal Layout Control for Image Composition](consistcompose_multimodal_layout_control.md)**
 
 :   提出 ConsistCompose，通过将布局坐标直接嵌入语言prompt（LELG范式），在统一多模态框架中实现布局可控的多实例图像生成；构建340万样本的ConsistCompose3M数据集提供布局+身份监督；配合坐标感知CFG机制，在COCO-Position上实现布局IoU 7.2%提升和AP 13.7%提升，同时保持通用理解能力。
@@ -247,9 +287,17 @@ item_total: 220
 
 :   CRAFT 提出一种超轻量的扩散模型对齐方法：通过组合奖励过滤(CRF)策略自动构建高质量训练集，然后执行增强版 SFT，理论证明 CRAFT 实际优化的是分组强化学习的下界，仅用 100 个样本就超越了需要数千偏好对的 SOTA 方法，且训练速度快 11-220 倍。
 
+**[Cross-Axis Feature Fusion with Joint-Wise Motion Difference Prediction for Text-Based 3D Human Motion Editing](cross-axis_feature_fusion_with_joint-wise_motion_difference_prediction_for_text-.md)**
+
+:   针对文本驱动的 3D 人体动作编辑，本文用「关节锚定」和「时间锚定」两个 Transformer 分别在关节轴和时间轴上建模，再用跨轴融合块整合，并配一个回归源/目标旋转轨迹 Soft-DTW 距离的辅助任务，让模型不仅知道「何时」改、还知道「改哪些关节」，在 MotionFix 上全面刷到 SOTA。
+
 **[Cross-Modal Emotion Transfer for Emotion Editing in Talking Face Video](cross-modal_emotion_transfer_for_emotion_editing_in_talking_face_video.md)**
 
 :   提出 C-MET（Cross-Modal Emotion Transfer），通过建模语音和面部表情空间之间的情感语义向量映射，首次实现了基于语音驱动的扩展情感（如讽刺、魅力）说话人脸视频生成，情感准确率超越 SOTA 14%。
+
+**[CSF: Black-box Fingerprinting via Compositional Semantics for Text-to-Image Models](csf_black-box_fingerprinting_via_compositional_semantics_for_text-to-image_model.md)**
+
+:   CSF 把文生图模型当成"语义类别生成器"，用一批在微调数据里**极其罕见的组合语义提示词**（如"一只危险的城市夜行动物"）反复采样，提取模型对模糊提示的类别分布作为指纹，再用 Wasserstein 距离 + 贝叶斯归因判定一个只能 API 访问的可疑模型属于哪个受保护基座家族——在 6 个基座家族、13 个微调变体上全部通过"主导性"判据。
 
 **[CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration](ctcal_rethinking_text-to-image_diffusion_models_via_cross-timestep_self-calibrat.md)**
 
@@ -267,17 +315,45 @@ item_total: 220
 
 :   提出 Detail-Aligned VAE (DA-VAE)，通过在预训练 VAE 的潜空间中引入结构化的"细节通道"并施加对齐约束，在不重训扩散模型的前提下将 token 数压缩 4 倍，仅需 5 H100-days 微调即可实现 SD3.5 的 1024→2048 生成，加速 6 倍。
 
+**[DBMSolver: A Training-free Diffusion Bridge Sampler for High-Quality Image-to-Image Translation](dbmsolver_a_training-free_diffusion_bridge_sampler_for_high-quality_image-to-ima.md)**
+
+:   针对扩散桥模型（DBM）做图像到图像翻译时采样慢（动辄几十上百次网络评估）的问题，DBMSolver 不改网络、不训练，仅靠揭示 Bridge SDE/ODE 的「半线性结构」并用指数积分器（EI）推出闭式解，把采样步数（NFE）压到 6 步就超过此前 SOTA，在 DIODE 上 20 NFE 时 FID 比二阶基线降 53%。
+
 **[Elucidating the SNR-t Bias of Diffusion Probabilistic Models](dcw_snr_t_bias_diffusion.md)**
 
 :   本文揭示了扩散模型中普遍存在的 SNR-t 偏差（逆过程样本的信噪比与时间步不匹配），并提出小波域动态差分校正方法（DCW），在不训练的情况下即插即用地提升多种扩散模型的生成质量。
+
+**[DebFilter: Eradicating Biases Stashed in Value](debfilter_eradicating_biases_stashed_in_value.md)**
+
+:   DebFilter 发现文生图扩散模型的社会偏见主要藏在交叉注意力的 **value** 分量里，于是用最小二乘把"中性提示"的 value 对齐到"显式属性提示"的 value，提炼出一个跨提示通用的固定偏移向量 $\Delta\bar{\mathbf{c}}$，**推理时**直接加到文本 embedding 上即可去偏，无需任何训练或数据，并能按比例可控、支持多目标场景。
+
+**[Decision Boundary-aware Generation for Long-tailed Learning](decision_boundary-aware_generation_for_long-tailed_learning.md)**
+
+:   针对"用扩散模型 + 头→尾特征迁移补长尾数据"会暗中把头类特征泄漏到尾类、模糊决策边界的问题，本文先用三个指标把这种"边界模糊"量化出来，再提出 DBG：用对抗去类化噪声把样本推到决策边界附近、重标成 $k$ 个最易混淆类，并用分类器驱动的双路清洗丢掉有害样本，在 CIFAR-LT 上对所有生成式 baseline 都能降低类间重叠、提升尾类与整体精度。
 
 **[DeCo: Frequency-Decoupled Pixel Diffusion for End-to-End Image Generation](deco_frequency-decoupled_pixel_diffusion_for_end-to-end_image_generation.md)**
 
 :   DeCo 提出频率解耦的像素扩散框架，用轻量像素解码器处理高频细节并让DiT专注低频语义建模，配合频率感知flow matching损失，在ImageNet上达到FID 1.62（256）和2.22（512），缩小了像素扩散与潜空间扩散的差距。
 
+**[Decoupled Residual Denoising Diffusion Models for Unified and Data Efficient Image-to-Image Translation](decoupled_residual_denoising_diffusion_models_for_unified_and_data_efficient_ima.md)**
+
+:   DRDD 发现注入高斯噪声除了"流形抬升"还能隐式拉近不同域的特征分布（"域调和器"），于是把传统耦合扩散拆成"先加噪声做域调和 + 再做确定性残差映射"两个独立阶段，让核心 source→target 映射全程在固定噪声域里完成，从而在多任务统一恢复和少配对数据场景下又稳又省数据。
+
+**[Denoising, Fast and Slow: Difficulty-Aware Adaptive Sampling for Image Generation](denoising_fast_and_slow_difficulty-aware_adaptive_sampling_for_image_generation.md)**
+
+:   扩散/流匹配模型默认对所有 patch 用同一个时间步、均匀分配算力，本文提出 **Patch Forcing (PF)**：训练时给每个 patch 独立的噪声水平、并学一个轻量的「patch 难度头」，让置信(简单)区域先去噪、为不确定(困难)区域提供"未来"上下文，配合两个难度感知采样器在 ImageNet 256² 上把 SiT 的 FID 从 17.2 降到 9.8（XL/2，固定算力）。
+
 **[Depth Adaptive Efficient Visual Autoregressive Modeling](depthvar_depth_adaptive_var.md)**
 
 :   揭示了 VAR 模型中频率驱动的硬剪枝范式存在根本性局限，提出 DepthVAR，一种免训练的推理加速框架，通过自适应分配每个 token 的 Transformer 层计算深度（而非二值化的保留/剪除），实现 2.3×-3.1× 加速且质量损失极小。
+
+**[Design Your Ad: Personalized Advertising Image and Text Generation with Unified Autoregressive Models](design_your_ad_personalized_advertising_image_and_text_generation_with_unified_a.md)**
+
+:   针对电商广告"图像和文案各用一套模型、且只靠群体 CTR 反映平均偏好"的问题，本文用一个统一自回归模型 Uni-AdGen 把广告图和广告文案放进同一个 next-token 预测流程里联合生成，再配一个"粗到细偏好理解模块"从用户带噪的多模态历史点击中抽取个性化兴趣，并构建了首个大规模个性化广告图文数据集 PAd1M 和背景敏感的 PBS 评测指标，在通用和个性化两种设定下都优于基线。
+
+**[Designing Instance-Level Sampling Schedules via REINFORCE with James-Stein Shrinkage](designing_instance-level_sampling_schedules_via_reinforce_with_james-stein_shrin.md)**
+
+:   不动模型权重，只为冻结的文生图采样器学一个"按 prompt 和噪声定制的采样时间表"——用单次前向的 Dirichlet 策略一口气吐出整条 schedule，并用 James-Stein 收缩做 REINFORCE 的 reward baseline 来压低梯度方差，使得 SD/Flux 在相同步数下文图对齐更好、5 步就能逼近蒸馏过的 Flux-Schnell。
 
 **[Diffusion Mental Averages](diffusion_mental_averages.md)**
 
@@ -343,6 +419,10 @@ item_total: 220
 
 :   提出 EffectErase 框架，将视频物体插入作为移除的逆辅助任务进行联合学习，并构建包含 60K 视频对的大规模 VOR 数据集，实现对物体及其遮挡、阴影、反射、光照、变形等视觉副效应的高质量擦除。
 
+**[Efficient and Training-Free Single-Image Diffusion Models](efficient_and_training-free_single-image_diffusion_models.md)**
+
+:   把"单张图片里所有 patch"当成一个有限数据集，证明在这个数据集上的去噪 score 有解析闭式解（一个类 non-local-means 的加权去噪器），从而把单图扩散模型彻底变成**零训练**——质量/多样性追平甚至超过要训几小时的 SinDDM/SinFusion，还能一秒生成百万像素、几分钟生成十亿像素。
+
 **[EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation](egoflow_gradient-guided_flow_matching_for_egocentric_6dof_object_motion_generati.md)**
 
 :   EgoFlow 提出一种基于 Flow Matching 的生成框架，通过 Mamba-Transformer-Perceiver 混合架构融合多模态场景条件，并在推理时用梯度引导采样施加可微的物理约束（碰撞避免、运动平滑性），从第一人称视频生成物理合理的 6DoF 物体运动轨迹，碰撞率降低高达 79%。
@@ -367,6 +447,10 @@ item_total: 220
 
 :   本文系统评估了16种文本到图像扩散模型概念擦除（unlearning）方法在安全性（擦除成功率）与组合性生成能力之间的权衡，揭示了激进擦除策略在去除不良内容的同时严重破坏了模型的属性绑定、空间推理和计数能力，强调安全干预不应以牺牲模型语义逻辑为代价。
 
+**[Evaluating Reasoning Fidelity in Visual Text Generation](evaluating_reasoning_fidelity_in_visual_text_generation.md)**
+
+:   这是一篇诊断性评测工作：现代 T2I 模型已经能把文字渲染得清晰好看，作者却追问"当完整推理过程必须以图像里的文字外化时，模型是否还保留了文字模型那样的推理能力"，通过一套"先筛渲染、再考推理"的分层评测发现——即便文字渲染得一清二楚，T2I 模型仍频繁产生逻辑不一致、错误中间步骤，与纯文本 LLM 之间存在巨大的推理保真度鸿沟。
+
 **[EVATok: 自适应长度视频Tokenization用于高效视觉自回归生成](evatok_adaptive_length_video_tokenization_for_eff.md)**
 
 :   提出EVATok框架——通过最优token分配估计+轻量路由器+自适应tokenizer训练的三步流程，让视频tokenizer按片段复杂度自适应分配token长度，在UCF-101上节省24.4%+ token同时达到SOTA生成质量。
@@ -374,6 +458,10 @@ item_total: 220
 **[Exploring Conditions for Diffusion Models in Robotic Control](exploring_conditions_for_diffusion_models_in_robotic_control.md)**
 
 :   本文探索了如何用预训练文本到图像扩散模型的条件机制为机器人控制生成任务自适应的视觉表示，发现文本条件在控制环境中因域差距而无效，提出 ORCA 框架通过可学习的任务提示词(task prompts)和逐帧视觉提示词(visual prompts)作为条件机制，在 DMC/MetaWorld/Adroit 三个基准的 12 个任务上达到 SOTA。
+
+**[Exploring Spatial Intelligence from a Generative Perspective](exploring_spatial_intelligence_from_a_generative_perspective.md)**
+
+:   本文提出"生成式空间智能"(GSI)概念——统一多模态模型在生成图像时遵守并操控 3D 空间约束的能力，并构建首个量化基准 GSI-Bench（真实集 GSI-Real + 合成集 GSI-Syn），通过空间锚定的图像编辑任务来评测；进一步证明仅用合成编辑数据微调 BAGEL，不仅大幅提升生成侧空间编辑能力，还能反向迁移增强模型的空间"理解"能力。
 
 **[ExpPortrait: Expressive Portrait Generation via Personalized Representation](expportrait_expressive_portrait_generation_via_personalized_representation.md)**
 
@@ -387,9 +475,13 @@ item_total: 220
 
 :   提出 Face2Scene 两阶段框架：先用参考人脸复原模型(Ref-FR)获得 HQ-LQ 人脸对，从中提取退化编码作为"oracle"，再以此条件化单步扩散模型完成包含身体与背景的全场景图像复原。
 
-**[FDeID-Toolbox: Face De-Identification Toolbox](fdeidtoolbox_face_deidentification_toolbox.md)**
+**[FAGER: Factually Grounded Evaluation and Refinement of Text-to-Image Models](fager_factually_grounded_evaluation_and_refinement_of_text-to-image_models.md)**
 
-:   发布 FDeID-Toolbox，一个模块化人脸去识别研究工具箱，统一了数据加载、方法实现（经典到 SOTA 生成模型）、推理流水线和三维评估协议（隐私/效用/质量），解决该领域实验碎片化和结果不可比的问题。
+:   FAGER 用一条多智能体流水线，先把 prompt 里"显式说出来 + 隐式暗含"的可视事实拆成一份分层 rubric，再转成原子化 QA 让 VLM 逐题打分，得到一个事实性分数 FAGER score，并据此对生成图做 keep/edit/regenerate 的训练无关精炼；在跨科学、历史、商品、文化的五个数据集上，它判定"真实参考图比生成图更事实"的准确率全面超过 VQAScore / FineGRAIN，并能把弱生成模型 FLUX1-dev 的事实性大幅拉高。
+
+**[Fashion130K: An E-commerce Fashion Dataset for Outfit Generation with Unified Multi-modal Condition](fashion130k_an_e-commerce_fashion_dataset_for_outfit_generation_with_unified_mul.md)**
+
+:   这篇论文一手放出了 13 万对「服装图 + 上身模特图 + 结构化文本」的电商数据集 Fashion130K，一手提出 UMC 框架——用 Fusion Transformer 把文本和服装图的 embedding 对齐成统一表示、再用 top-$k$ 的 Selective Attention 让噪声 token 只挑最相关的条件 token，从而在保持服装细节一致性的穿搭生成上刷到 SOTA。
 
 **[Few-shot Acoustic Synthesis with Multimodal Flow Matching](few-shot_acoustic_synthesis_with_multimodal_flow_matching.md)**
 
@@ -423,6 +515,14 @@ item_total: 220
 
 :   本文观察到图像图层分解（layer decomposition）与图像修复/外绘（inpainting/outpainting）任务之间的内在联系，提出 Outpaint-and-Remove 方法，通过轻量级 LoRA 微调将预训练的 inpainting DiT 模型（FLUX.1-Fill-dev）高效适配为图层分解模型，同时引入多模态上下文融合模块保留细节，仅用 10 万合成训练数据即达到 SOTA 性能。
 
+**[From Navigation to Refinement: Revealing the Two-Stage Nature of Flow-based Diffusion Models through Oracle Velocity](from_navigation_to_refinement_revealing_the_two-stage_nature_of_flow-based_diffu.md)**
+
+:   这篇论文给 rectified flow 的边际速度场推出了一个在高斯先验 + 有限数据集下的**闭式 oracle 解**，并用它揭示 flow-based 扩散模型的训练目标天然分成「导航阶段」(早期、被多个数据模式混合引导，负责全局布局/泛化) 和「精修阶段」(后期、被最近邻单个样本主导，负责细节/记忆) 两段，再用这个两阶段视角统一解释了 timestep shifting、CFG interval、latent space 设计这些经验技巧为什么有效。
+
+**[Fusion in Your Way: Aligning Image Fusion with Heterogeneous Demands via Direct Preference Optimization](fusion_in_your_way_aligning_image_fusion_with_heterogeneous_demands_via_direct_p.md)**
+
+:   DPOFusion 把 LLM 里的直接偏好优化（DPO）搬到红外-可见光图像融合上，先用一个属性对齐的潜空间扩散模型生成多样化融合候选，再用「实例级 DPO」只在感兴趣区域做偏好微调、区域外强制和参考模型保持一致，从而用一套框架同时满足人类、VLM、检测、分割四类异质偏好。
+
 **[Garments2Look: A Multi-Reference Dataset for High-Fidelity Outfit-Level Virtual Try-On with Clothing and Accessories](garments2look_a_multi-reference_dataset_for_high-fidelity_outfit-level_virtual_t.md)**
 
 :   提出 Garments2Look，首个大规模多模态整套搭配级虚拟试穿数据集（80K 对，40 类，300+ 子类），每组包含 3-12 件参考服饰图、模特穿搭图和详细文本标注，揭示现有方法在多层搭配和配饰一致性上的重大不足。
@@ -430,6 +530,14 @@ item_total: 220
 **[Gaussian Shannon: High-Precision Diffusion Model Watermarking Based on Communication](gaussian_shannon_high-precision_diffusion_model_watermarking_based_on_communicat.md)**
 
 :   将扩散模型的水印嵌入和提取过程建模为噪声信道通信，提出 Gaussian Shannon 框架，通过级联的多数投票和 LDPC 纠错码实现水印的比特精确恢复（而非仅阈值检测），在三种 Stable Diffusion 版本和七种扰动下达到 SOTA 的比特精度和检测率。
+
+**[Generative Anonymization in Event Streams](generative_anonymization_in_event_streams.md)**
+
+:   针对"事件流被 E2V 重建模型反演出人脸身份"的隐私漏洞，本文提出首个面向事件流的**生成式匿名化**流水线：把异步事件投影成灰度帧、用现成的 RGB 人脸替换模型换成一张不存在的合成身份、再用 V2E 投回事件域，从而在彻底破坏原身份的同时保住下游感知所需的时空结构。
+
+**[GeoRelight: Learning Joint Geometrical Relighting and Reconstruction with Flexible Multi-Modal Diffusion Transformers](georelight_learning_joint_geometrical_relighting_and_reconstruction_with_flexibl.md)**
+
+:   GeoRelight 把"人像重光照"和"3D 几何重建"塞进同一个多模态扩散 Transformer 里**联合去噪**——用一个 VAE 友好的无畸变深度表征 iNOD 让 3D 几何能进潜空间、再用合成+自动标注真实数据的混合训练弥合 sim-to-real gap，单图就能同时拿到照片级重光照、内在反照率、法线和高保真 3D 形状，且在重光照、几何、内在估计三项上全面超过各自的专用 SOTA。
 
 **[GIST: Towards Design Compositing](gist_towards_design_compositing.md)**
 
@@ -499,6 +607,10 @@ item_total: 220
 
 :   本文提出 DreamPRVR，采用"先想象后集中"的粗到细策略：通过截断扩散模型在文本监督下生成全局语义注册令牌（registers），然后将其融合到细粒度视频表征中，有效抑制局部噪音响应，在三个 PRVR 基准上取得了 SOTA。
 
+**[IncreFA: Breaking the Static Wall of Generative Model Attribution](increfa_breaking_the_static_wall_of_generative_model_attribution.md)**
+
+:   把"判断一张图由哪个生成模型产出"这个静态分类问题，重新定义成**增量归因（incremental attribution）**：用层次正交先验编码生成模型的"家族血缘"、用潜空间记忆库做回放并混合出伪未见样本，让归因系统能随新模型不断涌现持续学习而不遗忘，在覆盖 28 个生成模型的新基准 IABench 上拿到 SOTA 归因精度与 98.93% 的未见检测率。
+
 **[InnoAds-Composer: Efficient Condition Composition for E-Commerce Poster Generation](innoads-composer_efficient_condition_composition_for_e-commerce_poster_generatio.md)**
 
 :   提出 InnoAds-Composer，一个基于 MM-DiT 的单阶段电商海报生成框架，通过统一 token 化将商品主体、字形文本和背景风格三类条件映射到同一空间，结合文本特征增强模块（TFEM）和重要性感知条件注入策略，在保持高质量生成的同时显著降低推理开销。
@@ -518,6 +630,10 @@ item_total: 220
 **[Intrinsic Concept Extraction Based on Compositional Interpretability](intrinsic_concept_extraction_based_on_compositional_interpretability.md)**
 
 :   HyperExpress 提出组合可解释本征概念提取（CI-ICE）新任务，利用双曲空间的层次建模能力和等球面投影模块，从单张图像中提取可组合的物体级和属性级概念，实现可逆的复杂视觉概念分解。
+
+**[It's Never Too Late: Noise Optimization for Collapse Recovery in Trained Diffusion Models](its_never_too_late_noise_optimization_for_collapse_recovery_in_trained_diffusion.md)**
+
+:   针对文生图扩散模型"同一 prompt 反复采样却几乎一模一样"的模式坍缩问题，本文不改模型、不改 prompt，而是直接对初始噪声做端到端梯度优化、让一组样本互相推开，再配合一个把能量压向低频的"粉红噪声"初始化，在几乎不损失图像质量的前提下大幅提升生成多样性。
 
 **[Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers](just-in-time_training-free_spatial_acceleration_for_diffusion_transformers.md)**
 
@@ -575,6 +691,10 @@ item_total: 220
 
 :   提出 MAGIC 框架，通过微调 inpainting 扩散模型，结合高斯 prompt 扰动、掩码引导空间噪声注入和上下文感知掩码对齐三个互补模块，在少样本条件下生成高保真、多样化、空间合理的工业异常图像，在 MVTec-AD 下游任务上达到 SOTA。
 
+**[MagicFuse: Single Image Fusion for Visual and Semantic Reinforcement](magicfuse_single_image_fusion_for_visual_and_semantic_reinforcement.md)**
+
+:   针对"现实中往往只有可见光相机、没有红外相机"的痛点，本文提出"单图融合 (Single Image Fusion, SIF)"新范式：用两条扩散流分别从一张低质可见光图里**强化可见光内知识**、**凭空生成红外光知识**，再在噪声层面把两者融合，得到一张兼顾人眼观感与下游语义决策的 MagImg——在只用单张退化可见光图的条件下，视觉/语义指标可与用红外-可见光配对输入的 SOTA 融合方法持平甚至反超。
+
 **[MapReduce LoRA: Advancing the Pareto Front in Multi-Preference Optimization for Generative Models](mapreduce_lora_advancing_the_pareto_front_in_multi-preference_optimization_for_g.md)**
 
 :   提出 MapReduce LoRA 和 RaTE 两种互补方法来推进多偏好优化的 Pareto 前沿：前者通过"Map（并行训偏好专家）+ Reduce（迭代合并）"的策略渐进推进 Pareto 前沿；后者通过学习奖励感知的 token embedding 实现推理时可组合的偏好控制。
@@ -586,6 +706,10 @@ item_total: 220
 **[Match-and-Fuse: Consistent Generation from Unstructured Image Sets](match-and-fuse_consistent_generation_from_unstructured_image_sets.md)**
 
 :   提出 Match-and-Fuse，首个面向非结构化图像集合的训练无关一致性生成方法。以图为节点、图对为边建立成对一致性图，通过多视角特征融合（MFF）和特征引导在扩散推理中操控内部特征，实现集合级跨图一致性，DINO-MatchSim 达 0.80 远超所有基线。
+
+**[Memorization In Stable Diffusion Is Unexpectedly Driven by CLIP Embeddings](memorization_in_stable_diffusion_is_unexpectedly_driven_by_clip_embeddings.md)**
+
+:   作者把 Stable Diffusion 的"记忆化"（逐字复刻训练图像）归因到一个被忽视的结构缺陷——CLIP 的 tokenizer 用重复的 `<eot>` 来做 padding，导致 30+ 个几乎相同的 $\mathbf{v}^{\mathbf{eot}}$ 嵌入被扩散模型反复 attend，从而过拟合到具体样本；据此提出两个免训练、即插即用的推理期缓解策略（换 `<pad>` token + mask `<eot>`、或部分 mask padding 嵌入），在几乎不损画质的前提下把记忆化的 SSCD 从 ~1.0 压到 ~0.08。
 
 **[Memory-Efficient Fine-Tuning Diffusion Transformers via Dynamic Patch Sampling and Block Skipping](memory-efficient_fine-tuning_diffusion_transformers_via_dynamic_patch_sampling_a.md)**
 
@@ -615,6 +739,14 @@ item_total: 220
 
 :   提出 MPDiT，一个多尺度 patch 的全局到局部扩散 Transformer 架构，前期用大 patch（4×4）处理全局上下文仅需 64 个 token，后期上采样到小 patch（2×2）的 256 个 token 精修局部细节，将 GFLOPs 降低高达 50%，且 XL 模型在 240 epoch 即达到 FID 2.05（cfg）。
 
+**[MRT: Masked Region Transformer for Layered Image Generation and Editing at Scale](mrt_masked_region_transformer_for_layered_image_generation_and_editing_at_scale.md)**
+
+:   MRT 把「文生图层 / 图生图层 / 图层生图层」三类分层图像任务统一进同一个 20B 掩码区域扩散 Transformer，靠「自适应掩码」决定每个图层从干净 latent 还是噪声出发，再用一个「溢出感知画布层」生成越过画布边界的完整可复用 RGBA 图层；在 10M 设计数据上训练后，分层质量全面超过 ART 与并发的 Qwen-Image-Layered，且推理快 $10\sim100\times$、激活显存省 $50\%\sim90\%$。
+
+**[Multi-Scale Local Speculative Decoding for Image Generation](multi-scale_local_speculative_decoding_for_image_generation.md)**
+
+:   MuLo-SD 把"低分辨率草稿 + 上采样 + 高分辨率并行验证"的多尺度思路引入投机解码，并用"只在被拒 token 的局部邻域里重采样"替代传统的 raster-scan 全序列回退，配合并行解码，在 Tar-1.5B/7B 上把自回归图像生成端到端加速到最高 $5.33\times$，同时保持语义对齐与感知质量基本不掉。
+
 **[MultiBanana: A Challenging Benchmark for Multi-Reference Text-to-Image Generation](multibanana_a_challenging_benchmark_for_multi_reference_text_to_image_generation.md)**
 
 :   提出MultiBanana——首个系统评估多参考图像生成能力的大规模基准，包含3769个评测样本、最多8张参考图、5个难度维度（跨域/尺度/稀有概念/多语言），揭示了闭源模型"过拟合参考细节"和开源模型"忽略参考主体"的互补失败模式。
@@ -643,6 +775,10 @@ item_total: 220
 
 :   提出 Object-WIPER，首个无训练的视频物体及其关联效应（阴影、反射、镜像等）移除框架，利用 DiT 中的文本-视觉交叉注意力和视觉自注意力定位关联效应区域，通过前景重初始化和注意力缩放实现干净移除，并提出 TokSim 指标和 WIPER-Bench 真实世界基准。
 
+**[Omni-Attribute: Open-vocabulary Attribute Encoder for Visual Concept Personalization](omni-attribute_open-vocabulary_attribute_encoder_for_visual_concept_personalizat.md)**
+
+:   针对现有个性化方法用通用图像编码器（CLIP/DINOv2/VAE）提取的整体嵌入"什么都纠缠在一起"、容易把光照、衣着等无关信息一起搬过去（copy-and-paste 伪影）的问题，Omni-Attribute 让编码器同时吃「图像 + 一段文字属性描述」，专门学习只编码指定属性（身份/表情/光照/风格…）的开放词表嵌入；通过「正负属性配对数据 + 生成损失与对比损失双目标训练」，在属性检索、个性化、多属性组合三个任务上都取得 SOTA。
+
 **[One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers](one_model_many_budgets_elastic_latent_interfaces_for_diffusion_transformers.md)**
 
 :   提出 ELIT（Elastic Latent Interface Transformer），在 DiT 中插入可变长度的潜变量接口（latent interface）和轻量 Read/Write 跨注意力层，使单一模型能在推理时动态调节计算预算，同时将计算非均匀地分配到图像中更难的区域，在 ImageNet 512px 上 FID 最高降低 53%。
@@ -658,6 +794,18 @@ item_total: 220
 **[Organizing Unstructured Image Collections using Natural Language](organizing_unstructured_image_collections_using_natural_language.md)**
 
 :   本文定义了开放式语义多聚类（OpenSMC）新任务，并提出 X-Cluster 框架，利用 MLLM 将图像转为文本后通过 LLM 自动发现聚类标准和语义子结构，无需任何人类先验输入即可将大规模无标签图像集组织为多维度、多粒度、可解释的语义聚类。
+
+**[Parallel Jacobi Decoding for Fast Autoregressive Image Generation](parallel_jacobi_decoding_for_fast_autoregressive_image_generation.md)**
+
+:   针对自回归（AR）图像生成"逐 token 串行、推理极慢"的瓶颈，本文提出训练无关的 **Parallel Jacobi Decoding（PJD）**，把原来在一维序列上展开的 Jacobi 草稿改成沿图像二维网格"按行并行"展开，并配一个行因果注意力掩码抑制误差累积，在 Lumina-mGPT / LlamaGen 上实现 4.8×–6.4× 加速且画质几乎不掉。
+
+**[PhotoFramer: Multi-modal Image Composition Instruction](photoframer_multi-modal_image_composition_instruction.md)**
+
+:   PhotoFramer 把"怎么拍出构图更好的照片"做成一个统一理解-生成模型：给一张构图差的照片，它先用自然语言说清楚该怎么改（如"去掉栅栏、把主体居中"），再生成一张同场景、构图好的示例图，让业余拍照者照着文字+示例去重拍。
+
+**[PhyCo: Learning Controllable Physical Priors for Generative Motion](phyco_learning_controllable_physical_priors_for_generative_motion.md)**
+
+:   PhyCo 通过「10万条物理仿真视频数据集 + 用 ControlNet 注入像素对齐的物理属性图做监督微调 + 用微调过的 VLM 对生成视频做物理问答打分提供可微奖励」三件套，让视频扩散模型能在推理时**不依赖任何仿真器/几何重建**，就连续可控地生成符合摩擦、回弹、形变、外力等物理规律的运动，在 Physics-IQ 基准上把 IQ Score 从 baseline 的 ~28 提到 43.6。
 
 **[PhysGen: Physically Grounded 3D Shape Generation for Industrial Design](physgen_physically_grounded_3d_shape_generation_for_industrial_design.md)**
 
@@ -683,6 +831,10 @@ item_total: 220
 
 :   提出 PPCL 框架，通过线性探针检测 MMDiT 中连续冗余层区间，结合非顺序蒸馏实现深度剪枝（即插即用）和宽度剪枝（用线性投影替换文本流/FFN），将 Qwen-Image 从 20B 压缩到 10B 时性能仅下降 3.29%。
 
+**[POCA: Pareto-Optimal Curriculum Alignment for Visual Text Generation](poca_pareto-optimal_curriculum_alignment_for_visual_text_generation.md)**
+
+:   针对视觉文字生成中「文字准确度」与「图像整体协调度/美学」难以兼顾的矛盾，POCA 把 GRPO 多奖励对齐重新建模成多目标优化问题：用双向帕累托排序在联合奖励空间里挑出非支配（好）/被支配（差）样本来做正负信号，再配一个基于 OCR 奖励 ECDF 的自适应课程，把训练数据按「由易到难」排布，在 AnyText-benchmark 上同时提升了 Sen.ACC、CLIP、HPS。
+
 **[Pose-dIVE: Pose-Diversified Augmentation with Diffusion Model for Person Re-Identification](pose-dive_pose-diversified_augmentation_with_diffusion_model_for_person_re-ident.md)**
 
 :   Pose-dIVE通过SMPL模型联合控制人体姿态和相机视角，利用扩散模型生成具有多样化姿态和视角的行人图像，系统性地弥补Re-ID训练数据中的分布偏差，在多个基准上持续提升任意Re-ID模型的泛化能力。
@@ -698,6 +850,10 @@ item_total: 220
 **[Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality](preserving_source_video_realism_high-fidelity_face_swapping_for_cinematic_qualit.md)**
 
 :   提出 LivingSwap，首个视频参考引导的人脸替换模型，通过关键帧身份注入 + 源视频参考补全 + 时序拼接的可控流水线，实现长视频中的高保真人脸替换，在保持源视频表情、光照、运动等细节的同时稳定注入目标身份，将人工编辑量减少 40 倍。
+
+**[Probabilistic Precipitation Nowcasting with Rectified Flow Transformers](probabilistic_precipitation_nowcasting_with_rectified_flow_transformers.md)**
+
+:   本文提出 FREUD——一个用整流流（rectified flow）Transformer 充当"压缩第一阶段"的框架：帧级编码器独立编码每帧、联合视频解码器一次性重建所有帧，把确定性解码换成概率式解码，从而在压缩阶段就能量化不确定性；配合潜空间整流流临近预报模型，在 SEVIR 降水临近预报基准上取得 SOTA 的 CRPS（0.0190）和 SSIM。
 
 **[Probing and Bridging Geometry–Interaction Cues for Affordance Reasoning in Vision Foundation Models](probing_and_bridging_geometry-interaction_cues_for_affordance_reasoning_in_visio.md)**
 
@@ -739,6 +895,10 @@ item_total: 220
 
 :   提出 MVC-ZigAL 框架，通过多视图感知 MDP 建模、zigzag 自反思优势学习和 Lagrangian 对偶约束优化，有效提升少步文本到多视图扩散模型的单视图保真度和跨视图一致性。
 
+**[Refracting Reality: Generating Images with Realistic Transparent Objects](refracting_reality_generating_images_with_realistic_transparent_objects.md)**
+
+:   针对文生图模型画不对透明物体折射的老毛病，本文提出训练无关的 Snellcaster：在 FLUX 生成轨迹的每一步用斯涅尔定律对折射光线做"自变形"，再借一张以透明物体为中心的全景图补上相机看不到的被折射表面，把折射/反射严格约束到物理正确，masked PSNR 从 ~12.7 提到 16.5、LPIPS 从 0.47 降到 0.24。
+
 **[Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing](rel-zero_harnessing_patch-pair_invariance_for_robust_zero-watermarking_against_a.md)**
 
 :   本文发现图像patch对之间的关系距离在AI编辑后保持不变，并利用该不变性构建了一种零水印框架Rel-Zero，无需修改原图即可实现对多种生成式编辑的鲁棒内容认证。
@@ -751,6 +911,10 @@ item_total: 220
 
 :   提出 RepTRFD：通过将 Tensor Ring 因子重参数化为"可学习隐张量 × 固定基"的形式，解决 INR 参数化 TR 因子的频谱偏置问题，在图像修复/去噪/超分/点云恢复等任务上全面超越 SOTA。
 
+**[Residual Decoder Adapter: ID-Preserving Tokenizer Adaption for Autoregressive Text Rendering](residual_decoder_adapter_id-preserving_tokenizer_adaption_for_autoregressive_tex.md)**
+
+:   针对自回归（AR）图像生成在"画字"时笔画模糊、字形扭曲的老毛病，本文把根因定位到视觉 tokenizer 的重建能力不足，提出 **Residual Decoder Adapter (RDA)**：冻结原 tokenizer 和 AR 模型，外挂一个共享 token-ID 的 Hint 码本 + 一条像素级残差解码支路，在不改 token 空间、不重训任何模型的前提下把文字重建质量补回来——Janus-Pro 1B 的 OCR 准确率从 24.52% 飙到 58.26%。
+
 **[Resolving the Identity Crisis in Text-to-Image Generation](resolving_the_identity_crisis_in_text-to-image_generation.md)**
 
 :   本文揭示了文本到图像模型在多人场景生成中的"身份危机"问题（重复面孔、身份合并），提出 DisCo 框架，通过组合式奖励函数和 GRPO 强化学习微调 flow-matching 模型，实现了 98.6% 的唯一面孔准确率，超越包括 GPT-Image-1 在内的闭源模型。
@@ -762,6 +926,10 @@ item_total: 220
 **[RewardFlow: Generate Images by Optimizing What You Reward](rewardflow_generate_images_by_optimizing_what_you_reward.md)**
 
 :   RewardFlow 提出一种无需反转的推理时框架，通过多奖励 Langevin 动力学融合语义对齐、感知保真度、局部定位、物体一致性和人类偏好等多种可微分奖励信号，在图像编辑和组合式生成任务上实现 SOTA 的编辑保真度和组合对齐效果。
+
+**[Scone: Bridging Composition and Distinction in Subject-Driven Image Generation via Unified Understanding-Generation Modeling](scone_bridging_composition_and_distinction_in_subject-driven_image_generation_vi.md)**
+
+:   Scone 在统一理解-生成模型 BAGEL 上，把"理解专家"改造成一座**语义桥**——通过早期多模态对齐和注意力掩码筛除参考图中的无关主体，再端到端引导"生成专家"，从而在一张参考图含多个候选主体时也能准确"认对人再画对人"，在 OmniContext 上拿到开源模型第一。
 
 **[Score2Instruct: Scaling Up Video Quality-Centric Instructions via Automated Dimension Scoring](score2instruct_scaling_up_video_quality-centric_instructions_via_automated_dimen.md)**
 
@@ -795,6 +963,10 @@ item_total: 220
 
 :   本文提出SimLBR，通过在DINOv3潜空间中将少量假图信息混入真图嵌入作为正则化手段，迫使检测器学习真实图像分布的紧致决策边界，从而实现对未知生成器的强泛化能力，在GenImage上平均准确率达94.54%，在硬测试集Chameleon上比AIDE提升25%准确率和70%召回率。
 
+**[SimplePoster: A Simple Baseline for Product Poster Generation](simpleposter_a_simple_baseline_for_product_poster_generation.md)**
+
+:   针对电商商品海报生成的两大刚需——主体不能变形、多行文字要落到指定位置，SimplePoster 把现有方法堆叠的 ControlNet / OCR 编码器全部砍掉，只靠「对 FLUX-Fill 做全参数微调」消除主体外延、靠「零成本的字符级位置编码」实现版面可控文字，主体保持率从 PosterMaker 的 85.3% 提到 98.7%，文字准确率也全面领先。
+
 **[SJD-PAC: Accelerating Speculative Jacobi Decoding via Proactive Drafting and Adaptive Continuation](sjd-pac_accelerating_speculative_jacobi_decoding_via_proactive_drafting_and_adap.md)**
 
 :   本文分析了 Speculative Jacobi Decoding (SJD) 在文本到图像生成中接受长度分布严重偏斜的瓶颈，提出 SJD-PAC 框架，通过 Proactive Drafting (PD) 和 Adaptive Continuation (AC) 两项技术，在严格无损的前提下实现 3.8× 推理加速，显著超越原始 SJD 的约 2× 加速。
@@ -802,6 +974,10 @@ item_total: 220
 **[SketchDeco: Training-Free Latent Composition for Precise Sketch Colourisation](sketchdeco_training-free_latent_composition_for_precise_sketch_colourisation.md)**
 
 :   提出SketchDeco，一种无需训练的线稿上色方法，通过全局-局部两阶段策略将区域蒙版和调色板作为精确控制信号，利用扩散模型反演和自注意力注入在隐空间中实现区域精准着色与全局和谐过渡，在消费级GPU上15-20步即可完成。
+
+**[SkyReels-Text: Fine-Grained Font-Controllable Text Editing for Poster Design](skyreels-text_fine-grained_font-controllable_text_editing_for_poster_design.md)**
+
+:   SkyReels-Text 把"换字"建模成区域级编辑任务，用一张用户裁剪的字形参考图（glyph patch）作为显式视觉条件，通过双流 VAE 注入实现零样本字体迁移——既准确替换文字内容，又精确复刻任意字体（包括手写、艺术体），在多个 benchmark 上文字保真度和字体一致性同时拿到 SOTA。
 
 **[SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking](slice_semantic_latent_injection_via_compartmentalized_embedding_for_image_waterm.md)**
 
@@ -830,6 +1006,14 @@ item_total: 220
 **[StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars](streamavatar_streaming_diffusion_models_for_real-time_interactive_human_avatars.md)**
 
 :   提出两阶段自回归适配加速框架（自回归蒸馏 + 对抗精炼），将双向人体视频扩散模型转化为实时流式生成器，通过 Reference Sink、RAPR 位置重编码和一致性感知判别器保证长视频稳定性，实现首个支持说话和倾听交互的全身实时数字人。
+
+**[StyleText: A Large-Scale Dataset and Benchmark for Stylized Scene Text Inpainting](styletext_a_large-scale_dataset_and_benchmark_for_stylized_scene_text_inpainting.md)**
+
+:   针对"往自然场景里插入新文字、同时保住周围光照纹理风格"这个任务缺乏专用 benchmark 的问题，本文用 LLM 出 prompt + Flux/StableFlow KV 注入生成 + OCR 过滤 + 多边形 mask 提取的全自动管线，造出 28,518 个图–mask–prompt 三元组（按 9,932 个"场景组"分组）的 StyleText 数据集，并配套定义了 OCR 易读性 + CLIP 风格一致性的双指标可复现评测协议，最后用 FluxFill+LoRA 训出一个把字符准确率从 56% 拉到 77% 的强基线。
+
+**[StyleTextGen: Style-Conditioned Multilingual Scene Text Generation](styletextgen_style-conditioned_multilingual_scene_text_generation.md)**
+
+:   StyleTextGen 把"按参考图风格生成场景文字"建模成 DiT 扩散修复（inpainting）任务，用**双分支风格编码器**（文字分支抠字形纹理 + 视觉分支补全局基调）提取与背景解耦的风格嵌入，再配一个**只在文字区域**算的风格一致性损失和**只在前 10 步注入参考 KV**的推理策略，在中英文单语和跨语言场景文字生成上都刷新了风格相似度与文字正确率的 SOTA。
 
 **[TAG-MoE: Task-Aware Gating for Unified Generative Mixture-of-Experts](tag-moe_task-aware_gating_for_unified_generative_mixture-of-experts.md)**
 
@@ -891,9 +1075,17 @@ item_total: 220
 
 :   针对 T2I 模型生成图像"太鲜艳不像真实照片"的问题，提出 Color Fidelity Dataset (CFD, 130 万图像)、Color Fidelity Metric (CFM, 基于 Qwen2-VL + softrank loss) 和 Color Fidelity Refinement (CFR, 无训练的时空自适应 guidance 调制)，形成评估-改善一体化框架。
 
+**[Towards Photorealistic and Efficient Bokeh Rendering via Diffusion Framework](towards_photorealistic_and_efficient_bokeh_rendering_via_diffusion_framework.md)**
+
+:   MagicBokeh 用一个单步扩散框架把"高倍数字变焦下的超分辨率"和"散景（虚化）渲染"统一在同一个模型里，通过交替训练策略 + 焦点感知掩码注意力解决两任务的优化冲突，再配一个退化感知深度模块从低质输入估出可靠视差图，在低分辨率真实手机照片上以 0.1s 级速度做出比"先超分再虚化"两阶段流水线更逼真的散景。
+
 **[Towards Robust Content Watermarking Against Removal and Forgery Attacks](towards_robust_content_watermarking_against_removal_and_forgery_attacks.md)**
 
 :   提出实例特定双侧检测水印方法 ISTS，通过根据图像语义动态选择水印注入时间和位置来抵抗去除攻击和伪造攻击，并设计双侧检测机制抵御反向潜在表示攻击，在三种去除攻击和三种伪造攻击的平均和最坏情况下均达到 SOTA 鲁棒性。
+
+**[Towards Robust Sequential Decomposition for Complex Image Editing](towards_robust_sequential_decomposition_for_complex_image_editing.md)**
+
+:   针对"一条指令里塞了多个编辑操作还互相依赖"的复杂图像编辑，本文把"序列分解"放进 in-context editing 框架里研究，用 Blender 合成出带分解标注的高质量编辑链来微调 BAGEL，并设计了一个能调节"历史编辑结果影响力"的 Context-Guided Sequential Editing 范式，使得分解步数越多反而越稳，并能通过和真实数据共训迁移到真实图像。
 
 **[TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking](trace_structure-aware_character_encoding_for_robust_and_generalizable_document_w.md)**
 
@@ -903,6 +1095,10 @@ item_total: 220
 
 :   提出 STALL，一种无需训练的零样本生成视频检测器，通过在白化嵌入空间中联合建模逐帧空间似然和帧间时序似然，仅依赖真实视频校准即可实现对多种生成模型的鲁棒检测。
 
+**[Training-free, Perceptually Consistent Low-Resolution Previews with High-Resolution Image for Efficient Workflows of Diffusion Models](training-free_perceptually_consistent_low-resolution_previews.md)**
+
+:   为了让用户在"撞种子/调 prompt"的反复试错阶段不必每次都付出高分辨率（HR）出图的算力，本文提出一种**免训练**的低分辨率（LR）"预览图"生成法：把"LR 要和 HR 在感知上一致"这一目标，重新表述成 flow matching 模型与下采样算子之间的**对易子为零（commutator-zero）条件**，并用"下采样矩阵择优 + 对易子归零引导"两步在采样中近似满足它，在最多省 33% 算力的同时保住 LR↔HR 的构图与色彩一致性，叠加时间轴加速后可达 3.05× 提速。
+
 **[Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)**
 
 :   提出 Uni-DAD，首个将扩散模型蒸馏（distillation）与域适应（adaptation）统一为单阶段流程的方法，通过双域 DMD 损失和多头 GAN 损失，在仅 1–4 步采样下实现少样本域的高质量多样生成。
@@ -911,9 +1107,17 @@ item_total: 220
 
 :   本文提出 Floorplan Markup Language (FML) 标记语言，将房间、门等户型元素编码为结构化 token 序列，用一个 LLaMA 风格的 Transformer 模型（FMLM）统一解决无条件/边界条件/图条件/补全等多种户型图生成任务，FID 指标比 HouseDiffusion 低 80%+。
 
+**[UniGenDet: 面向生成-检测协同进化的统一生成-判别框架](unigendet_a_unified_generative-discriminative_framework_for_co-evolutionary_imag.md)**
+
+:   UniGenDet 把"造假"(图像生成)和"打假"(生成图像检测)塞进同一个统一多模态模型里两阶段联合训练——先用共生自注意力把生成器对图像分布的理解注入检测器、再用冻结检测器当"真实性教师"反向对齐生成器特征，让两者在一个闭环里互相喂招，最终检测精度(FakeClue 98.0% Acc)和生成保真度(FID 22.9→17.5)同时提升。
+
 **[V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration](v-bridge_bridging_video_generative_priors_to_versatile_few-shot_image_restoratio.md)**
 
 :   将图像修复重新定义为渐进式视频生成过程，利用预训练视频模型（Wan2.2-TI2V-5B）的丰富视觉先验，仅用 1,000 个多任务训练样本（不到现有方法的 2%）就实现了多种退化类型的全能修复，超越了在百万级数据上训练的专用架构。
+
+**[VDE: Training-Free Accelerating Rectified Flow Model via Velocity Decomposition and Estimation](vde_training-free_accelerating_rectified_flow_model_via_velocity_decomposition_a.md)**
+
+:   针对整流流（Rectified Flow）生成模型采样慢的问题，本文提出 VDE：把每步预测的速度沿当前输入分解为平行分量和正交分量，利用这两个分量"标量系数随时间近似线性、正交方向短期几乎不变"的规律，在大部分步骤上用线性外推 + 方向复用直接从当前输入估计速度、跳过模型前向，从而在 FLUX/Qwen-Image/Wan2.1 上取得 2.04–3.22× 加速且画质几乎无损（Qwen-Image 上 LPIPS 比最强基线再降 52.2%）。
 
 **[VecGlypher: Unified Vector Glyph Generation with Language Models](vecglypher_unified_vector_glyph_generation_with_language_models.md)**
 
@@ -923,9 +1127,17 @@ item_total: 220
 
 :   提出 VeCoR（速度对比正则化），在标准 Flow Matching 训练中引入"负速度"对比信号，通过同时指导模型"该往哪走"和"不该往哪走"，实现更稳定的轨迹演化和更高的感知保真度——在 ImageNet-1K 上 SiT-XL/2 和 REPA-SiT-XL/2 分别获得 22% 和 35% 的 FID 相对降低。
 
+**[VectorArk: Learning Practical Image Vectorization with Rounded Polygon Representation](vectorark_learning_practical_image_vectorization_with_rounded_polygon_representa.md)**
+
+:   VectorArk 把"光栅图→矢量图(SVG)"重新设计成对生成模型友好的圆角多边形表示，配合轮廓化输入、矢量化退化训练和 DINO 排序的测试时缩放，让一个仅 1B 参数的多模态 LLM 在真实世界（含文生图输出）的矢量化任务上几何完整度和去伪影能力都大幅超过 StarVector / OmniSVG。
+
 **[Verify Claimed Text-to-Image Models via Boundary-Aware Prompt Optimization](verify_claimed_text-to-image_models_via_boundary-aware_prompt_optimization.md)**
 
 :   BPO 提出一种无需参考模型的白盒 T2I 模型验证方法，通过三阶段流程（对抗锚点识别→二分搜索边界探索→目标优化）找到模型特有的语义边界区域，生成的验证 prompt 在 5 个 T2I 模型上达到平均 96% 准确率和 0.93 F1，比 TVN 方法快 2 倍。
+
+**[VFM-VAE: Vision Foundation Models Can Be Good Tokenizers for Latent Diffusion Models](vfm-vae_vision_foundation_models_can_be_good_tokenizers_for_latent_diffusion_mod.md)**
+
+:   把一个冻结的视觉基础模型（VFM，如 SigLIP2-Large）直接当作隐空间扩散模型的 VAE 编码器，再配一个多尺度专用解码器把语义特征解回逼真图像，从而跳过"蒸馏对齐"带来的表示退化——结果在 ImageNet 256×256 上用 80 epoch 就把 gFID（无 CFG）做到 2.22（比此前 tokenizer 快约 10×），训练到 640 epoch 进一步到 1.62。
 
 **[ViHOI: Human-Object Interaction Synthesis with Visual Priors](vihoi_human-object_interaction_synthesis_with_visual_priors.md)**
 

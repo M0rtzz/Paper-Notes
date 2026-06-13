@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SUGAR: Learning Skeleton Representation with Visual-Motion Knowledge for Action Recognition
 description: >-
-  [AAAI 2026][视频理解][骨骼动作识别] 提出 SUGAR 范式，利用 GPT 生成的**运动描述**和**视觉描述**作为先验知识，通过对比学习监督骨骼编码器学习更离散的表示，再用 LLM（LLaMA2-7B）的未触及预训练权重作为识别器…
+  [AAAI 2026][视频理解][骨骼动作识别] 提出 SUGAR 范式，利用 GPT 生成的**运动描述**和**视觉描述**作为先验知识，通过对比学习监督骨骼编码器学习更离散的表示，再用 LLM（LLaMA2-7B）的未触及预训练权重作为识别器，配合新设计的 Temporal Query Projection（TQP）模块实现高效的骨骼动作分类和零样本推理。
 tags:
   - "AAAI 2026"
   - "视频理解"

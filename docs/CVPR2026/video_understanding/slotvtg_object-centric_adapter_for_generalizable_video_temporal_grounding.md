@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SlotVTG: Object-Centric Adapter for Generalizable Video Temporal Grounding
 description: >-
-  [CVPR 2026][视频理解][视频时序定位] 提出SlotVTG框架，通过在MLLM解码器早期层插入轻量级Slot Adapter将视觉token分解为对象级slot表示，辅以DINOv2先验的Slot Alignment Loss引导语义一致的slot形成…
+  [CVPR 2026][视频理解][视频时序定位] 提出SlotVTG框架，通过在MLLM解码器早期层插入轻量级Slot Adapter将视觉token分解为对象级slot表示，辅以DINOv2先验的Slot Alignment Loss引导语义一致的slot形成，显著提升视频时序定位的域外泛化性能（OOD R1@0.5最大提升+4.3），同时仅增加约0.25%的可训练参数。
 tags:
   - "CVPR 2026"
   - "视频理解"

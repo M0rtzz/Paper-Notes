@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Abstain-R1: Calibrated Abstention and Post-Refusal Clarification via Verifiable RL
 description: >-
-  [ACL 2026][LLM安全][拒答校准] Abstain-R1 提出一种**澄清感知的 RLVR 奖励**，在不可回答查询上联合优化"明确拒答"和"拒答后给出有用澄清（指出缺失信息）"，使 3B 模型在拒答和澄清质量上接近甚至超越 DeepSeek-R1 等大模型。
+  [ACL 2026][LLM安全][拒答校准] Abstain-R1 提出一种澄清感知的 RLVR 奖励：，在不可回答查询上联合优化"明确拒答"和"拒答后给出有用澄清（指出缺失信息）"，使 3B 模型在拒答和澄清质量上接近甚至超越 DeepSeek-R1 等大模型。 领域现状：RL 后训练（如 RLVR/GRPO）显著提升了…
 tags:
   - "ACL 2026"
   - "LLM安全"

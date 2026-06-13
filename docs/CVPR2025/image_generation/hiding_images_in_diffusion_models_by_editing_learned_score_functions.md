@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hiding Images in Diffusion Models by Editing Learned Score Functions
 description: >-
-  [CVPR 2025][图像生成][神经信息隐藏] 提出在扩散模型的特定时间步编辑learned score function来隐藏图像的方法，结合梯度感知参数选择和LoRA实现参数高效微调…
+  [CVPR 2025][图像生成][神经信息隐藏] 提出在扩散模型的特定时间步编辑learned score function来隐藏图像的方法，结合梯度感知参数选择和LoRA实现参数高效微调，在提取精度（52.90 dB PSNR）、模型保真度（FID变化仅0.02）和隐藏效率（0.04 GPU小时）三个维度上全面超越现有方法数个量级。
 tags:
   - "CVPR 2025"
   - "图像生成"

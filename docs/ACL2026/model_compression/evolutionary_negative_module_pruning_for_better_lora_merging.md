@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolutionary Negative Module Pruning for Better LoRA Merging
 description: >-
-  [ACL 2026][模型压缩][LoRA合并] 提出 ENMP 方法，通过进化搜索策略发现并剪除 LoRA 合并中降低性能的"负面模块"，作为即插即用的增强手段，在 NLP 和视觉领域全面提升现有合并算法的效果。
+  [ACL 2026][模型压缩][LoRA合并] 提出 ENMP 方法，通过进化搜索策略发现并剪除 LoRA 合并中降低性能的"负面模块"，作为即插即用的增强手段，在 NLP 和视觉领域全面提升现有合并算法的效果。 领域现状：LoRA 因其参数效率和良好收敛性成为大模型微调的主流方法，实际部署中常需将多个任务的 LoRA 适…
 tags:
   - "ACL 2026"
   - "模型压缩"

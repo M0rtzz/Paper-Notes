@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRACE: Structure-Aware Character Encoding for Robust and Generalizable Document Watermarking
 description: >-
-  [CVPR 2026][图像生成][document watermarking] 提出 TRACE——基于字符结构编码的文档水印框架，利用扩散模型（DragDiffusion）精确移动字符骨架关键点来嵌入信息，通过自适应扩散初始化（ADI）、引导扩散编码（GDE）和掩码区域替换（MRR）三大组件…
+  [CVPR 2026][图像生成][document watermarking] 提出 TRACE——基于字符结构编码的文档水印框架，利用扩散模型（DragDiffusion）精确移动字符骨架关键点来嵌入信息，通过自适应扩散初始化（ADI）、引导扩散编码（GDE）和掩码区域替换（MRR）三大组件，同时实现跨介质传输鲁棒性、多语言/多字体泛化性和高隐蔽性。
 tags:
   - "CVPR 2026"
   - "图像生成"

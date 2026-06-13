@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Short-length Adversarial Training Helps LLMs Defend Long-length Jailbreak Attacks
 description: >-
-  [NeurIPS 2025][LLM对齐][越狱防御] 理论证明并实验验证：防御长度 $\Theta(M)$ 的后缀越狱攻击，只需要在长度 $\Theta(\sqrt{M})$ 的对抗后缀上做对抗训练即可，即"短对抗训练防长越狱"——在5个主流LLM上…
+  [NeurIPS 2025][LLM对齐][越狱防御] 理论证明并实验验证：防御长度 $\Theta(M)$ 的后缀越狱攻击，只需要在长度 $\Theta(\sqrt{M})$ 的对抗后缀上做对抗训练即可，即"短对抗训练防长越狱"——在5个主流LLM上，20 token 对抗训练可将 120 token 越狱成功率降低至少 30%。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

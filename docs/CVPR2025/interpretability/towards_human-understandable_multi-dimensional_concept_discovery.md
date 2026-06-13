@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Human-Understandable Multi-Dimensional Concept Discovery
 description: >-
-  [CVPR 2025][可解释性][概念发现] 提出 HU-MCD 框架，用 SAM 替代传统分割方法发现人类可理解的视觉概念，配合 CNN 专用的输入遮罩方案减少噪声干扰，在 MCD 的完备性框架下实现可理解性和忠实性兼顾的概念级模型解释。
+  [CVPR 2025][可解释性][概念发现] 提出 HU-MCD 框架，用 SAM 替代传统分割方法发现人类可理解的视觉概念，配合 CNN 专用的输入遮罩方案减少噪声干扰，在 MCD 的完备性框架下实现可理解性和忠实性兼顾的概念级模型解释。 1. 领域现状：概念级可解释 AI（C-XAI）旨在用人类可理解的视觉概念替代像素…
 tags:
   - "CVPR 2025"
   - "可解释性"

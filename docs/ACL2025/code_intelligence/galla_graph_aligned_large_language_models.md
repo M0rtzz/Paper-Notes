@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding
 description: >-
-  [ACL 2025][代码智能][code understanding] 提出 GALLa，通过 GNN 编码代码的 AST/DFG 结构图并用跨模态适配器对齐到 LLM 嵌入空间，在微调时作为辅助任务注入代码结构信息，推理时丢弃 GNN 和 adapter 实现零额外开销…
+  [ACL 2025][代码智能][code understanding] 提出 GALLa，通过 GNN 编码代码的 AST/DFG 结构图并用跨模态适配器对齐到 LLM 嵌入空间，在微调时作为辅助任务注入代码结构信息，推理时丢弃 GNN 和 adapter 实现零额外开销，在 5 个代码任务 × 7 个基线 LLM（350M-14B）上持续提升。
 tags:
   - "ACL 2025"
   - "代码智能"

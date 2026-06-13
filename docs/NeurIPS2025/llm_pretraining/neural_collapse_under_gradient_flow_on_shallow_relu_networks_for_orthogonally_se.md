@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data
 description: >-
-  [NeurIPS 2025][预训练][Neural Collapse] 首次证明在正交可分数据上，两层ReLU网络的梯度流（GF）在小初始化下可证收敛到Neural Collapse（NC）解，揭示了GF隐式偏置（早期神经元对齐+渐近最大间隔偏置）在促进NC出现中的关键作用。
+  [NeurIPS 2025][预训练][Neural Collapse] 首次证明在正交可分数据上，两层ReLU网络的梯度流（GF）在小初始化下可证收敛到Neural Collapse（NC）解，揭示了GF隐式偏置（早期神经元对齐+渐近最大间隔偏置）在促进NC出现中的关键作用。 问题背景 Neural Collapse（NC…
 tags:
   - "NeurIPS 2025"
   - "预训练"

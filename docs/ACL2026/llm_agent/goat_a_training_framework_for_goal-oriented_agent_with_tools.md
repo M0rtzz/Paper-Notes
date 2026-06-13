@@ -2,9 +2,9 @@
 title: >-
   [论文解读] GOAT: A Training Framework for Goal-Oriented Agent with Tools
 description: >-
-  [ACL 2026][LLM Agent][目标导向] GOAT 通过从 API 文档自动构建"依赖图 + call-first 合成数据"的流水线，让开源小模型在无需人工标注的情况下学会把高层目标拆成一串相互依赖的 API 调用…
+  [ACL 2026 Findings][LLM Agent][目标导向] GOAT 通过从 API 文档自动构建"依赖图 + call-first 合成数据"的流水线，让开源小模型在无需人工标注的情况下学会把高层目标拆成一串相互依赖的 API 调用，在 RestBench / API-Bank / 自建的 GOATBench 上把开源模型推到 SOTA，部分场景甚至超过闭源大模型。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "目标导向"
   - "API 调用"

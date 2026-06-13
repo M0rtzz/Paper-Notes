@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Adjoint Schrödinger Bridge Sampler
 description: >-
-  [NeurIPS 2025][Schrödinger Bridge] 提出 Adjoint Schrödinger Bridge Sampler (ASBS)，通过将 Schrödinger Bridge 问题重新解释为随机最优控制问题，消除了先前扩散采样器的 memoryless 条件限制…
+  [NeurIPS 2025 Oral][Schrödinger Bridge] 提出 Adjoint Schrödinger Bridge Sampler (ASBS)，通过将 Schrödinger Bridge 问题重新解释为随机最优控制问题，消除了先前扩散采样器的 memoryless 条件限制，支持任意源分布（如高斯、谐波先验），使用可扩展的 matching 目标无需重要性权重估计，在多粒子能量函数和分子构象生成上全面超越先前方法。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "Schrödinger Bridge"
   - "扩散模型"
   - "Boltzmann分布"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnyEdit++: Adaptive Long-Form Knowledge Editing via Bayesian Surprise
 description: >-
-  [ICML 2026][知识编辑][贝叶斯惊讶] AnyEdit++ 用 token 级 Bayesian Surprise 找到长文本中的语义转折点，把 AnyEdit 的固定窗口切分改成结构感知的 Bayes-Chunk…
+  [ICML 2026][知识编辑][贝叶斯惊讶] AnyEdit++ 用 token 级 Bayesian Surprise 找到长文本中的语义转折点，把 AnyEdit 的固定窗口切分改成结构感知的 Bayes-Chunk，并在数学、代码、新闻、诗歌等长文本知识编辑任务上稳定提升 BLEU 与 BERT Score。
 tags:
   - "ICML 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification
 description: >-
-  [ICML2025][best arm identification] 揭示了经典固定置信度最佳臂识别算法（Successive Elimination、KL-LUCB）存在永不停止的正概率事件，并提出 FC-DSH 和元算法 BrakeBooster 两种方案，首次实现了停止时间的指数尾衰减保证…
+  [ICML2025][best arm identification] 揭示了经典固定置信度最佳臂识别算法（Successive Elimination、KL-LUCB）存在永不停止的正概率事件，并提出 FC-DSH 和元算法 BrakeBooster 两种方案，首次实现了停止时间的指数尾衰减保证，且不损失实例依赖复杂度（仅差对数因子）。
 tags:
   - "ICML2025"
   - "best arm identification"

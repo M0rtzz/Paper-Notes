@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embodied Task Planning via Graph-Informed Action Generation with Large Language Models
 description: >-
-  [ICML 2026][机器人][具身规划] GiG 用"图中图"双层记忆（场景图 + 状态转移图）+ GNN 编码 + 1 步 lookahead 武装 LLM 规划器，让具身 agent 在 Robotouille 同步/异步以及 ALFWorld 上的 Pass@1 比 ReCAP 提高 6–37 个百…
+  [ICML 2026][机器人][具身规划] GiG 用"图中图"双层记忆（场景图 + 状态转移图）+ GNN 编码 + 1 步 lookahead 武装 LLM 规划器，让具身 agent 在 Robotouille 同步/异步以及 ALFWorld 上的 Pass@1 比 ReCAP 提高 6–37 个百分点。
 tags:
   - "ICML 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details
 description: >-
-  [AAAI 2026][神经符号距离函数] 提出一种双分支架构（泛化分支+过拟合分支）来学习多个神经SDF的紧凑潜空间，结合共享spatial feature grid和新颖的带宽采样策略，在保持紧凑latent code的同时恢复高保真几何细节…
+  [AAAI 2026][神经符号距离函数] 提出一种双分支架构（泛化分支+过拟合分支）来学习多个神经SDF的紧凑潜空间，结合共享spatial feature grid和新颖的带宽采样策略，在保持紧凑latent code的同时恢复高保真几何细节，在Stanford Models、ShapeNet和D-FAUST上均达到SOTA。
 tags:
   - "AAAI 2026"
   - "神经符号距离函数"

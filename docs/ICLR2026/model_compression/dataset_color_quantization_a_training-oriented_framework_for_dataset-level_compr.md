@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dataset Color Quantization: A Training-Oriented Framework for Dataset-Level Compression
 description: >-
-  [ICLR2026][模型压缩][数据集压缩] 提出 Dataset Color Quantization（DCQ）框架，通过色度感知聚类、注意力引导调色板分配和纹理保持优化三个机制，在数据集层面减少颜色冗余实现存储压缩，同时保持训练效果。
+  [ICLR2026][模型压缩][数据集压缩] 提出 Dataset Color Quantization（DCQ）框架，通过色度感知聚类、注意力引导调色板分配和纹理保持优化三个机制，在数据集层面减少颜色冗余实现存储压缩，同时保持训练效果。 领域现状与痛点：大规模图像数据集的存储需求给资源受限环境带来挑战…
 tags:
   - "ICLR2026"
   - "模型压缩"

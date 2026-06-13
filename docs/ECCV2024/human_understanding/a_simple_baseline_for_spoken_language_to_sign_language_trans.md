@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars
 description: >-
-  [ECCV 2024][人体理解][Spoken2Sign] 提出首个基于3D Avatar输出的Spoken2Sign翻译基线系统，通过三步流程（字典构建→SMPLSign-X 3D手语估计→检索-连接-渲染翻译）将口语文本翻译为3D手语动画…
+  [ECCV 2024][人体理解][Spoken2Sign] 提出首个基于3D Avatar输出的Spoken2Sign翻译基线系统，通过三步流程（字典构建→SMPLSign-X 3D手语估计→检索-连接-渲染翻译）将口语文本翻译为3D手语动画，在Phoenix-2014T上back-translation BLEU-4达25.46，同时其3D手语副产品（关键点增强和多视角理解）显著提升了手语理解任务性能。
 tags:
   - "ECCV 2024"
   - "人体理解"

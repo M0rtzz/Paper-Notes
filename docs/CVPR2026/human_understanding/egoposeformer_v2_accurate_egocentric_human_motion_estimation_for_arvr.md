@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoPoseFormer v2: Accurate Egocentric Human Motion Estimation for AR/VR
 description: >-
-  [CVPR2026][人体理解][自我中心姿态估计] 提出 EgoPoseFormer v2 (EPFv2)，通过端到端 Transformer 架构（单一全局查询 + 因果时序注意力 + 条件多视图交叉注意力）和基于不确定性蒸馏的自动标注系统…
+  [CVPR2026][人体理解][自我中心姿态估计] 提出 EgoPoseFormer v2 (EPFv2)，通过端到端 Transformer 架构（单一全局查询 + 因果时序注意力 + 条件多视图交叉注意力）和基于不确定性蒸馏的自动标注系统，在 EgoBody3M 基准上以 0.8ms GPU 延迟实现了自我中心 3D 人体运动估计的 SOTA 精度（MPJPE 4.02cm，比前作提升 15-22%）。
 tags:
   - "CVPR2026"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Dynamic Regret of Following the Regularized Leader: Optimism with History Pruning
 description: >-
-  [ICML 2025][强化学习][FTRL] 本文提出 OptFPRL 算法，通过在 Follow the Regularized Leader (FTRL) 框架中引入**历史梯度裁剪 (History Pruning)** 机制，首次为 FTRL 在紧凑集上建立了数据依赖的动态遗憾保证…
+  [ICML 2025][强化学习][FTRL] 本文提出 OptFPRL 算法，通过在 Follow the Regularized Leader (FTRL) 框架中引入**历史梯度裁剪 (History Pruning)** 机制，首次为 FTRL 在紧凑集上建立了数据依赖的动态遗憾保证，动态遗憾完全由预测误差调控，在预测完美时可达零遗憾。
 tags:
   - "ICML 2025"
   - "强化学习"

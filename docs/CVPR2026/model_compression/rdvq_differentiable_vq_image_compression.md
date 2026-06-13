@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RDVQ: Differentiable Vector Quantization for Rate-Distortion Optimization of Generative Image Compression
 description: >-
-  [CVPR 2026][模型压缩][向量量化] RDVQ 通过对码本分布的可微松弛，首次实现了 VQ-based 图像压缩的端到端率失真联合优化，在极低码率下以不到 20% 的参数量取得了优于或竞争性的感知质量。
+  [CVPR 2026 Oral][模型压缩][向量量化] RDVQ 通过对码本分布的可微松弛，首次实现了 VQ-based 图像压缩的端到端率失真联合优化，在极低码率下以不到 20% 的参数量取得了优于或竞争性的感知质量。 领域现状：学习型图像压缩主要用标量量化（SQ），可微近似（如加噪/STE）使梯度能回传到编码器…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Oral"
   - "模型压缩"
   - "向量量化"
   - "率失真优化"

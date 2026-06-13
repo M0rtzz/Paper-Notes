@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowTok: Flowing Seamlessly Across Text and Image Tokens
 description: >-
-  [图像生成] FlowTok 提出将文本和图像都编码为紧凑的 1D token 表示（77×16），通过 flow matching 直接在文本与图像 token 之间进行流动转换，无需复杂的条件机制或噪声调度，实现了高效的跨模态生成。
+  [图像生成] FlowTok 提出将文本和图像都编码为紧凑的 1D token 表示（77×16），通过 flow matching 直接在文本与图像 token 之间进行流动转换，无需复杂的条件机制或噪声调度，实现了高效的跨模态生成。 传统的文本到图像生成方法将文本作为条件信号，通过去噪过程从高斯噪声逐步引导到目标图像…
 tags:
   - "图像生成"
 ---

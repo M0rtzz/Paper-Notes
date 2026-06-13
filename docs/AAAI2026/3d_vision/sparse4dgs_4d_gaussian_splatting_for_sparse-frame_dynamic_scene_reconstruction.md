@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction
 description: >-
-  [AAAI 2026][3D视觉][动态场景重建] 提出 Sparse4DGS，首个面向稀疏帧输入的4D动态场景重建方法，通过纹理感知的变形正则化（TADR）和纹理感知的规范优化（TACO）两大核心模块，引导高斯分布聚焦纹理丰富区域，在仅5-30帧稀疏输入下实现高质量动态新视角合成。
+  [AAAI 2026][3D视觉][动态场景重建] 提出 Sparse4DGS，首个面向稀疏帧输入的4D动态场景重建方法，通过纹理感知的变形正则化（TADR）和纹理感知的规范优化（TACO）两大核心模块，引导高斯分布聚焦纹理丰富区域，在仅5-30帧稀疏输入下实现高质量动态新视角合成。 动态高斯溅射方法在4D场景重建中取得了显…
 tags:
   - "AAAI 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning
 description: >-
-  [CVPR 2026][语义分割][密集视频描述] 提出 STaRC 框架，通过有监督的帧级显著性学习统一驱动检索（显著性引导分割+检索）和描述生成（显著性提示注入解码器），显著提升密集视频描述(DVC)任务中的时序对齐和字幕质量。
+  [CVPR 2026][语义分割][密集视频描述] 提出 STaRC 框架，通过有监督的帧级显著性学习统一驱动检索（显著性引导分割+检索）和描述生成（显著性提示注入解码器），显著提升密集视频描述(DVC)任务中的时序对齐和字幕质量。 密集视频描述(DVC)需要在长视频中检测多个事件并为每个事件生成自然语言描述…
 tags:
   - "CVPR 2026"
   - "语义分割"

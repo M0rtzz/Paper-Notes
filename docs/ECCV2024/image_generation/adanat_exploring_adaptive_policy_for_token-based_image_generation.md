@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaNAT: Exploring Adaptive Policy for Token-Based Image Generation
 description: >-
-  [ECCV 2024][图像生成][Transformer] 提出AdaNAT，将非自回归Transformer（NAT）的生成策略配置建模为MDP，通过轻量策略网络+PPO强化学习+对抗奖励模型自动为每个样本定制生成策略（重掩码比例、采样温度、CFG权重等）…
+  [ECCV 2024][图像生成][Transformer] 提出AdaNAT，将非自回归Transformer（NAT）的生成策略配置建模为MDP，通过轻量策略网络+PPO强化学习+对抗奖励模型自动为每个样本定制生成策略（重掩码比例、采样温度、CFG权重等），在ImageNet-256上仅用8步达到FID 2.86，相比手工策略实现约40%的相对提升。
 tags:
   - "ECCV 2024"
   - "图像生成"

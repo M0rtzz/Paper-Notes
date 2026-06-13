@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAGR: Manifold-Aligned Graph Regularization for Continual Action Quality Assessment
 description: >-
-  [ECCV 2024][LLM安全][持续学习] 提出 MAGR 方法，通过流形对齐投影器和 Intra-Inter-Joint 图正则化器，解决持续动作质量评估（CAQA）中特征回放导致的旧特征与当前特征流形不对齐问题，在四个数据集上显著超越现有基线。
+  [ECCV 2024][LLM安全][持续学习] 提出 MAGR 方法，通过流形对齐投影器和 Intra-Inter-Joint 图正则化器，解决持续动作质量评估（CAQA）中特征回放导致的旧特征与当前特征流形不对齐问题，在四个数据集上显著超越现有基线。 领域现状： 动作质量评估（AQA）用于定量评价运动、康复等场景中的动作…
 tags:
   - "ECCV 2024"
   - "LLM安全"

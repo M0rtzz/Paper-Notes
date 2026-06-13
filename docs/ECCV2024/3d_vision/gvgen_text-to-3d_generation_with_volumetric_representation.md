@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GVGEN: Text-to-3D Generation with Volumetric Representation
 description: >-
-  [ECCV 2024][3D视觉][文本到3D] 提出GVGEN，首个直接从文本前馈生成3D高斯的框架，通过将无序高斯组织为结构化体积表示(GaussianVolume)，并设计从粗到精的生成管线（先生成几何体积再预测高斯属性），在约7秒内完成文本到3D生成。
+  [ECCV 2024][3D视觉][文本到3D] 提出GVGEN，首个直接从文本前馈生成3D高斯的框架，通过将无序高斯组织为结构化体积表示(GaussianVolume)，并设计从粗到精的生成管线（先生成几何体积再预测高斯属性），在约7秒内完成文本到3D生成。 领域现状： 文本到3D生成是计算机图形学中的热门方向…
 tags:
   - "ECCV 2024"
   - "3D视觉"

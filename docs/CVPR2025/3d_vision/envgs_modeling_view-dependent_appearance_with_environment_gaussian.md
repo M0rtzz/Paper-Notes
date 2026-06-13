@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EnvGS: Modeling View-Dependent Appearance with Environment Gaussian
 description: >-
-  [CVPR 2025][3D视觉][高斯溅射] 本文提出EnvGS，用一组环境高斯原语（Environment Gaussian）作为显式3D表示来捕获场景反射，通过基于GPU RT Core的可微光线追踪渲染器联合优化环境高斯和基础高斯…
+  [CVPR 2025][3D视觉][高斯溅射] 本文提出EnvGS，用一组环境高斯原语（Environment Gaussian）作为显式3D表示来捕获场景反射，通过基于GPU RT Core的可微光线追踪渲染器联合优化环境高斯和基础高斯，在真实场景中首次实现了实时（26+ FPS）且高质量的镜面反射新视角合成，显著超越所有实时方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

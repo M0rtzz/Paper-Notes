@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RobuSTereo: Robust Zero-Shot Stereo Matching under Adverse Weather
 description: >-
-  [ICCV 2025][3D视觉][立体匹配] 提出 RobuSTereo 框架，通过基于扩散模型的立体数据生成管线和结合去噪 ViT 与 VGG19 的鲁棒特征编码器，大幅提升立体匹配模型在雨、雾、雪等恶劣天气下的零样本泛化能力。
+  [ICCV 2025][3D视觉][立体匹配] 提出 RobuSTereo 框架，通过基于扩散模型的立体数据生成管线和结合去噪 ViT 与 VGG19 的鲁棒特征编码器，大幅提升立体匹配模型在雨、雾、雪等恶劣天气下的零样本泛化能力。 立体匹配是计算机视觉中的基础任务，通过估计左右图像之间的视差来获取深度信息…
 tags:
   - "ICCV 2025"
   - "3D视觉"

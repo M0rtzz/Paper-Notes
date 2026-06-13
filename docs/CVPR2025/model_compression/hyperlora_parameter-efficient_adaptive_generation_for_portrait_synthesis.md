@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis
 description: >-
-  [CVPR 2025][模型压缩][个性化肖像生成] 提出 HyperLoRA，一种通过自适应网络直接生成 LoRA 权重的零样本个性化肖像生成方法——将 LoRA 参数投影到低维线性空间（原参数的 1.2%），用 perceiver resampler 从输入人脸预测组合系数…
+  [CVPR 2025][模型压缩][个性化肖像生成] 提出 HyperLoRA，一种通过自适应网络直接生成 LoRA 权重的零样本个性化肖像生成方法——将 LoRA 参数投影到低维线性空间（原参数的 1.2%），用 perceiver resampler 从输入人脸预测组合系数，并将 LoRA 显式分解为 ID-LoRA 和 Base-LoRA 以解耦身份与无关信息，实现高保真度+高可编辑性+快速推理的平衡。
 tags:
   - "CVPR 2025"
   - "模型压缩"

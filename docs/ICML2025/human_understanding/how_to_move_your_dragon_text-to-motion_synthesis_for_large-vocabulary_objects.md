@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How to Move Your Dragon: Text-to-Motion Synthesis for Large-Vocabulary Objects
 description: >-
-  [ICML2025][人体理解][motion synthesis] 本文首次提出一个统一框架，通过为 Truebones Zoo 数据集（70+ 物种）标注文本描述、引入 rig augmentation 技术以及在 Motion Diffusion Model 中融入 TreePE 和 RestPE 编码…
+  [ICML2025][人体理解][motion synthesis] 本文首次提出一个统一框架，通过为 Truebones Zoo 数据集（70+ 物种）标注文本描述、引入 rig augmentation 技术以及在 Motion Diffusion Model 中融入 TreePE 和 RestPE 编码，实现了面向大词汇量异构骨骼对象的文本驱动动作生成，可为动物、恐龙乃至虚构生物合成高质量 3D 动作。
 tags:
   - "ICML2025"
   - "人体理解"

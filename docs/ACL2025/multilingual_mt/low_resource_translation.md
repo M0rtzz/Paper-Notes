@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Read it in Two Steps: Translating Extremely Low-Resource Languages with Code-Augmented Grammar Books
 description: >-
-  [ACL 2025][多语言/翻译][extremely low-resource translation] 将语法书辅助的极低资源翻译分解为**语法规则检索**和**规则应用**两步，提出 Rule-by-Rule 检索策略和代码格式语法规则表示，在壮语翻译上端到端提升 13.1% BLEU。
+  [ACL 2025][多语言/翻译][extremely low-resource translation] 将语法书辅助的极低资源翻译分解为语法规则检索：和规则应用：两步，提出 Rule-by-Rule 检索策略和代码格式语法规则表示，在壮语翻译上端到端提升 13.1% BLEU。 领域现状：全球大多数语言属于极低资源（X…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

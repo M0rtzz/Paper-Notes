@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Prompting Image Restoration with Diffusion Transformers (DPIR)
 description: >-
-  [图像生成] 提出 DPIR，基于 SD3 (Diffusion Transformer) 的图像修复模型，通过轻量级低质量图像条件分支和全局-局部视觉双提示(dual prompting)分支，从多角度引入退化图像信息，首次系统性地将 DiT 应用于图像修复并取得 SOTA 性能。
+  [图像生成] 提出 DPIR，基于 SD3 (Diffusion Transformer) 的图像修复模型，通过轻量级低质量图像条件分支和全局-局部视觉双提示(dual prompting)分支，从多角度引入退化图像信息，首次系统性地将 DiT 应用于图像修复并取得 SOTA 性能。 图像修复(IR)领域中…
 tags:
   - "图像生成"
 ---

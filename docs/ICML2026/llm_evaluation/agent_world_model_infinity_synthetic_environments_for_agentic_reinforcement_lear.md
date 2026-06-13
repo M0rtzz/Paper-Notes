@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning
 description: >-
-  [ICML2026][LLM评测][Agent 环境合成] 本文提出 Agent World Model，一条从场景、任务、数据库、MCP 工具接口到验证器的全合成流水线，生成 1000 个可执行数据库驱动环境，并用它们训练工具调用 Agent…
+  [ICML2026][LLM评测][Agent 环境合成] 本文提出 Agent World Model，一条从场景、任务、数据库、MCP 工具接口到验证器的全合成流水线，生成 1000 个可执行数据库驱动环境，并用它们训练工具调用 Agent，在 BFCLv3、$\tau^2$-bench 和 MCP-Universe 上取得更强的域外泛化。
 tags:
   - "ICML2026"
   - "LLM评测"

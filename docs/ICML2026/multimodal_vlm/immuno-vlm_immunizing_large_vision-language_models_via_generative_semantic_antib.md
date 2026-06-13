@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Immuno-VLM: Immunizing Large Vision-Language Models via Generative Semantic Antibodies for Open-World Trustworthiness
 description: >-
-  [ICML 2026][多模态VLM][语义抗体] 本文把生物免疫系统中的"阴性选择"原理搬到 CLIP 等 VLM 上：用 LLM 主动幻觉一批"看起来像但不是已知类"的文本描述作为语义抗体，再以一个轻量 adapter 把视觉特征推离这些抗体，从而在不重训骨干的情况下显著降低开放世界场景下的"高自信误判"…
+  [ICML 2026][多模态VLM][语义抗体] 本文把生物免疫系统中的"阴性选择"原理搬到 CLIP 等 VLM 上：用 LLM 主动幻觉一批"看起来像但不是已知类"的文本描述作为语义抗体，再以一个轻量 adapter 把视觉特征推离这些抗体，从而在不重训骨干的情况下显著降低开放世界场景下的"高自信误判"。
 tags:
   - "ICML 2026"
   - "多模态VLM"

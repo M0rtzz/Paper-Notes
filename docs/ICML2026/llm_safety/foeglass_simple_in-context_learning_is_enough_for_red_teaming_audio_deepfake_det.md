@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoeGlass: Simple In-Context Learning Is Enough for Red Teaming Audio Deepfake Detectors
 description: >-
-  [ICML 2026][LLM安全][音频深伪检测] FoeGlass 把"用 LLM 红队 LLM"的思路搬到音频深伪检测（ADD）上：不微调 LLM，仅通过 in-context learning + 真实度/多样性双反馈，让黑盒 reasoning LLM 自动写 TTS prompt 去骗 ADD…
+  [ICML 2026][LLM安全][音频深伪检测] FoeGlass 把"用 LLM 红队 LLM"的思路搬到音频深伪检测（ADD）上：不微调 LLM，仅通过 in-context learning + 真实度/多样性双反馈，让黑盒 reasoning LLM 自动写 TTS prompt 去骗 ADD，cold start 即可把现有 ADD 的 FNR（假阴率）从 0% 拉到最高 96%，且攻击在 8 个 ADD 之间高度可迁移。
 tags:
   - "ICML 2026"
   - "LLM安全"

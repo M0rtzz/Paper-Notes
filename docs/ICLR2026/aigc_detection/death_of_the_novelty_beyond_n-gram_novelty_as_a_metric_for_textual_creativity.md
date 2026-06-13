@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Death of the Novel(ty): Beyond n-Gram Novelty as a Metric for Textual Creativity
 description: >-
-  [ICLR 2026][AIGC检测][textual creativity] 通过 26 位专业作家对 8618 条表达的 close reading 标注，揭示 n-gram 新颖度不足以衡量文本创造力——约 91% 的高 n-gram 新颖表达并不被认为具有创造性…
+  [ICLR 2026][AIGC检测][textual creativity] 通过 26 位专业作家对 8618 条表达的 close reading 标注，揭示 n-gram 新颖度不足以衡量文本创造力——约 91% 的高 n-gram 新颖表达并不被认为具有创造性，且开源 LLM 中高 n-gram 新颖度与低语用合理性负相关。
 tags:
   - "ICLR 2026"
   - "AIGC检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MindDriver: Introducing Progressive Multimodal Reasoning for Autonomous Driving
 description: >-
-  [CVPR 2026][自动驾驶][多模态推理] 提出渐进式多模态推理框架 MindDriver，模仿人类"感知→想象→行动"机制——先文本语义理解，再想象未来场景图像（桥接语义和物理空间），最后预测轨迹，配合反馈引导数据标注和渐进式强化微调…
+  [CVPR 2026][自动驾驶][多模态推理] 提出渐进式多模态推理框架 MindDriver，模仿人类"感知→想象→行动"机制——先文本语义理解，再想象未来场景图像（桥接语义和物理空间），最后预测轨迹，配合反馈引导数据标注和渐进式强化微调，在 nuScenes 开环和 Bench2Drive 闭环评估上均取得最优表现。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

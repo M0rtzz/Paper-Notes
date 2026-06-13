@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisRL: Intention-Driven Visual Perception via Reinforced Reasoning
 description: >-
-  [ICCV 2025][目标检测][意图驱动视觉感知] VisRL是首个将强化学习应用于意图驱动视觉感知的框架，通过迭代DPO训练让大多模态模型学会根据查询意图自主选择关注区域（预测bounding box），无需昂贵的中间bounding box标注即可实现比SFT更强的视觉推理能力。
+  [ICCV 2025][目标检测][意图驱动视觉感知] VisRL是首个将强化学习应用于意图驱动视觉感知的框架，通过迭代DPO训练让大多模态模型学会根据查询意图自主选择关注区域（预测bounding box），无需昂贵的中间bounding box标注即可实现比SFT更强的视觉推理能力。 领域现状：大多模态模型（LMM…
 tags:
   - "ICCV 2025"
   - "目标检测"

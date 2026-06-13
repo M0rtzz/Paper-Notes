@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Reasoning with Hidden Thinking
 description: >-
-  [ICML 2026][多模态VLM][Heima] Heima 把多模态 LLM 的冗长 CoT 每个阶段（summary / caption / reasoning）蒸馏成**一个特殊 thinking token**，让模型在隐空间里"想"…
+  [ICML 2026][多模态VLM][Heima] Heima 把多模态 LLM 的冗长 CoT 每个阶段（summary / caption / reasoning）蒸馏成**一个特殊 thinking token**，让模型在隐空间里"想"，token 数从 100-200 量级降到 13-16 个的同时 zero-shot 准确率反而比 LLaVA-CoT 更稳；配套训练一个 LLM "interpreter"用 thinking token 的 hidden state 重建出文字推理链，从而验证压缩损失的信息论上界。
 tags:
   - "ICML 2026"
   - "多模态VLM"

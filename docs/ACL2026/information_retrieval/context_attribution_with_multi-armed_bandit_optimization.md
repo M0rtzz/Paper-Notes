@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Context Attribution with Multi-Armed Bandit Optimization
 description: >-
-  [ACL 2026 (Findings)][信息检索/RAG][上下文归因] 本文提出 CAMAB，将 RAG 中的上下文归因（识别哪些上下文片段对生成答案有贡献）建模为组合多臂赌博机（CMAB）问题，使用线性 Thompson 采样自适应地探索上下文子集空间…
+  [ACL 2026 (Findings)][信息检索/RAG][上下文归因] 本文提出 CAMAB，将 RAG 中的上下文归因（识别哪些上下文片段对生成答案有贡献）建模为组合多臂赌博机（CMAB）问题，使用线性 Thompson 采样自适应地探索上下文子集空间，在 HotpotQA、CNN/DM、TyDi QA 上比 SHAP 和 ContextCite 减少最多 30% 的模型查询次数同时匹配或超越归因质量。
 tags:
   - "ACL 2026 (Findings)"
   - "信息检索/RAG"

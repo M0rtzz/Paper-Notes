@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][Deep Hashing] Hash-RAG 将深度哈希技术系统集成到 RAG 框架中，实现了仅需传统方法 10% 检索时间的高效检索，并通过 Prompt-Guided Chunk-to-Context（PGCC）模块在保持效率的同时提升了生成质量。
+  [ACL 2025][信息检索/RAG][Deep Hashing] Hash-RAG 将深度哈希技术系统集成到 RAG 框架中，实现了仅需传统方法 10% 检索时间的高效检索，并通过 Prompt-Guided Chunk-to-Context（PGCC）模块在保持效率的同时提升了生成质量。 RAG 系统的有效性依赖于大规…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

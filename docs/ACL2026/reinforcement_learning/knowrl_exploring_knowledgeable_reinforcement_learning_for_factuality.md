@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KnowRL: Exploring Knowledgeable Reinforcement Learning for Factuality
 description: >-
-  [ACL 2026][强化学习][过程级奖励] KnowRL 把"原子事实校验"作为过程级奖励直接塞进 GRPO 训练循环，对慢思考模型的 CoT 每一步进行事实判定，同时用"拒答给正奖励"教模型识别自己的知识边界…
+  [ACL 2026][强化学习][过程级奖励] KnowRL 把"原子事实校验"作为过程级奖励直接塞进 GRPO 训练循环，对慢思考模型的 CoT 每一步进行事实判定，同时用"拒答给正奖励"教模型识别自己的知识边界，在 SimpleQA Incorrect Rate 上直降 20.3% 的同时不损失（甚至略升）GPQA / AIME 等推理能力，并展现出英文知识 → 中文 QA 的跨语言迁移。
 tags:
   - "ACL 2026"
   - "强化学习"

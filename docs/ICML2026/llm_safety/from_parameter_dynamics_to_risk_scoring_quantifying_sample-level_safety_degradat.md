@@ -2,10 +2,10 @@
 title: >-
   [论文解读] From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning
 description: >-
-  [ICML 2026][LLM/NLP][安全对齐] 作者通过追踪 LoRA 微调过程中参数沿"危险/安全方向"的累积漂移，发现善意数据破坏对齐的根本机制是参数在 fine-tuning 中向危险方向单调漂移；进而提出 SQSD——用单步梯度沿两方向的投影差对每个样本打连续风险分…
+  [ICML 2026][LLM安全][安全对齐] 作者通过追踪 LoRA 微调过程中参数沿"危险/安全方向"的累积漂移，发现善意数据破坏对齐的根本机制是参数在 fine-tuning 中向危险方向单调漂移；进而提出 SQSD——用单步梯度沿两方向的投影差对每个样本打连续风险分，在 3 个模型 × 2 数据集上保持单调 ASR 排名，且能跨架构、跨规模、跨 LoRA→Full 迁移。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM安全"
   - "安全对齐"
   - "微调风险"
   - "参数动态"

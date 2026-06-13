@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration
 description: >-
-  [CVPR 2026][图像生成][扩散采样加速] 提出 Spectrum，一种基于切比雪夫多项式的全局谱域特征预测方法，将扩散模型去噪器的中间特征视为时间函数并用岭回归拟合系数，实现误差不随步长增长的长程特征预测…
+  [CVPR 2026][图像生成][扩散采样加速] 提出 Spectrum，一种基于切比雪夫多项式的全局谱域特征预测方法，将扩散模型去噪器的中间特征视为时间函数并用岭回归拟合系数，实现误差不随步长增长的长程特征预测，在 FLUX.1 上达到 4.79× 加速、在 Wan2.1-14B 上达到 4.67× 加速而质量几乎无损。
 tags:
   - "CVPR 2026"
   - "图像生成"

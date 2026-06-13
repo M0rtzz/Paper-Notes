@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRACE: Unleashing Spatial Reasoning in Multimodal Large Language Models via Textual Representation Guided Reasoning
 description: >-
-  [ACL 2026][多模态VLM][空间推理] 本文提出 TRACE（Textual Representation of Allocentric Context from Egocentric Video），一种提示方法…
+  [ACL 2026][多模态VLM][空间推理] 本文提出 TRACE（Textual Representation of Allocentric Context from Egocentric Video），一种提示方法，引导多模态大语言模型从自我中心视频中生成结构化的文本 allocentric 3D 环境表示——包括元上下文、相机轨迹和实体注册表——作为中间推理步骤来增强空间问答能力，在 VSI-Bench 和 OST-Bench 上一致超越已有提示策略。
 tags:
   - "ACL 2026"
   - "多模态VLM"

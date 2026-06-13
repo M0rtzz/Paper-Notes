@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiveFact: A Dynamic, Time-Aware Benchmark for LLM-Driven Fake News Detection
 description: >-
-  [ACL 2026][社会计算][动态基准] LiveFact 把"假新闻检测"从静态二分类升级成一个按月更新、按时间切片证据的动态推理基准，用 Classification + Inference 双模式同时考察 LLM 的事实判断和"该说不知道就说不知道"的认知谦逊，并用 SSA 实体替换显式监控基准污染…
+  [ACL 2026][社会计算][动态基准] LiveFact 把"假新闻检测"从静态二分类升级成一个按月更新、按时间切片证据的动态推理基准，用 Classification + Inference 双模式同时考察 LLM 的事实判断和"该说不知道就说不知道"的认知谦逊，并用 SSA 实体替换显式监控基准污染。
 tags:
   - "ACL 2026"
   - "社会计算"

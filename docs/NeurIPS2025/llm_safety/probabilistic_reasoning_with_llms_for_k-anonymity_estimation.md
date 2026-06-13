@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probabilistic Reasoning with LLMs for K-Anonymity Estimation
 description: >-
-  [NeurIPS 2025][LLM安全][隐私风险估计] 本文提出Branch框架，利用大语言模型将用户文本中的个人信息建模为贝叶斯网络的联合概率分布，分别估计各属性的条件概率后组合计算k-匿名值（全球匹配该信息的人数），在隐私风险估计任务上达到73%准确率，比o3-mini链式思维提升13%。
+  [NeurIPS 2025][LLM安全][隐私风险估计] 本文提出Branch框架，利用大语言模型将用户文本中的个人信息建模为贝叶斯网络的联合概率分布，分别估计各属性的条件概率后组合计算k-匿名值（全球匹配该信息的人数），在隐私风险估计任务上达到73%准确率，比o3-mini链式思维提升13%。 随着用户在Reddit、C…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

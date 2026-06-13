@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Static Program Slicing Using Language Models With Dataflow-Aware Pretraining and Constrained Decoding
 description: >-
-  [ACL2026][代码智能][程序切片] Sliceformer 把静态程序切片重写为小型代码语言模型的 seq2seq 任务，通过数据流感知预训练学习依赖关系，并用词法与语法约束解码防止幻觉，在 Java 和 Python 切片基准上显著提升 ExactMatch。
+  [ACL2026][代码智能][程序切片] Sliceformer 把静态程序切片重写为小型代码语言模型的 seq2seq 任务，通过数据流感知预训练学习依赖关系，并用词法与语法约束解码防止幻觉，在 Java 和 Python 切片基准上显著提升 ExactMatch。 领域现状：静态程序切片用于找出与某个变量或语句相关的代…
 tags:
   - "ACL2026"
   - "代码智能"

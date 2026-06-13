@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Alternating Gradient Flow Utility: A Unified Metric for Structural Pruning and Dynamic Routing in Deep Networks
 description: >-
-  [CVPR 2025][结构化剪枝] 提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
+  [CVPR 2025][模型压缩][结构化剪枝] 提出基于交替梯度流(AGF)的统一效用度量，将特征空间总变差作为结构化剪枝指标，并结合置信度级联路由实现离线拓扑构建与在线动态推理的解耦，在ImageNet-1K极端压缩下避免传统指标导致的结构崩溃，在ImageNet-100动态推理中以0.92x计算代价匹配全模型精度。
 tags:
   - "CVPR 2025"
+  - "模型压缩"
   - "结构化剪枝"
   - "动态路由"
   - "梯度流效用"

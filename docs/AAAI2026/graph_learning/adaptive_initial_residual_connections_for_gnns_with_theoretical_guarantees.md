@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Initial Residual Connections for GNNs with Theoretical Guarantees
 description: >-
-  [AAAI 2026][图学习][自适应残差连接] 提出自适应初始残差连接（Adaptive IRC），允许每个节点拥有基于初始特征学习的个性化残差强度，首次证明带激活函数的初始残差连接的 Dirichlet 能量有正下界（保证不过平滑）…
+  [AAAI 2026][图学习][自适应残差连接] 提出自适应初始残差连接（Adaptive IRC），允许每个节点拥有基于初始特征学习的个性化残差强度，首次证明带激活函数的初始残差连接的 Dirichlet 能量有正下界（保证不过平滑），并提出基于 PageRank 的启发式变体在避免学习额外参数的同时达到可比甚至更优性能。
 tags:
   - "AAAI 2026"
   - "图学习"

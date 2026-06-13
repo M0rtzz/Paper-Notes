@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Are Optimal Algorithms Still Optimal? Rethinking Sorting in LLM-Based Pairwise Ranking with Batching and Caching
 description: >-
-  [ACL 2025][LLM/NLP][成对排序] 本文重新审视了LLM成对排序提示（PRP）中排序算法的选择问题，提出以LLM推理调用次数（而非比较次数）为核心代价模型，发现经典最优算法Heapsort在引入批处理（batching）和缓存（caching）优化后不再最优…
+  [ACL 2025][LLM 其他][成对排序] 本文重新审视了LLM成对排序提示（PRP）中排序算法的选择问题，提出以LLM推理调用次数（而非比较次数）为核心代价模型，发现经典最优算法Heapsort在引入批处理（batching）和缓存（caching）优化后不再最优，Quicksort在batch size≥2时推理次数减少44%，为PRP排序提供了新的最优选择。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "成对排序"
   - "排序算法"
   - "LLM推理成本"

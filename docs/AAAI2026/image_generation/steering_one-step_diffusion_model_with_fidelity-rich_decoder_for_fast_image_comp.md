@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression
 description: >-
-  [AAAI 2026][图像生成][图像压缩] 提出 SODEC，一种基于单步扩散的图像压缩模型，通过保真度引导模块(FGM)将高保真VAE解码器的先验注入扩散生成过程，结合速率退火训练策略实现极低码率下的高质量压缩，解码速度比多步扩散方法快20×以上，同时在率-失真-感知权衡上达到SOTA。
+  [AAAI 2026][图像生成][图像压缩] 提出 SODEC，一种基于单步扩散的图像压缩模型，通过保真度引导模块(FGM)将高保真VAE解码器的先验注入扩散生成过程，结合速率退火训练策略实现极低码率下的高质量压缩，解码速度比多步扩散方法快20×以上，同时在率-失真-感知权衡上达到SOTA。 领域现状 传统编解码器：（JP…
 tags:
   - "AAAI 2026"
   - "图像生成"

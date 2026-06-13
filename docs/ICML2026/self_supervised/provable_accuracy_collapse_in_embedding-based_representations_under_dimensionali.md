@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Provable Accuracy Collapse in Embedding-Based Representations under Dimensionality Mismatch
 description: >-
-  [ICML 2026][自监督学习][triplet embedding] 作者证明:对比学习里典型的三元组任务,只要嵌入维度 $d$ 小于真维度 $D$ 的某个常数倍,无论用什么优化器,准确率都会"坍缩"到 1 维随机嵌入的 50% baseline…
+  [ICML 2026 Spotlight][自监督学习][triplet embedding] 作者证明:对比学习里典型的三元组任务,只要嵌入维度 $d$ 小于真维度 $D$ 的某个常数倍,无论用什么优化器,准确率都会"坍缩"到 1 维随机嵌入的 50% baseline,而且在算法层面这件事在 Unique Games 假设下也无法被多项式时间逼近。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "自监督学习"
   - "triplet embedding"
   - "维度坍缩"

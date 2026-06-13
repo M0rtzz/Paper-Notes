@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let Me Think! A Long Chain-of-Thought Can Be Worth Exponentially Many Short Ones
 description: >-
-  [NeurIPS 2025][LLM推理][推理时缩放] 本文从理论和实验两方面证明：存在推理任务（图连通性问题），其中一条长 CoT（顺序缩放）的能力等价于指数多条短 CoT（并行缩放）——即将 CoT 长度减少一点点，就需要指数级增加并行采样数才能达到同等准确率。
+  [NeurIPS 2025][LLM推理][推理时缩放] 本文从理论和实验两方面证明：存在推理任务（图连通性问题），其中一条长 CoT（顺序缩放）的能力等价于指数多条短 CoT（并行缩放）——即将 CoT 长度减少一点点，就需要指数级增加并行采样数才能达到同等准确率。 领域现状：推理时计算有两个主要缩放轴——顺序缩放：（更长…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

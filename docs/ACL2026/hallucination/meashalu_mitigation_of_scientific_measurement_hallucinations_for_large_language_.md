@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeasHalu: Mitigation of Scientific Measurement Hallucinations for LLMs
 description: >-
-  [ACL 2026][幻觉检测][科学测量幻觉] 本文提出MeasHalu框架，通过细粒度测量幻觉分类法和两阶段优化（推理感知SFT+幻觉靶向GRPO奖励）缓解LLM在科学测量抽取中的幻觉，在MeasEval上显著超越基线。
+  [ACL 2026][幻觉检测][科学测量幻觉] 本文提出MeasHalu框架，通过细粒度测量幻觉分类法和两阶段优化（推理感知SFT+幻觉靶向GRPO奖励）缓解LLM在科学测量抽取中的幻觉，在MeasEval上显著超越基线。 领域现状：该领域已有一定积累但存在关键缺口。 现有痛点：现有方法未能充分解决核心问题…
 tags:
   - "ACL 2026"
   - "幻觉检测"

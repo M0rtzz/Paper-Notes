@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Chronicles: Using Multimodal LLMs to Analyze Massive Collections of Images
 description: >-
-  [ICCV 2025][多模态VLM][大规模图像分析] 提出 Visual Chronicles 系统，首次利用多模态大语言模型（MLLM）分析超过 2000 万张街景图像的海量数据库，通过自底向上的分层策略（局部变化检测 + 趋势发现）和高效的文本嵌入-MLLM 混合验证算法…
+  [ICCV 2025][多模态VLM][大规模图像分析] 提出 Visual Chronicles 系统，首次利用多模态大语言模型（MLLM）分析超过 2000 万张街景图像的海量数据库，通过自底向上的分层策略（局部变化检测 + 趋势发现）和高效的文本嵌入-MLLM 混合验证算法，无标签、开放式地发现城市十年间的视觉变化趋势（如旧金山新增太阳能板、高架桥被刷成蓝色等），将 MLLM 推理成本降低 2000 倍同时保持 93.9% 的验证准确率。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaGen: Learning Adaptive Policy for Image Synthesis
 description: >-
-  [ECCV 2024 (AdaNAT的扩展版本)][图像生成][强化学习] 将多步生成模型（MaskGIT/AR/Diffusion/Rectified Flow）的步级参数调度（温度、mask ratio、CFG scale、timestep等）统一建模为MDP，用轻量RL策略网络实现样本自适应调度…
+  [ECCV 2024 (AdaNAT的扩展版本)][图像生成][强化学习] 将多步生成模型（MaskGIT/AR/Diffusion/Rectified Flow）的步级参数调度（温度、mask ratio、CFG scale、timestep等）统一建模为MDP，用轻量RL策略网络实现样本自适应调度，并提出对抗奖励设计防止策略过拟合，在四种生成范式上一致提升性能（VAR FID 1.92→1.59，DiT-XL推理成本降3倍同时性能更优）。
 tags:
   - "ECCV 2024 (AdaNAT的扩展版本)"
   - "图像生成"

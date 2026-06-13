@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embodied Interpretability: Linking Causal Understanding to Generalization in Vision-Language-Action Models
 description: >-
-  [ICML 2026][机器人][VLA 模型] 本文把「视觉—动作归因」重新表述为干预估计问题，提出 ISS（介入显著性分数）和 NMR（干扰物质量比）两个指标，用 Bernoulli 掩码 + 高斯模糊扰动 + Action MSE 代理 KL 散度的方式量化 VLA 策略到底依赖哪些视觉区域…
+  [ICML 2026][机器人][VLA 模型] 本文把「视觉—动作归因」重新表述为干预估计问题，提出 ISS（介入显著性分数）和 NMR（干扰物质量比）两个指标，用 Bernoulli 掩码 + 高斯模糊扰动 + Action MSE 代理 KL 散度的方式量化 VLA 策略到底依赖哪些视觉区域，并证明 NMR 与 OOD 任务成功率呈 $r = -0.77$ 的强负相关——是预测 VLA 泛化能力的便宜诊断工具。
 tags:
   - "ICML 2026"
   - "机器人"

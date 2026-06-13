@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Galaxy Walker: Geometry-aware VLMs For Galaxy-scale Understanding
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言模型] 提出 Galaxy-Walker，首个几何感知的视觉语言模型框架，通过在欧几里得、球面和双曲三种空间上进行随机游走生成几何提示（Geometry Prompt），配合混合几何专家适配器（Geometry Adapter）…
+  [CVPR 2025][多模态VLM][视觉语言模型] 提出 Galaxy-Walker，首个几何感知的视觉语言模型框架，通过在欧几里得、球面和双曲三种空间上进行随机游走生成几何提示（Geometry Prompt），配合混合几何专家适配器（Geometry Adapter），在星系属性估计（$R^2$ 最高达 0.91）和形态分类任务（F1 提升 +0.17）上大幅超越通用 VLM 和领域专用模型。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

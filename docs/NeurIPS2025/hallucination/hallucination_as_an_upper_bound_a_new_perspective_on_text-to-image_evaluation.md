@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation
 description: >-
-  [NeurIPS 2025 (Workshop: Generative and Protective AI for Content Creation)][幻觉检测][幻觉] 提出将文本到图像（T2I）模型中的幻觉定义为**偏差驱动的偏离**，建立了包含属性、关系和物体三类幻觉的分类学，并论证幻觉评估作为提示对齐评估的"上界"…
+  [NeurIPS 2025 (Workshop: Generative and Protective AI for Content Creation)][幻觉检测][幻觉] 提出将文本到图像（T2I）模型中的幻觉定义为**偏差驱动的偏离**，建立了包含属性、关系和物体三类幻觉的分类学，并论证幻觉评估作为提示对齐评估的"上界"，可揭示模型隐藏偏差。
 tags:
   - "NeurIPS 2025 (Workshop: Generative and Protective AI for Content Creation)"
   - "幻觉检测"

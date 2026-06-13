@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Augmented Potential Field Theory: A Framework for Adaptive Control in Non-Convex Domains
 description: >-
-  [NeurIPS 2025][机器人][potential field] 提出记忆增强势场理论（MAPFT），在随机最优控制中维护一个动态记忆模块来检测并编码状态空间的拓扑特征（局部最小值、低梯度区等），通过动态修改价值函数景观实现非凸环境下的自适应控制…
+  [NeurIPS 2025][机器人][potential field] 提出记忆增强势场理论（MAPFT），在随机最优控制中维护一个动态记忆模块来检测并编码状态空间的拓扑特征（局部最小值、低梯度区等），通过动态修改价值函数景观实现非凸环境下的自适应控制，在 Humanoid-v4 等任务上比最优 RL 方法（SAC）提升 27% 累积奖励，且局部最优逃逸率从 ~30% 提升到 ~72%。
 tags:
   - "NeurIPS 2025"
   - "机器人"

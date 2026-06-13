@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AirCache: Activating Inter-modal Relevancy KV Cache Compression for Efficient Large Vision-Language Model Inference
 description: >-
-  [ICCV 2025][多模态VLM][KV cache compression] 提出AirCache，通过精英观测窗口（利用文本自注意力筛选关键文本token评估视觉token重要性）和自适应层间预算分配（基于重要性分数分布的强度和偏度），实现仅保留10%视觉KV缓存即可保持模型性能…
+  [ICCV 2025][多模态VLM][KV cache compression] 提出AirCache，通过精英观测窗口（利用文本自注意力筛选关键文本token评估视觉token重要性）和自适应层间预算分配（基于重要性分数分布的强度和偏度），实现仅保留10%视觉KV缓存即可保持模型性能，解码延迟降低29%-66%。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical and Collaborative LLM-Based Control for Multi-UAV Motion and Communication in Integrated Terrestrial and Non-Terrestrial Networks
 description: >-
-  [ICML 2025 (Workshop on ML4Wireless)][自动驾驶][多无人机控制] 提出一种基于 LLM 的层次化协作控制框架，通过 HAPS 端部署的元控制器 LLM 和 UAV 端部署的边缘控制器 LLM 的双层协同…
+  [ICML 2025 (Workshop on ML4Wireless)][自动驾驶][多无人机控制] 提出一种基于 LLM 的层次化协作控制框架，通过 HAPS 端部署的元控制器 LLM 和 UAV 端部署的边缘控制器 LLM 的双层协同，实现多 UAV 在 3D 空中高速公路场景下的运动规划与通信接入联合优化。
 tags:
   - "ICML 2025 (Workshop on ML4Wireless)"
   - "自动驾驶"

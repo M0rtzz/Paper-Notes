@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grounding Agent Memory in Contextual Intent
 description: >-
-  [ACL 2026][LLM Agent][长程记忆] STITCH 为 LLM agent 的长程记忆引入"contextual intent"（主题域 + 事件类型 + 关键实体类型）三元组作为结构化检索 cue，在每条 trajectory step 上在线归纳…
+  [ACL 2026][LLM Agent][长程记忆] STITCH 为 LLM agent 的长程记忆引入"contextual intent"（主题域 + 事件类型 + 关键实体类型）三元组作为结构化检索 cue，在每条 trajectory step 上在线归纳；推理时按"标签密度排序"先做结构匹配再做语义打分，在新构建的 CAME-Bench 上随 trajectory 增长不掉点，比最强 baseline 在 Large subset 上提升 35.6% 绝对（100% 相对）。
 tags:
   - "ACL 2026"
   - "LLM Agent"

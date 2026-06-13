@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Reason without External Rewards
 description: >-
-  [ICLR 2026][代码智能][RLIF] 提出 Intuitor，一种用模型自身置信度（self-certainty，即输出分布与均匀分布的 KL 散度）替代外部可验证奖励的 RLIF 方法，在数学推理上匹配 GRPO 性能，同时在代码生成等域外任务上展现更好的泛化能力。
+  [ICLR 2026][代码智能][RLIF] 提出 Intuitor，一种用模型自身置信度（self-certainty，即输出分布与均匀分布的 KL 散度）替代外部可验证奖励的 RLIF 方法，在数学推理上匹配 GRPO 性能，同时在代码生成等域外任务上展现更好的泛化能力。 领域现状：RLVR（Reinforcement…
 tags:
   - "ICLR 2026"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion
 description: >-
-  [NeurIPS 2025][3D视觉][图像补全] 提出 GeoComplete，通过将投影点云作为几何条件注入双分支扩散模型，并结合 target-aware masking 策略，实现几何一致的参考驱动图像补全，PSNR 提升 17.1%。
+  [NeurIPS 2025][3D视觉][图像补全] 提出 GeoComplete，通过将投影点云作为几何条件注入双分支扩散模型，并结合 target-aware masking 策略，实现几何一致的参考驱动图像补全，PSNR 提升 17.1%。 参考驱动图像补全（Reference-driven image complet…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOOSE-Copilot: A Web-Based Interactive Assistant for Unified Exploratory and Fine-Grained Scientific Hypothesis Discovery
 description: >-
-  [ACL 2026][LLM Agent][科学假设发现] MOOSE-Copilot 把发散式科研 idea 探索和收敛式细粒度假设 refinement 统一到一个可视化人机协同系统中，并用初始蓝图、阶段路由和反馈三类显式人工信号显著提升科学假设发现效果。
+  [ACL 2026][LLM Agent][科学假设发现] MOOSE-Copilot 把发散式科研 idea 探索和收敛式细粒度假设 refinement 统一到一个可视化人机协同系统中，并用初始蓝图、阶段路由和反馈三类显式人工信号显著提升科学假设发现效果。 领域现状：LLM 已经被用于科研流程中的假设生成、实验设计、论文…
 tags:
   - "ACL 2026"
   - "LLM Agent"

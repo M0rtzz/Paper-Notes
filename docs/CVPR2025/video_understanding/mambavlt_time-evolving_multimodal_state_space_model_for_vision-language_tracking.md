@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking
 description: >-
-  [CVPR 2025][视频理解][视觉语言跟踪] 首个基于 Mamba 的视觉语言跟踪器 MambaVLT，利用状态空间的时间演化特性实现长时序目标信息记忆和多模态参考特征的自适应更新，在多个视觉语言跟踪基准上达到 SOTA。
+  [CVPR 2025][视频理解][视觉语言跟踪] 首个基于 Mamba 的视觉语言跟踪器 MambaVLT，利用状态空间的时间演化特性实现长时序目标信息记忆和多模态参考特征的自适应更新，在多个视觉语言跟踪基准上达到 SOTA。 视觉语言跟踪（VLT）旨在根据多种模态参考（初始边界框、自然语言描述或两者组合）对视频中的目标进…
 tags:
   - "CVPR 2025"
   - "视频理解"

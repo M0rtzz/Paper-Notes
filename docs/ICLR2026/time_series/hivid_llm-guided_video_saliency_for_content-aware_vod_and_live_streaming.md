@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiVid: LLM-Guided Video Saliency For Content-Aware VOD And Live Streaming
 description: >-
-  [ICLR 2026][时间序列][video saliency] 提出 HiVid 框架，首次利用 LLM 作为人类代理为视频块生成内容重要性权重，通过感知模块（滑动窗口评分）、排序模块（LLM 引导归并排序去除评分偏差）和预测模块（多模态时间序列预测自适应延迟）实现内容感知流媒体传输，
+  [ICLR 2026][时间序列][video saliency] 提出 HiVid 框架，首次利用 LLM 作为人类代理为视频块生成内容重要性权重，通过感知模块（滑动窗口评分）、排序模块（LLM 引导归并排序去除评分偏差）和预测模块（多模态时间序列预测自适应延迟）实现内容感知流媒体传输， 领域现状： 内容感知视频流媒体通过…
 tags:
   - "ICLR 2026"
   - "时间序列"

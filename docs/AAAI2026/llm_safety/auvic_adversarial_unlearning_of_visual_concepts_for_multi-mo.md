@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models
 description: >-
-  [AAAI 2026][LLM安全][机器遗忘] 提出AUVIC框架，通过对抗性扰动生成器 + 动态锚点保留机制，在MLLM中精确遗忘目标视觉概念（如特定人脸），同时避免对语义相似概念的附带遗忘，并构建了首个面向群体场景视觉概念遗忘的评测基准VCUBench。
+  [AAAI 2026][LLM安全][机器遗忘] 提出AUVIC框架，通过对抗性扰动生成器 + 动态锚点保留机制，在MLLM中精确遗忘目标视觉概念（如特定人脸），同时避免对语义相似概念的附带遗忘，并构建了首个面向群体场景视觉概念遗忘的评测基准VCUBench。 多模态大语言模型（MLLMs）在海量数据上训练…
 tags:
   - "AAAI 2026"
   - "LLM安全"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Model Extrapolation Expedites Alignment
 description: >-
-  [ACL 2025][模型外推] 基于"对齐训练仅产生微小参数变化"的观察，提出ExPO方法——通过放大SFT→DPO的参数变化方向（$\theta_2 = \theta_1 + \alpha\Delta\theta$），在零额外训练开销下提升对齐性能，使仅训练20%步骤的DPO模型超越完整训练的版本。
+  [ACL 2025][LLM对齐][模型外推] 基于"对齐训练仅产生微小参数变化"的观察，提出ExPO方法——通过放大SFT→DPO的参数变化方向（$\theta_2 = \theta_1 + \alpha\Delta\theta$），在零额外训练开销下提升对齐性能，使仅训练20%步骤的DPO模型超越完整训练的版本。
 tags:
   - "ACL 2025"
+  - "LLM对齐"
   - "模型外推"
   - "偏好对齐"
   - "DPO加速"

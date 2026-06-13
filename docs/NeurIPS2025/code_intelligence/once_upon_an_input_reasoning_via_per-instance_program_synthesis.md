@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Once Upon an Input: Reasoning via Per-Instance Program Synthesis
 description: >-
-  [NeurIPS 2025][代码智能][程序合成] 提出 PIPS（Per-Instance Program Synthesis），通过实例级别的程序合成与结构化反馈迭代改进，结合置信度度量动态选择直接推理或程序合成，在30个基准上将调和平均准确率提升8.6%。
+  [NeurIPS 2025][代码智能][程序合成] 提出 PIPS（Per-Instance Program Synthesis），通过实例级别的程序合成与结构化反馈迭代改进，结合置信度度量动态选择直接推理或程序合成，在30个基准上将调和平均准确率提升8.6%。 领域现状：LLM 在零样本推理方面已有长足进步…
 tags:
   - "NeurIPS 2025"
   - "代码智能"

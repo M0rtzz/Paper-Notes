@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels
 description: >-
-  [ICML 2025][LLM评测][LLM评估] 受 Bloom 分类法启发，提出多认知层次评估框架 MultiCogEval，从知识掌握、综合应用、情景问题解决三个层次评估 LLM 医学能力，发现所有模型性能随认知复杂度增加显著下降，且模型规模在高层次更关键。
+  [ICML 2025][LLM评测][LLM评估] 受 Bloom 分类法启发，提出多认知层次评估框架 MultiCogEval，从知识掌握、综合应用、情景问题解决三个层次评估 LLM 医学能力，发现所有模型性能随认知复杂度增加显著下降，且模型规模在高层次更关键。 核心矛盾 核心矛盾：GPT-4 在 MedQA 上达 90%…
 tags:
   - "ICML 2025"
   - "LLM评测"

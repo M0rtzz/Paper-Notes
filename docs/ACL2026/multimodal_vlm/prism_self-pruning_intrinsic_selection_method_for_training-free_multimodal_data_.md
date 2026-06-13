@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PRISM: Self-Pruning Intrinsic Selection Method for Training-Free Multimodal Data Selection
 description: >-
-  [ACL2026][多模态VLM][多模态数据选择] PRISM 发现 MLLM 视觉特征的非零均值会造成 Global Semantic Drift，从而污染基于相似度的数据选择，并用训练免的均值重中心化和低相关样本筛选，在只保留约 30% 视觉样本的情况下达到 101.7% 相对性能…
+  [ACL2026 Best Paper][多模态VLM][多模态数据选择] PRISM 发现 MLLM 视觉特征的非零均值会造成 Global Semantic Drift，从而污染基于相似度的数据选择，并用训练免的均值重中心化和低相关样本筛选，在只保留约 30% 视觉样本的情况下达到 101.7% 相对性能，同时把端到端 GPU 时间降低约 70%。
 tags:
-  - "ACL2026"
+  - "ACL2026 Best Paper"
   - "多模态VLM"
   - "多模态数据选择"
   - "视觉指令微调"

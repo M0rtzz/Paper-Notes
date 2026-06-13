@@ -2,10 +2,10 @@
 title: >-
   [论文解读] InductionBench: LLMs Fail in the Simplest Complexity Class
 description: >-
-  [ACL 2025][LLM/NLP][归纳推理] 本文提出 InductionBench，一个基于子正则函数层次（subregular hierarchy）的归纳推理基准，揭示即使是最强的 LLM（如 o3-mini）也难以掌握最简单复杂度类的归纳推理任务…
+  [ACL 2025][LLM 其他][归纳推理] 本文提出 InductionBench，一个基于子正则函数层次（subregular hierarchy）的归纳推理基准，揭示即使是最强的 LLM（如 o3-mini）也难以掌握最简单复杂度类的归纳推理任务，暴露了当前 LLM 在从观测数据中归纳规则方面的根本缺陷。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "归纳推理"
   - "基准测试"
   - "子正则层次"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained Bayesian Experimental Design via Online Planning
 description: >-
-  [ICML 2026][预训练][Bayesian experimental design] 本文提出 COPEx：通过"离线预训练 amortized 后验网络 + 设计策略 + 在线多步 lookahead 场景树"的半摊销方案，让贝叶斯实验设计在测试时能动态适应预算 / 成本 / 转移约束…
+  [ICML 2026][预训练][Bayesian experimental design] 本文提出 COPEx：通过"离线预训练 amortized 后验网络 + 设计策略 + 在线多步 lookahead 场景树"的半摊销方案，让贝叶斯实验设计在测试时能动态适应预算 / 成本 / 转移约束，在受约束的 location finding、CES、cost-aware AL 三类任务上 EIG / RMSE 一致超过 VPCE、ALINE、RL-BOED 等基线。
 tags:
   - "ICML 2026"
   - "预训练"

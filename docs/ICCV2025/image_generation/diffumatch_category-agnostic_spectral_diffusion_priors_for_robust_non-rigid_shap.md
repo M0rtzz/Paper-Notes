@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching
 description: >-
-  [ICCV 2025][图像生成][功能映射] 提出在功能映射（Functional Map）的谱域上训练无条件扩散模型，通过蒸馏学习到的结构先验替代传统公理化正则项（如拉普拉斯交换性、正交性），实现跨类别零样本非刚性形状匹配。
+  [ICCV 2025][图像生成][功能映射] 提出在功能映射（Functional Map）的谱域上训练无条件扩散模型，通过蒸馏学习到的结构先验替代传统公理化正则项（如拉普拉斯交换性、正交性），实现跨类别零样本非刚性形状匹配。 深度功能映射（Deep Functional Maps）在非刚性形状对应任务中表现出色…
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are Tools Always Beneficial? Learning to Invoke Tools Adaptively for Dual-Mode Multimodal LLM Reasoning
 description: >-
-  [ICML2026][LLM推理][自适应工具调用] AutoTool 用强化学习让多模态大模型先判断“这题是否真的需要 zoom-in 工具”，再在工具辅助推理和纯文本推理之间自适应切换，从而在高分辨率感知、定位、幻觉检测和推理任务上同时提升准确率与效率。
+  [ICML2026][LLM推理][自适应工具调用] AutoTool 用强化学习让多模态大模型先判断“这题是否真的需要 zoom-in 工具”，再在工具辅助推理和纯文本推理之间自适应切换，从而在高分辨率感知、定位、幻觉检测和推理任务上同时提升准确率与效率。 领域现状：多模态大模型已经可以通过 CoT 把复杂问题拆成中间推理…
 tags:
   - "ICML2026"
   - "LLM推理"

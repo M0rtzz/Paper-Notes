@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Complex-Valued Neural Networks for Waveform Generation
 description: >-
-  [ICLR 2026][音频/语音][复值神经网络] 提出 ComVo，首个在生成器和判别器中均使用复值神经网络（CVNN）的 iSTFT 声码器，通过相位量化层稳定训练，并引入块矩阵计算方案将训练时间减少 25%，在 LibriTTS 上合成质量超过 Vocos 等实值基线。
+  [ICLR 2026][音频/语音][复值神经网络] 提出 ComVo，首个在生成器和判别器中均使用复值神经网络（CVNN）的 iSTFT 声码器，通过相位量化层稳定训练，并引入块矩阵计算方案将训练时间减少 25%，在 LibriTTS 上合成质量超过 Vocos 等实值基线。 领域现状：iSTFT 声码器（如 Vocos、…
 tags:
   - "ICLR 2026"
   - "音频/语音"

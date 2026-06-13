@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model
 description: >-
-  [ECCV 2024][3D视觉][单图3D生成] 提出卷积重建模型 CRM，利用 triplane 与六个正交视图之间的空间对齐先验，用 U-Net 替代 Transformer 直接从六视图映射到 triplane，结合 FlexiCubes 端到端训练，10 秒内从单张图像生成高保真纹理网格…
+  [ECCV 2024][3D视觉][单图3D生成] 提出卷积重建模型 CRM，利用 triplane 与六个正交视图之间的空间对齐先验，用 U-Net 替代 Transformer 直接从六视图映射到 triplane，结合 FlexiCubes 端到端训练，10 秒内从单张图像生成高保真纹理网格，训练成本仅为 LRM 的 1/8。
 tags:
   - "ECCV 2024"
   - "3D视觉"

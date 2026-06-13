@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RecLM: Recommendation Instruction Tuning
 description: >-
-  [ACL 2025][推荐系统][指令微调] 提出 RecLM，一个模型无关的推荐指令微调框架，通过两轮对话式指令微调将协同过滤信号注入 LLM 生成的用户/商品画像，再用 RLHF（PPO）精炼画像质量…
+  [ACL 2025][推荐系统][指令微调] 提出 RecLM，一个模型无关的推荐指令微调框架，通过两轮对话式指令微调将协同过滤信号注入 LLM 生成的用户/商品画像，再用 RLHF（PPO）精炼画像质量，在 MIND/Netflix/工业数据集上作为即插即用组件为 BiasMF/NCF/LightGCN/SGL/SimGCL 一致带来提升，尤其在冷启动场景效果显著。
 tags:
   - "ACL 2025"
   - "推荐系统"

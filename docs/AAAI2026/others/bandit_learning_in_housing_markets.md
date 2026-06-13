@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Bandit Learning in Housing Markets
 description: >-
-  [AAAI 2026][multi-armed-bandit] 本文首次将多臂老虎机（MAB）框架引入住房市场（单边匹配市场），定义了基于核（core）概念的遗憾值，并分别提出去中心化 ETC 和中心化 UCB 两种算法…
+  [AAAI 2026 Oral][multi-armed-bandit] 本文首次将多臂老虎机（MAB）框架引入住房市场（单边匹配市场），定义了基于核（core）概念的遗憾值，并分别提出去中心化 ETC 和中心化 UCB 两种算法，证明了 $\mathcal{O}(N\log T / \Delta_{\min}^2)$ 的去中心化遗憾上界与匹配的下界，建立了阶最优性。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "multi-armed-bandit"
   - "housing-market"
   - "matching"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TheraAgent: Self-Improving Therapeutic Agent for Precise and Comprehensive Treatment Planning
 description: >-
-  [ACL 2026][LLM Agent][自改进 agent] TheraAgent 把治疗方案生成从一次性回答改造成 generate-reflect-refine 的自改进 agent 流程，用临床维度化评估器 TheraJudge 和 score-aware memory 不断修正方案…
+  [ACL 2026][LLM Agent][自改进 agent] TheraAgent 把治疗方案生成从一次性回答改造成 generate-reflect-refine 的自改进 agent 流程，用临床维度化评估器 TheraJudge 和 score-aware memory 不断修正方案，在 HealthBench 治疗规划子集和医生盲评中显著超过强基线。
 tags:
   - "ACL 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BALLAST: Bayesian Active Learning with Look-ahead Amendment for Sea-drifter Trajectories under Spatio-Temporal Vector Fields
 description: >-
-  [ICML2026][物理/科学计算][主动学习] 提出 BALLAST 算法，通过从 GP 后验中采样向量场并模拟拉格朗日观测器的未来轨迹来修正主动学习的效用估计，同时开发了 VaSE 推理方法将 GP 后验采样效率提升数千倍，在合成与高保真海洋流场上实现约 16%-22% 的部署成本节省。
+  [ICML2026][物理/科学计算][主动学习] 提出 BALLAST 算法，通过从 GP 后验中采样向量场并模拟拉格朗日观测器的未来轨迹来修正主动学习的效用估计，同时开发了 VaSE 推理方法将 GP 后验采样效率提升数千倍，在合成与高保真海洋流场上实现约 16%-22% 的部署成本节省。 领域现状：理解和预测海洋流场对…
 tags:
   - "ICML2026"
   - "物理/科学计算"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2509.26005](https://arxiv.org/abs/2509.26005)  
 **代码**: https://github.com/ShuSheng3927/BALLAST  
-**领域**: scientific_computing  
+**领域**: 科学计算  
 **关键词**: 主动学习, 高斯过程, 海洋漂流器, 时空向量场, 贝叶斯实验设计  
 
 ## 一句话总结

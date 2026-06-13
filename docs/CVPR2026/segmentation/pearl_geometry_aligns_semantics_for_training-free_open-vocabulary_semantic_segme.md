@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PEARL: Geometry Aligns Semantics for Training-Free Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2026][语义分割][开放词汇语义分割] PEARL 提出了一种基于 Procrustes 对齐和文本感知拉普拉斯传播的两步推理方法，在不引入额外训练或辅助骨干网络的前提下，通过修正 CLIP 最后一层自注意力中 key-query 的几何失配并利用文本语义引导标签传播…
+  [CVPR 2026][语义分割][开放词汇语义分割] PEARL 提出了一种基于 Procrustes 对齐和文本感知拉普拉斯传播的两步推理方法，在不引入额外训练或辅助骨干网络的前提下，通过修正 CLIP 最后一层自注意力中 key-query 的几何失配并利用文本语义引导标签传播，在训练免开放词汇语义分割上达到了新的 SOTA。
 tags:
   - "CVPR 2026"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models
 description: >-
-  [CVPR 2026][幻觉检测][多模态推理] 本文提出 Hallucination-as-Cue 分析框架，通过三种模态特定腐蚀策略（空白图像、随机图像、文本移除）系统研究 RL 后训练对多模态推理模型的真实作用机制，发现即使在 100% 腐蚀视觉输入下 GRPO 训练仍能显著提升推理性能…
+  [CVPR 2026][幻觉检测][多模态推理] 本文提出 Hallucination-as-Cue 分析框架，通过三种模态特定腐蚀策略（空白图像、随机图像、文本移除）系统研究 RL 后训练对多模态推理模型的真实作用机制，发现即使在 100% 腐蚀视觉输入下 GRPO 训练仍能显著提升推理性能，挑战了"RL 训练能有效利用视觉信息"的主流假设。
 tags:
   - "CVPR 2026"
   - "幻觉检测"

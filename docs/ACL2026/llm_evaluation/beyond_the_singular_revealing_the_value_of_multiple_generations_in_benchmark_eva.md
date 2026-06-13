@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation
 description: >-
-  [ACL 2026][LLM评测][多次采样] 作者把 LLM benchmarking 形式化为一个**分层贝叶斯估计问题**——prompt 难度 $p_i \sim \mathbb{P}(\mu,\sigma)$，每条 prompt 的 $k$ 次生成正确率服从 Bernoulli$(p_i)$…
+  [ACL 2026 Findings][LLM评测][多次采样] 作者把 LLM benchmarking 形式化为一个**分层贝叶斯估计问题**——prompt 难度 $p_i \sim \mathbb{P}(\mu,\sigma)$，每条 prompt 的 $k$ 次生成正确率服从 Bernoulli$(p_i)$；理论证明用 $k>1$ 次采样能把 within-prompt variance 压到 $\frac{1}{nk}$，并由此衍生出 prompt-level 难度分 $\mathbb{P}(\text{correct})$ 和能检出标注错误的 data map（在 GSM8K 上 44.4% 命中率）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "多次采样"
   - "分层模型"

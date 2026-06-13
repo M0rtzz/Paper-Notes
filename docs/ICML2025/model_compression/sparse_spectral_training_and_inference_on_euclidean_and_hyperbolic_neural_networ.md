@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks
 description: >-
-  [ICML2025][模型压缩][稀疏谱训练] 提出 Sparse Spectral Training (SST)，通过在谱域上每步更新全部奇异值、按奇异值大小多项式采样选择性更新奇异向量，并周期性 re-SVD 保持正交性，实现接近全秩训练的预训练效果，同时显存开销与 LoRA 相当。
+  [ICML2025][模型压缩][稀疏谱训练] 提出 Sparse Spectral Training (SST)，通过在谱域上每步更新全部奇异值、按奇异值大小多项式采样选择性更新奇异向量，并周期性 re-SVD 保持正交性，实现接近全秩训练的预训练效果，同时显存开销与 LoRA 相当。 大模型预训练对 GPU 显存需求巨大…
 tags:
   - "ICML2025"
   - "模型压缩"

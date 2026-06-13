@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Orthogonal Concept Erasure for Diffusion Models
 description: >-
-  [ICML 2026][图像生成][概念擦除] 把 T2I 扩散模型里"加性参数编辑"的概念擦除（UCE/SPEED 等）改写成"层级正交旋转 $W^* = QW$"的乘性更新，并配上一个子空间级别的擦除目标，用 Procrustes 闭式解一次性算出 $Q$，4.3 秒擦掉 100 个名人概念…
+  [ICML 2026 Oral][图像生成][概念擦除] 把 T2I 扩散模型里"加性参数编辑"的概念擦除（UCE/SPEED 等）改写成"层级正交旋转 $W^* = QW$"的乘性更新，并配上一个子空间级别的擦除目标，用 Procrustes 闭式解一次性算出 $Q$，4.3 秒擦掉 100 个名人概念，且对非目标概念几乎零损伤。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "图像生成"
   - "概念擦除"
   - "正交变换"

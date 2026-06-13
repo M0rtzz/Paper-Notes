@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Greedy Algorithm for Structured Bandits: A Sharp Characterization of Asymptotic Success / Failure
 description: >-
-  [NeurIPS 2025][强化学习][structured bandits] 本文对结构化 bandit 问题中的贪心算法（Greedy）进行了完整的理论刻画，提出 self-identifiability 作为贪心算法能否获得 sublinear regret 的充要条件…
+  [NeurIPS 2025][强化学习][structured bandits] 本文对结构化 bandit 问题中的贪心算法（Greedy）进行了完整的理论刻画，提出 self-identifiability 作为贪心算法能否获得 sublinear regret 的充要条件，并将结论推广到上下文 bandit 及一般交互决策框架 DMSO。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages
 description: >-
-  [ACL 2025][多语言/翻译][权重共享] 提出编码器-解码器权重共享框架，通过交替复用编码器权重层和随机初始化层构建解码器，将多语言编码器CINO高效扩展为seq2seq模型XLM-SWCM，在藏维哈蒙四种极低资源语言上以不到0.5B参数大幅超越mBART和13B LLaMA。
+  [ACL 2025][多语言/翻译][权重共享] 提出编码器-解码器权重共享框架，通过交替复用编码器权重层和随机初始化层构建解码器，将多语言编码器CINO高效扩展为seq2seq模型XLM-SWCM，在藏维哈蒙四种极低资源语言上以不到0.5B参数大幅超越mBART和13B LLaMA。 领域现状：XLM-R等多语言预训练模型…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

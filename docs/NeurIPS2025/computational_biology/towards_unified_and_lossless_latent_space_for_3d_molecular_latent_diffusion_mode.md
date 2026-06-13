@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling
 description: >-
-  [NeurIPS 2025][计算生物][3D分子生成] 提出 UAE-3D，一种多模态变分自编码器，将3D分子的原子类型、化学键和3D坐标压缩到统一的近无损潜在空间中，消除了处理多模态和等变性的复杂性，使通用 Diffusion Transformer 即可实现 SOTA 的3D分子生成。
+  [NeurIPS 2025][计算生物][3D分子生成] 提出 UAE-3D，一种多模态变分自编码器，将3D分子的原子类型、化学键和3D坐标压缩到统一的近无损潜在空间中，消除了处理多模态和等变性的复杂性，使通用 Diffusion Transformer 即可实现 SOTA 的3D分子生成。 3D 分子生成对药物发现和材料科…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

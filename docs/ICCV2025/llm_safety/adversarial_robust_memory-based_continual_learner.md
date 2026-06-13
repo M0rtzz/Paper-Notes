@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Robust Memory-Based Continual Learner
 description: >-
-  [ICCV 2025][LLM安全][持续学习] 揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块…
+  [ICCV 2025][LLM安全][持续学习] 揭示持续学习与对抗训练结合时的双重挑战（加速遗忘 + 梯度混淆），提出抗遗忘 Logit 校准（AFLC）和鲁棒感知经验回放（RAER）两个即插即用模块，在 Split-CIFAR10/100 和 Split-Tiny-ImageNet 上有效提升对抗鲁棒性达 8.13%。
 tags:
   - "ICCV 2025"
   - "LLM安全"

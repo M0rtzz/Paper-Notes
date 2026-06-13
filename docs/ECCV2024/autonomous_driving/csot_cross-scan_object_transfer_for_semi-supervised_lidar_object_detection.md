@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CSOT: Cross-Scan Object Transfer for Semi-Supervised LiDAR Object Detection
 description: >-
-  [ECCV 2024][自动驾驶][半监督学习] 提出 CSOT（Cross-Scan Object Transfer）范式，通过 Transformer 网络预测语义一致的物体放置位置和适配度，首次在 LiDAR 半监督目标检测中成功实现了 object copy-paste 增强，配合空间感知分类损失…
+  [ECCV 2024][自动驾驶][半监督学习] 提出 CSOT（Cross-Scan Object Transfer）范式，通过 Transformer 网络预测语义一致的物体放置位置和适配度，首次在 LiDAR 半监督目标检测中成功实现了 object copy-paste 增强，配合空间感知分类损失，仅用 1% 标注数据即可达到全监督基线的检测性能。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-MC-Affect: LLM-Based Monte Carlo Modeling of Affective Trajectories and Latent Ambiguity for Interpersonal Dynamic Insight
 description: >-
-  [ACL2026][音频/语音][概率情感建模] 这篇论文提出 LLM-MC-Affect，把对话中的情感从单点标签改写成由随机 LLM 解码近似的潜在分布，再用均值、方差、互相关和斜率指标分析师生对话里的情感同步与主导关系。
+  [ACL2026][音频/语音][概率情感建模] 这篇论文提出 LLM-MC-Affect，把对话中的情感从单点标签改写成由随机 LLM 解码近似的潜在分布，再用均值、方差、互相关和斜率指标分析师生对话里的情感同步与主导关系。 领域现状：情感同步和人际情绪动态通常依赖生理信号、神经同步或人工标注来研究…
 tags:
   - "ACL2026"
   - "音频/语音"

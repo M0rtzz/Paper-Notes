@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Data-Driven Prism: Multi-View Source Separation with Diffusion Model Priors
 description: >-
-  [NeurIPS 2025][图像生成][source separation] 提出 DDPRISM 方法，利用多视图观测中不同线性变换的结构性差异，在 EM 框架下为每个未知源学习独立的扩散模型先验，无需预先获得任何单独的源样本即可完成源分离和后验采样，在合成问题和真实星系观测上超越现有方法。
+  [NeurIPS 2025][图像生成][source separation] 提出 DDPRISM 方法，利用多视图观测中不同线性变换的结构性差异，在 EM 框架下为每个未知源学习独立的扩散模型先验，无需预先获得任何单独的源样本即可完成源分离和后验采样，在合成问题和真实星系观测上超越现有方法。 领域现状：在自然科学中…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

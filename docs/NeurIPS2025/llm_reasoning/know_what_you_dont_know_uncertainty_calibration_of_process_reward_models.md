@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Know What You Don't Know: Uncertainty Calibration of Process Reward Models
 description: >-
-  [NeurIPS 2025][LLM推理][过程奖励模型] 本文提出了一种基于分位数回归的PRM校准方法，使PRM输出的分数更准确地反映LLM实际推理成功概率，并基于校准后的PRM设计了实例自适应推理时缩放（IAS）策略，在保持准确率的同时显著降低推理成本。
+  [NeurIPS 2025][LLM推理][过程奖励模型] 本文提出了一种基于分位数回归的PRM校准方法，使PRM输出的分数更准确地反映LLM实际推理成功概率，并基于校准后的PRM设计了实例自适应推理时缩放（IAS）策略，在保持准确率的同时显著降低推理成本。 领域现状：Process Reward Model (PRM) 在…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

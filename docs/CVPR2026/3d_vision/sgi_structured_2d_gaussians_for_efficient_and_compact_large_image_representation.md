@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGI: Structured 2D Gaussians for Efficient and Compact Large Image Representation
 description: >-
-  [CVPR 2026][3D视觉][2D Gaussian Splatting] SGI 提出基于种子点(seed)的结构化 2D 高斯表示框架，通过将无结构高斯原语组织为种子驱动的神经高斯、结合上下文引导的熵编码和多尺度拟合策略，在高分辨率图像表示中实现最高 7.5× 压缩比和 6.5× 优化加速…
+  [CVPR 2026][3D视觉][2D Gaussian Splatting] SGI 提出基于种子点(seed)的结构化 2D 高斯表示框架，通过将无结构高斯原语组织为种子驱动的神经高斯、结合上下文引导的熵编码和多尺度拟合策略，在高分辨率图像表示中实现最高 7.5× 压缩比和 6.5× 优化加速，同时保持甚至提升重建保真度。
 tags:
   - "CVPR 2026"
   - "3D视觉"

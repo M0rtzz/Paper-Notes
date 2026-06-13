@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Not Step Into the Same River Twice: Learning to Reason from Trial and Error
 description: >-
-  [ACL 2026][LLM推理][探索停滞] 提出 LTE (Learning to reason from Trial and Error)，通过将模型自身生成的错误答案作为提示引导额外 rollout，在不依赖外部专家的情况下有效缓解 RLVR 中的探索停滞问题。
+  [ACL 2026][LLM推理][探索停滞] 提出 LTE (Learning to reason from Trial and Error)，通过将模型自身生成的错误答案作为提示引导额外 rollout，在不依赖外部专家的情况下有效缓解 RLVR 中的探索停滞问题。 领域现状：RLVR（基于可验证奖励的强化学习）是提升…
 tags:
   - "ACL 2026"
   - "LLM推理"

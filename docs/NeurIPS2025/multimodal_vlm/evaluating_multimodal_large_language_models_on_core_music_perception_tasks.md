@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Multimodal Large Language Models on Core Music Perception Tasks
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态LLM] 本文通过三项核心音乐感知任务（切分节奏评分、移调检测、和弦辨识）系统性评估了多模态LLM在音频与MIDI两种输入下的表现，揭示了模型在符号推理上接近理想但在音频感知上存在显著缺陷的关键差距。
+  [NeurIPS 2025][多模态VLM][多模态LLM] 本文通过三项核心音乐感知任务（切分节奏评分、移调检测、和弦辨识）系统性评估了多模态LLM在音频与MIDI两种输入下的表现，揭示了模型在符号推理上接近理想但在音频感知上存在显著缺陷的关键差距。 多模态基础模型（如 Qwen2.5-Omni、Gemini 2.5）宣称…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

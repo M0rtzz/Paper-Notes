@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrete Adjoint Matching
 description: >-
-  [ICLR 2026][图像生成][Adjoint Matching] 提出 Discrete Adjoint Matching（DAM），从纯统计学视角（而非控制论）推导出离散状态空间上的伴随变量，将连续域的 Adjoint Matching 推广到基于连续时间马尔可夫链（CTMC）的离散生成模型…
+  [ICLR 2026][图像生成][Adjoint Matching] 提出 Discrete Adjoint Matching（DAM），从纯统计学视角（而非控制论）推导出离散状态空间上的伴随变量，将连续域的 Adjoint Matching 推广到基于连续时间马尔可夫链（CTMC）的离散生成模型，实现了对扩散式 LLM（LLaDA-8B）的有效微调，在 Sudoku 上将准确率从 11.5% 提升至 89.2%。
 tags:
   - "ICLR 2026"
   - "图像生成"

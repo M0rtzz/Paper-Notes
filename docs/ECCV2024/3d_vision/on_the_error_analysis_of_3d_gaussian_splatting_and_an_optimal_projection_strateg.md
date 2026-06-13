@@ -2,9 +2,10 @@
 title: >-
   [论文解读] On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy
 description: >-
-  [ECCV 2024][3D高斯喷溅] 从数学角度分析3DGS中局部仿射近似引入的投影误差，推导出当高斯均值到相机中心连线为投影方向时误差最小，提出 Optimal Gaussian Splatting 投影策略。
+  [ECCV 2024][3D视觉][3D高斯喷溅] 从数学角度分析3DGS中局部仿射近似引入的投影误差，推导出当高斯均值到相机中心连线为投影方向时误差最小，提出 Optimal Gaussian Splatting 投影策略。 领域现状： 3D Gaussian Splatting (3D-GS)以高斯函数作为显式场景表示…
 tags:
   - "ECCV 2024"
+  - "3D视觉"
   - "3D高斯喷溅"
   - "投影误差分析"
   - "最优投影"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal-Tune: Mining Causal Factors from Vision Foundation Models for Domain Generalized Semantic Segmentation
 description: >-
-  [AAAI 2026][语义分割][因果分析] 本文提出Causal-Tune，一种基于因果机制的VFM微调策略，通过DCT频域变换和高斯带通滤波器将VFM特征分离为因果（域不变）和非因果（域特定）成分，仅对因果成分施加可学习token精炼，在域泛化语义分割中有效抑制VFM伪影并提升泛化性能。
+  [AAAI 2026][语义分割][因果分析] 本文提出Causal-Tune，一种基于因果机制的VFM微调策略，通过DCT频域变换和高斯带通滤波器将VFM特征分离为因果（域不变）和非因果（域特定）成分，仅对因果成分施加可学习token精炼，在域泛化语义分割中有效抑制VFM伪影并提升泛化性能。 领域现状：VFM（如DINOv…
 tags:
   - "AAAI 2026"
   - "语义分割"

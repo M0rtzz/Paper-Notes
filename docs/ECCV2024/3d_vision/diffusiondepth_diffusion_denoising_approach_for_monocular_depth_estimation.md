@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffusionDepth: Diffusion Denoising Approach for Monocular Depth Estimation
 description: >-
-  [ECCV 2024][3D视觉][单目深度估计] 本文首次将扩散去噪过程引入单目深度估计任务，通过在潜在深度空间中执行视觉条件引导的迭代去噪，并提出自扩散机制解决稀疏GT深度的模式崩塌问题，在KITTI和NYU-Depth-V2上达到SOTA性能。
+  [ECCV 2024][3D视觉][单目深度估计] 本文首次将扩散去噪过程引入单目深度估计任务，通过在潜在深度空间中执行视觉条件引导的迭代去噪，并提出自扩散机制解决稀疏GT深度的模式崩塌问题，在KITTI和NYU-Depth-V2上达到SOTA性能。 领域现状：单目深度估计是从单张2D图像预测逐像素深度的基础视觉任务…
 tags:
   - "ECCV 2024"
   - "3D视觉"

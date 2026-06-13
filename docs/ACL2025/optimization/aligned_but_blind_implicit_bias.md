@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Aligned but Blind: Alignment Increases Implicit Bias by Reducing Awareness of Race
 description: >-
-  [ACL 2025][implicit bias] 揭示对齐训练的"种族盲视"副作用：对齐使 LLM 在歧义上下文中不再将 black/white 表征为种族概念，安全护栏因此无法激活，导致隐式偏见从 64.1% 飙升至 91.4%；反直觉地…
+  [ACL 2025][优化/理论][implicit bias] 揭示对齐训练的"种族盲视"副作用：对齐使 LLM 在歧义上下文中不再将 black/white 表征为种族概念，安全护栏因此无法激活，导致隐式偏见从 64.1% 飙升至 91.4%；反直觉地，在早期层注入种族感知激活（而非遗忘）可将隐式偏见从 97.3% 降至 42.4%。
 tags:
   - "ACL 2025"
+  - "优化/理论"
   - "implicit bias"
   - "race blindness"
   - "alignment side-effect"

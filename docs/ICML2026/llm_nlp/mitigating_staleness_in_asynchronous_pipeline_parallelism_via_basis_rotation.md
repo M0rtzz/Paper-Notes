@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mitigating Staleness in Asynchronous Pipeline Parallelism via Basis Rotation
 description: >-
-  [ICML 2026][LLM/NLP][异步流水线并行] 作者把异步流水线并行训练 LLM 时延迟梯度导致收敛崩塌的"罪魁祸首"归结为 Adam 的基底失配（Hessian 特征基与坐标轴不对齐），并提出在 Hessian 特征基下做基底旋转再走 Adam 更新…
+  [ICML 2026][LLM 其他][异步流水线并行] 作者把异步流水线并行训练 LLM 时延迟梯度导致收敛崩塌的"罪魁祸首"归结为 Adam 的基底失配（Hessian 特征基与坐标轴不对齐），并提出在 Hessian 特征基下做基底旋转再走 Adam 更新，3B 模型上比最强异步基线少 81.7% 迭代就能达到同样 loss。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "异步流水线并行"
   - "梯度延迟"
   - "基底旋转"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Blue Teaming Function-Calling Agents
 description: >-
-  [AAAI 2026][LLM/NLP][function-calling] 系统评估了四个开源function-calling LLM在三种攻击下的鲁棒性，并测试了八种防御方案的效果，揭示了当前模型默认不安全、防御方案在实际场景中仍难以部署的现状。
+  [AAAI 2026][LLM 其他][function-calling] 系统评估了四个开源function-calling LLM在三种攻击下的鲁棒性，并测试了八种防御方案的效果，揭示了当前模型默认不安全、防御方案在实际场景中仍难以部署的现状。 领域现状： Function-calling能力使LLM能够与外部工具交互…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "function-calling"
   - "提示注入攻击"
   - "工具投毒"

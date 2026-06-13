@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseVLM: Visual Token Sparsification for Efficient Vision-Language Model Inference
 description: >-
-  [ICML 2025][多模态VLM][剪枝] SparseVLM 提出了首个文本引导的免训练视觉 token 稀疏化框架，通过选择与视觉相关的文本 token 作为"评分者"来评估视觉 token 的重要性，结合自适应剪枝比率和 token 回收机制…
+  [ICML 2025][多模态VLM][剪枝] SparseVLM 提出了首个文本引导的免训练视觉 token 稀疏化框架，通过选择与视觉相关的文本 token 作为"评分者"来评估视觉 token 的重要性，结合自适应剪枝比率和 token 回收机制，在 LLaVA 上仅保留 192 个 token（减少 66.7%）时维持 99.1% 的原始性能。
 tags:
   - "ICML 2025"
   - "多模态VLM"

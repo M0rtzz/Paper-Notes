@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaTVLM: Hybrid Mamba-Transformer for Efficient Vision-Language Modeling
 description: >-
-  [多模态VLM] 提出MaTVLM，将预训练VLM中部分Transformer层替换为Mamba-2层并通过单阶段知识蒸馏训练，在保持竞争性性能的同时实现3.6倍推理加速和27.5%显存降低。
+  [多模态VLM] 提出MaTVLM，将预训练VLM中部分Transformer层替换为Mamba-2层并通过单阶段知识蒸馏训练，在保持竞争性性能的同时实现3.6倍推理加速和27.5%显存降低。 当前视觉语言模型（VLM）主要基于Transformer架构，其自注意力机制的二次复杂度在处理长序列时带来严重的计算和内存瓶颈…
 tags:
   - "多模态VLM"
 ---

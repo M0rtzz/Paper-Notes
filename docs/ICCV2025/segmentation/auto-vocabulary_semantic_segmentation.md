@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auto-Vocabulary Semantic Segmentation
 description: >-
-  [ICCV 2025][语义分割][图像分割] 本文提出 Auto-Vocabulary Semantic Segmentation (AVS) 新任务，通过 AutoSeg 框架自动从图像中发现目标类别并分割，无需人为指定词汇表，在 PASCAL VOC 上达到 87.1 mIoU…
+  [ICCV 2025][语义分割][图像分割] 本文提出 Auto-Vocabulary Semantic Segmentation (AVS) 新任务，通过 AutoSeg 框架自动从图像中发现目标类别并分割，无需人为指定词汇表，在 PASCAL VOC 上达到 87.1 mIoU，远超唯一同类方法 ZeroSeg (20.1)，甚至超越部分需要指定类别的开放词汇方法。
 tags:
   - "ICCV 2025"
   - "语义分割"

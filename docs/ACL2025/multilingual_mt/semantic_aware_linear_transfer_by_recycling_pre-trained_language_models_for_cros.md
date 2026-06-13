@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Aware Linear Transfer by Recycling Pre-trained Language Models for Cross-Lingual Transfer
 description: >-
-  [ACL 2025][多语言/翻译][cross-lingual transfer] 提出 SALT（Semantic Aware Linear Transfer），通过为每个非共享词表 token 基于语义相似的共享 token 对构建独立的最小二乘变换矩阵…
+  [ACL 2025][多语言/翻译][cross-lingual transfer] 提出 SALT（Semantic Aware Linear Transfer），通过为每个非共享词表 token 基于语义相似的共享 token 对构建独立的最小二乘变换矩阵，将目标语言 PLM 的丰富嵌入表示迁移到英语中心 LLM 的嵌入空间，在下游任务、持续预训练收敛速度和跨语言理解上均优于现有方法。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

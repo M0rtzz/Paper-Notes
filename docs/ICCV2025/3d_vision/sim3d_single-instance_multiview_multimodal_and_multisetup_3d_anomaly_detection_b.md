@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SiM3D: Single-Instance Multiview Multimodal and Multisetup 3D Anomaly Detection Benchmark
 description: >-
-  [ICCV 2025][3D视觉][3D异常检测] 提出 SiM3D，首个面向多视角多模态3D异常检测与分割的基准，聚焦工业制造中的单实例场景，通过工业级传感器采集高分辨率数据，使用体素化异常体积(Anomaly Volume)替代2D异常图，并首次支持合成到真实的跨域评估。
+  [ICCV 2025][3D视觉][3D异常检测] 提出 SiM3D，首个面向多视角多模态3D异常检测与分割的基准，聚焦工业制造中的单实例场景，通过工业级传感器采集高分辨率数据，使用体素化异常体积(Anomaly Volume)替代2D异常图，并首次支持合成到真实的跨域评估。 工业异常检测(ADS)在MVTec AD发布后迈…
 tags:
   - "ICCV 2025"
   - "3D视觉"

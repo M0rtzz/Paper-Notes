@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reward Modeling from Natural Language Human Feedback
 description: >-
-  [ICML 2026][LLM推理][生成式奖励模型 (GRM)] 本文指出在二元偏好奖励上训练的 generative reward model (GRM) 严重存在"猜对偏好但 critique 错误"的 outcome-process 不一致（20-30%、最高 44%）…
+  [ICML 2026][LLM推理][生成式奖励模型 (GRM)] 本文指出在二元偏好奖励上训练的 generative reward model (GRM) 严重存在"猜对偏好但 critique 错误"的 outcome-process 不一致（20-30%、最高 44%），并提出 RM-NLHF：把模型 critique 与人工 critique 的核心论点相似度作为额外过程奖励，并用 MetaRM 自动预测过程奖励、在线随策略更新，从而在多个 benchmark 上稳定超过 outcome-only GRPO 训练的 SOTA GRM。
 tags:
   - "ICML 2026"
   - "LLM推理"

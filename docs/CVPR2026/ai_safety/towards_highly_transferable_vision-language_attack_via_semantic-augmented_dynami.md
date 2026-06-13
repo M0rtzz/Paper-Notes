@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction
 description: >-
-  [CVPR 2026][AI安全][对抗攻击] 提出 SADCA（语义增强动态对比攻击），通过动态对比交互机制和语义增强模块，迭代地破坏对抗图像与文本之间的跨模态语义一致性，显著提升对视觉语言预训练模型（VLP）的对抗可迁移性，在跨模型和跨任务攻击中均超越现有 SOTA 方法。
+  [CVPR 2026][AI安全][对抗攻击] 提出 SADCA（语义增强动态对比攻击），通过动态对比交互机制和语义增强模块，迭代地破坏对抗图像与文本之间的跨模态语义一致性，显著提升对视觉语言预训练模型（VLP）的对抗可迁移性，在跨模型和跨任务攻击中均超越现有 SOTA 方法。 VLP 模型的安全隐患：CLIP、ALBEF、…
 tags:
   - "CVPR 2026"
   - "AI安全"

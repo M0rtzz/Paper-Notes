@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Large Vision and Language Models by Learning from a Panel of Peers
 description: >-
-  [ICCV2025][自监督学习][自我改进] 提出 Panel-of-Peers (PoP) 学习框架，利用多个性能相近的 LVLM 互相生成候选答案、互相评分、构建偏好数据，并通过 SimPO 迭代自我改进，在 15 个基准上将平均分从 48% 提升至 57%，无需人工标注数据。
+  [ICCV2025][自监督学习][自我改进] 提出 Panel-of-Peers (PoP) 学习框架，利用多个性能相近的 LVLM 互相生成候选答案、互相评分、构建偏好数据，并通过 SimPO 迭代自我改进，在 15 个基准上将平均分从 48% 提升至 57%，无需人工标注数据。 大型视觉-语言模型（LVLM）在多种任务…
 tags:
   - "ICCV2025"
   - "自监督学习"

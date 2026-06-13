@@ -2,9 +2,10 @@
 title: >-
   [论文解读] How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension
 description: >-
-  [NeurIPS 2025][领域泛化] 提出"领域碎裂维度"（Domain Shattering Dimension）这一新组合度量，紧致刻画了领域泛化所需的领域数量（领域样本复杂度），并证明其与经典VC维的关系为 $\Theta(d \log(1/\alpha))$。
+  [NeurIPS 2025][学习理论 / 领域泛化][领域泛化] 提出"领域碎裂维度"（Domain Shattering Dimension）这一新组合度量，紧致刻画了领域泛化所需的领域数量（领域样本复杂度），并证明其与经典VC维的关系为 $\Theta(d \log(1/\alpha))$。 领域现状 领域现状：领域泛…
 tags:
   - "NeurIPS 2025"
+  - "学习理论 / 领域泛化"
   - "领域泛化"
   - "领域碎裂维度"
   - "样本复杂度"

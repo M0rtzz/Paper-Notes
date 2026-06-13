@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolutionary Multimodal Reasoning via Hierarchical Semantic Representation for Intent Recognition
 description: >-
-  [CVPR 2026][对话系统][多模态意图识别] 提出 HIER，通过层次语义表示（token→概念→关系三级）结合基于 MLLM 反馈的自进化推理机制，在三个多模态意图识别 benchmark 上一致超越 SOTA 方法和领先 MLLM（1-3% 增益）。
+  [CVPR 2026][对话系统][多模态意图识别] 提出 HIER，通过层次语义表示（token→概念→关系三级）结合基于 MLLM 反馈的自进化推理机制，在三个多模态意图识别 benchmark 上一致超越 SOTA 方法和领先 MLLM（1-3% 增益）。 多模态意图识别的重要性：从多模态信号（文本+视频+音频）推断人…
 tags:
   - "CVPR 2026"
   - "对话系统"

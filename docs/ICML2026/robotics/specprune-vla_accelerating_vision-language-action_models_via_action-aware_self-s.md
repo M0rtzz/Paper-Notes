@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning
 description: >-
-  [ICML 2026][机器人][VLA 加速] 作者发现 VLA 推理是 compute-bound 的，剪枝才是对的路子，且连续动作步之间视觉信息高度重叠 → 提出 SpecPrune-VLA：用上一步的全局注意力 + 本步早期层的局部注意力 + 帧差动态 token 三路融合做静态剪枝…
+  [ICML 2026][机器人][VLA 加速] 作者发现 VLA 推理是 compute-bound 的，剪枝才是对的路子，且连续动作步之间视觉信息高度重叠 → 提出 SpecPrune-VLA：用上一步的全局注意力 + 本步早期层的局部注意力 + 帧差动态 token 三路融合做静态剪枝，再加层内动态剪枝和速度感知的粗/细粒度切换控制器，免训练地在 LIBERO 上拿到 1.57× / 真机 1.70× 加速且成功率几乎无损。
 tags:
   - "ICML 2026"
   - "机器人"

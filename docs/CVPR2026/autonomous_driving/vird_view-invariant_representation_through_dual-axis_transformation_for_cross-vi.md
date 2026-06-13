@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIRD: View-Invariant Representation through Dual-Axis Transformation for Cross-View Pose Estimation
 description: >-
-  [CVPR2026][自动驾驶][位姿估计] 提出 VIRD，通过双轴变换（极坐标变换 + 上下文增强位置注意力）构建视图不变表示，在无方向先验条件下实现 SOTA 的跨视角位姿估计，在 KITTI 上位置和方向误差分别降低 50.7% 和 76.5%。
+  [CVPR2026][自动驾驶][位姿估计] 提出 VIRD，通过双轴变换（极坐标变换 + 上下文增强位置注意力）构建视图不变表示，在无方向先验条件下实现 SOTA 的跨视角位姿估计，在 KITTI 上位置和方向误差分别降低 50.7% 和 76.5%。 全局定位是自动驾驶的关键需求：准确的全局定位对自动驾驶和移动机器人至关…
 tags:
   - "CVPR2026"
   - "自动驾驶"

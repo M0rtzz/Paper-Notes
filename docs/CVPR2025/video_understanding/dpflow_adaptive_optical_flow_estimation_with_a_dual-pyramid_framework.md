@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPFlow: Adaptive Optical Flow Estimation with a Dual-Pyramid Framework
 description: >-
-  [CVPR 2025][视频理解][光流估计] 提出DPFlow，结合**图像金字塔**和**特征金字塔**的双金字塔循环编码器，配合纯卷积的**Cross-Gated Unit (CGU)**，仅用标准分辨率训练即可自适应泛化至8K分辨率输入，在Sintel、KITTI、Spring等基准上达到SOTA…
+  [CVPR 2025][视频理解][光流估计] 提出DPFlow，结合**图像金字塔**和**特征金字塔**的双金字塔循环编码器，配合纯卷积的**Cross-Gated Unit (CGU)**，仅用标准分辨率训练即可自适应泛化至8K分辨率输入，在Sintel、KITTI、Spring等基准上达到SOTA，同时发布**Kubric-NK**多分辨率光流评测数据集首次支持定量高分辨率评估。
 tags:
   - "CVPR 2025"
   - "视频理解"

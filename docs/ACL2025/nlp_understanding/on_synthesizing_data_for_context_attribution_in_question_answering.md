@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Synthesizing Data for Context Attribution in Question Answering
 description: >-
-  [ACL 2025][NLP理解][上下文归因] 本文提出 SynQA，一种基于"给定上下文句子→生成 QA 对"的合成数据策略，用于训练小模型完成上下文归因任务（即为 QA 系统的回答找到支撑证据句），在多个 QA 任务和跨域场景中显著优于零样本推理和 LLM 集成方法。
+  [ACL 2025][NLP理解][上下文归因] 本文提出 SynQA，一种基于"给定上下文句子→生成 QA 对"的合成数据策略，用于训练小模型完成上下文归因任务（即为 QA 系统的回答找到支撑证据句），在多个 QA 任务和跨域场景中显著优于零样本推理和 LLM 集成方法。 领域现状：问答（QA）是 LLM 最主要的应用场景…
 tags:
   - "ACL 2025"
   - "NLP理解"

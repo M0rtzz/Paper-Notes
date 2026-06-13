@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting
 description: >-
-  [ICCV 2025][3D视觉][高斯泼溅] 将3DGS扩展到7维（空间3D+时间1D+方向3D），通过条件切片机制将7D高斯投影为与3DGS管线兼容的3D高斯，在具有视角依赖效果的动态场景上PSNR提升最高7.36dB，同时维持401 FPS实时渲染。
+  [ICCV 2025][3D视觉][高斯泼溅] 将3DGS扩展到7维（空间3D+时间1D+方向3D），通过条件切片机制将7D高斯投影为与3DGS管线兼容的3D高斯，在具有视角依赖效果的动态场景上PSNR提升最高7.36dB，同时维持401 FPS实时渲染。 动态场景的真实感渲染需要同时建模三个维度：空间几何：、时间动态：和视…
 tags:
   - "ICCV 2025"
   - "3D视觉"

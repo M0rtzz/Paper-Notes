@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Path of Least Resistance: Guiding LLM Reasoning Trajectories with Prefix Consensus
 description: >-
-  [ICLR 2026][LLM推理][自一致性解码] 提出 PoLR（Path of Least Resistance），首个利用推理前缀一致性的推理时方法，通过聚类短前缀并仅展开主导簇来替代标准 Self-Consistency…
+  [ICLR 2026][LLM推理][自一致性解码] 提出 PoLR（Path of Least Resistance），首个利用推理前缀一致性的推理时方法，通过聚类短前缀并仅展开主导簇来替代标准 Self-Consistency，在 GSM8K/Math500/AIME/GPQA 等基准上保持甚至提升准确率的同时减少 40%–60% 的 token 用量和最高 50% 的延迟。
 tags:
   - "ICLR 2026"
   - "LLM推理"

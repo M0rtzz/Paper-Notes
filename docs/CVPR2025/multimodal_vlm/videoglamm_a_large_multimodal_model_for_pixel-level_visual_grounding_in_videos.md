@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoGLaMM: A Large Multimodal Model for Pixel-Level Visual Grounding in Videos
 description: >-
-  [CVPR 2025][多模态VLM][视觉定位] VideoGLaMM 是一个视频大型多模态模型，通过双视觉编码器（空间+时间）、可调 V→L 和 L→V 适配器、以及时空像素解码器，实现了视频中的像素级细粒度视觉定位，同时构建了首个 38K 视频 grounded QA 数据集。
+  [CVPR 2025][多模态VLM][视觉定位] VideoGLaMM 是一个视频大型多模态模型，通过双视觉编码器（空间+时间）、可调 V→L 和 L→V 适配器、以及时空像素解码器，实现了视频中的像素级细粒度视觉定位，同时构建了首个 38K 视频 grounded QA 数据集。 领域现状：图像领域的 grounded…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

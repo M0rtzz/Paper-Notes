@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tree-Sliced Wasserstein Distance: A Geometric Perspective
 description: >-
-  [ICML2025][图像生成][Sliced Wasserstein] 提出 Tree-Sliced Wasserstein distance on Systems of Lines (TSW-SL)，用树状线系统替代 SW 中的一维直线作为投影域，保留拓扑结构的同时保持闭合解的高效计算…
+  [ICML2025][图像生成][Sliced Wasserstein] 提出 Tree-Sliced Wasserstein distance on Systems of Lines (TSW-SL)，用树状线系统替代 SW 中的一维直线作为投影域，保留拓扑结构的同时保持闭合解的高效计算，在梯度流、风格迁移和生成模型上超越 SW 及其变体。
 tags:
   - "ICML2025"
   - "图像生成"

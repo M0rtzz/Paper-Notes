@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TG-Field: Geometry-Aware Radiative Gaussian Fields for Tomographic Reconstruction
 description: >-
-  [AAAI 2026][3D视觉][CT重建] 提出 TG-Field，一种面向极端稀疏视角 CT 重建的几何感知高斯形变框架，通过多分辨率哈希编码器建模空间几何先验、时空注意力模块和运动流网络处理动态 CT，在静态和动态 CT 重建中均实现了 SOTA 性能。
+  [AAAI 2026][3D视觉][CT重建] 提出 TG-Field，一种面向极端稀疏视角 CT 重建的几何感知高斯形变框架，通过多分辨率哈希编码器建模空间几何先验、时空注意力模块和运动流网络处理动态 CT，在静态和动态 CT 重建中均实现了 SOTA 性能。 问题定义 锥束计算机断层扫描（CBCT）广泛用于医学、生物学和…
 tags:
   - "AAAI 2026"
   - "3D视觉"

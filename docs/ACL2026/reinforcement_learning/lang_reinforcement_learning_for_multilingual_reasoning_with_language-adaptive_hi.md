@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LANG: Reinforcement Learning for Multilingual Reasoning with Language-Adaptive Hint Guidance
 description: >-
-  [ACL2026][强化学习][多语言推理] LANG 用同语种推理 hint 启动多语言数学推理 RL，再通过余弦衰减和按语言难度自适应关停 hint，让模型在保持语言一致性的同时提升非英语推理准确率。
+  [ACL2026][强化学习][多语言推理] LANG 用同语种推理 hint 启动多语言数学推理 RL，再通过余弦衰减和按语言难度自适应关停 hint，让模型在保持语言一致性的同时提升非英语推理准确率。 领域现状：RLVR/GRPO 已经成为提升大模型多步推理能力的常见路线，DeepSeek-R1 一类模型证明了可验证奖励…
 tags:
   - "ACL2026"
   - "强化学习"

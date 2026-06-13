@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncovering Zero-Shot Generalization Gaps in Time-Series Foundation Models Using Real-World Videos
 description: >-
-  [AAAI 2026][视频理解][时间序列基础模型] 提出从真实视频中通过光流提取时间序列数据的管线，构建了 REAL-V-TSFM 数据集（6130 条序列），揭示了当前时间序列基础模型（Chronos、TimesFM 等）在面对真实物理动态时的零样本泛化能力不足。
+  [AAAI 2026][视频理解][时间序列基础模型] 提出从真实视频中通过光流提取时间序列数据的管线，构建了 REAL-V-TSFM 数据集（6130 条序列），揭示了当前时间序列基础模型（Chronos、TimesFM 等）在面对真实物理动态时的零样本泛化能力不足。 问题定义 时间序列基础模型（TSFMs）旨在像 NLP…
 tags:
   - "AAAI 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BAPO: Boundary-Aware Policy Optimization for Reliable Agentic Search
 description: >-
-  [ACL 2026][LLM Agent][agentic search] 针对 RL 训练后的 agentic search 模型几乎从不说"I DON'T KNOW"导致编造答案的可靠性问题，BAPO 在 GRPO 之上加入"基于组的边界感知奖励 + 自适应奖励调制器"，让模型只在真正越界时才拒答…
+  [ACL 2026][LLM Agent][agentic search] 针对 RL 训练后的 agentic search 模型几乎从不说"I DON'T KNOW"导致编造答案的可靠性问题，BAPO 在 GRPO 之上加入"基于组的边界感知奖励 + 自适应奖励调制器"，让模型只在真正越界时才拒答，相对 GRPO 在四个多跳 QA 上把 reliability 平均提升约 9.7%，且仅用 5k 训练样本就超过 90k 样本训练的 Search-R1。
 tags:
   - "ACL 2026"
   - "LLM Agent"

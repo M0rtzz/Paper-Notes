@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MICAS: Multi-grained In-Context Adaptive Sampling for 3D Point Cloud Processing
 description: >-
-  [CVPR 2025][3D视觉][点云处理] MICAS 针对 3D 点云 in-context learning 中的任务间（inter-task）和任务内（intra-task）采样敏感性问题…
+  [CVPR 2025][3D视觉][点云处理] MICAS 针对 3D 点云 in-context learning 中的任务间（inter-task）和任务内（intra-task）采样敏感性问题，提出了多粒度自适应采样机制——包含任务自适应点采样（Gumbel-softmax 可微采样）和查询特定 prompt 采样（基于概率排序选择最优 prompt），在 ShapeNet 基准上将 part segmentation 提升了 4.1%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

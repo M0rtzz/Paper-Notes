@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL
 description: >-
-  [ICML 2026][AI安全][伪造检测] 本文针对"图/文/视频混合伪造同时检测+定位"这一统一任务，提出 OmniVL-Guard，用 Self-Evolving CoT 合成高质量冷启动数据 + ARSPO（非线性奖励映射 + 动态任务权重）解决多任务 RL 中"简单的真假分类抢走梯度、细粒度定位学…
+  [ICML 2026][AI安全][伪造检测] 本文针对"图/文/视频混合伪造同时检测+定位"这一统一任务，提出 OmniVL-Guard，用 Self-Evolving CoT 合成高质量冷启动数据 + ARSPO（非线性奖励映射 + 动态任务权重）解决多任务 RL 中"简单的真假分类抢走梯度、细粒度定位学不动"的难度偏置问题，在 In-Domain 上视频时序定位 tIoU +37.8、文本定位 F1 +22.9，并在四个 OOD benchmark 上做到零样本 SOTA。
 tags:
   - "ICML 2026"
   - "AI安全"

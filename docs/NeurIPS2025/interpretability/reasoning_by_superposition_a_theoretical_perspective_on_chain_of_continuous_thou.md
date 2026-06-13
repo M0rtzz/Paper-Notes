@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought
 description: >-
-  [NeurIPS 2025][可解释性][连续思维链] 本文从理论上证明了连续思维链（Coconut）在有向图可达性问题上的表达优势：两层Transformer使用D步连续思维即可解决直径为D的图可达性问题，而离散CoT需要O(n²)步，其核心机制是连续思维向量以"叠加态"同时编码多条搜索前沿…
+  [NeurIPS 2025][可解释性][连续思维链] 本文从理论上证明了连续思维链（Coconut）在有向图可达性问题上的表达优势：两层Transformer使用D步连续思维即可解决直径为D的图可达性问题，而离散CoT需要O(n²)步，其核心机制是连续思维向量以"叠加态"同时编码多条搜索前沿，实现隐式并行BFS。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

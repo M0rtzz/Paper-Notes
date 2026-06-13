@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Transcription: Unified Audio Schema for Perception-Aware AudioLLMs
 description: >-
-  [ACL 2026][音频/语音][音频大语言模型] 揭示当前 AudioLLM 的感知弱点源于 ASR 中心的训练范式（系统性抑制副语言和非语言信息），提出 Unified Audio Schema（UAS）将音频信息结构化为转录、副语言和非语言事件三个维度的 JSON 格式…
+  [ACL 2026 Findings][音频/语音][音频大语言模型] 揭示当前 AudioLLM 的感知弱点源于 ASR 中心的训练范式（系统性抑制副语言和非语言信息），提出 Unified Audio Schema（UAS）将音频信息结构化为转录、副语言和非语言事件三个维度的 JSON 格式，在 MMSU 基准上感知精度提升 10.9% 同时保持推理能力。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "音频大语言模型"
   - "感知增强"

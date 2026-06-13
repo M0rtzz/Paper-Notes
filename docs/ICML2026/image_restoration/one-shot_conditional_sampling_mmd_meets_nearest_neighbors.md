@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One-shot Conditional Sampling: MMD meets Nearest Neighbors
 description: >-
-  [ICML 2026][图像恢复][条件采样] CGMMD 用 k 近邻图把"期望条件 MMD（ECMMD）"估计成一个可直接最小化的非对抗目标，训出一个能在单次前向传播内从 $P_{Y\mid X}$ 采样的条件生成器，并给出了非渐近误差界与分布收敛性证明。
+  [ICML 2026][图像恢复][条件采样] CGMMD 用 k 近邻图把"期望条件 MMD（ECMMD）"估计成一个可直接最小化的非对抗目标，训出一个能在单次前向传播内从 $P_{Y\mid X}$ 采样的条件生成器，并给出了非渐近误差界与分布收敛性证明。 领域现状：条件分布建模是统计与机器学习的基础问题——回归只给出条…
 tags:
   - "ICML 2026"
   - "图像恢复"

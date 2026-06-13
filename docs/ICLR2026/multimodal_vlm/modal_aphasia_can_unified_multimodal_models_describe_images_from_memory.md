@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Modal Aphasia: Can Unified Multimodal Models Describe Images From Memory?
 description: >-
-  [ICLR 2026][多模态VLM][模态失语] 本文发现并系统定义"模态失语"（Modal Aphasia）现象——统一多模态模型能从记忆中近乎完美地生成视觉概念（如电影海报图像），但在文字描述同一概念时错误率高出 7 倍以上，且严重幻觉几乎只出现在文本模态…
+  [ICLR 2026][多模态VLM][模态失语] 本文发现并系统定义"模态失语"（Modal Aphasia）现象——统一多模态模型能从记忆中近乎完美地生成视觉概念（如电影海报图像），但在文字描述同一概念时错误率高出 7 倍以上，且严重幻觉几乎只出现在文本模态；通过前沿模型（ChatGPT-5）的真实实验和开源模型（Janus-Pro、Harmon）的合成控制实验，证实模态失语是当前统一架构的系统性缺陷而非训练偶然，并展示了该现象对 AI 安全框架的潜在威胁。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

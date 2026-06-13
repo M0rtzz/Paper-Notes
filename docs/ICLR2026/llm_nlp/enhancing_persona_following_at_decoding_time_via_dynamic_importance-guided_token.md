@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Enhancing Persona Following at Decoding Time via Dynamic Importance-Guided Token Estimation for Role-Playing Agents
 description: >-
-  [ICLR 2026][LLM/NLP][角色扮演智能体] 提出 Persona Dynamic Decoding (PDD) 框架，通过条件互信息动态估计人格属性的场景依赖重要性，并将重要性分数整合到多目标奖励引导解码中，实现无需微调的推理时人格跟随。
+  [ICLR 2026][LLM 其他][角色扮演智能体] 提出 Persona Dynamic Decoding (PDD) 框架，通过条件互信息动态估计人格属性的场景依赖重要性，并将重要性分数整合到多目标奖励引导解码中，实现无需微调的推理时人格跟随。 角色扮演语言智能体（RPLAs）在社会学研究中日益重要（如投票行为分析、…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "角色扮演智能体"
   - "人格跟随"
   - "推理时对齐"

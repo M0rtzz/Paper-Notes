@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CURE-Med: Curriculum-Informed Reinforcement Learning for Multilingual Medical Reasoning
 description: >-
-  [ACL 2026][医疗NLP][多语言医学推理] 作者构造了一个覆盖 13 种语言（含 Amharic、Yoruba、Swahili 等低资源语言）、共 15,774 条开放问答的医学推理数据集 CureMed-Bench…
+  [ACL 2026 Oral][医疗NLP][多语言医学推理] 作者构造了一个覆盖 13 种语言（含 Amharic、Yoruba、Swahili 等低资源语言）、共 15,774 条开放问答的医学推理数据集 CureMed-Bench，并提出 Cure-Med：一个两阶段「code-switching 感知的 SFT + 课程式 GRPO」框架，把推理正确性和语言一致性联合优化，在 7B 上将语言一致率 / 推理正确率拉到 85.21% / 54.35%，在 32B 上拉到 94.96% / 70.04%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "医疗NLP"
   - "多语言医学推理"
   - "GRPO"

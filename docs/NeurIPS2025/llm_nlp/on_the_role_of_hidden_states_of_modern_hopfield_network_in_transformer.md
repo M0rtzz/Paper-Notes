@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On the Role of Hidden States of Modern Hopfield Network in Transformer
 description: >-
-  [NeurIPS 2025][LLM/NLP][Modern Hopfield Network] 本文突破现代 Hopfield 网络（MHN）与 Transformer 对应关系的绝热近似限制，发现保留 MHN 的隐状态动力学会在自注意力层中引入跨层注意力分数传播机制（Modern Hopfield Att…
+  [NeurIPS 2025][LLM 其他][Modern Hopfield Network] 本文突破现代 Hopfield 网络（MHN）与 Transformer 对应关系的绝热近似限制，发现保留 MHN 的隐状态动力学会在自注意力层中引入跨层注意力分数传播机制（Modern Hopfield Attention, MHA），不增加训练参数即可系统性改善 ViT 和 GPT-2 的性能，并从理论和实验上证明 MHA 有效缓解了深层 Transformer 的 rank collapse 问题。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Modern Hopfield Network"
   - "注意力机制"
   - "rank collapse"

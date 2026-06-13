@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaskControl: Spatio-Temporal Control for Masked Motion Synthesis
 description: >-
-  [ICCV 2025][图像生成][Masked Motion Model] MaskControl 首次将空间关节可控性引入生成式掩码运动模型（Masked Motion Model），通过训练时的 Logits Regularizer 隐式对齐运动 token 分布与目标关节位置…
+  [ICCV 2025][图像生成][Masked Motion Model] MaskControl 首次将空间关节可控性引入生成式掩码运动模型（Masked Motion Model），通过训练时的 Logits Regularizer 隐式对齐运动 token 分布与目标关节位置，以及推理时的 Logits Optimization 显式优化预测 logits 以最小化控制误差，在保持高生成质量（FID 降低77%）的同时实现高精度关节控制（平均误差0.91cm），并支持零样本目标函数控制。
 tags:
   - "ICCV 2025"
   - "图像生成"

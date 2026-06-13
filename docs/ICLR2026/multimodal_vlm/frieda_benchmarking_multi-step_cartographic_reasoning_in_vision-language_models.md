@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FRIEDA: Benchmarking Multi-Step Cartographic Reasoning in Vision-Language Models
 description: >-
-  [ICLR2026][多模态VLM][cartographic reasoning] 提出 FRIEDA 基准，系统评估大型视觉语言模型在多步骤、跨地图的制图推理能力，发现最强模型 Gemini-2.5-Pro 准确率仅 38.20%，远低于人类 84.87%。
+  [ICLR2026][多模态VLM][cartographic reasoning] 提出 FRIEDA 基准，系统评估大型视觉语言模型在多步骤、跨地图的制图推理能力，发现最强模型 Gemini-2.5-Pro 准确率仅 38.20%，远低于人类 84.87%。 - 制图推理（cartographic reasoning）是…
 tags:
   - "ICLR2026"
   - "多模态VLM"

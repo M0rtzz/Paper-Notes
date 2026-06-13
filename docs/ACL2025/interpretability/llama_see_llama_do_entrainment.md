@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Llama See, Llama Do: A Mechanistic Perspective on Contextual Entrainment and Distraction in LLMs
 description: >-
-  [ACL 2025][可解释性][contextual entrainment] 本文发现并定义了"上下文夹带"(contextual entrainment)现象——LLM会对上下文中出现过的任意token赋予更高概率，并通过可微掩码方法定位了负责该现象的entrainment heads…
+  [ACL 2025][可解释性][contextual entrainment] 本文发现并定义了"上下文夹带"(contextual entrainment)现象——LLM会对上下文中出现过的任意token赋予更高概率，并通过可微掩码方法定位了负责该现象的entrainment heads，关闭这些头后可显著抑制干扰效应。
 tags:
   - "ACL 2025"
   - "可解释性"

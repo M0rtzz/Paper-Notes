@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SR-LLM: Rethinking the Structured Representation in Large Language Model
 description: >-
-  [ACL 2025][LLM/NLP][抽象语义表示] 提出 SR-LLM 框架，通过两种设置（training-free 的自然语言描述转换和 training-dependent 的混合数据微调）将结构化表示（AMR、PST、FOL）有效集成到 LLM 中…
+  [ACL 2025][LLM 其他][抽象语义表示] 提出 SR-LLM 框架，通过两种设置（training-free 的自然语言描述转换和 training-dependent 的混合数据微调）将结构化表示（AMR、PST、FOL）有效集成到 LLM 中，在 PAWS 等下游任务上分别取得 3.17% 和 12.38% 的提升，首次证明结构化表示能实质性增强 LLM 推理能力。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "抽象语义表示"
   - "结构化信息"
   - "LLM增强"

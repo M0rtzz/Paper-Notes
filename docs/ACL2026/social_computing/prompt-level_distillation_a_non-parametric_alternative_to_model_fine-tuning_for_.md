@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompt-Level Distillation: A Non-Parametric Alternative to Model Fine-Tuning for Efficient Reasoning
 description: >-
-  [ACL2026][社会计算][提示学习] 本文提出 Prompt-Level Distillation，把教师模型在训练样本上的推理规律抽取、聚类并消解冲突后写入学生模型的 system prompt，在不更新参数的情况下显著提升小模型的推理分类能力。
+  [ACL2026][社会计算][提示学习] 本文提出 Prompt-Level Distillation，把教师模型在训练样本上的推理规律抽取、聚类并消解冲突后写入学生模型的 system prompt，在不更新参数的情况下显著提升小模型的推理分类能力。 领域现状：复杂推理任务通常依赖 Chain-of-Thought pr…
 tags:
   - "ACL2026"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control
 description: >-
-  [NeurIPS 2025][强化学习][移动端控制] 提出SoLS算法，通过不对称策略更新机制（成功时激进学习、失败时保守正则化）和成功转换回放（STR），实现基础模型在移动应用控制任务上的高效强化学习微调，在AndroidWorld上达到51.3%成功率。
+  [NeurIPS 2025][强化学习][移动端控制] 提出SoLS算法，通过不对称策略更新机制（成功时激进学习、失败时保守正则化）和成功转换回放（STR），实现基础模型在移动应用控制任务上的高效强化学习微调，在AndroidWorld上达到51.3%成功率。 移动应用控制是一个极具挑战的多步交互任务：动作空间大且上下文相关…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

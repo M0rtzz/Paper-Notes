@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement
 description: >-
-  [NeurIPS 2025][可解释性][脑编码] 提出残差解纠缠方法，将 LLM 隐藏状态分离为词汇、句法、语义、推理四个近正交嵌入，用于预测颅内 ECoG 脑信号，发现推理信号在时间上（~350-400ms）和空间上（超越经典语言区扩展至视觉皮层）均具有独立的神经特征…
+  [NeurIPS 2025][可解释性][脑编码] 提出残差解纠缠方法，将 LLM 隐藏状态分离为词汇、句法、语义、推理四个近正交嵌入，用于预测颅内 ECoG 脑信号，发现推理信号在时间上（~350-400ms）和空间上（超越经典语言区扩展至视觉皮层）均具有独立的神经特征，揭示了 LLM 与人脑间的推理计算对齐。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

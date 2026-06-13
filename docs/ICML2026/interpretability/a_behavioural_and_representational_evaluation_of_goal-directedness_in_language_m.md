@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Behavioural and Representational Evaluation of Goal-Directedness in Language Model Agents
 description: >-
-  [ICML 2026][可解释性][目标导向性] 这篇论文提出一种把行为评估和内部表示探针结合起来的 LLM Agent 目标导向性评估框架，并在 GPT-OSS-20B 的网格导航任务中发现：行为上它大体按目标行动，内部也编码了粗粒度空间地图和短期计划，但会被无功能的目标状物体诱导。
+  [ICML 2026][可解释性][目标导向性] 这篇论文提出一种把行为评估和内部表示探针结合起来的 LLM Agent 目标导向性评估框架，并在 GPT-OSS-20B 的网格导航任务中发现：行为上它大体按目标行动，内部也编码了粗粒度空间地图和短期计划，但会被无功能的目标状物体诱导。 领域现状：判断一个 agent 是否“…
 tags:
   - "ICML 2026"
   - "可解释性"

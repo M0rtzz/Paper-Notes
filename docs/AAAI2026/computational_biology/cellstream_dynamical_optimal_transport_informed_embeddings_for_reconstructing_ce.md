@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data
 description: >-
-  [AAAI 2026][计算生物][单细胞RNA测序] 提出 CellStream，一种将自编码器与非平衡动态最优传输（unbalanced dynamical OT）联合学习的深度学习框架，从离散时间点的单细胞快照数据中同时学习低维嵌入和连续细胞动态轨迹，在时间一致性和速度一致性上显著优于现有方法。
+  [AAAI 2026 Oral][计算生物][单细胞RNA测序] 提出 CellStream，一种将自编码器与非平衡动态最优传输（unbalanced dynamical OT）联合学习的深度学习框架，从离散时间点的单细胞快照数据中同时学习低维嵌入和连续细胞动态轨迹，在时间一致性和速度一致性上显著优于现有方法。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "计算生物"
   - "单细胞RNA测序"
   - "最优传输"

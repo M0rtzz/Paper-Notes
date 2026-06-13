@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Detecting High-Stakes Interactions with Activation Probes
 description: >-
-  [NeurIPS 2025][LLM/NLP][activation probes] 用线性激活探针（在 LLM 内部表示上训练的轻量分类器）检测用户的"高风险交互"，在合成数据上训练后跨 6 个真实数据集 AUROC 达 0.88-0.92，匹敌 8-12B 微调 LLM但计算成本低 6 个数量级…
+  [NeurIPS 2025][LLM 其他][activation probes] 用线性激活探针（在 LLM 内部表示上训练的轻量分类器）检测用户的"高风险交互"，在合成数据上训练后跨 6 个真实数据集 AUROC 达 0.88-0.92，匹敌 8-12B 微调 LLM但计算成本低 6 个数量级，级联架构（探针初筛+LLM 精判）进一步超越单独使用任一方法。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "activation probes"
   - "高风险检测"
   - "级联监控"

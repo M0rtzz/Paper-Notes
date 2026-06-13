@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Few-Shot Adaptation of Vision-Language Models in Two Stages
 description: >-
-  [CVPR 2025][多模态VLM][少样本适配] 通过分析 PEFT 在少样本适配中的学习动态，发现训练过程天然分为"任务级特征提取"和"可用类别特化"两个阶段，据此提出 2SFS：先调 LayerNorm 学通用特征，再训练线性分类器提升已知类判别…
+  [CVPR 2025][多模态VLM][少样本适配] 通过分析 PEFT 在少样本适配中的学习动态，发现训练过程天然分为"任务级特征提取"和"可用类别特化"两个阶段，据此提出 2SFS：先调 LayerNorm 学通用特征，再训练线性分类器提升已知类判别，在 base-to-novel 和 all-to-all 两种设定下均达到或超越 SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

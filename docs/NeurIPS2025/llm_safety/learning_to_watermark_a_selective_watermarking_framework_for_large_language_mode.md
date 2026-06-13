@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization
 description: >-
-  [NeurIPS 2025][LLM安全][LLM水印] 提出LTW（Learning to Watermark）框架，使用一个轻量级选择器网络基于句子嵌入、token熵和当前水印比例来自适应决定何时施加水印，通过多目标优化（MGDA）在可检测性和文本质量之间达到Pareto最优…
+  [NeurIPS 2025][LLM安全][LLM水印] 提出LTW（Learning to Watermark）框架，使用一个轻量级选择器网络基于句子嵌入、token熵和当前水印比例来自适应决定何时施加水印，通过多目标优化（MGDA）在可检测性和文本质量之间达到Pareto最优，在不降低检测性能的前提下显著提升水印文本质量。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Jailbreak to Protect: Buffering and Reinforcing via Temporary Jailbreaking for Safe Fine-Tuning in Large Language Models
 description: >-
-  [ICML 2026][模型压缩][有害微调防御] 在 Fine-tuning-as-a-Service 场景下，作者把"先把模型临时越狱再让用户微调"重新解读为一种梯度饱和机制，并基于这一观察设计 Buffer-and-Reinforce 框架：用一个可拆卸的 BufferLoRA 在用户微调时吃掉有害梯度…
+  [ICML 2026 Spotlight][模型压缩][有害微调防御] 在 Fine-tuning-as-a-Service 场景下，作者把"先把模型临时越狱再让用户微调"重新解读为一种梯度饱和机制，并基于这一观察设计 Buffer-and-Reinforce 框架：用一个可拆卸的 BufferLoRA 在用户微调时吃掉有害梯度，再用 ReinforceLoRA 通过 QR 正交合并补回安全性，无需任何用户侧安全数据就把有害评分压到约 8.5，同时把下游任务准确率维持在 76 以上。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "模型压缩"
   - "有害微调防御"
   - "临时越狱"

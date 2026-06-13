@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hearing Hands: Generating Sounds from Physical Interactions in 3D Scenes
 description: >-
-  [CVPR 2025][3D视觉][3D场景交互] 本文提出通过在3D重建场景中记录人手交互的动作-声音对，训练基于rectified flow的生成模型，实现从3D手部轨迹预测对应交互声音，生成结果在人类评估中约47%无法与真实声音区分。
+  [CVPR 2025][3D视觉][3D场景交互] 本文提出通过在3D重建场景中记录人手交互的动作-声音对，训练基于rectified flow的生成模型，实现从3D手部轨迹预测对应交互声音，生成结果在人类评估中约47%无法与真实声音区分。 领域现状：当前3D重建方法（如NeRF、Gaussian Splatting）主要聚…
 tags:
   - "CVPR 2025"
   - "3D视觉"

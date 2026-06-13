@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FontCrafter: High-Fidelity Element-Driven Artistic Font Creation with Visual In-Context Generation
 description: >-
-  [CVPR 2026][图像生成][艺术字体生成] FontCrafter 将艺术字体生成重新定义为视觉上下文生成任务，通过将参考元素图像与空白画布拼接并输入预训练修复模型(FLUX.1-Fill)，实现高保真的元素驱动字体创建，在纹理和结构保真度上显著超越现有方法。
+  [CVPR 2026][图像生成][艺术字体生成] FontCrafter 将艺术字体生成重新定义为视觉上下文生成任务，通过将参考元素图像与空白画布拼接并输入预训练修复模型(FLUX.1-Fill)，实现高保真的元素驱动字体创建，在纹理和结构保真度上显著超越现有方法。 1. 领域现状：艺术字体生成旨在根据参考风格合成风格化字…
 tags:
   - "CVPR 2026"
   - "图像生成"

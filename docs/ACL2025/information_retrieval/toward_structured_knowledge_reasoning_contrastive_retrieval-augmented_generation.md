@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Structured Knowledge Reasoning: Contrastive Retrieval-Augmented Generation on Experience
 description: >-
-  [ACL 2025 Findings][信息检索/RAG][结构化知识推理] 本文提出 CoRE 框架，通过蒙特卡洛树搜索（MCTS）构建包含成功和失败经验的记忆库，并在推理时通过对比式上下文学习（Contrastive ICL）检索正负样例来增强 LLM 对结构化数据（表格、数据库）的推理能力…
+  [ACL 2025 Findings][信息检索/RAG][结构化知识推理] 本文提出 CoRE 框架，通过蒙特卡洛树搜索（MCTS）构建包含成功和失败经验的记忆库，并在推理时通过对比式上下文学习（Contrastive ICL）检索正负样例来增强 LLM 对结构化数据（表格、数据库）的推理能力，在 Text-to-SQL 和 TableQA 上分别平均提升 3.44% 和 4.24%。
 tags:
   - "ACL 2025 Findings"
   - "信息检索/RAG"

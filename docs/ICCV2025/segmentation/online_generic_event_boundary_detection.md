@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Generic Event Boundary Detection
 description: >-
-  [ICCV2025][语义分割][在线事件边界检测] 本文提出在线通用事件边界检测（On-GEBD）这一新任务——在流式视频中实时检测事件边界，并设计了基于认知科学事件分割理论（EST）的 ESTimator 框架，通过一致事件预测器（CEA）和在线边界判别器（OBD）的协同…
+  [ICCV2025][语义分割][在线事件边界检测] 本文提出在线通用事件边界检测（On-GEBD）这一新任务——在流式视频中实时检测事件边界，并设计了基于认知科学事件分割理论（EST）的 ESTimator 框架，通过一致事件预测器（CEA）和在线边界判别器（OBD）的协同，在 Kinetics-GEBD 上 Avg F1 达到 0.748，超越所有在线基线且接近离线方法的性能。
 tags:
   - "ICCV2025"
   - "语义分割"

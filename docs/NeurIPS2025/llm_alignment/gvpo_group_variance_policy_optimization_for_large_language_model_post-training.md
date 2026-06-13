@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GVPO: Group Variance Policy Optimization for Large Language Model Post-Training
 description: >-
-  [NeurIPS 2025][LLM对齐][GRPO] 通过将 KL 约束奖励最大化的解析解融入梯度权重（零和权重消除配分函数），设计了比 GRPO 更稳定的 LLM 后训练方法 GVPO，在 AIME 上达到 20.72%（GRPO 14.79%），并证明具有唯一全局最优解。
+  [NeurIPS 2025][LLM对齐][GRPO] 通过将 KL 约束奖励最大化的解析解融入梯度权重（零和权重消除配分函数），设计了比 GRPO 更稳定的 LLM 后训练方法 GVPO，在 AIME 上达到 20.72%（GRPO 14.79%），并证明具有唯一全局最优解。 领域现状：GRPO 等后训练方法通过增加采样和…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

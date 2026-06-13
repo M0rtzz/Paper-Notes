@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Annealing Flow Generative Models Towards Sampling High-Dimensional and Multi-Modal Distributions
 description: >-
-  [ICML 2025][图像生成][退火流] 提出 Annealing Flow (AF)——基于连续归一化流（CNF）的高维多模态分布采样方法，用动态最优传输（OT）目标配合 Wasserstein 正则化训练，通过退火过程引导模式探索，在高维多模态设置中大幅优于现有 NF 和 MCMC 方法。
+  [ICML 2025][图像生成][退火流] 提出 Annealing Flow (AF)——基于连续归一化流（CNF）的高维多模态分布采样方法，用动态最优传输（OT）目标配合 Wasserstein 正则化训练，通过退火过程引导模式探索，在高维多模态设置中大幅优于现有 NF 和 MCMC 方法。 领域现状：从高维多模态分布…
 tags:
   - "ICML 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEM: Geometric Entropy Mixing for Optimal LLM Data Curation
 description: >-
-  [ICML 2026][可解释性][数据混合] GEM 把 LLM 预训练数据划分问题重写成超球面上的 vMF 混合 + 平衡正则的变分目标，用可证明单调上升的 MM 算法求解，再通过 Teacher-Student 蒸馏到 FastText 上线…
+  [ICML 2026][可解释性][数据混合] GEM 把 LLM 预训练数据划分问题重写成超球面上的 vMF 混合 + 平衡正则的变分目标，用可证明单调上升的 MM 算法求解，再通过 Teacher-Student 蒸馏到 FastText 上线，在 1.1B 模型上叠加 DoReMi/Perf/RegMix 三种 mixing 框架平均提升约 1.2%。
 tags:
   - "ICML 2026"
   - "可解释性"

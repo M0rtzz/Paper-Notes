@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Privacy Amplification in Differentially Private Zeroth-Order Optimization with Hidden States
 description: >-
-  [ICML 2026][LLM安全][差分隐私] 作者给"差分隐私零阶优化（DP-ZOGD）"首次证出了**收敛的 hidden-state DP 上界**——通过设计一个"定向 + 各向同性"混合噪声机制并构造一个介于两条相邻轨迹之间的辅助过程，绕开了零阶更新缺乏全局 Lipschitz 性这一技术障碍…
+  [ICML 2026][LLM安全][差分隐私] 作者给"差分隐私零阶优化（DP-ZOGD）"首次证出了**收敛的 hidden-state DP 上界**——通过设计一个"定向 + 各向同性"混合噪声机制并构造一个介于两条相邻轨迹之间的辅助过程，绕开了零阶更新缺乏全局 Lipschitz 性这一技术障碍，揭示出"扩大每步采样方向数 $K$ 反而能降隐私损失"这一前所未知的 DP 算法设计准则。
 tags:
   - "ICML 2026"
   - "LLM安全"

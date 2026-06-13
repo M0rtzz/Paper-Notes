@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysForge: Generating Physics-Grounded 3D Assets for Interactive Virtual World
 description: >-
-  [ICML 2026][图像生成][物理感知 3D 生成] 把"造可交互 3D 物体"重新理解成"先做物理规划、再做物理生成"的两阶段问题——VLM 充当物理建筑师生成包含层级关系、材料、运动学约束的 "Hierarchical Physical Blueprint"…
+  [ICML 2026][图像生成][物理感知 3D 生成] 把"造可交互 3D 物体"重新理解成"先做物理规划、再做物理生成"的两阶段问题——VLM 充当物理建筑师生成包含层级关系、材料、运动学约束的 "Hierarchical Physical Blueprint"，扩散模型再用 KineVoxel Injection 把铰接参数和几何 voxel 协同去噪，配合 150k 资产、四层标注的 PhysDB 数据集，首次实现单视图到"可在物理引擎里抓握、推动、铰接"的 3D 资产生成。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Analyzing Finetuning Representation Shift for Multimodal LLMs Steering
 description: >-
-  [ICCV 2025][多模态VLM][MLLM可解释性] 提出一个无需训练的框架，通过概念级别分析揭示多模态大语言模型微调时的表征偏移，并利用偏移向量实现模型行为的轻量级引导（去偏、安全控制）。
+  [ICCV 2025][多模态VLM][MLLM可解释性] 提出一个无需训练的框架，通过概念级别分析揭示多模态大语言模型微调时的表征偏移，并利用偏移向量实现模型行为的轻量级引导（去偏、安全控制）。 多模态大语言模型（MLLMs）在图像描述、视觉问答等任务上表现出色，但理解其内部行为仍是挑战。现有工作大多以"事后分析"的方式考…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

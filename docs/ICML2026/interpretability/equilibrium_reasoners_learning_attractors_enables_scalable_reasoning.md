@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning
 description: >-
-  [ICML 2026][可解释性][不动点动力系统] 本文把"通过迭代更新潜变量做推理"的模型重新解释为一个学到的吸引子动力系统，提出 Equilibrium Reasoners (EqR)：用随机初始化 + 路径噪声两条轻量训练干预塑造吸引子地形…
+  [ICML 2026][可解释性][不动点动力系统] 本文把"通过迭代更新潜变量做推理"的模型重新解释为一个学到的吸引子动力系统，提出 Equilibrium Reasoners (EqR)：用随机初始化 + 路径噪声两条轻量训练干预塑造吸引子地形，配合"深度（迭代步数 $D$）+ 广度（多次随机重启 $B$）"两轴测试时扩展和基于残差收敛的选轨规则，在训练时最多 16 步迭代的前提下，把 Sudoku-Extreme 的精确准确率从 feedforward 的 2.6% 推到 99.8%（等效展开 40,000 层）。
 tags:
   - "ICML 2026"
   - "可解释性"

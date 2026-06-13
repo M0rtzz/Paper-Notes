@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ICE: Intrinsic Concept Extraction from a Single Image via Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][concept learning] 提出 ICE 两阶段框架，仅用单个 T2I 扩散模型从单张图像自动定位物体级概念并分解为内在属性（类别、颜色、材质），实现无标注、无额外模型的层次化视觉概念提取。
+  [CVPR 2025][图像生成][concept learning] 提出 ICE 两阶段框架，仅用单个 T2I 扩散模型从单张图像自动定位物体级概念并分解为内在属性（类别、颜色、材质），实现无标注、无额外模型的层次化视觉概念提取。 领域现状： T2I 扩散模型（如 Stable Diffusion）积累了丰富的视觉世界知…
 tags:
   - "CVPR 2025"
   - "图像生成"

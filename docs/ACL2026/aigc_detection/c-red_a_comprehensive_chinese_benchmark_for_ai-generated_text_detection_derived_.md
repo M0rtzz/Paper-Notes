@@ -2,9 +2,9 @@
 title: >-
   [论文解读] C-ReD: A Comprehensive Chinese Benchmark for AI-Generated Text Detection Derived from Real-World Prompts
 description: >-
-  [ACL2026][AIGC检测][AI 生成文本检测] C-ReD 构建了一个覆盖五类中文写作场景、九个 LLM 生成器和真实使用式 prompt 的中文 AI 生成文本检测基准，并显示检测难度强烈依赖领域、生成器和 prompt，而在 C-ReD 上微调能显著提升对未见模型和外部中文数据的泛化。
+  [ACL2026 Findings][AIGC检测][AI 生成文本检测] C-ReD 构建了一个覆盖五类中文写作场景、九个 LLM 生成器和真实使用式 prompt 的中文 AI 生成文本检测基准，并显示检测难度强烈依赖领域、生成器和 prompt，而在 C-ReD 上微调能显著提升对未见模型和外部中文数据的泛化。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "AIGC检测"
   - "AI 生成文本检测"
   - "中文 benchmark"

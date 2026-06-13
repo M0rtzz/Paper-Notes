@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quaffure: Real-Time Quasi-Static Neural Hair Simulation
 description: >-
-  [CVPR 2025][人体理解][头发仿真] Quaffure 提出首个基于物理自监督的实时准静态头发仿真方法，通过将头发形变分解为刚性姿态变换和学习到的修正，使用改进的 Cosserat 弹性能量作为自监督损失训练 CNN 解码器…
+  [CVPR 2025][人体理解][头发仿真] Quaffure 提出首个基于物理自监督的实时准静态头发仿真方法，通过将头发形变分解为刚性姿态变换和学习到的修正，使用改进的 Cosserat 弹性能量作为自监督损失训练 CNN 解码器，在消费级硬件上仅需几毫秒即可为不同发型、体型和姿态预测物理合理的头发悬垂效果。
 tags:
   - "CVPR 2025"
   - "人体理解"

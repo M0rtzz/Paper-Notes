@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReGATE: Learning Faster and Better with Fewer Tokens in MLLMs
 description: >-
-  [ACL 2026][多模态VLM][多模态大模型] ReGATE 用冻结的 text-only teacher 估计哪些输出 token 需要视觉信息，再结合 student 的历史学习难度动态选择训练 token，让 MLLM 在不改架构、不加参数的情况下用更少 token 更快训练…
+  [ACL 2026][多模态VLM][多模态大模型] ReGATE 用冻结的 text-only teacher 估计哪些输出 token 需要视觉信息，再结合 student 的历史学习难度动态选择训练 token，让 MLLM 在不改架构、不加参数的情况下用更少 token 更快训练，并在多个图像和视频 benchmark 上达到或超过标准微调。
 tags:
   - "ACL 2026"
   - "多模态VLM"

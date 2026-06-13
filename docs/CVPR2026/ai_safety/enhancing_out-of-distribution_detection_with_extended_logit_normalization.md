@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Out-of-Distribution Detection with Extended Logit Normalization
 description: >-
-  [CVPR 2026][AI安全][OOD检测] 本文发现 LogitNorm 在训练中会导致两种特征坍塌（维度坍塌和原点坍塌），提出了一种无超参数的 Extended Logit Normalization（ELogitNorm），用特征到决策边界的距离替代到原点的距离作为缩放因子…
+  [CVPR 2026][AI安全][OOD检测] 本文发现 LogitNorm 在训练中会导致两种特征坍塌（维度坍塌和原点坍塌），提出了一种无超参数的 Extended Logit Normalization（ELogitNorm），用特征到决策边界的距离替代到原点的距离作为缩放因子，在不损失分类精度的前提下显著提升各种 post-hoc OOD 检测方法的性能和置信度校准。
 tags:
   - "CVPR 2026"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Matchings Under Biased and Correlated Evaluations
 description: >-
-  [NeurIPS 2025][AI安全][stable matching] 在两机构稳定匹配模型中引入评估相关性参数 $\gamma$（机构间评分的对齐程度），分析偏差 $\beta$ 和相关性 $\gamma$ 如何联合影响弱势群体的代表性比率，证明即使轻微的相关性损失也可导致代表性急剧下降…
+  [NeurIPS 2025][AI安全][stable matching] 在两机构稳定匹配模型中引入评估相关性参数 $\gamma$（机构间评分的对齐程度），分析偏差 $\beta$ 和相关性 $\gamma$ 如何联合影响弱势群体的代表性比率，证明即使轻微的相关性损失也可导致代表性急剧下降，并提出公平性干预策略的 Pareto 前沿。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

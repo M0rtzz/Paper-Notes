@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HIMO: A New Benchmark for Full-Body Human Interacting with Multiple Objects
 description: >-
-  [ECCV 2024][图像生成][人物-物体交互] 提出 HIMO，首个大规模全身人体与多物体交互的 4D MoCap 数据集（3.3K序列，4.08M帧），并附带详细的文本描述和时间段分割标注，提出双分支条件扩散模型及自回归管线，生成协调的多物体交互动作序列。
+  [ECCV 2024][图像生成][人物-物体交互] 提出 HIMO，首个大规模全身人体与多物体交互的 4D MoCap 数据集（3.3K序列，4.08M帧），并附带详细的文本描述和时间段分割标注，提出双分支条件扩散模型及自回归管线，生成协调的多物体交互动作序列。 生成人类与物体的交互（HOI）对数字人、游戏、AR/VR、机…
 tags:
   - "ECCV 2024"
   - "图像生成"

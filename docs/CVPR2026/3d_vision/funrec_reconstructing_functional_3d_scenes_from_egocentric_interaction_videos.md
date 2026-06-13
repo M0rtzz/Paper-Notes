@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FunREC: Reconstructing Functional 3D Scenes from Egocentric Interaction Videos
 description: >-
-  [CVPR 2026][3D视觉][功能性3D重建] 本文提出 FunREC，一个无需训练的优化式方法，直接从自我中心 RGB-D 交互视频中重建功能性的铰接式 3D 数字孪生场景——自动发现铰接部件、估计运动学参数、追踪 3D 运动并重建静态和运动几何…
+  [CVPR 2026][3D视觉][功能性3D重建] 本文提出 FunREC，一个无需训练的优化式方法，直接从自我中心 RGB-D 交互视频中重建功能性的铰接式 3D 数字孪生场景——自动发现铰接部件、估计运动学参数、追踪 3D 运动并重建静态和运动几何，在所有基准上大幅超越先前方法（部件分割 mIoU 提升 50+，关节角度误差降低 5-10 倍），并支持仿真导出和机器人交互。
 tags:
   - "CVPR 2026"
   - "3D视觉"

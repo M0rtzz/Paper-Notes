@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RGNet: A Unified Clip Retrieval and Grounding Network for Long Videos
 description: >-
-  [ECCV 2024][视频理解][long video temporal grounding] 提出 RGNet 将长视频时序定位的片段检索和时序定位两个阶段深度统一到单一网络中，通过 RG-Encoder 的稀疏注意力和对比片段采样实现端到端优化，在 MAD 和 Ego4D 上取得 SOTA。
+  [ECCV 2024][视频理解][long video temporal grounding] 提出 RGNet 将长视频时序定位的片段检索和时序定位两个阶段深度统一到单一网络中，通过 RG-Encoder 的稀疏注意力和对比片段采样实现端到端优化，在 MAD 和 Ego4D 上取得 SOTA。 领域现状：长视频时序定位（…
 tags:
   - "ECCV 2024"
   - "视频理解"

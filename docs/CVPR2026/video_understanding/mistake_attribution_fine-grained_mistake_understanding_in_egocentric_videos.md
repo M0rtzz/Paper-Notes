@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos
 description: >-
-  [CVPR 2026][视频理解][错误归因] 本文提出 Mistake Attribution (MATT) 任务，将第一人称视频中的操作错误归因到语义（违反了指令的哪个成分）、时间（不可逆转点 PNR 在哪一帧）和空间（PNR 帧中错误区域在哪里）三个维度…
+  [CVPR 2026][视频理解][错误归因] 本文提出 Mistake Attribution (MATT) 任务，将第一人称视频中的操作错误归因到语义（违反了指令的哪个成分）、时间（不可逆转点 PNR 在哪一帧）和空间（PNR 帧中错误区域在哪里）三个维度，通过 MisEngine 数据引擎自动从已有动作数据集构建大规模错误样本，并设计统一的 Transformer 模型 MisFormer 同时完成三个归因子任务，在多个基准上超越各子任务的专用 SOTA 方法。
 tags:
   - "CVPR 2026"
   - "视频理解"

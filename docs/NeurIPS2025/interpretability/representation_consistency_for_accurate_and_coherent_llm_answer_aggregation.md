@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Representation Consistency for Accurate and Coherent LLM Answer Aggregation
 description: >-
-  [NeurIPS 2025][可解释性][测试时扩展] 提出 Representation Consistency (RC)，通过分析 LLM 生成多个候选答案时内部激活的一致性来改进答案聚合：同一答案的多条推理路径如果内部表示高度一致则更可能正确，结合稀疏自编码器的稀疏变体 RC-S 效果最优…
+  [NeurIPS 2025][可解释性][测试时扩展] 提出 Representation Consistency (RC)，通过分析 LLM 生成多个候选答案时内部激活的一致性来改进答案聚合：同一答案的多条推理路径如果内部表示高度一致则更可能正确，结合稀疏自编码器的稀疏变体 RC-S 效果最优，在 4 个 LLM 和 4 个推理数据集上一致优于 Self-Consistency。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

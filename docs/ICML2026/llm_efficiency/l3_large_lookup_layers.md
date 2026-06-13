@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L$^3$: Large Lookup Layers
 description: >-
-  [ICML 2026][LLM效率][稀疏模型] 本文提出 L$^3$（Large Lookup Layer），把 tokenizer embedding table 推广为可插入到 decoder 中的"大查表层"——按 token ID 做**静态路由**取出一组学习好的 key/value embedd…
+  [ICML 2026][LLM效率][稀疏模型] 本文提出 L$^3$（Large Lookup Layer），把 tokenizer embedding table 推广为可插入到 decoder 中的"大查表层"——按 token ID 做**静态路由**取出一组学习好的 key/value embeddings，再让当前隐藏状态对其做 attention 聚合，从而在不引入 MoE 那套动态路由+辅助损失+难以 offload 的痛点下，把模型稀疏度再上一个量级；在 800M–2.6B 激活参数上击败同算力的 dense 模型与同稀疏率的 MoE。
 tags:
   - "ICML 2026"
   - "LLM效率"

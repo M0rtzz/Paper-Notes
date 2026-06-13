@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Geometric Perspective on the Difficulties of Learning GNN-based SAT Solvers
 description: >-
-  [ICLR 2026][图学习][图神经网络] 从图 Ricci 曲率的几何视角证明随机 k-SAT 问题的二部图表示具有固有的负曲率，且曲率随问题难度增加而下降，建立了 GNN 过压缩 (oversquashing) 与 SAT 求解困难之间的理论联系，并通过测试时图重布线验证了该理论。
+  [ICLR 2026][图学习][图神经网络] 从图 Ricci 曲率的几何视角证明随机 k-SAT 问题的二部图表示具有固有的负曲率，且曲率随问题难度增加而下降，建立了 GNN 过压缩 (oversquashing) 与 SAT 求解困难之间的理论联系，并通过测试时图重布线验证了该理论。 领域现状：GNN 作为可学习的 S…
 tags:
   - "ICLR 2026"
   - "图学习"

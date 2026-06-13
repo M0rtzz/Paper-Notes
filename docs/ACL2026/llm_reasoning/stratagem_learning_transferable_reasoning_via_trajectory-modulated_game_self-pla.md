@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stratagem: Learning Transferable Reasoning via Trajectory-Modulated Game Self-Play
 description: >-
-  [ACL2026][LLM推理][self-play] Stratagem 在文本游戏自博弈中不再只按输赢强化模型，而是用“抽象可迁移性”和“推理演化”两个轨迹级信号调制 advantage，使从游戏中学到的策略更能迁移到数学、通用推理和代码生成任务。
+  [ACL2026][LLM推理][self-play] Stratagem 在文本游戏自博弈中不再只按输赢强化模型，而是用“抽象可迁移性”和“推理演化”两个轨迹级信号调制 advantage，使从游戏中学到的策略更能迁移到数学、通用推理和代码生成任务。 领域现状：用游戏训练智能体是强化学习的经典路线，近期也被迁移到 LLM…
 tags:
   - "ACL2026"
   - "LLM推理"

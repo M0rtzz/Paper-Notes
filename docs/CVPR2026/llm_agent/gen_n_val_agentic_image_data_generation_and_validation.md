@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Gen-n-Val: Agentic Image Data Generation and Validation
 description: >-
-  [CVPR 2026][LLM Agent][数据增强] 本文提出 Gen-n-Val，一个基于智能体的合成数据生成与验证框架，通过 LLM 优化 Layer Diffusion 的 prompt 生成高质量单物体透明图像，再用 VLLM 过滤低质量样本，将无效合成数据从 50% 降至 7%…
+  [CVPR 2026 Findings][LLM Agent][数据增强] 本文提出 Gen-n-Val，一个基于智能体的合成数据生成与验证框架，通过 LLM 优化 Layer Diffusion 的 prompt 生成高质量单物体透明图像，再用 VLLM 过滤低质量样本，将无效合成数据从 50% 降至 7%，在 LVIS 稀有类实例分割上提升 7.6% mAP。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "LLM Agent"
   - "数据增强"
   - "合成数据"

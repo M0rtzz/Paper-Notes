@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Removing Distributional Discrepancies in Captions Improves Image-Text Alignment
 description: >-
-  [ECCV 2024][图像生成] 发现正负描述文本在数据集层面存在分布偏差（如词频差异），提出用纯文本分类器过滤偏差数据，微调 LLaVA-1.5 获得 SOTA 图文对齐评分模型 LLaVA-score。
+  [ECCV 2024][图像生成] 发现正负描述文本在数据集层面存在分布偏差（如词频差异），提出用纯文本分类器过滤偏差数据，微调 LLaVA-1.5 获得 SOTA 图文对齐评分模型 LLaVA-score。 - 自动评估图像和文本的语义对齐对于数据清洗、模型评估和生成模型改进至关重要 - CLIP 等模型以"词袋"方式工作…
 tags:
   - "ECCV 2024"
   - "图像生成"

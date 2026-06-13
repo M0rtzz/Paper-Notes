@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph-Based Alternatives to LLMs for Human Simulation
 description: >-
-  [ACL 2026][图学习][图神经网络] 本文提出 GEMS（Graph-basEd Models for Human Simulation），将封闭式人类行为模拟任务建模为异构图上的链接预测问题，在三个数据集和三种评估设定下匹配或超越强 LLM 基线方法，同时参数量减少 3 个数量级。
+  [ACL 2026][图学习][图神经网络] 本文提出 GEMS（Graph-basEd Models for Human Simulation），将封闭式人类行为模拟任务建模为异构图上的链接预测问题，在三个数据集和三种评估设定下匹配或超越强 LLM 基线方法，同时参数量减少 3 个数量级。 领域现状：人类行为模拟近年来吸引…
 tags:
   - "ACL 2026"
   - "图学习"

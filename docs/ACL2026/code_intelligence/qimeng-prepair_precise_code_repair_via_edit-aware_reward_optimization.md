@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QiMeng-PRepair: Precise Code Repair via Edit-Aware Reward Optimization
 description: >-
-  [ACL 2026][代码智能][精确代码修复] 本文识别了 LLM 代码修复中的"过度编辑"问题——模型倾向于重写大量代码而非精确定位和修复 bug，提出 PRepair 框架，通过 Self-Breaking（多样化 bug 注入）和 Self-Repairing（编辑感知 GRPO 训练）…
+  [ACL 2026][代码智能][精确代码修复] 本文识别了 LLM 代码修复中的"过度编辑"问题——模型倾向于重写大量代码而非精确定位和修复 bug，提出 PRepair 框架，通过 Self-Breaking（多样化 bug 注入）和 Self-Repairing（编辑感知 GRPO 训练），显著提升修复精确度同时保持正确性，并加速推测解码推理。
 tags:
   - "ACL 2026"
   - "代码智能"

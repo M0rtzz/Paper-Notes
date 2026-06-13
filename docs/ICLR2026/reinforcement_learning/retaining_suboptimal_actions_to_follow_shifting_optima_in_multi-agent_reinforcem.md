@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retaining Suboptimal Actions to Follow Shifting Optima in Multi-Agent RL
 description: >-
-  [ICLR 2026][强化学习][多Agent RL] 提出 S2Q（Successive Sub-value Q-learning），通过逐步学习 $K$ 个 sub-value 函数显式保留次优联合动作，结合 Softmax 行为策略在候选间优先级采样…
+  [ICLR 2026][强化学习][多Agent RL] 提出 S2Q（Successive Sub-value Q-learning），通过逐步学习 $K$ 个 sub-value 函数显式保留次优联合动作，结合 Softmax 行为策略在候选间优先级采样，解决合作 MARL 中值分解方法因最优点动态漂移而收敛到次优策略的根本问题。
 tags:
   - "ICLR 2026"
   - "强化学习"

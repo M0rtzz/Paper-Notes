@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tokenisation is NP-Complete
 description: >-
-  证明了分词问题（tokenisation）的两种变体——直接分词和自底向上分词——都是 NP 完全的，通过从 max-2-SAT 问题多项式时间归约实现，这意味着不可能找到高效的最优分词算法，BPE 等近似方法是合理选择。
+  证明了分词问题（tokenisation）的两种变体——直接分词和自底向上分词——都是 NP 完全的，通过从 max-2-SAT 问题多项式时间归约实现，这意味着不可能找到高效的最优分词算法，BPE 等近似方法是合理选择。 - 现有痛点：分词（tokenisation）是 NLP 的第一步也是最底层步骤…
 tags:
 
 ---

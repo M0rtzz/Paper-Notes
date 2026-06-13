@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DiScoFormer: Plug-In Density and Score Estimation with Transformers
 description: >-
-  [ICML 2026][图像生成][密度估计] 本文提出 DiScoFormer，一种对样本顺序置换等变、对坐标仿射等变的 Transformer，用一次前向把任意 i.i.d. 样本集映射到对应密度 $f$ 与 score $\nabla\log f$…
+  [ICML 2026 Oral][图像生成][密度估计] 本文提出 DiScoFormer，一种对样本顺序置换等变、对坐标仿射等变的 Transformer，用一次前向把任意 i.i.d. 样本集映射到对应密度 $f$ 与 score $\nabla\log f$，并从理论上证明 self-attention 在适当参数化下可精确复现归一化高斯 KDE，实验上在 GMM、Laplace、Student-$t$ 等多种分布、宽样本量与维度范围内全面优于经典 KDE，并可作为即插即用 score oracle 用于 Fisher 信息、熵估计与 Fokker–Planck 类 PDE 求解。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "图像生成"
   - "密度估计"
   - "score 估计"

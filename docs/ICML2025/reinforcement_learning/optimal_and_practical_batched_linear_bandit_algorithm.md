@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal and Practical Batched Linear Bandit Algorithm
 description: >-
-  [ICML 2025][强化学习][批量线性 Bandit] BLAE 通过将**臂消除策略**与**正则化 G-最优设计**深度融合，首次在批量线性 Bandit 问题中**同时**实现了 large-$K$ 和 small-$K$ 两种体制下的极小极大最优遗憾（仅差 $\log T$ 因子）…
+  [ICML 2025][强化学习][批量线性 Bandit] BLAE 通过将**臂消除策略**与**正则化 G-最优设计**深度融合，首次在批量线性 Bandit 问题中**同时**实现了 large-$K$ 和 small-$K$ 两种体制下的极小极大最优遗憾（仅差 $\log T$ 因子），同时保持 $\mathcal{O}(\log\log T)$ 的最低批次复杂度和卓越的实际性能。
 tags:
   - "ICML 2025"
   - "强化学习"

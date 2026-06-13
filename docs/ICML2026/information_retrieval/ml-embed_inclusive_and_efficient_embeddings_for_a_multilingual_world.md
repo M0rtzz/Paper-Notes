@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ML-Embed: Inclusive and Efficient Embeddings for a Multilingual World
 description: >-
-  [ICML 2026][信息检索/RAG][Matryoshka 表征学习] ML-Embed 把 Matryoshka 思想从一维 (representation 维度) 扩展到**三维** —— 在 embedding 参数 (MEL)、模型深度 (MLL)、表征维度 (MRL) 上**全栈嵌套训练**…
+  [ICML 2026][信息检索/RAG][Matryoshka 表征学习] ML-Embed 把 Matryoshka 思想从一维 (representation 维度) 扩展到**三维** —— 在 embedding 参数 (MEL)、模型深度 (MLL)、表征维度 (MRL) 上**全栈嵌套训练**, 同时构建 282 种自然语言 + 40 种编程语言、5000 万样本的多语训练集, 推出 140M-8B 一族开源模型, 在 17 个 MTEB benchmark 上 9 个拿第一, 波兰语 +22.89, 越南语 +6.88.
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

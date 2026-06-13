@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification
 description: >-
-  [AAAI 2026][人体理解][同卵双胞胎验证] 针对同卵双胞胎人脸验证这一极端细粒度识别挑战，提出 AHAN 多流架构，通过层次交叉注意力 (HCA) 对语义面部区域做多尺度分析、面部不对称注意力模块 (FAAM) 捕获左右脸差异签名、以及双胞胎感知配对交叉注意力 (TA-PWCA) 训练正则化…
+  [AAAI 2026][人体理解][同卵双胞胎验证] 针对同卵双胞胎人脸验证这一极端细粒度识别挑战，提出 AHAN 多流架构，通过层次交叉注意力 (HCA) 对语义面部区域做多尺度分析、面部不对称注意力模块 (FAAM) 捕获左右脸差异签名、以及双胞胎感知配对交叉注意力 (TA-PWCA) 训练正则化，在 ND_TWIN 数据集上将双胞胎验证精度从 88.9% 提升至 92.3%（+3.4%）。
 tags:
   - "AAAI 2026"
   - "人体理解"

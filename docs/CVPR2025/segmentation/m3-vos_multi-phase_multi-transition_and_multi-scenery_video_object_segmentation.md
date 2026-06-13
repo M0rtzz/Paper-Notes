@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3-VOS: Multi-Phase, Multi-Transition, and Multi-Scenery Video Object Segmentation
 description: >-
-  [CVPR 2025][语义分割][视频目标分割] 本文引入"物相"（Phase）概念到视频目标分割任务中，构建了包含479个视频、205K掩码、覆盖6种相态和23种相变的M3-VOS基准，并提出即插即用的ReVOS方法通过逆向传播精炼来改善相变物体的分割性能。
+  [CVPR 2025][语义分割][视频目标分割] 本文引入"物相"（Phase）概念到视频目标分割任务中，构建了包含479个视频、205K掩码、覆盖6种相态和23种相变的M3-VOS基准，并提出即插即用的ReVOS方法通过逆向传播精炼来改善相变物体的分割性能。 领域现状：视频目标分割（VOS）已经取得了显著进展…
 tags:
   - "CVPR 2025"
   - "语义分割"

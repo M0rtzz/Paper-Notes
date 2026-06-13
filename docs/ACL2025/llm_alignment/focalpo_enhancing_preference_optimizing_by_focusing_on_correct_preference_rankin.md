@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FocalPO: Enhancing Preference Optimizing by Focusing on Correct Preference Rankings
 description: >-
-  [ACL 2025][LLM对齐][偏好优化] 本文提出 FocalPO，一种 DPO 变体，通过引入受 Focal Loss 启发的调制因子来降低错误排序对的权重、优先强化模型已正确排序的偏好对的理解，在 AlpacaEval 2.0 等基准上超越 DPO 及其变体。
+  [ACL 2025][LLM对齐][偏好优化] 本文提出 FocalPO，一种 DPO 变体，通过引入受 Focal Loss 启发的调制因子来降低错误排序对的权重、优先强化模型已正确排序的偏好对的理解，在 AlpacaEval 2.0 等基准上超越 DPO 及其变体。 领域现状：直接偏好优化（DPO）已成为将大语言模型与人…
 tags:
   - "ACL 2025"
   - "LLM对齐"

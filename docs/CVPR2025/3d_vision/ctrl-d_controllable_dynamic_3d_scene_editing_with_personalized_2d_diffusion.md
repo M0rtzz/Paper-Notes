@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ctrl-D: Controllable Dynamic 3D Scene Editing with Personalized 2D Diffusion
 description: >-
-  [CVPR 2025][3D视觉][动态3D编辑] 通过单张编辑参考图像微调 InstructPix2Pix 模型以"学习"编辑能力，结合两阶段可变形3D高斯优化，实现可控、一致的动态3D场景编辑。
+  [CVPR 2025][3D视觉][动态3D编辑] 通过单张编辑参考图像微调 InstructPix2Pix 模型以"学习"编辑能力，结合两阶段可变形3D高斯优化，实现可控、一致的动态3D场景编辑。 - 动态3D场景编辑是VR/AR、数据增强和内容创作的关键需求，但现有方法面临编辑不一致和可控性差的问题 - Instruct…
 tags:
   - "CVPR 2025"
   - "3D视觉"

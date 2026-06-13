@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CacheQuant: Comprehensively Accelerated Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][扩散模型加速] 提出 CacheQuant，一种无需训练的范式，通过联合优化模型缓存（temporal level）和量化（structural level）来全面加速扩散模型，在 Stable Diffusion 上实现 5.18× 加速和 4× 压缩…
+  [CVPR 2025][图像生成][扩散模型加速] 提出 CacheQuant，一种无需训练的范式，通过联合优化模型缓存（temporal level）和量化（structural level）来全面加速扩散模型，在 Stable Diffusion 上实现 5.18× 加速和 4× 压缩，CLIP score 仅损失 0.02。
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Krause Synchronization Transformers
 description: >-
-  [ICML 2026][图像生成][注意力机制] 作者把 Krause 有界置信共识模型搬进 Transformer，用"距离-RBF+局部窗+top-k 稀疏"替代全局 softmax 相似度，从理论上证明它鼓励多簇同步而非全局塌缩…
+  [ICML 2026][图像生成][注意力机制] 作者把 Krause 有界置信共识模型搬进 Transformer，用"距离-RBF+局部窗+top-k 稀疏"替代全局 softmax 相似度，从理论上证明它鼓励多簇同步而非全局塌缩，并在 ViT / 自回归图像生成 / LLM 上同时获得更优性能和 30%+ 算力节省。
 tags:
   - "ICML 2026"
   - "图像生成"

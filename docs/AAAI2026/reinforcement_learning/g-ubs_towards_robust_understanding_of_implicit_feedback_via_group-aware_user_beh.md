@@ -2,7 +2,7 @@
 title: >-
   [论文解读] G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation
 description: >-
-  [AAAI 2026][强化学习][隐式反馈] 提出 G-UBS（Group-aware User Behavior Simulation）范式，通过用户群组管理器（UGM）基于 LLM 的"总结-聚类-反思"流程生成群组画像，结合用户反馈建模器（UFM）的群组感知强化学习训练…
+  [AAAI 2026][强化学习][隐式反馈] 提出 G-UBS（Group-aware User Behavior Simulation）范式，通过用户群组管理器（UGM）基于 LLM 的"总结-聚类-反思"流程生成群组画像，结合用户反馈建模器（UFM）的群组感知强化学习训练，在隐式反馈噪声下实现鲁棒的用户行为理解，同时构建了首个多模态隐式反馈视频推荐基准 IF-VR。
 tags:
   - "AAAI 2026"
   - "强化学习"

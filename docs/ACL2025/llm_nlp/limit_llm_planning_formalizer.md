@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On the Limit of Language Models as Planning Formalizers
 description: >-
-  [ACL 2025][LLM/NLP][PDDL] 系统评估"LLM-as-Formalizer"方法论的极限——首次要求 LLM 生成完整 PDDL 表示（而非部分），从不同自然度的文本描述中形式化规划领域，发现最强模型（GPT-4o/o3-mini/DeepSeek-R1）可有效形式化超越直接规划…
+  [ACL 2025][LLM 其他][PDDL] 系统评估"LLM-as-Formalizer"方法论的极限——首次要求 LLM 生成完整 PDDL 表示（而非部分），从不同自然度的文本描述中形式化规划领域，发现最强模型（GPT-4o/o3-mini/DeepSeek-R1）可有效形式化超越直接规划，但描述越自然性能越低，弱模型卡在语法错误而强模型面临语义错误。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "PDDL"
   - "规划形式化"
   - "LLM推理"

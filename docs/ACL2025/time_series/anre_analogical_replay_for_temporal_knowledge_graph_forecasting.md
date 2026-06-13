@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ANRE: Analogical Replay for Temporal Knowledge Graph Forecasting
 description: >-
-  [ACL 2025][时间序列][时序知识图谱] 本文提出ANRE（Analogical Replay）方法，通过检索历史知识图谱快照中与当前查询结构类似的"类比事件"，将其作为推理线索辅助时序知识图谱的未来事件预测，在多个基准数据集上取得了显著的性能提升。
+  [ACL 2025][时间序列][时序知识图谱] 本文提出ANRE（Analogical Replay）方法，通过检索历史知识图谱快照中与当前查询结构类似的"类比事件"，将其作为推理线索辅助时序知识图谱的未来事件预测，在多个基准数据集上取得了显著的性能提升。 领域现状：时序知识图谱（TKG）将知识图谱扩展到时间维度…
 tags:
   - "ACL 2025"
   - "时间序列"

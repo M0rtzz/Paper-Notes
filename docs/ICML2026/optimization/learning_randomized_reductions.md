@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning Randomized Reductions
 description: >-
-  [ICML 2026][优化/理论][随机自归约] 本文把"发现某个函数 $f$ 的随机自归约 (RSR)"这一沉寂四十年的人工任务，形式化成一个带相关采样的学习问题，并构建了 Bitween 框架：先用稀疏线性回归在固定查询集 $\{x+r, x-r, x \cdot r, x, r\}$ 内挖掘 RSR…
+  [ICML 2026 Spotlight][优化/理论][随机自归约] 本文把"发现某个函数 $f$ 的随机自归约 (RSR)"这一沉寂四十年的人工任务，形式化成一个带相关采样的学习问题，并构建了 Bitween 框架：先用稀疏线性回归在固定查询集 $\{x+r, x-r, x \cdot r, x, r\}$ 内挖掘 RSR，再让 LLM 智能体在更大的查询函数空间里搜索，最终在 80 个数学/ML 函数构成的 RSR-Bench 上把 RSR 覆盖率从 54% 推到 80%，并首次给出 sigmoid 的 RSR 表达式。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "优化/理论"
   - "随机自归约"
   - "自校正程序"

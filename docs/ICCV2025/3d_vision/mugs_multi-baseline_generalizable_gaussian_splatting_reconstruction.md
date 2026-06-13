@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MuGS: Multi-Baseline Generalizable Gaussian Splatting Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 本文提出 MuGS，首个面向多基线设定的泛化 3D 高斯溅射方法，通过融合多视角立体（MVS）和单目深度估计（MDE）特征，并设计投影-采样深度一致性网络，实现在小基线和大基线场景下的 SOTA 新视角合成。
+  [ICCV 2025][3D视觉][3D高斯溅射] 本文提出 MuGS，首个面向多基线设定的泛化 3D 高斯溅射方法，通过融合多视角立体（MVS）和单目深度估计（MDE）特征，并设计投影-采样深度一致性网络，实现在小基线和大基线场景下的 SOTA 新视角合成。 领域现状：3D高斯溅射（3D-GS）因高效实时渲染而成为新视角合…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Do Medical MLLMs Fail? A Study on Visual Grounding in Medical Images
 description: >-
-  [ICLR 2026][多模态VLM][医学VQA] 首次系统性诊断出医学MLLM在零样本医学VQA上表现差的根本原因在于视觉扎根（visual grounding）不足——模型注意力系统性地偏离临床相关区域，由此提出无训练的VGRefine推理时注意力修正方法…
+  [ICLR 2026][多模态VLM][医学VQA] 首次系统性诊断出医学MLLM在零样本医学VQA上表现差的根本原因在于视觉扎根（visual grounding）不足——模型注意力系统性地偏离临床相关区域，由此提出无训练的VGRefine推理时注意力修正方法，在6个基准的110K+样本、8种成像模态上均达到SOTA。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

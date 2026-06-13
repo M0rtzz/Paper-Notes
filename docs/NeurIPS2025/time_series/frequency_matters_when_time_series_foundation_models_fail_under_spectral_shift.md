@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frequency Matters: When Time Series Foundation Models Fail Under Spectral Shift
 description: >-
-  [NeurIPS 2025][时间序列][时间序列基础模型] 揭示时间序列基础模型（TSFM）在工业场景中泛化失败的关键原因——频谱偏移（downstream 数据主频与预训练数据不重叠），通过工业级手游玩家参与预测任务和受控合成实验验证了这一假说。
+  [NeurIPS 2025][时间序列][时间序列基础模型] 揭示时间序列基础模型（TSFM）在工业场景中泛化失败的关键原因——频谱偏移（downstream 数据主频与预训练数据不重叠），通过工业级手游玩家参与预测任务和受控合成实验验证了这一假说。 领域现状：时间序列基础模型（如 MOMENT、Chronos、TimesF…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

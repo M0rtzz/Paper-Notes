@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Availability-aware Sensor Fusion via Unified Canonical Space
 description: >-
-  [NeurIPS 2025][自动驾驶][多传感器融合] 提出 ASF（Availability-aware Sensor Fusion），通过统一规范投影（UCP）将 Camera/LiDAR/4D Radar 特征映射到共享空间 + 跨传感器沿 patch 交叉注意力（CASAP…
+  [NeurIPS 2025][自动驾驶][多传感器融合] 提出 ASF（Availability-aware Sensor Fusion），通过统一规范投影（UCP）将 Camera/LiDAR/4D Radar 特征映射到共享空间 + 跨传感器沿 patch 交叉注意力（CASAP，复杂度 $O(N_qN_s)$ 而非 $O(N_qN_sN_p)$）自动适配可用传感器 + 传感器组合损失（SCL）覆盖所有 7 种组合，在 K-Radar 上 AP_3D 73.6%（超 SOTA 20.1%），传感器故障时性能仅降 1.7%。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

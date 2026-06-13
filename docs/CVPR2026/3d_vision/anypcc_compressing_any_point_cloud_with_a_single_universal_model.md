@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnyPcc: Compressing Any Point Cloud with a Single Universal Model
 description: >-
-  [CVPR 2026][3D视觉][点云] 提出 AnyPcc，通过 Universal Context Model（融合空间+通道双粒度先验）和 Instance-Adaptive Fine-Tuning（实例自适应微调）策略，用单一模型在 15 个多样化数据集上实现 SOTA 点云几何压缩…
+  [CVPR 2026][3D视觉][点云] 提出 AnyPcc，通过 Universal Context Model（融合空间+通道双粒度先验）和 Instance-Adaptive Fine-Tuning（实例自适应微调）策略，用单一模型在 15 个多样化数据集上实现 SOTA 点云几何压缩，相比 G-PCC v23 获得 ~12% 的码率增益。
 tags:
   - "CVPR 2026"
   - "3D视觉"

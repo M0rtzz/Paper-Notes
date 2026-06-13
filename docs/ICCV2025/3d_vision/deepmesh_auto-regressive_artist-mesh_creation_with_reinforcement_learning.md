@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepMesh: Auto-Regressive Artist-Mesh Creation with Reinforcement Learning
 description: >-
-  [ICCV 2025][3D视觉][3D网格生成] 提出 DeepMesh 框架，通过改进的高效mesh tokenization算法（72%压缩率）和首次将DPO强化学习引入3D网格生成来实现人类偏好对齐，能够生成最高3万面的高质量Artist-like三角网格。
+  [ICCV 2025][3D视觉][3D网格生成] 提出 DeepMesh 框架，通过改进的高效mesh tokenization算法（72%压缩率）和首次将DPO强化学习引入3D网格生成来实现人类偏好对齐，能够生成最高3万面的高质量Artist-like三角网格。 Artist-like Mesh的重要性：- 三角网格是3…
 tags:
   - "ICCV 2025"
   - "3D视觉"

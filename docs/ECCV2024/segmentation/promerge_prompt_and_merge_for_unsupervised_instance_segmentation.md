@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProMerge: Prompt and Merge for Unsupervised Instance Segmentation
 description: >-
-  [ECCV 2024][语义分割][无监督实例分割] 提出 ProMerge，利用自监督视觉特征（DINO）进行初始 patch 分组，再通过策略性合并和背景感知掩码裁剪实现无监督实例分割，推理速度远超 normalized-cut 方法，且用生成的伪标签训练检测器可超越现有无监督 SOTA。
+  [ECCV 2024][语义分割][无监督实例分割] 提出 ProMerge，利用自监督视觉特征（DINO）进行初始 patch 分组，再通过策略性合并和背景感知掩码裁剪实现无监督实例分割，推理速度远超 normalized-cut 方法，且用生成的伪标签训练检测器可超越现有无监督 SOTA。 领域现状：无监督实例分割旨在不…
 tags:
   - "ECCV 2024"
   - "语义分割"

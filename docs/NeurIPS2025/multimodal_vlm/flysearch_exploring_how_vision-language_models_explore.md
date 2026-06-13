@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlySearch: Exploring how vision-language models explore
 description: >-
-  [NeurIPS 2025 (Datasets and Benchmarks Track)][多模态VLM][视觉语言模型] FlySearch 提出了一个基于 Unreal Engine 5 的 3D 户外真实感环境，评估 VLM 的探索能力，发现最先进的 VLM 在简单搜索任务上也无法可靠完成…
+  [NeurIPS 2025 (Datasets and Benchmarks Track)][多模态VLM][视觉语言模型] FlySearch 提出了一个基于 Unreal Engine 5 的 3D 户外真实感环境，评估 VLM 的探索能力，发现最先进的 VLM 在简单搜索任务上也无法可靠完成，且与人类的差距随任务难度增加而急剧扩大。
 tags:
   - "NeurIPS 2025 (Datasets and Benchmarks Track)"
   - "多模态VLM"

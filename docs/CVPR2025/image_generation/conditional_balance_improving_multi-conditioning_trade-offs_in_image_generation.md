@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Balance: Improving Multi-Conditioning Trade-Offs in Image Generation
 description: >-
-  [CVPR 2025][图像生成][多条件生成] 分析 SDXL 自注意力层对风格和结构的敏感度差异，发现仅在最敏感的子集层中注入条件信息即可显著改善多条件生成中的风格-内容 trade-off，无需额外训练。
+  [CVPR 2025][图像生成][多条件生成] 分析 SDXL 自注意力层对风格和结构的敏感度差异，发现仅在最敏感的子集层中注入条件信息即可显著改善多条件生成中的风格-内容 trade-off，无需额外训练。 领域现状：多条件图像生成（同时控制风格和结构/内容）是实际应用的核心需求。现有方法如 StyleAligned（通…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EAC-MoE: Expert-Selection Aware Compressor for Mixture-of-Experts Large Language Models
 description: >-
-  [ACL 2025][模型压缩][MoE 量化] EAC-MoE 深入分析 MoE 模型的专家选择特性，提出两个互补模块——量化时通过逐层校准路由器缓解 expert-shift 问题（QESC），推理时基于专家选择频率动态剪枝不重要专家（PESF）…
+  [ACL 2025][模型压缩][MoE 量化] EAC-MoE 深入分析 MoE 模型的专家选择特性，提出两个互补模块——量化时通过逐层校准路由器缓解 expert-shift 问题（QESC），推理时基于专家选择频率动态剪枝不重要专家（PESF），在 4 个 MoE 模型上实现显著的内存压缩和推理加速且精度损失极小。
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diverse Text-to-Image Generation via Contrastive Noise Optimization
 description: >-
-  [ICLR 2026][图像生成][扩散模型] 提出 Contrastive Noise Optimization (CNO)，通过在 Tweedie 去噪预测空间上对初始噪声施加 InfoNCE 对比损失，以预处理方式提升扩散模型生成多样性，同时保持保真度，无需修改采样过程或模型本身。
+  [ICLR 2026][图像生成][扩散模型] 提出 Contrastive Noise Optimization (CNO)，通过在 Tweedie 去噪预测空间上对初始噪声施加 InfoNCE 对比损失，以预处理方式提升扩散模型生成多样性，同时保持保真度，无需修改采样过程或模型本身。 扩散模型的多样性瓶颈：当前文本到图像…
 tags:
   - "ICLR 2026"
   - "图像生成"

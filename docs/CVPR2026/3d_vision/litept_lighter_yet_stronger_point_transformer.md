@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LitePT: Lighter Yet Stronger Point Transformer
 description: >-
-  [CVPR 2026][3D视觉][Transformer] LitePT 通过深入分析卷积和注意力在U-Net各层级的角色，提出在浅层使用稀疏卷积、深层使用注意力的分层混合架构，并引入无参数的PointROPE位置编码，实现了比Point Transformer V3少3.6倍参数、快2倍、省2倍内存…
+  [CVPR 2026][3D视觉][Transformer] LitePT 通过深入分析卷积和注意力在U-Net各层级的角色，提出在浅层使用稀疏卷积、深层使用注意力的分层混合架构，并引入无参数的PointROPE位置编码，实现了比Point Transformer V3少3.6倍参数、快2倍、省2倍内存，同时在多个点云基准上性能持平或超越。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Losses for Diffusion Bridge Samplers
 description: >-
-  [NeurIPS 2025][扩散桥采样器] 本文揭示了扩散桥采样器中流行的 Log Variance (LV) 损失存在的理论缺陷——不满足数据处理不等式且梯度与 rKL 不等价——并提出用 log-derivative trick 计算 rKL 梯度（rKL-LD），在多个基准上一致性超越 LV 损失…
+  [NeurIPS 2025][扩散桥采样器] 本文揭示了扩散桥采样器中流行的 Log Variance (LV) 损失存在的理论缺陷——不满足数据处理不等式且梯度与 rKL 不等价——并提出用 log-derivative trick 计算 rKL 梯度（rKL-LD），在多个基准上一致性超越 LV 损失，且训练更加稳定、对超参数不敏感。
 tags:
   - "NeurIPS 2025"
   - "扩散桥采样器"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Planning without Search: Refining Frontier LLMs with Offline Goal-Conditioned RL
 description: >-
-  [NeurIPS 2025][NLP理解][离线强化学习] 提出PNLC方法，通过训练轻量级目标条件价值函数作为"自然语言评论家"，在推理步骤层面引导LLM智能体进行多轮规划和自我精化，无需直接微调或推理时搜索，在Web导航、社交推理、劝服等复杂交互任务上显著超越现有方法且推理速度快8-10倍。
+  [NeurIPS 2025][NLP理解][离线强化学习] 提出PNLC方法，通过训练轻量级目标条件价值函数作为"自然语言评论家"，在推理步骤层面引导LLM智能体进行多轮规划和自我精化，无需直接微调或推理时搜索，在Web导航、社交推理、劝服等复杂交互任务上显著超越现有方法且推理速度快8-10倍。 领域现状：LLM在目标导向的…
 tags:
   - "NeurIPS 2025"
   - "NLP理解"

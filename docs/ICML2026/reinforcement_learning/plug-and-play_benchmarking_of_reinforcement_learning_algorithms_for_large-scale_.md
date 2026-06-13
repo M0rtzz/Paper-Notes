@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plug-and-Play Benchmarking of Reinforcement Learning Algorithms for Large-Scale Flow Control
 description: >-
-  [ICML 2026][强化学习][主动流控] 本文提出 FluidGym——首个完全用 PyTorch 实现、无外部 CFD 求解器依赖、端到端可微、原生支持多智能体与 3D 流场的 RL 主动流控基准…
+  [ICML 2026][强化学习][主动流控] 本文提出 FluidGym——首个完全用 PyTorch 实现、无外部 CFD 求解器依赖、端到端可微、原生支持多智能体与 3D 流场的 RL 主动流控基准，用 PPO/SAC/TD-MPC/DPC 在 13 个 2D/3D 环境上跑出 25k+ GPU 小时的标准化结果。
 tags:
   - "ICML 2026"
   - "强化学习"

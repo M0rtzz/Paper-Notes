@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PLA: Prompt Learning Attack against Text-to-Image Generative Models
 description: >-
-  [ICCV 2025][图像生成][对抗攻击] 本文提出 PLA（Prompt Learning Attack），一种针对黑盒 T2I 模型的梯度驱动对抗攻击框架，通过敏感知识编码和多模态相似度损失来学习对抗性 prompt，从而绕过 prompt 过滤器和后置安全检查器，平均 ASR-4 达 90%+…
+  [ICCV 2025][图像生成][对抗攻击] 本文提出 PLA（Prompt Learning Attack），一种针对黑盒 T2I 模型的梯度驱动对抗攻击框架，通过敏感知识编码和多模态相似度损失来学习对抗性 prompt，从而绕过 prompt 过滤器和后置安全检查器，平均 ASR-4 达 90%+，远超现有方法。
 tags:
   - "ICCV 2025"
   - "图像生成"

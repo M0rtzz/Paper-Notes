@@ -2,7 +2,7 @@
 title: >-
   [论文解读] McBE: A Multi-task Chinese Bias Evaluation Benchmark for Large Language Models
 description: >-
-  [ACL 2025][LLM评测][Chinese bias] 提出首个多任务中文偏见评估基准 McBE，包含 4,077 条偏见评估实例（BEI），覆盖 12 种偏见类别和 82 个子类别，通过 5 种评估任务（偏好计算/子类别分类/场景选择/偏见分析/偏见评分）多角度量化 LLM 中的中文偏见…
+  [ACL 2025][LLM评测][Chinese bias] 提出首个多任务中文偏见评估基准 McBE，包含 4,077 条偏见评估实例（BEI），覆盖 12 种偏见类别和 82 个子类别，通过 5 种评估任务（偏好计算/子类别分类/场景选择/偏见分析/偏见评分）多角度量化 LLM 中的中文偏见，并揭示"参数越大偏见越强"的传统结论可能源于单任务评估的局限性。
 tags:
   - "ACL 2025"
   - "LLM评测"

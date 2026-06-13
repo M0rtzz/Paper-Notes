@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do-PFN: In-Context Learning for Causal Effect Estimation
 description: >-
-  [NeurIPS 2025][因果推理][Causal Effect Estimation] 提出 Do-PFN，将 Prior-data Fitted Networks (PFN) 扩展到因果效应估计，在大量合成 SCM 数据上预训练 Transformer 进行 in-context 因果推理…
+  [NeurIPS 2025][因果推理][Causal Effect Estimation] 提出 Do-PFN，将 Prior-data Fitted Networks (PFN) 扩展到因果效应估计，在大量合成 SCM 数据上预训练 Transformer 进行 in-context 因果推理，仅需观测数据即可预测干预分布（CID）和 CATE，无需因果图知识或不混杂假设，在合成和半合成实验中表现出色。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

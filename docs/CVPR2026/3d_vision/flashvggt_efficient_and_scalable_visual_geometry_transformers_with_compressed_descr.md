@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashVGGT: Efficient and Scalable Visual Geometry Transformers with Compressed Descriptor Attention
 description: >-
-  [CVPR 2026][3D视觉][三维重建] 通过将VGGT中的全局自注意力替换为基于描述符的交叉注意力，实现了1000张图像推理时间降至VGGT的9.3%，同时保持竞争性重建精度，并可扩展至3000+张图像序列。
+  [CVPR 2026][3D视觉][三维重建] 通过将VGGT中的全局自注意力替换为基于描述符的交叉注意力，实现了1000张图像推理时间降至VGGT的9.3%，同时保持竞争性重建精度，并可扩展至3000+张图像序列。 VGGT是多视图3D重建的里程碑模型，通过交替的帧内和全局注意力块实现高保真重建。然而…
 tags:
   - "CVPR 2026"
   - "3D视觉"

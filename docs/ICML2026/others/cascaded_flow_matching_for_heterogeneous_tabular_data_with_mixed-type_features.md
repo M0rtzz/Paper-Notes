@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cascaded Flow Matching for Heterogeneous Tabular Data with Mixed-Type Features
 description: >-
-  [ICML 2026][Flow matching] TabCascade 把表格行拆成"低分辨率（类别 + 数值的离散化版本）"与"高分辨率（连续数值）"两段级联：先用 CDTD 学低分辨率联合分布，再用 flow matching 在低分辨率引导下生成数值细节…
+  [ICML 2026][Flow matching] TabCascade 把表格行拆成"低分辨率（类别 + 数值的离散化版本）"与"高分辨率（连续数值）"两段级联：先用 CDTD 学低分辨率联合分布，再用 flow matching 在低分辨率引导下生成数值细节，并通过数据相关耦合 + 可学非线性时间表收紧 transport cost；天然支持缺失值、零膨胀等"混合型特征"的生成，在 12 个数据集上 detection score 比 SOTA 提升 51.9%。
 tags:
   - "ICML 2026"
   - "Flow matching"

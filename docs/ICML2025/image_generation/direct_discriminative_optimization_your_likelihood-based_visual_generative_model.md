@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Direct Discriminative Optimization: Your Likelihood-Based Visual Generative Model is also a GAN Discriminator
 description: >-
-  [ICML 2025][图像生成][生成模型微调] DDO 提出将似然模型本身参数化为 GAN 判别器（通过似然比），无需额外判别器网络即可用 GAN 目标微调预训练的扩散/自回归模型，在 CIFAR-10 和 ImageNet 上大幅刷新 FID 记录（EDM: 1.97→1.38…
+  [ICML 2025 Spotlight][图像生成][生成模型微调] DDO 提出将似然模型本身参数化为 GAN 判别器（通过似然比），无需额外判别器网络即可用 GAN 目标微调预训练的扩散/自回归模型，在 CIFAR-10 和 ImageNet 上大幅刷新 FID 记录（EDM: 1.97→1.38, EDM2-S: 1.58→0.97）。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "图像生成"
   - "生成模型微调"
   - "GAN"

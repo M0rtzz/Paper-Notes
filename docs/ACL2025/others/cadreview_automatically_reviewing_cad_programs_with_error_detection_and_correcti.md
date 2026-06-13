@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CADReview: Automatically Reviewing CAD Programs with Error Detection and Correction
 description: >-
-  [ACL 2025][CAD 程序审查] 提出 CAD 程序审查任务及 ReCAD 框架，基于参考图像自动检测 CAD 程序中的错误并生成修正反馈，构建了包含 20K+ 样本（8 类错误）的 CADReview 数据集。
+  [ACL 2025][CAD 程序审查] 提出 CAD 程序审查任务及 ReCAD 框架，基于参考图像自动检测 CAD 程序中的错误并生成修正反馈，构建了包含 20K+ 样本（8 类错误）的 CADReview 数据集。 计算机辅助设计（CAD）在工业设计中至关重要，设计师需要反复审查 3D 原型与设计图之间的一致性…
 tags:
   - "ACL 2025"
   - "CAD 程序审查"

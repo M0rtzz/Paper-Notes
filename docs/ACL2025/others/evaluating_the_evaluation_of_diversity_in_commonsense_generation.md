@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating the Evaluation of Diversity in Commonsense Generation
 description: >-
-  [ACL 2025][多样性评估] 对常识生成（GCR）任务中的12种多样性评估指标进行系统元评估，发现基于形式（n-gram）的指标在低质量生成上严重高估多样性，而基于内容（句子嵌入）的指标与人类判断一致性更高，推荐未来 GCR 研究使用 VS-Embed 或 Chamfer Distance 等内容级指标…
+  [ACL 2025][多样性评估] 对常识生成（GCR）任务中的12种多样性评估指标进行系统元评估，发现基于形式（n-gram）的指标在低质量生成上严重高估多样性，而基于内容（句子嵌入）的指标与人类判断一致性更高，推荐未来 GCR 研究使用 VS-Embed 或 Chamfer Distance 等内容级指标。
 tags:
   - "ACL 2025"
   - "多样性评估"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Cognitive Compass: Theory-of-Mind-Guided Multimodal Emotion Reasoning
 description: >-
-  [强化学习] 构建基于心智理论（ToM）的层次化多模态情感理解基准 HitEmotion，并提出 TMPO 框架通过中间心理状态作为过程级监督来增强 MLLM 的情感推理能力。
+  [强化学习] 构建基于心智理论（ToM）的层次化多模态情感理解基准 HitEmotion，并提出 TMPO 框架通过中间心理状态作为过程级监督来增强 MLLM 的情感推理能力。 核心问题 尽管多模态大语言模型（MLLM）在各种任务上表现出色，但在深层情感理解方面仍然存在明显缺陷。核心原因在于： 缺乏统一认知框架：现有基准仅提…
 tags:
   - "强化学习"
 ---

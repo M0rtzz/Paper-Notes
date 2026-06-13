@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bilevel Optimization over Saddle Points of Zero-Sum Markov Games
 description: >-
-  [ICML2026][强化学习][双层优化] 提出 PANDA 算法，通过基于 Nikaido-Isoda 函数的惩罚重构，用纯一阶策略梯度方法求解下层为正则化零和马尔可夫博弈的双层 RL 问题…
+  [ICML2026][强化学习][双层优化] 提出 PANDA 算法，通过基于 Nikaido-Isoda 函数的惩罚重构，用纯一阶策略梯度方法求解下层为正则化零和马尔可夫博弈的双层 RL 问题，达到 $\tilde{O}(\epsilon^{-1})$ 迭代复杂度和 $\tilde{O}(\epsilon^{-3})$ 样本复杂度，匹配单策略下层 BRL 的最优已知速率。
 tags:
   - "ICML2026"
   - "强化学习"

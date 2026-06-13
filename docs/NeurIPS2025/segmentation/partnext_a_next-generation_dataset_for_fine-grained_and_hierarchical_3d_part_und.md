@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding
 description: >-
-  [NeurIPS 2025][语义分割][3D部件分割] 提出 PartNeXt，一个包含 23,519 个高质量带纹理 3D 模型、跨 50 个类别的细粒度层级部件标注数据集，并建立了类别无关部件分割和 3D 部件问答两个基准测试，揭示了当前方法在细粒度部件理解上的显著不足。
+  [NeurIPS 2025][语义分割][3D部件分割] 提出 PartNeXt，一个包含 23,519 个高质量带纹理 3D 模型、跨 50 个类别的细粒度层级部件标注数据集，并建立了类别无关部件分割和 3D 部件问答两个基准测试，揭示了当前方法在细粒度部件理解上的显著不足。 领域现状：PartNet 数据集推动了 3D…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

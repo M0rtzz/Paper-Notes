@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ROS-SAM: High-Quality Interactive Segmentation for Remote Sensing Moving Object
 description: >-
-  [CVPR 2025][语义分割][遥感视频] ROS-SAM通过LoRA微调编码器、改进HQ解码器和重设计数据流水线，使SAM适配遥感视频运动目标的高质量交互分割任务，IoU提升13%并展现强零样本泛化能力。
+  [CVPR 2025][语义分割][遥感视频] ROS-SAM通过LoRA微调编码器、改进HQ解码器和重设计数据流水线，使SAM适配遥感视频运动目标的高质量交互分割任务，IoU提升13%并展现强零样本泛化能力。 遥感视频（卫星视频）中的运动目标分割是一个新兴但具有挑战性的研究方向。遥感视频中的目标（飞机、汽车、轮船、火车等）…
 tags:
   - "CVPR 2025"
   - "语义分割"

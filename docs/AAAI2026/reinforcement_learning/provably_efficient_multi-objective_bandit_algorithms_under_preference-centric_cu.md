@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Efficient Multi-Objective Bandit Algorithms under Preference-Centric Customization
 description: >-
-  [AAAI 2026][强化学习][multi-objective bandits] 首次从理论角度研究显式用户偏好下的多目标多臂赌博机（MO-MAB）定制化优化问题，提出 PAMO-MAB 框架并针对"未知偏好"和"隐藏偏好"两种场景分别设计 PRUCB-UP 和 PRUCB-HP 算法…
+  [AAAI 2026][强化学习][multi-objective bandits] 首次从理论角度研究显式用户偏好下的多目标多臂赌博机（MO-MAB）定制化优化问题，提出 PAMO-MAB 框架并针对"未知偏好"和"隐藏偏好"两种场景分别设计 PRUCB-UP 和 PRUCB-HP 算法，通过偏好估计 + 偏好感知优化的双组件框架实现近最优遗憾界，证明了 preference-free 算法在 Pareto 前沿冲突时必然产生 $\Omega(T)$ 线性遗憾。
 tags:
   - "AAAI 2026"
   - "强化学习"

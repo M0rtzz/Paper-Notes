@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Using Shapley Interactions to Understand How Models Use Structure
 description: >-
-  [ACL 2025][Shapley交互] 利用Shapley Taylor交互指数（STII）跨模态（文本+语音）系统分析语言模型如何通过非线性交互编码句法结构、非组合语义和语音协同发音，发现自回归模型在句法编码上显著优于遮蔽模型。
+  [ACL 2025][Shapley交互] 利用Shapley Taylor交互指数（STII）跨模态（文本+语音）系统分析语言模型如何通过非线性交互编码句法结构、非组合语义和语音协同发音，发现自回归模型在句法编码上显著优于遮蔽模型。 领域现状 领域现状：领域现状： Shapley值等特征归因方法是理解神经网络的重要工具…
 tags:
   - "ACL 2025"
   - "Shapley交互"

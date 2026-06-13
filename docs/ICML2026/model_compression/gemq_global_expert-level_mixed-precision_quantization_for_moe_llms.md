@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEMQ: Global Expert-Level Mixed-Precision Quantization for MoE LLMs
 description: >-
-  [ICML 2026][模型压缩][MoE-LLM] GEMQ 把 MoE 大模型的 expert 比特位分配从层内局部 LP 升级成跨层全局 LP，并配合"量化后微调 router 权重"来对齐被量化扭曲的路由分布，再用"渐进式降比特"的迭代框架反复修正重要性估计…
+  [ICML 2026][模型压缩][MoE-LLM] GEMQ 把 MoE 大模型的 expert 比特位分配从层内局部 LP 升级成跨层全局 LP，并配合"量化后微调 router 权重"来对齐被量化扭曲的路由分布，再用"渐进式降比特"的迭代框架反复修正重要性估计，在 Mixtral-8×7B 等 4 个 MoE 模型上把每 expert 平均 2.5 bit 的压缩下 MMLU 等 7 项 zero-shot 平均掉点压在 7% 以内，同 bit 预算下显著超过 PMQ / SpQR / MoEQuant / EAQuant。
 tags:
   - "ICML 2026"
   - "模型压缩"

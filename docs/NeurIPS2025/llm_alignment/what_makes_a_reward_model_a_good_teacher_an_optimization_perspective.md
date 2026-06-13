@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes a Reward Model a Good Teacher? An Optimization Perspective
 description: >-
-  [NeurIPS 2025][LLM对齐][奖励模型] 从优化理论角度证明：奖励模型的准确率（accuracy）不足以衡量其作为 RLHF "教师"的质量——即使完美准确的奖励模型，如果诱导的奖励方差（reward variance）过低，也会导致 RLHF 目标函数景观平坦…
+  [NeurIPS 2025][LLM对齐][奖励模型] 从优化理论角度证明：奖励模型的准确率（accuracy）不足以衡量其作为 RLHF "教师"的质量——即使完美准确的奖励模型，如果诱导的奖励方差（reward variance）过低，也会导致 RLHF 目标函数景观平坦，使 policy gradient 优化极慢；不同的语言模型需要不同的奖励模型。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

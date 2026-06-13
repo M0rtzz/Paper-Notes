@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taste More, Taste Better: Diverse Data and Strong Model Boost Semi-Supervised Crowd Counting
 description: >-
-  [CVPR 2025][图像生成][半监督学习] 提出 TMTB 框架，通过扩散模型 inpainting 增强背景多样性、引入 VMamba 骨干网络和抗噪分类分支，在半监督人群计数任务中以仅 5% 标签数据将 JHU-Crowd++ MAE 降至 67.0，大幅刷新 SOTA。
+  [CVPR 2025][图像生成][半监督学习] 提出 TMTB 框架，通过扩散模型 inpainting 增强背景多样性、引入 VMamba 骨干网络和抗噪分类分支，在半监督人群计数任务中以仅 5% 标签数据将 JHU-Crowd++ MAE 降至 67.0，大幅刷新 SOTA。 1. 领域现状：人群计数是计算机视觉的基础…
 tags:
   - "CVPR 2025"
   - "图像生成"

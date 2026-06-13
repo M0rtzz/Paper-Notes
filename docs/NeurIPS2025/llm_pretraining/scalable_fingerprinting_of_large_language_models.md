@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Scalable Fingerprinting of Large Language Models
 description: >-
-  [NeurIPS 2025][预训练][model fingerprinting] 提出 Perinucleus 采样方法生成可扩展的 LLM 指纹，能在 Llama-3.1-8B 上嵌入 24,576 个指纹（比现有方法多两个数量级）且不损害模型能力，并通过理论和实验证明大规模指纹是抵御共谋攻击的关键。
+  [NeurIPS 2025 Spotlight][预训练][model fingerprinting] 提出 Perinucleus 采样方法生成可扩展的 LLM 指纹，能在 Llama-3.1-8B 上嵌入 24,576 个指纹（比现有方法多两个数量级）且不损害模型能力，并通过理论和实验证明大规模指纹是抵御共谋攻击的关键。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "预训练"
   - "model fingerprinting"
   - "LLM ownership"

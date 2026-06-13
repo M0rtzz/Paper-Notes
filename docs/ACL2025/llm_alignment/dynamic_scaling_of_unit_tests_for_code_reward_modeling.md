@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Scaling of Unit Tests for Code Reward Modeling
 description: >-
-  [LLM对齐] 本文发现扩展LLM生成的单元测试数量可以持续提升代码奖励信号质量（尤其对困难问题效果更好），据此训练了轻量级单元测试生成模型CodeRM-8B并实现动态缩放策略，在多个代码生成基准上取得显著提升。
+  [LLM对齐] 本文发现扩展LLM生成的单元测试数量可以持续提升代码奖励信号质量（尤其对困难问题效果更好），据此训练了轻量级单元测试生成模型CodeRM-8B并实现动态缩放策略，在多个代码生成基准上取得显著提升。 - 当前LLM在代码生成中很难一次性产出正确方案，常见做法是生成多个候选方案（repeated sampling…
 tags:
   - "LLM对齐"
 ---

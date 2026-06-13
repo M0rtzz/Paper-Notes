@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCOPE: Selective Conformal Optimized Pairwise LLM Judging
 description: >-
-  [ICML 2026][社会计算][LLM-as-Judge] SCOPE 通过**双向偏好熵（BPE）**消除 LLM 评判中的位置偏差，结合**保形风险控制**实现有限样本 FDR 控制——在保持高覆盖率的前提下提供统计有效的风险界保证（覆盖率 0.583 时 FDR 仅 0.099 vs Vanilla…
+  [ICML 2026][社会计算][LLM-as-Judge] SCOPE 通过**双向偏好熵（BPE）**消除 LLM 评判中的位置偏差，结合**保形风险控制**实现有限样本 FDR 控制——在保持高覆盖率的前提下提供统计有效的风险界保证（覆盖率 0.583 时 FDR 仅 0.099 vs Vanilla 1.000 但 FDR 0.198）。
 tags:
   - "ICML 2026"
   - "社会计算"

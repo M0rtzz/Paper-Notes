@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARES: Adaptive Red-Teaming and End-to-End Repair of Policy-Reward System
 description: >-
-  [ACL 2026][LLM对齐][红队测试] ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结构的 Safety Mentor 同时探测 Core LLM 和 Reward Model 的「系统性弱点」（两者同时失守）…
+  [ACL 2026][LLM对齐][红队测试] ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结构的 Safety Mentor 同时探测 Core LLM 和 Reward Model 的「系统性弱点」（两者同时失守），然后用先修 RM 再修策略的两阶段闭环把 RedTeam 安全率从 0.28 提到 0.96，几乎不损失通用能力。
 tags:
   - "ACL 2026"
   - "LLM对齐"

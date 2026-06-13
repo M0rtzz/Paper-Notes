@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TIPSv2: Advancing Vision-Language Pretraining with Enhanced Patch-Text Alignment
 description: >-
-  [CVPR 2026][多模态VLM][视觉-语言预训练] 提出 TIPSv2，通过发现蒸馏能显著提升 patch-text 对齐能力，并将该洞察转化为新的预训练目标 iBOT++（可见 token 也参与损失计算），结合头部EMA和多粒度文本增强，在 9 个任务 20 个数据集上达到 SOTA。
+  [CVPR 2026][多模态VLM][视觉-语言预训练] 提出 TIPSv2，通过发现蒸馏能显著提升 patch-text 对齐能力，并将该洞察转化为新的预训练目标 iBOT++（可见 token 也参与损失计算），结合头部EMA和多粒度文本增强，在 9 个任务 20 个数据集上达到 SOTA。 领域现状：视觉-语言预训练…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

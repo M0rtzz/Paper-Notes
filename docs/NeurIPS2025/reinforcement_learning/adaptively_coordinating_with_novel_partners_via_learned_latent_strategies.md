@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptively Coordinating with Novel Partners via Learned Latent Strategies
 description: >-
-  [NeurIPS 2025][强化学习][zero-shot coordination] 提出 TALENTS 框架，通过 VAE 学习潜在策略空间 + K-Means 聚类发现策略类型 + Fixed-Share 遗憾最小化算法在线推断队友类型，实现对未知人类/智能体队友的零样本实时适应协作。
+  [NeurIPS 2025][强化学习][zero-shot coordination] 提出 TALENTS 框架，通过 VAE 学习潜在策略空间 + K-Means 聚类发现策略类型 + Fixed-Share 遗憾最小化算法在线推断队友类型，实现对未知人类/智能体队友的零样本实时适应协作。 Ad Hoc Teamwor…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

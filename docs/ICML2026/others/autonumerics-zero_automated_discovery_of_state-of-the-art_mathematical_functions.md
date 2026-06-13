@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoNumerics-Zero: Automated Discovery of State-of-the-Art Mathematical Functions
 description: >-
-  [ICML2026][符号回归] 提出 AutoNumerics-Zero，一种零先验知识的进化符号回归方法，从空程序出发自动发现逼近超越函数（如指数、余弦）的算术程序，在有限精度目标下以更少的运算次数超越了数百年来数学家设计的经典逼近方法。
+  [ICML2026][符号回归] 提出 AutoNumerics-Zero，一种零先验知识的进化符号回归方法，从空程序出发自动发现逼近超越函数（如指数、余弦）的算术程序，在有限精度目标下以更少的运算次数超越了数百年来数学家设计的经典逼近方法。 领域现状：超越函数（指数函数、对数、三角函数等）是科学计算的基石…
 tags:
   - "ICML2026"
   - "符号回归"
@@ -17,7 +17,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2312.08472](https://arxiv.org/abs/2312.08472)  
 **代码**: https://github.com/google-deepmind/autonumerics_zero  
-**领域**: others  
+**领域**: 其他  
 **关键词**: 符号回归, 进化搜索, 超越函数逼近, 程序发现, 数值计算
 
 ## 一句话总结

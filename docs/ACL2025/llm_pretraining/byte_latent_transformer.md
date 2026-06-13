@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Byte Latent Transformer: Patches Scale Better Than Tokens
 description: >-
-  [ACL 2025][byte-level LLM] 提出 Byte Latent Transformer (BLT)，一种无分词器的字节级 LLM 架构，通过基于熵的动态分组将字节聚合为可变长度 patch，首次在 8B 规模上匹配 token-based 模型性能…
+  [ACL 2025][预训练][byte-level LLM] 提出 Byte Latent Transformer (BLT)，一种无分词器的字节级 LLM 架构，通过基于熵的动态分组将字节聚合为可变长度 patch，首次在 8B 规模上匹配 token-based 模型性能，同时解锁了通过同时增大 patch 和模型尺寸来提升推理效率的新 scaling 维度。
 tags:
   - "ACL 2025"
+  - "预训练"
   - "byte-level LLM"
   - "tokenizer-free"
   - "dynamic patching"

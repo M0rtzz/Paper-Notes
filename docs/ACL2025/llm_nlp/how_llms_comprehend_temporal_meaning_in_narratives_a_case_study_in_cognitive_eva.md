@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How LLMs Comprehend Temporal Meaning in Narratives: A Case Study in Cognitive Evaluation of LLMs
 description: >-
-  [ACL 2025][LLM/NLP][时态理解] 构建 Expert-in-the-Loop 探测管线，通过真值判断/词语补全/开放式因果提问三组认知语言学实验（16篇叙事×30种prompt变体×7个LLM），系统评估LLM对叙事中语法体貌（perfective vs imperfective）的理解能力…
+  [ACL 2025][LLM 其他][时态理解] 构建 Expert-in-the-Loop 探测管线，通过真值判断/词语补全/开放式因果提问三组认知语言学实验（16篇叙事×30种prompt变体×7个LLM），系统评估LLM对叙事中语法体貌（perfective vs imperfective）的理解能力，发现LLM在非原型体貌条件下准确率仅18%（人类71%），且缺乏远距因果推理能力。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "时态理解"
   - "语法体貌"
   - "认知评估"

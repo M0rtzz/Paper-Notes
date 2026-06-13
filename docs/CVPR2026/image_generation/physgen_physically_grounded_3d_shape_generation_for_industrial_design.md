@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysGen: Physically Grounded 3D Shape Generation for Industrial Design
 description: >-
-  [CVPR 2026][图像生成][物理引导] 本文提出 PhysGen，一个将物理约束（空气动力学效率）融入 3D 形状生成的统一框架：通过 Shape-and-Physics VAE 将几何和物理信息联合编码到统一潜空间，然后用交替更新的 Flow Matching 模型在速度更新和物理精炼之间迭代…
+  [CVPR 2026][图像生成][物理引导] 本文提出 PhysGen，一个将物理约束（空气动力学效率）融入 3D 形状生成的统一框架：通过 Shape-and-Physics VAE 将几何和物理信息联合编码到统一潜空间，然后用交替更新的 Flow Matching 模型在速度更新和物理精炼之间迭代，生成既视觉逼真又物理高效的 3D 形状（如低阻力系数的汽车）。
 tags:
   - "CVPR 2026"
   - "图像生成"

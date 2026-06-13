@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Self-Consistency from Only Two Samples: CoT-PoT Ensembling for Efficient LLM Reasoning
 description: >-
-  [ACL 2026][LLM推理][自一致性] 提出 CoT-PoT 跨模态集成方法，利用链式推理（CoT）和程序化推理（PoT）两种根本不同推理模态的互补性，将自一致性所需的采样次数减少9.3倍，78.6%的问题仅需2个样本即可解决。
+  [ACL 2026 Findings][LLM推理][自一致性] 提出 CoT-PoT 跨模态集成方法，利用链式推理（CoT）和程序化推理（PoT）两种根本不同推理模态的互补性，将自一致性所需的采样次数减少9.3倍，78.6%的问题仅需2个样本即可解决。 领域现状：自一致性（Self-Consistency）通过多次采样推理…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "自一致性"
   - "思维链"

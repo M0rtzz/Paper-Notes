@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoPresent: Designing Structured Visuals from Scratch
 description: >-
-  [CVPR 2025][图像生成][幻灯片生成] 本文提出AutoPresent框架和SlidesBench基准，首次系统研究从自然语言指令生成演示幻灯片的任务——通过让LLM生成Python代码（而非端到端图像生成）来创建PPTX幻灯片，配合SlidesLib工具库和迭代优化…
+  [CVPR 2025][图像生成][幻灯片生成] 本文提出AutoPresent框架和SlidesBench基准，首次系统研究从自然语言指令生成演示幻灯片的任务——通过让LLM生成Python代码（而非端到端图像生成）来创建PPTX幻灯片，配合SlidesLib工具库和迭代优化，8B参数的开源模型达到接近GPT-4o的效果。
 tags:
   - "CVPR 2025"
   - "图像生成"

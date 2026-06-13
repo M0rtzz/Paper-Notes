@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Bet for Horizon-Aware Anytime-Valid Testing
 description: >-
-  [ICML 2026][强化学习][测试鞅] 本文把"在严格观测上限 $N$ 下设计 anytime-valid 序贯检验"重新表述为一个状态空间为 $(t,\log W_t)$ 的有限期最优控制问题，从理论上证明 Kelly 下注在"按时进度"的中间带最优、落后时该激进、超前时该保守，得到一张三区"相图"…
+  [ICML 2026][强化学习][测试鞅] 本文把"在严格观测上限 $N$ 下设计 anytime-valid 序贯检验"重新表述为一个状态空间为 $(t,\log W_t)$ 的有限期最优控制问题，从理论上证明 Kelly 下注在"按时进度"的中间带最优、落后时该激进、超前时该保守，得到一张三区"相图"，并用一个在大量合成 Beta 分布上训练的统一 DQN agent 自动学到与相图一致的状态依赖策略，在合成与真实数据上同时拿到更高的 deadline-内拒绝率与更窄的置信序列，同时通过 Ville 不等式保持 anytime-validity。
 tags:
   - "ICML 2026"
   - "强化学习"

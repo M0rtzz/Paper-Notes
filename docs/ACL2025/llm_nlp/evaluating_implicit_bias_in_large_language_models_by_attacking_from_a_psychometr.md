@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Evaluating Implicit Bias in Large Language Models by Attacking from a Psychometric Perspective
 description: >-
-  [ACL 2025][LLM/NLP][隐式偏差] 借鉴认知与社会心理学中的三种心理测量学原理（目标转移、认知协调、模仿学习），设计 Disguise/Deception/Teaching 三类攻击方法来诱发 LLM 的隐式偏见，构建了双语基准 BUMBLE（12.7K 条目覆盖 9 类偏见）…
+  [ACL 2025][LLM 其他][隐式偏差] 借鉴认知与社会心理学中的三种心理测量学原理（目标转移、认知协调、模仿学习），设计 Disguise/Deception/Teaching 三类攻击方法来诱发 LLM 的隐式偏见，构建了双语基准 BUMBLE（12.7K 条目覆盖 9 类偏见），揭示所有主流 LLM 均存在可被激发的系统性隐式偏见。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "隐式偏差"
   - "psychometrics"
   - "attack methodology"

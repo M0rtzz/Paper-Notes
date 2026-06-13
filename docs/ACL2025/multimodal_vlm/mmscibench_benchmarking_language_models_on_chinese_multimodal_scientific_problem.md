@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMSciBench: Benchmarking Language Models on Chinese Multimodal Scientific Problems
 description: >-
-  [ACL 2025][多模态VLM][科学推理基准] 提出 MMSciBench，一个包含 4,482 道中文高中数学和物理题目的多模态科学推理基准，涵盖选择题和问答题、纯文本和图文配对两种模态，并带有人工标注难度等级和三级知识分类体系…
+  [ACL 2025][多模态VLM][科学推理基准] 提出 MMSciBench，一个包含 4,482 道中文高中数学和物理题目的多模态科学推理基准，涵盖选择题和问答题、纯文本和图文配对两种模态，并带有人工标注难度等级和三级知识分类体系；评估显示最强模型 Gemini 1.5 Pro 002 仅达 63.77% 准确率，且在图文题上性能大幅下降（36.28 个百分点差距）。
 tags:
   - "ACL 2025"
   - "多模态VLM"

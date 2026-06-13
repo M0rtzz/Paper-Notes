@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rethinking Spiking Self-Attention Mechanism: Implementing a-XNOR Similarity Calculation in Spiking Transformers
 description: >-
-  [CVPR 2025][LLM/NLP][脉冲神经网络] 本文深入分析了点积在脉冲查询-键对中因大量"非脉冲事件"导致相似度度量失效的根本原因，提出专为脉冲序列设计的a-XNOR相似度度量，将非脉冲对的相关性重定义为特定值a，在多种脉冲Transformer架构和数据集上显著提升性能。
+  [CVPR 2025][LLM 其他][脉冲神经网络] 本文深入分析了点积在脉冲查询-键对中因大量"非脉冲事件"导致相似度度量失效的根本原因，提出专为脉冲序列设计的a-XNOR相似度度量，将非脉冲对的相关性重定义为特定值a，在多种脉冲Transformer架构和数据集上显著提升性能。 领域现状：Transformer因其全局…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "脉冲神经网络"
   - "Transformer"
   - "自注意力机制"

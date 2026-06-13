@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Text to Image in Diffusion Models is Easier Than You Think
 description: >-
-  [NeurIPS 2025][图像生成][SoftREPA] 提出 SoftREPA——一种轻量级对比微调策略，通过引入可学习 soft text token（不到 1M 参数）在冻结的预训练 T2I 扩散模型上进行对比学习，显式提高文本和图像表征的互信息…
+  [NeurIPS 2025][图像生成][SoftREPA] 提出 SoftREPA——一种轻量级对比微调策略，通过引入可学习 soft text token（不到 1M 参数）在冻结的预训练 T2I 扩散模型上进行对比学习，显式提高文本和图像表征的互信息，在 SD1.5/SDXL/SD3 上显著提升文本-图像对齐质量，且适用于图像生成和图像编辑任务。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

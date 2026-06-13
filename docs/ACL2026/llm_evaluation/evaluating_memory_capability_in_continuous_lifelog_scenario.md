@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Evaluating Memory Capability in Continuous Lifelog Scenario
 description: >-
-  [ACL 2026][LLM评测][生活日志记忆] 本文提出LifeDialBench，一个评估连续生活日志场景下记忆能力的基准（含7天真实数据的EgoMem和1年模拟的LifeMem），引入在线评估协议确保时间因果性，反直觉地发现简单RAG基线一致优于复杂记忆系统。
+  [ACL 2026 Findings][LLM评测][生活日志记忆] 本文提出LifeDialBench，一个评估连续生活日志场景下记忆能力的基准（含7天真实数据的EgoMem和1年模拟的LifeMem），引入在线评估协议确保时间因果性，反直觉地发现简单RAG基线一致优于复杂记忆系统。 领域现状：可穿戴设备（如智能眼镜Ray…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "生活日志记忆"
   - "在线评估"

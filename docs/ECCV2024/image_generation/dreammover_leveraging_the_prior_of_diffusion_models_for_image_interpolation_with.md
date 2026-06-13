@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion
 description: >-
-  [ECCV 2024][图像生成][图像插值] 提出 DreamMover，基于预训练文本到图像扩散模型实现大运动图像对之间的插值，通过扩散感知光流估计、两级潜空间融合和自注意力拼接替换三个核心组件，生成语义一致的中间帧。
+  [ECCV 2024][图像生成][图像插值] 提出 DreamMover，基于预训练文本到图像扩散模型实现大运动图像对之间的插值，通过扩散感知光流估计、两级潜空间融合和自注意力拼接替换三个核心组件，生成语义一致的中间帧。 从两张存在大运动的图像生成中间过渡帧是一个具有重要实际价值但极具挑战性的任务。现有方法存在明显局限：…
 tags:
   - "ECCV 2024"
   - "图像生成"

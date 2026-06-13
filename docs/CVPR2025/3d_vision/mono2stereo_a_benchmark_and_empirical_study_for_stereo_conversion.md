@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion
 description: >-
-  [CVPR 2025][3D视觉][stereo conversion] 构建首个大规模立体转换基准 Mono2Stereo（240 万对），提出立体质量指标 SIoU（与人类判断相关性 0.84 Spearman）和双条件扩散模型 + Edge Consistency 损失…
+  [CVPR 2025][3D视觉][stereo conversion] 构建首个大规模立体转换基准 Mono2Stereo（240 万对），提出立体质量指标 SIoU（与人类判断相关性 0.84 Spearman）和双条件扩散模型 + Edge Consistency 损失，同时解决单阶段方法立体效果弱和两阶段方法图像质量差的矛盾。
 tags:
   - "CVPR 2025"
   - "3D视觉"

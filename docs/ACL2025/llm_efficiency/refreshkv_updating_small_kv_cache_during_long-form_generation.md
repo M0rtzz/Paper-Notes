@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RefreshKV: Updating Small KV Cache During Long-form Generation
 description: >-
-  [ACL 2025][LLM效率][KV缓存压缩] 提出RefreshKV推理方法，通过在生成过程中周期性地在全KV缓存注意力和小KV缓存注意力之间交替，并基于全注意力步的注意力模式动态更新小KV缓存，在不永久丢弃任何token的前提下，实现与驱逐式方法相当的加速且大幅提升长文本生成任务性能。
+  [ACL 2025][LLM效率][KV缓存压缩] 提出RefreshKV推理方法，通过在生成过程中周期性地在全KV缓存注意力和小KV缓存注意力之间交替，并基于全注意力步的注意力模式动态更新小KV缓存，在不永久丢弃任何token的前提下，实现与驱逐式方法相当的加速且大幅提升长文本生成任务性能。 - 领域现状：长上下文LLM推…
 tags:
   - "ACL 2025"
   - "LLM效率"

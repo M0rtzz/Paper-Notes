@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Audio-Visual Segmentation with Vision-Centric Transformer
 description: >-
-  [CVPR 2025][语义分割][音频-视觉分割] 本文提出以视觉为中心的 Transformer（VCT）框架来解决音频-视觉分割任务，用从视觉特征衍生的 query 替代传统的音频衍生 query，配合原型提示查询生成模块（PPQG），在 AVSBench 三个子集上达到新 SOTA…
+  [CVPR 2025][语义分割][音频-视觉分割] 本文提出以视觉为中心的 Transformer（VCT）框架来解决音频-视觉分割任务，用从视觉特征衍生的 query 替代传统的音频衍生 query，配合原型提示查询生成模块（PPQG），在 AVSBench 三个子集上达到新 SOTA，尤其在最具挑战性的 AVSS 子集上取得显著提升。
 tags:
   - "CVPR 2025"
   - "语义分割"

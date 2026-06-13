@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prior-based Noisy Text Data Filtering: Fast and Strong Alternative for Perplexity
 description: >-
-  [ICLR 2026][AI安全][数据过滤] 提出基于 token 先验（词频统计）的文本数据过滤方法，利用文档内 token 先验的均值和标准差作为 PPL 的近似替代，在 20 个下游基准上取得最高平均性能，同时比 PPL 过滤快 1000 倍以上。
+  [ICLR 2026][AI安全][数据过滤] 提出基于 token 先验（词频统计）的文本数据过滤方法，利用文档内 token 先验的均值和标准差作为 PPL 的近似替代，在 20 个下游基准上取得最高平均性能，同时比 PPL 过滤快 1000 倍以上。 预训练数据质量的重要性 大语言模型依赖海量 web 数据预训练…
 tags:
   - "ICLR 2026"
   - "AI安全"

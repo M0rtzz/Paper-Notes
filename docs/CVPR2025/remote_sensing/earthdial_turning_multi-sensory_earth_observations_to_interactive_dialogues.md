@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EarthDial: Turning Multi-sensory Earth Observations to Interactive Dialogues
 description: >-
-  [CVPR 2025][遥感][遥感VLM] 提出 EarthDial，一个专为地球观测 (EO) 数据设计的对话式视觉语言模型，支持多光谱 (SAR/NIR/红外)、多时序和多分辨率遥感影像的统一理解，基于 1111 万条指令微调数据集，在 44 个下游数据集上超越现有遥感 VLM。
+  [CVPR 2025][遥感][遥感VLM] 提出 EarthDial，一个专为地球观测 (EO) 数据设计的对话式视觉语言模型，支持多光谱 (SAR/NIR/红外)、多时序和多分辨率遥感影像的统一理解，基于 1111 万条指令微调数据集，在 44 个下游数据集上超越现有遥感 VLM。 领域现状：通用 VLM（如 GPT-4…
 tags:
   - "CVPR 2025"
   - "遥感"

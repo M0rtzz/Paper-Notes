@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][Test-Time RL] 提出 Self-Harmony 框架，通过让单一模型扮演两个角色（Solver 求解原始问题 + Reframer 改述问题），将答案在原始和改述视角下的调和平均得分作为伪标签选择标准，替代传统多数投票…
+  [ICLR 2026][强化学习][Test-Time RL] 提出 Self-Harmony 框架，通过让单一模型扮演两个角色（Solver 求解原始问题 + Reframer 改述问题），将答案在原始和改述视角下的调和平均得分作为伪标签选择标准，替代传统多数投票，在 30 个实验设置中 28 个达到 SOTA，且训练零失败。
 tags:
   - "ICLR 2026"
   - "强化学习"

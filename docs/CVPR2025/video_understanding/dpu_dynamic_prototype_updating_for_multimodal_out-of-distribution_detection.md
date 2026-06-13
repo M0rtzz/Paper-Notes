@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPU: Dynamic Prototype Updating for Multimodal Out-of-Distribution Detection
 description: >-
-  [CVPR 2025][视频理解][多模态OOD检测] 提出**Dynamic Prototype Updating (DPU)**框架，通过**Cohesive-Separate对比训练**建立稳健表示空间、**动态原型逼近**自适应更新类中心、**Pro-ratio差异增强**按样本到原型的距离调节多模态…
+  [CVPR 2025][视频理解][多模态OOD检测] 提出**Dynamic Prototype Updating (DPU)**框架，通过**Cohesive-Separate对比训练**建立稳健表示空间、**动态原型逼近**自适应更新类中心、**Pro-ratio差异增强**按样本到原型的距离调节多模态预测差异的放大强度，作为即插即用模块在5个数据集×9种基础OOD方法上全面提升性能，Far-OOD检测提升最高达**80%**。
 tags:
   - "CVPR 2025"
   - "视频理解"

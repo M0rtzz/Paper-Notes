@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion
 description: >-
-  [ECCV 2024][图像生成][3D 室内场景生成] 提出 EchoScene，一个基于双分支扩散模型的 3D 室内场景生成方法，通过信息回声（Information Echo）机制在场景图扩散过程中实现多个去噪过程间的协作信息交换，生成全局一致且可交互控制的场景。
+  [ECCV 2024][图像生成][3D 室内场景生成] 提出 EchoScene，一个基于双分支扩散模型的 3D 室内场景生成方法，通过信息回声（Information Echo）机制在场景图扩散过程中实现多个去噪过程间的协作信息交换，生成全局一致且可交互控制的场景。 可控场景生成（Controllable Scene G…
 tags:
   - "ECCV 2024"
   - "图像生成"

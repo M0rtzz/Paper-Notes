@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Segment Anything with Robust Uncertainty-Accuracy Correlation
 description: >-
-  [ICML 2026][语义分割][SAM2] 针对 SAM 系列只输出 mask-level 单一置信度、在域漂移下出现"Mask-level Confidence Confusion"的问题，本文给 SAM2 接上 Weibull 双粒度贝叶斯 mask decoder 做像素级 epistemic 估计…
+  [ICML 2026][语义分割][SAM2] 针对 SAM 系列只输出 mask-level 单一置信度、在域漂移下出现"Mask-level Confidence Confusion"的问题，本文给 SAM2 接上 Weibull 双粒度贝叶斯 mask decoder 做像素级 epistemic 估计，并配以受人类视觉启发的 style + deformation 协同对抗扰动 + 校准损失，让 uncertainty 在 23 个 zero-shot 目标域始终与误差对齐，平均 J&F 达 79.87 同时不确定性图变得显著可信。
 tags:
   - "ICML 2026"
   - "语义分割"

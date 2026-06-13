@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VoteFlow: Enforcing Local Rigidity in Self-Supervised Scene Flow
 description: >-
-  [CVPR 2025][自动驾驶][场景流估计] VoteFlow 通过在网络架构中引入一个基于可微投票的轻量级模块，将局部刚性运动约束作为归纳偏置融入自监督场景流估计模型，在 Argoverse 2 和 Waymo 数据集上以极低计算开销超越了此前最优的自监督方法。
+  [CVPR 2025][自动驾驶][场景流估计] VoteFlow 通过在网络架构中引入一个基于可微投票的轻量级模块，将局部刚性运动约束作为归纳偏置融入自监督场景流估计模型，在 Argoverse 2 和 Waymo 数据集上以极低计算开销超越了此前最优的自监督方法。 领域现状：场景流估计旨在从两帧连续的 LiDAR 扫描中…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

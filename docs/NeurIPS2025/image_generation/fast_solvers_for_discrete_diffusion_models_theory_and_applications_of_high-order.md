@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast Solvers for Discrete Diffusion Models: Theory and Applications of High-Order Algorithms
 description: >-
-  [NeurIPS 2025][图像生成][离散扩散] 首次将高阶数值方法引入离散扩散模型推理，提出 θ-RK-2 和 θ-Trapezoidal 两种二阶求解器，在理论上证明 θ-Trapezoidal 的离散化误差从一阶 $\mathcal{O}(\kappa T)$ 提升到二阶 $\mathcal{O}(…
+  [NeurIPS 2025][图像生成][离散扩散] 首次将高阶数值方法引入离散扩散模型推理，提出 θ-RK-2 和 θ-Trapezoidal 两种二阶求解器，在理论上证明 θ-Trapezoidal 的离散化误差从一阶 $\mathcal{O}(\kappa T)$ 提升到二阶 $\mathcal{O}(\kappa^2 T)$，实验覆盖 200M–8B 模型在文本、图像和数学推理上的一致性提升。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

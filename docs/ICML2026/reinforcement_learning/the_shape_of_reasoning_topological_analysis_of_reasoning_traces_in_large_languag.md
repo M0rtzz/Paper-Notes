@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Shape of Reasoning: Topological Analysis of Reasoning Traces in Large Language Models
 description: >-
-  [ICML 2026][强化学习][推理迹评估] 本文把 LLM 的 chain-of-thought 看作嵌入空间中的"点云", 用拓扑数据分析 (TDA) 提取持续同调特征作为推理质量的客观度量…
+  [ICML 2026][强化学习][推理迹评估] 本文把 LLM 的 chain-of-thought 看作嵌入空间中的"点云", 用拓扑数据分析 (TDA) 提取持续同调特征作为推理质量的客观度量, 在 AIME 数据集上证明 TDA 特征对 Smith-Waterman 对齐分数的预测能力 (平均 $R^2=0.236$) 显著高于传统图统计 (平均 $R^2=0.064$)。
 tags:
   - "ICML 2026"
   - "强化学习"

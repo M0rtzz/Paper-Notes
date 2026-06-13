@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TableLoRA: Low-rank Adaptation on Table Structure Understanding for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][LoRA] TableLoRA 提出面向表格任务的专用 LoRA 模块，通过特殊 token 编码器改善表格序列化，并用 2D LoRA 编码单元格的行列位置信息，在参数高效微调设置下相比 vanilla LoRA 在 HiTab 上提升 5.9%…
+  [ACL 2025][LLM 其他][LoRA] TableLoRA 提出面向表格任务的专用 LoRA 模块，通过特殊 token 编码器改善表格序列化，并用 2D LoRA 编码单元格的行列位置信息，在参数高效微调设置下相比 vanilla LoRA 在 HiTab 上提升 5.9%，弥合了 LoRA 与全量微调之间 40.56% 的性能差距。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LoRA"
   - "表格理解"
   - "结构化数据"

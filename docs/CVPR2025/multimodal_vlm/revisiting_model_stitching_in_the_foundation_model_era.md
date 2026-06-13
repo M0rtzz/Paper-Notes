@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Model Stitching in the Foundation Model Era
 description: >-
-  [CVPR 2025][多模态VLM][model stitching] 系统研究异构 Vision Foundation Model（如 CLIP、DINOv2、SigLIP 2）之间的 stitchability…
+  [CVPR 2025][多模态VLM][model stitching] 系统研究异构 Vision Foundation Model（如 CLIP、DINOv2、SigLIP 2）之间的 stitchability，发现用 Final Feature Matching 预训练 stitch layer 可实现可靠拼接，并提出 VFM Stitch Tree 架构实现多 VFM 的高效共享。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] rPPG-VQA: A Video Quality Assessment Framework for Unsupervised rPPG Training
 description: >-
-  [CVPR 2026][人体理解][远程光体积描记] rPPG-VQA 提出首个面向远程心率检测（rPPG）的视频质量评估框架，结合信号级多方法共识 SNR 和场景级 MLLM 干扰识别，配合两阶段自适应采样策略筛选野外视频构建训练集。
+  [CVPR 2026][人体理解][远程光体积描记] rPPG-VQA 提出首个面向远程心率检测（rPPG）的视频质量评估框架，结合信号级多方法共识 SNR 和场景级 MLLM 干扰识别，配合两阶段自适应采样策略筛选野外视频构建训练集。 领域现状：无监督 rPPG 旨在利用无标注视频数据学习非接触式心率检测…
 tags:
   - "CVPR 2026"
   - "人体理解"

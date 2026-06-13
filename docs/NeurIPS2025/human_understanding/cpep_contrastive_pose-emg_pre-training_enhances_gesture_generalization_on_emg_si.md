@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CPEP: Contrastive Pose-EMG Pre-training Enhances Gesture Generalization on EMG Signals
 description: >-
-  [NeurIPS 2025][人体理解][肌电信号] 提出 CPEP 框架，通过对比学习将低质量 EMG 信号表征与高质量手部姿态表征对齐，使 EMG 编码器获得姿态感知能力，首次实现从 EMG 信号零样本识别未见手势，分布内手势分类提升 21%、未见手势分类提升 72%。
+  [NeurIPS 2025][人体理解][肌电信号] 提出 CPEP 框架，通过对比学习将低质量 EMG 信号表征与高质量手部姿态表征对齐，使 EMG 编码器获得姿态感知能力，首次实现从 EMG 信号零样本识别未见手势，分布内手势分类提升 21%、未见手势分类提升 72%。 领域现状：基于视觉的手势识别已非常成熟…
 tags:
   - "NeurIPS 2025"
   - "人体理解"

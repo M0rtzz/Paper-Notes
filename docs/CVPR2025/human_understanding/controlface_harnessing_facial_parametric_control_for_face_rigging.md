@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ControlFace: Harnessing Facial Parametric Control for Face Rigging
 description: >-
-  [人体理解] 提出 ControlFace，利用双分支 U-Net（FaceNet + 去噪 U-Net）结合 3DMM 渲染条件，实现无需微调即可灵活编辑人脸姿态、表情和光照，同时精确保留身份和语义细节。
+  [人体理解] 提出 ControlFace，利用双分支 U-Net（FaceNet + 去噪 U-Net）结合 3DMM 渲染条件，实现无需微调即可灵活编辑人脸姿态、表情和光照，同时精确保留身份和语义细节。 领域现状 人脸操控（face rigging）是计算机视觉的基础任务，目标是根据用户指定的姿态、表情、光照等控制信号修…
 tags:
   - "人体理解"
 ---

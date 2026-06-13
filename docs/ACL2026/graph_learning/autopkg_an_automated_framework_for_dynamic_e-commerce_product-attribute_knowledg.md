@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AutoPKG: An Automated Framework for Dynamic E-commerce Product-Attribute Knowledge Graph Construction
 description: >-
-  [ACL 2026][图学习][知识图谱构建] 提出 AutoPKG，一个多智能体 LLM 框架，从多模态电商商品内容自动构建 Product-Attribute 知识图谱（PKG）…
+  [ACL 2026 Findings][图学习][知识图谱构建] 提出 AutoPKG，一个多智能体 LLM 框架，从多模态电商商品内容自动构建 Product-Attribute 知识图谱（PKG），通过类型归纳 Agent、属性键发现 Agent、属性值提取 Agent 和集中式 KGD 决策 Agent 实现动态本体的持续演化和规范化，在 Lazada 数据集上取得 0.953 WKE（类型）和 0.724 WKE（属性键），线上 A/B 测试推荐 GMV 提升 7.89%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "图学习"
   - "知识图谱构建"
   - "电商属性提取"

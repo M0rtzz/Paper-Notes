@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Margin-aware Preference Optimization for Aligning Diffusion Models without Reference
 description: >-
-  [AAAI 2026][图像生成][偏好对齐] 提出 MaPO（Margin-aware Preference Optimization），一种无需参考模型的偏好对齐方法，通过直接优化 Bradley-Terry 模型下偏好/非偏好输出的似然 margin 来对齐 T2I 扩散模型…
+  [AAAI 2026][图像生成][偏好对齐] 提出 MaPO（Margin-aware Preference Optimization），一种无需参考模型的偏好对齐方法，通过直接优化 Bradley-Terry 模型下偏好/非偏好输出的似然 margin 来对齐 T2I 扩散模型，在风格适配、安全生成、通用偏好对齐等 5 个领域均超越 DPO 和专用方法。
 tags:
   - "AAAI 2026"
   - "图像生成"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Un-considering Contextual Information: Assessing LLMs' Understanding of Indexical Elements
 description: >-
-  [ACL2025][LLM/NLP][指示词理解] 首次系统评估 LLM 对英语指示词（I/you/here/tomorrow）的理解能力，构建 1600 条 2×2 因素设计的评测集，揭示 LLM 在 you/here/tomorrow 上严重依赖无关上下文信息而非语法规则…
+  [ACL2025][LLM 其他][指示词理解] 首次系统评估 LLM 对英语指示词（I/you/here/tomorrow）的理解能力，构建 1600 条 2×2 因素设计的评测集，揭示 LLM 在 you/here/tomorrow 上严重依赖无关上下文信息而非语法规则，且引号对不同指示词的影响方向截然相反。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "指示词理解"
   - "共指消解"
   - "LLM语言能力评估"

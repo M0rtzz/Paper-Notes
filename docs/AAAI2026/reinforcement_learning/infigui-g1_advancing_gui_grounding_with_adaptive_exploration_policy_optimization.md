@@ -2,9 +2,9 @@
 title: >-
   [论文解读] InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization
 description: >-
-  [AAAI 2026][强化学习][GUI定位] 针对GUI定位中语义对齐的探索瓶颈，提出Adaptive Exploration Policy Optimization (AEPO)框架，通过多答案生成策略强制广泛探索、自适应探索奖励函数动态引导以及共线惩罚机制确保探索质量…
+  [AAAI 2026 Oral][强化学习][GUI定位] 针对GUI定位中语义对齐的探索瓶颈，提出Adaptive Exploration Policy Optimization (AEPO)框架，通过多答案生成策略强制广泛探索、自适应探索奖励函数动态引导以及共线惩罚机制确保探索质量，显著提升多模态大模型在复杂GUI定位任务上的表现。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "强化学习"
   - "GUI定位"
   - "多模态大模型"

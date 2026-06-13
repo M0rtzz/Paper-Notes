@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Refusals Fail: Unstable Safety Mechanisms in Long-Context LLM Agents
 description: >-
-  [AAAI 2026][LLM Agent][LLM安全] 系统研究 LLM Agent 在长上下文填充下的安全行为变化：发现声称支持 1M-2M token 的模型在 100K token 时已出现 >50% 的性能崩溃，拒绝率以不可预测的方式波动（GPT-4.1-nano 从 5% 升至 40%…
+  [AAAI 2026][LLM Agent][LLM安全] 系统研究 LLM Agent 在长上下文填充下的安全行为变化：发现声称支持 1M-2M token 的模型在 100K token 时已出现 >50% 的性能崩溃，拒绝率以不可预测的方式波动（GPT-4.1-nano 从 5% 升至 40%，Grok 4 Fast 从 80% 降至 10%），揭示了长上下文 Agent 系统的严重安全隐患。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

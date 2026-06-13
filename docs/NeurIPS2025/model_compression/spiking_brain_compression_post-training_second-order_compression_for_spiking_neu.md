@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks
 description: >-
-  [NeurIPS 2025][模型压缩][脉冲神经网络] 提出 Spiking Brain Compression（SBC），一种基于 Van Rossum 距离的二阶后训练一次性压缩框架，专为脉冲神经网络（SNN）设计，通过替代膜电位（SMP）Hessian 实现高效的模块级剪枝和量化…
+  [NeurIPS 2025][模型压缩][脉冲神经网络] 提出 Spiking Brain Compression（SBC），一种基于 Van Rossum 距离的二阶后训练一次性压缩框架，专为脉冲神经网络（SNN）设计，通过替代膜电位（SMP）Hessian 实现高效的模块级剪枝和量化，在 ImageNet 规模下首次压缩 SEW-ResNet152 和 Spike-Driven Transformer。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

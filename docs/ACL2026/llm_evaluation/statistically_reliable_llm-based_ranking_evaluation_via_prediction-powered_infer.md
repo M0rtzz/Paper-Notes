@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Statistically Reliable LLM-Based Ranking Evaluation via Prediction-Powered Inference
 description: >-
-  [ACL2026][LLM评测][PPI] PRECISE 将 Prediction-Powered Inference (PPI) 扩展到排名评估指标，通过少量人工标注 + 大量 LLM 判断的组合，在纠正 LLM 系统性偏差的同时降低指标估计方差，实现统计可靠的排名系统评估。
+  [ACL2026][LLM评测][PPI] PRECISE 将 Prediction-Powered Inference (PPI) 扩展到排名评估指标，通过少量人工标注 + 大量 LLM 判断的组合，在纠正 LLM 系统性偏差的同时降低指标估计方差，实现统计可靠的排名系统评估。 LLM-as-a-Judge 评估方法虽然可…
 tags:
   - "ACL2026"
   - "LLM评测"
@@ -20,7 +20,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2606.05308](https://arxiv.org/abs/2606.05308)
 **代码**: 待确认
-**领域**: llm_evaluation
+**领域**: LLM评测
 **关键词**: PPI, LLM-as-Judge, 偏差校正, 排名评估, Precision@K, 半监督估计
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MiLiC-Eval: Benchmarking Multilingual LLMs for China's Minority Languages
 description: >-
-  [多语言/翻译] 构建了首个面向中国少数民族语言（藏语、维吾尔语、哈萨克语、蒙古语）的标准化LLM评估基准MiLiC-Eval，包含9类任务2.4万实例，揭示了当前LLM在非主流书写系统上的严重不足。
+  [多语言/翻译] 构建了首个面向中国少数民族语言（藏语、维吾尔语、哈萨克语、蒙古语）的标准化LLM评估基准MiLiC-Eval，包含9类任务2.4万实例，揭示了当前LLM在非主流书写系统上的严重不足。 - 领域现状： LLM在英语和中文等高资源语言上表现出色，但对数千种低资源语言的支持严重不足，尤其是使用非主流书写系统的语言…
 tags:
   - "多语言/翻译"
 ---

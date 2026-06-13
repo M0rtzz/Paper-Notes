@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sim-DETR: Unlock DETR for Temporal Sentence Grounding
 description: >-
-  [ICCV 2025][目标检测][时序语句定位] 系统分析了 DETR 在时序语句定位 (TSG) 任务中的异常行为根因——查询间冲突和查询内全局-局部矛盾，并提出两个简单修改（Query Grouping & Ranking + Global-Local Bridging）构成 Sim-DETR…
+  [ICCV 2025][目标检测][时序语句定位] 系统分析了 DETR 在时序语句定位 (TSG) 任务中的异常行为根因——查询间冲突和查询内全局-局部矛盾，并提出两个简单修改（Query Grouping & Ranking + Global-Local Bridging）构成 Sim-DETR，解锁 DETR 在 TSG 任务的全部潜力。
 tags:
   - "ICCV 2025"
   - "目标检测"

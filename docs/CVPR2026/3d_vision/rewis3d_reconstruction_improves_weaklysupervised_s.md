@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation
 description: >-
-  [CVPR 2026][3D视觉][弱监督分割] 提出 Rewis3d 框架，首次将前馈式 3D 场景重建作为辅助监督信号整合到弱监督语义分割中，通过双学生-教师架构和双置信度加权的跨模态一致性损失，在仅有稀疏标注的情况下将 mIoU 提升 2-7%，且推理时仅使用 2D 图像。
+  [CVPR 2026][3D视觉][弱监督分割] 提出 Rewis3d 框架，首次将前馈式 3D 场景重建作为辅助监督信号整合到弱监督语义分割中，通过双学生-教师架构和双置信度加权的跨模态一致性损失，在仅有稀疏标注的情况下将 mIoU 提升 2-7%，且推理时仅使用 2D 图像。 语义分割虽已取得显著进展…
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning
 description: >-
-  [CVPR 2025][机器人][预训练视觉模型] 通过系统评估发现DINO/iBOT在机器人任务上优于MAE但在非物体中心(NOC)数据上性能退化，原因是丧失了物体中心表示能力。提出SlotMIM方法，通过语义瓶颈（减少原型数量促进objectness涌现）和跨视图一致性正则+slot级对比学习…
+  [CVPR 2025][机器人][预训练视觉模型] 通过系统评估发现DINO/iBOT在机器人任务上优于MAE但在非物体中心(NOC)数据上性能退化，原因是丧失了物体中心表示能力。提出SlotMIM方法，通过语义瓶颈（减少原型数量促进objectness涌现）和跨视图一致性正则+slot级对比学习，使模型在NOC数据上也能学到物体中心表示，仅用241K样本即超越用>1M样本的MVP/VC-1。
 tags:
   - "CVPR 2025"
   - "机器人"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On Safety Risks in Experience-Driven Self-Evolving Agents
 description: >-
-  [ACL 2026][LLM安全][自进化Agent] 本文系统研究经验驱动自进化Agent的安全风险，发现仅从无害任务积累的经验也导致安全性显著退化（ASR上升13-49%），根因是经验的执行导向本质强化了行动而非拒绝。
+  [ACL 2026 Findings][LLM安全][自进化Agent] 本文系统研究经验驱动自进化Agent的安全风险，发现仅从无害任务积累的经验也导致安全性显著退化（ASR上升13-49%），根因是经验的执行导向本质强化了行动而非拒绝。 领域现状：经验驱动的自进化（experience-driven self-evolu…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "自进化Agent"
   - "经验驱动"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning
 description: >-
-  [NeurIPS 2025][自监督学习][最小生成树] 提出 T-REGS——一种基于最小生成树(MST)长度最大化的自监督学习正则化框架，理论证明可同时防止维度坍缩并促进表示分布均匀性，在紧致黎曼流形上成立，实验在标准 JE-SSL 基准上验证了有效性。
+  [NeurIPS 2025][自监督学习][最小生成树] 提出 T-REGS——一种基于最小生成树(MST)长度最大化的自监督学习正则化框架，理论证明可同时防止维度坍缩并促进表示分布均匀性，在紧致黎曼流形上成立，实验在标准 JE-SSL 基准上验证了有效性。 领域现状：联合嵌入自监督学习（JE-SSL）通过让同一图像不同视图…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

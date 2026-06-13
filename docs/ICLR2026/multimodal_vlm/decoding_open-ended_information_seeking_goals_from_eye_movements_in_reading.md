@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading
 description: >-
-  [ICLR2026][多模态VLM][眼动追踪] 提出从阅读时眼动轨迹解码开放式信息检索目标的新任务，基于 OneStop 眼动数据集（360人、486问题、162段落），开发判别式和生成式多模态模型；RoBERTEye-Fixations 在三选一目标选择上达 49.3%（随机 33%）…
+  [ICLR2026][多模态VLM][眼动追踪] 提出从阅读时眼动轨迹解码开放式信息检索目标的新任务，基于 OneStop 眼动数据集（360人、486问题、162段落），开发判别式和生成式多模态模型；RoBERTEye-Fixations 在三选一目标选择上达 49.3%（随机 33%），不同 critical span 达 70.9%；DalEye-Llama/GPT 在目标重建中也显著优于无眼动基线。
 tags:
   - "ICLR2026"
   - "多模态VLM"

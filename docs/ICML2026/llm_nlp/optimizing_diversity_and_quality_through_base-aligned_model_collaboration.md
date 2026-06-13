@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Optimizing Diversity and Quality through Base-Aligned Model Collaboration
 description: >-
-  [ICML 2026][LLM/NLP][多样性-质量权衡] 作者提出 BACO，一种推理时 token 级路由框架：让"未对齐的 base 模型"和"对齐后的 instruct 模型"在同一次解码里逐 token 切换，用 logit 不确定度与内容词信号决定该信谁…
+  [ICML 2026][LLM 其他][多样性-质量权衡] 作者提出 BACO，一种推理时 token 级路由框架：让"未对齐的 base 模型"和"对齐后的 instruct 模型"在同一次解码里逐 token 切换，用 logit 不确定度与内容词信号决定该信谁，从而在不再训练、不多次采样的前提下同时拿到 base 的多样性与 aligned 的质量，best router 相对最强 baseline 取得 21.3% 的多样性-质量联合提升。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多样性-质量权衡"
   - "推理时协同"
   - "token级路由"

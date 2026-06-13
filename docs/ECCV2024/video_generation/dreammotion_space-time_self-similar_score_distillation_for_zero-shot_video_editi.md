@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing
 description: >-
-  [ECCV 2024][视频生成][Score Distillation] 提出基于分数蒸馏（Score Distillation）的零样本视频编辑框架DreamMotion，通过时空自相似性正则化在注入目标外观的同时保持原始视频的结构和运动完整性，适用于级联和非级联视频扩散模型。
+  [ECCV 2024][视频生成][Score Distillation] 提出基于分数蒸馏（Score Distillation）的零样本视频编辑框架DreamMotion，通过时空自相似性正则化在注入目标外观的同时保持原始视频的结构和运动完整性，适用于级联和非级联视频扩散模型。 现有的基于扩散模型的视频编辑方法面临一个核…
 tags:
   - "ECCV 2024"
   - "视频生成"

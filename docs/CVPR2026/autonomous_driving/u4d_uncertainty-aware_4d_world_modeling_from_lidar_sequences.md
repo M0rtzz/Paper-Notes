@@ -2,7 +2,7 @@
 title: >-
   [论文解读] U4D: Uncertainty-Aware 4D World Modeling from LiDAR Sequences
 description: >-
-  [CVPR 2026][自动驾驶][LiDAR生成] 提出 U4D，首个不确定性感知的 4D LiDAR 世界建模框架，通过"先难后易"的两阶段扩散生成策略，先重建高不确定性区域再条件补全整个场景，并设计 MoST 模块自适应融合时空特征以保证时序一致性。
+  [CVPR 2026][自动驾驶][LiDAR生成] 提出 U4D，首个不确定性感知的 4D LiDAR 世界建模框架，通过"先难后易"的两阶段扩散生成策略，先重建高不确定性区域再条件补全整个场景，并设计 MoST 模块自适应融合时空特征以保证时序一致性。 LiDAR 数据采集瓶颈：大规模、多样化、带标注的 LiDAR 数据…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

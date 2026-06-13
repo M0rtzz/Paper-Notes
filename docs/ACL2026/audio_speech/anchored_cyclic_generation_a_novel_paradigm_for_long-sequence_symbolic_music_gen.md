@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Anchored Cyclic Generation: A Novel Paradigm for Long-Sequence Symbolic Music Generation
 description: >-
-  [ACL 2026][音频/语音][符号音乐生成] 本文提出锚定循环生成（ACG）范式，通过在自回归过程中用已确认的音乐内容作为锚点来校准生成方向，有效缓解长序列符号音乐生成中的误差累积问题，并构建了层次化框架Hi-ACG实现从全局到局部的音乐生成。
+  [ACL 2026 Findings][音频/语音][符号音乐生成] 本文提出锚定循环生成（ACG）范式，通过在自回归过程中用已确认的音乐内容作为锚点来校准生成方向，有效缓解长序列符号音乐生成中的误差累积问题，并构建了层次化框架Hi-ACG实现从全局到局部的音乐生成。 领域现状：符号音乐生成是音乐生成的核心分支…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "符号音乐生成"
   - "误差累积"

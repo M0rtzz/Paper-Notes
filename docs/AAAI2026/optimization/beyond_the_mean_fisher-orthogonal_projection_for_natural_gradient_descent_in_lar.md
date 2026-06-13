@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training
 description: >-
-  [AAAI2026][优化/理论][Natural Gradient Descent] 提出 Fisher-Orthogonal Projection (FOP)，通过在 Fisher 度量下对子批次梯度差做正交投影来补充方差信息，使二阶优化器 KFAC 在超大 batch 训练中保持有效…
+  [AAAI2026][优化/理论][Natural Gradient Descent] 提出 Fisher-Orthogonal Projection (FOP)，通过在 Fisher 度量下对子批次梯度差做正交投影来补充方差信息，使二阶优化器 KFAC 在超大 batch 训练中保持有效，实现最高 ×7.5 的加速。
 tags:
   - "AAAI2026"
   - "优化/理论"

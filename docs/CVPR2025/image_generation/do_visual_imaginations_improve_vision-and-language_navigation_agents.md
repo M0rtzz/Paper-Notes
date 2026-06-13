@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Visual Imaginations Improve Vision-and-Language Navigation Agents?
 description: >-
-  [CVPR 2025][图像生成][视觉导航] 本文用 SDXL 为 VLN 指令中的视觉地标生成合成图像作为"想象"，通过 ViT 编码后拼接到文本指令 embedding 中输入 VLN agent，配合余弦相似度对齐损失，在 R2R 和 REVERIE 上一致提升导航成功率约 1%…
+  [CVPR 2025][图像生成][视觉导航] 本文用 SDXL 为 VLN 指令中的视觉地标生成合成图像作为"想象"，通过 ViT 编码后拼接到文本指令 embedding 中输入 VLN agent，配合余弦相似度对齐损失，在 R2R 和 REVERIE 上一致提升导航成功率约 1%，初步验证了视觉想象作为语言与视觉之间桥梁的价值。
 tags:
   - "CVPR 2025"
   - "图像生成"

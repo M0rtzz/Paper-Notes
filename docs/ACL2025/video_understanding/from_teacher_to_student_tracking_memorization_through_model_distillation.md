@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Teacher to Student: Tracking Memorization Through Model Distillation
 description: >-
-  [ACL 2025][视频理解][知识蒸馏] 系统研究了知识蒸馏（KD）对大语言模型记忆化行为的影响，发现蒸馏不仅能压缩模型，还能显著降低对训练数据的逐字记忆风险——其中反向 KL 蒸馏（RKLD/MiniLLM）将记忆化比例从 SFT 的 65.4% 降至最低 6.0%。
+  [ACL 2025][视频理解][知识蒸馏] 系统研究了知识蒸馏（KD）对大语言模型记忆化行为的影响，发现蒸馏不仅能压缩模型，还能显著降低对训练数据的逐字记忆风险——其中反向 KL 蒸馏（RKLD/MiniLLM）将记忆化比例从 SFT 的 65.4% 降至最低 6.0%。 领域现状：大语言模型已被证明会记忆并可能泄露训练数…
 tags:
   - "ACL 2025"
   - "视频理解"

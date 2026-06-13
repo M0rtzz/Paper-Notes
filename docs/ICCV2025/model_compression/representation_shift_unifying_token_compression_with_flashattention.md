@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Representation Shift: Unifying Token Compression with FlashAttention
 description: >-
-  [ICCV 2025][模型压缩][剪枝] 提出 Representation Shift，一种无需训练、模型无关的 token 重要性度量方法，通过计算 token 在网络层前后的表征变化量来衡量重要性，从而首次实现 token 压缩与 FlashAttention 的兼容…
+  [ICCV 2025][模型压缩][剪枝] 提出 Representation Shift，一种无需训练、模型无关的 token 重要性度量方法，通过计算 token 在网络层前后的表征变化量来衡量重要性，从而首次实现 token 压缩与 FlashAttention 的兼容，在视频理解和图像分类上取得高达 5.5× 的加速。
 tags:
   - "ICCV 2025"
   - "模型压缩"

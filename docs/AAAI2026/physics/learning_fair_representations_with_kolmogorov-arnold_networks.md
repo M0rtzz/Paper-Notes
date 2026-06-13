@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Fair Representations with Kolmogorov-Arnold Networks
 description: >-
-  [AAAI 2026][物理/科学计算][Kolmogorov-Arnold网络] 提出将Kolmogorov-Arnold网络（KAN）引入对抗去偏框架，利用KAN的样条函数架构提供理论上的Lipschitz连续性和平滑性保证，并设计自适应 $\lambda$ 更新机制动态平衡公平性与准确率…
+  [AAAI 2026][物理/科学计算][Kolmogorov-Arnold网络] 提出将Kolmogorov-Arnold网络（KAN）引入对抗去偏框架，利用KAN的样条函数架构提供理论上的Lipschitz连续性和平滑性保证，并设计自适应 $\lambda$ 更新机制动态平衡公平性与准确率，在UCI大学录取数据集上实现了公平性指标的显著提升。
 tags:
   - "AAAI 2026"
   - "物理/科学计算"

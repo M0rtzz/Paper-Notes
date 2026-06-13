@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S2G-RAG: Structured Sufficiency and Gap Judging for Iterative Retrieval-Augmented QA
 description: >-
-  [ACL2026][信息检索/RAG][迭代检索] S2G-RAG 把迭代 RAG 中“证据够不够”和“下一步缺什么”显式建模成结构化控制器 S2G-Judge，再用 gap-guided query 和句子级证据抽取减少噪声…
+  [ACL2026][信息检索/RAG][迭代检索] S2G-RAG 把迭代 RAG 中“证据够不够”和“下一步缺什么”显式建模成结构化控制器 S2G-Judge，再用 gap-guided query 和句子级证据抽取减少噪声，在 HotpotQA BM25 设置下把 F1 从 SIM-RAG 的 43.3 提升到 56.5。
 tags:
   - "ACL2026"
   - "信息检索/RAG"

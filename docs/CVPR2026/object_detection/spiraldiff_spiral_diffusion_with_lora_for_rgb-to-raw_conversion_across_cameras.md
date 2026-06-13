@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras
 description: >-
-  [CVPR2026][目标检测][RGB-to-RAW] 提出 SpiralDiff，一种面向 RGB-to-RAW 转换的扩散框架，通过信号依赖的噪声加权策略适应不同像素强度区域的重建难度，并引入 CamLoRA 模块实现单一模型跨多相机的轻量适配。
+  [CVPR2026][目标检测][RGB-to-RAW] 提出 SpiralDiff，一种面向 RGB-to-RAW 转换的扩散框架，通过信号依赖的噪声加权策略适应不同像素强度区域的重建难度，并引入 CamLoRA 模块实现单一模型跨多相机的轻量适配。 1. RAW 图像信息更丰富：RAW 保留线性辐射响应和高动态范围…
 tags:
   - "CVPR2026"
   - "目标检测"

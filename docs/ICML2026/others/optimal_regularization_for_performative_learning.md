@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Regularization for Performative Learning
 description: >-
-  [ICML2026][表演性学习] 在高维岭回归框架下首次系统刻画了"模型部署反过来推动数据分布漂移"（performativity）场景中最优正则强度的标度律：最优 $\lambda$ 与表演性强度 $\bar b$ 成正比，并且在过参数化区域里恰当的正则甚至能利用表演效应反向降低风险。
+  [ICML2026][表演性学习] 在高维岭回归框架下首次系统刻画了"模型部署反过来推动数据分布漂移"（performativity）场景中最优正则强度的标度律：最优 $\lambda$ 与表演性强度 $\bar b$ 成正比，并且在过参数化区域里恰当的正则甚至能利用表演效应反向降低风险。 领域现状：表演性学习（perfor…
 tags:
   - "ICML2026"
   - "表演性学习"

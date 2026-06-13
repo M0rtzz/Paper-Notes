@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoLingo: Motion-Language Alignment for Text-to-Human Motion Generation
 description: >-
-  [CVPR 2026][人体理解][文本驱动动作生成] MoLingo 通过语义对齐的运动自编码器（SAE）和多 token 交叉注意力文本条件注入，在连续潜空间上执行 masked 自回归 rectified flow…
+  [CVPR 2026][人体理解][文本驱动动作生成] MoLingo 通过语义对齐的运动自编码器（SAE）和多 token 交叉注意力文本条件注入，在连续潜空间上执行 masked 自回归 rectified flow，在文本到人体动作生成任务上取得了 FID、R-Precision 和用户研究的全面 SOTA。
 tags:
   - "CVPR 2026"
   - "人体理解"

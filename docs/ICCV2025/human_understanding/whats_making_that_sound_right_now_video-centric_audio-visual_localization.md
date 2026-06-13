@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What's Making That Sound Right Now? Video-centric Audio-Visual Localization
 description: >-
-  [人体理解] 提出视频级音视频定位基准 AVATAR 和时序感知模型 TAVLO，通过高分辨率时序建模解决传统 AVL 方法忽略时间动态的问题。
+  [人体理解] 提出视频级音视频定位基准 AVATAR 和时序感知模型 TAVLO，通过高分辨率时序建模解决传统 AVL 方法忽略时间动态的问题。 音视频定位（AVL）旨在在视觉场景中识别发出声音的物体。现有研究存在两个关键局限： 图像级关联的局限：现有基准（如 Flickr-SoundNet、VGGSS）采用图像级标注方式—…
 tags:
   - "人体理解"
 ---

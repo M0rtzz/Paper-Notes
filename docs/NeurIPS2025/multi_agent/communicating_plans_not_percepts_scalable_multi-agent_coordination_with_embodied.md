@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Communicating Plans, Not Percepts: Scalable Multi-Agent Coordination with Embodied World Models
 description: >-
-  [NeurIPS 2025][多智能体][多智能体强化学习] 提出基于轻量世界模型的"意图通信"架构，通过生成并共享未来轨迹计划来实现多智能体协调，在可扩展性和性能上全面超越端到端涌现通信方案。
+  [NeurIPS 2025][多智能体][多智能体强化学习] 提出基于轻量世界模型的"意图通信"架构，通过生成并共享未来轨迹计划来实现多智能体协调，在可扩展性和性能上全面超越端到端涌现通信方案。 多智能体协调在自动驾驶、仓储机器人等场景中至关重要。多智能体强化学习（MARL）面临核心挑战：由于其他智能体的动作改变状态转移动力…
 tags:
   - "NeurIPS 2025"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tree-of-Debate: Multi-Persona Debate Trees Elicit Critical Thinking for Scientific Comparative Analysis
 description: >-
-  [ACL 2025][多智能体辩论] 提出Tree-of-Debate (ToD)框架，将科学论文转化为LLM persona进行树结构化辩论，通过自我审议、迭代检索和主持人引导的层级子话题扩展，生成细粒度、上下文化的论文对比摘要，在领域专家评估中显著优于基线方法。
+  [ACL 2025][多智能体辩论] 提出Tree-of-Debate (ToD)框架，将科学论文转化为LLM persona进行树结构化辩论，通过自我审议、迭代检索和主持人引导的层级子话题扩展，生成细粒度、上下文化的论文对比摘要，在领域专家评估中显著优于基线方法。 问题背景 随着科学文献的爆炸式增长（arXiv 2024年…
 tags:
   - "ACL 2025"
   - "多智能体辩论"

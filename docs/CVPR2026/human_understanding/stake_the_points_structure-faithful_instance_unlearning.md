@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stake the Points: Structure-Faithful Instance Unlearning
 description: >-
-  [CVPR2026][人体理解][machine unlearning] 提出 Structguard，通过语义锚点（semantic anchors）保持遗忘过程中保留实例间的语义关系结构，避免结构性崩塌，在图像分类/人脸识别/检索三任务上平均提升 32.9%/19.3%/22.5%。
+  [CVPR2026][人体理解][machine unlearning] 提出 Structguard，通过语义锚点（semantic anchors）保持遗忘过程中保留实例间的语义关系结构，避免结构性崩塌，在图像分类/人脸识别/检索三任务上平均提升 32.9%/19.3%/22.5%。 1. 数据保护法规驱动：GDPR 等…
 tags:
   - "CVPR2026"
   - "人体理解"

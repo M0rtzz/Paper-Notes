@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LongDPO: Unlock Better Long-form Generation Abilities for LLMs via Critique-augmented Stepwise Information
 description: >-
-  [ACL 2025][LLM/NLP][长文本生成] 提出 LongDPO，通过 MCTS 收集步级偏好对、全局记忆池维护事实一致性、critique 增强低质量候选，再用步级 DPO 进行细粒度优化，在 LongBench-Write 上显著提升长文本生成质量，同时保持通用能力。
+  [ACL 2025][LLM 其他][长文本生成] 提出 LongDPO，通过 MCTS 收集步级偏好对、全局记忆池维护事实一致性、critique 增强低质量候选，再用步级 DPO 进行细粒度优化，在 LongBench-Write 上显著提升长文本生成质量，同时保持通用能力。 领域现状：LLM 在长上下文输入方面已取得显…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "长文本生成"
   - "stepwise DPO"
   - "MCTS"

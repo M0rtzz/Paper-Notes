@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Not All Deepfakes Are Created Equal: Triaging Audio Forgeries for Robust Deepfake Singer Identification
 description: >-
-  [NeurIPS 2025 Workshop (Generative and Protective AI for Content Creation)][AI安全][深伪检测] 提出基于"最有害的深伪是质量最高的"这一前提的两阶段流水线：先用判别器过滤低质量伪造以减少噪声，再用仅在真实录音上训练的歌手识别模型进行声纹匹配…
+  [NeurIPS 2025 Workshop (Generative and Protective AI for Content Creation)][AI安全][深伪检测] 提出基于"最有害的深伪是质量最高的"这一前提的两阶段流水线：先用判别器过滤低质量伪造以减少噪声，再用仅在真实录音上训练的歌手识别模型进行声纹匹配，在多个数据集上一致超越基线。
 tags:
   - "NeurIPS 2025 Workshop (Generative and Protective AI for Content Creation)"
   - "AI安全"

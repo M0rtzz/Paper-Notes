@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning
 description: >-
-  [ICML 2025][预训练][cross-domain few-shot] 发现破坏 ViT 图像 token 的连续性（使相邻 patch 像素不再平滑过渡）在源域性能显著下降但在目标域仅略降，揭示连续性帮助学习的大空间模式更难跨域迁移，据此提出简单有效的 ReCIT 方法来缩小域差距。
+  [ICML 2025 Spotlight][预训练][cross-domain few-shot] 发现破坏 ViT 图像 token 的连续性（使相邻 patch 像素不再平滑过渡）在源域性能显著下降但在目标域仅略降，揭示连续性帮助学习的大空间模式更难跨域迁移，据此提出简单有效的 ReCIT 方法来缩小域差距。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "预训练"
   - "cross-domain few-shot"
   - "ViT"

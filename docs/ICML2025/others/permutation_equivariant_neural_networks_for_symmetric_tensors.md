@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Permutation Equivariant Neural Networks for Symmetric Tensors
 description: >-
-  [ICML 2025][permutation equivariance] 本文首次研究了以对称张量为输入的置换等变神经网络，给出了对称幂空间之间所有线性置换等变函数的两种完整刻画，实验证明该方法在数据效率和泛化能力上显著优于标准 MLP。
+  [ICML 2025][permutation equivariance] 本文首次研究了以对称张量为输入的置换等变神经网络，给出了对称幂空间之间所有线性置换等变函数的两种完整刻画，实验证明该方法在数据效率和泛化能力上显著优于标准 MLP。 领域现状：置换等变性是深度学习中的重要归纳偏置，DeepSets、Janossy P…
 tags:
   - "ICML 2025"
   - "permutation equivariance"

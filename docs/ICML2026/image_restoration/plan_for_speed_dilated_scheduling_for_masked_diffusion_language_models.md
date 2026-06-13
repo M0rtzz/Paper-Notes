@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plan for Speed: Dilated Scheduling for Masked Diffusion Language Models
 description: >-
-  [ICML 2026][图像恢复][扩散模型] 本文提出 Dilated Unmasking Scheduler (DUS)：用「等距空隙」预定义不依赖模型置信度的 unmask 顺序…
+  [ICML 2026][图像恢复][扩散模型] 本文提出 Dilated Unmasking Scheduler (DUS)：用「等距空隙」预定义不依赖模型置信度的 unmask 顺序，把每块 $B$ 个 token 的 denoiser 调用次数从 $\mathcal O(B)$ 降到 $\mathcal O(\log B)$，在 LLaDA / Dream / DiffuCoder 上拿到 5.8× wall-clock 加速且质量优于基于置信度的并行 planner。
 tags:
   - "ICML 2026"
   - "图像恢复"

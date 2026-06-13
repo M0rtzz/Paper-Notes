@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NI-Tex: Non-isometric Image-based Garment Texture Generation
 description: >-
-  [CVPR 2026][图像生成][服装纹理生成] 提出NI-Tex框架，通过构建3D Garment Videos数据集、基于图像编辑的跨拓扑增强以及不确定性引导的迭代烘焙算法，首次以前馈架构实现了非等距条件下从单图到3D服装PBR纹理的高质量生成。
+  [CVPR 2026][图像生成][服装纹理生成] 提出NI-Tex框架，通过构建3D Garment Videos数据集、基于图像编辑的跨拓扑增强以及不确定性引导的迭代烘焙算法，首次以前馈架构实现了非等距条件下从单图到3D服装PBR纹理的高质量生成。 现有工业级3D服装网格已覆盖大多数真实世界的服装几何形状…
 tags:
   - "CVPR 2026"
   - "图像生成"

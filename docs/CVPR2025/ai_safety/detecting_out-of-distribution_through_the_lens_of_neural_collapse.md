@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting Out-of-Distribution through the Lens of Neural Collapse
 description: >-
-  [CVPR 2025][AI安全][OOD检测] 从 Neural Collapse 理论出发，发现中心化后的 ID 特征聚集在预测类别的权重向量附近且远离原点（形成 simplex ETF），据此设计 NCI 检测器——结合特征与权重向量的角度近邻度（pScore）和特征范数过滤…
+  [CVPR 2025][AI安全][OOD检测] 从 Neural Collapse 理论出发，发现中心化后的 ID 特征聚集在预测类别的权重向量附近且远离原点（形成 simplex ETF），据此设计 NCI 检测器——结合特征与权重向量的角度近邻度（pScore）和特征范数过滤，在 CIFAR-10/100 和 ImageNet 多架构上实现最佳综合 OOD 检测性能且推理延迟与 softmax 基线持平。
 tags:
   - "CVPR 2025"
   - "AI安全"

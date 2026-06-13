@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeGauss: Dynamic-Static Decomposition with Gaussian Splatting for Distractor-free 3D Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][3D高斯泼溅] 提出 DeGauss，一种基于解耦的动态-静态高斯泼溅的自监督框架，通过前景动态高斯和背景静态高斯的概率掩码组合，实现从随意捕获的图像集到高度动态的自我中心视频的广泛场景下的无干扰 3D 重建。
+  [ICCV 2025][3D视觉][3D高斯泼溅] 提出 DeGauss，一种基于解耦的动态-静态高斯泼溅的自监督框架，通过前景动态高斯和背景静态高斯的概率掩码组合，实现从随意捕获的图像集到高度动态的自我中心视频的广泛场景下的无干扰 3D 重建。 从真实世界捕获的视频/图像中重建干净的静态 3D 场景是计算机视觉的核心挑战…
 tags:
   - "ICCV 2025"
   - "3D视觉"

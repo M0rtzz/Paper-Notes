@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniFlow: Any-to-Any Generation with Multi-Modal Rectified Flows
 description: >-
-  [CVPR 2025][图像生成][多模态生成] OmniFlow 将 Stable Diffusion 3 的整流流框架扩展到多模态（文本+图像+音频）联合生成场景，通过模块化的 Omni-Transformer 架构和新颖的多模态引导机制…
+  [CVPR 2025][图像生成][多模态生成] OmniFlow 将 Stable Diffusion 3 的整流流框架扩展到多模态（文本+图像+音频）联合生成场景，通过模块化的 Omni-Transformer 架构和新颖的多模态引导机制，在无需从头训练的情况下实现了优于 CoDi 和 UniDiffuser 等前代 any-to-any 模型的生成质量。
 tags:
   - "CVPR 2025"
   - "图像生成"

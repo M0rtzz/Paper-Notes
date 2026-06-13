@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaCache: Ladder-Shaped KV Caching for Efficient Long-Context Modeling of Large Language Models
 description: >-
-  [ICML2025][模型压缩][KV Cache 压缩] 提出梯形（ladder-shaped）KV 缓存模式，在不同层保留不同 token 范围的 KV 状态，从而在固定缓存预算下扩展可捕获的上下文跨度，并通过迭代压缩机制支持无限长度的连续生成。
+  [ICML2025][模型压缩][KV Cache 压缩] 提出梯形（ladder-shaped）KV 缓存模式，在不同层保留不同 token 范围的 KV 状态，从而在固定缓存预算下扩展可捕获的上下文跨度，并通过迭代压缩机制支持无限长度的连续生成。 LLM 自回归解码时需缓存所有历史 token 的 Key-Value 状…
 tags:
   - "ICML2025"
   - "模型压缩"

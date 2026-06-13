@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing LLM Training via Spectral Clipping
 description: >-
-  [ICML 2026][优化/理论][谱裁剪] 本文提出 SPECTRA：一个 optimizer-agnostic 的包装层，对更新矩阵做**后置谱裁剪**、对原始梯度做可选的**前置谱裁剪**，在理论上等价于带权重正则的复合 Frank-Wolfe 算法…
+  [ICML 2026][优化/理论][谱裁剪] 本文提出 SPECTRA：一个 optimizer-agnostic 的包装层，对更新矩阵做**后置谱裁剪**、对原始梯度做可选的**前置谱裁剪**，在理论上等价于带权重正则的复合 Frank-Wolfe 算法，在 124M–1.5B LLM 预训练上把 AdamW / Signum / Mars / AdEMAMix 的验证损失一致地往下压。
 tags:
   - "ICML 2026"
   - "优化/理论"

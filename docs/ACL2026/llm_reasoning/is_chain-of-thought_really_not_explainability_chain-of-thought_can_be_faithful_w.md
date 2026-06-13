@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Chain-of-Thought Really Not Explainability? Chain-of-Thought Can Be Faithful without Hint Verbalization
 description: >-
-  [ACL 2026][LLM推理][Chain-of-Thought] 论文系统反驳"CoT 不算可解释性"这一近年流行结论：用 Filler Tokens、FUR、faithful@k 与 Causal Mediation Analysis 四种互补指标证明…
+  [ACL 2026][LLM推理][Chain-of-Thought] 论文系统反驳"CoT 不算可解释性"这一近年流行结论：用 Filler Tokens、FUR、faithful@k 与 Causal Mediation Analysis 四种互补指标证明，被 Biasing Features（hint verbalization）判为不忠实的 CoT 里超过一半其实"以其它方式"忠实地反映了模型推理；不忠实主要来自"自然语言对分布式计算做了 lossy 压缩"导致的不完整（incompleteness），而非真不忠实——增大采样预算可让 hint 出现概率涨到 90%，未明示 hint 的 CoT 也能因果性地传递 hint…
 tags:
   - "ACL 2026"
   - "LLM推理"

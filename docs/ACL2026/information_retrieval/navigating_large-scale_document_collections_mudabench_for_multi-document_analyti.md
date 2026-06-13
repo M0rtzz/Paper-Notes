@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Navigating Large-Scale Document Collections: MuDABench for Multi-Document Analytical QA
 description: >-
-  [ACL2026][信息检索/RAG][多文档分析问答] 这篇论文提出 MuDABench，把多文档问答从“找几个相关片段回答问题”推进到“在大规模半结构化文档集合上做抽取、聚合和定量分析”，并证明普通 RAG 即使扩大召回也很难完成这类任务…
+  [ACL2026 Findings][信息检索/RAG][多文档分析问答] 这篇论文提出 MuDABench，把多文档问答从“找几个相关片段回答问题”推进到“在大规模半结构化文档集合上做抽取、聚合和定量分析”，并证明普通 RAG 即使扩大召回也很难完成这类任务，而元数据感知的多 Agent 工作流能显著提高结果但仍远落后于人类专家。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "信息检索/RAG"
   - "多文档分析问答"
   - "RAG评测"

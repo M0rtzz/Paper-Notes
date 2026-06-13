@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making
 description: >-
-  [NeurIPS 2025][模型压缩][online learning] 提出在线专家混合（OMoE）框架，包含 UCB 逐步消除和在线加权多数投票两种算法，理论上保证无遗憾（no-regret），并应用于 LLM 专家的在线动态聚合。
+  [NeurIPS 2025][模型压缩][online learning] 提出在线专家混合（OMoE）框架，包含 UCB 逐步消除和在线加权多数投票两种算法，理论上保证无遗憾（no-regret），并应用于 LLM 专家的在线动态聚合。 领域现状：专家混合（Mixture of Experts, MoE）在离线场景已有广泛…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

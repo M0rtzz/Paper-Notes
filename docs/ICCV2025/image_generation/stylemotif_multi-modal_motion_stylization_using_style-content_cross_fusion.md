@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StyleMotif: Multi-Modal Motion Stylization using Style-Content Cross Fusion
 description: >-
-  [ICCV 2025][图像生成][动作风格化] 提出 StyleMotif，一个单分支运动潜在扩散框架，通过风格-内容交叉归一化机制统一内容生成与多模态（文本/图片/视频/音频/运动）风格注入，相比 SMooDi 双分支设计减少 43.9% 可训练参数并提速 22.5%…
+  [ICCV 2025][图像生成][动作风格化] 提出 StyleMotif，一个单分支运动潜在扩散框架，通过风格-内容交叉归一化机制统一内容生成与多模态（文本/图片/视频/音频/运动）风格注入，相比 SMooDi 双分支设计减少 43.9% 可训练参数并提速 22.5%，同时在风格识别准确率（SRA）上提升 5.23%。
 tags:
   - "ICCV 2025"
   - "图像生成"

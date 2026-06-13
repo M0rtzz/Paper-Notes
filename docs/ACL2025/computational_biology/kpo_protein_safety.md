@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Safe and Controllable Protein Generation via Knowledge Preference Optimization
 description: >-
-  [ACL 2025][计算生物][蛋白质语言模型] 提出KPO框架，通过构建蛋白质安全知识图谱(PSKG)并结合加权图剪枝策略识别"相似但安全"的蛋白质对，用DPO微调蛋白质语言模型使其远离有害序列空间，同时保持功能性。
+  [ACL 2025][计算生物][蛋白质语言模型] 提出KPO框架，通过构建蛋白质安全知识图谱(PSKG)并结合加权图剪枝策略识别"相似但安全"的蛋白质对，用DPO微调蛋白质语言模型使其远离有害序列空间，同时保持功能性。 领域现状：蛋白质语言模型（PLM）如ProtGPT2、ProGen2等在蛋白质序列生成上取得了巨大成功…
 tags:
   - "ACL 2025"
   - "计算生物"

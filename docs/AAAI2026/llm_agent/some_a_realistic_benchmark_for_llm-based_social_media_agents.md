@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoMe: A Realistic Benchmark for LLM-based Social Media Agents
 description: >-
-  [AAAI 2026][LLM Agent][social media agent] 提出首个面向社交媒体智能体的综合性评测基准 SoMe，包含 8 项任务、900 万+真实帖子和 17,869 条标注查询，评估 13 个主流 LLM 的社交媒体代理能力，揭示现有模型在复杂社交任务上仍有较大差距。
+  [AAAI 2026][LLM Agent][social media agent] 提出首个面向社交媒体智能体的综合性评测基准 SoMe，包含 8 项任务、900 万+真实帖子和 17,869 条标注查询，评估 13 个主流 LLM 的社交媒体代理能力，揭示现有模型在复杂社交任务上仍有较大差距。 LLM 驱动的智能体在社交…
 tags:
   - "AAAI 2026"
   - "LLM Agent"

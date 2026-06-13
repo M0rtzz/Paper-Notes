@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Solving Parameter-Robust Avoid Problems with Unknown Feasibility using Reinforcement Learning
 description: >-
-  [强化学习] 提出 Feasibility-Guided Exploration (FGE)，同时识别可行参数子集并学习在该子集上安全的策略，解决可行性未知的参数鲁棒避障问题，在 MuJoCo 任务中比最佳现有方法多覆盖 50% 以上。
+  [强化学习] 提出 Feasibility-Guided Exploration (FGE)，同时识别可行参数子集并学习在该子集上安全的策略，解决可行性未知的参数鲁棒避障问题，在 MuJoCo 任务中比最佳现有方法多覆盖 50% 以上。 - Hamilton-Jacobi (HJ) 安全控制：是获得最大安全初始状态集合的强大…
 tags:
   - "强化学习"
 ---

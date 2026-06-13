@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians
 description: >-
-  [NeurIPS 2025][自注意力] 本文从动力系统的 Jacobian 分析视角，突破传统能量函数框架的对称性约束，揭示了归一化层在抑制自注意力谱范数和振荡分量方面的关键作用，发现高性能循环自注意力模型的 Lyapunov 指数趋近于零（临界态），并基于此提出谱正则化方法显著提升推理性能。
+  [NeurIPS 2025][自注意力] 本文从动力系统的 Jacobian 分析视角，突破传统能量函数框架的对称性约束，揭示了归一化层在抑制自注意力谱范数和振荡分量方面的关键作用，发现高性能循环自注意力模型的 Lyapunov 指数趋近于零（临界态），并基于此提出谱正则化方法显著提升推理性能。 自注意力（SA）的理论理解一…
 tags:
   - "NeurIPS 2025"
   - "自注意力"

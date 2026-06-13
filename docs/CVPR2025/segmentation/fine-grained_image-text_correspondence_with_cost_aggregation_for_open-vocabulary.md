@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained Image-Text Correspondence with Cost Aggregation for Open-Vocabulary Part Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇分割] PartCATSeg 通过将物体级和部件级的图文代价体积解耦聚合、引入组合损失约束部件构成关系、并利用 DINO 特征提供结构引导，在多个开放词汇部件分割基准上将 h-IoU 提升超过 10%。
+  [CVPR 2025][语义分割][开放词汇分割] PartCATSeg 通过将物体级和部件级的图文代价体积解耦聚合、引入组合损失约束部件构成关系、并利用 DINO 特征提供结构引导，在多个开放词汇部件分割基准上将 h-IoU 提升超过 10%。 领域现状：开放词汇部件分割 (OVPS) 是一个新兴方向…
 tags:
   - "CVPR 2025"
   - "语义分割"

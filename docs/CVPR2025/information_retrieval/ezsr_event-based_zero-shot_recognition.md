@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EZSR: Event-based Zero-Shot Recognition
 description: >-
-  [CVPR 2025][信息检索/RAG][事件相机] 提出 EZSR 框架用于事件相机数据的零样本物体识别，通过标量级调制（scalar-wise modulation）策略解决事件嵌入与 CLIP 文本嵌入之间的语义错位问题，并通过从静态 RGB 图像大规模合成事件数据来突破训练数据稀缺限制…
+  [CVPR 2025][信息检索/RAG][事件相机] 提出 EZSR 框架用于事件相机数据的零样本物体识别，通过标量级调制（scalar-wise modulation）策略解决事件嵌入与 CLIP 文本嵌入之间的语义错位问题，并通过从静态 RGB 图像大规模合成事件数据来突破训练数据稀缺限制，在 N-ImageNet 上以 ViT-B/16 达到 47.84% 零样本准确率。
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

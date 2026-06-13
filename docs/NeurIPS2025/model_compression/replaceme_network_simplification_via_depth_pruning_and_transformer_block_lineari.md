@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReplaceMe: Network Simplification via Depth Pruning and Transformer Block Linearization
 description: >-
-  [NeurIPS 2025][模型压缩][深度剪枝] 提出 ReplaceMe，一种无训练的深度剪枝方法：用少量校准数据估计线性变换来近似被剪枝的 Transformer 块组，该变换可融合到相邻层权重中不增加参数，在 LLaMA-2-7B 上实现 25% 剪枝率并保留约 90% 性能。
+  [NeurIPS 2025][模型压缩][深度剪枝] 提出 ReplaceMe，一种无训练的深度剪枝方法：用少量校准数据估计线性变换来近似被剪枝的 Transformer 块组，该变换可融合到相邻层权重中不增加参数，在 LLaMA-2-7B 上实现 25% 剪枝率并保留约 90% 性能。 领域现状：结构化剪枝是 LLM 压缩…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Orientation-anchored Hyper-Gaussian for 4D Reconstruction from Casual Videos
 description: >-
-  [NeurIPS 2025][3D视觉][4D重建] 提出 OriGS (Orientation-anchored Gaussian Splatting)，通过全局方向场引导和方向感知超维高斯表示，实现从随手拍摄的单目视频中进行高质量4D动态场景重建。
+  [NeurIPS 2025][3D视觉][4D重建] 提出 OriGS (Orientation-anchored Gaussian Splatting)，通过全局方向场引导和方向感知超维高斯表示，实现从随手拍摄的单目视频中进行高质量4D动态场景重建。 将3D高斯溅射 (3DGS) 扩展到动态场景的4D重建已成为热门方向…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

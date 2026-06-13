@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeSpot: Benchmarking Geo-Temporal Understanding in Vision-Language Models in Real-World Settings
 description: >-
-  [ICML 2026][多模态VLM][地理-时间推理] 作者构建了一个覆盖 80 个国家、1,455 张真实地面图像的 TimeSpot 基准，强制 VLM 同时给出"何时（季节/月份/分钟级本地时间/日相）"与"何地（洲/国/气候带/环境类型/经纬度）"九字段结构化预测…
+  [ICML 2026][多模态VLM][地理-时间推理] 作者构建了一个覆盖 80 个国家、1,455 张真实地面图像的 TimeSpot 基准，强制 VLM 同时给出"何时（季节/月份/分钟级本地时间/日相）"与"何地（洲/国/气候带/环境类型/经纬度）"九字段结构化预测，结果显示即便最强模型 Gemini-2.5-Flash-Thinking 也只达到 77.59% 国家准确率、892.54 km 中位地理距离误差，分钟级时间准确率不到 34%，说明 VLM 严重缺乏基于物理线索的地理-时间联合推理能力。
 tags:
   - "ICML 2026"
   - "多模态VLM"

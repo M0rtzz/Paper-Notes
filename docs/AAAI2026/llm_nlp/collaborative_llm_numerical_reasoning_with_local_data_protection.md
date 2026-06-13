@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Collaborative LLM Numerical Reasoning with Local Data Protection
 description: >-
-  [AAAI 2026][LLM/NLP][隐私保护推理] 提出一种大小模型协作框架，通过对本地查询进行"主题迁移+数值替换"的两阶段匿名化来保护敏感数据，同时让远端 GPT-4 以可执行 Python 代码（即插即用工具）形式返回推理方案，本地仅需做数值回代即可获得答案…
+  [AAAI 2026][LLM 其他][隐私保护推理] 提出一种大小模型协作框架，通过对本地查询进行"主题迁移+数值替换"的两阶段匿名化来保护敏感数据，同时让远端 GPT-4 以可执行 Python 代码（即插即用工具）形式返回推理方案，本地仅需做数值回代即可获得答案，在 FinQA 和 MultiHiertt 上准确率提升 16-44% 且数据泄露降低 2-45%。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "隐私保护推理"
   - "数值推理"
   - "模型协作"

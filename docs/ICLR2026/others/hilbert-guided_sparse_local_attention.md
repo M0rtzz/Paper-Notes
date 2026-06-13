@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hilbert-Guided Sparse Local Attention
 description: >-
-  [ICLR 2026][Hilbert曲线] 利用Hilbert空间填充曲线将2D图像token重排为保持空间邻近性的1D序列，大幅提升局部注意力的块稀疏率（空块比例从87.5%到96.9%），结合FlexAttention实现窗口注意力4倍和滑动注意力18倍加速，精度损失极小。
+  [ICLR 2026][Hilbert曲线] 利用Hilbert空间填充曲线将2D图像token重排为保持空间邻近性的1D序列，大幅提升局部注意力的块稀疏率（空块比例从87.5%到96.9%），结合FlexAttention实现窗口注意力4倍和滑动注意力18倍加速，精度损失极小。 领域现状：Vision Transforme…
 tags:
   - "ICLR 2026"
   - "Hilbert曲线"

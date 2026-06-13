@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ORLoopBench: Solver-in-the-Loop Benchmarks for Self-Correction and Behavioral Rationality in Operations Research
 description: >-
-  [ICML 2026][强化学习][solver-in-the-loop] 作者把"修一个 Infeasible 的运筹模型"形式化成"每改一步都要重跑 Gurobi 拿 IIS 反馈"的求解器在环 MDP，发布了配套基准 ORLoopBench（5362 条 LP/MILP 修复实例 + 库存决策偏差测评）…
+  [ICML 2026][强化学习][solver-in-the-loop] 作者把"修一个 Infeasible 的运筹模型"形式化成"每改一步都要重跑 Gurobi 拿 IIS 反馈"的求解器在环 MDP，发布了配套基准 ORLoopBench（5362 条 LP/MILP 修复实例 + 库存决策偏差测评），并用 RLVR 把一个 8B 模型训到在 LP 修复上以 95.3% RR@5 反超闭源 API（92.4%）。
 tags:
   - "ICML 2026"
   - "强化学习"

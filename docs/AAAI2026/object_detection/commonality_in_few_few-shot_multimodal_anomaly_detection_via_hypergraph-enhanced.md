@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Commonality in Few: Few-Shot Multimodal Anomaly Detection via Hypergraph-Enhanced Memory
 description: >-
-  [AAAI2026][目标检测][hypergraph learning] 提出 CIF，利用超图（hypergraph）提取少量训练样本的类内结构共性，指导 memory bank 的构建与搜索，在少样本多模态工业异常检测中取得 SOTA。
+  [AAAI2026][目标检测][hypergraph learning] 提出 CIF，利用超图（hypergraph）提取少量训练样本的类内结构共性，指导 memory bank 的构建与搜索，在少样本多模态工业异常检测中取得 SOTA。 工业异常检测是保障产品质量的关键技术。现有方法大多需要大量正常样本来构建特征分布…
 tags:
   - "AAAI2026"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Residual-Update Steering for Low-Overhead Hallucination Mitigation in Large Vision Language Models
 description: >-
-  [ICML 2026][幻觉检测][LVLM幻觉] 这篇论文提出 RUDDER，在 LVLM 的 prefill 阶段从残差更新中提取每样本视觉证据方向，并在解码时用 Beta Gate 自适应注入，从而以接近单次前向的开销降低物体幻觉。
+  [ICML 2026][幻觉检测][LVLM幻觉] 这篇论文提出 RUDDER，在 LVLM 的 prefill 阶段从残差更新中提取每样本视觉证据方向，并在解码时用 Beta Gate 自适应注入，从而以接近单次前向的开销降低物体幻觉。 领域现状：大型视觉语言模型通常把图像 token 作为语言解码器的前缀…
 tags:
   - "ICML 2026"
   - "幻觉检测"

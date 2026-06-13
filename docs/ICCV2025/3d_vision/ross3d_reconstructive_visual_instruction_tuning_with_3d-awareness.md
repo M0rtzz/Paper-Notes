@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness
 description: >-
-  [ICCV 2025][3D视觉][3D场景理解] Ross3D 提出将3D感知的视觉重建预训练任务（跨视图重建 + 全局BEV重建）注入2D大型多模态模型的训练流程中，在不修改输入表示的前提下通过输出级监督信号显著提升3D场景理解能力…
+  [ICCV 2025][3D视觉][3D场景理解] Ross3D 提出将3D感知的视觉重建预训练任务（跨视图重建 + 全局BEV重建）注入2D大型多模态模型的训练流程中，在不修改输入表示的前提下通过输出级监督信号显著提升3D场景理解能力，在SQA3D、ScanQA、Scan2Cap、ScanRefer、Multi3DRefer五个基准上均达到SOTA。
 tags:
   - "ICCV 2025"
   - "3D视觉"

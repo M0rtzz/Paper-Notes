@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vista3D: Unravel the 3D Darkside of a Single Image
 description: >-
-  [ECCV 2024][3D视觉] 提出Vista3D，通过粗到细的两阶段框架（高斯溅射→FlexiCubes等值面细化+解耦纹理），结合角度扩散先验组合，5分钟内从单张图像生成多样且一致的高保真3D网格。
+  [ECCV 2024][3D视觉] 提出Vista3D，通过粗到细的两阶段框架（高斯溅射→FlexiCubes等值面细化+解耦纹理），结合角度扩散先验组合，5分钟内从单张图像生成多样且一致的高保真3D网格。 - 单图到3D生成面临两难：稀疏重建方法导致模糊，纯生成方法依赖2D先验无法保证3D一致性 - Zero-1-to-3…
 tags:
   - "ECCV 2024"
   - "3D视觉"

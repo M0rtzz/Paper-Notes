@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAPE V2: Process Attention Score as Feature Map for Length Extrapolation
 description: >-
-  [ACL 2025][长度外推] 本文将 Transformer 的注意力分数视为特征图，通过在注意力分数上施加卷积操作（而非简单的 key-query 点积）来显著提升 Transformer 在长序列上的长度外推能力，将外推问题转化为经典的图像特征处理问题。
+  [ACL 2025][长度外推] 本文将 Transformer 的注意力分数视为特征图，通过在注意力分数上施加卷积操作（而非简单的 key-query 点积）来显著提升 Transformer 在长序列上的长度外推能力，将外推问题转化为经典的图像特征处理问题。 领域现状：Transformer 模型在语言处理、计算机视觉等…
 tags:
   - "ACL 2025"
   - "长度外推"

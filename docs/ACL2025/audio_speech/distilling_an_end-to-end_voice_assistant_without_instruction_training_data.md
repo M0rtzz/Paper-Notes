@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling an End-to-End Voice Assistant Without Instruction Training Data
 description: >-
-  [ACL 2025][音频/语音][语音大语言模型] 提出DiVA（Distilled Voice Assistant），通过将文本LLM对转录文本的响应作为自监督信号进行跨模态蒸馏，无需任何语音指令训练数据即可训练端到端语音LLM——仅用3.5k小时ASR数据就泛化到口语问答、分类和翻译任务…
+  [ACL 2025][音频/语音][语音大语言模型] 提出DiVA（Distilled Voice Assistant），通过将文本LLM对转录文本的响应作为自监督信号进行跨模态蒸馏，无需任何语音指令训练数据即可训练端到端语音LLM——仅用3.5k小时ASR数据就泛化到口语问答、分类和翻译任务，且在用户偏好测试中以72%胜率碾压Qwen 2 Audio（使用100倍以上训练计算量）。
 tags:
   - "ACL 2025"
   - "音频/语音"

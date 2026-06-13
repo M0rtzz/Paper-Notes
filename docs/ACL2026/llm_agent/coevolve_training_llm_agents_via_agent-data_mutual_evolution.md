@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoEvolve: Training LLM Agents via Agent-Data Mutual Evolution
 description: >-
-  [ACL 2026][LLM Agent][智能体训练] CoEvolve 提出**智能体-数据共进化框架**，通过从训练轨迹中提取遗忘/边界/稀有三类弱点信号，引导 LLM 做针对性环境再探索和任务合成，使训练数据分布随智能体能力动态适应…
+  [ACL 2026][LLM Agent][智能体训练] CoEvolve 提出**智能体-数据共进化框架**，通过从训练轨迹中提取遗忘/边界/稀有三类弱点信号，引导 LLM 做针对性环境再探索和任务合成，使训练数据分布随智能体能力动态适应，在 AppWorld 和 BFCL 上分别带来 19-23% 的绝对提升。
 tags:
   - "ACL 2026"
   - "LLM Agent"

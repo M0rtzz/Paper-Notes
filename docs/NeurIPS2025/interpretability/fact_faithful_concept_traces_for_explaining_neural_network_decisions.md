@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FaCT: Faithful Concept Traces for Explaining Neural Network Decisions
 description: >-
-  [NeurIPS 2025][可解释性][概念解释] 提出 FaCT，一种结合 B-cos 变换和稀疏自编码器 (SAE) 的内在可解释模型，能够**忠实地**将模型预测分解为概念贡献（Logit = $\sum$ 概念贡献），并将每个概念忠实地可视化到输入像素级别（概念激活 = $\sum$ 像素贡献）…
+  [NeurIPS 2025][可解释性][概念解释] 提出 FaCT，一种结合 B-cos 变换和稀疏自编码器 (SAE) 的内在可解释模型，能够**忠实地**将模型预测分解为概念贡献（Logit = $\sum$ 概念贡献），并将每个概念忠实地可视化到输入像素级别（概念激活 = $\sum$ 像素贡献），同时提出基于 DINOv2 的 C²-score 用于评估概念一致性。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

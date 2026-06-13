@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Deblurring Texture Prior from Unpaired Data with Diffusion Model
 description: >-
-  [ICCV 2025][图像生成][无监督去模糊] TP-Diff 首次将扩散模型引入无配对图像去模糊任务，通过记忆增强的纹理先验编码器（TPE）学习空间可变的纹理先验，并设计滤波调制自注意力（FM-MSA）利用该先验实现精准去模糊，以仅 11.89M 参数在多个基准上刷新无监督 SOTA。
+  [ICCV 2025][图像生成][无监督去模糊] TP-Diff 首次将扩散模型引入无配对图像去模糊任务，通过记忆增强的纹理先验编码器（TPE）学习空间可变的纹理先验，并设计滤波调制自注意力（FM-MSA）利用该先验实现精准去模糊，以仅 11.89M 参数在多个基准上刷新无监督 SOTA。 领域现状：图像去模糊是低级视觉的…
 tags:
   - "ICCV 2025"
   - "图像生成"

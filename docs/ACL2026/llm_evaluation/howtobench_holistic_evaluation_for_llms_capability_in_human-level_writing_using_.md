@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HoWToBench: Holistic Evaluation for LLM's Capability in Human-level Writing using Tree of Writing
 description: >-
-  [ACL 2026][LLM评测][Tree-of-Writing] 本文指出 LLM-as-a-judge 在长篇开放式写作上有 "negotiation inconsistency" —— 子分聚合不稳定且不可解释…
+  [ACL 2026][LLM评测][Tree-of-Writing] 本文指出 LLM-as-a-judge 在长篇开放式写作上有 "negotiation inconsistency" —— 子分聚合不稳定且不可解释，提出 Tree-of-Writing (ToW) 把写作评测显式建模成"内容 / 格式 / 印象"三主节点 + 子叶节点 + 显式 LLM-negotiator 权重的树形流水线，在 1302 条中文 12 体裁的 HoWToBench 上把 system-level Pearson 相关性从 0.85-0.89 拉到 **0.93** 并对常见文本扰动鲁棒。
 tags:
   - "ACL 2026"
   - "LLM评测"

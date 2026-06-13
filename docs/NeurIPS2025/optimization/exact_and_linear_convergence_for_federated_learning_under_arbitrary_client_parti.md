@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable
 description: >-
-  [NeurIPS 2025][优化/理论][联邦学习] 本文引入随机矩阵和时变图作为建模工具，将联邦学习的客户端参与和本地更新过程统一为矩阵乘法形式，并提出 FOCUS 算法（基于 push-pull 策略），在**任意客户端参与**和数据异构下首次实现精确收敛与线性收敛速率。
+  [NeurIPS 2025][优化/理论][联邦学习] 本文引入随机矩阵和时变图作为建模工具，将联邦学习的客户端参与和本地更新过程统一为矩阵乘法形式，并提出 FOCUS 算法（基于 push-pull 策略），在任意客户端参与：和数据异构下首次实现精确收敛与线性收敛速率。 领域现状：联邦学习（FL）允许多客户端协作训练而不共…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

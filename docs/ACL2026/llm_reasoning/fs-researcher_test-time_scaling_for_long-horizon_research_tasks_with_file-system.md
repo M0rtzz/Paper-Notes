@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents
 description: >-
-  [ACL 2026][LLM推理][深度研究] 本文提出 FS-Researcher，一个基于文件系统的双 Agent 深度研究框架，通过 Context Builder 构建层次化知识库、Report Writer 分节撰写报告，利用持久化工作空间突破上下文窗口限制…
+  [ACL 2026][LLM推理][深度研究] 本文提出 FS-Researcher，一个基于文件系统的双 Agent 深度研究框架，通过 Context Builder 构建层次化知识库、Report Writer 分节撰写报告，利用持久化工作空间突破上下文窗口限制，在 DeepResearch Bench 上达到 53.94 RACE（SOTA），并展示了上下文构建计算量与报告质量的正相关测试时扩展效应。
 tags:
   - "ACL 2026"
   - "LLM推理"

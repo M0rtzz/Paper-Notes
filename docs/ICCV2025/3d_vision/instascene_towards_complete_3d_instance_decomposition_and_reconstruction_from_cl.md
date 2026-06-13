@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InstaScene: Towards Complete 3D Instance Decomposition and Reconstruction from Cluttered Scenes
 description: >-
-  [3D视觉] InstaScene 提出统一的杂乱场景实例分解与完整重建框架，通过追踪高斯光栅化构建空间对比学习实现精准实例分割，并设计 in-situ 生成管线利用已知观测和几何线索引导 3D 生成模型重建完整物体。
+  [3D视觉] InstaScene 提出统一的杂乱场景实例分解与完整重建框架，通过追踪高斯光栅化构建空间对比学习实现精准实例分割，并设计 in-situ 生成管线利用已知观测和几何线索引导 3D 生成模型重建完整物体。 人类能够自然地在杂乱环境中识别并脑补被遮挡的物体，但赋予机器人同样的感知能力仍极具挑战： 整体建模 vs…
 tags:
   - "3D视觉"
 ---

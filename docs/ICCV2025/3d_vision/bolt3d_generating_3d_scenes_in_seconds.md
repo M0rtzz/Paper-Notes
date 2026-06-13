@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bolt3D: Generating 3D Scenes in Seconds
 description: >-
-  [ICCV 2025][3D视觉][潜在扩散模型] 提出一种基于潜在扩散模型的前馈式3D场景生成方法，通过将3D场景表示为多组Splatter Image并使用专门训练的几何VAE，**在单GPU上7秒内生成完整3D场景**，推理成本比优化式方法（CAT3D）降低300倍。
+  [ICCV 2025][3D视觉][潜在扩散模型] 提出一种基于潜在扩散模型的前馈式3D场景生成方法，通过将3D场景表示为多组Splatter Image并使用专门训练的几何VAE，在单GPU上7秒内生成完整3D场景：，推理成本比优化式方法（CAT3D）降低300倍。 1. 2D生成模型无法直接输出3D场景：现有图像/视频生…
 tags:
   - "ICCV 2025"
   - "3D视觉"

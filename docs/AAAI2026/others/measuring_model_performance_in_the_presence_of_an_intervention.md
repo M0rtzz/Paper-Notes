@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Measuring Model Performance in the Presence of an Intervention
 description: >-
-  [AAAI 2026][模型评估] 针对存在干预（intervention）时 AI 模型评估偏差的问题，提出 Nuisance Parameter Weighting (NPW) 方法，通过对 RCT 治疗组数据进行因果加权，实现无偏的 AUROC 估计，使样本效率提升 5 倍…
+  [AAAI 2026][模型评估] 针对存在干预（intervention）时 AI 模型评估偏差的问题，提出 Nuisance Parameter Weighting (NPW) 方法，通过对 RCT 治疗组数据进行因果加权，实现无偏的 AUROC 估计，使样本效率提升 5 倍，显著改善了模型选择和假设检验的统计功效。
 tags:
   - "AAAI 2026"
   - "模型评估"

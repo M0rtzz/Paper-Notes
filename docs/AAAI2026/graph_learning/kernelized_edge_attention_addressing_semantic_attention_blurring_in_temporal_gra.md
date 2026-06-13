@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Kernelized Edge Attention: Addressing Semantic Attention Blurring in Temporal Graph Neural Networks
 description: >-
-  [AAAI 2026][图学习][时序图神经网络] 本文提出 KEAT（Kernelized Edge Attention for Temporal Graphs），通过连续时间核（Laplacian、RBF、可学习 MLP）调制边特征来解决时序图神经网络中节点与边表示纠缠导致的语义注意力模糊问题…
+  [AAAI 2026][图学习][时序图神经网络] 本文提出 KEAT（Kernelized Edge Attention for Temporal Graphs），通过连续时间核（Laplacian、RBF、可学习 MLP）调制边特征来解决时序图神经网络中节点与边表示纠缠导致的语义注意力模糊问题，在链接预测任务上实现了对 DyGFormer 高达 18% 和 TGN 7% 的 MRR 提升。
 tags:
   - "AAAI 2026"
   - "图学习"

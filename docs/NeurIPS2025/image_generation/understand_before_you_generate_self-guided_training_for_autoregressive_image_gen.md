@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation
 description: >-
-  [NeurIPS 2025][图像生成][自回归模型] 通过系统分析自回归图像生成中阻碍视觉语义学习的三个关键属性（局部条件依赖、步间语义不一致、空间不变性缺失），提出 ST-AR 训练框架，将掩码图像建模和对比学习融入 next-token prediction 训练，在不依赖预训练表示模型的情况下…
+  [NeurIPS 2025][图像生成][自回归模型] 通过系统分析自回归图像生成中阻碍视觉语义学习的三个关键属性（局部条件依赖、步间语义不一致、空间不变性缺失），提出 ST-AR 训练框架，将掩码图像建模和对比学习融入 next-token prediction 训练，在不依赖预训练表示模型的情况下，使 LlamaGen-XL 的 FID 提升约 49%（从 19.42 降到 9.81），50 epoch 即接近 3B 参数模型 300 epoch 的效果。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

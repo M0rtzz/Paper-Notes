@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image Diffusion Preview with Consistency Solver
 description: >-
-  [CVPR 2026][图像生成][扩散模型加速] 本文提出 Diffusion Preview 范式和 ConsistencySolver——一个基于强化学习训练的轻量级高阶 ODE 求解器，在低步数采样时生成高质量预览图像并确保与全步数输出的一致性…
+  [CVPR 2026][图像生成][扩散模型加速] 本文提出 Diffusion Preview 范式和 ConsistencySolver——一个基于强化学习训练的轻量级高阶 ODE 求解器，在低步数采样时生成高质量预览图像并确保与全步数输出的一致性，用 47% 更少的步数达到与 Multistep DPM-Solver 相当的 FID，用户交互时间减少近 50%。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GIFT: Guided Fine-Tuning and Transfer for Enhancing Instruction-Tuned Language Models
 description: >-
-  [ACL2026][信息检索/RAG][Guided Fine-Tuning] GIFT 让 instruction-tuned 模型不再只是最终 merge 的被动目标，而是先用它给训练 token 标注置信度，再用这些置信度指导 base model 的 LoRA 微调…
+  [ACL2026][信息检索/RAG][Guided Fine-Tuning] GIFT 让 instruction-tuned 模型不再只是最终 merge 的被动目标，而是先用它给训练 token 标注置信度，再用这些置信度指导 base model 的 LoRA 微调，最后把 adapter 合并回 instruction model，在数学、医学和指令任务上稳定超过直接微调与 Shadow-FT 等迁移基线。
 tags:
   - "ACL2026"
   - "信息检索/RAG"

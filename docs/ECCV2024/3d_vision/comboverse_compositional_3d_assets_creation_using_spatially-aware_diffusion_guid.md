@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance
 description: >-
-  [ECCV 2024][3D视觉][组合式3D生成] 提出ComboVerse，一个组合式3D资产生成框架：先将包含多个物体的输入图像分解并独立重建为单物体3D模型，再通过空间感知的Score Distillation Sampling (SSDS)引导物体的位置、缩放和旋转参数优化…
+  [ECCV 2024][3D视觉][组合式3D生成] 提出ComboVerse，一个组合式3D资产生成框架：先将包含多个物体的输入图像分解并独立重建为单物体3D模型，再通过空间感知的Score Distillation Sampling (SSDS)引导物体的位置、缩放和旋转参数优化，实现高质量多物体组合3D资产创建，在CLIP Score和人类评估中均显著优于现有方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

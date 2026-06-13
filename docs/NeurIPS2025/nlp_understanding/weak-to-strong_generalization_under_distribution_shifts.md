@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weak-to-Strong Generalization under Distribution Shifts
 description: >-
-  [NeurIPS 2025][NLP理解][弱到强泛化] 本文发现朴素的弱到强泛化在分布偏移下会失败（强模型甚至不如弱监督者），并提出 RAVEN 框架，通过动态学习多个弱模型的最优组合权重来实现鲁棒的弱到强泛化，在 OOD 任务上超越 baseline 超过 30%。
+  [NeurIPS 2025][NLP理解][弱到强泛化] 本文发现朴素的弱到强泛化在分布偏移下会失败（强模型甚至不如弱监督者），并提出 RAVEN 框架，通过动态学习多个弱模型的最优组合权重来实现鲁棒的弱到强泛化，在 OOD 任务上超越 baseline 超过 30%。 领域现状：随着 AI 模型能力不断增强…
 tags:
   - "NeurIPS 2025"
   - "NLP理解"

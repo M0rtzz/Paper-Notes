@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stress-Testing Alignment Audits with Prompt-Level Strategic Deception
 description: >-
-  [ICLR 2026][可解释性][alignment audit] 构建自动 prompt 级红队流水线（Claude Opus 4.5 驱动）增强现有微调模型有机体的情境感知与策略推理，对四种黑盒+白盒对齐审计方法进行压力测试，在 6 个实验设置中均成功诱导审计方法产生高置信错误猜测…
+  [ICLR 2026][可解释性][alignment audit] 构建自动 prompt 级红队流水线（Claude Opus 4.5 驱动）增强现有微调模型有机体的情境感知与策略推理，对四种黑盒+白盒对齐审计方法进行压力测试，在 6 个实验设置中均成功诱导审计方法产生高置信错误猜测，首次记录了不修改权重的 prompt 级激活欺骗现象。
 tags:
   - "ICLR 2026"
   - "可解释性"

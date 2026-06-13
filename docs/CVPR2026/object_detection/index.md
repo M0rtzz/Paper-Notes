@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 目标检测论文汇总 · 55篇论文解读
+  CVPR2026 目标检测论文汇总 · 67篇论文解读
 description: >-
-  55篇CVPR2026的目标检测方向论文解读，涵盖目标检测、异常检测、少样本学习、多模态、3D 目标检测、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  67篇CVPR2026的目标检测方向论文解读，涵盖目标检测、异常检测、少样本学习、多模态、3D 目标检测、域适应等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "目标检测"
@@ -12,7 +12,7 @@ tags:
   - "少样本学习"
   - "多模态"
   - "3D 目标检测"
-  - "对齐/RLHF"
+  - "域适应"
 item_list:
   - u: "a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_/"
     t: "A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps"
@@ -36,6 +36,8 @@ item_list:
     t: "Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection"
   - u: "boosting_quantitive_and_spatial_awareness_for_zero-shot_object_counting/"
     t: "Boosting Quantitive and Spatial Awareness for Zero-Shot Object Counting"
+  - u: "bridge_basis-driven_causal_inference_marries_vfms_for_domain_generalization/"
+    t: "Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization"
   - u: "bussard_normalizing_flows_for_bijective_universal_scene-specific_anomalous_relat/"
     t: "BUSSARD: Normalizing Flows for Bijective Universal Scene-Specific Anomalous Relationship Detection"
   - u: "cd-buffer_complementary_dual-buffer_framework_for_test-time_adaptation_in_advers/"
@@ -44,47 +46,45 @@ item_list:
     t: "CompAgent: An Agentic Framework for Visual Compliance Verification"
   - u: "cops_conditional_prompt_synthesis_for_zero-shot_anomaly_detection/"
     t: "CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection"
+  - u: "crossvl_complexity-aware_feature_routing_and_paired_curriculum_for_cross-view_vi/"
+    t: "CrossVL: Complexity-Aware Feature Routing and Paired Curriculum for Cross-View Vision-Language Detection"
   - u: "da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d/"
     t: "DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection"
   - u: "detecting_unknown_objects_via_energy-based_separation/"
     t: "Detecting Unknown Objects via Energy-Based Separation for Open World Object Detection"
+  - u: "detrefiner_model-agnostic_detection_refinement_with_feature_fusion_transformer/"
+    t: "DetRefiner: Model-Agnostic Detection Refinement with Feature Fusion Transformer"
   - u: "does_yolo_really_need_to_see_every_training_image_in_every_epoch/"
     t: "Does YOLO Really Need to See Every Training Image in Every Epoch?"
   - u: "evaluating_few-shot_pill_recognition_under_visual_domain_shift/"
     t: "Evaluating Few-Shot Pill Recognition Under Visual Domain Shift"
   - u: "ew-detr_evolving_world_object_detection_via_incremental_low-rank_detection_trans/"
     t: "EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer"
+  - u: "explaining_object_detectors_via_collective_contribution_of_pixels/"
+    t: "Explaining Object Detectors via Collective Contribution of Pixels"
+  - u: "exploring_hierarchical_consistency_and_unbiased_objectness_for_open-vocabulary_o/"
+    t: "Exploring Hierarchical Consistency and Unbiased Objectness for Open-Vocabulary Object Detection"
   - u: "foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob/"
     t: "Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection"
   - u: "fourier_angle_alignment_for_oriented_object_detection_in_remote_sensing/"
     t: "Fourier Angle Alignment for Oriented Object Detection in Remote Sensing"
   - u: "gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_/"
     t: "GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning"
+  - u: "hard_to_see_hard_to_label_generative_and_symbolic_acquisition_for_subtle_visual_/"
+    t: "Hard to See, Hard to Label: Generative and Symbolic Acquisition for Subtle Visual Phenomena"
   - u: "herod_heuristic_inspired_reasoning_data_efficient_rod/"
     t: "HeROD: Heuristic-inspired Reasoning Priors Facilitate Data-Efficient Referring Object Detection"
-  - u: "integration_of_deep_generative_anomaly_detection_algorithm_in_high-speed_industr/"
-    t: "Integration of Deep Generative Anomaly Detection Algorithm in High-Speed Industrial Line"
-  - u: "invad_inversion-based_reconstruction-free_anomaly_detection_with_diffusion_model/"
-    t: "InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models"
-  - u: "learning_multi-modal_prototypes_for_cross-domain_few-shot_object_detection/"
-    t: "Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection"
-  - u: "mining_instance-centric_vision-language_contexts_for_human-object_interaction_de/"
-    t: "Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection"
-  - u: "mmrad_multimodal_anomaly_detection/"
-    t: "MMR-AD: A Large-Scale Multimodal Dataset for Benchmarking General Anomaly Detection with MLLMs"
-  - u: "moeclip_patch-specialized_experts_for_zero-shot_anomaly_detection/"
-    t: "MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection"
-item_total: 55
+item_total: 67
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**📷 CVPR2026** · **55** 篇论文解读
+**📷 CVPR2026** · **67** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (27)](../../NeurIPS2025/object_detection/index.md) · [📹 ICCV2025 (28)](../../ICCV2025/object_detection/index.md) · [🧪 ICML2025 (12)](../../ICML2025/object_detection/index.md)
 
-🔥 **高频主题：** 目标检测 ×16 · 异常检测 ×16 · 少样本学习 ×13 · 多模态 ×5 · 3D 目标检测 ×3
+🔥 **高频主题：** 目标检测 ×18 · 异常检测 ×16 · 少样本学习 ×13 · 多模态 ×6 · 3D 目标检测 ×3
 
 **[A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)**
 
@@ -130,6 +130,10 @@ item_total: 55
 
 :   提出QICA框架解决零样本目标计数中的数量感知缺失和空间不敏感问题，通过数量条件化的协同提示策略（SPS）联合适配视觉-语言编码器，结合在相似度图上直接操作的代价聚合解码器（CAD）保持零样本迁移能力，在FSC-147上达到零样本SOTA（MAE 12.41）并展现强跨域泛化。
 
+**[Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization](bridge_basis-driven_causal_inference_marries_vfms_for_domain_generalization.md)**
+
+:   针对单源域、数据稀缺下检测器容易学到"光照/共现/风格"等混杂因子导致虚假相关的问题，本文提出即插即用的 Causal Basis Block（CBB），用**可学习低秩基**把因果前门调整落地成"估计两个期望"，挂在冻结的 VFM（DINOv2/3、SAM、Stable Diffusion）上做端到端校准，在五个域泛化检测基准上一致刷新 SOTA（最高 +5.4 mAP）。
+
 **[BUSSARD: Normalizing Flows for Bijective Universal Scene-Specific Anomalous Relationship Detection](bussard_normalizing_flows_for_bijective_universal_scene-specific_anomalous_relat.md)**
 
 :   提出 BUSSARD，首个基于学习的场景特定异常关系检测方法，利用预训练语言模型嵌入场景图三元组 + 自编码器降维 + 标准化流进行似然估计，在 SARD 数据集上 AUROC 提升约 10%，且对同义词变化鲁棒。
@@ -146,6 +150,10 @@ item_total: 55
 
 :   本文提出 CoPS 框架，通过显式状态token合成（ESTS）和隐式类别token采样（ICTS）两种视觉条件化机制动态生成提示，配合空间感知对齐（SAGA），在13个工业和医学数据集上实现零样本异常检测SOTA。
 
+**[CrossVL: Complexity-Aware Feature Routing and Paired Curriculum for Cross-View Vision-Language Detection](crossvl_complexity-aware_feature_routing_and_paired_curriculum_for_cross-view_vi.md)**
+
+:   针对视觉语言模型（VLM）在地面视角强、航拍视角弱的"跨视角鸿沟"，CrossVL 用一个**只在训练期生效、零推理开销**的复杂度感知通路聚合模块（CPA）按场景稀疏/密集程度路由视觉特征，再配一套**从配对采样渐变到随机采样**的课程学习（PCL）稳住优化，把 Florence-2 在 MAVREC 航拍 mAP 从 58.66% 提到 61.03%、地空差距从 8.63pp 缩到 6.65pp，并把跨随机种子的方差降了 3.3×。
+
 **[DA-Mamba: Learning Domain-Aware State Space Model for Global-Local Alignment in Domain Adaptive Object Detection](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)**
 
 :   提出 DA-Mamba，一种 CNN-SSM 混合架构，通过 Image-Aware SSM（IA-SSM）和 Object-Aware SSM（OA-SSM）两个模块，以线性复杂度实现图像级和实例级的全局-局部域不变特征对齐，在四个域自适应检测基准上达到 SOTA。
@@ -153,6 +161,10 @@ item_total: 55
 **[Detecting Unknown Objects via Energy-Based Separation for Open World Object Detection](detecting_unknown_objects_via_energy-based_separation.md)**
 
 :   提出 DEUS 框架，通过 ETF 子空间未知目标分离（EUS）在几何正交的已知/未知子空间中利用能量分数有效分离已知、未知和背景提案，并设计能量基已知区分损失（EKD）减少增量学习中新旧类的交叉干扰，在 OWOD 基准上大幅提升未知目标召回率。
+
+**[DetRefiner: Model-Agnostic Detection Refinement with Feature Fusion Transformer](detrefiner_model-agnostic_detection_refinement_with_feature_fusion_transformer.md)**
+
+:   DetRefiner 是一个不碰基检测器、不需重训的轻量后处理模块：用一个 7.5M 参数的 Transformer 把 DINOv3 的全局与局部特征融成 class/patch 向量，再借 CLIP 蒸馏对齐文本语义，推理时只对每个 (框, 类别) 重新校准置信度，给多个开放词汇检测器在 LVIS 稀有类上带来最高 +10.1 AP 的提升。
 
 **[Does YOLO Really Need to See Every Training Image in Every Epoch?](does_yolo_really_need_to_see_every_training_image_in_every_epoch.md)**
 
@@ -166,6 +178,14 @@ item_total: 55
 
 :   提出 Evolving World Object Detection (EWOD) 范式及 EW-DETR 框架，通过增量 LoRA 适配器、查询范数物体性适配器和熵感知未知混合三个协同模块，在无样本回放条件下同时解决类别增量学习、域迁移适应和未知目标检测问题，FOGS 指标提升 57.24%。
 
+**[Explaining Object Detectors via Collective Contribution of Pixels](explaining_object_detectors_via_collective_contribution_of_pixels.md)**
+
+:   本文提出 VX-CODE，用博弈论中的 Shapley 值（个体贡献）与 interaction（集体贡献）来解释目标检测器，并通过 self-context 变体 + 贪心 patch 选择把指数级计算降到可用，生成同时覆盖"主体特征 + 协同背景线索"的忠实热力图，insertion/deletion AUC 相比 SOTA 最高提升约 19%。
+
+**[Exploring Hierarchical Consistency and Unbiased Objectness for Open-Vocabulary Object Detection](exploring_hierarchical_consistency_and_unbiased_objectness_for_open-vocabulary_o.md)**
+
+:   针对开放词表检测（OVD）伪标签里两个老毛病——CLIP 的类别置信度不可靠、RPN 的 objectness 偏向基类——本文提出 HCC（用类/超类/子类三级预测的一致性来校准置信度）和 LoCLIP（往冻结 CLIP 里插一个 `[OBJ]` token 估计 objectness），只靠更干净的伪标签就在 OV-COCO/OV-LVIS 上刷到新 SOTA（OV-COCO 新类 AP$_{50}^{N}$ 38.9）。
+
 **[Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)**
 
 :   提出 FALCON-SFOD 框架，通过基础模型（OV-SAM）生成的类别无关二值掩码正则化检测器特征空间（SPAR），结合不平衡感知的噪声鲁棒伪标签损失（IRPL），在无源域目标检测中增强目标聚焦表征，多个基准上达到 SOTA。
@@ -177,6 +197,10 @@ item_total: 55
 **[GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning](gs-clip_zero-shot_3d_anomaly_detection_by_geometry-aware_prompt_and_synergistic_.md)**
 
 :   提出GS-CLIP两阶段框架，通过几何缺陷蒸馏模块将3D点云的全局形状和局部缺陷信息注入文本提示，并用LoRA双流架构协同融合渲染图和深度图，在四个大规模数据集上实现零样本3D异常检测SOTA。
+
+**[Hard to See, Hard to Label: Generative and Symbolic Acquisition for Subtle Visual Phenomena](hard_to_see_hard_to_label_generative_and_symbolic_acquisition_for_subtle_visual_.md)**
+
+:   针对"既难看清又难标注"的微弱视觉异常（如发丝裂纹、亚毫米气孔），本文提出主动学习框架 GSAL：用扩散模型在图像级和候选框级打"生成难度分"找出视觉上反常的样本，再用三级概念图给语义稀有类加"覆盖奖励"，两路信号融合后挑样本去标注，在工业薄膜缺陷、Pascal VOC、MS COCO 上都比纯不确定性/多样性基线更省标注、更早召回稀有类。
 
 **[HeROD: Heuristic-inspired Reasoning Priors Facilitate Data-Efficient Referring Object Detection](herod_heuristic_inspired_reasoning_data_efficient_rod.md)**
 
@@ -194,6 +218,10 @@ item_total: 55
 
 :   提出双分支框架 LMP，在 GroundingDINO 基础上引入视觉原型分支（正类原型+硬负原型），与文本分支联合训练并集成推理，在跨域少样本目标检测中取得 SOTA。
 
+**[Learning to Track Instance from Single Nature Language Description](learning_to_track_instance_from_single_nature_language_description.md)**
+
+:   SVLTrack 提出了一种**完全不依赖任何边界框标注**的自监督视觉-语言跟踪框架：用大型视觉-语言模型（LVLM）为视频首帧生成伪框，在弱到强一致性下做前向/后向跟踪自监督，并设计动态 token 聚合模块（DTA）把语言 token 与少数关键视觉 token 紧密对齐，最终仅凭一句自然语言描述就能跟踪任意目标，在四个 VL 跟踪基准上超越现有自监督方法。
+
 **[Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection](mining_instance-centric_vision-language_contexts_for_human-object_interaction_de.md)**
 
 :   提出 InCoM-Net，通过从 VLM 特征中为每个实例分别提取实例内、实例间和全局三层上下文特征，并通过渐进式上下文聚合与检测器特征融合，在 HICO-DET 和 V-COCO 上取得 HOI 检测 SOTA（HICO-DET Full mAP 43.96，V-COCO AP_role^S1 73.6）。
@@ -209,6 +237,10 @@ item_total: 55
 **[MRD: Multi-resolution Retrieval-Detection Fusion for High-Resolution Image Understanding](mrd_multi-resolution_retrieval-detection_fusion_for_high-resolution_image_unders.md)**
 
 :   提出 MRD，一个 training-free 的多分辨率检索-检测融合框架，通过多分辨率语义融合缓解目标碎片化，结合开放词汇检测器抑制背景干扰，显著提升 MLLM 对高分辨率图像的理解能力。
+
+**[Multi-view Crowd Tracking Transformer with View-Ground Interactions Under Large Real-World Scenes](multi-view_crowd_tracking_transformer_with_view-ground_interactions_under_large_.md)**
+
+:   首次把多视角人群跟踪从 Wildtrack/MultiviewX 这类几十帧小场景推进到上百米的大规模真实场景，提出一个完全基于 Transformer 的模型 MVTrackTrans（在地面 BEV 空间做跟踪 + 视图-地面交叉注意力补全外观信息），并配套发布两个大场景长序列数据集 MVCrowdTrack 与 CityTrack，在大数据集上 MOTA/IDF1 全面领先 CNN 方法。
 
 **[NoOVD: Novel Category Discovery and Embedding for Open-Vocabulary Object Detection](noovd_novel_category_discovery_and_embedding_for_open-vocabulary_object_detectio.md)**
 
@@ -234,6 +266,10 @@ item_total: 55
 
 :   提出可提示人体非模态补全（PHAC）新任务，通过基于点的用户提示（姿态/边界框）配合 ControlNet 注入条件信号，并设计基于修复的精炼模块保留可见区域外观，实现高质量、可控的遮挡人体图像补全。
 
+**[Portable Active Learning for Object Detection](portable_active_learning_for_object_detection.md)**
+
+:   PAL 提出一个**只读检测器推理输出、不动模型内部和训练流程**的主动学习框架：用轻量逻辑回归分类器从「pre-NMS 框数 + 置信度」两个特征估计每个检测是真/假阳性、再取熵作为实例不确定性（LIUS），叠加三路图像级信号（GUIDE）做多样性与类别均衡筛选，在 COCO / VOC / BDD100K 上比 PPAL 等基线用更少标注达到更高检测精度。
+
 **[Prompt-Free Universal Region Proposal Network](prompt-free_universal_region_proposal_network.md)**
 
 :   PF-RPN 用可学习视觉嵌入替代文本/图像提示，通过稀疏图像感知适配器、级联自提示和中心性引导查询选择三个模块，仅用 5% COCO 数据训练即可在 19 个跨域数据集上实现 SOTA 零样本区域提案。
@@ -253,6 +289,10 @@ item_total: 55
 **[Remedying Target-Domain Astigmatism for Cross-Domain Few-Shot Object Detection](remedying_target-domain_astigmatism_for_cross-domain_few-shot_object_detection.md)**
 
 :   首次发现跨域少样本目标检测（CD-FSOD）中模型注意力在目标域持续分散的"散光"现象，受人类中央凹视觉系统启发，设计正向模式精化（PPR）、负向上下文调制（NCM）和文本语义对齐（TSA）三个互补模块来重塑注意力，在6个跨域基准上以显著优势达到SOTA。
+
+**[Rethinking Transfer Learning for Industrial Inspection: DINOv3 vs. ImageNet Pretraining Across RGB and X-ray Tasks](rethinking_transfer_learning_for_industrial_inspection_dinov3_vs_imagenet_pretra.md)**
+
+:   这是一篇受控对照研究：在工业视觉质检（语义分割 / 实例分割 / 目标检测）上，把 DINOv3 蒸馏预训练的 ConvNeXt 和有监督 ImageNet 预训练的 ConvNeXt 在「冻结」和「全量微调」两种适配方式下逐一对比，结论是——DINOv3 在 RGB 任务上**只有在全量微调后**才显出优势（收敛更快、终点更高），而在 X 光这种模态偏移大的场景下，老牌的有监督 ImageNet 预训练在冻结和微调下**都更稳更强**。
 
 **[Saliency-R1: Enforcing Interpretable and Faithful Vision-language Reasoning via Saliency-map Alignment Reward](saliency-r1_enforcing_interpretable_and_faithful_vision-language_reasoning_via_s.md)**
 
@@ -290,6 +330,10 @@ item_total: 55
 
 :   提出 CANVAS——首个大规模亚细胞分辨率光片荧光显微镜（LSFM）全脑基准数据集，涵盖 6 种细胞标记物、约 93,000 个细胞标注和公开排行榜，揭示了现有检测模型在跨标记物和跨脑区泛化上的严重不足，并探索了 3D 掩码自编码器（MAE）的自监督表示学习潜力。
 
+**[Towards Continual Expansion of Data Coverage: Automatic Text-guided Edge-case Synthesis](towards_continual_expansion_of_data_coverage_automatic_text-guided_edge-case_syn.md)**
+
+:   用一个被 DPO 偏好微调过的 LLM 把图像 caption 改写成"刁难检测器"的文本提示，喂给文生图模型批量生成困难场景图像来扩充训练集，从而在 FishEye8K 鱼眼目标检测上以全自动方式超过朴素增强和人工设计提示。
+
 **[UAVGen: Visual Prototype Conditioned Focal Region Generation for UAV-Based Object Detection](uavgen_visual_prototype_conditioned_focal_region_generation_for_uav_based_object_detection.md)**
 
 :   提出 UAVGen，一个面向无人机目标检测的 layout-to-image 数据增强框架，通过视觉原型条件扩散模型和焦点区域增强管线解决小目标生成质量低、模型容量浪费和标签不一致问题。
@@ -305,3 +349,7 @@ item_total: 55
 **[VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer](visualad_language-free_zero-shot_anomaly_detection_via_vision_transformer.md)**
 
 :   重新审视零样本异常检测（ZSAD）中文本分支的必要性，提出 VisualAD——一个纯视觉框架：在冻结 ViT 中插入两个可学习 token（anomaly/normal），配合 Spatial-Aware Cross-Attention 和 Self-Alignment Function，去掉文本编码器仍在 13 个工业+医学基准上取得 SOTA。
+
+**[YOLO-NAS-Bench: A Surrogate Benchmark with Self-Evolving Predictors for YOLO Architecture Search](yolo-nas-bench_a_surrogate_benchmark_with_self-evolving_predictors_for_yolo_arch.md)**
+
+:   针对"目标检测做 NAS 评估代价太高、又没有现成 benchmark"的痛点，本文构建了首个面向 YOLO 检测器的代理 benchmark YOLO-NAS-Bench——在统一搜索空间里采样并完整训练 1000 个架构建库，训练 LightGBM 代理预测器，再用"自进化机制"让预测器自己去高性能区找架构补充训练池，把集成预测器的 sKT 从 0.694 提到 0.752，最终用它当 fitness 做演化搜索，搜出的架构在 COCO-mini 上同延迟下全面超过 YOLOv8–YOLO12 官方基线。

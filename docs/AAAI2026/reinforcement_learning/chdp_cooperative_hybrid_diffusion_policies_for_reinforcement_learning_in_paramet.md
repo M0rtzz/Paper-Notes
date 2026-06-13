@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments
 description: >-
-  [AAAI 2026][强化学习][混合动作空间] 将混合动作空间问题建模为两个agent的全合作博弈，分别用离散和连续扩散策略生成动作，通过顺序更新和Q引导码本解决策略冲突与高维可扩展性问题，成功率最高提升19.3%。
+  [AAAI 2026][强化学习][混合动作空间] 将混合动作空间问题建模为两个agent的全合作博弈，分别用离散和连续扩散策略生成动作，通过顺序更新和Q引导码本解决策略冲突与高维可扩展性问题，成功率最高提升19.3%。 混合动作空间（Hybrid Action Space）同时包含离散选择和连续参数，广泛存在于机器人控制和…
 tags:
   - "AAAI 2026"
   - "强化学习"

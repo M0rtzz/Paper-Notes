@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Is Not Free: Robust Adaptive Cost-Efficient Routing for LLM-as-a-Judge
 description: >-
-  [ICML 2026][LLM评测][LLM-as-a-Judge] RACER 把"对每个 query 决定要不要调用 reasoning 模式做 judge"建模为带 KL 不确定集的分布鲁棒约束优化问题，用 primal-dual 算法解出 OOD 下仍满足 cost 预算的最优路由策略…
+  [ICML 2026][LLM评测][LLM-as-a-Judge] RACER 把"对每个 query 决定要不要调用 reasoning 模式做 judge"建模为带 KL 不确定集的分布鲁棒约束优化问题，用 primal-dual 算法解出 OOD 下仍满足 cost 预算的最优路由策略，并首次给出 LLM 路由器策略的 linear convergence 理论保证。
 tags:
   - "ICML 2026"
   - "LLM评测"

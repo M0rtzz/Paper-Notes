@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Entropy-informed Decoding: Adaptive Information-Driven Branching
 description: >-
-  [ICML 2026][代码智能][熵自适应] EDEN（Entropy-informed DEcodiNg）把每一步的束宽 $B_t$ 设成与归一化熵 $\bar H_t$ 单调正比——高熵 fork 多分支、低熵步骤近贪心——用更少的总扩展近似更宽的 beam search…
+  [ICML 2026][代码智能][熵自适应] EDEN（Entropy-informed DEcodiNg）把每一步的束宽 $B_t$ 设成与归一化熵 $\bar H_t$ 单调正比——高熵 fork 多分支、低熵步骤近贪心——用更少的总扩展近似更宽的 beam search；理论上证明熵单调的分支因子在期望累计 regret 上严格优于任何固定束宽，且能给出 $\mathbb{E}[R_T] \leq G P_\max \sum_t \exp(-c m_t \Delta_\min^2)$ 的显式 regret 率。
 tags:
   - "ICML 2026"
   - "代码智能"

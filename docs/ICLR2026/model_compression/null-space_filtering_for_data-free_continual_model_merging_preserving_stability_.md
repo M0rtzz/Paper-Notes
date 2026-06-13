@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Null-Space Filtering for Data-Free Continual Model Merging: Preserving Stability, Promoting Plasticity
 description: >-
-  [ICLR 2026][模型压缩][模型合并] 提出 NUFILT 框架，利用"任务向量与表示子空间近似对齐"的几何性质，通过零空间滤波压制对旧任务的干扰、投影感知 LoRA 恢复新任务可塑性，在完全不访问数据的条件下实现持续模型合并，在视觉/NLP/多模态基准上比 OPCM 提升 4-8%…
+  [ICLR 2026][模型压缩][模型合并] 提出 NUFILT 框架，利用"任务向量与表示子空间近似对齐"的几何性质，通过零空间滤波压制对旧任务的干扰、投影感知 LoRA 恢复新任务可塑性，在完全不访问数据的条件下实现持续模型合并，在视觉/NLP/多模态基准上比 OPCM 提升 4-8%，逼近独立微调的上界。
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4DTAM: Non-Rigid Tracking and Mapping via Dynamic Surface Gaussians
 description: >-
-  [CVPR 2025][3D视觉][4D SLAM] 本文提出了首个基于可微渲染和2D高斯表面基元的4D跟踪与建图方法（4DTAM），通过联合优化相机位姿、场景几何、外观和动态变形场，从单目RGB-D视频流实现非刚性动态场景的实时重建，并发布了全新的合成4D数据集Sim4D用于评估。
+  [CVPR 2025][3D视觉][4D SLAM] 本文提出了首个基于可微渲染和2D高斯表面基元的4D跟踪与建图方法（4DTAM），通过联合优化相机位姿、场景几何、外观和动态变形场，从单目RGB-D视频流实现非刚性动态场景的实时重建，并发布了全新的合成4D数据集Sim4D用于评估。 视觉SLAM技术在过去二十年取得了巨大进…
 tags:
   - "CVPR 2025"
   - "3D视觉"

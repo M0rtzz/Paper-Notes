@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Visually Grounded Multimodal Summarization via Cross-Modal Transformer and Gated Attention
 description: >-
-  [ACL2026][多模态VLM][多模态摘要] 这篇论文提出 SPeCTrA-Sum，把层级对齐的 Deep Visual Processor、门控跨模态注意力和 DPP 蒸馏的图像选择器合在一起，使多模态摘要不仅保持接近 SOTA 的 ROUGE，还能选出更相关且更多样的支撑图像。
+  [ACL2026 Findings][多模态VLM][多模态摘要] 这篇论文提出 SPeCTrA-Sum，把层级对齐的 Deep Visual Processor、门控跨模态注意力和 DPP 蒸馏的图像选择器合在一起，使多模态摘要不仅保持接近 SOTA 的 ROUGE，还能选出更相关且更多样的支撑图像。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "多模态摘要"
   - "视觉grounding"

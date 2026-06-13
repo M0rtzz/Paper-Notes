@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LUCAS: Layered Universal Codec Avatars
 description: >-
-  [CVPR 2025][3D视觉][codec avatar] 提出 LUCAS，首个将人脸和头发解耦为分层 mesh 的通用先验 Avatar 模型，通过共享表情编码 + 独立解码实现自然的面部-头发交互，同时支持实时 mesh 渲染（45 FPS mobile）和高保真 Gaussian 渲染…
+  [CVPR 2025][3D视觉][codec avatar] 提出 LUCAS，首个将人脸和头发解耦为分层 mesh 的通用先验 Avatar 模型，通过共享表情编码 + 独立解码实现自然的面部-头发交互，同时支持实时 mesh 渲染（45 FPS mobile）和高保真 Gaussian 渲染，在跨身份零样本驱动中达到 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

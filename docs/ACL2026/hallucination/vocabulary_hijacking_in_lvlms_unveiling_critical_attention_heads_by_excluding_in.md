@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vocabulary Hijacking in LVLMs: Unveiling Critical Attention Heads by Excluding Inert Tokens to Mitigate Hallucination
 description: >-
-  [ACL2026][幻觉检测][LVLM幻觉] 本文发现 LVLM 中部分无效视觉 token 会稳定解码到一组无关词并劫持注意力，进而提出 HABI 定位这些 token、用 NHAR 找到可靠视觉头，再通过 HAVAE 在推理时增强这些头以降低幻觉。
+  [ACL2026][幻觉检测][LVLM幻觉] 本文发现 LVLM 中部分无效视觉 token 会稳定解码到一组无关词并劫持注意力，进而提出 HABI 定位这些 token、用 NHAR 找到可靠视觉头，再通过 HAVAE 在推理时增强这些头以降低幻觉。 领域现状：多模态大模型的幻觉缓解方法常围绕“让模型多看图”展开…
 tags:
   - "ACL2026"
   - "幻觉检测"

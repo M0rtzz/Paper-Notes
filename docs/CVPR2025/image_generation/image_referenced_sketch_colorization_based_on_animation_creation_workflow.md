@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image Referenced Sketch Colorization Based on Animation Creation Workflow
 description: >-
-  [CVPR 2025][图像生成][草图上色] 本文模仿真实动画制作流程，提出一种基于扩散模型的图像参考草图上色框架，通过分割交叉注意力（Split Cross-Attention）配合可切换LoRA机制分别处理前景和背景的上色，消除了空间纠缠伪影（spatial entanglement）…
+  [CVPR 2025][图像生成][草图上色] 本文模仿真实动画制作流程，提出一种基于扩散模型的图像参考草图上色框架，通过分割交叉注意力（Split Cross-Attention）配合可切换LoRA机制分别处理前景和背景的上色，消除了空间纠缠伪影（spatial entanglement），在4.8M图像上训练后在定性、定量和用户研究中均优于现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

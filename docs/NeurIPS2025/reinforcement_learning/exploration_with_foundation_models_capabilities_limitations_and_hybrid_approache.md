@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches
 description: >-
-  [NeurIPS 2025][强化学习][foundation models] 系统评测 LLM/VLM 在经典 RL 探索任务（bandit、Gridworld、Atari）上的零样本能力，发现 VLM 存在"知行差距"（knowing-doing gap）——高层推理正确但低层控制失败…
+  [NeurIPS 2025][强化学习][foundation models] 系统评测 LLM/VLM 在经典 RL 探索任务（bandit、Gridworld、Atari）上的零样本能力，发现 VLM 存在"知行差距"（knowing-doing gap）——高层推理正确但低层控制失败，并提出简单的 VLM-RL 混合框架在理想条件下可显著加速学习。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

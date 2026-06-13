@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization
 description: >-
-  [NeurIPS 2025][LLM评测][混合归一化] 提出 HybridNorm 混合归一化策略——注意力模块用 QKV 归一化解耦梯度、FFN 用 Post-Norm 增强正则化，在 550M-7B 规模上同时获得 Pre-Norm 的训练稳定性和 Post-Norm 的泛化性能…
+  [NeurIPS 2025][LLM评测][混合归一化] 提出 HybridNorm 混合归一化策略——注意力模块用 QKV 归一化解耦梯度、FFN 用 Post-Norm 增强正则化，在 550M-7B 规模上同时获得 Pre-Norm 的训练稳定性和 Post-Norm 的泛化性能，7B 模型下游任务平均提升 2.45%。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

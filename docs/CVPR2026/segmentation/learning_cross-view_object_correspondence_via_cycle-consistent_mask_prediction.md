@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction
 description: >-
-  [CVPR 2026][语义分割][跨视角对应] 提出基于条件二值分割的跨视角物体对应框架 CCMP，通过循环一致性约束提供自监督信号并支持测试时训练 (TTT)，在 Ego-Exo4D 上达到 44.57% mIoU 的 SOTA 性能。
+  [CVPR 2026][语义分割][跨视角对应] 提出基于条件二值分割的跨视角物体对应框架 CCMP，通过循环一致性约束提供自监督信号并支持测试时训练 (TTT)，在 Ego-Exo4D 上达到 44.57% mIoU 的 SOTA 性能。 跨视角视觉对应（特别是自我中心/外中心视角之间）是具身智能的核心能力…
 tags:
   - "CVPR 2026"
   - "语义分割"

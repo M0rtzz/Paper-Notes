@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decompositional Neural Scene Reconstruction with Generative Diffusion Prior
 description: >-
-  [CVPR 2025][3D视觉][分解式场景重建] 提出DP-Recon，将生成式扩散先验（SDS）引入分解式神经场景重建中，通过可见性引导动态调整逐像素SDS权重，解决重建目标与生成引导之间的冲突，实现稀疏视角下完整的物体几何与外观恢复。
+  [CVPR 2025][3D视觉][分解式场景重建] 提出DP-Recon，将生成式扩散先验（SDS）引入分解式神经场景重建中，通过可见性引导动态调整逐像素SDS权重，解决重建目标与生成引导之间的冲突，实现稀疏视角下完整的物体几何与外观恢复。 - 分解式3D场景重建旨在将场景分解为独立物体，对具身AI、机器人和场景编辑至关重…
 tags:
   - "CVPR 2025"
   - "3D视觉"

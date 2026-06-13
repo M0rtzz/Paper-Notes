@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VTool-R1: VLMs Learn to Think with Images via Reinforcement Learning on Multimodal Tool Use
 description: >-
-  [多模态VLM] 提出 VTool-R1，首个通过强化学习微调训练 VLM 生成交错文本和视觉中间推理步骤的框架，使模型学会"用图像思考"。
+  [多模态VLM] 提出 VTool-R1，首个通过强化学习微调训练 VLM 生成交错文本和视觉中间推理步骤的框架，使模型学会"用图像思考"。 核心问题 RFT（强化学习微调）已大幅提升 LLM 的推理能力，但在 VLM 领域的复制尝试仍局限于纯文本推理：模型仅在初始编码阶段处理图像，推理链完全以文本形式生成…
 tags:
   - "多模态VLM"
 ---

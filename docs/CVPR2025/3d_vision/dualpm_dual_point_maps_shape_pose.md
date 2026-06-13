@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][双点图] 提出 Dual Point Maps（DualPM），通过同时预测相机空间和规范空间的点图对，将可变形物体的 3D 形状和姿态重建简化为点图预测问题，仅用合成数据训练即可泛化到真实图像。
+  [CVPR 2025][3D视觉][双点图] 提出 Dual Point Maps（DualPM），通过同时预测相机空间和规范空间的点图对，将可变形物体的 3D 形状和姿态重建简化为点图预测问题，仅用合成数据训练即可泛化到真实图像。 领域现状：DUSt3R 证明了点图表示在静态场景重建中的强大能力，将匹配、相机估计、三角化等…
 tags:
   - "CVPR 2025"
   - "3D视觉"

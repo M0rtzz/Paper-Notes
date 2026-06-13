@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning in Structured Stackelberg Games
 description: >-
-  [ICML 2026][强化学习][Stackelberg game] 本文给"上下文 Stackelberg 博弈"加上一条结构性假设（context→follower type 的映射来自某个假设类 $\mathcal{H}$）…
+  [ICML 2026 Spotlight][强化学习][Stackelberg game] 本文给"上下文 Stackelberg 博弈"加上一条结构性假设（context→follower type 的映射来自某个假设类 $\mathcal{H}$），并构造出两类全新的学习论维度——刻画在线悔界的 Stackelberg-Littlestone 维度 SLdim 与刻画 PAC 样本复杂度上下界的 $\gamma$-SG / $\gamma$-SN 维度——证明它们能严格胜过多类 Littlestone / Natarajan 维度，给出实例最优的在线算法 SSOA 和分布式算法 $\mathfrak L^*$。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "强化学习"
   - "Stackelberg game"
   - "online learning"

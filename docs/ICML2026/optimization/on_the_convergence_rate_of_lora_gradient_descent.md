@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Convergence Rate of LoRA Gradient Descent
 description: >-
-  [ICML 2026][优化/理论][LoRA] 本文首次在不假设 adapter 矩阵有界、不要求重参数化损失 Lipschitz 平滑的前提下，证明了原始 LoRA 梯度下降的最小梯度范数以 $O(1/\log T)$ 速率收敛（若参数范数有界则恢复经典 $O(1/T)$）…
+  [ICML 2026][优化/理论][LoRA] 本文首次在不假设 adapter 矩阵有界、不要求重参数化损失 Lipschitz 平滑的前提下，证明了原始 LoRA 梯度下降的最小梯度范数以 $O(1/\log T)$ 速率收敛（若参数范数有界则恢复经典 $O(1/T)$），并据此设计了与理论严格对应的自适应/归一化学习率，在 logistic regression、ResNet-18、TinyLlama 上验证了训练加速与稳定性提升。
 tags:
   - "ICML 2026"
   - "优化/理论"

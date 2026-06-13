@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FiDeLiS: Faithful Reasoning in Large Language Model for Knowledge Graph Question Answering
 description: >-
-  [ACL 2025][图学习][知识图谱问答] 提出 FiDeLiS 框架，通过 Path-RAG 预选候选集缩小搜索空间 + 演绎验证beam search (DVBS) 逐步构建并验证推理路径，在无需训练的情况下提升 LLM 在知识图谱问答中的准确性和可解释性。
+  [ACL 2025][图学习][知识图谱问答] 提出 FiDeLiS 框架，通过 Path-RAG 预选候选集缩小搜索空间 + 演绎验证beam search (DVBS) 逐步构建并验证推理路径，在无需训练的情况下提升 LLM 在知识图谱问答中的准确性和可解释性。 领域现状：LLM 在复杂推理任务中表现出色…
 tags:
   - "ACL 2025"
   - "图学习"

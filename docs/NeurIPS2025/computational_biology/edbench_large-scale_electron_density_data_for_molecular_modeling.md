@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDBench: Large-Scale Electron Density Data for Molecular Modeling
 description: >-
-  [NeurIPS 2025][计算生物][电子密度] 构建了目前最大规模的电子密度（ED）数据集 EDBench（330 万分子，基于 B3LYP/6-31G** DFT 计算），并设计了涵盖预测、检索、生成三类任务的 ED 基准评估体系，首次系统评估了深度学习模型对电子密度的理解和利用能力。
+  [NeurIPS 2025][计算生物][电子密度] 构建了目前最大规模的电子密度（ED）数据集 EDBench（330 万分子，基于 B3LYP/6-31G DFT 计算），并设计了涵盖预测、检索、生成三类任务的 ED 基准评估体系，首次系统评估了深度学习模型对电子密度的理解和利用能力。 ：领域现状：机器学习力场（MLFF…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

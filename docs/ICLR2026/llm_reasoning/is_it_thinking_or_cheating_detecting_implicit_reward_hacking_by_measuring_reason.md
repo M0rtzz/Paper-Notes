@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort
 description: >-
-  [ICLR 2026][LLM推理][reward hacking] 提出 TRACE（Truncated Reasoning AUC Evaluation）方法，通过逐步截断推理链并测量模型"多早"能获得奖励来量化推理努力程度，从而检测 CoT 监控无法发现的隐式奖励黑客行为…
+  [ICLR 2026 Oral][LLM推理][reward hacking] 提出 TRACE（Truncated Reasoning AUC Evaluation）方法，通过逐步截断推理链并测量模型"多早"能获得奖励来量化推理努力程度，从而检测 CoT 监控无法发现的隐式奖励黑客行为，在数学和代码任务中比最强 CoT 监控器分别提升 65% 和 30% 以上的检测 F1。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "LLM推理"
   - "reward hacking"
   - "chain-of-thought"

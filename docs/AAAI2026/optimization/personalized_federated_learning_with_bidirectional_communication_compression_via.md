@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Personalized Federated Learning with Bidirectional Communication Compression via One-Bit Random Sketching
 description: >-
-  [AAAI 2026][优化/理论][联邦学习] 提出 pFed1BS 框架，通过单比特随机草图实现联邦学习中上下行双向极致通信压缩（降低 99%+），同时引入基于符号的正则化器实现客户端模型个性化，在非 IID 数据场景下同时解决通信瓶颈和数据异质性两大难题。
+  [AAAI 2026][优化/理论][联邦学习] 提出 pFed1BS 框架，通过单比特随机草图实现联邦学习中上下行双向极致通信压缩（降低 99%+），同时引入基于符号的正则化器实现客户端模型个性化，在非 IID 数据场景下同时解决通信瓶颈和数据异质性两大难题。 联邦学习（FL）面临两大根本挑战：(1) 客户端数据非 IID…
 tags:
   - "AAAI 2026"
   - "优化/理论"

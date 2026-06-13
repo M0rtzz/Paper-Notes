@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AANet: Virtual Screening under Structural Uncertainty via Alignment and Aggregation
 description: >-
-  [NeurIPS 2025][计算生物][虚拟筛选] 针对现实药物发现中蛋白质 holo 结构不可用的问题，提出 AANet——通过三模态对比学习（配体-holo pocket-检测cavity）对齐表征并用交叉注意力聚合多个候选结合位点…
+  [NeurIPS 2025][计算生物][虚拟筛选] 针对现实药物发现中蛋白质 holo 结构不可用的问题，提出 AANet——通过三模态对比学习（配体-holo pocket-检测cavity）对齐表征并用交叉注意力聚合多个候选结合位点，在 apo/predicted 蛋白质结构上的盲筛性能远超 SOTA（DUD-E 上 EF1% 从 11.75 提升至 37.19）。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

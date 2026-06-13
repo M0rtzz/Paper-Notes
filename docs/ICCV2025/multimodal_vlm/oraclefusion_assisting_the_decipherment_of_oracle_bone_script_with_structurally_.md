@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OracleFusion: Assisting the Decipherment of Oracle Bone Script with Structurally Constrained Semantic Typography
 description: >-
-  [ICCV 2025][多模态VLM][oracle bone script] 提出OracleFusion，一个两阶段语义字体排印框架：第一阶段利用MLLM增强的空间感知推理（SAR）分析甲骨文字形结构并定位关键部件；第二阶段提出Structural Oracle Vector Fusion（SOVF）…
+  [ICCV 2025][多模态VLM][oracle bone script] 提出OracleFusion，一个两阶段语义字体排印框架：第一阶段利用MLLM增强的空间感知推理（SAR）分析甲骨文字形结构并定位关键部件；第二阶段提出Structural Oracle Vector Fusion（SOVF），通过字形结构约束和骨架保持损失生成语义丰富的矢量字体，在保持原始字形完整性的同时传达语义，辅助专家解读未释甲骨文。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

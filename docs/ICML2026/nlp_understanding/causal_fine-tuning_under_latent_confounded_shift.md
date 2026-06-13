@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Fine-Tuning under Latent Confounded Shift
 description: >-
-  [ICML 2026][NLP理解][因果微调] 本文提出 Causal Fine-Tuning (CFT)：在标准 BERT 微调里嵌入一个 SCM 启发的"高级稳定特征 $C$ + 低级混杂敏感特征 $\Phi$"分解，并用 front-door 风格的 do-calculus 调整公式做预测…
+  [ICML 2026][NLP理解][因果微调] 本文提出 Causal Fine-Tuning (CFT)：在标准 BERT 微调里嵌入一个 SCM 启发的"高级稳定特征 $C$ + 低级混杂敏感特征 $\Phi$"分解，并用 front-door 风格的 do-calculus 调整公式做预测，在文本伪相关注入攻击下显著优于 SFT/SWA/WISE 等单域泛化基线。
 tags:
   - "ICML 2026"
   - "NLP理解"

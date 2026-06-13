@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explicit Trait Inference for Multi-Agent Coordination
 description: >-
-  [ACL 2026][多智能体][多智能体协调] 提出显式特质推理（ETI）方法，基于心理学中温暖和能力两个维度让LLM智能体推理并追踪合作伙伴的行为特征，在经济博弈中减少45-77%收益损失，在MultiAgentBench上提升3-29%任务表现。
+  [ACL 2026][多智能体][多智能体协调] 提出显式特质推理（ETI）方法，基于心理学中温暖和能力两个维度让LLM智能体推理并追踪合作伙伴的行为特征，在经济博弈中减少45-77%收益损失，在MultiAgentBench上提升3-29%任务表现。 领域现状：基于LLM的多智能体系统（MAS）在复杂任务上展现潜力…
 tags:
   - "ACL 2026"
   - "多智能体"

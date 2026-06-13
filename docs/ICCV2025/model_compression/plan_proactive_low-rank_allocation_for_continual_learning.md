@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PLAN: Proactive Low-Rank Allocation for Continual Learning
 description: >-
-  [ICCV 2025][模型压缩][持续学习] 提出 PLAN 框架，通过为每个任务前瞻性地分配正交低秩子空间并使用扰动策略最小化任务间干扰，在持续学习场景下实现了高效且无遗忘的大模型微调，在标准 CL 基准上建立了新的 SOTA。
+  [ICCV 2025][模型压缩][持续学习] 提出 PLAN 框架，通过为每个任务前瞻性地分配正交低秩子空间并使用扰动策略最小化任务间干扰，在持续学习场景下实现了高效且无遗忘的大模型微调，在标准 CL 基准上建立了新的 SOTA。 领域现状：持续学习 (Continual Learning, CL) 要求模型顺序学习多个任…
 tags:
   - "ICCV 2025"
   - "模型压缩"

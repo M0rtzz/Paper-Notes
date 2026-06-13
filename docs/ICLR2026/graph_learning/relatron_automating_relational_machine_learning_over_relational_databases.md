@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relatron: Automating Relational Machine Learning over Relational Databases
 description: >-
-  [ICLR 2026][图学习][关系数据库] 系统比较关系深度学习（RDL/GNN）和深度特征合成（DFS）在关系数据库预测任务上的性能，发现两者各有优势且高度任务依赖，提出 Relatron——基于任务嵌入的元选择器，通过 RDB 任务同质性和亲和力嵌入实现自动架构选择…
+  [ICLR 2026][图学习][关系数据库] 系统比较关系深度学习（RDL/GNN）和深度特征合成（DFS）在关系数据库预测任务上的性能，发现两者各有优势且高度任务依赖，提出 Relatron——基于任务嵌入的元选择器，通过 RDB 任务同质性和亲和力嵌入实现自动架构选择，在联合架构-超参搜索中提升达 18.5%。
 tags:
   - "ICLR 2026"
   - "图学习"

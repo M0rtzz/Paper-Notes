@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FinanceReasoning: Benchmarking Financial Numerical Reasoning More Credible, Comprehensive and Challenging
 description: >-
-  [ACL 2025][LLM评测][金融数值推理] 提出 FinanceReasoning benchmark，通过重标注公开数据集、构建 3,133 个 Python 金融函数库和新增 908 道专家标注难题，在可信度、全面性和挑战性三个维度提升金融数值推理评估能力。
+  [ACL 2025][LLM评测][金融数值推理] 提出 FinanceReasoning benchmark，通过重标注公开数据集、构建 3,133 个 Python 金融函数库和新增 908 道专家标注难题，在可信度、全面性和挑战性三个维度提升金融数值推理评估能力。 领域现状： LRM（大推理模型）如 OpenAI o1…
 tags:
   - "ACL 2025"
   - "LLM评测"

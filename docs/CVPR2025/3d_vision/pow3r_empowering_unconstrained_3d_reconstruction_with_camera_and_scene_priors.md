@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pow3R: Empowering Unconstrained 3D Reconstruction with Camera and Scene Priors
 description: >-
-  [CVPR 2025][3D视觉][3D重建] 提出 Pow3R，一个在 DUSt3R 基础上增强的通用 3D 视觉回归模型，能灵活接收相机内参、相对位姿、稀疏/稠密深度等任意组合的辅助信息，在多项 3D 视觉任务上取得 SOTA 并解锁原生分辨率推理等新能力。
+  [CVPR 2025][3D视觉][3D重建] 提出 Pow3R，一个在 DUSt3R 基础上增强的通用 3D 视觉回归模型，能灵活接收相机内参、相对位姿、稀疏/稠密深度等任意组合的辅助信息，在多项 3D 视觉任务上取得 SOTA 并解锁原生分辨率推理等新能力。 DUSt3R 是 3D 视觉回归模型的里程碑…
 tags:
   - "CVPR 2025"
   - "3D视觉"

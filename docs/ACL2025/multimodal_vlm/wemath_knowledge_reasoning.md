@@ -2,7 +2,7 @@
 title: >-
   [论文解读] We-Math: Does Your Large Multimodal Model Achieve Human-like Mathematical Reasoning?
 description: >-
-  [ACL 2025][多模态VLM][视觉数学推理] 本文提出We-Math基准，包含6.5K视觉数学问题和67个层次化知识概念，通过将复合问题分解为子问题引入四维评估指标（知识不足IK、泛化不足IG、完全掌握CM、机械记忆RM），首次从知识掌握角度系统评估LMM的数学推理过程而非仅关注最终结果。
+  [ACL 2025][多模态VLM][视觉数学推理] 本文提出We-Math基准，包含6.5K视觉数学问题和67个层次化知识概念，通过将复合问题分解为子问题引入四维评估指标（知识不足IK、泛化不足IG、完全掌握CM、机械记忆RM），首次从知识掌握角度系统评估LMM的数学推理过程而非仅关注最终结果。 1. 领域现状：LMM在视…
 tags:
   - "ACL 2025"
   - "多模态VLM"

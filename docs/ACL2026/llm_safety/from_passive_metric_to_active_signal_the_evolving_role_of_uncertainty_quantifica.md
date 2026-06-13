@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Passive Metric to Active Signal: The Evolving Role of Uncertainty Quantification in Large Language Models
 description: >-
-  [ACL 2026][LLM安全][不确定性量化] 本文系统综述了 LLM 中不确定性量化从"被动诊断指标"到"主动控制信号"的功能演化，覆盖三大前沿领域：高级推理（引导计算分配和自我纠正）、自主代理（驱动工具使用和信息获取的元认知决策）、以及强化学习（缓解奖励黑客并通过内在奖励实现自我改进）。
+  [ACL 2026][LLM安全][不确定性量化] 本文系统综述了 LLM 中不确定性量化从"被动诊断指标"到"主动控制信号"的功能演化，覆盖三大前沿领域：高级推理（引导计算分配和自我纠正）、自主代理（驱动工具使用和信息获取的元认知决策）、以及强化学习（缓解奖励黑客并通过内在奖励实现自我改进）。 领域现状：LLM 在各类任务…
 tags:
   - "ACL 2026"
   - "LLM安全"

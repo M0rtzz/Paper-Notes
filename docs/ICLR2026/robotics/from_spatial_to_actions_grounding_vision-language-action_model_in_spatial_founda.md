@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors
 description: >-
-  [ICLR 2026][机器人][VLA模型] 提出 FALCON（From Spatial to Action），通过将空间基础模型的丰富 3D 空间 token 注入到 Action Head 而非 VLM 主干中，实现了 VLA 模型的强 3D 空间感知…
+  [ICLR 2026][机器人][VLA模型] 提出 FALCON（From Spatial to Action），通过将空间基础模型的丰富 3D 空间 token 注入到 Action Head 而非 VLM 主干中，实现了 VLA 模型的强 3D 空间感知，同时保持仅 RGB 到 RGB-D 的灵活模态切换，在仿真和真实世界任务中均达到 SOTA。
 tags:
   - "ICLR 2026"
   - "机器人"

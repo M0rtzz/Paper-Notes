@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Model Is Superior LLM-Judge, Yet Suffers from Biases
 description: >-
-  [ACL 2026][LLM评测][推理模型评审] 论文系统比较 reasoning model 与普通 LLM 作为 judge 的表现，发现推理模型在准确率、评测指令遵循和攻击鲁棒性上更强，但仍容易受表层质量偏差影响，并提出 prompt-only 的 PlanJudge 缓解偏差。
+  [ACL 2026][LLM评测][推理模型评审] 论文系统比较 reasoning model 与普通 LLM 作为 judge 的表现，发现推理模型在准确率、评测指令遵循和攻击鲁棒性上更强，但仍容易受表层质量偏差影响，并提出 prompt-only 的 PlanJudge 缓解偏差。 领域现状：随着开放式生成任务增多…
 tags:
   - "ACL 2026"
   - "LLM评测"

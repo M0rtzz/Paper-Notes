@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image Restoration via Diffusion Models with Dynamic Resolution
 description: >-
-  [ICML 2026][图像生成][动态分辨率扩散] SubDAPS / SubDAPS++ 把 DPS、DAPS 这类 pixel-space 扩散复原方法搬进"动态分辨率扩散模型"框架——早期在 $64^2 / 128^2$ 子空间采样、后期才回到 $256^2$ 全分辨率…
+  [ICML 2026][图像生成][动态分辨率扩散] SubDAPS / SubDAPS++ 把 DPS、DAPS 这类 pixel-space 扩散复原方法搬进"动态分辨率扩散模型"框架——早期在 $64^2 / 128^2$ 子空间采样、后期才回到 $256^2$ 全分辨率，并用共轭梯度替掉 Langevin、用阈值切换 stochastic / deterministic 采样、再附一个无需额外网络评估的 corrector 步，在 4 类线性 + 2 类非线性复原任务上多数指标超越 pixel 与 latent 扩散方法且推理更快。
 tags:
   - "ICML 2026"
   - "图像生成"

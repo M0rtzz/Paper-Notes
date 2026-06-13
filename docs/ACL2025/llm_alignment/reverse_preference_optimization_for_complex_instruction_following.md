@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reverse Preference Optimization for Complex Instruction Following
 description: >-
-  [ACL 2025][LLM对齐][指令遵循] 提出反向偏好优化（RPO），通过动态反转指令中未满足的约束将任意回复转化为"完美"chosen 样本，消除多约束偏好对中的噪声，在多轮复杂指令遵循任务上显著超越 DPO 基线。
+  [ACL 2025][LLM对齐][指令遵循] 提出反向偏好优化（RPO），通过动态反转指令中未满足的约束将任意回复转化为"完美"chosen 样本，消除多约束偏好对中的噪声，在多轮复杂指令遵循任务上显著超越 DPO 基线。 领域现状： 指令遵循（IF）是 LLM 的核心能力，尤其在多轮对话、多约束场景中（如系统提示遵循）…
 tags:
   - "ACL 2025"
   - "LLM对齐"

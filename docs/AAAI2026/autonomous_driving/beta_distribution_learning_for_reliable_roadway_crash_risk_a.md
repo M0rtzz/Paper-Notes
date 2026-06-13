@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beta Distribution Learning for Reliable Roadway Crash Risk Assessment
 description: >-
-  [AAAI 2026][自动驾驶][Beta Distribution] 提出基于 Beta 分布学习的地理空间深度学习框架，利用多尺度卫星图像预测道路致命事故风险的完整概率分布（而非点估计），在 Recall 上提升 17-23%，并通过分布形状自然表达不确定性。
+  [AAAI 2026][自动驾驶][Beta Distribution] 提出基于 Beta 分布学习的地理空间深度学习框架，利用多尺度卫星图像预测道路致命事故风险的完整概率分布（而非点估计），在 Recall 上提升 17-23%，并通过分布形状自然表达不确定性。 领域现状：道路交通事故每年全球致死超 130 万人…
 tags:
   - "AAAI 2026"
   - "自动驾驶"

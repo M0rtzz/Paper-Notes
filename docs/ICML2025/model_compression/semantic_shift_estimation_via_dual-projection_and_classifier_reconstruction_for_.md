@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Shift Estimation via Dual-Projection and Classifier Reconstruction for Exemplar-Free Class-Incremental Learning
 description: >-
-  [ICML2025][模型压缩][类增量学习] 提出 DPCR 方法，通过双投影（任务级 TSSP + 类别级 CIP）估计语义漂移，并用岭回归无BP地重建分类器，同时解决无样例类增量学习中的语义漂移和决策偏差问题，在多个基准上超越 SOTA。
+  [ICML2025][模型压缩][类增量学习] 提出 DPCR 方法，通过双投影（任务级 TSSP + 类别级 CIP）估计语义漂移，并用岭回归无BP地重建分类器，同时解决无样例类增量学习中的语义漂移和决策偏差问题，在多个基准上超越 SOTA。 无样例类增量学习（EFCIL）要求模型在不存储旧数据的前提下顺序学习新类别…
 tags:
   - "ICML2025"
   - "模型压缩"

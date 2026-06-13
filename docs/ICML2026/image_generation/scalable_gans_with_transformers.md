@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable GANs with Transformers
 description: >-
-  [ICML2026][图像生成][GAN] 本文提出 GAT（Generative Adversarial Transformers）——一套在 VAE 隐空间上用纯 Transformer 生成器与判别器搭起来的可扩展 GAN 框架…
+  [ICML2026][图像生成][GAN] 本文提出 GAT（Generative Adversarial Transformers）——一套在 VAE 隐空间上用纯 Transformer 生成器与判别器搭起来的可扩展 GAN 框架，通过多层级噪声扰动监督（MNG）激活早期生成器层、并用宽度感知的学习率缩放稳定大模型训练，使 GAT-XL/2 在 ImageNet-256 类条件生成上仅训练 60 epoch 就拿到 FID 2.18 的单步生成 SOTA，比同等规模 1-NFE diffusion/flow baseline 少用 4× epoch。
 tags:
   - "ICML2026"
   - "图像生成"

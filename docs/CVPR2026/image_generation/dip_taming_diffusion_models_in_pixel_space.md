@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiP: Taming Diffusion Models in Pixel Space
 description: >-
-  [CVPR 2026][图像生成][像素空间扩散] 提出 DiP，一个高效的像素空间扩散框架，通过将 DiT backbone 在大patch上建模全局结构 + 轻量 Patch Detailer Head 恢复局部细节，实现了与LDM可比的计算效率但无需VAE…
+  [CVPR 2026][图像生成][像素空间扩散] 提出 DiP，一个高效的像素空间扩散框架，通过将 DiT backbone 在大patch上建模全局结构 + 轻量 Patch Detailer Head 恢复局部细节，实现了与LDM可比的计算效率但无需VAE，在ImageNet 256×256上达到1.79 FID。
 tags:
   - "CVPR 2026"
   - "图像生成"

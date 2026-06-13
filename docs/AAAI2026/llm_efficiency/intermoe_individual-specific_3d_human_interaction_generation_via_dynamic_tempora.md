@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InterMoE: Individual-Specific 3D Human Interaction Generation via Dynamic Temporal-Selective MoE
 description: >-
-  [AAAI 2026][LLM效率][人体交互生成] 提出 InterMoE，通过 Dynamic Temporal-Selective MoE 架构解决文本驱动的双人 3D 交互运动生成中的个体特征保持和语义忠实度问题：Synergistic Router 融合语义和运动学特征引导路由…
+  [AAAI 2026][LLM效率][人体交互生成] 提出 InterMoE，通过 Dynamic Temporal-Selective MoE 架构解决文本驱动的双人 3D 交互运动生成中的个体特征保持和语义忠实度问题：Synergistic Router 融合语义和运动学特征引导路由，Dynamic Temporal Selection 让专家动态选择关键时间帧，在 InterHuman 上 FID 降低 9%、InterX 上降低 22%。
 tags:
   - "AAAI 2026"
   - "LLM效率"

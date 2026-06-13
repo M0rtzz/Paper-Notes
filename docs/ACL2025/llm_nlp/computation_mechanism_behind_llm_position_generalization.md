@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Computation Mechanism Behind LLM Position Generalization
 description: >-
-  [ACL 2025][LLM/NLP][position generalization] 揭示 LLM 注意力 logit 学习了位置相关性和语义重要性的近似算术加法解耦（$W_{i,j} \approx f(\mathbf{q}, i-j) + g(\mathbf{q}, \mathbf{k})$…
+  [ACL 2025][LLM 其他][position generalization] 揭示 LLM 注意力 logit 学习了位置相关性和语义重要性的近似算术加法解耦（$W_{i,j} \approx f(\mathbf{q}, i-j) + g(\mathbf{q}, \mathbf{k})$，线性相关 0.959），发现了使这种解耦成立的中间表示模式，并用此解释了 LLM 的位置排列容忍性和长度泛化能力。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "position generalization"
   - "注意力机制"
   - "RoPE"

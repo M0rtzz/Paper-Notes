@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CuBridge: An LLM-Based Framework for Understanding and Reconstructing High-Performance Attention Kernels
 description: >-
-  [ACL 2026][代码智能][CUDA] 作者把"用 LLM 直接改 FlashAttention CUDA 代码"这件不靠谱的事，重写成"lift 到可执行 IR（CuIR）→ 按 PyTorch reference transfer → 差分式 lower 回 CUDA"三段式工作流…
+  [ACL 2026][代码智能][CUDA] 作者把"用 LLM 直接改 FlashAttention CUDA 代码"这件不靠谱的事，重写成"lift 到可执行 IR（CuIR）→ 按 PyTorch reference transfer → 差分式 lower 回 CUDA"三段式工作流，在 A100/H100 上对 8 类 attention 变体保持 100% 正确率，相对 PyTorch 平均 16.03×、相对 FlexAttention 1.39×、相对前一代 LLM-based 方法 Qimeng-Attention 3.33× 加速。
 tags:
   - "ACL 2026"
   - "代码智能"

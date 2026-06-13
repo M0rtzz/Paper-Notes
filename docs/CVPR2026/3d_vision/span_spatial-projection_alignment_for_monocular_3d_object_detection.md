@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPAN: Spatial-Projection Alignment for Monocular 3D Object Detection
 description: >-
-  [CVPR2026][3D视觉][单目3D检测] 提出 Spatial-Projection Alignment (SPAN)，通过3D角点空间对齐和3D-2D投影对齐两个几何协同约束，配合分层任务学习策略，作为即插即用模块提升任意单目3D检测器的定位精度。
+  [CVPR2026][3D视觉][单目3D检测] 提出 Spatial-Projection Alignment (SPAN)，通过3D角点空间对齐和3D-2D投影对齐两个几何协同约束，配合分层任务学习策略，作为即插即用模块提升任意单目3D检测器的定位精度。 1. 单目3D检测的核心挑战：从单张RGB图像推断完整的3D空间信…
 tags:
   - "CVPR2026"
   - "3D视觉"

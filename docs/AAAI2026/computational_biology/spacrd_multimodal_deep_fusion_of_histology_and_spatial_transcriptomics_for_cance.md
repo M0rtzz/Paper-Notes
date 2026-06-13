@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection
 description: >-
-  [AAAI 2026][计算生物][癌症区域检测] 提出 SpaCRD，一个基于迁移学习的多模态深度融合框架，通过类别正则化变分重建引导的双向交叉注意力融合网络（VRBCA），将组织学图像与空间转录组学数据深度整合，在 23 个配对数据集上跨样本、跨平台/批次实现了癌症组织区域（CTR）检测的 SOTA 性能…
+  [AAAI 2026 Oral][计算生物][癌症区域检测] 提出 SpaCRD，一个基于迁移学习的多模态深度融合框架，通过类别正则化变分重建引导的双向交叉注意力融合网络（VRBCA），将组织学图像与空间转录组学数据深度整合，在 23 个配对数据集上跨样本、跨平台/批次实现了癌症组织区域（CTR）检测的 SOTA 性能。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "计算生物"
   - "癌症区域检测"
   - "空间转录组学"

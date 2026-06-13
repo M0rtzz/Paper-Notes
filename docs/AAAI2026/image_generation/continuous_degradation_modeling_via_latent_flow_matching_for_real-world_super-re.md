@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution
 description: >-
-  [AAAI 2026][图像生成][真实世界超分辨率] 提出 DegFlow，通过残差自编码器 + 潜空间 Flow Matching 从离散尺度的真实 HR-LR 对学习连续退化轨迹，仅需单张 HR 图像即可合成任意连续尺度的逼真 LR 图像，用于训练超分模型达到 SOTA。
+  [AAAI 2026][图像生成][真实世界超分辨率] 提出 DegFlow，通过残差自编码器 + 潜空间 Flow Matching 从离散尺度的真实 HR-LR 对学习连续退化轨迹，仅需单张 HR 图像即可合成任意连续尺度的逼真 LR 图像，用于训练超分模型达到 SOTA。 深度学习超分辨率方法在 bicubic 降采样…
 tags:
   - "AAAI 2026"
   - "图像生成"

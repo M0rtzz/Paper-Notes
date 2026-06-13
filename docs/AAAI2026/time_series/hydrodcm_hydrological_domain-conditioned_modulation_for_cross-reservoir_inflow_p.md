@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HydroDCM: Hydrological Domain-Conditioned Modulation for Cross-Reservoir Inflow Prediction
 description: >-
-  [AAAI 2026][时间序列][域泛化] 提出 HydroDCM，首次将域泛化(Domain Generalization)引入水文预测领域，通过空间元属性构建伪域标签指导对抗学习提取不变特征，再用 FiLM 适配器根据目标水库的地理信息调制特征，实现对未见水库的跨域入流预测。
+  [AAAI 2026][时间序列][域泛化] 提出 HydroDCM，首次将域泛化(Domain Generalization)引入水文预测领域，通过空间元属性构建伪域标签指导对抗学习提取不变特征，再用 FiLM 适配器根据目标水库的地理信息调制特征，实现对未见水库的跨域入流预测。 水库入流预测（Reservoir Infl…
 tags:
   - "AAAI 2026"
   - "时间序列"

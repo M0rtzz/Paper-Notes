@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language
 description: >-
-  [ICLR 2026][可解释性][mechanistic_interpretability] 本文提出 **Semantic Regexes（语义正则表达式）**，一种用于自动描述 LLM 特征的结构化语言…
+  [ICLR 2026][可解释性][mechanistic_interpretability] 本文提出 **Semantic Regexes（语义正则表达式）**，一种用于自动描述 LLM 特征的结构化语言，通过原语（symbol/lexeme/field）+ 修饰符（context/composition/quantification）组合，实现与自然语言同等准确但更简洁、一致且可分析的特征描述。
 tags:
   - "ICLR 2026"
   - "可解释性"

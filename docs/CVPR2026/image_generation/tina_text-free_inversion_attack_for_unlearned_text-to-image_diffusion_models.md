@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][Concept Erasure] 提出 TINA（Text-free INversion Attack），通过在 null-text 条件下优化 DDIM 反演找到精确的初始噪声，绕过所有基于文本的概念擦除防御…
+  [CVPR 2026][图像生成][Concept Erasure] 提出 TINA（Text-free INversion Attack），通过在 null-text 条件下优化 DDIM 反演找到精确的初始噪声，绕过所有基于文本的概念擦除防御，证明当前擦除方法仅切断了文本-图像映射而未真正删除模型内部的视觉知识。
 tags:
   - "CVPR 2026"
   - "图像生成"

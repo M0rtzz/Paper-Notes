@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Confounding Robust Deep Reinforcement Learning: A Causal Approach
 description: >-
-  [NeurIPS 2025][强化学习][confounded MDP] 基于部分辨识（partial identification）理论扩展 DQN，提出 Causal DQN 从含有未观测混淆因子的离线数据中学习鲁棒策略——通过优化最坏情况下的价值函数下界来获得安全策略…
+  [NeurIPS 2025][强化学习][confounded MDP] 基于部分辨识（partial identification）理论扩展 DQN，提出 Causal DQN 从含有未观测混淆因子的离线数据中学习鲁棒策略——通过优化最坏情况下的价值函数下界来获得安全策略，在 12 个混淆 Atari 游戏中一致性地超越标准 DQN。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

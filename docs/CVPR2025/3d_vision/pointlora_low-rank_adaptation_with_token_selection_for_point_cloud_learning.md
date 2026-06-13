@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PointLoRA: Low-Rank Adaptation with Token Selection for Point Cloud Learning
 description: >-
-  [CVPR 2025][3D视觉][点云学习] PointLoRA 将低秩适配 (LoRA) 与多尺度 token 选择结合，为点云预训练模型提供了一种简单高效的参数微调方案，仅用 3.43% 的可训练参数即达到与全量微调竞争的性能…
+  [CVPR 2025][3D视觉][点云学习] PointLoRA 将低秩适配 (LoRA) 与多尺度 token 选择结合，为点云预训练模型提供了一种简单高效的参数微调方案，仅用 3.43% 的可训练参数即达到与全量微调竞争的性能，在 ScanObjectNN、ModelNet40 和 ShapeNetPart 上均取得 SOTA 或接近 SOTA 的结果。
 tags:
   - "CVPR 2025"
   - "3D视觉"

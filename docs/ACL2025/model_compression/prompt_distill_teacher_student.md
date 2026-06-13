@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompt Candidates, then Distill: A Teacher-Student Framework for LLM-driven Data Annotation
 description: >-
-  [ACL 2025][模型压缩][LLM数据标注] 提出CanDist框架，借鉴人类面对不确定性时的"模糊规避"心理，引导LLM输出多个候选标签而非单一标签(候选标注)，再通过分布精炼(Distribution Refinery)策略蒸馏到小语言模型(SLM)获得最终标注…
+  [ACL 2025][模型压缩][LLM数据标注] 提出CanDist框架，借鉴人类面对不确定性时的"模糊规避"心理，引导LLM输出多个候选标签而非单一标签(候选标注)，再通过分布精炼(Distribution Refinery)策略蒸馏到小语言模型(SLM)获得最终标注，从理论到实验证明候选标注蒸馏优于单一标注。
 tags:
   - "ACL 2025"
   - "模型压缩"

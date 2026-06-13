@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WebThinker: Empowering Large Reasoning Models with Deep Research Capability
 description: >-
-  [NeurIPS 2025][LLM推理][深度研究] WebThinker赋予大型推理模型(LRM)自主的网络搜索与导航能力，通过Think-Search-Draft策略实现推理、信息采集与报告生成的无缝交织，经RL优化后在复杂推理与科学报告生成任务上超越o1与Gemini。
+  [NeurIPS 2025][LLM推理][深度研究] WebThinker赋予大型推理模型(LRM)自主的网络搜索与导航能力，通过Think-Search-Draft策略实现推理、信息采集与报告生成的无缝交织，经RL优化后在复杂推理与科学报告生成任务上超越o1与Gemini。 LRM知识孤岛：o1/DeepSeek-R1等…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

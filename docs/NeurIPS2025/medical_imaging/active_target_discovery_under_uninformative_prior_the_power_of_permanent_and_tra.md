@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Active Target Discovery under Uninformative Prior: The Power of Permanent and Transient Memory
 description: >-
-  [NEURIPS2025][医学图像][active target discovery] 提出 EM-PTDM 框架，受神经科学双记忆系统启发，利用预训练扩散模型作为"永久记忆"并结合基于 Doob's h-transform 的轻量"瞬时记忆"模块，在**无领域先验数据**的条件下实现高效的主动目标发现…
+  [NEURIPS2025][医学图像][active target discovery] 提出 EM-PTDM 框架，受神经科学双记忆系统启发，利用预训练扩散模型作为"永久记忆"并结合基于 Doob's h-transform 的轻量"瞬时记忆"模块，在**无领域先验数据**的条件下实现高效的主动目标发现，理论保证先验单调改进。
 tags:
   - "NEURIPS2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEIcoder: Decoding Visual Stimuli from Neural Activity by Leveraging Most Exciting Inputs
 description: >-
-  [NeurIPS 2025][计算生物][视觉解码] 提出 MEIcoder，利用神经元特异性的最激励输入(MEI)作为生物学先验、SSIM 损失和对抗训练，从初级视觉皮层(V1)的神经群体活动中实现 SOTA 级别的视觉刺激重建，尤其在小数据集和少量神经元场景下表现突出。
+  [NeurIPS 2025][计算生物][视觉解码] 提出 MEIcoder，利用神经元特异性的最激励输入(MEI)作为生物学先验、SSIM 损失和对抗训练，从初级视觉皮层(V1)的神经群体活动中实现 SOTA 级别的视觉刺激重建，尤其在小数据集和少量神经元场景下表现突出。 从大脑活动解码视觉刺激是理解大脑的关键课题…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tempest: Autonomous Multi-Turn Jailbreaking of Large Language Models with Tree Search
 description: >-
-  [ACL 2025 Main][LLM对齐][多轮越狱攻击] 本文提出 Tempest（论文早期版本称 Siege），一个基于广度优先树搜索的多轮对抗框架，通过追踪目标 LLM 的部分合规信息并将其重新注入后续查询…
+  [ACL 2025 Main][LLM对齐][多轮越狱攻击] 本文提出 Tempest（论文早期版本称 Siege），一个基于广度优先树搜索的多轮对抗框架，通过追踪目标 LLM 的部分合规信息并将其重新注入后续查询，在 JailbreakBench 上对 GPT-3.5-turbo 达到 100%、GPT-4 达到 97% 的攻击成功率，且需要的查询数远少于 Crescendo/GOAT 等基线。
 tags:
   - "ACL 2025 Main"
   - "LLM对齐"

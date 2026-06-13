@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MulDimIF: A Multi-Dimensional Constraint Framework for Evaluating and Improving Instruction Following in Large Language Models
 description: >-
-  [ACL 2026][LLM/NLP][指令遵循] 提出 MulDimIF 多维约束框架，从约束模式（3种）、约束类别（4类13子类）和约束难度（4级）三个维度系统评估 LLM 的指令遵循能力，并通过 GRPO 训练显著提升模型性能，发现改进主要源自注意力模块的参数更新。
+  [ACL 2026][LLM 其他][指令遵循] 提出 MulDimIF 多维约束框架，从约束模式（3种）、约束类别（4类13子类）和约束难度（4级）三个维度系统评估 LLM 的指令遵循能力，并通过 GRPO 训练显著提升模型性能，发现改进主要源自注意力模块的参数更新。 领域现状：指令遵循是 LLM 的基础能力…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "指令遵循"
   - "多维约束"
   - "评估基准"

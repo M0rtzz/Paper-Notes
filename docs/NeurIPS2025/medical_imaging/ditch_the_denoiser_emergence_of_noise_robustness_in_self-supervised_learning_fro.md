@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ditch the Denoiser: Emergence of Noise Robustness in Self-Supervised Learning from Data Curriculum
 description: >-
-  [NeurIPS 2025][医学图像][自监督学习] 提出一种全自监督的噪声鲁棒表示学习框架，通过"去噪→噪声"的数据课程学习策略 + 去噪教师正则化，使 DINOv2 等 SSL 模型在推理时无需去噪器即可直接处理噪声输入，在 ImageNet-1k 极端高斯噪声下线性探测精度提升 4.8%。
+  [NeurIPS 2025][医学图像][自监督学习] 提出一种全自监督的噪声鲁棒表示学习框架，通过"去噪→噪声"的数据课程学习策略 + 去噪教师正则化，使 DINOv2 等 SSL 模型在推理时无需去噪器即可直接处理噪声输入，在 ImageNet-1k 极端高斯噪声下线性探测精度提升 4.8%。 领域现状：自监督学习（SS…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

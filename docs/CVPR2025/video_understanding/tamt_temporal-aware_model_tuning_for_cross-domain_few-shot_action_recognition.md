@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAMT: Temporal-Aware Model Tuning for Cross-Domain Few-Shot Action Recognition
 description: >-
-  [CVPR 2025][视频理解][跨域少样本动作识别] 本文提出 TAMT，一个解耦的"预训练-微调"范式用于跨域少样本动作识别（CDFSAR），通过时序感知适配器（TAA）高效重校准冻结模型的中间特征，并利用全局时序矩调优（GTMT）捕获长短期时序协方差来生成强表示…
+  [CVPR 2025][视频理解][跨域少样本动作识别] 本文提出 TAMT，一个解耦的"预训练-微调"范式用于跨域少样本动作识别（CDFSAR），通过时序感知适配器（TAA）高效重校准冻结模型的中间特征，并利用全局时序矩调优（GTMT）捕获长短期时序协方差来生成强表示，在多个跨域场景中以 5 倍低的训练成本超越现有方法 13%-31%。
 tags:
   - "CVPR 2025"
   - "视频理解"

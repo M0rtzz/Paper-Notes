@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Entropy Calibration of Language Models
 description: >-
-  [NeurIPS 2025][LLM评测][entropy calibration] 系统研究语言模型的熵校准问题（生成文本的熵是否匹配在人类文本上的 log loss），发现由于数据分布的幂律特性（$\alpha \approx 1$）…
+  [NeurIPS 2025][LLM评测][entropy calibration] 系统研究语言模型的熵校准问题（生成文本的熵是否匹配在人类文本上的 log loss），发现由于数据分布的幂律特性（$\alpha \approx 1$），误差积累随模型规模的改善极为缓慢（scaling exponent $\approx -0.05$），并从理论上证明了在多项式时间内可以在不牺牲多样性的前提下校准熵。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

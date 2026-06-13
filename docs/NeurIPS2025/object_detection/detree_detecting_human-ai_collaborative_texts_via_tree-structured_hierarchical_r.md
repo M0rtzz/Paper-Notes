@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning
 description: >-
-  [NEURIPS2025][目标检测][文本检测] 提出 DETree 框架，通过构建层次亲和树（HAT）建模不同人机协作文本生成过程之间的层次关系，并设计树结构对比损失（TSCL）对齐表示空间，在混合文本检测和 OOD 场景下取得了显著优势。
+  [NEURIPS2025][目标检测][文本检测] 提出 DETree 框架，通过构建层次亲和树（HAT）建模不同人机协作文本生成过程之间的层次关系，并设计树结构对比损失（TSCL）对齐表示空间，在混合文本检测和 OOD 场景下取得了显著优势。 随着 LLM 的广泛应用，AI 参与文本生成的方式日益多样化：人类撰写后由 AI…
 tags:
   - "NEURIPS2025"
   - "目标检测"

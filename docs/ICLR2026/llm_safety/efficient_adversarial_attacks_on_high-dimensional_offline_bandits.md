@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Adversarial Attacks on High-dimensional Offline Bandits
 description: >-
-  [ICLR 2026][LLM安全][离线多臂老虎机] 揭示了离线多臂老虎机（MAB）评估框架的安全漏洞：攻击者只需对公开的奖励模型权重进行极小的不可感知扰动，就能完全劫持 bandit 的决策行为，且所需扰动范数随输入维度增加而降低（$\widetilde{\mathcal{O}}(d^{-1/2})$）…
+  [ICLR 2026][LLM安全][离线多臂老虎机] 揭示了离线多臂老虎机（MAB）评估框架的安全漏洞：攻击者只需对公开的奖励模型权重进行极小的不可感知扰动，就能完全劫持 bandit 的决策行为，且所需扰动范数随输入维度增加而降低（$\widetilde{\mathcal{O}}(d^{-1/2})$），使基于图像的生成模型评估特别脆弱。
 tags:
   - "ICLR 2026"
   - "LLM安全"

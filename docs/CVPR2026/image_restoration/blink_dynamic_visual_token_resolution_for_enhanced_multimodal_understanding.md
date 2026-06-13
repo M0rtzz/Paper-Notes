@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blink: Dynamic Visual Token Resolution for Enhanced Multimodal Understanding
 description: >-
-  [CVPR 2026][图像恢复][视觉token分辨率] 提出 Blink 框架，通过在 MLLM 不同 Transformer 层动态扩展和丢弃视觉 token（模拟人类"快速眨眼"式扫描），在单次前向传播中自适应增强视觉感知能力，在多个多模态基准上提升 LLaVA-1.5 性能。
+  [CVPR 2026][图像恢复][视觉token分辨率] 提出 Blink 框架，通过在 MLLM 不同 Transformer 层动态扩展和丢弃视觉 token（模拟人类"快速眨眼"式扫描），在单次前向传播中自适应增强视觉感知能力，在多个多模态基准上提升 LLaVA-1.5 性能。 领域现状： 多模态大语言模型（MLLM…
 tags:
   - "CVPR 2026"
   - "图像恢复"

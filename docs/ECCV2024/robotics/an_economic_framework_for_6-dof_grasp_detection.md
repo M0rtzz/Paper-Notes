@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Economic Framework for 6-DoF Grasp Detection
 description: >-
-  [ECCV 2024][机器人][6自由度抓取检测] 提出EconomicGrasp框架，通过发现密集监督中的歧义问题（ambiguity problem）是性能与资源矛盾的根源，设计经济监督范式（保留所有视角但裁剪角度/深度）和焦点表示模块（交互式抓取头+复合评分）…
+  [ECCV 2024][机器人][6自由度抓取检测] 提出EconomicGrasp框架，通过发现密集监督中的歧义问题（ambiguity problem）是性能与资源矛盾的根源，设计经济监督范式（保留所有视角但裁剪角度/深度）和焦点表示模块（交互式抓取头+复合评分），在GraspNet-1Billion上以1/4训练时间、1/8内存成本超越SOTA约3AP。
 tags:
   - "ECCV 2024"
   - "机器人"

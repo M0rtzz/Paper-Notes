@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRFusion: Degradation-Robust Fusion via Degradation-Aware Diffusion Framework
 description: >-
-  [CVPR 2026][图像恢复][多模态] 提出退化感知扩散框架 DRFusion，通过直接回归融合图像（而非显式预测噪声）和联合观测模型校正机制，在少量扩散步骤内实现任意退化场景下的多模态图像融合。
+  [CVPR 2026][图像恢复][多模态] 提出退化感知扩散框架 DRFusion，通过直接回归融合图像（而非显式预测噪声）和联合观测模型校正机制，在少量扩散步骤内实现任意退化场景下的多模态图像融合。 真实世界的图像融合面临噪声、模糊、低分辨率等退化挑战。传统"先恢复再融合"管线存在误差累积和部署复杂性…
 tags:
   - "CVPR 2026"
   - "图像恢复"

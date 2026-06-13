@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TigerLLM - A Family of Bangla Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][低资源语言] 针对孟加拉语（全球第5大语言）的 LLM 严重不足问题，构建高质量教科书语料 Bangla-TextBook（10M token）和原生指令数据 Bangla-Instruct（100K）…
+  [ACL 2025][LLM 其他][低资源语言] 针对孟加拉语（全球第5大语言）的 LLM 严重不足问题，构建高质量教科书语料 Bangla-TextBook（10M token）和原生指令数据 Bangla-Instruct（100K），训练的 TigerLLM 家族在六项基准上超越所有开源替代方案并胜过 GPT-3.5。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "低资源语言"
   - "孟加拉语LLM"
   - "高质量数据"

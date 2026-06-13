@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMO Sampler: Enhancing Text Rendering with Overshooting
 description: >-
-  [CVPR 2025][预训练][text rendering] 提出AMO（Attention-Modulated Overshooting）采样器，一种无需训练的推理时增强方法，通过在rectified flow模型的采样过程中引入过冲-噪声补偿的Langevin动力学校正…
+  [CVPR 2025][预训练][text rendering] 提出AMO（Attention-Modulated Overshooting）采样器，一种无需训练的推理时增强方法，通过在rectified flow模型的采样过程中引入过冲-噪声补偿的Langevin动力学校正，并利用文本-图像交叉注意力分数自适应控制过冲强度，显著提升文本渲染的准确率，同时保持生成图像的整体质量。
 tags:
   - "CVPR 2025"
   - "预训练"

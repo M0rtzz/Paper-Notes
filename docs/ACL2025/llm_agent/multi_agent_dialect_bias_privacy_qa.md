@@ -2,15 +2,15 @@
 title: >-
   [论文解读] A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems
 description: >-
-  [ACL 2025][LLM Agent][多智能体] 提出一个双 Agent 框架（Dialect Agent + Privacy Policy Agent），通过方言感知翻译和迭代协作来消除隐私政策QA系统在不同英语方言间的性能差距，无需重训练或方言特定微调…
+  [ACL 2025][LLM Agent][多智能体协作] 构建 Dialect Agent（方言翻译+审查）与 Privacy Policy Agent（领域回答）的双 Agent 迭代协作框架，通过注入方言语言学知识的提示工程，在无需重训练的前提下同时提升隐私政策 QA 的整体准确率和跨方言公平性。
 tags:
   - "ACL 2025"
   - "LLM Agent"
-  - "多智能体"
+  - "多智能体协作"
   - "方言偏差"
   - "隐私政策QA"
   - "公平性"
-  - "LLM协作"
+  - "零训练"
 ---
 
 # A Multi-Agent Framework for Mitigating Dialect Biases in Privacy Policy Question-Answering Systems
@@ -134,3 +134,19 @@ tags:
   - 公平性
   - LLM协作
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] EMULATE: A Multi-Agent Framework for Determining the Veracity of Atomic Claims by Emulating Human Actions](emulate_a_multi-agent_framework_for_determining_the_veracity_of_atomic_claims_by.md)
+- [\[ICML 2025\] KBQA-o1: Agentic Knowledge Base Question Answering with Monte Carlo Tree Search](../../ICML2025/llm_agent/kbqa-o1_agentic_knowledge_base_question_answering_with_monte_carlo_tree_search.md)
+- [\[ACL 2025\] Agents Under Siege: Breaking Pragmatic Multi-Agent LLM Systems with Optimized Prompt Attacks](agents_under_siege_breaking_pragmatic_multi-agent_llm_systems_with_optimized_pro.md)
+- [\[ACL 2025\] MIND: A Multi-agent Framework for Zero-shot Harmful Meme Detection](mind_a_multi-agent_framework_for_zero-shot_harmful_meme_detection.md)
+- [\[ACL 2025\] Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines](bel_esprit_multi-agent_framework_for_building_ai_model_pipelines.md)
+
+</div>
+
+<!-- RELATED:END -->

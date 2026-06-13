@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Recommender Systems Teach Themselves? A Recursive Self-Improving Framework with Fidelity Control
 description: >-
-  [ICML 2026][推荐系统][序列推荐] RSIR 让序列推荐模型用自身预测能力生成新的合成用户交互序列、再训练一个新模型，并用基于排名的"保真度检查"过滤掉偏离用户偏好流形的样本，防止 self-consuming model collapse…
+  [ICML 2026][推荐系统][序列推荐] RSIR 让序列推荐模型用自身预测能力生成新的合成用户交互序列、再训练一个新模型，并用基于排名的"保真度检查"过滤掉偏离用户偏好流形的样本，防止 self-consuming model collapse；在 4 个数据集 × 3 个主流 backbone 上稳定提升 NDCG/Recall 4–11%，并理论上证明该过程等价于沿用户偏好流形切空间的隐式正则化。
 tags:
   - "ICML 2026"
   - "推荐系统"

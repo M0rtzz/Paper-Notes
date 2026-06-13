@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Annotations Mitigate Post-Training Mode Collapse
 description: >-
-  [ICML 2026][预训练][模式坍塌] 作者发现 SFT 把模型对齐到一个低熵语义先验上、导致"指令模型越大越无聊"的反向 scaling，于是提出"标注锚定训练"——预训练阶段给文档配语义 tag、SFT 阶段对 tag 部分 mask loss，让推理时先采样语义再生成响应…
+  [ICML 2026][预训练][模式坍塌] 作者发现 SFT 把模型对齐到一个低熵语义先验上、导致"指令模型越大越无聊"的反向 scaling，于是提出"标注锚定训练"——预训练阶段给文档配语义 tag、SFT 阶段对 tag 部分 mask loss，让推理时先采样语义再生成响应，从而在保持指令跟随能力的同时把语义多样性差距缩小 85%。
 tags:
   - "ICML 2026"
   - "预训练"

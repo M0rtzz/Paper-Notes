@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SEMA-RAG: A Self-Evolving Multi-Agent Retrieval-Augmented Generation Framework for Medical Reasoning
 description: >-
-  [ACL 2026][医疗NLP][医学问答] 提出 SEMA-RAG，一种自演化多智能体 RAG 框架，通过三个专职智能体（解释器、探索器、仲裁器）模拟临床推理的分阶段工作流，在 5 个医学 QA 基准上平均超越最强基线 +6.46 个准确率点。
+  [ACL 2026 Findings][医疗NLP][医学问答] 提出 SEMA-RAG，一种自演化多智能体 RAG 框架，通过三个专职智能体（解释器、探索器、仲裁器）模拟临床推理的分阶段工作流，在 5 个医学 QA 基准上平均超越最强基线 +6.46 个准确率点。 领域现状： RAG 被广泛用于缓解医学问答中 LLM 的幻…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "医学问答"
   - "多智能体RAG"

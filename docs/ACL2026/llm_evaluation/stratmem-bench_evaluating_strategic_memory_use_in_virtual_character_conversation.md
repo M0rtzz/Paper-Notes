@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StratMem-Bench: Evaluating Strategic Memory Use in Virtual Character Conversation Beyond Factual Recall
 description: >-
-  [ACL2026][LLM评测][strategic memory use] StratMem-Bench 将虚拟角色对话中的记忆分成 must、nice 和 irr 三类，评估模型是否能在保证事实需求的同时主动加入有益记忆并抑制无关记忆，揭示当前强 LLM 在“支持性记忆选择”上仍明显不稳。
+  [ACL2026][LLM评测][strategic memory use] StratMem-Bench 将虚拟角色对话中的记忆分成 must、nice 和 irr 三类，评估模型是否能在保证事实需求的同时主动加入有益记忆并抑制无关记忆，揭示当前强 LLM 在“支持性记忆选择”上仍明显不稳。 领域现状：长期对话和虚拟角色系…
 tags:
   - "ACL2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Self-Supervised Learning via Representer Landmarks and Nyström Approximation
 description: >-
-  [ICML 2026][可解释性][自监督学习] KREPES 用 eNTK 把任意 SSL 模型近似成核模型，再借 Representer 定理把表征写成"地标样本"的核加权组合…
+  [ICML 2026][可解释性][自监督学习] KREPES 用 eNTK 把任意 SSL 模型近似成核模型，再借 Representer 定理把表征写成"地标样本"的核加权组合，用 Nyström + 单步 GGN-Newton 把 SimCLR/BYOL/VICReg/Barlow Twins 等非凸目标的影响系数解析地解出来，从而无监督地审计 SSL 隐空间并扩展到 1M+ 数据集。
 tags:
   - "ICML 2026"
   - "可解释性"

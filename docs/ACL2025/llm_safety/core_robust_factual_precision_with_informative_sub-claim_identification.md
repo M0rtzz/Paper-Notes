@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Core: Robust Factual Precision with Informative Sub-Claim Identification
 description: >-
-  [ACL 2025][LLM安全][事实精度评估] 本文提出 Core 框架，通过识别和过滤信息性子声明（informative sub-claims）来实现鲁棒的事实精度（factual precision）评估，解决了现有方法因无信息声明的稀释效应而导致评估不准确的问题。
+  [ACL 2025][LLM安全][事实精度评估] 本文提出 Core 框架，通过识别和过滤信息性子声明（informative sub-claims）来实现鲁棒的事实精度（factual precision）评估，解决了现有方法因无信息声明的稀释效应而导致评估不准确的问题。 领域现状：LLM 生成文本的事实准确性评估是当前…
 tags:
   - "ACL 2025"
   - "LLM安全"

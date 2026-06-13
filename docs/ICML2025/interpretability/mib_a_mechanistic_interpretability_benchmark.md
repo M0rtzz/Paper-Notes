@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIB: A Mechanistic Interpretability Benchmark
 description: >-
-  [ICML 2025][可解释性][机械可解释性] 提出 MIB（Mechanistic Interpretability Benchmark），包含电路定位和因果变量定位两个赛道、四个任务、五个模型，通过标准化的反事实干预评估和新指标（CPR/CMD）系统比较 MI 方法…
+  [ICML 2025][可解释性][机械可解释性] 提出 MIB（Mechanistic Interpretability Benchmark），包含电路定位和因果变量定位两个赛道、四个任务、五个模型，通过标准化的反事实干预评估和新指标（CPR/CMD）系统比较 MI 方法，发现 attribution + mask optimization 方法在电路定位中最优，而 SAE 特征在因果变量定位中并不优于原始神经元。
 tags:
   - "ICML 2025"
   - "可解释性"

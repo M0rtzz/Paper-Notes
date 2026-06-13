@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simulated Students in Tutoring Dialogues: Substance or Illusion?
 description: >-
-  [ACL2026][对话系统][模拟学生] 这篇论文提出了一套面向数学辅导对话的模拟学生评测框架，发现简单 prompting 往往只会生成“看似会答题的学生”，而 SFT 和 DPO 更接近真实学生行为，但在错误复现和个体差异建模上仍然远未解决。
+  [ACL2026][对话系统][模拟学生] 这篇论文提出了一套面向数学辅导对话的模拟学生评测框架，发现简单 prompting 往往只会生成“看似会答题的学生”，而 SFT 和 DPO 更接近真实学生行为，但在错误复现和个体差异建模上仍然远未解决。 领域现状：LLM 已经被广泛用于智能辅导系统，既可以扮演 tutor…
 tags:
   - "ACL2026"
   - "对话系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Volumetrically Consistent 3D Gaussian Rasterization
 description: >-
-  [CVPR 2025][3D视觉][3D高斯渲染] 本文指出 3DGS 的 splatting 渲染中存在不必要的物理近似，提出在光栅化框架内直接解析积分 3D 高斯的透射率来计算更精确的 alpha 值，既保持了光栅化的速度优势，又达到了接近光线追踪的物理精度。
+  [CVPR 2025][3D视觉][3D高斯渲染] 本文指出 3DGS 的 splatting 渲染中存在不必要的物理近似，提出在光栅化框架内直接解析积分 3D 高斯的透射率来计算更精确的 alpha 值，既保持了光栅化的速度优势，又达到了接近光线追踪的物理精度。 领域现状：3DGS 通过将 3D 高斯投影（splattin…
 tags:
   - "CVPR 2025"
   - "3D视觉"

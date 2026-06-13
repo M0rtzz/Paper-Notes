@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning
 description: >-
-  [CVPR 2026][自监督学习][active learning] 提出 BoSS——一种可扩展的 oracle 策略选择框架：在每轮主动学习中，并行运行多种查询策略在随机子池上生成候选 batch，通过冻结 backbone 仅重训最后一层快速评估每个候选 batch 的性能增益，选出最优 batch…
+  [CVPR 2026][自监督学习][active learning] 提出 BoSS——一种可扩展的 oracle 策略选择框架：在每轮主动学习中，并行运行多种查询策略在随机子池上生成候选 batch，通过冻结 backbone 仅重训最后一层快速评估每个候选 batch 的性能增益，选出最优 batch，从而量化现有 AL 策略与理论最优之间的差距。
 tags:
   - "CVPR 2026"
   - "自监督学习"

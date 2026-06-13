@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaDecode: Accelerating LLM Decoding with Adaptive Layer Parallelism
 description: >-
-  [ICML 2025][LLM推理][自适应层并行] AdaDecode 通过在中间层训练轻量级 LM Head 实现高置信度的 token 早期预测，将后续层的 KV cache 计算延迟并行化执行，在保证与标准自回归解码完全一致输出的同时，实现最高 1.73× 的解码吞吐量加速。
+  [ICML 2025][LLM推理][自适应层并行] AdaDecode 通过在中间层训练轻量级 LM Head 实现高置信度的 token 早期预测，将后续层的 KV cache 计算延迟并行化执行，在保证与标准自回归解码完全一致输出的同时，实现最高 1.73× 的解码吞吐量加速。 领域现状：大模型的自回归解码是逐 tok…
 tags:
   - "ICML 2025"
   - "LLM推理"

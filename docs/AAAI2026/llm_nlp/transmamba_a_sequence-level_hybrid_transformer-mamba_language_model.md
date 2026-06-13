@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TransMamba: A Sequence-Level Hybrid Transformer-Mamba Language Model
 description: >-
-  [AAAI 2026][LLM/NLP][Transformer] 提出 TransMamba，一种序列级别的 Transformer-Mamba 混合架构，通过共享 QKV/CBx 参数和 Memory Converter 在不同 token 长度时动态切换 Attention 和 SSM…
+  [AAAI 2026][LLM 其他][Transformer] 提出 TransMamba，一种序列级别的 Transformer-Mamba 混合架构，通过共享 QKV/CBx 参数和 Memory Converter 在不同 token 长度时动态切换 Attention 和 SSM，兼顾长短序列的效率。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "Mamba"
   - "SSM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chatsparent: An Interactive System for Detecting and Mitigating Cognitive Fatigue in LLMs
 description: >-
-  [AAAI 2026][对话系统][认知疲劳] 本文提出 Chatsparent 交互系统，通过实时监测 LLM 推理过程中的三种 token 级疲劳信号（注意力衰减、嵌入漂移、熵坍缩），构建统一疲劳指数并在疲劳阈值触发时自动应用轻量级干预措施（提示重注入、注意力重置、熵正则化解码、自反思检查点）…
+  [AAAI 2026][对话系统][认知疲劳] 本文提出 Chatsparent 交互系统，通过实时监测 LLM 推理过程中的三种 token 级疲劳信号（注意力衰减、嵌入漂移、熵坍缩），构建统一疲劳指数并在疲劳阈值触发时自动应用轻量级干预措施（提示重注入、注意力重置、熵正则化解码、自反思检查点），将被动的聊天交互转变为主动的诊断体验。
 tags:
   - "AAAI 2026"
   - "对话系统"

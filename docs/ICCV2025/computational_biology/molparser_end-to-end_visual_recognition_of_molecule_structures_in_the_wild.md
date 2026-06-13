@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild
 description: >-
-  [计算生物] 提出 MolParser，一个端到端的光学化学结构识别 (OCSR) 方法，通过扩展 SMILES 表示（E-SMILES）处理 Markush 结构、构建 700 万级大规模训练集 MolParser-7M，并利用主动学习引入真实文献数据…
+  [计算生物] 提出 MolParser，一个端到端的光学化学结构识别 (OCSR) 方法，通过扩展 SMILES 表示（E-SMILES）处理 Markush 结构、构建 700 万级大规模训练集 MolParser-7M，并利用主动学习引入真实文献数据，在 WildMol 基准上以 76.9% 准确率显著超越现有方法。
 tags:
   - "计算生物"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can LLMs Truly Embody Human Personality? Analyzing AI and Human Behavior Alignment in Dispute Resolution
 description: >-
-  [AAAI 2026][可解释性][LLM人格模拟] 提出首个系统对比框架，在配对的冲突调解场景中直接比较人类与人格提示LLM的策略行为差异，发现LLM在人格-行为映射上与人类存在显著偏差，挑战了"人格提示即可代理人类行为"的假设。
+  [AAAI 2026][可解释性][LLM人格模拟] 提出首个系统对比框架，在配对的冲突调解场景中直接比较人类与人格提示LLM的策略行为差异，发现LLM在人格-行为映射上与人类存在显著偏差，挑战了"人格提示即可代理人类行为"的假设。 LLM越来越多地被用于模拟高风险社交场景（法律调解、谈判、争端解决），但一个核心问题尚未得到…
 tags:
   - "AAAI 2026"
   - "可解释性"

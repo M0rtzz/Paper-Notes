@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Verifier-Free RL for LLMs via Intrinsic Gradient-Norm Reward
 description: >-
-  [ACL2026][强化学习][verifier-free RL] VIGOR 用每个 completion 在当前模型参数下的 teacher-forced NLL 梯度范数作为内在奖励，偏好低梯度范数输出，并通过 $\sqrt{T}$ 长度校正和组内 rank shaping 稳定 GRPO…
+  [ACL2026 Findings][强化学习][verifier-free RL] VIGOR 用每个 completion 在当前模型参数下的 teacher-forced NLL 梯度范数作为内在奖励，偏好低梯度范数输出，并通过 $\sqrt{T}$ 长度校正和组内 rank shaping 稳定 GRPO，从而在无需 gold answer 或外部 verifier 的情况下提升数学与代码推理。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "强化学习"
   - "verifier-free RL"
   - "GRPO"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2605.09920](https://arxiv.org/abs/2605.09920)  
 **代码**: https://github.com/ZJUSCL/VIGOR  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: verifier-free RL, GRPO, intrinsic reward, gradient norm, 长度校正  
 
 ## 一句话总结

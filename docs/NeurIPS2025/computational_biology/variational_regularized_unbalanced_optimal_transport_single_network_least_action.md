@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Variational Regularized Unbalanced Optimal Transport: Single Network, Least Action
 description: >-
-  [NeurIPS 2025][计算生物][正则化非平衡最优传输] 提出 Var-RUOT，通过将正则化非平衡最优传输（RUOT）问题的最优性必要条件融入参数化和损失设计，仅需学习单个标量场即可求解 RUOT，获得更低作用量的解并提升训练稳定性；同时分析了增长惩罚函数对生物先验的影响。
+  [NeurIPS 2025][计算生物][正则化非平衡最优传输] 提出 Var-RUOT，通过将正则化非平衡最优传输（RUOT）问题的最优性必要条件融入参数化和损失设计，仅需学习单个标量场即可求解 RUOT，获得更低作用量的解并提升训练稳定性；同时分析了增长惩罚函数对生物先验的影响。 从有限快照数据恢复高维系统的连续动力学是…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

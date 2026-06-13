@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FactoryNet: A Large-Scale Dataset toward Industrial Time-Series Foundation Models
 description: >-
-  [ICML 2026][时间序列][工业时序] FactoryNet 是首个统一控制环结构的工业时序大规模数据集——5100 万数据点 / 2.3 万端到端任务执行（1.33 万真实 + 9800 仿真）跨 6 个机器实体…
+  [ICML 2026][时间序列][工业时序] FactoryNet 是首个统一控制环结构的工业时序大规模数据集——5100 万数据点 / 2.3 万端到端任务执行（1.33 万真实 + 9800 仿真）跨 6 个机器实体，按 Setpoint-Effort-Feedback-Context (S-E-F-C) 控制论分类对齐所有信号；27 种标注异常类型 + 健康基线 + 反事实对，使零样本跨实体迁移和参数高效异常检测成为可能。
 tags:
   - "ICML 2026"
   - "时间序列"

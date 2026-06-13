@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BTL-UI: Blink-Think-Link Reasoning Model for GUI Agent
 description: >-
-  [NeurIPS 2025][LLM Agent][GUI agent] 提出 Blink-Think-Link（BTL）脑启发框架，将 GUI 交互分解为 Blink（快速注意力定位）、Think（认知推理决策）、Link（可执行命令生成）三个生物合理阶段…
+  [NeurIPS 2025][LLM Agent][GUI agent] 提出 Blink-Think-Link（BTL）脑启发框架，将 GUI 交互分解为 Blink（快速注意力定位）、Think（认知推理决策）、Link（可执行命令生成）三个生物合理阶段，配合自动化 Blink 数据标注 pipeline 和首个基于规则的过程+结果复合奖励机制 BTL Reward，训练的 BTL-UI 在静态 GUI 理解和动态交互 benchmark 上达到 competitive 性能。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

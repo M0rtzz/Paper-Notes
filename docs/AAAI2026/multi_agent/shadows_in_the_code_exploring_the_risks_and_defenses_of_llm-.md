@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems
 description: >-
-  [AAAI 2026][多智能体][多Agent安全] 首次系统分析 LLM 多 Agent 软件开发系统（ChatDev/MetaGPT/AgentVerse）的安全风险：提出 IMBIA 攻击框架覆盖两种威胁场景（恶意用户+良性Agent / 良性用户+恶意Agent）和 12 种恶意行为（5 大恶意软件…
+  [AAAI 2026][多智能体][多Agent安全] 首次系统分析 LLM 多 Agent 软件开发系统（ChatDev/MetaGPT/AgentVerse）的安全风险：提出 IMBIA 攻击框架覆盖两种威胁场景（恶意用户+良性Agent / 良性用户+恶意Agent）和 12 种恶意行为（5 大恶意软件家族），攻击成功率高达 93%（ChatDev），并设计 Adv-IMBIA 对抗性防御将 ASR 降低 40-73%。
 tags:
   - "AAAI 2026"
   - "多智能体"

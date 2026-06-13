@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisualSync: Multi-Camera Synchronization via Cross-View Object Motion
 description: >-
-  [NeurIPS 2025][3D视觉][多相机同步] VisualSync提出了一个基于对极几何约束的多相机时间同步框架，利用预训练视觉模型（VGGT、CoTracker3、MAST3R）提取运动轨迹和跨视角对应关系，通过最小化Sampson误差来估计各相机的时间偏移…
+  [NeurIPS 2025][3D视觉][多相机同步] VisualSync提出了一个基于对极几何约束的多相机时间同步框架，利用预训练视觉模型（VGGT、CoTracker3、MAST3R）提取运动轨迹和跨视角对应关系，通过最小化Sampson误差来估计各相机的时间偏移，在四个数据集上达到了中位误差低于50ms的毫秒级同步精度。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

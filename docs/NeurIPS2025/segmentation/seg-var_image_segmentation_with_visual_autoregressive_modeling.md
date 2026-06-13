@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seg-VAR: Image Segmentation with Visual Autoregressive Modeling
 description: >-
-  [NeurIPS 2025][语义分割][视觉自回归建模] Seg-VAR 将图像分割重新定义为条件自回归掩码生成问题，通过引入 seglat（分割掩码的潜在表示）和空间感知颜色映射将分割掩码编码为可由 VAR 模型处理的离散 token…
+  [NeurIPS 2025][语义分割][视觉自回归建模] Seg-VAR 将图像分割重新定义为条件自回归掩码生成问题，通过引入 seglat（分割掩码的潜在表示）和空间感知颜色映射将分割掩码编码为可由 VAR 模型处理的离散 token，在 COCO、Cityscapes、ADE20K 上的语义/实例/全景分割任务中全面超越 Mask2Former 等判别式方法和 GSS 等生成式方法。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

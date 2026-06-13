@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Invariance Makes LLM Unlearning Resilient Even to Unanticipated Downstream Fine-Tuning
 description: >-
-  [ICML2025][LLM安全][LLM 遗忘] 将不变风险最小化（IRM）引入 LLM 遗忘框架，提出 ILU 正则化方法，使被遗忘的知识在后续下游微调中不会被恢复，仅用单个无关微调数据集即可泛化到多个未知下游任务。
+  [ICML2025][LLM安全][LLM 遗忘] 将不变风险最小化（IRM）引入 LLM 遗忘框架，提出 ILU 正则化方法，使被遗忘的知识在后续下游微调中不会被恢复，仅用单个无关微调数据集即可泛化到多个未知下游任务。 LLM 遗忘（unlearning）旨在从预训练模型中移除特定知识（如有害内容、隐私数据）…
 tags:
   - "ICML2025"
   - "LLM安全"

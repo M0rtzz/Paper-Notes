@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RESBev: Making BEV Perception More Robust
 description: >-
-  [CVPR 2026][自动驾驶][BEV perception] 提出 RESBev，一个即插即用的 BEV 感知鲁棒性增强框架，通过隐空间世界模型从历史干净帧预测当前 BEV 语义先验，再由异常重建器将先验与被损坏的当前观测通过交叉注意力融合…
+  [CVPR 2026][自动驾驶][BEV perception] 提出 RESBev，一个即插即用的 BEV 感知鲁棒性增强框架，通过隐空间世界模型从历史干净帧预测当前 BEV 语义先验，再由异常重建器将先验与被损坏的当前观测通过交叉注意力融合，在 nuScenes 上为四种 LSS 模型在 10 种干扰（含自然损坏 + 对抗攻击）下平均提升 15~20 个 IoU 点，且能泛化到训练未见过的干扰类型。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

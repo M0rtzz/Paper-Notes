@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LightAVSeg: Lightweight Audio-Visual Segmentation
 description: >-
-  [ICML 2026][语义分割][AVS] LightAVSeg 通过解耦 "语义筛选 (what)" 和 "空间定位 (where)"，用全局通道调制替换 $\mathcal{O}(N^2)$ 的跨模态注意力，让 AVS 模型在 20.5M 参数下达到 50.4 mIoU (MS3)…
+  [ICML 2026][语义分割][AVS] LightAVSeg 通过解耦 "语义筛选 (what)" 和 "空间定位 (where)"，用全局通道调制替换 $\mathcal{O}(N^2)$ 的跨模态注意力，让 AVS 模型在 20.5M 参数下达到 50.4 mIoU (MS3)，并在 Snapdragon 8 Elite 上做到 163.4 ms 的端侧延迟，比 AVSegFormer-R50 快约 $8\times$。
 tags:
   - "ICML 2026"
   - "语义分割"

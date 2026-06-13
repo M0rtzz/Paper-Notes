@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-WebAgentBench: A Multilingual Interactive Web Benchmark for Evaluating Global Agentic System
 description: >-
-  [ACL 2025 Findings][多语言/翻译][多语言智能体] 提出 X-WebAgentBench——一个多语言交互式网页基准，用于评估语言智能体在多种语言下的规划和交互能力，并评测了多种 LLM 及跨语言对齐方法，发现即使 GPT-4o 结合跨语言技术也无法达到令人满意的结果。
+  [ACL 2025 Findings][多语言/翻译][多语言智能体] 提出 X-WebAgentBench——一个多语言交互式网页基准，用于评估语言智能体在多种语言下的规划和交互能力，并评测了多种 LLM 及跨语言对齐方法，发现即使 GPT-4o 结合跨语言技术也无法达到令人满意的结果。 领域现状：基于 LLM 的智能体（…
 tags:
   - "ACL 2025 Findings"
   - "多语言/翻译"

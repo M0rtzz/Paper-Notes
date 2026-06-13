@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Annotation-Efficient Universal Honesty Alignment
 description: >-
-  [ICLR 2026][LLM推理][honesty alignment] 提出 EliCal（先激发后校准）两阶段框架，先用无标注的 self-consistency 信号教 LLM 表达内部置信度，再用极少量正确性标注（仅 1k 个，占 0.18%）进行校准…
+  [ICLR 2026][LLM推理][honesty alignment] 提出 EliCal（先激发后校准）两阶段框架，先用无标注的 self-consistency 信号教 LLM 表达内部置信度，再用极少量正确性标注（仅 1k 个，占 0.18%）进行校准，在 HonestyBench（560K 训练 + 70K 评估）上达到接近全量标注 98% 的诚实性对齐性能，并在未见 MMLU 任务上泛化优于仅校准基线。
 tags:
   - "ICLR 2026"
   - "LLM推理"

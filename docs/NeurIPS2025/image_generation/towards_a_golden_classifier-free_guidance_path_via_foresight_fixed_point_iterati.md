@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations
 description: >-
-  [NeurIPS 2025][图像生成][Classifier-Free Guidance] 将条件引导统一为不动点迭代框架，发现CFG及其变体都是短区间单步迭代的特例，理论证明其次优性，进而提出前瞻引导(FSG)——在早期扩散阶段对更长区间执行多步迭代，以更少计算实现更好的对齐质量。
+  [NeurIPS 2025 Spotlight][图像生成][Classifier-Free Guidance] 将条件引导统一为不动点迭代框架，发现CFG及其变体都是短区间单步迭代的特例，理论证明其次优性，进而提出前瞻引导(FSG)——在早期扩散阶段对更长区间执行多步迭代，以更少计算实现更好的对齐质量。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "Classifier-Free Guidance"
   - "不动点迭代"

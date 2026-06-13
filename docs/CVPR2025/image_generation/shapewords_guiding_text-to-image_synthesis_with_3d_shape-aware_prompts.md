@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShapeWords: Guiding Text-to-Image Synthesis with 3D Shape-Aware Prompts
 description: >-
-  [CVPR 2025][图像生成][3D形状引导] 提出ShapeWords，将3D形状编码为可嵌入文本prompt中的特殊token（Shape2CLIP模块），实现视角无关的3D形状引导文本到图像生成，在组合场景中显著优于ControlNet深度图条件方法。
+  [CVPR 2025][图像生成][3D形状引导] 提出ShapeWords，将3D形状编码为可嵌入文本prompt中的特殊token（Shape2CLIP模块），实现视角无关的3D形状引导文本到图像生成，在组合场景中显著优于ControlNet深度图条件方法。 文本到图像生成的形状控制面临三大挑战： - 文本-视觉条件失衡…
 tags:
   - "CVPR 2025"
   - "图像生成"

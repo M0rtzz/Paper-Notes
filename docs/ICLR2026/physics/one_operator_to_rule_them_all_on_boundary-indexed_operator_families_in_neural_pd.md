@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers
 description: >-
-  [ICLR 2026][物理/科学计算][神经算子] 论证神经 PDE 求解器在边界条件变化时学到的不是单一的解算子，而是由边界条件索引的算子族，并从学习理论角度形式化了 ERM 下边界分布偏移导致的不可辨识性问题。
+  [ICLR 2026][物理/科学计算][神经算子] 论证神经 PDE 求解器在边界条件变化时学到的不是单一的解算子，而是由边界条件索引的算子族，并从学习理论角度形式化了 ERM 下边界分布偏移导致的不可辨识性问题。 神经 PDE 求解器（如 FNO）通常被描述为"学习解算子"——从问题输入映射到 PDE 解。然而…
 tags:
   - "ICLR 2026"
   - "物理/科学计算"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] GlimpRouter: Efficient Collaborative Inference by Glimpsing One Token of Thoughts
 description: >-
-  [ACL 2026][模型压缩][协同推理] 本文提出 **GlimpRouter**：在 step 级 LRM 协同推理中，先让小模型只解码每个推理步的"第一个 token"，用它的熵 $\mathbf{H}_{\text{init}}$ 估计该步难度，低则小模型续写、高则切换到大模型…
+  [ACL 2026 Findings][模型压缩][协同推理] 本文提出 **GlimpRouter**：在 step 级 LRM 协同推理中，先让小模型只解码每个推理步的"第一个 token"，用它的熵 $\mathbf{H}_{\text{init}}$ 估计该步难度，低则小模型续写、高则切换到大模型；training-free，无需大模型 verifier，在 AIME25 上比独立大模型准确率 +10.7% 同时延迟 −25.9%，且与 token-level Speculative Decoding 正交叠加。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "协同推理"
   - "推测解码"

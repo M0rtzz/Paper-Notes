@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling-Aware Adapter for Structure-Grounded LLM Reasoning
 description: >-
-  [ICML2026][LLM推理][Cuttlefish] Cuttlefish 把 Q-Former 那种"固定长度查询 token"换成了"按结构复杂度自适应增长的指令条件 patch token"…
+  [ICML2026][LLM推理][Cuttlefish] Cuttlefish 把 Q-Former 那种"固定长度查询 token"换成了"按结构复杂度自适应增长的指令条件 patch token"，再用 cross-attention 把 EGNN 抽出的几何特征作为 modality token 注入 LLM，从而在分子 / 蛋白 / DNA / RNA 四种全原子模态上同时降幻觉、扛 scaling，超过一众模态专用 baseline。
 tags:
   - "ICML2026"
   - "LLM推理"

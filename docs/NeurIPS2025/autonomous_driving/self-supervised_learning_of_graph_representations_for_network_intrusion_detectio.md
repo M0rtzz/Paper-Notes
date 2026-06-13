@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Learning of Graph Representations for Network Intrusion Detection
 description: >-
-  [NeurIPS 2025][自动驾驶][network intrusion detection] 提出 GraphIDS，一种自监督入侵检测模型，通过掩码自编码器统一图表示学习与异常检测，在多个 NetFlow 基准上 PR-AUC 达 99.98%、宏 F1 达 99.61%，超越基线 5-25 个百分点…
+  [NeurIPS 2025][自动驾驶][network intrusion detection] 提出 GraphIDS，一种自监督入侵检测模型，通过掩码自编码器统一图表示学习与异常检测，在多个 NetFlow 基准上 PR-AUC 达 99.98%、宏 F1 达 99.61%，超越基线 5-25 个百分点。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

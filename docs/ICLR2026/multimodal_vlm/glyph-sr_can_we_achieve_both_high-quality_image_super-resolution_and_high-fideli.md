@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLYPH-SR: Can We Achieve Both High-Quality Image Super-Resolution and High-Fidelity Text Recovery via VLM-Guided Latent Diffusion Model?
 description: >-
-  [ICLR 2026][多模态VLM][图像超分辨率] 提出GLYPH-SR，一个视觉-语言引导的扩散框架，通过双分支Text-SR融合ControlNet和ping-pong调度器同时优化图像质量和文本可读性，在SVT ×8上将OCR F1提升15.18个百分点。
+  [ICLR 2026][多模态VLM][图像超分辨率] 提出GLYPH-SR，一个视觉-语言引导的扩散框架，通过双分支Text-SR融合ControlNet和ping-pong调度器同时优化图像质量和文本可读性，在SVT ×8上将OCR F1提升15.18个百分点。 图像超分辨率(SR)是许多视觉系统的基础技术…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

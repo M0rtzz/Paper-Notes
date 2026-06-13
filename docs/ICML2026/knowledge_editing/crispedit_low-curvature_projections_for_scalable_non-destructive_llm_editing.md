@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CrispEdit: Low-Curvature Projections for Scalable Non-Destructive LLM Editing
 description: >-
-  [ICML 2026][知识编辑][Gauss-Newton Hessian] 把 LLM 编辑写成"最小化编辑损失 s.t. 能力损失不变"的约束优化, 用 Bregman 散度等价转化为 Gauss-Newton Hessian 的低曲率子空间投影…
+  [ICML 2026][知识编辑][Gauss-Newton Hessian] 把 LLM 编辑写成"最小化编辑损失 s.t. 能力损失不变"的约束优化, 用 Bregman 散度等价转化为 Gauss-Newton Hessian 的低曲率子空间投影, 再借 K-FAC + 一个无需显式构造投影矩阵的 Kronecker 特征基技巧, 让 3000 条编辑在 A40 上 6 分钟跑完, 同时把 LLaMA-3-8B 的 MMLU/IFEval/ARC-C/TruthfulQA/GSM8K 平均掉点压到 < 1%, 显著优于 AlphaEdit / MEMIT / 微调。
 tags:
   - "ICML 2026"
   - "知识编辑"

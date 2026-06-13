@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents
 description: >-
-  [ACL2026][LLM Agent][时序层次记忆] TiMem 将长程对话记忆组织成显式时间包含的五层 Temporal Memory Tree，并用复杂度感知检索在细粒度事实和高层 persona 之间动态取舍，在 LoCoMo 和 LongMemEval-S 上同时提升准确率并显著减少召回上下文长度…
+  [ACL2026 Findings][LLM Agent][时序层次记忆] TiMem 将长程对话记忆组织成显式时间包含的五层 Temporal Memory Tree，并用复杂度感知检索在细粒度事实和高层 persona 之间动态取舍，在 LoCoMo 和 LongMemEval-S 上同时提升准确率并显著减少召回上下文长度。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM Agent"
   - "时序层次记忆"
   - "长对话智能体"

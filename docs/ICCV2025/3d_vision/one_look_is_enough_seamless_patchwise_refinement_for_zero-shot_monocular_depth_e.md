@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images
 description: >-
-  [3D视觉] 提出 PRO（Patch Refine Once），通过分组块一致性训练（GPCT）和无偏遮罩（BFM）策略，在高分辨率图像上实现无缝的逐块深度精炼，仅需每块单次精炼即可消除边界伪影，推理速度比 PatchRefiner 快12倍。
+  [3D视觉] 提出 PRO（Patch Refine Once），通过分组块一致性训练（GPCT）和无偏遮罩（BFM）策略，在高分辨率图像上实现无缝的逐块深度精炼，仅需每块单次精炼即可消除边界伪影，推理速度比 PatchRefiner 快12倍。 零样本单目深度估计模型（如 DepthAnything V2）虽然泛化能力强…
 tags:
   - "3D视觉"
 ---

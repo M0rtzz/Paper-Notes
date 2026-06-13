@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniSpector: Towards Universal Open-set Defect Recognition via Spectral-Contrastive Visual Prompting
 description: >-
-  [CVPR 2026][目标检测][开放集缺陷检测] 本文提出 UniSpector 开放集工业缺陷检测框架，通过频域-空域双域特征融合（SSPE）和角度间隔对比提示编码（CPE）解决了视觉提示嵌入崩塌问题，在新构建的包含 360 种缺陷类别的 Inspect Anything benchmark 上…
+  [CVPR 2026][目标检测][开放集缺陷检测] 本文提出 UniSpector 开放集工业缺陷检测框架，通过频域-空域双域特征融合（SSPE）和角度间隔对比提示编码（CPE）解决了视觉提示嵌入崩塌问题，在新构建的包含 360 种缺陷类别的 Inspect Anything benchmark 上，AP50 检测和分割分别比最佳基线高 19.7% 和 15.8%。
 tags:
   - "CVPR 2026"
   - "目标检测"

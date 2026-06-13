@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-Guided Modeling of Foundation Features Enables Generalizable Object Shape Deformation Learning
 description: >-
-  [ICML 2026][3D视觉][模板形变] 本文提出 GODeform：把 2D 基础模型（DINOv3 类）特征"挂"到类别模板表面上做几何引导传播与跨视点融合，再用 Flow Matching 学一个从模板到目标的逐点形变场，从而在大形变、任意视角和未见类别上都能从单张图恢复 3D 形状…
+  [ICML 2026][3D视觉][模板形变] 本文提出 GODeform：把 2D 基础模型（DINOv3 类）特征"挂"到类别模板表面上做几何引导传播与跨视点融合，再用 Flow Matching 学一个从模板到目标的逐点形变场，从而在大形变、任意视角和未见类别上都能从单张图恢复 3D 形状，并直接服务于灵巧抓取迁移。
 tags:
   - "ICML 2026"
   - "3D视觉"

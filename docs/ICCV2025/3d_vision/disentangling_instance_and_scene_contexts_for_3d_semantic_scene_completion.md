@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangling Instance and Scene Contexts for 3D Semantic Scene Completion
 description: >-
-  [3D视觉] 提出 DISC，一种基于类别感知的双流架构用于 3D 语义场景补全，通过将实例类别和场景类别解耦到独立的查询流中并设计针对性的解码模块，在 SemanticKITTI 上仅用单帧输入即超越多帧 SOTA 方法，实例类别 mIoU 提升 17.9%。
+  [3D视觉] 提出 DISC，一种基于类别感知的双流架构用于 3D 语义场景补全，通过将实例类别和场景类别解耦到独立的查询流中并设计针对性的解码模块，在 SemanticKITTI 上仅用单帧输入即超越多帧 SOTA 方法，实例类别 mIoU 提升 17.9%。 3D 语义场景补全（SSC）旨在从稀疏输入联合预测场景几何和语…
 tags:
   - "3D视觉"
 ---

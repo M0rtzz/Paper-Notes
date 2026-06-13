@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sequential Keypoint Density Estimator: An Overlooked Baseline of Skeleton-Based Video Anomaly Detection
 description: >-
-  [人体理解] > SeeKer 提出将骨架序列的联合密度在关键点级别进行自回归分解，通过预测后续关键点的条件高斯分布来检测异常人体行为，在 UBnormal 和 MSAD-HR 数据集上大幅超越现有方法。
+  [人体理解] SeeKer 提出将骨架序列的联合密度在关键点级别进行自回归分解，通过预测后续关键点的条件高斯分布来检测异常人体行为，在 UBnormal 和 MSAD-HR 数据集上大幅超越现有方法。 视频异常检测是安全关键的计算机视觉任务，广泛应用于医疗监护、工作场所安全和公共监控等场景。基于骨架的方法因其低维性、匿名性和…
 tags:
   - "人体理解"
 ---

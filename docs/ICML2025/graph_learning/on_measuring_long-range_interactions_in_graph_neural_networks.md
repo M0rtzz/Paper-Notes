@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Measuring Long-Range Interactions in Graph Neural Networks
 description: >-
-  [ICML 2025][图学习][长距离交互] 首次从第一性原理出发形式化定义图任务中的"长距离交互"，推导出唯一满足四条公理的 range measure $\hat{\rho}_u = \mathbb{E}_{v \sim I_u}[d_G(u,v)]$，通过合成实验验证其有效性后…
+  [ICML 2025][图学习][长距离交互] 首次从第一性原理出发形式化定义图任务中的"长距离交互"，推导出唯一满足四条公理的 range measure $\hat{\rho}_u = \mathbb{E}_{v \sim I_u}[d_G(u,v)]$，通过合成实验验证其有效性后，用该度量揭示 LRGB 基准中的 peptides 任务实际上是短距离的。
 tags:
   - "ICML 2025"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Conformational Ensembles of Proteins Based on Backbone Geometry
 description: >-
-  [NeurIPS 2025][计算生物][蛋白质构象集合] 提出 BBFlow，一种基于蛋白质骨架几何信息的流匹配生成模型，用于蛋白质构象集合采样，无需进化序列信息或预训练折叠模型，推理速度比 AlphaFlow 快一个数量级以上，且可扩展到多链蛋白质。
+  [NeurIPS 2025][计算生物][蛋白质构象集合] 提出 BBFlow，一种基于蛋白质骨架几何信息的流匹配生成模型，用于蛋白质构象集合采样，无需进化序列信息或预训练折叠模型，推理速度比 AlphaFlow 快一个数量级以上，且可扩展到多链蛋白质。 蛋白质的功能依赖于其结构动力学，即在热力学平衡下蛋白质可访问的构象集合…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

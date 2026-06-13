@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Style-Content Separation using B-LoRA
 description: >-
-  [ECCV 2024][图像生成][风格迁移] 提出 B-LoRA，通过分析 SDXL 架构发现仅联合训练两个特定 transformer block 的 LoRA 权重（Block 4 控制内容、Block 5 控制风格）即可隐式实现单张图片的风格-内容分离，支持风格迁移、文本风格化、一致风格生成等多种任务…
+  [ECCV 2024][图像生成][风格迁移] 提出 B-LoRA，通过分析 SDXL 架构发现仅联合训练两个特定 transformer block 的 LoRA 权重（Block 4 控制内容、Block 5 控制风格）即可隐式实现单张图片的风格-内容分离，支持风格迁移、文本风格化、一致风格生成等多种任务。
 tags:
   - "ECCV 2024"
   - "图像生成"

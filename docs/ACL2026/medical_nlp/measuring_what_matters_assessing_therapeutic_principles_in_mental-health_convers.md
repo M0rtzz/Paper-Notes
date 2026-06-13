@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Measuring What Matters!! Assessing Therapeutic Principles in Mental-Health Conversation
 description: >-
-  [ACL 2026][医疗NLP][心理健康对话评估] 本文提出 CARE 框架和 FAITH-M 基准数据集，通过对话上下文编码与对比范例检索+知识蒸馏链式推理（KD-CoT），对 AI 生成的心理治疗对话进行六个治疗原则维度的细粒度序数评估，加权 F1 达 63.34…
+  [ACL 2026][医疗NLP][心理健康对话评估] 本文提出 CARE 框架和 FAITH-M 基准数据集，通过对话上下文编码与对比范例检索+知识蒸馏链式推理（KD-CoT），对 AI 生成的心理治疗对话进行六个治疗原则维度的细粒度序数评估，加权 F1 达 63.34，比最强基线 Qwen3 提升 64.26%。
 tags:
   - "ACL 2026"
   - "医疗NLP"

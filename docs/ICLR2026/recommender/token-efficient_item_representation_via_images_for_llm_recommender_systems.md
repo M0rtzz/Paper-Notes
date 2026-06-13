@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token-Efficient Item Representation via Images for LLM Recommender Systems
 description: >-
-  [ICLR 2026][推荐系统][LLM推荐系统] 提出 I-LLMRec，利用商品图像替代冗长文本描述来表示推荐系统中的物品语义，通过 RISA 对齐模块和 RERI 检索模块，在仅用单个token表示物品的同时保留丰富语义，推理速度提升约2.93倍且推荐性能超越文本描述方法。
+  [ICLR 2026][推荐系统][LLM推荐系统] 提出 I-LLMRec，利用商品图像替代冗长文本描述来表示推荐系统中的物品语义，通过 RISA 对齐模块和 RERI 检索模块，在仅用单个token表示物品的同时保留丰富语义，推理速度提升约2.93倍且推荐性能超越文本描述方法。 领域现状：基于LLM的推荐系统需要将物品交…
 tags:
   - "ICLR 2026"
   - "推荐系统"

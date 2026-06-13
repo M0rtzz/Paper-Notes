@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation
 description: >-
-  [ECCV 2024][分层抽样] 提出一个统计框架，通过分层（stratification）、采样设计（sampling）和估计器（estimation）三个组件的协同设计，在仅标注少量测试样本的情况下精确估计CV模型准确率，最高可实现10倍的效率增益（即用1/10的标注量达到同等精度）。
+  [ECCV 2024][分层抽样] 提出一个统计框架，通过分层（stratification）、采样设计（sampling）和估计器（estimation）三个组件的协同设计，在仅标注少量测试样本的情况下精确估计CV模型准确率，最高可实现10倍的效率增益（即用1/10的标注量达到同等精度）。 领域现状 领域现状：评估CV模型…
 tags:
   - "ECCV 2024"
   - "分层抽样"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VAUQ: Vision-Aware Uncertainty Quantification for LVLM Self-Evaluation
 description: >-
-  [ACL2026][多模态VLM][LVLM自评估] 本文提出 VAUQ，用图像信息分数和注意力驱动的核心区域遮蔽来衡量 LVLM 的回答是否真正依赖视觉证据，从而在无需训练和外部评估器的情况下更可靠地做多模态自评估与幻觉检测。
+  [ACL2026 Findings][多模态VLM][LVLM自评估] 本文提出 VAUQ，用图像信息分数和注意力驱动的核心区域遮蔽来衡量 LVLM 的回答是否真正依赖视觉证据，从而在无需训练和外部评估器的情况下更可靠地做多模态自评估与幻觉检测。 领域现状：大视觉语言模型已经能完成开放式 VQA、视觉推理和图文对话…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "LVLM自评估"
   - "不确定性量化"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2602.21054](https://arxiv.org/abs/2602.21054)  
 **代码**: https://github.com/deeplearning-wisc/vauq  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: LVLM自评估, 不确定性量化, 幻觉检测, 视觉证据, 注意力遮蔽  
 
 ## 一句话总结

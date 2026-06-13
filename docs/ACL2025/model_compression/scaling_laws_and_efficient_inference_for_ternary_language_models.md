@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectra 1.1: Scaling Laws and Efficient Inference for Ternary Language Models
 description: >-
-  [ACL 2025][模型压缩][三值量化] 本文系统研究三值语言模型（TriLM）的缩放规律，发现 TriLM 从增加训练数据中获益远大于增加参数量，基于此训练了在 1.2T token 上预训练的 Spectra-1.1 模型族（1B/2B/3B）…
+  [ACL 2025][模型压缩][三值量化] 本文系统研究三值语言模型（TriLM）的缩放规律，发现 TriLM 从增加训练数据中获益远大于增加参数量，基于此训练了在 1.2T token 上预训练的 Spectra-1.1 模型族（1B/2B/3B），并提出 1.6-bit 和 2-bit 权重打包方案及 TriRun GPU 内核，实现最高 8 倍的推理加速。
 tags:
   - "ACL 2025"
   - "模型压缩"

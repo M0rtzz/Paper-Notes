@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast Estimation of Wasserstein Distances via Regression on Sliced Wasserstein Distances
 description: >-
-  [ICLR 2026][3D视觉][Wasserstein距离] 利用 Sliced Wasserstein（SW）距离既能提供 Wasserstein 距离的下界、lifted SW 距离又能提供上界这一数学性质，构建极简的线性回归模型（RG 框架）…
+  [ICLR 2026][3D视觉][Wasserstein距离] 利用 Sliced Wasserstein（SW）距离既能提供 Wasserstein 距离的下界、lifted SW 距离又能提供上界这一数学性质，构建极简的线性回归模型（RG 框架），仅用少量分布对的精确 Wasserstein 作为监督信号就能训练出高精度的 Wasserstein 代理估计器，在低数据场景下全面碾压 Transformer 方法 Wasserstein Wormhole。
 tags:
   - "ICLR 2026"
   - "3D视觉"

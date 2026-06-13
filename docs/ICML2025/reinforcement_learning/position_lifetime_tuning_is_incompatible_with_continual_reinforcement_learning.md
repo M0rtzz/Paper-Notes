@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning
 description: >-
-  [ICML 2025][强化学习][continual RL] 这篇 position paper 指出持续强化学习研究中的关键方法论缺陷——lifetime tuning（在整个生命周期上调参）会掩盖算法的真实持续学习能力，并提出 k%-percent tuning 作为更合理的评估替代方案。
+  [ICML 2025][强化学习][continual RL] 这篇 position paper 指出持续强化学习研究中的关键方法论缺陷——lifetime tuning（在整个生命周期上调参）会掩盖算法的真实持续学习能力，并提出 k%-percent tuning 作为更合理的评估替代方案。 领域现状：持续强化学习（Co…
 tags:
   - "ICML 2025"
   - "强化学习"

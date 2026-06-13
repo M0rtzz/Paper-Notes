@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T-FAKE: Synthesizing Thermal Images for Facial Landmarking
 description: >-
-  [CVPR 2025][医学图像][热红外图像合成] 提出 T-FAKE 数据集和 RGB2Thermal 损失函数，通过半监督热红外图像合成生成首个大规模合成热红外面部关键点数据集（20万张图像），在热红外域实现 SOTA 的稀疏/稠密面部关键点检测。
+  [CVPR 2025][医学图像][热红外图像合成] 提出 T-FAKE 数据集和 RGB2Thermal 损失函数，通过半监督热红外图像合成生成首个大规模合成热红外面部关键点数据集（20万张图像），在热红外域实现 SOTA 的稀疏/稠密面部关键点检测。 热红外成像在传染病筛查、情感状态分析、生物特征识别等领域具有重要应用价…
 tags:
   - "CVPR 2025"
   - "医学图像"

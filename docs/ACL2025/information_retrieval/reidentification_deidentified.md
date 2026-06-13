@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Re-identification of De-identified Documents with Autoregressive Infilling
 description: >-
-  提出一种基于 RAG 的去标识化文档重标识方法：先用稀疏+稠密检索找到相关背景文档，再用自回归填充模型推断被遮蔽的个人标识信息，在三个数据集上恢复了高达 80% 的被遮蔽文本。
+  [信息检索/RAG] 提出一种基于 RAG 的去标识化文档重标识方法：先用稀疏+稠密检索找到相关背景文档，再用自回归填充模型推断被遮蔽的个人标识信息，在三个数据集上恢复了高达 80% 的被遮蔽文本。 - 核心问题： 文档去标识化（de-identification）通过遮蔽个人可识别信息（PII）来保护隐私…
 tags:
-
+  - "信息检索/RAG"
 ---
 
 # Re-identification of De-identified Documents with Autoregressive Infilling

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding
 description: >-
-  [ICLR 2026][强化学习][Mixup] MergeMix 提出了一种基于 token merging 的 mixup 数据增强方法，通过双部软匹配在注意力空间生成混合图像，并将混合比例作为偏好优化中的软边际，在图像分类和多模态大模型两个场景下统一了 SFT 和 RL 训练范式。
+  [ICLR 2026][强化学习][Mixup] MergeMix 提出了一种基于 token merging 的 mixup 数据增强方法，通过双部软匹配在注意力空间生成混合图像，并将混合比例作为偏好优化中的软边际，在图像分类和多模态大模型两个场景下统一了 SFT 和 RL 训练范式。 领域现状：多模态大语言模型（MLLM…
 tags:
   - "ICLR 2026"
   - "强化学习"

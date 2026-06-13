@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EditInspector: A Benchmark for Evaluation of Text-Guided Image Edits
 description: >-
-  [ACL 2025][LLM评测][文本引导图像编辑] 本文提出 EditInspector，一个基于人工标注的多维度文本引导图像编辑评估基准，覆盖编辑准确性、伪影检测、视觉质量、场景融合度、常识一致性和变化描述六个维度，揭示了当前 VLM 在全面评估编辑质量方面的不足…
+  [ACL 2025][LLM评测][文本引导图像编辑] 本文提出 EditInspector，一个基于人工标注的多维度文本引导图像编辑评估基准，覆盖编辑准确性、伪影检测、视觉质量、场景融合度、常识一致性和变化描述六个维度，揭示了当前 VLM 在全面评估编辑质量方面的不足，并提出在伪影检测和差异描述生成上超越 SOTA 的两种新方法。
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Native Reasoning Models: Training Language Models to Reason on Unverifiable Data
 description: >-
-  [ICLR2026][LLM推理][推理训练] 提出 NRT（Native Reasoning Training）框架，将推理链视为隐变量，通过模型自身对参考答案的预测置信度作为内在奖励信号训练 LLM 推理能力，无需外部验证器或专家推理示范…
+  [ICLR2026][LLM推理][推理训练] 提出 NRT（Native Reasoning Training）框架，将推理链视为隐变量，通过模型自身对参考答案的预测置信度作为内在奖励信号训练 LLM 推理能力，无需外部验证器或专家推理示范；在 Llama-3.1-8B 上 9 个基准平均提升 10.2 分（46.0→56.2），超越需要验证器的 RLPR +5.4 分。
 tags:
   - "ICLR2026"
   - "LLM推理"

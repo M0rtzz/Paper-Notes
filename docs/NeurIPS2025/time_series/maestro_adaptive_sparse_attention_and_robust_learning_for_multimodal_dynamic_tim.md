@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series
 description: >-
-  [NeurIPS 2025][时间序列][多模态时间序列] 提出 MAESTRO 框架，通过符号化分词、自适应注意力预算、稀疏跨模态注意力和动态 MoE 路由，解决多模态时间序列中模态异质性和任意缺失的问题，在完整/缺失模态场景下均显著超越基线。
+  [NeurIPS 2025 Spotlight][时间序列][多模态时间序列] 提出 MAESTRO 框架，通过符号化分词、自适应注意力预算、稀疏跨模态注意力和动态 MoE 路由，解决多模态时间序列中模态异质性和任意缺失的问题，在完整/缺失模态场景下均显著超越基线。 多模态传感器监测（如心电、皮肤电导、加速度计等）在临床医疗…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "时间序列"
   - "多模态时间序列"
   - "稀疏注意力"

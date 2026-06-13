@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Effective and Efficient Continual Pre-training of Large Language Models
 description: >-
-  [ACL 2025][预训练][持续预训练] 系统性地研究了对Llama-3 (8B)进行持续预训练的数据策略，通过主题级数据混合、困惑度课程学习和高质量合成科学QA数据三大策略，仅用100B token就显著增强了中文能力（C-Eval +8.81）和科学推理能力（MATH +12.00）…
+  [ACL 2025][预训练][持续预训练] 系统性地研究了对Llama-3 (8B)进行持续预训练的数据策略，通过主题级数据混合、困惑度课程学习和高质量合成科学QA数据三大策略，仅用100B token就显著增强了中文能力（C-Eval +8.81）和科学推理能力（MATH +12.00），同时有效保持了原始英语能力。
 tags:
   - "ACL 2025"
   - "预训练"

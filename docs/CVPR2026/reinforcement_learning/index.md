@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 强化学习论文汇总 · 11篇论文解读
+  CVPR2026 强化学习论文汇总 · 13篇论文解读
 description: >-
-  11篇CVPR2026的强化学习方向论文解读，涵盖强化学习、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  13篇CVPR2026的强化学习方向论文解读，涵盖强化学习、多模态、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "强化学习"
@@ -11,12 +11,16 @@ tags:
   - "多模态"
   - "推理"
 item_list:
+  - u: "adversarial_agents_black-box_evasion_attacks_with_reinforcement_learning/"
+    t: "Adversarial Agents: Black-Box Evasion Attacks with Reinforcement Learning"
   - u: "anticipatory_planning_for_multimodal_ai_agents/"
     t: "Anticipatory Planning for Multimodal AI Agents"
   - u: "anydoc_enhancing_document_generation_via_large-scale_htmlcss_data_synthesis_and_/"
     t: "AnyDoc: Enhancing Document Generation via Large-Scale HTML/CSS Data Synthesis and Height-Aware Reinforcement Optimization"
   - u: "cccaption_dual-reward_reinforcement_learning_for_complete_and_correct_image_capt/"
     t: "CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning"
+  - u: "cme-cad_heterogeneous_collaborative_multi-expert_reinforcement_learning_for_cad_code_gen/"
+    t: "CME-CAD: Heterogeneous Collaborative Multi-Expert Reinforcement Learning for CAD Code Generation"
   - u: "cross-modal_identity_mapping_minimizing_information_loss_in_modality_conversion_/"
     t: "Cross-modal Identity Mapping: Minimizing Information Loss in Modality Conversion via Reinforcement Learning"
   - u: "geoworld_geometric_world_models/"
@@ -33,17 +37,21 @@ item_list:
     t: "Seeing is Improving: Visual Feedback for Iterative Text Layout Refinement"
   - u: "specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat/"
     t: "Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification"
-item_total: 11
+item_total: 13
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**📷 CVPR2026** · **11** 篇论文解读
+**📷 CVPR2026** · **13** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (95)](../../ICML2026/reinforcement_learning/index.md) · [💬 ACL2026 (44)](../../ACL2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (126)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×4 · 多模态 ×3 · 推理 ×3
+🔥 **高频主题：** 强化学习 ×6 · 多模态 ×3 · 推理 ×3
+
+**[Adversarial Agents: Black-Box Evasion Attacks with Reinforcement Learning](adversarial_agents_black-box_evasion_attacks_with_reinforcement_learning.md)**
+
+:   把"生成对抗样本"重新建模成一个马尔可夫决策过程（MDP），用 PPO 训练一个会"攒经验"的 RL 攻击智能体，让黑盒逃逸攻击随着训练越打越准、越打越省查询——在 CIFAR-10 / SVHN 上相比 Square、HSJA、Bandits 等 SOTA 黑盒攻击，最多多 17% 攻击成功率、少 31% 查询。
 
 **[Anticipatory Planning for Multimodal AI Agents](anticipatory_planning_for_multimodal_ai_agents.md)**
 
@@ -56,6 +64,10 @@ item_total: 11
 **[CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning](cccaption_dual-reward_reinforcement_learning_for_complete_and_correct_image_capt.md)**
 
 :   提出 CCCaption 双奖励强化学习框架，通过 completeness reward（基于多 MLLM 生成的视觉 query 集）和 correctness reward（基于 caption 分解后的子 query 幻觉检测）联合优化图像描述的完整性和正确性，2B 模型超越 32B 基线。
+
+**[CME-CAD: Heterogeneous Collaborative Multi-Expert Reinforcement Learning for CAD Code Generation](cme-cad_heterogeneous_collaborative_multi-expert_reinforcement_learning_for_cad_code_gen.md)**
+
+:   针对"从二维工程三视图直接生成可执行、可编辑 CAD 代码"这一工业场景，CME-CAD 让多个异构预训练大模型分别扮演风格各异的"专家"，先用各自的推理风格做监督微调（MEFT），再在强化学习阶段（MERL）让强专家通过 KL 蒸馏把好策略传给弱专家、并用难例缓冲机制反复攻克最难的样本，最终在自建的工业级基准 CADExpert 上把 IoU 从 71.84% 提升到 80.71%、代码可执行率提到 98.25%。
 
 **[Cross-modal Identity Mapping: Minimizing Information Loss in Modality Conversion via Reinforcement Learning](cross-modal_identity_mapping_minimizing_information_loss_in_modality_conversion_.md)**
 

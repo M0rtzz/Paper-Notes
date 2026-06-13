@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TemporalVLM: Video LLMs for Temporal Reasoning in Long Videos
 description: >-
-  [ACL 2026][视频理解][视频大语言模型] 本文提出 TemporalVLM，通过时间感知的片段编码器（重叠滑动 Video Q-Former + 融合模块）提取局部细粒度时间特征，再用 BiLSTM 聚合全局长程依赖，首次在 Video LLM 中引入 LSTM…
+  [ACL 2026][视频理解][视频大语言模型] 本文提出 TemporalVLM，通过时间感知的片段编码器（重叠滑动 Video Q-Former + 融合模块）提取局部细粒度时间特征，再用 BiLSTM 聚合全局长程依赖，首次在 Video LLM 中引入 LSTM，在密集视频描述、时序定位、高光检测和动作分割四项任务上超越先前方法。
 tags:
   - "ACL 2026"
   - "视频理解"

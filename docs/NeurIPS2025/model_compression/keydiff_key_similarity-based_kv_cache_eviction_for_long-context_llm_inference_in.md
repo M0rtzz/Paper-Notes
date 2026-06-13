@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments
 description: >-
-  [NeurIPS 2025][模型压缩][KV cache eviction] 提出 KeyDiff——一种无需注意力分数的 KV cache 驱逐策略，通过保留与其他 key 余弦相似度最低（即几何上最独特）的 key 来维护 cache…
+  [NeurIPS 2025][模型压缩][KV cache eviction] 提出 KeyDiff——一种无需注意力分数的 KV cache 驱逐策略，通过保留与其他 key 余弦相似度最低（即几何上最独特）的 key 来维护 cache，在严格内存约束的逐块推理场景下以 8K cache 在 LongBench 上仅损失 ≤0.04% 精度，同时端到端推理延迟减少最高 30%。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

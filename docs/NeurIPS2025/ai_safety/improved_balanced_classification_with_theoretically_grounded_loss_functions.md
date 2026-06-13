@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Balanced Classification with Theoretically Grounded Loss Functions
 description: >-
-  [NeurIPS 2025][AI安全][平衡分类损失] 提出两个理论驱动的代理损失函数族——广义Logit调整(GLA)损失和广义类感知加权(GCA)损失，为类别不平衡下的多类分类提供更强的理论保证和实证性能。
+  [NeurIPS 2025][AI安全][平衡分类损失] 提出两个理论驱动的代理损失函数族——广义Logit调整(GLA)损失和广义类感知加权(GCA)损失，为类别不平衡下的多类分类提供更强的理论保证和实证性能。 在多类分类中，类别不平衡是一个普遍存在的问题。平衡分类损失通过对所有类别赋予相同重要性来促进公平性…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

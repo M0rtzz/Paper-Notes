@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feel-Good Thompson Sampling for Contextual Bandits: a Markov Chain Monte Carlo Showdown
 description: >-
-  [NeurIPS 2025][强化学习][Thompson Sampling] 首次系统性实证评估 Feel-Good Thompson Sampling (FG-TS) 及其平滑变体 SFG-TS 在近似后验下的表现，横跨线性/逻辑/神经三类上下文赌博机设置和十四个基准…
+  [NeurIPS 2025][强化学习][Thompson Sampling] 首次系统性实证评估 Feel-Good Thompson Sampling (FG-TS) 及其平滑变体 SFG-TS 在近似后验下的表现，横跨线性/逻辑/神经三类上下文赌博机设置和十四个基准，发现 FG-TS 在精确后验场景（线性/逻辑）下优于标准 TS，但在神经赌博机中反而退化，揭示了乐观偏差与采样噪声之间的关键权衡。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

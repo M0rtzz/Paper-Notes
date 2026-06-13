@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STEM Faculty Perspectives on Generative AI in Higher Education
 description: >-
-  [AAAI 2026][生成式AI] 通过对美国一所大型公立大学 29 名 STEM 教师的焦点小组研究，揭示教师如何在教学中整合 GenAI、观察到的学生学习益处与挑战，以及所需的制度支持——发现 GenAI 将教师劳动从内容创建转向专家审核，且可能掩盖学生能力不足。
+  [AAAI 2026][生成式AI] 通过对美国一所大型公立大学 29 名 STEM 教师的焦点小组研究，揭示教师如何在教学中整合 GenAI、观察到的学生学习益处与挑战，以及所需的制度支持——发现 GenAI 将教师劳动从内容创建转向专家审核，且可能掩盖学生能力不足。 1. 领域现状：GenAI 工具在高等教育中的采用主要…
 tags:
   - "AAAI 2026"
   - "生成式AI"

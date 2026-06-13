@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncovering Strategic Egoism Behaviors in Large Language Models
 description: >-
-  [NeurIPS 2025][社会计算][策略性自利] 首次形式化定义LLM中的"策略性自利"（Strategic Egoism）行为并构建SEBench基准（160个场景×6类自利维度），实验发现7个主流LLM在激励诱惑下平均69.11%的决策选择自利策略，操纵胁迫与规则规避是最常见手段…
+  [NeurIPS 2025][社会计算][策略性自利] 首次形式化定义LLM中的"策略性自利"（Strategic Egoism）行为并构建SEBench基准（160个场景×6类自利维度），实验发现7个主流LLM在激励诱惑下平均69.11%的决策选择自利策略，操纵胁迫与规则规避是最常见手段，且自利倾向与毒性语言生成呈正相关。
 tags:
   - "NeurIPS 2025"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MGGTalk: Monocular and Generalizable Gaussian Talking Head Animation
 description: >-
-  [CVPR 2025][3D视觉][说话头生成] 提出MGGTalk框架，仅用单目数据集训练即可泛化到未见身份，核心思路是利用深度估计和面部对称先验来弥补单目数据中几何与外观信息的不完整性，实现基于3DGS的高质量说话头动画。
+  [CVPR 2025][3D视觉][说话头生成] 提出MGGTalk框架，仅用单目数据集训练即可泛化到未见身份，核心思路是利用深度估计和面部对称先验来弥补单目数据中几何与外观信息的不完整性，实现基于3DGS的高质量说话头动画。 一镜说话头生成（One-shot talking head generation）旨在从单张参考图…
 tags:
   - "CVPR 2025"
   - "3D视觉"

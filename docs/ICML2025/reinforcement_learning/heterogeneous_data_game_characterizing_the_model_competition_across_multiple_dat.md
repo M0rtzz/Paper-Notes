@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heterogeneous Data Game: Characterizing the Model Competition Across Multiple Data Sources
 description: >-
-  [ICML 2025][强化学习][数据异构性] 本文提出了异构数据博弈（HD-Game）框架，用博弈论分析多个ML模型提供商在异构数据源上的竞争行为，揭示了三种纯策略纳什均衡（PNE）模式——不存在、同质化和异质化——并给出了各类均衡存在的充分/必要条件。
+  [ICML 2025][强化学习][数据异构性] 本文提出了异构数据博弈（HD-Game）框架，用博弈论分析多个ML模型提供商在异构数据源上的竞争行为，揭示了三种纯策略纳什均衡（PNE）模式——不存在、同质化和异质化——并给出了各类均衡存在的充分/必要条件。 领域现状：现实ML市场中，数据通常来自多个异构来源（如不同医院的患…
 tags:
   - "ICML 2025"
   - "强化学习"

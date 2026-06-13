@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can SAEs Reveal and Mitigate Racial Biases of LLMs in Healthcare?
 description: >-
-  [ICLR 2026][医疗NLP][稀疏自编码器] 研究稀疏自编码器（SAE）能否揭示和缓解 LLM 在医疗场景中的种族偏见：发现 SAE 能识别出与种族相关的有害联想（如黑人与暴力），但在复杂临床任务中缓解偏见的效果有限（FLDD < 3%），远不如简单的提示策略（FLDD 8-15%）。
+  [ICLR 2026][医疗NLP][稀疏自编码器] 研究稀疏自编码器（SAE）能否揭示和缓解 LLM 在医疗场景中的种族偏见：发现 SAE 能识别出与种族相关的有害联想（如黑人与暴力），但在复杂临床任务中缓解偏见的效果有限（FLDD < 3%），远不如简单的提示策略（FLDD 8-15%）。 领域现状：LLM 在医疗场景中…
 tags:
   - "ICLR 2026"
   - "医疗NLP"

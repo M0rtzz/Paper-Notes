@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLsI: Verbalized Layers-to-Interactions from Large to Small Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][知识蒸馏] VLsI 提出了一种基于自然语言的层间蒸馏方法，通过在大小 VLM 的中间层引入 "verbalizer" 将特征映射到语言空间，并采用自适应层匹配策略对齐推理过程…
+  [CVPR 2025][多模态VLM][知识蒸馏] VLsI 提出了一种基于自然语言的层间蒸馏方法，通过在大小 VLM 的中间层引入 "verbalizer" 将特征映射到语言空间，并采用自适应层匹配策略对齐推理过程，使 2B/7B 小模型在 10 个 VL 基准上平均超过 GPT-4V 达 11.0%/17.4%，无需改变架构或增加参数。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Diffusion Model without Variational Autoencoder
 description: >-
-  [ICLR 2026][图像生成][自监督表征] 提出 SVG，用冻结的 DINOv3 自监督特征替代 VAE 潜在空间构建扩散模型，通过轻量残差编码器补充细粒度细节，实现更快训练、更高效推理和跨任务通用的视觉表征。
+  [ICLR 2026][图像生成][自监督表征] 提出 SVG，用冻结的 DINOv3 自监督特征替代 VAE 潜在空间构建扩散模型，通过轻量残差编码器补充细粒度细节，实现更快训练、更高效推理和跨任务通用的视觉表征。 - VAE+Diffusion 范式存在三大局限：训练/推理低效、少步采样质量差、VAE 特征缺乏语义判别性…
 tags:
   - "ICLR 2026"
   - "图像生成"

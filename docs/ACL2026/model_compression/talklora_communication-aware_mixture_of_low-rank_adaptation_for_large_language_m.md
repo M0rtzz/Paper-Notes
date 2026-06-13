@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TalkLoRA: Communication-Aware Mixture of Low-Rank Adaptation for Large Language Models
 description: >-
-  [ACL2026][模型压缩][LoRA] TalkLoRA 在 MoE-LoRA 架构中引入轻量级 Talking Module，允许低秩专家在路由前进行信息交换，解决传统 MoELoRA 中专家独立运行导致的路由不稳定和专家主导问题…
+  [ACL2026][模型压缩][LoRA] TalkLoRA 在 MoE-LoRA 架构中引入轻量级 Talking Module，允许低秩专家在路由前进行信息交换，解决传统 MoELoRA 中专家独立运行导致的路由不稳定和专家主导问题，在常识推理和 NLU 任务上以更少参数（0.2%）持续超越 LoRA 和 MoELoRA 变体。
 tags:
   - "ACL2026"
   - "模型压缩"
@@ -20,7 +20,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2604.06291](https://arxiv.org/abs/2604.06291)
 **代码**: [GitHub](https://github.com/why0129/TalkLoRA)
-**领域**: model_compression
+**领域**: 模型压缩
 **关键词**: LoRA, MoE, 参数高效微调, 专家通信, 路由均衡, Talking Module
 
 ## 一句话总结

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] DiffLM: Controllable Synthetic Data Generation via Diffusion Language Models
 description: >-
-  [ACL 2025][LLM/NLP][合成数据] DiffLM 提出基于 VAE + 潜在扩散 + 冻结 LLM 解码器的可控数据合成框架，通过在潜在空间引入扩散过程来精确建模真实数据分布，并以 soft prompt 方式将分布信息注入 LLM…
+  [ACL 2025][LLM 其他][合成数据] DiffLM 提出基于 VAE + 潜在扩散 + 冻结 LLM 解码器的可控数据合成框架，通过在潜在空间引入扩散过程来精确建模真实数据分布，并以 soft prompt 方式将分布信息注入 LLM，在表格、代码和工具三类结构化数据上合成质量超越真实数据 2%-7%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "合成数据"
   - "VAE"
   - "扩散模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plug-and-Play Label Map Diffusion for Universal Goal-Oriented Navigation
 description: >-
-  [ICML 2026][自动驾驶][目标导向导航] 本文提出 PLMD：把 BEV 语义图与障碍图合并成 Label Map，用 DDPM 在障碍先验调制下补全未探索区域的语义+障碍标签，作为即插即用模块挂在任意 GON 策略上…
+  [ICML 2026][自动驾驶][目标导向导航] 本文提出 PLMD：把 BEV 语义图与障碍图合并成 Label Map，用 DDPM 在障碍先验调制下补全未探索区域的语义+障碍标签，作为即插即用模块挂在任意 GON 策略上，在 ON / IIN / MRON 三类任务的 HM3D/MP3D 上一致刷新 SOTA。
 tags:
   - "ICML 2026"
   - "自动驾驶"

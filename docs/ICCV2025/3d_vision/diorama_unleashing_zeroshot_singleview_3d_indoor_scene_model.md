@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling
 description: >-
-  [ICCV 2025][3D视觉][zero-shot 3D scene modeling] 提出首个零样本开放世界系统 Diorama，通过模块化地组合 foundation model（GPT-4o、SAM、DinoV2、Metric3D 等）…
+  [ICCV 2025][3D视觉][zero-shot 3D scene modeling] 提出首个零样本开放世界系统 Diorama，通过模块化地组合 foundation model（GPT-4o、SAM、DinoV2、Metric3D 等），将单张 RGB 图像转化为包含建筑结构和 CAD 物体的完整可组合 3D 室内场景，无需任何端到端训练或人工标注。
 tags:
   - "ICCV 2025"
   - "3D视觉"

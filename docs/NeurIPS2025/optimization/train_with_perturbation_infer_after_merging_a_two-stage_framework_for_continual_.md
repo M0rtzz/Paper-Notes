@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Train with Perturbation, Infer after Merging: A Two-Stage Framework for Continual Learning
 description: >-
-  [NeurIPS 2025][优化/理论][持续学习] 提出Perturb-and-Merge (P&M)框架，将模型合并机制引入持续学习范式：训练时沿任务向量方向添加随机扰动以平滑损失面，推理时通过闭式最优系数对历史模型和当前任务模型做凸组合合并，结合LoRA实现内存高效的SOTA持续学习性能。
+  [NeurIPS 2025][优化/理论][持续学习] 提出Perturb-and-Merge (P&M)框架，将模型合并机制引入持续学习范式：训练时沿任务向量方向添加随机扰动以平滑损失面，推理时通过闭式最优系数对历史模型和当前任务模型做凸组合合并，结合LoRA实现内存高效的SOTA持续学习性能。 持续学习（CL）旨在让模型…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

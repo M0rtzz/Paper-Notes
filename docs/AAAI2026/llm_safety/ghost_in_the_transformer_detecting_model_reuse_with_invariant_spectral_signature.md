@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ghost in the Transformer: Detecting Model Reuse with Invariant Spectral Signatures
 description: >-
-  [LLM安全] 提出 GhostSpec，一种无需数据、不修改模型行为的白盒方法，通过对注意力权重矩阵的不变乘积做 SVD 提取光谱指纹，可在微调、剪枝、合并、扩展甚至对抗性变换下稳健地验证 LLM 血统。
+  [LLM安全] 提出 GhostSpec，一种无需数据、不修改模型行为的白盒方法，通过对注意力权重矩阵的不变乘积做 SVD 提取光谱指纹，可在微调、剪枝、合并、扩展甚至对抗性变换下稳健地验证 LLM 血统。 - LLM 训练成本极高，许多开发者基于开源模型微调后发布，大多遵守开源协议；但也有人将微调衍生模型伪称为"从零训练"…
 tags:
   - "LLM安全"
 ---

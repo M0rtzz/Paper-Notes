@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SCRIPT: A Subcharacter Compositional Representation Injection Module for Korean Pre-Trained Language Models
 description: >-
-  [ACL 2026][预训练][子字符组合表示] 本文提出 SCRIPT，一个模型无关的即插即用模块，通过双通道策略将韩文 Hangul 的子字符（Jamo）组合知识注入现有子词级 PLM 的嵌入层，无需重新预训练即可在韩语 NLU/NLG 任务上获得一致提升，并使嵌入空间更好地捕捉语法规律和语义变化。
+  [ACL 2026 Findings][预训练][子字符组合表示] 本文提出 SCRIPT，一个模型无关的即插即用模块，通过双通道策略将韩文 Hangul 的子字符（Jamo）组合知识注入现有子词级 PLM 的嵌入层，无需重新预训练即可在韩语 NLU/NLG 任务上获得一致提升，并使嵌入空间更好地捕捉语法规律和语义变化。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "预训练"
   - "子字符组合表示"
   - "韩语预训练模型"

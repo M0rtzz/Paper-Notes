@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NorEval: A Norwegian Language Understanding and Generation Evaluation Benchmark
 description: >-
-  [ACL 2025 (Findings)][LLM评测][挪威语评测] 本文提出 NorEval，一个包含 24 个人工创建数据集、覆盖 9 类任务的挪威语综合评测套件，系统地评测了 19 个开源挪威语语言模型在语言理解和生成上的能力，发现模型在常识推理、真实性和指令遵循上仍显著落后于人类。
+  [ACL 2025 (Findings)][LLM评测][挪威语评测] 本文提出 NorEval，一个包含 24 个人工创建数据集、覆盖 9 类任务的挪威语综合评测套件，系统地评测了 19 个开源挪威语语言模型在语言理解和生成上的能力，发现模型在常识推理、真实性和指令遵循上仍显著落后于人类。 领域现状：语言模型的进步离不开标…
 tags:
   - "ACL 2025 (Findings)"
   - "LLM评测"

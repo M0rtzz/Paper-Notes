@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Articulated Kinematics Distillation from Video Diffusion Models
 description: >-
-  [CVPR 2025][视频生成][关节动画] 本文提出AKD框架，通过骨骼关节参数化将3D资产的运动自由度从全空间降维到少量关节角度，再利用视频扩散模型（CogVideoX）的SDS梯度蒸馏出文本对齐的关节运动序列，并可通过物理仿真进一步确保物理合理性。
+  [CVPR 2025][视频生成][关节动画] 本文提出AKD框架，通过骨骼关节参数化将3D资产的运动自由度从全空间降维到少量关节角度，再利用视频扩散模型（CogVideoX）的SDS梯度蒸馏出文本对齐的关节运动序列，并可通过物理仿真进一步确保物理合理性。 领域现状：文本到4D生成（text-to-4D）是新兴方向…
 tags:
   - "CVPR 2025"
   - "视频生成"

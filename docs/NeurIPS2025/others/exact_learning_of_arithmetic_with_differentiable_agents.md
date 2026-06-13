@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exact Learning of Arithmetic with Differentiable Agents
 description: >-
-  [NeurIPS 2025 (MATH-AI Workshop)][differentiable FST] 提出可微有限状态转换器（DFST），一种图灵完备且端到端可微的模型族，在 2D 符号网格上通过观察专家算术计算的中间步骤（Policy-Trajectory Observations）训练…
+  [NeurIPS 2025 (MATH-AI Workshop)][differentiable FST] 提出可微有限状态转换器（DFST），一种图灵完备且端到端可微的模型族，在 2D 符号网格上通过观察专家算术计算的中间步骤（Policy-Trajectory Observations）训练，仅用 20 个样本（最长 3 位数加法）即可完美泛化到 3850 位二进制加法、2450 位十进制加法，未发现任何错误。
 tags:
   - "NeurIPS 2025 (MATH-AI Workshop)"
   - "differentiable FST"

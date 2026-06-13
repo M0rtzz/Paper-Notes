@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mirror Descent Under Generalized Smoothness
 description: >-
-  [ICML 2026][优化/理论][$\ell*$-smoothness] 本文提出一种基于任意范数及其对偶范数的 $\ell*$-广义光滑性概念，并通过"广义自界引理"把梯度对偶范数控制在初始次最优间隙之内…
+  [ICML 2026][优化/理论][$\ell*$-smoothness] 本文提出一种基于任意范数及其对偶范数的 $\ell*$-广义光滑性概念，并通过"广义自界引理"把梯度对偶范数控制在初始次最优间隙之内，从而首次为镜像下降及其加速、乐观、Mirror Prox、随机、复合等变体在非欧几何下建立了与经典 $L$-smooth 下匹配的收敛率。
 tags:
   - "ICML 2026"
   - "优化/理论"

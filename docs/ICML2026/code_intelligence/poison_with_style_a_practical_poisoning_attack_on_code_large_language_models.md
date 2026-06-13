@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Poison with Style: A Practical Poisoning Attack on Code Large Language Models
 description: >-
-  [ICML 2026][代码智能][代码大模型] PwS 用开发者常用的 Python 代码风格（如 Yapf/Black/PEP8）作为隐式触发器对开源 Code LLM 进行投毒，让模型在格式化器自动整理代码后才生成带 CWE 漏洞的补全…
+  [ICML 2026][代码智能][代码大模型] PwS 用开发者常用的 Python 代码风格（如 Yapf/Black/PEP8）作为隐式触发器对开源 Code LLM 进行投毒，让模型在格式化器自动整理代码后才生成带 CWE 漏洞的补全；在 Qwen2.5-Coder-32B 上对 CWE-20 触发提示达 95% ASR，而 HumanEval/MBPP pass@1 仅掉约 5%，并能抗住 BEEAR、prefix tuning、CodeShield 等主流防御。
 tags:
   - "ICML 2026"
   - "代码智能"

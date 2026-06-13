@@ -2,7 +2,7 @@
 title: >-
   [论文解读] pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning
 description: >-
-  [ICLR 2026][3D视觉][视觉编程] pySpatial 是一个视觉编程框架，让 MLLM 通过生成 Python 代码自动调用 3D 空间工具（3D 重建、相机位姿恢复、新视角渲染等），将有限的 2D 图像输入转化为可交互探索的 3D 场景，实现零样本、即插即用的显式 3D 空间推理…
+  [ICLR 2026][3D视觉][视觉编程] pySpatial 是一个视觉编程框架，让 MLLM 通过生成 Python 代码自动调用 3D 空间工具（3D 重建、相机位姿恢复、新视角渲染等），将有限的 2D 图像输入转化为可交互探索的 3D 场景，实现零样本、即插即用的显式 3D 空间推理，在 MindCube 基准上以 58.56% 的整体准确率超越 GPT-4.1-mini 12.94%、超越 VLM-3R 16.5%，并成功驱动真实四足机器人完成室内导航。
 tags:
   - "ICLR 2026"
   - "3D视觉"

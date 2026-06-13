@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WonderTurbo: Generating Interactive 3D World in 0.72 Seconds
 description: >-
-  [ICCV 2025][3D视觉][实时3D场景生成] WonderTurbo 提出首个实时交互式3D场景生成框架，通过 StepSplat（前馈式3DGS）、QuickDepth（轻量深度补全）和 FastPaint（2步扩散修复）三个模块协同加速，将单次场景扩展时间从 10+ 秒压缩到 0.72 秒…
+  [ICCV 2025][3D视觉][实时3D场景生成] WonderTurbo 提出首个实时交互式3D场景生成框架，通过 StepSplat（前馈式3DGS）、QuickDepth（轻量深度补全）和 FastPaint（2步扩散修复）三个模块协同加速，将单次场景扩展时间从 10+ 秒压缩到 0.72 秒，实现 15 倍加速的同时保持了与 WonderWorld 相当的生成质量。
 tags:
   - "ICCV 2025"
   - "3D视觉"

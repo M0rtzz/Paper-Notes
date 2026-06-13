@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension
 description: >-
-  [NeurIPS 2025][目标检测][检索增强生成] 本文提出Video-RAG，一个免训练、即插即用的RAG管道，通过从视频中提取视觉对齐的辅助文本（OCR、ASR、目标检测）并经检索筛选后输入LVLM，在仅增加约2K token的条件下将7个开源LVLM的Video-MME平均性能提升2.8%…
+  [NeurIPS 2025][目标检测][检索增强生成] 本文提出Video-RAG，一个免训练、即插即用的RAG管道，通过从视频中提取视觉对齐的辅助文本（OCR、ASR、目标检测）并经检索筛选后输入LVLM，在仅增加约2K token的条件下将7个开源LVLM的Video-MME平均性能提升2.8%，72B模型超越GPT-4o。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

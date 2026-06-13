@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Using Multiple Input Modalities Can Improve Data-Efficiency and O.O.D. Generalization for ML with Satellite Imagery
 description: >-
-  [ICML 2025 (TerraBytes Workshop)][语义分割][卫星遥感] 系统研究在卫星遥感 ML 任务中融合光学影像与额外地理数据层（DEM、土地覆盖图、温度、风速等）的效果，发现多模态输入显著提升模型性能，且收益在标注数据有限和地理分布外场景中最大；意外地…
+  [ICML 2025 (TerraBytes Workshop)][语义分割][卫星遥感] 系统研究在卫星遥感 ML 任务中融合光学影像与额外地理数据层（DEM、土地覆盖图、温度、风速等）的效果，发现多模态输入显著提升模型性能，且收益在标注数据有限和地理分布外场景中最大；意外地，硬编码融合策略优于学习型融合策略。
 tags:
   - "ICML 2025 (TerraBytes Workshop)"
   - "语义分割"

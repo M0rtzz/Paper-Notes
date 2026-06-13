@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Orient Anything V2: Unifying Orientation and Rotation Understanding
 description: >-
-  [NeurIPS 2025][图像生成][方向估计] Orient Anything V2 通过可扩展的合成数据引擎、对称感知的周期分布目标和多帧架构，统一了物体3D方向和旋转理解，在方向估计、6DoF位姿估计和对称性识别三个任务上均达到 zero-shot SOTA。
+  [NeurIPS 2025 Spotlight][图像生成][方向估计] Orient Anything V2 通过可扩展的合成数据引擎、对称感知的周期分布目标和多帧架构，统一了物体3D方向和旋转理解，在方向估计、6DoF位姿估计和对称性识别三个任务上均达到 zero-shot SOTA。 从图像中估计物体的3D方向是计算机…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "方向估计"
   - "旋转对称性"

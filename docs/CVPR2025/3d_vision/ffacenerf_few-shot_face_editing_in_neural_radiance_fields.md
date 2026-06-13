@@ -2,10 +2,10 @@
 title: >-
   [论文解读] FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields
 description: >-
-  [CVPR 2025][医学图像][face editing] 提出 FFaceNeRF，一种基于 NeRF 的面部编辑方法，通过几何适配器（geometry adapter）+ 三平面特征注入 + 潜码混合增强（LMTA），仅需 10 张标注样本即可适配到任意自定义分割 mask 布局…
+  [CVPR 2025][3D视觉][face editing] 提出 FFaceNeRF，一种基于 NeRF 的面部编辑方法，通过几何适配器（geometry adapter）+ 三平面特征注入 + 潜码混合增强（LMTA），仅需 10 张标注样本即可适配到任意自定义分割 mask 布局，实现灵活的 3D 感知面部编辑。
 tags:
   - "CVPR 2025"
-  - "医学图像"
+  - "3D视觉"
   - "face editing"
   - "NeRF"
   - "few-shot"

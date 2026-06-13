@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Partitioning for Intrinsic Model Inversion Resistance in Collaborative Inference
 description: >-
-  [ICML 2026][模型反演攻击] 本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ）…
+  [ICML 2026][AI安全][模型反演攻击] 本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ），而类内均方半径 $R_c^2$ 是定位 GPZ、且能被标签平滑训练动态地主动收缩的关键变量。
 tags:
   - "ICML 2026"
+  - "AI安全"
   - "模型反演攻击"
   - "协同推理"
   - "划分策略"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Children's English Reading Story Generation via Supervised Fine-Tuning of Compact LLMs with Controllable Difficulty and Safety
 description: >-
-  [ACL 2026][文本生成][儿童阅读] 作者用 UFLI K–2 英语阅读课程对应的 2,580 篇 GPT-4o / Llama-3.3-70B 生成故事，对三个 8B 模型（Llama 3 / Granite 3.3 / Apertus）做 4 种 SFT 设计（baseline / Good St…
+  [ACL 2026][文本生成][儿童阅读] 作者用 UFLI K–2 英语阅读课程对应的 2,580 篇 GPT-4o / Llama-3.3-70B 生成故事，对三个 8B 模型（Llama 3 / Granite 3.3 / Apertus）做 4 种 SFT 设计（baseline / Good Stories / Rewarded SFT / 模拟儿童读音错误），证明 **小模型 + 合适 SFT 策略** 可在 Spache 可读性、句法复杂度、毒性等 K-2 关键指标上**超过 zero-shot GPT-4o 与 Llama-3.3-70B**，其中 Rewarded SFT 最稳定、几乎无幻觉。
 tags:
   - "ACL 2026"
   - "文本生成"

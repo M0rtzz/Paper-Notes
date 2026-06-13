@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One-for-More: Continual Diffusion Model for Anomaly Detection
 description: >-
-  [CVPR 2025][目标检测][持续学习] 提出CDAD框架，通过梯度投影实现扩散模型的稳定持续学习，配合迭代SVD（iSVD）将内存消耗从157GB降至17GB，并设计异常掩码网络增强条件机制，在MVTec和VisA上17/18个设置中取得第一。
+  [CVPR 2025][目标检测][持续学习] 提出CDAD框架，通过梯度投影实现扩散模型的稳定持续学习，配合迭代SVD（iSVD）将内存消耗从157GB降至17GB，并设计异常掩码网络增强条件机制，在MVTec和VisA上17/18个设置中取得第一。 异常检测从"一对一"（为每类训练专门模型）发展到"一对多"（单模型检测所…
 tags:
   - "CVPR 2025"
   - "目标检测"

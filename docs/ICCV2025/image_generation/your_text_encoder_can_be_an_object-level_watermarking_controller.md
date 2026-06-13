@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your Text Encoder Can Be An Object-Level Watermarking Controller
 description: >-
-  [ICCV 2025][图像生成][水印嵌入] 通过仅微调文本编码器中的伪 token 嵌入 $\mathcal{W}_*$，实现对 T2I 扩散模型生成图像的对象级不可见水印嵌入，以 $10^5\times$ 更少的参数达到 99% 的比特准确率（48 bits）。
+  [ICCV 2025][图像生成][水印嵌入] 通过仅微调文本编码器中的伪 token 嵌入 $\mathcal{W}_$，实现对 T2I 扩散模型生成图像的对象级不可见水印嵌入，以 $10^5\times$ 更少的参数达到 99% 的比特准确率（48 bits）。 随着文本到图像（T2I）扩散模型的广泛应用…
 tags:
   - "ICCV 2025"
   - "图像生成"

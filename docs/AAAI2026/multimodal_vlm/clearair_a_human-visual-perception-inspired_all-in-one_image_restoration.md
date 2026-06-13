@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration
 description: >-
-  [AAAI 2026][多模态VLM][图像恢复] 受人类视觉感知（HVP）启发，提出一种从粗到细的统一图像复原框架 ClearAIR，通过 MLLM 质量评估 → 语义区域感知 → 退化类型识别 → 内部线索复用四阶段逐步恢复图像质量，在多种退化任务上取得 SOTA。
+  [AAAI 2026][多模态VLM][图像恢复] 受人类视觉感知（HVP）启发，提出一种从粗到细的统一图像复原框架 ClearAIR，通过 MLLM 质量评估 → 语义区域感知 → 退化类型识别 → 内部线索复用四阶段逐步恢复图像质量，在多种退化任务上取得 SOTA。 任务特定模型泛化性差：早期图像复原方法针对去噪、去雾、…
 tags:
   - "AAAI 2026"
   - "多模态VLM"

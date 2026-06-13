@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Easi3R: Estimating Disentangled Motion from DUSt3R Without Training
 description: >-
-  [ICCV 2025][3D视觉][4D重建] 提出 Easi3R，一种免训练的即插即用方法，通过分析和操控 DUSt3R 交叉注意力层中隐含的运动信息，实现动态物体分割、相机位姿估计和 4D 密集点云重建。
+  [ICCV 2025][3D视觉][4D重建] 提出 Easi3R，一种免训练的即插即用方法，通过分析和操控 DUSt3R 交叉注意力层中隐含的运动信息，实现动态物体分割、相机位姿估计和 4D 密集点云重建。 领域现状：DUSt3R 在静态场景中实现了鲁棒的密集点云和相机参数估计。MonST3R、CUT3R 等工作通过在动态…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting 3D Single Object Tracking with 2D Matching Distillation and 3D Pre-training
 description: >-
-  [ECCV 2024][视频理解][3D单目标跟踪] 本文提出了一个统一的3D单目标跟踪（SOT）框架，通过3D生成式预训练和2D预训练基础跟踪器的匹配知识蒸馏，解决了点云数据稀缺和LiDAR扫描稀疏不完整的问题，在KITTI、Waymo和nuScenes上达到SOTA性能。
+  [ECCV 2024][视频理解][3D单目标跟踪] 本文提出了一个统一的3D单目标跟踪（SOT）框架，通过3D生成式预训练和2D预训练基础跟踪器的匹配知识蒸馏，解决了点云数据稀缺和LiDAR扫描稀疏不完整的问题，在KITTI、Waymo和nuScenes上达到SOTA性能。 领域现状：3D单目标跟踪是自动驾驶和机器人领域的…
 tags:
   - "ECCV 2024"
   - "视频理解"

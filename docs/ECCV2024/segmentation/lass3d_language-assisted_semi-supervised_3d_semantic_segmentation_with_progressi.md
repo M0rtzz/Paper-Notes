@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LASS3D: Language-Assisted Semi-Supervised 3D Semantic Segmentation with Progressive Unreliable Data Exploitation
 description: >-
-  [ECCV 2024][语义分割][半监督学习] 本文提出 LASS3D，在 MeanTeacher 半监督 3D 语义分割框架中引入大语言视觉模型（LVM）生成多层级文本描述来增强 3D 特征，并通过渐进式负学习策略有效利用低置信度伪标签点，在室内外数据集上取得显著提升。
+  [ECCV 2024][语义分割][半监督学习] 本文提出 LASS3D，在 MeanTeacher 半监督 3D 语义分割框架中引入大语言视觉模型（LVM）生成多层级文本描述来增强 3D 特征，并通过渐进式负学习策略有效利用低置信度伪标签点，在室内外数据集上取得显著提升。 领域现状：3D 点云语义分割需要大量精确的逐点标注…
 tags:
   - "ECCV 2024"
   - "语义分割"

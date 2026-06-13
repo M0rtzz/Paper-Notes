@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BVINet: Unlocking Blind Video Inpainting with Zero Annotations
 description: >-
-  [ICCV 2025][图像生成][图像修复] 首次定义并解决"盲视频修复"（blind video inpainting）任务——在无需任何损坏区域标注的情况下，端到端地同时完成"哪里需要修复"和"如何修复"，通过 mask 预测网络与视频补全网络的一致性约束互相增强…
+  [ICCV 2025][图像生成][图像修复] 首次定义并解决"盲视频修复"（blind video inpainting）任务——在无需任何损坏区域标注的情况下，端到端地同时完成"哪里需要修复"和"如何修复"，通过 mask 预测网络与视频补全网络的一致性约束互相增强，在合成数据和真实应用（弹幕去除/划痕修复）中均取得优异效果。
 tags:
   - "ICCV 2025"
   - "图像生成"

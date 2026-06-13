@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BYORn: Bootstrap Your Own Responses to Defend Large Vision-Language Models Against Backdoor Attacks
 description: >-
-  [ICML 2026][LLM安全][后门防御] BYORn 通过检测与输入语义不一致的高困惑度目标响应来识别投毒样本，并用模型自身生成的干净响应动态替换，从而打破后门触发器与恶意输出之间的关联，在保持干净任务性能的同时将攻击成功率平均降低 40 个百分点。
+  [ICML 2026][LLM安全][后门防御] BYORn 通过检测与输入语义不一致的高困惑度目标响应来识别投毒样本，并用模型自身生成的干净响应动态替换，从而打破后门触发器与恶意输出之间的关联，在保持干净任务性能的同时将攻击成功率平均降低 40 个百分点。 领域现状：监督微调（SFT）是将预训练视觉语言模型（LVLM）适配…
 tags:
   - "ICML 2026"
   - "LLM安全"

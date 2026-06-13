@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Goal-Driven Reward by Video Diffusion Models for Reinforcement Learning
 description: >-
-  [CVPR 2026][视频生成][视频扩散模型] 提出 GenReward 框架，利用预训练视频扩散模型生成目标条件视频，通过视频级和帧级两层目标驱动奖励信号引导强化学习智能体，无需手工设计奖励函数即可在 Meta-World 机器人操控任务上显著超越基线。
+  [CVPR 2026][视频生成][视频扩散模型] 提出 GenReward 框架，利用预训练视频扩散模型生成目标条件视频，通过视频级和帧级两层目标驱动奖励信号引导强化学习智能体，无需手工设计奖励函数即可在 Meta-World 机器人操控任务上显著超越基线。 领域现状：强化学习依赖精心设计的奖励函数来引导策略学习…
 tags:
   - "CVPR 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why DPO is a Misspecified Estimator and How to Fix It
 description: >-
-  [ICLR 2026 Oral][LLM对齐][DPO] 从信息几何角度证明 DPO 在参数化（非 tabular）策略类下本质上是一个误指定的统计估计问题——DPO 将真实奖励函数 KL 投影到隐式奖励流形上…
+  [ICLR 2026 Oral][LLM对齐][DPO] 从信息几何角度证明 DPO 在参数化（非 tabular）策略类下本质上是一个误指定的统计估计问题——DPO 将真实奖励函数 KL 投影到隐式奖励流形上，当奖励不可实现时会导致偏好反转和奖励下降——并提出 AuxDPO 通过引入零空间辅助变量来修复此问题。
 tags:
   - "ICLR 2026 Oral"
   - "LLM对齐"

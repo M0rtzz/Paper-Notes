@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory
 description: >-
-  [NeurIPS 2025][LLM安全][战略推理] 本文提出基于行为博弈论的LLM战略推理评估框架，使用截断量子响应均衡(TQRE)量化推理深度τ，在13个矩阵博弈上评估22个SOTA模型，揭示推理风格差异和人口统计persona引发的偏差问题。
+  [NeurIPS 2025][LLM安全][战略推理] 本文提出基于行为博弈论的LLM战略推理评估框架，使用截断量子响应均衡(TQRE)量化推理深度τ，在13个矩阵博弈上评估22个SOTA模型，揭示推理风格差异和人口统计persona引发的偏差问题。 LLM越来越多地被部署在需要战略决策的交互场景（如采购谈判、广告竞价）…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

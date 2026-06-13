@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment
 description: >-
-  [CVPR 2025][语义分割][DINOv2] 提出 dino.txt，通过冻结 DINOv2 视觉编码器 + 从头训练文本编码器的 LiT 策略，创新性地用 [CLS]+平均池化拼接作为图像表征，结合文本+图像双模态数据平衡…
+  [CVPR 2025][语义分割][DINOv2] 提出 dino.txt，通过冻结 DINOv2 视觉编码器 + 从头训练文本编码器的 LiT 策略，创新性地用 [CLS]+平均池化拼接作为图像表征，结合文本+图像双模态数据平衡，仅用 50K 迭代（CLIP 训练成本的几分之一）即在零样本分类和开放词汇分割上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

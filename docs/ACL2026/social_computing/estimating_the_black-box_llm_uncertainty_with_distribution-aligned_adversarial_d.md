@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Estimating the Black-box LLM Uncertainty with Distribution-Aligned Adversarial Distillation
 description: >-
-  [ACL 2026][社会计算][黑盒不确定性] 提出 DisAAD：用一个仅占目标模型 1% 体积的小代理模型，通过 "分布对齐 + 对抗蒸馏" 学到 "黑盒 LLM 知不知道这道题"，再借证据深度学习把代理模型 logits 拆成认知 / 偶然不确定性…
+  [ACL 2026][社会计算][黑盒不确定性] 提出 DisAAD：用一个仅占目标模型 1% 体积的小代理模型，通过 "分布对齐 + 对抗蒸馏" 学到 "黑盒 LLM 知不知道这道题"，再借证据深度学习把代理模型 logits 拆成认知 / 偶然不确定性，单次响应即可估计 GPT-4/Claude 这类闭源模型的实时不确定性，平均 AUROC 比黑盒 baseline 高 18.2%、AUPR 高 22.9%。
 tags:
   - "ACL 2026"
   - "社会计算"

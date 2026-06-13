@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Reason from Feedback at Test-Time
 description: >-
-  [ACL 2025][测试时计算] 本文提出FTTT（Feedback at Test-Time Training）范式，将LLM在推理阶段对环境反馈的利用形式化为一个优化问题，并设计了可学习的测试时优化器OpTune，在四个推理数据集上实现了优于现有反馈利用方法的可扩展性和性能。
+  [ACL 2025][测试时计算] 本文提出FTTT（Feedback at Test-Time Training）范式，将LLM在推理阶段对环境反馈的利用形式化为一个优化问题，并设计了可学习的测试时优化器OpTune，在四个推理数据集上实现了优于现有反馈利用方法的可扩展性和性能。 领域现状：大语言模型在面对复杂推理任务时…
 tags:
   - "ACL 2025"
   - "测试时计算"

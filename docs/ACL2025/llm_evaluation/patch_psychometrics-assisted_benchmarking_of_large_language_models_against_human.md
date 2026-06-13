@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PATCH: Psychometrics-Assisted Benchmarking of LLMs Against Human Populations
 description: >-
-  [ACL 2025][LLM评测][psychometrics] 提出 PATCH 框架，将心理测量学中的项目反应理论（IRT 3PL/2PL 模型）引入 LLM 基准测试，在 TIMSS 2011 八年级数学测试（88 道题、56 个国家/地区）上对比 GPT-4V、Gemini-Pro-Vision、Qw…
+  [ACL 2025][LLM评测][psychometrics] 提出 PATCH 框架，将心理测量学中的项目反应理论（IRT 3PL/2PL 模型）引入 LLM 基准测试，在 TIMSS 2011 八年级数学测试（88 道题、56 个国家/地区）上对比 GPT-4V、Gemini-Pro-Vision、Qwen-VL 与人类群体的能力值，发现 IRT 能力估计与简单准确率排名显著不同，GPT-4V 与韩国/新加坡/中国台北学生处于同一排名区间；同时发布 4 个高质量数据集（TIMSS 2011 & 2008 数学/科学/物理）。
 tags:
   - "ACL 2025"
   - "LLM评测"

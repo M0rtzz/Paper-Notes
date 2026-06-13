@@ -2,9 +2,9 @@
 title: >-
   [论文解读] KVmix: Gradient-Based Layer Importance-Aware Mixed-Precision Quantization for KV Cache
 description: >-
-  [AAAI 2026][模型压缩][KV Cache量化] 提出 KVmix，通过计算 Key/Value 投影权重梯度的 $L_2$ 范数来评估各层 KV Cache 的重要性，实现层级混合精度量化（Key 平均 2.19bit、Value 平均 2.38bit），并结合动态关键上下文选择（RPC）策略…
+  [AAAI 2026 Oral][模型压缩][KV Cache量化] 提出 KVmix，通过计算 Key/Value 投影权重梯度的 $L_2$ 范数来评估各层 KV Cache 的重要性，实现层级混合精度量化（Key 平均 2.19bit、Value 平均 2.38bit），并结合动态关键上下文选择（RPC）策略，在 Llama/Mistral 等模型上实现近无损推理、4.9× 内存压缩和 5.3× 吞吐加速。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "模型压缩"
   - "KV Cache量化"
   - "混合精度"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Multi-Drafter Speculative Decoding with Alignment Feedback
 description: >-
-  [ACL 2026][LLM效率][推测解码] 本文提出 MetaSD，一个将多个异构草稿器整合到推测解码中的统一框架，将草稿器选择建模为多臂赌博机问题，通过块散度（Block Divergence）奖励信号动态选择与目标 LLM 最对齐的草稿器，在黑盒和白盒配置下一致优于单草稿器方法。
+  [ACL 2026 Findings][LLM效率][推测解码] 本文提出 MetaSD，一个将多个异构草稿器整合到推测解码中的统一框架，将草稿器选择建模为多臂赌博机问题，通过块散度（Block Divergence）奖励信号动态选择与目标 LLM 最对齐的草稿器，在黑盒和白盒配置下一致优于单草稿器方法。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM效率"
   - "推测解码"
   - "多臂赌博机"

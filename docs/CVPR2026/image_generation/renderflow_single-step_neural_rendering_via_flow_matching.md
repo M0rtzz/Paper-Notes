@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RenderFlow: Single-Step Neural Rendering via Flow Matching
 description: >-
-  [CVPR 2026][图像生成][神经渲染] 提出 RenderFlow，将神经渲染重新建模为从 albedo 到全光照图像的单步条件流匹配问题，以 G-buffer 为条件、预训练视频 DiT 为骨干，实现了比扩散方法快 10 倍以上（~0.19s/帧）的确定性渲染，可选的稀疏关键帧引导进一步提升物理精度…
+  [CVPR 2026][图像生成][神经渲染] 提出 RenderFlow，将神经渲染重新建模为从 albedo 到全光照图像的单步条件流匹配问题，以 G-buffer 为条件、预训练视频 DiT 为骨干，实现了比扩散方法快 10 倍以上（~0.19s/帧）的确定性渲染，可选的稀疏关键帧引导进一步提升物理精度，还支持通过冻结骨干 + 轻量 adapter 实现逆渲染。
 tags:
   - "CVPR 2026"
   - "图像生成"

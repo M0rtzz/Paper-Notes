@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ExpeTrans: LLMs Are Experiential Transfer Learners
 description: >-
-  [ACL 2025][LLM/NLP][经验迁移] ExpeTrans 提出了一个自主经验迁移框架，让 LLM 模仿人类认知智能，将已有源任务的解题经验自动迁移到新遇到的目标任务上，在 13 个数据集上有效提升了 LLM 性能，无需为每个新任务人工收集经验。
+  [ACL 2025][LLM 其他][经验迁移] ExpeTrans 提出了一个自主经验迁移框架，让 LLM 模仿人类认知智能，将已有源任务的解题经验自动迁移到新遇到的目标任务上，在 13 个数据集上有效提升了 LLM 性能，无需为每个新任务人工收集经验。 领域现状：近年来研究表明，通过提示（prompt）为 LLM 提供文…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "经验迁移"
   - "任务泛化"
   - "提示工程"

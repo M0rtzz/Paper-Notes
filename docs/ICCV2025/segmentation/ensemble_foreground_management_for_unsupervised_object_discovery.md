@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ensemble Foreground Management for Unsupervised Object Discovery
 description: >-
-  [ICCV 2025 (Highlight)][语义分割][无监督目标发现] 本文提出 UnionCut——一种基于最小割和集成方法的前景联合体检测方法，为无监督目标发现（UOD）提供数学上有保证的前景先验，使 UOD 算法能够准确判断发现区域是否为前景并在恰当时刻停止探索…
+  [ICCV 2025 (Highlight)][语义分割][无监督目标发现] 本文提出 UnionCut——一种基于最小割和集成方法的前景联合体检测方法，为无监督目标发现（UOD）提供数学上有保证的前景先验，使 UOD 算法能够准确判断发现区域是否为前景并在恰当时刻停止探索；同时提出蒸馏版 UnionSeg 大幅提升效率和精度。
 tags:
   - "ICCV 2025 (Highlight)"
   - "语义分割"

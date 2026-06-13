@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoLC: Communication-Efficient Collaborative Perception with LiDAR Completion
 description: >-
-  [CVPR 2026][自动驾驶][协同感知] CoLC 提出一种通信高效的早期协同感知框架，通过前景感知点采样(FAPS)减少传输量，结合 VQ-based LiDAR 补全(CEEF)在 ego 端恢复稠密 pillar 表示，并用稠密引导双对齐(DGDA)保证语义和几何一致性…
+  [CVPR 2026][自动驾驶][协同感知] CoLC 提出一种通信高效的早期协同感知框架，通过前景感知点采样(FAPS)减少传输量，结合 VQ-based LiDAR 补全(CEEF)在 ego 端恢复稠密 pillar 表示，并用稠密引导双对齐(DGDA)保证语义和几何一致性，在大幅降低通信带宽的同时保持甚至超越早期融合的检测性能。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

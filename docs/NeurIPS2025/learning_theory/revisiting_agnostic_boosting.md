@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Revisiting Agnostic Boosting
 description: >-
-  [NeurIPS 2025][Boosting] 提出新的不可知 Boosting 算法,在非常一般的假设下大幅改善了此前工作的样本复杂度,并建立近匹配下界,从而在对数因子意义下解决了不可知 Boosting 的样本复杂度问题。
+  [NeurIPS 2025][机器学习理论][Boosting] 提出新的不可知 Boosting 算法,在非常一般的假设下大幅改善了此前工作的样本复杂度,并建立近匹配下界,从而在对数因子意义下解决了不可知 Boosting 的样本复杂度问题。 现有痛点 现有痛点：领域现状：Boosting 是统计学习中的关键方法…
 tags:
   - "NeurIPS 2025"
+  - "机器学习理论"
   - "Boosting"
   - "不可知学习"
   - "样本复杂度"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeCon-RAG: A Two-Stage Semantic Filtering and Conflict-Free Framework for Trustworthy RAG
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG] 提出 SeCon-RAG 两阶段防御框架，第一阶段用聚类+语义图联合过滤毒化文档，第二阶段在推理时做冲突感知过滤，在5个LLM和3个QA数据集上全面超越现有RAG防御方法，在100%投毒率下仍保持高准确率和极低攻击成功率。
+  [NeurIPS 2025][信息检索/RAG][RAG] 提出 SeCon-RAG 两阶段防御框架，第一阶段用聚类+语义图联合过滤毒化文档，第二阶段在推理时做冲突感知过滤，在5个LLM和3个QA数据集上全面超越现有RAG防御方法，在100%投毒率下仍保持高准确率和极低攻击成功率。 领域现状：RAG 通过引入外部文档增强 L…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

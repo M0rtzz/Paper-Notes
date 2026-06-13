@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EAFormer: Scene Text Segmentation with Edge-Aware Transformers
 description: >-
-  [ECCV 2024][语义分割][场景文字分割] 提出边缘感知Transformer（EAFormer），通过文本边缘提取器过滤非文本区域边缘、对称交叉注意力在编码器中融合文本边缘信息，显著提升文字边缘区域的分割精度，并重标注COCO_TS和MLT_S数据集以实现更公平评估。
+  [ECCV 2024][语义分割][场景文字分割] 提出边缘感知Transformer（EAFormer），通过文本边缘提取器过滤非文本区域边缘、对称交叉注意力在编码器中融合文本边缘信息，显著提升文字边缘区域的分割精度，并重标注COCO_TS和MLT_S数据集以实现更公平评估。 领域现状：场景文字分割旨在像素级区分前景文字与…
 tags:
   - "ECCV 2024"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Inexact CAD Model Alignment from a Single Image
 description: >-
-  [ICCV 2025][3D视觉][CAD对齐] 提出一种弱监督的9-DoF CAD模型对齐方法，通过增强DINOv2特征的几何感知能力并在归一化物体坐标（NOC）空间进行稠密对齐优化，实现无需位姿标注、可泛化到未见类别的零样本3D对齐。
+  [ICCV 2025][3D视觉][CAD对齐] 提出一种弱监督的9-DoF CAD模型对齐方法，通过增强DINOv2特征的几何感知能力并在归一化物体坐标（NOC）空间进行稠密对齐优化，实现无需位姿标注、可泛化到未见类别的零样本3D对齐。 从单张图像恢复3D场景结构是一个高度病态问题（深度模糊+大面积遮挡）…
 tags:
   - "ICCV 2025"
   - "3D视觉"

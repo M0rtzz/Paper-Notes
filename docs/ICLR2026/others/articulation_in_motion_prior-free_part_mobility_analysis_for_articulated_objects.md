@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Articulation in Motion: Prior-Free Part Mobility Analysis for Articulated Objects
 description: >-
-  [ICLR 2026][articulated objects] 提出AiM（Articulation in Motion）框架，从交互视频和初始状态扫描中无需部件数量先验地重建铰接物体——通过双高斯表征（静态GS + 可变形GS）实现动静解耦，结合顺序RANSAC进行无先验部件分割和关节估计…
+  [ICLR 2026][articulated objects] 提出AiM（Articulation in Motion）框架，从交互视频和初始状态扫描中无需部件数量先验地重建铰接物体——通过双高斯表征（静态GS + 可变形GS）实现动静解耦，结合顺序RANSAC进行无先验部件分割和关节估计，辅以SDMD模块处理新暴露的静态区域，在复杂6部件物体（Storage）上以79.34% mean IoU大幅超越需先验的ArtGS（52.23%）。
 tags:
   - "ICLR 2026"
   - "articulated objects"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CARE: Class-Adaptive Expert Consensus for Reliable Learning with Long-Tailed Noisy Labels
 description: >-
-  [ICML 2026][信息检索/RAG][噪声标签学习] 提出 CARE 框架，利用 VLM 的文本嵌入、图像特征和原始标签三路互补专家，通过类别自适应 Top-$K$ 共识机制实现长尾噪声标签场景下的可靠标签矫正，在合成与真实基准上一致超越 SOTA 最高 3.0%。
+  [ICML 2026][信息检索/RAG][噪声标签学习] 提出 CARE 框架，利用 VLM 的文本嵌入、图像特征和原始标签三路互补专家，通过类别自适应 Top-$K$ 共识机制实现长尾噪声标签场景下的可靠标签矫正，在合成与真实基准上一致超越 SOTA 最高 3.0%。 领域现状：现实数据通常同时存在标签噪声（annota…
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoDial: Interpretable Task-Oriented Dialogue Systems Through Dialogue Flow Alignment
 description: >-
-  [ACL 2026][对话系统][任务型对话] 本文提出 CoDial，一个将预定义的对话流（task schema）转换为结构化异构图再自动生成 LLM 护栏代码（如 Colang）的框架，在推理阶段实现可解释且可控的任务型对话策略，在 STAR 基准上达到 SOTA，且无需训练数据。
+  [ACL 2026][对话系统][任务型对话] 本文提出 CoDial，一个将预定义的对话流（task schema）转换为结构化异构图再自动生成 LLM 护栏代码（如 Colang）的框架，在推理阶段实现可解释且可控的任务型对话策略，在 STAR 基准上达到 SOTA，且无需训练数据。 领域现状：任务型对话（TOD）系统需…
 tags:
   - "ACL 2026"
   - "对话系统"

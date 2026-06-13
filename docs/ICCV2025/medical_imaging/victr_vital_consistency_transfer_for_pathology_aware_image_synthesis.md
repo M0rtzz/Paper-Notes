@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViCTr: Vital Consistency Transfer for Pathology Aware Image Synthesis
 description: >-
-  [医学图像] > 提出 ViCTr 两阶段框架，结合 Rectified Flow 与 Tweedie 校正的扩散过程实现高保真的病理感知医学图像合成，将推理步数从50步降至3-4步，并首次实现分级严重程度的腹部MRI病理合成。
+  [医学图像] 提出 ViCTr 两阶段框架，结合 Rectified Flow 与 Tweedie 校正的扩散过程实现高保真的病理感知医学图像合成，将推理步数从50步降至3-4步，并首次实现分级严重程度的腹部MRI病理合成。 问题定义 医学图像合成旨在生成具有解剖学真实性和病理学多样性的合成医学影像…
 tags:
   - "医学图像"
 ---

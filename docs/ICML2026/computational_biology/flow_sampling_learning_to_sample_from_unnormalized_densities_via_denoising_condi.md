@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Flow Sampling: Learning to Sample from Unnormalized Densities via Denoising Conditional Processes
 description: >-
-  [ICML 2026][计算生物][扩散采样] 本文提出 Flow Sampling，把流匹配/扩散模型从"数据驱动"反转为"噪声驱动"——以源噪声样本为条件构造去噪扩散漂移，在 interpolant 上用 detached 模型采得 $X_1$ 的能量梯度做回归目标，从而学到无数据情况下的高效扩散采样器…
+  [ICML 2026 Spotlight][计算生物][扩散采样] 本文提出 Flow Sampling，把流匹配/扩散模型从"数据驱动"反转为"噪声驱动"——以源噪声样本为条件构造去噪扩散漂移，在 interpolant 上用 detached 模型采得 $X_1$ 的能量梯度做回归目标，从而学到无数据情况下的高效扩散采样器，并自然推广到常曲率黎曼流形。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "计算生物"
   - "扩散采样"
   - "流匹配"

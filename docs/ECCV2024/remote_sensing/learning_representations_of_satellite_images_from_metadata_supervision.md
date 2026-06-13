@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Representations of Satellite Images From Metadata Supervision
 description: >-
-  [ECCV 2024][遥感][卫星图像] 本文提出了 SatMIP（Satellite Metadata-Image Pretraining），将卫星图像的元数据（如时间、地理位置、传感器信息等）表示为文本描述，通过图像-元数据对比学习任务在共享嵌入空间中对齐图像和元数据…
+  [ECCV 2024][遥感][卫星图像] 本文提出了 SatMIP（Satellite Metadata-Image Pretraining），将卫星图像的元数据（如时间、地理位置、传感器信息等）表示为文本描述，通过图像-元数据对比学习任务在共享嵌入空间中对齐图像和元数据，学习到既包含视觉特征又编码语义信息的卫星图像表征，并进一步提出 SatMIPS（结合图像自监督和元数据监督），在多个遥感下游任务上超越了 SimCLR 等纯视觉自监督方法。
 tags:
   - "ECCV 2024"
   - "遥感"

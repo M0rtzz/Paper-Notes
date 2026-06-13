@@ -2,9 +2,10 @@
 title: >-
   [论文解读] LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models
 description: >-
-  [AAAI 2026][Lyapunov稳定性] 提出 LILAD 框架，利用 GPT-2 的 in-context learning 能力同时学习动力学模型和 Lyapunov 函数，在保证全局指数稳定性的同时实现对非平稳参数化动力系统的自适应辨识，在多个基准系统上超越 ICL、MAML 等基线。
+  [AAAI 2026][LLM 其他][Lyapunov稳定性] 提出 LILAD 框架，利用 GPT-2 的 in-context learning 能力同时学习动力学模型和 Lyapunov 函数，在保证全局指数稳定性的同时实现对非平稳参数化动力系统的自适应辨识，在多个基准系统上超越 ICL、MAML 等基线。
 tags:
   - "AAAI 2026"
+  - "LLM 其他"
   - "Lyapunov稳定性"
   - "上下文学习"
   - "自适应系统辨识"

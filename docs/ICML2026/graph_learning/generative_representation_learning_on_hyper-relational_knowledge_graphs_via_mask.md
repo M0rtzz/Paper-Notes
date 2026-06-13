@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Representation Learning on Hyper-relational Knowledge Graphs via Masked Discrete Diffusion
 description: >-
-  [ICML 2026][图学习][超关系知识图谱] 本文提出"事实生成"任务，把超关系知识图谱（HKG）补全从"填一个空"扩展到"从任意掩码模式甚至从零生成完整事实"，并给出首个生成式 HKG 表示学习方法 KREPE：用上下文消息传递编码事实内/事实间依赖，用掩码离散扩散建模缺失分量的联合条件分布…
+  [ICML 2026][图学习][超关系知识图谱] 本文提出"事实生成"任务，把超关系知识图谱（HKG）补全从"填一个空"扩展到"从任意掩码模式甚至从零生成完整事实"，并给出首个生成式 HKG 表示学习方法 KREPE：用上下文消息传递编码事实内/事实间依赖，用掩码离散扩散建模缺失分量的联合条件分布，在三个 HKG 基准的链接预测上达 SOTA，并在事实生成任务上把基于 GPT-5.2 / Gemini 3 Pro 的强 LLM 基线大幅甩开（如 WikiPeople- 从零生成 0.855 vs LLM 最好 0.343）。
 tags:
   - "ICML 2026"
   - "图学习"

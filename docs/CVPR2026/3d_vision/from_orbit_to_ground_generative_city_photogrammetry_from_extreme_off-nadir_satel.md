@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Orbit to Ground: Generative City Photogrammetry from Extreme Off-Nadir Satellite Images
 description: >-
-  [CVPR 2026][3D视觉][城市重建] 提出从稀疏卫星图像重建城市级 3D 模型的两阶段方法：用 Z-Monotonic SDF 建模几何保证建筑结构完整性，再用微调 FLUX 扩散模型做"确定性修复"从退化贴图合成写实纹理，实现从轨道到地面近 90° 视点外推。
+  [CVPR 2026 Findings][3D视觉][城市重建] 提出从稀疏卫星图像重建城市级 3D 模型的两阶段方法：用 Z-Monotonic SDF 建模几何保证建筑结构完整性，再用微调 FLUX 扩散模型做"确定性修复"从退化贴图合成写实纹理，实现从轨道到地面近 90° 视点外推。 领域现状：NeRF/3DGS 在物…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "城市重建"
   - "卫星图像"

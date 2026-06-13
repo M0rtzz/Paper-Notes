@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying Misattribution Unfairness in Authorship Attribution
 description: >-
-  [ACL 2025][AI安全][作者归因] 本文提出MAUI_k指标量化作者归因系统中"错误归因不公平性"——某些作者系统性地更容易被误判为可疑作者，并发现这种不公平与作者嵌入在向量空间中距质心的距离高度相关。
+  [ACL 2025][AI安全][作者归因] 本文提出MAUI_k指标量化作者归因系统中"错误归因不公平性"——某些作者系统性地更容易被误判为可疑作者，并发现这种不公平与作者嵌入在向量空间中距质心的距离高度相关。 - 领域现状：作者归因（authorship attribution）在法庭取证、文学分析等场景中广泛使用…
 tags:
   - "ACL 2025"
   - "AI安全"

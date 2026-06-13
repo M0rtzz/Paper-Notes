@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RealViformer: Investigating Attention for Real-World Video Super-Resolution
 description: >-
-  [ECCV 2024][视频生成][超分辨率] 本文系统研究了空间注意力和通道注意力在真实世界视频超分辨率（RWVSR）中的行为差异，发现通道注意力对退化伪影更鲁棒但会导致特征冗余，据此提出了带有改进通道注意力（ICA）和通道注意力融合（CAF）模块的 RealViformer…
+  [ECCV 2024][视频生成][超分辨率] 本文系统研究了空间注意力和通道注意力在真实世界视频超分辨率（RWVSR）中的行为差异，发现通道注意力对退化伪影更鲁棒但会导致特征冗余，据此提出了带有改进通道注意力（ICA）和通道注意力融合（CAF）模块的 RealViformer，以更少的参数和更快的速度达到 SOTA。
 tags:
   - "ECCV 2024"
   - "视频生成"

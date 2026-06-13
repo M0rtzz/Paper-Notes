@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TESS 2: A Large-Scale Generalist Diffusion Language Model
 description: >-
-  [ACL2025][LLM/NLP][扩散模型] 提出 TESS 2，首个从已有自回归模型适配而来的大规模通用指令遵循扩散语言模型，通过 UL2 masking + label shifting + 双向注意力的适配训练方案 + reward guidance 推理引导…
+  [ACL2025][LLM 其他][扩散模型] 提出 TESS 2，首个从已有自回归模型适配而来的大规模通用指令遵循扩散语言模型，通过 UL2 masking + label shifting + 双向注意力的适配训练方案 + reward guidance 推理引导，在 QA 和指令遵循任务上匹配甚至超越同等 AR 模型。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散模型"
   - "instruction tuning"
   - "reward guidance"

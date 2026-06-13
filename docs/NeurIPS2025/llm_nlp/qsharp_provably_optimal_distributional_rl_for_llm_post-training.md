@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Q♯: Provably Optimal Distributional RL for LLM Post-Training
 description: >-
-  [NeurIPS 2025][LLM/NLP][LLM后训练] 提出 Q♯，一种基于分布式 RL 的值函数方法用于 KL 正则化 LLM 后训练，通过学习参考策略下的累积奖励分布来计算最优软 Q 函数引导生成，在数学推理任务上实现更高准确率和更低 KL 散度，并证明了方差相关的 PAC 收敛界。
+  [NeurIPS 2025][LLM 其他][LLM后训练] 提出 Q♯，一种基于分布式 RL 的值函数方法用于 KL 正则化 LLM 后训练，通过学习参考策略下的累积奖励分布来计算最优软 Q 函数引导生成，在数学推理任务上实现更高准确率和更低 KL 散度，并证明了方差相关的 PAC 收敛界。 领域现状：RL 后训练是 LL…
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM后训练"
   - "分布式强化学习"
   - "KL正则化"

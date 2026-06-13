@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Systematic Evaluation of Preference Aggregation in Federated RLHF for Pluralistic Alignment of LLMs
 description: >-
-  [NEURIPS2025][LLM安全][联邦学习] 提出一种自适应 Alpha 聚合策略，在联邦 RLHF 框架中根据各用户群体的历史对齐表现动态调整奖励权重，从而在多元偏好对齐中同时实现高公平性和强对齐性能。
+  [NEURIPS2025][LLM安全][联邦学习] 提出一种自适应 Alpha 聚合策略，在联邦 RLHF 框架中根据各用户群体的历史对齐表现动态调整奖励权重，从而在多元偏好对齐中同时实现高公平性和强对齐性能。 标准 RLHF 的集中式困境： 传统 RLHF 依赖集中式偏好数据，既存在隐私风险，又容易偏向狭窄人群的偏好…
 tags:
   - "NEURIPS2025"
   - "LLM安全"

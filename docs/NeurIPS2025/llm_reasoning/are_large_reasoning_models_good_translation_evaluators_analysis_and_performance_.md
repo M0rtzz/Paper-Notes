@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are Large Reasoning Models Good Translation Evaluators? Analysis and Performance Boost
 description: >-
-  [NeurIPS 2025][LLM推理][LRM-as-a-judge] 首次系统分析了大推理模型（LRM）在机器翻译MQM评估中的行为，发现LRM存在"过度思考"、评分高估和材料选择依赖模型规模等问题，并提出ThinMQM方法通过训练合成人类评分轨迹来校准LRM思维过程…
+  [NeurIPS 2025][LLM推理][LRM-as-a-judge] 首次系统分析了大推理模型（LRM）在机器翻译MQM评估中的行为，发现LRM存在"过度思考"、评分高估和材料选择依赖模型规模等问题，并提出ThinMQM方法通过训练合成人类评分轨迹来校准LRM思维过程，将思维预算减少约35倍同时提升评估性能（7B模型提升+8.7相关性分数）。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

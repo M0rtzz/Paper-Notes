@@ -2,7 +2,7 @@
 title: >-
   [论文解读] All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation
 description: >-
-  [ICLR 2026][机器人][终身视觉语言导航] 提出Tucker Adaptation (TuKA)，将多场景多环境的多层级导航知识表示为高阶张量，用Tucker分解解耦为共享子空间（核心张量+编解码器）和场景/环境专家向量，配合解耦知识增量学习策略实现全天候多场景终身VLN…
+  [ICLR 2026][机器人][终身视觉语言导航] 提出Tucker Adaptation (TuKA)，将多场景多环境的多层级导航知识表示为高阶张量，用Tucker分解解耦为共享子空间（核心张量+编解码器）和场景/环境专家向量，配合解耦知识增量学习策略实现全天候多场景终身VLN，在24个导航场景上的SR和遗忘率均优于LoRA变体。
 tags:
   - "ICLR 2026"
   - "机器人"

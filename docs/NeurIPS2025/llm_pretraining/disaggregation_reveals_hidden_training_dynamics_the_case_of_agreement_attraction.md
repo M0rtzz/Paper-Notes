@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disaggregation Reveals Hidden Training Dynamics: The Case of Agreement Attraction
 description: >-
-  [NeurIPS 2025][预训练][训练动态] 本文通过对语言模型在主谓一致任务上的表现按实验条件进行细粒度拆解（disaggregation），揭示了聚合指标所掩盖的多阶段训练动态：模型先学词频偏好、再学局部上下文、最后发展出一般性的语法规则，这一过程涉及多次"隐藏突破"而非简单的单调提升。
+  [NeurIPS 2025][预训练][训练动态] 本文通过对语言模型在主谓一致任务上的表现按实验条件进行细粒度拆解（disaggregation），揭示了聚合指标所掩盖的多阶段训练动态：模型先学词频偏好、再学局部上下文、最后发展出一般性的语法规则，这一过程涉及多次"隐藏突破"而非简单的单调提升。 领域现状：大型语言模型通常…
 tags:
   - "NeurIPS 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SocialGesture: Delving into Multi-Person Gesture Understanding
 description: >-
-  [CVPR 2025][人体理解][多人手势识别] SocialGesture 是首个专注于多人社交场景下指示性手势（pointing/showing/giving/reaching）的大规模数据集，涵盖 9889 个视频片段和 42533 个手势实例，同时提出了时序定位、分类识别和 VQA 三类基准任务…
+  [CVPR 2025][人体理解][多人手势识别] SocialGesture 是首个专注于多人社交场景下指示性手势（pointing/showing/giving/reaching）的大规模数据集，涵盖 9889 个视频片段和 42533 个手势实例，同时提出了时序定位、分类识别和 VQA 三类基准任务，系统揭示了当前模型在多人手势理解上的严重不足。
 tags:
   - "CVPR 2025"
   - "人体理解"

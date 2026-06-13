@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games
 description: >-
-  [NeurIPS 2025][多面体博弈] 提出基于核化（kernelization）的框架，在部分信息反馈设定下为多面体博弈（Colonel Blotto、图拟阵拥堵博弈、网络拥堵博弈）设计了计算高效的无遗憾学习算法，显著改进了学习粗关联均衡（CCE）的运行时复杂度。
+  [NeurIPS 2025][多面体博弈] 提出基于核化（kernelization）的框架，在部分信息反馈设定下为多面体博弈（Colonel Blotto、图拟阵拥堵博弈、网络拥堵博弈）设计了计算高效的无遗憾学习算法，显著改进了学习粗关联均衡（CCE）的运行时复杂度。 多面体博弈：是一类具有组合结构和指数级大动作空间的正常…
 tags:
   - "NeurIPS 2025"
   - "多面体博弈"

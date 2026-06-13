@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finite-Sample Analysis of Policy Evaluation for Robust Average Reward Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][鲁棒强化学习] 首次给出鲁棒平均奖励 MDP 策略评估的有限样本复杂度分析：通过构造精巧的半范数证明鲁棒 Bellman 算子具有收缩性质，结合截断 Multi-Level Monte Carlo 估计器实现有限期望样本复杂度…
+  [NeurIPS 2025][强化学习][鲁棒强化学习] 首次给出鲁棒平均奖励 MDP 策略评估的有限样本复杂度分析：通过构造精巧的半范数证明鲁棒 Bellman 算子具有收缩性质，结合截断 Multi-Level Monte Carlo 估计器实现有限期望样本复杂度，最终达到阶最优的 $\tilde{\mathcal{O}}(\epsilon^{-2})$ 样本复杂度。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

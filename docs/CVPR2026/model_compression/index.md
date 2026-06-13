@@ -1,17 +1,18 @@
 ---
 title: >-
-  CVPR2026 模型压缩论文汇总 · 54篇论文解读
+  CVPR2026 模型压缩论文汇总 · 68篇论文解读
 description: >-
-  54篇CVPR2026的模型压缩方向论文解读，涵盖模型压缩、扩散模型、压缩/编码、对抗鲁棒、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  68篇CVPR2026的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、扩散模型、对抗鲁棒、持续学习、知识蒸馏等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "模型压缩"
   - "论文解读"
   - "论文笔记"
-  - "扩散模型"
   - "压缩/编码"
+  - "扩散模型"
   - "对抗鲁棒"
   - "持续学习"
+  - "知识蒸馏"
 item_list:
   - u: "4d_rgpt_toward_region_level_4d_understanding_via_perceptual_distillation/"
     t: "4D-RGPT: Toward Region-level 4D Understanding via Perceptual Distillation"
@@ -35,8 +36,14 @@ item_list:
     t: "Bilevel Layer-Positioning LoRA for Real Image Dehazing"
   - u: "binaryattention_one-bit_qk-attention_for_vision_and_diffusion_transformers/"
     t: "BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers"
+  - u: "bridging_the_training-deployment_gap_gated_encoding_and_multi-scale_refinement_f/"
+    t: "Bridging the Training-Deployment Gap: Gated Encoding and Multi-Scale Refinement for Efficient Quantization-Aware Image Enhancement"
+  - u: "continual_distillation_of_teachers_from_different_domains/"
+    t: "Continual Distillation of Teachers from Different Domains"
   - u: "critical_patch-aware_sparse_prompting_with_decoupled_training_for_continual_lear/"
     t: "Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge"
+  - u: "cross-modal_knowledge_distillation_from_spatial_transcriptomics_to_histology/"
+    t: "Cross-Modal Knowledge Distillation from Spatial Transcriptomics to Histology"
   - u: "dage_dual-stream_architecture_for_efficient_and_fine-grained_geometry_estimation/"
     t: "DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation"
   - u: "distilling_balanced_knowledge_from_a_biased_teacher/"
@@ -67,23 +74,17 @@ item_list:
     t: "HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers"
   - u: "hieramp_coarse-to-fine_autoregressive_amplification_for_generative_dataset_disti/"
     t: "HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation"
-  - u: "learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover/"
-    t: "Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery"
-  - u: "llava-le_large_language-and-vision_assistant_for_lunar_exploration/"
-    t: "LLaVA-LE: Large Language-and-Vision Assistant for Lunar Exploration"
-  - u: "mame_and_mare_matrix_based_token_merging_and_restoration_for_efficient_visual_perception_and_synthesis/"
-    t: "MaMe & MaRe: Matrix-Based Token Merging and Restoration for Efficient Visual Perception and Synthesis"
-item_total: 54
+item_total: 68
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📷 CVPR2026** · **54** 篇论文解读
+**📷 CVPR2026** · **68** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (100)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (60)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md) · [📹 ICCV2025 (52)](../../ICCV2025/model_compression/index.md)
 
-🔥 **高频主题：** 模型压缩 ×7 · 扩散模型 ×6 · 压缩/编码 ×6 · 对抗鲁棒 ×3 · 持续学习 ×2
+🔥 **高频主题：** 模型压缩 ×10 · 压缩/编码 ×8 · 扩散模型 ×7 · 对抗鲁棒 ×3 · 持续学习 ×2
 
 **[4D-RGPT: Toward Region-level 4D Understanding via Perceptual Distillation](4d_rgpt_toward_region_level_4d_understanding_via_perceptual_distillation.md)**
 
@@ -129,9 +130,21 @@ item_total: 54
 
 :   提出 BinaryAttention，将 Transformer 注意力中的 Query 和 Key 量化为 1-bit 二值表示，通过 XNOR + popcount 位运算替代浮点点积，在 A100 上实现比 FlashAttention2 快 2 倍以上的加速，同时在视觉分类/检测/分割/扩散生成等任务上性能持平甚至超越全精度注意力。
 
+**[Bridging the Training-Deployment Gap: Gated Encoding and Multi-Scale Refinement for Efficient Quantization-Aware Image Enhancement](bridging_the_training-deployment_gap_gated_encoding_and_multi-scale_refinement_f.md)**
+
+:   针对手机端图像增强模型"训练用 FP32、部署用 INT8 后质量暴跌"的训练-部署鸿沟，本文用门控编码 + 多尺度精修的三尺度混合 U-Net 保细节，再叠加量化感知训练(QAT)在训练时就模拟 8-bit 量化噪声，使 INT8 模型在 DPED 上比 PTQ 涨 +0.474 dB PSNR，并在高通 HTP 上把延迟从 151 ms 压到 41.8 ms（约 3.6× 加速）。
+
+**[Continual Distillation of Teachers from Different Domains](continual_distillation_of_teachers_from_different_domains.md)**
+
+:   论文提出"持续蒸馏 (Continual Distillation, CD)"新范式——一个学生从**一串先后到来、彼此领域不同且互相不可见**的教师里顺序蒸馏，并发现用教师没训过的"外部数据"蒸馏能搬来未见域知识 (UKT)、但序列推进会把这些知识忘掉 (UKF)，进而用 SE2D（把自蒸馏限制在外部数据上）来缓解遗忘，在多个基准上提升跨域平均精度。
+
 **[Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge](critical_patch-aware_sparse_prompting_with_decoupled_training_for_continual_lear.md)**
 
 :   提出 CPS-Prompt 框架，通过任务感知的关键 patch 采样（CPS）和解耦 prompt-分类器训练（DPCT）两个模块，在边缘设备上实现 Prompt-based 持续学习的训练时内存和计算效率提升约 1.6 倍，同时准确率仅下降约 2%。
+
+**[Cross-Modal Knowledge Distillation from Spatial Transcriptomics to Histology](cross-modal_knowledge_distillation_from_spatial_transcriptomics_to_histology.md)**
+
+:   用一个冻结的空间转录组教师（NOLAN）在配对数据上监督一个 H&E 组织学学生，把分子层面定义的「组织 niche（微环境分区）」结构蒸馏进只看图像的学生网络，从而在推理时仅凭 H&E 切片就能预测出与转录组高度一致的 niche 分区。
 
 **[DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation](dage_dual-stream_architecture_for_efficient_and_fine-grained_geometry_estimation.md)**
 
@@ -193,9 +206,17 @@ item_total: 54
 
 :   提出 HierAmp，在视觉自回归（VAR）模型的粗到细生成过程中，向每个尺度注入可学习的类别 token 识别语义显著区域，并通过正 logit 偏置放大这些区域的注意力，使蒸馏数据在粗尺度获得更丰富多样的布局、在细尺度聚焦于类别相关细节，在多个数据集蒸馏基准上达到 SOTA。
 
+**[How to Choose Your Teacher for Fine Grained Image Recognition](how_to_choose_your_teacher_for_fine_grained_image_recognition.md)**
+
+:   这是一篇围绕"细粒度识别的知识蒸馏里到底该选哪个教师"的大规模实证研究：作者跑了 1216 组实验，提出用教师 top-1/top-2 **原始 logit 比值** $R_{12}$ 作为教师选择指标，发现它比"教师准确率""次类概率方差"更能预测学生最终精度，据此挑教师可让小学生模型最高再涨 17%。
+
 **[Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery](learning_through_creation_a_hash-free_framework_for_on-the-fly_category_discover.md)**
 
 :   提出 LTC 框架，通过在训练阶段利用 MKEE（最小化核能量+最大化熵）在线生成伪未知类样本，配合双最大间隔损失和自适应阈值，在7个数据集上实现1.5%–13.1%的全类精度提升，彻底摆脱了哈希编码对细粒度语义的损害。
+
+**[LIFT and PLACE: A Simple, Stable, and Effective Knowledge Distillation Framework for Lightweight Diffusion Models](lift_and_place_a_simple_stable_and_effective_knowledge_distillation_framework_fo.md)**
+
+:   针对"大教师蒸馏小扩散学生时训练不稳定"的痛点，本文用线性回归把蒸馏误差拆成"粗易（低阶矩失配）"和"细难（非线性残差）"两部分，提出 LIFT 先粗对齐再细精修、PLACE 按空间难度分组做局部自适应，在 90% 剪枝（学生仅占教师 1.6% 参数）的极端压缩下把 FID 从常规 KD 的 50–200+ 拉回到 15.73。
 
 **[LLaVA-LE: Large Language-and-Vision Assistant for Lunar Exploration](llava-le_large_language-and-vision_assistant_for_lunar_exploration.md)**
 
@@ -217,9 +238,17 @@ item_total: 54
 
 :   MDPD提出通过冻结骨干网络与轻量侧网络之间的双向知识蒸馏实现高效微调，训练完成后丢弃侧网络，从而同时实现训练时的参数/内存高效和推理时的速度高效。
 
+**[Model Merging on Loss Landscape: A Geometry Perspective](model_merging_on_loss_landscape_a_geometry_perspective.md)**
+
+:   本文提出 EpiMer，把模型合并重新表述为「在以期望 Hessian 为度量的黎曼流形上求 Fréchet 均值」，并把计算限制在任务向量张成的低秩子空间里使曲率可精确求解；理论上把合并误差界拆成子空间方差与残差能量、并给出「何时曲率感知合并可证明优于平直几何合并」的闭式判据 $\eta$，实验上在三种 CLIP-ViT backbone 的八任务合并上一致超过最强平直基线 TSV-M。
+
 **[MXNorm: Reusing MXFP Block Scales for Efficient Tensor Normalisation](mxnorm_reusing_mxfp_block_scales_for_efficient_tensor_normalisation.md)**
 
 :   GPU矩阵乘法吞吐量提升(80x)远超reduction/elementwise操作(5-9x)，RMSNorm正成为低精度训练的新瓶颈。MXNorm直接复用MXFP8量化时已计算的block scales来估计RMS，实现32倍reduction大小缩减。理论上证明block absmax的广义p-mean可收敛到RMS的常数倍。Llama 3 125M/1B/8B预训练验证MXNorm(p=2)与RMSNorm训练精度差异minimal，torch.compile实测isolated kernel最高2.4x加速、Llama 3 8B transformer layer在MXFP8下+1.3%、NVFP4下+2.6%加速。Drop-in replacement，无额外超参数。
+
+**[NuWa: Deriving Lightweight Class-Specific Vision Transformers for Edge Devices](nuwa_deriving_lightweight_class-specific_vision_transformers_for_edge_devices.md)**
+
+:   针对「边缘设备只关心几个类别」这一被忽视的场景，NuWa 先用自知识净化（SKP）学一组二值 mask 删掉「对目标类有害的权重」，再把 MHA/MLP 的剪枝写成可求闭式解的优化问题，从而**无需重训练**就能从大 ViT 派生出比原模型在目标类上**还更准**、且推理更快的小 ViT，剪枝速度比最好的训练依赖方法快 33.69×、成本降低最多 99.83%。
 
 **[On the Robustness of Diffusion-Based Image Compression to Bit-Flip Errors](on_the_robustness_of_diffusion-based_image_compression_to_bit-flip_errors.md)**
 
@@ -253,15 +282,31 @@ item_total: 54
 
 :   PriVi 构建了 424 小时的大规模灵长类视频预训练数据集，并通过在 V-JEPA 上进行**领域级预训练**（非目标数据集级别），首次证明了视频模型的领域级预训练可以跨数据集泛化，在四个灵长类行为识别基准上用仅 220K 参数的冻结分类器超越了全量微调的专用模型。
 
+**[ProGIC: Progressive and Lightweight Generative Image Compression with Residual Vector Quantization](progic_progressive_and_lightweight_generative_image_compression_with_residual_ve.md)**
+
+:   ProGIC 把图像 latent 表示成多个码本逐级量化残差之和（RVQ），既能从部分码流做粗到细的渐进预览，又配一个深度可分离卷积+小注意力的轻量骨干，在 Kodak 上相比 MS-ILLM 取得 57.57%（DISTS）/58.83%（LPIPS）的 BD-rate 节省，同时编解码快 10 倍以上，能跑在仅 CPU 的手机上。
+
 **[Quant Experts: Token-aware Adaptive Error Reconstruction with Mixture of Experts for Large Vision-Language Models Quantization](quant_experts_token_aware_vlm_quantization.md)**
 
 :   提出 Quant Experts (QE)，一种基于 Mixture-of-Experts 的 token 感知自适应量化误差重建框架——将重要通道分为 token-independent（高频出现、全局性）和 token-dependent（低频出现、局部性）两组，分别用共享专家和路由专家的低秩适配器来补偿全局和局部量化误差，在 W4A6 到 W3A16 的多种量化设置下一致提升 VLM 性能。
+
+**[QVGGT: Post-Training Quantized Visual Geometry Grounded Transformer](qvggt_post-training_quantized_visual_geometry_grounded_transformer.md)**
+
+:   针对 1.26B 参数的前馈 3D 重建模型 VGGT，本文提出一套几何感知的后训练量化框架 QVGGT，用"逐块敏感度混合精度 + 相机 token 过滤补偿 + 任务感知尺度搜索"三步，在 W4A16 下做到几乎无损（CO3Dv2 相机位姿 AUC@30 89.4 vs FP16 89.5），同时内存降 3∼4.9×、最高 2.8× 硬件加速。
 
 **[RDVQ: Differentiable Vector Quantization for Rate-Distortion Optimization of Generative Image Compression](rdvq_differentiable_vq_image_compression.md)**
 
 :   RDVQ 通过对码本分布的可微松弛，首次实现了 VQ-based 图像压缩的端到端率失真联合优化，在极低码率下以不到 20% 的参数量取得了优于或竞争性的感知质量。
 
+**[Rethinking Dataset Distillation: Hard Truths about Soft Labels](rethinking_dataset_distillation_hard_truths_about_soft_labels.md)**
+
+:   这是一篇"打假"性质的分析论文：作者系统证明了**大规模数据集蒸馏（DD）方法看似领先，其实主要是下游训练时用了软标签在撑场面**——一旦在不同标签制度下做可扩展性分析，高质量子集相对随机子集的优势几乎消失；据此他们提出计算感知的难度剪枝指标 **CAD-Prune** 和对齐计算预算的蒸馏方法 **CA2D**，在 ImageNet-1K 多个 IPC 设置上超过现有 DD 方法。
+
 **[RL-ScanIQA: Reinforcement-Learned Scanpaths for Blind 360° Image Quality Assessment](rl-scaniqa_reinforcement-learned_scanpaths_for_blind_360image_quality_assessment.md)**
+
+**[S2FT: Parameter-Efficient Fine-Tuning in Sparse Spectrum Domain](s2ft_parameter-efficient_fine-tuning_in_sparse_spectrum_domain.md)**
+
+:   针对傅里叶类 PEFT 假设"权重变化 $\Delta W$ 频谱稀疏"实际不成立（频谱接近功率均匀分布）的问题，S2FT 先粗估 $\Delta W$，再用行列重排找到一个可逆变换把它映射成一个频谱真正稀疏的隐空间矩阵 $\Delta\bar W$，在这个稀疏频谱域上只训练少量频谱系数，用 0.08% 参数就超过 FourierFT 等基线。
 
 **[SODA: Sensitivity-Oriented Dynamic Acceleration for Diffusion Transformer](soda_sensitivity-oriented_dynamic_acceleration_for_diffusion_transformer.md)**
 
@@ -270,6 +315,10 @@ item_total: 54
 **[TALON: Test-time Adaptive Learning for On-the-Fly Category Discovery](talon_test-time_adaptive_learning_for_on-the-fly_category_discovery.md)**
 
 :   提出首个面向 on-the-fly 类别发现（OCD）的测试时自适应框架 TALON，通过语义感知原型更新 + 稳定编码器适应 + 边距感知 logit 校准，摒弃哈希编码在连续特征空间直接建模，大幅缓解类别爆炸并显著提升新类发现精度。
+
+**[TAS-LoRA: Transformer Architecture Search with Mixture-of-LoRA Experts](tas-lora_transformer_architecture_search_with_mixture-of-lora_experts.md)**
+
+:   针对一次性 Transformer 架构搜索（TAS）中"子网共享权重导致特征坍缩"的顽疾，TAS-LoRA 给冻结的超网挂上一组 LoRA 专家，用一个吃"架构配置"的 LSTM 路由器为每个子网动态组合专家、学到子网专属特征，并靠分组式路由器初始化逼专家从训练初期就学得各不相同，在 ImageNet 上把 AutoFormer 各尺度的搜索结果稳定提升 0.2~1.0 个点且推理零额外开销。
 
 **[F²HDR: Two-Stage HDR Video Reconstruction via Flow Adapter and Physical Motion Modeling](textf2texthdr_two-stage_hdr_video_reconstruction_via_flow_adapter_and_physical_m.md)**
 
@@ -283,6 +332,10 @@ item_total: 54
 
 :   提出 SourceSwap，通过频率分离的初始噪声扰动从单张图像生成高质量伪配对数据，并采用源感知双 U-Net 架构学习跨物体对齐，实现零样本、无逐物体微调的高保真物体替换。
 
+**[Ultra-Fast Neural Video Compression](ultra-fast_neural_video_compression.md)**
+
+:   本文提出 DCVC-UF，用"把一整段（chunk）多帧编码进单个紧凑 latent、再并行解码回所有帧"的 chunk 编码范式，彻底甩掉逐帧运动估计，配合帧专属解码器和单步熵解码，在 1080p、4090 GPU 上做到 371 编码 / 274 解码 FPS 的同时还把码率比 VTM(LD) 省了 42.2%，刷新神经视频编码的率-失真-复杂度 SOTA。
+
 **[Understanding and Enforcing Weight Disentanglement in Task Arithmetic](understanding_and_enforcing_weight_disentanglement_in_task_arithmetic.md)**
 
 :   本文提出任务特征专业化（TFS）作为权重解耦的充分条件，揭示其几何结果是权重向量正交性，并基于此提出 OrthoReg 正则化方法，通过在微调时强制权重更新矩阵的列向量正交来促进任务向量解耦，显著提升各种任务算术方法的性能。
@@ -294,6 +347,10 @@ item_total: 54
 **[Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation](unlocking_imagenets_multi-object_nature_automated_large-scale_multilabel_annotat.md)**
 
 :   提出全自动流水线，利用自监督 ViT 特征进行无监督目标发现，为 ImageNet-1K 全部 128 万训练图像生成带空间定位的多标签标注，无需人工标注，模型在域内和下游多标签任务上均获一致提升（ReaL +2.0 top-1, COCO +4.2 mAP）。
+
+**[VVS: Accelerating Speculative Decoding for Visual Autoregressive Generation via Partial Verification Skipping](vvs_accelerating_speculative_decoding_for_visual_autoregressive_generation_via_p.md)**
+
+:   VVS 第一次在视觉自回归生成的投机解码（SD）中"部分跳过验证"——靠免验证 token 选择 + 陈旧特征缓存复用 + 相似度驱动的跳过调度，把目标模型的前向次数最多砍掉 2.86×、端到端加速 1.76×，且图像质量基本不掉，打破了 SD"草稿一步、验证一步"无法显式减少前向次数的天花板。
 
 **[WPT: World-to-Policy Transfer via Online World Model Distillation](wpt_world-to-policy_transfer_via_online_world_model_distillation.md)**
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lite Any Stereo: Efficient Zero-Shot Stereo Matching
 description: >-
-  [CVPR 2026][3D视觉][立体匹配] 提出Lite Any Stereo，通过混合2D-3D代价聚合模块和三阶段百万级数据训练策略（监督→自蒸馏→真实数据知识蒸馏），以不到SOTA精确方法1%的计算量（33G MACs），在四个real-world benchmark上ranking 1st…
+  [CVPR 2026][3D视觉][立体匹配] 提出Lite Any Stereo，通过混合2D-3D代价聚合模块和三阶段百万级数据训练策略（监督→自蒸馏→真实数据知识蒸馏），以不到SOTA精确方法1%的计算量（33G MACs），在四个real-world benchmark上ranking 1st，首次证明超轻量模型可具备强零样本泛化能力。
 tags:
   - "CVPR 2026"
   - "3D视觉"

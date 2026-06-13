@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training
 description: >-
-  [ICLR 2026][GFlowNet] 建立GFlowNet中状态流函数与策略评价函数之间的理论联系，提出子轨迹评价平衡（Sub-EB）目标用于可靠学习评价函数，增强策略基GFlowNet训练的稳定性和灵活性。
+  [ICLR 2026][GFlowNet] 建立GFlowNet中状态流函数与策略评价函数之间的理论联系，提出子轨迹评价平衡（Sub-EB）目标用于可靠学习评价函数，增强策略基GFlowNet训练的稳定性和灵活性。 GFlowNet简介 生成流网络（GFlowNet）是一种在组合空间 $\mathcal{X}$ 上采样的生成…
 tags:
   - "ICLR 2026"
   - "GFlowNet"

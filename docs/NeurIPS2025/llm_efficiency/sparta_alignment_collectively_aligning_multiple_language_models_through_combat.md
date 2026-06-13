@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPARTA Alignment: Collectively Aligning Multiple Language Models through Combat
 description: >-
-  [NeurIPS 2025][LLM效率][集体对齐] 让多个LLM组成"斯巴达部落"互相竞技和互评，通过声誉加权的判断聚合生成偏好对，再用DPO迭代训练所有模型，在12个任务中的10个上超越Self-Rewarding等自对齐基线，平均提升7%。
+  [NeurIPS 2025][LLM效率][集体对齐] 让多个LLM组成"斯巴达部落"互相竞技和互评，通过声誉加权的判断聚合生成偏好对，再用DPO迭代训练所有模型，在12个任务中的10个上超越Self-Rewarding等自对齐基线，平均提升7%。 领域现状：LLM对齐是后训练的关键步骤。自对齐方法让模型自己当裁判和生成奖励…
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

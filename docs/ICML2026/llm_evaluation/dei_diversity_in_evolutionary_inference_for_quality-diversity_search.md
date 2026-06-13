@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DEI: Diversity in Evolutionary Inference for Quality-Diversity Search
 description: >-
-  [ICML 2026][LLM评测][Quality-Diversity] 本文提出 DEI，把多个**不同家族的 LLM**当作 Quality-Diversity 搜索里的异构变异算子分布到不同节点，用全异步 gossip 互相广播每轮 champion 形成跨模型对抗压力…
+  [ICML 2026][LLM评测][Quality-Diversity] 本文提出 DEI，把多个**不同家族的 LLM**当作 Quality-Diversity 搜索里的异构变异算子分布到不同节点，用全异步 gossip 互相广播每轮 champion 形成跨模型对抗压力，在 Core War 程序合成任务上以等总算力换来比单节点 +124% 的 QD-Score 与 +28% 的 archive coverage。
 tags:
   - "ICML 2026"
   - "LLM评测"

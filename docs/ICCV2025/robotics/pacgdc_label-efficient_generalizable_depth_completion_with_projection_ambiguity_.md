@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PacGDC: Label-Efficient Generalizable Depth Completion with Projection Ambiguity and Consistency
 description: >-
-  [ICCV 2025][机器人][深度补全] 提出 PacGDC，利用 2D 到 3D 投影中固有的形状歧义和位置歧义来合成大量伪几何数据（通过多个深度基础模型作为尺度操纵器），以最小的标注代价实现可泛化的深度补全，在零样本和少样本设置中均达到 SOTA。
+  [ICCV 2025][机器人][深度补全] 提出 PacGDC，利用 2D 到 3D 投影中固有的形状歧义和位置歧义来合成大量伪几何数据（通过多个深度基础模型作为尺度操纵器），以最小的标注代价实现可泛化的深度补全，在零样本和少样本设置中均达到 SOTA。 领域现状：深度补全旨在从配对的图像和稀疏深度测量中推断稠密的度量深度…
 tags:
   - "ICCV 2025"
   - "机器人"

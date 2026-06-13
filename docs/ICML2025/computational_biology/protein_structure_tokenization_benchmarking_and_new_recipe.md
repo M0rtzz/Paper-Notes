@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protein Structure Tokenization: Benchmarking and New Recipe
 description: >-
-  [计算生物] 提出 **StructTokenBench**——首个全面评估蛋白质结构分词器 (PST) 的基准框架，从下游有效性、敏感性、独特性和 codebook 利用效率四个维度评估现有方法…
+  [计算生物] 提出 **StructTokenBench**——首个全面评估蛋白质结构分词器 (PST) 的基准框架，从下游有效性、敏感性、独特性和 codebook 利用效率四个维度评估现有方法，并提出 **AminoAseed** 策略通过 codebook 重参数化和 Pareto 最优配置显著改善 VQ-VAE 型分词器的质量（相比 ESM3 提升 6.31%、利用率提升 124%）。
 tags:
   - "计算生物"
 ---

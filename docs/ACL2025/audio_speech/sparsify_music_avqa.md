@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparsify: Learning Sparsity for Effective and Efficient Music Performance Question Answering
 description: >-
-  [ACL 2025][音频/语音][Music AVQA] Sparsify 提出三层稀疏化策略（稀疏掩码+自适应稀疏合并+关键子集选择）用于音乐表演视听问答（Music AVQA），在 MUSIC-AVQA 和 v2.0 两个 benchmark 上达到 SOTA（81.75%/81.30%）…
+  [ACL 2025][音频/语音][Music AVQA] Sparsify 提出三层稀疏化策略（稀疏掩码+自适应稀疏合并+关键子集选择）用于音乐表演视听问答（Music AVQA），在 MUSIC-AVQA 和 v2.0 两个 benchmark 上达到 SOTA（81.75%/81.30%），训练时间减少 28.32%，25% 数据即保持 74% 的全量性能。
 tags:
   - "ACL 2025"
   - "音频/语音"

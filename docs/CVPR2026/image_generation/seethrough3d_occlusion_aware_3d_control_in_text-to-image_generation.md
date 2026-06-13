@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeeThrough3D: Occlusion Aware 3D Control in Text-to-Image Generation
 description: >-
-  [CVPR2026][图像生成][3D布局控制] 提出 SeeThrough3D，通过半透明 3D 包围盒渲染的遮挡感知场景表示（OSCR）来条件化 FLUX 模型，实现了精确的 3D 布局控制与遮挡一致的文本到图像生成。
+  [CVPR2026][图像生成][3D布局控制] 提出 SeeThrough3D，通过半透明 3D 包围盒渲染的遮挡感知场景表示（OSCR）来条件化 FLUX 模型，实现了精确的 3D 布局控制与遮挡一致的文本到图像生成。 2D控制的局限：现有可控生成方法大多基于 2D 空间控制（边界框、分割图），无法控制 3D 场景属性（…
 tags:
   - "CVPR2026"
   - "图像生成"

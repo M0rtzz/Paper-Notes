@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOI3DGen: Generating High-Quality Human-Object-Interactions in 3D
 description: >-
-  [CVPR 2025][3D视觉][人物交互生成] 提出 HOI3DGen 框架，通过MLLM自动标注高质量交互数据 + 视角条件化微调扩散模型 + 3D提升与SMPL配准，首次实现从文本精确控制接触语义的高质量3D人物交互生成，在文本一致性上超越基线4-15倍。
+  [CVPR 2025][3D视觉][人物交互生成] 提出 HOI3DGen 框架，通过MLLM自动标注高质量交互数据 + 视角条件化微调扩散模型 + 3D提升与SMPL配准，首次实现从文本精确控制接触语义的高质量3D人物交互生成，在文本一致性上超越基线4-15倍。 领域现状：3D人物交互（HOI）生成对游戏、AR/XR 至关…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Wasserstein Adversarial Imitation Learning
 description: >-
-  [ICLR 2026][强化学习][Wasserstein距离] 提出LWAIL方法，用ICVF从少量随机数据学习动态感知的潜空间表示，将Wasserstein距离的"地面度量"从欧氏距离升级为潜空间距离，仅用单条状态轨迹即可达到专家级模仿性能。
+  [ICLR 2026][强化学习][Wasserstein距离] 提出LWAIL方法，用ICVF从少量随机数据学习动态感知的潜空间表示，将Wasserstein距离的"地面度量"从欧氏距离升级为潜空间距离，仅用单条状态轨迹即可达到专家级模仿性能。 领域现状：模仿学习从专家演示中学习策略。对抗式模仿学习(AIL)通过匹配智能体…
 tags:
   - "ICLR 2026"
   - "强化学习"

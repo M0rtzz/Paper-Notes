@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IncEventGS: Pose-Free Gaussian Splatting from a Single Event Camera
 description: >-
-  [CVPR 2025][3D视觉][事件相机] 本文提出 IncEventGS，首个仅用单目事件相机、无需已知位姿即可增量重建 3D 高斯溅射场景的方法，采用跟踪-建图 SLAM 范式联合优化相机运动和场景表示，在新视角合成和位姿估计上均超越现有方法。
+  [CVPR 2025][3D视觉][事件相机] 本文提出 IncEventGS，首个仅用单目事件相机、无需已知位姿即可增量重建 3D 高斯溅射场景的方法，采用跟踪-建图 SLAM 范式联合优化相机运动和场景表示，在新视角合成和位姿估计上均超越现有方法。 领域现状：3D 高斯溅射（3DGS）和 NeRF 在新视角合成方面取得巨…
 tags:
   - "CVPR 2025"
   - "3D视觉"

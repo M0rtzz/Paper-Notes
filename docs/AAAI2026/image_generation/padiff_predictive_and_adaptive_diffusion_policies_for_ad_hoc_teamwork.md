@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PADiff: Predictive and Adaptive Diffusion Policies for Ad Hoc Teamwork
 description: >-
-  [AAAI 2026][图像生成][Ad Hoc Teamwork] 首次将扩散模型应用于 Ad Hoc Teamwork 问题，提出 PADiff 框架，通过 Adaptive Feature Modulation Net（AFM-Net）实现对动态队友的实时适应…
+  [AAAI 2026][图像生成][Ad Hoc Teamwork] 首次将扩散模型应用于 Ad Hoc Teamwork 问题，提出 PADiff 框架，通过 Adaptive Feature Modulation Net（AFM-Net）实现对动态队友的实时适应，通过 Predictive Guidance Block（PGB）将队友意图预测信息注入去噪过程，在多模态合作场景中比现有方法平均提升 35.25%。
 tags:
   - "AAAI 2026"
   - "图像生成"

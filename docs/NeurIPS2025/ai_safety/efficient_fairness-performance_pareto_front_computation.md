@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Fairness-Performance Pareto Front Computation
 description: >-
-  [NeurIPS 2025][AI安全][fairness] 提出 MIFPO 方法，无需训练复杂的公平表示模型即可高效计算公平性-性能 Pareto 前沿，通过理论分析将问题化简为紧凑的离散凹优化问题。
+  [NeurIPS 2025][AI安全][fairness] 提出 MIFPO 方法，无需训练复杂的公平表示模型即可高效计算公平性-性能 Pareto 前沿，通过理论分析将问题化简为紧凑的离散凹优化问题。 公平表示学习（fair representation learning）是公平机器学习领域的核心问题…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

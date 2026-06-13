@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization
 description: >-
-  [NeurIPS 2025][自监督学习][无监督域泛化] MS-UDG 在无类别标签和域标签的条件下，通过信息解纠缠模块（IDM）将表征分解为语义和变异成分，配合最小语义充分性优化模块（SROM）最大化语义信息同时最小化变异干扰，在 PACS 上达 72.89% 准确率（+1.5% vs CycleMAE）…
+  [NeurIPS 2025][自监督学习][无监督域泛化] MS-UDG 在无类别标签和域标签的条件下，通过信息解纠缠模块（IDM）将表征分解为语义和变异成分，配合最小语义充分性优化模块（SROM）最大化语义信息同时最小化变异干扰，在 PACS 上达 72.89% 准确率（+1.5% vs CycleMAE），理论证明最小充分语义表征最小化下游贝叶斯错误率。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

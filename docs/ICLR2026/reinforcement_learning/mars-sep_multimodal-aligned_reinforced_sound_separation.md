@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARS-Sep: Multimodal-Aligned Reinforced Sound Separation
 description: >-
-  [ICLR 2026][强化学习][Sound Separation] MARS-Sep 将查询条件声音分离重新建模为强化学习问题，通过分解 Beta 掩码策略在时频域上进行随机决策，并利用渐进式对齐的多模态编码器提供语义奖励信号，在信号保真度和语义一致性上同时取得提升。
+  [ICLR 2026][强化学习][Sound Separation] MARS-Sep 将查询条件声音分离重新建模为强化学习问题，通过分解 Beta 掩码策略在时频域上进行随机决策，并利用渐进式对齐的多模态编码器提供语义奖励信号，在信号保真度和语义一致性上同时取得提升。 领域现状：通用声音分离（Universal Soun…
 tags:
   - "ICLR 2026"
   - "强化学习"

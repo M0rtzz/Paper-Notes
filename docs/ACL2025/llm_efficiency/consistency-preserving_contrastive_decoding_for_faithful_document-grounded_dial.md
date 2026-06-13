@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistency-Preserving Contrastive Decoding for Faithful Document-Grounded Dialogue
 description: >-
-  [ACL 2025][LLM效率][对比解码] 本文提出一种一致性保持的对比解码（Consistency-Preserving Contrastive Decoding, CPCD）方法，通过在解码阶段对比有文档条件和无文档条件的生成分布，增强文档基础对话系统对源文档的忠实性，同时保持回复的流畅性和对话一致性…
+  [ACL 2025][LLM效率][对比解码] 本文提出一种一致性保持的对比解码（Consistency-Preserving Contrastive Decoding, CPCD）方法，通过在解码阶段对比有文档条件和无文档条件的生成分布，增强文档基础对话系统对源文档的忠实性，同时保持回复的流畅性和对话一致性。
 tags:
   - "ACL 2025"
   - "LLM效率"

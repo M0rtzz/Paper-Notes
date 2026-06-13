@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRAFT: Training-Free Cascaded Retrieval for Tabular QA
 description: >-
-  [ACL 2026][信息检索/RAG][表格检索] 本文提出 CRAFT，一个无需数据集特定训练的三阶段级联表格检索框架（SPLADE 稀疏过滤 → 语义 mini-table 排序 → 神经重排序），通过 Gemini 生成的表格标题和描述增强表格表示…
+  [ACL 2026][信息检索/RAG][表格检索] 本文提出 CRAFT，一个无需数据集特定训练的三阶段级联表格检索框架（SPLADE 稀疏过滤 → 语义 mini-table 排序 → 神经重排序），通过 Gemini 生成的表格标题和描述增强表格表示，在 NQ-Tables 上达到 SOTA（R@1 49.84），在 OTT-QA 上展现强零样本泛化能力，且对查询改写具有显著鲁棒性。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

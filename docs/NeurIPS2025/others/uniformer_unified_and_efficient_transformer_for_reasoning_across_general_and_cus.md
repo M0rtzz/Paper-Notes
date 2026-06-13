@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing
 description: >-
-  [NeurIPS 2025][高效注意力] 提出 UniFormer，一种面向 GPU 和 FPGA 跨平台部署的统一高效 Transformer 架构，通过双分支注意力机制（全局线性注意力 + 局部块注意力）实现了高并行性和计算存储融合。
+  [NeurIPS 2025][高效注意力] 提出 UniFormer，一种面向 GPU 和 FPGA 跨平台部署的统一高效 Transformer 架构，通过双分支注意力机制（全局线性注意力 + 局部块注意力）实现了高并行性和计算存储融合。 - 当前高效 Transformer 方法主要针对 GPU 优化…
 tags:
   - "NeurIPS 2025"
   - "高效注意力"

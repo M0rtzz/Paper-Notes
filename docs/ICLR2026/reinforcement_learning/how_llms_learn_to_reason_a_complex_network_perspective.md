@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How LLMs Learn to Reason: A Complex Network Perspective
 description: >-
-  [ICLR 2026][强化学习][RLVR] 本文从复杂网络视角提出"稀疏概念网"理论来统一解释RLVR训练中四个令人困惑的现象（V形响应长度、两阶段学习曲线、灾难性遗忘、策略坍塌），揭示它们都源于平均度约为2的稀疏推理图的拓扑自组织，并据此设计Annealed-RLVR算法在数学推理基准上超越标准RLVR…
+  [ICLR 2026][强化学习][RLVR] 本文从复杂网络视角提出"稀疏概念网"理论来统一解释RLVR训练中四个令人困惑的现象（V形响应长度、两阶段学习曲线、灾难性遗忘、策略坍塌），揭示它们都源于平均度约为2的稀疏推理图的拓扑自组织，并据此设计Annealed-RLVR算法在数学推理基准上超越标准RLVR。
 tags:
   - "ICLR 2026"
   - "强化学习"

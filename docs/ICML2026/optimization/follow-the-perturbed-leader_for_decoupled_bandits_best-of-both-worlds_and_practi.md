@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Follow-the-Perturbed-Leader for Decoupled Bandits: Best-of-Both-Worlds and Practicality
 description: >-
-  [ICML 2026][优化/理论][Follow-the-Perturbed-Leader] 本文给 decoupled multi-armed bandit 问题（每轮分别选一个臂"利用"、一个臂"探索"）设计了首个 Best-of-Both-Worlds (BOBW) FTPL 算法：用 Pareto…
+  [ICML 2026][优化/理论][Follow-the-Perturbed-Leader] 本文给 decoupled multi-armed bandit 问题（每轮分别选一个臂"利用"、一个臂"探索"）设计了首个 Best-of-Both-Worlds (BOBW) FTPL 算法：用 Pareto 扰动做利用、用一个仅依赖累积估损排名的代理量 $q_{t,i}$ 直接定义探索分布——既不需要 FTRL 的每步凸优化，也不需要 FTPL 标准做法中的几何重采样，对抗与随机两种环境下均达到与现有最优 FTRL 算法同阶的 $\mathcal{O}(\sqrt{KT})$ / $\mathcal{O}(K/\Delta_{\mi…
 tags:
   - "ICML 2026"
   - "优化/理论"

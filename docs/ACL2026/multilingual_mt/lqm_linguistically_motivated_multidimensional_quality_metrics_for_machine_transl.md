@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LQM: Linguistically Motivated Multidimensional Quality Metrics for Machine Translation
 description: >-
-  [ACL 2026][多语言/翻译][机器翻译评估] 提出LQM（Linguistically Motivated Multidimensional Quality Metrics），一个六层语言学驱动的机器翻译错误分类体系（社会语言学→语用学→语义→形态句法→正字法→字形）…
+  [ACL 2026][多语言/翻译][机器翻译评估] 提出LQM（Linguistically Motivated Multidimensional Quality Metrics），一个六层语言学驱动的机器翻译错误分类体系（社会语言学→语用学→语义→形态句法→正字法→字形），并在7种阿拉伯方言上构建3850句双向平行语料库，通过专家标注6113个错误跨度揭示现有MT系统在方言和文化感知翻译上的系统性不足。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

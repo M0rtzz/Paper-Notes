@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Generate Structured Output with Schema Reinforcement Learning
 description: >-
-  [ACL 2025][强化学习][structured generation] 提出 SchemaBench 基准（约4万条 JSON schema）和 Schema Reinforcement Learning (SRL) 训练框架，通过细粒度 schema 验证器提供密集奖励信号…
+  [ACL 2025][强化学习][structured generation] 提出 SchemaBench 基准（约4万条 JSON schema）和 Schema Reinforcement Learning (SRL) 训练框架，通过细粒度 schema 验证器提供密集奖励信号，结合 Thoughts of Structure (ToS) 推理机制，将 LLM 的复杂 JSON 生成准确率提升高达16%，同时不损害通用推理能力。
 tags:
   - "ACL 2025"
   - "强化学习"

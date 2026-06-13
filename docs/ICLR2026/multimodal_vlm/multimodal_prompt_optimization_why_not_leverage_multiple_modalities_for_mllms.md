@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Prompt Optimization: Why Not Leverage Multiple Modalities for MLLMs
 description: >-
-  [ICLR 2026][多模态VLM][多模态提示] 首次将自动提示优化（APO）从纯文本空间扩展到多模态空间，提出 MPO 框架：通过对齐保持的联合探索（统一语义梯度同步驱动文本+非文本提示更新…
+  [ICLR 2026][多模态VLM][多模态提示] 首次将自动提示优化（APO）从纯文本空间扩展到多模态空间，提出 MPO 框架：通过对齐保持的联合探索（统一语义梯度同步驱动文本+非文本提示更新，配合 Generation/Edit/Mix 三种算子多样化搜索）和先验继承的贝叶斯 UCB 候选选择（利用父提示性能 warm-start 子提示的 Beta 先验），在图像/视频/分子共 10 个数据集上平均准确率达 65.1%，超越最强文本 APO 基线 ProTeGi 的 60.0%。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

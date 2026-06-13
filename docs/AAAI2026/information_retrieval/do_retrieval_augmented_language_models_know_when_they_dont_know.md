@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Retrieval Augmented Language Models Know When They Don't Know?
 description: >-
-  [AAAI 2026][信息检索/RAG][RAG] 系统分析RAG模型的拒绝校准问题，发现RALM在检索文档全部不相关时过度拒绝率超过55%（即使模型内部知识足够回答），提出结合不确定性估计和拒绝感知微调的机制来平衡拒绝与回答质量。
+  [AAAI 2026][信息检索/RAG][RAG] 系统分析RAG模型的拒绝校准问题，发现RALM在检索文档全部不相关时过度拒绝率超过55%（即使模型内部知识足够回答），提出结合不确定性估计和拒绝感知微调的机制来平衡拒绝与回答质量。 - 领域现状：RAG系统通过检索外部文档来增强LLM，拒绝后训练（refusal post…
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ResRL: Boosting LLM Reasoning via Negative Sample Projection Residual Reinforcement Learning
 description: >-
-  [ICML 2026][LLM推理][GRPO] ResRL 从理论上把 RLVR 中 "负样本梯度污染正样本"现象 (Lazy Likelihood Displacement) 分解成"logit × 表征"两个分量,然后在表征层用正样本的 SVD 低秩子空间做投影残差…
+  [ICML 2026][LLM推理][GRPO] ResRL 从理论上把 RLVR 中 "负样本梯度污染正样本"现象 (Lazy Likelihood Displacement) 分解成"logit × 表征"两个分量,然后在表征层用正样本的 SVD 低秩子空间做投影残差,根据每个负 token 的"正交分量能量"给它一个 [ξ,1] 区间的梯度权重——表征越像正样本(残差越小)就罚得越轻,纯错误成分才被重罚,既保住 Pass@1 又不丢 Pass@k 多样性;在 Qwen3-4B 数学任务上 Avg@16 比 NSR 提升 9.4%,Pass@128 提升 7.0%。
 tags:
   - "ICML 2026"
   - "LLM推理"

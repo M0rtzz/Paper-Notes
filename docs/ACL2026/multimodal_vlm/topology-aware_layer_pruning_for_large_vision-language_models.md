@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology-Aware Layer Pruning for Large Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][层剪枝] 提出基于拓扑数据分析的层剪枝框架 TopoVLM，将各层隐藏状态建模为点云并通过 zigzag 持久同调量化层间拓扑一致性，自适应保留关键表征转换层、剪除结构冗余层，在 50-60% 稀疏率下显著优于现有剪枝方法。
+  [ACL 2026][多模态VLM][层剪枝] 提出基于拓扑数据分析的层剪枝框架 TopoVLM，将各层隐藏状态建模为点云并通过 zigzag 持久同调量化层间拓扑一致性，自适应保留关键表征转换层、剪除结构冗余层，在 50-60% 稀疏率下显著优于现有剪枝方法。 领域现状：大型视觉语言模型（LVLMs）如 LLaVA-NeX…
 tags:
   - "ACL 2026"
   - "多模态VLM"

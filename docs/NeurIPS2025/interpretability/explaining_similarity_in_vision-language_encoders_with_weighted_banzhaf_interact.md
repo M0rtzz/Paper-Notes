@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explaining Similarity in Vision-Language Encoders with Weighted Banzhaf Interactions
 description: >-
-  [NeurIPS 2025][可解释性][CLIP可解释性] FIxLIP 提出基于加权 Banzhaf 交互指数的博弈论框架，统一分解视觉-语言编码器（如 CLIP、SigLIP-2）的相似度预测为一阶token归因和二阶跨模态/模态内交互，在效率和忠实度上均超越现有一阶归因方法。
+  [NeurIPS 2025][可解释性][CLIP可解释性] FIxLIP 提出基于加权 Banzhaf 交互指数的博弈论框架，统一分解视觉-语言编码器（如 CLIP、SigLIP-2）的相似度预测为一阶token归因和二阶跨模态/模态内交互，在效率和忠实度上均超越现有一阶归因方法。 语言-图像预训练（如 CLIP、SigL…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PPE: Positional Preservation Embedding for Token Compression in Multimodal Large Language Models
 description: >-
-  [ICLR 2026][多模态VLM][Token压缩] 提出PPE（Positional Preservation Embedding），利用RoPE各维度旋转独立性，将合并token内多个原始位置ID分块编码到不同维度段中，实现单个压缩token携带多个空间/时序位置信息…
+  [ICLR 2026][多模态VLM][Token压缩] 提出PPE（Positional Preservation Embedding），利用RoPE各维度旋转独立性，将合并token内多个原始位置ID分块编码到不同维度段中，实现单个压缩token携带多个空间/时序位置信息。PPE是零参数、即插即用的通用算子，在55%压缩率下图像任务平均仅降3.6%、在90%压缩率下通过级联压缩仍保持可比性能。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

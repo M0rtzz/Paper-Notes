@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration
 description: >-
-  [ICCV 2025][多模态VLM][VLM加速] 揭示了 VLM 中早期视觉 token 剪枝存在系统性位置偏差（RoPE 导致倾向保留图像底部 token），并提出 FEATHER 方法通过去除 RoPE + 均匀采样 + 多阶段剪枝解决该问题，在定位任务上实现 5× 以上性能提升。
+  [ICCV 2025][多模态VLM][VLM加速] 揭示了 VLM 中早期视觉 token 剪枝存在系统性位置偏差（RoPE 导致倾向保留图像底部 token），并提出 FEATHER 方法通过去除 RoPE + 均匀采样 + 多阶段剪枝解决该问题，在定位任务上实现 5× 以上性能提升。 近年来 VLM（如 LLaVA）通…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Multi-Modal LLMs Provide Live Step-by-Step Task Guidance?
 description: >-
-  [NeurIPS 2025][多模态VLM][流式视频理解] 提出 Qualcomm Interactive Cooking 基准和 LiveMamba 模型，首次系统评估多模态 LLM 在实时流式视频中提供分步任务指导（包括指令下发、完成检测和错误反馈）的能力。
+  [NeurIPS 2025][多模态VLM][流式视频理解] 提出 Qualcomm Interactive Cooking 基准和 LiveMamba 模型，首次系统评估多模态 LLM 在实时流式视频中提供分步任务指导（包括指令下发、完成检测和错误反馈）的能力。 当前多模态 LLM 虽然具备强大的对话能力…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

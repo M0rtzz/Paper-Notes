@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-RGPT: Unifying Image and Video Region-level Understanding via Token Marks
 description: >-
-  [CVPR 2025][视频理解][区域级理解] Omni-RGPT 提出 Token Mark 机制在视觉特征空间中直接标记目标区域，统一图像和视频的区域级理解，配合 30 万条区域级视频指令数据集 RegVID-300k，在常识推理等任务上达到 SOTA。
+  [CVPR 2025][视频理解][区域级理解] Omni-RGPT 提出 Token Mark 机制在视觉特征空间中直接标记目标区域，统一图像和视频的区域级理解，配合 30 万条区域级视频指令数据集 RegVID-300k，在常识推理等任务上达到 SOTA。 多模态大语言模型在全局视觉理解上取得了显著进展…
 tags:
   - "CVPR 2025"
   - "视频理解"

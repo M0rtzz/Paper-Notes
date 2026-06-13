@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Museum Exhibits using Vision-Language Reasoning
 description: >-
-  [ICCV 2025][多模态VLM][博物馆视觉问答] 构建了一个包含 6500 万张图片和 2 亿个问答对的大规模博物馆展品数据集 Museum-65，并通过在该数据集上微调 BLIP 和 LLaVA 证明：领域特定的大规模数据集显著优于零样本 SOTA VLM…
+  [ICCV 2025][多模态VLM][博物馆视觉问答] 构建了一个包含 6500 万张图片和 2 亿个问答对的大规模博物馆展品数据集 Museum-65，并通过在该数据集上微调 BLIP 和 LLaVA 证明：领域特定的大规模数据集显著优于零样本 SOTA VLM，微调后的 LLaVA 在展品标题和产地识别上分别达到 57% 和 70% 的准确率（vs. GPT-4o 的 22% 和 33%）。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

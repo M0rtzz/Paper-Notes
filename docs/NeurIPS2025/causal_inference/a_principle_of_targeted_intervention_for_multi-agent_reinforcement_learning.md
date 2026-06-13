@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Principle of Targeted Intervention for Multi-Agent Reinforcement Learning
 description: >-
-  [NeurIPS 2025][因果推理][多智能体强化学习] 提出基于多智能体影响图（MAIDs）的**目标干预范式（Targeted Intervention）**，通过仅对单个目标智能体施加**预策略干预（Pre-Strategy Intervention, PSI）**…
+  [NeurIPS 2025][因果推理][多智能体强化学习] 提出基于多智能体影响图（MAIDs）的**目标干预范式（Targeted Intervention）**，通过仅对单个目标智能体施加**预策略干预（Pre-Strategy Intervention, PSI）**，引导整个多智能体系统收敛到满足额外期望结果的优选Nash均衡，无需对所有智能体进行全局干预。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

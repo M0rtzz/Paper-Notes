@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CombinationTS: A Modular Framework for Understanding Time-Series Forecasting Models
 description: >-
-  [ICML 2026][时间序列][模块化归因] CombinationTS 把时序预测模型解耦为 Input Transformation / Embedding / Encoder / Decoder / Output Transformation 五个正交模块…
+  [ICML 2026][时间序列][模块化归因] CombinationTS 把时序预测模型解耦为 Input Transformation / Embedding / Encoder / Decoder / Output Transformation 五个正交模块，在共享的"评估条件空间"上做配对蒙特卡洛采样，用边际性能 $\mu$ 和稳定性 $\sigma$ 取代脆弱的单点 MSE，结论是：一旦数据视图（Embedding）设计得好，参数无关的 Identity Encoder 就能打平甚至超过复杂 Transformer，时序预测领域的"SOTA 增益"很大程度上来自看数据的方式而不是建模能力。
 tags:
   - "ICML 2026"
   - "时间序列"

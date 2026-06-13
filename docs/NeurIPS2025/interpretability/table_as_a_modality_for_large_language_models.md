@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Table as a Modality for Large Language Models
 description: >-
-  [NeurIPS 2025][可解释性][Table Reasoning] 提出 TaMo 框架，将表格作为独立模态通过超图神经网络编码其结构信息，与 LLM 的文本模态融合，在多个表格推理基准上相比纯文本方法平均提升 42.65%，且在结构鲁棒性上接近 GPT-4。
+  [NeurIPS 2025][可解释性][Table Reasoning] 提出 TaMo 框架，将表格作为独立模态通过超图神经网络编码其结构信息，与 LLM 的文本模态融合，在多个表格推理基准上相比纯文本方法平均提升 42.65%，且在结构鲁棒性上接近 GPT-4。 当前 LLM 处理表格任务的主流方式是将表格序列化为文本…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

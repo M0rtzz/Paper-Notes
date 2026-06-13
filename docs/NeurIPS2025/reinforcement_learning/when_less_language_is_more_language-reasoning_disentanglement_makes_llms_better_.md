@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Less Language is More: Language-Reasoning Disentanglement Makes LLMs Better Multilingual Reasoners
 description: >-
-  [NeurIPS 2025][强化学习][多语言推理] 受认知神经科学启发（人脑的推理与语言处理相对独立），在 LLM 的激活空间中识别并消除语言特定成分，实现语言与推理的解耦，从而在免训练条件下一致性地提升多语言推理性能。
+  [NeurIPS 2025][强化学习][多语言推理] 受认知神经科学启发（人脑的推理与语言处理相对独立），在 LLM 的激活空间中识别并消除语言特定成分，实现语言与推理的解耦，从而在免训练条件下一致性地提升多语言推理性能。 推理型 LLM（如 DeepSeek-R1、QwQ）在英语/中文等高资源语言上表现出色…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

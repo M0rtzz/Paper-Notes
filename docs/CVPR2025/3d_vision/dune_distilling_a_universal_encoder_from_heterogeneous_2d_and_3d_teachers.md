@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers
 description: >-
-  [3D视觉] DUNE 提出了异构教师联合蒸馏（co-distillation）框架，将来自不同任务和数据域的 2D（DINOv2）与 3D（MASt3R、Multi-HMR）教师模型统一蒸馏为一个 ViT-Base 通用编码器…
+  [3D视觉] DUNE 提出了异构教师联合蒸馏（co-distillation）框架，将来自不同任务和数据域的 2D（DINOv2）与 3D（MASt3R、Multi-HMR）教师模型统一蒸馏为一个 ViT-Base 通用编码器，在语义分割、深度估计、3D 重建和人体姿态恢复等多任务上均达到或超越各自 ViT-Large 教师的性能。
 tags:
   - "3D视觉"
 ---

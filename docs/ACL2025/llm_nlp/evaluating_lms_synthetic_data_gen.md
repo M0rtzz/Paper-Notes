@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Evaluating Language Models as Synthetic Data Generators
 description: >-
-  [ACL 2025][LLM/NLP][合成数据] 提出 AgoraBench 基准，系统评估 6 个 LLM 在 3 个领域×3 种数据生成方式下的数据生成能力，通过训练 99 个学生模型发现：LLM 的数据生成能力与问题求解能力不直接相关…
+  [ACL 2025][LLM 其他][合成数据] 提出 AgoraBench 基准，系统评估 6 个 LLM 在 3 个领域×3 种数据生成方式下的数据生成能力，通过训练 99 个学生模型发现：LLM 的数据生成能力与问题求解能力不直接相关，GPT-4o 在实例生成上最强而 Claude-3.5-Sonnet 在质量增强上最强。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "合成数据"
   - "数据生成"
   - "benchmark"

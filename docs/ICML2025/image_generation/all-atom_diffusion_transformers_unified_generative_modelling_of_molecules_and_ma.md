@@ -2,7 +2,7 @@
 title: >-
   [论文解读] All-atom Diffusion Transformers: Unified Generative Modelling of Molecules and Materials
 description: >-
-  [ICML2025][图像生成][扩散模型] 提出 All-atom Diffusion Transformer (ADiT)，通过 VAE 将分子和晶体映射到统一潜空间、再用 Diffusion Transformer 在潜空间生成的两阶段框架…
+  [ICML2025][图像生成][扩散模型] 提出 All-atom Diffusion Transformer (ADiT)，通过 VAE 将分子和晶体映射到统一潜空间、再用 Diffusion Transformer 在潜空间生成的两阶段框架，首次实现**单一模型**同时生成周期性材料（晶体）和非周期性分子系统，在 MP20、QM9、GEOM-DRUGS 上达到 SOTA，且比等变扩散模型快一个数量级。
 tags:
   - "ICML2025"
   - "图像生成"

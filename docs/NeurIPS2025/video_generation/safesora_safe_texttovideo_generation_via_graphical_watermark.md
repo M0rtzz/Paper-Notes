@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking
 description: >-
-  [NeurIPS 2025][视频生成][图形水印] Safe-Sora 首次将**图形水印**（如logo图像）直接嵌入到视频生成管线中，通过分层粗到细自适应匹配将水印patch分配到视觉最相似的帧和区域，并设计3D小波变换增强Mamba架构实现时空融合…
+  [NeurIPS 2025][视频生成][图形水印] Safe-Sora 首次将**图形水印**（如logo图像）直接嵌入到视频生成管线中，通过分层粗到细自适应匹配将水印patch分配到视觉最相似的帧和区域，并设计3D小波变换增强Mamba架构实现时空融合，在视频质量（FVD 3.77 vs 次优154.35）和水印保真度上大幅超越所有基线。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

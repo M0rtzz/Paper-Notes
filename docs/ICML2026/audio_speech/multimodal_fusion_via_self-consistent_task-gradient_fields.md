@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Fusion via Self-Consistent Task-Gradient Fields
 description: >-
-  [ICML 2026][音频/语音][自洽场] SCFAE 把多模态融合块改写成一个"任务损失 + 重建损失"组成的自洽场（Self-Consistent Field），通过把每个模态特征拆成"共享/特有"子空间并在模态间循环替换共享分量，让任务梯度干净地反传给各个编码器…
+  [ICML 2026][音频/语音][自洽场] SCFAE 把多模态融合块改写成一个"任务损失 + 重建损失"组成的自洽场（Self-Consistent Field），通过把每个模态特征拆成"共享/特有"子空间并在模态间循环替换共享分量，让任务梯度干净地反传给各个编码器，从而在不等长输入、模态冲突、模态缺失三种场景下都比强耦合或重正则化的融合方法更稳健。
 tags:
   - "ICML 2026"
   - "音频/语音"

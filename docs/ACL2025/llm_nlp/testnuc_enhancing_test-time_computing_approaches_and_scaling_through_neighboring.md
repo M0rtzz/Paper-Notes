@@ -2,9 +2,10 @@
 title: >-
   [论文解读] TestNUC: Enhancing Test-Time Computing Approaches and Scaling through Neighboring Unlabeled Data Consistency
 description: >-
-  [ACL 2025][测试时计算] TestNUC 提出了一种线性扩展的测试时推理增强方法，通过检索测试样本的近邻无标注数据，让 LLM 同时预测测试样本及其邻居，再通过加权多数投票聚合，稳定提升分类准确率。
+  [ACL 2025][LLM 其他][测试时计算] TestNUC 提出了一种线性扩展的测试时推理增强方法，通过检索测试样本的近邻无标注数据，让 LLM 同时预测测试样本及其邻居，再通过加权多数投票聚合，稳定提升分类准确率。 测试时计算（test-time computing）通过在推理阶段投入更多计算资源来提升 LLM 性…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "测试时计算"
   - "邻域一致性"
   - "无标注数据"

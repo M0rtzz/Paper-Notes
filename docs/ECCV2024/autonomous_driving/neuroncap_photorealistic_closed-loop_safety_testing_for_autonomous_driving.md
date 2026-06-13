@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeuroNCAP: Photorealistic Closed-Loop Safety Testing for Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][closed-loop simulation] 提出 NeuroNCAP，一个基于 NeRF 渲染的真实感闭环自动驾驶安全测试框架，受 Euro NCAP 碰撞避免协议启发设计三类安全关键场景（静止/正面/侧面碰撞）…
+  [ECCV 2024][自动驾驶][closed-loop simulation] 提出 NeuroNCAP，一个基于 NeRF 渲染的真实感闭环自动驾驶安全测试框架，受 Euro NCAP 碰撞避免协议启发设计三类安全关键场景（静止/正面/侧面碰撞），揭示当前 SOTA 端到端规划器（UniAD、VAD）在闭环安全场景中严重失败——碰撞率高达 88-92%——尽管其感知模块准确运行。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

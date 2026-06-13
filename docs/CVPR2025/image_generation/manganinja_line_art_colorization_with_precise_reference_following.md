@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MangaNinja: Line Art Colorization with Precise Reference Following
 description: >-
-  [CVPR 2025][图像生成][线稿上色] MangaNinja 是一个基于扩散模型的参考图引导线稿上色方法，通过渐进式 Patch Shuffling 策略训练模型学会局部语义匹配能力，并引入 PointNet 驱动的点控制机制实现精细颜色对应…
+  [CVPR 2025][图像生成][线稿上色] MangaNinja 是一个基于扩散模型的参考图引导线稿上色方法，通过渐进式 Patch Shuffling 策略训练模型学会局部语义匹配能力，并引入 PointNet 驱动的点控制机制实现精细颜色对应，在大姿态差异、多参考图、跨角色上色等挑战场景中显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

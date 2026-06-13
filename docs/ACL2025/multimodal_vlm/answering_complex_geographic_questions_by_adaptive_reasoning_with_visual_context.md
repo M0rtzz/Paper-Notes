@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Answering Complex Geographic Questions by Adaptive Reasoning with Visual Context and External Commonsense Knowledge
 description: >-
-  [ACL 2025][多模态VLM][地理视觉问答] 本文提出一种面向复杂地理问题的自适应推理框架，结合视觉上下文（如地图、卫星图像）和外部常识知识库进行多步推理，根据问题复杂度动态选择推理路径，在地理VQA任务上显著超越直接端到端回答的方法。
+  [ACL 2025][多模态VLM][地理视觉问答] 本文提出一种面向复杂地理问题的自适应推理框架，结合视觉上下文（如地图、卫星图像）和外部常识知识库进行多步推理，根据问题复杂度动态选择推理路径，在地理VQA任务上显著超越直接端到端回答的方法。 领域现状：视觉问答（VQA）和多模态推理近年来取得巨大进展…
 tags:
   - "ACL 2025"
   - "多模态VLM"

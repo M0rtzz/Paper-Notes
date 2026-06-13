@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLIER: Generative Legal Inference and Evidence Ranking for Legal Case Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][法律案例检索] 本文提出 **GLIER**：把法律案例检索（LCR）从"直接文本相似度匹配"重写为"先用 seq2seq 联合生成 *罪名 + 构成要件* 这一隐变量、再用多视图（生成置信 + 结构匹配 + 词项 BM25）MLP 融合"的两阶段框架…
+  [ACL 2026][信息检索/RAG][法律案例检索] 本文提出 **GLIER**：把法律案例检索（LCR）从"直接文本相似度匹配"重写为"先用 seq2seq 联合生成 *罪名 + 构成要件* 这一隐变量、再用多视图（生成置信 + 结构匹配 + 词项 BM25）MLP 融合"的两阶段框架，在 LeCaRD/LeCaRDv2 上超越 SAILER、KELLER，且只用 10% 数据训练就能击败强基线的全量结果。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

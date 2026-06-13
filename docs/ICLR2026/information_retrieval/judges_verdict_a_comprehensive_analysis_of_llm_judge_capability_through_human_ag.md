@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Judge's Verdict: A Comprehensive Analysis of LLM Judge Capability Through Human Agreement
 description: >-
-  [ICLR 2026][信息检索/RAG][LLM-as-a-Judge] 提出 Judge's Verdict Benchmark——基于"相关性过滤 → Cohen's Kappa 人类相似性测试"的两步评估框架，对 54 个 LLM 评委进行系统评测…
+  [ICLR 2026][信息检索/RAG][LLM-as-a-Judge] 提出 Judge's Verdict Benchmark——基于"相关性过滤 → Cohen's Kappa 人类相似性测试"的两步评估框架，对 54 个 LLM 评委进行系统评测，筛选出 27 个 Tier 1 评委（23 个人类相似型 + 4 个超一致型），核心发现是相关性高不等于一致性高，需要用 Kappa + z-score 才能真正衡量 LLM 评委质量。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

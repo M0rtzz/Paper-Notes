@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniArch: Building Foundation Model For Scientific Computing
 description: >-
-  [ICML 2025][物理/科学计算][foundation model] OmniArch 是首个在 1D-2D-3D PDE 上进行统一预训练的科学计算基础模型，通过 Fourier 编解码器解决多尺度问题、Temporal Mask 机制处理多物理量耦合、PDE-Aligner 实现物理先验对齐…
+  [ICML 2025][物理/科学计算][foundation model] OmniArch 是首个在 1D-2D-3D PDE 上进行统一预训练的科学计算基础模型，通过 Fourier 编解码器解决多尺度问题、Temporal Mask 机制处理多物理量耦合、PDE-Aligner 实现物理先验对齐，在 PDEBench 的 11 类 PDE 上达到了 SOTA 性能。
 tags:
   - "ICML 2025"
   - "物理/科学计算"

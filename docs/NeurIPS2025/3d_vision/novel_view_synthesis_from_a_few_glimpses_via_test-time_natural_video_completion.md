@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion
 description: >-
-  [NeurIPS 2025][3D视觉][新视角合成] 将稀疏输入新视角合成重新定义为测试时自然视频补全问题，利用预训练视频扩散模型的先验生成中间伪视图，并通过不确定性感知机制与 3D 高斯泼溅（3D-GS）迭代优化，在极稀疏输入下实现高保真场景重建。
+  [NeurIPS 2025][3D视觉][新视角合成] 将稀疏输入新视角合成重新定义为测试时自然视频补全问题，利用预训练视频扩散模型的先验生成中间伪视图，并通过不确定性感知机制与 3D 高斯泼溅（3D-GS）迭代优化，在极稀疏输入下实现高保真场景重建。 稀疏输入的新视角合成（Sparse-input Novel View S…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

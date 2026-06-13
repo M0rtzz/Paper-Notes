@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes
 description: >-
-  [NeurIPS 2025][目标检测][flicker removal] 提出首个面向多帧闪烁去除（MFFR）的大规模 benchmark 数据集 BurstDeflicker，包含基于 Retinex 的合成数据、真实静态数据和绿幕动态数据三个互补子集…
+  [NeurIPS 2025][目标检测][flicker removal] 提出首个面向多帧闪烁去除（MFFR）的大规模 benchmark 数据集 BurstDeflicker，包含基于 Retinex 的合成数据、真实静态数据和绿幕动态数据三个互补子集，系统解决了动态场景下闪烁-干净图像对难以获取的核心瓶颈。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

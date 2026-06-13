@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probability-Entropy Calibration: An Elastic Indicator for Adaptive Fine-tuning
 description: >-
-  [ICML 2026][代码智能][SFT] RankTuner 提出 Relative Rank Indicator $I_t$，用「真值 token 的实际排名 $R_t$」对比「模型分布下的期望排名 $\mathbb{E}[R_t]$」作为单一标量信号…
+  [ICML 2026][代码智能][SFT] RankTuner 提出 Relative Rank Indicator $I_t$，用「真值 token 的实际排名 $R_t$」对比「模型分布下的期望排名 $\mathbb{E}[R_t]$」作为单一标量信号，把概率 $p_t$（任务对齐）和熵 $H_t$（内禀不确定性）拧成一个 token 级权重，在数学推理 SFT 上 Pass@1 普遍超过纯概率/纯熵的重加权 baseline。
 tags:
   - "ICML 2026"
   - "代码智能"

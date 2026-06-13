@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization
 description: >-
-  [ICLR 2026][机器人][个性化具身智能] 本文通过 Memento 框架系统评估了 LLM 驱动具身智能体的记忆利用能力，发现现有 agent 能回忆简单物体语义但无法处理用户行为模式的序列信息，并提出了基于层次知识图谱的用户画像记忆模块来有效提升个性化辅助任务的表现。
+  [ICLR 2026][机器人][个性化具身智能] 本文通过 Memento 框架系统评估了 LLM 驱动具身智能体的记忆利用能力，发现现有 agent 能回忆简单物体语义但无法处理用户行为模式的序列信息，并提出了基于层次知识图谱的用户画像记忆模块来有效提升个性化辅助任务的表现。 领域现状：当前 LLM 驱动的具身智能体在传…
 tags:
   - "ICLR 2026"
   - "机器人"

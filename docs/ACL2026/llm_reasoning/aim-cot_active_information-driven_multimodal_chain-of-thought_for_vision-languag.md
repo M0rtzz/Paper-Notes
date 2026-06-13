@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AIM-CoT: Active Information-driven Multimodal Chain-of-Thought for Vision-Language Reasoning
 description: >-
-  [ACL 2026][LLM推理][交错模态思维链] 提出 AIM-CoT 框架，通过信息觅食理论驱动的主动视觉证据选择(AVP)和基于注意力偏移的动态触发机制(DAT)，解决交错模态思维链(I-MCoT)中"看什么"和"何时看"两个核心问题。
+  [ACL 2026][LLM推理][交错模态思维链] 提出 AIM-CoT 框架，通过信息觅食理论驱动的主动视觉证据选择(AVP)和基于注意力偏移的动态触发机制(DAT)，解决交错模态思维链(I-MCoT)中"看什么"和"何时看"两个核心问题。 领域现状：交错模态思维链(I-MCoT)是视觉语言推理(如 VQA)的重要范式进…
 tags:
   - "ACL 2026"
   - "LLM推理"

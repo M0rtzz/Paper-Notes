@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science
 description: >-
-  [ICLR 2026][LLM评测][data science benchmark] DARE-bench 是一个面向数据科学任务的大规模可验证基准，包含 6300 个 Kaggle 衍生任务，支持 ML 建模和指令遵循两类评估…
+  [ICLR 2026][LLM评测][data science benchmark] DARE-bench 是一个面向数据科学任务的大规模可验证基准，包含 6300 个 Kaggle 衍生任务，支持 ML 建模和指令遵循两类评估，提供训练集支持 SFT 和 RL——SFT 将 Qwen3-32B 提升 1.83×，RL 将 Qwen3-4B 提升 8× 以上。
 tags:
   - "ICLR 2026"
   - "LLM评测"

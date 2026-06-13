@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MESA: Improving MoE Safety Alignment via Decentralized Expertise
 description: >-
-  [ICML 2026][LLM对齐][MoE安全] MESA 把 MoE 安全对齐重塑为"在专家上分配安全责任"的资源分配问题，用 KL 正则化的 Sinkhorn 最优传输（OT）从中间档（shoulder region）专家中挑出代价最低的子集做 SFT…
+  [ICML 2026][LLM对齐][MoE安全] MESA 把 MoE 安全对齐重塑为"在专家上分配安全责任"的资源分配问题，用 KL 正则化的 Sinkhorn 最优传输（OT）从中间档（shoulder region）专家中挑出代价最低的子集做 SFT，同时用 OT 约束的路由损失把安全 token 引到这些专家，从而在 DeepSeek-V2-Lite / Qwen3-30B-A3B 上把 Strata 安全分推到 95+%，并保住 GSM8K 等推理任务接近原始水平。
 tags:
   - "ICML 2026"
   - "LLM对齐"

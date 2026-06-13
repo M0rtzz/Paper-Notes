@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations
 description: >-
-  [音频/语音] 提出 DualTalk——首个统一建模说话者和倾听者行为的多轮双人交互 3D 说话人头生成框架，配套构建了包含 50 小时、1000+ 身份的双人对话数据集。
+  [音频/语音] 提出 DualTalk——首个统一建模说话者和倾听者行为的多轮双人交互 3D 说话人头生成框架，配套构建了包含 50 小时、1000+ 身份的双人对话数据集。 领域现状 3D 说话人头生成是计算机视觉的活跃研究方向，在客服、远程办公、教育和娱乐中有广泛应用。现有方法要么只建模说话行为（如 FaceFormer…
 tags:
   - "音频/语音"
 ---

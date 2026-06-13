@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLaMP 3: Universal Music Information Retrieval Across Unaligned Modalities and Unseen Languages
 description: >-
-  [ACL 2025][音频/语音][音乐信息检索] 提出 CLaMP 3 统一框架，通过对比学习将乐谱、演奏信号、音频录音与多语言文本对齐到共享表示空间，在无配对训练数据的模态间实现跨模态检索，并展现出对未见语言的强泛化能力。
+  [ACL 2025][音频/语音][音乐信息检索] 提出 CLaMP 3 统一框架，通过对比学习将乐谱、演奏信号、音频录音与多语言文本对齐到共享表示空间，在无配对训练数据的模态间实现跨模态检索，并展现出对未见语言的强泛化能力。 领域现状： 音乐信息检索（MIR）旨在开发处理、组织和访问音乐数据的计算工具…
 tags:
   - "ACL 2025"
   - "音频/语音"

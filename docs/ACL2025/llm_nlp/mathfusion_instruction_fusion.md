@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MathFusion: Enhancing Mathematical Problem-solving of LLM through Instruction Fusion
 description: >-
-  [ACL 2025][LLM/NLP][数学推理] 提出 MathFusion 框架，通过三种问题融合策略（顺序/并行/条件融合）将数学问题两两合成新问题，仅用 45K 额外合成数据就在多个基准上实现平均 18 个百分点的数学推理提升。
+  [ACL 2025][LLM 其他][数学推理] 提出 MathFusion 框架，通过三种问题融合策略（顺序/并行/条件融合）将数学问题两两合成新问题，仅用 45K 额外合成数据就在多个基准上实现平均 18 个百分点的数学推理提升。 核心问题：LLM 的数学推理能力依赖高质量训练数据，现有数据增强方法主要在单个问题层面进行…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "数学推理"
   - "数据增强"
   - "指令融合"

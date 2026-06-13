@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DragFlow: Unleashing DiT Priors with Region Based Supervision for Drag Editing
 description: >-
-  [ICLR 2026][图像生成][Drag Editing] 首个将 FLUX (DiT) 的强生成先验引入拖拽编辑的框架，通过区域级仿射监督替代传统点级监督，配合梯度掩码硬约束和 adapter 增强反演，大幅提升拖拽编辑质量。
+  [ICLR 2026][图像生成][Drag Editing] 首个将 FLUX (DiT) 的强生成先验引入拖拽编辑的框架，通过区域级仿射监督替代传统点级监督，配合梯度掩码硬约束和 adapter 增强反演，大幅提升拖拽编辑质量。 领域现状：拖拽编辑（Drag Editing）允许用户通过交互式拖拽指令指定空间局部运动…
 tags:
   - "ICLR 2026"
   - "图像生成"

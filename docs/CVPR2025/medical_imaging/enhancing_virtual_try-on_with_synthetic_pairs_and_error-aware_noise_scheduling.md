@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Virtual Try-On with Synthetic Pairs and Error-Aware Noise Scheduling
 description: >-
-  [CVPR 2025][医学图像][虚拟试穿] 本文提出通过人体图像反向提取合成服装对来增强虚拟试穿训练数据，并设计了基于错误感知噪声调度的Schrödinger Bridge精炼模型（EARSB），对已有试穿模型的生成结果进行局部纠错…
+  [CVPR 2025][医学图像][虚拟试穿] 本文提出通过人体图像反向提取合成服装对来增强虚拟试穿训练数据，并设计了基于错误感知噪声调度的Schrödinger Bridge精炼模型（EARSB），对已有试穿模型的生成结果进行局部纠错，在VITON-HD和DressCode上取得了SOTA效果且用户更偏好本文结果（59%）。
 tags:
   - "CVPR 2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Comprehensive Scene Understanding: Integrating First and Third-Person Views for LVLMs
 description: >-
-  [NeurIPS 2025 (Spotlight)][多模态VLM][多视角理解] 提出 E3VQA 基准（首个多视角 VQA 基准）和 M3CoT 提示技术（融合三种互补视角的场景图），增强大型视觉语言模型 (LVLM) 的多视角场景理解能力…
+  [NeurIPS 2025 (Spotlight)][多模态VLM][多视角理解] 提出 E3VQA 基准（首个多视角 VQA 基准）和 M3CoT 提示技术（融合三种互补视角的场景图），增强大型视觉语言模型 (LVLM) 的多视角场景理解能力，GPT-4o 提升 4.84%、Gemini 2.0 Flash 提升 5.94%。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "多模态VLM"

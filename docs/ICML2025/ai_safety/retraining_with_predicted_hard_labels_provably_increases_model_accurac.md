@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retraining with Predicted Hard Labels Provably Increases Model Accuracy
 description: >-
-  [ICML 2025][AI安全][label noise] 在噪声标签下，用模型自身预测的硬标签（0/1标签）对训练集重新标注并重训练，可以**理论上可证明地**提升模型准确率；进一步提出 consensus-based retraining（仅对预测标签与给定标签一致的样本重训练）…
+  [ICML 2025][AI安全][label noise] 在噪声标签下，用模型自身预测的硬标签（0/1标签）对训练集重新标注并重训练，可以**理论上可证明地**提升模型准确率；进一步提出 consensus-based retraining（仅对预测标签与给定标签一致的样本重训练），在 label DP 场景下无额外隐私代价即可大幅提升性能。
 tags:
   - "ICML 2025"
   - "AI安全"

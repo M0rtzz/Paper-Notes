@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RDD: Robust Feature Detector and Descriptor Using Deformable Transformer
 description: >-
-  [CVPR 2025][3D视觉][特征检测与描述] RDD 提出了一种双分支架构，用卷积网络做关键点检测、用可变形Transformer做描述子提取，通过可变形注意力建模几何不变性和全局上下文，在大视角/尺度变化的稀疏和半稠密特征匹配任务上全面超越现有方法。
+  [CVPR 2025][3D视觉][特征检测与描述] RDD 提出了一种双分支架构，用卷积网络做关键点检测、用可变形Transformer做描述子提取，通过可变形注意力建模几何不变性和全局上下文，在大视角/尺度变化的稀疏和半稠密特征匹配任务上全面超越现有方法。 领域现状：特征检测和描述是 SfM、SLAM、视觉定位等 3D…
 tags:
   - "CVPR 2025"
   - "3D视觉"

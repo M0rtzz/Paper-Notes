@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Far are AI-generated Videos from Simulating the 3D Visual World: A Learned 3D Evaluation Approach
 description: >-
-  [ICCV 2025][3D视觉][Video Evaluation] 提出 Learned 3D Evaluation (L3DE)，一种基于单目3D线索（运动、深度、外观）和对比学习的客观可量化评估方法，用于衡量AI生成视频在3D视觉一致性方面与真实视频的差距，无需人工标注缺陷或质量标签。
+  [ICCV 2025][3D视觉][Video Evaluation] 提出 Learned 3D Evaluation (L3DE)，一种基于单目3D线索（运动、深度、外观）和对比学习的客观可量化评估方法，用于衡量AI生成视频在3D视觉一致性方面与真实视频的差距，无需人工标注缺陷或质量标签。 视频扩散模型（如Sora、Kl…
 tags:
   - "ICCV 2025"
   - "3D视觉"

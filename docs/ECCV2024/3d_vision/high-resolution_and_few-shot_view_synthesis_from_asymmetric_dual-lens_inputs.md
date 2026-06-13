@@ -2,7 +2,7 @@
 title: >-
   [论文解读] High-Resolution and Few-shot View Synthesis from Asymmetric Dual-Lens Inputs
 description: >-
-  [ECCV 2024][3D视觉][3D高斯溅射] 本文提出 DL-GS（Dual-Lens 3D-GS），利用移动设备上常见的非对称双镜头系统（广角+长焦）提供的立体几何约束和高分辨率引导，解决了 3D-GS 在少样本训练和超分辨率渲染上的两大难题…
+  [ECCV 2024][3D视觉][3D高斯溅射] 本文提出 DL-GS（Dual-Lens 3D-GS），利用移动设备上常见的非对称双镜头系统（广角+长焦）提供的立体几何约束和高分辨率引导，解决了 3D-GS 在少样本训练和超分辨率渲染上的两大难题，通过一致性感知训练策略和多参考引导细化模块实现了 SOTA 性能。
 tags:
   - "ECCV 2024"
   - "3D视觉"

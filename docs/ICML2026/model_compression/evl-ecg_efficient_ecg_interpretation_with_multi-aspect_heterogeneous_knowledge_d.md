@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EVL-ECG: Efficient ECG Interpretation With Multi-Aspect Heterogeneous Knowledge Distillation
 description: >-
-  [ICML 2026][模型压缩][ECG 基础模型] EVL-ECG 针对 ECG 解读的 VLM 蒸馏问题（teacher 与 student 在视觉 token 数量、tokenizer、序列长度上都异构），引入"多头交叉注意力对齐 + 最优传输视觉特征匹配 + 几何关系内部匹配"三模块的跨架构蒸馏框架…
+  [ICML 2026][模型压缩][ECG 基础模型] EVL-ECG 针对 ECG 解读的 VLM 蒸馏问题（teacher 与 student 在视觉 token 数量、tokenizer、序列长度上都异构），引入"多头交叉注意力对齐 + 最优传输视觉特征匹配 + 几何关系内部匹配"三模块的跨架构蒸馏框架，把 2B 学生模型推到 SOTA，AUC 比已有 KD 高 2.4%、临床准确率高 1.1%。
 tags:
   - "ICML 2026"
   - "模型压缩"

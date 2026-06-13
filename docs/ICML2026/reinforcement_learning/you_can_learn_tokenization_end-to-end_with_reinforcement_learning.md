@@ -2,7 +2,7 @@
 title: >-
   [论文解读] You Can Learn Tokenization End-to-End with Reinforcement Learning
 description: >-
-  [ICML2026][强化学习][端到端分词] 本文把 byte-level LLM 中“哪里画 token 边界”建模成离散随机决策，用带 early-exit relative reward、time discounting 和 batch-relative advantage 的 score funct…
+  [ICML2026][强化学习][端到端分词] 本文把 byte-level LLM 中“哪里画 token 边界”建模成离散随机决策，用带 early-exit relative reward、time discounting 和 batch-relative advantage 的 score function estimator 端到端学习 tokenization，在 147M 自然语言模型和 90M 代码模型上优于直通估计器并接近 BPE-guided downsampling。
 tags:
   - "ICML2026"
   - "强化学习"

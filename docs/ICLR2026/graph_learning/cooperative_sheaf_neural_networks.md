@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cooperative Sheaf Neural Networks
 description: >-
-  [ICLR 2026][图学习][Sheaf Neural Networks] 提出在有向图上定义 cellular sheaf 的 in/out-degree Laplacian，构建 Cooperative Sheaf Neural Network (CSNN)，使节点能独立选择信息传播/接收策略…
+  [ICLR 2026][图学习][Sheaf Neural Networks] 提出在有向图上定义 cellular sheaf 的 in/out-degree Laplacian，构建 Cooperative Sheaf Neural Network (CSNN)，使节点能独立选择信息传播/接收策略，从而同时缓解过度挤压(oversquashing)和处理异配(heterophilic)任务。
 tags:
   - "ICLR 2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Devil is in the Condition Numbers: Why is GLU Better than non-GLU Structure?
 description: >-
-  [ICML 2026][预训练][GLU] 在 NTK 视角下证明 GLU 把两层网络的核矩阵改写成"原 NTK 与数据 Gram 阵的 Hadamard 积"，从而显著压缩条件数、加速收敛，同时实证显示 GLU 并不改善泛化间隔，其全部红利都来自更好的优化。
+  [ICML 2026][预训练][GLU] 在 NTK 视角下证明 GLU 把两层网络的核矩阵改写成"原 NTK 与数据 Gram 阵的 Hadamard 积"，从而显著压缩条件数、加速收敛，同时实证显示 GLU 并不改善泛化间隔，其全部红利都来自更好的优化。 领域现状：从 LLaMA、Qwen、DeepSeek 到几乎所有…
 tags:
   - "ICML 2026"
   - "预训练"

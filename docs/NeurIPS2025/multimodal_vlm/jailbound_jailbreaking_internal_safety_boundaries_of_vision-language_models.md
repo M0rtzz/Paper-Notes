@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JailBound: Jailbreaking Internal Safety Boundaries of Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][jailbreak] 受 Eliciting Latent Knowledge (ELK) 框架启发，首次揭示 VLM 在 fusion layer 潜空间中存在可近似的安全决策边界…
+  [NeurIPS 2025][多模态VLM][jailbreak] 受 Eliciting Latent Knowledge (ELK) 框架启发，首次揭示 VLM 在 fusion layer 潜空间中存在可近似的安全决策边界，提出 JailBound 两阶段攻击框架（Safety Boundary Probing + Safety Boundary Crossing），通过联合优化图像和文本对抗扰动跨越该边界，在白盒和黑盒场景分别达到 94.32% 和 67.28% 平均攻击成功率，显著超越 SOTA。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

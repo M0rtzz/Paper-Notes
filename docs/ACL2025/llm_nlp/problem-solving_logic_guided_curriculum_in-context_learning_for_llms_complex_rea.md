@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Problem-Solving Logic Guided Curriculum In-Context Learning for LLMs Complex Reasoning
 description: >-
-  [ACL 2025][LLM/NLP][in-context learning] 提出基于问题求解逻辑（Problem-Solving Logic）的课程式 ICL 策略，通过分析问题的求解步骤结构来选择和排序 demonstration examples，有效提升 LLM 的复杂推理能力。
+  [ACL 2025][LLM 其他][in-context learning] 提出基于问题求解逻辑（Problem-Solving Logic）的课程式 ICL 策略，通过分析问题的求解步骤结构来选择和排序 demonstration examples，有效提升 LLM 的复杂推理能力。 研究领域现状：In-Context…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "in-context learning"
   - "curriculum learning"
   - "problem-solving logic"

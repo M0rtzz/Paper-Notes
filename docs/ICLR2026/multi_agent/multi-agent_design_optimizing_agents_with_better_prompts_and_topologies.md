@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies
 description: >-
-  [ICLR 2026][多智能体][多智能体系统] 提出Multi-Agent System Search（MASS）框架，通过交错优化提示词和拓扑结构的三阶段策略（局部提示优化→拓扑搜索→全局提示优化），自动发现高性能的多智能体系统设计。
+  [ICLR 2026][多智能体][多智能体系统] 提出Multi-Agent System Search（MASS）框架，通过交错优化提示词和拓扑结构的三阶段策略（局部提示优化→拓扑搜索→全局提示优化），自动发现高性能的多智能体系统设计。 1. 领域现状： 基于LLM的多智能体系统（MAS）通过多个Agent的交互与协作…
 tags:
   - "ICLR 2026"
   - "多智能体"

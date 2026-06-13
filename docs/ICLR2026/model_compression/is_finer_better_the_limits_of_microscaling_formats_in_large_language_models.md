@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Finer Better? The Limits of Microscaling Formats in Large Language Models
 description: >-
-  [ICLR 2026][模型压缩][微缩放量化] 发现并解释了微缩放（microscaling）量化中"更细粒度反而更差"的反直觉异常——当block size减小到阈值以下时，FP8 UE4M3 scale的有限动态范围导致窄分布张量的量化误差反而增大…
+  [ICLR 2026][模型压缩][微缩放量化] 发现并解释了微缩放（microscaling）量化中"更细粒度反而更差"的反直觉异常——当block size减小到阈值以下时，FP8 UE4M3 scale的有限动态范围导致窄分布张量的量化误差反而增大，并提出 FP8 UE5M3 scale格式作为硬件友好的解决方案。
 tags:
   - "ICLR 2026"
   - "模型压缩"

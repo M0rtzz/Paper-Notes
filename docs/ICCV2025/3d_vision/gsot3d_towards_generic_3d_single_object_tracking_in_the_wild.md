@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GSOT3D: Towards Generic 3D Single Object Tracking in the Wild
 description: >-
-  [ICCV 2025][3D视觉][3D单目标跟踪] 提出 GSOT3D，目前最大的通用3D单目标跟踪基准，包含620个多模态序列（点云+RGB+深度）覆盖54类物体，支持PC/RGB-PC/RGB-D三种3D跟踪任务，并提出渐进式时空跟踪器PROT3D以9DoF包围盒实现最优性能。
+  [ICCV 2025][3D视觉][3D单目标跟踪] 提出 GSOT3D，目前最大的通用3D单目标跟踪基准，包含620个多模态序列（点云+RGB+深度）覆盖54类物体，支持PC/RGB-PC/RGB-D三种3D跟踪任务，并提出渐进式时空跟踪器PROT3D以9DoF包围盒实现最优性能。 3D单目标跟踪(SOT)在智能驾驶、移动…
 tags:
   - "ICCV 2025"
   - "3D视觉"

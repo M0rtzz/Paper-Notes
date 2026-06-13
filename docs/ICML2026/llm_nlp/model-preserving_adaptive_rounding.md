@@ -2,10 +2,10 @@
 title: >-
   [论文解读] YAQA: 端到端 KL 最小化的 LLM 自适应权重量化
 description: >-
-  [ICML 2026][LLM/NLP][量化] YAQA 把 LLM 权重量化的代理目标从「逐层激活误差」换成「端到端模型输出 KL 散度」，用 Kronecker 分解的 Hessian 草图给出第一个端到端误差界，相对 GPTQ/LDLQ 把 KL 再降约 30%，甚至比量化感知训练（QAT）更准…
+  [ICML 2026][LLM 其他][量化] YAQA 把 LLM 权重量化的代理目标从「逐层激活误差」换成「端到端模型输出 KL 散度」，用 Kronecker 分解的 Hessian 草图给出第一个端到端误差界，相对 GPTQ/LDLQ 把 KL 再降约 30%，甚至比量化感知训练（QAT）更准，且推理速度不变。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "量化"
   - "自适应舍入"
   - "端到端 KL"

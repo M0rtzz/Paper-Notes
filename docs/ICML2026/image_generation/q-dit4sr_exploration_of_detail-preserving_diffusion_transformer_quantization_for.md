@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Q-DiT4SR: Exploration of Detail-Preserving Diffusion Transformer Quantization for Real-World Image Super-Resolution
 description: >-
-  [ICML 2026][图像生成][PTQ] 本文首次为基于 DiT 的真实图像超分（Real-ISR）设计了 PTQ 框架 Q-DiT4SR，通过「全局低秩 + 局部分块 rank-1」的层级 SVD 分解保留高频细节…
+  [ICML 2026][图像生成][PTQ] 本文首次为基于 DiT 的真实图像超分（Real-ISR）设计了 PTQ 框架 Q-DiT4SR，通过「全局低秩 + 局部分块 rank-1」的层级 SVD 分解保留高频细节，并基于率失真理论提出无需校准数据的层间权重位宽分配（VaSMP）与基于动态规划的时间步激活位宽调度（VaTMP），在 W4A6 / W4A4 极低位设置下达到 SOTA，并将模型压缩 5.8× / 计算量减少 6.14×。
 tags:
   - "ICML 2026"
   - "图像生成"

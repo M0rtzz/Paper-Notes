@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Temporal Context Learning for Camera-based Semantic Scene Completion
 description: >-
-  [ECCV 2024][自动驾驶][语义场景补全] 针对相机语义场景补全（SSC）中时序信息利用粗糙的问题，提出层级式时序上下文学习（HTCL）范式：先通过跨帧模式亲和度（CPA）度量当前帧与历史帧的细粒度对应关系，再通过基于亲和度的动态精炼（ADR）自适应采样补偿不完整观测…
+  [ECCV 2024][自动驾驶][语义场景补全] 针对相机语义场景补全（SSC）中时序信息利用粗糙的问题，提出层级式时序上下文学习（HTCL）范式：先通过跨帧模式亲和度（CPA）度量当前帧与历史帧的细粒度对应关系，再通过基于亲和度的动态精炼（ADR）自适应采样补偿不完整观测，在SemanticKITTI上排名第1，甚至在OpenOccupancy上mIoU超过LiDAR方法。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

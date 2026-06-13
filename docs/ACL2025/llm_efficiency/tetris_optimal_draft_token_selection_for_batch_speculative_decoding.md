@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tetris: Optimal Draft Token Selection for Batch Speculative Decoding
 description: >-
-  [ACL 2025][LLM效率][推测解码] Tetris 提出了一种在批量推测解码场景下，跨请求动态选择最优草稿token的方法，通过贪心选择累积接受概率最高的token来最大化有限计算资源下的推理吞吐量。
+  [ACL 2025][LLM效率][推测解码] Tetris 提出了一种在批量推测解码场景下，跨请求动态选择最优草稿token的方法，通过贪心选择累积接受概率最高的token来最大化有限计算资源下的推理吞吐量。 推测解码（Speculative Decoding, SD）是加速LLM推理的有效方法，通过小型草稿模型快速生成候…
 tags:
   - "ACL 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accelerating Spectral Clustering under Fairness Constraints
 description: >-
-  [ICML 2025][AI安全][公平聚类] 将公平谱聚类（Fair SC）问题转化为凸差分（DC）优化框架，通过变量增广策略和 ADMM 类型算法，避免了昂贵的特征分解计算，在大规模问题上实现显著加速。
+  [ICML 2025][AI安全][公平聚类] 将公平谱聚类（Fair SC）问题转化为凸差分（DC）优化框架，通过变量增广策略和 ADMM 类型算法，避免了昂贵的特征分解计算，在大规模问题上实现显著加速。 领域现状：算法决策系统在医疗、教育等关键领域的广泛应用引发公平性担忧。公平聚类要求各人口群组在每个簇中的比例与总体一致…
 tags:
   - "ICML 2025"
   - "AI安全"

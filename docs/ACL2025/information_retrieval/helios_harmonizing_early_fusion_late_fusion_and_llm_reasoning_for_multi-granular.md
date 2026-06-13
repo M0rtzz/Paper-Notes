@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HELIOS: Harmonizing Early Fusion, Late Fusion, and LLM Reasoning for Multi-Granular Table-Text Retrieval
 description: >-
-  [ACL 2025][信息检索/RAG][Table-Text Retrieval] 提出 HELIOS 三阶段图检索框架（边级早期融合 → 节点级晚期融合 → 星图级 LLM 精化），通过多粒度协调统一解决表格-文本检索中的检索单元粒度、查询依赖关系发现和高级推理三大挑战…
+  [ACL 2025][信息检索/RAG][Table-Text Retrieval] 提出 HELIOS 三阶段图检索框架（边级早期融合 → 节点级晚期融合 → 星图级 LLM 精化），通过多粒度协调统一解决表格-文本检索中的检索单元粒度、查询依赖关系发现和高级推理三大挑战，在 OTT-QA 上实现 42.6% Answer Recall 提升。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

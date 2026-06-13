@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Redefining <Creative> in Dictionary: Towards an Enhanced Semantic Understanding of Creative Generation
 description: >-
-  [CVPR 2025][图像生成][创意生成] CreTok 将"creative"重定义为一个可学习的通用 token `<CreTok>`，通过在文本嵌入空间持续迭代优化该 token 的语义，赋予扩散模型组合式创意生成的"元创造力"，无需额外训练即可零样本生成多样的概念混合图像…
+  [CVPR 2025][图像生成][创意生成] CreTok 将"creative"重定义为一个可学习的通用 token `<CreTok>`，通过在文本嵌入空间持续迭代优化该 token 的语义，赋予扩散模型组合式创意生成的"元创造力"，无需额外训练即可零样本生成多样的概念混合图像，速度比 SOTA 快 10-30 倍。
 tags:
   - "CVPR 2025"
   - "图像生成"

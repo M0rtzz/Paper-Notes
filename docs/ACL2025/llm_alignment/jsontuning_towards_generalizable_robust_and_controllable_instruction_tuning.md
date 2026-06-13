@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JsonTuning: Towards Generalizable, Robust, and Controllable Instruction Tuning
 description: >-
-  [ACL 2025][LLM对齐][instruction tuning] 提出 JsonTuning——将指令微调的输入输出从自然语言文本替换为 JSON 结构化格式，通过显式表示任务元素、关系和输出约束（JSON Schema），在 7 个预训练模型和 6 类任务上一致超越传统 TextTuning…
+  [ACL 2025][LLM对齐][instruction tuning] 提出 JsonTuning——将指令微调的输入输出从自然语言文本替换为 JSON 结构化格式，通过显式表示任务元素、关系和输出约束（JSON Schema），在 7 个预训练模型和 6 类任务上一致超越传统 TextTuning，平均性能从 26.78 提升到 30.88，同时显著增强鲁棒性和可控性。
 tags:
   - "ACL 2025"
   - "LLM对齐"

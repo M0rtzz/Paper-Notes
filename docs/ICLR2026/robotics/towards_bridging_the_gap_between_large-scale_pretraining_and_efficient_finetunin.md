@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control
 description: >-
-  [ICLR 2026][机器人][人形机器人控制] LIFT提出预训练-微调三阶段框架：(i) 大规模并行SAC预训练实现零样本部署；(ii) 基于拉格朗日动力学的物理先验世界模型离线预训练；(iii) 确定性动作执行+世界模型内随机探索的高效微调…
+  [ICLR 2026][机器人][人形机器人控制] LIFT提出预训练-微调三阶段框架：(i) 大规模并行SAC预训练实现零样本部署；(ii) 基于拉格朗日动力学的物理先验世界模型离线预训练；(iii) 确定性动作执行+世界模型内随机探索的高效微调，在Booster T1和Unitree G1人形机器人上验证了从仿真到真实世界的全流程。
 tags:
   - "ICLR 2026"
   - "机器人"

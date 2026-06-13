@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating LLMs on Large-Scale Graph Property Estimation via Random Walks
 description: >-
-  [ACL 2026][图学习][large graph reasoning] 现有 LLM 图推理 benchmark 只用 20–50 节点的小图、还要求全图可见；本文用「随机游走统计量」把最多 2.39M 节点的真实图压成 prompt…
+  [ACL 2026][图学习][large graph reasoning] 现有 LLM 图推理 benchmark 只用 20–50 节点的小图、还要求全图可见；本文用「随机游走统计量」把最多 2.39M 节点的真实图压成 prompt，提出 EstGraph 评估 LLM 在节点/边数、社区数、图结构、影响节点 4 项估计任务上的表现，发现 LLM 在中等规模图上可达 < 20% 相对误差并能识别图结构。
 tags:
   - "ACL 2026"
   - "图学习"

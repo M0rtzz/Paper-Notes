@@ -2,7 +2,7 @@
 title: >-
   [论文解读] If Open Source Is to Win, It Must Go Public
 description: >-
-  [ICML 2025][开源AI] 本文是一篇立场论文，核心论点是：开源 AI 本身无法实现 AI 的民主化访问，必须嵌入更广泛的"公共 AI"基础设施——包括公共资金、公共访问、公共治理和私人承诺——才能让开放模型真正成为公共产品。
+  [ICML 2025][开源AI] 本文论证了开源 AI 在当前实践下无法独立实现 AI 民主化——模型权重只是"惰性代码"，需要大量资本才能激活——必须嵌入公共 AI 基础设施（公共资金 + 公共访问 + 公共治理 + 私人承诺）才能成为真正的公共产品。 领域现状：开源软件在 Linux、Kubernetes 等领域取得了…
 tags:
   - "ICML 2025"
   - "开源AI"
@@ -147,3 +147,19 @@ tags:
   - ICML 2025
   - 人体理解
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2026\] Back to Source: Open-Set Continual Test-Time Adaptation via Domain Compensation](../../CVPR2026/others/back_to_source_open-set_continual_test-time_adaptation_via_domain_compensation.md)
+- [\[ACL 2025\] Is Linguistically-Motivated Data Augmentation Worth It?](../../ACL2025/others/is_linguistically-motivated_data_augmentation_worth_it.md)
+- [\[ICML 2025\] Democratic AI is Possible. The Democracy Levels Framework Shows How It Might Work](democratic_ai_is_possible_the_democracy_levels_framework_shows_how_it_might_work.md)
+- [\[ACL 2025\] CiteEval: Principle-Driven Citation Evaluation for Source Attribution](../../ACL2025/others/citeeval_principle-driven_citation_evaluation_for_source_attribution.md)
+- [\[ACL 2025\] If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?](../../ACL2025/others/if_attention_serves_as_a_cognitive_model_of_human_memory_retrieval_what_is_the_p.md)
+
+</div>
+
+<!-- RELATED:END -->

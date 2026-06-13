@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MorphAny3D: Unleashing the Power of Structured Latent in 3D Morphing
 description: >-
-  [CVPR 2026][图像生成][3D变形] 提出 MorphAny3D，首个基于 Structured Latent（SLAT）表示的无训练 3D 变形框架，通过 Morphing Cross-Attention（MCA）融合源/目标信息保证结构合理、Temporal-Fused Self-Attenti…
+  [CVPR 2026][图像生成][3D变形] 提出 MorphAny3D，首个基于 Structured Latent（SLAT）表示的无训练 3D 变形框架，通过 Morphing Cross-Attention（MCA）融合源/目标信息保证结构合理、Temporal-Fused Self-Attention（TFSA）增强时序一致性、方向校正策略消除突变，在跨类别 3D 变形中实现了 SOTA 质量。
 tags:
   - "CVPR 2026"
   - "图像生成"

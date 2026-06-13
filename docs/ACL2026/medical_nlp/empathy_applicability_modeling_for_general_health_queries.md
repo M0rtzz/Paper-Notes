@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Empathy Applicability Modeling for General Health Queries
 description: >-
-  [ACL2026][医疗NLP][clinical empathy] 本文提出 Empathy Applicability Framework (EAF)，先判断患者单轮健康咨询中是否“适合”表达情绪回应或解释性理解，再用人类与 GPT-4o 标注构建基准并训练分类器…
+  [ACL2026 Findings][医疗NLP][clinical empathy] 本文提出 Empathy Applicability Framework (EAF)，先判断患者单轮健康咨询中是否“适合”表达情绪回应或解释性理解，再用人类与 GPT-4o 标注构建基准并训练分类器，为医疗 LLM 回答前的同理心需求识别提供上游信号。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "医疗NLP"
   - "clinical empathy"
   - "health queries"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification
 description: >-
-  [AAAI 2026][自动驾驶][行人重识别] 提出统一框架 HPL，通过任务路由 Transformer（双分类 token）解耦 I2I 和 T2I 任务，利用层次化提示学习（身份级 + 实例级伪文本 token）结合跨模态提示正则化，首次在单一模型中同时实现图像-图像和文本-图像行人重识别的 SOTA…
+  [AAAI 2026][自动驾驶][行人重识别] 提出统一框架 HPL，通过任务路由 Transformer（双分类 token）解耦 I2I 和 T2I 任务，利用层次化提示学习（身份级 + 实例级伪文本 token）结合跨模态提示正则化，首次在单一模型中同时实现图像-图像和文本-图像行人重识别的 SOTA。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

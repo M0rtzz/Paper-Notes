@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Image Restoration Using Few-Step Guidance of Consistency Models (and Beyond)
 description: >-
-  [CVPR 2025][图像生成][零样本图像恢复] CM4IR 提出一种基于一致性模型（Consistency Model）的零样本图像恢复方案，通过新颖的噪声注入机制（解耦去噪/注入噪声级别 + 随机/估计噪声分割）结合反投影引导和更好的初始化…
+  [CVPR 2025][图像生成][零样本图像恢复] CM4IR 提出一种基于一致性模型（Consistency Model）的零样本图像恢复方案，通过新颖的噪声注入机制（解耦去噪/注入噪声级别 + 随机/估计噪声分割）结合反投影引导和更好的初始化，仅用 4 次神经网络评估即超越需要 20-1000 次的现有扩散模型方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

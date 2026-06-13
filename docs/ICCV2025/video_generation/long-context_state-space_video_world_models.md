@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Long-Context State-Space Video World Models
 description: >-
-  [ICCV 2025][图像生成][世界模型] 本文提出将状态空间模型（SSM/Mamba）引入视频世界模型，通过 block-wise SSM 扫描方案在空间一致性和时序记忆之间权衡，配合局部帧注意力，实现了线性训练复杂度、常数推理开销下的长期空间记忆保持…
+  [ICCV 2025][视频生成][世界模型] 本文提出将状态空间模型（SSM/Mamba）引入视频世界模型，通过 block-wise SSM 扫描方案在空间一致性和时序记忆之间权衡，配合局部帧注意力，实现了线性训练复杂度、常数推理开销下的长期空间记忆保持，在 Memory Maze 和 Minecraft 数据集上大幅超越有限上下文的 Transformer 基线。
 tags:
   - "ICCV 2025"
-  - "图像生成"
+  - "视频生成"
   - "世界模型"
   - "SSM"
   - "Mamba"

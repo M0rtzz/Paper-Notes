@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextualized Visual Personalization in Vision-Language Models
 description: >-
-  [ICML2026][多模态VLM][视觉个性化] CoViP 把"基于用户历史经验做视觉个性化"这一开放任务，统一收敛到"个性化图像字幕"这个共享底层过程，通过可验证奖励的 RL 后训练 + 推理时的字幕增强生成（CAG），让 VLM 在交错图文上下文里真正"看图说人话"…
+  [ICML2026][多模态VLM][视觉个性化] CoViP 把"基于用户历史经验做视觉个性化"这一开放任务，统一收敛到"个性化图像字幕"这个共享底层过程，通过可验证奖励的 RL 后训练 + 推理时的字幕增强生成（CAG），让 VLM 在交错图文上下文里真正"看图说人话"，并配套设计了能排除文本捷径的 MCQA 诊断基准。
 tags:
   - "ICML2026"
   - "多模态VLM"

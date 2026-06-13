@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents
 description: >-
-  [CVPR 2026][LLM Agent][GUI Agent] 提出 GUI-CEval，首个面向中文移动端 GUI Agent 的综合评测基准，覆盖 201 个主流中文 App、4 种设备类型，采用"基础能力+应用能力"两层结构从感知、规划、反思、执行、评估五个维度进行细粒度诊断…
+  [CVPR 2026][LLM Agent][GUI Agent] 提出 GUI-CEval，首个面向中文移动端 GUI Agent 的综合评测基准，覆盖 201 个主流中文 App、4 种设备类型，采用"基础能力+应用能力"两层结构从感知、规划、反思、执行、评估五个维度进行细粒度诊断，在 20 个代表性模型上的实验揭示当前模型在反思和自我评估方面仍有明显短板。
 tags:
   - "CVPR 2026"
   - "LLM Agent"

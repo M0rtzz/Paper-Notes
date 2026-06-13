@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Graph-Theoretical Perspective on Law Design for Multiagent Systems
 description: >-
-  [AAAI 2026][多智能体][law design] 从图论角度研究多智能体系统中的法律设计问题，将 useful law 和 gap-free law 的最小化设计分别归约为超图的顶点覆盖问题，证明了 NP-hardness 并给出近似算法。
+  [AAAI 2026][多智能体][law design] 从图论角度研究多智能体系统中的法律设计问题，将 useful law 和 gap-free law 的最小化设计分别归约为超图的顶点覆盖问题，证明了 NP-hardness 并给出近似算法。 1. 领域现状： 多智能体系统中常通过法律/规范来约束 agent 行为…
 tags:
   - "AAAI 2026"
   - "多智能体"
@@ -106,10 +106,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐⭐ 将法律设计归约为顶点覆盖、引入 gap-free law 概念均为新贡献
-- 实验充分度: ⭐⭐ 纯理论工作无实验验证，但理论证明完整
-- 写作质量: ⭐⭐⭐⭐ 动机引入清晰（工厂污染例子贯穿全文），数学表述严谨
-- 价值: ⭐⭐⭐ 理论扎实但应用场景有限，one-shot 假设制约实用性
+- 新颖性: ⭐⭐⭐⭐⭐ 将法律设计归约为顶点覆盖、引入 gap-free law 概念均为新贡献
+- 实验充分度: ⭐⭐⭐ 纯理论工作无实验验证，但理论证明完整
+- 写作质量: ⭐⭐⭐⭐⭐ 动机引入清晰（工厂污染例子贯穿全文），数学表述严谨
+- 价值: ⭐⭐⭐⭐ 理论扎实但应用场景有限，one-shot 假设制约实用性
 
 <!-- RELATED:START -->
 

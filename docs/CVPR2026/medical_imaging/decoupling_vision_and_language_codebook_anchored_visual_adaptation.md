@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoupling Vision and Language: Codebook Anchored Visual Adaptation
 description: >-
-  [CVPR2026][医学图像][离散视觉token] 提出 CRAFT，通过离散 codebook 将视觉编码器与语言模型解耦，仅微调视觉编码器即可实现领域适配，且适配后的编码器可跨 LLM 架构无缝复用，在 10 个领域基准上平均提升 13.51%。
+  [CVPR2026][医学图像][离散视觉token] 提出 CRAFT，通过离散 codebook 将视觉编码器与语言模型解耦，仅微调视觉编码器即可实现领域适配，且适配后的编码器可跨 LLM 架构无缝复用，在 10 个领域基准上平均提升 13.51%。 1. 大型视觉语言模型（LVLM）的视觉编码器在医学图像、细粒度分类等…
 tags:
   - "CVPR2026"
   - "医学图像"

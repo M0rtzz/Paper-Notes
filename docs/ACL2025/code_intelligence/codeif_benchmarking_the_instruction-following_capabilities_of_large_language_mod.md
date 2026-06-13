@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeIF: Benchmarking the Instruction-Following Capabilities of Large Language Models for Code Generation
 description: >-
-  [ACL 2025][代码智能][代码生成] 提出 CodeIF，第一个系统性评估 LLM 在代码生成中指令遵循能力的基准，含 8 大类 50 个细粒度约束指令、4 种新评估指标，并对 35 个 SOTA 模型进行全面评估。
+  [ACL 2025][代码智能][代码生成] 提出 CodeIF，第一个系统性评估 LLM 在代码生成中指令遵循能力的基准，含 8 大类 50 个细粒度约束指令、4 种新评估指标，并对 35 个 SOTA 模型进行全面评估。 领域现状：LLM 在代码生成领域取得显著进展，但其理解和执行复杂指令的能力仍是关键挑战…
 tags:
   - "ACL 2025"
   - "代码智能"

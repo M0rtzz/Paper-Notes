@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Automated Formal Proofs of Combinatorial Identities via Wilf–Zeilberger Guidance and LLMs
 description: >-
-  [ICML 2026][LLM/NLP][Lean 4] WZ-LLM 把经典的 Wilf–Zeilberger 符号证明流程编译成 Lean 4 中可执行的证明骨架（递推 + 边界条件 + 侧条件）…
+  [ICML 2026][LLM 其他][Lean 4] WZ-LLM 把经典的 Wilf–Zeilberger 符号证明流程编译成 Lean 4 中可执行的证明骨架（递推 + 边界条件 + 侧条件），交给专门用 SFT + expert-iteration + DAPO 训练出的 WZ-Prover 逐项 discharge，在 100 个经典组合恒等式上把 pass@32 从 Goedel-Prover-V2 的 9% 提升到 34%。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Lean 4"
   - "组合恒等式"
   - "Wilf-Zeilberger"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Software Engineering Agents and Verifiers with SWE-Gym
 description: >-
-  [ICML 2025][代码智能][软件工程Agent] 本文提出 SWE-Gym——首个用于训练软件工程 Agent 的环境，包含来自 11 个开源 Python 仓库的 2438 个真实任务实例，通过在 SWE-Gym 上进行拒绝采样微调训练 SWE Agent 和 Verifier…
+  [ICML 2025][代码智能][软件工程Agent] 本文提出 SWE-Gym——首个用于训练软件工程 Agent 的环境，包含来自 11 个开源 Python 仓库的 2438 个真实任务实例，通过在 SWE-Gym 上进行拒绝采样微调训练 SWE Agent 和 Verifier，在 SWE-Bench Verified/Lite 上最终达到 32.0%/26.0% 的解决率，创造了开源权重 SWE Agent 的新 SOTA。
 tags:
   - "ICML 2025"
   - "代码智能"

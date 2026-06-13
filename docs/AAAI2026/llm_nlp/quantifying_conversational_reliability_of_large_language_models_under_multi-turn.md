@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Quantifying Conversational Reliability of Large Language Models under Multi-Turn Interaction
 description: >-
-  [AAAI 2026][LLM/NLP][LLM评估] 通过三个可确定性评估的代表性任务（指令遵循、工具选择、实体抽取），系统量化 LLM 在多轮对话中的可靠性退化程度，揭示模型在扩展对话中出现指令漂移、意图混淆和上下文覆写等失败模式。
+  [AAAI 2026][LLM 其他][LLM评估] 通过三个可确定性评估的代表性任务（指令遵循、工具选择、实体抽取），系统量化 LLM 在多轮对话中的可靠性退化程度，揭示模型在扩展对话中出现指令漂移、意图混淆和上下文覆写等失败模式。 领域现状 LLM 越来越多地部署在真实世界应用中，用户会进行延长的、混合话题的多轮对话…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM评估"
   - "多轮对话"
   - "可靠性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Softplus Attention with Re-weighting Boosts Length Extrapolation in Large Language Models
 description: >-
-  [ICML 2026][物理/科学计算][Softmax 替代] 作者把传统 Softmax attention 解构为"非负化 + L1 归一化"两个独立部件，证明真正关键的是 L1 归一化而非指数，于是用 Softplus + 动态长度尺度因子换掉指数得到 LSSA，再用一次幂函数式"重权"对注意力锐化…
+  [ICML 2026][物理/科学计算][Softmax 替代] 作者把传统 Softmax attention 解构为"非负化 + L1 归一化"两个独立部件，证明真正关键的是 L1 归一化而非指数，于是用 Softplus + 动态长度尺度因子换掉指数得到 LSSA，再用一次幂函数式"重权"对注意力锐化，得到的 LSSAR 在 16× 训练长度上几乎保持 validation loss 不变，并能让 GPT-109M 从轨迹数据中"重新发现"牛顿万有引力定律。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

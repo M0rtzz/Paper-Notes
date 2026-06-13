@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jacobian Scopes: Token-Level Causal Attributions in LLMs
 description: >-
-  [ACL 2026][可解释性][Jacobian] 作者提出 Jacobian Scopes——一套用"输入 token 嵌入到末层 hidden state 的 Jacobian 在某个 vector 上的投影"作为 token 归因强度的统一框架…
+  [ACL 2026][可解释性][Jacobian] 作者提出 Jacobian Scopes——一套用"输入 token 嵌入到末层 hidden state 的 Jacobian 在某个 vector 上的投影"作为 token 归因强度的统一框架，配套三种 scope（Semantic / Fisher / Temperature）分别解释"某个目标 logit / 整个预测分布 / 模型置信度"如何被各输入 token 驱动，只需 1 次反向传播，AOPC 指标上与 Input×Gradient 持平、显著优于 Integrated Gradients。
 tags:
   - "ACL 2026"
   - "可解释性"

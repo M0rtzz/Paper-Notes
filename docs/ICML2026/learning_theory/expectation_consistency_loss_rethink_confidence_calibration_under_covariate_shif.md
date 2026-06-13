@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Expectation Consistency Loss: Rethink Confidence Calibration under Covariate Shift
 description: >-
-  [ICML2026][置信度校准] ECL 证明在协变量漂移下完整对齐输入分布 $P_s(X) = P_t(X)$ 并非校准的必要条件，只要"在每个置信度水平集上 $P(Y_k=1|X)$ 的条件期望两域一致"即可…
+  [ICML2026][AI 安全 / 置信度校准 / 协变量漂移][置信度校准] ECL 证明在协变量漂移下完整对齐输入分布 $P_s(X) = P_t(X)$ 并非校准的必要条件，只要"在每个置信度水平集上 $P(Y_k=1|X)$ 的条件期望两域一致"即可，并据此构造一个对 canonical / class-wise / top-label 三类校准都通用、可微、且 mini-batch 梯度无偏的损失 ECL。
 tags:
   - "ICML2026"
+  - "AI 安全 / 置信度校准 / 协变量漂移"
   - "置信度校准"
   - "协变量漂移"
   - "期望一致性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking
 description: >-
-  [NeurIPS 2025][自监督学习][时序分类] 提出 STaRFormer，通过动态注意力区域掩码（DAReM）识别任务关键区域并施加掩码扰动，配合批内+类内半监督对比学习将任务信息嵌入潜在表示，在 56 个数据集（含非平稳、不规则采样、分类/异常检测/回归）上全面超越 SOTA。
+  [NeurIPS 2025][自监督学习][时序分类] 提出 STaRFormer，通过动态注意力区域掩码（DAReM）识别任务关键区域并施加掩码扰动，配合批内+类内半监督对比学习将任务信息嵌入潜在表示，在 56 个数据集（含非平稳、不规则采样、分类/异常检测/回归）上全面超越 SOTA。 领域现状：时序建模方法通常假设数据…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeGave: 3D Physics Learning from Dynamic Videos by Gaussian Velocity
 description: >-
-  [CVPR 2025][3D视觉][3D物理学习] 提出 FreeGave，一个从多视角动态视频中学习 3D 场景几何、外观和物理速度的通用框架，通过为每个 3D 高斯核引入可学习的物理编码（physics code）并设计无散度（divergence-free）速度场参数化…
+  [CVPR 2025][3D视觉][3D物理学习] 提出 FreeGave，一个从多视角动态视频中学习 3D 场景几何、外观和物理速度的通用框架，通过为每个 3D 高斯核引入可学习的物理编码（physics code）并设计无散度（divergence-free）速度场参数化，在不依赖 PINN 损失和目标先验的条件下实现精准的未来帧外推。
 tags:
   - "CVPR 2025"
   - "3D视觉"

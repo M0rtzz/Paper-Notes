@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Focal Split: Untethered Snapshot Depth from Differential Defocus
 description: >-
-  [CVPR 2025][差分离焦深度] 受跳蛛视觉启发，构建首个无线（电池供电）的快照式差分离焦深度相机 Focal Split，用分光镜将光路分给两个不同焦距的传感器，仅需 500 FLOPs/像素和 4.9W 功率即可在树莓派上实时估计深度。
+  [CVPR 2025][差分离焦深度] 受跳蛛视觉启发，构建首个无线（电池供电）的快照式差分离焦深度相机 Focal Split，用分光镜将光路分给两个不同焦距的传感器，仅需 500 FLOPs/像素和 4.9W 功率即可在树莓派上实时估计深度。 领域现状 领域现状：深度感知是机器人和AR的基础需求。主流方案包括主动方法（结…
 tags:
   - "CVPR 2025"
   - "差分离焦深度"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging
 description: >-
-  [NeurIPS 2025][医学图像][持续学习] 提出将类条件 DDPM 扩散重放与弹性权重巩固（EWC）相结合的无样本持续学习框架，在 MedMNIST v2（8 个 2D/3D 任务）和 CheXpert 上实现了 AUROC 0.851，相比 DER++ 遗忘率降低超 30%…
+  [NeurIPS 2025][医学图像][持续学习] 提出将类条件 DDPM 扩散重放与弹性权重巩固（EWC）相结合的无样本持续学习框架，在 MedMNIST v2（8 个 2D/3D 任务）和 CheXpert 上实现了 AUROC 0.851，相比 DER++ 遗忘率降低超 30%，接近联合训练上界（0.869），同时完全无需存储患者原始数据。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

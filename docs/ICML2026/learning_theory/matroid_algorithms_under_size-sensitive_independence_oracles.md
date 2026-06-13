@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Matroid Algorithms Under Size-Sensitive Independence Oracles
 description: >-
-  [ICML 2026][拟阵] 作者提出「查询代价随查询集合大小线性增长」的尺寸敏感拟阵 oracle 模型，证明在该模型下找基、估计秩、估计划分数的最优查询代价都是 $\tilde{\Theta}(n^2)$…
+  [ICML 2026 Spotlight][算法理论 / 组合优化][拟阵] 作者提出「查询代价随查询集合大小线性增长」的尺寸敏感拟阵 oracle 模型，证明在该模型下找基、估计秩、估计划分数的最优查询代价都是 $\tilde{\Theta}(n^2)$，并对有界周长 $c$ 的拟阵给出 $\mathcal{O}(n^{2-1/c}\log n)$ 的最大权基算法突破二次下界。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
+  - "算法理论 / 组合优化"
   - "拟阵"
   - "独立性 oracle"
   - "尺寸敏感查询代价"

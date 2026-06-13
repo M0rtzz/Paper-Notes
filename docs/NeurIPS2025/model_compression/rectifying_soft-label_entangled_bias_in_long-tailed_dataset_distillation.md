@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rectifying Soft-Label Entangled Bias in Long-Tailed Dataset Distillation
 description: >-
-  [NeurIPS 2025][模型压缩][数据集蒸馏] 揭示了长尾数据集蒸馏中软标签存在来自蒸馏模型和蒸馏图像的双重纠缠偏差，提出 ADSA 自适应软标签对齐模块，通过logit空间的后处理校准消除偏差，作为即插即用模块可无缝集成到现有蒸馏方法中…
+  [NeurIPS 2025][模型压缩][数据集蒸馏] 揭示了长尾数据集蒸馏中软标签存在来自蒸馏模型和蒸馏图像的双重纠缠偏差，提出 ADSA 自适应软标签对齐模块，通过logit空间的后处理校准消除偏差，作为即插即用模块可无缝集成到现有蒸馏方法中，在 ImageNet-1k-LT 上将尾部类准确率提升高达11.8%。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

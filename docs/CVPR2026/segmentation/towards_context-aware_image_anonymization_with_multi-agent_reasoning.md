@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Context-Aware Image Anonymization with Multi-Agent Reasoning
 description: >-
-  [CVPR 2026][语义分割][图像匿名化] 提出 CAIAMAR 多智能体框架，将预定义的高置信度直接 PII（人体、车牌）处理与基于大视觉语言模型的上下文感知推理相结合，通过 PDCA 迭代优化循环检测间接隐私标识符，使用扩散模型进行外观去相关修复…
+  [CVPR 2026][语义分割][图像匿名化] 提出 CAIAMAR 多智能体框架，将预定义的高置信度直接 PII（人体、车牌）处理与基于大视觉语言模型的上下文感知推理相结合，通过 PDCA 迭代优化循环检测间接隐私标识符，使用扩散模型进行外观去相关修复，在 CUHK03-NP 上将行人重识别风险降低 73%，同时在 CityScapes 上保持 FID 9.1 的高图像质量。
 tags:
   - "CVPR 2026"
   - "语义分割"

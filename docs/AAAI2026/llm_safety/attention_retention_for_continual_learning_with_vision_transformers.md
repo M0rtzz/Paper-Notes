@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention Retention for Continual Learning with Vision Transformers
 description: >-
-  [AAAI 2026][LLM安全][持续学习] 提出ARCL-ViT框架，通过注意力掩码生成和梯度掩码两步策略防止ViT在持续学习中的注意力漂移，在ImageNet-R和CIFAR-100上取得SOTA结果，证明保持注意力模式是解决灾难性遗忘的关键。
+  [AAAI 2026][LLM安全][持续学习] 提出ARCL-ViT框架，通过注意力掩码生成和梯度掩码两步策略防止ViT在持续学习中的注意力漂移，在ImageNet-R和CIFAR-100上取得SOTA结果，证明保持注意力模式是解决灾难性遗忘的关键。 领域现状：持续学习要求模型在学习新任务时保持对旧任务的性能…
 tags:
   - "AAAI 2026"
   - "LLM安全"

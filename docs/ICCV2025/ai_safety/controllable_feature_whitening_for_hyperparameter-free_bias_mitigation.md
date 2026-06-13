@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation
 description: >-
-  [ICCV 2025][AI安全][偏差缓解] 提出可控特征白化(CFW)框架，通过白化变换消除目标特征与偏差特征之间的线性相关性来缓解模型偏差，无需对抗学习或额外正则化超参数，且可通过加权系数平滑控制demographic parity和equalized odds之间的权衡。
+  [ICCV 2025][AI安全][偏差缓解] 提出可控特征白化(CFW)框架，通过白化变换消除目标特征与偏差特征之间的线性相关性来缓解模型偏差，无需对抗学习或额外正则化超参数，且可通过加权系数平滑控制demographic parity和equalized odds之间的权衡。 深度神经网络在偏差数据集上训练时…
 tags:
   - "ICCV 2025"
   - "AI安全"

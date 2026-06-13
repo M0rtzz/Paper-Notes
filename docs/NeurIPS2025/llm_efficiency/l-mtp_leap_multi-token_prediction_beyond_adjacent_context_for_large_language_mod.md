@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L-MTP: Leap Multi-Token Prediction Beyond Adjacent Context for Large Language Models
 description: >-
-  [NeurIPS 2025][LLM效率][跳跃预测] L-MTP 在多token预测（MTP）基础上引入跳跃机制，预测非相邻位置的token（如位置1,3,5,7而非1,2,3,4），通过"后向查找"解码策略复用先前预测填补空隙，在3B-12B模型上实现22%推理加速的同时保持或提升任务性能。
+  [NeurIPS 2025][LLM效率][跳跃预测] L-MTP 在多token预测（MTP）基础上引入跳跃机制，预测非相邻位置的token（如位置1,3,5,7而非1,2,3,4），通过"后向查找"解码策略复用先前预测填补空隙，在3B-12B模型上实现22%推理加速的同时保持或提升任务性能。 - NTP 的瓶颈： 标准…
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

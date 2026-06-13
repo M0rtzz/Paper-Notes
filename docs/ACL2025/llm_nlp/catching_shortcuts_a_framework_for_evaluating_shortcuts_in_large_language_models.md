@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Catching Shortcuts: A Framework for Evaluating Shortcuts in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][捷径学习] 本文提出了一个系统化的框架来检测和评估大语言模型中的捷径学习（shortcut learning）现象，通过构造对比测试集和诊断指标，揭示LLM在多个NLP任务上依赖虚假相关而非真正理解语义的问题。
+  [ACL 2025][LLM 其他][捷径学习] 本文提出了一个系统化的框架来检测和评估大语言模型中的捷径学习（shortcut learning）现象，通过构造对比测试集和诊断指标，揭示LLM在多个NLP任务上依赖虚假相关而非真正理解语义的问题。 领域现状：大语言模型在各类NLP基准测试上取得了令人瞩目的成绩…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "捷径学习"
   - "虚假相关"
   - "评估框架"

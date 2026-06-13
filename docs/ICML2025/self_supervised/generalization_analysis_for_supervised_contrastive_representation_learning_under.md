@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings
 description: >-
-  [ICML2025][自监督学习][对比学习] 本文首次在非独立同分布（non-IID）条件下为监督对比表征学习（CRL）建立了泛化界，利用 U-统计量分解技术处理训练元组重叠样本的依赖性问题，给出了以标记样本数 $N$ 为自变量的 excess risk 收敛速率。
+  [ICML2025][自监督学习][对比学习] 本文首次在非独立同分布（non-IID）条件下为监督对比表征学习（CRL）建立了泛化界，利用 U-统计量分解技术处理训练元组重叠样本的依赖性问题，给出了以标记样本数 $N$ 为自变量的 excess risk 收敛速率。 领域现状 领域现状：对比学习的理论理解受限：CRL 在视…
 tags:
   - "ICML2025"
   - "自监督学习"

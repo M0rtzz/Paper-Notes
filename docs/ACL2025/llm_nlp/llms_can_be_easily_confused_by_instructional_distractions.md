@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLMs Can Be Easily Confused by Instructional Distractions
 description: >-
-  [ACL 2025][LLM/NLP][指令干扰] 本文发现 LLM 在处理"输入本身也像指令"的场景时会被严重误导（指令干扰），提出 DIM-Bench 基准系统评估该问题，实验证明包括 GPT-4o 在内的主流 LLM 均显著受影响，且现有提示策略无法根本解决。
+  [ACL 2025][LLM 其他][指令干扰] 本文发现 LLM 在处理"输入本身也像指令"的场景时会被严重误导（指令干扰），提出 DIM-Bench 基准系统评估该问题，实验证明包括 GPT-4o 在内的主流 LLM 均显著受影响，且现有提示策略无法根本解决。 1. 领域现状：LLM 的指令跟随能力是其核心应用基础…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "指令干扰"
   - "指令跟随鲁棒性"
   - "DIM-Bench"

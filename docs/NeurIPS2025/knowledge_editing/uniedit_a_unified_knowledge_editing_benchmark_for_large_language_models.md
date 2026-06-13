@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models
 description: >-
-  [NeurIPS 2025 (Datasets & Benchmarks Track)][知识编辑][knowledge editing] 构建 UniEdit——首个基于开放域知识图谱（Wikidata）的统一 LLM 知识编辑基准，覆盖 5 大类 25 个领域共 311K 条样本…
+  [NeurIPS 2025 (Datasets & Benchmarks Track)][知识编辑][knowledge editing] 构建 UniEdit——首个基于开放域知识图谱（Wikidata）的统一 LLM 知识编辑基准，覆盖 5 大类 25 个领域共 311K 条样本，通过邻域多跳链采样（NMCS）算法统一整合多种泛化性和局部性评估标准，系统揭示了现有编辑方法在复杂波纹效应评估下的不足。
 tags:
   - "NeurIPS 2025 (Datasets & Benchmarks Track)"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks
 description: >-
-  [NeurIPS 2025][医学图像][3D Med-VQA] 提出 3D-RAD——首个大规模3D医学VQA基准，包含170K条CT影像问答数据，覆盖六类临床任务（含创新性的多时相诊断任务），并配套136K训练集，揭示了现有VLM在3D时序推理上的严重不足。
+  [NeurIPS 2025][医学图像][3D Med-VQA] 提出 3D-RAD——首个大规模3D医学VQA基准，包含170K条CT影像问答数据，覆盖六类临床任务（含创新性的多时相诊断任务），并配套136K训练集，揭示了现有VLM在3D时序推理上的严重不足。 现有Med-VQA数据集面临三大瓶颈： 1. 维度局限：绝大多…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

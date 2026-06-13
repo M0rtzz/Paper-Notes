@@ -2,9 +2,9 @@
 title: >-
   [论文解读] K-MetBench: A Multi-Dimensional Benchmark for Fine-Grained Evaluation of Expert Reasoning, Locality, and Multimodality in Meteorology
 description: >-
-  [ACL 2026][LLM评测][K-MetBench] 作者基于韩国国家气象工程师认证考试 25 届真题构造了 1,774 题的 K-MetBench，沿"多模态视觉 / 专家推理 / 地理文化 / 子领域细粒度"四个正交维度评测了 55 个 LLM/MLLM…
+  [ACL 2026 Findings][LLM评测][K-MetBench] 作者基于韩国国家气象工程师认证考试 25 届真题构造了 1,774 题的 K-MetBench，沿"多模态视觉 / 专家推理 / 地理文化 / 子领域细粒度"四个正交维度评测了 55 个 LLM/MLLM，发现现有模型存在普遍的 modality gap（视觉气象图准确率较纯文本平均掉 18.6%）、reasoning gap（答案对但 rationale 幻觉）、geo-cultural gap（小韩国模型 A.X-4.0 在韩特题上 78.9 反超 235B 的 Qwen3-VL 的 72.6），证明纯参数规模不能解决文化本地化问题。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "K-MetBench"
   - "Skew-T 图"

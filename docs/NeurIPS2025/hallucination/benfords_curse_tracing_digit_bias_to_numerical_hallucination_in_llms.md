@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benford's Curse: Tracing Digit Bias to Numerical Hallucination in LLMs
 description: >-
-  [NeurIPS 2025][幻觉检测][Benford定律] 本文发现 LLM 的数值幻觉根源于预训练语料中符合 Benford 定律的数字频率分布——数字 1 出现概率 ~30% 而数字 9 仅 ~5%，这种偏差被 FFN 后期层的特定"数字选择性神经元"内化…
+  [NeurIPS 2025][幻觉检测][Benford定律] 本文发现 LLM 的数值幻觉根源于预训练语料中符合 Benford 定律的数字频率分布——数字 1 出现概率 ~30% 而数字 9 仅 ~5%，这种偏差被 FFN 后期层的特定"数字选择性神经元"内化，提出数字选择性分数（DSC）定位偏差神经元并通过剪枝 0.01% 的神经元修正 1.36-3.49% 的错误预测。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

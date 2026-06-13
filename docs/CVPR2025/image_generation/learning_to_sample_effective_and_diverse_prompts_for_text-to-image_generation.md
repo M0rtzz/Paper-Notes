@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Sample Effective and Diverse Prompts for Text-to-Image Generation
 description: >-
-  [CVPR 2025][图像生成][提示词优化] 提出PAG（Prompt Adaptation with GFlowNets），将提示词适配重新定义为概率推断问题，利用GFlowNets从奖励分布中采样而非最大化奖励，结合流重激活、奖励优先采样和奖励分解三大技术解决模式坍塌问题…
+  [CVPR 2025][图像生成][提示词优化] 提出PAG（Prompt Adaptation with GFlowNets），将提示词适配重新定义为概率推断问题，利用GFlowNets从奖励分布中采样而非最大化奖励，结合流重激活、奖励优先采样和奖励分解三大技术解决模式坍塌问题，生成既高质量又多样化的文本到图像提示词。
 tags:
   - "CVPR 2025"
   - "图像生成"

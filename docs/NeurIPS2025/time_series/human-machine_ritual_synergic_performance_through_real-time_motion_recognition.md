@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human-Machine Ritual: Synergic Performance through Real-Time Motion Recognition
 description: >-
-  [NeurIPS 2025][时间序列][IMU传感器] 提出一种轻量级实时动作识别系统，利用可穿戴 IMU 传感器 + MiniRocket 时序分类器实现 <50ms 延迟的舞者特定动作识别（96.05% 准确率），通过"具身记忆映射"将舞者的个人动作-声音关联编码到系统中…
+  [NeurIPS 2025][时间序列][IMU传感器] 提出一种轻量级实时动作识别系统，利用可穿戴 IMU 传感器 + MiniRocket 时序分类器实现 <50ms 延迟的舞者特定动作识别（96.05% 准确率），通过"具身记忆映射"将舞者的个人动作-声音关联编码到系统中，构建了一种尊重人体表达深度的人机协作表演范式。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

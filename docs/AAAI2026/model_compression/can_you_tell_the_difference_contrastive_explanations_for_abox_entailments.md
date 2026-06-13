@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can You Tell the Difference? Contrastive Explanations for ABox Entailments
 description: >-
-  [AAAI 2026][模型压缩][对比解释] 提出对比式ABox解释（Contrastive ABox Explanations）的形式化框架，用于回答"为什么a是C的实例而b不是"的问题，在描述逻辑知识库中同时考虑正向蕴涵和缺失蕴涵，并分析不同描述逻辑和优化准则下的计算复杂度。
+  [AAAI 2026][模型压缩][对比解释] 提出对比式ABox解释（Contrastive ABox Explanations）的形式化框架，用于回答"为什么a是C的实例而b不是"的问题，在描述逻辑知识库中同时考虑正向蕴涵和缺失蕴涵，并分析不同描述逻辑和优化准则下的计算复杂度。 知识表示系统的一个核心优势是其透明性和可解…
 tags:
   - "AAAI 2026"
   - "模型压缩"

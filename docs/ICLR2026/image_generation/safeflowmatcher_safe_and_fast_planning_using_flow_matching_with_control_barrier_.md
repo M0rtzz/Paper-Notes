@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeFlowMatcher: Safe and Fast Planning using Flow Matching with Control Barrier Functions
 description: >-
-  [ICLR 2026][图像生成][Flow Matching] 提出 SafeFlowMatcher，一种将流匹配与控制障碍函数 (CBF) 结合的安全规划框架，通过预测-修正 (PC) 积分器将路径生成与安全认证解耦，在保持流匹配高效性的同时提供形式化安全保证。
+  [ICLR 2026][图像生成][Flow Matching] 提出 SafeFlowMatcher，一种将流匹配与控制障碍函数 (CBF) 结合的安全规划框架，通过预测-修正 (PC) 积分器将路径生成与安全认证解耦，在保持流匹配高效性的同时提供形式化安全保证。 领域现状：基于生成模型（扩散 / 流匹配）的路径规划近年来…
 tags:
   - "ICLR 2026"
   - "图像生成"

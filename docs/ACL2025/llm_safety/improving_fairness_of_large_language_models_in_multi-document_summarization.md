@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Fairness of Large Language Models in Multi-document Summarization
 description: >-
-  [ACL 2025][LLM安全][公平性] 提出 FairPO（Fair Preference Optimization），通过扰动式偏好对生成和公平感知偏好调优，同时优化多文档摘要中的摘要级和语料级公平性。
+  [ACL 2025][LLM安全][公平性] 提出 FairPO（Fair Preference Optimization），通过扰动式偏好对生成和公平感知偏好调优，同时优化多文档摘要中的摘要级和语料级公平性。 1. 领域现状 多文档摘要（MDS）旨在从多个文档中提炼关键信息，例如对某一产品的多条评论进行总结…
 tags:
   - "ACL 2025"
   - "LLM安全"

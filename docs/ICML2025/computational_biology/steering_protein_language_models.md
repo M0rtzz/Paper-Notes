@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering Protein Language Models
 description: >-
-  [ICML 2025][计算生物][蛋白质语言模型] 首次将LLM领域的Activation Steering技术迁移到蛋白质语言模型（PLM），通过在推理时编辑模型内部激活来引导蛋白质序列生成和优化朝向目标属性（如热稳定性、溶解度），完全无需重新训练…
+  [ICML 2025][计算生物][蛋白质语言模型] 首次将LLM领域的Activation Steering技术迁移到蛋白质语言模型（PLM），通过在推理时编辑模型内部激活来引导蛋白质序列生成和优化朝向目标属性（如热稳定性、溶解度），完全无需重新训练，并提出基于steering vector相异度的突变位点识别算法（ASPO），在溶菌酶和GFP优化任务上大幅超越传统方法。
 tags:
   - "ICML 2025"
   - "计算生物"

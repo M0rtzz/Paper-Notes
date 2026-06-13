@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation
 description: >-
-  [ECCV 2024][自动驾驶][扩散模型] 本文提出 Optimal Gaussian Diffusion (OGD) 和 Estimated Clean Manifold (ECM) Guidance 两项技术，分别通过优化扩散先验分布和在干净流形上直接注入引导梯度…
+  [ECCV 2024][自动驾驶][扩散模型] 本文提出 Optimal Gaussian Diffusion (OGD) 和 Estimated Clean Manifold (ECM) Guidance 两项技术，分别通过优化扩散先验分布和在干净流形上直接注入引导梯度，将联合轨迹预测的扩散步数减少到原来的 1/12，引导采样步数减少到 1/5，同时在 Argoverse 2 上取得更优性能。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

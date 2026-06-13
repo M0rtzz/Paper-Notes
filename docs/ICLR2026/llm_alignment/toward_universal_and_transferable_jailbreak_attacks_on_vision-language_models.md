@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)
 description: >-
-  [ICLR 2026][LLM对齐][VLM越狱] 提出 UltraBreak，通过语义对抗目标（用cosine相似度替代交叉熵优化出平滑loss景观）+ 输入空间约束（随机变换+TV正则化产生变换不变特征），训练单张通用对抗图像即可跨6+个VLM架构和商业模型实现越狱…
+  [ICLR 2026][LLM对齐][VLM越狱] 提出 UltraBreak，通过语义对抗目标（用cosine相似度替代交叉熵优化出平滑loss景观）+ 输入空间约束（随机变换+TV正则化产生变换不变特征），训练单张通用对抗图像即可跨6+个VLM架构和商业模型实现越狱，黑盒平均ASR达71%（SafeBench），远超此前方法。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

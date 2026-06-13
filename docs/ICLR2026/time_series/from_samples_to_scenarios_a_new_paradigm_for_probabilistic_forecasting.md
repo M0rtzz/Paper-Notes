@@ -2,9 +2,10 @@
 title: >-
   [论文解读] From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting
 description: >-
-  [ICLR 2026][probabilistic forecasting] 提出 Probabilistic Scenarios 范式，用模型直接输出有限个 {场景, 概率} 对取代采样，并用仅含三层平行线性层的 TimePrism 在5个基准数据集上取得9/10 SOTA。
+  [ICLR 2026][时间序列][probabilistic forecasting] 提出 Probabilistic Scenarios 范式，用模型直接输出有限个 {场景, 概率} 对取代采样，并用仅含三层平行线性层的 TimePrism 在5个基准数据集上取得9/10 SOTA。 领域现状： 概率时间序列预测是不确…
 tags:
   - "ICLR 2026"
+  - "时间序列"
   - "probabilistic forecasting"
   - "time series"
   - "scenario generation"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TalkingGaussian: Structure-Persistent 3D Talking Head Synthesis via Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][说话人头部合成] 提出TalkingGaussian，基于3D高斯溅射的形变驱动说话人头部合成框架，通过对持久性高斯基元施加平滑形变表示面部运动，并分解面部和口腔内部区域以解决运动不一致问题。
+  [ECCV 2024][3D视觉][说话人头部合成] 提出TalkingGaussian，基于3D高斯溅射的形变驱动说话人头部合成框架，通过对持久性高斯基元施加平滑形变表示面部运动，并分解面部和口腔内部区域以解决运动不一致问题。 现有NeRF-based说话头方法（如RAD-NeRF、ER-NeRF）通过直接修改点的颜色和密…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAG: A Dual Correlation Network for Time Series Forecasting with Exogenous Variables
 description: >-
-  [ICML 2026][时间序列][协变量预测] 针对"未来协变量已知"的时间序列预测 (TSF-X), DAG 设计了一个双通路网络: 一条沿时间维捕获"历史外生→未来外生"的注意力模式并注入到"历史内生→未来内生"的预测里…
+  [ICML 2026][时间序列][协变量预测] 针对"未来协变量已知"的时间序列预测 (TSF-X), DAG 设计了一个双通路网络: 一条沿时间维捕获"历史外生→未来外生"的注意力模式并注入到"历史内生→未来内生"的预测里, 另一条沿通道维捕获"历史外生→历史内生"的模式并注入到"未来外生→未来内生"的预测里, 在 12 个公开/新发布 TSF-X 数据集上 10/10 拿下 MSE 最佳, 显著超过 TimeXer、TFT、TiDE、CrossLinear、PatchTST 等。
 tags:
   - "ICML 2026"
   - "时间序列"

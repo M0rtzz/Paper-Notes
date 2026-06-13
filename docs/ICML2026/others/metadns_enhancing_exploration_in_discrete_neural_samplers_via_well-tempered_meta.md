@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetaDNS: Enhancing Exploration in Discrete Neural Samplers via Well-Tempered Metadynamics
 description: >-
-  [ICML 2026][离散扩散] 把分子动力学里的「well-tempered metadynamics」搬进离散神经采样器，用一个沿低维 collective variable 累积的历史相关偏置势 $V_t(s)$ 推平已访问的能谷，强迫 MDNS 类模型跨越能垒、覆盖多模态 Boltzmann 分布…
+  [ICML 2026][离散扩散] 把分子动力学里的「well-tempered metadynamics」搬进离散神经采样器，用一个沿低维 collective variable 累积的历史相关偏置势 $V_t(s)$ 推平已访问的能谷，强迫 MDNS 类模型跨越能垒、覆盖多模态 Boltzmann 分布，并用重要性重加权保留无偏估计。
 tags:
   - "ICML 2026"
   - "离散扩散"

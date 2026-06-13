@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta-learning Structure-Preserving Dynamics
 description: >-
-  [ICML 2026][信号/通信][Hamiltonian NN] 把 modulation-based 元学习（hyper-network 把 latent code $\bm{z}^{(k)}$ 映射成层级调制参数）系统性地引入 Hamiltonian / GENERIC 神经网络…
+  [ICML 2026][信号/通信][Hamiltonian NN] 把 modulation-based 元学习（hyper-network 把 latent code $\bm{z}^{(k)}$ 映射成层级调制参数）系统性地引入 Hamiltonian / GENERIC 神经网络，提出两种新颖调制——latent multi-rank (MR) 与 latent SVD-like 调制，让一个共享网络在不知道系统参数 $\bm{\mu}$ 的情况下少样本适配整族新参数实例，同时严格保持能量守恒 / 耗散结构。
 tags:
   - "ICML 2026"
   - "信号/通信"

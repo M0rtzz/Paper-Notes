@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoCoF: Unified Video Editing with Temporal Reasoner
 description: >-
-  [CVPR 2026][视频生成][视频编辑] 提出 VideoCoF，一种受 Chain-of-Thought 启发的"看→推理→编辑"视频编辑框架，通过让视频扩散模型先预测编辑区域的推理 token（灰度高亮 latent），再生成目标视频 token…
+  [CVPR 2026][视频生成][视频编辑] 提出 VideoCoF，一种受 Chain-of-Thought 启发的"看→推理→编辑"视频编辑框架，通过让视频扩散模型先预测编辑区域的推理 token（灰度高亮 latent），再生成目标视频 token，在无需用户提供 mask 的前提下实现精确的指令-区域对齐，仅用 50K 视频对训练即达到 SOTA 性能，且支持 16 倍训练长度的视频外推。
 tags:
   - "CVPR 2026"
   - "视频生成"

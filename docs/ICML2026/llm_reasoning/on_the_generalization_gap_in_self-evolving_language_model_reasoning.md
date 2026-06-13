@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Generalization Gap in Self-Evolving Language Model Reasoning
 description: >-
-  [ICML 2026][LLM推理][闭环自我进化] 本文在"只有未标注 prompt + 基座模型"的严格闭环设定下，系统比较了 4 种自我进化（SE）策略（单轮验证、多轮修订、迭代训练、课程学习）与 oracle 监督的差距…
+  [ICML 2026][LLM推理][闭环自我进化] 本文在"只有未标注 prompt + 基座模型"的严格闭环设定下，系统比较了 4 种自我进化（SE）策略（单轮验证、多轮修订、迭代训练、课程学习）与 oracle 监督的差距，发现在 Knights & Knaves 逻辑推理上 SE 能把 Gemma 3 4B 从 31.0% 提到 44.8%，但相对 oracle 的 53.3% 仍有 8–13% 的持续 gap，只有 12B 模型的 RevisionSE 才能逼近 oracle（52.8% vs 53.6%）。
 tags:
   - "ICML 2026"
   - "LLM推理"

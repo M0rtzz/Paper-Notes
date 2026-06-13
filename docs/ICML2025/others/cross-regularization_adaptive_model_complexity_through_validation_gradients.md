@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-regularization: Adaptive Model Complexity through Validation Gradients
 description: >-
-  [ICML2025][正则化] 提出 Cross-regularization（交叉正则化），通过验证集梯度直接优化正则化参数（权重范数、噪声尺度、增强强度），在单次训练中收敛到交叉验证最优解，消除手动调参需求。
+  [ICML2025][正则化] 提出 Cross-regularization（交叉正则化），通过验证集梯度直接优化正则化参数（权重范数、噪声尺度、增强强度），在单次训练中收敛到交叉验证最优解，消除手动调参需求。 - 核心痛点：传统正则化（weight decay、dropout 等）需要手动调超参 $\lambda$…
 tags:
   - "ICML2025"
   - "正则化"

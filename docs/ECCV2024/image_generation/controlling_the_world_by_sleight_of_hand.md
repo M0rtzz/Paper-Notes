@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controlling the World by Sleight of Hand
 description: >-
-  [ECCV 2024][图像生成][动作条件生成] 提出 CosHand，通过手部二值掩码作为动作条件，在预训练 Stable Diffusion 上微调，预测手-物交互后的未来图像，并可零样本泛化到机器人末端执行器。
+  [ECCV 2024][图像生成][动作条件生成] 提出 CosHand，通过手部二值掩码作为动作条件，在预训练 Stable Diffusion 上微调，预测手-物交互后的未来图像，并可零样本泛化到机器人末端执行器。 人类具有天然的心理模拟能力——看到物体就能想象与之交互后会发生什么变化。现有生成模型主要依赖文本或无条件方…
 tags:
   - "ECCV 2024"
   - "图像生成"

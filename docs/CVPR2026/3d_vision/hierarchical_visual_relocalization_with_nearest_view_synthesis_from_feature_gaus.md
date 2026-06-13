@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Visual Relocalization with Nearest View Synthesis from Feature Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][视觉重定位] 提出 SplatHLoc，一种基于 Feature Gaussian Splatting 的分层视觉重定位框架，通过自适应视点检索合成更接近查询的虚拟视图，并设计混合特征匹配策略（渲染特征用于粗匹配、半稠密匹配器用于细匹配），在室内外重定位基准上取得 SOTA…
+  [CVPR 2026][3D视觉][视觉重定位] 提出 SplatHLoc，一种基于 Feature Gaussian Splatting 的分层视觉重定位框架，通过自适应视点检索合成更接近查询的虚拟视图，并设计混合特征匹配策略（渲染特征用于粗匹配、半稠密匹配器用于细匹配），在室内外重定位基准上取得 SOTA。
 tags:
   - "CVPR 2026"
   - "3D视觉"

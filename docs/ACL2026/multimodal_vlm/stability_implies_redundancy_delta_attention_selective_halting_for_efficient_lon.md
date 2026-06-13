@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stability Implies Redundancy: Delta Attention Selective Halting for Efficient Long-Context Prefilling
 description: >-
-  [ACL2026][多模态VLM][长上下文推理] 提出 DASH（Delta Attention Selective Halting），一种无需训练的推理加速方法，通过监测自注意力层的逐层更新幅度 Δ_attn 来识别已"语义固化"的 token 并停止其后续计算…
+  [ACL2026][多模态VLM][长上下文推理] 提出 DASH（Delta Attention Selective Halting），一种无需训练的推理加速方法，通过监测自注意力层的逐层更新幅度 Δ_attn 来识别已"语义固化"的 token 并停止其后续计算，在长上下文文本和视觉-语言基准上实现显著的 prefill 加速且几乎不损失精度。
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2604.18103](https://arxiv.org/abs/2604.18103)
 **代码**: [GitHub](https://github.com/verach3n/DASH)
-**领域**: multimodal_vlm
+**领域**: 多模态VLM
 **关键词**: 长上下文推理, Prefill加速, Token剪枝, 注意力冗余, 视觉语言模型
 
 ## 一句话总结

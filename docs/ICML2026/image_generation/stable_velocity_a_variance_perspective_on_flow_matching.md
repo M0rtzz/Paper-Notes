@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Velocity: A Variance Perspective on Flow Matching
 description: >-
-  [ICML 2026][图像生成][flow matching] 本文从"条件速度方差"这一被忽视的视角重新审视 flow matching，发现训练轨迹天然分裂为靠近先验的高方差区和靠近数据的低方差区，并据此提出统一框架 Stable Velocity…
+  [ICML 2026][图像生成][flow matching] 本文从"条件速度方差"这一被忽视的视角重新审视 flow matching，发现训练轨迹天然分裂为靠近先验的高方差区和靠近数据的低方差区，并据此提出统一框架 Stable Velocity，含一个无偏的多样本方差缩减损失 StableVM、一个只在低方差区启用 REPA 的 VA-REPA，以及一个利用低方差区闭式解的无微调采样加速器 StableVS，在 ImageNet 256 与 SD3.5/Flux/Qwen-Image/Wan2.2 上取得训练效率提升与 >2× 采样加速。
 tags:
   - "ICML 2026"
   - "图像生成"

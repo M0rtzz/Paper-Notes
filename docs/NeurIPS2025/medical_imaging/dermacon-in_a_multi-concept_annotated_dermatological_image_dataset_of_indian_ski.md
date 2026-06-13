@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DermaCon-IN: A Multi-concept Annotated Dermatological Image Dataset of Indian Skin Disorders
 description: >-
-  [NeurIPS 2025][医学图像][皮肤病数据集] 构建了 DermaCon-IN——首个以印度肤色为主的密集标注皮肤病图像数据集（5,450 张 / 3,002 患者 / 245 种诊断），提供三级层次诊断标签、47 个病灶描述符和 49 个解剖位置标注，并用 CNN/ViT/概念瓶颈模型进行基准评测…
+  [NeurIPS 2025][医学图像][皮肤病数据集] 构建了 DermaCon-IN——首个以印度肤色为主的密集标注皮肤病图像数据集（5,450 张 / 3,002 患者 / 245 种诊断），提供三级层次诊断标签、47 个病灶描述符和 49 个解剖位置标注，并用 CNN/ViT/概念瓶颈模型进行基准评测。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

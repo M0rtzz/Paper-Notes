@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Learning for Class Distribution Mismatch (UCDM)
 description: >-
-  [ICML2025][图像生成][类别分布不匹配] 提出 UCDM，利用扩散模型从无标注数据中合成正负样本对来训练分类器，在不依赖标注数据的情况下解决训练集与目标任务之间的类别分布不匹配（CDM）问题，在 closed-set 和 open-set 任务上均大幅超越现有半监督方法。
+  [ICML2025][图像生成][类别分布不匹配] 提出 UCDM，利用扩散模型从无标注数据中合成正负样本对来训练分类器，在不依赖标注数据的情况下解决训练集与目标任务之间的类别分布不匹配（CDM）问题，在 closed-set 和 open-set 任务上均大幅超越现有半监督方法。 类别分布不匹配（CDM）：是指训练数据的类…
 tags:
   - "ICML2025"
   - "图像生成"

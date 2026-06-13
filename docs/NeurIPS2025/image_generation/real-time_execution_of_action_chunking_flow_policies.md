@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Real-Time Execution of Action Chunking Flow Policies
 description: >-
-  [NeurIPS 2025][图像生成][实时推理] 提出 Real-Time Chunking (RTC)，将异步动作分块执行建模为修复（inpainting）问题，通过冻结已执行动作并"修复"其余部分，实现扩散/流策略的实时平滑执行，无需重新训练。
+  [NeurIPS 2025][图像生成][实时推理] 提出 Real-Time Chunking (RTC)，将异步动作分块执行建模为修复（inpainting）问题，通过冻结已执行动作并"修复"其余部分，实现扩散/流策略的实时平滑执行，无需重新训练。 现代 VLA（视觉-语言-动作模型）在机器人控制中日益强大…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

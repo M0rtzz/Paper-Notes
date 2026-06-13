@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Attention Perturbations for Large Object Detection Transformers
 description: >-
-  [ICCV 2025][目标检测][对抗攻击] 本文提出 AFOG（Attention-Focused Offensive Gradient），一种架构无关的对抗攻击方法，通过可学习注意力机制聚焦扰动到图像脆弱区域…
+  [ICCV 2025][目标检测][对抗攻击] 本文提出 AFOG（Attention-Focused Offensive Gradient），一种架构无关的对抗攻击方法，通过可学习注意力机制聚焦扰动到图像脆弱区域，仅需 10 次迭代即可在视觉不可察觉的扰动下将 12 种检测 Transformer 的 mAP 最高降低 37.8 倍，同时在 CNN 检测器上也优于现有方法。
 tags:
   - "ICCV 2025"
   - "目标检测"

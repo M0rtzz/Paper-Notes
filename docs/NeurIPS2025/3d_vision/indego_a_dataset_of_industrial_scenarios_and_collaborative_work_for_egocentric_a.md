@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IndEgo: A Dataset of Industrial Scenarios and Collaborative Work for Egocentric Assistants
 description: >-
-  [NeurIPS 2025][3D视觉][第一人称视觉] 提出IndEgo——首个面向真实工业场景的大规模多模态第一人称视觉数据集，包含3,460段自我中心录像（约197小时）和1,092段外部视角录像（约97小时），覆盖装配/拆卸、物流、检修、木工等五大类任务及协作场景…
+  [NeurIPS 2025][3D视觉][第一人称视觉] 提出IndEgo——首个面向真实工业场景的大规模多模态第一人称视觉数据集，包含3,460段自我中心录像（约197小时）和1,092段外部视角录像（约97小时），覆盖装配/拆卸、物流、检修、木工等五大类任务及协作场景，并建立了错误检测、推理问答和协作理解三项基准。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

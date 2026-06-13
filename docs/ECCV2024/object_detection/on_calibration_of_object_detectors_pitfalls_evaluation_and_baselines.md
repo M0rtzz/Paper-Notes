@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Calibration of Object Detectors: Pitfalls, Evaluation and Baselines
 description: >-
-  [ECCV 2024 (Oral)][目标检测][目标检测校准] 本文系统性地揭示了当前目标检测器校准研究中评估框架、评估指标和温度缩放（Temperature Scaling）使用方面的重大缺陷…
+  [ECCV 2024 (Oral)][目标检测][目标检测校准] 本文系统性地揭示了当前目标检测器校准研究中评估框架、评估指标和温度缩放（Temperature Scaling）使用方面的重大缺陷，提出了原则性的联合评估框架以及专为目标检测定制的后处理校准方法（Platt Scaling和Isotonic Regression），证明了正确设计和评估的后处理校准器远优于近期训练时校准方法。
 tags:
   - "ECCV 2024 (Oral)"
   - "目标检测"

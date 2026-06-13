@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributional Autoencoders Know the Score
 description: >-
-  [NeurIPS 2025][可解释性][自编码器] 本文为 Distributional Principal Autoencoder (DPA) 提供了精确的理论保证：证明了最优编码器的等值面几何与数据分布的 score 函数之间的闭合形式关系，并证明了超出流形维度的潜在分量与数据条件独立…
+  [NeurIPS 2025][可解释性][自编码器] 本文为 Distributional Principal Autoencoder (DPA) 提供了精确的理论保证：证明了最优编码器的等值面几何与数据分布的 score 函数之间的闭合形式关系，并证明了超出流形维度的潜在分量与数据条件独立，从而统一了分布学习与内在维度发现两个长期目标。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

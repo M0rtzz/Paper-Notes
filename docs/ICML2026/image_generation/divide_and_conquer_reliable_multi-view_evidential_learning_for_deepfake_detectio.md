@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Divide and Conquer: Reliable Multi-View Evidential Learning for Deepfake Detection
 description: >-
-  [ICML 2026][图像生成][深度伪造检测] 本文提出 DiCoME 框架，先用几何正交投影把 CLIP 语义特征和伪造伪迹特征强制解耦成两路互补"专家视图"，再用 Dempster–Shafer 证据融合显式建模两视图间的"认识论冲突"以输出可信的不确定性…
+  [ICML 2026][图像生成][深度伪造检测] 本文提出 DiCoME 框架，先用几何正交投影把 CLIP 语义特征和伪造伪迹特征强制解耦成两路互补"专家视图"，再用 Dempster–Shafer 证据融合显式建模两视图间的"认识论冲突"以输出可信的不确定性，在跨数据集和跨伪造方法的 deepfake 检测基准上将平均 AUC 从 0.923 提升到 0.939（cross-dataset）和 0.976（cross-manipulation）。
 tags:
   - "ICML 2026"
   - "图像生成"

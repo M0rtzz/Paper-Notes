@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoMM: On Geodesic Perspective for Multi-Modal Learning
 description: >-
-  [CVPR 2025][多模态VLM][测地距离] 首次将测地距离（Geodesic Distance）引入多模态对比学习，通过构建层次化图结构高效计算样本间的流形距离，替代传统余弦距离，从而更准确地挖掘正负样本关系，提升图文检索、VQA等下游任务性能。
+  [CVPR 2025][多模态VLM][测地距离] 首次将测地距离（Geodesic Distance）引入多模态对比学习，通过构建层次化图结构高效计算样本间的流形距离，替代传统余弦距离，从而更准确地挖掘正负样本关系，提升图文检索、VQA等下游任务性能。 领域现状： 当前多模态学习（如CLIP、ALBEF、TCL等）的主流范…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

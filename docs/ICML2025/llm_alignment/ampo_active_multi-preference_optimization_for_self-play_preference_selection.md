@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMPO: Active Multi-Preference Optimization for Self-play Preference Selection
 description: >-
-  [ICML 2025][LLM对齐][多偏好优化] 提出 AMPO 框架，将在线策略生成、多偏好组对比损失和主动子集选择相结合，通过从大规模候选响应池中智能挑选少量但信息丰富的子集进行偏好优化，在 AlpacaEval 上达到 SOTA。
+  [ICML 2025][LLM对齐][多偏好优化] 提出 AMPO 框架，将在线策略生成、多偏好组对比损失和主动子集选择相结合，通过从大规模候选响应池中智能挑选少量但信息丰富的子集进行偏好优化，在 AlpacaEval 上达到 SOTA。 传统偏好优化（如 DPO）依赖成对比较，无法充分捕捉人类判断的微妙之处…
 tags:
   - "ICML 2025"
   - "LLM对齐"

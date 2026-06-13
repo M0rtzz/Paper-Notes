@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models
 description: >-
-  [ICCV 2025][视频生成][human animation] 提出 OmniHuman，一种基于 Diffusion Transformer 的多条件人体动画生成框架，通过混合文本/音频/姿态等运动相关条件的全条件训练策略实现数据规模化…
+  [ICCV 2025][视频生成][human animation] 提出 OmniHuman，一种基于 Diffusion Transformer 的多条件人体动画生成框架，通过混合文本/音频/姿态等运动相关条件的全条件训练策略实现数据规模化，首次实现单一模型支持任意身体比例、任意宽高比输入的音频驱动人体视频生成，在肖像和半身动画任务上均达到 SOTA。
 tags:
   - "ICCV 2025"
   - "视频生成"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths
 description: >-
-  [ECCV 2024][视觉扫描路径] 提出GazeXplain，首次将视觉扫描路径预测与自然语言解释结合，通过注意力-语言解码器、语义对齐机制和跨数据集联合训练，实现对人类注视行为的可解释预测。
+  [ECCV 2024][人体理解][视觉扫描路径] 提出GazeXplain，首次将视觉扫描路径预测与自然语言解释结合，通过注意力-语言解码器、语义对齐机制和跨数据集联合训练，实现对人类注视行为的可解释预测。 1. 领域现状： 人类探索视觉场景时，眼球运动形成的扫描路径（scanpath）——即注视点的时空序列——反映了其底…
 tags:
   - "ECCV 2024"
+  - "人体理解"
   - "视觉扫描路径"
   - "自然语言解释"
   - "注视预测"

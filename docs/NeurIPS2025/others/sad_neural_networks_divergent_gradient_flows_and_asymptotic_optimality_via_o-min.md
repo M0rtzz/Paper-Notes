@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures
 description: >-
-  [NeurIPS 2025][梯度流] 利用 o-minimal 结构的数学工具，证明了使用常见光滑激活函数（sigmoid、tanh、softplus、GELU 等）的全连接网络的梯度流存在二元性：要么收敛到临界点，要么发散到无穷大且损失收敛到渐近临界值。特别地，对多项式目标函数…
+  [NeurIPS 2025][梯度流] 利用 o-minimal 结构的数学工具，证明了使用常见光滑激活函数（sigmoid、tanh、softplus、GELU 等）的全连接网络的梯度流存在二元性：要么收敛到临界点，要么发散到无穷大且损失收敛到渐近临界值。特别地，对多项式目标函数，证明了损失无法精确取零但可任意接近零，从而导致参数必然发散。
 tags:
   - "NeurIPS 2025"
   - "梯度流"

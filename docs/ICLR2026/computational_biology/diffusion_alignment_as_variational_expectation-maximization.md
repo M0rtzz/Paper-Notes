@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Alignment as Variational Expectation-Maximization
 description: >-
-  [ICLR 2026][计算生物][扩散模型] 将扩散模型对齐形式化为变分 EM 算法：E-step 用 test-time search（soft Q 引导 + 重要性采样）探索高奖励多模态轨迹，M-step 通过 forward-KL 蒸馏将搜索结果写入模型参数…
+  [ICLR 2026][计算生物][扩散模型] 将扩散模型对齐形式化为变分 EM 算法：E-step 用 test-time search（soft Q 引导 + 重要性采样）探索高奖励多模态轨迹，M-step 通过 forward-KL 蒸馏将搜索结果写入模型参数，在图像生成和 DNA 序列设计上同时实现高奖励和高多样性。
 tags:
   - "ICLR 2026"
   - "计算生物"

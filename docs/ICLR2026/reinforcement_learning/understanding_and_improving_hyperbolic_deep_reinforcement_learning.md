@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Improving Hyperbolic Deep Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][hyperbolic geometry] 通过闭式梯度分析揭示双曲深度 RL 中 Poincaré Ball 保角因子爆炸和大范数嵌入导致 PPO 信赖域失效的根源…
+  [ICLR 2026][强化学习][hyperbolic geometry] 通过闭式梯度分析揭示双曲深度 RL 中 Poincaré Ball 保角因子爆炸和大范数嵌入导致 PPO 信赖域失效的根源，提出 Hyper++（RMSNorm + 可学习缩放 + HL-Gauss + Hyperboloid）四组件方案，在 ProcGen 16 环境和 Atari-5 上全面超越先前基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

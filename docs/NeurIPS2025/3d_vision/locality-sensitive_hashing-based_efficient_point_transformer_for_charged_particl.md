@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction
 description: >-
-  [NeurIPS 2025][3D视觉][Transformer] 通过将 LSH 与 Point Transformer 结合，提出 HEPTv2 实现粒子轨迹重建的端到端学习，消除了 DBScan 聚类后处理瓶颈，在保持竞争性追踪效率的同时实现 28.9 倍加速。
+  [NeurIPS 2025][3D视觉][Transformer] 通过将 LSH 与 Point Transformer 结合，提出 HEPTv2 实现粒子轨迹重建的端到端学习，消除了 DBScan 聚类后处理瓶颈，在保持竞争性追踪效率的同时实现 28.9 倍加速。 领域现状：高能物理 LHC 实验中粒子轨迹重建是最计算密…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval-Augmented Generation for Reliable Interpretation of Radio Regulations
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG] 针对无线电法规这一法律敏感的高风险领域，设计了专用 RAG 管道并构建了首个 ITU 无线电法规多选题评估集，检索准确率达 97%，在 GPT-4o 上实现 +11.9% 的问答准确率提升，远超直接将文档塞入 prompt 的方式。
+  [NeurIPS 2025][信息检索/RAG][RAG] 针对无线电法规这一法律敏感的高风险领域，设计了专用 RAG 管道并构建了首个 ITU 无线电法规多选题评估集，检索准确率达 97%，在 GPT-4o 上实现 +11.9% 的问答准确率提升，远超直接将文档塞入 prompt 的方式。 领域现状：LLM 在通用问答中表…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowSeg: Dynamic Semantic Guidance for LLM-Conditioned Segmentation
 description: >-
-  [ICML 2026][语义分割][图像分割] 本文指出当前基于 query 的 LLM-conditioned 分割是"propose-then-select"——候选 mask 往往已经够准，错就错在选不对；为此提出 FlowSeg…
+  [ICML 2026][语义分割][图像分割] 本文指出当前基于 query 的 LLM-conditioned 分割是"propose-then-select"——候选 mask 往往已经够准，错就错在选不对；为此提出 FlowSeg，让 LLM 条件嵌入在 decoder 每一层都参与 query refinement 并被新的视觉证据持续更新，再叠一个轻量边界细化模块，在 RefCOCO/+/g 和 ReasonSeg 上一致刷点。
 tags:
   - "ICML 2026"
   - "语义分割"

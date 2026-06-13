@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Merlin's Whisper: Enabling Efficient Reasoning in Large Language Models via Black-box Persuasive Prompting
 description: >-
-  [ACL2026][LLM推理][推理压缩] Whisper 把大推理模型的“少想但不降准确率”问题建模为黑盒 persuasive prompting，通过多视角自动生成和迭代筛选提示后缀…
+  [ACL2026][LLM推理][推理压缩] Whisper 把大推理模型的“少想但不降准确率”问题建模为黑盒 persuasive prompting，通过多视角自动生成和迭代筛选提示后缀，在 Qwen3、DeepSeek-R1-Distill 以及 Claude/Gemini API 上显著减少输出 token，同时基本保持推理准确率。
 tags:
   - "ACL2026"
   - "LLM推理"

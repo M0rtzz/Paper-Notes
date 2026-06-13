@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alloc-MoE: Budget-Aware Expert Activation Allocation for Efficient Mixture-of-Experts Inference
 description: >-
-  [ACL 2026][LLM效率][Mixture-of-Experts] 把 MoE 推理的"激活专家个数"抽象成全局预算 $B$，先用动态规划在层间做最优 Top-K 分配（Alloc-L），再用全局 Top-(K·T) 选择在 token 间重分配（Alloc-T）…
+  [ACL 2026][LLM效率][Mixture-of-Experts] 把 MoE 推理的"激活专家个数"抽象成全局预算 $B$，先用动态规划在层间做最优 Top-K 分配（Alloc-L），再用全局 Top-(K·T) 选择在 token 间重分配（Alloc-T），在 DeepSeek-V2-Lite 上把激活预算砍掉一半还能保持精度，prefill 加速 1.15×、decode 加速 1.34×。
 tags:
   - "ACL 2026"
   - "LLM效率"

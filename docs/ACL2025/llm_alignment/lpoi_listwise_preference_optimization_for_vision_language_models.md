@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LPOI: Listwise Preference Optimization for Vision Language Models
 description: >-
-  [ACL 2025 (Main)][LLM对齐][列表级偏好优化] 本文提出 LPOI，首个面向 VLM 的目标感知列表级偏好优化方法——通过识别并遮挡图像中的关键目标，在正样本和负样本之间插值生成渐进式遮挡序列，训练模型按目标可见度排序，从而在无需额外标注的情况下有效降低幻觉…
+  [ACL 2025 (Main)][LLM对齐][列表级偏好优化] 本文提出 LPOI，首个面向 VLM 的目标感知列表级偏好优化方法——通过识别并遮挡图像中的关键目标，在正样本和负样本之间插值生成渐进式遮挡序列，训练模型按目标可见度排序，从而在无需额外标注的情况下有效降低幻觉，在 MMHalBench、AMBER 和 Object HalBench 上超越现有偏好优化方法。
 tags:
   - "ACL 2025 (Main)"
   - "LLM对齐"

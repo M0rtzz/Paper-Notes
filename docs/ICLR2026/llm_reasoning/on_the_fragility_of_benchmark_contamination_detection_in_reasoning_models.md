@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On The Fragility of Benchmark Contamination Detection in Reasoning Models
 description: >-
-  [ICLR 2026][LLM推理][基准污染] 系统性研究发现 LRM 的基准污染检测极其脆弱：SFT 阶段引入的污染在经过 GRPO 训练后检测信号几乎消失（PPO 式重要性采样/裁剪是根因），而对高级 LRM 直接用 CoT 做 SFT 污染则几乎不留任何可检测痕迹，现有 10 种检测方法均接近随机猜测…
+  [ICLR 2026][LLM推理][基准污染] 系统性研究发现 LRM 的基准污染检测极其脆弱：SFT 阶段引入的污染在经过 GRPO 训练后检测信号几乎消失（PPO 式重要性采样/裁剪是根因），而对高级 LRM 直接用 CoT 做 SFT 污染则几乎不留任何可检测痕迹，现有 10 种检测方法均接近随机猜测。
 tags:
   - "ICLR 2026"
   - "LLM推理"

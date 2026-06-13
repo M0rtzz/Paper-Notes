@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysicsNeRF: Physics-Guided 3D Reconstruction from Sparse Views
 description: >-
-  [ICML 2025][3D视觉][NeRF] PhysicsNeRF 提出了一个基于物理先验的稀疏视角 NeRF 框架，通过深度排序、跨视角一致性、稀疏性正则和渐进训练四种互补约束，在仅 8 个视角下实现 21.4 dB 的 PSNR，并对稀疏视角下过拟合的本质进行了深入的理论分析。
+  [ICML 2025][3D视觉][NeRF] PhysicsNeRF 提出了一个基于物理先验的稀疏视角 NeRF 框架，通过深度排序、跨视角一致性、稀疏性正则和渐进训练四种互补约束，在仅 8 个视角下实现 21.4 dB 的 PSNR，并对稀疏视角下过拟合的本质进行了深入的理论分析。 领域现状 Neural Radianc…
 tags:
   - "ICML 2025"
   - "3D视觉"
@@ -112,10 +112,10 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rgb}} + \alpha(t)\sum_i \lambd
 - 崩溃-恢复动态类似于训练中的 loss landscape 相变研究
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 物理约束本身不新，但对过拟合行为的理论分析提供了新视角
-- 实验充分度: ⭐⭐⭐ 仅在 NeRF synthetic 数据集上实验（3 个场景），规模有限
-- 写作质量: ⭐⭐⭐⭐ 理论分析清晰深入，结构完整
-- 价值: ⭐⭐⭐ 理论洞察有意义，但实际应用场景有限
+- 新颖性: ⭐⭐⭐⭐ 物理约束本身不新，但对过拟合行为的理论分析提供了新视角
+- 实验充分度: ⭐⭐⭐⭐ 仅在 NeRF synthetic 数据集上实验（3 个场景），规模有限
+- 写作质量: ⭐⭐⭐⭐⭐ 理论分析清晰深入，结构完整
+- 价值: ⭐⭐⭐⭐ 理论洞察有意义，但实际应用场景有限
 
 <!-- RELATED:START -->
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where Concept Erasure Should Occur: Concept-Layer Alignment in Text-to-Video Diffusion Models
 description: >-
-  [ICML 2026][视频生成][文本到视频扩散] 这篇论文发现文本到视频扩散模型中的目标概念只在特定深度最可分，提出 CLEAR 用 Gumbel-Softmax 学习“在哪一层擦除”、用 SAE 学习“擦除哪个概念方向”，从而在不改动扩散模型权重的情况下更精确地抑制目标概念并保留视频质量。
+  [ICML 2026][视频生成][文本到视频扩散] 这篇论文发现文本到视频扩散模型中的目标概念只在特定深度最可分，提出 CLEAR 用 Gumbel-Softmax 学习“在哪一层擦除”、用 SAE 学习“擦除哪个概念方向”，从而在不改动扩散模型权重的情况下更精确地抑制目标概念并保留视频质量。 领域现状：大规模文本到视频模…
 tags:
   - "ICML 2026"
   - "视频生成"

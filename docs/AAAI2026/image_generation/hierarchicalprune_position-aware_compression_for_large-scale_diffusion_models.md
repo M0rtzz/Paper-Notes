@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models
 description: >-
-  [AAAI 2026][图像生成][模型压缩] 提出 HierarchicalPrune，利用 MMDiT 扩散模型中块的层级功能差异（早期块建立语义结构、后期块处理纹理细节），通过层级位置剪枝（HPP）、位置权重保护（PWP）和敏感度引导蒸馏（SGDistill）三种技术协同，结合 INT4 量化…
+  [AAAI 2026][图像生成][模型压缩] 提出 HierarchicalPrune，利用 MMDiT 扩散模型中块的层级功能差异（早期块建立语义结构、后期块处理纹理细节），通过层级位置剪枝（HPP）、位置权重保护（PWP）和敏感度引导蒸馏（SGDistill）三种技术协同，结合 INT4 量化，将 SD3.5 Large Turbo（8B）从 15.8GB 压缩至 3.24GB（79.5% 内存缩减），仅损失 4.8% 图像质量。
 tags:
   - "AAAI 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks
 description: >-
-  [ICML 2025][AI安全][对抗净化] 本文首次系统评估了基于保护性扰动的语音克隆（Voice Cloning）防御方法在面对对抗净化时的脆弱性，并提出了一种两阶段的"净化-精炼"（Purification-Refinement）框架 PhonePuRe，利用音素引导的扩散模型有效消除保护性扰动…
+  [ICML 2025][AI安全][对抗净化] 本文首次系统评估了基于保护性扰动的语音克隆（Voice Cloning）防御方法在面对对抗净化时的脆弱性，并提出了一种两阶段的"净化-精炼"（Purification-Refinement）框架 PhonePuRe，利用音素引导的扩散模型有效消除保护性扰动，使语音克隆模型能够重新准确复制说话人特征，揭示了现有防御方案的根本局限性。
 tags:
   - "ICML 2025"
   - "AI安全"

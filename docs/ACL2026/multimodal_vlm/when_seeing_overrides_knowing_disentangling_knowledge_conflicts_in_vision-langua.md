@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Seeing Overrides Knowing: Disentangling Knowledge Conflicts in Vision-Language Models
 description: >-
-  [ACL2026][多模态VLM][视觉语言模型] 这篇论文构造 WHOOPS-AHA! 让 VLM 的常识知识与图像反事实证据正面冲突，并发现少数晚层注意力头能因果控制模型依赖内部知识还是视觉输入。
+  [ACL2026][多模态VLM][视觉语言模型] 这篇论文构造 WHOOPS-AHA! 让 VLM 的常识知识与图像反事实证据正面冲突，并发现少数晚层注意力头能因果控制模型依赖内部知识还是视觉输入。 领域现状：VLM 同时依赖预训练得到的参数知识和当前图像输入。正常情况下，这两类信息互补：参数知识提供世界常识…
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2507.13868](https://arxiv.org/abs/2507.13868)  
 **代码**: https://github.com/francescortu/Seeing-Knowing  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: 视觉语言模型、知识冲突、机制解释、注意力头、视觉归因
 
 ## 一句话总结

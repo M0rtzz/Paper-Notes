@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RT-Lynx: Putting the GEMM Sparsity In a Right Way for Diffusion Models
 description: >-
-  [ICML 2026][图像生成][激活稀疏] 作者发现 DiT 的**激活**比**权重**更天然稀疏（每个 token 只激活 5–10% 通道），于是把 2:4 半结构化稀疏从权重侧搬到激活侧，再用 norm 缩放 + LoRA 残差补偿 + 选择性跳层把质量损失补回来…
+  [ICML 2026][图像生成][激活稀疏] 作者发现 DiT 的**激活**比**权重**更天然稀疏（每个 token 只激活 5–10% 通道），于是把 2:4 半结构化稀疏从权重侧搬到激活侧，再用 norm 缩放 + LoRA 残差补偿 + 选择性跳层把质量损失补回来，并写了一套把"在线 Top-K 选择 + Sparse GEMM"融合到单 kernel 的 CUDA 流水，在 Qwen-Image / FLUX / Z-Image 上做到线性层平均 1.55× 加速且 FID/IR 不退化。
 tags:
   - "ICML 2026"
   - "图像生成"

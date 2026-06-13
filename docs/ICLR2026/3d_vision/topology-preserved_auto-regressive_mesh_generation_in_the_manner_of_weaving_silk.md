@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk
 description: >-
-  [3D视觉] 提出一种类似"织丝"的网格 tokenization 算法，通过顶点分层和排序提供规范的拓扑框架，保证生成网格的流形性、水密性、法线一致性和部件感知性，同时达到 SOTA 压缩效率。
+  [3D视觉] 提出一种类似"织丝"的网格 tokenization 算法，通过顶点分层和排序提供规范的拓扑框架，保证生成网格的流形性、水密性、法线一致性和部件感知性，同时达到 SOTA 压缩效率。 自回归网格生成是近期3D内容生成的重要方向，但现有方法（MeshAnything v2, EdgeRunner, BPT…
 tags:
   - "3D视觉"
 ---

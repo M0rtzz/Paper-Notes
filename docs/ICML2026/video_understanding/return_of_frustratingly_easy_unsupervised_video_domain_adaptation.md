@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Return of Frustratingly Easy Unsupervised Video Domain Adaptation
 description: >-
-  [ICML 2026][视频理解][无监督视频域适应] 本文提出 MetaTrans——一个"令人沮丧地简单"的无监督视频域适应（UVDA）方法，通过双流 Transformer 的时空特征相减来解耦空间和时间域差异，仅用两个基础损失（监督 + 域对抗）即可超过 SOTA 复杂方法…
+  [ICML 2026][视频理解][无监督视频域适应] 本文提出 MetaTrans——一个"令人沮丧地简单"的无监督视频域适应（UVDA）方法，通过双流 Transformer 的时空特征相减来解耦空间和时间域差异，仅用两个基础损失（监督 + 域对抗）即可超过 SOTA 复杂方法，并把超参搜索成本从指数级压到线性级。
 tags:
   - "ICML 2026"
   - "视频理解"

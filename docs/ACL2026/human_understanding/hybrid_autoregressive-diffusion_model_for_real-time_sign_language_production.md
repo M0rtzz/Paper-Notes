@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid Autoregressive-Diffusion Model for Real-Time Sign Language Production
 description: >-
-  [ACL2026][人体理解][Sign Language Production] 这篇论文提出 HybridSign，把自回归逐帧生成和 flow-based diffusion 细化结合起来，并加入三专家多尺度姿态表示与 confidence-aware causal attention…
+  [ACL2026][人体理解][Sign Language Production] 这篇论文提出 HybridSign，把自回归逐帧生成和 flow-based diffusion 细化结合起来，并加入三专家多尺度姿态表示与 confidence-aware causal attention，在 PHOENIX14T 和 How2Sign 上取得更好的手语生成质量-延迟折中。
 tags:
   - "ACL2026"
   - "人体理解"

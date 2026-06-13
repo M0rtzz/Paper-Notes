@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KAC: Kolmogorov-Arnold Classifier for Continual Learning
 description: >-
-  [CVPR 2025][物理/科学计算][KAN] 首次将 Kolmogorov-Arnold Network (KAN) 应用于持续学习，通过将 B-spline 替换为径向基函数 (RBF) 构建分类器 KAC…
+  [CVPR 2025][物理/科学计算][KAN] 首次将 Kolmogorov-Arnold Network (KAN) 应用于持续学习，通过将 B-spline 替换为径向基函数 (RBF) 构建分类器 KAC，仅增加 0.23M 参数即可在多种持续学习方法上获得一致且显著的性能提升（CUB200 40-step 最高 +20.70%）。
 tags:
   - "CVPR 2025"
   - "物理/科学计算"

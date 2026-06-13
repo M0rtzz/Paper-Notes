@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VidEoMT: Your ViT is Secretly Also a Video Segmentation Model
 description: >-
-  [CVPR2026][语义分割][encoder-only] 提出 VidEoMT，一种纯编码器（encoder-only）视频分割架构，通过 query propagation 和 query fusion 将分割与时序关联统一在单个 ViT 编码器中…
+  [CVPR2026][语义分割][encoder-only] 提出 VidEoMT，一种纯编码器（encoder-only）视频分割架构，通过 query propagation 和 query fusion 将分割与时序关联统一在单个 ViT 编码器中，在保持与 SOTA 可比精度的同时实现 5×–10× 加速（ViT-L 达 160 FPS）。
 tags:
   - "CVPR2026"
   - "语义分割"

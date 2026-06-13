@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Framework for Diffusion Model Unlearning with f-Divergence
 description: >-
-  [ICML 2026][图像生成][扩散模型] 这篇论文把扩散模型概念遗忘中的 MSE/KL 对齐推广到任意 $f$-divergence，提出 f-DMU 框架，并发现 closed-form Hellinger loss 往往比 MSE 更稳、更能保留非目标概念。
+  [ICML 2026][图像生成][扩散模型] 这篇论文把扩散模型概念遗忘中的 MSE/KL 对齐推广到任意 $f$-divergence，提出 f-DMU 框架，并发现 closed-form Hellinger loss 往往比 MSE 更稳、更能保留非目标概念。 领域现状：文本到图像扩散模型可以生成高质量图像…
 tags:
   - "ICML 2026"
   - "图像生成"

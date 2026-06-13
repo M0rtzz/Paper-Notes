@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeoAMT: Neologism-Aware Agentic Machine Translation with Reinforcement Learning
 description: >-
-  [ACL2026][多语言/翻译][新词翻译] NeoAMT 把新词翻译从单纯依赖模型参数知识的问题，改造成“先推理、再查词典、再翻译”的 agentic MT 问题，并用面向新词命中率、整体译文质量和翻译难度的 GRPO 训练…
+  [ACL2026][多语言/翻译][新词翻译] NeoAMT 把新词翻译从单纯依赖模型参数知识的问题，改造成“先推理、再查词典、再翻译”的 agentic MT 问题，并用面向新词命中率、整体译文质量和翻译难度的 GRPO 训练，让 8B 模型在 Neko 新词翻译基准上显著超过 SFT、无检索 RL 和多种通用/翻译专用 LLM。
 tags:
   - "ACL2026"
   - "多语言/翻译"

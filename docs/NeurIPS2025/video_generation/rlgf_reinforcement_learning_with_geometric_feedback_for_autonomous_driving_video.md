@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RLGF: Reinforcement Learning with Geometric Feedback for Autonomous Driving Video Generation
 description: >-
-  [NeurIPS 2025][视频生成][几何一致性] 本文首次系统量化自动驾驶视频生成中的几何失真问题，提出 RLGF 框架通过层次化几何奖励（消失点-车道线-深度-占用）和潜空间滑动窗口优化策略，将 3D 目标检测 mAP 提升 12.7 个绝对百分点（25.75→31.42）…
+  [NeurIPS 2025][视频生成][几何一致性] 本文首次系统量化自动驾驶视频生成中的几何失真问题，提出 RLGF 框架通过层次化几何奖励（消失点-车道线-深度-占用）和潜空间滑动窗口优化策略，将 3D 目标检测 mAP 提升 12.7 个绝对百分点（25.75→31.42），大幅缩小合成数据与真实数据的性能差距。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

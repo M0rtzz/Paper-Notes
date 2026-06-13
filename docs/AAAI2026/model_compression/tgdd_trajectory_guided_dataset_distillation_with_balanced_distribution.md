@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution
 description: >-
-  [AAAI 2026][模型压缩][数据集蒸馏] 提出 TGDD，将静态分布匹配重新定义为沿训练轨迹的动态对齐过程，通过阶段式分布匹配（Stage-wise Distribution Matching）捕获演化语义 + 分布约束正则化（Stage-wise Distribution Constraint）减少…
+  [AAAI 2026][模型压缩][数据集蒸馏] 提出 TGDD，将静态分布匹配重新定义为沿训练轨迹的动态对齐过程，通过阶段式分布匹配（Stage-wise Distribution Matching）捕获演化语义 + 分布约束正则化（Stage-wise Distribution Constraint）减少类间重叠，在 10 个数据集上达到 SOTA，高分辨率基准上准确率提升 5.0%。
 tags:
   - "AAAI 2026"
   - "模型压缩"

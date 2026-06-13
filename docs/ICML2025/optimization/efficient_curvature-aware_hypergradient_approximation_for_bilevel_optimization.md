@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Curvature-Aware Hypergradient Approximation for Bilevel Optimization
 description: >-
-  [ICML2025][优化/理论][bilevel optimization] 提出 NBO 框架，利用双层优化中超梯度的内在结构（下层问题求解与 Hessian 逆向量积共享同一 Hessian），通过非精确 Newton 方法高效融合曲率信息来逼近超梯度…
+  [ICML2025][优化/理论][bilevel optimization] 提出 NBO 框架，利用双层优化中超梯度的内在结构（下层问题求解与 Hessian 逆向量积共享同一 Hessian），通过非精确 Newton 方法高效融合曲率信息来逼近超梯度，在确定性场景下将梯度计算复杂度相比 SOTA 改善了 $\kappa \log \kappa$ 倍。
 tags:
   - "ICML2025"
   - "优化/理论"

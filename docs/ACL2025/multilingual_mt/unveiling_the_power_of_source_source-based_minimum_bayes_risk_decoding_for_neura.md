@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Power of Source: Source-based Minimum Bayes Risk Decoding for Neural Machine Translation
 description: >-
-  [ACL2025][多语言/翻译][MBR decoding] 提出 source-based MBR (sMBR) 解码方法，利用释义/回译生成的准源端句子作为"支持假设"，结合无参考 QE 指标作为效用函数，首次在 MBR 解码中完全依赖源端信息…
+  [ACL2025][多语言/翻译][MBR decoding] 提出 source-based MBR (sMBR) 解码方法，利用释义/回译生成的准源端句子作为"支持假设"，结合无参考 QE 指标作为效用函数，首次在 MBR 解码中完全依赖源端信息，在经典和 LLM 两种 NMT 设置下均优于 QE reranking 和标准 MBR 解码。
 tags:
   - "ACL2025"
   - "多语言/翻译"

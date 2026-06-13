@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation
 description: >-
-  [NeurIPS 2025][推荐系统][用户角色建模] 提出 TagCF 框架，通过 MLLM 提取用户角色标签和物品话题标签，再用 LLM 推理构建 U2I/I2U 逻辑图（用户角色与物品类型的因果关联），辅以标签编码器、对比学习增强和逻辑推理评分三种集成策略增强推荐…
+  [NeurIPS 2025][推荐系统][用户角色建模] 提出 TagCF 框架，通过 MLLM 提取用户角色标签和物品话题标签，再用 LLM 推理构建 U2I/I2U 逻辑图（用户角色与物品类型的因果关联），辅以标签编码器、对比学习增强和逻辑推理评分三种集成策略增强推荐，在亿级用户的工业在线A/B测试中互动指标提升0.946%、多样性提升0.102%，离线实验NDCG@10提升8.06%。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Cost-Aware Stopping for Bayesian Optimization
 description: >-
-  [ICML2026][Bayesian optimization] 作者把 Weitzman 的 Pandora's Box 停下原则推广到带相关性的贝叶斯优化场景，证明 PBGI/LogEIPC 这两个 cost-aware 采集函数在共同的"采集函数值越过当前最优"停下规则下…
+  [ICML2026][优化/理论][Bayesian optimization] 作者把 Weitzman 的 Pandora's Box 停下原则推广到带相关性的贝叶斯优化场景，证明 PBGI/LogEIPC 这两个 cost-aware 采集函数在共同的"采集函数值越过当前最优"停下规则下，期望代价调整 simple regret 不会比"采一次就停"更差，从而给出首个对 cost-adjusted simple regret 有理论保证的自适应停下规则。
 tags:
   - "ICML2026"
+  - "优化/理论"
   - "Bayesian optimization"
   - "cost-aware stopping"
   - "Pandora's Box"

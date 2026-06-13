@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Camouflaged Object Detection from Noisy Pseudo Label
 description: >-
-  [ECCV 2024][语义分割][伪装目标检测] 提出首个弱半监督伪装目标检测方法 (WSSCOD)，仅用 20% 像素级标注 + 80% 框标注即可达到全监督 SOTA 的可比性能，核心贡献是一个自适应噪声校正损失 $\mathcal{L}_{NC}$，可在早期学习和记忆化两个阶段分别优化。
+  [ECCV 2024][语义分割][伪装目标检测] 提出首个弱半监督伪装目标检测方法 (WSSCOD)，仅用 20% 像素级标注 + 80% 框标注即可达到全监督 SOTA 的可比性能，核心贡献是一个自适应噪声校正损失 $\mathcal{L}_{NC}$，可在早期学习和记忆化两个阶段分别优化。 伪装目标检测 (COD) 旨…
 tags:
   - "ECCV 2024"
   - "语义分割"

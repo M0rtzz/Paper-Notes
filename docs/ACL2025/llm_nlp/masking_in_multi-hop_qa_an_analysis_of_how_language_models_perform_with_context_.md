@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Masking in Multi-hop QA: How LMs Perform with Context Permutation
 description: >-
-  [ACL 2025][LLM/NLP][multi-hop QA] 通过系统性的文档排列实验和注意力权重分析，揭示因果掩码是 decoder-only LLM 在多跳问答中的结构性瓶颈，并证明将因果掩码替换为 prefix mask 可显著提升性能和鲁棒性。
+  [ACL 2025][LLM 其他][multi-hop QA] 通过系统性的文档排列实验和注意力权重分析，揭示因果掩码是 decoder-only LLM 在多跳问答中的结构性瓶颈，并证明将因果掩码替换为 prefix mask 可显著提升性能和鲁棒性。 领域现状：RAG 框架已成为搜索式对话代理（如 Copilot、豆包…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "multi-hop QA"
   - "causal mask"
   - "注意力机制"

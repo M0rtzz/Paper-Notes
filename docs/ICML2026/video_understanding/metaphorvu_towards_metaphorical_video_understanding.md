@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MetaphorVU: Towards Metaphorical Video Understanding
 description: >-
-  [ICML 2026][视频理解][隐喻视频理解] 本文提出首个隐喻视频理解基准 MetaphorVU-Bench（860 视频 + 8 类隐喻分类法）和增强方法 MetaphorBoost——通过 54K 节点 / 200K 边的隐喻知识图谱作为外部认知支架…
+  [ICML 2026 Spotlight][视频理解][隐喻视频理解] 本文提出首个隐喻视频理解基准 MetaphorVU-Bench（860 视频 + 8 类隐喻分类法）和增强方法 MetaphorBoost——通过 54K 节点 / 200K 边的隐喻知识图谱作为外部认知支架，定量揭示 MLLM 在隐喻视频上的核心瓶颈是"跨域映射缺失"而非视觉识别错误，最优模型相比人类（83.4）仍差 17 个点。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "视频理解"
   - "隐喻视频理解"
   - "多模态大模型"

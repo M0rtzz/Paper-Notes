@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BioAgent Bench: An AI Agent Evaluation Suite for Bioinformatics
 description: >-
-  [ICML 2026][LLM安全][agent 评测] BioAgent Bench 给"用 LLM agent 跑生物信息学 pipeline"这件事造了一个端到端的评测套件——10 个真实 bioinformatics 任务 × 10 个 frontier/open-weight 模型 × 3 个 ag…
+  [ICML 2026][LLM安全][agent 评测] BioAgent Bench 给"用 LLM agent 跑生物信息学 pipeline"这件事造了一个端到端的评测套件——10 个真实 bioinformatics 任务 × 10 个 frontier/open-weight 模型 × 3 个 agent harness，配合 LLM 判官评分和 corrupted/decoy/prompt-bloat 三类扰动测试，发现前沿模型能完成 90%+ pipeline 但鲁棒性堪忧。
 tags:
   - "ICML 2026"
   - "LLM安全"

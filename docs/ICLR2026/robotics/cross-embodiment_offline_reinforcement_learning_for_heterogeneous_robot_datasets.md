@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Embodiment Offline Reinforcement Learning for Heterogeneous Robot Datasets
 description: >-
-  [ICLR 2026][机器人][cross-embodiment learning] 系统研究跨形态离线 RL 预训练范式，发现次优数据比例和机器人多样性增加时梯度冲突导致负迁移，提出基于形态图距离的 Embodiment Grouping（EG）策略将机器人按形态聚类后分组更新 actor…
+  [ICLR 2026][机器人][cross-embodiment learning] 系统研究跨形态离线 RL 预训练范式，发现次优数据比例和机器人多样性增加时梯度冲突导致负迁移，提出基于形态图距离的 Embodiment Grouping（EG）策略将机器人按形态聚类后分组更新 actor，在 16 种机器人平台的 locomotion benchmark 上显著缓解负迁移（70% 次优数据集上 IQL+EG 比 IQL 提升 34%）。
 tags:
   - "ICLR 2026"
   - "机器人"

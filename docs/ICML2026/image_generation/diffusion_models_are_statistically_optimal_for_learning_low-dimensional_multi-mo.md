@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Models Are Statistically Optimal for Learning Low-Dimensional Multi-Modal Distributions
 description: >-
-  [ICML 2026][图像生成][扩散模型] 本文证明：当数据分布支撑在 $M$ 个低维线性子空间的并集（UoS）上且每个子空间内的分布是 subgaussian 时，存在一个基于核密度的 score 估计器可以让 score-based 扩散采样器以 $\widetilde{O}(\varepsilon^…
+  [ICML 2026][图像生成][扩散模型] 本文证明：当数据分布支撑在 $M$ 个低维线性子空间的并集（UoS）上且每个子空间内的分布是 subgaussian 时，存在一个基于核密度的 score 估计器可以让 score-based 扩散采样器以 $\widetilde{O}(\varepsilon^{-(k\vee 2)})$ 个样本达到 1-Wasserstein 误差 $\varepsilon$（$k$ 为最大内在维度），首次在多峰、无 smoothness/有界密度/log-concavity 假设下达到了与内在维度匹配的 minimax 最优率，彻底打破了维度灾难。
 tags:
   - "ICML 2026"
   - "图像生成"

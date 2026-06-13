@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Responses Fall Short of Understanding: Revealing the Gap between Internal Representations and Responses in VDU
 description: >-
-  [CVPR 2026][多模态VLM][LVLM] 通过逐层线性探测分析发现 LVLM 在视觉文档理解中存在内部表示与生成响应之间的显著差距，且中间层比最终层编码了更线性可访问的任务信息，微调中间层可同时提升准确率和缩小差距。
+  [CVPR 2026][多模态VLM][LVLM] 通过逐层线性探测分析发现 LVLM 在视觉文档理解中存在内部表示与生成响应之间的显著差距，且中间层比最终层编码了更线性可访问的任务信息，微调中间层可同时提升准确率和缩小差距。 大型视觉语言模型（LVLMs）在视觉文档理解（VDU）任务上取得了进展，但其性能评估主要依赖生成响…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

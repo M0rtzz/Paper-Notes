@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weed Out, Then Harvest: Dual Low-Rank Adaptation is an Effective Noisy Label Detector for Noise-Robust Learning
 description: >-
-  [ACL 2025][目标检测][noisy label learning] 提出Delora框架，通过引入clean LoRA和noisy LoRA双模块构建噪声标签检测器，将样本选择与模型训练解耦，打破传统"小损失"方法中样本选择与训练互相影响的恶性循环。
+  [ACL 2025][目标检测][noisy label learning] 提出Delora框架，通过引入clean LoRA和noisy LoRA双模块构建噪声标签检测器，将样本选择与模型训练解耦，打破传统"小损失"方法中样本选择与训练互相影响的恶性循环。 领域现状： PEFT（特别是LoRA）已成为LLM下游任务适配的…
 tags:
   - "ACL 2025"
   - "目标检测"

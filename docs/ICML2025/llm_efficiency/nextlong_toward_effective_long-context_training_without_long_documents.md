@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NExtLong: Toward Effective Long-Context Training without Long Documents
 description: >-
-  [ICML 2025][LLM效率][长上下文训练] 本文提出 NExtLong 框架，通过将文档分割为 meta-chunk 并在 chunk 之间插入从预训练语料检索的硬负例干扰文本来合成长上下文训练数据，迫使模型区分长距离依赖信息和干扰内容…
+  [ICML 2025][LLM效率][长上下文训练] 本文提出 NExtLong 框架，通过将文档分割为 meta-chunk 并在 chunk 之间插入从预训练语料检索的硬负例干扰文本来合成长上下文训练数据，迫使模型区分长距离依赖信息和干扰内容，在 HELMET 和 RULER 基准上比此前最佳的长上下文合成方法 Quest 平均提升 7.33%。
 tags:
   - "ICML 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Learning Verifiers and Implications to Chain-of-Thought Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][验证器] 提出学习Chain-of-Thought验证器的形式化PAC框架，定义三种递进强度的验证目标（Simple → Trustable → γ-Trustable），证明当每个问题只有少量正确证明时样本复杂度为 $O(\log|H|)$…
+  [NeurIPS 2025][LLM推理][验证器] 提出学习Chain-of-Thought验证器的形式化PAC框架，定义三种递进强度的验证目标（Simple → Trustable → γ-Trustable），证明当每个问题只有少量正确证明时样本复杂度为 $O(\log|H|)$，但当正确证明数量不受限时样本复杂度不可避免地跃升至 $\Theta(|H|)$，除非验证器类满足交集封闭性等额外结构假设；同时利用USAT问题证明验证与生成之间存在计算复杂度差距。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

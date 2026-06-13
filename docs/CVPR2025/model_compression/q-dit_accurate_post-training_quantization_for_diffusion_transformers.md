@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Q-DiT: Accurate Post-Training Quantization for Diffusion Transformers
 description: >-
-  [CVPR 2025][模型压缩][Transformer] 提出 Q-DiT，针对 Diffusion Transformer (DiT) 的后训练量化方法，通过进化搜索自动分配量化组大小和样本级动态激活量化，在 W4A8 设置下实现高保真图像/视频生成。
+  [CVPR 2025][模型压缩][Transformer] 提出 Q-DiT，针对 Diffusion Transformer (DiT) 的后训练量化方法，通过进化搜索自动分配量化组大小和样本级动态激活量化，在 W4A8 设置下实现高保真图像/视频生成。 扩散模型的架构已从 UNet 演进到 Diffusion Tran…
 tags:
   - "CVPR 2025"
   - "模型压缩"

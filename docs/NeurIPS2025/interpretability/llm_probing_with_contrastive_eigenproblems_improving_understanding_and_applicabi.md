@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS
 description: >-
-  [NeurIPS 2025][可解释性][CCS] 本文对无监督探测方法 CCS（Contrast-Consistent Search）进行了深入分析，提出将 CCS 重新表述为特征值问题（Contrastive Eigenproblems），获得闭式解和可解释的特征值，避免了 CCS 对随机初始化的敏感性…
+  [NeurIPS 2025][可解释性][CCS] 本文对无监督探测方法 CCS（Contrast-Consistent Search）进行了深入分析，提出将 CCS 重新表述为特征值问题（Contrastive Eigenproblems），获得闭式解和可解释的特征值，避免了 CCS 对随机初始化的敏感性，并自然扩展到多变量设置。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

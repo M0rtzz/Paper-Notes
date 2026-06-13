@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ani3DHuman: Photorealistic 3D Human Animation with Self-guided Stochastic Sampling
 description: >-
-  [CVPR2026][图像生成][3D人体动画] 提出 Ani3DHuman 框架，将运动学驱动的网格动画与视频扩散先验相结合，通过自引导随机采样（Self-guided Stochastic Sampling）将低质量的刚体渲染恢复为高保真视频，从而实现逼真的非刚体服装动态建模。
+  [CVPR2026][图像生成][3D人体动画] 提出 Ani3DHuman 框架，将运动学驱动的网格动画与视频扩散先验相结合，通过自引导随机采样（Self-guided Stochastic Sampling）将低质量的刚体渲染恢复为高保真视频，从而实现逼真的非刚体服装动态建模。 运动学方法的局限：基于骨骼/SMPL 的方…
 tags:
   - "CVPR2026"
   - "图像生成"

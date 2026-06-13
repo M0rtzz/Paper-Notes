@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RodinHD: High-Fidelity 3D Avatar Generation with Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][3D头像生成] 提出RodinHD，解决triplane解码器的灾难性遗忘问题，并通过层级化肖像表示注入实现高保真3D头像生成。
+  [ECCV 2024][图像生成][3D头像生成] 提出RodinHD，解决triplane解码器的灾难性遗忘问题，并通过层级化肖像表示注入实现高保真3D头像生成。 核心矛盾 核心矛盾：领域现状：从单张肖像图片生成高保真的3D头像（avatar）是计算机图形学和计算机视觉交叉领域的重要问题。高质量的3D头像在虚拟现实、社交媒…
 tags:
   - "ECCV 2024"
   - "图像生成"

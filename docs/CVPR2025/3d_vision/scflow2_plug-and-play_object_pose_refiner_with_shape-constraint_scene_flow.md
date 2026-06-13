@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCFlow2: Plug-and-Play Object Pose Refiner with Shape-Constraint Scene Flow
 description: >-
-  [CVPR 2025][3D视觉][6D位姿精修] SCFlow2 提出了一个即插即用的 6D 物体位姿精修框架，将 3D 场景流的刚体运动嵌入引入基于形状约束的循环匹配网络中，并将深度图作为迭代正则化嵌入端到端训练，在 BOP 基准的 7 个数据集上作为后处理一致地提升了 6 个 SOTA 方法的精度…
+  [CVPR 2025][3D视觉][6D位姿精修] SCFlow2 提出了一个即插即用的 6D 物体位姿精修框架，将 3D 场景流的刚体运动嵌入引入基于形状约束的循环匹配网络中，并将深度图作为迭代正则化嵌入端到端训练，在 BOP 基准的 7 个数据集上作为后处理一致地提升了 6 个 SOTA 方法的精度，无需任何重新训练。
 tags:
   - "CVPR 2025"
   - "3D视觉"

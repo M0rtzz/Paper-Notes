@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data
 description: >-
-  [ICCV 2025][优化/理论][联邦学习] 提出 FED-PRIME，一个面向多模态数据模态缺失场景的联邦 Prompt-Tuning 框架，通过 inter-client 和 intra-client 两组 prompt 分别捕获跨客户端可对齐的缺失模式和客户端内特有的缺失模式…
+  [ICCV 2025][优化/理论][联邦学习] 提出 FED-PRIME，一个面向多模态数据模态缺失场景的联邦 Prompt-Tuning 框架，通过 inter-client 和 intra-client 两组 prompt 分别捕获跨客户端可对齐的缺失模式和客户端内特有的缺失模式，并通过聚类-对齐机制进行服务端聚合，在多种缺失数据设置下大幅超越现有基线。
 tags:
   - "ICCV 2025"
   - "优化/理论"

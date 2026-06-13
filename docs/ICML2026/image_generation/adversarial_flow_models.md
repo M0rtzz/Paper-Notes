@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Flow Models
 description: >-
-  [ICML 2026][图像生成][Adversarial Training] 作者在 GAN 训练目标上加一个最优传输正则 $\|G(z)-z\|^2$，把 GAN 的"任意搬运图"约束成 Wasserstein-2 最优搬运图，让纯 transformer 上的对抗训练第一次能稳定收敛并端到端做单步生成…
+  [ICML 2026][图像生成][Adversarial Training] 作者在 GAN 训练目标上加一个最优传输正则 $\|G(z)-z\|^2$，把 GAN 的"任意搬运图"约束成 Wasserstein-2 最优搬运图，让纯 transformer 上的对抗训练第一次能稳定收敛并端到端做单步生成，ImageNet-256 上 1NFE FID 刷到 2.38（XL/2）和 1.94（112 层）。
 tags:
   - "ICML 2026"
   - "图像生成"

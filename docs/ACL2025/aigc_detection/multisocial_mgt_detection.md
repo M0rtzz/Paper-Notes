@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiSocial: Multilingual Benchmark of Machine-Generated Text Detection of Social-Media Texts
 description: >-
-  [ACL 2025][AIGC检测][文本检测] 构建了首个覆盖 22 种语言、5 个社交媒体平台、7 个 LLM 生成器的大规模机器生成文本检测基准 MultiSocial（47.2 万文本），实验表明 fine-tuned 检测器（Llama-3-8B/Mistral-7B…
+  [ACL 2025][AIGC检测][文本检测] 构建了首个覆盖 22 种语言、5 个社交媒体平台、7 个 LLM 生成器的大规模机器生成文本检测基准 MultiSocial（47.2 万文本），实验表明 fine-tuned 检测器（Llama-3-8B/Mistral-7B, AUC ROC 0.977）在社交媒体文本上表现优异，且训练平台选择对跨平台泛化影响显著。
 tags:
   - "ACL 2025"
   - "AIGC检测"

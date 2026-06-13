@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Surprising Effectiveness of Large Learning Rates under Standard Width Scaling
 description: >-
-  [NeurIPS 2025][infinite-width limit] 揭示在标准参数化(SP)下，cross-entropy 损失函数使得"不稳定"区间实际分为灾难性不稳定和受控发散两个子区间：在受控发散区间（学习率 $\eta_n = \Theta(n^{-1/2})$）logits 发散但梯度和激活保…
+  [NeurIPS 2025 Spotlight][infinite-width limit] 揭示在标准参数化(SP)下，cross-entropy 损失函数使得"不稳定"区间实际分为灾难性不稳定和受控发散两个子区间：在受控发散区间（学习率 $\eta_n = \Theta(n^{-1/2})$）logits 发散但梯度和激活保持稳定，从而首次为 SP 提供了一个实用的、具有特征学习能力的无穷宽极限。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "infinite-width limit"
   - "standard parameterization"
   - "learning rate scaling"

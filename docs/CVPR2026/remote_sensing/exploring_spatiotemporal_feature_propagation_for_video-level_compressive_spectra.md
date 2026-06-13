@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Spatiotemporal Feature Propagation for Video-Level Compressive Spectral Reconstruction
 description: >-
-  [CVPR 2026][遥感][光谱压缩成像] 首次将光谱压缩成像（SCI）从图像级推进到视频级重建，构建首个高质量动态高光谱数据集 DynaSpec（30 序列/300 帧），提出 PG-SVRT 通过空间-然后-时间注意力 + 桥接 token 实现 41.52dB PSNR 和最优时间一致性…
+  [CVPR 2026][遥感][光谱压缩成像] 首次将光谱压缩成像（SCI）从图像级推进到视频级重建，构建首个高质量动态高光谱数据集 DynaSpec（30 序列/300 帧），提出 PG-SVRT 通过空间-然后-时间注意力 + 桥接 token 实现 41.52dB PSNR 和最优时间一致性，且 FLOPs（28.18G）低于多个图像级 SOTA。
 tags:
   - "CVPR 2026"
   - "遥感"

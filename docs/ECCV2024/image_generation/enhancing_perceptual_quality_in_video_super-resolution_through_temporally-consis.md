@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Perceptual Quality in Video Super-Resolution through Temporally-Consistent Detail Synthesis using Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][视频超分辨率] 提出 StableVSR，首次将扩散模型应用于视频超分辨率任务，通过时序条件模块（TCM）和帧级双向采样策略，在显著提升感知质量的同时确保帧间时序一致性。
+  [ECCV 2024][图像生成][视频超分辨率] 提出 StableVSR，首次将扩散模型应用于视频超分辨率任务，通过时序条件模块（TCM）和帧级双向采样策略，在显著提升感知质量的同时确保帧间时序一致性。 视频超分辨率（VSR）旨在提升视频的空间分辨率。现有方法存在一个核心矛盾： 感知质量低：当前 SOTA 的 VSR 方…
 tags:
   - "ECCV 2024"
   - "图像生成"

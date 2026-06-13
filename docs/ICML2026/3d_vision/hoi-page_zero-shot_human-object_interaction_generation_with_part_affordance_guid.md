@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOI-PAGE: Zero-Shot Human-Object Interaction Generation with Part Affordance Guidance
 description: >-
-  [ICML 2026][3D视觉][4D HOI] HOI-PAGE 让 LLM 先"想清楚"身体哪个部位该接触物体哪个部件，把推理结果写成一张「部件 affordance 图」(PAG)，再用它去驱动 3D 部件分割、视频扩散和优化求解…
+  [ICML 2026][3D视觉][4D HOI] HOI-PAGE 让 LLM 先"想清楚"身体哪个部位该接触物体哪个部件，把推理结果写成一张「部件 affordance 图」(PAG)，再用它去驱动 3D 部件分割、视频扩散和优化求解，从而在零样本、零 4D 训练数据的条件下生成可处理"多人单物 / 单人多物"等复杂场景的 4D 人-物交互序列。
 tags:
   - "ICML 2026"
   - "3D视觉"

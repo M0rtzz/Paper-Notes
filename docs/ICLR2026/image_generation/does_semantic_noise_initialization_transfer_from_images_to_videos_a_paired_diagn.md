@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study
 description: >-
-  [ICLR 2026][图像生成][semantic noise initialization] 通过严格的 prompt 级别配对统计检验，发现将图像领域的 semantic noise initialization（golden noise）迁移到视频扩散模型后…
+  [ICLR 2026][图像生成][semantic noise initialization] 通过严格的 prompt 级别配对统计检验，发现将图像领域的 semantic noise initialization（golden noise）迁移到视频扩散模型后，temporal 指标呈微弱正向趋势但统计不显著（p≈0.17），噪声空间诊断揭示了方向稳定性不足和时空频率结构差异是根因。
 tags:
   - "ICLR 2026"
   - "图像生成"

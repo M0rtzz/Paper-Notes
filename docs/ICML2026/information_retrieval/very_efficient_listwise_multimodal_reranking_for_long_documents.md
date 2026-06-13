@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Very Efficient Listwise Multimodal Reranking for Long Documents
 description: >-
-  [ICML 2026][信息检索/RAG][listwise reranking] ZipRerank 同时砍掉 VLM 列表式重排的两大瓶颈——「视觉 token 序列过长」和「自回归解码逐 token 输出排名」——用 query-aware token 剪枝 + 单 logit 排序在 MMDocIR…
+  [ICML 2026][信息检索/RAG][listwise reranking] ZipRerank 同时砍掉 VLM 列表式重排的两大瓶颈——「视觉 token 序列过长」和「自回归解码逐 token 输出排名」——用 query-aware token 剪枝 + 单 logit 排序在 MMDocIR 上把 LLM 推理延迟降一个数量级，同时匹配或超越当前 SOTA 的 MM-R5。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

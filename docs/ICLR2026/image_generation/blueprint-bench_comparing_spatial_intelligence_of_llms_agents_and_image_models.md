@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blueprint-Bench: Comparing Spatial Intelligence of LLMs, Agents and Image Models
 description: >-
-  [ICLR 2026][图像生成][空间智能] Blueprint-Bench 通过"从公寓室内照片生成 2D 平面图"的任务评测 AI 的空间推理能力：输入（照片）完全在训练分布内但任务（空间重建）在分布外。评测 GPT-5、Claude 4 Opus、Gemini 2.5 Pro、Grok-4 等 LLM…
+  [ICLR 2026][图像生成][空间智能] Blueprint-Bench 通过"从公寓室内照片生成 2D 平面图"的任务评测 AI 的空间推理能力：输入（照片）完全在训练分布内但任务（空间重建）在分布外。评测 GPT-5、Claude 4 Opus、Gemini 2.5 Pro、Grok-4 等 LLM，GPT-Image、NanoBanana 等图像生成模型，以及 Codex CLI、Claude Code 等 Agent 系统，结果显示绝大多数模型表现接近或低于随机基线，揭示当前 AI 在空间智能上的系统性盲区。
 tags:
   - "ICLR 2026"
   - "图像生成"

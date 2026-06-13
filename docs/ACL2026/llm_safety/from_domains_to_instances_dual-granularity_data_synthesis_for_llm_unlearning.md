@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Domains to Instances: Dual-Granularity Data Synthesis for LLM Unlearning
 description: >-
-  [ACL 2026][LLM安全][机器遗忘] 本文形式化定义了领域级和实例级两种 LLM 遗忘粒度，提出 BiForget 框架——利用目标模型自身（而非外部强模型）通过种子引导合成和对抗探测两阶段生成高质量遗忘数据集…
+  [ACL 2026 Findings][LLM安全][机器遗忘] 本文形式化定义了领域级和实例级两种 LLM 遗忘粒度，提出 BiForget 框架——利用目标模型自身（而非外部强模型）通过种子引导合成和对抗探测两阶段生成高质量遗忘数据集，在 Harry Potter 领域将相关性提升约 20、多样性提升约 0.05 同时数据量减半。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "机器遗忘"
   - "遗忘集合成"

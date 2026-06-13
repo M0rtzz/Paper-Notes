@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bounded Hyperbolic Tangent: A Stable and Efficient Alternative to Pre-Layer Normalization in Large Language Models
 description: >-
-  [ICML 2026][模型压缩][归一化替代] 提出 Bounded Hyperbolic Tanh (BHyT)，一种基于数据驱动输入界定的 $\tanh$ 变换，作为 Pre-Layer Normalization 的即插即用替代，在抑制深度方向激活增长的同时避免重复方差计算…
+  [ICML 2026][模型压缩][归一化替代] 提出 Bounded Hyperbolic Tanh (BHyT)，一种基于数据驱动输入界定的 $\tanh$ 变换，作为 Pre-Layer Normalization 的即插即用替代，在抑制深度方向激活增长的同时避免重复方差计算，训练速度比 RMSNorm 快 1.6%、生成吞吐提升 1.77%，且下游性能全面优于现有方法。
 tags:
   - "ICML 2026"
   - "模型压缩"

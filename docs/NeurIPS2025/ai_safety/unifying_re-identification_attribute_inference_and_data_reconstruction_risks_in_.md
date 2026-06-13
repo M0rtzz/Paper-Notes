@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy
 description: >-
-  [NeurIPS 2025][AI安全][差分隐私] 基于假设检验解释的 f-DP 框架，统一了差分隐私中重识别、属性推断和数据重建三类隐私风险的界定，提供更紧致一致的风险上界，使噪声校准可减少 20% 且不降低安全性。
+  [NeurIPS 2025][AI安全][差分隐私] 基于假设检验解释的 f-DP 框架，统一了差分隐私中重识别、属性推断和数据重建三类隐私风险的界定，提供更紧致一致的风险上界，使噪声校准可减少 20% 且不降低安全性。 现有痛点 现有痛点：领域现状：差分隐私 (DP) 机制难以解释和校准，因为： 风险类型分散： 重识别、属…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

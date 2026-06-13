@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sensorium Arc: AI Agent System for Oceanic Data Exploration and Interactive Eco-Art
 description: >-
-  [NeurIPS 2025][音频/语音][海洋数据可视化] 本文构建了一个名为 Sensorium Arc 的多模态交互式 AI 智能体系统，通过将海洋拟人化为一个诗意的"讲述者"角色，利用多智能体 RAG 架构将 NASA 海洋科学数据与生态美学文本相结合，使用户能够以自然对话的方式探索复杂的海洋环境数据…
+  [NeurIPS 2025][音频/语音][海洋数据可视化] 本文构建了一个名为 Sensorium Arc 的多模态交互式 AI 智能体系统，通过将海洋拟人化为一个诗意的"讲述者"角色，利用多智能体 RAG 架构将 NASA 海洋科学数据与生态美学文本相结合，使用户能够以自然对话的方式探索复杂的海洋环境数据，同时在视听层面生成动态的科学可视化和艺术化反馈，实现从"被动数据观察"到"主动生态对话"的范式转变。
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

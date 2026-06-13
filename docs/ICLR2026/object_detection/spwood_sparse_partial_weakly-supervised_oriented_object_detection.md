@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection
 description: >-
-  [ICLR 2026][目标检测][旋转目标检测] 提出 SPWOOD 框架统一处理稀疏标注和弱标注（HBox/Point）的旋转目标检测问题，通过 SOS-Student 学生模型（稀疏标注/朝向/尺度学习）和多层级伪标签筛选（MPF），在 DOTA-v1.0/v1.5、DIOR 上以混合标注（RBox:HBox:Point=1:1:1）达到接近全监督的性能。
+  [ICLR 2026][目标检测][旋转目标检测] 提出首个统一处理"稀疏标注 + 弱标注（HBox/Point）"的旋转目标检测框架 SPWOOD：用 SOS-Student 在一个学生模型里并联补齐未标注、缺角度、缺尺度三股信号，再以多层级伪标签筛选（MPF）从无标注数据自训练，在 DOTA-v1.0/v1.5、DIOR 上以混合标注（RBox:HBox:Point=1:1:1）达到接近全监督的性能。
 tags:
   - "ICLR 2026"
   - "目标检测"

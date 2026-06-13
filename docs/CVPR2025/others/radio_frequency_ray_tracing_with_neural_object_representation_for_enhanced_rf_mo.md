@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Radio Frequency Ray Tracing with Neural Object Representation for Enhanced RF Modeling
 description: >-
-  [CVPR 2025][射频传播建模] 提出 RFScape 框架，通过为每个物体学习对象级的神经电磁属性表示，结合传统射线追踪的可组合性，在稀疏训练样本下实现高精度 RF 传播建模，比传统光线追踪提升 13 dB、比 SOTA 神经基线提升 5 dB。
+  [CVPR 2025][射频传播建模] 提出 RFScape 框架，通过为每个物体学习对象级的神经电磁属性表示，结合传统射线追踪的可组合性，在稀疏训练样本下实现高精度 RF 传播建模，比传统光线追踪提升 13 dB、比 SOTA 神经基线提升 5 dB。 领域现状：射频（RF）传播建模对无线通信网络规划至关重要…
 tags:
   - "CVPR 2025"
   - "射频传播建模"

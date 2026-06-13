@@ -2,10 +2,10 @@
 title: >-
   [论文解读] WebDevJudge: Evaluating (M)LLMs as Critiques for Web Development Quality
 description: >-
-  [ICLR 2026][LLM/NLP][LLM-as-a-judge] 构建 WebDevJudge 元评估基准，系统评估 LLM/MLLM 及智能体工作流在 Web 开发质量评估任务上作为裁判的能力，发现当前最强模型与人类专家之间仍存在约15%的一致率差距…
+  [ICLR 2026][LLM 其他][LLM-as-a-judge] 构建 WebDevJudge 元评估基准，系统评估 LLM/MLLM 及智能体工作流在 Web 开发质量评估任务上作为裁判的能力，发现当前最强模型与人类专家之间仍存在约15%的一致率差距，并揭示了功能等价识别失败和可行性验证薄弱两大根本瓶颈。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-as-a-judge"
   - "meta-evaluation"
   - "web development"

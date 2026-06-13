@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KScope: A Framework for Characterizing the Knowledge Status of Language Models
 description: >-
-  [NeurIPS 2025][知识编辑][知识状态刻画] 提出LLM知识状态的五分类法（一致正确/冲突正确/缺失/冲突错误/一致错误）和KScope层次化统计检验框架，通过重复采样+多步假设检验精确刻画LLM对给定问题的知识模式结构，并系统研究上下文如何更新各状态…
+  [NeurIPS 2025][知识编辑][知识状态刻画] 提出LLM知识状态的五分类法（一致正确/冲突正确/缺失/冲突错误/一致错误）和KScope层次化统计检验框架，通过重复采样+多步假设检验精确刻画LLM对给定问题的知识模式结构，并系统研究上下文如何更新各状态，发现受约束的上下文摘要+增强可信度平均提升4.3%的知识更新成功率。
 tags:
   - "NeurIPS 2025"
   - "知识编辑"

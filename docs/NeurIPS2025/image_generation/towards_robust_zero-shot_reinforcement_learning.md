@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Robust Zero-Shot Reinforcement Learning
 description: >-
-  [NeurIPS 2025][图像生成][零样本强化学习] 提出BREEZE框架，通过行为正则化、任务条件扩散策略和注意力增强表示建模，系统性解决FB-based零样本RL中的OOD外推误差和表达力不足问题，在ExORL和D4RL Kitchen上实现最优或接近最优的鲁棒零样本泛化性能。
+  [NeurIPS 2025][图像生成][零样本强化学习] 提出BREEZE框架，通过行为正则化、任务条件扩散策略和注意力增强表示建模，系统性解决FB-based零样本RL中的OOD外推误差和表达力不足问题，在ExORL和D4RL Kitchen上实现最优或接近最优的鲁棒零样本泛化性能。 零样本强化学习(zero-shot…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

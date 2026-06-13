@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Creating ConLangs to Probe the Metalinguistic Grammatical Knowledge of LLMs
 description: >-
-  [ACL 2026][NLP理解][人造语言] 本文提出 IASC（Interactive Agentic System for ConLangs），一个模块化的人造语言构建系统，通过让 LLM 按语言学规格执行形态句法变换来探测其元语言知识，发现 LLM 处理常见语言类型模式远优于罕见模式…
+  [ACL 2026][NLP理解][人造语言] 本文提出 IASC（Interactive Agentic System for ConLangs），一个模块化的人造语言构建系统，通过让 LLM 按语言学规格执行形态句法变换来探测其元语言知识，发现 LLM 处理常见语言类型模式远优于罕见模式，且不同 LLM 之间能力差异悬殊。
 tags:
   - "ACL 2026"
   - "NLP理解"

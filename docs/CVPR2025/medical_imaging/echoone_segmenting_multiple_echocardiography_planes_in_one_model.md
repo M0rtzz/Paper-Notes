@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoONE: Segmenting Multiple Echocardiography Planes in One Model
 description: >-
-  [CVPR 2025][医学图像][超声心动图分割] 本文提出 EchoONE，首次用一个统一模型解决超声心动图多切面分割（MPS）问题，通过先验可组合掩码学习（PC-Mask）模块生成语义感知的稠密 prompt，并设计局部特征融合与适配（LFFA）模块将 CNN 局部特征注入 SAM 解码器…
+  [CVPR 2025][医学图像][超声心动图分割] 本文提出 EchoONE，首次用一个统一模型解决超声心动图多切面分割（MPS）问题，通过先验可组合掩码学习（PC-Mask）模块生成语义感知的稠密 prompt，并设计局部特征融合与适配（LFFA）模块将 CNN 局部特征注入 SAM 解码器，在 6 个切面上持续达到 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "医学图像"

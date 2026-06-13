@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rectify the Regression Bias in Long-Tailed Object Detection
 description: >-
-  [ECCV 2024][目标检测][长尾目标检测] 首次揭示并系统解决长尾目标检测中被忽视的**回归偏差**问题：稀有类别的类别专属(class-specific)回归头参数因样本不足导致泛化能力差，通过添加额外的类别不可知(class-agnostic)回归分支进行权衡…
+  [ECCV 2024][目标检测][长尾目标检测] 首次揭示并系统解决长尾目标检测中被忽视的**回归偏差**问题：稀有类别的类别专属(class-specific)回归头参数因样本不足导致泛化能力差，通过添加额外的类别不可知(class-agnostic)回归分支进行权衡，在LVIS等数据集上取得了SOTA性能。
 tags:
   - "ECCV 2024"
   - "目标检测"

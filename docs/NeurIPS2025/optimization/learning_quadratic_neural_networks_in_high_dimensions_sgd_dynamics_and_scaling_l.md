@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws
 description: >-
-  [NeurIPS 2025][优化/理论][二次激活网络] 对高维情形下二次激活函数两层神经网络的梯度训练进行了精确分析，针对数据由 $f_*(x) \propto \sum_{j=1}^r \lambda_j \sigma(\langle \theta_j, x \rangle)$ 生成的设定…
+  [NeurIPS 2025][优化/理论][二次激活网络] 对高维情形下二次激活函数两层神经网络的梯度训练进行了精确分析，针对数据由 $f_*(x) \propto \sum_{j=1}^r \lambda_j \sigma(\langle \theta_j, x \rangle)$ 生成的设定，在宽度 $r \asymp d^\beta$ 和系数幂律衰减 $\lambda_j \asymp j^{-\alpha}$ 下，推导出预测风险关于优化时间、样本量和模型宽度的缩放律。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

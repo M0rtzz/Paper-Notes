@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroVO: Visual Odometry with Minimal Assumptions
 description: >-
-  [CVPR 2025][自动驾驶][视觉里程计] 本文提出 ZeroVO，一种基于 Transformer 的单目视觉里程计方法，通过免标定的几何感知网络结构、语言先验融合和半监督训练范式…
+  [CVPR 2025][自动驾驶][视觉里程计] 本文提出 ZeroVO，一种基于 Transformer 的单目视觉里程计方法，通过免标定的几何感知网络结构、语言先验融合和半监督训练范式，在 KITTI、nuScenes、Argoverse 2 和自建 GTA 数据集上实现了超过 30% 的零样本泛化性能提升。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

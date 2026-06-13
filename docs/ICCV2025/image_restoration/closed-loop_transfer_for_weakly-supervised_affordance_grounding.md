@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Closed-Loop Transfer for Weakly-supervised Affordance Grounding
 description: >-
-  [ICCV 2025][图像恢复][弱监督affordance定位] 提出LoopTrans闭环知识迁移框架，通过共享CAM实现外中心-自中心图像的统一知识激活，利用像素级伪掩码将粗激活精炼为精确定位，并通过去噪蒸馏将自中心定位反馈增强外中心知识提取，在AGD20K上全面超越SOTA。
+  [ICCV 2025][图像恢复][弱监督affordance定位] 提出LoopTrans闭环知识迁移框架，通过共享CAM实现外中心-自中心图像的统一知识激活，利用像素级伪掩码将粗激活精炼为精确定位，并通过去噪蒸馏将自中心定位反馈增强外中心知识提取，在AGD20K上全面超越SOTA。 Affordance groundin…
 tags:
   - "ICCV 2025"
   - "图像恢复"

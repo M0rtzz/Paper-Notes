@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaNGO: Adaptable Graph Network Simulators via Meta-Learning
 description: >-
-  [NeurIPS 2025][机器人][图网络模拟器] 提出 MaNGO（Meta Neural Graph Operator），通过元学习和条件神经过程（CNP）学习不同物理参数下仿真任务的共享潜在结构，实现对新物理参数的快速适应，无需重新训练。
+  [NeurIPS 2025][机器人][图网络模拟器] 提出 MaNGO（Meta Neural Graph Operator），通过元学习和条件神经过程（CNP）学习不同物理参数下仿真任务的共享潜在结构，实现对新物理参数的快速适应，无需重新训练。 - 传统仿真的局限：基于网格的物理仿真虽然精确，但计算成本高…
 tags:
   - "NeurIPS 2025"
   - "机器人"

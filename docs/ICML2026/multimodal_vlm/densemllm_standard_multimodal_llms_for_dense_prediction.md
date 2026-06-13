@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DenseMLLM: Standard Multimodal LLMs for Dense Prediction
 description: >-
-  [ICML 2026][多模态VLM][密集预测] 作者把语义分割、深度估计、指代分割这些密集预测任务直接塞进一个 4B 标准 MLLM（ViT + Projector + LLM），不加任何任务专用 decoder，靠对视觉 token 引入"多标签下一 token 预测"（NTP-M）监督…
+  [ICML 2026][多模态VLM][密集预测] 作者把语义分割、深度估计、指代分割这些密集预测任务直接塞进一个 4B 标准 MLLM（ViT + Projector + LLM），不加任何任务专用 decoder，靠对视觉 token 引入"多标签下一 token 预测"（NTP-M）监督，在 ADE20K 取得 54.2 mIoU、DDAD 取得 87.6 δ1、RefCOCO val 取得 80.7 cIoU，同时通用 VL 指标与 Qwen3-VL-4B 持平。
 tags:
   - "ICML 2026"
   - "多模态VLM"

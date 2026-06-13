@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Image Fusion for Multi-Illuminant White-Balance Correction
 description: >-
-  [ICCV 2025][白平衡] 针对多光源场景白平衡校正问题，提出一种基于 Transformer 的高效融合模型来替代传统线性融合，并构建了包含 16,000+ 张图像的大规模多光源白平衡数据集，在新数据集上实现比现有方法提升 100% 的校正质量。
+  [ICCV 2025][白平衡] 针对多光源场景白平衡校正问题，提出一种基于 Transformer 的高效融合模型来替代传统线性融合，并构建了包含 16,000+ 张图像的大规模多光源白平衡数据集，在新数据集上实现比现有方法提升 100% 的校正质量。 领域现状：白平衡（White Balance, WB）是相机 ISP…
 tags:
   - "ICCV 2025"
   - "白平衡"

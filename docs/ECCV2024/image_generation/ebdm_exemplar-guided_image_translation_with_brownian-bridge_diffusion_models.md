@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EBDM: Exemplar-guided Image Translation with Brownian-bridge Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][样例引导图像翻译] 提出 EBDM 框架，将样例引导的图像翻译建模为随机布朗桥扩散过程，从结构控制直接翻译为真实感图像，通过 Global Encoder、Exemplar Network 和 Exemplar Attention Module 三个组件有效整合样例的全局风…
+  [ECCV 2024][图像生成][样例引导图像翻译] 提出 EBDM 框架，将样例引导的图像翻译建模为随机布朗桥扩散过程，从结构控制直接翻译为真实感图像，通过 Global Encoder、Exemplar Network 和 Exemplar Attention Module 三个组件有效整合样例的全局风格和细节纹理信息。
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APPSI-139: A Parallel Corpus of English Application Privacy Policy Summarization and Interpretation
 description: >-
-  [ACL 2026][LLM安全][隐私政策] APPSI-139 是首个由法律专家精细标注的英文应用隐私政策摘要与解释平行语料（139 篇政策 / 36,351 条标注 / 15,692 对改写）…
+  [ACL 2026][LLM安全][隐私政策] APPSI-139 是首个由法律专家精细标注的英文应用隐私政策摘要与解释平行语料（139 篇政策 / 36,351 条标注 / 15,692 对改写），配套提出的 TCSI-pp-V2 框架用共享编码器 + 5 个交替训练的专家头实现"重要 / 风险 / 敏感 / 主题 / 改写"五子任务，相比 TCSI-pp v1 编码时间砍 73%、显存从 7.3GB 降到 2.7GB，可读性主观投票胜过 GPT-4o / Llama3-70b。
 tags:
   - "ACL 2026"
   - "LLM安全"

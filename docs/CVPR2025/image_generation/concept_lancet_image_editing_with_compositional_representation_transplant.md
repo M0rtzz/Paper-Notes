@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Concept Lancet: Image Editing with Compositional Representation Transplant
 description: >-
-  [CVPR 2025][图像生成][图像编辑] 提出 Concept Lancet (CoLan)，一种零样本即插即用的图像编辑框架，通过将源图像的隐表示稀疏分解为视觉概念向量的线性组合，然后根据编辑任务（替换/添加/删除）进行定制化概念移植，解决了编辑强度校准难题。
+  [CVPR 2025][图像生成][图像编辑] 提出 Concept Lancet (CoLan)，一种零样本即插即用的图像编辑框架，通过将源图像的隐表示稀疏分解为视觉概念向量的线性组合，然后根据编辑任务（替换/添加/删除）进行定制化概念移植，解决了编辑强度校准难题。 领域现状 领域现状：基于扩散模型的图像编辑（如 P2P-…
 tags:
   - "CVPR 2025"
   - "图像生成"

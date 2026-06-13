@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling
 description: >-
-  [NeurIPS 2025][优化/理论][联邦学习] 将联邦动态剪枝重新建模为组合多臂赌博机(CMAB)问题，提出基于 Thompson Sampling 的拓扑调整机制 TSAdj，通过概率性决策替代确定性决策来获得更鲁棒的稀疏模型拓扑，同时显著降低通信开销。
+  [NeurIPS 2025][优化/理论][联邦学习] 将联邦动态剪枝重新建模为组合多臂赌博机(CMAB)问题，提出基于 Thompson Sampling 的拓扑调整机制 TSAdj，通过概率性决策替代确定性决策来获得更鲁棒的稀疏模型拓扑，同时显著降低通信开销。 领域现状：联邦学习(FL)允许分布式设备协作训练模型而不共享…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

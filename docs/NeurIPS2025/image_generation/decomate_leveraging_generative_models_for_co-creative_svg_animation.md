@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decomate: Leveraging Generative Models for Co-Creative SVG Animation
 description: >-
-  [NeurIPS 2025 (GenProAI Workshop)][图像生成][SVG animation] 提出 Decomate 交互系统，利用多模态大语言模型 (MLLM) 将非结构化 SVG 图形自动分解为语义组件，设计师通过自然语言为各组件指定动画行为…
+  [NeurIPS 2025 (GenProAI Workshop)][图像生成][SVG animation] 提出 Decomate 交互系统，利用多模态大语言模型 (MLLM) 将非结构化 SVG 图形自动分解为语义组件，设计师通过自然语言为各组件指定动画行为，系统生成可生产的 HTML/CSS/JS 动画代码，支持迭代协作创作。
 tags:
   - "NeurIPS 2025 (GenProAI Workshop)"
   - "图像生成"
@@ -128,10 +128,10 @@ tags:
 - **vs 传统工具 (Figma + Lottie + After Effects)**：传统工具需要手动操作和技术专长，Decomate 降低门槛但精细度不足
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 语义分解 + prompt 动画的组合是增量式创新，核心依赖 LLM 能力
-- 实验充分度: ⭐⭐⭐ 有需求调研+用户研究，但仅定性评估、小样本(6人)、无定量对比
-- 写作质量: ⭐⭐⭐⭐ 问题动机清晰、流程图和界面截图详细、用户反馈原汁原味
-- 价值: ⭐⭐⭐ 作为 workshop demo 有展示意义，但离可靠的设计工具仍有距离
+- 新颖性: ⭐⭐⭐⭐ 语义分解 + prompt 动画的组合是增量式创新，核心依赖 LLM 能力
+- 实验充分度: ⭐⭐⭐⭐ 有需求调研+用户研究，但仅定性评估、小样本(6人)、无定量对比
+- 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰、流程图和界面截图详细、用户反馈原汁原味
+- 价值: ⭐⭐⭐⭐ 作为 workshop demo 有展示意义，但离可靠的设计工具仍有距离
 
 <!-- RELATED:START -->
 

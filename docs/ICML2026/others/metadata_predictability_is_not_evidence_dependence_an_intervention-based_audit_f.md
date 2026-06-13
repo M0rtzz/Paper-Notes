@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metadata Predictability Is Not Evidence Dependence: An Intervention-Based Audit for Weak-Label Benchmarks
 description: >-
-  [ICML 2026 Workshop on Hypothesis Testing][MPDS] 作者指出「输出能被元数据预测」≠「输出依赖证据」，提出双统计量审计协议：用 MPDS 测元数据可预测性、用证据洗牌 ΔEvi 测证据敏感性，再加 stronger-reader 校准层和输入消融…
+  [ICML 2026 Workshop on Hypothesis Testing][MPDS] 作者指出「输出能被元数据预测」≠「输出依赖证据」，提出双统计量审计协议：用 MPDS 测元数据可预测性、用证据洗牌 ΔEvi 测证据敏感性，再加 stronger-reader 校准层和输入消融，构成一个 4 步可复用的弱标签 benchmark 体检方案。
 tags:
   - "ICML 2026 Workshop on Hypothesis Testing"
   - "MPDS"

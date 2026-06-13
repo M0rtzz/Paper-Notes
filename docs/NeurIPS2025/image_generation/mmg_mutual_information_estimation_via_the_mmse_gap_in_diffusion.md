@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMG: Mutual Information Estimation via the MMSE Gap in Diffusion
 description: >-
-  [NeurIPS 2025][图像生成][mutual information estimation] 利用扩散模型的信息论公式，证明互信息等于条件与无条件去噪 MMSE 之间的差值在所有信噪比上的积分的一半，提出 MMG 估计器，结合自适应重要性采样和正交原理显著提升估计精度和稳定性。
+  [NeurIPS 2025][图像生成][mutual information estimation] 利用扩散模型的信息论公式，证明互信息等于条件与无条件去噪 MMSE 之间的差值在所有信噪比上的积分的一半，提出 MMG 估计器，结合自适应重要性采样和正交原理显著提升估计精度和稳定性。 互信息（Mutual Informa…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

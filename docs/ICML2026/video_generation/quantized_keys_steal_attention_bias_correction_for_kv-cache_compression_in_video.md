@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantized Keys Steal Attention: Bias Correction for KV-Cache Compression in Video Generation
 description: >-
-  [ICML 2026][视频生成][KV 缓存量化] 本文发现分块自回归视频扩散模型中 KV 缓存量化导致**注意力权重发生系统性偏移**（"量化键窃取注意力"），通过推导出基于 Jensen 不等式的逐分数纠正项…
+  [ICML 2026][视频生成][KV 缓存量化] 本文发现分块自回归视频扩散模型中 KV 缓存量化导致**注意力权重发生系统性偏移**（"量化键窃取注意力"），通过推导出基于 Jensen 不等式的逐分数纠正项，在 INT2 激进量化下恢复接近 BF16 的视频质量（VBench 78.02 vs 78.27），节省 50% 内存。
 tags:
   - "ICML 2026"
   - "视频生成"

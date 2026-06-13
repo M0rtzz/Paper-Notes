@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Generalizing Fair Clustering to Multiple Groups: Algorithms and Applications
 description: >-
-  [AAAI 2026][AI安全][公平聚类] 将最近公平聚类（Closest Fair Clustering）问题从仅两个群体推广到任意多群体，证明三群体以上等比例情形已为NP-hard…
+  [AAAI 2026 Oral][AI安全][公平聚类] 将最近公平聚类（Closest Fair Clustering）问题从仅两个群体推广到任意多群体，证明三群体以上等比例情形已为NP-hard，提出近线性时间近似算法（等比例 $O(|\chi|^{1.6}\log^{2.81}|\chi|)$、任意比例 $O(|\chi|^{3.81})$），并将结果推广至公平相关聚类和公平共识聚类问题。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "AI安全"
   - "公平聚类"
   - "多群体公平"

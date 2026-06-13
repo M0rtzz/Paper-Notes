@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Pseudo2Real: Task Arithmetic for Pseudo-Label Correction in Automatic Speech Recognition
 description: >-
-  [ACL 2026][音频/语音][伪标签校正] 本文提出 Pseudo2Real，一种参数空间校正方法，通过在源域中计算真实标签模型与伪标签模型的权重差得到"校正向量"，将其应用于目标域伪标签微调模型以纠正系统性伪标签偏差…
+  [ACL 2026 Findings][音频/语音][伪标签校正] 本文提出 Pseudo2Real，一种参数空间校正方法，通过在源域中计算真实标签模型与伪标签模型的权重差得到"校正向量"，将其应用于目标域伪标签微调模型以纠正系统性伪标签偏差，在 AfriSpeech-200 的十种非洲口音上最高实现 35% 相对 WER 降低。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "伪标签校正"
   - "任务算术"

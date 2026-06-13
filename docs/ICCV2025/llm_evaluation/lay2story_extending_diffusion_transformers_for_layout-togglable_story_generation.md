@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation
 description: >-
-  [ICCV 2025][LLM评测][故事生成] Lay2Story 提出布局可切换的故事生成任务，构建了超 100 万张高分辨率图像的 Lay2Story-1M 数据集，并基于 DiT 架构设计全局-主体双分支框架，在一致性、语义相关性和美学质量上全面超越现有方法。
+  [ICCV 2025][LLM评测][故事生成] Lay2Story 提出布局可切换的故事生成任务，构建了超 100 万张高分辨率图像的 Lay2Story-1M 数据集，并基于 DiT 架构设计全局-主体双分支框架，在一致性、语义相关性和美学质量上全面超越现有方法。 故事生成任务要求从文本提示生成具有主体一致性的图像序列…
 tags:
   - "ICCV 2025"
   - "LLM评测"

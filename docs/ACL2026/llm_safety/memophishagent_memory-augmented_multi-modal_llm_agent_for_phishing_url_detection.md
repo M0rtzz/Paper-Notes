@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MemoPhishAgent: Memory-Augmented Multi-Modal LLM Agent for Phishing URL Detection
 description: >-
-  [ACL 2026][LLM安全][钓鱼检测] 提出 MemoPhishAgent（MPA），首个专为钓鱼URL检测设计的记忆增强多模态LLM智能体，通过5个专用工具的动态编排和情景记忆系统复用历史推理轨迹，在公开基准上召回率提升13.6%，在真实社交媒体数据上提升20%…
+  [ACL 2026][LLM安全][钓鱼检测] 提出 MemoPhishAgent（MPA），首个专为钓鱼URL检测设计的记忆增强多模态LLM智能体，通过5个专用工具的动态编排和情景记忆系统复用历史推理轨迹，在公开基准上召回率提升13.6%，在真实社交媒体数据上提升20%，并已部署生产环境每周处理约6万高风险URL。
 tags:
   - "ACL 2026"
   - "LLM安全"

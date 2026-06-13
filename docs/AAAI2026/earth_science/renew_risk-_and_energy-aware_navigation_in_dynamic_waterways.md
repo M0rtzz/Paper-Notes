@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RENEW: Risk- and Energy-Aware Navigation in Dynamic Waterways
 description: >-
-  [AAAI 2026 (Oral)][地球科学][ASV] 提出 RENEW 全局路径规划器，为水面自主航行器 (ASV) 在动态水流 (洋流) 环境中引入统一的风险感知和能量感知策略，通过自适应不可导航区域识别、最佳努力应急策略和基于约束 Delaunay 三角化的分层架构实现安全高效导航…
+  [AAAI 2026 (Oral)][地球科学][ASV] 提出 RENEW 全局路径规划器，为水面自主航行器 (ASV) 在动态水流 (洋流) 环境中引入统一的风险感知和能量感知策略，通过自适应不可导航区域识别、最佳努力应急策略和基于约束 Delaunay 三角化的分层架构实现安全高效导航，应急碰撞测试中实现零碰撞。
 tags:
   - "AAAI 2026 (Oral)"
   - "地球科学"

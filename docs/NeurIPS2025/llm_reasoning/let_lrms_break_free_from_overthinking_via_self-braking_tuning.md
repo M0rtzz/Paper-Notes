@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let LRMs Break Free from Overthinking via Self-Braking Tuning
 description: >-
-  [NeurIPS 2025][LLM推理][高效推理] 提出 Self-Braking Tuning (SBT) 框架，通过识别推理轨迹中的过度思考模式并构造自适应长度训练数据，使大型推理模型（LRM）学会自主判断何时停止推理，在数学推理任务上减少 30%-60% token 消耗的同时保持精度。
+  [NeurIPS 2025][LLM推理][高效推理] 提出 Self-Braking Tuning (SBT) 框架，通过识别推理轨迹中的过度思考模式并构造自适应长度训练数据，使大型推理模型（LRM）学会自主判断何时停止推理，在数学推理任务上减少 30%-60% token 消耗的同时保持精度。 领域现状：大型推理模型（如…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

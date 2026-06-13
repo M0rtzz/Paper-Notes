@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeighborRetr: Balancing Hub Centrality in Cross-Modal Retrieval
 description: >-
-  [CVPR 2025][信息检索/RAG][跨模态检索] 提出 NeighborRetr，通过三重机制解决跨模态检索中的 Hubness 问题（少数样本垄断近邻）：中心性加权损失（降低 hub 样本的训练权重）、邻域调整损失（区分好/坏 hub）和均匀正则化（确保每个样本被公平检索）…
+  [CVPR 2025][信息检索/RAG][跨模态检索] 提出 NeighborRetr，通过三重机制解决跨模态检索中的 Hubness 问题（少数样本垄断近邻）：中心性加权损失（降低 hub 样本的训练权重）、邻域调整损失（区分好/坏 hub）和均匀正则化（确保每个样本被公平检索），在 MSR-VTT 文本→视频 R@1 达 49.5%（+0.9% SOTA）。
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

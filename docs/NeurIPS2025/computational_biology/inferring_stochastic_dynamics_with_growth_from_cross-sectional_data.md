@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inferring Stochastic Dynamics with Growth from Cross-Sectional Data
 description: >-
-  [NeurIPS 2025][计算生物][概率流推断] 提出非平衡概率流推断（UPFI），通过Fokker-Planck方程的Lagrangian形式化，从横截面数据中联合推断随机动力学系统的漂移项、扩散项和增长率，首次准确处理含细胞增殖/死亡的场景。
+  [NeurIPS 2025][计算生物][概率流推断] 提出非平衡概率流推断（UPFI），通过Fokker-Planck方程的Lagrangian形式化，从横截面数据中联合推断随机动力学系统的漂移项、扩散项和增长率，首次准确处理含细胞增殖/死亡的场景。 单细胞测序（scRNA-seq）技术是破坏性的——每个细胞只能在一个时间…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

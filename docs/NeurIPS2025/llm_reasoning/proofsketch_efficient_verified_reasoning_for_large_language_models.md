@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProofSketch: Efficient Verified Reasoning for Large Language Models
 description: >-
-  [NeurIPS 2025][LLM推理][verified reasoning] 提出 ProofSketch 框架，通过符号闭包前向推理+短sketch生成+形式验证的多阶段pipeline，在降低token用量的同时提供逻辑推理的形式化正确性保证。
+  [NeurIPS 2025][LLM推理][verified reasoning] 提出 ProofSketch 框架，通过符号闭包前向推理+短sketch生成+形式验证的多阶段pipeline，在降低token用量的同时提供逻辑推理的形式化正确性保证。 领域现状：CoT prompting和self-consistency…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"
@@ -107,10 +107,10 @@ tags:
 - **vs atomic reasoning (zhang2025)**: 受原子声明分解的启发，但增加了闭包验证
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 将符号闭包与sketch生成结合的idea有意思，但技术贡献有限
-- 实验充分度: ⭐⭐ 实验规模太小（300条），仅一个数据集，结论可信度不足
-- 写作质量: ⭐⭐⭐ 结构清晰但深度不够，是workshop级别的论文
-- 价值: ⭐⭐⭐ 方向有趣但验证不充分，需要更大规模的实验支撑
+- 新颖性: ⭐⭐⭐⭐ 将符号闭包与sketch生成结合的idea有意思，但技术贡献有限
+- 实验充分度: ⭐⭐⭐ 实验规模太小（300条），仅一个数据集，结论可信度不足
+- 写作质量: ⭐⭐⭐⭐ 结构清晰但深度不够，是workshop级别的论文
+- 价值: ⭐⭐⭐⭐ 方向有趣但验证不充分，需要更大规模的实验支撑
 
 <!-- RELATED:START -->
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Concept Bottleneck Language Models For Protein Design
 description: >-
-  [ACL 2025][计算生物][概念瓶颈模型] 本文将概念瓶颈模型（Concept Bottleneck Model）的可解释性设计理念引入蛋白质语言模型，通过中间层的生物学概念作为瓶颈，实现既能设计功能性蛋白质序列又能提供人类可理解的设计理由的蛋白质生成系统。
+  [ACL 2025][计算生物][概念瓶颈模型] 本文将概念瓶颈模型（Concept Bottleneck Model）的可解释性设计理念引入蛋白质语言模型，通过中间层的生物学概念作为瓶颈，实现既能设计功能性蛋白质序列又能提供人类可理解的设计理由的蛋白质生成系统。 领域现状：蛋白质设计是生物工程的核心任务…
 tags:
   - "ACL 2025"
   - "计算生物"

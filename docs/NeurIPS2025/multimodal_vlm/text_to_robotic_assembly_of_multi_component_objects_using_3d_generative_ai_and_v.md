@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text to Robotic Assembly of Multi Component Objects using 3D Generative AI and Vision Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][VLM推理] 提出了一个端到端流水线，将自然语言输入通过3D生成式AI转化为网格模型，再利用VLM的零样本多模态推理自动分解为多组件3D模型（结构件+面板件），最终由机器人臂自动装配成物理对象，并支持用户通过对话反馈调整组件分配。
+  [NeurIPS 2025][多模态VLM][VLM推理] 提出了一个端到端流水线，将自然语言输入通过3D生成式AI转化为网格模型，再利用VLM的零样本多模态推理自动分解为多组件3D模型（结构件+面板件），最终由机器人臂自动装配成物理对象，并支持用户通过对话反馈调整组件分配。 3D生成式AI（如DreamFusion、Get…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

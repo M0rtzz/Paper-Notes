@@ -2,9 +2,9 @@
 title: >-
   [论文解读] W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search
 description: >-
-  [AAAI 2026][LLM对齐][推理时对齐] 提出 W2S-AlignTree，首个将蒙特卡洛树搜索（MCTS）与弱到强泛化（W2SG）范式结合的推理时对齐框架，利用弱模型的步级代理值函数实时引导强模型生成，在情感控制、摘要、指令遵循任务上均显著超越基线…
+  [AAAI 2026 Oral][LLM对齐][推理时对齐] 提出 W2S-AlignTree，首个将蒙特卡洛树搜索（MCTS）与弱到强泛化（W2SG）范式结合的推理时对齐框架，利用弱模型的步级代理值函数实时引导强模型生成，在情感控制、摘要、指令遵循任务上均显著超越基线，其中 Llama3-8B 摘要任务提升 15.9%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM对齐"
   - "推理时对齐"
   - "弱到强泛化"

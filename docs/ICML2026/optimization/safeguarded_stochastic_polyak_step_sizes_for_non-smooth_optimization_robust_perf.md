@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPSsafe: Safeguarded Stochastic Polyak Step Sizes for Non-smooth Optimization
 description: >-
-  [ICML 2026][优化/理论][Stochastic Polyak step size] SPSsafe 把 Stochastic Polyak Step Size (SPS) 扩展到非光滑随机优化——既不需要 interpolation 假设也不需要知道最优值…
+  [ICML 2026][优化/理论][Stochastic Polyak step size] SPSsafe 把 Stochastic Polyak Step Size (SPS) 扩展到非光滑随机优化——既不需要 interpolation 假设也不需要知道最优值，配合动量（IMA = SHB 等价形式）仍保有严格收敛保证；在 DNN 训练上比已有自适应方法（AdaGrad、Adam、DecSPS 等）更稳健，且梯度范数不塌缩到近零（抗梯度消失）。
 tags:
   - "ICML 2026"
   - "优化/理论"

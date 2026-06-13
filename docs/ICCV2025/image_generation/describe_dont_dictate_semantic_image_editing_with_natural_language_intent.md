@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Describe, Don't Dictate: Semantic Image Editing with Natural Language Intent
 description: >-
-  [ICCV 2025][图像生成][语义图像编辑] 提出 DescriptiveEdit，将"指令式图像编辑"重新定义为"参考图像条件下的文本到图像生成"，通过 Cross-Attentive UNet 引入注意力桥接层将参考图像特征注入生成过程，仅需 75M 可训练参数即可实现高保真描述式编辑…
+  [ICCV 2025][图像生成][语义图像编辑] 提出 DescriptiveEdit，将"指令式图像编辑"重新定义为"参考图像条件下的文本到图像生成"，通过 Cross-Attentive UNet 引入注意力桥接层将参考图像特征注入生成过程，仅需 75M 可训练参数即可实现高保真描述式编辑，并与 ControlNet、IP-Adapter 等社区工具无缝兼容。
 tags:
   - "ICCV 2025"
   - "图像生成"

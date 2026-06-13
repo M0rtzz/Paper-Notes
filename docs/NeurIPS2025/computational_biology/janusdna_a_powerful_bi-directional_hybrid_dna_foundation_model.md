@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JanusDNA: A Powerful Bi-directional Hybrid DNA Foundation Model
 description: >-
-  [NeurIPS 2025][计算生物][DNA基础模型] 提出JanusDNA，首个双向DNA基础模型，结合Mamba-Attention-MoE混合架构和Janus Modeling训练范式，以自回归的训练效率实现双向理解，在多个基因组基准上达到SOTA。
+  [NeurIPS 2025][计算生物][DNA基础模型] 提出JanusDNA，首个双向DNA基础模型，结合Mamba-Attention-MoE混合架构和Janus Modeling训练范式，以自回归的训练效率实现双向理解，在多个基因组基准上达到SOTA。 领域现状：大语言模型正被应用于DNA序列建模…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

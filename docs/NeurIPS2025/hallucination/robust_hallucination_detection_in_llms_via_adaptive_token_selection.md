@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Hallucination Detection in LLMs via Adaptive Token Selection
 description: >-
-  [NeurIPS 2025][幻觉检测][hallucination detection] HaMI 将幻觉检测建模为多示例学习（MIL）问题，将生成序列视为 token 实例的"bag"，通过联合优化 token 选择和幻觉检测来自适应地定位最具指示性的 token…
+  [NeurIPS 2025][幻觉检测][hallucination detection] HaMI 将幻觉检测建模为多示例学习（MIL）问题，将生成序列视为 token 实例的"bag"，通过联合优化 token 选择和幻觉检测来自适应地定位最具指示性的 token，在四个 QA 基准上以 AUROC 大幅超越所有现有方法（最高提升 11.9%）。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

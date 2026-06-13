@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CompleteMe: Reference-based Human Image Completion
 description: >-
-  [ICCV 2025][图像生成][Image Completion] 提出CompleteMe框架，通过双U-Net架构和Region-focused Attention（RFA）Block，利用参考图像中的细粒度人物细节（衣物纹理、纹身等），实现高保真的参考引导人体图像补全。
+  [ICCV 2025][图像生成][Image Completion] 提出CompleteMe框架，通过双U-Net架构和Region-focused Attention（RFA）Block，利用参考图像中的细粒度人物细节（衣物纹理、纹身等），实现高保真的参考引导人体图像补全。 领域现状 领域现状：人体图像补全是计算机视觉…
 tags:
   - "ICCV 2025"
   - "图像生成"

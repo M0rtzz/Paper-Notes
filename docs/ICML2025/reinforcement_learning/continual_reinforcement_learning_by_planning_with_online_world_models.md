@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual Reinforcement Learning by Planning with Online World Models
 description: >-
-  [ICML 2025 (Spotlight)][强化学习][持续强化学习] 提出 FTL Online Agent (OA)，通过在线学习的 Follow-The-Leader 浅层世界模型 + 模型预测控制（MPC）规划来实现持续强化学习，该世界模型从构造上免疫灾难性遗忘…
+  [ICML 2025 (Spotlight)][强化学习][持续强化学习] 提出 FTL Online Agent (OA)，通过在线学习的 Follow-The-Leader 浅层世界模型 + 模型预测控制（MPC）规划来实现持续强化学习，该世界模型从构造上免疫灾难性遗忘，且具有理论遗憾界保证 $\mathcal{O}(\sqrt{K^2 D \log(T)})$，在专门设计的 Continual Bench 上全面超越基于深度世界模型的方法。
 tags:
   - "ICML 2025 (Spotlight)"
   - "强化学习"

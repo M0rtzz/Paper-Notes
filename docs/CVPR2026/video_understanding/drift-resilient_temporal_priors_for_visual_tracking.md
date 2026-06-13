@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Drift-Resilient Temporal Priors for Visual Tracking
 description: >-
-  [CVPR 2026][视频理解][视觉跟踪] 提出 DTPTrack——一个轻量即插即用的时序建模模块，通过时序可靠性校准器（TRC）为历史帧分配可靠性分数过滤噪声，并通过时序引导合成器（TGS）将校准后的历史信息合成为动态先验 token 抑制跟踪漂移，在多个基准上达到 SOTA。
+  [CVPR 2026][视频理解][视觉跟踪] 提出 DTPTrack——一个轻量即插即用的时序建模模块，通过时序可靠性校准器（TRC）为历史帧分配可靠性分数过滤噪声，并通过时序引导合成器（TGS）将校准后的历史信息合成为动态先验 token 抑制跟踪漂移，在多个基准上达到 SOTA。 模型漂移：是多帧视觉跟踪器的核心脆弱性…
 tags:
   - "CVPR 2026"
   - "视频理解"

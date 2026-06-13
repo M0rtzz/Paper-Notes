@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Orchestration Framework for Financial Agents: From Algorithmic Trading to Agentic Trading
 description: >-
-  [NeurIPS 2025][LLM Agent][金融智能体] 提出 FinAgent 编排框架，将传统算法交易系统的各组件映射为 AI 智能体（规划器、编排器、Alpha/风控/组合/回测/执行/审计/记忆智能体），使用 MCP 协议进行控制通信、A2A 协议进行智能体间通信…
+  [NeurIPS 2025][LLM Agent][金融智能体] 提出 FinAgent 编排框架，将传统算法交易系统的各组件映射为 AI 智能体（规划器、编排器、Alpha/风控/组合/回测/执行/审计/记忆智能体），使用 MCP 协议进行控制通信、A2A 协议进行智能体间通信，在股票和 BTC 交易任务上验证了可行性。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

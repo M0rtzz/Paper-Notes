@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mastering Massive Multi-Task Reinforcement Learning via Mixture-of-Expert Decision Transformer
 description: >-
-  [ICML2025][强化学习][多任务强化学习] 提出 M3DT 框架，将 MoE 引入 Decision Transformer 实现参数分离——通过任务分组让每个专家只学习一个小任务子集的特定知识，配合三阶段训练机制（骨干→专家→路由器）避免梯度冲突，增加专家数既扩展参数又降低任务负载…
+  [ICML2025][强化学习][多任务强化学习] 提出 M3DT 框架，将 MoE 引入 Decision Transformer 实现参数分离——通过任务分组让每个专家只学习一个小任务子集的特定知识，配合三阶段训练机制（骨干→专家→路由器）避免梯度冲突，增加专家数既扩展参数又降低任务负载，成功将离线多任务 RL 扩展到 160 个仿真控制任务。
 tags:
   - "ICML2025"
   - "强化学习"

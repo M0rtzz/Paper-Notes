@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastVAR: Linear Visual Autoregressive Modeling via Cached Token Pruning
 description: >-
-  [ICCV 2025][模型压缩][Visual Autoregressive] FastVAR 提出一种无需训练的后处理加速方法，通过观察 VAR 模型中大尺度步骤主要建模高频纹理且对剪枝鲁棒的特性，利用频域引导的关键 token 选择（PTS）仅保留高频 token 参与前向…
+  [ICCV 2025][模型压缩][Visual Autoregressive] FastVAR 提出一种无需训练的后处理加速方法，通过观察 VAR 模型中大尺度步骤主要建模高频纹理且对剪枝鲁棒的特性，利用频域引导的关键 token 选择（PTS）仅保留高频 token 参与前向，并用缓存的早期尺度 token 恢复被剪枝的位置（CTR），在 FlashAttention 基础上实现额外 2.7× 加速且性能损失 <1%，并首次实现单张 3090 GPU 上 1.5 秒生成 2K 图像。
 tags:
   - "ICCV 2025"
   - "模型压缩"

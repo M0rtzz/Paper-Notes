@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction
 description: >-
-  [ECCV 2024][3D视觉][3D高斯溅射] SplatFields发现3D高斯溅射（3DGS）在稀疏视图设置下的性能瓶颈源于splat特征缺乏空间自相关性，提出通过隐式神经场预测splat特征来引入空间正则化，在静态3D和动态4D的稀疏重建场景中一致提升了重建质量。
+  [ECCV 2024][3D视觉][3D高斯溅射] SplatFields发现3D高斯溅射（3DGS）在稀疏视图设置下的性能瓶颈源于splat特征缺乏空间自相关性，提出通过隐式神经场预测splat特征来引入空间正则化，在静态3D和动态4D的稀疏重建场景中一致提升了重建质量。 领域现状：3D Gaussian Splattin…
 tags:
   - "ECCV 2024"
   - "3D视觉"

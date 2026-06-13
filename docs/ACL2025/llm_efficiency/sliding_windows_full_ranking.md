@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models
 description: >-
-  [ACL 2025 (Long Paper)][LLM效率][LLM Reranking] 本文系统研究了长上下文LLM在段落排序中的应用，提出用 full ranking（一次性排序所有段落）替代传统滑动窗口策略，并设计了多轮滑动窗口标签构造方法和重要性感知损失函数来微调 full ranking 模型…
+  [ACL 2025 (Long Paper)][LLM效率][LLM Reranking] 本文系统研究了长上下文LLM在段落排序中的应用，提出用 full ranking（一次性排序所有段落）替代传统滑动窗口策略，并设计了多轮滑动窗口标签构造方法和重要性感知损失函数来微调 full ranking 模型，在效率提升约30-65%的同时实现了排序效果的全面超越。
 tags:
   - "ACL 2025 (Long Paper)"
   - "LLM效率"

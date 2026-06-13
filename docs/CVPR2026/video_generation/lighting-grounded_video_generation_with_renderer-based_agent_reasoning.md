@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lighting-grounded Video Generation with Renderer-based Agent Reasoning
 description: >-
-  [CVPR 2026][视频生成][光照可控视频生成] LiVER 提出了一种光照驱动的视频生成框架，通过渲染器Agent将文本描述转化为显式3D场景代理（包含布局、光照、相机轨迹），再利用物理渲染生成diffuse/glossy/rough GGX的场景proxy…
+  [CVPR 2026][视频生成][光照可控视频生成] LiVER 提出了一种光照驱动的视频生成框架，通过渲染器Agent将文本描述转化为显式3D场景代理（包含布局、光照、相机轨迹），再利用物理渲染生成diffuse/glossy/rough GGX的场景proxy，注入视频扩散模型实现物理准确的光照效果与精确场景控制。
 tags:
   - "CVPR 2026"
   - "视频生成"

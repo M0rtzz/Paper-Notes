@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Uni-LoRA: One Vector is All You Need
 description: >-
-  [NeurIPS 2025][模型压缩][参数高效微调] 提出 Uni-LoRA 统一框架，证明各种 LoRA 变体（Tied-LoRA、VeRA、VB-LoRA 等）的参数缩减策略本质上是对全参数空间 $\mathbb{R}^D$ 到低维子空间 $\mathbb{R}^d$ 的投影差异…
+  [NeurIPS 2025 Spotlight][模型压缩][参数高效微调] 提出 Uni-LoRA 统一框架，证明各种 LoRA 变体（Tied-LoRA、VeRA、VB-LoRA 等）的参数缩减策略本质上是对全参数空间 $\mathbb{R}^D$ 到低维子空间 $\mathbb{R}^d$ 的投影差异，并设计了一种等距随机分组投影矩阵——只需训练一个向量即可重建整个 LLM 的 LoRA 参数，实现极致参数效率。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "参数高效微调"
   - "LoRA"

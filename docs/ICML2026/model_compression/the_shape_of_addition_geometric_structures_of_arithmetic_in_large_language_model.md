@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Shape of Addition: Geometric Structures of Arithmetic in Large Language Models
 description: >-
-  [ICML 2026][模型压缩][残差流几何] 作者在 Qwen3-4B 的最后一层残差流里发现 LLM 做多操作数加法时，激活被组织成「数字盆 × 进位纤维」的分层流形，并把"算错一位"重新解释成沿着等原始和轨迹（IRST）滑过一个连续进位势的量化阈值，由此提出双流一致性检查…
+  [ICML 2026][模型压缩][残差流几何] 作者在 Qwen3-4B 的最后一层残差流里发现 LLM 做多操作数加法时，激活被组织成「数字盆 × 进位纤维」的分层流形，并把"算错一位"重新解释成沿着等原始和轨迹（IRST）滑过一个连续进位势的量化阈值，由此提出双流一致性检查，在推理期把"内部还知道但输出选错"的 off-by-one 错误纠回来。
 tags:
   - "ICML 2026"
   - "模型压缩"

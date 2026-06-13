@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation
 description: >-
-  [NeurIPS 2025][图学习][开放词汇场景图生成] 本文提出ACC框架，通过交互驱动范式（而非传统以对象为中心的范式）来解决开放词汇场景图生成中的关键匹配问题：在知识注入阶段用双向交互提示生成更准确的伪监督，在知识迁移阶段用交互引导的查询选择和交互一致性知识蒸馏来减少不匹配…
+  [NeurIPS 2025][图学习][开放词汇场景图生成] 本文提出ACC框架，通过交互驱动范式（而非传统以对象为中心的范式）来解决开放词汇场景图生成中的关键匹配问题：在知识注入阶段用双向交互提示生成更准确的伪监督，在知识迁移阶段用交互引导的查询选择和交互一致性知识蒸馏来减少不匹配，在VG、GQA、PSG三个基准上达到SOTA。
 tags:
   - "NeurIPS 2025"
   - "图学习"

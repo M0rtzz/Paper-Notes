@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Automatic Combination of Sample Selection Strategies for Few-Shot Learning
 description: >-
-  [ACL 2026][LLM/NLP][少样本学习] 本文提出 ACSESS 方法，通过前向选择、后向选择和 Datamodels 三种机制自动识别互补的样本选择策略并加权组合，在 23 种策略、5 个 ICL 模型和 3 种梯度少样本学习方法、6 个文本和 8 个图像数据集上验证了组合策略一致优于单一策略和…
+  [ACL 2026 Findings][LLM 其他][少样本学习] 本文提出 ACSESS 方法，通过前向选择、后向选择和 Datamodels 三种机制自动识别互补的样本选择策略并加权组合，在 23 种策略、5 个 ICL 模型和 3 种梯度少样本学习方法、6 个文本和 8 个图像数据集上验证了组合策略一致优于单一策略和 ICL 专用基线。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "少样本学习"
   - "样本选择"
   - "策略组合"

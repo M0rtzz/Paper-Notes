@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PlugTrack: Multi-Perceptive Motion Analysis for Adaptive Fusion in Multi-Object Tracking
 description: >-
-  [AAAI 2026][视频理解][多目标跟踪] 提出 PlugTrack 框架，通过多感知运动分析（CME）和自适应混合因子生成（ABG），首次实现卡尔曼滤波器与数据驱动运动预测器的自适应融合，在线性和非线性运动场景中均取得显著提升。
+  [AAAI 2026][视频理解][多目标跟踪] 提出 PlugTrack 框架，通过多感知运动分析（CME）和自适应混合因子生成（ABG），首次实现卡尔曼滤波器与数据驱动运动预测器的自适应融合，在线性和非线性运动场景中均取得显著提升。 领域现状 多目标跟踪（MOT）主流采用跟踪-检测范式（tracking-by-detec…
 tags:
   - "AAAI 2026"
   - "视频理解"

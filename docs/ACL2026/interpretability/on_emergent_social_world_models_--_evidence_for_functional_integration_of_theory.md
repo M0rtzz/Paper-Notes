@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Emergent Social World Models -- Evidence for Functional Integration of Theory of Mind and Pragmatic Reasoning in Language Models
 description: >-
-  [ACL2026][可解释性][Theory of Mind] 这篇论文用大规模行为评测和受认知神经科学启发的功能定位/消融实验，给出语言模型的 Theory of Mind 与语用推理可能共享内部计算机制的证据，因此把“社会世界模型”从单纯能力得分推进到可检验的功能整合假说。
+  [ACL2026][可解释性][Theory of Mind] 这篇论文用大规模行为评测和受认知神经科学启发的功能定位/消融实验，给出语言模型的 Theory of Mind 与语用推理可能共享内部计算机制的证据，因此把“社会世界模型”从单纯能力得分推进到可检验的功能整合假说。 领域现状：关于大语言模型是否拥有“世界模型”的…
 tags:
   - "ACL2026"
   - "可解释性"

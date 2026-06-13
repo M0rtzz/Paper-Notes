@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiHaluDet: Multilingual Hallucination Detection via LLM Hidden State Probing
 description: >-
-  [ACL2026][幻觉检测][多语言幻觉检测] MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。
+  [ACL2026][幻觉检测][多语言幻觉检测] MultiHaluDet 用冻结 LLM 的全层隐状态轨迹做多尺度序列建模，再通过 out-of-fold 表征和集成元学习器判别幻觉，在 HaluEval / TriviaQA 上达到约 98% AUROC，并能迁移到法语、孟加拉语和阿姆哈拉语。 领域现状：LLM 幻觉检测…
 tags:
   - "ACL2026"
   - "幻觉检测"

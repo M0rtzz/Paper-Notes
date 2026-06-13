@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEMUR: Learned Multi-Vector Retrieval
 description: >-
-  [ICML 2026][信息检索/RAG][多向量检索] Lemur 将多向量相似性搜索转化为监督学习问题，用一个两层 MLP 将 token 级嵌入映射到低维潜空间，再利用现有单向量 ANNS 索引完成检索，比 PLAID/MUVERA 等方法快一个数量级。
+  [ICML 2026][信息检索/RAG][多向量检索] Lemur 将多向量相似性搜索转化为监督学习问题，用一个两层 MLP 将 token 级嵌入映射到低维潜空间，再利用现有单向量 ANNS 索引完成检索，比 PLAID/MUVERA 等方法快一个数量级。 领域现状：以 ColBERT 为代表的 late interac…
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Binarized Mamba-Transformer for Lightweight Quad Bayer HybridEVS Demosaicing
 description: >-
-  [CVPR 2025][模型压缩][二值化神经网络] 提出BMTNet——一个结合二值化Mamba和Swin Transformer的轻量级混合架构，用于Quad Bayer HybridEVS传感器的RAW图像去马赛克，通过保留核心Selective Scan的全精度、结合全局视觉信息补偿精度损失…
+  [CVPR 2025][模型压缩][二值化神经网络] 提出BMTNet——一个结合二值化Mamba和Swin Transformer的轻量级混合架构，用于Quad Bayer HybridEVS传感器的RAW图像去马赛克，通过保留核心Selective Scan的全精度、结合全局视觉信息补偿精度损失，在大幅降低计算复杂度的同时保持高质量的去马赛克效果。
 tags:
   - "CVPR 2025"
   - "模型压缩"

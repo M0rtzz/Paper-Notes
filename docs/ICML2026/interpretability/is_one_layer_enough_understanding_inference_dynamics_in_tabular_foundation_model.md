@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is One Layer Enough? Understanding Inference Dynamics in Tabular Foundation Models
 description: >-
-  [ICML 2026][可解释性][TabPFN] 作者对 6 个主流表格基础模型 (TFM) 做了首个大规模分层机理分析，发现中后层主要在做"迭代精化"且存在大量冗余，并据此设计了一个只用 20% 参数的单层循环 TFM，性能几乎追平六层原版。
+  [ICML 2026][可解释性][TabPFN] 作者对 6 个主流表格基础模型 (TFM) 做了首个大规模分层机理分析，发现中后层主要在做"迭代精化"且存在大量冗余，并据此设计了一个只用 20% 参数的单层循环 TFM，性能几乎追平六层原版。 领域现状：TabPFN、TabICL、LimiX 等基于 Transforme…
 tags:
   - "ICML 2026"
   - "可解释性"

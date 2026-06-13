@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-free Online Video Step Grounding
 description: >-
-  [NeurIPS 2025][多模态VLM][视频步骤定位] 提出BaGLM，一种无需训练的在线视频步骤定位方法，利用贝叶斯滤波将LLM估计的步骤依赖关系和LMM估计的步骤进度融入零样本LMM预测中，在三个数据集上超越现有需训练的离线方法。
+  [NeurIPS 2025][多模态VLM][视频步骤定位] 提出BaGLM，一种无需训练的在线视频步骤定位方法，利用贝叶斯滤波将LLM估计的步骤依赖关系和LMM估计的步骤进度融入零样本LMM预测中，在三个数据集上超越现有需训练的离线方法。 视频步骤定位（Video Step Grounding, VSG）旨在给定一组程序性…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

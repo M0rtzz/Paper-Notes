@@ -2,10 +2,10 @@
 title: >-
   [论文解读] An Invariant Latent Space Perspective on Language Model Inversion
 description: >-
-  [AAAI 2026][LLM/NLP][语言模型反演] 提出不变潜空间假说(ILSH)，将LLM反演问题重新建模为复用LLM自身潜空间，设计Inv²A框架通过轻量级逆编码器将输出映射到去噪伪表示，再由冻结的LLM解码恢复隐藏prompt…
+  [AAAI 2026][LLM 其他][语言模型反演] 提出不变潜空间假说(ILSH)，将LLM反演问题重新建模为复用LLM自身潜空间，设计Inv²A框架通过轻量级逆编码器将输出映射到去噪伪表示，再由冻结的LLM解码恢复隐藏prompt，在9个数据集上BLEU平均提升4.77%且仅需20%数据量即可达到可比性能。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "语言模型反演"
   - "隐私攻击"
   - "不变潜空间"

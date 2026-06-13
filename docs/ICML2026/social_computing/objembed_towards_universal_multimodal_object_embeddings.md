@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ObjEmbed: Towards Universal Multimodal Object Embeddings
 description: >-
-  [ICML 2026][社会计算][通用对象嵌入] ObjEmbed 训练一个**通用的对象嵌入模型**——通过结合检测、分割、检索、描述、分类等任务对齐多模态对象表示，在 OVD / OVS / Text2Image-Object / Open-Caption-Eval 等 11 项任务上单一嵌入超越或匹配…
+  [ICML 2026][社会计算][通用对象嵌入] ObjEmbed 训练一个**通用的对象嵌入模型**——通过结合检测、分割、检索、描述、分类等任务对齐多模态对象表示，在 OVD / OVS / Text2Image-Object / Open-Caption-Eval 等 11 项任务上单一嵌入超越或匹配任务特定 SOTA。
 tags:
   - "ICML 2026"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science
 description: >-
-  [ACL2025][LLM评测][benchmark] 提出 SeedBench——首个面向种子科学（种子育种）的多任务 LLM 评测基准，包含 2,264 道专家验证题目，覆盖基因信息检索、基因功能调控和品种选育三大育种流程，对 26 个 LLM 进行系统评估…
+  [ACL2025][LLM评测][benchmark] 提出 SeedBench——首个面向种子科学（种子育种）的多任务 LLM 评测基准，包含 2,264 道专家验证题目，覆盖基因信息检索、基因功能调控和品种选育三大育种流程，对 26 个 LLM 进行系统评估，揭示了当前 LLM 与真实育种需求之间的显著差距。
 tags:
   - "ACL2025"
   - "LLM评测"

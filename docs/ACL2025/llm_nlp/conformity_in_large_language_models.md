@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Conformity in Large Language Models
 description: >-
-  [ACL 2025 Main][LLM/NLP][从众效应] 将心理学中的 Asch 从众实验范式迁移到 LLM 上，系统研究了 LLM 的从众行为（conformity），发现所有模型都会受多数意见影响改变答案，且不确定性越高越容易从众…
+  [ACL 2025 Main][LLM 其他][从众效应] 将心理学中的 Asch 从众实验范式迁移到 LLM 上，系统研究了 LLM 的从众行为（conformity），发现所有模型都会受多数意见影响改变答案，且不确定性越高越容易从众，并提出 Devil's Advocate 和 Question Distillation 两种干预方法有效缓解从众效应。
 tags:
   - "ACL 2025 Main"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "从众效应"
   - "LLM偏差"
   - "Asch实验"

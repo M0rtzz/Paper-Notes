@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S³D-NeRF: Single-Shot Speech-Driven Neural Radiance Field for High Fidelity Talking Head Synthesis
 description: >-
-  [ECCV 2024][3D视觉][说话头合成] 提出 S³D-NeRF，利用分层面部外观编码器、跨模态面部形变场和唇音同步判别器，实现了仅需一张图片即可由语音驱动生成高保真说话头视频的 NeRF 方法，在视频质量和唇音同步方面超越了现有单图方法。
+  [ECCV 2024][3D视觉][说话头合成] 提出 S³D-NeRF，利用分层面部外观编码器、跨模态面部形变场和唇音同步判别器，实现了仅需一张图片即可由语音驱动生成高保真说话头视频的 NeRF 方法，在视频质量和唇音同步方面超越了现有单图方法。 领域现状：说话头合成（Talking Head Synthesis）是计算机…
 tags:
   - "ECCV 2024"
   - "3D视觉"

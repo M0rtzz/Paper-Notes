@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MatchFixAgent: Language-Agnostic Autonomous Repository-Level Code Translation Validation and Repair
 description: >-
-  [ICML 2026][代码智能][代码翻译] MatchFixAgent 把仓库级代码翻译的"等价性验证 + 修复"全面 LLM 化：用 6 个并行语义子分析器（控制流 / 数据流 / IO / 库 API / 异常 / 规约）替代昂贵的跨语言互操作工程…
+  [ICML 2026][代码智能][代码翻译] MatchFixAgent 把仓库级代码翻译的"等价性验证 + 修复"全面 LLM 化：用 6 个并行语义子分析器（控制流 / 数据流 / IO / 库 API / 异常 / 规约）替代昂贵的跨语言互操作工程，再叠加一个测试生成 & 修复 Agent 和一个仲裁 Agent，仅 1650 行代码就把验证覆盖率从 71.6% 抬到 99.2%，可修复缺陷比例从 18.5% 抬到 50.6%。
 tags:
   - "ICML 2026"
   - "代码智能"

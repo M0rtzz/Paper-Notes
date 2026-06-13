@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multitwine: Multi-Object Compositing with Text and Layout Control
 description: >-
-  [CVPR 2025][图像生成][多目标合成] 本文提出首个支持文本和布局引导的多目标同时合成（compositing）生成模型Multitwine，通过联合训练合成与个性化生成任务，结合跨注意力/自注意力解耦损失，实现同时插入多个对象的自然交互（如拥抱、弹吉他），用户研究中交互真实性偏好率最高达97.1%…
+  [CVPR 2025][图像生成][多目标合成] 本文提出首个支持文本和布局引导的多目标同时合成（compositing）生成模型Multitwine，通过联合训练合成与个性化生成任务，结合跨注意力/自注意力解耦损失，实现同时插入多个对象的自然交互（如拥抱、弹吉他），用户研究中交互真实性偏好率最高达97.1%。
 tags:
   - "CVPR 2025"
   - "图像生成"

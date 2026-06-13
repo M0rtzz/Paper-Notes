@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Few-shot Acoustic Synthesis with Multimodal Flow Matching
 description: >-
-  [CVPR2026][图像生成][flow matching] 提出 FLAC，首个基于 flow matching 的少样本房间脉冲响应（RIR）生成框架，仅凭单次录音即可在未见场景中合成空间一致的声学响应，并引入 AGREE 联合嵌入用于几何-声学一致性评估。
+  [CVPR2026][图像生成][flow matching] 提出 FLAC，首个基于 flow matching 的少样本房间脉冲响应（RIR）生成框架，仅凭单次录音即可在未见场景中合成空间一致的声学响应，并引入 AGREE 联合嵌入用于几何-声学一致性评估。 房间声学建模的重要性：沉浸式虚拟环境需要声音与空间一致…
 tags:
   - "CVPR2026"
   - "图像生成"

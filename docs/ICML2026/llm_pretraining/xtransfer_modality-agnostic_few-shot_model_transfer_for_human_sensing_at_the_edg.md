@@ -2,7 +2,7 @@
 title: >-
   [论文解读] XTransfer: Modality-Agnostic Few-Shot Model Transfer for Human Sensing at the Edge
 description: >-
-  [ICML2026][预训练][human sensing] XTransfer 面向边缘设备上的人体感知任务，用少量目标传感器数据把来自图像、文本、音频或传感器等任意模态的预训练模型迁移过来…
+  [ICML2026][预训练][human sensing] XTransfer 面向边缘设备上的人体感知任务，用少量目标传感器数据把来自图像、文本、音频或传感器等任意模态的预训练模型迁移过来，通过 layer-wise model repairing 和 resource-constrained layer recombining 缓解跨模态特征错位，同时提升少样本精度与边缘部署效率。
 tags:
   - "ICML2026"
   - "预训练"

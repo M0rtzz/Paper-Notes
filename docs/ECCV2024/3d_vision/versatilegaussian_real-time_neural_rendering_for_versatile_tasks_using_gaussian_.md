@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VersatileGaussian: Real-Time Neural Rendering for Versatile Tasks Using Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][3D高斯泼溅] 本文提出 VersatileGaussian，通过为 3D 高斯赋予共享多任务特征并设计任务相关注意力（Task Correlation Attention）模块实现跨任务信息流动…
+  [ECCV 2024][3D视觉][3D高斯泼溅] 本文提出 VersatileGaussian，通过为 3D 高斯赋予共享多任务特征并设计任务相关注意力（Task Correlation Attention）模块实现跨任务信息流动，在 ScanNet 和 Replica 数据集上同时达到了多任务标签预测的 SOTA 精度和 35 FPS 的实时渲染速度。
 tags:
   - "ECCV 2024"
   - "3D视觉"

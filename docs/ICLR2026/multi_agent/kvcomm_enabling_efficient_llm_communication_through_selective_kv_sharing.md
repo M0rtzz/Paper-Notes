@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KVComm: Enabling Efficient LLM Communication through Selective KV Sharing
 description: >-
-  [ICLR 2026][多智能体][LLM communication] 提出 KVComm 框架通过选择性共享 KV pairs 实现 LLM 间高效通信，发现 hidden states 存在"信息集中偏差"使其不适合跨模型传递，设计基于注意力重要性 + 高斯先验的层选择策略…
+  [ICLR 2026][多智能体][LLM communication] 提出 KVComm 框架通过选择性共享 KV pairs 实现 LLM 间高效通信，发现 hidden states 存在"信息集中偏差"使其不适合跨模型传递，设计基于注意力重要性 + 高斯先验的层选择策略，仅传输 30% 层即可超越大多数 baseline。
 tags:
   - "ICLR 2026"
   - "多智能体"

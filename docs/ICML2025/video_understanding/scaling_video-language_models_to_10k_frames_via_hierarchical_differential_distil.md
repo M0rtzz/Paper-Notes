@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation
 description: >-
-  [ICML 2025][视频理解][长视频理解] ViLaMP 提出差分蒸馏 (Differential Distillation) 原则，通过层次化的帧级差分关键帧选择 (DKS) 和 patch 级差分特征融合 (DFM) 两种机制实现"混合精度"视频处理——关键帧保留全部视觉 token…
+  [ICML 2025][视频理解][长视频理解] ViLaMP 提出差分蒸馏 (Differential Distillation) 原则，通过层次化的帧级差分关键帧选择 (DKS) 和 patch 级差分特征融合 (DFM) 两种机制实现"混合精度"视频处理——关键帧保留全部视觉 token，非关键帧压缩为单个 token，成功在单张 A100 GPU 上处理长达 10K 帧（约 2.7 小时）的超长视频。
 tags:
   - "ICML 2025"
   - "视频理解"

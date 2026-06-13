@@ -2,10 +2,10 @@
 title: >-
   [论文解读] B-score: Detecting biases in large language models using response history
 description: >-
-  [ICML 2025][LLM/NLP][LLM偏见检测] 提出B-score指标，通过比较LLM在单轮(single-turn)与多轮(multi-turn)对话中的回答概率差异来检测偏见，发现LLM在多轮对话中能"自我去偏"，并利用B-score提升答案验证准确率。
+  [ICML 2025][LLM 其他][LLM偏见检测] 提出B-score指标，通过比较LLM在单轮(single-turn)与多轮(multi-turn)对话中的回答概率差异来检测偏见，发现LLM在多轮对话中能"自我去偏"，并利用B-score提升答案验证准确率。 核心矛盾 核心矛盾：领域现状：LLM常表现出强烈的偏见…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM偏见检测"
   - "多轮对话"
   - "自我去偏"

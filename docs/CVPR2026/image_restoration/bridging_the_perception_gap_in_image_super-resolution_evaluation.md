@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Perception Gap in Image Super-Resolution Evaluation
 description: >-
-  [CVPR 2026][图像恢复][超分辨率评估] 通过大规模用户研究揭示现有 SR 评估指标（PSNR、SSIM、LPIPS 等）与人类感知严重不一致，分析其内在缺陷后提出极简但有效的 RQI（Relative Quality Index）框架，通过学习图像对之间的相对质量差异实现更可靠的 SR 评估…
+  [CVPR 2026][图像恢复][超分辨率评估] 通过大规模用户研究揭示现有 SR 评估指标（PSNR、SSIM、LPIPS 等）与人类感知严重不一致，分析其内在缺陷后提出极简但有效的 RQI（Relative Quality Index）框架，通过学习图像对之间的相对质量差异实现更可靠的 SR 评估，且可作为损失函数指导 SR 训练。
 tags:
   - "CVPR 2026"
   - "图像恢复"

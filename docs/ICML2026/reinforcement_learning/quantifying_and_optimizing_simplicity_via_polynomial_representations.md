@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying and Optimizing Simplicity via Polynomial Representations
 description: >-
-  [ICML2026][强化学习][简单性度量] 作者提出用"沿数据插值路径拟合 Chebyshev 多项式"作为神经网络的低维函数空间代理，并定义"有效次数"（Effective Degree, ED）—— 对系数加绝对值再乘多项式阶数 —— 作为衡量"函数有多简单"的标量…
+  [ICML2026][强化学习][简单性度量] 作者提出用"沿数据插值路径拟合 Chebyshev 多项式"作为神经网络的低维函数空间代理，并定义"有效次数"（Effective Degree, ED）—— 对系数加绝对值再乘多项式阶数 —— 作为衡量"函数有多简单"的标量；它在 CIFAR-10/ImageNet/CLIP 上比 sharpness、参数 $L_2$ 范数等已知泛化代理更准地预测泛化间隔，并且整条估计 pipeline 可微，可直接当做训练时的"简单性正则项"，在图像、文本、CLIP 微调与 RL 四类任务上一致带来增益。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.29823](https://arxiv.org/abs/2605.29823)  
 **代码**: https://github.com/xinzaixinzai/Effective-Degree  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: 简单性度量, 函数空间, Chebyshev 多项式, 泛化代理, 可微正则化  
 
 ## 一句话总结

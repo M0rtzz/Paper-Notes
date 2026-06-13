@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShowTable: Unlocking Creative Table Visualization with Collaborative Reflection and Refinement
 description: >-
-  [CVPR 2026][图像生成][表格可视化] ShowTable 提出了"创意表格可视化"这一新任务（将数据表格生成为信息图），并设计了一个 MLLM（推理+反思）与扩散模型（生成+精修）协同的渐进式自纠错 pipeline，通过针对性训练的重写模块和用 RL 优化的精修模块…
+  [CVPR 2026][图像生成][表格可视化] ShowTable 提出了"创意表格可视化"这一新任务（将数据表格生成为信息图），并设计了一个 MLLM（推理+反思）与扩散模型（生成+精修）协同的渐进式自纠错 pipeline，通过针对性训练的重写模块和用 RL 优化的精修模块，在自建的 TableVisBench 基准上显著提升所有基线模型的可视化质量。
 tags:
   - "CVPR 2026"
   - "图像生成"

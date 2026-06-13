@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection
 description: >-
-  [ECCV 2024][自动驾驶][单目3D检测] 提出 MonoWAD，通过天气码本学习晴天知识作为参考，结合天气自适应扩散模型将雾效建模为噪声进行特征增强，实现在各种天气条件下鲁棒的单目3D目标检测。
+  [ECCV 2024][自动驾驶][单目3D检测] 提出 MonoWAD，通过天气码本学习晴天知识作为参考，结合天气自适应扩散模型将雾效建模为噪声进行特征增强，实现在各种天气条件下鲁棒的单目3D目标检测。 单目3D目标检测仅依赖单张RGB图像估计3D边界框，因其成本低廉而被广泛用于自动驾驶。然而，现有方法几乎只关注理想天气（…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

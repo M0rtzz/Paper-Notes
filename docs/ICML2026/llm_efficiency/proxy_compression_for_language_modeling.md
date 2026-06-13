@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Proxy Compression for Language Modeling
 description: >-
-  [ICML 2026][LLM效率][byte-level LM] 作者提出「proxy compression」——训练时把 90% 数据喂成 tokenizer / 神经压缩器产出的短序列、10% 喂原始 UTF-8 字节…
+  [ICML 2026][LLM效率][byte-level LM] 作者提出「proxy compression」——训练时把 90% 数据喂成 tokenizer / 神经压缩器产出的短序列、10% 喂原始 UTF-8 字节，配合 sentinel token 与短暂的 in-context translation warm-up；推理时丢掉所有压缩器，模型只看原始字节，却能在固定 compute 下显著超过纯字节模型，且在大规模下追平甚至超过 tokenizer baseline。
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments
 description: >-
-  [ICML 2025][时间序列][状态空间模型] 提出 Phy-SSM，将部分已知的物理知识融入深度状态空间模型（SSM），通过动力学分解（已知/未知矩阵）和物理状态正则化，实现对噪声大、不规则采样数据的长期动力学精准预测与外推。
+  [ICML 2025][时间序列][状态空间模型] 提出 Phy-SSM，将部分已知的物理知识融入深度状态空间模型（SSM），通过动力学分解（已知/未知矩阵）和物理状态正则化，实现对噪声大、不规则采样数据的长期动力学精准预测与外推。 现实中的动力学系统（自动驾驶、流行病传播、气候科学等）通常受物理法则支配…
 tags:
   - "ICML 2025"
   - "时间序列"

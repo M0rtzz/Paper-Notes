@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Understanding New-Knowledge-Induced Factual Hallucinations in LLMs: Analysis and Interpretation
 description: >-
-  [ACL 2026][幻觉检测][事实幻觉] 本文通过受控合成数据集 Biography-Reasoning 系统分析了 SFT 阶段学习新知识导致的事实幻觉现象，发现幻觉的根本机制是模型对关键实体的注意力被削弱，并提出 KnownPatch——在训练末期注入少量已知知识来恢复注意力模式，有效缓解幻觉。
+  [ACL 2026 Findings][幻觉检测][事实幻觉] 本文通过受控合成数据集 Biography-Reasoning 系统分析了 SFT 阶段学习新知识导致的事实幻觉现象，发现幻觉的根本机制是模型对关键实体的注意力被削弱，并提出 KnownPatch——在训练末期注入少量已知知识来恢复注意力模式，有效缓解幻觉。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "幻觉检测"
   - "事实幻觉"
   - "新知识学习"

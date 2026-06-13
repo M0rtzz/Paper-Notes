@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Editability in Image Generation with Layer-wise Memory
 description: >-
-  [CVPR 2025][图像生成][图像编辑] 本文提出基于层级记忆的迭代图像编辑框架，通过存储每步编辑的 latent 和 prompt embedding，结合背景一致性引导（BCG）和多查询解耦注意力（MQD），实现多步顺序编辑中背景保持一致且新对象自然融入的效果。
+  [CVPR 2025][图像生成][图像编辑] 本文提出基于层级记忆的迭代图像编辑框架，通过存储每步编辑的 latent 和 prompt embedding，结合背景一致性引导（BCG）和多查询解耦注意力（MQD），实现多步顺序编辑中背景保持一致且新对象自然融入的效果。 领域现状：文本到图像生成（如 Stable Diff…
 tags:
   - "CVPR 2025"
   - "图像生成"

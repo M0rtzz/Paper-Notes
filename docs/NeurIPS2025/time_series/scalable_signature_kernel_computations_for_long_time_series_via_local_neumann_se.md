@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Signature Kernel Computations for Long Time Series via Local Neumann Series Expansions
 description: >-
-  [NeurIPS 2025][时间序列][签名核] 提出 PowerSig，通过自适应截断的局部 Neumann 级数展开高效计算签名核（signature kernel），将内存从 $O(\ell^2)$ 降到 $O(\ell P)$，使签名核可扩展到单GPU上百万级长度的时间序列。
+  [NeurIPS 2025][时间序列][签名核] 提出 PowerSig，通过自适应截断的局部 Neumann 级数展开高效计算签名核（signature kernel），将内存从 $O(\ell^2)$ 降到 $O(\ell P)$，使签名核可扩展到单GPU上百万级长度的时间序列。 领域现状： 签名核（Signature…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

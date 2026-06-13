@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Value Gradient Guidance for Flow Matching Alignment
 description: >-
-  [NeurIPS 2025][图像生成][流匹配] 提出VGG-Flow方法，利用最优控制理论中的Hamilton-Jacobi-Bellman方程，将流匹配模型对齐问题转化为"残差速度场匹配值函数梯度"的梯度匹配任务，实现高效且保持先验分布的奖励对齐。
+  [NeurIPS 2025][图像生成][流匹配] 提出VGG-Flow方法，利用最优控制理论中的Hamilton-Jacobi-Bellman方程，将流匹配模型对齐问题转化为"残差速度场匹配值函数梯度"的梯度匹配任务，实现高效且保持先验分布的奖励对齐。 流匹配模型（如Stable Diffusion 3）是当前最强大的连续…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

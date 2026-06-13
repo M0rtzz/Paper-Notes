@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Towards Robust ESG Analysis Against Greenwashing Risks: A3CG
 description: >-
-  [ACL 2025][ESG分析] 提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性…
+  [ACL 2025][LLM 其他][ESG分析] 提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性，发现监督学习（GRACE F1=47.51）优于 LLM（Claude 3.5 F1=42.03）但泛化效率更差。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "ESG分析"
   - "漂绿检测"
   - "方面-行动分析"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sampling Innovation-Based Adaptive Compressive Sensing
 description: >-
-  [CVPR 2025][模型压缩][自适应压缩感知] 提出 SIB-ACS 框架，通过"采样创新"准则（衡量采样增量带来的重建误差下降）指导多阶段自适应采样分配，并设计主成分压缩域网络（PCCD-Net）进行高保真图像重建，显著超越 SOTA 压缩感知方法。
+  [CVPR 2025][模型压缩][自适应压缩感知] 提出 SIB-ACS 框架，通过"采样创新"准则（衡量采样增量带来的重建误差下降）指导多阶段自适应采样分配，并设计主成分压缩域网络（PCCD-Net）进行高保真图像重建，显著超越 SOTA 压缩感知方法。 压缩感知（CS）利用信号稀疏性进行欠采样重建…
 tags:
   - "CVPR 2025"
   - "模型压缩"

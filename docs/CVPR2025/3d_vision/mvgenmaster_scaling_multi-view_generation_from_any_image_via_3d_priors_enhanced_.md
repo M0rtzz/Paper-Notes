@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVGenMaster: Scaling Multi-View Generation from Any Image via 3D Priors Enhanced Diffusion Model
 description: >-
-  [CVPR 2025][3D视觉][新视角合成] MVGenMaster 提出了一种融合度量深度几何先验的多视图扩散模型，配合 160 万场景的 MvD-1M 数据集和无训练的 key-rescaling 技术，能在单次前向推理中从任意参考视图生成多达 100 个新视角…
+  [CVPR 2025][3D视觉][新视角合成] MVGenMaster 提出了一种融合度量深度几何先验的多视图扩散模型，配合 160 万场景的 MvD-1M 数据集和无训练的 key-rescaling 技术，能在单次前向推理中从任意参考视图生成多达 100 个新视角，在域内外 NVS 基准上全面超越 CAT3D 和 ViewCrafter。
 tags:
   - "CVPR 2025"
   - "3D视觉"

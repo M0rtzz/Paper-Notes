@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-supervised Synthetic Pretraining for Inference of Stellar Mass Embedded in Dense Gas
 description: >-
-  [NeurIPS 2025 (Workshop: ML and the Physical Sciences)][语义分割][自监督预训练] 本文提出了一种"合成数据驱动的自监督预训练"范式：先用 Flame 算法生成 100 万张合成分形图像，对 ViT-L/16 编码器进行 DINOv2 自监督预训练…
+  [NeurIPS 2025 (Workshop: ML and the Physical Sciences)][语义分割][自监督预训练] 本文提出了一种"合成数据驱动的自监督预训练"范式：先用 Flame 算法生成 100 万张合成分形图像，对 ViT-L/16 编码器进行 DINOv2 自监督预训练，然后将冻结的编码器直接迁移到极其有限的磁流体动力学（MHD）恒星形成模拟数据上，通过 kNN 回归实现恒星质量预测（$R^2=0.81$），通过 PCA 投影实现零样本无监督语义分割，性能略优于在相同数据上训练的全监督 ResNet-18 基线。
 tags:
   - "NeurIPS 2025 (Workshop: ML and the Physical Sciences)"
   - "语义分割"

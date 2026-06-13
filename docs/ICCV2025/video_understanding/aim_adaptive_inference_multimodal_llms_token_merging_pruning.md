@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning
 description: >-
-  [ICCV 2025][视频理解][多模态LLM] 提出 AIM，一种无需训练的多模态LLM自适应推理方法，通过LLM前基于相似度的视觉token迭代合并和LLM层内基于PageRank重要性的渐进token剪枝，实现6.8倍FLOPs削减同时保持性能…
+  [ICCV 2025][视频理解][多模态LLM] 提出 AIM，一种无需训练的多模态LLM自适应推理方法，通过LLM前基于相似度的视觉token迭代合并和LLM层内基于PageRank重要性的渐进token剪枝，实现6.8倍FLOPs削减同时保持性能，在长视频理解上同等计算量下甚至超越SOTA (+4.6 MLVU)。
 tags:
   - "ICCV 2025"
   - "视频理解"

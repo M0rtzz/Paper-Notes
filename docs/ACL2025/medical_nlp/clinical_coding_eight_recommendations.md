@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning AI Research with the Needs of Clinical Coding Workflows: Eight Recommendations Based on US Data Analysis and Critical Review
 description: >-
-  [ACL 2025][医疗NLP][clinical coding] 这篇 position paper 通过对 MIMIC 数据集和现有自动化临床编码研究的深入分析，指出当前评估方法（如仅关注前50个高频编码、使用不恰当指标）与真实临床场景严重脱节，并提出八条具体建议来改进评估方法和研究方向。
+  [ACL 2025][医疗NLP][clinical coding] 这篇 position paper 通过对 MIMIC 数据集和现有自动化临床编码研究的深入分析，指出当前评估方法（如仅关注前50个高频编码、使用不恰当指标）与真实临床场景严重脱节，并提出八条具体建议来改进评估方法和研究方向。 领域现状：临床编码（clin…
 tags:
   - "ACL 2025"
   - "医疗NLP"

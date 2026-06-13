@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InPO: Inversion Preference Optimization with Reparametrized DDIM for Efficient Diffusion Model Alignment
 description: >-
-  [CVPR 2025][图像生成][扩散模型] 本文提出 DDIM-InPO，通过将扩散模型视为单步生成模型并利用 DDIM 反演技术找到与偏好数据高度相关的潜变量，实现仅需 400 步微调即可达到 SOTA 的高效扩散模型偏好对齐。
+  [CVPR 2025][图像生成][扩散模型] 本文提出 DDIM-InPO，通过将扩散模型视为单步生成模型并利用 DDIM 反演技术找到与偏好数据高度相关的潜变量，实现仅需 400 步微调即可达到 SOTA 的高效扩散模型偏好对齐。 领域现状：文本到图像扩散模型（如 SDXL）已具备强大的生成能力，但生成结果与人类偏好的对…
 tags:
   - "CVPR 2025"
   - "图像生成"

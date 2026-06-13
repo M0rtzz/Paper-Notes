@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auditing Cascading Risks in Multi-Agent Systems via Semantic–Geometric Co-evolution
 description: >-
-  [ICLR 2026 Workshop][多智能体][multi-agent safety] 提出 SCCAL 框架，通过耦合语义流（semantic flow）和交互图的 Ollivier–Ricci 曲率（ORC）来建模多智能体系统中语义-几何的协同演化，利用两者的一致性残差作为级联风险的早期预警信号…
+  [ICLR 2026 Workshop][多智能体][multi-agent safety] 提出 SCCAL 框架，通过耦合语义流（semantic flow）和交互图的 Ollivier–Ricci 曲率（ORC）来建模多智能体系统中语义-几何的协同演化，利用两者的一致性残差作为级联风险的早期预警信号，在语义违规显现前数轮即可检测异常。
 tags:
   - "ICLR 2026 Workshop"
   - "多智能体"

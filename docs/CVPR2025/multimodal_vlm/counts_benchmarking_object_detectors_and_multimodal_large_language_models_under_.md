@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COUNTS: Benchmarking Object Detectors and Multimodal Large Language Models under Distribution Shifts
 description: >-
-  [CVPR 2025][多模态VLM][分布偏移] 本文构建了COUNTS——一个包含14种自然分布偏移、222K+样本和119万+标注框的大规模OOD数据集，并提出O(OD)²和OODG两个基准，系统评估了目标检测器和多模态大模型在分布偏移下的泛化能力，发现即使是GPT-4o也仅能达到56.7%的定位准确率…
+  [CVPR 2025][多模态VLM][分布偏移] 本文构建了COUNTS——一个包含14种自然分布偏移、222K+样本和119万+标注框的大规模OOD数据集，并提出O(OD)²和OODG两个基准，系统评估了目标检测器和多模态大模型在分布偏移下的泛化能力，发现即使是GPT-4o也仅能达到56.7%的定位准确率。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

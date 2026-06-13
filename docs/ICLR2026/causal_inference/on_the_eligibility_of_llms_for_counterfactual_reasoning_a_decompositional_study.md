@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study
 description: >-
-  [ICLR2026][因果推理][counterfactual reasoning] 提出基于结构因果模型（SCM）的分解式评估框架，将 LLM 的反事实推理拆分为四个阶段（因果变量识别→因果图构建→干预识别→结果推理），在 11 个多模态数据集上系统诊断 LLM 在各阶段的能力瓶颈…
+  [ICLR2026][因果推理][counterfactual reasoning] 提出基于结构因果模型（SCM）的分解式评估框架，将 LLM 的反事实推理拆分为四个阶段（因果变量识别→因果图构建→干预识别→结果推理），在 11 个多模态数据集上系统诊断 LLM 在各阶段的能力瓶颈，并提出工具增强和高级 elicitation 策略来改善性能。
 tags:
   - "ICLR2026"
   - "因果推理"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SteerEval: How Controllable Are Large Language Models? A Unified Evaluation across Behavioral Granularities
 description: >-
-  [ACL 2026][LLM/NLP][LLM steering] SteerEval 把 LLM 可控性按 Marr 的三层分析框架拆成 L1（表达什么）/L2（怎么表达）/L3（具体落到哪个词）…
+  [ACL 2026][LLM 其他][LLM steering] SteerEval 把 LLM 可控性按 Marr 的三层分析框架拆成 L1（表达什么）/L2（怎么表达）/L3（具体落到哪个词），覆盖 Personality、Sentiment、Language Features 三个域共 7560 个 paired sample，系统揭示了"细粒度上现有 steering 方法普遍崩溃"这一关键缺口。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM steering"
   - "controllability"
   - "hierarchical benchmark"

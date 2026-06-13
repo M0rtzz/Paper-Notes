@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L2G-Net: Local to Global Spectral Graph Neural Networks via Cauchy Factorizations
 description: >-
-  [ICML 2026][图学习][图神经网络] 作者把图傅里叶变换（GFT）的特征基**精确分解**成"每个子图的局部 GFT × 一串 Cauchy 矩阵"，将 $O(n^3)$ 的特征分解降到 $O(kn^2)$（$k$ 为子图间的切边数），并在分解里穿插可学谱滤波器…
+  [ICML 2026][图学习][图神经网络] 作者把图傅里叶变换（GFT）的特征基**精确分解**成"每个子图的局部 GFT × 一串 Cauchy 矩阵"，将 $O(n^3)$ 的特征分解降到 $O(kn^2)$（$k$ 为子图间的切边数），并在分解里穿插可学谱滤波器，得到一族能在 569k 节点大图上跑通、参数比 Transformer 少几个数量级却性能相当的局部-到-全局谱 GNN。
 tags:
   - "ICML 2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Two-Stage Training: Cooperative SFT and RL for LLM Reasoning
 description: >-
-  [ICML 2026][LLM推理][强化学习] 提出 BRIDGE 框架，将 SFT 与 RL 的整合建模为双层优化问题——SFT 作为上层教师通过轻量 LoRA 模块学习选择性地向 RL 学生传递有益监督信号，在五个数学推理基准上平均绝对提升超过 3 个百分点。
+  [ICML 2026][LLM推理][强化学习] 提出 BRIDGE 框架，将 SFT 与 RL 的整合建模为双层优化问题——SFT 作为上层教师通过轻量 LoRA 模块学习选择性地向 RL 学生传递有益监督信号，在五个数学推理基准上平均绝对提升超过 3 个百分点。 领域现状：SFT（监督微调）和 RLVR（基于可验证奖励的…
 tags:
   - "ICML 2026"
   - "LLM推理"

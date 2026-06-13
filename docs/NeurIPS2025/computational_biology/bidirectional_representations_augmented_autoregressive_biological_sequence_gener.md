@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CrossNovo: Bidirectional Representations Augmented Autoregressive Biological Sequence Generation
 description: >-
-  [NeurIPS 2025][计算生物][肽段测序] CrossNovo 融合自回归（AR）和非自回归（NAR）解码器，通过共享谱编码器 + 重要性退火 + 梯度阻断知识蒸馏，让 NAR 的双向全局理解增强 AR 的序列生成能力…
+  [NeurIPS 2025][计算生物][肽段测序] CrossNovo 融合自回归（AR）和非自回归（NAR）解码器，通过共享谱编码器 + 重要性退火 + 梯度阻断知识蒸馏，让 NAR 的双向全局理解增强 AR 的序列生成能力，在 9-Species 基准上氨基酸精度达 0.811（+2.6%）、肽段召回 0.654（+5.3%）。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

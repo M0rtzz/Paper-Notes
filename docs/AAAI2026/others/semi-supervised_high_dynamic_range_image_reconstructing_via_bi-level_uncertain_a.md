@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semi-Supervised High Dynamic Range Image Reconstructing via Bi-Level Uncertain Area Masking
 description: >-
-  [AAAI 2026][HDR重建] 提出半监督 HDR 重建框架，通过**不确定性估计分支**评估伪 HDR 标签质量，在 patch 和像素两个层面掩码不可靠区域，仅用 6.7% HDR 真值即可达到与全监督 SOTA 可比的性能。
+  [AAAI 2026][HDR重建] 提出半监督 HDR 重建框架，通过不确定性估计分支：评估伪 HDR 标签质量，在 patch 和像素两个层面掩码不可靠区域，仅用 6.7% HDR 真值即可达到与全监督 SOTA 可比的性能。 1. 领域现状：从不同曝光的 LDR 图像集重建无鬼影的 HDR 图像是计算摄影的重要任务…
 tags:
   - "AAAI 2026"
   - "HDR重建"

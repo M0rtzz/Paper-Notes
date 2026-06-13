@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PYRA: Parallel Yielding Re-Activation for Training-Inference Efficient Task Adaptation
 description: >-
-  [ECCV 2024][信号/通信][参数高效微调] 本文提出 PYRA，通过并行生成解耦的自适应调制权重并以 re-activation 策略调节待合并 token 的特征，实现了 Vision Transformer 在下游任务适配时同时兼顾训练效率（仅调 0.4% 参数）和推理效率（约 1.7-3.2…
+  [ECCV 2024][信号/通信][参数高效微调] 本文提出 PYRA，通过并行生成解耦的自适应调制权重并以 re-activation 策略调节待合并 token 的特征，实现了 Vision Transformer 在下游任务适配时同时兼顾训练效率（仅调 0.4% 参数）和推理效率（约 1.7-3.2 倍加速），性能与不压缩的 PEFT 方法持平甚至更优。
 tags:
   - "ECCV 2024"
   - "信号/通信"

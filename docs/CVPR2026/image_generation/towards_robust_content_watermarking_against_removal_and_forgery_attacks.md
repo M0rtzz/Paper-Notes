@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Robust Content Watermarking Against Removal and Forgery Attacks
 description: >-
-  [CVPR 2026][图像生成][内容水印] 提出实例特定双侧检测水印方法 ISTS，通过根据图像语义动态选择水印注入时间和位置来抵抗去除攻击和伪造攻击，并设计双侧检测机制抵御反向潜在表示攻击，在三种去除攻击和三种伪造攻击的平均和最坏情况下均达到 SOTA 鲁棒性。
+  [CVPR 2026 Findings][图像生成][内容水印] 提出实例特定双侧检测水印方法 ISTS，通过根据图像语义动态选择水印注入时间和位置来抵抗去除攻击和伪造攻击，并设计双侧检测机制抵御反向潜在表示攻击，在三种去除攻击和三种伪造攻击的平均和最坏情况下均达到 SOTA 鲁棒性。 1. 领域现状：内容水印（如 Tree…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "内容水印"
   - "扩散模型"

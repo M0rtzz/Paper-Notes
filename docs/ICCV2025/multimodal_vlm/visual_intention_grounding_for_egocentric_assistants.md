@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Intention Grounding for Egocentric Assistants
 description: >-
-  [ICCV 2025][多模态VLM][视觉意图定位] 提出首个面向**自我中心视觉意图定位**（egocentric visual intention grounding）的任务和数据集 **EgoIntention**（26K 图像 + 52K 意图描述 + 89K 边界框）…
+  [ICCV 2025][多模态VLM][视觉意图定位] 提出首个面向**自我中心视觉意图定位**（egocentric visual intention grounding）的任务和数据集 **EgoIntention**（26K 图像 + 52K 意图描述 + 89K 边界框），揭示现有 MLLM 在隐式意图推理和第一人称视觉定位上的重大不足，并提出 **Reason-to-Ground (RoG)** 指令微调方法，通过解耦意图推理和物体定位显著提升性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

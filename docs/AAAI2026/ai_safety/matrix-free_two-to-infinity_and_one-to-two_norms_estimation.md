@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation
 description: >-
-  [AAAI 2026][AI安全][matrix norm estimation] 提出 TwINEst 和 TwINEst++ 两种基于 Hutchinson 对角估计器的随机算法，用于在无矩阵 (matrix-free) 设定下高效估计 $\|A\|_{2\to\infty}$ 和 $\|A\|_{1\t…
+  [AAAI 2026][AI安全][matrix norm estimation] 提出 TwINEst 和 TwINEst++ 两种基于 Hutchinson 对角估计器的随机算法，用于在无矩阵 (matrix-free) 设定下高效估计 $\|A\|_{2\to\infty}$ 和 $\|A\|_{1\to 2}$ 范数，并提供了 oracle 复杂度理论保证，在 DNN 的 Jacobian 正则化（图像分类对抗鲁棒性）和推荐系统对抗攻击防御中展现了显著优势。
 tags:
   - "AAAI 2026"
   - "AI安全"

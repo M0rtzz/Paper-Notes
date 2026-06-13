@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation
 description: >-
-  [NeurIPS 2025][医学图像][自监督学习] 提出 DISCOVR，一种自监督双分支框架，通过在线语义聚类蒸馏将图像编码器的细粒度空间语义传递到视频编码器的时序表示中，在六个跨胎儿/儿科/成人心脏超声数据集上实现了异常检测、分类和分割的全面领先。
+  [NeurIPS 2025][医学图像][自监督学习] 提出 DISCOVR，一种自监督双分支框架，通过在线语义聚类蒸馏将图像编码器的细粒度空间语义传递到视频编码器的时序表示中，在六个跨胎儿/儿科/成人心脏超声数据集上实现了异常检测、分类和分割的全面领先。 超声心动图视频理解面临独特的挑战，现有自监督学习方法在该领域表现不佳…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

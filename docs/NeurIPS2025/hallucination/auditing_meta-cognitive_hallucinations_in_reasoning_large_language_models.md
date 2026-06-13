@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auditing Meta-Cognitive Hallucinations in Reasoning Large Language Models
 description: >-
-  [NeurIPS 2025][幻觉检测][hallucination] 系统性审计推理大模型（RLLM）中幻觉的产生与传播机制，发现长 CoT 中的反思（reflection）会通过元认知偏差放大幻觉而非纠正它，即使在幻觉源头进行干预也难以改变最终结果（chain disloyalty）…
+  [NeurIPS 2025][幻觉检测][hallucination] 系统性审计推理大模型（RLLM）中幻觉的产生与传播机制，发现长 CoT 中的反思（reflection）会通过元认知偏差放大幻觉而非纠正它，即使在幻觉源头进行干预也难以改变最终结果（chain disloyalty），揭示现有幻觉检测方法在多步推理场景下严重不足。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

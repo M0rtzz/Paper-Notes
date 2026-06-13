@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lagrangian Perturbation Diffusion Steering: Latent Reinforcement Learning for Generative Policies
 description: >-
-  [ICML 2026][机器人][扩散策略] LP-DS 把冻结的扩散/流匹配策略当成黑盒解码器 $\Phi(s,w)$，只在它的初始噪声 $w=\epsilon+\Delta_\theta(s)$ 上学一个状态条件残差…
+  [ICML 2026][机器人][扩散策略] LP-DS 把冻结的扩散/流匹配策略当成黑盒解码器 $\Phi(s,w)$，只在它的初始噪声 $w=\epsilon+\Delta_\theta(s)$ 上学一个状态条件残差，用 Lagrangian 信任域 $\mathbb{E}_s[\|\Delta_\theta(s)\|_2^2]\le\delta$ 把扰动幅度卡住，从而在保留多模态先验的前提下做样本高效的在线 RL 微调，在 RoboMimic / Gym / Adroit / LIBERO 上比 DSRL 与 DPPO 更稳，回报最多 +25%。
 tags:
   - "ICML 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Black-Box Detection of LLM-Generated Text Using Generalized Jensen-Shannon Divergence
 description: >-
-  [ICML 2026][AIGC检测][黑盒 AI 文本检测] SurpMark 把"AI 文本检测"重构成似然无关假设检验：用代理 LM 算 token surprisal 后 k-means 离散成 k 个状态，估计一阶 Markov 转移矩阵…
+  [ICML 2026][AIGC检测][黑盒 AI 文本检测] SurpMark 把"AI 文本检测"重构成似然无关假设检验：用代理 LM 算 token surprisal 后 k-means 离散成 k 个状态，估计一阶 Markov 转移矩阵，再用广义 Jensen-Shannon 散度（GJS）和预先建好的"人写 / 机写"参考转移矩阵比较，单次前向就给出黑盒、无需重训、无需 per-instance 重采样的判别分数。
 tags:
   - "ICML 2026"
   - "AIGC检测"

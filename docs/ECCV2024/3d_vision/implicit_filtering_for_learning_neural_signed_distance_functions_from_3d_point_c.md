@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Filtering for Learning Neural Signed Distance Functions from 3D Point Clouds
 description: >-
-  [ECCV 2024][3D视觉][隐式场] 提出一种非线性隐式滤波器，在不需要法线的情况下对神经SDF的隐式场进行平滑同时保留尖锐几何细节，并通过扩展到非零等值面实现全场一致性正则化。
+  [ECCV 2024][3D视觉][隐式场] 提出一种非线性隐式滤波器，在不需要法线的情况下对神经SDF的隐式场进行平滑同时保留尖锐几何细节，并通过扩展到非零等值面实现全场一致性正则化。 领域现状： 神经符号距离函数（Neural SDF）已成为从3D点云重建表面的主流方法，通过过拟合单个点云上的MLP来预测空间中每个点的符…
 tags:
   - "ECCV 2024"
   - "3D视觉"

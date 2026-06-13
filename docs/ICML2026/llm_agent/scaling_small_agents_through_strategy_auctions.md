@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Small Agents Through Strategy Auctions
 description: >-
-  [ICML 2026][LLM Agent][策略竞拍] 论文提出 sale（Strategy Auctions for Workload Efficiency）：让大小不一的 Qwen3 智能体在每个任务上提交"策略短计划"作为竞拍标书，按 cost-minus-value 选出执行者…
+  [ICML 2026][LLM Agent][策略竞拍] 论文提出 sale（Strategy Auctions for Workload Efficiency）：让大小不一的 Qwen3 智能体在每个任务上提交"策略短计划"作为竞拍标书，按 cost-minus-value 选出执行者，并用历史竞拍记忆让便宜 agent 持续精炼自己的标书；在 deep search 与 coding 上既超过最大模型的 pass@1，又把对最大 agent 的依赖降低 52%、总开销降低 35%。
 tags:
   - "ICML 2026"
   - "LLM Agent"

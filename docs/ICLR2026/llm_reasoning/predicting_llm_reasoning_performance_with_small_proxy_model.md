@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicting LLM Reasoning Performance with Small Proxy Model
 description: >-
-  [ICLR 2026][LLM推理][scaling law] 提出 rBridge，通过使用 frontier 模型的推理 trace 作为 gold label 并按 token 级任务对齐加权 NLL，使 ≤1B 的小模型能有效预测 13B-32B 大模型的推理性能…
+  [ICLR 2026][LLM推理][scaling law] 提出 rBridge，通过使用 frontier 模型的推理 trace 作为 gold label 并按 token 级任务对齐加权 NLL，使 ≤1B 的小模型能有效预测 13B-32B 大模型的推理性能，在数据集排名任务中实现 100× 以上的计算节省。
 tags:
   - "ICLR 2026"
   - "LLM推理"

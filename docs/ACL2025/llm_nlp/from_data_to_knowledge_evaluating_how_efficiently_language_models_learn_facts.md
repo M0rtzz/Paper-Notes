@@ -2,10 +2,10 @@
 title: >-
   [论文解读] From Data to Knowledge: Evaluating How Efficiently Language Models Learn Facts
 description: >-
-  [ACL 2025][LLM/NLP][sample efficiency] 首次直接研究事实在预训练数据中出现频次与 LLM 能否回忆该事实之间的关系，提出两种样本效率指标，发现不同架构/规模的模型在高频事实上表现相似但在低频事实上差异显著——低频事实的学习能力是区分模型样本效率的关键。
+  [ACL 2025][LLM 其他][sample efficiency] 首次直接研究事实在预训练数据中出现频次与 LLM 能否回忆该事实之间的关系，提出两种样本效率指标，发现不同架构/规模的模型在高频事实上表现相似但在低频事实上差异显著——低频事实的学习能力是区分模型样本效率的关键。 领域现状 领域现状：LLM 通过预训…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "sample efficiency"
   - "fact learning"
   - "knowledge probing"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Multi-task Linear Regression without Eigenvalue Lower Bounds: Adaptivity, Robustness and Safety
 description: >-
-  [ICML 2026][多任务线性回归] 本文提出一种以 $\|\theta_j-\beta\|_{\bm\Sigma_j}$（矩阵加权范数）为正则项的鲁棒多任务线性回归估计器，用一个相对的"平衡度常数" $B$ 取代了既往工作中刚硬的"每个任务二阶矩最小特征值 $\Omega(1)$"假设…
+  [ICML 2026][统计学习理论 / 多任务学习 / 鲁棒回归][多任务线性回归] 本文提出一种以 $\|\theta_j-\beta\|_{\bm\Sigma_j}$（矩阵加权范数）为正则项的鲁棒多任务线性回归估计器，用一个相对的"平衡度常数" $B$ 取代了既往工作中刚硬的"每个任务二阶矩最小特征值 $\Omega(1)$"假设，在病态/低秩/带离群任务的高维场景下同时给出最小最大率（minimax）、自适应、和回退到独立任务学习（ITL）的安全保证。
 tags:
   - "ICML 2026"
+  - "统计学习理论 / 多任务学习 / 鲁棒回归"
   - "多任务线性回归"
   - "矩阵加权正则"
   - "最小特征值"

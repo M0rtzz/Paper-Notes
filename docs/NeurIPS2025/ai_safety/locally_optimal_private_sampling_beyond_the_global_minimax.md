@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locally Optimal Private Sampling: Beyond the Global Minimax
 description: >-
-  [NeurIPS 2025][AI安全][本地差分隐私] 在本地差分隐私（LDP）下的采样问题中，提出**局部minimax**框架，利用公共数据分布 $P_0$ 定义的邻域约束，推导出闭式最优采样器，在理论和实验上均**一致优于全局minimax采样器**。
+  [NeurIPS 2025][AI安全][本地差分隐私] 在本地差分隐私（LDP）下的采样问题中，提出局部minimax：框架，利用公共数据分布 $P_0$ 定义的邻域约束，推导出闭式最优采样器，在理论和实验上均一致优于全局minimax采样器：。 领域现状： 本地差分隐私（LDP）允许用户在设备上随机化数据后再共享…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

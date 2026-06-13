@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoundObj: Self-supervised Foundation Models as Rewards for Label-free 3D Object Segmentation
 description: >-
-  [ICML 2026][3D视觉][标签无关3D分割] 本文提出 FoundObj，把 2D/3D 自监督基础模型（DINOv2 + TRELLIS）当作奖励器，用一个"超点合并 + PPO"的 RL 代理在无任何场景级人工标注下完成复杂室内场景的多类 3D 物体分割…
+  [ICML 2026][3D视觉][标签无关3D分割] 本文提出 FoundObj，把 2D/3D 自监督基础模型（DINOv2 + TRELLIS）当作奖励器，用一个"超点合并 + PPO"的 RL 代理在无任何场景级人工标注下完成复杂室内场景的多类 3D 物体分割，在 ScanNet/S3DIS/ScanNet200 上将无监督 SOTA 的 AP 从 19.6 提到 24.2。
 tags:
   - "ICML 2026"
   - "3D视觉"

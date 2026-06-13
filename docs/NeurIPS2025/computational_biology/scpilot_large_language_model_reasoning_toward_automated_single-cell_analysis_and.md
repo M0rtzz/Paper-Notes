@@ -2,7 +2,7 @@
 title: >-
   [论文解读] scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery
 description: >-
-  [NeurIPS 2025][计算生物][single-cell RNA-seq] 提出 scPilot 框架和 scBench 基准，让LLM直接在单细胞RNA-seq数据上进行"组学原生推理"（读取标记基因→提出假设→调用工具验证→迭代修正）…
+  [NeurIPS 2025][计算生物][single-cell RNA-seq] 提出 scPilot 框架和 scBench 基准，让LLM直接在单细胞RNA-seq数据上进行"组学原生推理"（读取标记基因→提出假设→调用工具验证→迭代修正），实现细胞类型标注准确率提升11%、轨迹推断graph-edit distance降低30%。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

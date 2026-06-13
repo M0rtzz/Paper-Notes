@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIMPC: Learning Self-Induced Mirror-Point Consistency for Unsupervised Point Cloud Denoising
 description: >-
-  [ICML 2026][3D视觉][点云去噪] SIMPC 提出在**同一个噪声点**上沿去噪向量做"对称延伸"得到一个位于曲面另一侧的镜像点，再用 Mirror-Point Consistency Loss 强制两点的去噪目标重合…
+  [ICML 2026][3D视觉][点云去噪] SIMPC 提出在**同一个噪声点**上沿去噪向量做"对称延伸"得到一个位于曲面另一侧的镜像点，再用 Mirror-Point Consistency Loss 强制两点的去噪目标重合，从而把无监督点云去噪从"在多份噪声变体间找统计对应"换成"在单点内部找确定性几何对应"，在 PUNet/PCNet 合成数据和 Paris-Rue-Madame / Kinect 真实扫描上全面超越无监督 SOTA，并击败若干有监督方法。
 tags:
   - "ICML 2026"
   - "3D视觉"

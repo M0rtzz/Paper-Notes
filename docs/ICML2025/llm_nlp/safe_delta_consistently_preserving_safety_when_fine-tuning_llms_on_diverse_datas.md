@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Safe Delta: Consistently Preserving Safety when Fine-Tuning LLMs on Diverse Datasets
 description: >-
-  [ICML 2025][LLM/NLP][LLM安全] Safe Delta提出了一种安全感知的后训练防御方法，通过估计安全退化程度、选择性保留delta参数以最大化效用同时限制安全损失、并施加安全补偿向量来弥补残余安全损失，在多种微调数据集（不同规模、任务类型）上一致地保持LLM安全性而不牺牲效用。
+  [ICML 2025][LLM 其他][LLM安全] Safe Delta提出了一种安全感知的后训练防御方法，通过估计安全退化程度、选择性保留delta参数以最大化效用同时限制安全损失、并施加安全补偿向量来弥补残余安全损失，在多种微调数据集（不同规模、任务类型）上一致地保持LLM安全性而不牺牲效用。
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM安全"
   - "微调安全"
   - "对齐保持"

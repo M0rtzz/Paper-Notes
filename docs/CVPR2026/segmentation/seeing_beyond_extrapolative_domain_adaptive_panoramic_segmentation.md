@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing Beyond: Extrapolative Domain Adaptive Panoramic Segmentation
 description: >-
-  [CVPR 2026][语义分割][全景语义分割] 提出 EDA-PSeg 框架，通过图匹配适配器（GMA）和欧拉-边际注意力（EMA）两个核心模块，首次实现从针孔视图到 360° 全景图像的开放集无监督域自适应语义分割，同时处理几何视场角畸变和未知类别发现。
+  [CVPR 2026][语义分割][全景语义分割] 提出 EDA-PSeg 框架，通过图匹配适配器（GMA）和欧拉-边际注意力（EMA）两个核心模块，首次实现从针孔视图到 360° 全景图像的开放集无监督域自适应语义分割，同时处理几何视场角畸变和未知类别发现。 全景视觉的重要性：全景图像提供 360° 视场角（FoV）…
 tags:
   - "CVPR 2026"
   - "语义分割"

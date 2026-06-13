@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Long Live The Balance: Information Bottleneck Driven Tree-based Policy Optimization
 description: >-
-  [ICML 2026][LLM对齐][信息瓶颈] 本文用信息瓶颈 (IB) 理论提出一个可量化"探索-利用平衡"的步级指标 IB-Score, 并据此设计 IB 引导的树采样 (IBTree) + 步级局部/全局优势, 在 Qwen3-1.7B/8B 上比 GRPO 平均提升 2.9–3.6%…
+  [ICML 2026][LLM对齐][信息瓶颈] 本文用信息瓶颈 (IB) 理论提出一个可量化"探索-利用平衡"的步级指标 IB-Score, 并据此设计 IB 引导的树采样 (IBTree) + 步级局部/全局优势, 在 Qwen3-1.7B/8B 上比 GRPO 平均提升 2.9–3.6%, 同时在同 token 预算下多采到 50% 轨迹.
 tags:
   - "ICML 2026"
   - "LLM对齐"

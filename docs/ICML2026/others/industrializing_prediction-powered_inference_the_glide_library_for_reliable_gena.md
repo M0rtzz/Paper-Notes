@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Industrializing Prediction-Powered Inference: The GLIDE Library for Reliable GenAI and Agentic Systems Evaluation
 description: >-
-  [ICML2026][Prediction-Powered Inference] GLIDE 把 PPI（prediction-powered inference）家族的最新估计器（PPI++、Stratified PPI、PTD、ASI）与采样器（uniform、stratified、active、cost…
+  [ICML2026][Prediction-Powered Inference] GLIDE 把 PPI（prediction-powered inference）家族的最新估计器（PPI++、Stratified PPI、PTD、ASI）与采样器（uniform、stratified、active、cost-optimal）统一封装成 scipy 风格的均值估计库，专门解决"贵的人类标注 + 便宜但有偏的 LLM-as-judge"的混合评测问题，并配套蒙特卡洛验证与一颗决策树，让 GenAI / Agentic 系统的可信评估真的能上工业化。
 tags:
   - "ICML2026"
   - "Prediction-Powered Inference"

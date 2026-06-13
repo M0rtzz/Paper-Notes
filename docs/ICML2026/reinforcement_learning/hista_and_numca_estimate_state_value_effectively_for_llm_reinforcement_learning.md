@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hista and Numca: Estimate State Value Effectively for LLM Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][LLM RL] 本文先用一个新建的 State Value Estimation Benchmark (SVEB) 实证 PPO critic 在 LLM RL 里几乎完全退化为 GRPO 的组均奖励 baseline…
+  [ICML 2026][强化学习][LLM RL] 本文先用一个新建的 State Value Estimation Benchmark (SVEB) 实证 PPO critic 在 LLM RL 里几乎完全退化为 GRPO 的组均奖励 baseline，再提出两种以"无须额外 rollout、几乎零额外算力"为目标的状态价值估计方法 —— Numca 用数字 milestone 把数学推理重写为目标条件 RL 做信用分配，Hista 用 LLM 末层隐状态 + MinDistance 做概率加权奖励平均 —— 在五大类 SVEB 子集都把 MAE 降到 GRPO/PPO 之下，并让 DAPO/CSIPO 等强算法在多个数学基准上拿…
 tags:
   - "ICML 2026"
   - "强化学习"

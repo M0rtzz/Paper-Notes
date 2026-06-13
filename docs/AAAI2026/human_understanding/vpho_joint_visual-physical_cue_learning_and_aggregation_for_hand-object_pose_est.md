@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VPHO: Joint Visual-Physical Cue Learning and Aggregation for Hand-Object Pose Estimation
 description: >-
-  [AAAI 2026][人体理解][手-物体姿态估计] 提出 VPHO，一个联合视觉和物理线索的手-物体姿态估计框架，通过力预测模块学习 3D 物理线索，并设计两阶段候选姿态聚合策略（视觉引导 + 物理引导），在保持视觉一致性的同时实现物理合理性…
+  [AAAI 2026][人体理解][手-物体姿态估计] 提出 VPHO，一个联合视觉和物理线索的手-物体姿态估计框架，通过力预测模块学习 3D 物理线索，并设计两阶段候选姿态聚合策略（视觉引导 + 物理引导），在保持视觉一致性的同时实现物理合理性，在 DexYCB 和 HO3D 两个基准上同时达到姿态精度和物理合理性的 SOTA。
 tags:
   - "AAAI 2026"
   - "人体理解"

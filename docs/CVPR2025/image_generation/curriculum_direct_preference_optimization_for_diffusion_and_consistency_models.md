@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curriculum Direct Preference Optimization for Diffusion and Consistency Models
 description: >-
-  [CVPR 2025][图像生成][DPO] 首次将课程学习引入 DPO 并首次将 DPO 适配到一致性模型，通过从"容易区分的偏好对"到"难以区分的偏好对"渐进训练，在文本对齐、美学和人类偏好上全面超越标准 DPO 和 DDPO，且仅需 1/10 训练数据量。
+  [CVPR 2025][图像生成][DPO] 首次将课程学习引入 DPO 并首次将 DPO 适配到一致性模型，通过从"容易区分的偏好对"到"难以区分的偏好对"渐进训练，在文本对齐、美学和人类偏好上全面超越标准 DPO 和 DDPO，且仅需 1/10 训练数据量。 领域现状：DPO 已成功应用于 LLM 对齐…
 tags:
   - "CVPR 2025"
   - "图像生成"

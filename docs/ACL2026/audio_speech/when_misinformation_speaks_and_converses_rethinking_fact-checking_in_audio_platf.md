@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Misinformation Speaks and Converses: Rethinking Fact-Checking in Audio Platforms
 description: >-
-  [ACL 2026][音频/语音][音频虚假信息] 本文为Position Paper，论证音频平台上的虚假信息在本质上不同于文本虚假信息——它同时具有口语性（prosody、pacing、emotion）和对话性（多轮、多说话人、跨集节），现有以文本为中心的事实核查流水线无法有效处理…
+  [ACL 2026][音频/语音][音频虚假信息] 本文为Position Paper，论证音频平台上的虚假信息在本质上不同于文本虚假信息——它同时具有口语性（prosody、pacing、emotion）和对话性（多轮、多说话人、跨集节），现有以文本为中心的事实核查流水线无法有效处理，需要围绕音频特有属性重新设计验证框架。
 tags:
   - "ACL 2026"
   - "音频/语音"

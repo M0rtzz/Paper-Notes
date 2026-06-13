@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AD-LLM: Benchmarking Large Language Models for Anomaly Detection
 description: >-
-  [ACL 2025][LLM评测][Anomaly Detection] 提出首个LLM异常检测基准AD-LLM，系统评估LLM在零样本检测、数据增强和无监督模型选择三个核心任务中的能力，发现GPT-4o零样本检测在多数数据集上超越传统训练方法，合成数据对灵活表示的检测器有效但对几何假设模型有害…
+  [ACL 2025][LLM评测][Anomaly Detection] 提出首个LLM异常检测基准AD-LLM，系统评估LLM在零样本检测、数据增强和无监督模型选择三个核心任务中的能力，发现GPT-4o零样本检测在多数数据集上超越传统训练方法，合成数据对灵活表示的检测器有效但对几何假设模型有害，推理型LLM模型选择接近最优但解释缺乏数据集针对性。
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InvisibleInk: High-Utility and Low-Cost Text Generation with Differential Privacy
 description: >-
-  [NeurIPS 2025][LLM安全][differential privacy] 提出 InvisibleInk 框架，通过差分裁剪（DClip）隔离敏感信息和 Top-$k^+$ 截断采样两项创新，将差分隐私长文本生成的计算成本降低 8 倍以上…
+  [NeurIPS 2025][LLM安全][differential privacy] 提出 InvisibleInk 框架，通过差分裁剪（DClip）隔离敏感信息和 Top-$k^+$ 截断采样两项创新，将差分隐私长文本生成的计算成本降低 8 倍以上，首次实现不到非隐私生成 4-8 倍开销的高质量隐私文本生成。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

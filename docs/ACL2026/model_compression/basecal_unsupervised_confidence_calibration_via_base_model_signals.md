@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BaseCal: Unsupervised Confidence Calibration via Base Model Signals
 description: >-
-  [ACL 2026][模型压缩][confidence calibration] 观察到 base LLM 在 free-form QA 上仍然保持良好校准、而 post-trained LLM（PoLLM）严重过自信…
+  [ACL 2026][模型压缩][confidence calibration] 观察到 base LLM 在 free-form QA 上仍然保持良好校准、而 post-trained LLM（PoLLM）严重过自信，BaseCal 提出两种无监督方案——把 PoLLM 的回答喂进 base LLM 拿 token 概率做置信度（BaseCal-ReEval），或用一层线性投影把 PoLLM 末层隐状态映射回 base LLM 空间再过 base 的输出层（BaseCal-Proj），在 5 个数据集 × 3 个模型族上把 ECE 相对最佳无监督基线平均降低 42.9%。
 tags:
   - "ACL 2026"
   - "模型压缩"

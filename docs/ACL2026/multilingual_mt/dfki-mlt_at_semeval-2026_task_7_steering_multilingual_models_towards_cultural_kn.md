@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DFKI-MLT at SemEval-2026 TASK 7: Steering Multilingual Models Towards Cultural Knowledge
 description: >-
-  [ACL2026][多语言/翻译][activation steering] 这篇 SemEval 系统论文用 FLORES 平行语料提取语言方向，在推理时向多语言 LLM 的 residual stream 注入 language steering vector…
+  [ACL2026][多语言/翻译][activation steering] 这篇 SemEval 系统论文用 FLORES 平行语料提取语言方向，在推理时向多语言 LLM 的 residual stream 注入 language steering vector，最终 MCQ 官方成绩为 86.96% accuracy、17 队第 7，但后验分析显示增益高度依赖层、prompt、模型和 locale。
 tags:
   - "ACL2026"
   - "多语言/翻译"

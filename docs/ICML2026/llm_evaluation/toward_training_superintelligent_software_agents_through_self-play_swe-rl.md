@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Training Superintelligent Software Agents through Self-Play SWE-RL
 description: >-
-  [ICML 2026][LLM评测][自博弈] 本文提出 Self-play SWE-RL (SSR)，让同一个 LLM 在沙箱化代码仓里既扮演"造 bug 的 proposer"又扮演"修 bug 的 solver"，仅以 Docker 镜像为输入、用一致性校验和 solve-rate 作奖励做联合 RL…
+  [ICML 2026][LLM评测][自博弈] 本文提出 Self-play SWE-RL (SSR)，让同一个 LLM 在沙箱化代码仓里既扮演"造 bug 的 proposer"又扮演"修 bug 的 solver"，仅以 Docker 镜像为输入、用一致性校验和 solve-rate 作奖励做联合 RL，在 SWE-bench Verified 与 SWE-Bench Pro 上分别自我提升 +10.4 / +7.8 分，并稳定优于使用人类标注 issue + 测试套件的"human-data"基线。
 tags:
   - "ICML 2026"
   - "LLM评测"

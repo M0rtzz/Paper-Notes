@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-HGS: 3D Half-Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][Half-Gaussian] 提出3D Half-Gaussian (3D-HGS)核函数——用一个分割平面将3D高斯分成两半，每半有独立不透明度，作为**即插即用**的重建核替换标准高斯核，在不牺牲渲染速度的前提下显著提升形状和颜色不连续处的渲染质量…
+  [CVPR 2025][3D视觉][Half-Gaussian] 提出3D Half-Gaussian (3D-HGS)核函数——用一个分割平面将3D高斯分成两半，每半有独立不透明度，作为**即插即用**的重建核替换标准高斯核，在不牺牲渲染速度的前提下显著提升形状和颜色不连续处的渲染质量，在Mip-NeRF360/T&T/Deep Blending上全面超越所有SOTA方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

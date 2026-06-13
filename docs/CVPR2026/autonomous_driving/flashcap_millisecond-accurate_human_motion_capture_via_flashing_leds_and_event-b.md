@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlashCap: Millisecond-Accurate Human Motion Capture via Flashing LEDs and Event-Based Vision
 description: >-
-  [CVPR 2026][自动驾驶][事件相机] 提出 FlashCap，首个基于闪烁 LED + 事件相机的运动捕捉系统，通过为每个 LED 配置不同的闪烁频率实现身份识别，构建了首个 1000Hz 标注精度的人体运动数据集 FlashMotion（715 万帧），并提出 ResPose 基线方法…
+  [CVPR 2026][自动驾驶][事件相机] 提出 FlashCap，首个基于闪烁 LED + 事件相机的运动捕捉系统，通过为每个 LED 配置不同的闪烁频率实现身份识别，构建了首个 1000Hz 标注精度的人体运动数据集 FlashMotion（715 万帧），并提出 ResPose 基线方法，将运动定时误差从 ~50ms 降至 ~5ms，姿态估计 MPJPE 降低约 40%。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

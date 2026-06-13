@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Sustainable Investment Policies Informed by Opponent Shaping
 description: >-
-  形式化证明 InvestESG 模拟环境在何种条件下构成社会困境，并应用 Advantage Alignment 对抗塑形算法引导经济智能体走向可持续投资均衡。
+  形式化证明 InvestESG 模拟环境在何种条件下构成社会困境，并应用 Advantage Alignment 对抗塑形算法引导经济智能体走向可持续投资均衡。 核心问题 应对气候变化需要全球协调，但理性经济主体通常优先追求即时利益，导致社会困境。如何利用多智能体强化学习来发现并推动可持续投资策略？ InvestESG 环…
 tags:
 
 ---

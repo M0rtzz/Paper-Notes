@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Through-The-Mask: Mask-based Motion Trajectories for Image-to-Video Generation
 description: >-
-  [CVPR 2025][视频生成][图像到视频生成] 本文提出 Through-The-Mask（TTM），一种两阶段组合式 I2V 框架，以基于掩码的运动轨迹（mask-based motion trajectory）作为中间表示，将图像到视频的生成分解为"运动生成"和"视频生成"两个阶段…
+  [CVPR 2025][视频生成][图像到视频生成] 本文提出 Through-The-Mask（TTM），一种两阶段组合式 I2V 框架，以基于掩码的运动轨迹（mask-based motion trajectory）作为中间表示，将图像到视频的生成分解为"运动生成"和"视频生成"两个阶段，在多物体复杂运动场景中取得SOTA效果。
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARQUIS: A Three-Stage Pipeline for Video Retrieval-Augmented Generation
 description: >-
-  [ACL2026][音频/语音][视频检索增强生成] MARQUIS 将多视频检索增强文章生成拆成“查询分解与重排检索-校准式结构化证据抽取-带引用文章生成”三阶段，并可用 RLM 控制器做迭代证据管理，在 MAGMaR2026 上把检索 nDCG@10 从 0.195 提升到 0.759…
+  [ACL2026][音频/语音][视频检索增强生成] MARQUIS 将多视频检索增强文章生成拆成“查询分解与重排检索-校准式结构化证据抽取-带引用文章生成”三阶段，并可用 RLM 控制器做迭代证据管理，在 MAGMaR2026 上把检索 nDCG@10 从 0.195 提升到 0.759，生成侧 Iter-QA-Base 人类评分达到 3.83。
 tags:
   - "ACL2026"
   - "音频/语音"

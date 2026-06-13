@@ -2,10 +2,10 @@
 title: >-
   [论文解读] To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization
 description: >-
-  [ACL2025][LLM/NLP][数学推理] 提出基于EM框架的AutoCode方法，让数学LLM自主决定何时使用代码工具辅助推理，通过E-step引导探索高潜力代码触发决策+M-step离线RL优化，7B模型在MATH500上提升11%+。
+  [ACL2025][LLM 其他][数学推理] 提出基于EM框架的AutoCode方法，让数学LLM自主决定何时使用代码工具辅助推理，通过E-step引导探索高潜力代码触发决策+M-step离线RL优化，7B模型在MATH500上提升11%+。 数学推理需要混合能力：数学问题求解同时需要抽象推理（CoT）和精确计算（代码执行…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "数学推理"
   - "工具集成"
   - "元认知"

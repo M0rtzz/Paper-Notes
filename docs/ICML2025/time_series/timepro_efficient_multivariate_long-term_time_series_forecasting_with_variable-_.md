@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimePro: Efficient Multivariate Long-term Time Series Forecasting with Variable- and Time-Aware Hyper-state
 description: >-
-  [ICML 2025][时间序列][时间序列预测] 提出基于 Mamba 的 TimePro 模型，通过构建变量感知和时间感知的超级状态（hyper-state），自适应选择关键时间点来调节变量维度的隐状态，以线性复杂度实现高效的多变量长期时间序列预测。
+  [ICML 2025][时间序列][时间序列预测] 提出基于 Mamba 的 TimePro 模型，通过构建变量感知和时间感知的超级状态（hyper-state），自适应选择关键时间点来调节变量维度的隐状态，以线性复杂度实现高效的多变量长期时间序列预测。 领域现状：长期时间序列预测（LTSF）是机器学习的重要任务…
 tags:
   - "ICML 2025"
   - "时间序列"

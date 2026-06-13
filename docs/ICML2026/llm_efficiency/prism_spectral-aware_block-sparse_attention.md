@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prism: Spectral-Aware Block-Sparse Attention
 description: >-
-  [ICML 2026][LLM效率][块稀疏注意力] Prism 把"块重要性估计"分解到 RoPE 的高频/低频两个频带分别做 mean-pooling 加 softmax，并用能量比推出的温度自动校准 logit 量级…
+  [ICML 2026][LLM效率][块稀疏注意力] Prism 把"块重要性估计"分解到 RoPE 的高频/低频两个频带分别做 mean-pooling 加 softmax，并用能量比推出的温度自动校准 logit 量级，从而完全用块级运算（不再回落到 token 级搜索）拿到与 full attention 几乎相同的精度，在 128K 上对 FlashAttention-2 取得 5.1× 加速。
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs
 description: >-
-  [ECCV 2024][3D视觉][粗定位] 提出 SceneGraphLoc，将查询图像在由多模态 3D 场景图组成的参考地图中进行粗定位，在不依赖大规模图像数据库的前提下，实现了接近 SOTA 图像级方法的定位精度，同时存储需求降低三个数量级。
+  [ECCV 2024][3D视觉][粗定位] 提出 SceneGraphLoc，将查询图像在由多模态 3D 场景图组成的参考地图中进行粗定位，在不依赖大规模图像数据库的前提下，实现了接近 SOTA 图像级方法的定位精度，同时存储需求降低三个数量级。 粗视觉定位（place recognition）是计算机视觉和机器人中的基础…
 tags:
   - "ECCV 2024"
   - "3D视觉"

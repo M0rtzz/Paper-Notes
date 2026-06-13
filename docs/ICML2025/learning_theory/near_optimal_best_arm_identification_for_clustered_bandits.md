@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Near Optimal Best Arm Identification for Clustered Bandits
 description: >-
-  [ICML2025][best arm identification] 在多智能体聚类多臂赌博机设置下，提出 Cl-BAI 和 BAI-Cl 两种算法，利用聚类结构大幅降低最优臂识别的样本复杂度，并证明 BAI-Cl++ 在 $M$ 为常数时达到 minimax 最优。
+  [ICML2025][best arm identification] 在多智能体聚类多臂赌博机设置下，提出 Cl-BAI 和 BAI-Cl 两种算法，利用聚类结构大幅降低最优臂识别的样本复杂度，并证明 BAI-Cl++ 在 $M$ 为常数时达到 minimax 最优。 联邦多臂赌博机 (Federated MAB) 近年来…
 tags:
   - "ICML2025"
   - "best arm identification"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Machine Learning for Heart Transplant Allocation Policy Optimization Should Account for Incentives
 description: >-
-  [ICML 2026][AI安全][器官分配] 这是一篇 ICML 2026 立场论文：作者结合 UNOS 历史数据，论证美国心脏移植分配系统的下一代 ML 策略必须把"器官获取组织/移植中心/医生/患者/监管"之间的激励错位当成一等公民来建模，呼吁把机制设计、战略分类、因果推断、社会选择整合进 ML 流水线…
+  [ICML 2026][AI安全][器官分配] 这是一篇 ICML 2026 立场论文：作者结合 UNOS 历史数据，论证美国心脏移植分配系统的下一代 ML 策略必须把"器官获取组织/移植中心/医生/患者/监管"之间的激励错位当成一等公民来建模，呼吁把机制设计、战略分类、因果推断、社会选择整合进 ML 流水线，否则再强的预测模型也会在部署时被各方策略性行为反噬。
 tags:
   - "ICML 2026"
   - "AI安全"

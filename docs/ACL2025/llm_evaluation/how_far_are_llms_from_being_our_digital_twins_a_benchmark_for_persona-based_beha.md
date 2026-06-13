@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Far are LLMs from Being Our Digital Twins? A Benchmark for Persona-Based Behavior Chain Simulation
 description: >-
-  [ACL 2025 (Findings)][LLM评测][数字孪生] 本文提出BehaviorChain基准，首次评估LLM模拟连续人类行为的能力，包含1001个人格画像下的15846个行为样本，发现即使是最先进的模型在连续行为模拟任务上仍表现不佳。
+  [ACL 2025 (Findings)][LLM评测][数字孪生] 本文提出BehaviorChain基准，首次评估LLM模拟连续人类行为的能力，包含1001个人格画像下的15846个行为样本，发现即使是最先进的模型在连续行为模拟任务上仍表现不佳。 领域现状：大语言模型作为"人类数字孪生"（digital twins）的潜…
 tags:
   - "ACL 2025 (Findings)"
   - "LLM评测"

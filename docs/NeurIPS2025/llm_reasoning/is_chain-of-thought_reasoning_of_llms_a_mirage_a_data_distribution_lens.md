@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Chain-of-Thought Reasoning of LLMs a Mirage? A Data Distribution Lens
 description: >-
-  [NeurIPS 2025][LLM推理][Chain-of-Thought] 通过构建完全可控的抽象环境DataAlchemy，本文揭示CoT推理是一种幻觉——其有效性完全由训练数据分布主导，在分布外场景表现极其脆弱。
+  [NeurIPS 2025][LLM推理][Chain-of-Thought] 通过构建完全可控的抽象环境DataAlchemy，本文揭示CoT推理是一种幻觉——其有效性完全由训练数据分布主导，在分布外场景表现极其脆弱。 1. CoT提示技术在推理任务上表现出众，但近期研究发现其失败案例普遍存在，引发对CoT本质的根本性质疑…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

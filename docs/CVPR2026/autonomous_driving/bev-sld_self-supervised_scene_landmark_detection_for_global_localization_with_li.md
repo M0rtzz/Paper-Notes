@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images
 description: >-
-  [CVPR 2026][自动驾驶][LiDAR定位] 提出BEV-SLD，一种基于自监督场景地标检测(Scene Landmark Detection)的LiDAR全局定位方法，将检测与对应关系预测解耦，仅需20MB即可在多种场景下实现高精度(x, y, azimuth)位姿估计。
+  [CVPR 2026][自动驾驶][LiDAR定位] 提出BEV-SLD，一种基于自监督场景地标检测(Scene Landmark Detection)的LiDAR全局定位方法，将检测与对应关系预测解耦，仅需20MB即可在多种场景下实现高精度(x, y, azimuth)位姿估计。 LiDAR全局定位是自动驾驶和机器人导航的…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

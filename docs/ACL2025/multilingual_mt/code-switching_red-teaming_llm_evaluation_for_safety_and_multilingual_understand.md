@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Code-Switching Red-Teaming: LLM Evaluation for Safety and Multilingual Understanding
 description: >-
-  [ACL 2025][多语言/翻译][语码转换] 本文提出 CSRT（Code-Switching Red-Teaming）框架，利用日常生活中常见的语码转换（code-switching）现象来构造多语言混合的红队攻击查询，成功在 10 个主流 LLM 上发现了严重的安全漏洞…
+  [ACL 2025][多语言/翻译][语码转换] 本文提出 CSRT（Code-Switching Red-Teaming）框架，利用日常生活中常见的语码转换（code-switching）现象来构造多语言混合的红队攻击查询，成功在 10 个主流 LLM 上发现了严重的安全漏洞，攻击成功率比标准英语攻击高出 46.7%，揭示了当前 LLM 安全对齐在多语言场景下的脆弱性。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

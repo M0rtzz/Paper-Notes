@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Less is More: Empowering GUI Agent with Context-Aware Simplification
 description: >-
-  [ICCV 2025][LLM Agent][GUI Agent] 提出 SimpAgent——一种上下文感知的简化框架，通过基于遮挡的元素剪枝（训练时随机遮挡无关元素区域）和一致性引导的历史压缩（在 LLM 中间层直接丢弃历史视觉 token + KL散度一致性约束）…
+  [ICCV 2025][LLM Agent][GUI Agent] 提出 SimpAgent——一种上下文感知的简化框架，通过基于遮挡的元素剪枝（训练时随机遮挡无关元素区域）和一致性引导的历史压缩（在 LLM 中间层直接丢弃历史视觉 token + KL散度一致性约束），在降低27% FLOPs 的同时取得多个 GUI 导航基准的 SOTA。
 tags:
   - "ICCV 2025"
   - "LLM Agent"

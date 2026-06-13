@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Refer to Any Segmentation Mask Group With Vision-Language Prompts
 description: >-
-  [ICCV 2025][语义分割][全模态指代分割] 提出全模态指代表达分割（ORES）任务及 RAS 框架，通过掩码级 LMM 和非自回归解码机制，根据视觉-语言混合提示从候选掩码中选择目标掩码组，在新 ORES 数据集及经典 RES/GRES 基准上取得 SOTA。
+  [ICCV 2025][语义分割][全模态指代分割] 提出全模态指代表达分割（ORES）任务及 RAS 框架，通过掩码级 LMM 和非自回归解码机制，根据视觉-语言混合提示从候选掩码中选择目标掩码组，在新 ORES 数据集及经典 RES/GRES 基准上取得 SOTA。 指代表达分割（RES）将文本描述与分割掩码关联…
 tags:
   - "ICCV 2025"
   - "语义分割"

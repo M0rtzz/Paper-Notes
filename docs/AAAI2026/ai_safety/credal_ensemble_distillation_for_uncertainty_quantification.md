@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Credal Ensemble Distillation for Uncertainty Quantification
 description: >-
-  [AAAI 2026][AI安全][知识蒸馏] 提出Credal Ensemble Distillation（CED）框架，将深度集成教师蒸馏为单模型CREDIT，该模型预测类别概率区间（定义credal集）而非单一softmax分布，在OOD检测任务上实现了优于或可比的不确定性估计…
+  [AAAI 2026][AI安全][知识蒸馏] 提出Credal Ensemble Distillation（CED）框架，将深度集成教师蒸馏为单模型CREDIT，该模型预测类别概率区间（定义credal集）而非单一softmax分布，在OOD检测任务上实现了优于或可比的不确定性估计，同时大幅降低推理开销（推理时间从5×降为1×）。
 tags:
   - "AAAI 2026"
   - "AI安全"

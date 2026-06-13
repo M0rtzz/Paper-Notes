@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Hyper-Graph Convolution Network for Skeleton-Based Human Action Recognition
 description: >-
-  [ICCV 2025][视频理解][骨架动作识别] 提出 Hyper-GCN，通过**自适应非均匀超图**替代传统二元图来建模骨骼拓扑，并引入**虚拟超关节**（hyper joints）创建虚拟连接，使多关节协同关系得以直接建模…
+  [ICCV 2025][视频理解][骨架动作识别] 提出 Hyper-GCN，通过**自适应非均匀超图**替代传统二元图来建模骨骼拓扑，并引入**虚拟超关节**（hyper joints）创建虚拟连接，使多关节协同关系得以直接建模，在 NTU-60/120 和 NW-UCLA 上以最轻量的 GCN 设计实现 SOTA（base 版仅 1.1M 参数、1.63 GFLOPs）。
 tags:
   - "ICCV 2025"
   - "视频理解"

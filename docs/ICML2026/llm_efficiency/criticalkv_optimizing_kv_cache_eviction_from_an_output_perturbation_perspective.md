@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CriticalKV: Optimizing KV Cache Eviction from an Output Perturbation Perspective
 description: >-
-  [ICML 2026][LLM效率][KV cache eviction] 作者把"哪些 KV 缓存条目算关键"这个一直靠经验拍脑袋的问题，重新写成"最小化注意力输出扰动"的优化问题，推导出扰动的可解析上界（同时涉及注意力权重和经 $W^O$ 投影后的 value 范数）…
+  [ICML 2026][LLM效率][KV cache eviction] 作者把"哪些 KV 缓存条目算关键"这个一直靠经验拍脑袋的问题，重新写成"最小化注意力输出扰动"的优化问题，推导出扰动的可解析上界（同时涉及注意力权重和经 $W^O$ 投影后的 value 范数），并由此设计了一个即插即用的两阶段贪心选择算法，把 SnapKV/AdaKV/HeadKV 三种 SOTA 驱逐方法在 29 个长上下文数据集上的压缩损失平均砍掉一半以上。
 tags:
   - "ICML 2026"
   - "LLM效率"

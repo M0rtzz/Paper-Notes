@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Counterfactual Reasoning for Steerable Pluralistic Value Alignment of Large Language Models
 description: >-
-  [NEURIPS2025][因果推理][价值对齐] 提出COUPLE框架，通过构建结构因果模型（SCM）建模多维价值观的依赖关系与优先级，并利用反事实推理实现LLM对任意细粒度多元价值目标的可控对齐。
+  [NEURIPS2025][因果推理][价值对齐] 提出COUPLE框架，通过构建结构因果模型（SCM）建模多维价值观的依赖关系与优先级，并利用反事实推理实现LLM对任意细粒度多元价值目标的可控对齐。 领域背景：随着LLM广泛服务于不同文化、社区和群体的用户，仅对齐"有用、诚实、无害"（HHH）等平均原则已不够…
 tags:
   - "NEURIPS2025"
   - "因果推理"

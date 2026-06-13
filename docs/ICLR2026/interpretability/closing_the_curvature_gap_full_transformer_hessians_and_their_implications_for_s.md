@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws
 description: >-
-  [ICLR 2026][可解释性][Transformer] 首次推导完整 Transformer block（含 LayerNorm 和 FFN）的显式 Hessian 表达式及谱范数上界，建立了损失面随数据量增加以 $O(1/k)$ 速率收敛的理论框架…
+  [ICLR 2026][可解释性][Transformer] 首次推导完整 Transformer block（含 LayerNorm 和 FFN）的显式 Hessian 表达式及谱范数上界，建立了损失面随数据量增加以 $O(1/k)$ 速率收敛的理论框架，为 scaling laws 和曲率感知训练提供了数学基础。
 tags:
   - "ICLR 2026"
   - "可解释性"

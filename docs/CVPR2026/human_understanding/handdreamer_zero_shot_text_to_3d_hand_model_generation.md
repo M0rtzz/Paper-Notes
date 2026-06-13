@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HandDreamer: Zero-Shot Text to 3D Hand Model Generation
 description: >-
-  [CVPR 2026][人体理解][text-to-3D] 提出 HandDreamer，首个从文本提示零样本生成 3D 手部模型的方法，通过 MANO 初始化、骨架引导扩散和校正手形损失解决 SDS 中的视图不一致和几何畸变问题。
+  [CVPR 2026][人体理解][text-to-3D] 提出 HandDreamer，首个从文本提示零样本生成 3D 手部模型的方法，通过 MANO 初始化、骨架引导扩散和校正手形损失解决 SDS 中的视图不一致和几何畸变问题。 VR 时代需要高质量可定制的 3D 手部模型，但传统方法需要多视图采集系统和图形艺术家…
 tags:
   - "CVPR 2026"
   - "人体理解"

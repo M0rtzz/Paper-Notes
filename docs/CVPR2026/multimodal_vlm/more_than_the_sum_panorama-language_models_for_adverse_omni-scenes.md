@@ -2,7 +2,7 @@
 title: >-
   [论文解读] More than the Sum: Panorama-Language Models for Adverse Omni-Scenes
 description: >-
-  [CVPR 2026][多模态VLM][全景图理解] 提出 Panorama-Language Modeling（PLM）范式和 PanoVQA 大规模全景 VQA 数据集（653K QA 对），设计即插即用的全景稀疏注意力模块让现有 VLM 无需重训练即可处理等距柱状投影全景图…
+  [CVPR 2026][多模态VLM][全景图理解] 提出 Panorama-Language Modeling（PLM）范式和 PanoVQA 大规模全景 VQA 数据集（653K QA 对），设计即插即用的全景稀疏注意力模块让现有 VLM 无需重训练即可处理等距柱状投影全景图，在遮挡和事故等恶劣场景下实现优于多视角拼接方案的全局推理。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

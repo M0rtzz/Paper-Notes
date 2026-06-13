@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentiable Semantic Meta-Learning Framework for Long-Tail Motion Forecasting in Autonomous Driving
 description: >-
-  [AAAI 2026][自动驾驶][长尾分布] 提出 SAML 框架，首次给出运动预测中"长尾性"的可微语义定义——通过 5 类内在/交互属性量化稀有度，经贝叶斯尾部感知器融合为连续 Tail Index 驱动 MAML 元学习适配…
+  [AAAI 2026][自动驾驶][长尾分布] 提出 SAML 框架，首次给出运动预测中"长尾性"的可微语义定义——通过 5 类内在/交互属性量化稀有度，经贝叶斯尾部感知器融合为连续 Tail Index 驱动 MAML 元学习适配，在 nuScenes worst-case top 1% 上 minADE 比次优低 17.2%。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

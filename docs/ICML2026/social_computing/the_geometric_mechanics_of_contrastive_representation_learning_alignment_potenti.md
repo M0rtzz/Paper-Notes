@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Geometric Mechanics of Contrastive Representation Learning: Alignment Potentials, Entropic Dispersion, and Cross-modal Divergence
 description: >-
-  [ICML 2026][社会计算][InfoNCE] 本文用测度论框架把 InfoNCE 损失提升到表示分布上的确定性"种群能量"，证明 unimodal 情形是凸的且收敛到唯一 Gibbs 平衡，而对称多模态情形会出现持续的负对称 KL 耦合，从几何上必然产生 modality gap。
+  [ICML 2026][社会计算][InfoNCE] 本文用测度论框架把 InfoNCE 损失提升到表示分布上的确定性"种群能量"，证明 unimodal 情形是凸的且收敛到唯一 Gibbs 平衡，而对称多模态情形会出现持续的负对称 KL 耦合，从几何上必然产生 modality gap。 领域现状：InfoNCE 是当前自…
 tags:
   - "ICML 2026"
   - "社会计算"

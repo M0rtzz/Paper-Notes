@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics
 description: >-
-  [医学图像] COMPASS 通过在分割网络的中间特征空间沿**对目标度量最敏感的低维子空间**进行线性扰动来构建 conformal prediction 区间，在四个医学分割任务上实现了比传统 CP 方法显著更窄的预测区间，同时保持有效覆盖率。
+  [医学图像] COMPASS 通过在分割网络的中间特征空间沿对目标度量最敏感的低维子空间：进行线性扰动来构建 conformal prediction 区间，在四个医学分割任务上实现了比传统 CP 方法显著更窄的预测区间，同时保持有效覆盖率。 领域现状： 医学图像分割中，临床价值通常不在于像素级分割精度…
 tags:
   - "医学图像"
 ---

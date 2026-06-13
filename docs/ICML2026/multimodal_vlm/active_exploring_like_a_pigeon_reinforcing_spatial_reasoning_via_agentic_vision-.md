@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Active Exploring like a Pigeon: Reinforcing Spatial Reasoning via Agentic Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][主动视觉探索] 本文把 VLM 空间推理从“被动看完所有视角再回答”改造成“按问题主动取景、更新认知地图、用可执行空间断言验证推理”的 agentic 流程，并用密集奖励微调 Qwen2.5-VL-3B…
+  [ICML 2026][多模态VLM][主动视觉探索] 本文把 VLM 空间推理从“被动看完所有视角再回答”改造成“按问题主动取景、更新认知地图、用可执行空间断言验证推理”的 agentic 流程，并用密集奖励微调 Qwen2.5-VL-3B，在 MindCube-Tiny 上取得 80.5% overall accuracy，尤其把 Rotation 子集提升到 85.0%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

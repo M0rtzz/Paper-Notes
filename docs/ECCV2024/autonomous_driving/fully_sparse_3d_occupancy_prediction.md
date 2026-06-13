@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fully Sparse 3D Occupancy Prediction
 description: >-
-  [ECCV 2024][自动驾驶][3D Occupancy] 提出 SparseOcc，首个完全稀疏的 3D 占用预测网络，通过稀疏体素解码器和掩码引导的 Mask Transformer 实现高效占用预测，并设计了 RayIoU 评价指标解决传统 mIoU 的深度方向不一致惩罚问题。
+  [ECCV 2024][自动驾驶][3D Occupancy] 提出 SparseOcc，首个完全稀疏的 3D 占用预测网络，通过稀疏体素解码器和掩码引导的 Mask Transformer 实现高效占用预测，并设计了 RayIoU 评价指标解决传统 mIoU 的深度方向不一致惩罚问题。 3D 占用预测是自动驾驶中的关键任务…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

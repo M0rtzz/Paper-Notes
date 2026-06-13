@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Lossless Implicit Neural Representation via Bit Plane Decomposition
 description: >-
-  [CVPR 2025][音频/语音][隐式神经表示] 发现隐式神经表示（INR）的模型容量上界随比特精度指数增长（$\mathcal{P}(f_\theta) \propto 2^n$），提出比特平面分解——将 n-bit 信号分解为 n 个独立的 1-bit 平面分别训练 INR…
+  [CVPR 2025][音频/语音][隐式神经表示] 发现隐式神经表示（INR）的模型容量上界随比特精度指数增长（$\mathcal{P}(f_\theta) \propto 2^n$），提出比特平面分解——将 n-bit 信号分解为 n 个独立的 1-bit 平面分别训练 INR，首次实现 16-bit 图像的无损（BER=0）隐式神经表示。
 tags:
   - "CVPR 2025"
   - "音频/语音"

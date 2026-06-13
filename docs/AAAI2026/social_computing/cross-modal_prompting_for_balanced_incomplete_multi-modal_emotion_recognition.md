@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-modal Prompting for Balanced Incomplete Multi-modal Emotion Recognition
 description: >-
-  [AAAI 2026][社会计算][不完整多模态] 提出 Cross-modal Prompting (ComP) 方法，通过渐进式提示生成+跨模态知识传播+动态调度器来解决不完整多模态情感识别中的模态不平衡问题，在 4 个数据集、 7 种缺失率下均达到 SOTA。
+  [AAAI 2026][社会计算][不完整多模态] 提出 Cross-modal Prompting (ComP) 方法，通过渐进式提示生成+跨模态知识传播+动态调度器来解决不完整多模态情感识别中的模态不平衡问题，在 4 个数据集、 7 种缺失率下均达到 SOTA。 领域现状：多模态情感识别（MER）利用音频、文本、视频等多…
 tags:
   - "AAAI 2026"
   - "社会计算"

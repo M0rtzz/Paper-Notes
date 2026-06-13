@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights
 description: >-
-  [ACL 2025][多模态VLM][多模态数学推理] 系统性揭示了现有多模态数学推理模型对视觉信息的利用极其有限——打乱或移除训练图像对模型性能影响甚微——并提出 HC-M3D 基准来真正测试视觉依赖性，发现主流模型无法识别图像中的细微差异。
+  [ACL 2025][多模态VLM][多模态数学推理] 系统性揭示了现有多模态数学推理模型对视觉信息的利用极其有限——打乱或移除训练图像对模型性能影响甚微——并提出 HC-M3D 基准来真正测试视觉依赖性，发现主流模型无法识别图像中的细微差异。 多模态数学推理是近年来 LVLM 研究的热点，但一个关键问题被忽视：模型是否真正…
 tags:
   - "ACL 2025"
   - "多模态VLM"

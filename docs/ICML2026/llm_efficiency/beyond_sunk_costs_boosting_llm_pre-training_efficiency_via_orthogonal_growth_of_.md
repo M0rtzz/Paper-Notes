@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Sunk Costs: Boosting LLM Pre-training Efficiency via Orthogonal Growth of Mixture-of-Experts
 description: >-
-  [ICML 2026][LLM效率][MoE模型增长] 提出对已收敛 MoE 模型的"正交增长"策略——深度方向用 interpositional 层复制、宽度方向用噪声专家复制——将 17B 模型扩展到 70B，在相同额外算力下比从头训练准确率提升 10.6%。
+  [ICML 2026][LLM效率][MoE模型增长] 提出对已收敛 MoE 模型的"正交增长"策略——深度方向用 interpositional 层复制、宽度方向用噪声专家复制——将 17B 模型扩展到 70B，在相同额外算力下比从头训练准确率提升 10.6%。 领域现状：LLM 预训练遵循 scaling laws…
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Magnet: Multi-turn Tool-use Data Synthesis and Distillation via Graph Translation
 description: >-
-  [ACL 2025][模型压缩][Function Calling] 提出 Magnet 框架，基于函数依赖图的随机游走和节点操作（Insert/Merge/Split）构建高质量多轮 Function Calling 训练轨迹，结合基于提示的上下文蒸馏生成正负对比轨迹进行 SFT + mDPO 训练…
+  [ACL 2025][模型压缩][Function Calling] 提出 Magnet 框架，基于函数依赖图的随机游走和节点操作（Insert/Merge/Split）构建高质量多轮 Function Calling 训练轨迹，结合基于提示的上下文蒸馏生成正负对比轨迹进行 SFT + mDPO 训练，使 14B 模型 Magnet-14B-mDPO 在 BFCL-v3 上达到 68.01（排名第 4），在多轮场景上大幅超越教师模型 Gemini-1.5-pro-002。
 tags:
   - "ACL 2025"
   - "模型压缩"

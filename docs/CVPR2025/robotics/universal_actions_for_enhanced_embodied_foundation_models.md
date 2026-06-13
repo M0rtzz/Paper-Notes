@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniAct: Universal Actions for Enhanced Embodied Foundation Models
 description: >-
-  [CVPR 2025][机器人][具身智能] UniAct提出在通用动作空间（Universal Action Space）中构建具身基础模型，通过向量量化codebook编码跨具身平台共享的原子行为，0.5B参数模型性能超越14倍大的SOTA模型，并支持快速适配新机器人。
+  [CVPR 2025][机器人][具身智能] UniAct提出在通用动作空间（Universal Action Space）中构建具身基础模型，通过向量量化codebook编码跨具身平台共享的原子行为，0.5B参数模型性能超越14倍大的SOTA模型，并支持快速适配新机器人。 开发通用具身基础模型面临的核心挑战是动作异质性（a…
 tags:
   - "CVPR 2025"
   - "机器人"

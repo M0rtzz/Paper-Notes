@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Point-to-Region Loss for Semi-Supervised Point-Based Crowd Counting
 description: >-
-  [CVPR 2025][自动驾驶][半监督人群计数] 发现半监督人群计数中点到点（P2P）匹配导致模型对未标注数据过度激活（通过 PSAM 梯度诊断可视化），提出点到区域（P2R）匹配——将每个 GT/伪标签点扩展为局部区域并传播置信度…
+  [CVPR 2025][自动驾驶][半监督人群计数] 发现半监督人群计数中点到点（P2P）匹配导致模型对未标注数据过度激活（通过 PSAM 梯度诊断可视化），提出点到区域（P2R）匹配——将每个 GT/伪标签点扩展为局部区域并传播置信度，在 ShanghaiTech-A 5% 标注下 MAE 69.9（前 SOTA 83.7），且比 P2P 快 68 倍。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

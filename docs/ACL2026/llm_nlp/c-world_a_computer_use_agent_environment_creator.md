@@ -2,10 +2,10 @@
 title: >-
   [论文解读] C-World: A Computer Use Agent Environment Creator
 description: >-
-  [ACL 2026][LLM/NLP][MCP 工具] 作者将"agent 环境"形式化为 Action / Task / Transition / Reward 四元组并实现为 C-World：用 5…
+  [ACL 2026][LLM 其他][MCP 工具] 作者将"agent 环境"形式化为 Action / Task / Transition / Reward 四元组并实现为 C-World：用 5,571 个真实 MCP 工具 + 自动任务合成 + state controller 扰动 + 双信号 reward 提供高保真评测，又用一个"World Engine"在无 live API 下模拟工具响应实现可规模化训练；评测 9 个前沿 LLM 发现"规划普遍强、执行普遍弱"，仅用 1,170 条 C-World 轨迹微调即可超过用 119k 样本训练的 baseline。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "MCP 工具"
   - "长程任务"
   - "World Model"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDDF: Specificity-Driven Dynamic Focusing for Open-Vocabulary Camouflaged Object Detection
 description: >-
-  [CVPR 2026][语义分割][开放词汇目标检测] SDDF 提出开放词汇伪装目标检测（OVCOD）新任务，构建了 OVCOD-D 基准，通过子描述主成分对比融合策略去除冗余文本噪声，以及特异性引导的区域弱对齐和动态聚焦机制增强伪装目标与背景的区分能力，在开集设置下达到 56.4 AP。
+  [CVPR 2026][语义分割][开放词汇目标检测] SDDF 提出开放词汇伪装目标检测（OVCOD）新任务，构建了 OVCOD-D 基准，通过子描述主成分对比融合策略去除冗余文本噪声，以及特异性引导的区域弱对齐和动态聚焦机制增强伪装目标与背景的区分能力，在开集设置下达到 56.4 AP。 开放词汇目标检测（OVOD）借助…
 tags:
   - "CVPR 2026"
   - "语义分割"

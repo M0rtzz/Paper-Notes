@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LACONIC: A 3D Layout Adapter for Controllable Image Creation
 description: >-
-  [ICCV 2025][3D视觉][3D布局引导] 提出 LACONIC，一种基于参数化 3D 语义包围盒的轻量级适配器，通过解耦交叉注意力机制将显式 3D 几何信息注入预训练 text-to-image 扩散模型，首次实现了相机控制、3D 物体级语义引导以及对屏幕外物体的全面场景上下文建模…
+  [ICCV 2025][3D视觉][3D布局引导] 提出 LACONIC，一种基于参数化 3D 语义包围盒的轻量级适配器，通过解耦交叉注意力机制将显式 3D 几何信息注入预训练 text-to-image 扩散模型，首次实现了相机控制、3D 物体级语义引导以及对屏幕外物体的全面场景上下文建模，在 FID 上比 SceneCraft 降低 75.8%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

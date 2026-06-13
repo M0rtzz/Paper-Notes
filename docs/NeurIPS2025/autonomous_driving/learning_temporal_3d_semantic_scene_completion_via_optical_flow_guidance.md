@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowScene: Learning Temporal 3D Semantic Scene Completion via Optical Flow Guidance
 description: >-
-  [NeurIPS 2025][自动驾驶][3D Semantic Scene Completion] 提出 FlowScene，利用光流引导时序特征聚合并结合遮挡掩码进行体素细化，在仅使用2帧历史输入的条件下…
+  [NeurIPS 2025][自动驾驶][3D Semantic Scene Completion] 提出 FlowScene，利用光流引导时序特征聚合并结合遮挡掩码进行体素细化，在仅使用2帧历史输入的条件下，在 SemanticKITTI 和 SSCBench-KITTI-360 基准上达到 SOTA（mIoU 17.70 / 20.81）。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

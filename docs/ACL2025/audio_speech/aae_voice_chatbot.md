@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finding A Voice: Exploring the Potential of African American Dialect and Voice Generation for Chatbots
 description: >-
-  [ACL 2025][音频/语音][语音对话] 对文本和语音两种模态下将非裔美式英语（AAE）融入聊天机器人进行系统研究，发现文本AAE反而损害用户体验，但配合非裔口音的语音机器人受到AAE使用者青睐，揭示了语言个性化中模态选择的关键作用。
+  [ACL 2025][音频/语音][语音对话] 对文本和语音两种模态下将非裔美式英语（AAE）融入聊天机器人进行系统研究，发现文本AAE反而损害用户体验，但配合非裔口音的语音机器人受到AAE使用者青睐，揭示了语言个性化中模态选择的关键作用。 领域现状：聊天机器人个性化是提升用户信任和参与度的关键方向。视觉相似性（头像肤色匹配…
 tags:
   - "ACL 2025"
   - "音频/语音"

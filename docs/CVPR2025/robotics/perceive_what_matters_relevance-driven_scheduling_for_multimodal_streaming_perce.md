@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perceive What Matters: Relevance-Driven Scheduling for Multimodal Streaming Perception
 description: >-
-  [CVPR2025][机器人][perception scheduling] 提出一种面向人机协作的感知调度框架，基于信息增益和计算代价的权衡来选择性激活感知模块（目标检测/姿态估计），在流式感知场景下将计算延迟降低最多 27.52%，同时 MMPose 激活召回提升 72.73%。
+  [CVPR2025][机器人][perception scheduling] 提出一种面向人机协作的感知调度框架，基于信息增益和计算代价的权衡来选择性激活感知模块（目标检测/姿态估计），在流式感知场景下将计算延迟降低最多 27.52%，同时 MMPose 激活召回提升 72.73%。 核心矛盾 核心矛盾：领域现状：1. 人机…
 tags:
   - "CVPR2025"
   - "机器人"

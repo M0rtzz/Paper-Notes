@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking Zero-Shot Geospatial Reasoning via Indirect Rewards
 description: >-
-  [ICML 2026][强化学习][间接奖励] 作者把"地面街景与卫星图能否定位为同一坐标"作为可验证间接奖励，用 GRPO 对 Qwen2.5-VL-7B 做两阶段后训练（CoT scaffolding + RL self-exploring）…
+  [ICML 2026][强化学习][间接奖励] 作者把"地面街景与卫星图能否定位为同一坐标"作为可验证间接奖励，用 GRPO 对 Qwen2.5-VL-7B 做两阶段后训练（CoT scaffolding + RL self-exploring），让模型仅凭 GPS metadata 学到可零样本迁移到 25+ 地理空间任务的通用推理能力。
 tags:
   - "ICML 2026"
   - "强化学习"

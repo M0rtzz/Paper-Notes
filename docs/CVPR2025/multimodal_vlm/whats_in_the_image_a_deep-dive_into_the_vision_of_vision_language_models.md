@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What's in the Image? A Deep-Dive into the Vision of Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][VLM可解释性] 本文通过 Attention Knockout 实验系统分析了 VLM（InternVL2-76B 和 LLaVA-1.5-7B）的视觉信息处理机制，揭示了三个关键发现：(1) query text token 充当全局图像描述器压缩高层视觉信息…
+  [CVPR 2025][多模态VLM][VLM可解释性] 本文通过 Attention Knockout 实验系统分析了 VLM（InternVL2-76B 和 LLaVA-1.5-7B）的视觉信息处理机制，揭示了三个关键发现：(1) query text token 充当全局图像描述器压缩高层视觉信息，(2) 中间层（约 25%）主导跨模态信息传递而早晚层贡献极少，(3) 细粒度物体细节通过空间局部化的方式从 image token 中提取。基于这些发现提出了 Image Re-prompting 应用，用仅 5% 的 image token 即可保持 96% 的 VQA 性能。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

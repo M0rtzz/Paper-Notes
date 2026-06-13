@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes an Ideal Quote? Recommending "Unexpected yet Rational" Quotations via Novelty
 description: >-
-  [ACL 2026][推荐系统][引用推荐] NOVELQR 提出了一个新颖性驱动的引用推荐框架，通过生成式标签代理构建深层语义知识库实现语义理性检索，并用 token 级新颖性估计器缓解自回归续写偏差，在双语基准上显著提升推荐质量。
+  [ACL 2026][推荐系统][引用推荐] NOVELQR 提出了一个新颖性驱动的引用推荐框架，通过生成式标签代理构建深层语义知识库实现语义理性检索，并用 token 级新颖性估计器缓解自回归续写偏差，在双语基准上显著提升推荐质量。 领域现状：引用推荐系统旨在为给定写作上下文推荐合适的名言警句。现有系统（如 QuoteR、…
 tags:
   - "ACL 2026"
   - "推荐系统"

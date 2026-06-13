@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Log Probability Tracking of LLM APIs
 description: >-
-  [ICLR 2026][LLM评测][LLM API监控] 提出 Logprob Tracking (LT) 方法，仅用单token输入和单token输出的log概率即可检测LLM API的微小变更（如单步微调），灵敏度比现有方法高2-3个数量级，成本低1000倍。
+  [ICLR 2026][LLM评测][LLM API监控] 提出 Logprob Tracking (LT) 方法，仅用单token输入和单token输出的log概率即可检测LLM API的微小变更（如单步微调），灵敏度比现有方法高2-3个数量级，成本低1000倍。 LLM API提供商通常提供版本固定的端点…
 tags:
   - "ICLR 2026"
   - "LLM评测"

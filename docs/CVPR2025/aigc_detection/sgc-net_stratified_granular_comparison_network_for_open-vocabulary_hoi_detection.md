@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGC-Net: Stratified Granular Comparison Network for Open-Vocabulary HOI Detection
 description: >-
-  [CVPR 2025][AIGC检测][开放词汇HOI检测] 提出分层粒度比较网络SGC-Net，通过粒度感知对齐(GSA)模块聚合CLIP多层视觉特征，并利用层级分组比较(HGC)模块借助LLM递归生成区分性描述，解决开放词汇HOI检测中的特征粒度不足和语义混淆问题。
+  [CVPR 2025][AIGC检测][开放词汇HOI检测] 提出分层粒度比较网络SGC-Net，通过粒度感知对齐(GSA)模块聚合CLIP多层视觉特征，并利用层级分组比较(HGC)模块借助LLM递归生成区分性描述，解决开放词汇HOI检测中的特征粒度不足和语义混淆问题。 开放词汇HOI检测（OV-HOI）需要在只使用基类交互…
 tags:
   - "CVPR 2025"
   - "AIGC检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond the Crowd: LLM-Augmented Community Notes for Governing Health Misinformation
 description: >-
-  [ACL 2026][社会计算][Community Notes] 作者用 30.8K 条 X 平台健康类 Community Notes 的实证分析揭示出"首条 helpful verdict 中位延迟 17.6 小时、87.9% 笔记永远无评级"的系统性慢响应问题…
+  [ACL 2026][社会计算][Community Notes] 作者用 30.8K 条 X 平台健康类 Community Notes 的实证分析揭示出"首条 helpful verdict 中位延迟 17.6 小时、87.9% 笔记永远无评级"的系统性慢响应问题，提出 CrowdNotes+ 框架——以 (1) **证据增强**和 (2) **效用引导自动化** 两种模式让 LLM 写 note，并配以"相关性→正确性→帮助性"三级评估；15 个 LLM 在新 benchmark HealthNotes 上全面超过人工 note 的 73.19% helpfulness（最高 o3 模型达 81.15%）。
 tags:
   - "ACL 2026"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamics and Representation Structure of Local Approximations to Gradient-Based Learning in Linear Recurrent Neural Networks
 description: >-
-  [ICML 2026][优化/理论][线性 RNN] 本文在 student–teacher 数据对齐的线性 RNN 上，把 BPTT、one-step tBPTT、RFLO 的更新写成可解析的 ODE，比较它们的不动点流形、稳定性、收敛速率…
+  [ICML 2026][优化/理论][线性 RNN] 本文在 student–teacher 数据对齐的线性 RNN 上，把 BPTT、one-step tBPTT、RFLO 的更新写成可解析的 ODE，比较它们的不动点流形、稳定性、收敛速率，发现 RFLO 缺少 BPTT/tBPTT 那条非最优鞍流形但代价是稳定性依赖符号、收敛更慢，并且**局限于初始权重的低秩扰动**——这一低秩限制可推广到非数据对齐的设定。
 tags:
   - "ICML 2026"
   - "优化/理论"

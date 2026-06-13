@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Multi-modal Large Language Models via Progressive Consistency Distillation
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态LLM] 提出EPIC框架，通过渐进式一致性蒸馏（Token和Layer两个维度）解决视觉token压缩训练中特征空间扰动导致的学习困难，在不修改模型架构的前提下实现高效多模态LLM。
+  [NeurIPS 2025][多模态VLM][多模态LLM] 提出EPIC框架，通过渐进式一致性蒸馏（Token和Layer两个维度）解决视觉token压缩训练中特征空间扰动导致的学习困难，在不修改模型架构的前提下实现高效多模态LLM。 多模态大语言模型（MLLMs）将视觉编码器提取的视觉token输入LLM进行理解和推理…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

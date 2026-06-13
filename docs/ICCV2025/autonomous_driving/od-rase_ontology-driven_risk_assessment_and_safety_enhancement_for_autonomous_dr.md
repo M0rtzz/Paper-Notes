@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OD-RASE: Ontology-Driven Risk Assessment and Safety Enhancement for Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][本体驱动] 提出 OD-RASE 框架，通过构建道路交通专家知识本体(ontology)来过滤 LVLM 生成的道路基础设施改善方案，实现对事故风险道路结构的前瞻性识别与改善建议生成。
+  [ICCV 2025][自动驾驶][本体驱动] 提出 OD-RASE 框架，通过构建道路交通专家知识本体(ontology)来过滤 LVLM 生成的道路基础设施改善方案，实现对事故风险道路结构的前瞻性识别与改善建议生成。 - 当前自动驾驶系统虽有高感知性能，但在罕见场景或复杂路况下仍有局限 - 传统道路基础设施改善是被动的：…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LearnAlign: Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment
 description: >-
-  [ACL 2026][强化学习][RLVR] 针对 RLVR 后训练的数据选择问题，提出 LearnAlign——把"梯度对齐"作为代表性指标，再用"成功率 $V(\xi)=p(1-p)$"作为可学习性权重消除响应长度偏置…
+  [ACL 2026 Findings][强化学习][RLVR] 针对 RLVR 后训练的数据选择问题，提出 LearnAlign——把"梯度对齐"作为代表性指标，再用"成功率 $V(\xi)=p(1-p)$"作为可学习性权重消除响应长度偏置，仅用 1000 条数据（约 6%）就在 5 个推理 benchmark 上做到接近全量训练（42.4% vs 44.9%），且 GSM8K 上以 13.4% 数据 (77.5%) 超过全量 (77.0%)。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "RLVR"
   - "GRPO"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training
 description: >-
-  [ICCV 2025][对抗训练] 揭示了对抗训练中一个反直觉现象——失败样本的模型感知变化反而比成功样本更小（即被"过度学习"），据此提出 Robust Perception Adversarial Training (RPAT)，通过鼓励感知随扰动平滑变化来缓解准确率-鲁棒性权衡问题。
+  [ICCV 2025][AI安全][对抗训练] 揭示了对抗训练中一个反直觉现象——失败样本的模型感知变化反而比成功样本更小（即被"过度学习"），据此提出 Robust Perception Adversarial Training (RPAT)，通过鼓励感知随扰动平滑变化来缓解准确率-鲁棒性权衡问题。
 tags:
   - "ICCV 2025"
+  - "AI安全"
   - "对抗训练"
   - "准确率-鲁棒性权衡"
   - "感知一致性"

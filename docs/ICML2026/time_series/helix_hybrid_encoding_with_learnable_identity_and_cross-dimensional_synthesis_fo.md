@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HELIX: Hybrid Encoding with Learnable Identity and Cross-dimensional Synthesis for Time Series Imputation
 description: >-
-  [ICML 2026][时间序列][特征身份嵌入] 给每个特征学一个"身份嵌入"作为持久语义锚点，配合时间-特征双螺旋注意力，在 5 个公开多变量时序数据集 21 个缺失场景上全部拿下第一，比次优的 ImputeFormer 在 ETT-h1 等数据集上多 25% 以上的 MAE 降幅。
+  [ICML 2026 Spotlight][时间序列][特征身份嵌入] 给每个特征学一个"身份嵌入"作为持久语义锚点，配合时间-特征双螺旋注意力，在 5 个公开多变量时序数据集 21 个缺失场景上全部拿下第一，比次优的 ImputeFormer 在 ETT-h1 等数据集上多 25% 以上的 MAE 降幅。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "时间序列"
   - "特征身份嵌入"
   - "时间序列插补"

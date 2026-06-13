@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM4SVG: Empowering LLMs to Understand and Generate Complex Vector Graphics
 description: >-
-  [CVPR 2025][LLM安全][SVG生成] 提出 LLM4SVG 框架，通过定义 55 个可学习的 SVG 语义 token 替代原始 XML 标签，结合 250K 高质量 SVG 和 580K 指令数据的 SVGX-SFT 数据集进行两阶段指令微调…
+  [CVPR 2025][LLM安全][SVG生成] 提出 LLM4SVG 框架，通过定义 55 个可学习的 SVG 语义 token 替代原始 XML 标签，结合 250K 高质量 SVG 和 580K 指令数据的 SVGX-SFT 数据集进行两阶段指令微调，使 GPT-2、Phi-2、Falcon 等开源 LLM 能高质量理解和生成复杂矢量图形，GPT-2 XL 版本达 FID 64.11、CLIPScore 0.3496，大幅超越 GPT-4o（127.78 FID）和所有现有 SVG 生成方法。
 tags:
   - "CVPR 2025"
   - "LLM安全"

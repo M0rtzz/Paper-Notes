@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiMorph: On-demand Atlas Construction
 description: >-
-  [CVPR 2025][医学图像][atlas construction] 本文提出MultiMorph，一种前馈式脑图谱构建模型，通过线性复杂度的GroupBlock特征共享层和Centrality Layer实现任意数量3D脑图像的单次前向传播即生成无偏群组图谱，速度比传统优化方法快100倍…
+  [CVPR 2025][医学图像][atlas construction] 本文提出MultiMorph，一种前馈式脑图谱构建模型，通过线性复杂度的GroupBlock特征共享层和Centrality Layer实现任意数量3D脑图像的单次前向传播即生成无偏群组图谱，速度比传统优化方法快100倍，且无需微调即可泛化到未见模态和人群。
 tags:
   - "CVPR 2025"
   - "医学图像"

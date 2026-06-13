@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Seeing to Thinking: Decoupling Perception and Reasoning Improves Post-Training of Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][视觉感知] 本文指出当前 VLM 后训练过度强调"长链推理"而忽视感知瓶颈，把后训练显式拆成"视觉感知 → 文本推理 → 视觉推理"三个独立阶段，并用 RLVR（而非 caption SFT）单独打磨感知…
+  [ICML 2026][多模态VLM][视觉感知] 本文指出当前 VLM 后训练过度强调"长链推理"而忽视感知瓶颈，把后训练显式拆成"视觉感知 → 文本推理 → 视觉推理"三个独立阶段，并用 RLVR（而非 caption SFT）单独打磨感知，使 Qwen3-VL-8B 在视觉数学和感知 benchmark 上分别相对基线提升约 +5.9% 和 +1.2%，同时把推理 trace 缩短 20.8%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

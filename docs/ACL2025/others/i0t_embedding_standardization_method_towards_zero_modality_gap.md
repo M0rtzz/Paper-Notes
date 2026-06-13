@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I0T: Embedding Standardization Method Towards Zero Modality Gap
 description: >-
-  [ACL 2025][模态差距] 提出 I0T 框架，通过发现并消除 CLIP 中图像/文本编码器各自学到的模态特异性特征（表现为归一化嵌入中的峰值激活），将模态差距降低至接近零，同时保持甚至提升下游任务性能，并提出了比 CLIPScore 更具可解释性的自动评估指标 I0T-Score。
+  [ACL 2025][模态差距] 提出 I0T 框架，通过发现并消除 CLIP 中图像/文本编码器各自学到的模态特异性特征（表现为归一化嵌入中的峰值激活），将模态差距降低至接近零，同时保持甚至提升下游任务性能，并提出了比 CLIPScore 更具可解释性的自动评估指标 I0T-Score。 模态差距问题：CLIP 等视觉-语…
 tags:
   - "ACL 2025"
   - "模态差距"

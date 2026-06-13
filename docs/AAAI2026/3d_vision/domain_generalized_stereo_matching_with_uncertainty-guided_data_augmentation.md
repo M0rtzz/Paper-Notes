@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation
 description: >-
-  [AAAI2026][3D视觉][立体匹配] 提出 UgDA-Stereo，通过对 RGB 图像逐通道均值和标准差施加基于批次统计量的高斯不确定性扰动来模拟多种未知域的视觉风格，并结合特征一致性约束，以即插即用方式显著提升立体匹配模型的跨域泛化能力。
+  [AAAI2026][3D视觉][立体匹配] 提出 UgDA-Stereo，通过对 RGB 图像逐通道均值和标准差施加基于批次统计量的高斯不确定性扰动来模拟多种未知域的视觉风格，并结合特征一致性约束，以即插即用方式显著提升立体匹配模型的跨域泛化能力。 立体匹配（Stereo Matching）是计算机视觉中的基础任务…
 tags:
   - "AAAI2026"
   - "3D视觉"

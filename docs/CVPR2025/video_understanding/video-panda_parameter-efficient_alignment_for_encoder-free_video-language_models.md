@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video-Panda: Parameter-efficient Alignment for Encoder-free Video-Language Models
 description: >-
-  [CVPR 2025][视频理解][无编码器视频语言模型] Video-Panda 提出了首个无编码器（encoder-free）的视频语言模型，通过仅 45M 参数的时空对齐模块（STAB）直接处理视频输入，在开放式视频问答任务上达到与使用 300M-1.4B 参数编码器的方法相当的性能…
+  [CVPR 2025][视频理解][无编码器视频语言模型] Video-Panda 提出了首个无编码器（encoder-free）的视频语言模型，通过仅 45M 参数的时空对齐模块（STAB）直接处理视频输入，在开放式视频问答任务上达到与使用 300M-1.4B 参数编码器的方法相当的性能，且推理速度提升 3-4 倍。
 tags:
   - "CVPR 2025"
   - "视频理解"

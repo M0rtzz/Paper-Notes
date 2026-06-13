@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Holistic Tokenizer for Autoregressive Image Generation
 description: >-
-  [ICCV 2025][图像生成][Image Tokenizer] 提出 Hita，一种全局-局部（holistic-to-local）图像 tokenizer，通过可学习全局查询捕获纹理/材质/形状等全局属性，结合双码本量化和因果注意力融合模块，在不修改 AR 模型架构的前提下…
+  [ICCV 2025][图像生成][Image Tokenizer] 提出 Hita，一种全局-局部（holistic-to-local）图像 tokenizer，通过可学习全局查询捕获纹理/材质/形状等全局属性，结合双码本量化和因果注意力融合模块，在不修改 AR 模型架构的前提下，将 ImageNet 256×256 生成 FID 降至 2.59、训练收敛加速 2.1 倍，并支持零样本风格迁移和图像补全。
 tags:
   - "ICCV 2025"
   - "图像生成"

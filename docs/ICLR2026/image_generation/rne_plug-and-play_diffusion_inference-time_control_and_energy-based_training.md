@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RNE: plug-and-play diffusion inference-time control and energy-based training
 description: >-
-  [ICLR 2026][图像生成][扩散模型] 提出 Radon-Nikodym 估计器 (RNE)，基于路径分布间的密度比揭示边际密度与转移核的基本联系，提供统一的即插即用框架，同时实现扩散密度估计、推理时控制和能量扩散训练。
+  [ICLR 2026][图像生成][扩散模型] 提出 Radon-Nikodym 估计器 (RNE)，基于路径分布间的密度比揭示边际密度与转移核的基本联系，提供统一的即插即用框架，同时实现扩散密度估计、推理时控制和能量扩散训练。 扩散模型通过逐步去噪生成数据，对应加噪过程的时间反转。在许多应用中，仅获取去噪核 (denois…
 tags:
   - "ICLR 2026"
   - "图像生成"

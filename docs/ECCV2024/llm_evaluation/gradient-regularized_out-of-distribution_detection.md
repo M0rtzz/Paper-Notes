@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gradient-Regularized Out-of-Distribution Detection
 description: >-
-  [ECCV 2024][LLM评测][OOD检测] 提出 GReg/GReg+，通过正则化 OOD 评分函数的输入梯度范数来学习评分流形的局部平滑性，并结合基于能量评分的聚类采样策略选取高信息量辅助样本，在 CIFAR 和 ImageNet OOD 检测基准上取得 SOTA。
+  [ECCV 2024][LLM评测][OOD检测] 提出 GReg/GReg+，通过正则化 OOD 评分函数的输入梯度范数来学习评分流形的局部平滑性，并结合基于能量评分的聚类采样策略选取高信息量辅助样本，在 CIFAR 和 ImageNet OOD 检测基准上取得 SOTA。 神经网络在遇到分布外（OOD）数据时常产生过度自…
 tags:
   - "ECCV 2024"
   - "LLM评测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DocSeeker: Structured Visual Reasoning with Evidence Grounding for Long Document Understanding
 description: >-
-  [CVPR 2026][多模态VLM][长文档理解] 提出 DocSeeker，通过 ALR（分析-定位-推理）视觉推理范式和两阶段训练（SFT+EviGRPO）实现长文档理解中的结构化推理和证据定位，仅在短文档上训练即可鲁棒泛化到超长文档。
+  [CVPR 2026 Highlight][多模态VLM][长文档理解] 提出 DocSeeker，通过 ALR（分析-定位-推理）视觉推理范式和两阶段训练（SFT+EviGRPO）实现长文档理解中的结构化推理和证据定位，仅在短文档上训练即可鲁棒泛化到超长文档。 领域现状：MLLM 在长文档 VQA 中随文档长度增加性能严重…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "多模态VLM"
   - "长文档理解"
   - "证据定位"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Is That Talk About? A Video-to-Text Summarization Dataset for Scientific Presentations
 description: >-
-  [ACL 2025][文本生成][video summarization] 提出VISTA数据集——18,599个AI会议演讲视频与论文摘要配对，并引入plan-based摘要框架，通过生成中间问题序列引导科学视频的结构化摘要生成，显著提升事实一致性。
+  [ACL 2025][文本生成][video summarization] 提出VISTA数据集——18,599个AI会议演讲视频与论文摘要配对，并引入plan-based摘要框架，通过生成中间问题序列引导科学视频的结构化摘要生成，显著提升事实一致性。 问题定义：将录制的学术演讲视频转化为简洁准确的文本摘要（即视频到文本摘要…
 tags:
   - "ACL 2025"
   - "文本生成"

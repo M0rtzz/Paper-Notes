@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Role of Exploration Modules in Small Language Models for Knowledge Graph Question Answering
 description: >-
-  [ACL 2025][图学习][知识图谱问答] 本文系统性地诊断了小语言模型（SLM，0.5B–8B）在 Think-on-Graph 知识图谱问答框架中失效的根因——**探索阶段（exploration）而非推理阶段是性能瓶颈**…
+  [ACL 2025][图学习][知识图谱问答] 本文系统性地诊断了小语言模型（SLM，0.5B–8B）在 Think-on-Graph 知识图谱问答框架中失效的根因——**探索阶段（exploration）而非推理阶段是性能瓶颈**，并证明用零样本、即插即用的轻量级段落检索模块（SentenceBERT/GTR，仅~110M参数）替代 SLM 进行 KG 遍历，即可在 CWQ 和 WebQSP 两个基准上带来一致且显著的 EM 提升。
 tags:
   - "ACL 2025"
   - "图学习"

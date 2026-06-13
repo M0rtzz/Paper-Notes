@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nonisotropic Gaussian Diffusion for Realistic 3D Human Motion Prediction
 description: >-
-  [CVPR 2025][图像生成][运动预测] SkeletonDiffusion 提出非各向同性高斯扩散模型用于 3D 人体运动预测，用骨骼邻接矩阵构造非对角协方差矩阵 $\Sigma_N$（而非标准的 $I$），使扩散噪声天然符合人体骨骼拓扑，肢体抖动（jitter）从 0.52 降至 0.26…
+  [CVPR 2025][图像生成][运动预测] SkeletonDiffusion 提出非各向同性高斯扩散模型用于 3D 人体运动预测，用骨骼邻接矩阵构造非对角协方差矩阵 $\Sigma_N$（而非标准的 $I$），使扩散噪声天然符合人体骨骼拓扑，肢体抖动（jitter）从 0.52 降至 0.26，拉伸（stretch）从 5.54 降至 4.45。
 tags:
   - "CVPR 2025"
   - "图像生成"

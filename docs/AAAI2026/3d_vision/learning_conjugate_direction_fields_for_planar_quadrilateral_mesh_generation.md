@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Conjugate Direction Fields for Planar Quadrilateral Mesh Generation
 description: >-
-  [AAAI 2026][3D视觉][平面四边形网格] 提出一种基于DGCNN的数据驱动方法高效生成共轭方向场（CDF），避免了传统非线性优化的高计算开销，支持用户笔画引导的可控CDF生成，将CDF生成速度提升了1-2个数量级，同时配套发布了包含50000+自由曲面的大规模数据集。
+  [AAAI 2026][3D视觉][平面四边形网格] 提出一种基于DGCNN的数据驱动方法高效生成共轭方向场（CDF），避免了传统非线性优化的高计算开销，支持用户笔画引导的可控CDF生成，将CDF生成速度提升了1-2个数量级，同时配套发布了包含50000+自由曲面的大规模数据集。 平面四边形（PQ）网格：在计算机辅助设计中至…
 tags:
   - "AAAI 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Trajectory-Level Attribution: Graph-Based Credit Assignment for Agentic Reinforcement Learning
 description: >-
-  [ICML 2026][LLM评测][信用分配] 提出 GraphGPO，将所有 rollout 轨迹聚合为统一的状态转移图，利用图上全局最短路径信息为每一步计算基于距离的 advantage，实现比轨迹级归因更精细的信用分配…
+  [ICML 2026][LLM评测][信用分配] 提出 GraphGPO，将所有 rollout 轨迹聚合为统一的状态转移图，利用图上全局最短路径信息为每一步计算基于距离的 advantage，实现比轨迹级归因更精细的信用分配，在 ALFWorld、WebShop、Sokoban 上显著超越 GRPO 和 GiGPO。
 tags:
   - "ICML 2026"
   - "LLM评测"

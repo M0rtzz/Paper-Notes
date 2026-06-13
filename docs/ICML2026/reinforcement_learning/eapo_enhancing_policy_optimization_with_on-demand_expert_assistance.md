@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EAPO: Enhancing Policy Optimization with On-Demand Expert Assistance
 description: >-
-  [ICML 2026][强化学习][专家辅助RL] EAPO 把"咨询外部专家"作为一个可学习的离散动作嵌入策略空间，让 LLM 在 RL 训练阶段按需调用更强模型获取中间提示，并通过逐步衰减的接受率把专家知识内化到自身策略中…
+  [ICML 2026][强化学习][专家辅助RL] EAPO 把"咨询外部专家"作为一个可学习的离散动作嵌入策略空间，让 LLM 在 RL 训练阶段按需调用更强模型获取中间提示，并通过逐步衰减的接受率把专家知识内化到自身策略中，在评测时完全独立推理仍能在 AIME / AIMO 等数学推理基准上稳定超越纯自探索 RL。
 tags:
   - "ICML 2026"
   - "强化学习"

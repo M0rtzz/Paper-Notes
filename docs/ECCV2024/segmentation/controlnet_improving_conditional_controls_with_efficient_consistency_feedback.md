@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback
 description: >-
-  [ECCV 2024][语义分割][ControlNet] 提出 ControlNet++，通过像素级循环一致性损失显式优化条件可控生成质量：用预训练判别模型从生成图像中提取条件并与输入条件对齐，并设计高效单步去噪 reward 策略避免多步采样的巨大显存开销…
+  [ECCV 2024][语义分割][ControlNet] 提出 ControlNet++，通过像素级循环一致性损失显式优化条件可控生成质量：用预训练判别模型从生成图像中提取条件并与输入条件对齐，并设计高效单步去噪 reward 策略避免多步采样的巨大显存开销，在分割掩码、边缘、深度等多种条件控制下显著提升可控性（如分割 mIoU +11.1%）。
 tags:
   - "ECCV 2024"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Causality-Aware Vision-Based 3D Occupancy Prediction
 description: >-
-  [ICCV 2025][自动驾驶][3D Occupancy Prediction] 从因果关系视角分析视觉3D占用预测中2D到3D变换的语义歧义问题，提出因果损失（Causal Loss）实现端到端语义一致性监督…
+  [ICCV 2025][自动驾驶][3D Occupancy Prediction] 从因果关系视角分析视觉3D占用预测中2D到3D变换的语义歧义问题，提出因果损失（Causal Loss）实现端到端语义一致性监督，并设计SCAT模块（通道分组提升、可学习相机偏移、归一化卷积）显著提升占用预测精度和相机扰动鲁棒性。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarially Robust Approximate Furthest Neighbor
 description: >-
-  [ICML 2026][目标检测][近似最远邻] 这篇理论论文首次给出能抵抗自适应查询对手的近似最远邻数据结构，在保持与 Indyk 经典 oblivious 算法相近的 $n$ 依赖查询复杂度的同时，证明传统随机投影最远邻算法会被自适应查询击穿。
+  [ICML 2026][目标检测][近似最远邻] 这篇理论论文首次给出能抵抗自适应查询对手的近似最远邻数据结构，在保持与 Indyk 经典 oblivious 算法相近的 $n$ 依赖查询复杂度的同时，证明传统随机投影最远邻算法会被自适应查询击穿。 领域现状：近邻搜索和最远邻搜索是高维数据分析里的基础几何 primitive…
 tags:
   - "ICML 2026"
   - "目标检测"

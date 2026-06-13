@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L-DiffER: Single Image Reflection Removal with Language-Based Diffusion Model
 description: >-
-  [ECCV 2024][图像生成][图像反射去除] 提出 L-DiffER，一种语言引导的扩散模型，通过迭代条件精化策略解决控制条件不准确问题，结合多条件约束机制保证图像恢复的颜色和结构保真度，同时保留扩散模型的生成能力以处理低透射率反射。
+  [ECCV 2024][图像生成][图像反射去除] 提出 L-DiffER，一种语言引导的扩散模型，通过迭代条件精化策略解决控制条件不准确问题，结合多条件约束机制保证图像恢复的颜色和结构保真度，同时保留扩散模型的生成能力以处理低透射率反射。 领域现状：单图像反射去除（Single Image Reflection Remov…
 tags:
   - "ECCV 2024"
   - "图像生成"

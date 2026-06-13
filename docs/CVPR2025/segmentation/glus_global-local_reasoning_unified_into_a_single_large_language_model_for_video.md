@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLUS: Global-Local Reasoning Unified into A Single Large Language Model for Video Segmentation
 description: >-
-  [CVPR 2025][语义分割][视频目标分割] 提出GLUS框架，通过"上下文帧（全局推理）+ 查询帧（局部追踪）"的帧划分策略，将全局理解和局部时序一致性统一到单个MLLM中，结合端到端训练的VOS记忆库模块，在MeViS上大幅超越所有MLLM-based方法（J&F 51.3%）。
+  [CVPR 2025][语义分割][视频目标分割] 提出GLUS框架，通过"上下文帧（全局推理）+ 查询帧（局部追踪）"的帧划分策略，将全局理解和局部时序一致性统一到单个MLLM中，结合端到端训练的VOS记忆库模块，在MeViS上大幅超越所有MLLM-based方法（J&F 51.3%）。 1. 领域现状：参考视频目标分割（…
 tags:
   - "CVPR 2025"
   - "语义分割"

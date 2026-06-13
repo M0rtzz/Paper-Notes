@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models
 description: >-
-  [LLM评测] 提出ToolRet——首个大规模工具检索基准（7.6k检索任务、43k工具），揭示现有强IR模型在工具检索任务上表现不佳（最强模型nDCG@10仅33.83），并贡献超20万训练实例的ToolRet-train数据集，显著提升IR模型的工具检索能力和端到端工具使用任务通过率。
+  [LLM评测] 提出ToolRet——首个大规模工具检索基准（7.6k检索任务、43k工具），揭示现有强IR模型在工具检索任务上表现不佳（最强模型nDCG@10仅33.83），并贡献超20万训练实例的ToolRet-train数据集，显著提升IR模型的工具检索能力和端到端工具使用任务通过率。 - 领域现状： 工具学习（Too…
 tags:
   - "LLM评测"
 ---

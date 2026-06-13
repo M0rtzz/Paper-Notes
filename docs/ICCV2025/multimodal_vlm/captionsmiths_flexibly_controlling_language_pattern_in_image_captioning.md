@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CaptionSmiths: Flexibly Controlling Language Pattern in Image Captioning
 description: >-
-  [ICCV 2025][多模态VLM][图像描述] 提出CaptionSmiths框架，通过连续标量插值（而非离散聚类）对图像描述的长度、描述性和词汇独特性三个属性进行滑块式灵活控制，在多数据集联合训练下实现比基线更精确的属性控制和更高的词汇对齐质量。
+  [ICCV 2025][多模态VLM][图像描述] 提出CaptionSmiths框架，通过连续标量插值（而非离散聚类）对图像描述的长度、描述性和词汇独特性三个属性进行滑块式灵活控制，在多数据集联合训练下实现比基线更精确的属性控制和更高的词汇对齐质量。 图像描述（Image Captioning）是计算机视觉的重要任务…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Unlearnability Phenomenon in RLVR for Language Models
 description: >-
-  [ICML 2026][LLM安全][RLVR] 作者发现在 RLVR（GRPO）训练中存在一类「不可学习样本」：即便采样到正确 rollout、奖励信号非零，模型在整个训练过程中也始终学不会，根因不是优化端的正样本稀缺或裁剪/KL 正则，而是这些样本在初始策略下就是「梯度离群点」，背后是模型表征缺陷…
+  [ICML 2026][LLM安全][RLVR] 作者发现在 RLVR（GRPO）训练中存在一类「不可学习样本」：即便采样到正确 rollout、奖励信号非零，模型在整个训练过程中也始终学不会，根因不是优化端的正样本稀缺或裁剪/KL 正则，而是这些样本在初始策略下就是「梯度离群点」，背后是模型表征缺陷，需要靠 mid-training 而非 RL 后训练来修复。
 tags:
   - "ICML 2026"
   - "LLM安全"

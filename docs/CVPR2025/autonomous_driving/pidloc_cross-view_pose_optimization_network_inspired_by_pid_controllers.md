@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PIDLoc: Cross-View Pose Optimization Network Inspired by PID Controllers
 description: >-
-  [CVPR 2025][自动驾驶][跨视角定位] 受 PID 控制器启发，提出 PIDLoc 跨视角位姿优化网络，通过 P（局部特征差异）、I（全局多候选位姿聚合）、D（特征差异梯度）三个分支结合空间感知位姿估计器,在大初始位姿误差下实现鲁棒精确定位。
+  [CVPR 2025][自动驾驶][跨视角定位] 受 PID 控制器启发，提出 PIDLoc 跨视角位姿优化网络，通过 P（局部特征差异）、I（全局多候选位姿聚合）、D（特征差异梯度）三个分支结合空间感知位姿估计器,在大初始位姿误差下实现鲁棒精确定位。 精确定位对自动驾驶至关重要，但 GNSS 在城市峡谷等环境下信号受阻…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

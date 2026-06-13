@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Model Behavioral Phases are Consistent Across Architecture, Training Data, and Scale
 description: >-
-  [NeurIPS 2025][预训练][语言模型训练动态] 通过对超过 1,400 个语言模型检查点（涵盖 Transformer/Mamba/RWKV 三种架构、14M–12B 参数规模、两种训练数据集）在 11 万+ token 上的系统分析…
+  [NeurIPS 2025][预训练][语言模型训练动态] 通过对超过 1,400 个语言模型检查点（涵盖 Transformer/Mamba/RWKV 三种架构、14M–12B 参数规模、两种训练数据集）在 11 万+ token 上的系统分析，发现所有自回归语言模型在预训练过程中展现出高度一致的行为阶段——预测概率依次过拟合到递增阶数的 n-gram 概率，且词频、n-gram 概率和语义相似度三个简单启发式可解释高达 98% 的行为方差。
 tags:
   - "NeurIPS 2025"
   - "预训练"

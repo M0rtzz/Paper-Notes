@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoTemp-o3: Harmonizing Temporal Grounding and Video Understanding in Agentic Thinking
 description: >-
-  [ICML 2026][视频理解][长视频理解] VideoTemp-o3 是统一的 Agent 视频理解框架——通过**冷启动 SFT 的统一掩码策略** + **可感知奖惩的 IoU 奖励**联合建模视频时间定位与问答，在长视频理解中实现高质量的多轮迭代定位与精准回答…
+  [ICML 2026][视频理解][长视频理解] VideoTemp-o3 是统一的 Agent 视频理解框架——通过**冷启动 SFT 的统一掩码策略** + **可感知奖惩的 IoU 奖励**联合建模视频时间定位与问答，在长视频理解中实现高质量的多轮迭代定位与精准回答，超长视频（> 20 分钟）mIoU 15.6% 超过 Gemini-2.5-Pro 的 14.8%。
 tags:
   - "ICML 2026"
   - "视频理解"

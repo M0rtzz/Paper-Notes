@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpiralThinker: Latent Reasoning through an Iterative Process with Text-Latent Interleaving
 description: >-
-  [ACL 2026][强化学习][潜在推理] 本文提出 SpiralThinker，通过在潜在表示空间中进行迭代更新、并与文本推理步骤交替进行的框架实现隐式推理，引入渐进对齐目标确保潜在表示在迭代过程中保持与显式推理的一致性，在数学、逻辑和常识推理任务上超越所有潜在推理基线。
+  [ACL 2026 Findings][强化学习][潜在推理] 本文提出 SpiralThinker，通过在潜在表示空间中进行迭代更新、并与文本推理步骤交替进行的框架实现隐式推理，引入渐进对齐目标确保潜在表示在迭代过程中保持与显式推理的一致性，在数学、逻辑和常识推理任务上超越所有潜在推理基线。 领域现状：大型推理模型的进展主…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "潜在推理"
   - "迭代精炼"

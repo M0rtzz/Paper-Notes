@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relieving the Over-Aggregating Effect in Graph Transformers
 description: >-
-  [NeurIPS 2025][图学习][Over-Aggregating] 发现了 Graph Transformer 中的 over-aggregating 现象——大量节点以近均匀注意力分数被聚合导致关键信息被稀释，提出 Wideformer 通过分割聚合+引导注意力来缓解…
+  [NeurIPS 2025][图学习][Over-Aggregating] 发现了 Graph Transformer 中的 over-aggregating 现象——大量节点以近均匀注意力分数被聚合导致关键信息被稀释，提出 Wideformer 通过分割聚合+引导注意力来缓解，作为即插即用模块在 13 个数据集上一致提升骨干模型性能。
 tags:
   - "NeurIPS 2025"
   - "图学习"

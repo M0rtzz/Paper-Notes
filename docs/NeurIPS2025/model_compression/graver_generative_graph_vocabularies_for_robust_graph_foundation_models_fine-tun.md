@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graver: Generative Graph Vocabularies for Robust Graph Foundation Models Fine-tuning
 description: >-
-  [NeurIPS 2025][模型压缩][graph foundation model] 提出 Graver 框架，通过 ego-graph 解耦提取可迁移子图词汇、graphon 专家建模词汇分布、MoE-CoE 路由选择性增强 support 样本，解决 GFM 少样本微调中因结构不匹配导致的不稳定性问题…
+  [NeurIPS 2025][模型压缩][graph foundation model] 提出 Graver 框架，通过 ego-graph 解耦提取可迁移子图词汇、graphon 专家建模词汇分布、MoE-CoE 路由选择性增强 support 样本，解决 GFM 少样本微调中因结构不匹配导致的不稳定性问题。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

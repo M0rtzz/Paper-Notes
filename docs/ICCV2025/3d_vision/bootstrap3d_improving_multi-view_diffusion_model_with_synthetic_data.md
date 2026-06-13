@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrap3D: Improving Multi-view Diffusion Model with Synthetic Data
 description: >-
-  [ICCV 2025][3D视觉][多视角扩散模型] 提出 Bootstrap3D 框架，利用 2D/视频扩散模型自动生成 100 万张高质量多视角图像配精细文本描述，并通过训练时间步重调度（TTR）策略在微调多视角扩散模型时平衡图像质量与视角一致性，显著提升文本到 3D 生成的质量。
+  [ICCV 2025][3D视觉][多视角扩散模型] 提出 Bootstrap3D 框架，利用 2D/视频扩散模型自动生成 100 万张高质量多视角图像配精细文本描述，并通过训练时间步重调度（TTR）策略在微调多视角扩散模型时平衡图像质量与视角一致性，显著提升文本到 3D 生成的质量。 问题定义 多视角扩散模型是当前 3D…
 tags:
   - "ICCV 2025"
   - "3D视觉"

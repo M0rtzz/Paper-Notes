@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video Killed the Energy Budget: Characterizing the Latency and Power Regimes of Open Text-to-Video Models
 description: >-
-  [NeurIPS 2025][视频生成][文本到视频生成] 对开源文本到视频 (T2V) 模型进行系统性延迟和能耗分析，建立了基于 FLOP 的计算分析模型预测 WAN2.1 的缩放规律（空间/时间维度二次缩放、去噪步数线性缩放），并在 7 个 T2V 模型上提供跨模型能耗基准。
+  [NeurIPS 2025][视频生成][文本到视频生成] 对开源文本到视频 (T2V) 模型进行系统性延迟和能耗分析，建立了基于 FLOP 的计算分析模型预测 WAN2.1 的缩放规律（空间/时间维度二次缩放、去噪步数线性缩放），并在 7 个 T2V 模型上提供跨模型能耗基准。 1. 领域现状： T2V 生成技术快速发展…
 tags:
   - "NeurIPS 2025"
   - "视频生成"

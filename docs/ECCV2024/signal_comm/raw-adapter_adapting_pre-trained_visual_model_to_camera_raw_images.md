@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAW-Adapter: Adapting Pre-trained Visual Model to Camera RAW Images
 description: >-
-  [ECCV 2024][信号/通信][RAW 图像] 提出 RAW-Adapter，通过输入级适配器（可学习 ISP 阶段）和模型级适配器（ISP 中间特征注入骨干网络），以极小参数量（0.2-0.8M）将 sRGB 预训练模型高效适配到 Camera RAW 图像…
+  [ECCV 2024][信号/通信][RAW 图像] 提出 RAW-Adapter，通过输入级适配器（可学习 ISP 阶段）和模型级适配器（ISP 中间特征注入骨干网络），以极小参数量（0.2-0.8M）将 sRGB 预训练模型高效适配到 Camera RAW 图像，在正常光/暗光/过曝等多种光照条件下的检测和分割任务上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "信号/通信"

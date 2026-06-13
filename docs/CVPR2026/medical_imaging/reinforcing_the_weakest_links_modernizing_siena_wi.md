@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration
 description: >-
-  [CVPR 2026][医学图像][SIENA] 将 SIENA 纵向脑萎缩管线中的经典颅骨剥离(BET2)和组织分割(FAST)模块定向替换为深度学习方案(SynthStrip/SynthSeg)…
+  [CVPR 2026][医学图像][SIENA] 将 SIENA 纵向脑萎缩管线中的经典颅骨剥离(BET2)和组织分割(FAST)模块定向替换为深度学习方案(SynthStrip/SynthSeg)，在 ADNI (N=1006) 和 PPMI (N=310) 两个大规模纵向队列上显著增强了 PBVC 与临床疾病进展的关联性(相关系数提升超 100%)，扫描顺序误差降低高达 99.1%。
 tags:
   - "CVPR 2026"
   - "医学图像"

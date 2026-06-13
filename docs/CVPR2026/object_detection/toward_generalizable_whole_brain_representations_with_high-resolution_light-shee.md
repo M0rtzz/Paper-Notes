@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Generalizable Whole Brain Representations with High-Resolution Light-Sheet Data
 description: >-
-  [CVPR 2026][目标检测][光片荧光显微镜] 提出 CANVAS——首个大规模亚细胞分辨率光片荧光显微镜（LSFM）全脑基准数据集，涵盖 6 种细胞标记物、约 93,000 个细胞标注和公开排行榜，揭示了现有检测模型在跨标记物和跨脑区泛化上的严重不足…
+  [CVPR 2026][目标检测][光片荧光显微镜] 提出 CANVAS——首个大规模亚细胞分辨率光片荧光显微镜（LSFM）全脑基准数据集，涵盖 6 种细胞标记物、约 93,000 个细胞标注和公开排行榜，揭示了现有检测模型在跨标记物和跨脑区泛化上的严重不足，并探索了 3D 掩码自编码器（MAE）的自监督表示学习潜力。
 tags:
   - "CVPR 2026"
   - "目标检测"

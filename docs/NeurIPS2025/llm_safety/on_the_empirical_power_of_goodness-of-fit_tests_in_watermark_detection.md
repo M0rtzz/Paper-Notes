@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Empirical Power of Goodness-of-Fit Tests in Watermark Detection
 description: >-
-  [NeurIPS 2025][LLM安全][文本水印检测] 系统性地评估了八种经典拟合优度（GoF）检验在 LLM 文本水印检测中的效果，发现 GoF 检验在检测功效和鲁棒性上均显著优于现有基线方法。
+  [NeurIPS 2025 Spotlight][LLM安全][文本水印检测] 系统性地评估了八种经典拟合优度（GoF）检验在 LLM 文本水印检测中的效果，发现 GoF 检验在检测功效和鲁棒性上均显著优于现有基线方法。 LLM 生成的文本引发了内容真实性和版权问题，文本水印通过在生成文本中嵌入可检测的统计信号来验证内容来源…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM安全"
   - "文本水印检测"
   - "拟合优度检验"

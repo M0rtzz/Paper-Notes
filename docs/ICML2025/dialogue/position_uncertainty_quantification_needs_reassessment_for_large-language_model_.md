@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents
 description: >-
-  [ICML 2025][对话系统][uncertainty quantification] 本文是一篇 Position Paper，通过梳理文献中 aleatoric 和 epistemic 不确定性的多种相互矛盾的定义，论证传统二分法在 LLM 交互场景中根本性失效…
+  [ICML 2025][对话系统][uncertainty quantification] 本文是一篇 Position Paper，通过梳理文献中 aleatoric 和 epistemic 不确定性的多种相互矛盾的定义，论证传统二分法在 LLM 交互场景中根本性失效，并提出 underspecification uncertainty（任务/上下文欠规范）、interactive learning（通过追问减少不确定性）和 output uncertainty（用自然语言而非标量表达不确定性）三个新研究方向。
 tags:
   - "ICML 2025"
   - "对话系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theoretically Optimal Attention/FFN Ratios in Disaggregated LLM Serving
 description: >-
-  [ICML 2026][LLM效率][AFD] 本文为新兴的 Attention-FFN 解耦 (AFD) 推理架构提供首个理论框架,基于"prefill 长度有限均值 + decode 长度服从几何分布"的概率工作负载模型,推导出 rA-1F 拓扑下最优 A/F 比的闭式解 $r^*=\max\{r_A…
+  [ICML 2026][LLM效率][AFD] 本文为新兴的 Attention-FFN 解耦 (AFD) 推理架构提供首个理论框架,基于"prefill 长度有限均值 + decode 长度服从几何分布"的概率工作负载模型,推导出 rA-1F 拓扑下最优 A/F 比的闭式解 $r^*=\max\{r_A, r_C, r_{\text{peak}}\}$,并用 trace-calibrated 模拟器验证理论与实测最优值偏差 <10%。
 tags:
   - "ICML 2026"
   - "LLM效率"

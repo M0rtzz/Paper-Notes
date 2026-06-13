@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models
 description: >-
-  [ICCV 2025][图像生成][文本到图像生成] CoMPaSS通过SCOP数据引擎筛选空间关系无歧义的训练数据，并提出无参数的TENOR模块将token顺序信息注入注意力机制，大幅提升T2I扩散模型的空间关系生成准确率（VISOR +98%、GenEval Position +131%）。
+  [ICCV 2025][图像生成][文本到图像生成] CoMPaSS通过SCOP数据引擎筛选空间关系无歧义的训练数据，并提出无参数的TENOR模块将token顺序信息注入注意力机制，大幅提升T2I扩散模型的空间关系生成准确率（VISOR +98%、GenEval Position +131%）。 文本到图像扩散模型（如SD、…
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feedback-driven Recurrent Quantum Neural Network Universality
 description: >-
-  [ICLR2026][物理/科学计算][quantum reservoir computing] 本文首次为基于反馈的循环量子神经网络 (RQNN) 建立了定量逼近误差界和普适性证明，表明 RQNN 可在 qubit 数仅以 $\lceil\log_2(\varepsilon^{-1})\rceil$ 对数增…
+  [ICLR2026][物理/科学计算][quantum reservoir computing] 本文首次为基于反馈的循环量子神经网络 (RQNN) 建立了定量逼近误差界和普适性证明，表明 RQNN 可在 qubit 数仅以 $\lceil\log_2(\varepsilon^{-1})\rceil$ 对数增长的条件下，以线性读出层逼近任意 fading memory 滤波器，且不受维度灾难影响。
 tags:
   - "ICLR2026"
   - "物理/科学计算"

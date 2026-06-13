@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms
 description: >-
-  [ICML2025][图学习][Euler Characteristic Transform] 提出 Local Euler Characteristic Transform (ℓ-ECT)，将经典 ECT 拓扑不变量扩展到图的局部邻域，为每个节点生成无损的拓扑-几何指纹…
+  [ICML2025][图学习][Euler Characteristic Transform] 提出 Local Euler Characteristic Transform (ℓ-ECT)，将经典 ECT 拓扑不变量扩展到图的局部邻域，为每个节点生成无损的拓扑-几何指纹，在节点分类任务（尤其是高异质性图）上超越标准 GNN，同时提供理论可逆性保证与可解释性。
 tags:
   - "ICML2025"
   - "图学习"

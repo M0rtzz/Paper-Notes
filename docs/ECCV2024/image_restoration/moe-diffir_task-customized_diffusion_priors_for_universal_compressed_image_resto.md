@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoE-DiffIR: Task-customized Diffusion Priors for Universal Compressed Image Restoration
 description: >-
-  [ECCV 2024][图像恢复][压缩图像复原] 提出 MoE-DiffIR，首个基于扩散模型的通用压缩图像复原（CIR）框架，通过混合专家（MoE）Prompt 模块从 Stable Diffusion 中挖掘任务定制化的扩散先验，结合 Visual-to-Text 适配器激活 SD 的跨模态生成先验…
+  [ECCV 2024][图像恢复][压缩图像复原] 提出 MoE-DiffIR，首个基于扩散模型的通用压缩图像复原（CIR）框架，通过混合专家（MoE）Prompt 模块从 Stable Diffusion 中挖掘任务定制化的扩散先验，结合 Visual-to-Text 适配器激活 SD 的跨模态生成先验，并构建了覆盖 7 种编解码器 × 3 个压缩级别共 21 种退化的首个通用 CIR 基准数据集。
 tags:
   - "ECCV 2024"
   - "图像恢复"

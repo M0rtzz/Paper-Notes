@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval
 description: >-
-  [ACL 2025][Contract Clause Retrieval] 构建首个面向合同起草的专家标注条款检索基准ACORD（114查询、126K+对、1-5星评分），评估20种检索方法发现BM25+GPT-4o pointwise重排序最优（NDCG@5=76.9%）…
+  [ACL 2025][Contract Clause Retrieval] 构建首个面向合同起草的专家标注条款检索基准ACORD（114查询、126K+对、1-5星评分），评估20种检索方法发现BM25+GPT-4o pointwise重排序最优（NDCG@5=76.9%），但高质量条款精度极低（5星precision@5仅17.2%），揭示模型距真实律师需求的巨大差距。
 tags:
   - "ACL 2025"
   - "Contract Clause Retrieval"

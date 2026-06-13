@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification
 description: >-
-  [CVPR 2026][医学图像][多实例学习] 将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力）…
+  [CVPR 2026][医学图像][多实例学习] 将冻结的通用基础编码器（DINOv2 ViT-Giant / MedSigLIP）与仅 ~40k 参数的轻量 MIL 聚合头结合，通过预计算特征 + 双流聚合（全局 max 池化 + 局部 Perceiver 交叉注意力），在 EMBED 等大规模乳腺 X 线分类基准上以 5-7 分钟训练达到 SOTA（AUC 0.916, Spec@Sens=0.9 达 0.762），可训练参数比基线少 35-458 倍。
 tags:
   - "CVPR 2026"
   - "医学图像"

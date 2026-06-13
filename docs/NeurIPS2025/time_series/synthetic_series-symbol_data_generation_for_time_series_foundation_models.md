@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthetic Series-Symbol Data Generation for Time Series Foundation Models
 description: >-
-  [NeurIPS 2025][时间序列][time series foundation model] 提出 Series-Symbol (S²) 数据生成机制和 SymTime 双模态基础模型，利用 Takens 定理和符号动力学理论生成无限规模的合成时序-符号配对数据（40M 对/50B token）…
+  [NeurIPS 2025][时间序列][time series foundation model] 提出 Series-Symbol (S²) 数据生成机制和 SymTime 双模态基础模型，利用 Takens 定理和符号动力学理论生成无限规模的合成时序-符号配对数据（40M 对/50B token），通过跨模态对比学习预训练在 5 大时序任务上达到与真实数据预训练模型竞争的性能。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

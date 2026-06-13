@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeMIL: Learning Offline Safe Imitation Policy from Non-Preferred Trajectories
 description: >-
-  [AAAI 2026][强化学习][离线安全模仿学习] 本文提出SafeMIL，通过将代价函数学习建模为多实例学习（MIL）问题，从有限的非偏好轨迹和大量无标签轨迹中学习安全的模仿策略，在不需要逐步reward/cost标注的情况下，实现约束满足性能比最佳基线提升3.7倍。
+  [AAAI 2026][强化学习][离线安全模仿学习] 本文提出SafeMIL，通过将代价函数学习建模为多实例学习（MIL）问题，从有限的非偏好轨迹和大量无标签轨迹中学习安全的模仿策略，在不需要逐步reward/cost标注的情况下，实现约束满足性能比最佳基线提升3.7倍。 问题背景 强化学习在现实世界部署面临两大挑战： 在…
 tags:
   - "AAAI 2026"
   - "强化学习"

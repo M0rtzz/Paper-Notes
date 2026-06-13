@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training
 description: >-
-  [ICLR 2026 Oral][预训练][pre-training data] 构建 Common Corpus——约 2 万亿 token 的最大规模合法授权 LLM 预训练数据集，覆盖 6 大集合（政府/文化/科学/代码/Web/语义），多语言（含低资源语言），所有数据均为无版权或宽松许可来源…
+  [ICLR 2026 Oral][预训练][pre-training data] 构建 Common Corpus——约 2 万亿 token 的最大规模合法授权 LLM 预训练数据集，覆盖 6 大集合（政府/文化/科学/代码/Web/语义），多语言（含低资源语言），所有数据均为无版权或宽松许可来源，配有完整数据溯源和多阶段过滤管道，已被 Anthropic 等行业领导者采用。
 tags:
   - "ICLR 2026 Oral"
   - "预训练"

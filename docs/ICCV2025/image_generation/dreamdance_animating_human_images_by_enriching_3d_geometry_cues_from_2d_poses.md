@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamDance: Animating Human Images by Enriching 3D Geometry Cues from 2D Poses
 description: >-
-  [ICCV 2025][图像生成][人体图像动画] DreamDance 提出一种仅以 2D 骨架姿态序列为输入的人体图像动画框架：先通过 Mutually Aligned Geometry Diffusion Model 从 2D 姿态生成相互对齐的深度图和法线图以丰富 3D 几何引导…
+  [ICCV 2025][图像生成][人体图像动画] DreamDance 提出一种仅以 2D 骨架姿态序列为输入的人体图像动画框架：先通过 Mutually Aligned Geometry Diffusion Model 从 2D 姿态生成相互对齐的深度图和法线图以丰富 3D 几何引导，再通过基于 SVD 的 Cross-Domain Controlled Video Diffusion Model 整合多层次引导信号生成高质量人体动画，在 TikTok 数据集上取得 SOTA（FVD 153.07 vs Champ 170.20）。
 tags:
   - "ICCV 2025"
   - "图像生成"

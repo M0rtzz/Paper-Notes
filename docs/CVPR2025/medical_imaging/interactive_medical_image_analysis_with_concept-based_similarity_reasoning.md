@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interactive Medical Image Analysis with Concept-based Similarity Reasoning
 description: >-
-  [CVPR 2025][医学图像][可解释医学影像] 本文提出 CSR（Concept-based Similarity Reasoning）网络，通过学习概念原型在图像局部区域的相似性来进行分类推理，同时支持医生在训练和测试时从空间级和概念级两个维度进行交互式干预…
+  [CVPR 2025][医学图像][可解释医学影像] 本文提出 CSR（Concept-based Similarity Reasoning）网络，通过学习概念原型在图像局部区域的相似性来进行分类推理，同时支持医生在训练和测试时从空间级和概念级两个维度进行交互式干预，在三个医学数据集上以高达 4.5% 的 F1 提升超越了现有可解释方法。
 tags:
   - "CVPR 2025"
   - "医学图像"

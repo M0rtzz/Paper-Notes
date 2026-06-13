@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous 3D Perception Model with Persistent State
 description: >-
-  [CVPR 2025][3D视觉][在线3D重建] 提出CUT3R（Continuous Updating Transformer for 3D Reconstruction），一个维持持续内部状态的循环模型，能从图像流中在线、增量地进行度量级3D重建、相机位姿估计，并能推断未观测区域的3D结构。
+  [CVPR 2025][3D视觉][在线3D重建] 提出CUT3R（Continuous Updating Transformer for 3D Reconstruction），一个维持持续内部状态的循环模型，能从图像流中在线、增量地进行度量级3D重建、相机位姿估计，并能推断未观测区域的3D结构。 领域现状 领域现状：传统3…
 tags:
   - "CVPR 2025"
   - "3D视觉"

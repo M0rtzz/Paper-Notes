@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Robust Graph Neural Networks by Modeling Noise Dependencies
 description: >-
-  [NeurIPS 2025][优化/理论][图神经网络鲁棒性] 提出依赖感知图噪声(DANG)和DA-GNN框架，通过建模节点特征噪声→图结构噪声→标签噪声的因果依赖链，利用变分推断推导ELBO来训练对多源协同噪声鲁棒的GNN。
+  [NeurIPS 2025][优化/理论][图神经网络鲁棒性] 提出依赖感知图噪声(DANG)和DA-GNN框架，通过建模节点特征噪声→图结构噪声→标签噪声的因果依赖链，利用变分推断推导ELBO来训练对多源协同噪声鲁棒的GNN。 GNN在实际应用中面临的核心挑战之一是数据噪声。现有鲁棒GNN方法分别处理特征噪声（AirGNN…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

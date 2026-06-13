@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement
 description: >-
-  [ECCV 2024][图像恢复][低光视频增强] 提出 UDU-Net，将低光视频增强建模为 MAP 优化问题并展开为深度网络，通过 Intra/Inter 子网分别处理空间（光照）和时序（一致性）退化，支持无配对训练和人类感知反馈的可控增强。
+  [ECCV 2024][图像恢复][低光视频增强] 提出 UDU-Net，将低光视频增强建模为 MAP 优化问题并展开为深度网络，通过 Intra/Inter 子网分别处理空间（光照）和时序（一致性）退化，支持无配对训练和人类感知反馈的可控增强。 低光视频增强面临三重挑战： 配对数据获取困难：相比静态图像…
 tags:
   - "ECCV 2024"
   - "图像恢复"

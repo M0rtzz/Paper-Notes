@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Mismatch within Reference-based Preference Optimization
 description: >-
-  [ICLR 2026][社会计算][DPO] 揭示 DPO 的"过早满足"问题——当 reference 策略对 chosen 的概率低于 rejected 时（~45% pairs），DPO 的梯度被 reference 的悲观信号不必要地衰减（即使策略仍然错误即 $\Delta_\theta < 0$）…
+  [ICLR 2026][社会计算][DPO] 揭示 DPO 的"过早满足"问题——当 reference 策略对 chosen 的概率低于 rejected 时（~45% pairs），DPO 的梯度被 reference 的悲观信号不必要地衰减（即使策略仍然错误即 $\Delta_\theta < 0$）；提出 HyPO（一行代码修改：$\max(0, \Delta_{ref})$ 裁剪 reference margin），在 AlpacaEval 2.0 上相对 DPO 提升 41.2%。
 tags:
   - "ICLR 2026"
   - "社会计算"

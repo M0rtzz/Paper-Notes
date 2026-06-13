@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ActivationReasoning: Logical Reasoning in Latent Activation Spaces
 description: >-
-  [ICLR 2026][LLM推理][稀疏自编码器] 提出 ActivationReasoning (AR) 框架，在 LLM 的潜在激活空间（通过 SAE 提取的特征）上嵌入显式逻辑推理，通过三阶段流程（发现概念表征→检测激活命题→逻辑规则推理）实现多跳推理、概念组合和安全控制…
+  [ICLR 2026][LLM推理][稀疏自编码器] 提出 ActivationReasoning (AR) 框架，在 LLM 的潜在激活空间（通过 SAE 提取的特征）上嵌入显式逻辑推理，通过三阶段流程（发现概念表征→检测激活命题→逻辑规则推理）实现多跳推理、概念组合和安全控制，在 PrOntoQA 上 8B 模型达到 95%+ 准确率超越 GPT-4o。
 tags:
   - "ICLR 2026"
   - "LLM推理"

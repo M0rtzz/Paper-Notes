@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models
 description: >-
-  [图像生成] 提出 DEXTER，一个无需数据的框架，通过优化文本提示驱动扩散模型生成最大化目标分类器激活的图像，再用 LLM 对合成样本进行推理，生成全局性、可读的文本解释，实现模型行为的偏差发现和全局解释。
+  [图像生成] 提出 DEXTER，一个无需数据的框架，通过优化文本提示驱动扩散模型生成最大化目标分类器激活的图像，再用 LLM 对合成样本进行推理，生成全局性、可读的文本解释，实现模型行为的偏差发现和全局解释。 模型可解释性是构建可信 AI 的基础。现有方法的局限： 1. 局部归因方法：（GradCAM、Integrated…
 tags:
   - "图像生成"
 ---

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer
 description: >-
-  [ICCV 2025][LLM/NLP][阴影去除] 提出ShadowHack框架，将阴影去除分解为亮度恢复和颜色修复两个子任务，通过带有纠偏外展注意力的LRNet恢复亮度和纹理，再用跨注意力驱动的CRNet重建准确颜色，在ISTD+和SRD数据集上取得SOTA。
+  [ICCV 2025][LLM 其他][阴影去除] 提出ShadowHack框架，将阴影去除分解为亮度恢复和颜色修复两个子任务，通过带有纠偏外展注意力的LRNet恢复亮度和纹理，再用跨注意力驱动的CRNet重建准确颜色，在ISTD+和SRD数据集上取得SOTA。 阴影去除面临三种复杂且交织的退化： 亮度降低：阴影区域被遮挡直…
 tags:
   - "ICCV 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "阴影去除"
   - "亮度-颜色分解"
   - "Transformer"

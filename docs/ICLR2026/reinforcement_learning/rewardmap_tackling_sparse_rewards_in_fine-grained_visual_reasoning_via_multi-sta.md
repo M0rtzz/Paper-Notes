@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RewardMap: Tackling Sparse Rewards in Fine-grained Visual Reasoning via Multi-Stage Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][多模态大模型] 提出RewardMap框架，通过难度感知的细节奖励设计和从简单感知到复杂推理的多阶段RL课程学习策略，克服细粒度视觉推理中的稀疏奖励问题。
+  [ICLR 2026][强化学习][多模态大模型] 提出RewardMap框架，通过难度感知的细节奖励设计和从简单感知到复杂推理的多阶段RL课程学习策略，克服细粒度视觉推理中的稀疏奖励问题。 细粒度视觉推理（如地铁路线规划）是多模态大模型（MLLM）的核心挑战。ReasonMap基准揭示了即使先进的MLLM在结构化、信息密集…
 tags:
   - "ICLR 2026"
   - "强化学习"

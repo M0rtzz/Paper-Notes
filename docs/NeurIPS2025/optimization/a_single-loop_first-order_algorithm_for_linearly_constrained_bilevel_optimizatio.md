@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][bilevel optimization] 针对下层问题带耦合线性约束的双层优化问题，提出单循环一阶算法 SFLCB，通过罚函数 + 增广拉格朗日重构消除 Hessian 依赖…
+  [NeurIPS 2025][优化/理论][bilevel optimization] 针对下层问题带耦合线性约束的双层优化问题，提出单循环一阶算法 SFLCB，通过罚函数 + 增广拉格朗日重构消除 Hessian 依赖，将迭代复杂度从 $O(\epsilon^{-3}\log(\epsilon^{-1}))$ 改进至 $O(\epsilon^{-3})$。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

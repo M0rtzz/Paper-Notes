@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bi-TTA: Bidirectional Test-Time Adapter for Remote Physiological Measurement
 description: >-
-  [ECCV2024][AI安全][rPPG] 提出 Bi-TTA 框架，首次将 Test-Time Adaptation 引入远程光电容积脉搏波 (rPPG) 任务，通过时空一致性自监督先验和前瞻-回溯双向适应策略，在推理时仅用无标注单实例数据即可完成模型域适应。
+  [ECCV2024][AI安全][rPPG] 提出 Bi-TTA 框架，首次将 Test-Time Adaptation 引入远程光电容积脉搏波 (rPPG) 任务，通过时空一致性自监督先验和前瞻-回溯双向适应策略，在推理时仅用无标注单实例数据即可完成模型域适应。 远程光电容积脉搏波 (rPPG) 通过普通摄像头从人脸视频中…
 tags:
   - "ECCV2024"
   - "AI安全"

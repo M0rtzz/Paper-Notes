@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MuSLR: Multimodal Symbolic Logical Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][多模态符号逻辑推理] 提出首个多模态符号逻辑推理任务MuSLR及其基准测试集MuSLR-Bench（1,093个实例，涵盖7个领域、35种原子符号逻辑、推理深度2-9），并设计模块化框架LogiCAM…
+  [NeurIPS 2025][LLM推理][多模态符号逻辑推理] 提出首个多模态符号逻辑推理任务MuSLR及其基准测试集MuSLR-Bench（1,093个实例，涵盖7个领域、35种原子符号逻辑、推理深度2-9），并设计模块化框架LogiCAM，通过前提选择、推理类型识别和符号推理三个模块将GPT-4.1的CoT性能提升14.13%。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

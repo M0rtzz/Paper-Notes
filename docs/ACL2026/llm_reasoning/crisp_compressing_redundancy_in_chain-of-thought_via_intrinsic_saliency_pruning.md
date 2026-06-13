@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CRISP: Compressing Redundancy in Chain-of-Thought via Intrinsic Saliency Pruning
 description: >-
-  [ACL 2026][LLM推理][思维链压缩] 提出 CRISP 框架，发现 `</think>` token 的注意力模式能可靠区分推理链中的关键步骤和冗余步骤，据此设计四种原子操作的贪心搜索压缩流水线，在保持准确率的同时减少50-60%的 token 用量。
+  [ACL 2026 Findings][LLM推理][思维链压缩] 提出 CRISP 框架，发现 </think token 的注意力模式能可靠区分推理链中的关键步骤和冗余步骤，据此设计四种原子操作的贪心搜索压缩流水线，在保持准确率的同时减少50-60%的 token 用量。 领域现状：推理型 LLM（如 DeepSeek-…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "思维链压缩"
   - "注意力显著性"

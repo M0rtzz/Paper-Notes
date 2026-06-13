@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simulation-Based Inference for Neutrino Interaction Model Parameter Tuning
 description: >-
-  [NeurIPS 2025][物理/科学计算][simulation-based inference] 首次将基于仿真的推断（SBI）应用于中微子相互作用模型参数调优，使用神经后验估计（NPE）从200K个GENIE模拟的58-bin直方图中学习4个物理参数的后验分布…
+  [NeurIPS 2025][物理/科学计算][simulation-based inference] 首次将基于仿真的推断（SBI）应用于中微子相互作用模型参数调优，使用神经后验估计（NPE）从200K个GENIE模拟的58-bin直方图中学习4个物理参数的后验分布，在MicroBooNE Tune的mock数据上准确恢复了真实参数值。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

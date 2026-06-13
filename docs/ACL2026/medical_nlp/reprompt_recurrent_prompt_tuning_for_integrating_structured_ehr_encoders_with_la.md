@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RePrompT: Recurrent Prompt Tuning for Integrating Structured EHR Encoders with Large Language Models
 description: >-
-  [ACL 2026][医疗NLP][电子健康记录] 本文提出 RePrompT，一种时间感知的 LLM 框架，通过循环提示调优（将前一次就诊的隐状态作为下一次就诊的软提示）和结构化编码提示调优（注入群体级 EHR 编码器的嵌入）两种互补机制…
+  [ACL 2026][医疗NLP][电子健康记录] 本文提出 RePrompT，一种时间感知的 LLM 框架，通过循环提示调优（将前一次就诊的隐状态作为下一次就诊的软提示）和结构化编码提示调优（注入群体级 EHR 编码器的嵌入）两种互补机制，在 MIMIC-III/IV 上的再入院和死亡率预测任务上一致超越 EHR 基线和 LLM 基线。
 tags:
   - "ACL 2026"
   - "医疗NLP"

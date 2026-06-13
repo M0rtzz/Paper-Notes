@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization
 description: >-
-  [ECCV 2024][人体理解][自监督学习] 提出了一个自监督学习基准，同时评估语义分类和姿态估计能力，并设计视角轨迹正则化损失(trajectory loss)，利用相邻视角的图像三元组约束特征空间中的局部线性性，使学到的表征既保持语义分类精度又获得 emergent 的全局姿态感知能力…
+  [ECCV 2024][人体理解][自监督学习] 提出了一个自监督学习基准，同时评估语义分类和姿态估计能力，并设计视角轨迹正则化损失(trajectory loss)，利用相邻视角的图像三元组约束特征空间中的局部线性性，使学到的表征既保持语义分类精度又获得 emergent 的全局姿态感知能力，在域内和域外姿态估计上均提升4%。
 tags:
   - "ECCV 2024"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Reality Check on Context Utilisation for Retrieval-Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 提出DRUID真实世界事实验证数据集和ACU评估指标，揭示合成数据集（CounterFact、ConflictQA）夸大了上下文特征的影响，导致对LLM上下文利用能力的过度乐观评估，呼吁使用真实检索数据研究RAG。
+  [ACL 2025][信息检索/RAG][RAG] 提出DRUID真实世界事实验证数据集和ACU评估指标，揭示合成数据集（CounterFact、ConflictQA）夸大了上下文特征的影响，导致对LLM上下文利用能力的过度乐观评估，呼吁使用真实检索数据研究RAG。 检索增强生成（RAG）被广泛用于弥补LLM参数化知识的不足…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

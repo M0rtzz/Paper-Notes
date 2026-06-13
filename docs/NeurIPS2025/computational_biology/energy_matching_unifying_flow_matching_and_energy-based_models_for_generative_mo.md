@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling
 description: >-
-  [NeurIPS 2025][计算生物][能量模型] 提出 Energy Matching，通过学习一个时间无关的标量势能场统一流匹配与能量模型：远离数据流形时沿最优传输路径高效传输，靠近流形时过渡为 Boltzmann 平衡分布以建模似然…
+  [NeurIPS 2025][计算生物][能量模型] 提出 Energy Matching，通过学习一个时间无关的标量势能场统一流匹配与能量模型：远离数据流形时沿最优传输路径高效传输，靠近流形时过渡为 Boltzmann 平衡分布以建模似然，在 CIFAR-10 上 FID 3.34 大幅超越现有 EBM（>50%提升）。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

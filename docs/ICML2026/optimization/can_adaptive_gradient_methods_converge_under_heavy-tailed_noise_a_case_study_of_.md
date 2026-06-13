@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Adaptive Gradient Methods Converge under Heavy-Tailed Noise? A Case Study of AdaGrad
 description: >-
-  [ICML 2026][优化/理论][自适应梯度方法] 首次证明 AdaGrad 在重尾噪声（$p \in (4/3, 2]$）下无需任何算法修改即可收敛，同时给出算法依赖的下界表明 AdaGrad 无法达到 minimax 最优速率…
+  [ICML 2026][优化/理论][自适应梯度方法] 首次证明 AdaGrad 在重尾噪声（$p \in (4/3, 2]$）下无需任何算法修改即可收敛，同时给出算法依赖的下界表明 AdaGrad 无法达到 minimax 最优速率，并证明 AdaGrad-Norm 在有界目标函数假设下可获得更快的 $O(1/T^{(p-1)/(2p)})$ 速率。
 tags:
   - "ICML 2026"
   - "优化/理论"

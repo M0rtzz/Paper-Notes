@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Expressive Power of GNNs to Solve Linear SDPs
 description: >-
-  [ICML 2026][优化/理论][半定规划] 本文从 Weisfeiler–Leman 层级的角度首次刻画了学习线性 SDP 解所需的最小 GNN 表达力，证明标准的变量-约束二部图消息传递（VC-WL）和高阶 VC-2-WL 都不够…
+  [ICML 2026][优化/理论][半定规划] 本文从 Weisfeiler–Leman 层级的角度首次刻画了学习线性 SDP 解所需的最小 GNN 表达力，证明标准的变量-约束二部图消息传递（VC-WL）和高阶 VC-2-WL 都不够，而 2-FWL 等价的 VC-2-FWL 架构足以仿真 PDHG 求解器的更新步骤，并在合成与 SDPLIB 上把高质量预测用作 warm-start，最多带来约 80% 的加速。
 tags:
   - "ICML 2026"
   - "优化/理论"

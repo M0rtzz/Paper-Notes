@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting
 description: >-
-  [ICCV 2025][3D视觉][视线重定向] 提出GazeGaussian，首个基于3D高斯溅射（3DGS）的高保真视线重定向方法，通过双流3DGS模型分别建模面部和眼部区域，设计显式的高斯眼球旋转表示和表情引导神经渲染器，在视线精度、合成质量和渲染速度上全面超越现有方法。
+  [ICCV 2025][3D视觉][视线重定向] 提出GazeGaussian，首个基于3D高斯溅射（3DGS）的高保真视线重定向方法，通过双流3DGS模型分别建模面部和眼部区域，设计显式的高斯眼球旋转表示和表情引导神经渲染器，在视线精度、合成质量和渲染速度上全面超越现有方法。 视线估计（Gaze Estimation）是计…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ShredBench: Evaluating the Semantic Reasoning Capabilities of Multimodal LLMs in Document Reconstruction
 description: >-
-  [ACL2026][多模态VLM][文档重建] ShredBench 构造了一个“把文档撕碎后让多模态大模型复原内容”的评测基准，证明当前 MLLM 即使在常规 OCR 上很强，也普遍缺乏把视觉碎片、阅读顺序和语义上下文合在一起推理的能力。
+  [ACL2026 Findings][多模态VLM][文档重建] ShredBench 构造了一个“把文档撕碎后让多模态大模型复原内容”的评测基准，证明当前 MLLM 即使在常规 OCR 上很强，也普遍缺乏把视觉碎片、阅读顺序和语义上下文合在一起推理的能力。 领域现状：多模态大模型在文档理解任务上已经覆盖 OCR、表格解析、…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "文档重建"
   - "MLLM评测"

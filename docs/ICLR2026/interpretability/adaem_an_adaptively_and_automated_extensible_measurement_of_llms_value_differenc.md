@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdAEM: An Adaptively and Automated Extensible Measurement of LLMs' Value Difference
 description: >-
-  [ICLR 2026 (Oral)][可解释性][LLM价值观评估] 提出 AdAEM，一个自适应、自扩展的 LLM 价值观评估框架，通过信息论优化自动生成能最大化揭示不同 LLM 价值差异的测试问题，解决现有静态基准无法区分模型价值取向的"信息量不足"问题。
+  [ICLR 2026 (Oral)][可解释性][LLM价值观评估] 提出 AdAEM，一个自适应、自扩展的 LLM 价值观评估框架，通过信息论优化自动生成能最大化揭示不同 LLM 价值差异的测试问题，解决现有静态基准无法区分模型价值取向的"信息量不足"问题。 大语言模型（LLM）虽在知识和指令跟随方面取得巨大进展…
 tags:
   - "ICLR 2026 (Oral)"
   - "可解释性"

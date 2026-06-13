@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding
 description: >-
-  [AAAI 2026][预训练][过程化视频理解] 提出 Task-Step-State（TSS）三层语义框架，在传统的任务-步骤层次中引入"状态"作为视觉锚定层，并设计渐进式预训练策略（Task→Step→State→Step→Task）逐步展开 TSS 层次…
+  [AAAI 2026][预训练][过程化视频理解] 提出 Task-Step-State（TSS）三层语义框架，在传统的任务-步骤层次中引入"状态"作为视觉锚定层，并设计渐进式预训练策略（Task→Step→State→Step→Task）逐步展开 TSS 层次，在 COIN 和 CrossTask 数据集上的任务识别、步骤识别和步骤预测任务上全面超越 SOTA。
 tags:
   - "AAAI 2026"
   - "预训练"

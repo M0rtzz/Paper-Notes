@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfoAtlas: A Foundation Model for Zero-Shot Statistical Dependence Estimation
 description: >-
-  [ICML 2026][自监督学习][互信息] InfoAtlas 把互信息估计从"每个数据集都要从头训一个评估网络"的优化问题，改造成一个用大规模合成数据预训练好的超网络的"一次前向推理"问题，做到与 MINE/MINDE 等神经估计器相当的精度同时 100× 提速。
+  [ICML 2026][自监督学习][互信息] InfoAtlas 把互信息估计从"每个数据集都要从头训一个评估网络"的优化问题，改造成一个用大规模合成数据预训练好的超网络的"一次前向推理"问题，做到与 MINE/MINDE 等神经估计器相当的精度同时 100× 提速。 领域现状：互信息 (MI) 是衡量两组多维变量统计依赖…
 tags:
   - "ICML 2026"
   - "自监督学习"

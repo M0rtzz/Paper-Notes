@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReIn: Conversational Error Recovery with Reasoning Inception
 description: >-
-  [ICLR 2026][对话系统][conversational agents] 提出 Reasoning Inception（ReIn），一种无需修改模型参数或系统提示的测试时干预方法，通过外部 inception 模块检测对话错误并将恢复计划注入任务 agent 的推理链中…
+  [ICLR 2026][对话系统][conversational agents] 提出 Reasoning Inception（ReIn），一种无需修改模型参数或系统提示的测试时干预方法，通过外部 inception 模块检测对话错误并将恢复计划注入任务 agent 的推理链中，在多种错误场景下显著提升对话任务完成率，且可泛化至未见错误类型。
 tags:
   - "ICLR 2026"
   - "对话系统"

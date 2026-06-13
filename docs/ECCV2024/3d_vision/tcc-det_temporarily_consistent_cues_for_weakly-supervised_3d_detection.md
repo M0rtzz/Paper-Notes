@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TCC-Det: Temporarily Consistent Cues for Weakly-Supervised 3D Detection
 description: >-
-  [ECCV 2024][3D视觉][弱监督3D检测] 本文提出一种完全不需要人工3D标注的弱监督3D目标检测方法，通过利用现成的2D检测器（Mask-RCNN）和多帧时间一致性线索生成高质量伪3D标签，然后用于训练3D点云检测器（Voxel-RCNN）…
+  [ECCV 2024][3D视觉][弱监督3D检测] 本文提出一种完全不需要人工3D标注的弱监督3D目标检测方法，通过利用现成的2D检测器（Mask-RCNN）和多帧时间一致性线索生成高质量伪3D标签，然后用于训练3D点云检测器（Voxel-RCNN），在KITTI和Waymo上超越所有弱监督方法并显著缩小与全监督方法的差距。
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Doc-PP: Document Policy Preservation Benchmark for Large Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][文档问答] 本文提出 Doc-PP 基准，揭示大型视觉-语言模型（LVLM）在多模态文档问答中存在"推理诱导的安全缺口"——模型在需要跨模态推理时会绕过显式非披露策略泄露敏感信息…
+  [ACL 2026 Findings][多模态VLM][文档问答] 本文提出 Doc-PP 基准，揭示大型视觉-语言模型（LVLM）在多模态文档问答中存在"推理诱导的安全缺口"——模型在需要跨模态推理时会绕过显式非披露策略泄露敏感信息，并提出 DVA（Decompose–Verify–Aggregation）结构化推理框架来显著降低泄露率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "文档问答"
   - "信息泄露"

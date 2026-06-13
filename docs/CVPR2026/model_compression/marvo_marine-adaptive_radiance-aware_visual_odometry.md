@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARVO: Marine-Adaptive Radiance-aware Visual Odometry
 description: >-
-  [CVPR 2026][模型压缩][水下视觉里程计] 提出 MARVO 水下视觉里程计框架，将物理感知辐射适配器 (PARA) 嵌入 LoFTR 特征匹配器补偿水下波长衰减、结合 GTSAM 多传感器因子图融合和强化学习位姿图优化 (RL-PGO)，在水下场景实现鲁棒定位。
+  [CVPR 2026][模型压缩][水下视觉里程计] 提出 MARVO 水下视觉里程计框架，将物理感知辐射适配器 (PARA) 嵌入 LoFTR 特征匹配器补偿水下波长衰减、结合 GTSAM 多传感器因子图融合和强化学习位姿图优化 (RL-PGO)，在水下场景实现鲁棒定位。 水下视觉定位面临独特挑战：光散射、波长依赖的衰减：…
 tags:
   - "CVPR 2026"
   - "模型压缩"

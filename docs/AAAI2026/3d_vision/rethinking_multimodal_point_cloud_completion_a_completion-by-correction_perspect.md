@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective
 description: >-
-  [AAAI 2026][3D视觉][点云补全] 提出 Completion-by-Correction 新范式，用预训练 image-to-3D 模型生成拓扑完整的形状先验，再通过特征空间纠正使其与局部观测对齐，取代传统的 Completion-by-Inpainting 方法…
+  [AAAI 2026][3D视觉][点云补全] 提出 Completion-by-Correction 新范式，用预训练 image-to-3D 模型生成拓扑完整的形状先验，再通过特征空间纠正使其与局部观测对齐，取代传统的 Completion-by-Inpainting 方法，在 ShapeNetViPC 上平均 CD 降低 23.5%、F-score 提升 7.1%。
 tags:
   - "AAAI 2026"
   - "3D视觉"

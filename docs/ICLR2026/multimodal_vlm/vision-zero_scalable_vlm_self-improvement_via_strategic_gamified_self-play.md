@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Zero: Scalable VLM Self-Improvement via Strategic Gamified Self-Play
 description: >-
-  [多模态VLM] 提出 Vision-Zero，首个无标注的游戏化自博弈框架，通过"谁是卧底"式视觉推理游戏实现 VLM 的可扩展自进化，结合 Iterative-SPO 训练算法在推理、图表理解和视觉中心任务上超越基于人工标注数据的 SOTA 方法。
+  [多模态VLM] 提出 Vision-Zero，首个无标注的游戏化自博弈框架，通过"谁是卧底"式视觉推理游戏实现 VLM 的可扩展自进化，结合 Iterative-SPO 训练算法在推理、图表理解和视觉中心任务上超越基于人工标注数据的 SOTA 方法。 当前 VLM 训练面临两个核心瓶颈： 数据稀缺：多模态标注成本极高（CO…
 tags:
   - "多模态VLM"
 ---

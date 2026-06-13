@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 本文提出 3DGS-LM，通过将 3D Gaussian Splatting 的 ADAM 优化器替换为定制的 Levenberg-Marquardt (LM) 二阶优化器，并设计了高效的 GPU 并行化方案和梯度缓存结构…
+  [ICCV 2025][3D视觉][3D高斯溅射] 本文提出 3DGS-LM，通过将 3D Gaussian Splatting 的 ADAM 优化器替换为定制的 Levenberg-Marquardt (LM) 二阶优化器，并设计了高效的 GPU 并行化方案和梯度缓存结构，在保持相同重建质量的前提下实现了 20% 的训练加速。
 tags:
   - "ICCV 2025"
   - "3D视觉"

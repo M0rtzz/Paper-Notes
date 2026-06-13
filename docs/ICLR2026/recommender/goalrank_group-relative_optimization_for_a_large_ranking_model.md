@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GoalRank: Group-Relative Optimization for a Large Ranking Model
 description: >-
-  [ICLR 2026][推荐系统][ranking] 理论证明任意 Multi-Generator-Evaluator 排序系统都存在一个更大的 generator-only 模型以更小的误差逼近最优策略且满足 scaling law…
+  [ICLR 2026][推荐系统][ranking] 理论证明任意 Multi-Generator-Evaluator 排序系统都存在一个更大的 generator-only 模型以更小的误差逼近最优策略且满足 scaling law，据此提出 GoalRank——用 reward model 构建 group-relative 参考策略来训练大型 generator-only 排序模型，在线 A/B 测试中显著优于 SOTA。
 tags:
   - "ICLR 2026"
   - "推荐系统"

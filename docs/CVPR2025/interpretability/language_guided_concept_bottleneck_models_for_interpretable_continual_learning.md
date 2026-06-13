@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Guided Concept Bottleneck Models for Interpretable Continual Learning
 description: >-
-  [CVPR 2025][可解释性][持续学习] 本文将语言引导的概念瓶颈模型（CBM）引入持续学习，用 ChatGPT 生成人类可理解的概念、CLIP 编码概念嵌入构建概念瓶颈层，在缓解灾难性遗忘的同时提供透明的决策解释，在 ImageNet-subset 上超越 SOTA 3.06%。
+  [CVPR 2025][可解释性][持续学习] 本文将语言引导的概念瓶颈模型（CBM）引入持续学习，用 ChatGPT 生成人类可理解的概念、CLIP 编码概念嵌入构建概念瓶颈层，在缓解灾难性遗忘的同时提供透明的决策解释，在 ImageNet-subset 上超越 SOTA 3.06%。 领域现状：持续学习需要模型不断学习新…
 tags:
   - "CVPR 2025"
   - "可解释性"

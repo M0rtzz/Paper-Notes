@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Multimodal Continual Instruction Tuning with BranchLoRA
 description: >-
-  [ACL 2025][多模态VLM][持续指令微调] 针对多模态持续指令微调(MCIT)中MoELoRA的参数低效和灾难性遗忘问题，提出BranchLoRA——一种非对称架构，共享矩阵A捕获跨任务通用模式、多路矩阵B编码任务特有知识，配合灵活调参-冻结机制和任务特定路由器…
+  [ACL 2025][多模态VLM][持续指令微调] 针对多模态持续指令微调(MCIT)中MoELoRA的参数低效和灾难性遗忘问题，提出BranchLoRA——一种非对称架构，共享矩阵A捕获跨任务通用模式、多路矩阵B编码任务特有知识，配合灵活调参-冻结机制和任务特定路由器，在CoIN benchmark上以更少参数大幅超越前SOTA MoELoRA（ACC: 44.20 vs 37.13, BWT: -20.98 vs -25.91）。
 tags:
   - "ACL 2025"
   - "多模态VLM"

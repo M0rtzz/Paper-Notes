@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LightMover: Generative Light Movement with Color and Intensity Controls
 description: >-
-  [CVPR 2026][视频生成][光源操控] LightMover 利用视频扩散先验，将光源编辑建模为序列到序列预测问题，通过统一的控制token表示实现光源位置、颜色和亮度的精确操控，并提出自适应token剪枝机制将控制序列长度减少41%，在光源移动和物体移动任务上均超越现有方法。
+  [CVPR 2026][视频生成][光源操控] LightMover 利用视频扩散先验，将光源编辑建模为序列到序列预测问题，通过统一的控制token表示实现光源位置、颜色和亮度的精确操控，并提出自适应token剪枝机制将控制序列长度减少41%，在光源移动和物体移动任务上均超越现有方法。 从单张图像精确编辑光照是一个极具挑战性…
 tags:
   - "CVPR 2026"
   - "视频生成"

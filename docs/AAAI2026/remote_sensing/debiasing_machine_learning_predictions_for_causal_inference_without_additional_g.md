@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Debiasing Machine Learning Predictions for Causal Inference Without Additional Ground Truth Data
 description: >-
-  [AAAI 2026][遥感][预测去偏] 针对ML卫星贫困预测因均值回归导致因果处理效应衰减的问题，提出两种无需新标注数据的后处理校正方法——线性校准校正(LCC)和Tweedie局部去收缩——使同一预测地图可在多个下游因果试验中复用（"一图多试"范式）…
+  [AAAI 2026][遥感][预测去偏] 针对ML卫星贫困预测因均值回归导致因果处理效应衰减的问题，提出两种无需新标注数据的后处理校正方法——线性校准校正(LCC)和Tweedie局部去收缩——使同一预测地图可在多个下游因果试验中复用（"一图多试"范式），Tweedie校正在模拟和DHS真实数据上实现近无偏的处理效应估计。
 tags:
   - "AAAI 2026"
   - "遥感"

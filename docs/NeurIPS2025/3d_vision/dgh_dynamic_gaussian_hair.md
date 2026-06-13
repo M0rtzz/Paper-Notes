@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DGH: Dynamic Gaussian Hair
 description: >-
-  [NeurIPS 2025][3D视觉][动态头发建模] 提出 Dynamic Gaussian Hair (DGH)，一个数据驱动的 coarse-to-fine 框架，通过体素隐式变形模型学习头发动力学，并结合柱状 Gaussian 表示与曲率混合策略实现动态头发的逼真新视角渲染。
+  [NeurIPS 2025][3D视觉][动态头发建模] 提出 Dynamic Gaussian Hair (DGH)，一个数据驱动的 coarse-to-fine 框架，通过体素隐式变形模型学习头发动力学，并结合柱状 Gaussian 表示与曲率混合策略实现动态头发的逼真新视角渲染。 动态头发建模是数字人的核心难题：头发的…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

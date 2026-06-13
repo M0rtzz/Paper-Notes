@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GoalForce: Teaching Video Models to Accomplish Physics-Conditioned Goals
 description: >-
-  [CVPR 2026][视频理解][Video Generation] 提出 Goal Force 框架，通过多通道物理控制信号（目标力、直接力、质量）在简单合成数据上训练视频生成模型，使其学会从目标效果逆向规划因果链，实现零样本泛化到工具使用、人-物交互等复杂现实场景。
+  [CVPR 2026][视频理解][Video Generation] 提出 Goal Force 框架，通过多通道物理控制信号（目标力、直接力、质量）在简单合成数据上训练视频生成模型，使其学会从目标效果逆向规划因果链，实现零样本泛化到工具使用、人-物交互等复杂现实场景。 视频生成模型可作为"世界模型"进行规划和仿真…
 tags:
   - "CVPR 2026"
   - "视频理解"

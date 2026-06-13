@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?
 description: >-
-  [NeurIPS 2025][信息检索/RAG][Many-Shot ICL] 提出 MIR-Bench，首个大规模多样化的 many-shot 上下文推理基准，通过从编程题中自动生成输入输出对来测试 LLM 的模式识别能力，发现 LLM 在 many-shot 场景下存在注意力分散导致的性能饱和现象…
+  [NeurIPS 2025][信息检索/RAG][Many-Shot ICL] 提出 MIR-Bench，首个大规模多样化的 many-shot 上下文推理基准，通过从编程题中自动生成输入输出对来测试 LLM 的模式识别能力，发现 LLM 在 many-shot 场景下存在注意力分散导致的性能饱和现象，且转导推理普遍优于归纳推理。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

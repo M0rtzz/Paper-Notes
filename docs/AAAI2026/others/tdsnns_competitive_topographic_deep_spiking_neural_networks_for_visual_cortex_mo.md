@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TDSNNs: Competitive Topographic Deep Spiking Neural Networks for Visual Cortex Modeling
 description: >-
-  [AAAI 2026][脉冲神经网络] 提出拓扑深度脉冲神经网络（TDSNNs），通过设计时空约束（STC）损失函数，在深层SNN中成功复现灵长类视觉皮层从V1到IT的层级拓扑组织，既保持了高任务性能（ImageNet top-1无精度下降），又显著超越现有拓扑ANN的脑相似性。
+  [AAAI 2026 Oral][脉冲神经网络] 提出拓扑深度脉冲神经网络（TDSNNs），通过设计时空约束（STC）损失函数，在深层SNN中成功复现灵长类视觉皮层从V1到IT的层级拓扑组织，既保持了高任务性能（ImageNet top-1无精度下降），又显著超越现有拓扑ANN的脑相似性。 领域现状：灵长类视觉皮层呈现拓扑组…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "脉冲神经网络"
   - "拓扑组织"
   - "视觉皮层建模"

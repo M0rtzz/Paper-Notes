@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shape of Motion: 4D Reconstruction from a Single Video
 description: >-
-  [ICCV 2025][3D视觉][4D重建] 提出基于 $\mathbb{SE}(3)$ 运动基的动态 3D 高斯表示，从单目视频中恢复全局一致的 3D 运动轨迹，同时实现实时新视角合成和长程 3D 跟踪，在 iPhone 和 Kubric 数据集上全面超越先前方法。
+  [ICCV 2025][3D视觉][4D重建] 提出基于 $\mathbb{SE}(3)$ 运动基的动态 3D 高斯表示，从单目视频中恢复全局一致的 3D 运动轨迹，同时实现实时新视角合成和长程 3D 跟踪，在 iPhone 和 Kubric 数据集上全面超越先前方法。 从单目视频中重建动态 3D 场景是一个长期存在的视觉难…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intermediate N-Gramming: Deterministic and Fast N-Grams For Large N and Large Datasets
 description: >-
-  [AAAI 2026][n-gram计算] 提出 Intergrams 多遍扫描算法，利用较短 n-gram 作为前缀递推过滤候选更长 n-gram，充分利用处理器缓存层次结构实现缓存友好的内存访问模式，在 TB 级数据集上比此前最快的 hash-gramming 方法加速 6-33 倍…
+  [AAAI 2026][n-gram计算] 提出 Intergrams 多遍扫描算法，利用较短 n-gram 作为前缀递推过滤候选更长 n-gram，充分利用处理器缓存层次结构实现缓存友好的内存访问模式，在 TB 级数据集上比此前最快的 hash-gramming 方法加速 6-33 倍，同时几乎精确恢复所有 top-k n-gram。
 tags:
   - "AAAI 2026"
   - "n-gram计算"

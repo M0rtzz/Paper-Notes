@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Acquisition and Application of Novel Knowledge in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][新知识获取] 本文提出 PermAR 框架，通过排列式语言建模赋予自回归模型双向知识获取能力，同时构建了基于知识图谱生物进化模拟的新知识数据集 NovelHuman，发现知识在句子中的位置显著影响 LLM 的知识获取效果…
+  [ACL 2025][LLM 其他][新知识获取] 本文提出 PermAR 框架，通过排列式语言建模赋予自回归模型双向知识获取能力，同时构建了基于知识图谱生物进化模拟的新知识数据集 NovelHuman，发现知识在句子中的位置显著影响 LLM 的知识获取效果，PermAR 在新知识注入任务上比现有方法提升 3.3%-38%。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "新知识获取"
   - "排列语言建模"
   - "知识图谱"

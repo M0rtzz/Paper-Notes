@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Response-G1: Explicit Scene Graph Modeling for Proactive Streaming Video Understanding
 description: >-
-  [ACL2026][视频理解][流式视频理解] Response-G1 用查询引导的在线场景图、历史场景图检索和带时间戳的触发提示，把流式视频中的视觉证据和用户查询的响应条件显式对齐，在无需微调的情况下显著提升 Video-LLM 判断“现在是否该回答”的能力。
+  [ACL2026][视频理解][流式视频理解] Response-G1 用查询引导的在线场景图、历史场景图检索和带时间戳的触发提示，把流式视频中的视觉证据和用户查询的响应条件显式对齐，在无需微调的情况下显著提升 Video-LLM 判断“现在是否该回答”的能力。 领域现状：Video-LLM 已经能处理视频问答和长视频理解…
 tags:
   - "ACL2026"
   - "视频理解"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.07575](https://arxiv.org/abs/2605.07575)  
 **代码**: https://github.com/kadmkbl/Response-G1  
-**领域**: video_understanding  
+**领域**: 视频理解  
 **关键词**: 流式视频理解、主动响应、场景图、检索增强、Video-LLM
 
 ## 一句话总结

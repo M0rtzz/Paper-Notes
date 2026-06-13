@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOOSE-Star: Unlocking Tractable Training for Scientific Discovery by Breaking the Complexity Barrier
 description: >-
-  [ICML 2026][预训练][假设生成] MOOSE-Star 把"训练一个能直接生成科学假设的 LLM"这个原本要在 $\mathcal{O}(N^k)$ 组合空间里搜索的问题拆成"灵感检索 + 假设合成"两个序列子任务…
+  [ICML 2026][预训练][假设生成] MOOSE-Star 把"训练一个能直接生成科学假设的 LLM"这个原本要在 $\mathcal{O}(N^k)$ 组合空间里搜索的问题拆成"灵感检索 + 假设合成"两个序列子任务，再叠上层级树检索 + bounded composition + motivation 规划，把最优复杂度从指数级压到 $\mathcal{O}(\log N)$，并放出 108,717 篇带分解标注的 TOMATO-Star 数据集。
 tags:
   - "ICML 2026"
   - "预训练"

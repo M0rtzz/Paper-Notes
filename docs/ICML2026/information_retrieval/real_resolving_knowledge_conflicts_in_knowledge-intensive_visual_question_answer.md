@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REAL: Resolving Knowledge Conflicts in Knowledge-Intensive Visual Question Answering via Reasoning-Pivot Alignment
 description: >-
-  [ICML2026][信息检索/RAG][知识冲突] 本文提出 REAL 框架，用"Reasoning-Pivot"（推理链中必须依赖外部证据才能补全的原子节点/边）重新定义 KI-VQA 中的知识冲突，并通过 RPA-SFT 训练 pivot 感知的冲突判别器 + RPGD 训练免费的对比解码策略…
+  [ICML2026][信息检索/RAG][知识冲突] 本文提出 REAL 框架，用"Reasoning-Pivot"（推理链中必须依赖外部证据才能补全的原子节点/边）重新定义 KI-VQA 中的知识冲突，并通过 RPA-SFT 训练 pivot 感知的冲突判别器 + RPGD 训练免费的对比解码策略，在 E-VQA / InfoSeek / A-OKVQA 上分别取得 +3.8% / +1.6% / +3.6% 的提升。
 tags:
   - "ICML2026"
   - "信息检索/RAG"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.14065](https://arxiv.org/abs/2602.14065)  
 **代码**: 待确认  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: 知识冲突、KI-VQA、Reasoning-Pivot、对比解码、多模态 RAG
 
 ## 一句话总结

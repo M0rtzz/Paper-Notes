@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniSonic: Towards Universal and Holistic Audio Generation from Video and Text
 description: >-
-  [CVPR 2026][音频/语音][视频到音频生成] 提出 Universal Holistic Audio Generation (UniHAGen) 任务和 OmniSonic 框架，通过 TriAttn-DiT 架构的三路交叉注意力和 MoE 门控机制…
+  [CVPR 2026][音频/语音][视频到音频生成] 提出 Universal Holistic Audio Generation (UniHAGen) 任务和 OmniSonic 框架，通过 TriAttn-DiT 架构的三路交叉注意力和 MoE 门控机制，首次实现同时生成屏幕内/屏外环境声和人声的统一音频合成，在新构建的 UniHAGen-Bench 上全面超越 SOTA。
 tags:
   - "CVPR 2026"
   - "音频/语音"

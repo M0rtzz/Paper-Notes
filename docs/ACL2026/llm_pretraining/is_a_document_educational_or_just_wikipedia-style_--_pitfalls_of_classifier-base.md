@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is a Document Educational or Just Wikipedia-Style? -- Pitfalls of Classifier-Based Quality Filtering
 description: >-
-  [ACL2026][预训练][预训练语料] 这篇论文发现Classifier-based Quality Filtering会把“Wikipedia式写法”误当成“更有教育价值”，简单改写就能让低质量网页越过预训练数据过滤阈值，FineWeb-Edu约7%的样本会因此翻转过滤决策。
+  [ACL2026][预训练][预训练语料] 这篇论文发现Classifier-based Quality Filtering会把“Wikipedia式写法”误当成“更有教育价值”，简单改写就能让低质量网页越过预训练数据过滤阈值，FineWeb-Edu约7%的样本会因此翻转过滤决策。 领域现状：现代LLM预训练语料构建越来越依…
 tags:
   - "ACL2026"
   - "预训练"

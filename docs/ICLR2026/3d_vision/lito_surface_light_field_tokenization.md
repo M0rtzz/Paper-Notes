@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiTo: Surface Light Field Tokenization
 description: >-
-  [ICLR 2026][3D视觉][表面光场] 提出LiTo——通过将表面光场(surface light field)编码为紧凑latent向量集合来同时建模3D几何和视角依赖外观：输入RGB-D多视角图像的光场随机子采样 -> Perceiver IO编码器(支持100万token输入的3D局部atten…
+  [ICLR 2026][3D视觉][表面光场] 提出LiTo——通过将表面光场(surface light field)编码为紧凑latent向量集合来同时建模3D几何和视角依赖外观：输入RGB-D多视角图像的光场随机子采样 -> Perceiver IO编码器(支持100万token输入的3D局部attention) + flow-matching几何解码器 + 高阶球谐Gaussian解码器 -> 实现重建和单图到3D生成都超越TRELLIS，首次在latent 3D表示中建模高光/菲涅尔反射等视角依赖效果。
 tags:
   - "ICLR 2026"
   - "3D视觉"

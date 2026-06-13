@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inconsistency-Aware Minimization: Improving Generalization with Unlabeled Data
 description: >-
-  [ICML 2026][自监督学习][泛化界] 本文提出一种只用无标签数据就能计算的"局部不一致性" $S_\rho(\theta)$ —— 即参数球内 KL 散度的最坏值 —— 并把它当作训练正则项，得到 IAM 优化器，在监督任务上和 SAM/ASAM 持平甚至更好…
+  [ICML 2026][自监督学习][泛化界] 本文提出一种只用无标签数据就能计算的"局部不一致性" $S_\rho(\theta)$ —— 即参数球内 KL 散度的最坏值 —— 并把它当作训练正则项，得到 IAM 优化器，在监督任务上和 SAM/ASAM 持平甚至更好，在半监督 (FixMatch) 与自监督 (SimCLR) 场景下因能吃无标签批量数据而带来额外提升。
 tags:
   - "ICML 2026"
   - "自监督学习"

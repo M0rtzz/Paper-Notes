@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M-RewardBench: Evaluating Reward Models in Multilingual Settings
 description: >-
-  [ACL 2025][多语言/翻译][reward model] 构建首个多语言奖励模型评估基准 M-RewardBench（23种 typologically 多样语言、2.87K 偏好实例，覆盖 Chat/Safety/Reasoning/Translation 四类能力）…
+  [ACL 2025][多语言/翻译][reward model] 构建首个多语言奖励模型评估基准 M-RewardBench（23种 typologically 多样语言、2.87K 偏好实例，覆盖 Chat/Safety/Reasoning/Translation 四类能力），系统评估多种 RM 后发现英语与非英语性能存在显著差距，且 RM 偏好可在语言间发生实质性漂移。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

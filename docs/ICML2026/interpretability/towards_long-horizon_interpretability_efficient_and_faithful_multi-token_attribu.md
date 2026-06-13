@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs
 description: >-
-  [ICML 2026][可解释性][token attribution] 针对推理 LLM 长思维链场景下逐 token 归因 $\mathcal{O}(M\cdot N)$ 慢且归因质量被中间推理 token 吸光的问题…
+  [ICML 2026 Oral][可解释性][token attribution] 针对推理 LLM 长思维链场景下逐 token 归因 $\mathcal{O}(M\cdot N)$ 慢且归因质量被中间推理 token 吸光的问题，本文提出 FlashTrace：用 span-wise 聚合一次过算完整段目标 token 的归因，再用递归归因把重要性从输出经推理链回溯到原始输入，5k 目标 span 上比最强基线 IFR 快 130 倍以上，同时在 RULER / MATH / MoreHopQA 上 faithfulness 全面占优。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "可解释性"
   - "token attribution"
   - "reasoning LLM"

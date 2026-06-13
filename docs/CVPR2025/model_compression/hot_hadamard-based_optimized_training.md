@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOT: Hadamard-based Optimized Training
 description: >-
-  [CVPR 2025][模型压缩][训练加速] 提出HOT方法，通过对反向传播中不同梯度路径（激活梯度$g_x$和权重梯度$g_m$）的差异化灵敏度分析，选择性地应用Hadamard变换+量化——$g_x$用HT+INT4加速计算、$g_m$用HLA+INT8节省激活内存…
+  [CVPR 2025][模型压缩][训练加速] 提出HOT方法，通过对反向传播中不同梯度路径（激活梯度$g_x$和权重梯度$g_m$）的差异化灵敏度分析，选择性地应用Hadamard变换+量化——$g_x$用HT+INT4加速计算、$g_m$用HLA+INT8节省激活内存，实现75%激活内存节省和2.6倍GPU加速，ViT-B在ImageNet上精度仅降0.17%。
 tags:
   - "CVPR 2025"
   - "模型压缩"

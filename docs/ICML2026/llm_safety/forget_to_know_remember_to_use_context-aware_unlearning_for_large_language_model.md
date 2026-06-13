@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Forget to Know, Remember to Use: Context-Aware Unlearning for Large Language Models
 description: >-
-  [ICML 2026][LLM安全][LLM unlearning] 本文指出现有 LLM unlearning 方法在"把知识从参数里抹掉"的同时，会把"用户在 prompt 里重新提供该知识时模型能正确利用"的能力（contextual utility）一起抹掉…
+  [ICML 2026][LLM安全][LLM unlearning] 本文指出现有 LLM unlearning 方法在"把知识从参数里抹掉"的同时，会把"用户在 prompt 里重新提供该知识时模型能正确利用"的能力（contextual utility）一起抹掉，作者提出在已有 unlearning loss 上加一项 KL 正则——让 unlearn 后的模型在"问题+上下文"输入上的分布对齐原始模型——即可在几乎不损失遗忘效果和保留集效用的前提下，把 Contextual QA 的 LLM-Judge 分数从 0.00–0.84 拉回到 0.95+。
 tags:
   - "ICML 2026"
   - "LLM安全"

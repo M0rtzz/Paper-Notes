@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Class Prototypes for Unified Sparse-Supervised 3D Object Detection
 description: >-
-  [CVPR 2025][3D视觉][目标检测] 提出首个统一室内外稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（跨场景 Sinkhorn-Knopp 最优传输匹配）挖掘未标注物体的类别，再用多标签协同精化（伪标签 + 原型标签）恢复漏检…
+  [CVPR 2025][3D视觉][目标检测] 提出首个统一室内外稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（跨场景 Sinkhorn-Knopp 最优传输匹配）挖掘未标注物体的类别，再用多标签协同精化（伪标签 + 原型标签）恢复漏检，仅用每场景 1 个标注即达 ScanNet V2 全监督 78% / SUN RGB-D 90% / KITTI 96% 性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CyberJurors: A Multi-Agent Simulation Task for E-Commerce Disputes Verdict
 description: >-
-  [ICML 2026][多模态VLM][电商纠纷裁决] 作者把电商平台"众包陪审团"的真实裁决任务形式化为 EDV (E-commerce Dispute Verdicts)，构建首个含 17 名陪审员投票真值的多模态基准 VerdictBench（6000 案、文/图/视频/多轮）…
+  [ICML 2026][多模态VLM][电商纠纷裁决] 作者把电商平台"众包陪审团"的真实裁决任务形式化为 EDV (E-commerce Dispute Verdicts)，构建首个含 17 名陪审员投票真值的多模态基准 VerdictBench（6000 案、文/图/视频/多轮），并提出 CyberJurors——用四阶段的 Individual Verdict Chain-of-Thought (IV-CoT) 做单陪审员细粒度证据定位，用 Jury Consensus Verdict (JCV) 借鉴 Stare Decisis 引入历史判例做集体共识；在 VerdictBench 上 Acc 较最强 LLM/MLLM/法庭…
 tags:
   - "ICML 2026"
   - "多模态VLM"

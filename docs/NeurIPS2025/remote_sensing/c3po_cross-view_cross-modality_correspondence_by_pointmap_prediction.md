@@ -2,7 +2,7 @@
 title: >-
   [论文解读] C3PO: Cross-View Cross-Modality Correspondence by Pointmap Prediction
 description: >-
-  [NeurIPS 2025][遥感][cross-view correspondence] 构建了包含 90K 地面照片-平面图对（597 个场景、153M 像素级对应和 85K 相机位姿）的 C3 数据集，揭示现有对应模型在跨视角跨模态（如地面照片 vs. 平面图）场景下的局限性…
+  [NeurIPS 2025][遥感][cross-view correspondence] 构建了包含 90K 地面照片-平面图对（597 个场景、153M 像素级对应和 85K 相机位姿）的 C3 数据集，揭示现有对应模型在跨视角跨模态（如地面照片 vs. 平面图）场景下的局限性，通过在该数据上训练可将最佳方法的 RMSE 降低 34%。
 tags:
   - "NeurIPS 2025"
   - "遥感"

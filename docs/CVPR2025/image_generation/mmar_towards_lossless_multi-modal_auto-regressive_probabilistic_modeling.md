@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMAR: Towards Lossless Multi-Modal Auto-Regressive Probabilistic Modeling
 description: >-
-  [CVPR 2025][图像生成][多模态] 首次将连续图像表示与离散文本表示整合到统一自回归概率建模框架中，通过轻量扩散头替代 VQ 离散化避免信息损失，并推导出 v-prediction 为最优参数化以解决低精度训练下的数值误差问题。
+  [CVPR 2025][图像生成][多模态] 首次将连续图像表示与离散文本表示整合到统一自回归概率建模框架中，通过轻量扩散头替代 VQ 离散化避免信息损失，并推导出 v-prediction 为最优参数化以解决低精度训练下的数值误差问题。 领域现状： 多模态大模型同时支持图像理解和生成是热门方向。现有联合概率建模方法分三类：…
 tags:
   - "CVPR 2025"
   - "图像生成"

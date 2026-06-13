@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GA3CE: Unconstrained 3D Gaze Estimation with Gaze-Aware 3D Context Encoding
 description: >-
-  [CVPR 2025][人体理解][3D注视估计] 提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系…
+  [CVPR 2025][人体理解][3D注视估计] 提出 GA3CE 方法，通过将主体 3D 姿态和场景物体位置编码到以主体为中心的自我中心空间中，并设计方向-距离分解的 D3 位置编码，在 Transformer 中学习 3D 注视方向与场景上下文的空间关系，在无约束设置下将 3D 注视角度误差降低 13%–37%。
 tags:
   - "CVPR 2025"
   - "人体理解"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Mem^p: Exploring Agent Procedural Memory
 description: >-
-  [ACL 2026][LLM Agent][程序性记忆] 本文提出 Mem^p 框架，系统性地研究如何为 LLM Agent 构建可学习、可更新、终身演化的程序性记忆——通过将过去的任务轨迹蒸馏为细粒度的分步指令和高层脚本抽象，并配合动态更新机制（添加/验证/反思/淘汰）…
+  [ACL 2026 Findings][LLM Agent][程序性记忆] 本文提出 Mem^p 框架，系统性地研究如何为 LLM Agent 构建可学习、可更新、终身演化的程序性记忆——通过将过去的任务轨迹蒸馏为细粒度的分步指令和高层脚本抽象，并配合动态更新机制（添加/验证/反思/淘汰），在 TravelPlanner 和 ALFWorld 上实现了成功率持续提升和执行步数大幅减少。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "程序性记忆"
   - "Agent学习"

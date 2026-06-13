@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MergePrint: Merge-Resistant Fingerprints for Robust Black-box Ownership Verification of Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][模型指纹] 提出 MergePrint，首个针对模型合并（model merging）场景的 LLM 黑盒指纹验证方法，通过伪合并模型模拟合并行为并两阶段优化（输入优化 + 参数优化），使嵌入的指纹在合并后仍可被检测，实现高效、无害、抗篡改的所有权验证。
+  [ACL 2025][LLM 其他][模型指纹] 提出 MergePrint，首个针对模型合并（model merging）场景的 LLM 黑盒指纹验证方法，通过伪合并模型模拟合并行为并两阶段优化（输入优化 + 参数优化），使嵌入的指纹在合并后仍可被检测，实现高效、无害、抗篡改的所有权验证。 训练 LLM 成本极高：…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "模型指纹"
   - "所有权验证"
   - "模型合并"

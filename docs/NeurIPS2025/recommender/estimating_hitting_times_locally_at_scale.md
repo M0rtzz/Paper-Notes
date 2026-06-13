@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Estimating Hitting Times Locally At Scale
 description: >-
-  [NeurIPS 2025][推荐系统][命中时间] 提出两种局部（亚线性）算法估计图上的命中时间——基于相遇时间的 Algorithm 1 和基于谱截断的 Algorithm 3，无需全图访问仅通过以 $u,v$ 为中心的短随机游走完成估计，在合成和真实图上相对误差 <1.4%…
+  [NeurIPS 2025][推荐系统][命中时间] 提出两种局部（亚线性）算法估计图上的命中时间——基于相遇时间的 Algorithm 1 和基于谱截断的 Algorithm 3，无需全图访问仅通过以 $u,v$ 为中心的短随机游走完成估计，在合成和真实图上相对误差 <1.4%，并证明了游走采样的最优样本复杂度下界。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

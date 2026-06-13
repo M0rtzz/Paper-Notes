@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Refining Video Sampling
 description: >-
-  [ICML 2026][视频生成][视频扩散] 把预训练 flow matching 视频生成器自身当作"去噪自编码器"，在推理时同一噪声层级内用 Predict-and-Perturb 内循环反复纠偏 latent，再用模型自洽性算出的不确定度 mask 只精修动态区域…
+  [ICML 2026][视频生成][视频扩散] 把预训练 flow matching 视频生成器自身当作"去噪自编码器"，在推理时同一噪声层级内用 Predict-and-Perturb 内循环反复纠偏 latent，再用模型自洽性算出的不确定度 mask 只精修动态区域，从而在不引入任何外部 verifier、不做任何额外训练的前提下显著改善视频的运动连贯性与物理合理性，人评偏好率超 70%。
 tags:
   - "ICML 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection
 description: >-
-  [ACL 2025][LLM安全][LLM Agent] 提出 AGrail，一个终身学习的 LLM Agent 安全护栏框架，通过双 LLM 协作（Analyzer + Executor）和记忆模块，在测试时自适应地生成和优化安全检查策略，有效防御任务特定风险和系统性风险。
+  [ACL 2025][LLM安全][LLM Agent] 提出 AGrail，一个终身学习的 LLM Agent 安全护栏框架，通过双 LLM 协作（Analyzer + Executor）和记忆模块，在测试时自适应地生成和优化安全检查策略，有效防御任务特定风险和系统性风险。 LLM Agent 在自主执行复杂任务时面临两类…
 tags:
   - "ACL 2025"
   - "LLM安全"

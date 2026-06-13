@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction
 description: >-
-  [ICML 2026][LLM Agent][Thought-Aligner] 本文提出 Thought-Aligner——一个 1.5B/7B 的轻量级即插即用安全模型，在 LLM agent 的 think-act-observe 循环里、在每个动作执行前对中间思维做因果纠偏…
+  [ICML 2026][LLM Agent][Thought-Aligner] 本文提出 Thought-Aligner——一个 1.5B/7B 的轻量级即插即用安全模型，在 LLM agent 的 think-act-observe 循环里、在每个动作执行前对中间思维做因果纠偏，把 6 个主流 LLM 在 ToolEmu/Agent-SafetyBench 上的行为安全率从约 50% 拉到约 90%，同时帮助度还提升约 5%。
 tags:
   - "ICML 2026"
   - "LLM Agent"

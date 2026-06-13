@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Prototypes Collapse: Diagnosing and Preventing Partial Collapse in Prototypical Self-Supervised Learning
 description: >-
-  [ICLR 2026][自监督学习][prototype collapse] 诊断出原型自监督学习中部分原型坍缩的根因是编码器与原型的联合优化导致的快捷学习，提出全解耦训练策略——用在线 GMM 独立估计原型——彻底消除坍缩并提升下游性能。
+  [ICLR 2026][自监督学习][prototype collapse] 诊断出原型自监督学习中部分原型坍缩的根因是编码器与原型的联合优化导致的快捷学习，提出全解耦训练策略——用在线 GMM 独立估计原型——彻底消除坍缩并提升下游性能。 领域现状：原型 SSL 框架（DINO, DINOv2, CARP 等）使用可学习的…
 tags:
   - "ICLR 2026"
   - "自监督学习"

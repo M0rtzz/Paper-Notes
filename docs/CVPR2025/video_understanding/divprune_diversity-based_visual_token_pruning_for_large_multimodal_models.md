@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DivPrune: Diversity-Based Visual Token Pruning for Large Multimodal Models
 description: >-
-  [CVPR 2025][视频理解][视觉token剪枝] 将视觉token剪枝问题重新建模为**Max-Min Diversity Problem (MMDP)**，通过精确求解使保留token集合的**最小pair-wise距离最大化**，实现无需训练/校准的即插即用剪枝方案…
+  [CVPR 2025][视频理解][视觉token剪枝] 将视觉token剪枝问题重新建模为**Max-Min Diversity Problem (MMDP)**，通过精确求解使保留token集合的**最小pair-wise距离最大化**，实现无需训练/校准的即插即用剪枝方案，在16个多模态基准上实现SOTA，特别是在≥80%极端剪枝率下显著优于所有基线。
 tags:
   - "CVPR 2025"
   - "视频理解"

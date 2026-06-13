@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CARES: Context-Aware Resolution Selector for VLMs
 description: >-
-  [ACL2026][多模态VLM][分辨率选择] CARES 在目标 VLM 前增加一个轻量 query-aware 分辨率选择器，用低分辨率图像和文本问题预测“足够回答”的最小输入分辨率，在 9 个多模态 benchmark 上基本保持准确率，同时平均节省约 65–85% 的 prefill 计算成本。
+  [ACL2026 Oral][多模态VLM][分辨率选择] CARES 在目标 VLM 前增加一个轻量 query-aware 分辨率选择器，用低分辨率图像和文本问题预测“足够回答”的最小输入分辨率，在 9 个多模态 benchmark 上基本保持准确率，同时平均节省约 65–85% 的 prefill 计算成本。
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "多模态VLM"
   - "分辨率选择"
   - "视觉token压缩"

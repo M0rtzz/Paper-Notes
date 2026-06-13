@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plan, Posture and Go: Towards Open-Vocabulary Text-to-Motion Generation
 description: >-
-  [ECCV 2024][预训练][文本到动作生成] 本文提出 PRO-Motion 分治框架，将文本到动作生成分解为三个阶段：LLM 驱动的动作规划（Plan）、基于脚本的姿态扩散生成（Posture）、以及全身平移旋转估计（Go），通过降低各阶段的复杂度实现了开放词汇的高质量动作生成。
+  [ECCV 2024][预训练][文本到动作生成] 本文提出 PRO-Motion 分治框架，将文本到动作生成分解为三个阶段：LLM 驱动的动作规划（Plan）、基于脚本的姿态扩散生成（Posture）、以及全身平移旋转估计（Go），通过降低各阶段的复杂度实现了开放词汇的高质量动作生成。 领域现状：文本到动作生成（text-…
 tags:
   - "ECCV 2024"
   - "预训练"

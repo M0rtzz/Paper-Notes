@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Do Visual Tokens Really Encode? Uncovering Sparsity and Redundancy in Multimodal Large Language Models
 description: >-
-  [CVPR 2026][多模态VLM][视觉token分析] 提出EmbedLens探针工具系统分析MLLM中视觉token的内部结构，发现视觉token分为sink/dead/alive三类（约40%为无用token），alive token已在进入LLM前编码丰富语义（"预语言"特性）…
+  [CVPR 2026][多模态VLM][视觉token分析] 提出EmbedLens探针工具系统分析MLLM中视觉token的内部结构，发现视觉token分为sink/dead/alive三类（约40%为无用token），alive token已在进入LLM前编码丰富语义（"预语言"特性），且LLM内部视觉计算对大多数任务冗余，直接中层注入即可。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

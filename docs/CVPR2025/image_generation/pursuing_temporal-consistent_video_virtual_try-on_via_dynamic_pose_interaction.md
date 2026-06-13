@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pursuing Temporal-Consistent Video Virtual Try-On via Dynamic Pose Interaction
 description: >-
-  [CVPR 2025][图像生成][视频虚拟试穿] 提出 DPIDM（Dynamic Pose Interaction Diffusion Models），通过骨架姿态适配器将人体和服装的同步姿态注入去噪网络，设计分层注意力模块建模帧内人-衣姿态空间交互和帧间人体姿态时序动态…
+  [CVPR 2025][图像生成][视频虚拟试穿] 提出 DPIDM（Dynamic Pose Interaction Diffusion Models），通过骨架姿态适配器将人体和服装的同步姿态注入去噪网络，设计分层注意力模块建模帧内人-衣姿态空间交互和帧间人体姿态时序动态，配合时序正则化注意力损失增强时序一致性，在 VVT 数据集上 VFID 达到 0.506，相比 SOTA 提升 60.5%。
 tags:
   - "CVPR 2025"
   - "图像生成"

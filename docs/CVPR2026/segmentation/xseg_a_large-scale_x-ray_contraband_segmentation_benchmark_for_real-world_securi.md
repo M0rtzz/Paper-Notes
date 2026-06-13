@@ -2,7 +2,7 @@
 title: >-
   [论文解读] XSeg: A Large-scale X-ray Contraband Segmentation Benchmark for Real-World Security Screening
 description: >-
-  [CVPR 2026][语义分割][X光违禁品分割] 本文构建了目前最大的 X 光违禁品分割数据集 XSeg（98,644 张图像、295,932 个实例 mask、30 个细粒度类别），并提出域特化模型 APSAM…
+  [CVPR 2026][语义分割][X光违禁品分割] 本文构建了目前最大的 X 光违禁品分割数据集 XSeg（98,644 张图像、295,932 个实例 mask、30 个细粒度类别），并提出域特化模型 APSAM，通过 Energy-Aware Encoder 利用 X 光双能量物理特性 + Adaptive Point Generator 智能扩展用户点击提示，mIoU 达 72.83%，比 SAM 微调高 4.96%。
 tags:
   - "CVPR 2026"
   - "语义分割"

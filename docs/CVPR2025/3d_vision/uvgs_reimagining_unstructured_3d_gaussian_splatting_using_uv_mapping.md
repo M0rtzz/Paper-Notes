@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UVGS: Reimagining Unstructured 3D Gaussian Splatting using UV Mapping
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] UVGS通过球面映射将无序的3D高斯溅射（3DGS）转化为结构化的2D UV图表示，并进一步压缩为3通道Super UVGS图像，使预训练的2D图像基础模型（VAE、扩散模型）可以零样本直接应用于3DGS的生成与压缩。
+  [CVPR 2025][3D视觉][3D高斯溅射] UVGS通过球面映射将无序的3D高斯溅射（3DGS）转化为结构化的2D UV图表示，并进一步压缩为3通道Super UVGS图像，使预训练的2D图像基础模型（VAE、扩散模型）可以零样本直接应用于3DGS的生成与压缩。 3D高斯溅射（3DGS）在3D对象和场景建模中展现了卓…
 tags:
   - "CVPR 2025"
   - "3D视觉"

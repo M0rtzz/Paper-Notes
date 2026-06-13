@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PlanGenLLMs: A Modern Survey of LLM Planning Capabilities
 description: >-
-  [LLM/NLP] 首篇基于经典规划理论 (Kartam & Wilkins 1990) 提出六维评估框架（完整性、可执行性、最优性、表示、泛化性、效率）的 LLM 规划能力综述，系统梳理了从任务分解到搜索算法的基础范式，并指出多智能体规划、幻觉、人类偏好对齐等关键未解决方向。
+  [LLM 其他] 首篇基于经典规划理论 (Kartam & Wilkins 1990) 提出六维评估框架（完整性、可执行性、最优性、表示、泛化性、效率）的 LLM 规划能力综述，系统梳理了从任务分解到搜索算法的基础范式，并指出多智能体规划、幻觉、人类偏好对齐等关键未解决方向。 领域现状：LLM 在规划任务上展现出巨大潜力…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # PlanGenLLMs: A Modern Survey of LLM Planning Capabilities

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blameless Users in a Clean Room: Defining Copyright Protection for Generative Models
 description: >-
-  [NeurIPS 2025][图像生成][版权保护] 重建生成模型可证明版权保护的理论基础——证明现有的 Near Access-Freeness (NAF) 定义不能防止逐字复制（"被污染"），提出"无辜用户"(blameless) 框架和净室版权保护 ($(\kappa,\beta)$-clean) 定义…
+  [NeurIPS 2025][图像生成][版权保护] 重建生成模型可证明版权保护的理论基础——证明现有的 Near Access-Freeness (NAF) 定义不能防止逐字复制（"被污染"），提出"无辜用户"(blameless) 框架和净室版权保护 ($(\kappa,\beta)$-clean) 定义，其中用户在反事实"净室设置"中不会复制则在真实世界中也不太可能复制，并证明差分隐私训练在"黄金数据集"假设下蕴含净室版权保护。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

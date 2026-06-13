@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation
 description: >-
-  [ECCV2024][active learning] 提出 BUAL 框架，通过 Random Label Negative Learning 将未知类样本推向高置信区域、已知类样本推向低置信区域，结合双向不确定性采样策略，在开放集场景下有效选出高信息量的已知类样本。
+  [ECCV2024][active learning] 提出 BUAL 框架，通过 Random Label Negative Learning 将未知类样本推向高置信区域、已知类样本推向低置信区域，结合双向不确定性采样策略，在开放集场景下有效选出高信息量的已知类样本。 - 主动学习的核心目标：从未标注数据池中迭代选出最有信…
 tags:
   - "ECCV2024"
   - "active learning"

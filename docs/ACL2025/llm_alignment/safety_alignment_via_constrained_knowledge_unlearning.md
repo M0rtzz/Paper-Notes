@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safety Alignment via Constrained Knowledge Unlearning
 description: >-
-  [ACL 2025][LLM对齐][安全对齐] 本文提出 Constrained Knowledge Unlearning (CKU)，通过在 MLP 层中定位有用知识神经元并在遗忘过程中保护其梯度来删除有害知识，在不损害模型通用能力的前提下显著提升 LLM 的安全性。
+  [ACL 2025][LLM对齐][安全对齐] 本文提出 Constrained Knowledge Unlearning (CKU)，通过在 MLP 层中定位有用知识神经元并在遗忘过程中保护其梯度来删除有害知识，在不损害模型通用能力的前提下显著提升 LLM 的安全性。 领域现状：大语言模型（LLM）的安全对齐一直是部署中的…
 tags:
   - "ACL 2025"
   - "LLM对齐"

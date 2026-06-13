@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LIVS: A Pluralistic Alignment Dataset for Inclusive Public Spaces
 description: >-
-  [ICML2025][图像生成][Pluralistic Alignment] 通过两年社区参与式研究，构建了包含 37,710 对多标准偏好标注的 LIVS 数据集，用于文本到图像模型在包容性城市公共空间设计中的多元对齐，并用 DPO 微调 SDXL 验证其有效性。
+  [ICML2025][图像生成][Pluralistic Alignment] 通过两年社区参与式研究，构建了包含 37,710 对多标准偏好标注的 LIVS 数据集，用于文本到图像模型在包容性城市公共空间设计中的多元对齐，并用 DPO 微调 SDXL 验证其有效性。 - 现有 T2I 对齐的局限：现有对齐框架（如 Simu…
 tags:
   - "ICML2025"
   - "图像生成"

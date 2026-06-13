@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AAD-LLM: Neural Attention-Driven Auditory Scene Understanding
 description: >-
-  [ACL 2025][LLM/NLP][听觉注意力解码] 提出意图感知听觉场景理解（II-ASU）范式和 AAD-LLM 原型系统——通过颅内脑电（iEEG）解码听者正在关注哪个说话人，将注意力状态注入听觉 LLM，使模型在多说话人场景中生成与听者感知对齐的回答。
+  [ACL 2025][LLM 其他][听觉注意力解码] 提出意图感知听觉场景理解（II-ASU）范式和 AAD-LLM 原型系统——通过颅内脑电（iEEG）解码听者正在关注哪个说话人，将注意力状态注入听觉 LLM，使模型在多说话人场景中生成与听者感知对齐的回答。 领域现状：听觉基础模型（如 LTU、SALMONN、Qwen2…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "听觉注意力解码"
   - "脑机接口"
   - "iEEG"

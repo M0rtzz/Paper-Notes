@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetaSynth: Meta-Prompting-Driven Agentic Scaffolds for Diverse Synthetic Data Generation
 description: >-
-  [ACL 2025 (Findings)][LLM Agent][元提示] 提出 MetaSynth，利用元提示（meta-prompting）驱动的多智能体协作框架生成高多样性的合成数据，仅用 25M tokens 合成数据（不混合真实数据）就能将 Mistral-7B 成功适配到金融和生物医学领域…
+  [ACL 2025 (Findings)][LLM Agent][元提示] 提出 MetaSynth，利用元提示（meta-prompting）驱动的多智能体协作框架生成高多样性的合成数据，仅用 25M tokens 合成数据（不混合真实数据）就能将 Mistral-7B 成功适配到金融和生物医学领域，分别提升 4.08% 和 13.75%，同时不损害通用能力。
 tags:
   - "ACL 2025 (Findings)"
   - "LLM Agent"

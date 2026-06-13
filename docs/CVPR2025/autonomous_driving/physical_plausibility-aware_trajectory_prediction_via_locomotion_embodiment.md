@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physical Plausibility-aware Trajectory Prediction via Locomotion Embodiment
 description: >-
-  [CVPR 2025][自动驾驶][轨迹预测] 提出 Locomotion Embodiment 框架，利用物理模拟器中的人形运动生成评估轨迹的物理合理性，通过可微的 LocoVal 函数替代不可微的物理模拟器来训练轨迹预测网络，并在推理时过滤不合理轨迹。
+  [CVPR 2025][自动驾驶][轨迹预测] 提出 Locomotion Embodiment 框架，利用物理模拟器中的人形运动生成评估轨迹的物理合理性，通过可微的 LocoVal 函数替代不可微的物理模拟器来训练轨迹预测网络，并在推理时过滤不合理轨迹。 人体轨迹预测(HTP)旨在预测行人未来移动路径…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

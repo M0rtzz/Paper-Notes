@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CorrSteer: Generation-Time LLM Steering via Correlated Sparse Autoencoder Features
 description: >-
-  [ICML 2026][可解释性][稀疏自编码器] 通过把生成时 token 上的 SAE 激活与任务正确性做 Pearson 相关来挑选可解释的引导特征, 用正样本均值激活直接当系数, 不需对比数据集也不需反向传播…
+  [ICML 2026][可解释性][稀疏自编码器] 通过把生成时 token 上的 SAE 激活与任务正确性做 Pearson 相关来挑选可解释的引导特征, 用正样本均值激活直接当系数, 不需对比数据集也不需反向传播, 就能在 Gemma-2 2B / LLaMA-3.1 8B 上把 MMLU 提 +3.3%、HarmBench 提 +27.1%, 且副作用率比微调更低。
 tags:
   - "ICML 2026"
   - "可解释性"

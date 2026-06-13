@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Surface Simplicity: Revealing Hidden Reasoning Attributes for Precise Commonsense Diagnosis
 description: >-
-  [ACL 2025][人体理解][常识推理诊断] 本文揭示了常识推理基准中表面简单但实际隐含复杂推理属性的问题，提出了一种基于隐藏推理属性的细粒度诊断框架，能够更精确地分析和评估模型的常识推理能力。
+  [ACL 2025][人体理解][常识推理诊断] 本文揭示了常识推理基准中表面简单但实际隐含复杂推理属性的问题，提出了一种基于隐藏推理属性的细粒度诊断框架，能够更精确地分析和评估模型的常识推理能力。 领域现状：常识推理（Commonsense Reasoning）是衡量 AI 系统理解力的核心任务。CSQA、WinoGran…
 tags:
   - "ACL 2025"
   - "人体理解"

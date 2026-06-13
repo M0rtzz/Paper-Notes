@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deconstructing Positional Information: From Attention Logits to Training Biases
 description: >-
-  [ICLR2026][预训练][位置编码] 提出基于 Toeplitz 矩阵的统一分析框架，将位置编码分为加法（Absolute/T5/ALiBi）和乘法（RoPE）两类；通过合成任务发现 RoPE 在位置敏感任务上优势显著但存在"单头沉积模式"（single-head deposit pattern）——浅…
+  [ICLR2026][预训练][位置编码] 提出基于 Toeplitz 矩阵的统一分析框架，将位置编码分为加法（Absolute/T5/ALiBi）和乘法（RoPE）两类；通过合成任务发现 RoPE 在位置敏感任务上优势显著但存在"单头沉积模式"（single-head deposit pattern）——浅层几乎所有位置推理集中于单个注意力头；理论证明该模式是 RoPE 乘法结构的固有属性。
 tags:
   - "ICLR2026"
   - "预训练"

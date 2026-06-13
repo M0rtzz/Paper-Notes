@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynthAgent: Adapting Web Agents with Synthetic Supervision
 description: >-
-  [ACL 2026][LLM Agent][合成数据] 本文提出 SynthAgent，一个完全基于合成监督的 Web Agent 适应框架，通过分类探索系统覆盖网页功能区域以合成多样化任务，再通过任务精炼（冲突检测触发修正幻觉）和轨迹精炼（全局视角去噪）的双重精炼策略提升合成数据质量…
+  [ACL 2026][LLM Agent][合成数据] 本文提出 SynthAgent，一个完全基于合成监督的 Web Agent 适应框架，通过分类探索系统覆盖网页功能区域以合成多样化任务，再通过任务精炼（冲突检测触发修正幻觉）和轨迹精炼（全局视角去噪）的双重精炼策略提升合成数据质量，在 WebArena 和 Online-Mind2Web 上显著优于现有合成方法。
 tags:
   - "ACL 2026"
   - "LLM Agent"

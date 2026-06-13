@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAM: A Constructivist View of Agentic Memory for LLM-Based Reading Comprehension
 description: >-
-  [NeurIPS 2025][LLM Agent][智能体记忆] 受皮亚杰建构主义理论启发，提出CAM——一种具有结构性（层次化schema）、灵活性（重叠聚类的同化）和动态性（增量适应）三大特征的智能体记忆系统，在6个长文本阅读理解任务上全面超越RAPTOR、GraphRAG等基线。
+  [NeurIPS 2025][LLM Agent][智能体记忆] 受皮亚杰建构主义理论启发，提出CAM——一种具有结构性（层次化schema）、灵活性（重叠聚类的同化）和动态性（增量适应）三大特征的智能体记忆系统，在6个长文本阅读理解任务上全面超越RAPTOR、GraphRAG等基线。 领域现状：LLM处理超长文档（小说、会…
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

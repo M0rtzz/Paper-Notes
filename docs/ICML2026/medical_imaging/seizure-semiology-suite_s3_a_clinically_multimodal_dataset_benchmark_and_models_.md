@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Seizure-Semiology-Suite (S³): A Clinically Multimodal Dataset, Benchmark, and Models for Seizure Semiology Understanding
 description: >-
-  [ICML 2026][医学图像][癫痫语义学] 本文构建了首个大规模专家标注的癫痫发作视频数据集 S³（438 段视频、35,000+ 密集标签、20 项 ILAE 语义学特征），配套设计了七级层次化任务基准与临床对齐的 Seizure-RQI 报告质量指标…
+  [ICML 2026 Spotlight][医学图像][癫痫语义学] 本文构建了首个大规模专家标注的癫痫发作视频数据集 S³（438 段视频、35,000+ 密集标签、20 项 ILAE 语义学特征），配套设计了七级层次化任务基准与临床对齐的 Seizure-RQI 报告质量指标，系统暴露了 11 个开源 MLLM 在时序定位、空间偏侧化和临床忠实性上的失败模式，并通过领域微调 + 两阶段神经符号框架将癫痫 vs 非癫痫分类 F1 提升到 0.96。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "医学图像"
   - "癫痫语义学"
   - "临床视频理解"

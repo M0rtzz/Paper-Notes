@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Scaling Equitable Reflection Assessment in Education via Large Language Models and Role-Based Feedback Agents
 description: >-
-  [AAAI 2026][LLM/NLP][多Agent系统] 提出一个由5个角色化GPT-4o Agent组成的零样本多Agent流水线，对学习者反思文本进行公平的量表评分并生成偏差感知的对话式反馈，在336篇反思上实现MAE=0.467、QWK=0.459的评分一致性和Q(g)=3.967的反馈质量。
+  [AAAI 2026][LLM 其他][多Agent系统] 提出一个由5个角色化GPT-4o Agent组成的零样本多Agent流水线，对学习者反思文本进行公平的量表评分并生成偏差感知的对话式反馈，在336篇反思上实现MAE=0.467、QWK=0.459的评分一致性和Q(g)=3.967的反馈质量。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多Agent系统"
   - "形成性反馈"
   - "自动评分"

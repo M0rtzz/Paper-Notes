@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability
 description: >-
-  [可解释性] 提出一个双视角 NLG 元评估框架，将传统的人-指标相关性分解为全局视角（序数分类，判断粗粒度质量等级）和局部视角（相邻对比，区分细粒度质量差异），并通过自动化基准构建方法避免人工标注和数据污染…
+  [可解释性] 提出一个双视角 NLG 元评估框架，将传统的人-指标相关性分解为全局视角（序数分类，判断粗粒度质量等级）和局部视角（相邻对比，区分细粒度质量差异），并通过自动化基准构建方法避免人工标注和数据污染，在 16 个 LLM 评估器上实验发现 Qwen-2.5-72B 全局最优、DeepSeek-V3 局部最优。
 tags:
   - "可解释性"
 ---

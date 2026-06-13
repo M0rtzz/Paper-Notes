@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime
 description: >-
-  [CVPR 2026][语义分割][panoptic scene graph generation] DSFlash 通过合并分割与关系预测 backbone、双向关系预测头、动态 patch 剪枝等策略，将全景场景图生成速度提升至 RTX 3090 上 56 FPS…
+  [CVPR 2026][语义分割][panoptic scene graph generation] DSFlash 通过合并分割与关系预测 backbone、双向关系预测头、动态 patch 剪枝等策略，将全景场景图生成速度提升至 RTX 3090 上 56 FPS，同时在 PSG 数据集上达到 mR@50=30.9 的 SOTA 性能。
 tags:
   - "CVPR 2026"
   - "语义分割"

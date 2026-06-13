@@ -2,9 +2,10 @@
 title: >-
   [论文解读] GeAR: Generation Augmented Retrieval
 description: >-
-  [ACL 2025][document retrieval] GeAR 在传统 bi-encoder 检索框架上引入融合编码器和文本解码器，通过生成任务增强检索模型对文档内部细粒度语义的理解能力，同时不增加全局检索的计算开销。
+  [ACL 2025][信息检索/RAG][document retrieval] GeAR 在传统 bi-encoder 检索框架上引入融合编码器和文本解码器，通过生成任务增强检索模型对文档内部细粒度语义的理解能力，同时不增加全局检索的计算开销。 当前文档检索的主流方法是 bi-encoder：将查询和文档分别编码为向量…
 tags:
   - "ACL 2025"
+  - "信息检索/RAG"
   - "document retrieval"
   - "fine-grained retrieval"
   - "generation-augmented"

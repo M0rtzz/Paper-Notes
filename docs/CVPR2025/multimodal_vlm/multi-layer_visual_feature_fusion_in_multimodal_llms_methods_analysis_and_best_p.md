@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Layer Visual Feature Fusion in Multimodal LLMs: Methods, Analysis, and Best Practices
 description: >-
-  [多模态VLM] 本文系统研究了多模态 LLM 中多层视觉特征融合的两个核心问题：**(1) 如何选择最有效的视觉层**和 **(2) 如何最好地融合到语言模型中**，发现从不同表示相似性阶段各选一层 + 外部直接融合是最优实践。
+  [多模态VLM] 本文系统研究了多模态 LLM 中多层视觉特征融合的两个核心问题：(1) 如何选择最有效的视觉层：和 (2) 如何最好地融合到语言模型中：，发现从不同表示相似性阶段各选一层 + 外部直接融合是最优实践。 领域现状 多模态大语言模型（MLLM）通过结合预训练视觉编码器和 LLM 取得了显著进展。然而…
 tags:
   - "多模态VLM"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection
 description: >-
-  [AAAI 2026][3D视觉][3D目标检测] 提出 FTKD（Future Temporal Knowledge Distillation）框架，通过未来感知特征重建（FFR）和未来引导 logit 蒸馏（FLD）两个策略，将离线教师模型中的未来帧知识有效迁移到在线学生模型…
+  [AAAI 2026][3D视觉][3D目标检测] 提出 FTKD（Future Temporal Knowledge Distillation）框架，通过未来感知特征重建（FFR）和未来引导 logit 蒸馏（FLD）两个策略，将离线教师模型中的未来帧知识有效迁移到在线学生模型，在 nuScenes 上取得 1.3 mAP/1.3 NDS 提升且不增加推理开销。
 tags:
   - "AAAI 2026"
   - "3D视觉"

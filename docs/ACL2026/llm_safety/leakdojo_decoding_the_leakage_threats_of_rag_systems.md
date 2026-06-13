@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LeakDojo: Decoding the Leakage Threats of RAG Systems
 description: >-
-  [ACL 2026][LLM安全][RAG 泄露攻击] 提出 LeakDojo——首个把 RAG 系统、攻击与防御都模块化解耦的可配置评测框架，在 6 种攻击 × 14 个 LLM × 4 个数据集 × 多种增强模块上系统量化 RAG 泄露风险…
+  [ACL 2026 Findings][LLM安全][RAG 泄露攻击] 提出 LeakDojo——首个把 RAG 系统、攻击与防御都模块化解耦的可配置评测框架，在 6 种攻击 × 14 个 LLM × 4 个数据集 × 多种增强模块上系统量化 RAG 泄露风险，发现"指令跟随能力越强、泄露风险越高"且"RAG 忠实度与泄露风险正相关"。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "RAG 泄露攻击"
   - "提示学习"

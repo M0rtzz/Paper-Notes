@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PET-DINO: Unifying Visual Cues into Grounding DINO with Prompt-Enriched Training
 description: >-
-  [CVPR 2026][目标检测][开放集目标检测] PET-DINO 在 Grounding DINO 基础上构建了一个同时支持文本和视觉提示的通用目标检测器，设计了对齐友好的视觉提示生成模块（AFVPG）以及两种提示丰富化训练策略（IBP 和 DMD）…
+  [CVPR 2026][目标检测][开放集目标检测] PET-DINO 在 Grounding DINO 基础上构建了一个同时支持文本和视觉提示的通用目标检测器，设计了对齐友好的视觉提示生成模块（AFVPG）以及两种提示丰富化训练策略（IBP 和 DMD），在零样本检测任务上以更少的训练数据取得了有竞争力的性能。
 tags:
   - "CVPR 2026"
   - "目标检测"

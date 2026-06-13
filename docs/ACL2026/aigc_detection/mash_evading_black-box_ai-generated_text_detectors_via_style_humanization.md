@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MASH: Evading Black-Box AI-Generated Text Detectors via Style Humanization
 description: >-
-  [ACL 2026][AIGC检测][AI生成文本检测] 本文提出 MASH（多阶段风格人性化对齐），通过风格注入 SFT → DPO 对齐 → 推理时精炼三阶段流水线，训练一个仅 0.1B 参数的改写器，在黑盒设置下以 92% 的平均攻击成功率规避 AI 文本检测器，同时保持优秀的语言质量。
+  [ACL 2026 Findings][AIGC检测][AI生成文本检测] 本文提出 MASH（多阶段风格人性化对齐），通过风格注入 SFT → DPO 对齐 → 推理时精炼三阶段流水线，训练一个仅 0.1B 参数的改写器，在黑盒设置下以 92% 的平均攻击成功率规避 AI 文本检测器，同时保持优秀的语言质量。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "AIGC检测"
   - "AI生成文本检测"
   - "黑盒对抗攻击"

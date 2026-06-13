@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIND: Multi-Rationale Integrated Discriminative Reasoning Framework for Multi-Modal Fake News
 description: >-
-  [ICML 2026][社会计算][多视角推理] MIND 通过**多视角理由生成 + 跨理由判别推理**为假新闻检测提供可解释 + 鲁棒的判别框架——同时利用 LLM 生成的事实核查、模态一致性、语义合理性 3 类理由…
+  [ICML 2026][社会计算][多视角推理] MIND 通过**多视角理由生成 + 跨理由判别推理**为假新闻检测提供可解释 + 鲁棒的判别框架——同时利用 LLM 生成的事实核查、模态一致性、语义合理性 3 类理由，在 Weibo / Twitter / Fakeddit 上 F1 较 SOTA 提升 4-8%。
 tags:
   - "ICML 2026"
   - "社会计算"

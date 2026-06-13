@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spec-o3: A Tool-Augmented Vision-Language Agent for Rare Celestial Object Candidate Identification
 description: >-
-  [ACL 2026][LLM Agent][工具增强智能体] 提出 Spec-o3，一个工具增强的视觉语言智能体，通过交错多模态思维链（iMCoT）模拟天文学家的光谱检查流程，采用冷启动 SFT + 基于结果的 RL 两阶段训练，在稀有天体识别上将 macro-F1 从 28.3% 提升至 76.5%…
+  [ACL 2026][LLM Agent][工具增强智能体] 提出 Spec-o3，一个工具增强的视觉语言智能体，通过交错多模态思维链（iMCoT）模拟天文学家的光谱检查流程，采用冷启动 SFT + 基于结果的 RL 两阶段训练，在稀有天体识别上将 macro-F1 从 28.3% 提升至 76.5%，推理速度比人工检查快 ~50 倍。
 tags:
   - "ACL 2026"
   - "LLM Agent"

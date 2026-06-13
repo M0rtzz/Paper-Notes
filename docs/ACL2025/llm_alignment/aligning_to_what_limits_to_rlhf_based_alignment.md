@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning to What? Limits to RLHF Based Alignment
 description: >-
-  [ACL 2025][LLM对齐][RLHF] 本文通过系统实验发现RLHF（包括DPO、ORPO、RLOO等方法）在减少LLM隐性种族偏见方面基本无效，且SFT在RLHF之前进行会"固化"模型偏见，揭示了当前对齐技术在处理模糊目标（如消除偏见）方面的根本局限。
+  [ACL 2025][LLM对齐][RLHF] 本文通过系统实验发现RLHF（包括DPO、ORPO、RLOO等方法）在减少LLM隐性种族偏见方面基本无效，且SFT在RLHF之前进行会"固化"模型偏见，揭示了当前对齐技术在处理模糊目标（如消除偏见）方面的根本局限。 领域现状：RLHF已成为大模型对齐的标准范式…
 tags:
   - "ACL 2025"
   - "LLM对齐"

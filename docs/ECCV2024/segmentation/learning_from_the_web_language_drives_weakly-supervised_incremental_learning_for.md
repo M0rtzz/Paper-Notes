@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from the Web: Language Drives Weakly-Supervised Incremental Learning for Semantic Segmentation
 description: >-
-  [ECCV 2024][语义分割][weakly-supervised] 首次提出完全使用网络图像（而非精心设计的数据集图像）进行弱监督增量语义分割，通过傅里叶域判别器筛选网络图像 + caption 驱动的 rehearsal 策略保持旧类知识…
+  [ECCV 2024][语义分割][weakly-supervised] 首次提出完全使用网络图像（而非精心设计的数据集图像）进行弱监督增量语义分割，通过傅里叶域判别器筛选网络图像 + caption 驱动的 rehearsal 策略保持旧类知识，在 PASCAL VOC 15-5 设定下达到 73.4% mIoU。
 tags:
   - "ECCV 2024"
   - "语义分割"

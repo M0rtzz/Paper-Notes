@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics-Informed Coarsening for Multigrid Graph Neural Surrogates
 description: >-
-  [ICML 2026][图学习][图神经网络] 本文为固体力学有限元仿真训练了一个 Encoder-Processor-Decoder 多重网格 GNN 代理模型，核心创新是把"粗化（downsampling）时选哪些节点"从几何启发式（FPS）/学习注意力换成"按动量守恒方程的离散残差打分再 TopK"…
+  [ICML 2026][图学习][图神经网络] 本文为固体力学有限元仿真训练了一个 Encoder-Processor-Decoder 多重网格 GNN 代理模型，核心创新是把"粗化（downsampling）时选哪些节点"从几何启发式（FPS）/学习注意力换成"按动量守恒方程的离散残差打分再 TopK"，从而把粗层算力倾斜到应力集中、接触界面、大变形等动力学关键区域，在 DeformingPlate 上把 rollout RMSE 从 SOTA 的 $11.46\times 10^{-3}$ 降到 $6.5\times 10^{-3}$（提升约 43%）。
 tags:
   - "ICML 2026"
   - "图学习"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Escaping Saddle Points without Lipschitz Smoothness: The Power of Nonlinear Preconditioning
 description: >-
-  [NeurIPS 2025][优化/理论][非线性预条件] 本文提出统一的充分条件连接 $(L_0,L_1)$-光滑性与各向异性光滑性两种广义光滑框架，证明非线性预条件梯度法（含梯度裁剪）在此放松条件下保持鞍点规避性质，并给出扰动变体以多项对数维数依赖达到二阶稳定点。
+  [NeurIPS 2025 Spotlight][优化/理论][非线性预条件] 本文提出统一的充分条件连接 $(L_0,L_1)$-光滑性与各向异性光滑性两种广义光滑框架，证明非线性预条件梯度法（含梯度裁剪）在此放松条件下保持鞍点规避性质，并给出扰动变体以多项对数维数依赖达到二阶稳定点。 领域现状：经典梯度下降分析依赖 Li…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "优化/理论"
   - "非线性预条件"
   - "鞍点逃逸"

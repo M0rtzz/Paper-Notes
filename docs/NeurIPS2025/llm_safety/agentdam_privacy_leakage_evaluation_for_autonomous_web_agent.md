@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents
 description: >-
-  [NeurIPS 2025][LLM安全][AI agent privacy] 提出 AgentDAM，首个在真实 Web 环境中端到端评估 AI Agent 数据最小化能力的基准，包含 246 个跨 Reddit/GitLab/Shopping 的任务…
+  [NeurIPS 2025][LLM安全][AI agent privacy] 提出 AgentDAM，首个在真实 Web 环境中端到端评估 AI Agent 数据最小化能力的基准，包含 246 个跨 Reddit/GitLab/Shopping 的任务，发现 GPT-4o 等主流模型在无缓解措施时隐私泄露率高达 36-46%，而 CoT 隐私提示可将泄露率降至 6-8%。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

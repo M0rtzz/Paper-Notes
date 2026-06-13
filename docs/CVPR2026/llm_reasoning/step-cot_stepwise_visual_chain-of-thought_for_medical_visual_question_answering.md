@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Step-CoT: Stepwise Visual Chain-of-Thought for Medical Visual Question Answering
 description: >-
-  [CVPR 2026][LLM推理][医学VQA] 构建首个对齐临床诊断工作流的结构化多步CoT医学推理数据集Step-CoT（10K+病例/70K QA对），并提出基于图注意力网络的教师-学生框架实现逐步推理监督，提升Med-VQA的准确性和可解释性。
+  [CVPR 2026][LLM推理][医学VQA] 构建首个对齐临床诊断工作流的结构化多步CoT医学推理数据集Step-CoT（10K+病例/70K QA对），并提出基于图注意力网络的教师-学生框架实现逐步推理监督，提升Med-VQA的准确性和可解释性。 领域现状：Med-VQA通过多模态深度学习回答基于医学图像的临床问题…
 tags:
   - "CVPR 2026"
   - "LLM推理"

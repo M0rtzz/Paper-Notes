@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis
 description: >-
-  [医学图像] 提出首个用于体素级全脑4D fMRI条件生成的扩散Transformer，结合3D VQ-GAN潜空间压缩、CNN-Transformer混合骨干网络和AdaLN-Zero+交叉注意力的强条件注入，在HCP七种认知任务上实现任务激活图相关0.83、RSA达0.98和完美条件特异性。
+  [医学图像] 提出首个用于体素级全脑4D fMRI条件生成的扩散Transformer，结合3D VQ-GAN潜空间压缩、CNN-Transformer混合骨干网络和AdaLN-Zero+交叉注意力的强条件注入，在HCP七种认知任务上实现任务激活图相关0.83、RSA达0.98和完美条件特异性。 任务态fMRI提供了认知过程…
 tags:
   - "医学图像"
 ---

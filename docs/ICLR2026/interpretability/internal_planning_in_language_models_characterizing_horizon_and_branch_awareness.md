@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Internal Planning in Language Models: Characterizing Horizon and Branch Awareness
 description: >-
-  [ICLR 2026][可解释性][语言模型规划] 提出基于VQ-VAE的信息论框架来分析语言模型内部的规划行为，发现规划视野是任务依赖的、模型隐式保留未选择的正确路径信息、下一token决策主要依赖最近的计算。
+  [ICLR 2026][可解释性][语言模型规划] 提出基于VQ-VAE的信息论框架来分析语言模型内部的规划行为，发现规划视野是任务依赖的、模型隐式保留未选择的正确路径信息、下一token决策主要依赖最近的计算。 LLM展现出令人惊叹的能力，但其训练目标——下一token预测——似乎只关注局部，与"规划"的前瞻性本质矛盾…
 tags:
   - "ICLR 2026"
   - "可解释性"

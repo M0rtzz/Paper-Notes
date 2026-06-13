@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration
 description: >-
-  [ICML2025][强化学习][无监督技能预训练] 提出 SUPE 方法，将无标签离线轨迹数据"用两次"——既用于 VAE 技能预训练，又通过 UCB 伪标签转化为高层 off-policy 数据加速在线探索，在 42 个稀疏奖励任务上全面超越已有方法。
+  [ICML2025][强化学习][无监督技能预训练] 提出 SUPE 方法，将无标签离线轨迹数据"用两次"——既用于 VAE 技能预训练，又通过 UCB 伪标签转化为高层 off-policy 数据加速在线探索，在 42 个稀疏奖励任务上全面超越已有方法。 无监督预训练在 NLP/CV 中已取得巨大成功…
 tags:
   - "ICML2025"
   - "强化学习"

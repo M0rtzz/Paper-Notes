@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cracking Factual Knowledge: A Comprehensive Analysis of Degenerate Knowledge Neurons in Large Language Models
 description: >-
-  [ACL 2025][可解释性][知识神经元] 本文从结构和功能双重角度重新定义了LLM中的退化知识神经元（DKN），提出神经拓扑聚类方法获取任意数量和结构的DKN，并通过34个实验揭示了DKN与LLM鲁棒性、可进化性和复杂性的内在关联。
+  [ACL 2025][可解释性][知识神经元] 本文从结构和功能双重角度重新定义了LLM中的退化知识神经元（DKN），提出神经拓扑聚类方法获取任意数量和结构的DKN，并通过34个实验揭示了DKN与LLM鲁棒性、可进化性和复杂性的内在关联。 1. 领域现状：LLM在MLP权重中存储大量事实知识，知识神经元（KN）是知识存储的基…
 tags:
   - "ACL 2025"
   - "可解释性"

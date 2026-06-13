@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASTRA: An Automated Framework for Strategy Discovery, Retrieval, and Evolution for Jailbreaking LLMs
 description: >-
-  [ACL 2026][LLM安全][越狱攻击] ASTRA 把每次越狱尝试都视为学习机会，按 1-10 连续打分把策略蒸馏到「Effective / Promising / Ineffective」三层向量库中，下一次攻击通过相似度检索复用经验…
+  [ACL 2026][LLM安全][越狱攻击] ASTRA 把每次越狱尝试都视为学习机会，按 1-10 连续打分把策略蒸馏到「Effective / Promising / Ineffective」三层向量库中，下一次攻击通过相似度检索复用经验，平均仅 2.4 次查询就在 8 个主流 LLM 上取得 80.6% 攻击成功率。
 tags:
   - "ACL 2026"
   - "LLM安全"

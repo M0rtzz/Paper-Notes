@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FruitNinja: 3D Object Interior Texture Generation with Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] FruitNinja 首次提出为 3DGS 物体生成内部纹理的方法，通过渐进式截面修复 + 体素平滑 + OpaqueAtom GS 策略，实现切割后实时渲染无需额外优化，在语义对齐和纹理一致性上显著优于基线。
+  [CVPR 2025][3D视觉][3D高斯溅射] FruitNinja 首次提出为 3DGS 物体生成内部纹理的方法，通过渐进式截面修复 + 体素平滑 + OpaqueAtom GS 策略，实现切割后实时渲染无需额外优化，在语义对齐和纹理一致性上显著优于基线。 领域现状：3D Gaussian Splatting (3DG…
 tags:
   - "CVPR 2025"
   - "3D视觉"

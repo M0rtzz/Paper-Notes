@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MADE: A Living Benchmark for Multi-Label Text Classification with Uncertainty Quantification
 description: >-
-  [ACL 2026][NLP理解][多标签分类] 本文提出 MADE——一个基于 FDA 医疗设备不良事件报告的"活"多标签文本分类基准，包含 1,154 个层次化标签和严格的时间分割…
+  [ACL 2026][NLP理解][多标签分类] 本文提出 MADE——一个基于 FDA 医疗设备不良事件报告的"活"多标签文本分类基准，包含 1,154 个层次化标签和严格的时间分割，系统评估了 20+ 编码器/解码器模型在判别式微调、生成式微调和 few-shot 提示下的预测性能和不确定性量化（UQ）能力，揭示了关键权衡：小型判别式微调解码器在头到尾准确率上最优，生成式微调的 UQ 最可靠，大型推理模型提升稀有标签但 UQ 意外较弱。
 tags:
   - "ACL 2026"
   - "NLP理解"

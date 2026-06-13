@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DictPFL: Efficient and Private Federated Learning on Encrypted Gradients
 description: >-
-  [NeurIPS 2025][AI安全][联邦学习] 提出 DictPFL 框架，通过将模型权重分解为静态字典+可训练查找表，并结合加密感知剪枝，在联邦学习中实现全梯度同态加密保护的同时，将通信开销降低 402–748 倍、训练速度提升 28–65 倍，运行时间仅为明文 FL 的 2 倍以内。
+  [NeurIPS 2025][AI安全][联邦学习] 提出 DictPFL 框架，通过将模型权重分解为静态字典+可训练查找表，并结合加密感知剪枝，在联邦学习中实现全梯度同态加密保护的同时，将通信开销降低 402–748 倍、训练速度提升 28–65 倍，运行时间仅为明文 FL 的 2 倍以内。 联邦学习（FL）允许多个机构协…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

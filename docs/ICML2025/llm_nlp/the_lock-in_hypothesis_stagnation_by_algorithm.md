@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Lock-in Hypothesis: Stagnation by Algorithm
 description: >-
-  [ICML 2025][LLM/NLP][反馈循环] 本文提出并形式化了"锁定假说"（Lock-in Hypothesis）：LLM 训练与部署过程中形成的人类-AI 反馈循环会固化用户的现有信念，导致群体观点多样性不可逆地丧失，甚至锁定在错误信念上。
+  [ICML 2025][LLM 其他][反馈循环] 本文提出并形式化了"锁定假说"（Lock-in Hypothesis）：LLM 训练与部署过程中形成的人类-AI 反馈循环会固化用户的现有信念，导致群体观点多样性不可逆地丧失，甚至锁定在错误信念上。 大语言模型（LLM）正日益影响人类的信念和价值观。这产生了一个自我强化的反…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "反馈循环"
   - "信念锁定"
   - "多样性损失"

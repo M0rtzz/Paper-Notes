@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TransLaw: A Large-Scale Dataset and Multi-Agent Benchmark Simulating Professional Translation of Hong Kong Case Law
 description: >-
-  [ACL2026][多语言/翻译][法律翻译] 这篇论文构建了首个面向香港终审法院判词英中翻译的句级平行数据集 HKCFA Judgement 97-22，并提出模拟专业法律翻译流程的 TransLaw 多智能体系统，在自动指标、人类法律译者评测和成本分析上都显著优于单一翻译 agent。
+  [ACL2026][多语言/翻译][法律翻译] 这篇论文构建了首个面向香港终审法院判词英中翻译的句级平行数据集 HKCFA Judgement 97-22，并提出模拟专业法律翻译流程的 TransLaw 多智能体系统，在自动指标、人类法律译者评测和成本分析上都显著优于单一翻译 agent。 领域现状：法律机器翻译已经从通用…
 tags:
   - "ACL2026"
   - "多语言/翻译"

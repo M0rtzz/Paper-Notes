@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaMI-DETR: Open-Vocabulary Detection with Language Model Instruction
 description: >-
-  [ECCV 2024][目标检测][开放词汇目标检测] 提出 LaMI-DETR，通过利用 GPT 生成视觉概念描述和 T5 挖掘类间视觉相似性关系，解决开放词汇目标检测中概念表示不足和基类过拟合两大问题，在 OV-LVIS 上以 43.4 的 rare AP 超越前最佳方法 7.8 个点。
+  [ECCV 2024][目标检测][开放词汇目标检测] 提出 LaMI-DETR，通过利用 GPT 生成视觉概念描述和 T5 挖掘类间视觉相似性关系，解决开放词汇目标检测中概念表示不足和基类过拟合两大问题，在 OV-LVIS 上以 43.4 的 rare AP 超越前最佳方法 7.8 个点。 开放词汇目标检测（OVOD）旨在…
 tags:
   - "ECCV 2024"
   - "目标检测"

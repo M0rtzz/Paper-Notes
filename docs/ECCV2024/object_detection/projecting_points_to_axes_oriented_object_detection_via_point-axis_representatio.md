@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation
 description: >-
-  [ECCV 2024][目标检测][旋转目标检测] 提出点-轴（Point-Axis）表示方法，将旋转目标的位置（点集）和方向（轴编码）解耦，配合 Max-Projection Loss 和 Cross-Axis Loss 实现无需额外标注的优化，并基于此设计 Oriented DETR 模型…
+  [ECCV 2024][目标检测][旋转目标检测] 提出点-轴（Point-Axis）表示方法，将旋转目标的位置（点集）和方向（轴编码）解耦，配合 Max-Projection Loss 和 Cross-Axis Loss 实现无需额外标注的优化，并基于此设计 Oriented DETR 模型，解决传统旋转框表示的损失不连续问题。
 tags:
   - "ECCV 2024"
   - "目标检测"

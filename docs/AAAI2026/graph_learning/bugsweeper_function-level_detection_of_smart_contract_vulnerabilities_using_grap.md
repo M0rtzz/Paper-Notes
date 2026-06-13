@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BugSweeper: Function-Level Detection of Smart Contract Vulnerabilities Using Graph Neural Networks
 description: >-
-  [AAAI2026][图学习][Smart Contract] 提出 BugSweeper，通过构建函数级抽象语法图 (FLAG) 并设计两阶段 GNN 架构，实现无需专家规则的端到端智能合约漏洞检测，在重入攻击检测上 F1 达 98.57%。
+  [AAAI2026][图学习][Smart Contract] 提出 BugSweeper，通过构建函数级抽象语法图 (FLAG) 并设计两阶段 GNN 架构，实现无需专家规则的端到端智能合约漏洞检测，在重入攻击检测上 F1 达 98.57%。 以太坊智能合约一旦部署就无法修改，若存在安全漏洞（如著名的 DAO 攻击导致 3…
 tags:
   - "AAAI2026"
   - "图学习"

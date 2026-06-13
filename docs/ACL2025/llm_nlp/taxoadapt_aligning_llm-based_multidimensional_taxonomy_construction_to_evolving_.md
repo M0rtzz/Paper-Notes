@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TaxoAdapt: Aligning LLM-Based Multidimensional Taxonomy Construction to Evolving Research Corpora
 description: >-
-  [ACL2025][LLM/NLP][自动分类体系构建] 提出 TaxoAdapt 框架，通过层次分类驱动的深度/宽度扩展和分类感知聚类，将 LLM 生成的多维度分类体系动态对齐到特定科学语料库，在粒度保持和兄弟节点一致性上分别超越最优基线 26.51% 和 50.41%。
+  [ACL2025][LLM 其他][自动分类体系构建] 提出 TaxoAdapt 框架，通过层次分类驱动的深度/宽度扩展和分类感知聚类，将 LLM 生成的多维度分类体系动态对齐到特定科学语料库，在粒度保持和兄弟节点一致性上分别超越最优基线 26.51% 和 50.41%。 科学文献爆发式增长：近年来科学文献数量急剧增加…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动分类体系构建"
   - "LLM对齐"
   - "多维度分类"

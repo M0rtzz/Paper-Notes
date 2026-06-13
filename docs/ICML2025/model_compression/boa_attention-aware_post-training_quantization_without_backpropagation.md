@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BoA: Attention-aware Post-training Quantization without Backpropagation
 description: >-
-  [ICML 2025][模型压缩][训练后量化] 提出 BoA——首个在训练后量化中考虑跨层依赖性的无反向传播算法，通过构建注意力感知 Hessian 矩阵捕捉注意力模块内的层间交互，在低位宽（INT2）下显著超越现有 PTQ 方法。
+  [ICML 2025][模型压缩][训练后量化] 提出 BoA——首个在训练后量化中考虑跨层依赖性的无反向传播算法，通过构建注意力感知 Hessian 矩阵捕捉注意力模块内的层间交互，在低位宽（INT2）下显著超越现有 PTQ 方法。 领域现状：PTQ 是 LLM 部署的关键技术。GPTQ 等方法使用 Hessian 信息逐…
 tags:
   - "ICML 2025"
   - "模型压缩"

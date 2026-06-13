@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Amortising Inference and Meta-Learning Priors in Neural Networks (BNNP)
 description: >-
-  [ICLR 2026][图像生成][Bayesian neural network] 提出 BNNP（Bayesian Neural Network Process），一种将 BNN 权重作为隐变量、BNN 本身作为解码器的 neural process…
+  [ICLR 2026][图像生成][Bayesian neural network] 提出 BNNP（Bayesian Neural Network Process），一种将 BNN 权重作为隐变量、BNN 本身作为解码器的 neural process，通过逐层 amortised variational inference 在多数据集上联合学习 BNN 先验和推断网络，首次回答了"在良好先验下，近似推断方法还重要吗？"——答案是肯定的，没有免费午餐。
 tags:
   - "ICLR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Context-Conditioned Predicate Semantics via Prototype Feedback
 description: >-
-  [ICML 2026][优化/理论][场景图生成] AlignG 把 PE-Net 的静态谓词原型改造成"图像条件化"的动态原型：先用关系候选给原型做 GRU 增量更新拿到 image-specific prototype，再反向用它去 recalibrate 关系特征…
+  [ICML 2026][优化/理论][场景图生成] AlignG 把 PE-Net 的静态谓词原型改造成"图像条件化"的动态原型：先用关系候选给原型做 GRU 增量更新拿到 image-specific prototype，再反向用它去 recalibrate 关系特征，并把对齐损失锚定在静态全局原型上以防漂移，在 VG-150 / GQA-200 的 SGDet 设置上 F@100 分别涨 1.4 / 2.7。
 tags:
   - "ICML 2026"
   - "优化/理论"

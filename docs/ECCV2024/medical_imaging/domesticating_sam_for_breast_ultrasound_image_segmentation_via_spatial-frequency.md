@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domesticating SAM for Breast Ultrasound Image Segmentation via Spatial-Frequency Fusion and Uncertainty Correction
 description: >-
-  [ECCV 2024][医学图像][乳腺超声分割] 本文提出 SF-RecSAM 模型，通过空间-频率特征融合模块弥补SAM在低级特征提取上的不足，并设计双假校正器（Dual False Corrector）利用不确定性估计识别并修正假阳性和假阴性区域…
+  [ECCV 2024][医学图像][乳腺超声分割] 本文提出 SF-RecSAM 模型，通过空间-频率特征融合模块弥补SAM在低级特征提取上的不足，并设计双假校正器（Dual False Corrector）利用不确定性估计识别并修正假阳性和假阴性区域，在BUSI和UDIAT两个乳腺超声数据集上显著超越SOTA方法。
 tags:
   - "ECCV 2024"
   - "医学图像"

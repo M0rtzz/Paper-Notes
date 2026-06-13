@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSG-Nav: Probabilistic Scene Graph Navigation via Multiverse Decision Making
 description: >-
-  [ICML 2026][机器人][ObjectNav] 本文提出 PSG-Nav，用"保留完整类别分布的 3D 概率场景图 + 从联合分布采样多个一致世界做决策 + 用成功/失败记忆库做证据校准"三件套替代传统确定性场景图导航…
+  [ICML 2026][机器人][ObjectNav] 本文提出 PSG-Nav，用"保留完整类别分布的 3D 概率场景图 + 从联合分布采样多个一致世界做决策 + 用成功/失败记忆库做证据校准"三件套替代传统确定性场景图导航，在 HM3D / MP3D / HSSD 三大 ObjectNav 基准上分别达到 66.1% / 44.8% / 67.9% SR，是新的 SOTA。
 tags:
   - "ICML 2026"
   - "机器人"

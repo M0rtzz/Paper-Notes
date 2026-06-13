@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universal Safety Controllers with Learned Prophecies
 description: >-
-  [AAAI 2026][可解释性][通用安全控制器] 提出 UCLearn，通过从少量代表性 plant 模型中学习 CTL (计算树逻辑) 公式作为预言（prophecy）的近似表示，替代精确但计算昂贵的树自动机，实现高效、可扩展且可解释的通用安全控制器合成。
+  [AAAI 2026][可解释性][通用安全控制器] 提出 UCLearn，通过从少量代表性 plant 模型中学习 CTL (计算树逻辑) 公式作为预言（prophecy）的近似表示，替代精确但计算昂贵的树自动机，实现高效、可扩展且可解释的通用安全控制器合成。 1. 领域现状： 反应式合成（reactive synthes…
 tags:
   - "AAAI 2026"
   - "可解释性"

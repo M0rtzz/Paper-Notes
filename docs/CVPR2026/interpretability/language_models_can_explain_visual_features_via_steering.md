@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Models Can Explain Visual Features via Steering
 description: >-
-  [CVPR 2026][可解释性][稀疏自编码器] 提出通过对VLM视觉编码器进行SAE特征因果干预（steering），在输入空白图像后让语言模型描述其"看到"的视觉概念，从而实现无需评估图像集的可扩展视觉特征自动解释，并提出混合方法Steering-informed Top-k达到SOTA。
+  [CVPR 2026][可解释性][稀疏自编码器] 提出通过对VLM视觉编码器进行SAE特征因果干预（steering），在输入空白图像后让语言模型描述其"看到"的视觉概念，从而实现无需评估图像集的可扩展视觉特征自动解释，并提出混合方法Steering-informed Top-k达到SOTA。 领域现状：稀疏自编码器（SA…
 tags:
   - "CVPR 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] qa-FLoRA: Data-free Query-Adaptive Fusion of LoRAs for LLMs
 description: >-
-  [AAAI 2026][医学图像][LoRA融合] 提出 qa-FLoRA，一种无需训练数据和训练过程的查询自适应 LoRA 融合方法，通过逐层计算各适配器与基座模型间的 KL 散度来动态确定融合权重，在九个多语言复合任务上显著优于静态融合和无训练基线。
+  [AAAI 2026][医学图像][LoRA融合] 提出 qa-FLoRA，一种无需训练数据和训练过程的查询自适应 LoRA 融合方法，通过逐层计算各适配器与基座模型间的 KL 散度来动态确定融合权重，在九个多语言复合任务上显著优于静态融合和无训练基线。 大语言模型（LLM）在特定领域部署时通常需要通过 LoRA（Low-R…
 tags:
   - "AAAI 2026"
   - "医学图像"

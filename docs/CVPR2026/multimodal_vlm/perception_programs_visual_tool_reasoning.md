@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Perception Programs: Unlocking Visual Tool Reasoning in Language Models
 description: >-
-  [CVPR 2026][LLM/NLP][感知程序] 提出 Perception Programs (P2)，一种训练免费、模型无关的方法，将视觉工具（深度、光流、对应等）的原始输出转换为紧凑的语言原生结构化摘要，使 MLLM 能直接"阅读"视觉模态而非从密集像素推断…
+  [CVPR 2026][多模态VLM][感知程序] 提出 Perception Programs (P2)，一种训练免费、模型无关的方法，将视觉工具（深度、光流、对应等）的原始输出转换为紧凑的语言原生结构化摘要，使 MLLM 能直接"阅读"视觉模态而非从密集像素推断，在 BLINK 6 个任务上平均提升 19.66%。
 tags:
   - "CVPR 2026"
-  - "LLM/NLP"
+  - "多模态VLM"
   - "感知程序"
   - "视觉工具"
   - "语言原生表示"

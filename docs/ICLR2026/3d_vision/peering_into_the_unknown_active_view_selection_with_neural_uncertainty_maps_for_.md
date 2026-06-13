@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction
 description: >-
-  [ICLR 2026][3D视觉][active view selection] 提出 PUN（Peering into the UnkNowN），用轻量前馈网络 UPNet 从单张图像直接预测球面上所有候选视点的不确定性分布（neural uncertainty map）…
+  [ICLR 2026][3D视觉][active view selection] 提出 PUN（Peering into the UnkNowN），用轻量前馈网络 UPNet 从单张图像直接预测球面上所有候选视点的不确定性分布（neural uncertainty map），替代了需要迭代重训 NeRF/3DGS 的传统主动视点选择流程。仅用上界一半的视点就达到可比的重建质量，选点阶段实现 400 倍加速和 50%+ 的计算资源节省。
 tags:
   - "ICLR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PlanaReLoc: Camera Relocalization in 3D Planar Primitives via Region-Based Structure Matching
 description: >-
-  [CVPR 2026][模型压缩][相机重定位] 首次提出基于平面基元（planar primitives）和 3D 平面地图的相机重定位范式 PlanaReLoc，通过深度匹配器在统一嵌入空间中关联查询图像的平面区域与地图平面基元，实现了无需真实纹理地图、位姿先验或逐场景训练的轻量化 6-DoF 相机重定位…
+  [CVPR 2026][模型压缩][相机重定位] 首次提出基于平面基元（planar primitives）和 3D 平面地图的相机重定位范式 PlanaReLoc，通过深度匹配器在统一嵌入空间中关联查询图像的平面区域与地图平面基元，实现了无需真实纹理地图、位姿先验或逐场景训练的轻量化 6-DoF 相机重定位。
 tags:
   - "CVPR 2026"
   - "模型压缩"

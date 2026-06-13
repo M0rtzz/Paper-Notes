@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlearning as Ablation: Toward a Falsifiable Benchmark for Generative Scientific Discovery
 description: >-
-  [NeurIPS 2025 (AI4Science Workshop)][LLM安全][遗忘即消融] 本文提出将机器遗忘重新定义为认识论探针工具（"遗忘即消融"），通过系统性移除目标知识及其遗忘闭包后测试模型能否从公理出发重新推导…
+  [NeurIPS 2025 (AI4Science Workshop)][LLM安全][遗忘即消融] 本文提出将机器遗忘重新定义为认识论探针工具（"遗忘即消融"），通过系统性移除目标知识及其遗忘闭包后测试模型能否从公理出发重新推导，从而提供可证伪的测试来区分 LLM 是"真正生成新知识"还是"仅仅检索记忆片段"。
 tags:
   - "NeurIPS 2025 (AI4Science Workshop)"
   - "LLM安全"

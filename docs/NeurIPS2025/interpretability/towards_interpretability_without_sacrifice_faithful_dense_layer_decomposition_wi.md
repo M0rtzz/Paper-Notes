@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Interpretability Without Sacrifice: Faithful Dense Layer Decomposition with Mixture of Decoders
 description: >-
-  [NeurIPS 2025][可解释性][mechanistic interpretability] 提出 Mixture of Decoders (MxD)，将 LLM 的 MLP 层分解为数万个稀疏激活的专家子层（layer-level sparsity）…
+  [NeurIPS 2025][可解释性][mechanistic interpretability] 提出 Mixture of Decoders (MxD)，将 LLM 的 MLP 层分解为数万个稀疏激活的专家子层（layer-level sparsity），每个专家通过 Hadamard 乘积张量分解实现满秩线性变换，在稀疏性-准确性权衡上显著优于 Transcoders，同时保持可解释性。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

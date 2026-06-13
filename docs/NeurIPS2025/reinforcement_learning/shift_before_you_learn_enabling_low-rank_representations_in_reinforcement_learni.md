@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning
 description: >-
-  [NeurIPS 2025 (Spotlight)][强化学习][Low-Rank] 揭示了强化学习中 successor measure 本身并非近似低秩的，但通过"移位"（shift）操作——跳过前几步转移后——可以自然涌现低秩结构…
+  [NeurIPS 2025 (Spotlight)][强化学习][Low-Rank] 揭示了强化学习中 successor measure 本身并非近似低秩的，但通过"移位"（shift）操作——跳过前几步转移后——可以自然涌现低秩结构，并基于此提出了 Type II Poincaré 不等式来量化所需的移位量，在 goal-conditioned RL 中验证了改进效果。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "强化学习"

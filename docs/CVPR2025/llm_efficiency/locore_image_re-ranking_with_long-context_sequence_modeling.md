@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LOCORE: Image Re-ranking with Long-Context Sequence Modeling
 description: >-
-  [CVPR 2025][LLM效率][图像重排序] 提出 LoCoRe（Long-Context Re-ranker），首次实现基于局部描述子的列表级（list-wise）图像重排序，利用 Longformer 长上下文序列模型同时处理查询图像和整个候选列表的局部描述子…
+  [CVPR 2025][LLM效率][图像重排序] 提出 LoCoRe（Long-Context Re-ranker），首次实现基于局部描述子的列表级（list-wise）图像重排序，利用 Longformer 长上下文序列模型同时处理查询图像和整个候选列表的局部描述子，通过捕获候选图像间的传递关系显著提升重排序性能。
 tags:
   - "CVPR 2025"
   - "LLM效率"

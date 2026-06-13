@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards
 description: >-
-  [CVPR 2026][多模态VLM][自进化LMM] 提出 EvoLMM，一个纯无监督的自进化框架：从单一LMM分出Proposer（生成图像相关问题）和Solver（回答问题），通过连续自一致性奖励（替代离散多数投票）形成闭环训练信号，仅使用原始图像（无标注、无外部奖励模型）…
+  [CVPR 2026 Findings][多模态VLM][自进化LMM] 提出 EvoLMM，一个纯无监督的自进化框架：从单一LMM分出Proposer（生成图像相关问题）和Solver（回答问题），通过连续自一致性奖励（替代离散多数投票）形成闭环训练信号，仅使用原始图像（无标注、无外部奖励模型），在8个多模态数学推理基准上获得约2-3%的一致性提升。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "多模态VLM"
   - "自进化LMM"
   - "无监督自我改进"

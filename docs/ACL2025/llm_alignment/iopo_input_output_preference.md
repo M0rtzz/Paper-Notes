@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IOPO: Empowering LLMs with Complex Instruction Following via Input-Output Preference Optimization
 description: >-
-  [ACL 2025][LLM对齐][instruction following] 提出 IOPO（Input-Output Preference Optimization），在传统 DPO 仅优化输出偏好的基础上，引入输入偏好建模——让模型学习"给定回复 y，哪个指令 x 更匹配"…
+  [ACL 2025][LLM对齐][instruction following] 提出 IOPO（Input-Output Preference Optimization），在传统 DPO 仅优化输出偏好的基础上，引入输入偏好建模——让模型学习"给定回复 y，哪个指令 x 更匹配"，从而增强对复杂多约束指令的细粒度感知能力；同时构建了包含 120K 训练数据、1K 评测数据、覆盖 5 大类 26 个约束维度的 Trace 基准。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysGen3D: Crafting a Miniature Interactive World from a Single Image
 description: >-
-  [CVPR 2025][3D视觉][单图3D重建] 提出 PhysGen3D 框架，将单张图像转化为以相机为中心的交互式 3D 场景，通过组合视觉基础模型的几何/语义理解与基于物理的模拟和渲染，生成比商业 I2V 模型更加物理真实且可控的视频。
+  [CVPR 2025][3D视觉][单图3D重建] 提出 PhysGen3D 框架，将单张图像转化为以相机为中心的交互式 3D 场景，通过组合视觉基础模型的几何/语义理解与基于物理的模拟和渲染，生成比商业 I2V 模型更加物理真实且可控的视频。 领域现状：图像到视频（I2V）生成近年来取得了重大进展，Pika、Kling、G…
 tags:
   - "CVPR 2025"
   - "3D视觉"

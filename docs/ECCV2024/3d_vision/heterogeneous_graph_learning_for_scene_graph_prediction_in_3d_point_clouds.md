@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heterogeneous Graph Learning for Scene Graph Prediction in 3D Point Clouds
 description: >-
-  [ECCV 2024][3D视觉][3D场景图] 提出 3D-HetSGP 框架，将3D场景图预测建模为异构图学习问题，通过两阶段的异构图结构学习（HGSL）和异构图推理（HGR），解决了现有同构全连接图方法中不加区分的消息传递导致的次优性能问题。
+  [ECCV 2024][3D视觉][3D场景图] 提出 3D-HetSGP 框架，将3D场景图预测建模为异构图学习问题，通过两阶段的异构图结构学习（HGSL）和异构图推理（HGR），解决了现有同构全连接图方法中不加区分的消息传递导致的次优性能问题。 领域现状：3D场景图预测（3D Scene Graph Prediction…
 tags:
   - "ECCV 2024"
   - "3D视觉"

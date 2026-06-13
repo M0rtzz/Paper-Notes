@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BD-Merging: Bias-Aware Dynamic Model Merging with Evidence-Guided Contrastive Learning
 description: >-
-  [CVPR 2026][优化/理论][Model Merging] 提出 BD-Merging 框架，通过 Dirichlet 证据建模 + 邻域差异分数（ADS）+ 差异感知对比学习，训练去偏路由器来自适应分配模型合并权重，显著提升合并模型在测试时分布偏移和未见任务上的鲁棒性与泛化能力。
+  [CVPR 2026][优化/理论][Model Merging] 提出 BD-Merging 框架，通过 Dirichlet 证据建模 + 邻域差异分数（ADS）+ 差异感知对比学习，训练去偏路由器来自适应分配模型合并权重，显著提升合并模型在测试时分布偏移和未见任务上的鲁棒性与泛化能力。 模型合并（Model Mergin…
 tags:
   - "CVPR 2026"
   - "优化/理论"

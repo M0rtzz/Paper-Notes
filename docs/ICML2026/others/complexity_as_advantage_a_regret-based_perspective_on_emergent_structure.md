@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Complexity as Advantage: A Regret-Based Perspective on Emergent Structure
 description: >-
-  [ICML 2026][复杂度度量] 本文提出 Complexity-as-Advantage (CAA)：把"复杂度"重新定义为一族**资源受限观察者**在同一过程上的**后悔（regret）分散程度**…
+  [ICML 2026][复杂度度量] 本文提出 Complexity-as-Advantage (CAA)：把"复杂度"重新定义为一族**资源受限观察者**在同一过程上的**后悔（regret）分散程度**，并证明它在 log-loss + Markov 框架下等价于条件互信息原子之和（恰好恢复 excess entropy），在编码视角下等价于过剩描述长度的方差（MDL），从而把 Kolmogorov 复杂度、Bennett 逻辑深度、excess entropy 统一成一个**可计算、可经验估计**的标量谱。
 tags:
   - "ICML 2026"
   - "复杂度度量"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrap Your Generator: Unpaired Visual Editing with Flow Matching
 description: >-
-  [ICML2026][图像生成][无配对训练] 提出 Bootstrap Your Generator (ByG)，一个无需配对数据的 flow matching 编辑训练框架，通过从冻结基础模型提取编辑方向先验 + cycle consistency 保持源结构 + 梯度路由弥合训练-推理差距…
+  [ICML2026][图像生成][无配对训练] 提出 Bootstrap Your Generator (ByG)，一个无需配对数据的 flow matching 编辑训练框架，通过从冻结基础模型提取编辑方向先验 + cycle consistency 保持源结构 + 梯度路由弥合训练-推理差距，在图像和视频编辑上超越百万级配对数据训练的监督基线。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2606.03911](https://arxiv.org/abs/2606.03911)  
 **代码**: https://research.nvidia.com/labs/par/byg/ (项目页)  
-**领域**: image_generation  
+**领域**: 图像生成  
 **关键词**: 无配对训练, flow matching, 图像编辑, 视频编辑, cycle consistency  
 
 ## 一句话总结

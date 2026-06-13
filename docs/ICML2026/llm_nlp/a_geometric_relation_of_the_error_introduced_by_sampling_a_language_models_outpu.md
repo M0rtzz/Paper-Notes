@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Geometric Relation of the Error Introduced by Sampling a Language Model's Output Distribution to its Internal State
 description: >-
-  [ICML 2026][LLM/NLP][采样误差] 本文从微分几何视角刻画 GPT 风格 LLM 在高熵分布上采样所引入的信息丧失，构造 $\mathfrak{so}(n)$ 值 1-形式与平行输运算子，并在国际象棋探针实验中证明这种几何旋转与模型学到的世界向量高度同向。
+  [ICML 2026][LLM 其他][采样误差] 本文从微分几何视角刻画 GPT 风格 LLM 在高熵分布上采样所引入的信息丧失，构造 $\mathfrak{so}(n)$ 值 1-形式与平行输运算子，并在国际象棋探针实验中证明这种几何旋转与模型学到的世界向量高度同向。 领域现状：自回归 LLM 通过贪心或随机解码生成 t…
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "采样误差"
   - "微分几何"
   - "平行输运"

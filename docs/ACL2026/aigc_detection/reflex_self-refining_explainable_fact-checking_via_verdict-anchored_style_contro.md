@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REFLEX: Self-Refining Explainable Fact-Checking via Verdict-Anchored Style Control
 description: >-
-  [ACL2026][AIGC检测][可解释事实核查] REFLEX 将事实核查中的判决预测和解释生成绑定起来，用 backbone 与微调模型之间的自分歧样本构造内部 steering 向量，在不依赖搜索 API 或闭源教师模型的情况下提升判决 Macro-F1，并让解释更短、更一致、更少误导。
+  [ACL2026][AIGC检测][可解释事实核查] REFLEX 将事实核查中的判决预测和解释生成绑定起来，用 backbone 与微调模型之间的自分歧样本构造内部 steering 向量，在不依赖搜索 API 或闭源教师模型的情况下提升判决 Macro-F1，并让解释更短、更一致、更少误导。 领域现状：自动事实核查系统通…
 tags:
   - "ACL2026"
   - "AIGC检测"

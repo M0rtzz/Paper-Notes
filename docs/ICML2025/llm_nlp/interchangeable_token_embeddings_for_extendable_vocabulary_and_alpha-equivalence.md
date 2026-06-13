@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Interchangeable Token Embeddings for Extendable Vocabulary and Alpha-Equivalence
 description: >-
-  [ICML 2025][LLM/NLP][可互换 token 嵌入] 提出双部分 token 嵌入策略（共享可学习部分 + 随机区分部分），使语言模型能在训练后泛化到更大词表，并对 alpha-等价变换具有天然鲁棒性。
+  [ICML 2025][LLM 其他][可互换 token 嵌入] 提出双部分 token 嵌入策略（共享可学习部分 + 随机区分部分），使语言模型能在训练后泛化到更大词表，并对 alpha-等价变换具有天然鲁棒性。 在形式逻辑（如线性时序逻辑 LTL、命题逻辑）等任务中存在可互换 token：的概念：语义等价但符号不同的…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "可互换 token 嵌入"
   - "词表扩展"
   - "Alpha-equivalence"

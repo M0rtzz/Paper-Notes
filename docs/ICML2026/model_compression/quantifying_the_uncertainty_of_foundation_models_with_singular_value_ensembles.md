@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying the Uncertainty of Foundation Models with Singular Value Ensembles
 description: >-
-  [ICML 2026][模型压缩][不确定性量化] Singular Value Ensemble（SVE）把"集成多样性"做成纯粹由 SVD 奇异值的不同重新加权来表达——冻结预训练权重的左右奇异向量（共享的"知识基底"），只为每个集成成员训一组独立的奇异值…
+  [ICML 2026][模型压缩][不确定性量化] Singular Value Ensemble（SVE）把"集成多样性"做成纯粹由 SVD 奇异值的不同重新加权来表达——冻结预训练权重的左右奇异向量（共享的"知识基底"），只为每个集成成员训一组独立的奇异值，参数开销 $\lesssim1\%$ 而校准质量接近真正的 Deep Ensemble，把 UQ 带进了 PEFT 友好的资源受限场景。
 tags:
   - "ICML 2026"
   - "模型压缩"

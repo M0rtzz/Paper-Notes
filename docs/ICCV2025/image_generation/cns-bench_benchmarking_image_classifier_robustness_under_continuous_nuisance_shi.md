@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CNS-Bench: Benchmarking Image Classifier Robustness Under Continuous Nuisance Shifts
 description: >-
-  [ICCV2025][图像生成][OOD鲁棒性] 提出 CNS-Bench，首个利用 LoRA 适配器对扩散模型施加**连续**且**逼真**的干扰偏移（nuisance shift）来系统评估图像分类器 OOD 鲁棒性的基准，覆盖 14 种偏移类型、5 个严重度级别和 40+ 分类器。
+  [ICCV2025][图像生成][OOD鲁棒性] 提出 CNS-Bench，首个利用 LoRA 适配器对扩散模型施加连续：且逼真：的干扰偏移（nuisance shift）来系统评估图像分类器 OOD 鲁棒性的基准，覆盖 14 种偏移类型、5 个严重度级别和 40+ 分类器。 在真实世界部署视觉模型时…
 tags:
   - "ICCV2025"
   - "图像生成"

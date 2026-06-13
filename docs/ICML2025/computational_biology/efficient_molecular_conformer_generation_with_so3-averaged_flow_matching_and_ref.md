@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Molecular Conformer Generation with SO(3)-Averaged Flow Matching and Reflow
 description: >-
-  [ICML2025][计算生物][分子构象生成] 提出 SO(3)-Averaged Flow 训练目标，通过解析地对旋转群 SO(3) 上所有旋转取平均来消除先验-数据分布间的旋转对齐需求，结合 Reflow+蒸馏实现高质量的少步乃至单步分子构象生成。
+  [ICML2025][计算生物][分子构象生成] 提出 SO(3)-Averaged Flow 训练目标，通过解析地对旋转群 SO(3) 上所有旋转取平均来消除先验-数据分布间的旋转对齐需求，结合 Reflow+蒸馏实现高质量的少步乃至单步分子构象生成。 分子构象生成（Molecular Conformer Generati…
 tags:
   - "ICML2025"
   - "计算生物"

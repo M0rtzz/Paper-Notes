@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeDance: A Dynamic Tool-integrated MLLM for Executable Visual Reasoning
 description: >-
-  [CVPR 2026][多模态VLM][可执行视觉推理] 提出CodeDance，将可执行代码作为视觉推理的通用求解器——MLLM生成代码来定义、组合和执行多种工具，渲染中间视觉结果(bbox/线/图表)支持可审查的推理链，通过平衡探索与效率的工具调用奖励做RL训练…
+  [CVPR 2026][多模态VLM][可执行视觉推理] 提出CodeDance，将可执行代码作为视觉推理的通用求解器——MLLM生成代码来定义、组合和执行多种工具，渲染中间视觉结果(bbox/线/图表)支持可审查的推理链，通过平衡探索与效率的工具调用奖励做RL训练，在RL中涌现出未见过的工具调用组合和跨任务迁移行为，7B模型在计数/视觉搜索/图表QA上超越GPT-4o。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MERLiN: Single-Shot Material Estimation and Relighting for Photometric Stereo
 description: >-
-  [ECCV 2024][LLM评测][逆渲染] 提出单阶段注意力沙漏网络MERLiN，从单张图像联合估计空间变化BRDF参数并进行物理正确的重打光，首次利用重打光图像驱动光度立体方法实现单图法向估计，弥合了Shape from Shading与Photometric Stereo之间的鸿沟。
+  [ECCV 2024][LLM评测][逆渲染] 提出单阶段注意力沙漏网络MERLiN，从单张图像联合估计空间变化BRDF参数并进行物理正确的重打光，首次利用重打光图像驱动光度立体方法实现单图法向估计，弥合了Shape from Shading与Photometric Stereo之间的鸿沟。 光度立体(Photometric…
 tags:
   - "ECCV 2024"
   - "LLM评测"

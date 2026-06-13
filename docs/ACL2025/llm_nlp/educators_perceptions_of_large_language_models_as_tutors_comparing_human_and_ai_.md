@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Educators' Perceptions of Large Language Models as Tutors: Comparing Human and AI Tutors in a Blind Text-only Setting
 description: >-
-  [ACL 2025 (BEA Workshop)][LLM/NLP][LLM辅导] 本文通过盲测实验让有教学经验的人类标注者对比评估 LLM 辅导员与人类辅导员在小学数学应用题场景下的表现，在参与度、共情能力、支架式教学和简洁性四个维度上 LLM 均被评为优于人类辅导员…
+  [ACL 2025 (BEA Workshop)][LLM 其他][LLM辅导] 本文通过盲测实验让有教学经验的人类标注者对比评估 LLM 辅导员与人类辅导员在小学数学应用题场景下的表现，在参与度、共情能力、支架式教学和简洁性四个维度上 LLM 均被评为优于人类辅导员，其中共情维度最突出——80% 的标注者更偏好 LLM。
 tags:
   - "ACL 2025 (BEA Workshop)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM辅导"
   - "人类教师对比"
   - "盲评实验"

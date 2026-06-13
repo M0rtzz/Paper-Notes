@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProAPO: Progressively Automatic Prompt Optimization for Visual Classification
 description: >-
-  [CVPR 2025][AIGC检测][视觉语言模型] 提出 ProAPO，一种基于进化算法的渐进式自动提示优化方法，在仅需 one-shot 监督且无需人工参与的条件下，从任务级模板逐步优化到类别级描述，解决 LLM 生成描述中的幻觉和缺乏区分度问题，在 13 个数据集上超越现有文本提示方法。
+  [CVPR 2025][AIGC检测][视觉语言模型] 提出 ProAPO，一种基于进化算法的渐进式自动提示优化方法，在仅需 one-shot 监督且无需人工参与的条件下，从任务级模板逐步优化到类别级描述，解决 LLM 生成描述中的幻觉和缺乏区分度问题，在 13 个数据集上超越现有文本提示方法。 领域现状：CLIP 等视觉语…
 tags:
   - "CVPR 2025"
   - "AIGC检测"

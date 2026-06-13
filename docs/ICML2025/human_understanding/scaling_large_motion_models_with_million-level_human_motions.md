@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Large Motion Models with Million-Level Human Motions
 description: >-
-  [ICML 2025][人体理解] 本文提出 MotionLib（首个百万级运动数据集，120 万条序列）、MotionBook（无损特征 + 2D 无查找运动分词器）和 Being-M0（大型运动模型），首次在运动生成领域展示了数据和模型规模的 scaling law。
+  [ICML 2025][人体理解] 本文提出 MotionLib（首个百万级运动数据集，120 万条序列）、MotionBook（无损特征 + 2D 无查找运动分词器）和 Being-M0（大型运动模型），首次在运动生成领域展示了数据和模型规模的 scaling law。 文本到运动生成（T2M）是一个新兴领域…
 tags:
   - "ICML 2025"
   - "人体理解"

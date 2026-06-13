@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenVDM: Generating Vector Displacement Maps From a Single Image
 description: >-
-  [CVPR 2025][3D视觉][向量位移图] 提出首个从单张图像生成 Vector Displacement Map (VDM) 的方法，通过微调 Zero123++ 生成多视角法线图、使用神经 SDF 重建网格、再用神经变形场参数化为 VDM 图像，并构建了首个学术 VDM 数据集…
+  [CVPR 2025][3D视觉][向量位移图] 提出首个从单张图像生成 Vector Displacement Map (VDM) 的方法，通过微调 Zero123++ 生成多视角法线图、使用神经 SDF 重建网格、再用神经变形场参数化为 VDM 图像，并构建了首个学术 VDM 数据集，为 3D 艺术家提供了按需生成自定义几何细节印章的能力。
 tags:
   - "CVPR 2025"
   - "3D视觉"

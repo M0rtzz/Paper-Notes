@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Target Speaker Extraction Through Comparing Noisy Positive and Negative Audio Enrollments
 description: >-
-  [NeurIPS 2025][音频/语音][目标说话人提取] 提出一种利用噪声正样本（目标说话人在说话的段落）和负样本（目标说话人沉默的段落）对比来编码目标说话人特征的新型注册策略，在单声道噪声注册目标说话人提取任务上取得 SOTA 性能，SI-SNRi 比此前最优方法高出 2.1 dB 以上。
+  [NeurIPS 2025][音频/语音][目标说话人提取] 提出一种利用噪声正样本（目标说话人在说话的段落）和负样本（目标说话人沉默的段落）对比来编码目标说话人特征的新型注册策略，在单声道噪声注册目标说话人提取任务上取得 SOTA 性能，SI-SNRi 比此前最优方法高出 2.1 dB 以上。 目标说话人提取（TSE）旨在…
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

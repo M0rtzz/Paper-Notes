@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plana3R: Zero-shot Metric Planar 3D Reconstruction via Feed-Forward Planar Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][平面3D重建] 提出Plana3R，一个无需位姿和平面标注的前馈框架，从未配对的双视角图像中预测稀疏3D平面基元和度量尺度相对位姿，实现室内场景的零样本度量平面3D重建。
+  [NeurIPS 2025][3D视觉][平面3D重建] 提出Plana3R，一个无需位姿和平面标注的前馈框架，从未配对的双视角图像中预测稀疏3D平面基元和度量尺度相对位姿，实现室内场景的零样本度量平面3D重建。 室内环境是人类生活的主要场所，创建其数字孪生对很多应用至关重要。室内场景天然富含平面结构（地板、墙壁、桌面等）…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

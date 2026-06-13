@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models
 description: >-
-  [ICML2025][图像生成][扩散模型加速] 提出 Morse 双采样框架，通过快速 Dot 模型学习残差反馈来补偿 Dash（原扩散模型）跳步采样的信息损失，实现 1.78×–3.31× 的无损加速。
+  [ICML2025][图像生成][扩散模型加速] 提出 Morse 双采样框架，通过快速 Dot 模型学习残差反馈来补偿 Dash（原扩散模型）跳步采样的信息损失，实现 1.78×–3.31× 的无损加速。 扩散模型（DM）在图像生成、文生图等任务上效果出色，但采样过程需要数百步迭代 function evaluation…
 tags:
   - "ICML2025"
   - "图像生成"

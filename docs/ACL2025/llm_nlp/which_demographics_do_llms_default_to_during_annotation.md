@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Which Demographics Do LLMs Default to During Annotation?
 description: >-
-  [ACL2025][LLM/NLP][LLM annotation] 通过对比 LLM 在无人口统计信息(N)、有人口统计(SD)、安慰剂信息(P)三种 prompt 条件下的标注行为，揭示 LLM 在主观标注任务(冒犯性/礼貌性)中默认更接近白人、年轻、高学历群体的标注模式…
+  [ACL2025][LLM 其他][LLM annotation] 通过对比 LLM 在无人口统计信息(N)、有人口统计(SD)、安慰剂信息(P)三种 prompt 条件下的标注行为，揭示 LLM 在主观标注任务(冒犯性/礼貌性)中默认更接近白人、年轻、高学历群体的标注模式，且人口统计 prompting 确实产生了比安慰剂信息更系统性的影响。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM annotation"
   - "demographic bias"
   - "提示学习"

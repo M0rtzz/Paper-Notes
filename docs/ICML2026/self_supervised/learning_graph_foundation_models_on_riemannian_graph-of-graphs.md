@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Graph Foundation Models on Riemannian Graph-of-Graphs
 description: >-
-  [ICML 2026][自监督学习][Graph Foundation Model] R-GFM 把"不同 hop 数"的子图当作上层 Graph-of-Graphs 的节点，再用一套动态 MoE 路由把每个 GoG 分配到曲率最匹配的 Riemannian 流形（双曲 / 欧氏 / 球面）…
+  [ICML 2026][自监督学习][Graph Foundation Model] R-GFM 把"不同 hop 数"的子图当作上层 Graph-of-Graphs 的节点，再用一套动态 MoE 路由把每个 GoG 分配到曲率最匹配的 Riemannian 流形（双曲 / 欧氏 / 球面），同时解决了现有图基础模型固定 receptive field 与单一 Euclidean 嵌入两个先天缺陷，下游最高带来 49% 相对提升。
 tags:
   - "ICML 2026"
   - "自监督学习"

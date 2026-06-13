@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation
 description: >-
-  [NeurIPS 2025][机器人][长程操作] 提出RoboCerebra长程机器人操作基准，包含1000条人类示范轨迹（平均2972步，约为现有基准的6倍），通过分层规划与执行框架和多维评估协议，系统测评VLM在规划、反思和记忆三个System 2认知维度上的能力。
+  [NeurIPS 2025][机器人][长程操作] 提出RoboCerebra长程机器人操作基准，包含1000条人类示范轨迹（平均2972步，约为现有基准的6倍），通过分层规划与执行框架和多维评估协议，系统测评VLM在规划、反思和记忆三个System 2认知维度上的能力。 当前VLM在机器人操作中的应用主要停留在快速反应式的…
 tags:
   - "NeurIPS 2025"
   - "机器人"

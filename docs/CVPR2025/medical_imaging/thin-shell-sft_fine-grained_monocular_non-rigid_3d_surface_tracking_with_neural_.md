@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thin-Shell-SfT: Fine-Grained Monocular Non-Rigid 3D Surface Tracking with Neural Deformation Fields
 description: >-
-  [CVPR 2025][医学图像][非刚性表面跟踪] Thin-Shell-SfT 提出了基于连续神经变形场和 Kirchhoff-Love 薄壳物理先验的单目非刚性 3D 表面跟踪方法，结合表面诱导的 3D 高斯泼溅进行可微渲染，实现了前所未有的细粒度褶皱重建精度。
+  [CVPR 2025][医学图像][非刚性表面跟踪] Thin-Shell-SfT 提出了基于连续神经变形场和 Kirchhoff-Love 薄壳物理先验的单目非刚性 3D 表面跟踪方法，结合表面诱导的 3D 高斯泼溅进行可微渲染，实现了前所未有的细粒度褶皱重建精度。 领域现状：从单目 RGB 视频中重建高度可变形表面（如布…
 tags:
   - "CVPR 2025"
   - "医学图像"

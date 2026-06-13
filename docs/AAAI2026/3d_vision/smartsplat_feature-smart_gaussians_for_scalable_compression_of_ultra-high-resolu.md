@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SmartSplat: Feature-Smart Gaussians for Scalable Compression of Ultra-High-Resolution Images
 description: >-
-  [AAAI2026][3D视觉][2D Gaussian Splatting] 提出SmartSplat，一种基于特征感知的2D Gaussian Splatting图像压缩框架，通过梯度-颜色引导的变分采样、排斥均匀采样和尺度自适应颜色初始化三大策略…
+  [AAAI2026][3D视觉][2D Gaussian Splatting] 提出SmartSplat，一种基于特征感知的2D Gaussian Splatting图像压缩框架，通过梯度-颜色引导的变分采样、排斥均匀采样和尺度自适应颜色初始化三大策略，首次实现了8K/16K超高分辨率图像在极端压缩比（最高5000×）下的高质量重建。
 tags:
   - "AAAI2026"
   - "3D视觉"

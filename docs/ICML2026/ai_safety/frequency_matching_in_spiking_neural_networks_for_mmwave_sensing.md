@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frequency Matching in Spiking Neural Networks for mmWave Sensing
 description: >-
-  [ICML 2026][AI安全][LIF 神经元] 本文从「机制-数据对齐」角度证明 LIF 脉冲神经元等价于一个一阶 IIR 低通滤波器，并提出根据毫米波信号的判别频谱来设定膜衰减系数 $\beta$…
+  [ICML 2026][AI安全][LIF 神经元] 本文从「机制-数据对齐」角度证明 LIF 脉冲神经元等价于一个一阶 IIR 低通滤波器，并提出根据毫米波信号的判别频谱来设定膜衰减系数 $\beta$，使 SNN 在四个常用 mmWave 数据集上平均比 ANN 提高 6.22% 精度并降低 3.64× 理论能耗。
 tags:
   - "ICML 2026"
   - "AI安全"

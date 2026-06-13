@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Injecting Distributional Awareness into MLLMs via Reinforcement Learning for Deep Imbalanced Regression
 description: >-
-  [ICML 2026][多模态VLM][MLLM 回归] 本文把 MLLM 的连续值回归在长尾分布下的"回归到均值"问题转化为分布感知的 RL 问题，在 GRPO 框架内用 Concordance Correlation Coefficient (CCC) 作为批次级奖励——既看相关性、又看方差、又看均值——…
+  [ICML 2026][多模态VLM][MLLM 回归] 本文把 MLLM 的连续值回归在长尾分布下的"回归到均值"问题转化为分布感知的 RL 问题，在 GRPO 框架内用 Concordance Correlation Coefficient (CCC) 作为批次级奖励——既看相关性、又看方差、又看均值——从而显式惩罚预测分布塌缩；在 4 个长尾回归任务、Qwen2.5-VL-3B/7B 上稳压 SFT、SoftLabel、各种 point-wise RL，特别是 medium/few-shot 区域 MAE 大幅下降。
 tags:
   - "ICML 2026"
   - "多模态VLM"

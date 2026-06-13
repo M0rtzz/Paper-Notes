@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LIMSSR: LLM-Driven Sequence-to-Score Reasoning under Training-Time Incomplete Multimodal Observations
 description: >-
-  [ICML 2026][多模态VLM][多模态] 作者把"训练阶段就缺模态"的多模态动作质量评估重新建模成"基于 LLM 的条件序列到分数推理"问题，用 prompt + 特殊 token 让 LLM 在没有完整数据监督的情况下补全缺失语义，再配合掩码感知的双路融合抑制幻觉…
+  [ICML 2026 Spotlight][多模态VLM][多模态] 作者把"训练阶段就缺模态"的多模态动作质量评估重新建模成"基于 LLM 的条件序列到分数推理"问题，用 prompt + 特殊 token 让 LLM 在没有完整数据监督的情况下补全缺失语义，再配合掩码感知的双路融合抑制幻觉，在三个 AQA 数据集上全面超越依赖完整训练数据的 SOTA。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "多模态VLM"
   - "多模态"
   - "LLM Reasoning"

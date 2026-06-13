@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certifying Concavity and Monotonicity in Games via Sum-of-Squares Hierarchies
 description: >-
-  [NeurIPS 2025][强化学习][凹博弈] 证明了在多项式效用和半代数策略集的博弈中验证凹性和单调性是 NP-hard 的，并提出了两套基于平方和 (SOS) 规划的层次化认证方案，可在多项式时间内逐层求解。
+  [NeurIPS 2025][强化学习][凹博弈] 证明了在多项式效用和半代数策略集的博弈中验证凹性和单调性是 NP-hard 的，并提出了两套基于平方和 (SOS) 规划的层次化认证方案，可在多项式时间内逐层求解。 多人博弈中，每个玩家独立选择动作以最大化自身收益，而收益取决于其他玩家的行动。博弈的结构性质——特别是凹性和…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

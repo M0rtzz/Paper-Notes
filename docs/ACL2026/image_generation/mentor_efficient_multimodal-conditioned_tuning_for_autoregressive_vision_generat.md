@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MENTOR: Efficient Autoregressive Image Generation with Balanced Multimodal Control
 description: >-
-  [ACL2026][图像生成][自回归图像生成] MENTOR 用统一自回归 decoder 和两阶段多模态训练，把参考图像与文本指令对齐到同一生成前缀中，在仅 3M 训练数据和 8 张 A100 约 1.5 天训练预算下，取得了较好的概念保持与 prompt following 平衡。
+  [ACL2026 Findings][图像生成][自回归图像生成] MENTOR 用统一自回归 decoder 和两阶段多模态训练，把参考图像与文本指令对齐到同一生成前缀中，在仅 3M 训练数据和 8 张 A100 约 1.5 天训练预算下，取得了较好的概念保持与 prompt following 平衡。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "图像生成"
   - "自回归图像生成"
   - "多模态控制"

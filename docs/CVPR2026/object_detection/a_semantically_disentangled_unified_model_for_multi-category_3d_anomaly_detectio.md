@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection
 description: >-
-  [CVPR 2026][目标检测][3D异常检测] 提出 SeDiR 框架，通过粗到细全局标记化（CFGT）、类别条件对比学习（C3L）和几何引导解码器（GGD）三个模块实现语义解纠缠的统一3D异常检测，解决跨类别特征纠缠（ICE）问题…
+  [CVPR 2026][目标检测][3D异常检测] 提出 SeDiR 框架，通过粗到细全局标记化（CFGT）、类别条件对比学习（C3L）和几何引导解码器（GGD）三个模块实现语义解纠缠的统一3D异常检测，解决跨类别特征纠缠（ICE）问题，在 Real3D-AD 和 Anomaly-ShapeNet 上分别超出SOTA 2.8% 和 9.1% AUROC。
 tags:
   - "CVPR 2026"
   - "目标检测"

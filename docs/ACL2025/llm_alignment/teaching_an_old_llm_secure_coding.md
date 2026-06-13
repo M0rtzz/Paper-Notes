@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaching an Old LLM Secure Coding: Localized Preference Optimization on Distilled Preferences
 description: >-
-  [ACL 2025][LLM对齐][secure code generation] 提出 DiSCo（从前沿 LLM 蒸馏的安全代码偏好数据集，10K 实例覆盖 431 种 CWE）和 LPO（局部偏好优化算法，仅在安全相关 token 上传播损失），在四个安全编码基准上减少 19-40% 的安全问题…
+  [ACL 2025][LLM对齐][secure code generation] 提出 DiSCo（从前沿 LLM 蒸馏的安全代码偏好数据集，10K 实例覆盖 431 种 CWE）和 LPO（局部偏好优化算法，仅在安全相关 token 上传播损失），在四个安全编码基准上减少 19-40% 的安全问题，同时提升 3-10% 的代码质量。
 tags:
   - "ACL 2025"
   - "LLM对齐"

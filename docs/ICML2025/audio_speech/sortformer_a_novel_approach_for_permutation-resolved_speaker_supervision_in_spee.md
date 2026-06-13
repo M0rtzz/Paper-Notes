@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sortformer: A Novel Approach for Permutation-Resolved Speaker Supervision in Speech-to-Text Systems
 description: >-
-  [ICML 2025][音频/语音][说话人日志] 提出 Sortformer——一个基于编码器的说话人日志模型，通过 Sort Loss 按说话人到达时间排序来解决排列问题，替代或辅助传统的排列不变损失（PIL），并设计正弦核函数将说话人标签注入 ASR 编码器…
+  [ICML 2025][音频/语音][说话人日志] 提出 Sortformer——一个基于编码器的说话人日志模型，通过 Sort Loss 按说话人到达时间排序来解决排列问题，替代或辅助传统的排列不变损失（PIL），并设计正弦核函数将说话人标签注入 ASR 编码器，使多说话人 ASR 训练可直接使用标准交叉熵损失，在 LibriSpeechMix 上实现 2-mix/3-mix 相对误差降低 30%/25%。
 tags:
   - "ICML 2025"
   - "音频/语音"

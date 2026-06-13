@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RePanda: Pandas-powered Tabular Verification and Reasoning
 description: >-
-  [ACL 2025][表格事实验证] 提出 RePanda，将自然语言声明翻译为可执行的 pandas 查询来实现表格事实验证，在 TabFact 上达到 84.09% 准确率，在 OOD 的 WikiFact 上无需额外微调达 84.72%…
+  [ACL 2025][表格事实验证] 提出 RePanda，将自然语言声明翻译为可执行的 pandas 查询来实现表格事实验证，在 TabFact 上达到 84.09% 准确率，在 OOD 的 WikiFact 上无需额外微调达 84.72%，同时以仅 7B 参数的模型逼近 671B DeepSeek-Chat 的零样本性能，并扩展至表格问答任务取得 75.1% 准确率。
 tags:
   - "ACL 2025"
   - "表格事实验证"

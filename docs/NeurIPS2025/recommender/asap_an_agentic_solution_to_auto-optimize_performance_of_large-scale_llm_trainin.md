@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training
 description: >-
-  [NeurIPS 2025][推荐系统][多Agent系统] ASAP 是一个多 Agent 系统（Coordinator + Analyzer + Proposal），自动化诊断大规模 LLM 分布式训练的瓶颈类型（计算/内存/通信）并提出 sharding 配置方案，在 3 个实验场景中均匹配人类专家方案…
+  [NeurIPS 2025][推荐系统][多Agent系统] ASAP 是一个多 Agent 系统（Coordinator + Analyzer + Proposal），自动化诊断大规模 LLM 分布式训练的瓶颈类型（计算/内存/通信）并提出 sharding 配置方案，在 3 个实验场景中均匹配人类专家方案，实现最高 2.58× 吞吐量提升。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

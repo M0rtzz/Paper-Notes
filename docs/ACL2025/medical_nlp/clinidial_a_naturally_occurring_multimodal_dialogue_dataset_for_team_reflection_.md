@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CliniDial: A Naturally Occurring Multimodal Dialogue Dataset for Team Reflection in Action During Clinical Operation
 description: >-
-  [ACL 2025][医疗NLP][临床对话数据集] 构建了 CliniDial 数据集，收集自模拟临床手术中的自然对话，包含音频转录、双角度视频和患者生理信号等多模态数据，标注了团队反思行为编码，揭示了现有 LLM 在处理标签不均衡、自然对话交互和领域多模态数据方面的显著不足。
+  [ACL 2025][医疗NLP][临床对话数据集] 构建了 CliniDial 数据集，收集自模拟临床手术中的自然对话，包含音频转录、双角度视频和患者生理信号等多模态数据，标注了团队反思行为编码，揭示了现有 LLM 在处理标签不均衡、自然对话交互和领域多模态数据方面的显著不足。 领域现状： 临床手术中团队协作直接影响手术结…
 tags:
   - "ACL 2025"
   - "医疗NLP"

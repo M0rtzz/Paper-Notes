@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials
 description: >-
-  [ICML 2025][医学图像][外部对照] 提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。
+  [ICML 2025][因果推理][外部对照] 提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。 领域现状 领域现状：在临床试验（尤其是罕见病）中…
 tags:
   - "ICML 2025"
-  - "医学图像"
+  - "因果推理"
   - "外部对照"
   - "生存分析"
   - "双重稳健估计"

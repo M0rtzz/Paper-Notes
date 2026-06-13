@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size
 description: >-
-  [ICLR 2026][模型压缩][ReLU 网络] 从代数几何和代数拓扑的视角，系统研究了基于一般 DAG 架构的前馈 ReLU 网络参数空间的连通性和奇异性，揭示了瓶颈节点和平衡条件在决定参数空间拓扑结构中的关键作用，并建立了奇异性与可微剪枝的理论联系。
+  [ICLR 2026][模型压缩][ReLU 网络] 从代数几何和代数拓扑的视角，系统研究了基于一般 DAG 架构的前馈 ReLU 网络参数空间的连通性和奇异性，揭示了瓶颈节点和平衡条件在决定参数空间拓扑结构中的关键作用，并建立了奇异性与可微剪枝的理论联系。 领域现状：理解 ReLU 网络参数空间的几何与拓扑性质…
 tags:
   - "ICLR 2026"
   - "模型压缩"

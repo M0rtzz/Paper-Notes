@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discriminative Policy Optimization for Token-Level Reward Models
 description: >-
-  [ICML2025][图像生成][token-level reward model] 提出 Q-function Reward Model (Q-RM)，通过将奖励建模与语言生成解耦，定义判别式策略来学习 token 级 Q 函数，从偏好数据中无需细粒度标注即可获得精确的 token 级奖励信号…
+  [ICML2025][图像生成][token-level reward model] 提出 Q-function Reward Model (Q-RM)，通过将奖励建模与语言生成解耦，定义判别式策略来学习 token 级 Q 函数，从偏好数据中无需细粒度标注即可获得精确的 token 级奖励信号，显著提升 PPO/REINFORCE 的推理性能与训练效率。
 tags:
   - "ICML2025"
   - "图像生成"

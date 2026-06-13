@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MedLayBench-V: A Large-Scale Benchmark for Expert-Lay Semantic Alignment in Medical Vision Language Models
 description: >-
-  [ACL 2026][多模态VLM][医学视觉语言模型] 本文提出 MedLayBench-V，首个大规模多模态医学专家-通俗语义对齐基准（79,793 图文对），通过 Structured Concept-Grounded Refinement (SCGR) 流水线将专业放射学报告转化为通俗描述…
+  [ACL 2026 Oral Findings][多模态VLM][医学视觉语言模型] 本文提出 MedLayBench-V，首个大规模多模态医学专家-通俗语义对齐基准（79,793 图文对），通过 Structured Concept-Grounded Refinement (SCGR) 流水线将专业放射学报告转化为通俗描述，确保临床语义保真的同时将阅读难度从研究生级别降至高中水平，零样本检索实验表明通俗描述仅带来不到 1% 的性能损失。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral Findings"
   - "多模态VLM"
   - "医学视觉语言模型"
   - "专家-通俗语义对齐"

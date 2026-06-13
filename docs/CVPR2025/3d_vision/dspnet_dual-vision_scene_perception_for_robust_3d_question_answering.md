@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSPNet: Dual-vision Scene Perception for Robust 3D Question Answering
 description: >-
-  [CVPR 2025][3D视觉][3D问答] DSPNet 提出了一种双视觉场景感知网络，通过文本引导的多视图融合（TGMF）、自适应双视觉感知（ADVP）和多模态上下文引导推理（MCGR）三个模块，综合利用点云和多视图图像信息来解决 3D 问答中的精细感知和鲁棒推理问题…
+  [CVPR 2025][3D视觉][3D问答] DSPNet 提出了一种双视觉场景感知网络，通过文本引导的多视图融合（TGMF）、自适应双视觉感知（ADVP）和多模态上下文引导推理（MCGR）三个模块，综合利用点云和多视图图像信息来解决 3D 问答中的精细感知和鲁棒推理问题，在 SQA3D 和 ScanQA 数据集上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

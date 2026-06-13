@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CodePromptZip: Code-specific Prompt Compression for Retrieval-Augmented Generation in Coding Tasks with LMs
 description: >-
-  [ACL 2026][信息检索/RAG][代码提示压缩] 提出 CodePromptZip，首个面向代码的提示压缩框架，通过类型感知优先级排序构建训练数据并训练带 copy 机制的小模型压缩器，在三个编码任务上分别比最佳基线提升 23.4%、28.7% 和 8.7%。
+  [ACL 2026 Findings][信息检索/RAG][代码提示压缩] 提出 CodePromptZip，首个面向代码的提示压缩框架，通过类型感知优先级排序构建训练数据并训练带 copy 机制的小模型压缩器，在三个编码任务上分别比最佳基线提升 23.4%、28.7% 和 8.7%。 领域现状：RAG 通过检索相关代码示例…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "代码提示压缩"
   - "RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Stackelberg Speaker: Optimizing Persuasive Communication in Social Deduction Games
 description: >-
-  [ACL 2026][强化学习][说服性通信] 本文将社交推理游戏中的回合制对话建模为 Stackelberg 博弈，当前玩家作为 leader 通过度量下一玩家的响应分布来优化话语的说服力影响，使用 GRPO 训练 Refiner 模型在狼人杀、阿瓦隆等四个游戏基准上显著超越基线。
+  [ACL 2026][强化学习][说服性通信] 本文将社交推理游戏中的回合制对话建模为 Stackelberg 博弈，当前玩家作为 leader 通过度量下一玩家的响应分布来优化话语的说服力影响，使用 GRPO 训练 Refiner 模型在狼人杀、阿瓦隆等四个游戏基准上显著超越基线。 领域现状：LLM 智能体在社交推理游戏（…
 tags:
   - "ACL 2026"
   - "强化学习"

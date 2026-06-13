@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Prediction of Stochastic Sequences with High Probability Regret Bounds
 description: >-
-  [ICLR 2026][强化学习][在线预测] 重新审视有限时间范围 $T$ 下随机序列的通用预测经典问题，首次给出以高概率成立的消退遗憾界（形式为 $O(T^{-1/2}\delta^{-1/2})$），与已有的期望遗憾界 $O(T^{-1/2})$ 形式高度一致…
+  [ICLR 2026][强化学习][在线预测] 重新审视有限时间范围 $T$ 下随机序列的通用预测经典问题，首次给出以高概率成立的消退遗憾界（形式为 $O(T^{-1/2}\delta^{-1/2})$），与已有的期望遗憾界 $O(T^{-1/2})$ 形式高度一致，并证明在不附加额外假设时 $\delta$ 的指数无法改进。
 tags:
   - "ICLR 2026"
   - "强化学习"

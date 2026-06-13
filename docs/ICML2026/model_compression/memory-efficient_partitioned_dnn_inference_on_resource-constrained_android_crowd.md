@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient Partitioned DNN Inference on Resource-Constrained Android Crowds
 description: >-
-  [ICML 2026][模型压缩][内存高效推理] 本文给出 CROWDio 框架中"DNN 流水线调度子系统"的设计：在不修改模型本身（不剪枝、不量化、不蒸馏）的前提下，把一个完整 ONNX 模型按层切成多段，分发到 RAM 仅 3.3–7.4 GB 的多台 Android 手机上做流水线推理…
+  [ICML 2026][模型压缩][内存高效推理] 本文给出 CROWDio 框架中"DNN 流水线调度子系统"的设计：在不修改模型本身（不剪枝、不量化、不蒸馏）的前提下，把一个完整 ONNX 模型按层切成多段，分发到 RAM 仅 3.3–7.4 GB 的多台 Android 手机上做流水线推理，靠 **JIT 延迟加载 + 单分区驻留约束 + 4 级亲和度调度 + zlib 压缩张量传输 + 流式 1:1 依赖** 五条机制把每台设备峰值 RSS 压到 $43\pm 2$ MB，并让批延迟比传统屏障同步快 34%。
 tags:
   - "ICML 2026"
   - "模型压缩"

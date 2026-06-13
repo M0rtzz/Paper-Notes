@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Elevating All Zero-Shot Sketch-Based Image Retrieval Through Multimodal Prompt Learning
 description: >-
-  [ECCV2024][多模态VLM][CLIP] 提出 SpLIP，一种基于冻结 CLIP 的双向多模态提示学习框架，通过视觉-文本编码器间的双向知识交换、自适应 margin 的三元组损失和条件跨模态拼图任务，在 ZS-SBIR、GZS-SBIR 和 FG-ZS-SBIR 三种草图检索设定下均取得 SOTA…
+  [ECCV2024][多模态VLM][CLIP] 提出 SpLIP，一种基于冻结 CLIP 的双向多模态提示学习框架，通过视觉-文本编码器间的双向知识交换、自适应 margin 的三元组损失和条件跨模态拼图任务，在 ZS-SBIR、GZS-SBIR 和 FG-ZS-SBIR 三种草图检索设定下均取得 SOTA。
 tags:
   - "ECCV2024"
   - "多模态VLM"

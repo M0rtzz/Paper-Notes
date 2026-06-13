@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering
 description: >-
-  [ICCV 2025][自动驾驶][动态场景渲染] 提出 UGSDF 方法，将 SDF 网络与 3D Gaussian Splatting 联合学习来建模动态城市场景中的物体，仅使用 2D 先验（深度网络+点跟踪器）即可实现 SOTA 渲染效果，无需 LiDAR 数据、3D 运动标注或人体模板。
+  [ICCV 2025][自动驾驶][动态场景渲染] 提出 UGSDF 方法，将 SDF 网络与 3D Gaussian Splatting 联合学习来建模动态城市场景中的物体，仅使用 2D 先验（深度网络+点跟踪器）即可实现 SOTA 渲染效果，无需 LiDAR 数据、3D 运动标注或人体模板。 动态城市场景的重建和渲染是自…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

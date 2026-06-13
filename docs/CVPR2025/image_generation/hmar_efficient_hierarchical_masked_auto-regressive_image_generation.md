@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation
 description: >-
-  [CVPR 2025][图像生成][自回归图像生成] HMAR 将 VAR 的 next-scale 预测重构为 Markov 过程（仅依赖前一尺度的累积重建而非所有前序尺度），并在每个尺度内引入多步掩码生成来消除条件独立假设，配合自定义 IO-aware 块稀疏注意力核…
+  [CVPR 2025][图像生成][自回归图像生成] HMAR 将 VAR 的 next-scale 预测重构为 Markov 过程（仅依赖前一尺度的累积重建而非所有前序尺度），并在每个尺度内引入多步掩码生成来消除条件独立假设，配合自定义 IO-aware 块稀疏注意力核，在 ImageNet 上匹配或超越 VAR/DiT 质量的同时实现训练 2.5× 加速和推理 3× 内存缩减。
 tags:
   - "CVPR 2025"
   - "图像生成"

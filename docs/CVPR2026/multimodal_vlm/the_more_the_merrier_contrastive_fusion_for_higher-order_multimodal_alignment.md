@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment
 description: >-
-  [CVPR2026][多模态VLM][多模态对齐] 提出Contrastive Fusion (ConFu)框架，将CLIP式的双模态对比学习推广到三模态高阶对齐，在统一目标中同时学习配对和融合表示，支持1→1和2→1检索。
+  [CVPR2026][多模态VLM][多模态对齐] 提出Contrastive Fusion (ConFu)框架，将CLIP式的双模态对比学习推广到三模态高阶对齐，在统一目标中同时学习配对和融合表示，支持1→1和2→1检索。 多模态表示学习的核心挑战是学习跨模态的联合表示。CLIP等方法本质上是配对式的…
 tags:
   - "CVPR2026"
   - "多模态VLM"

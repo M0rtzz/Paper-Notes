@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CUB: Benchmarking Context Utilisation Techniques for Language Models
 description: >-
-  [ACL 2026][LLM评测][上下文利用] 作者把 7 类主流"上下文利用调控技术"（CMTs）放到统一基准 CUB 上，覆盖 3 个数据集（CounterFact / NQ / DRUID）× 3 类上下文（gold / conflicting / irrelevant）× 11 个 LLM 共 ~8…
+  [ACL 2026][LLM评测][上下文利用] 作者把 7 类主流"上下文利用调控技术"（CMTs）放到统一基准 CUB 上，覆盖 3 个数据集（CounterFact / NQ / DRUID）× 3 类上下文（gold / conflicting / irrelevant）× 11 个 LLM 共 ~800 个实验点，证明所有现有 CMT 都存在"对相关上下文敏感 vs 对无关上下文鲁棒"的根本权衡，且在合成数据上效果普遍被高估。
 tags:
   - "ACL 2026"
   - "LLM评测"

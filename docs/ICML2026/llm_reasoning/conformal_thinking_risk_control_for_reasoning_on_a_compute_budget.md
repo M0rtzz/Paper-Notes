@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Thinking: Risk Control for Reasoning on a Compute Budget
 description: >-
-  [ICML 2026][LLM推理][双阈值早停] 本文把"reasoning LLM 何时停止思考"从一个不可解释的阈值调参问题，重构为一个**用户可指定 risk 容忍度**的 conformal 风险控制问题：用两个阈值——上阈值在模型自信时停（控 false positive）…
+  [ICML 2026][LLM推理][双阈值早停] 本文把"reasoning LLM 何时停止思考"从一个不可解释的阈值调参问题，重构为一个**用户可指定 risk 容忍度**的 conformal 风险控制问题：用两个阈值——上阈值在模型自信时停（控 false positive），新提出的**参数化下阈值**在模型在不可解题上"想不动"时强行停（控 false negative）——并通过 UCB 算法从校准集自动求出满足风险约束的阈值，在 AIME / GPQA / MathVision 上实现"准确率几乎不掉、token 大幅省"。
 tags:
   - "ICML 2026"
   - "LLM推理"

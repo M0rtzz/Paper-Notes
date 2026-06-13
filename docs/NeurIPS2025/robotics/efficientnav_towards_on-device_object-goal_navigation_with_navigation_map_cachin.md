@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EfficientNav: Towards On-Device Object-Goal Navigation with Navigation Map Caching and Retrieval
 description: >-
-  [NeurIPS 2025][机器人][object-goal navigation] 通过离散内存缓存（KV cache分组独立计算+选择性加载）、注意力驱动聚类（LLM浅层attention指导分组）和语义感知检索（CLIP+背包问题适配不同内存预算）…
+  [NeurIPS 2025][机器人][object-goal navigation] 通过离散内存缓存（KV cache分组独立计算+选择性加载）、注意力驱动聚类（LLM浅层attention指导分组）和语义感知检索（CLIP+背包问题适配不同内存预算），首次在Jetson Orin上用LLaMA-3.2-11b实现零样本ObjNav，比GPT-4基线提升11.1% SR且实时延迟降低6.7×。
 tags:
   - "NeurIPS 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Federated Learning with Domain Shift Eraser
 description: >-
-  [CVPR 2025][优化/理论][联邦学习] 提出FDSE方法，将每层网络分解为域无关特征提取器（DFE，全局聚合增强共识）和域特异偏移消除器（DSE，个性化聚合保留本地特性），结合BN一致性正则化，在DomainNet上达到76.77%（超Ditto 1.6%）…
+  [CVPR 2025][优化/理论][联邦学习] 提出FDSE方法，将每层网络分解为域无关特征提取器（DFE，全局聚合增强共识）和域特异偏移消除器（DSE，个性化聚合保留本地特性），结合BN一致性正则化，在DomainNet上达到76.77%（超Ditto 1.6%），在Office-Caltech10上达到91.58%（超FedBN 4.6%）。
 tags:
   - "CVPR 2025"
   - "优化/理论"

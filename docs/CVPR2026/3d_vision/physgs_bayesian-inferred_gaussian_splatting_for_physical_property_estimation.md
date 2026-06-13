@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysGS: Bayesian-Inferred Gaussian Splatting for Physical Property Estimation
 description: >-
-  [CVPR 2026][3D视觉][物理属性估计] 提出 PhysGS，将贝叶斯推断嵌入3D高斯溅射管线，利用视觉-语言模型先验和多视角置信度加权更新，实现逐点物理属性（摩擦力、硬度、密度、刚度）的概率估计与不确定性量化，在质量估计上比 NeRF2Physics 提升 22.8%（APE）…
+  [CVPR 2026][3D视觉][物理属性估计] 提出 PhysGS，将贝叶斯推断嵌入3D高斯溅射管线，利用视觉-语言模型先验和多视角置信度加权更新，实现逐点物理属性（摩擦力、硬度、密度、刚度）的概率估计与不确定性量化，在质量估计上比 NeRF2Physics 提升 22.8%（APE），岸氏硬度误差降低 61.2%。
 tags:
   - "CVPR 2026"
   - "3D视觉"

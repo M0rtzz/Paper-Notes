@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token CropR: Faster ViTs for Quite a Few Tasks
 description: >-
-  [CVPR 2025][语义分割][ViT加速] 提出 Token CropR (Cropr)，一种基于交叉注意力的 ViT token 剪枝方法，通过辅助预测头端到端学习按任务相关性选择 token，训练后可移除辅助头实现接近随机剪枝器的吞吐量…
+  [CVPR 2025][语义分割][ViT加速] 提出 Token CropR (Cropr)，一种基于交叉注意力的 ViT token 剪枝方法，通过辅助预测头端到端学习按任务相关性选择 token，训练后可移除辅助头实现接近随机剪枝器的吞吐量，在分类/语义分割/目标检测/实例分割四类任务上均实现 1.5-4× 加速且性能损失极小。
 tags:
   - "CVPR 2025"
   - "语义分割"

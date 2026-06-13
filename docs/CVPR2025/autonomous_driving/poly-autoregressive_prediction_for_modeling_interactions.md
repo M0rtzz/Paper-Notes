@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PAR: Poly-Autoregressive Prediction for Modeling Interactions
 description: >-
-  [CVPR 2025][自动驾驶][多智能体交互] PAR（Poly-Autoregressive）提出了一种简洁统一的多智能体行为预测框架，通过将交互中其他智能体的状态序列作为条件，结合同智能体下一时间步预测和学习的智能体ID嵌入…
+  [CVPR 2025][自动驾驶][多智能体交互] PAR（Poly-Autoregressive）提出了一种简洁统一的多智能体行为预测框架，通过将交互中其他智能体的状态序列作为条件，结合同智能体下一时间步预测和学习的智能体ID嵌入，在社交行为预测、自动驾驶轨迹预测和手-物交互三个截然不同的任务上均优于单智能体自回归基线。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

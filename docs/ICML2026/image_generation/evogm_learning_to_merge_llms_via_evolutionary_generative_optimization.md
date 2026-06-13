@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoGM: Learning to Merge LLMs via Evolutionary Generative Optimization
 description: >-
-  [ICML 2026][图像生成][模型合并] EvoGM 把"找 task-vector 合并系数 $\bm{\lambda}$"从手工设计变异算子的进化搜索改写成可学习的生成任务：用一对带 cycle-consistency 的 MLP 生成器从历史的 winner/loser 配对里学高性能区域的分布…
+  [ICML 2026][图像生成][模型合并] EvoGM 把"找 task-vector 合并系数 $\bm{\lambda}$"从手工设计变异算子的进化搜索改写成可学习的生成任务：用一对带 cycle-consistency 的 MLP 生成器从历史的 winner/loser 配对里学高性能区域的分布，并在外层套多轮"基底切换"逐步刷新专家池，在 GLUE 8 任务和 Qwen2.5-1.5B 10 模型 unseen 任务上分别比 PSO-Merging 的 SOTA 平均高约 1.4% 和明显领先。
 tags:
   - "ICML 2026"
   - "图像生成"

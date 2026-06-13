@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SARMAE: Masked Autoencoder for SAR Representation Learning
 description: >-
-  [CVPR2026][语义分割][SAR] 提出 SARMAE 框架，通过百万级 SAR 数据集 SAR-1M、散斑感知表征增强 (SARE) 和光学语义锚约束 (SARC)，实现噪声鲁棒的 SAR 自监督预训练，在分类、检测和分割多个下游任务上取得 SOTA。
+  [CVPR2026][语义分割][SAR] 提出 SARMAE 框架，通过百万级 SAR 数据集 SAR-1M、散斑感知表征增强 (SARE) 和光学语义锚约束 (SARC)，实现噪声鲁棒的 SAR 自监督预训练，在分类、检测和分割多个下游任务上取得 SOTA。 SAR 成像的独特优势与挑战：SAR 具有全天候、全天时成像能…
 tags:
   - "CVPR2026"
   - "语义分割"

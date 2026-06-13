@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning
 description: >-
-  [NeurIPS 2025][图像生成][MLLM] 提出 Janus-Pro-R1，通过两阶段训练（SFT + RL）实现视觉理解与生成的协同共进，让 MLLM 在文本到图像生成中形成真正的 Chain-of-Thought 并触发 Aha 时刻，在 GenEval 上超越 GPT-4o…
+  [NeurIPS 2025][图像生成][MLLM] 提出 Janus-Pro-R1，通过两阶段训练（SFT + RL）实现视觉理解与生成的协同共进，让 MLLM 在文本到图像生成中形成真正的 Chain-of-Thought 并触发 Aha 时刻，在 GenEval 上超越 GPT-4o，同时拓展到图像编辑任务。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

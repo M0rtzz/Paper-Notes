@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforcement Learning for Reachability: Guaranteeing Asymptotic Optimality
 description: >-
-  [ICML 2026][强化学习][可达性规约] 本文针对未知 MDP 上的可达性规约学习问题，提出一个分阶段细化 PAC 参数的直接学习算法，证明以概率 1 存在有限阶段 $K_{\mathsf{opt}}$，此后只输出最优策略，并用内在 MDP 参数显式刻画该阶段…
+  [ICML 2026][强化学习][可达性规约] 本文针对未知 MDP 上的可达性规约学习问题，提出一个分阶段细化 PAC 参数的直接学习算法，证明以概率 1 存在有限阶段 $K_{\mathsf{opt}}$，此后只输出最优策略，并用内在 MDP 参数显式刻画该阶段，在量化验证基准上经验地证实最优策略可在极少阶段（中位数 $k=2$）内出现。
 tags:
   - "ICML 2026"
   - "强化学习"

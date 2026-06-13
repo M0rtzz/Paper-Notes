@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-tuning Quantized Neural Networks with Zeroth-order Optimization
 description: >-
-  [ICLR 2026][模型压缩][零阶优化] 提出QZO方法，通过对量化缩放因子（而非离散权重）做零阶扰动来估计梯度，配合方向导数裁剪稳定训练，实现4-bit/2-bit LLM的极致内存高效微调，总内存降低18倍以上。
+  [ICLR 2026][模型压缩][零阶优化] 提出QZO方法，通过对量化缩放因子（而非离散权重）做零阶扰动来估计梯度，配合方向导数裁剪稳定训练，实现4-bit/2-bit LLM的极致内存高效微调，总内存降低18倍以上。 领域现状：LLM微调需要存储权重、梯度、优化器状态和激活值，典型7B模型需56GB…
 tags:
   - "ICLR 2026"
   - "模型压缩"

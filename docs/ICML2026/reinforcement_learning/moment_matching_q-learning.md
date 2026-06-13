@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoMa QL: 用矩匹配加速扩散/流匹配策略的离线 + 离线-在线 RL
 description: >-
-  [ICML 2026][强化学习][离线 RL] MoMa QL 用 Maximum Mean Discrepancy 替代标准 BC 损失，把扩散/流匹配策略的多步采样压缩为单步或少步的"边际保持插值"采样器，在 D4RL 上 Gym 平均归一化分 95.5 全面领先 Diffusion-QL（87.9）…
+  [ICML 2026][强化学习][离线 RL] MoMa QL 用 Maximum Mean Discrepancy 替代标准 BC 损失，把扩散/流匹配策略的多步采样压缩为单步或少步的"边际保持插值"采样器，在 D4RL 上 Gym 平均归一化分 95.5 全面领先 Diffusion-QL（87.9），同时因为采样快得多，offline-to-online 微调时也比一致性 AC、Diffusion-QL 提升更大。
 tags:
   - "ICML 2026"
   - "强化学习"

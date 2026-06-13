@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How to Train Long-Context Language Models (Effectively)
 description: >-
-  [ACL 2025][LLM效率][长上下文训练] 本文系统研究如何通过持续预训练和 SFT 有效训练长上下文语言模型，提出数据配比、训练长度缩放、评估协议等一系列关键设计，最终训练出的 ProLong-8B 仅用 Llama-3.1 **5%** 的长上下文训练数据即在 128K 长度上达到同规模 SOTA…
+  [ACL 2025][LLM效率][长上下文训练] 本文系统研究如何通过持续预训练和 SFT 有效训练长上下文语言模型，提出数据配比、训练长度缩放、评估协议等一系列关键设计，最终训练出的 ProLong-8B 仅用 Llama-3.1 **5%** 的长上下文训练数据即在 128K 长度上达到同规模 SOTA。
 tags:
   - "ACL 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMs Lean on Priors, Not Programming Language Semantics
 description: >-
-  [ICML 2026][可解释性][形式语义] 作者构建 PLSemanticsBench——把一个 featherweight C 语言 $\text{C}^{\star}$ 配上 small-step 操作语义 $\mathbb{S}$ 与 K 语义 $\mathbb{K}$ 两套形式系统…
+  [ICML 2026][可解释性][形式语义] 作者构建 PLSemanticsBench——把一个 featherweight C 语言 $\text{C}^{\star}$ 配上 small-step 操作语义 $\mathbb{S}$ 与 K 语义 $\mathbb{K}$ 两套形式系统，并通过 KeywordSwap（互换 `+`/`-` 等运算符语义）与 KeywordObf（替换为 Caucasian-Albanian 罕用符号）系统性扰动语义，测了 11 个前沿 LLM 后发现：标准语义下最高 90% 的最终状态预测准确率，在语义扰动下骤降 40–60 个百分点，长程规则保持准确率最高只有 35%…
 tags:
   - "ICML 2026"
   - "可解释性"

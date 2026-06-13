@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Rotation-Invariant 3D Learning with Global Pose Awareness and Attention Mechanisms
 description: >-
-  [AAAI 2026][3D视觉][旋转不变] 提出 Shadow-informed Pose Feature (SiPF) 和 RIAttnConv 算子，通过引入基于 Bingham 分布学习的全局"影子"参考点来增强局部旋转不变特征的全局姿态感知能力…
+  [AAAI 2026][3D视觉][旋转不变] 提出 Shadow-informed Pose Feature (SiPF) 和 RIAttnConv 算子，通过引入基于 Bingham 分布学习的全局"影子"参考点来增强局部旋转不变特征的全局姿态感知能力，解决对称结构（如飞机左右机翼）无法区分的"Wing-tip Feature Collapse"问题，在 ModelNet40 分类和 ShapeNetPart 分割上达到 SOTA。
 tags:
   - "AAAI 2026"
   - "3D视觉"

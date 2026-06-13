@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments
 description: >-
-  [CVPR 2025][3D视觉][articulated objects] 构建基于 3DGS 的层次化语义特征场，融合 CLIP/SAM/DINOv2 的语义信息，实现铰接物体的交互式 affordance 预测和跨状态运动参数恢复，支持任意类别、多可动部件的复杂室内场景。
+  [CVPR 2025][3D视觉][articulated objects] 构建基于 3DGS 的层次化语义特征场，融合 CLIP/SAM/DINOv2 的语义信息，实现铰接物体的交互式 affordance 预测和跨状态运动参数恢复，支持任意类别、多可动部件的复杂室内场景。 领域现状： 理解铰接物体（如柜门、剪刀等）的形…
 tags:
   - "CVPR 2025"
   - "3D视觉"

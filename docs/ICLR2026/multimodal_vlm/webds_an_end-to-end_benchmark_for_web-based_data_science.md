@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WebDS: An End-to-End Benchmark for Web-based Data Science
 description: >-
-  [多模态VLM] 提出首个端到端 Web 数据科学基准 WebDS（870 个任务，29 个网站，10 个领域），当前最强 Agent（BrowserUse + GPT-4o）仅完成 15% 的任务，而人类达到 90%，揭示了真实数据科学工作流中 Agent 的巨大性能差距。
+  [多模态VLM] 提出首个端到端 Web 数据科学基准 WebDS（870 个任务，29 个网站，10 个领域），当前最强 Agent（BrowserUse + GPT-4o）仅完成 15% 的任务，而人类达到 90%，揭示了真实数据科学工作流中 Agent 的巨大性能差距。 现实中的数据科学任务涉及复杂的 Web 交互：在…
 tags:
   - "多模态VLM"
 ---

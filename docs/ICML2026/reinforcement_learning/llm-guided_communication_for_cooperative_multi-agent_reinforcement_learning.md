@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-Guided Communication for Cooperative Multi-Agent Reinforcement Learning
 description: >-
-  [ICML2026][强化学习][多智能体RL] 本文提出 LMAC——用 LLM 离线为合作型 MARL 设计可执行的通信协议代码，依据"状态可重建性"指标做两轮反馈迭代（先提高重建准确度，再降低跨智能体的不平衡）…
+  [ICML2026][强化学习][多智能体RL] 本文提出 LMAC——用 LLM 离线为合作型 MARL 设计可执行的通信协议代码，依据"状态可重建性"指标做两轮反馈迭代（先提高重建准确度，再降低跨智能体的不平衡），在 SMAC-Comm、LBF、GRF、SMACv2 等基准上显著超过 TarMAC/SMS/T2MAC/MASIA 等通信基线，部分场景甚至超过把全局状态喂给所有智能体的 QMIX+State 上界。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.18077](https://arxiv.org/abs/2605.18077)  
 **代码**: https://saaangjun.github.io/LMAC/  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: 多智能体RL, 协作通信, LLM协议设计, CTDE, QMIX
 
 ## 一句话总结

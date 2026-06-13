@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRPO is Secretly a Process Reward Model
 description: >-
-  [ICML 2026][LLM推理][GRPO] 本文从理论上证明 GRPO + ORM 在"组内轨迹共享前缀"的温和条件下**等价于**一个带有 Monte-Carlo PRM 的过程奖励 RL 目标…
+  [ICML 2026][LLM推理][GRPO] 本文从理论上证明 GRPO + ORM 在"组内轨迹共享前缀"的温和条件下**等价于**一个带有 Monte-Carlo PRM 的过程奖励 RL 目标，从而揭示出 vanilla GRPO 隐藏的一个 bug——前缀长度不均会让高奖励轨迹的大部分 token 拿到负 advantage——并提出 $\lambda$-GRPO 做一个 PRM-aware 归一化，在推理 benchmark 上稳定超过 GRPO 且训练快约 2 倍。
 tags:
   - "ICML 2026"
   - "LLM推理"

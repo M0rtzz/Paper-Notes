@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models
 description: >-
-  [ICCV 2025][多模态VLM][视觉token压缩] 利用视觉编码器中CLS token与空间token之间注意力分数的稀疏性，自适应地剪枝和合并视觉token，在仅保留5.5%视觉token的情况下维持LMM的可比性能。
+  [ICCV 2025][多模态VLM][视觉token压缩] 利用视觉编码器中CLS token与空间token之间注意力分数的稀疏性，自适应地剪枝和合并视觉token，在仅保留5.5%视觉token的情况下维持LMM的可比性能。 大型多模态模型（LMM）通过连接视觉编码器（如CLIP-ViT）和大型语言模型来实现视觉推理…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GoalLadder: Incremental Goal Discovery with Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][视觉语言模型] 提出 GoalLadder，利用 VLM 渐进式发现并排序候选目标状态，结合 ELO 评分系统抵抗噪声反馈，在学习的嵌入空间中定义距离奖励，仅凭单条语言指令就能训练 RL 智能体达到约 95% 的成功率。
+  [NeurIPS 2025][多模态VLM][视觉语言模型] 提出 GoalLadder，利用 VLM 渐进式发现并排序候选目标状态，结合 ELO 评分系统抵抗噪声反馈，在学习的嵌入空间中定义距离奖励，仅凭单条语言指令就能训练 RL 智能体达到约 95% 的成功率。 自然语言指令（如"打开抽屉"）为 RL 任务提供了简洁的规…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Factorized Learning for Temporally Grounded Video-Language Models
 description: >-
-  [ICCV 2025][视频理解][video-language model] 提出D2VLM框架，通过将视频理解分解为"先定位证据再基于证据生成回答"的范式，引入证据token捕捉事件级视觉语义，并设计分解式偏好优化(FPO)同时提升时序定位和文本回答能力。
+  [ICCV 2025][视频理解][video-language model] 提出D2VLM框架，通过将视频理解分解为"先定位证据再基于证据生成回答"的范式，引入证据token捕捉事件级视觉语义，并设计分解式偏好优化(FPO)同时提升时序定位和文本回答能力。 视频语言模型在视频理解中展现出巨大潜力，但在精确的时序定位方面仍…
 tags:
   - "ICCV 2025"
   - "视频理解"

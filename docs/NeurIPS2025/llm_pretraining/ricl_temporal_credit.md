@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models
 description: >-
-  [NeurIPS 2025][预训练][时间信用分配] 本文提出 RICL（回顾式上下文学习），通过比较 LLM 策略在上下文更新前后的 log-probability 差异来估计优势函数，将稀疏环境反馈转化为密集训练信号，实现高效的时间信用分配…
+  [NeurIPS 2025][预训练][时间信用分配] 本文提出 RICL（回顾式上下文学习），通过比较 LLM 策略在上下文更新前后的 log-probability 差异来估计优势函数，将稀疏环境反馈转化为密集训练信号，实现高效的时间信用分配，并在 BabyAI 任务上以更高采样效率达到传统 RL 可比的收敛性能。
 tags:
   - "NeurIPS 2025"
   - "预训练"

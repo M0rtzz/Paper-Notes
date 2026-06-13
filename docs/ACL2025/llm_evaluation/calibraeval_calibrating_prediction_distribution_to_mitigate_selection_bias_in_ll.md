@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CalibraEval: Calibrating Prediction Distribution to Mitigate Selection Bias in LLMs-as-Judges
 description: >-
-  [ACL 2025][LLM评测][LLM评估] 提出 CalibraEval，一种无标签的推理时去偏方法，通过将去偏问题形式化为优化任务，利用非参数保序算法（NOA）学习校准函数，将 LLM 评判器的观测概率分布映射到无偏分布，有效缓解 LLM-as-Judge 中的选择偏差。
+  [ACL 2025][LLM评测][LLM评估] 提出 CalibraEval，一种无标签的推理时去偏方法，通过将去偏问题形式化为优化任务，利用非参数保序算法（NOA）学习校准函数，将 LLM 评判器的观测概率分布映射到无偏分布，有效缓解 LLM-as-Judge 中的选择偏差。 "LLMs-as-Judges"范式利用强大…
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MCCD: Multi-Agent Collaboration-based Compositional Diffusion for Complex Text-to-Image Generation
 description: >-
-  [CVPR 2025][图像生成][组合式扩散] MCCD提出基于多智能体协作的组合式扩散方法，利用MLLM驱动的多智能体系统进行复杂场景解析，并通过层次化组合扩散（高斯mask和区域增强）实现多目标复杂场景的准确高保真生成，且无需训练。
+  [CVPR 2025][图像生成][组合式扩散] MCCD提出基于多智能体协作的组合式扩散方法，利用MLLM驱动的多智能体系统进行复杂场景解析，并通过层次化组合扩散（高斯mask和区域增强）实现多目标复杂场景的准确高保真生成，且无需训练。 领域现状：扩散模型在文本到图像生成上表现优异，但处理包含多个目标、属性和关系的复杂提示…
 tags:
   - "CVPR 2025"
   - "图像生成"

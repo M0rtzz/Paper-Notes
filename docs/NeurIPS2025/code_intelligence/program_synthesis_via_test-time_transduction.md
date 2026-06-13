@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Program Synthesis via Test-Time Transduction
 description: >-
-  [NeurIPS 2025][代码智能][program synthesis] 提出 SYNTRA 框架，将程序合成重新定义为转导式学习——在测试时利用可见的 test inputs 和 LLM 的判断来迭代消除不一致的候选程序假设，通过 greedy maximin 算法最小化 LLM 查询次数…
+  [NeurIPS 2025][代码智能][program synthesis] 提出 SYNTRA 框架，将程序合成重新定义为转导式学习——在测试时利用可见的 test inputs 和 LLM 的判断来迭代消除不一致的候选程序假设，通过 greedy maximin 算法最小化 LLM 查询次数，在 4 个 benchmark 上准确率提升最高达 196%。
 tags:
   - "NeurIPS 2025"
   - "代码智能"

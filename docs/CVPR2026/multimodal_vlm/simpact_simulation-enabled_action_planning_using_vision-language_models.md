@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIMPACT: Simulation-Enabled Action Planning using Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][仿真推理] SIMPACT 提出一种测试时的仿真增强动作规划框架，从单张 RGB-D 图像自动构建物理仿真环境，使 VLM 能够提出动作、观察仿真结果并迭代优化推理，无需额外训练即可在刚体和可变形物体操作任务上达到 SOTA 性能。
+  [CVPR 2026][多模态VLM][仿真推理] SIMPACT 提出一种测试时的仿真增强动作规划框架，从单张 RGB-D 图像自动构建物理仿真环境，使 VLM 能够提出动作、观察仿真结果并迭代优化推理，无需额外训练即可在刚体和可变形物体操作任务上达到 SOTA 性能。 领域现状：视觉-语言模型（VLMs）如 GPT-4V…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

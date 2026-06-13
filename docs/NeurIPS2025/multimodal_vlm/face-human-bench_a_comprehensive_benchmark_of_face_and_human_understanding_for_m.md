@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态大模型] 提出 Face-Human-Bench，首个系统评估多模态大模型人脸与人体理解能力的基准，包含三级能力分类体系（2个L1 × 10个L2 × 18个L3），开发集与测试集各 1800 题，支持中英双语…
+  [NeurIPS 2025][多模态VLM][多模态大模型] 提出 Face-Human-Bench，首个系统评估多模态大模型人脸与人体理解能力的基准，包含三级能力分类体系（2个L1 × 10个L2 × 18个L3），开发集与测试集各 1800 题，支持中英双语，评测 25 个主流 MLLM 并揭示其与专家模型的显著差距。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

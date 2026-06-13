@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Physics-Informed Spatial Intelligence with Human Priors: An Autonomous Driving Perspective
 description: >-
-  [NeurIPS 2025][自动驾驶][空间智能网格] 本文提出空间智能网格（SIG）——一种受文艺复兴画家透视网格启发的结构化表示方法，将驾驶场景中的物体布局、方向关系和距离关系显式编码为网格结构…
+  [NeurIPS 2025 Spotlight][自动驾驶][空间智能网格] 本文提出空间智能网格（SIG）——一种受文艺复兴画家透视网格启发的结构化表示方法，将驾驶场景中的物体布局、方向关系和距离关系显式编码为网格结构，并构建 SIGBench 基准证明 SIG 在少样本上下文学习中比传统 VQA 方式能更稳定、更全面地提升 MLLM 的空间推理能力。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "自动驾驶"
   - "空间智能网格"
   - "视觉空间推理"

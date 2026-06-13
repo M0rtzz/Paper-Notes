@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SlideAgent: Hierarchical Agentic Framework for Multi-Page Visual Document Understanding
 description: >-
-  [ACL 2026][多模态VLM][多页文档理解] 提出 SlideAgent，一个层次化智能体框架，通过全局、页面、元素三级专用 agent 构建结构化知识表示，显著提升多页视觉文档（尤其是幻灯片）的细粒度理解能力。
+  [ACL 2026][多模态VLM][多页文档理解] 提出 SlideAgent，一个层次化智能体框架，通过全局、页面、元素三级专用 agent 构建结构化知识表示，显著提升多页视觉文档（尤其是幻灯片）的细粒度理解能力。 领域现状：多页视觉文档（如财务报告、学术演示文稿、技术手册）广泛存在于金融、科学、教育等高风险领域…
 tags:
   - "ACL 2026"
   - "多模态VLM"

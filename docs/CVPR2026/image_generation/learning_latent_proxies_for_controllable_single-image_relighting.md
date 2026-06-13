@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Latent Proxies for Controllable Single-Image Relighting
 description: >-
-  [CVPR 2026][图像生成][单图重光照] 提出 LightCtrl，一个基于扩散模型的单图重光照框架，通过小样本潜在代理编码器（few-shot latent proxy）提供轻量材质-几何先验、光照感知掩码引导空间选择性去噪、DPO 后训练增强物理一致性，实现对光照方向/强度/色温的精确连续控制…
+  [CVPR 2026][图像生成][单图重光照] 提出 LightCtrl，一个基于扩散模型的单图重光照框架，通过小样本潜在代理编码器（few-shot latent proxy）提供轻量材质-几何先验、光照感知掩码引导空间选择性去噪、DPO 后训练增强物理一致性，实现对光照方向/强度/色温的精确连续控制，在合成和真实场景上均优于现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

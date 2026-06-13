@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIRST: Video-Instructed Reasoning Assistant for SpatioTemporal Segmentation
 description: >-
-  [CVPR 2026][语义分割][视频目标分割] VIRST 提出端到端框架将全局视频推理和像素级 mask 预测统一在单个视觉语言模型中，通过时空融合（STF）和时序动态锚点更新器（TDAU）实现时空一致的视频分割，在 ReVOS 上 J&F 达 70.8（+7.5 over SOTA）…
+  [CVPR 2026][语义分割][视频目标分割] VIRST 提出端到端框架将全局视频推理和像素级 mask 预测统一在单个视觉语言模型中，通过时空融合（STF）和时序动态锚点更新器（TDAU）实现时空一致的视频分割，在 ReVOS 上 J&F 达 70.8（+7.5 over SOTA），MeViS 62.9（+9.2），同时推理速度 5.1 FPS（比 VRS-HQ 快 1.3 倍）。
 tags:
   - "CVPR 2026"
   - "语义分割"

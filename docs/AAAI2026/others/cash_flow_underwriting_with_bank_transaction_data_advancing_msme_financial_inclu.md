@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cash Flow Underwriting with Bank Transaction Data: Advancing MSME Financial Inclusion in Malaysia
 description: >-
-  [AAAI 2026][信用评分] 提出基于银行流水数据的端到端现金流承保工作流，构建首个马来西亚 MSME（中小微企业）银行账单数据集（611 条贷款记录），验证银行交易衍生特征相比传统申请信息可将逻辑回归模型的 AUROC 从 0.672 提升至 0.850…
+  [AAAI 2026][信用评分] 提出基于银行流水数据的端到端现金流承保工作流，构建首个马来西亚 MSME（中小微企业）银行账单数据集（611 条贷款记录），验证银行交易衍生特征相比传统申请信息可将逻辑回归模型的 AUROC 从 0.672 提升至 0.850，显著增强对缺乏信用记录的中小微企业的信用评估能力。
 tags:
   - "AAAI 2026"
   - "信用评分"

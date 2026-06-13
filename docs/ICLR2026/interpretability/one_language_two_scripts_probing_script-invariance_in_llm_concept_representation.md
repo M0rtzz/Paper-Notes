@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Language, Two Scripts: Probing Script-Invariance in LLM Concept Representations
 description: >-
-  [ICLR 2026][可解释性][Sparse Autoencoders] 利用塞尔维亚语双文字系统(拉丁/西里尔文)作为天然控制实验，探究Sparse Autoencoders(SAE)学到的特征是否捕获了超越表面token化的抽象语义：发现跨文字的相同句子激活高度重叠的SAE特征(Jaccard~0.5…
+  [ICLR 2026][可解释性][Sparse Autoencoders] 利用塞尔维亚语双文字系统(拉丁/西里尔文)作为天然控制实验，探究Sparse Autoencoders(SAE)学到的特征是否捕获了超越表面token化的抽象语义：发现跨文字的相同句子激活高度重叠的SAE特征(Jaccard~0.58)，且切换文字造成的表征差异小于同文字内的改写差异，且此不变性随模型规模增强，表明SAE特征确实捕获了超越正字法的语义结构。
 tags:
   - "ICLR 2026"
   - "可解释性"

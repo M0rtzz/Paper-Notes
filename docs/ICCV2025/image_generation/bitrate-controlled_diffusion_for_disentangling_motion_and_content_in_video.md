@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video
 description: >-
-  [ICCV 2025][图像生成][视频解耦] 提出BCD（Bitrate-Controlled Diffusion），一种通用的自监督视频解耦框架，通过低码率矢量量化作为信息瓶颈来分离视频中的逐帧运动特征和全局内容特征，并以条件扩散模型重建视频…
+  [ICCV 2025][图像生成][视频解耦] 提出BCD（Bitrate-Controlled Diffusion），一种通用的自监督视频解耦框架，通过低码率矢量量化作为信息瓶颈来分离视频中的逐帧运动特征和全局内容特征，并以条件扩散模型重建视频，在说话人头部视频和像素风格卡通数据集上展示了高质量的运动迁移和自回归视频生成能力。
 tags:
   - "ICCV 2025"
   - "图像生成"

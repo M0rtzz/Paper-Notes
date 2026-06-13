@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LASER: Learning Active Sensing for Continuum Field Reconstruction
 description: >-
-  [ICML 2026][强化学习][主动感知] 把"该把稀疏传感器放哪"建模成一个 POMDP，用一套包含编码器、GRU、扩散动力学预测器和隐式神经场解码器的"连续场潜世界模型"提供 imagined 下一步潜状态作为策略条件，再用 GRPO + 动态 group 过滤 + 多步前瞻奖励训练交叉注意力策略…
+  [ICML 2026 Oral][强化学习][主动感知] 把"该把稀疏传感器放哪"建模成一个 POMDP，用一套包含编码器、GRU、扩散动力学预测器和隐式神经场解码器的"连续场潜世界模型"提供 imagined 下一步潜状态作为策略条件，再用 GRPO + 动态 group 过滤 + 多步前瞻奖励训练交叉注意力策略，在 Navier-Stokes / 浅水方程 / 真实海表温度（SST）三个数据集的稀疏感知重建任务上一致打败固定布局和 offline-optimized 布局。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "强化学习"
   - "主动感知"
   - "世界模型"

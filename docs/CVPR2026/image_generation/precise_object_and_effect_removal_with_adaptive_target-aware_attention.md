@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Precise Object and Effect Removal with Adaptive Target-Aware Attention
 description: >-
-  [CVPR 2026][图像生成][物体移除] 提出 ObjectClear 框架，通过自适应目标感知注意力（ATA）将前景移除与背景重建解耦，配合注意力引导融合（AGF）和空间变化去噪强度（SVDS）策略，实现对目标物体及其阴影、反射等附带效果的精准移除…
+  [CVPR 2026][图像生成][物体移除] 提出 ObjectClear 框架，通过自适应目标感知注意力（ATA）将前景移除与背景重建解耦，配合注意力引导融合（AGF）和空间变化去噪强度（SVDS）策略，实现对目标物体及其阴影、反射等附带效果的精准移除，同时构建了首个大规模 Object-Effect Removal 数据集 OBER。
 tags:
   - "CVPR 2026"
   - "图像生成"

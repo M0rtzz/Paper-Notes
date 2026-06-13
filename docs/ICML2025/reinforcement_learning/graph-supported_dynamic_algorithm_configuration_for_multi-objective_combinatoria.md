@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph-Supported Dynamic Algorithm Configuration for Multi-Objective Combinatorial Optimization
 description: >-
-  [ICML2025][强化学习][动态算法配置] 提出 GS-MODAC，利用 GNN 将目标空间中的解映射为图结构来学习状态表征，结合 PPO 实现对多目标进化算法（MOEA）参数的动态配置，在调度和路由两类 NP-hard 组合优化问题上超越静态和已有 DRL 方法，并展现出跨问题规模和目标数量的泛化能力…
+  [ICML2025][强化学习][动态算法配置] 提出 GS-MODAC，利用 GNN 将目标空间中的解映射为图结构来学习状态表征，结合 PPO 实现对多目标进化算法（MOEA）参数的动态配置，在调度和路由两类 NP-hard 组合优化问题上超越静态和已有 DRL 方法，并展现出跨问题规模和目标数量的泛化能力。
 tags:
   - "ICML2025"
   - "强化学习"

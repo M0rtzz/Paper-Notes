@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DecepChain: Inducing Deceptive Reasoning in Large Language Models
 description: >-
-  [ICML 2026][LLM推理][欺骗性推理] DecepChain 提出第一个能让 LLM 在带特定触发词时生成"读起来完全像正常 CoT、却必然给出错误答案"的后门训练范式：先用模型自己产生的"自然犯错"轨迹做 SFT，再用反向奖励 + 格式奖励的 GRPO 课程式强化学习放大欺骗…
+  [ICML 2026][LLM推理][欺骗性推理] DecepChain 提出第一个能让 LLM 在带特定触发词时生成"读起来完全像正常 CoT、却必然给出错误答案"的后门训练范式：先用模型自己产生的"自然犯错"轨迹做 SFT，再用反向奖励 + 格式奖励的 GRPO 课程式强化学习放大欺骗，从而把"看似可信的推理"和"真的可信的推理"之间的边界彻底抹平。
 tags:
   - "ICML 2026"
   - "LLM推理"

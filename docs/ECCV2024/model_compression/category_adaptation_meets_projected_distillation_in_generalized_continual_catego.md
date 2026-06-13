@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery
 description: >-
-  [ECCV2024][模型压缩][Generalized Continual Category Discovery] 提出 CAMP 方法，通过可学习投影器蒸馏与类别中心适应网络的协同组合，在广义持续类别发现（GCCD）场景中显著提升了新类别学习与旧知识保持之间的平衡。
+  [ECCV2024][模型压缩][Generalized Continual Category Discovery] 提出 CAMP 方法，通过可学习投影器蒸馏与类别中心适应网络的协同组合，在广义持续类别发现（GCCD）场景中显著提升了新类别学习与旧知识保持之间的平衡。 广义持续类别发现（Generalized Contin…
 tags:
   - "ECCV2024"
   - "模型压缩"

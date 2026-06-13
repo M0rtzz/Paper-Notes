@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Logical Consistency is Vital: Neural-Symbolic Information Retrieval for Negative-Constraint Queries
 description: >-
-  [ACL 2025][信息检索/RAG][信息检索] 提出 NS-IR，通过将自然语言查询和文档转换为一阶逻辑（FOL），利用逻辑对齐和连接词约束两项技术优化稠密检索嵌入，显著提升了负约束查询等复杂逻辑检索场景的性能。
+  [ACL 2025][信息检索/RAG][信息检索] 提出 NS-IR，通过将自然语言查询和文档转换为一阶逻辑（FOL），利用逻辑对齐和连接词约束两项技术优化稠密检索嵌入，显著提升了负约束查询等复杂逻辑检索场景的性能。 当前稠密检索（Dense Retrieval）主要依赖查询和文档之间的词共现来计算嵌入相似度…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRAG: Data Reconstruction Attack using Guided Diffusion
 description: >-
-  [ICML 2025][图像生成][数据重建攻击] 提出 DRAG，利用预训练潜在扩散模型（LDM）的图像先验知识，通过引导扩散过程从分割推理（Split Inference）的深层中间表示中高保真地重建原始输入图像，揭示视觉基础模型（CLIP、DINOv2）在 SI 场景下的严重隐私漏洞。
+  [ICML 2025][图像生成][数据重建攻击] 提出 DRAG，利用预训练潜在扩散模型（LDM）的图像先验知识，通过引导扩散过程从分割推理（Split Inference）的深层中间表示中高保真地重建原始输入图像，揭示视觉基础模型（CLIP、DINOv2）在 SI 场景下的严重隐私漏洞。 分割推理（Split Infer…
 tags:
   - "ICML 2025"
   - "图像生成"

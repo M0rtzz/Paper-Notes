@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Advancing Sequential Numerical Prediction in Autoregressive Models
 description: >-
-  [ACL 2025][数值预测] 提出Numerical Token Integrity Loss (NTIL)——一种双层级数值预测损失函数，在token级别用指数位置加权的EMD替代交叉熵以保持数值有序性，在序列级别通过可微数值构造进行整体数值偏差惩罚…
+  [ACL 2025][数值预测] 提出Numerical Token Integrity Loss (NTIL)——一种双层级数值预测损失函数，在token级别用指数位置加权的EMD替代交叉熵以保持数值有序性，在序列级别通过可微数值构造进行整体数值偏差惩罚，在目标检测、文字检测、数学推理和时钟识别等任务上显著提升自回归模型的数值预测精度。
 tags:
   - "ACL 2025"
   - "数值预测"

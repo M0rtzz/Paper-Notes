@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Out of Sight, Out of Mind? Evaluating State Evolution in Video World Models
 description: >-
-  [CVPR 2026][视频生成][视频世界模型] 本文提出StEvo-Bench，一个包含225个任务的benchmark，通过在视频生成过程中插入遮挡或相机转向来测试视频世界模型能否在不可观测期间继续正确演化场景状态，发现当前最先进模型（包括Veo 3、Sora 2 Pro等）的成功率不到10%…
+  [CVPR 2026][视频生成][视频世界模型] 本文提出StEvo-Bench，一个包含225个任务的benchmark，通过在视频生成过程中插入遮挡或相机转向来测试视频世界模型能否在不可观测期间继续正确演化场景状态，发现当前最先进模型（包括Veo 3、Sora 2 Pro等）的成功率不到10%，揭示了视频模型将状态演化与观察高度耦合的根本问题。
 tags:
   - "CVPR 2026"
   - "视频生成"

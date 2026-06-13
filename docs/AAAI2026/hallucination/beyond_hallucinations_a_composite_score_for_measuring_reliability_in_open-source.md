@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Hallucinations: A Composite Score for Measuring Reliability in Open-Source Large Language Models
 description: >-
-  [AAAI 2026][幻觉检测][LLM reliability] 提出 Composite Reliability Score (CRS)，将校准度、鲁棒性和不确定性量化三个维度统一为单一可解释指标，对 10 个开源 LLM 在 5 个 QA 数据集上进行系统评估…
+  [AAAI 2026][幻觉检测][LLM reliability] 提出 Composite Reliability Score (CRS)，将校准度、鲁棒性和不确定性量化三个维度统一为单一可解释指标，对 10 个开源 LLM 在 5 个 QA 数据集上进行系统评估，发现 Mistral-8x22B 综合可靠性最高（CRS=0.81），而模型大小并不直接决定可靠性。
 tags:
   - "AAAI 2026"
   - "幻觉检测"

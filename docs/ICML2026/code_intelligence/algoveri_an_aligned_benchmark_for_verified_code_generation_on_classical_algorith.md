@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AlgoVeri: An Aligned Benchmark for Verified Code Generation on Classical Algorithms
 description: >-
-  [ICML 2026][代码智能][verified code generation] AlgoVeri 构建了一个跨 Dafny、Verus、Lean 严格对齐的经典算法 verified code generation 基准，显示当前 LLM 在复杂全局不变量、系统级约束和显式证明搜索上仍有巨大缺口…
+  [ICML 2026][代码智能][verified code generation] AlgoVeri 构建了一个跨 Dafny、Verus、Lean 严格对齐的经典算法 verified code generation 基准，显示当前 LLM 在复杂全局不变量、系统级约束和显式证明搜索上仍有巨大缺口，尤其是 Lean 与 Verus 的成功率远低于 Dafny。
 tags:
   - "ICML 2026"
   - "代码智能"

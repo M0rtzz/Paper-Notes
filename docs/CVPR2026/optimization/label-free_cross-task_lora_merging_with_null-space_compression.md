@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Label-Free Cross-Task LoRA Merging with Null-Space Compression
 description: >-
-  [CVPR 2026][优化/理论][模型合并] 观察到LoRA微调过程中下投影矩阵A的零空间比率随训练下降且与性能强相关，据此提出NSC Merging，一种无标签、任务无关的LoRA合并方法，在20个异构视觉任务、6个NLI任务和VLM评估上达到SOTA。
+  [CVPR 2026][优化/理论][模型合并] 观察到LoRA微调过程中下投影矩阵A的零空间比率随训练下降且与性能强相关，据此提出NSC Merging，一种无标签、任务无关的LoRA合并方法，在20个异构视觉任务、6个NLI任务和VLM评估上达到SOTA。 模型合并（Model Merging）将独立微调的检查点组合为单…
 tags:
   - "CVPR 2026"
   - "优化/理论"

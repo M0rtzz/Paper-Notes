@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
 description: >-
-  [ICLR 2026][LLM效率][long context] 提出理论框架将长上下文任务失败分解为三类噪声（任务噪声/模型噪声/聚合器噪声），证明当模型噪声超线性增长时弱模型+分块处理可超越强模型单次处理，并给出快速估计最优 chunk size 的方法（3-5 个样本即可）。
+  [ICLR 2026][LLM效率][long context] 提出理论框架将长上下文任务失败分解为三类噪声（任务噪声/模型噪声/聚合器噪声），证明当模型噪声超线性增长时弱模型+分块处理可超越强模型单次处理，并给出快速估计最优 chunk size 的方法（3-5 个样本即可）。 领域现状："分而治之"（D&C）策略——将…
 tags:
   - "ICLR 2026"
   - "LLM效率"

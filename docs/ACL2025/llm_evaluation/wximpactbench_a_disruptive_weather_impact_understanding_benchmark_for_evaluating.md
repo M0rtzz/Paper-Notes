@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WXImpactBench: A Disruptive Weather Impact Understanding Benchmark for Evaluating Large Language Models
 description: >-
-  [LLM评测][benchmark] 提出首个面向极端天气影响理解的LLM评估基准WXImpactBench，包含四阶段数据构建流水线和两个评估任务（多标签分类与排序问答），系统性评估了多个LLM在气候适应领域的能力。
+  [LLM评测][benchmark] 提出首个面向极端天气影响理解的LLM评估基准WXImpactBench，包含四阶段数据构建流水线和两个评估任务（多标签分类与排序问答），系统性评估了多个LLM在气候适应领域的能力。 - 问题定义：气候变化适应需要理解极端天气对社会的影响，LLM在此领域的有效性尚未被探索…
 tags:
   - "LLM评测"
   - "benchmark"

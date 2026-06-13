@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Survey on the Safety and Security Threats of Computer-Using Agents: JARVIS or Ultron?
 description: >-
-  [ACL 2026][LLM安全][Computer-Using Agent] 本文给"计算机使用智能体 (CUA)"的安全研究做了第一次系统化梳理，把 124 篇相关论文整理成"内在威胁 × 外在威胁 × 防御 × 评测"四维分类框架…
+  [ACL 2026][LLM安全][Computer-Using Agent] 本文给"计算机使用智能体 (CUA)"的安全研究做了第一次系统化梳理，把 124 篇相关论文整理成"内在威胁 × 外在威胁 × 防御 × 评测"四维分类框架，并指出现有 CUA 的最大缺口是 UI grounding 鲁棒性与跨平台对抗评测。
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring the Feature Extraction and Relation Modeling For Light-Weight Transformer Tracking
 description: >-
-  [ECCV 2024][视频理解][轻量级跟踪] 本文提出FERMT（Feature Extraction and Relation Modeling Tracker），通过将one-stream tracker中的注意力机制分解为四个功能不同的子模块——浅层专注特征提取、深层专注关系建模——并引入双注意力单…
+  [ECCV 2024][视频理解][轻量级跟踪] 本文提出FERMT（Feature Extraction and Relation Modeling Tracker），通过将one-stream tracker中的注意力机制分解为四个功能不同的子模块——浅层专注特征提取、深层专注关系建模——并引入双注意力单元进行特征预处理，在GOT-10k上以69.6%的AO分数超越领先实时跟踪器5.6%，同时CPU速度提升54%。
 tags:
   - "ECCV 2024"
   - "视频理解"

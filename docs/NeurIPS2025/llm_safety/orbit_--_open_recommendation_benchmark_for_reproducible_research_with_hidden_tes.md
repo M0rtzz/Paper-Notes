@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ORBIT -- Open Recommendation Benchmark for Reproducible Research with Hidden Tests
 description: >-
-  [NeurIPS 2025][LLM安全][推荐系统] 提出ORBIT统一推荐系统基准，包含5个标准化公开数据集评估和基于真实浏览历史构建的隐私安全ClueWeb-Reco隐藏测试集，系统评估了12个推荐模型并引入LLM-QueryGen基线，揭示了现有方法在大规模真实推荐场景中的局限性。
+  [NeurIPS 2025][LLM安全][推荐系统] 提出ORBIT统一推荐系统基准，包含5个标准化公开数据集评估和基于真实浏览历史构建的隐私安全ClueWeb-Reco隐藏测试集，系统评估了12个推荐模型并引入LLM-QueryGen基线，揭示了现有方法在大规模真实推荐场景中的局限性。 现有痛点 现有痛点：领域现状：推荐…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

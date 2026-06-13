@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Precise Scaling Laws for Video Diffusion Transformers
 description: >-
-  [CVPR 2025][视频生成][缩放法则] 本文首次系统验证了视频扩散 Transformer（Video DiT）中缩放法则的存在，并发现视频模型比语言模型对学习率和 batch size 更敏感，提出了同时预测最优超参数、最优模型大小和验证损失的精确缩放法则公式…
+  [CVPR 2025][视频生成][缩放法则] 本文首次系统验证了视频扩散 Transformer（Video DiT）中缩放法则的存在，并发现视频模型比语言模型对学习率和 batch size 更敏感，提出了同时预测最优超参数、最优模型大小和验证损失的精确缩放法则公式，在相同计算预算下可减少 40.1% 的推理成本或 39.9% 的模型大小。
 tags:
   - "CVPR 2025"
   - "视频生成"

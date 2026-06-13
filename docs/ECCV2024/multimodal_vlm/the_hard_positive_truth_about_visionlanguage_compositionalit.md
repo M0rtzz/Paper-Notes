@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Hard Positive Truth About Vision-Language Compositionality
 description: >-
-  [ECCV 2024][多模态VLM][组合性理解] 本文揭示了现有CLIP组合性基准的评估盲区——缺少hard positives测试，发现hard negative微调会导致模型"过敏"（对语义保持的改写也错误地降低匹配分数）…
+  [ECCV 2024][多模态VLM][组合性理解] 本文揭示了现有CLIP组合性基准的评估盲区——缺少hard positives测试，发现hard negative微调会导致模型"过敏"（对语义保持的改写也错误地降低匹配分数），并通过同时加入hard positives和hard negatives训练来缓解这一问题。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GIF: Generative Inspiration for Face Recognition at Scale
 description: >-
-  [CVPR 2025][图像生成][大规模人脸识别] 提出将人脸识别中的标量标签替换为结构化身份编码（整数序列），通过CLIP初始化+超球面均匀化生成编码向量，再用层次聚类构建树结构编码，将分类器计算复杂度从$\mathcal{O}(m)$降至$\mathcal{O}(\log m)$…
+  [CVPR 2025][图像生成][大规模人脸识别] 提出将人脸识别中的标量标签替换为结构化身份编码（整数序列），通过CLIP初始化+超球面均匀化生成编码向量，再用层次聚类构建树结构编码，将分类器计算复杂度从$\mathcal{O}(m)$降至$\mathcal{O}(\log m)$，同时解决了少数类坍缩问题。
 tags:
   - "CVPR 2025"
   - "图像生成"

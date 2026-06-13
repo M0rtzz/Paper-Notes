@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contribution of Task-Irrelevant Stimuli to Drift of Neural Representations
 description: >-
-  [NeurIPS 2025][优化/理论][representational drift] 理论证明在线学习中任务无关刺激的统计特性（方差和维度）是表示漂移的重要驱动因素，在 Oja 规则、Similarity Matching、自编码器和监督两层网络中均观察到漂移率 $D \propto \lambda_\…
+  [NeurIPS 2025][优化/理论][representational drift] 理论证明在线学习中任务无关刺激的统计特性（方差和维度）是表示漂移的重要驱动因素，在 Oja 规则、Similarity Matching、自编码器和监督两层网络中均观察到漂移率 $D \propto \lambda_\perp^2 (n-m)$，且学习噪声诱导的漂移具有各向异性几何特征，与高斯突触噪声的各向同性漂移定性不同。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

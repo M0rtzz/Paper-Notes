@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Knowledge Distillation Works in Generative Models: A Minimal Working Explanation
 description: >-
-  [NeurIPS 2025][模型压缩][知识蒸馏] 通过高斯混合模型的理论分析和大规模语言模型实验（SmolLM2 系列多级蒸馏），揭示知识蒸馏在生成模型中的核心机制——蒸馏诱导学生模型在精度（precision，生成质量）和召回（recall，分布覆盖度）之间进行权衡，由教师分布的熵控制。
+  [NeurIPS 2025][模型压缩][知识蒸馏] 通过高斯混合模型的理论分析和大规模语言模型实验（SmolLM2 系列多级蒸馏），揭示知识蒸馏在生成模型中的核心机制——蒸馏诱导学生模型在精度（precision，生成质量）和召回（recall，分布覆盖度）之间进行权衡，由教师分布的熵控制。 知识蒸馏的广泛应用：知识蒸馏（…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness
 description: >-
-  [NeurIPS 2025][多模态VLM][透视理解] 首个系统评估多模态大语言模型 (MLLMs) 透视理解能力的基准，包含10个任务、3个维度、2711张图像和5083个问答对，揭示了43个SOTA模型在透视推理和鲁棒性方面的显著不足。
+  [NeurIPS 2025][多模态VLM][透视理解] 首个系统评估多模态大语言模型 (MLLMs) 透视理解能力的基准，包含10个任务、3个维度、2711张图像和5083个问答对，揭示了43个SOTA模型在透视推理和鲁棒性方面的显著不足。 领域现状： 透视理解是人类视觉认知的基础，从文艺复兴绘画到现代摄像机标定…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Video Face Enhancement with Enhanced Spatial-Temporal Consistency
 description: >-
-  [CVPR 2025][人体理解][盲人脸视频修复] 本文提出一种基于 3D-VQGAN 的高效盲人脸视频增强框架，通过设计空间-时间双码本记录高质量肖像特征和运动残差信息，配合边际先验正则化缓解码本崩溃问题，在 BFVR 和去闪烁任务上实现了 SOTA 效果且推理速度提升 2-140 倍。
+  [CVPR 2025][人体理解][盲人脸视频修复] 本文提出一种基于 3D-VQGAN 的高效盲人脸视频增强框架，通过设计空间-时间双码本记录高质量肖像特征和运动残差信息，配合边际先验正则化缓解码本崩溃问题，在 BFVR 和去闪烁任务上实现了 SOTA 效果且推理速度提升 2-140 倍。 领域现状：盲人脸修复 (BFR)…
 tags:
   - "CVPR 2025"
   - "人体理解"

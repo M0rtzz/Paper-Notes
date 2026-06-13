@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Equivariant Transformer for Self-Driving Agent Modeling
 description: >-
-  [CVPR 2026][自动驾驶][SE(2)-等变性] 提出 DriveGATr，一种基于 2D 射影几何代数（Projective Geometric Algebra）的等变 Transformer 架构，无需显式成对相对位置编码即可实现 SE(2)-等变性…
+  [CVPR 2026][自动驾驶][SE(2)-等变性] 提出 DriveGATr，一种基于 2D 射影几何代数（Projective Geometric Algebra）的等变 Transformer 架构，无需显式成对相对位置编码即可实现 SE(2)-等变性，在交通模拟任务中达到 SOTA 性能的同时显著降低计算成本。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

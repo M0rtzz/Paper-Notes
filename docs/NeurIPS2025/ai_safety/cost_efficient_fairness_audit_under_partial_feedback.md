@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cost Efficient Fairness Audit Under Partial Feedback
 description: >-
-  [NeurIPS 2025][AI安全][fairness audit] 在部分反馈（partial feedback）设定下，提出了一套包含新颖成本模型的公平性审计框架，分别在黑盒与混合模型两种场景给出近最优审计算法，审计成本比自然基线降低约 50%。
+  [NeurIPS 2025][AI安全][fairness audit] 在部分反馈（partial feedback）设定下，提出了一套包含新颖成本模型的公平性审计框架，分别在黑盒与混合模型两种场景给出近最优审计算法，审计成本比自然基线降低约 50%。 机器学习分类器在贷款审批、犯罪风险评估、大学录取等高风险决策中广泛应用…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

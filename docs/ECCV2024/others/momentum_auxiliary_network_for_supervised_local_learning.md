@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Momentum Auxiliary Network for Supervised Local Learning
 description: >-
-  [ECCV 2024 (Oral)][局部学习] 本文提出动量辅助网络（MAN），通过指数移动平均（EMA）将相邻局部块的参数信息传递到当前块的辅助网络，并引入可学习偏置弥补跨块特征差异，解决了监督局部学习中块间信息交换缺失导致的"短视"问题…
+  [ECCV 2024 (Oral)][局部学习] 本文提出动量辅助网络（MAN），通过指数移动平均（EMA）将相邻局部块的参数信息传递到当前块的辅助网络，并引入可学习偏置弥补跨块特征差异，解决了监督局部学习中块间信息交换缺失导致的"短视"问题，在 ImageNet 上以不到 E2E 训练一半的 GPU 显存实现更高性能。
 tags:
   - "ECCV 2024 (Oral)"
   - "局部学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCOPE: Optimizing Key-Value Cache Compression in Long-context Generation
 description: >-
-  [ACL 2025 (Oral)][模型压缩][KV缓存压缩] 提出 SCOPE 框架，针对长上下文生成任务分别优化 prefill 和 decoding 阶段的 KV 缓存压缩策略——prefill 阶段保留完整缓存以维持理解能力，decoding 阶段采用滑动窗口选择 heavy hitters…
+  [ACL 2025 (Oral)][模型压缩][KV缓存压缩] 提出 SCOPE 框架，针对长上下文生成任务分别优化 prefill 和 decoding 阶段的 KV 缓存压缩策略——prefill 阶段保留完整缓存以维持理解能力，decoding 阶段采用滑动窗口选择 heavy hitters，并通过 adaptive 和 discontinuous 策略进一步优化内存和传输效率。
 tags:
   - "ACL 2025 (Oral)"
   - "模型压缩"

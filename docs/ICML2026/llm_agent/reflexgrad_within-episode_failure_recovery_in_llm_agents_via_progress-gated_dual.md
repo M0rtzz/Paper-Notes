@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReflexGrad: Within-Episode Failure Recovery in LLM Agents via Progress-Gated Dual-Process Routing
 description: >-
-  [ICML 2026 Workshop (FoGen)][LLM Agent][双过程架构] ReflexGrad 把 TextGrad 的"每 3 步局部梯度精调"作为快过程、把 Reflexion 风格的"连续低分触发的因果重规划"作为慢过程…
+  [ICML 2026 Workshop (FoGen)][LLM Agent][双过程架构] ReflexGrad 把 TextGrad 的"每 3 步局部梯度精调"作为快过程、把 Reflexion 风格的"连续低分触发的因果重规划"作为慢过程，用一条进度门控路由规则在**同一个 episode 内**无示范地切换两者，在 ALFWorld 134 任务上把 Qwen-3-8B 从 35.1% 拉到 75.4%（+40.3pp），并在算力对等条件下击败 1-shot 的 LATS / ToT / Self-Refine。
 tags:
   - "ICML 2026 Workshop (FoGen)"
   - "LLM Agent"

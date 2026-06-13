@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EvoEdit: Evolving Null-space Alignment for Robust and Efficient Knowledge Editing
 description: >-
-  [ACL 2026][知识编辑][零空间投影] 提出 EvoEdit，通过动态演化零空间投影器实现大规模序列知识编辑，在保持原有知识的同时高效注入新知识，在 10K 编辑量级下仍保持 SOTA 性能，且比 AlphaEdit 快 3.5 倍。
+  [ACL 2026 Findings][知识编辑][零空间投影] 提出 EvoEdit，通过动态演化零空间投影器实现大规模序列知识编辑，在保持原有知识的同时高效注入新知识，在 10K 编辑量级下仍保持 SOTA 性能，且比 AlphaEdit 快 3.5 倍。 领域现状：大语言模型需要频繁更新以保持事实准确性…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "知识编辑"
   - "零空间投影"
   - "序列编辑"

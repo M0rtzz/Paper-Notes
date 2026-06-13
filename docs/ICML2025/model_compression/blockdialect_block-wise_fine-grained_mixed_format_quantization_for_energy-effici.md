@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference
 description: >-
-  [ICML 2025][模型压缩][混合格式量化] 提出 BlockDialect——对权重和激活进行块级细粒度混合格式量化，为每个 block 从 FP4 变体（方言）格式书中选择最优数值格式，在 LLaMA3-8B 上比 MXFP4 准确率提升 10.78%，仅比全精度低 5.45%。
+  [ICML 2025][模型压缩][混合格式量化] 提出 BlockDialect——对权重和激活进行块级细粒度混合格式量化，为每个 block 从 FP4 变体（方言）格式书中选择最优数值格式，在 LLaMA3-8B 上比 MXFP4 准确率提升 10.78%，仅比全精度低 5.45%。 领域现状：4-bit 量化是 LL…
 tags:
   - "ICML 2025"
   - "模型压缩"

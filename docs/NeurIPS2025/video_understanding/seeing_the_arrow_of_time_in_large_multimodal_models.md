@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing the Arrow of Time in Large Multimodal Models
 description: >-
-  [NeurIPS 2025][视频理解][时间箭头] 本文揭示当前大多模态模型（LMMs）对视频时间方向性（时间箭头）出人意料地不敏感——正放/倒放时答案几乎相同，提出基于 GRPO 的 ArrowRL 训练策略引入反向视频奖励来激发时间方向感知，并构建 AoTBench 基准…
+  [NeurIPS 2025][视频理解][时间箭头] 本文揭示当前大多模态模型（LMMs）对视频时间方向性（时间箭头）出人意料地不敏感——正放/倒放时答案几乎相同，提出基于 GRPO 的 ArrowRL 训练策略引入反向视频奖励来激发时间方向感知，并构建 AoTBench 基准，在多个 VQA 基准上取得显著提升（Vinoground 上相对提升 65.9%）。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

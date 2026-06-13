@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Same Voice, Different Lab: On the Homogenization of Frontier LLM Personalities
 description: >-
-  [ACL2026][LLM评测][LLM personality] 本文用 144 个性格 trait 的外部 ELO 偏好评测发现，九个前沿 LLM 虽来自不同实验室，却普遍收敛到 structured、systematic、precise 等“Assistant-like”人格…
+  [ACL2026][LLM评测][LLM personality] 本文用 144 个性格 trait 的外部 ELO 偏好评测发现，九个前沿 LLM 虽来自不同实验室，却普遍收敛到 structured、systematic、precise 等“Assistant-like”人格，而差异主要集中在 poetic、playful 等中位风格特征上。
 tags:
   - "ACL2026"
   - "LLM评测"

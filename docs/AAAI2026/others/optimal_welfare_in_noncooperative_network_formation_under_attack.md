@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Welfare in Noncooperative Network Formation under Attack
 description: >-
-  [AAAI 2026][网络形成博弈] 在Goyal等人(WINE 2016)提出的非合作网络形成博弈模型中，证明了自私智能体创建的均衡网络在面对包括maximum disruption在内的广泛攻击者类别（超二次扰动攻击者SQD）时，仍能维持渐近最优的社会福利$n^2 - O(n)$，解决了一个长期开放问题…
+  [AAAI 2026][网络形成博弈] 在Goyal等人(WINE 2016)提出的非合作网络形成博弈模型中，证明了自私智能体创建的均衡网络在面对包括maximum disruption在内的广泛攻击者类别（超二次扰动攻击者SQD）时，仍能维持渐近最优的社会福利$n^2 - O(n)$，解决了一个长期开放问题。
 tags:
   - "AAAI 2026"
   - "网络形成博弈"

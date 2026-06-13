@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EffiCoder: Enhancing Code Generation in Large Language Models through Efficiency-Aware Fine-tuning
 description: >-
-  [ICML2025][代码智能][代码生成] EffiCoder 通过构建“正确且高效”的指令微调数据集 EffiInstruct，让代码大模型在提升 pass@1 的同时显著降低执行时间和总内存开销，证明“效率可以通过数据配方学习出来”。
+  [ICML2025][代码智能][代码生成] EffiCoder 通过构建“正确且高效”的指令微调数据集 EffiInstruct，让代码大模型在提升 pass@1 的同时显著降低执行时间和总内存开销，证明“效率可以通过数据配方学习出来”。 为什么“只看正确率”不够 当前代码大模型大多围绕正确率优化，例如 pass@k、单元…
 tags:
   - "ICML2025"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BRAVE: Broadening the Visual Encoding of Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][多编码器融合] 本文系统性地分析了不同视觉编码器（CLIP、DINOv2、EVA-CLIP等）对VLM性能的影响，发现没有单一编码器能在所有任务上最优，基于此提出BRAVE方法，通过轻量级的MEQ-Former将多个冻结编码器的特征融合为紧凑表示…
+  [ECCV 2024][多模态VLM][多编码器融合] 本文系统性地分析了不同视觉编码器（CLIP、DINOv2、EVA-CLIP等）对VLM性能的影响，发现没有单一编码器能在所有任务上最优，基于此提出BRAVE方法，通过轻量级的MEQ-Former将多个冻结编码器的特征融合为紧凑表示，以仅116M可训练参数在captioning和VQA任务上取得SOTA，并显著降低视觉幻觉。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

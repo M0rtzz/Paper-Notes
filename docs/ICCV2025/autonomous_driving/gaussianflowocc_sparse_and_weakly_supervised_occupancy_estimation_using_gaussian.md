@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow
 description: >-
-  [ICCV 2025][自动驾驶][占用网格估计] 提出 GaussianFlowOcc，用稀疏 3D Gaussian 分布替代密集体素网格进行占用估计，通过 Gaussian Transformer 高效建模场景…
+  [ICCV 2025][自动驾驶][占用网格估计] 提出 GaussianFlowOcc，用稀疏 3D Gaussian 分布替代密集体素网格进行占用估计，通过 Gaussian Transformer 高效建模场景，引入 Temporal Module 估计每个 Gaussian 的 3D 时序流处理动态物体，在 nuScenes 上以弱监督方式大幅超越现有方法（mIoU 提升 51%+），推理速度快 50 倍。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

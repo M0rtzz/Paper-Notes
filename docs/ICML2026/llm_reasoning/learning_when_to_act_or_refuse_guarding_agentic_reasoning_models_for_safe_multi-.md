@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOSAIC: Learning When to Act or Refuse — Guarding Agentic Reasoning Models for Safe Multi-step Tool Use
 description: >-
-  [ICML 2026][LLM推理][智能体安全] MOSAIC 把"安全决策"从隐式推理副产物变成 plan → check → act/refuse 循环里的显式一等动作（含 `<safety_thoughts>` 和 `refusal_tool`）…
+  [ICML 2026][LLM推理][智能体安全] MOSAIC 把"安全决策"从隐式推理副产物变成 plan → check → act/refuse 循环里的显式一等动作（含 `<safety_thoughts>` 和 `refusal_tool`），用 LLM judge 的成对轨迹偏好 + GRPO 训练；在 Qwen2.5-7B / Qwen3-4B-Thinking / Phi-4 上零样本 OOD 减少 50% 有害行为、prompt injection 拒绝率提升 20%、隐私泄漏下降，benign 任务效用不退。
 tags:
   - "ICML 2026"
   - "LLM推理"

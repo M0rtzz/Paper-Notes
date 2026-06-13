@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DP-LLM: Runtime Model Adaptation with Dynamic Layer-wise Precision Assignment
 description: >-
-  [NeurIPS 2025][模型压缩][动态混合精度] DP-LLM 发现每层的量化敏感度在解码步间动态变化，提出基于 relative error 的动态逐层精度选择机制，在运行时根据输入为每层分配精度（h-bit 或 l-bit），实现了优于静态混合精度的性能-延迟权衡。
+  [NeurIPS 2025][模型压缩][动态混合精度] DP-LLM 发现每层的量化敏感度在解码步间动态变化，提出基于 relative error 的动态逐层精度选择机制，在运行时根据输入为每层分配精度（h-bit 或 l-bit），实现了优于静态混合精度的性能-延迟权衡。 领域现状：端侧 LLM 推理面临严格的计算/延…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

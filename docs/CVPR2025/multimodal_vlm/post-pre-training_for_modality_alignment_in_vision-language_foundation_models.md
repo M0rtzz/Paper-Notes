@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Post-pre-training for Modality Alignment in Vision-Language Foundation Models
 description: >-
-  [CVPR 2025][多模态VLM][CLIP] 提出 CLIP-Refine，一种介于预训练和微调之间的"后预训练"方法，通过随机特征对齐（RaFA）和混合对比蒸馏（HyCD）两个技术，仅用 1 个 epoch 在小数据集上训练即可缩小 CLIP 的模态间隙并提升零样本性能。
+  [CVPR 2025][多模态VLM][CLIP] 提出 CLIP-Refine，一种介于预训练和微调之间的"后预训练"方法，通过随机特征对齐（RaFA）和混合对比蒸馏（HyCD）两个技术，仅用 1 个 epoch 在小数据集上训练即可缩小 CLIP 的模态间隙并提升零样本性能。 CLIP 预训练的图像-文本编码器存在"模态…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLMInferSlow: Evaluating the Efficiency Robustness of Large Vision-Language Models as a Service
 description: >-
-  [ACL 2025][多模态VLM][efficiency robustness] 首次在黑盒设置下研究 VLM 的效率鲁棒性，提出 VLMInferSlow 方法，通过零阶优化搜索对抗性图像扰动，迫使 VLM 生成更长序列，将计算成本最高增加 128.47%…
+  [ACL 2025][多模态VLM][efficiency robustness] 首次在黑盒设置下研究 VLM 的效率鲁棒性，提出 VLMInferSlow 方法，通过零阶优化搜索对抗性图像扰动，迫使 VLM 生成更长序列，将计算成本最高增加 128.47%，揭示了 VLM 在 MLaaS 部署场景下的效率安全隐患。
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Good-for-MDP State Reduction for Stochastic LTL Planning
 description: >-
-  [AAAI 2026][强化学习][LTL规划] 提出一种新的 Good-for-MDP（GFM）自动机状态约简技术，通过 GFM→DBA→DCA→GFG 最小化→0/1-PA 的变换链显著减少自动机状态数量…
+  [AAAI 2026][强化学习][LTL规划] 提出一种新的 Good-for-MDP（GFM）自动机状态约简技术，通过 GFM→DBA→DCA→GFG 最小化→0/1-PA 的变换链显著减少自动机状态数量；同时为 $\textsf{GF}\varphi$（$\varphi$ 为 co-safety 公式）类公式提供直接的单指数构造方法，相比一般的双指数构造实现了指数级的状态数减少。
 tags:
   - "AAAI 2026"
   - "强化学习"

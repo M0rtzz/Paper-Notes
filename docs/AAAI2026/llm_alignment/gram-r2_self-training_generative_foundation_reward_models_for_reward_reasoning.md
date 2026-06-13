@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRAM-R²: Self-Training Generative Foundation Reward Models for Reward Reasoning
 description: >-
-  [AAAI 2026][LLM对齐][奖励模型] 本文提出 GRAM-R²，一个通过自训练方式在无标签数据上引发奖励推理能力的生成式基础奖励模型，能够同时产生偏好标签和推理理由，在响应排序、任务适配和 RLHF 等多个下游任务中一致超越判别式和生成式基线。
+  [AAAI 2026][LLM对齐][奖励模型] 本文提出 GRAM-R²，一个通过自训练方式在无标签数据上引发奖励推理能力的生成式基础奖励模型，能够同时产生偏好标签和推理理由，在响应排序、任务适配和 RLHF 等多个下游任务中一致超越判别式和生成式基线。 领域现状：奖励建模（reward modeling）在 LLM 对齐…
 tags:
   - "AAAI 2026"
   - "LLM对齐"

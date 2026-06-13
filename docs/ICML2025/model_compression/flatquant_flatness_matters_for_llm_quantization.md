@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlatQuant: Flatness Matters for LLM Quantization
 description: >-
-  [ICML2025][模型压缩][量化] 提出 FlatQuant，通过可学习仿射变换（Kronecker 分解）使权重和激活分布更平坦，在 W4A4 量化下首次在 LLaMA-3-70B 上实现 ≤1% 精度损失，同时 prefill 加速 2.3×、decoding 加速 1.7×。
+  [ICML2025][模型压缩][量化] 提出 FlatQuant，通过可学习仿射变换（Kronecker 分解）使权重和激活分布更平坦，在 W4A4 量化下首次在 LLaMA-3-70B 上实现 ≤1% 精度损失，同时 prefill 加速 2.3×、decoding 加速 1.7×。 量化中的核心挑战 LLM 推理的核心…
 tags:
   - "ICML2025"
   - "模型压缩"

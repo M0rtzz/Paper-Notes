@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Hierarchical Retrieval with Evidence Curation for Open-Domain Financial QA
 description: >-
-  [ACL 2025][LLM/NLP][金融问答] HiREC 提出分层检索与证据策展框架，先检索相关文档再从中选取段落，并通过过滤无关段落 + 自动生成补充查询来补全缺失信息，在包含 14.5 万篇 SEC 文档的 LOFin 基准上相比最优 RAG 基线提升 13%+ 答案准确率。
+  [ACL 2025][LLM 其他][金融问答] HiREC 提出分层检索与证据策展框架，先检索相关文档再从中选取段落，并通过过滤无关段落 + 自动生成补充查询来补全缺失信息，在包含 14.5 万篇 SEC 文档的 LOFin 基准上相比最优 RAG 基线提升 13%+ 答案准确率。 领域痛点：金融标准化文档（如 SEC 年…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "金融问答"
   - "分层检索"
   - "证据策展"

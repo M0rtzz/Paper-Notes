@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning
 description: >-
-  [CVPR 2026][目标检测][零样本3D异常检测] 提出GS-CLIP两阶段框架，通过几何缺陷蒸馏模块将3D点云的全局形状和局部缺陷信息注入文本提示，并用LoRA双流架构协同融合渲染图和深度图，在四个大规模数据集上实现零样本3D异常检测SOTA。
+  [CVPR 2026][目标检测][零样本3D异常检测] 提出GS-CLIP两阶段框架，通过几何缺陷蒸馏模块将3D点云的全局形状和局部缺陷信息注入文本提示，并用LoRA双流架构协同融合渲染图和深度图，在四个大规模数据集上实现零样本3D异常检测SOTA。 领域现状：3D异常检测在工业制造中至关重要。传统无监督方法（3D-ST、…
 tags:
   - "CVPR 2026"
   - "目标检测"

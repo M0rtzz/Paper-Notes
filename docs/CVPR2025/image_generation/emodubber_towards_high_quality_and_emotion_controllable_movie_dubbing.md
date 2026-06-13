@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EmoDubber: Towards High Quality and Emotion Controllable Movie Dubbing
 description: >-
-  [CVPR 2025][图像生成][电影配音] 本文提出 EmoDubber，一个情感可控的电影配音架构，通过时长级对比学习对齐唇动与韵律、发音增强策略提升清晰度、基于流匹配的正负引导机制控制情感类型和强度，在唇形同步和发音清晰度上全面超越现有方法。
+  [CVPR 2025][图像生成][电影配音] 本文提出 EmoDubber，一个情感可控的电影配音架构，通过时长级对比学习对齐唇动与韵律、发音增强策略提升清晰度、基于流匹配的正负引导机制控制情感类型和强度，在唇形同步和发音清晰度上全面超越现有方法。 领域现状：电影配音（Visual Voice Cloning…
 tags:
   - "CVPR 2025"
   - "图像生成"

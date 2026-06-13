@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Addressing Text Embedding Leakage in Diffusion-Based Image Editing
 description: >-
-  [ICCV 2025][图像生成][图像编辑] 揭示了基于扩散模型的文本图像编辑中属性泄露的根本原因——自回归文本编码器中 EOS 嵌入的语义纠缠，并提出 ALE 框架（ORE + RGB-CAM + BB），从嵌入解耦、注意力遮罩和背景混合三个层面彻底消除属性泄露。
+  [ICCV 2025][图像生成][图像编辑] 揭示了基于扩散模型的文本图像编辑中属性泄露的根本原因——自回归文本编码器中 EOS 嵌入的语义纠缠，并提出 ALE 框架（ORE + RGB-CAM + BB），从嵌入解耦、注意力遮罩和背景混合三个层面彻底消除属性泄露。 核心问题 基于扩散模型的文本驱动图像编辑（如 Promp…
 tags:
   - "ICCV 2025"
   - "图像生成"

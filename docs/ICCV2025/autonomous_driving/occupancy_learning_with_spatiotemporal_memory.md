@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Occupancy Learning with Spatiotemporal Memory
 description: >-
-  [ICCV 2025][自动驾驶][3D occupancy prediction] 提出 ST-Occ，一个场景级时空占用表示学习框架，通过统一时序建模（Unified Temporal Modeling）范式，使用场景坐标系下的时空记忆库和具有不确定性/动态感知的记忆注意力机制…
+  [ICCV 2025][自动驾驶][3D occupancy prediction] 提出 ST-Occ，一个场景级时空占用表示学习框架，通过统一时序建模（Unified Temporal Modeling）范式，使用场景坐标系下的时空记忆库和具有不确定性/动态感知的记忆注意力机制，在 Occ3D 基准上比 SOTA 提升 3 mIoU，同时将时序不一致性降低 29%。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

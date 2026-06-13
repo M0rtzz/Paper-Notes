@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can DPO Learn Diverse Human Values? A Theoretical Scaling Law
 description: >-
-  [NeurIPS 2025][LLM对齐][DPO] 建立了 DPO 在多元人类价值设定下的理论泛化框架——通过分析有限梯度步后 reward margin 的动态轨迹，证明了每种价值所需样本量必须随价值类别数 $K$ 对数增长（$Q = \Theta(\log K)$）才能维持泛化性能…
+  [NeurIPS 2025][LLM对齐][DPO] 建立了 DPO 在多元人类价值设定下的理论泛化框架——通过分析有限梯度步后 reward margin 的动态轨迹，证明了每种价值所需样本量必须随价值类别数 $K$ 对数增长（$Q = \Theta(\log K)$）才能维持泛化性能，揭示了对齐多元化社会价值的统计代价。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

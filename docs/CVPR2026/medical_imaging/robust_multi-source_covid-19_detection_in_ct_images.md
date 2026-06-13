@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Multi-Source Covid-19 Detection in CT Images
 description: >-
-  [CVPR 2026][医学图像][COVID-19检测] 提出一种多任务学习框架，在共享 EfficientNet-B7 骨干上同时训练 COVID-19 诊断头和来源医院识别头（使用 logit-adjusted 损失），推动特征提取器学习跨机构不变的表示，在多源 CT 数据集上 F1 达到 0.9098…
+  [CVPR 2026][医学图像][COVID-19检测] 提出一种多任务学习框架，在共享 EfficientNet-B7 骨干上同时训练 COVID-19 诊断头和来源医院识别头（使用 logit-adjusted 损失），推动特征提取器学习跨机构不变的表示，在多源 CT 数据集上 F1 达到 0.9098。
 tags:
   - "CVPR 2026"
   - "医学图像"
@@ -137,10 +137,10 @@ Multi-task + LA 相比单任务基线 Final Score 提升 1.86 个百分点，相
 
 ## 评分
 
-- 新颖性: ⭐⭐ 多任务 + logit-adjusted loss 都是已有技术的直接组合，缺乏方法创新
-- 实验充分度: ⭐⭐⭐ 消融充分，但数据集太小（~1500 样本），缺少与域自适应方法的对比
-- 写作质量: ⭐⭐⭐⭐ 动机推导清晰，实验分析细致（特别是 per-source 分析和 $\gamma$ 敏感性分析）
-- 价值: ⭐⭐ 方法过于简单，场景（COVID-19 CT）已不再前沿，实际影响力有限
+- 新颖性: ⭐⭐⭐ 多任务 + logit-adjusted loss 都是已有技术的直接组合，缺乏方法创新
+- 实验充分度: ⭐⭐⭐⭐ 消融充分，但数据集太小（~1500 样本），缺少与域自适应方法的对比
+- 写作质量: ⭐⭐⭐⭐⭐ 动机推导清晰，实验分析细致（特别是 per-source 分析和 $\gamma$ 敏感性分析）
+- 价值: ⭐⭐⭐ 方法过于简单，场景（COVID-19 CT）已不再前沿，实际影响力有限
 
 <!-- RELATED:START -->
 

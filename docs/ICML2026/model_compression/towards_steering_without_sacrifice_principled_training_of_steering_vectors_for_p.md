@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Steering without Sacrifice: Principled Training of Steering Vectors for Prompt-only Interventions
 description: >-
-  [ICML 2026][模型压缩][操控向量] 作者用神经网络无穷宽缩放理论推出 steering vector 的 factor / direction 联合训练应满足 $\eta_{\mathbf{v}}\eta_{\alpha}=\Theta(1)$ 这一缩放约束…
+  [ICML 2026][模型压缩][操控向量] 作者用神经网络无穷宽缩放理论推出 steering vector 的 factor / direction 联合训练应满足 $\eta_{\mathbf{v}}\eta_{\alpha}=\Theta(1)$ 这一缩放约束，从而消掉推理时人工选 $\alpha$ 的环节；同时受 ReFT 启发只在前 4 个 prompt token 上做加性干预（PrOSV），在 AxBench 上既能维持模型实用性，又能在三档 Gemma2/Qwen2.5 模型上一致超过全序列 FSSV。
 tags:
   - "ICML 2026"
   - "模型压缩"

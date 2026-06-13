@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sequential Monte Carlo for Policy Optimization in Continuous POMDPs
 description: >-
-  [NeurIPS 2025][强化学习][POMDP] 提出基于非马尔可夫 Feynman-Kac 模型的嵌套 SMC（Sequential Monte Carlo）算法，在连续 POMDP 中实现策略优化，天然捕获信息收集价值而无需手工启发式。
+  [NeurIPS 2025][强化学习][POMDP] 提出基于非马尔可夫 Feynman-Kac 模型的嵌套 SMC（Sequential Monte Carlo）算法，在连续 POMDP 中实现策略优化，天然捕获信息收集价值而无需手工启发式。 领域现状：部分可观测马尔可夫决策过程（POMDP）中的最优决策要求智能体平衡减…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

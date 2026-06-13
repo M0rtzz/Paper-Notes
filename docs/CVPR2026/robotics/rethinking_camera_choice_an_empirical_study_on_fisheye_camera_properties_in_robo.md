@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Camera Choice: An Empirical Study on Fisheye Camera Properties in Robotic Manipulation
 description: >-
-  [CVPR 2026][机器人][鱼眼相机] 首次系统性地对腕部鱼眼相机在机器人操作模仿学习中的特性进行实证研究，围绕空间定位、场景泛化和硬件泛化三个核心问题揭示了宽视场角的优势与局限，并提出 Random Scale Augmentation (RSA) 策略解决跨相机迁移中的尺度过拟合问题。
+  [CVPR 2026][机器人][鱼眼相机] 首次系统性地对腕部鱼眼相机在机器人操作模仿学习中的特性进行实证研究，围绕空间定位、场景泛化和硬件泛化三个核心问题揭示了宽视场角的优势与局限，并提出 Random Scale Augmentation (RSA) 策略解决跨相机迁移中的尺度过拟合问题。 鱼眼相机凭借超广视场角（Fo…
 tags:
   - "CVPR 2026"
   - "机器人"

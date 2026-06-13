@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finding Diverse Solutions Parameterized by Cliquewidth
 description: >-
-  [AAAI 2026][参数化复杂性] 将"寻找多样化解"的参数化框架从treewidth扩展到更强的cliquewidth图参数，证明任何基于cliquewidth分解的单调动态规划都可以以极小额外开销转换为求解多样化版本的算法，并提出了一族新的Venn多样性度量函数。
+  [AAAI 2026][参数化复杂性] 将"寻找多样化解"的参数化框架从treewidth扩展到更强的cliquewidth图参数，证明任何基于cliquewidth分解的单调动态规划都可以以极小额外开销转换为求解多样化版本的算法，并提出了一族新的Venn多样性度量函数。 问题背景 在组合优化中，通常只求解一个最优解…
 tags:
   - "AAAI 2026"
   - "参数化复杂性"

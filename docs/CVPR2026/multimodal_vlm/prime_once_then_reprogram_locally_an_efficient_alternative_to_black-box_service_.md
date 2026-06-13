@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prime Once, then Reprogram Locally: An Efficient Alternative to Black-Box Service Model Adaptation
 description: >-
-  [CVPR 2026][多模态VLM][模型即服务] 本文提出AReS方法，用单次API查询预热本地编码器代替传统零阶优化（ZOO）的持续API调用，在GPT-4o上获得+27.8%提升（ZOO方法几乎无效），同时将API调用量减少99.99%以上，实现了无成本推理。
+  [CVPR 2026][多模态VLM][模型即服务] 本文提出AReS方法，用单次API查询预热本地编码器代替传统零阶优化（ZOO）的持续API调用，在GPT-4o上获得+27.8%提升（ZOO方法几乎无效），同时将API调用量减少99.99%以上，实现了无成本推理。 1. 领域现状：Model-as-a-Service（M…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

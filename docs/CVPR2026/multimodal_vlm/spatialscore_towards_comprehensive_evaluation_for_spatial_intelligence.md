@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpatialScore: Towards Comprehensive Evaluation for Spatial Intelligence
 description: >-
-  [CVPR 2026][多模态VLM][空间智能] 本文提出了目前最全面的多模态空间智能基准 SpatialScore（5K样本/30任务），并通过数据驱动的 SpatialCorpus（331K QA）微调方案和免训练的 SpatialAgent（12个工具）两条互补路径来提升 MLLM 的空间理解能力。
+  [CVPR 2026 Highlight][多模态VLM][空间智能] 本文提出了目前最全面的多模态空间智能基准 SpatialScore（5K样本/30任务），并通过数据驱动的 SpatialCorpus（331K QA）微调方案和免训练的 SpatialAgent（12个工具）两条互补路径来提升 MLLM 的空间理解能力。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "多模态VLM"
   - "空间智能"
   - "多模态评测"

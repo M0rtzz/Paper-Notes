@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UAVGen: Visual Prototype Conditioned Focal Region Generation for UAV-Based Object Detection
 description: >-
-  [CVPR 2026][目标检测][UAV detection] 提出 UAVGen，一个面向无人机目标检测的 layout-to-image 数据增强框架，通过视觉原型条件扩散模型和焦点区域增强管线解决小目标生成质量低、模型容量浪费和标签不一致问题。
+  [CVPR 2026][目标检测][UAV detection] 提出 UAVGen，一个面向无人机目标检测的 layout-to-image 数据增强框架，通过视觉原型条件扩散模型和焦点区域增强管线解决小目标生成质量低、模型容量浪费和标签不一致问题。 无人机（UAV）目标检测面临严重的数据稀缺问题，尤其在动态变化环境中…
 tags:
   - "CVPR 2026"
   - "目标检测"

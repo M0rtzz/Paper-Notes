@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The Price of Robustness: Stable Classifiers Need Overparameterization
 description: >-
-  [ICLR 2026][过参数化] 建立了不连续分类器的稳定性-泛化界，证明了分类任务中的"鲁棒性代价定律"：任何参数量 $p \approx n$ 的插值分类器必然不稳定，实现高稳定性需要 $p \approx nd$ 量级的过参数化。
+  [ICLR 2026][学习理论 / 泛化理论][过参数化] 建立了不连续分类器的稳定性-泛化界，证明了分类任务中的"鲁棒性代价定律"：任何参数量 $p \approx n$ 的插值分类器必然不稳定，实现高稳定性需要 $p \approx nd$ 量级的过参数化。 - 过参数化的悖论：经典学习理论认为参数越多过拟合越严重…
 tags:
   - "ICLR 2026"
+  - "学习理论 / 泛化理论"
   - "过参数化"
   - "鲁棒性"
   - "稳定性"

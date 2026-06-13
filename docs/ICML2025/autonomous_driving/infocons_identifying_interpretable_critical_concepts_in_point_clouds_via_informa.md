@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfoCons: Identifying Interpretable Critical Concepts in Point Clouds via Information Theory
 description: >-
-  [ICML 2025][自动驾驶][点云解释] 提出 InfoCons 框架，将信息瓶颈（IB）原理应用于点云模型解释——通过学习一个注意力瓶颈网络来分解点云为不同重要性的 3D 概念，引入可学习的无偏先验替代固定先验…
+  [ICML 2025][自动驾驶][点云解释] 提出 InfoCons 框架，将信息瓶颈（IB）原理应用于点云模型解释——通过学习一个注意力瓶颈网络来分解点云为不同重要性的 3D 概念，引入可学习的无偏先验替代固定先验，在保证对模型预测忠实（faithfulness）的同时生成概念连贯（conceptual cohesion）的解释。
 tags:
   - "ICML 2025"
   - "自动驾驶"

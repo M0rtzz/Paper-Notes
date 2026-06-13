@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instruction Lens Score: Your Instruction Contributes a Powerful Object Hallucination Detector for Multimodal Large Language Models
 description: >-
-  [ICML 2026][幻觉检测][对象幻觉] 本文发现 MLLM 中 instruction token 的中间层嵌入能天然过滤视觉端引入的误导信息，据此提出训练无关的 InsLen 分数（Calibrated Local Score + Context Consistency Score）…
+  [ICML 2026][幻觉检测][对象幻觉] 本文发现 MLLM 中 instruction token 的中间层嵌入能天然过滤视觉端引入的误导信息，据此提出训练无关的 InsLen 分数（Calibrated Local Score + Context Consistency Score），在 5 个 MLLM × 4 个基准上把对象幻觉检测的 AUROC 拉高最多 13.81%。
 tags:
   - "ICML 2026"
   - "幻觉检测"

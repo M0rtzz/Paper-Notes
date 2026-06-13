@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation
 description: >-
-  [AAAI 2026][医学图像][胸部X光报告生成] 提出一种两阶段疾病感知框架，通过学习14个与病理类别对应的疾病感知语义token（DASTs）实现显式的疾病表征，再利用疾病-视觉注意力融合（DVAF）和双模态相似性检索（DMSR）机制辅助LLM生成临床准确的胸部X光报告…
+  [AAAI 2026][医学图像][胸部X光报告生成] 提出一种两阶段疾病感知框架，通过学习14个与病理类别对应的疾病感知语义token（DASTs）实现显式的疾病表征，再利用疾病-视觉注意力融合（DVAF）和双模态相似性检索（DMSR）机制辅助LLM生成临床准确的胸部X光报告，在CheXpert Plus、IU X-Ray和MIMIC-CXR三个数据集上取得SOTA。
 tags:
   - "AAAI 2026"
   - "医学图像"

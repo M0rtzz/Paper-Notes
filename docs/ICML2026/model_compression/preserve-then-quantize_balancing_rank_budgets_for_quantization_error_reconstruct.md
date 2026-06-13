@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preserve-Then-Quantize: Balancing Rank Budgets for Quantization Error Reconstruction in LLMs
 description: >-
-  [ICML 2026][模型压缩][PTQ] 作者提出 SRR（Structured Residual Reconstruction），把 QER（Quantization Error Reconstruction）中固定用于补偿量化残差的低秩预算 $r$ 显式地拆成"先保留 $k$ 个主奇异方向再量化"和"…
+  [ICML 2026][模型压缩][PTQ] 作者提出 SRR（Structured Residual Reconstruction），把 QER（Quantization Error Reconstruction）中固定用于补偿量化残差的低秩预算 $r$ 显式地拆成"先保留 $k$ 个主奇异方向再量化"和"用 $r-k$ 个秩去拟合残差"两部分，并给出一个只需一次随机探针的闭式准则来逐层选 $k^\star$，在 2/3 bit PTQ 和 QPEFT 上一致优于 LQER/QERA。
 tags:
   - "ICML 2026"
   - "模型压缩"

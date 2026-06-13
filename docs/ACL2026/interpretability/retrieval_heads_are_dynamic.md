@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval Heads are Dynamic
 description: >-
-  [ACL2026][可解释性][retrieval heads] 本文证明 LLM 中负责从上下文取信息的 retrieval heads 并不是固定集合，而会随生成步动态变化、不可被静态 heads 替代，并可由 hidden states 预测，从而能提升动态 RAG 的检索效果。
+  [ACL2026][可解释性][retrieval heads] 本文证明 LLM 中负责从上下文取信息的 retrieval heads 并不是固定集合，而会随生成步动态变化、不可被静态 heads 替代，并可由 hidden states 预测，从而能提升动态 RAG 的检索效果。 领域现状：已有机制可解释性研究发现 T…
 tags:
   - "ACL2026"
   - "可解释性"

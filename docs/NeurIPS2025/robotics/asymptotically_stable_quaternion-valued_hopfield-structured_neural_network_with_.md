@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning
 description: >-
-  [NeurIPS 2025][机器人][quaternion neural network] 提出四元数值监督学习 Hopfield 结构神经网络 (QSHNN)，通过周期性投影策略保持权重矩阵的四元数结构一致性，并基于 Lyapunov 理论证明了不动点的存在唯一性和渐近稳定性…
+  [NeurIPS 2025][机器人][quaternion neural network] 提出四元数值监督学习 Hopfield 结构神经网络 (QSHNN)，通过周期性投影策略保持权重矩阵的四元数结构一致性，并基于 Lyapunov 理论证明了不动点的存在唯一性和渐近稳定性，轨迹曲率有界保证机器人路径规划的平滑性。
 tags:
   - "NeurIPS 2025"
   - "机器人"
@@ -119,10 +119,10 @@ tags:
 - **vs 四元数监督网络 (QSNN)**：标准 QSNN 只做静态输入-输出映射，无连续时间稳定性保证
 
 ## 评分
-- 新颖性: ⭐⭐⭐⭐ 四元数 + Hopfield + 监督学习 + 周期投影的组合确实新颖，理论推导严谨
-- 实验充分度: ⭐⭐ 实验规模太小（4 神经元），缺乏与基线的定量对比，机器人应用仅为原型
-- 写作质量: ⭐⭐⭐⭐ 数学推导清晰，但行文偏冗长
-- 价值: ⭐⭐⭐ 理论基础扎实，但实际应用价值需更大规模实验验证
+- 新颖性: ⭐⭐⭐⭐⭐ 四元数 + Hopfield + 监督学习 + 周期投影的组合确实新颖，理论推导严谨
+- 实验充分度: ⭐⭐⭐ 实验规模太小（4 神经元），缺乏与基线的定量对比，机器人应用仅为原型
+- 写作质量: ⭐⭐⭐⭐⭐ 数学推导清晰，但行文偏冗长
+- 价值: ⭐⭐⭐⭐ 理论基础扎实，但实际应用价值需更大规模实验验证
 
 <!-- RELATED:START -->
 

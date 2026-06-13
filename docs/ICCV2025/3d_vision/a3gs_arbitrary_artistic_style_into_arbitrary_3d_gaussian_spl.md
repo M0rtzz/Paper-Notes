@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A3GS: Arbitrary Artistic Style into Arbitrary 3D Gaussian Splatting
 description: >-
-  [ICCV 2025][3D视觉][3DGS风格迁移] 提出A3GS——首个前馈式零样本3DGS风格迁移框架，通过GCN自编码器将3DGS场景编码到潜在空间并用AdaIN注入任意风格特征，仅需10秒即可完成任意风格到任意3D场景的迁移，速度比优化方法快两个数量级。
+  [ICCV 2025][3D视觉][3DGS风格迁移] 提出A3GS——首个前馈式零样本3DGS风格迁移框架，通过GCN自编码器将3DGS场景编码到潜在空间并用AdaIN注入任意风格特征，仅需10秒即可完成任意风格到任意3D场景的迁移，速度比优化方法快两个数量级。 领域现状：3D场景风格迁移是元宇宙、游戏等领域的重要需求…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning
 description: >-
-  [CVPR 2026][机器人][连续隐运动] 提出 CoMo，通过早期时序差分（Td）和时序对比学习（Tcl）两个机制协同解决连续隐运动学习中的捷径学习问题，从互联网视频中提取精细的连续伪动作标签，使视频数据与机器人动作在统一连续分布下联合训练，显著提升策略性能。
+  [CVPR 2026][机器人][连续隐运动] 提出 CoMo，通过早期时序差分（Td）和时序对比学习（Tcl）两个机制协同解决连续隐运动学习中的捷径学习问题，从互联网视频中提取精细的连续伪动作标签，使视频数据与机器人动作在统一连续分布下联合训练，显著提升策略性能。 从互联网视频中学习隐运动（latent motion）是扩…
 tags:
   - "CVPR 2026"
   - "机器人"

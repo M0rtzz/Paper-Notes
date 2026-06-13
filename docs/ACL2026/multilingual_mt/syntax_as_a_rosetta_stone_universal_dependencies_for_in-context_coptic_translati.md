@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Syntax as a Rosetta Stone: Universal Dependencies for In-Context Coptic Translation
 description: >-
-  [ACL 2026][多语言/翻译][低资源机器翻译] 本文首次探索将 Universal Dependencies 句法信息作为上下文学习的增强源用于低资源科普特语到英语的机器翻译，发现虽然句法信息单独不如词典有效，但将词典与句法信息结合（LEX+SYN）在所有模型上取得最佳效果…
+  [ACL 2026 Findings][多语言/翻译][低资源机器翻译] 本文首次探索将 Universal Dependencies 句法信息作为上下文学习的增强源用于低资源科普特语到英语的机器翻译，发现虽然句法信息单独不如词典有效，但将词典与句法信息结合（LEX+SYN）在所有模型上取得最佳效果，Gemma-27B 的 BERTScore F1 达到 0.8746（+0.0361）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "低资源机器翻译"
   - "科普特语"

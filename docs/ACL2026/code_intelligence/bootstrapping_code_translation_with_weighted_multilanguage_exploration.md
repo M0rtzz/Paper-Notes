@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrapping Code Translation with Weighted Multilanguage Exploration
 description: >-
-  [ACL 2026][代码智能][代码翻译] BootTrans 提出了一种自举式多语言代码翻译方法，通过利用单一枢纽语言（Python）的测试用例作为跨语言验证预言，结合双池架构进行经验收集扩展训练数据，并设计语言感知加权机制动态优先处理困难的翻译方向…
+  [ACL 2026][代码智能][代码翻译] BootTrans 提出了一种自举式多语言代码翻译方法，通过利用单一枢纽语言（Python）的测试用例作为跨语言验证预言，结合双池架构进行经验收集扩展训练数据，并设计语言感知加权机制动态优先处理困难的翻译方向，在 HumanEval-X 和 TransCoder-Test 上显著超越基线。
 tags:
   - "ACL 2026"
   - "代码智能"

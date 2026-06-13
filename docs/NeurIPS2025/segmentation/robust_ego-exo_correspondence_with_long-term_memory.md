@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Ego-Exo Correspondence with Long-Term Memory
 description: >-
-  [NeurIPS 2025][语义分割][自中心-外中心对应] 提出LM-EEC，基于SAM 2的自中心-外中心(ego-exo)视频跨视角目标分割框架，通过Memory-View MoE自适应融合记忆特征与跨视角特征，配合双记忆库压缩策略保持长期信息…
+  [NeurIPS 2025][语义分割][自中心-外中心对应] 提出LM-EEC，基于SAM 2的自中心-外中心(ego-exo)视频跨视角目标分割框架，通过Memory-View MoE自适应融合记忆特征与跨视角特征，配合双记忆库压缩策略保持长期信息，在EgoExo4D基准上大幅超越现有方法（Ego2Exo IoU 54.98 vs 38.26）。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] NonZero: Interaction-Guided Exploration for Multi-Agent Monte Carlo Tree Search
 description: >-
-  [ICML 2026][MCTS] 用一个 asinh 链接的 GLM surrogate 把多智能体 MCTS 的 joint-action 空间 $d^n$ 压成 low-dim 非线性 bandit，再用"一阶差分量 + 二阶 mixed difference"作为 NonUCT 提议规则…
+  [ICML 2026 Spotlight][MCTS] 用一个 asinh 链接的 GLM surrogate 把多智能体 MCTS 的 joint-action 空间 $d^n$ 压成 low-dim 非线性 bandit，再用"一阶差分量 + 二阶 mixed difference"作为 NonUCT 提议规则，只在每个节点维护小候选集 $\mathcal{C}(s)$，证明 $\widetilde{O}(T^{3/4})$ 的局部 regret（与 $d^n$ 无关），在 MatGame/SMAC/SMACv2 上 sample efficiency 和最终性能都好过 MAZero 等强 baseline。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "MCTS"
   - "joint action 爆炸"
   - "二阶差分交互"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetFuse: Figurative Fusion between Metonymy and Metaphor
 description: >-
-  [ACL 2026][NLP理解][转喻] 作者提出一个三阶段（候选生成 → MLM 打分挑选 → LLM 润色）流水线，把一句字面句子同时改写成转喻 / 隐喻 / 混合（hybrid）三种 figurative 变体，构造出首个 1000 quadruplet × 4000 句的 MetFuse 数据集…
+  [ACL 2026][NLP理解][转喻] 作者提出一个三阶段（候选生成 → MLM 打分挑选 → LLM 润色）流水线，把一句字面句子同时改写成转喻 / 隐喻 / 混合（hybrid）三种 figurative 变体，构造出首个 1000 quadruplet × 4000 句的 MetFuse 数据集，并实证发现"隐喻动词的出现会让同句中的转喻名词变得更显性"，在 8 个 metonymy/metaphor 分类基准上做数据增强一致涨点。
 tags:
   - "ACL 2026"
   - "NLP理解"

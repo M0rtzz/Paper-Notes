@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation
 description: >-
-  [NeurIPS 2025][LLM安全][machine unlearning] 将机器遗忘的评估问题建模为密码学博弈（unlearning sample inference game），通过定义adversary的"advantage"来衡量遗忘质量…
+  [NeurIPS 2025][LLM安全][machine unlearning] 将机器遗忘的评估问题建模为密码学博弈（unlearning sample inference game），通过定义adversary的"advantage"来衡量遗忘质量，克服了传统MIA准确率作为评估指标的多种缺陷（不以retrain为零基准、对数据划分敏感、对MIA选择敏感），并提出SWAP test作为高效的实用近似方案。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

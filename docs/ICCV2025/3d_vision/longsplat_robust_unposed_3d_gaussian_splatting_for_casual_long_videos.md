@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos
 description: >-
-  [3D视觉] LongSplat 针对无相机位姿的随拍长视频场景，提出增量联合优化框架同时优化相机位姿和 3DGS，设计基于 MASt3R 先验的鲁棒位姿估计模块和自适应八叉树锚点形成机制，解决位姿漂移、几何初始化不准和内存限制问题。
+  [3D视觉] LongSplat 针对无相机位姿的随拍长视频场景，提出增量联合优化框架同时优化相机位姿和 3DGS，设计基于 MASt3R 先验的鲁棒位姿估计模块和自适应八叉树锚点形成机制，解决位姿漂移、几何初始化不准和内存限制问题。 随拍长视频是 3D 内容的重要来源，但给新视角合成带来独特挑战： 位姿估计困难：COLMA…
 tags:
   - "3D视觉"
 ---

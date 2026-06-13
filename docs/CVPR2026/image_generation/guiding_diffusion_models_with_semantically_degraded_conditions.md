@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guiding Diffusion Models with Semantically Degraded Conditions
 description: >-
-  [CVPR2026][图像生成][Classifier-Free Guidance] 提出 Condition-Degradation Guidance (CDG)，用语义退化的条件 $\boldsymbol{c}_{\text{deg}}$ 替代 CFG 中的空提示 $\emptyset$…
+  [CVPR2026][图像生成][Classifier-Free Guidance] 提出 Condition-Degradation Guidance (CDG)，用语义退化的条件 $\boldsymbol{c}_{\text{deg}}$ 替代 CFG 中的空提示 $\emptyset$，将引导从粗粒度"好 vs. 空"转变为细粒度"好 vs. 差一点"的对比，通过分层退化策略（先退化内容 token 再退化上下文聚合 token）构建自适应负样本，在 SD3/FLUX/Qwen-Image 等模型上即插即用地提升组合生成精度，几乎零额外开销。
 tags:
   - "CVPR2026"
   - "图像生成"

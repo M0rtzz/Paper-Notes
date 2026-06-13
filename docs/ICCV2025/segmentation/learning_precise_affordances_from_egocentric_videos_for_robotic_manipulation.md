@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Precise Affordances from Egocentric Videos for Robotic Manipulation
 description: >-
-  [ICCV 2025][语义分割][Affordance Learning] 提出一套完整的 affordance 学习系统：(1) 从第一人称视频自动提取精确的可抓取/功能性 affordance 分割标注…
+  [ICCV 2025][语义分割][Affordance Learning] 提出一套完整的 affordance 学习系统：(1) 从第一人称视频自动提取精确的可抓取/功能性 affordance 分割标注，(2) 基于 DINOv2 + 深度几何引导的 GAT 模型实现跨域 affordance 分割（mIoU 提升 13.8%），(3) Aff-Grasp 框架在 179 次真实机器人试验中达到 77.1% 抓取成功率。
 tags:
   - "ICCV 2025"
   - "语义分割"

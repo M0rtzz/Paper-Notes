@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learn2Synth: Learning Optimal Data Synthesis Using Hypergradients for Brain Image Segmentation
 description: >-
-  [ICCV 2025][语义分割][域随机化] 提出Learn2Synth训练框架，通过超梯度（hypergradients）学习最优的合成数据增强参数，使在合成数据上训练的分割网络在真实数据上达到最优精度，兼顾域内高精度和域外强泛化，在脑MRI分割任务中全面超越SynthSeg和监督学习基线。
+  [ICCV 2025][语义分割][域随机化] 提出Learn2Synth训练框架，通过超梯度（hypergradients）学习最优的合成数据增强参数，使在合成数据上训练的分割网络在真实数据上达到最优精度，兼顾域内高精度和域外强泛化，在脑MRI分割任务中全面超越SynthSeg和监督学习基线。 医学影像中高质量标注数据的获…
 tags:
   - "ICCV 2025"
   - "语义分割"

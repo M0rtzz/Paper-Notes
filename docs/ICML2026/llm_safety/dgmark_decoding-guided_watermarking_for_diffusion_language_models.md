@@ -2,7 +2,7 @@
 title: >-
   [论文解读] dgMARK: Decoding-Guided Watermarking for Diffusion Language Models
 description: >-
-  [ICML 2026][LLM安全][dLLM 水印] dgMARK 把扩散语言模型（dLLM）固有的"解码顺序自由度"用作水印通道——根据二进制哈希优先解码满足奇偶条件的位置，无需修改 token 概率分布，就能在 LLaDA / Dream 上嵌入可统计检测且对插删替/改写鲁棒的水印。
+  [ICML 2026][LLM安全][dLLM 水印] dgMARK 把扩散语言模型（dLLM）固有的"解码顺序自由度"用作水印通道——根据二进制哈希优先解码满足奇偶条件的位置，无需修改 token 概率分布，就能在 LLaDA / Dream 上嵌入可统计检测且对插删替/改写鲁棒的水印。 领域现状：LLM 内容溯源主要靠水…
 tags:
   - "ICML 2026"
   - "LLM安全"

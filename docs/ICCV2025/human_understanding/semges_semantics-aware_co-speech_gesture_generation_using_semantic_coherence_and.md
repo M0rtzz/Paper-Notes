@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning
 description: >-
-  [人体理解] > SemGes 提出两阶段框架，通过语义一致性和语义相关性学习在全局和细粒度层面整合语义信息，生成与语音语义对齐的共语手势，在 BEAT 和 TED-Expressive 两个基准上超越现有方法。
+  [人体理解] SemGes 提出两阶段框架，通过语义一致性和语义相关性学习在全局和细粒度层面整合语义信息，生成与语音语义对齐的共语手势，在 BEAT 和 TED-Expressive 两个基准上超越现有方法。 人类语言本质上是多模态的，手势和语音相互补充以传达语用和语义信息。共语手势生成旨在合成与语音同步的非语言线索…
 tags:
   - "人体理解"
 ---

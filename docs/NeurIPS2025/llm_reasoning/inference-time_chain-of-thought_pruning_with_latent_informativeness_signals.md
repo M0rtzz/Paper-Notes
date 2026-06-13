@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference-Time Chain-of-Thought Pruning with Latent Informativeness Signals
 description: >-
-  [NeurIPS 2025][LLM推理][inference-time scaling] 提出 KAPPA (KL-Adjusted Pruned Path Algorithm)，利用 KL 散度、置信度和熵三个无需额外训练的信号对 Best-of-N 采样的推理分支进行渐进式剪枝…
+  [NeurIPS 2025][LLM推理][inference-time scaling] 提出 KAPPA (KL-Adjusted Pruned Path Algorithm)，利用 KL 散度、置信度和熵三个无需额外训练的信号对 Best-of-N 采样的推理分支进行渐进式剪枝，在保持准确率的同时实现最高 60% 峰值内存和 90% token 生成量的削减。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

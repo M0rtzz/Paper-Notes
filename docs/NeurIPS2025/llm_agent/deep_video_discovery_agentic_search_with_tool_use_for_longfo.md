@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding
 description: >-
-  [NeurIPS 2025][LLM Agent][视频理解] 提出 DVD（Deep Video Discovery）agent，将长视频理解建模为多步信息搜索问题：先将长视频构建为多粒度结构化数据库（全局摘要 + clip 级字幕嵌入 + 帧级像素）…
+  [NeurIPS 2025][LLM Agent][视频理解] 提出 DVD（Deep Video Discovery）agent，将长视频理解建模为多步信息搜索问题：先将长视频构建为多粒度结构化数据库（全局摘要 + clip 级字幕嵌入 + 帧级像素），再提供三种搜索工具（Global Browse / Clip Search / Frame Inspect），由 reasoning LLM 通过 observe-reason-act 循环自主编排搜索轨迹，在 LVBench 达 74.2%（超先前 SOTA MR.Video 13.4 pp），加字幕 76.0%。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

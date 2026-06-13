@@ -2,10 +2,10 @@
 title: >-
   [论文解读] STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks
 description: >-
-  [CVPR 2025][LLM/NLP][脉冲神经网络] 通过在SNN中集成全局上下文自注意(GC)、位置编码(PE)、步骤注意(SA)和时间步随机退出(TSRD)四大模块，STAA-SNN在CIFAR-10/100和ImageNet上达到97.14%/82.05%/70.40%的SNN SOTA性能。
+  [CVPR 2025][LLM 其他][脉冲神经网络] 通过在SNN中集成全局上下文自注意(GC)、位置编码(PE)、步骤注意(SA)和时间步随机退出(TSRD)四大模块，STAA-SNN在CIFAR-10/100和ImageNet上达到97.14%/82.05%/70.40%的SNN SOTA性能。
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "脉冲神经网络"
   - "空间-时间注意力"
   - "自适应LIF"

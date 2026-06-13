@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boomerang Distillation Enables Zero-Shot Model Size Interpolation
 description: >-
-  [ICLR2026][模型压缩][知识蒸馏] 提出"回旋蒸馏"范式——只训练一个小 student 模型，通过将 teacher 的 transformer 层块逐步贴回 student，零训练代价地构建出一整族中间尺寸模型，性能在 student 与 teacher 之间平滑插值…
+  [ICLR2026][模型压缩][知识蒸馏] 提出"回旋蒸馏"范式——只训练一个小 student 模型，通过将 teacher 的 transformer 层块逐步贴回 student，零训练代价地构建出一整族中间尺寸模型，性能在 student 与 teacher 之间平滑插值，匹配甚至超越逐个蒸馏的同等规模模型。
 tags:
   - "ICLR2026"
   - "模型压缩"

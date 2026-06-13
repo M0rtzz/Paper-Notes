@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Motion4D: Learning 3D-Consistent Motion and Semantics for 4D Scene Understanding
 description: >-
-  [NeurIPS 2025][3D视觉][4D场景理解] Motion4D提出了一个统一的4D高斯溅射框架，通过迭代优化策略将2D基础模型的先验（语义掩码、点追踪、深度）融入3D表示，实现了时空一致的运动和语义建模，在视频对象分割、点追踪和新视角合成任务上显著超越了现有方法。
+  [NeurIPS 2025][3D视觉][4D场景理解] Motion4D提出了一个统一的4D高斯溅射框架，通过迭代优化策略将2D基础模型的先验（语义掩码、点追踪、深度）融入3D表示，实现了时空一致的运动和语义建模，在视频对象分割、点追踪和新视角合成任务上显著超越了现有方法。 近年来，2D视觉基础模型（如SAM2、Track…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

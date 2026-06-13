@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans
 description: >-
-  [NeurIPS 2025][图像生成][多人图像生成] 提出 MultiHuman-Testbench，首个系统性评估多人图像生成的基准，包含 1800 个测试样本配对 5550 张人脸图像，以及基于匈牙利匹配的身份相似度等多维度评估指标，并提出区域隔离和隐式匹配技术提升现有方法性能。
+  [NeurIPS 2025][图像生成][多人图像生成] 提出 MultiHuman-Testbench，首个系统性评估多人图像生成的基准，包含 1800 个测试样本配对 5550 张人脸图像，以及基于匈牙利匹配的身份相似度等多维度评估指标，并提出区域隔离和隐式匹配技术提升现有方法性能。 领域现状： 当前文本到图像扩散模型可…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

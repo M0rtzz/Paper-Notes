@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Incremental Unified Framework for Small Defect Inspection
 description: >-
-  [ECCV 2024][缺陷检测] 提出增量统一框架IUF，首次将增量学习集成到统一重建式缺陷检测方法中，通过目标感知自注意力（OASA）建立语义边界、语义压缩损失（SCL）压缩非主要语义空间、以及基于SVD的权重更新策略保护旧对象特征…
+  [ECCV 2024][缺陷检测] 提出增量统一框架IUF，首次将增量学习集成到统一重建式缺陷检测方法中，通过目标感知自注意力（OASA）建立语义边界、语义压缩损失（SCL）压缩非主要语义空间、以及基于SVD的权重更新策略保护旧对象特征，在MVTec-AD和VisA上实现图像级和像素级的SOTA增量缺陷检测性能。
 tags:
   - "ECCV 2024"
   - "缺陷检测"

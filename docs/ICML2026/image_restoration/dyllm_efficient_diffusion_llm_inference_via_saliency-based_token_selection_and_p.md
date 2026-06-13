@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DyLLM: Efficient Diffusion LLM Inference via Saliency-based Token Selection and Partial Attention
 description: >-
-  [ICML2026][图像恢复][扩散语言模型] DyLLM 是一种 training-free 的扩散 LLM 推理加速框架，利用相邻去噪步骤之间注意力上下文的余弦相似度识别"显著 token"，只对这部分 token 重算 FFN 和注意力，配合显著感知的近似注意力…
+  [ICML2026][图像恢复][扩散语言模型] DyLLM 是一种 training-free 的扩散 LLM 推理加速框架，利用相邻去噪步骤之间注意力上下文的余弦相似度识别"显著 token"，只对这部分 token 重算 FFN 和注意力，配合显著感知的近似注意力，在 LLaDA / Dream 上把吞吐推到 7.6× / 9.6× 而几乎不掉点。
 tags:
   - "ICML2026"
   - "图像恢复"

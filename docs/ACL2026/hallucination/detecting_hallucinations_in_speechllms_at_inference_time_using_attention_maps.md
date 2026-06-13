@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps
 description: >-
-  [ACL 2026][幻觉检测][语音大模型] 提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉…
+  [ACL 2026 Findings][幻觉检测][语音大模型] 提出四种基于音频注意力的指标（AudioRatio、AudioConsistency、AudioEntropy、TextEntropy），训练轻量级逻辑回归分类器在推理时检测语音大模型（SpeechLLM）的幻觉，在域内数据上 PR-AUC 提升最高达 +0.23。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "幻觉检测"
   - "语音大模型"
   - "注意力图"

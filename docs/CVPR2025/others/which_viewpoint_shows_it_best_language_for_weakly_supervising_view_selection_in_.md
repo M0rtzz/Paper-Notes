@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Which Viewpoint Shows it Best? Language for Weakly Supervising View Selection in Multi-view Instructional Videos
 description: >-
-  [CVPR 2025][视角选择] 本文提出 LangView，利用视角无关的文字叙述（narration）作为弱监督信号，通过比较各视角预测 caption 与真实叙述的匹配度来生成最佳视角伪标签，实现无需手动标注的多视角教学视频自动视角选择。
+  [CVPR 2025][视角选择] 本文提出 LangView，利用视角无关的文字叙述（narration）作为弱监督信号，通过比较各视角预测 caption 与真实叙述的匹配度来生成最佳视角伪标签，实现无需手动标注的多视角教学视频自动视角选择。 领域现状：多视角教学视频（如多机位拍摄的操作教程）需要选择每个时刻最具信息量的…
 tags:
   - "CVPR 2025"
   - "视角选择"

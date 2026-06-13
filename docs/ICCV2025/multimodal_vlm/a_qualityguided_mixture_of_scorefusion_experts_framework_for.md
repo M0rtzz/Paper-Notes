@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition
 description: >-
-  [ICCV 2025][多模态VLM][全身生物特征识别] 提出 Quality-guided Mixture of score-fusion Experts (QME) 框架，通过质量引导的 MoE 策略对来自不同生物特征模态（人脸、步态、身体）的相似度分数进行可学习融合，配合伪质量损失和分数三元组损失…
+  [ICCV 2025][多模态VLM][全身生物特征识别] 提出 Quality-guided Mixture of score-fusion Experts (QME) 框架，通过质量引导的 MoE 策略对来自不同生物特征模态（人脸、步态、身体）的相似度分数进行可学习融合，配合伪质量损失和分数三元组损失，在多个全身生物特征识别基准上达到 SOTA。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

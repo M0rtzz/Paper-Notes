@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PlanetAlign: A Comprehensive Python Library for Benchmarking Network Alignment
 description: >-
-  [ICLR 2026][网络对齐] 提出 PlanetAlign，一个集成 18 个跨 6 个领域的数据集、14 种覆盖三大类别（一致性、嵌入、最优传输）方法和标准化评估流程的 PyTorch 网络对齐基准库…
+  [ICLR 2026][网络对齐] 提出 PlanetAlign，一个集成 18 个跨 6 个领域的数据集、14 种覆盖三大类别（一致性、嵌入、最优传输）方法和标准化评估流程的 PyTorch 网络对齐基准库，通过大规模系统实验揭示了 OT 类方法（PARROT/JOENA）在有效性上的全面领先以及各类方法在可扩展性和鲁棒性上的差异化表现。
 tags:
   - "ICLR 2026"
   - "网络对齐"

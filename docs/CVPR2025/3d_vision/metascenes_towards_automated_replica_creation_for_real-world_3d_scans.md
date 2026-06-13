@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetaScenes: Towards Automated Replica Creation for Real-world 3D Scans
 description: >-
-  [CVPR 2025][3D视觉][3D场景重建] MetaScenes 构建了一个大规模可仿真3D场景数据集（15366个物体, 831类），通过从真实扫描中自动替换物体资产实现 Real-to-Sim 转换，并提出多模态对齐模型 Scan2Sim 实现自动化资产选择…
+  [CVPR 2025][3D视觉][3D场景重建] MetaScenes 构建了一个大规模可仿真3D场景数据集（15366个物体, 831类），通过从真实扫描中自动替换物体资产实现 Real-to-Sim 转换，并提出多模态对齐模型 Scan2Sim 实现自动化资产选择，在场景合成和VLN跨域迁移任务上验证了数据集的价值。
 tags:
   - "CVPR 2025"
   - "3D视觉"

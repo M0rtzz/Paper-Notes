@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Possibilistic Predictive Uncertainty for Deep Learning
 description: >-
-  [ICML 2026][认知不确定性] 本文用 possibility theory 替代 Bayes 概率框架，提出 DAPPr——把参数空间的 possibilistic 后验通过 supremum 投影到预测空间，再用可学习的 Dirichlet possibility function 拟合…
+  [ICML 2026][认知不确定性] 本文用 possibility theory 替代 Bayes 概率框架，提出 DAPPr——把参数空间的 possibilistic 后验通过 supremum 投影到预测空间，再用可学习的 Dirichlet possibility function 拟合，最终得到一个仅 10 行代码、可直接替换交叉熵、且在 OOD 检测上超越 EDL 家族的认知不确定性建模方法。
 tags:
   - "ICML 2026"
   - "认知不确定性"

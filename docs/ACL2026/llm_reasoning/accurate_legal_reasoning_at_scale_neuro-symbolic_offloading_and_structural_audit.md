@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication
 description: >-
-  [ACL 2026][LLM推理][神经符号] 本文提出 Amortized Intelligence 范式：把 LLM 当作"一次性编译器"将法律合同编译成名为 DACL 的确定性有向无环图中间表示，运行时由轻量 agent 调度符号引擎执行，在 400 个真实合同事件上达到 99.5% 准确率…
+  [ACL 2026][LLM推理][神经符号] 本文提出 Amortized Intelligence 范式：把 LLM 当作"一次性编译器"将法律合同编译成名为 DACL 的确定性有向无环图中间表示，运行时由轻量 agent 调度符号引擎执行，在 400 个真实合同事件上达到 99.5% 准确率，相比 GPT-5.2/Claude/Gemini 等推理大模型在复杂合同上准确率从 22-46% 直接跳到 98%，且 token 消耗降低 9.9 倍。
 tags:
   - "ACL 2026"
   - "LLM推理"

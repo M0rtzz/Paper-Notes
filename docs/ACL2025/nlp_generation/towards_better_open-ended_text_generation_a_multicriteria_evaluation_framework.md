@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Better Open-Ended Text Generation: A Multicriteria Evaluation Framework
 description: >-
-  [ACL 2025 (workshop GEM²)][文本生成][open-ended text generation] 针对开放式文本生成中多指标（coherence/diversity/perplexity）之间的权衡问题…
+  [ACL 2025 (workshop GEM²)][文本生成][open-ended text generation] 针对开放式文本生成中多指标（coherence/diversity/perplexity）之间的权衡问题，提出三种互补的多准则评估方法——Extended Bradley-Terry 模型（序数排名）、Union-Free Generic Depth（允许不可比性的偏序）和 Q*Text（基数评估综合指标），在6个 LLM × 59种解码策略 × 180万+生成文本上验证，发现中等超参配置普遍优于极端配置，小模型+合理解码策略可匹敌大模型。
 tags:
   - "ACL 2025 (workshop GEM²)"
   - "文本生成"

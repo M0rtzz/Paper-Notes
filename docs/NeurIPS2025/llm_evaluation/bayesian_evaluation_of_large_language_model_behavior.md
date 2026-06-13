@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bayesian Evaluation of Large Language Model Behavior
 description: >-
-  [NeurIPS 2025][LLM评测][Bayesian inference] 提出基于 Beta-Binomial 贝叶斯模型的 LLM 行为评估框架，通过对每个 prompt 的随机生成结果建模 $\theta_m$ 后验分布，量化评估指标的统计不确定性…
+  [NeurIPS 2025][LLM评测][Bayesian inference] 提出基于 Beta-Binomial 贝叶斯模型的 LLM 行为评估框架，通过对每个 prompt 的随机生成结果建模 $\theta_m$ 后验分布，量化评估指标的统计不确定性，并引入 Thompson sampling 等序贯采样策略以更少的 API 调用获得更窄的置信区间。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BQA: Body Language Question Answering Dataset for Video Large Language Models
 description: >-
-  [ACL 2025][NLP理解][肢体语言] 基于BoLD数据集通过四步半自动流水线构建了BQA——一个包含7,632个短视频的肢体语言情感识别多选QA基准，评估发现最强VideoLLM（GPT-4o/Gemini）准确率仅约60%远低于人类的85%…
+  [ACL 2025][NLP理解][肢体语言] 基于BoLD数据集通过四步半自动流水线构建了BQA——一个包含7,632个短视频的肢体语言情感识别多选QA基准，评估发现最强VideoLLM（GPT-4o/Gemini）准确率仅约60%远低于人类的85%，同时揭示了模型对面部表情的过度依赖以及针对特定种族群体的显著偏见。
 tags:
   - "ACL 2025"
   - "NLP理解"

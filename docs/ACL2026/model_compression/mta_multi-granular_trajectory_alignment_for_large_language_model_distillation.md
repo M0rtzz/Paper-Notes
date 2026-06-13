@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTA: Multi-Granular Trajectory Alignment for Large Language Model Distillation
 description: >-
-  [ACL2026][模型压缩][大语言模型蒸馏] MTA 将 LLM 蒸馏从“对齐某几个静态层”推进到“按网络深度对齐表示演化轨迹”：低层对齐词级信息，高层对齐短语级关系几何，并作为插件稳定提升 FDD、DistiLLM、DistiLLM-2 在指令跟随任务上的 ROUGE-L 表现。
+  [ACL2026][模型压缩][大语言模型蒸馏] MTA 将 LLM 蒸馏从“对齐某几个静态层”推进到“按网络深度对齐表示演化轨迹”：低层对齐词级信息，高层对齐短语级关系几何，并作为插件稳定提升 FDD、DistiLLM、DistiLLM-2 在指令跟随任务上的 ROUGE-L 表现。 领域现状：LLM 压缩里…
 tags:
   - "ACL2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement
 description: >-
-  [ICLR 2026][可解释性][rich dynamics] 提出一种计算高效、与性能无关的动态丰富度度量 $\mathcal{D}_{LR}$，通过比较最后一层前后的激活来衡量 rich/lazy 训练动态，并证明 neural collapse 是该度量的特殊情况。
+  [ICLR 2026][可解释性][rich dynamics] 提出一种计算高效、与性能无关的动态丰富度度量 $\mathcal{D}_{LR}$，通过比较最后一层前后的激活来衡量 rich/lazy 训练动态，并证明 neural collapse 是该度量的特殊情况。 领域现状：深度学习中的特征学习有两个视角——表征质…
 tags:
   - "ICLR 2026"
   - "可解释性"

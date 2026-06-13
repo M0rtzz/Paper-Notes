@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation
 description: >-
-  [3D视觉] 提出 Gaussian Atlas 表示法，将无序3D高斯通过最优传输映射到球面再展平为规整2D网格，从而直接微调预训练2D Latent Diffusion模型实现高质量文本到3D生成。
+  [3D视觉] 提出 Gaussian Atlas 表示法，将无序3D高斯通过最优传输映射到球面再展平为规整2D网格，从而直接微调预训练2D Latent Diffusion模型实现高质量文本到3D生成。 3D扩散模型的发展受限于高质量3D数据的稀缺，性能远不如2D对应模型。现有方法尝试利用2D扩散模型先验来辅助3D生成…
 tags:
   - "3D视觉"
 ---

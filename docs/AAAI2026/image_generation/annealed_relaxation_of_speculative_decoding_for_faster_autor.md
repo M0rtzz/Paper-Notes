@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation
 description: >-
-  [AAAI 2026][图像生成][推测解码] 提出Cool-SD，一种有理论支撑的退火松弛speculative decoding框架：通过推导TV距离上界得到最优重采样分布，并证明接受概率递减调度比均匀调度产生更小的分布偏移…
+  [AAAI 2026][图像生成][推测解码] 提出Cool-SD，一种有理论支撑的退火松弛speculative decoding框架：通过推导TV距离上界得到最优重采样分布，并证明接受概率递减调度比均匀调度产生更小的分布偏移，在LlamaGen和Lumina-mGPT上实现了比LANTERN++更优的速度-质量权衡。
 tags:
   - "AAAI 2026"
   - "图像生成"

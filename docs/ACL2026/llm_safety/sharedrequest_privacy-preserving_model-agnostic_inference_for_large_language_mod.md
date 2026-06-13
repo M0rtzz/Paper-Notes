@@ -18,7 +18,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2606.05004](https://arxiv.org/abs/2606.05004)  
 **代码**: [GitHub](https://github.com/NusIoraPrivacy/SharedRequest)  
-**领域**: llm_safety  
+**领域**: LLM安全  
 **关键词**: 隐私保护推理, 模型无关, 批次级混淆, 差分隐私, LLM安全
 
 ## 一句话总结

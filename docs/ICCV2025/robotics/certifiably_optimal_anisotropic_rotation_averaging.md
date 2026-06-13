@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certifiably Optimal Anisotropic Rotation Averaging
 description: >-
-  [ICCV 2025][机器人][rotation averaging] 提出了一种新的SDP松弛方法，通过强制解落在SO(3)的凸包conv(SO(3))内，首次实现了各向异性代价下的可证明全局最优旋转平均，解决了传统O(3)松弛在各向异性场景下完全失效的问题。
+  [ICCV 2025][机器人][rotation averaging] 提出了一种新的SDP松弛方法，通过强制解落在SO(3)的凸包conv(SO(3))内，首次实现了各向异性代价下的可证明全局最优旋转平均，解决了传统O(3)松弛在各向异性场景下完全失效的问题。 旋转平均（Rotation Averaging）是SfM和S…
 tags:
   - "ICCV 2025"
   - "机器人"

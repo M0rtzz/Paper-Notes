@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Objects to Anywhere: A Holistic Benchmark for Multi-level Visual Grounding in 3D Scenes
 description: >-
-  [NeurIPS 2025][3D视觉][3D视觉定位] 提出 Anywhere3D-Bench，首个涵盖区域/空间/物体/部件四个层级的 3D 视觉定位基准，揭示即使最强的 Gemini-2.5-Pro 和 o3 在空间级任务上仅达约 30% 准确率、部件级约 40%，远低于人类的 95%。
+  [NeurIPS 2025][3D视觉][3D视觉定位] 提出 Anywhere3D-Bench，首个涵盖区域/空间/物体/部件四个层级的 3D 视觉定位基准，揭示即使最强的 Gemini-2.5-Pro 和 o3 在空间级任务上仅达约 30% 准确率、部件级约 40%，远低于人类的 95%。 领域现状：3D 视觉定位（vi…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

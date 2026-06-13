@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ab Initio Nonparametric Variable Selection for Scalable Symbolic Regression with Large p
 description: >-
-  [ICML2025][可解释性][符号回归] 提出 PAN+SR 框架，通过基于 BART 的非参数变量预筛选，将高维符号回归问题降维至低维子空间，使 19 种现有 SR 方法在高维场景下均获显著性能提升。
+  [ICML2025][可解释性][符号回归] 提出 PAN+SR 框架，通过基于 BART 的非参数变量预筛选，将高维符号回归问题降维至低维子空间，使 19 种现有 SR 方法在高维场景下均获显著性能提升。 核心矛盾 核心矛盾：符号回归（SR）旨在发现可解释的数学表达式，但搜索空间随特征数 p 呈双指数增长…
 tags:
   - "ICML2025"
   - "可解释性"

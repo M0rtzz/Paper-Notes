@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CORAL: Learning Consistent Representations across Multi-step Training with Lighter Speculative Drafter
 description: >-
-  [ACL 2025][推测解码] CORAL 通过跨步表示对齐（CSRA）改进多步训练中 draft 模型的特征一致性，并用权重分组机制压缩大词表 LM head 的推理延迟，在 LLaMA3/Qwen2.5 上实现 2.50-4.07× 加速，超越 EAGLE-2 和 HASS。
+  [ACL 2025][推测解码] CORAL 通过跨步表示对齐（CSRA）改进多步训练中 draft 模型的特征一致性，并用权重分组机制压缩大词表 LM head 的推理延迟，在 LLaMA3/Qwen2.5 上实现 2.50-4.07× 加速，超越 EAGLE-2 和 HASS。 领域现状：投机解码用轻量 draft 模型…
 tags:
   - "ACL 2025"
   - "推测解码"

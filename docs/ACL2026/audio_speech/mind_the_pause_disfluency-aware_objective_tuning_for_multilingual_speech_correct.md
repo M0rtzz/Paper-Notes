@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Pause: Disfluency-Aware Objective Tuning for Multilingual Speech Correction with LLMs
 description: >-
-  [ACL 2026][音频/语音][disfluency correction] 作者提出一个多语言 disfluency 修正流水线：先用 MuRIL 在 token 级标注 fluent/disfluent 标签…
+  [ACL 2026][音频/语音][disfluency correction] 作者提出一个多语言 disfluency 修正流水线：先用 MuRIL 在 token 级标注 fluent/disfluent 标签，再把"原始转录 + token 标签"一起喂给 Llama-3.2-3B / Qwen2.5-3B 做 instruction fine-tuning，关键创新是引入一个**对比损失项**，对生成 disfluent token 的概率显式惩罚（penalize $-\log(1-\sum_v w_v P_\theta(v))$），在 Hindi/Bengali/Marathi 三语种实ASR数据上比无对比 basel…
 tags:
   - "ACL 2026"
   - "音频/语音"

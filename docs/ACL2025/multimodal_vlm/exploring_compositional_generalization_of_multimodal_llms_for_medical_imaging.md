@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging
 description: >-
-  [ACL 2025][多模态VLM][组合泛化] 提出 Med-MAT 数据集（106个医学数据集、53个子集），通过 MAT-Triplet（Modality-Anatomical area-Task）分解医学影像属性…
+  [ACL 2025][多模态VLM][组合泛化] 提出 Med-MAT 数据集（106个医学数据集、53个子集），通过 MAT-Triplet（Modality-Anatomical area-Task）分解医学影像属性，首次系统验证了多模态大模型在医学影像上存在组合泛化（Compositional Generalization）现象，并证明组合泛化是多任务训练泛化增益的关键驱动因素。
 tags:
   - "ACL 2025"
   - "多模态VLM"

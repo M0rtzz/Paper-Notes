@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data-efficient Targeted Token-level Preference Optimization for LLM-based Text-to-Speech
 description: >-
-  [ACL 2026][音频/语音][TKTO] 针对 LLM-based TTS 中模糊发音（如日语「辛い」既可读 karai 也可读 tsurai）的对齐难题，作者提出 TKTO：先用两个标签对调训练的对比 KTO 模型估计每个 token 的重要度权重 $w_t$…
+  [ACL 2026][音频/语音][TKTO] 针对 LLM-based TTS 中模糊发音（如日语「辛い」既可读 karai 也可读 tsurai）的对齐难题，作者提出 TKTO：先用两个标签对调训练的对比 KTO 模型估计每个 token 的重要度权重 $w_t$，再把 KTO 的 utterance 级 value function 拆到 token 级并加权聚合，实现「无需配对数据 + 自动定位目标 token」的双重升级，把日语发音准确率从 0.668 抬到 0.958（+39%），CER 降 54%。
 tags:
   - "ACL 2026"
   - "音频/语音"

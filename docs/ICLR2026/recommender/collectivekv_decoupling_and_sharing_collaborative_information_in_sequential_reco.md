@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CollectiveKV: Decoupling and Sharing Collaborative Information in Sequential Recommendation
 description: >-
-  [ICLR 2026][推荐系统][KV缓存压缩] 观察到序列推荐中不同用户的 KV cache 具有显著跨用户相似性（协同信号），提出 CollectiveKV 将 KV 分解为低维用户特有部分和从全局 KV 池检索的高维共享部分，实现 0.8% 的压缩率且性能不降。
+  [ICLR 2026][推荐系统][KV缓存压缩] 观察到序列推荐中不同用户的 KV cache 具有显著跨用户相似性（协同信号），提出 CollectiveKV 将 KV 分解为低维用户特有部分和从全局 KV 池检索的高维共享部分，实现 0.8% 的压缩率且性能不降。 领域现状：序列推荐模型（SIM、HSTU 等）采用 T…
 tags:
   - "ICLR 2026"
   - "推荐系统"

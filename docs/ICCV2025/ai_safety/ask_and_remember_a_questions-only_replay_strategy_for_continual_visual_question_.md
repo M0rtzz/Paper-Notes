@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ask and Remember: A Questions-Only Replay Strategy for Continual Visual Question Answering
 description: >-
-  [ICCV 2025][AI安全][持续学习] 提出QUAD——一种仅存储过去任务问题（不存储图像）的持续VQA方法，通过问题重放和注意力一致性蒸馏，在保护隐私的同时超越存储图像的现有方法。
+  [ICCV 2025][AI安全][持续学习] 提出QUAD——一种仅存储过去任务问题（不存储图像）的持续VQA方法，通过问题重放和注意力一致性蒸馏，在保护隐私的同时超越存储图像的现有方法。 持续学习在VQA中面临独特挑战：模型必须在视觉和语言两个模态上同时：保持稳定性（保留旧知识）和可塑性（学习新任务）…
 tags:
   - "ICCV 2025"
   - "AI安全"

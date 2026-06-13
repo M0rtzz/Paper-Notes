@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention
 description: >-
-  [NeurIPS 2025][图像生成][layout-to-image] 提出 InstanceAssemble，在 DiT-based T2I 模型（SD3 和 Flux）的 Transformer 块中注入"实例组装注意力"机制…
+  [NeurIPS 2025][图像生成][layout-to-image] 提出 InstanceAssemble，在 DiT-based T2I 模型（SD3 和 Flux）的 Transformer 块中注入"实例组装注意力"机制，通过将每个 bounding box 区域的 image token 独立与对应的 layout hidden state 做 cross-attention 来实现精确的实例级空间控制，同时以 LoRA 轻量适配方式保持与现有风格 LoRA 的兼容性，并提出包含 5K 图像/90K 实例的 DenseLayout 基准和多维度的 Layout Grounding Score（LGS）评估指标。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Efficient Guardrails for Compliance
 description: >-
-  [ICML 2026][LLM Agent][策略合规] 本文构造了一个 60k 规模的 PolicyGuardBench（5 个域、733 条标准化轨迹 × 2195 条原子策略 → 6 万 trajectory-policy 对，含跨子域和前缀截断设置）…
+  [ICML 2026][LLM Agent][策略合规] 本文构造了一个 60k 规模的 PolicyGuardBench（5 个域、733 条标准化轨迹 × 2195 条原子策略 → 6 万 trajectory-policy 对，含跨子域和前缀截断设置），并基于 Qwen3-4B-Instruct 全参数 SFT 出一个轻量 guardrail 模型 PolicyGuard-4B，在 22.5 ms/样本的延迟下取得 90.14% 准确率 / 87.59% F1，匹配甚至超过 70B 级开源模型和 Claude-Sonnet-4，并展现了强跨域泛化（LODO OOD F1≈0.91）。
 tags:
   - "ICML 2026"
   - "LLM Agent"

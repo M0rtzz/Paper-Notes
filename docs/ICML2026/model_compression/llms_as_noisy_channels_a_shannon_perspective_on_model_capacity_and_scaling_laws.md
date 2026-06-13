@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMs as Noisy Channels: A Shannon Perspective on Model Capacity and Scaling Laws
 description: >-
-  [ICML 2026][模型压缩][Shannon 容量] 本文把 LLM 训练重新解释为 Shannon-Hartley 噪声信道——参数量对应带宽、训练 token 对应信号功率、数据/模型噪声对应信道噪声…
+  [ICML 2026][模型压缩][Shannon 容量] 本文把 LLM 训练重新解释为 Shannon-Hartley 噪声信道——参数量对应带宽、训练 token 对应信号功率、数据/模型噪声对应信道噪声；从该框架推出 Shannon Scaling Law $C_{\text{LLM}} = aN^\alpha \log_2(1 + bD^\beta / (c(DN)^\gamma + dD^\delta + e))$，能统一解释经典单调 scaling 与近期发现的 U 形退化（catastrophic overtraining、quantization-induced degradation）…
 tags:
   - "ICML 2026"
   - "模型压缩"

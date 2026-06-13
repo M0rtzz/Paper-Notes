@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mostly Text, Smart Visuals: Asymmetric Text-Visual Pruning for Large Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][权重剪枝] 通过 MoT 探针实验揭示 LVLM 中文本通路和视觉通路对剪枝的不对称敏感性——文本通路高度敏感必须用文本 token 校准、视觉通路高度冗余可承受 60% 稀疏度…
+  [CVPR 2026][多模态VLM][权重剪枝] 通过 MoT 探针实验揭示 LVLM 中文本通路和视觉通路对剪枝的不对称敏感性——文本通路高度敏感必须用文本 token 校准、视觉通路高度冗余可承受 60% 稀疏度，据此提出 ATV-Pruning 使用全部文本 token + 逐层自适应选择的少量视觉 token 构建校准池。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learn to Think: Improving Multimodal Reasoning through Vision-Aware Self-Improvement Training
 description: >-
-  [ICML 2026][多模态VLM][多模态推理] VISTA 把多模态大模型的自我改进训练改造成"难题靠 prefix 重采样补样本、伪正例靠视觉注意力分数 (VAS) 过滤"的两段式 pipeline，在 Qwen2.5-VL-3B 上把数学/医学多模态推理平均提升 +13.66%。
+  [ICML 2026][多模态VLM][多模态推理] VISTA 把多模态大模型的自我改进训练改造成"难题靠 prefix 重采样补样本、伪正例靠视觉注意力分数 (VAS) 过滤"的两段式 pipeline，在 Qwen2.5-VL-3B 上把数学/医学多模态推理平均提升 +13.66%。 领域现状：当前主流通过对 MLLM…
 tags:
   - "ICML 2026"
   - "多模态VLM"

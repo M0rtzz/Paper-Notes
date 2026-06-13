@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Elucidating the Design Space of Arbitrary-Noise-Based Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][任意噪声扩散] 提出 EDA 框架，将 EDM 的设计空间从纯高斯噪声扩展至任意噪声模式，通过多元高斯分布和多独立维纳过程驱动的 SDE 实现灵活噪声扩散，且证明噪声复杂度的提升不引入额外采样开销…
+  [CVPR 2026][图像生成][任意噪声扩散] 提出 EDA 框架，将 EDM 的设计空间从纯高斯噪声扩展至任意噪声模式，通过多元高斯分布和多独立维纳过程驱动的 SDE 实现灵活噪声扩散，且证明噪声复杂度的提升不引入额外采样开销；仅用 5 步采样即可在 MRI 偏置场矫正、CT 金属伪影去除和自然图像阴影去除三项任务上取得媲美或优于百步 Refusion 和专用方法的效果。
 tags:
   - "CVPR 2026"
   - "图像生成"

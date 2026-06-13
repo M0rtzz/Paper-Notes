@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing Justice Clearly: Handwritten Legal Document Translation with OCR and Vision-Language Models
 description: >-
-  [AAAI 2026][多模态VLM][手写文档识别] 本文系统性对比了传统 OCR+机器翻译（OCR-MT）流水线与视觉大语言模型（vLLM）在手写马拉地语法律文档翻译为英语任务上的表现，发现两类方法均未达到法律级部署要求，OCR-MT 受级联错误影响严重，vLLM 存在严重的幻觉问题…
+  [AAAI 2026][多模态VLM][手写文档识别] 本文系统性对比了传统 OCR+机器翻译（OCR-MT）流水线与视觉大语言模型（vLLM）在手写马拉地语法律文档翻译为英语任务上的表现，发现两类方法均未达到法律级部署要求，OCR-MT 受级联错误影响严重，vLLM 存在严重的幻觉问题，但 vLLM 展现出统一端到端处理的发展潜力。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

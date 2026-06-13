@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Approximating Shapley Explanations in Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][Shapley值] 提出 FastSVERL，一种可扩展的参数化学习框架，分别近似强化学习中 Shapley 值的两个计算瓶颈（特征函数和 Shapley 求和），支持离策略数据学习和随策略演化持续更新解释。
+  [NeurIPS 2025][强化学习][Shapley值] 提出 FastSVERL，一种可扩展的参数化学习框架，分别近似强化学习中 Shapley 值的两个计算瓶颈（特征函数和 Shapley 求和），支持离策略数据学习和随策略演化持续更新解释。 Shapley 值为 RL 中的特征归因提供了有理论保障（公平性、一致性）…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

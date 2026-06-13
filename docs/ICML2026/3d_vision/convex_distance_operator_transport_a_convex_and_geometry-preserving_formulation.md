@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convex Distance Operator Transport: A Convex and Geometry-Preserving Formulation
 description: >-
-  [ICML 2026][3D视觉][最优传输] 本文提出 CDOT（Convex Distance Operator Transport），通过把每个度量空间的距离矩阵和耦合一起"算子化"…
+  [ICML 2026][3D视觉][最优传输] 本文提出 CDOT（Convex Distance Operator Transport），通过把每个度量空间的距离矩阵和耦合一起"算子化"，用 $\|D_X T_\pi - T_\pi D_Y\|_{\mathrm{HS}}^2$ 替代 FGW 中那个非凸的成对距离差平方，从而首次得到一个**对耦合 $\pi$ 严格凸**、同时仍然是合法伪度量、并具备有限样本风险界的异构空间对齐框架。
 tags:
   - "ICML 2026"
   - "3D视觉"

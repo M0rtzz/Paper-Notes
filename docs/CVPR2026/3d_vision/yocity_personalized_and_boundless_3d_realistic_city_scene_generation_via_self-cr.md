@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Yo'City: Personalized and Boundless 3D Realistic City Scene Generation via Self-Critic Expansion
 description: >-
-  [CVPR 2026][3D视觉][3D城市生成] 提出 Yo'City 多智能体框架，通过"City–District–Grid"层次化规划 + produce–refine–evaluate 等距图像合成环 + 场景图引导扩展机制，实现用户个性化文本驱动的无界 3D 城市生成…
+  [CVPR 2026][3D视觉][3D城市生成] 提出 Yo'City 多智能体框架，通过"City–District–Grid"层次化规划 + produce–refine–evaluate 等距图像合成环 + 场景图引导扩展机制，实现用户个性化文本驱动的无界 3D 城市生成，在语义一致性和视觉质量上全面超过 SynCity 等现有方法。
 tags:
   - "CVPR 2026"
   - "3D视觉"

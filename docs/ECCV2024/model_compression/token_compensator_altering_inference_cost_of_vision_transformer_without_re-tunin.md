@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token Compensator: Altering Inference Cost of Vision Transformer without Re-Tuning
 description: >-
-  [ECCV 2024][模型压缩][Token 压缩] 提出 ToCom（Token Compensator），一个模型算术框架的轻量插件，通过快速的参数高效自蒸馏获得，可在推理时直接插入任意下游已训练模型以弥补 token 压缩度不匹配造成的性能损失，无需重新训练。
+  [ECCV 2024][模型压缩][Token 压缩] 提出 ToCom（Token Compensator），一个模型算术框架的轻量插件，通过快速的参数高效自蒸馏获得，可在推理时直接插入任意下游已训练模型以弥补 token 压缩度不匹配造成的性能损失，无需重新训练。 Token 压缩是加速 Vision Transform…
 tags:
   - "ECCV 2024"
   - "模型压缩"

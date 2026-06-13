@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving LLM Safety Alignment with Dual-Objective Optimization
 description: >-
-  [ICML 2025][LLM安全][安全对齐] 通过梯度分析揭示DPO在安全对齐中的两大缺陷（学习率饱和与OOD泛化差），提出DOOR/W-DOOR双目标优化框架（鲁棒拒绝训练+有害知识遗忘+token级加权）…
+  [ICML 2025][LLM安全][安全对齐] 通过梯度分析揭示DPO在安全对齐中的两大缺陷（学习率饱和与OOD泛化差），提出DOOR/W-DOOR双目标优化框架（鲁棒拒绝训练+有害知识遗忘+token级加权），在Llama-3-8B和Gemma-2-2B上显著降低了prefilling/suffix/multi-turn等多种越狱攻击的成功率，同时保持通用能力。
 tags:
   - "ICML 2025"
   - "LLM安全"

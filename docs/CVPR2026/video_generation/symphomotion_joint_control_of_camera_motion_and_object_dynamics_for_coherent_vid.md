@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SymphoMotion: Joint Control of Camera Motion and Object Dynamics for Coherent Video Generation
 description: >-
-  [CVPR 2026][视频生成][视频扩散模型] 提出 SymphoMotion 统一运动控制框架，通过相机轨迹控制（CTC）和物体动态控制（ODC）两个机制同时精确控制视频中的相机运动和物体3D轨迹，并构建了25K规模的真实世界联合标注数据集 RealCOD-25K。
+  [CVPR 2026][视频生成][视频扩散模型] 提出 SymphoMotion 统一运动控制框架，通过相机轨迹控制（CTC）和物体动态控制（ODC）两个机制同时精确控制视频中的相机运动和物体3D轨迹，并构建了25K规模的真实世界联合标注数据集 RealCOD-25K。 领域现状：精确控制视频生成中的运动动态正受到越来越多…
 tags:
   - "CVPR 2026"
   - "视频生成"

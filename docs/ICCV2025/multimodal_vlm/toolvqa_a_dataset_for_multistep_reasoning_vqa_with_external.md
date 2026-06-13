@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToolVQA: A Dataset for Multi-step Reasoning VQA with External Tools
 description: >-
-  [ICCV 2025][多模态VLM][tool-augmented VQA] 提出ToolVQA，一个23K样本的多模态工具使用VQA数据集，通过ToolEngine数据生成pipeline（图像引导DFS + LCS示例匹配）从真实图像中构造隐式多步推理问题（平均2.78步）…
+  [ICCV 2025][多模态VLM][tool-augmented VQA] 提出ToolVQA，一个23K样本的多模态工具使用VQA数据集，通过ToolEngine数据生成pipeline（图像引导DFS + LCS示例匹配）从真实图像中构造隐式多步推理问题（平均2.78步），在该数据上微调LLaVA-7B后在5个OOD benchmark上超过GPT-3.5-Turbo，并揭示了当前LFM在参数预测和答案总结方面的瓶颈。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

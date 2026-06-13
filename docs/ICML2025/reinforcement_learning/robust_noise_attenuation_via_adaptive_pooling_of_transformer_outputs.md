@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Robust Noise Attenuation via Adaptive Pooling of Transformer Outputs
 description: >-
-  [ICML2025][强化学习][Transformer] 本文将 Transformer 输出的池化操作形式化为向量量化问题，证明 AvgPool 和 MaxPool 在信噪比 (SNR) 变化时存在性能崩溃风险，并提出基于交叉注意力的自适应池化方法 (AdaPool)…
+  [ICML2025 Spotlight][强化学习][Transformer] 本文将 Transformer 输出的池化操作形式化为向量量化问题，证明 AvgPool 和 MaxPool 在信噪比 (SNR) 变化时存在性能崩溃风险，并提出基于交叉注意力的自适应池化方法 (AdaPool)，在理论上可在任意 SNR 下逼近信号最优量化器，在 RL、关系推理和视觉任务中均表现出优越的鲁棒性。
 tags:
-  - "ICML2025"
+  - "ICML2025 Spotlight"
   - "强化学习"
   - "Transformer"
   - "噪声鲁棒性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisuoThink: Empowering LVLM Reasoning with Multimodal Tree Search
 description: >-
-  [ACL 2025][多模态VLM][多模态推理] 本文提出VisuoThink框架，通过视觉-文本交织推理和预测性前瞻树搜索，在推理过程中动态整合视觉辅助信息并探索多条推理路径，无需微调即可在几何和空间推理任务上实现SOTA性能（Geomverse-109上Accuracy@1最高达48.5%…
+  [ACL 2025][多模态VLM][多模态推理] 本文提出VisuoThink框架，通过视觉-文本交织推理和预测性前瞻树搜索，在推理过程中动态整合视觉辅助信息并探索多条推理路径，无需微调即可在几何和空间推理任务上实现SOTA性能（Geomverse-109上Accuracy@1最高达48.5%，相比最优基线提升21.8%）。
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Model Base Retrieval: Weaving Knowledge to Master Fine-grained Neural Network Design
 description: >-
-  [ICML 2026][图学习][神经架构搜索] 提出 M-DESIGN 框架，将神经网络设计建模为检索增强的迭代修改过程，通过构建修改-增益图编码细粒度架构编辑效果，并利用贝叶斯动态任务相似度在线校准迁移信号，在 33 个 GNN 任务中的 26 个达到设计空间最优。
+  [ICML 2026][图学习][神经架构搜索] 提出 M-DESIGN 框架，将神经网络设计建模为检索增强的迭代修改过程，通过构建修改-增益图编码细粒度架构编辑效果，并利用贝叶斯动态任务相似度在线校准迁移信号，在 33 个 GNN 任务中的 26 个达到设计空间最优。 领域现状：设计高性能神经网络的主流方法分为两大类——神…
 tags:
   - "ICML 2026"
   - "图学习"

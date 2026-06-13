@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes
 description: >-
-  [3D视觉] 提出相对光照场（Relative Illumination Fields），通过在相机局部坐标系中用MLP建模非均匀光照分布，结合体积介质表示，实现对水下场景的干净重建——去除光源和介质的影响。
+  [3D视觉] 提出相对光照场（Relative Illumination Fields），通过在相机局部坐标系中用MLP建模非均匀光照分布，结合体积介质表示，实现对水下场景的干净重建——去除光源和介质的影响。 水下环境对3D重建提出了独特挑战： 散射与衰减：水体对光进行波长相关的吸收和散射，相当于在物体和相机间增加了一个"额…
 tags:
   - "3D视觉"
 ---

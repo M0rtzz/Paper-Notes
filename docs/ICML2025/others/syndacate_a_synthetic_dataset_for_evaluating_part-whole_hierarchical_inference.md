@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynDaCaTE: A Synthetic Dataset for Evaluating Part-Whole Hierarchical Inference
 description: >-
-  [ICML 2025 (MOSS Workshop)][胶囊网络] 提出SynDaCaTE合成数据集和Mereological Inference框架，将部分-整体层次推断分解为Image-to-Parts和Parts-to-Wholes两个可独立评估的子任务…
+  [ICML 2025 (MOSS Workshop)][胶囊网络] 提出SynDaCaTE合成数据集和Mereological Inference框架，将部分-整体层次推断分解为Image-to-Parts和Parts-to-Wholes两个可独立评估的子任务，通过精心设计的控制实验证明CapsNet的瓶颈在于从图像提取部件而非从部件推断整体，同时发现置换等变的SetTransformer在部件到整体推断中显著优于所有基线（超过10倍精度优势）。
 tags:
   - "ICML 2025 (MOSS Workshop)"
   - "胶囊网络"

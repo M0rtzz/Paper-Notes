@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Text Embeddings Should Capture Implicit Semantics, Not Just Surface Meaning
 description: >-
-  [ICML 2026][音频/语音][文本嵌入] 本文是一篇 position paper：作者论证当前文本嵌入研究过度聚焦"表层语义"（词形 / 句法 / 主题相似），系统性忽略了语用、立场、社会语境等"隐式语义"…
+  [ICML 2026][音频/语音][文本嵌入] 本文是一篇 position paper：作者论证当前文本嵌入研究过度聚焦"表层语义"（词形 / 句法 / 主题相似），系统性忽略了语用、立场、社会语境等"隐式语义"，并通过 7 个隐式语义数据集的实证显示——即便是 SOTA 嵌入相比 Bag-of-Tokens 也只有边际提升，呼吁把隐式语义作为嵌入研究的一等建模目标。
 tags:
   - "ICML 2026"
   - "音频/语音"

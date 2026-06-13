@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibration vs Decision Making: Revisiting the Reliability Paradox in Unlearned Language Models
 description: >-
-  [ACL2026][LLM安全][machine unlearning] 这篇论文说明机器遗忘后的 LLM 即使保持很低的校准误差，也可能更多依赖数据集捷径 token 做选择，因此只用 ECE/MCE/Brier 判断 unlearned model 是否可靠是不够的。
+  [ACL2026][LLM安全][machine unlearning] 这篇论文说明机器遗忘后的 LLM 即使保持很低的校准误差，也可能更多依赖数据集捷径 token 做选择，因此只用 ECE/MCE/Brier 判断 unlearned model 是否可靠是不够的。 领域现状：机器遗忘希望从模型中移除特定训练数据影响…
 tags:
   - "ACL2026"
   - "LLM安全"

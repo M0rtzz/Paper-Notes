@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAtCha Gaussians: Atlas of Charts for High-Quality Geometry and Photorealism From Sparse Views
 description: >-
-  [CVPR 2025][3D视觉][稀疏视图重建] 提出 MAtCha Gaussians，将场景表面建模为 2D 流形上的图表集合（Atlas of Charts）并用 2D Gaussian Surfels 渲染，通过单目深度初始化 + 轻量神经变形模型 + 结构保持损失…
+  [CVPR 2025][3D视觉][稀疏视图重建] 提出 MAtCha Gaussians，将场景表面建模为 2D 流形上的图表集合（Atlas of Charts）并用 2D Gaussian Surfels 渲染，通过单目深度初始化 + 轻量神经变形模型 + 结构保持损失，在仅 3-10 张稀疏视图下数分钟内同时实现高质量表面网格重建和逼真新视角合成。
 tags:
   - "CVPR 2025"
   - "3D视觉"

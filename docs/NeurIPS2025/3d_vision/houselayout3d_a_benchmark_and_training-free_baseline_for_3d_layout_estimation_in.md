@@ -2,9 +2,10 @@
 title: >-
   [论文解读] HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild
 description: >-
-  [NeurIPS 2025][3D layout estimation] 提出 HouseLayout3D——首个面向大规模多层建筑的真实世界 3D layout 估计基准，以及 MultiFloor3D——一个无需训练的基线方法…
+  [NeurIPS 2025][3D视觉][3D layout estimation] 提出 HouseLayout3D——首个面向大规模多层建筑的真实世界 3D layout 估计基准，以及 MultiFloor3D——一个无需训练的基线方法，通过组合现代 3D 重建和分割模型在多层建筑 layout 估计上超越现有深度学习方法。
 tags:
   - "NeurIPS 2025"
+  - "3D视觉"
   - "3D layout estimation"
   - "multi-floor buildings"
   - "benchmark"

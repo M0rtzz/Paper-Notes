@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniPhy: Learning a Unified Constitutive Model for Inverse Physics Simulation
 description: >-
-  [CVPR 2025][逆物理仿真] 提出 UniPhy，首个统一的潜变量条件本构模型，在共享潜空间中编码弹性体/沙子/塑料/牛顿/非牛顿流体等多种材料属性，推理时通过可微 MPM 仿真器优化潜变量以匹配观测粒子轨迹，重建误差比 NCLaw 低 1-2 个数量级。
+  [CVPR 2025][逆物理仿真] 提出 UniPhy，首个统一的潜变量条件本构模型，在共享潜空间中编码弹性体/沙子/塑料/牛顿/非牛顿流体等多种材料属性，推理时通过可微 MPM 仿真器优化潜变量以匹配观测粒子轨迹，重建误差比 NCLaw 低 1-2 个数量级。 领域现状：逆物理仿真从观测数据推断材料属性（如弹性模量、粘度…
 tags:
   - "CVPR 2025"
   - "逆物理仿真"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeOmni-VL: Unified Models for Time Series Understanding and Generation
 description: >-
-  [ICML 2026][时间序列][时间序列预测] TimeOmni-VL 通过把时间序列转换为**高保真图像**（Bi-TSI）+ 引入**理解引导的生成机制**（CoT 作为扩散条件），首次实现在统一多模态框架中同时达成时间序列**理解与生成**任务，预测和插补均达业界最优。
+  [ICML 2026][时间序列][时间序列预测] TimeOmni-VL 通过把时间序列转换为高保真图像：（Bi-TSI）+ 引入理解引导的生成机制：（CoT 作为扩散条件），首次实现在统一多模态框架中同时达成时间序列理解与生成：任务，预测和插补均达业界最优。 领域现状：时间序列建模长期分为两个分支——生成模型：（基础模型…
 tags:
   - "ICML 2026"
   - "时间序列"

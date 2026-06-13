@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Sequence-to-Sequence Generative Neural Rendering
 description: >-
-  [ICLR 2026][3D视觉][Neural Rendering] 提出 Kaleido，一系列将 3D 视为视频特殊子域的 decoder-only rectified flow transformer 生成模型…
+  [ICLR 2026][3D视觉][Neural Rendering] 提出 Kaleido，一系列将 3D 视为视频特殊子域的 decoder-only rectified flow transformer 生成模型，通过统一位置编码（Unified Positional Encoding）、掩码自回归框架和视频预训练策略，实现无需任何显式 3D 表示的 "any-to-any" 6-DoF 新视角合成，**首次在多视角设置下匹配逐场景优化方法（InstantNGP）的渲染质量**，并将分辨率从 512/576px 提升至 1024px。
 tags:
   - "ICLR 2026"
   - "3D视觉"

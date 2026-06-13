@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Mixture of Small and Large Models for Chinese Spelling Check
 description: >-
-  [ACL 2025][中文拼写检查] 本文提出在Beam Search解码阶段动态混合小模型（fine-tuned BERT）和大语言模型（LLM）的概率分布来进行中文拼写纠错，无需微调LLM即可兼顾小模型的精确纠错和LLM的流畅性，在多个CSC数据集上达到SOTA。
+  [ACL 2025][LLM 其他][中文拼写检查] 本文提出在Beam Search解码阶段动态混合小模型（fine-tuned BERT）和大语言模型（LLM）的概率分布来进行中文拼写纠错，无需微调LLM即可兼顾小模型的精确纠错和LLM的流畅性，在多个CSC数据集上达到SOTA。 领域现状：中文拼写检查（Chinese…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "中文拼写检查"
   - "模型混合"
   - "Beam Search"

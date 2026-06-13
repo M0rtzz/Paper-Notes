@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VAnim: Rendering-Aware Sparse State Modeling for Structure-Preserving Vector Animation
 description: >-
-  [ICML 2026][视频生成][SVG 动画] VAnim 把开放域 text-to-SVG 动画建模为「持久 DOM 树上的稀疏状态更新」+「Identification-First 运动规划」+「GRPO 渲染感知强化学习」，序列长度压缩 $9.86\times$ 的同时保持拓扑一致…
+  [ICML 2026][视频生成][SVG 动画] VAnim 把开放域 text-to-SVG 动画建模为「持久 DOM 树上的稀疏状态更新」+「Identification-First 运动规划」+「GRPO 渲染感知强化学习」，序列长度压缩 $9.86\times$ 的同时保持拓扑一致，并显著超越 GPT-5.2、Gemini 3 Pro 与 LiveSketch。
 tags:
   - "ICML 2026"
   - "视频生成"

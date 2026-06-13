@@ -2,9 +2,10 @@
 title: >-
   [论文解读] MMD-Balls as Credal Sets: A PAC-Bayesian Framework for Epistemic Uncertainty in Test-Time Adaptation
 description: >-
-  [ICML 2026][PAC-Bayes 界] 论文为 test-time adaptation 提供了第一份"目标风险 ≤ 源经验风险 + KL 复杂度 + MMD 分布偏移项"的 PAC-Bayes 上界，并把 MMD-球解读为 Walley 意义下的 credal set…
+  [ICML 2026][测试时自适应 / PAC-Bayes 理论 / 不确定性量化][PAC-Bayes 界] 论文为 test-time adaptation 提供了第一份"目标风险 ≤ 源经验风险 + KL 复杂度 + MMD 分布偏移项"的 PAC-Bayes 上界，并把 MMD-球解读为 Walley 意义下的 credal set，从而用"上下风险区间"自然分离 aleatoric 与 epistemic 不确定性，给出"何时应当 adapt、何时该 abstain"的可计算判据。
 tags:
   - "ICML 2026"
+  - "测试时自适应 / PAC-Bayes 理论 / 不确定性量化"
   - "PAC-Bayes 界"
   - "MMD"
   - "credal set"

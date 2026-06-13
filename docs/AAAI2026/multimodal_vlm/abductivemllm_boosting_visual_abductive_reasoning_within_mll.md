@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs
 description: >-
-  [AAAI 2026][多模态VLM][visual abductive reasoning] 受人类认知中"语言溯因+图像想象"双模式启发，提出 AbductiveMLLM，通过 Reasoner（因果对比学习筛选假设）和 Imaginer（扩散模型图像化推理）两个协同组件增强 MLLM 的视觉溯因推理能力…
+  [AAAI 2026 Oral][多模态VLM][visual abductive reasoning] 受人类认知中"语言溯因+图像想象"双模式启发，提出 AbductiveMLLM，通过 Reasoner（因果对比学习筛选假设）和 Imaginer（扩散模型图像化推理）两个协同组件增强 MLLM 的视觉溯因推理能力，在 VAR 和 YouCookII 基准上取得 SOTA。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "visual abductive reasoning"
   - "MLLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeMEnv: Benchmarking Large Language Models on Code Migration
 description: >-
-  [ACL 2025][LLM评测][code migration] 提出 CodeMEnv，首个系统评估 LLM 跨环境代码迁移能力的基准，包含 922 个样本、19 个 Python/Java 包、3 个层次化任务（定位不兼容函数→描述变更→迁移代码），9 个 LLM 的平均 Pass@1 仅 26.50%…
+  [ACL 2025][LLM评测][code migration] 提出 CodeMEnv，首个系统评估 LLM 跨环境代码迁移能力的基准，包含 922 个样本、19 个 Python/Java 包、3 个层次化任务（定位不兼容函数→描述变更→迁移代码），9 个 LLM 的平均 Pass@1 仅 26.50%，GPT-4o 最高 43.84%，揭示 LLM 更熟悉新版本函数且存在版本推理逻辑不一致问题。
 tags:
   - "ACL 2025"
   - "LLM评测"

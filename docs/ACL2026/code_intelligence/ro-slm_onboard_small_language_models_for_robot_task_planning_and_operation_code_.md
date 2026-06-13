@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ro-SLM: Onboard Small Language Models for Robot Task Planning and Operation Code Generation
 description: >-
-  [ACL2026][代码智能][小语言模型] Ro-SLM 用 LLM 合成和校验机器人任务-代码数据，再通过 SFT 与 LLM 奖励的 GRPO 优化 Llama-3.1-8B，使小模型能在无人机和地面车任务中接近云端 LLM 的规划与操作代码生成能力。
+  [ACL2026][代码智能][小语言模型] Ro-SLM 用 LLM 合成和校验机器人任务-代码数据，再通过 SFT 与 LLM 奖励的 GRPO 优化 Llama-3.1-8B，使小模型能在无人机和地面车任务中接近云端 LLM 的规划与操作代码生成能力。 领域现状：LLM 已经被用于机器人任务理解、规划和操作代码生成…
 tags:
   - "ACL2026"
   - "代码智能"

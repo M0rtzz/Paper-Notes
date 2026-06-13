@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Provably Data-driven Multiple Hyper-parameter Tuning with Structured Loss Function
 description: >-
-  [ICML 2026][data-driven algorithm design] 本文用「实代数几何 + 一阶谓词逻辑量词消去」给多维超参数调参第一次给出可证明的 generalization bound…
+  [ICML 2026][学习理论 / 自动调参 / 数据驱动算法设计][data-driven algorithm design] 本文用「实代数几何 + 一阶谓词逻辑量词消去」给多维超参数调参第一次给出可证明的 generalization bound，把过去只能处理一维标量超参的 Balcan 2025 框架推广到任意 $p$ 维、双层验证损失、近似内层优化等多种实际场景，并配出第一条匹配上界的下界。
 tags:
   - "ICML 2026"
+  - "学习理论 / 自动调参 / 数据驱动算法设计"
   - "data-driven algorithm design"
   - "pseudo-dimension"
   - "quantifier elimination"

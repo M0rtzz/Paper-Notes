@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Oversmoothing, Oversquashing, Heterophily, Long-Range, and More: Demystifying Common Beliefs in Graph Machine Learning
 description: >-
-  本文系统梳理了图机器学习领域围绕 oversmoothing、oversquashing、同质/异质性和长程依赖的九个常见误区，通过简洁反例逐一反驳，将"oversquashing"拆分为**计算瓶颈**和**拓扑瓶颈**两个独立概念，厘清了领域中广泛存在的概念混淆。
+  本文系统梳理了图机器学习领域围绕 oversmoothing、oversquashing、同质/异质性和长程依赖的九个常见误区，通过简洁反例逐一反驳，将"oversquashing"拆分为计算瓶颈：和拓扑瓶颈：两个独立概念，厘清了领域中广泛存在的概念混淆。 领域现状： 图上消息传递（message-passing）深度学习…
 tags:
 
 ---

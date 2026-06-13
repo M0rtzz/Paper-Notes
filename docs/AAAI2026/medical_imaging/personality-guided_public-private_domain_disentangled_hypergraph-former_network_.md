@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection
 description: >-
-  [AAAI 2026][医学图像][抑郁检测] 提出 P3HF 框架，通过人格引导的特征门控、时序感知的超图-Transformer（Hypergraph-Former）架构和事件级公私域解耦三大创新，在多事件多模态抑郁检测任务上实现约 10% 的准确率和 F1 提升。
+  [AAAI 2026][医学图像][抑郁检测] 提出 P3HF 框架，通过人格引导的特征门控、时序感知的超图-Transformer（Hypergraph-Former）架构和事件级公私域解耦三大创新，在多事件多模态抑郁检测任务上实现约 10% 的准确率和 F1 提升。 抑郁症影响全球约 3.8% 的人口…
 tags:
   - "AAAI 2026"
   - "医学图像"

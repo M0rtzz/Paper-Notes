@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ProgCo: Program Helps Self-Correction of Large Language Models
 description: >-
-  [ACL 2025 Main][LLM/NLP][自我纠正] ProgCo 提出用 LLM 自动生成并执行验证伪程序（ProgVe）来检查自身回答的正确性，再通过对回答和验证程序的双重反思与修正（ProgRe）来实现可靠的自我纠正，在指令遵循和数学推理任务上显著提升了纠正成功率。
+  [ACL 2025 Main][LLM 其他][自我纠正] ProgCo 提出用 LLM 自动生成并执行验证伪程序（ProgVe）来检查自身回答的正确性，再通过对回答和验证程序的双重反思与修正（ProgRe）来实现可靠的自我纠正，在指令遵循和数学推理任务上显著提升了纠正成功率。 领域现状：自我纠正（Self-Correcti…
 tags:
   - "ACL 2025 Main"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自我纠正"
   - "程序驱动验证"
   - "伪程序"

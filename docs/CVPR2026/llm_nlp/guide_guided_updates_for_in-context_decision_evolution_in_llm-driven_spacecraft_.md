@@ -2,10 +2,10 @@
 title: >-
   [论文解读] GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations
 description: >-
-  [CVPR 2026 (AI4Space Workshop)][LLM/NLP][航天器操作] 提出GUIDE框架，利用LLM的in-context学习能力为航天器自主操作提供引导式决策进化，通过结构化的上下文信息和反馈机制让LLM在无需微调的情况下逐步改善航天任务规划和故障诊断决策的质量。
+  [CVPR 2026 (AI4Space Workshop)][LLM 其他][航天器操作] 提出GUIDE框架，利用LLM的in-context学习能力为航天器自主操作提供引导式决策进化，通过结构化的上下文信息和反馈机制让LLM在无需微调的情况下逐步改善航天任务规划和故障诊断决策的质量。 领域现状：航天器操作传统依赖地面站…
 tags:
   - "CVPR 2026 (AI4Space Workshop)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "航天器操作"
   - "LLM决策"
   - "in-context学习"
@@ -121,10 +121,10 @@ in-context 学习的天花板取决于示例质量，而航天任务又拿不到
 - **vs LLM for Robotics**: 机器人操作的LLM Agent研究更成熟，航天场景是新兴方向
 
 ## 评分
-- 新颖性: ⭐⭐⭐ Workshop级别的探索性工作，概念新但验证初步
-- 实验充分度: ⭐⭐⭐ 仿真验证有限，缺乏与专业航天系统的定量对比
-- 写作质量: ⭐⭐⭐⭐ 问题动机和航天背景描述清晰
-- 价值: ⭐⭐⭐ 应用导向的前瞻性工作，对航天自主系统研究有启发价值
+- 新颖性: ⭐⭐⭐⭐ Workshop级别的探索性工作，概念新但验证初步
+- 实验充分度: ⭐⭐⭐⭐ 仿真验证有限，缺乏与专业航天系统的定量对比
+- 写作质量: ⭐⭐⭐⭐⭐ 问题动机和航天背景描述清晰
+- 价值: ⭐⭐⭐⭐ 应用导向的前瞻性工作，对航天自主系统研究有启发价值
 
 <!-- RELATED:START -->
 

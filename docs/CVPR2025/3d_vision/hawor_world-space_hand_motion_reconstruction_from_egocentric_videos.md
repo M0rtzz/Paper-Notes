@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HaWoR: World-Space Hand Motion Reconstruction from Egocentric Videos
 description: >-
-  [CVPR 2025][3D视觉][手部运动重建] HaWoR 首次实现了从第一人称视频重建世界坐标系下的3D手部运动，通过将任务解耦为相机空间手部重建 + 自适应SLAM相机轨迹估计，并引入运动补全网络处理手部出视野的情况…
+  [CVPR 2025][3D视觉][手部运动重建] HaWoR 首次实现了从第一人称视频重建世界坐标系下的3D手部运动，通过将任务解耦为相机空间手部重建 + 自适应SLAM相机轨迹估计，并引入运动补全网络处理手部出视野的情况，在 HOT3D 数据集上取得 SOTA 的全局轨迹精度（ATE 3.36mm）和手部重建质量（PA-MPJPE 4.79mm）。
 tags:
   - "CVPR 2025"
   - "3D视觉"

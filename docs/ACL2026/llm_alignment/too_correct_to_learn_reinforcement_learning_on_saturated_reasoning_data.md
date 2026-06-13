@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Too Correct to Learn: Reinforcement Learning on Saturated Reasoning Data
 description: >-
-  [ACL2026][LLM对齐][饱和推理数据] 这篇论文指出强推理模型在“太容易、几乎全对”的训练集上做 GRPO 会因为组内奖励方差消失而停止学习，并提出 Mixed-CUTS 用受限 Top-K 均匀采样混合标准 rollout，重新制造有意义的探索差异…
+  [ACL2026][LLM对齐][饱和推理数据] 这篇论文指出强推理模型在“太容易、几乎全对”的训练集上做 GRPO 会因为组内奖励方差消失而停止学习，并提出 Mixed-CUTS 用受限 Top-K 均匀采样混合标准 rollout，重新制造有意义的探索差异，在 Qwen3-4B 上把 AIME25 Pass@1 相比标准 GRPO 提高 15.1%。
 tags:
   - "ACL2026"
   - "LLM对齐"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2604.18493](https://arxiv.org/abs/2604.18493)  
 **代码**: 待确认  
-**领域**: llm_alignment / LLM推理强化学习  
+**领域**: LLM对齐 / LLM推理强化学习  
 **关键词**: 饱和推理数据, GRPO, CUTS, 探索多样性, 模式坍缩
 
 ## 一句话总结

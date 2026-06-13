@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained Analysis of Shared Syntactic Mechanisms in Language Models
 description: >-
-  [ACL 2026][可解释性][Activation Patching] 论文用 activation patching 在 attention head 粒度上证明：Pythia/Gemma 处理英文 filler-gap 依赖（FGD）时七大构式共享同一套早-中层 3 个 attention head…
+  [ACL 2026][可解释性][Activation Patching] 论文用 activation patching 在 attention head 粒度上证明：Pythia/Gemma 处理英文 filler-gap 依赖（FGD）时七大构式共享同一套早-中层 3 个 attention head 的机制，把这几个 head 的激活×1.5 还能在 BLiMP 上多对一批题；而负极性项（NPI）授权没有这种统一机制，且训练阶段更易学到的"DAS 方向"在 OOD 上完全失效，说明无监督的 patching 比有监督的 DAS 更可信。
 tags:
   - "ACL 2026"
   - "可解释性"

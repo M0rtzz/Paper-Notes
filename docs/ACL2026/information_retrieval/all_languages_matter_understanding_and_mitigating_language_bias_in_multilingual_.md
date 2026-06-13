@@ -2,7 +2,7 @@
 title: >-
   [论文解读] All Languages Matter: Understanding and Mitigating Language Bias in Multilingual RAG
 description: >-
-  [ACL 2026][信息检索/RAG][多语言RAG] 系统揭示多语言 RAG 系统在重排序阶段存在严重的语言偏差（偏好英语和查询语言），提出 LAURA 框架通过下游生成质量驱动的监督信号对齐重排序器，有效缓解偏差并提升生成性能。
+  [ACL 2026][信息检索/RAG][多语言RAG] 系统揭示多语言 RAG 系统在重排序阶段存在严重的语言偏差（偏好英语和查询语言），提出 LAURA 框架通过下游生成质量驱动的监督信号对齐重排序器，有效缓解偏差并提升生成性能。 领域现状：多语言 RAG 通过跨语言证据增强 LLM 的全球知识覆盖。真实世界中…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

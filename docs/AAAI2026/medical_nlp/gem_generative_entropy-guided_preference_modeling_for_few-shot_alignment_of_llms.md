@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEM: Generative Entropy-Guided Preference Modeling for Few-shot Alignment of LLMs
 description: >-
-  [医疗NLP] GEM 提出了一种生成式熵引导偏好建模方法，通过认知过滤（基于熵的 CoT 评分）和 SEGA 算法（自评估组优势策略优化），在仅 3000 个偏好对的低资源场景下实现高效的 LLM 对齐。
+  [医疗NLP] GEM 提出了一种生成式熵引导偏好建模方法，通过认知过滤（基于熵的 CoT 评分）和 SEGA 算法（自评估组优势策略优化），在仅 3000 个偏好对的低资源场景下实现高效的 LLM 对齐。 标准 RLHF 管线通常依赖数千个高质量偏好比较和单独训练的奖励模型，但在医学、法律等专业领域…
 tags:
   - "医疗NLP"
 ---

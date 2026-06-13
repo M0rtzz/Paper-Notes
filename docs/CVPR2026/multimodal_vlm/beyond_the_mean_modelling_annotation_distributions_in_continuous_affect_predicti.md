@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond the Mean: Modelling Annotation Distributions in Continuous Affect Prediction
 description: >-
-  [CVPR 2026][多模态VLM][情感预测] 提出基于Beta分布的情感标注共识建模框架，模型仅预测标注分布的均值和标准差，即可通过矩匹配闭式推导出偏度、峰度、分位数等高阶描述子，在SEWA和RECOLA上证明Beta分布能有效捕获标注者分歧的完整分布特性。
+  [CVPR 2026][多模态VLM][情感预测] 提出基于Beta分布的情感标注共识建模框架，模型仅预测标注分布的均值和标准差，即可通过矩匹配闭式推导出偏度、峰度、分位数等高阶描述子，在SEWA和RECOLA上证明Beta分布能有效捕获标注者分歧的完整分布特性。 领域现状：连续情感预测（valence-arousal）中…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

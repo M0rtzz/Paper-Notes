@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting MAE Pre-Training for 3D Medical Image Segmentation
 description: >-
-  [CVPR 2025][医学图像][自监督学习] 本文系统性地解决了 3D 医学影像 SSL 研究的三大陷阱（小数据、非 SOTA 架构、评估不足），在 39K 脑部 MRI 上用优化后的 MAE 预训练 ResEnc U-Net CNN…
+  [CVPR 2025][医学图像][自监督学习] 本文系统性地解决了 3D 医学影像 SSL 研究的三大陷阱（小数据、非 SOTA 架构、评估不足），在 39K 脑部 MRI 上用优化后的 MAE 预训练 ResEnc U-Net CNN，在 11 个下游分割数据集上平均超越 nnU-Net 基线约 3 个 Dice 点。
 tags:
   - "CVPR 2025"
   - "医学图像"

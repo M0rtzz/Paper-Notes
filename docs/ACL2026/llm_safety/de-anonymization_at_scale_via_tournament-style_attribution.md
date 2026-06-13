@@ -2,9 +2,9 @@
 title: >-
   [论文解读] De-Anonymization at Scale via Tournament-Style Attribution
 description: >-
-  [ACL 2026][LLM安全][作者归因] 本文提出 DAS（De-Anonymization at Scale），一种基于 LLM 的大规模作者去匿名化方法，采用锦标赛式淘汰策略+密集检索预过滤+多轮投票聚合，可在数万候选文本中进行作者匹配，揭示了 LLM 对匿名平台（如双盲评审）的隐私威胁。
+  [ACL 2026 Oral][LLM安全][作者归因] 本文提出 DAS（De-Anonymization at Scale），一种基于 LLM 的大规模作者去匿名化方法，采用锦标赛式淘汰策略+密集检索预过滤+多轮投票聚合，可在数万候选文本中进行作者匹配，揭示了 LLM 对匿名平台（如双盲评审）的隐私威胁。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "LLM安全"
   - "作者归因"
   - "去匿名化"

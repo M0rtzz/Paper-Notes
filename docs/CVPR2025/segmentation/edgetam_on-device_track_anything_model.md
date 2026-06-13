@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EdgeTAM: On-Device Track Anything Model
 description: >-
-  [CVPR 2025][语义分割][SAM 2] EdgeTAM 通过详细的延迟分析发现 SAM 2 的瓶颈在记忆注意力而非图像编码器，提出 2D Spatial Perceiver 将帧级记忆从 64×64 维压缩到 ~500 个 token（保留空间结构），配合两阶段知识蒸馏…
+  [CVPR 2025][语义分割][SAM 2] EdgeTAM 通过详细的延迟分析发现 SAM 2 的瓶颈在记忆注意力而非图像编码器，提出 2D Spatial Perceiver 将帧级记忆从 64×64 维压缩到 ~500 个 token（保留空间结构），配合两阶段知识蒸馏，在 iPhone 15 Pro Max 上实现 16 FPS 的实时 Track Anything。
 tags:
   - "CVPR 2025"
   - "语义分割"

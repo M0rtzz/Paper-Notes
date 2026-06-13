@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Spikingformer: A Key Foundation Model for Spiking Neural Networks
 description: >-
-  [AAAI 2026][自监督学习][Spiking Neural Networks] 提出 Spikingformer，通过将 MS Residual 与 Self-Attention 以 spike-driven 方式结合，解决 Spikformer 中 SEW Residual 导致的非脉冲计算问题…
+  [AAAI 2026 Oral][自监督学习][Spiking Neural Networks] 提出 Spikingformer，通过将 MS Residual 与 Self-Attention 以 spike-driven 方式结合，解决 Spikformer 中 SEW Residual 导致的非脉冲计算问题，同时保持全局建模能力。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自监督学习"
   - "Spiking Neural Networks"
   - "Transformer"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Least Squares Variational Inference
 description: >-
-  [NeurIPS 2025][优化/理论][variational inference] 提出 LSVI（Least Squares Variational Inference），一种无梯度、基于普通最小二乘回归的变分推断方法，在指数族内通过对温控 log-target 做 OLS 回归来迭代求解最优变分近似…
+  [NeurIPS 2025][优化/理论][variational inference] 提出 LSVI（Least Squares Variational Inference），一种无梯度、基于普通最小二乘回归的变分推断方法，在指数族内通过对温控 log-target 做 OLS 回归来迭代求解最优变分近似，对高斯族有高效的 $O(d^3)$（全协方差）或 $O(d)$（平均场）实现。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

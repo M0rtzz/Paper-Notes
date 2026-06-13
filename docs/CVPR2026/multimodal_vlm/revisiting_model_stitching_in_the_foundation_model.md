@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Model Stitching in the Foundation Model Era
 description: >-
-  [CVPR 2026][多模态VLM][模型拼接] 本文系统研究视觉基础模型（VFM）之间的拼接可行性，发现传统方法在VFM上失效，提出"Final Feature Matching + Task Loss"两阶段训练策略使异构VFM可靠拼接，拼接模型甚至能超越两个单独VFM…
+  [CVPR 2026][多模态VLM][模型拼接] 本文系统研究视觉基础模型（VFM）之间的拼接可行性，发现传统方法在VFM上失效，提出"Final Feature Matching + Task Loss"两阶段训练策略使异构VFM可靠拼接，拼接模型甚至能超越两个单独VFM，进而提出VFM Stitch Tree（VST）架构为多VFM系统提供可控的精度-效率权衡方案。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

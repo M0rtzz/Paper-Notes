@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RACO: Reward-free Alignment for Conflicting Objectives
 description: >-
-  [ICML 2026][优化/理论][多目标对齐] RACO 把多目标 LLM 偏好对齐做成多目标优化问题——每个目标走自己的 DPO 损失，用 clipped CAGrad（CAGrad + 按用户权重剪裁系数）解决梯度冲突…
+  [ICML 2026 Oral][优化/理论][多目标对齐] RACO 把多目标 LLM 偏好对齐做成多目标优化问题——每个目标走自己的 DPO 损失，用 clipped CAGrad（CAGrad + 按用户权重剪裁系数）解决梯度冲突；理论证明收敛到尊重 user-specified 权重的 Pareto-critical 点（两目标场景下 clipping 严格加速），实证在 Qwen 3 / Llama 3 / Gemma 3 多模型族上一致拿到更好的 Pareto 折中。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "优化/理论"
   - "多目标对齐"
   - "梯度冲突"

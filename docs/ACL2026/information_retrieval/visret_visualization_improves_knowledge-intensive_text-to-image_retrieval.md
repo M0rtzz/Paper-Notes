@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisRet: Visualization Improves Knowledge-Intensive Text-to-Image Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][文本到图像检索] 本文提出 Visualize-then-Retrieve (VisRet)，一种将文本查询先通过 T2I 生成模型可视化为图像、再在图像模态内进行检索的新范式，在四个基准上平均提升 nDCG@30 0.125（CLIP）和 0.121（E5-V）…
+  [ACL 2026][信息检索/RAG][文本到图像检索] 本文提出 Visualize-then-Retrieve (VisRet)，一种将文本查询先通过 T2I 生成模型可视化为图像、再在图像模态内进行检索的新范式，在四个基准上平均提升 nDCG@30 0.125（CLIP）和 0.121（E5-V），下游 VQA 准确率在 Visual-RAG-ME 上提升 15.7%。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

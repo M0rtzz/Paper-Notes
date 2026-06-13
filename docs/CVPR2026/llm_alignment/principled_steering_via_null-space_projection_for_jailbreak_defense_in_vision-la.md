@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models
 description: >-
-  [CVPR 2026][LLM对齐][越狱防御] 提出 NullSteer，一种基于零空间投影的激活转向防御框架，通过将转向操作限制在良性激活的零空间中，在不损害模型通用能力的前提下有效抵御视觉越狱攻击。
+  [CVPR 2026][LLM对齐][越狱防御] 提出 NullSteer，一种基于零空间投影的激活转向防御框架，通过将转向操作限制在良性激活的零空间中，在不损害模型通用能力的前提下有效抵御视觉越狱攻击。 视觉语言模型（VLM）在开放场景部署时极易受到视觉越狱攻击的威胁——攻击者通过对图像添加对抗扰动或嵌入恶意指令来绑架模型…
 tags:
   - "CVPR 2026"
   - "LLM对齐"

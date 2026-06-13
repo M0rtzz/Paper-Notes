@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models
 description: >-
-  [AAAI 2026][多模态VLM][Token压缩] 提出GlobalCom²，一个**即插即用、无需训练**的token压缩框架，专为动态裁剪（dynamic cropping）结构的高分辨率VLM设计：利用全局缩略图（thumbnail）作为"指挥官"引导局部裁剪区域（crop）的差异化压缩…
+  [AAAI 2026][多模态VLM][Token压缩] 提出GlobalCom²，一个**即插即用、无需训练**的token压缩框架，专为动态裁剪（dynamic cropping）结构的高分辨率VLM设计：利用全局缩略图（thumbnail）作为"指挥官"引导局部裁剪区域（crop）的差异化压缩，在压缩90%视觉token的同时保持>90%原始性能。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

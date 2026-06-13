@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Do LLMs and VLMs Understand Viewpoint Rotation Without Vision? An Interpretability Study
 description: >-
-  [ACL 2026][多模态VLM][视角旋转理解] 本文提出文本视角旋转理解 (VRU) 基准 VRUBench，用 layer-wise probing 与 head-wise path patching 揭示 LLM/VLM 之所以在该任务上接近随机的根因 —— 中后层关键头未能把"已感知的朝向"与"该…
+  [ACL 2026][多模态VLM][视角旋转理解] 本文提出文本视角旋转理解 (VRU) 基准 VRUBench，用 layer-wise probing 与 head-wise path patching 揭示 LLM/VLM 之所以在该任务上接近随机的根因 —— 中后层关键头未能把"已感知的朝向"与"该朝向对应的观测"绑定，并通过只微调 32 个关键头就以 50% GPU 时间达到全量微调的效果且不损通用能力。
 tags:
   - "ACL 2026"
   - "多模态VLM"

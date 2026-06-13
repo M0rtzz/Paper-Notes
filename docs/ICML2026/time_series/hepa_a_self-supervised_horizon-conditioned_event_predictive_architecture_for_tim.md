@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HEPA: A Self-Supervised Horizon-Conditioned Event Predictive Architecture for Time Series
 description: >-
-  [ICML 2026][时间序列][事件预测] HEPA 通过**地平线条件化的 JEPA 自监督预训练**学习时间序列中的可预测动态——冻结编码器只微调预测器，用单一架构和固定超参在 11 个领域 14 个基准上超越多个 SOTA 方法，仅用 2% 标签数据即可达到 92% 性能。
+  [ICML 2026 Spotlight][时间序列][事件预测] HEPA 通过**地平线条件化的 JEPA 自监督预训练**学习时间序列中的可预测动态——冻结编码器只微调预测器，用单一架构和固定超参在 11 个领域 14 个基准上超越多个 SOTA 方法，仅用 2% 标签数据即可达到 92% 性能。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "时间序列"
   - "事件预测"
   - "JEPA"

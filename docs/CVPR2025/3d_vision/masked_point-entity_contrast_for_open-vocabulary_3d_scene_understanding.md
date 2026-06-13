@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Masked Point-Entity Contrast for Open-Vocabulary 3D Scene Understanding
 description: >-
-  [CVPR 2025][3D视觉][开放词汇3D分割] 提出 MPEC（Masked Point-Entity Contrastive learning），通过跨视角 point-to-entity 对比学习和 entity-to-language 对齐两个层次的对比损失来训练 3D 编码器…
+  [CVPR 2025][3D视觉][开放词汇3D分割] 提出 MPEC（Masked Point-Entity Contrastive learning），通过跨视角 point-to-entity 对比学习和 entity-to-language 对齐两个层次的对比损失来训练 3D 编码器，在保持实体级几何-空间信息的同时实现开放词汇语义理解，在 ScanNet 上取得 66.0% f-mIoU 的 SOTA 并在 8 个数据集的下游任务上展现强泛化能力。
 tags:
   - "CVPR 2025"
   - "3D视觉"

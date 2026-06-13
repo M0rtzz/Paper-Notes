@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Skill Path: Unveiling Language Skills from Circuit Graphs
 description: >-
-  [AAAI2026][图学习][机制可解释性] 提出 Skill Path 概念及三步框架（分解-剪枝-因果中介），从电路图中提取语言模型特定技能的线性路径，定量验证了技能的分层性（Stratification）和包容性（Inclusiveness）两大猜想。
+  [AAAI2026 Oral][图学习][机制可解释性] 提出 Skill Path 概念及三步框架（分解-剪枝-因果中介），从电路图中提取语言模型特定技能的线性路径，定量验证了技能的分层性（Stratification）和包容性（Inclusiveness）两大猜想。 Circuit Discovery 是理解语言模型内部…
 tags:
-  - "AAAI2026"
+  - "AAAI2026 Oral"
   - "图学习"
   - "机制可解释性"
   - "电路发现"

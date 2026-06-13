@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PIMRL: Physics-Informed Multi-Scale Recurrent Learning for Burst-Sampled Spatiotemporal Dynamics
 description: >-
-  [AAAI 2026][物理/科学计算][物理信息学习] 提出 PIMRL 框架，针对 burst 采样（短段高频+长间隔）的稀疏时空数据，结合宏观尺度潜空间推理和微观尺度物理校正的双模块架构，通过跨尺度消息传递融合信息，在 5 个 PDE 基准上将误差最多降低 80%。
+  [AAAI 2026][物理/科学计算][物理信息学习] 提出 PIMRL 框架，针对 burst 采样（短段高频+长间隔）的稀疏时空数据，结合宏观尺度潜空间推理和微观尺度物理校正的双模块架构，通过跨尺度消息传递融合信息，在 5 个 PDE 基准上将误差最多降低 80%。 领域现状：学习PDE时空动力学的主流方法（FNO、D…
 tags:
   - "AAAI 2026"
   - "物理/科学计算"

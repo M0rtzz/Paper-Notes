@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Step Length Confounding in LLM Reasoning Data Selection
 description: >-
-  [ACL 2026][LLM推理][推理数据选择] 本文发现基于自然度的 LLM 推理数据选择方法存在"步长混淆"问题——系统性地偏好每步更长的样本而非更高质量的样本，根因是推理步骤首 token 的低概率被长步骤稀释…
+  [ACL 2026 Findings][LLM推理][推理数据选择] 本文发现基于自然度的 LLM 推理数据选择方法存在"步长混淆"问题——系统性地偏好每步更长的样本而非更高质量的样本，根因是推理步骤首 token 的低概率被长步骤稀释。提出 Aslec-drop（丢弃首 token 概率）和 Aslec-casl（因果回归去偏）两种校正方法，平均准确率提升 6-9%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "推理数据选择"
   - "步长混淆"

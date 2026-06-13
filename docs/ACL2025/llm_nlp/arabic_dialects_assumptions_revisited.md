@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Revisiting Common Assumptions about Arabic Dialects in NLP
 description: >-
-  [LLM/NLP] 系统性检验了阿拉伯语方言 NLP 中四个被广泛接受但未被量化验证的假设，通过扩展 NADI 2024 数据集（11 个国家级方言、33 名标注者）发现这些假设过度简化了现实，56% 的方言句子跨区域有效、ADI 应建模为多标签分类任务。
+  [LLM 其他] 系统性检验了阿拉伯语方言 NLP 中四个被广泛接受但未被量化验证的假设，通过扩展 NADI 2024 数据集（11 个国家级方言、33 名标注者）发现这些假设过度简化了现实，56% 的方言句子跨区域有效、ADI 应建模为多标签分类任务。 - 现有痛点：阿拉伯方言识别（ADI）长期被建模为单标签分类任务…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # Revisiting Common Assumptions about Arabic Dialects in NLP

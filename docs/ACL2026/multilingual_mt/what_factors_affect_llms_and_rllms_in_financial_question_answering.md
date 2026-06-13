@@ -2,9 +2,9 @@
 title: >-
   [论文解读] What Factors Affect LLMs and RLLMs in Financial Question Answering?
 description: >-
-  [ACL 2026][多语言/翻译][金融问答] 本文系统研究了提示方法、Agent 框架和多语言对齐方法对 LLM 和 RLLM（推理型大模型）在金融问答任务上的影响，发现现有方法本质上是通过模拟 Long CoT 来提升 LLM 性能，但对已具备 Long CoT 能力的 RLLM 效果有限。
+  [ACL 2026 Findings][多语言/翻译][金融问答] 本文系统研究了提示方法、Agent 框架和多语言对齐方法对 LLM 和 RLLM（推理型大模型）在金融问答任务上的影响，发现现有方法本质上是通过模拟 Long CoT 来提升 LLM 性能，但对已具备 Long CoT 能力的 RLLM 效果有限。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "金融问答"
   - "推理型大模型"

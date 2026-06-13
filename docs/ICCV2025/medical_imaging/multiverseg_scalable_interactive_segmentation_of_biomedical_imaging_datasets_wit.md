@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MultiverSeg: Scalable Interactive Segmentation of Biomedical Imaging Datasets with In-Context Guidance
 description: >-
-  [ICCV 2025][医学图像][交互式分割] 提出 MultiverSeg，一个渐进式交互分割系统：用户每标注一张图像，后续图像所需的交互次数就会减少，通过将已分割图像作为上下文输入模型实现"越用越好"的效果…
+  [ICCV 2025][医学图像][交互式分割] 提出 MultiverSeg，一个渐进式交互分割系统：用户每标注一张图像，后续图像所需的交互次数就会减少，通过将已分割图像作为上下文输入模型实现"越用越好"的效果，在 12 个未见数据集上相比 ScribblePrompt 将点击数减少 36%、涂鸦步骤减少 25%。
 tags:
   - "ICCV 2025"
   - "医学图像"

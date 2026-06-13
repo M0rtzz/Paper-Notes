@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaRINeR: Enhancing Novel Views by Matching Rendered Images with Nearby References
 description: >-
-  [ECCV 2024][3D视觉][新视角增强] 提出MaRINeR方法，利用附近参考图像通过深度特征匹配和层次化细节传输来增强3D重建的渲染图像质量，适用于显式（mesh）和隐式（NeRF）等多种3D表示的渲染后处理。
+  [ECCV 2024][3D视觉][新视角增强] 提出MaRINeR方法，利用附近参考图像通过深度特征匹配和层次化细节传输来增强3D重建的渲染图像质量，适用于显式（mesh）和隐式（NeRF）等多种3D表示的渲染后处理。 领域现状： 3D重建方法（点云、mesh、NeRF、高斯溅射）各有局限，产生的渲染图像包含几何噪声、外观…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TSBOW: Traffic Surveillance Benchmark for Occluded Vehicles Under Various Weather Conditions
 description: >-
-  [AAAI2026][自动驾驶][目标检测] 提出TSBOW——一个基于CCTV的大规模交通监控数据集，包含198个视频、超32小时真实交通数据和320万帧，覆盖全年四季天气（晴/霾/雨/雪含极端灾害场景），涵盖8类交通参与者，重点解决恶劣天气下遮挡车辆检测的挑战。
+  [AAAI2026][自动驾驶][目标检测] 提出TSBOW——一个基于CCTV的大规模交通监控数据集，包含198个视频、超32小时真实交通数据和320万帧，覆盖全年四季天气（晴/霾/雨/雪含极端灾害场景），涵盖8类交通参与者，重点解决恶劣天气下遮挡车辆检测的挑战。 全球变暖加剧了极端天气事件的频率和严重程度…
 tags:
   - "AAAI2026"
   - "自动驾驶"

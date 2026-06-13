@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coloring the Noise: Adversarial Sobolev Alignment for Faithful Image Super Resolution
 description: >-
-  [ICML 2026][图像恢复][图像超分辨率] ASASR 通过将 Flow Matching 的噪声先验从各向同性高斯替换为 Sobolev 谱着色噪声，结合对抗性流形引导生成硬负样本，构建 AS-DPO 框架，实现了超分辨率中感知质量与结构保真度的最优平衡。
+  [ICML 2026][图像恢复][图像超分辨率] ASASR 通过将 Flow Matching 的噪声先验从各向同性高斯替换为 Sobolev 谱着色噪声，结合对抗性流形引导生成硬负样本，构建 AS-DPO 框架，实现了超分辨率中感知质量与结构保真度的最优平衡。 领域现状：基于大规模生成先验（扩散模型 / Flow Ma…
 tags:
   - "ICML 2026"
   - "图像恢复"

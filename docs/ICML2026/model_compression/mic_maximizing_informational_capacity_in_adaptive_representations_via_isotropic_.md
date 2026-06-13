@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIC: Maximizing Informational Capacity in Adaptive Representations via Isotropic Subspace Alignment
 description: >-
-  [ICML 2026][模型压缩][Matryoshka 表征] 本文提出 MIC，在 Matryoshka 表征学习 (MRL) 之上加两个几何正则——SCR (限制 prefix/residual 子空间之间的相关) 和 SIR (强制 prefix 的方差均匀 + 超球面均匀)…
+  [ICML 2026][模型压缩][Matryoshka 表征] 本文提出 MIC，在 Matryoshka 表征学习 (MRL) 之上加两个几何正则——SCR (限制 prefix/residual 子空间之间的相关) 和 SIR (强制 prefix 的方差均匀 + 超球面均匀)，让模型在被截断到 16/32/64 维这种极低维度时仍保持高判别性，平均超越 MRL/ESE 等基线。
 tags:
   - "ICML 2026"
   - "模型压缩"

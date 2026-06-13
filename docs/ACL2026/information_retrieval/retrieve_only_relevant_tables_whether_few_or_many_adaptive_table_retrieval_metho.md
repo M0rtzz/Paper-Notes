@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Retrieve Only Relevant Tables Whether Few or Many: Adaptive Table Retrieval Method
 description: >-
-  [ACL2026][信息检索/RAG][adaptive retrieval] 这篇论文提出 Adaptive Table Retrieval (ATR)，用查询自适应阈值代替固定 top-k 表格检索，并结合相关性校准、表间语义分组和滑动窗口重排…
+  [ACL2026 Findings][信息检索/RAG][adaptive retrieval] 这篇论文提出 Adaptive Table Retrieval (ATR)，用查询自适应阈值代替固定 top-k 表格检索，并结合相关性校准、表间语义分组和滑动窗口重排，在 Spider、BIRD、Spider 2.0 上同时提升检索召回、text-to-SQL 执行准确率和推理效率。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "信息检索/RAG"
   - "adaptive retrieval"
   - "table retrieval"

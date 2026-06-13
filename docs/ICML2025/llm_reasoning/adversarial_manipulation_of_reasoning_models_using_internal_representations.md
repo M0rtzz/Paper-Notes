@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Manipulation of Reasoning Models using Internal Representations
 description: >-
-  [ICML 2025 (R2FM Workshop)][LLM推理][Reasoning Models] 本文发现推理模型（如 DeepSeek-R1-Distill-Llama-8B）在 CoT 生成阶段存在一个线性"谨慎方向"（caution direction），通过消融该方向可有效越狱模型…
+  [ICML 2025 (R2FM Workshop)][LLM推理][Reasoning Models] 本文发现推理模型（如 DeepSeek-R1-Distill-Llama-8B）在 CoT 生成阶段存在一个线性"谨慎方向"（caution direction），通过消融该方向可有效越狱模型，揭示了 CoT 本身是对抗攻击的新靶点。
 tags:
   - "ICML 2025 (R2FM Workshop)"
   - "LLM推理"

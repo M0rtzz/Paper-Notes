@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Correlation Dimension of Auto-Regressive Large Language Models
 description: >-
-  [NeurIPS 2025][模型压缩][关联维度] 本文将分形几何中的关联维度（Correlation Dimension）引入LLM分析，通过度量next-token对数概率向量之间的递归结构来量化文本的层次化复杂度…
+  [NeurIPS 2025][模型压缩][关联维度] 本文将分形几何中的关联维度（Correlation Dimension）引入LLM分析，通过度量next-token对数概率向量之间的递归结构来量化文本的层次化复杂度，揭示了LLM预训练的三阶段演化、幻觉倾向指示以及多种文本退化模式的统一检测能力——这些是困惑度（perplexity）无法捕捉的。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

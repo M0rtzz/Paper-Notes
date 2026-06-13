@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contrastive Flow Matching (ΔFM)
 description: >-
-  [ICCV 2025][图像生成][Flow Matching] 在 Flow Matching 的训练目标中引入对比正则项，强制不同条件的流场互相远离，从而在零额外推理开销下实现 9× 训练加速、5× 更少采样步数、FID 最多降低 8.9。
+  [ICCV 2025][图像生成][Flow Matching] 在 Flow Matching 的训练目标中引入对比正则项，强制不同条件的流场互相远离，从而在零额外推理开销下实现 9× 训练加速、5× 更少采样步数、FID 最多降低 8.9。 Flow Matching（FM）是当前生成模型的主流训练范式之一…
 tags:
   - "ICCV 2025"
   - "图像生成"

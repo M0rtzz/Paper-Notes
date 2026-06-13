@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Semantic Gradients in SSD: A PCA Sweep Approach and a Case Study on AI Discourse
 description: >-
-  [ACL 2026][可解释性][Supervised Semantic Differential] 本文给 Supervised Semantic Differential (SSD) 这种"用个体差异变量估计文本嵌入语义梯度"的方法提了一个 PCA sweep 程序——用可解释性 + 稳定性两个诊断（而非…
+  [ACL 2026][可解释性][Supervised Semantic Differential] 本文给 Supervised Semantic Differential (SSD) 这种"用个体差异变量估计文本嵌入语义梯度"的方法提了一个 PCA sweep 程序——用可解释性 + 稳定性两个诊断（而非预测精度）联合挑选 PCA 维度 $K$，并在 349 条 AI 主题短文 + 自恋问卷上演示：sweep 选出的 $K=15$ 给出 Admiration 相关的"乐观协作 vs 不信任嘲讽"稳定语义梯度，而高 $K=120$ 的反事实方案得到混乱难解释的簇。
 tags:
   - "ACL 2026"
   - "可解释性"

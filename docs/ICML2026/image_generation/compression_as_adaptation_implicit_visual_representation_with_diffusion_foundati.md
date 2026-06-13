@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compression as Adaptation: Implicit Visual Representation with Diffusion Foundation Models
 description: >-
-  [ICML 2026][图像生成][隐式表示] 将视觉信号编码为冻结扩散基础模型上的低秩适配参数（LoRA），并通过哈希映射压缩为单个紧凑向量，在极低码率下实现强感知质量的视频压缩，同时支持推理时缩放和生成式编辑。
+  [ICML 2026][图像生成][隐式表示] 将视觉信号编码为冻结扩散基础模型上的低秩适配参数（LoRA），并通过哈希映射压缩为单个紧凑向量，在极低码率下实现强感知质量的视频压缩，同时支持推理时缩放和生成式编辑。 领域现状：大规模视觉生成模型（如 Wan-2.1、Qwen）通过海量数据训练获得了丰富的视觉知识…
 tags:
   - "ICML 2026"
   - "图像生成"

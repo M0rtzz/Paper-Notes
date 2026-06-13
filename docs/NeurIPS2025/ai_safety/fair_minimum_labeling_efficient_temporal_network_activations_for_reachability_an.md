@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fair Minimum Labeling: Efficient Temporal Network Activations for Reachability and Equity
 description: >-
-  [NeurIPS 2025][AI安全][公平性] 本文提出公平最小标注（FML）问题，旨在设计最小代价的时序边激活方案，使网络中各节点组均有足够的时序路径可达性以满足公平覆盖要求；证明该问题是 NP-hard 且难以近似，并基于概率树嵌入给出匹配下界的近似算法。
+  [NeurIPS 2025][AI安全][公平性] 本文提出公平最小标注（FML）问题，旨在设计最小代价的时序边激活方案，使网络中各节点组均有足够的时序路径可达性以满足公平覆盖要求；证明该问题是 NP-hard 且难以近似，并基于概率树嵌入给出匹配下界的近似算法。 领域现状：现代联网系统（联邦学习、推荐系统、分布式传感器网络…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

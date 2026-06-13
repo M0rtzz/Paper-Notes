@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Case Study of Cross-Lingual Zero-Shot Generalization for Classical Languages in LLMs
 description: >-
-  [ACL 2025][多语言/翻译][Cross-Lingual Generalization] 系统评估 LLM 在三种古典语言（梵语、古希腊语、拉丁语）上的零样本跨语言泛化能力，涵盖 NER、机器翻译和问答三个 NLU 任务，同时贡献 1501 对梵语问答数据集并验证 RAG 策略的有效性…
+  [ACL 2025][多语言/翻译][Cross-Lingual Generalization] 系统评估 LLM 在三种古典语言（梵语、古希腊语、拉丁语）上的零样本跨语言泛化能力，涵盖 NER、机器翻译和问答三个 NLU 任务，同时贡献 1501 对梵语问答数据集并验证 RAG 策略的有效性，揭示模型规模是跨语言泛化的决定性因素。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

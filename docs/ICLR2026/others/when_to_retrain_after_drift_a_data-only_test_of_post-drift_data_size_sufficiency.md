@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Retrain after Drift: A Data-Only Test of Post-Drift Data Size Sufficiency
 description: >-
-  [ICLR 2026][概念漂移] CALIPER提出了一种检测器和模型无关的、仅依赖数据的检验方法，通过跟踪加权局部回归的代理误差随局部性参数$\theta$的单调性变化，来估计突发概念漂移后重训练所需的最小数据量，无需实际重训练下游模型。
+  [ICLR 2026][概念漂移] CALIPER提出了一种检测器和模型无关的、仅依赖数据的检验方法，通过跟踪加权局部回归的代理误差随局部性参数$\theta$的单调性变化，来估计突发概念漂移后重训练所需的最小数据量，无需实际重训练下游模型。 领域现状：非平稳数据流中维持预测器性能需要快速适应概念漂移…
 tags:
   - "ICLR 2026"
   - "概念漂移"

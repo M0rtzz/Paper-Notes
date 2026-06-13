@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking LiDAR Domain Generalization: Single Source as Multiple Density Domains
 description: >-
-  [ECCV 2024][自动驾驶][LiDAR语义分割] 提出密度判别特征嵌入（DDFE）模块，利用单一 LiDAR 源域点云中固有的密度多样性（近处密/远处疏），学习密度感知的特征表示，实现对不同传感器配置下未见域的泛化，无需目标域数据。
+  [ECCV 2024][自动驾驶][LiDAR语义分割] 提出密度判别特征嵌入（DDFE）模块，利用单一 LiDAR 源域点云中固有的密度多样性（近处密/远处疏），学习密度感知的特征表示，实现对不同传感器配置下未见域的泛化，无需目标域数据。 LiDAR 语义分割在自动驾驶中至关重要，但模型性能在域迁移时严重退化…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

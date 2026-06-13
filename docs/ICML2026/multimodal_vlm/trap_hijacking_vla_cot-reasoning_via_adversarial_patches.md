@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRAP: 用对抗 patch 劫持 VLA 的 CoT 推理实现目标行为攻击
 description: >-
-  [ICML 2026][多模态VLM][VLA] TRAP 是第一个针对 reasoning VLA 的目标行为劫持攻击——通过桌布大小的物理对抗 patch 劫持 VLA 的 CoT 推理（边界框/轨迹/子任务），让机器人在用户指令保持「拿苹果」时改为「拿刀给人」…
+  [ICML 2026][多模态VLM][VLA] TRAP 是第一个针对 reasoning VLA 的目标行为劫持攻击——通过桌布大小的物理对抗 patch 劫持 VLA 的 CoT 推理（边界框/轨迹/子任务），让机器人在用户指令保持「拿苹果」时改为「拿刀给人」；在 MolmoAct/GraspVLA/InstructVLA 三种 CoT 范式上平均 ASR 52.54%，真实世界打印 patch 在 GraspVLA 上 occlusion-free 部署 86.7% 干扰成功率、33.3% 完全控制率。
 tags:
   - "ICML 2026"
   - "多模态VLM"

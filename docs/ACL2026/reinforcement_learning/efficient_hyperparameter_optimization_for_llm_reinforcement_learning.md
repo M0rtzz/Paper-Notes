@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Hyperparameter Optimization for LLM Reinforcement Learning
 description: >-
-  [ACL2026][强化学习][LLM强化学习] 本文提出 JF-HPO，把小型同族代理模型、训练步数保真度、训练动态早停和 checkpoint 复用合到一个 Bayesian HPO 框架中，用更低成本为 LLM 强化学习找到更稳的超参数…
+  [ACL2026][强化学习][LLM强化学习] 本文提出 JF-HPO，把小型同族代理模型、训练步数保真度、训练动态早停和 checkpoint 复用合到一个 Bayesian HPO 框架中，用更低成本为 LLM 强化学习找到更稳的超参数，并在多个推理任务上优于 VeRL Recipe、Random Search 和 BOHB。
 tags:
   - "ACL2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions
 description: >-
-  [ICCV 2025][图像恢复][自适应卷积] 从度量几何视角统一解释现有各种自适应卷积（标准/膨胀/平移/可变形），并基于显式 Randers 度量的单位球采样提出 Metric Convolution，以更少参数实现更好的几何正则化和泛化能力。
+  [ICCV 2025][图像恢复][自适应卷积] 从度量几何视角统一解释现有各种自适应卷积（标准/膨胀/平移/可变形），并基于显式 Randers 度量的单位球采样提出 Metric Convolution，以更少参数实现更好的几何正则化和泛化能力。 标准卷积是深度学习的基石，但固定的各向同性 $k \times k$ 核形…
 tags:
   - "ICCV 2025"
   - "图像恢复"

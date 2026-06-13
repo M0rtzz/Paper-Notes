@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoseBH: Prototypical Multi-Dataset Training Beyond Human Pose Estimation
 description: >-
-  [CVPR 2025][人体理解][多数据集训练] 提出 PoseBH，通过非参数关键点原型（Sinkhorn-Knopp 在线聚类）和跨类型自监督（CSS）实现人/动物/手部等不同骨骼定义数据集的统一训练，在 APT-36K 动物视频数据集上比 ViTPose++ 提升 11.2 AP…
+  [CVPR 2025][人体理解][多数据集训练] 提出 PoseBH，通过非参数关键点原型（Sinkhorn-Knopp 在线聚类）和跨类型自监督（CSS）实现人/动物/手部等不同骨骼定义数据集的统一训练，在 APT-36K 动物视频数据集上比 ViTPose++ 提升 11.2 AP，证明跨类型知识迁移的有效性。
 tags:
   - "CVPR 2025"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAMI: A Counselor Agent Supporting Motivational Interviewing through State Inference and Topic Exploration
 description: >-
-  [ACL 2025][模型压缩][动机式访谈] 本文提出CAMI（Counselor Agent for Motivational Interviewing），一个基于动机式访谈（MI）原则的咨询Agent，通过STAR框架（状态推断、话题探索、回复生成）来引导来访者产生改变谈话（change talk）…
+  [ACL 2025][模型压缩][动机式访谈] 本文提出CAMI（Counselor Agent for Motivational Interviewing），一个基于动机式访谈（MI）原则的咨询Agent，通过STAR框架（状态推断、话题探索、回复生成）来引导来访者产生改变谈话（change talk），在自动化和人工评估中均优于现有方法。
 tags:
   - "ACL 2025"
   - "模型压缩"

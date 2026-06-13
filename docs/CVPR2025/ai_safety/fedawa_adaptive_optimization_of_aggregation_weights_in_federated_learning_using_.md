@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedAWA: Adaptive Optimization of Aggregation Weights in Federated Learning Using Client Vectors
 description: >-
-  [CVPR 2025][AI安全][联邦学习] 提出 FedAWA，受任务算术（task arithmetic）启发，用客户端向量（本地参数与全局参数的差值）来自适应优化联邦学习中的聚合权重——与全局优化方向一致的客户端获得更高权重，在 non-IID 场景下稳定提升 FedAvg 1-4 个点。
+  [CVPR 2025][AI安全][联邦学习] 提出 FedAWA，受任务算术（task arithmetic）启发，用客户端向量（本地参数与全局参数的差值）来自适应优化联邦学习中的聚合权重——与全局优化方向一致的客户端获得更高权重，在 non-IID 场景下稳定提升 FedAvg 1-4 个点。 领域现状 领域现状：联邦学…
 tags:
   - "CVPR 2025"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUIOdyssey: A Comprehensive Dataset for Cross-App GUI Navigation on Mobile Devices
 description: >-
-  [ICCV 2025][机器人][GUI导航] 提出 GUIOdyssey，首个面向移动端跨应用 GUI 导航的综合数据集（8334 episodes、212 apps、1357 app 组合），以及 OdysseyAgent——配备历史重采样模块的多模态导航智能体…
+  [ICCV 2025][机器人][GUI导航] 提出 GUIOdyssey，首个面向移动端跨应用 GUI 导航的综合数据集（8334 episodes、212 apps、1357 app 组合），以及 OdysseyAgent——配备历史重采样模块的多模态导航智能体，在平衡性能与推理效率的同时显著提升跨应用任务表现。
 tags:
   - "ICCV 2025"
   - "机器人"

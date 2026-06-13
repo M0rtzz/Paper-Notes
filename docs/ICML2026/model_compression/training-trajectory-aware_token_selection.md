@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T3S: 训练轨迹感知的 token 选择，破解推理蒸馏的「Imitation Shock」
 description: >-
-  [ICML 2026][模型压缩][推理蒸馏] 论文发现强 student（如 Qwen3-8B）继续从 DeepSeek-R1 蒸馏时存在通用的「Imitation Shock」——loss 单调下降但 acc 先暴跌再恢复…
+  [ICML 2026][模型压缩][推理蒸馏] 论文发现强 student（如 Qwen3-8B）继续从 DeepSeek-R1 蒸馏时存在通用的「Imitation Shock」——loss 单调下降但 acc 先暴跌再恢复，根因是早期「Imitation-Anchor Tokens」梯度统治优化压制了真正负责推理的 token；T3S 用训练轨迹找出 anchor token 并把它们 mask 掉，让 yet-to-learn 推理 token 提前学习，在 AR 和 dLLM 两个 setting 都涨分（Qwen3-8B 反超 DeepSeek-R1，Qwen3-32B 逼近 Qwen3-235B…
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reliable Automated Triage in Spanish Clinical Notes: A Hybrid Framework for Risk-Aware HIV Suspicion Identification
 description: >-
-  [ACL2026][医疗NLP][临床 NLP] 本文面向西班牙临床笔记中的早期 HIV 疑似识别，提出 MCP 处理 aleatoric uncertainty、MCMD 几何 veto 处理 epistemic uncertainty 的双验证选择性分诊框架…
+  [ACL2026][医疗NLP][临床 NLP] 本文面向西班牙临床笔记中的早期 HIV 疑似识别，提出 MCP 处理 aleatoric uncertainty、MCMD 几何 veto 处理 epistemic uncertainty 的双验证选择性分诊框架，在严格安全约束下自动处理 67.7% 病例并达到 0.982 Clear $F_2$。
 tags:
   - "ACL2026"
   - "医疗NLP"

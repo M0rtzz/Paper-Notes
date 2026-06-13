@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnyPortal: Zero-Shot Consistent Video Background Replacement
 description: >-
-  [ICCV 2025][图像生成][视频背景替换] AnyPortal 提出了一个零样本、免训练的视频背景替换框架，通过协同利用 IC-Light 的重光照能力和视频扩散模型（CogVideoX）的时序先验…
+  [ICCV 2025][图像生成][视频背景替换] AnyPortal 提出了一个零样本、免训练的视频背景替换框架，通过协同利用 IC-Light 的重光照能力和视频扩散模型（CogVideoX）的时序先验，配合新提出的 Refinement Projection Algorithm (RPA) 实现像素级前景保持，在单张 24GB GPU 上即可高效运行。
 tags:
   - "ICCV 2025"
   - "图像生成"

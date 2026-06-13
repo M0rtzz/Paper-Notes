@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VTON 360: High-Fidelity Virtual Try-On from Any Viewing Direction
 description: >-
-  [CVPR 2025][人体理解][3D虚拟试穿] 提出 VTON 360，通过将 3D 虚拟试穿重新建模为多视角一致的 2D 虚拟试穿扩展问题，结合伪 3D 姿态表示、多视角空间注意力和多视角 CLIP 嵌入三项技术，实现从任意视角的高保真虚拟试穿。
+  [CVPR 2025][人体理解][3D虚拟试穿] 提出 VTON 360，通过将 3D 虚拟试穿重新建模为多视角一致的 2D 虚拟试穿扩展问题，结合伪 3D 姿态表示、多视角空间注意力和多视角 CLIP 嵌入三项技术，实现从任意视角的高保真虚拟试穿。 虚拟试穿（VTON）在电商和时尚设计中需求巨大。2D VTON 方法虽已…
 tags:
   - "CVPR 2025"
   - "人体理解"

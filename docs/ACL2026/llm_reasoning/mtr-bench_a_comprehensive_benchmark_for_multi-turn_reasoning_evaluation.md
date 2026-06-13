@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTR-Bench: A Comprehensive Benchmark for Multi-Turn Reasoning Evaluation
 description: >-
-  [ACL 2026][LLM推理][多轮推理] MTR-Bench 构建了一个包含 4 类、40 个任务、3600 个实例的自动化多轮推理评测框架，显示当前前沿推理模型在交互式、动态反馈环境中仍远未可靠。
+  [ACL 2026][LLM推理][多轮推理] MTR-Bench 构建了一个包含 4 类、40 个任务、3600 个实例的自动化多轮推理评测框架，显示当前前沿推理模型在交互式、动态反馈环境中仍远未可靠。 领域现状：o1、DeepSeek-R1、QwQ 等 reasoning-enhanced LLM 在数学、代码和逻辑题上…
 tags:
   - "ACL 2026"
   - "LLM推理"

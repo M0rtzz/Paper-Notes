@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FICGen: Frequency-Inspired Contextual Disentanglement for Layout-driven Degraded Image Generation
 description: >-
-  [ICCV 2025][图像生成][Layout-to-Image] 提出 FICGen，首次解决退化场景（低光照/水下/遥感/恶劣天气等）Layout-to-Image 生成中的"上下文幻觉困境"，通过可学习双查询机制提取退化场景的高低频原型，经视觉-频率增强注意力注入 latent 扩散空间…
+  [ICCV 2025][图像生成][Layout-to-Image] 提出 FICGen，首次解决退化场景（低光照/水下/遥感/恶劣天气等）Layout-to-Image 生成中的"上下文幻觉困境"，通过可学习双查询机制提取退化场景的高低频原型，经视觉-频率增强注意力注入 latent 扩散空间，并使用实例一致性图 + 空间-频率自适应聚合实现前景-背景解耦，在 5 个退化数据集上全面超越现有 L2I 方法。
 tags:
   - "ICCV 2025"
   - "图像生成"

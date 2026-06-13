@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisualAD: Language-Free Zero-Shot Anomaly Detection via Vision Transformer
 description: >-
-  [CVPR 2026][目标检测][零样本异常检测] 重新审视零样本异常检测（ZSAD）中文本分支的必要性，提出 VisualAD——一个纯视觉框架：在冻结 ViT 中插入两个可学习 token（anomaly/normal）…
+  [CVPR 2026][目标检测][零样本异常检测] 重新审视零样本异常检测（ZSAD）中文本分支的必要性，提出 VisualAD——一个纯视觉框架：在冻结 ViT 中插入两个可学习 token（anomaly/normal），配合 Spatial-Aware Cross-Attention 和 Self-Alignment Function，去掉文本编码器仍在 13 个工业+医学基准上取得 SOTA。
 tags:
   - "CVPR 2026"
   - "目标检测"

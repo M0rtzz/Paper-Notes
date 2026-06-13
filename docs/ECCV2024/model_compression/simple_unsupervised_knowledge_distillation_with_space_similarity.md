@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simple Unsupervised Knowledge Distillation With Space Similarity
 description: >-
-  [ECCV 2024][模型压缩][无监督知识蒸馏] CoSS 提出在无监督知识蒸馏中，除了常规的**特征维度余弦相似度**外，额外引入一个**空间维度余弦相似度（Space Similarity）**损失——将特征矩阵转置后在维度方向上对齐，从而弥补 $L_2$ 归一化导致的流形结构信息丢失…
+  [ECCV 2024][模型压缩][无监督知识蒸馏] CoSS 提出在无监督知识蒸馏中，除了常规的**特征维度余弦相似度**外，额外引入一个**空间维度余弦相似度（Space Similarity）**损失——将特征矩阵转置后在维度方向上对齐，从而弥补 $L_2$ 归一化导致的流形结构信息丢失，以极简的方式在多个 UKD benchmark 上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "模型压缩"

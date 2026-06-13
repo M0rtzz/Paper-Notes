@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Few-Shot Incremental 3D Object Detection in Dynamic Indoor Environments
 description: >-
-  [CVPR 2026][3D视觉][少样本增量学习] 提出 FI3Det，首个少样本增量 3D 目标检测框架：在基础训练阶段通过 VLM 引导的未知对象学习模块提前感知潜在新类别，在增量阶段通过门控多模态原型铸造模块融合 2D 语义和 3D 几何特征进行新类检测…
+  [CVPR 2026][3D视觉][少样本增量学习] 提出 FI3Det，首个少样本增量 3D 目标检测框架：在基础训练阶段通过 VLM 引导的未知对象学习模块提前感知潜在新类别，在增量阶段通过门控多模态原型铸造模块融合 2D 语义和 3D 几何特征进行新类检测，在 ScanNet V2 和 SUN RGB-D 上的新类 mAP 平均提升 17.37%。
 tags:
   - "CVPR 2026"
   - "3D视觉"

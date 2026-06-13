@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Planning Beyond Text: Graph-based Reasoning for Complex Narrative Generation
 description: >-
-  [ACL 2026][文本生成][叙事生成] 本文提出 PLOTTER 框架，首次将叙事规划从文本表示转移到图结构表示（事件图+角色图），通过多 agent 的 Evaluate-Plan-Revise 迭代循环在图拓扑上诊断和修复叙事缺陷，在叙事性、角色塑造、戏剧张力等维度上显著优于现有方法。
+  [ACL 2026 Findings][文本生成][叙事生成] 本文提出 PLOTTER 框架，首次将叙事规划从文本表示转移到图结构表示（事件图+角色图），通过多 agent 的 Evaluate-Plan-Revise 迭代循环在图拓扑上诊断和修复叙事缺陷，在叙事性、角色塑造、戏剧张力等维度上显著优于现有方法。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "文本生成"
   - "叙事生成"
   - "图结构推理"

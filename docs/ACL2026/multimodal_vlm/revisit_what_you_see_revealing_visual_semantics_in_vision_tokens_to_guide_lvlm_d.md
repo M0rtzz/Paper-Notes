@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Revisit What You See: Revealing Visual Semantics in Vision Tokens to Guide LVLM Decoding
 description: >-
-  [ACL2026][多模态VLM][视觉语言模型] ReVisiT 发现 LVLM 的视觉 token 本身已经编码了可解释的对象语义，并通过上下文约束词表、视觉 token 选择与 logit 融合，在不训练、不额外前向的情况下提升视觉 grounding 并降低幻觉。
+  [ACL2026 Oral][多模态VLM][视觉语言模型] ReVisiT 发现 LVLM 的视觉 token 本身已经编码了可解释的对象语义，并通过上下文约束词表、视觉 token 选择与 logit 融合，在不训练、不额外前向的情况下提升视觉 grounding 并降低幻觉。 领域现状：当前大型视觉语言模型通常先把图像…
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "多模态VLM"
   - "视觉语言模型"
   - "幻觉抑制"

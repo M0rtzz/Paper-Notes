@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PaPr: Training-Free One-Step Patch Pruning with Lightweight ConvNets for Faster Inference
 description: >-
-  [ECCV 2024][模型压缩][剪枝] 提出 PaPr，利用轻量级 ConvNet 的卷积特征图生成 Patch Significance Map (PSM)，在**无需重训练**的情况下对 ViT/ConvNet/混合架构进行**一步式** patch 剪枝…
+  [ECCV 2024][模型压缩][剪枝] 提出 PaPr，利用轻量级 ConvNet 的卷积特征图生成 Patch Significance Map (PSM)，在**无需重训练**的情况下对 ViT/ConvNet/混合架构进行**一步式** patch 剪枝，实现显著的计算量削减（视频场景最高 3.7× FLOPs 减少），且精度损失极小。
 tags:
   - "ECCV 2024"
   - "模型压缩"

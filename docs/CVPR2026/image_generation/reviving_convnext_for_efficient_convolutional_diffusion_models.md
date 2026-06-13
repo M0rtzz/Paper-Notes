@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reviving ConvNeXt for Efficient Convolutional Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][扩散模型] 本文提出FCDM（Fully Convolutional Diffusion Model），将ConvNeXt架构适配为条件扩散模型backbone，仅用DiT-XL 50%的FLOPs即可在ImageNet上达到竞争性FID（2.03）…
+  [CVPR 2026][图像生成][扩散模型] 本文提出FCDM（Fully Convolutional Diffusion Model），将ConvNeXt架构适配为条件扩散模型backbone，仅用DiT-XL 50%的FLOPs即可在ImageNet上达到竞争性FID（2.03），且能在4块RTX 4090上训练XL模型，展示了全卷积架构在生成建模中被严重低估的效率优势。
 tags:
   - "CVPR 2026"
   - "图像生成"

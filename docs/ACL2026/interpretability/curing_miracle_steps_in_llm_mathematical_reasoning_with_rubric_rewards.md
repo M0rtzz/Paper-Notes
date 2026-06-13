@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curing "Miracle Steps" in LLM Mathematical Reasoning with Rubric Rewards
 description: >-
-  [ACL 2026][可解释性][数学推理] 本文发现当前 LLM 数学推理中存在大量"Miracle Steps"——推理链中凭空跳跃到正确答案的现象，并提出 Rubric Reward Model (RRM)，一种基于问题特定评分标准的过程奖励函数…
+  [ACL 2026][可解释性][数学推理] 本文发现当前 LLM 数学推理中存在大量"Miracle Steps"——推理链中凭空跳跃到正确答案的现象，并提出 Rubric Reward Model (RRM)，一种基于问题特定评分标准的过程奖励函数，在 RL 训练中显著减少 Miracle Steps 71% 并将 AIME2024 的 Verified Pass@1024 从 26.7% 提升至 62.6%。
 tags:
   - "ACL 2026"
   - "可解释性"

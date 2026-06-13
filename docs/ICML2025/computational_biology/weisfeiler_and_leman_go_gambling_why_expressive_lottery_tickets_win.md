@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weisfeiler and Leman Go Gambling: Why Expressive Lottery Tickets Win
 description: >-
-  [ICML2025][计算生物][图彩票假说] 首次从理论上将 GNN 的表达力（Weisfeiler-Leman 测试）与彩票假说（LTH）联系起来，提出并证明了强表达力彩票假说（SELTH），证明稀疏初始化的 GNN 中存在保持 1-WL 表达力的可训练子网络…
+  [ICML2025][计算生物][图彩票假说] 首次从理论上将 GNN 的表达力（Weisfeiler-Leman 测试）与彩票假说（LTH）联系起来，提出并证明了强表达力彩票假说（SELTH），证明稀疏初始化的 GNN 中存在保持 1-WL 表达力的可训练子网络，且表达力更强的稀疏初始化更可能成为"中奖彩票"，同时展示了不当剪枝导致的不可恢复表达力损失在药物发现等场景中的严重后果。
 tags:
   - "ICML2025"
   - "计算生物"

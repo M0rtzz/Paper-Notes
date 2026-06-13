@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond the Individual: Virtualizing Multi-Disciplinary Reasoning for Clinical Intake via Collaborative Agents
 description: >-
-  [ACL 2026][医疗NLP][多学科会诊] 提出 Aegle 框架，通过图结构多智能体架构虚拟化多学科会诊（MDT），将解耦并行推理和动态拓扑引入门诊问诊流程，在24个科室53项指标上超越SOTA模型。
+  [ACL 2026 Findings][医疗NLP][多学科会诊] 提出 Aegle 框架，通过图结构多智能体架构虚拟化多学科会诊（MDT），将解耦并行推理和动态拓扑引入门诊问诊流程，在24个科室53项指标上超越SOTA模型。 领域现状：初诊问诊是临床决策的关键阶段，医生需将患者的非结构化叙述转化为SOAP格式的初始病程记录…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "多学科会诊"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeArtGS: Articulated Gaussian Splatting Under Free-Moving Scenario
 description: >-
-  [CVPR 2026][3D视觉][铰接物体重建] FreeArtGS 提出在"自由移动场景"(物体姿态和关节状态同时任意变化)下从单目RGB-D视频重建铰接物体的方法，通过运动驱动的部件分割、鲁棒关节估计和端到端3DGS优化的三阶段流程，在自建FreeArt-21基准和现有数据集上远超所有基线。
+  [CVPR 2026][3D视觉][铰接物体重建] FreeArtGS 提出在"自由移动场景"(物体姿态和关节状态同时任意变化)下从单目RGB-D视频重建铰接物体的方法，通过运动驱动的部件分割、鲁棒关节估计和端到端3DGS优化的三阶段流程，在自建FreeArt-21基准和现有数据集上远超所有基线。 1. 领域现状：铰接物体重…
 tags:
   - "CVPR 2026"
   - "3D视觉"

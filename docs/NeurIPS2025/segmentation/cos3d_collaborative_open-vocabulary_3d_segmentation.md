@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COS3D: Collaborative Open-Vocabulary 3D Segmentation
 description: >-
-  [NeurIPS 2025][语义分割][开放词汇3D分割] 提出 COS3D——一种协作式 prompt-分割框架，通过构建实例场（instance field）和语言场（language field）组成的协作场，在训练阶段利用实例到语言的特征映射构建语言场…
+  [NeurIPS 2025][语义分割][开放词汇3D分割] 提出 COS3D——一种协作式 prompt-分割框架，通过构建实例场（instance field）和语言场（language field）组成的协作场，在训练阶段利用实例到语言的特征映射构建语言场，在推理阶段利用语言到实例的自适应 prompt 精炼生成精确分割，在两个主流基准上大幅超越现有方法。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

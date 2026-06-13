@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models
 description: >-
-  [AAAI 2026][可解释性][Reward Model Evaluation] 提出 MRMBench 基准，通过 6 个维度（无害性、有帮助性、正确性、连贯性、复杂性、冗长性）的探针任务评估奖励模型是否有效捕获多维偏好，发现探针性能与 PPO 对齐质量强相关（Pearson $r > 0.8$）…
+  [AAAI 2026][可解释性][Reward Model Evaluation] 提出 MRMBench 基准，通过 6 个维度（无害性、有帮助性、正确性、连贯性、复杂性、冗长性）的探针任务评估奖励模型是否有效捕获多维偏好，发现探针性能与 PPO 对齐质量强相关（Pearson $r > 0.8$），并提出推理时探针方法将 AlpacaEval win rate 从 57.3% 提升至 62.5%。
 tags:
   - "AAAI 2026"
   - "可解释性"

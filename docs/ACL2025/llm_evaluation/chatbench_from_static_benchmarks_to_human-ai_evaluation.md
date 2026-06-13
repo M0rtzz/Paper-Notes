@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChatBench: From Static Benchmarks to Human-AI Evaluation
 description: >-
-  [ACL 2025][LLM评测][基准评估] 通过用户实验将 MMLU 静态基准转换为用户-AI 对话，构建 ChatBench 数据集（396 道题、7336 段对话），发现 AI-alone 准确率无法预测 user-AI 准确率，并训练用户模拟器使相关性提升 22-26 个百分点…
+  [ACL 2025][LLM评测][基准评估] 通过用户实验将 MMLU 静态基准转换为用户-AI 对话，构建 ChatBench 数据集（396 道题、7336 段对话），发现 AI-alone 准确率无法预测 user-AI 准确率，并训练用户模拟器使相关性提升 22-26 个百分点，为可扩展的交互式评估奠基。
 tags:
   - "ACL 2025"
   - "LLM评测"

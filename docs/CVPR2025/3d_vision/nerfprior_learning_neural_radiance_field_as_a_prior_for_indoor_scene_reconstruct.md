@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeRFPrior: Learning Neural Radiance Field as a Prior for Indoor Scene Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][NeRF先验] NeRFPrior 用快速训练的 Grid-NeRF（TensoRF，30 分钟）作为场景特定先验，通过多视图一致性约束和置信度加权深度一致性损失指导 SDF 学习…
+  [CVPR 2025][3D视觉][NeRF先验] NeRFPrior 用快速训练的 Grid-NeRF（TensoRF，30 分钟）作为场景特定先验，通过多视图一致性约束和置信度加权深度一致性损失指导 SDF 学习，ScanNet 上 F1 从 MonoSDF 的 0.310 提升至 0.930（+200%），总训练时间仅 4.7 小时（比 MonoSDF 快 2.2 倍）。
 tags:
   - "CVPR 2025"
   - "3D视觉"

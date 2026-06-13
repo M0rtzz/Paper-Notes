@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Redundant Queries in DETR-Based 3D Detection: Unnecessary and Prunable
 description: >-
-  [AAAI 2026][3D视觉][3D 目标检测] 提出 GPQ（Gradually Pruning Queries），通过分类分数逐步裁剪 DETR 系 3D 检测器中大量冗余的 object queries，无需额外可学习参数，可直接在预训练 checkpoint 上微调完成…
+  [AAAI 2026][3D视觉][3D 目标检测] 提出 GPQ（Gradually Pruning Queries），通过分类分数逐步裁剪 DETR 系 3D 检测器中大量冗余的 object queries，无需额外可学习参数，可直接在预训练 checkpoint 上微调完成，在边缘设备上最高实现 67.86% FLOPs 减少和 65.16% 推理时间下降。
 tags:
   - "AAAI 2026"
   - "3D视觉"

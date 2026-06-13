@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards
 description: >-
-  [NeurIPS 2025][多模态VLM][chain-of-step] 提出Chain-of-Step (CoS)推理框架，将VLM的推理链拆解为由Name+Thought+Reflection组成的结构化步骤，训练步骤级Process Reward Model (PRM)提供精细奖励信号…
+  [NeurIPS 2025][多模态VLM][chain-of-step] 提出Chain-of-Step (CoS)推理框架，将VLM的推理链拆解为由Name+Thought+Reflection组成的结构化步骤，训练步骤级Process Reward Model (PRM)提供精细奖励信号，配合迭代DPO和step-level beam search系统性提升VLM推理能力——在InternVL-2.5-MPO-8B上6个benchmark平均73.4%（+4.0%），在LLaVA-NeXT-8B上平均64.2%（+12.1%），并揭示了"VLM推理中质量远比长度重要"这一与LLM领域相反的发现。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

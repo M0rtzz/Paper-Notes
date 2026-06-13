@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spatial-Temporal Aware Visuomotor Diffusion Policy Learning
 description: >-
-  [ICCV 2025][3D视觉][视觉模仿学习] 提出 4D Diffusion Policy（DP4），通过动态高斯世界模型为扩散策略注入3D空间和4D时空感知能力，在17个仿真任务和3个真实机器人任务上大幅超越基线（Adroit +16.4%, DexArt +14%, RLBench +6.45%…
+  [ICCV 2025][3D视觉][视觉模仿学习] 提出 4D Diffusion Policy（DP4），通过动态高斯世界模型为扩散策略注入3D空间和4D时空感知能力，在17个仿真任务和3个真实机器人任务上大幅超越基线（Adroit +16.4%, DexArt +14%, RLBench +6.45%, 真实任务 +8.6%）。
 tags:
   - "ICCV 2025"
   - "3D视觉"

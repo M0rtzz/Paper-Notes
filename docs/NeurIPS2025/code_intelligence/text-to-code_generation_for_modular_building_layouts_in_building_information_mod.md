@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-to-Code Generation for Modular Building Layouts in Building Information Modeling
 description: >-
-  [NeurIPS 2025][代码智能][Text-to-Code] 提出 Text2MBL 框架，将自然语言描述转化为可执行的 BIM 代码（而非坐标序列），通过面向对象的代码架构和 LLM 微调实现模块化建筑布局的自动生成，在几何一致性上比坐标驱动方法提升 10%+ IoU。
+  [NeurIPS 2025][代码智能][Text-to-Code] 提出 Text2MBL 框架，将自然语言描述转化为可执行的 BIM 代码（而非坐标序列），通过面向对象的代码架构和 LLM 微调实现模块化建筑布局的自动生成，在几何一致性上比坐标驱动方法提升 10%+ IoU。 领域现状：模块化建筑（Modular Con…
 tags:
   - "NeurIPS 2025"
   - "代码智能"

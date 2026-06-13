@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Harmonic Structure of Information Contours
 description: >-
-  [ACL 2025][uniform information density] 提出 Harmonic Surprisal (HS) 假说——文本中 surprisal 曲线呈周期性波动且周期与语篇结构（EDU/句子/段落）对齐，用带时间缩放的谐波回归检验，在 6 种语言上发现一致的周期模式…
+  [ACL 2025][uniform information density] 提出 Harmonic Surprisal (HS) 假说——文本中 surprisal 曲线呈周期性波动且周期与语篇结构（EDU/句子/段落）对齐，用带时间缩放的谐波回归检验，在 6 种语言上发现一致的周期模式，精化了经典的 Uniform Information Density 假说。
 tags:
   - "ACL 2025"
   - "uniform information density"

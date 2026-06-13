@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation
 description: >-
-  [AAAI 2026][多模态VLM][VLN] 提出基于隐式场景表征（ISR）的VLN策略，通过递归视觉想象（RVI）将历史轨迹压缩为固定大小的紧凑神经网格学习高层场景先验，并通过自适应语言对齐（ALG）将指令的不同语义组件与不同网格精细匹配…
+  [AAAI 2026][多模态VLM][VLN] 提出基于隐式场景表征（ISR）的VLN策略，通过递归视觉想象（RVI）将历史轨迹压缩为固定大小的紧凑神经网格学习高层场景先验，并通过自适应语言对齐（ALG）将指令的不同语义组件与不同网格精细匹配，在R2R-CE和ObjectNav两个连续环境导航任务上取得SOTA。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DisCO: Reinforcing Large Reasoning Models with Discriminative Constrained Optimization
 description: >-
-  [NeurIPS 2025][LLM推理][GRPO] 分析 GRPO 目标函数，揭示其固有的难度偏差（对过难/过易问题赋予过低权重）和熵不稳定性问题，提出基于判别学习的 DisCO 框架，通过无裁剪评分函数、平方铰链约束优化和 DRO 处理不平衡 rollout…
+  [NeurIPS 2025][LLM推理][GRPO] 分析 GRPO 目标函数，揭示其固有的难度偏差（对过难/过易问题赋予过低权重）和熵不稳定性问题，提出基于判别学习的 DisCO 框架，通过无裁剪评分函数、平方铰链约束优化和 DRO 处理不平衡 rollout，在 1.5B 模型上平均超过 GRPO 7%、超过 DAPO 6%。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

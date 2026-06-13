@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiPART: Hierarchical Pose AutoRegressive Transformer for Occluded 3D Human Pose Estimation
 description: >-
-  [CVPR 2025][人体理解][3D 姿态估计] HiPART 提出从稀疏 2D 姿态（17 关节）生成层次化稠密 2D 姿态（48→96 关节）的自回归生成方案，用丰富的骨架上下文替代复杂的时序/视觉编码器来解决遮挡问题，在单帧 3D HPE 上达到 SOTA 且超越多数多帧方法，同时参数量和计算量更小…
+  [CVPR 2025][人体理解][3D 姿态估计] HiPART 提出从稀疏 2D 姿态（17 关节）生成层次化稠密 2D 姿态（48→96 关节）的自回归生成方案，用丰富的骨架上下文替代复杂的时序/视觉编码器来解决遮挡问题，在单帧 3D HPE 上达到 SOTA 且超越多数多帧方法，同时参数量和计算量更小。
 tags:
   - "CVPR 2025"
   - "人体理解"

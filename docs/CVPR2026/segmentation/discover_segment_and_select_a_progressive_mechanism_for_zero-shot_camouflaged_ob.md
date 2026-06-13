@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation
 description: >-
-  [CVPR 2026][语义分割][零样本分割] 提出DSS三阶段渐进式pipeline(Discover→Segment→Select)，通过自监督视觉编码器+Leiden聚类发现前景(FOD)、SAM生成候选mask、启发式评分+MLLM成对比较选择最优mask，实现零样本无训练的伪装目标分割…
+  [CVPR 2026][语义分割][零样本分割] 提出DSS三阶段渐进式pipeline(Discover→Segment→Select)，通过自监督视觉编码器+Leiden聚类发现前景(FOD)、SAM生成候选mask、启发式评分+MLLM成对比较选择最优mask，实现零样本无训练的伪装目标分割，尤其在多实例场景上显著优于现有方法。
 tags:
   - "CVPR 2026"
   - "语义分割"

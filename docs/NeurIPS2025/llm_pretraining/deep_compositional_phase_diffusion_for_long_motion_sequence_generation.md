@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Deep Compositional Phase Diffusion for Long Motion Sequence Generation
 description: >-
-  [NeurIPS 2025][预训练][motion generation] 提出 Compositional Phase Diffusion 框架，在 ACT-PAE 建立的频域相位空间中用 SPDM 和 TPDM 分别处理语义对齐和过渡连续性，实现长程组合式动作序列生成…
+  [NeurIPS 2025 Oral][预训练][motion generation] 提出 Compositional Phase Diffusion 框架，在 ACT-PAE 建立的频域相位空间中用 SPDM 和 TPDM 分别处理语义对齐和过渡连续性，实现长程组合式动作序列生成，在 BABEL-TEACH 上达到 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "预训练"
   - "motion generation"
   - "扩散模型"

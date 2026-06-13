@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SegTune: Structured and Fine-Grained Control for Song Generation
 description: >-
-  [ACL 2026][音频/语音][歌曲生成] 提出 SegTune，一种基于 Diffusion Transformer 的歌曲生成框架，通过层次化文本条件（全局 + 分段级提示）和 LLM 时长预测器实现对歌曲结构和音乐属性的细粒度时序控制。
+  [ACL 2026 Best Paper Oral][音频/语音][歌曲生成] 提出 SegTune，一种基于 Diffusion Transformer 的歌曲生成框架，通过层次化文本条件（全局 + 分段级提示）和 LLM 时长预测器实现对歌曲结构和音乐属性的细粒度时序控制。 领域现状： 神经歌曲生成已能从歌词和全局文本提…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Best Paper Oral"
   - "音频/语音"
   - "歌曲生成"
   - "分段控制"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026 Best Paper Oral  
 **arXiv**: [2606.02638](https://arxiv.org/abs/2606.02638)  
 **代码**: 待确认  
-**领域**: audio_speech  
+**领域**: 音频语音  
 **关键词**: 歌曲生成, 分段控制, 扩散Transformer, 时长预测, 层次化条件
 
 ## 一句话总结

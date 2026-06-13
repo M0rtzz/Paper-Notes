@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System
 description: >-
-  [NeurIPS 2025][优化/理论][联邦学习] 提出 MAR-FL 系统，通过 Moshpit All-Reduce 机制和动态分组聚合，将 P2P 联邦学习的通信复杂度从 $O(N^2)$ 降至 $O(N \log N)$，同时保持对网络抖动的鲁棒性。
+  [NeurIPS 2025][优化/理论][联邦学习] 提出 MAR-FL 系统，通过 Moshpit All-Reduce 机制和动态分组聚合，将 P2P 联邦学习的通信复杂度从 $O(N^2)$ 降至 $O(N \log N)$，同时保持对网络抖动的鲁棒性。 领域现状：联邦学习（FL）正从中心化向 P2P 架构迁移…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreak Large Vision-Language Models Through Multi-Modal Linkage
 description: >-
-  [ACL 2025][多模态VLM][越狱攻击] 提出多模态链接（MML）攻击框架，通过跨模态加密-解密机制和"邪恶对齐"策略，以极高成功率（GPT-4o上达99%+）越狱当前最先进的视觉语言模型。
+  [ACL 2025][多模态VLM][越狱攻击] 提出多模态链接（MML）攻击框架，通过跨模态加密-解密机制和"邪恶对齐"策略，以极高成功率（GPT-4o上达99%+）越狱当前最先进的视觉语言模型。 随着GPT-4o等大型视觉语言模型（VLM）的快速发展，其潜在的滥用和安全风险引发了广泛关注。现有的越狱攻击方法主要分为三类：…
 tags:
   - "ACL 2025"
   - "多模态VLM"

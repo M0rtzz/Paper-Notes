@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineVQ: Fine-Grained User Generated Content Video Quality Assessment
 description: >-
-  [CVPR 2025][推荐系统][视频质量评估] 构建了首个大规模细粒度 UGC 视频质量评估数据库 FineVD（6104 视频、80 万+评分、6 个维度），并提出基于大型多模态模型的 FineVQ 方法，以一个模型同时实现质量评级、质量评分和质量归因三种能力…
+  [CVPR 2025][推荐系统][视频质量评估] 构建了首个大规模细粒度 UGC 视频质量评估数据库 FineVD（6104 视频、80 万+评分、6 个维度），并提出基于大型多模态模型的 FineVQ 方法，以一个模型同时实现质量评级、质量评分和质量归因三种能力，在 FineVD 和其他 UGC-VQA 数据集上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "推荐系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GCE-Pose: Global Context Enhancement for Category-Level Object Pose Estimation
 description: >-
-  [CVPR 2025][人体理解][类别级位姿估计] GCE-Pose 提出一种"先补全再聚合"的策略，通过语义形状重建（SSR）模块将部分观测补全为完整的几何+语义 3D 表示，再通过全局上下文增强（GCE）特征融合模块将全局信息注入局部关键点特征…
+  [CVPR 2025][人体理解][类别级位姿估计] GCE-Pose 提出一种"先补全再聚合"的策略，通过语义形状重建（SSR）模块将部分观测补全为完整的几何+语义 3D 表示，再通过全局上下文增强（GCE）特征融合模块将全局信息注入局部关键点特征，在 HouseCat6D 和 NOCS-REAL275 上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "人体理解"

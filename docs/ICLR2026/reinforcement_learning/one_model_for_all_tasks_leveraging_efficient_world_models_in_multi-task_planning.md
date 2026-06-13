@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning
 description: >-
-  [ICLR 2026][强化学习][multitask RL] 提出 ScaleZero，通过在统一世界模型中引入 MoE 架构解决多任务学习中的梯度冲突和可塑性崩塌问题，结合动态参数扩展（DPS）策略自适应分配模型容量…
+  [ICLR 2026][强化学习][multitask RL] 提出 ScaleZero，通过在统一世界模型中引入 MoE 架构解决多任务学习中的梯度冲突和可塑性崩塌问题，结合动态参数扩展（DPS）策略自适应分配模型容量，单个多任务模型在 Atari/DMC/Jericho 三个基准上达到与单任务专家模型相当的性能，同时减少约 28.5% 的环境交互。
 tags:
   - "ICLR 2026"
   - "强化学习"

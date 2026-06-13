@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition
 description: >-
-  [ICLR 2026][通道依赖] 提出 xCPD 即插即用插件，将多变量时间序列的建模单元从"通道"细化到"通道-patch"，通过共享图傅里叶基做谱嵌入→按频率能量响应分组为低/中/高频段→动态 MoE 路由自适应选择频率特定滤波专家，可无缝集成到 CI/CD 任何现有模型上一致提升长短期预测性能…
+  [ICLR 2026][时间序列][通道依赖] 提出 xCPD 即插即用插件，将多变量时间序列的建模单元从"通道"细化到"通道-patch"，通过共享图傅里叶基做谱嵌入→按频率能量响应分组为低/中/高频段→动态 MoE 路由自适应选择频率特定滤波专家，可无缝集成到 CI/CD 任何现有模型上一致提升长短期预测性能，并支持零样本迁移。
 tags:
   - "ICLR 2026"
+  - "时间序列"
   - "通道依赖"
   - "图谱分解"
   - "频率感知"

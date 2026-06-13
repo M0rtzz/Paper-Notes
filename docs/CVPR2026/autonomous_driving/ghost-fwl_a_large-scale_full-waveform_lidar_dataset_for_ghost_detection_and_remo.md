@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ghost-FWL: A Large-Scale Full-Waveform LiDAR Dataset for Ghost Detection and Removal
 description: >-
-  [CVPR 2026][自动驾驶][全波形LiDAR] Ghost-FWL 提出首个大规模移动端全波形 LiDAR 数据集（24K帧、75亿峰值级标注），并设计 FWL-MAE 自监督预训练框架实现鬼影检测与去除，将 SLAM 轨迹误差降低 66% 以上、3D 检测假阳性率减少 50 倍。
+  [CVPR 2026][自动驾驶][全波形LiDAR] Ghost-FWL 提出首个大规模移动端全波形 LiDAR 数据集（24K帧、75亿峰值级标注），并设计 FWL-MAE 自监督预训练框架实现鬼影检测与去除，将 SLAM 轨迹误差降低 66% 以上、3D 检测假阳性率减少 50 倍。 领域现状：LiDAR 是自动驾驶、…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

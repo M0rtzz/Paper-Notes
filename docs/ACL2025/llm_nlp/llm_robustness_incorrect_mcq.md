@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Wait, that's not an option: LLMs Robustness with Incorrect Multiple-Choice Options
 description: >-
-  [ACL 2025][LLM/NLP][reflective judgment] 提出"反思判断力"（Reflective Judgment）概念来衡量 LLM 在所有选项都错误的选择题中拒绝选择的能力，发现对齐后的模型（GPT-4o 等）往往盲目服从指令选择错误选项，而基座模型反而表现更好…
+  [ACL 2025][LLM 其他][reflective judgment] 提出"反思判断力"（Reflective Judgment）概念来衡量 LLM 在所有选项都错误的选择题中拒绝选择的能力，发现对齐后的模型（GPT-4o 等）往往盲目服从指令选择错误选项，而基座模型反而表现更好，且该能力随模型规模增大而涌现。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "reflective judgment"
   - "LLM alignment"
   - "multiple-choice"

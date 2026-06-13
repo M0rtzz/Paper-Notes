@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers
 description: >-
-  [ICLR2026][计算生物][3D genome] 提出 DiffBacChrom——基于条件扩散 Transformer (CrossDiT) 从 Hi-C 接触图谱生成大肠杆菌三维基因组构象集合…
+  [ICLR2026][计算生物][3D genome] 提出 DiffBacChrom——基于条件扩散 Transformer (CrossDiT) 从 Hi-C 接触图谱生成大肠杆菌三维基因组构象集合，通过 ResNet VAE 保持逐 bin 对齐的潜空间编码、Transformer 编码器 + 交叉注意力注入 Hi-C 条件、flow-matching 训练，生成的集合在距离衰减 P(s) 和 SCC 指标上与输入 Hi-C 高度一致，同时保持构象多样性。
 tags:
   - "ICLR2026"
   - "计算生物"

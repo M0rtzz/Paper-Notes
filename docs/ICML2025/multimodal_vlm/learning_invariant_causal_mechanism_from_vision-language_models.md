@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Invariant Causal Mechanism from Vision-Language Models
 description: >-
-  [ICML2025][多模态VLM][CLIP] 通过因果分析证明 CLIP 嵌入是真实不变/可变因子的线性变换，提出 CLIP-ICM 框架利用干预数据估计线性投影矩阵，将预测限定在不变子空间中以实现跨环境一致预测。
+  [ICML2025][多模态VLM][CLIP] 通过因果分析证明 CLIP 嵌入是真实不变/可变因子的线性变换，提出 CLIP-ICM 框架利用干预数据估计线性投影矩阵，将预测限定在不变子空间中以实现跨环境一致预测。 领域现状 领域现状：CLIP 在零样本任务上表现优异，但 fine-tune 到 OOD 场景时性能不稳定…
 tags:
   - "ICML2025"
   - "多模态VLM"

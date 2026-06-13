@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset
 description: >-
-  [CVPR 2025][3D视觉][数字孪生] Meta Reality Labs 提出 DTC 数据集，包含 2000 个毫米级几何精度和逼真 PBR 材质的3D物体数字孪生模型，配合 DSLR 和自中心 AR 眼镜拍摄的评估数据，为3D重建和逆渲染提供首个全面的真实世界基准。
+  [CVPR 2025][3D视觉][数字孪生] Meta Reality Labs 提出 DTC 数据集，包含 2000 个毫米级几何精度和逼真 PBR 材质的3D物体数字孪生模型，配合 DSLR 和自中心 AR 眼镜拍摄的评估数据，为3D重建和逆渲染提供首个全面的真实世界基准。 - 数字孪生（Digital Twin）要求…
 tags:
   - "CVPR 2025"
   - "3D视觉"

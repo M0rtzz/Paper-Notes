@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-Enhanced Self-Evolving Reinforcement Learning for Multi-Step E-Commerce Payment Fraud Risk Detection
 description: >-
-  [ACL 2025][强化学习][欺诈检测] 将电商支付欺诈检测建模为多步 MDP，用 LLM（Mixtral/LLaMA/Gemma）通过进化算法自动生成和优化 RL 奖励函数，在 eBay 真实交易数据上比人工设计奖励函数和传统 SL 基线显著提升 dollar-wise precision。
+  [ACL 2025][强化学习][欺诈检测] 将电商支付欺诈检测建模为多步 MDP，用 LLM（Mixtral/LLaMA/Gemma）通过进化算法自动生成和优化 RL 奖励函数，在 eBay 真实交易数据上比人工设计奖励函数和传统 SL 基线显著提升 dollar-wise precision。 领域现状：电商支付欺诈检测…
 tags:
   - "ACL 2025"
   - "强化学习"

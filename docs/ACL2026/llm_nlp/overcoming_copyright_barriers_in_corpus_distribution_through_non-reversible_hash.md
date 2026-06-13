@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Overcoming Copyright Barriers in Corpus Distribution Through Non-Reversible Hashing
 description: >-
-  [ACL2026][LLM/NLP][非可逆哈希] 本文提出 novelshare：把受版权保护文本的 token 变成截断后的非可逆哈希，并只公开哈希序列与研究者自有标注，使拥有合法原文的用户可以在轻微版本差异下重新对齐标注，在近版本小说上达到 98.7% 到 99.79% 的 token 正确对齐率。
+  [ACL2026][LLM 其他][非可逆哈希] 本文提出 novelshare：把受版权保护文本的 token 变成截断后的非可逆哈希，并只公开哈希序列与研究者自有标注，使拥有合法原文的用户可以在轻微版本差异下重新对齐标注，在近版本小说上达到 98.7% 到 99.79% 的 token 正确对齐率。
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "非可逆哈希"
   - "版权文本"
   - "语料分发"

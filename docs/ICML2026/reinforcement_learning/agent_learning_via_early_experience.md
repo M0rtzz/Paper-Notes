@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agent Learning via Early Experience
 description: >-
-  [ICML2026][强化学习][早期经验] 本文提出 early experience 范式，让语言 Agent 在没有外部奖励的情况下利用自己尝试动作后的未来状态学习环境动态和决策反思，从而在 8 个 Agent 环境中稳定超过纯模仿学习，并为后续 GRPO 强化学习提供更好的初始化。
+  [ICML2026][强化学习][早期经验] 本文提出 early experience 范式，让语言 Agent 在没有外部奖励的情况下利用自己尝试动作后的未来状态学习环境动态和决策反思，从而在 8 个 Agent 环境中稳定超过纯模仿学习，并为后续 GRPO 强化学习提供更好的初始化。 领域现状：当前语言 Agent 主…
 tags:
   - "ICML2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizable Non-Line-of-Sight Imaging with Learnable Physical Priors
 description: >-
-  [ICCV 2025][信号/通信][非视线成像] 提出Learnable Path Compensation (LPC)和Adaptive Phasor Field (APF)两个模块，分别解决NLOS成像中辐射强度衰减的材质依赖性问题和不同信噪比条件下的频域去噪问题…
+  [ICCV 2025][信号/通信][非视线成像] 提出Learnable Path Compensation (LPC)和Adaptive Phasor Field (APF)两个模块，分别解决NLOS成像中辐射强度衰减的材质依赖性问题和不同信噪比条件下的频域去噪问题，仅在合成数据上训练即可在多种真实数据集上实现SOTA泛化性能。
 tags:
   - "ICCV 2025"
   - "信号/通信"

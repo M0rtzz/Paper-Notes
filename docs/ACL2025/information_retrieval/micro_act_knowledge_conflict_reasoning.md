@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Micro-Act: Mitigate Knowledge Conflict in QA via Actionable Self-Reasoning
 description: >-
-  [ACL 2025][RAG] 提出 Micro-Act 框架，通过层次化动作空间（导航/功能/桥接动作）和自适应粒度分解，让 LLM 自动感知上下文复杂度并逐层拆解知识对比，在 5 个知识冲突基准上全面超越 SOTA，同时在无冲突场景下也保持鲁棒。
+  [ACL 2025][信息检索/RAG][RAG] 提出 Micro-Act 框架，通过层次化动作空间（导航/功能/桥接动作）和自适应粒度分解，让 LLM 自动感知上下文复杂度并逐层拆解知识对比，在 5 个知识冲突基准上全面超越 SOTA，同时在无冲突场景下也保持鲁棒。 领域现状：RAG 系统通过检索外部知识增强 LLM 回…
 tags:
   - "ACL 2025"
+  - "信息检索/RAG"
   - "RAG"
   - "知识冲突"
   - "层次化动作空间"

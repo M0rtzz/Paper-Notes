@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDTagNet: Leveraging Text-Annotated Navigation Maps for Online HD Map Construction
 description: >-
-  [NeurIPS 2025][自动驾驶][HD map] 提出 SDTagNet，首次通过 BERT 编码 OpenStreetMap 文本标注（路名/车道数/单行道等）并用点级图 Transformer 编码所有 SD 地图元素（点/线/关系）…
+  [NeurIPS 2025][自动驾驶][HD map] 提出 SDTagNet，首次通过 BERT 编码 OpenStreetMap 文本标注（路名/车道数/单行道等）并用点级图 Transformer 编码所有 SD 地图元素（点/线/关系），在远距离 HD 地图构建上相比无先验方法提升 +5.9 mAP（+45%），超越已有 SD 地图先验方法 +3.2 mAP（+20%）。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

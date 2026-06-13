@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pano3DComposer: Feed-Forward Compositional 3D Scene Generation from Single Panoramic Image
 description: >-
-  [CVPR 2026][3D视觉][全景图3D重建] 提出 Pano3DComposer，一个从单张全景图出发的模块化前馈式组合3D场景生成框架，通过即插即用的 Object-World Transformation Predictor（基于 Alignment-VGGT）将生成的3D物体从局部坐标转换到世界…
+  [CVPR 2026][3D视觉][全景图3D重建] 提出 Pano3DComposer，一个从单张全景图出发的模块化前馈式组合3D场景生成框架，通过即插即用的 Object-World Transformation Predictor（基于 Alignment-VGGT）将生成的3D物体从局部坐标转换到世界坐标，约20秒即可在 RTX 4090 上生成高保真3D场景。
 tags:
   - "CVPR 2026"
   - "3D视觉"

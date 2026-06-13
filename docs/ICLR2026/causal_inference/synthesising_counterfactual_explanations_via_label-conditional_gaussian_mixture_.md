@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders
 description: >-
-  [ICLR 2026][因果推理][反事实解释] 提出 L-GMVAE（标签条件高斯混合 VAE）和 LAPACE 算法，通过在潜空间中学习每个类别的多个高斯聚类中心，然后从输入潜表征到目标类别中心进行线性插值，生成路径式反事实解释，同时保证有效性、似合性、多样性和对输入扰动的完美鲁棒性。
+  [ICLR 2026][因果推理][反事实解释] 提出 L-GMVAE（标签条件高斯混合 VAE）和 LAPACE 算法，通过在潜空间中学习每个类别的多个高斯聚类中心，然后从输入潜表征到目标类别中心进行线性插值，生成路径式反事实解释，同时保证有效性、似合性、多样性和对输入扰动的完美鲁棒性。 领域现状：反事实解释（CE）为受算…
 tags:
   - "ICLR 2026"
   - "因果推理"

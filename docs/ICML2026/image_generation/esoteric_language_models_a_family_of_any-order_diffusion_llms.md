@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Esoteric Language Models: A Family of Any-Order Diffusion LLMs
 description: >-
-  [ICML 2026][图像生成][扩散模型] Eso-LMs 把 AR 与 Masked Diffusion 在 loss、注意力、采样三个层面深度融合：用一个 causal-on-shuffled-sequence 的去噪 Transformer 同时支持并行扩散和左到右 AR…
+  [ICML 2026][图像生成][扩散模型] Eso-LMs 把 AR 与 Masked Diffusion 在 loss、注意力、采样三个层面深度融合：用一个 causal-on-shuffled-sequence 的去噪 Transformer 同时支持并行扩散和左到右 AR，从而**首次让 MDM 在扩散阶段也能用上精确 KV cache**，在 OWT 长上下文上比 MDLM 快 14–65×、比 BD3-LM 快 3–4×，并在 speed–quality Pareto 前沿上取得 SOTA。
 tags:
   - "ICML 2026"
   - "图像生成"

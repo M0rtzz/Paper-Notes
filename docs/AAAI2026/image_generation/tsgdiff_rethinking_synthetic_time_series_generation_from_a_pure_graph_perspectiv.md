@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TSGDiff: Rethinking Synthetic Time Series Generation from a Pure Graph Perspective
 description: >-
-  [AAAI 2026][图像生成][时间序列生成] 提出 TSGDiff，首次从纯图的视角重新审视时间序列生成任务，将时间序列表示为基于傅里叶频谱特征构建的动态图，在图的潜在空间中进行扩散建模，并提出 Topo-FID 指标评估生成时间序列的结构忠实度。
+  [AAAI 2026][图像生成][时间序列生成] 提出 TSGDiff，首次从纯图的视角重新审视时间序列生成任务，将时间序列表示为基于傅里叶频谱特征构建的动态图，在图的潜在空间中进行扩散建模，并提出 Topo-FID 指标评估生成时间序列的结构忠实度。 1. 领域现状： 多变量时间序列生成在能源管理、金融预测、医疗监测等领…
 tags:
   - "AAAI 2026"
   - "图像生成"

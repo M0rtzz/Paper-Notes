@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate
 description: >-
-  [ICLR 2026][优化/理论][缩放定律] 从凸优化理论出发，证明深度学习训练损失以 O(1/sqrt(T)) 速率收敛，最优学习率以 1/sqrt(T) 缩放，在 GPT-2 到 12.5B 参数模型上验证了该缩放律（R^2 >= 0.978），并实现了 80 倍训练步数的学习率外推。
+  [ICLR 2026][优化/理论][缩放定律] 从凸优化理论出发，证明深度学习训练损失以 O(1/sqrt(T)) 速率收敛，最优学习率以 1/sqrt(T) 缩放，在 GPT-2 到 12.5B 参数模型上验证了该缩放律（R^2 = 0.978），并实现了 80 倍训练步数的学习率外推。 领域现状：Chinchilla…
 tags:
   - "ICLR 2026"
   - "优化/理论"

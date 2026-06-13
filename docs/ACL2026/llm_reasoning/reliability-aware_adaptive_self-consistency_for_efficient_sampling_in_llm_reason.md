@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reliability-Aware Adaptive Self-Consistency for Efficient Sampling in LLM Reasoning
 description: >-
-  [ACL2026][LLM推理][自一致性] ReASC 将 adaptive self-consistency 从“数答案票数”改成“判断可靠证据是否足够”，用响应置信度加权 Beta 累积…
+  [ACL2026][LLM推理][自一致性] ReASC 将 adaptive self-consistency 从“数答案票数”改成“判断可靠证据是否足够”，用响应置信度加权 Beta 累积，在 GSM8K、MATH500、Omni-Math 和 GPQA-Diamond 上以接近原准确率显著降低多样本推理成本。
 tags:
   - "ACL2026"
   - "LLM推理"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2601.02970](https://arxiv.org/abs/2601.02970)  
 **代码**: 未公开  
-**领域**: llm_reasoning  
+**领域**: LLM推理  
 **关键词**: 自一致性、推理采样、置信度估计、自适应停止、推理效率
 
 ## 一句话总结

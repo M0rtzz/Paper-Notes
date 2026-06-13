@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Before Forgetting, Learn to Remember: Revisiting Foundational Learning Failures in LVLM Unlearning Benchmarks
 description: >-
-  [ACL 2026][LLM安全][LVLM unlearning] 作者指出现有 LVLM unlearning benchmark（FIUBench / MLLMU-Bench / CLEAR）在 stage 1 fine-tune 阶段就没把虚构身份真的记住，导致 stage 2 的「遗忘」评估全部失效…
+  [ACL 2026 Findings][LLM安全][LVLM unlearning] 作者指出现有 LVLM unlearning benchmark（FIUBench / MLLMU-Bench / CLEAR）在 stage 1 fine-tune 阶段就没把虚构身份真的记住，导致 stage 2 的「遗忘」评估全部失效；他们诊断出根因是「数据重复不够 + multi-hop curse」，由此提出 ReMem——每个身份 100 QA × 100 张多视角图、70%∶30% 的单跳/多跳混合、新增 Exposure 内部概率度量，把 unlearning 评测重新建立在「真的学会了」的基础上。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "LVLM unlearning"
   - "记忆失败"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning
 description: >-
-  [AAAI 2026][人体理解][人脸模板反演] 首次利用 CLIP 提取面部细粒度语义属性嵌入来辅助人脸模板反演（FTI），通过跨模态特征交互网络将泄露模板与属性嵌入融合并投影到 StyleGAN 潜空间，生成身份一致且属性细节更丰富的人脸图像，在识别准确率、属性相似度和跨模型攻击迁移性上均超越 SOTA…
+  [AAAI 2026][人体理解][人脸模板反演] 首次利用 CLIP 提取面部细粒度语义属性嵌入来辅助人脸模板反演（FTI），通过跨模态特征交互网络将泄露模板与属性嵌入融合并投影到 StyleGAN 潜空间，生成身份一致且属性细节更丰富的人脸图像，在识别准确率、属性相似度和跨模型攻击迁移性上均超越 SOTA。
 tags:
   - "AAAI 2026"
   - "人体理解"

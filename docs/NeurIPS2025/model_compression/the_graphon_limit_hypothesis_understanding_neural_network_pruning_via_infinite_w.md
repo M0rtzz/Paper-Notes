@@ -2,9 +2,9 @@
 title: >-
   [论文解读] The Graphon Limit Hypothesis: Understanding Neural Network Pruning via Infinite Width Analysis
 description: >-
-  [NeurIPS 2025][模型压缩][剪枝] 提出"Graphon极限假说"：当网络宽度趋于无穷时，不同剪枝方法产生的二值掩码序列在cut距离下收敛到各自独特的graphon极限，并在此基础上推导出Graphon NTK来分析稀疏网络训练动态，从理论层面解释了为什么不同剪枝方法在相同稀疏度下表现迥异。
+  [NeurIPS 2025 Spotlight][模型压缩][剪枝] 提出"Graphon极限假说"：当网络宽度趋于无穷时，不同剪枝方法产生的二值掩码序列在cut距离下收敛到各自独特的graphon极限，并在此基础上推导出Graphon NTK来分析稀疏网络训练动态，从理论层面解释了为什么不同剪枝方法在相同稀疏度下表现迥异。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "剪枝"
   - "Graphon"

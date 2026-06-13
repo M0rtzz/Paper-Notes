@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GleSAM: Segment Any-Quality Images with Generative Latent Space Enhancement
 description: >-
-  [CVPR 2025][语义分割][SAM鲁棒性] GleSAM将预训练潜在扩散模型（LDM）的去噪能力引入SAM的隐空间，通过单步去噪增强低质量图像的特征表示，实现对任意质量图像的鲁棒分割。
+  [CVPR 2025][语义分割][SAM鲁棒性] GleSAM将预训练潜在扩散模型（LDM）的去噪能力引入SAM的隐空间，通过单步去噪增强低质量图像的特征表示，实现对任意质量图像的鲁棒分割。 SAM/SAM2虽然在清晰图像上表现出色，但在真实场景中常见的低质量图像（噪声、模糊、压缩失真等）上性能显著下降…
 tags:
   - "CVPR 2025"
   - "语义分割"

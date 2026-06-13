@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Models Can Subtly Deceive Without Lying: A Case Study on Strategic Phrasing
 description: >-
-  [ACL 2025][LLM安全][LLM欺骗] 构建了一个立法环境测试平台（LobbyLens），研究 LLM 是否能通过策略性措辞（strategic phrasing）——即不说谎但有意操纵表达方式——来隐藏修正案中对特定公司的利益导向…
+  [ACL 2025][LLM安全][LLM欺骗] 构建了一个立法环境测试平台（LobbyLens），研究 LLM 是否能通过策略性措辞（strategic phrasing）——即不说谎但有意操纵表达方式——来隐藏修正案中对特定公司的利益导向，发现 LLM 经过 re-planning 可使欺骗率提升最多 40 个百分点。
 tags:
   - "ACL 2025"
   - "LLM安全"

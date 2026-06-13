@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenMol: A Drug Discovery Generalist with Discrete Diffusion
 description: >-
-  [ICML2025][计算生物][离散扩散模型] 提出 GenMol，一个基于掩码离散扩散（Masked Discrete Diffusion）的通用分子生成框架，通过非自回归双向并行解码生成 SAFE 序列，并引入片段重掩码（fragment remasking）和分子上下文引导（MCG）…
+  [ICML2025][计算生物][离散扩散模型] 提出 GenMol，一个基于掩码离散扩散（Masked Discrete Diffusion）的通用分子生成框架，通过非自回归双向并行解码生成 SAFE 序列，并引入片段重掩码（fragment remasking）和分子上下文引导（MCG），用**单一模型**覆盖从头生成、片段约束生成、目标导向 hit 生成和先导化合物优化四大药物发现场景，全面超越此前最优方法。
 tags:
   - "ICML2025"
   - "计算生物"

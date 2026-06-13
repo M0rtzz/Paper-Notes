@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Neural Granger Causality with xLSTMs: Unveiling Temporal Dependencies in Complex Data
 description: >-
-  [NEURIPS2025][时间序列][Granger Causality] 提出 GC-xLSTM，利用 xLSTM 架构结合新颖的动态稀疏优化策略，在多变量时间序列中挖掘 Granger 因果关系，在多个数据集上取得 SOTA 性能。
+  [NEURIPS2025][时间序列][Granger Causality] 提出 GC-xLSTM，利用 xLSTM 架构结合新颖的动态稀疏优化策略，在多变量时间序列中挖掘 Granger 因果关系，在多个数据集上取得 SOTA 性能。 Granger 因果性（Granger Causality, GC）是判定一个时间序列…
 tags:
   - "NEURIPS2025"
   - "时间序列"

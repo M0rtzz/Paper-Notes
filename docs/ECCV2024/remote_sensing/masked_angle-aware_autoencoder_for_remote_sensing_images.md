@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Masked Angle-Aware Autoencoder for Remote Sensing Images
 description: >-
-  [ECCV 2024][遥感][自监督学习] 提出 MA3E，在 MAE 预训练中显式引入角度变化（通过 scaling center crop 构建旋转裁剪），并用最优传输损失自动分配重建目标，使模型感知遥感目标的多样角度，学习旋转不变表示。
+  [ECCV 2024][遥感][自监督学习] 提出 MA3E，在 MAE 预训练中显式引入角度变化（通过 scaling center crop 构建旋转裁剪），并用最优传输损失自动分配重建目标，使模型感知遥感目标的多样角度，学习旋转不变表示。 遥感（RS）图像与自然图像存在显著的域差距。自然图像中的物体因重力通常具有固定朝…
 tags:
   - "ECCV 2024"
   - "遥感"

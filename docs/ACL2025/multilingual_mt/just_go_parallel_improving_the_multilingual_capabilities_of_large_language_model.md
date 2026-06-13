@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Just Go Parallel: Improving the Multilingual Capabilities of Large Language Models
 description: >-
-  [ACL 2025][多语言/翻译][parallel data] 系统研究在 decoder-only LLM 训练中加入平行数据对多语言能力的影响：平行数据放在训练末期效果最好且显著优于等量单语数据；LLM 无法自动泛化到训练方向的反向翻译（reversal curse）。
+  [ACL 2025][多语言/翻译][parallel data] 系统研究在 decoder-only LLM 训练中加入平行数据对多语言能力的影响：平行数据放在训练末期效果最好且显著优于等量单语数据；LLM 无法自动泛化到训练方向的反向翻译（reversal curse）。 - 领域现状：LLM 即使未显式使用平行数据也…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

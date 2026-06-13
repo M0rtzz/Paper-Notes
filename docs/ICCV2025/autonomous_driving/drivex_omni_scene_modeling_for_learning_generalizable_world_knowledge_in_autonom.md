@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DriveX: Omni Scene Modeling for Learning Generalizable World Knowledge in Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][世界模型] 提出 DriveX，一个自监督世界模型框架，通过 Omni Scene Modeling（联合3D点云预测、2D语义表示和图像生成）在 BEV 潜在空间学习可迁移的通用场景表征…
+  [ICCV 2025][自动驾驶][世界模型] 提出 DriveX，一个自监督世界模型框架，通过 Omni Scene Modeling（联合3D点云预测、2D语义表示和图像生成）在 BEV 潜在空间学习可迁移的通用场景表征，并设计 Future Spatial Attention 范式将预测的未来状态无缝集成到占据预测、流估计和端到端驾驶等多种下游任务中，在多个任务上达到 SOTA。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

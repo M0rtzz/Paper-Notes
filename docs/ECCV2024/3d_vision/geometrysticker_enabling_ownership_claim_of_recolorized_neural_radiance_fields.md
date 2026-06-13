@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeometrySticker: Enabling Ownership Claim of Recolorized Neural Radiance Fields
 description: >-
-  [ECCV 2024][3D视觉][NeRF版权保护] 提出GeometrySticker，将二进制版权信息"贴"在NeRF的**几何组件**（而非颜色组件）上，使得即使NeRF被重着色（recolorization），原始创建者仍能从渲染图像中提取水印来主张所有权。
+  [ECCV 2024][3D视觉][NeRF版权保护] 提出GeometrySticker，将二进制版权信息"贴"在NeRF的几何组件：（而非颜色组件）上，使得即使NeRF被重着色（recolorization），原始创建者仍能从渲染图像中提取水印来主张所有权。 领域现状： NeRF重着色技术（CLIP-NeRF、Palet…
 tags:
   - "ECCV 2024"
   - "3D视觉"

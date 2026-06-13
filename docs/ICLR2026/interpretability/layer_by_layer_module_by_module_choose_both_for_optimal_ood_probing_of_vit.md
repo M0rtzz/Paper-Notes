@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Layer by layer, module by module: Choose both for optimal OOD probing of ViT
 description: >-
-  [ICLR 2026 (CAO Workshop)][可解释性][Transformer] 通过大规模线性探测实验系统研究预训练ViT的中间层行为，发现分布偏移是深层性能退化的主因，并在模块级别揭示了最优探测点取决于偏移程度：显著偏移时探测FFN激活最优，弱偏移时探测MHSA归一化输出最优。
+  [ICLR 2026 (CAO Workshop)][可解释性][Transformer] 通过大规模线性探测实验系统研究预训练ViT的中间层行为，发现分布偏移是深层性能退化的主因，并在模块级别揭示了最优探测点取决于偏移程度：显著偏移时探测FFN激活最优，弱偏移时探测MHSA归一化输出最优。 近年来，一个引人注目的现象在基础…
 tags:
   - "ICLR 2026 (CAO Workshop)"
   - "可解释性"

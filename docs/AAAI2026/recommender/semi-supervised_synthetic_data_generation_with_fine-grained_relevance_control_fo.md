@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling
 description: >-
-  [AAAI 2026][推荐系统][合成数据] 提出SSRA（半监督相关性感知合成数据管道），通过两阶段流程生成具有可控细粒度相关性标签（4级）的领域自适应短视频数据，增强embedding模型的语义相关性建模能力，在抖音双列场景线上A/B测试中CTR提升1.45%。
+  [AAAI 2026][推荐系统][合成数据] 提出SSRA（半监督相关性感知合成数据管道），通过两阶段流程生成具有可控细粒度相关性标签（4级）的领域自适应短视频数据，增强embedding模型的语义相关性建模能力，在抖音双列场景线上A/B测试中CTR提升1.45%。 现有合成数据方法的局限 Embedding模型是搜索、推…
 tags:
   - "AAAI 2026"
   - "推荐系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BLINK-Twice: You See But Do You Observe? A Reasoning Benchmark on Visual Perception
 description: >-
-  [NeurIPS 2025][LLM评测][视觉推理] 提出视觉中心推理 benchmark BLINK-Twice（345 张视觉挑战图 + 103 个对抗样本 + 896 个 VQA + 1725 个推理步骤标注），通过 7 类视觉错觉场景评估 MLLM "看到但未观察到"的推理能力…
+  [NeurIPS 2025][LLM评测][视觉推理] 提出视觉中心推理 benchmark BLINK-Twice（345 张视觉挑战图 + 103 个对抗样本 + 896 个 VQA + 1725 个推理步骤标注），通过 7 类视觉错觉场景评估 MLLM "看到但未观察到"的推理能力，发现最强模型 Gemini-2.5 Pro 的 G-Acc 仅 26.9%，多轮图像观察和主动视觉交互是提升方向。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

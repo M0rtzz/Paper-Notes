@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TSPulse: Tiny Pre-Trained Models with Disentangled Representations for Rapid Time Series
 description: >-
-  [ICLR 2026][时间序列][Time Series Pre-trained Model] 提出 TSPulse，仅 1M 参数的超轻量时间序列预训练模型，通过双空间掩码重建和双嵌入解耦策略，在分类（+5-16%）、异常检测（+20%）、插补（+50%）和相似性检索（+25%）四大任务上超越 10-10…
+  [ICLR 2026][时间序列][Time Series Pre-trained Model] 提出 TSPulse，仅 1M 参数的超轻量时间序列预训练模型，通过双空间掩码重建和双嵌入解耦策略，在分类（+5-16%）、异常检测（+20%）、插补（+50%）和相似性检索（+25%）四大任务上超越 10-100 倍大的模型。
 tags:
   - "ICLR 2026"
   - "时间序列"

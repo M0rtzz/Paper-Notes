@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shoot First, Ask Questions Later? Building Rational Agents that Explore and Act Like People
 description: >-
-  [ICLR 2026][LLM Agent][信息搜索智能体] 提出 Collaborative Battleship 任务评估语言模型的信息搜索能力，设计三种贝叶斯推断策略（Bayes-Q/M/D）增强 LM 的提问、行动和决策能力…
+  [ICLR 2026][LLM Agent][信息搜索智能体] 提出 Collaborative Battleship 任务评估语言模型的信息搜索能力，设计三种贝叶斯推断策略（Bayes-Q/M/D）增强 LM 的提问、行动和决策能力，使弱模型（Llama-4-Scout）以 GPT-5 约 1% 的成本达到超人表现（82% 胜率）。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

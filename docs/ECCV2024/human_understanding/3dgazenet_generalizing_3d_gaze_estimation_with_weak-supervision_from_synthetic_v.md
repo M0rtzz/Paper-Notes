@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views
 description: >-
-  [ECCV 2024][人体理解][视线估计] 提出将视线估计重新表述为密集3D眼球网格回归，并通过从大规模野外人脸图像中自动提取伪标签+HeadGAN合成多视图进行弱监督训练，在跨域场景下比SOTA提升最多30%。
+  [ECCV 2024][人体理解][视线估计] 提出将视线估计重新表述为密集3D眼球网格回归，并通过从大规模野外人脸图像中自动提取伪标签+HeadGAN合成多视图进行弱监督训练，在跨域场景下比SOTA提升最多30%。 视线估计在人机交互、VR/AR、心理学分析等领域有广泛应用，但核心痛点在于跨域泛化困难：…
 tags:
   - "ECCV 2024"
   - "人体理解"

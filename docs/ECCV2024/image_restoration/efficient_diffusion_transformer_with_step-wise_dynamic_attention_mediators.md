@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators
 description: >-
-  [ECCV 2024][图像恢复][Transformer] 发现 Diffusion Transformer 中 query-key 交互存在显著冗余（尤其在去噪早期），提出 Attention Mediator 机制将注意力复杂度降至线性，并设计逐步动态调整策略…
+  [ECCV 2024][图像恢复][Transformer] 发现 Diffusion Transformer 中 query-key 交互存在显著冗余（尤其在去噪早期），提出 Attention Mediator 机制将注意力复杂度降至线性，并设计逐步动态调整策略，在 SiT-XL/2 上实现 SOTA FID 2.01，同时减少计算量。
 tags:
   - "ECCV 2024"
   - "图像恢复"

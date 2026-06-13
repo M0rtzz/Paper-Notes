@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation
 description: >-
-  [ECCV 2024][视频生成][物理仿真] 利用视频生成模型中隐含的物理动力学先验，为静态3D高斯对象估计空间变化的杨氏模量材料场，从而实现物理合理的交互式3D动力学合成。
+  [ECCV 2024][视频生成][物理仿真] 利用视频生成模型中隐含的物理动力学先验，为静态3D高斯对象估计空间变化的杨氏模量材料场，从而实现物理合理的交互式3D动力学合成。 - 领域现状： 近年来3D视觉在高质量静态3D资产重建方面取得显著进展（如3D Gaussian Splatting、NeRF）…
 tags:
   - "ECCV 2024"
   - "视频生成"

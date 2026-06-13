@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Networked Information Aggregation for Binary Classification
 description: >-
-  [ICML 2026][联邦学习] 把 Kearns-Roth-Ryu 2026 的"在 DAG 上让线性回归 agent 顺序传 prediction 列即可逼近全局最优"结论推广到二分类：每个 agent 只看到部分特征列、顺序地把自己的 logit 转发给下游…
+  [ICML 2026][联邦学习] 把 Kearns-Roth-Ryu 2026 的"在 DAG 上让线性回归 agent 顺序传 prediction 列即可逼近全局最优"结论推广到二分类：每个 agent 只看到部分特征列、顺序地把自己的 logit 转发给下游，能在 $M$-coverage 条件下用 $O(M/\sqrt{D})$ 超额 BCE loss 达到全局逻辑回归最优；同时构造硬实例证明 $\Omega(k/D)$ 下界，把网络深度刻画成信息聚合的根本瓶颈。
 tags:
   - "ICML 2026"
   - "联邦学习"

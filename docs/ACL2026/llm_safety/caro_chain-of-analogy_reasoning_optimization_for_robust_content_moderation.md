@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CarO: Chain-of-Analogy Reasoning Optimization for Robust Content Moderation
 description: >-
-  [ACL 2026][LLM安全][内容审核] 提出 CarO（Chain-of-Analogy Reasoning Optimization），一个两阶段训练框架，通过 RAG 引导生成类比推理链 + SFT + 定制 DPO 优化，使 LLM 在推理时自主生成类比参考案例进行内容审核…
+  [ACL 2026 Findings][LLM安全][内容审核] 提出 CarO（Chain-of-Analogy Reasoning Optimization），一个两阶段训练框架，通过 RAG 引导生成类比推理链 + SFT + 定制 DPO 优化，使 LLM 在推理时自主生成类比参考案例进行内容审核，在模糊审核基准上 F1 平均提升 24.9%，显著超越推理模型（DeepSeek R1）和专用审核模型（LLaMA Guard）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "内容审核"
   - "类比推理"

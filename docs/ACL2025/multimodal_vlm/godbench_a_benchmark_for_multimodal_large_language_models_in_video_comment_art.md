@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GODBench: A Benchmark for Multimodal Large Language Models in Video Comment Art
 description: >-
-  [ACL 2025][多模态VLM][视频弹幕艺术] GODBench 构建了首个系统性评估多模态大模型（MLLM）视频弹幕/评论创作能力的基准，定义了5个创意维度和25个子类别，并提出受物理波纹传播启发的 Ripple of Thought（RoT）多步推理框架来增强模型的创意生成能力。
+  [ACL 2025][多模态VLM][视频弹幕艺术] GODBench 构建了首个系统性评估多模态大模型（MLLM）视频弹幕/评论创作能力的基准，定义了5个创意维度和25个子类别，并提出受物理波纹传播启发的 Ripple of Thought（RoT）多步推理框架来增强模型的创意生成能力。 领域现状：视频弹幕/评论艺术（Co…
 tags:
   - "ACL 2025"
   - "多模态VLM"

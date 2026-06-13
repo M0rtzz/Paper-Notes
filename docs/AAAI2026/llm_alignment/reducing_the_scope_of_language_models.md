@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reducing the Scope of Language Models
 description: >-
-  [AAAI 2026][LLM对齐][范围限制] 系统评估 LLM "范围限制"（scoping）方法——让部署在特定用途的 LLM 只响应域内查询、拒绝所有域外请求。在 3 个模型家族×多种任务上比较 prompting / SFT / DPO / 探针 / Circuit Breakers (CB)…
+  [AAAI 2026][LLM对齐][范围限制] 系统评估 LLM "范围限制"（scoping）方法——让部署在特定用途的 LLM 只响应域内查询、拒绝所有域外请求。在 3 个模型家族×多种任务上比较 prompting / SFT / DPO / 探针 / Circuit Breakers (CB)，发现 SFT 在高数据多样性下最强、CB 在低多样性下最强、分层组合 (SFT→CB) 保留两者优势——关键发现是范围限制的可行性高度依赖训练数据多样性。
 tags:
   - "AAAI 2026"
   - "LLM对齐"

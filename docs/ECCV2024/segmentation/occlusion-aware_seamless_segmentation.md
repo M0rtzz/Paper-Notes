@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Occlusion-Aware Seamless Segmentation
 description: >-
-  [ECCV 2024][语义分割][全景分割] 提出 Occlusion-Aware Seamless Segmentation (OASS) 新任务与 UnmaskFormer 框架，同时解决全景图像窄视场解锁、遮挡物体完整分割和针孔-全景跨域适应三大挑战，在自建 BlendPASS 数据集上达到 SOTA…
+  [ECCV 2024][语义分割][全景分割] 提出 Occlusion-Aware Seamless Segmentation (OASS) 新任务与 UnmaskFormer 框架，同时解决全景图像窄视场解锁、遮挡物体完整分割和针孔-全景跨域适应三大挑战，在自建 BlendPASS 数据集上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "语义分割"

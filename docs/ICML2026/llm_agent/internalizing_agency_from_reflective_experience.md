@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Internalizing Agency from Reflective Experience
 description: >-
-  [ICML 2026][LLM Agent][agentic LLM] 本文提出 LEAFE 框架，让 LLM agent 通过反思失败轨迹生成「失败→回滚→修正→成功」的经验数据，再用 SFT 蒸馏出 feedback-grounded 的恢复能力…
+  [ICML 2026][LLM Agent][agentic LLM] 本文提出 LEAFE 框架，让 LLM agent 通过反思失败轨迹生成「失败→回滚→修正→成功」的经验数据，再用 SFT 蒸馏出 feedback-grounded 的恢复能力，在 CodeContests、WebShop、ALFWorld 等长程任务上把 Pass@128 拉高最多 14%，远胜 GRPO 等 outcome-driven RL。
 tags:
   - "ICML 2026"
   - "LLM Agent"

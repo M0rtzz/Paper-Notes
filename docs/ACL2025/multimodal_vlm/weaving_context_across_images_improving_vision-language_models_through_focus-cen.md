@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains
 description: >-
-  [ACL 2025][多模态VLM][多图推理] 提出 Focus-Centric Visual Chain 多图推理范式，通过问题分解和逐步聚焦关键视觉信息实现跨图推理，并构建 VISC-150K 数据集，在七个多图基准上实现 2-3% 的一致性提升。
+  [ACL 2025][多模态VLM][多图推理] 提出 Focus-Centric Visual Chain 多图推理范式，通过问题分解和逐步聚焦关键视觉信息实现跨图推理，并构建 VISC-150K 数据集，在七个多图基准上实现 2-3% 的一致性提升。 视觉语言模型（VLM）在单图任务上已达到人类水平…
 tags:
   - "ACL 2025"
   - "多模态VLM"

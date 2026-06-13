@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicting Public Health Impacts of Electricity Usage
 description: >-
-  [NeurIPS 2025][地球科学][公共健康] 提出 HealthPredictor，一个将电力消费端到端映射到公共健康损害（以 $/MWh 计量）的 AI 流水线，包含燃料组合预测、空气质量转换和健康影响评估三个模块，健康驱动优化比燃料组合驱动基线显著降低健康影响预测误差…
+  [NeurIPS 2025][地球科学][公共健康] 提出 HealthPredictor，一个将电力消费端到端映射到公共健康损害（以 $/MWh 计量）的 AI 流水线，包含燃料组合预测、空气质量转换和健康影响评估三个模块，健康驱动优化比燃料组合驱动基线显著降低健康影响预测误差，并在电动汽车充电调度案例中实现 24-42% 的健康损害减少。
 tags:
   - "NeurIPS 2025"
   - "地球科学"

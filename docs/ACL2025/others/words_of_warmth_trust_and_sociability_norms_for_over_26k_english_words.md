@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Words of Warmth: Trust and Sociability Norms for over 26k English Words
 description: >-
-  [ACL 2025][warmth] 通过严格的众包标注流程构建了首个大规模词汇-温暖（Warmth）、信任（Trust）和社交性（Sociability）关联词典（覆盖 26k+ 英语单词），并通过儿童词汇习得分析和社交媒体刻板印象案例研究，展示了该资源在社会认知研究中的广泛价值。
+  [ACL 2025][warmth] 通过严格的众包标注流程构建了首个大规模词汇-温暖（Warmth）、信任（Trust）和社交性（Sociability）关联词典（覆盖 26k+ 英语单词），并通过儿童词汇习得分析和社交媒体刻板印象案例研究，展示了该资源在社会认知研究中的广泛价值。 社会心理学研究表明，温暖（Warmth…
 tags:
   - "ACL 2025"
   - "warmth"

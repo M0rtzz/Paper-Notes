@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DisjunctiveNet: Neural Symbolic Learning via Differentiable Convexified Optimization Layers
 description: >-
-  [ICML2026][析取约束] 把"输入相关的 if-then 逻辑规则"写成多面体并的析取约束，通过基本步序列把 CNF 凸化成 DNF 的凸包，得到一个可微的 LP 投影层，神经网络输出经过这层后能在训练和推理时都精确满足原始 MILP 级别约束。
+  [ICML2026][析取约束] 把"输入相关的 if-then 逻辑规则"写成多面体并的析取约束，通过基本步序列把 CNF 凸化成 DNF 的凸包，得到一个可微的 LP 投影层，神经网络输出经过这层后能在训练和推理时都精确满足原始 MILP 级别约束。 领域现状：科学和工程问题往往同时具备两个特征——数据极度稀疏…
 tags:
   - "ICML2026"
   - "析取约束"

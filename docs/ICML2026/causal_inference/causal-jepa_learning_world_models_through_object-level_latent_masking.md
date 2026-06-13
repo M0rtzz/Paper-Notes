@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal-JEPA: Learning World Models through Object-Level Latent Masking
 description: >-
-  [ICML2026][因果推理][世界模型] 提出 C-JEPA，将 JEPA 的掩码预测从图像 patch 级别扩展到对象级别潜在表示，通过对象级掩码作为潜在干预迫使模型学习交互依赖的动态，在反事实推理上比无掩码基线提升约 20%，在控制任务中仅用 1% 的 token 即达到可比性能且规划加速 8 倍以上…
+  [ICML2026][因果推理][世界模型] 提出 C-JEPA，将 JEPA 的掩码预测从图像 patch 级别扩展到对象级别潜在表示，通过对象级掩码作为潜在干预迫使模型学习交互依赖的动态，在反事实推理上比无掩码基线提升约 20%，在控制任务中仅用 1% 的 token 即达到可比性能且规划加速 8 倍以上。
 tags:
   - "ICML2026"
   - "因果推理"

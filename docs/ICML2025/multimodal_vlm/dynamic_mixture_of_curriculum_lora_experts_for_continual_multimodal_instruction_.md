@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning
 description: >-
-  [ICML 2025][多模态VLM][持续学习] 本文提出 D-MoLE 方法，通过动态层级 LoRA 专家分配器和基于梯度的跨模态持续课程策略，在参数预算约束下自动演化 MLLM 架构以持续适配新任务，相比最优基线平均提升 15%。
+  [ICML 2025][多模态VLM][持续学习] 本文提出 D-MoLE 方法，通过动态层级 LoRA 专家分配器和基于梯度的跨模态持续课程策略，在参数预算约束下自动演化 MLLM 架构以持续适配新任务，相比最优基线平均提升 15%。 领域现状： 多模态大语言模型（MLLMs，如 LLaVA、InstructBLIP 等）…
 tags:
   - "ICML 2025"
   - "多模态VLM"

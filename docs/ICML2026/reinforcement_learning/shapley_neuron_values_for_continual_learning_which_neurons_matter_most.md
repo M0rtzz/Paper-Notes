@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shapley Neuron Values for Continual Learning: Which Neurons Matter Most?
 description: >-
-  [ICML 2026][强化学习][持续学习] 作者把合作博弈论里的 Shapley 值搬到卷积神经网络的"滤波器"级别，用 Monte Carlo + 截断 + 多臂老虎机三重近似估计每个 Neuron 的连续重要度排名，然后冻结 Top-$r\%$ 的"专家"Neuron、留下其余继续可塑训练…
+  [ICML 2026][强化学习][持续学习] 作者把合作博弈论里的 Shapley 值搬到卷积神经网络的"滤波器"级别，用 Monte Carlo + 截断 + 多臂老虎机三重近似估计每个 Neuron 的连续重要度排名，然后冻结 Top-$r\%$ 的"专家"Neuron、留下其余继续可塑训练，从而在不存储样本、不扩展架构的前提下把 ImageNet-1k 上类增量学习的精度比第二名 buffer-free 方法再提升 $+2.88\%$、任务增量提升 $+6.46\%$。
 tags:
   - "ICML 2026"
   - "强化学习"

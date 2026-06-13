@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HierVA: Hierarchical Visual Agent — Managing Contexts in Joint Image-Text Space for Advanced Chart Reasoning
 description: >-
-  [ACL 2026][多模态VLM][chart QA] HierVA 用 "manager–worker" 双层多模态 agent，把图表推理过程中的图像和文本 context 都按"获取–限定–蒸馏"的纪律管理起来…
+  [ACL 2026][多模态VLM][chart QA] HierVA 用 "manager–worker" 双层多模态 agent，把图表推理过程中的图像和文本 context 都按"获取–限定–蒸馏"的纪律管理起来，零训练地在 CharXiv 等复杂图表推理 benchmark 上稳超 CoT 和 "thinking with images" 等强基线。
 tags:
   - "ACL 2026"
   - "多模态VLM"

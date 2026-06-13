@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualFocus: Depth from Focus with Spatio-Focal Dual Variational Constraints
 description: >-
-  [NeurIPS 2025][3D视觉][Depth from Focus] 提出 DualFocus，通过空间变分约束（利用焦距相关梯度模式区分深度边缘与纹理伪影）和焦距变分约束（强制单峰单调的对焦概率分布）双重约束，实现从焦距堆栈中鲁棒精确的深度估计。
+  [NeurIPS 2025][3D视觉][Depth from Focus] 提出 DualFocus，通过空间变分约束（利用焦距相关梯度模式区分深度边缘与纹理伪影）和焦距变分约束（强制单峰单调的对焦概率分布）双重约束，实现从焦距堆栈中鲁棒精确的深度估计。 Depth-from-Focus (DFF) 利用焦距堆栈（不同焦距…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

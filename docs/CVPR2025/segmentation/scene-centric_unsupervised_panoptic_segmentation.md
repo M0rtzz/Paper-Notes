@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scene-Centric Unsupervised Panoptic Segmentation
 description: >-
-  [CVPR 2025][语义分割][无监督全景分割] CUPS 是首个直接在场景中心图像（如自动驾驶场景）上训练的无监督全景分割方法，通过融合自监督视觉特征、立体深度和光流运动线索生成高质量伪标签，在 Cityscapes 上的 PQ 超越此前 SOTA U2Seg 9.4 个点。
+  [CVPR 2025][语义分割][无监督全景分割] CUPS 是首个直接在场景中心图像（如自动驾驶场景）上训练的无监督全景分割方法，通过融合自监督视觉特征、立体深度和光流运动线索生成高质量伪标签，在 Cityscapes 上的 PQ 超越此前 SOTA U2Seg 9.4 个点。 领域现状：全景分割将语义分割和实例分割统一…
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding
 description: >-
-  [ACL 2026][视频理解][程序化视频字幕] 作者把"做饭、家具制作"这类程序化视频字幕的事实评测拆成**双层事实**——conceptual facts（抽象角色，如 Action/Ingredient/Tool/Location）+ contextual facts（视频中可观察的 predicat…
+  [ACL 2026 Findings][视频理解][程序化视频字幕] 作者把"做饭、家具制作"这类程序化视频字幕的事实评测拆成**双层事实**——conceptual facts（抽象角色，如 Action/Ingredient/Tool/Location）+ contextual facts（视频中可观察的 predicate–argument 关系，如 stir(soup, pot)），配套构建 YouCook3-Fact / CraftBench-Fact 两个标注隐式参数补全 (VIA) 与对比性事实的基准，并提出 MultiFactScore 用多模态/文本 NLI 在角色级别分别核查事实…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "视频理解"
   - "程序化视频字幕"
   - "双层事实"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L-STEP: Learnable Spatial-Temporal Positional Encoding for Link Prediction
 description: >-
-  [ICML 2025][图学习][时序图] 提出 L-STEP，一种基于可学习时空位置编码的轻量级时序链接预测模型，通过离散傅里叶变换捕获位置编码的时序演化，用 MLP 替代 Transformer 注意力机制达到 SOTA 效果且运行更快。
+  [ICML 2025][图学习][时序图] 提出 L-STEP，一种基于可学习时空位置编码的轻量级时序链接预测模型，通过离散傅里叶变换捕获位置编码的时序演化，用 MLP 替代 Transformer 注意力机制达到 SOTA 效果且运行更快。 领域现状：时序链接预测（判断两节点在特定时刻是否存在连接）是图学习核心任务…
 tags:
   - "ICML 2025"
   - "图学习"

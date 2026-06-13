@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intrinsic Lorentz Neural Network
 description: >-
-  [ICLR 2026][计算生物][hyperbolic neural network] 提出完全内禀（fully intrinsic）的双曲神经网络 ILNN，所有运算均在 Lorentz 模型内完成，消除了现有方法中混合欧几里得操作的几何不一致性，在图像分类、基因组学和图分类上取得 SOTA。
+  [ICLR 2026][计算生物][hyperbolic neural network] 提出完全内禀（fully intrinsic）的双曲神经网络 ILNN，所有运算均在 Lorentz 模型内完成，消除了现有方法中混合欧几里得操作的几何不一致性，在图像分类、基因组学和图分类上取得 SOTA。 领域现状：双曲神经网络利用…
 tags:
   - "ICLR 2026"
   - "计算生物"

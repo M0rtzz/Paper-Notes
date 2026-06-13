@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LATTE-MV: Learning to Anticipate Table Tennis Hits from Monocular Videos
 description: >-
-  [CVPR 2025][乒乓球预测] LATTE-MV 提出一套从单目乒乓球比赛视频中重建 3D 比赛数据的可扩展系统，并训练 Transformer 模型预判对手击球意图，结合共形预测实现不确定性感知的预判式控制，将仿真中机器人回球率从 49.9% 提升至 59.0%。
+  [CVPR 2025][乒乓球预测] LATTE-MV 提出一套从单目乒乓球比赛视频中重建 3D 比赛数据的可扩展系统，并训练 Transformer 模型预判对手击球意图，结合共形预测实现不确定性感知的预判式控制，将仿真中机器人回球率从 49.9% 提升至 59.0%。 1. 领域现状：乒乓球机器人是人形机器人研究的经典试…
 tags:
   - "CVPR 2025"
   - "乒乓球预测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisionZip: Longer is Better but Not Necessary in Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][视觉Token压缩] VisionZip 发现视觉编码器（CLIP/SigLIP）生成的视觉Token存在严重冗余——仅少数Token聚集了绝大部分注意力和信息，基于此提出一种文本无关的Token选择与合并方法，在仅保留10%Token的情况下保持95%的模型性能…
+  [CVPR 2025][多模态VLM][视觉Token压缩] VisionZip 发现视觉编码器（CLIP/SigLIP）生成的视觉Token存在严重冗余——仅少数Token聚集了绝大部分注意力和信息，基于此提出一种文本无关的Token选择与合并方法，在仅保留10%Token的情况下保持95%的模型性能，并实现8倍预填充加速。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

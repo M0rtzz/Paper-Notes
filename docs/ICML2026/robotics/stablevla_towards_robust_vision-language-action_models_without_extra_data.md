@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StableVLA: Towards Robust Vision-Language-Action Models without Extra Data
 description: >-
-  [ICML 2026][机器人][VLA] 针对 VLA 模型在视觉扰动下崩盘的问题，作者发现脆弱的根源在视觉到 LLM 之间的 MLP 投影器，于是用一个不到 10M 参数的"通道维度信息瓶颈适配器（IB-Adapter）"替换它…
+  [ICML 2026][机器人][VLA] 针对 VLA 模型在视觉扰动下崩盘的问题，作者发现脆弱的根源在视觉到 LLM 之间的 MLP 投影器，于是用一个不到 10M 参数的"通道维度信息瓶颈适配器（IB-Adapter）"替换它，在不增加任何训练数据或增强策略的前提下让 0.5B 的 StableVLA 在 LIBERO 严重扰动下平均提升约 35%，并在真机抓放任务上比 14× 大的 OpenPi 还稳。
 tags:
   - "ICML 2026"
   - "机器人"

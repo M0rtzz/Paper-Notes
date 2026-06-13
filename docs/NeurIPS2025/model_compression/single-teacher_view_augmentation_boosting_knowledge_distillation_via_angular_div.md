@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity
 description: >-
-  [NeurIPS 2025][模型压缩][知识蒸馏] 提出Angular-KD，通过在单个教师模型上附加多个轻量线性分支并引入两种角度多样性损失（约束型视角间角度多样性损失和视角内角度多样性损失），从单教师生成多样化监督信号，以低成本替代多教师蒸馏方案，在多个KD基准上取得SOTA表现。
+  [NeurIPS 2025][模型压缩][知识蒸馏] 提出Angular-KD，通过在单个教师模型上附加多个轻量线性分支并引入两种角度多样性损失（约束型视角间角度多样性损失和视角内角度多样性损失），从单教师生成多样化监督信号，以低成本替代多教师蒸馏方案，在多个KD基准上取得SOTA表现。 问题背景 知识蒸馏（KD）将大型教师…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

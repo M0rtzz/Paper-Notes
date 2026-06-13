@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PragLocker: Protecting Agent Intellectual Property in Untrusted Deployments via Non-Portable Prompts
 description: >-
-  [ICML 2026][LLM Agent][提示学习] PragLocker 用 "代码符号初始化 + 黑盒目标模型反馈下的噪声注入" 两阶段策略，把 agent system prompt 编码成一段只能在 target LLM 上 work、迁移到其它任意 LLM 都会失效的 obfuscated te…
+  [ICML 2026][LLM Agent][提示学习] PragLocker 用 "代码符号初始化 + 黑盒目标模型反馈下的噪声注入" 两阶段策略，把 agent system prompt 编码成一段只能在 target LLM 上 work、迁移到其它任意 LLM 都会失效的 obfuscated text，从而在 prompt 被部署侧窃取时让攻击者无法在自己的 LLM 上复用。
 tags:
   - "ICML 2026"
   - "LLM Agent"

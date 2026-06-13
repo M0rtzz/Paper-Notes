@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentially Private Federated Low Rank Adaptation Beyond Fixed-Matrix
 description: >-
-  [NeurIPS 2025][LLM安全][差分隐私] 提出FedASK框架，通过**双阶段sketching流水线**（randomized SVD启发），首次在差分隐私下实现联邦LoRA中**两个低秩矩阵A和B的同步有效更新**，在Llama-2 7B/13B上MMLU提升最高11.5%…
+  [NeurIPS 2025][LLM安全][差分隐私] 提出FedASK框架，通过**双阶段sketching流水线**（randomized SVD启发），首次在差分隐私下实现联邦LoRA中**两个低秩矩阵A和B的同步有效更新**，在Llama-2 7B/13B上MMLU提升最高11.5%，GSM8K提升46%。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

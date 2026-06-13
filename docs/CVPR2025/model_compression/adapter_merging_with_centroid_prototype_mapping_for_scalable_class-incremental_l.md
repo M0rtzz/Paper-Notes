@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning
 description: >-
-  [CVPR 2025][模型压缩][类增量学习] 提出ACMap框架，通过将每个任务独立训练的adapter增量平均合并为单一adapter（保持O(1)推理复杂度），结合centroid prototype mapping对齐旧任务原型在新子空间中的表示…
+  [CVPR 2025][模型压缩][类增量学习] 提出ACMap框架，通过将每个任务独立训练的adapter增量平均合并为单一adapter（保持O(1)推理复杂度），结合centroid prototype mapping对齐旧任务原型在新子空间中的表示，在5个基准上实现与SOTA EASE相当的精度同时推理速度快39倍。
 tags:
   - "CVPR 2025"
   - "模型压缩"

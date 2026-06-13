@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLaVAShield: Safeguarding Multimodal Multi-Turn Dialogues in Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][多模态多轮对话安全] 针对VLM多模态多轮对话中的恶意意图隐蔽性、上下文风险累积和跨模态联合风险三大挑战，构建4,484个标注对话的MMDS数据集和基于MCTS的MMRT红队框架，提出LLaVAShield审计模型…
+  [CVPR 2026][多模态VLM][多模态多轮对话安全] 针对VLM多模态多轮对话中的恶意意图隐蔽性、上下文风险累积和跨模态联合风险三大挑战，构建4,484个标注对话的MMDS数据集和基于MCTS的MMRT红队框架，提出LLaVAShield审计模型，在用户/助手两侧分别达到F1 95.71%/92.24%，大幅超越GPT-5-mini等基线。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Surprising Difficulty of Search in Model-Based Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][模型预测控制] 作者反直觉地指出 model-based RL 中搜索失败的根因不是模型不准，而是 MPC 行为策略与价值函数训练策略不一致引发的过估计偏差，并提出在 10 个价值函数集成上"取最小"的 MRS.Q 算法…
+  [ICML 2026][强化学习][模型预测控制] 作者反直觉地指出 model-based RL 中搜索失败的根因不是模型不准，而是 MPC 行为策略与价值函数训练策略不一致引发的过估计偏差，并提出在 10 个价值函数集成上"取最小"的 MRS.Q 算法，在 50+ 个连续控制任务上稳定超过 TD-MPC2、BMPC、BOOM、SimbaV2 等 SOTA。
 tags:
   - "ICML 2026"
   - "强化学习"

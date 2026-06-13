@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Focus and Dilution: The Multi-stage Learning Process of Attention
 description: >-
-  [ICML 2026][预训练][注意力训练动力学] 本文在单层 Transformer 学习马尔可夫数据的简化场景下，通过围绕一系列临界点做分阶段线性化的梯度流分析，揭示并严格刻画了注意力训练中反复出现的「聚焦—稀释」循环，并在 WikiText 与 TinyStories 上观察到一致的现象。
+  [ICML 2026 Spotlight][预训练][注意力训练动力学] 本文在单层 Transformer 学习马尔可夫数据的简化场景下，通过围绕一系列临界点做分阶段线性化的梯度流分析，揭示并严格刻画了注意力训练中反复出现的「聚焦—稀释」循环，并在 WikiText 与 TinyStories 上观察到一致的现象。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "预训练"
   - "注意力训练动力学"
   - "聚焦-稀释循环"

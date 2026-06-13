@@ -2,7 +2,7 @@
 title: >-
   [论文解读] F-LMM: Grounding Frozen Large Multimodal Models
 description: >-
-  [CVPR 2025][语义分割][视觉定位] F-LMM 冻结现成 LMM 的所有参数，仅训练轻量 CNN mask decoder 将 LMM 注意力图中固有的词-像素对应关系翻译为分割 mask，在完全保持对话能力的同时获得 competitive 的视觉定位性能。
+  [CVPR 2025][语义分割][视觉定位] F-LMM 冻结现成 LMM 的所有参数，仅训练轻量 CNN mask decoder 将 LMM 注意力图中固有的词-像素对应关系翻译为分割 mask，在完全保持对话能力的同时获得 competitive 的视觉定位性能。 领域现状：赋予大型多模态模型（LMM）视觉定位能力是…
 tags:
   - "CVPR 2025"
   - "语义分割"

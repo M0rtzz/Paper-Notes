@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RTCFake: Speech Deepfake Detection in Real-Time Communication
 description: >-
-  [ACL2026][音频/语音][语音深度伪造检测] RTCFake 构建了约 600 小时面向真实实时通信平台的语音伪造检测数据集，并提出音素引导一致性学习 PCL，使 XLSR+AASIST 在离线、在线、跨平台和未见噪声场景下的平均 EER 从混合训练的 7.33% 降到 5.81%。
+  [ACL2026][音频/语音][语音深度伪造检测] RTCFake 构建了约 600 小时面向真实实时通信平台的语音伪造检测数据集，并提出音素引导一致性学习 PCL，使 XLSR+AASIST 在离线、在线、跨平台和未见噪声场景下的平均 EER 从混合训练的 7.33% 降到 5.81%。 领域现状：语音深度伪造检测已有…
 tags:
   - "ACL2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][概念擦除] SPEED 提出基于零空间（null space）约束的闭式模型编辑方法，通过影响力先验过滤（IPF）、定向先验增强（DPA）和不变等式约束（IEC）三种互补技术精化保留集，实现可扩展（5 秒内擦除 100 个概念）、精确（非目标概念语义零损失）且高效的概念擦除…
+  [ICLR 2026][图像生成][概念擦除] SPEED 提出基于零空间（null space）约束的闭式模型编辑方法，通过影响力先验过滤（IPF）、定向先验增强（DPA）和不变等式约束（IEC）三种互补技术精化保留集，实现可扩展（5 秒内擦除 100 个概念）、精确（非目标概念语义零损失）且高效的概念擦除。
 tags:
   - "ICLR 2026"
   - "图像生成"

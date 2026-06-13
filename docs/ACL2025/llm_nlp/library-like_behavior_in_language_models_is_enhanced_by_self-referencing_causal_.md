@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ReCall: Library-Like Behavior In Language Models is Enhanced by Self-Referencing Causal Cycles
 description: >-
-  [ACL2025][LLM/NLP][reversal curse] 提出"自引用因果循环"（ReCall）概念，揭示 LLM 预训练数据中自然存在的重复 token 序列如何形成循环引用，使自回归模型能够绕过单向因果限制、克服逆向诅咒（reversal curse）…
+  [ACL2025][LLM 其他][reversal curse] 提出"自引用因果循环"（ReCall）概念，揭示 LLM 预训练数据中自然存在的重复 token 序列如何形成循环引用，使自回归模型能够绕过单向因果限制、克服逆向诅咒（reversal curse），并据此设计了两步 ReCall-aware prompting 策略。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "reversal curse"
   - "causal cycle"
   - "cycle tokens"

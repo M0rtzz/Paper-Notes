@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEGION: Learning to Ground and Explain for Synthetic Image Detection
 description: >-
-  [ICCV 2025][语义分割][合成图像检测] 提出 LEGION 框架和 SynthScars 数据集，利用多模态大语言模型（MLLM）实现合成图像的伪影检测、像素级分割和文本解释三位一体，并创新性地将检测器从"防御者"扩展为"控制者"，引导生成模型产出更高质量的图像。
+  [ICCV 2025][语义分割][合成图像检测] 提出 LEGION 框架和 SynthScars 数据集，利用多模态大语言模型（MLLM）实现合成图像的伪影检测、像素级分割和文本解释三位一体，并创新性地将检测器从"防御者"扩展为"控制者"，引导生成模型产出更高质量的图像。 生成技术（GAN → Diffusion → 自…
 tags:
   - "ICCV 2025"
   - "语义分割"

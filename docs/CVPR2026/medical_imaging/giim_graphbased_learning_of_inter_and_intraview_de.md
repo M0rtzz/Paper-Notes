@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis
 description: >-
-  [CVPR 2026][医学图像][多异构图] 提出 GIIM 框架，基于多异构图（MHG）通过四类边关系同时建模同一病灶跨期相动态变化和不同病灶间空间关联，并设计四种缺失视图填充策略，在肝脏 CT、乳腺 X 光和乳腺 MRI 三种模态上均显著优于现有方法。
+  [CVPR 2026][医学图像][多异构图] 提出 GIIM 框架，基于多异构图（MHG）通过四类边关系同时建模同一病灶跨期相动态变化和不同病灶间空间关联，并设计四种缺失视图填充策略，在肝脏 CT、乳腺 X 光和乳腺 MRI 三种模态上均显著优于现有方法。 领域现状：临床诊断需要综合多个视图中异常之间的复杂依赖关系——同一…
 tags:
   - "CVPR 2026"
   - "医学图像"

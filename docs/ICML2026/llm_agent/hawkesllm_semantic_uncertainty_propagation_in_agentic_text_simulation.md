@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HawkesLLM: Semantic Uncertainty Propagation in Agentic Text Simulation
 description: >-
-  [ICML 2026][LLM Agent][Hawkes 过程] HawkesLLM 把多变量 Hawkes 点过程嫁接到 LLM 智能体文本模拟循环中：Hawkes 负责安排"何时由哪个节点生成"以及"用哪些历史节点的输出作为压缩记忆"，LLM 只负责把被选中的记忆写成下一条事件…
+  [ICML 2026][LLM Agent][Hawkes 过程] HawkesLLM 把多变量 Hawkes 点过程嫁接到 LLM 智能体文本模拟循环中：Hawkes 负责安排"何时由哪个节点生成"以及"用哪些历史节点的输出作为压缩记忆"，LLM 只负责把被选中的记忆写成下一条事件，在 GDELT Artemis II 新闻级联上获得了在紧凑提示预算下仍随时间上升的后段语义对齐度。
 tags:
   - "ICML 2026"
   - "LLM Agent"

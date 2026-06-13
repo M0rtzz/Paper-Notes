@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method
 description: >-
-  [ACL 2025][Argument Mining] 本文针对中文高中议论文，提出包含纵向（论证关系）和横向（话语关系）两个维度共 14 种细粒度论证关系类型的标注方案，并在论证成分检测、关系预测和自动评分三个任务上建立了全面的 benchmark。
+  [ACL 2025][Argument Mining] 本文针对中文高中议论文，提出包含纵向（论证关系）和横向（话语关系）两个维度共 14 种细粒度论证关系类型的标注方案，并在论证成分检测、关系预测和自动评分三个任务上建立了全面的 benchmark。 论证挖掘（Argument Mining）旨在从非结构化文本中自动提取结…
 tags:
   - "ACL 2025"
   - "Argument Mining"

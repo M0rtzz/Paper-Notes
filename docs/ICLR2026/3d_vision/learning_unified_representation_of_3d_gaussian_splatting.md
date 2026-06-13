@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Unified Representation of 3D Gaussian Splatting
 description: >-
-  [ICLR 2026][3D视觉][3D高斯溅射] 3DGS原生参数 $\boldsymbol{\theta}=\{\mu,\mathbf{q},\mathbf{s},\mathbf{c},o\}$ 存在非唯一性与数值异质性，不适合作为神经网络的学习空间…
+  [ICLR 2026][3D视觉][3D高斯溅射] 3DGS原生参数 $\boldsymbol{\theta}=\{\mu,\mathbf{q},\mathbf{s},\mathbf{c},o\}$ 存在非唯一性与数值异质性，不适合作为神经网络的学习空间。本文提出**子流形场 (Submanifold Field)** 表示：将每个高斯基元映射到其等概率椭球面上的连续颜色场，证明该映射是单射的，从根源上消除参数歧义，并配合基于最优传输的流形距离 (M-Dist) 训练 VAE 嵌入，在重建保真度、跨域泛化与潜空间稳定性上全面优于参数基线。
 tags:
   - "ICLR 2026"
   - "3D视觉"

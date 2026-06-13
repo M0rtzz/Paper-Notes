@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeUQI: Near-Optimal Uniform Quantization Parameter Initialization for Low-Bit LLMs
 description: >-
-  [ICML 2026][模型压缩][后训练量化] 本文指出主流后训练量化 (PTQ) 方法都沿用了 Min-Max 公式来初始化 scale 与 zero-point，而这套老公式隐含了"由极值决定参数 + zero-point 必须是整数"两个被长期忽视的约束；作者提出 NeUQI…
+  [ICML 2026][模型压缩][后训练量化] 本文指出主流后训练量化 (PTQ) 方法都沿用了 Min-Max 公式来初始化 scale 与 zero-point，而这套老公式隐含了"由极值决定参数 + zero-point 必须是整数"两个被长期忽视的约束；作者提出 NeUQI，用"给定 scale 解析地求最优 zero-point + 由粗到细搜 scale"两步把约束打掉，在 LLaMA-2 7B 2-bit 通道量化下把 C4 困惑度从 SOTA 的 47.55 (MagR) 砍到 17.50，并使轻量蒸馏后超越成本高得多的 PV-tuning。
 tags:
   - "ICML 2026"
   - "模型压缩"

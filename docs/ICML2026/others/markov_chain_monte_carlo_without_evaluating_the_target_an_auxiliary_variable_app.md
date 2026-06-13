@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Markov Chain Monte Carlo without Evaluating the Target: An Auxiliary Variable Approach
 description: >-
-  [ICML 2026][辅助变量] 作者把 exchange、PoissonMH、TunaMH 三类"不算目标分布也能采样"的 MCMC 统一成一个用辅助变量的元算法，并在 proposal 与接受率两处同时引入辅助随机性…
+  [ICML 2026 Oral][辅助变量] 作者把 exchange、PoissonMH、TunaMH 三类"不算目标分布也能采样"的 MCMC 统一成一个用辅助变量的元算法，并在 proposal 与接受率两处同时引入辅助随机性，从而设计出小批量数据下仍保持精确平稳分布的梯度型 MCMC（Poisson–Barker、Poisson–MALA、Tuna–SGLD），实证显著超过 PoissonMH/TunaMH/SGLD 等基线。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "辅助变量"
   - "小批量 MCMC"
   - "梯度型 proposal"

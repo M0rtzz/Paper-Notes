@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Exploring Explanations Improves the Robustness of In-Context Learning
 description: >-
-  [ACL 2025][LLM/NLP][上下文学习] 提出 X²-ICL 框架，通过在上下文学习的示例中为所有可能的标签（而非仅观测标签）生成解释推理路径，系统性地探索隐变量推理空间，从而显著提升 ICL 在分布外（OOD）数据上的鲁棒性——在 5 个 LLM 上的 8 个 OOD 数据集中…
+  [ACL 2025][LLM 其他][上下文学习] 提出 X²-ICL 框架，通过在上下文学习的示例中为所有可能的标签（而非仅观测标签）生成解释推理路径，系统性地探索隐变量推理空间，从而显著提升 ICL 在分布外（OOD）数据上的鲁棒性——在 5 个 LLM 上的 8 个 OOD 数据集中，X²-ICL 在 6-8 个上超越 ICL 和 X-ICL。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "上下文学习"
   - "OOD鲁棒性"
   - "解释探索"

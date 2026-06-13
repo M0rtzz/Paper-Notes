@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Old Habits Die Hard: How Conversational History Geometrically Traps LLMs
 description: >-
-  [ICML 2026][LLM安全][对话历史] History-Echoes 框架用"马尔可夫链状态一致性"和"潜空间几何角度"两套视角分析 LLM 对话历史的 carryover 效应，发现两者 Spearman 相关 0.78——一旦某种行为（幻觉/谄媚/拒绝）出现，模型就被困在潜空间该状态对应区域里…
+  [ICML 2026][LLM安全][对话历史] History-Echoes 框架用"马尔可夫链状态一致性"和"潜空间几何角度"两套视角分析 LLM 对话历史的 carryover 效应，发现两者 Spearman 相关 0.78——一旦某种行为（幻觉/谄媚/拒绝）出现，模型就被困在潜空间该状态对应区域里，难以跳出；其中"拒绝"陷阱最强，"幻觉"最弱，且话题不连贯时陷阱会消解。
 tags:
   - "ICML 2026"
   - "LLM安全"

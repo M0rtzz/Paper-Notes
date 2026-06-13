@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Real to Synthetic: Synthesizing Millions of Diversified and Complicated User Instructions with Attributed Grounding
 description: >-
-  [ACL 2025 (Outstanding Paper Award 🏆)][指令合成] 本文提出"归因式接地"（Attributed Grounding）框架，通过自顶向下的用户归因和自底向上的基于网络文档的指令合成，构建了一个包含 100 万条多样且复杂指令的 SynthQuestions 数据集…
+  [ACL 2025 (Outstanding Paper Award 🏆)][指令合成] 本文提出"归因式接地"（Attributed Grounding）框架，通过自顶向下的用户归因和自底向上的基于网络文档的指令合成，构建了一个包含 100 万条多样且复杂指令的 SynthQuestions 数据集，训练模型在多个通用基准上达到领先表现。
 tags:
   - "ACL 2025 (Outstanding Paper Award 🏆)"
   - "指令合成"

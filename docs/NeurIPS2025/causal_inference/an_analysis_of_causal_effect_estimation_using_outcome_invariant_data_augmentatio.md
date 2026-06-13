@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation
 description: >-
-  [NeurIPS 2025][因果推理][因果效应估计] 首次系统分析"结果不变数据增强"（outcome invariant DA）在因果效应估计中的作用，证明当 DA 操作保持结果变量的不变性时等价于对处理变量的软干预，可减少混杂偏差；进一步提出 IV-like（IVL）回归框架…
+  [NeurIPS 2025][因果推理][因果效应估计] 首次系统分析"结果不变数据增强"（outcome invariant DA）在因果效应估计中的作用，证明当 DA 操作保持结果变量的不变性时等价于对处理变量的软干预，可减少混杂偏差；进一步提出 IV-like（IVL）回归框架，将 DA 参数用作"类工具变量"，通过对抗性 DA 组合进一步降低偏差。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

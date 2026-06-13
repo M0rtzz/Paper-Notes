@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation
 description: >-
-  [ICCV 2025][图像生成][视频帧插值] 提出 TLB-VFI，一种高效的视频扩散模型用于帧插值：通过时域感知自编码器（隐空间时域块+像素空间3D小波门控）提取丰富的时间信息，结合重新设计的布朗桥扩散过程，在参数量仅 46.7M（比图像扩散方法少 3×、比视频扩散方法少 20×）的情况下…
+  [ICCV 2025][图像生成][视频帧插值] 提出 TLB-VFI，一种高效的视频扩散模型用于帧插值：通过时域感知自编码器（隐空间时域块+像素空间3D小波门控）提取丰富的时间信息，结合重新设计的布朗桥扩散过程，在参数量仅 46.7M（比图像扩散方法少 3×、比视频扩散方法少 20×）的情况下，在 SNU-FILM extreme 和 Xiph-4K 上 FID 提升约 20%。
 tags:
   - "ICCV 2025"
   - "图像生成"

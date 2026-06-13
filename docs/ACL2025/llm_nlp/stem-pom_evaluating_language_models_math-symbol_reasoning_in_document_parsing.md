@@ -2,10 +2,10 @@
 title: >-
   [论文解读] STEM-PoM: Evaluating Language Models Math-Symbol Reasoning in Document Parsing
 description: >-
-  [ACL2025][LLM/NLP][数学符号分类] 提出 STEM-PoM 基准数据集（2K+ 数学符号实例），将 Part-of-Math Tagging 与文档解析结合，系统评估 LLM 对数学符号上下文多义性的分类能力，并证明符号分类能力的提升可迁移增强下游数学推理表现。
+  [ACL2025][LLM 其他][数学符号分类] 提出 STEM-PoM 基准数据集（2K+ 数学符号实例），将 Part-of-Math Tagging 与文档解析结合，系统评估 LLM 对数学符号上下文多义性的分类能力，并证明符号分类能力的提升可迁移增强下游数学推理表现。 1. 数学符号的上下文多义性：同一数学符号（如…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "数学符号分类"
   - "Part-of-Math Tagging"
   - "benchmark"

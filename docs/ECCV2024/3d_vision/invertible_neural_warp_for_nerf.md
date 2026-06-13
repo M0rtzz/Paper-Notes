@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Invertible Neural Warp for NeRF
 description: >-
-  [ECCV 2024][3D视觉][NeRF] 提出用可逆神经网络（INN）过参数化相机位姿的刚性变换函数，在 NeRF 联合优化中显著提升位姿估计精度和重建质量，证明可逆性是 MLP 建模刚性 warp 的关键约束。
+  [ECCV 2024][3D视觉][NeRF] 提出用可逆神经网络（INN）过参数化相机位姿的刚性变换函数，在 NeRF 联合优化中显著提升位姿估计精度和重建质量，证明可逆性是 MLP 建模刚性 warp 的关键约束。 领域现状： NeRF 通过体渲染实现高质量新视图合成，但需要精确已知的相机位姿。BARF、NeRFmm、G…
 tags:
   - "ECCV 2024"
   - "3D视觉"

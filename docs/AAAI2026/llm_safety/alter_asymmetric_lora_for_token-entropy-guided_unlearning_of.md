@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ALTER: Asymmetric LoRA for Token-Entropy-Guided Unlearning of LLMs
 description: >-
-  [AAAI 2026][LLM安全][机器遗忘] 提出ALTER框架，利用非对称LoRA架构结合Token级别的Tsallis熵引导，实现LLM中目标知识的精准遗忘，同时通过参数隔离机制保留模型基础能力，在TOFU、WMDP和MUSE三个基准上达到SOTA。
+  [AAAI 2026][LLM安全][机器遗忘] 提出ALTER框架，利用非对称LoRA架构结合Token级别的Tsallis熵引导，实现LLM中目标知识的精准遗忘，同时通过参数隔离机制保留模型基础能力，在TOFU、WMDP和MUSE三个基准上达到SOTA。 随着LLM规模扩大和训练数据多样化，模型不可避免地学到敏感信息、隐…
 tags:
   - "AAAI 2026"
   - "LLM安全"

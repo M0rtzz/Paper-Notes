@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Laplacian Multi-scale Flow Matching for Generative Modeling
 description: >-
-  [ICLR 2026][图像生成][多尺度生成] 提出 LapFlow，将图像分解为拉普拉斯金字塔残差，通过混合 Transformer（MoT）架构和因果注意力并行建模不同尺度，在减少计算量的同时提升生成质量。
+  [ICLR 2026][图像生成][多尺度生成] 提出 LapFlow，将图像分解为拉普拉斯金字塔残差，通过混合 Transformer（MoT）架构和因果注意力并行建模不同尺度，在减少计算量的同时提升生成质量。 - 扩散模型和 Flow Matching 在图像合成中取得SOTA，但随着分辨率增加，可扩展性成为关键挑战 -…
 tags:
   - "ICLR 2026"
   - "图像生成"

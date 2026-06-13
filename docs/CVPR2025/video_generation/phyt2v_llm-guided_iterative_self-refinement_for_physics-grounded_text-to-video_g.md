@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhyT2V: LLM-Guided Iterative Self-Refinement for Physics-Grounded Text-to-Video Generation
 description: >-
-  [CVPR 2025][视频生成][文本到视频生成] PhyT2V 利用 LLM 的思维链（CoT）和 step-back 推理能力，通过迭代式地分析生成视频与物理规则的不一致、并据此优化文本 prompt，使现有 T2V 模型在无需重新训练的情况下将物理规则遵循度提升最高 2.3 倍。
+  [CVPR 2025][视频生成][文本到视频生成] PhyT2V 利用 LLM 的思维链（CoT）和 step-back 推理能力，通过迭代式地分析生成视频与物理规则的不一致、并据此优化文本 prompt，使现有 T2V 模型在无需重新训练的情况下将物理规则遵循度提升最高 2.3 倍。 领域现状：近年来基于 Transfo…
 tags:
   - "CVPR 2025"
   - "视频生成"

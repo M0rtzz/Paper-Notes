@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoSci: A Bio-Inspired Multi-Agent Framework for the Evolution of Scientific Discovery
 description: >-
-  [ACL2026][多智能体][scientific discovery] 本文提出 EvoSci，把科研 idea 生成建模为多智能体协作和生物启发式演化循环，通过问题空间构建、团队式研究执行、评审反馈和实体级交叉/变异/选择，在 10 个科研主题上生成更有新颖性和整体质量的研究想法。
+  [ACL2026][多智能体][scientific discovery] 本文提出 EvoSci，把科研 idea 生成建模为多智能体协作和生物启发式演化循环，通过问题空间构建、团队式研究执行、评审反馈和实体级交叉/变异/选择，在 10 个科研主题上生成更有新颖性和整体质量的研究想法。 领域现状：LLM 已开始参与科学发现…
 tags:
   - "ACL2026"
   - "多智能体"

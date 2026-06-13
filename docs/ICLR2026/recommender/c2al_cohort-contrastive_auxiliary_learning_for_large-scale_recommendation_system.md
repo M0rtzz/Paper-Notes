@@ -2,7 +2,7 @@
 title: >-
   [论文解读] C2AL: Cohort-Contrastive Auxiliary Learning for Large-scale Recommendation Systems
 description: >-
-  [ICLR2026][推荐系统][recommendation system] 提出 C2AL（Cohort-Contrastive Auxiliary Learning），通过数据驱动地发现分布差异最大的用户群体对，构建对比性辅助二分类任务正则化共享编码器，使 FM 注意力权重从稀疏变为稠密…
+  [ICLR2026][推荐系统][recommendation system] 提出 C2AL（Cohort-Contrastive Auxiliary Learning），通过数据驱动地发现分布差异最大的用户群体对，构建对比性辅助二分类任务正则化共享编码器，使 FM 注意力权重从稀疏变为稠密，缓解大规模推荐系统中少数群体的表征偏差，在 Meta 6 个生产模型（数十亿数据点）上验证有效。
 tags:
   - "ICLR2026"
   - "推荐系统"

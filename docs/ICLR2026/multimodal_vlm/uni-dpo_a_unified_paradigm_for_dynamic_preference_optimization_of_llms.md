@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs
 description: >-
-  [ICLR 2026][多模态VLM][DPO改进] 提出Uni-DPO，通过质量感知加权（高分差偏好对优先）+性能感知加权（focal loss聚焦欠拟合样本）+校准NLL损失三个组件统一动态调整DPO偏好对权重，在文本理解和数学推理基准上一致超越DPO/SimPO…
+  [ICLR 2026][多模态VLM][DPO改进] 提出Uni-DPO，通过质量感知加权（高分差偏好对优先）+性能感知加权（focal loss聚焦欠拟合样本）+校准NLL损失三个组件统一动态调整DPO偏好对权重，在文本理解和数学推理基准上一致超越DPO/SimPO，Gemma-2-9B在Arena-Hard达67.1%超过Claude 3 Opus(60.4%)。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective
 description: >-
-  [ICML 2026 (Position Paper)][隐式知识] 本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识"…
+  [ICML 2026 (Position Paper)][信息检索/RAG][隐式知识] 本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识",作者提出 Knowledge Objects (KOs) 作为基础设施——把 AI 隐式推理外化成人类可检查、可验证、可背书的结构化产物,从而让一次人类验证的成本在群体中长期复利。
 tags:
   - "ICML 2026 (Position Paper)"
+  - "信息检索/RAG"
   - "隐式知识"
   - "Knowledge Objects"
   - "人在环路"

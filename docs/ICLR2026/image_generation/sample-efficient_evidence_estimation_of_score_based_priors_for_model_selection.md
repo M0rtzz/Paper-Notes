@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sample-Efficient Evidence Estimation of Score-Based Priors for Model Selection
 description: >-
-  [ICLR 2026][图像生成][模型证据] 提出 DiME，一种沿扩散后验时间边缘积分的模型证据估计器，无需先验评分或密度评估，仅用少量后验样本（如 20 个）即可准确估计扩散模型先验下的模型证据，用于先验选择和模型验证。
+  [ICLR 2026][图像生成][模型证据] 提出 DiME，一种沿扩散后验时间边缘积分的模型证据估计器，无需先验评分或密度评估，仅用少量后验样本（如 20 个）即可准确估计扩散模型先验下的模型证据，用于先验选择和模型验证。 在贝叶斯逆问题中，先验分布 $p(\boldsymbol{x})$ 对后验 $p(\boldsym…
 tags:
   - "ICLR 2026"
   - "图像生成"

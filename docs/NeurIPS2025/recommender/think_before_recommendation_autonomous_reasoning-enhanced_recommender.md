@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think before Recommendation: Autonomous Reasoning-enhanced Recommender
 description: >-
-  [NeurIPS 2025][推荐系统][LLM] 提出 RecZero（纯 RL 范式）和 RecOne（SFT+RL 混合范式），抛弃传统的 teacher-student 蒸馏方法，用 GRPO 强化学习直接训练单个 LLM 自主发展推理能力进行评分预测…
+  [NeurIPS 2025][推荐系统][LLM] 提出 RecZero（纯 RL 范式）和 RecOne（SFT+RL 混合范式），抛弃传统的 teacher-student 蒸馏方法，用 GRPO 强化学习直接训练单个 LLM 自主发展推理能力进行评分预测，通过结构化 "Think-before-Recommendation" 模板引导分步推理（分析用户→分析物品→匹配→评分），在 4 个数据集上显著超越现有基线。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

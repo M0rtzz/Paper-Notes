@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRPO: Paragraph-level Policy Optimization for Vision-Language Deepfake Detection
 description: >-
-  [ICML 2026][LLM安全][deepfake detection] 作者用一个 115k 带推理标注的 DF-R5 数据集 + 把 CLIP ViT 换成 ConvNeXT 的 DX-LLaVA 架构，并提出 PRPO —— 段落级别 GRPO 变体…
+  [ICML 2026][LLM安全][deepfake detection] 作者用一个 115k 带推理标注的 DF-R5 数据集 + 把 CLIP ViT 换成 ConvNeXT 的 DX-LLaVA 架构，并提出 PRPO —— 段落级别 GRPO 变体，每段以 CLIP-文本-图像相似度（VCR）+ 推理-结论多数票一致性（PCR）为 reward，把跨域 deepfake 检测 F1 从 SOTA 75.26% 推到 89.91%，推理质量从 4.2/5 提到 4.55/5。
 tags:
   - "ICML 2026"
   - "LLM安全"

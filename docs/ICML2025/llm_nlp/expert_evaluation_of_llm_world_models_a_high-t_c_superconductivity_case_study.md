@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Expert Evaluation of LLM World Models: A High-Tc Superconductivity Case Study
 description: >-
-  [ICML 2025][LLM/NLP][LLM世界模型评估] 以高温超导（HTS）领域为案例，构建了专家级数据集（1,726篇论文 + 67道专家问题），系统评估6种LLM系统的科学文献理解能力，发现基于精选文献的RAG系统在事实完整性和证据支持方面显著优于通用闭源模型。
+  [ICML 2025][LLM 其他][LLM世界模型评估] 以高温超导（HTS）领域为案例，构建了专家级数据集（1,726篇论文 + 67道专家问题），系统评估6种LLM系统的科学文献理解能力，发现基于精选文献的RAG系统在事实完整性和证据支持方面显著优于通用闭源模型。 高温超导（High-Tc Superconducti…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM世界模型评估"
   - "检索增强生成(RAG)"
   - "高温超导"

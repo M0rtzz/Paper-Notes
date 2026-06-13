@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FOCUS: Forcing In-Context Object Localization through Visual Support Constraints and Policy Optimization
 description: >-
-  [ICML 2026][目标检测][上下文目标定位] FOCUS 通过"完全去除类别名 + 注意力 mask 优化 + GRPO IoU 奖励"两阶段训练，让 VLM 真正按视觉支持示例（而非语义先验）做 in-context 目标定位；7B 参数模型超 72B 模型…
+  [ICML 2026][目标检测][上下文目标定位] FOCUS 通过"完全去除类别名 + 注意力 mask 优化 + GRPO IoU 奖励"两阶段训练，让 VLM 真正按视觉支持示例（而非语义先验）做 in-context 目标定位；7B 参数模型超 72B 模型，证明任务对齐的 inductive bias 比单纯 scaling 更重要。
 tags:
   - "ICML 2026"
   - "目标检测"

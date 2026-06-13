@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LlamaDuo: LLMOps Pipeline for Seamless Migration from Service LLMs to Small-Scale Local LLMs
 description: >-
-  [ACL2025][LLM/NLP][LLMOps] 提出 LlamaDuo 自动化 LLMOps 流水线，通过服务 LLM 生成合成数据迭代微调小模型，使 2B-8B 本地模型在特定下游任务上逼近甚至匹敌 GPT-4o 等大模型性能，且长期部署成本显著降低。
+  [ACL2025][LLM 其他][LLMOps] 提出 LlamaDuo 自动化 LLMOps 流水线，通过服务 LLM 生成合成数据迭代微调小模型，使 2B-8B 本地模型在特定下游任务上逼近甚至匹敌 GPT-4o 等大模型性能，且长期部署成本显著降低。 领域现状：云端大模型（GPT-4、Gemini、Claude）占据…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLMOps"
   - "知识蒸馏"
   - "合成数据"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding
 description: >-
-  [ECCV 2024][Transformer] 提出SpatialFormer架构，通过引入自适应空间token显式建模场景的全局空间关系，采用decoder-only架构与双边交叉注意力块实现上下文与空间信息的高效交互，在分类、分割和检测任务上展示了优异的泛化性和可迁移性。
+  [ECCV 2024][Transformer] 提出SpatialFormer架构，通过引入自适应空间token显式建模场景的全局空间关系，采用decoder-only架构与双边交叉注意力块实现上下文与空间信息的高效交互，在分类、分割和检测任务上展示了优异的泛化性和可迁移性。 领域现状：Vision Transformer…
 tags:
   - "ECCV 2024"
   - "Transformer"

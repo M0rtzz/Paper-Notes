@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking the Capabilities of Large Vision-Language Models for Generalizable and Explainable Deepfake Detection
 description: >-
-  [ICML 2025][LLM安全][Deepfake检测] 提出基于 LVLM 的 deepfake 检测框架，通过知识引导伪造检测器（KFD）计算图像特征与真/假描述文本的相关性实现分类和定位，再通过伪造提示学习器（FPL）将细粒度伪造特征注入 LLM 生成可解释的检测结果…
+  [ICML 2025][LLM安全][Deepfake检测] 提出基于 LVLM 的 deepfake 检测框架，通过知识引导伪造检测器（KFD）计算图像特征与真/假描述文本的相关性实现分类和定位，再通过伪造提示学习器（FPL）将细粒度伪造特征注入 LLM 生成可解释的检测结果，在 FF++/CDF2/DFDC/DF40 等多个基准上超越 SOTA 泛化性能。
 tags:
   - "ICML 2025"
   - "LLM安全"

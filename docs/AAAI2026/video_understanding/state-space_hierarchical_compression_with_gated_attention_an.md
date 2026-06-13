@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models
 description: >-
-  [AAAI 2026][视频理解][长视频压缩] MambaMia 提出了基于双向 Mamba 的两阶段层次化视频 Token 压缩框架：门控 Patch 聚合（GPA）做空间-时间局部压缩 + 时间轴聚合器（TAA）利用 Mamba 的自适应步长 $\Delta_t$ 做数据驱动的关键帧采样…
+  [AAAI 2026 Oral][视频理解][长视频压缩] MambaMia 提出了基于双向 Mamba 的两阶段层次化视频 Token 压缩框架：门控 Patch 聚合（GPA）做空间-时间局部压缩 + 时间轴聚合器（TAA）利用 Mamba 的自适应步长 $\Delta_t$ 做数据驱动的关键帧采样，将小时级视频压缩到仅 4.7K Token，在 LVBench 上达到 44.6 分超越 Qwen2-VL 和 mPLUG-Owl3。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "视频理解"
   - "长视频压缩"
   - "状态空间模型"

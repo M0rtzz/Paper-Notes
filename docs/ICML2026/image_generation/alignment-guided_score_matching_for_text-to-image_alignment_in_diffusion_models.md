@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alignment-Guided Score Matching for Text-to-Image Alignment in Diffusion Models
 description: >-
-  [ICML 2026][图像生成][文本图像对齐] 这篇论文提出 Alignment-Guided Score Matching，用 reward-free 的 Plackett-Luce 对齐奖励把正负文本-图像匹配信号直接写入扩散 score matching 目标…
+  [ICML 2026][图像生成][文本图像对齐] 这篇论文提出 Alignment-Guided Score Matching，用 reward-free 的 Plackett-Luce 对齐奖励把正负文本-图像匹配信号直接写入扩散 score matching 目标，通过训练轻量 soft tokens 改善 T2I 语义对齐，同时缓解 SoftREPA 常见的重复生成和计数错误。
 tags:
   - "ICML 2026"
   - "图像生成"

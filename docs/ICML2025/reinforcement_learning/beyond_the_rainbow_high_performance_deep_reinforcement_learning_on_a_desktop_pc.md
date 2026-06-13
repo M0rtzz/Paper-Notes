@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC
 description: >-
-  [ICML 2025][强化学习][深度强化学习] 提出 BTR（Beyond The Rainbow）——整合 6 项 RL 改进到 Rainbow DQN 中，在单台桌面 PC 上 12 小时内训练 Atari-60 达到 IQM 7.4（Rainbow 为 1.9）…
+  [ICML 2025][强化学习][深度强化学习] 提出 BTR（Beyond The Rainbow）——整合 6 项 RL 改进到 Rainbow DQN 中，在单台桌面 PC 上 12 小时内训练 Atari-60 达到 IQM 7.4（Rainbow 为 1.9），并首次成功训练智能体玩马里奥银河、马里奥赛车和真人快打等 3D 游戏。
 tags:
   - "ICML 2025"
   - "强化学习"

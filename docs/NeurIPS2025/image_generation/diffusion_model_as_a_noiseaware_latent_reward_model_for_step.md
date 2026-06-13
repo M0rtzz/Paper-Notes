@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Model as a Noise-Aware Latent Reward Model for Step-Level Preference Optimization
 description: >-
-  [NeurIPS 2025][图像生成][扩散模型] 提出 Latent Reward Model (LRM) 和 Latent Preference Optimization (LPO)，将预训练扩散模型本身复用为噪声感知的潜空间奖励模型，在噪声潜在空间直接进行步级偏好优化…
+  [NeurIPS 2025][图像生成][扩散模型] 提出 Latent Reward Model (LRM) 和 Latent Preference Optimization (LPO)，将预训练扩散模型本身复用为噪声感知的潜空间奖励模型，在噪声潜在空间直接进行步级偏好优化，相比 Diffusion-DPO 实现 10-28× 训练加速，相比 SPO 实现 2.5-3.5× 加速。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

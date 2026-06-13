@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ECG-R1: Protocol-Guided and Modality-Agnostic MLLM for Reliable ECG Interpretation
 description: >-
-  [ICML 2026][多模态VLM][ECG 解读] ECG-R1 是首个面向心电图解读的"推理型"医学多模态大模型，通过**协议引导的指令数据合成 + 信号/图像解耦编码 + 交错模态丢弃训练 + 基于诊断证据的过程奖励 RL** 四件套…
+  [ICML 2026][多模态VLM][ECG 解读] ECG-R1 是首个面向心电图解读的"推理型"医学多模态大模型，通过**协议引导的指令数据合成 + 信号/图像解耦编码 + 交错模态丢弃训练 + 基于诊断证据的过程奖励 RL** 四件套，把心电诊断准确率从此前 SOTA GEM 的 74.7 提升到 80.3，并在任一模态缺失时保持跨模态一致性。
 tags:
   - "ICML 2026"
   - "多模态VLM"

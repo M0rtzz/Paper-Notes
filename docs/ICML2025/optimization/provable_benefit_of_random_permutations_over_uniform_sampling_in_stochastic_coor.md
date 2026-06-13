@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provable Benefit of Random Permutations over Uniform Sampling in Stochastic Coordinate Descent
 description: >-
-  [ICML 2025][优化/理论][coordinate descent] 本文首次理论证明了在正定二次函数的坐标下降中，随机排列坐标下降（RPCD）的收缩率严格优于均匀随机坐标下降（RCD），从而解决了一个长期悬而未决的理论问题。
+  [ICML 2025][优化/理论][coordinate descent] 本文首次理论证明了在正定二次函数的坐标下降中，随机排列坐标下降（RPCD）的收缩率严格优于均匀随机坐标下降（RCD），从而解决了一个长期悬而未决的理论问题。 领域现状： 坐标下降（CD）是大规模优化中的基础算法，广泛应用于 LASSO、SVM、矩阵…
 tags:
   - "ICML 2025"
   - "优化/理论"

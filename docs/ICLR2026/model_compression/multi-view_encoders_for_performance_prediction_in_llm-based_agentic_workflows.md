@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows
 description: >-
-  [ICLR 2026][模型压缩][性能预测] 提出 Agentic Predictor，一种多视图工作流编码框架，通过联合建模图结构、代码语义和提示信息来预测 LLM Agent 工作流的性能，显著减少昂贵的试错评估。
+  [ICLR 2026][模型压缩][性能预测] 提出 Agentic Predictor，一种多视图工作流编码框架，通过联合建模图结构、代码语义和提示信息来预测 LLM Agent 工作流的性能，显著减少昂贵的试错评估。 LLM Agent 系统近年发展迅速，但优化其工作流配置面临巨大搜索空间挑战。现有的自动化设计方法（如…
 tags:
   - "ICLR 2026"
   - "模型压缩"

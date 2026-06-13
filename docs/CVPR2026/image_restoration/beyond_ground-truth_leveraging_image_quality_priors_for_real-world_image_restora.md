@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration
 description: >-
-  [CVPR 2026][图像恢复][图像修复] 提出IQPIR框架，引入预训练NR-IQA模型的图像质量先验(IQP)作为条件信号，通过质量条件化Transformer、双Codebook结构和离散表示空间质量优化三个机制，引导图像修复过程趋向最高感知质量，在盲人脸修复等任务上全面超越SOTA。
+  [CVPR 2026][图像恢复][图像修复] 提出IQPIR框架，引入预训练NR-IQA模型的图像质量先验(IQP)作为条件信号，通过质量条件化Transformer、双Codebook结构和离散表示空间质量优化三个机制，引导图像修复过程趋向最高感知质量，在盲人脸修复等任务上全面超越SOTA。 领域现状：真实世界图像修复旨…
 tags:
   - "CVPR 2026"
   - "图像恢复"

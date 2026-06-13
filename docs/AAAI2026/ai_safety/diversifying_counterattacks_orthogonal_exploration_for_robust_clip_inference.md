@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Diversifying Counterattacks: Orthogonal Exploration for Robust CLIP Inference
 description: >-
-  [AAAI 2026][AI安全][对抗鲁棒性] 提出方向正交反攻击（DOC）方法，通过在反攻击优化中引入正交梯度分量和动量更新扩展搜索空间，结合基于余弦相似度的方向敏感度评分自适应调控反攻击强度，在 16 个数据集上显著提升 CLIP 的测试时对抗鲁棒性。
+  [AAAI 2026 Oral][AI安全][对抗鲁棒性] 提出方向正交反攻击（DOC）方法，通过在反攻击优化中引入正交梯度分量和动量更新扩展搜索空间，结合基于余弦相似度的方向敏感度评分自适应调控反攻击强度，在 16 个数据集上显著提升 CLIP 的测试时对抗鲁棒性。 CLIP 等视觉语言预训练模型具有强大的零样本泛化能力…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "AI安全"
   - "对抗鲁棒性"
   - "CLIP防御"

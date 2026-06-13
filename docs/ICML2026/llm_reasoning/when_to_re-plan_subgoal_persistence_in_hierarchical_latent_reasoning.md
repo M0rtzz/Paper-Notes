@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Re-Plan: Subgoal Persistence in Hierarchical Latent Reasoning
 description: >-
-  [ICML 2026][LLM推理][层级推理] 这篇论文在 Hierarchical Reasoning Model 中加入 manager-worker 式持久子目标，发现潜变量推理里的关键不是单纯注入子目标，而是子目标应该持续 $P=3$ 到 $6$ 个低层更新步，过快重规划会破坏组合结构…
+  [ICML 2026][LLM推理][层级推理] 这篇论文在 Hierarchical Reasoning Model 中加入 manager-worker 式持久子目标，发现潜变量推理里的关键不是单纯注入子目标，而是子目标应该持续 $P=3$ 到 $6$ 个低层更新步，过快重规划会破坏组合结构，过强 alignment 又会干扰任务学习。
 tags:
   - "ICML 2026"
   - "LLM推理"

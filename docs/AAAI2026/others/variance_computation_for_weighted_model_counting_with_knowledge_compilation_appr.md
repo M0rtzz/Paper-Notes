@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Variance Computation for Weighted Model Counting with Knowledge Compilation Approach
 description: >-
-  [AAAI 2026][加权模型计数] 本文将加权模型计数 (WMC) 的权重视为具有方差的随机变量，提出在 structured d-DNNF 表示上多项式时间计算 WMC 方差的算法，同时证明了在 structured DNNF、d-DNNF 和 FBDD 上该问题不可解（除非 P=NP）…
+  [AAAI 2026][加权模型计数] 本文将加权模型计数 (WMC) 的权重视为具有方差的随机变量，提出在 structured d-DNNF 表示上多项式时间计算 WMC 方差的算法，同时证明了在 structured DNNF、d-DNNF 和 FBDD 上该问题不可解（除非 P=NP），并将其应用于贝叶斯网络推理中参数不确定性的量化。
 tags:
   - "AAAI 2026"
   - "加权模型计数"

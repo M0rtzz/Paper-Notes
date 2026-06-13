@@ -2,9 +2,9 @@
 title: >-
   [论文解读] REX: A Family of Reversible Exponential Stochastic Runge-Kutta Solvers
 description: >-
-  [ICML 2026][物理/科学计算][可逆求解器] 本文提出 Rex —— 一族基于 Lawson 指数积分器构造的、可代数反演的（随机）Runge-Kutta 求解器，把任意显式 (S)RK 格式自动转成可精确反演的 ODE/SDE 求解器，既保证任意高阶收敛与非零稳定域…
+  [ICML 2026 Oral][物理/科学计算][可逆求解器] 本文提出 Rex —— 一族基于 Lawson 指数积分器构造的、可代数反演的（随机）Runge-Kutta 求解器，把任意显式 (S)RK 格式自动转成可精确反演的 ODE/SDE 求解器，既保证任意高阶收敛与非零稳定域，又能在扩散模型的图像重建/编辑、流模型的 Boltzmann 采样上做到接近机器精度的反演。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "物理/科学计算"
   - "可逆求解器"
   - "指数积分器"

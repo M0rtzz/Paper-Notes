@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ClimateCause: Complex and Implicit Causal Structures in Climate Reports
 description: >-
-  [ACL 2026][因果推理][因果发现] ClimateCause 构建了首个针对气候报告中复杂和隐式因果结构的专家标注数据集（874 条因果关系），支持嵌套因果、多事件拆解、相关性方向和时空语境标注，并提出基于因果图语义复杂度的可读性度量，LLM 基准测试显示因果链推理仍是重要挑战。
+  [ACL 2026 Findings][因果推理][因果发现] ClimateCause 构建了首个针对气候报告中复杂和隐式因果结构的专家标注数据集（874 条因果关系），支持嵌套因果、多事件拆解、相关性方向和时空语境标注，并提出基于因果图语义复杂度的可读性度量，LLM 基准测试显示因果链推理仍是重要挑战。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "因果推理"
   - "因果发现"
   - "气候变化"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task Vector Quantization for Memory-Efficient Model Merging
 description: >-
-  [ICCV 2025][模型压缩][模型合并] 本文提出对任务向量（fine-tuned 与 pre-trained 权重之差）而非 fine-tuned 权重本身进行量化，利用任务向量更窄的数值范围实现低至 3-bit 的量化而不损失精度；进一步提出残差任务向量量化（RTVQ）…
+  [ICCV 2025][模型压缩][模型合并] 本文提出对任务向量（fine-tuned 与 pre-trained 权重之差）而非 fine-tuned 权重本身进行量化，利用任务向量更窄的数值范围实现低至 3-bit 的量化而不损失精度；进一步提出残差任务向量量化（RTVQ），将任务向量分解为共享高精度基向量和低精度偏移量，在仅用 8% 原始存储的情况下维持甚至提升模型合并性能。
 tags:
   - "ICCV 2025"
   - "模型压缩"

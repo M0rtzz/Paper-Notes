@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Straighten Viscous Rectified Flow via Noise Optimization
 description: >-
-  [ICCV 2025][图像生成][Rectified Flow] 本文提出 VRFNO（Viscous Rectified Flow via Noise Optimization），通过引入历史速度项增强轨迹区分度、并用编码器联合训练来优化噪声构建最优耦合，有效拉直 Rectified Flow 的推理轨迹…
+  [ICCV 2025][图像生成][Rectified Flow] 本文提出 VRFNO（Viscous Rectified Flow via Noise Optimization），通过引入历史速度项增强轨迹区分度、并用编码器联合训练来优化噪声构建最优耦合，有效拉直 Rectified Flow 的推理轨迹，在 CIFAR-10 和 AFHQ 上取得单步/少步生成的 SOTA 性能（单步 FID 4.50，无需蒸馏）。
 tags:
   - "ICCV 2025"
   - "图像生成"

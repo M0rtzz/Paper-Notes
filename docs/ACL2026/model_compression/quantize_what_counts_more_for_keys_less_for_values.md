@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2502.15075](https://arxiv.org/abs/2502.15075)  
 **代码**: [https://github.com/mohsenhariri/spectral-kv](https://github.com/mohsenhariri/spectral-kv)  
-**领域**: model_compression  
+**领域**: 模型压缩  
 **关键词**: KV缓存量化, 混合精度, 谱范数, Key-Value不对称, LLM推理优化
 
 ## 一句话总结

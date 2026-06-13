@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Retrieval Systems with Inference-Time Logical Reasoning
 description: >-
-  [ACL 2025][LLM推理][逻辑推理] 提出推理时逻辑推理框架（ITLR），利用 LLM 将自然语言查询转换为逻辑表达式（AND/OR/NOT），然后基于模糊逻辑对各子项的 cosine similarity 分数进行组合…
+  [ACL 2025][LLM推理][逻辑推理] 提出推理时逻辑推理框架（ITLR），利用 LLM 将自然语言查询转换为逻辑表达式（AND/OR/NOT），然后基于模糊逻辑对各子项的 cosine similarity 分数进行组合，在合成数据和 NFCorpus/SciFact/ArguAna 三个真实数据集上一致性超越传统 dense retrieval 和 BRIGHT baseline，尤其在含否定的复杂查询上提升显著。
 tags:
   - "ACL 2025"
   - "LLM推理"

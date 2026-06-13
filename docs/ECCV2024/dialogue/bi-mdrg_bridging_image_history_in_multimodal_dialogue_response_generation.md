@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation
 description: >-
-  [ECCV2024][对话系统][多模态对话] 提出 BI-MDRG 框架，通过桥接图像历史信息来增强多模态对话中文本回复的图像 grounding 能力和连续图像回复中物体的一致性。
+  [ECCV2024][对话系统][多模态对话] 提出 BI-MDRG 框架，通过桥接图像历史信息来增强多模态对话中文本回复的图像 grounding 能力和连续图像回复中物体的一致性。 多模态对话响应生成 (MDRG) 要求模型根据对话上下文生成文本、图像或混合形式的回复。由于缺少大规模多模态对话数据集…
 tags:
   - "ECCV2024"
   - "对话系统"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CamFreeDiff: Camera-free Image to Panorama Generation with Diffusion Model
 description: >-
-  [CVPR 2025][图像生成][全景图生成] 提出 CamFreeDiff，通过在多视图扩散框架中集成轻量级 3-DoF 单应性估计器，实现从无相机参数的单张图像生成 360° 全景图，FID 从 MVDiffusion 的 42.4 降至 27.0，且无需微调即可泛化到域外数据。
+  [CVPR 2025][图像生成][全景图生成] 提出 CamFreeDiff，通过在多视图扩散框架中集成轻量级 3-DoF 单应性估计器，实现从无相机参数的单张图像生成 360° 全景图，FID 从 MVDiffusion 的 42.4 降至 27.0，且无需微调即可泛化到域外数据。 领域现状：360° 全景图生成在 AR…
 tags:
   - "CVPR 2025"
   - "图像生成"

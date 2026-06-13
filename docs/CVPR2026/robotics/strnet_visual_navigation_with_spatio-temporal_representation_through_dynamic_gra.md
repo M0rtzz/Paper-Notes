@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STRNet: Visual Navigation with Spatio-Temporal Representation through Dynamic Graph Aggregation
 description: >-
-  [CVPR 2026][机器人][视觉导航] STRNet 提出统一的时空表征框架用于视觉导航，通过图推理模块建模帧内空间拓扑结构，结合混合时间偏移和多分辨率差分卷积建模时序动态，显著提升了目标条件导航的成功率（比 NoMaD 提升 70%）。
+  [CVPR 2026][机器人][视觉导航] STRNet 提出统一的时空表征框架用于视觉导航，通过图推理模块建模帧内空间拓扑结构，结合混合时间偏移和多分辨率差分卷积建模时序动态，显著提升了目标条件导航的成功率（比 NoMaD 提升 70%）。 视觉导航中，现有方法大量投入在改进决策模块（策略头、行为克隆、指令跟随）…
 tags:
   - "CVPR 2026"
   - "机器人"

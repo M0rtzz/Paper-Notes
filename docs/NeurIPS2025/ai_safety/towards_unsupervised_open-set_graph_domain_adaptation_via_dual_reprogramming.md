@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Unsupervised Open-Set Graph Domain Adaptation via Dual Reprogramming
 description: >-
-  [NeurIPS 2025][AI安全][图域适应] 提出 GraphRTA 框架，通过模型重编程（基于梯度的权重剪枝）和图重编程（目标图结构与特征优化）双重机制，解决无监督开放集图域适应中已知类分类与未知类识别难题，无需人工设定阈值。
+  [NeurIPS 2025][AI安全][图域适应] 提出 GraphRTA 框架，通过模型重编程（基于梯度的权重剪枝）和图重编程（目标图结构与特征优化）双重机制，解决无监督开放集图域适应中已知类分类与未知类识别难题，无需人工设定阈值。 图神经网络在跨域场景中面临分布偏移导致的性能下降问题。无监督图域适应旨在将标签丰富的源图…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

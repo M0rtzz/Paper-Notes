@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Real-Data-Driven 2000 FPS Color Video from Mosaicked Chromatic Spikes
 description: >-
-  [ECCV 2024][脉冲相机] 针对马赛克彩色脉冲相机（mosaicked chromatic spikes），提出一种完全基于真实数据驱动的 2000FPS 彩色高动态范围视频重建方法，通过自监督去噪模块和渐进式配准模块解决短时帧噪声和运动模糊问题，无需合成数据即可重建高质量高速彩色视频。
+  [ECCV 2024][脉冲相机] 针对马赛克彩色脉冲相机（mosaicked chromatic spikes），提出一种完全基于真实数据驱动的 2000FPS 彩色高动态范围视频重建方法，通过自监督去噪模块和渐进式配准模块解决短时帧噪声和运动模糊问题，无需合成数据即可重建高质量高速彩色视频。 领域现状：脉冲相机（Spik…
 tags:
   - "ECCV 2024"
   - "脉冲相机"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata
 description: >-
-  [NeurIPS 2025][遥感][UAV定位] OrthoLoC构建了首个面向正射地理数据（DOP+DSM）的大规模UAV 6-DoF定位基准数据集，包含16425张真实UAV图像覆盖德国和美国47个区域，并引入AdHoP（自适应单应性预处理）匹配改进技术…
+  [NeurIPS 2025][遥感][UAV定位] OrthoLoC构建了首个面向正射地理数据（DOP+DSM）的大规模UAV 6-DoF定位基准数据集，包含16425张真实UAV图像覆盖德国和美国47个区域，并引入AdHoP（自适应单应性预处理）匹配改进技术，在不修改特征匹配器的情况下将匹配性能提升95%、平移误差降低63%。
 tags:
   - "NeurIPS 2025"
   - "遥感"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] QuEst: Enhancing Estimates of Quantile-Based Distributional Measures Using Model Predictions
 description: >-
-  [ICML 2025][LLM/NLP][分位数估计] 提出 QuEst 框架，将少量高质量观测数据与大量模型预测（imputed）数据相结合，对分位数相关的分布度量（QBDM）给出更精确的点估计和严格的置信区间，覆盖 CVaR、Interval-VaR 等经典指标。
+  [ICML 2025][LLM 其他][分位数估计] 提出 QuEst 框架，将少量高质量观测数据与大量模型预测（imputed）数据相结合，对分位数相关的分布度量（QBDM）给出更精确的点估计和严格的置信区间，覆盖 CVaR、Interval-VaR 等经典指标。 现有的 Prediction-Powered Infere…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "分位数估计"
   - "预测驱动推断"
   - "置信区间"

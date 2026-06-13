@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HORT: Monocular Hand-held Objects Reconstruction with Transformers
 description: >-
-  [3D视觉] 提出 HORT，基于 Transformer 的粗到细框架，从单目图像高效重建手持物体的稠密3D点云，通过整合图像特征和3D手部几何信息联合预测物体点云及其相对手部的位姿，在准确率和推理速度上均达到 SOTA。
+  [3D视觉] 提出 HORT，基于 Transformer 的粗到细框架，从单目图像高效重建手持物体的稠密3D点云，通过整合图像特征和3D手部几何信息联合预测物体点云及其相对手部的位姿，在准确率和推理速度上均达到 SOTA。 从单目图像重建手持物体的3D形状在动作识别、人机交互和机器人操作中有广泛应用…
 tags:
   - "3D视觉"
 ---

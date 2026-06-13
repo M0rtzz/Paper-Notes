@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theoretical Analysis of Sparse Optimization with Reparameterization, Weight Decay, and Adaptive Learning Rate
 description: >-
-  [ICML 2026][稀疏优化] 本文提出 ReWA：把待优化变量重参数化为 $\boldsymbol{x}=\boldsymbol{y}^{K}$、对 $\boldsymbol{y}$ 加权重衰减、并使用一种坐标级自适应步长 $\eta_t \boldsymbol{y}^{M}/(\boldsymbol{…
+  [ICML 2026][稀疏优化] 本文提出 ReWA：把待优化变量重参数化为 $\boldsymbol{x}=\boldsymbol{y}^{K}$、对 $\boldsymbol{y}$ 加权重衰减、并使用一种坐标级自适应步长 $\eta_t \boldsymbol{y}^{M}/(\boldsymbol{y}^{K-1}+\epsilon)$，把不可优化的 $\ell_p\;(0<p<1)$ 稀疏正则等价转化为一个梯度有界、不易陷入零鞍点的可训练目标，并在 CIFAR-10 / ImageNet 上用 ResNet 验证了相对 $\ell_1$ 的稀疏性提升。
 tags:
   - "ICML 2026"
   - "稀疏优化"

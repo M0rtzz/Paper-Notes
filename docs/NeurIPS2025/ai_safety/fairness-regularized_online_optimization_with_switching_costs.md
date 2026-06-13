@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Fairness-Regularized Online Optimization with Switching Costs
 description: >-
-  [NeurIPS 2025][AI安全][公平性正则化] 本文研究在线凸优化中同时处理长期公平性正则项和切换代价的新问题，先证明了任何在线算法都无法获得次线性遗憾或有限竞争比的不可能性结果，然后提出FairOBD算法通过引入辅助变量分解长期公平代价，在(R,δ)-约束基准下实现了渐近最优竞争比。
+  [NeurIPS 2025][AI安全][长期公平正则] 这篇论文把“长期公平”与“动作平滑”第一次严密地放进同一个在线优化框架里，先证明原问题在常规动态基准下根本不可能做好，再提出 FairOBD 通过辅助变量和对偶镜像下降把公平代价在线化，从而在更合理的 $(R,\delta)$ 约束基准上拿到渐近最优级别的竞争比。
 tags:
   - "NeurIPS 2025"
   - "AI安全"
-  - "公平性正则化"
-  - "在线凸优化"
+  - "长期公平正则"
   - "切换代价"
+  - "平滑在线优化"
   - "竞争比"
-  - "镜像下降"
+  - "Mirror Descent"
 ---
 
 # Fairness-Regularized Online Optimization with Switching Costs
@@ -291,3 +291,19 @@ tags:
   - 竞争比
   - 镜像下降
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Stochastic Regret Guarantees for Online Zeroth- and First-Order Bilevel Optimization](stochastic_regret_guarantees_for_online_zeroth-_and_first-order_bilevel_optimiza.md)
+- [\[AAAI 2026\] Alternative Fairness and Accuracy Optimization in Criminal Justice](../../AAAI2026/ai_safety/alternative_fairness_and_accuracy_optimization_in_criminal_j.md)
+- [\[NeurIPS 2025\] Fairness under Competition](fairness_under_competition.md)
+- [\[NeurIPS 2025\] Differentially Private Bilevel Optimization: Efficient Algorithms with Near-Optimal Rates](differentially_private_bilevel_optimization_efficient_algorithms_with_near-optim.md)
+- [\[ICML 2026\] COPF: An Online Framework for Deployment-Stable Counterfactual Fairness in Evolving Graphs](../../ICML2026/ai_safety/copf_an_online_framework_for_deployment-stable_counterfactual_fairness_in_evolvi.md)
+
+</div>
+
+<!-- RELATED:END -->

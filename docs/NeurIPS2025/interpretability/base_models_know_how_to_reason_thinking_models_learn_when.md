@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Base Models Know How to Reason, Thinking Models Learn When
 description: >-
-  [NeurIPS 2025][可解释性][Thinking Models] 通过无监督 SAE 聚类发现 thinking model 的推理机制分类，然后用 steering vector 在基座模型上激活这些潜在推理能力，混合模型恢复高达 91% 的 thinking-base 性能差距（无需权重更新）…
+  [NeurIPS 2025][可解释性][Thinking Models] 通过无监督 SAE 聚类发现 thinking model 的推理机制分类，然后用 steering vector 在基座模型上激活这些潜在推理能力，混合模型恢复高达 91% 的 thinking-base 性能差距（无需权重更新），证明基座模型已具备推理能力，thinking model 只是学会了"何时"部署它们。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

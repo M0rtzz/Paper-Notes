@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Probing Multimodal Large Language Models on Cognitive Biases in Chinese Short-Video Misinformation
 description: >-
-  [ACL 2026][社会计算][短视频谣言] 这篇论文构建了一个 200 条中文健康短视频的高质量谣言评测集，用证据链、错误类型和社交线索系统评估 8 个前沿 MLLM，发现 Gemini-2.5-Pro 最稳，但多数模型在多模态谣言判断中仍受标签偏置、权威账号和流量指标影响。
+  [ACL 2026 Findings][社会计算][短视频谣言] 这篇论文构建了一个 200 条中文健康短视频的高质量谣言评测集，用证据链、错误类型和社交线索系统评估 8 个前沿 MLLM，发现 Gemini-2.5-Pro 最稳，但多数模型在多模态谣言判断中仍受标签偏置、权威账号和流量指标影响。 领域现状：短视频平台已经成…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "社会计算"
   - "短视频谣言"
   - "多模态大模型"

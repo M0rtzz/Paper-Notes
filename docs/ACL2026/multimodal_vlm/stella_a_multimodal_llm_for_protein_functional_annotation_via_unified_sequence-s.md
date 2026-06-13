@@ -2,9 +2,9 @@
 title: >-
   [论文解读] STELLA: A Multimodal LLM for Protein Functional Annotation via Unified Sequence-Structure Encoding
 description: >-
-  [ACL2026][多模态VLM][蛋白功能注释] STELLA 将 ESM3 的统一序列-结构蛋白表示接入 Llama-3.1-8B-Instruct，通过两阶段多模态指令调优完成蛋白功能描述和酶催化反应预测，并在 OPI-Struc 系列基准上刷新多项功能注释指标。
+  [ACL2026 Findings][多模态VLM][蛋白功能注释] STELLA 将 ESM3 的统一序列-结构蛋白表示接入 Llama-3.1-8B-Instruct，通过两阶段多模态指令调优完成蛋白功能描述和酶催化反应预测，并在 OPI-Struc 系列基准上刷新多项功能注释指标。 领域现状：蛋白研究中的核心链条是 s…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "蛋白功能注释"
   - "多模态LLM"

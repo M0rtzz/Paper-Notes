@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attend Before Attention: Efficient and Scalable Video Understanding via Autoregressive Gazing
 description: >-
-  [CVPR 2026][视频理解][AutoGaze] 提出 AutoGaze，一个仅 3M 参数的轻量模块，在 ViT 之前自回归选择最少的多尺度 patch 集合以重建视频，去除 4×-100× 时空冗余，实现 ViT 最高 19× / MLLM 最高 10× 加速…
+  [CVPR 2026][视频理解][AutoGaze] 提出 AutoGaze，一个仅 3M 参数的轻量模块，在 ViT 之前自回归选择最少的多尺度 patch 集合以重建视频，去除 4×-100× 时空冗余，实现 ViT 最高 19× / MLLM 最高 10× 加速，首次使 MLLM 可扩展到 1K 帧 4K 分辨率视频，在 VideoMME 上达到 67.0%。
 tags:
   - "CVPR 2026"
   - "视频理解"

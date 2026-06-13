@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Winner of CVPR2026 NTIRE Challenge on Image Shadow Removal: Semantic and Geometric Guidance for Shadow Removal via Cascaded Refinement
 description: >-
-  [CVPR 2026 Workshop (NTIRE)][图像恢复][阴影去除] 基于 OmniSR 构建三级级联精炼 pipeline，结合冻结 DINOv2 语义特征与单目深度/法线几何引导，通过收缩约束损失稳定多阶段训练，在 NTIRE 2026 阴影去除挑战赛中获得第一名。
+  [CVPR 2026 Workshop (NTIRE)][图像恢复][阴影去除] 基于 OmniSR 构建三级级联精炼 pipeline，结合冻结 DINOv2 语义特征与单目深度/法线几何引导，通过收缩约束损失稳定多阶段训练，在 NTIRE 2026 阴影去除挑战赛中获得第一名。 领域现状：图像阴影去除是底层视觉中的重要任…
 tags:
   - "CVPR 2026 Workshop (NTIRE)"
   - "图像恢复"

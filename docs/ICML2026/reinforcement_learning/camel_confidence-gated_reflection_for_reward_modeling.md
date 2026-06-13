@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAMEL: Confidence-Gated Reflection for Reward Modeling
 description: >-
-  [ICML 2026][强化学习][奖励模型] 本文观察到 verdict token 的 log-probability margin 与判断正确率高度相关，据此提出 CAMEL —— 先用单 token 快速给出偏好判断，仅在低置信度时才触发反思生成，并用反事实前缀增强 GRPO 训练自我纠错能力…
+  [ICML 2026][强化学习][奖励模型] 本文观察到 verdict token 的 log-probability margin 与判断正确率高度相关，据此提出 CAMEL —— 先用单 token 快速给出偏好判断，仅在低置信度时才触发反思生成，并用反事实前缀增强 GRPO 训练自我纠错能力，在三个奖励模型 benchmark 上以 14B 参数取得 82.9% 的平均准确率（超过此前最佳 70B 模型 3.2%）。
 tags:
   - "ICML 2026"
   - "强化学习"

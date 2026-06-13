@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation
 description: >-
-  [CVPR 2026][3D视觉][3D点云分割] 提出即插即用的SCOPE框架，利用类无关分割模型从基础训练场景的背景区域挖掘伪实例原型，通过检索+注意力融合增强few-shot新类原型，无需重训backbone即可在ScanNet上将新类IoU提升6.98%。
+  [CVPR 2026 Findings][3D视觉][3D点云分割] 提出即插即用的SCOPE框架，利用类无关分割模型从基础训练场景的背景区域挖掘伪实例原型，通过检索+注意力融合增强few-shot新类原型，无需重训backbone即可在ScanNet上将新类IoU提升6.98%。 领域现状：全监督3D点云分割需要大量逐点标…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "3D点云分割"
   - "增量few-shot"

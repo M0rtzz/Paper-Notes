@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemLayer: Semantic-aware Generative Segmentation and Layer Construction for Abstract Icons
 description: >-
-  [CVPR 2026][语义分割][矢量图层构建] 提出 SemLayer，一个基于生成模型的流水线，将扁平化的矢量图标恢复为语义化分层结构——先通过扩散模型将分割重新定义为上色任务，再进行遮挡区域的语义补全，最后用整数线性规划确定层级顺序，实现 mIoU +5.0、PQ +16.7 的分割提升。
+  [CVPR 2026][语义分割][矢量图层构建] 提出 SemLayer，一个基于生成模型的流水线，将扁平化的矢量图标恢复为语义化分层结构——先通过扩散模型将分割重新定义为上色任务，再进行遮挡区域的语义补全，最后用整数线性规划确定层级顺序，实现 mIoU +5.0、PQ +16.7 的分割提升。 1. 领域现状：矢量图标是…
 tags:
   - "CVPR 2026"
   - "语义分割"

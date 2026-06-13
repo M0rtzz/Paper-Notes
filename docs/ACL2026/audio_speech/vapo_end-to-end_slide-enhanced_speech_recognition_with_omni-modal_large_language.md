@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VAPO: End-to-end Slide-Enhanced Speech Recognition with Omni-modal Large Language Models
 description: >-
-  [ACL2026][音频/语音][全模态大模型] 本文发现端到端全模态大模型做 SlideASR 时会把幻灯片文字误抄成语音内容，并提出 VAPO 用“先看后听”的结构化推理链和多目标强化学习，把幻灯片文字变成语音识别的语义锚点而不是干扰源。
+  [ACL2026][音频/语音][全模态大模型] 本文发现端到端全模态大模型做 SlideASR 时会把幻灯片文字误抄成语音内容，并提出 VAPO 用“先看后听”的结构化推理链和多目标强化学习，把幻灯片文字变成语音识别的语义锚点而不是干扰源。 领域现状：传统 ASR 在通用语音上已经很强，但在学术报告、技术演示和专业讲座中仍…
 tags:
   - "ACL2026"
   - "音频/语音"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.08618](https://arxiv.org/abs/2510.08618)  
 **代码**: https://github.com/isruihu/SlideASR-Bench  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: 全模态大模型, 幻灯片增强语音识别, 强化学习, 视觉锚定, 上下文ASR  
 
 ## 一句话总结

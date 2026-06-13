@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HeROD: Heuristic-inspired Reasoning Priors Facilitate Data-Efficient Referring Object Detection
 description: >-
-  [CVPR 2026][目标检测][指代目标检测] HeROD 提出了一种轻量级、模型无关的框架，通过将启发式空间和语义推理先验注入 DETR 风格检测管道的三个阶段（候选排序、预测融合、匈牙利匹配），在标注稀缺条件下显著提升指代目标检测(ROD)的数据效率和收敛性能。
+  [CVPR 2026][目标检测][指代目标检测] HeROD 提出了一种轻量级、模型无关的框架，通过将启发式空间和语义推理先验注入 DETR 风格检测管道的三个阶段（候选排序、预测融合、匈牙利匹配），在标注稀缺条件下显著提升指代目标检测(ROD)的数据效率和收敛性能。 1. 领域现状：指代目标检测(ROD)通过自然语言描述…
 tags:
   - "CVPR 2026"
   - "目标检测"

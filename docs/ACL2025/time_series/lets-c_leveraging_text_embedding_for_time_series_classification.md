@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LETS-C: Leveraging Text Embedding for Time Series Classification
 description: >-
-  [ACL 2025][时间序列][time series classification] 提出 LETS-C——将时间序列数字化为文本字符串后用 text embedding 模型编码，与原始时间序列元素级相加融合后送入轻量 CNN+MLP 分类头…
+  [ACL 2025][时间序列][time series classification] 提出 LETS-C——将时间序列数字化为文本字符串后用 text embedding 模型编码，与原始时间序列元素级相加融合后送入轻量 CNN+MLP 分类头，在 UEA 10 个多变量时间序列数据集上以仅 14.5% 的可训练参数量超越 OneFitsAll（GPT-2 微调）等 27 个 baseline 达到 SOTA。
 tags:
   - "ACL 2025"
   - "时间序列"

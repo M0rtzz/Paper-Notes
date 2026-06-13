@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neuro-Spectral Architectures for Causal Physics-Informed Networks
 description: >-
-  [NeurIPS 2025][物理/科学计算][PINN] NeuSA 将经典谱方法与 Neural ODE 结合，先将 PDE 投影到谱基（Fourier）上得到 ODE 系统，再用 NODE 学习动力学演化，从架构层面解决了传统 PINN 的谱偏差和因果性问题…
+  [NeurIPS 2025][物理/科学计算][PINN] NeuSA 将经典谱方法与 Neural ODE 结合，先将 PDE 投影到谱基（Fourier）上得到 ODE 系统，再用 NODE 学习动力学演化，从架构层面解决了传统 PINN 的谱偏差和因果性问题，在波动方程/Burgers方程/sine-Gordon方程上误差比 baseline 低 1-2 个数量级且训练更快。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

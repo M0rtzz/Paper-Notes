@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Utilities from Demonstrations in Markov Decision Processes
 description: >-
-  [ICML 2025][强化学习][效用学习] 本文提出 Utility Learning (UL) 问题，通过从演示中推断智能体的效用函数来捕捉其风险态度，设计了两个可证明高效的算法并分析了样本复杂度和可辨识性。
+  [ICML 2025][强化学习][效用学习] 本文提出 Utility Learning (UL) 问题，通过从演示中推断智能体的效用函数来捕捉其风险态度，设计了两个可证明高效的算法并分析了样本复杂度和可辨识性。 领域现状 领域现状：领域现状: 逆强化学习 (IRL) 从专家演示推断奖励函数，是理解和模仿行为的核心方法…
 tags:
   - "ICML 2025"
   - "强化学习"

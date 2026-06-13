@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-3DPSM: A State Machine for Event-Based Egocentric 3D Human Pose Estimation
 description: >-
-  [CVPR 2026][人体理解][事件相机] 提出 E-3DPSM，一种基于事件相机的自我中心 3D 人体姿态状态机，将姿态估计建模为连续时间状态演化过程，通过双向 SSM 时序建模和可学习的卡尔曼式融合模块融合直接预测与增量预测，实现 80Hz 实时推理…
+  [CVPR 2026][人体理解][事件相机] 提出 E-3DPSM，一种基于事件相机的自我中心 3D 人体姿态状态机，将姿态估计建模为连续时间状态演化过程，通过双向 SSM 时序建模和可学习的卡尔曼式融合模块融合直接预测与增量预测，实现 80Hz 实时推理，MPJPE 降低 19%、时序稳定性提升 2.7 倍。
 tags:
   - "CVPR 2026"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cooperative Retrieval-Augmented Generation for Question Answering: Mutual Information Exchange and Ranking by Contrasting Layers
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG] 提出CoopRAG框架，通过问题展开、基于检索器层对比的重排、以及推理链补全，实现检索器与LLM的双向合作，在多跳QA上超越HippoRAG2 5.3%，单跳QA上提升35.2%。
+  [NeurIPS 2025][信息检索/RAG][RAG] 提出CoopRAG框架，通过问题展开、基于检索器层对比的重排、以及推理链补全，实现检索器与LLM的双向合作，在多跳QA上超越HippoRAG2 5.3%，单跳QA上提升35.2%。 问题简短： 原始问题信息不足，无法充分指导检索和推理 浅层检索： 现有检索器容易陷入…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Position Embedding as a Context Controller for Multi-Reference and Multi-Shot Video Generation
 description: >-
-  [CVPR 2026][视频生成][位置编码] 提出 PoCo（Position Embedding as Context Controller），通过在 RoPE 中引入额外的 SideInfo 轴编码参考实体信息…
+  [CVPR 2026][视频生成][位置编码] 提出 PoCo（Position Embedding as Context Controller），通过在 RoPE 中引入额外的 SideInfo 轴编码参考实体信息，解决多参考多镜头视频生成中的"参考混淆"问题——当参考图像外观高度相似时模型无法正确关联镜头与参考。在 VACE-Wan2.1-14B 框架上实现 SOTA 的跨镜头一致性（CrossShot-FaceSim 89.35，CrossShot-DINO 92.66）。
 tags:
   - "CVPR 2026"
   - "视频生成"

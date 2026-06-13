@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PapersPlease: A Benchmark for Evaluating Motivational Values of Large Language Models Based on ERG Theory
 description: >-
-  [ACL 2025 (GEM2 Workshop)][LLM评测][LLM价值观评估] 提出PapersPlease基准，包含3700个基于ERG动机理论构建的道德困境场景，让LLM扮演移民检查官决定是否放行，揭示了6个LLM在动机价值优先级上的显著差异以及对边缘化身份群体的偏见。
+  [ACL 2025 (GEM2 Workshop)][LLM评测][LLM价值观评估] 提出PapersPlease基准，包含3700个基于ERG动机理论构建的道德困境场景，让LLM扮演移民检查官决定是否放行，揭示了6个LLM在动机价值优先级上的显著差异以及对边缘化身份群体的偏见。 领域现状：通过角色扮演场景评估LLM的行为…
 tags:
   - "ACL 2025 (GEM2 Workshop)"
   - "LLM评测"

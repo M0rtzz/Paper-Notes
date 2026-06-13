@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][mobile agent] FingerTip 20K 收集了 95 名用户在真实日常手机使用中的 21,437 条交互记录（含用户画像、时间、位置、历史意图），提出两个新赛道——主动任务建议（预测用户意图）和个性化任务执行（适配动作偏好）…
+  [ICLR 2026][LLM Agent][mobile agent] FingerTip 20K 收集了 95 名用户在真实日常手机使用中的 21,437 条交互记录（含用户画像、时间、位置、历史意图），提出两个新赛道——主动任务建议（预测用户意图）和个性化任务执行（适配动作偏好），最强模型 Qwen-QVQ-Max 主动建议成功率仅 12.8%（人类 30.3%），UI-TARS 执行成功率仅 38.5%。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

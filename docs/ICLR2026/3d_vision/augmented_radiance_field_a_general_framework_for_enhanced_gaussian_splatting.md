@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting
 description: >-
-  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出增强辐射场 (Augmented Radiance Field) 框架，通过设计具有视角相关不透明度的增强高斯核来显式建模高光分量，并引入误差驱动的补偿策略（2D 高斯初始化 → 逆投影至 3D → 联合优化）…
+  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出增强辐射场 (Augmented Radiance Field) 框架，通过设计具有视角相关不透明度的增强高斯核来显式建模高光分量，并引入误差驱动的补偿策略（2D 高斯初始化 → 逆投影至 3D → 联合优化），作为后处理即插即用地增强现有 3DGS 场景，在多个数据集上超越 SOTA NeRF 方法，同时仅需二阶球谐即可捕获复杂光照。
 tags:
   - "ICLR 2026"
   - "3D视觉"

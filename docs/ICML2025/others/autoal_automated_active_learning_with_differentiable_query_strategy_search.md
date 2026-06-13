@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoAL: Automated Active Learning with Differentiable Query Strategy Search
 description: >-
-  [ICML 2025][主动学习] 提出首个可微的主动学习策略搜索框架 AutoAL，通过 SearchNet 和 FitNet 两个网络在双层优化框架下协同训练，自动从多个候选 AL 策略中为给定任务选出最优策略，在自然图像和医学图像数据集上一致超越所有候选策略及其他 SOTA 方法。
+  [ICML 2025][主动学习] 提出首个可微的主动学习策略搜索框架 AutoAL，通过 SearchNet 和 FitNet 两个网络在双层优化框架下协同训练，自动从多个候选 AL 策略中为给定任务选出最优策略，在自然图像和医学图像数据集上一致超越所有候选策略及其他 SOTA 方法。 领域现状 主动学习（Active L…
 tags:
   - "ICML 2025"
   - "主动学习"

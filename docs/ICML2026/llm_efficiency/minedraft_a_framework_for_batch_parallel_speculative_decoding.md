@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MineDraft: A Framework for Batch Parallel Speculative Decoding
 description: >-
-  [ICML2026][LLM效率][投机解码] MineDraft 通过维护两批请求并让一批的 drafting 与另一批的 verification 在两组独立 GPU 上**重叠执行**,把投机解码中原本串行的"草稿—验证"流水线变成批并行 PSD…
+  [ICML2026][LLM效率][投机解码] MineDraft 通过维护两批请求并让一批的 drafting 与另一批的 verification 在两组独立 GPU 上**重叠执行**,把投机解码中原本串行的"草稿—验证"流水线变成批并行 PSD,在仅多用 1 张 GPU 的代价下相对标准 SD 把吞吐拉高最多 75%、端到端延迟降低最多 39%,并已实现为可即插即用的 vLLM 插件。
 tags:
   - "ICML2026"
   - "LLM效率"

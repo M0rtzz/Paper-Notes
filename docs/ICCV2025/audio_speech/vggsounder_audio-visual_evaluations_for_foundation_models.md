@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VGGSounder: Audio-Visual Evaluations for Foundation Models
 description: >-
-  [ICCV 2025][音频/语音][音视频分类] 针对 VGGSound 数据集在多标签缺失、类别重叠和模态错位方面的局限性，构建了 VGGSounder——一个带有模态标注的多标签音视频分类基准，并提出"模态混淆"度量来揭示基础模型在多模态融合上的不足。
+  [ICCV 2025][音频/语音][音视频分类] 针对 VGGSound 数据集在多标签缺失、类别重叠和模态错位方面的局限性，构建了 VGGSounder——一个带有模态标注的多标签音视频分类基准，并提出"模态混淆"度量来揭示基础模型在多模态融合上的不足。 VGGSound 是音视频分类领域最常用的基准数据集…
 tags:
   - "ICCV 2025"
   - "音频/语音"

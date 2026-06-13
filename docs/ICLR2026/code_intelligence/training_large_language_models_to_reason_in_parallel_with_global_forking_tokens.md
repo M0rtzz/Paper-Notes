@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Large Language Models To Reason In Parallel With Global Forking Tokens
 description: >-
-  [ICLR2026][代码智能][parallel reasoning] 提出 Set Supervised Fine-Tuning (SSFT)，通过二分图匹配将全局分叉令牌 (global forking tokens) 与多样推理轨迹对齐，使 LLM 能从单个控制令牌全局引导不同推理模式…
+  [ICLR2026][代码智能][parallel reasoning] 提出 Set Supervised Fine-Tuning (SSFT)，通过二分图匹配将全局分叉令牌 (global forking tokens) 与多样推理轨迹对齐，使 LLM 能从单个控制令牌全局引导不同推理模式，在数学推理和代码生成任务上显著优于标准 SFT 和 GRPO。
 tags:
   - "ICLR2026"
   - "代码智能"

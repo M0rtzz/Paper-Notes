@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Expressive Power of Permutation-Equivariant Weight-Space Networks
 description: >-
-  [ICML 2026][预训练][weight-space learning] 本文为操作在 MLP 权重上的置换等变 weight-space 网络（DWS / NFN / GMN / NG-GNN 等）建立了首个系统的表达力理论，证明这些架构在表达力上几乎完全等价…
+  [ICML 2026 Spotlight][预训练][weight-space learning] 本文为操作在 MLP 权重上的置换等变 weight-space 网络（DWS / NFN / GMN / NG-GNN 等）建立了首个系统的表达力理论，证明这些架构在表达力上几乎完全等价，并在"general position"假设下对四种逼近场景（函数空间泛函/算子、置换不变泛函、置换等变算子）给出了普适性刻画；由理论得出的简单修改 OCE（输出端 ensemble 多个 MLP）在 INR 编辑基准上相对 SOTA 提升 34%。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "预训练"
   - "weight-space learning"
   - "permutation equivariance"

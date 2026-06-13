@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Consistency Preference Optimization
 description: >-
-  [ICML 2025][LLM推理][自一致性] 将推理时的自一致性(self-consistency)概念引入训练阶段，通过投票机制构建偏好对并使用加权DPO损失进行迭代训练，在无需金标签的情况下大幅提升LLM的数学和逻辑推理能力。
+  [ICML 2025][LLM推理][自一致性] 将推理时的自一致性(self-consistency)概念引入训练阶段，通过投票机制构建偏好对并使用加权DPO损失进行迭代训练，在无需金标签的情况下大幅提升LLM的数学和逻辑推理能力。 LLM的自对齐(self-alignment)是当前热门方向，核心目标是让模型在无人工标注…
 tags:
   - "ICML 2025"
   - "LLM推理"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TideGS: Scalable Training of Over One Billion 3D Gaussian Splatting Primitives via Out-of-Core Optimization
 description: >-
-  [ICML 2026][3D视觉][3DGS] TideGS 把 3DGS 的参数表搬到 SSD 上，按"块"虚拟化并以 GPU VRAM 作为视锥可见工作集的缓存，配合三级异步流水线和轨迹自适应差分流式传输…
+  [ICML 2026 Spotlight][3D视觉][3DGS] TideGS 把 3DGS 的参数表搬到 SSD 上，按"块"虚拟化并以 GPU VRAM 作为视锥可见工作集的缓存，配合三级异步流水线和轨迹自适应差分流式传输，在单张 24 GB GPU 上首次把可训练的高斯数量从约 11M（原生 3DGS）/ 105M（CLM）推到 **超过 10 亿**，且大场景重建质量优于所有评测的单卡基线。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "3D视觉"
   - "3DGS"
   - "out-of-core"

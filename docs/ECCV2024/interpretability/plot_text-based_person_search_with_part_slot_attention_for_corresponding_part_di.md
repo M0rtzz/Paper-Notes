@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PLOT: Text-based Person Search with Part Slot Attention for Corresponding Part Discovery
 description: >-
-  [ECCV 2024][可解释性][text-based person search] 提出 PLOT 框架，利用基于 Slot Attention 的 Part Discovery Module 自动发现跨模态（图像-文本）对应的人体部件…
+  [ECCV 2024][可解释性][text-based person search] 提出 PLOT 框架，利用基于 Slot Attention 的 Part Discovery Module 自动发现跨模态（图像-文本）对应的人体部件，结合 Text-based Dynamic Part Attention（TDPA）动态调整各部件重要性，无需部件级标注即可在三个 benchmark 上全面超越 SOTA。
 tags:
   - "ECCV 2024"
   - "可解释性"

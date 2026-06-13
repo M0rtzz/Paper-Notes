@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][共形预测] 提出 Feedback-Based Conformal Prediction (Fb-CP) 框架，将已执行轨迹的信息反馈给 CP 以动态调整预测区域大小，在缩减时域轨迹优化中同时保证覆盖率和显著提升轨迹性能。
+  [NeurIPS 2025][优化/理论][共形预测] 提出 Feedback-Based Conformal Prediction (Fb-CP) 框架，将已执行轨迹的信息反馈给 CP 以动态调整预测区域大小，在缩减时域轨迹优化中同时保证覆盖率和显著提升轨迹性能。 领域现状： Conformal Prediction (C…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

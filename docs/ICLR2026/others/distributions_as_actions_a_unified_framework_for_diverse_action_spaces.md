@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces
 description: >-
-  [ICLR 2026][统一动作空间] DA-AC 提出将动作分布的参数（如 softmax 概率或 Gaussian 均值/方差）作为 Agent 的"动作"输出，将动作采样过程移入环境，从而用统一的确定性策略梯度框架处理离散/连续/混合动作空间，理论证明方差严格低于 LR 和 RP 估计器…
+  [ICLR 2026][统一动作空间] DA-AC 提出将动作分布的参数（如 softmax 概率或 Gaussian 均值/方差）作为 Agent 的"动作"输出，将动作采样过程移入环境，从而用统一的确定性策略梯度框架处理离散/连续/混合动作空间，理论证明方差严格低于 LR 和 RP 估计器，并在 40+ 环境上取得 competitive 或 SOTA 性能。
 tags:
   - "ICLR 2026"
   - "统一动作空间"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convex Relaxation for Robust Vanishing Point Estimation in Manhattan World
 description: >-
-  [CVPR 2025 (Best Paper Award Candidate & Oral)][优化/理论][消失点估计] GlobustVP 首次将凸松弛技术引入曼哈顿世界消失点估计问题，通过将联合估计消失点位置与直线-消失点关联的问题转化为 QCQP 再松弛为 SDP…
+  [CVPR 2025 (Best Paper Award Candidate & Oral)][优化/理论][消失点估计] GlobustVP 首次将凸松弛技术引入曼哈顿世界消失点估计问题，通过将联合估计消失点位置与直线-消失点关联的问题转化为 QCQP 再松弛为 SDP，实现了全局最优且对 70% 外点鲁棒的高效求解器（~50ms/图）。
 tags:
   - "CVPR 2025 (Best Paper Award Candidate & Oral)"
   - "优化/理论"

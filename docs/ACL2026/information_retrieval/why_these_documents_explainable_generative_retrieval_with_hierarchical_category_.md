@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Why These Documents? Explainable Generative Retrieval with Hierarchical Category Paths
 description: >-
-  [ACL 2026][信息检索/RAG][生成式检索] 提出 HyPE 框架，在生成式检索中通过先生成层级类别路径（如 "Government >> Government by cities"）再解码文档标识符，为检索结果提供查询相关的可解释路径，同时提升检索准确率。
+  [ACL 2026 Findings][信息检索/RAG][生成式检索] 提出 HyPE 框架，在生成式检索中通过先生成层级类别路径（如 "Government Government by cities"）再解码文档标识符，为检索结果提供查询相关的可解释路径，同时提升检索准确率。 领域现状：生成式检索（Generative…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "生成式检索"
   - "可解释检索"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-party Collaborative Attention Control for Image Customization
 description: >-
-  [图像生成] 提出 MCA-Ctrl，一种无需微调的图像定制方法，通过三路并行扩散过程中的自注意力协同控制（SAGI + SALQ），实现文本/图像条件下的高质量 subject 编辑与生成，并用 Subject Localization Module 解决复杂场景中的主体泄漏和混淆问题。
+  [图像生成] 提出 MCA-Ctrl，一种无需微调的图像定制方法，通过三路并行扩散过程中的自注意力协同控制（SAGI + SALQ），实现文本/图像条件下的高质量 subject 编辑与生成，并用 Subject Localization Module 解决复杂场景中的主体泄漏和混淆问题。 现有图像定制方法存在四大局限： 1…
 tags:
   - "图像生成"
 ---

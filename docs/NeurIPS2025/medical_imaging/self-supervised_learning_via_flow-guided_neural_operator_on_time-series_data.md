@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Supervised Learning via Flow-Guided Neural Operator on Time-Series Data
 description: >-
-  [NeurIPS 2025][医学图像][自监督学习] 提出 FGNO（Flow-Guided Neural Operator），将 Flow Matching 与算子学习结合用于时间序列自监督预训练，通过 STFT 实现分辨率不变的函数空间学习…
+  [NeurIPS 2025][医学图像][自监督学习] 提出 FGNO（Flow-Guided Neural Operator），将 Flow Matching 与算子学习结合用于时间序列自监督预训练，通过 STFT 实现分辨率不变的函数空间学习，并将流时间（flow time）和网络层作为控制特征粒度的"旋钮"，在生物医学任务上显著优于 MAE 等基线。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

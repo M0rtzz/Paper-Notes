@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Evaluating LLM Alignment by Evaluating LLMs as Judges
 description: >-
-  [NeurIPS 2025][LLM评测][LLM alignment] 本文系统研究了 LLM 的生成能力与评估能力之间的一致性（GE-consistency），发现两者在强偏好预言机下高度相关（Spearman ρ=0.96）…
+  [NeurIPS 2025][LLM评测][LLM alignment] 本文系统研究了 LLM 的生成能力与评估能力之间的一致性（GE-consistency），发现两者在强偏好预言机下高度相关（Spearman ρ=0.96），据此提出 AlignEval 基准——通过评估 LLM 作为评判者的能力来衡量其对齐水平，无需 LLM-as-Judge 直接评估模型输出，与 AlpacaEval/Arena-Hard 相当甚至更优。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

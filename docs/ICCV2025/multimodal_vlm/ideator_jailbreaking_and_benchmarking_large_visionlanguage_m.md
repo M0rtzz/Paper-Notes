@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IDEATOR: Jailbreaking and Benchmarking Large Vision-Language Models Using Themselves
 description: >-
-  [ICCV 2025][多模态VLM][jailbreak attack] 提出IDEATOR，首个用VLM自身做红队攻击VLM的黑盒越狱框架——利用一个弱安全对齐的VLM（MiniGPT-4）作为攻击者，结合Stable Diffusion生成语义丰富的图文越狱对…
+  [ICCV 2025][多模态VLM][jailbreak attack] 提出IDEATOR，首个用VLM自身做红队攻击VLM的黑盒越狱框架——利用一个弱安全对齐的VLM（MiniGPT-4）作为攻击者，结合Stable Diffusion生成语义丰富的图文越狱对，通过breadth-depth探索策略迭代优化，在MiniGPT-4上达94%攻击成功率（平均5.34次查询），迁移到LLaVA/InstructBLIP/Chameleon达75-88%，并构建VLJailbreakBench（3654样本）揭示11个VLM的安全漏洞。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

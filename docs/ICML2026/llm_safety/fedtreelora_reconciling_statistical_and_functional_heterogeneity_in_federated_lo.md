@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedTreeLoRA: Reconciling Statistical and Functional Heterogeneity in Federated LoRA Fine-Tuning
 description: >-
-  [ICML2026][LLM安全][联邦学习] 针对联邦 LoRA 微调里"客户端数据异质"和"LLM 各层功能异质"两个维度被现有方法割裂处理的问题，FedTreeLoRA 用一棵全局层次聚类树 + 逐层自适应深度搜索，让浅层尽量共享、深层逐步分化…
+  [ICML2026][LLM安全][联邦学习] 针对联邦 LoRA 微调里"客户端数据异质"和"LLM 各层功能异质"两个维度被现有方法割裂处理的问题，FedTreeLoRA 用一棵全局层次聚类树 + 逐层自适应深度搜索，让浅层尽量共享、深层逐步分化，在 GLUE 和 FLAN 上以最小参数代价把平均指标分别从 91.19 / 61.77 提到 92.36 / 63.19。
 tags:
   - "ICML2026"
   - "LLM安全"

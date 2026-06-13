@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Algorithmic Recourse of In-Context Learning for Tabular Data
 description: >-
-  [ICML 2026][音频/语音][表格数据ICL] 这篇论文首次系统研究表格数据 in-context learning 场景下的算法追索问题，证明 ICL 诱导的动态决策规则仍可定义可界定的 recourse…
+  [ICML 2026][音频/语音][表格数据ICL] 这篇论文首次系统研究表格数据 in-context learning 场景下的算法追索问题，证明 ICL 诱导的动态决策规则仍可定义可界定的 recourse，并提出 ASR-ICL 用自适应子空间零阶优化在黑盒 ICL 模型上生成低成本、稀疏且可行动的反事实修改。
 tags:
   - "ICML 2026"
   - "音频/语音"

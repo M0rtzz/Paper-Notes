@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PriorDrive: Enhancing Online HD Mapping with Unified Vector Priors
 description: >-
-  [AAAI 2026][自动驾驶][HD Map] 提出 PriorDrive 框架，通过 Unified Vector Encoder (UVE) 和 Hybrid Prior Representation (HPQuery) 将多种向量化先验地图（SD地图、旧HD地图、历史预测地图）统一编码并集成到各种在…
+  [AAAI 2026][自动驾驶][HD Map] 提出 PriorDrive 框架，通过 Unified Vector Encoder (UVE) 和 Hybrid Prior Representation (HPQuery) 将多种向量化先验地图（SD地图、旧HD地图、历史预测地图）统一编码并集成到各种在线建图模型中，在 nuScenes 上 mAP 提升 14.3，兼容 query-based 和 non-query-based 两类建图架构。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

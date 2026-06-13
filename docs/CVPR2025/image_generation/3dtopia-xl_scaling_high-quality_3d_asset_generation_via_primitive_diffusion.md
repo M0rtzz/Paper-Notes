@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion
 description: >-
-  [CVPR 2025][图像生成][3D生成] 提出基于新型原语表示PrimX和Diffusion Transformer的原生3D生成模型3DTopia-XL，能从文本或图像输入生成带有高分辨率几何、纹理和PBR材质的高质量3D资产，在质量和效率上显著超越现有方法。
+  [CVPR 2025][图像生成][3D生成] 提出基于新型原语表示PrimX和Diffusion Transformer的原生3D生成模型3DTopia-XL，能从文本或图像输入生成带有高分辨率几何、纹理和PBR材质的高质量3D资产，在质量和效率上显著超越现有方法。 高质量3D资产在影视、游戏、虚拟现实等领域需求巨大…
 tags:
   - "CVPR 2025"
   - "图像生成"

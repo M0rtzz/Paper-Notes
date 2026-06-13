@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafePTR: Token-Level Jailbreak Defense in Multimodal LLMs via Prune-then-Restore Mechanism
 description: >-
-  [NeurIPS 2025][LLM对齐][多模态] 通过分析多模态 LLM 中有害 token 的传播机制，发现不到 1% 的 token 在早期-中间层引发越狱行为，由此提出无需训练的 SafePTR 框架，在脆弱层剪枝有害 token 并在后续层恢复良性特征，显著提升安全性而不牺牲任务性能。
+  [NeurIPS 2025][LLM对齐][多模态] 通过分析多模态 LLM 中有害 token 的传播机制，发现不到 1% 的 token 在早期-中间层引发越狱行为，由此提出无需训练的 SafePTR 框架，在脆弱层剪枝有害 token 并在后续层恢复良性特征，显著提升安全性而不牺牲任务性能。 多模态越狱威胁：MLLM…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

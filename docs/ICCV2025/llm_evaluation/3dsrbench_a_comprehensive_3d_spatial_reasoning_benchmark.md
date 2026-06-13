@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DSRBench: A Comprehensive 3D Spatial Reasoning Benchmark
 description: >-
-  [ICCV 2025][LLM评测][3D Spatial Reasoning] 提出首个全面的3D空间推理基准3DSRBench，包含2,772个人工标注的VQA对（12种问题类型），通过平衡数据分布和新型FlipEval策略实现鲁棒评估…
+  [ICCV 2025][LLM评测][3D Spatial Reasoning] 提出首个全面的3D空间推理基准3DSRBench，包含2,772个人工标注的VQA对（12种问题类型），通过平衡数据分布和新型FlipEval策略实现鲁棒评估，揭示SOTA LMM（包括GPT-4o、Gemini）在3D空间推理上远落后于人类水平（≈52% vs 95.7%），且在非常规视角下性能显著退化。
 tags:
   - "ICCV 2025"
   - "LLM评测"

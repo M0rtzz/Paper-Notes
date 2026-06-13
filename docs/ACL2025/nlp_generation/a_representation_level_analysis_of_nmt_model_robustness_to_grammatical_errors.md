@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Representation Level Analysis of NMT Model Robustness to Grammatical Errors
 description: >-
-  [ACL 2025][文本生成][NMT鲁棒性] 从表示层面系统分析 NMT 编码器如何处理语法错误——发现编码器先在浅层"检测"错误（GED 探测 F1 上升），再在深层"纠正"错误（CKA 距离下降），并提出 Robustness Heads 概念识别出参与纠正的具体注意力头…
+  [ACL 2025][文本生成][NMT鲁棒性] 从表示层面系统分析 NMT 编码器如何处理语法错误——发现编码器先在浅层"检测"错误（GED 探测 F1 上升），再在深层"纠正"错误（CKA 距离下降），并提出 Robustness Heads 概念识别出参与纠正的具体注意力头，在 4 个模型×5 个语言方向上验证了该"检测→纠正"两阶段机制。
 tags:
   - "ACL 2025"
   - "文本生成"

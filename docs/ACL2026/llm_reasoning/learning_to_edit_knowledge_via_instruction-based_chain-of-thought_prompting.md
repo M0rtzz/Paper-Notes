@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting
 description: >-
-  [ACL 2026][LLM推理][知识编辑] CoT2Edit 提出通过 CoT 推理教 LLM 进行知识编辑的新范式——构建结构化和非结构化编辑的 CoT 指令数据，经 SFT 冷启动 + GRPO 优化训练，推理时结合 RAG 检索编辑事实，单次训练即在 6 个编辑基准上达到 SOTA 且具有强泛化能力…
+  [ACL 2026][LLM推理][知识编辑] CoT2Edit 提出通过 CoT 推理教 LLM 进行知识编辑的新范式——构建结构化和非结构化编辑的 CoT 指令数据，经 SFT 冷启动 + GRPO 优化训练，推理时结合 RAG 检索编辑事实，单次训练即在 6 个编辑基准上达到 SOTA 且具有强泛化能力。
 tags:
   - "ACL 2026"
   - "LLM推理"

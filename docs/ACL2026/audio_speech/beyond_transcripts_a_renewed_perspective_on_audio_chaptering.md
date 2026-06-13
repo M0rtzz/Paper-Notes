@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Transcripts: A Renewed Perspective on Audio Chaptering
 description: >-
-  [ACL2026][音频/语音][audio chaptering] 这篇论文系统重构长音频章节分段任务：把评测从依赖 transcript 的文本空间推进到 transcript-invariant 的时间空间…
+  [ACL2026][音频/语音][audio chaptering] 这篇论文系统重构长音频章节分段任务：把评测从依赖 transcript 的文本空间推进到 transcript-invariant 的时间空间，并证明直接用音频表示的 AudioSeg 在 YTSeg 上明显优于文本分段和现有 MLLM 方案。
 tags:
   - "ACL2026"
   - "音频/语音"

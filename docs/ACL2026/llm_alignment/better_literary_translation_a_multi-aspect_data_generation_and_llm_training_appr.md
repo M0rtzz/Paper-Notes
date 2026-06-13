@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Better Literary Translation: A Multi-Aspect Data Generation and LLM Training Approach
 description: >-
-  [ACL2026][LLM对齐][文学翻译] 这篇论文把文学翻译质量拆成“表达流畅”和“文学效果”两个维度，用专门 LLM 反复生成高质量参考译文和偏好对，再用 SFT + 显式奖励模型 + GRPO 训练 LitMT，使 8B/14B 小模型在英译中文学翻译上接近甚至超过部分大模型。
+  [ACL2026][LLM对齐][文学翻译] 这篇论文把文学翻译质量拆成“表达流畅”和“文学效果”两个维度，用专门 LLM 反复生成高质量参考译文和偏好对，再用 SFT + 显式奖励模型 + GRPO 训练 LitMT，使 8B/14B 小模型在英译中文学翻译上接近甚至超过部分大模型。 领域现状：文学翻译不同于普通机器翻译…
 tags:
   - "ACL2026"
   - "LLM对齐"

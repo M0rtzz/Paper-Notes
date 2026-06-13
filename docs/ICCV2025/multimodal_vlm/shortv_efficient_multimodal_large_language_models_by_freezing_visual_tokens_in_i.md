@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShortV: Efficient Multimodal Large Language Models by Freezing Visual Tokens in Ineffective Layers
 description: >-
-  [ICCV 2025][多模态VLM][多模态大模型] 发现 MLLM 中存在显著的**层级冗余**——多数层对视觉 token 的变换贡献极小，据此提出 ShortV：在约 60% 的层中冻结视觉 token（跳过其注意力和 FFN 计算），在 LLaVA-NeXT-13B 上实现 50% FLOPs 减少…
+  [ICCV 2025][多模态VLM][多模态大模型] 发现 MLLM 中存在显著的**层级冗余**——多数层对视觉 token 的变换贡献极小，据此提出 ShortV：在约 60% 的层中冻结视觉 token（跳过其注意力和 FFN 计算），在 LLaVA-NeXT-13B 上实现 50% FLOPs 减少，性能几乎无损。方法免训练，且与 token 剪枝方法正交可叠加。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PrunNet: Learning Compatible Multi-Prize Subnetworks for Asymmetric Retrieval
 description: >-
-  [CVPR 2025][模型压缩][可剪枝网络] 提出 PrunNet（可剪枝网络），通过为每个权重学习重要性分数并结合冲突感知梯度集成，训练一个可以在任意容量（20%-100%）下产生兼容子网络的统一模型，在 GLDv2 上 46.29 mAP 超越密集网络基线，且所有容量子网络间特征兼容。
+  [CVPR 2025][模型压缩][可剪枝网络] 提出 PrunNet（可剪枝网络），通过为每个权重学习重要性分数并结合冲突感知梯度集成，训练一个可以在任意容量（20%-100%）下产生兼容子网络的统一模型，在 GLDv2 上 46.29 mAP 超越密集网络基线，且所有容量子网络间特征兼容。 领域现状：非对称检索（Asym…
 tags:
   - "CVPR 2025"
   - "模型压缩"

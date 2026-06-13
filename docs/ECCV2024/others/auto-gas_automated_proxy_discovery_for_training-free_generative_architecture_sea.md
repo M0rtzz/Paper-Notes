@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search
 description: >-
-  [ECCV 2024][生成架构搜索] 本文提出 Auto-GAS，首个面向生成模型（GAN）的免训练架构搜索框架，通过自动发现并优化零成本代理指标来替代传统训练式搜索，实现 110 倍搜索加速，同时保持与训练式方法相当的生成质量。
+  [ECCV 2024][生成架构搜索] 本文提出 Auto-GAS，首个面向生成模型（GAN）的免训练架构搜索框架，通过自动发现并优化零成本代理指标来替代传统训练式搜索，实现 110 倍搜索加速，同时保持与训练式方法相当的生成质量。 领域现状：生成对抗网络（GAN）在实时图像生成、图像翻译等场景广泛应用…
 tags:
   - "ECCV 2024"
   - "生成架构搜索"

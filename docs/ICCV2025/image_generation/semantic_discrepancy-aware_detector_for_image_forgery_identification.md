@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Discrepancy-aware Detector for Image Forgery Identification
 description: >-
-  [ICCV 2025][图像生成][图像伪造检测] 提出语义差异感知检测器（SDD），通过语义 token 采样、概念级伪造差异学习和低层伪造特征增强三个模块，利用重建学习将 CLIP 的视觉语义概念空间与伪造空间进行细粒度对齐…
+  [ICCV 2025][图像生成][图像伪造检测] 提出语义差异感知检测器（SDD），通过语义 token 采样、概念级伪造差异学习和低层伪造特征增强三个模块，利用重建学习将 CLIP 的视觉语义概念空间与伪造空间进行细粒度对齐，在 UnivFD 和 SynRIS 基准上取得 SOTA 性能（$ap_m$ 98.51%，AUROC 95.1%）。
 tags:
   - "ICCV 2025"
   - "图像生成"

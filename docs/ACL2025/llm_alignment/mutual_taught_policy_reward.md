@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mutual-Taught for Co-adapting Policy and Reward Models
 description: >-
-  [ACL 2025][LLM对齐][奖励篡改] Mutual-Taught 提出了一种基于 EM 算法的自训练框架，在偏好优化过程中同时迭代更新 policy model 和 reward model：E-step 用当前 RM 优化 PM，M-step 用 PM 更新前后的输出差异构建伪偏好对来更新 RM…
+  [ACL 2025][LLM对齐][奖励篡改] Mutual-Taught 提出了一种基于 EM 算法的自训练框架，在偏好优化过程中同时迭代更新 policy model 和 reward model：E-step 用当前 RM 优化 PM，M-step 用 PM 更新前后的输出差异构建伪偏好对来更新 RM，解决了分布偏移导致的 reward hacking 问题，8B 模型在 AlpacaEval-2 达到 54.1% LC win rate。
 tags:
   - "ACL 2025"
   - "LLM对齐"

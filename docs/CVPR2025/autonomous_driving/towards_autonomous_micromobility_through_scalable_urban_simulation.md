@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Autonomous Micromobility through Scalable Urban Simulation
 description: >-
-  [CVPR 2025 (Highlight)][自动驾驶][微出行] 本文提出 URBAN-SIM（高性能城市机器人学习仿真平台）和 URBAN-BENCH（8 项微出行任务 benchmark），通过层级化城市场景生成、交互式动态生成和异步场景采样三大模块，实现大规模多样化城市环境中的具身智能体训练与评测…
+  [CVPR 2025 (Highlight)][自动驾驶][微出行] 本文提出 URBAN-SIM（高性能城市机器人学习仿真平台）和 URBAN-BENCH（8 项微出行任务 benchmark），通过层级化城市场景生成、交互式动态生成和异步场景采样三大模块，实现大规模多样化城市环境中的具身智能体训练与评测，是推动自主微出行领域的系统性仿真方案。
 tags:
   - "CVPR 2025 (Highlight)"
   - "自动驾驶"

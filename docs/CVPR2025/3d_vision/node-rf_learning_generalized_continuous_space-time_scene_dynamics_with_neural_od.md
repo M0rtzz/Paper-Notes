@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Node-RF: Learning Generalized Continuous Space-Time Scene Dynamics with Neural ODE-based NeRFs
 description: >-
-  [CVPR 2025][3D视觉][Neural ODE] 提出 Node-RF，将 Neural ODE 与动态 NeRF 紧密耦合，用潜在向量的 ODE 演化建模场景连续时间动力学，实现超出训练序列的长程时序外推和跨轨迹泛化，无需光流或深度监督。
+  [CVPR 2025][3D视觉][Neural ODE] 提出 Node-RF，将 Neural ODE 与动态 NeRF 紧密耦合，用潜在向量的 ODE 演化建模场景连续时间动力学，实现超出训练序列的长程时序外推和跨轨迹泛化，无需光流或深度监督。 领域现状：动态 NeRF（D-NeRF、HyperNeRF 等）通过变形场…
 tags:
   - "CVPR 2025"
   - "3D视觉"

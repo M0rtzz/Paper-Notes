@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Stable and Storage-efficient Dataset Distillation: Matching Convexified Trajectory
 description: >-
-  [CVPR 2025][优化/理论][数据集蒸馏] 提出 MCT (Matching Convexified Trajectory) 方法，通过将 SGD 专家轨迹替换为从随机初始化到最优点的凸组合线性轨迹，同时解决了传统 MTT 方法的轨迹不稳定、收敛慢和存储消耗高三大问题。
+  [CVPR 2025][优化/理论][数据集蒸馏] 提出 MCT (Matching Convexified Trajectory) 方法，通过将 SGD 专家轨迹替换为从随机初始化到最优点的凸组合线性轨迹，同时解决了传统 MTT 方法的轨迹不稳定、收敛慢和存储消耗高三大问题。 数据集蒸馏（Dataset Distillat…
 tags:
   - "CVPR 2025"
   - "优化/理论"

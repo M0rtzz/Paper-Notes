@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems
 description: >-
-  [ICML2025][在线背包问题] 提出一族基于简洁预测（临界值的点预测或区间预测）的在线背包算法，在consistency与robustness之间实现近Pareto最优的权衡，并给出分数解到整数解的通用转换方法。
+  [ICML2025][其他/在线算法][在线背包问题] 提出一族基于简洁预测（临界值的点预测或区间预测）的在线背包算法，在consistency与robustness之间实现近Pareto最优的权衡，并给出分数解到整数解的通用转换方法。 现有痛点 现有痛点：在线背包问题 (OKP) 是经典的在线资源分配问题：物品按序到达…
 tags:
   - "ICML2025"
+  - "其他/在线算法"
   - "在线背包问题"
   - "learning-augmented算法"
   - "竞争比"

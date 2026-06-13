@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EVOLvE: Evaluating and Optimizing LLMs For In-Context Exploration
 description: >-
-  [ICML2025][医疗NLP][In-Context Exploration] 提出 BanditBench 基准和三种增强策略（推理时算法引导、Few-shot 示范、Oracle 行为微调），系统评估并改善 LLM 在 bandit 环境中的上下文探索能力，使小模型通过算法蒸馏超越大模型。
+  [ICML2025][医疗NLP][In-Context Exploration] 提出 BanditBench 基准和三种增强策略（推理时算法引导、Few-shot 示范、Oracle 行为微调），系统评估并改善 LLM 在 bandit 环境中的上下文探索能力，使小模型通过算法蒸馏超越大模型。 LLM 已被广泛用于推荐系…
 tags:
   - "ICML2025"
   - "医疗NLP"

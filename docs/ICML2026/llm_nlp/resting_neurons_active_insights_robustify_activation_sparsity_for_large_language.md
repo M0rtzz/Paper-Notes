@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Resting Neurons, Active Insights: Robustify Activation Sparsity for Large Language Models
 description: >-
-  [ICML 2026][LLM/NLP][激活稀疏] 本文把激活稀疏导致 LLM 掉点的本质归因为"表示漂移"，并仿照生物自发放电向每层注入一个输入无关、训练后可吸收进 bias 的小向量（SPON），以接近零推理开销显著缩小稀疏模型与稠密模型的差距。
+  [ICML 2026][LLM 其他][激活稀疏] 本文把激活稀疏导致 LLM 掉点的本质归因为"表示漂移"，并仿照生物自发放电向每层注入一个输入无关、训练后可吸收进 bias 的小向量（SPON），以接近零推理开销显著缩小稀疏模型与稠密模型的差距。 领域现状：为了加速 LLM 推理，激活稀疏（activation spar…
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "激活稀疏"
   - "表示稳定性"
   - "自发神经元"

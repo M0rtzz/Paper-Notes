@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hallucination Detection in LLMs with Topological Divergence on Attention Graphs
 description: >-
-  [ACL 2026][幻觉检测][TDA] TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 Manifold Topology Divergence 度量「response 子图相对 prompt 子图的拓扑新颖度」…
+  [ACL 2026][幻觉检测][TDA] TOHA 把 LLM 的 attention 矩阵当成带权图，用拓扑数据分析里的 Manifold Topology Divergence 度量「response 子图相对 prompt 子图的拓扑新颖度」，并发现存在跨数据集稳定的「幻觉感知头」——只用 10 个这样的头做平均，就能在 RAG 场景下做到 training-free + 比 SelfCheckGPT 快 70× 且 ROC-AUC 显著领先。
 tags:
   - "ACL 2026"
   - "幻觉检测"

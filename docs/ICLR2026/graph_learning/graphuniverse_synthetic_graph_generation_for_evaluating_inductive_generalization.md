@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraphUniverse: Synthetic Graph Generation for Evaluating Inductive Generalization
 description: >-
-  [ICLR2026][图学习][synthetic graph generation] 提出 GraphUniverse 框架，通过分层生成具有持久语义社区的图族（graph families），首次实现对图学习模型归纳泛化能力的系统性评估…
+  [ICLR2026][图学习][synthetic graph generation] 提出 GraphUniverse 框架，通过分层生成具有持久语义社区的图族（graph families），首次实现对图学习模型归纳泛化能力的系统性评估，揭示了 transductive 性能无法可靠预测 inductive 泛化能力这一关键发现。
 tags:
   - "ICLR2026"
   - "图学习"

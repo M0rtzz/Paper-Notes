@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blending Supervised and Reinforcement Fine-Tuning with Prefix Sampling
 description: >-
-  [ICML 2026][LLM推理][后训练] 提出 Prefix-RFT，通过从专家示范中采样前缀拼接模型续写来构建混合轨迹，在保持 RFT 目标导向优化的同时注入 SFT 的知识引导，在数学推理任务上显著超越独立 SFT、RFT 及已有混合方法。
+  [ICML 2026][LLM推理][后训练] 提出 Prefix-RFT，通过从专家示范中采样前缀拼接模型续写来构建混合轨迹，在保持 RFT 目标导向优化的同时注入 SFT 的知识引导，在数学推理任务上显著超越独立 SFT、RFT 及已有混合方法。 领域现状：LLM 后训练主要分两种范式——监督微调（SFT）通过模仿专家示…
 tags:
   - "ICML 2026"
   - "LLM推理"

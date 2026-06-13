@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VipAct: Visual-Perception Enhancement via Specialized VLM Agent Collaboration and Tool-use
 description: >-
-  [AAAI 2026][多模态VLM][VLM Agent] VipAct 提出了一个多Agent协作框架，通过编排器Agent（任务分析+规划+协调）、专用Agent（描述/比较/视觉提示解读）和视觉专家模型（深度估计/目标检测/分割等）三层协作，显著提升 VLM 在细粒度视觉感知任务上的表现…
+  [AAAI 2026][多模态VLM][VLM Agent] VipAct 提出了一个多Agent协作框架，通过编排器Agent（任务分析+规划+协调）、专用Agent（描述/比较/视觉提示解读）和视觉专家模型（深度估计/目标检测/分割等）三层协作，显著提升 VLM 在细粒度视觉感知任务上的表现，在 Blink 上从 63.74% (zero-shot GPT-4o) 提升到 73.79%。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

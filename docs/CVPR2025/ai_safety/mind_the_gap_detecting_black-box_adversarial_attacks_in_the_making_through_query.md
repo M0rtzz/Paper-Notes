@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Gap: Detecting Black-box Adversarial Attacks in the Making through Query Update Analysis
 description: >-
-  [CVPR 2025][AI安全][对抗攻击检测] 本文提出了一种基于查询更新模式(而非输入模式)的黑盒对抗攻击检测框架 GWAD，引入 Delta Similarity 指标来捕获基于查询的攻击中零阶优化的固有模式，在8种SOTA攻击(包括自适应攻击OARS)上实现了接近100%的检测率且误报率极低…
+  [CVPR 2025][AI安全][对抗攻击检测] 本文提出了一种基于查询更新模式(而非输入模式)的黑盒对抗攻击检测框架 GWAD，引入 Delta Similarity 指标来捕获基于查询的攻击中零阶优化的固有模式，在8种SOTA攻击(包括自适应攻击OARS)上实现了接近100%的检测率且误报率极低，显著优于现有的状态化防御方法。
 tags:
   - "CVPR 2025"
   - "AI安全"

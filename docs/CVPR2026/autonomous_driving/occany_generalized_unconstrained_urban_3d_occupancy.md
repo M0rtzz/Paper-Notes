@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OccAny: Generalized Unconstrained Urban 3D Occupancy
 description: >-
-  [CVPR 2026][自动驾驶][3D占用预测] OccAny 提出了首个泛化无约束城市 3D 占用预测框架，能在无标定、域外场景中从单目/序列/环视图像预测度量级占用体素，通过 Segmentation Forcing 和 Novel View Rendering 两项关键设计…
+  [CVPR 2026][自动驾驶][3D占用预测] OccAny 提出了首个泛化无约束城市 3D 占用预测框架，能在无标定、域外场景中从单目/序列/环视图像预测度量级占用体素，通过 Segmentation Forcing 和 Novel View Rendering 两项关键设计，在 KITTI 和 nuScenes 上超越所有视觉几何基线。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

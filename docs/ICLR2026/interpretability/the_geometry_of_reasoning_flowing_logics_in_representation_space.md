@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Geometry of Reasoning: Flowing Logics in Representation Space
 description: >-
-  [ICLR 2026][可解释性][Reasoning Geometry] 本文提出一个几何框架将 LLM 的推理过程建模为表示空间中的"流"（embedding 轨迹），通过解耦逻辑结构与语义内容的受控实验证明 LLM 内化了超越表面形式的逻辑不变量，并发现跨模型家族的可能普适表示规律。
+  [ICLR 2026][可解释性][Reasoning Geometry] 本文提出一个几何框架将 LLM 的推理过程建模为表示空间中的"流"（embedding 轨迹），通过解耦逻辑结构与语义内容的受控实验证明 LLM 内化了超越表面形式的逻辑不变量，并发现跨模型家族的可能普适表示规律。 领域现状：大语言模型（LLM）在各…
 tags:
   - "ICLR 2026"
   - "可解释性"

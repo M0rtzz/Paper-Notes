@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Geometry: Artistic Disparity Synthesis for Immersive 2D-to-3D
 description: >-
-  [CVPR 2026][3D视觉][2D-to-3D转换] 提出"艺术视差合成"新范式（Art3D），将2D-to-3D转换目标从几何精度转向艺术表达，通过双路径架构解耦全局深度风格与局部艺术效果，从专业3D电影数据中学习导演意图。
+  [CVPR 2026][3D视觉][2D-to-3D转换] 提出"艺术视差合成"新范式（Art3D），将2D-to-3D转换目标从几何精度转向艺术表达，通过双路径架构解耦全局深度风格与局部艺术效果，从专业3D电影数据中学习导演意图。 领域现状：当前2D-to-3D转换方法（如扩散模型方法StereoCrafter、Eye2E…
 tags:
   - "CVPR 2026"
   - "3D视觉"

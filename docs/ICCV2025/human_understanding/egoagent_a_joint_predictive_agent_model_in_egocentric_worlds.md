@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoAgent: A Joint Predictive Agent Model in Egocentric Worlds
 description: >-
-  [ICCV 2025][人体理解][egocentric vision] 提出EgoAgent，一个统一的预测式智能体模型，在单个Transformer中同时学习表征第一人称视觉观测、预测未来世界状态和生成3D人体动作。
+  [ICCV 2025][人体理解][egocentric vision] 提出EgoAgent，一个统一的预测式智能体模型，在单个Transformer中同时学习表征第一人称视觉观测、预测未来世界状态和生成3D人体动作。 人类通过感知-行动循环持续与环境交互，同时获得视觉感知、预测世界动态和行动决策三种能力…
 tags:
   - "ICCV 2025"
   - "人体理解"

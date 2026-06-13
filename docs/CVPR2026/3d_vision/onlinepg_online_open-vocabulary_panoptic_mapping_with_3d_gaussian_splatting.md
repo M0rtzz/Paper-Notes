@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][全景建图] 提出 OnlinePG，首个基于 3DGS 的在线开放词汇全景建图系统，通过 local-to-global 范式——在滑窗内用多线索聚类图（几何重叠+语义相似+视图共识）构建局部一致 3D 实例…
+  [CVPR 2026][3D视觉][全景建图] 提出 OnlinePG，首个基于 3DGS 的在线开放词汇全景建图系统，通过 local-to-global 范式——在滑窗内用多线索聚类图（几何重叠+语义相似+视图共识）构建局部一致 3D 实例，再通过双向二部匹配增量融合到全局地图——实现了在线方法中最优的语义和全景分割性能，ScanNet 上 mIoU 48.48 超越 OnlineAnySeg +17.2，且达到 10-18 FPS 实时效率。
 tags:
   - "CVPR 2026"
   - "3D视觉"

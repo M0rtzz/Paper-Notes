@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][3DGS] 提出Fuse-and-Refine模块，通过混合Splat-Voxel表征将像素对齐的高斯基元聚合到粗到细的体素层次结构中，用稀疏体素Transformer在15ms内融合约20万基元并提升约2dB PSNR…
+  [NeurIPS 2025][3D视觉][3DGS] 提出Fuse-and-Refine模块，通过混合Splat-Voxel表征将像素对齐的高斯基元聚合到粗到细的体素层次结构中，用稀疏体素Transformer在15ms内融合约20万基元并提升约2dB PSNR，且仅在静态场景训练即可零样本泛化到流式动态场景重建。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

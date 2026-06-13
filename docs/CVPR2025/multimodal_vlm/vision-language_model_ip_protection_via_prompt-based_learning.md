@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Language Model IP Protection via Prompt-based Learning
 description: >-
-  [CVPR 2025][多模态VLM][知识产权保护] 提出IP-CLIP框架，通过轻量级IP-Prompt学习（域token+图像token）和风格增强分支，在冻结CLIP骨干上实现VLM的知识产权保护——让模型在授权域保持高准确率的同时故意降低在非授权域的性能，授权域准确率下降为0%。
+  [CVPR 2025][多模态VLM][知识产权保护] 提出IP-CLIP框架，通过轻量级IP-Prompt学习（域token+图像token）和风格增强分支，在冻结CLIP骨干上实现VLM的知识产权保护——让模型在授权域保持高准确率的同时故意降低在非授权域的性能，授权域准确率下降为0%。 训练VLM（如CLIP）需要海量数…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

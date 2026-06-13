@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flying with Photons: Rendering Novel Views of Propagating Light
 description: >-
-  [ECCV 2024][3D视觉][瞬态成像] 提出瞬态场（Transient Field）表示，结合首创的多视点超快成像数据集，首次实现从动态新视角渲染真实场景中传播光的视频，能处理散射、反射、折射和衍射等复杂光传输效果。
+  [ECCV 2024][3D视觉][瞬态成像] 提出瞬态场（Transient Field）表示，结合首创的多视点超快成像数据集，首次实现从动态新视角渲染真实场景中传播光的视频，能处理散射、反射、折射和衍射等复杂光传输效果。 领域现状： 超快相机（如SPAD）能以万亿帧/秒的速度记录光传播视频（瞬态视频）…
 tags:
   - "ECCV 2024"
   - "3D视觉"

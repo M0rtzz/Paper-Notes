@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tilted Sharpness-Aware Minimization
 description: >-
-  [ICML2025][优化/理论][SAM] 提出 Tilted SAM (TSAM)，利用指数倾斜 (exponential tilting) 将 SAM 的 min-max 目标平滑化为对邻域内多个局部解按损失值加权的软优化，理论上更平滑、更偏好平坦极小值，实验在图像和文本任务上一致优于 SAM 及其变体…
+  [ICML2025][优化/理论][SAM] 提出 Tilted SAM (TSAM)，利用指数倾斜 (exponential tilting) 将 SAM 的 min-max 目标平滑化为对邻域内多个局部解按损失值加权的软优化，理论上更平滑、更偏好平坦极小值，实验在图像和文本任务上一致优于 SAM 及其变体。
 tags:
   - "ICML2025"
   - "优化/理论"

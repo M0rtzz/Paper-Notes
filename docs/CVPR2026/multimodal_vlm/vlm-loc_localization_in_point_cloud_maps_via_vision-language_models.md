@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLM-Loc: Localization in Point Cloud Maps via Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][文本到点云定位] 提出VLM-Loc框架，将3D点云地图转换为BEV图像和场景图供VLM进行结构化空间推理，结合部分节点分配（PNA）机制实现文本-点云精细定位，在自建的CityLoc基准上以Recall@5m提升14.20%大幅超越先前SOTA。
+  [CVPR 2026][多模态VLM][文本到点云定位] 提出VLM-Loc框架，将3D点云地图转换为BEV图像和场景图供VLM进行结构化空间推理，结合部分节点分配（PNA）机制实现文本-点云精细定位，在自建的CityLoc基准上以Recall@5m提升14.20%大幅超越先前SOTA。 领域现状：文本到点云（T2P）定位旨…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

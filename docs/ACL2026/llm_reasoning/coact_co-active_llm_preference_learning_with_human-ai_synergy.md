@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoAct: Co-Active LLM Preference Learning with Human-AI Synergy
 description: >-
-  [ACL 2026][LLM推理][偏好学习] CoAct 在偏好对齐中用自一致性把无标注样本切成"高一致 / 低一致"两堆，再用 k-NN 距离从高一致样本里挑出"自洽但可能错"的隐患样本送给 Oracle 标注，剩下的高一致样本直接当 AI 自标数据…
+  [ACL 2026][LLM推理][偏好学习] CoAct 在偏好对齐中用自一致性把无标注样本切成"高一致 / 低一致"两堆，再用 k-NN 距离从高一致样本里挑出"自洽但可能错"的隐患样本送给 Oracle 标注，剩下的高一致样本直接当 AI 自标数据，最后用 oracle-verified 样本做 in-context demo 生成新指令，把人和 AI 的监督在一个 DPO 循环里捏成一团，在 GSM8K/MATH/WebInstruct 上比最强基线再涨 4–8 个点。
 tags:
   - "ACL 2026"
   - "LLM推理"

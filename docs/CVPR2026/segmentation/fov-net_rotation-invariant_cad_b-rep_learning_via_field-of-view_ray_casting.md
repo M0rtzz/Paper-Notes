@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoV-Net: Rotation-Invariant CAD B-rep Learning via Field-of-View Ray Casting
 description: >-
-  [CVPR 2026][语义分割][CAD B-rep 学习] 提出 FoV-Net，首个在 CAD B-rep 学习中同时捕获局部表面几何和全局结构上下文的旋转不变框架，通过局部参考系 UV 网格(LRF UV)和视场光线投射(FoV)描述子实现了在任意 $\mathbf{SO}(3)$ 旋转下的鲁棒分类和…
+  [CVPR 2026][语义分割][CAD B-rep 学习] 提出 FoV-Net，首个在 CAD B-rep 学习中同时捕获局部表面几何和全局结构上下文的旋转不变框架，通过局部参考系 UV 网格(LRF UV)和视场光线投射(FoV)描述子实现了在任意 $\mathbf{SO}(3)$ 旋转下的鲁棒分类和分割。
 tags:
   - "CVPR 2026"
   - "语义分割"

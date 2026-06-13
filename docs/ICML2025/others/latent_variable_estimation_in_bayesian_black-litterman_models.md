@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Variable Estimation in Bayesian Black-Litterman Models
 description: >-
-  [ICML2025][Black-Litterman 模型] 将经典 Black-Litterman 组合优化模型中的主观投资者观点 $(q, \Omega)$ 视为隐变量，通过贝叶斯网络从市场特征数据中自动推断，消除对人工主观输入的依赖…
+  [ICML2025][Black-Litterman 模型] 将经典 Black-Litterman 组合优化模型中的主观投资者观点 $(q, \Omega)$ 视为隐变量，通过贝叶斯网络从市场特征数据中自动推断，消除对人工主观输入的依赖，在 30 年道琼斯和 20 年 ETF 数据上 Sharpe 比率提升约 50%、换手率降低约 55%。
 tags:
   - "ICML2025"
   - "Black-Litterman 模型"

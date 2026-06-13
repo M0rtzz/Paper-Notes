@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASHiTA: Automatic Scene-grounded Hierarchical Task Analysis
 description: >-
-  [CVPR 2025][3D视觉][层次化任务分析] 提出首个将高层任务自动分解为场景锚定(grounded)子任务层级的框架ASHiTA，通过交替执行LLM辅助的层次化任务分析和基于信息瓶颈原理的任务驱动3D场景图构建，实现了任务层级与场景表示的联合推理。
+  [CVPR 2025][3D视觉][层次化任务分析] 提出首个将高层任务自动分解为场景锚定(grounded)子任务层级的框架ASHiTA，通过交替执行LLM辅助的层次化任务分析和基于信息瓶颈原理的任务驱动3D场景图构建，实现了任务层级与场景表示的联合推理。 领域现状：场景重建与语义理解领域已在将自然语言锚定到3D环境方面取…
 tags:
   - "CVPR 2025"
   - "3D视觉"

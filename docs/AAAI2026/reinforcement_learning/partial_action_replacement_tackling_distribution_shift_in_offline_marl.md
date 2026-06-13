@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Partial Action Replacement: Tackling Distribution Shift in Offline MARL
 description: >-
-  [AAAI 2026][强化学习][离线多智能体强化学习] 提出部分动作替换（PAR）原理，从理论上证明在分解行为策略下分布偏移随偏离智能体数量线性增长（而非联合动作空间的指数增长），并基于此开发 SPaCQL 算法，通过 Q 函数集成的不确定性动态加权不同 PAR 策略…
+  [AAAI 2026][强化学习][离线多智能体强化学习] 提出部分动作替换（PAR）原理，从理论上证明在分解行为策略下分布偏移随偏离智能体数量线性增长（而非联合动作空间的指数增长），并基于此开发 SPaCQL 算法，通过 Q 函数集成的不确定性动态加权不同 PAR 策略，在 Random 和 Medium-Replay 数据集上显著超越所有基线。
 tags:
   - "AAAI 2026"
   - "强化学习"

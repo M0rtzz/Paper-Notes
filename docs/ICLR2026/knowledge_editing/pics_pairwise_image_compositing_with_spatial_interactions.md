@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PICS: Pairwise Image Compositing with Spatial Interactions
 description: >-
-  [ICLR 2026][知识编辑][image compositing] 提出 PICS——一种并行成对图像合成方法，通过 Interaction Transformer 中的掩码引导 MoE 和自适应 α-blending 策略，在单次推理中同时合成两个对象并显式建模遮挡、接触等空间交互关系…
+  [ICLR 2026][知识编辑][image compositing] 提出 PICS——一种并行成对图像合成方法，通过 Interaction Transformer 中的掩码引导 MoE 和自适应 α-blending 策略，在单次推理中同时合成两个对象并显式建模遮挡、接触等空间交互关系，全面超越现有序列合成方法。
 tags:
   - "ICLR 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VirtueBench: Evaluating Trustworthiness under Uncertainty in Long Video Understanding
 description: >-
-  [CVPR 2026][视频理解][视频理解Benchmark] 提出 VirtueBench，首个评估 VLM 在不确定性下可信度的长视频理解基准，通过为每个视频构建多级帧采样并标注可回答/不可回答的 ground truth，揭示了现有模型普遍倾向于猜测而非诚实拒绝的问题。
+  [CVPR 2026][视频理解][视频理解Benchmark] 提出 VirtueBench，首个评估 VLM 在不确定性下可信度的长视频理解基准，通过为每个视频构建多级帧采样并标注可回答/不可回答的 ground truth，揭示了现有模型普遍倾向于猜测而非诚实拒绝的问题。 视觉语言模型（VLM）在多模态理解任务上取得了…
 tags:
   - "CVPR 2026"
   - "视频理解"

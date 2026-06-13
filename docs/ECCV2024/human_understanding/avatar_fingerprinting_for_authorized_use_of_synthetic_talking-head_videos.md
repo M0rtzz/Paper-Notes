@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Avatar Fingerprinting for Authorized Use of Synthetic Talking-Head Videos
 description: >-
-  [ECCV 2024][人体理解][Avatar指纹识别] 本文定义了"Avatar指纹识别"这一新任务——验证合成说话头视频中驱动表情的真实身份，贡献了迄今最大规模的面部重建数据集NVFAIR（161个身份），并提出基于归一化面部关键点距离和时序CNN的基线方法…
+  [ECCV 2024][人体理解][Avatar指纹识别] 本文定义了"Avatar指纹识别"这一新任务——验证合成说话头视频中驱动表情的真实身份，贡献了迄今最大规模的面部重建数据集NVFAIR（161个身份），并提出基于归一化面部关键点距离和时序CNN的基线方法，通过学习与外观无关的面部运动签名实现身份验证（平均AUC 0.85），且能泛化到未见过的生成器（AUC 0.83）。
 tags:
   - "ECCV 2024"
   - "人体理解"

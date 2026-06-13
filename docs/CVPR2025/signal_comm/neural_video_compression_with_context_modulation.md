@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Neural Video Compression with Context Modulation
 description: >-
-  [CVPR 2025][信号/通信][神经视频编码] 提出上下文调制机制，增强神经视频编码器（NVC）中时间上下文的传播和利用能力，解决现有条件编码方法时间上下文利用不充分的问题。
+  [CVPR 2025][信号/通信][神经视频压缩] 提出 DCMVC 框架，通过流定向（flow orientation）和上下文补偿（context compensation）两步调制时序上下文，在像素域和特征域充分利用参考信息，实现比 H.266/VVC 平均节省 22.7% 码率、比前 SOTA DCVC-FM 节省 10.1% 码率的压缩性能。
 tags:
   - "CVPR 2025"
   - "信号/通信"
-  - "神经视频编码"
-  - "上下文调制"
-  - "时间上下文"
+  - "神经视频压缩"
+  - "时序上下文建模"
   - "条件编码"
+  - "光流引导"
+  - "特征补偿"
 ---
 
 # Neural Video Compression with Context Modulation
@@ -127,3 +128,19 @@ tags:
   - 时间冗余
   - 条件编码
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Continuous Space-Time Video Resampling with Invertible Motion Steganography](continuous_space-time_video_resampling_with_invertible_motion_steganography.md)
+- [\[ICML 2025\] Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization](../../ICML2025/signal_comm/large_language_model_llm-enabled_in-context_learning_for_wireless_network_optimi.md)
+- [\[NeurIPS 2025\] Feature-aware Modulation for Learning from Temporal Tabular Data](../../NeurIPS2025/signal_comm/feature-aware_modulation_for_learning_from_temporal_tabular_data.md)
+- [\[AAAI 2026\] Balancing Multimodal Domain Generalization via Gradient Modulation and Projection](../../AAAI2026/signal_comm/balancing_multimodal_domain_generalization_via_gradient_modulation_and_projectio.md)
+- [\[CVPR 2026\] CLAY: Conditional Visual Similarity Modulation in Vision-Language Embedding Space](../../CVPR2026/signal_comm/clay_conditional_visual_similarity.md)
+
+</div>
+
+<!-- RELATED:END -->

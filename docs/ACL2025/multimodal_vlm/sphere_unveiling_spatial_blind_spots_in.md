@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPHERE: Unveiling Spatial Blind Spots in Vision-Language Models Through Hierarchical Evaluation
 description: >-
-  [ACL 2025][多模态VLM][spatial reasoning] 提出 SPHERE 三层级空间推理评估框架（单技能→多技能→推理），基于 MS COCO 人工标注 2285 个 QA 对，发现 GPT-4o（67.9%）与人类（93.0%）差距 25%…
+  [ACL 2025][多模态VLM][spatial reasoning] 提出 SPHERE 三层级空间推理评估框架（单技能→多技能→推理），基于 MS COCO 人工标注 2285 个 QA 对，发现 GPT-4o（67.9%）与人类（93.0%）差距 25%，尤其在距离判断、视角切换和物理推理上表现严重不足。
 tags:
   - "ACL 2025"
   - "多模态VLM"

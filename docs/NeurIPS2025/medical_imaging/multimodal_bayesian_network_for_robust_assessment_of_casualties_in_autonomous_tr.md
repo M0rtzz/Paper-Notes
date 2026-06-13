@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Bayesian Network for Robust Assessment of Casualties in Autonomous Triage
 description: >-
-  [NeurIPS 2025][医学图像][贝叶斯网络] 提出基于专家知识驱动的贝叶斯网络决策支持框架，融合多个计算机视觉模型的输出来评估伤亡人员状况，无需训练数据且支持不完整信息推断，在DARPA Triage Challenge中将分诊准确率从14%提升至53%，诊断覆盖率从31%提升至95%。
+  [NeurIPS 2025][医学图像][贝叶斯网络] 提出基于专家知识驱动的贝叶斯网络决策支持框架，融合多个计算机视觉模型的输出来评估伤亡人员状况，无需训练数据且支持不完整信息推断，在DARPA Triage Challenge中将分诊准确率从14%提升至53%，诊断覆盖率从31%提升至95%。 大规模伤亡事件（MCIs）…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

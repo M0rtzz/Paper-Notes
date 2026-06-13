@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Contextual Attribute Density in Referring Expression Counting (CAD-GD)
 description: >-
-  [CVPR 2025][指代表达计数] 提出上下文属性密度（Contextual Attribute Density, CAD）概念来增强指代表达计数（Referring Expression Counting），通过 U 形密度估计器、CAD 注意力和动态查询初始化三个模块…
+  [CVPR 2025][指代表达计数] 提出上下文属性密度（Contextual Attribute Density, CAD）概念来增强指代表达计数（Referring Expression Counting），通过 U 形密度估计器、CAD 注意力和动态查询初始化三个模块，在 REC-8K 数据集上相比 GroundingREC 降低了约 30% 的计数误差（MAE 从 6.80 降至 5.43）。
 tags:
   - "CVPR 2025"
   - "指代表达计数"

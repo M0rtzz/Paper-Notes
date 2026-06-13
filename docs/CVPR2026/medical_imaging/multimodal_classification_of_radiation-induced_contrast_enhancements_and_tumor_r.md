@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning
 description: >-
-  [CVPR 2026][医学图像][脑肿瘤] 提出 RICE-NET，一个多模态 3D ResNet-18 模型，整合纵向 MRI 数据与放疗剂量分布图，用于自动区分胶质母细胞瘤术后放射诱导对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。
+  [CVPR 2026][医学图像][脑肿瘤] 提出 RICE-NET，一个多模态 3D ResNet-18 模型，整合纵向 MRI 数据与放疗剂量分布图，用于自动区分胶质母细胞瘤术后放射诱导对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。 1. 领域现状 胶质母细胞瘤（GBM）术后放疗是标准治疗…
 tags:
   - "CVPR 2026"
   - "医学图像"

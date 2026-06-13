@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rotation-Invariant Spherical Watermarking via Third-Order SO(3) Representation Coupling
 description: >-
-  [ICML 2026][AI安全][全景图水印] TRIAD 把 360° 全景图当作球面信号，用三阶球谐系数张量积投影到 trivial 表示得到一个**理论可证 SO(3) 不变**的双谱标量，从而把水印藏在高阶 SH 系数里、再从这个不变量里读出来…
+  [ICML 2026][AI安全][全景图水印] TRIAD 把 360° 全景图当作球面信号，用三阶球谐系数张量积投影到 trivial 表示得到一个**理论可证 SO(3) 不变**的双谱标量，从而把水印藏在高阶 SH 系数里、再从这个不变量里读出来，在任意 3D 旋转下仍能保持近 100% 的比特准确率而不依赖数据增强。
 tags:
   - "ICML 2026"
   - "AI安全"

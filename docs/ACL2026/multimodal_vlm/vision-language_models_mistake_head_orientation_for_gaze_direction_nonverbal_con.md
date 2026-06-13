@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Language Models Mistake Head Orientation for Gaze Direction: Nonverbal Conversation Cues
 description: >-
-  [ACL2026][多模态VLM][视线目标推断] 这篇论文用 1,360 张受控真实照片和预注册统计检验发现，当前 VLM 在判断人看向哪个物体时远弱于人类，主要会把头部朝向误当成视线方向；对专门 gaze 模型微调后可缓解但不能完全消除这种偏差。
+  [ACL2026][多模态VLM][视线目标推断] 这篇论文用 1,360 张受控真实照片和预注册统计检验发现，当前 VLM 在判断人看向哪个物体时远弱于人类，主要会把头部朝向误当成视线方向；对专门 gaze 模型微调后可缓解但不能完全消除这种偏差。 领域现状：视线是人类交流中非常重要的非语言线索。对话机器人、具身智能和多模…
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2506.05412](https://arxiv.org/abs/2506.05412)  
 **代码**: https://zoryzhang.github.io/gaze  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: 视线目标推断, 头部朝向偏差, 非语言线索, VLM行为评估, 受控实验
 
 ## 一句话总结

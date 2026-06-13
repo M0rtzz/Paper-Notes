@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Circuit Compositions: Exploring Modular Structures in Transformer-Based Language Models
 description: >-
-  [ACL 2025][LLM/NLP][机械可解释性] 通过在 PCFG SET 数据集上识别 10 个组合性字符串编辑操作的电路（circuits），研究 Transformer 中功能相关电路之间的模块化关系，发现功能相似的电路具有显著的节点重叠和跨任务忠实度…
+  [ACL 2025][LLM 其他][机械可解释性] 通过在 PCFG SET 数据集上识别 10 个组合性字符串编辑操作的电路（circuits），研究 Transformer 中功能相关电路之间的模块化关系，发现功能相似的电路具有显著的节点重叠和跨任务忠实度，且电路可以通过集合运算（并集）组合以表示超出单个电路能力的更复杂功能。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "机械可解释性"
   - "电路发现"
   - "模块化结构"

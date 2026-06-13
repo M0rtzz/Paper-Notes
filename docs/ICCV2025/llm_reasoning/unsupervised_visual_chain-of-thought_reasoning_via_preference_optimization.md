@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Visual Chain-of-Thought Reasoning via Preference Optimization
 description: >-
-  [ICCV 2025][LLM推理][Visual CoT] 提出UV-CoT框架，通过自动生成偏好数据和改进的Score-DPO损失函数，在不需要人工标注bounding box的情况下实现图像级链式思维（Visual CoT）推理，在6个基准上超越有监督的Visual-CoT方法。
+  [ICCV 2025][LLM推理][Visual CoT] 提出UV-CoT框架，通过自动生成偏好数据和改进的Score-DPO损失函数，在不需要人工标注bounding box的情况下实现图像级链式思维（Visual CoT）推理，在6个基准上超越有监督的Visual-CoT方法。 CoT推理显著提升了MLLM的可解释性…
 tags:
   - "ICCV 2025"
   - "LLM推理"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Ranking Unraveled: Recipes for LLM Rankings in Head-to-Head AI Combat
 description: >-
-  [ACL 2025][LLM/NLP][LLM排名] 系统性地评估四种排名算法（Elo、Bradley-Terry、Glicko、Markov Chain）在LLM头对头评估中的表现，定义三条核心排名准则（传递性、预测准确率、超参数敏感性），发现广泛使用的 Elo 排名在稳定性和一致性方面存在严重缺陷…
+  [ACL 2025][LLM 其他][LLM排名] 系统性地评估四种排名算法（Elo、Bradley-Terry、Glicko、Markov Chain）在LLM头对头评估中的表现，定义三条核心排名准则（传递性、预测准确率、超参数敏感性），发现广泛使用的 Elo 排名在稳定性和一致性方面存在严重缺陷，推荐 Glicko 用于大规模不均匀数据集、Bradley-Terry 用于小型可控数据集。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM排名"
   - "Elo"
   - "Bradley-Terry"

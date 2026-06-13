@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Fixed-Point RNNs: Interpolating from Diagonal to Dense
 description: >-
-  [NeurIPS 2025][Fixed-Point Iteration] 提出 Fixed-Point RNN 框架，将稠密线性 RNN 参数化为对角线性 RNN 的不动点，通过迭代次数在对角（高效）与稠密（表达力强）之间动态插值，首次在状态跟踪（$A_5$/$S_5$）和拷贝任务上同时取得最优结果。
+  [NeurIPS 2025 Spotlight][Fixed-Point Iteration] 提出 Fixed-Point RNN 框架，将稠密线性 RNN 参数化为对角线性 RNN 的不动点，通过迭代次数在对角（高效）与稠密（表达力强）之间动态插值，首次在状态跟踪（$A_5$/$S_5$）和拷贝任务上同时取得最优结果。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "Fixed-Point Iteration"
   - "Dense Linear RNN"
   - "State-Space Model"

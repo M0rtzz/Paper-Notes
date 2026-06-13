@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography
 description: >-
-  [ICCV 2025][医学图像][光声计算断层成像] 本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。
+  [ICCV 2025][医学图像][光声计算断层成像] 本文提出一种高效的自监督联合重建方法，通过将声速（SOS）参数化为像素网格或神经场，并通过可微成像前向模型反向传播梯度来恢复SOS和高质量光声图像，在精度上超越现有SOTA的同时实现35倍加速（40秒 vs 23分钟）。 光声计算断层成像（PACT）是一种类似超声的非侵…
 tags:
   - "ICCV 2025"
   - "医学图像"

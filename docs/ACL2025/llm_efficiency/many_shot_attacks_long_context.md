@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Really Matters in Many-Shot Attacks? An Empirical Study of Long-Context Vulnerabilities in LLMs
 description: >-
-  [ACL 2025][LLM效率][many-shot jailbreaking] 系统分析 Many-Shot Jailbreaking（MSJ）攻击的关键因素，发现上下文长度是攻击成功的决定性因素…
+  [ACL 2025][LLM效率][many-shot jailbreaking] 系统分析 Many-Shot Jailbreaking（MSJ）攻击的关键因素，发现上下文长度是攻击成功的决定性因素，而内容的有害性、主题、格式几乎不重要——即使重复安全内容、随机无意义文本（Lorem Ipsum）都能在长上下文下突破模型安全对齐。
 tags:
   - "ACL 2025"
   - "LLM效率"

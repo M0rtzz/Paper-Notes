@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Magic Insert: Style-Aware Drag-and-Drop
 description: >-
-  提出Magic Insert方法，首次形式化和解决"风格感知拖放"问题——将任意风格的主体拖入不同风格的目标图像中，主体自动适应目标风格且插入效果物理合理…
+  提出Magic Insert方法，首次形式化和解决"风格感知拖放"问题——将任意风格的主体拖入不同风格的目标图像中，主体自动适应目标风格且插入效果物理合理，核心包括风格感知个性化（LoRA+IP-Adapter风格注入）和Bootstrap Domain Adaptation（将真实图像训练的插入模型适配到风格化图像领域）。
 tags:
 
 ---

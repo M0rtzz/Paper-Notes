@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AsymRnR: Video Diffusion Transformers Acceleration with Asymmetric Reduction and Restoration
 description: >-
-  [ICML 2025][视频生成][视频生成加速] 提出 AsymRnR——一种免训练的视频 DiT 加速方法，基于注意力中不同组件（Q/K/V）、不同层、不同去噪步骤的冗余程度不同的观察，非对称地削减 token 以实现无损加速。
+  [ICML 2025][视频生成][视频生成加速] 提出 AsymRnR——一种免训练的视频 DiT 加速方法，基于注意力中不同组件（Q/K/V）、不同层、不同去噪步骤的冗余程度不同的观察，非对称地削减 token 以实现无损加速。 领域现状：视频 Diffusion Transformer（DiT）如 HunyuanVid…
 tags:
   - "ICML 2025"
   - "视频生成"

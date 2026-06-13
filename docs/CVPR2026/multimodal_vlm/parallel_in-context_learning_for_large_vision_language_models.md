@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Parallel In-context Learning for Large Vision Language Models
 description: >-
-  [CVPR 2026][多模态VLM][上下文学习] 提出 Parallel-ICL，将多模态 in-context learning 的长 demonstration 上下文分块并行处理，通过加权 Product-of-Experts 在 logit 层集成，实现与全上下文 MM-ICL 相当甚至更优的性能…
+  [CVPR 2026 Findings][多模态VLM][上下文学习] 提出 Parallel-ICL，将多模态 in-context learning 的长 demonstration 上下文分块并行处理，通过加权 Product-of-Experts 在 logit 层集成，实现与全上下文 MM-ICL 相当甚至更优的性能，同时显著降低推理延迟。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "多模态VLM"
   - "上下文学习"
   - "推理加速"

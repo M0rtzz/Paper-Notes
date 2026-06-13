@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RealUnify: Do Unified Models Truly Benefit from Unification? A Comprehensive Benchmark
 description: >-
-  [CVPR 2026][图像生成][统一模型] 本文提出 RealUnify，首个专门评估统一模型中理解与生成能力双向协同效果的基准，通过1000个人工标注实例和直接/分步双重评估协议，揭示了当前统一模型虽然具备理解和生成能力，但在端到端场景中仍无法实现真正的能力协同。
+  [CVPR 2026][图像生成][统一模型] 本文提出 RealUnify，首个专门评估统一模型中理解与生成能力双向协同效果的基准，通过1000个人工标注实例和直接/分步双重评估协议，揭示了当前统一模型虽然具备理解和生成能力，但在端到端场景中仍无法实现真正的能力协同。 1. 领域现状：多模态统一模型（如 BAGEL、Jan…
 tags:
   - "CVPR 2026"
   - "图像生成"

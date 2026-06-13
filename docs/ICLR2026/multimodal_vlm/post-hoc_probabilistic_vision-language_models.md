@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Post-hoc Probabilistic Vision-Language Models
 description: >-
-  [ICLR 2026][多模态VLM][视觉语言模型] 提出一种免训练的后验（post-hoc）不确定性估计方法，对 CLIP/SigLIP 等 VLM 最后几层使用 Laplace 近似，解析推导余弦相似度的不确定性，在不确定性量化和主动学习中取得显著优于基线的效果。
+  [ICLR 2026][多模态VLM][视觉语言模型] 提出一种免训练的后验（post-hoc）不确定性估计方法，对 CLIP/SigLIP 等 VLM 最后几层使用 Laplace 近似，解析推导余弦相似度的不确定性，在不确定性量化和主动学习中取得显著优于基线的效果。 领域现状：视觉语言模型（vision-language…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

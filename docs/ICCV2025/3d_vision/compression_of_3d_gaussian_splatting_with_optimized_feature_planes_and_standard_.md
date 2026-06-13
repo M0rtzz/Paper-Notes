@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compression of 3D Gaussian Splatting with Optimized Feature Planes and Standard Video Codecs
 description: >-
-  [ICCV 2025][3D视觉][3D高斯喷溅] 本文提出 CodecGS，通过将 3DGS 的所有高斯属性用紧凑的 Tri-plane 特征平面表示，并结合频率域 DCT 熵建模和通道级比特分配策略，使特征平面能高效利用标准视频编解码器（HEVC）压缩…
+  [ICCV 2025][3D视觉][3D高斯喷溅] 本文提出 CodecGS，通过将 3DGS 的所有高斯属性用紧凑的 Tri-plane 特征平面表示，并结合频率域 DCT 熵建模和通道级比特分配策略，使特征平面能高效利用标准视频编解码器（HEVC）压缩，实现在保持高渲染质量的同时将存储大小减少至约10MB以内（相比原始3DGS压缩比高达146×）。
 tags:
   - "ICCV 2025"
   - "3D视觉"

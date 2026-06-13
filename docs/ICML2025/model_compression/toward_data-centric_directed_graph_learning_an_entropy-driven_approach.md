@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Data-centric Directed Graph Learning: An Entropy-driven Approach
 description: >-
-  [ICML 2025][模型压缩][有向图学习] 提出 EDEN（Entropy-driven Digraph Knowledge Distillation），从数据中心视角构建层级知识树（HKT），通过有向拓扑结构度量和节点互信息量化，揭示有向图中拓扑与节点属性的潜在关联…
+  [ICML 2025][模型压缩][有向图学习] 提出 EDEN（Entropy-driven Digraph Knowledge Distillation），从数据中心视角构建层级知识树（HKT），通过有向拓扑结构度量和节点互信息量化，揭示有向图中拓扑与节点属性的潜在关联，作为即插即用模块可为任意 DiGNN 带来平均 2-5% 的性能提升，在 14 个数据集和 4 个下游任务上取得 SOTA。
 tags:
   - "ICML 2025"
   - "模型压缩"

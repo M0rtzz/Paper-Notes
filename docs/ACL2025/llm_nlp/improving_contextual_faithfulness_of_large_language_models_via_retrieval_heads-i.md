@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization
 description: >-
-  [ACL 2025][LLM/NLP][检索增强生成] 本文发现LLM中的"检索头"（retrieval heads）与长文本问答的上下文忠实度高度相关，据此提出Rhio框架：通过遮蔽检索头生成不忠实样本、引入控制令牌进行忠实度感知调优、再利用对比解码增强忠实度，在7B和13B模型上均超越GPT-4o。
+  [ACL 2025][LLM 其他][检索增强生成] 本文发现LLM中的"检索头"（retrieval heads）与长文本问答的上下文忠实度高度相关，据此提出Rhio框架：通过遮蔽检索头生成不忠实样本、引入控制令牌进行忠实度感知调优、再利用对比解码增强忠实度，在7B和13B模型上均超越GPT-4o。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "检索增强生成"
   - "上下文忠实度"
   - "注意力头"

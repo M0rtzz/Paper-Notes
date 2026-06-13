@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DFSAttn: Dynamic Fine-Grained Sparse Attention for Efficient Video Generation
 description: >-
-  [ICML 2026][视频生成][稀疏注意力] DFSAttn 通过 **3D Hilbert 曲线重排序** + **分层块评分** + **自适应掩码缓存**，实现了与全注意力相媲美的质量下 **2.1× 端到端加速**——解决了块稀疏注意力在高稀疏率（>80%）下质量下降的核心问题。
+  [ICML 2026][视频生成][稀疏注意力] DFSAttn 通过 3D Hilbert 曲线重排序：+ 分层块评分：+ 自适应掩码缓存：，实现了与全注意力相媲美的质量下 2.1× 端到端加速：——解决了块稀疏注意力在高稀疏率（80%）下质量下降的核心问题。 领域现状：视频扩散变换器（DiT）通过 3D 全注意力实现高保…
 tags:
   - "ICML 2026"
   - "视频生成"

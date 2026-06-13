@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FSL-SAGE: Accelerating Federated Split Learning via Smashed Activation Gradient Estimation
 description: >-
-  [ICML 2025][优化/理论][联邦学习] 本文提出 FSL-SAGE，一种联邦分裂学习算法，通过辅助模型估计服务端梯度反馈，在保持与 FedAvg 相当的 $O(1/\sqrt{T})$ 收敛速率的同时，大幅降低通信开销和客户端内存需求。
+  [ICML 2025][优化/理论][联邦学习] 本文提出 FSL-SAGE，一种联邦分裂学习算法，通过辅助模型估计服务端梯度反馈，在保持与 FedAvg 相当的 $O(1/\sqrt{T})$ 收敛速率的同时，大幅降低通信开销和客户端内存需求。 领域现状： 联邦学习（FL）和分裂学习（SL）是两种主流的分布式隐私保护训练范…
 tags:
   - "ICML 2025"
   - "优化/理论"

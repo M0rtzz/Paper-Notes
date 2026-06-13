@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safety Anchor: Defending Harmful Fine-tuning via Geometric Bottlenecks
 description: >-
-  [ICML 2026][LLM对齐][Harmful Fine-tuning] 本文证明所有现有「在参数空间设约束」的 HFT 防御都会因参数冗余而被绕过，提出 Safety Bottleneck Regularization (SBR) 把防御战场搬到 unembedding 层这一几何瓶颈上：仅锚定 1…
+  [ICML 2026][LLM对齐][Harmful Fine-tuning] 本文证明所有现有「在参数空间设约束」的 HFT 防御都会因参数冗余而被绕过，提出 Safety Bottleneck Regularization (SBR) 把防御战场搬到 unembedding 层这一几何瓶颈上：仅锚定 1 个高危 prompt 的最后一层隐状态，就能在 50 epoch 持续 HFT 攻击下把 Harmful Score 压到 < 10，同时不损 benign 任务精度。
 tags:
   - "ICML 2026"
   - "LLM对齐"

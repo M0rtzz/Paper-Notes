@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mimic In-Context Learning for Multimodal Tasks
 description: >-
-  [CVPR 2025][多模态VLM][In-Context Learning] 本文从数学角度分析了ICL中in-context demonstrations (ICDs)对自注意力的"移位效应"，并提出MimIC方法通过在每个注意力头插入可学习移位向量+query依赖的缩放因子来模拟ICL行为…
+  [CVPR 2025][多模态VLM][In-Context Learning] 本文从数学角度分析了ICL中in-context demonstrations (ICDs)对自注意力的"移位效应"，并提出MimIC方法通过在每个注意力头插入可学习移位向量+query依赖的缩放因子来模拟ICL行为，在VQA和Captioning任务上以仅0.26M参数超越32-shot ICL和所有现有移位向量方法。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

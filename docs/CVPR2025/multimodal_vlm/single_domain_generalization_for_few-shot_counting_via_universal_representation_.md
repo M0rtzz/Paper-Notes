@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Single Domain Generalization for Few-Shot Counting via Universal Representation Matching
 description: >-
-  [CVPR 2025][多模态VLM][少样本计数] 提出首个面向少样本计数的单域泛化模型URM，通过将CLIP的通用视觉-语言表征蒸馏到可学习原型中参与相关性构建，在不损失域内性能的前提下大幅提升跨域泛化能力（MAE降低27.5%）。
+  [CVPR 2025][多模态VLM][少样本计数] 提出首个面向少样本计数的单域泛化模型URM，通过将CLIP的通用视觉-语言表征蒸馏到可学习原型中参与相关性构建，在不损失域内性能的前提下大幅提升跨域泛化能力（MAE降低27.5%）。 少样本计数（FSC）根据少量标注样例估计图像中目标物体数量。现有方法（如FamNet、L…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

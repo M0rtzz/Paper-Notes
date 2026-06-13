@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Frustratingly Simple Yet Highly Effective Attack Baseline: Over 90% Success Rate Against the Strong Black-box Models of GPT-4.5/4o/o1
 description: >-
-  [NeurIPS 2025][多模态VLM][黑盒迁移攻击] 提出 M-Attack，通过对源图像做随机裁剪后与目标图像在嵌入空间做局部-全局/局部-局部匹配，配合多 CLIP 模型集成，使对抗扰动自然聚集在语义关键区域形成清晰的语义细节…
+  [NeurIPS 2025][多模态VLM][黑盒迁移攻击] 提出 M-Attack，通过对源图像做随机裁剪后与目标图像在嵌入空间做局部-全局/局部-局部匹配，配合多 CLIP 模型集成，使对抗扰动自然聚集在语义关键区域形成清晰的语义细节，在 GPT-4.5/4o/o1 等商业黑盒 LVLM 上实现 >90% 的定向攻击成功率。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

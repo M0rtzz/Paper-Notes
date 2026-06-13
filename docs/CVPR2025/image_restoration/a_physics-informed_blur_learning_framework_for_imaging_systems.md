@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Physics-Informed Blur Learning Framework for Imaging Systems
 description: >-
-  [CVPR 2025][图像恢复][PSF estimation] 提出基于物理的 PSF 学习框架，设计新型波前基（每个基仅影响单一 SFR 方向）消除梯度冲突，结合课程学习（中心→边缘），无需镜头参数即可精确估计成像系统的空间变化 PSF。
+  [CVPR 2025][图像恢复][PSF estimation] 提出基于物理的 PSF 学习框架，设计新型波前基（每个基仅影响单一 SFR 方向）消除梯度冲突，结合课程学习（中心→边缘），无需镜头参数即可精确估计成像系统的空间变化 PSF。 领域现状：成像系统的空间非均匀像差严重影响图像质量，精确表征 PSF（点扩散函数…
 tags:
   - "CVPR 2025"
   - "图像恢复"

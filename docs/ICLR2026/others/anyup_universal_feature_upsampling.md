@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnyUp: Universal Feature Upsampling
 description: >-
-  AnyUp 提出首个**编码器无关**的可学习特征上采样方法，通过 feature-agnostic 卷积层和窗口注意力机制，仅训练一次即可对任意视觉特征在任意分辨率间进行高质量上采样，在语义分割、深度估计等任务上达到 SOTA。
+  AnyUp 提出首个编码器无关：的可学习特征上采样方法，通过 feature-agnostic 卷积层和窗口注意力机制，仅训练一次即可对任意视觉特征在任意分辨率间进行高质量上采样，在语义分割、深度估计等任务上达到 SOTA。 领域现状： 预训练视觉编码器（DINO、CLIP、SigLIP 等）输出的特征图分辨率受限于 Tr…
 tags:
 
 ---

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DISCO: Mitigating Bias in Deep Learning with Conditional Distance Correlation
 description: >-
-  [ICML2026][反因果模型] 用反因果图把混淆/对撞/中介三类偏差统一成一个条件独立准则 $\hat{Y} \perp \mathbf{B} \mid Y$，再设计 $O(n^2)$ 显存的单步可微估计器 sDISCO，作为正则项把条件距离相关惩罚塞进任何梯度训练的网络…
+  [ICML2026 Oral][反因果模型] 用反因果图把混淆/对撞/中介三类偏差统一成一个条件独立准则 $\hat{Y} \perp \mathbf{B} \mid Y$，再设计 $O(n^2)$ 显存的单步可微估计器 sDISCO，作为正则项把条件距离相关惩罚塞进任何梯度训练的网络，从而缓解多种偏差且能扩展到多偏差场景。
 tags:
-  - "ICML2026"
+  - "ICML2026 Oral"
   - "反因果模型"
   - "条件距离相关"
   - "捷径学习"

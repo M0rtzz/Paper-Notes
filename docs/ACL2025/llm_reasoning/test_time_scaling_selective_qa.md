@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering
 description: >-
-  [ACL 2025][LLM推理][测试时缩放] 首次评估 test-time scaling 模型（DeepSeek R1、S1）在选择性问答（允许拒绝回答）场景下的表现，发现增加推理计算不仅提高正确率还提升对正确答案的置信度…
+  [ACL 2025][LLM推理][测试时缩放] 首次评估 test-time scaling 模型（DeepSeek R1、S1）在选择性问答（允许拒绝回答）场景下的表现，发现增加推理计算不仅提高正确率还提升对正确答案的置信度，提出基于置信度阈值的选择函数和 "Jeopardy Odds" 效用函数来评估非零错误惩罚下的 test-time scaling 性能。
 tags:
   - "ACL 2025"
   - "LLM推理"

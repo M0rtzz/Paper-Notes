@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Role of Deductive and Inductive Reasoning in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][演绎推理] 本文提出 DID（De-In-Ductive）框架，通过动态结合演绎推理和归纳推理来增强 LLM 的推理能力，利用 Littlestone 维度和信息熵组成的双指标复杂度评估系统来指导问题分解策略…
+  [ACL 2025][LLM 其他][演绎推理] 本文提出 DID（De-In-Ductive）框架，通过动态结合演绎推理和归纳推理来增强 LLM 的推理能力，利用 Littlestone 维度和信息熵组成的双指标复杂度评估系统来指导问题分解策略，在 AIW 基准上达到 70.3% 准确率（超过 ToT 的 62.2%），同时保持更低的计算成本。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "演绎推理"
   - "归纳推理"
   - "提示工程"

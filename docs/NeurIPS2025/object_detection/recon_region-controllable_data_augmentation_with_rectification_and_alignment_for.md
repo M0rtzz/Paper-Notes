@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection
 description: >-
-  [NeurIPS 2025][目标检测][数据增强] ReCon 提出无需额外训练的区域可控数据增强框架，通过区域引导校正（RGR）和区域对齐交叉注意力（RACA）增强现有结构可控生成模型的目标检测数据质量，在 COCO 上实现 35.5 mAP（超过需 fine-tune 的 GeoDiffusion）。
+  [NeurIPS 2025 Spotlight][目标检测][数据增强] ReCon 提出无需额外训练的区域可控数据增强框架，通过区域引导校正（RGR）和区域对齐交叉注意力（RACA）增强现有结构可控生成模型的目标检测数据质量，在 COCO 上实现 35.5 mAP（超过需 fine-tune 的 GeoDiffusion）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "目标检测"
   - "数据增强"
   - "扩散模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RELO: Reinforcement Learning to Localize for Visual Object Tracking
 description: >-
-  [ICML 2026][视频理解][视觉跟踪] RELO 把视觉单目标跟踪中"哪里是目标"这件事重构成一个空间特征图上的 MDP,把每个空间位置当作 action,用 actor-critic + IoU/AUC 直接奖励替换掉传统的手工中心热图监督…
+  [ICML 2026][视频理解][视觉跟踪] RELO 把视觉单目标跟踪中"哪里是目标"这件事重构成一个空间特征图上的 MDP,把每个空间位置当作 action,用 actor-critic + IoU/AUC 直接奖励替换掉传统的手工中心热图监督,并配合"先 warmup 回归 + 层对齐时序 token 传播"两个稳定化设计,在 LaSOText 上以 57.5% AUC 拿到 SOTA。
 tags:
   - "ICML 2026"
   - "视频理解"

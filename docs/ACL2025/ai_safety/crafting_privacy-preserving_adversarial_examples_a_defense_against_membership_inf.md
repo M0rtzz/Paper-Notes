@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Crafting Privacy-Preserving Adversarial Examples: A Defense Against Membership Inference
 description: >-
-  [ACL 2025][AI安全][隐私保护] 本文提出一种通过构造隐私保护型对抗样本来防御成员推理攻击（MIA）的方法，在模型预测输出中注入精心设计的扰动，使攻击者无法判断某条数据是否属于训练集，同时保持模型对正常用户的服务质量。
+  [ACL 2025][AI安全][隐私保护] 本文提出一种通过构造隐私保护型对抗样本来防御成员推理攻击（MIA）的方法，在模型预测输出中注入精心设计的扰动，使攻击者无法判断某条数据是否属于训练集，同时保持模型对正常用户的服务质量。 领域现状：成员推理攻击（Membership Inference Attack…
 tags:
   - "ACL 2025"
   - "AI安全"

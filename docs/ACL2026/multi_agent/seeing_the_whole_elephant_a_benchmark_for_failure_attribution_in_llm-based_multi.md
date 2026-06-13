@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems
 description: >-
-  [ACL2026][多智能体][失败归因] TraceElephant 主张多智能体失败归因应在开发者真实可见的完整执行轨迹下评测，并提供 220 条失败 trace、责任 agent 与关键失败 step 标注…
+  [ACL2026][多智能体][失败归因] TraceElephant 主张多智能体失败归因应在开发者真实可见的完整执行轨迹下评测，并提供 220 条失败 trace、责任 agent 与关键失败 step 标注，证明 full observability 能将 step-level 归因从输出-only 的 16% 提升到 28%-30% 以上。
 tags:
   - "ACL2026"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reactivation: Empirical NTK Dynamics Under Task Shifts
 description: >-
-  [ICML 2025][可解释性][神经切线核] 首次系统实证研究了持续学习中NTK的动态行为，发现任务切换会一致性地触发NTK的突变——即使在lazy学习体制下，NTK的范数、速度和对齐指标都在任务边界出现急剧偏差，揭示了一种被称为"重激活"（reactivation）的特征学习现象…
+  [ICML 2025][可解释性][神经切线核] 首次系统实证研究了持续学习中NTK的动态行为，发现任务切换会一致性地触发NTK的突变——即使在lazy学习体制下，NTK的范数、速度和对齐指标都在任务边界出现急剧偏差，揭示了一种被称为"重激活"（reactivation）的特征学习现象，并通过区分概念性和频率性分布偏移精确定位了驱动因素。
 tags:
   - "ICML 2025"
   - "可解释性"

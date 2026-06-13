@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Membership Inference Attacks Against Fine-tuned Diffusion Language Models (SAMA)
 description: >-
-  [ICLR 2026][LLM安全][成员推断攻击] 首次系统研究扩散语言模型(DLM)的成员推断攻击漏洞，提出SAMA方法：利用DLM的双向掩码结构创造指数级探测机会，通过渐进式掩码+符号投票+自适应加权处理稀疏且重尾的成员信号，在9个数据集上AUC达0.81，比最优baseline高30%。
+  [ICLR 2026][LLM安全][成员推断攻击] 首次系统研究扩散语言模型(DLM)的成员推断攻击漏洞，提出SAMA方法：利用DLM的双向掩码结构创造指数级探测机会，通过渐进式掩码+符号投票+自适应加权处理稀疏且重尾的成员信号，在9个数据集上AUC达0.81，比最优baseline高30%。 领域现状：扩散语言模型(DL…
 tags:
   - "ICLR 2026"
   - "LLM安全"

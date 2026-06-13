@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stress Testing Factual Consistency Metrics for Long-Document Summarization
 description: >-
-  [ACL2026][LLM评测][事实一致性] 这篇论文把六个常用 reference-free factuality metrics 放到长文档摘要中做压力测试，发现它们会被事实保持的改写、检索窗口大小和高信息密度 claim 显著影响，说明短摘要指标不能直接信任地迁移到长文档场景。
+  [ACL2026][LLM评测][事实一致性] 这篇论文把六个常用 reference-free factuality metrics 放到长文档摘要中做压力测试，发现它们会被事实保持的改写、检索窗口大小和高信息密度 claim 显著影响，说明短摘要指标不能直接信任地迁移到长文档场景。 领域现状：抽象摘要系统越来越流畅…
 tags:
   - "ACL2026"
   - "LLM评测"

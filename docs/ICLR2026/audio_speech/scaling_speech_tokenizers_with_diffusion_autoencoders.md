@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Speech Tokenizers with Diffusion Autoencoders
 description: >-
-  [ICLR 2026][音频/语音][Speech Tokenizer] 提出 SiTok（Speech Diffusion Tokenizer），采用扩散自编码器联合训练编码器-量化器-解码器（非两阶段），加入 CTC 语义正则化确保离散 token 保留语言信息…
+  [ICLR 2026][音频/语音][Speech Tokenizer] 提出 SiTok（Speech Diffusion Tokenizer），采用扩散自编码器联合训练编码器-量化器-解码器（非两阶段），加入 CTC 语义正则化确保离散 token 保留语言信息，规模化到 1.6B 参数和 2200 万小时语音数据，在极端低 token 率（12.5Hz / 200bps）下同时实现 3.34% WER（重建）和 4.95 WER（LLM ASR）的强性能。
 tags:
   - "ICLR 2026"
   - "音频/语音"

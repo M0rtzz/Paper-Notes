@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaze-LLE: Gaze Target Estimation via Large-Scale Learned Encoders
 description: >-
-  [CVPR 2025][模型压缩][视线目标估计] 提出 Gaze-LLE，一个基于冻结 DINOv2 编码器的极简视线目标估计框架——仅用 ~2.8M 可训练参数（比先前方法少 1-2 个数量级）、无需辅助深度/姿态模型、无需独立头部编码器…
+  [CVPR 2025][模型压缩][视线目标估计] 提出 Gaze-LLE，一个基于冻结 DINOv2 编码器的极简视线目标估计框架——仅用 ~2.8M 可训练参数（比先前方法少 1-2 个数量级）、无需辅助深度/姿态模型、无需独立头部编码器，通过人物位置提示 + 轻量 transformer 解码器即在 GazeFollow/VideoAttentionTarget 等基准上达到 SOTA（AUC 0.958）。
 tags:
   - "CVPR 2025"
   - "模型压缩"

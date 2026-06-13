@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiomedSQL: Text-to-SQL for Scientific Reasoning on Biomedical Knowledge Bases
 description: >-
-  [ICLR 2026 (Gen2 Workshop)][医疗NLP][Text-to-SQL] 提出 BiomedSQL，首个专门评估 Text-to-SQL 系统在生物医学知识库上科学推理能力的基准，包含 68,000 个问题/SQL/答案三元组…
+  [ICLR 2026 (Gen2 Workshop)][医疗NLP][Text-to-SQL] 提出 BiomedSQL，首个专门评估 Text-to-SQL 系统在生物医学知识库上科学推理能力的基准，包含 68,000 个问题/SQL/答案三元组，揭示当前最强模型（GPT-o3-mini 62.6%）与领域专家（90%）之间仍有巨大差距。
 tags:
   - "ICLR 2026 (Gen2 Workshop)"
   - "医疗NLP"

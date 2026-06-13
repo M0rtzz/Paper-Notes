@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accelerate Creation of Product Claims Using Generative AI
 description: >-
-  [NeurIPS 2025][音频/语音][product claims] 开发 Claim Advisor 平台，利用 LLM 的 in-context learning 和 LoRA 微调加速消费品产品宣称的搜索、生成、优化和排序…
+  [NeurIPS 2025][音频/语音][product claims] 开发 Claim Advisor 平台，利用 LLM 的 in-context learning 和 LoRA 微调加速消费品产品宣称的搜索、生成、优化和排序，通过模仿 MaxDiff 研究方法论让微调的 Phi-3 14B 模型在宣称排序上超越 GPT-4o（仅用 1 个示例 vs GPT 的 100 个示例），三轮迭代后 100% 的生成宣称达到"高吸引力"级别。
 tags:
   - "NeurIPS 2025"
   - "音频/语音"
@@ -118,10 +118,10 @@ Claim Advisor 是一个 MVP Web 应用，包含三大功能模块：(1) **语义
 - **可迁移的思路**：任何有"人类偏好比较方法论"的领域（A/B 测试、Elo 排名等）都可以用类似方式将方法论融入 LLM
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 将 MaxDiff 范式融入 LLM 有创意，但技术上是 prompt engineering + LoRA 的标准组合
-- 实验充分度: ⭐⭐⭐ 有真实消费者 MaxDiff 验证，但数据不可公开，模型对比不够系统
-- 写作质量: ⭐⭐⭐⭐ 实际问题描述清晰，方法讲解直观，不过更像工业报告而非学术论文
-- 价值: ⭐⭐⭐ 对 LLM 工业应用有参考价值，但学术贡献有限
+- 新颖性: ⭐⭐⭐⭐ 将 MaxDiff 范式融入 LLM 有创意，但技术上是 prompt engineering + LoRA 的标准组合
+- 实验充分度: ⭐⭐⭐⭐ 有真实消费者 MaxDiff 验证，但数据不可公开，模型对比不够系统
+- 写作质量: ⭐⭐⭐⭐⭐ 实际问题描述清晰，方法讲解直观，不过更像工业报告而非学术论文
+- 价值: ⭐⭐⭐⭐ 对 LLM 工业应用有参考价值，但学术贡献有限
 
 <!-- RELATED:START -->
 

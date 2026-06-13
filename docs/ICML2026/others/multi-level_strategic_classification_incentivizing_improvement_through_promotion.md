@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Level Strategic Classification: Incentivizing Improvement Through Promotion and Relegation Dynamics
 description: >-
-  [ICML 2026][策略性分类] 本文把传统单次"策略性分类"扩展成一个由多级三元分类器（通过/弃判/不通过 = 晋升/留级/降级）构成的序贯机制，证明仅靠折现因子 $\beta$、技能保留率 $\gamma$ 与"高位增益"$\delta$ 这三种跨期效应…
+  [ICML 2026][策略性分类] 本文把传统单次"策略性分类"扩展成一个由多级三元分类器（通过/弃判/不通过 = 晋升/留级/降级）构成的序贯机制，证明仅靠折现因子 $\beta$、技能保留率 $\gamma$ 与"高位增益"$\delta$ 这三种跨期效应，就能把不可激励区域从 $c^+>c^-$ 缩小到 $(1-\beta\gamma)c^+>c^-$；进一步给出 $\mu_l = \delta(l-1)/(1-\gamma)$ 的稳态阈值序列，证明在温和条件下可激励诚实努力把属性推到任意高水平。
 tags:
   - "ICML 2026"
   - "策略性分类"

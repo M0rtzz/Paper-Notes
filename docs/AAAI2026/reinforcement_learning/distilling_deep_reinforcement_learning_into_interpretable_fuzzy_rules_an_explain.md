@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Deep Reinforcement Learning into Interpretable Fuzzy Rules: An Explainable AI Framework
 description: >-
-  [AAAI 2026][强化学习][模糊逻辑] 提出层次化 Takagi-Sugeno-Kang (TSK) 模糊分类器系统，将深度 RL 的神经网络策略蒸馏为人类可读的 IF-THEN 模糊规则，引入三个量化可解释性度量（FRAD、FSC、ASG）…
+  [AAAI 2026][强化学习][模糊逻辑] 提出层次化 Takagi-Sugeno-Kang (TSK) 模糊分类器系统，将深度 RL 的神经网络策略蒸馏为人类可读的 IF-THEN 模糊规则，引入三个量化可解释性度量（FRAD、FSC、ASG），在 Lunar Lander 连续控制任务上以 81.48% 的保真度超越决策树 21 个百分点。
 tags:
   - "AAAI 2026"
   - "强化学习"

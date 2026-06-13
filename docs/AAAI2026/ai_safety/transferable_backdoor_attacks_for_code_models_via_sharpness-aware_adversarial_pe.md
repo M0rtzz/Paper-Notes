@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation
 description: >-
-  [AAAI 2026][AI安全][backdoor attack] 提出 STAB（Sharpness-aware Transferable Adversarial Backdoor），通过 SAM 训练代理模型使其收敛到损失平面的平坦区域…
+  [AAAI 2026][AI安全][backdoor attack] 提出 STAB（Sharpness-aware Transferable Adversarial Backdoor），通过 SAM 训练代理模型使其收敛到损失平面的平坦区域，并使用 Gumbel-Softmax 优化生成上下文感知的对抗触发器，首次实现了同时兼顾跨数据集迁移性和隐蔽性的代码模型后门攻击。
 tags:
   - "AAAI 2026"
   - "AI安全"

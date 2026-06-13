@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rapid Training of Hamiltonian Graph Networks using Random Features
 description: >-
-  [ICLR 2026][优化/理论][Hamiltonian Graph Networks] 本文提出 RF-HGN，通过随机特征采样（ELM/SWIM）构建 dense 层参数并求解线性最小二乘问题来训练哈密顿图网络，完全绕过梯度下降迭代优化，在 N 体物理系统上实现 150-600 倍加速…
+  [ICLR 2026][优化/理论][Hamiltonian Graph Networks] 本文提出 RF-HGN，通过随机特征采样（ELM/SWIM）构建 dense 层参数并求解线性最小二乘问题来训练哈密顿图网络，完全绕过梯度下降迭代优化，在 N 体物理系统上实现 150-600 倍加速，同时保持可比精度和强零样本泛化能力。
 tags:
   - "ICLR 2026"
   - "优化/理论"

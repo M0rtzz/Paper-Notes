@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation
 description: >-
-  [NeurIPS 2025][计算生物][单细胞扰动预测] 提出 PRESCRIBE 框架，通过多变量深度证据回归联合建模单细胞扰动预测中的认知不确定性（模型对输入的不熟悉程度）和随机不确定性（生物系统固有的随机性），生成伪 E-distance 作为统一的不确定性代理指标…
+  [NeurIPS 2025][计算生物][单细胞扰动预测] 提出 PRESCRIBE 框架，通过多变量深度证据回归联合建模单细胞扰动预测中的认知不确定性（模型对输入的不熟悉程度）和随机不确定性（生物系统固有的随机性），生成伪 E-distance 作为统一的不确定性代理指标，过滤不可靠预测后准确率提升 3% 以上。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

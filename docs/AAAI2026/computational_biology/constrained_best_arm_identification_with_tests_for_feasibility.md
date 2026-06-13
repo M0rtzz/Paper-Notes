@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained Best Arm Identification with Tests for Feasibility
 description: >-
-  [AAAI 2026][计算生物][Best Arm Identification] 提出带可行性约束的最优臂识别新框架，允许决策者分别测试臂的性能或可行性约束，设计了渐近最优算法，可自适应地选择通过性能或可行性中更容易的方式淘汰次优臂。
+  [AAAI 2026][计算生物][Best Arm Identification] 提出带可行性约束的最优臂识别新框架，允许决策者分别测试臂的性能或可行性约束，设计了渐近最优算法，可自适应地选择通过性能或可行性中更容易的方式淘汰次优臂。 最优臂识别（BAI）的广泛应用：BAI 旨在从 $K$ 个臂中通过随机采样找到期望回报…
 tags:
   - "AAAI 2026"
   - "计算生物"

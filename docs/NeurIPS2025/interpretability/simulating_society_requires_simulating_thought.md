@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simulating Society Requires Simulating Thought
 description: >-
-  [NeurIPS 2025][可解释性][社会模拟] 本文提出从"行为主义"模式转向"认知建模"范式，通过 GenMinds 框架用因果信念图建模 LLM Agent 的内部推理过程，并设计 RECAP 基准从可追溯性、人口统计敏感性和干预一致性三维度评估推理保真度。
+  [NeurIPS 2025][可解释性][社会模拟] 本文提出从"行为主义"模式转向"认知建模"范式，通过 GenMinds 框架用因果信念图建模 LLM Agent 的内部推理过程，并设计 RECAP 基准从可追溯性、人口统计敏感性和干预一致性三维度评估推理保真度。 领域现状：LLM 越来越多地用于社会模拟…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

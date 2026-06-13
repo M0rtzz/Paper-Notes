@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding
 description: >-
-  [NeurIPS 2025][语义分割][部件级理解] 提出 Partonomy 部件级分割 benchmark（862 部件标签/534 物体标签）和 Plum 模型（用 span 标记替代 [SEG] token + mask 反馈循环），发现 SOTA 分割 LMM 在部件理解上仅 5.9% gIoU…
+  [NeurIPS 2025 Spotlight][语义分割][部件级理解] 提出 Partonomy 部件级分割 benchmark（862 部件标签/534 物体标签）和 Plum 模型（用 span 标记替代 [SEG] token + mask 反馈循环），发现 SOTA 分割 LMM 在部件理解上仅 5.9% gIoU，Plum 通过避免分布偏移和利用历史预测显著提升。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "语义分割"
   - "部件级理解"
   - "LMM"

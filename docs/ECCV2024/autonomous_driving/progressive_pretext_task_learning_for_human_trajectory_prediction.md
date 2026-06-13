@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Progressive Pretext Task Learning for Human Trajectory Prediction
 description: >-
-  [ECCV 2024][自动驾驶][行人轨迹预测] 提出渐进式前置任务学习框架 PPT，通过三阶段训练（逐步下一位置预测 → 目的地预测 → 完整轨迹预测）逐步增强模型对短期动态和长期依赖的捕获能力，配合高效的两步非自回归 Transformer 预测器，在多个行人轨迹预测基准上取得 SOTA。
+  [ECCV 2024][自动驾驶][行人轨迹预测] 提出渐进式前置任务学习框架 PPT，通过三阶段训练（逐步下一位置预测 → 目的地预测 → 完整轨迹预测）逐步增强模型对短期动态和长期依赖的捕获能力，配合高效的两步非自回归 Transformer 预测器，在多个行人轨迹预测基准上取得 SOTA。 行人轨迹预测需要预测从短期到…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

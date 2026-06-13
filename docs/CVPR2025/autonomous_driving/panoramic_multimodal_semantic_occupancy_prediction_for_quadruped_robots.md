@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots
 description: >-
-  [CVPR2025][自动驾驶][occupancy prediction] 首个面向四足机器人的全景多模态语义占用预测框架 VoxelHound，提出 PanoMMOcc 数据集（全景 RGB + 热成像 + 偏振 + LiDAR）…
+  [CVPR2025][自动驾驶][occupancy prediction] 首个面向四足机器人的全景多模态语义占用预测框架 VoxelHound，提出 PanoMMOcc 数据集（全景 RGB + 热成像 + 偏振 + LiDAR），通过垂直抖动补偿（VJC）和多模态信息提示融合（MIPF）模块达到 23.34% mIoU。
 tags:
   - "CVPR2025"
   - "自动驾驶"

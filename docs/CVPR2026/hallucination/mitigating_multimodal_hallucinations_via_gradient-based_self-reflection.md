@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection
 description: >-
-  [CVPR2026][幻觉检测][多模态幻觉] 提出 GACD（Gradient-based Influence-Aware Constrained Decoding），利用一阶 Taylor 梯度估计每个 token 对输出的影响力，在推理阶段同时缓解文本-视觉偏差和共现偏差导致的多模态幻觉…
+  [CVPR2026][幻觉检测][多模态幻觉] 提出 GACD（Gradient-based Influence-Aware Constrained Decoding），利用一阶 Taylor 梯度估计每个 token 对输出的影响力，在推理阶段同时缓解文本-视觉偏差和共现偏差导致的多模态幻觉，无需辅助模型或微调。
 tags:
   - "CVPR2026"
   - "幻觉检测"

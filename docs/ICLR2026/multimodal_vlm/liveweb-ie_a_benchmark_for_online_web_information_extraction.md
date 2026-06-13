@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiveWeb-IE: A Benchmark For Online Web Information Extraction
 description: >-
-  [ICLR 2026][多模态VLM][网页信息抽取] 提出首个面向在线网页的信息抽取（WIE）基准LiveWeb-IE，覆盖文本/图片/超链接等多类数据抽取，并设计Visual Grounding Scraper（VGS）框架…
+  [ICLR 2026][多模态VLM][网页信息抽取] 提出首个面向在线网页的信息抽取（WIE）基准LiveWeb-IE，覆盖文本/图片/超链接等多类数据抽取，并设计Visual Grounding Scraper（VGS）框架，通过模拟人类认知过程——视觉扫描定位区域→精确定位元素→生成XPath——在动态网页上实现鲁棒的信息抽取。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

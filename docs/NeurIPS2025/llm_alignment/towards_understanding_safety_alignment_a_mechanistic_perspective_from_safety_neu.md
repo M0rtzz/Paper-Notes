@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons
 description: >-
-  [NeurIPS 2025][LLM对齐][safety alignment] 通过机制可解释性视角发现 LLM 中约 5% 的稀疏"安全神经元"，仅修补（patching）这些神经元的激活即可恢复 90% 以上的安全性能，并从神经元重叠角度解释了 alignment tax 现象。
+  [NeurIPS 2025][LLM对齐][safety alignment] 通过机制可解释性视角发现 LLM 中约 5% 的稀疏"安全神经元"，仅修补（patching）这些神经元的激活即可恢复 90% 以上的安全性能，并从神经元重叠角度解释了 alignment tax 现象。 大语言模型虽经安全对齐训练显著提升了安全…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

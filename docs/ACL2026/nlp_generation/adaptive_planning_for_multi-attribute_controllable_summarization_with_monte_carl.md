@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Planning for Multi-Attribute Controllable Summarization with Monte Carlo Tree Search
 description: >-
-  [ACL 2026][文本生成][可控摘要] 本文提出 PACO，把"多属性可控摘要"重新表述为一个寻找"属性控制顺序"的规划问题，并用一个定制的 Monte Carlo Tree Search（节点是完整摘要、动作是单属性调整）在 prompt 阶段就找到最优调整路径，无需任何属性专用训练…
+  [ACL 2026][文本生成][可控摘要] 本文提出 PACO，把"多属性可控摘要"重新表述为一个寻找"属性控制顺序"的规划问题，并用一个定制的 Monte Carlo Tree Search（节点是完整摘要、动作是单属性调整）在 prompt 阶段就找到最优调整路径，无需任何属性专用训练，用 Llama-3.2-1B 即可达到 Llama-3.3-70B baseline 的可控性，70B+PACO 全面超越所有现有方法。
 tags:
   - "ACL 2026"
   - "文本生成"

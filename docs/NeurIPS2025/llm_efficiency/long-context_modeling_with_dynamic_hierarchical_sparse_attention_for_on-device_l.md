@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs
 description: >-
-  [NeurIPS 2025][LLM效率][注意力机制] 提出动态分层稀疏注意力 (DHSA)，通过自适应 chunk 分割 + chunk 级相似度预测 + 上采样到 token 级的分层框架，在不重训基座模型的前提下将密集注意力替换为稀疏注意力…
+  [NeurIPS 2025][LLM效率][注意力机制] 提出动态分层稀疏注意力 (DHSA)，通过自适应 chunk 分割 + chunk 级相似度预测 + 上采样到 token 级的分层框架，在不重训基座模型的前提下将密集注意力替换为稀疏注意力，在 Gemma2/3 上实现与密集注意力同等精度、20-60% prefill 延迟降低和 35% 峰值内存节省。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

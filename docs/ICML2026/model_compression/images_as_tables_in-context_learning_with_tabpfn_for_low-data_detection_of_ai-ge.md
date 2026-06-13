@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Images as Tables: In-Context Learning with TabPFN for Low-Data Detection of AI-Generated Images
 description: >-
-  [ICML 2026][模型压缩][AIGC 检测] 作者把 AI 生成图像检测改写成"先用冻结的 DINOv3 把每张图压成 768 维 CLS 向量、再 PCA 降到 500 维当作一行表格、最后扔给 TabPFN 做上下文推断"的三段式流水线…
+  [ICML 2026][模型压缩][AIGC 检测] 作者把 AI 生成图像检测改写成"先用冻结的 DINOv3 把每张图压成 768 维 CLS 向量、再 PCA 降到 500 维当作一行表格、最后扔给 TabPFN 做上下文推断"的三段式流水线，从而把"换一个新生成器要重训分类头"变成"只换 TabPFN 上下文样本"，在 GenImage 低数据与跨生成器场景下相比强基线 LATTE 最高领先 8.2%，在 64 对生成器迁移里 54 对胜出。
 tags:
   - "ICML 2026"
   - "模型压缩"

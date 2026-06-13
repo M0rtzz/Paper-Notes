@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEC-Prompt: SEmantic Complementary Prompting for Few-Shot Class-Incremental Learning
 description: >-
-  [CVPR 2025][自监督学习][少样本增量学习] 提出 SEC-Prompt（SEmantic Complementary Prompt）框架，学习两组语义互补的提示——判别性提示（D-Prompt）和非判别性提示（ND-Prompt），通过自适应查询机制协同工作，分别强化类间区分和促进新类泛化…
+  [CVPR 2025][自监督学习][少样本增量学习] 提出 SEC-Prompt（SEmantic Complementary Prompt）框架，学习两组语义互补的提示——判别性提示（D-Prompt）和非判别性提示（ND-Prompt），通过自适应查询机制协同工作，分别强化类间区分和促进新类泛化，在三个基准数据集上取得 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "自监督学习"

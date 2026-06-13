@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description
 description: >-
-  [AAAI 2026][AI安全][视觉问答] 本文提出OAD-Promoter，通过对象集中样例生成（OEG）、记忆知识辅助（MKA）和OAD Prompt三个模块协同工作，在零样本设置下缓解LLM继承的语言偏差并提升领域迁移能力，在VQAv2等多个基准上取得SOTA。
+  [AAAI 2026][AI安全][视觉问答] 本文提出OAD-Promoter，通过对象集中样例生成（OEG）、记忆知识辅助（MKA）和OAD Prompt三个模块协同工作，在零样本设置下缓解LLM继承的语言偏差并提升领域迁移能力，在VQAv2等多个基准上取得SOTA。 领域现状：LLM已成为VQA任务中处理知识密集型问题…
 tags:
   - "AAAI 2026"
   - "AI安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Alignment Data Map for Efficient Preference Data Selection and Diagnosis
 description: >-
-  [ACL 2026][LLM对齐][偏好学习] 提出 Alignment Data Map，一个通过联合考量回复质量(quality)和回复变异性(variability)来可视化、选择和诊断偏好数据的分析工具，仅用 33% 数据即可达到全量训练的对齐效果。
+  [ACL 2026 Findings][LLM对齐][偏好学习] 提出 Alignment Data Map，一个通过联合考量回复质量(quality)和回复变异性(variability)来可视化、选择和诊断偏好数据的分析工具，仅用 33% 数据即可达到全量训练的对齐效果。 领域现状：偏好数据是 LLM 对齐学习（如 DP…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM对齐"
   - "偏好学习"
   - "数据选择"

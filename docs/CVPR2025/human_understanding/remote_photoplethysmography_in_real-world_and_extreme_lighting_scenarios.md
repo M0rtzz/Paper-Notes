@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Remote Photoplethysmography in Real-World and Extreme Lighting Scenarios
 description: >-
-  [CVPR 2025][人体理解][远程光电容积脉搏波] 提出首个面向真实户外极端光照场景的 rPPG 端到端视频 Transformer 模型，通过全局干扰共享、背景参考解耦和生物先验约束，仅基于 RGB 摄像头实现鲁棒的生理信号提取。
+  [CVPR 2025][人体理解][远程光电容积脉搏波] 提出首个面向真实户外极端光照场景的 rPPG 端到端视频 Transformer 模型，通过全局干扰共享、背景参考解耦和生物先验约束，仅基于 RGB 摄像头实现鲁棒的生理信号提取。 远程光电容积脉搏波（rPPG）通过面部视频捕捉血容量脉搏信号（BVP）…
 tags:
   - "CVPR 2025"
   - "人体理解"

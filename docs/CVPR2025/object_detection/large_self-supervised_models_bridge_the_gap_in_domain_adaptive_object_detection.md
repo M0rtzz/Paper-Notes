@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Self-Supervised Models Bridge the Gap in Domain Adaptive Object Detection
 description: >-
-  [CVPR 2025][目标检测][域自适应目标检测] DINO Teacher 提出用冻结的 DINOv2 大模型替代传统 Mean Teacher 框架中的 EMA 教师，一方面作为更准确的伪标签生成器，另一方面作为特征对齐的代理目标…
+  [CVPR 2025][目标检测][域自适应目标检测] DINO Teacher 提出用冻结的 DINOv2 大模型替代传统 Mean Teacher 框架中的 EMA 教师，一方面作为更准确的伪标签生成器，另一方面作为特征对齐的代理目标，在多个域自适应目标检测基准上取得了 SOTA 性能（BDD100k 上 +7.6%）。
 tags:
   - "CVPR 2025"
   - "目标检测"

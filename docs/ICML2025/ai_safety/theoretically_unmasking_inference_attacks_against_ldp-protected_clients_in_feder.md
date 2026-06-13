@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models
 description: >-
-  [ICML 2025][AI安全][联邦学习] 首次为联邦学习中基于全连接层和自注意力层的**主动成员推断攻击（AMI）**在**LDP保护下**推导出理论成功率的上下界，揭示即使在LDP保护下，隐恓风险仍依赖于隐私预算 $\varepsilon$，且要有效缓解攻击所需的噪声会严重损害模型效用。
+  [ICML 2025][AI安全][联邦学习] 首次为联邦学习中基于全连接层和自注意力层的主动成员推断攻击（AMI）：在LDP保护下：推导出理论成功率的上下界，揭示即使在LDP保护下，隐恓风险仍依赖于隐私预算 $\varepsilon$，且要有效缓解攻击所需的噪声会严重损害模型效用。 联邦学习中的隐私风险 - 联邦学习虽然不…
 tags:
   - "ICML 2025"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ThinkGuard: Deliberative Slow Thinking Leads to Cautious Guardrails
 description: >-
-  [ACL 2025][LLM推理][安全护栏] 通过从 GPT-4o/DeepSeek-R1 蒸馏结构化批判（安全标签+详细推理理由），微调护栏模型实现"慢思考"式安全判断，在 4 个安全 benchmark 上达到最高平均 F1（75.5%）和 AUPRC（79.5%）…
+  [ACL 2025][LLM推理][安全护栏] 通过从 GPT-4o/DeepSeek-R1 蒸馏结构化批判（安全标签+详细推理理由），微调护栏模型实现"慢思考"式安全判断，在 4 个安全 benchmark 上达到最高平均 F1（75.5%）和 AUPRC（79.5%），相比 LLaMA Guard 3 准确率提升 16.1%、宏 F1 提升 27.0%。
 tags:
   - "ACL 2025"
   - "LLM推理"

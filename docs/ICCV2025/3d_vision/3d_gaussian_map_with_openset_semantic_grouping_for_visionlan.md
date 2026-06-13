@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation
 description: >-
-  [ICCV 2025][3D视觉][3D Gaussian Splatting] 提出基于3D高斯溅射的场景地图表示（3D Gaussian Map），结合开放集语义分组机制，为视觉-语言导航（VLN）构建兼顾几何结构与丰富语义的3D环境表示…
+  [ICCV 2025][3D视觉][3D Gaussian Splatting] 提出基于3D高斯溅射的场景地图表示（3D Gaussian Map），结合开放集语义分组机制，为视觉-语言导航（VLN）构建兼顾几何结构与丰富语义的3D环境表示，并设计多层级动作预测策略（Multi-Level Action Prediction）融合多粒度空间-语义线索辅助导航决策。
 tags:
   - "ICCV 2025"
   - "3D视觉"

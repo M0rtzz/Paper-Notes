@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing the Abstract: Translating the Abstract Language for Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][抽象语言理解] 提出 ACT（Abstract-to-Concrete Translator），通过 PCA 分析抽象-具象文本在 VLM 隐空间的表征差异，在推理时无训练地将抽象描述的表征向具象方向偏移，解决 VLM 对抽象语言理解不足的问题…
+  [CVPR 2025][多模态VLM][抽象语言理解] 提出 ACT（Abstract-to-Concrete Translator），通过 PCA 分析抽象-具象文本在 VLM 隐空间的表征差异，在推理时无训练地将抽象描述的表征向具象方向偏移，解决 VLM 对抽象语言理解不足的问题，在时尚领域文本-图像检索任务上显著超越微调模型。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

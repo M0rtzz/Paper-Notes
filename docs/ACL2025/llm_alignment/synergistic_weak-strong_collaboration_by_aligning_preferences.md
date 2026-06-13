@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Synergistic Weak-Strong Collaboration by Aligning Preferences
 description: >-
-  [ACL 2025][弱强模型协作] 本文提出 CoWest 框架，通过让专业化的弱模型（如 LLaMA3-8B）生成初始草稿，再由通用强模型（如 GPT-4）精炼，并利用协作反馈通过 DPO 微调弱模型以对齐强模型偏好，在反事实推理、医学和伦理三个领域显著超越单模型和已有协作方法。
+  [ACL 2025][LLM对齐][弱强模型协作] 本文提出 CoWest 框架，通过让专业化的弱模型（如 LLaMA3-8B）生成初始草稿，再由通用强模型（如 GPT-4）精炼，并利用协作反馈通过 DPO 微调弱模型以对齐强模型偏好，在反事实推理、医学和伦理三个领域显著超越单模型和已有协作方法。 当前 LLM 在通用推理上…
 tags:
   - "ACL 2025"
+  - "LLM对齐"
   - "弱强模型协作"
   - "偏好对齐"
   - "DPO"

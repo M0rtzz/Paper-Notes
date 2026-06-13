@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification
 description: >-
-  [CVPR2026][医学图像][全切片图像分类] 提出 MUSE 框架，通过 MoE 驱动的样本级细粒度语义增强（SFSE）和基于 LLM 知识库的随机多视角语义优化（SMMO），在少样本全切片图像分类任务上显著提升泛化能力。
+  [CVPR2026][医学图像][全切片图像分类] 提出 MUSE 框架，通过 MoE 驱动的样本级细粒度语义增强（SFSE）和基于 LLM 知识库的随机多视角语义优化（SMMO），在少样本全切片图像分类任务上显著提升泛化能力。 1. 全切片图像（WSI）的标注极度稀缺：WSI 标注需要病理学专家，加上隐私法规限制…
 tags:
   - "CVPR2026"
   - "医学图像"

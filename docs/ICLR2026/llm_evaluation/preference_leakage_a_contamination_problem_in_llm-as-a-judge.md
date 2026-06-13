@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Leakage: A Contamination Problem in LLM-as-a-judge
 description: >-
-  [ICLR2026][LLM评测][LLM-as-a-Judge] 首次定义并系统研究 LLM-as-a-Judge 中的 **偏好泄漏 (Preference Leakage)** 问题——当合成数据生成器 $M_G$ 与评估器 $M_J$ 存在关联（同模型/继承/同家族）时…
+  [ICLR2026][LLM评测][LLM-as-a-Judge] 首次定义并系统研究 LLM-as-a-Judge 中的 **偏好泄漏 (Preference Leakage)** 问题——当合成数据生成器 $M_G$ 与评估器 $M_J$ 存在关联（同模型/继承/同家族）时，评委会对"相关学生模型"产生系统性偏好，同模型场景下 PLS 高达 28.7%（Arena-Hard），且该偏差比自中心偏差更隐蔽、更难检测。
 tags:
   - "ICLR2026"
   - "LLM评测"

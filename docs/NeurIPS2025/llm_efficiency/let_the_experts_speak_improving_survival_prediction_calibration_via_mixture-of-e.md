@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads
 description: >-
-  [NeurIPS 2025][LLM效率][生存分析] 提出三种离散时间深度混合专家(MoE)生存分析架构，其中 Personalized MoE 通过让每个专家为每位患者生成定制化事件分布，同时实现出色的聚类、校准和预测精度。
+  [NeurIPS 2025][LLM效率][生存分析] 提出三种离散时间深度混合专家(MoE)生存分析架构，其中 Personalized MoE 通过让每个专家为每位患者生成定制化事件分布，同时实现出色的聚类、校准和预测精度。 生存分析(预测临床事件发生时间)在临床决策支持系统中至关重要。临床医生最关心三个方面：预测准确性…
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

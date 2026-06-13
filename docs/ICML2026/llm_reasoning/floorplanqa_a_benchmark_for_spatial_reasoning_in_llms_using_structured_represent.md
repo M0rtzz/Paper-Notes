@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FloorplanQA: A Benchmark for Spatial Reasoning in LLMs Using Structured Representations
 description: >-
-  [ICML 2026][LLM推理][空间推理] FloorplanQA 用 2,000 个 JSON/XML 格式的 2D 室内布局 + 16,000 道几何题（距离/可见性/路径/放置等）系统性诊断了 15 个前沿 LLM 的"纯符号空间推理"能力，发现它们能算简单距离却普遍栽在并集、规划和约束满足上…
+  [ICML 2026][LLM推理][空间推理] FloorplanQA 用 2,000 个 JSON/XML 格式的 2D 室内布局 + 16,000 道几何题（距离/可见性/路径/放置等）系统性诊断了 15 个前沿 LLM 的"纯符号空间推理"能力，发现它们能算简单距离却普遍栽在并集、规划和约束满足上，且 Python 工具增强能修复算术错误但救不了算法层面的失败。
 tags:
   - "ICML 2026"
   - "LLM推理"

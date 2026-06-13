@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncovering Graph Reasoning in Decoder-only Transformers with Circuit Tracing
 description: >-
-  [NeurIPS 2025 (Workshop on Efficient Reasoning)][可解释性][图推理] 通过电路追踪 (circuit tracing) 框架分析 decoder-only Transformer 在图推理任务上的内部机制…
+  [NeurIPS 2025 (Workshop on Efficient Reasoning)][可解释性][图推理] 通过电路追踪 (circuit tracing) 框架分析 decoder-only Transformer 在图推理任务上的内部机制，发现了 token merging 和 structural memorization 两个核心推理机制。
 tags:
   - "NeurIPS 2025 (Workshop on Efficient Reasoning)"
   - "可解释性"

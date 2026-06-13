@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Watch and Learn: Learning to Use Computers from Online Videos
 description: >-
-  [CVPR2026][预训练][computer-using agent] 提出 Watch & Learn (W&L) 框架，通过逆动力学模型 (IDM) 将互联网上的人类计算机操作视频自动转化为可执行的 UI 轨迹数据，生成 53K+ 高质量轨迹…
+  [CVPR2026][预训练][computer-using agent] 提出 Watch & Learn (W&L) 框架，通过逆动力学模型 (IDM) 将互联网上的人类计算机操作视频自动转化为可执行的 UI 轨迹数据，生成 53K+ 高质量轨迹，作为 ICL 示例或 SFT 训练数据显著提升各类 CUA 性能。
 tags:
   - "CVPR2026"
   - "预训练"

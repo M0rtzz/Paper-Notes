@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PanSplat: 4K Panorama Synthesis with Feed-Forward Gaussian Splatting
 description: >-
-  [CVPR 2025][自动驾驶][全景图合成] PanSplat 提出了一种前馈式全景视图合成方法，通过球面 3D 高斯金字塔、Fibonacci 点阵排列和层级球面代价体积设计，首次实现了 4K 分辨率（2048×4096）的高效全景图生成，在单张 A100 GPU 上即可训练。
+  [CVPR 2025][自动驾驶][全景图合成] PanSplat 提出了一种前馈式全景视图合成方法，通过球面 3D 高斯金字塔、Fibonacci 点阵排列和层级球面代价体积设计，首次实现了 4K 分辨率（2048×4096）的高效全景图生成，在单张 A100 GPU 上即可训练。 领域现状：随着便携式 360° 相机的普…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

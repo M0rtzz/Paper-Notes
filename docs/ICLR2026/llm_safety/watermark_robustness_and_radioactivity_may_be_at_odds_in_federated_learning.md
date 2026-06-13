@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Watermark Robustness and Radioactivity May Be at Odds in Federated Learning
 description: >-
-  [ICLR 2026][LLM安全][联邦学习] 首次研究联邦学习中 LLM 水印的数据溯源问题，发现水印在 FL 中具有放射性（可检测），但恶意服务器可通过强鲁棒聚合算法过滤水印更新，揭示了放射性、鲁棒性和模型效用之间的根本性三元矛盾。
+  [ICLR 2026][LLM安全][联邦学习] 首次研究联邦学习中 LLM 水印的数据溯源问题，发现水印在 FL 中具有放射性（可检测），但恶意服务器可通过强鲁棒聚合算法过滤水印更新，揭示了放射性、鲁棒性和模型效用之间的根本性三元矛盾。 随着 LLM 生成的合成数据在联邦学习（FL）中的广泛使用，数据溯源（data pro…
 tags:
   - "ICLR 2026"
   - "LLM安全"

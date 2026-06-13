@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locality-Aware Zero-Shot Human-Object Interaction Detection
 description: >-
-  [CVPR 2025][多模态VLM][零样本HOI检测] 提出 LAIN 框架，通过局部适配器（LA）和交互适配器（IA）增强 CLIP 表示的局部细粒度感知和交互推理能力，在多种零样本 HOI 检测设定下达到 SOTA。
+  [CVPR 2025][多模态VLM][零样本HOI检测] 提出 LAIN 框架，通过局部适配器（LA）和交互适配器（IA）增强 CLIP 表示的局部细粒度感知和交互推理能力，在多种零样本 HOI 检测设定下达到 SOTA。 零样本 HOI 检测的目标是识别训练中未见过的人-物交互类别。现有方法普遍利用 CLIP 的泛化能力…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

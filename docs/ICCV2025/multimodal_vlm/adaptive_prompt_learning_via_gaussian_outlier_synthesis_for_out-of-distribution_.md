@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection
 description: >-
-  [ICCV 2025][多模态VLM][OOD检测] 提出 APLGOS 框架，利用 ChatGPT 标准化 Q&A 对来初始化可学习 ID 提示，并在类条件高斯分布的低似然区域合成虚拟 OOD 提示和图像，通过对比学习对齐文本-图像嵌入，实现更紧凑的 ID/OOD 决策边界。
+  [ICCV 2025][多模态VLM][OOD检测] 提出 APLGOS 框架，利用 ChatGPT 标准化 Q&A 对来初始化可学习 ID 提示，并在类条件高斯分布的低似然区域合成虚拟 OOD 提示和图像，通过对比学习对齐文本-图像嵌入，实现更紧凑的 ID/OOD 决策边界。 核心问题 深度学习模型在训练时只见过有限的已知…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

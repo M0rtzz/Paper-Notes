@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Generative Image Modeling via Joint Image-Feature Synthesis
 description: >-
-  [NeurIPS 2025 **Spotlight**][图像生成][联合图像-特征生成] 提出ReDi (Representation Diffusion)框架，在扩散模型中联合建模VAE图像latent和DINOv2语义特征——两者在同一扩散过程中从纯噪声同步去噪…
+  [NeurIPS 2025 **Spotlight**][图像生成][联合图像-特征生成] 提出ReDi (Representation Diffusion)框架，在扩散模型中联合建模VAE图像latent和DINOv2语义特征——两者在同一扩散过程中从纯噪声同步去噪，仅需最小修改DiT架构即实现23倍训练收敛加速和SOTA FID，并解锁Representation Guidance推理策略。
 tags:
   - "NeurIPS 2025 **Spotlight**"
   - "图像生成"

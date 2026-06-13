@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Behaviors of LLM Reinforcement Learning Post-Training: An Empirical Study
 description: >-
-  [ACL 2026][强化学习][强化学习后训练] 首次系统研究 LLM 强化学习后训练的缩放行为，在 Qwen2.5 系列(0.5B-72B)上发现性能与训练资源之间遵循幂律关系，且学习效率随模型规模增大呈饱和趋势。
+  [ACL 2026][强化学习][强化学习后训练] 首次系统研究 LLM 强化学习后训练的缩放行为，在 Qwen2.5 系列(0.5B-72B)上发现性能与训练资源之间遵循幂律关系，且学习效率随模型规模增大呈饱和趋势。 领域现状：预训练阶段的缩放定律(Scaling Laws)已被广泛研究——Kaplan et al. 和…
 tags:
   - "ACL 2026"
   - "强化学习"

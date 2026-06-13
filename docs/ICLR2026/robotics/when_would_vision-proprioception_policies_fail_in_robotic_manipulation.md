@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When would Vision-Proprioception Policies Fail in Robotic Manipulation?
 description: >-
-  [ICLR 2026][机器人][视觉-本体感觉策略] 揭示视觉-本体感觉操作策略在运动转换阶段（motion-transition phases）会失效的原因——本体感觉信号在优化中占主导导致视觉学习被抑制，并提出Gradient Adjustment with Phase-guidance (GAP)算法…
+  [ICLR 2026][机器人][视觉-本体感觉策略] 揭示视觉-本体感觉操作策略在运动转换阶段（motion-transition phases）会失效的原因——本体感觉信号在优化中占主导导致视觉学习被抑制，并提出Gradient Adjustment with Phase-guidance (GAP)算法，通过自适应调低本体感觉梯度来恢复视觉模态的学习，在仿真和真实环境中均显著提升策略的泛化性。
 tags:
   - "ICLR 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Laundering: Artificially Boosting Benchmark Results through Knowledge Distillation
 description: >-
-  [ACL 2025][模型压缩][数据洗白] 本文揭示了知识蒸馏可被滥用来人为提高基准测试分数的漏洞——通过"数据洗白"（Data Laundering）方法，将教师模型在测试集上学到的知识通过看似合法的中间训练步骤隐蔽地传递给学生模型…
+  [ACL 2025][模型压缩][数据洗白] 本文揭示了知识蒸馏可被滥用来人为提高基准测试分数的漏洞——通过"数据洗白"（Data Laundering）方法，将教师模型在测试集上学到的知识通过看似合法的中间训练步骤隐蔽地传递给学生模型，使一个2层BERT即可在GPQA上达到73.94%（接近OpenAI o1的77.30%），而该模型并未真正学会推理。
 tags:
   - "ACL 2025"
   - "模型压缩"

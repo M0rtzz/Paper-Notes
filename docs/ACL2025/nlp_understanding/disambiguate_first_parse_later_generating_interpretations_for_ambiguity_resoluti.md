@@ -1,0 +1,140 @@
+---
+title: >-
+  [论文解读] Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing
+description: >-
+  [ACL 2025][NLP理解][歧义消解] 提出"先消歧、后解析"的模块化方法，利用LLM生成默认解释并训练专门的infilling模型补全缺失解释，将歧义自然语言问题转化为多个明确解释后再分别进行SQL解析。 领域现状： 自然语言接口（如Text-to-SQL系统）在处理歧义和欠指定问题上面临重大挑战…
+tags:
+  - "ACL 2025"
+  - "NLP理解"
+  - "歧义消解"
+  - "语义解析"
+  - "Text-to-SQL"
+  - "自然语言解释"
+  - "LLM偏好"
+---
+
+# Disambiguate First, Parse Later: Generating Interpretations for Ambiguity Resolution in Semantic Parsing
+
+**会议**: ACL 2025  
+**arXiv**: [2502.18448](https://arxiv.org/abs/2502.18448)  
+**代码**: [github.com/saparina/disambiguate-then-parse](https://github.com/saparina/disambiguate-then-parse)  
+**领域**: NLP理解  
+**关键词**: 歧义消解, 语义解析, Text-to-SQL, 自然语言解释, LLM偏好  
+
+## 一句话总结
+
+提出"先消歧、后解析"的模块化方法，利用LLM生成默认解释并训练专门的infilling模型补全缺失解释，将歧义自然语言问题转化为多个明确解释后再分别进行SQL解析。
+
+## 研究背景与动机
+
+**领域现状**: 自然语言接口（如Text-to-SQL系统）在处理歧义和欠指定问题上面临重大挑战。例如"返回每个酒店的评分"中，"评分"可能指星级评分、客户评价或两者兼有。
+
+**现有痛点**: 现有LLM在面对歧义问题时表现出强烈的系统性偏好——它们倾向于仅预测一个"默认"解释，而忽略其他合理的理解方式。Liu等人(2023)和Floratou等人(2024)的研究证实了这一问题。
+
+**核心矛盾**: 歧义问题存在多个合法SQL查询（各自产生不同结果集），但模型只能覆盖部分解释。直接让LLM生成所有解释的策略效果有限，因为LLM的训练数据分布导致的固有偏差难以消除。
+
+**本文目标**: 如何在Text-to-SQL场景中完整覆盖歧义问题的所有合法解释，而非仅输出单一偏好解释。
+
+**切入角度**: 不试图纠正LLM偏差，而是**利用**这种偏差——先让LLM生成"默认"解释，再训练专门的infilling模型来发现并补全遗漏的解释。
+
+**核心 idea**: 将歧义消解分解为"默认解释生成 + 缺失解释填充 + 语义解析"三步模块化流程，以自然语言解释作为中间表示来桥接歧义输入与SQL输出。
+
+## 方法详解
+
+### 整体框架
+
+系统包含三个模块化组件：
+- **默认解释生成器**: 使用LLM的zero-shot prompting，对歧义问题 $u$ 在数据库上下文 $\mathcal{C}$ 下生成初始解释集合 $\{\hat{u}_1, ..., \hat{u}_k\}$
+- **Infilling模型**: 审查歧义问题和初始解释，生成缺失的解释 $\{\hat{u}_l, ..., \hat{u}_m\}$
+- **Text-to-SQL解析器**: 将每个明确的解释独立翻译为SQL查询
+
+### 关键设计
+
+**问题形式化**: 对歧义查询 $u$，存在多个合法SQL表达式 $\{e_1, ..., e_n\}$，且 $\llbracket e_i \rrbracket \neq \llbracket e_j \rrbracket$（执行结果不同）。目标是先生成明确的自然语言解释集合，再逐一映射为SQL。
+
+**默认解释生成**: 利用指令调优的Llama-3.1 8B，通过精心设计的prompt同时处理歧义和非歧义情况。生成的解释经SQL执行后可通过比较结果集来去除冗余（相同执行结果的解释视为同义）。
+
+**Infilling训练数据构造**: 这是方法的核心创新点。由于现有数据集（如AmbiQT）只提供多个金标SQL而不提供自然语言解释，作者创造性地：
+1. 利用AmbiQT的同义词替换策略，用LLM（Llama 3.1 8B）在问题中替换列/表名同义词来生成参考解释
+2. 使用代码生成LLM（Qwen2.5-Coder 32B）验证：只保留两个解释都能在5次尝试内生成正确SQL的样本
+3. 通过SQL执行结果比较，而非直接比较自然语言，来判断默认解释是否覆盖了某个参考解释
+
+**Infilling模型训练**: 输入为歧义问题+数据库上下文+默认解释集合，输出为缺失解释。当所有解释已覆盖时，输出"All interpretations are covered."。使用LoRA adapter在Llama-3.1 8B上训练。
+
+### 损失函数/训练策略
+
+- Infilling模型使用标准的有监督序列生成训练
+- 利用约5K条来自Spider训练集子集的合成数据进行训练
+- 仅infilling组件需要训练，其余两个模块为即插即用的预训练模型
+
+## 实验关键数据
+
+### 主实验
+
+| 方法 | AmbiQT Single↑ | AmbiQT Full↑ | Ambrosia Single↑ | Ambrosia Full↑ |
+|------|:---:|:---:|:---:|:---:|
+| 0-shot Prompt (端到端) | 62.3 | 12.3 | 29.4 | 0.9 |
+| 3-shot Prompt (端到端) | 44.3 | 10.9 | 35.7 | 1.3 |
+| SFT (端到端) | 82.1 | 63.2 | 38.0 | 0.4 |
+| 解释生成 (Prompt) | 81.8 | 26.0 | 81.9 | 16.9 |
+| **本文方法 (w. Infilling)** | **92.3** | **53.2** | **84.4** | **18.8** |
+
+### 消融实验
+
+| 默认解释模型 | AmbiQT Single/Full | w. Infilling Single/Full |
+|---|:---:|:---:|
+| Llama 3.1 8B | 81.8/26.0 | 92.3/53.2 |
+| Qwen 2.5 7B | 65.0/25.9 | 88.7/48.6 |
+| Gemma 2 9B | 77.3/17.3 | 91.1/55.9 |
+
+Text-to-SQL模型影响: Qwen2.5-Coder 32B vs 7B，AmbiQT Full覆盖率从53.2%降至40.2%。
+
+### 关键发现
+
+1. **Infilling对所有生成模型都有效**: 无论使用Llama、Qwen还是Gemma作为默认解释生成器，infilling都能显著提升覆盖率
+2. **端到端SFT在域内表现好但泛化差**: AmbiQT上Full Coverage达63.2%，但Ambrosia上仅0.4%
+3. **Self-correction反而降低召回**: 过滤掉了一些合法解释, Single coverage从81.8%降至77.4%
+4. **错误类型分析**: SQL生成错误(~30%)和解释不匹配意图(~27-30%)是最主要的错误来源
+
+## 亮点与洞察
+
+- **巧妙利用LLM偏差**: 不试图消除LLM偏好，而是将其转化为优势——先获取"容易"的默认解释，再专注补全遗漏的部分
+- **模块化设计的优势**: 三个组件可独立替换和优化，任何模块的改进都能直接提升整体性能
+- **自然训练数据构造**: 利用SQL执行结果作为"自动注释器"来验证解释的正确性，避免了昂贵的人工标注
+- **处理非歧义情况的自然方式**: 非歧义问题只会产生单一解释，infilling输出"全部覆盖"，无需单独的歧义检测模块
+
+## 局限与展望
+
+- Ambrosia上的Full Coverage仍然较低(18.8%)，跨域泛化能力有待提高
+- Infilling只能添加新解释、不能过滤错误解释，可能导致精度下降
+- 参考解释的合成方法依赖于同义词替换，对更复杂的歧义类型（如作用域歧义）适用性有限
+- 对除Text-to-SQL以外的语义解析任务（如代码生成）的适用性未经验证
+
+## 相关工作与启发
+
+- 与Bhaskar等人(2023)的AmbiQT和Saparina & Lapata(2024a)的Ambrosia形成互补——前者注入歧义，后者包含人工标注的解释
+- "先解释后执行"的思路可推广到代码生成、数学推理等需要处理歧义的领域
+- Infilling的思想类似于集成学习中的boosting——先获取"简单"解，再专注"困难"部分
+
+## 评分
+
+- **新颖性**: ⭐⭐⭐⭐ — "利用偏差而非消除偏差"的思路新颖，infilling模型的训练数据构造方法巧妙
+- **实验充分度**: ⭐⭐⭐⭐ — 两个数据集、多种基线和消融实验较充分，但跨域泛化实验可以更深入
+- **写作质量**: ⭐⭐⭐⭐⭐ — 论文结构清晰，动机阐述充分，图示直观易懂
+- **价值**: ⭐⭐⭐⭐ — 模块化方法实用性强，对语义解析中歧义处理提供了新范式
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Rethinking Semantic Parsing for Large Language Models: Enhancing LLM Performance with Semantic Hints](rethinking_semantic_parsing_for_large_language_models_enhancing_llm_performance_.md)
+- [\[ACL 2025\] BookCoref: Coreference Resolution at Book Scale](bookcoref_book_scale.md)
+- [\[ACL 2025\] Generating Diverse Training Samples for Relation Extraction with Large Language Models](generating_diverse_training_samples_for_relation_extraction_with_large_language_.md)
+- [\[ACL 2025\] End-to-End Dialog Neural Coreference Resolution: Balancing Efficiency and Accuracy in Large-Scale Systems](end-to-end_dialog_neural_coreference_resolution_balancing_efficiency_and_accurac.md)
+- [\[ACL 2025\] RISE: Reasoning Enhancement via Iterative Self-Exploration in Multi-hop Question Answering](rise_reasoning_enhancement_via_iterative_self-exploration_in_multi-hop_question_.md)
+
+</div>
+
+<!-- RELATED:END -->

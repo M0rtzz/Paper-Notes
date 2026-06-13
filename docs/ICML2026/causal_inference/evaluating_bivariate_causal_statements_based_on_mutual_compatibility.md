@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Bivariate Causal Statements Based on Mutual Compatibility
 description: >-
-  [ICML 2026][因果推理][二元因果陈述] 本文针对"只有成对(bivariate)因果陈述、没有 ground truth"的场景，提出两个无需 faithfulness 的相容性评分（线性情形的 `comp` + 图结构情形的 `incomp`）…
+  [ICML 2026][因果推理][二元因果陈述] 本文针对"只有成对(bivariate)因果陈述、没有 ground truth"的场景，提出两个无需 faithfulness 的相容性评分（线性情形的 `comp` + 图结构情形的 `incomp`），通过判断这些两两陈述拼起来的多元模型是否需要"反常的额外混淆"来解释观测协方差，从而识别错误的因果论断，并用它给 LLM 的因果输出打分。
 tags:
   - "ICML 2026"
   - "因果推理"

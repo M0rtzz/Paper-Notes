@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression
 description: >-
-  [CVPR 2025][优化/理论][剪枝] 提出 GETA 框架实现自动联合结构化剪枝和量化感知训练：量化感知依赖图（QADG）构建通用剪枝搜索空间 + 部分投影 SGD 保证逐层比特约束 + 可解释的联合学习策略，在 CNN 和 Transformer 上均达到竞争力或领先的压缩性能。
+  [CVPR 2025][优化/理论][剪枝] 提出 GETA 框架实现自动联合结构化剪枝和量化感知训练：量化感知依赖图（QADG）构建通用剪枝搜索空间 + 部分投影 SGD 保证逐层比特约束 + 可解释的联合学习策略，在 CNN 和 Transformer 上均达到竞争力或领先的压缩性能。 领域现状：结构化剪枝和量化是两种基…
 tags:
   - "CVPR 2025"
   - "优化/理论"

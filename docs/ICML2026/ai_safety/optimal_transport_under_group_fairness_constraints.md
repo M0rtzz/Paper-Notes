@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Optimal Transport under Group Fairness Constraints
 description: >-
-  [ICML 2026][AI安全][群体公平性] 本文把"群体公平性"显式编码为一个 $K_s \times K_w$ 的组间匹配概率目标 $\mathbf{F}$，提出 **FairSinkhorn** 精确求解、**惩罚式 OT** 凸松弛、以及 **双层成本学习** 三种方案…
+  [ICML 2026 Spotlight][AI安全][群体公平性] 本文把"群体公平性"显式编码为一个 $K_s \times K_w$ 的组间匹配概率目标 $\mathbf{F}$，提出 **FairSinkhorn** 精确求解、**惩罚式 OT** 凸松弛、以及 **双层成本学习** 三种方案，分别给出有限样本复杂度 $O(1/\sqrt{n})$ 和 fairness 偏差界 $O(\exp(5R_\Theta/\varepsilon)/\sqrt{n})$，在合成与半合成（约会 app）数据集上勾画出"代价 - 公平性"权衡前沿。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "AI安全"
   - "群体公平性"
   - "最优传输"

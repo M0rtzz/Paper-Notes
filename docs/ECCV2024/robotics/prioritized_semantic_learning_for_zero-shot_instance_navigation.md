@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prioritized Semantic Learning for Zero-shot Instance Navigation
 description: >-
-  [ECCV 2024][机器人][零样本导航] 提出Prioritized Semantic Learning (PSL)方法，通过语义增强的Agent架构、优先语义训练策略和语义扩展推理方案，显著提升零样本目标/实例导航中Agent的语义感知能力…
+  [ECCV 2024][机器人][零样本导航] 提出Prioritized Semantic Learning (PSL)方法，通过语义增强的Agent架构、优先语义训练策略和语义扩展推理方案，显著提升零样本目标/实例导航中Agent的语义感知能力，在ObjectNav和新提出的InstanceNav任务上实现SOTA。
 tags:
   - "ECCV 2024"
   - "机器人"

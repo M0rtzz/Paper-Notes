@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SPARE: Single-Pass Annotation with Reference-Guided Evaluation for Automatic Process Supervision
 description: >-
-  [AAAI 2026][LLM推理][过程奖励模型] 提出 SPARE 框架，通过单次结构化生成同时完成解题步骤与参考解的对齐和准确性判断（含显式推理），无需额外训练数据，比 MCTS 方法快 2.3 倍且仅需 16% 训练样本即可实现 OOD 泛化。
+  [AAAI 2026 Oral][LLM推理][过程奖励模型] 提出 SPARE 框架，通过单次结构化生成同时完成解题步骤与参考解的对齐和准确性判断（含显式推理），无需额外训练数据，比 MCTS 方法快 2.3 倍且仅需 16% 训练样本即可实现 OOD 泛化。 过程奖励模型（PRM）通过步骤级别的监督信号来指导 LLM 的…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM推理"
   - "过程奖励模型"
   - "自动标注"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLaVA-FA: Learning Fourier Approximation for Compressing Large Multimodal Models
 description: >-
-  [ICLR 2026][多模态VLM][模型压缩] 提出 LLaVA-FA，一种在频域进行联合低秩加量化权重近似的高效多模态大模型压缩方法，利用傅里叶变换的去相关性和共轭对称性实现更紧凑准确的权重表示，并引入 PolarQuant（极坐标量化）和 ODC（可选对角校准）方案…
+  [ICLR 2026][多模态VLM][模型压缩] 提出 LLaVA-FA，一种在频域进行联合低秩加量化权重近似的高效多模态大模型压缩方法，利用傅里叶变换的去相关性和共轭对称性实现更紧凑准确的权重表示，并引入 PolarQuant（极坐标量化）和 ODC（可选对角校准）方案，在多个基准上以最少的激活参数和计算成本超越现有高效多模态模型。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

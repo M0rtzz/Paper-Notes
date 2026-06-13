@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Big AI is Accelerating the Metacrisis: What Can We Do?
 description: >-
-  [ACL 2026][LLM/NLP][metacrisis] Steven Bird 在这篇 ACL 2026 立场论文里论证："Big AI"（少数巨头驱动的工业化 LLM 工程）正在同时加速 3 大相互纠缠的危机——**生态危机 / 意义危机 / 语言危机**——而 ACL 作为最大 LLM 研究发表方…
+  [ACL 2026][LLM 其他][metacrisis] Steven Bird 在这篇 ACL 2026 立场论文里论证："Big AI"（少数巨头驱动的工业化 LLM 工程）正在同时加速 3 大相互纠缠的危机——**生态危机 / 意义危机 / 语言危机**——而 ACL 作为最大 LLM 研究发表方，必须从"个人合规"转向"职业共同体集体行动"，并提出 7 项面向 ACL 的具体改革建议（重申公共利益优先、抵御 corporate capture、保护批判性 NLP、设立 NLP policy track 等）。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "metacrisis"
   - "Big AI"
   - "ACL Code of Ethics"

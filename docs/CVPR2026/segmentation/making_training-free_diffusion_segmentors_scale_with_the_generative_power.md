@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Making Training-Free Diffusion Segmentors Scale with the Generative Power
 description: >-
-  [CVPR 2026][语义分割][扩散模型] 揭示现有无训练扩散分割方法无法随生成模型能力增强而提升的根本原因——交叉注意力图到语义相关性之间存在两个gap（聚合gap和分数不平衡gap）…
+  [CVPR 2026][语义分割][扩散模型] 揭示现有无训练扩散分割方法无法随生成模型能力增强而提升的根本原因——交叉注意力图到语义相关性之间存在两个gap（聚合gap和分数不平衡gap），提出自动聚合（auto aggregation）和逐像素重缩放（per-pixel rescaling）两项技术组成GoCA框架，首次使更强的扩散模型（SDXL、PixArt-Sigma、Flux）在无训练语义分割中显著超越旧模型。
 tags:
   - "CVPR 2026"
   - "语义分割"

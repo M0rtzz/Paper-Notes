@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The (Marginal) Value of a Search Ad: An Online Causal Framework for Repeated Second-price Auctions
 description: >-
-  [ICML 2026][因果推理][第二价格拍卖] 本文把搜索广告的真实价值建模为"赢拍 vs 输拍"的 treatment effect，在重复二价拍卖（SPA）binary 反馈下设计了一个利用支付规则的在线因果学习算法…
+  [ICML 2026][因果推理][第二价格拍卖] 本文把搜索广告的真实价值建模为"赢拍 vs 输拍"的 treatment effect，在重复二价拍卖（SPA）binary 反馈下设计了一个利用支付规则的在线因果学习算法，得到 $\widetilde\Theta(\sqrt{dT})$ 的极小极大最优 regret，比同设定下的一价拍卖严格更易学。
 tags:
   - "ICML 2026"
   - "因果推理"

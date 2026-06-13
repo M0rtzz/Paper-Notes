@@ -2,9 +2,9 @@
 title: >-
   [论文解读] BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives
 description: >-
-  [AAAI 2026][医疗NLP][dense retrieval] 提出利用 PubMed 引文链构建多跳语义图并进行随机游走的 hard negative 挖掘方法，仅用 20k 训练样本和极少微调步数，即让 33M/110M 小模型在 BEIR 和 LoTTE 上超越数十亿参数的检索基线。
+  [AAAI 2026 Oral][医疗NLP][dense retrieval] 提出利用 PubMed 引文链构建多跳语义图并进行随机游走的 hard negative 挖掘方法，仅用 20k 训练样本和极少微调步数，即让 33M/110M 小模型在 BEIR 和 LoTTE 上超越数十亿参数的检索基线。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "医疗NLP"
   - "dense retrieval"
   - "hard negative mining"

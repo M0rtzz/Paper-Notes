@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Black-hole Emission Tomography with Physics-informed Neural Fields
 description: >-
-  [CVPR2026][3D视觉][黑洞成像] 提出 PI-DEF，利用物理信息约束的坐标神经网络同时重建黑洞附近气体的 4D（时间+3D）发射率场和 3D 速度场，在稀疏 EHT 测量下显著优于硬约束 Keplerian 动力学的 BH-NeRF。
+  [CVPR2026][3D视觉][黑洞成像] 提出 PI-DEF，利用物理信息约束的坐标神经网络同时重建黑洞附近气体的 4D（时间+3D）发射率场和 3D 速度场，在稀疏 EHT 测量下显著优于硬约束 Keplerian 动力学的 BH-NeRF。 1. 静态成像已成功，动态3D成像是下一前沿：EHT 已成功拍摄 M87\…
 tags:
   - "CVPR2026"
   - "3D视觉"

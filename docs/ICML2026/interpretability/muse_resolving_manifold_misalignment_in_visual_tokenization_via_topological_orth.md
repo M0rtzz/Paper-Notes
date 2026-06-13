@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUSE: Resolving Manifold Misalignment in Visual Tokenization via Topological Orthogonality
 description: >-
-  [ICML 2026][可解释性][统一视觉 tokenizer] MUSE 把统一视觉 tokenizer 的"理解-生成"零和困境归因于流形错配，提出梯度正交假设——把语义注入 $W_V$ 而结构梯度走 $W_{Q…
+  [ICML 2026][可解释性][统一视觉 tokenizer] MUSE 把统一视觉 tokenizer 的"理解-生成"零和困境归因于流形错配，提出梯度正交假设——把语义注入 $W_V$ 而结构梯度走 $W_{Q,K}$——并通过 Synergistic Block + DINOv3 拓扑对齐 + NCE 语义锚定彻底解耦，最终 gFID 3.08 与 linear probing 85.2%（甚至超过 InternViT-300M 老师 82.5%）共存，首次实现真正的"互相强化"而非折中。
 tags:
   - "ICML 2026"
   - "可解释性"

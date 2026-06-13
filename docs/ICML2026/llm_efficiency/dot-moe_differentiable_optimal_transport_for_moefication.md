@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DOT-MoE: 用可微 optimal transport 把 dense LLM 转成 MoE
 description: >-
-  [ICML 2026][LLM效率][MoEfication] DOT-MoE 把"dense FFN 转成 MoE 时怎么分配神经元到专家"建模成 differentiable optimal transport——Sinkhorn-Knopp 迭代解 entropic-regularized balanc…
+  [ICML 2026][LLM效率][MoEfication] DOT-MoE 把"dense FFN 转成 MoE 时怎么分配神经元到专家"建模成 differentiable optimal transport——Sinkhorn-Knopp 迭代解 entropic-regularized balanced transport + Straight-Through Estimator 让 neuron-to-expert assignment 和 router 联合 end-to-end 学习；在 LLaMA-2/3 + Qwen2.5 上 50% 激活参数下保留 90% dense 性能…
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mobile-VTON: High-Fidelity On-Device Virtual Try-On
 description: >-
-  [CVPR 2026][人体理解][虚拟试穿] 首个全离线移动端扩散式虚拟试穿框架，基于TeacherNet-GarmentNet-TryonNet (TGT)架构，通过特征引导对抗蒸馏(FGA)将SD3.5 Large的能力迁移到415M参数的轻量学生网络…
+  [CVPR 2026][人体理解][虚拟试穿] 首个全离线移动端扩散式虚拟试穿框架，基于TeacherNet-GarmentNet-TryonNet (TGT)架构，通过特征引导对抗蒸馏(FGA)将SD3.5 Large的能力迁移到415M参数的轻量学生网络，在VITON-HD和DressCode上以1024×768分辨率匹配甚至超越服务器端基线，端到端推理时间约80秒（小米17 Pro Max）。
 tags:
   - "CVPR 2026"
   - "人体理解"

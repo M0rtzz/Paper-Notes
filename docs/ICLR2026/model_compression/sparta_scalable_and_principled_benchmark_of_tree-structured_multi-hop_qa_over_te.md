@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPARTA: Scalable and Principled Benchmark of Tree-Structured Multi-hop QA over Text and Tables
 description: >-
-  [ICLR 2026][模型压缩][多跳推理] 提出 SPARTA，一个端到端自动构建大规模表格-文本多跳问答基准的框架，通过参考事实数据库、来源引导的修复和现实结构约束生成高质量嵌套 SQL 查询，SOTA 模型在 SPARTA 上 F1 下降超过 30 分。
+  [ICLR 2026][模型压缩][多跳推理] 提出 SPARTA，一个端到端自动构建大规模表格-文本多跳问答基准的框架，通过参考事实数据库、来源引导的修复和现实结构约束生成高质量嵌套 SQL 查询，SOTA 模型在 SPARTA 上 F1 下降超过 30 分。 - 现有基准的三大缺陷： 1. 问题类型有限、推理浅：多数基准…
 tags:
   - "ICLR 2026"
   - "模型压缩"

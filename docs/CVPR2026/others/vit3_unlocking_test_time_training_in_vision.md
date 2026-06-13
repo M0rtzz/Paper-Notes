@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ViT3: Unlocking Test-Time Training in Vision
 description: >-
-  [CVPR 2026][Test-Time Training] 系统性探索Test-Time Training（TTT）在视觉任务中的设计空间，总结六条实用设计洞察，提出ViT3——一个线性复杂度的纯TTT视觉架构，在分类/生成/检测/分割任务中匹配或超越Mamba和线性注意力方法。
+  [CVPR 2026 Oral][Test-Time Training] 系统性探索Test-Time Training（TTT）在视觉任务中的设计空间，总结六条实用设计洞察，提出ViT3——一个线性复杂度的纯TTT视觉架构，在分类/生成/检测/分割任务中匹配或超越Mamba和线性注意力方法。 Vision Transfor…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Oral"
   - "Test-Time Training"
   - "线性复杂度"
   - "内部模型"

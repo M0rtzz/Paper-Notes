@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VC-Inspector: Advancing Reference-free Evaluation of Video Captions with Factual Analysis
 description: >-
-  [ACL 2026][LLM评测][视频字幕评估] 本文提出 VC-Inspector，一个基于开源轻量级多模态模型（Qwen2.5-VL 3B/7B）的无参考视频字幕评估指标，通过可控事实错误合成流水线生成训练数据，在 VATEX-Eval 上达到 $\tau_b$=42.58 的人类判断相关性…
+  [ACL 2026][LLM评测][视频字幕评估] 本文提出 VC-Inspector，一个基于开源轻量级多模态模型（Qwen2.5-VL 3B/7B）的无参考视频字幕评估指标，通过可控事实错误合成流水线生成训练数据，在 VATEX-Eval 上达到 $\tau_b$=42.58 的人类判断相关性，超越依赖 GPT-4o 的 G-VEval（$\tau_b$=39.40），且在幻觉检测基准上达到 99.6% 准确率。
 tags:
   - "ACL 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization
 description: >-
-  [ICLR 2026][机器人][Neural Combinatorial Optimization] 提出 RRNCO 架构，通过自适应节点嵌入（ANE）和神经自适应偏置（NAB）两大创新，首次在深度路由框架中联合建模非对称距离、时长和方向角，并构建了基于 100 个真实城市的 VRP 基准数据集…
+  [ICLR 2026][机器人][Neural Combinatorial Optimization] 提出 RRNCO 架构，通过自适应节点嵌入（ANE）和神经自适应偏置（NAB）两大创新，首次在深度路由框架中联合建模非对称距离、时长和方向角，并构建了基于 100 个真实城市的 VRP 基准数据集，显著缩小了 NCO 方法从仿真到真实世界部署的差距。
 tags:
   - "ICLR 2026"
   - "机器人"

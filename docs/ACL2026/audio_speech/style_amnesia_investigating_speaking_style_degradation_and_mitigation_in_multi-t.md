@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Style Amnesia: Investigating Speaking Style Degradation and Mitigation in Multi-Turn Spoken Language Models
 description: >-
-  [ACL 2026][音频/语音][口语语言模型] 发现口语语言模型（SLMs）在多轮对话中无法维持初始指定的说话风格（情感、口音、音量、语速），称之为"风格遗忘"现象，并通过注意力分析揭示其成因（注意力衰减），提出显式回忆过程作为缓解手段。
+  [ACL 2026 Findings][音频/语音][口语语言模型] 发现口语语言模型（SLMs）在多轮对话中无法维持初始指定的说话风格（情感、口音、音量、语速），称之为"风格遗忘"现象，并通过注意力分析揭示其成因（注意力衰减），提出显式回忆过程作为缓解手段。 领域现状：口语语言模型（如GPT-4o、Gemini Live、…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "口语语言模型"
   - "风格遗忘"

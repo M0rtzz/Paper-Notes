@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph-Structured Trajectory Extraction from Travelogues
 description: >-
-  [ACL 2025][trajectory extraction] 提出"访问顺序图"（Visiting Order Graph）来统一表示旅行轨迹中的地理包含层级关系和时序转移关系，构建了覆盖 100 篇日语游记的 ATD-VSO 基准数据集（3354 个地理实体、3369 条关系）…
+  [ACL 2025][trajectory extraction] 提出"访问顺序图"（Visiting Order Graph）来统一表示旅行轨迹中的地理包含层级关系和时序转移关系，构建了覆盖 100 篇日语游记的 ATD-VSO 基准数据集（3354 个地理实体、3369 条关系），并通过基线实验发现地理包含关系预测（F1=0.355）是核心瓶颈，为该领域指明了地理知识融合的关键方向。
 tags:
   - "ACL 2025"
   - "trajectory extraction"

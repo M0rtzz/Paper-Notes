@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Erasing More Than Intended? How Concept Erasure Degrades the Generation of Non-Target Concepts
 description: >-
-  [ICCV 2025][图像生成][概念擦除] 系统分析了文本到图像模型中概念擦除技术对非目标概念的意外负面影响（溢出退化），提出EraseBench基准测试框架覆盖视觉相似、二项关联、语义关联等多维度，揭示当前SOTA擦除方法在保留非目标概念的生成质量方面仍不可靠。
+  [ICCV 2025][图像生成][概念擦除] 系统分析了文本到图像模型中概念擦除技术对非目标概念的意外负面影响（溢出退化），提出EraseBench基准测试框架覆盖视觉相似、二项关联、语义关联等多维度，揭示当前SOTA擦除方法在保留非目标概念的生成质量方面仍不可靠。 概念擦除（Concept Erasure）技术旨在从文本…
 tags:
   - "ICCV 2025"
   - "图像生成"

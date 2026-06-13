@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoEE: Mixture of Emotion Experts for Audio-Driven Portrait Animation
 description: >-
-  [CVPR 2025][人体理解][mixture of emotion experts] 提出情绪混合专家（MoEE）模型，为 6 种基础情绪各训练一个专家网络并通过 Soft MoE 门控组合，配合 150 小时专业情绪数据集和多模态情绪条件模块，实现对单一及复合情绪的精确、自然控制。
+  [CVPR 2025][人体理解][mixture of emotion experts] 提出情绪混合专家（MoEE）模型，为 6 种基础情绪各训练一个专家网络并通过 Soft MoE 门控组合，配合 150 小时专业情绪数据集和多模态情绪条件模块，实现对单一及复合情绪的精确、自然控制。 领域现状： 音频驱动说话人头像生成…
 tags:
   - "CVPR 2025"
   - "人体理解"

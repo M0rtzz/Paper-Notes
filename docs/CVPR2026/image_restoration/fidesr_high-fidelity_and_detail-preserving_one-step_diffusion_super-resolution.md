@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution
 description: >-
-  [CVPR 2026][图像恢复][单步扩散超分] 提出 FiDeSR，一种高保真和细节保持的单步扩散超分框架，通过细节感知加权（DAW）、隐空间残差精炼块（LRRB）和潜在频率注入模块（LFIM）三个互补组件，同时解决单步扩散超分中的结构保真度退化和高频细节恢复不足问题。
+  [CVPR 2026][图像恢复][单步扩散超分] 提出 FiDeSR，一种高保真和细节保持的单步扩散超分框架，通过细节感知加权（DAW）、隐空间残差精炼块（LRRB）和潜在频率注入模块（LFIM）三个互补组件，同时解决单步扩散超分中的结构保真度退化和高频细节恢复不足问题。 扩散模型在真实世界图像超分（Real-ISR）中表…
 tags:
   - "CVPR 2026"
   - "图像恢复"

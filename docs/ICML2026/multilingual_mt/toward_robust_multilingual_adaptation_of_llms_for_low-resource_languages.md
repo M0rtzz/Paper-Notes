@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Robust Multilingual Adaptation of LLMs for Low-Resource Languages
 description: >-
-  [ICML 2026][多语言/翻译][低资源语言] LiRA 在冻结的多语言编码器与英文 LLM 之间插一层 "锚定 + 一致性正则" 的轻量微调模块，把低资源语言的句向量按 $\epsilon_1$（锚定误差）与 $\epsilon_2$（翻译 KL 距离）这两个理论可控的量约束到共享英文语义空间…
+  [ICML 2026][多语言/翻译][低资源语言] LiRA 在冻结的多语言编码器与英文 LLM 之间插一层 "锚定 + 一致性正则" 的轻量微调模块，把低资源语言的句向量按 $\epsilon_1$（锚定误差）与 $\epsilon_2$（翻译 KL 距离）这两个理论可控的量约束到共享英文语义空间，从而在检索、排序与推理三类任务上同时拿到稳定提升。
 tags:
   - "ICML 2026"
   - "多语言/翻译"

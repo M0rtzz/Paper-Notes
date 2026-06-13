@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Interactive World Model for Object-Centric Reinforcement Learning
 description: >-
-  [NeurIPS 2025][机器人][world model] 提出 FIOC-WM，通过对象级和属性级的两层分解学习世界模型中的物体交互结构，并基于交互原语训练层级策略，在多个机器人控制任务上实现了更高效的策略学习和组合泛化能力。
+  [NeurIPS 2025][机器人][world model] 提出 FIOC-WM，通过对象级和属性级的两层分解学习世界模型中的物体交互结构，并基于交互原语训练层级策略，在多个机器人控制任务上实现了更高效的策略学习和组合泛化能力。 现有的强化学习世界模型从高维观测中学习状态抽象与动力学，但大多将场景整体编码为单一潜在向量…
 tags:
   - "NeurIPS 2025"
   - "机器人"

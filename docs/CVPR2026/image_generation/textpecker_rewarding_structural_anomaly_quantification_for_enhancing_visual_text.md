@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TextPecker: Rewarding Structural Anomaly Quantification for Enhancing Visual Text Rendering
 description: >-
-  [CVPR 2026][图像生成][visual text rendering] 提出 TextPecker——一种即插即用的结构异常感知 RL 策略，通过构建字符级结构异常标注数据集训练结构感知识别器，替代传统 OCR 的噪声奖励信号，联合优化语义对齐和结构保真度…
+  [CVPR 2026][图像生成][visual text rendering] 提出 TextPecker——一种即插即用的结构异常感知 RL 策略，通过构建字符级结构异常标注数据集训练结构感知识别器，替代传统 OCR 的噪声奖励信号，联合优化语义对齐和结构保真度，在多个文本到图像模型（FLUX、SD3.5、Qwen-Image）上显著提升视觉文本渲染质量。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UIPro: Unleashing Superior Interaction Capability for GUI Agents
 description: >-
-  [ICCV 2025][LLM Agent][GUI 智能体] 提出 UIPro，通过构建 2060 万 GUI 理解样本进行预训练并提出统一动作空间整合异构 GUI agent 任务数据，实现跨移动端、Web 端和桌面端的 SOTA GUI 交互性能。
+  [ICCV 2025][LLM Agent][GUI 智能体] 提出 UIPro，通过构建 2060 万 GUI 理解样本进行预训练并提出统一动作空间整合异构 GUI agent 任务数据，实现跨移动端、Web 端和桌面端的 SOTA GUI 交互性能。 构建能像人类一样操作图形界面的自主 GUI agent 是 AI 的长…
 tags:
   - "ICCV 2025"
   - "LLM Agent"

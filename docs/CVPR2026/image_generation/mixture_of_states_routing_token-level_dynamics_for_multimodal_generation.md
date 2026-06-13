@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture of States: Routing Token-Level Dynamics for Multimodal Generation
 description: >-
-  [CVPR2026][图像生成][多模态扩散模型] 提出 Mixture of States (MoS)——一种基于可学习 token 级稀疏路由的多模态融合范式，使视觉 token 能在每个去噪步骤自适应地从文本编码器任意层选取隐藏状态，仅用 3-5B 参数即可匹敌或超越 20B 级模型。
+  [CVPR2026][图像生成][多模态扩散模型] 提出 Mixture of States (MoS)——一种基于可学习 token 级稀疏路由的多模态融合范式，使视觉 token 能在每个去噪步骤自适应地从文本编码器任意层选取隐藏状态，仅用 3-5B 参数即可匹敌或超越 20B 级模型。 模态表征鸿沟：文本模型（对比学习…
 tags:
   - "CVPR2026"
   - "图像生成"

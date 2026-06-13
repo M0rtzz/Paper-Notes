@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards a Science of AI Agent Reliability
 description: >-
-  [ICML2026][LLM Agent][AI agent] 论文借鉴航空 / 核能 / 汽车等安全关键工程的成熟做法，把 AI agent 的"可靠性"分解为一致性、鲁棒性、可预测性、安全四个维度共 12 个与准确率无关的指标…
+  [ICML2026][LLM Agent][AI agent] 论文借鉴航空 / 核能 / 汽车等安全关键工程的成熟做法，把 AI agent 的"可靠性"分解为一致性、鲁棒性、可预测性、安全四个维度共 12 个与准确率无关的指标，在 GAIA 和 $\tau$-bench 两个基准上系统评测 15 个前沿模型，得出"过去 24 个月准确率猛涨、可靠性几乎没动"这一行业级结论。
 tags:
   - "ICML2026"
   - "LLM Agent"

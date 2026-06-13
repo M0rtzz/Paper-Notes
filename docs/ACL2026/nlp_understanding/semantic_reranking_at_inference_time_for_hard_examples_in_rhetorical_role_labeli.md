@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Reranking at Inference Time for Hard Examples in Rhetorical Role Labeling
 description: >-
-  [ACL 2026][NLP理解][修辞角色标注] 提出 RiSE，一种推理时语义重排序框架，通过自动识别低置信度困难样本并利用对比学习的标签语义表示重排序模型输出，在 8 个修辞角色标注数据集上困难样本平均提升 +9.15 macro-F1。
+  [ACL 2026][NLP理解][修辞角色标注] 提出 RiSE，一种推理时语义重排序框架，通过自动识别低置信度困难样本并利用对比学习的标签语义表示重排序模型输出，在 8 个修辞角色标注数据集上困难样本平均提升 +9.15 macro-F1。 领域现状： 修辞角色标注（RRL）为文档中每个句子分配功能角色…
 tags:
   - "ACL 2026"
   - "NLP理解"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2605.18007](https://arxiv.org/abs/2605.18007)  
 **代码**: [GitHub](https://github.com/AnasBelfathi/rise-framework)  
-**领域**: medical_imaging  
+**领域**: 医学图像  
 **关键词**: 修辞角色标注, 推理时重排序, 标签语义, 对比学习, 困难样本
 
 ## 一句话总结

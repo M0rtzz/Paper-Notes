@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Clozing the Gap: Exploring Why Language Model Surprisal Outperforms Cloze Surprisal
 description: >-
-  [ACL2026][LLM/NLP][cloze surprisal] 论文系统比较 cloze 反应和 GPT2 surprisal 对人类逐词阅读时间的解释力，并通过三类概率干预证明 LM surprisal 的优势主要来自更高概率分辨率、能区分语义相近词和能给低频词分配细粒度概率。
+  [ACL2026][LLM 其他][cloze surprisal] 论文系统比较 cloze 反应和 GPT2 surprisal 对人类逐词阅读时间的解释力，并通过三类概率干预证明 LM surprisal 的优势主要来自更高概率分辨率、能区分语义相近词和能给低频词分配细粒度概率。 领域现状：语言理解研究常用 surpr…
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "cloze surprisal"
   - "LM surprisal"
   - "阅读时间"

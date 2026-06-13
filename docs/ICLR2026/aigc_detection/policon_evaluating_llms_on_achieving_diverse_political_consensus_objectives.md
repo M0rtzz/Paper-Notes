@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoliCon: Evaluating LLMs on Achieving Diverse Political Consensus Objectives
 description: >-
-  [ICLR 2026][AIGC检测][政治共识] 基于欧洲议会2009-2022年2225条高质量审议记录构建PoliCon基准，评估LLM在不同投票机制、权力结构和政治目标下起草共识决议的能力。结果显示前沿模型在简单多数任务表现尚可，但在2/3多数和安全议题上显著不足。
+  [ICLR 2026][AIGC检测][政治共识] 基于欧洲议会2009-2022年2225条高质量审议记录构建PoliCon基准，评估LLM在不同投票机制、权力结构和政治目标下起草共识决议的能力。结果显示前沿模型在简单多数任务表现尚可，但在2/3多数和安全议题上显著不足。 在多元化社会中建立政治共识是有效治理的基本前提…
 tags:
   - "ICLR 2026"
   - "AIGC检测"

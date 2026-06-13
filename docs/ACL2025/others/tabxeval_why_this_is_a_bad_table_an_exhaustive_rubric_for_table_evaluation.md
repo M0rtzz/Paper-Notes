@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation
 description: >-
-  [ACL 2025][表格评估] TabXEval 提出了一个基于 rubric（评分细则）的两阶段表格评估框架——先通过 TabAlign 进行结构对齐，再通过 TabCompare 进行语义和语法细粒度比较，并配套发布了多领域基准 TabXBench。
+  [ACL 2025][表格评估] TabXEval 提出了一个基于 rubric（评分细则）的两阶段表格评估框架——先通过 TabAlign 进行结构对齐，再通过 TabCompare 进行语义和语法细粒度比较，并配套发布了多领域基准 TabXBench。 表格是关键工作流中的通用数据格式（预算、临床记录、实验日志）…
 tags:
   - "ACL 2025"
   - "表格评估"

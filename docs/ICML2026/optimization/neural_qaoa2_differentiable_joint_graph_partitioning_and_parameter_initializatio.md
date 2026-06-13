@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural QAOA$^2$: Differentiable Joint Graph Partitioning and Parameter Initialization for Quantum Combinatorial Optimization
 description: >-
-  [ICML 2026][优化/理论][QAOA] 用一个生成-评估神经网络（GEN）一次性地把 QAOA² 的"图分割 + 量子电路参数初始化"两件事联合可微化：评估器学一个高保真的 quantum performance surrogate，生成器在它的梯度引导下吐出离散分区 + 参数初值…
+  [ICML 2026][优化/理论][QAOA] 用一个生成-评估神经网络（GEN）一次性地把 QAOA² 的"图分割 + 量子电路参数初始化"两件事联合可微化：评估器学一个高保真的 quantum performance surrogate，生成器在它的梯度引导下吐出离散分区 + 参数初值，配合直通估计器 + 正交补头让端到端可训练；在 183 个 QUBO/Ising/MaxCut 实例（21-1000 变量）上超越启发式 baseline，101 个实例排第一。
 tags:
   - "ICML 2026"
   - "优化/理论"

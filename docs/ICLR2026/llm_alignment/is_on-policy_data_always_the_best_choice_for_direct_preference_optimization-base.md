@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?
 description: >-
-  [ICLR 2026][LLM对齐][on-policy vs off-policy] 挑战"on-policy数据总是更好"的共识：发现对齐过程分为偏好注入（需高多样性off-policy数据）和偏好微调（需高质量on-policy数据）两个阶段，不同模型/阶段对数据类型的最优选择不同…
+  [ICLR 2026][LLM对齐][on-policy vs off-policy] 挑战"on-policy数据总是更好"的共识：发现对齐过程分为偏好注入（需高多样性off-policy数据）和偏好微调（需高质量on-policy数据）两个阶段，不同模型/阶段对数据类型的最优选择不同。提出仅3.2%计算开销的边界判定算法，在5个模型×55个配置上验证有效。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

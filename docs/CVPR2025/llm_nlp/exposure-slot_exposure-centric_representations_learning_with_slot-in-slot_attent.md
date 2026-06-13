@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Exposure-slot: Exposure-centric Representations Learning with Slot-in-Slot Attention
 description: >-
-  [CVPR 2025][LLM/NLP][曝光矫正] 本文提出Exposure-slot框架，将Slot Attention算法扩展为层次化的slot-in-slot结构，通过可学习的曝光prompt引导特征聚类，实现以曝光为中心的区域感知表征学习，在欠曝/过曝图像矫正任务上取得SOTA性能。
+  [CVPR 2025][LLM 其他][曝光矫正] 本文提出Exposure-slot框架，将Slot Attention算法扩展为层次化的slot-in-slot结构，通过可学习的曝光prompt引导特征聚类，实现以曝光为中心的区域感知表征学习，在欠曝/过曝图像矫正任务上取得SOTA性能。 领域现状 领域现状：图像曝光矫正…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "曝光矫正"
   - "注意力机制"
   - "层次化聚类"

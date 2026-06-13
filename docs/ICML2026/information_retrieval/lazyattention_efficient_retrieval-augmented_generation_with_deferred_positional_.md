@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LazyAttention: Efficient Retrieval-Augmented Generation with Deferred Positional Encoding
 description: >-
-  [ICML 2026][信息检索/RAG][KV 缓存复用] LazyAttention 把 RoPE 位置编码从 KV 缓存写入阶段推迟到 attention kernel 内部 on-the-fly 完成，让同一份物理 KV 副本可以被任意 logical 位置复用…
+  [ICML 2026][信息检索/RAG][KV 缓存复用] LazyAttention 把 RoPE 位置编码从 KV 缓存写入阶段推迟到 attention kernel 内部 on-the-fly 完成，让同一份物理 KV 副本可以被任意 logical 位置复用，在 skewed RAG 工作负载上比 SOTA Block-Attention 减少 1.37× TTFT、提升 1.40× 吞吐，且生成质量基本无损。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conjuring Semantic Similarity
 description: >-
-  [ICLR2026][可解释性][semantic similarity] 提出一种基于视觉想象的文本语义相似度度量——通过计算文本条件扩散模型在两个文本提示下诱导的反向 SDE 之间的 Jeffreys 散度来衡量语义距离，可用 Monte-Carlo 采样直接计算…
+  [ICLR2026][可解释性][semantic similarity] 提出一种基于视觉想象的文本语义相似度度量——通过计算文本条件扩散模型在两个文本提示下诱导的反向 SDE 之间的 Jeffreys 散度来衡量语义距离，可用 Monte-Carlo 采样直接计算，首次量化了扩散模型学到的语义空间与人类标注的对齐程度。
 tags:
   - "ICLR2026"
   - "可解释性"

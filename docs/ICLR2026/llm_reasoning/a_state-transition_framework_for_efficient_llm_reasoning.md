@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A State-Transition Framework for Efficient LLM Reasoning
 description: >-
-  [ICLR 2026][LLM推理][efficient reasoning] 提出将 LLM 推理过程建模为状态转移过程的高效推理框架，用 Linear Attention 将历史推理步骤的信息压缩为状态矩阵…
+  [ICLR 2026][LLM推理][efficient reasoning] 提出将 LLM 推理过程建模为状态转移过程的高效推理框架，用 Linear Attention 将历史推理步骤的信息压缩为状态矩阵，使注意力复杂度从 $O(C^2)$ 降为 $O(C)$、KV cache 从 $O(C)$ 降为 $O(1)$，同时不缩短 CoT 序列，保持推理能力。额外的动量 momentum 策略缓解了噪声推理步导致的 overthinking 问题。
 tags:
   - "ICLR 2026"
   - "LLM推理"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SLIM: Stealthy Low-Coverage Black-Box Watermarking via Latent-Space Confusion Zones
 description: >-
-  [ACL2026][LLM安全][数据水印] SLIM 提出一种面向单个数据所有者的低覆盖数据水印思路：通过让模型在局部潜在空间学到相近前缀对应分歧续写的模式，最终在黑盒生成中表现出可统计检测的局部不稳定性。
+  [ACL2026 Findings][LLM安全][数据水印] SLIM 提出一种面向单个数据所有者的低覆盖数据水印思路：通过让模型在局部潜在空间学到相近前缀对应分歧续写的模式，最终在黑盒生成中表现出可统计检测的局部不稳定性。 领域现状：大模型训练数据越来越昂贵，也越来越涉及版权、隐私和数据授权问题。数据所有者希望知道自己的…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM安全"
   - "数据水印"
   - "黑盒验证"

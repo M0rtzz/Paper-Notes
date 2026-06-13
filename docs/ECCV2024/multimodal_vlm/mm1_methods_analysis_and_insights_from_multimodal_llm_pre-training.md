@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training
 description: >-
-  [ECCV 2024][多模态VLM][多模态大语言模型] Apple 系统性地消融了 MLLM 构建的三大轴（架构、数据、训练），得出关键设计准则：图像分辨率 > 模型大小 > 训练数据；VL 连接器类型影响甚微；caption/interleaved/text-only 三类数据的精细混合至关重要…
+  [ECCV 2024][多模态VLM][多模态大语言模型] Apple 系统性地消融了 MLLM 构建的三大轴（架构、数据、训练），得出关键设计准则：图像分辨率 > 模型大小 > 训练数据；VL 连接器类型影响甚微；caption/interleaved/text-only 三类数据的精细混合至关重要，最终构建了 3B-30B dense 和最高 64B MoE 的 MM1 模型族，在 few-shot 预训练评测上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning
 description: >-
-  [NeurIPS 2025][AI安全][模型反演] 在无数据持续学习场景中，提出逐层模型反演（PMI）来加速图像合成，并通过类别级高斯特征建模和对比学习缓解合成-真实数据间的特征漂移，实现高效且高质量的无数据知识回放。
+  [NeurIPS 2025][AI安全][模型反演] 在无数据持续学习场景中，提出逐层模型反演（PMI）来加速图像合成，并通过类别级高斯特征建模和对比学习缓解合成-真实数据间的特征漂移，实现高效且高质量的无数据知识回放。 领域现状：持续学习（Continual Learning, CL）旨在让模型在学习新任务时保持对旧任务的…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

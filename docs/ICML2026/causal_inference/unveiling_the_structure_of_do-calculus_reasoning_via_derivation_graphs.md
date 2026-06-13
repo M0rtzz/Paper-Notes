@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Structure of Do-Calculus Reasoning via Derivation Graphs
 description: >-
-  [ICML 2026][因果推理][因果推断] 通过引入推导图（derivation graphs）显式表示 do-演算规则的所有等价变换——揭示因果表达式空间的结构，并证明最多 4 步规则应用可达任意等价表达式。
+  [ICML 2026][因果推理][因果推断] 通过引入推导图（derivation graphs）显式表示 do-演算规则的所有等价变换——揭示因果表达式空间的结构，并证明最多 4 步规则应用可达任意等价表达式。 领域现状：Pearl 的 do-演算通过三条图形重写规则（R1、R2、R3）实现观测和干预概率的递归变换…
 tags:
   - "ICML 2026"
   - "因果推理"

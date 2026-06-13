@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GPT-4 as a Homework Tutor can Improve Student Engagement and Learning Outcomes
 description: >-
-  [ACL 2025][GPT-4] 在意大利高中进行了为期 8 周的随机对照试验（RCT），用 GPT-4 替代传统英语作业作为互动辅导工具，发现 GPT-4 组学生在参与度（有趣性、资源充分性显著提升）和特定条件下的学习增益（三年级 Cohen's d=0.603）方面有所改善…
+  [ACL 2025][GPT-4] 在意大利高中进行了为期 8 周的随机对照试验（RCT），用 GPT-4 替代传统英语作业作为互动辅导工具，发现 GPT-4 组学生在参与度（有趣性、资源充分性显著提升）和特定条件下的学习增益（三年级 Cohen's d=0.603）方面有所改善，仅需教师提供作业目标和描述即可实施，幻觉率低于 1%，且所有在校学生均表示希望继续使用。
 tags:
   - "ACL 2025"
   - "GPT-4"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Cost of Learning Under Multiple Change Points
 description: >-
-  [ICML 2026][时间序列][在线学习] 本文提出 Anytime Tracking CUSUM (ATC) 算法，通过时变自适应阈值 + 选择性检测原理，在**无任何可检测性假设**（最小间距 / 最小跳幅）下达到近似最小最优的动态遗憾 $O(\sigma^2 (S+1) \log T)$…
+  [ICML 2026][时间序列][在线学习] 本文提出 Anytime Tracking CUSUM (ATC) 算法，通过时变自适应阈值 + 选择性检测原理，在**无任何可检测性假设**（最小间距 / 最小跳幅）下达到近似最小最优的动态遗憾 $O(\sigma^2 (S+1) \log T)$；并首次形式化量化了多变点场景中"漏检带来的内生混淆"的对数级退化界。
 tags:
   - "ICML 2026"
   - "时间序列"

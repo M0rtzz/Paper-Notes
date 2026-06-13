@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ray-Distance Volume Rendering for Neural Scene Reconstruction
 description: >-
-  [ECCV 2024][3D视觉][室内场景重建] 提出 RS-Recon 方法，用射线方向相关的有符号射线距离函数（SRDF）替代传统 SDF 来参数化体渲染中的密度函数，结合 SRDF-SDF 一致性损失和自监督可见性任务，在多物体室内场景重建中取得更准确的表面和视图合成。
+  [ECCV 2024][3D视觉][室内场景重建] 提出 RS-Recon 方法，用射线方向相关的有符号射线距离函数（SRDF）替代传统 SDF 来参数化体渲染中的密度函数，结合 SRDF-SDF 一致性损失和自监督可见性任务，在多物体室内场景重建中取得更准确的表面和视图合成。 - 领域现状： 基于 NeRF 的神经隐式场景…
 tags:
   - "ECCV 2024"
   - "3D视觉"

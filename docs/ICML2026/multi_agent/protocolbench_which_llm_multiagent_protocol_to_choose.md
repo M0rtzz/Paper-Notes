@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProtocolBench: Which LLM MultiAgent Protocol to Choose?
 description: >-
-  [ICML 2026][多智能体][多智能体协议] ProtocolBench 首次系统对比四大 LLM 多智能体通信协议（A2A、ACP、ANP、Agora）在任务成功、端到端延迟、消息字节开销、失败鲁棒性四轴上的表现——发现协议选择对系统行为有 36.5% 完成时间差、3.48s 延迟差…
+  [ICML 2026][多智能体][多智能体协议] ProtocolBench 首次系统对比四大 LLM 多智能体通信协议（A2A、ACP、ANP、Agora）在任务成功、端到端延迟、消息字节开销、失败鲁棒性四轴上的表现——发现协议选择对系统行为有 36.5% 完成时间差、3.48s 延迟差；进一步提出 ProtocolRouter 按场景/模块动态选协议，将 Fail-Storm 恢复时间降 18.1%。
 tags:
   - "ICML 2026"
   - "多智能体"

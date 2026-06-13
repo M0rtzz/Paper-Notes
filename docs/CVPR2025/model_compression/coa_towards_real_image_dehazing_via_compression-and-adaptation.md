@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoA: Towards Real Image Dehazing via Compression-and-Adaptation
 description: >-
-  [CVPR 2025][模型压缩][image dehazing] 提出压缩-适应（CoA）框架实现实际图像去雾：先在合成数据上训练大模型，然后压缩+适应到真实域，平衡性能和部署效率
+  [CVPR 2025][模型压缩][image dehazing] 提出压缩-适应（CoA）框架实现实际图像去雾：先在合成数据上训练大模型，然后压缩+适应到真实域，平衡性能和部署效率 领域现状 领域现状：CoA 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不足，限制了实际应用…
 tags:
   - "CVPR 2025"
   - "模型压缩"

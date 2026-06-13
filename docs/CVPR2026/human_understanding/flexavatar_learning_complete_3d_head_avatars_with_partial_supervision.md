@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlexAvatar: Learning Complete 3D Head Avatars with Partial Supervision
 description: >-
-  [CVPR 2026][人体理解][3D 头部化身] 提出 FlexAvatar，通过引入可学习的"偏置吸收器"（bias sinks）token 统一单目和多视角数据训练，解决了驱动信号与目标视角的纠缠问题，从单张图像生成完整、高质量、可动画的 3D 头部化身。
+  [CVPR 2026][人体理解][3D 头部化身] 提出 FlexAvatar，通过引入可学习的"偏置吸收器"（bias sinks）token 统一单目和多视角数据训练，解决了驱动信号与目标视角的纠缠问题，从单张图像生成完整、高质量、可动画的 3D 头部化身。 从单张图像创建高质量可动画的 3D 头部化身是一个极具挑战性…
 tags:
   - "CVPR 2026"
   - "人体理解"

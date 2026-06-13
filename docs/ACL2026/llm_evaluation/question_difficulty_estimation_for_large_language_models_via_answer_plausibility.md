@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Question Difficulty Estimation for Large Language Models via Answer Plausibility Scoring
 description: >-
-  [ACL2026][LLM评测][问题难度] Q-Daps 通过生成多个候选答案并计算去流行度偏置后的 plausibility 分布熵来估计 LLM 问答难度，在 TriviaQA、NQ、MuSiQue、QASC 上系统优于可读性、检索复杂度、prompt 打分和不确定性基线。
+  [ACL2026][LLM评测][问题难度] Q-Daps 通过生成多个候选答案并计算去流行度偏置后的 plausibility 分布熵来估计 LLM 问答难度，在 TriviaQA、NQ、MuSiQue、QASC 上系统优于可读性、检索复杂度、prompt 打分和不确定性基线。 领域现状：问题难度估计常用于教育测评、信息检…
 tags:
   - "ACL2026"
   - "LLM评测"

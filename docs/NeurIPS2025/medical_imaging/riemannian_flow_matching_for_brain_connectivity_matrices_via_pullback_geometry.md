@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry
 description: >-
-  [NeurIPS 2025][医学图像][脑连接矩阵] 提出DiffeoCFM，利用全局微分同胚诱导的拉回度量，将黎曼流形上的条件流匹配等价转化为欧几里得空间中的标准CFM，实现对脑连接矩阵（SPD/相关矩阵）的高效生成，同时严格保持流形约束，在3个fMRI和2个EEG数据集上达到SOTA。
+  [NeurIPS 2025][医学图像][脑连接矩阵] 提出DiffeoCFM，利用全局微分同胚诱导的拉回度量，将黎曼流形上的条件流匹配等价转化为欧几里得空间中的标准CFM，实现对脑连接矩阵（SPD/相关矩阵）的高效生成，同时严格保持流形约束，在3个fMRI和2个EEG数据集上达到SOTA。 问题背景 脑功能连接矩阵（协方差…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

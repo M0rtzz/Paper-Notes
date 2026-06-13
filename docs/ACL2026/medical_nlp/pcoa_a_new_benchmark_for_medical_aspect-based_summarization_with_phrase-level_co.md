@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PCoA: A New Benchmark for Medical Aspect-Based Summarization With Phrase-Level Context Attribution
 description: >-
-  [ACL2026][医疗NLP][医学方面摘要] PCoA 构建了一个面向随机对照试验摘要的医学方面级摘要基准，把每条方面摘要同时对齐到支撑句子和贡献短语，并用 claim、citation、phrase 三层指标系统评测 LLM 在可验证医学摘要上的能力。
+  [ACL2026][医疗NLP][医学方面摘要] PCoA 构建了一个面向随机对照试验摘要的医学方面级摘要基准，把每条方面摘要同时对齐到支撑句子和贡献短语，并用 claim、citation、phrase 三层指标系统评测 LLM 在可验证医学摘要上的能力。 领域现状：医学证据综合通常需要阅读大量随机对照试验（RCT）摘要…
 tags:
   - "ACL2026"
   - "医疗NLP"

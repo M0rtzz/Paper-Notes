@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GuideDog: A Real-World Egocentric Multimodal Dataset for Blind and Low-Vision Accessibility-Aware Guidance
 description: >-
-  [ACL 2026][多模态VLM][BLV 导航] GuideDog 用「专家规范驱动的银标生成 + 人工核验金标」流水线，从 269 段全球行走视频中构建出 22K 张第一视角行人场景图文对（含 818 题 QA 基准）…
+  [ACL 2026][多模态VLM][BLV 导航] GuideDog 用「专家规范驱动的银标生成 + 人工核验金标」流水线，从 269 段全球行走视频中构建出 22K 张第一视角行人场景图文对（含 818 题 QA 基准），首次让 MLLM 在 BLV（盲与低视力）导航任务上有了规模化、地理多样、标准化的训练与评测数据。
 tags:
   - "ACL 2026"
   - "多模态VLM"

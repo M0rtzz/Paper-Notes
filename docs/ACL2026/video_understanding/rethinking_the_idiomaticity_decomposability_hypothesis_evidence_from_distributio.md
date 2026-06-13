@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking the Idiomaticity Decomposability Hypothesis: Evidence from Distributional Learning
 description: >-
-  [ACL2026][视频理解][idiom decomposability] 这篇论文用上下文化语言模型作为“受控的分布式学习者”重新检验 Idiom Decomposability Hypothesis，发现模型派生的可分解性只弱相关于人类判断，并且与句法灵活性呈小而稳定的负相关…
+  [ACL2026][视频理解][idiom decomposability] 这篇论文用上下文化语言模型作为“受控的分布式学习者”重新检验 Idiom Decomposability Hypothesis，发现模型派生的可分解性只弱相关于人类判断，并且与句法灵活性呈小而稳定的负相关，说明习语行为更像是由分布经验、surprisal 和表征稳定过程共同塑造。
 tags:
   - "ACL2026"
   - "视频理解"

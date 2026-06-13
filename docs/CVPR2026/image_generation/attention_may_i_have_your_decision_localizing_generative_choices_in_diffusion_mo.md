@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][扩散模型] 本文通过线性探针（linear probing）发现扩散模型中**隐式决策**（如未指定性别时默认生成男性）主要由自注意力层而非交叉注意力层控制，并基于此提出 ICM 方法，仅在少量关键自注意力层上进行干预即可实现 SOTA 的去偏见效果，同时最小化图像质量退化…
+  [CVPR 2026][图像生成][扩散模型] 本文通过线性探针（linear probing）发现扩散模型中**隐式决策**（如未指定性别时默认生成男性）主要由自注意力层而非交叉注意力层控制，并基于此提出 ICM 方法，仅在少量关键自注意力层上进行干预即可实现 SOTA 的去偏见效果，同时最小化图像质量退化。
 tags:
   - "CVPR 2026"
   - "图像生成"

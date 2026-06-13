@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SQL-R1: Training Natural Language to SQL Reasoning Model By Reinforcement Learning
 description: >-
-  [NeurIPS 2025][LLM推理][NL2SQL] 首次系统地将 GRPO 强化学习应用于 NL2SQL 任务，通过四层递进式奖励函数和 200K 冷启动 + 5K 复杂样本 RL 训练策略，7B 模型在 Spider 和 BIRD 上分别达到 88.7% 和 66.6%，超越 GPT-4 同规模模型…
+  [NeurIPS 2025][LLM推理][NL2SQL] 首次系统地将 GRPO 强化学习应用于 NL2SQL 任务，通过四层递进式奖励函数和 200K 冷启动 + 5K 复杂样本 RL 训练策略，7B 模型在 Spider 和 BIRD 上分别达到 88.7% 和 66.6%，超越 GPT-4 同规模模型。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

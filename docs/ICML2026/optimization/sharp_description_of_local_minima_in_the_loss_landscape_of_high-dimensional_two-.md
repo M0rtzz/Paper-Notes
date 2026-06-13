@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sharp Description of Local Minima in the Loss Landscape of High-Dimensional Two-Layer ReLU Networks
 description: >-
-  [ICML2026][优化/理论][损失景观] 本文在教师-学生两层 ReLU 网络的高维 Gaussian 输入设定下，用一组关于权重重叠 $(Q,R)$ 的精确低维概要统计方程，给出 population loss 所有局部极小的层级化分类…
+  [ICML2026][优化/理论][损失景观] 本文在教师-学生两层 ReLU 网络的高维 Gaussian 输入设定下，用一组关于权重重叠 $(Q,R)$ 的精确低维概要统计方程，给出 population loss 所有局部极小的层级化分类，并刻画过参数化如何把低阶 spurious 极小变成鞍点、把高阶极小保留下来，从而首次同时调和了 Safran–Shamir 的存在性结果、Arjevani–Field 的群论分类和 Safran 等人的 Hessian 失稳论。
 tags:
   - "ICML2026"
   - "优化/理论"

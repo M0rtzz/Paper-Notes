@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping
 description: >-
-  [CVPR 2026][图像生成][Face Swapping] APPLE 提出了一种基于扩散模型的教师-学生框架，通过条件去模糊（代替传统条件修复）训练教师模型生成属性对齐的伪标签，再利用这些高质量伪标签训练学生模型，在保持身份迁移能力的同时实现了 SOTA 的属性保留性能（FID 2.18…
+  [CVPR 2026][图像生成][Face Swapping] APPLE 提出了一种基于扩散模型的教师-学生框架，通过条件去模糊（代替传统条件修复）训练教师模型生成属性对齐的伪标签，再利用这些高质量伪标签训练学生模型，在保持身份迁移能力的同时实现了 SOTA 的属性保留性能（FID 2.18, Pose Error 1.85）。
 tags:
   - "CVPR 2026"
   - "图像生成"

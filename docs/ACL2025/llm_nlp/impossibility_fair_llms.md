@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Impossibility of Fair LLMs
 description: >-
-  [ACL 2025 (Long Paper)][LLM/NLP][LLM Fairness] 系统分析了四种主流技术公平性框架（FTU、多方公平、群体公平/公平表示、公平组合）在通用LLM场景下均存在固有不可克服挑战，论证了严格意义上的公平LLM在原理层面不可行，并提出了三条务实的前进方向。
+  [ACL 2025 (Long Paper)][LLM 其他][LLM Fairness] 系统分析了四种主流技术公平性框架（FTU、多方公平、群体公平/公平表示、公平组合）在通用LLM场景下均存在固有不可克服挑战，论证了严格意义上的公平LLM在原理层面不可行，并提出了三条务实的前进方向。 领域现状：公平性（fairness…
 tags:
   - "ACL 2025 (Long Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM Fairness"
   - "Impossibility Result"
   - "Group Fairness"

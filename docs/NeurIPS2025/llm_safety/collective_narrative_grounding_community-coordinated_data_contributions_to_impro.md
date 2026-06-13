@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Collective Narrative Grounding: Community-Coordinated Data Contributions to Improve Local AI Systems
 description: >-
-  [NeurIPS 2025][LLM安全][local knowledge] 提出 Collective Narrative Grounding 协议，通过参与式工坊收集社区叙事并结构化为"叙事单元"，用 RAG 管道将本地知识注入 LLM 问答系统…
+  [NeurIPS 2025][LLM安全][local knowledge] 提出 Collective Narrative Grounding 协议，通过参与式工坊收集社区叙事并结构化为"叙事单元"，用 RAG 管道将本地知识注入 LLM 问答系统，在 LocalBench 上发现 76.7% 的错误可由本地叙事直接修复，GPT-5 在参与式 QA 集上仅 21% 正确率凸显了本地知识鸿沟。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reasoning-Based Refinement of Unsupervised Text Clusters with LLMs
 description: >-
-  [ACL 2026][NLP理解][文本聚类精炼] 提出基于推理的聚类精炼框架，将 LLM 作为语义判官（而非嵌入生成器）验证和重构无监督聚类的输出，通过一致性验证、冗余裁决和标签接地三个推理阶段，在社交媒体语料上显著提升聚类一致性和人类对齐的标注质量。
+  [ACL 2026 Findings][NLP理解][文本聚类精炼] 提出基于推理的聚类精炼框架，将 LLM 作为语义判官（而非嵌入生成器）验证和重构无监督聚类的输出，通过一致性验证、冗余裁决和标签接地三个推理阶段，在社交媒体语料上显著提升聚类一致性和人类对齐的标注质量。 领域现状：无监督文本聚类（LDA、BERTopic、…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "文本聚类精炼"
   - "LLM语义判官"

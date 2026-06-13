@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifews: You Need Fewer Operations for Efficient Graph Neural Networks
 description: >-
-  [ICML 2025][图学习][graph_neural_networks] Unifews 提出统一的逐元素稀疏化框架，将 GNN 的图传播和特征变换视为矩阵运算，基于幅值阈值同时剪枝图边和模型权重，通过谱图平滑理论给出有界近似误差保证，在十亿边级别图上实现高达 100x 加速且不损失精度。
+  [ICML 2025][图学习][graph_neural_networks] Unifews 提出统一的逐元素稀疏化框架，将 GNN 的图传播和特征变换视为矩阵运算，基于幅值阈值同时剪枝图边和模型权重，通过谱图平滑理论给出有界近似误差保证，在十亿边级别图上实现高达 100x 加速且不损失精度。 GNN 的计算瓶颈来自两个图…
 tags:
   - "ICML 2025"
   - "图学习"

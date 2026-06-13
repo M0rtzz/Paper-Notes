@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Auction Design in the Joint Advertising
 description: >-
-  [ICML2025][联合广告] 本文针对联合广告场景（零售商与供应商共同竞标广告位）提出最优拍卖机制：单槽位下给出Myerson式闭式最优解，多槽位下设计BundleNet神经网络以bundle为单位构建IC约束，在保证近似激励兼容的同时最大化平台收入。
+  [ICML2025][联合广告] 本文针对联合广告场景（零售商与供应商共同竞标广告位）提出最优拍卖机制：单槽位下给出Myerson式闭式最优解，多槽位下设计BundleNet神经网络以bundle为单位构建IC约束，在保证近似激励兼容的同时最大化平台收入。 - 联合广告：是近年兴起的在线广告模式（Facebook等平台已部署…
 tags:
   - "ICML2025"
   - "联合广告"

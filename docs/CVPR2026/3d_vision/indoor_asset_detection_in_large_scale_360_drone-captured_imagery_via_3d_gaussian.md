@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Indoor Asset Detection in Large Scale 360° Drone-Captured Imagery via 3D Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][室内资产检测] 提出一种基于3D目标编码簿(Object Codebook)的pipeline，将2D分割mask通过语义+空间约束关联为3DGS中的一致3D物体实例，在大规模室内360°无人机图像上实现目标级检测，F1 score比SOTA GAGA提升65%…
+  [CVPR 2026][3D视觉][室内资产检测] 提出一种基于3D目标编码簿(Object Codebook)的pipeline，将2D分割mask通过语义+空间约束关联为3DGS中的一致3D物体实例，在大规模室内360°无人机图像上实现目标级检测，F1 score比SOTA GAGA提升65%，mAP提升11%。
 tags:
   - "CVPR 2026"
   - "3D视觉"

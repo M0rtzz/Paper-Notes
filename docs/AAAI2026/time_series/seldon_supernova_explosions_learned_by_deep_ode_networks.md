@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SELDON: Supernova Explosions Learned by Deep ODE Networks
 description: >-
-  [AAAI 2026][时间序列][连续时间建模] 提出SELDON，一种结合masked GRU-ODE编码器、隐式Neural ODE传播器和可解释高斯基函数解码器的连续时间VAE，用于稀疏、不规则采样的天文光变曲线预测，在仅观测20%数据时即可超越基线方法做出准确的多波段通量预测。
+  [AAAI 2026][时间序列][连续时间建模] 提出SELDON，一种结合masked GRU-ODE编码器、隐式Neural ODE传播器和可解释高斯基函数解码器的连续时间VAE，用于稀疏、不规则采样的天文光变曲线预测，在仅观测20%数据时即可超越基线方法做出准确的多波段通量预测。 领域现状：Vera C. Rubin…
 tags:
   - "AAAI 2026"
   - "时间序列"

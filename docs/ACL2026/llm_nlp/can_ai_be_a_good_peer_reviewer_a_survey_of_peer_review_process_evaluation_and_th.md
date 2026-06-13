@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can AI Be a Good Peer Reviewer? A Survey of Peer Review Process, Evaluation, and the Future
 description: >-
-  [ACL 2026][LLM/NLP][peer review] 作者系统综述了 LLM 时代 AI 辅助 peer review 全流程的方法：把"review 生成"分为 fine-tuning / agent / RL / 生成增强 四大范式…
+  [ACL 2026][LLM 其他][peer review] 作者系统综述了 LLM 时代 AI 辅助 peer review 全流程的方法：把"review 生成"分为 fine-tuning / agent / RL / 生成增强 四大范式，把"after-review"分为 rebuttal / meta-review / paper revision 三类，再给出"human / reference-based / LLM-based / aspect-oriented"四象限评测分类法，最后从 novelty、自动评测、跨域、多模态、伦理 6 个方向讨论未来。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "peer review"
   - "LLM agent"
   - "RL"

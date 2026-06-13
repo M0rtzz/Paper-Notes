@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Process Reward Modeling via Contrastive Mutual Information
 description: >-
-  [ACL 2026][LLM推理][过程奖励模型] 提出 CPMI（Contrastive Pointwise Mutual Information），一种高效的自动步级奖励标注方法，通过对比推理步骤对正确答案和错误答案的条件概率变化量来估计步级贡献…
+  [ACL 2026][LLM推理][过程奖励模型] 提出 CPMI（Contrastive Pointwise Mutual Information），一种高效的自动步级奖励标注方法，通过对比推理步骤对正确答案和错误答案的条件概率变化量来估计步级贡献，比 Monte Carlo 估计减少 84% 构建时间和 98% token 生成量，同时在过程级评估和数学推理基准上取得更高准确率。
 tags:
   - "ACL 2026"
   - "LLM推理"

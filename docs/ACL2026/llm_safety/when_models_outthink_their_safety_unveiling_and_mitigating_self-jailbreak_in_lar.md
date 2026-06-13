@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Models Outthink Their Safety: Unveiling and Mitigating Self-Jailbreak in Large Reasoning Models
 description: >-
-  [ACL2026][LLM安全][大推理模型] 这篇论文发现大推理模型的安全失败常发生在“已经识别风险之后又被后续推理推翻”，并提出 Chain-of-Guardrail 通过定位和修复危险推理片段，在显著降低攻击成功率的同时保留数学与代码推理能力。
+  [ACL2026][LLM安全][大推理模型] 这篇论文发现大推理模型的安全失败常发生在“已经识别风险之后又被后续推理推翻”，并提出 Chain-of-Guardrail 通过定位和修复危险推理片段，在显著降低攻击成功率的同时保留数学与代码推理能力。 领域现状：Large Reasoning Models 通过长链式推理在数…
 tags:
   - "ACL2026"
   - "LLM安全"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.21285](https://arxiv.org/abs/2510.21285)  
 **代码**: https://github.com/icip-cas/COG  
-**领域**: llm_reasoning  
+**领域**: LLM推理  
 **关键词**: 大推理模型、安全对齐、自我越狱、推理轨迹、选择性监督
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AI Cap-and-Trade: Efficiency Incentives for Accessibility and Sustainability
 description: >-
-  [ICML 2026][排放交易] 作者借鉴碳排放 cap-and-trade，提出针对 AI 推理 FLOP 的配额-交易市场（AI Allowance），用 KKT 条件证明其能在合理参数下严格减少各公司 FLOP 使用，从而同时缓解大模型时代的能耗与小公司被挤出市场两大问题。
+  [ICML 2026][排放交易] 作者借鉴碳排放 cap-and-trade，提出针对 AI 推理 FLOP 的配额-交易市场（AI Allowance），用 KKT 条件证明其能在合理参数下严格减少各公司 FLOP 使用，从而同时缓解大模型时代的能耗与小公司被挤出市场两大问题。 领域现状：大模型走超大规模路径——更大模型…
 tags:
   - "ICML 2026"
   - "排放交易"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Dataset Distillation via Non-Critical Region Refinement
 description: >-
-  [CVPR 2025][模型压缩][数据集蒸馏] 提出NRR-DD三阶段框架：用CAM选低置信度patch初始化合成图像、固定关键区域仅优化非关键区域提升信息密度、用2个距离值替代1000维软标签实现500倍存储压缩。在ImageNet-1K上IPC=10时达到46.1%（超RDED 25.7%）…
+  [CVPR 2025][模型压缩][数据集蒸馏] 提出NRR-DD三阶段框架：用CAM选低置信度patch初始化合成图像、固定关键区域仅优化非关键区域提升信息密度、用2个距离值替代1000维软标签实现500倍存储压缩。在ImageNet-1K上IPC=10时达到46.1%（超RDED 25.7%），软标签存储从120GB降至0.2GB。
 tags:
   - "CVPR 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiasJailbreak: Analyzing Ethical Biases and Jailbreak Vulnerabilities in Large Language Models
 description: >-
-  [AAAI 2026][LLM对齐][越狱攻击] 揭示LLM安全对齐中引入的伦理偏见可被反向利用作为越狱攻击向量——边缘化群体关键词的越狱成功率比优势群体高出20%，并提出基于提示词的轻量防御方法BiasDefense。
+  [AAAI 2026][LLM对齐][越狱攻击] 揭示LLM安全对齐中引入的伦理偏见可被反向利用作为越狱攻击向量——边缘化群体关键词的越狱成功率比优势群体高出20%，并提出基于提示词的轻量防御方法BiasDefense。 领域现状：LLM通过RLHF等safety alignment技术防止生成有害内容…
 tags:
   - "AAAI 2026"
   - "LLM对齐"

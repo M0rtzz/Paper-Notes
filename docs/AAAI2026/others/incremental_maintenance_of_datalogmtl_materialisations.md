@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Incremental Maintenance of DatalogMTL Materialisations
 description: >-
-  [AAAI 2026][DatalogMTL] 提出 DRed$_{\text{MTL}}$ 算法，将经典 Delete/Rederive 增量维护技术扩展到 DatalogMTL（带度量时序逻辑的 Datalog），通过在周期化物化表示上设计新的 seminaïve 评估算子和周期识别算法，实现高效增量更新…
+  [AAAI 2026 Oral][DatalogMTL] 提出 DRed$_{\text{MTL}}$ 算法，将经典 Delete/Rederive 增量维护技术扩展到 DatalogMTL（带度量时序逻辑的 Datalog），通过在周期化物化表示上设计新的 seminaïve 评估算子和周期识别算法，实现高效增量更新，性能可达重新物化的数量级提升。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "DatalogMTL"
   - "incremental reasoning"
   - "materialisation"

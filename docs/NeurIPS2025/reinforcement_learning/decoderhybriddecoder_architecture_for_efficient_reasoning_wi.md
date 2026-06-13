@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoder-Hybrid-Decoder Architecture for Efficient Reasoning with Long Generation
 description: >-
-  [NeurIPS 2025][强化学习][混合架构] SambaY 提出 Gated Memory Unit（GMU）用于跨层共享 SSM 的 token 混合表示，将 YOCO 的 cross-decoder 中一半的 cross-attention 层替换为轻量级 GMU…
+  [NeurIPS 2025][强化学习][混合架构] SambaY 提出 Gated Memory Unit（GMU）用于跨层共享 SSM 的 token 混合表示，将 YOCO 的 cross-decoder 中一半的 cross-attention 层替换为轻量级 GMU，在保持线性预填充复杂度和长上下文检索能力的同时，大幅提升解码效率——最终产品 Phi4-mini-Flash-Reasoning (3.8B) 在推理任务上超越 Phi4-mini-Reasoning，且在 2K 提示 + 32K 生成场景下实现高达 10× 的解码吞吐提升。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

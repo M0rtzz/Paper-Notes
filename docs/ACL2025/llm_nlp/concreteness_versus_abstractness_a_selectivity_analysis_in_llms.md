@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Concreteness Versus Abstractness: A Selectivity Analysis in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][具体性] 本文探究大语言模型中具体概念（如"苹果"）和抽象概念（如"自由"）的处理差异，通过选择性分析（selectivity analysis）发现LLM内部存在对具体性/抽象性具有选择性响应的神经元群体…
+  [ACL 2025][LLM 其他][具体性] 本文探究大语言模型中具体概念（如"苹果"）和抽象概念（如"自由"）的处理差异，通过选择性分析（selectivity analysis）发现LLM内部存在对具体性/抽象性具有选择性响应的神经元群体，揭示了LLM的语义表示与人类认知理论中的"具体性效应"（concreteness effect）之间的有趣对应。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "具体性"
   - "抽象性"
   - "语义选择性"

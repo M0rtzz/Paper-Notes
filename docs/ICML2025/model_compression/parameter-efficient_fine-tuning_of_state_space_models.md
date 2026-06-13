@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parameter-Efficient Fine-Tuning of State Space Models
 description: >-
-  [ICML 2025][模型压缩][状态空间模型] 首次系统性基准测试 6 种 PEFT 方法在 SSM（Mamba）上的表现，发现 LoRA 应作用于线性投影层而非 SSM 模块，并提出 SDT（稀疏维度调优）方法选择性更新关键状态维度以更高效地微调 SSM 参数。
+  [ICML 2025][模型压缩][状态空间模型] 首次系统性基准测试 6 种 PEFT 方法在 SSM（Mamba）上的表现，发现 LoRA 应作用于线性投影层而非 SSM 模块，并提出 SDT（稀疏维度调优）方法选择性更新关键状态维度以更高效地微调 SSM 参数。 领域现状：参数高效微调（PEFT）方法如 LoRA、Pr…
 tags:
   - "ICML 2025"
   - "模型压缩"

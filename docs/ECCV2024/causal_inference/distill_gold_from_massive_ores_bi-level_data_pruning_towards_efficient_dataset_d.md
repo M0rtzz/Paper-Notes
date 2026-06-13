@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distill Gold from Massive Ores: Bi-level Data Pruning towards Efficient Dataset Distillation
 description: >-
-  [ECCV 2024][因果推理][Dataset Distillation] 提出双层数据剪枝策略 BiLP，通过经验损失静态剪枝和基于因果效应 (ITE) 的动态剪枝，高效选择对数据集蒸馏最有价值的真实样本，以即插即用方式一致性提升现有蒸馏方法性能并降低计算开销。
+  [ECCV 2024][因果推理][Dataset Distillation] 提出双层数据剪枝策略 BiLP，通过经验损失静态剪枝和基于因果效应 (ITE) 的动态剪枝，高效选择对数据集蒸馏最有价值的真实样本，以即插即用方式一致性提升现有蒸馏方法性能并降低计算开销。 数据集蒸馏的核心目标：从大规模真实数据集中学习一个小型合…
 tags:
   - "ECCV 2024"
   - "因果推理"

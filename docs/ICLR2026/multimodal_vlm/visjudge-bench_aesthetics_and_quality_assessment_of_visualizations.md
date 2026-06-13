@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations
 description: >-
-  [多模态VLM] 提出首个面向数据可视化美学与质量评估的综合基准 VisJudge-Bench（3,090 样本，32 种图表类型），并训练 VisJudge 模型，将 MAE 相比 GPT-5 降低 23.9%，与人类专家的一致性提升 60.5%。
+  [多模态VLM] 提出首个面向数据可视化美学与质量评估的综合基准 VisJudge-Bench（3,090 样本，32 种图表类型），并训练 VisJudge 模型，将 MAE 相比 GPT-5 降低 23.9%，与人类专家的一致性提升 60.5%。 数据可视化是将复杂数据转化为直观洞察的有效方式，其质量取决于三个维度：保真…
 tags:
   - "多模态VLM"
 ---

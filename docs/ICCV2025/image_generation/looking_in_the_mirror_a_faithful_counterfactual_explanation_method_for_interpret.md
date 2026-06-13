@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Looking in the Mirror: A Faithful Counterfactual Explanation Method for Interpreting Deep Image Classification Models
 description: >-
-  [ICCV 2025][图像生成][反事实解释] 将分类器的决策边界视为"镜面"，通过将特征表示"反射"到镜面另一侧生成反事实解释（CFE），并设计三角测量损失保持潜在空间到图像空间的距离关系，实现忠实、可控且可动画化的反事实解释。
+  [ICCV 2025][图像生成][反事实解释] 将分类器的决策边界视为"镜面"，通过将特征表示"反射"到镜面另一侧生成反事实解释（CFE），并设计三角测量损失保持潜在空间到图像空间的距离关系，实现忠实、可控且可动画化的反事实解释。 反事实解释（Counterfactual Explanation, CFE）旨在回答"如果输…
 tags:
   - "ICCV 2025"
   - "图像生成"

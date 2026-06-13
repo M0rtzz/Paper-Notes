@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Monocular Occupancy Prediction for Scalable Indoor Scenes
 description: >-
-  [ECCV 2024][自动驾驶][3D 占用预测] 提出 ISO（Indoor Scene Occupancy）方法，通过预训练深度模型和 D-FLoSP（双特征视线投影）模块实现室内场景的单目 3D 占用预测，并构建了规模比 NYUv2 大 40 倍的 Occ-ScanNet 基准数据集。
+  [ECCV 2024][自动驾驶][3D 占用预测] 提出 ISO（Indoor Scene Occupancy）方法，通过预训练深度模型和 D-FLoSP（双特征视线投影）模块实现室内场景的单目 3D 占用预测，并构建了规模比 NYUv2 大 40 倍的 Occ-ScanNet 基准数据集。 室内 vs 室外的关键差异：3…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

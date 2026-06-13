@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrap Your Own Views: Masked Ego-Exo Modeling for Fine-Grained View-Invariant Video Representations
 description: >-
-  [CVPR 2025][视频理解][ego-exo] 通过掩码建模在自我中心和外部视角之间学习细粒度视图不变表示，无需配对标注即可从两种视角的关联中自监督学习
+  [CVPR 2025][视频理解][ego-exo] 通过掩码建模在自我中心和外部视角之间学习细粒度视图不变表示，无需配对标注即可从两种视角的关联中自监督学习 领域现状 领域现状：Bootstrap Your Own Views 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不足…
 tags:
   - "CVPR 2025"
   - "视频理解"

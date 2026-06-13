@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explainable Forensics of Manipulated Segments in Untrimmed Long Videos
 description: >-
-  [ICML 2026][视频生成][AI 生成视频检测] 本文提出了**长视频中 AI 生成片段的时序定位与可解释分析**任务，引入 **TASLE 大规模数据集**和**两阶段 MSLoc 基线方法**——通过边界感知提议生成和 MLLM 精化实现对混合真伪视频中篡改片段的精确定位和可解释推理。
+  [ICML 2026][视频生成][AI 生成视频检测] 本文提出了长视频中 AI 生成片段的时序定位与可解释分析：任务，引入 TASLE 大规模数据集：和两阶段 MSLoc 基线方法：——通过边界感知提议生成和 MLLM 精化实现对混合真伪视频中篡改片段的精确定位和可解释推理。 领域现状：当前 AI 生成视频检测方法主要聚…
 tags:
   - "ICML 2026"
   - "视频生成"

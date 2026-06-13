@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Relation between Rectified Flows and Optimal Transport
 description: >-
-  [NeurIPS 2025][图像生成][Rectified Flow] 本文深入研究了 rectified flow（流匹配）与最优传输之间的理论关系，通过构造多个反例证明了此前文献中关于"梯度约束的 rectified flow 可以渐近收敛到最优传输"的等价性声明并不成立…
+  [NeurIPS 2025][图像生成][Rectified Flow] 本文深入研究了 rectified flow（流匹配）与最优传输之间的理论关系，通过构造多个反例证明了此前文献中关于"梯度约束的 rectified flow 可以渐近收敛到最优传输"的等价性声明并不成立，需要比已知条件更强的假设才能保证两者的等价关系。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

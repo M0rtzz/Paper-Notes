@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph of Verification: Structured Verification of LLM Reasoning with Directed Acyclic Graphs
 description: >-
-  [AAAI 2026][LLM推理][推理验证] 提出 Graph of Verification (GoV)，一种将 LLM 推理过程建模为有向无环图 (DAG) 的结构化验证框架…
+  [AAAI 2026][LLM推理][推理验证] 提出 Graph of Verification (GoV)，一种将 LLM 推理过程建模为有向无环图 (DAG) 的结构化验证框架，通过灵活的节点块(Node Block)架构实现多粒度验证——从形式化任务的原子步骤到自然语言叙述的段落级验证——在结构化和松散结构化推理基准上均显著优于整体验证和其他分解验证方法。
 tags:
   - "AAAI 2026"
   - "LLM推理"

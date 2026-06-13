@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unanswerability Evaluation for Retrieval Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][RAG评估] UAEval4RAG 提出了一个针对 RAG 系统处理不可回答查询的全面评估框架，定义了六类不可回答类别，能够基于任意知识库自动合成测试数据并评估系统的拒绝能力，实验揭示没有单一配置能在所有数据集上同时最优化可回答和不可回答查询的表现。
+  [ACL 2025][信息检索/RAG][RAG评估] UAEval4RAG 提出了一个针对 RAG 系统处理不可回答查询的全面评估框架，定义了六类不可回答类别，能够基于任意知识库自动合成测试数据并评估系统的拒绝能力，实验揭示没有单一配置能在所有数据集上同时最优化可回答和不可回答查询的表现。 1. 领域现状：RAG（检索增强…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

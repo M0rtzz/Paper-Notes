@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structure-Guided Entity Resolution: Fine-Tuning LLMs for Robust Name Matching in Complex Linguistic Contexts
 description: >-
-  [ACL2026][多语言/翻译][实体解析] SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配：Phase 1 训练模型解析姓名结构（输出 JSON），Phase 2 从 Phase 1 checkpoint 训练二分类匹配器…
+  [ACL2026][多语言/翻译][实体解析] SGER 提出两阶段课程学习框架微调 Llama 3 8B 进行人名实体匹配：Phase 1 训练模型解析姓名结构（输出 JSON），Phase 2 从 Phase 1 checkpoint 训练二分类匹配器，在 5 万对印度 KYC 数据上达到 99.02% 准确率和 0.994 F1，已在 Dream11（2.5 亿用户）生产环境部署。
 tags:
   - "ACL2026"
   - "多语言/翻译"
@@ -20,7 +20,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2605.23597](https://arxiv.org/abs/2605.23597)
 **代码**: 待确认
-**领域**: multilingual_mt
+**领域**: 多语言翻译
 **关键词**: 实体解析, 姓名匹配, 课程学习, KYC, LoRA 微调, 多语言
 
 ## 一句话总结

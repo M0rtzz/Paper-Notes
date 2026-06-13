@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Local and Mixing-Based Algorithms for Gaussian Graphical Model Selection from Glauber Dynamics
 description: >-
-  [ICML 2026][Gaussian Graphical Model] 作者首次研究"从单条 Gaussian Glauber 动力学轨迹"中学习高斯图模型结构的问题，提出两种互补算法：LET-GL（基于 i,i,j…
+  [ICML 2026][Gaussian Graphical Model] 作者首次研究"从单条 Gaussian Glauber 动力学轨迹"中学习高斯图模型结构的问题，提出两种互补算法：LET-GL（基于 i,i,j,i 窗口的局部边检测、完美并行）和 BTR-GL（在 Dobrushin 条件下用 burn-in/thinning 把轨迹"解相关"成近似 i.i.d. 样本再喂给现成 i.i.d. 学习器），并给出有限样本恢复保证 + 信息论下界 + 一个独立有用的随机扫描高斯 Gibbs sampler 的 TV mixing 上界。
 tags:
   - "ICML 2026"
   - "Gaussian Graphical Model"

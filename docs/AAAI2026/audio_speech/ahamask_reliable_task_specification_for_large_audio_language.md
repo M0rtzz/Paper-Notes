@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AHAMask: Reliable Task Specification for Large Audio Language Models without Instructions
 description: >-
-  [AAAI 2026][音频/语音][大音频语言模型] 通过对大音频语言模型（LALM）Transformer 骨干中的注意力头进行二值掩码（AHAMask），无需文本指令即可可靠触发特定声学任务功能，同时揭示了 LALM 内部存在"声学功能通路"。
+  [AAAI 2026][音频/语音][大音频语言模型] 通过对大音频语言模型（LALM）Transformer 骨干中的注意力头进行二值掩码（AHAMask），无需文本指令即可可靠触发特定声学任务功能，同时揭示了 LALM 内部存在"声学功能通路"。 当前 LALM（如 SALMONN、Qwen2Audio）虽能统一处理多种…
 tags:
   - "AAAI 2026"
   - "音频/语音"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?
 description: >-
-  [NeurIPS 2025][预训练][目标绑定] 通过定义 IsSameObject 谓词并设计二次探针，证明大规模预训练 ViT（尤其是 DINO、CLIP）自然涌现了目标绑定能力，该信号编码在低维子空间中并主动引导注意力机制，挑战了认知科学界认为 ViT 缺乏绑定能力的观点。
+  [NeurIPS 2025 Spotlight][预训练][目标绑定] 通过定义 IsSameObject 谓词并设计二次探针，证明大规模预训练 ViT（尤其是 DINO、CLIP）自然涌现了目标绑定能力，该信号编码在低维子空间中并主动引导注意力机制，挑战了认知科学界认为 ViT 缺乏绑定能力的观点。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "预训练"
   - "目标绑定"
   - "Transformer"

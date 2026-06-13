@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?
 description: >-
-  [NeurIPS 2025][3D视觉][Transformer] 本文系统性地揭示了 3D 点云 Transformer（如 PTv3、Sonata）中存在 90-95% 的 token 冗余，并提出 gitmerge3D——一种全局信息感知的图 token 合并方法…
+  [NeurIPS 2025][3D视觉][Transformer] 本文系统性地揭示了 3D 点云 Transformer（如 PTv3、Sonata）中存在 90-95% 的 token 冗余，并提出 gitmerge3D——一种全局信息感知的图 token 合并方法，通过能量分数自适应合并策略实现了高达 5.3× FLOPs 降低和 6.4× 显存节省而几乎不损失精度。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

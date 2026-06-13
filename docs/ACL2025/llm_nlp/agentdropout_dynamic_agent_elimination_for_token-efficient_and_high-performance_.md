@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AgentDropout: Dynamic Agent Elimination for Token-Efficient and High-Performance LLM-Based Multi-Agent Collaboration
 description: >-
-  [ACL 2025][LLM/NLP][多智能体协作] 本文提出AgentDropout，通过在每轮通信中动态删除冗余Agent节点和通信边来优化多智能体系统的通信拓扑，相比SOTA方法平均减少21.6%的prompt token消耗和18.4%的completion token消耗，同时性能提升1.14分。
+  [ACL 2025][LLM 其他][多智能体协作] 本文提出AgentDropout，通过在每轮通信中动态删除冗余Agent节点和通信边来优化多智能体系统的通信拓扑，相比SOTA方法平均减少21.6%的prompt token消耗和18.4%的completion token消耗，同时性能提升1.14分。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多智能体协作"
   - "通信拓扑优化"
   - "节点剪枝"

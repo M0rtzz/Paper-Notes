@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily
 description: >-
-  [AAAI2026][图学习][图神经网络] 提出 AD-GNN，通过理论分析节点级别的同配/异配特性，为每个节点自适应分配不同的聚合深度，在统一框架中同时处理同配和异配图上的节点分类任务。
+  [AAAI2026][图学习][图神经网络] 提出 AD-GNN，通过理论分析节点级别的同配/异配特性，为每个节点自适应分配不同的聚合深度，在统一框架中同时处理同配和异配图上的节点分类任务。 传统 GNN 建立在同配假设（homophily assumption）之上——相连节点倾向于拥有相同标签。然而在社交网络、网页图等真…
 tags:
   - "AAAI2026"
   - "图学习"

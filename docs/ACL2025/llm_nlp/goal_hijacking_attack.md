@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Efficient Universal Goal Hijacking with Semantics-guided Prompt Organization
 description: >-
-  [ACL 2025][LLM/NLP][通用目标劫持] 本文提出POUGH方法，通过高效的渐进式优化算法和两种语义引导的提示组织策略（采样策略+排序策略），实现了对LLM的高效通用目标劫持攻击，在四个开源LLM和十种恶意目标响应上平均攻击成功率达93.41%。
+  [ACL 2025][LLM 其他][通用目标劫持] 本文提出POUGH方法，通过高效的渐进式优化算法和两种语义引导的提示组织策略（采样策略+排序策略），实现了对LLM的高效通用目标劫持攻击，在四个开源LLM和十种恶意目标响应上平均攻击成功率达93.41%。 目标劫持攻击定义：目标劫持是一种提示注入攻击…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "通用目标劫持"
   - "提示注入攻击"
   - "语义引导"

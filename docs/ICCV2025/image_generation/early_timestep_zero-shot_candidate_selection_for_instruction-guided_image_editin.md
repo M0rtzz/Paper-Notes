@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing
 description: >-
-  [ICCV 2025][图像生成][图像编辑] 本文提出 ELECT（Early-timestep Latent Evaluation for Candidate selecTion），一个零样本框架，通过在扩散去噪的早期时间步估计背景不一致性来选择最优种子，将计算开销降低 41%（最高 61%）…
+  [ICCV 2025][图像生成][图像编辑] 本文提出 ELECT（Early-timestep Latent Evaluation for Candidate selecTion），一个零样本框架，通过在扩散去噪的早期时间步估计背景不一致性来选择最优种子，将计算开销降低 41%（最高 61%），同时提升背景一致性和编辑指令遵循度，且无需外部监督或额外训练。
 tags:
   - "ICCV 2025"
   - "图像生成"

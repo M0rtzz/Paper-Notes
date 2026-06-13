@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Efficient and Expressive Offline RL via Flow-Anchored Noise-conditioned Q-Learning
 description: >-
-  [ICML 2026][机器人][离线RL] 本文提出 FAN：把"昂贵的生成式策略 + 分布式 critic"压缩到"单步 flow 锚定 + 单噪声样本 critic"——用 Flow Anchoring 在一次 flow 评估内完成行为正则化…
+  [ICML 2026][机器人][离线RL] 本文提出 FAN：把"昂贵的生成式策略 + 分布式 critic"压缩到"单步 flow 锚定 + 单噪声样本 critic"——用 Flow Anchoring 在一次 flow 评估内完成行为正则化，用 noise-conditioned critic 把 quantile 多样本替换成单 Gaussian 噪声样本，在 D4RL/OGBench 上做到 SOTA 性能同时训练比同类分布式方法快 5-14×。
 tags:
   - "ICML 2026"
   - "机器人"

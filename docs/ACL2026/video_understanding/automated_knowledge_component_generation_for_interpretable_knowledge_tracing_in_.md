@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Automated Knowledge Component Generation and Interpretable Knowledge Tracing in Coding Problems
 description: >-
-  [ACL2026][视频理解][Knowledge Component] 这篇论文用 LLM 自动为开放式编程题生成和聚类 Knowledge Components，并提出 KCGen-KT 将学生在每个 KC 上的掌握度转成 soft token 输入 Llama 3…
+  [ACL2026 Findings][视频理解][Knowledge Component] 这篇论文用 LLM 自动为开放式编程题生成和聚类 Knowledge Components，并提出 KCGen-KT 将学生在每个 KC 上的掌握度转成 soft token 输入 Llama 3，在 CodeWorkout 和 FalconCode 上同时提升正确率预测与学生代码生成。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "视频理解"
   - "Knowledge Component"
   - "Knowledge Tracing"

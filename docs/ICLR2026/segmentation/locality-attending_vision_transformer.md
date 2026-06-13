@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locality-Attending Vision Transformer
 description: >-
-  [ICLR 2026][语义分割][Transformer] 提出 LocAt 模块化插件（GAug + PRR），通过可学习高斯核偏置注意力向局部邻域聚焦并精炼 patch 表示，在不修改训练目标的前提下使 ViT 在 ADE20K 分割上提升超 6%，同时分类精度不降反升。
+  [ICLR 2026][语义分割][Transformer] 提出 LocAt 模块化插件（GAug + PRR），通过可学习高斯核偏置注意力向局部邻域聚焦并精炼 patch 表示，在不修改训练目标的前提下使 ViT 在 ADE20K 分割上提升超 6%，同时分类精度不降反升。 1. ViT 的全局注意力利于分类但不利于分割…
 tags:
   - "ICLR 2026"
   - "语义分割"

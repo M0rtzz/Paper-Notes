@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BLOCK-EM: Preventing Emergent Misalignment via Latent Blocking
 description: >-
-  [ICML 2026][可解释性][emergent misalignment] BLOCK-EM 用 SAE 找到一小撮"因果地控制 emergent misalignment"的内部 latent，然后在窄域 SFT 时加一个 one-sided 正则…
+  [ICML 2026][可解释性][emergent misalignment] BLOCK-EM 用 SAE 找到一小撮"因果地控制 emergent misalignment"的内部 latent，然后在窄域 SFT 时加一个 one-sided 正则，禁止模型把这些 latent 朝"失对齐方向"放大——在 6 个 fine-tuning 域上把 emergent misalignment 平均砍掉 93%，同时几乎不损伤 in-domain 任务表现。
 tags:
   - "ICML 2026"
   - "可解释性"

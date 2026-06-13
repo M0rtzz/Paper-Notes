@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Classifiers Understand Compositionality, but Conditions Apply
 description: >-
-  [NeurIPS 2025 (Datasets & Benchmarks)][图像生成][扩散模型] 全面研究零样本扩散分类器在组合理解任务上的判别能力：覆盖3个扩散模型(SD 1.5/2.0/3-m)×10个数据集×30+任务，引入Self-Bench诊断基准（用扩散模型自己生成的图像消除域差异）…
+  [NeurIPS 2025 (Datasets & Benchmarks)][图像生成][扩散模型] 全面研究零样本扩散分类器在组合理解任务上的判别能力：覆盖3个扩散模型(SD 1.5/2.0/3-m)×10个数据集×30+任务，引入Self-Bench诊断基准（用扩散模型自己生成的图像消除域差异），发现扩散分类器确实理解组合性但受域差距和时间步加权影响——"条件适用"。
 tags:
   - "NeurIPS 2025 (Datasets & Benchmarks)"
   - "图像生成"

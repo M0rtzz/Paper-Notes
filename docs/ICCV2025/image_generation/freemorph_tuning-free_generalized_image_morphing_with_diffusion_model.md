@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeMorph: Tuning-Free Generalized Image Morphing with Diffusion Model
 description: >-
-  [图像生成] FreeMorph 提出首个无需微调的通用图像变形方法，通过引导感知球面插值和步骤导向变化趋势两个创新设计，实现了 30 秒内在任意语义/布局的图像对之间生成平滑过渡序列，速度比现有方法快 10-50 倍。
+  [图像生成] FreeMorph 提出首个无需微调的通用图像变形方法，通过引导感知球面插值和步骤导向变化趋势两个创新设计，实现了 30 秒内在任意语义/布局的图像对之间生成平滑过渡序列，速度比现有方法快 10-50 倍。 图像变形（Image Morphing）旨在生成两张输入图像之间平滑过渡的中间图像序列…
 tags:
   - "图像生成"
 ---

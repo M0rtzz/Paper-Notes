@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mastering Negation: Boosting Grounding Models via Grouped Opposition-Based Learning
 description: >-
-  [CVPR 2025][多模态VLM][visual grounding] 构建首个包含正负语义描述的视觉定位数据集 D-Negation，并提出 Grouped Opposition-Based Learning (GOBL) 微调机制，通过对立语义约束显著增强 grounding 模型对否定语义的理解能力…
+  [CVPR 2025][多模态VLM][visual grounding] 构建首个包含正负语义描述的视觉定位数据集 D-Negation，并提出 Grouped Opposition-Based Learning (GOBL) 微调机制，通过对立语义约束显著增强 grounding 模型对否定语义的理解能力。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

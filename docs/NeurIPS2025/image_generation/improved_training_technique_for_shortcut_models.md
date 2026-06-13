@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Training Technique for Shortcut Models (iSM)
 description: >-
-  [NeurIPS 2025][图像生成][Shortcut Models] 针对 Shortcut Models 的五大性能瓶颈（指导累积、固定引导、频率偏差、自一致性偏离、弯曲轨迹），提出 iSM 统一训练框架，通过内禀引导、多级小波损失、缩放最优传输和双 EMA 策略…
+  [NeurIPS 2025][图像生成][Shortcut Models] 针对 Shortcut Models 的五大性能瓶颈（指导累积、固定引导、频率偏差、自一致性偏离、弯曲轨迹），提出 iSM 统一训练框架，通过内禀引导、多级小波损失、缩放最优传输和双 EMA 策略，在 ImageNet 256×256 上实现单步 FID 5.27、四步 FID 2.05 的大幅提升。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

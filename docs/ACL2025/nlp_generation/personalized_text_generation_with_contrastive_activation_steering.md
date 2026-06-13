@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Personalized Text Generation with Contrastive Activation Steering
 description: >-
-  [ACL 2025][文本生成][个性化生成] 提出 StyleVector——一个无需训练的个性化文本生成框架，通过对比用户真实响应与模型生成的无风格响应之间的隐层激活差异来提取"风格向量"，在推理时通过简单的线性激活干预引导 LLM 生成符合用户写作风格的文本…
+  [ACL 2025][文本生成][个性化生成] 提出 StyleVector——一个无需训练的个性化文本生成框架，通过对比用户真实响应与模型生成的无风格响应之间的隐层激活差异来提取"风格向量"，在推理时通过简单的线性激活干预引导 LLM 生成符合用户写作风格的文本，在 LaMP 和 LongLaMP 基准上实现 8% 的相对提升，同时将存储需求降低至 PEFT 方法的 1/1700。
 tags:
   - "ACL 2025"
   - "文本生成"

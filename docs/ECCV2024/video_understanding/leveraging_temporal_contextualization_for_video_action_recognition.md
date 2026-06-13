@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Temporal Contextualization for Video Action Recognition
 description: >-
-  [ECCV 2024][视频理解][视频动作识别] 提出 **TC-CLIP** 框架，通过**时序上下文化(TC)** 机制将全局视频动作线索压缩为少量 context tokens 注入 CLIP 编码过程，并设计**视频条件提示(VP)** 模块将视觉信息注入文本端…
+  [ECCV 2024][视频理解][视频动作识别] 提出 **TC-CLIP** 框架，通过**时序上下文化(TC)** 机制将全局视频动作线索压缩为少量 context tokens 注入 CLIP 编码过程，并设计**视频条件提示(VP)** 模块将视觉信息注入文本端，在零样本、小样本、base-to-novel 和全监督四种设定下全面超越现有 CLIP-based 视频识别方法。
 tags:
   - "ECCV 2024"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understand and Accelerate Memory Processing Pipeline for Large Language Model Inference
 description: >-
-  [ICML 2026][信息检索/RAG][长上下文] 本文把现代 LLM 长上下文推理中的稀疏注意力、RAG、压缩上下文记忆等优化统一为四阶段 "Prepare Memory → Compute Relevancy → Retrieval → Apply to Inference" 内存处理流水线…
+  [ICML 2026][信息检索/RAG][长上下文] 本文把现代 LLM 长上下文推理中的稀疏注意力、RAG、压缩上下文记忆等优化统一为四阶段 "Prepare Memory → Compute Relevancy → Retrieval → Apply to Inference" 内存处理流水线，定量证明该流水线占整体延迟 22%-97% 且各阶段计算特性高度异构，并据此提出 GPU-FPGA 异构系统：把规则/算密集操作留 GPU、把稀疏/不规则/访存密集操作 offload 到 FPGA，在 MI210 + Alveo U55C 上取得最多 2.2× 端到端加速和 4.7× 能耗下降。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching
 description: >-
-  [ICLR 2026][图像生成][Flow Matching] 提出FlowCast框架，将投机解码思想引入Flow Matching模型，利用速度场的局部平滑性将当前速度预测作为零成本draft外推未来状态，通过MSE验证选择性跳过冗余步骤，实现>2.5×加速且无质量损失。
+  [ICLR 2026][图像生成][Flow Matching] 提出FlowCast框架，将投机解码思想引入Flow Matching模型，利用速度场的局部平滑性将当前速度预测作为零成本draft外推未来状态，通过MSE验证选择性跳过冗余步骤，实现2.5×加速且无质量损失。 领域现状：Flow Matching (FM)…
 tags:
   - "ICLR 2026"
   - "图像生成"

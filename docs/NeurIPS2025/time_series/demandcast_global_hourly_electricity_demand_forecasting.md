@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DemandCast: Global hourly electricity demand forecasting
 description: >-
-  [NeurIPS 2025][时间序列][电力需求预测] 构建 DemandCast 开源机器学习框架，基于 XGBoost 融合历史电力需求、ERA5 温度和社会经济特征进行全球 56 个国家/地区的小时级电力需求预测，通过归一化目标变量（年度分数）实现跨国家可比，在时间外推测试集上达到 MAPE 9.2%…
+  [NeurIPS 2025][时间序列][电力需求预测] 构建 DemandCast 开源机器学习框架，基于 XGBoost 融合历史电力需求、ERA5 温度和社会经济特征进行全球 56 个国家/地区的小时级电力需求预测，通过归一化目标变量（年度分数）实现跨国家可比，在时间外推测试集上达到 MAPE 9.2%。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

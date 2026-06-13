@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Exploration of Mamba for Speech Self-Supervised Models
 description: >-
-  [ACL 2026][音频/语音][Mamba] 首次全面探索Mamba架构作为语音自监督学习（SSL）基础模型的潜力，发现Mamba-based HuBERT在长上下文ASR、流式ASR和因果设置的probing任务中优于Transformer，同时保持线性时间复杂度。
+  [ACL 2026][音频/语音][Mamba] 首次全面探索Mamba架构作为语音自监督学习（SSL）基础模型的潜力，发现Mamba-based HuBERT在长上下文ASR、流式ASR和因果设置的probing任务中优于Transformer，同时保持线性时间复杂度。 领域现状：Transformer-based语音SS…
 tags:
   - "ACL 2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos
 description: >-
-  [ECCV 2024][视频理解][第一人称视频] 提出球面世界锁定（Spherical World-Locking, SWL）框架，通过将多模态感知流隐式变换到世界锁定的球面坐标系中，消除自身运动带来的挑战，实现更精准的第一人称视频中的音视觉定位。
+  [ECCV 2024][视频理解][第一人称视频] 提出球面世界锁定（Spherical World-Locking, SWL）框架，通过将多模态感知流隐式变换到世界锁定的球面坐标系中，消除自身运动带来的挑战，实现更精准的第一人称视频中的音视觉定位。 第一人称视频提供了来自个人视角的全面上下文信息，但其最显著的特点——自身运…
 tags:
   - "ECCV 2024"
   - "视频理解"

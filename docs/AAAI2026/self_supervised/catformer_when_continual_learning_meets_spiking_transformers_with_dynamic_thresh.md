@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds
 description: >-
-  [AAAI 2026 (Neuro for AI & AI for Neuro Workshop, PMLR)][自监督学习][脉冲神经网络] 提出 CATFormer，一种基于脉冲视觉 Transformer 的无数据重放持续学习框架，通过上下文自适应的动态放电阈值实现任务特定的神经元兴奋性调节…
+  [AAAI 2026 (Neuro for AI & AI for Neuro Workshop, PMLR)][自监督学习][脉冲神经网络] 提出 CATFormer，一种基于脉冲视觉 Transformer 的无数据重放持续学习框架，通过上下文自适应的动态放电阈值实现任务特定的神经元兴奋性调节，在长达 100 个任务序列中不仅不遗忘反而准确率提升（"逆向遗忘"现象）。
 tags:
   - "AAAI 2026 (Neuro for AI & AI for Neuro Workshop, PMLR)"
   - "自监督学习"

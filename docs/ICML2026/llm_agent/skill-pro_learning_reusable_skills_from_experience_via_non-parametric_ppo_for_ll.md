@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Skill-Pro: Learning Reusable Skills from Experience via Non-Parametric PPO for LLM Agents
 description: >-
-  [ICML 2026][LLM Agent][可复用技能] Skill-Pro 把 LLM agent 的交互经验显式抽成"激活+执行+终止"三件套的 Skill，用语义梯度生成候选 Skill、再用 PPO 风格的信任域验证 (PPO Gate) 决定是否纳入…
+  [ICML 2026 Spotlight][LLM Agent][可复用技能] Skill-Pro 把 LLM agent 的交互经验显式抽成"激活+执行+终止"三件套的 Skill，用语义梯度生成候选 Skill、再用 PPO 风格的信任域验证 (PPO Gate) 决定是否纳入，最终在 ALFWorld / Mastermind 上以 ~800 token 的极小记忆库实现 0.85+ 的复用率和显著性能提升。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM Agent"
   - "可复用技能"
   - "Skill-MDP"

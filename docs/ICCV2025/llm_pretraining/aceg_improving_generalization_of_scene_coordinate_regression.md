@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training
 description: >-
-  [ICCV 2025][预训练][场景坐标回归] 将场景坐标回归器拆分为「场景无关的Transformer」和「场景特定的map code」，通过在数万场景上进行交替的mapping/query预训练，显著提升SCR方法在光照、视角变化下的泛化能力，同时保持轻量化的计算开销。
+  [ICCV 2025][预训练][场景坐标回归] 将场景坐标回归器拆分为「场景无关的Transformer」和「场景特定的map code」，通过在数万场景上进行交替的mapping/query预训练，显著提升SCR方法在光照、视角变化下的泛化能力，同时保持轻量化的计算开销。 领域现状 领域现状：场景坐标回归（Scene C…
 tags:
   - "ICCV 2025"
   - "预训练"

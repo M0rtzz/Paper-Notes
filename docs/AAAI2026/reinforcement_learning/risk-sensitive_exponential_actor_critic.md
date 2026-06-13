@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Risk-Sensitive Exponential Actor Critic
 description: >-
-  [AAAI2026][强化学习][risk-sensitive RL] 针对 entropic risk measure 下 policy gradient 的高方差和数值不稳定问题，推导了完整的 on/off-policy 风险敏感策略梯度定理，并提出 rsEAC 算法…
+  [AAAI2026][强化学习][risk-sensitive RL] 针对 entropic risk measure 下 policy gradient 的高方差和数值不稳定问题，推导了完整的 on/off-policy 风险敏感策略梯度定理，并提出 rsEAC 算法，通过 log-domain critic 参数化和梯度归一化裁剪机制实现稳定的风险敏感连续控制。
 tags:
   - "AAAI2026"
   - "强化学习"

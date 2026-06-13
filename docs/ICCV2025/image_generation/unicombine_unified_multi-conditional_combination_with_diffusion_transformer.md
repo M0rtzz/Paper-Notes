@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniCombine: Unified Multi-Conditional Combination with Diffusion Transformer
 description: >-
-  [ICCV 2025][图像生成][多条件生成] UniCombine 提出基于 DiT 的多条件可控生成框架，通过 Conditional MMDiT Attention 机制和 LoRA Switching 模块，实现任意条件组合（文本+空间图+主体图像）的统一生成…
+  [ICCV 2025][图像生成][多条件生成] UniCombine 提出基于 DiT 的多条件可控生成框架，通过 Conditional MMDiT Attention 机制和 LoRA Switching 模块，实现任意条件组合（文本+空间图+主体图像）的统一生成，支持 training-free 和 training-based 两种模式，并构建了首个多条件生成数据集 SubjectSpatial200K。
 tags:
   - "ICCV 2025"
   - "图像生成"

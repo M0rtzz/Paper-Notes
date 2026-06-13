@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing
 description: >-
-  [ECCV 2024][光谱去马赛克] 本文提出 WeFAT，通过波长嵌入引导的多头自注意力（We-MSA）赋予模型"波长记忆"能力，配合滤波器阵列注意力机制（MaM）聚焦高质量光谱区域，仅在 ARAD 数据集上训练就能在不同相机和不同光谱分布下保持稳定性能，超越现有 SOTA。
+  [ECCV 2024][光谱去马赛克] 本文提出 WeFAT，通过波长嵌入引导的多头自注意力（We-MSA）赋予模型"波长记忆"能力，配合滤波器阵列注意力机制（MaM）聚焦高质量光谱区域，仅在 ARAD 数据集上训练就能在不同相机和不同光谱分布下保持稳定性能，超越现有 SOTA。 领域现状：光谱成像（Spectral Ima…
 tags:
   - "ECCV 2024"
   - "光谱去马赛克"

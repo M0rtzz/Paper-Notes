@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extend3D: Town-Scale 3D Generation
 description: >-
-  [CVPR 2026][3D视觉][3D场景生成] 本文提出 Extend3D，一个无需训练的 3D 场景生成流水线，通过扩展预训练物体级 3D 生成模型（Trellis）的体素隐空间并引入重叠 patch 联合去噪、under-noising SDEdit 初始化和 3D 感知优化…
+  [CVPR 2026][3D视觉][3D场景生成] 本文提出 Extend3D，一个无需训练的 3D 场景生成流水线，通过扩展预训练物体级 3D 生成模型（Trellis）的体素隐空间并引入重叠 patch 联合去噪、under-noising SDEdit 初始化和 3D 感知优化，从单张图像生成城镇级大规模 3D 场景，在人类偏好和定量评估中均超越现有方法。
 tags:
   - "CVPR 2026"
   - "3D视觉"

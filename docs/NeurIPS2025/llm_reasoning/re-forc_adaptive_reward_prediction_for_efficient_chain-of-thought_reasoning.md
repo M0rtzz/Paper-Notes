@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Re-FORC: Adaptive Reward Prediction for Efficient Chain-of-Thought Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][chain-of-thought] 提出Re-FORC，一个轻量级adapter在CoT推理过程中实时预测未来期望奖励 $\psi(t|x,z,\pi)$，将推理计算分配建模为Pandora's box问题…
+  [NeurIPS 2025][LLM推理][chain-of-thought] 提出Re-FORC，一个轻量级adapter在CoT推理过程中实时预测未来期望奖励 $\psi(t|x,z,\pi)$，将推理计算分配建模为Pandora's box问题，实现自适应早停（节省26%计算）、模型+计算联合选择（同等计算下+4%准确率或同等准确率-55%计算）和测试时计算伸缩（+11%准确率），且用户可通过代价系数 $\lambda$ 在推理时自由调控精度-效率权衡，无需重训。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

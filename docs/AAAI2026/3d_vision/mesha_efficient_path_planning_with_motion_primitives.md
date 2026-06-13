@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeshA*: Efficient Path Planning With Motion Primitives
 description: >-
-  [AAAI 2026][3D视觉][运动基元] 提出 MeshA* 算法，将 lattice-based 路径规划从"在运动基元层面搜索"转变为"在网格单元层面搜索并同时拟合基元序列"，通过定义"扩展网格单元"（extended cell）新搜索空间，在保证完备性和最优性的同时…
+  [AAAI 2026][3D视觉][运动基元] 提出 MeshA* 算法，将 lattice-based 路径规划从"在运动基元层面搜索"转变为"在网格单元层面搜索并同时拟合基元序列"，通过定义"扩展网格单元"（extended cell）新搜索空间，在保证完备性和最优性的同时，实现相比标准 LBA* 1.5x-2x 的运行时加速。
 tags:
   - "AAAI 2026"
   - "3D视觉"

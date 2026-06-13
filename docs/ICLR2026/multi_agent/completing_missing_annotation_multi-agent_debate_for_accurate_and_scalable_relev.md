@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Completing Missing Annotation: Multi-Agent Debate for Accurate and Scalable Relevance Assessment
 description: >-
-  [ICLR 2026][多智能体][信息检索评测] 提出DREAM——基于对立立场初始化的多Agent多轮辩论框架用于IR相关性标注：一致时自动标注、分歧时交给人工(含辩论历史辅助)。达到95.2% balanced accuracy且仅3.5%需人工介入，据此构建BRIDGE基准数据集，发现29…
+  [ICLR 2026][多智能体][信息检索评测] 提出DREAM——基于对立立场初始化的多Agent多轮辩论框架用于IR相关性标注：一致时自动标注、分歧时交给人工(含辩论历史辅助)。达到95.2% balanced accuracy且仅3.5%需人工介入，据此构建BRIDGE基准数据集，发现29,824个原有基准缺失的相关标注(原标注的428%)，修正了检索系统排名偏差和RAG中检索-生成性能不匹配问题。
 tags:
   - "ICLR 2026"
   - "多智能体"

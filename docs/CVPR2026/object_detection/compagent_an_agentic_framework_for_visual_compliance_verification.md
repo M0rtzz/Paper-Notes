@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CompAgent: An Agentic Framework for Visual Compliance Verification
 description: >-
-  [CVPR 2026][目标检测][视觉合规验证] 提出 CompAgent，首个用于视觉合规验证的智能体框架——Planning Agent 根据合规策略动态选择视觉工具（目标检测、人脸分析、NSFW 检测等）…
+  [CVPR 2026][目标检测][视觉合规验证] 提出 CompAgent，首个用于视觉合规验证的智能体框架——Planning Agent 根据合规策略动态选择视觉工具（目标检测、人脸分析、NSFW 检测等），Compliance Verification Agent 整合图像、工具输出和策略上下文进行多模态推理，无需训练即在 UnsafeBench 上超越 SOTA 10% 达 76% F1。
 tags:
   - "CVPR 2026"
   - "目标检测"

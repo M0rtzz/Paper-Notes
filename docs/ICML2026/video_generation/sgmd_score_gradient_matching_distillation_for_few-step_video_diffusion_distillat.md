@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGMD: Score Gradient Matching Distillation for Few-Step Video Diffusion
 description: >-
-  [ICML 2026][视频生成][扩散模型蒸馏] SGMD 通过引入**稳定的 teacher stop-gradient Fisher 目标**和**双重势（NR/RC）机制**——解决 few-step 视频扩散蒸馏中 fake score 追踪代价高（DMD2 每轮 5 次更新）和运动抑制问题…
+  [ICML 2026][视频生成][扩散模型蒸馏] SGMD 通过引入**稳定的 teacher stop-gradient Fisher 目标**和**双重势（NR/RC）机制**——解决 few-step 视频扩散蒸馏中 fake score 追踪代价高（DMD2 每轮 5 次更新）和运动抑制问题，4 步蒸馏下实现 ~3× 训练加速同时运动质量从 0.65 提升到 0.78（VideoAlign）。
 tags:
   - "ICML 2026"
   - "视频生成"

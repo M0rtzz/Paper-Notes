@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability
 description: >-
-  [ICML2025][Hamiltonian系统] 提出"观测诱导纤维丛"几何框架，将部分可观测系统中的观测不确定性从外部扰动内化为纤维坐标的内禀变化，在此结构上统一处理状态约束与观测约束，建立了完整的辛几何、可积性、对称性与守恒律理论。
+  [ICML2025 Spotlight][Hamiltonian系统] 提出"观测诱导纤维丛"几何框架，将部分可观测系统中的观测不确定性从外部扰动内化为纤维坐标的内禀变化，在此结构上统一处理状态约束与观测约束，建立了完整的辛几何、可积性、对称性与守恒律理论。 经典约束 Hamilton 理论（Dirac 约束量子化）假设系统…
 tags:
-  - "ICML2025"
+  - "ICML2025 Spotlight"
   - "Hamiltonian系统"
   - "纤维丛"
   - "观测约束"

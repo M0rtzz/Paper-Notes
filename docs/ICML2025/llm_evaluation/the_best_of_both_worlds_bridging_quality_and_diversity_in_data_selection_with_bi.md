@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Best of Both Worlds: Bridging Quality and Diversity in Data Selection with Bipartite Graph
 description: >-
-  [LLM评测] 提出 GraphFilter 方法，将 SFT 数据集建模为句子-n-gram 的二部图，通过乘法优先级函数同时优化数据质量和多样性，在 3 个模型 6 个基准上全面超越 9 种基线方法。
+  [LLM评测] 提出 GraphFilter 方法，将 SFT 数据集建模为句子-n-gram 的二部图，通过乘法优先级函数同时优化数据质量和多样性，在 3 个模型 6 个基准上全面超越 9 种基线方法。 大语言模型（LLM）在监督微调（SFT）阶段的性能高度依赖训练数据的质量和多样性。然而，现有数据选择方法往往顾此失彼：…
 tags:
   - "LLM评测"
 ---

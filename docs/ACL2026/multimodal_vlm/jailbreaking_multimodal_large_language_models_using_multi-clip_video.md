@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreaking Multimodal Large Language Models using Multi-Clip Video
 description: >-
-  [ACL2026][多模态VLM][多模态安全] 这篇论文构建MCV SafetyBench来评估视频MLLM安全性，发现多clip、多上下文的视频输入会系统性提高攻击成功率，而简单的抽帧图像过滤能显著降低这种风险。
+  [ACL2026][多模态VLM][多模态安全] 这篇论文构建MCV SafetyBench来评估视频MLLM安全性，发现多clip、多上下文的视频输入会系统性提高攻击成功率，而简单的抽帧图像过滤能显著降低这种风险。 领域现状：MLLM已经从图文理解扩展到视频理解，能够处理动态场景、时序信息和复杂视觉上下文。与此同时…
 tags:
   - "ACL2026"
   - "多模态VLM"

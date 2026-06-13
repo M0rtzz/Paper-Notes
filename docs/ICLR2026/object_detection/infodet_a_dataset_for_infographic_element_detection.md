@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfoDet: A Dataset for Infographic Element Detection
 description: >-
-  [ICLR 2026][目标检测][信息图检测] 构建了一个大规模信息图元素检测数据集（101,264 张信息图、1420 万标注），涵盖图表和人类可识别对象两大类，并提出 Grounded CoT 方法利用检测结果提升 VLM 的图表理解能力。
+  [ICLR 2026][目标检测][信息图检测] 构建了一个大规模信息图元素检测数据集（101,264 张信息图、1420 万标注），涵盖图表和人类可识别对象两大类，并提出 Grounded CoT 方法利用检测结果提升 VLM 的图表理解能力。 领域现状：图表理解是 VLM 的重要应用场景（如 ChartQA）…
 tags:
   - "ICLR 2026"
   - "目标检测"

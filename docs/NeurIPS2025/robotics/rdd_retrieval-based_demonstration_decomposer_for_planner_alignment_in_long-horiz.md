@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks
 description: >-
-  [NeurIPS 2025][机器人][层级VLA] 提出RDD（基于检索的演示分解器），通过将演示分解建模为最优分区问题，自动将长时域任务演示分解为与底层视觉运动策略训练数据对齐的子任务，从而协调层级VLA框架中高层规划器与低层策略，在RLBench上接近专家分解器的性能。
+  [NeurIPS 2025][机器人][层级VLA] 提出RDD（基于检索的演示分解器），通过将演示分解建模为最优分区问题，自动将长时域任务演示分解为与底层视觉运动策略训练数据对齐的子任务，从而协调层级VLA框架中高层规划器与低层策略，在RLBench上接近专家分解器的性能。 层级视觉-语言-动作模型（Hierarchica…
 tags:
   - "NeurIPS 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation
 description: >-
-  [CVPR 2025][3D视觉][3D generation] 提出金字塔 VAE + 级联 MAR（MAR-LR → MAR-HR）的渐进式 3D 生成框架，通过随机遮罩适配 3D token 的无序特性，并用条件增强策略缓解分辨率上扩展时的累计误差，在开源方法中达到 SOTA。
+  [CVPR 2025][3D视觉][3D generation] 提出金字塔 VAE + 级联 MAR（MAR-LR → MAR-HR）的渐进式 3D 生成框架，通过随机遮罩适配 3D token 的无序特性，并用条件增强策略缓解分辨率上扩展时的累计误差，在开源方法中达到 SOTA。 领域现状： 3D 生成方法分为三大范式：…
 tags:
   - "CVPR 2025"
   - "3D视觉"

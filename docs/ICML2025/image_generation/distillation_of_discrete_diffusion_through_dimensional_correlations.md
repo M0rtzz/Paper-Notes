@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distillation of Discrete Diffusion through Dimensional Correlations (Di4C)
 description: >-
-  [ICML 2025][图像生成][离散扩散模型] 提出Di4C方法，通过"mixture"模型捕获维度间相关性，配合一致性损失函数，将多步离散扩散模型蒸馏为少步模型，同时在图像和语言任务上展示了有效性。
+  [ICML 2025][图像生成][离散扩散模型] 提出Di4C方法，通过"mixture"模型捕获维度间相关性，配合一致性损失函数，将多步离散扩散模型蒸馏为少步模型，同时在图像和语言任务上展示了有效性。 离散扩散模型在减少采样步数方面面临连续模型不具有的独特挑战： 维度独立性限制：传统离散扩散模型使用"product模型"…
 tags:
   - "ICML 2025"
   - "图像生成"

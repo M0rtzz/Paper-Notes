@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I-INR: Iterative Implicit Neural Representations
 description: >-
-  [AAAI 2026][自动驾驶][隐式神经表示] 提出 I-INR（Iterative Implicit Neural Representations），一个即插即用的迭代精修框架，通过引入轻量级 FeedbackNet 和 FuseNet 模块（仅增加 0.5-2% 参数），对信号进行渐进式多步重建…
+  [AAAI 2026][自动驾驶][隐式神经表示] 提出 I-INR（Iterative Implicit Neural Representations），一个即插即用的迭代精修框架，通过引入轻量级 FeedbackNet 和 FuseNet 模块（仅增加 0.5-2% 参数），对信号进行渐进式多步重建，有效缓解 INR 的频谱偏差问题，在图像拟合、超分辨率、去噪和 3D 占位预测等任务上均显著超越基线。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The AI Gap: How Socioeconomic Status Affects Language Technology Interactions
 description: >-
-  [ACL 2025][社会经济地位] 通过对1000名不同社会经济地位(SES)用户的大规模调查和6482条真实LLM prompts的分析，揭示了高低SES群体在语言技术使用频率、交互方式和话题选择上存在显著系统性差异，呼吁开发更具包容性的NLP技术以缩小AI鸿沟。
+  [ACL 2025][LLM 其他][社会经济地位] 通过对1000名不同社会经济地位(SES)用户的大规模调查和6482条真实LLM prompts的分析，揭示了高低SES群体在语言技术使用频率、交互方式和话题选择上存在显著系统性差异，呼吁开发更具包容性的NLP技术以缩小AI鸿沟。 领域现状：随着ChatGPT等大语言模型…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "社会经济地位"
   - "语言技术"
   - "数字鸿沟"

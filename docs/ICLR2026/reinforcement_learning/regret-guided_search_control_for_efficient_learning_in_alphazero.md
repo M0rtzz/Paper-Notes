@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Regret-Guided Search Control for Efficient Learning in AlphaZero
 description: >-
-  [ICLR 2026][强化学习][AlphaZero] 提出 RGSC（Regret-Guided Search Control）框架，通过训练一个 regret 网络识别高遗憾值状态并优先从这些状态重新开始自我对弈，模拟人类"反复复盘错误"的学习方式…
+  [ICLR 2026][强化学习][AlphaZero] 提出 RGSC（Regret-Guided Search Control）框架，通过训练一个 regret 网络识别高遗憾值状态并优先从这些状态重新开始自我对弈，模拟人类"反复复盘错误"的学习方式，在 9×9 围棋、10×10 黑白棋和 11×11 Hex 上平均超越 AlphaZero 77 Elo。
 tags:
   - "ICLR 2026"
   - "强化学习"

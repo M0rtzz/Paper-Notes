@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model
 description: >-
-  [ICML 2025][标签随机块模型] 针对标签随机块模型 (LSBM)，提出 IAC (Instance-Adaptive Clustering) 算法，通过一次谱聚类 + 迭代似然改进两阶段策略，首次以 $\mathcal{O}(n(\log n)^3)$ 复杂度实现匹配实例特定信息论下界的社区恢复…
+  [ICML 2025][标签随机块模型] 针对标签随机块模型 (LSBM)，提出 IAC (Instance-Adaptive Clustering) 算法，通过一次谱聚类 + 迭代似然改进两阶段策略，首次以 $\mathcal{O}(n(\log n)^3)$ 复杂度实现匹配实例特定信息论下界的社区恢复，同时提供期望和高概率双重保证。
 tags:
   - "ICML 2025"
   - "标签随机块模型"

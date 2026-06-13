@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mamba-VMR: Multimodal Query Augmentation via Generated Videos for Precise Temporal Grounding
 description: >-
-  [CVPR 2026][视频理解][视频时刻检索] 提出一个两阶段视频时刻检索框架：第一阶段用LLM引导字幕匹配并生成辅助短视频作为时序先验，第二阶段用多模态控制Mamba网络高效融合生成先验与长序列，在TVR数据集上超越SOTA（R@1/IoU=0.5达45.20%），同时降低计算开销。
+  [CVPR 2026][视频理解][视频时刻检索] 提出一个两阶段视频时刻检索框架：第一阶段用LLM引导字幕匹配并生成辅助短视频作为时序先验，第二阶段用多模态控制Mamba网络高效融合生成先验与长序列，在TVR数据集上超越SOTA（R@1/IoU=0.5达45.20%），同时降低计算开销。 1. 领域现状：视频时刻检索（VM…
 tags:
   - "CVPR 2026"
   - "视频理解"

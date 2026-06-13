@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Visual Autoregressive Generation via Score Maximization
 description: >-
-  [ICML 2025][图像生成][连续自回归] 提出连续视觉自回归框架——基于严格适当评分规则理论，用能量分数作为无似然训练目标，替代向量量化实现连续token自回归图像生成，EAR-H达到FID 1.97且推理速度比扩散损失方法MAR快约10倍。
+  [ICML 2025][图像生成][连续自回归] 提出连续视觉自回归框架——基于严格适当评分规则理论，用能量分数作为无似然训练目标，替代向量量化实现连续token自回归图像生成，EAR-H达到FID 1.97且推理速度比扩散损失方法MAR快约10倍。 领域现状：视觉自回归模型（VAR）通常需要向量量化（VQ）将连续视觉数据离…
 tags:
   - "ICML 2025"
   - "图像生成"

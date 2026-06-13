@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Coreference Resolution Evaluation Using Explicit Semantics
 description: >-
-  [ACL 2026][可解释性][共指消解] 本文用 Concept and Named Entity Recognition (CNER) 把 29 类细粒度语义标签按"提及 + 簇级多数投票"覆盖到共指消解的输出上，得到按语义类别分层的 Mention F1 和 Link F1 诊断指标…
+  [ACL 2026][可解释性][共指消解] 本文用 Concept and Named Entity Recognition (CNER) 把 29 类细粒度语义标签按"提及 + 簇级多数投票"覆盖到共指消解的输出上，得到按语义类别分层的 Mention F1 和 Link F1 诊断指标，从而看清"模型在哪个类别上系统性失败"，再用这些诊断指导仅 3 篇合成文档的定向数据增强，把 LitBank 训练的模型在 OntoNotes/PreCo 上 CoNLL-F1 提了 +2.5/+2.8，Mention F1 提了约 +9.5。
 tags:
   - "ACL 2026"
   - "可解释性"

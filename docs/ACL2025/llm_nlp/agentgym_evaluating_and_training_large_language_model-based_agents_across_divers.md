@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AgentGym: Evolving Large Language Model-based Agents across Diverse Environments
 description: >-
-  [ACL 2025][LLM/NLP][通用Agent] 本文提出AgentGym框架，包含14种交互环境、89类任务、标准化轨迹数据集和评测基准，并提出AgentEvol自我进化算法，让LLM Agent通过跨环境探索和学习实现从模仿到自主进化，性能可达到SOTA模型水平。
+  [ACL 2025][LLM 其他][通用Agent] 本文提出AgentGym框架，包含14种交互环境、89类任务、标准化轨迹数据集和评测基准，并提出AgentEvol自我进化算法，让LLM Agent通过跨环境探索和学习实现从模仿到自主进化，性能可达到SOTA模型水平。 领域现状：构建能够处理多样化任务并在不同环境中自我…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "通用Agent"
   - "自我进化"
   - "多环境训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoVieS: Motion-Aware 4D Dynamic View Synthesis in One Second
 description: >-
-  [CVPR 2026][3D视觉][动态视图合成] 提出 MoVieS，一个前馈式 4D 动态场景重建框架，通过 **动态溅射像素 (Dynamic Splatter Pixel)** 表示将外观、几何和运动统一建模，从单目视频在约 1 秒内完成 4D 重建…
+  [CVPR 2026][3D视觉][动态视图合成] 提出 MoVieS，一个前馈式 4D 动态场景重建框架，通过 **动态溅射像素 (Dynamic Splatter Pixel)** 表示将外观、几何和运动统一建模，从单目视频在约 1 秒内完成 4D 重建，并支持新视角合成、3D 点跟踪、场景流估计和运动物体分割等多种任务。
 tags:
   - "CVPR 2026"
   - "3D视觉"

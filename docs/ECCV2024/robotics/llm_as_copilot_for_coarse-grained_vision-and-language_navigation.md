@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM as Copilot for Coarse-Grained Vision-and-Language Navigation
 description: >-
-  [ECCV 2024][机器人][视觉语言导航] 本文提出VLN-Copilot框架，让视觉语言导航智能体在粗粒度（简短模糊）指令下遇到困惑时主动向LLM求助，LLM作为副驾驶实时生成细粒度导航指导，在两个粗粒度VLN数据集上显著提升导航成功率。
+  [ECCV 2024][机器人][视觉语言导航] 本文提出VLN-Copilot框架，让视觉语言导航智能体在粗粒度（简短模糊）指令下遇到困惑时主动向LLM求助，LLM作为副驾驶实时生成细粒度导航指导，在两个粗粒度VLN数据集上显著提升导航成功率。 领域现状：视觉语言导航（VLN）要求智能体根据自然语言指令在室内环境中导航到目…
 tags:
   - "ECCV 2024"
   - "机器人"

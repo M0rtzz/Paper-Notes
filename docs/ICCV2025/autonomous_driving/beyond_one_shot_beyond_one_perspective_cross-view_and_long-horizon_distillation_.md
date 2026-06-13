@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond One Shot, Beyond One Perspective: Cross-View and Long-Horizon Distillation for Better LiDAR Representations
 description: >-
-  [ICCV 2025][自动驾驶][LiDAR表示学习] LiMA 提出了一种长时图像到 LiDAR 记忆聚合框架，通过跨视角聚合、长时特征传播和跨序列记忆对齐三个模块，显式利用 LiDAR 序列中的时空线索来增强 LiDAR 表示学习，在语义分割和 3D 目标检测任务上显著超越现有预训练方法。
+  [ICCV 2025][自动驾驶][LiDAR表示学习] LiMA 提出了一种长时图像到 LiDAR 记忆聚合框架，通过跨视角聚合、长时特征传播和跨序列记忆对齐三个模块，显式利用 LiDAR 序列中的时空线索来增强 LiDAR 表示学习，在语义分割和 3D 目标检测任务上显著超越现有预训练方法。 领域现状：LiDAR 表示学…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

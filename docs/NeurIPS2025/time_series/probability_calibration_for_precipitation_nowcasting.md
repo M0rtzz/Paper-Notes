@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probability Calibration for Precipitation Nowcasting
 description: >-
-  [NeurIPS 2025][时间序列][概率校准] 提出了期望阈值校准误差（ETCE）作为降水临近预报中更合理的概率校准度量，并将计算机视觉中的后处理校准技术扩展到预报领域，通过结合前置时间条件的选择性缩放（Selective Scaling）方法将模型校准误差降低高达23.5%。
+  [NeurIPS 2025][时间序列][概率校准] 提出了期望阈值校准误差（ETCE）作为降水临近预报中更合理的概率校准度量，并将计算机视觉中的后处理校准技术扩展到预报领域，通过结合前置时间条件的选择性缩放（Selective Scaling）方法将模型校准误差降低高达23.5%。 降水临近预报（precipitation…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

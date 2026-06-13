@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoQAE: Mixed-Precision Quantization for Long-Context LLM Inference via Mixture of Quantization-Aware Experts
 description: >-
-  [ACL 2025][模型压缩][量化] MoQAE 创造性地将不同量化比特宽度配置视为 MoE 中的"专家"，通过轻量路由器学习每个 chunk 的最优量化策略，结合路由冻结和路由共享机制，在几乎不损失精度的情况下大幅减少长上下文推理的 KV cache 内存。
+  [ACL 2025][模型压缩][量化] MoQAE 创造性地将不同量化比特宽度配置视为 MoE 中的"专家"，通过轻量路由器学习每个 chunk 的最优量化策略，结合路由冻结和路由共享机制，在几乎不损失精度的情况下大幅减少长上下文推理的 KV cache 内存。 领域现状：长上下文 LLM 推理中，KV cache 是内存…
 tags:
   - "ACL 2025"
   - "模型压缩"

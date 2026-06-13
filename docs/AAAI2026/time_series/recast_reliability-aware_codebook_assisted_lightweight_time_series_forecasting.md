@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting
 description: >-
-  [AAAI 2026][时间序列][码本量化] 提出 ReCast，通过 patch 级向量量化将时间序列编码为离散嵌入，设计量化路径（预测规律结构）和残差路径（捕获不规则波动）的双路径架构，并引入基于分布鲁棒优化(DRO)的可靠性感知码本更新策略，在 8 个数据集上以轻量架构实现 SOTA 精度。
+  [AAAI 2026 Oral][时间序列][码本量化] 提出 ReCast，通过 patch 级向量量化将时间序列编码为离散嵌入，设计量化路径（预测规律结构）和残差路径（捕获不规则波动）的双路径架构，并引入基于分布鲁棒优化(DRO)的可靠性感知码本更新策略，在 8 个数据集上以轻量架构实现 SOTA 精度。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "时间序列"
   - "码本量化"
   - "轻量级预测"

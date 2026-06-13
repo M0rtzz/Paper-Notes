@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Majority Voting: LLM Aggregation by Leveraging Higher-Order Information
 description: >-
-  [ICML 2026][多智能体][LLM聚合] 本文提出两种利用高阶信息的 LLM 回答聚合算法——基于一阶准确率信息的 Optimal Weight (OW) 和基于二阶相关性信息的 Inverse Surprising Popularity (ISP)，在不需要标签的条件下证明性优于多数投票…
+  [ICML 2026][多智能体][LLM聚合] 本文提出两种利用高阶信息的 LLM 回答聚合算法——基于一阶准确率信息的 Optimal Weight (OW) 和基于二阶相关性信息的 Inverse Surprising Popularity (ISP)，在不需要标签的条件下证明性优于多数投票，并在 UltraFeedback、MMLU 和医疗健康数据集上验证了一致的提升。
 tags:
   - "ICML 2026"
   - "多智能体"

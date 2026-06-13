@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sorbet: A Neuromorphic Hardware-Compatible Transformer-Based Spiking Language Model
 description: >-
-  [ICML 2025][LLM安全][spiking neural network] 提出 Sorbet，首个完全兼容神经形态硬件的 Transformer 脉冲语言模型，通过两项关键创新——基于位移的 PTsoftmax 和 Bit Shifting PowerNorm (BSPN)——替代传统的 soft…
+  [ICML 2025][LLM安全][spiking neural network] 提出 Sorbet，首个完全兼容神经形态硬件的 Transformer 脉冲语言模型，通过两项关键创新——基于位移的 PTsoftmax 和 Bit Shifting PowerNorm (BSPN)——替代传统的 softmax 和层归一化，在 GLUE 基准上实现与 BERT 可比的性能，同时节省 27.16 倍能耗。
 tags:
   - "ICML 2025"
   - "LLM安全"

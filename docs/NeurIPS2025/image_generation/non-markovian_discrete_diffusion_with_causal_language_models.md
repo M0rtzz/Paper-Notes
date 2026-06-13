@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Non-Markovian Discrete Diffusion with Causal Language Models
 description: >-
-  [NeurIPS 2025][图像生成][离散扩散模型] 提出CaDDi框架，通过非马尔可夫离散扩散过程让每步去噪都能访问完整生成轨迹，并将其统一到因果语言模型架构中，使预训练LLM可直接复用为离散扩散模型。
+  [NeurIPS 2025][图像生成][离散扩散模型] 提出CaDDi框架，通过非马尔可夫离散扩散过程让每步去噪都能访问完整生成轨迹，并将其统一到因果语言模型架构中，使预训练LLM可直接复用为离散扩散模型。 离散扩散模型（如D3PM、SEDD、MDLM等）在结构化序列生成方面展现了灵活、可控的优势，特别是在文本填充、双向生…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

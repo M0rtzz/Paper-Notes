@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Sparse MoE in GANs for Text-conditioned Image Synthesis
 description: >-
-  [CVPR 2025][图像生成][文本生成图像] 本文提出 Aurora，一种基于稀疏混合专家（Sparse MoE）的 GAN 文本生成图像模型，通过在生成器中引入多个专家网络和文本感知的稀疏路由器来扩大模型容量，在 64×64 分辨率上以远快于扩散模型的推理速度…
+  [CVPR 2025][图像生成][文本生成图像] 本文提出 Aurora，一种基于稀疏混合专家（Sparse MoE）的 GAN 文本生成图像模型，通过在生成器中引入多个专家网络和文本感知的稀疏路由器来扩大模型容量，在 64×64 分辨率上以远快于扩散模型的推理速度，在 MS COCO 上达到 6.2 的零样本 FID。
 tags:
   - "CVPR 2025"
   - "图像生成"

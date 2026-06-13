@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LayerTracer: Cognitive-Aligned Layered SVG Synthesis via Diffusion Transformer
 description: >-
-  [ICCV 2025][SVG生成] LayerTracer 提出首个基于 Diffusion Transformer（DiT）的认知对齐分层 SVG 生成框架：通过构建 2 万+ 设计师操作序列数据集，训练 DiT 生成模拟设计师工作流程的多阶段光栅化蓝图…
+  [ICCV 2025][SVG生成] LayerTracer 提出首个基于 Diffusion Transformer（DiT）的认知对齐分层 SVG 生成框架：通过构建 2 万+ 设计师操作序列数据集，训练 DiT 生成模拟设计师工作流程的多阶段光栅化蓝图，再通过逐层矢量化和路径去重转换为干净可编辑的分层 SVG；同时支持文本驱动生成和图像到分层 SVG 的转换。
 tags:
   - "ICCV 2025"
   - "SVG生成"

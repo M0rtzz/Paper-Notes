@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Privacy-Utility Trade-offs to Mitigate Memorization in Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][扩散模型记忆化] 本文提出 PRSS 方法，通过 Prompt Re-anchoring（将记忆化 prompt 重新用作 CFG 的锚点引导生成偏离记忆内容）和 Semantic Prompt Search（用 LLM 搜索语义相似但不触发记忆的替代 prompt）两个策…
+  [CVPR 2025][图像生成][扩散模型记忆化] 本文提出 PRSS 方法，通过 Prompt Re-anchoring（将记忆化 prompt 重新用作 CFG 的锚点引导生成偏离记忆内容）和 Semantic Prompt Search（用 LLM 搜索语义相似但不触发记忆的替代 prompt）两个策略，在不修改模型和不需要训练数据的推理阶段改进 CFG 方程，实现了扩散模型记忆化缓解中的最优隐私-效用平衡。
 tags:
   - "CVPR 2025"
   - "图像生成"

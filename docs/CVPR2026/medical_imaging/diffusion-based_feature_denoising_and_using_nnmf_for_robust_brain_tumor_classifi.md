@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion-Based Feature Denoising and Using NNMF for Robust Brain Tumor Classification
 description: >-
-  [CVPR 2026][医学图像][脑肿瘤分类] 本文提出 NNMF+CNN+扩散防御框架用于脑肿瘤 MRI 分类：先用 NNMF 将图像分解为紧凑可解释的低秩特征，通过 AUC/Cohen's d/p-value 统计指标筛选最强判别组件，再用轻量 CNN 分类…
+  [CVPR 2026][医学图像][脑肿瘤分类] 本文提出 NNMF+CNN+扩散防御框架用于脑肿瘤 MRI 分类：先用 NNMF 将图像分解为紧凑可解释的低秩特征，通过 AUC/Cohen's d/p-value 统计指标筛选最强判别组件，再用轻量 CNN 分类；推理时引入前向扩散加噪 + 学习去噪器的特征空间净化模块，在 AutoAttack ($L_\infty$, $\epsilon=0.10$) 下将鲁棒准确率从 0.47% 提升至 59.53%。
 tags:
   - "CVPR 2026"
   - "医学图像"

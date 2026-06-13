@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harnessing Text-to-Image Diffusion Models for Category-Agnostic Pose Estimation
 description: >-
-  [ECCV 2024][图像生成][类别无关姿态估计] 提出 Prompt Pose Matching（PPM）框架，利用预训练文本到图像扩散模型中的丰富知识来解决类别无关姿态估计（CAPE），通过学习与关键点对应的伪提示（pseudo prompts）实现零训练基础类别的少样本关键点检测。
+  [ECCV 2024][图像生成][类别无关姿态估计] 提出 Prompt Pose Matching（PPM）框架，利用预训练文本到图像扩散模型中的丰富知识来解决类别无关姿态估计（CAPE），通过学习与关键点对应的伪提示（pseudo prompts）实现零训练基础类别的少样本关键点检测。 领域现状：类别无关姿态估计（Ca…
 tags:
   - "ECCV 2024"
   - "图像生成"

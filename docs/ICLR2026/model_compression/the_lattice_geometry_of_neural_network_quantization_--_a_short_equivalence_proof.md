@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Lattice Geometry of Neural Network Quantization -- A Short Equivalence Proof of GPTQ and Babai's Algorithm
 description: >-
-  [ICLR 2026][模型压缩][GPTQ] 独立于 Chen et al. (2026)，以更简洁优雅的方式证明 GPTQ 等价于 Babai 最近平面算法，并阐明格基约减可能改进神经网络量化的前景。
+  [ICLR 2026][模型压缩][GPTQ] 独立于 Chen et al. (2026)，以更简洁优雅的方式证明 GPTQ 等价于 Babai 最近平面算法，并阐明格基约减可能改进神经网络量化的前景。 GPTQ 是当前最流行的 LLM 后训练量化方法之一，通过逐维量化权重并最优传播误差来最小化层输出误差。然而…
 tags:
   - "ICLR 2026"
   - "模型压缩"

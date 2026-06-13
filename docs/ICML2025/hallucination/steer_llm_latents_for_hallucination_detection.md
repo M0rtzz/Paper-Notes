@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steer LLM Latents for Hallucination Detection
 description: >-
-  [ICML 2025][幻觉检测][steering vector] 提出 Truthfulness Separator Vector (TSV)，一种轻量级 steering vector，在推理时重塑 LLM 表示空间以增强真实与幻觉输出的分离，仅需 32 个标注样本即可接近全监督性能。
+  [ICML 2025][幻觉检测][steering vector] 提出 Truthfulness Separator Vector (TSV)，一种轻量级 steering vector，在推理时重塑 LLM 表示空间以增强真实与幻觉输出的分离，仅需 32 个标注样本即可接近全监督性能。 领域现状 领域现状：LLM 幻觉…
 tags:
   - "ICML 2025"
   - "幻觉检测"

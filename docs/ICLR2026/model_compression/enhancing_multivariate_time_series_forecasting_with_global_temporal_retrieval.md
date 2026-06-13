@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval
 description: >-
-  [ICLR 2026][模型压缩][时间序列预测] 提出 Global Temporal Retriever（GTR），一个轻量级即插即用模块，通过维护自适应全局周期嵌入并利用绝对时间索引检索对齐全局周期信息，使任意预测模型突破回看窗口限制，有效捕获远超输入长度的全局周期模式。
+  [ICLR 2026][模型压缩][时间序列预测] 提出 Global Temporal Retriever（GTR），一个轻量级即插即用模块，通过维护自适应全局周期嵌入并利用绝对时间索引检索对齐全局周期信息，使任意预测模型突破回看窗口限制，有效捕获远超输入长度的全局周期模式。 全局周期性的重要性：真实时间序列常包含多尺度周…
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mining Instance-Centric Vision-Language Contexts for Human-Object Interaction Detection
 description: >-
-  [CVPR 2026][目标检测][人物交互检测] 提出 InCoM-Net，通过从 VLM 特征中为每个实例分别提取实例内、实例间和全局三层上下文特征，并通过渐进式上下文聚合与检测器特征融合…
+  [CVPR 2026][目标检测][人物交互检测] 提出 InCoM-Net，通过从 VLM 特征中为每个实例分别提取实例内、实例间和全局三层上下文特征，并通过渐进式上下文聚合与检测器特征融合，在 HICO-DET 和 V-COCO 上取得 HOI 检测 SOTA（HICO-DET Full mAP 43.96，V-COCO AP_role^S1 73.6）。
 tags:
   - "CVPR 2026"
   - "目标检测"

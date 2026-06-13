@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Balancing Fidelity and Diversity in Diffusion Models via Symmetric Attention Decomposition: Hopfield Perspective
 description: >-
-  [ICML 2026][图像生成][注意力分解] 将扩散模型中 $\mathbf{QK}^\top$ 注意力矩阵分解为对称分量（能量景观）和反对称分量（环流动力学），据此推导 Hopfield 风格的稳定性度量来诊断亚稳态混合，并通过调控反对称分量实现无需训练的保真度-多样性可控权衡。
+  [ICML 2026][图像生成][注意力分解] 将扩散模型中 $\mathbf{QK}^\top$ 注意力矩阵分解为对称分量（能量景观）和反对称分量（环流动力学），据此推导 Hopfield 风格的稳定性度量来诊断亚稳态混合，并通过调控反对称分量实现无需训练的保真度-多样性可控权衡。 领域现状：扩散模型（DDPM、SDXL…
 tags:
   - "ICML 2026"
   - "图像生成"

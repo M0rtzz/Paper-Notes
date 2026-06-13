@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Virne: A Comprehensive Benchmark for RL-based Network Resource Allocation in NFV
 description: >-
-  [强化学习] 提出 Virne——一个面向网络功能虚拟化资源分配（NFV-RA）的综合基准框架，集成 30+ 种算法和 gym 风格环境，支持云、边缘、5G 等多场景的系统评估。
+  [强化学习] 提出 Virne——一个面向网络功能虚拟化资源分配（NFV-RA）的综合基准框架，集成 30+ 种算法和 gym 风格环境，支持云、边缘、5G 等多场景的系统评估。 核心问题 网络功能虚拟化（NFV）中的资源分配问题（NFV-RA）是将虚拟网络请求映射到物理网络基础设施的 NP-hard 组合优化问题…
 tags:
   - "强化学习"
 ---

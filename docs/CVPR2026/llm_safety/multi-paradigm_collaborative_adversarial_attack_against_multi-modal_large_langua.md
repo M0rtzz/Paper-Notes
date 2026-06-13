@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Paradigm Collaborative Adversarial Attack Against Multi-Modal Large Language Models
 description: >-
-  [CVPR 2026][LLM安全][adversarial attack] 提出 MPCAttack 框架，联合跨模态对齐、多模态理解和视觉自监督三种学习范式的特征表示，通过多范式协同优化策略生成高迁移性对抗样本，在开源和闭源 MLLM 上均取得 SOTA 攻击效果。
+  [CVPR 2026][LLM安全][adversarial attack] 提出 MPCAttack 框架，联合跨模态对齐、多模态理解和视觉自监督三种学习范式的特征表示，通过多范式协同优化策略生成高迁移性对抗样本，在开源和闭源 MLLM 上均取得 SOTA 攻击效果。 多模态大语言模型（MLLM）在安全关键领域面临严重的对…
 tags:
   - "CVPR 2026"
   - "LLM安全"

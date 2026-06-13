@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pref-CTRL: Preference Driven LLM Alignment using Representation Editing
 description: >-
-  [ACL2026][LLM对齐][表示编辑] Pref-CTRL 在不更新大模型参数的测试时对齐框架 RE-Control 上，引入面向成对偏好数据的 margin loss 和 regularizer loss 来训练轻量价值函数…
+  [ACL2026][LLM对齐][表示编辑] Pref-CTRL 在不更新大模型参数的测试时对齐框架 RE-Control 上，引入面向成对偏好数据的 margin loss 和 regularizer loss 来训练轻量价值函数，使表示编辑更符合人类偏好并在 SHP、HH-RLHF 与跨域数据上稳定优于 RE-Control。
 tags:
   - "ACL2026"
   - "LLM对齐"

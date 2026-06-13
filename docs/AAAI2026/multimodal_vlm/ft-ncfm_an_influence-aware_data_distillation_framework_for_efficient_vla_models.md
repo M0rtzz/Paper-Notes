@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FT-NCFM: An Influence-Aware Data Distillation Framework for Efficient VLA Models
 description: >-
-  [多模态VLM] 提出 FT-NCFM 框架，通过因果归因（Fact-Tracing）评估样本价值并引导对抗式 NCFM 过程合成高信息密度核心集，仅用 5% 合成数据即可达到全量训练 85-90% 的性能，训练时间减少 80% 以上。
+  [多模态VLM] 提出 FT-NCFM 框架，通过因果归因（Fact-Tracing）评估样本价值并引导对抗式 NCFM 过程合成高信息密度核心集，仅用 5% 合成数据即可达到全量训练 85-90% 的性能，训练时间减少 80% 以上。 VLA（Vision-Language-Action）模型通过联合处理视觉、语言和动作实…
 tags:
   - "多模态VLM"
 ---

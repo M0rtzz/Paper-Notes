@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models
 description: >-
-  [ICLR 2026][计算生物][扩散模型推理适配] DriftLite 提出在 Fokker-Planck 方程中利用漂移-势函数的自由度，通过轻量级线性系统求解最优控制漂移来主动稳定粒子权重，以最小代价解决 Sequential Monte Carlo 中的权重退化问题…
+  [ICLR 2026][计算生物][扩散模型推理适配] DriftLite 提出在 Fokker-Planck 方程中利用漂移-势函数的自由度，通过轻量级线性系统求解最优控制漂移来主动稳定粒子权重，以最小代价解决 Sequential Monte Carlo 中的权重退化问题，在高斯混合、分子系统和蛋白质-配体共折叠任务上大幅超越 Guidance-SMC 基线。
 tags:
   - "ICLR 2026"
   - "计算生物"

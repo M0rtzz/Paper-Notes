@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Extreme Tokens: Covariance-Aware GRPO with Gaussian-Kernel Advantage Reweighting
 description: >-
-  [ACL2026][LLM对齐][GRPO] 这篇论文把 GRPO 训练中的熵不稳定归因于少量极端 token 的“log 概率-优势”协方差贡献，并用无额外超参的高斯核对这些 token 的 advantage 做软抑制，从而在 1.5B 和 7B 数学推理模型上稳定提升性能。
+  [ACL2026][LLM对齐][GRPO] 这篇论文把 GRPO 训练中的熵不稳定归因于少量极端 token 的“log 概率-优势”协方差贡献，并用无额外超参的高斯核对这些 token 的 advantage 做软抑制，从而在 1.5B 和 7B 数学推理模型上稳定提升性能。 领域现状：在可验证奖励的推理训练中…
 tags:
   - "ACL2026"
   - "LLM对齐"

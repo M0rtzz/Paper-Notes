@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers
 description: >-
-  [ECCV 2024][视频理解][3D多目标跟踪] 本文深入分析了端到端3D跟踪器中检测与跟踪任务之间性能冲突的根本原因——二者在正样本分配上的微妙差异导致了分类梯度的矛盾，并提出OneTrack通过梯度协调、查询分组和注意力掩码等策略，首次实现了检测和跟踪在统一特征表示下的无冲突联合优化…
+  [ECCV 2024][视频理解][3D多目标跟踪] 本文深入分析了端到端3D跟踪器中检测与跟踪任务之间性能冲突的根本原因——二者在正样本分配上的微妙差异导致了分类梯度的矛盾，并提出OneTrack通过梯度协调、查询分组和注意力掩码等策略，首次实现了检测和跟踪在统一特征表示下的无冲突联合优化，在nuScenes上取得了SOTA性能。
 tags:
   - "ECCV 2024"
   - "视频理解"

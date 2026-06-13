@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SN-WER: Script-Normalized WER for Multi-Script Indic ASR Evaluation
 description: >-
-  [ACL2026][音频/语音][ASR评估] 提出 Script-Normalized WER (SN-WER)，一种无需训练的评估方法，通过将参考文本和假设文本音译到统一规范文字后再计算 WER，分离多文字 ASR 评估中的文字不匹配误差与真实识别误差。
+  [ACL2026][音频/语音][ASR评估] 提出 Script-Normalized WER (SN-WER)，一种无需训练的评估方法，通过将参考文本和假设文本音译到统一规范文字后再计算 WER，分离多文字 ASR 评估中的文字不匹配误差与真实识别误差。 WER 是 ASR 评估的主流指标，但在多语言场景中…
 tags:
   - "ACL2026"
   - "音频/语音"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL2026
 **arXiv**: [2606.02548](https://arxiv.org/abs/2606.02548)
 **代码**: 待确认
-**领域**: audio_speech
+**领域**: 音频语音
 **关键词**: ASR评估, 多文字系统, WER, 音译规范化, 印度语言
 
 ## 一句话总结

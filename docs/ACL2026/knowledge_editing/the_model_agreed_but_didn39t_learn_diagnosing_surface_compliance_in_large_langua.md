@@ -2,9 +2,9 @@
 title: >-
   [论文解读] The Model Agreed, But Didn't Learn: Diagnosing Surface Compliance in Large Language Models
 description: >-
-  [ACL 2026][知识编辑][表面合规] 提出 SA-MCQ 诊断框架揭示知识编辑中的"表面合规"现象——编辑器在标准基准上达到高分但并未真正覆写内部信念，模型在判别式自评中会回退到原始参数记忆，递归编辑还会累积表征残留导致认知不稳定。
+  [ACL 2026 Findings][知识编辑][表面合规] 提出 SA-MCQ 诊断框架揭示知识编辑中的"表面合规"现象——编辑器在标准基准上达到高分但并未真正覆写内部信念，模型在判别式自评中会回退到原始参数记忆，递归编辑还会累积表征残留导致认知不稳定。 领域现状：LLM 将世界知识编码在参数中作为参数记忆…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "知识编辑"
   - "表面合规"
   - "自我评估"

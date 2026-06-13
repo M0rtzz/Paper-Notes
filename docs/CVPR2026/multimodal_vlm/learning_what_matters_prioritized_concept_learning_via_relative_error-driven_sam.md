@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning What Matters: Prioritized Concept Learning via Relative Error-driven Sample Selection
 description: >-
-  [CVPR 2026][多模态VLM][数据高效学习] 提出 PROGRESS 框架，通过追踪 VLM 在自动发现的多模态概念集群上的学习进度来动态选择最有信息量的训练样本，仅用 16-20% 的标注数据就达到全数据 99-100% 的性能，且总训练时间更短。
+  [CVPR 2026][多模态VLM][数据高效学习] 提出 PROGRESS 框架，通过追踪 VLM 在自动发现的多模态概念集群上的学习进度来动态选择最有信息量的训练样本，仅用 16-20% 的标注数据就达到全数据 99-100% 的性能，且总训练时间更短。 领域现状：VLM 的指令微调（instruction tunin…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

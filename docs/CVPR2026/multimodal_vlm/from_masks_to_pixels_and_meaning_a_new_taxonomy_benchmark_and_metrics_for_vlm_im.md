@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Masks to Pixels and Meaning: A New Taxonomy, Benchmark, and Metrics for VLM Image Tampering
 description: >-
-  [CVPR 2026][多模态VLM][图像篡改检测] 本文指出现有图像篡改检测基准依赖粗糙的mask标注与真实编辑信号严重不对齐,提出 PIXAR——一个包含 420K+ 图像对的像素级、语义感知篡改检测基准,配合新的训练框架和评估指标,在精确定位和语义理解方面大幅超越现有方法。
+  [CVPR 2026 Findings][多模态VLM][图像篡改检测] 本文指出现有图像篡改检测基准依赖粗糙的mask标注与真实编辑信号严重不对齐,提出 PIXAR——一个包含 420K+ 图像对的像素级、语义感知篡改检测基准,配合新的训练框架和评估指标,在精确定位和语义理解方面大幅超越现有方法。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "多模态VLM"
   - "图像篡改检测"
   - "像素级定位"

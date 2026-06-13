@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constitutional Classifiers: Defending Against Universal Jailbreaks Across Thousands of Hours of Red Teaming
 description: >-
-  [ACL 2025][LLM对齐][越狱防御] Anthropic提出"宪法分类器"（Constitutional Classifiers），通过从自然语言安全规则（宪法）出发生成合成训练数据来训练输入/输出安全分类器，在超过3000小时的红队测试中未被发现通用越狱攻击…
+  [ACL 2025][LLM对齐][越狱防御] Anthropic提出"宪法分类器"（Constitutional Classifiers），通过从自然语言安全规则（宪法）出发生成合成训练数据来训练输入/输出安全分类器，在超过3000小时的红队测试中未被发现通用越狱攻击，同时仅增加0.38%的误拒率和23.7%的推理开销。
 tags:
   - "ACL 2025"
   - "LLM对齐"

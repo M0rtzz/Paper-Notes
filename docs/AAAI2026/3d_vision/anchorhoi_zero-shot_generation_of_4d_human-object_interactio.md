@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnchorHOI: Zero-shot Generation of 4D Human-Object Interaction via Anchor-based Prior Distillation
 description: >-
-  [AAAI 2026][3D视觉][4D HOI生成] 提出 AnchorHOI，通过锚点NeRF和锚点关键点两种中间桥梁，分别从图像/视频扩散模型中蒸馏交互先验和运动先验，实现零样本的文本驱动4D人物-物体交互生成，在静态3D和动态4D HOI生成上均超越已有方法。
+  [AAAI 2026][3D视觉][4D HOI生成] 提出 AnchorHOI，通过锚点NeRF和锚点关键点两种中间桥梁，分别从图像/视频扩散模型中蒸馏交互先验和运动先验，实现零样本的文本驱动4D人物-物体交互生成，在静态3D和动态4D HOI生成上均超越已有方法。 文本驱动的4D人物-物体交互（HOI）生成在AR/VR、…
 tags:
   - "AAAI 2026"
   - "3D视觉"

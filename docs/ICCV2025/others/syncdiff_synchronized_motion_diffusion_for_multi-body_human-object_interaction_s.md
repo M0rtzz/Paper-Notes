@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis
 description: >-
-  [ICCV 2025][人体-物体交互] 提出 SyncDiff，一个统一的多体人体-物体交互运动合成框架，通过对齐分数（alignment scores）和显式同步策略实现多体运动的精确同步，并引入频域分解来建模高频交互语义。
+  [ICCV 2025][人体-物体交互] 提出 SyncDiff，一个统一的多体人体-物体交互运动合成框架，通过对齐分数（alignment scores）和显式同步策略实现多体运动的精确同步，并引入频域分解来建模高频交互语义。 现有的人体-物体交互（HOI）运动合成方法通常局限于特定的交互配置（如单手-单物体、双手-单物体…
 tags:
   - "ICCV 2025"
   - "人体-物体交互"

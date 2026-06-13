@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discontinuity-aware Normal Integration for Generic Central Camera Models
 description: >-
-  [ICCV 2025 (Highlight)][LLM评测][法线积分] 提出一种支持显式不连续性建模和通用中心相机模型的法线积分新方法，通过局部平面性假设建立法线与光线方向之间的约束，在标准法线积分基准上达到 SOTA，并首次直接处理通用中心相机（如鱼眼、全景相机）。
+  [ICCV 2025 (Highlight)][LLM评测][法线积分] 提出一种支持显式不连续性建模和通用中心相机模型的法线积分新方法，通过局部平面性假设建立法线与光线方向之间的约束，在标准法线积分基准上达到 SOTA，并首次直接处理通用中心相机（如鱼眼、全景相机）。 领域现状：法线积分（Normal Integratio…
 tags:
   - "ICCV 2025 (Highlight)"
   - "LLM评测"

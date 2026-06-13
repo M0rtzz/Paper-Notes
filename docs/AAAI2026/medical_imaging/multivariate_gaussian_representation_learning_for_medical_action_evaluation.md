@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multivariate Gaussian Representation Learning for Medical Action Evaluation
 description: >-
-  [AAAI 2026][医学图像][CPR评估] 提出 GaussMedAct 框架，将关节运动轨迹建模为多元高斯混合分布并结合笛卡尔-向量双流编码，在自建的 CPREval-6k 数据集上实现 92.1% Top-1 准确率，仅需 ST-GCN 10% 的计算量。
+  [AAAI 2026][医学图像][CPR评估] 提出 GaussMedAct 框架，将关节运动轨迹建模为多元高斯混合分布并结合笛卡尔-向量双流编码，在自建的 CPREval-6k 数据集上实现 92.1% Top-1 准确率，仅需 ST-GCN 10% 的计算量。 领域现状：心肺复苏（CPR）质量直接影响心脏骤停存活率…
 tags:
   - "AAAI 2026"
   - "医学图像"

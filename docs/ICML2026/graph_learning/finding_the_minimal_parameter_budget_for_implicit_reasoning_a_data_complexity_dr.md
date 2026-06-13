@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finding the Minimal Parameter Budget for Implicit Reasoning: A Data Complexity Driven Scaling Law for Language Models
 description: >-
-  [ICML 2026][图学习][隐式推理] 本文从知识图谱补全任务出发，证明并测量了"隐式推理所需的最小参数量"满足一条以**图搜索熵**为复杂度度量的线性 scaling law，每个参数最多支持约 $0.008$ bit 推理信息，颠覆了"模型越大推理越强"的朴素直觉。
+  [ICML 2026][图学习][隐式推理] 本文从知识图谱补全任务出发，证明并测量了"隐式推理所需的最小参数量"满足一条以图搜索熵：为复杂度度量的线性 scaling law，每个参数最多支持约 $0.008$ bit 推理信息，颠覆了"模型越大推理越强"的朴素直觉。 领域现状：Kaplan、Hoffmann 等人提出的…
 tags:
   - "ICML 2026"
   - "图学习"

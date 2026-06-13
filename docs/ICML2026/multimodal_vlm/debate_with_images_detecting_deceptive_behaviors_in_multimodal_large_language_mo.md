@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Debate with Images: Detecting Deceptive Behaviors in Multimodal Large Language Models
 description: >-
-  [ICML 2026][多模态VLM][多模态欺骗] 作者构建了首个面向 MLLM 欺骗行为的多模态基准 MM-DeceptionBench（六类、1013 个真实案例），并提出"带图辩论 (Debate with Images)"框架——两个 MLLM 智能体在多轮辩论中被强制用可视化操作回切原图取证…
+  [ICML 2026][多模态VLM][多模态欺骗] 作者构建了首个面向 MLLM 欺骗行为的多模态基准 MM-DeceptionBench（六类、1013 个真实案例），并提出"带图辩论 (Debate with Images)"框架——两个 MLLM 智能体在多轮辩论中被强制用可视化操作回切原图取证，再由 judge 判定是否欺骗，使与人类一致性的 Cohen's kappa 相对 MLLM-as-a-judge 提升最高 1.5×、准确率提升最高 1.25×。
 tags:
   - "ICML 2026"
   - "多模态VLM"

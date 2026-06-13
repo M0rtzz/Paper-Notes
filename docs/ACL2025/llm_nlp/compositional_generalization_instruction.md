@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability
 description: >-
-  [ACL 2025][LLM/NLP][组合泛化] 提出 Ordered CommonGen 基准，通过要求 LLM 按指定顺序生成包含所有概念的句子，同时评估组合泛化与指令遵循能力，在 36 个 LLM 上发现即使最强模型也仅能达到约 75% 的有序覆盖率。
+  [ACL 2025][LLM 其他][组合泛化] 提出 Ordered CommonGen 基准，通过要求 LLM 按指定顺序生成包含所有概念的句子，同时评估组合泛化与指令遵循能力，在 36 个 LLM 上发现即使最强模型也仅能达到约 75% 的有序覆盖率。 生成式常识推理 (GCR)：任务（如 CommonGen）要求模型…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "组合泛化"
   - "指令遵循"
   - "生成式常识推理"

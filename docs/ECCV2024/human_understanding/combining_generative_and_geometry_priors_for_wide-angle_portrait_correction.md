@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Combining Generative and Geometry Priors for Wide-Angle Portrait Correction
 description: >-
-  [ECCV2024][人体理解][wide-angle portrait correction] 提出结合 StyleGAN 生成式先验（用于人脸矫正）和几何对称先验（用于背景直线矫正）的双模块框架，大幅提升广角人像畸变校正的视觉质量和定量指标。
+  [ECCV2024][人体理解][wide-angle portrait correction] 提出结合 StyleGAN 生成式先验（用于人脸矫正）和几何对称先验（用于背景直线矫正）的双模块框架，大幅提升广角人像畸变校正的视觉质量和定量指标。 - 广角镜头在手机摄影中越来越普遍，但会引入显著的桶形畸变…
 tags:
   - "ECCV2024"
   - "人体理解"

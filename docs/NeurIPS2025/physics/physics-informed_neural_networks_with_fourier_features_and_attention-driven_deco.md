@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding
 description: >-
-  [NeurIPS 2025 (AI for Science Workshop)][物理/科学计算][PINNs] 提出 Spectral PINNsformer (S-Pformer)，用 Fourier 特征嵌入替换 PINNsformer 的编码器，结合仅解码器 Transformer 架构…
+  [NeurIPS 2025 (AI for Science Workshop)][物理/科学计算][PINNs] 提出 Spectral PINNsformer (S-Pformer)，用 Fourier 特征嵌入替换 PINNsformer 的编码器，结合仅解码器 Transformer 架构，在减少 18.6% 参数量的同时在多个 PDE benchmark 上取得更优性能，有效缓解了频谱偏置问题。
 tags:
   - "NeurIPS 2025 (AI for Science Workshop)"
   - "物理/科学计算"
@@ -150,10 +150,10 @@ S-Pformer 在全部 4 个 benchmark 上 rMAE/rMSE 均优于 Pformer，且 Navier
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ — 核心思路是去编码器 + 加 Fourier 特征，各组件已有先例但组合有意义
-- 实验充分度: ⭐⭐⭐ — 4 个 benchmark + 频谱分析 + 消融 + 超参优化，较充分但规模偏小
-- 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整，消融设计合理
-- 价值: ⭐⭐⭐ — 对 PINN 社区有实用参考价值，但应用范围和影响力有限
+- 新颖性: ⭐⭐⭐⭐ — 核心思路是去编码器 + 加 Fourier 特征，各组件已有先例但组合有意义
+- 实验充分度: ⭐⭐⭐⭐ — 4 个 benchmark + 频谱分析 + 消融 + 超参优化，较充分但规模偏小
+- 写作质量: ⭐⭐⭐⭐⭐ — 结构清晰，公式推导完整，消融设计合理
+- 价值: ⭐⭐⭐⭐ — 对 PINN 社区有实用参考价值，但应用范围和影响力有限
 
 <!-- RELATED:START -->
 

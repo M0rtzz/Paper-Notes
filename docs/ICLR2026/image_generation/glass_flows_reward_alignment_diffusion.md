@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models
 description: >-
-  [ICLR 2026 Oral][图像生成][flow matching] 提出 GLASS (Gaussian Latent Sufficient Statistic) Flows——一种"流模型中的流模型"新采样范式…
+  [ICLR 2026 Oral][图像生成][flow matching] 提出 GLASS (Gaussian Latent Sufficient Statistic) Flows——一种"流模型中的流模型"新采样范式，通过高斯充分统计量重参数化将随机马尔可夫转移 $p_{t'|t}(x_{t'} | x_t)$ 重铸为内部 ODE 求解问题（复用预训练去噪器，无需重训），在无需权衡 ODE 效率和 SDE 随机性的条件下实现 Feynman-Kac Steering，在 FLUX 文生图模型上一致超越 Best-of-N ODE 基线，刷新推理时奖励对齐 SOTA。
 tags:
   - "ICLR 2026 Oral"
   - "图像生成"

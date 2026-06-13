@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Automatic Evaluation of LLMs in Biomedical Relation Extraction via LLMs-as-the-Judge
 description: >-
-  [ACL 2025][医疗NLP][LLM-as-Judge] 本文首次系统研究了 LLM-as-Judge 在生物医学关系抽取评估中的表现，发现其准确率通常低于 50%，并提出结构化输出格式（JSON）和域适应技术来提升约 15% 的评估准确率。
+  [ACL 2025][医疗NLP][LLM-as-Judge] 本文首次系统研究了 LLM-as-Judge 在生物医学关系抽取评估中的表现，发现其准确率通常低于 50%，并提出结构化输出格式（JSON）和域适应技术来提升约 15% 的评估准确率。 领域现状：LLM 在生物医学关系抽取（BioRE）中已展现出强大的零样本能力…
 tags:
   - "ACL 2025"
   - "医疗NLP"

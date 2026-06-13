@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Light Forcing: Accelerating Autoregressive Video Diffusion via Sparse Attention
 description: >-
-  [ICML 2026][视频生成][自回归视频生成] Light Forcing 是首个为自回归（AR）视频扩散模型定制的稀疏注意力方案——块感知增长（CAG）量化每个生成块的累积误差贡献来动态分配稀疏度，分层稀疏注意力（HSA）通过帧级 → 块级二级掩码选择灵活捕捉历史依赖…
+  [ICML 2026][视频生成][自回归视频生成] Light Forcing 是首个为自回归（AR）视频扩散模型定制的稀疏注意力方案——块感知增长（CAG）量化每个生成块的累积误差贡献来动态分配稀疏度，分层稀疏注意力（HSA）通过帧级 → 块级二级掩码选择灵活捕捉历史依赖，在 Self Forcing 上实现 1.30× 端到端 / 3.79× 注意力加速且 VBench 总分 84.5 > 密集基线 84.1。
 tags:
   - "ICML 2026"
   - "视频生成"

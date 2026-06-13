@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On the Acquisition of Shared Grammatical Representations in Bilingual Language Models
 description: >-
-  [ACL 2025][LLM/NLP][跨语言迁移] 本文通过训练受控的小型双语语言模型，使用心理语言学中的结构启动方法（structural priming）研究跨语言语法表征的共享机制，发现跨语言结构启动效应在语言对之间呈不对称性，且对类型学距离较远的语言对（如英语-希腊语）明显减弱。
+  [ACL 2025][LLM 其他][跨语言迁移] 本文通过训练受控的小型双语语言模型，使用心理语言学中的结构启动方法（structural priming）研究跨语言语法表征的共享机制，发现跨语言结构启动效应在语言对之间呈不对称性，且对类型学距离较远的语言对（如英语-希腊语）明显减弱。 领域现状：跨语言迁移是当代多语言语言…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "跨语言迁移"
   - "双语模型"
   - "结构启动"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gap-K%: Measuring Top-1 Prediction Gap for Detecting Pretraining Data
 description: >-
-  [ACL2026][LLM安全][预训练数据检测] 这篇论文提出 Gap-K%，用目标 token 与模型 top-1 预测之间的归一化 log probability gap 加上顺序滑窗平滑来检测文本是否出现在 LLM 预训练数据中…
+  [ACL2026][LLM安全][预训练数据检测] 这篇论文提出 Gap-K%，用目标 token 与模型 top-1 预测之间的归一化 log probability gap 加上顺序滑窗平滑来检测文本是否出现在 LLM 预训练数据中，在 WikiMIA、MIMIR、近期模型和强 paraphrase 攻击下都超过 Min-K%++ 等基线。
 tags:
   - "ACL2026"
   - "LLM安全"

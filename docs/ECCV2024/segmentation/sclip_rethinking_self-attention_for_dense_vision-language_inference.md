@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCLIP: Rethinking Self-Attention for Dense Vision-Language Inference
 description: >-
-  [ECCV 2024][语义分割][CLIP] 发现 CLIP 的密集预测失败源于自注意力导致的空间位置错位问题，提出 Correlative Self-Attention (CSA) 机制——仅修改最后一层自注意力的计算方式（无需训练）…
+  [ECCV 2024][语义分割][CLIP] 发现 CLIP 的密集预测失败源于自注意力导致的空间位置错位问题，提出 Correlative Self-Attention (CSA) 机制——仅修改最后一层自注意力的计算方式（无需训练），将 CLIP 的零样本语义分割从 14.1% 平均 mIoU 提升至 38.2%，超越所有已有方法。
 tags:
   - "ECCV 2024"
   - "语义分割"

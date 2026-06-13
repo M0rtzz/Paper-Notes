@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Survey of Reasoning-Intensive Retrieval: Progress and Challenges
 description: >-
-  [ACL 2026][信息检索/RAG][推理密集型检索] 本文系统梳理了"推理密集型检索 (Reasoning-Intensive Retrieval, RIR)"这一新方向，按 query/index/retriever/reranker/迭代 这条流水线给出了第一份完整的 benchmark-方法-挑战…
+  [ACL 2026][信息检索/RAG][推理密集型检索] 本文系统梳理了"推理密集型检索 (Reasoning-Intensive Retrieval, RIR)"这一新方向，按 query/index/retriever/reranker/迭代 这条流水线给出了第一份完整的 benchmark-方法-挑战 三段式综述，并指出现有评测过度依赖 nDCG 等传统 IR 指标。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

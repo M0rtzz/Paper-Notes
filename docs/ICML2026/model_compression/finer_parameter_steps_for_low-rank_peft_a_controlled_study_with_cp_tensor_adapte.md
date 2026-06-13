@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finer Parameter Steps for Low-Rank PEFT: A Controlled Study with CP Tensor Adapters
 description: >-
-  [ICML 2026][模型压缩][参数高效微调] 作者把 LoRA 的"按 rank 增长"换成"按 CP 张量分量增长"，让单步参数增量从 4096 降到 193 (小 21×)…
+  [ICML 2026][模型压缩][参数高效微调] 作者把 LoRA 的"按 rank 增长"换成"按 CP 张量分量增长"，让单步参数增量从 4096 降到 193 (小 21×)，并在 OPT-1.3B / SST-2/RTE/BoolQ 上做严格 controlled study 证明：更细的参数粒度可以作为"诊断 PEFT 预算敏感度"的工具，但本身并不能换来更好的准确率-预算曲线——这是一个清醒的负-中性结论而非"我家方法更强"的宣传。
 tags:
   - "ICML 2026"
   - "模型压缩"

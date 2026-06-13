@@ -2,9 +2,9 @@
 title: >-
   [论文解读] GigaCheck: Detecting LLM-generated Content via Object-Centric Span Localization
 description: >-
-  [ACL 2026][AIGC检测][LLM生成文本检测] 提出 GigaCheck，一个双策略框架：文档级使用微调 LLM 进行分类，片段级创新地将 AI 生成文本片段视为"目标"，用 DETR-like 架构实现端到端的字符级定位。
+  [ACL 2026 Findings][AIGC检测][LLM生成文本检测] 提出 GigaCheck，一个双策略框架：文档级使用微调 LLM 进行分类，片段级创新地将 AI 生成文本片段视为"目标"，用 DETR-like 架构实现端到端的字符级定位。 领域现状：随着 LLM 生成内容质量的快速提升，AI 生成文本在许多场…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "AIGC检测"
   - "LLM生成文本检测"
   - "目标检测范式"

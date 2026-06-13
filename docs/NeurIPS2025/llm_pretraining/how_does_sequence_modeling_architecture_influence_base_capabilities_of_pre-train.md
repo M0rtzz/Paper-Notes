@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?
 description: >-
-  [NeurIPS 2025][预训练][sequence modeling] 通过"限定领域预训练 + OOD 测试"的评估框架揭示 Mamba/RWKV 等 stateful 架构存在基础能力退化…
+  [NeurIPS 2025][预训练][sequence modeling] 通过"限定领域预训练 + OOD 测试"的评估框架揭示 Mamba/RWKV 等 stateful 架构存在基础能力退化，并归纳出关键设计原则——"全序列任意选择能力"（full-sequence visibility + real relation calculation + non-uniform distribution），用极简的 Top-1 Element/Chunk Selection 架构验证该原则可恢复至接近 Transformer 的基础能力。
 tags:
   - "NeurIPS 2025"
   - "预训练"

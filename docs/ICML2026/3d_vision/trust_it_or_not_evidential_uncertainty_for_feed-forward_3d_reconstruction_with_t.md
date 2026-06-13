@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trust3R: Evidential Uncertainty for Feed-Forward 3D Reconstruction
 description: >-
-  [ICML 2026][3D视觉][证据学习] Trust3R 为 MASt3R 等 feed-forward 3D 重建模型引入概率化证据学习框架，用 Normal-Inverse-Wishart 先验为每个 3D 点预测闭形式多元 Student-t 分布，取代启发式置信度…
+  [ICML 2026][3D视觉][证据学习] Trust3R 为 MASt3R 等 feed-forward 3D 重建模型引入概率化证据学习框架，用 Normal-Inverse-Wishart 先验为每个 3D 点预测闭形式多元 Student-t 分布，取代启发式置信度，单遍前向推理就能输出概率可解释的逐点不确定性，并在 ScanNet++ 上 AURC 降低 25%、AUSE 降低 41%。
 tags:
   - "ICML 2026"
   - "3D视觉"

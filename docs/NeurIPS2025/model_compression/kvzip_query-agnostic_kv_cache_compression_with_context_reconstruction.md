@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KVzip: Query-Agnostic KV Cache Compression with Context Reconstruction
 description: >-
-  [NeurIPS 2025 (Oral)][模型压缩][KV Cache压缩] 提出 KVzip，一种查询无关的 KV Cache 驱逐方法，通过利用 LLM 自身从缓存的 KV 对中重建原始上下文来量化每个 KV 对的重要性…
+  [NeurIPS 2025 (Oral)][模型压缩][KV Cache压缩] 提出 KVzip，一种查询无关的 KV Cache 驱逐方法，通过利用 LLM 自身从缓存的 KV 对中重建原始上下文来量化每个 KV 对的重要性，实现 3-4× 的 KV Cache 压缩率和约 2× 的 FlashAttention 解码延迟降低，同时在多查询场景下显著优于现有查询感知方法。
 tags:
   - "NeurIPS 2025 (Oral)"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embodied Scene Understanding for Vision Language Models via MetaVQA
 description: >-
-  [CVPR 2025][多模态VLM][具身场景理解] 构建了一个基于 Set-of-Mark 标注和场景图的大规模 VQA 基准（430 万问题），系统评估 VLM 的空间推理和具身理解能力，发现在 MetaVQA 上微调可显著提升空间推理（+28 点）…
+  [CVPR 2025][多模态VLM][具身场景理解] 构建了一个基于 Set-of-Mark 标注和场景图的大规模 VQA 基准（430 万问题），系统评估 VLM 的空间推理和具身理解能力，发现在 MetaVQA 上微调可显著提升空间推理（+28 点），且训练于仿真数据的能力可零样本迁移到真实场景和未见过的闭环驾驶任务。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

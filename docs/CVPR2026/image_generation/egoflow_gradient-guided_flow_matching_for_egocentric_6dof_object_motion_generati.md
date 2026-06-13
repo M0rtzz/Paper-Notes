@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoFlow: Gradient-Guided Flow Matching for Egocentric 6DoF Object Motion Generation
 description: >-
-  [CVPR 2026][图像生成][第一人称视频] EgoFlow 提出一种基于 Flow Matching 的生成框架，通过 Mamba-Transformer-Perceiver 混合架构融合多模态场景条件，并在推理时用梯度引导采样施加可微的物理约束（碰撞避免、运动平滑性）…
+  [CVPR 2026][图像生成][第一人称视频] EgoFlow 提出一种基于 Flow Matching 的生成框架，通过 Mamba-Transformer-Perceiver 混合架构融合多模态场景条件，并在推理时用梯度引导采样施加可微的物理约束（碰撞避免、运动平滑性），从第一人称视频生成物理合理的 6DoF 物体运动轨迹，碰撞率降低高达 79%。
 tags:
   - "CVPR 2026"
   - "图像生成"

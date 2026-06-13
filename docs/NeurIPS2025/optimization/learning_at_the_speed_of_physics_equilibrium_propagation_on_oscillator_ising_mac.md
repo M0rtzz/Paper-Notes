@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning at the Speed of Physics: Equilibrium Propagation on Oscillator Ising Machines
 description: >-
-  [NeurIPS 2025][优化/理论][equilibrium propagation] 首次将 Equilibrium Propagation（EP）完整映射到振荡器 Ising Machine（OIM）硬件上，利用 GHz 物理动力学实现无反向传播的局部学习…
+  [NeurIPS 2025][优化/理论][equilibrium propagation] 首次将 Equilibrium Propagation（EP）完整映射到振荡器 Ising Machine（OIM）硬件上，利用 GHz 物理动力学实现无反向传播的局部学习，在 MNIST/Fashion-MNIST 上达到 97.2%/88.0% 精度，并展示在参数量化和噪声下的鲁棒性。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What We Don't C: Manifold Disentanglement for Structured Discovery
 description: >-
-  [NeurIPS 2025][图像生成][流形解缠绕] 提出 WWDC（What We Don't C）方法，利用条件引导的潜在流匹配从已有 VAE 表征中去除已知信息，使未知特征在残余流形中更易被发现和访问，实现迭代式科学发现。
+  [NeurIPS 2025][图像生成][流形解缠绕] 提出 WWDC（What We Don't C）方法，利用条件引导的潜在流匹配从已有 VAE 表征中去除已知信息，使未知特征在残余流形中更易被发现和访问，实现迭代式科学发现。 领域现状 领域现状：表征学习的核心挑战：如何在学到的表征中访问有意义的信息 现有痛点 现有痛点…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PRISM: Gauge-Invariant Tangent-Space Differentially Private LoRA
 description: >-
-  [ICML2026][AI安全][差分隐私] PRISM 把 DP-SGD 从 LoRA 的 $(A,B)$ 因子空间搬到 rank-$r$ 流形的切空间上做 clip+加噪+retract…
+  [ICML2026 Oral][AI安全][差分隐私] PRISM 把 DP-SGD 从 LoRA 的 $(A,B)$ 因子空间搬到 rank-$r$ 流形的切空间上做 clip+加噪+retract，从而获得 gauge invariant、无 bilinear 二阶噪声、且有闭式 $\sigma C/b\cdot\sqrt{r(m+n-r)}$ 内禀噪声能量的 DP-LoRA 机制。
 tags:
-  - "ICML2026"
+  - "ICML2026 Oral"
   - "AI安全"
   - "差分隐私"
   - "LoRA"

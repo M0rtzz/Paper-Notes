@@ -2,10 +2,10 @@
 title: >-
   [论文解读] FunQA: Towards Surprising Video Comprehension
 description: >-
-  [ECCV 2024][LLM/NLP][video question answering] 构建了大规模反直觉视频问答基准 FunQA（4.3K 视频、312K QA 对），覆盖幽默/创意/魔术三类令人惊讶的视频，并提出 FunMentor 智能体通过多轮对话增强 VLM 的反常识推理能力。
+  [ECCV 2024][LLM 其他][video question answering] 构建了大规模反直觉视频问答基准 FunQA（4.3K 视频、312K QA 对），覆盖幽默/创意/魔术三类令人惊讶的视频，并提出 FunMentor 智能体通过多轮对话增强 VLM 的反常识推理能力。 领域现状 领域现状：现有 Vid…
 tags:
   - "ECCV 2024"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "video question answering"
   - "counter-intuitive reasoning"
   - "surprising videos"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Saliency-Aware Model Merging
 description: >-
-  [ICML 2026][模型压缩][model merging] SA-Merging 把结构化剪枝里的 SynFlow 连接性分数搬到数据无关模型合并场景，对每个专家的 task vector 计算"端到端通路敏感度 × 聚合方向一致性"作为显著度，迭代地去掉低显著度更新…
+  [ICML 2026][模型压缩][model merging] SA-Merging 把结构化剪枝里的 SynFlow 连接性分数搬到数据无关模型合并场景，对每个专家的 task vector 计算"端到端通路敏感度 × 聚合方向一致性"作为显著度，迭代地去掉低显著度更新，从而在视觉/语言/LoRA 多任务上把数据无关 merging 推到接近 test-time adaptation 的水平。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPRINT: Enabling Interleaved Planning and Parallelized Execution in Reasoning Models
 description: >-
-  [NeurIPS 2025][LLM推理][推理加速] 通过将长链式推理轨迹重组为交替的规划-并行执行阶段，Sprint 使推理模型在保持准确率的同时，将长推理链的顺序 token 数减少高达 39%（OOD 任务上最高 65%），实现推理过程的动态并行化。
+  [NeurIPS 2025][LLM推理][推理加速] 通过将长链式推理轨迹重组为交替的规划-并行执行阶段，Sprint 使推理模型在保持准确率的同时，将长推理链的顺序 token 数减少高达 39%（OOD 任务上最高 65%），实现推理过程的动态并行化。 领域现状：大型推理模型（LRM）如 DeepSeek-R1、Ope…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

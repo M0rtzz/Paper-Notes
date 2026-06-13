@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression
 description: >-
-  [ICML 2025][模型压缩][网络压缩] 提出 FGFP 框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器（FGF），每个卷积核仅需 7 个参数，配合自适应非结构化剪枝（AUP），在 CIFAR-10 上 ResNet-20 精度仅降 1.52% 即实现 85.2% 的模型压缩率…
+  [ICML 2025][模型压缩][网络压缩] 提出 FGFP 框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器（FGF），每个卷积核仅需 7 个参数，配合自适应非结构化剪枝（AUP），在 CIFAR-10 上 ResNet-20 精度仅降 1.52% 即实现 85.2% 的模型压缩率，在 ImageNet 上 ResNet-50 精度降 1.63% 实现 69.1% 压缩率。
 tags:
   - "ICML 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniSIFT: Modality-Asymmetric Token Compression for Efficient Omni-modal Large Language Models
 description: >-
-  [ICML 2026][视频理解][Omni-LLM] 本文指出现有 Omni-LLM token 压缩方法对音频和视频"对称"处理是次优的，提出 OmniSIFT——先用时空显著性剪掉视频冗余得到"视觉锚点"，再用这些锚点引导音频选择的两阶段非对称压缩框架…
+  [ICML 2026][视频理解][Omni-LLM] 本文指出现有 Omni-LLM token 压缩方法对音频和视频"对称"处理是次优的，提出 OmniSIFT——先用时空显著性剪掉视频冗余得到"视觉锚点"，再用这些锚点引导音频选择的两阶段非对称压缩框架，仅引入 4.85M 额外参数就在 Qwen2.5-Omni-7B 上保留 25% token 时一致超过现有压缩基线甚至原模型。
 tags:
   - "ICML 2026"
   - "视频理解"

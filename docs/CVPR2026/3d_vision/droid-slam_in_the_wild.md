@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DROID-W: DROID-SLAM in the Wild
 description: >-
-  [CVPR2026][3D视觉][SLAM] 提出 DROID-W，通过将不确定性估计引入可微分 Bundle Adjustment（Uncertainty-aware BA），结合 DINOv2 特征驱动的动态不确定性更新机制和单目深度正则化…
+  [CVPR2026][3D视觉][SLAM] 提出 DROID-W，通过将不确定性估计引入可微分 Bundle Adjustment（Uncertainty-aware BA），结合 DINOv2 特征驱动的动态不确定性更新机制和单目深度正则化，使 DROID-SLAM 在高度动态的野外（in-the-wild）场景中实现鲁棒的相机位姿估计和场景重建，约 10 FPS 实时运行。
 tags:
   - "CVPR2026"
   - "3D视觉"

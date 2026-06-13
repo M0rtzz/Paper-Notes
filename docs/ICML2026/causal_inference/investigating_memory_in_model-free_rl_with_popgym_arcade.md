@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Investigating Memory in Model-Free RL with POPGym Arcade
 description: >-
-  [ICML2026][因果推理][model-free RL] 本文指出仅用回报来比较 RL 记忆模型并不可靠，作者构建了一个 GPU 加速的 MDP/POMDP "孪生"基准 POPGym Arcade…
+  [ICML2026 Spotlight][因果推理][model-free RL] 本文指出仅用回报来比较 RL 记忆模型并不可靠，作者构建了一个 GPU 加速的 MDP/POMDP "孪生"基准 POPGym Arcade，并提出 Observability Gap、Memory Bias、像素显著性和 Recall Density 四个工具，借此揭示了一种"价值涂抹（value smearing）"病理：记忆模型会把价值信用错误地分摊到无关的历史观测上，进而导致单个 OOD 观测就能通过 recurrent state 长期污染策略。
 tags:
-  - "ICML2026"
+  - "ICML2026 Spotlight"
   - "因果推理"
   - "model-free RL"
   - "POMDP"

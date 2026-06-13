@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowDrag: 3D-aware Drag-based Image Editing with Mesh-guided Deformation Vector Flow Fields
 description: >-
-  [ICML 2025 (Spotlight)][3D视觉][drag-based editing] 提出 FlowDrag，从图像构建 3D 网格后利用渐进式 SR-ARAP 变形生成连续 2D 向量流场，将全局几何先验注入扩散模型的 motion supervision 过程…
+  [ICML 2025 (Spotlight)][3D视觉][drag-based editing] 提出 FlowDrag，从图像构建 3D 网格后利用渐进式 SR-ARAP 变形生成连续 2D 向量流场，将全局几何先验注入扩散模型的 motion supervision 过程，在 DragBench（MD=22.88）和新提出的 VFD-Bench（PSNR=18.55, 1-LPIPS=0.82, MD=28.23）上全面领先。
 tags:
   - "ICML 2025 (Spotlight)"
   - "3D视觉"

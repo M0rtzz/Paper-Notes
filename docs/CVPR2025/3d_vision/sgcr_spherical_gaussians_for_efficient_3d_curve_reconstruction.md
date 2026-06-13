@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGCR: Spherical Gaussians for Efficient 3D Curve Reconstruction
 description: >-
-  [CVPR 2025][3D视觉][3D高斯] SGCR提出了球形高斯（Spherical Gaussians）这一简洁的3D表示，将标准3D高斯的各向异性椭球简化为统一大小的球体，仅用2D边缘图监督即可忠实地对齐到3D物体边缘，再通过新颖的有理Bézier曲线提取算法高效重建精确的3D参数化曲线…
+  [CVPR 2025][3D视觉][3D高斯] SGCR提出了球形高斯（Spherical Gaussians）这一简洁的3D表示，将标准3D高斯的各向异性椭球简化为统一大小的球体，仅用2D边缘图监督即可忠实地对齐到3D物体边缘，再通过新颖的有理Bézier曲线提取算法高效重建精确的3D参数化曲线，比NEF和EMAP快50倍且精度更优。
 tags:
   - "CVPR 2025"
   - "3D视觉"

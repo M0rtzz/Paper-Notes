@@ -2,7 +2,7 @@
 title: >-
   [论文解读] POPri: Private Federated Learning using Preference-Optimized Synthetic Data
 description: >-
-  [ICML2025][LLM安全][差分隐私] 将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。
+  [ICML2025][LLM安全][差分隐私] 将差分隐私联邦学习中的合成数据生成问题重新建模为 LLM 策略优化（DPO）问题，利用客户端 DP 反馈构建偏好对来微调 LLM，比传统 Private Evolution 提升更大——在 ε=1 下将隐私-性能差距缩小 58%。 差分隐私联邦学习（DP-FL）是从设备端私有数…
 tags:
   - "ICML2025"
   - "LLM安全"

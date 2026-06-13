@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LatentGuard: Controllable Latent Steering for Robust Refusal of Attacks and Reliable Response Generation
 description: >-
-  [NEURIPS2025][对话系统][LLM safety] 提出 LatentGuard 三阶段框架，通过行为级对齐微调 + 结构化 VAE 监督潜空间 + 潜空间维度操控，实现对 LLM 拒绝行为的可解释、可控制调节，在抵御对抗攻击的同时保持对正常查询的响应能力。
+  [NEURIPS2025][对话系统][LLM safety] 提出 LatentGuard 三阶段框架，通过行为级对齐微调 + 结构化 VAE 监督潜空间 + 潜空间维度操控，实现对 LLM 拒绝行为的可解释、可控制调节，在抵御对抗攻击的同时保持对正常查询的响应能力。 LLM 安全对齐面临两个核心矛盾： 1. 安全性 vs…
 tags:
   - "NEURIPS2025"
   - "对话系统"

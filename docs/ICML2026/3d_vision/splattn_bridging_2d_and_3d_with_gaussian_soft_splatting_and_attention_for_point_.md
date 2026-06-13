@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SplAttN: Bridging 2D and 3D with Gaussian Soft Splatting and Attention for Point Cloud Completion
 description: >-
-  [ICML 2026][3D视觉][点云补全] 本文指出多模态点云补全里"硬投影把 3D 点直接打到 2D 网格"会让支持集 Lebesgue 测度为零、梯度被 Dirac delta 截断（称为 Cross-Modal Entropy Collapse）…
+  [ICML 2026 Spotlight][3D视觉][点云补全] 本文指出多模态点云补全里"硬投影把 3D 点直接打到 2D 网格"会让支持集 Lebesgue 测度为零、梯度被 Dirac delta 截断（称为 Cross-Modal Entropy Collapse），用可微 Gaussian Soft Splatting 把硬投影换成连续密度估计，搭配 EdgeConv 局部 + Transformer 全局的混合编码器和全局-局部解码器，在 PCN/ShapeNet-55/34 拿到 SOTA，并用 KITTI 上的 counter-factual 评估证明 baseline 实际是退化的"单模态模板检索器"。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "3D视觉"
   - "点云补全"
   - "可微高斯泼溅"

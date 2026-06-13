@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Alignment Tuning for Large Language Models: A Data-Centric Lens on Alignment Data Pipelines
 description: >-
-  [ACL 2026][模型压缩][对齐调优] 这篇论文把 LLM alignment tuning 重新解释为一个动态的数据管线设计问题：模型最终学到什么，不只取决于 PPO、DPO、GRPO 这类优化算法，更取决于候选回答如何生成、偏好如何评估、偏好信号又如何实例化为训练目标。
+  [ACL 2026 Findings][模型压缩][对齐调优] 这篇论文把 LLM alignment tuning 重新解释为一个动态的数据管线设计问题：模型最终学到什么，不只取决于 PPO、DPO、GRPO 这类优化算法，更取决于候选回答如何生成、偏好如何评估、偏好信号又如何实例化为训练目标。 领域现状：大语言模型早期的…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "对齐调优"
   - "偏好数据"

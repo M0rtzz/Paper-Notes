@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Digital Gatekeepers: Google's Role in Curating Hashtags and Subreddits
 description: >-
-  [ACL 2025][搜索引擎偏差] 本文通过对比 Google 搜索引擎返回的 hashtag 和 subreddit 结果与 Reddit 和 Twitter/X 的非采样数据，揭示了 Google 的算法系统性地压制了与色情、阴谋论、广告和加密货币相关的内容，同时推广高参与度内容…
+  [ACL 2025][搜索引擎偏差] 本文通过对比 Google 搜索引擎返回的 hashtag 和 subreddit 结果与 Reddit 和 Twitter/X 的非采样数据，揭示了 Google 的算法系统性地压制了与色情、阴谋论、广告和加密货币相关的内容，同时推广高参与度内容，从而充当"数字守门人"影响公众话语。
 tags:
   - "ACL 2025"
   - "搜索引擎偏差"

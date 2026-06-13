@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation
 description: >-
-  [ICLR 2026][图像生成][distribution matching distillation] 提出 SenseFlow，通过隐式分布对齐（IDA）和段内引导（ISG）将分布匹配蒸馏（DMD）扩展到大规模 flow-based 文生图模型（SD 3.5 Large 8B / FLUX.1 dev…
+  [ICLR 2026][图像生成][distribution matching distillation] 提出 SenseFlow，通过隐式分布对齐（IDA）和段内引导（ISG）将分布匹配蒸馏（DMD）扩展到大规模 flow-based 文生图模型（SD 3.5 Large 8B / FLUX.1 dev 12B），实现 4 步高质量图像生成。
 tags:
   - "ICLR 2026"
   - "图像生成"

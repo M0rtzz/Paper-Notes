@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learnable Infinite Taylor Gaussian for Dynamic View Rendering
 description: >-
-  [CVPR 2025][3D视觉][dynamic scene] 提出可学习无穷 Taylor 级数（Learnable Infinite Taylor Formula）建模动态场景中高斯基元的位置/旋转/缩放随时间的演化，用三阶 Taylor 展开捕捉大运动、MLP+LBS 构造 Peano 余项补偿高阶项…
+  [CVPR 2025][3D视觉][dynamic scene] 提出可学习无穷 Taylor 级数（Learnable Infinite Taylor Formula）建模动态场景中高斯基元的位置/旋转/缩放随时间的演化，用三阶 Taylor 展开捕捉大运动、MLP+LBS 构造 Peano 余项补偿高阶项，实现无近似误差的运动建模，N3DV 和 Technicolor 数据集上超越 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

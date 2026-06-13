@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Image Super-Resolution from Training Data Perspectives
 description: >-
-  [ECCV 2024][图像恢复][超分辨率] 从训练数据角度重新思考图像超分辨率，提出自动化数据评估流水线构建 DiverSeg 数据集（低分辨率但高质量、目标多样的图像），证明在该数据集上训练的 SR 模型可以超越使用高分辨率数据集（DF2K、LSDIR）训练的模型。
+  [ECCV 2024][图像恢复][超分辨率] 从训练数据角度重新思考图像超分辨率，提出自动化数据评估流水线构建 DiverSeg 数据集（低分辨率但高质量、目标多样的图像），证明在该数据集上训练的 SR 模型可以超越使用高分辨率数据集（DF2K、LSDIR）训练的模型。 图像超分辨率（SR）领域在过去十年取得了巨大进展…
 tags:
   - "ECCV 2024"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event-Driven Storytelling with Multiple Lifelike Humans in a 3D Scene
 description: >-
-  [ICCV 2025][3D视觉][Multi-Human Motion] 提出基于事件驱动的LLM框架，将3D场景中多角色行为规划分解为叙述者逐事件生成和事件解析器的精细空间推理两个模块，首次实现了大规模多房间3D场景中4-5+角色的长时序自然交互运动生成。
+  [ICCV 2025][3D视觉][Multi-Human Motion] 提出基于事件驱动的LLM框架，将3D场景中多角色行为规划分解为叙述者逐事件生成和事件解析器的精细空间推理两个模块，首次实现了大规模多房间3D场景中4-5+角色的长时序自然交互运动生成。 3D场景中生成逼真的数字人运动对VR、游戏、电影至关重要…
 tags:
   - "ICCV 2025"
   - "3D视觉"

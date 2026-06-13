@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update
 description: >-
-  [ICCV 2025][3D视觉][2D Gaussian Splatting] 提出TRAN-D，一种基于2D Gaussian Splatting的稀疏视角透明物体深度重建方法，通过分割引导的object-aware损失优化遮挡区域Gaussian分布，并利用物理仿真（MPM）实现物体移除后的场景动态更新…
+  [ICCV 2025][3D视觉][2D Gaussian Splatting] 提出TRAN-D，一种基于2D Gaussian Splatting的稀疏视角透明物体深度重建方法，通过分割引导的object-aware损失优化遮挡区域Gaussian分布，并利用物理仿真（MPM）实现物体移除后的场景动态更新，仅需单张图像即可完成场景刷新。
 tags:
   - "ICCV 2025"
   - "3D视觉"

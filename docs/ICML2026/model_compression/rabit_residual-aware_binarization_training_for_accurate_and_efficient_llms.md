@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RaBiT: Residual-Aware Binarization Training for Accurate and Efficient LLMs
 description: >-
-  [ICML 2026][模型压缩][残差二值化] 本文针对残差二值化 LLM 中"并行二值路径学到冗余特征"这一被作者命名为 inter-path adaptation 的失败模式，提出 RaBiT——用单一共享的全精度权重在线派生所有二值路径并配合函数感知初始化，从而结构性地强制残差层级…
+  [ICML 2026][模型压缩][残差二值化] 本文针对残差二值化 LLM 中"并行二值路径学到冗余特征"这一被作者命名为 inter-path adaptation 的失败模式，提出 RaBiT——用单一共享的全精度权重在线派生所有二值路径并配合函数感知初始化，从而结构性地强制残差层级，使 2-bit Llama2-7B 在 matmul-free 架构下首次反超 VQ 强基线（Wiki2 PPL 5.78 vs QTIP 5.86），同时获得 4.49× 推理加速。
 tags:
   - "ICML 2026"
   - "模型压缩"

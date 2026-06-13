@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking
 description: >-
-  [CVPR 2026][视频理解][视频Agent] VideoSeek 提出一种长程视频 Agent，利用视频逻辑流主动"寻找"关键证据而非穷举解析所有帧，通过 think-act-observe 循环和多粒度工具包（overview/skim/focus）…
+  [CVPR 2026][视频理解][视频Agent] VideoSeek 提出一种长程视频 Agent，利用视频逻辑流主动"寻找"关键证据而非穷举解析所有帧，通过 think-act-observe 循环和多粒度工具包（overview/skim/focus），在 LVBench 上比基座模型 GPT-5 提升 10.2 个点的同时减少 93% 的帧使用量。
 tags:
   - "CVPR 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning
 description: >-
-  [NeurIPS 2025][时间序列][光谱 Tokenizer] 提出首个通用光谱 Tokenizer，通过连续波长嵌入和自监督重建目标，在原始波长网格上联合训练异构天文光谱数据（SDSS/DESI/GALAH/APOGEE），生成对齐、均匀且物理有意义的表征。
+  [NeurIPS 2025][时间序列][光谱 Tokenizer] 提出首个通用光谱 Tokenizer，通过连续波长嵌入和自监督重建目标，在原始波长网格上联合训练异构天文光谱数据（SDSS/DESI/GALAH/APOGEE），生成对齐、均匀且物理有意义的表征。 核心矛盾 核心矛盾：大型天文巡天（SDSS、DESI 等）…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

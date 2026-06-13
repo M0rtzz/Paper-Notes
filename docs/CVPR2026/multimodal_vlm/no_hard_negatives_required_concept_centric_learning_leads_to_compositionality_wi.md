@@ -2,7 +2,7 @@
 title: >-
   [论文解读] No Hard Negatives Required: Concept Centric Learning Leads to Compositionality without Degrading Zero-shot Capabilities of Contrastive Models
 description: >-
-  [CVPR 2026][多模态VLM][组合性理解] C2LIP 提出不依赖 hard negatives 的对比学习微调方案：通过将文本拆解为名词短语概念并引入跨模态注意力池化，在 SugarCrepe/SugarCrepe++ 组合性基准上达到 SOTA，同时保持甚至提升零样本和检索性能。
+  [CVPR 2026][多模态VLM][组合性理解] C2LIP 提出不依赖 hard negatives 的对比学习微调方案：通过将文本拆解为名词短语概念并引入跨模态注意力池化，在 SugarCrepe/SugarCrepe++ 组合性基准上达到 SOTA，同时保持甚至提升零样本和检索性能。 1. 领域现状：对比式视觉-语…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

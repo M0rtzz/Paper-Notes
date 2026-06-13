@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Theory for Kernel Bilevel Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][双层优化] 首次为核双层优化（KBO）建立了有限样本泛化界，证明目标函数值和梯度的插入估计误差均以$\mathcal{O}(1/\sqrt{m}+1/\sqrt{n})$的参数速率一致收敛，并将该理论应用于双层梯度下降算法的统计精度分析。
+  [NeurIPS 2025][优化/理论][双层优化] 首次为核双层优化（KBO）建立了有限样本泛化界，证明目标函数值和梯度的插入估计误差均以$\mathcal{O}(1/\sqrt{m}+1/\sqrt{n})$的参数速率一致收敛，并将该理论应用于双层梯度下降算法的统计精度分析。 问题背景 双层优化在机器学习中广泛应用…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

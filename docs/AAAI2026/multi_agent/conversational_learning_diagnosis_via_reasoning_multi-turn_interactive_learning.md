@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning
 description: >-
-  [AAAI 2026][多智能体][对话式学习诊断] 提出 ParLD（Preview-Analyze-Reason 框架），通过多 Agent 协作实现对话式学习过程中学生认知状态的细粒度逐轮诊断，在性能预测上超越传统知识追踪方法 10%，并显著提升辅导效果。
+  [AAAI 2026][多智能体][对话式学习诊断] 提出 ParLD（Preview-Analyze-Reason 框架），通过多 Agent 协作实现对话式学习过程中学生认知状态的细粒度逐轮诊断，在性能预测上超越传统知识追踪方法 10%，并显著提升辅导效果。 领域现状：对话式学习（Conversational Learn…
 tags:
   - "AAAI 2026"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding
 description: >-
-  [ECCV 2024][目标检测][temporal grounding] 针对组合时序定位任务中现有方法负样本构造不合理、DETR 模型对负查询无法产生合理显著性响应的问题，提出利用 LLM（GPT-3.5 Turbo）生成语义可行的分层硬负样本…
+  [ECCV 2024][目标检测][temporal grounding] 针对组合时序定位任务中现有方法负样本构造不合理、DETR 模型对负查询无法产生合理显著性响应的问题，提出利用 LLM（GPT-3.5 Turbo）生成语义可行的分层硬负样本，并设计粗到细的显著性排序策略建立视频片段与层次负查询之间的多粒度语义关系，显著提升组合泛化能力。
 tags:
   - "ECCV 2024"
   - "目标检测"

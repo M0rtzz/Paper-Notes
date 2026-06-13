@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Context is Key: A Benchmark for Forecasting with Essential Textual Information
 description: >-
-  [ICML 2025][多模态VLM][上下文辅助预测] 提出 Context is Key（CiK）基准——71个手工设计的预测任务横跨7个领域，每个任务必须结合数值历史和自然语言上下文才能准确预测，同时提出 RCRPS 评估指标和 Direct Prompt 方法…
+  [ICML 2025][多模态VLM][上下文辅助预测] 提出 Context is Key（CiK）基准——71个手工设计的预测任务横跨7个领域，每个任务必须结合数值历史和自然语言上下文才能准确预测，同时提出 RCRPS 评估指标和 Direct Prompt 方法，发现 Llama-3.1-405B 的简单提示方法（RCRPS=0.159）大幅领先所有统计模型和时序基础模型。
 tags:
   - "ICML 2025"
   - "多模态VLM"

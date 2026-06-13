@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extremely Simple Multimodal Outlier Synthesis for Out-of-Distribution Detection and Segmentation
 description: >-
-  [NeurIPS 2025][自动驾驶][OOD检测] 提出 Feature Mixing——一种极其简单的多模态异常值合成方法，从两种模态的特征中随机交换 $N$ 个维度即可生成 OOD 样本用于训练正则化，理论上保证合成异常值位于 ID 分布的低似然区域且偏移有界…
+  [NeurIPS 2025][自动驾驶][OOD检测] 提出 Feature Mixing——一种极其简单的多模态异常值合成方法，从两种模态的特征中随机交换 $N$ 个维度即可生成 OOD 样本用于训练正则化，理论上保证合成异常值位于 ID 分布的低似然区域且偏移有界，在 8 个数据集 4 种模态上达到 SOTA 且比 NP-Mix 快 10×~370×。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

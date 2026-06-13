@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding
 description: >-
-  [CVPR 2025][视频理解][知识蒸馏] 提出 R-MSD（Reliable Multi-Sample Distillation），通过对每个输入采样多个教师响应并结合任务自适应质量匹配，解决视频 LVLM 黑盒蒸馏中单样本教师监督不可靠的问题…
+  [CVPR 2025][视频理解][知识蒸馏] 提出 R-MSD（Reliable Multi-Sample Distillation），通过对每个输入采样多个教师响应并结合任务自适应质量匹配，解决视频 LVLM 黑盒蒸馏中单样本教师监督不可靠的问题，4B 学生模型在 VideoMME (+1.5%)、Video-MMMU (+3.2%)、MathVerse (+3.6%) 等基准上取得一致提升。
 tags:
   - "CVPR 2025"
   - "视频理解"

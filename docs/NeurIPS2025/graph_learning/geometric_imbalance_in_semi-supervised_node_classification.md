@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometric Imbalance in Semi-Supervised Node Classification
 description: >-
-  [NeurIPS 2025][图学习][geometric imbalance] 首次形式化定义了半监督节点分类中的"几何不平衡"概念——消息传递在类别不平衡图上导致少数类节点在黎曼流形嵌入空间中产生几何歧义，并提出 UNREAL 框架…
+  [NeurIPS 2025][图学习][geometric imbalance] 首次形式化定义了半监督节点分类中的"几何不平衡"概念——消息传递在类别不平衡图上导致少数类节点在黎曼流形嵌入空间中产生几何歧义，并提出 UNREAL 框架，通过双路径伪标签对齐、节点重排序和几何歧义样本丢弃三个模块系统性缓解该问题。
 tags:
   - "NeurIPS 2025"
   - "图学习"

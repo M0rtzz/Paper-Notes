@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DALR: Dual-level Alignment Learning for Multimodal Sentence Representation Learning
 description: >-
-  [ACL 2025][多模态VLM][句子表示学习] 提出 DALR 框架，通过跨模态一致性学习 + 模态内排序蒸馏的双层对齐策略，解决多模态句子表示中的跨模态不对齐偏差（CMB）和模态内语义分歧（ISD）问题，在 STS 和 TR 任务上取得 SOTA。
+  [ACL 2025][多模态VLM][句子表示学习] 提出 DALR 框架，通过跨模态一致性学习 + 模态内排序蒸馏的双层对齐策略，解决多模态句子表示中的跨模态不对齐偏差（CMB）和模态内语义分歧（ISD）问题，在 STS 和 TR 任务上取得 SOTA。 领域现状：句子表示学习将句子映射为低维向量以保留语义信息…
 tags:
   - "ACL 2025"
   - "多模态VLM"

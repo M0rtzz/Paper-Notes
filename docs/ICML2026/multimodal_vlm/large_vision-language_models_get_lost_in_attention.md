@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Vision-Language Models Get Lost in Attention
 description: >-
-  [ICML 2026][多模态VLM][LVLM 可解释性] 本文用"信息复杂度 (eRank) + 子空间支持"的几何信息论框架定量诊断 LVLM 的残差流，发现 Attention 几乎只做子空间内重配置而 FFN 才注入新语义维度…
+  [ICML 2026][多模态VLM][LVLM 可解释性] 本文用"信息复杂度 (eRank) + 子空间支持"的几何信息论框架定量诊断 LVLM 的残差流，发现 Attention 几乎只做子空间内重配置而 FFN 才注入新语义维度；更惊人的是把学习到的 attention 权重换成高斯噪声后多数视觉任务性能不降反升，揭示当代 LVLM 在 visual attention 上严重错配冗余。
 tags:
   - "ICML 2026"
   - "多模态VLM"

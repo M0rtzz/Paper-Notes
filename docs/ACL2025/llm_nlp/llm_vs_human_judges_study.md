@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLMs instead of Human Judges? A Large Scale Empirical Study across 20 NLP Evaluation Tasks
 description: >-
-  [ACL 2025][LLM/NLP][LLM-as-a-Judge] 构建包含20个NLP数据集（7万+实例）的 Judge-Bench 基准，系统评估11个LLM作为评判者与人类标注的一致性，发现模型在不同任务/属性/标注者专业水平上表现差异巨大，建议部署前必须针对特定任务做人类标注验证。
+  [ACL 2025][LLM 其他][LLM-as-a-Judge] 构建包含20个NLP数据集（7万+实例）的 Judge-Bench 基准，系统评估11个LLM作为评判者与人类标注的一致性，发现模型在不同任务/属性/标注者专业水平上表现差异巨大，建议部署前必须针对特定任务做人类标注验证。 LLM-as-a-Judge 趋…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-as-a-Judge"
   - "人类评估"
   - "评估基准"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompts for Public-Sector LLMs Should Be Governed as Commons
 description: >-
-  [ICML 2026][推荐系统][提示词治理] 这是一篇 position paper：作者主张公共部门用的 LLM 提示词应当像开源 commons 一样被版本化、有出处、可审计、可否决，并用一座北美城市的 443 条社区提示词（增强到 3…
+  [ICML 2026][推荐系统][提示词治理] 这是一篇 position paper：作者主张公共部门用的 LLM 提示词应当像开源 commons 一样被版本化、有出处、可审计、可否决，并用一座北美城市的 443 条社区提示词（增强到 3,317 条）跑了一个含五种治理状态的 pilot benchmark，给出可证伪的三个预测——治理化提示能改变输出分布、提升可审计性、缩短故障修复时延。
 tags:
   - "ICML 2026"
   - "推荐系统"

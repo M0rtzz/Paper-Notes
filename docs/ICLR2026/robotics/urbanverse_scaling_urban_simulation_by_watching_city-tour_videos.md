@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos
 description: >-
-  [ICLR 2026][机器人][城市仿真] UrbanVerse是一个数据驱动的real-to-sim系统，将众包城市旅拍视频转化为物理感知的交互式仿真场景，包含10万+标注3D资产和自动场景构建流水线，在IsaacSim中生成160个高质量场景，训练的PPO导航策略在真实世界零样本转移中成功率达89.7%…
+  [ICLR 2026][机器人][城市仿真] UrbanVerse是一个数据驱动的real-to-sim系统，将众包城市旅拍视频转化为物理感知的交互式仿真场景，包含10万+标注3D资产和自动场景构建流水线，在IsaacSim中生成160个高质量场景，训练的PPO导航策略在真实世界零样本转移中成功率达89.7%，完成337m长距离任务仅需2次人工干预。
 tags:
   - "ICLR 2026"
   - "机器人"

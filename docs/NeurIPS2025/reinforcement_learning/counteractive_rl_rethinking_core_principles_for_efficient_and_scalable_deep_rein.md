@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][Counteractive TD] CoAct TD Learning 颠覆 ε-greedy 的随机探索范式——以概率 ε 选择最小化 $Q(s,a)$ 的动作（而非随机动作）来获取高时间差分信号，理论证明其产生更大 TD 误差…
+  [NeurIPS 2025 Spotlight][强化学习][Counteractive TD] CoAct TD Learning 颠覆 ε-greedy 的随机探索范式——以概率 ε 选择最小化 $Q(s,a)$ 的动作（而非随机动作）来获取高时间差分信号，理论证明其产生更大 TD 误差，在 Atari 100K 上实现 248% 性能提升，仅需改动 2 行代码且零额外计算。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "强化学习"
   - "Counteractive TD"
   - "最小化Q值"

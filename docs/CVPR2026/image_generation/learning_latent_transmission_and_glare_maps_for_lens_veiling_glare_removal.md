@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Latent Transmission and Glare Maps for Lens Veiling Glare Removal
 description: >-
-  [CVPR 2026][图像生成][veiling glare removal] 提出 VeilGen + DeVeiler 框架，通过物理引导的 Stable Diffusion 生成模型学习潜在透射率和眩光图以合成逼真的复合退化训练数据，并用可逆约束训练修复网络，实现简化光学系统中像差与雾化眩光的联合去除…
+  [CVPR 2026][图像生成][veiling glare removal] 提出 VeilGen + DeVeiler 框架，通过物理引导的 Stable Diffusion 生成模型学习潜在透射率和眩光图以合成逼真的复合退化训练数据，并用可逆约束训练修复网络，实现简化光学系统中像差与雾化眩光的联合去除。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Explicit Refusals: Soft-Failure Attacks on Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][LLM安全][RAG攻击] 形式化定义 RAG 系统的"软失败"威胁（生成流畅但无信息量的回答），提出 DEJA 黑箱进化攻击框架，通过对抗性文档诱导模型利用安全对齐机制产生模棱两可的回答，SASR 超过 79% 且高度隐蔽。
+  [ACL 2026][LLM安全][RAG攻击] 形式化定义 RAG 系统的"软失败"威胁（生成流畅但无信息量的回答），提出 DEJA 黑箱进化攻击框架，通过对抗性文档诱导模型利用安全对齐机制产生模棱两可的回答，SASR 超过 79% 且高度隐蔽。 领域现状： RAG 系统依赖外部语料库提升事实准确性…
 tags:
   - "ACL 2026"
   - "LLM安全"

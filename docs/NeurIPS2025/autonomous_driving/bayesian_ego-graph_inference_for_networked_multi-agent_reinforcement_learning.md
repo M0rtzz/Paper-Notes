@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning
 description: >-
-  [NeurIPS 2025][自动驾驶][贝叶斯推断] BayesG 让网络化 MARL 中的每个 agent 通过贝叶斯变分推断学习其局部通信图的动态结构——用 Gumbel-Softmax 采样边掩码、ELBO 目标联合优化策略和图结构…
+  [NeurIPS 2025][自动驾驶][贝叶斯推断] BayesG 让网络化 MARL 中的每个 agent 通过贝叶斯变分推断学习其局部通信图的动态结构——用 Gumbel-Softmax 采样边掩码、ELBO 目标联合优化策略和图结构，在 167 agent 的纽约交通场景中奖励比最佳 baseline 高 50%+。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

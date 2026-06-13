@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Image Tokenization for Multi-Scale Image Super Resolution
 description: >-
-  [ICML 2026][模型压缩][VAR] H-VAR 把"残差量化做多尺度生成"的 VAR 范式重新切片成层次化的图像 tokenization (HIT)，让一个 310M 的小模型只跑一次前向就能输出 128 / 256 / 512 三个有意义的中间分辨率…
+  [ICML 2026][模型压缩][VAR] H-VAR 把"残差量化做多尺度生成"的 VAR 范式重新切片成层次化的图像 tokenization (HIT)，让一个 310M 的小模型只跑一次前向就能输出 128 / 256 / 512 三个有意义的中间分辨率，再配一个不需要外部奖励模型的 DPO 正则项推动输出偏向 HR，在标准 ISR 数据上对打 1B 参数的 VARSR。
 tags:
   - "ICML 2026"
   - "模型压缩"

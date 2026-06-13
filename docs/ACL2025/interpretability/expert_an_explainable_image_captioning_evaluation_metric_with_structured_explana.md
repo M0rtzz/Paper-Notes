@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations
 description: >-
-  [ACL 2025][可解释性][图像描述评估] 本文提出 EXPERT，一种基于 VLM 微调的无参考图像描述评估指标，通过构建大规模结构化解释数据集并设计两阶段评估模板，在多个基准数据集上达到 SOTA 的同时，提供基于流畅度、相关性、描述性三个维度的高质量结构化解释。
+  [ACL 2025][可解释性][图像描述评估] 本文提出 EXPERT，一种基于 VLM 微调的无参考图像描述评估指标，通过构建大规模结构化解释数据集并设计两阶段评估模板，在多个基准数据集上达到 SOTA 的同时，提供基于流畅度、相关性、描述性三个维度的高质量结构化解释。 图像描述（Image Captioning）的自动…
 tags:
   - "ACL 2025"
   - "可解释性"

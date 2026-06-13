@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Systematic Comparison between Extractive Self-Explanations and Human Rationales in Text Classification
 description: >-
-  [ACL2026][可解释性][LLM自解释] 这篇论文系统比较了 4 个开源指令调优 LLM 在 3 类文本分类任务上生成的抽取式自解释与人类 rationale、后验归因方法之间的差异，发现自解释与人类标注的一致性强烈受文本长度和任务复杂度影响，但在扰动式 faithfulness 评测中…
+  [ACL2026][可解释性][LLM自解释] 这篇论文系统比较了 4 个开源指令调优 LLM 在 3 类文本分类任务上生成的抽取式自解释与人类 rationale、后验归因方法之间的差异，发现自解释与人类标注的一致性强烈受文本长度和任务复杂度影响，但在扰动式 faithfulness 评测中，自解释往往能选出对模型预测更关键的 token 子集。
 tags:
   - "ACL2026"
   - "可解释性"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2410.03296](https://arxiv.org/abs/2410.03296)  
 **代码**: https://github.com/oeberle/self_explanations_human_rationales  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: LLM自解释, 输入 rationale, 人类标注, 可解释性评测, 归因方法  
 
 ## 一句话总结

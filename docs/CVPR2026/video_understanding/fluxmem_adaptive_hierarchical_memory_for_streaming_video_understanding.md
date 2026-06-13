@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding
 description: >-
-  [CVPR 2026][视频理解][流式视频理解] 提出 FluxMem，一个无需训练的流式视频理解框架，通过层级化记忆设计（短期/中期/长期）和两个自适应 token 压缩模块（TAS 去时间冗余 + SDC 去空间冗余）…
+  [CVPR 2026][视频理解][流式视频理解] 提出 FluxMem，一个无需训练的流式视频理解框架，通过层级化记忆设计（短期/中期/长期）和两个自适应 token 压缩模块（TAS 去时间冗余 + SDC 去空间冗余），在丢弃 60-70% 视觉 token 的同时在 StreamingBench 和 OVO-Bench 上取得新 SOTA。
 tags:
   - "CVPR 2026"
   - "视频理解"

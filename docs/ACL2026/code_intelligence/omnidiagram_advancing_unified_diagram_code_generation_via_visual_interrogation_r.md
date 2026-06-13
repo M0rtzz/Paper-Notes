@@ -2,9 +2,9 @@
 title: >-
   [论文解读] OmniDiagram: Advancing Unified Diagram Code Generation via Visual Interrogation Reward
 description: >-
-  [ACL 2026][代码智能][图表代码生成] 本文提出 OmniDiagram，一个统一的图表代码生成框架，覆盖 LaTeX/Mermaid/PlantUML 三种语言和图表转代码/图表编辑/文本转代码三种任务，并引入基于视觉问答的 Viva 奖励机制来指导 RL 训练，在多个基准上达到 SOTA。
+  [ACL 2026 Findings][代码智能][图表代码生成] 本文提出 OmniDiagram，一个统一的图表代码生成框架，覆盖 LaTeX/Mermaid/PlantUML 三种语言和图表转代码/图表编辑/文本转代码三种任务，并引入基于视觉问答的 Viva 奖励机制来指导 RL 训练，在多个基准上达到 SOTA。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "图表代码生成"
   - "视觉问答奖励"

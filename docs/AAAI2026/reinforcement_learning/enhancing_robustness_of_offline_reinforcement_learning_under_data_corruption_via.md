@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Robustness of Offline RL Under Data Corruption via SAM
 description: >-
-  [AAAI 2026 (Student Abstract, Oral)][强化学习][离线RL] 首次将 Sharpness-Aware Minimization (SAM) 作为即插即用优化器应用于离线 RL，假设数据损坏导致损失景观中出现尖锐极小值从而泛化差，SAM 通过寻找平坦极小值提升鲁棒性…
+  [AAAI 2026 (Student Abstract, Oral)][强化学习][离线RL] 首次将 Sharpness-Aware Minimization (SAM) 作为即插即用优化器应用于离线 RL，假设数据损坏导致损失景观中出现尖锐极小值从而泛化差，SAM 通过寻找平坦极小值提升鲁棒性，在 D4RL 基准上 IQL+SAM 平均得分从 34.47 提升到 44.40。
 tags:
   - "AAAI 2026 (Student Abstract, Oral)"
   - "强化学习"

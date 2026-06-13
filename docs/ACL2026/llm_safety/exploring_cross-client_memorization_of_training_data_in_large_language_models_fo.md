@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Cross-Client Memorization of Training Data in Large Language Models for Federated Learning
 description: >-
-  [ACL 2026][LLM安全][联邦学习] 作者把集中式 LLM 上的 fine-grained 跨样本记忆度量（Zeng 2024 + PAN2014 抄袭检测器）扩展到联邦学习场景…
+  [ACL 2026][LLM安全][联邦学习] 作者把集中式 LLM 上的 fine-grained 跨样本记忆度量（Zeng 2024 + PAN2014 抄袭检测器）扩展到联邦学习场景，提出一对 client-pair 度量 $\text{MR}_{j \to k}$ 并由此推导 intra-client / inter-client 记忆比率，发现 FL **并不能**有效防止训练数据记忆——intra-client 记忆比 inter-client 高、但 FL vs CL 总记忆比并无明显下降，且记忆量受 prefix 长度、解码策略、FL 算法（FedProx > FedAvg）显著影响。
 tags:
   - "ACL 2026"
   - "LLM安全"

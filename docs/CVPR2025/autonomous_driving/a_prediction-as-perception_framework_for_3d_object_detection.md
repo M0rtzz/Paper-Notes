@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PAP: A Prediction-as-Perception Framework for 3D Object Detection
 description: >-
-  [CVPR 2025][自动驾驶][3D目标检测] PAP 受人脑"预测性感知"启发，将上一帧轨迹预测结果作为当前帧感知模块的 query 输入替代部分随机 query，在 UniAD 上实现 AMOTA 提升 10%（0.359→0.395）、推理速度提升 15%（14→16 FPS）和训练时间缩短 14%…
+  [CVPR 2025][自动驾驶][3D目标检测] PAP 受人脑"预测性感知"启发，将上一帧轨迹预测结果作为当前帧感知模块的 query 输入替代部分随机 query，在 UniAD 上实现 AMOTA 提升 10%（0.359→0.395）、推理速度提升 15%（14→16 FPS）和训练时间缩短 14%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

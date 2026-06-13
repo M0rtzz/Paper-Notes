@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraLoRA: Granular Low-Rank Adaptation for Parameter-Efficient Fine-Tuning
 description: >-
-  [NEURIPS2025][图像生成][LoRA] 提出 GraLoRA——将 LoRA 的权重更新矩阵分割为 $k^2$ 个独立子块、每块配独立低秩适配器，在不增加参数量和计算量的前提下将有效秩从 $r$ 提升至 $kr$，解决 LoRA 在高秩下因梯度纠缠导致的性能退化问题…
+  [NEURIPS2025][图像生成][LoRA] 提出 GraLoRA——将 LoRA 的权重更新矩阵分割为 $k^2$ 个独立子块、每块配独立低秩适配器，在不增加参数量和计算量的前提下将有效秩从 $r$ 提升至 $kr$，解决 LoRA 在高秩下因梯度纠缠导致的性能退化问题，在代码生成上 Pass@1 最高提升 +8.5%。
 tags:
   - "NEURIPS2025"
   - "图像生成"

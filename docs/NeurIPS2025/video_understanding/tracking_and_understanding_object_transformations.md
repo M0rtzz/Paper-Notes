@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tracking and Understanding Object Transformations
 description: >-
-  [NeurIPS 2025][视频理解][目标跟踪] 提出 Track Any State 任务和 TubeletGraph 零样本框架，在视频中跟踪经历外观剧变的物体状态变化（如切苹果、蝴蝶从蛹中羽化），同时检测并描述这些变化。
+  [NeurIPS 2025][视频理解][目标跟踪] 提出 Track Any State 任务和 TubeletGraph 零样本框架，在视频中跟踪经历外观剧变的物体状态变化（如切苹果、蝴蝶从蛹中羽化），同时检测并描述这些变化。 现实世界中，物体频繁经历状态转换——苹果被切成碎片、蝴蝶从蛹中破壳而出。跟踪这些变化对理解物体…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

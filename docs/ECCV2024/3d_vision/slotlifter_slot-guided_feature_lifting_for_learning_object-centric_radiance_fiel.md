@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SlotLifter: Slot-guided Feature Lifting for Learning Object-centric Radiance Fields
 description: >-
-  [ECCV 2024][3D视觉][物体中心学习] 提出SlotLifter，通过将2D特征提升为3D并与Slot Attention结合的slot-guided feature lifting设计，在场景分解和新视角合成上同时达到SOTA，且训练效率提升约5倍。
+  [ECCV 2024][3D视觉][物体中心学习] 提出SlotLifter，通过将2D特征提升为3D并与Slot Attention结合的slot-guided feature lifting设计，在场景分解和新视角合成上同时达到SOTA，且训练效率提升约5倍。 现有痛点 现有痛点：领域现状：物体中心学习旨在从视觉场景中无…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Do Multimodal RAG Systems Leak Data? A Comprehensive Evaluation of Membership Inference and Image Caption Retrieval Attacks
 description: >-
-  [ACL 2026][LLM安全][多模态] 作者首次系统评估了 **图像驱动的多模态 RAG (mRAG)** 系统的隐私泄露风险，证明仅靠最朴素的黑盒文本 prompt + 一张目标图就能在 4 个数据集 × 3 个 VLM 上达到 **MIA F1=0.993** 与 **caption exact-m…
+  [ACL 2026 Findings][LLM安全][多模态] 作者首次系统评估了 **图像驱动的多模态 RAG (mRAG)** 系统的隐私泄露风险，证明仅靠最朴素的黑盒文本 prompt + 一张目标图就能在 4 个数据集 × 3 个 VLM 上达到 **MIA F1=0.993** 与 **caption exact-match=0.835**，即便对图像做裁剪/掩盖/旋转/噪声等变换攻击依然有效，并发现 prompt 中"目标图 vs 检索图"的相对位置和 cross-modal rerank 是两个关键缓解杠杆。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "多模态"
   - "Membership Inference Attack"

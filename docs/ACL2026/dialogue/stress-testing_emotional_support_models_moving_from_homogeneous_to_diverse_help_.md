@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Stress-Testing Emotional Support Models: Moving from Homogeneous to Diverse Help Seekers
 description: >-
-  [ACL2026][对话系统][情感支持模型] 这篇论文用 Reddit 情感支持对话构造九维求助者画像，并用带行为路由的 LoRA-MoE 训练可控求助者模拟器，从而让情感支持模型在更真实、更困难、更多样的人群上接受交互式压力测试。
+  [ACL2026 Findings][对话系统][情感支持模型] 这篇论文用 Reddit 情感支持对话构造九维求助者画像，并用带行为路由的 LoRA-MoE 训练可控求助者模拟器，从而让情感支持模型在更真实、更困难、更多样的人群上接受交互式压力测试。 领域现状：情感支持对话模型已经从单轮共情回复走向多轮交互系统…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "对话系统"
   - "情感支持模型"
   - "求助者模拟"

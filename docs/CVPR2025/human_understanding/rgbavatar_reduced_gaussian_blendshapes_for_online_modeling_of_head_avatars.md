@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RGBAvatar: Reduced Gaussian Blendshapes for Online Modeling of Head Avatars
 description: >-
-  [CVPR 2025][人体理解][头部虚拟形象] RGBAvatar提出"精简高斯混合形状"表示，仅用20个可学习基底即可高效表征可动画头部虚拟形象，配合批量并行渲染和颜色初始化策略，首次实现在线实时（边拍边建）的头部虚拟形象重建。
+  [CVPR 2025][人体理解][头部虚拟形象] RGBAvatar提出"精简高斯混合形状"表示，仅用20个可学习基底即可高效表征可动画头部虚拟形象，配合批量并行渲染和颜色初始化策略，首次实现在线实时（边拍边建）的头部虚拟形象重建。 3DGS极大推动了可动画头部虚拟形象的重建质量。现有方法（如GaussianBlendsh…
 tags:
   - "CVPR 2025"
   - "人体理解"

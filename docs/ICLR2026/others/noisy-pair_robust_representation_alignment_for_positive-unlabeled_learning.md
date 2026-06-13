@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning
 description: >-
-  [ICLR 2026][PU学习] 提出 NcPU 非对比 PU 学习框架，通过对标准非对比损失做 sqrt 变换（NoiSNCL）让 clean pair 梯度主导训练、用 PhantomGate 提供保守负监督并支持 regret 回退，两个模块在 EM 框架下迭代互利…
+  [ICLR 2026][PU学习] 提出 NcPU 非对比 PU 学习框架，通过对标准非对比损失做 sqrt 变换（NoiSNCL）让 clean pair 梯度主导训练、用 PhantomGate 提供保守负监督并支持 regret 回退，两个模块在 EM 框架下迭代互利；在不依赖辅助负样本或预估类先验的前提下，CIFAR-100 上与监督学习差距从 14.26% 缩至 <1.4%，xBD 灾损评估上同样达到 SOTA。
 tags:
   - "ICLR 2026"
   - "PU学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRACER: 用 WMA teacher + 几何分解证明的鲁棒多模态微调
 description: >-
-  [ICML 2026][自监督学习][CLIP 微调] TRACER 用闭式解理论把对比微调的几何分解为"任务子空间"+"正交保留"两部分，证明 EMA teacher 会坍缩失去正则化力…
+  [ICML 2026][自监督学习][CLIP 微调] TRACER 用闭式解理论把对比微调的几何分解为"任务子空间"+"正交保留"两部分，证明 EMA teacher 会坍缩失去正则化力，提出 Weighted Moving Average (WMA) teacher 保持 finite-horizon 持续约束力且对任务子空间无偏收敛；在 CLIP ViT-B/16 上 ImageNet 分布偏移平均提升至 64.07% vs CaRot 62.54%。
 tags:
   - "ICML 2026"
   - "自监督学习"

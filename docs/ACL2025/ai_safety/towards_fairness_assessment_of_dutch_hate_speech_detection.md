@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Fairness Assessment of Dutch Hate Speech Detection
 description: >-
-  [ACL 2025][AI安全][仇恨言论检测] 本文系统评估了荷兰语仇恨言论检测模型的反事实公平性，提出四种反事实数据生成方法（LLMdef、LLMlist、SLL、MGS），并通过在 BERTje 模型上微调验证了反事实数据增强对模型性能和公平性的改进效果。
+  [ACL 2025][AI安全][仇恨言论检测] 本文系统评估了荷兰语仇恨言论检测模型的反事实公平性，提出四种反事实数据生成方法（LLMdef、LLMlist、SLL、MGS），并通过在 BERTje 模型上微调验证了反事实数据增强对模型性能和公平性的改进效果。 仇恨言论检测领域存在三个核心问题： 语言偏向：绝大多数研究聚焦…
 tags:
   - "ACL 2025"
   - "AI安全"

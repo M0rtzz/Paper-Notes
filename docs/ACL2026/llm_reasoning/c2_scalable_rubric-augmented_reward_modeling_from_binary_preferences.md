@@ -2,7 +2,7 @@
 title: >-
   [论文解读] C2: Scalable Rubric-Augmented Reward Modeling from Binary Preferences
 description: >-
-  [ACL 2026][LLM推理][奖励模型] 针对"自生成 rubric 经常误导 reward model"的两面性问题，作者用 LM 似然 margin 把自采样的 16 条 rubric 自动标注为"helpful / misleading"对…
+  [ACL 2026][LLM推理][奖励模型] 针对"自生成 rubric 经常误导 reward model"的两面性问题，作者用 LM 似然 margin 把自采样的 16 条 rubric 自动标注为"helpful / misleading"对，再用 DPO 训一个合作型 rubric generator + GRPO 训一个会先评估 rubric 可信度再下判断的"critical" verifier；只用二元偏好数据，C2 在 4 个偏好基准上比 GRPO 训的 reasoning RM 提升最多 6.5 点 (RM-Bench)，下游 DPO 的 LC win rate 涨 6 点…
 tags:
   - "ACL 2026"
   - "LLM推理"

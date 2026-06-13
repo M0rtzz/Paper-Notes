@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoDPO: Omni-Preference Alignment for Video Diffusion Generation
 description: >-
-  [CVPR 2025][视频生成][视频扩散模型] VideoDPO 首次将 DPO（Direct Preference Optimization）适配到视频扩散模型，提出 OmniScore 综合评分体系同时衡量视觉质量和语义对齐，结合自动偏好数据生成 pipeline 和基于分数差异的数据重加权策略…
+  [CVPR 2025][视频生成][视频扩散模型] VideoDPO 首次将 DPO（Direct Preference Optimization）适配到视频扩散模型，提出 OmniScore 综合评分体系同时衡量视觉质量和语义对齐，结合自动偏好数据生成 pipeline 和基于分数差异的数据重加权策略，在 VideoCrafter2、T2V-Turbo 和 CogVideoX 上均取得了显著的偏好对齐提升。
 tags:
   - "CVPR 2025"
   - "视频生成"

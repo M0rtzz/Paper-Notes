@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Teacher Forcing for Masked Autoregressive Video Generation
 description: >-
-  [CVPR 2025][视频生成][自回归] MAGI 提出 Complete Teacher Forcing（CTF）范式，在训练时条件化于完整观察帧而非掩码帧，消除训练-推理差距，FVD 提升 23%，仅训练 16 帧即可生成超过 100 帧的连贯视频。
+  [CVPR 2025][视频生成][自回归] MAGI 提出 Complete Teacher Forcing（CTF）范式，在训练时条件化于完整观察帧而非掩码帧，消除训练-推理差距，FVD 提升 23%，仅训练 16 帧即可生成超过 100 帧的连贯视频。 自回归视频生成的"生成顺序"问题被严重忽视…
 tags:
   - "CVPR 2025"
   - "视频生成"

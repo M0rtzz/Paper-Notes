@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies
 description: >-
-  [AAAI 2026][LLM Agent][GUI Agent] 提出 D-GARA，一个面向 Android GUI Agent 的动态鲁棒性评估框架，通过在实时交互过程中注入权限弹窗、电量警告、应用崩溃等真实世界异常…
+  [AAAI 2026][LLM Agent][GUI Agent] 提出 D-GARA，一个面向 Android GUI Agent 的动态鲁棒性评估框架，通过在实时交互过程中注入权限弹窗、电量警告、应用崩溃等真实世界异常，揭示现有 SOTA Agent（包括 UI-TARS-72B、GPT-4o）在中断场景下平均成功率下降超过 17.5%，最高达 33% 的严重脆弱性。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDiaReward: Modeling and Benchmarking Spoken Dialogue Rewards with Modality and Colloquialness
 description: >-
-  [ACL2026][音频/语音][语音对话评测] SDiaReward 构建了面向多轮语音对话的成对偏好数据集与 ESDR-Bench，并训练端到端语音 reward model，让评测不再只看文本语义，而能同时判断韵律/情感等 modality gap 与自然口语风格的 colloquialness gap…
+  [ACL2026][音频/语音][语音对话评测] SDiaReward 构建了面向多轮语音对话的成对偏好数据集与 ESDR-Bench，并训练端到端语音 reward model，让评测不再只看文本语义，而能同时判断韵律/情感等 modality gap 与自然口语风格的 colloquialness gap。
 tags:
   - "ACL2026"
   - "音频/语音"

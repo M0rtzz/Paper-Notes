@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Low-Resource Morphological Inflection via Self-Supervised Objectives
 description: >-
-  [ACL 2025][自监督学习][形态变化] 系统探索 13 种自监督辅助目标（自编码、CMLM、T5-style 等）在极低资源形态变化任务中的效果，发现无标注数据极少时自编码最优，数据增多后字符级 MLM 更好，按形态素边界采样掩码是最有前景的方向。
+  [ACL 2025][自监督学习][形态变化] 系统探索 13 种自监督辅助目标（自编码、CMLM、T5-style 等）在极低资源形态变化任务中的效果，发现无标注数据极少时自编码最优，数据增多后字符级 MLM 更好，按形态素边界采样掩码是最有前景的方向。 领域现状：形态变化（morphological inflection…
 tags:
   - "ACL 2025"
   - "自监督学习"

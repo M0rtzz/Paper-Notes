@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models
 description: >-
-  [NeurIPS 2025 (Workshop on ML for Physical Sciences)][遥感][电离层预测] 作为2025 NASA Heliolab的成果，本文构建了首个全面的ML-ready电离层预测数据集…
+  [NeurIPS 2025 (Workshop on ML for Physical Sciences)][遥感][电离层预测] 作为2025 NASA Heliolab的成果，本文构建了首个全面的ML-ready电离层预测数据集，将太阳动力学观测站（SDO）极紫外辐照度嵌入、太阳风参数、行星际磁场、地磁活动指数、JPL稠密TEC全球电离层图、Madrigal稀疏TEC、太阳通量指数以及轨道力学参数等7大类异构数据源统一对齐到一致的时间-空间结构中，并在此基础上训练了包括LSTM、球面神经算子（SFNO）和GraphCast在内的多种时空预测架构，实现了对全球垂直总电子含量（vTEC）在安静和地磁活跃条件下长达12小时的自回归预测…
 tags:
   - "NeurIPS 2025 (Workshop on ML for Physical Sciences)"
   - "遥感"

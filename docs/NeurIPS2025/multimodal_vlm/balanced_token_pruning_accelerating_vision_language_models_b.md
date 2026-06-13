@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Balanced Token Pruning: Accelerating Vision Language Models Beyond Local Optimization
 description: >-
-  [NeurIPS 2025][多模态VLM][视觉token剪枝] 提出 Balanced Token Pruning (BTP)，通过联合考虑剪枝对当前层（局部）和后续层（全局）的影响，在浅层侧重多样性保留以维护下游表示质量、在深层侧重注意力选择以保持局部输出一致性…
+  [NeurIPS 2025][多模态VLM][视觉token剪枝] 提出 Balanced Token Pruning (BTP)，通过联合考虑剪枝对当前层（局部）和后续层（全局）的影响，在浅层侧重多样性保留以维护下游表示质量、在深层侧重注意力选择以保持局部输出一致性，在 LLaVA/Qwen2.5-VL 等多个 LVLM 上仅保留 22% 视觉 token 即保持原模型 98% 性能。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

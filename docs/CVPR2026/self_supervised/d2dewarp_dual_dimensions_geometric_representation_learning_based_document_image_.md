@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D2Dewarp: Dual Dimensions Geometric Representation Learning Based Document Image Dewarping
 description: >-
-  [CVPR 2026][自监督学习][Document Dewarping] 提出 D2Dewarp——首个从水平和垂直双维度学习文档几何表示的去畸变方法：UNet 双解码器分别预测水平线（文档/表格/文本行的上下边界）和垂直线（左右边界）…
+  [CVPR 2026][自监督学习][Document Dewarping] 提出 D2Dewarp——首个从水平和垂直双维度学习文档几何表示的去畸变方法：UNet 双解码器分别预测水平线（文档/表格/文本行的上下边界）和垂直线（左右边界），HV Fusion Module 通过混合注意力交叉融合两个方向的特征，并构建了包含 114K 张图的 DocDewarpHV 数据集提供双维度标注。
 tags:
   - "CVPR 2026"
   - "自监督学习"

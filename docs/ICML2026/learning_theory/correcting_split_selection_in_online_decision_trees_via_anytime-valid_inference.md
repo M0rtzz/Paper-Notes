@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Correcting Split Selection in Online Decision Trees via Anytime-Valid Inference
 description: >-
-  [ICML 2026][在线决策树] 作者指出经典 Hoeffding Tree（HT）在数据流上分裂时使用的"固定样本量"集中不等式被它自己采用的"数据相关停止规则"破坏，于是用 testing-by-betting + Universal Portfolio 重写分裂判据…
+  [ICML 2026 Spotlight][数据流学习 / 决策树 / 序贯推断][在线决策树] 作者指出经典 Hoeffding Tree（HT）在数据流上分裂时使用的"固定样本量"集中不等式被它自己采用的"数据相关停止规则"破坏，于是用 testing-by-betting + Universal Portfolio 重写分裂判据，让单棵树和 Adaptive Random Forest 都能在任意停止时刻保持 Type-I 错误可控，同时在 12 个真实流上更准且树更小。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
+  - "数据流学习 / 决策树 / 序贯推断"
   - "在线决策树"
   - "anytime-valid 推断"
   - "testing-by-betting"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding
 description: >-
-  [CVPR2026][视频理解][长视频理解] 提出 LongVideo-R1，一个配备推理能力的多模态 Agent，通过层次化视频树结构和智能导航策略，以平均仅 10.5 轮工具调用实现高效长视频问答，在精度-效率权衡上显著优于穷举式方法。
+  [CVPR2026][视频理解][长视频理解] 提出 LongVideo-R1，一个配备推理能力的多模态 Agent，通过层次化视频树结构和智能导航策略，以平均仅 10.5 轮工具调用实现高效长视频问答，在精度-效率权衡上显著优于穷举式方法。 1. 长视频理解的计算瓶颈：当前 MLLM 受限于有限上下文窗口…
 tags:
   - "CVPR2026"
   - "视频理解"

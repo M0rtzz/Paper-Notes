@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExPLoRA: Parameter-Efficient Extended Pre-Training to Adapt Vision Transformers under Domain Shifts
 description: >-
-  [ICML2025][遥感][参数高效微调] 提出 ExPLoRA，通过解冻 1-2 个 ViT block 并对其余层施加 LoRA，以参数高效的方式在目标域上继续自监督预训练，在遥感等域偏移场景下以 <10% 参数量超越从头全量预训练的 SOTA。
+  [ICML2025][遥感][参数高效微调] 提出 ExPLoRA，通过解冻 1-2 个 ViT block 并对其余层施加 LoRA，以参数高效的方式在目标域上继续自监督预训练，在遥感等域偏移场景下以 <10% 参数量超越从头全量预训练的 SOTA。 - 问题核心：大型视觉基础模型 (VFM) 如 DinoV2、MAE 在…
 tags:
   - "ICML2025"
   - "遥感"

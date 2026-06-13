@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIR: Methodology Inspiration Retrieval for Scientific Research Problems
 description: >-
-  [ACL 2025][科研方法检索] 本文定义了方法论启发检索（Methodology Inspiration Retrieval, MIR）新任务——为给定的科研问题检索能提供方法论启发的论文，构建了Methodology Adjacency Graph (MAG)来捕获方法论传承关系…
+  [ACL 2025][科研方法检索] 本文定义了方法论启发检索（Methodology Inspiration Retrieval, MIR）新任务——为给定的科研问题检索能提供方法论启发的论文，构建了Methodology Adjacency Graph (MAG)来捕获方法论传承关系，在Recall@3上提升+5.4、mAP上提升+7.8，结合LLM重排序再获+4.5/+4.8的额外提升。
 tags:
   - "ACL 2025"
   - "科研方法检索"

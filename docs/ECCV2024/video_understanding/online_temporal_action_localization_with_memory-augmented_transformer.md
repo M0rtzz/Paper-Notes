@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Online Temporal Action Localization with Memory-Augmented Transformer
 description: >-
-  [ECCV 2024][在线时序动作定位] 本文提出 MATR（Memory-Augmented Transformer），通过记忆队列选择性地保存历史片段特征来建模长期上下文，并采用双 Transformer 解码器分别定位动作的结束和起始时间…
+  [ECCV 2024][视频理解][在线时序动作定位] 本文提出 MATR（Memory-Augmented Transformer），通过记忆队列选择性地保存历史片段特征来建模长期上下文，并采用双 Transformer 解码器分别定位动作的结束和起始时间，在 THUMOS14 和 MUSES 两个在线时序动作定位基准上刷新了 SOTA，甚至可与部分离线方法媲美。
 tags:
   - "ECCV 2024"
+  - "视频理解"
   - "在线时序动作定位"
   - "Transformer"
   - "长期上下文建模"

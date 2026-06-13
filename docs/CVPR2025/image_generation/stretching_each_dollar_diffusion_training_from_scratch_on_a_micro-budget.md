@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stretching Each Dollar: Diffusion Training from Scratch on a Micro-Budget
 description: >-
-  [CVPR 2025][图像生成][低成本训练] MicroDiT 通过提出延迟遮蔽（deferred masking）策略——先用轻量级 patch-mixer 预处理所有 patch 再遮蔽 75%——配合层级宽度缩放、混合专家（MoE）及合成数据，仅用 $1…
+  [CVPR 2025][图像生成][低成本训练] MicroDiT 通过提出延迟遮蔽（deferred masking）策略——先用轻量级 patch-mixer 预处理所有 patch 再遮蔽 75%——配合层级宽度缩放、混合专家（MoE）及合成数据，仅用 $1,890 成本在 2.6 天内从零训练出 11.6 亿参数的稀疏 Transformer，在 COCO 上达到 12.7 FID，成本仅为 Stable Diffusion 的 1/118。
 tags:
   - "CVPR 2025"
   - "图像生成"

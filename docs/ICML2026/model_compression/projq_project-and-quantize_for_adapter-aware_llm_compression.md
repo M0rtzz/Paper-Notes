@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProjQ: Project-and-Quantize for Adapter-Aware LLM Compression
 description: >-
-  [ICML 2026][模型压缩][后训练量化] ProjQ 把 PTQ 的量化噪声主动"塑形"到一个低秩子空间里、并把这部分让给后续 LoRA 适配器去消除，从而保住 LoRA 容量学下游任务…
+  [ICML 2026][模型压缩][后训练量化] ProjQ 把 PTQ 的量化噪声主动"塑形"到一个低秩子空间里、并把这部分让给后续 LoRA 适配器去消除，从而保住 LoRA 容量学下游任务，在 LLaMA-2 / Qwen2.5 / Qwen3 上用 3 bit 就能追平标准 4 bit baseline。
 tags:
   - "ICML 2026"
   - "模型压缩"

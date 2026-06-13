@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Observations to Events: Event-Aware World Model for Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][世界模型] 提出 Event-Aware World Model (EAWM)，一个通用框架，通过从原始观测中自动生成事件并学习事件感知表征，在不需要手工标签的情况下，将现有 MBRL 基线性能提升 10%–45%…
+  [ICLR 2026][强化学习][世界模型] 提出 Event-Aware World Model (EAWM)，一个通用框架，通过从原始观测中自动生成事件并学习事件感知表征，在不需要手工标签的情况下，将现有 MBRL 基线性能提升 10%–45%，在 Atari 100K、Craftax 1M、DeepMind Control 500K、DMC-GB2 500K 上均创新 SOTA。
 tags:
   - "ICLR 2026"
   - "强化学习"

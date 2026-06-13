@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How to Enable Effective Cooperation Between Humans and NLP Models: A Survey of Principles, Formalizations, and Beyond
 description: >-
-  [ACL 2025][LLM/NLP][人机协作] 首次系统综述人-模型合作（Human-Model Cooperation）的原则、形式化分类和开放挑战，提出基于"谁做最终决策"的三类合作范式分类法（序列/分诊/联合合作），为每种范式梳理角色框架和方法路线。
+  [ACL 2025][LLM 其他][人机协作] 首次系统综述人-模型合作（Human-Model Cooperation）的原则、形式化分类和开放挑战，提出基于"谁做最终决策"的三类合作范式分类法（序列/分诊/联合合作），为每种范式梳理角色框架和方法路线。 领域现状：随着 LLM 从工具演化为具有自主目标和策略的智能体…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "人机协作"
   - "合作范式分类"
   - "序列合作"

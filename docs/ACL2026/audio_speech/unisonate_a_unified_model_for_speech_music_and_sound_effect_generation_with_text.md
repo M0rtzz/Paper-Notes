@@ -2,9 +2,9 @@
 title: >-
   [论文解读] UniSonate: A Unified Model for Speech, Music, and Sound Effect Generation with Text Instructions
 description: >-
-  [ACL2026][音频/语音][统一音频生成] UniSonate 用统一的 Instruction-Content 表示、动态 SFX token 注入和多阶段课程学习，把文本转语音、文本转音乐和文本转音效放进同一个 flow-matching MM-DiT 中…
+  [ACL2026 Oral][音频/语音][统一音频生成] UniSonate 用统一的 Instruction-Content 表示、动态 SFX token 注入和多阶段课程学习，把文本转语音、文本转音乐和文本转音效放进同一个 flow-matching MM-DiT 中，在 TTS 与 TTM 上达到或超过专用模型，同时在 TTA 上保持可用的音效生成能力。
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "音频/语音"
   - "统一音频生成"
   - "文本指令控制"

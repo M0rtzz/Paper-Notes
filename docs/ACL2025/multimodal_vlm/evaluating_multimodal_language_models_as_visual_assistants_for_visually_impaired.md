@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Multimodal Language Models as Visual Assistants for Visually Impaired Users
 description: >-
-  [ACL 2025][多模态VLM][视觉辅助] 通过用户调查确定视障人群对 AI 视觉助手的核心需求与挑战，设计涵盖图像描述、多语言VQA、光学盲文识别、视频物体识别、视频问答五大用户中心任务的评估框架，系统评测 12 个 MLLM…
+  [ACL 2025][多模态VLM][视觉辅助] 通过用户调查确定视障人群对 AI 视觉助手的核心需求与挑战，设计涵盖图像描述、多语言VQA、光学盲文识别、视频物体识别、视频问答五大用户中心任务的评估框架，系统评测 12 个 MLLM，揭示当前模型在文化理解、多语言支持、盲文阅读、辅助设备识别和幻觉控制方面的显著不足。
 tags:
   - "ACL 2025"
   - "多模态VLM"

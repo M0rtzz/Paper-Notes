@@ -2,7 +2,7 @@
 title: >-
   [论文解读] scDFM: Distributional Flow Matching for Robust Single-Cell Perturbation Prediction
 description: >-
-  [ICLR 2026][计算生物][单细胞扰动预测] 提出 scDFM，基于条件流匹配（CFM）的生成式框架，通过 MMD 正则化保证分布级保真度，并设计 PAD-Transformer 骨干处理噪声稀疏的单细胞数据，在组合扰动预测上比最强基线 CellFlow 的 MSE 降低 19.6%。
+  [ICLR 2026][计算生物][单细胞扰动预测] 提出 scDFM，基于条件流匹配（CFM）的生成式框架，通过 MMD 正则化保证分布级保真度，并设计 PAD-Transformer 骨干处理噪声稀疏的单细胞数据，在组合扰动预测上比最强基线 CellFlow 的 MSE 降低 19.6%。 - 预测细胞在基因/药物扰动后…
 tags:
   - "ICLR 2026"
   - "计算生物"

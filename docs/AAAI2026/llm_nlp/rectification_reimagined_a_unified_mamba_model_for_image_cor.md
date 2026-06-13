@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Rectification Reimagined: A Unified Mamba Model for Image Correction and Rectangling with Prompts
 description: >-
-  [AAAI 2026][LLM/NLP][image correction] 从统一畸变矫正视角出发，提出 UniRect 框架，通过 Residual Progressive TPS 处理几何形变 + Residual Mamba Blocks 补偿退化…
+  [AAAI 2026][LLM 其他][image correction] 从统一畸变矫正视角出发，提出 UniRect 框架，通过 Residual Progressive TPS 处理几何形变 + Residual Mamba Blocks 补偿退化，统一处理肖像校正、广角矩形化、拼接矩形化、旋转校正四种任务，并通过 Sparse MoE 实现 four-in-one 多任务学习，拼接矩形化 PSNR 提升 3.82 dB，旋转校正提升 0.87 dB。
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "image correction"
   - "image rectangling"
   - "unified rectification"

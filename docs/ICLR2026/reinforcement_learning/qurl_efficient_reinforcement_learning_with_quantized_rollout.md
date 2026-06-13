@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuRL: Efficient Reinforcement Learning with Quantized Rollout
 description: >-
-  [ICLR 2026][强化学习][量化推理] 提出 QuRL 方法，通过量化 actor 模型加速 RL 训练中的 rollout 阶段，设计自适应裁剪范围（ACR）解决量化导致的训练崩溃问题，并提出更新感知量化（UAQ）解决权重更新远小于量化误差的尺度失配问题…
+  [ICLR 2026][强化学习][量化推理] 提出 QuRL 方法，通过量化 actor 模型加速 RL 训练中的 rollout 阶段，设计自适应裁剪范围（ACR）解决量化导致的训练崩溃问题，并提出更新感知量化（UAQ）解决权重更新远小于量化误差的尺度失配问题，实现 20%~80% 的推理吞吐量提升且不损失性能。
 tags:
   - "ICLR 2026"
   - "强化学习"

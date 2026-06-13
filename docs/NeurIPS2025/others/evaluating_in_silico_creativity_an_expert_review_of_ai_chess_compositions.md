@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating In Silico Creativity: An Expert Review of AI Chess Compositions
 description: >-
-  [NeurIPS 2025][国际象棋谜题] Google DeepMind训练了三种生成式神经网络（自回归Transformer、离散扩散、MaskGit）学习国际象棋谜题分布，通过强化学习优化谜题的唯一性和反直觉性，生成约400万个棋局位置，经奖励函数筛选和美学主题检测后，邀请三位世界级国际象棋专家评审…
+  [NeurIPS 2025][国际象棋谜题] Google DeepMind训练了三种生成式神经网络（自回归Transformer、离散扩散、MaskGit）学习国际象棋谜题分布，通过强化学习优化谜题的唯一性和反直觉性，生成约400万个棋局位置，经奖励函数筛选和美学主题检测后，邀请三位世界级国际象棋专家评审，得到积极但带有建设性批评的反馈。
 tags:
   - "NeurIPS 2025"
   - "国际象棋谜题"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology of Reasoning: Understanding Large Reasoning Models through Reasoning Graph Properties
 description: >-
-  [NeurIPS 2025][LLM推理][reasoning graph] 提出"推理图"概念——通过对 LLM 隐藏状态聚类构建有向图，从环路密度、直径和小世界指标三个图论维度分析大推理模型（如 DeepSeek-R1 蒸馏系列）…
+  [NeurIPS 2025][LLM推理][reasoning graph] 提出"推理图"概念——通过对 LLM 隐藏状态聚类构建有向图，从环路密度、直径和小世界指标三个图论维度分析大推理模型（如 DeepSeek-R1 蒸馏系列），发现推理模型的推理图具有显著更多环路（~5/样本）、更大直径和更强小世界特性（~6倍），且这些特性随任务难度和模型规模增长。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

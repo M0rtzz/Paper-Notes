@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient DP-SGD for LLMs with Randomized Clipping
 description: >-
-  [ICML 2026][LLM安全][DP-SGD] 本文提出 DP-SGD-RC，用 Hutchinson / Hutch++ 随机迹估计代替 DP-SGD 中的精确逐样本梯度范数计算，把长上下文 LLM 训练的裁剪内存开销从 $O(B\min\{T^2,d^2\})$ 降到 $O(BkT+kp)$…
+  [ICML 2026][LLM安全][DP-SGD] 本文提出 DP-SGD-RC，用 Hutchinson / Hutch++ 随机迹估计代替 DP-SGD 中的精确逐样本梯度范数计算，把长上下文 LLM 训练的裁剪内存开销从 $O(B\min\{T^2,d^2\})$ 降到 $O(BkT+kp)$，配套给出基于卡方混合 envelope CDF 的紧 $f$-DP 分析，在 Llama-3.2-1B 长上下文微调上保持精度、最大线性层峰值显存降低约 40%、FLOPs 节省约 2×。
 tags:
   - "ICML 2026"
   - "LLM安全"

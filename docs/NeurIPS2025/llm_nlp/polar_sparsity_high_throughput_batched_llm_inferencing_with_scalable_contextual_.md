@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Polar Sparsity: High Throughput Batched LLM Inferencing with Scalable Contextual Sparsity
 description: >-
-  [NeurIPS 2025][LLM/NLP][LLM inference] 揭示了 LLM 推理中稀疏性的"极性转移"现象——MLP 层稀疏性随 batch 增大而消失，而 attention head 稀疏性保持稳定且与 batch 无关…
+  [NeurIPS 2025][LLM 其他][LLM inference] 揭示了 LLM 推理中稀疏性的"极性转移"现象——MLP 层稀疏性随 batch 增大而消失，而 attention head 稀疏性保持稳定且与 batch 无关，据此设计了 Selective Head Attention 及对应 GPU kernel，在大 batch 推理中实现高达 2.2x 的端到端加速。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM inference"
   - "contextual sparsity"
   - "注意力机制"

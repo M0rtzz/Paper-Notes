@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Error as Signal: Stiffness-Aware Diffusion Sampling via Embedded Runge-Kutta Guidance
 description: >-
-  [ICLR2026][图像生成][扩散模型] 提出 ERK-Guid，利用嵌入式 Runge-Kutta 求解器的阶差误差作为 guidance 信号，在刚性区域自适应纠正局部截断误差（LTE），无需额外网络评估即可提升扩散模型采样质量。
+  [ICLR2026][图像生成][扩散模型] 提出 ERK-Guid，利用嵌入式 Runge-Kutta 求解器的阶差误差作为 guidance 信号，在刚性区域自适应纠正局部截断误差（LTE），无需额外网络评估即可提升扩散模型采样质量。 - 扩散模型采样本质上是求解一个 ODE/SDE，采样质量同时取决于模型精度和数值求解…
 tags:
   - "ICLR2026"
   - "图像生成"

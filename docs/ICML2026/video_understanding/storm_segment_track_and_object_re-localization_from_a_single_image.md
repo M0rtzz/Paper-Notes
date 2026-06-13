@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STORM: Segment, Track, and Object Re-Localization from a Single Image
 description: >-
-  [ICML 2026][视频理解][Reference-conditioned 6D tracking] STORM 提出"一张参考图就能跑"的 6D 位姿跟踪框架：用层级化空间融合注意力 HSFA 做参考-查询特征对齐（产出分割掩膜 + SAM3D 网格）…
+  [ICML 2026][视频理解][Reference-conditioned 6D tracking] STORM 提出"一张参考图就能跑"的 6D 位姿跟踪框架：用层级化空间融合注意力 HSFA 做参考-查询特征对齐（产出分割掩膜 + SAM3D 网格），再训一个 BCE 二分类的 Tracking Verifier，把其 logit 取负当作能量分数 $E=-g_\theta$，连续 $L=3$ 帧超阈值就触发自动重定位，从而在 LM-O / YCB-V 上把无标注 6D 跟踪精度推到接近 ground-truth 掩膜上限。
 tags:
   - "ICML 2026"
   - "视频理解"

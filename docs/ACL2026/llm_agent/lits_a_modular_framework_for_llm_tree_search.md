@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiTS: A Modular Framework for LLM Tree Search
 description: >-
-  [ACL 2026][LLM Agent][LLM Tree Search] LiTS 把 LLM tree search 拆成 Policy、Transition、RewardModel 和统一数据结构…
+  [ACL 2026][LLM Agent][LLM Tree Search] LiTS 把 LLM tree search 拆成 Policy、Transition、RewardModel 和统一数据结构，用 decorator registry 让同一套搜索算法、组件和任务逻辑可以在数学推理、环境规划和工具调用之间组合复用，并通过实验指出开放文本动作空间中的 policy diversity 是树搜索瓶颈。
 tags:
   - "ACL 2026"
   - "LLM Agent"

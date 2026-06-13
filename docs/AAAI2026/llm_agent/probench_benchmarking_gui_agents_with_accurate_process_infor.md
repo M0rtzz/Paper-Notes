@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProBench: Benchmarking GUI Agents with Accurate Process Information
 description: >-
-  [AAAI 2026][LLM Agent][GUI Agent评估] 提出 ProBench，首个同时评估"最终状态"和"操作过程"的移动端 GUI Agent benchmark：200+ 挑战性任务覆盖 34 个中英文主流 App…
+  [AAAI 2026][LLM Agent][GUI Agent评估] 提出 ProBench，首个同时评估"最终状态"和"操作过程"的移动端 GUI Agent benchmark：200+ 挑战性任务覆盖 34 个中英文主流 App，通过 Process Provider（Structure Description Converter + MLLM Summarizer）自动捕获精确的中间过程信息，评估发现最强模型 Gemini 2.5 Pro 也仅完成 40.1% 任务，暴露了 grounding 不足、历史操作感知差、任务规划过于简化三大普遍问题。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

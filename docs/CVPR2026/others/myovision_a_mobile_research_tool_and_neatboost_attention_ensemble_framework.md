@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MyoVision: A Mobile Research Tool and NEATBoost-Attention Ensemble Framework for Real Time Chicken Breast Myopathy Detection
 description: >-
-  [CVPR 2026][neuroevolution] 提出 MyoVision 智能手机透射成像框架和 NEATBoost-Attention 神经进化优化集成模型，用于低成本实时鸡胸肉肌病（木质胸、意面肉）三分类检测。
+  [CVPR 2026][neuroevolution] 提出 MyoVision 智能手机透射成像框架和 NEATBoost-Attention 神经进化优化集成模型，用于低成本实时鸡胸肉肌病（木质胸、意面肉）三分类检测。 木质胸 (WB) 和意面肉 (SM) 是严重影响家禽肉质的结构性肌病，当前检测依赖主观手工评估或昂贵的…
 tags:
   - "CVPR 2026"
   - "neuroevolution"

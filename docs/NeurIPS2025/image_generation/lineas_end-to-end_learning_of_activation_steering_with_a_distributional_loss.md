@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LinEAS: End-to-end Learning of Activation Steering with a Distributional Loss
 description: >-
-  [NeurIPS 2025][图像生成][Activation Steering] 提出 LinEAS（Linear End-to-end Activation Steering），通过端到端优化跨层仿射变换映射，利用 1D Wasserstein 分布损失进行全局激活值对齐…
+  [NeurIPS 2025][图像生成][Activation Steering] 提出 LinEAS（Linear End-to-end Activation Steering），通过端到端优化跨层仿射变换映射，利用 1D Wasserstein 分布损失进行全局激活值对齐，仅需 32 个无配对样本即可高效控制 LLM 毒性和 T2I 模型概念生成。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

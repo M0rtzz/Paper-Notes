@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finite Difference Flow Optimization for RL Post-Training of Text-to-Image Models
 description: >-
-  [CVPR 2025][图像生成][强化学习后训练] 本文提出一种基于有限差分的在线 RL 变体（FDFO），通过采样成对轨迹并将 flow velocity 拉向生成更优图像的方向来优化扩散/流匹配 T2I 模型，将整个采样过程视为单一 action…
+  [CVPR 2025][图像生成][强化学习后训练] 本文提出一种基于有限差分的在线 RL 变体（FDFO），通过采样成对轨迹并将 flow velocity 拉向生成更优图像的方向来优化扩散/流匹配 T2I 模型，将整个采样过程视为单一 action，比现有 RL 后训练方法收敛更快、输出质量和 prompt 对齐更优。
 tags:
   - "CVPR 2025"
   - "图像生成"

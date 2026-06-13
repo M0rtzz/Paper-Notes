@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PL-MTEB: Polish Massive Text Embedding Benchmark
 description: >-
-  [ACL2026][信息检索/RAG][Polish NLP] PL-MTEB 为波兰语文本嵌入构建了覆盖分类、聚类、句对分类、检索和语义相似度的 30 任务评测集，并系统评测 30 个波兰语和多语言 embedding 模型，显示大模型整体领先但任务类型、训练数据泄漏和模型规模都会显著影响结论。
+  [ACL2026 Findings][信息检索/RAG][Polish NLP] PL-MTEB 为波兰语文本嵌入构建了覆盖分类、聚类、句对分类、检索和语义相似度的 30 任务评测集，并系统评测 30 个波兰语和多语言 embedding 模型，显示大模型整体领先但任务类型、训练数据泄漏和模型规模都会显著影响结论。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "信息检索/RAG"
   - "Polish NLP"
   - "Text Embedding"

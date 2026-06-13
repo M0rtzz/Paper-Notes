@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Social Dynamics as Critical Vulnerabilities that Undermine Objective Decision-Making in LLM Collectives
 description: >-
-  [ACL2026][多智能体][多智能体系统] 这篇论文证明，LLM 多智能体系统中的代表智能体不仅会受自身推理能力限制，还会被同伴数量、同伴能力、论证长度和修辞风格等“社会动力学”显著影响，从而在有客观答案的任务上做出错误决策。
+  [ACL2026][多智能体][多智能体系统] 这篇论文证明，LLM 多智能体系统中的代表智能体不仅会受自身推理能力限制，还会被同伴数量、同伴能力、论证长度和修辞风格等“社会动力学”显著影响，从而在有客观答案的任务上做出错误决策。 领域现状：LLM agent 越来越常被设计成协作式系统：多个 peer agent 给出观点…
 tags:
   - "ACL2026"
   - "多智能体"

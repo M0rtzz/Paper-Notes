@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temp-R1: A Unified Autonomous Agent for Complex Temporal KGQA via Reverse Curriculum Reinforcement Learning
 description: >-
-  [ACL 2026][LLM Agent][Temporal KGQA] Temp-R1 把时序知识图谱问答从人工设计的固定 prompt workflow 改造成可强化学习训练的自主 agent，通过显式内部动作、SFT 冷启动、GRPO 和“先难后易”的反向课程…
+  [ACL 2026][LLM Agent][Temporal KGQA] Temp-R1 把时序知识图谱问答从人工设计的固定 prompt workflow 改造成可强化学习训练的自主 agent，通过显式内部动作、SFT 冷启动、GRPO 和“先难后易”的反向课程，在 8B 开源模型上超过多种 GPT-4o/DeepSeek-V3 驱动的强基线。
 tags:
   - "ACL 2026"
   - "LLM Agent"

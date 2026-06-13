@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DIVER: Diving Deeper into Distilled Data via Expressive Semantic Recovery
 description: >-
-  [ICML 2026][模型压缩][数据集蒸馏] DIVER 把经典数据集蒸馏 (DD) 从"单阶段直接评估"改造成"先蒸馏再用预训练扩散模型救活语义"的双阶段范式，通过语义继承、语义引导、语义融合三步从 ConvNet 蒸馏出来的"乱码"图像中恢复被压抑的高层语义…
+  [ICML 2026][模型压缩][数据集蒸馏] DIVER 把经典数据集蒸馏 (DD) 从"单阶段直接评估"改造成"先蒸馏再用预训练扩散模型救活语义"的双阶段范式，通过语义继承、语义引导、语义融合三步从 ConvNet 蒸馏出来的"乱码"图像中恢复被压抑的高层语义，让同一份蒸馏数据在 ResNet18/ViT 等异构架构上的精度普遍提升 3–10 个百分点，每张图只要 2.48s 和 4GB 显存。
 tags:
   - "ICML 2026"
   - "模型压缩"

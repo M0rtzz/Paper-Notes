@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tiny Inference-Time Scaling with Latent Verifiers
 description: >-
-  [CVPR 2026][图像生成][推理时扩展] 提出VHS（Verifier on Hidden States）——一种直接在DiT生成器中间层隐状态上工作的验证器，跳过解码-重编码开销…
+  [CVPR 2026 Findings][图像生成][推理时扩展] 提出VHS（Verifier on Hidden States）——一种直接在DiT生成器中间层隐状态上工作的验证器，跳过解码-重编码开销，在单步图像生成的推理时扩展（inference-time scaling）场景下将联合生成-验证时间减少63.3%、FLOPs降低51%，同时在GenEval上相同时间预算下提升2.7%的性能。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "推理时扩展"
   - "隐空间验证器"

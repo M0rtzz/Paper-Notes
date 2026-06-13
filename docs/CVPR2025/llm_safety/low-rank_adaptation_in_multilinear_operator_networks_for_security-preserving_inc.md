@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Low-Rank Adaptation in Multilinear Operator Networks for Security-Preserving Incremental Learning
 description: >-
-  [CVPR 2025][LLM安全][多线性算子网络] 针对全同态加密（Leveled FHE）场景下多线性算子网络的灾难性遗忘问题，提出了一种结合低秩适应（LoRA）和梯度投影记忆（GPM）机制的增量学习方法，在保障数据安全的前提下实现持续学习。
+  [CVPR 2025][LLM安全][多线性算子网络] 针对全同态加密（Leveled FHE）场景下多线性算子网络的灾难性遗忘问题，提出了一种结合低秩适应（LoRA）和梯度投影记忆（GPM）机制的增量学习方法，在保障数据安全的前提下实现持续学习。 领域现状 领域现状：领域现状：在安全敏感领域（如医疗、金融、国防）…
 tags:
   - "CVPR 2025"
   - "LLM安全"

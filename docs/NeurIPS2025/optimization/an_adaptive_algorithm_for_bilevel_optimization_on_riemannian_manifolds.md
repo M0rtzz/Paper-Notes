@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Adaptive Algorithm for Bilevel Optimization on Riemannian Manifolds
 description: >-
-  [NeurIPS 2025][优化/理论][黎曼流形] AdaRHD 是首个无需预知问题参数（强凸常数、Lipschitz 界、流形曲率）的黎曼双层优化自适应算法——通过逆累计梯度范数策略自适应选择步长，在三阶段框架中逐步求解下层问题/线性系统/上层更新…
+  [NeurIPS 2025][优化/理论][黎曼流形] AdaRHD 是首个无需预知问题参数（强凸常数、Lipschitz 界、流形曲率）的黎曼双层优化自适应算法——通过逆累计梯度范数策略自适应选择步长，在三阶段框架中逐步求解下层问题/线性系统/上层更新，收敛速率 $O(1/\epsilon)$ 匹配非自适应方法，对初始步长选择鲁棒性远超 RHGD。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

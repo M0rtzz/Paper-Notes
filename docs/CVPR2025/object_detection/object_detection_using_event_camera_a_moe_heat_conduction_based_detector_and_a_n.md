@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Object Detection using Event Camera: A MoE Heat Conduction based Detector and A New Benchmark Dataset
 description: >-
-  [CVPR 2025][目标检测][事件相机] 本文提出 MvHeat-DET，把视觉特征建模为二维热扩散过程，用 MoE 在 DFT/DCT/Haar 三种频域变换之间动态路由，再加上 IoU-aware query selection，做事件流目标检测…
+  [CVPR 2025][目标检测][事件相机] 本文提出 MvHeat-DET，把视觉特征建模为二维热扩散过程，用 MoE 在 DFT/DCT/Haar 三种频域变换之间动态路由，再加上 IoU-aware query selection，做事件流目标检测；同时发布了高清事件相机检测数据集 EvDET200K (10,054 段视频 / 200K bbox / 10 类)。
 tags:
   - "CVPR 2025"
   - "目标检测"

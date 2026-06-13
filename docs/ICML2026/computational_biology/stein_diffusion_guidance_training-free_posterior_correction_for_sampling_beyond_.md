@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stein Diffusion Guidance: Training-Free Posterior Correction for Sampling Beyond High-Density Regions
 description: >-
-  [ICML 2026][计算生物][扩散引导] SDG 把"训练免（training-free）扩散引导"和"随机最优控制（SOC）后验采样"两条路线统一起来：用 SOC 推出引导项的变分上界后，发现现有 Tweedie 类方法都漏掉了一个 KL 正则项…
+  [ICML 2026][计算生物][扩散引导] SDG 把"训练免（training-free）扩散引导"和"随机最优控制（SOC）后验采样"两条路线统一起来：用 SOC 推出引导项的变分上界后，发现现有 Tweedie 类方法都漏掉了一个 KL 正则项，于是借 Stein 变分梯度下降设计一个"先 Tweedie 倒推到数据流形 $\mathcal{M}_T$、再 Stein 修正、再前推回噪声流形 $\mathcal{M}_t$"的回环修正机制，在图像引导和小分子-蛋白对接两类任务上都显著超过 DPS/LGD/MPGD/UGD 等基线，特别擅长在低密度区域采到稀有高价值样本。
 tags:
   - "ICML 2026"
   - "计算生物"

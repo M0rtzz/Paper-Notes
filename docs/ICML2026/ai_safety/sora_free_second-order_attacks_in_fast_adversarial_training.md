@@ -2,9 +2,10 @@
 title: >-
   [论文解读] SORA: Free Second-Order Attacks in Fast Adversarial Training
 description: >-
-  [ICML 2026][快速对抗训练] 本文从二阶视角重新审视单步对抗训练中的灾难性过拟合（CO），提出零成本曲率指标 PertAlign 来提前预警 CO，并据此推导出 SORA：一种用上一步反向传播梯度免费估计 Hessian、按通道随机化采样最优步长的自适应快速对抗训练算法…
+  [ICML 2026][AI安全][快速对抗训练] 本文从二阶视角重新审视单步对抗训练中的灾难性过拟合（CO），提出零成本曲率指标 PertAlign 来提前预警 CO，并据此推导出 SORA：一种用上一步反向传播梯度免费估计 Hessian、按通道随机化采样最优步长的自适应快速对抗训练算法，在 6 个数据集和 4 种架构上仅用同一组超参就稳定避免 CO 并刷新单步 AT 的鲁棒/干净精度 trade-off。
 tags:
   - "ICML 2026"
+  - "AI安全"
   - "快速对抗训练"
   - "灾难性过拟合"
   - "二阶优化"

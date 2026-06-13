@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the Impasse: Dual-Scale Evolutionary Policy Training for Social Language Agents
 description: >-
-  [ACL 2026][强化学习][self-play RLVR] 针对自博弈 RLVR 在开放式社交语言博弈（谈判 / 不许说 / 两美元分配）中出现的"进化僵局"——agent 行为同质化导致比赛结果分布退化为确定性、梯度信号消失——本文提出 DEPT 用 fast/slow 双时间尺度 EMA basel…
+  [ACL 2026][强化学习][self-play RLVR] 针对自博弈 RLVR 在开放式社交语言博弈（谈判 / 不许说 / 两美元分配）中出现的"进化僵局"——agent 行为同质化导致比赛结果分布退化为确定性、梯度信号消失——本文提出 DEPT 用 fast/slow 双时间尺度 EMA baseline 检测 stagnation，再用 asymmetric advantage reshaping 抑制 dominant outcome、放大 rare trajectory，在 Qwen3-4B/8B-Base 上把谈判任务胜率从 16-20% 拉到 32%，并在 OOD 数学/推理 benchmark 上同步受益。
 tags:
   - "ACL 2026"
   - "强化学习"

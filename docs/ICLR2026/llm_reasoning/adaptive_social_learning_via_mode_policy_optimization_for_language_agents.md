@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Social Learning via Mode Policy Optimization for Language Agents
 description: >-
-  [ICLR 2026][LLM推理][social intelligence] 提出 Adaptive Social Learning（ASL）框架，设计四种层次化推理模式（从直觉回应到深度推演），并通过 AMPO 算法（融合模式级和样本级优势估计）让 LLM agent 根据社交场景复杂度自适应切换推理深度…
+  [ICLR 2026][LLM推理][social intelligence] 提出 Adaptive Social Learning（ASL）框架，设计四种层次化推理模式（从直觉回应到深度推演），并通过 AMPO 算法（融合模式级和样本级优势估计）让 LLM agent 根据社交场景复杂度自适应切换推理深度，在社交智能任务上比 GPT-4o 高 15.6%，比 GRPO 高 7.0% 且 token 用量减少 32.8%。
 tags:
   - "ICLR 2026"
   - "LLM推理"

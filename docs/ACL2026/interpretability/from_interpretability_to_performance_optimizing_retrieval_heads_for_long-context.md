@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Interpretability to Performance: Optimizing Retrieval Heads for Long-Context Language Models
 description: >-
-  [ACL 2026][可解释性][Retrieval Head] RetMask 把"机制可解释性 (mechanistic interpretability)"找到的 retrieval heads 当成对比信号源 — 用屏蔽 retrieval head 后的 ablated 模型输出作为 rejecte…
+  [ACL 2026 Findings][可解释性][Retrieval Head] RetMask 把"机制可解释性 (mechanistic interpretability)"找到的 retrieval heads 当成对比信号源 — 用屏蔽 retrieval head 后的 ablated 模型输出作为 rejected 样本、原模型输出作为 chosen 样本，跑 DPO 训练，无需 LLM judge 或人工标注，在 Llama-3.1 / Qwen3 / Olmo-3 三个模型族 128K 长度上一致提升，特别是 generation-with-citation +70% / re-rank +32%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "可解释性"
   - "Retrieval Head"
   - "DPO"

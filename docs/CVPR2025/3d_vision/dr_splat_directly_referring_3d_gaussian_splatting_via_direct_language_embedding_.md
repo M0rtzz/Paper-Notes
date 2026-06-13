@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dr. Splat: Directly Referring 3D Gaussian Splatting via Direct Language Embedding Registration
 description: >-
-  [CVPR 2025][3D视觉][开放词汇3D理解] 提出 Dr. Splat，绕过渲染过程直接将语言对齐的 CLIP 嵌入注册到 3D 高斯上，结合在大规模图像数据上预训练的乘积量化（PQ）实现 6.25% 的嵌入压缩，在完全不需要逐场景优化的前提下（~10 分钟 vs 现有方法 1-24 小时）…
+  [CVPR 2025][3D视觉][开放词汇3D理解] 提出 Dr. Splat，绕过渲染过程直接将语言对齐的 CLIP 嵌入注册到 3D 高斯上，结合在大规模图像数据上预训练的乘积量化（PQ）实现 6.25% 的嵌入压缩，在完全不需要逐场景优化的前提下（~10 分钟 vs 现有方法 1-24 小时），在开放词汇 3D 语义分割、3D 物体定位和 3D 物体选择任务上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

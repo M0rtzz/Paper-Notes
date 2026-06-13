@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tune-Your-Style: Intensity-Tunable 3D Style Transfer with Gaussian Splatting
 description: >-
-  [3D视觉] 提出 Tune-Your-Style，首个强度可调的 3D 风格迁移范式，通过 Gaussian 神经元显式建模风格强度并参数化可学习 style tuner，配合两阶段优化策略，实现用户自由调节风格注入的程度。
+  [3D视觉] 提出 Tune-Your-Style，首个强度可调的 3D 风格迁移范式，通过 Gaussian 神经元显式建模风格强度并参数化可学习 style tuner，配合两阶段优化策略，实现用户自由调节风格注入的程度。 问题定义 3D 风格迁移旨在将参考风格图像的艺术效果迁移到 3D 场景中…
 tags:
   - "3D视觉"
 ---

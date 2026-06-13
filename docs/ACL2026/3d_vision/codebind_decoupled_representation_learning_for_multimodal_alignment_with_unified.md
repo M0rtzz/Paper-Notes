@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CodeBind: Decoupled Representation Learning for Multimodal Alignment with Unified Compositional Codebook
 description: >-
-  [ACL2026][3D视觉][多模态表征] CodeBind 用 shared-specific 表征解耦和组合式 VQ codebook 改造 ImageBind/ViT-Lens 式多模态对齐，在九种模态上同时提升跨模态分类/检索，并保留更强的模态特有细粒度信息。
+  [ACL2026 Findings][3D视觉][多模态表征] CodeBind 用 shared-specific 表征解耦和组合式 VQ codebook 改造 ImageBind/ViT-Lens 式多模态对齐，在九种模态上同时提升跨模态分类/检索，并保留更强的模态特有细粒度信息。 领域现状：多模态表征对齐是让 LLM…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "3D视觉"
   - "多模态表征"
   - "组合式向量量化"

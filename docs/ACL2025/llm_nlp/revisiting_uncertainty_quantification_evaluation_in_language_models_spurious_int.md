@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Revisiting Uncertainty Quantification Evaluation in Language Models: Spurious Interactions with Response Length Bias Results
 description: >-
-  [ACL 2025 (Main)][LLM/NLP][不确定性量化] 本文发现语言模型不确定性量化（UQ）评估中存在严重的长度偏差问题——UQ 方法和正确性度量函数都受响应长度偏差影响，二者的"互偏差"系统性地扭曲了 AUROC 排名，并在理论和实证上证明了这一点…
+  [ACL 2025 (Main)][LLM 其他][不确定性量化] 本文发现语言模型不确定性量化（UQ）评估中存在严重的长度偏差问题——UQ 方法和正确性度量函数都受响应长度偏差影响，二者的"互偏差"系统性地扭曲了 AUROC 排名，并在理论和实证上证明了这一点，同时发现 LLM-as-a-Judge 方法是最不受长度偏差影响的评估选择。
 tags:
   - "ACL 2025 (Main)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "不确定性量化"
   - "长度偏差"
   - "AUROC"

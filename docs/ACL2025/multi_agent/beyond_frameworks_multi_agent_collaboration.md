@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Frameworks: Unpacking Collaboration Strategies in Multi-Agent Systems
 description: >-
-  [ACL 2025][多智能体][multi-agent collaboration] 本文系统化地将多智能体协作分解为四个维度（治理模式、参与控制、交互模式、上下文管理），通过两个上下文依赖任务的大量实验证明：集中治理+指导者控制参与+有序交互+指导者摘要的组合最优…
+  [ACL 2025][多智能体][multi-agent collaboration] 本文系统化地将多智能体协作分解为四个维度（治理模式、参与控制、交互模式、上下文管理），通过两个上下文依赖任务的大量实验证明：集中治理+指导者控制参与+有序交互+指导者摘要的组合最优，在保持甚至提升准确率的同时减少高达 93% 的 token 消耗。
 tags:
   - "ACL 2025"
   - "多智能体"

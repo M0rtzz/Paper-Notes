@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Large Language Models Are Overconfident in Their Own Responses
 description: >-
-  [ACL2026][LLM对齐][置信度校准] 这篇论文发现 instruction-tuned LLM 在评估“自己给出的答案”时存在显著 ownership bias，并提出把答案改写成用户输入再询问置信度的简单推理时策略，可在无需重训的情况下降低过度自信。
+  [ACL2026 Findings][LLM对齐][置信度校准] 这篇论文发现 instruction-tuned LLM 在评估“自己给出的答案”时存在显著 ownership bias，并提出把答案改写成用户输入再询问置信度的简单推理时策略，可在无需重训的情况下降低过度自信。 领域现状：可信 LLM 需要能正确表达不确定…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM对齐"
   - "置信度校准"
   - "instruction tuning"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding
 description: >-
-  [AAAI 2026][视频理解][关键帧选择] 提出因果信息瓶颈（CIB）理论框架，将关键帧选择形式化为同时优化"预测充分性"和"因果必要性"的信息论问题，并基于此设计 ReaSon 强化学习框架，通过三种 CIB 对齐的奖励（答案奖励、循环一致性奖励、反事实奖励）训练选择策略…
+  [AAAI 2026][视频理解][关键帧选择] 提出因果信息瓶颈（CIB）理论框架，将关键帧选择形式化为同时优化"预测充分性"和"因果必要性"的信息论问题，并基于此设计 ReaSon 强化学习框架，通过三种 CIB 对齐的奖励（答案奖励、循环一致性奖励、反事实奖励）训练选择策略，在限定帧数设置下显著超越已有方法。
 tags:
   - "AAAI 2026"
   - "视频理解"

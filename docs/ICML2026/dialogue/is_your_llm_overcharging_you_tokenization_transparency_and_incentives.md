@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Is Your LLM Overcharging You? Tokenization, Transparency, and Incentives
 description: >-
-  [ICML 2026][对话系统][按 token 计费] 本文把 LLM-as-a-Service 建模成"委托-代理"问题，证明现在主流的"按 token 收费"机制天然激励服务商把同一字符串重新切成更长的 token 序列来超额收费，并且即使强制服务商公开 next-token 分布…
+  [ICML 2026 Oral][对话系统][按 token 计费] 本文把 LLM-as-a-Service 建模成"委托-代理"问题，证明现在主流的"按 token 收费"机制天然激励服务商把同一字符串重新切成更长的 token 序列来超额收费，并且即使强制服务商公开 next-token 分布，多收费而不被发现也只是 NP-Hard 而非不可行——作者给出一个简单启发式算法在保持合理性的前提下实测最多多收 11.2% 的 token，最后证明唯一能消除该激励的可加性定价机制是"按字符长度线性计费"。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "对话系统"
   - "按 token 计费"
   - "激励兼容"

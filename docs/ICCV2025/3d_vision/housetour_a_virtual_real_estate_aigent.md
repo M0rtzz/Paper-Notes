@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HouseTour: A Virtual Real Estate A(I)gent
 description: >-
-  [ICCV 2025][3D视觉][Camera Trajectory Generation] 提出 HouseTour，给定一组已知位姿的室内图像，联合生成类人的3D相机轨迹和房地产文字描述，通过 Residual Diffuser 进行基于扩散的轨迹规划并将空间特征集成到 Qwen2-VL-3D 中生成3…
+  [ICCV 2025][3D视觉][Camera Trajectory Generation] 提出 HouseTour，给定一组已知位姿的室内图像，联合生成类人的3D相机轨迹和房地产文字描述，通过 Residual Diffuser 进行基于扩散的轨迹规划并将空间特征集成到 Qwen2-VL-3D 中生成3D-grounded文本摘要。
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LegalDrill: Diagnosis-Driven Synthesis for Legal Reasoning in Small Language Models
 description: >-
-  [ACL 2026][LLM推理][法律推理] LegalDrill 用 Audit Agent 诊断 0.6B/1.7B 小模型在法律推理上的具体错误模式，让强 teacher（GPT-4o / Qwen3-30B）按错误指令"刻意复现+修正"生成偏好对…
+  [ACL 2026][LLM推理][法律推理] LegalDrill 用 Audit Agent 诊断 0.6B/1.7B 小模型在法律推理上的具体错误模式，让强 teacher（GPT-4o / Qwen3-30B）按错误指令"刻意复现+修正"生成偏好对，再用学生自己的 forced-choice 概率算 Difficulty Score 过滤掉它已会的样本，迭代 SFT+DPO 后 1.7B 学生在 LegalBench 多个子集上逼近 30B teacher。
 tags:
   - "ACL 2026"
   - "LLM推理"

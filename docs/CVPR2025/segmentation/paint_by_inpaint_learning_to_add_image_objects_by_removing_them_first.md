@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Paint by Inpaint: Learning to Add Image Objects by Removing Them First
 description: >-
-  [CVPR 2025][语义分割][图像编辑] 提出"Paint by Inpaint"框架，利用"添加对象是移除对象的逆过程"这一洞察，通过自动化 inpainting 管线构建包含约 100 万高质量图像对的 PIPE 数据集，训练的扩散模型在对象添加和通用编辑任务上达到 SOTA。
+  [CVPR 2025][语义分割][图像编辑] 提出"Paint by Inpaint"框架，利用"添加对象是移除对象的逆过程"这一洞察，通过自动化 inpainting 管线构建包含约 100 万高质量图像对的 PIPE 数据集，训练的扩散模型在对象添加和通用编辑任务上达到 SOTA。 基于文本指令的无 mask 图像对象…
 tags:
   - "CVPR 2025"
   - "语义分割"

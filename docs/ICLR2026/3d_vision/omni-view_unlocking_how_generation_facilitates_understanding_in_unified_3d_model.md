@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-View: Unlocking How Generation Facilitates Understanding in Unified 3D Model based on Multiview images
 description: >-
-  [ICLR 2026][3D视觉][统一理解与生成] 构建统一的3D场景理解与生成模型 Omni-View，通过纹理模块（新视角合成）和几何模块（深度/位姿估计）的生成能力增强理解性能，在 VSI-Bench 上达到 55.4 分超越所有现有专用3D理解模型。
+  [ICLR 2026][3D视觉][统一理解与生成] 构建统一的3D场景理解与生成模型 Omni-View，通过纹理模块（新视角合成）和几何模块（深度/位姿估计）的生成能力增强理解性能，在 VSI-Bench 上达到 55.4 分超越所有现有专用3D理解模型。 领域现状：统一多模态理解与生成（UMM）在2D领域已取得显著进展…
 tags:
   - "ICLR 2026"
   - "3D视觉"

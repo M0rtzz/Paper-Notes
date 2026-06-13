@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Lag, RAG: Training-Free Adversarial Detection Using RAG
 description: >-
-  [ICML 2025 (VecDB Workshop)][信息检索/RAG][对抗样本检测] 本文提出 VRAG 框架，通过构建对抗补丁数据库 + 视觉检索增强生成（VRAG）+ VLM 推理的免训练 pipeline，实现对多种对抗补丁攻击的高效检测，Gemini-2.0 达到 98% 准确率…
+  [ICML 2025 (VecDB Workshop)][信息检索/RAG][对抗样本检测] 本文提出 VRAG 框架，通过构建对抗补丁数据库 + 视觉检索增强生成（VRAG）+ VLM 推理的免训练 pipeline，实现对多种对抗补丁攻击的高效检测，Gemini-2.0 达到 98% 准确率，开源模型 UI-TARS-72B-DPO 达 95%。
 tags:
   - "ICML 2025 (VecDB Workshop)"
   - "信息检索/RAG"

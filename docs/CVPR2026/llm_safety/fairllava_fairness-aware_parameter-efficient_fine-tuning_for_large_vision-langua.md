@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FairLLaVA: Fairness-Aware Parameter-Efficient Fine-Tuning for Large Vision-Language Models
 description: >-
-  [CVPR 2026][LLM安全][Fairness] 提出 FairLLaVA，一种参数高效的公平性微调方法，通过最小化隐藏状态与人口学属性之间的互信息来消除多模态大语言模型中的人口学捷径，在胸片报告生成和皮肤病变问答中显著缩小了群体间性能差距。
+  [CVPR 2026][LLM安全][Fairness] 提出 FairLLaVA，一种参数高效的公平性微调方法，通过最小化隐藏状态与人口学属性之间的互信息来消除多模态大语言模型中的人口学捷径，在胸片报告生成和皮肤病变问答中显著缩小了群体间性能差距。 多模态大语言模型（MLLM）在医学影像任务中展现强大能力…
 tags:
   - "CVPR 2026"
   - "LLM安全"

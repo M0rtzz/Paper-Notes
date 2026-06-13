@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoseMaster: A Unified 3D Native Framework for Stylized Pose Generation
 description: >-
-  [CVPR 2026][3D视觉][3D姿态风格化] PoseMaster 提出了一个将姿态风格化与 3D 生成统一在端到端框架中的 3D 原生方法，直接使用 3D 骨骼作为姿态控制信号（而非 2D 骨骼图），设计了骨骼稠密化策略和 Point Transformer 编码器提取精细的空间拓扑特征…
+  [CVPR 2026][3D视觉][3D姿态风格化] PoseMaster 提出了一个将姿态风格化与 3D 生成统一在端到端框架中的 3D 原生方法，直接使用 3D 骨骼作为姿态控制信号（而非 2D 骨骼图），设计了骨骼稠密化策略和 Point Transformer 编码器提取精细的空间拓扑特征，并通过大规模"Image-Skeleton-Mesh"三元组数据引擎训练，在姿态规范化和任意姿态风格化上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "3D视觉"

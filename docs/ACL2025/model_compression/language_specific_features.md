@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders
 description: >-
-  [ACL 2025][模型压缩][Sparse Autoencoders] 利用 Sparse Autoencoders (SAEs) 分析多语言 LLM 的内部表示，发现存在强烈的语言特定 SAE features，这些 features 不仅与语言特有 token 相关还与语言上下文相关…
+  [ACL 2025][模型压缩][Sparse Autoencoders] 利用 Sparse Autoencoders (SAEs) 分析多语言 LLM 的内部表示，发现存在强烈的语言特定 SAE features，这些 features 不仅与语言特有 token 相关还与语言上下文相关，消融它们只影响对应语言能力，且多个语言 features 之间存在协同效应；进一步利用这些 features 增强 steering vectors 实现对生成语言的精确控制。
 tags:
   - "ACL 2025"
   - "模型压缩"

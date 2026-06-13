@@ -2,7 +2,7 @@
 title: >-
   [论文解读] INACTIVE: Invisible Backdoor Attack against Self-supervised Learning
 description: >-
-  [CVPR 2025][AI安全][SSL后门] 提出 INACTIVE，首个对自监督学习（SSL）有效的不可见后门攻击——通过在 HSV/HSL 色彩空间中设计触发器以逃离 SSL 数据增强的分布空间，实现 99.09% 平均攻击成功率，同时保持 SSIM 0.9763/PSNR 41.07dB 的高隐蔽性…
+  [CVPR 2025][AI安全][SSL后门] 提出 INACTIVE，首个对自监督学习（SSL）有效的不可见后门攻击——通过在 HSV/HSL 色彩空间中设计触发器以逃离 SSL 数据增强的分布空间，实现 99.09% 平均攻击成功率，同时保持 SSIM 0.9763/PSNR 41.07dB 的高隐蔽性，抵抗 7 种防御方法。
 tags:
   - "CVPR 2025"
   - "AI安全"

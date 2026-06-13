@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locally Orderless Images for Optimization in Differentiable Rendering
 description: >-
-  [CVPR 2025][differentiable rendering] 提出利用局部无序图像（LOI）的三维尺度空间（内尺度 σ、色调尺度 β、范围尺度 α）进行直方图匹配的逆渲染优化方法，无需修改可微渲染器即可扩展稀疏梯度的支持范围，有效避免局部最优。
+  [CVPR 2025][differentiable rendering] 提出利用局部无序图像（LOI）的三维尺度空间（内尺度 σ、色调尺度 β、范围尺度 α）进行直方图匹配的逆渲染优化方法，无需修改可微渲染器即可扩展稀疏梯度的支持范围，有效避免局部最优。 领域现状： 可微渲染通过分析合成（analysis-by-synt…
 tags:
   - "CVPR 2025"
   - "differentiable rendering"

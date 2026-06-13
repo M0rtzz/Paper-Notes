@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CreditDecoding: Accelerating Parallel Decoding in Diffusion Large Language Models with Trace Credit
 description: >-
-  [ACL 2026][LLM效率][扩散语言模型] 本文提出 CreditDecoding，一种无需训练的并行解码加速方法，通过累积 token 级历史证据（轨迹信用）来增强正确但置信度不足的 token，在 LLaDA-8B-Instruct 上实现最高 5.48 倍加速且准确率提升 0.48。
+  [ACL 2026][LLM效率][扩散语言模型] 本文提出 CreditDecoding，一种无需训练的并行解码加速方法，通过累积 token 级历史证据（轨迹信用）来增强正确但置信度不足的 token，在 LLaDA-8B-Instruct 上实现最高 5.48 倍加速且准确率提升 0.48。 领域现状：扩散大语言模型（…
 tags:
   - "ACL 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention Decomposition for Cross-Domain Semantic Segmentation
 description: >-
-  [ECCV 2024][语义分割][跨域语义分割] 本文提出 ADFormer，一种用于跨域语义分割的新型 Transformer 架构，通过将解码器中的交叉注意力分解为域无关和域特定两部分，结合梯度反转对抗学习，有效缩小源域和目标域之间的分布差异…
+  [ECCV 2024][语义分割][跨域语义分割] 本文提出 ADFormer，一种用于跨域语义分割的新型 Transformer 架构，通过将解码器中的交叉注意力分解为域无关和域特定两部分，结合梯度反转对抗学习，有效缩小源域和目标域之间的分布差异，在 GTA→Cityscapes 和 SYNTHIA→Cityscapes 两个基准上以显著更低的复杂度超越了现有无 proposal 方法。
 tags:
   - "ECCV 2024"
   - "语义分割"

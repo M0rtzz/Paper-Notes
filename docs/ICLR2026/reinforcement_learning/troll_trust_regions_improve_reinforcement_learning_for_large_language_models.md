@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TROLL: Trust Regions improve Reinforcement Learning for Large Language Models
 description: >-
-  [ICLR 2026][强化学习][信任域] 本文提出 TROLL（Trust Region Optimization for Large Language models），用可微分的离散信任域投影替代PPO中的裁剪（clipping）机制，实现了基于原则性KL约束的token级策略更新…
+  [ICLR 2026][强化学习][信任域] 本文提出 TROLL（Trust Region Optimization for Large Language models），用可微分的离散信任域投影替代PPO中的裁剪（clipping）机制，实现了基于原则性KL约束的token级策略更新，在数学推理和代码生成任务上一致性地优于PPO裁剪方法。
 tags:
   - "ICLR 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Chain-of-Thought Works? Tracing Information Flow from Decoding, Projection, and Activation
 description: >-
-  [ACL2026][LLM推理][Chain-of-Thought] 这篇论文从解码、概率投影和 FFN 激活三个层面反向追踪 CoT 的信息流，发现 CoT 可能主要通过约束答案结构、降低预测熵，并按任务类型调节神经元激活来提升推理表现，而不只是让模型“真的更会逻辑推理”。
+  [ACL2026][LLM推理][Chain-of-Thought] 这篇论文从解码、概率投影和 FFN 激活三个层面反向追踪 CoT 的信息流，发现 CoT 可能主要通过约束答案结构、降低预测熵，并按任务类型调节神经元激活来提升推理表现，而不只是让模型“真的更会逻辑推理”。 领域现状：Chain-of-Thought pr…
 tags:
   - "ACL2026"
   - "LLM推理"

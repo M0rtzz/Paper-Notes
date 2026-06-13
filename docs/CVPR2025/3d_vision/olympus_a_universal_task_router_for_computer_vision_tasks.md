@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Olympus: A Universal Task Router for Computer Vision Tasks
 description: >-
-  [CVPR 2025][3D视觉][任务路由] Olympus 将多模态大模型（MLLM）作为统一的任务路由器，通过设计任务特定路由 token 和构建大规模指令数据集，将超过 20 种计算机视觉任务（涵盖图像/视频/3D）分派到专用模型…
+  [CVPR 2025][3D视觉][任务路由] Olympus 将多模态大模型（MLLM）作为统一的任务路由器，通过设计任务特定路由 token 和构建大规模指令数据集，将超过 20 种计算机视觉任务（涵盖图像/视频/3D）分派到专用模型，实现了 94.75% 的单任务路由准确率和 91.82% 的链式动作精度。
 tags:
   - "CVPR 2025"
   - "3D视觉"

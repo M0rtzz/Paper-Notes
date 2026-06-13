@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Navigating Image Restoration with VAR's Distribution Alignment Prior
 description: >-
-  [CVPR 2025][图像生成][图像恢复] 本文发现Visual AutoRegressive (VAR) 模型的next-scale预测具有天然的多尺度分布对齐能力——低尺度修复全局退化（如低光照、雾霾），高尺度修复局部退化（如噪声、雨滴），基于此构建VarFormer框架…
+  [CVPR 2025][图像生成][图像恢复] 本文发现Visual AutoRegressive (VAR) 模型的next-scale预测具有天然的多尺度分布对齐能力——低尺度修复全局退化（如低光照、雾霾），高尺度修复局部退化（如噪声、雨滴），基于此构建VarFormer框架，通过Degradation-Aware Enhancement (DAE)自适应选择尺度先验、Adaptive Feature Transformation (AFT)融合先验与退化特征，在6类恢复任务上超越现有multi-task方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

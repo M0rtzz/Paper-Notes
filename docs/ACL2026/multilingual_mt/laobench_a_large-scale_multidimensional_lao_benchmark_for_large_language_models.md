@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaoBench: A Large-Scale Multidimensional Lao Benchmark for Large Language Models
 description: >-
-  [ACL 2026][多语言/翻译][老挝语] LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17000+ 条专家精选样本，覆盖文化-知识应用 / 老挝 K12 课纲 / 老-中-英三语翻译三大维度…
+  [ACL 2026][多语言/翻译][老挝语] LaoBench 是首个大规模、多维度的老挝语 LLM 评测基准，包含 17000+ 条专家精选样本，覆盖文化-知识应用 / 老挝 K12 课纲 / 老-中-英三语翻译三大维度，并独创"开源 7k + 黑盒 10k + 开放式 500"三段式设计——其中 10k 黑盒子集通过受控服务发分数防污染，主流闭源模型（GPT-5-High、Gemini-2.5-Pro 等）仍落后人类专家 ~10-20 个百分点，老挝语文化推理与翻译保真度依然是远未解决的难题。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

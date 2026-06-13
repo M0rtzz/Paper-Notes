@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Vision-Only Gaussian Splatting for Collaborative Semantic Occupancy Prediction
 description: >-
-  [AAAI 2026][自动驾驶][协同感知] 提出首个使用稀疏3D语义高斯基元作为协同感知通信介质的纯视觉语义占据预测框架，通过ROI裁剪+刚性变换传输高斯+邻域融合模块抑制噪声冗余，在mIoU上比单车提升+8.42，比baseline协同方法提升+3.28。
+  [AAAI 2026 Oral][自动驾驶][协同感知] 提出首个使用稀疏3D语义高斯基元作为协同感知通信介质的纯视觉语义占据预测框架，通过ROI裁剪+刚性变换传输高斯+邻域融合模块抑制噪声冗余，在mIoU上比单车提升+8.42，比baseline协同方法提升+3.28。 - 领域现状：协同感知通过V2X通信扩展单车感知范围…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自动驾驶"
   - "协同感知"
   - "3D高斯溅射"

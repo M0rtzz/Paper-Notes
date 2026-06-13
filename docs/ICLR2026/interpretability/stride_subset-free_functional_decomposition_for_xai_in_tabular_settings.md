@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STRIDE: Subset-Free Functional Decomposition for XAI in Tabular Settings
 description: >-
-  [ICLR 2026][可解释性][Functional Decomposition] STRIDE 将模型解释重新定义为 RKHS 中的正交函数分解问题，通过递归核中心化无需枚举 $2^d$ 个子集即可解析计算正交功能组件 $f_S(x_S)$，不仅能给出标量重要性分数还能揭示特征如何协同或冗余地影响预测…
+  [ICLR 2026][可解释性][Functional Decomposition] STRIDE 将模型解释重新定义为 RKHS 中的正交函数分解问题，通过递归核中心化无需枚举 $2^d$ 个子集即可解析计算正交功能组件 $f_S(x_S)$，不仅能给出标量重要性分数还能揭示特征如何协同或冗余地影响预测，在表格数据上实现了比 TreeSHAP 快 3 倍且 $R^2=0.93$ 的性能。
 tags:
   - "ICLR 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Affine Divergence: Aligning Activation Updates Beyond Normalisation
 description: >-
-  [ICLR 2026][优化/理论][仿射散度] 揭示了梯度下降中参数最速下降方向与传播到激活后的有效更新之间存在根本性不对齐（"仿射散度"$\Delta\mathcal{L}/\Delta z_i = (\partial\mathcal{L}/\partial z_i) \cdot (\|\vec{x}\|…
+  [ICLR 2026][优化/理论][仿射散度] 揭示了梯度下降中参数最速下降方向与传播到激活后的有效更新之间存在根本性不对齐（"仿射散度"$\Delta\mathcal{L}/\Delta z_i = (\partial\mathcal{L}/\partial z_i) \cdot (\|\vec{x}\|^2+1)$），从第一性原理推导出归一化是消除此散度的自然解，并发现一种非归一化的替代方案在实验中超越传统归一化。
 tags:
   - "ICLR 2026"
   - "优化/理论"

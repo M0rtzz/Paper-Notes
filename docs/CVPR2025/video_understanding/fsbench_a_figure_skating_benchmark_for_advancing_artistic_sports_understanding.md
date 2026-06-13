@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FSBench: A Figure Skating Benchmark for Advancing Artistic Sports Understanding
 description: >-
-  [CVPR 2025][视频理解][花样滑冰] 提出 FSAnno/FSBench，首个面向花样滑冰的细粒度、多模态、多层次基准数据集，覆盖从先验知识测试、单个动作识别/评估/解说到整体表演评估/解说的完整任务链，揭示了现有 LLM 在艺术体育理解上的显著不足。
+  [CVPR 2025][视频理解][花样滑冰] 提出 FSAnno/FSBench，首个面向花样滑冰的细粒度、多模态、多层次基准数据集，覆盖从先验知识测试、单个动作识别/评估/解说到整体表演评估/解说的完整任务链，揭示了现有 LLM 在艺术体育理解上的显著不足。 花样滑冰被誉为"冰上艺术"，其评价不仅依赖技术难度（跳跃、旋转…
 tags:
   - "CVPR 2025"
   - "视频理解"

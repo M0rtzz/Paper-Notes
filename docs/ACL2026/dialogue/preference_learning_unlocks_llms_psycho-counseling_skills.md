@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Learning Unlocks LLMs' Psycho-Counseling Skills
 description: >-
-  [ACL 2026][对话系统][心理咨询] 本文构建了面向心理咨询回复质量的 PsyCoPref 偏好数据集，并用奖励模型、DPO 与迭代式偏好学习训练 LLM，使 8B 模型在心理咨询回复上相对 GPT-4o 达到 87.0% 的胜率。
+  [ACL 2026][对话系统][心理咨询] 本文构建了面向心理咨询回复质量的 PsyCoPref 偏好数据集，并用奖励模型、DPO 与迭代式偏好学习训练 LLM，使 8B 模型在心理咨询回复上相对 GPT-4o 达到 87.0% 的胜率。 领域现状：心理咨询辅助是 LLM 很有潜力的应用场景，因为现实中专业心理健康支持供给…
 tags:
   - "ACL 2026"
   - "对话系统"

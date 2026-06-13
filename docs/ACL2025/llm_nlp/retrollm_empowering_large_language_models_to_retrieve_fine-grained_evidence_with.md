@@ -2,10 +2,10 @@
 title: >-
   [论文解读] RetroLLM: Empowering Large Language Models to Retrieve Fine-grained Evidence within Generation
 description: >-
-  [ACL 2025][LLM/NLP][检索增强生成] 提出RetroLLM统一框架，将检索和生成集成为单一自回归解码过程，通过层级FM-Index约束和前瞻式受限解码，使LLM能直接从语料库中生成细粒度证据，同时显著减少token消耗。
+  [ACL 2025][LLM 其他][检索增强生成] 提出RetroLLM统一框架，将检索和生成集成为单一自回归解码过程，通过层级FM-Index约束和前瞻式受限解码，使LLM能直接从语料库中生成细粒度证据，同时显著减少token消耗。 大型语言模型虽然生成能力强大，但常因依赖内部记忆而产生幻觉。检索增强生成（RAG）通过引…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "检索增强生成"
   - "生成式检索"
   - "FM-Index"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Soundwave: Less is More for Speech-Text Alignment in LLMs
 description: >-
-  [ACL 2025][音频/语音][语音大模型] 提出 Soundwave 模型，通过高效训练策略和新颖架构解决语音和文本之间的表示空间差距与序列长度不一致问题，仅用五十分之一的训练数据即超越 Qwen2-Audio 在语音翻译和 AIR-Bench 语音任务上的表现。
+  [ACL 2025][音频/语音][语音大模型] 提出 Soundwave 模型，通过高效训练策略和新颖架构解决语音和文本之间的表示空间差距与序列长度不一致问题，仅用五十分之一的训练数据即超越 Qwen2-Audio 在语音翻译和 AIR-Bench 语音任务上的表现。 领域现状：端到端语音大语言模型（Speech LLM）…
 tags:
   - "ACL 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs
 description: >-
-  [ICLR 2026][多模态VLM][空间推理] 提出 SpinBench，一个以认知科学为基础的诊断性基准测试，通过 7 类渐进式空间推理任务（从物体识别到视角转换）系统评估 37 个 VLMs 的空间理解能力，揭示了模型存在的自我中心偏差、旋转理解薄弱等系统性缺陷。
+  [ICLR 2026][多模态VLM][空间推理] 提出 SpinBench，一个以认知科学为基础的诊断性基准测试，通过 7 类渐进式空间推理任务（从物体识别到视角转换）系统评估 37 个 VLMs 的空间理解能力，揭示了模型存在的自我中心偏差、旋转理解薄弱等系统性缺陷。 空间推理是人类认知的基本组成部分…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency
 description: >-
-  [ICLR 2026][图像生成][连续时间一致性模型] 提出 rCM（score-regularized continuous-time consistency model），首次将连续时间一致性蒸馏扩展到 14B 参数的文生图/视频模型，通过结合前向散度（一致性）和反向散度（score蒸馏）…
+  [ICLR 2026][图像生成][连续时间一致性模型] 提出 rCM（score-regularized continuous-time consistency model），首次将连续时间一致性蒸馏扩展到 14B 参数的文生图/视频模型，通过结合前向散度（一致性）和反向散度（score蒸馏），在保持多样性的同时匹配 DMD2 的质量，实现 15-50× 加速。
 tags:
   - "ICLR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Distances from Data with Normalizing Flows and Score Matching
 description: >-
-  [ICML 2025][Fermat Distance] 本文提出利用 normalizing flows 和 score matching 学习密度函数与得分函数，从而高效计算基于密度的 Fermat 距离，解决了传统图方法在高维空间中收敛慢、路径粗糙的问题。
+  [ICML 2025][Fermat Distance] 本文提出利用 normalizing flows 和 score matching 学习密度函数与得分函数，从而高效计算基于密度的 Fermat 距离，解决了传统图方法在高维空间中收敛慢、路径粗糙的问题。 核心矛盾 核心矛盾：领域现状：度量学习是机器学习中的基础任务…
 tags:
   - "ICML 2025"
   - "Fermat Distance"

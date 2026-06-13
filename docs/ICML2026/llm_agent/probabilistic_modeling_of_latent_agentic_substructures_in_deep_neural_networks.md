@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probabilistic Modeling of Latent Agentic Substructures in Deep Neural Networks
 description: >-
-  [ICML 2026][LLM Agent][子代理结构] 作者把神经网络（特别是 LLM）形式化为多个隐式子代理（每个是 outcome 上的概率分布）通过对数加权池化合成的复合代理…
+  [ICML 2026][LLM Agent][子代理结构] 作者把神经网络（特别是 LLM）形式化为多个隐式子代理（每个是 outcome 上的概率分布）通过对数加权池化合成的复合代理，并在认知效用 $W_i(o)=\log P_i(o)$ 框架下证明了 "严格一致受益（strict unanimity）" 在线性池化或二元 outcome 下不可能、但 $|\mathcal O|\ge 3$ 下可行，进而推出"显式让 Waluigi 先显形再压制"严格优于"只强化 Luigi"的对齐原则。
 tags:
   - "ICML 2026"
   - "LLM Agent"

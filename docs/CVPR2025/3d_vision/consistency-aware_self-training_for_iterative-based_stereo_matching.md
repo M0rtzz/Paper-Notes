@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistency-aware Self-Training for Iterative-based Stereo Matching
 description: >-
-  [CVPR 2025][3D视觉][立体匹配] 首次提出面向迭代式立体匹配的一致性感知自训练框架（CST-Stereo），通过多分辨率预测一致性滤波和迭代预测一致性滤波评估伪标签可靠性，结合软加权损失有效利用无标签真实数据提升模型性能和泛化能力。
+  [CVPR 2025][3D视觉][立体匹配] 首次提出面向迭代式立体匹配的一致性感知自训练框架（CST-Stereo），通过多分辨率预测一致性滤波和迭代预测一致性滤波评估伪标签可靠性，结合软加权损失有效利用无标签真实数据提升模型性能和泛化能力。 领域现状 领域现状：迭代式方法（如RAFT-Stereo、IGEV-Stere…
 tags:
   - "CVPR 2025"
   - "3D视觉"

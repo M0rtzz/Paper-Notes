@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Signal Degradation to Computation Collapse: Uncovering the Two Failure Modes of LLM Quantization
 description: >-
-  [ACL 2026][模型压缩][后训练量化] 本文通过系统的机械可解释性分析，揭示LLM量化存在两种质性不同的失败模式：4-bit的信号退化（Signal Degradation，计算模式完整但精度受损，可局部修复）和2-bit的计算崩溃（Computation Collapse，关键组件功能性破坏…
+  [ACL 2026 Findings][模型压缩][后训练量化] 本文通过系统的机械可解释性分析，揭示LLM量化存在两种质性不同的失败模式：4-bit的信号退化（Signal Degradation，计算模式完整但精度受损，可局部修复）和2-bit的计算崩溃（Computation Collapse，关键组件功能性破坏，需结构重建）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "后训练量化"
   - "信号退化"

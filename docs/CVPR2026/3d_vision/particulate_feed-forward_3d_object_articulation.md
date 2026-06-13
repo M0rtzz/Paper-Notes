@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Particulate: Feed-Forward 3D Object Articulation
 description: >-
-  [CVPR 2026][3D视觉][铰接物体] Particulate 提出了一个前馈式模型，给定静态 3D 网格即可在数秒内推断出完整的铰接结构（部件分割、运动学树、运动约束），基于 Part Articulation Transformer 在公开数据集上端到端训练，显著优于需要逐物体优化的现有方法…
+  [CVPR 2026][3D视觉][铰接物体] Particulate 提出了一个前馈式模型，给定静态 3D 网格即可在数秒内推断出完整的铰接结构（部件分割、运动学树、运动约束），基于 Part Articulation Transformer 在公开数据集上端到端训练，显著优于需要逐物体优化的现有方法，并能与 3D 生成模型结合实现从单张图像到铰接 3D 物体的生成。
 tags:
   - "CVPR 2026"
   - "3D视觉"

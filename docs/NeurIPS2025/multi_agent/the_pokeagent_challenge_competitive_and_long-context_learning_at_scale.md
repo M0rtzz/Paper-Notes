@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The PokeAgent Challenge: Competitive and Long-Context Learning at Scale
 description: >-
-  [NeurIPS 2025][多智能体][游戏AI基准] 提出 PokéAgent Challenge，一个基于宝可梦对战和RPG速通的双赛道大规模AI基准，通过NeurIPS 2025竞赛验证了专家RL方法远超通用LLM方法，并揭示宝可梦对战衡量的能力与现有49个LLM基准近乎正交。
+  [NeurIPS 2025][多智能体][游戏AI基准] 提出 PokéAgent Challenge，一个基于宝可梦对战和RPG速通的双赛道大规模AI基准，通过NeurIPS 2025竞赛验证了专家RL方法远超通用LLM方法，并揭示宝可梦对战衡量的能力与现有49个LLM基准近乎正交。 领域现状： 部分可观测性、博弈论推理和…
 tags:
   - "NeurIPS 2025"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do ImageNet-trained Models Learn Shortcuts? The Impact of Frequency Shortcuts on Generalization
 description: >-
-  [CVPR 2025][频率捷径] 提出层次化频率捷径搜索方法（HFSS），首次在ImageNet-1K规模上高效发现CNN和Transformer学到的频率捷径（仅5%频率即可正确分类），揭示频率捷径在保留纹理的OOD测试中反而有益但在风格化测试（IN-R/IN-S）上有害…
+  [CVPR 2025][频率捷径] 提出层次化频率捷径搜索方法（HFSS），首次在ImageNet-1K规模上高效发现CNN和Transformer学到的频率捷径（仅5%频率即可正确分类），揭示频率捷径在保留纹理的OOD测试中反而有益但在风格化测试（IN-R/IN-S）上有害，指出现有OOD评估框架忽视了频率捷径的影响。
 tags:
   - "CVPR 2025"
   - "频率捷径"

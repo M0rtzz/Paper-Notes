@@ -2,7 +2,7 @@
 title: >-
   [论文解读] It's LIT! Reliability-Optimized LLMs with Inspectable Tools
 description: >-
-  [NeurIPS 2025 (Workshop on Multi-Turn Interactions in LLMs)][LLM Agent][工具可靠性] 通过为每个外部工具定义可靠性/可调试性成本函数，引导 LLM 在多候选方案中选择成本最低（最透明可审计）的工具调用路径…
+  [NeurIPS 2025 (Workshop on Multi-Turn Interactions in LLMs)][LLM Agent][工具可靠性] 通过为每个外部工具定义可靠性/可调试性成本函数，引导 LLM 在多候选方案中选择成本最低（最透明可审计）的工具调用路径，在 61/65 测试场景中提升可解释性的同时保持甚至提升任务准确率。
 tags:
   - "NeurIPS 2025 (Workshop on Multi-Turn Interactions in LLMs)"
   - "LLM Agent"

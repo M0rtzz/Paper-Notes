@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUIDE: A Benchmark for Understanding and Assisting Users in Open-Ended GUI Tasks
 description: >-
-  [CVPR 2026][多模态VLM][GUI理解] 本文提出 GUIDE 基准，包含 120 个新手用户在 10 款软件上的 67.5 小时屏幕录像和出声思维标注，定义了行为状态检测、意图预测、协助预测三个分层任务…
+  [CVPR 2026][多模态VLM][GUI理解] 本文提出 GUIDE 基准，包含 120 个新手用户在 10 款软件上的 67.5 小时屏幕录像和出声思维标注，定义了行为状态检测、意图预测、协助预测三个分层任务，评估发现当前最强多模态模型在理解用户行为和判断协助需求上表现有限（行为检测仅 44.6% 准确率），但提供结构化用户上下文可显著提升性能（协助预测最高提升 50.2pp）。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Robustness of Verbal Confidence of LLMs in Adversarial Attacks
 description: >-
-  [NeurIPS 2025][LLM安全][verbal confidence] 首次系统研究 LLM 语言化置信度（verbal confidence）在对抗攻击下的鲁棒性，提出基于扰动和越狱的攻击框架，揭示攻击可导致置信度下降最高 30%、答案翻转率高达 100%，且现有防御策略基本无效。
+  [NeurIPS 2025][LLM安全][verbal confidence] 首次系统研究 LLM 语言化置信度（verbal confidence）在对抗攻击下的鲁棒性，提出基于扰动和越狱的攻击框架，揭示攻击可导致置信度下降最高 30%、答案翻转率高达 100%，且现有防御策略基本无效。 领域现状：随着 LLM 广泛部…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

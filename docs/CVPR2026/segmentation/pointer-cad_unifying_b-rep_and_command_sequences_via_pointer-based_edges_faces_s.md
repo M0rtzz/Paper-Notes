@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pointer-CAD: Unifying B-Rep and Command Sequences via Pointer-based Edges & Faces Selection
 description: >-
-  [CVPR2026][语义分割][CAD 生成] 提出基于指针 (Pointer) 机制的命令序列表示，将 B-Rep 几何实体（边/面）显式引入自回归 CAD 生成，首次在命令序列方法中支持 chamfer/fillet 操作，同时大幅降低量化误差导致的拓扑错误。
+  [CVPR2026][语义分割][CAD 生成] 提出基于指针 (Pointer) 机制的命令序列表示，将 B-Rep 几何实体（边/面）显式引入自回归 CAD 生成，首次在命令序列方法中支持 chamfer/fillet 操作，同时大幅降低量化误差导致的拓扑错误。 CAD 建模耗时：传统 CAD 设计流程（2D 草图 →…
 tags:
   - "CVPR2026"
   - "语义分割"

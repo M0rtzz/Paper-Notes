@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedEx-LoRA: Exact Aggregation for Federated and Efficient Fine-Tuning of Large Language Models
 description: >-
-  [ACL 2025][模型压缩][LoRA] FedEx-LoRA 发现联邦学习中独立平均 LoRA 的 A 和 B 矩阵会导致不精确的全局更新（"乘积的均值≠均值的乘积"），通过在冻结权重矩阵中加入残差误差项实现精确聚合，在多个推理和 NLU 任务上一致优于 FedIT 和 FFA-LoRA。
+  [ACL 2025][模型压缩][LoRA] FedEx-LoRA 发现联邦学习中独立平均 LoRA 的 A 和 B 矩阵会导致不精确的全局更新（"乘积的均值≠均值的乘积"），通过在冻结权重矩阵中加入残差误差项实现精确聚合，在多个推理和 NLU 任务上一致优于 FedIT 和 FFA-LoRA。 领域现状：LoRA 是 LL…
 tags:
   - "ACL 2025"
   - "模型压缩"

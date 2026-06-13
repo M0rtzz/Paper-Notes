@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KatFishNet: Detecting LLM-Generated Korean Text through Linguistic Feature Analysis
 description: >-
-  [ACL 2025][AIGC检测][LLM生成文本检测] 本文构建了首个韩语 LLM 生成文本检测基准 KatFish（涵盖三种文体、四种 LLM），通过分析词间距、词性多样性和逗号使用三类韩语语言学特征，提出 KatFishNet 检测方法…
+  [ACL 2025][AIGC检测][LLM生成文本检测] 本文构建了首个韩语 LLM 生成文本检测基准 KatFish（涵盖三种文体、四种 LLM），通过分析词间距、词性多样性和逗号使用三类韩语语言学特征，提出 KatFishNet 检测方法，在 OOD（未见过的 LLM）设置下平均 AUROC 比最佳基线高 19.78%。
 tags:
   - "ACL 2025"
   - "AIGC检测"

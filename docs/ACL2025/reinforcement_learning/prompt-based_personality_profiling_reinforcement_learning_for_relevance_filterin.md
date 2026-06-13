@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompt-based Personality Profiling: Reinforcement Learning for Relevance Filtering
 description: >-
-  [ACL 2025][强化学习][personality profiling] 提出RL-Profiler方法，用强化学习训练一个帖子相关性过滤器（SelNet），从用户Profile的大量帖子中筛选出与人格特征相关的少量帖子，再交给LLM零样本预测人格…
+  [ACL 2025][强化学习][personality profiling] 提出RL-Profiler方法，用强化学习训练一个帖子相关性过滤器（SelNet），从用户Profile的大量帖子中筛选出与人格特征相关的少量帖子，再交给LLM零样本预测人格，在大幅减少上下文长度的同时保持接近使用全部帖子的预测效果。
 tags:
   - "ACL 2025"
   - "强化学习"

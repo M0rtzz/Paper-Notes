@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ClusterRAG: Cluster-Based Collaborative Filtering for Personalized Retrieval-Augmented Generation
 description: >-
-  [ACL2026][推荐系统][个性化RAG] ClusterRAG 把协同过滤引入个性化 RAG：先用用户历史文档构建用户表示并用 HDBSCAN 聚类，再从目标用户和相似用户中分层检索 profile 文档组成 prompt…
+  [ACL2026][推荐系统][个性化RAG] ClusterRAG 把协同过滤引入个性化 RAG：先用用户历史文档构建用户表示并用 HDBSCAN 聚类，再从目标用户和相似用户中分层检索 profile 文档组成 prompt，在 LaMP 多任务基准上使 hybrid 模式全面优于 vanillaRAG、LaMP-IPA、ROPG 和 CFRAG。
 tags:
   - "ACL2026"
   - "推荐系统"

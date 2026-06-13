@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIGFace: Virtual Identity Generation for Privacy-Free Face Recognition Dataset
 description: >-
-  [ICCV 2025][图像生成][虚拟身份生成] 提出 VIGFace 框架，通过在人脸识别模型的特征空间中预先分配与真实身份正交的虚拟原型（virtual prototypes），训练扩散模型从虚拟原型生成不存在于真实世界的人脸图像，实现隐私无忧的人脸识别数据集构建和数据增强。
+  [ICCV 2025][图像生成][虚拟身份生成] 提出 VIGFace 框架，通过在人脸识别模型的特征空间中预先分配与真实身份正交的虚拟原型（virtual prototypes），训练扩散模型从虚拟原型生成不存在于真实世界的人脸图像，实现隐私无忧的人脸识别数据集构建和数据增强。 深度学习人脸识别模型的训练依赖于大规模人脸…
 tags:
   - "ICCV 2025"
   - "图像生成"

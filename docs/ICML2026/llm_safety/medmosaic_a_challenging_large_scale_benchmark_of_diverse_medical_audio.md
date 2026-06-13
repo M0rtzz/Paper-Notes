@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedMosaic: A Challenging Large Scale Benchmark of Diverse Medical Audio
 description: >-
-  [ICML 2026][LLM安全][医学音频 QA] MedMosaic 用合成管道构造了一个覆盖生理声 + 真实/合成临床对话的医学音频 QA 基准（46,701 条 QA、10 种问题类型），系统评测 13 个音频/多模态模型，发现即使 Gemini-2.5-Pro 也只能拿到约 68.1% 加权准确率…
+  [ICML 2026][LLM安全][医学音频 QA] MedMosaic 用合成管道构造了一个覆盖生理声 + 真实/合成临床对话的医学音频 QA 基准（46,701 条 QA、10 种问题类型），系统评测 13 个音频/多模态模型，发现即使 Gemini-2.5-Pro 也只能拿到约 68.1% 加权准确率，揭示当代 LALM 在医学音频推理上的根本短板。
 tags:
   - "ICML 2026"
   - "LLM安全"

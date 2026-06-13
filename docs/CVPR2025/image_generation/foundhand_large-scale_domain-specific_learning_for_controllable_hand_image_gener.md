@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoundHand: Large-Scale Domain-Specific Learning for Controllable Hand Image Generation
 description: >-
-  [CVPR 2025][图像生成][手部图像生成] 提出 FoundHand，一个在千万级手部数据集（FoundHand-10M）上训练的领域专用扩散模型，以 2D 关键点热力图为通用控制表示，实现精确的手部姿态/视角控制和外观保持，并展现出修复畸形手、视频生成、手物交互视频等零样本涌现能力。
+  [CVPR 2025][图像生成][手部图像生成] 提出 FoundHand，一个在千万级手部数据集（FoundHand-10M）上训练的领域专用扩散模型，以 2D 关键点热力图为通用控制表示，实现精确的手部姿态/视角控制和外观保持，并展现出修复畸形手、视频生成、手物交互视频等零样本涌现能力。 领域现状：通用 T2I 模型（…
 tags:
   - "CVPR 2025"
   - "图像生成"

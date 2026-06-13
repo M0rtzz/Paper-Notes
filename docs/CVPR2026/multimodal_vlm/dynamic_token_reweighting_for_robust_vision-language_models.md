@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Token Reweighting for Robust Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][VLM safety] 提出Dtr（Dynamic Token Reweighting），首个通过优化VLM的KV缓存来防御多模态越狱攻击的推理时防御方法，通过定义"反向安全偏移"（RSS）来识别导致安全退化的视觉token，动态调整其权重以恢复模型的安全对齐能力…
+  [CVPR 2026][多模态VLM][VLM safety] 提出Dtr（Dynamic Token Reweighting），首个通过优化VLM的KV缓存来防御多模态越狱攻击的推理时防御方法，通过定义"反向安全偏移"（RSS）来识别导致安全退化的视觉token，动态调整其权重以恢复模型的安全对齐能力，同时保持良性任务性能。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preconditioners for the Stochastic Training of Neural Fields
 description: >-
-  [CVPR 2025][3D视觉][神经场] 本文提出了一个用于神经场随机训练的预条件理论框架，证明了曲率感知对角预条件器（如 ESGD）能显著加速 sine/Gaussian/wavelet 激活神经场的训练，而对 ReLU(PE) 激活则无明显帮助，为神经场优化器选择提供了理论指导。
+  [CVPR 2025][3D视觉][神经场] 本文提出了一个用于神经场随机训练的预条件理论框架，证明了曲率感知对角预条件器（如 ESGD）能显著加速 sine/Gaussian/wavelet 激活神经场的训练，而对 ReLU(PE) 激活则无明显帮助，为神经场优化器选择提供了理论指导。 1. 领域现状：神经场（Neural…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder
 description: >-
-  [ACL 2025][多模态VLM][CLIP] 系统探究为何生成式多模态LLM（如LLaVA）使用与CLIP相同的视觉编码器却能在视觉推理任务上大幅超越CLIP，发现patch token、位置编码和prompt加权是关键因素。
+  [ACL 2025][多模态VLM][CLIP] 系统探究为何生成式多模态LLM（如LLaVA）使用与CLIP相同的视觉编码器却能在视觉推理任务上大幅超越CLIP，发现patch token、位置编码和prompt加权是关键因素。 领域现状： CLIP在零样本分类上表现出色，但在组合性推理、空间理解、细粒度视觉理解等任务上表…
 tags:
   - "ACL 2025"
   - "多模态VLM"

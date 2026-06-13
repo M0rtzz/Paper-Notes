@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoMa: A Simple Modular Deep Learning Framework for Material Property Prediction
 description: >-
-  [ICLR 2026][预训练][材料属性预测] 提出 MoMa 模块化材料属性预测框架，先在多任务上训练专用模块并集中存储为 MoMa Hub，再通过表示驱动的无训练自适应模块组合算法（AMC）为下游任务定制模型，在 17 个数据集上平均超越最强基线 14%。
+  [ICLR 2026][预训练][材料属性预测] 提出 MoMa 模块化材料属性预测框架，先在多任务上训练专用模块并集中存储为 MoMa Hub，再通过表示驱动的无训练自适应模块组合算法（AMC）为下游任务定制模型，在 17 个数据集上平均超越最强基线 14%。 领域现状：深度学习材料属性预测主要有两条路线：(1) 专用模型…
 tags:
   - "ICLR 2026"
   - "预训练"

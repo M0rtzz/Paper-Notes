@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Degradation-Aware Metric Prompting for Hyperspectral Image Restoration
 description: >-
-  [ICML 2026][图像恢复][高光谱图像恢复] DAMP 用 6 个可解释的空间-光谱物理度量（高频能量比/纹理一致性/光谱曲率等）作为"退化提示" (DP) 代替黑盒嵌入与显式退化标签…
+  [ICML 2026][图像恢复][高光谱图像恢复] DAMP 用 6 个可解释的空间-光谱物理度量（高频能量比/纹理一致性/光谱曲率等）作为"退化提示" (DP) 代替黑盒嵌入与显式退化标签，再用 DP 作为门控驱动 Spatial-Spectral Adaptive MoE 选择不同的"空间专家/光谱专家"，在 5 种 HSI 恢复任务和 2 种未见退化（运动模糊、Poisson 噪声）上同时取得 SOTA。
 tags:
   - "ICML 2026"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GradPower: Powering Gradients for Faster Language Model Pre-Training
 description: >-
-  [ICML 2026][模型压缩][梯度变换] GradPower 在喂给任意梯度优化器之前对原始梯度做一次逐元素的"符号保留幂次"变换 $\varphi_p(g_i)=\mathrm{sign}(g_i)\,|g_i|^p$，仅多一行代码、不动 AdamW/Muon 内部逻辑和超参…
+  [ICML 2026][模型压缩][梯度变换] GradPower 在喂给任意梯度优化器之前对原始梯度做一次逐元素的"符号保留幂次"变换 $\varphi_p(g_i)=\mathrm{sign}(g_i)\,|g_i|^p$，仅多一行代码、不动 AdamW/Muon 内部逻辑和超参，就能在 LLaMA / Qwen2MoE 从 66M 到 2B 的多个规模上一致拿到更低的终末 loss，尤其在 MoE + wsd 学习率调度下增益最显著。
 tags:
   - "ICML 2026"
   - "模型压缩"

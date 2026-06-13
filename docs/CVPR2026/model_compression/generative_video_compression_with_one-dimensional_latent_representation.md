@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Video Compression with One-Dimensional Latent Representation
 description: >-
-  [CVPR 2026][模型压缩][视频压缩] 提出 GVC1D，首次将视频压缩的潜在表示从2D网格替换为紧凑的1D token序列，结合1D记忆模块建模长期时序上下文，在感知质量指标上实现 60%+ 的码率节省。
+  [CVPR 2026][模型压缩][视频压缩] 提出 GVC1D，首次将视频压缩的潜在表示从2D网格替换为紧凑的1D token序列，结合1D记忆模块建模长期时序上下文，在感知质量指标上实现 60%+ 的码率节省。 传统和神经视频编解码器通常将帧编码为2D潜在网格：（如2D特征图或块），这种范式存在两个核心缺陷： 空间冗余难…
 tags:
   - "CVPR 2026"
   - "模型压缩"

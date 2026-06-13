@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TEMPORA: Characterising the Time-Contingent Utility of Online Test-Time Adaptation
 description: >-
-  [ICML 2026][TTA] TEMPORA 把 TTA 评测从「无时延上限的离线精度」改写为「时延受限下的可服务效用」，用离散 / 连续 / 摊销三类时间约束 + 可分解的效用指标…
+  [ICML 2026][TTA] TEMPORA 把 TTA 评测从「无时延上限的离线精度」改写为「时延受限下的可服务效用」，用离散 / 连续 / 摊销三类时间约束 + 可分解的效用指标，在 ImageNet-C × ResNet-50 上跑 750+ 次实验证明：离线榜首方法在 87.9% 的时延场景下输掉冠军，且越接近真实部署越不预测。
 tags:
   - "ICML 2026"
   - "TTA"

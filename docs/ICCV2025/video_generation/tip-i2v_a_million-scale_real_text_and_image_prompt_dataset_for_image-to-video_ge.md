@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation
 description: >-
-  [ICCV 2025][视频生成][图像到视频] 构建了首个百万规模的真实用户文本和图像Prompt数据集TIP-I2V（170万+唯一prompt对），包含5个SOTA图像到视频模型的生成视频，并基于此提出了TIP-Eval评估基准、用户偏好分析、以及视频真伪检测等多个研究方向。
+  [ICCV 2025][视频生成][图像到视频] 构建了首个百万规模的真实用户文本和图像Prompt数据集TIP-I2V（170万+唯一prompt对），包含5个SOTA图像到视频模型的生成视频，并基于此提出了TIP-Eval评估基准、用户偏好分析、以及视频真伪检测等多个研究方向。 图像到视频（I2V）生成是视频生成领域的重…
 tags:
   - "ICCV 2025"
   - "视频生成"

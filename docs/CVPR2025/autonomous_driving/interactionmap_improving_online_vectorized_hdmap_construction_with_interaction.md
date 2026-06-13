@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InteractionMap: Improving Online Vectorized HDMap Construction with Interaction
 description: >-
-  [CVPR 2025][自动驾驶][HD地图构建] 本文提出InteractionMap，通过点级和实例级关系嵌入、关键帧分层时序融合和几何感知分类-定位对齐三个模块，全面增强在线矢量化HD地图构建中的信息交互…
+  [CVPR 2025][自动驾驶][HD地图构建] 本文提出InteractionMap，通过点级和实例级关系嵌入、关键帧分层时序融合和几何感知分类-定位对齐三个模块，全面增强在线矢量化HD地图构建中的信息交互，在nuScenes (mAP 71.8) 和Argoverse2 (mAP 74.7) 上均取得SOTA。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

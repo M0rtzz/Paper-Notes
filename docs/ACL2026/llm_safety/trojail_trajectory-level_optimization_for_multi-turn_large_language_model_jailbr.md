@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TROJail: Trajectory-Level Optimization for Multi-Turn Large Language Model Jailbreaks with Process Rewards
 description: >-
-  [ACL 2026][LLM安全][多轮越狱攻击] 本文将自动化多轮越狱攻击建模为多轮强化学习问题，提出 TROJail，通过两个启发式过程奖励（过度有害惩罚和语义相关性递进）缓解结果奖励的稀疏监督问题，在多个模型和基准上显著提升攻击成功率。
+  [ACL 2026][LLM安全][多轮越狱攻击] 本文将自动化多轮越狱攻击建模为多轮强化学习问题，提出 TROJail，通过两个启发式过程奖励（过度有害惩罚和语义相关性递进）缓解结果奖励的稀疏监督问题，在多个模型和基准上显著提升攻击成功率。 领域现状：LLM 面临越狱攻击的安全威胁。多轮越狱攻击因反映真实交互场景而受到关注…
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GLane3D: Detecting Lanes with Graph of 3D Keypoints
 description: >-
-  [CVPR 2025][自动驾驶][3D车道线检测] 提出GLane3D，一种基于关键点的3D车道线检测方法，通过检测车道关键点并预测它们之间的有向连接构建图结构，利用PointNMS去除冗余关键点提议后用Dijkstra最短路径提取车道实例…
+  [CVPR 2025][自动驾驶][3D车道线检测] 提出GLane3D，一种基于关键点的3D车道线检测方法，通过检测车道关键点并预测它们之间的有向连接构建图结构，利用PointNMS去除冗余关键点提议后用Dijkstra最短路径提取车道实例，在OpenLane和Apollo数据集上达到SOTA的F1分数且泛化能力优越。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

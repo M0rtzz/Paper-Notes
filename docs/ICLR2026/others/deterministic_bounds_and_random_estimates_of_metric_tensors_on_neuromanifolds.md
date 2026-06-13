@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds
 description: >-
-  [ICLR 2026][Fisher信息矩阵] 本文通过分析低维概率分布核空间的Fisher信息矩阵(FIM)谱性质，为神经网络参数空间(神经流形)上的度量张量建立了确定性上下界，并基于Hutchinson迹估计器引入了一族有界方差的无偏随机估计方法，仅需单次反向传播即可高效计算。
+  [ICLR 2026][Fisher信息矩阵] 本文通过分析低维概率分布核空间的Fisher信息矩阵(FIM)谱性质，为神经网络参数空间(神经流形)上的度量张量建立了确定性上下界，并基于Hutchinson迹估计器引入了一族有界方差的无偏随机估计方法，仅需单次反向传播即可高效计算。 深度神经网络的高维参数空间——神经流形(N…
 tags:
   - "ICLR 2026"
   - "Fisher信息矩阵"

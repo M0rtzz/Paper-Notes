@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Subject-level Inference for Realistic Text Anonymization Evaluation
 description: >-
-  [ACL 2026][LLM安全][文本匿名化] SPIA 提出首个主体级 PII 推断评估基准（675 篇文档、1712 个主体、7040 个 PII），揭示即使 90%+ 的 PII 片段被遮蔽，主体级推断保护率可低至 33%，且聚焦单一目标主体的匿名化会导致非目标主体暴露更多。
+  [ACL 2026][LLM安全][文本匿名化] SPIA 提出首个主体级 PII 推断评估基准（675 篇文档、1712 个主体、7040 个 PII），揭示即使 90%+ 的 PII 片段被遮蔽，主体级推断保护率可低至 33%，且聚焦单一目标主体的匿名化会导致非目标主体暴露更多。 领域现状：文本匿名化通过修改文本来防止个…
 tags:
   - "ACL 2026"
   - "LLM安全"

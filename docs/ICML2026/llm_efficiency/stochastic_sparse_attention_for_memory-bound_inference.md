@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stochastic Sparse Attention for Memory-Bound Inference
 description: >-
-  [ICML 2026][LLM效率][稀疏注意力] SANTA 把 attention 的 value 聚合 $AV$ 看作 "按 softmax 概率 $A$ 对值行 $V$ 做加权求和", 改成 "从 $A$ 中无放回采样 $S\ll n_k$ 个索引、直接平均对应 $V$ 行"的无偏估计…
+  [ICML 2026][LLM效率][稀疏注意力] SANTA 把 attention 的 value 聚合 $AV$ 看作 "按 softmax 概率 $A$ 对值行 $V$ 做加权求和", 改成 "从 $A$ 中无放回采样 $S\ll n_k$ 个索引、直接平均对应 $V$ 行"的无偏估计, 用 stratified / systematic 采样降方差, 再写成 GPU kernel 与 FlashDecoding 对齐——在 32k context 下端到端比 FlashInfer / FlashDecoding 快 1.5× 且精度不掉。
 tags:
   - "ICML 2026"
   - "LLM效率"

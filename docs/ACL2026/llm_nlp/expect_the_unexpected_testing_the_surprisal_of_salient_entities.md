@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Expect the Unexpected? Testing the Surprisal of Salient Entities
 description: >-
-  [ACL 2026][LLM/NLP][信息密度均匀性] 本文研究全局显著实体（discourse-level salient entities）与惊异度（surprisal）的关系，通过 70K+ 手工标注的实体提及和新颖的最小对提示方法，发现全局显著实体本身更出人意料（更高 surprisal）…
+  [ACL 2026][LLM 其他][信息密度均匀性] 本文研究全局显著实体（discourse-level salient entities）与惊异度（surprisal）的关系，通过 70K+ 手工标注的实体提及和新颖的最小对提示方法，发现全局显著实体本身更出人意料（更高 surprisal），但它们系统性地降低周围内容的 surprisal，且该效应随体裁变化——话题连贯性高的文本中效应最强。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "信息密度均匀性"
   - "话语显著性"
   - "惊异度"

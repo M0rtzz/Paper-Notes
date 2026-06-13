@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AesFormer: Transform Everyday Photos into Beautiful Memories
 description: >-
-  [ICML 2026][图像生成][美学照片重建] AesFormer 将日常照片美化定义为 Aesthetic Photo Reconstruction，通过先生成摄影动作计划再执行结构编辑的两阶段框架，把构图、视角和姿态等拍摄时错误转化为可执行编辑…
+  [ICML 2026][图像生成][美学照片重建] AesFormer 将日常照片美化定义为 Aesthetic Photo Reconstruction，通过先生成摄影动作计划再执行结构编辑的两阶段框架，把构图、视角和姿态等拍摄时错误转化为可执行编辑，并在 AesRecon 上显著优于开源编辑器、接近 Nano Banana Pro。
 tags:
   - "ICML 2026"
   - "图像生成"

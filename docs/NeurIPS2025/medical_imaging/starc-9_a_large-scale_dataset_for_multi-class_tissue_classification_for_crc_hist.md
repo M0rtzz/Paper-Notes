@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology
 description: >-
-  [NeurIPS 2025][医学图像][结直肠癌] 提出 STARC-9 大规模结直肠癌组织分类数据集（63 万张图片、9 类组织）及其构建框架 DeepCluster++，通过自编码器特征提取 + K-means 聚类 + 等频分箱采样确保形态多样性…
+  [NeurIPS 2025][医学图像][结直肠癌] 提出 STARC-9 大规模结直肠癌组织分类数据集（63 万张图片、9 类组织）及其构建框架 DeepCluster++，通过自编码器特征提取 + K-means 聚类 + 等频分箱采样确保形态多样性，在该数据集上训练的模型显著超越 NCT 和 HMU 训练的模型。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

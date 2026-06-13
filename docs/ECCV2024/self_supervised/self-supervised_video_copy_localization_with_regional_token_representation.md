@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-supervised Video Copy Localization with Regional Token Representation
 description: >-
-  [ECCV 2024][自监督学习][视频拷贝定位] 提出了一种自监督视频拷贝定位框架，通过在 Vision Transformer 中引入 Regional Token 捕获局部区域信息，并利用传递性（Transitivity Property）自动生成训练数据，在无需人工标注的情况下超越了有监督方法的性能…
+  [ECCV 2024][自监督学习][视频拷贝定位] 提出了一种自监督视频拷贝定位框架，通过在 Vision Transformer 中引入 Regional Token 捕获局部区域信息，并利用传递性（Transitivity Property）自动生成训练数据，在无需人工标注的情况下超越了有监督方法的性能。
 tags:
   - "ECCV 2024"
   - "自监督学习"

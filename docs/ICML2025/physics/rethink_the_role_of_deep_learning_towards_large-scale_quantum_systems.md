@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethink the Role of Deep Learning towards Large-scale Quantum Systems
 description: >-
-  [ICML2025][物理/科学计算][量子系统学习] 在统一量子资源约束下系统性地对比 ML 与 DL 在量子系统学习 (QSL) 任务中的表现，发现传统 ML（Lasso/Ridge/核方法）往往匹配甚至超越 DL，挑战了"大规模量子系统必须用深度学习"的直觉。
+  [ICML2025][物理/科学计算][量子系统学习] 在统一量子资源约束下系统性地对比 ML 与 DL 在量子系统学习 (QSL) 任务中的表现，发现传统 ML（Lasso/Ridge/核方法）往往匹配甚至超越 DL，挑战了"大规模量子系统必须用深度学习"的直觉。 - 核心问题： 量子系统基态性质（关联函数、纠缠熵）估计和…
 tags:
   - "ICML2025"
   - "物理/科学计算"

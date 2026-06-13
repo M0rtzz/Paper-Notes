@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification
 description: >-
-  [NeurIPS 2025][语义分割][不确定性量化] Torch-Uncertainty 是首个统一、可扩展、领域通用且以评估为中心的 PyTorch/Lightning 不确定性量化 (UQ) 框架，集成了 6 大类 UQ 方法、26 种评估指标和 27 个即插即用数据集，覆盖分类、分割、回归等任务…
+  [NeurIPS 2025 Spotlight][语义分割][不确定性量化] Torch-Uncertainty 是首个统一、可扩展、领域通用且以评估为中心的 PyTorch/Lightning 不确定性量化 (UQ) 框架，集成了 6 大类 UQ 方法、26 种评估指标和 27 个即插即用数据集，覆盖分类、分割、回归等任务，并提供了完整的基准测试结果。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "语义分割"
   - "不确定性量化"
   - "PyTorch框架"

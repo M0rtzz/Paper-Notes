@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Intricate Dance of Prompt Complexity, Quality, Diversity, and Consistency in T2I Models
 description: >-
-  [ICLR 2026][图像生成][T2I模型] 本文系统研究了文本提示（prompt）复杂度对T2I模型合成数据的质量、多样性和一致性三个关键维度的影响，提出了新的评估框架，并发现提示扩展（prompt expansion）作为一种推理时干预手段能最优地平衡多样性与美学质量。
+  [ICLR 2026][图像生成][T2I模型] 本文系统研究了文本提示（prompt）复杂度对T2I模型合成数据的质量、多样性和一致性三个关键维度的影响，提出了新的评估框架，并发现提示扩展（prompt expansion）作为一种推理时干预手段能最优地平衡多样性与美学质量。 文本到图像（T2I）模型能够生成几乎无限的合成…
 tags:
   - "ICLR 2026"
   - "图像生成"

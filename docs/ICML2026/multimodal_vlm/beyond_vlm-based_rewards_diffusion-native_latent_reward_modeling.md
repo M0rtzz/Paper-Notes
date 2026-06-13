@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond VLM-Based Rewards: Diffusion-Native Latent Reward Modeling
 description: >-
-  [ICML2026][多模态VLM][扩散模型奖励建模] 提出 DiNa-LRM，将偏好学习直接建立在扩散模型的噪声潜空间上，通过噪声校准的 Thurstone 似然和推理时多噪声集成，以远低于 VLM 奖励模型的计算开销实现接近 SOTA 的偏好预测精度。
+  [ICML2026][多模态VLM][扩散模型奖励建模] 提出 DiNa-LRM，将偏好学习直接建立在扩散模型的噪声潜空间上，通过噪声校准的 Thurstone 似然和推理时多噪声集成，以远低于 VLM 奖励模型的计算开销实现接近 SOTA 的偏好预测精度。 领域现状：扩散/Flow-Matching 模型的偏好对齐（如 R…
 tags:
   - "ICML2026"
   - "多模态VLM"

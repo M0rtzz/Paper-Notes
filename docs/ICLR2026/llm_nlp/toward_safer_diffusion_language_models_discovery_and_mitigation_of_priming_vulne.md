@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities
 description: >-
-  [ICLR 2026][LLM/NLP][扩散模型] 揭示了掩码扩散语言模型（MDLM）中的"启动漏洞"（priming vulnerability）——在去噪中间步骤注入肯定性 token 可绕过安全防线，并提出 Recovery Alignment（RA）方法训练模型从被污染的中间状态恢复到安全响应。
+  [ICLR 2026][LLM 其他][扩散模型] 揭示了掩码扩散语言模型（MDLM）中的"启动漏洞"（priming vulnerability）——在去噪中间步骤注入肯定性 token 可绕过安全防线，并提出 Recovery Alignment（RA）方法训练模型从被污染的中间状态恢复到安全响应。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散模型"
   - "jailbreak attacks"
   - "priming vulnerability"

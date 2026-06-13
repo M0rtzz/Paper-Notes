@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Impact of Token Granularity on the Predictive Power of Language Model Surprisal
 description: >-
-  [ACL 2025][LLM/NLP][token 粒度] 系统研究子词 token 粒度（词表大小 256~128K）对 LM surprisal 预测人类阅读时间能力的影响，发现 ~8K 词表的中等粒度在自然阅读时间预测上最优（甚至优于 GPT-2），而粗粒度 token 在花园路径句法效应上更敏感…
+  [ACL 2025][LLM 其他][token 粒度] 系统研究子词 token 粒度（词表大小 256~128K）对 LM surprisal 预测人类阅读时间能力的影响，发现 ~8K 词表的中等粒度在自然阅读时间预测上最优（甚至优于 GPT-2），而粗粒度 token 在花园路径句法效应上更敏感，揭示认知建模的最优分词粒度并非 NLP 通用标准。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "token 粒度"
   - "子词分词"
   - "惊奇度"

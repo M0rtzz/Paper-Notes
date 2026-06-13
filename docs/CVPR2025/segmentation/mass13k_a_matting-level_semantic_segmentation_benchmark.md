@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaSS13K: A Matting-level Semantic Segmentation Benchmark
 description: >-
-  [CVPR 2025][语义分割][高分辨率分割] 构建了包含 13,348 张 4K 分辨率图像的 matting 级语义分割数据集 MaSS13K（掩码复杂度比现有数据集高 20-50 倍）…
+  [CVPR 2025][语义分割][高分辨率分割] 构建了包含 13,348 张 4K 分辨率图像的 matting 级语义分割数据集 MaSS13K（掩码复杂度比现有数据集高 20-50 倍），并提出 MaSSFormer 模型通过双分支像素解码器（全局语义 + 局部结构）在保持计算效率的同时实现了高分辨率场景下精细边界的高质量分割。
 tags:
   - "CVPR 2025"
   - "语义分割"

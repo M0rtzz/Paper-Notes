@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video
 description: >-
-  [AAAI 2026][3D视觉][3D Gaussian Splatting] MoBGS 提出了一种端到端的动态去模糊 3D Gaussian Splatting 框架，通过 Blur-adaptive Latent Camera Estimation (BLCE) 和 Latent Camera-ind…
+  [AAAI 2026][3D视觉][3D Gaussian Splatting] MoBGS 提出了一种端到端的动态去模糊 3D Gaussian Splatting 框架，通过 Blur-adaptive Latent Camera Estimation (BLCE) 和 Latent Camera-induced Exposure Estimation (LCEE) 两个核心模块，从模糊单目视频中重建清晰的时空新视角，在 Stereo Blur 数据集上大幅超越现有 SOTA 方法。
 tags:
   - "AAAI 2026"
   - "3D视觉"

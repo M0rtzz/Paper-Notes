@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PointINS: Instance-Aware Self-Supervised Learning for Point Clouds
 description: >-
-  [CVPR 2026][3D视觉][点云自监督学习] PointINS 提出首个显式学习语义一致性和几何推理的点云自监督框架，通过无标签的偏移分支配合偏移分布正则化（ODR）和空间聚类正则化（SCR），在室内实例分割上平均提升 +3.5% mAP，室外全景分割提升 +4.1% PQ。
+  [CVPR 2026][3D视觉][点云自监督学习] PointINS 提出首个显式学习语义一致性和几何推理的点云自监督框架，通过无标签的偏移分支配合偏移分布正则化（ODR）和空间聚类正则化（SCR），在室内实例分割上平均提升 +3.5% mAP，室外全景分割提升 +4.1% PQ。 点云自监督学习（SSL）在语义分割上已取…
 tags:
   - "CVPR 2026"
   - "3D视觉"

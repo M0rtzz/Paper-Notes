@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVerImaTeC: A Dataset for Automatic Verification of Image-Text Claims with Evidence from the Web
 description: >-
-  [NeurIPS 2025][社会计算][图文核查] AVerImaTeC 构建了首个带完整证据标注的图文事实核查数据集——1297 条真实图文声明 + 5 阶段标注流水线（提取→QA 推理→充分性检查→迭代精炼→二次检查）+ 时间约束证据（防止时间泄露）…
+  [NeurIPS 2025][社会计算][图文核查] AVerImaTeC 构建了首个带完整证据标注的图文事实核查数据集——1297 条真实图文声明 + 5 阶段标注流水线（提取→QA 推理→充分性检查→迭代精炼→二次检查）+ 时间约束证据（防止时间泄露），基线系统在有 ground truth 证据时准确率 82%，但自动检索证据后降至 15-25%，揭示了图文核查的巨大挑战。
 tags:
   - "NeurIPS 2025"
   - "社会计算"

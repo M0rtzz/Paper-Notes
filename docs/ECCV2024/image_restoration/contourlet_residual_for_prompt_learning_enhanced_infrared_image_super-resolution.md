@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contourlet Residual for Prompt Learning Enhanced Infrared Image Super-Resolution
 description: >-
-  [ECCV 2024][图像恢复][红外图像超分辨率] 针对红外图像超分辨率的特殊挑战，提出 CoRPLE 框架，利用 Contourlet 变换进行多尺度多方向的红外频谱残差增强，并引入基于视觉语言模型的提示学习范式来捕获红外图像的固有特征，在红外 SR 任务上达到 SOTA 性能。
+  [ECCV 2024][图像恢复][红外图像超分辨率] 针对红外图像超分辨率的特殊挑战，提出 CoRPLE 框架，利用 Contourlet 变换进行多尺度多方向的红外频谱残差增强，并引入基于视觉语言模型的提示学习范式来捕获红外图像的固有特征，在红外 SR 任务上达到 SOTA 性能。 领域现状：图像超分辨率（SR）是图像增…
 tags:
   - "ECCV 2024"
   - "图像恢复"

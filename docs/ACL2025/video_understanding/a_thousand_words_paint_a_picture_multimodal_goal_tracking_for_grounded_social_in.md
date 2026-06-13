@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Thousand Words Paint a Picture: Multimodal Goal Tracking for Grounded Social Intelligence
 description: >-
-  [ACL 2025][视频理解][多模态目标追踪] 本文提出了一个多模态目标追踪框架，通过结合视觉与语言线索来推理社交场景中参与者的隐含目标，从而提升模型对社交情境的理解能力（即"落地的社会智能"）。
+  [ACL 2025][视频理解][多模态目标追踪] 本文提出了一个多模态目标追踪框架，通过结合视觉与语言线索来推理社交场景中参与者的隐含目标，从而提升模型对社交情境的理解能力（即"落地的社会智能"）。 领域现状：社会智能（Social Intelligence）是人工智能的重要研究方向，要求模型理解人类在社交场景中的意图、目…
 tags:
   - "ACL 2025"
   - "视频理解"

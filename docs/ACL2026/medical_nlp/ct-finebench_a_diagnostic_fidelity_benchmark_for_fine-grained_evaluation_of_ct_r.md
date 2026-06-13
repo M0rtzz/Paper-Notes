@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CT-FineBench: A Diagnostic Fidelity Benchmark for Fine-Grained Evaluation of CT Report Generation
 description: >-
-  [ACL 2026][医疗NLP][CT 报告生成] 作者把"CT 报告好不好"这个模糊问题，拆成"每个 finding 的每条细粒度属性是否对得上"的 QA 检查清单，构建出 44k 题的 CT-FineBench 基准…
+  [ACL 2026][医疗NLP][CT 报告生成] 作者把"CT 报告好不好"这个模糊问题，拆成"每个 finding 的每条细粒度属性是否对得上"的 QA 检查清单，构建出 44k 题的 CT-FineBench 基准，对临床错误的敏感度和与人类专家打分的相关性都显著超过 BLEU/BERTScore/RadGraph/RaTEScore/GREEN 等已有指标。
 tags:
   - "ACL 2026"
   - "医疗NLP"

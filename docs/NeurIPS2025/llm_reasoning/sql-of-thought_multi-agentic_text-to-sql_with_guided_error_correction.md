@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SQL-of-Thought: Multi-agentic Text-to-SQL with Guided Error Correction
 description: >-
-  [NeurIPS 2025][LLM推理][text-to-SQL] 提出 SQL-of-Thought——一个多智能体 Text-to-SQL 框架，将任务分解为 schema linking → 子问题识别 → CoT 查询计划生成 → SQL 生成 → 基于 31 类错误分类法的引导修正循环…
+  [NeurIPS 2025][LLM推理][text-to-SQL] 提出 SQL-of-Thought——一个多智能体 Text-to-SQL 框架，将任务分解为 schema linking → 子问题识别 → CoT 查询计划生成 → SQL 生成 → 基于 31 类错误分类法的引导修正循环，用 Claude 3 Opus 在 Spider 上达到 91.59% 执行准确率，比此前最佳 Chase SQL（87.6%）提升近 4 个百分点。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

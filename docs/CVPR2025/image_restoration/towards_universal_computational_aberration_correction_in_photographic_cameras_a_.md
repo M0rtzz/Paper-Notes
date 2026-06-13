@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OptiFusion: Towards Universal Computational Aberration Correction in Photographic Cameras
 description: >-
-  [CVPR 2025][图像恢复][计算像差校正] 扩展 OptiFusion 自动设计 120 种多样化镜头，提出 ODE 综合评估指标和大规模 benchmark，系统对比 24 种算法，发现 CNN 模型在像差校正中提供最佳速度-精度权衡，反直觉地超越 Transformer。
+  [CVPR 2025][图像恢复][计算像差校正] 扩展 OptiFusion 自动设计 120 种多样化镜头，提出 ODE 综合评估指标和大规模 benchmark，系统对比 24 种算法，发现 CNN 模型在像差校正中提供最佳速度-精度权衡，反直觉地超越 Transformer。 领域现状 领域现状：计算像差校正（CAC…
 tags:
   - "CVPR 2025"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EEG-Based Multimodal Learning via Hyperbolic Mixture-of-Curvature Experts
 description: >-
-  [ICML 2026][医学图像][EEG] EEG-MoCE 给 EEG-based 多模态学习（情绪/睡眠/认知）每个模态分配一个**可学习曲率**的 Lorentz 流形 expert…
+  [ICML 2026][医学图像][EEG] EEG-MoCE 给 EEG-based 多模态学习（情绪/睡眠/认知）每个模态分配一个**可学习曲率**的 Lorentz 流形 expert，再用"曲率大→层级结构更丰富→在 fusion 中权重更高"的 curvature-aware attention 做跨模态融合，在 EAV/ISRUC/Cognitive 三个数据集上 cross-subject 准确率分别 +14.14%、+3.34%、+7.98%。
 tags:
   - "ICML 2026"
   - "医学图像"

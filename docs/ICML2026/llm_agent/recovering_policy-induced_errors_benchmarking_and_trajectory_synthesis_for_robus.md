@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Recovering Policy-Induced Errors: Benchmarking and Trajectory Synthesis for Robust GUI Agents
 description: >-
-  [ICML 2026][LLM Agent][GUI智能体] 针对 GUI 智能体在真实部署中容易陷入"自己造的错误"无法恢复这一痛点，作者一边搭出 GUI-RobustEval（1216 个可执行测试，覆盖 11 种策略诱发错误 + 4 档错误深度）做细粒度评测…
+  [ICML 2026 Spotlight][LLM Agent][GUI智能体] 针对 GUI 智能体在真实部署中容易陷入"自己造的错误"无法恢复这一痛点，作者一边搭出 GUI-RobustEval（1216 个可执行测试，覆盖 11 种策略诱发错误 + 4 档错误深度）做细粒度评测，一边提出 RoTS——一种基于轨迹树的在线数据合成框架：在成功子树上用脆弱度 UCB 主动暴露新错误，在失败子树上用邻居经验做长程恢复回滚，最终合成 800k 反思数据，使 RoTS-32B 在 OSWorld 上拿到 47.4% SR / 33.8% All-Pass@4 的开源 SOTA。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM Agent"
   - "GUI智能体"
   - "策略诱发错误"

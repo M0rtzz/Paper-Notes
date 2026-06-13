@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][continual RL] 受人脑海马体-大脑皮层交互机制启发，提出 FAME 双学习器框架，通过快速学习器进行知识迁移、元学习器进行知识整合，在原则性地最小化灾难性遗忘的前提下实现高效的持续强化学习。
+  [ICLR 2026][强化学习][continual RL] 受人脑海马体-大脑皮层交互机制启发，提出 FAME 双学习器框架，通过快速学习器进行知识迁移、元学习器进行知识整合，在原则性地最小化灾难性遗忘的前提下实现高效的持续强化学习。 持续学习的核心挑战：传统深度 RL 算法针对单任务设计，面对连续到来的任务序列时…
 tags:
   - "ICLR 2026"
   - "强化学习"

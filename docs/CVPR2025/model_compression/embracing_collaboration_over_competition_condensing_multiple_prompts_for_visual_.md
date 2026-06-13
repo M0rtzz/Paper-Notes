@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning
 description: >-
-  [CVPR 2025][模型压缩][Visual ICL] 提出 Condenser 将多个 Visual ICL 的 prompt 候选通过 Patch-wise 跨注意力凝聚为单一 prompt，实现多 prompt 协作而非竞争选择…
+  [CVPR 2025][模型压缩][Visual ICL] 提出 Condenser 将多个 Visual ICL 的 prompt 候选通过 Patch-wise 跨注意力凝聚为单一 prompt，实现多 prompt 协作而非竞争选择，在分割/检测/上色等任务上以 16 个 prompt 输入达到 46.63 mIoU（vs 单 prompt 44.14），推理速度比逐一评估快 15×。
 tags:
   - "CVPR 2025"
   - "模型压缩"

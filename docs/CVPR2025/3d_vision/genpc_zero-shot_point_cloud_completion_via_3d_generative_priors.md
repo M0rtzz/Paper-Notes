@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenPC: Zero-shot Point Cloud Completion via 3D Generative Priors
 description: >-
-  [CVPR 2025][3D视觉][点云补全] 提出 GenPC 零样本点云补全框架，通过 Depth Prompting 模块将部分点云转化为深度图再生成 RGB 图像作为 Image-to-3D 模型的输入…
+  [CVPR 2025][3D视觉][点云补全] 提出 GenPC 零样本点云补全框架，通过 Depth Prompting 模块将部分点云转化为深度图再生成 RGB 图像作为 Image-to-3D 模型的输入，再通过 Geometric Preserving Fusion 模块将生成的 3D 形状与原始点云对齐融合，实现了比 SDS 优化方法更快更好的真实世界扫描补全。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval is Not Enough: Enhancing RAG Reasoning through Test-Time Critique and Optimization
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG] 提出 AlignRAG 框架，将 RAG 重新定义为"检索增强推理"，通过训练专用 Critic Language Model (CLM) 在测试时迭代批评和修正推理过程，解决推理与检索证据之间的错位问题…
+  [NeurIPS 2025][信息检索/RAG][RAG] 提出 AlignRAG 框架，将 RAG 重新定义为"检索增强推理"，通过训练专用 Critic Language Model (CLM) 在测试时迭代批评和修正推理过程，解决推理与检索证据之间的错位问题，8B CLM 在 OOD 任务上超越 72B 标准 CLM。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

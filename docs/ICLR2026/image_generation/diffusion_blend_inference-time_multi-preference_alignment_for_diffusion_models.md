@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Blend: Inference-Time Multi-Preference Alignment for Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][multi-preference alignment] 提出 Diffusion Blend，通过在推理时混合多个奖励微调模型的反向扩散过程来实现多偏好对齐：DB-MPA 支持任意奖励线性组合、DB-KLA 支持动态 KL 正则化控制、DB-MPA-LS 通过随机 LoRA…
+  [ICLR 2026][图像生成][multi-preference alignment] 提出 Diffusion Blend，通过在推理时混合多个奖励微调模型的反向扩散过程来实现多偏好对齐：DB-MPA 支持任意奖励线性组合、DB-KLA 支持动态 KL 正则化控制、DB-MPA-LS 通过随机 LoRA 采样消除推理开销，理论上证明了混合近似的误差界并在实验中接近 MORL oracle 上界。
 tags:
   - "ICLR 2026"
   - "图像生成"

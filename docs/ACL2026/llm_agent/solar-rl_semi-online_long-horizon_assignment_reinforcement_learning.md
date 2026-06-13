@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SOLAR-RL: Semi-Online Long-horizon Assignment Reinforcement Learning
 description: >-
-  [ACL2026][LLM Agent][GUI智能体] SOLAR-RL 用离线轨迹重构、失败点检测和目标对齐奖励塑形，把静态 GUI 数据加工成带有伪在线反馈的长程训练信号，使 Qwen2.5-VL-7B 规模的 GUI agent 在 Android Control、GUI-Odyssey 和 Andr…
+  [ACL2026 Findings][LLM Agent][GUI智能体] SOLAR-RL 用离线轨迹重构、失败点检测和目标对齐奖励塑形，把静态 GUI 数据加工成带有伪在线反馈的长程训练信号，使 Qwen2.5-VL-7B 规模的 GUI agent 在 Android Control、GUI-Odyssey 和 Android World 上获得接近或超过强 offline baseline 的稳定表现。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM Agent"
   - "GUI智能体"
   - "半在线强化学习"

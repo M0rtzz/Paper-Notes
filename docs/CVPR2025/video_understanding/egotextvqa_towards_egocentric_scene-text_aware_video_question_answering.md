@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoTextVQA: Towards Egocentric Scene-Text Aware Video Question Answering
 description: >-
-  [CVPR 2025][视频理解][第一人称视频问答] 提出 EgoTextVQA 基准，包含 1.5K 第一人称视频和 7K 场景文字相关问答对，揭示了当前 MLLM 在以自我中心视角进行实时场景文字问答辅助时的严重不足（最佳模型 Gemini 1.5 Pro 仅约 33% 准确率）。
+  [CVPR 2025][视频理解][第一人称视频问答] 提出 EgoTextVQA 基准，包含 1.5K 第一人称视频和 7K 场景文字相关问答对，揭示了当前 MLLM 在以自我中心视角进行实时场景文字问答辅助时的严重不足（最佳模型 Gemini 1.5 Pro 仅约 33% 准确率）。 领域现状 领域现状：现有场景文字 V…
 tags:
   - "CVPR 2025"
   - "视频理解"

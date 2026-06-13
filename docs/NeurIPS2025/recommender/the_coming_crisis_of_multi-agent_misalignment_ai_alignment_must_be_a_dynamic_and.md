@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Coming Crisis of Multi-Agent Misalignment: AI Alignment Must Be a Dynamic and Social Process
 description: >-
-  [NeurIPS 2025 (Position Paper)][推荐系统][多智能体系统] 立场论文，主张多智能体系统（MAS）中的 AI 对齐应被视为动态的、依赖交互的社会过程，而非孤立问题；借鉴社会科学理论分析了社会结构如何破坏群体和个体价值…
+  [NeurIPS 2025 (Position Paper)][推荐系统][多智能体系统] 立场论文，主张多智能体系统（MAS）中的 AI 对齐应被视为动态的、依赖交互的社会过程，而非孤立问题；借鉴社会科学理论分析了社会结构如何破坏群体和个体价值，并呼吁 AI 社区建立专门的仿真环境、基准测试和评估框架来应对这一挑战。
 tags:
   - "NeurIPS 2025 (Position Paper)"
   - "推荐系统"

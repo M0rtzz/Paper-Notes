@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Benchmarking LLMs for Political Science: A United Nations Perspective
 description: >-
-  [AAAI 2026][LLM评测][联合国安理会] 提出 UNBench，首个基于联合国安理会 1994-2024 年记录的综合性政治科学 LLM 评测基准，涵盖决议起草、投票模拟、通过预测和代表发言生成四个关联任务，评估 LLM 对复杂政治动态的理解和模拟能力。
+  [AAAI 2026 Oral][LLM评测][联合国安理会] 提出 UNBench，首个基于联合国安理会 1994-2024 年记录的综合性政治科学 LLM 评测基准，涵盖决议起草、投票模拟、通过预测和代表发言生成四个关联任务，评估 LLM 对复杂政治动态的理解和模拟能力。 领域现状：LLM 在自然语言处理上取得巨大进步…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM评测"
   - "联合国安理会"
   - "政治科学基准"

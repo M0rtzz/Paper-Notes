@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction
 description: >-
-  [3D视觉] 提出 Dual Point Maps (DualPM) 表示——从单张图像预测一对点图（相机空间 P + 规范空间 Q），将可变形物体的 3D 形状和姿态重建简化为点图预测问题，并引入分层 amodal 点图实现完整形状恢复（含自遮挡部分），仅用 1-2 个合成 3D 模型训练即可泛化到真实图像…
+  [3D视觉] 提出 Dual Point Maps (DualPM) 表示——从单张图像预测一对点图（相机空间 P + 规范空间 Q），将可变形物体的 3D 形状和姿态重建简化为点图预测问题，并引入分层 amodal 点图实现完整形状恢复（含自遮挡部分），仅用 1-2 个合成 3D 模型训练即可泛化到真实图像。
 tags:
   - "3D视觉"
 ---

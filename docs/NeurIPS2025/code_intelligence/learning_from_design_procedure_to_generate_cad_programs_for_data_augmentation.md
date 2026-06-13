@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning From Design Procedure To Generate CAD Programs for Data Augmentation
 description: >-
-  [NeurIPS 2025 (Workshop: Deep Learning for Code in the Agentic Era)][代码智能][CAD程序生成] 提出一种受工业设计流程启发的CAD程序数据增强范式，通过向LLM提供参考曲面程序和设计流程描述来引导生成包含B-Spline有机形状的CAD程序…
+  [NeurIPS 2025 (Workshop: Deep Learning for Code in the Agentic Era)][代码智能][CAD程序生成] 提出一种受工业设计流程启发的CAD程序数据增强范式，通过向LLM提供参考曲面程序和设计流程描述来引导生成包含B-Spline有机形状的CAD程序，显著缩小了公开CAD数据集与工业级设计在几何复杂度上的差距。
 tags:
   - "NeurIPS 2025 (Workshop: Deep Learning for Code in the Agentic Era)"
   - "代码智能"

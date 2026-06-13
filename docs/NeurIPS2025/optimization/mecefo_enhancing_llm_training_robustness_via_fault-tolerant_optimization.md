@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][容错训练] MeCeFO 提出了一种面向 LLM 训练的容错优化算法，当计算节点故障时通过跳连接、选择性激活重计算和低秩梯度近似三个技术将额外开销降到最低，在高频故障下仅有 4.18% 的吞吐量下降。
+  [NeurIPS 2025][优化/理论][容错训练] MeCeFO 提出了一种面向 LLM 训练的容错优化算法，当计算节点故障时通过跳连接、选择性激活重计算和低秩梯度近似三个技术将额外开销降到最低，在高频故障下仅有 4.18% 的吞吐量下降。 大规模 LLM 训练需要成千上万的 GPU 协同工作。在这种规模下…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

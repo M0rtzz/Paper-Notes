@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation
 description: >-
-  [CVPR 2026][AI安全][联邦学习] 提出 FedAFD 框架，通过双层对抗对齐、粒度感知特征融合和相似度引导的集成蒸馏三阶段设计，在多模态联邦学习中同时提升异构客户端和服务器的模型性能。
+  [CVPR 2026][AI安全][联邦学习] 提出 FedAFD 框架，通过双层对抗对齐、粒度感知特征融合和相似度引导的集成蒸馏三阶段设计，在多模态联邦学习中同时提升异构客户端和服务器的模型性能。 多模态联邦学习（MFL）允许不同模态的客户端在不共享原始数据的前提下协作训练模型，但面临三大挑战： 模态/任务异构性：不同客户…
 tags:
   - "CVPR 2026"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align-then-Unlearn: Embedding Alignment for LLM Unlearning
 description: >-
-  [ICML 2025][LLM安全][LLM 遗忘] 提出 Align-then-Unlearn 框架，通过在语义嵌入空间（而非 token 级别）执行遗忘操作，先训练嵌入预测模块对齐未来语义表示，再微调 LLM 使预测嵌入远离目标概念嵌入，实现对 prompt 改写鲁棒的概念级知识遗忘。
+  [ICML 2025][LLM安全][LLM 遗忘] 提出 Align-then-Unlearn 框架，通过在语义嵌入空间（而非 token 级别）执行遗忘操作，先训练嵌入预测模块对齐未来语义表示，再微调 LLM 使预测嵌入远离目标概念嵌入，实现对 prompt 改写鲁棒的概念级知识遗忘。 领域现状：LLM 在大规模数据上训…
 tags:
   - "ICML 2025"
   - "LLM安全"

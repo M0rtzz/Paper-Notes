@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DINO-Foresight: Looking into the Future with DINO
 description: >-
-  [NeurIPS 2025][自动驾驶][Future Prediction] 提出 DINO-Foresight，在视觉基础模型（VFM）的语义特征空间中预测未来帧特征演化，通过自监督 Masked Feature Transformer 预测 DINOv2 多层特征的 PCA 压缩表示…
+  [NeurIPS 2025][自动驾驶][Future Prediction] 提出 DINO-Foresight，在视觉基础模型（VFM）的语义特征空间中预测未来帧特征演化，通过自监督 Masked Feature Transformer 预测 DINOv2 多层特征的 PCA 压缩表示，搭配即插即用的 task-specific heads，单一模型同时完成语义分割、实例分割、深度估计和表面法线预测四项任务，大幅超越 VISTA 世界模型且推理快 100 倍。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

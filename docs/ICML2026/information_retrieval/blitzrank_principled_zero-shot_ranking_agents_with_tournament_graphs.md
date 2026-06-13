@@ -2,9 +2,9 @@
 title: >-
   [论文解读] BlitzRank: Principled Zero-shot Ranking Agents with Tournament Graphs
 description: >-
-  [ICML2026][信息检索/RAG][锦标赛图] 提出基于锦标赛图（tournament graph）的零样本重排序框架 BlitzRank，通过将每次 $k$-wise 比较产生的 $\binom{k}{2}$ 个偏好对累积到全局偏好图中并利用传递闭包推断额外排序关系…
+  [ICML2026 Spotlight][信息检索/RAG][锦标赛图] 提出基于锦标赛图（tournament graph）的零样本重排序框架 BlitzRank，通过将每次 $k$-wise 比较产生的 $\binom{k}{2}$ 个偏好对累积到全局偏好图中并利用传递闭包推断额外排序关系，在 14 个基准、5 个 LLM oracle 上实现 Pareto 最优——在匹配或超越现有方法精度的同时减少 25–40% token 消耗。
 tags:
-  - "ICML2026"
+  - "ICML2026 Spotlight"
   - "信息检索/RAG"
   - "锦标赛图"
   - "k-wise排序"

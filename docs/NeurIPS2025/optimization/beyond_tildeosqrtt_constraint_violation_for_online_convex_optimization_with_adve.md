@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints
 description: >-
-  [NeurIPS 2025][优化/理论][在线凸优化] 研究带对抗约束的在线凸优化 (COCO)，通过引入可调参数 $\beta$ 实现 $\tilde{O}(T^\beta)$ 遗憾与 $\tilde{O}(T^{1-\beta})$ 约束违反之间的精确权衡…
+  [NeurIPS 2025][优化/理论][在线凸优化] 研究带对抗约束的在线凸优化 (COCO)，通过引入可调参数 $\beta$ 实现 $\tilde{O}(T^\beta)$ 遗憾与 $\tilde{O}(T^{1-\beta})$ 约束违反之间的精确权衡，突破了此前 $\tilde{O}(\sqrt{T})$ 约束违反的已知最优界。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

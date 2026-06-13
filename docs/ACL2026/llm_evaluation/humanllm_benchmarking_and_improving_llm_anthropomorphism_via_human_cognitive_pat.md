@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HumanLLM: Benchmarking and Improving LLM Anthropomorphism via Human Cognitive Patterns
 description: >-
-  [ACL 2026][LLM评测][拟人化] 本文提出 HumanLLM 框架，将 244 个心理学模式（100 个人格特质 + 144 个社会认知模式）建模为相互作用的因果力而非孤立标签，构建了 11,359 个包含 2-5 个模式交互的场景和多轮对话数据集…
+  [ACL 2026][LLM评测][拟人化] 本文提出 HumanLLM 框架，将 244 个心理学模式（100 个人格特质 + 144 个社会认知模式）建模为相互作用的因果力而非孤立标签，构建了 11,359 个包含 2-5 个模式交互的场景和多轮对话数据集，通过双层 checklist 评估实现与人类判断的高对齐（$r=0.90$），HumanLLM-8B 在多模式动态上以 4 倍小的参数量超越 Qwen3-32B。
 tags:
   - "ACL 2026"
   - "LLM评测"

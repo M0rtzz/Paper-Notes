@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Language Gap: Synthetic Voice Diversity via Latent Mixup for Equitable Speech Recognition
 description: >-
-  [ICML 2025][音频/语音][ASR] 本文提出 LatentVoiceMix，在语音转换模型 Diff-HierVC 的说话人风格编码器潜在空间中进行 mixup 插值，生成具有新颖声音特征的合成语音数据用于增强 ASR 训练…
+  [ICML 2025][音频/语音][ASR] 本文提出 LatentVoiceMix，在语音转换模型 Diff-HierVC 的说话人风格编码器潜在空间中进行 mixup 插值，生成具有新颖声音特征的合成语音数据用于增强 ASR 训练，在低资源语言 Wolof 上取得了优于波形增强、频谱增强和标准语音转换的 WER 改善效果。
 tags:
   - "ICML 2025"
   - "音频/语音"

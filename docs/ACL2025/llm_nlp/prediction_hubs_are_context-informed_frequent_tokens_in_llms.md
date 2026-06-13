@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Prediction Hubs are Context-Informed Frequent Tokens in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][高维空间] 本文首次在自回归LLM中系统分析hubness现象，从理论上证明LLM预测中使用的概率距离不受距离集中效应影响，实证发现预测hub是上下文调制的高频token（属于"良性hub"），但用欧氏距离比较LLM表示时会产生有害的nuisance hub。
+  [ACL 2025][LLM 其他][高维空间] 本文首次在自回归LLM中系统分析hubness现象，从理论上证明LLM预测中使用的概率距离不受距离集中效应影响，实证发现预测hub是上下文调制的高频token（属于"良性hub"），但用欧氏距离比较LLM表示时会产生有害的nuisance hub。 领域现状：Hubness是…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "高维空间"
   - "hubness现象"
   - "预测hub"

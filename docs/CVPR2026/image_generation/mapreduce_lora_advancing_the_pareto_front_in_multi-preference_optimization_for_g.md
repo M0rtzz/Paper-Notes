@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MapReduce LoRA: Advancing the Pareto Front in Multi-Preference Optimization for Generative Models
 description: >-
-  [CVPR2026][图像生成][multi-preference optimization] 提出 MapReduce LoRA 和 RaTE 两种互补方法来推进多偏好优化的 Pareto 前沿：前者通过"Map（并行训偏好专家）+ Reduce（迭代合并）"的策略渐进推进 Pareto 前沿…
+  [CVPR2026][图像生成][multi-preference optimization] 提出 MapReduce LoRA 和 RaTE 两种互补方法来推进多偏好优化的 Pareto 前沿：前者通过"Map（并行训偏好专家）+ Reduce（迭代合并）"的策略渐进推进 Pareto 前沿；后者通过学习奖励感知的 token embedding 实现推理时可组合的偏好控制。
 tags:
   - "CVPR2026"
   - "图像生成"

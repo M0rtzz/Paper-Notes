@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLAyiNG: Towards Queer Language Processing
 description: >-
-  [NeurIPS 2025 (Queer in AI Workshop)][社会计算][queer slang] 构建了首个显式标注的酷儿俚语（queer slang）数据集 SLAyiNG，包含 695 个术语和近 20 万条使用实例…
+  [NeurIPS 2025 (Queer in AI Workshop)][社会计算][queer slang] 构建了首个显式标注的酷儿俚语（queer slang）数据集 SLAyiNG，包含 695 个术语和近 20 万条使用实例，并通过人机标注一致性实验（Krippendorff's α=0.746）表明推理模型可用于预筛选但仍需社区驱动的专家标注。
 tags:
   - "NeurIPS 2025 (Queer in AI Workshop)"
   - "社会计算"

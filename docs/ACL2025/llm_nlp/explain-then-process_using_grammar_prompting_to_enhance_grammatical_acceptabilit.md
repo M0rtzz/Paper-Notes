@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Explain-then-Process: Using Grammar Prompting to Enhance Grammatical Acceptability Judgments
 description: >-
-  [ACL 2025][LLM/NLP][提示学习] 提出 grammar prompting 的 explain-then-process 范式——先让 LLM 生成目标语法现象的解释，再将该解释作为上下文反馈给目标模型（LLM 或 SLM）辅助最小对语法判断…
+  [ACL 2025][LLM 其他][提示学习] 提出 grammar prompting 的 explain-then-process 范式——先让 LLM 生成目标语法现象的解释，再将该解释作为上下文反馈给目标模型（LLM 或 SLM）辅助最小对语法判断。在英语 BLiMP、中文 SLING、俄语 RuBLiMP 三个跨语言基准上显著提升准确率，SLM 搭配 GP+CoT 将 LLM-SLM 平均差距从 13.0pp 缩小到 5.8pp（缩小 56%）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示学习"
   - "语法可接受性"
   - "最小对"

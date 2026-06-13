@@ -2,7 +2,7 @@
 title: >-
   [论文解读] H-MoRe: Learning Human-centric Motion Representation for Action Analysis
 description: >-
-  [CVPR 2025][视频理解][人体运动表示] 提出 H-MoRe（Human-centric Motion Representation），通过骨骼约束和边界约束的联合自监督学习框架，从真实场景中学习精确的以人为中心的运动表示（world-local flows）…
+  [CVPR 2025][视频理解][人体运动表示] 提出 H-MoRe（Human-centric Motion Representation），通过骨骼约束和边界约束的联合自监督学习框架，从真实场景中学习精确的以人为中心的运动表示（world-local flows），在步态识别（CL@R1 +16.01%）、动作识别（Acc@1 +8.92%）和视频生成（FVD -67.07%）上均大幅超越传统光流方法。
 tags:
   - "CVPR 2025"
   - "视频理解"

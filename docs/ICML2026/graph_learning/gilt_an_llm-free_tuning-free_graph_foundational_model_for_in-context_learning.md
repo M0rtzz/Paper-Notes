@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GILT: An LLM-Free, Tuning-Free Graph Foundational Model for In-Context Learning
 description: >-
-  [ICML 2026][图学习][图基础模型] GILT 把节点/边/图三类少样本图分类统一改写成基于 token 的 in-context learning 问题，用"线性 GCN 提结构 + 非对称原型 token + 两段式注意力 Transformer + 原型头"的纯数值架构…
+  [ICML 2026][图学习][图基础模型] GILT 把节点/边/图三类少样本图分类统一改写成基于 token 的 in-context learning 问题，用"线性 GCN 提结构 + 非对称原型 token + 两段式注意力 Transformer + 原型头"的纯数值架构，做到既不依赖 LLM 也不需要任何下游 tuning，在 5-shot 设置下超过 LLM-based 和 tuning-based GFM，同时比它们快 1~4 个数量级。
 tags:
   - "ICML 2026"
   - "图学习"

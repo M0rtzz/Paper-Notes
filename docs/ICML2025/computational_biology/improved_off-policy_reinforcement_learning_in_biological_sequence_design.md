@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Off-policy Reinforcement Learning in Biological Sequence Design
 description: >-
-  [ICML2025][计算生物][biological sequence design] 提出 δ-Conservative Search (δ-CS)，一种面向生物序列设计的新型 off-policy 搜索方法…
+  [ICML2025][计算生物][biological sequence design] 提出 δ-Conservative Search (δ-CS)，一种面向生物序列设计的新型 off-policy 搜索方法，通过对高分离线序列进行 token 级噪声注入（以概率 δ 随机遮蔽）再用 GFlowNet 策略去噪，并根据代理模型不确定性自适应调节保守程度，在 DNA、RNA、蛋白质和肽设计任务上显著优于现有方法。
 tags:
   - "ICML2025"
   - "计算生物"

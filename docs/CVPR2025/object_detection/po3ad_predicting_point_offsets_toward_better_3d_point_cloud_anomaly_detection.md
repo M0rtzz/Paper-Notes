@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PO3AD: Predicting Point Offsets toward Better 3D Point Cloud Anomaly Detection
 description: >-
-  [CVPR 2025][目标检测][点云异常检测] PO3AD 提出通过预测伪异常点的偏移向量（而非重建完整点云）来学习正常点云表征，使模型注意力聚焦于异常区域，结合法向量引导的伪异常生成方法（Norm-AS）…
+  [CVPR 2025][目标检测][点云异常检测] PO3AD 提出通过预测伪异常点的偏移向量（而非重建完整点云）来学习正常点云表征，使模型注意力聚焦于异常区域，结合法向量引导的伪异常生成方法（Norm-AS），在 Anomaly-ShapeNet 和 Real3D-AD 上分别比现有方法提升 9.0% 和 1.4% 的检测 AUC-ROC。
 tags:
   - "CVPR 2025"
   - "目标检测"

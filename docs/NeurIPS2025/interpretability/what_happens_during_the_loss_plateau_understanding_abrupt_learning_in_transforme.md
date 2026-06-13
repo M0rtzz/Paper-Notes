@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Happens During the Loss Plateau? Understanding Abrupt Learning in Transformers
 description: >-
-  [NeurIPS 2025][可解释性][abrupt learning] 系统研究 Transformer 训练中的"突变学习"现象，揭示 loss 平台期内模型已学会部分解、同时表现出输出重复偏差和表示坍缩，并证明注意力图的缓慢学习是关键瓶颈…
+  [NeurIPS 2025][可解释性][abrupt learning] 系统研究 Transformer 训练中的"突变学习"现象，揭示 loss 平台期内模型已学会部分解、同时表现出输出重复偏差和表示坍缩，并证明注意力图的缓慢学习是关键瓶颈，相关发现在 Pythia/OLMo 等 LLM 预训练早期也得到验证。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

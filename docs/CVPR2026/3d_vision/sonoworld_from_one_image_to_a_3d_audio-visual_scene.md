@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SonoWorld: From One Image to a 3D Audio-Visual Scene
 description: >-
-  [CVPR 2026][3D视觉][3D音频视觉场景] 提出 SonoWorld，一个 training-free 的框架，可以从单张图片出发，生成可探索的3D音频-视觉场景：先将图片扩展为360°全景并重建为3D高斯场景，再通过VLM驱动的语义定位放置声源锚点，最后用 Ambisonics 编码渲染空间音频…
+  [CVPR 2026][3D视觉][3D音频视觉场景] 提出 SonoWorld，一个 training-free 的框架，可以从单张图片出发，生成可探索的3D音频-视觉场景：先将图片扩展为360°全景并重建为3D高斯场景，再通过VLM驱动的语义定位放置声源锚点，最后用 Ambisonics 编码渲染空间音频，实现视觉与听觉的几何和语义对齐。
 tags:
   - "CVPR 2026"
   - "3D视觉"

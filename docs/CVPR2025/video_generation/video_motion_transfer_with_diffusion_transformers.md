@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiTFlow: Video Motion Transfer with Diffusion Transformers
 description: >-
-  [CVPR 2025][视频生成][运动迁移] DiTFlow提出了首个专为扩散Transformer(DiT)设计的运动迁移方法，通过分析跨帧注意力图提取Attention Motion Flow(AMF)作为逐patch的运动信号，以无训练的优化方式引导新视频生成复现参考视频的运动模式。
+  [CVPR 2025][视频生成][运动迁移] DiTFlow提出了首个专为扩散Transformer(DiT)设计的运动迁移方法，通过分析跨帧注意力图提取Attention Motion Flow(AMF)作为逐patch的运动信号，以无训练的优化方式引导新视频生成复现参考视频的运动模式。 视频扩散模型虽然能生成逼真的视频…
 tags:
   - "CVPR 2025"
   - "视频生成"

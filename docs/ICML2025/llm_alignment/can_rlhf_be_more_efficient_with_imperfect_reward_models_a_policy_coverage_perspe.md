@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective
 description: >-
-  [ICML 2025][LLM对齐][迁移学习] 发现 RLHF 中 KL 正则化带来的结构性质——策略对最优策略的 coverage 被其次优性控制（$\text{Cov}^{\pi^*|\pi} \leq 1 + \kappa \cdot (J(\pi^*) - J(\pi))/\beta$）…
+  [ICML 2025][LLM对齐][迁移学习] 发现 RLHF 中 KL 正则化带来的结构性质——策略对最优策略的 coverage 被其次优性控制（$\text{Cov}^{\pi^*|\pi} \leq 1 + \kappa \cdot (J(\pi^*) - J(\pi))/\beta$），据此提出两条迁移学习原则：(1) 选高 policy value 的 transfer policy，(2) self-transfer 从在线数据蒸馏策略。设计 TPO 算法实现早期 $O(W\sqrt{T})$、后期 $O(\sqrt{T})$ 的 regret，可模块化集成 DPO/IPO/XPO…
 tags:
   - "ICML 2025"
   - "LLM对齐"

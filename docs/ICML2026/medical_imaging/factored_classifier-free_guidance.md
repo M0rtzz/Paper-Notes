@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Factored Classifier-Free Guidance
 description: >-
-  [ICML 2026][医学图像][Classifier-Free Guidance] 本文识别出 CFG 在扩散模型反事实生成中存在「属性放大 (attribute amplification)」失效模式——单一全局 $\omega$ 会把本不该改变的属性一起放大…
+  [ICML 2026][医学图像][Classifier-Free Guidance] 本文识别出 CFG 在扩散模型反事实生成中存在「属性放大 (attribute amplification)」失效模式——单一全局 $\omega$ 会把本不该改变的属性一起放大，并提出 FCFG：按因果图分组、为每组属性分配独立 guidance 权重，从而在 CelebA-HQ / EMBED / MIMIC-CXR 上显著降低非目标属性漂移、改善反事实可逆性。
 tags:
   - "ICML 2026"
   - "医学图像"

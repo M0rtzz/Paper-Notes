@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CHARM: 用 Multimodal JEPA + 通道描述做时间序列 foundation embedding
 description: >-
-  [ICML 2026][多模态VLM][时间序列基础模型] CHARM 把通道文本描述（如"温度传感器 °C"）作为 inductive bias 注入时间序列 Transformer，用 JEPA 目标（latent prediction 而非 raw signal reconstruction）训练…
+  [ICML 2026][多模态VLM][时间序列基础模型] CHARM 把通道文本描述（如"温度传感器 °C"）作为 inductive bias 注入时间序列 Transformer，用 JEPA 目标（latent prediction 而非 raw signal reconstruction）训练；得到的 embedding 在 anomaly detection、classification、forecasting 上用 linear probe 就能与 PatchTST/MOMENT/Moirai 等专用模型匹敌，且 channel-permutation 严格等变。
 tags:
   - "ICML 2026"
   - "多模态VLM"

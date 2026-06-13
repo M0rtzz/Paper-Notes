@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Attribution Methods in NLP: Navigating a Fragmented Landscape
 description: >-
-  [ACL 2025][LLM/NLP][归因方法] 本文对NLP领域的归因方法（Attribution Methods）进行了全面的综述和系统性比较，针对该领域评估标准碎片化、方法间缺乏公平对比的问题，提出了统一的评估框架，并揭示了不同归因方法在不同任务和模型架构上的适用性规律。
+  [ACL 2025][LLM 其他][归因方法] 本文对NLP领域的归因方法（Attribution Methods）进行了全面的综述和系统性比较，针对该领域评估标准碎片化、方法间缺乏公平对比的问题，提出了统一的评估框架，并揭示了不同归因方法在不同任务和模型架构上的适用性规律。 领域现状：归因方法（Attribution M…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "归因方法"
   - "可解释NLP"
   - "特征重要性"

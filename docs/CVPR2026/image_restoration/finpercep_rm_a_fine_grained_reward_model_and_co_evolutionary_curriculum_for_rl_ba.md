@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FinPercep-RM: A Fine-grained Reward Model and Co-evolutionary Curriculum for RL-based Real-world Super-Resolution
 description: >-
-  [CVPR 2026][图像恢复][图像超分辨率] 提出细粒度感知奖励模型 FinPercep-RM 和协同进化课程学习（CCL）策略，解决 RLHF 应用于真实世界超分辨率时的奖励黑客和训练不稳定问题，通过同时输出全局质量分数和空间退化热力图实现局部缺陷感知。
+  [CVPR 2026][图像恢复][图像超分辨率] 提出细粒度感知奖励模型 FinPercep-RM 和协同进化课程学习（CCL）策略，解决 RLHF 应用于真实世界超分辨率时的奖励黑客和训练不稳定问题，通过同时输出全局质量分数和空间退化热力图实现局部缺陷感知。 基于扩散模型的真实世界图像超分辨率（Real-ISR）已取得显…
 tags:
   - "CVPR 2026"
   - "图像恢复"

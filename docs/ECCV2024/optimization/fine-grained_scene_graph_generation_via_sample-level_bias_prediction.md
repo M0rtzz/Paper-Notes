@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction
 description: >-
-  [ECCV2024][优化/理论][Scene Graph Generation] 提出样本级偏置预测方法 SBP，通过 Bias-Oriented GAN 利用物体对 union region 的上下文信息预测样本特异性纠偏向量，将粗粒度关系修正为细粒度关系…
+  [ECCV2024][优化/理论][Scene Graph Generation] 提出样本级偏置预测方法 SBP，通过 Bias-Oriented GAN 利用物体对 union region 的上下文信息预测样本特异性纠偏向量，将粗粒度关系修正为细粒度关系，在 VG/GQA/VG-1800 上相比数据集级纠偏方法平均提升 5.6%/3.9%/3.2% 的 Average@K。
 tags:
   - "ECCV2024"
   - "优化/理论"

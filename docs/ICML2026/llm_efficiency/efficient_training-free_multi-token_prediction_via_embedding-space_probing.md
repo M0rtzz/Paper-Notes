@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Training-Free Multi-Token Prediction via Embedding-Space Probing
 description: >-
-  [ICML 2026][LLM效率][多 token 预测] 本文提出 ESP（Embedding-Space Probing）：在不修改任何权重、不训练任何辅助模型的前提下，把"prompt 嵌入均值"作为 mask token 注入到冻结 LLM 的输入序列里，借助一次前向同时探出未来多个 token…
+  [ICML 2026][LLM效率][多 token 预测] 本文提出 ESP（Embedding-Space Probing）：在不修改任何权重、不训练任何辅助模型的前提下，把"prompt 嵌入均值"作为 mask token 注入到冻结 LLM 的输入序列里，借助一次前向同时探出未来多个 token，再用基础模型自身做无损推测验证，在 LLaMA3 / Qwen3 上比同类训练免费基线（LADE / STAND / PLD）的平均接受长度高 7–11%、吞吐高 15–19%。
 tags:
   - "ICML 2026"
   - "LLM效率"

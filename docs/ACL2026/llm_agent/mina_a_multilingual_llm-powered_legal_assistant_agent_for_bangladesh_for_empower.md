@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Mina: A Multilingual LLM-Powered Legal Assistant Agent for Bangladesh
 description: >-
-  [ACL 2026][LLM Agent][法律助手] 开发 Mina——面向孟加拉国法律场景的多语言 LLM 法律助手，通过两阶段 RAG 流水线精准检索法案和条款，配合工具链和多语言嵌入，在孟加拉律师资格考试中取得 75-80% 的通过成绩，法律咨询成本仅为传统方式的 0.12-0.61%。
+  [ACL 2026 Findings][LLM Agent][法律助手] 开发 Mina——面向孟加拉国法律场景的多语言 LLM 法律助手，通过两阶段 RAG 流水线精准检索法案和条款，配合工具链和多语言嵌入，在孟加拉律师资格考试中取得 75-80% 的通过成绩，法律咨询成本仅为传统方式的 0.12-0.61%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "法律助手"
   - "多语言Agent"

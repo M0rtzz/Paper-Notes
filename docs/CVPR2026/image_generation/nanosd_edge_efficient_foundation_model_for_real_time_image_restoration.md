@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NanoSD: Edge Efficient Foundation Model for Real Time Image Restoration
 description: >-
-  [CVPR2026][图像生成][扩散模型蒸馏] 提出 NanoSD，通过对 SD 1.5 进行硬件感知的 U-Net 分解、逐块特征蒸馏和多目标贝叶斯优化，构建了一族 Pareto 最优的轻量扩散基础模型（130M–315M 参数，最快 12ms 推理）…
+  [CVPR2026][图像生成][扩散模型蒸馏] 提出 NanoSD，通过对 SD 1.5 进行硬件感知的 U-Net 分解、逐块特征蒸馏和多目标贝叶斯优化，构建了一族 Pareto 最优的轻量扩散基础模型（130M–315M 参数，最快 12ms 推理），可作为 drop-in backbone 在超分、人脸修复、去模糊、单目深度估计等多任务上达到 SOTA 级表现。
 tags:
   - "CVPR2026"
   - "图像生成"

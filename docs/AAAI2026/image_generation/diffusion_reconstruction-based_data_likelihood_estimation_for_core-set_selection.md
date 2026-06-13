@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Reconstruction-Based Data Likelihood Estimation for Core-Set Selection
 description: >-
-  [AAAI 2026][图像生成][核心集选择] 提出利用扩散模型的部分反向去噪重建偏差作为数据似然的理论近似信号，配合信息瓶颈理论选择最优重建时间步，实现分布感知的核心集选择，在 ImageNet 上仅用 50% 数据即可逼近全量训练性能。
+  [AAAI 2026][图像生成][核心集选择] 提出利用扩散模型的部分反向去噪重建偏差作为数据似然的理论近似信号，配合信息瓶颈理论选择最优重建时间步，实现分布感知的核心集选择，在 ImageNet 上仅用 50% 数据即可逼近全量训练性能。 核心集选择（Core-set Selection）旨在从大规模数据集中选取代表性子…
 tags:
   - "AAAI 2026"
   - "图像生成"

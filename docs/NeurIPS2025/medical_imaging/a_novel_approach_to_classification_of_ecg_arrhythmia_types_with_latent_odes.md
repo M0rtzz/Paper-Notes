@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Novel Approach to Classification of ECG Arrhythmia Types with Latent ODEs
 description: >-
-  [NeurIPS 2025 (Workshop: Learning from Time Series for Health)][医学图像][Latent ODE] 将路径最小化 Latent ODE 的编码器与梯度提升决策树（GBDT）组合为两阶段 ECG 心律失常分类流水线…
+  [NeurIPS 2025 (Workshop: Learning from Time Series for Health)][医学图像][Latent ODE] 将路径最小化 Latent ODE 的编码器与梯度提升决策树（GBDT）组合为两阶段 ECG 心律失常分类流水线，在 MIT-BIH 数据集上的 macro AUC-ROC 从 360Hz 的 0.984 仅降至 45Hz 的 0.976，展示了对采样频率变化的强鲁棒性。
 tags:
   - "NeurIPS 2025 (Workshop: Learning from Time Series for Health)"
   - "医学图像"
@@ -127,10 +127,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ Latent ODE 用于 ECG 分类的组合有新意，但核心组件（Latent ODE、GBDT、SMOTE）均为现有方法
-- 实验充分度: ⭐⭐ 仅一个小数据集，缺乏与主流方法对比和实际设备测试
-- 写作质量: ⭐⭐⭐⭐ 短论文结构紧凑清晰，算法伪代码直观
-- 价值: ⭐⭐⭐ 思路有实用价值但需更充分验证，作为初步探索方向正确
+- 新颖性: ⭐⭐⭐⭐ Latent ODE 用于 ECG 分类的组合有新意，但核心组件（Latent ODE、GBDT、SMOTE）均为现有方法
+- 实验充分度: ⭐⭐⭐ 仅一个小数据集，缺乏与主流方法对比和实际设备测试
+- 写作质量: ⭐⭐⭐⭐⭐ 短论文结构紧凑清晰，算法伪代码直观
+- 价值: ⭐⭐⭐⭐ 思路有实用价值但需更充分验证，作为初步探索方向正确
 
 <!-- RELATED:START -->
 

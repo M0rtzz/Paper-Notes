@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization
 description: >-
-  [ECCV 2024][3D视觉][3D高斯溅射] 发现同时训练两个 3DGS 辐射场时它们在高斯位置和渲染结果上的差异（disagreement）与重建质量负相关，据此提出 CoR-GS 通过协同剪枝和伪视角协同正则化来抑制不准确重建，在稀疏视角下实现 SOTA 新视角合成。
+  [ECCV 2024][3D视觉][3D高斯溅射] 发现同时训练两个 3DGS 辐射场时它们在高斯位置和渲染结果上的差异（disagreement）与重建质量负相关，据此提出 CoR-GS 通过协同剪枝和伪视角协同正则化来抑制不准确重建，在稀疏视角下实现 SOTA 新视角合成。 3D Gaussian Splatting（3…
 tags:
   - "ECCV 2024"
   - "3D视觉"

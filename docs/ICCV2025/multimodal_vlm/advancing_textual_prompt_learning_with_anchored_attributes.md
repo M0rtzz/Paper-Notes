@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Advancing Textual Prompt Learning with Anchored Attributes
 description: >-
-  [ICCV 2025][多模态VLM][提示学习] 本文提出 ATPrompt，通过在文本 prompt 中嵌入通用属性 token（如颜色、形状），将软 prompt 的学习空间从一维类别级别拓展到多维属性级别，作为即插即用的模块可无缝集成到现有文本 prompt 学习方法中…
+  [ICCV 2025][多模态VLM][提示学习] 本文提出 ATPrompt，通过在文本 prompt 中嵌入通用属性 token（如颜色、形状），将软 prompt 的学习空间从一维类别级别拓展到多维属性级别，作为即插即用的模块可无缝集成到现有文本 prompt 学习方法中，在 11 个数据集上一致性提升基线性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

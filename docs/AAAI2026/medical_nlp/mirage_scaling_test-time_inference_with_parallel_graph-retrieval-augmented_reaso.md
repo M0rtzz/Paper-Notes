@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains
 description: >-
-  [AAAI 2026][医疗NLP][医学QA] 提出MIRAGE框架，将传统的线性推理链扩展为并行多链推理范式，结合结构化医学知识图谱的自适应检索（邻域扩展和多跳遍历），通过跨链验证解决矛盾，在三个医学QA基准上持续优于GPT-4o、ToT和Search-o1等方法。
+  [AAAI 2026][医疗NLP][医学QA] 提出MIRAGE框架，将传统的线性推理链扩展为并行多链推理范式，结合结构化医学知识图谱的自适应检索（邻域扩展和多跳遍历），通过跨链验证解决矛盾，在三个医学QA基准上持续优于GPT-4o、ToT和Search-o1等方法。 大型推理模型（LRMs）通过链式思考（CoT）提示在测…
 tags:
   - "AAAI 2026"
   - "医疗NLP"

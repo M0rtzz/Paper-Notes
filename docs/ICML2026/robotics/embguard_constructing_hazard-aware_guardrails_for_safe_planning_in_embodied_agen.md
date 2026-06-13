@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMBGuard: Constructing Hazard-Aware Guardrails for Safe Planning in Embodied Agents
 description: >-
-  [ICML 2026][机器人][具身 agent] EmbGuard 把"具身 agent 的物理安全判断"从策略里剥离成独立的小模型 guardrail——输入 (观察图, 候选动作)，输出 (是否危险, 风险类别, 危险解释)；2B/4B 规模就追平 GPT-5.1/Gemini-2.5-Pro…
+  [ICML 2026][机器人][具身 agent] EmbGuard 把"具身 agent 的物理安全判断"从策略里剥离成独立的小模型 guardrail——输入 (观察图, 候选动作)，输出 (是否危险, 风险类别, 危险解释)；2B/4B 规模就追平 GPT-5.1/Gemini-2.5-Pro，并把 baseline 普遍存在的"动不动就 false positive"问题压下去。
 tags:
   - "ICML 2026"
   - "机器人"

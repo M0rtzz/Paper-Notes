@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays
 description: >-
-  [NeurIPS 2025][医学图像][胸部X光] 提出 CheXStruct + CXReasonBench，一个基于胸部X光的结构化诊断推理评估框架，通过多路径、多阶段评估揭示现有 LVLM 在中间推理步骤上的严重不足。
+  [NeurIPS 2025][医学图像][胸部X光] 提出 CheXStruct + CXReasonBench，一个基于胸部X光的结构化诊断推理评估框架，通过多路径、多阶段评估揭示现有 LVLM 在中间推理步骤上的严重不足。 领域现状：大型视觉语言模型（LVLM）在医学影像中的应用日益广泛，包括报告生成和视觉问答（VQA）…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

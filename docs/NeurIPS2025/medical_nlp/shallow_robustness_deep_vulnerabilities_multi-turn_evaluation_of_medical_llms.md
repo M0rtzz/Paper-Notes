@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs
 description: >-
-  [NeurIPS 2025][医疗NLP][医学LLM] 提出MedQA-Followup框架系统评估医学LLM的多轮鲁棒性，发现模型在单轮扰动下表现尚可（浅层鲁棒性），但在多轮追问中准确率可从91.2%暴跌至13.5%（深层脆弱性），且间接上下文操纵比直接错误建议更具破坏力。
+  [NeurIPS 2025][医疗NLP][医学LLM] 提出MedQA-Followup框架系统评估医学LLM的多轮鲁棒性，发现模型在单轮扰动下表现尚可（浅层鲁棒性），但在多轮追问中准确率可从91.2%暴跌至13.5%（深层脆弱性），且间接上下文操纵比直接错误建议更具破坏力。 医学LLM正快速从研究原型进入临床应用…
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

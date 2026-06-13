@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AWM: Accurate Weight-Matrix Fingerprint for Large Language Models
 description: >-
-  [ICLR 2026][强化学习][model fingerprinting] 提出 AWM，一种无需训练的 LLM 权重矩阵指纹方法，利用线性分配问题（LAP）恢复嵌入层的置换和符号翻转，再用无偏 CKA 消除 Q/K 矩阵的正交变换影响，在 150 对 LLM 上实现完美 AUC（1.0）…
+  [ICLR 2026][强化学习][model fingerprinting] 提出 AWM，一种无需训练的 LLM 权重矩阵指纹方法，利用线性分配问题（LAP）恢复嵌入层的置换和符号翻转，再用无偏 CKA 消除 Q/K 矩阵的正交变换影响，在 150 对 LLM 上实现完美 AUC（1.0），对 SFT、持续预训练（5.5T token）、RL、多模态扩展、剪枝、upcycling 六类后训练均鲁棒，30 秒内完成。
 tags:
   - "ICLR 2026"
   - "强化学习"

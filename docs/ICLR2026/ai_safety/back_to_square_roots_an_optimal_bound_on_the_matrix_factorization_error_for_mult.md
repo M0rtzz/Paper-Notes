@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Back to Square Roots: An Optimal Bound on the Matrix Factorization Error for Multi-Epoch Differentially Private SGD
 description: >-
-  [ICLR 2026][AI安全][differential privacy] 提出 Banded Inverse Square Root (BISR) 矩阵分解方法，通过对逆相关矩阵（而非相关矩阵本身）施加带状结构，首次在多轮参与差分隐私 SGD 中实现渐近最优的分解误差界…
+  [ICLR 2026][AI安全][differential privacy] 提出 Banded Inverse Square Root (BISR) 矩阵分解方法，通过对逆相关矩阵（而非相关矩阵本身）施加带状结构，首次在多轮参与差分隐私 SGD 中实现渐近最优的分解误差界，并配套低存储优化变体 BandInvMF。
 tags:
   - "ICLR 2026"
   - "AI安全"

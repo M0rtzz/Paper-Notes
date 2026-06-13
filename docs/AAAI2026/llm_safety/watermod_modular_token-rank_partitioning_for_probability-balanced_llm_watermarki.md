@@ -2,9 +2,9 @@
 title: >-
   [论文解读] WaterMod: Modular Token-Rank Partitioning for Probability-Balanced LLM Watermarking
 description: >-
-  [AAAI 2026][LLM安全][LLM水印] 提出 WaterMod，一种基于模算术 ($\text{rank} \bmod k$) 的 LLM 文本水印方法，通过对概率排序后的词表进行模残差类划分，在零比特（$k=2$）和多比特（$k>2$）水印场景下统一实现高检测率和低质量损耗…
+  [AAAI 2026 Oral][LLM安全][LLM水印] 提出 WaterMod，一种基于模算术 ($\text{rank} \bmod k$) 的 LLM 文本水印方法，通过对概率排序后的词表进行模残差类划分，在零比特（$k=2$）和多比特（$k>2$）水印场景下统一实现高检测率和低质量损耗，无需外部同义词库或哈希技巧。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM安全"
   - "LLM水印"
   - "文本水印"

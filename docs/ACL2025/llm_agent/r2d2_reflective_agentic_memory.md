@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R2D2: Remembering, Replaying and Dynamic Decision Making with a Reflective Agentic Memory
 description: >-
-  [ACL 2025][LLM Agent][web agent] R2D2 提出了一个结合 Remember（经验回放缓冲区 + A* 搜索导航）和 Reflect（错误反思 + 反思记忆存储）两范式的 Web Agent 框架，将 Web 导航从 Unknown MDP 转化为 Known MDP…
+  [ACL 2025][LLM Agent][web agent] R2D2 提出了一个结合 Remember（经验回放缓冲区 + A* 搜索导航）和 Reflect（错误反思 + 反思记忆存储）两范式的 Web Agent 框架，将 Web 导航从 Unknown MDP 转化为 Known MDP，在 WebArena 上导航错误减少 50%，任务完成率提升 3 倍，超越 SOTA 17%。
 tags:
   - "ACL 2025"
   - "LLM Agent"

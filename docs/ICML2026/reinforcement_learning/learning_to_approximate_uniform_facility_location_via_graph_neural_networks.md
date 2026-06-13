@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Approximate Uniform Facility Location via Graph Neural Networks
 description: >-
-  [ICML 2026][强化学习][Uniform Facility Location] 本文为 Uniform Facility Location 设计了一个把经典近似算法 SimpleUniformFL 神经化的 MPNN，**既可用无监督期望成本损失端到端训练…
+  [ICML 2026][强化学习][Uniform Facility Location] 本文为 Uniform Facility Location 设计了一个把经典近似算法 SimpleUniformFL 神经化的 MPNN，**既可用无监督期望成本损失端到端训练，也具备 $\mathcal{O}(\log n)$（递归版还能到 $\mathcal{O}(1)$）的可证明近似界**，实验上既打过 SimpleUniformFL 经典算法、也逼近 ILP 最优。
 tags:
   - "ICML 2026"
   - "强化学习"

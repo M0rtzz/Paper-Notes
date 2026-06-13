@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing
 description: >-
-  [AAAI 2026][时间序列][非平稳时间序列] 提出 DTAF 双分支框架，通过时域的非平稳 MoE 滤波器提取并去除异质非平稳模式、频域的频谱差分追踪频率漂移，并通过双分支注意力融合两个域的互补信息，实现鲁棒的非平稳时间序列预测。
+  [AAAI 2026][时间序列][非平稳时间序列] 提出 DTAF 双分支框架，通过时域的非平稳 MoE 滤波器提取并去除异质非平稳模式、频域的频谱差分追踪频率漂移，并通过双分支注意力融合两个域的互补信息，实现鲁棒的非平稳时间序列预测。 问题背景 时间序列预测在能源、金融、交通、云计算等领域至关重要。现实世界的时间序列通常…
 tags:
   - "AAAI 2026"
   - "时间序列"

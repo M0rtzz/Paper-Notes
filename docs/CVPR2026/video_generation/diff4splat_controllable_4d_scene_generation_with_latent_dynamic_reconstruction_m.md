@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation
 description: >-
-  [CVPR 2026][视频生成][4D生成] 提出 Diff4Splat，一个前馈式框架，将视频扩散模型与可变形3D高斯场统一到端到端可训练的模型中，从单张图像在约30秒内直接生成动态4D场景表示，比优化方法快60倍。
+  [CVPR 2026][视频生成][4D生成] 提出 Diff4Splat，一个前馈式框架，将视频扩散模型与可变形3D高斯场统一到端到端可训练的模型中，从单张图像在约30秒内直接生成动态4D场景表示，比优化方法快60倍。 动态3D场景生成（4D生成）是计算机视觉的核心挑战，在沉浸式内容创建、机器人和仿真领域有广泛应用…
 tags:
   - "CVPR 2026"
   - "视频生成"

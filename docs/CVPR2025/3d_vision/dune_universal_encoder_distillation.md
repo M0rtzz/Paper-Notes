@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DUNE: Distilling a Universal Encoder from Heterogeneous 2D and 3D Teachers
 description: >-
-  [CVPR 2025][3D视觉][多教师蒸馏] 提出 DUNE，首次研究异构教师蒸馏（co-distillation）问题——从任务目标和训练数据都显著不同的教师模型（DINOv2 + MASt3R + Multi-HMR）中蒸馏出一个 ViT-Base 通用编码器…
+  [CVPR 2025][3D视觉][多教师蒸馏] 提出 DUNE，首次研究异构教师蒸馏（co-distillation）问题——从任务目标和训练数据都显著不同的教师模型（DINOv2 + MASt3R + Multi-HMR）中蒸馏出一个 ViT-Base 通用编码器，在 2D 视觉、3D 场景理解和 3D 人体感知任务上均达到教师级性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

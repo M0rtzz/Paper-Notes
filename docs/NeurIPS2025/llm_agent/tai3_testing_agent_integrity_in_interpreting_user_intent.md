@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAI3: Testing Agent Integrity in Interpreting User Intent
 description: >-
-  [NeurIPS 2025][LLM Agent][Agent 测试] 提出 TAI3，一个以 API 为中心的 LLM Agent 意图完整性压力测试框架，通过语义分区（Semantic Partitioning）将自然语言输入空间组织为结构化测试网格…
+  [NeurIPS 2025][LLM Agent][Agent 测试] 提出 TAI3，一个以 API 为中心的 LLM Agent 意图完整性压力测试框架，通过语义分区（Semantic Partitioning）将自然语言输入空间组织为结构化测试网格，再利用意图保持变异（Intent-Preserving Mutation）和策略记忆（Strategy Memory）高效暴露 Agent 在执行用户任务时的意图理解错误。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

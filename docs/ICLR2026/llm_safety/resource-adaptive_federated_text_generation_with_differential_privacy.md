@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Resource-Adaptive Federated Text Generation with Differential Privacy
 description: >-
-  [ICLR2026][LLM安全][联邦学习] 提出一种资源自适应的联邦文本生成框架，通过强客户端 DP 微调 + 弱客户端 DP 投票两阶段设计，在计算异构和差分隐私约束下生成高质量合成文本数据。
+  [ICLR2026][LLM安全][联邦学习] 提出一种资源自适应的联邦文本生成框架，通过强客户端 DP 微调 + 弱客户端 DP 投票两阶段设计，在计算异构和差分隐私约束下生成高质量合成文本数据。 在跨筒仓联邦学习（cross-silo FL）场景中，敏感文本数据因隐私法规必须留在本地组织（如医院、公司）…
 tags:
   - "ICLR2026"
   - "LLM安全"

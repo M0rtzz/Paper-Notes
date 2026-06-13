@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3SR: Multi-Scale Multi-Perceptual Mamba for Efficient Spectral Reconstruction
 description: >-
-  [AAAI 2026][遥感][Spectral Reconstruction] 提出 M3SR，一种基于 Mamba 的多尺度多感知架构，通过空间-频率-光谱三分支并行融合结合 U-Net 多尺度结构，以 2.17M 参数和 100.9G FLOPs 的低计算代价在四个光谱重建基准上超越现有 SOTA 方法…
+  [AAAI 2026][遥感][Spectral Reconstruction] 提出 M3SR，一种基于 Mamba 的多尺度多感知架构，通过空间-频率-光谱三分支并行融合结合 U-Net 多尺度结构，以 2.17M 参数和 100.9G FLOPs 的低计算代价在四个光谱重建基准上超越现有 SOTA 方法。
 tags:
   - "AAAI 2026"
   - "遥感"

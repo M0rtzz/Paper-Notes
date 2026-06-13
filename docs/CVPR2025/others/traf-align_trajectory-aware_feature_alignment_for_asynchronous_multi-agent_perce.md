@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TraF-Align: Trajectory-aware Feature Alignment for Asynchronous Multi-agent Perception
 description: >-
-  [CVPR 2025][协作感知] 提出 TraF-Align 框架，通过在特征级别预测目标运动轨迹来学习特征的时空流动路径，沿轨迹生成时序有序的采样点将当前时刻 query 引导至相关历史特征，实现异步多智能体感知中的精确特征对齐…
+  [CVPR 2025][协作感知] 提出 TraF-Align 框架，通过在特征级别预测目标运动轨迹来学习特征的时空流动路径，沿轨迹生成时序有序的采样点将当前时刻 query 引导至相关历史特征，实现异步多智能体感知中的精确特征对齐，在 V2V4Real 和 DAIR-V2X-Seq 两个真实数据集上刷新SOTA。
 tags:
   - "CVPR 2025"
   - "协作感知"

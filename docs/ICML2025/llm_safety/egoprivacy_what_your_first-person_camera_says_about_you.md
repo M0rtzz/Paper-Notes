@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoPrivacy: What Your First-Person Camera Says About You?
 description: >-
-  [ICML2025][LLM安全][egocentric vision] 提出 EgoPrivacy——首个大规模第一人称视频隐私基准，定义三类隐私（人口统计/个体/情境）七大任务，并设计检索增强攻击 (RAA) 将 ego-to-exo 检索与分类联合…
+  [ICML2025][LLM安全][egocentric vision] 提出 EgoPrivacy——首个大规模第一人称视频隐私基准，定义三类隐私（人口统计/个体/情境）七大任务，并设计检索增强攻击 (RAA) 将 ego-to-exo 检索与分类联合，证明基础模型零样本即可以 70–80% 准确率推断佩戴者性别、种族等敏感属性。
 tags:
   - "ICML2025"
   - "LLM安全"

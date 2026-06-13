@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PBCAT: Patch-Based Composite Adversarial Training against Physically Realizable Attacks on Object Detection
 description: >-
-  [ICCV 2025][自动驾驶][对抗训练] 提出 PBCAT（Patch-Based Composite Adversarial Training），通过结合小面积梯度引导对抗补丁和全局不可感知扰动进行对抗训练，统一防御多种物理可实现攻击（对抗补丁+对抗纹理）…
+  [ICCV 2025][自动驾驶][对抗训练] 提出 PBCAT（Patch-Based Composite Adversarial Training），通过结合小面积梯度引导对抗补丁和全局不可感知扰动进行对抗训练，统一防御多种物理可实现攻击（对抗补丁+对抗纹理），在行人检测任务上比之前 SOTA 防御方法提升 29.7% AP。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

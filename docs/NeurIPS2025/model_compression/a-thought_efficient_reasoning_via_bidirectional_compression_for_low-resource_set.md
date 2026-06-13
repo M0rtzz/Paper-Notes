@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A*-Thought: Efficient Reasoning via Bidirectional Compression for Low-Resource Settings
 description: >-
-  [NeurIPS 2025][模型压缩][reasoning efficiency] 提出 A*-Thought——基于 A* 搜索算法的 CoT 压缩框架，通过双向重要性评分（BIS）衡量每个推理步骤对问题和答案的相关性，结合路径级 A* 搜索在指数级搜索空间中高效找到最紧凑的推理路径…
+  [NeurIPS 2025][模型压缩][reasoning efficiency] 提出 A*-Thought——基于 A* 搜索算法的 CoT 压缩框架，通过双向重要性评分（BIS）衡量每个推理步骤对问题和答案的相关性，结合路径级 A* 搜索在指数级搜索空间中高效找到最紧凑的推理路径，在 512 token 预算下将 QwQ-32B 准确率提升 2.39 倍，在 4096 token 预算下减少约 50% 输出 token 且几乎不损失准确率。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Refining Salience-Aware Sparse Fine-Tuning Strategies for Language Models
 description: >-
-  [ACL2025][LLM/NLP][参数高效微调] 首次系统评估了 8 种显著性度量在稀疏参数高效微调（SPEFT）中的效果，发现简单的梯度基方法配合静态掩码即可一致性地超越 LoRA，挑战了"PEFT 需要复杂设计"的常见认知。
+  [ACL2025][LLM 其他][参数高效微调] 首次系统评估了 8 种显著性度量在稀疏参数高效微调（SPEFT）中的效果，发现简单的梯度基方法配合静态掩码即可一致性地超越 LoRA，挑战了"PEFT 需要复杂设计"的常见认知。 领域现状：参数高效微调（PEFT）是大模型适配下游任务的主流范式，LoRA（低秩适配）是最流行…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "参数高效微调"
   - "稀疏微调"
   - "显著性度量"

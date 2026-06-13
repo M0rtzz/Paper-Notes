@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mDP3: A Training-free Approach for List-wise Frame Selection in Video-LLMs
 description: >-
-  [ICCV 2025][强化学习][帧选择] 提出 mDP3，一种免训练、模型无关的视频帧选择方法，通过条件高斯核在 RKHS 中估计帧相似度，结合行列式点过程（DPP）捕获查询相关性和列表级多样性，再通过马尔可夫决策过程（MDP）建模时序性…
+  [ICCV 2025][强化学习][帧选择] 提出 mDP3，一种免训练、模型无关的视频帧选择方法，通过条件高斯核在 RKHS 中估计帧相似度，结合行列式点过程（DPP）捕获查询相关性和列表级多样性，再通过马尔可夫决策过程（MDP）建模时序性，在多个长视频 benchmark 上以仅 8 帧输入显著超越均匀采样和现有帧选择方法。
 tags:
   - "ICCV 2025"
   - "强化学习"

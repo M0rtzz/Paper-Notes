@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Synthetic and Real Routing Problems via LLM-Guided Instance Generation and Progressive Adaptation
 description: >-
-  [AAAI 2026][优化/理论][神经组合优化] 提出 EvoReal 框架，利用 LLM 驱动的进化搜索生成结构上接近真实世界的 VRP 合成实例，再通过两阶段渐进微调策略将预训练神经求解器适配到真实基准…
+  [AAAI 2026][优化/理论][神经组合优化] 提出 EvoReal 框架，利用 LLM 驱动的进化搜索生成结构上接近真实世界的 VRP 合成实例，再通过两阶段渐进微调策略将预训练神经求解器适配到真实基准，在 TSPLib (1.05% gap) 和 CVRPLib (2.71% gap) 上大幅超越已有神经求解器。
 tags:
   - "AAAI 2026"
   - "优化/理论"

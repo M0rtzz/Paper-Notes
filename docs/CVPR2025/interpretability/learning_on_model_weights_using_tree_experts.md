@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning on Model Weights using Tree Experts
 description: >-
-  [CVPR 2025][可解释性][权重空间学习] 发现公开模型大多属于少数 Model Tree（从共同祖先微调而来），在同一 Tree 内学习权重远比跨 Tree 简单；提出 ProbeX——首个针对单隐藏层权重的轻量 probing 方法，通过 Tucker 张量分解实现参数量 30 倍压缩…
+  [CVPR 2025][可解释性][权重空间学习] 发现公开模型大多属于少数 Model Tree（从共同祖先微调而来），在同一 Tree 内学习权重远比跨 Tree 简单；提出 ProbeX——首个针对单隐藏层权重的轻量 probing 方法，通过 Tucker 张量分解实现参数量 30 倍压缩，并首次实现了将模型权重与文本表示对齐的零样本模型分类（89.8% 准确率）。
 tags:
   - "CVPR 2025"
   - "可解释性"

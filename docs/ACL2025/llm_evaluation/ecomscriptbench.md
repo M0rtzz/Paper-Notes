@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EcomScriptBench: A Multi-task Benchmark for E-commerce Script Planning via Step-wise Intention-Driven Product Association
 description: >-
-  [LLM评测] 定义电商脚本规划（EcomScript）任务并构建首个大规模基准 EcomScriptBench（60 万脚本 + 240 万产品），通过购买意图桥接动作步骤与产品搜索的语义鸿沟，揭示当前 LLM 在该任务上的显著不足。
+  [LLM评测] 定义电商脚本规划（EcomScript）任务并构建首个大规模基准 EcomScriptBench（60 万脚本 + 240 万产品），通过购买意图桥接动作步骤与产品搜索的语义鸿沟，揭示当前 LLM 在该任务上的显著不足。 - 现有痛点：用户希望 LLM 购物助手能根据目标（如"策划秋季派对"）生成分步骤脚本并…
 tags:
   - "LLM评测"
 ---

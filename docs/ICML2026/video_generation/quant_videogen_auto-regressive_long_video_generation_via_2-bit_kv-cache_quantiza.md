@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quant VideoGen: Auto-Regressive Long Video Generation via 2-Bit KV-Cache Quantization
 description: >-
-  [ICML 2026][视频生成][扩散模型] QVG 是面向自回归视频扩散的训练免微调 KV-Cache 量化框架——通过语义感知聚类做 token 平滑、并以渐进残差多阶段压缩残差，在 LongCat-Video/HY-WorldPlay/Self-Forcing 上把 KV 显存压低到原来的 1/7…
+  [ICML 2026][视频生成][扩散模型] QVG 是面向自回归视频扩散的训练免微调 KV-Cache 量化框架——通过语义感知聚类做 token 平滑、并以渐进残差多阶段压缩残差，在 LongCat-Video/HY-WorldPlay/Self-Forcing 上把 KV 显存压低到原来的 1/7，端到端延迟开销 <4%，2 bit 下质量大幅领先 KIVI/QuaRot 等 LLM 量化基线。
 tags:
   - "ICML 2026"
   - "视频生成"

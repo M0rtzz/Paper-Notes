@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiscoForcing: A Unified Framework for Real-Time Audio-Driven Character Control with Diffusion Forcing
 description: >-
-  [ICML 2026][人体理解][音频驱动角色控制] DiscoForcing 把"音乐 → 全身舞蹈"的离线生成问题改写成严格因果、有界延迟的流式问题，用一个 VQ-PAE 因果音乐编码器 + 潜空间 Diffusion Forcing + 混合时间噪声调度 + 时间引导采样…
+  [ICML 2026][人体理解][音频驱动角色控制] DiscoForcing 把"音乐 → 全身舞蹈"的离线生成问题改写成严格因果、有界延迟的流式问题，用一个 VQ-PAE 因果音乐编码器 + 潜空间 Diffusion Forcing + 混合时间噪声调度 + 时间引导采样，把音乐流实时翻译成可直接驱动 Unity 虚拟人和宇树 G1 人形机器人的 30 FPS 全身动作。
 tags:
   - "ICML 2026"
   - "人体理解"

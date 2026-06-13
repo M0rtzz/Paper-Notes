@@ -2,16 +2,15 @@
 title: >-
   [论文解读] DiCo: Revitalizing ConvNets for Scalable and Efficient Diffusion Modeling
 description: >-
-  [NeurIPS 2025 (Spotlight)][图像生成][ConvNet] 重新发掘卷积网络在扩散模型中的潜力——发现预训练DiT的全局自注意力主要捕获局部模式（冗余），提出用标准ConvNet模块+紧凑通道注意力构建纯卷积扩散模型DiCo…
+  [NeurIPS 2025 (Spotlight)][图像生成][ConvNet] 发现预训练DiT的全局self-attention在生成任务中主要捕获局部模式存在大量冗余，提出用标准卷积模块+紧凑通道注意力（CCA）构建纯卷积扩散模型DiCo，在ImageNet-256上FID达2.05超越DiT-XL/2且推理速度快2.7倍，512分辨率下更快3.1倍。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "图像生成"
   - "ConvNet"
   - "扩散模型"
-  - "卷积替代注意力"
-  - "通道冗余"
-  - "注意力机制"
+  - "通道注意力"
   - "高效生成"
+  - "U-shaped架构"
 ---
 
 # DiCo: Revitalizing ConvNets for Scalable and Efficient Diffusion Modeling
@@ -144,3 +143,19 @@ tags:
   - 注意力机制
   - 高效生成
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] DiG: Scalable and Efficient Diffusion Models with Gated Linear Attention](../../CVPR2025/image_generation/dig_scalable_and_efficient_diffusion_models_with_gated_linear_attention.md)
+- [\[NeurIPS 2025\] GSPN-2: Efficient Parallel Sequence Modeling](gspn-2_efficient_parallel_sequence_modeling.md)
+- [\[ICML 2025\] Efficient Generative Modeling with Residual Vector Quantization-Based Tokens](../../ICML2025/image_generation/efficient_generative_modeling_with_residual_vector_quantization-based_tokens.md)
+- [\[NeurIPS 2025\] Continuous Diffusion Model for Language Modeling](continuous_diffusion_model_for_language_modeling.md)
+- [\[ICLR 2026\] SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](../../ICLR2026/image_generation/speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoofDiffusion: Constructing Roofs from Severely Corrupted Point Data via Diffusion
 description: >-
-  [ECCV 2024][自动驾驶][扩散模型] RoofDiffusion 提出了一种基于条件扩散概率模型的端到端自监督方法，用于从严重稀疏（最高99%缺失）、不完整（80%区域遮挡）且含噪的屋顶高程图中恢复完整干净的高程信息…
+  [ECCV 2024][自动驾驶][扩散模型] RoofDiffusion 提出了一种基于条件扩散概率模型的端到端自监督方法，用于从严重稀疏（最高99%缺失）、不完整（80%区域遮挡）且含噪的屋顶高程图中恢复完整干净的高程信息，在自建的 PoznanRD 数据集和 BuildingNet 上显著超越传统插值方法和现有深度补全方法。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

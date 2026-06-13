@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis
 description: >-
-  [NeurIPS 2025][AI安全][double descent] 本文首次揭示 post-hoc OOD 检测中存在 double descent 现象——OOD 检测性能随模型宽度在插值阈值附近出现谷值后再次上升，通过随机矩阵理论提供理论解释…
+  [NeurIPS 2025][AI安全][double descent] 本文首次揭示 post-hoc OOD 检测中存在 double descent 现象——OOD 检测性能随模型宽度在插值阈值附近出现谷值后再次上升，通过随机矩阵理论提供理论解释，并提出基于 Neural Collapse 的 NC1 判据来识别最佳模型复杂度区间。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

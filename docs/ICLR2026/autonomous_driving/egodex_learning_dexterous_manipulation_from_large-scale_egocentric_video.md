@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoDex: Learning Dexterous Manipulation from Large-Scale Egocentric Video
 description: >-
-  [ICLR 2026][自动驾驶][第一人称视频] Apple 使用 Vision Pro 采集了 829 小时的第一人称视频 + 3D 手部关节追踪数据（EgoDex），覆盖 194 种桌面操作任务，并在此数据集上系统评估了模仿学习策略（BC/DDPM/FM + Transformer）…
+  [ICLR 2026][自动驾驶][第一人称视频] Apple 使用 Vision Pro 采集了 829 小时的第一人称视频 + 3D 手部关节追踪数据（EgoDex），覆盖 194 种桌面操作任务，并在此数据集上系统评估了模仿学习策略（BC/DDPM/FM + Transformer），为灵巧操作的扩展训练提供了迄今最大规模的数据基础。
 tags:
   - "ICLR 2026"
   - "自动驾驶"

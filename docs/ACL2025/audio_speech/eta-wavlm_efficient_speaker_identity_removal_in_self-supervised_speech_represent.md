@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Eta-WavLM: Efficient Speaker Identity Removal in Self-Supervised Speech Representations Using a Simple Linear Equation
 description: >-
-  [ACL 2025][音频/语音][自监督语音表示] 提出 Eta-WavLM，通过简单的线性方程将 WavLM 自监督语音表示分解为说话人相关和说话人无关两个分量，无需复杂训练即可生成高质量的说话人解耦表示，在语音转换任务上全面超越现有方法。
+  [ACL 2025][音频/语音][自监督语音表示] 提出 Eta-WavLM，通过简单的线性方程将 WavLM 自监督语音表示分解为说话人相关和说话人无关两个分量，无需复杂训练即可生成高质量的说话人解耦表示，在语音转换任务上全面超越现有方法。 领域现状：自监督学习（SSL）在语音领域取得革命性进展，WavLM、HuBERT…
 tags:
   - "ACL 2025"
   - "音频/语音"

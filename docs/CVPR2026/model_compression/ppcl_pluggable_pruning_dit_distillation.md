@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PPCL: Pluggable Pruning with Contiguous Layer Distillation for Diffusion Transformers
 description: >-
-  [CVPR 2026][模型压缩][Transformer] 提出 PPCL 框架，针对超大规模 Multi-Modal Diffusion Transformer (MMDiT, 8–20B 参数) 设计结构化剪枝方案：通过线性探针 (Linear Probe) 学习每层的可替代性…
+  [CVPR 2026][模型压缩][Transformer] 提出 PPCL 框架，针对超大规模 Multi-Modal Diffusion Transformer (MMDiT, 8–20B 参数) 设计结构化剪枝方案：通过线性探针 (Linear Probe) 学习每层的可替代性，结合 CKA 一阶差分自动定位连续冗余层区间，再以非顺序交替蒸馏实现深度+宽度双轴剪枝，最终在 Qwen-Image 20B 上实现 50% 参数缩减、1.8× 推理加速，平均性能仅下降 2.61%。
 tags:
   - "CVPR 2026"
   - "模型压缩"

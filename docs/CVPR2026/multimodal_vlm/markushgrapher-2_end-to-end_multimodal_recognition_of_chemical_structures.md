@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MarkushGrapher-2: End-to-end Multimodal Recognition of Chemical Structures
 description: >-
-  [CVPR 2026][多模态VLM][化学结构识别] MarkushGrapher-2 提出了一个端到端多模态化学结构识别模型，通过专用化学 OCR 模块联合编码图像、文本和布局信息，结合两阶段训练策略（先适配 OCSR 特征再融合多模态编码）…
+  [CVPR 2026][多模态VLM][化学结构识别] MarkushGrapher-2 提出了一个端到端多模态化学结构识别模型，通过专用化学 OCR 模块联合编码图像、文本和布局信息，结合两阶段训练策略（先适配 OCSR 特征再融合多模态编码），在 Markush 结构识别上大幅超越现有方法（M2S 准确率 56% vs 38%），同时保持分子结构识别的竞争力。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

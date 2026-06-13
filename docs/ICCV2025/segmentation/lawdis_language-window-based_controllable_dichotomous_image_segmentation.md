@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation
 description: >-
-  [ICCV 2025][语义分割][二分图像分割] 提出 LawDIS，一个基于潜在扩散模型的可控二分图像分割框架，通过宏观语言控制（LS）和微观窗口细化（WR）两种模式的协同，实现高质量前景目标掩码生成，在 DIS5K 基准上全面超越 11 种 SOTA 方法。
+  [ICCV 2025][语义分割][二分图像分割] 提出 LawDIS，一个基于潜在扩散模型的可控二分图像分割框架，通过宏观语言控制（LS）和微观窗口细化（WR）两种模式的协同，实现高质量前景目标掩码生成，在 DIS5K 基准上全面超越 11 种 SOTA 方法。 二分图像分割（DIS）旨在从高分辨率图像中精确分割前景目标…
 tags:
   - "ICCV 2025"
   - "语义分割"

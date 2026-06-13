@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StyleTokenizer: Defining Image Style by a Single Instance for Controlling Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][风格迁移] 提出StyleTokenizer，通过将风格定义为可学习的token嵌入，实现仅用一张参考图即可控制扩散模型的风格生成，同时精确分离内容和风格。
+  [ECCV 2024][图像生成][风格迁移] 提出StyleTokenizer，通过将风格定义为可学习的token嵌入，实现仅用一张参考图即可控制扩散模型的风格生成，同时精确分离内容和风格。 现有痛点 现有痛点：领域现状：利用扩散模型进行风格化图像生成是一个重要的应用场景。用户通常希望提供一张参考图像来指定所需风格…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -1,8 +1,8 @@
 ---
 title: >-
-  [论文解读] TranSUN: A Preemptive Paradigm to Eradicate Retransformation Bias Intrinsically from Regression Models
+  [论文解读] TranSUN: A Preemptive Paradigm to Eradicate Retransformation Bias Intrinsically from Regression Models in Recommender Systems
 description: >-
-  [NeurIPS 2025][自动驾驶][retransformation bias] 针对推荐系统中变换 MSE 回归模型的逆变换偏差（retransformation bias）问题，提出先发制人（preemptive）的 TranSUN 方法，通过联合学习辅助分支显式建模偏差…
+  [NeurIPS 2025][自动驾驶][retransformation bias] 针对推荐系统中变换 MSE 回归模型的逆变换偏差（retransformation bias）问题，提出先发制人（preemptive）的 TranSUN 方法，通过联合学习辅助分支显式建模偏差，在训练阶段即从模型内部消除偏差，具有理论无偏保证和良好收敛性，并已部署在淘宝首页猜你喜欢的商品和短视频推荐场景。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

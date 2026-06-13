@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can LLMs Ground when they (Don't) Know: A Study on Direct and Loaded Political Questions
 description: >-
-  [ACL 2025][LLM/NLP][对话基础] 本文研究LLM在政治领域中处理直接知识问题和暗含错误预设的"loaded question"的能力，评估LLM是否能进行主动的对话基础（conversational grounding）来纠正用户的虚假信念…
+  [ACL 2025][LLM 其他][对话基础] 本文研究LLM在政治领域中处理直接知识问题和暗含错误预设的"loaded question"的能力，评估LLM是否能进行主动的对话基础（conversational grounding）来纠正用户的虚假信念，发现LLM在拒绝虚假预设和维护知识准确性方面存在重大缺陷。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "对话基础"
   - "预设性问题"
   - "政治偏见"

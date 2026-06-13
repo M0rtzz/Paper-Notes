@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Efficient Test-Time Scaling via Temporal Reasoning Aggregation
 description: >-
-  [ACL 2026][LLM推理][测试时扩展] 提出 TRACE 框架，通过在滑动窗口内聚合多步答案一致性和置信度轨迹两种互补信号来判断推理是否收敛，实现无需训练的动态早退，在减少25-30% token 用量的同时准确率仅降1-2%。
+  [ACL 2026 Findings][LLM推理][测试时扩展] 提出 TRACE 框架，通过在滑动窗口内聚合多步答案一致性和置信度轨迹两种互补信号来判断推理是否收敛，实现无需训练的动态早退，在减少25-30% token 用量的同时准确率仅降1-2%。 领域现状：测试时扩展（Test-time Scaling）通过增加推…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "测试时扩展"
   - "早退策略"

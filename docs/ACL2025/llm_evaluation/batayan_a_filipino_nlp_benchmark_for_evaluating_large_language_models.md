@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models
 description: >-
-  [ACL 2025][LLM评测][菲律宾语] 提出 Batayan——首个全面的菲律宾语 LLM 评测基准，覆盖理解/推理/生成三大能力的 8 个任务（含 3 个全新菲律宾语任务），由母语者翻译和标注确保语言真实性，评测 50+ 开源和商用 LLM 后发现菲律宾语表现显著落后于英语…
+  [ACL 2025][LLM评测][菲律宾语] 提出 Batayan——首个全面的菲律宾语 LLM 评测基准，覆盖理解/推理/生成三大能力的 8 个任务（含 3 个全新菲律宾语任务），由母语者翻译和标注确保语言真实性，评测 50+ 开源和商用 LLM 后发现菲律宾语表现显著落后于英语，显式菲律宾语支持和模型规模的提升均能带来明显增益。
 tags:
   - "ACL 2025"
   - "LLM评测"

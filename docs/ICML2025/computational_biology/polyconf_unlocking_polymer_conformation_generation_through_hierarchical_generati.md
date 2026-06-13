@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models
 description: >-
-  [ICML 2025][计算生物][聚合物构象生成] 提出 PolyConf——首个专为聚合物构象生成设计的层次化生成框架：Phase 1 用掩码自回归模型（MAR）+ 扩散过程在随机顺序下生成各重复单元的局部构象，Phase 2 用 SO(3) 扩散模型生成朝向变换以将局部构象组装为完整聚合物构象…
+  [ICML 2025][计算生物][聚合物构象生成] 提出 PolyConf——首个专为聚合物构象生成设计的层次化生成框架：Phase 1 用掩码自回归模型（MAR）+ 扩散过程在随机顺序下生成各重复单元的局部构象，Phase 2 用 SO(3) 扩散模型生成朝向变换以将局部构象组装为完整聚合物构象；同时构建了首个聚合物构象基准 PolyBench（5万+聚合物，~2000原子/构象），在所有结构和能量指标上均大幅超越现有方法 25%+。
 tags:
   - "ICML 2025"
   - "计算生物"

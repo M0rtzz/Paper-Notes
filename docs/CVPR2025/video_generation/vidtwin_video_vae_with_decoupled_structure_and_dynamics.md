@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VidTwin: Video VAE with Decoupled Structure and Dynamics
 description: >-
-  [CVPR 2025][视频生成][视频自编码器] 提出 VidTwin，将视频解耦为 Structure Latent（全局内容和整体运动）和 Dynamics Latent（细粒度细节和快速运动）两个独立潜空间，以 0.20% 的极高压缩率实现 28.14 PSNR 的高质量重建。
+  [CVPR 2025][视频生成][视频自编码器] 提出 VidTwin，将视频解耦为 Structure Latent（全局内容和整体运动）和 Dynamics Latent（细粒度细节和快速运动）两个独立潜空间，以 0.20% 的极高压缩率实现 28.14 PSNR 的高质量重建。 视频自编码器（Video AE）在视频…
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InternLM-XComposer2.5-Reward: A Simple Yet Effective Multi-Modal Reward Model
 description: >-
-  [ACL 2025][多模态VLM][多模态奖励模型] 基于InternLM-XComposer2.5构建判别式多模态奖励模型IXC-2.5-Reward，通过精心构建跨文本/图像/视频的多领域偏好数据集训练…
+  [ACL 2025][多模态VLM][多模态奖励模型] 基于InternLM-XComposer2.5构建判别式多模态奖励模型IXC-2.5-Reward，通过精心构建跨文本/图像/视频的多领域偏好数据集训练，在多模态奖励基准VL-RewardBench上以70.0% Macro Acc超越GPT-4o（62.4%），并展示了RL训练、Best-of-N测试时缩放和数据清洗三大应用。
 tags:
   - "ACL 2025"
   - "多模态VLM"

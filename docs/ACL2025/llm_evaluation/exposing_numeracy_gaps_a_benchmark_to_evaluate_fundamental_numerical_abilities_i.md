@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exposing Numeracy Gaps: A Benchmark to Evaluate Fundamental Numerical Abilities in Large Language Models
 description: >-
-  [ACL2025][LLM评测][numerical reasoning] 提出 NumericBench 综合基准，通过 6 类数据集评估 LLM 的 6 种基本数值能力（数字识别、算术运算、上下文检索、比较、汇总、逻辑推理）…
+  [ACL2025][LLM评测][numerical reasoning] 提出 NumericBench 综合基准，通过 6 类数据集评估 LLM 的 6 种基本数值能力（数字识别、算术运算、上下文检索、比较、汇总、逻辑推理），发现包括 GPT-4o、DeepSeek-V3 在内的 SOTA 模型在简单数值任务上仍表现极差，并深入分析了 5 种根因。
 tags:
   - "ACL2025"
   - "LLM评测"

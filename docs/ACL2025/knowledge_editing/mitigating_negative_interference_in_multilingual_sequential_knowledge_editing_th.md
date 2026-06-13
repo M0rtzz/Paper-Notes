@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Negative Interference in Multilingual Sequential Knowledge Editing through Null-Space Constraints
 description: >-
-  [ACL 2025][知识编辑][多语言知识编辑] 本文提出 LangEdit 框架，通过将每种语言的参数更新投影到先前编辑语言的零空间上，实现多语言序列知识编辑中不同语言更新之间的数学隔离，有效缓解负干扰并保持多语言泛化能力。
+  [ACL 2025][知识编辑][多语言知识编辑] 本文提出 LangEdit 框架，通过将每种语言的参数更新投影到先前编辑语言的零空间上，实现多语言序列知识编辑中不同语言更新之间的数学隔离，有效缓解负干扰并保持多语言泛化能力。 大型语言模型（LLM）在编码和检索事实知识方面表现出色，知识编辑（knowledge editi…
 tags:
   - "ACL 2025"
   - "知识编辑"

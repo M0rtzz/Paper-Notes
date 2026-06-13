@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scale Efficient Training for Large Datasets
 description: >-
-  [CVPR 2025][语义分割][高效训练] 提出 SeTa（Scale Efficient Training），一种基于 loss 的动态样本剪枝框架，通过随机采样去冗余、loss 聚类分难度、滑动窗口渐进式课程学习三步策略…
+  [CVPR 2025][语义分割][高效训练] 提出 SeTa（Scale Efficient Training），一种基于 loss 的动态样本剪枝框架，通过随机采样去冗余、loss 聚类分难度、滑动窗口渐进式课程学习三步策略，在 11 个数据集 10 类任务 14 种模型上实现最高 50% 训练成本削减且性能无损。
 tags:
   - "CVPR 2025"
   - "语义分割"

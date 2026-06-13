@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation
 description: >-
-  [CVPR2026][医学图像][放射报告生成] 提出 OraPO（Oracle-educated GRPO），在 GRPO 探索失败时注入轻量 DPO 监督将失败 rollout 转化为偏好样本…
+  [CVPR2026][医学图像][放射报告生成] 提出 OraPO（Oracle-educated GRPO），在 GRPO 探索失败时注入轻量 DPO 监督将失败 rollout 转化为偏好样本，配合 FactScore 奖励实现仅用 1K 样本、3B 小模型在 CheXpert Plus 和 MIMIC-CXR 上达到放射报告生成 SOTA（F1=0.341/0.357），训练数据量比前最优减少 2-3 个数量级。
 tags:
   - "CVPR2026"
   - "医学图像"

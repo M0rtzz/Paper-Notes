@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Multilingual Dataset and Empirical Validation for the Mutual Reinforcement Effect in Information Extraction
 description: >-
-  [ACL 2026][多语言/翻译][互增强效应] 构建首个多语言MRE Mix数据集（MMM，21个子集覆盖英中日），并通过大规模消融实验系统验证了词级与文本级信息抽取任务的互增强效应（MRE）跨语言普遍存在。
+  [ACL 2026 Findings][多语言/翻译][互增强效应] 构建首个多语言MRE Mix数据集（MMM，21个子集覆盖英中日），并通过大规模消融实验系统验证了词级与文本级信息抽取任务的互增强效应（MRE）跨语言普遍存在。 领域现状：信息抽取（IE）包含命名实体识别、关系抽取、情感分析等多个子任务…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "互增强效应"
   - "多语言信息抽取"

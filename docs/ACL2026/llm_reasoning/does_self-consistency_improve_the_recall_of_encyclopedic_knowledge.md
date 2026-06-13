@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Does Self-Consistency Improve the Recall of Encyclopedic Knowledge?
 description: >-
-  [ACL 2026][LLM推理][Self-Consistency] 作者对 MMLU 按学科应用 Sprague 等的 "=="-启发式把 57 个 subject 拆成 **符号推理** 与 **知识召回** 两个子集（约 1:2）…
+  [ACL 2026][LLM推理][Self-Consistency] 作者对 MMLU 按学科应用 Sprague 等的 "=="-启发式把 57 个 subject 拆成 **符号推理** 与 **知识召回** 两个子集（约 1:2），实证证明 self-consistency (SC) 不仅在符号推理上有效——这是 CoT 已经擅长的领域——**在知识召回上也能持续增益**（n=20 时 +2.48），把 GPT-4o 的 MMLU 整体准确率推到 88.93%，并用"多数答案占比"作为置信度信号 (Pearson ρ ≈ 0.42) 给出机制解释。
 tags:
   - "ACL 2026"
   - "LLM推理"

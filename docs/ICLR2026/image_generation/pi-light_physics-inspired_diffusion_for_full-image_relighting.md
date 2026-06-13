@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PI-Light: Physics-Inspired Diffusion for Full-Image Relighting
 description: >-
-  [ICLR 2026][图像生成][扩散模型] 提出 π-Light（PI-Light），一个两阶段的全图像重光照框架：第一阶段通过物理引导的扩散模型进行内蕴属性（albedo、法线、roughness 等）分解，第二阶段通过物理引导的神经渲染模块实现光照条件下的重新渲染…
+  [ICLR 2026][图像生成][扩散模型] 提出 π-Light（PI-Light），一个两阶段的全图像重光照框架：第一阶段通过物理引导的扩散模型进行内蕴属性（albedo、法线、roughness 等）分解，第二阶段通过物理引导的神经渲染模块实现光照条件下的重新渲染，引入批量感知注意力机制和物理启发损失以实现对真实场景的优秀泛化能力。
 tags:
   - "ICLR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stronger Normalization-Free Transformers
 description: >-
-  [CVPR 2026][计算生物][Transformer] 通过系统分析逐点函数替代归一化层所需的四个关键属性（零中心性、有界性、中心敏感性、单调性），在大规模搜索中发现 $\text{Derf}(x) = \text{erf}(\alpha x + s)$ 是最优的归一化层替代函数…
+  [CVPR 2026][计算生物][Transformer] 通过系统分析逐点函数替代归一化层所需的四个关键属性（零中心性、有界性、中心敏感性、单调性），在大规模搜索中发现 $\text{Derf}(x) = \text{erf}(\alpha x + s)$ 是最优的归一化层替代函数，在视觉识别、图像生成、语音表示和DNA序列建模等多个领域持续超越LayerNorm和DyT，且性能增益主要来自更强的泛化而非拟合能力。
 tags:
   - "CVPR 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Offline Reinforcement Learning with Universal Horizon Models
 description: >-
-  [ICML 2026][强化学习][universal horizon model] 作者把"几何视界模型 (GHM) 只能采样一个固定折扣分布"这个限制打开，提出能在任意视界 $n$ 上直接采样未来状态的 universal horizon model (UHM)…
+  [ICML 2026][强化学习][universal horizon model] 作者把"几何视界模型 (GHM) 只能采样一个固定折扣分布"这个限制打开，提出能在任意视界 $n$ 上直接采样未来状态的 universal horizon model (UHM)，再用 Winsorized 几何分布把过长视界截断，在 OGBench 100 个任务上比最强基线平均成功率提升约 14%。
 tags:
   - "ICML 2026"
   - "强化学习"

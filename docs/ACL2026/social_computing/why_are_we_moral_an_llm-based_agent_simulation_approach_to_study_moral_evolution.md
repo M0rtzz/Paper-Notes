@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Are We Moral? An LLM-based Agent Simulation Approach to Study Moral Evolution
 description: >-
-  [ACL2026][社会计算][LLM Agent] 这篇论文用 LLM agent 构建史前狩猎采集社会仿真平台，把道德类型、记忆、判断、协作和繁衍都纳入演化实验，发现合作和互助通常提升生存稳定性，而判断他人道德类型的认知成本会改变哪类道德策略胜出。
+  [ACL2026][社会计算][LLM Agent] 这篇论文用 LLM agent 构建史前狩猎采集社会仿真平台，把道德类型、记忆、判断、协作和繁衍都纳入演化实验，发现合作和互助通常提升生存稳定性，而判断他人道德类型的认知成本会改变哪类道德策略胜出。 领域现状：道德为什么会演化出来，是进化生物学、社会科学和伦理学中的长期问…
 tags:
   - "ACL2026"
   - "社会计算"

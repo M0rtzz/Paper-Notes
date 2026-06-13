@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NVILA: Efficient Frontier Visual Language Models
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言模型] NVILA 提出"先放大再压缩"(Scale-then-Compress)的范式，通过提升空间和时间分辨率后再压缩视觉Token，在保持甚至超越SOTA精度的同时…
+  [CVPR 2025][多模态VLM][视觉语言模型] NVILA 提出"先放大再压缩"(Scale-then-Compress)的范式，通过提升空间和时间分辨率后再压缩视觉Token，在保持甚至超越SOTA精度的同时，将训练成本降低1.9-5.1倍、推理预填充延迟降低1.6-2.2倍、解码延迟降低1.2-2.8倍。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

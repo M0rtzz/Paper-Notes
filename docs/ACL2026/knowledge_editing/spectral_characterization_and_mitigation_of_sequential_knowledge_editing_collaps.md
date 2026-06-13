@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral Characterization and Mitigation of Sequential Knowledge Editing Collapse
 description: >-
-  [ACL2026][知识编辑][顺序知识编辑] 论文从 SVD 谱结构解释顺序知识编辑为何会让 LLM 一般能力崩溃，并提出 REVIVE，在原始权重的奇异向量基中滤除会干扰 dominant singular subspace 的更新分量，使 MEMIT、RECT、AlphaEdit 等编辑器在 10…
+  [ACL2026][知识编辑][顺序知识编辑] 论文从 SVD 谱结构解释顺序知识编辑为何会让 LLM 一般能力崩溃，并提出 REVIVE，在原始权重的奇异向量基中滤除会干扰 dominant singular subspace 的更新分量，使 MEMIT、RECT、AlphaEdit 等编辑器在 10,000 到 20,000 次连续编辑下同时保持编辑成功率和通用能力。
 tags:
   - "ACL2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoFT: Low-Rank Adaptation That Behaves Like Full Fine-Tuning
 description: >-
-  [ICLR 2026][模型压缩][LoRA] 提出 LoFT，一种通过对齐优化器内部动态（动量和二阶矩）与全参微调行为一致的低秩适配方法，由六个构建模块组成，在全秩极限下可精确恢复 AdamW，在多项基准上显著缩小 LoRA 与全参微调的性能差距。
+  [ICLR 2026][模型压缩][LoRA] 提出 LoFT，一种通过对齐优化器内部动态（动量和二阶矩）与全参微调行为一致的低秩适配方法，由六个构建模块组成，在全秩极限下可精确恢复 AdamW，在多项基准上显著缩小 LoRA 与全参微调的性能差距。 大规模预训练模型的下游适配已成为 NLP 和其他领域的标准范式…
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding
 description: >-
-  [AAAI 2026][多模态VLM][长文档理解] URaG 发现 MLLM 处理长文档时存在类人的"粗到细"推理模式（浅层注意力均匀分散、深层集中于证据页），基于此洞察在第 6 层插入轻量跨模态检索模块（仅占参数 0.05%），选取 Top-5 相关页面丢弃其余内容…
+  [AAAI 2026 Oral][多模态VLM][长文档理解] URaG 发现 MLLM 处理长文档时存在类人的"粗到细"推理模式（浅层注意力均匀分散、深层集中于证据页），基于此洞察在第 6 层插入轻量跨模态检索模块（仅占参数 0.05%），选取 Top-5 相关页面丢弃其余内容，实现 SOTA 性能的同时减少 44-56% 计算量。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "长文档理解"
   - "统一检索-生成"

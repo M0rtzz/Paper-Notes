@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHARE: Shared Memory-Aware Open-Domain Long-Term Dialogue Dataset Constructed from Movie Script
 description: >-
-  [ACL 2025][对话系统][长期对话] 提出了基于电影剧本构建的长期对话数据集 SHARE，首次引入「共享记忆」概念，并设计了 EPISODE 对话框架来管理个人信息、个人事件和共享记忆，使长期对话更具亲密感和参与度。
+  [ACL 2025][对话系统][长期对话] 提出了基于电影剧本构建的长期对话数据集 SHARE，首次引入「共享记忆」概念，并设计了 EPISODE 对话框架来管理个人信息、个人事件和共享记忆，使长期对话更具亲密感和参与度。 对话中的记忆在建立关系和促进持续对话中发挥关键作用。现有长期对话研究的局限性： 仅关注个体记忆：现有…
 tags:
   - "ACL 2025"
   - "对话系统"

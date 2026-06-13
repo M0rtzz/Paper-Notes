@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Pre³: Enabling Deterministic Pushdown Automata for Faster Structured LLM Generation
 description: >-
-  [ACL 2025][LLM/NLP][结构化生成] 提出 Pre³，将 LR(1) 文法转化为确定性下推自动机（DPDA），通过预计算前缀条件边消除运行时非确定性探索，实现结构化 LLM 生成的显著加速——每 token 耗时降低最高 40%，吞吐提升最高 36%。
+  [ACL 2025][LLM 其他][结构化生成] 提出 Pre³，将 LR(1) 文法转化为确定性下推自动机（DPDA），通过预计算前缀条件边消除运行时非确定性探索，实现结构化 LLM 生成的显著加速——每 token 耗时降低最高 40%，吞吐提升最高 36%。 领域现状：结构化生成（如 JSON 输出）在 LLM 应用…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "结构化生成"
   - "约束解码"
   - "确定性下推自动机"

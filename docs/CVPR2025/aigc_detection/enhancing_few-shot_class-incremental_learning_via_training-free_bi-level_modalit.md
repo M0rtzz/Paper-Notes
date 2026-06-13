@@ -2,15 +2,16 @@
 title: >-
   [论文解读] Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration
 description: >-
-  [CVPR 2025][AIGC检测][FSCIL] 提出无需额外训练的双层模态校准框架，利用 CLIP 等预训练视觉语言模型的跨模态对齐能力实现小样本类增量学习，在避免灾难性遗忘的同时学习新类。
+  [CVPR 2025][AIGC检测][FSCIL] 提出 BiMC（Bi-level Modality Calibration）框架，基于冻结 CLIP 模型，通过模态内校准（结合 LLM 生成的细粒度类别描述与视觉原型）和模态间校准（融合预训练语言知识与任务特定视觉先验），在无需任何参数训练的情况下实现 FSCIL SOTA，在 CIFAR-100 上超越最优对比方法 4.25%。
 tags:
   - "CVPR 2025"
   - "AIGC检测"
   - "FSCIL"
-  - "模态校准"
+  - "双层模态校准"
   - "CLIP"
   - "无训练"
-  - "视觉语言模型"
+  - "LLM描述"
+  - "视觉原型"
 ---
 
 # Enhancing Few-Shot Class-Incremental Learning via Training-Free Bi-Level Modality Calibration
@@ -133,3 +134,19 @@ tags:
   - 无训练
   - 视觉语言模型
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Learning to Rewrite: Generalized LLM-Generated Text Detection](../../ACL2025/aigc_detection/learning_to_rewrite_generalized_llm-generated_text_detection.md)
+- [\[ACL 2025\] ChemActor: Enhancing Automated Extraction of Chemical Synthesis Actions with LLM-Generated Data](../../ACL2025/aigc_detection/chemactor_enhancing_automated_extraction_of_chemical_synthesis_actions_with_llm-.md)
+- [\[CVPR 2026\] Quality-Aware Calibration for AI-Generated Image Detection in the Wild](../../CVPR2026/aigc_detection/quality-aware_calibration_for_ai-generated_image_detection_in_the_wild.md)
+- [\[ACL 2025\] Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training](../../ACL2025/aigc_detection/greater_adversarial_mgt_detection.md)
+- [\[ACL 2025\] Reliably Bounding False Positives: A Zero-Shot Machine-Generated Text Detection Framework via Multiscaled Conformal Prediction](../../ACL2025/aigc_detection/reliably_bounding_false_positives_a_zero-shot_machine-generated_text_detection_f.md)
+
+</div>
+
+<!-- RELATED:END -->

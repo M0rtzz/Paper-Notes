@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization
 description: >-
-  [ACL 2025][医疗NLP][radiology report summarization] 提出 CSTRL，一种基于顺序迁移学习的放射学报告摘要生成方法，通过优化的间隔句生成（GSG）预训练、Fisher 矩阵正则化防止灾难性遗忘，并结合知识蒸馏实现模型压缩…
+  [ACL 2025][医疗NLP][radiology report summarization] 提出 CSTRL，一种基于顺序迁移学习的放射学报告摘要生成方法，通过优化的间隔句生成（GSG）预训练、Fisher 矩阵正则化防止灾难性遗忘，并结合知识蒸馏实现模型压缩，在 MIMIC-CXR 和 Open-I 数据集上大幅超越现有方法。
 tags:
   - "ACL 2025"
   - "医疗NLP"

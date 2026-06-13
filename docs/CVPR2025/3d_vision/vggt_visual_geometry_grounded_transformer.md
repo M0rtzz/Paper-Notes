@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VGGT: Visual Geometry Grounded Transformer
 description: >-
-  [CVPR 2025][3D视觉][3D重建] VGGT是一个大型前馈Transformer，能在不到一秒内从一张到数百张图像中直接预测相机参数、深度图、点云图和3D点轨迹，无需后处理优化即可超越现有方法。
+  [CVPR 2025][3D视觉][3D重建] VGGT是一个大型前馈Transformer，能在不到一秒内从一张到数百张图像中直接预测相机参数、深度图、点云图和3D点轨迹，无需后处理优化即可超越现有方法。 传统3D重建依赖视觉几何方法和迭代优化（如Bundle Adjustment），计算代价高昂且流程复杂…
 tags:
   - "CVPR 2025"
   - "3D视觉"

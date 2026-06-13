@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Practical Guide for Incorporating Symmetry in Diffusion Policy
 description: >-
-  [NeurIPS 2025][预训练][扩散模型] 本文提出了一套将对称性融入扩散策略的实用指南——通过不变性表征（相对轨迹动作 + 手眼感知）、等变视觉编码器和 Frame Averaging 三种简单方法，在 MimicGen 12 个任务上达到了接近甚至超越完全等变扩散策略的性能，同时实现复杂度大幅降低…
+  [NeurIPS 2025][预训练][扩散模型] 本文提出了一套将对称性融入扩散策略的实用指南——通过不变性表征（相对轨迹动作 + 手眼感知）、等变视觉编码器和 Frame Averaging 三种简单方法，在 MimicGen 12 个任务上达到了接近甚至超越完全等变扩散策略的性能，同时实现复杂度大幅降低。
 tags:
   - "NeurIPS 2025"
   - "预训练"

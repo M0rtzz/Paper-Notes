@@ -2,9 +2,9 @@
 title: >-
   [论文解读] OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects
 description: >-
-  [NeurIPS 2025][3D视觉][在线3D重建] 提出 OnlineSplatter，一个无需相机位姿、深度先验或全局优化的前馈式在线3D重建框架，通过双键记忆模块（外观-几何潜在键 + 方向键）实现自由移动物体的恒定时间增量重建。
+  [NeurIPS 2025 Spotlight][3D视觉][在线3D重建] 提出 OnlineSplatter，一个无需相机位姿、深度先验或全局优化的前馈式在线3D重建框架，通过双键记忆模块（外观-几何潜在键 + 方向键）实现自由移动物体的恒定时间增量重建。 从单目视频实时重建自由移动物体是计算机视觉的基础挑战（应用于机器…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "3D视觉"
   - "在线3D重建"
   - "3D高斯溅射"

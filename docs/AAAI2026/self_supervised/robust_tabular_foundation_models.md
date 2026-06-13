@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Tabular Foundation Models
 description: >-
-  [AAAI 2026][自监督学习][tabular foundation model] 提出 RTFM——一种模型无关的对抗训练框架，通过在合成数据生成器的参数空间上做 min-max 优化（最大化 TFM 与传统树模型之间的"最优性差距"）…
+  [AAAI 2026][自监督学习][tabular foundation model] 提出 RTFM——一种模型无关的对抗训练框架，通过在合成数据生成器的参数空间上做 min-max 优化（最大化 TFM 与传统树模型之间的"最优性差距"），仅用不到 10 万额外合成数据集就显著提升了 TabPFN V2 在多个表格基准上的表现。
 tags:
   - "AAAI 2026"
   - "自监督学习"

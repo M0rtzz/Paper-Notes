@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling View Synthesis Transformers (SVSM)
 description: >-
-  [CVPR 2026][3D视觉][新视角合成] 首次为无几何先验的 NVS Transformer 建立缩放定律：提出有效批量大小假设（B_eff = B·V_T）揭示 encoder-decoder 被低估的根因，设计单向 encoder-decoder 架构 SVSM…
+  [CVPR 2026][3D视觉][新视角合成] 首次为无几何先验的 NVS Transformer 建立缩放定律：提出有效批量大小假设（B_eff = B·V_T）揭示 encoder-decoder 被低估的根因，设计单向 encoder-decoder 架构 SVSM，在 RealEstate10K 上以不到一半训练 FLOPs 达到新 SOTA（30.01 PSNR），Pareto 前沿比 LVSM decoder-only 左移 3×。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models
 description: >-
-  [CVPR 2025][多模态VLM][个性化多模态大模型] 提出 RAP（Retrieval-Augmented Personalization）框架，通过"记忆-检索-生成"三步实现 MLLM 的个性化：用外部数据库存储用户概念，用多模态检索器动态检索相关概念信息，再注入 MLLM 生成个性化响应…
+  [CVPR 2025][多模态VLM][个性化多模态大模型] 提出 RAP（Retrieval-Augmented Personalization）框架，通过"记忆-检索-生成"三步实现 MLLM 的个性化：用外部数据库存储用户概念，用多模态检索器动态检索相关概念信息，再注入 MLLM 生成个性化响应，每个概念仅需1张图+描述即可，且支持实时更新。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

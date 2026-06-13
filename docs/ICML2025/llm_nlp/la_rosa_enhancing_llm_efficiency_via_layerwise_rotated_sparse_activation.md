@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation
 description: >-
-  [ICML 2025][LLM/NLP] LaRoSA 提出了一种无需训练的激活稀疏化方法，通过逐层正交旋转矩阵将输入激活变换到更适合稀疏化的空间，并结合 Top-K 选择实现一致的模型级稀疏度和可靠的推理加速。
+  [ICML 2025][LLM 其他] LaRoSA 提出了一种无需训练的激活稀疏化方法，通过逐层正交旋转矩阵将输入激活变换到更适合稀疏化的空间，并结合 Top-K 选择实现一致的模型级稀疏度和可靠的推理加速。 大语言模型的高效推理是当前的重要研究方向。利用激活稀疏性可以跳过零值激活对应的权重通道，从而减少内存传输和计算开销…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # LaRoSA: Enhancing LLM Efficiency via Layerwise Rotated Sparse Activation

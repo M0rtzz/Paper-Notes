@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sonata: Self-Supervised Learning of Reliable Point Representations
 description: >-
-  [CVPR 2025][3D视觉][点云自监督学习] 提出 Sonata，一个可靠的点云自监督学习方法，通过识别并解决"几何捷径"问题（表示坍塌到表面法线/点高度等低级空间特征），在ScanNet上将线性探测mIoU从21.8%提升至72.5%（3.3倍），并在多个3D感知任务上达到SOTA。
+  [CVPR 2025][3D视觉][点云自监督学习] 提出 Sonata，一个可靠的点云自监督学习方法，通过识别并解决"几何捷径"问题（表示坍塌到表面法线/点高度等低级空间特征），在ScanNet上将线性探测mIoU从21.8%提升至72.5%（3.3倍），并在多个3D感知任务上达到SOTA。 - 图像自监督学习已经非常成熟…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3ViewSense: Spatial and Mental Perspective Reasoning from Orthographic Views in Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][正交视图] 3ViewSense 认为 VLM 空间推理的瓶颈不是视觉特征不够或语言推理太弱，而是缺少稳定的三维中间表示，因此让模型先从单张图像诱导前视图、左视图、俯视图，再基于这些正交视图推理，在遮挡计数和视角一致空间推理上显著优于同规模 VLM。
+  [ICML 2026][多模态VLM][正交视图] 3ViewSense 认为 VLM 空间推理的瓶颈不是视觉特征不够或语言推理太弱，而是缺少稳定的三维中间表示，因此让模型先从单张图像诱导前视图、左视图、俯视图，再基于这些正交视图推理，在遮挡计数和视角一致空间推理上显著优于同规模 VLM。 领域现状：大视觉语言模型已经能处理…
 tags:
   - "ICML 2026"
   - "多模态VLM"

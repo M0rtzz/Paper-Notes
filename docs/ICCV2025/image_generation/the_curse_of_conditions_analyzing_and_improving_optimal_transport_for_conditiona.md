@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Curse of Conditions: Analyzing and Improving Optimal Transport for Conditional Flow-Based Generation
 description: >-
-  [ICCV 2025][图像生成][最优传输] 本文揭示了条件流匹配中使用标准最优传输（OT）会导致训练-测试不匹配的"条件诅咒"问题——OT 忽略条件信息导致训练时先验分布产生条件偏移，而测试时用的是无偏先验…
+  [ICCV 2025][图像生成][最优传输] 本文揭示了条件流匹配中使用标准最优传输（OT）会导致训练-测试不匹配的"条件诅咒"问题——OT 忽略条件信息导致训练时先验分布产生条件偏移，而测试时用的是无偏先验，并提出了 C²OT（Conditional Optimal Transport）通过在 OT 代价矩阵中加入条件权重项来修复此问题。
 tags:
   - "ICCV 2025"
   - "图像生成"

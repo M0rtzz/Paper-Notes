@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Information-Theoretic Discrete Diffusion
 description: >-
-  [NeurIPS 2025][图像生成][离散扩散模型] 将连续扩散中经典的 I-MMSE 恒等式推广到离散域，建立 I-MDSE 和 I-MDCE 关系——证明 DSE/DCE 损失不仅是变分上界而是对数似然的**精确分解**，并由此推导出 time-free 公式、条件似然估计和耦合似然比估计器…
+  [NeurIPS 2025][图像生成][离散扩散模型] 将连续扩散中经典的 I-MMSE 恒等式推广到离散域，建立 I-MDSE 和 I-MDCE 关系——证明 DSE/DCE 损失不仅是变分上界而是对数似然的**精确分解**，并由此推导出 time-free 公式、条件似然估计和耦合似然比估计器，在 LLaDA 等大模型上验证了低方差和 OOD 检测能力。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML
 description: >-
-  [ICML 2025][多智能体][AutoML] 本文提出 AutoML-Agent，一个基于多智能体 LLM 协作的全流水线 AutoML 框架，通过检索增强规划策略（Retrieval-Augmented Planning）扩大搜索空间、将任务分解为并行执行的子任务由专业化 Agent 分别完成、并引入…
+  [ICML 2025][多智能体][AutoML] 本文提出 AutoML-Agent，一个基于多智能体 LLM 协作的全流水线 AutoML 框架，通过检索增强规划策略（Retrieval-Augmented Planning）扩大搜索空间、将任务分解为并行执行的子任务由专业化 Agent 分别完成、并引入多阶段验证机制保障代码生成质量，在 7 类任务 14 个数据集上实现了更高的自动化成功率和模型性能。
 tags:
   - "ICML 2025"
   - "多智能体"

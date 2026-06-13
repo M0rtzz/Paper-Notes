@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning
 description: >-
-  [ICLR 2026][多模态VLM][多模态推理] 提出 MMR-Life 基准（2646 道 5 选 1 多图选择题，基于 19108 张真实图像，覆盖 7 种推理类型和 21 个任务），首次系统评估 MLLM 在真实生活场景中的多图推理能力，发现最强模型 GPT-5 仅 58.69% 准确率…
+  [ICLR 2026][多模态VLM][多模态推理] 提出 MMR-Life 基准（2646 道 5 选 1 多图选择题，基于 19108 张真实图像，覆盖 7 种推理类型和 21 个任务），首次系统评估 MLLM 在真实生活场景中的多图推理能力，发现最强模型 GPT-5 仅 58.69% 准确率，距人类水平差 14%，并揭示了推理增强方法在大模型上失效、RL 泛化弱于 BoN 等关键发现。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

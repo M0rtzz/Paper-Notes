@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DualGuard: Dual-stream Large Language Model Watermarking Defense against Paraphrase and Spoofing Attack
 description: >-
-  [ACL 2026][LLM安全][双流水印] DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗水印头根据当前内容是"良性"还是"恶意"自适应地注入不同水印，使良性文本两路一致、恶意文本两路发散…
+  [ACL 2026 Findings][LLM安全][双流水印] DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗水印头根据当前内容是"良性"还是"恶意"自适应地注入不同水印，使良性文本两路一致、恶意文本两路发散，从而在保持对 paraphrase 鲁棒的同时**首次能检测并溯源** piggyback spoofing 注入的恶意片段。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "双流水印"
   - "Spoofing 攻击"

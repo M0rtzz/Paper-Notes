@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Survey on MLLM-based Visually Rich Document Understanding: Methods, Challenges, and Emerging Trends
 description: >-
-  [ACL 2026][多模态VLM][视觉丰富文档理解] 系统综述基于多模态大语言模型（MLLM）的视觉丰富文档理解（VRDU），从特征表示/融合和训练范式两个维度梳理OCR-based和OCR-free方法，并讨论数据稀缺、多页文档、多语言支持、RAG和智能体等新兴方向。
+  [ACL 2026 Findings][多模态VLM][视觉丰富文档理解] 系统综述基于多模态大语言模型（MLLM）的视觉丰富文档理解（VRDU），从特征表示/融合和训练范式两个维度梳理OCR-based和OCR-free方法，并讨论数据稀缺、多页文档、多语言支持、RAG和智能体等新兴方向。 领域现状：视觉丰富文档理解（VR…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "视觉丰富文档理解"
   - "多模态大语言模型"

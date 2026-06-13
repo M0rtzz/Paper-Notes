@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models
 description: >-
-  [ICML 2025][LLM对齐][VLM安全对齐] 本文发现了 VLM 中图像编码器的"早退出"漏洞（ICET）——跳过图像编码器的部分层会大幅增加有害输出概率，提出 Layer-wise PPO (L-PPO) 修改 Clipped-PPO 算法在不同层级做多模态 RLHF…
+  [ICML 2025 Spotlight][LLM对齐][VLM安全对齐] 本文发现了 VLM 中图像编码器的"早退出"漏洞（ICET）——跳过图像编码器的部分层会大幅增加有害输出概率，提出 Layer-wise PPO (L-PPO) 修改 Clipped-PPO 算法在不同层级做多模态 RLHF，在 ASR 上降低高达 48%、毒性分数降低 33.64%。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "LLM对齐"
   - "VLM安全对齐"
   - "图像编码器"

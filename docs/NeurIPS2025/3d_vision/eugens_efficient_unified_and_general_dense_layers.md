@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EUGens: Efficient, Unified, and General Dense Layers
 description: >-
-  [NeurIPS 2025][3D视觉][efficient neural network] EUGens 提出一类新的高效稠密层，利用随机特征（Random Features）将全连接前馈层的推理复杂度从二次降到线性，统一了已有的高效 FFL 扩展…
+  [NeurIPS 2025][3D视觉][efficient neural network] EUGens 提出一类新的高效稠密层，利用随机特征（Random Features）将全连接前馈层的推理复杂度从二次降到线性，统一了已有的高效 FFL 扩展，在 LLM 预训练、ViT 图像分类、NeRF/iSDF 三维重建等任务中实现高达 27% 加速和 30% 参数压缩，且支持无需反向传播的层级知识蒸馏。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

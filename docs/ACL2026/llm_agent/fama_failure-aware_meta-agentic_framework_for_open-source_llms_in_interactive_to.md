@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FAMA: Failure-Aware Meta-Agentic Framework for Open-Source LLMs in Interactive Tool Use Environments
 description: >-
-  [ACL 2026][LLM Agent][失败感知] FAMA 先用一套独立"失败分析 agent + 编排 agent"自动诊断基线 tool-use agent 在 τ-bench 这类多轮交互上的主要失败模式…
+  [ACL 2026 Findings][LLM Agent][失败感知] FAMA 先用一套独立"失败分析 agent + 编排 agent"自动诊断基线 tool-use agent 在 τ-bench 这类多轮交互上的主要失败模式，再让一个 mitigation agent 按需挑选最小子集 helper agent 注入到上下文，从而在 Qwen 系列开源模型上把任务成功率最高拉高 27%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "失败感知"
   - "Meta-Agent"

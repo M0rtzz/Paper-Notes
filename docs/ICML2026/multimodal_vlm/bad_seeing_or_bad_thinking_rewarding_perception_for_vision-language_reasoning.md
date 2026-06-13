@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Bad Seeing or Bad Thinking? Rewarding Perception for Vision-Language Reasoning
 description: >-
-  [ICML 2026][多模态VLM][VLM] 本文把 VLM 的输出强制拆成 `<recognition>` 感知块和 `<think>` 推理块，再用一个"蒙眼"文本推理代理（拿不到图，只看 VLM 写下的感知文字）能不能答对题作为感知奖励 $R_P$…
+  [ICML 2026 Oral][多模态VLM][VLM] 本文把 VLM 的输出强制拆成 `<recognition>` 感知块和 `<think>` 推理块，再用一个"蒙眼"文本推理代理（拿不到图，只看 VLM 写下的感知文字）能不能答对题作为感知奖励 $R_P$，配上结构化语言验证 SVV 作为结果奖励 $R_O$；MoCA 用 $R_P$ 当门控做模态级信用分配，让 7B 模型在 9 个 perception/reasoning/rich-modality benchmark 上同时提升，在多个指标上超过 GPT-4o。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "多模态VLM"
   - "VLM"
   - "RL"

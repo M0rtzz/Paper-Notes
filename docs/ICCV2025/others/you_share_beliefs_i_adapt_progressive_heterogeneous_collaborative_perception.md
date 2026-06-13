@@ -2,7 +2,7 @@
 title: >-
   [论文解读] You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception
 description: >-
-  [ICCV2025][异构协同感知] 提出PHCP框架，首次在推理阶段解决异构协同感知的域差距问题——通过agent的伪标签做few-shot无监督域适应，自训练适配器对齐特征空间，无需联合训练即在OPV2V上仅用少量无标注数据达到接近SOTA(HEAL)的性能。
+  [ICCV2025][异构协同感知] 提出PHCP框架，首次在推理阶段解决异构协同感知的域差距问题——通过agent的伪标签做few-shot无监督域适应，自训练适配器对齐特征空间，无需联合训练即在OPV2V上仅用少量无标注数据达到接近SOTA(HEAL)的性能。 领域现状：协同感知(Collaborative Percep…
 tags:
   - "ICCV2025"
   - "异构协同感知"

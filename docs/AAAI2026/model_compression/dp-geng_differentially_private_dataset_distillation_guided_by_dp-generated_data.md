@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DP-GenG: Differentially Private Dataset Distillation Guided by DP-Generated Data
 description: >-
-  [AAAI2026][模型压缩][differential privacy] 提出 DP-GenG 框架，利用差分隐私生成数据（DP-generated data）引导数据集蒸馏的初始化、特征匹配和专家校准三个阶段，在有限隐私预算下显著提升蒸馏数据集的实用性和隐私保护能力。
+  [AAAI2026][模型压缩][differential privacy] 提出 DP-GenG 框架，利用差分隐私生成数据（DP-generated data）引导数据集蒸馏的初始化、特征匹配和专家校准三个阶段，在有限隐私预算下显著提升蒸馏数据集的实用性和隐私保护能力。 数据集蒸馏（Dataset Distillatio…
 tags:
   - "AAAI2026"
   - "模型压缩"

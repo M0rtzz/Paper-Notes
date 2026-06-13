@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation
 description: >-
-  [CVPR 2025][3D视觉][全景深度估计] 提出Helvipad——首个用于全景立体深度估计的真实世界数据集（40K帧、上下双360°相机+LiDAR），并引入极角输入和环形填充两个适配策略来改进立体匹配模型处理等距矩形投影图像，所提360-IGEV-Stereo在所有指标上达到最佳。
+  [CVPR 2025][3D视觉][全景深度估计] 提出Helvipad——首个用于全景立体深度估计的真实世界数据集（40K帧、上下双360°相机+LiDAR），并引入极角输入和环形填充两个适配策略来改进立体匹配模型处理等距矩形投影图像，所提360-IGEV-Stereo在所有指标上达到最佳。 领域现状：立体深度估计在过去几…
 tags:
   - "CVPR 2025"
   - "3D视觉"

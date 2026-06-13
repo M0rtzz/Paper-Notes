@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-Free Personalization via Retrieval and Reasoning on Fingerprints
 description: >-
-  [多模态VLM] 提出R2P，首个免训练的VLM个性化方法，利用VLM自身的世界知识提取概念"指纹"属性，通过检索-推理范式和跨模态属性验证实现个人概念识别，无需任何微调或大规模预训练。
+  [多模态VLM] 提出R2P，首个免训练的VLM个性化方法，利用VLM自身的世界知识提取概念"指纹"属性，通过检索-推理范式和跨模态属性验证实现个人概念识别，无需任何微调或大规模预训练。 VLM个性化旨在让模型理解用户特定概念（如"我的钥匙"、"Fluffy在做什么"），但现有方法存在严重局限： 训练依赖：MyVLM、Yo'…
 tags:
   - "多模态VLM"
 ---

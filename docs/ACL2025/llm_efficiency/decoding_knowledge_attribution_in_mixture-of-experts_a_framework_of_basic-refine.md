@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Decoding Knowledge Attribution in Mixture-of-Experts: A Framework of Basic-Refinement Collaboration and Efficiency Analysis
 description: >-
-  [ACL2025][Mixture-of-Experts] 提出跨层级知识归因算法，系统解析 MoE 模型中共享专家与路由专家的"基础-精炼"协作框架，揭示 MoE 相比稠密模型实现 31% 更高的逐层效率…
+  [ACL2025][LLM效率][Mixture-of-Experts] 提出跨层级知识归因算法，系统解析 MoE 模型中共享专家与路由专家的"基础-精炼"协作框架，揭示 MoE 相比稠密模型实现 31% 更高的逐层效率，并通过语义驱动路由机制（注意力头-专家相关性 r=0.68）和专家阻断实验验证了架构深度对鲁棒性的决定性影响。
 tags:
   - "ACL2025"
+  - "LLM效率"
   - "Mixture-of-Experts"
   - "知识归因"
   - "可解释性"

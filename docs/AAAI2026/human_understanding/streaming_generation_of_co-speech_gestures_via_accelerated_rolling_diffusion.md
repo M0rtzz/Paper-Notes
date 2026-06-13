@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Streaming Generation of Co-Speech Gestures via Accelerated Rolling Diffusion
 description: >-
-  [AAAI2026][人体理解][co-speech gestures] 提出基于 Rolling Diffusion 的流式共语手势生成框架，通过结构化渐进噪声调度将任意扩散模型转化为流式手势生成器…
+  [AAAI2026][人体理解][co-speech gestures] 提出基于 Rolling Diffusion 的流式共语手势生成框架，通过结构化渐进噪声调度将任意扩散模型转化为流式手势生成器，并引入 Rolling Diffusion Ladder Acceleration (RDLA) 实现最高 4× 加速（200 FPS），在 ZEGGS 和 BEAT 基准上全面超越基线。
 tags:
   - "AAAI2026"
   - "人体理解"

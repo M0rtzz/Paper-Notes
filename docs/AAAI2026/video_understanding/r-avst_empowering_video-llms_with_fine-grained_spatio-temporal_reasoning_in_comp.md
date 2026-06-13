@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R-AVST: Empowering Video-LLMs with Fine-Grained Spatio-Temporal Reasoning in Complex Audio-Visual Scenarios
 description: >-
-  [AAAI 2026][视频理解][音视频推理] 提出首个面向复杂音视频场景的细粒度时空推理数据集 R-AVST（5K+未裁剪视频、27K物体、100类音视频事件），定义三个核心推理任务，并基于 GRPO 训练 AVST-Zero 模型，通过多维奖励函数直接优化音视频时空推理能力。
+  [AAAI 2026][视频理解][音视频推理] 提出首个面向复杂音视频场景的细粒度时空推理数据集 R-AVST（5K+未裁剪视频、27K物体、100类音视频事件），定义三个核心推理任务，并基于 GRPO 训练 AVST-Zero 模型，通过多维奖励函数直接优化音视频时空推理能力。 领域现状：多模态大语言模型（MLLM）在视…
 tags:
   - "AAAI 2026"
   - "视频理解"

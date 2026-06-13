@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Codebook-Injected Dialogue Segmentation for Multi-Utterance Constructs Annotation: LLM-Assisted and Gold-Label-Free Evaluation
 description: >-
-  [ACL 2026][对话系统][dialogue act 标注] 论文把 dialogue act 标注重新定义为"先分段、再贴标签"的两步问题，提出 codebook-injected 的 LLM 分割（System 1）和 Dial-Start 的 DA-aware 检索增强（System 2）两种方案…
+  [ACL 2026][对话系统][dialogue act 标注] 论文把 dialogue act 标注重新定义为"先分段、再贴标签"的两步问题，提出 codebook-injected 的 LLM 分割（System 1）和 Dial-Start 的 DA-aware 检索增强（System 2）两种方案，并给出无需 gold boundary 的三类评测指标（segment 内一致性 / 相邻段差异性 / 人-AI 分布对齐），在 TalkMoves 和 CLASS-annotated 两套教学对话上证明：DA-aware 提示能让 LLM 切出更同质的 segment，但和 coherence-based baseline…
 tags:
   - "ACL 2026"
   - "对话系统"

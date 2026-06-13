@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MKA: Memory-Keyed Attention for Efficient Long-Context Reasoning
 description: >-
-  [ICML2025][模型压缩][KV cache 压缩] 提出 Memory-Keyed Attention (MKA)，将 KV 缓存组织为三级分层记忆（局部/会话/长期），通过可学习路由门动态分配注意力；加速版 FastMKA 在注意力计算前融合记忆源…
+  [ICML2025][模型压缩][KV cache 压缩] 提出 Memory-Keyed Attention (MKA)，将 KV 缓存组织为三级分层记忆（局部/会话/长期），通过可学习路由门动态分配注意力；加速版 FastMKA 在注意力计算前融合记忆源，实现训练吞吐量达 MLA 的 5 倍、解码延迟降至 MLA 的 54%，perplexity 仅损失约 1%。
 tags:
   - "ICML2025"
   - "模型压缩"

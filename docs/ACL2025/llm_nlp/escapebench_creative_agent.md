@@ -2,10 +2,10 @@
 title: >-
   [论文解读] EscapeBench: Towards Advancing Creative Intelligence of Language Model Agents
 description: >-
-  [ACL 2025 (Long Paper)][LLM/NLP][creative intelligence] 本文推出 EscapeBench——基于密室逃脱游戏的 LLM Agent 创意智能评测基准（36 个场景、3 个难度），揭示当前模型在创造性工具使用和隐式目标推断上的严重不足…
+  [ACL 2025 (Long Paper)][LLM 其他][creative intelligence] 本文推出 EscapeBench——基于密室逃脱游戏的 LLM Agent 创意智能评测基准（36 个场景、3 个难度），揭示当前模型在创造性工具使用和隐式目标推断上的严重不足，并提出 EscapeAgent（Foresight + Reflection）将提示依赖降低近 50%。
 tags:
   - "ACL 2025 (Long Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "creative intelligence"
   - "escape room"
   - "agent benchmark"

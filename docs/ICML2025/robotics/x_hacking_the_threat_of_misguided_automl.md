@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-Hacking: The Threat of Misguided AutoML
 description: >-
-  [ICML2025][机器人][AutoML] 揭示了XAI(可解释AI)领域的新安全威胁"X-hacking"：通过AutoML的管道搜索能力，对抗者可在Rashomon模型集中寻找支持预定结论的解释性结果，Bayesian优化比随机搜索快3倍。
+  [ICML2025][机器人][AutoML] 揭示了XAI(可解释AI)领域的新安全威胁"X-hacking"：通过AutoML的管道搜索能力，对抗者可在Rashomon模型集中寻找支持预定结论的解释性结果，Bayesian优化比随机搜索快3倍。 从P-hacking到X-hacking P-hacking是传统统计学中的…
 tags:
   - "ICML2025"
   - "机器人"

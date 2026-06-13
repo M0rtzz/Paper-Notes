@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mechanisms of Prompt-Induced Hallucination in Vision–Language Models
 description: >-
-  [ACL 2026][幻觉检测][提示学习] 在受控的目标计数任务里把"模型听 prompt 不看图"的幻觉行为定位到 LLaVA-OneVision / Qwen-VL / Janus-Pro **早期层** (主要是 L0-1) 的 3-10 个 attention head…
+  [ACL 2026][幻觉检测][提示学习] 在受控的目标计数任务里把"模型听 prompt 不看图"的幻觉行为定位到 LLaVA-OneVision / Qwen-VL / Janus-Pro **早期层** (主要是 L0-1) 的 3-10 个 attention head，对它们做 mean ablation 不需要任何再训练就让 prompt-following 从 42–64% 掉到 <11%，把真实计数恢复率推到 70–78%，并能 zero-shot 迁移到颜色识别任务 (PIH 抑制 40–95%)。
 tags:
   - "ACL 2026"
   - "幻觉检测"

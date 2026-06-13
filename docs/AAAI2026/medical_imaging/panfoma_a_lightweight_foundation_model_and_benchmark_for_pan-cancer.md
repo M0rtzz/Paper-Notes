@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PanFoMa: A Lightweight Foundation Model and Benchmark for Pan-Cancer Pathology Image Analysis
 description: >-
-  [AAAI 2026][医学图像][Single-cell RNA-seq] 提出 PanFoMa，一种融合 Transformer 局部建模与 Mamba 全局整合的轻量级混合神经网络，用于泛癌单细胞转录组表示学习…
+  [AAAI 2026][医学图像][Single-cell RNA-seq] 提出 PanFoMa，一种融合 Transformer 局部建模与 Mamba 全局整合的轻量级混合神经网络，用于泛癌单细胞转录组表示学习；同时构建了覆盖 33 种癌症亚型、350 万+ 细胞的大规模基准数据集 PanFoMaBench。
 tags:
   - "AAAI 2026"
   - "医学图像"

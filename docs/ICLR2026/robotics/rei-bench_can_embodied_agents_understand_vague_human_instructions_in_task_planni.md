@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?
 description: >-
-  [ICLR 2026][机器人][指称表达] 首次系统研究人类模糊指令中的指称表达(Referring Expressions)对LLM机器人任务规划的影响——构建REI-Bench基准建模9级共指模糊度(3级RE难度×3级上下文)，发现隐式RE可使现有规划器成功率下降高达36.9%…
+  [ICLR 2026][机器人][指称表达] 首次系统研究人类模糊指令中的指称表达(Referring Expressions)对LLM机器人任务规划的影响——构建REI-Bench基准建模9级共指模糊度(3级RE难度×3级上下文)，发现隐式RE可使现有规划器成功率下降高达36.9%，提出Task-Oriented Context Cognition (TOCC)方法将任务理解与规划决策解耦，平均提升成功率6.5%。
 tags:
   - "ICLR 2026"
   - "机器人"

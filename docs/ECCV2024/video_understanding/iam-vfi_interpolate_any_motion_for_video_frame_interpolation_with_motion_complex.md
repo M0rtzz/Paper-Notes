@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IAM-VFI: Interpolate Any Motion for Video Frame Interpolation with Motion Complexity Map
 description: >-
-  [ECCV 2024][视频理解][视频帧插值] 提出IAM-VFI框架，通过引入运动复杂度图（Motion Complexity Map）来感知局部运动的难度级别，对不同复杂度区域自适应分配计算资源和处理策略，实现对任意运动模式的鲁棒视频帧插值。
+  [ECCV 2024][视频理解][视频帧插值] 提出IAM-VFI框架，通过引入运动复杂度图（Motion Complexity Map）来感知局部运动的难度级别，对不同复杂度区域自适应分配计算资源和处理策略，实现对任意运动模式的鲁棒视频帧插值。 领域现状：视频帧插值（VFI）旨在在两个已有的视频帧之间合成中间帧…
 tags:
   - "ECCV 2024"
   - "视频理解"

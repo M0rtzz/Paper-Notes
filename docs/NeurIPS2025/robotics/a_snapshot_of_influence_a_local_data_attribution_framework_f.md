@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning
 description: >-
-  [NeurIPS 2025][机器人][数据归因] 首次将数据归因（data attribution）引入在线强化学习，提出局部归因框架量化每条训练记录对策略更新的贡献，并基于此设计了迭代影响力过滤算法（IIF），在经典RL基准和LLM的RLHF上均显著提升了样本效率和最终性能。
+  [NeurIPS 2025 Oral][机器人][数据归因] 首次将数据归因（data attribution）引入在线强化学习，提出局部归因框架量化每条训练记录对策略更新的贡献，并基于此设计了迭代影响力过滤算法（IIF），在经典RL基准和LLM的RLHF上均显著提升了样本效率和最终性能。 在线RL（如PPO）在游戏、机器人…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "机器人"
   - "数据归因"
   - "在线强化学习"

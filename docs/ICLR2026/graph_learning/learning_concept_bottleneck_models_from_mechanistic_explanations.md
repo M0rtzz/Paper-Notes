@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Concept Bottleneck Models from Mechanistic Explanations
 description: >-
-  [ICLR2026][图学习][Concept Bottleneck Model] 提出 Mechanistic CBM (M-CBM)，利用 Sparse Autoencoder 从黑盒模型自身学到的特征中提取概念，再由多模态 LLM 命名和标注…
+  [ICLR2026][图学习][Concept Bottleneck Model] 提出 Mechanistic CBM (M-CBM)，利用 Sparse Autoencoder 从黑盒模型自身学到的特征中提取概念，再由多模态 LLM 命名和标注，构建可解释的 Concept Bottleneck Model，在控制信息泄露的条件下显著优于现有 CBM 方法。
 tags:
   - "ICLR2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning
 description: >-
-  [ICCV 2025][多模态VLM][持续学习] 发现多模态大模型持续视觉指令微调（CVIT）中存在"双重灾难性遗忘"——视觉理解能力和指令遵循能力同时退化，提出SMoLoRA通过可分离路由的LoRA专家混合方法有效缓解该问题。
+  [ICCV 2025][多模态VLM][持续学习] 发现多模态大模型持续视觉指令微调（CVIT）中存在"双重灾难性遗忘"——视觉理解能力和指令遵循能力同时退化，提出SMoLoRA通过可分离路由的LoRA专家混合方法有效缓解该问题。 多模态大语言模型（MLLM）通过视觉指令微调（VIT）获得处理各类视觉任务的能力…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TELL-TALE: Task Efficient LLMs with Task Aware Layer Elimination
 description: >-
-  [ACL 2026][模型压缩][任务感知剪枝] TALE 用一个无需重训的贪心搜索过程，为每个下游任务直接删除“拖后腿”的 Transformer 层，在 5 个开源 LLM 和 9 个 benchmark 上同时提升任务准确率并减少推理成本。
+  [ACL 2026 Findings][模型压缩][任务感知剪枝] TALE 用一个无需重训的贪心搜索过程，为每个下游任务直接删除“拖后腿”的 Transformer 层，在 5 个开源 LLM 和 9 个 benchmark 上同时提升任务准确率并减少推理成本。 领域现状：大语言模型通常以固定深度部署…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "任务感知剪枝"
   - "层删除"

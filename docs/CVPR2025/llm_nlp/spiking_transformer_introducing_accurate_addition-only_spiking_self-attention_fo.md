@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Spiking Transformer: Introducing Accurate Addition-Only Spiking Self-Attention for Transformer
 description: >-
-  [CVPR 2025][LLM/NLP][Transformer] 本文提出 Accurate Addition-Only Spiking Self-Attention（A²OS²A），通过融合二值、ReLU 和三值脉冲神经元的混合策略，在保持纯加法计算（无乘法）的前提下显著提升脉冲Transformer精度…
+  [CVPR 2025][LLM 其他][Transformer] 本文提出 Accurate Addition-Only Spiking Self-Attention（A²OS²A），通过融合二值、ReLU 和三值脉冲神经元的混合策略，在保持纯加法计算（无乘法）的前提下显著提升脉冲Transformer精度，ImageNet-1K 上达到 78.66%。
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "脉冲自注意力"
   - "加法运算"

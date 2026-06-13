@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Design2GarmentCode: Turning Design Concepts to Tangible Garments Through Program Synthesis
 description: >-
-  [CVPR 2025][人体理解][程序合成] 提出 Design2GarmentCode，首个神经符号方法将多模态设计输入（文本/图像/草图）转化为参数化服装制版程序（GarmentCode DSL），实现 100% 仿真成功率和 88.67% 的用户满意度，且生成的程序可编辑、可参数化。
+  [CVPR 2025][人体理解][程序合成] 提出 Design2GarmentCode，首个神经符号方法将多模态设计输入（文本/图像/草图）转化为参数化服装制版程序（GarmentCode DSL），实现 100% 仿真成功率和 88.67% 的用户满意度，且生成的程序可编辑、可参数化。 领域现状 领域现状：数字服装生成…
 tags:
   - "CVPR 2025"
   - "人体理解"

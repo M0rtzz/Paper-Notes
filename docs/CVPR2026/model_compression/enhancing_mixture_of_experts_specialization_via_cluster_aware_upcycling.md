@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Mixture-of-Experts Specialization via Cluster-Aware Upcycling
 description: >-
-  [CVPR 2026][模型压缩][Mixture-of-Experts] 提出 Cluster-aware Upcycling，通过球面 k-means 聚类提取密集模型的语义结构来初始化 MoE 的专家和路由器参数，打破专家对称性并促进早期专业化…
+  [CVPR 2026][模型压缩][Mixture-of-Experts] 提出 Cluster-aware Upcycling，通过球面 k-means 聚类提取密集模型的语义结构来初始化 MoE 的专家和路由器参数，打破专家对称性并促进早期专业化，配合专家集成自蒸馏损失在 CLIP ViT 上一致超越现有 upcycling 方法。
 tags:
   - "CVPR 2026"
   - "模型压缩"

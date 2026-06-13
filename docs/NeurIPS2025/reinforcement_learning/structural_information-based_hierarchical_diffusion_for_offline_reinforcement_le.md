@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][离线强化学习] 提出SIHD框架，利用历史轨迹中的结构信息（结构熵）自适应构建多尺度扩散层次，用结构信息增益替代局部奖励预测作为条件引导信号，并引入结构熵正则化促进对离线数据中稀疏状态的探索，在D4RL基准上最高提升12.6%的决策性能。
+  [NeurIPS 2025][强化学习][离线强化学习] 提出SIHD框架，利用历史轨迹中的结构信息（结构熵）自适应构建多尺度扩散层次，用结构信息增益替代局部奖励预测作为条件引导信号，并引入结构熵正则化促进对离线数据中稀疏状态的探索，在D4RL基准上最高提升12.6%的决策性能。 领域现状 离线RL使用预收集数据训练策略…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReDial: Assessing Dialect Fairness and Robustness of Large Language Models in Reasoning Tasks
 description: >-
-  [ACL 2025][LLM安全][dialect fairness] 本文构建了首个高质量人工标注的标准英语-AAVE平行推理基准ReDial（1216对），系统评估LLM在方言输入下的公平性与鲁棒性，发现几乎所有主流模型在AAVE查询上性能显著下降超过10%。
+  [ACL 2025][LLM安全][dialect fairness] 本文构建了首个高质量人工标注的标准英语-AAVE平行推理基准ReDial（1216对），系统评估LLM在方言输入下的公平性与鲁棒性，发现几乎所有主流模型在AAVE查询上性能显著下降超过10%。 领域现状：LLM评估基准通常使用标准英语构建（如HumanE…
 tags:
   - "ACL 2025"
   - "LLM安全"

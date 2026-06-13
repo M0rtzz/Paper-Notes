@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reducing Peak Memory Usage for Modern Multimodal Large Language Model Pipelines
 description: >-
-  [ACL 2026][多模态VLM][多模态大模型] 论文把多模态大模型的显存瓶颈从“解码阶段的长上下文缓存”前移到“prefill 阶段的视觉 token 峰值缓存”，提出在 prefill 过程中边计算边压缩的结构感知 KV-cache 框架，在固定缓存预算下把峰值显存控制住…
+  [ACL 2026][多模态VLM][多模态大模型] 论文把多模态大模型的显存瓶颈从“解码阶段的长上下文缓存”前移到“prefill 阶段的视觉 token 峰值缓存”，提出在 prefill 过程中边计算边压缩的结构感知 KV-cache 框架，在固定缓存预算下把峰值显存控制住，同时尽量保留图像和视频理解能力。
 tags:
   - "ACL 2026"
   - "多模态VLM"

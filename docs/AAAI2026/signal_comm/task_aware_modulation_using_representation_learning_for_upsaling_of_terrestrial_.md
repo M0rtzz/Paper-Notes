@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task Aware Modulation Using Representation Learning for Upscaling of Terrestrial Carbon Fluxes
 description: >-
-  [AAAI 2026][信号/通信][碳通量升尺度] 提出 TAM-RL 框架，将陆地碳通量升尺度问题建模为零样本回归迁移学习任务，用 BiLSTM 任务编码器+FiLM 调制结合碳平衡方程知识引导损失…
+  [AAAI 2026][信号/通信][碳通量升尺度] 提出 TAM-RL 框架，将陆地碳通量升尺度问题建模为零样本回归迁移学习任务，用 BiLSTM 任务编码器+FiLM 调制结合碳平衡方程知识引导损失，在 150+ 通量塔站点上将 GPP RMSE 降低 9.6%、NEE R² 提升 43.8%（相较 FLUXCOM-X-BASE）。
 tags:
   - "AAAI 2026"
   - "信号/通信"

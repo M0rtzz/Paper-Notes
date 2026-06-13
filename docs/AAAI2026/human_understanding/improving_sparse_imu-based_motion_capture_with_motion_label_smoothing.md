@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Sparse IMU-based Motion Capture with Motion Label Smoothing
 description: >-
-  [AAAI2026][人体理解][稀疏IMU] 提出 Motion Label Smoothing，将经典 label smoothing 从分类任务适配到稀疏IMU运动捕捉中，通过融合骨骼结构感知的Perlin噪声作为平滑标签，在不修改模型架构的前提下以即插即用方式提升三种SOTA方法在四个数据集上的精度…
+  [AAAI2026][人体理解][稀疏IMU] 提出 Motion Label Smoothing，将经典 label smoothing 从分类任务适配到稀疏IMU运动捕捉中，通过融合骨骼结构感知的Perlin噪声作为平滑标签，在不修改模型架构的前提下以即插即用方式提升三种SOTA方法在四个数据集上的精度，GlobalPose在TotalCapture上SIP误差降低20.41%。
 tags:
   - "AAAI2026"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weak-SIGReg: Covariance Regularization for Stable Deep Learning
 description: >-
-  [ICLR 2026][优化/理论][covariance regularization] 将 LeJEPA 的 SIGReg 正则化从自监督学习迁移到监督学习，并提出计算高效的 Weak-SIGReg 变体——只约束协方差矩阵趋向单位矩阵（而非全部矩）…
+  [ICLR 2026][优化/理论][covariance regularization] 将 LeJEPA 的 SIGReg 正则化从自监督学习迁移到监督学习，并提出计算高效的 Weak-SIGReg 变体——只约束协方差矩阵趋向单位矩阵（而非全部矩），用随机投影将内存从 $O(C^2)$ 降至 $O(CK)$，在 ViT 无 BN/残差连接时将 CIFAR-100 准确率从 20.73%（坍缩）恢复到 72.02%，且匹配或超越专家精调的基线。
 tags:
   - "ICLR 2026"
   - "优化/理论"

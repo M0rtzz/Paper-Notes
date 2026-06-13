@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LADA: Scalable Label-Specific CLIP Adapter for Continual Learning
 description: >-
-  [ICML2025][多模态VLM][CLIP] 提出 LADA（Label-specific ADApter），通过在冻结 CLIP 图像编码器后追加轻量级的**类别特定记忆向量**，将所有已学任务的判别信息浓缩到统一特征空间，**彻底消除推理阶段的参数选择步骤**…
+  [ICML2025][多模态VLM][CLIP] 提出 LADA（Label-specific ADApter），通过在冻结 CLIP 图像编码器后追加轻量级的**类别特定记忆向量**，将所有已学任务的判别信息浓缩到统一特征空间，**彻底消除推理阶段的参数选择步骤**，在 X-TAIL 持续学习设定下取得 SOTA。
 tags:
   - "ICML2025"
   - "多模态VLM"

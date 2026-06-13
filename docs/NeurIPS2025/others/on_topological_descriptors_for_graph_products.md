@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Topological Descriptors for Graph Products
 description: >-
-  [NeurIPS 2025][topological descriptors] 系统研究在图的（box）积上施加各种滤过时拓扑描述子（欧拉特征 EC 和持续同调 PH）的表达能力，证明 PH 图积描述子严格强于对单图的计算，而 EC 不具备此性质，并给出高效 PH 计算算法。
+  [NeurIPS 2025][topological descriptors] 系统研究在图的（box）积上施加各种滤过时拓扑描述子（欧拉特征 EC 和持续同调 PH）的表达能力，证明 PH 图积描述子严格强于对单图的计算，而 EC 不具备此性质，并给出高效 PH 计算算法。 领域现状：拓扑数据分析（TDA）中的持续同调（P…
 tags:
   - "NeurIPS 2025"
   - "topological descriptors"

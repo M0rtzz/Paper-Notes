@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teller: Real-Time Streaming Audio-Driven Portrait Animation with Autoregressive Motion Generation
 description: >-
-  [CVPR 2025][视频生成][说话人动画] 提出首个基于自回归 Transformer 的实时流式音频驱动肖像动画框架 Teller，通过 RVQ 将面部运动离散化为 token，结合高效时序模块精炼身体细节…
+  [CVPR 2025][视频生成][说话人动画] 提出首个基于自回归 Transformer 的实时流式音频驱动肖像动画框架 Teller，通过 RVQ 将面部运动离散化为 token，结合高效时序模块精炼身体细节，以 25 FPS 实时速度（生成 1s 视频仅需 0.92s vs Hallo 20.93s）达到与扩散模型可比的动画质量。
 tags:
   - "CVPR 2025"
   - "视频生成"

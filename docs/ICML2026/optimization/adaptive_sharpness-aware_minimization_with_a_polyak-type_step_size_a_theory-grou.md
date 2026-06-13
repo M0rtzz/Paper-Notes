@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Sharpness-Aware Minimization with a Polyak-type Step size: A Theory-Grounded Scheduler
 description: >-
-  [ICML 2026][优化/理论][SAM] 这篇论文把 Polyak step size 推广到 USAM/SAM，给出不依赖手工学习率调参的 sharpness-aware scheduler，并在凸优化理论和 CIFAR 实验中验证其稳定性与性能。
+  [ICML 2026][优化/理论][SAM] 这篇论文把 Polyak step size 推广到 USAM/SAM，给出不依赖手工学习率调参的 sharpness-aware scheduler，并在凸优化理论和 CIFAR 实验中验证其稳定性与性能。 领域现状：Sharpness-Aware Minimization…
 tags:
   - "ICML 2026"
   - "优化/理论"

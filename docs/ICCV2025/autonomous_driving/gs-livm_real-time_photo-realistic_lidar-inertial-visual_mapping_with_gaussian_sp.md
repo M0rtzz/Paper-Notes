@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting
 description: >-
-  [ICCV 2025][自动驾驶][3D高斯溅射] 提出 GS-LIVM，首个为大规模无界室外场景设计的实时光真实感 LiDAR-惯性-视觉建图框架，通过体素级高斯过程回归（Voxel-GPR）解决 LiDAR 点云稀疏不均匀问题，利用协方差中心化设计快速初始化 3D 高斯参数…
+  [ICCV 2025][自动驾驶][3D高斯溅射] 提出 GS-LIVM，首个为大规模无界室外场景设计的实时光真实感 LiDAR-惯性-视觉建图框架，通过体素级高斯过程回归（Voxel-GPR）解决 LiDAR 点云稀疏不均匀问题，利用协方差中心化设计快速初始化 3D 高斯参数，在多个室外数据集上达到 SOTA 的建图效率和渲染质量。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

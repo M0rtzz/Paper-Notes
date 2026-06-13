@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When One Moment Isn't Enough: Multi-Moment Retrieval with Cross-Moment Interactions
 description: >-
-  [NeurIPS 2025][视频理解][多时刻检索] 提出QV-M2数据集（首个全人工标注的多时刻检索基准）和FlashMMR框架（含后验证模块），将视频时刻检索从单时刻扩展到多时刻场景，建立了多时刻检索的标准化评价体系。
+  [NeurIPS 2025][视频理解][多时刻检索] 提出QV-M2数据集（首个全人工标注的多时刻检索基准）和FlashMMR框架（含后验证模块），将视频时刻检索从单时刻扩展到多时刻场景，建立了多时刻检索的标准化评价体系。 从单时刻到多时刻的需求 视频时刻检索（Moment Retrieval, MR）旨在根据自然语言查询…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

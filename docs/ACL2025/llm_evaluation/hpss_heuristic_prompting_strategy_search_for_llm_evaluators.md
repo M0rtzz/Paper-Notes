@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HPSS: Heuristic Prompting Strategy Search for LLM Evaluators
 description: >-
-  [ACL 2025][LLM评测][LLM评估] 整合 8 个影响 LLM 评估提示效果的关键因子（评分尺度、ICL 示例、评估标准、参考答案、CoT、AutoCoT、度量指标、组件顺序），提出基于遗传算法的启发式提示策略搜索方法 HPSS，在 12,960 种组合空间中高效找到最优提示策略…
+  [ACL 2025][LLM评测][LLM评估] 整合 8 个影响 LLM 评估提示效果的关键因子（评分尺度、ICL 示例、评估标准、参考答案、CoT、AutoCoT、度量指标、组件顺序），提出基于遗传算法的启发式提示策略搜索方法 HPSS，在 12,960 种组合空间中高效找到最优提示策略，仅用基线 5% 的生成成本即超越 G-Eval 和 CloserLook。
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DataRater: Meta-Learned Dataset Curation
 description: >-
-  [NeurIPS 2025][自监督学习][数据筛选] 提出 DataRater，一个基于元梯度（meta-gradient）的数据价值评估框架，通过元学习自动为每个训练数据点打分并过滤低质量数据，在多个预训练数据集上实现最高 46.6% 的净计算量节省…
+  [NeurIPS 2025][自监督学习][数据筛选] 提出 DataRater，一个基于元梯度（meta-gradient）的数据价值评估框架，通过元学习自动为每个训练数据点打分并过滤低质量数据，在多个预训练数据集上实现最高 46.6% 的净计算量节省，且在 400M 内部模型上训练的 DataRater 可直接泛化到 50M–1B 规模的 LLM 训练中。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

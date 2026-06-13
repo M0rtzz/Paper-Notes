@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Propaganda AI: An Analysis of Semantic Divergence in Large Language Models
 description: >-
-  [ICLR 2026][社会计算][LLM安全] 提出 RAVEN 审计框架，通过结合模型内语义熵和跨模型分歧来检测 LLM 中的概念条件语义分歧——一种类似宣传的行为模式，即高层概念线索（意识形态、公众人物）触发异常一致的立场响应。
+  [ICLR 2026][社会计算][LLM安全] 提出 RAVEN 审计框架，通过结合模型内语义熵和跨模型分歧来检测 LLM 中的概念条件语义分歧——一种类似宣传的行为模式，即高层概念线索（意识形态、公众人物）触发异常一致的立场响应。 核心矛盾：LLM 可能表现出概念条件语义分歧：（concept-conditioned s…
 tags:
   - "ICLR 2026"
   - "社会计算"

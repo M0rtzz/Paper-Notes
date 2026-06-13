@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BooW-VTON: Boosting In-the-Wild Virtual Try-On via Mask-Free Pseudo Data Training
 description: >-
-  [CVPR 2025][图像生成][虚拟试穿] 提出 BooW-VTON，通过高质量伪数据构建 + 野外数据增广 + 试穿定位损失，训练出无需人体解析掩码的虚拟试穿扩散模型，在 VITON-HD/StreetVTON/WildVTON 多个基准上全面超越现有方法。
+  [CVPR 2025][图像生成][虚拟试穿] 提出 BooW-VTON，通过高质量伪数据构建 + 野外数据增广 + 试穿定位损失，训练出无需人体解析掩码的虚拟试穿扩散模型，在 VITON-HD/StreetVTON/WildVTON 多个基准上全面超越现有方法。 领域现状：基于图像的虚拟试穿（VTON）旨在将目标服装自然地…
 tags:
   - "CVPR 2025"
   - "图像生成"

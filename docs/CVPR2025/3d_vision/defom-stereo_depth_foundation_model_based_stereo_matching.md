@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DEFOM-Stereo: Depth Foundation Model Based Stereo Matching
 description: >-
-  [CVPR 2025][3D视觉][立体匹配] 将单目深度基础模型 (Depth Anything V2) 融入循环立体匹配框架 RAFT-Stereo，通过组合特征编码器和尺度更新模块，在保持强泛化能力的同时实现多个基准上排名第一的立体匹配性能。
+  [CVPR 2025][3D视觉][立体匹配] 将单目深度基础模型 (Depth Anything V2) 融入循环立体匹配框架 RAFT-Stereo，通过组合特征编码器和尺度更新模块，在保持强泛化能力的同时实现多个基准上排名第一的立体匹配性能。 立体匹配是计算机视觉中度量深度估计的关键技术，但面临遮挡、无纹理、模糊等难题…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TC-Padé: Trajectory-Consistent Padé Approximation for Diffusion Acceleration
 description: >-
-  [CVPR 2026][图像生成][扩散模型加速] 提出基于 Padé 有理函数近似的特征残差预测框架 TC-Padé，通过自适应系数调节和分阶段感知策略，在低步数（20-30步）扩散采样场景下实现轨迹一致的加速（FLUX.1-dev 2.88×、Wan2.1 1.72×）…
+  [CVPR 2026][图像生成][扩散模型加速] 提出基于 Padé 有理函数近似的特征残差预测框架 TC-Padé，通过自适应系数调节和分阶段感知策略，在低步数（20-30步）扩散采样场景下实现轨迹一致的加速（FLUX.1-dev 2.88×、Wan2.1 1.72×），显著优于基于 Taylor 展开的现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

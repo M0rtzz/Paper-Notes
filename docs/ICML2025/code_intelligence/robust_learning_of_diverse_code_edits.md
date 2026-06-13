@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Learning of Diverse Code Edits (NextCoder)
 description: >-
-  [ICML 2025][代码智能][代码编辑] 提出合成代码编辑数据生成流水线 + 鲁棒自适应算法 SeleKT（Selective Knowledge Transfer），通过在微调过程中周期性地对任务向量做 top-k 稀疏投影，使模型在获得强代码编辑能力的同时保留原始代码生成与通用推理能力…
+  [ICML 2025][代码智能][代码编辑] 提出合成代码编辑数据生成流水线 + 鲁棒自适应算法 SeleKT（Selective Knowledge Transfer），通过在微调过程中周期性地对任务向量做 top-k 稀疏投影，使模型在获得强代码编辑能力的同时保留原始代码生成与通用推理能力，得到的 NextCoder 系列模型在五个代码编辑基准上超越同规模甚至更大模型。
 tags:
   - "ICML 2025"
   - "代码智能"

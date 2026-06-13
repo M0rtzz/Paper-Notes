@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Medical Visual Understanding From Multi-Granular Language Learning
 description: >-
-  [ICLR 2026][医学图像][医学图像预训练] 提出 Multi-Granular Language Learning (MGLL)，一个即插即用的对比学习框架，通过 soft CLIP loss、point-wise loss 和 smooth KL 散度联合优化…
+  [ICLR 2026][医学图像][医学图像预训练] 提出 Multi-Granular Language Learning (MGLL)，一个即插即用的对比学习框架，通过 soft CLIP loss、point-wise loss 和 smooth KL 散度联合优化，实现医学图像与多标签多粒度文本描述的对齐，在眼底和 X 光数据集上全面超越 SOTA 方法，并可作为视觉编码器嵌入多模态大语言模型提升诊断准确率最高达 34.1%。
 tags:
   - "ICLR 2026"
   - "医学图像"

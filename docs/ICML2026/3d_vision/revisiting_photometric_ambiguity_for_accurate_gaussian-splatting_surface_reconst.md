@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Photometric Ambiguity for Accurate Gaussian-Splatting Surface Reconstruction
 description: >-
-  [ICML 2026][3D视觉][光度歧义] AmbiSuR 把 Gaussian Splatting 的两类内生光度歧义（基元边缘外溢、像素混合欠约束）显式建模并用截断 + 射线-颜色一致性消歧，再借高阶球谐系数作"自指示器"找出歧义高风险基元并做无定形局部先验正则…
+  [ICML 2026][3D视觉][光度歧义] AmbiSuR 把 Gaussian Splatting 的两类内生光度歧义（基元边缘外溢、像素混合欠约束）显式建模并用截断 + 射线-颜色一致性消歧，再借高阶球谐系数作"自指示器"找出歧义高风险基元并做无定形局部先验正则，在 DTU 上把平均 Chamfer 距离降到 0.46，超过此前最优 GeoSVR (0.47)。
 tags:
   - "ICML 2026"
   - "3D视觉"

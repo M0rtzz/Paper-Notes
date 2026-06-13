@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExGra-Med: Extended Context Graph Alignment for Medical Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][医学VLM] ExGra-Med 提出了一种多图对齐（multi-graph alignment）框架，通过联合对齐图像、指令响应和扩展上下文描述在潜空间中的图结构关系，仅用10%预训练数据即可匹配 LLaVA-Med 的100%数据性能…
+  [NeurIPS 2025][多模态VLM][医学VLM] ExGra-Med 提出了一种多图对齐（multi-graph alignment）框架，通过联合对齐图像、指令响应和扩展上下文描述在潜空间中的图结构关系，仅用10%预训练数据即可匹配 LLaVA-Med 的100%数据性能，并在多个医学VQA任务上超越现有SOTA。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

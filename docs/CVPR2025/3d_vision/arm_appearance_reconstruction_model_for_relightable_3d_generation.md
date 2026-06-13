@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARM: Appearance Reconstruction Model for Relightable 3D Generation
 description: >-
-  [CVPR 2025][3D视觉][3D重建] 提出ARM框架，将几何和外观生成解耦，在UV纹理空间中通过反投影和全局感受野网络重建高质量纹理，并引入材质先验解决稀疏视角下材质与光照的歧义性，仅用8张H100训练即在GSO和OmniObject3D上超越现有方法。
+  [CVPR 2025][3D视觉][3D重建] 提出ARM框架，将几何和外观生成解耦，在UV纹理空间中通过反投影和全局感受野网络重建高质量纹理，并引入材质先验解决稀疏视角下材质与光照的歧义性，仅用8张H100训练即在GSO和OmniObject3D上超越现有方法。 从2D图像生成高质量3D模型（带真实外观）是计算机视觉和图形…
 tags:
   - "CVPR 2025"
   - "3D视觉"

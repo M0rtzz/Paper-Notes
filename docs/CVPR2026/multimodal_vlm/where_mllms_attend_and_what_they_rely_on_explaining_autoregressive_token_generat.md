@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where MLLMs Attend and What They Rely On: Explaining Autoregressive Token Generation
 description: >-
-  [CVPR 2026][多模态VLM][MLLM可解释性] 提出Eagle，一个轻量级黑盒归因框架，通过insight score（充分性）和necessity score（不可或缺性）的统一目标函数对MLLM的自回归token生成进行空间归因，并量化每个token依赖语言先验还是感知证据…
+  [CVPR 2026][多模态VLM][MLLM可解释性] 提出Eagle，一个轻量级黑盒归因框架，通过insight score（充分性）和necessity score（不可或缺性）的统一目标函数对MLLM的自回归token生成进行空间归因，并量化每个token依赖语言先验还是感知证据，在忠实度/定位/幻觉诊断上全面超越现有方法且GPU显存需求大幅降低。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Brevity is the soul of sustainability: Characterizing LLM response lengths
 description: >-
-  [ACL 2025][LLM/NLP][响应长度] 系统研究 12 个 LLM 在 5 个数据集上的响应长度行为，发现 LLM 普遍生成远超必要的冗长回复（核心答案仅占 42%），并提出多种提示策略将响应长度缩短 25-88%、推理能耗降低 25-60%，同时保持甚至提升 ROUGE-L F1 质量。
+  [ACL 2025][LLM 其他][响应长度] 系统研究 12 个 LLM 在 5 个数据集上的响应长度行为，发现 LLM 普遍生成远超必要的冗长回复（核心答案仅占 42%），并提出多种提示策略将响应长度缩短 25-88%、推理能耗降低 25-60%，同时保持甚至提升 ROUGE-L F1 质量。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "响应长度"
   - "能源效率"
   - "提示工程"

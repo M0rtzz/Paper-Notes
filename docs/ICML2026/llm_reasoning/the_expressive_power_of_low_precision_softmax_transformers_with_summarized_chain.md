@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Expressive Power of Low Precision Softmax Transformers with (Summarized) Chain-of-Thought
 description: >-
-  [ICML 2026][LLM推理][低精度 softmax] 本文首次证明：使用 softmax 注意力 + bfloat16 量级精度（激活与注意力权重都四舍五入）的标准 Transformer 解码器，只要深度、宽度对数地随上下文增长，就能借助 CoT 模拟任意图灵机…
+  [ICML 2026][LLM推理][低精度 softmax] 本文首次证明：使用 softmax 注意力 + bfloat16 量级精度（激活与注意力权重都四舍五入）的标准 Transformer 解码器，只要深度、宽度对数地随上下文增长，就能借助 CoT 模拟任意图灵机；并进一步证明 Summarized CoT 把规模从时间界 $\hat{t}$ 降到空间界 $\hat{s}$，且在 Sudoku 任务上实测发现"加深度而不是加精度"才是 CoT 长上下文失败的真正解药。
 tags:
   - "ICML 2026"
   - "LLM推理"

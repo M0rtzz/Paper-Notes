@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Temporally-Aware Features for Point Tracking
 description: >-
-  [CVPR 2025][视频生成][点跟踪] 提出 Chrono，一个为点跟踪设计的时序感知特征骨干网络，通过在 DINOv2 的 Transformer 块间插入时序适配器（2D 卷积下采样 + 1D 局部时序注意力 + 2D 卷积上采样）…
+  [CVPR 2025][视频生成][点跟踪] 提出 Chrono，一个为点跟踪设计的时序感知特征骨干网络，通过在 DINOv2 的 Transformer 块间插入时序适配器（2D 卷积下采样 + 1D 局部时序注意力 + 2D 卷积上采样），仅通过简单的特征匹配（soft-argmax）即可在无精炼器设定下达到 SOTA 表现。
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangling to Re-couple: Resolving the Similarity-Controllability Paradox in Subject-Driven Text-to-Image Generation
 description: >-
-  [CVPR 2026][图像生成][Subject-Driven T2I] 提出 DisCo 框架，通过先解耦文本与视觉信息（用代词替换实体词消除文本对 subject 的干扰）、再用 GRPO + 专用 reward model 重新耦合二者…
+  [CVPR 2026][图像生成][Subject-Driven T2I] 提出 DisCo 框架，通过先解耦文本与视觉信息（用代词替换实体词消除文本对 subject 的干扰）、再用 GRPO + 专用 reward model 重新耦合二者，有效解决了 subject-driven 图像生成中"相似度-可控性"不可兼得的悖论。
 tags:
   - "CVPR 2026"
   - "图像生成"

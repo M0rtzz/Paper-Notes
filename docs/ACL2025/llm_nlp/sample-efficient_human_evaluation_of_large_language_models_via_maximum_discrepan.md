@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Sample-Efficient Human Evaluation of Large Language Models via Maximum Discrepancy Competition
 description: >-
-  [ACL 2025][LLM/NLP][LLM评估] 本文提出基于最大差异 (MAD) 竞争原则的高效人工评测方法，通过自动选择最能区分 LLM 差异的指令子集来大幅减少人工标注量，用仅 280 条对比即可恢复大规模评测的排名结果。
+  [ACL 2025][LLM 其他][LLM评估] 本文提出基于最大差异 (MAD) 竞争原则的高效人工评测方法，通过自动选择最能区分 LLM 差异的指令子集来大幅减少人工标注量，用仅 280 条对比即可恢复大规模评测的排名结果。 领域现状：海量 LLM 层出不穷，可靠评估变得至关重要。目前主流评测方式有三种：(1) 标准基…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM评估"
   - "人工评测"
   - "最大差异竞争"

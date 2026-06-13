@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMind: Towards Community-Driven Agents for Machine Learning Engineering
 description: >-
-  [ICLR 2026][LLM Agent][机器学习工程] 提出MLE-Live——首个模拟Kaggle研究社区的实时评估框架，以及CoMind——一个能够系统性利用社区集体知识的多智能体ML工程系统，在75个历史Kaggle竞赛中获得36%奖牌率…
+  [ICLR 2026][LLM Agent][机器学习工程] 提出MLE-Live——首个模拟Kaggle研究社区的实时评估框架，以及CoMind——一个能够系统性利用社区集体知识的多智能体ML工程系统，在75个历史Kaggle竞赛中获得36%奖牌率，并在4个进行中的竞赛中平均超越79.2%的人类参赛者（更新版本中达到92.6%）。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

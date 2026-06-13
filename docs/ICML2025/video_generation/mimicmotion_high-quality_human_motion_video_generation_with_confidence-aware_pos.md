@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MimicMotion: High-Quality Human Motion Video Generation with Confidence-aware Pose Guidance
 description: >-
-  [ICML 2025][视频生成][pose-guided video generation] 基于 Stable Video Diffusion 构建姿态引导人体视频生成框架，通过将姿态估计置信度编码进引导信号、对高置信手部区域放大训练损失、以及位置感知的渐进式潜变量融合三项设计…
+  [ICML 2025][视频生成][pose-guided video generation] 基于 Stable Video Diffusion 构建姿态引导人体视频生成框架，通过将姿态估计置信度编码进引导信号、对高置信手部区域放大训练损失、以及位置感知的渐进式潜变量融合三项设计，在 TikTok 数据集上 FID-VID 达 9.3（前最优 12.4），同时支持任意长度平滑视频生成。
 tags:
   - "ICML 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Reasoning Paradigm for Named Entity Recognition
 description: >-
-  [AAAI 2026][LLM推理][NER] 提出 ReasoningNER，将命名实体识别从"隐式模式匹配"转变为"显式推理"范式，通过三阶段流程（CoT数据构建→CoT微调→GRPO强化增强）让模型先推理再抽取实体，在零样本设定下F1超GPT-4达12.3个百分点…
+  [AAAI 2026][LLM推理][NER] 提出 ReasoningNER，将命名实体识别从"隐式模式匹配"转变为"显式推理"范式，通过三阶段流程（CoT数据构建→CoT微调→GRPO强化增强）让模型先推理再抽取实体，在零样本设定下F1超GPT-4达12.3个百分点，8B模型在CrossNER上达72.4平均F1。
 tags:
   - "AAAI 2026"
   - "LLM推理"

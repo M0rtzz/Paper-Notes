@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design
 description: >-
-  [AAAI 2026][LLM Agent][物理信息agent] 提出PHIA系统：LLM规划器通过聊天接口收集设计需求，协调物理信息神经网络代理模型（层次化PINN）和优化算法自主迭代生成电力转换器调制设计方案，MAE降低63.2%、设计速度提升33倍、20位专家验证可用性。
+  [AAAI 2026][LLM Agent][物理信息agent] 提出PHIA系统：LLM规划器通过聊天接口收集设计需求，协调物理信息神经网络代理模型（层次化PINN）和优化算法自主迭代生成电力转换器调制设计方案，MAE降低63.2%、设计速度提升33倍、20位专家验证可用性。 领域现状：随着可再生能源系统规模扩大…
 tags:
   - "AAAI 2026"
   - "LLM Agent"

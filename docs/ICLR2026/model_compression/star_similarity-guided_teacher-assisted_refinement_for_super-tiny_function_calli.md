@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STAR: Similarity-guided Teacher-Assisted Refinement for Super-Tiny Function Calling Models
 description: >-
-  [ICLR 2026][模型压缩][知识蒸馏] 提出 STAR 框架，通过约束知识蒸馏（CKD）和相似度引导的强化学习（Sim-RL）协同工作，将大模型的 function calling 能力有效迁移到 0.6B 级别的超小模型，在 BFCL 和 ACEBench 上大幅超越基线。
+  [ICLR 2026][模型压缩][知识蒸馏] 提出 STAR 框架，通过约束知识蒸馏（CKD）和相似度引导的强化学习（Sim-RL）协同工作，将大模型的 function calling 能力有效迁移到 0.6B 级别的超小模型，在 BFCL 和 ACEBench 上大幅超越基线。 - LLM 的 function cal…
 tags:
   - "ICLR 2026"
   - "模型压缩"

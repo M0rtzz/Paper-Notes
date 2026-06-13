@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Generalization across Measurement Systems: LLMs Entail More Test-Time Compute for Underrepresented Cultures
 description: >-
-  [ACL 2025][LLM推理][度量系统泛化] 系统研究 LLM 跨度量系统（货币、长度、重量）的泛化能力，发现模型默认使用训练数据中的主导度量（如美元、公制），对非主导度量查询准确率显著下降；CoT 推理可弥补但推理成本增加高达 300%，对欠代表文化用户构成系统性不公平。
+  [ACL 2025][LLM推理][度量系统泛化] 系统研究 LLM 跨度量系统（货币、长度、重量）的泛化能力，发现模型默认使用训练数据中的主导度量（如美元、公制），对非主导度量查询准确率显著下降；CoT 推理可弥补但推理成本增加高达 300%，对欠代表文化用户构成系统性不公平。 领域现状：LLM 已在参数中编码了大量事实知…
 tags:
   - "ACL 2025"
   - "LLM推理"

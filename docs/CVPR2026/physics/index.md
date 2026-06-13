@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 物理/科学计算论文汇总 · 7篇论文解读
+  CVPR2026 物理/科学计算论文汇总 · 8篇论文解读
 description: >-
-  7篇CVPR2026的物理/科学计算方向论文解读，涵盖知识蒸馏、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  8篇CVPR2026的物理/科学计算方向论文解读，涵盖知识蒸馏、持续学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "物理/科学计算"
@@ -25,13 +25,15 @@ item_list:
     t: "QKD: Quantum-Gated Task-interaction Knowledge Distillation for Class-Incremental Learning"
   - u: "rooftop_wind_field_reconstruction_using_sparse_sen/"
     t: "Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods"
-item_total: 7
+  - u: "δynamics_language-based_representation_for_inferring_rigid-body_dynamics_from_vi/"
+    t: "Δynamics: Language-Based Representation for Inferring Rigid-Body Dynamics From Videos"
+item_total: 8
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**📷 CVPR2026** · **7** 篇论文解读
+**📷 CVPR2026** · **8** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
 
@@ -62,3 +64,7 @@ item_total: 7
 **[Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)**
 
 :   建立基于PIV风洞实验数据的学习-观测框架，系统比较Kriging插值与三种深度学习模型（UNet/ViTAE/CWGAN）在5–30个稀疏传感器下的屋顶风场重建能力，揭示混合风向训练（MDT）下深度学习一致优于Kriging（SSIM提升18–34%），并通过QR分解优化传感器布局提升系统鲁棒性达27.8%。
+
+**[Δynamics: Language-Based Representation for Inferring Rigid-Body Dynamics From Videos](δynamics_language-based_representation_for_inferring_rigid-body_dynamics_from_vi.md)**
+
+:   把"从单目视频反推刚体物理状态与参数"重新表述成**文本生成**问题——训练一个 VLM 以光流为输入，直接吐出可被物理引擎执行的 YAML 场景配置（几何/初始状态/材质/相机），在 CLEVRER 上分割 IoU 达到 0.30，是主流 VLM 的 7 倍，并能零样本迁移到 235 段真实视频。

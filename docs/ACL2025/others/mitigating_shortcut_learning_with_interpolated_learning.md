@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Shortcut Learning with InterpoLated Learning
 description: >-
-  [shortcut learning] 提出 InterpoLated Learning (InterpoLL)，通过将多数样本的表示与同类少数样本的表示进行插值，削弱模型对虚假关联（shortcut）的依赖，显著提升少数样本上的泛化能力。
+  [shortcut learning] 提出 InterpoLated Learning (InterpoLL)，通过将多数样本的表示与同类少数样本的表示进行插值，削弱模型对虚假关联（shortcut）的依赖，显著提升少数样本上的泛化能力。 问题定义： 经验风险最小化 (ERM) 训练的模型倾向于利用 shortcut（即训…
 tags:
   - "shortcut learning"
   - "interpolation"

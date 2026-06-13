@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Context-Fidelity Boosting: Enhancing Faithful Generation through Watermark-Inspired Decoding
 description: >-
-  [ACL 2026][LLM安全][faithfulness hallucination] CFB 把文本 watermark 用的 logit 加性偏置技术反向利用——在解码每步给"被输入上下文支持"的 token 加 bonus…
+  [ACL 2026][LLM安全][faithfulness hallucination] CFB 把文本 watermark 用的 logit 加性偏置技术反向利用——在解码每步给"被输入上下文支持"的 token 加 bonus，提出 static / context-aware（用 JSD 自适应缩放）/ token-aware（用注意力 + 语义相关性再分配）三层渐进策略，在多模型多任务的摘要和 QA 上稳定提升 faithfulness 指标，且几乎无解码开销。
 tags:
   - "ACL 2026"
   - "LLM安全"

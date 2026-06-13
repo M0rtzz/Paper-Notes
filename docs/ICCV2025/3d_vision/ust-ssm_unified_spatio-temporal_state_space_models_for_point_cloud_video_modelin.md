@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UST-SSM: Unified Spatio-Temporal State Space Models for Point Cloud Video Modeling
 description: >-
-  [ICCV 2025][3D视觉][点云视频] 提出UST-SSM，通过时空选择扫描(STSS)、时空结构聚合(STSA)和时序交互采样(TIS)三个核心模块，将选择性状态空间模型扩展到点云视频分析，以线性复杂度实现优于Transformer的性能。
+  [ICCV 2025][3D视觉][点云视频] 提出UST-SSM，通过时空选择扫描(STSS)、时空结构聚合(STSA)和时序交互采样(TIS)三个核心模块，将选择性状态空间模型扩展到点云视频分析，以线性复杂度实现优于Transformer的性能。 现有痛点 现有痛点：点云视频建模面临三重挑战： 时空无序：点云视频缺乏一致…
 tags:
   - "ICCV 2025"
   - "3D视觉"

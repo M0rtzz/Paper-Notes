@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research
 description: >-
-  [AAAI 2026][文本生成][恶意软件分析] 提出 AutoMalDesc 自动化静态分析框架，通过迭代自步学习流水线——从 900 个专家标注种子样本出发，经 LoRA 微调 Llama-3.3-70B 生成伪标签，多阶段质量过滤后进行 V2 训练——实现 5 种脚本语言的恶意软件自动分类和行为描述…
+  [AAAI 2026 Oral][文本生成][恶意软件分析] 提出 AutoMalDesc 自动化静态分析框架，通过迭代自步学习流水线——从 900 个专家标注种子样本出发，经 LoRA 微调 Llama-3.3-70B 生成伪标签，多阶段质量过滤后进行 V2 训练——实现 5 种脚本语言的恶意软件自动分类和行为描述，Batch 脚本检测准确率从 52.7% 提升到 82.4%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "文本生成"
   - "恶意软件分析"
   - "自我改进LLM"

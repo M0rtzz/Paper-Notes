@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChatR1: Reinforcement Learning for Conversational Reasoning and Retrieval Augmented Question Answering
 description: >-
-  [ACL 2026][信息检索/RAG][对话式问答] 作者把 Search-R1 / R1-Searcher 这类"搜索 + 推理"RL 框架从单轮问答扩展到**多轮对话问答**，提出 ChatR1：用 PPO 端到端联合优化 reasoning / search / answer…
+  [ACL 2026][信息检索/RAG][对话式问答] 作者把 Search-R1 / R1-Searcher 这类"搜索 + 推理"RL 框架从单轮问答扩展到**多轮对话问答**，提出 ChatR1：用 PPO 端到端联合优化 reasoning / search / answer，并设计"intent-aware reward"——用历史人工 rewrite 与模型自发 search query 的 token-F1 作为 turn-level dense reward，在 5 个 CQA 数据集上以 3B 主干击败 ChatGPT/Claude，并大幅提升域外迁移能力。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

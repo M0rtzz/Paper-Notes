@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mastering Collaborative Multi-modal Data Selection: A Focus on Informativeness, Uniqueness, and Representativeness
 description: >-
-  [ICCV 2025][多模态VLM][数据选择] 提出 DataTailor——基于信息性（informativeness）、唯一性（uniqueness）和代表性（representativeness）三大原则的协同多模态数据选择框架，仅用 15% 数据即可达到全量数据微调 101.3% 的性能…
+  [ICCV 2025][多模态VLM][数据选择] 提出 DataTailor——基于信息性（informativeness）、唯一性（uniqueness）和代表性（representativeness）三大原则的协同多模态数据选择框架，仅用 15% 数据即可达到全量数据微调 101.3% 的性能，充分体现"Less is More"理念。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

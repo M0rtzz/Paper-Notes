@@ -2,9 +2,9 @@
 title: >-
   [论文解读] What Do Vision-Language Models Encode for Personalized Image Aesthetics Assessment?
 description: >-
-  [ACL 2026][多模态VLM][个性化美学评估] 本文通过线性探测发现 VLM 的隐藏表示中编码了丰富的多层次美学属性信息（光照、色彩、构图等），并传播到语言解码器层，基于此提出用简单线性回归实现无需微调的个性化图像美学评估（PIAA），效果显著优于 few-shot 和 LoRA 微调基线。
+  [ACL 2026 Findings][多模态VLM][个性化美学评估] 本文通过线性探测发现 VLM 的隐藏表示中编码了丰富的多层次美学属性信息（光照、色彩、构图等），并传播到语言解码器层，基于此提出用简单线性回归实现无需微调的个性化图像美学评估（PIAA），效果显著优于 few-shot 和 LoRA 微调基线。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "个性化美学评估"
   - "视觉语言模型"

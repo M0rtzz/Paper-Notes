@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DitHub: A Modular Framework for Incremental Open-Vocabulary Object Detection
 description: >-
-  [NeurIPS 2025][目标检测][open-vocabulary detection] 提出 DitHub，借鉴版本控制系统（Git）思想构建开放词汇目标检测的模块化适配框架——将不同领域的高效适配模块（LoRA）作为"分支"管理，支持按需获取（fetch）和合并（merge）…
+  [NeurIPS 2025][目标检测][open-vocabulary detection] DitHub 将开放词汇目标检测的增量适配问题重新构造为"版本控制"问题——为每个类别训练独立的 LoRA 专家模块，通过 branch（分支）、fetch（检索）、merge（合并）三个原语管理不断扩展的模块库，在 ODinW-13 全量数据上以 62.19 mAP 超越 ZiRa 4.21 个点，同时保持 47.01 的零样本 COCO 性能。
 tags:
   - "NeurIPS 2025"
   - "目标检测"
@@ -10,7 +10,7 @@ tags:
   - "incremental learning"
   - "modular deep learning"
   - "LoRA"
-  - "adaptation modules"
+  - "model merging"
   - "version control"
 ---
 
@@ -192,3 +192,19 @@ tags:
   - adaptation modules
   - version control
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2025\] Open-Det: An Efficient Learning Framework for Open-Ended Detection](../../ICML2025/object_detection/open-det_an_efficient_learning_framework_for_open-ended_detection.md)
+- [\[ICCV 2025\] Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection](../../ICCV2025/object_detection/dynamicdino_finegrained_mixture_of_experts_tuning_for_realti.md)
+- [\[CVPR 2025\] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection](../../CVPR2025/object_detection/abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)
+- [\[NeurIPS 2025\] CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection](cq-dino_mitigating_gradient_dilution_via_category_queries_for_vast_vocabulary_ob.md)
+- [\[CVPR 2026\] Exploring Hierarchical Consistency and Unbiased Objectness for Open-Vocabulary Object Detection](../../CVPR2026/object_detection/exploring_hierarchical_consistency_and_unbiased_objectness_for_open-vocabulary_o.md)
+
+</div>
+
+<!-- RELATED:END -->

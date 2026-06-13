@@ -2,9 +2,9 @@
 title: >-
   [论文解读] C2T: LLM-Aligned Common-Sense Reward Learning for Traffic-Vehicle Coordination
 description: >-
-  [CVPR 2026][自动驾驶][交通信号控制] 提出 C2T 框架，通过将交通状态转换为结构化描述（caption），利用 LLM 进行离线偏好判断并蒸馏为内在奖励函数，替代手工设计的交通信号控制奖励，在 CityFlow 基准的多个真实城市网络上提升效率、安全性和能耗指标。
+  [CVPR 2026 Findings][自动驾驶][交通信号控制] 提出 C2T 框架，通过将交通状态转换为结构化描述（caption），利用 LLM 进行离线偏好判断并蒸馏为内在奖励函数，替代手工设计的交通信号控制奖励，在 CityFlow 基准的多个真实城市网络上提升效率、安全性和能耗指标。 领域现状：基于 MARL…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "自动驾驶"
   - "交通信号控制"
   - "多智能体强化学习"

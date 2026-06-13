@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid Preferences: Learning to Route Instances for Human vs. AI Feedback
 description: >-
-  [ACL 2025][偏好学习] 本文提出HyPER（混合偏好路由器），通过训练性能预测模型来智能决定每个标注实例应由人类还是AI完成偏好标注，在RewardBench上比纯人类或纯AI标注分别提升7-13%，同时大幅降低标注成本。
+  [ACL 2025][偏好学习] 本文提出HyPER（混合偏好路由器），通过训练性能预测模型来智能决定每个标注实例应由人类还是AI完成偏好标注，在RewardBench上比纯人类或纯AI标注分别提升7-13%，同时大幅降低标注成本。 领域现状：从人类反馈中学习（RLHF）已成为语言模型对齐的核心范式。然而…
 tags:
   - "ACL 2025"
   - "偏好学习"

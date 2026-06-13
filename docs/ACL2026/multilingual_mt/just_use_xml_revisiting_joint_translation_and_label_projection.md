@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Just Use XML: Revisiting Joint Translation and Label Projection
 description: >-
-  [ACL 2026][多语言/翻译][标签投影] 提出 LabelPigeon，一种基于 XML 标签的联合翻译与标签投影方法，通过在高质量 XML 标记平行语料上微调 NLLB-200 翻译模型，在 11 种语言上超越所有基线并主动提升翻译质量，在下游跨语言 NER 任务中实现最高 +40.2 F1 的提升…
+  [ACL 2026 Findings][多语言/翻译][标签投影] 提出 LabelPigeon，一种基于 XML 标签的联合翻译与标签投影方法，通过在高质量 XML 标记平行语料上微调 NLLB-200 翻译模型，在 11 种语言上超越所有基线并主动提升翻译质量，在下游跨语言 NER 任务中实现最高 +40.2 F1 的提升。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "标签投影"
   - "XML标记"

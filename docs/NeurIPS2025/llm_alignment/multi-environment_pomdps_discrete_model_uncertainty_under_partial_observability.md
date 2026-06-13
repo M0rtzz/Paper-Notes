@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Environment POMDPs: Discrete Model Uncertainty Under Partial Observability
 description: >-
-  [NeurIPS 2025][LLM对齐][POMDP] 系统研究了多环境 POMDP（ME-POMDP）——一类共享状态/动作/观测空间但转移、观测和奖励函数可任意不同的 POMDP 集合，目标是找到在最坏情况环境下最大化奖励的鲁棒策略。通过引入对抗信念 POMDP（AB-POMDP）统一建模…
+  [NeurIPS 2025][LLM对齐][POMDP] 系统研究了多环境 POMDP（ME-POMDP）——一类共享状态/动作/观测空间但转移、观测和奖励函数可任意不同的 POMDP 集合，目标是找到在最坏情况环境下最大化奖励的鲁棒策略。通过引入对抗信念 POMDP（AB-POMDP）统一建模，并证明其与单侧部分可观测随机博弈（POSG）的等价关系，提出精确（值迭代 + LP）和近似（AB-HSVI）算法。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

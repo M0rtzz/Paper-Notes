@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToolGrad: Efficient Tool-use Dataset Generation with Textual "Gradients"
 description: >-
-  [ACL2026][LLM Agent][工具调用] ToolGrad 把工具使用数据生成从“先写用户问题、再用 DFS 找工具链”反过来做成“先生成可执行成功的工具链、再反推用户问题”，并用类似 textual gradients 的 API 选择循环构造 ToolGrad-500…
+  [ACL2026][LLM Agent][工具调用] ToolGrad 把工具使用数据生成从“先写用户问题、再用 DFS 找工具链”反过来做成“先生成可执行成功的工具链、再反推用户问题”，并用类似 textual gradients 的 API 选择循环构造 ToolGrad-500，使数据生成 pass rate 达到 99.8%，训练出的 Gemma-3 小模型还能超过多种闭源强模型的单轮工具调用表现。
 tags:
   - "ACL2026"
   - "LLM Agent"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2508.04086](https://arxiv.org/abs/2508.04086)  
 **代码**: https://github.com/zhongyi-zhou/toolgrad  
-**领域**: llm_agent / 工具使用数据生成  
+**领域**: LLM Agent / 工具使用数据生成  
 **关键词**: 工具调用, 合成数据, 文本梯度, answer-first, API工作流
 
 ## 一句话总结

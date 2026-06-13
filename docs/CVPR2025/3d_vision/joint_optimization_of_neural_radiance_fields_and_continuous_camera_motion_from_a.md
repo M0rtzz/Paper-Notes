@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint Optimization of Neural Radiance Fields and Continuous Camera Motion from a Monocular Video
 description: >-
-  [CVPR 2025][3D视觉][NeRF] 将相机运动建模为时间连续的角速度和线速度，通过速度积分避免直接优化大范围 camera-to-world 变换，结合时间依赖 NeRF 和 SDF flow 约束，无需深度先验即可从单目视频联合优化位姿和场景几何。
+  [CVPR 2025][3D视觉][NeRF] 将相机运动建模为时间连续的角速度和线速度，通过速度积分避免直接优化大范围 camera-to-world 变换，结合时间依赖 NeRF 和 SDF flow 约束，无需深度先验即可从单目视频联合优化位姿和场景几何。 领域现状： NeRF 在新视角合成方面表现出色…
 tags:
   - "CVPR 2025"
   - "3D视觉"

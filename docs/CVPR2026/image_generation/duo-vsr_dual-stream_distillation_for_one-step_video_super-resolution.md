@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DUO-VSR: Dual-Stream Distillation for One-Step Video Super-Resolution
 description: >-
-  [CVPR 2026][图像生成][视频超分辨率] 提出 DUO-VSR 三阶段蒸馏框架，通过渐进引导蒸馏初始化 + 双流蒸馏（DMD + RFS-GAN 联合优化）+ 偏好引导精调，将多步视频超分模型压缩为单步生成器，实现约 50× 加速且超越先前单步 VSR 方法的视觉质量。
+  [CVPR 2026][图像生成][视频超分辨率] 提出 DUO-VSR 三阶段蒸馏框架，通过渐进引导蒸馏初始化 + 双流蒸馏（DMD + RFS-GAN 联合优化）+ 偏好引导精调，将多步视频超分模型压缩为单步生成器，实现约 50× 加速且超越先前单步 VSR 方法的视觉质量。 1. 领域现状：基于扩散模型的视频超分辨率（…
 tags:
   - "CVPR 2026"
   - "图像生成"

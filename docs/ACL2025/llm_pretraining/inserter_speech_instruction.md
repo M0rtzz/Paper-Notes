@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InSerter: Speech Instruction Following with Unsupervised Interleaved Pre-training
 description: >-
-  [ACL 2025][预训练][SpeechLLM] 提出 InSerter（交错语音-文本预训练）方法，通过 TTS 将大规模文本语料合成为交错的语音-文本序列进行预训练，大幅提升 SpeechLLM 的语音指令遵循能力，并构建首个全面的语音指令遵循基准 SpeechInstructBench。
+  [ACL 2025][预训练][SpeechLLM] 提出 InSerter（交错语音-文本预训练）方法，通过 TTS 将大规模文本语料合成为交错的语音-文本序列进行预训练，大幅提升 SpeechLLM 的语音指令遵循能力，并构建首个全面的语音指令遵循基准 SpeechInstructBench。 语音指令遵循的语义鸿沟：当…
 tags:
   - "ACL 2025"
   - "预训练"

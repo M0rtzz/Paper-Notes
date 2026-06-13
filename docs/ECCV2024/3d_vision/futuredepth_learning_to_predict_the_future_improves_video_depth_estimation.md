@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FutureDepth: Learning to Predict the Future Improves Video Depth Estimation
 description: >-
-  [ECCV 2024][3D视觉][视频深度估计] 提出FutureDepth，通过未来预测网络(F-Net)学习运动线索和重建网络(R-Net)学习多帧对应关系，将隐式的运动和场景特征注入深度解码器，在NYUDv2、KITTI、DDAD、Sintel四个数据集上达到SOTA精度和时序一致性…
+  [ECCV 2024][3D视觉][视频深度估计] 提出FutureDepth，通过未来预测网络(F-Net)学习运动线索和重建网络(R-Net)学习多帧对应关系，将隐式的运动和场景特征注入深度解码器，在NYUDv2、KITTI、DDAD、Sintel四个数据集上达到SOTA精度和时序一致性，且推理效率显著优于现有视频深度方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

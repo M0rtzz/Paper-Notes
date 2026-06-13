@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Florence-VL: Enhancing Vision-Language Models with Generative Vision Encoder and Depth-Breadth Fusion
 description: >-
-  [CVPR 2025][多模态VLM][生成式视觉编码器] 用生成式视觉基础模型 Florence-2 替换 CLIP 作为 VLM 视觉编码器，通过"深度-广度融合"（DBFusion）整合底层 DaViT 特征和三种任务提示（描述/OCR/定位）的高层特征…
+  [CVPR 2025][多模态VLM][生成式视觉编码器] 用生成式视觉基础模型 Florence-2 替换 CLIP 作为 VLM 视觉编码器，通过"深度-广度融合"（DBFusion）整合底层 DaViT 特征和三种任务提示（描述/OCR/定位）的高层特征，以单编码器 576 token 实现超越多编码器方案的性能。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

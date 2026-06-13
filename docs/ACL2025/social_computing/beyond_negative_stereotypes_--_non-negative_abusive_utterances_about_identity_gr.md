@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Negative Stereotypes -- Non-Negative Abusive Utterances about Identity Groups and Their Semantic Variants
 description: >-
-  [ACL 2025][社会计算][仇恨言论] 本文研究了一种被忽视的仇恨言论类型——表面上不包含负面刻板印象但实际上针对身份群体的滥用性表达，系统分析了这类"非负面滥用话语"的语义变体，并评估了现有检测模型的处理能力。
+  [ACL 2025][社会计算][仇恨言论] 本文研究了一种被忽视的仇恨言论类型——表面上不包含负面刻板印象但实际上针对身份群体的滥用性表达，系统分析了这类"非负面滥用话语"的语义变体，并评估了现有检测模型的处理能力。 领域现状：仇恨言论和滥用语言检测（Abusive Language Detection）是 NLP 的重要…
 tags:
   - "ACL 2025"
   - "社会计算"

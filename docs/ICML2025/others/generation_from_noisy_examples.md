@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generation from Noisy Examples
 description: >-
-  [ICML2025][生成理论] 将 Kleinberg & Mullainathan (2024) 的"极限语言生成"理论框架扩展至噪声样本流场景，提出 Noisy Closure 维度，完整刻画了均匀噪声依赖可生成性的充要条件，并证明所有可数假设类在有限噪声下仍可非均匀生成。
+  [ICML2025][生成理论] 将 Kleinberg & Mullainathan (2024) 的"极限语言生成"理论框架扩展至噪声样本流场景，提出 Noisy Closure 维度，完整刻画了均匀噪声依赖可生成性的充要条件，并证明所有可数假设类在有限噪声下仍可非均匀生成。 Kleinberg & Mullainath…
 tags:
   - "ICML2025"
   - "生成理论"

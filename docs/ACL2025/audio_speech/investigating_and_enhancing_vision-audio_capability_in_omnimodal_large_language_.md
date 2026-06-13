@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Investigating and Enhancing Vision-Audio Capability in Omnimodal Large Language Models
 description: >-
-  [ACL 2025][音频/语音][全模态大语言模型] 发现当前全模态大语言模型（OLLMs）在视觉-音频任务上显著弱于视觉-文本任务，原因在于视觉与音频模态之间缺乏直接对齐，并提出 Self-KD（自知识蒸馏）方法，利用 OLLM 自身的视觉-文本组件作为教师来增强视觉-音频能力。
+  [ACL 2025][音频/语音][全模态大语言模型] 发现当前全模态大语言模型（OLLMs）在视觉-音频任务上显著弱于视觉-文本任务，原因在于视觉与音频模态之间缺乏直接对齐，并提出 Self-KD（自知识蒸馏）方法，利用 OLLM 自身的视觉-文本组件作为教师来增强视觉-音频能力。 领域现状：全模态大语言模型（OLLMs）…
 tags:
   - "ACL 2025"
   - "音频/语音"

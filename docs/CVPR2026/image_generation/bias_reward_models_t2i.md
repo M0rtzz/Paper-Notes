@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bias at the End of the Score: Demographic Biases in Reward Models for T2I
 description: >-
-  [CVPR 2026][图像生成][奖励模型] 对文本到图像生成中广泛使用的奖励模型（PickScore、ImageReward、HPS 等）进行大规模人口统计偏差审计，发现奖励引导优化会不成比例地性化女性图像、使人口统计收敛到白人、且奖励分数与现实世界的人口频率先验相关。
+  [CVPR 2026][图像生成][奖励模型] 对文本到图像生成中广泛使用的奖励模型（PickScore、ImageReward、HPS 等）进行大规模人口统计偏差审计，发现奖励引导优化会不成比例地性化女性图像、使人口统计收敛到白人、且奖励分数与现实世界的人口频率先验相关。 领域现状：奖励模型（RM）在 T2I 管线中无处不…
 tags:
   - "CVPR 2026"
   - "图像生成"

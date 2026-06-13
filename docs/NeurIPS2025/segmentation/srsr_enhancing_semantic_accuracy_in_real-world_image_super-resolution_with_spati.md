@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SRSR: Enhancing Semantic Accuracy in Real-World Image Super-Resolution with Spatially Re-Focused Text-Conditioning
 description: >-
-  [NeurIPS 2025][语义分割][超分辨率] SRSR提出一种无需训练的即插即用框架，通过空间重聚焦交叉注意力(SRCA)和空间定向CFG(STCFG)两个推理时模块，解决扩散超分方法中文本引导导致的语义幻觉问题，在保真度和感知质量上全面超越7个SOTA基线。
+  [NeurIPS 2025][语义分割][超分辨率] SRSR提出一种无需训练的即插即用框架，通过空间重聚焦交叉注意力(SRCA)和空间定向CFG(STCFG)两个推理时模块，解决扩散超分方法中文本引导导致的语义幻觉问题，在保真度和感知质量上全面超越7个SOTA基线。 基于Stable Diffusion的超分方法（如See…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

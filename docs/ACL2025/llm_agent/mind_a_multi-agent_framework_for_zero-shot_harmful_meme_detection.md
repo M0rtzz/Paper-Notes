@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIND: A Multi-agent Framework for Zero-shot Harmful Meme Detection
 description: >-
-  [ACL 2025][LLM Agent][有害梗图检测] 提出 MIND 框架，通过相似样本检索、双向洞察推导和多智能体辩论三个阶段实现零样本有害梗图（meme）检测，无需标注数据即可在三个数据集上超越现有零样本方法，并在不同模型架构和规模上展现强泛化性。
+  [ACL 2025][LLM Agent][有害梗图检测] 提出 MIND 框架，通过相似样本检索、双向洞察推导和多智能体辩论三个阶段实现零样本有害梗图（meme）检测，无需标注数据即可在三个数据集上超越现有零样本方法，并在不同模型架构和规模上展现强泛化性。 领域现状：社交媒体上梗图（meme）数量激增…
 tags:
   - "ACL 2025"
   - "LLM Agent"

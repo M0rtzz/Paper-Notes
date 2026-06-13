@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Refine and Align: Confidence Calibration through Multi-Agent Interaction in VQA
 description: >-
-  [AAAI 2026][医学图像][VQA] 提出 AlignVQA，一个基于多智能体辩论的VQA置信度校准框架：专家agent生成候选答案后，通用agent进行结构化辩论（支持论据 vs 反对论据）来修正置信度；同时提出可微分的校准感知损失 AlignCal…
+  [AAAI 2026][医学图像][VQA] 提出 AlignVQA，一个基于多智能体辩论的VQA置信度校准框架：专家agent生成候选答案后，通用agent进行结构化辩论（支持论据 vs 反对论据）来修正置信度；同时提出可微分的校准感知损失 AlignCal，通过最小化校准误差上界（UBCE）来训练更校准的agent，在VQARad和ScienceQA上将ECE从0.375降至0.098。
 tags:
   - "AAAI 2026"
   - "医学图像"

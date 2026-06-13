@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping
 description: >-
-  [NeurIPS 2025][AI安全][差分隐私] 通过在自适应梯度剪裁中引入可调整的下界（bounded adaptive clipping），防止 clipping bound 在训练过程中过度萎缩，从而改善少数群体的精度，在 DP 约束下缓解算法不公平。
+  [NeurIPS 2025][AI安全][差分隐私] 通过在自适应梯度剪裁中引入可调整的下界（bounded adaptive clipping），防止 clipping bound 在训练过程中过度萎缩，从而改善少数群体的精度，在 DP 约束下缓解算法不公平。 领域现状：差分隐私（DP）已广泛用于隐私保护机器学习…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

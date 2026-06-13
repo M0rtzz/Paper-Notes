@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pareto-Guided Optimal Transport for Multi-Reward Alignment
 description: >-
-  [ICML 2026][图像生成][多奖励对齐] PG-OT 把「多奖励文生图对齐」从「加权全局求和」改成「为每个 prompt 单独构造 Pareto 前沿、用 Sinkhorn 最优传输把被支配样本传到前沿」…
+  [ICML 2026][图像生成][多奖励对齐] PG-OT 把「多奖励文生图对齐」从「加权全局求和」改成「为每个 prompt 单独构造 Pareto 前沿、用 Sinkhorn 最优传输把被支配样本传到前沿」，并引入 Joint Domination Rate / Joint Collapse Rate 两个新指标暴露平均值掩盖的奖励 hacking，在 Parti-Prompts 上 JDR₂ 47.98% 比强基线提升 11%，人评胜率近 80%。
 tags:
   - "ICML 2026"
   - "图像生成"

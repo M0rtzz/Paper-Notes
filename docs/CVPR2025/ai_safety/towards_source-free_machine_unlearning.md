@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Source-Free Machine Unlearning
 description: >-
-  [CVPR 2025][AI安全][机器遗忘] 本文提出了一种无源机器遗忘（Source-Free Machine Unlearning）算法，在无法获取原始训练数据的条件下，通过近似估计保留数据的 Hessian 矩阵（仅使用待遗忘数据和训练好的模型），实现了对线性和混合线性分类器的高效遗忘…
+  [CVPR 2025][AI安全][机器遗忘] 本文提出了一种无源机器遗忘（Source-Free Machine Unlearning）算法，在无法获取原始训练数据的条件下，通过近似估计保留数据的 Hessian 矩阵（仅使用待遗忘数据和训练好的模型），实现了对线性和混合线性分类器的高效遗忘，并提供了严格的理论上界保证。
 tags:
   - "CVPR 2025"
   - "AI安全"

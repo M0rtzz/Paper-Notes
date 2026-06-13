@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoding Reading Goals from Eye Movements
 description: >-
-  [ACL 2025] 本文首次提出从眼动轨迹中解码读者阅读目标（信息检索 vs. 普通阅读）的任务，通过 12 种模型的系统比较发现基于 Transformer 的扫视路径+语言建模方案（RoBERTa-Eye-F）最优，可在阅读早期即实现高精度实时预测。
+  [ACL 2025] 本文首次提出从眼动轨迹中解码读者阅读目标（信息检索 vs. 普通阅读）的任务，通过 12 种模型的系统比较发现基于 Transformer 的扫视路径+语言建模方案（RoBERTa-Eye-F）最优，可在阅读早期即实现高精度实时预测。 问题定义 人们在阅读时可能有不同的目标：普通理解阅读（ordinar…
 tags:
   - "ACL 2025"
 ---

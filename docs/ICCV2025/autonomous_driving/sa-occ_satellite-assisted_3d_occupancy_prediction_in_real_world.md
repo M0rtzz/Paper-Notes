@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SA-Occ: Satellite-Assisted 3D Occupancy Prediction in Real World
 description: >-
-  [ICCV 2025][自动驾驶][3D占用预测] 提出 SA-Occ，首个利用卫星图像辅助车载相机进行 3D 占用预测的方法，通过动态解耦融合、3D 投影引导和均匀采样对齐三个模块解决跨视角感知挑战…
+  [ICCV 2025][自动驾驶][3D占用预测] 提出 SA-Occ，首个利用卫星图像辅助车载相机进行 3D 占用预测的方法，通过动态解耦融合、3D 投影引导和均匀采样对齐三个模块解决跨视角感知挑战，在 Occ3D-nuScenes 上以仅 6.93ms 额外延迟实现 39.05% mIoU（提升 6.97%）。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

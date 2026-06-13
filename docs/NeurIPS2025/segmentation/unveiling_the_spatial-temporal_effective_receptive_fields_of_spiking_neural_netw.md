@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Spatial-Temporal Effective Receptive Fields of Spiking Neural Networks
 description: >-
-  [NeurIPS 2025][语义分割][spiking neural networks] 提出时空有效感受野（ST-ERF）分析框架来诊断 Transformer-based SNN 在视觉长序列建模中的瓶颈——缺乏全局感受野…
+  [NeurIPS 2025][语义分割][spiking neural networks] 提出时空有效感受野（ST-ERF）分析框架来诊断 Transformer-based SNN 在视觉长序列建模中的瓶颈——缺乏全局感受野，并据此设计 MLPixer 和 SRB 两种通道混合器来增强 SNN 的全局建模能力。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

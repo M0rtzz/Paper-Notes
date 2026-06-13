@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisualLens: Personalization through Task-Agnostic Visual History
 description: >-
-  [NeurIPS 2025][推荐系统][多模态推荐] 提出VisualLens框架，利用用户日常拍摄的与任务无关的视觉历史(task-agnostic visual history)，通过频谱用户画像(spectrum user profile)和多模态大模型实现跨领域个性化推荐…
+  [NeurIPS 2025][推荐系统][多模态推荐] 提出VisualLens框架，利用用户日常拍摄的与任务无关的视觉历史(task-agnostic visual history)，通过频谱用户画像(spectrum user profile)和多模态大模型实现跨领域个性化推荐，在新建的Google Review-V和Yelp-V数据集上Hit@3超越GPT-4o 2-5%。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

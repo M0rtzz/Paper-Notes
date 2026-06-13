@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SkyLadder: Better and Faster Pretraining via Context Window Scheduling
 description: >-
-  [NeurIPS 2025][LLM效率][上下文窗口调度] 通过上下文窗口短到长的渐进式调度策略 SkyLadder，在固定计算量下实现更优的预训练效率（节省 22% 训练时间）和更好的模型性能（+3.7%），反驳了"长上下文=好性能"的业界信念。
+  [NeurIPS 2025][LLM效率][上下文窗口调度] 通过上下文窗口短到长的渐进式调度策略 SkyLadder，在固定计算量下实现更优的预训练效率（节省 22% 训练时间）和更好的模型性能（+3.7%），反驳了"长上下文=好性能"的业界信念。 领域现状：LLM 的上下文窗口不断扩大（GPT 512→Llama-3 8…
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

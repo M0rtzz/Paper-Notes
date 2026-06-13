@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAWM-Mamba: A Unified Model for Infrared-Visible Image Fusion and Compound Adverse Weather Restoration
 description: >-
-  [CVPR 2025][自动驾驶][红外-可见光融合] CAWM-Mamba 首次提出端到端统一处理红外-可见光图像融合与复合恶劣天气（如雾+雨、雨+雪）场景的框架，通过天气感知预处理、跨模态特征交互和小波域频率-SSM 解耦多频退化，在 AWMM-100K 和标准融合数据集上全面超越 SOTA。
+  [CVPR 2025][自动驾驶][红外-可见光融合] CAWM-Mamba 首次提出端到端统一处理红外-可见光图像融合与复合恶劣天气（如雾+雨、雨+雪）场景的框架，通过天气感知预处理、跨模态特征交互和小波域频率-SSM 解耦多频退化，在 AWMM-100K 和标准融合数据集上全面超越 SOTA。 领域现状：红外-可见光图像…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Savoir: Learning Social Savoir-Faire via Shapley-based Reward Attribution
 description: >-
-  [ACL 2026][强化学习][社交智能] 本文提出 Savoir，一个基于合作博弈论的社交 RL 框架，结合期望效用（前瞻性评估话语的战略潜力）和 Shapley 值（公理化公平信用分配）解决多轮对话中的信用分配问题…
+  [ACL 2026 Findings][强化学习][社交智能] 本文提出 Savoir，一个基于合作博弈论的社交 RL 框架，结合期望效用（前瞻性评估话语的战略潜力）和 Shapley 值（公理化公平信用分配）解决多轮对话中的信用分配问题，在 SOTOPIA 基准上以 7B 模型达到 SOTA 性能（Hard 设置 Goal 7.18），匹配或超越 GPT-4o 和 Claude-3.5-Sonnet，且大型推理模型（o1、DeepSeek-R1）在社交任务上系统性欠佳。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "社交智能"
   - "Shapley值"

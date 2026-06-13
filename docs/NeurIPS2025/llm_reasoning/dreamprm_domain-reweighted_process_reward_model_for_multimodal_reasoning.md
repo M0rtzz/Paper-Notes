@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][过程奖励模型] 提出 DreamPRM，通过双层优化自动学习多模态推理数据集的域权重，解决 PRM 训练中的数据质量不均衡问题，在 MathVista 排行榜上以 o4-mini 模型达到 85.2% 的 top-1 准确率。
+  [NeurIPS 2025][LLM推理][过程奖励模型] 提出 DreamPRM，通过双层优化自动学习多模态推理数据集的域权重，解决 PRM 训练中的数据质量不均衡问题，在 MathVista 排行榜上以 o4-mini 模型达到 85.2% 的 top-1 准确率。 领域现状： Process Reward Model…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Are We Overconfident in Models and Results for Semi-Supervised 3D Medical Image Segmentation?
 description: >-
-  [ICML 2026][医学图像][半监督学习] 这篇论文指出半监督 3D 医学图像分割同时存在模型伪标签过度自信和评测协议过度乐观两类问题，并提出 TCSeg 用置信度-不确定性双轴可靠性和概率、特征、图像三空间校准来抑制确认偏差…
+  [ICML 2026][医学图像][半监督学习] 这篇论文指出半监督 3D 医学图像分割同时存在模型伪标签过度自信和评测协议过度乐观两类问题，并提出 TCSeg 用置信度-不确定性双轴可靠性和概率、特征、图像三空间校准来抑制确认偏差，同时倡导多随机种子、best/last checkpoint 同时报喜报忧的评测方式。
 tags:
   - "ICML 2026"
   - "医学图像"

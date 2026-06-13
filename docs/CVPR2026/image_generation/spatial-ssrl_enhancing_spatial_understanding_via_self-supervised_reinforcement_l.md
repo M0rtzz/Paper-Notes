@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spatial-SSRL: Enhancing Spatial Understanding via Self-Supervised Reinforcement Learning
 description: >-
-  [CVPR 2026][图像生成][空间理解] 本文提出Spatial-SSRL，一种自监督强化学习范式，通过从普通RGB/RGB-D图像自动构造五种pretext任务（patch重排、翻转识别、裁剪修补、深度排序、相对3D位置预测），利用GRPO优化LVLM的空间理解能力…
+  [CVPR 2026][图像生成][空间理解] 本文提出Spatial-SSRL，一种自监督强化学习范式，通过从普通RGB/RGB-D图像自动构造五种pretext任务（patch重排、翻转识别、裁剪修补、深度排序、相对3D位置预测），利用GRPO优化LVLM的空间理解能力，在七个空间benchmark上平均提升3.89%-4.63%，且无需人工标注或外部工具。
 tags:
   - "CVPR 2026"
   - "图像生成"

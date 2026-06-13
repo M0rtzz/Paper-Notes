@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Speculative Coupled Decoding for Training-Free Lossless Acceleration of Autoregressive Visual Generation
 description: >-
-  [ICML 2026][图像生成][投机解码] 本文发现 Speculative Jacobi Decoding (SJD) 在自回归视觉生成中加速有限的根因是连续迭代之间 draft token 的独立采样导致 collision 概率几乎为零…
+  [ICML 2026][图像生成][投机解码] 本文发现 Speculative Jacobi Decoding (SJD) 在自回归视觉生成中加速有限的根因是连续迭代之间 draft token 的独立采样导致 collision 概率几乎为零；只需把独立采样换成 Maximal/Gumbel Coupling（一行修改、零额外训练），就能把图像生成最高加速到 $4.2\times$、视频生成 $13.6\times$，并严格保持输出分布与原 AR 解码一致。
 tags:
   - "ICML 2026"
   - "图像生成"

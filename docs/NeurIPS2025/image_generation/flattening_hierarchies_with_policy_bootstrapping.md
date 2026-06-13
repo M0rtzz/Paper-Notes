@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Flattening Hierarchies with Policy Bootstrapping
 description: >-
-  [NeurIPS 2025][图像生成][离线目标条件强化学习] 提出 SAW（Subgoal Advantage-Weighted Policy Bootstrapping），通过在数据集内轨迹上采样子目标并用优势值加权的重要性采样进行策略自举，将层次 RL 的长时序推理优势蒸馏到单一扁平策略中…
+  [NeurIPS 2025 Spotlight][图像生成][离线目标条件强化学习] 提出 SAW（Subgoal Advantage-Weighted Policy Bootstrapping），通过在数据集内轨迹上采样子目标并用优势值加权的重要性采样进行策略自举，将层次 RL 的长时序推理优势蒸馏到单一扁平策略中，无需学习子目标生成模型，在 20 个离线 GCRL 数据集上匹配或超越 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "离线目标条件强化学习"
   - "层次强化学习"

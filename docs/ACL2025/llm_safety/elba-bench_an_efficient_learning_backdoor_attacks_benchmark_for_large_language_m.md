@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ELBA-Bench: An Efficient Learning Backdoor Attacks Benchmark for Large Language Models
 description: >-
-  [ACL 2025][LLM安全][Backdoor Attack] 建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。
+  [ACL 2025][LLM安全][Backdoor Attack] 建立了 ELBA-Bench——一个涵盖 12 种攻击方法、18 个数据集和 12 个 LLM 的综合后门攻击基准，系统评估 PEFT 和无微调两种范式下 LLM 后门攻击的有效性和隐蔽性。 问题背景 生成式大语言模型（LLM）在 NLP 任务中取得了巨大…
 tags:
   - "ACL 2025"
   - "LLM安全"

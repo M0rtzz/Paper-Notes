@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Native Hybrid Attention for Efficient Sequence Modeling
 description: >-
-  [ACL 2026][LLM效率][混合注意力] 本文提出 Native Hybrid Attention (NHA)，将线性 RNN 的长期记忆槽与滑动窗口的短期精确 token 拼接后通过单次 softmax 注意力统一处理，实现层内和层间混合的原生统一——无需额外融合参数即可动态分配长短期注意力权重…
+  [ACL 2026][LLM效率][混合注意力] 本文提出 Native Hybrid Attention (NHA)，将线性 RNN 的长期记忆槽与滑动窗口的短期精确 token 拼接后通过单次 softmax 注意力统一处理，实现层内和层间混合的原生统一——无需额外融合参数即可动态分配长短期注意力权重，在 recall 密集和常识推理任务上超越 Transformer 和其他混合基线。
 tags:
   - "ACL 2026"
   - "LLM效率"

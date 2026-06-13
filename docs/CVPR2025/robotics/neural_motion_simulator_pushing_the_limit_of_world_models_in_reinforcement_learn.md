@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Motion Simulator: Pushing the Limit of World Models in Reinforcement Learning
 description: >-
-  [CVPR 2025][机器人][世界模型] 提出 MoSim，一个基于刚体动力学先验和 Neural ODE 的世界模型，可在物理状态空间中进行高精度长时域预测，首次实现零样本强化学习——不需任何真实环境交互即可训练策略。
+  [CVPR 2025][机器人][世界模型] 提出 MoSim，一个基于刚体动力学先验和 Neural ODE 的世界模型，可在物理状态空间中进行高精度长时域预测，首次实现零样本强化学习——不需任何真实环境交互即可训练策略。 领域现状：世界模型在强化学习中扮演核心角色，主流方法如 DreamerV3（基于 RSSM）和 TD…
 tags:
   - "CVPR 2025"
   - "机器人"

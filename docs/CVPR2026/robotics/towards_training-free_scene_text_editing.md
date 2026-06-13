@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Training-Free Scene Text Editing
 description: >-
-  [CVPR 2026][机器人][场景文字编辑] 提出TextFlow，一个免训练的场景文字编辑框架，通过在去噪早期阶段使用Flow Manifold Steering（FMS）保持风格一致性、后期阶段使用Attention Boost（AttnBoost）增强文字渲染准确性…
+  [CVPR 2026][机器人][场景文字编辑] 提出TextFlow，一个免训练的场景文字编辑框架，通过在去噪早期阶段使用Flow Manifold Steering（FMS）保持风格一致性、后期阶段使用Attention Boost（AttnBoost）增强文字渲染准确性，在不需要任务特定训练的情况下达到与训练方法可比甚至更优的编辑质量。
 tags:
   - "CVPR 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prediction-Powered Adaptive Shrinkage Estimation
 description: >-
-  [ICML2025][Prediction-Powered Inference] 将Prediction-Powered Inference (PPI)与经验贝叶斯收缩有机结合，提出PAS两阶段估计方法——先在每个问题内利用ML预测做方差缩减，再跨问题利用ML预测作为收缩目标做自适应收缩…
+  [ICML2025][Prediction-Powered Inference] 将Prediction-Powered Inference (PPI)与经验贝叶斯收缩有机结合，提出PAS两阶段估计方法——先在每个问题内利用ML预测做方差缩减，再跨问题利用ML预测作为收缩目标做自适应收缩，通过CURE无偏风险估计自动调优收缩参数，理论证明渐近最优。
 tags:
   - "ICML2025"
   - "Prediction-Powered Inference"

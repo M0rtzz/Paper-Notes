@@ -2,12 +2,11 @@
 title: >-
   [论文解读] Meta-RL Induces Exploration in Language Agents
 description: >-
-  [ICLR 2026][LLM/NLP][Meta-RL] 提出 LaMer 框架，将元强化学习（Meta-RL）引入 LLM agent 训练，通过跨 episode 的奖励优化和基于反思的上下文策略适应，使语言智能体学会主动探索环境…
+  [ICLR 2026][LLM Agent][Meta-RL] 提出 LaMer 框架，将元强化学习（Meta-RL）引入 LLM agent 训练，通过跨 episode 的奖励优化和基于反思的上下文策略适应，使语言智能体学会主动探索环境，在 Sokoban/MineSweeper/Webshop 上分别获得 11%/14%/19% 的绝对性能提升。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
-  - "Meta-RL"
   - "LLM Agent"
+  - "Meta-RL"
   - "探索与利用"
   - "多轮交互"
   - "跨episode训练"

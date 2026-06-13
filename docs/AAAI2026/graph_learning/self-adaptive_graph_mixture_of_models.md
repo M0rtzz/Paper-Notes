@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Adaptive Graph Mixture of Models
 description: >-
-  [AAAI 2026][图学习][图神经网络] 提出 SAGMM（Self-Adaptive Graph Mixture of Models），一个利用架构多样性的图 MoE 框架，通过拓扑感知注意力门控（TAAG）自适应选择和组合异构 GNN 专家，配合自适应剪枝机制…
+  [AAAI 2026][图学习][图神经网络] 提出 SAGMM（Self-Adaptive Graph Mixture of Models），一个利用架构多样性的图 MoE 框架，通过拓扑感知注意力门控（TAAG）自适应选择和组合异构 GNN 专家，配合自适应剪枝机制，在 16 个基准上覆盖节点分类、图分类、回归和链接预测，一致超越单一 GNN 和已有 MoE 方法。
 tags:
   - "AAAI 2026"
   - "图学习"

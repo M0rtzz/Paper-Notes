@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeeDNorm: Self-Rescaled Dynamic Normalization
 description: >-
-  [ICLR 2026][模型压缩][归一化层] 提出 SeeDNorm，一种自适应动态归一化层，通过将输入自身作为条件来动态调整缩放系数，从而在前向传播中保留输入范数信息，同时在反向传播中保持类似 RMSNorm 的自适应梯度调整能力…
+  [ICLR 2026][模型压缩][归一化层] 提出 SeeDNorm，一种自适应动态归一化层，通过将输入自身作为条件来动态调整缩放系数，从而在前向传播中保留输入范数信息，同时在反向传播中保持类似 RMSNorm 的自适应梯度调整能力，以极少额外参数在语言建模和视觉任务上全面超越 RMSNorm、LayerNorm 和 DyT。
 tags:
   - "ICLR 2026"
   - "模型压缩"

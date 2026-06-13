@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity
 description: >-
-  [ICML 2026][因果推理][反事实解释] DensityFlow 把"在模型多重性下生成鲁棒反事实解释 (RCE)"重新表述为带密度约束的最优传输问题，用 NCE 训练一个 (K+1) 类判别器同时学分类与类条件密度，再用 Neural ODE 把查询样本沿密度梯度运到目标类高密度流形上…
+  [ICML 2026][因果推理][反事实解释] DensityFlow 把"在模型多重性下生成鲁棒反事实解释 (RCE)"重新表述为带密度约束的最优传输问题，用 NCE 训练一个 (K+1) 类判别器同时学分类与类条件密度，再用 Neural ODE 把查询样本沿密度梯度运到目标类高密度流形上，并在黑盒场景下只对生成轨迹做局部蒸馏对齐，从而以远低于集成基线的查询量取得更高的跨模型 validity。
 tags:
   - "ICML 2026"
   - "因果推理"

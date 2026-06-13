@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reliable Algorithm Selection for Machine Learning-Guided Design
 description: >-
-  [ICML 2025][计算生物][算法选择] 提出一种设计算法选择方法，通过将候选设计算法配置的成功判定形式化为多重假设检验问题，结合预测驱动推断（Prediction-Powered Inference）技术校正预测误差，以高概率保证选出在未标注设计分布上满足用户定义成功准则的算法配置。
+  [ICML 2025][计算生物][算法选择] 提出一种设计算法选择方法，通过将候选设计算法配置的成功判定形式化为多重假设检验问题，结合预测驱动推断（Prediction-Powered Inference）技术校正预测误差，以高概率保证选出在未标注设计分布上满足用户定义成功准则的算法配置。 - ML引导设计的实际难题：蛋白…
 tags:
   - "ICML 2025"
   - "计算生物"

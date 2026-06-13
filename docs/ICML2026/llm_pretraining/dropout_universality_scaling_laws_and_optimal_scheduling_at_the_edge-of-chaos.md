@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dropout Universality: Scaling Laws and Optimal Scheduling at the Edge-of-Chaos
 description: >-
-  [ICML 2026][预训练][平均场理论] 作者把 dropout 看作平均场信号传播理论中破坏 $c^*=1$ 完美对齐不动点的"外场" $h$，推出 Landau 方程、两参数标度坍塌以及 smooth/kinked 激活的两个不同普适类…
+  [ICML 2026][预训练][平均场理论] 作者把 dropout 看作平均场信号传播理论中破坏 $c^*=1$ 完美对齐不动点的"外场" $h$，推出 Landau 方程、两参数标度坍塌以及 smooth/kinked 激活的两个不同普适类，并由此得到一个"零开销"的实用结论——**前置 dropout（front-loaded schedule）**在同等预算下比常数 dropout 在 MLP 和 ViT 上把测试损失降低 18–35%。
 tags:
   - "ICML 2026"
   - "预训练"

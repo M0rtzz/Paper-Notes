@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AffordGrasp: Cross-Modal Diffusion for Affordance-Aware Grasp Synthesis
 description: >-
-  [CVPR 2026][3D视觉][抓取生成] AffordGrasp 提出了一个基于扩散的跨模态框架，通过可供性引导的潜空间扩散和分布调节模块（DAM），从文本指令和物体点云生成物理可行且语义一致的人手抓取姿态，在四个基准上显著超越现有方法。
+  [CVPR 2026][3D视觉][抓取生成] AffordGrasp 提出了一个基于扩散的跨模态框架，通过可供性引导的潜空间扩散和分布调节模块（DAM），从文本指令和物体点云生成物理可行且语义一致的人手抓取姿态，在四个基准上显著超越现有方法。 领域现状：语义抓取生成旨在根据用户指令合成与物体交互的手部姿态…
 tags:
   - "CVPR 2026"
   - "3D视觉"

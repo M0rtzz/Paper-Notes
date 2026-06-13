@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Best Subset Selection: Optimal Pursuit for Feature Selection and Elimination
 description: >-
-  [ICML 2025][模型压缩][Best Subset Selection] 本文从优化视角重新审视经典最优子集选择中的特征选择/消除准则，发现传统准则（相关性选择 + Wald-T 消除）仅捕获了目标函数的"一步变化"而忽视了特征交互，从而提出了"目标函数感知"的最优选择和消除准则…
+  [ICML 2025][模型压缩][Best Subset Selection] 本文从优化视角重新审视经典最优子集选择中的特征选择/消除准则，发现传统准则（相关性选择 + Wald-T 消除）仅捕获了目标函数的"一步变化"而忽视了特征交互，从而提出了"目标函数感知"的最优选择和消除准则，将其作为元替换（Meta-Substitution）即插即用地增强 OMP/CoSaMP/(A)BESS 等经典算法，在压缩感知和稀疏回归任务上实现显著性能提升且不增加计算复杂度。
 tags:
   - "ICML 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering a Shared Logical Subspace: Steering LLM Logical Reasoning via Alignment of Natural-Language and Symbolic Views
 description: >-
-  [ACL 2026][LLM推理][逻辑推理] 发现 LLM 内部存在一个共享的逻辑子空间，可同时对齐自然语言和符号逻辑两种推理表示，通过在推理时沿该子空间引导激活可无训练提升逻辑推理准确率最高达 11 个百分点。
+  [ACL 2026][LLM推理][逻辑推理] 发现 LLM 内部存在一个共享的逻辑子空间，可同时对齐自然语言和符号逻辑两种推理表示，通过在推理时沿该子空间引导激活可无训练提升逻辑推理准确率最高达 11 个百分点。 领域现状：LLM 在复杂多步逻辑推理上仍然表现不佳。现有方法分为两个流派：（1）自然语言依赖方法——通过提示或…
 tags:
   - "ACL 2026"
   - "LLM推理"

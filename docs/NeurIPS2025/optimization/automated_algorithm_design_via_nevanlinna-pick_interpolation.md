@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Automated Algorithm Design via Nevanlinna-Pick Interpolation
 description: >-
-  [NeurIPS 2025 (DynaFront Workshop)][优化/理论][算法自动设计] 提出基于频域鲁棒控制理论中 Nevanlinna-Pick 插值的自动化算法设计框架，用于求解带等式约束的强凸优化问题，获得了矩阵乘法次数与收敛速率之间的最优权衡。
+  [NeurIPS 2025 (DynaFront Workshop)][优化/理论][算法自动设计] 提出基于频域鲁棒控制理论中 Nevanlinna-Pick 插值的自动化算法设计框架，用于求解带等式约束的强凸优化问题，获得了矩阵乘法次数与收敛速率之间的最优权衡。 传统优化算法的设计通常遵循"先设计后分析"的范式：首先基于…
 tags:
   - "NeurIPS 2025 (DynaFront Workshop)"
   - "优化/理论"

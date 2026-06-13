@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CQ-DINO: Mitigating Gradient Dilution via Category Queries for Vast Vocabulary Object Detection
 description: >-
-  [NeurIPS 2025][目标检测][大规模词汇检测] 针对大规模类别（>10K）目标检测中分类头的正梯度稀释和难负样本梯度稀释问题，提出 CQ-DINO：用可学习类别查询替代分类头，通过图像引导的 Top-K 类别选择将负空间缩小 100 倍…
+  [NeurIPS 2025][目标检测][大规模词汇检测] 针对大规模类别（>10K）目标检测中分类头的正梯度稀释和难负样本梯度稀释问题，提出 CQ-DINO：用可学习类别查询替代分类头，通过图像引导的 Top-K 类别选择将负空间缩小 100 倍，在 V3Det（13204 类）上超越前 SOTA 2.1% AP，同时保持 COCO 竞争力。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

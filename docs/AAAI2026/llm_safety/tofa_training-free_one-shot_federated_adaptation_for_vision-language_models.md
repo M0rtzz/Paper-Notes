@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TOFA: Training-Free One-Shot Federated Adaptation for Vision-Language Models
 description: >-
-  [AAAI 2026][LLM安全][联邦学习] 提出TOFA框架，在联邦学习场景下通过层次贝叶斯模型学习个性化视觉prototype分布 + 全局对齐的LLM文本增强 + 自适应模态融合，实现无需训练、仅一轮通信的CLIP高效适配，在9个数据集上超越one-shot基线甚至部分多轮训练方法。
+  [AAAI 2026][LLM安全][联邦学习] 提出TOFA框架，在联邦学习场景下通过层次贝叶斯模型学习个性化视觉prototype分布 + 全局对齐的LLM文本增强 + 自适应模态融合，实现无需训练、仅一轮通信的CLIP高效适配，在9个数据集上超越one-shot基线甚至部分多轮训练方法。 领域现状：CLIP等VLM在联…
 tags:
   - "AAAI 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models
 description: >-
-  [AAAI 2026][机器人][VLA] TTF-VLA 提出了一种免训练的时序 Token 融合方法，通过灰度像素差异+注意力语义检测的双维度机制选择性地复用历史帧的视觉 Token，提升 VLA 模型在机器人操作任务中的推理质量，在 LIBERO 上平均提升 4.0 个百分点。
+  [AAAI 2026][机器人][VLA] TTF-VLA 提出了一种免训练的时序 Token 融合方法，通过灰度像素差异+注意力语义检测的双维度机制选择性地复用历史帧的视觉 Token，提升 VLA 模型在机器人操作任务中的推理质量，在 LIBERO 上平均提升 4.0 个百分点。 领域现状：VLA（Vision-Lang…
 tags:
   - "AAAI 2026"
   - "机器人"

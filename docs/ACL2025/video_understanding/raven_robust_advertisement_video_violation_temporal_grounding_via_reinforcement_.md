@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAVEN: Robust Advertisement Video Violation Temporal Grounding via Reinforcement Reasoning
 description: >-
-  [ACL 2025][视频理解][广告违规检测] 本文提出RAVEN框架，将课程强化学习与多模态LLM结合，通过分层奖励机制和渐进式训练策略，实现广告视频违规内容的精确时序定位和类别预测，无需显式推理标注数据即可激发涌现推理能力。
+  [ACL 2025][视频理解][广告违规检测] 本文提出RAVEN框架，将课程强化学习与多模态LLM结合，通过分层奖励机制和渐进式训练策略，实现广告视频违规内容的精确时序定位和类别预测，无需显式推理标注数据即可激发涌现推理能力。 领域现状： 广告视频违规检测是平台合规的关键环节。早期方法依赖小模型（ViT、ResNet等）…
 tags:
   - "ACL 2025"
   - "视频理解"

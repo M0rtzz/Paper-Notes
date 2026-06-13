@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMs Underperform Graph-Based Parsers on Supervised Relation Extraction for Complex Graphs
 description: >-
-  [ACL 2026][图学习][关系抽取] 本文在六个关系抽取数据集上对比四个 LLM（7B-70B）和一个轻量级图解析器（124M参数），发现当文档的关系图平均边数超过约 18 条时，图解析器持续且显著优于 LLM，在最复杂的 ERFGC 数据集上 F1 差距达 13.2 个点…
+  [ACL 2026][图学习][关系抽取] 本文在六个关系抽取数据集上对比四个 LLM（7B-70B）和一个轻量级图解析器（124M参数），发现当文档的关系图平均边数超过约 18 条时，图解析器持续且显著优于 LLM，在最复杂的 ERFGC 数据集上 F1 差距达 13.2 个点，揭示了 LLM 在复杂语言图结构抽取上的根本局限。
 tags:
   - "ACL 2026"
   - "图学习"

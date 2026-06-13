@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models
 description: >-
-  [ICLR 2026][模型压缩][Lipschitz约束] 提出LipNeXt——首个无约束、无卷积的1-Lipschitz架构，通过正交流形优化学习正交矩阵 + 由Theorem 1理论驱动的Spatial Shift Module实现空间混合，成功扩展到十亿参数规模…
+  [ICLR 2026][模型压缩][Lipschitz约束] 提出LipNeXt——首个无约束、无卷积的1-Lipschitz架构，通过正交流形优化学习正交矩阵 + 由Theorem 1理论驱动的Spatial Shift Module实现空间混合，成功扩展到十亿参数规模，在CIFAR-10/100、Tiny-ImageNet和ImageNet上全面刷新认证鲁棒精度(CRA) SOTA，ImageNet上 $\varepsilon=1$ 时CRA提升达+8%。
 tags:
   - "ICLR 2026"
   - "模型压缩"

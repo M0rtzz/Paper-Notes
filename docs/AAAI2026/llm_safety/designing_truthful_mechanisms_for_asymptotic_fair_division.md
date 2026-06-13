@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Designing Truthful Mechanisms for Asymptotic Fair Division
 description: >-
-  [AAAI 2026][LLM安全][公平分配] 提出 PRD（Proportional Response with Dummy）机制，首次在渐近公平分配设定下实现了"期望真实性 + 多项式时间可计算 + 高概率无嫉妒"三重保证，且仅需 $m = \Omega(n \log n)$ 个物品…
+  [AAAI 2026][LLM安全][公平分配] 提出 PRD（Proportional Response with Dummy）机制，首次在渐近公平分配设定下实现了"期望真实性 + 多项式时间可计算 + 高概率无嫉妒"三重保证，且仅需 $m = \Omega(n \log n)$ 个物品，回答了 Manurangsi & Suksompong 提出的开放问题。
 tags:
   - "AAAI 2026"
   - "LLM安全"

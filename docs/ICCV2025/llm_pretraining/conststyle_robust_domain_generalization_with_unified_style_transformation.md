@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConstStyle: Robust Domain Generalization with Unified Style Transformation
 description: >-
-  [ICCV 2025][预训练][域泛化] 提出ConstStyle框架，通过构建一个理论驱动的"统一域"（Unified Domain），在训练时将所有样本风格对齐到该统一域，测试时将未见域样本部分投影到统一域，有效缩小域间差距并提升泛化性能。
+  [ICCV 2025][预训练][域泛化] 提出ConstStyle框架，通过构建一个理论驱动的"统一域"（Unified Domain），在训练时将所有样本风格对齐到该统一域，测试时将未见域样本部分投影到统一域，有效缩小域间差距并提升泛化性能。 深度神经网络在测试数据分布与训练分布不同时性能会显著下降（域偏移问题）…
 tags:
   - "ICCV 2025"
   - "预训练"

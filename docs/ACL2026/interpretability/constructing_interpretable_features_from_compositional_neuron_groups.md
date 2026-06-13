@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constructing Interpretable Features from Compositional Neuron Groups
 description: >-
-  [ACL 2026][可解释性][SNMF] 作者用半非负矩阵分解（SNMF）直接把 MLP 激活拆成"稀疏神经元组 × 非负系数"，得到既能映射回激活上下文又能跨层组合的可解释特征…
+  [ACL 2026][可解释性][SNMF] 作者用半非负矩阵分解（SNMF）直接把 MLP 激活拆成"稀疏神经元组 × 非负系数"，得到既能映射回激活上下文又能跨层组合的可解释特征，在 Llama-3.1-8B / Gemma-2-2B / GPT-2 上的因果引导（concept steering）评估全面超过最新 SAE（Llamascope / Gemmascope）和强监督基线 DiffMeans。
 tags:
   - "ACL 2026"
   - "可解释性"

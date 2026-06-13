@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decision Tree Learning on Product Spaces
 description: >-
-  [ICML 2026][top-down greedy heuristic] 本文把 Blanc et al. (ITCS'20) 对"top-down greedy 决策树启发式"的理论保证从均匀分布推广到**任意乘积分布**…
+  [ICML 2026][top-down greedy heuristic] 本文把 Blanc et al. (ITCS'20) 对"top-down greedy 决策树启发式"的理论保证从均匀分布推广到**任意乘积分布**，给出 $\exp(\Delta_\mathrm{opt} D_\mathrm{opt}\log(e/\epsilon))$ 大小上界（满二叉树情形严格优于 ITCS'20），且**完全免参数**——不需要预知最优树大小或深度即可运行。
 tags:
   - "ICML 2026"
   - "top-down greedy heuristic"

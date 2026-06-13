@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes
 description: >-
-  [ICLR2026][多模态VLM][multi-view spatial reasoning] 提出 MV-RoboBench，首个整合多视角空间推理与机器人操作执行评测的 benchmark，包含 1.7K 人工标注 QA…
+  [ICLR2026][多模态VLM][multi-view spatial reasoning] 提出 MV-RoboBench，首个整合多视角空间推理与机器人操作执行评测的 benchmark，包含 1.7K 人工标注 QA，揭示当前最强 VLM（GPT-5 仅 56.4%）与人类（91.0%）之间存在巨大差距。
 tags:
   - "ICLR2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR2026  
 **arXiv**: [2510.19400](https://arxiv.org/abs/2510.19400)  
 **代码**: [GitHub](https://github.com/) (项目页面已发布)  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: multi-view spatial reasoning, robotic manipulation, VLM benchmark, embodied AI, MV-RoboBench  
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Selective Coupling of Decoupled Informative Regions: Masked Attention Alignment for Data-Free Quantization of Vision Transformers
 description: >-
-  [ICML 2026][模型压缩][数据无关量化] MaskAQ 把 ViT 的数据无关量化重新定义为"在合成样本的稀疏 informative region 上对齐全精度模型 $P$ 与量化模型 $Q$ 的注意力"…
+  [ICML 2026][模型压缩][数据无关量化] MaskAQ 把 ViT 的数据无关量化重新定义为"在合成样本的稀疏 informative region 上对齐全精度模型 $P$ 与量化模型 $Q$ 的注意力"，用差分熵最大化解耦前景 patch、用自适应掩码对齐注意力、并以周期性刷新让样本跟随 $Q$ 演化，在 3-bit DeiT-T 上把 ImageNet Top-1 比此前最佳再抬 3.1%。
 tags:
   - "ICML 2026"
   - "模型压缩"

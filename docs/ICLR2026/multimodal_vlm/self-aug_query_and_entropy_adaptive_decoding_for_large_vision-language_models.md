@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Aug: Query and Entropy Adaptive Decoding for Large Vision-Language Models
 description: >-
-  [ICLR 2026][多模态VLM][visual contrastive decoding] 提出 Self-Aug，一种免训练的解码策略，通过自增强提示（SAS Prompting）让 LVLM 利用自身知识动态选择与查询语义对齐的视觉增强方式…
+  [ICLR 2026][多模态VLM][visual contrastive decoding] 提出 Self-Aug，一种免训练的解码策略，通过自增强提示（SAS Prompting）让 LVLM 利用自身知识动态选择与查询语义对齐的视觉增强方式，并提出稀疏度自适应截断（SAT）算法利用输出分布的完整熵信息动态调节候选词集大小，在5个 LVLM 和7个基准上一致超越现有对比解码方法。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

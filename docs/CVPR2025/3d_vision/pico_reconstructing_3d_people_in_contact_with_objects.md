@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PICO: Reconstructing 3D People In Contact with Objects
 description: >-
-  [CVPR 2025][3D视觉][人物交互重建] PICO 提出了一个包含数据集 (PICO-db) 和拟合方法 (PICO-fit) 的完整框架，通过建立人体与物体之间的稠密双射接触对应关系，从单张自然图像中恢复逼真的 3D 人-物交互场景，支持任意物体类别。
+  [CVPR 2025][3D视觉][人物交互重建] PICO 提出了一个包含数据集 (PICO-db) 和拟合方法 (PICO-fit) 的完整框架，通过建立人体与物体之间的稠密双射接触对应关系，从单张自然图像中恢复逼真的 3D 人-物交互场景，支持任意物体类别。 领域现状：从单张图像恢复 3D 人-物交互 (HOI) 需要…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Difficulty-Controllable Cloze Question Distractor Generation
 description: >-
-  [ACL2026][文本生成][完形填空] 这篇论文提出 DCDG，通过双路干扰项数据增强、QA ensemble 难度聚类和多任务 seq2seq 训练，让完形填空干扰项生成模型可以按 easy/hard 控制难度，并在自动与人工评测中明显优于 GPT-4o。
+  [ACL2026][文本生成][完形填空] 这篇论文提出 DCDG，通过双路干扰项数据增强、QA ensemble 难度聚类和多任务 seq2seq 训练，让完形填空干扰项生成模型可以按 easy/hard 控制难度，并在自动与人工评测中明显优于 GPT-4o。 领域现状：多选完形填空是语言能力测试和在线教育里很常见的题型…
 tags:
   - "ACL2026"
   - "文本生成"

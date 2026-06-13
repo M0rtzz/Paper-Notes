@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Crosscoding Through Time: Tracking Emergence & Consolidation Of Linguistic Representations Throughout LLM Pretraining
 description: >-
-  [ACL 2026][可解释性][sparse crosscoder] 用 sparse crosscoder 在同一 LLM 的多个 pretraining checkpoint 间训练一个共享特征字典…
+  [ACL 2026][可解释性][sparse crosscoder] 用 sparse crosscoder 在同一 LLM 的多个 pretraining checkpoint 间训练一个共享特征字典，并提出 Relative Indirect Effect (RelIE) 度量逐特征的因果重要性如何在 token 数量推移中"涌现/维持/消失"，从而首次在 Pythia/OLMo/BLOOM 上观察到 LLM 从"特定子词检测器"逐步内化为"抽象句法/跨语言检测器"的概念级演化轨迹。
 tags:
   - "ACL 2026"
   - "可解释性"

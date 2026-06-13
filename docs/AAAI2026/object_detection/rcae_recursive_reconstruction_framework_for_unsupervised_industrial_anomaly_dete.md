@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection
 description: >-
-  [AAAI 2026][目标检测][异常检测] 提出递归卷积自编码器（RcAE），通过参数共享的多步迭代重建逐步抑制异常并保留正常细节，配合跨递归检测模块（CRD）利用多步重建动态实现鲁棒的异常定位，在仅需10%扩散模型参数的条件下达到可比的SOTA性能。
+  [AAAI 2026][目标检测][异常检测] 提出递归卷积自编码器（RcAE），通过参数共享的多步迭代重建逐步抑制异常并保留正常细节，配合跨递归检测模块（CRD）利用多步重建动态实现鲁棒的异常定位，在仅需10%扩散模型参数的条件下达到可比的SOTA性能。 无监督工业异常检测要求模型仅使用正常样本训练，在测试时识别缺陷…
 tags:
   - "AAAI 2026"
   - "目标检测"

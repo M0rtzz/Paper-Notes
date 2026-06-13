@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs
 description: >-
-  [NeurIPS 2025][模型压缩][推理压缩] 提出TokenSqueeze方法，通过自适应推理深度选择、步内语言精炼（基于KL散度约束）和长度感知的偏好优化三阶段流程，仅用模型自生成数据实现推理链50%的token压缩而不损失准确率。
+  [NeurIPS 2025][模型压缩][推理压缩] 提出TokenSqueeze方法，通过自适应推理深度选择、步内语言精炼（基于KL散度约束）和长度感知的偏好优化三阶段流程，仅用模型自生成数据实现推理链50%的token压缩而不损失准确率。 以OpenAI-o1和DeepSeek-R1为代表的推理型LLM通过生成长链式思维…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

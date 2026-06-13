@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BulletGen: Improving 4D Reconstruction with Bullet-Time Generation
 description: >-
-  [CVPR 2026][3D视觉][4D重建] 提出 BulletGen，在选定的"子弹时间"冻结帧用静态视频扩散模型生成新视角，精确定位后用于监督 4D 高斯场景优化，在仅有单目视频输入的情况下实现极端新视角合成和 2D/3D 追踪的 SOTA。
+  [CVPR 2026][3D视觉][4D重建] 提出 BulletGen，在选定的"子弹时间"冻结帧用静态视频扩散模型生成新视角，精确定位后用于监督 4D 高斯场景优化，在仅有单目视频输入的情况下实现极端新视角合成和 2D/3D 追踪的 SOTA。 领域现状： 从单目视频重建动态 4D 场景是高度欠约束的问题…
 tags:
   - "CVPR 2026"
   - "3D视觉"

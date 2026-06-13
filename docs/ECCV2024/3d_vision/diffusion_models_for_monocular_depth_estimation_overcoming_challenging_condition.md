@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Models for Monocular Depth Estimation: Overcoming Challenging Conditions
 description: >-
-  [ECCV 2024][3D视觉][单目深度估计] 利用text-to-image扩散模型（ControlNet/T2I-Adapter）将简单场景图像转化为保持同一3D结构的恶劣条件图像，通过自蒸馏微调现有单目深度估计网络，统一解决恶劣天气和非朗伯表面等分布外挑战。
+  [ECCV 2024][3D视觉][单目深度估计] 利用text-to-image扩散模型（ControlNet/T2I-Adapter）将简单场景图像转化为保持同一3D结构的恶劣条件图像，通过自蒸馏微调现有单目深度估计网络，统一解决恶劣天气和非朗伯表面等分布外挑战。 领域现状：单目深度估计已因深度学习取得巨大进步…
 tags:
   - "ECCV 2024"
   - "3D视觉"

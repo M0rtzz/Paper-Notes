@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OMP: One-step Meanflow Policy with Directional Alignment
 description: >-
-  [ICML2026][图像生成][MeanFlow] 本文针对将 MeanFlow 范式直接搬到机器人操作时暴露出的三个理论病灶（频谱偏差、低速区梯度饥饿、嵌套 JVP 内存爆炸），提出 OMP：用一项 cosine-style 方向对齐损失把预测平均速度与真实平均速度方向"锁死"…
+  [ICML2026][图像生成][MeanFlow] 本文针对将 MeanFlow 范式直接搬到机器人操作时暴露出的三个理论病灶（频谱偏差、低速区梯度饥饿、嵌套 JVP 内存爆炸），提出 OMP：用一项 cosine-style 方向对齐损失把预测平均速度与真实平均速度方向"锁死"，再用有限差分 DDE 近似 Jacobian-Vector Product 解耦前后向，让单步（NFE=1）生成策略在 Adroit/Meta-World 上以 6.8ms 级延迟做到比 MP1 平均高 3.4%、在 Meta-World Very Hard 任务高 10.6% 的成功率。
 tags:
   - "ICML2026"
   - "图像生成"

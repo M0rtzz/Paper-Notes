@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Learning with Response Time: Robust Losses and Guarantees
 description: >-
-  [NeurIPS 2025][优化/理论][偏好学习] 将用户决策的响应时间信息融入偏好学习框架中，通过 Neyman 正交损失函数将奖励模型学习的误差从指数级缩减到多项式级。
+  [NeurIPS 2025][优化/理论][偏好学习] 将用户决策的响应时间信息融入偏好学习框架中，通过 Neyman 正交损失函数将奖励模型学习的误差从指数级缩减到多项式级。 核心矛盾 核心矛盾：领域现状：二元偏好数据已成为微调基础模型的核心信号（如 RLHF），但用户决策过程中蕴含的时间信息（如响应/反应时间）往往被忽视…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

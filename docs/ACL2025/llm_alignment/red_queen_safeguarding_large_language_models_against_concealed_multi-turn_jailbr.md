@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Red Queen: Safeguarding Large Language Models against Concealed Multi-Turn Jailbreaking
 description: >-
-  [ACL 2025][LLM对齐][Jailbreak Attack] 提出 Red Queen Attack——首个基于 Theory of Mind（ToM）构建多轮对话场景并隐藏恶意意图的越狱攻击方法，生成 56K 多轮隐蔽攻击数据，在 GPT-4o 上达到 87.6% ASR…
+  [ACL 2025][LLM对齐][Jailbreak Attack] 提出 Red Queen Attack——首个基于 Theory of Mind（ToM）构建多轮对话场景并隐藏恶意意图的越狱攻击方法，生成 56K 多轮隐蔽攻击数据，在 GPT-4o 上达到 87.6% ASR；同时提出 Red Queen Guard 防御策略，通过多轮 DPO 数据训练将 ASR 降至 <1%，同时不影响通用基准性能。
 tags:
   - "ACL 2025"
   - "LLM对齐"

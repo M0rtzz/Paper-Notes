@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mol-LLaMA: Towards General Understanding of Molecules in Large Molecular Language Models
 description: >-
-  [NeurIPS 2025][计算生物][分子语言模型] 提出 Mol-LLaMA，一个面向分子通用理解的大型分子语言模型，通过设计三类关键指令数据类型和 2D-3D 分子表示融合模块，在分子特征理解上超越 GPT-4o，具备可解释性和推理能力。
+  [NeurIPS 2025][计算生物][分子语言模型] 提出 Mol-LLaMA，一个面向分子通用理解的大型分子语言模型，通过设计三类关键指令数据类型和 2D-3D 分子表示融合模块，在分子特征理解上超越 GPT-4o，具备可解释性和推理能力。 分子理解是化学和生物学的基础，对药物发现至关重要。现有分子 LLM 存在两个核…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

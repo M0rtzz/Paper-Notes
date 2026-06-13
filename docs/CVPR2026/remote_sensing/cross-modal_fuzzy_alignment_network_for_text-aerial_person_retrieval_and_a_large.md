@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-modal Fuzzy Alignment Network for Text-Aerial Person Retrieval and A Large-scale Benchmark
 description: >-
-  [CVPR 2026][遥感][文本-航拍行人检索] 提出跨模态模糊对齐网络 CFAN，利用模糊逻辑量化 token 级可靠性实现精细对齐，并引入地面视图作为桥接代理缓解航拍图像与文本的语义鸿沟，同时构建了大规模文本-航拍行人检索基准 AERI-PEDES。
+  [CVPR 2026][遥感][文本-航拍行人检索] 提出跨模态模糊对齐网络 CFAN，利用模糊逻辑量化 token 级可靠性实现精细对齐，并引入地面视图作为桥接代理缓解航拍图像与文本的语义鸿沟，同时构建了大规模文本-航拍行人检索基准 AERI-PEDES。 领域现状：文本-图像行人检索（TIPR）已取得显著进展…
 tags:
   - "CVPR 2026"
   - "遥感"

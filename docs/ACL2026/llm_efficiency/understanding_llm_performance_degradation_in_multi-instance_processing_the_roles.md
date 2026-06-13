@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding LLM Performance Degradation in Multi-Instance Processing: The Roles of Instance Count and Context Length
 description: >-
-  [ACL2026][LLM效率][多实例处理] 这篇论文系统评测 16 个 LLM 在 multi-instance processing 中的退化规律，发现性能下降不只是上下文变长造成的，实例数量本身对成功率的影响更强，尤其在 1,000 个以上实例时几乎所有模型都会崩溃且很少主动提醒用户。
+  [ACL2026][LLM效率][多实例处理] 这篇论文系统评测 16 个 LLM 在 multi-instance processing 中的退化规律，发现性能下降不只是上下文变长造成的，实例数量本身对成功率的影响更强，尤其在 1,000 个以上实例时几乎所有模型都会崩溃且很少主动提醒用户。 领域现状：很多 LLM 应用仍…
 tags:
   - "ACL2026"
   - "LLM效率"

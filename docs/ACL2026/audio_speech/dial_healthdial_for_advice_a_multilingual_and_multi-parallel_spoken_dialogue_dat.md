@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking
 description: >-
-  [ACL2026][音频/语音][spoken dialogue] HEALTHDIAL 构建了一个包含 4 种 WHO 官方语言、6,000 个多平行健康信息寻求对话和 163 小时真实用户语音的数据集，并基于 ASR、TTS、检索、知识过滤和用户研究建立了多语言 spoken RAG benchmark。
+  [ACL2026 Findings][音频/语音][spoken dialogue] HEALTHDIAL 构建了一个包含 4 种 WHO 官方语言、6,000 个多平行健康信息寻求对话和 163 小时真实用户语音的数据集，并基于 ASR、TTS、检索、知识过滤和用户研究建立了多语言 spoken RAG benchmark。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "音频/语音"
   - "spoken dialogue"
   - "multilingual benchmark"

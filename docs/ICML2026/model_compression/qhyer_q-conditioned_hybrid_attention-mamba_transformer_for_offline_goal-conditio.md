@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QHyer: Q-conditioned Hybrid Attention-mamba Transformer for Offline Goal-conditioned RL
 description: >-
-  [ICML 2026][模型压缩][Offline GCRL] QHyer 用 Normalizing Flows 估计的状态依赖 Q 值取代 Decision Transformer 中的轨迹依赖 RTG，再叠加门控式 Attention-Mamba 混合骨干以实现内容自适应的历史压缩…
+  [ICML 2026][模型压缩][Offline GCRL] QHyer 用 Normalizing Flows 估计的状态依赖 Q 值取代 Decision Transformer 中的轨迹依赖 RTG，再叠加门控式 Attention-Mamba 混合骨干以实现内容自适应的历史压缩，在 OGBench/D4RL 的非马尔可夫与马尔可夫离线目标条件 RL 数据集上同时刷新 SOTA。
 tags:
   - "ICML 2026"
   - "模型压缩"

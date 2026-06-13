@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification
 description: >-
-  [NeurIPS 2025][自动驾驶][Aerial-Ground Person Re-Identification] 提出 GSAlign 框架，通过可学习薄板样条变换 (LTPS) 和动态对齐模块 (DAM) 分别解决空地行人重识别中几何畸变与语义不对齐问题…
+  [NeurIPS 2025][自动驾驶][Aerial-Ground Person Re-Identification] 提出 GSAlign 框架，通过可学习薄板样条变换 (LTPS) 和动态对齐模块 (DAM) 分别解决空地行人重识别中几何畸变与语义不对齐问题，在 CARGO 数据集空地协议上 mAP 提升 +18.8%、Rank-1 提升 +16.8%。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

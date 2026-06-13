@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs
 description: >-
-  [NeurIPS 2025][图学习][文本属性图] 提出 SSTAG，通过双重知识蒸馏将 LLM 和 GNN 的互补知识联合蒸馏到结构感知的 MLP 中，结合内存库机制存储原型表示，实现高效、可扩展的文本属性图跨域自监督预训练。
+  [NeurIPS 2025][图学习][文本属性图] 提出 SSTAG，通过双重知识蒸馏将 LLM 和 GNN 的互补知识联合蒸馏到结构感知的 MLP 中，结合内存库机制存储原型表示，实现高效、可扩展的文本属性图跨域自监督预训练。 NLP 和 CV 领域的大规模预训练模型已展现出卓越的跨域泛化能力，但图学习领域仍停留在单图训…
 tags:
   - "NeurIPS 2025"
   - "图学习"

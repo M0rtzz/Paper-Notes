@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming
 description: >-
-  [NEURIPS2025][AI安全][differential privacy] 提出了基于 Euclidean Jordan Algebra (EJA) 的通用 Gaussian 隐私机制，并在此基础上设计了首个差分隐私的 Symmetric Cone Programming (SCP) 求解算法…
+  [NEURIPS2025][AI安全][differential privacy] 提出了基于 Euclidean Jordan Algebra (EJA) 的通用 Gaussian 隐私机制，并在此基础上设计了首个差分隐私的 Symmetric Cone Programming (SCP) 求解算法，解决了 Hsu et al. (ICALP 2014) 提出的关于差分隐私半定规划的重要开放问题。
 tags:
   - "NEURIPS2025"
   - "AI安全"

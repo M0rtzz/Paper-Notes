@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning
 description: >-
-  [ACL 2026][信息检索/RAG][对话式搜索] 提出ConvAgent，通过将RL训练奖励分解为结果奖励、信息增益奖励和混合主动行为奖励三个互补组件，训练对话式搜索智能体在多轮交互中交替进行搜索和推理。
+  [ACL 2026 Findings][信息检索/RAG][对话式搜索] 提出ConvAgent，通过将RL训练奖励分解为结果奖励、信息增益奖励和混合主动行为奖励三个互补组件，训练对话式搜索智能体在多轮交互中交替进行搜索和推理。 领域现状：LLM正成为人机交互的主要界面，但在多轮对话式搜索中，用户意图随对话演进而变化…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "对话式搜索"
   - "强化学习"

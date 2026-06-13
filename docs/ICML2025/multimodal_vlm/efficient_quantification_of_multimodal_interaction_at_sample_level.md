@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Quantification of Multimodal Interaction at Sample Level
 description: >-
-  [ICML 2025][多模态VLM][多模态交互量化] 提出 LSMI（Lightweight Sample-wise Multimodal Interaction）估计器，首次实现了对真实世界连续分布数据的**逐样本级别**多模态交互（冗余、唯一性、协同）精确且高效的量化…
+  [ICML 2025][多模态VLM][多模态交互量化] 提出 LSMI（Lightweight Sample-wise Multimodal Interaction）估计器，首次实现了对真实世界连续分布数据的**逐样本级别**多模态交互（冗余、唯一性、协同）精确且高效的量化，并展示了其在数据分区、知识蒸馏和模型集成中的实用价值。
 tags:
   - "ICML 2025"
   - "多模态VLM"

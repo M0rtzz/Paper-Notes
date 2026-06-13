@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Progress-Aware Video Frame Captioning
 description: >-
-  [CVPR 2025][视频理解][帧级描述] 本文提出了"进度感知视频帧级描述"这一新任务，并开发了 ProgressCaptioner 模型，通过两阶段训练（帧对→帧序列）和自动化的伪标签筛选机制，生成能精确捕捉动作逐帧演变的细粒度描述…
+  [CVPR 2025][视频理解][帧级描述] 本文提出了"进度感知视频帧级描述"这一新任务，并开发了 ProgressCaptioner 模型，通过两阶段训练（帧对→帧序列）和自动化的伪标签筛选机制，生成能精确捕捉动作逐帧演变的细粒度描述，在自建 FrameCapEval 基准上大幅超越 GPT-4o 和 Gemini-1.5-Pro。
 tags:
   - "CVPR 2025"
   - "视频理解"

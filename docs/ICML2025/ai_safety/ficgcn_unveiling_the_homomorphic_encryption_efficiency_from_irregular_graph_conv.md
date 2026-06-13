@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FicGCN: Unveiling the Homomorphic Encryption Efficiency from Irregular Graph Convolutional Networks
 description: >-
-  [ICML 2025][AI安全][同态加密] 提出FicGCN框架，通过延迟感知的打包策略、稀疏密文内聚合（SpIntra-CA）和基于区域的节点重排三项创新，解决GCN不规则稀疏性与同态加密SIMD计算模式之间的根本矛盾，在Corafull等大规模图上实现最高4.10×的端到端加速。
+  [ICML 2025][AI安全][同态加密] 提出FicGCN框架，通过延迟感知的打包策略、稀疏密文内聚合（SpIntra-CA）和基于区域的节点重排三项创新，解决GCN不规则稀疏性与同态加密SIMD计算模式之间的根本矛盾，在Corafull等大规模图上实现最高4.10×的端到端加速。 领域现状： GCN在医疗、金融等隐私…
 tags:
   - "ICML 2025"
   - "AI安全"

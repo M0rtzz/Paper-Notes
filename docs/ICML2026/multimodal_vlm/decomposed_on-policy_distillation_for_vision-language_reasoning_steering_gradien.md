@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Decomposed On-Policy Distillation for Vision-Language Reasoning: Steering Gradients for Visual Grounding
 description: >-
-  [ICML2026][多模态VLM][在线蒸馏] 作者把多模态在线蒸馏的 KL 损失沿贝叶斯链拆成"语言先验"和"视觉接地"两个子目标，发现两者梯度近乎正交、标准蒸馏只是被动取平分，提出 Visual Gradient Steering（VGS）主动把更新方向偏向视觉子空间…
+  [ICML2026 Spotlight][多模态VLM][在线蒸馏] 作者把多模态在线蒸馏的 KL 损失沿贝叶斯链拆成"语言先验"和"视觉接地"两个子目标，发现两者梯度近乎正交、标准蒸馏只是被动取平分，提出 Visual Gradient Steering（VGS）主动把更新方向偏向视觉子空间，在 Qwen3-VL 8B→2B/4B 七个多模态推理基准上平均提升 +2.37%/+1.56%。
 tags:
-  - "ICML2026"
+  - "ICML2026 Spotlight"
   - "多模态VLM"
   - "在线蒸馏"
   - "视觉接地"

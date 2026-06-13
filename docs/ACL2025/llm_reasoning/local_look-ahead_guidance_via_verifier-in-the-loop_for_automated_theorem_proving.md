@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Local Look-Ahead Guidance via Verifier-in-the-Loop for Automated Theorem Proving
 description: >-
-  [ACL 2025][LLM推理][自动定理证明] 提出 LeanListener，在自动定理证明(ATP)中引入 verifier-in-the-loop 设计，利用 Lean 验证器在每步提供中间反馈（子目标数变化）而非仅轨迹级奖励…
+  [ACL 2025][LLM推理][自动定理证明] 提出 LeanListener，在自动定理证明(ATP)中引入 verifier-in-the-loop 设计，利用 Lean 验证器在每步提供中间反馈（子目标数变化）而非仅轨迹级奖励，通过在线 GRPO 训练使 ReProver 的 tactic 有效率和证明率均获提升，证明速度快 20%。
 tags:
   - "ACL 2025"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hallucination Stations: On Some Basic Limitations of Transformer-Based Language Models
 description: >-
-  [AAAI 2026][幻觉检测][幻觉] 从计算复杂度理论出发证明 Transformer LLM 每步推理复杂度为 $O(N^2 \cdot d)$，基于时间层次定理（Hartmanis-Stearns）…
+  [AAAI 2026][幻觉检测][幻觉] 从计算复杂度理论出发证明 Transformer LLM 每步推理复杂度为 $O(N^2 \cdot d)$，基于时间层次定理（Hartmanis-Stearns），任何需要超过此复杂度的计算任务——如 $O(n^3)$ 矩阵乘法、$O(n^k)$ token 组合、TSP 验证等——LLM 必然无法正确完成（即产生幻觉），且 LLM Agent 也无法验证此类任务的正确性。
 tags:
   - "AAAI 2026"
   - "幻觉检测"

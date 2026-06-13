@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Course Correction in Steerability Evaluation: Revealing Miscalibration and Side Effects in LLMs
 description: >-
-  [AAAI 2026][强化学习][可操控性评估] 本文提出了一个基于多维目标空间的 LLM 可操控性（steerability）评估框架，将 steering error 分解为校准偏差（miscalibration）和副作用（side effects/orthogonality）…
+  [AAAI 2026][强化学习][可操控性评估] 本文提出了一个基于多维目标空间的 LLM 可操控性（steerability）评估框架，将 steering error 分解为校准偏差（miscalibration）和副作用（side effects/orthogonality），在文本改写任务上发现即使是最强的 LLM 也会产生严重副作用，prompt engineering 无效、best-of-N 采样代价高、RL 微调有改善但仍未彻底解决。
 tags:
   - "AAAI 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVSMamba: Multi-View Stereo with State Space Model
 description: >-
-  [NeurIPS 2025][3D视觉][多视图立体] 提出MVSMamba，首个基于Mamba架构的多视图立体(MVS)网络，通过参考视角中心的动态扫描策略实现高效的视内和视间全局全方向特征聚合，在DTU和Tanks-and-Temples上以最优效率达到SOTA性能。
+  [NeurIPS 2025][3D视觉][多视图立体] 提出MVSMamba，首个基于Mamba架构的多视图立体(MVS)网络，通过参考视角中心的动态扫描策略实现高效的视内和视间全局全方向特征聚合，在DTU和Tanks-and-Temples上以最优效率达到SOTA性能。 多视图立体(MVS)旨在从标定的多视图图像重建密集3…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

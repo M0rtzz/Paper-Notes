@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data
 description: >-
-  [ICCV 2025][人体理解][面部表情识别] 提出 SynFER，一个基于扩散模型的面部表情合成框架，通过文本描述 + 面部动作单元 (FAU) 的双重控制实现细粒度表情生成，并引入 FERAnno 标签校准器确保标注可靠性，在自监督、监督、零样本和少样本四种学习范式下均证明合成数据对 FER 的有效性…
+  [ICCV 2025][人体理解][面部表情识别] 提出 SynFER，一个基于扩散模型的面部表情合成框架，通过文本描述 + 面部动作单元 (FAU) 的双重控制实现细粒度表情生成，并引入 FERAnno 标签校准器确保标注可靠性，在自监督、监督、零样本和少样本四种学习范式下均证明合成数据对 FER 的有效性。
 tags:
   - "ICCV 2025"
   - "人体理解"

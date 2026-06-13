@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IF-RewardBench: Benchmarking Judge Models for Instruction-Following Evaluation
 description: >-
-  [ACL 2026][LLM评测][指令跟随] 本文提出 IF-RewardBench：第一个同时覆盖单轮 / 多轮 / 系统提示三类指令、由 16 个 LLM 生成响应、由人工严格标注 (Cohen's $\kappa$=0.87) 的 judge 元评测基准…
+  [ACL 2026][LLM评测][指令跟随] 本文提出 IF-RewardBench：第一个同时覆盖单轮 / 多轮 / 系统提示三类指令、由 16 个 LLM 生成响应、由人工严格标注 (Cohen's $\kappa$=0.87) 的 judge 元评测基准；它把传统的 pairwise / BoN 评测范式升级为基于 **Pareto-dominance 偏好图**的 listwise 评测，对 22 个 SOTA judge（含 Gemini-3-Pro / GPT-5.1 / 各类 reward model）一通跑后发现：最强 judge 的 Kendall $\tau_b$ 也只有 0.609（远低于人类 0.755）…
 tags:
   - "ACL 2026"
   - "LLM评测"

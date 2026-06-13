@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Compact Language Models Search Like Agents? Distillation-Guided Policy Optimization for Preserving Agentic RAG Capabilities
 description: >-
-  [ACL 2026][信息检索/RAG][Agentic RAG] 本文提出 DGPO：用教师 demonstration 做冷启动 KD 初始化，再在 PPO 阶段对"错误样本"施加 KL 蒸馏惩罚，让 0.5B 紧凑模型获得 Agentic RAG 能力…
+  [ACL 2026][信息检索/RAG][Agentic RAG] 本文提出 DGPO：用教师 demonstration 做冷启动 KD 初始化，再在 PPO 阶段对"错误样本"施加 KL 蒸馏惩罚，让 0.5B 紧凑模型获得 Agentic RAG 能力，在 7 个 QA benchmark 上平均 EM 从 0.006 提升到 0.329，部分数据集甚至反超 3B 教师。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

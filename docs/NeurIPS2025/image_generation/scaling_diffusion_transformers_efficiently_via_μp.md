@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Diffusion Transformers Efficiently via μP
 description: >-
-  [NeurIPS 2025][图像生成][Transformer] 将 Maximal Update Parametrization (μP) 从标准 Transformer 推广到扩散 Transformer（DiT、PixArt-α、MMDiT 等），证明其超参数可从小模型稳定迁移到大模型…
+  [NeurIPS 2025][图像生成][Transformer] 将 Maximal Update Parametrization (μP) 从标准 Transformer 推广到扩散 Transformer（DiT、PixArt-α、MMDiT 等），证明其超参数可从小模型稳定迁移到大模型，显著降低大规模扩散模型的调参成本。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

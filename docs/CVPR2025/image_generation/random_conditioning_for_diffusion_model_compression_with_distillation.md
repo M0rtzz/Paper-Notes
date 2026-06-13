@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Random Conditioning for Diffusion Model Compression with Distillation
 description: >-
-  [CVPR 2025][图像生成][知识蒸馏] 本文提出 Random Conditioning 技术，在条件扩散模型的知识蒸馏过程中将带噪图像与随机选取的不相关文本条件配对，使得学生模型无需为每个文本都生成对应图像即可探索完整条件空间，实现了高效的无图像/少图像扩散模型压缩，且学生能生成训练时从未见过的概念…
+  [CVPR 2025][图像生成][知识蒸馏] 本文提出 Random Conditioning 技术，在条件扩散模型的知识蒸馏过程中将带噪图像与随机选取的不相关文本条件配对，使得学生模型无需为每个文本都生成对应图像即可探索完整条件空间，实现了高效的无图像/少图像扩散模型压缩，且学生能生成训练时从未见过的概念。
 tags:
   - "CVPR 2025"
   - "图像生成"

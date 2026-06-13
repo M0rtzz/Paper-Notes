@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving
 description: >-
-  [AAAI2026][自动驾驶][扩散模型] 提出 DiffRefiner，通过"粗到精"两阶段框架——先用判别式 Proposal Decoder 生成粗轨迹，再用扩散模型迭代精炼——结合细粒度语义交互模块，在 NAVSIM v2 和 Bench2Drive 两个基准上均达到 SOTA。
+  [AAAI2026][自动驾驶][扩散模型] 提出 DiffRefiner，通过"粗到精"两阶段框架——先用判别式 Proposal Decoder 生成粗轨迹，再用扩散模型迭代精炼——结合细粒度语义交互模块，在 NAVSIM v2 和 Bench2Drive 两个基准上均达到 SOTA。 端到端自动驾驶（E2E-AD）将原…
 tags:
   - "AAAI2026"
   - "自动驾驶"

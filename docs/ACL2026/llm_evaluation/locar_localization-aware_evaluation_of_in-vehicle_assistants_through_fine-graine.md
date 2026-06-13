@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LoCar: Localization-Aware Evaluation of In-Vehicle Assistants through Fine-Grained Sociolinguistic Control
 description: >-
-  [ACL2026][LLM/NLP][本地化评测] LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的 LLM-as-a-Judge 与敬语形态验证来评测 11 个模型，发现通用理解能力接近饱和，但细粒度敬语控制和多轮策略性引导仍明显不稳定。
+  [ACL2026][LLM评测][本地化评测] LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的 LLM-as-a-Judge 与敬语形态验证来评测 11 个模型，发现通用理解能力接近饱和，但细粒度敬语控制和多轮策略性引导仍明显不稳定。 领域现状：车载助手正在从固定命令系统变成能解释车辆手册、理解导航…
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM评测"
   - "本地化评测"
   - "韩语敬语"
   - "车载助手"

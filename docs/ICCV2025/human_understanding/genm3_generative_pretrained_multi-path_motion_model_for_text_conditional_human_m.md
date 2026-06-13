@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation
 description: >-
-  [ICCV 2025][人体理解][人体运动生成] 提出 GenM3 框架，通过 Multi-Expert VQ-VAE (MEVQ-VAE) 学习统一的离散运动表示，以及 Multi-path Motion Transformer (MMT) 处理模态内变异和跨模态对齐…
+  [ICCV 2025][人体理解][人体运动生成] 提出 GenM3 框架，通过 Multi-Expert VQ-VAE (MEVQ-VAE) 学习统一的离散运动表示，以及 Multi-path Motion Transformer (MMT) 处理模态内变异和跨模态对齐，整合 11 个运动数据集（约 220 小时），在 HumanML3D 上达到 SOTA FID 0.035。
 tags:
   - "ICCV 2025"
   - "人体理解"

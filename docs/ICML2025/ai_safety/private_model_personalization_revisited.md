@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Private Model Personalization Revisited
 description: >-
-  [ICML 2025][AI安全][差分隐私] 提出 Private FedRep 算法，在用户级差分隐私 (DP) 约束下通过交替最小化框架学习共享低维嵌入 $U^* \in \mathbb{R}^{d \times k}$（$k \ll d$）…
+  [ICML 2025][AI安全][差分隐私] 提出 Private FedRep 算法，在用户级差分隐私 (DP) 约束下通过交替最小化框架学习共享低维嵌入 $U^* \in \mathbb{R}^{d \times k}$（$k \ll d$），将隐私误差项相比先前工作 Jain et al. 降低 $\widetilde{O}(dk)$ 倍，且适用于更广泛的 sub-Gaussian 分布（而非仅限高斯），并通过 Johnson-Lindenstrauss 变换给出维度无关的分类风险界。
 tags:
   - "ICML 2025"
   - "AI安全"

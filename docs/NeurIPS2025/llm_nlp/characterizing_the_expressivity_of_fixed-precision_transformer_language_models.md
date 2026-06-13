@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Characterizing the Expressivity of Fixed-Precision Transformer Language Models
 description: >-
-  [NeurIPS 2025][LLM/NLP][Transformer] 精确刻画了固定精度、严格未来掩码、软注意力、无位置编码的 Transformer 的表达能力——恰好等价于仅含过去算子的线性时态逻辑 LTL[P]…
+  [NeurIPS 2025 Spotlight][LLM 其他][Transformer] 精确刻画了固定精度、严格未来掩码、软注意力、无位置编码的 Transformer 的表达能力——恰好等价于仅含过去算子的线性时态逻辑 LTL[P]，并将其与偏序确定有限自动机 (PODFA)、$\mathcal{R}$-trivial 幺半群统一起来。
 tags:
-  - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "NeurIPS 2025 Spotlight"
+  - "LLM 其他"
   - "Transformer"
   - "formal language theory"
   - "linear temporal logic"

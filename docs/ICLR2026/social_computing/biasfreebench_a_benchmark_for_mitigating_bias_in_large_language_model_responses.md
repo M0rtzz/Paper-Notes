@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses
 description: >-
-  [ICLR 2026][社会计算][bias mitigation] 本文构建了 BiasFreeBench 基准，首次在统一框架下系统比较 8 种主流去偏方法（4 种 prompting + 4 种 training），聚焦于 LLM 响应层面的偏差评估，并提出了 Bias-Free Score 指标…
+  [ICLR 2026][社会计算][bias mitigation] 本文构建了 BiasFreeBench 基准，首次在统一框架下系统比较 8 种主流去偏方法（4 种 prompting + 4 种 training），聚焦于 LLM 响应层面的偏差评估，并提出了 Bias-Free Score 指标，发现 prompting 方法（尤其是 CoT）整体优于 training 方法，而 DPO 在跨偏差类型泛化上表现突出。
 tags:
   - "ICLR 2026"
   - "社会计算"

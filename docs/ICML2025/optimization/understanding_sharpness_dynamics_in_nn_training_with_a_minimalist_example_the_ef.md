@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More
 description: >-
-  [ICML2025][优化/理论][sharpness dynamics] 提出用"每层单神经元的深度线性网络"作为极简模型，系统性地研究 progressive sharpening 和 edge of stability 现象…
+  [ICML2025][优化/理论][sharpness dynamics] 提出用"每层单神经元的深度线性网络"作为极简模型，系统性地研究 progressive sharpening 和 edge of stability 现象，引入 dataset difficulty $Q$ 概念并推导了 sharpness 在全局最优处的上下界，理论分析了数据规模、网络深度、batch size 和学习率对 sharpness 动态的影响机制。
 tags:
   - "ICML2025"
   - "优化/理论"

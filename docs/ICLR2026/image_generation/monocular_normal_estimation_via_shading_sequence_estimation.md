@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Monocular Normal Estimation via Shading Sequence Estimation
 description: >-
-  [ICLR 2026 (Oral)][图像生成][法线估计] 本文提出了RoSE方法，将单目法线估计问题重新定义为着色序列（Shading Sequence）估计问题，利用图像到视频（Image-to-Video）生成模型预测多光照下的着色序列，再通过简单的最小二乘法将着色序列转换为法线图…
+  [ICLR 2026 (Oral)][图像生成][法线估计] 本文提出了RoSE方法，将单目法线估计问题重新定义为着色序列（Shading Sequence）估计问题，利用图像到视频（Image-to-Video）生成模型预测多光照下的着色序列，再通过简单的最小二乘法将着色序列转换为法线图，在真实世界基准数据集上达到SOTA性能。
 tags:
   - "ICLR 2026 (Oral)"
   - "图像生成"

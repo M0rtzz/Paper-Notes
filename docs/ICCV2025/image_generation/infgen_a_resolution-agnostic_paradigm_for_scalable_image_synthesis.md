@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfGen: A Resolution-Agnostic Paradigm for Scalable Image Synthesis
 description: >-
-  [ICCV 2025][图像生成][任意分辨率生成] 提出InfGen，一种"第二代生成"范式，用一个基于Transformer的生成器替换VAE解码器，从固定大小的latent一步解码出任意分辨率图像，无需修改或重新训练扩散模型，将4K图像生成时间压缩至10秒以内…
+  [ICCV 2025][图像生成][任意分辨率生成] 提出InfGen，一种"第二代生成"范式，用一个基于Transformer的生成器替换VAE解码器，从固定大小的latent一步解码出任意分辨率图像，无需修改或重新训练扩散模型，将4K图像生成时间压缩至10秒以内，比现有最快方法UltraPixel提速10倍以上。
 tags:
   - "ICCV 2025"
   - "图像生成"

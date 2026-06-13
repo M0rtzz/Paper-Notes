@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers
 description: >-
-  [ICCV 2025][图像生成][扩散模型加速] 提出 Chords，一种基于多核层次 ODE 求解器的扩散采样加速框架，通过慢到快的核间纠正机制（inter-core rectification），在 4-8 个 GPU 上实现 2.1×~2.9× 加速，且不牺牲生成质量。
+  [ICCV 2025][图像生成][扩散模型加速] 提出 Chords，一种基于多核层次 ODE 求解器的扩散采样加速框架，通过慢到快的核间纠正机制（inter-core rectification），在 4-8 个 GPU 上实现 2.1×~2.9× 加速，且不牺牲生成质量。 扩散模型已成为高质量图像和视频生成的主导方法…
 tags:
   - "ICCV 2025"
   - "图像生成"

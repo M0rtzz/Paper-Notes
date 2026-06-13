@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SERE: Structural Example Retrieval for Enhancing LLMs in Event Causality Identification
 description: >-
-  [ACL2026][LLM安全][事件因果识别] SERE 认为事件因果识别中的示例选择不能只看语义相似度，而应检索概念路径、句法树和因果模式都结构相近的样例，从而让 LLM 在少样本推理时更少过度预测因果关系。
+  [ACL2026 Findings][LLM安全][事件因果识别] SERE 认为事件因果识别中的示例选择不能只看语义相似度，而应检索概念路径、句法树和因果模式都结构相近的样例，从而让 LLM 在少样本推理时更少过度预测因果关系。 领域现状：事件因果识别要求模型判断上下文中的两个事件是否存在因果关系。传统方法多依赖 BERT…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM安全"
   - "事件因果识别"
   - "结构化检索"

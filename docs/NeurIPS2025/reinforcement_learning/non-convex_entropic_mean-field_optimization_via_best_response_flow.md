@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Non-convex Entropic Mean-Field Optimization via Best Response Flow
 description: >-
-  [NeurIPS 2025][强化学习][平均场优化] 将Best Response Flow从凸函数泛函优化扩展到非凸情形，证明在充分大的熵正则化下，BR算子在 $L^1$-Wasserstein距离下成为压缩映射，保证非凸目标的唯一全局最小值存在性及指数收敛。
+  [NeurIPS 2025][强化学习][平均场优化] 将Best Response Flow从凸函数泛函优化扩展到非凸情形，证明在充分大的熵正则化下，BR算子在 $L^1$-Wasserstein距离下成为压缩映射，保证非凸目标的唯一全局最小值存在性及指数收敛。 领域现状： 概率测度空间上的泛函最小化问题在机器学习中广泛出…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

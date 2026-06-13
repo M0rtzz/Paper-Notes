@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Few-Shot Examples Add Up: A Causal Decomposition of Function Vectors in In-Context Learning
 description: >-
-  [ICML 2026][可解释性][function vector] 本文从 prompt 粒度因果分析 n-shot prompt 的 function vector（FV）形成机制，证明 FV 可线性叠加为各 example 子 FV 的加权和，且权重由 FV-head attention 决定…
+  [ICML 2026][可解释性][function vector] 本文从 prompt 粒度因果分析 n-shot prompt 的 function vector（FV）形成机制，证明 FV 可线性叠加为各 example 子 FV 的加权和，且权重由 FV-head attention 决定；并通过 2×2 QK/V 因果干预表明，contextualization 主要通过 QK 路径（而非 V）让模型把注意力集中到无歧义的 demonstration 上，从而提升 FV 质量。
 tags:
   - "ICML 2026"
   - "可解释性"

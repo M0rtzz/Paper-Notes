@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Gate: Mitigating Privacy Risks in LVLMs via Neuron-Level Gradient Gating
 description: >-
-  [CVPR 2025][LLM安全][LVLM隐私] Neural Gate 发现 LVLM 中隐私相关神经元具有强跨样本不一致性——仅约 10% 的神经元一致性编码隐私信号。基于此发现，提出神经元级梯度门控编辑：仅对强一致性隐私神经元施加梯度更新…
+  [CVPR 2025][LLM安全][LVLM隐私] Neural Gate 发现 LVLM 中隐私相关神经元具有强跨样本不一致性——仅约 10% 的神经元一致性编码隐私信号。基于此发现，提出神经元级梯度门控编辑：仅对强一致性隐私神经元施加梯度更新，在 MiniGPT 上将 Safety EtA 从 0.48 提升至 0.89，同时 Utility 保持不降。
 tags:
   - "CVPR 2025"
   - "LLM安全"

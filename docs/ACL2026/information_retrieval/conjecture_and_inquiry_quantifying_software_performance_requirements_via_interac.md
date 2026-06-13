@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conjecture and Inquiry: Quantifying Software Performance Requirements via Interactive Retrieval-Augmented Preference Elicitation
 description: >-
-  [ACL 2026][信息检索/RAG][需求量化] 提出IRAP方法，通过交互式检索增强偏好获取（Interactive Retrieval-Augmented Preference Elicitation）将自然语言描述的软件性能需求量化为数学函数…
+  [ACL 2026][信息检索/RAG][需求量化] 提出IRAP方法，通过交互式检索增强偏好获取（Interactive Retrieval-Augmented Preference Elicitation）将自然语言描述的软件性能需求量化为数学函数，在4个真实数据集上相比10种SOTA方法取得最高40倍的性能提升，且仅需5轮交互。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

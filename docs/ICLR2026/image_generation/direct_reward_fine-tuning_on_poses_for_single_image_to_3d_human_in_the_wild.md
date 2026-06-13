@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Direct Reward Fine-Tuning on Poses for Single Image to 3D Human in the Wild
 description: >-
-  [ICLR 2026][图像生成][single-view 3D human reconstruction] 提出 DrPose，通过直接奖励微调最大化 PoseScore（多视角潜变量图像与 GT 3D 姿态的骨骼一致性）+ KL 正则化防止 reward hacking…
+  [ICLR 2026][图像生成][single-view 3D human reconstruction] 提出 DrPose，通过直接奖励微调最大化 PoseScore（多视角潜变量图像与 GT 3D 姿态的骨骼一致性）+ KL 正则化防止 reward hacking，结合 DrPose15K 数据集（从 Motion-X 运动数据集采样 15K 多样姿态 + MIMO 视频生成器合成单视角图像），使多视角扩散模型在动态/杂技等困难姿态场景下的 3D 人体重建质量显著提升。
 tags:
   - "ICLR 2026"
   - "图像生成"

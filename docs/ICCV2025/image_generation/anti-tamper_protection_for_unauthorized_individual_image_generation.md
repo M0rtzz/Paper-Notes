@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Anti-Tamper Protection for Unauthorized Individual Image Generation
 description: >-
-  [ICCV 2025][图像生成][防篡改保护] 提出Anti-Tamper Perturbation (ATP)，在频域中将保护扰动（阻止伪造生成）和授权扰动（检测净化篡改）分离嵌入，当攻击者尝试净化保护信息时触发防篡改机制拒绝服务，在各种净化攻击下实现100%保护成功率。
+  [ICCV 2025][图像生成][防篡改保护] 提出Anti-Tamper Perturbation (ATP)，在频域中将保护扰动（阻止伪造生成）和授权扰动（检测净化篡改）分离嵌入，当攻击者尝试净化保护信息时触发防篡改机制拒绝服务，在各种净化攻击下实现100%保护成功率。 随着个性化图像生成技术（如DreamBooth、…
 tags:
   - "ICCV 2025"
   - "图像生成"

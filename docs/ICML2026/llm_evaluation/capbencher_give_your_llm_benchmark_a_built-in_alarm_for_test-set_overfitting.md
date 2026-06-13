@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CapBencher: Give Your LLM Benchmark a Built-in Alarm for Test-Set Overfitting
 description: >-
-  [ICML 2026][LLM评测][LLM基准测试] CapBencher 通过为每道题注入随机性（生成多个逻辑正确答案并随机选一个作为标准答案），将 benchmark 的 Bayes 准确率降到可控水平（如 50%）…
+  [ICML 2026][LLM评测][LLM基准测试] CapBencher 通过为每道题注入随机性（生成多个逻辑正确答案并随机选一个作为标准答案），将 benchmark 的 Bayes 准确率降到可控水平（如 50%），从而在公开发布 benchmark 的同时实现数据污染的黑盒统计检测——任何准确率显著超过 Bayes 上界的模型都被判定为存在污染。
 tags:
   - "ICML 2026"
   - "LLM评测"

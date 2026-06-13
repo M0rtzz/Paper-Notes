@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On
 description: >-
-  [CVPR 2026][图像生成][虚拟试穿] PROMO基于FLUX Flow Matching DiT骨干，通过潜空间多模态条件拼接、时序自参考KV缓存、3D-RoPE分组条件、以及fine-tuned VLM风格提示系统，在去除传统参考网络的前提下实现了高保真且高效的多件服装虚拟试穿…
+  [CVPR 2026][图像生成][虚拟试穿] PROMO基于FLUX Flow Matching DiT骨干，通过潜空间多模态条件拼接、时序自参考KV缓存、3D-RoPE分组条件、以及fine-tuned VLM风格提示系统，在去除传统参考网络的前提下实现了高保真且高效的多件服装虚拟试穿，推理速度比无加速版快2.4倍，在VITON-HD和DressCode上超越现有VTON和通用图像编辑方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

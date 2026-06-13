@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Only a Little to the Left: A Theory-grounded Measure of Political Bias in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][政治偏见] 本文用政治科学中经过验证的 World Values Survey (WVS) 替代缺乏科学基础的 Political Compass Test (PCT)，设计 30 种提示变体在 11 个开源/商业 LLM 上收集 88…
+  [ACL 2025][LLM 其他][政治偏见] 本文用政治科学中经过验证的 World Values Survey (WVS) 替代缺乏科学基础的 Political Compass Test (PCT)，设计 30 种提示变体在 11 个开源/商业 LLM 上收集 88,110 条开放式回复并训练立场分类器自动标注，发现指令微调模型普遍偏左但偏见度量对提示高度敏感，PCT 会夸大特定模型（如 GPT-3.5）的政治偏见。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "政治偏见"
   - "LLM偏见测量"
   - "Political Compass Test"

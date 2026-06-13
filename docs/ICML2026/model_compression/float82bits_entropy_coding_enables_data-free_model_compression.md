@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Float8@2bits: Entropy Coding Enables Data-Free Model Compression
 description: >-
-  [ICML 2026][模型压缩][后训练量化] EntQuant 把权重以 Float8/Int8 精度保留，但在量化阶段额外加一个 $\ell_1$ 正则把权重往低熵方向"对齐"，再用 GPU 上并行的 ANS 熵编码无损压到 2 bit 左右…
+  [ICML 2026][模型压缩][后训练量化] EntQuant 把权重以 Float8/Int8 精度保留，但在量化阶段额外加一个 $\ell_1$ 正则把权重往低熵方向"对齐"，再用 GPU 上并行的 ANS 熵编码无损压到 2 bit 左右，从而在完全不需要校准数据、10 分钟以内、不做恢复训练的前提下，把 70B LLM 压缩到 8× 以上且推理只慢 1.5–2 倍。
 tags:
   - "ICML 2026"
   - "模型压缩"

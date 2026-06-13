@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibrated Multi-Preference Optimization for Aligning Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][校准偏好优化] 本文提出 Calibrated Preference Optimization（CaPO），通过 win-rate 校准将不同奖励模型的分数统一为期望胜率，并设计基于 Pareto 前沿的配对采样策略（FRS）来处理多奖励信号间的冲突…
+  [CVPR 2025][图像生成][校准偏好优化] 本文提出 Calibrated Preference Optimization（CaPO），通过 win-rate 校准将不同奖励模型的分数统一为期望胜率，并设计基于 Pareto 前沿的配对采样策略（FRS）来处理多奖励信号间的冲突，在 SDXL 和 SD3-Medium 上一致地超越 DPO 和 IPO 方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

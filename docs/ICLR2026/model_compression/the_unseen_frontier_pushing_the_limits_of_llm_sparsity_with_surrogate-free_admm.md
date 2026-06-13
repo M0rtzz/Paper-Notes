@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Unseen Frontier: Pushing the Limits of LLM Sparsity with Surrogate-Free ADMM
 description: >-
-  [ICLR 2026][模型压缩][LLM 剪枝] 提出 Elsa 方法，通过无代理目标的 ADMM 约束优化直接求解稀疏性约束问题，突破 LLM 剪枝 50-60% 的"稀疏墙"瓶颈，在 90% 稀疏度下仍保持高模型保真度。
+  [ICLR 2026][模型压缩][LLM 剪枝] 提出 Elsa 方法，通过无代理目标的 ADMM 约束优化直接求解稀疏性约束问题，突破 LLM 剪枝 50-60% 的"稀疏墙"瓶颈，在 90% 稀疏度下仍保持高模型保真度。 - LLM 部署挑战： 大语言模型体积庞大，内存、计算和能耗需求巨大，严重制约广泛部署 - 剪枝瓶…
 tags:
   - "ICLR 2026"
   - "模型压缩"

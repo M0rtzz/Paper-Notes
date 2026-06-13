@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SUICA: Learning Super-high Dimensional Sparse Implicit Neural Representations for Spatial Transcriptomics
 description: >-
-  [ICML 2025][计算生物][spatial transcriptomics] 提出 SUICA，通过图增强自编码器将超高维稀疏空间转录组数据压缩到紧凑嵌入空间，再用隐式神经表示（INR）建模坐标到嵌入的连续映射，实现跨多种 ST 平台的空间填补、基因填补和去噪。
+  [ICML 2025][计算生物][spatial transcriptomics] 提出 SUICA，通过图增强自编码器将超高维稀疏空间转录组数据压缩到紧凑嵌入空间，再用隐式神经表示（INR）建模坐标到嵌入的连续映射，实现跨多种 ST 平台的空间填补、基因填补和去噪。 领域现状：空间转录组学（Spatial Transcr…
 tags:
   - "ICML 2025"
   - "计算生物"

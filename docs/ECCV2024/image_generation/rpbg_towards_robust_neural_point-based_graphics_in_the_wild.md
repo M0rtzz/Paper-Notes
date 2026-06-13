@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RPBG: Towards Robust Neural Point-based Graphics in the Wild
 description: >-
-  [ECCV 2024][图像生成][点云渲染] 本文针对Neural Point-based Graphics (NPBG)在真实场景中的鲁棒性不足问题，提出RPBG，通过退化感知卷积模块、注意力驱动的点可见性校正、轻量级背景建模和点云增强…
+  [ECCV 2024][图像生成][点云渲染] 本文针对Neural Point-based Graphics (NPBG)在真实场景中的鲁棒性不足问题，提出RPBG，通过退化感知卷积模块、注意力驱动的点可见性校正、轻量级背景建模和点云增强，在不修改点栅格化流程的前提下显著提升了点云神经重渲染在多种wild数据集上的质量和稳定性。
 tags:
   - "ECCV 2024"
   - "图像生成"

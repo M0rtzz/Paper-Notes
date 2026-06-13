@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning
 description: >-
-  [ACL 2025][LLM安全][in-context unlearning] 提出"上下文知识遗忘"方法，通过引入特殊的遗忘 token `<<UNL>>...<</UNL>>` 使 LLM 在推理时根据上下文选择性遗忘特定知识…
+  [ACL 2025][LLM安全][in-context unlearning] 提出"上下文知识遗忘"方法，通过引入特殊的遗忘 token `<<UNL>>...<</UNL>>` 使 LLM 在推理时根据上下文选择性遗忘特定知识，在 TOFU/AGE/RWKU 上达到 95% 遗忘准确率且保留 80% 无关知识，深入的内部分析发现 LLM 并未真正删除知识而是在最后一层"假装遗忘"。
 tags:
   - "ACL 2025"
   - "LLM安全"

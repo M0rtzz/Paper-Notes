@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DLO-Lab: Benchmarking Deformable Linear Object Manipulations with Differentiable Physics
 description: >-
-  [ICML 2026][机器人][可变形线性物体] DLO-Lab 在 Genesis 平台上用 Taichi 自研了一套以离散弹性杆（DER）为内核、支持双向耦合 + 弯曲塑性 + 闭环拓扑的可微仿真器…
+  [ICML 2026][机器人][可变形线性物体] DLO-Lab 在 Genesis 平台上用 Taichi 自研了一套以离散弹性杆（DER）为内核、支持双向耦合 + 弯曲塑性 + 闭环拓扑的可微仿真器，配套 10 个 rope/cable/橡皮筋 benchmark 任务和一个用 VLM 做"抓点提议 + 任务分解"的专门 agent，把 PPO/SAC/SHAC/SAPO/CMA-ES/GD 各路策略学习算法摆到统一擂台上 PK，并通过系统辨识做了真机 sim-to-real 验证。
 tags:
   - "ICML 2026"
   - "机器人"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2606.04206](https://arxiv.org/abs/2606.04206)  
 **代码**: 项目主页 https://dlo-lab-26.github.io/  
-**领域**: robotics  
+**领域**: 机器人  
 **关键词**: 可变形线性物体、可微仿真、机器人 benchmark、Discrete Elastic Rods、grasp 提议  
 
 ## 一句话总结

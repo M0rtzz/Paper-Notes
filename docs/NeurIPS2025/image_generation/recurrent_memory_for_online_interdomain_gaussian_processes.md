@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recurrent Memory for Online Interdomain Gaussian Processes
 description: >-
-  [NeurIPS 2025][图像生成][高斯过程] 提出 OHSVGP（Online HiPPO Sparse Variational Gaussian Process），将深度学习中的 HiPPO（高阶多项式投影算子）框架引入稀疏变分高斯过程中作为跨域诱导变量…
+  [NeurIPS 2025][图像生成][高斯过程] 提出 OHSVGP（Online HiPPO Sparse Variational Gaussian Process），将深度学习中的 HiPPO（高阶多项式投影算子）框架引入稀疏变分高斯过程中作为跨域诱导变量，利用时变正交多项式基函数实现在线学习中的长期记忆保持，核矩阵可通过 ODE 递推高效更新。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

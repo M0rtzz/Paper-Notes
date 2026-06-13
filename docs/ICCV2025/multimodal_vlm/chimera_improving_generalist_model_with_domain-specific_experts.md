@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chimera: Improving Generalist Model with Domain-Specific Experts
 description: >-
-  [ICCV 2025][多模态VLM][多模态推理] 提出 Chimera，一个可扩展的低成本多模态管道，通过轻量路由模块动态选择领域专家模型、渐进式训练策略以及 Generalist-Specialist Collaboration Masking（GSCM）机制…
+  [ICCV 2025][多模态VLM][多模态推理] 提出 Chimera，一个可扩展的低成本多模态管道，通过轻量路由模块动态选择领域专家模型、渐进式训练策略以及 Generalist-Specialist Collaboration Masking（GSCM）机制，将领域专家知识（表格、图表、数学、文档）集成到通用多模态大模型中，在 MathVista 上达到 64.9%（SOTA），在多个视觉结构提取任务上也达到或超越专家模型水平。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

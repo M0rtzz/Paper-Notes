@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis
 description: >-
-  [NeurIPS 2025][可解释性][内在动机] 提出一个系统性的事后可解释性框架，分析内在动机（基于Random Network Distillation）如何塑造Elastic Decision Transformer的嵌入空间几何结构…
+  [NeurIPS 2025][可解释性][内在动机] 提出一个系统性的事后可解释性框架，分析内在动机（基于Random Network Distillation）如何塑造Elastic Decision Transformer的嵌入空间几何结构，揭示不同内在动机变体创造了根本不同的表示结构——EDT-SIL促进紧凑表示，EDT-TIL增强正交性——且嵌入属性与任务性能存在强烈的环境特异性相关。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

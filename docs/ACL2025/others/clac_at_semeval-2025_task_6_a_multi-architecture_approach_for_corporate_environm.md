@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLaC at SemEval-2025 Task 6: A Multi-Architecture Approach for Corporate Environmental Promise Verification
 description: >-
-  [ACL 2025 (SemEval Workshop)][ESG报告] 本文针对SemEval-2025 Task 6（PromiseEval）的企业ESG报告承诺验证任务，探索了三种递进的模型架构：ESG-BERT基线、语言特征增强版、以及融合注意力池化和多目标学习的联合子任务模型…
+  [ACL 2025 (SemEval Workshop)][ESG报告] 本文针对SemEval-2025 Task 6（PromiseEval）的企业ESG报告承诺验证任务，探索了三种递进的模型架构：ESG-BERT基线、语言特征增强版、以及融合注意力池化和多目标学习的联合子任务模型，最终以0.5268的私榜分数略超基线（0.5227），验证了语言特征工程和多任务学习在ESG承诺验证中的有效性。
 tags:
   - "ACL 2025 (SemEval Workshop)"
   - "ESG报告"
@@ -142,10 +142,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐ 方法组合较为常规，无显著新技术提出
-- 实验充分度: ⭐⭐⭐ 三个模型递进对比清晰，但缺乏组件级消融
-- 写作质量: ⭐⭐⭐⭐ 结构清晰，每个模型的设计动机和实现细节完整
-- 价值: ⭐⭐⭐ 作为SemEval系统描述论文，提供了实用的ESG文本分析方案和经验教训
+- 新颖性: ⭐⭐⭐ 方法组合较为常规，无显著新技术提出
+- 实验充分度: ⭐⭐⭐⭐ 三个模型递进对比清晰，但缺乏组件级消融
+- 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，每个模型的设计动机和实现细节完整
+- 价值: ⭐⭐⭐⭐ 作为SemEval系统描述论文，提供了实用的ESG文本分析方案和经验教训
 
 <!-- RELATED:START -->
 

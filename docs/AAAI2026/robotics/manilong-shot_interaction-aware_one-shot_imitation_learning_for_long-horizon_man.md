@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation
 description: >-
-  [AAAI 2026][机器人][单次模仿学习] 提出 ManiLong-Shot 框架，通过交互感知的任务分解、不变区域预测和区域匹配三个模块，仅在10个短序列任务上训练即可泛化到20个未见长序列操作任务，单次模仿成功率 30.2%，相对SOTA提升22.8%。
+  [AAAI 2026][机器人][单次模仿学习] 提出 ManiLong-Shot 框架，通过交互感知的任务分解、不变区域预测和区域匹配三个模块，仅在10个短序列任务上训练即可泛化到20个未见长序列操作任务，单次模仿成功率 30.2%，相对SOTA提升22.8%。 问题定义 单次模仿学习（OSIL）：从单个演示中学习新技能…
 tags:
   - "AAAI 2026"
   - "机器人"

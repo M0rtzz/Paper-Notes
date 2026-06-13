@@ -2,10 +2,10 @@
 title: >-
   [论文解读] HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation
 description: >-
-  [ACL 2025][LLM/NLP][Grammar Generation] 构建 540 个挑战的文法生成数据集，设计 6 种评测指标，提出基于 LLM 驱动的混合遗传算法 HyGenar，显著提升 LLM 从少量示例生成 BNF 文法的能力。
+  [ACL 2025][LLM 其他][Grammar Generation] 构建 540 个挑战的文法生成数据集，设计 6 种评测指标，提出基于 LLM 驱动的混合遗传算法 HyGenar，显著提升 LLM 从少量示例生成 BNF 文法的能力。 领域现状：文法推理在 NLP 和软件工程中有广泛应用（解析器生成、LLM 结构…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Grammar Generation"
   - "BNF"
   - "Few-Shot"

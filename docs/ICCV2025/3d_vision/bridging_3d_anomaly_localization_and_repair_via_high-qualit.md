@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation
 description: >-
-  [ICCV 2025][3D视觉][3D anomaly detection] 提出 PASDF 框架，通过姿态感知的签名距离函数（SDF）实现连续几何表征，统一了3D异常检测与修复任务，在 Real3D-AD 和 Anomaly-ShapeNet 上取得 SOTA。
+  [ICCV 2025][3D视觉][3D anomaly detection] 提出 PASDF 框架，通过姿态感知的签名距离函数（SDF）实现连续几何表征，统一了3D异常检测与修复任务，在 Real3D-AD 和 Anomaly-ShapeNet 上取得 SOTA。 1. 3D异常检测的重要性：在制造业质量控制、机器人操作…
 tags:
   - "ICCV 2025"
   - "3D视觉"

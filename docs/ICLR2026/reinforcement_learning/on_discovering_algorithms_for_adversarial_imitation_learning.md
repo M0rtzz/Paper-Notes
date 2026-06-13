@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Discovering Algorithms for Adversarial Imitation Learning
 description: >-
-  [ICLR 2026][强化学习][对抗性模仿学习] 提出 DAIL——首个元学习对抗性模仿学习算法：将 AIL 分解为密度比估计和奖励赋值(RA)两阶段，用 LLM 引导的进化搜索自动发现最优 RA 函数 $r_{\text{disc}}$，在未见环境和策略优化器上泛化并超越所有人工设计基线。
+  [ICLR 2026][强化学习][对抗性模仿学习] 提出 DAIL——首个元学习对抗性模仿学习算法：将 AIL 分解为密度比估计和奖励赋值(RA)两阶段，用 LLM 引导的进化搜索自动发现最优 RA 函数 $r_{\text{disc}}$，在未见环境和策略优化器上泛化并超越所有人工设计基线。 领域现状：对抗性模仿学习(A…
 tags:
   - "ICLR 2026"
   - "强化学习"

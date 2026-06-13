@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboAgent: Chaining Basic Capabilities for Embodied Task Planning
 description: >-
-  [CVPR 2026][机器人][具身任务规划] 提出 RoboAgent，一种能力驱动的具身任务规划框架，用单个 VLM 同时实现调度器和 5 种基本能力（探索引导、物体定位、场景描述、动作解码、经验总结）…
+  [CVPR 2026][机器人][具身任务规划] 提出 RoboAgent，一种能力驱动的具身任务规划框架，用单个 VLM 同时实现调度器和 5 种基本能力（探索引导、物体定位、场景描述、动作解码、经验总结），通过三阶段训练（SFT + DAgger + 专家引导 RL）在 EB-ALFRED 和 ALFWorld 上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "机器人"

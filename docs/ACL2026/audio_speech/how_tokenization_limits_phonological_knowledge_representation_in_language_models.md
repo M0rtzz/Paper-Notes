@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Tokenization Limits Phonological Knowledge Representation in Language Models and How to Improve Them
 description: >-
-  [ACL 2026][音频/语音][subword tokenization] 本文用三个音韵 probing 任务（rhyme / G2P / 音节数）证明 BPE 类 subword tokenization 既"粒度太粗"难以捕捉局部音韵，又"边界错位"难以捕捉韵律结构…
+  [ACL 2026][音频/语音][subword tokenization] 本文用三个音韵 probing 任务（rhyme / G2P / 音节数）证明 BPE 类 subword tokenization 既"粒度太粗"难以捕捉局部音韵，又"边界错位"难以捕捉韵律结构，并提出 STAD 度量 + IPA-augmented 轻量微调，让 Llama3.1-8B 在三个音韵任务全面提升而 GSM8K / MMLU 只掉 1.1% / 0.9%。
 tags:
   - "ACL 2026"
   - "音频/语音"

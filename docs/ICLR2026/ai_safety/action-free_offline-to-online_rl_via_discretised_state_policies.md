@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Action-Free Offline-to-Online RL via Discretised State Policies
 description: >-
-  [ICLR 2026][AI安全][无动作离线RL] 首次形式化"无动作离线到在线RL"设定，提出OSO-DecQN算法：通过将连续状态差分离散化为{-1, 0, 1}三类标记，在仅含(s, r, s')元组的数据上预训练状态策略（预测期望的下一状态变化方向而非动作）…
+  [ICLR 2026][AI安全][无动作离线RL] 首次形式化"无动作离线到在线RL"设定，提出OSO-DecQN算法：通过将连续状态差分离散化为{-1, 0, 1}三类标记，在仅含(s, r, s')元组的数据上预训练状态策略（预测期望的下一状态变化方向而非动作），再通过策略切换机制+在线训练的逆动力学模型将状态策略转化为可执行动作，引导在线agent加速学习，在D4RL和DeepMind Control Suite上（含78维状态空间）一致提升收敛速度和渐近性能。
 tags:
   - "ICLR 2026"
   - "AI安全"

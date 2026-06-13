@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is this chart lying to me? Automating the detection of misleading visualizations
 description: >-
-  [ACL 2026][社会计算][误导性可视化] 提出 Misviz（2604张真实世界误导性可视化）和 Misviz-synth（57665张合成可视化）基准，覆盖12种误导类型，系统评估MLLM、规则检查器和图像分类器在检测误导性图表上的表现，揭示该任务仍极具挑战性。
+  [ACL 2026][社会计算][误导性可视化] 提出 Misviz（2604张真实世界误导性可视化）和 Misviz-synth（57665张合成可视化）基准，覆盖12种误导类型，系统评估MLLM、规则检查器和图像分类器在检测误导性图表上的表现，揭示该任务仍极具挑战性。 领域现状：误导性可视化是社交媒体上虚假信息的重要载体…
 tags:
   - "ACL 2026"
   - "社会计算"

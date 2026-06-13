@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Skills Gap: A Course Model for Modern Generative AI Education
 description: >-
-  [AAAI 2026 (EAAI Symposium)][生成式AI教育] 本文提出了一个面向本科和研究生计算机科学学生的生成式 AI 应用课程模型，通过混合方法调查表明该课程在弥合产业界与学术界之间的生成式 AI 技能差距方面效果显著，学生普遍认为课程有价值且有效。
+  [AAAI 2026 (EAAI Symposium)][生成式AI教育] 本文提出了一个面向本科和研究生计算机科学学生的生成式 AI 应用课程模型，通过混合方法调查表明该课程在弥合产业界与学术界之间的生成式 AI 技能差距方面效果显著，学生普遍认为课程有价值且有效。 领域现状：生成式 AI（如 ChatGPT、GitHub…
 tags:
   - "AAAI 2026 (EAAI Symposium)"
   - "生成式AI教育"

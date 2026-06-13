@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BabelDOC: Better Layout-Preserving PDF Translation via Intermediate Representation
 description: >-
-  [ACL 2026][多语言/翻译][PDF 翻译] 本文提出 BabelDOC：一个基于「中间表示（IR）」的版式保持 PDF 翻译系统，把视觉布局和语义内容解耦，让 LLM 翻译、术语提取、跨页上下文、公式占位等 NLP 操作发生在语义层，再用自适应排版引擎重新锚回原版式…
+  [ACL 2026][多语言/翻译][PDF 翻译] 本文提出 BabelDOC：一个基于「中间表示（IR）」的版式保持 PDF 翻译系统，把视觉布局和语义内容解耦，让 LLM 翻译、术语提取、跨页上下文、公式占位等 NLP 操作发生在语义层，再用自适应排版引擎重新锚回原版式；在 200 页基准上 BIoU、layout fidelity、术语一致性都超过 PDFMathTranslate 和 DeepL Document Translation。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

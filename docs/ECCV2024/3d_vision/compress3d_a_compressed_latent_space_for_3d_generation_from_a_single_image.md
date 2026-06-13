@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compress3D: a Compressed Latent Space for 3D Generation from a Single Image
 description: >-
-  [ECCV 2024][3D视觉][3D生成] 提出一种高度压缩的 triplane 潜空间自编码器，配合两阶段扩散模型（先生成 shape embedding 再生成 triplane latent），仅需 7 秒即可从单张图像生成高质量 3D 资产，且训练数据和时间远少于同类方法。
+  [ECCV 2024][3D视觉][3D生成] 提出一种高度压缩的 triplane 潜空间自编码器，配合两阶段扩散模型（先生成 shape embedding 再生成 triplane latent），仅需 7 秒即可从单张图像生成高质量 3D 资产，且训练数据和时间远少于同类方法。 从单张图像高效生成高质量 3D 资产是…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models
 description: >-
-  [AAAI2026][LLM安全][Universal Adversarial Perturbation] 提出 LAMP，一种针对多图 MLLM 的 black-box Universal Adversarial Perturbation 学习方法…
+  [AAAI2026][LLM安全][Universal Adversarial Perturbation] 提出 LAMP，一种针对多图 MLLM 的 black-box Universal Adversarial Perturbation 学习方法，通过 attention 约束和"传染式"损失实现仅扰动少量图像即可跨模型/任务迁移攻击。
 tags:
   - "AAAI2026"
   - "LLM安全"

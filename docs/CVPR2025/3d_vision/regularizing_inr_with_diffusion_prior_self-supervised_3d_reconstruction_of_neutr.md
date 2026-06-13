@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron CT Data
 description: >-
-  [CVPR 2025][3D视觉][隐式神经表示] 提出 DINR (Diffusive INR)，将隐式神经表示 (INR/SIREN) 与预训练扩散模型先验结合，通过 proximal loss 在每个 DDIM 时间步用扩散去噪输出正则化 INR 重建…
+  [CVPR 2025][3D视觉][隐式神经表示] 提出 DINR (Diffusive INR)，将隐式神经表示 (INR/SIREN) 与预训练扩散模型先验结合，通过 proximal loss 在每个 DDIM 时间步用扩散去噪输出正则化 INR 重建，在稀疏视角中子 CT（低至 4-5 个视角）上超越 FBP、纯 INR、DD3IP 和经典 MBIR(qGGMRF) 方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

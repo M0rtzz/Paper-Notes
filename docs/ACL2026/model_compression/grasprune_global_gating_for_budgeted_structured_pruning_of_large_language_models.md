@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRASPrune: Global Gating for Budgeted Structured Pruning of Large Language Models
 description: >-
-  [ACL 2026][模型压缩][结构化剪枝] GRASPrune 提出了一种全局预算约束的结构化剪枝框架，通过投影直通估计器（Projected STE）在每步训练中强制满足硬掩码预算约束，联合剪枝 FFN 通道和 KV 头组，在 LLaMA-2-7B 上以 50% 参数保留达到 12.18 PPL…
+  [ACL 2026][模型压缩][结构化剪枝] GRASPrune 提出了一种全局预算约束的结构化剪枝框架，通过投影直通估计器（Projected STE）在每步训练中强制满足硬掩码预算约束，联合剪枝 FFN 通道和 KV 头组，在 LLaMA-2-7B 上以 50% 参数保留达到 12.18 PPL，仅需单卡 A100 训练 6 分钟。
 tags:
   - "ACL 2026"
   - "模型压缩"

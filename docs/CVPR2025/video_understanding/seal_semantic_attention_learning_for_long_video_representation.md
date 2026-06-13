@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEAL: SEmantic Attention Learning for Long Video Representation
 description: >-
-  [CVPR 2025][视频理解][长视频理解] 提出SEAL统一长视频表征方法，将视频分解为场景/物体/动作三种语义token，通过query感知的子集选择优化来平衡相关性与多样性，在LVBench上以45.9%超越Qwen2-VL-72B的41.3%。
+  [CVPR 2025][视频理解][长视频理解] 提出SEAL统一长视频表征方法，将视频分解为场景/物体/动作三种语义token，通过query感知的子集选择优化来平衡相关性与多样性，在LVBench上以45.9%超越Qwen2-VL-72B的41.3%。 长视频理解面临三大挑战： - 计算复杂度高：小时级视频的帧数和像素量…
 tags:
   - "CVPR 2025"
   - "视频理解"

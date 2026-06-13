@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks
 description: >-
-  [NeurIPS 2025][SNN] 提出SPACE，首个专为脉冲神经网络(SNN)设计的无源单样本测试时自适应(TTA)方法，通过最大化增强样本间脉冲行为特征图的一致性，在多个数据集和架构上实现鲁棒适应。
+  [NeurIPS 2025][SNN] 提出SPACE，首个专为脉冲神经网络(SNN)设计的无源单样本测试时自适应(TTA)方法，通过最大化增强样本间脉冲行为特征图的一致性，在多个数据集和架构上实现鲁棒适应。 - SNN作为生物合理的ANN替代，具有能效和时间处理优势，但对分布偏移高度敏感 - 实验证明：SNN在分布偏移下的…
 tags:
   - "NeurIPS 2025"
   - "SNN"

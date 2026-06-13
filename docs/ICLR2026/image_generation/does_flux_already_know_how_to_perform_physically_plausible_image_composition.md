@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Does FLUX Already Know How to Perform Physically Plausible Image Composition?
 description: >-
-  [ICLR2026][图像生成][image composition] 提出 SHINE，一个无需训练的图像合成框架，通过 Manifold-Steered Anchor Loss、Degradation-Suppression Guidance 和 Adaptive Background Blending…
+  [ICLR2026][图像生成][image composition] 提出 SHINE，一个无需训练的图像合成框架，通过 Manifold-Steered Anchor Loss、Degradation-Suppression Guidance 和 Adaptive Background Blending 三个组件，利用预训练 T2I 模型（如 FLUX）内在的物理先验，实现在复杂光照条件下（阴影、水面反射等）的高质量物体插入。
 tags:
   - "ICLR2026"
   - "图像生成"

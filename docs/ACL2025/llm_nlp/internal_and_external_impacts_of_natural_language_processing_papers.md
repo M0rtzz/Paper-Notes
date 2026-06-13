@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Internal and External Impacts of Natural Language Processing Papers
 description: >-
-  [ACL 2025][LLM/NLP][scientometrics] 从内部（NLP 社区）和外部（其他领域）两个维度衡量 NLP 论文影响力，构建影响力预测模型。
+  [ACL 2025][LLM 其他][scientometrics] 从内部（学术引用）和外部（专利、媒体、政策文档）两个维度系统分析 1979-2024 年 ACL/EMNLP/NAACL 论文的影响力，发现语言建模主题影响力最广，伦理公平主题在政策文档中影响力突出但学术引用较低，且多维外部影响力可高效预测内部高被引论文。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "scientometrics"
   - "impact measurement"
   - "NLP research"
   - "citation analysis"
+  - "external impact"
 ---
 
 # Internal and External Impacts of Natural Language Processing Papers
@@ -126,3 +127,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数据规模大（24K 论文、四个数据源），分析全面，但缺乏因果机制探讨
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，7 个观察点层层递进，图表直观
 - 价值: ⭐⭐⭐⭐ 为 NLP 社区的自我反思和战略规划提供了有价值的数据支持
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Enhancing Transformation from Natural Language to Signal Temporal Logic Using LLMs with Diverse External Knowledge](enhancing_transformation_from_natural_language_to_signal_temporal_logic_using_ll.md)
+- [\[ACL 2025\] Natural Language Processing in Support of Evidence-based Medicine: A Scoping Review](natural_language_processing_in_support_of_evidence-based_medicine_a_scoping_revi.md)
+- [\[ACL 2025\] LLM×MapReduce: Simplified Long-Sequence Processing using Large Language Models](llm_mapreduce_simplified_long_sequence_processing.md)
+- [\[ACL 2025\] What Makes a Good Natural Language Prompt?](good_natural_language_prompt.md)
+- [\[ACL 2025\] Direct Confidence Alignment: Aligning Verbalized Confidence with Internal Confidence In Large Language Models](direct_confidence_alignment_aligning_verbalized_confidence_with_internal_confide.md)
+
+</div>
+
+<!-- RELATED:END -->

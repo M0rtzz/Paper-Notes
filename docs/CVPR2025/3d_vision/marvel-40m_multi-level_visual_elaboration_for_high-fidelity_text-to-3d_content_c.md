@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARVEL-40M+: Multi-Level Visual Elaboration for High-Fidelity Text-to-3D Content Creation
 description: >-
-  [CVPR 2025][3D视觉][文本到3D] 构建了包含 890 万 3D 资产、4000 万+多层级文本标注的大规模 3D 描述数据集 MARVEL-40M+，通过多阶段自动标注管线（InternVL2 + Qwen2.5）生成从详细描述到简洁标签的五级标注…
+  [CVPR 2025][3D视觉][文本到3D] 构建了包含 890 万 3D 资产、4000 万+多层级文本标注的大规模 3D 描述数据集 MARVEL-40M+，通过多阶段自动标注管线（InternVL2 + Qwen2.5）生成从详细描述到简洁标签的五级标注，并基于此微调 SD3.5 实现 15 秒内的高保真文本到 3D 生成。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Model Editing as a Double-Edged Sword: Steering Agent Ethical Behavior
 description: >-
-  [AAAI 2026][知识编辑][模型编辑] 将 Agent 伦理行为引导建模为模型编辑任务（Behavior Editing），提出基于心理学道德理论的三层 BehaviorBench 基准，在 9 个开源模型和 20 个闭源模型上验证了模型编辑可以精确地将 Agent 引导向善意或恶意方向…
+  [AAAI 2026 Oral][知识编辑][模型编辑] 将 Agent 伦理行为引导建模为模型编辑任务（Behavior Editing），提出基于心理学道德理论的三层 BehaviorBench 基准，在 9 个开源模型和 20 个闭源模型上验证了模型编辑可以精确地将 Agent 引导向善意或恶意方向，且单次编辑可导致全局道德对齐偏移。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "知识编辑"
   - "模型编辑"
   - "伦理行为"

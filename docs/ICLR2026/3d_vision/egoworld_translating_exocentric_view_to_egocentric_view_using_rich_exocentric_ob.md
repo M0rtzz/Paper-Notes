@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoWorld: Translating Exocentric View to Egocentric View using Rich Exocentric Observations
 description: >-
-  [ICLR 2026][3D视觉][视角转换] EgoWorld 提出一种端到端的外部-第一人称视角转换框架：从单张第三人称图像中提取 3D 点云、手部姿态和文本描述三种互补观测，通过点云重投影获得稀疏第一人称 RGB 映射，再以扩散模型 inpainting 方式重建完整的第一人称高保真图像…
+  [ICLR 2026][3D视觉][视角转换] EgoWorld 提出一种端到端的外部-第一人称视角转换框架：从单张第三人称图像中提取 3D 点云、手部姿态和文本描述三种互补观测，通过点云重投影获得稀疏第一人称 RGB 映射，再以扩散模型 inpainting 方式重建完整的第一人称高保真图像，在 H2O 等四个数据集的多种 unseen 设置下全面超越 SOTA。
 tags:
   - "ICLR 2026"
   - "3D视觉"

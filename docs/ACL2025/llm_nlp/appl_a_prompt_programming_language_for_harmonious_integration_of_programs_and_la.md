@@ -2,10 +2,10 @@
 title: >-
   [论文解读] APPL: A Prompt Programming Language for Harmonious Integration of Programs and Large Language Model Prompts
 description: >-
-  [ACL 2025][LLM/NLP][提示编程语言] 本文提出APPL——一种将LLM提示（prompt）无缝嵌入Python程序的提示编程语言，提供Python原生语法、异步并行运行时和可追溯调试模块，简化了复杂LLM工作流的开发与维护。
+  [ACL 2025][LLM 其他][提示编程语言] 本文提出APPL——一种将LLM提示（prompt）无缝嵌入Python程序的提示编程语言，提供Python原生语法、异步并行运行时和可追溯调试模块，简化了复杂LLM工作流的开发与维护。 领域现状：随着LLM能力的增强，基于LLM的应用越来越复杂——从简单的单轮对话发展到…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示编程语言"
   - "LLM工作流"
   - "Python集成"

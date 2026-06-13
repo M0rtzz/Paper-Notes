@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Process Reward Agents for Steering Knowledge-Intensive Reasoning
 description: >-
-  [ICML 2026][LLM Agent][Process Reward Model] 把过程奖励模型从"事后打分"重构成一个**在线 agent**：在每个推理步实时决定是否检索证据并给出奖励，借助 beam search 对冻结策略的候选轨迹进行剪枝…
+  [ICML 2026][LLM Agent][Process Reward Model] 把过程奖励模型从"事后打分"重构成一个**在线 agent**：在每个推理步实时决定是否检索证据并给出奖励，借助 beam search 对冻结策略的候选轨迹进行剪枝，使 Qwen3-4B 在 MedQA 上达到 81.9% 的 4B-scale SOTA，且能直接迁移到 0.5B–8B 各种未见骨干（最高带来 25.7% 提升）。
 tags:
   - "ICML 2026"
   - "LLM Agent"

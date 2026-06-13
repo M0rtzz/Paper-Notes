@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aha: Predicting What Matters Next — Online Highlight Detection Without Looking Ahead
 description: >-
-  [NeurIPS 2025][自动驾驶][在线高亮检测] Aha提出首个面向在线高亮检测（OHD）的自回归框架，通过解耦的多目标预测头（相关性/信息量/不确定性）和新颖的Dynamic SinkCache内存机制，在严格不使用未来帧的约束下…
+  [NeurIPS 2025][自动驾驶][在线高亮检测] Aha提出首个面向在线高亮检测（OHD）的自回归框架，通过解耦的多目标预测头（相关性/信息量/不确定性）和新颖的Dynamic SinkCache内存机制，在严格不使用未来帧的约束下，于TVSum和Mr.Hisum基准上分别以+5.9%和+8.3% mAP超越此前离线方法。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

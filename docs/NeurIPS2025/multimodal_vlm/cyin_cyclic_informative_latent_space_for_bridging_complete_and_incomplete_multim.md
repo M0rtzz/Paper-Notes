@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CyIN: Cyclic Informative Latent Space for Bridging Complete and Incomplete Multimodal Learning
 description: >-
-  [NeurIPS 2025][多模态VLM][不完整多模态学习] 提出 CyIN 框架，通过 token 级和 label 级信息瓶颈（IB）构建信息化潜空间，结合循环跨模态翻译重建缺失信息，在单一统一模型中同时优化完整和不完整多模态学习。
+  [NeurIPS 2025][多模态VLM][不完整多模态学习] 提出 CyIN 框架，通过 token 级和 label 级信息瓶颈（IB）构建信息化潜空间，结合循环跨模态翻译重建缺失信息，在单一统一模型中同时优化完整和不完整多模态学习。 1. 领域现状 多模态学习在整合语言、视觉、音频等信息方面快速发展…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

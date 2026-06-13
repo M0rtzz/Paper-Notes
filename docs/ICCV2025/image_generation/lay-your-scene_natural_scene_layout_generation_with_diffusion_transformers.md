@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lay-Your-Scene: Natural Scene Layout Generation with Diffusion Transformers
 description: >-
-  [图像生成] 提出 LayouSyn，基于轻量开源语言模型提取场景元素、结合宽高比感知扩散 Transformer 的开放词汇文本到布局生成流水线，在空间推理和数量推理基准上达到 SOTA。
+  [图像生成] 提出 LayouSyn，基于轻量开源语言模型提取场景元素、结合宽高比感知扩散 Transformer 的开放词汇文本到布局生成流水线，在空间推理和数量推理基准上达到 SOTA。 可控图像生成（如 GLIGEN、Instance Diffusion）依赖用户提供精细的场景布局（bounding boxes）…
 tags:
   - "图像生成"
 ---

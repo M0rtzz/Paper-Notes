@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Modeling Multi-Dimensional Cognitive States in Large Language Models under Cognitive Crowding
 description: >-
-  [ACL 2026][LLM评测][认知状态建模] 本文发现 LLM 在联合预测情感-思维风格-立场-意图四个认知维度时准确率暴跌至 5.7%（"认知拥挤"效应），通过 Gromov δ-hyperbolicity 分析证明认知状态具有层次结构，提出 HyCoLLM 框架在双曲空间中建模认知状态…
+  [ACL 2026][LLM评测][认知状态建模] 本文发现 LLM 在联合预测情感-思维风格-立场-意图四个认知维度时准确率暴跌至 5.7%（"认知拥挤"效应），通过 Gromov δ-hyperbolicity 分析证明认知状态具有层次结构，提出 HyCoLLM 框架在双曲空间中建模认知状态，8B 模型超越 GPT-4o。
 tags:
   - "ACL 2026"
   - "LLM评测"

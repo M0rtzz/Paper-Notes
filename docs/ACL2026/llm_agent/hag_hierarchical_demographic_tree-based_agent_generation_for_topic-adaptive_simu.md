@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation
 description: >-
-  [ACL 2026][LLM Agent][Agent生成] 提出 HAG 框架，将群体 Agent 生成形式化为两阶段层次化决策过程——先用世界知识模型构建主题自适应人口分布树实现宏观分布对齐，再通过真实数据检索与 Agent 增强保证微观个体一致性…
+  [ACL 2026][LLM Agent][Agent生成] 提出 HAG 框架，将群体 Agent 生成形式化为两阶段层次化决策过程——先用世界知识模型构建主题自适应人口分布树实现宏观分布对齐，再通过真实数据检索与 Agent 增强保证微观个体一致性，在多领域基准上将群体对齐误差平均降低 37.7%、社会学一致性提升 18.8%。
 tags:
   - "ACL 2026"
   - "LLM Agent"

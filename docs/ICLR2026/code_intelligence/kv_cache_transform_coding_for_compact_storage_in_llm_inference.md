@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KV Cache Transform Coding for Compact Storage in LLM Inference
 description: >-
-  [ICLR 2026][代码智能][KV缓存压缩] 提出 KVTC，一种借鉴经典媒体压缩技术（PCA 特征去相关 + 自适应量化 + 熵编码）的 KV 缓存压缩方法，在 Llama 3、Mistral NeMo、R1-Qwen 2.5 等模型上实现最高 20× 压缩（特定场景下 40×+）…
+  [ICLR 2026][代码智能][KV缓存压缩] 提出 KVTC，一种借鉴经典媒体压缩技术（PCA 特征去相关 + 自适应量化 + 熵编码）的 KV 缓存压缩方法，在 Llama 3、Mistral NeMo、R1-Qwen 2.5 等模型上实现最高 20× 压缩（特定场景下 40×+），优于 token 驱逐、量化、SVD 等基线方法。
 tags:
   - "ICLR 2026"
   - "代码智能"

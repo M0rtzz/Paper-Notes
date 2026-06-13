@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OPeRA: A Dataset of Observation, Persona, Rationale, and Action for Evaluating LLMs on Human Online Shopping Behavior Simulation
 description: >-
-  [ACL 2026][LLM Agent][用户行为模拟] OPeRA 是一个从真实 Amazon 购物过程中采集的用户行为数据集，把 persona、网页观察、细粒度动作和即时 rationale 放在同一条时间轴上，用来评估 LLM 是否真的能模拟特定用户的下一步购物行为。
+  [ACL 2026][LLM Agent][用户行为模拟] OPeRA 是一个从真实 Amazon 购物过程中采集的用户行为数据集，把 persona、网页观察、细粒度动作和即时 rationale 放在同一条时间轴上，用来评估 LLM 是否真的能模拟特定用户的下一步购物行为。 领域现状：LLM agent 已经能在网页环境…
 tags:
   - "ACL 2026"
   - "LLM Agent"

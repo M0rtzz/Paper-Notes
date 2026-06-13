@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TeFlow: Enabling Multi-frame Supervision for Self-Supervised Feed-forward Scene Flow Estimation
 description: >-
-  [CVPR 2026][自监督学习][场景流] 提出TeFlow——首个将多帧监督引入自监督前馈场景流估计的方法：通过时序集成策略构建运动候选池并基于共识投票聚合时序一致的监督信号…
+  [CVPR 2026][自监督学习][场景流] 提出TeFlow——首个将多帧监督引入自监督前馈场景流估计的方法：通过时序集成策略构建运动候选池并基于共识投票聚合时序一致的监督信号，在Argoverse 2上Three-way EPE达3.57cm（媲美优化方法Floxels）同时保持实时推理（8s vs 24min），较SeFlow++提升22.3%。
 tags:
   - "CVPR 2026"
   - "自监督学习"

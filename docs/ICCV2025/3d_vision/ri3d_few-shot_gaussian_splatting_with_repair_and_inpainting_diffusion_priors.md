@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RI3D: Few-Shot Gaussian Splatting With Repair and Inpainting Diffusion Priors
 description: >-
-  [3D视觉] 提出 RI3D，将稀疏视图合成分解为"修复可见区域"和"补全缺失区域"两个子任务，引入两个个性化扩散模型（repair + inpainting）配合两阶段优化策略，在极端稀疏输入下实现高质量 3DGS 重建。
+  [3D视觉] 提出 RI3D，将稀疏视图合成分解为"修复可见区域"和"补全缺失区域"两个子任务，引入两个个性化扩散模型（repair + inpainting）配合两阶段优化策略，在极端稀疏输入下实现高质量 3DGS 重建。 问题定义 稀疏视图（如仅3张图片）的新视角合成是一个极具挑战性的任务。现有方法面临两大核心问题： 可…
 tags:
   - "3D视觉"
 ---

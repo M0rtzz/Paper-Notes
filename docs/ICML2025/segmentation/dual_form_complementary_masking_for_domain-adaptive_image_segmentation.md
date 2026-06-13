@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual form Complementary Masking for Domain-Adaptive Image Segmentation
 description: >-
-  [ICML 2025][语义分割][无监督域自适应] 提出 MaskTwins 框架，将掩码重建理论化为稀疏信号重建问题，证明互补掩码对（dual form complementary masks）在提取域无关特征方面具有理论优势，并在端到端训练中通过互补掩码一致性约束实现域自适应分割。
+  [ICML 2025][语义分割][无监督域自适应] 提出 MaskTwins 框架，将掩码重建理论化为稀疏信号重建问题，证明互补掩码对（dual form complementary masks）在提取域无关特征方面具有理论优势，并在端到端训练中通过互补掩码一致性约束实现域自适应分割。 无监督域自适应（UDA）旨在利用有标…
 tags:
   - "ICML 2025"
   - "语义分割"

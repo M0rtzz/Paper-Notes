@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SSG: Logit-Balanced Vocabulary Partitioning for LLM Watermarking
 description: >-
-  [ACL 2026][LLM安全][LLM水印] 这篇论文分析了 KGW 类 LLM 水印在代码生成和数学推理等低熵场景中失效的原因，提出 Watermark Strength 度量和 SSG 的 logit-balanced vocabulary partition…
+  [ACL 2026][LLM安全][LLM水印] 这篇论文分析了 KGW 类 LLM 水印在代码生成和数学推理等低熵场景中失效的原因，提出 Watermark Strength 度量和 SSG 的 logit-balanced vocabulary partition，让高概率 token 更均衡地分布到两类集合中，从而在不进一步降低生成质量的前提下显著提升水印可检测性。
 tags:
   - "ACL 2026"
   - "LLM安全"

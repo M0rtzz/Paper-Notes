@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structure-Aware Encodings of Argumentation Properties for Clique-width
 description: >-
-  [AAAI 2026][抽象论辩] 本文设计了从抽象论辩问题到(Q)SAT的有向分解引导(DDG)归约，线性保持团宽(clique-width)，为所有常见论辩语义（stable、admissible、complete、preferred、semi-stable、stage）在扩展存在性、论元接受性和计数问题…
+  [AAAI 2026][抽象论辩] 本文设计了从抽象论辩问题到(Q)SAT的有向分解引导(DDG)归约，线性保持团宽(clique-width)，为所有常见论辩语义（stable、admissible、complete、preferred、semi-stable、stage）在扩展存在性、论元接受性和计数问题上建立了以团宽为参数的可处理性上界，并证明了在ETH假设下这些归约的开销不可显著改进。
 tags:
   - "AAAI 2026"
   - "抽象论辩"

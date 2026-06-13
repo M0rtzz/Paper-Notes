@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Group-DINOmics: Incorporating People Dynamics into DINO for Self-supervised Group Activity Feature Learning
 description: >-
-  [CVPR 2026][自监督学习][group activity] 提出利用 DINOv3 结合两个自监督预训练任务（人物光流估计和群体相关物体定位）来学习群体活动特征（GAF），在无群体活动标注的情况下大幅超越现有方法。
+  [CVPR 2026][自监督学习][group activity] 提出利用 DINOv3 结合两个自监督预训练任务（人物光流估计和群体相关物体定位）来学习群体活动特征（GAF），在无群体活动标注的情况下大幅超越现有方法。 群体活动分析在体育分析、机器人和监控中有重要应用。自监督 GAF 学习避免了大量人工标注和预定义活动…
 tags:
   - "CVPR 2026"
   - "自监督学习"

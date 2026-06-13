@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align before Collaborate: Mitigating Feature Misalignment for Robust Multi-Agent Perception
 description: >-
-  [ECCV 2024][协同感知] 提出NEAT——一种模型无关的轻量级插件，通过重要性引导的查询提议、可变形特征对齐和区域交叉注意力增强三个模块，显式解决协同感知中因位姿误差和通信延迟导致的特征级空间错位问题，在四个协同3D检测数据集的噪声设置下为多种基线方法带来一致性增益。
+  [ECCV 2024][协同感知] 提出NEAT——一种模型无关的轻量级插件，通过重要性引导的查询提议、可变形特征对齐和区域交叉注意力增强三个模块，显式解决协同感知中因位姿误差和通信延迟导致的特征级空间错位问题，在四个协同3D检测数据集的噪声设置下为多种基线方法带来一致性增益。 领域现状：协同感知（Collaborative…
 tags:
   - "ECCV 2024"
   - "协同感知"

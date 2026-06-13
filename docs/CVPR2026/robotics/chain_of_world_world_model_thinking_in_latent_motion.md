@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain of World: World Model Thinking in Latent Motion (CoWVLA)
 description: >-
-  [CVPR 2026][机器人][VLA] 提出CoWVLA，统一世界模型VLA和隐动作VLA的优势：通过Latent Motion Extractor将视频分解为结构隐变量和运动隐变量，VLA在隐运动空间做世界模型预测而非重建冗余像素，配合Co-Fine-tuning交替生成关键帧和动作token…
+  [CVPR 2026][机器人][VLA] 提出CoWVLA，统一世界模型VLA和隐动作VLA的优势：通过Latent Motion Extractor将视频分解为结构隐变量和运动隐变量，VLA在隐运动空间做世界模型预测而非重建冗余像素，配合Co-Fine-tuning交替生成关键帧和动作token，LIBERO-LONG达95.2%超越π₀(85.2%)，SimplerEnv-WidowX avg 0.560超π₀(0.425)。
 tags:
   - "CVPR 2026"
   - "机器人"

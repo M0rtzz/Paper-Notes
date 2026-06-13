@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Panda: Test-Time Adaptation with Negative Data Augmentation
 description: >-
-  [AAAI2026][多模态VLM][test-time adaptation] 提出 Panda，通过负数据增强（patch 打乱重组）生成保留 corruption 但破坏语义的图像，用其特征偏移原始嵌入以抑制 corruption 引起的预测偏差…
+  [AAAI2026][多模态VLM][test-time adaptation] 提出 Panda，通过负数据增强（patch 打乱重组）生成保留 corruption 但破坏语义的图像，用其特征偏移原始嵌入以抑制 corruption 引起的预测偏差，以极低开销（<10%）即插即用提升各类 TTA 方法的鲁棒性。
 tags:
   - "AAAI2026"
   - "多模态VLM"

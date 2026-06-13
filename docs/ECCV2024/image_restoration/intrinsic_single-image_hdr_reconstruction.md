@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Intrinsic Single-Image HDR Reconstruction
 description: >-
-  [ECCV 2024][HDR 重建] > 提出基于内在图像分解（intrinsic decomposition）的 HDR 重建方法，将问题分解为明暗域（shading）的动态范围扩展和反照率域（albedo）的颜色恢复两个子任务，分别训练网络以提升重建质量。
+  [ECCV 2024][图像恢复][HDR 重建] 提出基于内在图像分解（intrinsic decomposition）的 HDR 重建方法，将问题分解为明暗域（shading）的动态范围扩展和反照率域（albedo）的颜色恢复两个子任务，分别训练网络以提升重建质量。 现有痛点 现有痛点：普通相机的低动态范围（LDR）无法…
 tags:
   - "ECCV 2024"
+  - "图像恢复"
   - "HDR 重建"
   - "内在分解"
   - "明暗分离"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoDirector: Precise Video Editing via Text-to-Video Models
 description: >-
-  [CVPR 2025][视频生成][视频编辑] VideoDirector 提出了时空解耦引导（STDG）、多帧 Null-Text 优化和自注意力控制策略，首次成功地将经典的"反演-编辑"范式应用于 T2V 模型（AnimateDiff），实现了高保真、时间一致、运动自然的精确视频编辑。
+  [CVPR 2025][视频生成][视频编辑] VideoDirector 提出了时空解耦引导（STDG）、多帧 Null-Text 优化和自注意力控制策略，首次成功地将经典的"反演-编辑"范式应用于 T2V 模型（AnimateDiff），实现了高保真、时间一致、运动自然的精确视频编辑。 1. 领域现状：扩散模型在图像编辑…
 tags:
   - "CVPR 2025"
   - "视频生成"

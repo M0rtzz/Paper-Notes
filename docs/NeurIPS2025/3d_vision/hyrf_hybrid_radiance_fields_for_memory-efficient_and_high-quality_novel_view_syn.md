@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyRF: Hybrid Radiance Fields for Memory-efficient and High-quality Novel View Synthesis
 description: >-
-  [NeurIPS 2025][3D视觉][3D Gaussian Splatting] 提出混合辐射场（HyRF），将紧凑的显式高斯体（仅存储8个参数）与解耦的网格神经场相结合，在实现 20× 模型压缩的同时达到 SOTA 渲染质量和实时性能。
+  [NeurIPS 2025][3D视觉][3D Gaussian Splatting] 提出混合辐射场（HyRF），将紧凑的显式高斯体（仅存储8个参数）与解耦的网格神经场相结合，在实现 20× 模型压缩的同时达到 SOTA 渲染质量和实时性能。 领域现状：3DGS 凭借显式可优化的 3D 高斯体实现了实时高质量新视角合成…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

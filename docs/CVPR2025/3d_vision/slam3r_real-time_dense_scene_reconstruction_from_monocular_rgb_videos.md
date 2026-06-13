@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLAM3R: Real-Time Dense Scene Reconstruction from Monocular RGB Videos
 description: >-
-  [CVPR 2025][3D视觉][实时稠密重建] SLAM3R提出了一个两层级的前馈神经网络系统，通过Image-to-Points(I2P)网络从视频片段直接回归局部3D点图，再通过Local-to-World(L2W)网络渐进式对齐到全局坐标系，全程无需显式求解相机参数…
+  [CVPR 2025][3D视觉][实时稠密重建] SLAM3R提出了一个两层级的前馈神经网络系统，通过Image-to-Points(I2P)网络从视频片段直接回归局部3D点图，再通过Local-to-World(L2W)网络渐进式对齐到全局坐标系，全程无需显式求解相机参数，在20+ FPS下实现了SOTA的稠密重建精度和完整度。
 tags:
   - "CVPR 2025"
   - "3D视觉"

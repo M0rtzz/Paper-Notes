@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Key and Value Weights Are Probably All You Need: On the Necessity of the Query, Key, and Value Weight Triplet in Self-Attention
 description: >-
-  [ICLR 2026][自注意力] 理论证明Transformer自注意力中Query/Key/Value权重三元组存在冗余——Query权重可被替换为单位矩阵（减少25%注意力参数），GPT风格模型从头训练验证在适当超参数调整下性能不降，且训练在3倍更低权重衰减下仍然稳定。
+  [ICLR 2026][自注意力] 理论证明Transformer自注意力中Query/Key/Value权重三元组存在冗余——Query权重可被替换为单位矩阵（减少25%注意力参数），GPT风格模型从头训练验证在适当超参数调整下性能不降，且训练在3倍更低权重衰减下仍然稳定。 领域现状：Transformer 训练和部署资源…
 tags:
   - "ICLR 2026"
   - "自注意力"

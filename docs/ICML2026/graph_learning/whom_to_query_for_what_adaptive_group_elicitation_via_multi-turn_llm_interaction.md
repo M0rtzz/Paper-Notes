@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Whom to Query for What: Adaptive Group Elicitation via Multi-Turn LLM Interactions
 description: >-
-  [ICML 2026][图学习][自适应询问] 这篇论文把多轮问卷式 elicitation 从“问什么问题”扩展到“问谁、问什么”的联合决策，用 LLM 估计问题的信息增益、用异构 GNN 在群体关系图上传播和插补缺失回答，从而在有限受访者预算下更快恢复群体偏好。
+  [ICML 2026][图学习][自适应询问] 这篇论文把多轮问卷式 elicitation 从“问什么问题”扩展到“问谁、问什么”的联合决策，用 LLM 估计问题的信息增益、用异构 GNN 在群体关系图上传播和插补缺失回答，从而在有限受访者预算下更快恢复群体偏好。 领域现状：自适应 elicitation 通常把目标看成对…
 tags:
   - "ICML 2026"
   - "图学习"

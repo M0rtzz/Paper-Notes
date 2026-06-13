@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning
 description: >-
-  [CVPR 2026][机器人][视觉语言导航] 针对开放环境下视觉语言导航（GSA-VLN）任务，受人类快慢认知双系统启发，提出 slow4fast-VLN 框架：快推理模块基于端到端策略网络实时导航并积累历史记忆，慢推理模块借助 LLM 反思生成结构化泛化经验，经验通过注意力融合反馈增强快推理网络…
+  [CVPR 2026][机器人][视觉语言导航] 针对开放环境下视觉语言导航（GSA-VLN）任务，受人类快慢认知双系统启发，提出 slow4fast-VLN 框架：快推理模块基于端到端策略网络实时导航并积累历史记忆，慢推理模块借助 LLM 反思生成结构化泛化经验，经验通过注意力融合反馈增强快推理网络，实现在未见环境和多样指令下的持续适应，在 GSA-R2R 数据集上全面超越前 SOTA（GR-DUET）。
 tags:
   - "CVPR 2026"
   - "机器人"

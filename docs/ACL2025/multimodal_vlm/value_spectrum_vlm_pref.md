@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Value-Spectrum: Quantifying Preferences of Vision-Language Models via Value Decomposition
 description: >-
-  [ACL 2025][多模态VLM][VLM preferences] 提出 Value-Spectrum 基准，通过 50K+ 社交媒体短视频截图和 Schwartz 价值理论框架，系统评估 VLM 的内在价值偏好及角色扮演时的偏好适配能力。
+  [ACL 2025][多模态VLM][VLM preferences] 提出 Value-Spectrum 基准，通过 50K+ 社交媒体短视频截图和 Schwartz 价值理论框架，系统评估 VLM 的内在价值偏好及角色扮演时的偏好适配能力。 - 视觉语言模型（VLM）的评估大多局限于功能性任务（如 VQA、图像描述）…
 tags:
   - "ACL 2025"
   - "多模态VLM"

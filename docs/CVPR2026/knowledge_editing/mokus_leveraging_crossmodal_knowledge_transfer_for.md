@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoKus: Leveraging Cross-Modal Knowledge Transfer for Knowledge-Aware Concept Customization
 description: >-
-  [CVPR 2026][知识编辑][概念定制] 提出"知识感知概念定制"新任务，发现LLM文本编码器中的知识编辑可以自然迁移到视觉生成模态（跨模态知识迁移），基于此提出MoKus框架：先用LoRA微调将稀有token绑定为视觉概念的锚表征，再通过知识编辑技术将多条自然语言知识高效映射到锚表征上…
+  [CVPR 2026][知识编辑][概念定制] 提出"知识感知概念定制"新任务，发现LLM文本编码器中的知识编辑可以自然迁移到视觉生成模态（跨模态知识迁移），基于此提出MoKus框架：先用LoRA微调将稀有token绑定为视觉概念的锚表征，再通过知识编辑技术将多条自然语言知识高效映射到锚表征上，每条知识更新仅需约7秒。
 tags:
   - "CVPR 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nautilus: A Large Multimodal Model for Underwater Scene Understanding
 description: >-
-  [NeurIPS 2025][多模态VLM][水下场景理解] 构建了首个支持八种水下场景理解任务的大型多模态模型 Nautilus，通过物理先验驱动的视觉特征增强（VFE）模块显式修复水下图像退化，提升 LMM 在水下环境中的鲁棒性。
+  [NeurIPS 2025][多模态VLM][水下场景理解] 构建了首个支持八种水下场景理解任务的大型多模态模型 Nautilus，通过物理先验驱动的视觉特征增强（VFE）模块显式修复水下图像退化，提升 LMM 在水下环境中的鲁棒性。 领域现状：水下场景理解对海洋探索至关重要，涵盖目标检测、计数、图像描述等多粒度任务…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

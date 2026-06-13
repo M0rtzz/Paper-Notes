@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Make It Count: Text-to-Image Generation with an Accurate Number of Objects
 description: >-
-  [CVPR 2025][图像生成][文本到图像生成] 本文提出CountGen方法，通过在扩散模型去噪过程中识别承载物体身份信息的特征来分离和计数物体实例，并训练一个布局预测模型来修复数量不足的情况，实现了不依赖外部布局的计数准确文本到图像生成。
+  [CVPR 2025][图像生成][文本到图像生成] 本文提出CountGen方法，通过在扩散模型去噪过程中识别承载物体身份信息的特征来分离和计数物体实例，并训练一个布局预测模型来修复数量不足的情况，实现了不依赖外部布局的计数准确文本到图像生成。 领域现状：文本到图像扩散模型（如Stable Diffusion、DALL-E…
 tags:
   - "CVPR 2025"
   - "图像生成"

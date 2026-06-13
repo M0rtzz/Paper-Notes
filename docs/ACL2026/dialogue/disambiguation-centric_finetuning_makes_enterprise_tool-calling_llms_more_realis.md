@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Disambiguation-Centric Finetuning Makes Enterprise Tool-Calling LLMs More Realistic and Less Risky
 description: >-
-  [ACL 2026][对话系统][工具调用] 提出 DiaFORGE 框架，通过消歧中心的合成数据生成管线 + 推理链微调 + 动态评估体系，让开源 LLM 在面对近重复企业 API 时的工具调用成功率比 GPT-4o 高 27 个百分点、比 Claude-3.5-Sonnet 高 49 个百分点。
+  [ACL 2026 Findings][对话系统][工具调用] 提出 DiaFORGE 框架，通过消歧中心的合成数据生成管线 + 推理链微调 + 动态评估体系，让开源 LLM 在面对近重复企业 API 时的工具调用成功率比 GPT-4o 高 27 个百分点、比 Claude-3.5-Sonnet 高 49 个百分点。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "对话系统"
   - "工具调用"
   - "消歧"

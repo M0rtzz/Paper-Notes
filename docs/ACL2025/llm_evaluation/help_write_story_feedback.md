@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Help Me Write a Story: Evaluating LLMs' Ability to Generate Writing Feedback
 description: >-
-  [ACL 2025][LLM评测][写作反馈] 本文定义了"LLM 生成写作反馈"这一新任务，构建了包含 1,300 个带有受控写作缺陷的故事数据集（StoryFeedback，共 83K 对故事-反馈）…
+  [ACL 2025][LLM评测][写作反馈] 本文定义了"LLM 生成写作反馈"这一新任务，构建了包含 1,300 个带有受控写作缺陷的故事数据集（StoryFeedback，共 83K 对故事-反馈），通过自动指标和人工评估系统地测试了 8 个 LLM 在反馈的具体性、正确性、问题检测和正面评价适当性四个维度的表现，发现模型能给出具体且基本正确的反馈，但常常抓不住最大的写作问题，且不善于判断何时该给正面评价。
 tags:
   - "ACL 2025"
   - "LLM评测"

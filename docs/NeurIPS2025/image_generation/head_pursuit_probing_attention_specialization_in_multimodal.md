@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Head Pursuit: Probing Attention Specialization in Multimodal Transformers
 description: >-
-  [NeurIPS2025][图像生成][注意力机制] 将经典稀疏信号恢复算法（SOMP）重新解释为一种多样本可解释性工具，发现 LLM 和 VLM 中注意力头存在细粒度语义专业化现象，仅通过翻转约 1% 的头即可可靠地抑制或增强特定概念（如国家名、毒性内容、颜色等）的生成。
+  [NeurIPS2025 Spotlight][图像生成][注意力机制] 将经典稀疏信号恢复算法（SOMP）重新解释为一种多样本可解释性工具，发现 LLM 和 VLM 中注意力头存在细粒度语义专业化现象，仅通过翻转约 1% 的头即可可靠地抑制或增强特定概念（如国家名、毒性内容、颜色等）的生成。 领域现状：大规模生成模型（LL…
 tags:
-  - "NeurIPS2025"
+  - "NeurIPS2025 Spotlight"
   - "图像生成"
   - "注意力机制"
   - "Matching Pursuit"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ModeX: Evaluator-Free Best-of-N Selection for Open-Ended Generation
 description: >-
-  [ACL 2026][LLM对齐][Best-of-N] 把开放式文本生成的 Best-of-N 选样建模为「在生成文本的相似度图上找模态簇」的问题——用 n-gram Jaccard 构图 + 递归 Fiedler 向量谱聚类 + 中心度选 centroid…
+  [ACL 2026][LLM对齐][Best-of-N] 把开放式文本生成的 Best-of-N 选样建模为「在生成文本的相似度图上找模态簇」的问题——用 n-gram Jaccard 构图 + 递归 Fiedler 向量谱聚类 + 中心度选 centroid，不需要任何 reward model / LLM-judge 就把 self-consistency 推广到摘要 / 代码 / 数学等无标准答案的任务。
 tags:
   - "ACL 2026"
   - "LLM对齐"

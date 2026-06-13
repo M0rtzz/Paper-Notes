@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Directional Convergence, Benign Overfitting of Gradient Descent in leaky ReLU two-layer Neural Networks
 description: >-
-  [ICLR2026][优化/理论][benign overfitting] 首次证明了梯度下降（gradient descent）在 leaky ReLU 两层神经网络中的方向收敛性（directional convergence）…
+  [ICLR2026][优化/理论][benign overfitting] 首次证明了梯度下降（gradient descent）在 leaky ReLU 两层神经网络中的方向收敛性（directional convergence），并据此在远超近正交数据（nearly orthogonal data）的更广泛混合数据设定下建立了 benign overfitting 的充分条件，同时发现了一个新的相变（phase transition）现象。
 tags:
   - "ICLR2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrepancy Minimization in Input-Sparsity Time
 description: >-
-  [ICML2025][discrepancy minimization] 提出首个实值矩阵差异最小化的输入稀疏时间算法，组合版 $\widetilde{O}(\mathrm{nnz}(A)+n^3)$、快速矩阵乘法版 $\widetilde{O}(\mathrm{nnz}(A)+n^{2.53})$…
+  [ICML2025][discrepancy minimization] 提出首个实值矩阵差异最小化的输入稀疏时间算法，组合版 $\widetilde{O}(\mathrm{nnz}(A)+n^3)$、快速矩阵乘法版 $\widetilde{O}(\mathrm{nnz}(A)+n^{2.53})$，逼近 herdisc 的对数因子保证不变，几乎弥合了实值矩阵与二值矩阵之间的计算鸿沟。
 tags:
   - "ICML2025"
   - "discrepancy minimization"

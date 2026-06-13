@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spatiotemporal Skip Guidance for Enhanced Video Diffusion Sampling
 description: >-
-  [CVPR 2025][视频生成][视频扩散模型] STG（Spatiotemporal Skip Guidance）提出通过选择性跳过 Transformer 的时空层来构造隐式弱模型，作为原模型的退化版本进行自扰动引导，无需额外训练即可提升视频扩散模型的生成质量，同时保持样本多样性和运动动态性…
+  [CVPR 2025][视频生成][视频扩散模型] STG（Spatiotemporal Skip Guidance）提出通过选择性跳过 Transformer 的时空层来构造隐式弱模型，作为原模型的退化版本进行自扰动引导，无需额外训练即可提升视频扩散模型的生成质量，同时保持样本多样性和运动动态性，克服了 CFG 在视频生成中导致多样性和动态性下降的根本缺陷。
 tags:
   - "CVPR 2025"
   - "视频生成"

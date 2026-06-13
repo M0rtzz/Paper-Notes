@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][策略梯度] 提出 EMPG 框架，通过步级熵（uncertainty）动态调制策略梯度的幅度，解决长序列 LLM Agent 任务中稀疏奖励下的信用分配问题…
+  [ICLR 2026][LLM Agent][策略梯度] 提出 EMPG 框架，通过步级熵（uncertainty）动态调制策略梯度的幅度，解决长序列 LLM Agent 任务中稀疏奖励下的信用分配问题，在 WebShop、ALFWorld 和 Deep Search 三个基准上显著超越 GRPO 和 DAPO。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

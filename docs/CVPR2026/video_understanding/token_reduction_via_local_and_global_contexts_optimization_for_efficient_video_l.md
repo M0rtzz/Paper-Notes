@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token Reduction via Local and Global Contexts Optimization for Efficient Video Large Language Models
 description: >-
-  [CVPR2026][视频理解][Video LLM] 提出 AOT 框架，通过建立局部-全局 token anchors 并利用最优传输（Optimal Transport）在帧内和帧间两级聚合被裁剪/合并 token 的语义信息，实现 training-free 的视频 token 压缩…
+  [CVPR2026][视频理解][Video LLM] 提出 AOT 框架，通过建立局部-全局 token anchors 并利用最优传输（Optimal Transport）在帧内和帧间两级聚合被裁剪/合并 token 的语义信息，实现 training-free 的视频 token 压缩，在裁剪 90% token 的情况下仍保留 97.6% 的原始性能。
 tags:
   - "CVPR2026"
   - "视频理解"

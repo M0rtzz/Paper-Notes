@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Principled Fine-tuning of LLMs from User-Edits: A Medley of Preference, Supervision, and Reward
 description: >-
-  [NeurIPS 2025][代码智能][用户编辑] 系统研究如何利用用户编辑数据微调 LLM，将偏好、监督标签和代价三种反馈类型统一起来，并提出一种简单的集成方法，在不同用户分布下实现鲁棒适应。
+  [NeurIPS 2025][代码智能][用户编辑] 系统研究如何利用用户编辑数据微调 LLM，将偏好、监督标签和代价三种反馈类型统一起来，并提出一种简单的集成方法，在不同用户分布下实现鲁棒适应。 在基于 LLM 的写作助手和代码代理等应用中，用户会自然地对模型输出进行编辑。这些编辑数据（context + agent re…
 tags:
   - "NeurIPS 2025"
   - "代码智能"

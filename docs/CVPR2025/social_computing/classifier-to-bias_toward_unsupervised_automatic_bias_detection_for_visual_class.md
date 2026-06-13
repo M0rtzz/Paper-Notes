@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers
 description: >-
-  [CVPR 2025][社会计算][偏差检测] 提出 C2B（Classifier-to-Bias），首个仅依靠分类任务的文本描述（无需任何标注数据）即可自动发现预训练视觉分类器偏差的框架，通过 LLM 生成类特定偏差候选、生成检索标题收集图像数据集、最后计算偏差分数…
+  [CVPR 2025][社会计算][偏差检测] 提出 C2B（Classifier-to-Bias），首个仅依靠分类任务的文本描述（无需任何标注数据）即可自动发现预训练视觉分类器偏差的框架，通过 LLM 生成类特定偏差候选、生成检索标题收集图像数据集、最后计算偏差分数，在 CelebA 和 ImageNet-X 上超越需要监督的 SOTA 偏差检测方法。
 tags:
   - "CVPR 2025"
   - "社会计算"

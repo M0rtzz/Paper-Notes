@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parameter Efficient Mamba Tuning via Projector-targeted Diagonal-centric Linear Transformation
 description: >-
-  [CVPR 2025][模型压缩][Mamba架构] 本文揭示了 Mamba 架构中 Projector（投影层）而非 SSM 才是迁移学习的关键组件，并提出 ProDiaL 方法——通过对角中心线性变换矩阵间接微调冻结的 Projector 权重…
+  [CVPR 2025][模型压缩][Mamba架构] 本文揭示了 Mamba 架构中 Projector（投影层）而非 SSM 才是迁移学习的关键组件，并提出 ProDiaL 方法——通过对角中心线性变换矩阵间接微调冻结的 Projector 权重，仅训练不到 1% 的参数即可在视觉和语言 Mamba 模型上实现超越 LoRA/DoRA 的下游任务性能。
 tags:
   - "CVPR 2025"
   - "模型压缩"

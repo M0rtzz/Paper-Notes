@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sequential Group Composition: A Window into the Mechanics of Deep Learning
 description: >-
-  [ICML 2026][群论组合] 作者把"对一段群元素求累积乘积"这个统一任务作为显微镜，用群上 Fourier 分析 + AGF 框架证明两层网络会按 Fourier 能量从大到小逐个学习不可约表示（irrep）…
+  [ICML 2026][群论组合] 作者把"对一段群元素求累积乘积"这个统一任务作为显微镜，用群上 Fourier 分析 + AGF 框架证明两层网络会按 Fourier 能量从大到小逐个学习不可约表示（irrep），并刻画两层、RNN、深层 MLP 三种架构在序列长度 $k$ 上分别需要 $2^k$ 宽度、$k$ 步、$\log k$ 层的表达力鸿沟。
 tags:
   - "ICML 2026"
   - "群论组合"

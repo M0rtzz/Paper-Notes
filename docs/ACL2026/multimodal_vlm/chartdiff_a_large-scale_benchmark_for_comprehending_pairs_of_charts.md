@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChartDiff: A Large-Scale Benchmark for Comprehending Pairs of Charts
 description: >-
-  [ACL 2026][多模态VLM][图表对比] 作者构建了第一个面向"两图对比摘要"的大规模 benchmark ChartDiff（8,541 对图表，覆盖 6 种图类型、3 个绘图库、约 60 种视觉风格、LLM 生成 + 人工核验的对比摘要），系统评测了 14 个 VLM/pipeline…
+  [ACL 2026][多模态VLM][图表对比] 作者构建了第一个面向"两图对比摘要"的大规模 benchmark ChartDiff（8,541 对图表，覆盖 6 种图类型、3 个绘图库、约 60 种视觉风格、LLM 生成 + 人工核验的对比摘要），系统评测了 14 个 VLM/pipeline，发现前沿闭源大模型在 GPT Score 上领先但 ROUGE 低，专业图表模型/pipeline 反之，揭示了 ROUGE 与人感知质量的严重失配；同时多系列图始终是所有模型最难的死角。
 tags:
   - "ACL 2026"
   - "多模态VLM"

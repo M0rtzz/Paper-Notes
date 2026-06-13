@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Automated Interpretability with Output-Centric Feature Descriptions
 description: >-
-  [可解释性] 提出基于输出的特征描述方法（VocabProj和TokenChange），弥补了现有自动化可解释性管线仅依赖输入激活样本的局限，结合输入-输出双视角的集成方法在两类评估中均取得最优表现。
+  [可解释性] 提出基于输出的特征描述方法（VocabProj和TokenChange），弥补了现有自动化可解释性管线仅依赖输入激活样本的局限，结合输入-输出双视角的集成方法在两类评估中均取得最优表现。 - 领域现状： 自动化可解释性管线（如Bills et al., 2023）通过LLM描述模型特征（神经元、SAE方向等）所…
 tags:
   - "可解释性"
 ---

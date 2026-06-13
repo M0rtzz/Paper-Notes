@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EnIGMA: Interactive Tools Substantially Assist LM Agents in Finding Security Vulnerabilities
 description: >-
-  [ICML 2025][LLM评测][LLM Agent] EnIGMA 是一个用于自主解决 Capture The Flag (CTF) 挑战的 LM agent，通过引入新型交互式 Agent 工具（调试器和服务器连接工具），首次使 LM agent 能够运行交互式终端程序…
+  [ICML 2025][LLM评测][LLM Agent] EnIGMA 是一个用于自主解决 Capture The Flag (CTF) 挑战的 LM agent，通过引入新型交互式 Agent 工具（调试器和服务器连接工具），首次使 LM agent 能够运行交互式终端程序，在 4 个基准的 390 个 CTF 挑战上取得 SOTA，并发现了 "soliloquizing" 这一新的幻觉现象。
 tags:
   - "ICML 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SepLLM: Accelerate Large Language Models by Compressing One Segment into One Separator
 description: >-
-  [ICML 2025][模型压缩][稀疏注意力] 提出 SepLLM，利用分隔符 token（标点符号等）天然压缩文本段落信息的特性，仅保留 Initial + Separator + Neighboring 三类 token 的 KV 缓存，在保持性能的同时大幅减少注意力计算和内存占用。
+  [ICML 2025][模型压缩][稀疏注意力] 提出 SepLLM，利用分隔符 token（标点符号等）天然压缩文本段落信息的特性，仅保留 Initial + Separator + Neighboring 三类 token 的 KV 缓存，在保持性能的同时大幅减少注意力计算和内存占用。 领域现状：Transformer…
 tags:
   - "ICML 2025"
   - "模型压缩"

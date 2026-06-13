@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inter2Former: Dynamic Hybrid Attention for Efficient High-Precision Interactive Segmentation
 description: >-
-  [ICCV 2025][语义分割][交互式分割] 提出 Inter2Former，通过动态混合注意力（DHA）将边界 token 路由到全注意力、非边界 token 路由到线性复杂度的 BSQ 注意力，配合动态提示嵌入（DPE）、混合专家（HMoE）和动态局部上采样（DLU）…
+  [ICCV 2025][语义分割][交互式分割] 提出 Inter2Former，通过动态混合注意力（DHA）将边界 token 路由到全注意力、非边界 token 路由到线性复杂度的 BSQ 注意力，配合动态提示嵌入（DPE）、混合专家（HMoE）和动态局部上采样（DLU），在 CPU 设备上实现高精度交互式分割的 SOTA 性能与高效推理。
 tags:
   - "ICCV 2025"
   - "语义分割"

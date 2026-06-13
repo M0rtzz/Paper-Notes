@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DIA: The Adversarial Exposure of Deterministic Inversion in Diffusion Models
 description: >-
-  [ICCV 2025][图像生成][对抗攻击] 提出 DDIM Inversion Attack (DIA)，通过直接攻击 DDIM 反演轨迹路径来干扰扩散模型的图像编辑能力，有效防御恶意深度伪造和隐私侵犯内容生成，在多种编辑方法上大幅超越 AdvDM 和 Photoguard 等现有防御方法。
+  [ICCV 2025][图像生成][对抗攻击] 提出 DDIM Inversion Attack (DIA)，通过直接攻击 DDIM 反演轨迹路径来干扰扩散模型的图像编辑能力，有效防御恶意深度伪造和隐私侵犯内容生成，在多种编辑方法上大幅超越 AdvDM 和 Photoguard 等现有防御方法。 领域现状：扩散模型（特别是基…
 tags:
   - "ICCV 2025"
   - "图像生成"

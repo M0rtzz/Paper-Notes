@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Per-Image Low-Rank to Encoding Mismatch: Rethinking Feature Distillation in Vision Transformers
 description: >-
-  [ICML 2026][模型压缩][特征蒸馏] 作者用 sample-wise SVD + dataset-level PCA + token-level Spectral Energy Pattern (SEP) 三视角揭示了一个看似矛盾的 ViT 表征几何："每张图的特征矩阵都是低秩的…
+  [ICML 2026][模型压缩][特征蒸馏] 作者用 sample-wise SVD + dataset-level PCA + token-level Spectral Energy Pattern (SEP) 三视角揭示了一个看似矛盾的 ViT 表征几何："每张图的特征矩阵都是低秩的，但跨图共享的子空间却几乎要满秩 + 单 token 的频谱带宽接近 100%"，进而提出 Lift（推理时保留 lifting projector）和 WideLast（只把最后一个 block 加宽到 teacher 宽度）两个极简补丁，让普通 MSE 特征蒸馏在 DeiT-Tiny ← CaiT-S24 上从 74.86% 一路涨到 78.2…
 tags:
   - "ICML 2026"
   - "模型压缩"

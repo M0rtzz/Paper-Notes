@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsat Core Prediction through Polarity-Aware Representation Learning over Clause-Literal Hypergraphs
 description: >-
-  [ICML 2026][图学习][SAT] 本文把 CNF 公式建模成「子句–文字超图 + 子句关联图」，并在变量级把表示拆成极性不变与极性等变两部分，再用极性翻转一致性正则训练，把 unsat-core 变量预测精度显著拉高一档。
+  [ICML 2026][图学习][SAT] 本文把 CNF 公式建模成「子句–文字超图 + 子句关联图」，并在变量级把表示拆成极性不变与极性等变两部分，再用极性翻转一致性正则训练，把 unsat-core 变量预测精度显著拉高一档。 领域现状：基于 GNN 的 SAT 学习器（NeuroCore、NeuroSAT、SATfo…
 tags:
   - "ICML 2026"
   - "图学习"

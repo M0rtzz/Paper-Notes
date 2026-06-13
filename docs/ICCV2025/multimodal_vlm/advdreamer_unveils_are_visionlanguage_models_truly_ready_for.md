@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdvDreamer Unveils: Are Vision-Language Models Truly Ready for Real-World 3D Variations?
 description: >-
-  [ICCV 2025][多模态VLM][VLM鲁棒性] 提出AdvDreamer框架从单张图像生成物理可复现的对抗性3D变换(Adv-3DT)样本，通过零样本单目姿态操作+自然度奖励模型+逆语义概率损失，揭示当前VLM（包括GPT-4o）在3D变化下性能下降高达50-80%…
+  [ICCV 2025][多模态VLM][VLM鲁棒性] 提出AdvDreamer框架从单张图像生成物理可复现的对抗性3D变换(Adv-3DT)样本，通过零样本单目姿态操作+自然度奖励模型+逆语义概率损失，揭示当前VLM（包括GPT-4o）在3D变化下性能下降高达50-80%，并建立首个3D变化鲁棒性VQA基准MM3DTBench。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transferable 3D Adversarial Shape Completion using Diffusion Models
 description: >-
-  [ECCV 2024][3D视觉] 提出3DAdvDiff，利用3D扩散模型通过对抗性形状补全生成高质量的迁移性3D对抗点云，结合模型不确定性、集成对抗引导和显著性评分策略，在黑盒设置下对最新3D模型实现SOTA攻击成功率。
+  [ECCV 2024][3D视觉] 提出3DAdvDiff，利用3D扩散模型通过对抗性形状补全生成高质量的迁移性3D对抗点云，结合模型不确定性、集成对抗引导和显著性评分策略，在黑盒设置下对最新3D模型实现SOTA攻击成功率。 领域现状 领域现状：现有3D对抗攻击方法主要对xyz坐标加扰动，导致视觉质量严重下降且易被防御检测…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Locally Coherent Parallel Decoding in Diffusion Language Models
 description: >-
-  [ICML 2026][代码智能][扩散语言模型] 本文提出 CoDiLA，在 masked 扩散语言模型（DLM）外挂一个轻量自回归（AR）小模型，用"软嵌入"接收 DLM 的边缘分布并在小块内做局部自回归解码，从而在保留 DLM 全局双向能力的同时消除并行采样产生的局部不连贯问题…
+  [ICML 2026][代码智能][扩散语言模型] 本文提出 CoDiLA，在 masked 扩散语言模型（DLM）外挂一个轻量自回归（AR）小模型，用"软嵌入"接收 DLM 的边缘分布并在小块内做局部自回归解码，从而在保留 DLM 全局双向能力的同时消除并行采样产生的局部不连贯问题，在代码生成上以 ≥2× 吞吐建立新的 Pareto 前沿。
 tags:
   - "ICML 2026"
   - "代码智能"

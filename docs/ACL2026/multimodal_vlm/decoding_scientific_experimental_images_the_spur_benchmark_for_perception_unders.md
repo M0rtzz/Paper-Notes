@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoding Scientific Experimental Images: The SPUR Benchmark for Perception, Understanding, and Reasoning
 description: >-
-  [ACL 2026][多模态VLM][实验图像] SPUR 是首个针对生物医学实验图像（多面板染色图/Western blot/统计图）"感知 → 理解 → 推理"三阶段评测的 benchmark，包含 4264 道专家审定 MCQ…
+  [ACL 2026][多模态VLM][实验图像] SPUR 是首个针对生物医学实验图像（多面板染色图/Western blot/统计图）"感知 → 理解 → 推理"三阶段评测的 benchmark，包含 4264 道专家审定 MCQ，揭示当今 MLLM 仅 Gemini 3 Pro Preview 勉强突破 60%，定量推理普遍比定性推理低 12.76%–31.41%。
 tags:
   - "ACL 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video-T1: Test-Time Scaling for Video Generation
 description: >-
-  [ICCV 2025][LLM推理][测试时缩放] 将LLM中的测试时缩放(TTS)思想迁移到视频生成领域，将TTS重新定义为从高斯噪声空间到目标视频分布的搜索问题，提出Tree-of-Frames (ToF)搜索算法实现高效的推理时计算扩展，在VBench上持续稳定提升各类视频生成模型的质量。
+  [ICCV 2025][LLM推理][测试时缩放] 将LLM中的测试时缩放(TTS)思想迁移到视频生成领域，将TTS重新定义为从高斯噪声空间到目标视频分布的搜索问题，提出Tree-of-Frames (ToF)搜索算法实现高效的推理时计算扩展，在VBench上持续稳定提升各类视频生成模型的质量。 领域现状 视频生成在训练时扩…
 tags:
   - "ICCV 2025"
   - "LLM推理"

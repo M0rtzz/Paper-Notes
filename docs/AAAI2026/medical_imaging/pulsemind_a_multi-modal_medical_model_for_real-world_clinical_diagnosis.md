@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PulseMind: A Multi-Modal Medical Model for Real-World Clinical Diagnosis
 description: >-
-  [AAAI 2026][医学图像][医学多模态模型] 提出 PulseMind 医学多模态诊断模型，包含大规模多轮诊断对话数据集 MediScope、临床对话评估基准 PulseMind Benchmark，以及基于比较的强化策略优化方法 CRPO，在真实临床诊断对话场景中取得优异表现。
+  [AAAI 2026][医学图像][医学多模态模型] 提出 PulseMind 医学多模态诊断模型，包含大规模多轮诊断对话数据集 MediScope、临床对话评估基准 PulseMind Benchmark，以及基于比较的强化策略优化方法 CRPO，在真实临床诊断对话场景中取得优异表现。 近年来视觉语言模型（VLM）在多模态…
 tags:
   - "AAAI 2026"
   - "医学图像"

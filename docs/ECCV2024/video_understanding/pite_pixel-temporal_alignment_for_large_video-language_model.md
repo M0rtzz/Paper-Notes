@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PiTe: Pixel-Temporal Alignment for Large Video-Language Model
 description: >-
-  [ECCV 2024][视频理解][Large Video-Language Model] 提出 PiTe 模型，通过物体运动轨迹在像素级别实现视频与语言的时空对齐，构建 PiTe-143k 数据集，在零样本 QA、时序定位和密集描述任务上大幅超越现有方法。
+  [ECCV 2024][视频理解][Large Video-Language Model] 提出 PiTe 模型，通过物体运动轨迹在像素级别实现视频与语言的时空对齐，构建 PiTe-143k 数据集，在零样本 QA、时序定位和密集描述任务上大幅超越现有方法。 领域现状：大语言模型（LLM）驱动了大视觉语言模型（LVLM）的发…
 tags:
   - "ECCV 2024"
   - "视频理解"

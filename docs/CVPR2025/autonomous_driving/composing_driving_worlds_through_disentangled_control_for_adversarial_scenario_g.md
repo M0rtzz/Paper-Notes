@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CompoSIA: Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation
 description: >-
-  [CVPR 2025][自动驾驶][驾驶世界模型] CompoSIA 提出一种基于 Flow Matching DiT 的组合式驾驶视频生成框架，通过解耦结构（3D bbox）、身份（单参考图像）和自车动作（相机轨迹）三类控制信号的注入方式，实现精细独立控制和组合编辑，用于系统化合成对抗性驾驶场景…
+  [CVPR 2025][自动驾驶][驾驶世界模型] CompoSIA 提出一种基于 Flow Matching DiT 的组合式驾驶视频生成框架，通过解耦结构（3D bbox）、身份（单参考图像）和自车动作（相机轨迹）三类控制信号的注入方式，实现精细独立控制和组合编辑，用于系统化合成对抗性驾驶场景，FVD 提升 17%，碰撞率增加 173%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

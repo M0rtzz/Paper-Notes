@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Sparse Autoencoders Generalize? A Case Study of Answerability
 description: >-
-  [ICML 2025][可解释性][Sparse Autoencoder] 本文系统评估了稀疏自编码器（SAE）提取的特征在"可回答性"（answerability）任务上的跨域泛化能力，发现 SAE 特征的域外迁移表现极不一致——在某些数据集上优于残差流线性探针，但在另一些上接近随机…
+  [ICML 2025][可解释性][Sparse Autoencoder] 本文系统评估了稀疏自编码器（SAE）提取的特征在"可回答性"（answerability）任务上的跨域泛化能力，发现 SAE 特征的域外迁移表现极不一致——在某些数据集上优于残差流线性探针，但在另一些上接近随机，揭示了当前 SAE 可解释性方法在捕获抽象概念方面的根本局限。
 tags:
   - "ICML 2025"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spark Transformer: Reactivating Sparsity in FFN and Attention
 description: >-
-  [NeurIPS 2025][模型压缩][激活稀疏性] 提出 Spark Transformer 架构，通过 Statistical Top-k 算子在 FFN 和注意力机制中同时实现高水平激活稀疏性（FFN 仅 8% 神经元激活、每个 token 最多关注 256 个 token）…
+  [NeurIPS 2025][模型压缩][激活稀疏性] 提出 Spark Transformer 架构，通过 Statistical Top-k 算子在 FFN 和注意力机制中同时实现高水平激活稀疏性（FFN 仅 8% 神经元激活、每个 token 最多关注 256 个 token），在保持与 Gemma-2 相当质量的同时实现 2.5× FLOPs 降低和高达 1.79× 的推理加速。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

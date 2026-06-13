@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sandcastles in the Storm: Revisiting Watermarking Impossibility
 description: >-
-  [ACL 2025][AI安全][watermarking] 本文通过大规模实验和人类评估挑战了 "Watermarks in the Sand" (WITS) 的理论不可能性结论：证明随机游走攻击的两个关键假设在实践中不成立——混合(mixing)速度极慢（100% 的攻击文本仍可追溯原始来源）且质量预言机…
+  [ACL 2025][AI安全][watermarking] 本文通过大规模实验和人类评估挑战了 "Watermarks in the Sand" (WITS) 的理论不可能性结论：证明随机游走攻击的两个关键假设在实践中不成立——混合(mixing)速度极慢（100% 的攻击文本仍可追溯原始来源）且质量预言机(quality oracle)不可靠（仅 77% 准确率），自动攻击仅 26% 成功率，人类质量审核后降至 10%。
 tags:
   - "ACL 2025"
   - "AI安全"

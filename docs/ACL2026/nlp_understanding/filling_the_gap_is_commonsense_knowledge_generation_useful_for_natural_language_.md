@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Filling the Gap: Is Commonsense Knowledge Generation useful for Natural Language Inference?
 description: >-
-  [ACL 2026][NLP理解][NLI] 论文让 LLM 自己生成连接 premise 和 hypothesis 的自然语言"常识公理"，再用一个"factuality 判官"过滤掉不靠谱的公理只留下高质量的注入回 NLI 提示…
+  [ACL 2026][NLP理解][NLI] 论文让 LLM 自己生成连接 premise 和 hypothesis 的自然语言"常识公理"，再用一个"factuality 判官"过滤掉不靠谱的公理只留下高质量的注入回 NLI 提示，结果 Llama-3.1-70B 和 gpt-oss-120b 在 SNLI/ANLI 上准确率提升 1.99-6.88%，并显著减弱了"宁可选 Neutral"的安全偏好。
 tags:
   - "ACL 2026"
   - "NLP理解"

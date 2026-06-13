@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size
 description: >-
-  [ICLR 2026][LLM评测][扩散语言模型] 通过统计分析扩散语言模型（dLLM）去噪过程中 token 置信度的动态变化，发现"波动带"（Volatility Band）区域编码了文本的局部语义结构，进而提出 AdaBlock-dLLM——一个无训练、即插即用的自适应块大小调度器…
+  [ICLR 2026][LLM评测][扩散语言模型] 通过统计分析扩散语言模型（dLLM）去噪过程中 token 置信度的动态变化，发现"波动带"（Volatility Band）区域编码了文本的局部语义结构，进而提出 AdaBlock-dLLM——一个无训练、即插即用的自适应块大小调度器，让半自回归解码的块边界与语义步骤自然对齐，在相同吞吐量下最高提升 5.3% 准确率。
 tags:
   - "ICLR 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Open-Det: An Efficient Learning Framework for Open-Ended Detection
 description: >-
-  [ICML 2025][目标检测][Open-Ended Detection] Open-Det 提出了一个高效的开放端目标检测（OED）框架，通过重构目标检测器（解耦 one-to-many/one-to-one 匹配）、引入 VL-prompts 蒸馏模块桥接视觉-语言语义鸿沟、LoRa Head + T…
+  [ICML 2025][目标检测][Open-Ended Detection] Open-Det 提出了一个高效的开放端目标检测（OED）框架，通过重构目标检测器（解耦 one-to-many/one-to-one 匹配）、引入 VL-prompts 蒸馏模块桥接视觉-语言语义鸿沟、LoRa Head + Text Denoising 加速 LLM 训练、以及 Masked Alignment Loss 消除矛盾监督，仅用 GenerateU 1.5% 的训练数据和 20.8% 的训练 epoch 就取得了更高的检测性能（APr +1.0%）。
 tags:
   - "ICML 2025"
   - "目标检测"

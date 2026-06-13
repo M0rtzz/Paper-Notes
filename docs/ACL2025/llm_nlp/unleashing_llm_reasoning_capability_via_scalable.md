@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ScaleQuest: Unleashing LLM Reasoning Capability via Scalable Question Synthesis from Scratch
 description: >-
-  [ACL 2025][LLM/NLP][math reasoning] 提出 ScaleQuest，通过 Question Fine-Tuning (QFT) + Question Preference Optimization (QPO) 两阶段训练将 7B 解题模型变为出题模型…
+  [ACL 2025][LLM 其他][math reasoning] 提出 ScaleQuest，通过 Question Fine-Tuning (QFT) + Question Preference Optimization (QPO) 两阶段训练将 7B 解题模型变为出题模型，从零合成 100 万高质量数学问题-解答对，在四个基准上全面超越所有开源数据集，且数据量扩展至 1M 时性能持续提升未见饱和。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "math reasoning"
   - "question synthesis"
   - "QFT"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Voting and the Splitting of Cycles
 description: >-
-  [AAAI 2026][LLM推理][投票理论] 研究Simple Stable Voting (SSV)——已在数百次实际选举中使用的递归投票规则——是否总是精化(refine)Split Cycle (SC)方法的猜想，通过数学证明（≤5候选人）和SAT求解（6-7候选人）确定：猜想在≤6候选人时成立…
+  [AAAI 2026][LLM推理][投票理论] 研究Simple Stable Voting (SSV)——已在数百次实际选举中使用的递归投票规则——是否总是精化(refine)Split Cycle (SC)方法的猜想，通过数学证明（≤5候选人）和SAT求解（6-7候选人）确定：猜想在≤6候选人时成立，≥7候选人时被反驳，并通过构造性证明推广到任意多候选人。
 tags:
   - "AAAI 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection
 description: >-
-  [NeurIPS 2025][模型压缩][脉冲神经网络] 提出 S2M-Former，一种脉冲驱动的对称混合 Branchformer 框架，通过空间-频率双分支的互补学习和轻量化 1D token 表示，在 EEG 听觉注意力检测任务上以仅 0.06M 参数实现了 SOTA 级精度…
+  [NeurIPS 2025][模型压缩][脉冲神经网络] 提出 S2M-Former，一种脉冲驱动的对称混合 Branchformer 框架，通过空间-频率双分支的互补学习和轻量化 1D token 表示，在 EEG 听觉注意力检测任务上以仅 0.06M 参数实现了 SOTA 级精度，同时将能耗降低至双分支 ANN 模型的 1/5.8。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

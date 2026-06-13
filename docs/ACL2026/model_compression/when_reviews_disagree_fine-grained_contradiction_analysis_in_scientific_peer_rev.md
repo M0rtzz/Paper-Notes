@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Reviews Disagree: Fine-Grained Contradiction Analysis in Scientific Peer Reviews
 description: >-
-  [ACL2026][模型压缩][同行评审] 这篇论文把审稿意见分歧从句对级二分类推进到完整 review 上的证据抽取与强度评分，并用 IMPACT 多智能体教师蒸馏出单次前向即可部署的 TIDE 小模型。
+  [ACL2026][模型压缩][同行评审] 这篇论文把审稿意见分歧从句对级二分类推进到完整 review 上的证据抽取与强度评分，并用 IMPACT 多智能体教师蒸馏出单次前向即可部署的 TIDE 小模型。 领域现状：科学同行评审中的分歧是 Area Chair 和编辑做决定时最耗时的部分。已有计算方法大多把 reviewe…
 tags:
   - "ACL2026"
   - "模型压缩"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.10171](https://arxiv.org/abs/2605.10171)  
 **代码**: https://github.com/sandeep82945/Contradiction-Intensity.git  
-**领域**: model_compression  
+**领域**: 模型压缩  
 **关键词**: 同行评审、矛盾检测、强度评分、多智能体审议、知识蒸馏
 
 ## 一句话总结

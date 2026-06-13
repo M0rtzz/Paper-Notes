@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MDP-GRPO: Stabilized Group Relative Policy Optimization for Multi-Constraint Instruction Following
 description: >-
-  [ACL2026][LLM对齐][GRPO] MDP-GRPO 针对多约束指令遵循中 GRPO 在离散低方差奖励下的不稳定问题，结合多温度采样、双锚点 advantage、prospect-theoretic shaping 和非对称 KL…
+  [ACL2026][LLM对齐][GRPO] MDP-GRPO 针对多约束指令遵循中 GRPO 在离散低方差奖励下的不稳定问题，结合多温度采样、双锚点 advantage、prospect-theoretic shaping 和非对称 KL，使小模型在 IFEval、FollowBench 和自建多约束测试集上获得更稳的软/硬约束满足率。
 tags:
   - "ACL2026"
   - "LLM对齐"

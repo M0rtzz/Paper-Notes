@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Targeted Forgetting of Image Subgroups in CLIP Models
 description: >-
-  [CVPR 2025][3D视觉][CLIP遗忘] 提出三阶段 CLIP 子群图像遗忘框架（forgetting → reminding → restoring），通过相对 Fisher Information 选择关键层进行 LoRA 微调，利用 BatchNorm 统计量对齐 retain 数据分布…
+  [CVPR 2025][3D视觉][CLIP遗忘] 提出三阶段 CLIP 子群图像遗忘框架（forgetting → reminding → restoring），通过相对 Fisher Information 选择关键层进行 LoRA 微调，利用 BatchNorm 统计量对齐 retain 数据分布，再通过 model souping 恢复零样本能力，在 ImageNet-1K 和 CIFAR-10 上实现精准子群遗忘（target↓到 0%）同时保持 85-93% 的综合得分。
 tags:
   - "CVPR 2025"
   - "3D视觉"

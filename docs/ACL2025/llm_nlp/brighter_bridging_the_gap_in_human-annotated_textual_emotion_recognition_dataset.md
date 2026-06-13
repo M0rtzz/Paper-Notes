@@ -2,10 +2,10 @@
 title: >-
   [论文解读] BRIGHTER: BRIdging the Gap in Human-Annotated Textual Emotion Recognition Datasets for 28 Languages
 description: >-
-  [ACL 2025 (Best Resource Paper)][LLM/NLP][情感识别] 本文构建了覆盖28种语言的多标签情感标注数据集BRIGHTER，重点覆盖非洲、亚洲、东欧和拉美的低资源语言，由母语使用者标注，并在单语和跨语言情感识别任务上建立了基准实验结果。
+  [ACL 2025 (Best Resource Paper)][LLM 其他][情感识别] 本文构建了覆盖28种语言的多标签情感标注数据集BRIGHTER，重点覆盖非洲、亚洲、东欧和拉美的低资源语言，由母语使用者标注，并在单语和跨语言情感识别任务上建立了基准实验结果。 领域现状：文本情感识别（Emotion Recogni…
 tags:
   - "ACL 2025 (Best Resource Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "情感识别"
   - "多语言数据集"
   - "低资源语言"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transparent Networks for Multivariate Time Series
 description: >-
-  [AAAI 2026][时间序列][可解释模型] 提出 GATSM（Generalized Additive Time Series Model），一种透明的时间序列神经网络模型，通过共享权重的特征网络学习特征表示并用带掩码的多头注意力捕捉时序模式…
+  [AAAI 2026][时间序列][可解释模型] 提出 GATSM（Generalized Additive Time Series Model），一种透明的时间序列神经网络模型，通过共享权重的特征网络学习特征表示并用带掩码的多头注意力捕捉时序模式，在保持完全可解释性的同时达到与 Transformer 等黑箱模型可比的性能。
 tags:
   - "AAAI 2026"
   - "时间序列"

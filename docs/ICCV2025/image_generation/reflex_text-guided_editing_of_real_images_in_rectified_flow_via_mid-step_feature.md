@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReFlex: Text-Guided Editing of Real Images in Rectified Flow via Mid-Step Feature Extraction and Attention Adaptation
 description: >-
-  [ICCV 2025][图像生成][图像编辑] 针对 Rectified Flow（ReFlow）模型的真实图像编辑难题，通过系统分析 MM-DiT 的中间表示，识别出三个关键特征（I2I-SA、I2T-CA、残差特征）…
+  [ICCV 2025][图像生成][图像编辑] 针对 Rectified Flow（ReFlow）模型的真实图像编辑难题，通过系统分析 MM-DiT 的中间表示，识别出三个关键特征（I2I-SA、I2T-CA、残差特征），并提出中间步特征提取（mid-step feature extraction）和两种注意力适配技术，在 FLUX 模型上实现了无需训练、无需用户掩码的高质量真实图像编辑，人类评估中 68.2% 优选率远超其他方法。
 tags:
   - "ICCV 2025"
   - "图像生成"

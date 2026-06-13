@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling Multi-Regime Patterns in SciML: 不同失败模式与域特异优化
 description: >-
-  [ICML 2026][物理/科学计算][SciML] 通过系统的多域诊断框架揭示 SciML 模型（PINNs、神经算子等）存在的三种一致失败模式——并分析其损失面景特异性，为优化方法选择提供指导。
+  [ICML 2026][物理/科学计算][SciML] 通过系统的多域诊断框架揭示 SciML 模型（PINNs、神经算子等）存在的三种一致失败模式——并分析其损失面景特异性，为优化方法选择提供指导。 现有问题：PINNs、神经算子（FNO）和神经 ODE 等 SciML 方法在实际应用中存在优化困难和泛化失败…
 tags:
   - "ICML 2026"
   - "物理/科学计算"

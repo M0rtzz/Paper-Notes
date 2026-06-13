@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenDeg: Diffusion-based Degradation Synthesis for Generalizable All-In-One Image Restoration
 description: >-
-  [CVPR 2025][图像生成][图像退化合成] 本文提出GenDeg，一个基于Stable Diffusion的退化合成框架，能在任意干净图像上生成多种可控退化（雾/雨/雪/运动模糊/低光/雨滴），合成55万+图像构成GenDS数据集，训练在其上的All-In-One复原模型在域外测试集上获得显著性能提升…
+  [CVPR 2025][图像生成][图像退化合成] 本文提出GenDeg，一个基于Stable Diffusion的退化合成框架，能在任意干净图像上生成多种可控退化（雾/雨/雪/运动模糊/低光/雨滴），合成55万+图像构成GenDS数据集，训练在其上的All-In-One复原模型在域外测试集上获得显著性能提升。
 tags:
   - "CVPR 2025"
   - "图像生成"

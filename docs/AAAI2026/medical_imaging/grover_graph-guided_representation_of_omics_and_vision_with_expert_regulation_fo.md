@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GROVER: Graph-guided Representation of Omics and Vision with Expert Regulation for Cancer Survival Prediction
 description: >-
-  [AAAI 2026][医学图像][空间组学] 提出空间多组学框架GROVER，通过KAN-GCN编码器捕获非线性空间-特征依赖、spot-feature-pair对比学习对齐异构模态、以及自适应混合专家（MoE）动态路由过滤低质量信号，在四个真实空间组学数据集上实现了优于现有方法的聚类性能。
+  [AAAI 2026][医学图像][空间组学] 提出空间多组学框架GROVER，通过KAN-GCN编码器捕获非线性空间-特征依赖、spot-feature-pair对比学习对齐异构模态、以及自适应混合专家（MoE）动态路由过滤低质量信号，在四个真实空间组学数据集上实现了优于现有方法的聚类性能。 空间分辨转录组学和空间蛋白质组…
 tags:
   - "AAAI 2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video
 description: >-
-  [CVPR 2025][3D视觉][动态场景重建] SplineGS 提出了一种基于三次 Hermite 样条的动态 3DGS 框架，通过运动自适应样条（MAS）和运动自适应控制点剪枝（MACP）建模动态高斯的连续轨迹，同时联合优化相机参数…
+  [CVPR 2025][3D视觉][动态场景重建] SplineGS 提出了一种基于三次 Hermite 样条的动态 3DGS 框架，通过运动自适应样条（MAS）和运动自适应控制点剪枝（MACP）建模动态高斯的连续轨迹，同时联合优化相机参数，在无需 COLMAP 的情况下实现了 SOTA 动态新视角合成和实时渲染。
 tags:
   - "CVPR 2025"
   - "3D视觉"

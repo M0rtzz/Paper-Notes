@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Vision-Language Model Reliability with Uncertainty-Guided Dropout Decoding
 description: >-
-  [NeurIPS 2025][多模态VLM][VLM幻觉] 提出Dropout Decoding——将视觉token投影到文本空间后量化其认知不确定性，选择性遮掩高不确定性视觉token并通过多组遮掩结果的集成投票增强输出可靠性，无需额外训练即可显著减少LVLM的对象幻觉。
+  [NeurIPS 2025][多模态VLM][VLM幻觉] 提出Dropout Decoding——将视觉token投影到文本空间后量化其认知不确定性，选择性遮掩高不确定性视觉token并通过多组遮掩结果的集成投票增强输出可靠性，无需额外训练即可显著减少LVLM的对象幻觉。 LVLM幻觉的严重性：大型视觉语言模型（LVLM）…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

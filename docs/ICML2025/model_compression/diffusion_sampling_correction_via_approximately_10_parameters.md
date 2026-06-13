@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Sampling Correction via Approximately 10 Parameters
 description: >-
-  [ICML 2025][模型压缩][扩散模型加速] 提出PCA-based Adaptive Search (PAS)方法，利用采样轨迹处于高维空间低维子空间的几何特性，通过PCA提取少量正交基向量并仅学习约10个坐标参数来修正现有快速采样器的截断误差…
+  [ICML 2025][模型压缩][扩散模型加速] 提出PCA-based Adaptive Search (PAS)方法，利用采样轨迹处于高维空间低维子空间的几何特性，通过PCA提取少量正交基向量并仅学习约10个坐标参数来修正现有快速采样器的截断误差，在单张A100上亚分钟训练即可将DDIM在CIFAR10上的FID从15.69降至4.37（NFE=10）。
 tags:
   - "ICML 2025"
   - "模型压缩"

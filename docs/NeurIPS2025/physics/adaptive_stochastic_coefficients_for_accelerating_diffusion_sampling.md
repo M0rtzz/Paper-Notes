@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Stochastic Coefficients for Accelerating Diffusion Sampling
 description: >-
-  [NeurIPS 2025][物理/科学计算][扩散模型] 通过理论分析 ODE 和 SDE 求解器的互补弱点（ODE 积累不可消除的梯度误差，SDE 在少步时离散化误差放大），提出 AdaSDE——在每个去噪步引入可学习随机系数 $\gamma_i$ 控制噪声注入强度，通过轻量蒸馏优化…
+  [NeurIPS 2025][物理/科学计算][扩散模型] 通过理论分析 ODE 和 SDE 求解器的互补弱点（ODE 积累不可消除的梯度误差，SDE 在少步时离散化误差放大），提出 AdaSDE——在每个去噪步引入可学习随机系数 $\gamma_i$ 控制噪声注入强度，通过轻量蒸馏优化，在 5 NFE 下实现 CIFAR-10 FID 4.18、FFHQ FID 8.05 的 SOTA。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoDiv: Framework for Measuring Geographical Diversity in Text-to-Image Models
 description: >-
-  [ICLR 2026][图像生成][地理多样性] 提出 GeoDiv 框架，利用 LLM 和 VLM 的世界知识，从社会经济视觉指数（SEVI）和视觉多样性指数（VDI）两个维度系统评估 T2I 模型的地理多样性，揭示了模型对印度、尼日利亚等国家存在系统性贫困化偏见。
+  [ICLR 2026][图像生成][地理多样性] 提出 GeoDiv 框架，利用 LLM 和 VLM 的世界知识，从社会经济视觉指数（SEVI）和视觉多样性指数（VDI）两个维度系统评估 T2I 模型的地理多样性，揭示了模型对印度、尼日利亚等国家存在系统性贫困化偏见。 - 领域现状： T2I 模型（如 Stable Diff…
 tags:
   - "ICLR 2026"
   - "图像生成"

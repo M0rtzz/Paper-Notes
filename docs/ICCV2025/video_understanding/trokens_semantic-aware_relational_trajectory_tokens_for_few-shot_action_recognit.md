@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trokens: Semantic-Aware Relational Trajectory Tokens for Few-Shot Action Recognition
 description: >-
-  [ICCV 2025][视频理解][动作识别] 提出Trokens框架，通过**语义感知的轨迹点采样**和**关系运动建模**（包含轨迹内HoD和轨迹间相对位移描述子），将点轨迹转化为语义感知的关系token，与外观特征融合后在6个few-shot动作识别基准上取得SOTA。
+  [ICCV 2025][视频理解][动作识别] 提出Trokens框架，通过语义感知的轨迹点采样：和关系运动建模：（包含轨迹内HoD和轨迹间相对位移描述子），将点轨迹转化为语义感知的关系token，与外观特征融合后在6个few-shot动作识别基准上取得SOTA。 视频理解的核心在于运动：与外观：信息的协同建模…
 tags:
   - "ICCV 2025"
   - "视频理解"

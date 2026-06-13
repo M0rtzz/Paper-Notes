@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SAC-Opt: Semantic Anchors for Iterative Correction in Optimization Modeling
 description: >-
-  [ICML2026][LLM/NLP][优化建模] SAC-Opt 把 LLM 生成的优化求解器代码再"反向翻译"回结构化语义锚点（约束与目标），与原始问题描述的锚点逐条比对，只重写不一致的那条约束/目标并迭代到全部对齐，在 7 个公开数据集上平均提升 7.7%、ComplexLP 上提升 21.9%。
+  [ICML2026][LLM 其他][优化建模] SAC-Opt 把 LLM 生成的优化求解器代码再"反向翻译"回结构化语义锚点（约束与目标），与原始问题描述的锚点逐条比对，只重写不一致的那条约束/目标并迭代到全部对齐，在 7 个公开数据集上平均提升 7.7%、ComplexLP 上提升 21.9%。
 tags:
   - "ICML2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "优化建模"
   - "语义锚点"
   - "反向修正"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cognitive Fatigue in Autoregressive Transformers: Formalization and Measurement
 description: >-
-  [ICML2026][可解释性][认知疲劳] 本文将自回归语言模型在长序列生成中的退化现象形式化为"认知疲劳"，提出 Fatigue Index (FI) 这一轻量级、模型无关的在线诊断指标，聚合 prompt 注意力衰减、表示漂移和熵失调三个信号…
+  [ICML2026][可解释性][认知疲劳] 本文将自回归语言模型在长序列生成中的退化现象形式化为"认知疲劳"，提出 Fatigue Index (FI) 这一轻量级、模型无关的在线诊断指标，聚合 prompt 注意力衰减、表示漂移和熵失调三个信号，在 9 个模型上验证了 FI 对退化的预测能力（AUROC=0.976）并揭示了非单调的规模缩放行为。
 tags:
   - "ICML2026"
   - "可解释性"

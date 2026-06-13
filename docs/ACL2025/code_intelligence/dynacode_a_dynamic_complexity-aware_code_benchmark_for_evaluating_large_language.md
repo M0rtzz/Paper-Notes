@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynaCode: A Dynamic Complexity-Aware Code Benchmark for Evaluating Large Language Models in Code Generation
 description: >-
-  [ACL 2025][代码智能][代码生成] 提出 DynaCode，一个动态复杂度感知的代码生成基准，通过将代码问题按圈复杂度分类并用调用图（Call Graph）组合嵌套，生成约 1.89 亿个唯一问题，有效缓解数据污染并系统评估 LLM 在不同复杂度下的代码生成能力。
+  [ACL 2025][代码智能][代码生成] 提出 DynaCode，一个动态复杂度感知的代码生成基准，通过将代码问题按圈复杂度分类并用调用图（Call Graph）组合嵌套，生成约 1.89 亿个唯一问题，有效缓解数据污染并系统评估 LLM 在不同复杂度下的代码生成能力。 领域现状：HumanEval、MBPP 等静态基准…
 tags:
   - "ACL 2025"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AlignMMBench: Evaluating Chinese Multimodal Alignment in Large Vision-Language Models
 description: >-
-  [ACL 2025][多模态VLM][VLM评测] 提出 AlignMMBench，首个面向中文视觉上下文的多模态对齐评测基准，涵盖 3 大类 13 项任务、1054 张图像和 4978 个 QA 对（含单轮/多轮对话），并训练了基于 ChatGLM3-6B 的评估器 CritiqueVLM…
+  [ACL 2025][多模态VLM][VLM评测] 提出 AlignMMBench，首个面向中文视觉上下文的多模态对齐评测基准，涵盖 3 大类 13 项任务、1054 张图像和 4978 个 QA 对（含单轮/多轮对话），并训练了基于 ChatGLM3-6B 的评估器 CritiqueVLM，其评估一致性超过 GPT-4。
 tags:
   - "ACL 2025"
   - "多模态VLM"

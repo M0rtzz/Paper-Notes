@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MOTIF: Multi-strategy Optimization via Turn-based Interactive Framework
 description: >-
-  [AAAI 2026][优化/理论][自动启发式设计] 提出 MOTIF 框架，将求解器设计建模为多策略优化问题，通过基于蒙特卡洛树搜索 (MCTS) 的双 LLM 代理回合制竞争机制，联合优化组合优化求解器中的多个相互依赖的算法组件，在 TSP、CVRP、BPP 等多个组合优化领域中一致超越现有方法。
+  [AAAI 2026 Oral][优化/理论][自动启发式设计] 提出 MOTIF 框架，将求解器设计建模为多策略优化问题，通过基于蒙特卡洛树搜索 (MCTS) 的双 LLM 代理回合制竞争机制，联合优化组合优化求解器中的多个相互依赖的算法组件，在 TSP、CVRP、BPP 等多个组合优化领域中一致超越现有方法。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "优化/理论"
   - "自动启发式设计"
   - "LLM"

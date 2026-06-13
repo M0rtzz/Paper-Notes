@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PerfGuard: A Performance-Aware Agent for Visual Content Generation
 description: >-
-  [ICLR 2026][LLM Agent][工具选择] 提出PerfGuard——面向视觉内容生成的性能感知Agent框架：用多维评分矩阵替代文本描述建模工具性能边界(PASM)→自适应偏好更新(APU)动态校准理论排名与实际执行的偏差→能力对齐规划优化(CAPO)引导Planner生成与工具能力匹配的子任…
+  [ICLR 2026][LLM Agent][工具选择] 提出PerfGuard——面向视觉内容生成的性能感知Agent框架：用多维评分矩阵替代文本描述建模工具性能边界(PASM)→自适应偏好更新(APU)动态校准理论排名与实际执行的偏差→能力对齐规划优化(CAPO)引导Planner生成与工具能力匹配的子任务，在图像生成和编辑任务上全面超越GenArtist/T2I-Copilot等SOTA方法。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

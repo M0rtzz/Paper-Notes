@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective
 description: >-
-  [ICLR 2026][AI安全][差分隐私] 首次用随机微分方程（SDE）框架分析差分隐私优化器，揭示 DP-SGD 和 DP-SignSGD 在隐私噪声作用下的本质差异：自适应方法在高隐私设置下具有更优的隐私-效用权衡 $\mathcal{O}(1/\varepsilon)$ vs $\mathcal{O…
+  [ICLR 2026][AI安全][差分隐私] 首次用随机微分方程（SDE）框架分析差分隐私优化器，揭示 DP-SGD 和 DP-SignSGD 在隐私噪声作用下的本质差异：自适应方法在高隐私设置下具有更优的隐私-效用权衡 $\mathcal{O}(1/\varepsilon)$ vs $\mathcal{O}(1/\varepsilon^2)$，且超参数跨隐私预算可迁移。
 tags:
   - "ICLR 2026"
   - "AI安全"

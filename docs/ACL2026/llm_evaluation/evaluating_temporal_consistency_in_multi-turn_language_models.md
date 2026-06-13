@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Temporal Consistency in Multi-Turn Language Models
 description: >-
-  [ACL 2026][LLM评测][时序一致性] 本文提出 ChronoScope，一个基于 Wikidata 自动合成的 146 万条多轮问答 chain 评测集，专门用来测 LLM 能否在多轮交互中"维持先前对话隐含的时间作用域"…
+  [ACL 2026][LLM评测][时序一致性] 本文提出 ChronoScope，一个基于 Wikidata 自动合成的 146 万条多轮问答 chain 评测集，专门用来测 LLM 能否在多轮交互中"维持先前对话隐含的时间作用域"，发现包括 GPT-4 / Gemini-2.5 在内的强模型都会系统性地"漂移到现在"（present-day drift），且交互越长越严重，即便给 oracle 上文也无法消除。
 tags:
   - "ACL 2026"
   - "LLM评测"

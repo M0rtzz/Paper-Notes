@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry Field Splatting with Gaussian Surfels
 description: >-
-  [CVPR 2025][3D视觉][高斯表面元] 本文将 Geometry Field（几何场）理论引入 Gaussian Surfel 框架，推导出高效且近乎精确的可微渲染算法用于不透明表面重建，同时解决了 surfel 聚集时的损失不连续问题，并采用基于反射向量的潜在表示来更好地处理高光表面。
+  [CVPR 2025][3D视觉][高斯表面元] 本文将 Geometry Field（几何场）理论引入 Gaussian Surfel 框架，推导出高效且近乎精确的可微渲染算法用于不透明表面重建，同时解决了 surfel 聚集时的损失不连续问题，并采用基于反射向量的潜在表示来更好地处理高光表面。 领域现状：从多视角图像重建…
 tags:
   - "CVPR 2025"
   - "3D视觉"

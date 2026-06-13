@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization in Federated Learning: A Conditional Mutual Information Framework
 description: >-
-  [ICML 2025][AI安全][联邦学习] 提出基于条件互信息（CMI）的联邦学习泛化分析框架，首次统一刻画了参与差距和样本外差距两个层级的泛化误差，并揭示了差分隐私与泛化之间的内在联系。
+  [ICML 2025][AI安全][联邦学习] 提出基于条件互信息（CMI）的联邦学习泛化分析框架，首次统一刻画了参与差距和样本外差距两个层级的泛化误差，并揭示了差分隐私与泛化之间的内在联系。 领域现状：联邦学习（FL）中的泛化分析是理解模型可靠性的核心问题。经典统计学习理论主要关注样本外泛化（训练集到总体的推广）…
 tags:
   - "ICML 2025"
   - "AI安全"

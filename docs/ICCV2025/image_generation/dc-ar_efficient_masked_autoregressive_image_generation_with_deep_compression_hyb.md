@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer
 description: >-
-  [ICCV 2025][图像生成][自回归图像生成] 提出 DC-AR，一个基于深度压缩混合标记器（DC-HT，32× 空间压缩）的掩码自回归文本到图像生成框架，通过离散 token 生成结构 + 残差 token 精细化的混合流程，在 MJHQ-30K 上取得 SOTA gFID 5.49…
+  [ICCV 2025][图像生成][自回归图像生成] 提出 DC-AR，一个基于深度压缩混合标记器（DC-HT，32× 空间压缩）的掩码自回归文本到图像生成框架，通过离散 token 生成结构 + 残差 token 精细化的混合流程，在 MJHQ-30K 上取得 SOTA gFID 5.49，同时吞吐量比扩散模型高 1.5-7.9×。
 tags:
   - "ICCV 2025"
   - "图像生成"

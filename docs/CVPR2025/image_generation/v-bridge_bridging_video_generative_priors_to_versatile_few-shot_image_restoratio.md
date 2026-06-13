@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration
 description: >-
-  [CVPR2025][图像生成][video generative prior] 将图像复原重新定义为**渐进式视频生成过程**，利用预训练视频生成模型（Wan2.2-TI2V-5B）的先验知识，仅用 1,000 个多任务训练样本（不到现有方法的 2%）即可实现竞争力的多任务图像复原。
+  [CVPR2025][图像生成][video generative prior] 将图像复原重新定义为渐进式视频生成过程：，利用预训练视频生成模型（Wan2.2-TI2V-5B）的先验知识，仅用 1,000 个多任务训练样本（不到现有方法的 2%）即可实现竞争力的多任务图像复原。 视频模型蕴含丰富视觉先验：大规模视频生成模型…
 tags:
   - "CVPR2025"
   - "图像生成"

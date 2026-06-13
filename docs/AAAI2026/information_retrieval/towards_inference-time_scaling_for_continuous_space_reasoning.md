@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Inference-Time Scaling for Continuous Space Reasoning
 description: >-
-  [AAAI 2026][信息检索/RAG][inference-time scaling] 首次系统研究离散文本推理中的inference-time scaling技术能否迁移到连续潜空间推理模型（COCONUT），发现dropout采样能生成多样推理路径（Pass@32达44.43%）…
+  [AAAI 2026][信息检索/RAG][inference-time scaling] 首次系统研究离散文本推理中的inference-time scaling技术能否迁移到连续潜空间推理模型（COCONUT），发现dropout采样能生成多样推理路径（Pass@32达44.43%），但PRM/ORM仅带来不足2.3%提升，根因在于连续思维表示缺乏区分正误推理的几何归纳偏置。
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

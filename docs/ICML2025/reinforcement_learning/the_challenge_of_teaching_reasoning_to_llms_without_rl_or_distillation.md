@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Challenge of Teaching Reasoning to LLMs Without RL or Distillation
 description: >-
-  [ICML 2025 (AI for Math Workshop)][强化学习][Chain-of-Thought] 仅用 20 个来自推理模型 QwQ-32B-Preview 的长 CoT 样例轻量微调 Qwen2.5-32B 就能超越 72B 的数学指令模型…
+  [ICML 2025 (AI for Math Workshop)][强化学习][Chain-of-Thought] 仅用 20 个来自推理模型 QwQ-32B-Preview 的长 CoT 样例轻量微调 Qwen2.5-32B 就能超越 72B 的数学指令模型，但用非推理模型或人工生成的 CoT 无法达到同等效果，表明推理 CoT 中存在难以复制的"潜在质量"。
 tags:
   - "ICML 2025 (AI for Math Workshop)"
   - "强化学习"

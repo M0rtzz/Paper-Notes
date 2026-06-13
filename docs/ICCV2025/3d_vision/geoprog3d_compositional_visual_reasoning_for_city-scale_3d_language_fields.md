@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoProg3D: Compositional Visual Reasoning for City-Scale 3D Language Fields
 description: >-
-  [ICCV 2025][3D视觉][3D语言场] 提出 GeoProg3D，首个支持城市级高保真3D场景自然语言交互的视觉编程框架，通过地理感知的城市级3D语言场（GCLF）和地理视觉API（GV-APIs），结合LLM推理引擎实现组合式地理空间推理…
+  [ICCV 2025][3D视觉][3D语言场] 提出 GeoProg3D，首个支持城市级高保真3D场景自然语言交互的视觉编程框架，通过地理感知的城市级3D语言场（GCLF）和地理视觉API（GV-APIs），结合LLM推理引擎实现组合式地理空间推理，在新提出的952条查询的GeoEval3D基准上全面超越现有3D语言场和VLM方法。
 tags:
   - "ICCV 2025"
   - "3D视觉"

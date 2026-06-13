@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual SFT Matches Multimodal RLHF with Negative Supervision
 description: >-
-  [CVPR 2025][LLM对齐][RLHF] 通过梯度分析发现多模态 RLHF 相比持续 SFT 的核心优势在于 rejected response 中的负监督信号，据此提出 nSFT 方法，用 LLM 从拒绝回复中提取错误信息并构造纠正性对话数据…
+  [CVPR 2025][LLM对齐][RLHF] 通过梯度分析发现多模态 RLHF 相比持续 SFT 的核心优势在于 rejected response 中的负监督信号，据此提出 nSFT 方法，用 LLM 从拒绝回复中提取错误信息并构造纠正性对话数据，仅用 SFT loss 就能匹配甚至超越 DPO/PPO 等 RLHF 方法，且只需 1 个模型，显存效率大幅提升。
 tags:
   - "CVPR 2025"
   - "LLM对齐"

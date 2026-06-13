@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASPO: Adaptive Sentence-Level Preference Optimization for Fine-Grained Multimodal Reasoning
 description: >-
-  [ACL 2025][LLM对齐][DPO] 将 DPO 的偏好优化粒度从回复级细化到句子级，通过图文相似度和文本困惑度两个维度动态计算每个句子的自适应奖励权重，在 LLaVA-1.5-7B/13B 和 InstructBLIP-13B 上分别带来平均 2.57/2.87/1.98 分提升，同时显著降低幻觉率…
+  [ACL 2025][LLM对齐][DPO] 将 DPO 的偏好优化粒度从回复级细化到句子级，通过图文相似度和文本困惑度两个维度动态计算每个句子的自适应奖励权重，在 LLaVA-1.5-7B/13B 和 InstructBLIP-13B 上分别带来平均 2.57/2.87/1.98 分提升，同时显著降低幻觉率。
 tags:
   - "ACL 2025"
   - "LLM对齐"

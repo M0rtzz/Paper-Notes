@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HippoMM: Hippocampal-inspired Multimodal Memory for Long Audiovisual Event Understanding
 description: >-
-  [CVPR 2026][语义分割][海马体认知架构] HippoMM 将海马体的三大认知机制——模式分离（情景分割）、记忆固化（语义压缩）和模式补全（层级检索）——映射为计算架构，用于长音视频的情景记忆和跨模态关联回忆，在自建基准 HippoVlog 上达到 78.2% 准确率并比检索增强基线快 5 倍。
+  [CVPR 2026 Findings][语义分割][海马体认知架构] HippoMM 将海马体的三大认知机制——模式分离（情景分割）、记忆固化（语义压缩）和模式补全（层级检索）——映射为计算架构，用于长音视频的情景记忆和跨模态关联回忆，在自建基准 HippoVlog 上达到 78.2% 准确率并比检索增强基线快 5 倍。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "语义分割"
   - "海马体认知架构"
   - "多模态记忆"

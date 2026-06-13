@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic
 description: >-
-  [AAAI 2026][图学习][APT检测] 提出 Sentient，一种结合**图 Transformer 预训练**和**双向 Mamba2 意图分析**的 APT 检测方法，仅用良性数据训练即可捕获间接依赖关系、去除场景噪声、关联行为逻辑，在三个标准数据集上平均降低 44% 误报率。
+  [AAAI 2026][图学习][APT检测] 提出 Sentient，一种结合图 Transformer 预训练：和双向 Mamba2 意图分析：的 APT 检测方法，仅用良性数据训练即可捕获间接依赖关系、去除场景噪声、关联行为逻辑，在三个标准数据集上平均降低 44% 误报率。 1. 领域现状：APT（高级持续性威胁）因其…
 tags:
   - "AAAI 2026"
   - "图学习"

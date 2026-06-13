@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning the Neighborhood: Contrast-Free Multimodal Self-Supervised Molecular Graph Pretraining
 description: >-
-  [ICML 2026][计算生物][多模态分子图] C-FREE 把分子拆成固定半径的 k-EgoNet 子图，2D 拓扑 + 多个 3D 构象走 GINE + PaiNN + Transformer 编码后用 JEPA 风格的潜空间预测做预训练，全程无负样本、无增广、无位置编码…
+  [ICML 2026][计算生物][多模态分子图] C-FREE 把分子拆成固定半径的 k-EgoNet 子图，2D 拓扑 + 多个 3D 构象走 GINE + PaiNN + Transformer 编码后用 JEPA 风格的潜空间预测做预训练，全程无负样本、无增广、无位置编码，仅用 0.33M 分子（GEOM）就在 MoleculeNet 8 个任务上超越了用 19M–77M 分子训练的 UniMol / MolFM 等多模态基线。
 tags:
   - "ICML 2026"
   - "计算生物"

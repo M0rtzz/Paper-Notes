@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Photomontage
 description: >-
-  [CVPR 2025][图像生成][图像合成] 提出 Generative Photomontage 框架，允许用户从多张 ControlNet 生成的图像中选取不同区域，通过扩散特征空间的图割分割和自注意力特征注入进行无缝合成，实现对生成图像的精细组合控制。
+  [CVPR 2025][图像生成][图像合成] 提出 Generative Photomontage 框架，允许用户从多张 ControlNet 生成的图像中选取不同区域，通过扩散特征空间的图割分割和自注意力特征注入进行无缝合成，实现对生成图像的精细组合控制。 领域现状：文本到图像模型能够从简单条件（如文字、草图）生成高质量…
 tags:
   - "CVPR 2025"
   - "图像生成"

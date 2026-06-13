@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastGHA: Generalized Few-Shot 3D Gaussian Head Avatars with Real-Time Animation
 description: >-
-  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出 FastGHA，一个前馈式少样本 3D 高斯头部化身生成框架，从 4 张任意表情/视角的输入图像在 ~1 秒内重建可动画的 3D 高斯头部，支持 62 FPS 实时动画…
+  [ICLR 2026][3D视觉][3D Gaussian Splatting] 提出 FastGHA，一个前馈式少样本 3D 高斯头部化身生成框架，从 4 张任意表情/视角的输入图像在 ~1 秒内重建可动画的 3D 高斯头部，支持 62 FPS 实时动画，在 Ava-256 上 PSNR 达到 22.5 dB（超越 Avat3r 的 20.7，且快 7.75 倍）。
 tags:
   - "ICLR 2026"
   - "3D视觉"

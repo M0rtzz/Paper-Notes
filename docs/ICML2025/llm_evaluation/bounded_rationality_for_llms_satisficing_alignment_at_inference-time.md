@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time
 description: >-
-  [ICML 2025][LLM评测][推理时对齐] 提出 SITAlign——基于有界理性的满意决策框架，在推理时最大化主要目标（如有用性）同时确保次要目标（如无害性）满足阈值约束，通过对偶理论求解，在 GPT-4 评估上相比多目标解码 SOTA 提升 22.3% 胜率。
+  [ICML 2025][LLM评测][推理时对齐] 提出 SITAlign——基于有界理性的满意决策框架，在推理时最大化主要目标（如有用性）同时确保次要目标（如无害性）满足阈值约束，通过对偶理论求解，在 GPT-4 评估上相比多目标解码 SOTA 提升 22.3% 胜率。 领域现状：LLM 对齐需要同时满足多个属性（安全、有…
 tags:
   - "ICML 2025"
   - "LLM评测"

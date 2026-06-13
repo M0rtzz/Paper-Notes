@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind Your Margin and Boundary: Are Your Distilled Datasets Truly Robust?
 description: >-
-  [ICML 2026][模型压缩][数据集蒸馏] 本文提出 C2R 框架，把数据集蒸馏中的鲁棒性问题重新拆解成"最小鲁棒边距"问题，用"攻击感知课程 (AAC) + 对比鲁棒损失 (CRL) + 线搜索 PGD (LS-PGD)"三件套…
+  [ICML 2026][模型压缩][数据集蒸馏] 本文提出 C2R 框架，把数据集蒸馏中的鲁棒性问题重新拆解成"最小鲁棒边距"问题，用"攻击感知课程 (AAC) + 对比鲁棒损失 (CRL) + 线搜索 PGD (LS-PGD)"三件套，让合成集训练出的模型在六种攻击上平均比之前的鲁棒蒸馏 SOTA 高出约 2.8% 鲁棒准确率。
 tags:
   - "ICML 2026"
   - "模型压缩"

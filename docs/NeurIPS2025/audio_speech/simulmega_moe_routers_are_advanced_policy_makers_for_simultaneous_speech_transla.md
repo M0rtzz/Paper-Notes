@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimulMEGA: MoE Routers are Advanced Policy Makers for Simultaneous Speech Translation
 description: >-
-  [NeurIPS 2025][音频/语音][同时语音翻译] 提出SimulMEGA框架，结合前缀训练与混合专家(MoE)精炼模块，实现无监督的读/写策略学习，使500M参数模型在6种语言的同时语音翻译中以1.5秒延迟仅损失<7% BLEU，并扩展到流式TTS。
+  [NeurIPS 2025][音频/语音][同时语音翻译] 提出SimulMEGA框架，结合前缀训练与混合专家(MoE)精炼模块，实现无监督的读/写策略学习，使500M参数模型在6种语言的同时语音翻译中以1.5秒延迟仅损失<7% BLEU，并扩展到流式TTS。 - 同时语音翻译(SimulST)需要在严格延迟约束下联合优化语…
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

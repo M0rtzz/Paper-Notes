@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How Numerical Precision Affects Arithmetical Reasoning Capabilities of LLMs
 description: >-
-  [ACL 2025 (Findings)][LLM/NLP][numerical precision] 从电路复杂度理论出发，严格证明低精度（如 int4/int8）Transformer 在迭代加法和整数乘法上需要超多项式规模才能求解…
+  [ACL 2025 (Findings)][LLM 其他][numerical precision] 从电路复杂度理论出发，严格证明低精度（如 int4/int8）Transformer 在迭代加法和整数乘法上需要超多项式规模才能求解，而标准精度（float32）Transformer 仅需常数深度+多项式宽度即可高效求解三类算术任务，并在 LLaMA-3.1-8B 上实验验证了精度对算术能力的关键影响。
 tags:
   - "ACL 2025 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "numerical precision"
   - "arithmetic reasoning"
   - "Transformer"

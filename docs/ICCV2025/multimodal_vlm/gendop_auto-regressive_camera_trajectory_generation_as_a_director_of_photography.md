@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenDoP: Auto-regressive Camera Trajectory Generation as a Director of Photography
 description: >-
-  [ICCV 2025][多模态VLM][相机轨迹生成] 提出 DataDoP 数据集（29K 真实电影镜头的自由运动相机轨迹+描述）和 GenDoP 自回归 Transformer 模型，通过文本和/或 RGBD 输入生成艺术化、高质量的相机运动轨迹，在可控性、运动稳定性和复杂度上超越现有方法。
+  [ICCV 2025][多模态VLM][相机轨迹生成] 提出 DataDoP 数据集（29K 真实电影镜头的自由运动相机轨迹+描述）和 GenDoP 自回归 Transformer 模型，通过文本和/或 RGBD 输入生成艺术化、高质量的相机运动轨迹，在可控性、运动稳定性和复杂度上超越现有方法。 相机运动设计是视频制作的核心…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

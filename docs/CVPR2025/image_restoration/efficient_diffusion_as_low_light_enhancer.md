@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Diffusion as Low Light Enhancer (ReDDiT)
 description: >-
-  [CVPR 2025][图像恢复][低光增强] 提出 ReDDiT 将扩散式低光增强从 10+ 步蒸馏到 2-4 步——通过线性外推修正拟合误差、用 Retinex 分解的反射率做轨迹精炼弥合推理间隙，4 步即在 10 个基准上全面达到 SOTA。
+  [CVPR 2025][图像恢复][低光增强] 提出 ReDDiT 将扩散式低光增强从 10+ 步蒸馏到 2-4 步——通过线性外推修正拟合误差、用 Retinex 分解的反射率做轨迹精炼弥合推理间隙，4 步即在 10 个基准上全面达到 SOTA。 领域现状：扩散模型在低光增强（LLIE）上取得了优秀效果（如 GSAD）…
 tags:
   - "CVPR 2025"
   - "图像恢复"

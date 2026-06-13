@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mod-Adapter: Tuning-Free and Versatile Multi-concept Personalization via Modulation Adapter
 description: >-
-  [ICLR 2026][图像生成][多概念个性化] 提出 Mod-Adapter，一种无需测试时微调的多概念个性化方法，通过在 DiT 的调制（modulation）空间中预测概念特定的调制方向，实现对物体和抽象概念（姿态、光照、材质等）的解耦化定制生成，在多概念个性化上大幅超越现有方法。
+  [ICLR 2026][图像生成][多概念个性化] 提出 Mod-Adapter，一种无需测试时微调的多概念个性化方法，通过在 DiT 的调制（modulation）空间中预测概念特定的调制方向，实现对物体和抽象概念（姿态、光照、材质等）的解耦化定制生成，在多概念个性化上大幅超越现有方法。 领域现状：个性化文本到图像生成旨在…
 tags:
   - "ICLR 2026"
   - "图像生成"

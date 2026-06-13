@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaching Large Language Models to Regress Accurate Image Quality Scores Using Score Distribution
 description: >-
-  [CVPR 2025][多模态VLM][图像质量评估] 提出DeQA-Score，通过将质量分数的**高斯分布离散化为soft label**（替代Q-Align的one-hot label），大幅减少离散化信息损失（10-35倍）…
+  [CVPR 2025][多模态VLM][图像质量评估] 提出DeQA-Score，通过将质量分数的**高斯分布离散化为soft label**（替代Q-Align的one-hot label），大幅减少离散化信息损失（10-35倍），并引入基于Thurstone模型的**fidelity loss**实现多IQA数据集联合训练，在分数回归任务上全面超越基线。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dropout Mixture Low-Rank Adaptation for Visual Parameters-Efficient Fine-Tuning
 description: >-
-  [ECCV 2024][参数高效微调] 本文提出 DMLoRA（Dropout-Mixture Low-Rank Adaptation），通过引入多分支上下投影结构并在训练过程中逐步dropout分支来平衡精度与正则化，配合两阶段学习缩放因子策略优化每层的缩放系数…
+  [ECCV 2024][参数高效微调] 本文提出 DMLoRA（Dropout-Mixture Low-Rank Adaptation），通过引入多分支上下投影结构并在训练过程中逐步dropout分支来平衡精度与正则化，配合两阶段学习缩放因子策略优化每层的缩放系数，在VTAB-1k和FGVC视觉微调基准上取得SOTA性能且推理无额外开销。
 tags:
   - "ECCV 2024"
   - "参数高效微调"
@@ -129,10 +129,10 @@ DMLoRA的整体框架是一个针对预训练视觉Transformer（如ViT）的参
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ 多分支LoRA+渐进dropout的组合有一定新意，但各组件并非全新
-- 实验充分度: ⭐⭐⭐⭐ VTAB-1k 19个任务和FGVC 5个数据集的全面评估很充分
-- 写作质量: ⭐⭐⭐ 方法描述清晰，动机论证合理
-- 价值: ⭐⭐⭐ 为LoRA提供了一种鲁棒性更强的变体，对视觉PEFT社区有参考价值
+- 新颖性: ⭐⭐⭐⭐ 多分支LoRA+渐进dropout的组合有一定新意，但各组件并非全新
+- 实验充分度: ⭐⭐⭐⭐⭐ VTAB-1k 19个任务和FGVC 5个数据集的全面评估很充分
+- 写作质量: ⭐⭐⭐⭐ 方法描述清晰，动机论证合理
+- 价值: ⭐⭐⭐⭐ 为LoRA提供了一种鲁棒性更强的变体，对视觉PEFT社区有参考价值
 
 <!-- RELATED:START -->
 

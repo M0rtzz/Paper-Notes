@@ -2,9 +2,9 @@
 title: >-
   [论文解读] WISCA: A Lightweight Model Transition Method to Improve LLM Training via Weight Scaling
 description: >-
-  [ACL 2026][模型压缩][权重缩放] 本文提出等价模型理论和 WISCA 权重缩放策略，通过在训练中动态调整 Transformer 注意力层的 $W_q/W_k$ 和 $W_v/W_o$ 权重使其 L1 范数相等（保持模型输出不变），将优化引导至更平坦的损失最小值区域…
+  [ACL 2026 Findings][模型压缩][权重缩放] 本文提出等价模型理论和 WISCA 权重缩放策略，通过在训练中动态调整 Transformer 注意力层的 $W_q/W_k$ 和 $W_v/W_o$ 权重使其 L1 范数相等（保持模型输出不变），将优化引导至更平坦的损失最小值区域，在 GQA 架构上实现平均 5.6% 的零样本评估提升和 2.12% 的训练困惑度降低。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "权重缩放"
   - "等价模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion-Driven Data Replay: A Novel Approach to Combat Forgetting in Federated Class Continual Learning
 description: >-
-  [ECCV 2024][图像生成][联邦类别持续学习] 提出 DDDR 框架，首次将预训练扩散模型引入联邦类别持续学习（FCCL），通过 Federated Class Inversion 技术为每个类别学习一个紧凑的 class embedding，利用扩散模型高质量回放历史数据以对抗灾难性遗忘…
+  [ECCV 2024][图像生成][联邦类别持续学习] 提出 DDDR 框架，首次将预训练扩散模型引入联邦类别持续学习（FCCL），通过 Federated Class Inversion 技术为每个类别学习一个紧凑的 class embedding，利用扩散模型高质量回放历史数据以对抗灾难性遗忘，并通过对比学习弥合生成数据与真实数据的域差距。
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Evaluating Reasoning Models for Queries with Presuppositions
 description: >-
-  [ACL 2026][LLM评测][推理模型] 本文构建 ≈13K 跨健康/科学/常识的虚实声明 + 5 档预设强度查询，测评 6 个主流模型（GPT-OSS / Qwen3 / GPT-5 Mini / Gemini 2.5）的开/关推理两档表现，发现推理只带来 2-11% 的轻微准确率提升…
+  [ACL 2026 Findings][LLM评测][推理模型] 本文构建 ≈13K 跨健康/科学/常识的虚实声明 + 5 档预设强度查询，测评 6 个主流模型（GPT-OSS / Qwen3 / GPT-5 Mini / Gemini 2.5）的开/关推理两档表现，发现推理只带来 2-11% 的轻微准确率提升，但**会让模型变得更"决断"——错的更自信**，对 26-42% 的虚假声明仍然顺从。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "推理模型"
   - "预设"

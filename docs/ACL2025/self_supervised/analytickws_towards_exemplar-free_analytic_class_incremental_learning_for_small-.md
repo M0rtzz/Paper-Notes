@@ -2,9 +2,10 @@
 title: >-
   [论文解读] AnalyticKWS: Towards Exemplar-Free Analytic Class Incremental Learning for Small-footprint Keyword Spotting
 description: >-
-  [ACL 2025][关键词检测] 提出 AnalyticKWS，一种无需存储历史样本的关键词检测增量学习方法，通过冻结特征提取器 + 递归最小二乘解析解更新分类器，在 GSC 和 SC-100 数据集上超过了所有基于样本回放的方法，且训练时间和内存开销极低。
+  [ACL 2025][自监督学习][关键词检测] 提出 AnalyticKWS，一种无需存储历史样本的关键词检测增量学习方法，通过冻结特征提取器 + 递归最小二乘解析解更新分类器，在 GSC 和 SC-100 数据集上超过了所有基于样本回放的方法，且训练时间和内存开销极低。 领域现状：关键词检测 (KWS) 是边缘设备语音交…
 tags:
   - "ACL 2025"
+  - "自监督学习"
   - "关键词检测"
   - "类增量学习"
   - "无样本回放"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CBRS: Cognitive Blood Request System with Bilingual Dataset and Dual-Layer Filtering
 description: >-
-  [ACL 2026][模型压缩][血液捐献请求] CBRS 提出一个多平台框架，通过双层过滤架构（轻量分类器 + LLM）从社交媒体消息流中高效检测并解析血液捐献请求，构建了首个包含 11K 条孟加拉语-英语-转写孟加拉语的血液捐献请求数据集…
+  [ACL 2026 Findings][模型压缩][血液捐献请求] CBRS 提出一个多平台框架，通过双层过滤架构（轻量分类器 + LLM）从社交媒体消息流中高效检测并解析血液捐献请求，构建了首个包含 11K 条孟加拉语-英语-转写孟加拉语的血液捐献请求数据集，LoRA 微调的 Llama-3.2-3B 在解析任务上达到 92% 零样本准确率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "血液捐献请求"
   - "双语数据集"

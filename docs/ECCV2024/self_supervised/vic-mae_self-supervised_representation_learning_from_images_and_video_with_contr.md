@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders
 description: >-
-  [ECCV 2024][自监督学习][Masked Autoencoder] ViC-MAE 将对比学习和掩码自编码器统一到一个框架中，通过把短视频片段当作增强视角（而非把图像重复为视频），在图像和视频下游任务上同时取得优秀表现——ImageNet-1K top-1 达 87.1%（超越 OmniMAE +2…
+  [ECCV 2024][自监督学习][Masked Autoencoder] ViC-MAE 将对比学习和掩码自编码器统一到一个框架中，通过把短视频片段当作增强视角（而非把图像重复为视频），在图像和视频下游任务上同时取得优秀表现——ImageNet-1K top-1 达 87.1%（超越 OmniMAE +2.4%），SSv2 达 75.9%。
 tags:
   - "ECCV 2024"
   - "自监督学习"

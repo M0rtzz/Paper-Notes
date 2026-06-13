@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Reasoning Evolves from Post-Training Data: An Empirical Study Using Chess
 description: >-
-  [ICML 2026][强化学习][SFT-to-RL] 作者把"训 LLM 学下国际象棋"当成可验证 RL 的干净实验台，系统比对 6 类自制 SFT 数据集对 RL 的影响，发现"直接预测最佳一步 (Best Move)"得最高分但 RL 后产生不忠实推理…
+  [ICML 2026][强化学习][SFT-to-RL] 作者把"训 LLM 学下国际象棋"当成可验证 RL 的干净实验台，系统比对 6 类自制 SFT 数据集对 RL 的影响，发现"直接预测最佳一步 (Best Move)"得最高分但 RL 后产生不忠实推理，"预测多步最佳走法 (Best Line)"性能相当但 RL 更稳、推理更忠实；并提炼出三条可用 SFT-checkpoint 预测 RL 终局性能的指标，最终用 7B 模型在多个国象 benchmark 上超过 gpt-oss-120b。
 tags:
   - "ICML 2026"
   - "强化学习"

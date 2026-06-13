@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Simple Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇分割] 本文提出 S-Seg，一个极简的开放词汇语义分割模型，不依赖 CLIP 预训练、不需要标注掩码、不使用定制分组编码器，仅用伪掩码（DINO K-Means 聚类）和图像-文本对比损失训练 MaskFormer…
+  [CVPR 2025][语义分割][开放词汇分割] 本文提出 S-Seg，一个极简的开放词汇语义分割模型，不依赖 CLIP 预训练、不需要标注掩码、不使用定制分组编码器，仅用伪掩码（DINO K-Means 聚类）和图像-文本对比损失训练 MaskFormer，在 Pascal VOC、Pascal Context 和 COCO 上取得了与复杂方法相当的性能，自训练后平均 mIoU 提升 5.5%。
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ATRIE: Automating Legal Interpretation with LLMs: Retrieval, Generation, and Evaluation
 description: >-
-  [ACL 2025][LLM/NLP][Legal Interpretation] 提出 ATRIE 框架，模拟法学专家的教义法学研究流程，利用 LLM 自动从案例库中检索相关信息、生成法律概念解释并评估解释质量，消除对人类法律专家的依赖。
+  [ACL 2025][LLM 其他][Legal Interpretation] 提出 ATRIE 框架，模拟法学专家的教义法学研究流程，利用 LLM 自动从案例库中检索相关信息、生成法律概念解释并评估解释质量，消除对人类法律专家的依赖。 研究问题：法律解释——特别是模糊法律概念的解释——对法律实践至关重要…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Legal Interpretation"
   - "RAG"
   - "Legal Concept Entailment"

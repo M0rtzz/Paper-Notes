@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Towards Universal Offline Black-Box Optimization via Learning Language Model Embeddings
 description: >-
-  [ICML 2025][LLM/NLP][通用离线优化] 提出UniSO框架，将不同类型和维度的优化变量统一编码为JSON字符串后输入语言模型，通过token预测（UniSO-T）和数值回归（UniSO-N）两种建模范式训练通用回归器，并通过元数据引导的对比学习和Lipschitz平滑正则化改善嵌入空间质量…
+  [ICML 2025][LLM 其他][通用离线优化] 提出UniSO框架，将不同类型和维度的优化变量统一编码为JSON字符串后输入语言模型，通过token预测（UniSO-T）和数值回归（UniSO-N）两种建模范式训练通用回归器，并通过元数据引导的对比学习和Lipschitz平滑正则化改善嵌入空间质量，实现了跨域跨维度的通用离线黑盒优化。
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "通用离线优化"
   - "语言模型嵌入"
   - "跨域泛化"

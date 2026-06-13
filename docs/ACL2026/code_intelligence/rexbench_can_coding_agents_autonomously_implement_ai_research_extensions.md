@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RExBench: Can coding agents autonomously implement AI research extensions?
 description: >-
-  [ACL2026][代码智能][Coding Agent] RExBench 把 coding agent 放进真实 AI 论文代码库中，让它们实现专家设计的研究扩展并用受控执行结果评分，发现当前最强 agent 也只有约三分之一成功率，距离自主完成科研扩展仍有明显差距。
+  [ACL2026][代码智能][Coding Agent] RExBench 把 coding agent 放进真实 AI 论文代码库中，让它们实现专家设计的研究扩展并用受控执行结果评分，发现当前最强 agent 也只有约三分之一成功率，距离自主完成科研扩展仍有明显差距。 领域现状：LLM agent 已经能解决一部分软件工…
 tags:
   - "ACL2026"
   - "代码智能"

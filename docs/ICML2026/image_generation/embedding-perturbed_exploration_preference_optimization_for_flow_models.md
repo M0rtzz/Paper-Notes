@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E²PO: Embedding-perturbed Exploration Preference Optimization for Flow Models
 description: >-
-  [ICML 2026][图像生成][GRPO] 针对 GRPO/DiffusionNFT 等基于组的 RL 在 flow 模型对齐中组内方差崩塌、信号消失的问题，E²PO 在文本嵌入空间注入一组可学习的结构化扰动以维持组内判别方差，并配合噪声感知调度与参考锚定批策略…
+  [ICML 2026][图像生成][GRPO] 针对 GRPO/DiffusionNFT 等基于组的 RL 在 flow 模型对齐中组内方差崩塌、信号消失的问题，E²PO 在文本嵌入空间注入一组可学习的结构化扰动以维持组内判别方差，并配合噪声感知调度与参考锚定批策略，在 SD3.5-M 上把 GenEval 从 0.917 抬到 0.932 且显著提升多样性。
 tags:
   - "ICML 2026"
   - "图像生成"

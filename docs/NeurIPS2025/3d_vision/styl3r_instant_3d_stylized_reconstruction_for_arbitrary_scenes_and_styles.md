@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Styl3R: Instant 3D Stylized Reconstruction for Arbitrary Scenes and Styles
 description: >-
-  [NeurIPS 2025][3D视觉][3D风格化] 提出Styl3R前馈网络，通过结构-外观双分支架构将3D重建与风格化解耦，仅用未标定的稀疏视角图像和任意风格图像，在0.15秒内完成风格化3D重建。
+  [NeurIPS 2025][3D视觉][3D风格化] 提出Styl3R前馈网络，通过结构-外观双分支架构将3D重建与风格化解耦，仅用未标定的稀疏视角图像和任意风格图像，在0.15秒内完成风格化3D重建。 将2D风格迁移扩展到3D场景一直是一个重要挑战，核心困难在于外观风格化与3D结构一致性之间的矛盾：改变视觉外观以反映目标…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

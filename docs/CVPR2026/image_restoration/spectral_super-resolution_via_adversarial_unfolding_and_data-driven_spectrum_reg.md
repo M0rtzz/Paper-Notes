@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral Super-Resolution via Adversarial Unfolding and Data-Driven Spectrum Regularization
 description: >-
-  [CVPR 2026][图像恢复][光谱超分辨率] 提出 UALNet，通过将数据驱动的光谱先验（PriorNet）和对抗学习项同时嵌入深度展开框架，实现从 Sentinel-2 多光谱数据（12 波段）到 NASA AVIRIS 高光谱图像（186 波段）的光谱超分辨率…
+  [CVPR 2026][图像恢复][光谱超分辨率] 提出 UALNet，通过将数据驱动的光谱先验（PriorNet）和对抗学习项同时嵌入深度展开框架，实现从 Sentinel-2 多光谱数据（12 波段）到 NASA AVIRIS 高光谱图像（186 波段）的光谱超分辨率，性能超越 Transformer 的同时仅需 15% 计算量和 1/20 参数。
 tags:
   - "CVPR 2026"
   - "图像恢复"

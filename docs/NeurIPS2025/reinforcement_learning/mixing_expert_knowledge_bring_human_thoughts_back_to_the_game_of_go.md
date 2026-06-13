@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixing Expert Knowledge: Bring Human Thoughts Back to the Game of Go
 description: >-
-  [NeurIPS 2025][强化学习][LLM] 提出 LoGos，通过混合领域专家数据（围棋）与通用长 CoT 推理数据进行冷启动微调 + GRPO 强化学习，使通用 LLM 在围棋中达到职业棋手水平的同时保持优秀的通用推理能力。
+  [NeurIPS 2025][强化学习][LLM] 提出 LoGos，通过混合领域专家数据（围棋）与通用长 CoT 推理数据进行冷启动微调 + GRPO 强化学习，使通用 LLM 在围棋中达到职业棋手水平的同时保持优秀的通用推理能力。 领域现状： AlphaGo/AlphaZero 等专用 AI 系统早已在围棋领域超越人类…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

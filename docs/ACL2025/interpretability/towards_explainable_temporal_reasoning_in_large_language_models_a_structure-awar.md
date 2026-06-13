@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework
 description: >-
-  [ACL2025][可解释性][时序推理] 提出 GETER 框架，通过轻量级 Structure-Text Adapter 将时序知识图谱的结构信息注入 LLM，使模型在时序推理任务中既能给出准确预测又能生成可解释的推理说明。
+  [ACL2025][可解释性][时序推理] 提出 GETER 框架，通过轻量级 Structure-Text Adapter 将时序知识图谱的结构信息注入 LLM，使模型在时序推理任务中既能给出准确预测又能生成可解释的推理说明。 领域现状： 时序推理（Temporal Reasoning）是 NLP 中的核心能力…
 tags:
   - "ACL2025"
   - "可解释性"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On the Mutual Influence of Gender and Occupation in LLM Representations
 description: >-
-  [ACL2025][LLM/NLP][gender bias] 通过在 LLM 嵌入空间中近似性别方向（gender direction），系统研究了名字的性别表征与职业上下文之间的双向影响：职业上下文会偏移名字的性别表征，而名字的性别表征反过来影响 LLM 在职业预测任务中的偏差行为…
+  [ACL2025][LLM 其他][gender bias] 通过在 LLM 嵌入空间中近似性别方向（gender direction），系统研究了名字的性别表征与职业上下文之间的双向影响：职业上下文会偏移名字的性别表征，而名字的性别表征反过来影响 LLM 在职业预测任务中的偏差行为，但二者的相关性仅为中等强度。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "gender bias"
   - "occupation stereotype"
   - "LLM embeddings"

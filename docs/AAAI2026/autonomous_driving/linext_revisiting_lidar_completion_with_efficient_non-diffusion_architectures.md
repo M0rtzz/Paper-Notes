@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiNeXt: Revisiting LiDAR Completion with Efficient Non-Diffusion Architectures
 description: >-
-  [AAAI 2026][自动驾驶][LiDAR场景补全] 提出 LiNeXt，一种轻量级非扩散网络用于LiDAR 3D场景补全，通过**距离感知选择性重复策略**、**Noise-to-Coarse模块**和**Refine模块**直接重建完整点云…
+  [AAAI 2026][自动驾驶][LiDAR场景补全] 提出 LiNeXt，一种轻量级非扩散网络用于LiDAR 3D场景补全，通过**距离感知选择性重复策略**、**Noise-to-Coarse模块**和**Refine模块**直接重建完整点云，在SemanticKITTI上实现了比LiDiff快**199.8倍**的推理速度，Chamfer Distance降低**50.7%**，参数量仅为其**6.1%**。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

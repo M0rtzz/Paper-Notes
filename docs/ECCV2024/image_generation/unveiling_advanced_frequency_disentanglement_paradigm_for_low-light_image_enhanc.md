@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement
 description: >-
-  [ECCV 2024][图像生成] 提出了一种通用的频率解耦学习范式，通过拉普拉斯分解和低频一致性约束，将低频（光照恢复）和高频（去噪）增强解耦为两个独立子任务，仅需88K额外参数即可为6种SOTA低光增强模型带来最高7.68dB的PSNR提升。
+  [ECCV 2024][图像生成] 提出了一种通用的频率解耦学习范式，通过拉普拉斯分解和低频一致性约束，将低频（光照恢复）和高频（去噪）增强解耦为两个独立子任务，仅需88K额外参数即可为6种SOTA低光增强模型带来最高7.68dB的PSNR提升。 低光图像增强（LLIE）面临低频（光照恢复）和高频（噪声去除）耦合优化的挑战…
 tags:
   - "ECCV 2024"
   - "图像生成"

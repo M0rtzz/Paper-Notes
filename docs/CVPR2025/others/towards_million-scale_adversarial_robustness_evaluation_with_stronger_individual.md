@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Million-Scale Adversarial Robustness Evaluation With Stronger Individual Attacks
 description: >-
-  [CVPR 2025][概率边际攻击] 本文提出 Probability Margin Attack (PMA)，在概率空间而非 logits 空间定义对抗边际损失函数，其梯度等价于无目标和有目标交叉熵损失的自适应加权组合，一致性地超越现有个体攻击方法；基于此构建百万级评估数据集 CC1M…
+  [CVPR 2025][概率边际攻击] 本文提出 Probability Margin Attack (PMA)，在概率空间而非 logits 空间定义对抗边际损失函数，其梯度等价于无目标和有目标交叉熵损失的自适应加权组合，一致性地超越现有个体攻击方法；基于此构建百万级评估数据集 CC1M，首次开展对抗训练模型的百万规模白盒鲁棒性评估。
 tags:
   - "CVPR 2025"
   - "概率边际攻击"

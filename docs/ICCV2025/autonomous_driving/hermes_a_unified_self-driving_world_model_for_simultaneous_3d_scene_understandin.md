@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation
 description: >-
-  [ICCV 2025][自动驾驶][驾驶世界模型] 提出 Hermes，第一个统一 3D 场景理解（VQA/描述）和未来场景生成（点云预测）的驾驶世界模型，通过 BEV 表征和 world queries 将 LLM 的世界知识注入未来场景生成，3s 点云生成误差降低 32.4%…
+  [ICCV 2025][自动驾驶][驾驶世界模型] 提出 Hermes，第一个统一 3D 场景理解（VQA/描述）和未来场景生成（点云预测）的驾驶世界模型，通过 BEV 表征和 world queries 将 LLM 的世界知识注入未来场景生成，3s 点云生成误差降低 32.4%，场景理解 CIDEr 提升 8.0%。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

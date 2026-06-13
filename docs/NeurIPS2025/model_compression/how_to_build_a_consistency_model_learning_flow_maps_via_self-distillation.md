@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How to Build a Consistency Model: Learning Flow Maps via Self-Distillation
 description: >-
-  [NeurIPS 2025][模型压缩][Flow Map] 提出统一的自蒸馏（Self-Distillation）框架来直接学习 flow map（即 consistency model 的一般化形式），通过 tangent condition 将任意蒸馏方案转化为无需预训练教师的直接训练算法…
+  [NeurIPS 2025][模型压缩][Flow Map] 提出统一的自蒸馏（Self-Distillation）框架来直接学习 flow map（即 consistency model 的一般化形式），通过 tangent condition 将任意蒸馏方案转化为无需预训练教师的直接训练算法，并导出三大算法族（Eulerian / Lagrangian / Progressive），其中 Lagrangian 方法避免了空间梯度和自举引导，训练最稳定、性能最优。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GGPT: Geometry-Grounded Point Transformer
 description: >-
-  [CVPR 2026][3D视觉][sparse-view 3D重建] 提出GGPT框架：通过改进的轻量SfM管线(密集匹配+稀疏BA+DLT三角化)获取几何一致稀疏点云，再用3D Point Transformer V3在三维空间直接融合稀疏几何引导与前馈稠密预测进行residual refinement…
+  [CVPR 2026][3D视觉][sparse-view 3D重建] 提出GGPT框架：通过改进的轻量SfM管线(密集匹配+稀疏BA+DLT三角化)获取几何一致稀疏点云，再用3D Point Transformer V3在三维空间直接融合稀疏几何引导与前馈稠密预测进行residual refinement，仅在ScanNet++上训练即可跨架构、跨数据集显著提升多种前馈3D重建模型。
 tags:
   - "CVPR 2026"
   - "3D视觉"

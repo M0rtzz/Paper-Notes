@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoAM: Corpus of All-Type Multiword Expressions
 description: >-
-  [ACL 2025][多词表达] 构建了一个高质量的全类型多词表达(MWE)识别数据集 CoAM（1.3K句），通过多步质量保障流程解决了现有数据集标注不一致的问题，并发现微调大语言模型在 MWE 识别任务上显著优于此前的 SOTA 方法 MWEasWSD。
+  [ACL 2025][多词表达] 构建了一个高质量的全类型多词表达(MWE)识别数据集 CoAM（1.3K句），通过多步质量保障流程解决了现有数据集标注不一致的问题，并发现微调大语言模型在 MWE 识别任务上显著优于此前的 SOTA 方法 MWEasWSD。 多词表达（Multiword Expressions…
 tags:
   - "ACL 2025"
   - "多词表达"

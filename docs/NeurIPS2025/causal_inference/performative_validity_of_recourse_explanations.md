@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Performative Validity of Recourse Explanations
 description: >-
-  [NeurIPS 2025][因果推理][算法追索权] 本文形式化分析了追索权解释（recourse explanations）的"表演性"效应——当大量被拒申请者按照追索建议行动时，集体行为会引发数据分布偏移并使模型更新后追索失效…
+  [NeurIPS 2025][因果推理][算法追索权] 本文形式化分析了追索权解释（recourse explanations）的"表演性"效应——当大量被拒申请者按照追索建议行动时，集体行为会引发数据分布偏移并使模型更新后追索失效，并证明了只有基于因果变量的改进型追索（ICR）才能在广泛条件下保持"表演性有效性"。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

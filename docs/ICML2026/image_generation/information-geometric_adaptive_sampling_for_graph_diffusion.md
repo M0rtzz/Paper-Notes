@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Information-Geometric Adaptive Sampling for Graph Diffusion
 description: >-
-  [ICML 2026][图像生成][图扩散] 本文把图扩散反向 SDE 的采样轨迹看成 Riemannian 统计流形上的参数曲线，用 Fisher-Rao 度量推出一个无需训练的 Drift Variation Score (DVS) 来度量轨迹的局部"信息曲率"，并据此自适应缩放步长…
+  [ICML 2026][图像生成][图扩散] 本文把图扩散反向 SDE 的采样轨迹看成 Riemannian 统计流形上的参数曲线，用 Fisher-Rao 度量推出一个无需训练的 Drift Variation Score (DVS) 来度量轨迹的局部"信息曲率"，并据此自适应缩放步长，使每步在信息流形上前进等长，从而在分子（QM9/ZINC250k）和图（Planar/SBM/Ego）生成中以更少步数取得更高 FCD / MMD 保真度。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Alligat0R: Pre-Training through Covisibility Segmentation for Relative Camera Pose Regression
 description: >-
-  [NeurIPS 2025][语义分割][共视性分割] 用共视性分割（covisibility segmentation）替代 CroCo 的跨视图补全作为双目视觉预训练任务，对每个像素预测"共视/遮挡/视野外"三类标签，在低重叠场景下显著超越 CroCo，RUBIK 基准总体成功率 60.3% 排第一。
+  [NeurIPS 2025 Spotlight][语义分割][共视性分割] 用共视性分割（covisibility segmentation）替代 CroCo 的跨视图补全作为双目视觉预训练任务，对每个像素预测"共视/遮挡/视野外"三类标签，在低重叠场景下显著超越 CroCo，RUBIK 基准总体成功率 60.3% 排第一。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "语义分割"
   - "共视性分割"
   - "预训练"

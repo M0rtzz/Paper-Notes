@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Improve Language Model and Brain Alignment via Associative Memory
 description: >-
-  [ACL 2025][LLM/NLP][brain alignment] 通过模拟联想记忆对文本进行数据增强，以及对 LLM 进行联想记忆指令微调，本文证明两种方式均能显著提升语言模型与人脑在语音理解任务中的对齐程度，尤其在内侧颞叶等联想记忆相关脑区。
+  [ACL 2025][LLM 其他][brain alignment] 通过模拟联想记忆对文本进行数据增强，以及对 LLM 进行联想记忆指令微调，本文证明两种方式均能显著提升语言模型与人脑在语音理解任务中的对齐程度，尤其在内侧颞叶等联想记忆相关脑区。 - 核心问题： 语言模型的激活可以线性映射到人脑 fMRI 活动（即 br…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "brain alignment"
   - "associative memory"
   - "fMRI"

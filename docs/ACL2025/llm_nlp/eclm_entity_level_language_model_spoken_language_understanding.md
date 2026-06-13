@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ECLM: Entity Level Language Model for Spoken Language Understanding with Chain of Intent
 description: >-
-  [ACL 2025][LLM/NLP][多意图口语理解] 提出 ECLM 框架，将 LLM 应用于多意图口语理解：通过将 token 级槽填充转化为实体识别任务解决序列对齐问题，引入"意图链"（Chain of Intent）实现逐步多意图识别…
+  [ACL 2025][LLM 其他][多意图口语理解] 提出 ECLM 框架，将 LLM 应用于多意图口语理解：通过将 token 级槽填充转化为实体识别任务解决序列对齐问题，引入"意图链"（Chain of Intent）实现逐步多意图识别，在 MixATIS 和 MixSNIPS 上大幅超越 SOTA 基线。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多意图口语理解"
   - "实体级槽填充"
   - "意图链"

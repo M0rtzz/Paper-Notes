@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SciMDR: Advancing Scientific Multimodal Document Reasoning
 description: >-
-  [ACL2026][多模态VLM][科学文档推理] SciMDR 提出 synthesize-and-reground 数据构造框架，先在原子 claim 上合成可信 QA 与推理链，再把它们重嵌入完整科学论文中训练模型，使 7B VLM 在科学多模态文档推理上接近 GPT-5 系列表现。
+  [ACL2026][多模态VLM][科学文档推理] SciMDR 提出 synthesize-and-reground 数据构造框架，先在原子 claim 上合成可信 QA 与推理链，再把它们重嵌入完整科学论文中训练模型，使 7B VLM 在科学多模态文档推理上接近 GPT-5 系列表现。 领域现状：科学文档理解正在从摘要级…
 tags:
   - "ACL2026"
   - "多模态VLM"

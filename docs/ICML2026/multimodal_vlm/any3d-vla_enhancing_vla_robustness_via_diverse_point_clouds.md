@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Any3D-VLA: Enhancing VLA Robustness via Diverse Point Clouds
 description: >-
-  [ICML 2026][多模态VLM][点云融合] 作者通过 pilot study 发现"显式把视觉提升到点云、再与 2D patch 融合"是 VLA 注入 3D 信息的最有效方式；为了解决 3D 数据稀缺和不同点云源（仿真/传感器/单目估计）的域差异…
+  [ICML 2026][多模态VLM][点云融合] 作者通过 pilot study 发现"显式把视觉提升到点云、再与 2D patch 融合"是 VLA 注入 3D 信息的最有效方式；为了解决 3D 数据稀缺和不同点云源（仿真/传感器/单目估计）的域差异，提出 Any3D-VLA：用 hybrid point cloud training 学到 source-agnostic 的几何表示，在真实抓取任务上 zero-shot 比最强 baseline 提升 29.2%（62.5% vs 33.3%）。
 tags:
   - "ICML 2026"
   - "多模态VLM"

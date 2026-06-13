@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A High-Quality Robust Diffusion Framework for Corrupted Dataset
 description: >-
-  [ECCV 2024][图像生成][扩散模型] 提出 RDUOT 框架，首次将非平衡最优传输(UOT)融入扩散模型(DDGAN)中，通过学习 $q(x_0|x_t)$ 而非 $q(x_{t-1}|x_t)$ 来有效过滤训练数据中的离群值，在污染数据集上实现鲁棒生成的同时…
+  [ECCV 2024][图像生成][扩散模型] 提出 RDUOT 框架，首次将非平衡最优传输(UOT)融入扩散模型(DDGAN)中，通过学习 $q(x_0|x_t)$ 而非 $q(x_{t-1}|x_t)$ 来有效过滤训练数据中的离群值，在污染数据集上实现鲁棒生成的同时，在干净数据集上也超越了 DDGAN 基线。
 tags:
   - "ECCV 2024"
   - "图像生成"

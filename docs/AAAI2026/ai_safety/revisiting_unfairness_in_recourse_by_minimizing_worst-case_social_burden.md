@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting (Un)Fairness in Recourse by Minimizing Worst-Case Social Burden
 description: >-
-  [AAAI 2026][AI安全][algorithmic recourse] 系统分析了算法追索 (algorithmic recourse) 中公平性度量的三大局限（忽视分类器决策行为、忽略真实标签、差距指标掩盖不公平），提出基于社会负担 (social burden) 的公平性框架 MISOB…
+  [AAAI 2026][AI安全][algorithmic recourse] 系统分析了算法追索 (algorithmic recourse) 中公平性度量的三大局限（忽视分类器决策行为、忽略真实标签、差距指标掩盖不公平），提出基于社会负担 (social burden) 的公平性框架 MISOB，通过极小化极大加权训练策略减少所有群体的社会负担，无需访问敏感属性即可在预测和追索阶段同时提升公平性。
 tags:
   - "AAAI 2026"
   - "AI安全"

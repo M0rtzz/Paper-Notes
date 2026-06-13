@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iWorld-Bench: A Benchmark for Interactive World Models with a Unified Action Generation Framework
 description: >-
-  [ICML 2026][世界模型] iWorld-Bench 是首个专门为"交互式世界模型"设计的统一评测基准，提出一套能把文本 / one-hot / 相机内外参三种动作输入折算到同一指令空间的 Action Generation Framework，并基于 330K 视频精挑 4.9K 任务、9 项指标…
+  [ICML 2026][世界模型] iWorld-Bench 是首个专门为"交互式世界模型"设计的统一评测基准，提出一套能把文本 / one-hot / 相机内外参三种动作输入折算到同一指令空间的 Action Generation Framework，并基于 330K 视频精挑 4.9K 任务、9 项指标，对 14 个主流模型做了全维度对比。
 tags:
   - "ICML 2026"
   - "世界模型"

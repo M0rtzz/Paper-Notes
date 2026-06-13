@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaRank: Adaptive Rank Pruning for Enhanced Model Merging
 description: >-
-  [ICLR 2026][模型压缩][模型合并] 提出 AdaRank，用可学习二值掩码自适应选择 task vector 的奇异分量（取代启发式 top-k），结合测试时熵最小化优化，大幅缓解多任务模型合并中的任务间干扰，在 ViT-B/32 上达到 89.4% 准确率。
+  [ICLR 2026][模型压缩][模型合并] 提出 AdaRank，用可学习二值掩码自适应选择 task vector 的奇异分量（取代启发式 top-k），结合测试时熵最小化优化，大幅缓解多任务模型合并中的任务间干扰，在 ViT-B/32 上达到 89.4% 准确率。 领域现状：模型合并（Model Merging）将多…
 tags:
   - "ICLR 2026"
   - "模型压缩"

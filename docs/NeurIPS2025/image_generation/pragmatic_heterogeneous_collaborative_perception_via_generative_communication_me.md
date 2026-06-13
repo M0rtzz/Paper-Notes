@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pragmatic Heterogeneous Collaborative Perception via Generative Communication Mechanism
 description: >-
-  [NeurIPS 2025][图像生成][异构协作感知] 提出GenComm——一种基于生成式通信机制的异构多智能体协作感知方法，通过空间消息提取和条件扩散模型在ego端生成对齐的协作者特征，无需修改原始网络即可以极低代价接纳新异构智能体。
+  [NeurIPS 2025][图像生成][异构协作感知] 提出GenComm——一种基于生成式通信机制的异构多智能体协作感知方法，通过空间消息提取和条件扩散模型在ego端生成对齐的协作者特征，无需修改原始网络即可以极低代价接纳新异构智能体。 多智能体协作感知通过信息共享提升单个智能体的感知能力，但实际场景中不同智能体采用不同…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

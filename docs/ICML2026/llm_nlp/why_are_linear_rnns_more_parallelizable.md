@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Why Are Linear RNNs More Parallelizable?
 description: >-
-  [ICML2026][LLM/NLP][Linear RNN] 这篇论文用电路复杂度严格解释了为什么 Linear RNN 比传统非线性 RNN 更容易像 Transformer 一样并行：LRNN 可落在近似 log-depth 的算术电路类中…
+  [ICML2026][LLM 其他][Linear RNN] 这篇论文用电路复杂度严格解释了为什么 Linear RNN 比传统非线性 RNN 更容易像 Transformer 一样并行：LRNN 可落在近似 log-depth 的算术电路类中，而非线性 RNN 能表达更难并行的 logspace / polynomial-time 完全问题，二者形成表达力与并行性的基本权衡。
 tags:
   - "ICML2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Linear RNN"
   - "并行化"
   - "电路复杂度"

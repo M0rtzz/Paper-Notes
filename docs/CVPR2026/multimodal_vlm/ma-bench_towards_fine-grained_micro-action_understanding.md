@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MA-Bench: Towards Fine-grained Micro-Action Understanding
 description: >-
-  [CVPR 2026][多模态VLM][微动作理解] 提出 MA-Bench 微动作理解基准，包含 1000 个视频和 12000 个结构化 QA 对，通过"感知-理解-推理"三层评估架构系统测试 23 个 MLLM 的细粒度微动作理解能力…
+  [CVPR 2026][多模态VLM][微动作理解] 提出 MA-Bench 微动作理解基准，包含 1000 个视频和 12000 个结构化 QA 对，通过"感知-理解-推理"三层评估架构系统测试 23 个 MLLM 的细粒度微动作理解能力，并构建 20.5K 训练语料 MA-Bench-Train 用于模型微调提升。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

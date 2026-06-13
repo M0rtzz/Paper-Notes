@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SiameseNorm: Breaking the Barrier to Reconciling Pre/Post-Norm
 description: >-
-  [ICML 2026][LLM效率][SiameseNorm] 针对 Pre-Norm 与 Post-Norm 在单流架构内无法共存的结构性矛盾，作者提出双流残差架构 SiameseNorm，让一条未归一化流保留 Pre-Norm 的恒等梯度高速路、一条归一化流保留 Post-Norm 的主路径表征控制…
+  [ICML 2026][LLM效率][SiameseNorm] 针对 Pre-Norm 与 Post-Norm 在单流架构内无法共存的结构性矛盾，作者提出双流残差架构 SiameseNorm，让一条未归一化流保留 Pre-Norm 的恒等梯度高速路、一条归一化流保留 Post-Norm 的主路径表征控制，通过共享残差块耦合两条流，在 400M~15B 稠密/MoE 语言模型、ViT、DiT 上均稳定优于 Pre-Norm 基线，开销可忽略。
 tags:
   - "ICML 2026"
   - "LLM效率"

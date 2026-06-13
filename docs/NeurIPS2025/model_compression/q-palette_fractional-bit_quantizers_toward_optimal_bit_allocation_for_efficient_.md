@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment
 description: >-
-  [NeurIPS 2025][模型压缩][模型量化] 从信息论角度推导高斯化权重的最优比特分配,提出 Q-Palette 分数位量化器集合和混合方案量化框架,在 LLM 推理中实现近最优的量化性能和推理加速。
+  [NeurIPS 2025][模型压缩][模型量化] 从信息论角度推导高斯化权重的最优比特分配,提出 Q-Palette 分数位量化器集合和混合方案量化框架,在 LLM 推理中实现近最优的量化性能和推理加速。 权重后训练量化（Weight-only PTQ）是降低 LLM 推理延迟和内存占用的关键技术,尤其适用于内存受限的边…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

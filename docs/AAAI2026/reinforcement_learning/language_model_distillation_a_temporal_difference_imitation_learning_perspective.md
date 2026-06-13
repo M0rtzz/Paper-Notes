@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Language Model Distillation: A Temporal Difference Imitation Learning Perspective
 description: >-
-  [AAAI 2026][强化学习][知识蒸馏] 从模仿学习/逆强化学习的视角重新审视语言模型蒸馏，提出利用教师模型输出分布的稀疏性（top-p token集中了96%以上概率质量），构建top-p MDP进行时序差分（TD）学习，证明了在缩减动作空间中的最优策略具有可界的次优性保证…
+  [AAAI 2026][强化学习][知识蒸馏] 从模仿学习/逆强化学习的视角重新审视语言模型蒸馏，提出利用教师模型输出分布的稀疏性（top-p token集中了96%以上概率质量），构建top-p MDP进行时序差分（TD）学习，证明了在缩减动作空间中的最优策略具有可界的次优性保证，并以IQL算法为基础实现的Bellman Distill方法在多个模型家族上超越了现有蒸馏方法。
 tags:
   - "AAAI 2026"
   - "强化学习"

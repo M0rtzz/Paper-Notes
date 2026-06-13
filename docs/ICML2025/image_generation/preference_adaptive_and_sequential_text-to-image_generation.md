@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Adaptive and Sequential Text-to-Image Generation
 description: >-
-  [ICML 2025][图像生成][文本到图像] PASTA 将个性化 T2I 生成建模为多轮序列决策问题，通过 VLM 生成候选 prompt + EM 训练用户偏好模型 + IQL 离线 RL 学习价值函数，在人类评估中显著优于基线 LMM。
+  [ICML 2025][图像生成][文本到图像] PASTA 将个性化 T2I 生成建模为多轮序列决策问题，通过 VLM 生成候选 prompt + EM 训练用户偏好模型 + IQL 离线 RL 学习价值函数，在人类评估中显著优于基线 LMM。 领域现状： T2I 扩散模型 (Stable Diffusion XL 等)…
 tags:
   - "ICML 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Watch Your Step: Information Injection in Diffusion Models via Shadow Timestep Embedding
 description: >-
-  [ICML 2026][图像生成][Timestep embedding] 本文揭示扩散模型里一直被忽视的"时间步嵌入"其实是一条尚未被占用的信息侧信道——通过把训练时的 timestep 范围扩展到一个"影子区间"（shadow timestep）并把另一个数据分布绑定到该区间…
+  [ICML 2026][图像生成][Timestep embedding] 本文揭示扩散模型里一直被忽视的"时间步嵌入"其实是一条尚未被占用的信息侧信道——通过把训练时的 timestep 范围扩展到一个"影子区间"（shadow timestep）并把另一个数据分布绑定到该区间，可以在不改变 scheduler 接口的前提下，让同一个 diffusion 模型在显式区间生成正常图、在影子区间生成"隐藏"图，既可做隐蔽后门攻击也可做模型水印验证；同时给出基于正弦位置编码的互相干（mutual coherence）理论分析，解释为什么两个不相交区间能携带独立信息。
 tags:
   - "ICML 2026"
   - "图像生成"

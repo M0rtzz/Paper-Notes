@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Select, Hypothesize and Verify: Towards Verified Neuron Concept Interpretation
 description: >-
-  [CVPR 2026][LLM安全][神经元解释] 提出 SIEVE（Select–Hypothesize–Verify）框架，通过筛选高激活样本、生成概念假设、再用文生图验证的闭环流程来解释神经元功能，生成的概念激活对应神经元的概率约为现有 SOTA 的 1.5 倍。
+  [CVPR 2026][LLM安全][神经元解释] 提出 SIEVE（Select–Hypothesize–Verify）框架，通过筛选高激活样本、生成概念假设、再用文生图验证的闭环流程来解释神经元功能，生成的概念激活对应神经元的概率约为现有 SOTA 的 1.5 倍。 1. 领域现状：神经网络可解释性研究中…
 tags:
   - "CVPR 2026"
   - "LLM安全"

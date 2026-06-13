@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGIC: A Self-Guided Iterative Calibration Framework for RAG
 description: >-
-  [ACL 2025][信息检索/RAG][自校准] SGIC 利用 LLM 的 token 级不确定性分数（文档相关性不确定性 + 答案置信度不确定性）作为自校准的引导信号，通过迭代将前一轮答案及其不确定性分数注入提示中触发上下文推理…
+  [ACL 2025][信息检索/RAG][自校准] SGIC 利用 LLM 的 token 级不确定性分数（文档相关性不确定性 + 答案置信度不确定性）作为自校准的引导信号，通过迭代将前一轮答案及其不确定性分数注入提示中触发上下文推理，在 HotpotQA 上将 Llama2-7B 的 EM 从 69.1% 提升到 77.2%（+8.1%），对 GPT-4o 也有 2.8% 的提升。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

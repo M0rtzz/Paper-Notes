@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FALQON: Accelerating LoRA Fine-tuning with Low-Bit Floating-Point Arithmetic
 description: >-
-  [NeurIPS 2025][模型压缩][LoRA加速] FALQON 通过将 LoRA 适配器直接融合 (meld) 到 FP8 量化的骨干权重中，消除了单独 LoRA 路径引入的小矩阵量化开销，结合高效梯度计算和行级代理更新机制，实现了相比现有量化 LoRA 方法约 3 倍的训练加速。
+  [NeurIPS 2025][模型压缩][LoRA加速] FALQON 通过将 LoRA 适配器直接融合 (meld) 到 FP8 量化的骨干权重中，消除了单独 LoRA 路径引入的小矩阵量化开销，结合高效梯度计算和行级代理更新机制，实现了相比现有量化 LoRA 方法约 3 倍的训练加速。 领域现状：FP8 低精度格式在现代…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion-Based Electromagnetic Inverse Design of Scattering Structured Media
 description: >-
-  [NeurIPS 2025][图像生成][条件扩散模型] 提出基于条件扩散模型的电磁逆设计框架，从目标微分散射截面 (DSCS) 直接生成介电球超表面几何结构，绕过昂贵的迭代优化，并自然处理逆问题的非唯一性，性能优于 CMA-ES 进化优化且速度快数个数量级。
+  [NeurIPS 2025][图像生成][条件扩散模型] 提出基于条件扩散模型的电磁逆设计框架，从目标微分散射截面 (DSCS) 直接生成介电球超表面几何结构，绕过昂贵的迭代优化，并自然处理逆问题的非唯一性，性能优于 CMA-ES 进化优化且速度快数个数量级。 - 超表面的价值：工程超表面可精确控制电磁波…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

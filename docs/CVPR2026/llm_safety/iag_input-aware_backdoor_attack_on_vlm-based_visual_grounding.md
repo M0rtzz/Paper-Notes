@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IAG: Input-aware Backdoor Attack on VLM-based Visual Grounding
 description: >-
-  [CVPR 2026][LLM安全][后门攻击] 提出IAG，首个针对VLM视觉定位的多目标后门攻击方法，通过文本条件U-Net动态生成输入感知触发器，将任意指定目标物体的语义信息嵌入视觉输入中，在12种设置下的11种达到最高攻击成功率。
+  [CVPR 2026][LLM安全][后门攻击] 提出IAG，首个针对VLM视觉定位的多目标后门攻击方法，通过文本条件U-Net动态生成输入感知触发器，将任意指定目标物体的语义信息嵌入视觉输入中，在12种设置下的11种达到最高攻击成功率。 1. 领域现状： VLM-based视觉定位(Visual Grounding)已被广…
 tags:
   - "CVPR 2026"
   - "LLM安全"

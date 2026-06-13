@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convergence of Muon with Newton-Schulz
 description: >-
-  [ICLR2026][优化/理论][Muon optimizer] 首次为实际使用的 Muon 优化器（使用 Newton-Schulz 近似而非精确 SVD 极坐标分解）提供非凸收敛保证：证明收敛速率匹配 SVD 理想化版本（差一个常数因子），该因子随 Newton-Schulz 步数 $q$ 双指数衰减…
+  [ICLR2026][优化/理论][Muon optimizer] 首次为实际使用的 Muon 优化器（使用 Newton-Schulz 近似而非精确 SVD 极坐标分解）提供非凸收敛保证：证明收敛速率匹配 SVD 理想化版本（差一个常数因子），该因子随 Newton-Schulz 步数 $q$ 双指数衰减，且 Muon 比向量对应物 SGD-M 少 $\sqrt{r}$ 倍秩损失。
 tags:
   - "ICLR2026"
   - "优化/理论"

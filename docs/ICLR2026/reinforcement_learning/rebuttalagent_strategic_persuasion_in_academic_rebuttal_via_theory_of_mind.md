@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RebuttalAgent: Strategic Persuasion in Academic Rebuttal via Theory of Mind
 description: >-
-  [ICLR2026][强化学习][academic rebuttal] 首次将心智理论（ToM）引入学术 rebuttal，提出 ToM-Strategy-Response 三阶段框架：先建模审稿人心理状态，再制定说服策略，最后生成证据支撑的回复，结合自奖励 RL 训练和专用 Rebuttal-RM 评估器…
+  [ICLR2026][强化学习][academic rebuttal] 首次将心智理论（ToM）引入学术 rebuttal，提出 ToM-Strategy-Response 三阶段框架：先建模审稿人心理状态，再制定说服策略，最后生成证据支撑的回复，结合自奖励 RL 训练和专用 Rebuttal-RM 评估器，平均指标超越基座模型 18.3%。
 tags:
   - "ICLR2026"
   - "强化学习"

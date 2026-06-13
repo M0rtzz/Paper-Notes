@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][科学发现] 提出NewtonBench，一个包含12个物理领域324个任务的LLM科学法则发现基准，通过"反事实法则平移"生成可防止记忆化的新颖任务，要求智能体通过交互式实验探索发现隐藏的物理方程…
+  [ICLR 2026][LLM Agent][科学发现] 提出NewtonBench，一个包含12个物理领域324个任务的LLM科学法则发现基准，通过"反事实法则平移"生成可防止记忆化的新颖任务，要求智能体通过交互式实验探索发现隐藏的物理方程，发现GPT-5最佳（75.9%符号准确率）但在复杂系统中急剧退化（40.3%），且代码工具对强模型反而有负面效果。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

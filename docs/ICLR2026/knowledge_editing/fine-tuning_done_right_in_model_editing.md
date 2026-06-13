@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-tuning Done Right in Model Editing
 description: >-
-  [ICLR 2026][知识编辑][Model Editing] 揭示模型编辑中 fine-tuning 被低估的根因是错误的训练 pipeline（深度优先逐样本优化），修正为标准的广度优先 mini-batch 训练后，配合局部化参数调优形成 LocFT-BF…
+  [ICLR 2026][知识编辑][Model Editing] 揭示模型编辑中 fine-tuning 被低估的根因是错误的训练 pipeline（深度优先逐样本优化），修正为标准的广度优先 mini-batch 训练后，配合局部化参数调优形成 LocFT-BF，首次支持 10 万次连续编辑和 72B 模型规模。
 tags:
   - "ICLR 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering
 description: >-
-  [ECCV2024][视频生成][blind video deflickering] 提出 BlazeBVD，利用经典 Scale-Time Equalization (STE) 在光照直方图空间提取 deflickering 先验（滤波光照图、曝光图、闪烁帧索引）…
+  [ECCV2024][视频生成][blind video deflickering] 提出 BlazeBVD，利用经典 Scale-Time Equalization (STE) 在光照直方图空间提取 deflickering 先验（滤波光照图、曝光图、闪烁帧索引），将复杂的视频时空学习简化为 2D 空间网络逐帧处理 + 轻量 3D 时序一致性网络，在盲视频去闪烁任务上实现 SOTA 质量且推理速度比基线快 10 倍以上。
 tags:
   - "ECCV2024"
   - "视频生成"

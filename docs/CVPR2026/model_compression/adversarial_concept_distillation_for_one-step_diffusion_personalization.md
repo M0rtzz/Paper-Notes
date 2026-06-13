@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Adversarial Concept Distillation for One-Step Diffusion Personalization
 description: >-
-  [CVPR 2026][模型压缩][单步扩散模型] OPAD 首次解决单步扩散模型的个性化问题（1-SDP），通过教师-学生联合训练 + 对齐损失 + 对抗监督实现单步高质量概念生成，并引入协作学习阶段利用学生生成样本反馈增强双方。
+  [CVPR 2026 Findings][模型压缩][单步扩散模型] OPAD 首次解决单步扩散模型的个性化问题（1-SDP），通过教师-学生联合训练 + 对齐损失 + 对抗监督实现单步高质量概念生成，并引入协作学习阶段利用学生生成样本反馈增强双方。 1. 领域现状：大规模生成模型在T2I生成中占据主导地位…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "模型压缩"
   - "单步扩散模型"
   - "概念学习"

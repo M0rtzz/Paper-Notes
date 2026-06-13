@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset
 description: >-
-  [CVPR 2026][图像恢复][红外图像超分辨率] 提出 Real-IISR 统一自回归框架，通过热-结构引导模块、条件自适应码本和热序一致性损失解决真实红外图像超分辨率的特有挑战，并构建了 FLIR-IISR 数据集（1457 对真实 LR-HR 红外图像）。
+  [CVPR 2026][图像恢复][红外图像超分辨率] 提出 Real-IISR 统一自回归框架，通过热-结构引导模块、条件自适应码本和热序一致性损失解决真实红外图像超分辨率的特有挑战，并构建了 FLIR-IISR 数据集（1457 对真实 LR-HR 红外图像）。 1. 领域现状：可见光图像超分辨率已有显著进展…
 tags:
   - "CVPR 2026"
   - "图像恢复"

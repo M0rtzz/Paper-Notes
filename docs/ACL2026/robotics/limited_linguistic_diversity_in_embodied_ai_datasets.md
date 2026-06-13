@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Limited Linguistic Diversity in Embodied AI Datasets
 description: >-
-  [ACL 2026][机器人][VLA 数据集审计] 本文对主流 VLA 训练语料（RT-1、BRIDGE、TacoPlay、Language Table、LIBERO）做系统性"语言多样性体检"…
+  [ACL 2026][机器人][VLA 数据集审计] 本文对主流 VLA 训练语料（RT-1、BRIDGE、TacoPlay、Language Table、LIBERO）做系统性"语言多样性体检"，从词汇/语义/句法三维度量化发现：VLA 数据**仅 < 2% 指令唯一、RT-1 整库只有 49 个 unique word、否定/条件句 < 1%**，远逊于指令调优语料（OASST2 93%、Alpaca 99.8% 唯一），这种"模板化贫乏"或许正是 VLA 模型对 paraphrase 脆弱、泛化失败的根源。
 tags:
   - "ACL 2026"
   - "机器人"

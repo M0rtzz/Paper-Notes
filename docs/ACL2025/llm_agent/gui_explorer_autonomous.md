@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent
 description: >-
-  [ACL 2025][LLM Agent][GUI agent] 提出 GUI-explorer，一个无需训练的 GUI agent，通过自主探索收集功能感知的交互轨迹，并以无监督方式从状态转换三元组中挖掘 transition-aware 知识…
+  [ACL 2025][LLM Agent][GUI agent] 提出 GUI-explorer，一个无需训练的 GUI agent，通过自主探索收集功能感知的交互轨迹，并以无监督方式从状态转换三元组中挖掘 transition-aware 知识，在 SPA-Bench 和 AndroidWorld 上分别达到 53.7% 和 47.4% 的任务成功率。
 tags:
   - "ACL 2025"
   - "LLM Agent"

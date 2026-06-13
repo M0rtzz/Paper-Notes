@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhyScensis: Physics-Augmented LLM Agents for Complex Physical Scene Arrangement
 description: >-
-  [ICLR 2026][LLM Agent][3D scene generation] 提出 PhyScensis，一个结合物理引擎的 LLM agent 框架，通过空间与物理谓词驱动的求解器生成高复杂度、物理准确的 3D 场景，在视觉质量、语义正确性和物理精度上显著超越先前方法，并成功用于机器人操作策略训练…
+  [ICLR 2026][LLM Agent][3D scene generation] 提出 PhyScensis，一个结合物理引擎的 LLM agent 框架，通过空间与物理谓词驱动的求解器生成高复杂度、物理准确的 3D 场景，在视觉质量、语义正确性和物理精度上显著超越先前方法，并成功用于机器人操作策略训练。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

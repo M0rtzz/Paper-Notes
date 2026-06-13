@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TabReX: Tabular Referenceless eXplainable Evaluation
 description: >-
-  [ACL 2026][LLM评测][表格评估指标] 提出 TabReX，一种基于图推理的无参考表格生成评估框架，将源文本和生成表格转化为知识图谱三元组并对齐，计算可解释的属性驱动分数，在人类判断相关性上大幅超越现有方法；同时构建 TabReX-Bench 大规模基准。
+  [ACL 2026][LLM评测][表格评估指标] 提出 TabReX，一种基于图推理的无参考表格生成评估框架，将源文本和生成表格转化为知识图谱三元组并对齐，计算可解释的属性驱动分数，在人类判断相关性上大幅超越现有方法；同时构建 TabReX-Bench 大规模基准。 领域现状：随着 LLM 越来越多地被用于生成或转换结构化…
 tags:
   - "ACL 2026"
   - "LLM评测"

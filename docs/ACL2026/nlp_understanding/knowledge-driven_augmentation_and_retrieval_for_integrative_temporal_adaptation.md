@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge-driven Augmentation and Retrieval for Integrative Temporal Adaptation
 description: >-
-  [ACL 2026][NLP理解][时序偏移] KARITA 把"时序漂移"拆成不确定性、特征距离和本体术语稀有度三种互补信号，对每个被命中的目标样本回溯检索语义相近的源样本，再用 LLM + 领域本体（MeSH / EuroVoc / CSO）生成同义词改写做数据增强…
+  [ACL 2026][NLP理解][时序偏移] KARITA 把"时序漂移"拆成不确定性、特征距离和本体术语稀有度三种互补信号，对每个被命中的目标样本回溯检索语义相近的源样本，再用 LLM + 领域本体（MeSH / EuroVoc / CSO）生成同义词改写做数据增强，从而以纯数据驱动的方式把源时段模型迁移到未来时段，在临床、法律、科学三类长跨度多标签分类数据上稳定优于强基线。
 tags:
   - "ACL 2026"
   - "NLP理解"

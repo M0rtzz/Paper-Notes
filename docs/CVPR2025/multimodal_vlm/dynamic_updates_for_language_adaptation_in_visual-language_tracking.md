@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Updates for Language Adaptation in Visual-Language Tracking
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言跟踪] 提出DUTrack，通过动态更新多模态参考信息（模板帧+语言描述）来解决视觉语言跟踪中静态参考与动态目标之间的语义不一致问题，首次让VL跟踪器在LaSOT上超越最佳纯视觉跟踪器。
+  [CVPR 2025][多模态VLM][视觉语言跟踪] 提出DUTrack，通过动态更新多模态参考信息（模板帧+语言描述）来解决视觉语言跟踪中静态参考与动态目标之间的语义不一致问题，首次让VL跟踪器在LaSOT上超越最佳纯视觉跟踪器。 视觉语言(VL)跟踪依靠自然语言描述和模板帧来定位目标。然而现有方法存在一个根本性缺陷：多…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

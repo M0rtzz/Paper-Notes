@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sketchtopia: A Dataset and Foundational Agents for Benchmarking Asynchronous Multimodal Communication with Iconic Feedback
 description: >-
-  [CVPR 2025][LLM Agent][草图] 提出 Sketchtopia 大规模数据集（20K+ 游戏会话、263K 草图、916 名玩家）和三组件 Agent 框架（ActionDecider + DRAWBOT + GUESSBOT）…
+  [CVPR 2025][LLM Agent][草图] 提出 Sketchtopia 大规模数据集（20K+ 游戏会话、263K 草图、916 名玩家）和三组件 Agent 框架（ActionDecider + DRAWBOT + GUESSBOT），在 Pictionary 场景下研究异步、目标驱动的多模态协作通信，引入 AAO/FRS/MATS 三个新评估指标。
 tags:
   - "CVPR 2025"
   - "LLM Agent"

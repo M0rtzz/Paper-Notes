@@ -2,9 +2,9 @@
 title: >-
   [论文解读] E2E-GMNER: End-to-End Generative Grounded Multimodal Named Entity Recognition
 description: >-
-  [ACL 2026][多模态VLM][多模态命名实体识别] 提出E2E-GMNER，首个将实体识别、语义分类、视觉定位和隐式知识推理统一在单一多模态大语言模型中的端到端GMNER框架，通过CoT推理自适应判断视觉/知识线索的可用性，并引入高斯风险感知框扰动（GRBP）提升生成式框预测的鲁棒性。
+  [ACL 2026 Findings][多模态VLM][多模态命名实体识别] 提出E2E-GMNER，首个将实体识别、语义分类、视觉定位和隐式知识推理统一在单一多模态大语言模型中的端到端GMNER框架，通过CoT推理自适应判断视觉/知识线索的可用性，并引入高斯风险感知框扰动（GRBP）提升生成式框预测的鲁棒性。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多模态命名实体识别"
   - "端到端生成"

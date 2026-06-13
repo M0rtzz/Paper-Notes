@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering
 description: >-
-  [ECCV 2024][图像生成] TextDiffuser-2 利用两个语言模型分别进行布局规划和布局编码，实现了更灵活、更自动化、更多样化的视觉文本渲染，在保持文本准确性的同时大幅提升了字体风格多样性。
+  [ECCV 2024][图像生成] TextDiffuser-2 利用两个语言模型分别进行布局规划和布局编码，实现了更灵活、更自动化、更多样化的视觉文本渲染，在保持文本准确性的同时大幅提升了字体风格多样性。 扩散模型在图像合成领域取得了巨大成功，但在视觉文本渲染方面仍面临挑战。现有方法存在三大缺陷： 1. 灵活性和自动化不足…
 tags:
   - "ECCV 2024"
   - "图像生成"

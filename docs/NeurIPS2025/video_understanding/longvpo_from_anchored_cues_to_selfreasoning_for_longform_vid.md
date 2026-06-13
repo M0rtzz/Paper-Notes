@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongVPO: From Anchored Cues to Self-Reasoning for Long-Form Video Preference Optimization
 description: >-
-  [NeurIPS 2025][视频理解][长视频理解] LongVPO提出两阶段DPO框架，Stage 1通过锚定短片段构造伪长视频偏好数据并引入anchor-only参考模型近似解决上下文长度不匹配问题，Stage 2通过递归字幕生成和多片段推理任务在真实长视频上自训练…
+  [NeurIPS 2025][视频理解][长视频理解] LongVPO提出两阶段DPO框架，Stage 1通过锚定短片段构造伪长视频偏好数据并引入anchor-only参考模型近似解决上下文长度不匹配问题，Stage 2通过递归字幕生成和多片段推理任务在真实长视频上自训练，仅用16K合成样本即超越大规模监督训练的长视频模型。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

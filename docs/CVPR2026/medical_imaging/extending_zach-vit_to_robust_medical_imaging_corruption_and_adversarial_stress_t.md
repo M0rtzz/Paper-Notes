@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extending ZACH-ViT to Robust Medical Imaging: Corruption and Adversarial Stress Testing in Low-Data Regimes
 description: >-
-  [CVPR 2026 Workshop (PHAROS-AIF-MIH)][医学图像][Transformer] 在低数据医学影像场景下，对置换不变的紧凑型 ViT 架构 ZACH-ViT 进行首次鲁棒性扩展评估。在 7 个 MedMNIST 数据集上…
+  [CVPR 2026 Workshop (PHAROS-AIF-MIH)][医学图像][Transformer] 在低数据医学影像场景下，对置换不变的紧凑型 ViT 架构 ZACH-ViT 进行首次鲁棒性扩展评估。在 7 个 MedMNIST 数据集上，ZACH-ViT 在干净数据和常见损坏下均排名第一（Mean Rank 1.57），在 FGSM 下排名最佳（2.00），PGD 下排名第二（2.29）。
 tags:
   - "CVPR 2026 Workshop (PHAROS-AIF-MIH)"
   - "医学图像"

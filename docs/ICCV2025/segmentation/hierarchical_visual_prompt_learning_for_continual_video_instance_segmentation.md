@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Visual Prompt Learning for Continual Video Instance Segmentation
 description: >-
-  [ICCV 2025][语义分割][持续学习] 提出持续视频实例分割（CVIS）新问题，设计分层视觉提示学习（HVPL）模型，通过帧级和视频级两个层面的遗忘补偿机制，有效缓解旧类别的灾难性遗忘。
+  [ICCV 2025][语义分割][持续学习] 提出持续视频实例分割（CVIS）新问题，设计分层视觉提示学习（HVPL）模型，通过帧级和视频级两个层面的遗忘补偿机制，有效缓解旧类别的灾难性遗忘。 视频实例分割（VIS）需要在连续帧中同时检测、分割和跟踪物体实例。然而，现有方法假设类别集合固定不变，这与现实场景不符——新类别会…
 tags:
   - "ICCV 2025"
   - "语义分割"

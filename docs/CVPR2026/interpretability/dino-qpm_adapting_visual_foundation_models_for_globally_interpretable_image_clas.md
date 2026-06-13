@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification
 description: >-
-  [CVPR 2026][可解释性][可解释分类] 提出 DINO-QPM，一种轻量级可解释性适配器，将冻结的 DINOv2 骨干网络的复杂高维特征转换为对比性的、类无关的可解释表示，通过二次规划进行稀疏特征选择和类级特征分配…
+  [CVPR 2026][可解释性][可解释分类] 提出 DINO-QPM，一种轻量级可解释性适配器，将冻结的 DINOv2 骨干网络的复杂高维特征转换为对比性的、类无关的可解释表示，通过二次规划进行稀疏特征选择和类级特征分配，在 CUB-2011 和 Stanford Cars 上同时超越了 DINOv2 线性探测的准确率和所有可比方法的可解释性。
 tags:
   - "CVPR 2026"
   - "可解释性"

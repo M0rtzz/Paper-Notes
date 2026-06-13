@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Reliable Advertising Image Generation Using Human Feedback
 description: >-
-  [ECCV 2024][图像生成][广告图像生成] 构建百万级人工标注广告图像数据集 RF1M，提出多模态 RFNet 自动检测生成图像的可用性，并设计 Consistent Condition 正则化驱动的 RFFT 微调方法，将广告图像可用率从 56.4% 提升至 85.5%。
+  [ECCV 2024][图像生成][广告图像生成] 构建百万级人工标注广告图像数据集 RF1M，提出多模态 RFNet 自动检测生成图像的可用性，并设计 Consistent Condition 正则化驱动的 RFFT 微调方法，将广告图像可用率从 56.4% 提升至 85.5%。 电商领域中吸引人的广告图像对提升点击率至关…
 tags:
   - "ECCV 2024"
   - "图像生成"

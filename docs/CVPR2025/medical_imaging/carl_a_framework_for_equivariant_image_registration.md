@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CARL: A Framework for Equivariant Image Registration
 description: >-
-  [CVPR 2025][医学图像][图像配准] 提出 CARL（Coordinate Attention with Refinement Layers）——通过坐标注意力机制实现对平移和旋转的 [W,U] 等变性的深度配准框架，在多步配准架构中仅替换第一步即获得全局 [W,U] 等变性…
+  [CVPR 2025][医学图像][图像配准] 提出 CARL（Coordinate Attention with Refinement Layers）——通过坐标注意力机制实现对平移和旋转的 [W,U] 等变性的深度配准框架，在多步配准架构中仅替换第一步即获得全局 [W,U] 等变性，在腹部、肺部和脑部三个医学配准基准上匹配或超越 SOTA，尤其在具有不同视野的腹部配准任务上大幅领先。
 tags:
   - "CVPR 2025"
   - "医学图像"

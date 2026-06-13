@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaming LLMs to Detect and Mitigate Hallucinations
 description: >-
-  [NeurIPS 2025][幻觉检测][多模型一致性] 将单模型一致性方法（Self-Consistency + Semantic Entropy）推广到多个异构 LLM 的"联盟"设置，通过聚合不同训练背景的模型响应来打破单模型一致性幻觉，在 15 个 LLM 组成的模型池中评估大量联盟组合…
+  [NeurIPS 2025][幻觉检测][多模型一致性] 将单模型一致性方法（Self-Consistency + Semantic Entropy）推广到多个异构 LLM 的"联盟"设置，通过聚合不同训练背景的模型响应来打破单模型一致性幻觉，在 15 个 LLM 组成的模型池中评估大量联盟组合，发现匹配的强模型联盟在 92% 的情况下超越最强单模型基线，同时推理成本更低。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

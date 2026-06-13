@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HybridGS: Decoupling Transients and Statics with 2D and 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] HybridGS首次提出混合2D+3D高斯表示，用多视角一致的3D高斯建模静态场景、用单视图独立的2D高斯建模瞬态物体，配合多视角监督和多阶段训练实现了含干扰元素场景下SOTA的新视角合成质量。
+  [CVPR 2025][3D视觉][3D高斯溅射] HybridGS首次提出混合2D+3D高斯表示，用多视角一致的3D高斯建模静态场景、用单视图独立的2D高斯建模瞬态物体，配合多视角监督和多阶段训练实现了含干扰元素场景下SOTA的新视角合成质量。 领域现状：3D高斯溅射（3DGS）在新视角合成中取得了优异效果…
 tags:
   - "CVPR 2025"
   - "3D视觉"

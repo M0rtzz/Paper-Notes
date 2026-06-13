@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Recent Advances in Speech Language Models: A Survey
 description: >-
-  [ACL 2025][LLM/NLP][speech language model] 首篇 Speech Language Models (SpeechLMs) 综合综述，系统梳理从"ASR+LLM+TTS"级联架构到端到端语音语言模型的演进…
+  [ACL 2025][LLM 其他][speech language model] 首篇 Speech Language Models (SpeechLMs) 综合综述，系统梳理从"ASR+LLM+TTS"级联架构到端到端语音语言模型的演进，提出按三大组件（speech tokenizer / language model / vocoder）和训练方案分类的分类体系，覆盖下游能力、评估指标、挑战与未来方向。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "speech language model"
   - "end-to-end speech"
   - "speech tokenizer"

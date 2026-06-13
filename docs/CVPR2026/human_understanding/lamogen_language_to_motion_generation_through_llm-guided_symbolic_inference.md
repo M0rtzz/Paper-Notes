@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaMoGen: Language to Motion Generation Through LLM-Guided Symbolic Inference
 description: >-
-  [CVPR 2026][人体理解][文本驱动动作生成] 提出 LabanLite 符号动作表示和 LaMoGen 框架，首次让 LLM 通过可解释的 Laban 符号推理自主组合动作序列，在时序精度和可控性上超越传统文本-动作联合嵌入方法。
+  [CVPR 2026][人体理解][文本驱动动作生成] 提出 LabanLite 符号动作表示和 LaMoGen 框架，首次让 LLM 通过可解释的 Laban 符号推理自主组合动作序列，在时序精度和可控性上超越传统文本-动作联合嵌入方法。 领域现状：文本驱动人体动作生成（Text-to-Motion）近年取得显著进展…
 tags:
   - "CVPR 2026"
   - "人体理解"

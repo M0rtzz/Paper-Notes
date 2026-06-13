@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation
 description: >-
-  [ICML 2025][优化/理论][noise-contrastive estimation] 以f-NCE为基础提出alpha-CentNCE和f-CondNCE两个估计器家族，统一了MLE、MC-MLE、GlobalGISO、pseudo-likelihood、ISO等学习非归一化分布的方法…
+  [ICML 2025][优化/理论][noise-contrastive estimation] 以f-NCE为基础提出alpha-CentNCE和f-CondNCE两个估计器家族，统一了MLE、MC-MLE、GlobalGISO、pseudo-likelihood、ISO等学习非归一化分布的方法，纠正了CondNCE与score matching的误导性联系，并为有界指数族首次建立有限样本收敛保证。
 tags:
   - "ICML 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-Preserving Unsupervised Alignment for Heterogeneous Foundation Models
 description: >-
-  [ICML 2026][语义分割][视觉基础模型] GPUA 把 CLIP 这种语义有余而局部精度不足的 VLM 和 DINOv3 这种细粒度足但缺语义的 VFM 看作两种"视觉语言"，用最优传输挖软对应再解正交 Procrustes 学一个保几何的线性映射…
+  [ICML 2026][语义分割][视觉基础模型] GPUA 把 CLIP 这种语义有余而局部精度不足的 VLM 和 DINOv3 这种细粒度足但缺语义的 VFM 看作两种"视觉语言"，用最优传输挖软对应再解正交 Procrustes 学一个保几何的线性映射，把 VFM 翻译进 VLM 空间——全程无监督、不更新任何预训练参数，零样本分类平均涨 11.8%。
 tags:
   - "ICML 2026"
   - "语义分割"

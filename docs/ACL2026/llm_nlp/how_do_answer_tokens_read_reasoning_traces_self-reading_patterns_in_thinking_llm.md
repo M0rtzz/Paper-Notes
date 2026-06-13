@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How Do Answer Tokens Read Reasoning Traces? Self-Reading Patterns in Thinking LLMs
 description: >-
-  [ACL 2026][LLM/NLP][推理模型] 本文发现推理 LLM（如 DeepSeek-R1）在定量推理中存在"良性自读"模式——答案 token 对推理痕迹的注意力呈现前移漂移（沿推理链逐步推进）和语义锚点集中（反复回顾关键步骤），且此模式与正确性强相关…
+  [ACL 2026 Findings][LLM 其他][推理模型] 本文发现推理 LLM（如 DeepSeek-R1）在定量推理中存在"良性自读"模式——答案 token 对推理痕迹的注意力呈现前移漂移（沿推理链逐步推进）和语义锚点集中（反复回顾关键步骤），且此模式与正确性强相关；基于此提出 SRQ（自读质量）驱动的免训练激活引导方法，在多个基准上提升准确率最高 2.6%。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "推理模型"
   - "自读模式"
   - "注意力分析"

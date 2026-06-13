@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iFinder: Structured Zero-Shot VLM Grounding for Dash-Cam Video Reasoning
 description: >-
-  [NeurIPS 2025][多模态VLM][行车记录仪视频分析] 提出 iFinder，一个模块化免训练框架，将行车记录仪视频解耦为感知（结构化场景表示）与推理（LLM），通过层级数据结构和三块式提示策略使 LLM 获得可解释的时空推理能力，在四个驾驶视频基准上零样本超越端到端 V-VLM…
+  [NeurIPS 2025][多模态VLM][行车记录仪视频分析] 提出 iFinder，一个模块化免训练框架，将行车记录仪视频解耦为感知（结构化场景表示）与推理（LLM），通过层级数据结构和三块式提示策略使 LLM 获得可解释的时空推理能力，在四个驾驶视频基准上零样本超越端到端 V-VLM，事故推理准确率提升高达 39%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

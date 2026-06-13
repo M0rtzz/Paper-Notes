@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CorrCLIP: Reconstructing Patch Correlations in CLIP for Open-Vocabulary Semantic Segmentation
 description: >-
-  [ICCV 2025 (Oral)][语义分割][图像分割] 揭示CLIP用于分割时patch间"类间相关性"是性能瓶颈的根本原因，提出CorrCLIP通过SAM限制patch交互范围（scope reconstruction）+DINO计算更一致的相似度值（value reconstruction）+空间/…
+  [ICCV 2025 (Oral)][语义分割][图像分割] 揭示CLIP用于分割时patch间"类间相关性"是性能瓶颈的根本原因，提出CorrCLIP通过SAM限制patch交互范围（scope reconstruction）+DINO计算更一致的相似度值（value reconstruction）+空间/语义特征增强+SAM mask后处理，在8个benchmark上training-free方法平均mIoU从48.6%提升到53.6%。
 tags:
   - "ICCV 2025 (Oral)"
   - "语义分割"

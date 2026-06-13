@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenVision: A Fully-Open, Cost-Effective Family of Advanced Vision Encoders for Multimodal Learning
 description: >-
-  [ICCV 2025][多模态VLM][CLIP] 本文发布 OpenVision——一个完全开源（数据、训练代码、权重）的视觉编码器家族（5.9M-632.1M参数），基于 CLIPS 框架和 Recap-DataComp-1B 数据集训练…
+  [ICCV 2025][多模态VLM][CLIP] 本文发布 OpenVision——一个完全开源（数据、训练代码、权重）的视觉编码器家族（5.9M-632.1M参数），基于 CLIPS 框架和 Recap-DataComp-1B 数据集训练，在集成到 LLaVA 等多模态框架时匹配甚至超越 OpenAI CLIP 和 Google SigLIP 的性能，为社区提供透明、灵活的视觉骨干替代方案。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

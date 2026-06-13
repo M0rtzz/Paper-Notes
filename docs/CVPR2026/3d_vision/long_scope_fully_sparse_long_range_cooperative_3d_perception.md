@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Long-SCOPE: Fully Sparse Long-Range Cooperative 3D Perception
 description: >-
-  [CVPR 2026][3D视觉][协同感知] Long-SCOPE提出了全稀疏的长距离协同3D感知框架，通过几何引导查询生成和上下文感知关联模块，在100-150m远距离场景下实现了SOTA性能，同时保持高效的计算和通信成本。
+  [CVPR 2026][3D视觉][协同感知] Long-SCOPE提出了全稀疏的长距离协同3D感知框架，通过几何引导查询生成和上下文感知关联模块，在100-150m远距离场景下实现了SOTA性能，同时保持高效的计算和通信成本。 领域现状：协同感知通过V2X通信扩展自动驾驶的感知范围和解决遮挡问题，但主流方法依赖密集BEV特…
 tags:
   - "CVPR 2026"
   - "3D视觉"

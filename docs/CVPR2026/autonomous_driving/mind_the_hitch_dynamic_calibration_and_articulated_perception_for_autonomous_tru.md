@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Hitch: Dynamic Calibration and Articulated Perception for Autonomous Trucks
 description: >-
-  [CVPR 2026][自动驾驶][自动驾驶卡车] 提出 dCAP 框架，通过基于 Transformer 的跨视角和时序注意力机制，实现拖挂式自动驾驶卡车中拖头与挂车之间的实时 6-DoF 相对位姿估计，并集成到 BEVFormer 中提升铰接运动下的 3D 目标检测性能（平移误差 0.452m…
+  [CVPR 2026][自动驾驶][自动驾驶卡车] 提出 dCAP 框架，通过基于 Transformer 的跨视角和时序注意力机制，实现拖挂式自动驾驶卡车中拖头与挂车之间的实时 6-DoF 相对位姿估计，并集成到 BEVFormer 中提升铰接运动下的 3D 目标检测性能（平移误差 0.452m，旋转误差 0.042 rad）。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

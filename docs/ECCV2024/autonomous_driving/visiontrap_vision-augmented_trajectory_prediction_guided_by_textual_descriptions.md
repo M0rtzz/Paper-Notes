@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisionTrap: Vision-Augmented Trajectory Prediction Guided by Textual Descriptions
 description: >-
-  [ECCV 2024][自动驾驶][trajectory prediction] 提出 VisionTrap，将环视相机图像和文本描述引入轨迹预测任务，通过 BEV 视觉语义编码器和文本驱动的去偏对比学习引导模型学习视觉语义线索（如行人姿态、转向灯等）…
+  [ECCV 2024][自动驾驶][trajectory prediction] 提出 VisionTrap，将环视相机图像和文本描述引入轨迹预测任务，通过 BEV 视觉语义编码器和文本驱动的去偏对比学习引导模型学习视觉语义线索（如行人姿态、转向灯等），在保持 53ms 实时推理的同时显著提升预测精度并发布 nuScenes-Text 数据集。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters
 description: >-
-  [ICML2025][时间序列][时间序列预测] 将时间序列重构为图像，利用 ImageNet 预训练的 MAE（Masked Autoencoder）在**零样本**设置下进行时序预测，无需任何时序数据训练即可匹敌甚至超越专门的时序基础模型。
+  [ICML2025][时间序列][时间序列预测] 将时间序列重构为图像，利用 ImageNet 预训练的 MAE（Masked Autoencoder）在零样本：设置下进行时序预测，无需任何时序数据训练即可匹敌甚至超越专门的时序基础模型。 时间序列预测（TSF）的基础模型目前有两条路线： 文本路线：复用 LLM（如 GPT4…
 tags:
   - "ICML2025"
   - "时间序列"

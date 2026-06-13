@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vascular Anatomy-aware Self-supervised Pre-training for X-ray Angiogram Analysis
 description: >-
-  [AAAI 2026][医学图像][X射线血管造影] 提出 VasoMIM，一个针对X射线血管造影的领域特定自监督预训练框架：通过解剖引导的掩码策略优先遮挡血管区域 + 解剖一致性损失保持重建图像的血管拓扑结构，结合构建的最大规模XA-170K预训练数据集…
+  [AAAI 2026][医学图像][X射线血管造影] 提出 VasoMIM，一个针对X射线血管造影的领域特定自监督预训练框架：通过解剖引导的掩码策略优先遮挡血管区域 + 解剖一致性损失保持重建图像的血管拓扑结构，结合构建的最大规模XA-170K预训练数据集，在4个下游任务6个数据集上全面超越通用SSL方法和医学SSL方法（包括在16.9亿图像上预训练的DINOv3）。
 tags:
   - "AAAI 2026"
   - "医学图像"

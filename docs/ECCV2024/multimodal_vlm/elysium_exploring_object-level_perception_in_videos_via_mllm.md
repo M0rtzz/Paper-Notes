@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Elysium: Exploring Object-level Perception in Videos via MLLM
 description: >-
-  [ECCV 2024][多模态VLM][多模态大语言模型] 提出 Elysium——一个端到端可训练的多模态大语言模型（MLLM），通过构建百万级视频目标感知数据集 ElysiumTrack-1M 和设计视觉 Token 压缩网络 T-Selector，将 MLLM 的目标级感知能力从静态图像扩展到视频领域…
+  [ECCV 2024][多模态VLM][多模态大语言模型] 提出 Elysium——一个端到端可训练的多模态大语言模型（MLLM），通过构建百万级视频目标感知数据集 ElysiumTrack-1M 和设计视觉 Token 压缩网络 T-Selector，将 MLLM 的目标级感知能力从静态图像扩展到视频领域，支持单目标跟踪（SOT）、引用单目标跟踪（RSOT）和视频引用表达生成（Video-REG）三大任务。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4DSTR: Advancing Generative 4D Gaussians with Spatial-Temporal Rectification for High-Quality and Consistent 4D Generation
 description: >-
-  [AAAI 2026][3D视觉][4D高斯溅射] 提出4DSTR框架，通过基于Mamba的时序关联校正（修正高斯点的尺度和旋转）以及逐帧自适应稠密化与裁剪策略，显著提升4D高斯生成的时空一致性和对快速时序变化的适应能力。
+  [AAAI 2026][3D视觉][4D高斯溅射] 提出4DSTR框架，通过基于Mamba的时序关联校正（修正高斯点的尺度和旋转）以及逐帧自适应稠密化与裁剪策略，显著提升4D高斯生成的时空一致性和对快速时序变化的适应能力。 近年来2D图像和3D形状生成取得了巨大进展，自然地推动了动态4D内容生成的研究。现有的4D生成方法主要…
 tags:
   - "AAAI 2026"
   - "3D视觉"

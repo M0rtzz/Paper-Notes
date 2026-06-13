@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Monte Carlo Expected Threat (MOCET) Scoring
 description: >-
-  [NeurIPS 2025][可解释性][AI safety] 提出 MOCET（Monte Carlo Expected Threat）评分框架，通过将 LLM 生成的生物武器制造协议分解为逐步 Bernoulli 试验，结合 k-NN 语义嵌入的成功概率估计和蒙特卡洛模拟…
+  [NeurIPS 2025][可解释性][AI safety] 提出 MOCET（Monte Carlo Expected Threat）评分框架，通过将 LLM 生成的生物武器制造协议分解为逐步 Bernoulli 试验，结合 k-NN 语义嵌入的成功概率估计和蒙特卡洛模拟，生成可解释的、可自动化的威胁量化指标，用于衡量 LLM 在生物安全领域的真实世界风险。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

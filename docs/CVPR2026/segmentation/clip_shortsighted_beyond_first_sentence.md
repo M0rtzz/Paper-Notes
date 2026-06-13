@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeBias-CLIP: CLIP Is Shortsighted — Paying Attention Beyond the First Sentence
 description: >-
-  [CVPR 2026][语义分割][CLIP] 发现 CLIP 模型在长文本场景中严重偏向于编码首句摘要和早期 token（"近视"行为），通过三种零参数增量的训练增强策略——去除摘要句、句子随机采样、token 前缀填充——实现了全方位 SOTA 的长文本检索性能，同时改善了短文本检索。
+  [CVPR 2026][语义分割][CLIP] 发现 CLIP 模型在长文本场景中严重偏向于编码首句摘要和早期 token（"近视"行为），通过三种零参数增量的训练增强策略——去除摘要句、句子随机采样、token 前缀填充——实现了全方位 SOTA 的长文本检索性能，同时改善了短文本检索。 领域现状：CLIP 模型通过图文对…
 tags:
   - "CVPR 2026"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysVid: Physics Aware Local Conditioning for Generative Video
 description: >-
-  [CVPR 2026][视频生成][物理一致性] 提出 PhysVid，一种物理感知的局部条件化方案——将视频分为时间片段（chunk），由 VLM 为每个 chunk 标注物理现象描述，通过 chunk 级交叉注意力注入生成模型；推理时引入"负物理提示"（反事实引导）引导生成远离物理违规…
+  [CVPR 2026][视频生成][物理一致性] 提出 PhysVid，一种物理感知的局部条件化方案——将视频分为时间片段（chunk），由 VLM 为每个 chunk 标注物理现象描述，通过 chunk 级交叉注意力注入生成模型；推理时引入"负物理提示"（反事实引导）引导生成远离物理违规，在 VideoPhy 上将物理常识分数提升约 33%。
 tags:
   - "CVPR 2026"
   - "视频生成"

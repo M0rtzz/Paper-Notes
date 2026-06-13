@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Masked ECG-Text Auto-Encoders as Discriminative Learners (D-BETA)
 description: >-
-  [ICML 2025][医学图像][ECG信号解读] D-BETA 提出了一种融合生成式掩码自编码器与增强判别能力的对比学习框架，通过 ECG-Text Sigmoid (ETS) 损失和最近邻负采样策略 (N3S)，在 ECG-文本跨模态表征学习中显著超越现有方法…
+  [ICML 2025][医学图像][ECG信号解读] D-BETA 提出了一种融合生成式掩码自编码器与增强判别能力的对比学习框架，通过 ECG-Text Sigmoid (ETS) 损失和最近邻负采样策略 (N3S)，在 ECG-文本跨模态表征学习中显著超越现有方法，在仅用 1% 训练数据的线性探测中平均 AUC 提升 15%，零样本性能提升 2%。
 tags:
   - "ICML 2025"
   - "医学图像"

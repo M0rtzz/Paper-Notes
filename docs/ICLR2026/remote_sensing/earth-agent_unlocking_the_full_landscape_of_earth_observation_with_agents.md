@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Earth-Agent: Unlocking the Full Landscape of Earth Observation with Agents
 description: >-
-  [ICLR 2026][遥感][地球观测] Earth-Agent是首个基于MCP工具生态的地球观测Agent框架，统一了RGB和光谱遥感数据，通过动态调用104个专家工具实现跨模态、多步骤、定量时空推理，配套提出的Earth-Bench基准包含248个专家任务和13,729张图像…
+  [ICLR 2026][遥感][地球观测] Earth-Agent是首个基于MCP工具生态的地球观测Agent框架，统一了RGB和光谱遥感数据，通过动态调用104个专家工具实现跨模态、多步骤、定量时空推理，配套提出的Earth-Bench基准包含248个专家任务和13,729张图像，实验证明Earth-Agent远超通用Agent和遥感MLLM。
 tags:
   - "ICLR 2026"
   - "遥感"

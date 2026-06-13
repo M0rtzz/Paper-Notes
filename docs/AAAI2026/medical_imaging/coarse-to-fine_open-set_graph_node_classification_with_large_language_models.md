@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coarse-to-Fine Open-Set Graph Node Classification with Large Language Models
 description: >-
-  [AAAI2026][医学图像][open-set classification] 提出 Coarse-to-Fine Classification (CFC) 框架，利用 LLM 的零样本推理能力为图节点开放集分类提供语义化 OOD 样本和潜在 OOD 标签空间…
+  [AAAI2026][医学图像][open-set classification] 提出 Coarse-to-Fine Classification (CFC) 框架，利用 LLM 的零样本推理能力为图节点开放集分类提供语义化 OOD 样本和潜在 OOD 标签空间，实现不仅检测 OOD 还能将其分类到具体未知类别的能力。
 tags:
   - "AAAI2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention Entropy is a Key Factor for Parallel Context Encoding
 description: >-
-  [ACL 2025] 发现并行上下文编码导致 query token 的注意力熵异常升高是性能下降的关键因素，并提出 Attention Sink 共享前缀和 Selective Attention 两种免微调方法有效缓解该问题。
+  [ACL 2025] 发现并行上下文编码导致 query token 的注意力熵异常升高是性能下降的关键因素，并提出 Attention Sink 共享前缀和 Selective Attention 两种免微调方法有效缓解该问题。 主流 LLM 采用 decoder-only Transformer + 全自注意力建模上下文…
 tags:
   - "ACL 2025"
 ---

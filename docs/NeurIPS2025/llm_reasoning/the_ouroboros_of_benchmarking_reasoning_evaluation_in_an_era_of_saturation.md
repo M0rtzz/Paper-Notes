@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Ouroboros of Benchmarking: Reasoning Evaluation in an Era of Saturation
 description: >-
-  [NeurIPS 2025][LLM推理][基准饱和] 本文通过对OpenAI、Anthropic和Google三大模型家族在52个推理基准上的系统分析，揭示了一种"衔尾蛇"循环模式——旧基准被快速饱和→新基准被创建以维持区分度→新基准又被迅速饱和，由此质疑基准分数的提升是否真正代表了推理能力的泛化进步…
+  [NeurIPS 2025][LLM推理][基准饱和] 本文通过对OpenAI、Anthropic和Google三大模型家族在52个推理基准上的系统分析，揭示了一种"衔尾蛇"循环模式——旧基准被快速饱和→新基准被创建以维持区分度→新基准又被迅速饱和，由此质疑基准分数的提升是否真正代表了推理能力的泛化进步，还是仅仅反映了对特定评测集的过拟合。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

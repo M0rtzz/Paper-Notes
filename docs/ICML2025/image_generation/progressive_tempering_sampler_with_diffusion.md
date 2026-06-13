@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Progressive Tempering Sampler with Diffusion
 description: >-
-  [ICML 2025][图像生成][扩散模型] 提出 Progressive Tempering Sampler with Diffusion (PTSD)，通过将 Parallel Tempering 的温度交换机制与扩散模型的神经采样器相结合，利用"温度引导"从高温扩散模型外推生成低温近似样本…
+  [ICML 2025][图像生成][扩散模型] 提出 Progressive Tempering Sampler with Diffusion (PTSD)，通过将 Parallel Tempering 的温度交换机制与扩散模型的神经采样器相结合，利用"温度引导"从高温扩散模型外推生成低温近似样本，在目标密度评估效率上实现数量级提升。
 tags:
   - "ICML 2025"
   - "图像生成"

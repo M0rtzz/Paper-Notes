@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your Large Vision-Language Model Only Needs a Few Attention Heads for Visual Grounding
 description: >-
-  [CVPR 2025][多模态VLM][视觉定位] 发现冻结 LVLM 中天然存在少量"定位头"（localization heads）持续捕捉文本语义对应的物体位置，仅用 3 个注意力头的注意力图即可实现超越微调 LISA-7B 的无训练视觉定位，RefCOCO val 达 86.5%。
+  [CVPR 2025][多模态VLM][视觉定位] 发现冻结 LVLM 中天然存在少量"定位头"（localization heads）持续捕捉文本语义对应的物体位置，仅用 3 个注意力头的注意力图即可实现超越微调 LISA-7B 的无训练视觉定位，RefCOCO val 达 86.5%。 领域现状：视觉定位（VG）要求模型…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

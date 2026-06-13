@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaTexBlend: Scaling Multi-concept Customized Generation with Latent Textual Blending
 description: >-
-  [CVPR 2025][图像生成][多概念定制生成] LaTexBlend 通过在文本编码器后的潜在文本空间（Latent Textual Space）中表示和融合多个定制概念，实现了高保真、高效率的多概念定制图像生成，微调复杂度线性增长且推理无额外开销。
+  [CVPR 2025][图像生成][多概念定制生成] LaTexBlend 通过在文本编码器后的潜在文本空间（Latent Textual Space）中表示和融合多个定制概念，实现了高保真、高效率的多概念定制图像生成，微调复杂度线性增长且推理无额外开销。 1. 领域现状：定制化文本到图像生成（Customized T2I）…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentXRay: White-Boxing Agentic Systems via Workflow Reconstruction
 description: >-
-  [ICML 2026][LLM Agent][Agentic Workflow Reconstruction] 作者把"对黑盒 agent 系统反推一个等价白盒 workflow"作为新任务 AWR，用 MCTS 在 agent 原语序列空间中搜索…
+  [ICML 2026][LLM Agent][Agentic Workflow Reconstruction] 作者把"对黑盒 agent 系统反推一个等价白盒 workflow"作为新任务 AWR，用 MCTS 在 agent 原语序列空间中搜索，再配上一种基于评分动态着色的 Red-Black 剪枝来平衡深度与宽度，在五个真实领域上实现可解释的白盒重建。
 tags:
   - "ICML 2026"
   - "LLM Agent"

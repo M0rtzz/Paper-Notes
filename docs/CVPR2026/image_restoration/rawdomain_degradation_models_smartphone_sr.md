@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution
 description: >-
-  [CVPR 2026][图像恢复][超分辨率] 证明了精心设计的设备特定退化建模（通过标定获取真实的 blur 和 noise 参数）可以显著提升手机超分辨率的真实场景性能——通过将公开渲染图像 unprocess 到不同手机的 RAW 域生成高低分辨率训练对…
+  [CVPR 2026][图像恢复][超分辨率] 证明了精心设计的设备特定退化建模（通过标定获取真实的 blur 和 noise 参数）可以显著提升手机超分辨率的真实场景性能——通过将公开渲染图像 unprocess 到不同手机的 RAW 域生成高低分辨率训练对，训练的 SR 模型在保留设备的真实数据上明显优于使用大量任意退化组合训练的基线。
 tags:
   - "CVPR 2026"
   - "图像恢复"

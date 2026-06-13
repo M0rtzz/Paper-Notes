@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering Pretrained Drafters during Speculative Decoding
 description: >-
-  [AAAI 2026][模型压缩][推测解码] 提出 SD²，通过从验证器隐藏状态中提取转向向量（steering vector）并注入预训练 drafter 的 MLP 层，实现推测解码中 drafter-verifier 的动态对齐，在标准采样下将被接受 token 数提升高达 35%…
+  [AAAI 2026][模型压缩][推测解码] 提出 SD²，通过从验证器隐藏状态中提取转向向量（steering vector）并注入预训练 drafter 的 MLP 层，实现推测解码中 drafter-verifier 的动态对齐，在标准采样下将被接受 token 数提升高达 35%，同时计算开销可忽略不计。
 tags:
   - "AAAI 2026"
   - "模型压缩"

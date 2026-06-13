@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GAICo: A Deployed and Extensible Framework for Evaluating Diverse and Multimodal Generative AI Outputs
 description: >-
-  [AAAI 2026][时间序列][生成式AI评估] 提出GAICo（Generative AI Comparator），一个已部署的、可扩展的开源Python库，为文本、结构化数据（规划序列、时间序列）和多媒体（图像、音频）提供统一的基于参考的评估框架，支持多模型比较、可视化与报告生成。
+  [AAAI 2026][时间序列][生成式AI评估] 提出GAICo（Generative AI Comparator），一个已部署的、可扩展的开源Python库，为文本、结构化数据（规划序列、时间序列）和多媒体（图像、音频）提供统一的基于参考的评估框架，支持多模型比较、可视化与报告生成。 生成式AI（GenAI）的快速发展…
 tags:
   - "AAAI 2026"
   - "时间序列"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trans-Zero: Self-Play Incentivizes Large Language Models for Multilingual Translation
 description: >-
-  [ACL2025][多语言/翻译][多语言翻译] 提出 Trans-Zero 自博弈框架，仅使用单语数据，通过遗传蒙特卡洛树搜索（G-MCTS）在多语言翻译过程中探索语义一致的候选翻译，结合偏好优化实现无平行数据的多语言翻译训练，性能可媲美大规模监督微调方法。
+  [ACL2025][多语言/翻译][多语言翻译] 提出 Trans-Zero 自博弈框架，仅使用单语数据，通过遗传蒙特卡洛树搜索（G-MCTS）在多语言翻译过程中探索语义一致的候选翻译，结合偏好优化实现无平行数据的多语言翻译训练，性能可媲美大规模监督微调方法。 1. 多语言翻译对平行数据的依赖：当前 LLM 多语言翻译仍需大…
 tags:
   - "ACL2025"
   - "多语言/翻译"

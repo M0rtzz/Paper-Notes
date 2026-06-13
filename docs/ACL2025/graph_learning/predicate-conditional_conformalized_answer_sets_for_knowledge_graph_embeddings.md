@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predicate-Conditional Conformalized Answer Sets for Knowledge Graph Embeddings
 description: >-
-  [ACL 2025 (Findings)][图学习][knowledge graph embedding] 提出 CondKGCP——基于谓词条件的 conformal prediction 方法用于知识图谱嵌入的不确定性量化，通过合并相似谓词增大校准集+双重校准（score+rank）减小预测集大小…
+  [ACL 2025 (Findings)][图学习][knowledge graph embedding] 提出 CondKGCP——基于谓词条件的 conformal prediction 方法用于知识图谱嵌入的不确定性量化，通过合并相似谓词增大校准集+双重校准（score+rank）减小预测集大小，在保证谓词级条件覆盖率的同时输出更紧凑的答案集，在多个KGE基准上优于5个baseline。
 tags:
   - "ACL 2025 (Findings)"
   - "图学习"

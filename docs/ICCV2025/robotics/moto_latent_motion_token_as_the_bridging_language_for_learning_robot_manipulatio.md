@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos
 description: >-
-  [ICCV 2025][机器人][视频预训练] 提出 Moto 框架，通过无监督学习的潜在运动 Token（Latent Motion Token）将视频帧间的视觉运动编码为离散序列，利用 GPT 式自回归预训练学习运动先验，再通过 co-fine-tuning 策略将学到的运动知识迁移到真实机器人操作…
+  [ICCV 2025][机器人][视频预训练] 提出 Moto 框架，通过无监督学习的潜在运动 Token（Latent Motion Token）将视频帧间的视觉运动编码为离散序列，利用 GPT 式自回归预训练学习运动先验，再通过 co-fine-tuning 策略将学到的运动知识迁移到真实机器人操作，在 SIMPLER 和 CALVIN 基准上取得与 55B 参数大模型匹敌的性能（仅 98M 参数）。
 tags:
   - "ICCV 2025"
   - "机器人"

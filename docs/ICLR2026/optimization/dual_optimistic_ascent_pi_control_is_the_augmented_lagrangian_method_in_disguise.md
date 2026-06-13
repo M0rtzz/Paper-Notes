@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Optimistic Ascent (PI Control) is the Augmented Lagrangian Method in Disguise
 description: >-
-  [ICLR 2026][优化/理论][增广拉格朗日] 证明了约束深度学习中广泛使用的 dual optimistic ascent（PI 控制）在单步一阶更新体制下数学等价于经典的增广拉格朗日方法（ALM），从而将 ALM 的鲁棒收敛保证（线性收敛到所有严格局部解）转移至 PI 控制…
+  [ICLR 2026][优化/理论][增广拉格朗日] 证明了约束深度学习中广泛使用的 dual optimistic ascent（PI 控制）在单步一阶更新体制下数学等价于经典的增广拉格朗日方法（ALM），从而将 ALM 的鲁棒收敛保证（线性收敛到所有严格局部解）转移至 PI 控制，并为乐观系数 $\omega$ 提供了原则性调参指导。
 tags:
   - "ICLR 2026"
   - "优化/理论"

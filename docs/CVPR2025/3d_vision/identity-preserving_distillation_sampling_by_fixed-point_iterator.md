@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Identity-preserving Distillation Sampling by Fixed-Point Iterator
 description: >-
-  [CVPR 2025][3D视觉][score distillation] 提出 Identity-preserving Distillation Sampling (IDS)，通过不动点迭代正则化（FPR）修正文本条件分数函数中导致身份丢失的梯度误差，生成引导噪声替代随机噪声…
+  [CVPR 2025][3D视觉][score distillation] 提出 Identity-preserving Distillation Sampling (IDS)，通过不动点迭代正则化（FPR）修正文本条件分数函数中导致身份丢失的梯度误差，生成引导噪声替代随机噪声，在 2D 图像编辑和 3D NeRF 编辑中实现结构和姿态的高度保持。
 tags:
   - "CVPR 2025"
   - "3D视觉"

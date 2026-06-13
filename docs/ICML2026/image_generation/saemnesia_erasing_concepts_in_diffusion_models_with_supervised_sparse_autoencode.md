@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAEmnesia: Erasing Concepts in Diffusion Models with Supervised Sparse Autoencoders
 description: >-
-  [ICML 2026][图像生成][概念擦除] 通过在稀疏自编码器（SAE）训练阶段加入监督的"概念—潜变量"指派损失，强制每个目标概念集中到单个神经元（feature centralization），从而把扩散模型的概念擦除从"搜多神经元 + 调强度"的二维超参搜索压成"只调一个 multiplier"…
+  [ICML 2026][图像生成][概念擦除] 通过在稀疏自编码器（SAE）训练阶段加入监督的"概念—潜变量"指派损失，强制每个目标概念集中到单个神经元（feature centralization），从而把扩散模型的概念擦除从"搜多神经元 + 调强度"的二维超参搜索压成"只调一个 multiplier"，在 UnlearnCanvas 上比 SOTA 的 SAeUron 平均提升 9.22 个点，超参搜索代价降低 96.67%，并对对抗攻击更鲁棒。
 tags:
   - "ICML 2026"
   - "图像生成"

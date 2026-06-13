@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self Iterative Label Refinement via Robust Unlabeled Learning
 description: >-
-  [NeurIPS 2025][计算生物][自我精炼] 提出一种迭代式管道方法，利用鲁棒的无标签-无标签（UU）学习框架来精炼LLM生成的伪标签，仅需极少人工标注即可在分类和生成式安全对齐任务中超越GPT-4o和DeepSeek-R1的自我精炼方法。
+  [NeurIPS 2025][计算生物][自我精炼] 提出一种迭代式管道方法，利用鲁棒的无标签-无标签（UU）学习框架来精炼LLM生成的伪标签，仅需极少人工标注即可在分类和生成式安全对齐任务中超越GPT-4o和DeepSeek-R1的自我精炼方法。 大语言模型（LLM）在各种下游任务上表现出色，但进一步提升其能力通常需要大量…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

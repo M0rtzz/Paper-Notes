@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CMT: Mid-Training for Efficient Learning of Consistency, Mean Flow, and Flow Map Models
 description: >-
-  [ICLR 2026][图像生成][flow map] 提出 Consistency Mid-Training (CMT)，在预训练扩散模型和 flow map 后训练之间插入一个轻量级中间训练阶段，通过让模型学习将 ODE 轨迹上的任意点映射回干净样本来获得轨迹对齐的初始化…
+  [ICLR 2026][图像生成][flow map] 提出 Consistency Mid-Training (CMT)，在预训练扩散模型和 flow map 后训练之间插入一个轻量级中间训练阶段，通过让模型学习将 ODE 轨迹上的任意点映射回干净样本来获得轨迹对齐的初始化，从而大幅降低训练成本（最多 98%）并达到 SOTA 两步生成质量。
 tags:
   - "ICLR 2026"
   - "图像生成"

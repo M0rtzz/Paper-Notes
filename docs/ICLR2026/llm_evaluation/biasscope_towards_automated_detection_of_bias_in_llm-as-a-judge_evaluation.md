@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation
 description: >-
-  [ICLR 2026][LLM评测][LLM-as-a-Judge] 提出 BiasScope，一个完全由 LLM 驱动的迭代式框架，能自动、大规模地发现 LLM-as-a-Judge 中的潜在未知偏差，并基于此构建了更具挑战性的 JudgeBench-Pro 基准…
+  [ICLR 2026][LLM评测][LLM-as-a-Judge] 提出 BiasScope，一个完全由 LLM 驱动的迭代式框架，能自动、大规模地发现 LLM-as-a-Judge 中的潜在未知偏差，并基于此构建了更具挑战性的 JudgeBench-Pro 基准，在其上即使强大的 LLM 评估器错误率也超过 50%。
 tags:
   - "ICLR 2026"
   - "LLM评测"

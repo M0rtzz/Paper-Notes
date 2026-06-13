@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEG-XL: Data-Efficient Brain-to-Text via Long-Context Pre-Training
 description: >-
-  [ICML 2026][医学图像][脑到文本] MEG-XL 用 2.5 分钟（191k token）的 MEG 上下文做 mask token 预训练（比此前长 5–300×），再微调到 50 词的脑到文本任务上，仅用 1 小时数据就达到 SOTA 监督方法 50 小时的解码精度…
+  [ICML 2026][医学图像][脑到文本] MEG-XL 用 2.5 分钟（191k token）的 MEG 上下文做 mask token 预训练（比此前长 5–300×），再微调到 50 词的脑到文本任务上，仅用 1 小时数据就达到 SOTA 监督方法 50 小时的解码精度，并显著超过所有 brain foundation models。
 tags:
   - "ICML 2026"
   - "医学图像"

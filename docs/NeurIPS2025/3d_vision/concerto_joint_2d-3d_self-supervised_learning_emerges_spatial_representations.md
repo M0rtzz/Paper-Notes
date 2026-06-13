@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations
 description: >-
-  [NeurIPS 2025][3D视觉][自监督学习] Concerto 将 3D 点云模态内自蒸馏与 2D-3D 跨模态联合嵌入预测相结合，以极简设计让单一点云编码器（PTv3）涌现出超越 2D/3D 单模态甚至两者拼接的空间表征…
+  [NeurIPS 2025][3D视觉][自监督学习] Concerto 将 3D 点云模态内自蒸馏与 2D-3D 跨模态联合嵌入预测相结合，以极简设计让单一点云编码器（PTv3）涌现出超越 2D/3D 单模态甚至两者拼接的空间表征，在多个 3D 场景理解基准上刷新 SOTA（ScanNet 语义分割 80.7% mIoU）。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

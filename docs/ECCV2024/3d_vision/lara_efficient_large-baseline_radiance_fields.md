@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaRa: Efficient Large-Baseline Radiance Fields
 description: >-
-  [ECCV 2024][3D视觉][大基线重建] 提出LaRa前馈重建模型，通过**高斯体积（Gaussian Volume）**表示和**分组注意力层（Group Attention Layer）**统一局部与全局推理，仅需4张图像即可从大基线视角重建360°辐射场…
+  [ECCV 2024][3D视觉][大基线重建] 提出LaRa前馈重建模型，通过**高斯体积（Gaussian Volume）**表示和**分组注意力层（Group Attention Layer）**统一局部与全局推理，仅需4张图像即可从大基线视角重建360°辐射场，且仅用**4×A100训练2天**即可超越LGM等费时方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

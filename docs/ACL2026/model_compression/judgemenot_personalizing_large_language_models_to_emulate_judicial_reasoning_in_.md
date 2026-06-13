@@ -2,9 +2,9 @@
 title: >-
   [论文解读] JudgeMeNot: Personalizing Large Language Models to Emulate Judicial Reasoning in Hebrew
 description: >-
-  [ACL 2026][模型压缩][LLM个性化] 提出了一个 synthetic-organic 监督管线，将法官的原始判决文书转化为推理指令微调数据，通过 CLM→指令微调的 Chain-of-LoRA 策略实现对个体法官推理风格的高保真模拟，在希伯来语低资源场景下生成内容与真实法官不可区分。
+  [ACL 2026 Findings][模型压缩][LLM个性化] 提出了一个 synthetic-organic 监督管线，将法官的原始判决文书转化为推理指令微调数据，通过 CLM→指令微调的 Chain-of-LoRA 策略实现对个体法官推理风格的高保真模拟，在希伯来语低资源场景下生成内容与真实法官不可区分。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "LLM个性化"
   - "司法推理"

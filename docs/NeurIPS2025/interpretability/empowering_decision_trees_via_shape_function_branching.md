@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Empowering Decision Trees via Shape Function Branching
 description: >-
-  [NeurIPS 2025][可解释性][决策树] 提出 Shape Generalized Tree (SGT)，在决策树每个内部节点使用可学习的轴对齐形状函数替代传统线性阈值分裂，以更紧凑的树结构捕捉非线性特征效应，同时保持可解释性。
+  [NeurIPS 2025][可解释性][决策树] 提出 Shape Generalized Tree (SGT)，在决策树每个内部节点使用可学习的轴对齐形状函数替代传统线性阈值分裂，以更紧凑的树结构捕捉非线性特征效应，同时保持可解释性。 - 传统的轴对齐线性决策树每个节点只能进行简单的 $x_d \leq \theta$…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

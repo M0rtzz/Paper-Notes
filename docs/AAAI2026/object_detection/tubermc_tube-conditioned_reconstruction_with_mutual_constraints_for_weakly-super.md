@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding
 description: >-
-  [AAAI 2026][目标检测][弱监督时空视频定位] 提出 TubeRMC 框架，利用文本条件化的候选 tube 生成 + 从时间/空间/时空三个维度进行 tube 条件化重建，并引入空间-时间互约束来增强弱监督时空视频定位性能。
+  [AAAI 2026][目标检测][弱监督时空视频定位] 提出 TubeRMC 框架，利用文本条件化的候选 tube 生成 + 从时间/空间/时空三个维度进行 tube 条件化重建，并引入空间-时间互约束来增强弱监督时空视频定位性能。 时空视频定位（STVG）：旨在根据语言查询，在未裁剪视频中定位一个时空 tube（即一系列…
 tags:
   - "AAAI 2026"
   - "目标检测"

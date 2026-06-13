@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Noise Calculation in Deep Learning-based MRI Reconstructions
 description: >-
-  [ICML2025][医学图像][MRI 重建] 提出基于 Jacobian Sketching 的高效方法，通过随机相向量探测 DL 重建网络的 Jacobian 对角元，以无偏估计加速 MRI 重建中的体素级噪声方差，计算和内存需求降低一个数量级以上，与 Monte Carlo 参考相关系数达 99.8%…
+  [ICML2025][医学图像][MRI 重建] 提出基于 Jacobian Sketching 的高效方法，通过随机相向量探测 DL 重建网络的 Jacobian 对角元，以无偏估计加速 MRI 重建中的体素级噪声方差，计算和内存需求降低一个数量级以上，与 Monte Carlo 参考相关系数达 99.8%。
 tags:
   - "ICML2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MemSearcher: Training LLMs to Reason, Search and Manage Memory via End-to-End RL
 description: >-
-  [ACL 2026][LLM Agent][搜索 Agent] MemSearcher 把搜索 agent 的"历史拼接"换成"LLM 自管理的紧凑内存"——每轮只看 `(question, memory)` 而不是 `(question, t₁, a₁, o₁, …)`…
+  [ACL 2026][LLM Agent][搜索 Agent] MemSearcher 把搜索 agent 的"历史拼接"换成"LLM 自管理的紧凑内存"——每轮只看 `(question, memory)` 而不是 `(question, t₁, a₁, o₁, …)`，并用 multi-context GRPO 把整条 trajectory 的 advantage 传播到每一轮独立优化，在 7 个 QA benchmark 上 3B/7B/14B 全面超过同尺寸 ReAct baseline（7B 甚至超 32B ReSearch），context 长度恒定 <4K token。
 tags:
   - "ACL 2026"
   - "LLM Agent"

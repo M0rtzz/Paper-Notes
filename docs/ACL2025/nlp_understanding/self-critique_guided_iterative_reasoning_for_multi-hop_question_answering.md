@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Critique Guided Iterative Reasoning for Multi-hop Question Answering
 description: >-
-  [ACL2025][NLP理解][多跳问答] 提出 SiGIR 框架，通过端到端训练使模型具备迭代问题分解、检索、推理和自我评估能力，在推理阶段利用自我批评反馈引导 iteration-level beam search 选择最优推理路径，在三个多跳 QA 数据集上平均超越 SOTA 8.6%。
+  [ACL2025][NLP理解][多跳问答] 提出 SiGIR 框架，通过端到端训练使模型具备迭代问题分解、检索、推理和自我评估能力，在推理阶段利用自我批评反馈引导 iteration-level beam search 选择最优推理路径，在三个多跳 QA 数据集上平均超越 SOTA 8.6%。 大语言模型在知识密集型多跳推…
 tags:
   - "ACL2025"
   - "NLP理解"

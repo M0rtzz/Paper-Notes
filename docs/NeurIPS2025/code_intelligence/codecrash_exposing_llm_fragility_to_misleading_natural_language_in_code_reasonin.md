@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeCrash: Exposing LLM Fragility to Misleading Natural Language in Code Reasoning
 description: >-
-  [NeurIPS 2025][代码智能][LLM 鲁棒性] 提出 CodeCrash 压力测试框架，通过功能等价的结构扰动和误导性自然语言注入（注释/print/暗示），系统评估 17 个 LLM 的代码推理鲁棒性，揭示模型平均性能下降 23.2%，CoT 仅能挽回至 13.8%…
+  [NeurIPS 2025][代码智能][LLM 鲁棒性] 提出 CodeCrash 压力测试框架，通过功能等价的结构扰动和误导性自然语言注入（注释/print/暗示），系统评估 17 个 LLM 的代码推理鲁棒性，揭示模型平均性能下降 23.2%，CoT 仅能挽回至 13.8%，并首次发现大推理模型（LRM）中的 "Reasoning Collapse" 现象。
 tags:
   - "NeurIPS 2025"
   - "代码智能"

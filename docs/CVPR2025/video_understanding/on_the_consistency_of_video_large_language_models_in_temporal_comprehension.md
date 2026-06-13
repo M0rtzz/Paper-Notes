@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Consistency of Video Large Language Models in Temporal Comprehension
 description: >-
-  [CVPR 2025][视频理解][视频大语言模型] 系统研究视频大语言模型 (Video-LLMs) 在时序理解中的预测一致性，发现当前模型在改述查询、时间偏移和自我验证等探测下一致性极差（接近随机水平），提出事件时序验证微调 (VTune) 方法通过显式考虑一致性显著改善 grounding 和一致性表现…
+  [CVPR 2025][视频理解][视频大语言模型] 系统研究视频大语言模型 (Video-LLMs) 在时序理解中的预测一致性，发现当前模型在改述查询、时间偏移和自我验证等探测下一致性极差（接近随机水平），提出事件时序验证微调 (VTune) 方法通过显式考虑一致性显著改善 grounding 和一致性表现。
 tags:
   - "CVPR 2025"
   - "视频理解"

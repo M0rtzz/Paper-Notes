@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LangForce: Bayesian Decomposition of Vision-Language-Action Models via Latent Action Queries
 description: >-
-  [ICML 2026][机器人][VLA] LangForce 把 VLA 策略写成 $\pi(a\mid v,\ell)=p(\ell\mid a,v)\,p(a\mid v)/p(\ell\mid v)$ 这一贝叶斯分解…
+  [ICML 2026][机器人][VLA] LangForce 把 VLA 策略写成 $\pi(a\mid v,\ell)=p(\ell\mid a,v)\,p(a\mid v)/p(\ell\mid v)$ 这一贝叶斯分解，引入可学习的 Latent Action Queries 在同一套 VLM 权重上同时跑"只看视觉"和"视觉+语言"双分支，并通过最大化动作与指令的对数似然比来直接惩罚"视觉捷径"，在 SimplerEnv 上相对 QwenGR00T 基线提升 11.3 个绝对点。
 tags:
   - "ICML 2026"
   - "机器人"

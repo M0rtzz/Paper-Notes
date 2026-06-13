@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conflict-Aware Additive Guidance for Flow Models under Compositional Rewards
 description: >-
-  [ICML2026][图像生成][推理时引导] 针对流模型在多目标组合奖励下推理时引导易产生 off-manifold drift 的问题，提出 Conflict-Aware Additive Guidance (CAR)，通过检测梯度冲突并动态切换可学习的值梯度修正…
+  [ICML2026][图像生成][推理时引导] 针对流模型在多目标组合奖励下推理时引导易产生 off-manifold drift 的问题，提出 Conflict-Aware Additive Guidance (CAR)，通过检测梯度冲突并动态切换可学习的值梯度修正，以极低额外计算代价将身份保留提升 25.4%、规划成功率提升 38.75%。
 tags:
   - "ICML2026"
   - "图像生成"

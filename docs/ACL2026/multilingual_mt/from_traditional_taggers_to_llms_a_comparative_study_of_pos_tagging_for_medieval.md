@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Traditional Taggers to LLMs: A Comparative Study of POS Tagging for Medieval Romance Languages
 description: >-
-  [ACL 2026][多语言/翻译][中古罗曼语] 作者在三种中古罗曼语（古奥克语 NAF、古加泰罗尼亚语 CAT、古法语 Chauliac）的 POS 标注任务上，把传统 tagger（UDPipe / COLaF）与开源 LLM（Gemma3-12B / Phi4-14B）放在 zero-shot、few…
+  [ACL 2026][多语言/翻译][中古罗曼语] 作者在三种中古罗曼语（古奥克语 NAF、古加泰罗尼亚语 CAT、古法语 Chauliac）的 POS 标注任务上，把传统 tagger（UDPipe / COLaF）与开源 LLM（Gemma3-12B / Phi4-14B）放在 zero-shot、few-shot、单语微调、双语 CLTF、三语 CLTF 五种设置下做系统对比，发现 LLM 一致优于传统方法，加泰罗尼亚语充当"桥梁语种"使 CAT+FR 双语训练把古法语 Chauliac 推到 93.14% 的最高准确率。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

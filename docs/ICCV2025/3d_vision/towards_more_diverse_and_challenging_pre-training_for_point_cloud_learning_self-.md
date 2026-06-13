@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards More Diverse and Challenging Pre-training for Point Cloud Learning: Self-Supervised Cross Reconstruction with Decoupled Views
 description: >-
-  [ICCV 2025][3D视觉][点云自监督学习] 提出Point-PQAE，首个将跨视图重建（Cross Reconstruction）引入3D生成式自监督学习的框架，通过点云裁剪机制生成解耦视图、设计视图相对位置编码（VRPE）和位置查询模块，使预训练更具挑战性和信息量…
+  [ICCV 2025][3D视觉][点云自监督学习] 提出Point-PQAE，首个将跨视图重建（Cross Reconstruction）引入3D生成式自监督学习的框架，通过点云裁剪机制生成解耦视图、设计视图相对位置编码（VRPE）和位置查询模块，使预训练更具挑战性和信息量，在ScanObjectNN上以Mlp-Linear协议平均超越Point-MAE 6.7%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

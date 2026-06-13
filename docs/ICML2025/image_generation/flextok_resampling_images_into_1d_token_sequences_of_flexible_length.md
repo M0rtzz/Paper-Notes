@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlexTok: Resampling Images into 1D Token Sequences of Flexible Length
 description: >-
-  [ICML 2025][图像生成][可变长度 Tokenizer] 提出 FlexTok——一种将 2D 图像重采样为可变长度、有序的 1D 离散 token 序列的 tokenizer，通过 nested dropout 学习层次化编码…
+  [ICML 2025][图像生成][可变长度 Tokenizer] 提出 FlexTok——一种将 2D 图像重采样为可变长度、有序的 1D 离散 token 序列的 tokenizer，通过 nested dropout 学习层次化编码，配合 rectified flow 解码器在任意 token 数量下生成高质量重建，在 ImageNet 上用 8~128 个 token 即可实现 FID<2 的自回归图像生成。
 tags:
   - "ICML 2025"
   - "图像生成"

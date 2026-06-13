@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Gap Between Human Motion and Action Semantics via Kinematic Phrases
 description: >-
-  [ECCV 2024][人体理解][运动学短语] 本文提出运动学短语（Kinematic Phrases, KP）作为人体运动与动作语义之间的中间表示，KP基于客观运动学事实，具有适当抽象性、可解释性和通用性，并据此构建了运动理解系统和白盒运动生成评估基准KPG。
+  [ECCV 2024][人体理解][运动学短语] 本文提出运动学短语（Kinematic Phrases, KP）作为人体运动与动作语义之间的中间表示，KP基于客观运动学事实，具有适当抽象性、可解释性和通用性，并据此构建了运动理解系统和白盒运动生成评估基准KPG。 领域现状：运动理解旨在建立运动和动作语义之间的可靠映射…
 tags:
   - "ECCV 2024"
   - "人体理解"

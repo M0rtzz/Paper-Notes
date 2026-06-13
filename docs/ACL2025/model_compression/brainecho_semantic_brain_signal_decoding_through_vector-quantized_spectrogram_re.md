@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BrainECHO: Semantic Brain Signal Decoding through Vector-Quantized Spectrogram Reconstruction for Whisper-Enhanced Text Generation
 description: >-
-  [ACL 2025][模型压缩][脑信号解码] 提出 BrainECHO 三阶段框架（自编码—对齐—微调），通过向量量化离散表示将脑信号映射到 Mel 频谱图空间，再借助 Whisper 完成非侵入式脑信号到文本的高质量解码。
+  [ACL 2025][模型压缩][脑信号解码] 提出 BrainECHO 三阶段框架（自编码—对齐—微调），通过向量量化离散表示将脑信号映射到 Mel 频谱图空间，再借助 Whisper 完成非侵入式脑信号到文本的高质量解码。 1. 领域现状 从脑电（EEG）和脑磁（MEG）信号解码文本是脑机接口（BCI）的前沿课题…
 tags:
   - "ACL 2025"
   - "模型压缩"

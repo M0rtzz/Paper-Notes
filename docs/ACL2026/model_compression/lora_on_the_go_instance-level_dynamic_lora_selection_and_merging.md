@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoRA on the Go: Instance-level Dynamic LoRA Selection and Merging
 description: >-
-  [ACL 2026][模型压缩][LoRA动态选择] 提出 LoGo（LoRA on the Go），一个免训练的框架，通过单次前向传播提取 LoRA 激活信号（范数或熵），在实例级别动态选择和合并最相关的 LoRA 适配器，无需标注数据或额外训练即可实现跨任务泛化。
+  [ACL 2026][模型压缩][LoRA动态选择] 提出 LoGo（LoRA on the Go），一个免训练的框架，通过单次前向传播提取 LoRA 激活信号（范数或熵），在实例级别动态选择和合并最相关的 LoRA 适配器，无需标注数据或额外训练即可实现跨任务泛化。 领域现状：LoRA 作为参数高效微调方法已广泛应用于大语…
 tags:
   - "ACL 2026"
   - "模型压缩"

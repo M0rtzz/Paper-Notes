@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ABKD: Pursuing a Proper Allocation of the Probability Mass in Knowledge Distillation via α-β-Divergence
 description: >-
-  [ICML 2025][模型压缩][知识蒸馏] 本文深入分析了知识蒸馏中 FKLD 和 RKLD 的概率质量分配缺陷，发现它们在 Hardness-Concentration 和 Confidence-Concentration 两种效应上分别处于极端…
+  [ICML 2025 Spotlight][模型压缩][知识蒸馏] 本文深入分析了知识蒸馏中 FKLD 和 RKLD 的概率质量分配缺陷，发现它们在 Hardness-Concentration 和 Confidence-Concentration 两种效应上分别处于极端，提出基于 α-β-divergence 的 ABKD 框架，通过调节 α 和 β 灵活平衡两种效应，在 17 个语言/视觉数据集、12 种师生配置上取得了 SOTA 性能。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "模型压缩"
   - "知识蒸馏"
   - "α-β-Divergence"

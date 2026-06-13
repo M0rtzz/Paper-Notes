@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SYMPHONY: Synergistic Multi-agent Planning with Heterogeneous Language Model Assemblies
 description: >-
-  [NeurIPS 2025][LLM/NLP][多智能体规划] 提出 SYMPHONY，一个基于 MCTS 的多智能体规划框架，通过异构 LLM 池的多样性驱动搜索、UCB 自适应调度、熵调制置信度评估和池级记忆共享，显著提升了 LLM 规划的多样性和效率。
+  [NeurIPS 2025][LLM 其他][多智能体规划] 提出 SYMPHONY，一个基于 MCTS 的多智能体规划框架，通过异构 LLM 池的多样性驱动搜索、UCB 自适应调度、熵调制置信度评估和池级记忆共享，显著提升了 LLM 规划的多样性和效率。 将 LLM 与 MCTS 结合用于复杂任务规划是近年热点（RAP、L…
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多智能体规划"
   - "MCTS"
   - "异构模型"

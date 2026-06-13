@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GroupToM-Bench: Benchmarking Group Theory of Mind and Nonlinear Social Emergence in MLLMs
 description: >-
-  [ACL2026][多模态VLM][群体心智理论] 这篇论文提出 GroupToM-Bench，用 240 个专家设计的多模态群体互动场景和 7 层认知审计框架评测 MLLM 是否能从个体信念/欲望/意图推理到群体张力、结构约束和非线性集体结果…
+  [ACL2026][多模态VLM][群体心智理论] 这篇论文提出 GroupToM-Bench，用 240 个专家设计的多模态群体互动场景和 7 层认知审计框架评测 MLLM 是否能从个体信念/欲望/意图推理到群体张力、结构约束和非线性集体结果，结果显示当前模型普遍存在明显的 group cognitive gap。
 tags:
   - "ACL2026"
   - "多模态VLM"

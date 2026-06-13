@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding Modality Interaction in Multimodal Language Models via Partial Information Decomposition
 description: >-
-  [ICML 2026][音频/语音][PID] 本文把多模态大模型的决策看成一次输入到输出的信息分解，借 Partial Information Decomposition (PID) 把 VL/全模态模型的预测互信息拆成"视觉独有 / 文本独有 / 冗余 / 协同"四项…
+  [ICML 2026][音频/语音][PID] 本文把多模态大模型的决策看成一次输入到输出的信息分解，借 Partial Information Decomposition (PID) 把 VL/全模态模型的预测互信息拆成"视觉独有 / 文本独有 / 冗余 / 协同"四项，发现协同项是预测视觉敏感性的最佳指标、全模态模型存在"视觉霸权"型协同瓶颈，并用 PID 得到的样本级分数指导 LoRA 重加权微调，在 MMStar/MMBench/POPE 上稳定提升 1–2 个百分点。
 tags:
   - "ICML 2026"
   - "音频/语音"

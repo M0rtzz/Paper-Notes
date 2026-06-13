@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unleashing Vision-Language Semantics for Deepfake Video Detection
 description: >-
-  [CVPR 2026][人体理解][深度伪造检测] 提出VLAForge，通过ForgePerceiver独立学习多样的伪造线索和伪造定位图，并结合身份感知的视觉-语言对齐（VLA）评分机制，释放VLM跨模态语义的潜力来增强深度伪造视频检测的判别能力，在9个数据集上全面超越现有SOTA。
+  [CVPR 2026][人体理解][深度伪造检测] 提出VLAForge，通过ForgePerceiver独立学习多样的伪造线索和伪造定位图，并结合身份感知的视觉-语言对齐（VLA）评分机制，释放VLM跨模态语义的潜力来增强深度伪造视频检测的判别能力，在9个数据集上全面超越现有SOTA。 1. 领域现状：深度伪造视频检测（D…
 tags:
   - "CVPR 2026"
   - "人体理解"

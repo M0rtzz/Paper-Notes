@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Low-Rank Curvature for Zeroth-Order Optimization in LLM Fine-Tuning
 description: >-
-  [AAAI 2026][LLM评测][零阶优化] 提出 LOREN，一种曲率感知的零阶优化方法，通过低秩块对角预条件器捕获损失景观的各向异性曲率，并结合 REINFORCE Leave-One-Out 方差缩减技术，在 LLM 微调中实现了更高精度和更快收敛…
+  [AAAI 2026][LLM评测][零阶优化] 提出 LOREN，一种曲率感知的零阶优化方法，通过低秩块对角预条件器捕获损失景观的各向异性曲率，并结合 REINFORCE Leave-One-Out 方差缩减技术，在 LLM 微调中实现了更高精度和更快收敛，同时相比 MeZO-Adam 节省高达 27.3% 的峰值内存。
 tags:
   - "AAAI 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OccGen: Generative Multi-modal 3D Occupancy Prediction for Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][3D Occupancy Prediction] OccGen 将 3D 语义占用预测重新定义为"noise-to-occupancy"的生成式范式，通过条件编码器提取多模态特征、渐进式精炼解码器执行扩散去噪，以由粗到精的方式逐步生成占用图…
+  [ECCV 2024][自动驾驶][3D Occupancy Prediction] OccGen 将 3D 语义占用预测重新定义为"noise-to-occupancy"的生成式范式，通过条件编码器提取多模态特征、渐进式精炼解码器执行扩散去噪，以由粗到精的方式逐步生成占用图，在 nuScenes-Occupancy 上多模态/纯LiDAR/纯相机设置下分别相对提升 9.5%/6.3%/13.3% 的 mIoU。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

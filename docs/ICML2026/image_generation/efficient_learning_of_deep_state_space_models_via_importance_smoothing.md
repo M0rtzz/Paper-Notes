@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Learning of Deep State Space Models via Importance Smoothing
 description: >-
-  [ICML 2026][图像生成][深度状态空间模型] 本文提出 Parallel Variational Monte Carlo (PVMC)，用 prefix/suffix associative scan 把深度状态空间模型的重要性加权边际平滑分布在 $\mathcal{O}(\log N \times…
+  [ICML 2026][图像生成][深度状态空间模型] 本文提出 Parallel Variational Monte Carlo (PVMC)，用 prefix/suffix associative scan 把深度状态空间模型的重要性加权边际平滑分布在 $\mathcal{O}(\log N \times \log T)$ span 内并行算出来，同时支持监督式状态估计和生成式建模，比最快的可微 SMC 基线快约 10×，精度还更高。
 tags:
   - "ICML 2026"
   - "图像生成"

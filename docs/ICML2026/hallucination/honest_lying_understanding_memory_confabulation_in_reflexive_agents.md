@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Honest Lying: Understanding Memory Confabulation in Reflexive Agents
 description: >-
-  [ICML 2026][幻觉检测][Reflexion] 本文揭露 Reflexion 类 agent 一种系统性失败模式——"记忆虚构 (memory confabulation)"：agent 会把错误的任务理解写进反思记忆并跨 trial 反复使用…
+  [ICML 2026][幻觉检测][Reflexion] 本文揭露 Reflexion 类 agent 一种系统性失败模式——"记忆虚构 (memory confabulation)"：agent 会把错误的任务理解写进反思记忆并跨 trial 反复使用，作者用 Reflection Repetition Rate (RRR) 量化该现象，并用程序化反馈抽取替代开放式自我诊断，把 ALFWorld 上正确对象提及率从 0% 拉到 86%、RRR 从 0.64 降到 0.10。
 tags:
   - "ICML 2026"
   - "幻觉检测"

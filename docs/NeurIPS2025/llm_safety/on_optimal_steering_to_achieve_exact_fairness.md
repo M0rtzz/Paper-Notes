@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Optimal Steering to Achieve Exact Fairness
 description: >-
-  [NeurIPS 2025][LLM安全][fairness] 本文定义了"理想分布"——使任意代价敏感风险下的 Bayes 最优分类器都满足精确公平性的数据分布，并提出通过 KL 散度最小化寻找最近理想分布的优化框架，为公平预处理和 LLM 表示引导提供了可证明的公平性保证。
+  [NeurIPS 2025][LLM安全][fairness] 本文定义了"理想分布"——使任意代价敏感风险下的 Bayes 最优分类器都满足精确公平性的数据分布，并提出通过 KL 散度最小化寻找最近理想分布的优化框架，为公平预处理和 LLM 表示引导提供了可证明的公平性保证。 1. "偏见输入、偏见输出"问题：ML 系统中…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion
 description: >-
-  [NeurIPS 2025][人体理解][人体-物体交互] 将人体-物体交互（HOI）生成建模为 Driver-Responder 系统，通过轻量级 Transformer 交互动力学模型显式预测物体对人体动作的响应，利用残差动力学损失在训练时增强因果一致性，同时保持推理效率。
+  [NeurIPS 2025][人体理解][人体-物体交互] 将人体-物体交互（HOI）生成建模为 Driver-Responder 系统，通过轻量级 Transformer 交互动力学模型显式预测物体对人体动作的响应，利用残差动力学损失在训练时增强因果一致性，同时保持推理效率。 生成逼真的 3D 人体-物体交互（HOI）是…
 tags:
   - "NeurIPS 2025"
   - "人体理解"

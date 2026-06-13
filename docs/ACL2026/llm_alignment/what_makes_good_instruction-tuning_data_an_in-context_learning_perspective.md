@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes Good Instruction-Tuning Data? An In-Context Learning Perspective
 description: >-
-  [ACL2026][LLM对齐][指令微调] 本文提出 weighted In-Context Influence (wICI)，用候选样本作为 one-shot demonstration 后能否降低相关困难 probe 的 instruction-following difficulty 来衡量指令数据价…
+  [ACL2026][LLM对齐][指令微调] 本文提出 weighted In-Context Influence (wICI)，用候选样本作为 one-shot demonstration 后能否降低相关困难 probe 的 instruction-following difficulty 来衡量指令数据价值，在 10% 数据预算下优于或匹配 IFD、DEITA、NUGGETS、SelectIT 等选择方法。
 tags:
   - "ACL2026"
   - "LLM对齐"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2604.25132](https://arxiv.org/abs/2604.25132)  
 **代码**: https://github.com/trust-nlp/SyntheticData-Curator  
-**领域**: llm_alignment  
+**领域**: LLM对齐  
 **关键词**: 指令微调、数据选择、上下文学习、样本影响力、多样性约束
 
 ## 一句话总结

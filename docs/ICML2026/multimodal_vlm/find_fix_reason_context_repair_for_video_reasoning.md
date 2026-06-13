@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Find, Fix, Reason: Context Repair for Video Reasoning
 description: >-
-  [ICML 2026][多模态VLM][视频推理] 本文针对视频推理中"on-policy RL 在能力天花板停滞、off-policy 蒸馏又会熵塌缩"的两难，引入一个冻结的、工具集成的大教师模型在学生 rollout 失败时插入最小化的"证据补丁" (key-frame 区间、错误类型)…
+  [ICML 2026][多模态VLM][视频推理] 本文针对视频推理中"on-policy RL 在能力天花板停滞、off-policy 蒸馏又会熵塌缩"的两难，引入一个冻结的、工具集成的大教师模型在学生 rollout 失败时插入最小化的"证据补丁" (key-frame 区间、错误类型)，让学生在同一问题上重新作答，并把修复后的轨迹通过 chosen-rollout 机制纳入 GRPO 优化。
 tags:
   - "ICML 2026"
   - "多模态VLM"

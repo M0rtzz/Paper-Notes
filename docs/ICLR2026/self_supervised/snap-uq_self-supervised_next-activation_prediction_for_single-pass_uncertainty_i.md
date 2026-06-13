@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SNAP-UQ: Self-supervised Next-Activation Prediction for Single-Pass Uncertainty
 description: >-
-  [ICLR 2026][自监督学习][不确定性估计] SNAP-UQ 提出一种面向 TinyML 场景的单次前向传播不确定性估计方法：在骨干网络的选定层附加微型 int8 预测头，用自监督方式预测下一层的激活统计量，将实际激活与预测之间的偏差（"surprisal"）聚合为不确定性分数…
+  [ICLR 2026][自监督学习][不确定性估计] SNAP-UQ 提出一种面向 TinyML 场景的单次前向传播不确定性估计方法：在骨干网络的选定层附加微型 int8 预测头，用自监督方式预测下一层的激活统计量，将实际激活与预测之间的偏差（"surprisal"）聚合为不确定性分数，无需额外前向传播、时序缓冲或集成，仅增加几十 KB 闪存即可在微控制器上实现可靠的分布偏移检测和故障检测。
 tags:
   - "ICLR 2026"
   - "自监督学习"

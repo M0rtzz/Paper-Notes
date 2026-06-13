@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture of Ranks with Degradation-Aware Routing for One-Step Real-World Image Super-Resolution
 description: >-
-  [AAAI 2026][图像生成][图像超分辨率] 将稀疏混合专家（MoE）思想引入真实世界图像超分辨率任务，提出 Mixture-of-Ranks（MoR）架构，将 LoRA 的每个 rank 视为独立专家，并设计退化估计模块和退化感知负载均衡损失，实现单步高保真超分辨率重建。
+  [AAAI 2026][图像生成][图像超分辨率] 将稀疏混合专家（MoE）思想引入真实世界图像超分辨率任务，提出 Mixture-of-Ranks（MoR）架构，将 LoRA 的每个 rank 视为独立专家，并设计退化估计模块和退化感知负载均衡损失，实现单步高保真超分辨率重建。 领域现状 真实世界图像超分辨率（Real-I…
 tags:
   - "AAAI 2026"
   - "图像生成"

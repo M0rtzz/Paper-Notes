@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Computable Universal Online Learning
 description: >-
-  [NEURIPS2025][universal online learning] 在 universal online learning 框架中引入可计算性约束，证明了"数学上可学习"不等于"可用计算机程序实现的可学习"，并给出了 agnostic 和 proper 变体下可计算学习的精确刻画。
+  [NEURIPS2025][universal online learning] 在 universal online learning 框架中引入可计算性约束，证明了"数学上可学习"不等于"可用计算机程序实现的可学习"，并给出了 agnostic 和 proper 变体下可计算学习的精确刻画。 Universal onli…
 tags:
   - "NEURIPS2025"
   - "universal online learning"

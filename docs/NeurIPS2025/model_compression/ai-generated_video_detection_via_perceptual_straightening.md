@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AI-Generated Video Detection via Perceptual Straightening
 description: >-
-  [NeurIPS 2025][模型压缩][AI-generated video detection] 提出 ReStraV 方法，基于"感知拉直"假说（真实视频在神经表示空间形成更直的轨迹），利用 DINOv2 特征空间中的时间曲率和步距统计量训练轻量分类器检测 AI 生成视频…
+  [NeurIPS 2025][模型压缩][AI-generated video detection] 提出 ReStraV 方法，基于"感知拉直"假说（真实视频在神经表示空间形成更直的轨迹），利用 DINOv2 特征空间中的时间曲率和步距统计量训练轻量分类器检测 AI 生成视频，在 VidProM 上达到 97.17% 准确率和 98.63% AUROC，推理仅需 ~48ms。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

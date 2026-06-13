@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Train in Vain: Functionality-Preserving Poisoning to Prevent Unauthorized Use of Code Datasets
 description: >-
-  [ACL2026][LLM安全][代码数据保护] 这篇论文提出 FunPoison，在保持 Java 代码可编译、可执行和功能等价的前提下，把执行惰性的弱使用片段注入真实执行路径，只污染 10% 数据就能显著削弱未授权 CodeLLM 微调收益，并对格式化、重写、静态分析和检测清洗表现出较强鲁棒性。
+  [ACL2026 Findings][LLM安全][代码数据保护] 这篇论文提出 FunPoison，在保持 Java 代码可编译、可执行和功能等价的前提下，把执行惰性的弱使用片段注入真实执行路径，只污染 10% 数据就能显著削弱未授权 CodeLLM 微调收益，并对格式化、重写、静态分析和检测清洗表现出较强鲁棒性。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM安全"
   - "代码数据保护"
   - "数据投毒"

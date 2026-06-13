@@ -2,10 +2,10 @@
 title: >-
   [论文解读] BIPro: Zero-shot Chinese Poem Generation via Block Inverse Prompting Constrained Generation Framework
 description: >-
-  [ACL 2025][LLM/NLP][约束生成] 提出 BIPro 框架，利用块生成模型（Block Generative Model）的中间文本生成能力，通过"修订（revise）"和"重写（rewrite）"两种块逆提示方法…
+  [ACL 2025][LLM 其他][约束生成] 提出 BIPro 框架，利用块生成模型（Block Generative Model）的中间文本生成能力，通过"修订（revise）"和"重写（rewrite）"两种块逆提示方法，在无需领域特定训练的情况下使弱模型 GLM-10B 在开放式传统中国诗歌生成任务中超越 GPT-4 和最佳专用系统。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "约束生成"
   - "中国古诗"
   - "逆提示"

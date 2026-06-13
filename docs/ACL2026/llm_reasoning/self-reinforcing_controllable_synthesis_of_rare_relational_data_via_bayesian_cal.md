@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Self-Reinforcing Controllable Synthesis of Rare Relational Data via Bayesian Calibration
 description: >-
-  [ACL 2026][LLM推理][表格数据合成] 本文提出RDDG，基于渐进式CoT的表格数据合成框架，通过核心集选择、关系挖掘和自强化反馈机制引导LLM生成高保真表格数据，在不平衡分类上平均提升2%+ Macro-F1。
+  [ACL 2026 Findings][LLM推理][表格数据合成] 本文提出RDDG，基于渐进式CoT的表格数据合成框架，通过核心集选择、关系挖掘和自强化反馈机制引导LLM生成高保真表格数据，在不平衡分类上平均提升2%+ Macro-F1。 领域现状：不平衡数据在真实应用中普遍存在，数据合成是缓解稀有类样本稀缺的常用手段…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "表格数据合成"
   - "不平衡分类"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangled Concepts Speak Louder Than Words: Explainable Video Action Recognition
 description: >-
-  [NeurIPS 2025 (Spotlight)][视频理解][可解释视频动作识别] 提出DANCE框架，通过将动作解释解耦为运动动态、物体和场景三类概念，实现结构化和运动感知的可解释视频动作识别。
+  [NeurIPS 2025 (Spotlight)][视频理解][可解释视频动作识别] 提出DANCE框架，通过将动作解释解耦为运动动态、物体和场景三类概念，实现结构化和运动感知的可解释视频动作识别。 视频动作识别模型在性能上取得了巨大进步，但其决策过程仍然不透明。现有可解释方法存在明显局限： 显著性方法：（Saliency…
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "视频理解"

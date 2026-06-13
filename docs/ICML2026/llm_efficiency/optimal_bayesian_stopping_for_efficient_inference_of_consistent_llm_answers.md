@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Bayesian Stopping for Efficient Inference of Consistent LLM Answers
 description: >-
-  [ICML 2026][LLM效率][自适应采样] 本文把"自洽性 (Self-Consistency) 多次采样选众数"问题建模为带先验信息的贝叶斯最优停止问题，并提出一种只跟踪"出现次数最多 / 次多 / 其他合计"三类计数的 $L$-聚合后验近似…
+  [ICML 2026][LLM效率][自适应采样] 本文把"自洽性 (Self-Consistency) 多次采样选众数"问题建模为带先验信息的贝叶斯最优停止问题，并提出一种只跟踪"出现次数最多 / 次多 / 其他合计"三类计数的 $L$-聚合后验近似，从理论上证明 $L=3$ 即可在 $\delta \to 0$ 时达到与精确后验完全一致的渐近最优停止时间，实验上以约 1.4 倍 ASC 的速度在 GSM8K / CommonsenseQA 上节省 30%–80% 的 LLM 调用。
 tags:
   - "ICML 2026"
   - "LLM效率"

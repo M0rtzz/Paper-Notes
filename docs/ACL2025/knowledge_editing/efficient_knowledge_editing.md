@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Knowledge Editing via Minimal Precomputation
 description: >-
-  [ACL 2025][知识编辑][knowledge editing] 证明了 MEMIT/ROME/EMMET 等知识编辑方法的预计算步骤（缓存 4400 万隐向量）可以减少到理论最小值的 2-10 倍（不到原来的 0.3%），将预计算时间从数十小时降到几分钟，且编辑性能基本无损。
+  [ACL 2025][知识编辑][knowledge editing] 证明了 MEMIT/ROME/EMMET 等知识编辑方法的预计算步骤（缓存 4400 万隐向量）可以减少到理论最小值的 2-10 倍（不到原来的 0.3%），将预计算时间从数十小时降到几分钟，且编辑性能基本无损。 领域现状：Locate-then-edi…
 tags:
   - "ACL 2025"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hyperbolic Fine-Tuning for Large Language Models
 description: >-
-  [NeurIPS 2025][LLM评测][hyperbolic geometry] 发现 LLM token 嵌入具有幂律分布和树状双曲结构，据此提出 HypLoRA——在 Lorentz 双曲流形上直接执行低秩适配（避免切空间映射的相消效应）…
+  [NeurIPS 2025][LLM评测][hyperbolic geometry] 发现 LLM token 嵌入具有幂律分布和树状双曲结构，据此提出 HypLoRA——在 Lorentz 双曲流形上直接执行低秩适配（避免切空间映射的相消效应），在算术推理和常识推理任务上相比标准 LoRA 取得显著提升（如 Qwen2.5-7B 上 M.AVG +7.5%）。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

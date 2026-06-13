@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Semi-Supervised Noise Adaptation: Transferring Knowledge from Noise Domain
 description: >-
-  [ICML 2026][半监督噪声适应] 作者把"从高斯噪声生成的合成域"当作半监督迁移学习里的替代源域，先证明这种"无语义但有判别结构"的噪声能给目标域带来可量化的泛化界改进，再用三损失的 Noise Adaptation Framework（NAF）联合优化两域风险与分布差异…
+  [ICML 2026][迁移学习 / 半监督学习][半监督噪声适应] 作者把"从高斯噪声生成的合成域"当作半监督迁移学习里的替代源域，先证明这种"无语义但有判别结构"的噪声能给目标域带来可量化的泛化界改进，再用三损失的 Noise Adaptation Framework（NAF）联合优化两域风险与分布差异，使 CIFAR-10 上 4-shot ResNet-18 比 ERM 提升 12.35%。
 tags:
   - "ICML 2026"
+  - "迁移学习 / 半监督学习"
   - "半监督噪声适应"
   - "替代源域"
   - "泛化界"

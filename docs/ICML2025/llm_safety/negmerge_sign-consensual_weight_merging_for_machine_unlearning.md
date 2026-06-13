@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NegMerge: Sign-Consensual Weight Merging for Machine Unlearning
 description: >-
-  [ICML2025][LLM安全][机器遗忘] 提出 NegMerge，通过合并多个不同超参数微调模型的任务向量、仅保留符号一致的权重元素来构造更有效的遗忘向量，在零样本与标准分类场景中均取得 SOTA 遗忘效果。
+  [ICML2025][LLM安全][机器遗忘] 提出 NegMerge，通过合并多个不同超参数微调模型的任务向量、仅保留符号一致的权重元素来构造更有效的遗忘向量，在零样本与标准分类场景中均取得 SOTA 遗忘效果。 问题场景 "被遗忘权"（Right to be Forgotten）要求模型能够删除特定用户数据的影响…
 tags:
   - "ICML2025"
   - "LLM安全"

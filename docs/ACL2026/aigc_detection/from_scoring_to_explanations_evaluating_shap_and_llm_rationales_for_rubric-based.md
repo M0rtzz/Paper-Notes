@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Scoring to Explanations: Evaluating SHAP and LLM Rationales for Rubric-based Teaching Quality Assessment
 description: >-
-  [ACL2026][AIGC检测][SHAP] 这篇论文提出一个面向 rubric 自动评分的句子级解释评估框架，在课堂教学反馈质量评分任务上比较微调 PLM、prompted LLM、SHAP 归因和 LLM rationale，发现 fine-tuned PLM 更准…
+  [ACL2026 Findings][AIGC检测][SHAP] 这篇论文提出一个面向 rubric 自动评分的句子级解释评估框架，在课堂教学反馈质量评分任务上比较微调 PLM、prompted LLM、SHAP 归因和 LLM rationale，发现 fine-tuned PLM 更准，而 SHAP 比 LLM 生成的解释更忠实、更可迁移。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "AIGC检测"
   - "SHAP"
   - "LLM解释"

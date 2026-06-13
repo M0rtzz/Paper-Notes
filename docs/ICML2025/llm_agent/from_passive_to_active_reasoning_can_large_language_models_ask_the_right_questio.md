@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Passive to Active Reasoning: Can Large Language Models Ask the Right Questions under Incomplete Information?
 description: >-
-  [ICML 2025][LLM Agent][Active Reasoning] 本文提出 AR-Bench，一个专门评估 LLM 主动推理能力的基准，包含侦探案件、情境谜题和猜数字三类任务，实验发现 GPT-4o 等最先进模型在需要主动提问获取缺失信息的场景中表现远逊于人类…
+  [ICML 2025][LLM Agent][Active Reasoning] 本文提出 AR-Bench，一个专门评估 LLM 主动推理能力的基准，包含侦探案件、情境谜题和猜数字三类任务，实验发现 GPT-4o 等最先进模型在需要主动提问获取缺失信息的场景中表现远逊于人类，揭示了被动推理与主动推理之间的巨大鸿沟。
 tags:
   - "ICML 2025"
   - "LLM Agent"

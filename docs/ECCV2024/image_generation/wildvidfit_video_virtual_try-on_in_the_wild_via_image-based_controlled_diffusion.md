@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildVidFit: Video Virtual Try-On in the Wild via Image-Based Controlled Diffusion Models
 description: >-
-  [ECCV 2024][图像生成] WildVidFit 提出了一个无需视频训练的虚拟试穿框架，利用基于图像的条件扩散模型和扩散引导模块（VideoMAE + DINO-V2），实现了在野外复杂视频中保持时序一致性的服装试穿效果。
+  [ECCV 2024][图像生成] WildVidFit 提出了一个无需视频训练的虚拟试穿框架，利用基于图像的条件扩散模型和扩散引导模块（VideoMAE + DINO-V2），实现了在野外复杂视频中保持时序一致性的服装试穿效果。 视频虚拟试穿旨在生成逼真的序列，使目标服装自然地适配源视频中人物的姿态和体型…
 tags:
   - "ECCV 2024"
   - "图像生成"

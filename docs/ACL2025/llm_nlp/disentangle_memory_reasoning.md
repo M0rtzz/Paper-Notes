@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Disentangling Memory and Reasoning Ability in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][记忆与推理分离] 提出将 LLM 的推理过程显式分解为"记忆回忆"和"逻辑推理"两个步骤——引入 `<memory>` 和 `<reason>` 两个可学习特殊 token 标记每步是知识回忆还是逻辑推理，用双 LLM 框架生成训练数据后 LoRA 微调…
+  [ACL 2025][LLM 其他][记忆与推理分离] 提出将 LLM 的推理过程显式分解为"记忆回忆"和"逻辑推理"两个步骤——引入 `<memory>` 和 `<reason>` 两个可学习特殊 token 标记每步是知识回忆还是逻辑推理，用双 LLM 框架生成训练数据后 LoRA 微调，在 StrategyQA/CommonsenseQA/TruthfulQA 上提升性能并增强可解释性，8B 模型在 TruthfulQA 上超越 GPT-4o。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "记忆与推理分离"
   - "特殊token"
   - "可解释推理"

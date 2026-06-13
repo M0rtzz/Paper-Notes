@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreetCrafter: Street View Synthesis with Controllable Video Diffusion Models
 description: >-
-  [CVPR 2025][视频生成][街景合成] 提出 StreetCrafter，利用 LiDAR 点云渲染作为像素级条件来控制视频扩散模型，实现精确相机控制的街景新视角合成，并可将生成先验蒸馏到动态 3DGS 表示中实现实时渲染。
+  [CVPR 2025][视频生成][街景合成] 提出 StreetCrafter，利用 LiDAR 点云渲染作为像素级条件来控制视频扩散模型，实现精确相机控制的街景新视角合成，并可将生成先验蒸馏到动态 3DGS 表示中实现实时渲染。 自动驾驶模拟器需要高质量的视角合成能力。基于 3DGS 的方法在训练轨迹附近可生成高质量图像…
 tags:
   - "CVPR 2025"
   - "视频生成"

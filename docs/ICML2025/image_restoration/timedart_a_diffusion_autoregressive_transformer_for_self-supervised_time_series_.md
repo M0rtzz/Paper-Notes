@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation
 description: >-
-  [ICML2025][图像恢复][自监督学习] 提出 TimeDART，将自回归建模与去噪扩散过程统一在一个自监督预训练框架中，通过因果 Transformer 编码器捕获长期动态演化、patch 级扩散去噪捕获细粒度局部模式，在预测和分类任务上均超越现有方法。
+  [ICML2025][图像恢复][自监督学习] 提出 TimeDART，将自回归建模与去噪扩散过程统一在一个自监督预训练框架中，通过因果 Transformer 编码器捕获长期动态演化、patch 级扩散去噪捕获细粒度局部模式，在预测和分类任务上均超越现有方法。 时间序列自监督学习主要有三类范式，各有短板： 掩码自编码器：（…
 tags:
   - "ICML2025"
   - "图像恢复"

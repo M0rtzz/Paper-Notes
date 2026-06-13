@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Function Words as Statistical Cues for Language Learning
 description: >-
-  [ACL 2026][因果推理][功能词] 作者一边用 186 种语言的 Universal Dependencies 语料证明"功能词高频 + 句法可预测 + 短语边界对齐"这三条分布性质是跨语种普适的，另一边在英语上构造 7 个反事实变体训练 GPT-2 small…
+  [ACL 2026][因果推理][功能词] 作者一边用 186 种语言的 Universal Dependencies 语料证明"功能词高频 + 句法可预测 + 短语边界对齐"这三条分布性质是跨语种普适的，另一边在英语上构造 7 个反事实变体训练 GPT-2 small，证明 transformer 学习者只有在三条性质同时满足时学得最好，并发现一个 Goldilocks 效应——功能词必须既够高频又够多样才能既可靠又有区分度。
 tags:
   - "ACL 2026"
   - "因果推理"

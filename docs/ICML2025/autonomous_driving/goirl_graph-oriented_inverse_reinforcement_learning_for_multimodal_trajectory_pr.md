@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GoIRL: Graph-Oriented Inverse Reinforcement Learning for Multimodal Trajectory Prediction
 description: >-
-  [ICML 2025][自动驾驶][逆强化学习] 首次将最大熵逆强化学习框架与向量化场景表示相融合，提出 GoIRL 轨迹预测框架：通过可学习的 Feature Adaptor 将图特征聚合到网格空间以适配 IRL…
+  [ICML 2025][自动驾驶][逆强化学习] 首次将最大熵逆强化学习框架与向量化场景表示相融合，提出 GoIRL 轨迹预测框架：通过可学习的 Feature Adaptor 将图特征聚合到网格空间以适配 IRL，再用层级参数化轨迹生成器（Bézier曲线+精细化模块）和 MCMC 概率融合机制实现多模态轨迹预测，在 Argoverse 和 nuScenes 上达到 SOTA 并展现出相比监督模型显著更强的泛化能力。
 tags:
   - "ICML 2025"
   - "自动驾驶"

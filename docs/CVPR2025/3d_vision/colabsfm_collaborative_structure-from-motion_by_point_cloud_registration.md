@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ColabSfM: Collaborative Structure-from-Motion by Point Cloud Registration
 description: >-
-  [CVPR 2025][3D视觉][协同SfM] 提出ColabSfM范式——通过3D点云配准（而非视觉描述子匹配）来融合分布式SfM重建结果，并构建了专用的SfM配准数据集生成管线和改进的配准模型RefineRoITr。
+  [CVPR 2025][3D视觉][协同SfM] 提出ColabSfM范式——通过3D点云配准（而非视觉描述子匹配）来融合分布式SfM重建结果，并构建了专用的SfM配准数据集生成管线和改进的配准模型RefineRoITr。 机器人和XR设备需要在环境地图中精确构建和定位。各厂商使用不同的SfM管线和特征提取器…
 tags:
   - "CVPR 2025"
   - "3D视觉"

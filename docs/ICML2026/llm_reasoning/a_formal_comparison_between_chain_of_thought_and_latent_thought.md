@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Formal Comparison Between Chain of Thought and Latent Thought
 description: >-
-  [ICML 2026][LLM推理][链式思维] 本文从计算复杂度理论出发，形式化比较 CoT（链式思维）与隐式思维（Looped Transformer / Coconut）的表达能力，证明隐式思维在多对数深度下严格达到 $\mathsf{TC}^k$…
+  [ICML 2026][LLM推理][链式思维] 本文从计算复杂度理论出发，形式化比较 CoT（链式思维）与隐式思维（Looped Transformer / Coconut）的表达能力，证明隐式思维在多对数深度下严格达到 $\mathsf{TC}^k$，而 CoT 最多到 $\mathsf{TC}^{k-1}$；同时在概率设置下首次揭示 CoT 通过随机解码可支持 FPRAS 计数，反过来超越确定论隐式思维。
 tags:
   - "ICML 2026"
   - "LLM推理"

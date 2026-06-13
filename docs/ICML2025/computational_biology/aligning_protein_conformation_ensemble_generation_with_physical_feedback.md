@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Protein Conformation Ensemble Generation with Physical Feedback
 description: >-
-  [ICML 2025][计算生物][蛋白质构象生成] 提出 Energy-based Alignment (EBA)，将物理力场的能量反馈融入扩散生成模型的微调过程，通过 Boltzmann 因子加权的分类目标函数对齐生成分布与物理能量景观，在 ATLAS MD 基准上实现蛋白质构象集合生成的 SOTA 性能…
+  [ICML 2025][计算生物][蛋白质构象生成] 提出 Energy-based Alignment (EBA)，将物理力场的能量反馈融入扩散生成模型的微调过程，通过 Boltzmann 因子加权的分类目标函数对齐生成分布与物理能量景观，在 ATLAS MD 基准上实现蛋白质构象集合生成的 SOTA 性能。
 tags:
   - "ICML 2025"
   - "计算生物"

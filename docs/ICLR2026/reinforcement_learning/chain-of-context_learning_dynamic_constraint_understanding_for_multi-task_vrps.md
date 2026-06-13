@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain-of-Context Learning: Dynamic Constraint Understanding for Multi-Task VRPs
 description: >-
-  [ICLR2026][强化学习][vehicle routing problem] 提出 Chain-of-Context Learning (CCL)，通过 Relevance-Guided Context Reformulation（RGCR…
+  [ICLR2026][强化学习][vehicle routing problem] 提出 Chain-of-Context Learning (CCL)，通过 Relevance-Guided Context Reformulation（RGCR，自适应聚合约束信息构建上下文）和 Trajectory-Shared Node Re-embedding（TSNR，跨轨迹共享节点更新避免冗余计算）实现逐步动态的约束感知解码，在 48 种 VRP 变体（16 分布内 + 32 分布外）上全面超越现有方法。
 tags:
   - "ICLR2026"
   - "强化学习"

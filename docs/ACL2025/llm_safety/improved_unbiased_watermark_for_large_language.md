@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improved Unbiased Watermark for Large Language Models
 description: >-
-  [ACL 2025][LLM安全][watermark] 提出 MCmark，一族基于多通道（Multi-Channel）的无偏水印算法，通过将词表分割为 $l$ 个段并在选中段内提升 token 概率来嵌入统计信号，在保持 LLM 原始输出分布的同时，可检测性比现有无偏水印提升超 10%。
+  [ACL 2025][LLM安全][watermark] 提出 MCmark，一族基于多通道（Multi-Channel）的无偏水印算法，通过将词表分割为 $l$ 个段并在选中段内提升 token 概率来嵌入统计信号，在保持 LLM 原始输出分布的同时，可检测性比现有无偏水印提升超 10%。 领域现状：随着 AI 文本生成能…
 tags:
   - "ACL 2025"
   - "LLM安全"

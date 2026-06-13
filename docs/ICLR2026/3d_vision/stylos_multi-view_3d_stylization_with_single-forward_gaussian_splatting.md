@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stylos: Multi-View 3D Stylization with Single-Forward Gaussian Splatting
 description: >-
-  [ICLR 2026][3D视觉][3D风格迁移] Stylos 提出了一个单次前馈的3D风格迁移框架，通过共享Transformer骨干的双路径设计（几何自注意力+风格交叉注意力）和体素级3D风格损失，实现从未标定输入的零样本3D风格化，支持单视角到数百视角的扩展。
+  [ICLR 2026][3D视觉][3D风格迁移] Stylos 提出了一个单次前馈的3D风格迁移框架，通过共享Transformer骨干的双路径设计（几何自注意力+风格交叉注意力）和体素级3D风格损失，实现从未标定输入的零样本3D风格化，支持单视角到数百视角的扩展。 3D风格迁移旨在保持场景几何和跨视角一致性的同时迁移参考…
 tags:
   - "ICLR 2026"
   - "3D视觉"

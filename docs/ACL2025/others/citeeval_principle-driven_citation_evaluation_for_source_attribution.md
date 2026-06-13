@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CiteEval: Principle-Driven Citation Evaluation for Source Attribution
 description: >-
-  [ACL 2025][引用评估] 本文提出 CiteEval，一个基于原则驱动的引用评估框架，通过考虑完整检索上下文、超越检索的多种上下文以及细粒度评价标准，构建了 CiteBench 基准和 CiteEval-Auto 自动指标，在引用质量评估上显著优于基于 NLI 的现有方法。
+  [ACL 2025][引用评估] 本文提出 CiteEval，一个基于原则驱动的引用评估框架，通过考虑完整检索上下文、超越检索的多种上下文以及细粒度评价标准，构建了 CiteBench 基准和 CiteEval-Auto 自动指标，在引用质量评估上显著优于基于 NLI 的现有方法。 检索增强生成（RAG）系统在信息搜索中扮演…
 tags:
   - "ACL 2025"
   - "引用评估"

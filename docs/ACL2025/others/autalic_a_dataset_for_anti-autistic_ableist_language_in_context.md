@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autalic: A Dataset for Anti-Autistic Ableist Language In Context
 description: >-
-  [ACL 2025][反自闭症歧视] 提出 Autalic——首个专注于上下文中反自闭症残障歧视语言检测的数据集，包含 2,400 条 Reddit 句子及上下文标注，由神经多样性背景的专家标注…
+  [ACL 2025][反自闭症歧视] 提出 Autalic——首个专注于上下文中反自闭症残障歧视语言检测的数据集，包含 2,400 条 Reddit 句子及上下文标注，由神经多样性背景的专家标注，实验揭示当前 LLM（包括 DeepSeek、Llama3、Gemma2、Mistral）在识别反自闭症歧视语言时与人类判断严重不一致（平均 Cohen's Kappa 仅 0.091），凸显该任务的困难性。
 tags:
   - "ACL 2025"
   - "反自闭症歧视"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Why Not Act on What You Know? Unleashing Safety Potential of LLMs via Self-Aware Guard Enhancement
 description: >-
-  [ACL2025][LLM/NLP][越狱防御] 发现 LLM 作为判别器时能准确识别越狱请求、但作为生成器时却仍产出有害内容的"判别-生成安全差距"，提出免训练的 SAGE（Self-Aware Guard Enhancement）策略，通过判别分析模块和判别响应模块将模型自身的安全鉴别能力桥接到生成行为…
+  [ACL2025][LLM 其他][越狱防御] 发现 LLM 作为判别器时能准确识别越狱请求、但作为生成器时却仍产出有害内容的"判别-生成安全差距"，提出免训练的 SAGE（Self-Aware Guard Enhancement）策略，通过判别分析模块和判别响应模块将模型自身的安全鉴别能力桥接到生成行为，在 6 个模型上达到平均 99% 的防御成功率。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "越狱防御"
   - "安全对齐"
   - "判别-生成差距"

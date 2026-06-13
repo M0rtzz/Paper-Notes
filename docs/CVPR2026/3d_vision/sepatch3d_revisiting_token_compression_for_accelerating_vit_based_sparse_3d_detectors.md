@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEPatch3D: Revisiting Token Compression for Accelerating ViT-based Sparse Multi-View 3D Object Detectors
 description: >-
-  [CVPR 2026][3D视觉][目标检测] 提出 SEPatch3D，通过时空感知的动态 patch 大小选择和基于熵的信息性 patch 筛选增强机制，在 ViT 基稀疏多视角 3D 检测中实现 57% 推理加速且保持可比检测精度。
+  [CVPR 2026][3D视觉][目标检测] 提出 SEPatch3D，通过时空感知的动态 patch 大小选择和基于熵的信息性 patch 筛选增强机制，在 ViT 基稀疏多视角 3D 检测中实现 57% 推理加速且保持可比检测精度。 ViT 基稀疏查询式多视角 3D 检测器（如 StreamPETR）性能优异但推理延迟…
 tags:
   - "CVPR 2026"
   - "3D视觉"

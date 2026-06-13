@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting
 description: >-
-  [ICCV 2025][自动驾驶][时空预测] 提出SDKD（频域解耦知识蒸馏）框架，通过频率感知的教师模型和频率对齐的蒸馏策略，将复杂时空预测模型的多尺度频域知识迁移到轻量级学生网络，在Navier-Stokes数据集上MSE最高降低81.3%。
+  [ICCV 2025][模型压缩][时空预测] 提出SDKD（频域解耦知识蒸馏）框架，通过频率感知的教师模型和频率对齐的蒸馏策略，将复杂时空预测模型的多尺度频域知识迁移到轻量级学生网络，在Navier-Stokes数据集上MSE最高降低81.3%。 时空预测（如交通流量、天气演变、流体动力学）是智慧城市和气候科学中的核心任务…
 tags:
   - "ICCV 2025"
-  - "自动驾驶"
+  - "模型压缩"
   - "时空预测"
   - "知识蒸馏"
   - "频域解耦"

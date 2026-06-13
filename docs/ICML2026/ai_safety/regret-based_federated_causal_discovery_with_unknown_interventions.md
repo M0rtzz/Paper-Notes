@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Regret-Based Federated Causal Discovery with Unknown Interventions
 description: >-
-  [ICML 2026][AI安全][因果发现] 本文提出 I-PERI：在客户端干预目标完全未知、且只能共享 regret 标量的联邦设置下，用"有向一致掩码 + 无向一致掩码"两阶段流程，恢复出一个比观测 MEC 更紧、比 I-MEC 更松的全新等价类 Φ-MEC…
+  [ICML 2026][AI安全][因果发现] 本文提出 I-PERI：在客户端干预目标完全未知、且只能共享 regret 标量的联邦设置下，用"有向一致掩码 + 无向一致掩码"两阶段流程，恢复出一个比观测 MEC 更紧、比 I-MEC 更松的全新等价类 Φ-MEC，并通过 Laplace 噪声给出 ε-差分隐私保证。
 tags:
   - "ICML 2026"
   - "AI安全"

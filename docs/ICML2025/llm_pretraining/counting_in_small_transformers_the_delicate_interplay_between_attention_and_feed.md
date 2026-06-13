@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Counting in Small Transformers: The Delicate Interplay between Attention and Feed-Forward Layers
 description: >-
-  [ICML2025][预训练][Transformer] 通过直方图计数任务，揭示了小型Transformer中注意力层与前馈层之间的精细分工：注意力擅长关系比较（relation-based counting），前馈层负责字典记忆（inventory-based counting）…
+  [ICML2025][预训练][Transformer] 通过直方图计数任务，揭示了小型Transformer中注意力层与前馈层之间的精细分工：注意力擅长关系比较（relation-based counting），前馈层负责字典记忆（inventory-based counting），两种策略的出现由嵌入维度 $d$、隐层大小 $p$ 和词表大小 $T$ 的相对关系决定。
 tags:
   - "ICML2025"
   - "预训练"

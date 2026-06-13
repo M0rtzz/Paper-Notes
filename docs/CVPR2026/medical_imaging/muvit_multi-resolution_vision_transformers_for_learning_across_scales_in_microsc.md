@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy
 description: >-
-  [CVPR 2026][医学图像][多分辨率] 提出 MuViT，一种基于世界坐标 RoPE 位置编码的多分辨率 Vision Transformer，能在单一编码器中联合处理同一场景不同物理分辨率的裁剪图，在显微镜图像分割任务上显著优于单分辨率基线。
+  [CVPR 2026][医学图像][多分辨率] 提出 MuViT，一种基于世界坐标 RoPE 位置编码的多分辨率 Vision Transformer，能在单一编码器中联合处理同一场景不同物理分辨率的裁剪图，在显微镜图像分割任务上显著优于单分辨率基线。 现代显微成像（光片荧光显微镜、电子显微镜、数字病理）常产生超大尺寸（50…
 tags:
   - "CVPR 2026"
   - "医学图像"

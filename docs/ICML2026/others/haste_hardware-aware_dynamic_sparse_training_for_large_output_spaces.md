@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HASTE: Hardware-Aware Dynamic Sparse Training for Large Output Spaces
 description: >-
-  [ICML 2026][极端多标签分类] 针对百万级标签的极端多标签分类，HASTE 把"每个标签独立采样 fan-in"改成"按语义分组共享 fan-in"，再配合一个吃掉高频标签的小 dense head，使得稀疏训练在 GPU 上真正跑出对应 FLOPs 的墙钟收益…
+  [ICML 2026][极端多标签分类] 针对百万级标签的极端多标签分类，HASTE 把"每个标签独立采样 fan-in"改成"按语义分组共享 fan-in"，再配合一个吃掉高频标签的小 dense head，使得稀疏训练在 GPU 上真正跑出对应 FLOPs 的墙钟收益，前向最多 $4.4\times$、反向最多 $25\times$ 于现有稀疏基线，同时把与 dense 的精度差距收窄到几乎打平。
 tags:
   - "ICML 2026"
   - "极端多标签分类"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AutoMonitor-Bench: Evaluating the Reliability of LLM-Based Misbehavior Monitor
 description: >-
-  [ACL 2026][代码智能][不当行为监控] 本文构建首个系统性评测「LLM 监控器是否能可靠识别模型不当行为」的基准 AutoMonitor-Bench（3,010 个配对样本，覆盖安全违规 / 谄媚偏见 / 规约博弈三类）…
+  [ACL 2026 Findings][代码智能][不当行为监控] 本文构建首个系统性评测「LLM 监控器是否能可靠识别模型不当行为」的基准 AutoMonitor-Bench（3,010 个配对样本，覆盖安全违规 / 谄媚偏见 / 规约博弈三类），在 22 个开闭源监控模型上揭示了漏检率（MR）与误报率（FAR）之间的系统性 trade-off，并通过 153k 样本 SFT 实验证明：在易构造不当行为上微调难以泛化到隐式的规约博弈。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "不当行为监控"
   - "漏检率"

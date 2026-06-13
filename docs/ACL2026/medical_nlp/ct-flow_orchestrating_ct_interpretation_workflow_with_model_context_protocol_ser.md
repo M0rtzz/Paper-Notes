@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CT-Flow: Orchestrating CT Interpretation Workflow with Model Context Protocol Servers
 description: >-
-  [ACL 2026][医疗NLP][CT 解释] 作者把 3D CT 解读重新建模成"放射科医生用工具迭代探查"的智能体任务，用 Model Context Protocol（MCP）暴露 Data Ingestion / Global Navigation / Detailed Observation /…
+  [ACL 2026][医疗NLP][CT 解释] 作者把 3D CT 解读重新建模成"放射科医生用工具迭代探查"的智能体任务，用 Model Context Protocol（MCP）暴露 Data Ingestion / Global Navigation / Detailed Observation / Advanced Analysis 四类工具，构造 2000+300 条可执行轨迹的 CT-FlowBench，并 SFT 出 CT-Flow-8B：在 3D-RAD 上达到 69.46% ACC，比纯切片基线提升 +22.46%，工具调用名称错误率仅 0.007/case。
 tags:
   - "ACL 2026"
   - "医疗NLP"

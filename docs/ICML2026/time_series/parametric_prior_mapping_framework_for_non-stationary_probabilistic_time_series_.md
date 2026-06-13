@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parametric Prior Mapping Framework for Non-stationary Probabilistic Time Series Forecasting
 description: >-
-  [ICML 2026][时间序列][概率时序预测] PPM 用一个轻量编码器从历史序列里推断出 context-aware 高斯先验，再用一个两层 MLP 把这个先验"推前"成完整的预测分布，用 KDE-NLL + 均值 MSE 联合训练，在七个时序基准上同时打过 DeepAR 和 NsDiff 等扩散模型…
+  [ICML 2026][时间序列][概率时序预测] PPM 用一个轻量编码器从历史序列里推断出 context-aware 高斯先验，再用一个两层 MLP 把这个先验"推前"成完整的预测分布，用 KDE-NLL + 均值 MSE 联合训练，在七个时序基准上同时打过 DeepAR 和 NsDiff 等扩散模型，推理还快 2× 到 100×。
 tags:
   - "ICML 2026"
   - "时间序列"

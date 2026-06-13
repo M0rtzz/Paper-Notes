@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiveNewsBench: Evaluating LLM Web Search Capabilities with Freshly Curated News
 description: >-
-  [ICLR 2026][LLM Agent][LLM Web Search] 提出 LiveNewsBench，一个自动从近期新闻生成的、定期更新的 benchmark，通过多跳、事实性问答评估 LLM 的 agentic web search 能力，有效分离模型内部知识与检索能力…
+  [ICLR 2026][LLM Agent][LLM Web Search] 提出 LiveNewsBench，一个自动从近期新闻生成的、定期更新的 benchmark，通过多跳、事实性问答评估 LLM 的 agentic web search 能力，有效分离模型内部知识与检索能力，性能范围从 11% 到 90%，展现出强区分力。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

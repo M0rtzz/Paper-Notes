@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models
 description: >-
-  [ICLR 2026][LLM安全][隐私泄露] 本文系统揭示了多模态大推理模型（MLRM）通过图像推断敏感地理位置信息的隐私泄露风险，提出了三级隐私风险框架和 DoxBench 基准，以及信息论度量 Glare 和协作攻击框架 GeoMiner。
+  [ICLR 2026][LLM安全][隐私泄露] 本文系统揭示了多模态大推理模型（MLRM）通过图像推断敏感地理位置信息的隐私泄露风险，提出了三级隐私风险框架和 DoxBench 基准，以及信息论度量 Glare 和协作攻击框架 GeoMiner。 随着 OpenAI o3、Gemini 2.5 Pro 等多模态大推理模型的…
 tags:
   - "ICLR 2026"
   - "LLM安全"

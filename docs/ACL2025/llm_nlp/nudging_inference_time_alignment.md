@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Nudging: Inference-time Alignment of LLMs via Guided Decoding
 description: >-
-  [ACL 2025][LLM/NLP][推理时对齐] 提出 Nudging，一种免训练的推理时对齐算法，利用小型对齐模型在基础模型不确定时注入少量"nudging tokens"来引导输出，用 7-14 倍小的模型就能达到甚至超过大型对齐模型的性能。
+  [ACL 2025][LLM 其他][推理时对齐] 提出 Nudging，一种免训练的推理时对齐算法，利用小型对齐模型在基础模型不确定时注入少量"nudging tokens"来引导输出，用 7-14 倍小的模型就能达到甚至超过大型对齐模型的性能。 领域现状： LLM 经过预训练后需要对齐（指令微调 + RLHF）才能有效跟…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "推理时对齐"
   - "引导解码"
   - "免训练"

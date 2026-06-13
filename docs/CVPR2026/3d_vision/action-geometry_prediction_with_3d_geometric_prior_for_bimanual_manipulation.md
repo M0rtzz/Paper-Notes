@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GAP: Action-Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation
 description: >-
-  [CVPR2026][3D视觉][双臂操控] GAP利用预训练3D几何基础模型（π³）提取3D特征，融合2D语义和本体感知，通过条件扩散联合预测未来动作序列和未来3D pointmap，在RoboTwin 2.0和真实双臂实验中达到SOTA。
+  [CVPR2026][3D视觉][双臂操控] GAP利用预训练3D几何基础模型（π³）提取3D特征，融合2D语义和本体感知，通过条件扩散联合预测未来动作序列和未来3D pointmap，在RoboTwin 2.0和真实双臂实验中达到SOTA。 领域现状：双臂操控（bimanual manipulation）需要策略同时生成两…
 tags:
   - "CVPR2026"
   - "3D视觉"

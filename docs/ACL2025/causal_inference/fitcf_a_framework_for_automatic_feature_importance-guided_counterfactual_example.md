@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FitCF: A Framework for Automatic Feature Importance-guided Counterfactual Example Generation
 description: >-
-  [ACL 2025][因果推理][反事实生成] 提出 FitCF 框架，利用 BERT 特征归因方法（LIME/IG/SHAP等）提取重要词来引导 LLM 在 zero-shot 下生成反事实样本（ZeroCF），再经标签翻转验证筛选后作为 few-shot 示例…
+  [ACL 2025][因果推理][反事实生成] 提出 FitCF 框架，利用 BERT 特征归因方法（LIME/IG/SHAP等）提取重要词来引导 LLM 在 zero-shot 下生成反事实样本（ZeroCF），再经标签翻转验证筛选后作为 few-shot 示例，在新闻分类和情感分析任务上一致性超越 Polyjuice、BAE、FIZLE 三种基线。
 tags:
   - "ACL 2025"
   - "因果推理"

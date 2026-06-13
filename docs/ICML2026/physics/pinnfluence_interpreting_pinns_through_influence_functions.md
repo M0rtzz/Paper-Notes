@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PINNfluence: Interpreting PINNs Through Influence Functions
 description: >-
-  [ICML 2026][物理/科学计算][PINN 诊断] 本文把训练数据归因方法 Influence Functions 推广到物理信息神经网络 (PINN) 上，提出 PINNfluence——通过线性化的留一样本扰动估计，把 PINN 的预测/损失/物理量同时归因到每一个训练点和每一个损失分量上…
+  [ICML 2026][物理/科学计算][PINN 诊断] 本文把训练数据归因方法 Influence Functions 推广到物理信息神经网络 (PINN) 上，提出 PINNfluence——通过线性化的留一样本扰动估计，把 PINN 的预测/损失/物理量同时归因到每一个训练点和每一个损失分量上，并基于此构造一套诊断指标（损失分量比例、抵消分数、时间因果指标等），在 5 个时间相关 PDE 上稳定区分"训练良好 vs 训练失败"两类 PINN，给出残差分析看不到的结构性诊断。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

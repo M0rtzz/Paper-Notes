@@ -2,9 +2,9 @@
 title: >-
   [论文解读] NG-GS: NeRF-Guided 3D Gaussian Splatting Segmentation
 description: >-
-  [CVPR 2026][3D视觉][3D Gaussian Splatting] 提出 NG-GS 框架，利用 NeRF 的连续建模能力解决 3DGS 分割中的边界离散化问题，通过 RBF 插值构建连续特征场结合多分辨率哈希编码和 NeRF-GS 联合优化实现高质量对象分割。
+  [CVPR 2026 Highlight][3D视觉][3D Gaussian Splatting] 提出 NG-GS 框架，利用 NeRF 的连续建模能力解决 3DGS 分割中的边界离散化问题，通过 RBF 插值构建连续特征场结合多分辨率哈希编码和 NeRF-GS 联合优化实现高质量对象分割。 3DGS 已实现高效逼真的新…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "3D视觉"
   - "3D Gaussian Splatting"
   - "图像分割"

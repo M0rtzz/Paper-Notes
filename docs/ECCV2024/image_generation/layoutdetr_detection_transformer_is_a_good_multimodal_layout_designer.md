@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LayoutDETR: Detection Transformer Is a Good Multimodal Layout Designer
 description: >-
-  [ECCV 2024][图像生成][布局生成] 将目标检测框架 DETR 与生成模型（GAN/VAE）统一，提出 LayoutDETR 用于多模态条件下的图形布局自动设计，以背景图像为约束、前景图文元素为驱动，在广告横幅和 UI 布局生成上达到 SOTA。
+  [ECCV 2024][图像生成][布局生成] 将目标检测框架 DETR 与生成模型（GAN/VAE）统一，提出 LayoutDETR 用于多模态条件下的图形布局自动设计，以背景图像为约束、前景图文元素为驱动，在广告横幅和 UI 布局生成上达到 SOTA。 图形布局设计是视觉传播的基础——将前景多模态元素（图片、文本）通过边…
 tags:
   - "ECCV 2024"
   - "图像生成"

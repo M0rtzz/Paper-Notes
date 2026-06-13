@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating 3D-Consistent Videos from Unposed Internet Photos
 description: >-
-  [CVPR 2025][3D视觉][视频生成] 本文提出KFC-W，一种从无位姿互联网照片生成3D一致视频的自监督方法，通过在视频扩散模型上联合训练多视角修复和视角插值两个目标，无需任何3D标注（如相机参数），生成的视频在几何和外观一致性上超越商业模型Luma Dream Machine。
+  [CVPR 2025][3D视觉][视频生成] 本文提出KFC-W，一种从无位姿互联网照片生成3D一致视频的自监督方法，通过在视频扩散模型上联合训练多视角修复和视角插值两个目标，无需任何3D标注（如相机参数），生成的视频在几何和外观一致性上超越商业模型Luma Dream Machine。 1. 领域现状：视频基础模型迅速发…
 tags:
   - "CVPR 2025"
   - "3D视觉"

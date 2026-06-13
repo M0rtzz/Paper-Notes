@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AdapTime: Enabling Adaptive Temporal Reasoning in Large Language Models
 description: >-
-  [ACL 2026][NLP理解][时间推理] 本文提出 AdapTime，把"时间推理"抽象为 reformulate / rewrite / review 三个可复用的原子动作，由 LLM Planner 根据问题与上下文自适应决定执行哪几步、按什么顺序执行…
+  [ACL 2026 Findings][NLP理解][时间推理] 本文提出 AdapTime，把"时间推理"抽象为 reformulate / rewrite / review 三个可复用的原子动作，由 LLM Planner 根据问题与上下文自适应决定执行哪几步、按什么顺序执行，无需任何外部工具、手工规则或微调即可显著提升 LLM 在时序 QA 上的表现，在 DeepSeek-V3 上把 TimeQA-Easy 推到 85.4 EM。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "时间推理"
   - "时序问答"

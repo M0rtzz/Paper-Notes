@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroS: Zero-Sum Linear Attention for Efficient Transformers
 description: >-
-  [NeurIPS 2025][LLM效率][零和注意力] 通过移除 softmax 的零阶均匀项 $1/t$，构建零和权重的线性注意力机制 ZeroS，突破凸组合只能做加法混合的限制，支持单层内的差分/对比操作，在保持 $O(Nd^2)$ 线性复杂度的同时…
+  [NeurIPS 2025][LLM效率][零和注意力] 通过移除 softmax 的零阶均匀项 $1/t$，构建零和权重的线性注意力机制 ZeroS，突破凸组合只能做加法混合的限制，支持单层内的差分/对比操作，在保持 $O(Nd^2)$ 线性复杂度的同时，在多个序列建模基准上匹配甚至超越标准 softmax 注意力。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

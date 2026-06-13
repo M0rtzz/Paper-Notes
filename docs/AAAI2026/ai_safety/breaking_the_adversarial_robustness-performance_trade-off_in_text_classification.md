@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the Adversarial Robustness-Performance Trade-off in Text Classification via Manifold Purification
 description: >-
-  [AAAI 2026][AI安全][对抗防御] 提出 Manifold-Correcting Causal Flow (MC²F) 框架，通过分层黎曼连续正则化流 (SR-CNF) 学习干净数据嵌入的流形密度进行对抗样本检测…
+  [AAAI 2026][AI安全][对抗防御] 提出 Manifold-Correcting Causal Flow (MC²F) 框架，通过分层黎曼连续正则化流 (SR-CNF) 学习干净数据嵌入的流形密度进行对抗样本检测，再用测地线净化求解器 (Geodesic Purification Solver) 将被检测为对抗的嵌入沿最短路径投影回干净流形，在 SST-2/AGNews/YELP 三个数据集上对抗鲁棒性全面超越 SOTA，同时完全不损失（甚至略微提升）干净数据精度。
 tags:
   - "AAAI 2026"
   - "AI安全"

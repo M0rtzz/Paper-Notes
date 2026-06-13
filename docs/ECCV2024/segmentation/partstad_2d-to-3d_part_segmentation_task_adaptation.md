@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PartSTAD: 2D-to-3D Part Segmentation Task Adaptation
 description: >-
-  [ECCV 2024][语义分割][3D 部件分割] PartSTAD 提出了一种 2D-to-3D 部件分割的任务适配方法：通过为 GLIP 的 2D 检测框引入可学习权重预测网络（以 3D mRIoU 为目标优化），并集成 SAM 获取精确前景掩码…
+  [ECCV 2024][语义分割][3D 部件分割] PartSTAD 提出了一种 2D-to-3D 部件分割的任务适配方法：通过为 GLIP 的 2D 检测框引入可学习权重预测网络（以 3D mRIoU 为目标优化），并集成 SAM 获取精确前景掩码，在 PartNet-Mobility 上实现了语义分割 mIoU 提升 7.0%p、实例分割 mAP50 提升 5.2%p（相对 PartSLIP）。
 tags:
   - "ECCV 2024"
   - "语义分割"

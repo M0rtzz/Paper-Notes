@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align When They Want, Complement When They Need! Human-Centered Ensembles for Adaptive Human-AI Collaboration
 description: >-
-  [AAAI 2026][人机协作] 揭示了人机协作中"互补性"（complementarity）与"对齐性"（alignment）之间存在根本性权衡——单一模型无法同时优化二者，提出自适应AI集成框架，通过Rational Routing Shortcut（RRS）机制在对齐模型和互补模型之间动态切换…
+  [AAAI 2026][人机协作] 揭示了人机协作中"互补性"（complementarity）与"对齐性"（alignment）之间存在根本性权衡——单一模型无法同时优化二者，提出自适应AI集成框架，通过Rational Routing Shortcut（RRS）机制在对齐模型和互补模型之间动态切换，团队准确率较标准AI提升最高9%。
 tags:
   - "AAAI 2026"
   - "人机协作"

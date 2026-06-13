@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLN-NF: Feasibility-Aware Vision-and-Language Navigation with False-Premise Instructions
 description: >-
-  [ACL 2026][机器人][视觉语言导航] 本文提出 VLN-NF 基准——首个要求 VLN agent 在 3D 部分可观测环境中识别虚假前提指令并输出 NOT-FOUND 的任务，配套提出 REV-SPL 评估指标和 ROAM 两阶段混合框架，ROAM 达到 6.1 REV-SPL…
+  [ACL 2026][机器人][视觉语言导航] 本文提出 VLN-NF 基准——首个要求 VLN agent 在 3D 部分可观测环境中识别虚假前提指令并输出 NOT-FOUND 的任务，配套提出 REV-SPL 评估指标和 ROAM 两阶段混合框架，ROAM 达到 6.1 REV-SPL，比监督基线提升 45%。
 tags:
   - "ACL 2026"
   - "机器人"

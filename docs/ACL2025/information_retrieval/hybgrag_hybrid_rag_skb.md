@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HybGRAG: Hybrid Retrieval-Augmented Generation on Textual and Relational Knowledge Bases
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 提出 HybGRAG 方法，通过检索器库（Retriever Bank）同时利用文本和关系信息，配合 Critic 模块的自反思迭代纠正问题路由错误，在半结构化知识库上的混合问答任务中 Hit@1 平均提升 51%。
+  [ACL 2025][信息检索/RAG][RAG] 提出 HybGRAG 方法，通过检索器库（Retriever Bank）同时利用文本和关系信息，配合 Critic 模块的自反思迭代纠正问题路由错误，在半结构化知识库上的混合问答任务中 Hit@1 平均提升 51%。 领域现状：RAG 从非结构化文档检索信息辅助 LLM 回…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Out of Control -- Why Alignment Needs Formal Control Theory (and an Alignment Control Stack)
 description: >-
-  [NeurIPS 2025][可解释性][AI对齐] 本文是一篇 position paper，主张将形式化最优控制理论作为 AI 对齐研究的核心工具，并提出"对齐控制栈"(Alignment Control Stack, ACS)——一个从物理硬件层到社会治理层的十层分层框架…
+  [NeurIPS 2025][可解释性][AI对齐] 本文是一篇 position paper，主张将形式化最优控制理论作为 AI 对齐研究的核心工具，并提出"对齐控制栈"(Alignment Control Stack, ACS)——一个从物理硬件层到社会治理层的十层分层框架，用于系统地组织和分析不同对齐方法的测量、控制与互操作性。
 tags:
   - "NeurIPS 2025"
   - "可解释性"
@@ -122,10 +122,10 @@ tags:
 - **vs Constitutional AI**: Constitutional AI 用规则约束行为，控制论用形式化约束优化保证规则被可验证地执行。
 
 ## 评分
-- 新颖性: ⭐⭐⭐⭐ 将控制论系统地应用于对齐研究是一个有价值的视角，ACS框架有结构化的新意
-- 实验充分度: ⭐⭐ Position paper无实验，LQG玩具模型过于简化
-- 写作质量: ⭐⭐⭐⭐ 论述清晰有条理，数学推导严谨，但篇幅偏长
-- 价值: ⭐⭐⭐ 提供了有用的思维框架，但距离实际应用还有很大距离
+- 新颖性: ⭐⭐⭐⭐⭐ 将控制论系统地应用于对齐研究是一个有价值的视角，ACS框架有结构化的新意
+- 实验充分度: ⭐⭐⭐ Position paper无实验，LQG玩具模型过于简化
+- 写作质量: ⭐⭐⭐⭐⭐ 论述清晰有条理，数学推导严谨，但篇幅偏长
+- 价值: ⭐⭐⭐⭐ 提供了有用的思维框架，但距离实际应用还有很大距离
 
 <!-- RELATED:START -->
 

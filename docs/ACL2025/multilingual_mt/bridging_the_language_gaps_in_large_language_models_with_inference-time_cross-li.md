@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention
 description: >-
-  [ACL 2025][多语言/翻译][跨语言迁移] 本文提出INCLINE（Inference-Time Cross-Lingual Intervention），一种无需微调的推理时框架，通过学习对齐矩阵将低性能语言的内部表示变换到高性能语言的表示空间，在9个基准和5个LLM上显著提升多语言性能。
+  [ACL 2025][多语言/翻译][跨语言迁移] 本文提出INCLINE（Inference-Time Cross-Lingual Intervention），一种无需微调的推理时框架，通过学习对齐矩阵将低性能语言的内部表示变换到高性能语言的表示空间，在9个基准和5个LLM上显著提升多语言性能。 领域现状：多语言LLM虽然…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

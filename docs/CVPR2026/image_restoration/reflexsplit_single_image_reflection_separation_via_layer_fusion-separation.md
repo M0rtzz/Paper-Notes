@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation
 description: >-
-  [CVPR 2026][图像恢复][单图反射分离] ReflexSplit提出一种显式层融合-分离框架，通过跨尺度门控融合(CrGF)自适应聚合多尺度特征，层融合-分离模块(LFSB)中的差分双维度注意力 $\mathbf{A}^t - \lambda_\ell \mathbf{A}^r$ 进行跨流干扰抑制…
+  [CVPR 2026][图像恢复][单图反射分离] ReflexSplit提出一种显式层融合-分离框架，通过跨尺度门控融合(CrGF)自适应聚合多尺度特征，层融合-分离模块(LFSB)中的差分双维度注意力 $\mathbf{A}^t - \lambda_\ell \mathbf{A}^r$ 进行跨流干扰抑制，配合深度依赖初始化+epoch-wise warmup的课程训练，在合成和真实世界反射分离基准上取得SOTA。
 tags:
   - "CVPR 2026"
   - "图像恢复"

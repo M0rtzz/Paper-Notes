@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty Quantification for Reduced-Order Surrogate Models Applied to Cloud Microphysics
 description: >-
-  [NeurIPS 2025][优化/理论][降阶模型] 本文提出一种后验的、模型无关的不确定性量化框架，利用共形预测为潜空间降阶模型的重建、潜在动力学和端到端预测提供统计有效的预测区间，并在云微物理ROM上验证。
+  [NeurIPS 2025][优化/理论][降阶模型] 提出首个面向潜空间降阶模型的后验、模型无关不确定性量化框架，利用共形预测分别对重建、潜在动力学和端到端预测构建分布无关的预测区间，揭示了云微物理ROM中不确定性的组件级传播规律——自编码器结构性误差而非动力学误差主导端到端预测不确定性。 领域现状：潜空间降阶模型（Lat…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"
@@ -11,6 +11,7 @@ tags:
   - "云微物理"
   - "自编码器-SINDy"
   - "代理模型"
+  - "预测区间"
 ---
 
 # Uncertainty Quantification for Reduced-Order Surrogate Models Applied to Cloud Microphysics
@@ -157,3 +158,19 @@ tags:
   - 自编码器-SINDy
   - 代理模型
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization](conformal_prediction_in_the_loop_a_feedback-based_uncertainty_model_for_trajecto.md)
+- [\[ICML 2026\] Distribution-Free Uncertainty Quantification for Continuous AI Agent Evaluation](../../ICML2026/optimization/distribution-free_uncertainty_quantification_for_continuous_ai_agent_evaluation.md)
+- [\[NeurIPS 2025\] Private Zeroth-Order Optimization with Public Data](private_zeroth-order_optimization_with_public_data.md)
+- [\[NeurIPS 2025\] Improving the Straight-Through Estimator with Zeroth-Order Information](improving_the_straight-through_estimator_with_zeroth-order_information.md)
+- [\[NeurIPS 2025\] A Single-Loop First-Order Algorithm for Linearly Constrained Bilevel Optimization](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)
+
+</div>
+
+<!-- RELATED:END -->

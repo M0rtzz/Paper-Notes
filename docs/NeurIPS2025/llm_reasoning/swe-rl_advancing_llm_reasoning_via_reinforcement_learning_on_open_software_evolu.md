@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution
 description: >-
-  [NeurIPS 2025][LLM推理][强化学习] 首次将强化学习 (RL) 应用于真实世界软件工程任务（GitHub PR/Issue 修复），仅用基于规则的序列相似度奖励训练 Llama-3.3-70B，在 SWE-bench Verified 上达到 41.0% 解决率（中等规模模型 SOTA）…
+  [NeurIPS 2025][LLM推理][强化学习] 首次将强化学习 (RL) 应用于真实世界软件工程任务（GitHub PR/Issue 修复），仅用基于规则的序列相似度奖励训练 Llama-3.3-70B，在 SWE-bench Verified 上达到 41.0% 解决率（中等规模模型 SOTA），且 RL 训练仅在 issue-solving 数据上进行，却涌现出在代码推理、数学、通用语言理解等域外任务上的泛化推理能力。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

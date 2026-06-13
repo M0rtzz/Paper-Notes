@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bézier Splatting for Fast and Differentiable Vector Graphics Rendering
 description: >-
-  [NeurIPS 2025][模型压缩][可微渲染] Bézier Splatting 将 Gaussian Splatting 框架与 Bézier 曲线结合，沿曲线均匀采样 2D Gaussian 点，通过 α-blending 渲染实现可微矢量图形…
+  [NeurIPS 2025][模型压缩][可微渲染] Bézier Splatting 将 Gaussian Splatting 框架与 Bézier 曲线结合，沿曲线均匀采样 2D Gaussian 点，通过 α-blending 渲染实现可微矢量图形，前向 30× / 反向 150× 加速（相比 DiffVG），同时保持或超越 LIVE 等方法的图像质量。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation
 description: >-
-  [ECCV 2024][3D视觉][单目深度估计] 提出FUMET训练框架,利用道路上检测到的车辆尺寸先验聚合为相机高度估计,并利用相机高度在同一视频序列中不变的事实作为度量尺度监督,使任意单目深度网络无需辅助传感器即可学习绝对尺度。
+  [ECCV 2024][3D视觉][单目深度估计] 提出FUMET训练框架,利用道路上检测到的车辆尺寸先验聚合为相机高度估计,并利用相机高度在同一视频序列中不变的事实作为度量尺度监督,使任意单目深度网络无需辅助传感器即可学习绝对尺度。 单目深度估计(MDE)对自动驾驶至关重要。自监督方法降低了对GT深度的依赖…
 tags:
   - "ECCV 2024"
   - "3D视觉"

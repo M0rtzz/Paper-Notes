@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Tokens Suffice: Jailbreaking Audio Language Models via Token-Aware Gradient Optimization
 description: >-
-  [ICML 2026][音频/语音][音频语言模型] 本文发现音频语言模型 (ALM) 越狱优化中的波形梯度高度集中在少数 token 上，提出 TAGO 在每步只更新 top-$\zeta$ 高能量 token 对应的波形区段…
+  [ICML 2026][音频/语音][音频语言模型] 本文发现音频语言模型 (ALM) 越狱优化中的波形梯度高度集中在少数 token 上，提出 TAGO 在每步只更新 top-$\zeta$ 高能量 token 对应的波形区段，在 Qwen3-Omni 上仅保留 25% token 就能维持 86% 的 LLM-judge 越狱成功率 (vs 全量 token 的 87%)。
 tags:
   - "ICML 2026"
   - "音频/语音"

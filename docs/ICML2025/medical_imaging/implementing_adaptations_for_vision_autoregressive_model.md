@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implementing Adaptations for Vision AutoRegressive Model
 description: >-
-  [ICML 2025][医学图像][Vision AutoRegressive] 本文首次系统实现并评测了Vision AutoRegressive（VAR）模型的各种适配方法（FFT/LoRA/LNTuning）及差分隐私适配，发现VAR在非DP场景下显著超越扩散模型适配（DiffFit）…
+  [ICML 2025][医学图像][Vision AutoRegressive] 本文首次系统实现并评测了Vision AutoRegressive（VAR）模型的各种适配方法（FFT/LoRA/LNTuning）及差分隐私适配，发现VAR在非DP场景下显著超越扩散模型适配（DiffFit），收敛速度更快、计算效率更高，但DP适配性能仍然不佳，揭示了隐私保护图像生成领域的重要研究空白。
 tags:
   - "ICML 2025"
   - "医学图像"

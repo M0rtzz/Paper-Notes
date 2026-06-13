@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mutual Learning for Acoustic Matching and Dereverberation via Visual Scene-driven Diffusion
 description: >-
-  [ECCV 2024][图像生成] 提出 MVSD，一个基于扩散模型的互学习框架，将视觉声学匹配（VAM）和去混响作为对称互逆任务联合训练，利用两者的互惠关系克服配对数据稀缺问题，并首次将扩散模型用于视觉引导的混响风格迁移。
+  [ECCV 2024][图像生成] 提出 MVSD，一个基于扩散模型的互学习框架，将视觉声学匹配（VAM）和去混响作为对称互逆任务联合训练，利用两者的互惠关系克服配对数据稀缺问题，并首次将扩散模型用于视觉引导的混响风格迁移。 - 视觉声学匹配（VAM）的重要性：在增强现实/虚拟现实中，真实的混响音频对沉浸式体验至关重要…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Awareness before Action: Mitigating Logical Inertia via Proactive Cognitive Awareness
 description: >-
-  [ACL 2026][LLM推理][自我感知推理] 本文提出 SABA 推理框架，通过"先感知再行动"的范式，在做出最终决策前显式构建和审计知识状态——利用信息融合 (IF) 将叙事整合为可验证的基线状态…
+  [ACL 2026][LLM推理][自我感知推理] 本文提出 SABA 推理框架，通过"先感知再行动"的范式，在做出最终决策前显式构建和审计知识状态——利用信息融合 (IF) 将叙事整合为可验证的基线状态，再通过查询驱动的结构化推理 (QSR) 递归识别和解决缺失前提——在侦探推理和通用推理基准上均取得最佳表现。
 tags:
   - "ACL 2026"
   - "LLM推理"

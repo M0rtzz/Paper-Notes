@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One
 description: >-
-  [NeurIPS 2025][模型恢复] 通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
+  [NeurIPS 2025][可解释性][模型恢复] 通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
 tags:
   - "NeurIPS 2025"
+  - "可解释性"
   - "模型恢复"
   - "表征对齐"
   - "线性探测"

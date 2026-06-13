@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Language Models as Zero-Shot Deepfake Detectors
 description: >-
-  [ICML 2025][LLM安全][Deepfake检测] 提出基于 VLM token 概率归一化的图像分类框架，将 deepfake 检测从二元判断升级为概率估计，在零样本设置下用 InstructBLIP 超越多数专用 deepfake 检测器，微调后在 DFDC-P 上接近完美。
+  [ICML 2025][LLM安全][Deepfake检测] 提出基于 VLM token 概率归一化的图像分类框架，将 deepfake 检测从二元判断升级为概率估计，在零样本设置下用 InstructBLIP 超越多数专用 deepfake 检测器，微调后在 DFDC-P 上接近完美。 领域现状：Deepfake 检测方…
 tags:
   - "ICML 2025"
   - "LLM安全"

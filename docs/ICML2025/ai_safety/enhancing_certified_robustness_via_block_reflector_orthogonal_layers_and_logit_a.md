@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss
 description: >-
-  [ICML 2025][Lipschitz Neural Networks] 本文提出了一种高效的低秩正交层参数化方法（BRO Layer）和一种退火机制的损失函数（Logit Annealing Loss），用于构建具有更强认证鲁棒性的 Lipschitz 神经网络 BRONet…
+  [ICML 2025 Spotlight][AI安全][Lipschitz Neural Networks] 本文提出了一种高效的低秩正交层参数化方法（BRO Layer）和一种退火机制的损失函数（Logit Annealing Loss），用于构建具有更强认证鲁棒性的 Lipschitz 神经网络 BRONet，在 CIFAR-10/100、Tiny-ImageNet 和 ImageNet 上达到 SOTA。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
+  - "AI安全"
   - "Lipschitz Neural Networks"
   - "Certified Robustness"
   - "Orthogonal Layers"

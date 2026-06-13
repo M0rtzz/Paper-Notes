@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeConstellations: Mitigating Over-Refusals in LLMs Through Task-Aware Representation Steering
 description: >-
-  [ACL2026][LLM安全][过度拒答] SafeConstellations 发现 LLM 的中后层表示会按任务形成稳定的“星座轨迹”，并在高置信 benign 任务上把表示从拒答轨迹轻量推向非拒答轨迹，从而显著降低过度拒答且基本不损害通用能力。
+  [ACL2026][LLM安全][过度拒答] SafeConstellations 发现 LLM 的中后层表示会按任务形成稳定的“星座轨迹”，并在高置信 benign 任务上把表示从拒答轨迹轻量推向非拒答轨迹，从而显著降低过度拒答且基本不损害通用能力。 领域现状：LLM 安全对齐通常通过拒答策略阻止有害请求…
 tags:
   - "ACL2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parenting: Optimizing Knowledge Selection of Retrieval-Augmented Language Models with Parameter Decoupling and Tailored Tuning
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 受人脑功能分区启发，提出 Parenting 框架，通过解耦并定位 LLM 参数空间中与"上下文遵循"(adherence)和"噪声鲁棒"(robustness)相关的子空间，并为不同子空间设计定制化微调策略，实现两种能力的平衡提升。
+  [ACL 2025][信息检索/RAG][RAG] 受人脑功能分区启发，提出 Parenting 框架，通过解耦并定位 LLM 参数空间中与"上下文遵循"(adherence)和"噪声鲁棒"(robustness)相关的子空间，并为不同子空间设计定制化微调策略，实现两种能力的平衡提升。 领域现状： RAG 通过整合外部检索知…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

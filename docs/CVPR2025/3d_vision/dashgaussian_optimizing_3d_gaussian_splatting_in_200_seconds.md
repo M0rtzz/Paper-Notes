@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds
 description: >-
-  [CVPR 2025][3D视觉][3D高斯] 提出 DashGaussian，一种基于频率分析的渲染分辨率和高斯基元数量联合调度方案，将3DGS优化从逐步拟合高频分量的角度进行重新表述，平均加速 45.7% 且不牺牲渲染质量。
+  [CVPR 2025][3D视觉][3D高斯] 提出 DashGaussian，一种基于频率分析的渲染分辨率和高斯基元数量联合调度方案，将3DGS优化从逐步拟合高频分量的角度进行重新表述，平均加速 45.7% 且不牺牲渲染质量。 - 3DGS 虽然比 NeRF 快很多（数十分钟 vs 数天），但在算力受限设备和大规模场景重建…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DocVLM: Make Your VLM an Efficient Reader
 description: >-
-  [CVPR 2025][多模态VLM][文档理解] 提出一种模型无关的 OCR 编码模块，将 OCR 提取的文本和布局信息压缩为 64 个 learned query token 并注入冻结的 VLM，在极低视觉 token 数量下大幅提升文档理解能力（DocVQA 最高 +30.6 分）…
+  [CVPR 2025][多模态VLM][文档理解] 提出一种模型无关的 OCR 编码模块，将 OCR 提取的文本和布局信息压缩为 64 个 learned query token 并注入冻结的 VLM，在极低视觉 token 数量下大幅提升文档理解能力（DocVQA 最高 +30.6 分），并零样本泛化到多页文档。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

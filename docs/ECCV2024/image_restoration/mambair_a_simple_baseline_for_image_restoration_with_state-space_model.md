@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaIR: A Simple Baseline for Image Restoration with State-Space Model
 description: >-
-  [ECCV 2024][图像恢复][图像修复] 本文首次将 Mamba（选择性状态空间模型）引入底层图像修复任务，通过设计残差状态空间块（RSSB）中的局部卷积增强和通道注意力机制，解决了 vanilla Mamba 在 2D 图像上的局部像素遗忘和通道冗余问题…
+  [ECCV 2024][图像恢复][图像修复] 本文首次将 Mamba（选择性状态空间模型）引入底层图像修复任务，通过设计残差状态空间块（RSSB）中的局部卷积增强和通道注意力机制，解决了 vanilla Mamba 在 2D 图像上的局部像素遗忘和通道冗余问题，在图像超分辨率和去噪任务上以线性复杂度实现了与 Transformer 方法相当甚至更优的性能（SR 上超过 SwinIR 0.45dB）。
 tags:
   - "ECCV 2024"
   - "图像恢复"

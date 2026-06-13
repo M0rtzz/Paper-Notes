@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heavy Labels Out! Dataset Distillation with Label Space Lightening
 description: >-
-  [ICCV 2025][模型压缩][数据集蒸馏] 提出 HeLlO 框架，利用 CLIP 预训练模型和 LoRA-like 低秩知识迁移构建轻量级图像-标签投影器，将数据集蒸馏中软标签的存储需求降低至原来的 0.003%，同时保持甚至超越 SOTA 性能。
+  [ICCV 2025][模型压缩][数据集蒸馏] 提出 HeLlO 框架，利用 CLIP 预训练模型和 LoRA-like 低秩知识迁移构建轻量级图像-标签投影器，将数据集蒸馏中软标签的存储需求降低至原来的 0.003%，同时保持甚至超越 SOTA 性能。 数据集蒸馏旨在将大规模训练集压缩为极小的合成集…
 tags:
   - "ICCV 2025"
   - "模型压缩"

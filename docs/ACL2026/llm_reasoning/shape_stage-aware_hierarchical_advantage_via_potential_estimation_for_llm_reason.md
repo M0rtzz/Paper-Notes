@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHAPE: Stage-aware Hierarchical Advantage via Potential Estimation for LLM Reasoning
 description: >-
-  [ACL2026][LLM推理][过程监督] SHAPE 把 LLM 推理看成在“可解性潜势”状态空间中的轨迹，用长度感知的阶段级优势和熵驱动的 token 级重分配同时提升数学推理准确率并减少约 30% 生成 token。
+  [ACL2026][LLM推理][过程监督] SHAPE 把 LLM 推理看成在“可解性潜势”状态空间中的轨迹，用长度感知的阶段级优势和熵驱动的 token 级重分配同时提升数学推理准确率并减少约 30% 生成 token。 领域现状：数学推理类 LLM 后训练主要依赖 RLVR，典型算法如 GRPO 只根据最终答案正确性给…
 tags:
   - "ACL2026"
   - "LLM推理"

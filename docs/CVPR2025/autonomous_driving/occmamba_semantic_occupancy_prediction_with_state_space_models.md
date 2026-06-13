@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OccMamba: Semantic Occupancy Prediction with State Space Models
 description: >-
-  [CVPR 2025][自动驾驶][语义占据] OccMamba 把 SSM/Mamba 引入户外语义占据预测，用 height-prioritized 2D Hilbert 展开把 3D voxel 序列化为 1D 序列，再用层次化 Mamba + 局部上下文处理器同时建模全局和局部…
+  [CVPR 2025][自动驾驶][语义占据] OccMamba 把 SSM/Mamba 引入户外语义占据预测，用 height-prioritized 2D Hilbert 展开把 3D voxel 序列化为 1D 序列，再用层次化 Mamba + 局部上下文处理器同时建模全局和局部，在 OpenOccupancy/SemanticKITTI/SemanticPOSS 上全面 SOTA，且显存远小于 transformer 方案。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

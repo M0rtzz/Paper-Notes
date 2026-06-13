@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SPA: Achieving Consensus in LLM Alignment via Self-Priority Optimization
 description: >-
-  [AAAI 2026][医学图像][LLM 对齐] 提出 Self-Priority Alignment（SPA），一种全无监督框架，通过字典序优化实现"可信赖优先于有用性"的严格优先级对齐——模型自生成多样响应、自评估、自改进，经双准则去噪构建偏好对，用不确定性加权 SimPO 损失微调…
+  [AAAI 2026 Oral][医学图像][LLM 对齐] 提出 Self-Priority Alignment（SPA），一种全无监督框架，通过字典序优化实现"可信赖优先于有用性"的严格优先级对齐——模型自生成多样响应、自评估、自改进，经双准则去噪构建偏好对，用不确定性加权 SimPO 损失微调，在多个安全基准上同时提升安全性和有用性。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "医学图像"
   - "LLM 对齐"
   - "优先级对齐"

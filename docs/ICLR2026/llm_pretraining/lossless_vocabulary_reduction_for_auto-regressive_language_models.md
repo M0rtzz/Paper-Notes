@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lossless Vocabulary Reduction for Auto-Regressive Language Models
 description: >-
-  [ICLR 2026][预训练][Vocabulary Reduction] 提出**无损词表缩减（LVR）**的理论框架，通过嵌套分词（nested tokenization）将任意自回归语言模型精确转换为使用任意子词表的等价模型，并基于**最大公共词表（MCV）**实现不同分词方案语言模型之间的高效集成…
+  [ICLR 2026][预训练][Vocabulary Reduction] 提出**无损词表缩减（LVR）**的理论框架，通过嵌套分词（nested tokenization）将任意自回归语言模型精确转换为使用任意子词表的等价模型，并基于**最大公共词表（MCV）**实现不同分词方案语言模型之间的高效集成，在 GSM8K、MATH、翻译等多个任务上验证了方法的有效性。
 tags:
   - "ICLR 2026"
   - "预训练"

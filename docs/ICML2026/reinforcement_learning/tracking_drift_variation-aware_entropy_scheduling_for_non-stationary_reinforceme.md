@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tracking Drift: Variation-Aware Entropy Scheduling for Non-Stationary Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][非平稳强化学习] AES 把最大熵 RL 的探索强度调度问题投影到在线凸优化的动态遗憾框架，导出"熵权应与环境漂移幅度的平方根成正比"的硬理论结果…
+  [ICML 2026][强化学习][非平稳强化学习] AES 把最大熵 RL 的探索强度调度问题投影到在线凸优化的动态遗憾框架，导出"熵权应与环境漂移幅度的平方根成正比"的硬理论结果，再用 TD 误差分位数作为可观测漂移代理实现完全在线的算法不可知熵调度——在 SAC / PPO / SQL / MEow 四种框架 + 12 个任务上，激变恢复时间普遍减半。
 tags:
   - "ICML 2026"
   - "强化学习"

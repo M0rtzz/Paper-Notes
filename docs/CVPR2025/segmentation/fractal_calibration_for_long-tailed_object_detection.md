@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fractal Calibration for Long-Tailed Object Detection
 description: >-
-  [CVPR 2025][语义分割][长尾分布] 提出 FRACAL（FRActal CALibration），一种无需训练的后处理方法，首次将分形维数引入长尾目标检测的后校准中，通过对称校准频率轴（类别频率）和空间轴（类别位置均匀度），在 LVIS 数据集上将稀有类 mask AP 提升高达 8.6%…
+  [CVPR 2025][语义分割][长尾分布] 提出 FRACAL（FRActal CALibration），一种无需训练的后处理方法，首次将分形维数引入长尾目标检测的后校准中，通过对称校准频率轴（类别频率）和空间轴（类别位置均匀度），在 LVIS 数据集上将稀有类 mask AP 提升高达 8.6%，并在 COCO、V3Det、OpenImages 上展示泛化性。
 tags:
   - "CVPR 2025"
   - "语义分割"

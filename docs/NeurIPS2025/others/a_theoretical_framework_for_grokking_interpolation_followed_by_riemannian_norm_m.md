@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Theoretical Framework for Grokking: Interpolation followed by Riemannian Norm Minimisation
 description: >-
-  [NEURIPS2025][grokking] 本文从纯优化角度严格证明了 grokking 现象的成因：带小 weight decay 的梯度流在 $\lambda\to 0$ 极限下呈现两阶段动力学——先快速收敛到训练损失的临界流形 $\mathcal{M}$…
+  [NEURIPS2025][grokking] 本文从纯优化角度严格证明了 grokking 现象的成因：带小 weight decay 的梯度流在 $\lambda\to 0$ 极限下呈现两阶段动力学——先快速收敛到训练损失的临界流形 $\mathcal{M}$，再在 $t\approx 1/\lambda$ 时沿流形做黎曼梯度流以最小化 $\ell_2$ 范数，从而延迟实现泛化。
 tags:
   - "NEURIPS2025"
   - "grokking"

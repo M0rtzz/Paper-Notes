@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseDiT: Token Sparsification for Efficient Diffusion Transformer
 description: >-
-  [NeurIPS 2025][图像生成][Transformer] 提出 SparseDiT，通过空间维度的三段式架构（底层 Poolingformer + 中层 Sparse-Dense Token Module + 顶层全密度处理）和时间维度的动态剪枝率策略…
+  [NeurIPS 2025][图像生成][Transformer] 提出 SparseDiT，通过空间维度的三段式架构（底层 Poolingformer + 中层 Sparse-Dense Token Module + 顶层全密度处理）和时间维度的动态剪枝率策略，在 DiT-XL 512×512 上实现 55% FLOPs 减少和 175% 推理速度提升，FID 仅增加 0.09，并成功扩展到视频生成和文本到图像生成任务。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

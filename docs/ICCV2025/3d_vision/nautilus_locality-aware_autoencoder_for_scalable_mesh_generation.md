@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nautilus: Locality-aware Autoencoder for Scalable Mesh Generation
 description: >-
-  [ICCV2025][3D视觉][mesh generation] Nautilus 提出一种局部性感知的自编码器进行可扩展的 artist-like 网格生成，通过 Nautilus 式壳结构网格分词算法将序列长度压缩到 1/4，并结合双流点云条件器提高局部结构保真度…
+  [ICCV2025][3D视觉][mesh generation] Nautilus 提出一种局部性感知的自编码器进行可扩展的 artist-like 网格生成，通过 Nautilus 式壳结构网格分词算法将序列长度压缩到 1/4，并结合双流点云条件器提高局部结构保真度，首次实现最多 5000 面的高质量网格直接生成。
 tags:
   - "ICCV2025"
   - "3D视觉"

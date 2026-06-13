@@ -2,10 +2,10 @@
 title: >-
   [论文解读] FreestyleRet: Retrieving Images from Style-Diversified Queries
 description: >-
-  [ECCV 2024][LLM/NLP][风格多样化检索] 提出首个风格多样化查询图像检索（Style-Diversified QBIR）任务及数据集DSR，设计了轻量即插即用的FreestyleRet框架，通过Gram矩阵提取查询的纹理/风格特征，构建风格空间并以此初始化prompt token…
+  [ECCV 2024][LLM 其他][风格多样化检索] 提出首个风格多样化查询图像检索（Style-Diversified QBIR）任务及数据集DSR，设计了轻量即插即用的FreestyleRet框架，通过Gram矩阵提取查询的纹理/风格特征，构建风格空间并以此初始化prompt token，使冻结的视觉编码器能适配文本、草图、低分辨率、艺术画等多种查询风格的检索。
 tags:
   - "ECCV 2024"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "风格多样化检索"
   - "Gram矩阵"
   - "提示学习"

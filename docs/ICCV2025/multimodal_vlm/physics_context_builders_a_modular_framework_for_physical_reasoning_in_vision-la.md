@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics Context Builders: A Modular Framework for Physical Reasoning in Vision-Language Models
 description: >-
-  [多模态VLM] 提出 Physics Context Builders (PCBs)，一种模块化框架，通过微调小型专用 VLM 从仿真数据中学习生成详细的物理场景描述，作为物理上下文增强大型基础 VLM（如 GPT-4o）的物理推理能力，无需修改大模型本身。
+  [多模态VLM] 提出 Physics Context Builders (PCBs)，一种模块化框架，通过微调小型专用 VLM 从仿真数据中学习生成详细的物理场景描述，作为物理上下文增强大型基础 VLM（如 GPT-4o）的物理推理能力，无需修改大模型本身。 VLM 在物理推理任务上表现不佳：GPT-4o 在描述性任务上接…
 tags:
   - "多模态VLM"
 ---

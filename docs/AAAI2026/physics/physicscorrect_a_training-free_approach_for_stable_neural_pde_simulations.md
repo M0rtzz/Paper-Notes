@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations
 description: >-
-  [AAAI 2026][物理/科学计算][偏微分方程] 提出 PhysicsCorrect，一种无需训练的校正框架，通过将 PDE 残差校正建模为线性化逆问题并预计算伪逆缓存，在推理时以 <5% 计算开销实现最高 100× 误差降低，适用于 FNO/UNet/ViT 等任意预训练神经算子。
+  [AAAI 2026 Oral][物理/科学计算][偏微分方程] 提出 PhysicsCorrect，一种无需训练的校正框架，通过将 PDE 残差校正建模为线性化逆问题并预计算伪逆缓存，在推理时以 <5% 计算开销实现最高 100× 误差降低，适用于 FNO/UNet/ViT 等任意预训练神经算子。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "物理/科学计算"
   - "偏微分方程"
   - "误差累积"

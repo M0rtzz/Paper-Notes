@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STEAD: Robust Provably Secure Linguistic Steganography with Diffusion Language Model
 description: >-
-  [NeurIPS 2025][语义分割][语言隐写术] 提出STEAD，首个基于扩散语言模型（DLM）的可证安全且鲁棒的语言隐写术方法，利用DLM并行去噪的特性找到"鲁棒位置"进行信息嵌入，结合重复纠错编码和邻域搜索策略，抵御token级别的替换、插入、删除攻击。
+  [NeurIPS 2025][语义分割][语言隐写术] 提出STEAD，首个基于扩散语言模型（DLM）的可证安全且鲁棒的语言隐写术方法，利用DLM并行去噪的特性找到"鲁棒位置"进行信息嵌入，结合重复纠错编码和邻域搜索策略，抵御token级别的替换、插入、删除攻击。 语言隐写术旨在将秘密信息伪装成自然语言文本进行隐蔽通信…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attention! Your Vision Language Model Could Be Maliciously Manipulated
 description: >-
-  [NeurIPS 2025][LLM安全][视觉语言模型] 本文提出 Vision-language Model Manipulation Attack (VMA)，一种结合一阶和二阶动量优化及可微变换机制的图像对抗攻击方法，能够精确操控VLM的每个输出token…
+  [NeurIPS 2025][LLM安全][视觉语言模型] 本文提出 Vision-language Model Manipulation Attack (VMA)，一种结合一阶和二阶动量优化及可微变换机制的图像对抗攻击方法，能够精确操控VLM的每个输出token，可用于实施多种攻击（越狱、劫持、隐私泄露、DoS、海绵样本）同时也可用于版权保护水印注入。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

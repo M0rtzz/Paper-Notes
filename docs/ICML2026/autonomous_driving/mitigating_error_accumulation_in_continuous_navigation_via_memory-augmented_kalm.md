@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Error Accumulation in Continuous Navigation via Memory-Augmented Kalman Filtering
 description: >-
-  [ICML 2026][自动驾驶][卡尔曼滤波] 把无人机连续 VLN 的 step-by-step 预测重写成"递归贝叶斯估计 = GRU 先验 + 记忆库似然 + 可学习卡尔曼增益"的闭环, 在 TravelUAV 上仅用 10% 数据微调就把 L1-Full 的 SR 从 17.6% 推到 25.9%…
+  [ICML 2026][自动驾驶][卡尔曼滤波] 把无人机连续 VLN 的 step-by-step 预测重写成"递归贝叶斯估计 = GRU 先验 + 记忆库似然 + 可学习卡尔曼增益"的闭环, 在 TravelUAV 上仅用 10% 数据微调就把 L1-Full 的 SR 从 17.6% 推到 25.9%, 同时把 100 步后还在不断累积的位置漂移压平到 30–40 米。
 tags:
   - "ICML 2026"
   - "自动驾驶"

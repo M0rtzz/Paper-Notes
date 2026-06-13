@@ -2,9 +2,10 @@
 title: >-
   [论文解读] CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding
 description: >-
-  [AAAI 2026][脑机接口] 提出 CAT-Net（Cross-Attention Tone Network），通过空间-时间特征提取分支 + 交叉注意力融合机制 + 域对抗训练，仅用 20 个 EEG 通道和 5 个 EMG 通道实现中文四声调分类…
+  [AAAI 2026][医学图像][脑机接口] 提出 CAT-Net（Cross-Attention Tone Network），通过空间-时间特征提取分支 + 交叉注意力融合机制 + 域对抗训练，仅用 20 个 EEG 通道和 5 个 EMG 通道实现中文四声调分类，在有声/无声语音条件下分别达到 87.83%/88.08% 准确率，跨被试评估下达到 83.27%/85.10%，全面超越 8 种基线方法。
 tags:
   - "AAAI 2026"
+  - "医学图像"
   - "脑机接口"
   - "EEG-EMG融合"
   - "交叉注意力"

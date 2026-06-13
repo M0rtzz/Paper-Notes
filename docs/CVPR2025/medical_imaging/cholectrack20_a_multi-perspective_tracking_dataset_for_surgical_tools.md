@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CholecTrack20: A Multi-Perspective Tracking Dataset for Surgical Tools
 description: >-
-  [CVPR 2025][医学图像][手术器械跟踪] 本文提出CholecTrack20数据集，首次为腹腔镜手术器械跟踪引入三种视角的轨迹定义（术中/腹腔内/可见性），包含20个完整手术视频、35K+帧、65K+标注器械实例，基准测试表明当前SOTA方法（<45% HOTA）远不能满足临床需求。
+  [CVPR 2025][医学图像][手术器械跟踪] 本文提出CholecTrack20数据集，首次为腹腔镜手术器械跟踪引入三种视角的轨迹定义（术中/腹腔内/可见性），包含20个完整手术视频、35K+帧、65K+标注器械实例，基准测试表明当前SOTA方法（<45% HOTA）远不能满足临床需求。 领域现状：手术视频中的器械跟踪…
 tags:
   - "CVPR 2025"
   - "医学图像"

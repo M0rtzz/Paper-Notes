@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PICACO: Pluralistic In-Context Value Alignment of LLMs via Total Correlation Optimization
 description: >-
-  [ICML 2026][LLM对齐][多元价值对齐] PICACO 把"让 LLM 在一个 prompt 里同时遵守多个甚至互相冲突的人类价值"形式化为最大化"价值集与响应之间的条件总相关性"(Total Correlation, TC),不动模型参数…
+  [ICML 2026][LLM对齐][多元价值对齐] PICACO 把"让 LLM 在一个 prompt 里同时遵守多个甚至互相冲突的人类价值"形式化为最大化"价值集与响应之间的条件总相关性"(Total Correlation, TC),不动模型参数,通过 EM-like 的"响应增强 + 指令精炼"两步迭代自动搜索一条 meta-instruction,使 GPT-3.5 / LLaMA-3.1-8B / Gemini-1.5-Flash 在 Schwartz、HH 等 5 套最多 8 个价值的组合上都超过 OPRO、Modular Pluralism 等强基线。
 tags:
   - "ICML 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoDebias: An Automated Framework for Detecting and Mitigating Backdoor Biases in Text-to-Image Models
 description: >-
-  [CVPR 2026][图像生成][后门偏见] 提出 AutoDebias——首个同时检测和缓解 T2I 模型中恶意后门偏见的统一框架，利用 VLM 开放集检测发现触发词-偏见关联并构建查找表，再通过 CLIP 引导的分布对齐训练消除后门关联…
+  [CVPR 2026][图像生成][后门偏见] 提出 AutoDebias——首个同时检测和缓解 T2I 模型中恶意后门偏见的统一框架，利用 VLM 开放集检测发现触发词-偏见关联并构建查找表，再通过 CLIP 引导的分布对齐训练消除后门关联，在 17 种后门场景中将攻击成功率从 90% 降至接近 0 且保持图像质量。
 tags:
   - "CVPR 2026"
   - "图像生成"

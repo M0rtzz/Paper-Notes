@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Persona-E2: A Human-Grounded Dataset for Personality-Shaped Emotional Responses to Textual Events
 description: >-
-  [ACL 2026][社会计算][人格建模] 构建了首个将人格特质（MBTI + Big Five）与读者情感反应关联的大规模数据集 Persona-E2，包含 3111 个事件 × 36 名标注者共 11.2 万条标注，揭示 LLM 在模拟人格化情感反应时存在"人格幻觉"问题…
+  [ACL 2026][社会计算][人格建模] 构建了首个将人格特质（MBTI + Big Five）与读者情感反应关联的大规模数据集 Persona-E2，包含 3111 个事件 × 36 名标注者共 11.2 万条标注，揭示 LLM 在模拟人格化情感反应时存在"人格幻觉"问题，且 Big Five 特征比 MBTI 更有效地缓解该问题。
 tags:
   - "ACL 2026"
   - "社会计算"

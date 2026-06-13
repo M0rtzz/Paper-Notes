@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Lack of LVLM Robustness to Fundamental Visual Variations: Why and Path Forward
 description: >-
-  [ACL 2025][多模态VLM][LVLM鲁棒性] 提出 V2R-Bench 基准框架系统评估 21 个 LVLM 对位置/尺度/方向/上下文四种基本视觉变化的鲁棒性，揭示了即使先进模型在简单视觉任务上也存在显著脆弱性，并通过组件级分析证明这些漏洞根源在于多模态对齐不足和流水线架构的误差累积，而非数据不足…
+  [ACL 2025][多模态VLM][LVLM鲁棒性] 提出 V2R-Bench 基准框架系统评估 21 个 LVLM 对位置/尺度/方向/上下文四种基本视觉变化的鲁棒性，揭示了即使先进模型在简单视觉任务上也存在显著脆弱性，并通过组件级分析证明这些漏洞根源在于多模态对齐不足和流水线架构的误差累积，而非数据不足。
 tags:
   - "ACL 2025"
   - "多模态VLM"

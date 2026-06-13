@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Nürnberg NLP at PsyDefDetect: Multi-Axis Voter Ensembles for Psychological Defence Mechanism Classification
 description: >-
-  [ACL2026][LLM/NLP][防御机制识别] 这篇 BioNLP 2026 PsyDefDetect 共享任务系统论文把心理防御机制分类看成一个边界模糊、标注一致性有限的问题，用 9 个跨粒度、跨训练方式、跨基座模型的投票器做集成，在隐藏测试集上取得 F1=.420，并在 21 支注册队伍中排名第一。
+  [ACL2026][LLM 其他][防御机制识别] 这篇 BioNLP 2026 PsyDefDetect 共享任务系统论文把心理防御机制分类看成一个边界模糊、标注一致性有限的问题，用 9 个跨粒度、跨训练方式、跨基座模型的投票器做集成，在隐藏测试集上取得 F1=.420，并在 21 支注册队伍中排名第一。
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "防御机制识别"
   - "心理健康对话"
   - "模型集成"

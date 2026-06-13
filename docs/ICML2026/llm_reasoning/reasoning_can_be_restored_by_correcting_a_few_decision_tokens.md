@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Can Be Restored by Correcting a Few Decision Tokens
 description: >-
-  [ICML 2026][LLM推理][推理模型差距] 作者用 token 级分布散度量化 base LLM 与 reasoning LRM 的差异，发现差距高度集中在早期、规划相关、且 base 自身不确定的少量 token 上（占比 ~8%）…
+  [ICML 2026][LLM推理][推理模型差距] 作者用 token 级分布散度量化 base LLM 与 reasoning LRM 的差异，发现差距高度集中在早期、规划相关、且 base 自身不确定的少量 token 上（占比 ~8%），据此提出"分歧门控的一令牌接管"——仅在分歧尖峰处让 LRM 出一个 token 然后立刻交还 base，用 ~4-13% 干预预算即可恢复甚至超越同尺寸 thinking 模型。
 tags:
   - "ICML 2026"
   - "LLM推理"

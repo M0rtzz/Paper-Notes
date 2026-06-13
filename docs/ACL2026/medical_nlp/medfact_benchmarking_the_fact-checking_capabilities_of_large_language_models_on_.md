@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedFact: Benchmarking the Fact-Checking Capabilities of Large Language Models on Chinese Medical Texts
 description: >-
-  [ACL2026][医疗NLP][中文医疗文本] MedFact 构建了一个覆盖真实中文医疗文本的专家标注事实核查 benchmark，并用 20 个 LLM 证明：当前模型较容易判断文本“有没有错”，但仍难以精确定位错误，RAG 有帮助，而多智能体和推理时扩展反而容易放大“过度批判”。
+  [ACL2026][医疗NLP][中文医疗文本] MedFact 构建了一个覆盖真实中文医疗文本的专家标注事实核查 benchmark，并用 20 个 LLM 证明：当前模型较容易判断文本“有没有错”，但仍难以精确定位错误，RAG 有帮助，而多智能体和推理时扩展反而容易放大“过度批判”。 领域现状：医疗大模型已经进入临床问答…
 tags:
   - "ACL2026"
   - "医疗NLP"

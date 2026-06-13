@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probabilistic Concept Graph Reasoning for Multimodal Misinformation Detection
 description: >-
-  [CVPR 2026][社会计算][多模态虚假信息检测] 本文将多模态虚假信息检测（MMD）重构为基于概念图的结构化概率推理问题，提出PCGR框架，通过MLLM自动发现并验证人类可理解的概念节点，构建层次化概率概念图，实现可解释的虚假信息检测，在三个基准上全面超越13个baseline。
+  [CVPR 2026][社会计算][多模态虚假信息检测] 本文将多模态虚假信息检测（MMD）重构为基于概念图的结构化概率推理问题，提出PCGR框架，通过MLLM自动发现并验证人类可理解的概念节点，构建层次化概率概念图，实现可解释的虚假信息检测，在三个基准上全面超越13个baseline。 1. 领域现状：多模态虚假信息（图文…
 tags:
   - "CVPR 2026"
   - "社会计算"

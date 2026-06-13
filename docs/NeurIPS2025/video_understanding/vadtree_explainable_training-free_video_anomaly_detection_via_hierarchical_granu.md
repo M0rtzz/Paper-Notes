@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity
 description: >-
-  [NeurIPS 2025][视频理解][视频异常检测] 提出 VADTree，一种训练无关的视频异常检测框架，利用预训练的通用事件边界检测（GEBD）模型构建层次粒度感知树（HGTree），实现对不同时间跨度异常事件的自适应采样和多粒度推理…
+  [NeurIPS 2025][视频理解][视频异常检测] 提出 VADTree，一种训练无关的视频异常检测框架，利用预训练的通用事件边界检测（GEBD）模型构建层次粒度感知树（HGTree），实现对不同时间跨度异常事件的自适应采样和多粒度推理，在 UCF-Crime、XD-Violence 和 MSAD 三个基准上取得训练无关方法SOTA，甚至超越部分弱监督方法。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

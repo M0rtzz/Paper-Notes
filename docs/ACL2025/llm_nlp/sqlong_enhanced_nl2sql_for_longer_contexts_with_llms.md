@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SQLong: Enhanced NL2SQL for Longer Contexts with LLMs
 description: >-
-  [ACL2025][LLM/NLP][NL2SQL] 提出 SQLong，一种面向长上下文场景的 NL2SQL 数据增强框架，通过向训练数据中注入采样自其他数据库的合成 CREATE TABLE 语句来扩展上下文长度，使微调后的 LLM 在大规模 Schema 场景下显著提升 SQL 生成准确率。
+  [ACL2025][LLM 其他][NL2SQL] 提出 SQLong，一种面向长上下文场景的 NL2SQL 数据增强框架，通过向训练数据中注入采样自其他数据库的合成 CREATE TABLE 语句来扩展上下文长度，使微调后的 LLM 在大规模 Schema 场景下显著提升 SQL 生成准确率。 1. NL2SQL 在大 S…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "NL2SQL"
   - "长上下文"
   - "数据增强"

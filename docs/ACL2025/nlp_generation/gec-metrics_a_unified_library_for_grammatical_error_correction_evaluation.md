@@ -2,7 +2,7 @@
 title: >-
   [论文解读] gec-metrics: A Unified Library for Grammatical Error Correction Evaluation
 description: >-
-  [ACL 2025][文本生成][语法纠错评估] 提出 gec-metrics 统一库，将 10 种语法纠错 (GEC) 评估指标整合到统一接口中，并提供元评估功能，解决了现有 GEC 评估实现碎片化、不可复现、难以扩展的问题。
+  [ACL 2025][文本生成][语法纠错评估] 提出 gec-metrics 统一库，将 10 种语法纠错 (GEC) 评估指标整合到统一接口中，并提供元评估功能，解决了现有 GEC 评估实现碎片化、不可复现、难以扩展的问题。 领域现状： 语法纠错 (GEC) 是自动纠正拼写、时态、用词等语法错误的任务…
 tags:
   - "ACL 2025"
   - "文本生成"

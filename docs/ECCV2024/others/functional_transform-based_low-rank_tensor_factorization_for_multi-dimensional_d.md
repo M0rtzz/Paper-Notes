@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Functional Transform-Based Low-Rank Tensor Factorization for Multi-Dimensional Data Recovery
 description: >-
-  [ECCV 2024][低秩张量分解] 提出了基于函数变换的低秩张量分解方法（FLRTF），利用隐式神经表示替代传统离散变换来捕获数据在第三维度上的连续平滑性，有效解决时间/光谱退化问题。
+  [ECCV 2024][低秩张量分解] 提出了基于函数变换的低秩张量分解方法（FLRTF），利用隐式神经表示替代传统离散变换来捕获数据在第三维度上的连续平滑性，有效解决时间/光谱退化问题。 1. 领域现状： 基于变换的低秩张量分解（transform-based Low-Rank Tensor Factorization…
 tags:
   - "ECCV 2024"
   - "低秩张量分解"

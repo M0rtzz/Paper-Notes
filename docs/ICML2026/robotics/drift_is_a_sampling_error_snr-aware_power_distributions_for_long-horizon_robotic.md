@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Drift is a Sampling Error: SNR-Aware Power Distributions for Long-Horizon Robotic Planning
 description: >-
-  [ICML 2026][机器人][视觉语言] 本文提出 CAPS：把"指令漂移"重新解释为系统性采样误差，用 SNR（=$\log|\mathcal{A}|-\mathcal{H}$）作为元认知开关…
+  [ICML 2026][机器人][视觉语言] 本文提出 CAPS：把"指令漂移"重新解释为系统性采样误差，用 SNR（=$\log|\mathcal{A}|-\mathcal{H}$）作为元认知开关，仅在高熵"Pivotal Window"触发基于幂分布 $\pi\propto p^\alpha$ 的 Metropolis-Hastings 迭代精修，在 RoboTwin、Simpler-WindowX、Libero-long 上 training-free 超越 OpenVLA 和 TACO。
 tags:
   - "ICML 2026"
   - "机器人"

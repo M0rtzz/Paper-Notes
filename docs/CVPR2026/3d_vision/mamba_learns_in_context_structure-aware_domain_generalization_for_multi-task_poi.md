@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mamba Learns in Context: Structure-Aware Domain Generalization for Multi-Task Point Cloud Understanding
 description: >-
-  [CVPR 2026][3D视觉][点云理解] 提出SADG框架，首次将Mamba引入多任务点云域泛化的上下文学习，通过结构感知序列化（质心距离谱+测地曲率谱）、分层域感知建模和谱图对齐三个模块，在重建、去噪、配准三个任务上全面超越SOTA。
+  [CVPR 2026][3D视觉][点云理解] 提出SADG框架，首次将Mamba引入多任务点云域泛化的上下文学习，通过结构感知序列化（质心距离谱+测地曲率谱）、分层域感知建模和谱图对齐三个模块，在重建、去噪、配准三个任务上全面超越SOTA。 1. 领域现状：Transformer和Mamba架构在点云表示学习中取得进展…
 tags:
   - "CVPR 2026"
   - "3D视觉"

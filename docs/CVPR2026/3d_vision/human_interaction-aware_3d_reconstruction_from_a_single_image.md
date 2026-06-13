@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Interaction-Aware 3D Reconstruction from a Single Image
 description: >-
-  [CVPR 2026][3D视觉][多人3D重建] 提出HUG3D框架，通过透视-正交视图变换、群体-个体多视图扩散模型和物理感知几何重建，从单张图片实现交互多人的高保真纹理3D重建，在CD/P2S/NC等指标上全面超越现有方法。
+  [CVPR 2026][3D视觉][多人3D重建] 提出HUG3D框架，通过透视-正交视图变换、群体-个体多视图扩散模型和物理感知几何重建，从单张图片实现交互多人的高保真纹理3D重建，在CD/P2S/NC等指标上全面超越现有方法。 1. 领域现状： 单人3D重建已取得显著进展(SIFU/SiTH/PSHuman等)…
 tags:
   - "CVPR 2026"
   - "3D视觉"

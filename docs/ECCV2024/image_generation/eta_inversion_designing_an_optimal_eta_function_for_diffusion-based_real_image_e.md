@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Eta Inversion: Designing an Optimal Eta Function for Diffusion-based Real Image Editing
 description: >-
-  [ECCV 2024][图像生成][扩散模型反演] 通过理论分析DDIM采样方程中η参数的作用，设计时间和区域依赖的η函数，实现更灵活精确的真实图像编辑。
+  [ECCV 2024][图像生成][扩散模型反演] 通过理论分析DDIM采样方程中η参数的作用，设计时间和区域依赖的η函数，实现更灵活精确的真实图像编辑。 基于扩散模型的图像编辑已成为图像生成领域的重要研究方向。典型的编辑流程是：首先对真实图像进行反演（inversion），将其映射到噪声空间，然后在去噪过程中注入新的文本引…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MegaScenes: Scene-Level View Synthesis at Scale
 description: >-
-  [ECCV 2024][3D视觉][新视角合成] 从Wikimedia Commons互联网照片构建包含10万+SfM重建的大规模场景级3D数据集MegaScenes，并结合warp条件和位姿条件提升场景级新视角合成的位姿一致性。
+  [ECCV 2024][3D视觉][新视角合成] 从Wikimedia Commons互联网照片构建包含10万+SfM重建的大规模场景级3D数据集MegaScenes，并结合warp条件和位姿条件提升场景级新视角合成的位姿一致性。 领域现状： 位姿条件扩散模型(如Zero-1-to-3、ZeroNVS)在新视角合成(NVS)…
 tags:
   - "ECCV 2024"
   - "3D视觉"

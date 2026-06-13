@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViewMask-1-to-3: Multi-View Consistent Image Generation via Multimodal Discrete Diffusion Models
 description: >-
-  [ICML 2026][图像生成][离散扩散] 通过离散扩散模型和视觉 token 化，将多视图生成建模为离散序列预测任务——利用简单的随机掩码策略结合自注意力自然地实现跨视图一致性，显著超越连续扩散方法。
+  [ICML 2026][图像生成][离散扩散] 通过离散扩散模型和视觉 token 化，将多视图生成建模为离散序列预测任务——利用简单的随机掩码策略结合自注意力自然地实现跨视图一致性，显著超越连续扩散方法。 领域现状：多视图生成任务长期由连续扩散方法主导——基于 3D 表示（NeRF、3D Gaussian）的几何感知方法、…
 tags:
   - "ICML 2026"
   - "图像生成"

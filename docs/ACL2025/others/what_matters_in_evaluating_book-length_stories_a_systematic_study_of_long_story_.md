@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation
 description: >-
-  [ACL 2025][长文本评估] 本文系统研究了书籍级长篇故事（>100K tokens）的自动评估问题，构建了首个大规模长篇故事评估基准LongStoryEval（600本新出版小说、340K条读者评论），提出分层评价标准体系，比较三种评估策略的有效性，并训练了专用评估模型NovelCritique-8B…
+  [ACL 2025][长文本评估] 本文系统研究了书籍级长篇故事（>100K tokens）的自动评估问题，构建了首个大规模长篇故事评估基准LongStoryEval（600本新出版小说、340K条读者评论），提出分层评价标准体系，比较三种评估策略的有效性，并训练了专用评估模型NovelCritique-8B，在与人类评分的对齐度上超越GPT-4o。
 tags:
   - "ACL 2025"
   - "长文本评估"

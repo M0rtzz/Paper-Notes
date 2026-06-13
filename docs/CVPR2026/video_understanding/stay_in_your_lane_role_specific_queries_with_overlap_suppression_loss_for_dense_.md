@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stay in your Lane: Role Specific Queries with Overlap Suppression Loss for Dense Video Captioning
 description: >-
-  [CVPR 2026][视频理解][Dense Video Captioning] 提出 ROS-DVC，通过将 DETR-based DVC 框架中的共享 query 分离为独立的 localization query 和 caption query…
+  [CVPR 2026][视频理解][Dense Video Captioning] 提出 ROS-DVC，通过将 DETR-based DVC 框架中的共享 query 分离为独立的 localization query 和 caption query，并设计 Overlap Suppression Loss 惩罚 query 间的时序重叠、Cross-Task Contrastive Alignment 保证跨任务语义一致性，在 YouCook2 和 ActivityNet Captions 上实现了 SOTA 的 captioning 和 localization 性能。
 tags:
   - "CVPR 2026"
   - "视频理解"

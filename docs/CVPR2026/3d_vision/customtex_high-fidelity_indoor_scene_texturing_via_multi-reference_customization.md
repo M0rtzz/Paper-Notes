@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CustomTex: High-fidelity Indoor Scene Texturing via Multi-Reference Customization
 description: >-
-  [CVPR 2026][3D视觉][室内场景纹理] 提出CustomTex框架，通过实例级的多参考图像驱动和双蒸馏训练策略（语义级VSD蒸馏+像素级超分蒸馏），实现3D室内场景的高保真、实例可控纹理生成，在语义一致性、纹理清晰度和减少"烘焙阴影"方面全面超越现有方法。
+  [CVPR 2026][3D视觉][室内场景纹理] 提出CustomTex框架，通过实例级的多参考图像驱动和双蒸馏训练策略（语义级VSD蒸馏+像素级超分蒸馏），实现3D室内场景的高保真、实例可控纹理生成，在语义一致性、纹理清晰度和减少"烘焙阴影"方面全面超越现有方法。 创建逼真的3D室内场景纹理是VR/AR、建筑可视化和电影…
 tags:
   - "CVPR 2026"
   - "3D视觉"

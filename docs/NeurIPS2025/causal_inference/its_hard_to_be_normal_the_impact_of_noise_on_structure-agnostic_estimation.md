@@ -2,7 +2,7 @@
 title: >-
   [论文解读] It's Hard to Be Normal: The Impact of Noise on Structure-agnostic Estimation
 description: >-
-  [NeurIPS 2025][因果推理][DML] 证明 Double Machine Learning (DML) 在高斯处理噪声下是极小极大最优的（$O(\epsilon^2 + n^{-1/2})$），但在非高斯噪声下变得次优…
+  [NeurIPS 2025][因果推理][DML] 证明 Double Machine Learning (DML) 在高斯处理噪声下是极小极大最优的（$O(\epsilon^2 + n^{-1/2})$），但在非高斯噪声下变得次优；提出 Agnostic Cumulant-based Estimation (ACE) 利用高阶累积量达到 $r$ 阶不敏感性 $O(\epsilon^r + n^{-1/2})$。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

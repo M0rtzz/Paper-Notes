@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PerTouch: VLM-Driven Agent for Personalized and Semantic Image Retouching
 description: >-
-  [AAAI 2026][LLM Agent][VLM Agent] 提出 PerTouch 框架，结合基于 Stable Diffusion + ControlNet 的语义区域级修图模型和 VLM 驱动的 Agent（含反馈重思考机制和场景感知记忆），实现精细化、个性化的图像修图。
+  [AAAI 2026][LLM Agent][VLM Agent] 提出 PerTouch 框架，结合基于 Stable Diffusion + ControlNet 的语义区域级修图模型和 VLM 驱动的 Agent（含反馈重思考机制和场景感知记忆），实现精细化、个性化的图像修图。 领域现状：深度学习图像修图从 FCN 端…
 tags:
   - "AAAI 2026"
   - "LLM Agent"

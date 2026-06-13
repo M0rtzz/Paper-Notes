@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TapSampling: Inference-Time Sampling with a Task-Progress-Understanding Verifier for Robotic Manipulation
 description: >-
-  [ICML 2026][机器人][推理时采样] TapSampling 提出一个与策略无关、即插即用的推理时采样框架：先用 Action-VAE 从策略生成的少量动作里学一个低维后验、再高效地采出大量候选动作，再用"预测任务进度变化"的语义可解释 verifier 给候选动作打分并加权融合…
+  [ICML 2026][机器人][推理时采样] TapSampling 提出一个与策略无关、即插即用的推理时采样框架：先用 Action-VAE 从策略生成的少量动作里学一个低维后验、再高效地采出大量候选动作，再用"预测任务进度变化"的语义可解释 verifier 给候选动作打分并加权融合，在 CALVIN/LIBERO 和真机上无需微调原策略就能稳定提升 Diffusion Policy、OpenVLA、VPP、$\pi_0$、$\pi_{0.5}$ 等多种通用机器人策略的成功率。
 tags:
   - "ICML 2026"
   - "机器人"

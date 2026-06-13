@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models
 description: >-
-  [NeurIPS 2025][图像生成][潜在扩散模型] 提出StableGuard，将全局二值水印嵌入LDM生成流程中（通过MPW-VAE），并利用水印扰动模式的变化实现篡改定位（通过MoE-GFN），首次实现端到端的版权保护与篡改检测统一框架。
+  [NeurIPS 2025][图像生成][潜在扩散模型] 提出StableGuard，将全局二值水印嵌入LDM生成流程中（通过MPW-VAE），并利用水印扰动模式的变化实现篡改定位（通过MoE-GFN），首次实现端到端的版权保护与篡改检测统一框架。 潜在扩散模型(LDM)生成的图像越来越逼真，带来两大安全需求：（1）版权保护…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safe Reinforcement Learning with Preference-Based Constraint Inference
 description: >-
-  [ICML 2026][强化学习][Safe RL] 本文提出 PbCRL，用一个带"死区"的扩展 Bradley-Terry 偏好模型从轨迹比较中学安全约束，再叠加一个信噪比正则避免代价函数被压平，最后用两阶段（离线预训练 + 在线少量标注微调）训练打通 Safe RL 的完整流水线…
+  [ICML 2026][强化学习][Safe RL] 本文提出 PbCRL，用一个带"死区"的扩展 Bradley-Terry 偏好模型从轨迹比较中学安全约束，再叠加一个信噪比正则避免代价函数被压平，最后用两阶段（离线预训练 + 在线少量标注微调）训练打通 Safe RL 的完整流水线，在 Safety Gymnasium、自动驾驶与语言模型对齐三类任务上既显著降代价、又保住奖励。
 tags:
   - "ICML 2026"
   - "强化学习"

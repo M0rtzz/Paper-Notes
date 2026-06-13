@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jet-Nemotron: Efficient Language Model with Post Neural Architecture Search
 description: >-
-  [NeurIPS 2025][LLM效率][注意力机制] NVIDIA 提出 PostNAS 流水线——从预训练全注意力模型出发，冻结 MLP 权重，通过四步搜索（全注意力层放置→线性注意力块选择→新注意力块 JetBlock 设计→硬件感知超参搜索）得到混合架构 Jet-Nemotron…
+  [NeurIPS 2025][LLM效率][注意力机制] NVIDIA 提出 PostNAS 流水线——从预训练全注意力模型出发，冻结 MLP 权重，通过四步搜索（全注意力层放置→线性注意力块选择→新注意力块 JetBlock 设计→硬件感知超参搜索）得到混合架构 Jet-Nemotron，2B 模型在 MMLU-Pro 上超越 Qwen3-1.7B 同时生成吞吐提升 47×。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

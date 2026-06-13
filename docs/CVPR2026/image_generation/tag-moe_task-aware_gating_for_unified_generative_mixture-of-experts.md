@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAG-MoE: Task-Aware Gating for Unified Generative Mixture-of-Experts
 description: >-
-  [CVPR 2026][图像生成][混合专家] 针对统一图像生成与编辑模型中严重的任务干扰问题，提出 TAG-MoE 框架，通过层次化任务语义标注方案和预测性对齐正则化将高层任务意图注入 MoE 局部路由决策，使门控网络从任务无关的执行器进化为语义感知的调度中心…
+  [CVPR 2026][图像生成][混合专家] 针对统一图像生成与编辑模型中严重的任务干扰问题，提出 TAG-MoE 框架，通过层次化任务语义标注方案和预测性对齐正则化将高层任务意图注入 MoE 局部路由决策，使门控网络从任务无关的执行器进化为语义感知的调度中心，在 ICE-Bench、EmuEdit、GEdit、DreamBench++ 等五个基准上取得开源模型最优综合性能。
 tags:
   - "CVPR 2026"
   - "图像生成"

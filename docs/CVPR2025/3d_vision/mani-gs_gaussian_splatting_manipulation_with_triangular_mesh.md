@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh
 description: >-
-  [CVPR 2025][3D视觉][3D Gaussian Splatting] Mani-GS 提出了一种基于三角网格操控 3D Gaussian Splatting 的方法——通过在每个三角形上定义局部坐标系来绑定高斯，使得网格变形时高斯的位置、旋转和缩放能自适应调整…
+  [CVPR 2025][3D视觉][3D Gaussian Splatting] Mani-GS 提出了一种基于三角网格操控 3D Gaussian Splatting 的方法——通过在每个三角形上定义局部坐标系来绑定高斯，使得网格变形时高斯的位置、旋转和缩放能自适应调整，从而实现大变形、局部编辑和软体仿真等多种操控类型，同时保持高质量渲染且对网格精度有高容忍度。
 tags:
   - "CVPR 2025"
   - "3D视觉"

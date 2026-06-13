@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Bitter Lesson of Diffusion Language Models for Agentic Workflows: A Comprehensive Reality Check
 description: >-
-  [ACL2026][LLM Agent][扩散语言模型] 这篇论文系统评估扩散语言模型在具身智能体和工具调用智能体中的表现，发现它们虽然有并行解码带来的速度潜力，却在长程因果规划和严格格式生成上显著落后于自回归 LLM…
+  [ACL2026][LLM Agent][扩散语言模型] 这篇论文系统评估扩散语言模型在具身智能体和工具调用智能体中的表现，发现它们虽然有并行解码带来的速度潜力，却在长程因果规划和严格格式生成上显著落后于自回归 LLM，并进一步用 DiffuAgent 证明 dLLM 更适合作为记忆压缩、工具筛选等非因果辅助模块。
 tags:
   - "ACL2026"
   - "LLM Agent"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update
 description: >-
-  [ICML2025][heavy-tailed bandits] 提出基于 Online Mirror Descent 的单遍 Huber 回归算法 Hvt-UCB，用于重尾噪声线性 bandit，将每轮计算复杂度从 $\mathcal{O}(t\log T)$ 降至 $\mathcal{O}(1)$…
+  [ICML2025][其他/bandits][heavy-tailed bandits] 提出基于 Online Mirror Descent 的单遍 Huber 回归算法 Hvt-UCB，用于重尾噪声线性 bandit，将每轮计算复杂度从 $\mathcal{O}(t\log T)$ 降至 $\mathcal{O}(1)$，同时保持最优且依赖实例的 regret 界。
 tags:
   - "ICML2025"
+  - "其他/bandits"
   - "heavy-tailed bandits"
   - "Huber regression"
   - "online mirror descent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Attention Purification for Backdoored Large Vision Language Models
 description: >-
-  [CVPR 2026][LLM安全][后门攻击防御] 发现LVLM后门行为的本质是跨模态注意力窃取（trigger视觉token抢夺文本token的注意力），提出CleanSight——首个无需训练的测试时后门防御框架，通过检测和剪枝高注意力trigger token来消除后门效应。
+  [CVPR 2026][LLM安全][后门攻击防御] 发现LVLM后门行为的本质是跨模态注意力窃取（trigger视觉token抢夺文本token的注意力），提出CleanSight——首个无需训练的测试时后门防御框架，通过检测和剪枝高注意力trigger token来消除后门效应。 领域现状：LVLM通过微调轻量adapt…
 tags:
   - "CVPR 2026"
   - "LLM安全"

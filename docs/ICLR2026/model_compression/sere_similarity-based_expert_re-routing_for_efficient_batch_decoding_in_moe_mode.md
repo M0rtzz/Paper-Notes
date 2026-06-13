@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models
 description: >-
-  [模型压缩] 提出 SERE 方法，通过预计算专家相似度矩阵，在批量解码时将次要专家动态重路由到最相似的主要专家，实现最高 2.0 倍加速且质量损失极小，并提供即插即用的 vLLM CUDA 内核。
+  [模型压缩] 提出 SERE 方法，通过预计算专家相似度矩阵，在批量解码时将次要专家动态重路由到最相似的主要专家，实现最高 2.0 倍加速且质量损失极小，并提供即插即用的 vLLM CUDA 内核。 问题背景 MoE（混合专家）架构通过稀疏激活实现高效推理，每个 token 仅激活少量专家（如 Qwen3-30B-A3B 中…
 tags:
   - "模型压缩"
 ---

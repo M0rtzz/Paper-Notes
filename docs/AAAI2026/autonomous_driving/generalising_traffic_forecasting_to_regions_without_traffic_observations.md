@@ -1,8 +1,8 @@
 ---
 title: >-
-  [论文解读] GenCast：面向无观测区域的交通预测泛化
+  [论文解读] Generalising Traffic Forecasting to Regions without Traffic Observations
 description: >-
-  [AAAI 2026][自动驾驶][traffic forecasting] 本文提出 GenCast 模型，通过物理信息神经网络（引入 LWR 交通方程作为软约束）、动态外部天气信号融合和空间分组模块三大创新，实现了从有传感器区域到无传感器连续区域的交通预测泛化，在五个真实数据集上一致性地超越了现有最优方法…
+  [AAAI 2026][自动驾驶][traffic forecasting] 本文提出 GenCast 模型，通过物理信息神经网络（引入 LWR 交通方程作为软约束）、动态外部天气信号融合和空间分组模块三大创新，实现了从有传感器区域到无传感器连续区域的交通预测泛化，在五个真实数据集上一致性地超越了现有最优方法。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

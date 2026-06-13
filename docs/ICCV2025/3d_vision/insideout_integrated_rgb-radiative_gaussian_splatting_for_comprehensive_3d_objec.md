@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InsideOut: Integrated RGB-Radiative Gaussian Splatting for Comprehensive 3D Object Representation
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] InsideOut 将 3D Gaussian Splatting 从仅建模 RGB 表面扩展到同时建模 X 射线内部结构，通过层次化拟合和 X 射线参考损失实现了 RGB 外观与内部辐射结构的联合表示。
+  [ICCV 2025][3D视觉][3D高斯溅射] InsideOut 将 3D Gaussian Splatting 从仅建模 RGB 表面扩展到同时建模 X 射线内部结构，通过层次化拟合和 X 射线参考损失实现了 RGB 外观与内部辐射结构的联合表示。 领域现状：3D Gaussian Splatting（3DGS）已成…
 tags:
   - "ICCV 2025"
   - "3D视觉"

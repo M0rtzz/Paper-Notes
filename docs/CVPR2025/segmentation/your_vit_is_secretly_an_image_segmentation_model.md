@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your ViT is Secretly an Image Segmentation Model
 description: >-
-  [CVPR 2025][语义分割][Transformer] 本文提出 Encoder-only Mask Transformer（EoMT），证明在大规模预训练与足够大的模型下，plain ViT 无需卷积适配器、像素解码器和 Transformer 解码器等任务特定组件即可完成高质量图像分割…
+  [CVPR 2025][语义分割][Transformer] 本文提出 Encoder-only Mask Transformer（EoMT），证明在大规模预训练与足够大的模型下，plain ViT 无需卷积适配器、像素解码器和 Transformer 解码器等任务特定组件即可完成高质量图像分割，同时速度快达 4 倍。
 tags:
   - "CVPR 2025"
   - "语义分割"

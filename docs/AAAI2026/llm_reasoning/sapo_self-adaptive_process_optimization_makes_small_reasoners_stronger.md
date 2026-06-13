@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAPO: Self-Adaptive Process Optimization Makes Small Reasoners Stronger
 description: >-
-  [AAAI 2026][LLM推理][process supervision] 受神经科学中Error-Related Negativity启发，提出自适应过程优化方法SAPO，通过首错检测+局部后验估计替代低效的逐步蒙特卡洛rollout，在降低2-3倍计算成本的同时实现推理器-验证器协同优化…
+  [AAAI 2026][LLM推理][process supervision] 受神经科学中Error-Related Negativity启发，提出自适应过程优化方法SAPO，通过首错检测+局部后验估计替代低效的逐步蒙特卡洛rollout，在降低2-3倍计算成本的同时实现推理器-验证器协同优化，使小语言模型（≤2B）在数学和代码推理任务上超越多数自演化方法。
 tags:
   - "AAAI 2026"
   - "LLM推理"

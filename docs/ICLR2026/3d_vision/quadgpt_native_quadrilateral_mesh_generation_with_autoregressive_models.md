@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuadGPT: Native Quadrilateral Mesh Generation with Autoregressive Models
 description: >-
-  [ICLR 2026][3D视觉][quad mesh generation] 提出 QuadGPT——首个端到端自回归生成原生四边形网格的框架，通过统一的混合拓扑tokenization（三角形面 padding 为4顶点块）、Hourglass Transformer 架构、以及基于拓扑奖励的截断 DPO…
+  [ICLR 2026][3D视觉][quad mesh generation] 提出 QuadGPT——首个端到端自回归生成原生四边形网格的框架，通过统一的混合拓扑tokenization（三角形面 padding 为4顶点块）、Hourglass Transformer 架构、以及基于拓扑奖励的截断 DPO (tDPO) 微调，在 Chamfer Distance、Hausdorff Distance、四边形比例和用户偏好上全面超越现有的三角形→四边形转换流水线和十字场引导方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

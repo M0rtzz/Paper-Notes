@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing Token Choice for Code Watermarking: An RL Approach
 description: >-
-  [ICML 2026][LLM安全][代码水印] CodeTracer 在冻结的 code LLM 旁边挂一个小的 watermark policy 网络，用 GRPO + 双奖励（执行通过 + z-score）+ Gumbel-Top-k 直通估计联合学习"在哪个 token 位置加水印、选哪一组 gree…
+  [ICML 2026][LLM安全][代码水印] CodeTracer 在冻结的 code LLM 旁边挂一个小的 watermark policy 网络，用 GRPO + 双奖励（执行通过 + z-score）+ Gumbel-Top-k 直通估计联合学习"在哪个 token 位置加水印、选哪一组 green token"，在几乎不掉 Pass@1 的前提下把代码水印的检测 AUROC 从 ~70% 抬到 ~78%。
 tags:
   - "ICML 2026"
   - "LLM安全"

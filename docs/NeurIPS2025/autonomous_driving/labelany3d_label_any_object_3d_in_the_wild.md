@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LabelAny3D: Label Any Object 3D in the Wild
 description: >-
-  [NeurIPS 2025][自动驾驶][3D标注] 提出 LabelAny3D，一个基于分析合成（analysis-by-synthesis）的自动 3D 标注流水线，从单目图像重建完整 3D 场景以获取高质量 3D 包围框标注；基于此构建了 COCO3D 基准，覆盖 80 类日常物体…
+  [NeurIPS 2025][自动驾驶][3D标注] 提出 LabelAny3D，一个基于分析合成（analysis-by-synthesis）的自动 3D 标注流水线，从单目图像重建完整 3D 场景以获取高质量 3D 包围框标注；基于此构建了 COCO3D 基准，覆盖 80 类日常物体，在开放词汇单目 3D 检测上显著提升性能。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

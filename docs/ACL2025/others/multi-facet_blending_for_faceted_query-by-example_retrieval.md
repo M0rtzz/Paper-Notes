@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Facet Blending for Faceted Query-by-Example Retrieval
 description: >-
-  > 提出 FaBle（Multi-Facet Blending）数据增强方法，通过对文档进行面向分解（decomposition）、面向生成（generation）、面向重组（recomposition）三阶段，仅用 1K 文档合成出面向条件的训练三元组，在数据稀缺条件下显著提升分面 QBE 检索效果…
+  > 提出 FaBle（Multi-Facet Blending）数据增强方法，通过对文档进行面向分解（decomposition）、面向生成（generation）、面向重组（recomposition）三阶段，仅用 1K 文档合成出面向条件的训练三元组，在数据稀缺条件下显著提升分面 QBE 检索效果，特别是在最具挑战性的 method 分面上超越了使用 130 万+ 数据训练的强基线。
 tags:
 
 ---

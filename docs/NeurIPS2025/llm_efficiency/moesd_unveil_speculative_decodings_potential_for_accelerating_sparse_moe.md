@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MoESD: Unveil Speculative Decoding's Potential for Accelerating Sparse MoE
 description: >-
-  [NeurIPS 2025][LLM效率][投机解码] 挑战"投机解码对MoE无效"的传统认知，理论与实验证明在中等batch size下MoE反而比稠密模型更受益于投机解码，提出target efficiency这一系统级指标来量化加速瓶颈，并构建了可靠的性能预测模型…
+  [NeurIPS 2025 Spotlight][LLM效率][投机解码] 挑战"投机解码对MoE无效"的传统认知，理论与实验证明在中等batch size下MoE反而比稠密模型更受益于投机解码，提出target efficiency这一系统级指标来量化加速瓶颈，并构建了可靠的性能预测模型，在Qwen2-57B-A14B上实现最高2.29×加速。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM效率"
   - "投机解码"
   - "MoE推理"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Initialization is Half the Battle: Generating Diverse Images from a Guidance Potential Posterior
 description: >-
-  [ICML 2026][图像生成][多样性增强] 本文把"初始噪声"看作可以从一个由 conditional guidance 势能定义的后验中采样的随机变量，提出 DivIn：用一步 Langevin 动力学把标准高斯噪声往"低势能、平坦"的区域里推一推…
+  [ICML 2026 Spotlight][图像生成][多样性增强] 本文把"初始噪声"看作可以从一个由 conditional guidance 势能定义的后验中采样的随机变量，提出 DivIn：用一步 Langevin 动力学把标准高斯噪声往"低势能、平坦"的区域里推一推，在几乎不增加推理开销的前提下显著缓解扩散/flow matching 模型的 mode collapse，并和已有的 trajectory-based 多样性方法正交叠加。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "图像生成"
   - "多样性增强"
   - "初始噪声"

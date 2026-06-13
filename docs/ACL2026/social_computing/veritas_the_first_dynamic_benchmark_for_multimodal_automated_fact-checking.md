@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VeriTaS: The First Dynamic Benchmark for Multimodal Automated Fact-Checking
 description: >-
-  [ACL2026][社会计算][多模态事实核查] VeriTaS 用一个季度更新的七阶段自动化流水线，把专业事实核查机构的真实多语种图文视频声明转成标准化、可解释、可评测的多模态事实核查基准，并显示当前最强多模态模型离可靠 AFC 仍有明显距离。
+  [ACL2026 Oral][社会计算][多模态事实核查] VeriTaS 用一个季度更新的七阶段自动化流水线，把专业事实核查机构的真实多语种图文视频声明转成标准化、可解释、可评测的多模态事实核查基准，并显示当前最强多模态模型离可靠 AFC 仍有明显距离。 领域现状：自动化事实核查已经从纯文本声明验证扩展到图像、视频、社交媒…
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "社会计算"
   - "多模态事实核查"
   - "动态基准"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Oral  
 **arXiv**: [2601.08611](https://arxiv.org/abs/2601.08611)  
 **代码**: https://veritas.mai.informatik.tu-darmstadt.de  
-**领域**: audio_speech  
+**领域**: 音频语音  
 **关键词**: 多模态事实核查, 动态基准, 数据泄漏, ClaimReview, 事实核查评估
 
 ## 一句话总结

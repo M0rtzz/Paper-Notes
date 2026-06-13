@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowHijack: A Dynamics-Aware Backdoor Attack on Flow-Matching VLA Models
 description: >-
-  [CVPR 2026][多模态VLM][后门攻击] FlowHijack是首个系统性针对流匹配VLA模型向量场动态的后门攻击框架，通过τ条件注入策略和动态模仿正则化实现高攻击成功率和行为隐蔽性。
+  [CVPR 2026][多模态VLM][后门攻击] FlowHijack是首个系统性针对流匹配VLA模型向量场动态的后门攻击框架，通过τ条件注入策略和动态模仿正则化实现高攻击成功率和行为隐蔽性。 领域现状：VLA模型正在成为通用机器人的基石。流匹配VLA（如π₀）因能生成平滑连续的动作轨迹而备受关注，但其安全漏洞鲜有研究…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

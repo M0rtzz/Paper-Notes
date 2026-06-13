@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAR: Restore, Assess, Repeat - A Unified Framework for Iterative Image Restoration
 description: >-
-  [CVPR 2026][图像恢复][图像修复] RAR 将图像质量评估（IQA）与图像修复（IR）深度集成为统一端到端模型，在潜在空间中迭代执行"评估-修复-验证"循环，在复合退化场景下 PSNR 提升 +2.71 dB 且速度比 AgenticIR 快 11.27×。
+  [CVPR 2026][图像恢复][图像修复] RAR 将图像质量评估（IQA）与图像修复（IR）深度集成为统一端到端模型，在潜在空间中迭代执行"评估-修复-验证"循环，在复合退化场景下 PSNR 提升 +2.71 dB 且速度比 AgenticIR 快 11.27×。 真实场景中图像退化复杂且未知，可能同时包含模糊、噪声、…
 tags:
   - "CVPR 2026"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpeechLLM-as-Judges: Towards General and Interpretable Speech Quality Evaluation
 description: >-
-  [ACL 2026][音频/语音][语音质量评估] 这篇论文把语音质量评估从“给一个分数”扩展为“可解释的语音评审”，构建了含 32,207 条多语音频和 128,754 条标注的 SpeechEval 数据集，并用 CoT 指令微调与 GRPO 训练出 SQ-LLM…
+  [ACL 2026][音频/语音][语音质量评估] 这篇论文把语音质量评估从“给一个分数”扩展为“可解释的语音评审”，构建了含 32,207 条多语音频和 128,754 条标注的 SpeechEval 数据集，并用 CoT 指令微调与 GRPO 训练出 SQ-LLM，在质量评分、成对比较、改进建议和深伪检测四类任务上整体优于现有语音大模型与专家模型。
 tags:
   - "ACL 2026"
   - "音频/语音"

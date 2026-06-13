@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CADDreamer: CAD Object Generation from Single-view Images
 description: >-
-  [CVPR 2025][3D视觉][CAD重建] 提出 CADDreamer，通过语义增强的多视图扩散模型和几何拓扑提取模块，从单张RGB图像直接生成具有紧凑B-rep表示、清晰结构和锐利边缘的CAD模型，支持平面、圆柱、圆锥、球体、环面五种基元类型。
+  [CVPR 2025][3D视觉][CAD重建] 提出 CADDreamer，通过语义增强的多视图扩散模型和几何拓扑提取模块，从单张RGB图像直接生成具有紧凑B-rep表示、清晰结构和锐利边缘的CAD模型，支持平面、圆柱、圆锥、球体、环面五种基元类型。 基于扩散模型的3D生成近年取得显著进展，但生成的网格通常是过度稠密、缺乏…
 tags:
   - "CVPR 2025"
   - "3D视觉"

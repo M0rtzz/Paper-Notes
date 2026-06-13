@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REFLECTOR：把"边走边自省"内化进生成轨迹以抵御间接越狱
 description: >-
-  [ICML 2026][LLM安全][间接越狱] 针对会在长生成中后段才"暴露"的间接越狱攻击，作者用教师模型合成 `<|reflect|>/<|explore|>` 标注的反思轨迹做 SFT 冷启，再用安全奖励 + 反思有效性奖励的双奖 GDPO 把"search-and-recovery"行为内化到策略里…
+  [ICML 2026][LLM安全][间接越狱] 针对会在长生成中后段才"暴露"的间接越狱攻击，作者用教师模型合成 `<|reflect|>/<|explore|>` 标注的反思轨迹做 SFT 冷启，再用安全奖励 + 反思有效性奖励的双奖 GDPO 把"search-and-recovery"行为内化到策略里，把 DRA 等四类间接攻击的防御成功率从 ~10% 拉到 ~90%+，并且 GSM8K 反涨 5.65%。
 tags:
   - "ICML 2026"
   - "LLM安全"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Composite Flow Matching for Reinforcement Learning with Shifted-Dynamics Data
 description: >-
-  [NeurIPS 2025][图像生成][强化学习] 提出 CompFlow，通过复合流匹配架构（在离线流输出分布上构建在线流）估计离线-在线环境间的动态差异（Wasserstein 距离），并结合高动态差异区域的主动探索策略，在 27 个动态偏移 RL 任务中平均回报超越最强基线 14.2%。
+  [NeurIPS 2025 Spotlight][图像生成][强化学习] 提出 CompFlow，通过复合流匹配架构（在离线流输出分布上构建在线流）估计离线-在线环境间的动态差异（Wasserstein 距离），并结合高动态差异区域的主动探索策略，在 27 个动态偏移 RL 任务中平均回报超越最强基线 14.2%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "强化学习"
   - "流匹配"

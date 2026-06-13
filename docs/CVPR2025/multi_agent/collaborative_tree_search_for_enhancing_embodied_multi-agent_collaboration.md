@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Collaborative Tree Search for Enhancing Embodied Multi-Agent Collaboration
 description: >-
-  [CVPR 2025][多智能体][具身智能] 提出 Cooperative Tree Search (CoTS) 框架，将修改版蒙特卡洛树搜索与 LLM 驱动的奖励函数结合，引导多个具身智能体进行长期战略规划和高效协作，并通过计划评估模块避免频繁计划更新带来的行为混乱…
+  [CVPR 2025][多智能体][具身智能] 提出 Cooperative Tree Search (CoTS) 框架，将修改版蒙特卡洛树搜索与 LLM 驱动的奖励函数结合，引导多个具身智能体进行长期战略规划和高效协作，并通过计划评估模块避免频繁计划更新带来的行为混乱，在 CWAH 和 TDW-MAT 环境上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "多智能体"

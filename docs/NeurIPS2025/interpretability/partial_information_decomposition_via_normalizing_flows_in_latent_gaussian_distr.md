@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Partial Information Decomposition via Normalizing Flows in Latent Gaussian Distributions
 description: >-
-  [NeurIPS 2025][可解释性][部分信息分解] 提出两个互补工具：Thin-PID 是一种高效高斯 PID 算法（比已有方法快 10×），Flow-PID 用 normalizing flow 将任意输入分布转换为高斯再计算 PID，解决了 PID 在连续高维数据上不可行的问题…
+  [NeurIPS 2025][可解释性][部分信息分解] 提出两个互补工具：Thin-PID 是一种高效高斯 PID 算法（比已有方法快 10×），Flow-PID 用 normalizing flow 将任意输入分布转换为高斯再计算 PID，解决了 PID 在连续高维数据上不可行的问题，并证明了"联合高斯解是否最优"这一开放问题。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

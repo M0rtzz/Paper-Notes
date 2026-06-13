@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SATA: Spatial Autocorrelation Token Analysis for Enhancing the Robustness of Vision Transformers
 description: >-
-  [CVPR 2025][自监督学习][Transformer] 本文提出SATA（Spatial Autocorrelation Token Analysis），一种免训练的ViT鲁棒性增强方法，通过空间自相关分析将token按空间关联模式分组，利用分组信息重新加权token表示…
+  [CVPR 2025][自监督学习][Transformer] 本文提出SATA（Spatial Autocorrelation Token Analysis），一种免训练的ViT鲁棒性增强方法，通过空间自相关分析将token按空间关联模式分组，利用分组信息重新加权token表示，提升ViT在分布偏移和对抗攻击下的鲁棒性，且不影响干净样本性能。
 tags:
   - "CVPR 2025"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMoRa: Multimodal Large Language Model based on Refined Motion Representation for Long-Video Understanding
 description: >-
-  [CVPR 2026][多模态VLM][长视频理解] 提出 ReMoRa，直接操作视频压缩表示（I帧 + 运动向量），通过 Refined Motion Representation (RMR) 模块将粗糙的块级运动向量精化为接近光流的细粒度运动表征…
+  [CVPR 2026][多模态VLM][长视频理解] 提出 ReMoRa，直接操作视频压缩表示（I帧 + 运动向量），通过 Refined Motion Representation (RMR) 模块将粗糙的块级运动向量精化为接近光流的细粒度运动表征，再用 Hierarchical Motion State Space (HMSS) 模块进行线性时间的长程时间建模，在 LongVideoBench、NExT-QA、MLVU 等基准上超越基线。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

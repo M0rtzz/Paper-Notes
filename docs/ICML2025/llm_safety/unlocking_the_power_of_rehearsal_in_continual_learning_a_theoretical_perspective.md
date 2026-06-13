@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking the Power of Rehearsal in Continual Learning: A Theoretical Perspective
 description: >-
-  [ICML 2025][LLM安全][continual learning] 从理论角度严格证明持续学习中排练策略的有效性机制——排练通过控制梯度方向偏差将多任务顺序学习近似为联合训练，遗忘界随缓冲区大小 $m$ 呈 $O(\sqrt{T/m})$ 次线性增长…
+  [ICML 2025][LLM安全][continual learning] 从理论角度严格证明持续学习中排练策略的有效性机制——排练通过控制梯度方向偏差将多任务顺序学习近似为联合训练，遗忘界随缓冲区大小 $m$ 呈 $O(\sqrt{T/m})$ 次线性增长，为实际系统的缓冲区配置提供了 $O(d/\epsilon^2)$ 的精确指导。
 tags:
   - "ICML 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProPer Agents: Proactivity Driven Personalized Agents for Advancing Knowledge Gap Navigation
 description: >-
-  [ACL 2026][LLM Agent][主动式助手] ProPer 把主动式助手建模为“发现并校准用户未说出的任务维度”的问题，通过 Dimension Generating Agent、post-hoc reranker 和 Response Generating Agent 选择性补足知识缺口…
+  [ACL 2026][LLM Agent][主动式助手] ProPer 把主动式助手建模为“发现并校准用户未说出的任务维度”的问题，通过 Dimension Generating Agent、post-hoc reranker 和 Response Generating Agent 选择性补足知识缺口，在医疗、代码和购物推荐任务上显著提升回答质量与 win rate。
 tags:
   - "ACL 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rel-Zero: Harnessing Patch-Pair Invariance for Robust Zero-Watermarking Against AI Editing
 description: >-
-  [CVPR 2026][图像生成][零水印] 本文发现图像patch对之间的关系距离在AI编辑后保持不变，并利用该不变性构建了一种零水印框架Rel-Zero，无需修改原图即可实现对多种生成式编辑的鲁棒内容认证。
+  [CVPR 2026][图像生成][零水印] 本文发现图像patch对之间的关系距离在AI编辑后保持不变，并利用该不变性构建了一种零水印框架Rel-Zero，无需修改原图即可实现对多种生成式编辑的鲁棒内容认证。 领域现状：数字水印是保护图像版权和认证内容真实性的关键技术。现有方法分为嵌入式水印（在图像中注入信号）和零水印（不…
 tags:
   - "CVPR 2026"
   - "图像生成"

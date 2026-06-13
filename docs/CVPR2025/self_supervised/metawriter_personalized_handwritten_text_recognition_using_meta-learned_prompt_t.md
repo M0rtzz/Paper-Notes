@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetaWriter: Personalized Handwritten Text Recognition Using Meta-Learned Prompt Tuning
 description: >-
-  [CVPR 2025][自监督学习][手写文字识别] MetaWriter 将手写文字识别的个性化适配形式化为 prompt tuning 问题，结合 MAE 自监督辅助任务实现无标签测试时适应，并用元学习优化 prompt 初始化使自监督损失与识别损失对齐…
+  [CVPR 2025][自监督学习][手写文字识别] MetaWriter 将手写文字识别的个性化适配形式化为 prompt tuning 问题，结合 MAE 自监督辅助任务实现无标签测试时适应，并用元学习优化 prompt 初始化使自监督损失与识别损失对齐，仅更新不到1%参数即在IAM和RIMES上达到SOTA。
 tags:
   - "CVPR 2025"
   - "自监督学习"

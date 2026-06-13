@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Online Change Detection via Random Fourier Features
 description: >-
-  [NeurIPS 2025][预训练][在线变点检测] 提出 Online RFF-MMD 算法，通过随机 Fourier 特征近似 MMD 统计量并嵌入到二进制网格的序贯检验框架中，实现了无需训练数据、无需窗口参数的在线非参数变点检测，运行时间和空间复杂度均为对数级…
+  [NeurIPS 2025][预训练][在线变点检测] 提出 Online RFF-MMD 算法，通过随机 Fourier 特征近似 MMD 统计量并嵌入到二进制网格的序贯检验框架中，实现了无需训练数据、无需窗口参数的在线非参数变点检测，运行时间和空间复杂度均为对数级，并证明了检测延迟的 minimax 最优性。
 tags:
   - "NeurIPS 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FASA: Frequency-Aware Sparse Attention
 description: >-
-  [ICLR 2026][模型压缩][KV缓存压缩] 本文发现RoPE中频率块（FC）级别的功能稀疏性——少数"主导FC"可有效预测token重要性，据此提出FASA框架，通过主导FC预估token重要性+聚焦注意力计算两阶段实现无训练的KV缓存压缩…
+  [ICLR 2026][模型压缩][KV缓存压缩] 本文发现RoPE中频率块（FC）级别的功能稀疏性——少数"主导FC"可有效预测token重要性，据此提出FASA框架，通过主导FC预估token重要性+聚焦注意力计算两阶段实现无训练的KV缓存压缩，在LongBench上仅保留256个token接近100%全KV性能，AIME24上用18.9%缓存实现2.56×加速。
 tags:
   - "ICLR 2026"
   - "模型压缩"

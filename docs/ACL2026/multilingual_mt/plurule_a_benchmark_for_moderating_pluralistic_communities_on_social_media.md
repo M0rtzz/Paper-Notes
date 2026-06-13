@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PluRule: A Benchmark for Moderating Pluralistic Communities on Social Media
 description: >-
-  [ACL2026][多语言/翻译][内容审核] PluRule 把 Reddit 社区审核建模为“给定评论和上下文，选择违反了哪条本社区规则或没有违规”的多选题，构建了覆盖 1,989 个社区、2,885 条规则和 9 种语言的基准…
+  [ACL2026][多语言/翻译][内容审核] PluRule 把 Reddit 社区审核建模为“给定评论和上下文，选择违反了哪条本社区规则或没有违规”的多选题，构建了覆盖 1,989 个社区、2,885 条规则和 9 种语言的基准，并显示 GPT-5.2 high reasoning 全上下文也只有约 57.6% 准确率。
 tags:
   - "ACL2026"
   - "多语言/翻译"

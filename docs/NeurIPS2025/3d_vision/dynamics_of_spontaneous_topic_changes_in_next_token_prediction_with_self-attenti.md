@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention
 description: >-
-  [NeurIPS 2025][3D视觉][spontaneous thought] 从理论和实验两方面研究自注意力模型中"自发主题切换"的动力学机制，证明在单层 self-attention 模型中：(1) 混合主题训练保持原主题的 token 优先级顺序…
+  [NeurIPS 2025][3D视觉][spontaneous thought] 从理论和实验两方面研究自注意力模型中"自发主题切换"的动力学机制，证明在单层 self-attention 模型中：(1) 混合主题训练保持原主题的 token 优先级顺序；(2) 主题切换仅在低优先级 token 数量超过高优先级 token 时发生；(3) 更长输入和更模糊主题不会增加切换概率——与人类认知相反。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms
 description: >-
-  [ACL 2025][LLM/NLP][行为控制] 提出 STA（Steering Target Atoms），利用稀疏自编码器 (SAE) 将 LLM 的表示解耦为原子知识组件，通过激活幅度和频率筛选目标原子并操控，实现比提示工程更鲁棒、更精细的行为控制…
+  [ACL 2025][LLM 其他][行为控制] 提出 STA（Steering Target Atoms），利用稀疏自编码器 (SAE) 将 LLM 的表示解耦为原子知识组件，通过激活幅度和频率筛选目标原子并操控，实现比提示工程更鲁棒、更精细的行为控制，在安全解毒和推理控制任务上效果优于现有 steering 方法。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "行为控制"
   - "steering vector"
   - "SAE"

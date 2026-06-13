@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prune4Web: DOM Tree Pruning Programming for Web Agent
 description: >-
-  [AAAI 2026][LLM Agent][DOM树剪枝] 提出 Prune4Web，通过"LLM 生成评分函数参数 + 固定启发式模板执行"的编程式 DOM 剪枝方法实现 25-50 倍候选元素缩减：三阶段 pipeline（Planner 分解子任务 → Programmatic Filter 生成评分…
+  [AAAI 2026][LLM Agent][DOM树剪枝] 提出 Prune4Web，通过"LLM 生成评分函数参数 + 固定启发式模板执行"的编程式 DOM 剪枝方法实现 25-50 倍候选元素缩减：三阶段 pipeline（Planner 分解子任务 → Programmatic Filter 生成评分函数剪枝 DOM → Grounder 执行操作），3B 模型在 Multimodal-Mind2Web 上达到 52.4% Step SR（超越所有同参数量基线甚至部分 9.6B/32B 模型），低级 grounding 准确率从 46.8% 提升至 88.28%。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

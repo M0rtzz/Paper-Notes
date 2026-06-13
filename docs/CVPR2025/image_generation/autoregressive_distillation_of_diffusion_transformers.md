@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autoregressive Distillation of Diffusion Transformers
 description: >-
-  [CVPR 2025 (Oral)][图像生成][扩散模型蒸馏] 提出自回归蒸馏（ARD），利用ODE轨迹的历史信息而非仅当前去噪样本作为输入来预测未来步，通过token级时间嵌入和块级因果注意力掩码修改teacher transformer架构，在ImageNet-256上以4步达到FID 1.84…
+  [CVPR 2025 (Oral)][图像生成][扩散模型蒸馏] 提出自回归蒸馏（ARD），利用ODE轨迹的历史信息而非仅当前去噪样本作为输入来预测未来步，通过token级时间嵌入和块级因果注意力掩码修改teacher transformer架构，在ImageNet-256上以4步达到FID 1.84，仅增加1.1%额外FLOPs。
 tags:
   - "CVPR 2025 (Oral)"
   - "图像生成"

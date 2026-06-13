@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HalluAudio: A Comprehensive Benchmark for Hallucination Detection in Large Audio-Language Models
 description: >-
-  [ACL 2026][幻觉检测][音频幻觉] 本文提出 HalluAudio，首个大规模跨领域（语音/环境声/音乐）的音频幻觉检测基准，包含 5000+ 人工验证的 QA 对和系统化的对抗性提示设计，通过多维指标（准确率/幻觉率/Yes-No偏差/拒绝率/错误类型）评估主流 LALM…
+  [ACL 2026][幻觉检测][音频幻觉] 本文提出 HalluAudio，首个大规模跨领域（语音/环境声/音乐）的音频幻觉检测基准，包含 5000+ 人工验证的 QA 对和系统化的对抗性提示设计，通过多维指标（准确率/幻觉率/Yes-No偏差/拒绝率/错误类型）评估主流 LALM，揭示了当前模型在声学锚定、时间推理和音乐属性理解方面的显著缺陷。
 tags:
   - "ACL 2026"
   - "幻觉检测"

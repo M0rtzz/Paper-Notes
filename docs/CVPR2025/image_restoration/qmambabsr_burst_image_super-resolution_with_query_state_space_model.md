@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QMambaBSR: Burst Image Super-Resolution with Query State Space Model
 description: >-
-  [CVPR 2025][图像恢复][连拍超分辨率] 提出 QMambaBSR，通过 Query State Space Model（QSSM）实现帧间查询和帧内扫描的联合子像素提取与噪声抑制，结合自适应上采样模块，在合成和真实连拍超分辨率任务上达到 SOTA。
+  [CVPR 2025][图像恢复][连拍超分辨率] 提出 QMambaBSR，通过 Query State Space Model（QSSM）实现帧间查询和帧内扫描的联合子像素提取与噪声抑制，结合自适应上采样模块，在合成和真实连拍超分辨率任务上达到 SOTA。 连拍超分辨率（BurstSR）旨在从手持拍摄的多帧低分辨率图像中…
 tags:
   - "CVPR 2025"
   - "图像恢复"

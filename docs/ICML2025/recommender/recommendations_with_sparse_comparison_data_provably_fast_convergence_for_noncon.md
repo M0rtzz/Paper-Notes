@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recommendations with Sparse Comparison Data: Provably Fast Convergence for Nonconvex Matrix Factorization
 description: >-
-  [ICML 2025][推荐系统][成对比较] 首次为基于成对比较数据的推荐系统非凸矩阵分解问题提供理论恢复保证：证明在warm start条件下，投影梯度下降以指数速率收敛到真实低秩特征矩阵，样本复杂度为近乎最优的 $O(nr^2 \log n)$…
+  [ICML 2025][推荐系统][成对比较] 首次为基于成对比较数据的推荐系统非凸矩阵分解问题提供理论恢复保证：证明在warm start条件下，投影梯度下降以指数速率收敛到真实低秩特征矩阵，样本复杂度为近乎最优的 $O(nr^2 \log n)$，关键技术贡献是将matrix Bernstein不等式扩展到成对比较的采样矩阵结构。
 tags:
   - "ICML 2025"
   - "推荐系统"

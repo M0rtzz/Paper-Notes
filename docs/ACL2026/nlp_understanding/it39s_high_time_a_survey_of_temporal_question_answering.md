@@ -2,7 +2,7 @@
 title: >-
   [论文解读] It's High Time: A Survey of Temporal Question Answering
 description: >-
-  [ACL 2026][NLP理解][时序问答] 本文提供了时序问答（TQA）的全面综述，提出了基于语料时间性、问题时间性和模型时间能力三个维度的统一分析框架，系统梳理了从规则管道到 Transformer/LLM 时代的 TQA 方法演进、基准数据集和评估策略，并识别了未来挑战。
+  [ACL 2026][NLP理解][时序问答] 本文提供了时序问答（TQA）的全面综述，提出了基于语料时间性、问题时间性和模型时间能力三个维度的统一分析框架，系统梳理了从规则管道到 Transformer/LLM 时代的 TQA 方法演进、基准数据集和评估策略，并识别了未来挑战。 领域现状：时间是信息生成、检索和理解的基本维…
 tags:
   - "ACL 2026"
   - "NLP理解"

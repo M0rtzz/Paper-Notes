@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Addressing Blind Guessing: Calibration of Selection Bias in Multiple-Choice Question Answering by Video Language Models
 description: >-
-  [ACL 2025][视频理解][选择偏差] 首次系统性研究视频语言模型（VLM）在多选题回答中的选项选择偏差问题，通过任务分解分析偏差来源，提出BOLD后处理校准技术，在减少偏差的同时提升模型性能。
+  [ACL 2025][视频理解][选择偏差] 首次系统性研究视频语言模型（VLM）在多选题回答中的选项选择偏差问题，通过任务分解分析偏差来源，提出BOLD后处理校准技术，在减少偏差的同时提升模型性能。 多选题问答（MCQA）因其评估的透明性和便利性，被广泛用于衡量视频语言模型的推理能力。然而，VLM在回答MCQA时存在严重的…
 tags:
   - "ACL 2025"
   - "视频理解"

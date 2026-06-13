@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Integration of Task-Specific Adapters for Class Incremental Learning
 description: >-
-  [CVPR 2025][AI安全][class incremental learning] 通过动态集成任务特定适配器实现类增量学习，每个任务训练轻量适配器，推理时动态选择和组合相关适配器
+  [CVPR 2025][AI安全][class incremental learning] 通过动态集成任务特定适配器实现类增量学习，每个任务训练轻量适配器，推理时动态选择和组合相关适配器 领域现状 领域现状：Dynamic Integration of Task-Specific Adapters 方向近年取得了显著进展…
 tags:
   - "CVPR 2025"
   - "AI安全"

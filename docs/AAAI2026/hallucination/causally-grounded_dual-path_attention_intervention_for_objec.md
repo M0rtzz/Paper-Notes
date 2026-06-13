@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causally-Grounded Dual-Path Attention Intervention for Object Hallucination Mitigation in LVLMs
 description: >-
-  [AAAI 2026][幻觉检测][对象幻觉] 提出 Owl 框架，通过结构因果模型将视觉/文本注意力建模为中介变量，引入 VTACR 指标量化跨模态注意力失衡，设计 VTACR 引导的自适应注意力调制 + 双路径对比解码策略，在 POPE 和 CHAIR 上实现 SOTA 的幻觉抑制效果。
+  [AAAI 2026][幻觉检测][对象幻觉] 提出 Owl 框架，通过结构因果模型将视觉/文本注意力建模为中介变量，引入 VTACR 指标量化跨模态注意力失衡，设计 VTACR 引导的自适应注意力调制 + 双路径对比解码策略，在 POPE 和 CHAIR 上实现 SOTA 的幻觉抑制效果。 LVLMs（LLaVA、Mini…
 tags:
   - "AAAI 2026"
   - "幻觉检测"

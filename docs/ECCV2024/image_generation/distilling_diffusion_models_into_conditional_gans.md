@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Diffusion Models into Conditional GANs
 description: >-
-  [ECCV 2024][图像生成][扩散蒸馏] 提出 Diffusion2GAN 框架，将多步扩散模型蒸馏为单步条件GAN，核心创新是 E-LatentLPIPS 潜空间感知损失和基于预训练扩散模型的多尺度条件判别器…
+  [ECCV 2024][图像生成][扩散蒸馏] 提出 Diffusion2GAN 框架，将多步扩散模型蒸馏为单步条件GAN，核心创新是 E-LatentLPIPS 潜空间感知损失和基于预训练扩散模型的多尺度条件判别器，在零样本 COCO 基准上超越 DMD、SDXL-Turbo 和 SDXL-Lightning。
 tags:
   - "ECCV 2024"
   - "图像生成"

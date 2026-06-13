@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection
 description: >-
-  [CVPR 2026][目标检测][Zero-Shot 3D Anomaly Detection] BTP 首次将预训练的点-语言模型（PLM，如 ULIP）应用于零样本 3D 异常检测，提出多粒度特征嵌入模块（MGFEM）融合 patch 级语义、几何描述子和全局 CLS token，配合联合表示学习策略…
+  [CVPR 2026][目标检测][Zero-Shot 3D Anomaly Detection] BTP 首次将预训练的点-语言模型（PLM，如 ULIP）应用于零样本 3D 异常检测，提出多粒度特征嵌入模块（MGFEM）融合 patch 级语义、几何描述子和全局 CLS token，配合联合表示学习策略，在 Real3D-AD 点级 AUROC 达到 84.5%，大幅超越观 VLM 渲染方案的 PointAD（73.5%）。
 tags:
   - "CVPR 2026"
   - "目标检测"

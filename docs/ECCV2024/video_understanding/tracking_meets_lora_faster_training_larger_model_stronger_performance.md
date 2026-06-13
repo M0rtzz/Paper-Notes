@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance
 description: >-
-  [ECCV 2024][视频理解][视觉目标跟踪] LoRAT 首次将 LoRA 引入视觉目标跟踪，通过解耦位置编码（共享空间 + 独立类型嵌入）和纯 MLP 检测头两个 LoRA-友好设计，使得在实验室级资源上训练 ViT-g 骨干的跟踪器成为可能，在 LaSOT 上达到 0.762 SUC（新 SOTA）…
+  [ECCV 2024][视频理解][视觉目标跟踪] LoRAT 首次将 LoRA 引入视觉目标跟踪，通过解耦位置编码（共享空间 + 独立类型嵌入）和纯 MLP 检测头两个 LoRA-友好设计，使得在实验室级资源上训练 ViT-g 骨干的跟踪器成为可能，在 LaSOT 上达到 0.762 SUC（新 SOTA），最轻变体 LoRAT-B-224 以 209 FPS 运行。
 tags:
   - "ECCV 2024"
   - "视频理解"

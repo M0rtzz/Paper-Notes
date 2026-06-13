@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMLU-CF: A Contamination-free Multi-task Language Understanding Benchmark
 description: >-
-  [ACL 2025][LLM评测][数据污染] 提出 MMLU-CF，一个包含 20,000 道题的无数据污染多任务语言理解基准，通过从更广泛的来源收集数据并应用三条去污染规则（改写题目、打乱选项、随机替换选项）来避免无意和恶意的数据泄露…
+  [ACL 2025][LLM评测][数据污染] 提出 MMLU-CF，一个包含 20,000 道题的无数据污染多任务语言理解基准，通过从更广泛的来源收集数据并应用三条去污染规则（改写题目、打乱选项、随机替换选项）来避免无意和恶意的数据泄露，最强模型 GPT-4o 在该基准上仅获得 73.4%（MMLU 上为 88.0%）。
 tags:
   - "ACL 2025"
   - "LLM评测"

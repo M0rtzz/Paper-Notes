@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShapeCraft: LLM Agents for Structured, Textured and Interactive 3D Modeling
 description: >-
-  [NEURIPS2025][LLM Agent][text-to-3D] 提出基于图结构程序化形状表示（GPS）的多 Agent 框架 ShapeCraft，通过 Parser-Coder-Evaluator 三个 LLM Agent 协作，将自然语言分解为结构化子任务图…
+  [NEURIPS2025][LLM Agent][text-to-3D] 提出基于图结构程序化形状表示（GPS）的多 Agent 框架 ShapeCraft，通过 Parser-Coder-Evaluator 三个 LLM Agent 协作，将自然语言分解为结构化子任务图，迭代生成可编辑、可动画的带纹理 3D 资产。
 tags:
   - "NEURIPS2025"
   - "LLM Agent"

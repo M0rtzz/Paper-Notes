@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enrich and Detect: Video Temporal Grounding with Multimodal LLMs
 description: >-
-  [ICCV 2025][多模态VLM][视频时序定位] 提出 ED-VTG，将视频时序定位分为"先丰富查询、再预测时间区间"两阶段，利用多模态 LLM 的描述能力增补查询细节，配合轻量区间解码器和多实例学习框架，在多个基准上首次让 LLM 方法全面追平甚至超越专用模型。
+  [ICCV 2025][多模态VLM][视频时序定位] 提出 ED-VTG，将视频时序定位分为"先丰富查询、再预测时间区间"两阶段，利用多模态 LLM 的描述能力增补查询细节，配合轻量区间解码器和多实例学习框架，在多个基准上首次让 LLM 方法全面追平甚至超越专用模型。 视频时序定位（Video Temporal Groun…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

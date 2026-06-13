@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Measuring Weak-to-Strong Legibility of Reasoning Models
 description: >-
-  [ICML 2026][LLM推理][weak-to-strong legibility] 本文提出 **Transfer Utility (TU)** ——把强推理模型 (RLM) 写出的中间推理 trace 按百分位前缀喂给一个弱学生模型，用弱学生续写出正确答案的能力来度量 trace 的"弱到强可读性"…
+  [ICML 2026][LLM推理][weak-to-strong legibility] 本文提出 **Transfer Utility (TU)** ——把强推理模型 (RLM) 写出的中间推理 trace 按百分位前缀喂给一个弱学生模型，用弱学生续写出正确答案的能力来度量 trace 的"弱到强可读性"；在 12 个开源 RLM × 3 个数据集 × 85k 条 trace 上发现：**当前最准、最简洁的 RLM (如 GPT-OSS-120B) 的 trace 在 TU 排名中反而垫底**，说明 RLVR 训练把推理 trace 变成了"只对强模型有用"的工件。
 tags:
   - "ICML 2026"
   - "LLM推理"

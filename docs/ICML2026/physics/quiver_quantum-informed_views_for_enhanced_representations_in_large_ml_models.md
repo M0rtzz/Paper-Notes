@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quiver: Quantum-Informed Views for Enhanced Representations in Large ML Models
 description: >-
-  [ICML 2026][物理/科学计算][变分量子电路] Quiver 把分类输入额外送进一个变分量子电路 (VQC)，提取其量子 Fisher 信息矩阵 (QFIM) 作为「量子几何视图」，再用 cross-attention（对 Transformer）或残差门控（对 GNN）注入到经典骨干里…
+  [ICML 2026][物理/科学计算][变分量子电路] Quiver 把分类输入额外送进一个变分量子电路 (VQC)，提取其量子 Fisher 信息矩阵 (QFIM) 作为「量子几何视图」，再用 cross-attention（对 Transformer）或残差门控（对 GNN）注入到经典骨干里，在 JetClass 顶夸克标记与 QM9 HOMO-LUMO 间隙回归两个完全不同的物理任务上都拿到了稳定提升。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

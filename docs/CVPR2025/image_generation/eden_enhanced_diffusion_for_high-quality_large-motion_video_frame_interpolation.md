@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDEN: Enhanced Diffusion for High-quality Large-motion Video Frame Interpolation
 description: >-
-  [CVPR 2025][图像生成][视频帧插值] 提出 EDEN，从输入表示、模型架构和训练范式三个维度全面增强扩散模型在视频帧插值中的作用，通过 Transformer tokenizer 压缩中间帧为语义丰富的 1D token 表示、采用 DiT 替代 U-Net 架构、引入双流上下文整合机制（时序注意…
+  [CVPR 2025][图像生成][视频帧插值] 提出 EDEN，从输入表示、模型架构和训练范式三个维度全面增强扩散模型在视频帧插值中的作用，通过 Transformer tokenizer 压缩中间帧为语义丰富的 1D token 表示、采用 DiT 替代 U-Net 架构、引入双流上下文整合机制（时序注意力 + 帧差嵌入），在 DAVIS 等大运动基准上 LPIPS 降低近 10%，且仅需 2 步去噪即可实现高质量生成。
 tags:
   - "CVPR 2025"
   - "图像生成"

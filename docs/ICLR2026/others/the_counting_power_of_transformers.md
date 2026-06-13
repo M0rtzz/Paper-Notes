@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Counting Power of Transformers
 description: >-
-  [ICLR 2026][Transformer] 证明 Transformer 不仅能捕获（半）线性计数性质，还能表达所有**半代数计数性质**（即多元多项式不等式的布尔组合），从而推广了先前关于 Transformer 计数能力的所有结果，并由此推导出新的不可判定性结论。
+  [ICLR 2026][Transformer] 证明 Transformer 不仅能捕获（半）线性计数性质，还能表达所有半代数计数性质：（即多元多项式不等式的布尔组合），从而推广了先前关于 Transformer 计数能力的所有结果，并由此推导出新的不可判定性结论。 - 计数性质在 Transformer 研究中的核心地位…
 tags:
   - "ICLR 2026"
   - "Transformer"

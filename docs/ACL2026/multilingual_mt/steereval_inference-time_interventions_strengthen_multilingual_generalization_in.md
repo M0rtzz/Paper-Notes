@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SteerEval: Inference-time Interventions Strengthen Multilingual Generalization in Neural Summarization Metrics
 description: >-
-  [ACL2026][多语言/翻译][activation steering] SteerEval 研究在推理时把多语种评测模型的隐藏表示向高资源枢轴语言对齐，发现向英语或法语方向 steering 能普遍提高多语种摘要自动指标与人工评分的相关性…
+  [ACL2026][多语言/翻译][activation steering] SteerEval 研究在推理时把多语种评测模型的隐藏表示向高资源枢轴语言对齐，发现向英语或法语方向 steering 能普遍提高多语种摘要自动指标与人工评分的相关性，尤其能改善低基线语言和 encoder-based COMET 指标。
 tags:
   - "ACL2026"
   - "多语言/翻译"

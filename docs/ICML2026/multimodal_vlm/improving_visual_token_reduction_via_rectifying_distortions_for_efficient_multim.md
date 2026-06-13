@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RESTORE: 通过矫正失真改进视觉 Token 缩减以提升 MLLM 推理效率
 description: >-
-  [ICML 2026][多模态VLM][视觉 Token 缩减] RESTORE 把现有视觉 Token 缩减(VTR)中被忽略的"位置失真"和"注意力衰减"两个问题摆到台面上,通过给 RoPE 衰减加一个距离感知的反向补偿项,再用兼顾代表性与判别性的 anchor 选择策略改进 token 合并…
+  [ICML 2026][多模态VLM][视觉 Token 缩减] RESTORE 把现有视觉 Token 缩减(VTR)中被忽略的"位置失真"和"注意力衰减"两个问题摆到台面上,通过给 RoPE 衰减加一个距离感知的反向补偿项,再用兼顾代表性与判别性的 anchor 选择策略改进 token 合并,使得 LLaVA-1.5-7B 在 64 token(约 11% 保留率)下仍能逼近全 token 性能。
 tags:
   - "ICML 2026"
   - "多模态VLM"

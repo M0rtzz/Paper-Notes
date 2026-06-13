@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring the Translation Mechanism of Large Language Models
 description: >-
-  [NeurIPS 2025][多语言/翻译][translation mechanism] 提出 subspace-intervened path patching 方法对 LLM 翻译机制进行精细因果分析…
+  [NeurIPS 2025][多语言/翻译][translation mechanism] 提出 subspace-intervened path patching 方法对 LLM 翻译机制进行精细因果分析，发现翻译由不到 5% 的稀疏 attention head 驱动——分为 source head、indicator head、positional head 三类功能角色，MLP 将其特征整合为以英语为中心的中间表示，仅微调 64 个关键 head 即可匹配全参数微调性能。
 tags:
   - "NeurIPS 2025"
   - "多语言/翻译"

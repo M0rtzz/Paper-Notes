@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training
 description: >-
-  [ICML 2025][图学习][糖链建模] 提出 GlycanAA，首个全原子级糖链建模方法：将糖链表示为包含原子节点和单糖节点的异构图，通过层次消息传递捕获从局部原子交互到全局单糖交互的多尺度信息，并通过多尺度掩码预测预训练（PreGlycanAA）进一步增强…
+  [ICML 2025][图学习][糖链建模] 提出 GlycanAA，首个全原子级糖链建模方法：将糖链表示为包含原子节点和单糖节点的异构图，通过层次消息传递捕获从局部原子交互到全局单糖交互的多尺度信息，并通过多尺度掩码预测预训练（PreGlycanAA）进一步增强，在 GlycanML 基准 11 个任务上获得第一。
 tags:
   - "ICML 2025"
   - "图学习"

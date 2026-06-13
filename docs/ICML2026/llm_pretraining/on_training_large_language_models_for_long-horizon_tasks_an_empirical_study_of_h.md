@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Training Large Language Models for Long-Horizon Tasks: An Empirical Study of Horizon Length
 description: >-
-  [ICML 2026][预训练][horizon reduction] 本文用一套精心控制"推理难度恒定、只变 horizon 长度"的 Sudoku/Rush Hour 任务，系统证明**任务 horizon 本身就是 LLM agent RL 训练崩溃的独立根因**…
+  [ICML 2026][预训练][horizon reduction] 本文用一套精心控制"推理难度恒定、只变 horizon 长度"的 Sudoku/Rush Hour 任务，系统证明**任务 horizon 本身就是 LLM agent RL 训练崩溃的独立根因**，并提出 macro action 与 subgoal decomposition 两种 horizon-reduction 机制——它们不仅稳住训练，还让模型在更长 horizon 上实现强 zero-shot 泛化（horizon generalization）。
 tags:
   - "ICML 2026"
   - "预训练"

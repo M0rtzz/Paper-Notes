@@ -2,10 +2,10 @@
 title: >-
   [论文解读] FoodTaxo: Generating Food Taxonomies with Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][taxonomy generation] 提出 FoodTaxo，基于 Llama-3 的迭代自底向上分类法生成与补全算法，利用 CoT 提示 + RAG 检索 + NLI 验证三阶段流程，从已知叶节点概念出发逐步构建层次化 taxonomy…
+  [ACL 2025][LLM 其他][taxonomy generation] 提出 FoodTaxo，基于 Llama-3 的迭代自底向上分类法生成与补全算法，利用 CoT 提示 + RAG 检索 + NLI 验证三阶段流程，从已知叶节点概念出发逐步构建层次化 taxonomy；在五个基准数据集上与 TacoPrompt 等 SOTA 方法竞争，同时通过 reference-free 指标和消融实验揭示了非叶节点放置这一根本性瓶颈。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "taxonomy generation"
   - "taxonomy completion"
   - "food domain"

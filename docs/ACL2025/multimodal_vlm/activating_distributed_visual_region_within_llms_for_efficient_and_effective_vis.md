@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Activating Distributed Visual Region within LLMs for Efficient and Effective Vision-Language Training and Inference
 description: >-
-  [ACL 2025][多模态VLM][视觉区域] 本文发现 LLM 中存在类似人脑视觉皮层的"视觉区域"——稀疏且均匀分布的层集合，仅更新 25% 的层即可保留 99% 的视觉性能，同时保持甚至提升语言能力，并据此提出了高效的视觉区域定向训练和剪枝范式。
+  [ACL 2025][多模态VLM][视觉区域] 本文发现 LLM 中存在类似人脑视觉皮层的"视觉区域"——稀疏且均匀分布的层集合，仅更新 25% 的层即可保留 99% 的视觉性能，同时保持甚至提升语言能力，并据此提出了高效的视觉区域定向训练和剪枝范式。 领域现状：大视觉-语言模型（LVLM）如 LLaVA、Bunny 等通…
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Graph and State-Space Modeling for Intensive Care Unit Length of Stay Prediction
 description: >-
-  [NeurIPS 2025 (GenAI for Health Workshop)][图学习][ICU 住院时长预测] 提出 S2G-Net，将 Mamba 状态空间模型的时序编码与多视图图神经网络（GraphGPS）进行双路融合，用于 ICU 住院时长（LOS）预测…
+  [NeurIPS 2025 (GenAI for Health Workshop)][图学习][ICU 住院时长预测] 提出 S2G-Net，将 Mamba 状态空间模型的时序编码与多视图图神经网络（GraphGPS）进行双路融合，用于 ICU 住院时长（LOS）预测，在 MIMIC-IV 数据集上全面超越序列模型、图模型和混合基线。
 tags:
   - "NeurIPS 2025 (GenAI for Health Workshop)"
   - "图学习"

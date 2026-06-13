@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReflecTool: Towards Reflection-Aware Tool-Augmented Clinical Agents
 description: >-
-  [ACL 2025][医疗NLP][工具增强Agent] ReflecTool 提出了一个反思感知的工具增强临床 Agent 框架，通过优化阶段积累成功轨迹和工具级经验，推理阶段检索相似案例并用验证器改进工具使用…
+  [ACL 2025][医疗NLP][工具增强Agent] ReflecTool 提出了一个反思感知的工具增强临床 Agent 框架，通过优化阶段积累成功轨迹和工具级经验，推理阶段检索相似案例并用验证器改进工具使用，在涵盖 18 个任务的 ClinicalAgent Bench 上超越纯 LLM 10+ 分、超越已有 Agent 方法 3 分。
 tags:
   - "ACL 2025"
   - "医疗NLP"

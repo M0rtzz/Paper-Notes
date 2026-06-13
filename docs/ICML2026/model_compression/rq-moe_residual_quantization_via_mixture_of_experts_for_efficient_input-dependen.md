@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RQ-MoE: Residual Quantization via Mixture of Experts for Efficient Input-Dependent Vector Compression
 description: >-
-  [ICML 2026][模型压缩][量化] RQ-MoE 用「两级 MoE + 双流量化」的设计，让残差向量量化（RQ）的码本随输入动态生成，又通过把指令流与重建流解耦实现 6–14× 解码加速，在四个 retrieval benchmark 上 MSE/Recall 持平或超越 QINCo。
+  [ICML 2026][模型压缩][量化] RQ-MoE 用「两级 MoE + 双流量化」的设计，让残差向量量化（RQ）的码本随输入动态生成，又通过把指令流与重建流解耦实现 6–14× 解码加速，在四个 retrieval benchmark 上 MSE/Recall 持平或超越 QINCo。 领域现状：向量量化（VQ）通过…
 tags:
   - "ICML 2026"
   - "模型压缩"

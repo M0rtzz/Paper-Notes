@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instance-Specific Test-Time Training for Speech Editing in the Wild
 description: >-
-  [NeurIPS 2025 (Workshop on GenProCC)][音频/语音][语音编辑] 提出面向野外语音编辑的实例特定测试时训练方法：在推理前利用未编辑区域的真实声学特征做直接监督、编辑区域通过时长约束和音素预测辅助损失做间接监督，对模型进行实例级自适应微调，有效缓解编辑边界的带宽不连续问题…
+  [NeurIPS 2025 (Workshop on GenProCC)][音频/语音][语音编辑] 提出面向野外语音编辑的实例特定测试时训练方法：在推理前利用未编辑区域的真实声学特征做直接监督、编辑区域通过时长约束和音素预测辅助损失做间接监督，对模型进行实例级自适应微调，有效缓解编辑边界的带宽不连续问题，并支持通过 mask 长度调整精确控制语速，在野外 benchmark 上主客观评估均超越现有系统。
 tags:
   - "NeurIPS 2025 (Workshop on GenProCC)"
   - "音频/语音"

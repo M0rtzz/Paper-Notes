@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Better Search with Language Models via Guided Reinforced Self-Training
 description: >-
-  [NeurIPS 2025][模型压缩][搜索策略学习] 提出 Guided-ReST，通过将最优解作为子目标逐步融入模型自生成的搜索轨迹中，生成高质量训练数据并蒸馏更高效的搜索策略，在Countdown和代码自修复任务上显著提升搜索效率和准确率。
+  [NeurIPS 2025][模型压缩][搜索策略学习] 提出 Guided-ReST，通过将最优解作为子目标逐步融入模型自生成的搜索轨迹中，生成高质量训练数据并蒸馏更高效的搜索策略，在Countdown和代码自修复任务上显著提升搜索效率和准确率。 领域现状： 语言模型在复杂推理任务中仍面临挑战。近期研究（如Stream o…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

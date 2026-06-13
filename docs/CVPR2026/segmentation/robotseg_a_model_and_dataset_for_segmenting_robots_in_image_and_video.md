@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RobotSeg: A Model and Dataset for Segmenting Robots in Image and Video
 description: >-
-  [CVPR 2026][语义分割][机器人分割] 本文提出 RobotSeg，第一个同时支持图像和视频的机器人分割基础模型，基于 SAM 2 引入结构增强记忆关联器（SEMA）、机器人提示生成器（RPG）和标签高效训练策略，仅需首帧标注即可训练，在自动模式下 Whole Robot 分割达到 85.1 J&F…
+  [CVPR 2026][语义分割][机器人分割] 本文提出 RobotSeg，第一个同时支持图像和视频的机器人分割基础模型，基于 SAM 2 引入结构增强记忆关联器（SEMA）、机器人提示生成器（RPG）和标签高效训练策略，仅需首帧标注即可训练，在自动模式下 Whole Robot 分割达到 85.1 J&F，比 SAM 2.1 微调版高 4.9 分，同时参数仅 41.3M（远小于现有 638M+ 方案）。
 tags:
   - "CVPR 2026"
   - "语义分割"

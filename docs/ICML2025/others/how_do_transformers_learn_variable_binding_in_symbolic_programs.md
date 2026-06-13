@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Do Transformers Learn Variable Binding in Symbolic Programs?
 description: >-
-  [ICML2025][变量绑定] 通过训练Transformer在合成程序上做变量解引用(dereference)，揭示了三阶段发展轨迹：(1)随机预测→(2)浅层启发式→(3)系统性解引用机制，因果干预证明模型学会将残差流用作可寻址内存空间。
+  [ICML2025][变量绑定] 通过训练Transformer在合成程序上做变量解引用(dereference)，揭示了三阶段发展轨迹：(1)随机预测→(2)浅层启发式→(3)系统性解引用机制，因果干预证明模型学会将残差流用作可寻址内存空间。 变量绑定的哲学意义 变量绑定是符号计算和认知的基础。经典架构通过可寻址内存实现…
 tags:
   - "ICML2025"
   - "变量绑定"

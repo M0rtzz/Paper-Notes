@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation
 description: >-
-  [CVPR 2025][模型压缩][学习型图像压缩] 提出ARCHE端到端学习型图像压缩框架，在统一概率架构中整合分层Hyperprior、掩码空间自回归上下文、通道条件化和SE激励通道重校准，无需Transformer或循环组件，在Kodak上相对Ballé基线BD-Rate降低约48%…
+  [CVPR 2025][模型压缩][学习型图像压缩] 提出ARCHE端到端学习型图像压缩框架，在统一概率架构中整合分层Hyperprior、掩码空间自回归上下文、通道条件化和SE激励通道重校准，无需Transformer或循环组件，在Kodak上相对Ballé基线BD-Rate降低约48%，相对VVC Intra降低约5.6%，仅95M参数和222ms解码时间。
 tags:
   - "CVPR 2025"
   - "模型压缩"

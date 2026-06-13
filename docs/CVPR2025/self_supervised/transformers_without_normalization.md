@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformers without Normalization
 description: >-
-  [CVPR 2025][自监督学习][Dynamic Tanh] 发现 LayerNorm 的输入-输出映射呈 tanh 形状，提出 Dynamic Tanh (DyT) 作为归一化层的即插即用替代：$\text{DyT}(x) = \gamma \odot \tanh(\alpha x) + \beta$…
+  [CVPR 2025][自监督学习][Dynamic Tanh] 发现 LayerNorm 的输入-输出映射呈 tanh 形状，提出 Dynamic Tanh (DyT) 作为归一化层的即插即用替代：$\text{DyT}(x) = \gamma \odot \tanh(\alpha x) + \beta$，在视觉/语言/扩散/语音等多任务中与 LN 性能持平甚至更优。
 tags:
   - "CVPR 2025"
   - "自监督学习"

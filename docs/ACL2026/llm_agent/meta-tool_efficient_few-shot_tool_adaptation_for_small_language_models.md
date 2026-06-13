@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Meta-Tool: Efficient Few-Shot Tool Adaptation for Small Language Models
 description: >-
-  [ACL 2026][LLM Agent][小语言模型] 通过在四个基准上系统对比超网络 LoRA 适应 vs 精心设计的 few-shot 提示，发现 2.28 亿参数的超网络提供零增益——few-shot 示例贡献 +21.5%、文档编码贡献 +5.0%、超网络贡献 0%…
+  [ACL 2026 Findings][LLM Agent][小语言模型] 通过在四个基准上系统对比超网络 LoRA 适应 vs 精心设计的 few-shot 提示，发现 2.28 亿参数的超网络提供零增益——few-shot 示例贡献 +21.5%、文档编码贡献 +5.0%、超网络贡献 0%，3B 模型配合良好提示可达 GPT-5 平均性能的 79.7% 且延迟低 10 倍。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "小语言模型"
   - "工具使用"

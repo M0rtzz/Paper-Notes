@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RacketVision: A Multiple Racket Sports Benchmark for Unified Ball and Racket Analysis
 description: >-
-  [AAAI 2026][自动驾驶][球类运动分析] 提出 RacketVision——首个覆盖乒乓球、网球、羽毛球三种球拍运动的大规模基准数据集，首次提供球拍姿态标注，并定义了球追踪、球拍姿态估计、球轨迹预测三个互联任务，揭示了跨注意力融合机制在多模态轨迹预测中的关键作用。
+  [AAAI 2026 Oral][自动驾驶][球类运动分析] 提出 RacketVision——首个覆盖乒乓球、网球、羽毛球三种球拍运动的大规模基准数据集，首次提供球拍姿态标注，并定义了球追踪、球拍姿态估计、球轨迹预测三个互联任务，揭示了跨注意力融合机制在多模态轨迹预测中的关键作用。 现有数据集的不足 球拍运动（乒乓球、网球…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自动驾驶"
   - "球类运动分析"
   - "球拍姿态估计"

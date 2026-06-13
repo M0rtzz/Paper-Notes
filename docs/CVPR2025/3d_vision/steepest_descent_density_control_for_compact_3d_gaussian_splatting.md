@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steepest Descent Density Control for Compact 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯泼溅] SteepGS 从非凸优化理论出发，揭示了 3DGS 中密度控制的本质是帮助高斯基元逃离鞍点，并推导出最优分裂策略——分裂为两个后代、透明度减半、沿分裂矩阵最小特征向量方向位移——在保持渲染质量的同时将高斯点数减少约 50%。
+  [CVPR 2025][3D视觉][3D高斯泼溅] SteepGS 从非凸优化理论出发，揭示了 3DGS 中密度控制的本质是帮助高斯基元逃离鞍点，并推导出最优分裂策略——分裂为两个后代、透明度减半、沿分裂矩阵最小特征向量方向位移——在保持渲染质量的同时将高斯点数减少约 50%。 领域现状：3D Gaussian Splatt…
 tags:
   - "CVPR 2025"
   - "3D视觉"

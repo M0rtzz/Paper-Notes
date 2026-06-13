@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior
 description: >-
-  [ACL 2025][眼动追踪] 本文提出基于标记时空点过程（marked spatio-temporal point process）的阅读行为统一概率模型，同时建模注视何时发生、落在哪里、持续多久，避免传统聚合测量的信息损失，发现 surprisal 对细粒度眼动的预测贡献极其有限。
+  [ACL 2025][眼动追踪] 本文提出基于标记时空点过程（marked spatio-temporal point process）的阅读行为统一概率模型，同时建模注视何时发生、落在哪里、持续多久，避免传统聚合测量的信息损失，发现 surprisal 对细粒度眼动的预测贡献极其有限。 领域现状：计算心理语言学中…
 tags:
   - "ACL 2025"
   - "眼动追踪"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Comprehensive Benchmarking of Long-Form Speech Generation in Diverse Scenarios
 description: >-
-  [ACL2026][音频/语音][长文本语音生成] 本文提出 SwanBench-Speech，用 1,101 个样本、17 类真实下游场景和 7 个自动评测维度系统衡量长文本语音生成，结论是当前模型在内容准确性上已接近可用，但在混响一致性、长程韵律和表达层次上仍明显落后于真实录音。
+  [ACL2026 Findings][音频/语音][长文本语音生成] 本文提出 SwanBench-Speech，用 1,101 个样本、17 类真实下游场景和 7 个自动评测维度系统衡量长文本语音生成，结论是当前模型在内容准确性上已接近可用，但在混响一致性、长程韵律和表达层次上仍明显落后于真实录音。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "音频/语音"
   - "长文本语音生成"
   - "语音评测基准"

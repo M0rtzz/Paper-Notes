@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Moment- and Power-Spectrum-Based Gaussianity Regularization for Text-to-Image Models
 description: >-
-  [NeurIPS 2025][图像生成][高斯性正则化] 提出统一的标准高斯性正则化框架，结合空间域的矩(moment)匹配和频谱域的功率谱(power spectrum)匹配，将KL散度、峰度、范数等现有正则化方法统一为特殊情况…
+  [NeurIPS 2025][图像生成][高斯性正则化] 提出统一的标准高斯性正则化框架，结合空间域的矩(moment)匹配和频谱域的功率谱(power spectrum)匹配，将KL散度、峰度、范数等现有正则化方法统一为特殊情况，并以$\mathcal{O}(D\log D)$复杂度实现了PRNO的$\mathcal{O}(D^2)$等价效果，在文本到图像模型的reward alignment任务中显著优于所有基线。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

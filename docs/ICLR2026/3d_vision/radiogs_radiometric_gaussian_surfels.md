@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RadioGS: Radiometrically Consistent Gaussian Surfels for Inverse Rendering
 description: >-
-  [ICLR 2026][3D视觉][逆渲染] RadioGS 提出辐射一致性损失——通过最小化每个 Gaussian surfel 的学习辐射与其物理渲染辐射之间的残差，为未观测方向提供基于物理的监督信号，构建自纠正反馈循环，实现了准确的间接照明和材质分解，并支持分钟级重新打光。
+  [ICLR 2026 Oral][3D视觉][逆渲染] RadioGS 提出辐射一致性损失——通过最小化每个 Gaussian surfel 的学习辐射与其物理渲染辐射之间的残差，为未观测方向提供基于物理的监督信号，构建自纠正反馈循环，实现了准确的间接照明和材质分解，并支持分钟级重新打光。 领域现状：基于 Gaussian…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "3D视觉"
   - "逆渲染"
   - "Gaussian Splatting"

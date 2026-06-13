@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Cross-Cultural Transfer of Emoji Semantics and Sentiment in Financial Social Media
 description: >-
-  [ACL 2026][多语言/翻译][emoji 语义] 在 4 语种 / 2 平台 / 2 资产类的 1 亿条金融微博上系统比较 emoji 的频率、语义和情感极性，发现 emoji 频率因语言/平台差异大但语义和极性高度稳定…
+  [ACL 2026 Findings][多语言/翻译][emoji 语义] 在 4 语种 / 2 平台 / 2 资产类的 1 亿条金融微博上系统比较 emoji 的频率、语义和情感极性，发现 emoji 频率因语言/平台差异大但语义和极性高度稳定，并据此在零样本情感迁移上验证：把 emoji 加入文本能稳定地把 cross-platform transfer gap 从最高 21% 降到接近 0%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "emoji 语义"
   - "跨语言迁移"

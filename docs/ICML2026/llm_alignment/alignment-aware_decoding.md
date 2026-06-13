@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alignment-Aware Decoding
 description: >-
-  [ICML 2026][LLM对齐][alignment-aware decoding] Alignment-Aware Decoding 直接在推理时利用 DPO 模型相对 SFT 参考模型的 token 概率比作为隐式对齐奖励，在无需额外训练或外部 reward model 的情况下…
+  [ICML 2026][LLM对齐][alignment-aware decoding] Alignment-Aware Decoding 直接在推理时利用 DPO 模型相对 SFT 参考模型的 token 概率比作为隐式对齐奖励，在无需额外训练或外部 reward model 的情况下，比 greedy、Bo2 和 EFT 更稳定地生成高对齐质量回答，并可进一步产生合成偏好数据改进 DPO。
 tags:
   - "ICML 2026"
   - "LLM对齐"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Distilling LLM Agent into Small Models with Retrieval and Code Tools
 description: >-
-  [NeurIPS 2025][LLM Agent][agent distillation] 提出 Agent Distillation 框架，将 LLM agent 的完整 reason-act-observe 交互行为（而非静态 CoT）蒸馏到 0.5B-7B 小模型中…
+  [NeurIPS 2025 Spotlight][LLM Agent][agent distillation] 提出 Agent Distillation 框架，将 LLM agent 的完整 reason-act-observe 交互行为（而非静态 CoT）蒸馏到 0.5B-7B 小模型中，配合 first-thought prefix 提升教师轨迹质量和 self-consistent action generation 提升推理鲁棒性，使小模型达到比其大 2-4× 的 CoT 蒸馏模型的性能。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM Agent"
   - "agent distillation"
   - "first-thought prefix"

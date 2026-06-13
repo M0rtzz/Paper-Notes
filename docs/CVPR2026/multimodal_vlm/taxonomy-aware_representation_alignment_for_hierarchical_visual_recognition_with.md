@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taxonomy-Aware Representation Alignment for Hierarchical Visual Recognition with Large Multimodal Models
 description: >-
-  [CVPR 2026][多模态VLM][层次化视觉识别] 提出TARA框架，通过将LMM的中间表示与生物基础模型(BFM)的分类学感知特征对齐，为大型多模态模型注入分类层次知识，显著提升已知和新颖类别的层次化视觉识别性能。
+  [CVPR 2026][多模态VLM][层次化视觉识别] 提出TARA框架，通过将LMM的中间表示与生物基础模型(BFM)的分类学感知特征对齐，为大型多模态模型注入分类层次知识，显著提升已知和新颖类别的层次化视觉识别性能。 领域现状：大型多模态模型在细粒度视觉识别(FGVR)上表现优秀，但层次化视觉识别(HVR)要求模型预测…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

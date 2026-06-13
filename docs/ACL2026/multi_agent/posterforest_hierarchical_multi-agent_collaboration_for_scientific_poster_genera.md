@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PosterForest: Hierarchical Multi-Agent Collaboration for Scientific Poster Generation
 description: >-
-  [ACL2026][多智能体][科学海报生成] PosterForest 用一个同时编码论文层次语义和海报空间布局的 Poster Tree 作为中间表示，再让 Content Agent、Layout Agent 和 Feedback Agent 递归协同优化，训练-free 地生成科学海报…
+  [ACL2026][多智能体][科学海报生成] PosterForest 用一个同时编码论文层次语义和海报空间布局的 Poster Tree 作为中间表示，再让 Content Agent、Layout Agent 和 Feedback Agent 递归协同优化，训练-free 地生成科学海报，并在人评中获得 59.2% overall preference，明显优于 P2P 和 Paper2Poster。
 tags:
   - "ACL2026"
   - "多智能体"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2508.21720](https://arxiv.org/abs/2508.21720)  
 **代码**: https://github.com/kaist-cvml/poster-forest  
-**领域**: nlp_generation  
+**领域**: 文本生成  
 **关键词**: 科学海报生成、层次文档理解、多智能体协作、布局规划、Poster Tree
 
 ## 一句话总结

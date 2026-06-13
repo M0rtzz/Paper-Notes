@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LDMol: A Text-to-Molecule Diffusion Model with Structurally Informative Latent Space Surpasses AR Models
 description: >-
-  [ICML2025][计算生物][潜在扩散模型] 提出 LDMol，通过 SMILES 枚举对比学习构建结构感知的潜在空间，在该空间上训练条件扩散模型实现文本到分子生成，首次让扩散模型在文本数据生成任务上超越自回归模型。
+  [ICML2025][计算生物][潜在扩散模型] 提出 LDMol，通过 SMILES 枚举对比学习构建结构感知的潜在空间，在该空间上训练条件扩散模型实现文本到分子生成，首次让扩散模型在文本数据生成任务上超越自回归模型。 - 扩散模型在分子生成中遇到困难：分子数据具有不可避免的离散性（原子/键类型、SMILES token）…
 tags:
   - "ICML2025"
   - "计算生物"

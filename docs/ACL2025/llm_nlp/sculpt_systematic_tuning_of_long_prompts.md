@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SCULPT: Systematic Tuning of Long Prompts
 description: >-
-  [ACL 2025][LLM/NLP][提示词优化] 提出 SCULPT 框架，将长提示词优化建模为层次化树结构的迭代修正问题，通过 Critic-Actor 框架对提示词进行结构化的反思和操作级修改，在保持长提示词信息完整性的同时显著提升 LLM 任务性能，并具备对抗扰动的鲁棒性。
+  [ACL 2025][LLM 其他][提示词优化] 提出 SCULPT 框架，将长提示词优化建模为层次化树结构的迭代修正问题，通过 Critic-Actor 框架对提示词进行结构化的反思和操作级修改，在保持长提示词信息完整性的同时显著提升 LLM 任务性能，并具备对抗扰动的鲁棒性。 领域现状：提示词优化（Prompt Opt…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示词优化"
   - "长提示词"
   - "层次化树结构"

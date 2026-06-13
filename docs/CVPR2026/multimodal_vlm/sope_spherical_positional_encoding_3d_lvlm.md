@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SoPE: Spherical Coordinate-Based Positional Embedding for 3D LVLMs
 description: >-
-  [CVPR 2026][多模态VLM][3D LVLM] 揭示 RoPE 在 3D LVLM 中的空间感知偏差问题（1D 索引破坏 3D 局部性且忽视方向），提出球面坐标位置编码 SoPE（$(t,r,\theta,\phi)$ 四维索引 + 多维频率分配 + 多尺度混合）…
+  [CVPR 2026][多模态VLM][3D LVLM] 揭示 RoPE 在 3D LVLM 中的空间感知偏差问题（1D 索引破坏 3D 局部性且忽视方向），提出球面坐标位置编码 SoPE（$(t,r,\theta,\phi)$ 四维索引 + 多维频率分配 + 多尺度混合），在 SpatialLM 上实现 3D 布局估计和物体检测 SOTA。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

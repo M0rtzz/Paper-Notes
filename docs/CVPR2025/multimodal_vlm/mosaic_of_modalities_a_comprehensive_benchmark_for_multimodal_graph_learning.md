@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning
 description: >-
-  [CVPR 2025][多模态VLM][多模态图学习] 本文提出MM-Graph——首个同时包含文本和视觉节点属性的综合性图学习基准，涵盖7个不同规模的真实数据集和3类图任务（链接预测/节点分类/知识图谱补全），系统评估了视觉信息对图学习的影响…
+  [CVPR 2025][多模态VLM][多模态图学习] 本文提出MM-Graph——首个同时包含文本和视觉节点属性的综合性图学习基准，涵盖7个不同规模的真实数据集和3类图任务（链接预测/节点分类/知识图谱补全），系统评估了视觉信息对图学习的影响，揭示了"多模态GNN不如传统GNN"和"特征对齐至关重要"等关键发现。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

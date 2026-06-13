@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spatially-Variant Degradation Model for Dataset-free Super-resolution
 description: >-
-  [ECCV 2024][图像恢复][盲图像超分辨率] 提出首个无需数据集训练的空间变化退化模型 SVDSR，每个像素的退化核由可学习的原子核字典的线性组合表示，系数矩阵通过模糊集的隶属函数从图像纹理信息推导，在 MAP 框架下用 Monte Carlo EM 算法推断…
+  [ECCV 2024][图像恢复][盲图像超分辨率] 提出首个无需数据集训练的空间变化退化模型 SVDSR，每个像素的退化核由可学习的原子核字典的线性组合表示，系数矩阵通过模糊集的隶属函数从图像纹理信息推导，在 MAP 框架下用 Monte Carlo EM 算法推断，$2\times$ 超分平均提升 1 dB。
 tags:
   - "ECCV 2024"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Landscape of Thoughts: Visualizing the Reasoning Process of Large Language Models
 description: >-
-  [ICLR 2026][模型压缩][LLM推理可视化] 提出 Landscape of Thoughts (LoT)，首个将LLM推理轨迹可视化为二维地形图的工具，通过困惑度特征和t-SNE投影揭示推理行为模式，并可适配为轻量验证器提升推理准确率和测试时扩展效果。
+  [ICLR 2026][模型压缩][LLM推理可视化] 提出 Landscape of Thoughts (LoT)，首个将LLM推理轨迹可视化为二维地形图的工具，通过困惑度特征和t-SNE投影揭示推理行为模式，并可适配为轻量验证器提升推理准确率和测试时扩展效果。 LLM的逐步推理能力被广泛应用于智能体等场景…
 tags:
   - "ICLR 2026"
   - "模型压缩"

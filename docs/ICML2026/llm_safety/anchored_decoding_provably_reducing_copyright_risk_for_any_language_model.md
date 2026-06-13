@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Anchored Decoding: Provably Reducing Copyright Risk for Any Language Model
 description: >-
-  [ICML2026][LLM安全][版权记忆] 本文提出 Anchored Decoding：在推理时把高性能但可能复现训练数据的 risky LM 锚定到只用开放许可数据训练的 safe LM 附近，用可调的信息预算在版权复制风险和生成质量之间给出有形式保证的折中。
+  [ICML2026][LLM安全][版权记忆] 本文提出 Anchored Decoding：在推理时把高性能但可能复现训练数据的 risky LM 锚定到只用开放许可数据训练的 safe LM 附近，用可调的信息预算在版权复制风险和生成质量之间给出有形式保证的折中。 领域现状：大语言模型的能力很大程度来自大规模网页语料预训…
 tags:
   - "ICML2026"
   - "LLM安全"

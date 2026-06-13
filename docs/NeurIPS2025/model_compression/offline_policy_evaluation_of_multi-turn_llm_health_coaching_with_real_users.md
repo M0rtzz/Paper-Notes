@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Offline Policy Evaluation of Multi-Turn LLM Health Coaching with Real Users
 description: >-
-  [NeurIPS 2025 Workshop (Multi-Turn Interactions in Large Language Models)][模型压缩][离线策略评估] 在实际部署的 LLM 健康教练系统上进行离线策略评估（OPE），发现统一的高工具使用策略虽提升平均奖励但损害特定用户子群…
+  [NeurIPS 2025 Workshop (Multi-Turn Interactions in Large Language Models)][模型压缩][离线策略评估] 在实际部署的 LLM 健康教练系统上进行离线策略评估（OPE），发现统一的高工具使用策略虽提升平均奖励但损害特定用户子群，并通过模拟器验证了早期信息增益探索（好奇心奖励）可加速用户特征识别和提升任务成功率。
 tags:
   - "NeurIPS 2025 Workshop (Multi-Turn Interactions in Large Language Models)"
   - "模型压缩"

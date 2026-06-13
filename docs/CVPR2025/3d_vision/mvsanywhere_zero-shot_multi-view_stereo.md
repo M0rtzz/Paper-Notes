@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVSAnywhere: Zero-Shot Multi-View Stereo
 description: >-
-  [CVPR 2025][3D视觉][多视角立体匹配] 本文提出MVSAnywhere (MVSA)，一个通用多视角立体匹配架构，通过Cost Volume Patchifier将代价体信息高效tokenize后与单目ViT特征融合（Mono/Multi Cue Combiner）…
+  [CVPR 2025][3D视觉][多视角立体匹配] 本文提出MVSAnywhere (MVSA)，一个通用多视角立体匹配架构，通过Cost Volume Patchifier将代价体信息高效tokenize后与单目ViT特征融合（Mono/Multi Cue Combiner），结合视角数/尺度无关的元数据编码和级联自适应深度范围估计，在Robust MVS Benchmark上取得零样本SOTA，同时支持任意数量的源视角和任意深度范围。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CrossCheck-Bench: Diagnosing Compositional Failures in Multimodal Conflict Resolution
 description: >-
-  [AAAI2026][可解释性][多模态冲突检测] 构建包含15k对抗性QA样本的三级层次基准CrossCheck-Bench，通过7种原子能力和15个任务诊断VLM在多模态冲突解决中的组合推理失败，揭示从感知(L1)到推理(L3)的系统性性能衰退以及传统提示策略的局限性。
+  [AAAI2026][可解释性][多模态冲突检测] 构建包含15k对抗性QA样本的三级层次基准CrossCheck-Bench，通过7种原子能力和15个任务诊断VLM在多模态冲突解决中的组合推理失败，揭示从感知(L1)到推理(L3)的系统性性能衰退以及传统提示策略的局限性。 领域现状：开放域多模态内容中…
 tags:
   - "AAAI2026"
   - "可解释性"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MATA: Multi-Agent Framework for Reliable and Flexible Table Question Answering
 description: >-
-  [ACL 2026][多智能体][表格问答] 提出 MATA 多Agent表格问答框架，通过调度器优先选择推理路径（CoT/PoT/text2SQL）、置信度检查器筛选答案、法官Agent仲裁，实现模型无关的高效准确表格QA，在10个LLM上平均EM提升40.1%。
+  [ACL 2026 Findings][多智能体][表格问答] 提出 MATA 多Agent表格问答框架，通过调度器优先选择推理路径（CoT/PoT/text2SQL）、置信度检查器筛选答案、法官Agent仲裁，实现模型无关的高效准确表格QA，在10个LLM上平均EM提升40.1%。 领域现状：LLM 显著推动了表格问答（T…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "表格问答"
   - "多Agent框架"

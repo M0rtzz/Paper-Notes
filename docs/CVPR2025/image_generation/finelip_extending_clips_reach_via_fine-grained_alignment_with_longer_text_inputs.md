@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs
 description: >-
-  [图像生成] FineLIP 通过位置编码拉伸（77→248 tokens）、自适应 Token 精炼模块（ATRM）和跨模态 Token 级对齐（CLIM），使 CLIP 模型能够处理长文本描述并实现细粒度视觉-文本匹配，在长描述检索任务上显著超越 Long-CLIP、TULIP 等现有方法。
+  [图像生成] FineLIP 通过位置编码拉伸（77→248 tokens）、自适应 Token 精炼模块（ATRM）和跨模态 Token 级对齐（CLIM），使 CLIP 模型能够处理长文本描述并实现细粒度视觉-文本匹配，在长描述检索任务上显著超越 Long-CLIP、TULIP 等现有方法。 - CLIP 的两大限制：…
 tags:
   - "图像生成"
 ---

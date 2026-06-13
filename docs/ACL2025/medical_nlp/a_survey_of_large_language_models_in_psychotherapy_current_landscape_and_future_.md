@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions
 description: >-
-  [ACL 2025][LLM/NLP][LLM心理治疗] 首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。
+  [ACL 2025][医疗NLP][LLM心理治疗] 首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。 领域现状：心理健康在现代医疗体系中的重要性日益凸显…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "医疗NLP"
   - "LLM心理治疗"
   - "评估-诊断-治疗分类法"
   - "心理健康"

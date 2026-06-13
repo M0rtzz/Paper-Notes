@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Palm: A Culturally Inclusive and Linguistically Diverse Dataset for Arabic LLMs
 description: >-
-  [ACL 2025][LLM/NLP][Arabic NLP] 由 44 名阿拉伯世界研究者历时一年社区驱动构建的 Palm 数据集，涵盖全部 22 个阿拉伯国家、20 个文化主题、10 种方言，共 17,411 条人工创建的指令对，用于评估和提升 LLM 的阿拉伯文化和方言能力。
+  [ACL 2025][LLM 其他][Arabic NLP] 由 44 名阿拉伯世界研究者历时一年社区驱动构建的 Palm 数据集，涵盖全部 22 个阿拉伯国家、20 个文化主题、10 种方言，共 17,411 条人工创建的指令对，用于评估和提升 LLM 的阿拉伯文化和方言能力。 核心问题： LLM 训练数据以英语为主导…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Arabic NLP"
   - "Cultural Awareness"
   - "Dialectal Arabic"

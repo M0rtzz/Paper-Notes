@@ -2,7 +2,7 @@
 title: >-
   [论文解读] "I See What You Did There": Can Large Vision-Language Models Understand Multimodal Puns?
 description: >-
-  [ACL 2026][多模态VLM][多模态双关] 本文提出 MultiPun——首个带"对抗性 non-pun 干扰项"的多模态双关语 benchmark（445 个 pun + 890 个 non-pun，覆盖同音/同形两类），系统评测了 11 个 VLM 在双关检测/定位/解释三类任务上的表现…
+  [ACL 2026][多模态VLM][多模态双关] 本文提出 MultiPun——首个带"对抗性 non-pun 干扰项"的多模态双关语 benchmark（445 个 pun + 890 个 non-pun，覆盖同音/同形两类），系统评测了 11 个 VLM 在双关检测/定位/解释三类任务上的表现，发现**所有模型都倾向于把 non-pun 也当作 pun**（TNR 普遍 < 0.4），并提出 Pun-CoT 提示策略 + Pun-Tuning 微调策略，平均 F1 提升 16.5%。
 tags:
   - "ACL 2026"
   - "多模态VLM"

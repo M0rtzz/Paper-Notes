@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WeatherSyn: An Instruction Tuning MLLM For Weather Forecasting Report Generation
 description: >-
-  [ICML 2026][多模态VLM][天气预报报告] WeatherSyn 把气象预报员的报告写作流程拆解成"看图→列要点→出稿"的多模态指令任务，先建了首个覆盖 31 个美国城市、8 类天气要素的 WSInstruct 数据集，再用 SFT→RFT→DPO 三段式微调 Qwen3-VL-8B…
+  [ICML 2026][多模态VLM][天气预报报告] WeatherSyn 把气象预报员的报告写作流程拆解成"看图→列要点→出稿"的多模态指令任务，先建了首个覆盖 31 个美国城市、8 类天气要素的 WSInstruct 数据集，再用 SFT→RFT→DPO 三段式微调 Qwen3-VL-8B，让一个 8B 开源模型在多种评测指标上稳定打过 GPT-5-Nano、Claude-3.7-Sonnet 等闭源大模型，并对未见城市有零样本泛化能力。
 tags:
   - "ICML 2026"
   - "多模态VLM"

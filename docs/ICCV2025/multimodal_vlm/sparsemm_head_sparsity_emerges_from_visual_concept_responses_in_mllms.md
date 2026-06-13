@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseMM: Head Sparsity Emerges from Visual Concept Responses in MLLMs
 description: >-
-  [ICCV 2025][多模态VLM][Visual Head] 揭示了多模态大语言模型(MLLM)中仅约5%的注意力头实际参与视觉理解的"visual head sparsity"现象，提出基于OCR任务的免训练visual head识别框架…
+  [ICCV 2025][多模态VLM][Visual Head] 揭示了多模态大语言模型(MLLM)中仅约5%的注意力头实际参与视觉理解的"visual head sparsity"现象，提出基于OCR任务的免训练visual head识别框架，并设计SparseMM——一种按视觉分数对不同head分配不对称KV-Cache预算的加速策略，实现1.38×实时加速和52%显存降低，同时保持性能不降。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

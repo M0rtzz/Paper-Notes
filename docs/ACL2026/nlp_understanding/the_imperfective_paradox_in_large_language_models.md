@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Imperfective Paradox in Large Language Models
 description: >-
-  [ACL2026][NLP理解][未完成体悖论] 这篇论文用新构造的 ImperfectiveNLI 诊断集检验 LLM 是否理解“正在做某事”不一定意味着“已经完成某事”，发现开源 LLM 普遍会把有目标事件误判为已完成，提示工程只能在减少完成幻觉和保留合法蕴含之间摇摆，真正问题在于推理阶段被目的论先验主导…
+  [ACL2026][NLP理解][未完成体悖论] 这篇论文用新构造的 ImperfectiveNLI 诊断集检验 LLM 是否理解“正在做某事”不一定意味着“已经完成某事”，发现开源 LLM 普遍会把有目标事件误判为已完成，提示工程只能在减少完成幻觉和保留合法蕴含之间摇摆，真正问题在于推理阶段被目的论先验主导。
 tags:
   - "ACL2026"
   - "NLP理解"

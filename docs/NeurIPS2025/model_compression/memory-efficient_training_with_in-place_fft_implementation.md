@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient Training with In-Place FFT Implementation
 description: >-
-  [NeurIPS 2025][模型压缩][FFT] 提出 rdFFT——首个真正原地（in-place）的实数域快速傅里叶变换框架，通过隐式复数编码方案消除中间缓冲区，实现训练时零额外内存开销的 FFT/IFFT 计算，内存效率最高提升 1500 倍以上。
+  [NeurIPS 2025][模型压缩][FFT] 提出 rdFFT——首个真正原地（in-place）的实数域快速傅里叶变换框架，通过隐式复数编码方案消除中间缓冲区，实现训练时零额外内存开销的 FFT/IFFT 计算，内存效率最高提升 1500 倍以上。 领域现状： FFT 广泛用于深度学习中降低计算和内存开销…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

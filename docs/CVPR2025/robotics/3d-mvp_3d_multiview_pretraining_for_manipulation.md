@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-MVP: 3D Multiview Pretraining for Robotic Manipulation
 description: >-
-  [CVPR 2025][机器人][Masked Autoencoder] 提出3D-MVP，将Masked Autoencoder预训练从2D扩展到3D多视角设定——在Objaverse的200K个3D物体上预训练RVT的多视角Transformer编码器…
+  [CVPR 2025][机器人][Masked Autoencoder] 提出3D-MVP，将Masked Autoencoder预训练从2D扩展到3D多视角设定——在Objaverse的200K个3D物体上预训练RVT的多视角Transformer编码器，下游微调后在RLBench上平均成功率从62.9%提升到67.5%，在COLOSSEUM上显著提升对纹理、大小、光照等环境变化的鲁棒性。
 tags:
   - "CVPR 2025"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Separating Knowledge and Perception with Procedural Data
 description: >-
-  [ICML2025][语义分割][procedural data] 仅用程序化生成数据（非真实图像）训练视觉表征模型，再通过 visual memory（KNN 检索数据库）注入真实世界知识，在分类和分割任务上逼近真实数据训练的性能，同时实现对所有真实数据的完全可控（隐私保护、高效遗忘）。
+  [ICML2025][语义分割][procedural data] 仅用程序化生成数据（非真实图像）训练视觉表征模型，再通过 visual memory（KNN 检索数据库）注入真实世界知识，在分类和分割任务上逼近真实数据训练的性能，同时实现对所有真实数据的完全可控（隐私保护、高效遗忘）。 现代视觉模型通过梯度下降将图像"消…
 tags:
   - "ICML2025"
   - "语义分割"

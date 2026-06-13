@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The Implicit Bias of Adam and Muon on Smooth Homogeneous Neural Networks
 description: >-
-  [ICML 2026][隐式偏置] 本文证明：在光滑 $L$-同质模型 + 指数尾损失 + 学习率衰减的设定下，Muon（含 Muon-Signum、Muon-Adam）作为带动量的"归一化最速下降"会收敛到对应范数 max-margin 问题的 KKT 点…
+  [ICML 2026][优化/理论][隐式偏置] 本文证明：在光滑 $L$-同质模型 + 指数尾损失 + 学习率衰减的设定下，Muon（含 Muon-Signum、Muon-Adam）作为带动量的"归一化最速下降"会收敛到对应范数 max-margin 问题的 KKT 点；Adam（无稳定常数）则收敛到 $\ell_\infty$ max-margin 的 KKT 点，从而把以往仅对线性模型成立的隐式偏置结论一次性提升到所有光滑同质网络。
 tags:
   - "ICML 2026"
+  - "优化/理论"
   - "隐式偏置"
   - "Adam"
   - "Muon"

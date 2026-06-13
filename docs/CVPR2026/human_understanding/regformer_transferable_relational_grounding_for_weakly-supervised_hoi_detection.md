@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RegFormer: Transferable Relational Grounding for Efficient Weakly-Supervised HOI Detection
 description: >-
-  [CVPR 2026][人体理解][人-物交互检测] RegFormer 提出一个轻量级关系接地 Transformer 模块，在仅图像级标注的弱监督下，通过空间接地查询和交互性感知学习，直接从图像级推理迁移到实例级 HOI 检测，无需额外训练，性能接近全监督方法。
+  [CVPR 2026][人体理解][人-物交互检测] RegFormer 提出一个轻量级关系接地 Transformer 模块，在仅图像级标注的弱监督下，通过空间接地查询和交互性感知学习，直接从图像级推理迁移到实例级 HOI 检测，无需额外训练，性能接近全监督方法。 HOI 检测需要定位人和物体并识别它们的交互关系…
 tags:
   - "CVPR 2026"
   - "人体理解"

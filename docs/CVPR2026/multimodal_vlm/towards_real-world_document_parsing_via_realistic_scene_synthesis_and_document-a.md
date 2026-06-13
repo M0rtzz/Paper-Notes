@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Real-World Document Parsing via Realistic Scene Synthesis and Document-Aware Training
 description: >-
-  [CVPR 2026][多模态VLM][文档解析] 提出数据-训练协同设计框架 DocHumming：通过 Realistic Scene Synthesis 构建 DocMix-3M 大规模合成数据集，结合渐进学习和结构 token 加权的 Document-Aware Training Recipe…
+  [CVPR 2026][多模态VLM][文档解析] 提出数据-训练协同设计框架 DocHumming：通过 Realistic Scene Synthesis 构建 DocMix-3M 大规模合成数据集，结合渐进学习和结构 token 加权的 Document-Aware Training Recipe，在仅 1B 参数的 MLLM 上实现 OmniDocBench Overall 93.75（超越 Qwen3-VL-235B 的 89.15），且在真实拍摄场景下仅退化 6.72 分（模块化方法退化 18-20 分）。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mind the Gap: Removing the Discretization Gap in Differentiable Logic Gate Networks
 description: >-
-  [NeurIPS 2025][LLM/NLP][Logic Gate Networks] 提出 Gumbel Logic Gate Networks (Gumbel LGNs)，通过在逻辑门选择中注入 Gumbel 噪声并使用直通估计器 (ST estimator)，将可微逻辑门网络的离散化差距减少 98%…
+  [NeurIPS 2025][LLM 其他][Logic Gate Networks] 提出 Gumbel Logic Gate Networks (Gumbel LGNs)，通过在逻辑门选择中注入 Gumbel 噪声并使用直通估计器 (ST estimator)，将可微逻辑门网络的离散化差距减少 98%，训练速度提升 4.5 倍，未使用神经元比例降为 0%。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Logic Gate Networks"
   - "Gumbel-Softmax"
   - "离散化差距"

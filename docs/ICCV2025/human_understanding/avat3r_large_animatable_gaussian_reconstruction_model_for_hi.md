@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars
 description: >-
-  [ICCV 2025][人体理解][3D高斯] 提出Avat3r——首个可动画的大型3D重建模型(LRM)，仅需4张输入图像即可在前馈方式下回归出高质量可驱动的3D高斯头部头像，通过整合DUSt3R位置图和Sapiens语义特征作为先验、并用简单的cross-attention建模表情动画…
+  [ICCV 2025][人体理解][3D高斯] 提出Avat3r——首个可动画的大型3D重建模型(LRM)，仅需4张输入图像即可在前馈方式下回归出高质量可驱动的3D高斯头部头像，通过整合DUSt3R位置图和Sapiens语义特征作为先验、并用简单的cross-attention建模表情动画，在Ava256和NeRSemble数据集上大幅超越现有方法。
 tags:
   - "ICCV 2025"
   - "人体理解"

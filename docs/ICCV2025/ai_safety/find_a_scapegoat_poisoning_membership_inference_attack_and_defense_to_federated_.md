@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Find a Scapegoat: Poisoning Membership Inference Attack and Defense to Federated Learning
 description: >-
-  [ICCV 2025][AI安全][联邦学习] 提出 FedPoisonMIA，一种基于角度偏差最大化的联邦学习投毒成员推理攻击，同时提出 Angular Trimmed-mean (ATM) 防御机制，通过角度距离过滤恶意梯度。
+  [ICCV 2025][AI安全][联邦学习] 提出 FedPoisonMIA，一种基于角度偏差最大化的联邦学习投毒成员推理攻击，同时提出 Angular Trimmed-mean (ATM) 防御机制，通过角度距离过滤恶意梯度。 领域现状：联邦学习（FL）允许多客户端在不共享原始数据的情况下协作训练全局模型…
 tags:
   - "ICCV 2025"
   - "AI安全"

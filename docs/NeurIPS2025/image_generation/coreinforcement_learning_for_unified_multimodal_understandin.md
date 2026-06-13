@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
 description: >-
-  [NeurIPS 2025][图像生成][统一多模态模型] 提出 CoRL（Co-Reinforcement Learning）框架，通过"统一RL→精细化RL"两阶段策略对统一多模态模型（ULM）同时进行理解和生成能力的强化学习优化，实现理解生成双能力的协同进化…
+  [NeurIPS 2025][图像生成][统一多模态模型] 提出 CoRL（Co-Reinforcement Learning）框架，通过"统一RL→精细化RL"两阶段策略对统一多模态模型（ULM）同时进行理解和生成能力的强化学习优化，实现理解生成双能力的协同进化，在 1.5B 参数量下生成提升 7%、理解提升 23%。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

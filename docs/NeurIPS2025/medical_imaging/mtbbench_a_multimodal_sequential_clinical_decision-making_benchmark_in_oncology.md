@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology
 description: >-
-  [NeurIPS 2025][医学图像][多模态基准] 提出MTBBench——首个同时覆盖多模态、纵向时序和交互式Agent工作流三个维度的临床基准，模拟分子肿瘤委员会（MTB）的决策流程，评估并增强AI Agent在肿瘤学精准医疗中的多模态纵向推理能力。
+  [NeurIPS 2025][医学图像][多模态基准] 提出MTBBench——首个同时覆盖多模态、纵向时序和交互式Agent工作流三个维度的临床基准，模拟分子肿瘤委员会（MTB）的决策流程，评估并增强AI Agent在肿瘤学精准医疗中的多模态纵向推理能力。 多模态大语言模型在生物医学推理中展现了良好前景…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

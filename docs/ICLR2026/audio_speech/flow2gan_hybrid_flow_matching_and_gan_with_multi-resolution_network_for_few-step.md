@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation
 description: >-
-  [ICLR 2026][音频/语音][Flow Matching] 提出两阶段训练框架Flow2GAN，先用改进的Flow Matching学习生成能力，再用GAN微调实现少步（1/2/4步）高保真音频生成，结合多分辨率网络架构处理不同时频分辨率的傅里叶系数。
+  [ICLR 2026][音频/语音][Flow Matching] 提出两阶段训练框架Flow2GAN，先用改进的Flow Matching学习生成能力，再用GAN微调实现少步（1/2/4步）高保真音频生成，结合多分辨率网络架构处理不同时频分辨率的傅里叶系数。 领域现状：音频生成主要依赖GAN（如HiFi-GAN、BigVG…
 tags:
   - "ICLR 2026"
   - "音频/语音"

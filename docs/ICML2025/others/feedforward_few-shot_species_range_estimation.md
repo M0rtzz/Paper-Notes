@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feedforward Few-shot Species Range Estimation
 description: >-
-  [ICML 2025][物种分布建模] 提出 FS-SINR（Few-shot Spatial Implicit Neural Representations），一种基于 Transformer 的前馈式少样本物种分布估计模型，无需针对新物种重新训练即可从少量观测位置（甚至零个）一次前传预测空间分布…
+  [ICML 2025][物种分布建模] 提出 FS-SINR（Few-shot Spatial Implicit Neural Representations），一种基于 Transformer 的前馈式少样本物种分布估计模型，无需针对新物种重新训练即可从少量观测位置（甚至零个）一次前传预测空间分布，在 IUCN 和 S&T 基准上以 2-6% 的计算时间超越 LE-SINR 等需要重新训练的方法。
 tags:
   - "ICML 2025"
   - "物种分布建模"

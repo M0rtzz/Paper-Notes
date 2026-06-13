@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Optimal and Scalable MAPF via Multi-Marginal Optimal Transport and Schrödinger Bridges
 description: >-
-  [ICML 2026][机器人][MAPF] 本文把匿名多机器人路径规划（MAPF）证明为一类**马尔可夫多边际最优传输（MMOT）**，从而把原本 $K^{T+1}$ 维的传输张量压缩成多项式规模 LP（P1），并通过全单模性保证最优解整数性…
+  [ICML 2026 Spotlight][机器人][MAPF] 本文把匿名多机器人路径规划（MAPF）证明为一类**马尔可夫多边际最优传输（MMOT）**，从而把原本 $K^{T+1}$ 维的传输张量压缩成多项式规模 LP（P1），并通过全单模性保证最优解整数性；再把它推广为 Schrödinger bridge 得到 Sinkhorn 风格 entropic 松弛 P2 产出"影子传输"，最后在影子上做剪枝并解 LP（P3）恢复整数解，在 $K^{1.15}$ 复杂度下实现 3.6×–7.1× 加速、代价差距 <10%。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "机器人"
   - "MAPF"
   - "多边际最优传输"

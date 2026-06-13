@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Temporal Flattening in LLM-Generated Text: Comparing Human and LLM Writing Trajectories
 description: >-
-  [ACL 2026][AIGC检测][时间扁平化] 本文通过构建跨12年的纵向写作数据集，发现LLM生成文本存在"时间扁平化"现象——虽然词汇多样性高，但在语义和认知情感维度上的时间漂移显著低于人类，仅凭时间变异模式就能以94%准确率区分人类与LLM文本。
+  [ACL 2026 Findings][AIGC检测][时间扁平化] 本文通过构建跨12年的纵向写作数据集，发现LLM生成文本存在"时间扁平化"现象——虽然词汇多样性高，但在语义和认知情感维度上的时间漂移显著低于人类，仅凭时间变异模式就能以94%准确率区分人类与LLM文本。 领域现状：大语言模型已广泛应用于内容生成、对话系统…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "AIGC检测"
   - "时间扁平化"
   - "LLM生成文本检测"

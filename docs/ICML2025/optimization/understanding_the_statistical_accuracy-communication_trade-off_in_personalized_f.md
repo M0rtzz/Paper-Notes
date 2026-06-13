@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees
 description: >-
-  [ICML2025][优化/理论][个性化联邦学习] 本文首次定量刻画了个性化联邦学习中个性化程度 $\lambda$ 如何同时影响统计精度和通信效率，建立了 minimax 最优统计速率，并提出 FedCLUP 算法实现了统计-通信的最优权衡。
+  [ICML2025][优化/理论][个性化联邦学习] 本文首次定量刻画了个性化联邦学习中个性化程度 $\lambda$ 如何同时影响统计精度和通信效率，建立了 minimax 最优统计速率，并提出 FedCLUP 算法实现了统计-通信的最优权衡。 - 联邦学习 (FL)：允许分布式客户端协作训练模型，但面临数据异构性问题：单…
 tags:
   - "ICML2025"
   - "优化/理论"

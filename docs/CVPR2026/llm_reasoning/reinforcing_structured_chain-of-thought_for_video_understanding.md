@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforcing Structured Chain-of-Thought for Video Understanding
 description: >-
-  [CVPR 2026][LLM推理][视频QA] 提出 SDRL（Summary-Driven Reinforcement Learning），一种无需 SFT 的单阶段 RL 框架，通过结构化 CoT（Summarize→Think→Answer）和两个自监督机制（CVK 和 DVR）增强视频时序推理…
+  [CVPR 2026][LLM推理][视频QA] 提出 SDRL（Summary-Driven Reinforcement Learning），一种无需 SFT 的单阶段 RL 框架，通过结构化 CoT（Summarize→Think→Answer）和两个自监督机制（CVK 和 DVR）增强视频时序推理，在 7 个 VideoQA 基准上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "LLM推理"

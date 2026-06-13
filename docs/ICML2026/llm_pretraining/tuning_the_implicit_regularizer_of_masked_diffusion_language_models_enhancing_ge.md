@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tuning the Implicit Regularizer of Masked Diffusion Language Models: Enhancing Generalization via Insights from k-Parity
 description: >-
-  [ICML 2026][预训练][掩码扩散语言模型] 本文用 $k$-parity 这一可解析任务把 Masked Diffusion Language Model（MDLM）的训练目标解构成"信号项 + 噪声项"，从理论上证明噪声项扮演**隐式正则器**抑制 grokking、避开记忆陷阱…
+  [ICML 2026][预训练][掩码扩散语言模型] 本文用 $k$-parity 这一可解析任务把 Masked Diffusion Language Model（MDLM）的训练目标解构成"信号项 + 噪声项"，从理论上证明噪声项扮演**隐式正则器**抑制 grokking、避开记忆陷阱，并据此提出 **Signal-Rich Mask Sampling**——把训练时的掩码率 $t$ 从均匀 $\mathcal{U}[0,1]$ 收紧到中段窗口，在 50M 模型上显著降 perplexity、在 8B 模型上预训练提升 8.8%、SFT 提升 5.8%。
 tags:
   - "ICML 2026"
   - "预训练"

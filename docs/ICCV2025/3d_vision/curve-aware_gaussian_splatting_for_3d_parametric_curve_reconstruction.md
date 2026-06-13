@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][参数曲线重建] 提出 CurveGaussian，通过在参数曲线与边缘导向高斯原语之间建立双向耦合机制，实现从多视图边缘图直接端到端优化 3D 参数曲线的一阶段方法，消除了两阶段管线的误差累积，在精度、效率和紧凑性上全面超越先前方法。
+  [ICCV 2025][3D视觉][参数曲线重建] 提出 CurveGaussian，通过在参数曲线与边缘导向高斯原语之间建立双向耦合机制，实现从多视图边缘图直接端到端优化 3D 参数曲线的一阶段方法，消除了两阶段管线的误差累积，在精度、效率和紧凑性上全面超越先前方法。 参数曲线是 CAD/工业应用中不可或缺的基本几何原语…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Early Preparation Pays Off: New Classifier Pre-tuning for Class Incremental Semantic Segmentation
 description: >-
-  [ECCV 2024][语义分割][类增量语义分割] 提出NeST（New claSsifier pre-Tuning）方法，在正式训练前通过学习从所有旧分类器到新分类器的线性变换来初始化新分类器权重，并设计基于跨任务类别相似性的变换矩阵初始化策略…
+  [ECCV 2024][语义分割][类增量语义分割] 提出NeST（New claSsifier pre-Tuning）方法，在正式训练前通过学习从所有旧分类器到新分类器的线性变换来初始化新分类器权重，并设计基于跨任务类别相似性的变换矩阵初始化策略，在Pascal VOC和ADE20K上显著提升多种CISS方法的性能。
 tags:
   - "ECCV 2024"
   - "语义分割"

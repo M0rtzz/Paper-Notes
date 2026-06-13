@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViStoryBench: Comprehensive Benchmark Suite for Story Visualization
 description: >-
-  [CVPR 2026][图像生成][故事可视化] ViStoryBench 构建了一个包含 80 个多风格故事、344 个角色、1317 个镜头的综合基准，提出 12 项自动化评估指标（涵盖角色一致性、风格相似度、提示对齐、copy-paste 检测等），系统评估了超过 25 种开源/商业故事可视化方法…
+  [CVPR 2026][图像生成][故事可视化] ViStoryBench 构建了一个包含 80 个多风格故事、344 个角色、1317 个镜头的综合基准，提出 12 项自动化评估指标（涵盖角色一致性、风格相似度、提示对齐、copy-paste 检测等），系统评估了超过 25 种开源/商业故事可视化方法，填补了该领域缺乏统一评估标准的空白。
 tags:
   - "CVPR 2026"
   - "图像生成"

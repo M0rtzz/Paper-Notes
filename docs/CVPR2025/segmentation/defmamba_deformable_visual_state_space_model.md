@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DefMamba: Deformable Visual State Space Model
 description: >-
-  [CVPR 2025][语义分割][状态空间模型] DefMamba 提出了一种基于可变形机制的视觉状态空间模型，通过可变形扫描策略动态调整扫描路径（参考点偏移 + 扫描顺序偏移），克服了现有 Visual Mamba 方法使用固定扫描顺序导致的空间结构信息丢失问题…
+  [CVPR 2025][语义分割][状态空间模型] DefMamba 提出了一种基于可变形机制的视觉状态空间模型，通过可变形扫描策略动态调整扫描路径（参考点偏移 + 扫描顺序偏移），克服了现有 Visual Mamba 方法使用固定扫描顺序导致的空间结构信息丢失问题，在 ImageNet 分类、COCO 检测和 ADE20K 分割上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

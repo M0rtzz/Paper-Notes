@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Classification via Total Correlation Maximization
 description: >-
-  [ICLR 2026][多模态VLM][多模态学习] 从信息论角度分析多模态分类中的模态竞争问题，提出 TCMax 损失函数通过最大化多模态特征与标签之间的总相关性（Total Correlation），同时兼顾联合学习、单模态学习和跨模态对齐三重目标，在多个音视频/图文分类基准上超越 SOTA。
+  [ICLR 2026][多模态VLM][多模态学习] 从信息论角度分析多模态分类中的模态竞争问题，提出 TCMax 损失函数通过最大化多模态特征与标签之间的总相关性（Total Correlation），同时兼顾联合学习、单模态学习和跨模态对齐三重目标，在多个音视频/图文分类基准上超越 SOTA。 领域现状：多模态学习通过融…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps
 description: >-
-  [CVPR 2026][目标检测][少样本目标检测] 提出混合集成解码器(HED)和渐进微调策略用于跨域少样本目标检测，通过并行化部分解码层并随机初始化去噪查询引入预测多样性，在CD-FSOD/ODinW-13/RF100-VL三个基准上达到SOTA，不引入额外参数。
+  [CVPR 2026][目标检测][少样本目标检测] 提出混合集成解码器(HED)和渐进微调策略用于跨域少样本目标检测，通过并行化部分解码层并随机初始化去噪查询引入预测多样性，在CD-FSOD/ODinW-13/RF100-VL三个基准上达到SOTA，不引入额外参数。 领域现状：少样本目标检测(FSOD)旨在用少量标注样本检…
 tags:
   - "CVPR 2026"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpindleKV: A Novel KV Cache Reduction Method Balancing Both Shallow and Deep Layers
 description: >-
-  [ACL 2025][LLM效率][KV cache compression] SpindleKV 提出分层处理 KV cache 压缩的策略——深层使用注意力驱动的 token eviction（利用稀疏注意力），浅层使用基于相似性学习的 codebook 替换（利用 token 间高相似度）…
+  [ACL 2025][LLM效率][KV cache compression] SpindleKV 提出分层处理 KV cache 压缩的策略——深层使用注意力驱动的 token eviction（利用稀疏注意力），浅层使用基于相似性学习的 codebook 替换（利用 token 间高相似度），并解决了 GQA 兼容性问题，实现 50% KV cache 缩减而不损失性能。
 tags:
   - "ACL 2025"
   - "LLM效率"

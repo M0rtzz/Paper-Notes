@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FOLDER: Accelerating Multi-modal Large Language Models with Enhanced Performance
 description: >-
-  [ICCV 2025][多模态VLM][视觉Token压缩] 提出 FOLDER——一种即插即用的视觉 token 压缩模块，通过系统分析信息损失的三个关键因素（压缩影响、传播效应、聚合方式），在视觉编码器的最后几层进行激进的 token 合并，实现最多 70% 的 token 削减，同时保持甚至提升模型性能…
+  [ICCV 2025][多模态VLM][视觉Token压缩] 提出 FOLDER——一种即插即用的视觉 token 压缩模块，通过系统分析信息损失的三个关键因素（压缩影响、传播效应、聚合方式），在视觉编码器的最后几层进行激进的 token 合并，实现最多 70% 的 token 削减，同时保持甚至提升模型性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

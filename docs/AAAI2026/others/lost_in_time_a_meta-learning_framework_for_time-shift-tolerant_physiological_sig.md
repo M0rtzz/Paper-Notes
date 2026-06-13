@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lost in Time? A Meta-Learning Framework for Time-Shift-Tolerant Physiological Signal Transformation
 description: >-
-  [AAAI 2026][元学习] 提出 ShiftSyncNet，一个基于元学习双层优化的框架，通过 SyncNet 学习训练样本对之间的时间偏移量并利用傅里叶变换的相移性质自动校正标签对齐，在三个数据集上分别提升了 9.4%、6.0% 和 12.8% 的波形转换精度。
+  [AAAI 2026][元学习] 提出 ShiftSyncNet，一个基于元学习双层优化的框架，通过 SyncNet 学习训练样本对之间的时间偏移量并利用傅里叶变换的相移性质自动校正标签对齐，在三个数据集上分别提升了 9.4%、6.0% 和 12.8% 的波形转换精度。 连续血压监测在临床中至关重要，但有创动脉血压（ABP）…
 tags:
   - "AAAI 2026"
   - "元学习"

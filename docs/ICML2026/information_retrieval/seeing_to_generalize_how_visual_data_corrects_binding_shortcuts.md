@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing to Generalize: How Visual Data Corrects Binding Shortcuts
 description: >-
-  [ICML 2026][信息检索/RAG][跨模态训练] 本文用一个"颜色-形状-item"受控合成检索任务复现了"VLM 在纯文本任务上超过其 base LLM"的奇怪现象，并用机制可解释性证明：图像训练让模型把变量绑定策略从"位置捷径"切换到"语义符号匹配"，这一切换在重新接回纯文本后被保留下来…
+  [ICML 2026][信息检索/RAG][跨模态训练] 本文用一个"颜色-形状-item"受控合成检索任务复现了"VLM 在纯文本任务上超过其 base LLM"的奇怪现象，并用机制可解释性证明：图像训练让模型把变量绑定策略从"位置捷径"切换到"语义符号匹配"，这一切换在重新接回纯文本后被保留下来，使 OOD 检索准确率从 37.2% 提升到 69.5%；在真实 Qwen2/2.5/3 家族上也观察到一致的"symbolic/positional 比例上升"。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

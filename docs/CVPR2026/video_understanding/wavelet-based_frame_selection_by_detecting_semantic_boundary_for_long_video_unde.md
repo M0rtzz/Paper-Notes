@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding
 description: >-
-  [CVPR2026][视频理解][帧选择] 提出 WFS-SB，一种免训练的帧选择框架，利用小波变换从查询-帧相似度信号中检测语义边界，将视频分割为语义连贯的片段后自适应分配帧预算并做多样性采样，在 VideoMME/MLVU/LongVideoBench 上大幅超越 SOTA。
+  [CVPR2026][视频理解][帧选择] 提出 WFS-SB，一种免训练的帧选择框架，利用小波变换从查询-帧相似度信号中检测语义边界，将视频分割为语义连贯的片段后自适应分配帧预算并做多样性采样，在 VideoMME/MLVU/LongVideoBench 上大幅超越 SOTA。 1. 长视频帧冗余严重：长视频通常包含数千帧…
 tags:
   - "CVPR2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parameters as Experts: Adapting Vision Models with Dynamic Parameter Routing
 description: >-
-  [ICML 2026][模型压缩][PEFT] 作者把"参数本身当成专家"——在每个 stage 维护一个跨层共享的可训练参数矩阵池 (shared expert center)，让每一层的 ParaX 适配器通过一个轻量路由器为当前输入**动态合成**低秩投影和多尺度深度卷积的权重…
+  [ICML 2026][模型压缩][PEFT] 作者把"参数本身当成专家"——在每个 stage 维护一个跨层共享的可训练参数矩阵池 (shared expert center)，让每一层的 ParaX 适配器通过一个轻量路由器为当前输入**动态合成**低秩投影和多尺度深度卷积的权重，从而同时解决传统 adapter 的"输入无关"和"跨层冗余"两大缺陷，在密集预测任务上以 <5% 可训练参数稳定超越 full fine-tuning。
 tags:
   - "ICML 2026"
   - "模型压缩"

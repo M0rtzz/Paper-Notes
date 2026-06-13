@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Single- vs. Dual-Prompt Dialogue Generation with LLMs for Job Interviews in Human Resources
 description: >-
-  [ACL 2025 (GEM² Workshop)][对话系统][对话生成] 本文系统比较了使用 LLM 生成求职面试对话的两种策略——单提示（一次性生成完整对话）和双提示（两个 agent 分别扮演面试官和候选人轮流对话），发现双提示方法生成的对话在自然度上的胜率是单提示的 2-10 倍…
+  [ACL 2025 (GEM² Workshop)][对话系统][对话生成] 本文系统比较了使用 LLM 生成求职面试对话的两种策略——单提示（一次性生成完整对话）和双提示（两个 agent 分别扮演面试官和候选人轮流对话），发现双提示方法生成的对话在自然度上的胜率是单提示的 2-10 倍，但 token 成本增加约 6 倍。
 tags:
   - "ACL 2025 (GEM² Workshop)"
   - "对话系统"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training
 description: >-
-  [NeurIPS2025][图像生成][扩散模型] 通过数值实验和理论分析揭示扩散模型训练中存在两个关键时间尺度——泛化时间 $\tau_{\text{gen}}$ 和记忆化时间 $\tau_{\text{mem}}$，后者随训练集大小 $n$ 线性增长而前者保持恒定…
+  [NeurIPS2025 Oral][图像生成][扩散模型] 通过数值实验和理论分析揭示扩散模型训练中存在两个关键时间尺度——泛化时间 $\tau_{\text{gen}}$ 和记忆化时间 $\tau_{\text{mem}}$，后者随训练集大小 $n$ 线性增长而前者保持恒定，由此产生的隐式动力学正则化使模型即使在高度过参数化情况下也能通过早停避免记忆化。
 tags:
-  - "NeurIPS2025"
+  - "NeurIPS2025 Oral"
   - "图像生成"
   - "扩散模型"
   - "记忆化"

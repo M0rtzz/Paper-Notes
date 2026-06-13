@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering
 description: >-
-  [ICLR 2026][优化/理论][activation steering] 提出 STARS（Stiefel-based Activation Steering for Diverse ReaSoning），一种 training-free 的推理时激活转向方法…
+  [ICLR 2026][优化/理论][activation steering] 提出 STARS（Stiefel-based Activation Steering for Diverse ReaSoning），一种 training-free 的推理时激活转向方法，在每个 token 解码时于 Stiefel 流形上联合优化 N 条并行生成路径的正交 steering 方向，最大化隐状态的几何体积以促进发散的激活轨迹，在测试用例生成（TestEval）和科学发现（LiveIdeaBench）上以极低延迟一致超越温度采样的多样性，且不损失质量。
 tags:
   - "ICLR 2026"
   - "优化/理论"

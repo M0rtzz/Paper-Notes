@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I²-SLAM: Inverting Imaging Process for Robust Photorealistic Dense SLAM
 description: >-
-  [ECCV 2024][3D视觉][SLAM] 提出I²-SLAM，将物理成像过程（运动模糊建模+色调映射）集成到视觉SLAM系统中，通过HDR辐射场地图、多虚拟相机运动模糊模拟和可微分色调映射的联合优化，从手持随意拍摄的退化视频中重建出清晰的HDR 3D地图和更精确的相机轨迹。
+  [ECCV 2024][3D视觉][SLAM] 提出I²-SLAM，将物理成像过程（运动模糊建模+色调映射）集成到视觉SLAM系统中，通过HDR辐射场地图、多虚拟相机运动模糊模拟和可微分色调映射的联合优化，从手持随意拍摄的退化视频中重建出清晰的HDR 3D地图和更精确的相机轨迹。 领域现状：视觉SLAM将环境映射为3D表示…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues
 description: >-
-  [ACL2025][LLM/NLP][时间推理] 提出TReMu框架，通过时间感知记忆化（时间线摘要）和神经符号时间推理（LLM生成Python代码执行时间计算），将GPT-4o在多会话对话时间推理基准上的准确率从29.83%提升到77.67%。
+  [ACL2025][LLM 其他][时间推理] 提出TReMu框架，通过时间感知记忆化（时间线摘要）和神经符号时间推理（LLM生成Python代码执行时间计算），将GPT-4o在多会话对话时间推理基准上的准确率从29.83%提升到77.67%。 1. 时间推理是LLM的薄弱环节：已有研究（TimeBench、TRAM等）表明…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "时间推理"
   - "多轮对话"
   - "神经符号推理"

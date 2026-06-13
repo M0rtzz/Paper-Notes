@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Data-Driven Lagrangian Relaxation for Mixed Integer Linear Programming
 description: >-
-  [ICML 2026][优化/理论][Lagrangian relaxation] 本文给"学预测 Lagrangian 乘子加速 MILP"这一经验路线第一次配上了严格的统计学习理论：导出 $\mathcal{O}(s^{1.5}/\sqrt{N})$ 的 ERM 泛化上界 + $\Omega(s/\sqr…
+  [ICML 2026][优化/理论][Lagrangian relaxation] 本文给"学预测 Lagrangian 乘子加速 MILP"这一经验路线第一次配上了严格的统计学习理论：导出 $\mathcal{O}(s^{1.5}/\sqrt{N})$ 的 ERM 泛化上界 + $\Omega(s/\sqrt{N})$ 的 minimax 下界 + 用 SGA 平均算法构造性达到 $\Theta(s/\sqrt{N})$ 最优率，并证明转成"学暖启动初值"后样本复杂度可以提升到 $\Theta(s/N)$。
 tags:
   - "ICML 2026"
   - "优化/理论"

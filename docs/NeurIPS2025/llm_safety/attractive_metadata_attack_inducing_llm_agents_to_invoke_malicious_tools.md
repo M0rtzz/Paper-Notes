@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attractive Metadata Attack: Inducing LLM Agents to Invoke Malicious Tools
 description: >-
-  [NeurIPS 2025][LLM安全][工具调用攻击] AMA（Attractive Metadata Attack）证明仅通过精心设计恶意工具的元数据（名称、描述、参数模式），不需要提示注入或模型内部访问，就能诱导 LLM Agent 以 81-95% 的成功率调用攻击者工具并泄露隐私…
+  [NeurIPS 2025][LLM安全][工具调用攻击] AMA（Attractive Metadata Attack）证明仅通过精心设计恶意工具的元数据（名称、描述、参数模式），不需要提示注入或模型内部访问，就能诱导 LLM Agent 以 81-95% 的成功率调用攻击者工具并泄露隐私，同时几乎不影响原始任务完成（98%+），且现有防御（审计器、提示重写）效果有限。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

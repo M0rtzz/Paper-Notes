@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SRA: Span Representation Alignment for Large Language Model Distillation
 description: >-
-  [ACL 2026][模型压缩][跨分词器蒸馏] SRA 把跨分词器 LLM 蒸馏的基本对齐单元从易碎的 token 换成 tokenizer-agnostic 的文本 span，通过 LCS 字符偏移匹配、注意力加权 center-of-mass 表示、几何结构正则和共享词表 span logit 蒸馏…
+  [ACL 2026][模型压缩][跨分词器蒸馏] SRA 把跨分词器 LLM 蒸馏的基本对齐单元从易碎的 token 换成 tokenizer-agnostic 的文本 span，通过 LCS 字符偏移匹配、注意力加权 center-of-mass 表示、几何结构正则和共享词表 span logit 蒸馏，在多组 teacher-student 压缩实验中稳定超过 ULD、MinED、DSKD 和 MultiLevelOT。
 tags:
   - "ACL 2026"
   - "模型压缩"

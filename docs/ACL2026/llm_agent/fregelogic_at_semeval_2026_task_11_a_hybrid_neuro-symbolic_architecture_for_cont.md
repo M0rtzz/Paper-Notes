@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FregeLogic at SemEval 2026 Task 11: A Hybrid Neuro-Symbolic Architecture for Content-Robust Syllogistic Validity Prediction
 description: >-
-  [ACL 2026][LLM Agent][三段论推理] 提出 FregeLogic 混合神经符号系统，结合五成员 LLM 集成和 Z3 SMT 求解器作为决胜裁判，在三段论有效性判断中将内容效应降低16%的同时提升准确率0.9%。
+  [ACL 2026][LLM Agent][三段论推理] 提出 FregeLogic 混合神经符号系统，结合五成员 LLM 集成和 Z3 SMT 求解器作为决胜裁判，在三段论有效性判断中将内容效应降低16%的同时提升准确率0.9%。 领域现状：三段论推理是演绎推理的基本形式，SemEval-2026 Task 11 要求系统…
 tags:
   - "ACL 2026"
   - "LLM Agent"

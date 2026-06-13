@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic
 description: >-
-  [ACL 2026][多语言/翻译][组合式词表] 本文发现 LLM 在嵌入空间中将词形变化（如 walk→walked）编码为线性方向，基于此提出组合式词表设计：用基础词+变换向量的加法组合替代为每个表面形式分配独立 token，在冻结预训练骨干的前提下仅训练小型适配模块…
+  [ACL 2026 Findings][多语言/翻译][组合式词表] 本文发现 LLM 在嵌入空间中将词形变化（如 walk→walked）编码为线性方向，基于此提出组合式词表设计：用基础词+变换向量的加法组合替代为每个表面形式分配独立 token，在冻结预训练骨干的前提下仅训练小型适配模块，释放 10-40% 的词表槽位用于多语言扩展，同时几乎不影响下游性能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "组合式词表"
   - "向量算术"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Towards Style Alignment in Cross-Cultural Translation
 description: >-
-  [ACL 2025][Style Alignment] 本文首次将"风格对齐"定义为跨文化翻译的核心目标，系统揭示了 LLM 翻译中的风格中性化偏差和英语中心偏差，并提出 RASTA 方法在嵌入空间中学习文化对齐映射来检索风格匹配的少样本示例，在不降低翻译质量的前提下将风格对齐度提升最高 56%。
+  [ACL 2025][LLM 其他][Style Alignment] 本文首次将"风格对齐"定义为跨文化翻译的核心目标，系统揭示了 LLM 翻译中的风格中性化偏差和英语中心偏差，并提出 RASTA 方法在嵌入空间中学习文化对齐映射来检索风格匹配的少样本示例，在不降低翻译质量的前提下将风格对齐度提升最高 56%。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "Style Alignment"
   - "Cross-Cultural Translation"
   - "RASTA"

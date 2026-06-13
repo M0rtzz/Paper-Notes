@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-granularity Interactive Attention Framework for Residual Hierarchical Pronunciation Assessment
 description: >-
-  [AAAI2026][音频/语音][发音评估] 提出HIA框架，通过交互注意力模块（Interactive Attention Module）实现音素、词、句三粒度间的双向信息交互，结合残差层级结构缓解特征遗忘问题，在speechocean762数据集上所有粒度和方面指标均达到SOTA。
+  [AAAI2026][音频/语音][发音评估] 提出HIA框架，通过交互注意力模块（Interactive Attention Module）实现音素、词、句三粒度间的双向信息交互，结合残差层级结构缓解特征遗忘问题，在speechocean762数据集上所有粒度和方面指标均达到SOTA。 自动发音评估的重要性 计算机辅助发音…
 tags:
   - "AAAI2026"
   - "音频/语音"

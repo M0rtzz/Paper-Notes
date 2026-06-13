@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Robustness of Large Language Models Against Multilingual Typographical Errors
 description: >-
-  [ACL 2026][多语言/翻译][多语言 typo] 本文提出 MulTypo——一个基于各语言键盘布局和 10 指打字习惯的多语种 typo 生成算法，并用它系统评测 18 个开源 LLM 在 12 种语言、5 类下游任务上的鲁棒性…
+  [ACL 2026][多语言/翻译][多语言 typo] 本文提出 MulTypo——一个基于各语言键盘布局和 10 指打字习惯的多语种 typo 生成算法，并用它系统评测 18 个开源 LLM 在 12 种语言、5 类下游任务上的鲁棒性，证明 typo 对生成与推理任务影响最大、指令微调反而更脆弱、且 typo 影响存在跨语种和跨方向的非对称性。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

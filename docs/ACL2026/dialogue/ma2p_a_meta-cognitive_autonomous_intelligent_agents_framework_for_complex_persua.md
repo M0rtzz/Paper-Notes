@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MA$^2$P: A Meta-Cognitive Autonomous Intelligent Agents Framework for Complex Persuasion
 description: >-
-  [ACL2026][对话系统][复杂说服] MA$^2$P 将复杂说服对话拆成“元策略选择-任务级多智能体说服-事后知识更新”的闭环，在不训练底座 LLM 的情况下，把被说服者的信念、欲望和顾虑转成更具体的策略动作，并在 CToMPersu 上显著提升多种 LLM 的说服成功率。
+  [ACL2026 Findings][对话系统][复杂说服] MA$^2$P 将复杂说服对话拆成“元策略选择-任务级多智能体说服-事后知识更新”的闭环，在不训练底座 LLM 的情况下，把被说服者的信念、欲望和顾虑转成更具体的策略动作，并在 CToMPersu 上显著提升多种 LLM 的说服成功率。 领域现状：说服式对话已经从…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "对话系统"
   - "复杂说服"
   - "元认知"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Gradient Flow Approach to Solving Inverse Problems with Latent Diffusion Models
 description: >-
-  [NeurIPS 2025][图像生成][扩散模型] 提出 DWGF（Diffusion-regularized Wasserstein Gradient Flow），将隐空间扩散模型的后验采样问题严格形式化为 KL 散度在 Wasserstein-2 空间上的正则化梯度流…
+  [NeurIPS 2025][图像生成][扩散模型] 提出 DWGF（Diffusion-regularized Wasserstein Gradient Flow），将隐空间扩散模型的后验采样问题严格形式化为 KL 散度在 Wasserstein-2 空间上的正则化梯度流，推导出隐空间中的 ODE 系统用于求解图像逆问题，在 FFHQ-512 上的修复和超分辨率任务中 PSNR 大幅超越基线。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

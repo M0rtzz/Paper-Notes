@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?
 description: >-
-  [NeurIPS 2025 (Datasets and Benchmarks Track)][LLM效率][long dependency] 构建覆盖法律/金融/游戏/代码四大真实领域、长度16K-2M token的长依赖推理基准LooGLE v2，设计10类领域特定任务共1,934个QA实例…
+  [NeurIPS 2025 (Datasets and Benchmarks Track)][LLM效率][long dependency] 构建覆盖法律/金融/游戏/代码四大真实领域、长度16K-2M token的长依赖推理基准LooGLE v2，设计10类领域特定任务共1,934个QA实例，评估10个LLM发现最强模型GPT-4.1仅59.2%，揭示当前LLM在真实长依赖场景下的根本不足。
 tags:
   - "NeurIPS 2025 (Datasets and Benchmarks Track)"
   - "LLM效率"

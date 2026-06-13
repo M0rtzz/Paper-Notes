@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beta-Tuned Timestep Diffusion Model
 description: >-
-  [ECCV 2024][图像生成][扩散模型] 本文对扩散模型前向过程进行了深入的理论分析，发现分布变化在早期阶段最为剧烈，据此提出 B-TTDM（Beta-Tuned Timestep Diffusion Model），使用 Beta 分布替代均匀分布进行时间步采样，使训练更好地对齐前向扩散过程的特性…
+  [ECCV 2024][图像生成][扩散模型] 本文对扩散模型前向过程进行了深入的理论分析，发现分布变化在早期阶段最为剧烈，据此提出 B-TTDM（Beta-Tuned Timestep Diffusion Model），使用 Beta 分布替代均匀分布进行时间步采样，使训练更好地对齐前向扩散过程的特性，在多个基准数据集上验证了其有效性。
 tags:
   - "ECCV 2024"
   - "图像生成"

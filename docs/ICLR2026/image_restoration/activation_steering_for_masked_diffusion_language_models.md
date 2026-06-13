@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Activation Steering for Masked Diffusion Language Models
 description: >-
-  [ICLR 2026][图像恢复][activation steering] 首次将激活引导（activation steering）应用于 Masked Diffusion 语言模型（MDLM），发现 MDLM 的拒绝行为也受单一低维方向控制，通过在去噪过程中全局投影可完全绕过安全对齐，且与自回归模型不同…
+  [ICLR 2026][图像恢复][activation steering] 首次将激活引导（activation steering）应用于 Masked Diffusion 语言模型（MDLM），发现 MDLM 的拒绝行为也受单一低维方向控制，通过在去噪过程中全局投影可完全绕过安全对齐，且与自回归模型不同，有效方向可从指令前的 token 中提取——反映了扩散模型的非因果并行处理特性。
 tags:
   - "ICLR 2026"
   - "图像恢复"

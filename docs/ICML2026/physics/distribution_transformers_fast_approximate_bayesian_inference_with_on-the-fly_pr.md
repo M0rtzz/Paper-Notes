@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Distribution Transformers: Fast Approximate Bayesian Inference With On-The-Fly Prior Adaptation
 description: >-
-  [ICML 2026][物理/科学计算][摊销贝叶斯推断] Distribution Transformer (DT) 把"先验分布"显式 token 化为一组高斯混合分量、把"观测"通过交叉注意力注入解码器，端到端学一个"先验+数据 → 后验"的映射，在保持与先验同族（GMM→GMM）以支持序贯滤波的同时…
+  [ICML 2026 Spotlight][物理/科学计算][摊销贝叶斯推断] Distribution Transformer (DT) 把"先验分布"显式 token 化为一组高斯混合分量、把"观测"通过交叉注意力注入解码器，端到端学一个"先验+数据 → 后验"的映射，在保持与先验同族（GMM→GMM）以支持序贯滤波的同时，把推断时间从分钟级压到毫秒级，并允许测试时任意更换先验而无需重训。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "物理/科学计算"
   - "摊销贝叶斯推断"
   - "先验自适应"

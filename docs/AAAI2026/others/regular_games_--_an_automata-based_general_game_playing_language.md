@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Regular Games – an Automata-Based General Game Playing Language
 description: >-
-  [AAAI 2026][通用博弈] 提出 Regular Games (RG) 通用博弈系统，以非确定性有限自动机（NFA）为核心描述博弈规则，配合多层次语言（底层 RG + 高层 HRG + 专用框架），在表达力覆盖所有有限回合制博弈（含不完全信息和随机性）的同时…
+  [AAAI 2026][通用博弈] 提出 Regular Games (RG) 通用博弈系统，以非确定性有限自动机（NFA）为核心描述博弈规则，配合多层次语言（底层 RG + 高层 HRG + 专用框架），在表达力覆盖所有有限回合制博弈（含不完全信息和随机性）的同时，生成的前向模型效率全面超越现有最快的通用博弈系统 RBG，通常比 Ludii 快 10-20 倍。
 tags:
   - "AAAI 2026"
   - "通用博弈"

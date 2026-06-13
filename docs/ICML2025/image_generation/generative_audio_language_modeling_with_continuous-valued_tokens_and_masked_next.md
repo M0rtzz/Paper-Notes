@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction
 description: >-
-  [ICML 2025][图像生成][音频生成] 本文研究不使用离散 Token 的因果语言模型进行音频生成，利用 token-wise diffusion 建模连续值 next-token 分布，并提出 masked next-token prediction 任务…
+  [ICML 2025][图像生成][音频生成] 本文研究不使用离散 Token 的因果语言模型进行音频生成，利用 token-wise diffusion 建模连续值 next-token 分布，并提出 masked next-token prediction 任务，以 193M 参数在 AudioCaps 上达到与 SOTA 扩散模型相当的性能。
 tags:
   - "ICML 2025"
   - "图像生成"

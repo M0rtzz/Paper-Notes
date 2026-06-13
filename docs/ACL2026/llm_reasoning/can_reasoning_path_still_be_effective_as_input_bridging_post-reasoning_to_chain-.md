@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Reasoning Path still be Effective as Input? Bridging Post-Reasoning to Chain-of-Thought Compression
 description: >-
-  [ACL2026][LLM推理][post-reasoning] 本文提出 post-reasoning 与 UCoT：先由轻量 compressor 用单次前向生成表示推理路径的 soft tokens，再让 executor 把这些 soft tokens 当作输入上下文进行短输出推理…
+  [ACL2026][LLM推理][post-reasoning] 本文提出 post-reasoning 与 UCoT：先由轻量 compressor 用单次前向生成表示推理路径的 soft tokens，再让 executor 把这些 soft tokens 当作输入上下文进行短输出推理，从而在保持推理准确率的同时显著减少 CoT token 与延迟。
 tags:
   - "ACL2026"
   - "LLM推理"

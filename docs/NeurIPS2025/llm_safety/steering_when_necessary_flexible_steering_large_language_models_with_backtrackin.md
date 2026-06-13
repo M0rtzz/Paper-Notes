@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering When Necessary: Flexible Steering Large Language Models with Backtracking
 description: >-
-  [NeurIPS 2025][LLM安全][激活引导] 提出 FASB（Flexible Activation Steering with Backtracking）框架，通过跟踪 LLM 生成过程中的内部状态动态判断干预必要性和强度，并引入回溯机制纠正已偏离的 token…
+  [NeurIPS 2025][LLM安全][激活引导] 提出 FASB（Flexible Activation Steering with Backtracking）框架，通过跟踪 LLM 生成过程中的内部状态动态判断干预必要性和强度，并引入回溯机制纠正已偏离的 token，在 TruthfulQA 上 True*Info 达 80.56%、6 个多选任务平均准确率 78.8%，显著优于所有基线。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

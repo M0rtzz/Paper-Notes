@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective
 description: >-
-  [ICLR 2026][视频生成][自回归] 提出 Lumos-1，一个基于 LLM 架构的统一视频生成模型：通过 MM-RoPE（分布式多模态 RoPE）解决视觉时空编码问题，通过 AR-DF（自回归离散扩散强迫）解决帧间损失不均衡问题…
+  [ICLR 2026][视频生成][自回归] 提出 Lumos-1，一个基于 LLM 架构的统一视频生成模型：通过 MM-RoPE（分布式多模态 RoPE）解决视觉时空编码问题，通过 AR-DF（自回归离散扩散强迫）解决帧间损失不均衡问题，仅用 48 GPU 训练即可在 GenEval、VBench-I2V 和 VBench-T2V 上达到竞争力水平。
 tags:
   - "ICLR 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][双层优化] 本文提出"集合光滑性"(set smoothness)这一新的结构性质，证明它在非凸-PŁ双层优化中自然成立，并据此揭示超目标函数隐藏的弱凸/弱凹结构，首次建立了非光滑超目标函数Clarke稳定点的可计算性保证。
+  [NeurIPS 2025][优化/理论][双层优化] 本文提出"集合光滑性"(set smoothness)这一新的结构性质，证明它在非凸-PŁ双层优化中自然成立，并据此揭示超目标函数隐藏的弱凸/弱凹结构，首次建立了非光滑超目标函数Clarke稳定点的可计算性保证。 双层优化(BLO)建模层次化决策问题：领导者(上层)优化…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

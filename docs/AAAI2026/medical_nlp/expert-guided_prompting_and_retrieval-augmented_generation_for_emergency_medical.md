@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering
 description: >-
-  [AAAI2026][医疗NLP][RAG] 构建首个EMS急救领域多选QA数据集EMSQA（24.3K题、10个临床主题、4个认证等级），提出Expert-CoT和ExpertRAG框架将领域专业属性注入LLM推理与检索，比标准RAG最高提升4.59%准确率。
+  [AAAI2026][医疗NLP][RAG] 构建首个EMS急救领域多选QA数据集EMSQA（24.3K题、10个临床主题、4个认证等级），提出Expert-CoT和ExpertRAG框架将领域专业属性注入LLM推理与检索，比标准RAG最高提升4.59%准确率。 领域现状：LLM在通用医学QA（MedQA、MedMCQA）上…
 tags:
   - "AAAI2026"
   - "医疗NLP"

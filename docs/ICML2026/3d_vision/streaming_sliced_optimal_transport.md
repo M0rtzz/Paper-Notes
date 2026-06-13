@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Streaming Sliced Optimal Transport
 description: >-
-  [ICML 2026][3D视觉][Streaming OT] Stream-SW 是首个能在"样本流"上估计 sliced Wasserstein 距离的算法：每个一维投影上用 KLL/quantile sketch 维护近似分位函数，把 1D Wasserstein 的闭式积分变成可流式更新的估计量…
+  [ICML 2026][3D视觉][Streaming OT] Stream-SW 是首个能在"样本流"上估计 sliced Wasserstein 距离的算法：每个一维投影上用 KLL/quantile sketch 维护近似分位函数，把 1D Wasserstein 的闭式积分变成可流式更新的估计量，空间复杂度对样本数仅对数级，从而把 SOT 带入 IoT / 边缘设备等"看一次就丢掉"的场景。
 tags:
   - "ICML 2026"
   - "3D视觉"

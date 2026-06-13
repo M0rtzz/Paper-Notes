@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ContextBench: Modifying Contexts for Targeted Latent Activation
 description: >-
-  [ICLR 2026][图像生成][上下文修改] 提出 ContextBench 基准（715 个任务）评估自动生成流畅且能激活特定潜在特征的输入文本的方法，并开发两种 EPO 增强变体（LLM辅助和扩散模型修补），在激活强度和语言流畅度的权衡上 Pareto 优于标准 EPO。
+  [ICLR 2026][图像生成][上下文修改] 提出 ContextBench 基准（715 个任务）评估自动生成流畅且能激活特定潜在特征的输入文本的方法，并开发两种 EPO 增强变体（LLM辅助和扩散模型修补），在激活强度和语言流畅度的权衡上 Pareto 优于标准 EPO。 领域现状：AI 安全的一个核心挑战是在部署前…
 tags:
   - "ICLR 2026"
   - "图像生成"

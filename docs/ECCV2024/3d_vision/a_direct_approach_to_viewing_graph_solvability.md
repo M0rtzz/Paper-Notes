@@ -2,9 +2,10 @@
 title: >-
   [论文解读] A Direct Approach to Viewing Graph Solvability
 description: >-
-  [ECCV 2024][视图图] 本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。
+  [ECCV 2024][3D视觉][视图图] 本文对视图图（Viewing Graph）可解性问题提出了一种比以往更直接的新形式化方法，引入了新概念用于理解实际 SfM 图的可解性，并给出了更高效的不可解情况检测与分解算法。 领域现状：运动恢复结构（Structure from Motion, SfM）是三维重建的基础技术…
 tags:
   - "ECCV 2024"
+  - "3D视觉"
   - "视图图"
   - "可解性"
   - "基础矩阵"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Physical Dynamics with Counterfactual World Modeling
 description: >-
-  [ECCV 2024][因果推理][反事实世界建模] 本文提出反事实世界建模（Counterfactual World Modeling, CWM），通过时序分解的遮蔽策略训练视频掩码预测器，并设计"反事实提示"机制从单一预训练模型中无需微调即可提取光流、分割、关键点等多种视觉结构…
+  [ECCV 2024][因果推理][反事实世界建模] 本文提出反事实世界建模（Counterfactual World Modeling, CWM），通过时序分解的遮蔽策略训练视频掩码预测器，并设计"反事实提示"机制从单一预训练模型中无需微调即可提取光流、分割、关键点等多种视觉结构，在物理动力学理解任务Physion基准上达到最优性能。
 tags:
   - "ECCV 2024"
   - "因果推理"

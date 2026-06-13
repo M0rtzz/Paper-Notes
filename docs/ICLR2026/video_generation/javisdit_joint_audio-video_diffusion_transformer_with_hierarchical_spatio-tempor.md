@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization
 description: >-
-  [ICLR 2026][视频生成][音视频联合生成] 提出 JavisDiT，基于 DiT 架构的音视频联合生成模型，通过层级化时空同步先验估计器（HiST-Sypo）实现细粒度的音视频时空对齐；同时构建了新基准 JavisBench（10K 复杂场景样本）和新评估指标 JavisScore。
+  [ICLR 2026][视频生成][音视频联合生成] 提出 JavisDiT，基于 DiT 架构的音视频联合生成模型，通过层级化时空同步先验估计器（HiST-Sypo）实现细粒度的音视频时空对齐；同时构建了新基准 JavisBench（10K 复杂场景样本）和新评估指标 JavisScore。 音视频联合生成（JAVG）的兴…
 tags:
   - "ICLR 2026"
   - "视频生成"

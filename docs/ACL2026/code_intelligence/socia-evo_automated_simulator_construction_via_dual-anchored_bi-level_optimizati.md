@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOCIA-EVO: Automated Simulator Construction via Dual-Anchored Bi-Level Optimization
 description: >-
-  [ACL 2026][代码智能][自动化模拟器构建] 本文提出 SOCIA-EVO，一种将自动化模拟器构建重新定义为双锚进化过程的 LLM 智能体框架，通过静态蓝图（Blueprint）锚定经验约束、双层优化解耦结构修正与参数校准、自我策划的策略剧本（Playbook）管理修复假说并通过执行反馈进行贝叶斯加权…
+  [ACL 2026][代码智能][自动化模拟器构建] 本文提出 SOCIA-EVO，一种将自动化模拟器构建重新定义为双锚进化过程的 LLM 智能体框架，通过静态蓝图（Blueprint）锚定经验约束、双层优化解耦结构修正与参数校准、自我策划的策略剧本（Playbook）管理修复假说并通过执行反馈进行贝叶斯加权检索，在用户建模、口罩佩戴扩散和个人出行三个模拟任务上显著超越 Reflexion、G-SIM 等基线。
 tags:
   - "ACL 2026"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intrinsic Training Dynamics of Deep Neural Networks
 description: >-
-  [ICLR 2026][预训练][intrinsic dynamics] 本文研究深度神经网络梯度流训练中，参数空间的轨迹何时可以被"提升"到低维本征空间并表示为内禀的黎曼梯度流，提出了基于守恒律的内禀可恢复性（intrinsic recoverability）准则…
+  [ICLR 2026][预训练][intrinsic dynamics] 本文研究深度神经网络梯度流训练中，参数空间的轨迹何时可以被"提升"到低维本征空间并表示为内禀的黎曼梯度流，提出了基于守恒律的内禀可恢复性（intrinsic recoverability）准则，并将结果推广到任意深度的 ReLU 网络和线性网络。
 tags:
   - "ICLR 2026"
   - "预训练"

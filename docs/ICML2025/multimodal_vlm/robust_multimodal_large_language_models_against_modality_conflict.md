@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Multimodal Large Language Models Against Modality Conflict
 description: >-
-  [ICML 2025][多模态VLM][多模态幻觉] 揭示 MLLM 幻觉的一个被忽视来源——模态冲突（视觉输入与文本输入之间的固有矛盾），从对象/属性/关系三个层面形式化定义模态冲突，构建 20K 样例的 MMMC 数据集，并提出 prompt engineering、SFT 和 RL 三种缓解方法…
+  [ICML 2025][多模态VLM][多模态幻觉] 揭示 MLLM 幻觉的一个被忽视来源——模态冲突（视觉输入与文本输入之间的固有矛盾），从对象/属性/关系三个层面形式化定义模态冲突，构建 20K 样例的 MMMC 数据集，并提出 prompt engineering、SFT 和 RL 三种缓解方法，其中 RL 效果最佳。
 tags:
   - "ICML 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Silent Tokens, Loud Effects: Padding in LLMs
 description: >-
-  [NeurIPS 2025][LLM效率][Padding Token] 系统性研究了padding token在未被正确掩码时对LLM的影响，发现即使少量padding也会漂移隐层表示、降低生成质量、不可预测地改变偏见…
+  [NeurIPS 2025][LLM效率][Padding Token] 系统性研究了padding token在未被正确掩码时对LLM的影响，发现即使少量padding也会漂移隐层表示、降低生成质量、不可预测地改变偏见，而128个padding token可将Llama-3.1-8B的有害提示攻击成功率从8%飙升到77.5%，本质上实现了jailbreak。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

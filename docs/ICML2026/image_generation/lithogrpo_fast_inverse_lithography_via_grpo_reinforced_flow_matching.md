@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LithoGRPO: Fast Inverse Lithography via GRPO Reinforced Flow Matching
 description: >-
-  [ICML 2026][图像生成][逆光刻（ILT）] LithoGRPO 把光刻掩模生成建模为以目标版图为条件的 rectified flow，并用 GRPO 强化学习微调，让一次前向就能同时优化 L2/PVB（可微）与 EPE/Shot（不可微）四类光刻指标…
+  [ICML 2026][图像生成][逆光刻（ILT）] LithoGRPO 把光刻掩模生成建模为以目标版图为条件的 rectified flow，并用 GRPO 强化学习微调，让一次前向就能同时优化 L2/PVB（可微）与 EPE/Shot（不可微）四类光刻指标，配合一个 130×–490× 加速的快速 shot-count 算法，在 LithoBench 上把综合排名从 5.6 拉到 4.3，单样本推理仅 0.1 s。
 tags:
   - "ICML 2026"
   - "图像生成"

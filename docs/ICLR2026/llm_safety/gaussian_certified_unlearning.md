@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Certified Unlearning in High Dimensions: A Hypothesis Testing Approach
 description: >-
-  [ICLR 2026 Oral][LLM安全][machine unlearning] 提出 $(\phi,\varepsilon)$-Gaussian certifiability——基于假设检验 trade-off 函数的高维机器遗忘隐私框架…
+  [ICLR 2026 Oral][LLM安全][machine unlearning] 提出 $(\phi,\varepsilon)$-Gaussian certifiability——基于假设检验 trade-off 函数的高维机器遗忘隐私框架，严格证明在高维比例体系 ($p \sim n$) 下单步 Newton 更新 + 校准高斯噪声即可同时满足隐私 (GPAR) 和精度 (GED→0) 要求，推翻了 Zou et al. (2025) "至少需两步 Newton" 的结论，并从理论上揭示旧 $\varepsilon$-certifiability 与噪声添加机制不兼容的根本原因。
 tags:
   - "ICLR 2026 Oral"
   - "LLM安全"

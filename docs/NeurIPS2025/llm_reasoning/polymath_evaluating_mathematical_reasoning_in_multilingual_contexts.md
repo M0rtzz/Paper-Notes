@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts
 description: >-
-  [NeurIPS 2025][LLM推理][价值模型] 提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。
+  [NeurIPS 2025][LLM推理][价值模型] 提出Value-Guided Search(VGS)——通过token级价值模型指导块级束搜索，无需预定义"步骤"，相对多数投票在竞赛数学上准确度提升+14.5%，同时推理计算效率提升30%，超越现有PRM方案。 PRM可扩展性瓶颈：现有PRM需细粒度步骤标注(成本高、…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

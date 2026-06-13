@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Leveraging Human Production-Interpretation Asymmetries to Test LLM Cognitive Plausibility
 description: >-
-  [ACL 2025][LLM/NLP][认知合理性] 本文利用人类在隐含因果动词（implicit causality verbs）上"代词产出"与"代词解读"之间的已知不对称现象作为测试平台，系统评估了指令微调LLM是否能复现这种人类认知不对称性，发现模型大小和元语言提示的选择是决定性因素。
+  [ACL 2025][LLM 其他][认知合理性] 本文利用人类在隐含因果动词（implicit causality verbs）上"代词产出"与"代词解读"之间的已知不对称现象作为测试平台，系统评估了指令微调LLM是否能复现这种人类认知不对称性，发现模型大小和元语言提示的选择是决定性因素。 领域现状：大语言模型是否以类似人…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "认知合理性"
   - "代词产出与解读"
   - "隐含因果动词"

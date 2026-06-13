@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToolPRM: Fine-Grained Inference Scaling of Structured Outputs for Function Calling
 description: >-
-  [ACL2026][LLM推理][函数调用] ToolPRM 将函数调用拆成函数名选择、参数名选择、参数值填写等细粒度决策，训练 intra-call 过程奖励模型来指导 beam search，并提出“explore more but retain less”的结构化输出推理扩展原则…
+  [ACL2026][LLM推理][函数调用] ToolPRM 将函数调用拆成函数名选择、参数名选择、参数值填写等细粒度决策，训练 intra-call 过程奖励模型来指导 beam search，并提出“explore more but retain less”的结构化输出推理扩展原则，在 BFCL 和 ToolAlpaca 上稳定提升 Hammer2.1 系列工具调用模型。
 tags:
   - "ACL2026"
   - "LLM推理"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.14703](https://arxiv.org/abs/2510.14703)  
 **代码**: 待确认  
-**领域**: llm_reasoning / 工具调用  
+**领域**: LLM推理 / 工具调用  
 **关键词**: 函数调用, 过程奖励模型, 结构化输出, 推理扩展, Beam Search
 
 ## 一句话总结

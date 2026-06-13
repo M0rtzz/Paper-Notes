@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CymbaDiff: Structured Spatial Diffusion for Sketch-based 3D Semantic Urban Scene Generation
 description: >-
-  [NeurIPS 2025][自动驾驶][3D语义场景生成] 提出首个"草图→3D户外语义场景"生成任务与基准数据集 SketchSem3D，并设计 CymbaDiff（Cylinder Mamba Diffusion）去噪网络，通过柱坐标扫描+笛卡尔扫描的双路 Mamba 块实现结构化空间建模…
+  [NeurIPS 2025][自动驾驶][3D语义场景生成] 提出首个"草图→3D户外语义场景"生成任务与基准数据集 SketchSem3D，并设计 CymbaDiff（Cylinder Mamba Diffusion）去噪网络，通过柱坐标扫描+笛卡尔扫描的双路 Mamba 块实现结构化空间建模，在 FID 上比 3D Latent Diffusion 低 75%、比 3D DiT 低 71%。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

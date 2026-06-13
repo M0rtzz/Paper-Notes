@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I'm a Map! Interpretable Motion-Attentive Maps: Spatio-Temporally Localizing Concepts in Video Diffusion Transformers
 description: >-
-  [CVPR 2026][视频生成][视频扩散模型] 提出IMAP(可解释运动注意力图)，通过GramCol空间定位和运动头选择时序定位两个无训练模块，从Video DiT中提取运动概念的时空显著性图，在运动定位和零样本视频语义分割上超越现有方法。
+  [CVPR 2026][视频生成][视频扩散模型] 提出IMAP(可解释运动注意力图)，通过GramCol空间定位和运动头选择时序定位两个无训练模块，从Video DiT中提取运动概念的时空显著性图，在运动定位和零样本视频语义分割上超越现有方法。 1. 领域现状： Video Diffusion Transformers(如…
 tags:
   - "CVPR 2026"
   - "视频生成"

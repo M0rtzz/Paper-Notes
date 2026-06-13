@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MALD-NeRF: Taming Latent Diffusion Model for Neural Radiance Field Inpainting
 description: >-
-  [ECCV 2024][3D视觉][NeRF修复] 提出MALD-NeRF，通过掩码对抗训练和场景定制的潜在扩散模型实现高质量NeRF修复，有效解决扩散模型的多视角不一致和纹理偏移问题。
+  [ECCV 2024][3D视觉][NeRF修复] 提出MALD-NeRF，通过掩码对抗训练和场景定制的潜在扩散模型实现高质量NeRF修复，有效解决扩散模型的多视角不一致和纹理偏移问题。 利用2D潜在扩散模型进行NeRF修复面临两个核心挑战：(1) 扩散模型的修复结果跨视角不一致，使用像素级损失（L1/L2）会导致修复区域模…
 tags:
   - "ECCV 2024"
   - "3D视觉"

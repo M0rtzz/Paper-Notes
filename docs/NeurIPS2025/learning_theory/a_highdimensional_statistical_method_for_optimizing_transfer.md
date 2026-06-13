@@ -2,9 +2,10 @@
 title: >-
   [论文解读] A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning
 description: >-
-  [NeurIPS 2025][多源迁移学习] 提出基于K-L散度和高维统计分析的理论框架，用于确定多源迁移学习中每个源任务的最优样本迁移数量，避免"用所有源数据"带来的负迁移问题…
+  [NeurIPS 2025][迁移学习 / 多源迁移学习 / 高维统计][多源迁移学习] 提出基于K-L散度和高维统计分析的理论框架，用于确定多源迁移学习中每个源任务的最优样本迁移数量，避免"用所有源数据"带来的负迁移问题，在DomainNet和Office-Home上超过SOTA 1.0-1.5%的同时减少47.85%的样本使用量和35.19%的训练时间。
 tags:
   - "NeurIPS 2025"
+  - "迁移学习 / 多源迁移学习 / 高维统计"
   - "多源迁移学习"
   - "最优迁移量"
   - "K-L散度"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][信息检索/RAG][RAG忠实性] 提出 ProbeRAG，通过发现 LLM 隐空间中冲突/对齐知识的线性可分性，设计三阶段框架（细粒度知识剪枝→隐空间冲突探测→冲突感知注意力），从模型内部机制解决 RAG 忠实性问题。
+  [ACL 2026 Findings][信息检索/RAG][RAG忠实性] 提出 ProbeRAG，通过发现 LLM 隐空间中冲突/对齐知识的线性可分性，设计三阶段框架（细粒度知识剪枝→隐空间冲突探测→冲突感知注意力），从模型内部机制解决 RAG 忠实性问题。 领域现状： RAG 系统通过外部知识增强 LLM…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "RAG忠实性"
   - "知识冲突"

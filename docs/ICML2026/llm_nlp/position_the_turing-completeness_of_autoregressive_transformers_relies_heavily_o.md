@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Position: The Turing-Completeness of Autoregressive Transformers Relies Heavily on Context Management
 description: >-
-  [ICML2026][LLM/NLP][Transformer] 作者指出"Transformer 是图灵完备"这一流行说法在大多数已有证明里其实悄悄换成了"一族不同的 Transformer 共同能模拟图灵机"，并形式化了贴近真实部署的固定系统 $(T,D,C)$…
+  [ICML2026][LLM 其他][Transformer] 作者指出"Transformer 是图灵完备"这一流行说法在大多数已有证明里其实悄悄换成了"一族不同的 Transformer 共同能模拟图灵机"，并形式化了贴近真实部署的固定系统 $(T,D,C)$，证明同一个固定 Transformer 在不同上下文管理策略下计算能力可以从仅识别正则语言一路跃迁到图灵完备，从而把研究重点从模型本身扭转到 context manager 上。
 tags:
   - "ICML2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "自回归解码"
   - "上下文管理"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.19514](https://arxiv.org/abs/2605.19514)  
 **代码**: 无  
-**领域**: llm_nlp  
+**领域**: LLM/NLP  
 **关键词**: Transformer 图灵完备性, 自回归解码, 上下文管理, 计算复杂度, position paper
 
 ## 一句话总结

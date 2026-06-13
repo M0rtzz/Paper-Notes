@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond One-Size-Fits-All: Tailored Benchmarks for Efficient Evaluation
 description: >-
-  [ACL 2025][LLM评测][高效评估] 提出 TailoredBench 方法，为每个待评估的目标模型**自适应构建定制化核心集**（Native-coreset），而非使用所有模型共享的静态子集，通过自适应源模型选择、可扩展 K-Medoids 聚类和校准估计策略…
+  [ACL 2025][LLM评测][高效评估] 提出 TailoredBench 方法，为每个待评估的目标模型**自适应构建定制化核心集**（Native-coreset），而非使用所有模型共享的静态子集，通过自适应源模型选择、可扩展 K-Medoids 聚类和校准估计策略，在仅需 20-40 个样本的推理预算下将准确率估计的 MAE 平均降低 **31.4%**。
 tags:
   - "ACL 2025"
   - "LLM评测"

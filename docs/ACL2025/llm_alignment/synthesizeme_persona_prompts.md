@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs
 description: >-
-  [LLM对齐] 提出 SynthesizeMe 方法，通过从用户有限的成对偏好交互中自动推理-合成用户画像（persona），构建可解释、可迁移的个性化 prompt，在 PersonalRewardBench 上显著提升个性化偏好预测准确率。
+  [LLM对齐] 提出 SynthesizeMe 方法，通过从用户有限的成对偏好交互中自动推理-合成用户画像（persona），构建可解释、可迁移的个性化 prompt，在 PersonalRewardBench 上显著提升个性化偏好预测准确率。 研究问题：如何仅凭少量用户成对偏好反馈（5-15 对）…
 tags:
   - "LLM对齐"
 ---

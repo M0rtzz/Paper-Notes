@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions
 description: >-
-  [ACL 2026][多模态VLM][幻灯片自动更新] 定义了"基于自然语言指令在用户自定义模板上进行动态幻灯片更新"的新任务，构建了包含 20,036 个指令-执行三元组的 DynaSlide 基准，并提出了 SlideAgent 作为强参考基线。
+  [ACL 2026 Findings][多模态VLM][幻灯片自动更新] 定义了"基于自然语言指令在用户自定义模板上进行动态幻灯片更新"的新任务，构建了包含 20,036 个指令-执行三元组的 DynaSlide 基准，并提出了 SlideAgent 作为强参考基线。 领域现状：演示幻灯片是数据驱动报告的核心媒介…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "幻灯片自动更新"
   - "动态模板"

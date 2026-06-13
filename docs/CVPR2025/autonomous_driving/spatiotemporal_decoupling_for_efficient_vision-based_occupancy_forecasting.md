@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spatiotemporal Decoupling for Efficient Vision-Based Occupancy Forecasting
 description: >-
-  [CVPR 2025][自动驾驶][占用预测] 提出 EfficientOCF，通过空间解耦（将 3D 占用分解为 2D BEV 占用 + 高度值）和时间解耦（通过光流关联实例实现逐步 OCF 而非端到端预测）解决占用预测中的空间偏置和时间偏置问题…
+  [CVPR 2025][自动驾驶][占用预测] 提出 EfficientOCF，通过空间解耦（将 3D 占用分解为 2D BEV 占用 + 高度值）和时间解耦（通过光流关联实例实现逐步 OCF 而非端到端预测）解决占用预测中的空间偏置和时间偏置问题，实现 SOTA 3D 占用预测性能和 82.33ms 的快速推理。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

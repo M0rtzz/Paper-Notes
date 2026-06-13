@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Global Similarity: Towards Fine-Grained, Multi-Condition Multimodal Retrieval
 description: >-
-  [CVPR 2026][信息检索/RAG][multi-condition retrieval] 提出MCMR（Multi-Conditional Multimodal Retrieval）大规模基准，通过双证据设计（部分属性仅可从图像推断、部分仅可从文本获取）确保检索任务不可被单模态解决…
+  [CVPR 2026][信息检索/RAG][multi-condition retrieval] 提出MCMR（Multi-Conditional Multimodal Retrieval）大规模基准，通过双证据设计（部分属性仅可从图像推断、部分仅可从文本获取）确保检索任务不可被单模态解决，系统评估5个检索器和7个MLLM重排器，揭示模态不对称性和细粒度推理差距。
 tags:
   - "CVPR 2026"
   - "信息检索/RAG"

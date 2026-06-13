@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HelpSteer3-Preference: Open Human-Annotated Preference Data across Diverse Tasks and Languages
 description: >-
-  [NeurIPS 2025][多语言/翻译][Preference Dataset] NVIDIA 发布的 40K+ 开源人工标注偏好数据集，覆盖通用/STEM/代码/多语言（13 种语言），训练的奖励模型在 RM-Bench 上达 82.4%（+10%），CC-BY-4.0 许可对商业友好。
+  [NeurIPS 2025][多语言/翻译][Preference Dataset] NVIDIA 发布的 40K+ 开源人工标注偏好数据集，覆盖通用/STEM/代码/多语言（13 种语言），训练的奖励模型在 RM-Bench 上达 82.4%（+10%），CC-BY-4.0 许可对商业友好。 领域现状：偏好数据从低质量（H…
 tags:
   - "NeurIPS 2025"
   - "多语言/翻译"

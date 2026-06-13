@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ExpliCa: Evaluating Explicit Causal Reasoning in Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][causal reasoning] 提出 ExpliCa 数据集（4800 条问题，含因果和时间连接词），首次整合因果和时间关系评估并配以众包人类评分，发现即使顶级模型准确率也难超 0.80，且模型系统性地将时间关系误判为因果关系。
+  [ACL 2025][LLM 其他][causal reasoning] 提出 ExpliCa 数据集（4800 条问题，含因果和时间连接词），首次整合因果和时间关系评估并配以众包人类评分，发现即使顶级模型准确率也难超 0.80，且模型系统性地将时间关系误判为因果关系。 领域现状：LLM 因果推理评估主要关注隐式因果（如 C…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "causal reasoning"
   - "temporal reasoning"
   - "connectives"

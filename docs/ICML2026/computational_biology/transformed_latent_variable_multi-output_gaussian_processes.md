@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformed Latent Variable Multi-Output Gaussian Processes
 description: >-
-  [ICML 2026][计算生物][多输出高斯过程] 本文提出 T-LVMOGP：把多输出 GP 的核心建模问题——跨输出协方差 $k_{p,p'}(x, x')$ 的构造——转化成"在 Lipschitz 正则的 RCNN 嵌入空间里用单个标量基核做内积"，并完整嵌入 SVGP 框架…
+  [ICML 2026][计算生物][多输出高斯过程] 本文提出 T-LVMOGP：把多输出 GP 的核心建模问题——跨输出协方差 $k_{p,p'}(x, x')$ 的构造——转化成"在 Lipschitz 正则的 RCNN 嵌入空间里用单个标量基核做内积"，并完整嵌入 SVGP 框架，使 MOGP 第一次能可扩展且高表达力地处理 $P > 10000$ 输出（含 ZINB 似然的空间转录组数据），同时全面胜过 SV-LMC / OILMM / GS-LVMOGP 等基线。
 tags:
   - "ICML 2026"
   - "计算生物"

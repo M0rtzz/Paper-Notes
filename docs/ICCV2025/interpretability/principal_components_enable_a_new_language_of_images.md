@@ -2,7 +2,7 @@
 title: >-
   [论文解读] "Principal Components" Enable A New Language of Images
 description: >-
-  [ICCV 2025][可解释性][视觉分词器] 提出 Semanticist 视觉分词框架，通过在 latent token 空间中嵌入可证明的 PCA 结构（每个后续 token 贡献递减的非重叠信息），并用扩散解码器解耦语义-频谱耦合效应，在图像重建和自回归生成上实现了 SOTA 性能。
+  [ICCV 2025][可解释性][视觉分词器] 提出 Semanticist 视觉分词框架，通过在 latent token 空间中嵌入可证明的 PCA 结构（每个后续 token 贡献递减的非重叠信息），并用扩散解码器解耦语义-频谱耦合效应，在图像重建和自回归生成上实现了 SOTA 性能。 领域现状：视觉分词 (visu…
 tags:
   - "ICCV 2025"
   - "可解释性"

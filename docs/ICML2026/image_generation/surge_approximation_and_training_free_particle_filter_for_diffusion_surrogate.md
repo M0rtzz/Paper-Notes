@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SURGE: Approximation and Training Free Particle Filter for Diffusion Surrogate
 description: >-
-  [ICML 2026][图像生成][数据同化] SURGE 把扩散代理模型的引导采样视为路径测度上的有偏分布，用 Girsanov 公式计算重要性权重做 SMC 重采样，从而在不重新训练、不近似 Doob $h$-变换的前提下，得到无近似偏差的扩散代理数据同化滤波器…
+  [ICML 2026][图像生成][数据同化] SURGE 把扩散代理模型的引导采样视为路径测度上的有偏分布，用 Girsanov 公式计算重要性权重做 SMC 重采样，从而在不重新训练、不近似 Doob $h$-变换的前提下，得到无近似偏差的扩散代理数据同化滤波器，在 Lorenz、Navier-Stokes 和 SEVIR 天气预报上一致超越 BPF/EnKF/SDA/FlowDAS。
 tags:
   - "ICML 2026"
   - "图像生成"

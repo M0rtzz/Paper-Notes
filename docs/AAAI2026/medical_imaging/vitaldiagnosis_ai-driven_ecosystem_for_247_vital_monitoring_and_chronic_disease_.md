@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VitalDiagnosis: AI-Driven Ecosystem for 24/7 Vital Monitoring and Chronic Disease Management
 description: >-
-  [AAAI 2026][医学图像][LLM医疗系统] 提出VitalDiagnosis，一个由LLM驱动的慢性病管理生态系统，通过整合可穿戴设备连续数据与多尺度LLM推理能力，建立包含异常交互式分诊和常规依从性监测的双轨框架，在协作式患者-临床医生工作流中实现从被动监测到主动参与的范式转变。
+  [AAAI 2026][医学图像][LLM医疗系统] 提出VitalDiagnosis，一个由LLM驱动的慢性病管理生态系统，通过整合可穿戴设备连续数据与多尺度LLM推理能力，建立包含异常交互式分诊和常规依从性监测的双轨框架，在协作式患者-临床医生工作流中实现从被动监测到主动参与的范式转变。 1. 领域现状：慢性病（心血管疾…
 tags:
   - "AAAI 2026"
   - "医学图像"

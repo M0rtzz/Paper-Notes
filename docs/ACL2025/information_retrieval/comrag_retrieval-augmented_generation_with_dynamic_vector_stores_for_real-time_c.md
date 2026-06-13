@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ComRAG: Retrieval-Augmented Generation with Dynamic Vector Stores for Real-time Community Question Answering in Industry
 description: >-
-  [ACL 2025][信息检索/RAG][检索增强生成] 提出ComRAG——一个面向工业实时社区问答的检索增强生成框架，通过**静态知识向量库+高/低质量动态QA向量库**的三库架构和**质心记忆机制**，在三个CQA数据集上获得向量相似度最高25.9%的提升，同时降低延迟8.7%-23.3%。
+  [ACL 2025][信息检索/RAG][检索增强生成] 提出ComRAG——一个面向工业实时社区问答的检索增强生成框架，通过静态知识向量库+高/低质量动态QA向量库：的三库架构和质心记忆机制：，在三个CQA数据集上获得向量相似度最高25.9%的提升，同时降低延迟8.7%-23.3%。 领域现状：社区问答(CQA)平台（如S…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

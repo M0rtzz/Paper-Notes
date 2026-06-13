@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysSplat: Efficient Physics Simulation for 3D Scenes via MLLM-Guided Gaussian Splatting
 description: >-
-  [ICCV 2025][多模态VLM][物理仿真] 提出PhysSplat，首次利用多模态大语言模型(MLLM)零样本估计3D场景中物体的物理属性，结合物理-几何自适应采样策略在单GPU上2分钟内实现逼真的物理仿真。
+  [ICCV 2025][多模态VLM][物理仿真] 提出PhysSplat，首次利用多模态大语言模型(MLLM)零样本估计3D场景中物体的物理属性，结合物理-几何自适应采样策略在单GPU上2分钟内实现逼真的物理仿真。 赋予静态3D物体交互动力学仍然困难： 手动设置参数：PhysGaussian等需要手动指定物理属性 视频扩散…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Functionality Understanding and Segmentation in 3D Scenes
 description: >-
-  [CVPR 2025][3D视觉][功能性理解] Fun3DU 首次提出针对 3D 场景功能性理解的方法，通过 LLM 链式思维解析任务描述 + VLM 多视角分割功能性物体 + 2D-3D 投票聚合，在 SceneFun3D 上大幅超越开放词汇 3D 分割基线（mIoU +13.2）。
+  [CVPR 2025][3D视觉][功能性理解] Fun3DU 首次提出针对 3D 场景功能性理解的方法，通过 LLM 链式思维解析任务描述 + VLM 多视角分割功能性物体 + 2D-3D 投票聚合，在 SceneFun3D 上大幅超越开放词汇 3D 分割基线（mIoU +13.2）。 领域现状：3D 场景理解主要聚焦于语…
 tags:
   - "CVPR 2025"
   - "3D视觉"

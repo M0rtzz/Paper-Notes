@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMoVA: Empowering Language Models to See, Hear and Speak with Vivid Emotions
 description: >-
-  [CVPR 2025][音频/语音][全模态LLM] 提出 EMoVA，首个端到端的全模态 LLM，通过语义-声学解耦的语音 tokenizer 同时实现视觉理解、语音识别和情感可控的语音合成，在视觉语言基准上超越 GPT-4o，语音识别 WER 达 2.9%。
+  [CVPR 2025][音频/语音][全模态LLM] 提出 EMoVA，首个端到端的全模态 LLM，通过语义-声学解耦的语音 tokenizer 同时实现视觉理解、语音识别和情感可控的语音合成，在视觉语言基准上超越 GPT-4o，语音识别 WER 达 2.9%。 领域现状：多模态 LLM 领域快速发展，视觉-语言模型（如 L…
 tags:
   - "CVPR 2025"
   - "音频/语音"

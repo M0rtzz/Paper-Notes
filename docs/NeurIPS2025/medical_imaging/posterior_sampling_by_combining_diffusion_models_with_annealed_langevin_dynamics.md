@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics
 description: >-
-  [NeurIPS 2025][医学图像][后验采样] 提出将扩散模型与退火 Langevin 动力学结合的算法，仅需 $L^4$ 精度的 score 估计即可在（局部）对数凹分布下实现多项式时间的后验采样，首次为带暖启动的逆问题求解提供理论保障。
+  [NeurIPS 2025][医学图像][后验采样] 提出将扩散模型与退火 Langevin 动力学结合的算法，仅需 $L^4$ 精度的 score 估计即可在（局部）对数凹分布下实现多项式时间的后验采样，首次为带暖启动的逆问题求解提供理论保障。 领域现状：扩散模型是当前领先的生成建模方法，基于学习平滑 score $s_{…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

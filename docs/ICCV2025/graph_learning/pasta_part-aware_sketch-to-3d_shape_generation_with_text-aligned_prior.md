@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior
 description: >-
-  [ICCV 2025][图学习][草图到3D生成] 提出PASTA框架，通过集成VLM文本先验补偿草图的语义缺失，并设计ISG-Net（IndivGCN+PartGCN双图卷积）建模零件间结构关系，实现SOTA的草图到3D形状生成和零件级编辑。
+  [ICCV 2025][图学习][草图到3D生成] 提出PASTA框架，通过集成VLM文本先验补偿草图的语义缺失，并设计ISG-Net（IndivGCN+PartGCN双图卷积）建模零件间结构关系，实现SOTA的草图到3D形状生成和零件级编辑。 1. 领域现状：条件3D形状生成主要有草图和文本两种输入，草图提供几何精确控制但…
 tags:
   - "ICCV 2025"
   - "图学习"

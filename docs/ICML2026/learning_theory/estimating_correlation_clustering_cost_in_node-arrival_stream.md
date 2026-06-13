@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Estimating Correlation Clustering Cost in Node-Arrival Stream
 description: >-
-  [ICML 2026][关联聚类] 本文研究「节点到达」数据流模型下相关聚类（correlation clustering）代价的近似估计问题：作者提出 C4Approx 算法，用 $O(n^{(3+\alpha)/4}\log n)$ 词的**亚线性**空间和常数遍数得到 $(O(1)…
+  [ICML 2026][算法理论 / 数据流算法 / 图聚类][关联聚类] 本文研究「节点到达」数据流模型下相关聚类（correlation clustering）代价的近似估计问题：作者提出 C4Approx 算法，用 $O(n^{(3+\alpha)/4}\log n)$ 词的**亚线性**空间和常数遍数得到 $(O(1), n^{1-\alpha})$-近似，并配套两个匹配下界证明多遍与加性误差都不可避免；在真实数据上仅存 2% 节点即达 Pivot 同等效果。
 tags:
   - "ICML 2026"
+  - "算法理论 / 数据流算法 / 图聚类"
   - "关联聚类"
   - "节点到达流"
   - "亚线性空间"

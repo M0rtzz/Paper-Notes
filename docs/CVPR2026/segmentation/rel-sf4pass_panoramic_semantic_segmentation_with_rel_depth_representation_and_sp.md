@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REL-SF4PASS: Panoramic Semantic Segmentation with REL Depth Representation and Spherical Fusion
 description: >-
-  [CVPR 2026][语义分割][全景语义分割] 提出 REL 深度表示（基于柱面坐标系的 Rectified Depth + EGVIA + LOA 三通道）和球面动态多模态融合（SMMF），用于全景语义分割…
+  [CVPR 2026][语义分割][全景语义分割] 提出 REL 深度表示（基于柱面坐标系的 Rectified Depth + EGVIA + LOA 三通道）和球面动态多模态融合（SMMF），用于全景语义分割，在 Stanford2D3D 上实现 63.06% 平均 mIoU（比 HHA 基线提升 2.35%），并将面对 3D 扰动时的性能方差降低约 70%。
 tags:
   - "CVPR 2026"
   - "语义分割"

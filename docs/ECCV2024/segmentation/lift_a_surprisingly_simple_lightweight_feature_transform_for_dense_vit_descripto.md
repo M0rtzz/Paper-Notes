@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiFT: A Surprisingly Simple Lightweight Feature Transform for Dense ViT Descriptors
 description: >-
-  [ECCV 2024][语义分割][ViT特征增强] 提出 LiFT，一种极其简单的轻量级后处理网络（仅 1.2M 参数），通过自监督多尺度重建目标训练，融合冻结 ViT 的粗粒度语义特征与 CNN 提取的细粒度图像特征，以仅增加 5.7% 参数和 22% FLOPs 的代价将 ViT 特征分辨率翻倍…
+  [ECCV 2024][语义分割][ViT特征增强] 提出 LiFT，一种极其简单的轻量级后处理网络（仅 1.2M 参数），通过自监督多尺度重建目标训练，融合冻结 ViT 的粗粒度语义特征与 CNN 提取的细粒度图像特征，以仅增加 5.7% 参数和 22% FLOPs 的代价将 ViT 特征分辨率翻倍，在关键点匹配、检测、分割和目标发现等密集任务上均获得显著性能提升。
 tags:
   - "ECCV 2024"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Genetic Algorithm for Navigating Synthesizable Molecular Spaces
 description: >-
-  [ICLR 2026][计算生物][遗传算法] 提出 SynGA，一种直接在合成路线（合成树）上操作的遗传算法，通过自定义的交叉和变异算子将搜索严格约束在可合成分子空间内，结合 ML 驱动的构建块过滤实现 SOTA 的可合成类似物搜索和属性优化性能。
+  [ICLR 2026][计算生物][遗传算法] 提出 SynGA，一种直接在合成路线（合成树）上操作的遗传算法，通过自定义的交叉和变异算子将搜索严格约束在可合成分子空间内，结合 ML 驱动的构建块过滤实现 SOTA 的可合成类似物搜索和属性优化性能。 领域现状：分子设计中的生成模型 (VAE, RL, GFlowNet…
 tags:
   - "ICLR 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iAgent: LLM Agent as a Shield between User and Recommender Systems
 description: >-
-  [ACL 2025][LLM Agent][用户-Agent-平台范式] 提出用户-Agent-平台三层范式，在用户和推荐系统之间插入 LLM Agent 作为保护层，通过指令解析、知识获取、重排序和动态用户画像实现个性化推荐，在四个数据集上平均提升 16.6%，同时有效缓解回音室效应和低活跃用户的不公平问题…
+  [ACL 2025][LLM Agent][用户-Agent-平台范式] 提出用户-Agent-平台三层范式，在用户和推荐系统之间插入 LLM Agent 作为保护层，通过指令解析、知识获取、重排序和动态用户画像实现个性化推荐，在四个数据集上平均提升 16.6%，同时有效缓解回音室效应和低活跃用户的不公平问题。
 tags:
   - "ACL 2025"
   - "LLM Agent"

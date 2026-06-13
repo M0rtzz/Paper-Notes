@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tropical Attention: Neural Algorithmic Reasoning for Combinatorial Algorithms
 description: >-
-  [NeurIPS 2025][物理/科学计算][热带几何] Tropical Attention用热带代数几何替代softmax点积注意力，在热带射影空间中进行分段线性推理，实现与组合算法多面体决策结构的对齐，首次将神经算法推理扩展到NP-hard问题…
+  [NeurIPS 2025][物理/科学计算][热带几何] Tropical Attention用热带代数几何替代softmax点积注意力，在热带射影空间中进行分段线性推理，实现与组合算法多面体决策结构的对齐，首次将神经算法推理扩展到NP-hard问题，在长度/数值/噪声三种OOD泛化上全面超越softmax基线。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

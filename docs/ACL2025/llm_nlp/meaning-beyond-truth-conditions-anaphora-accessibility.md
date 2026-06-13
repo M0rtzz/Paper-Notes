@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility
 description: >-
-  [ACL 2025][LLM/NLP][篇章语义] 本文提出自然语言理解能力的三层次层级体系（词汇/句子/篇章），以回指可及性（anaphora accessibility）作为篇章级理解的诊断任务，通过动态语义学启发的评估数据集系统考察了 LLM 在全称量词、否定和析取三种语言结构下的篇章理解能力。
+  [ACL 2025][LLM 其他][篇章语义] 本文提出自然语言理解能力的三层次层级体系（词汇/句子/篇章），以回指可及性（anaphora accessibility）作为篇章级理解的诊断任务，通过动态语义学启发的评估数据集系统考察了 LLM 在全称量词、否定和析取三种语言结构下的篇章理解能力。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "篇章语义"
   - "回指可及性"
   - "动态语义学"

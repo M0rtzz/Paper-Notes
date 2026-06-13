@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAUCE: Selective Concept Unlearning in Vision-Language Models with Sparse Autoencoders
 description: >-
-  [ICCV 2025][LLM安全][概念遗忘] SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。
+  [ICCV 2025][LLM安全][概念遗忘] SAUCE 利用稀疏自编码器（SAE）在 VLM 的中间表征中识别并选择性抑制与目标概念相关的特征，实现了无需权重更新的细粒度概念遗忘，在 60 个概念的测试中遗忘质量超越 SOTA 18%。 领域现状：随着 VLM（如 LLaVA、LLaMA-Vision）的广泛部署…
 tags:
   - "ICCV 2025"
   - "LLM安全"

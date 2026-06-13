@@ -2,7 +2,7 @@
 title: >-
   [论文解读] POp-GS: Next Best View in 3D-Gaussian Splatting with P-Optimality
 description: >-
-  [CVPR 2025][3D视觉][3D高斯泼溅] 将经典最优实验设计中的 P-Optimality 理论引入 3D-GS，推导出基于 Hessian 矩阵的通用协方差矩阵，提出对角和块对角两种近似方案…
+  [CVPR 2025][3D视觉][3D高斯泼溅] 将经典最优实验设计中的 P-Optimality 理论引入 3D-GS，推导出基于 Hessian 矩阵的通用协方差矩阵，提出对角和块对角两种近似方案，在 D-Optimality 和 T-Optimality 准则下显著超越 FisherRF 的信息增益量化。
 tags:
   - "CVPR 2025"
   - "3D视觉"

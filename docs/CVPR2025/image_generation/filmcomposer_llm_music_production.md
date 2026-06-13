@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FilmComposer: LLM-Driven Music Production for Silent Film Clips
 description: >-
-  [CVPR 2025][图像生成][电影配乐] 提出 FilmComposer，模拟专业音乐人工作流，通过视觉处理、节奏可控 MusicGen 和多智能体编曲混音三大模块，首次实现面向电影片段的高质量专业配乐自动生成。
+  [CVPR 2025][图像生成][电影配乐] 提出 FilmComposer，模拟专业音乐人工作流，通过视觉处理、节奏可控 MusicGen 和多智能体编曲混音三大模块，首次实现面向电影片段的高质量专业配乐自动生成。 领域现状：AI 音乐生成在波形质量（MusicGen）和符号音乐控制上取得进展，但距电影配乐的专业要求（4…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentiable Stellar Atmospheres with Physics-Informed Neural Networks
 description: >-
-  [ICML 2025][物理/科学计算] 提出 Kurucz-a1，一个物理约束神经网络（PINN），用于模拟一维恒星大气模型（LTE 假设），解决了可微恒星光谱学中大气结构求解器不可微的关键瓶颈，在流体静力平衡和太阳光谱一致性上甚至优于经典 ATLAS-12 代码。
+  [ICML 2025][物理/科学计算] 提出 Kurucz-a1，一个物理约束神经网络（PINN），用于模拟一维恒星大气模型（LTE 假设），解决了可微恒星光谱学中大气结构求解器不可微的关键瓶颈，在流体静力平衡和太阳光谱一致性上甚至优于经典 ATLAS-12 代码。 问题定义 恒星光谱建模包含两个核心步骤：(1) 构建大气…
 tags:
   - "ICML 2025"
   - "物理/科学计算"

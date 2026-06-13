@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Rethinking Parameter Sharing for LLM Fine-Tuning with Multiple LoRAs
 description: >-
-  [ACL2026][模型压缩][LoRA] 本文推翻了“多 LoRA 应共享 A 矩阵”的常见假设，证明 A 的相似性主要来自相同初始化而非共享知识，并提出共享 B 矩阵的 ALoRA / Fed-ALoRA，在多任务和联邦微调中兼顾性能、均衡性与通信效率。
+  [ACL2026 Findings][模型压缩][LoRA] 本文推翻了“多 LoRA 应共享 A 矩阵”的常见假设，证明 A 的相似性主要来自相同初始化而非共享知识，并提出共享 B 矩阵的 ALoRA / Fed-ALoRA，在多任务和联邦微调中兼顾性能、均衡性与通信效率。 领域现状：LLM 微调通常使用 LoRA 等参数…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "模型压缩"
   - "LoRA"
   - "参数共享"

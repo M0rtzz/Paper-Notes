@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Retire the "Positive Backdoor" Label -- Secret Alignment Requires Strict and Systematic Evaluation
 description: >-
-  [ICML2026][LLM安全][Secret Alignment] 本文是一篇 position paper，主张废弃"positive backdoor"这一误导性标签，将触发器激活的隐藏行为统一重命名为 Secret Alignment…
+  [ICML2026][LLM安全][Secret Alignment] 本文是一篇 position paper，主张废弃"positive backdoor"这一误导性标签，将触发器激活的隐藏行为统一重命名为 Secret Alignment，并通过 SudoLM / Instructional Fingerprinting / SafeTrigger 三个代表性方案在六项标准化属性（有效性、无害性、持久性、效率、鲁棒性、可靠性）上的系统评测，揭示这类机制在机密性/完整性/可用性（CIA）方面的脆弱性，呼吁社区默认视其为"不安全"，除非有严格、标准化的证据支持。
 tags:
   - "ICML2026"
   - "LLM安全"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.28597](https://arxiv.org/abs/2605.28597)  
 **代码**: 待确认  
-**领域**: llm_safety  
+**领域**: LLM安全  
 **关键词**: Secret Alignment、后门防御、私有 LLM、CIA 评估、行为密度
 
 ## 一句话总结

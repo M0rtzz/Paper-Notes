@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARM-FM: Automated Reward Machines via Foundation Models for Compositional Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][奖励机器] 提出ARM-FM框架，利用基础模型（GPT-4o等）从自然语言任务描述自动生成语言对齐奖励机器（LARM）——包括自动机结构、可执行标签函数和每个状态的自然语言描述——为RL agent提供组合式密集奖励信号…
+  [ICLR 2026][强化学习][奖励机器] 提出ARM-FM框架，利用基础模型（GPT-4o等）从自然语言任务描述自动生成语言对齐奖励机器（LARM）——包括自动机结构、可执行标签函数和每个状态的自然语言描述——为RL agent提供组合式密集奖励信号，在MiniGrid/Craftium(3D Minecraft)/Meta-World等环境中解决标准RL完全无法学习的稀疏奖励长程任务，并实现零样本任务泛化。
 tags:
   - "ICLR 2026"
   - "强化学习"

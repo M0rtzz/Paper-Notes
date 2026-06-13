@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Vision Pre-Training to 4K Resolution
 description: >-
-  [CVPR 2025][可解释性][高分辨率预训练] 本文提出PS3（Pre-training with Scale-Selective Scaling），通过局部区域与局部caption的对比学习代替全图对比，以近常数的计算开销将CLIP式视觉预训练扩展到4K分辨率…
+  [CVPR 2025][可解释性][高分辨率预训练] 本文提出PS3（Pre-training with Scale-Selective Scaling），通过局部区域与局部caption的对比学习代替全图对比，以近常数的计算开销将CLIP式视觉预训练扩展到4K分辨率，并结合top-down/bottom-up patch选择机制构建VILA-HD多模态大模型，在高分辨率感知任务上大幅超越GPT-4o和Qwen2.5-VL。
 tags:
   - "CVPR 2025"
   - "可解释性"

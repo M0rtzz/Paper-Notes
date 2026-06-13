@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Federated In-Context Learning: Iterative Refinement for Improved Answer Quality
 description: >-
-  [ICML 2025][LLM安全][联邦学习] 本文提出 Fed-ICL，一种联邦 In-Context Learning 框架，通过客户端与服务端之间的多轮迭代协作，在不传输模型参数的情况下利用分散在各客户端的高质量示例逐步改善回答质量，并建立了收敛保证。
+  [ICML 2025][LLM安全][联邦学习] 本文提出 Fed-ICL，一种联邦 In-Context Learning 框架，通过客户端与服务端之间的多轮迭代协作，在不传输模型参数的情况下利用分散在各客户端的高质量示例逐步改善回答质量，并建立了收敛保证。 领域现状： In-Context Learning（ICL）使语…
 tags:
   - "ICML 2025"
   - "LLM安全"

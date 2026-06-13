@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CrossGuard: Safeguarding MLLMs against Joint-Modal Implicit Malicious Attacks
 description: >-
-  [ACL 2026][LLM安全][implicit jailbreak] 针对"图像和文本单独都安全、合起来才有害"的隐式跨模态攻击，提出基于 RL 红队的 ImpForge 自动批量生成此类样本（三种 reward：safety / semantic / overlap）…
+  [ACL 2026][LLM安全][implicit jailbreak] 针对"图像和文本单独都安全、合起来才有害"的隐式跨模态攻击，提出基于 RL 红队的 ImpForge 自动批量生成此类样本（三种 reward：safety / semantic / overlap），再用这些数据 LoRA SFT 出 CrossGuard 守卫模型——把 SIUO 隐式攻击 ASR 从 GPT-4o 的 48.9% 降到 5.4%，同时在 5 个安全 benchmark 上平均 ASR 仅 2.79%（runner-up Claude-3.5 是 12.05%）。
 tags:
   - "ACL 2026"
   - "LLM安全"

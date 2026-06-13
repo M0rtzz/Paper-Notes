@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Arbitrary Generative Video Interpolation
 description: >-
-  [ICLR 2026][视频生成][Video Frame Interpolation] ArbInterp 提出了一种支持任意时间戳、任意长度的生成式视频帧插值框架，通过时间戳感知旋转位置编码（TaRoPE）实现精准时间控制，并通过外观-运动解耦的条件注入策略实现长序列的无缝拼接。
+  [ICLR 2026][视频生成][Video Frame Interpolation] ArbInterp 提出了一种支持任意时间戳、任意长度的生成式视频帧插值框架，通过时间戳感知旋转位置编码（TaRoPE）实现精准时间控制，并通过外观-运动解耦的条件注入策略实现长序列的无缝拼接。 视频帧插值（Video Frame In…
 tags:
   - "ICLR 2026"
   - "视频生成"

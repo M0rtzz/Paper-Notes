@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GP-4DGS: Probabilistic 4D Gaussian Splatting from Monocular Video via Variational Gaussian Processes
 description: >-
-  [CVPR 2026][3D视觉][4D高斯溅射] 提出 GP-4DGS，将变分高斯过程（GP）整合到 4D 高斯溅射中，通过时空组合核和变分推断实现概率化运动建模，同时赋予 4DGS 不确定性量化、运动外推和自适应运动先验三大新能力。
+  [CVPR 2026][3D视觉][4D高斯溅射] 提出 GP-4DGS，将变分高斯过程（GP）整合到 4D 高斯溅射中，通过时空组合核和变分推断实现概率化运动建模，同时赋予 4DGS 不确定性量化、运动外推和自适应运动先验三大新能力。 领域现状：4D 高斯溅射（4DGS）是动态新视角合成的主流方法，通过将 3D 高斯原始体…
 tags:
   - "CVPR 2026"
   - "3D视觉"

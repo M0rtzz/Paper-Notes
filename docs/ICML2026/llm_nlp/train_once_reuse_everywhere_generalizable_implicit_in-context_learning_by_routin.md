@@ -2,10 +2,10 @@
 title: >-
   [论文解读] In-Context Routing (ICR): 一次训练、处处可用的 attention-level 隐式 ICL
 description: >-
-  [ICML 2026][LLM/NLP][隐式 ICL] ICR 不在 residual stream 注入 shift vector，而是从多域 ICL 中用 PCA 抽出 Principal ICL Directions (PIDs) 作为 attention logits 的 low-rank 修正方向…
+  [ICML 2026][LLM 其他][隐式 ICL] ICR 不在 residual stream 注入 shift vector，而是从多域 ICL 中用 PCA 抽出 Principal ICL Directions (PIDs) 作为 attention logits 的 low-rank 修正方向，配 query-conditioned router 自适应调制；一次训练后能在 12 个 in/out-of-domain 任务上零样本推理，无任务特定检索/再训练，在 OOD 上不像 vector-based 方法那样退化。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "隐式 ICL"
   - "注意力路由"
   - "Principal ICL Directions"

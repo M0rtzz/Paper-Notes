@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hyperion: A Fast, Versatile Symbolic Gaussian Belief Propagation Framework for Continuous-Time SLAM
 description: >-
-  [ECCV 2024][3D视觉][连续时间SLAM] 本文提出Hyperion，一个基于SymForce符号计算框架自动生成超高效B/Z样条实现的连续时间高斯置信传播（GBP）SLAM框架，在运动跟踪和定位场景中达到与传统NLLS求解器（Ceres）相当的精度，同时天然支持分布式多智能体推理。
+  [ECCV 2024][3D视觉][连续时间SLAM] 本文提出Hyperion，一个基于SymForce符号计算框架自动生成超高效B/Z样条实现的连续时间高斯置信传播（GBP）SLAM框架，在运动跟踪和定位场景中达到与传统NLLS求解器（Ceres）相当的精度，同时天然支持分布式多智能体推理。 领域现状：同时定位与建图（S…
 tags:
   - "ECCV 2024"
   - "3D视觉"

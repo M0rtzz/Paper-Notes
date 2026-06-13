@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution
 description: >-
-  [ECCV 2024][图像恢复][真实世界超分辨率] 提出成对距离蒸馏框架，通过蒸馏专用模型和通用模型之间的内部和模型间距离关系，实现无监督真实世界图像超分辨率的退化自适应。
+  [ECCV 2024][图像恢复][真实世界超分辨率] 提出成对距离蒸馏框架，通过蒸馏专用模型和通用模型之间的内部和模型间距离关系，实现无监督真实世界图像超分辨率的退化自适应。 单图超分辨率（SISR）是计算机视觉中的经典问题。标准方法使用已知的下采样核（如bicubic）从高分辨率图像构建低分辨率训练对…
 tags:
   - "ECCV 2024"
   - "图像恢复"

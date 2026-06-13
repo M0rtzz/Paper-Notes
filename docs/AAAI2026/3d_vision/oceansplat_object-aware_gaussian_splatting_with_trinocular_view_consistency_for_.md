@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OceanSplat: Object-aware Gaussian Splatting with Trinocular View Consistency for Underwater Scene Reconstruction
 description: >-
-  [AAAI 2026][3D视觉][3D高斯泼溅] 提出 OceanSplat，通过三目视图一致性约束、合成对极深度先验和深度感知透明度调整，实现了散射介质下的高保真水下 3D 高斯泼溅场景重建，显著减少了浮动伪影并超越现有方法。
+  [AAAI 2026][3D视觉][3D高斯泼溅] 提出 OceanSplat，通过三目视图一致性约束、合成对极深度先验和深度感知透明度调整，实现了散射介质下的高保真水下 3D 高斯泼溅场景重建，显著减少了浮动伪影并超越现有方法。 水下场景重建对海底测绘、生态监测、水下基础设施检测等海洋机器人任务至关重要…
 tags:
   - "AAAI 2026"
   - "3D视觉"

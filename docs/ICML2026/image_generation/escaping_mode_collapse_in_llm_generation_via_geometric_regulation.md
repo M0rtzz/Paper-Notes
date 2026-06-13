@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Escaping Mode Collapse in LLM Generation via Geometric Regulation
 description: >-
-  [ICML 2026][图像生成][模式崩溃] 本文从动力系统视角把 LLM 长文本生成中的「模式崩溃」（重复、循环、单调）重新解释为隐藏状态轨迹在表示空间里的「几何坍缩」，并提出 RMR — 在 Transformer value cache 上做轻量低秩阻尼来抑制最具持续性的自我强化方向…
+  [ICML 2026][图像生成][模式崩溃] 本文从动力系统视角把 LLM 长文本生成中的「模式崩溃」（重复、循环、单调）重新解释为隐藏状态轨迹在表示空间里的「几何坍缩」，并提出 RMR — 在 Transformer value cache 上做轻量低秩阻尼来抑制最具持续性的自我强化方向，从而在极低熵的解码区间（0.8 nats/step）依然保持稳定高质量生成。
 tags:
   - "ICML 2026"
   - "图像生成"

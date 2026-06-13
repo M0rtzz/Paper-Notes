@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Redundancy, Isotropy and Intrinsic Dimensionality of Prompt-Based Text Embeddings
 description: >-
-  [ACL 2025][信息检索/RAG][文本嵌入] 系统研究了基于Prompt的文本嵌入模型（如gte-Qwen2、E5-mistral等）在后处理降维下的性能鲁棒性，发现分类/聚类任务仅保留原始维度的0.5%即可基本保持性能…
+  [ACL 2025][信息检索/RAG][文本嵌入] 系统研究了基于Prompt的文本嵌入模型（如gte-Qwen2、E5-mistral等）在后处理降维下的性能鲁棒性，发现分类/聚类任务仅保留原始维度的0.5%即可基本保持性能，并通过内在维度（ID）和各向同性（IsoScore）两个指标定量解释了不同任务Prompt产生的嵌入冗余度差异。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

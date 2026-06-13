@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual Learning of Domain-Invariant Representations
 description: >-
-  [ICML 2026][continual learning] 作者首次把"域不变表示学习（DIRL）"显式注入到持续学习里：以 replay buffer 为载体做 multi-domain 不变性计算 + 域条件对齐，提出 ⋆-CL-{VREX, Fishr, CORAL, MMD…
+  [ICML 2026][continual learning] 作者首次把"域不变表示学习（DIRL）"显式注入到持续学习里：以 replay buffer 为载体做 multi-domain 不变性计算 + 域条件对齐，提出 ⋆-CL-{VREX, Fishr, CORAL, MMD, ANDMask} 五个方法，在六个跨视觉/医学/制造/生态的数据集上把目标域准确率推到 SOTA。
 tags:
   - "ICML 2026"
   - "continual learning"

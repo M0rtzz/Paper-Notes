@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalized Contrastive Learning for Universal Multimodal Retrieval
 description: >-
-  [NeurIPS 2025][信息检索/RAG][多模态] 提出 Generalized Contrastive Learning (GCL)——在 mini-batch 内对所有 6 种模态对组合（image↔text, image↔image+text, text↔image+text）执行对比学习…
+  [NeurIPS 2025][信息检索/RAG][多模态] 提出 Generalized Contrastive Learning (GCL)——在 mini-batch 内对所有 6 种模态对组合（image↔text, image↔image+text, text↔image+text）执行对比学习，无需构建新的三元组数据集，仅用现有图文对即可在 M-BEIR 上将 VISTA 的平均检索精度从 21.18 提升到 34.06（+60.8%），在 MMEB 的 text→image+text 任务上从 10.1% 提升到 31.1%。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

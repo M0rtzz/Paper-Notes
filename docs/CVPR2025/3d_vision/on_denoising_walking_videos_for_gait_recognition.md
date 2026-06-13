@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Denoising Walking Videos for Gait Recognition
 description: >-
-  [CVPR 2025][3D视觉][步态识别] 提出 DenoisingGait，结合"知识驱动去噪"（利用生成式扩散模型在特定 timestep 下滤除步态无关信息）和"几何驱动去噪"（Feature Matching 模块将多通道扩散特征压缩为二维方向向量）…
+  [CVPR 2025][3D视觉][步态识别] 提出 DenoisingGait，结合"知识驱动去噪"（利用生成式扩散模型在特定 timestep 下滤除步态无关信息）和"几何驱动去噪"（Feature Matching 模块将多通道扩散特征压缩为二维方向向量），生成全新的 Gait Feature Field 表示，在多个 RGB 步态数据集上取得 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

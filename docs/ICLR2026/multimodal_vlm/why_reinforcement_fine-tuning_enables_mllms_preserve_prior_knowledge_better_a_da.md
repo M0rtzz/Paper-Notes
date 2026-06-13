@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Reinforcement Fine-Tuning Preserves Prior Knowledge Better: A Data Perspective
 description: >-
-  [多模态VLM] 通过拼图任务系统研究 SFT 与 RFT 对先验知识的影响，揭示 RFT 避免灾难性遗忘的核心在于**数据分布**而非算法差异——RFT 采样的数据天然与基模型概率景观对齐，干扰更小。
+  [多模态VLM] 通过拼图任务系统研究 SFT 与 RFT 对先验知识的影响，揭示 RFT 避免灾难性遗忘的核心在于数据分布：而非算法差异——RFT 采样的数据天然与基模型概率景观对齐，干扰更小。 SFT 和 RFT 是大模型后训练的两种主要方法，但它们对先验知识保留的影响尚不明确。现有研究主要关注下游任务性能提升…
 tags:
   - "多模态VLM"
 ---

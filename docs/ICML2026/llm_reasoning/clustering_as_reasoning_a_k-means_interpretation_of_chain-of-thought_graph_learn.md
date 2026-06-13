@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Clustering as Reasoning: A $k$-Means Interpretation of Chain-of-Thought Graph Learning
 description: >-
-  [ICML 2026][LLM推理][Chain-of-Thought] 本文揭示 Transformer 自注意力与 $k$-means 聚类的数学等价性，据此设计 KCoT 框架，将 CoT 推理显式拆解为"赋值-更新"两步语义过滤提示，并用 Condition-Net 动态融合拓扑先验与演化思维表示…
+  [ICML 2026][LLM推理][Chain-of-Thought] 本文揭示 Transformer 自注意力与 $k$-means 聚类的数学等价性，据此设计 KCoT 框架，将 CoT 推理显式拆解为"赋值-更新"两步语义过滤提示，并用 Condition-Net 动态融合拓扑先验与演化思维表示，在节点分类和链接预测上持续超越 SOTA。
 tags:
   - "ICML 2026"
   - "LLM推理"

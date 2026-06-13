@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flatness-Aware Stochastic Gradient Langevin Dynamics
 description: >-
-  [ICML 2026][AI安全][SGLD] 本文提出 fSGLD：在标准 SGLD 更新里把梯度处的参数 $\theta$ 换成被高斯扰动过的 $\theta+\epsilon$…
+  [ICML 2026][AI安全][SGLD] 本文提出 fSGLD：在标准 SGLD 更新里把梯度处的参数 $\theta$ 换成被高斯扰动过的 $\theta+\epsilon$，并将扰动尺度 $\sigma$ 与逆温度 $\beta$ 通过 $\sigma=\beta^{-(1+\eta)/4}$ 严格耦合，从而在不增加任何梯度/内存开销的前提下，让算法的不变测度逼近 Hessian-trace 正则化目标 $v(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))$ 对应的 Gibbs 分布，并给出 Wasserstein-1 与超额风险的非渐近界…
 tags:
   - "ICML 2026"
   - "AI安全"

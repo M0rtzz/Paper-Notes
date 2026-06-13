@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Federated Finetuning of LLMs via Alternating Optimization of LoRA
 description: >-
-  [NeurIPS 2025][模型压缩][联邦学习] 提出 RoLoRA，通过交替优化 LoRA 的 down-projection (A) 和 up-projection (B) 矩阵，解决联邦学习中 LoRA 聚合不精确和表达力受限的问题…
+  [NeurIPS 2025][模型压缩][联邦学习] 提出 RoLoRA，通过交替优化 LoRA 的 down-projection (A) 和 up-projection (B) 矩阵，解决联邦学习中 LoRA 聚合不精确和表达力受限的问题，在 RoBERTa-Large 和 Llama-2-7B 上显著优于 FedAVG of LoRA 和 FFA-LoRA。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

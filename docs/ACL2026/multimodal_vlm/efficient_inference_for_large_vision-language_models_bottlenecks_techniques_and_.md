@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Efficient Inference for Large Vision-Language Models: Bottlenecks, Techniques, and Prospects
 description: >-
-  [ACL 2026][多模态VLM][视觉语言模型] 本文提出一个系统性的LVLM推理效率分类体系，围绕编码-预填充-解码三阶段推理流水线分析瓶颈，揭示了"视觉token主导"导致的系统性效率屏障，并梳理了从信息密度塑形、长上下文注意力管理到内存带宽突破的完整优化技术图谱。
+  [ACL 2026 Findings][多模态VLM][视觉语言模型] 本文提出一个系统性的LVLM推理效率分类体系，围绕编码-预填充-解码三阶段推理流水线分析瓶颈，揭示了"视觉token主导"导致的系统性效率屏障，并梳理了从信息密度塑形、长上下文注意力管理到内存带宽突破的完整优化技术图谱。 领域现状：大型视觉语言模型（如Q…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "视觉语言模型"
   - "推理效率"

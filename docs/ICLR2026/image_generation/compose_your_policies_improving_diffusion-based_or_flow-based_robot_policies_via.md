@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compose Your Policies! Improving Diffusion-based or Flow-based Robot Policies via Test-time Distribution-level Composition
 description: >-
-  [ICLR 2026][图像生成][策略组合] 提出 General Policy Composition (GPC)，在测试时通过凸组合多个预训练扩散/Flow 策略的分布分数（score），无需额外训练即可产生超越任何单一父策略的更强策略…
+  [ICLR 2026][图像生成][策略组合] 提出 General Policy Composition (GPC)，在测试时通过凸组合多个预训练扩散/Flow 策略的分布分数（score），无需额外训练即可产生超越任何单一父策略的更强策略，理论证明凸组合可改善单步分数误差且通过 Grönwall 界传播到全程轨迹。
 tags:
   - "ICLR 2026"
   - "图像生成"

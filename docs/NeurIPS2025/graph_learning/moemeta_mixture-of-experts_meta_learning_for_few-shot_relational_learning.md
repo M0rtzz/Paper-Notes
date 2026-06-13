@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning
 description: >-
-  [NeurIPS 2025][图学习][知识图谱] 提出MoEMeta框架，通过混合专家模型学习全局共享的关系原型实现跨任务泛化，结合任务定制的投影适应机制捕获局部上下文，在三个KG基准上达到SOTA。
+  [NeurIPS 2025][图学习][知识图谱] 提出MoEMeta框架，通过混合专家模型学习全局共享的关系原型实现跨任务泛化，结合任务定制的投影适应机制捕获局部上下文，在三个KG基准上达到SOTA。 少样本知识图谱关系学习(FSRL)旨在仅凭少量训练三元组推理新关系。现有基于MAML的方法存在两个关键缺陷： 忽视跨任务共…
 tags:
   - "NeurIPS 2025"
   - "图学习"

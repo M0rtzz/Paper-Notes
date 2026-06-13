@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Protein Structure-Function Relationships through Knowledge-guided Representation Decomposition
 description: >-
-  [ICML 2026][计算生物][蛋白质结构-功能] ProtDiS 把预训练蛋白质微环境嵌入（如 ESM-3）通过信息瓶颈+冗余消除的方式拆解成 8 个生物物理可解释的"知识通道"和 1 个残差通道，让结构表示在十二个下游任务（尤其是结构相似但功能不同的情形）上一致提升。
+  [ICML 2026][计算生物][蛋白质结构-功能] ProtDiS 把预训练蛋白质微环境嵌入（如 ESM-3）通过信息瓶颈+冗余消除的方式拆解成 8 个生物物理可解释的"知识通道"和 1 个残差通道，让结构表示在十二个下游任务（尤其是结构相似但功能不同的情形）上一致提升。 领域现状：当前蛋白质结构表示主要靠 GearNe…
 tags:
   - "ICML 2026"
   - "计算生物"

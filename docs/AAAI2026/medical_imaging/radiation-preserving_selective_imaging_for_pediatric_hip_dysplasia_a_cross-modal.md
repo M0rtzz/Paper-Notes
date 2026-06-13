@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach
 description: >-
-  [AAAI 2026][医学图像][发育性髋关节发育不良] 提出一种"超声优先、保辐射"的跨模态选择性成像策略，通过自监督预训练的冻结编码器、测量忠实的轻量头网络和共形预测校准的单侧下界，实现了在发育性髋关节发育不良（DDH）诊断中有据可依地决定何时仅用超声即可、何时需要额外的 X 光检查。
+  [AAAI 2026 Best Paper Oral][医学图像][发育性髋关节发育不良] 提出一种"超声优先、保辐射"的跨模态选择性成像策略，通过自监督预训练的冻结编码器、测量忠实的轻量头网络和共形预测校准的单侧下界，实现了在发育性髋关节发育不良（DDH）诊断中有据可依地决定何时仅用超声即可、何时需要额外的 X 光检查。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Best Paper Oral"
   - "医学图像"
   - "发育性髋关节发育不良"
   - "超声-X光跨模态"

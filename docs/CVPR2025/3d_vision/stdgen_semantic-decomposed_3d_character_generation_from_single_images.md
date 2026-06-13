@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StdGEN: Semantic-Decomposed 3D Character Generation from Single Images
 description: >-
-  [CVPR 2025][3D视觉][3D角色生成] StdGEN 提出了一个从单张图像高效生成语义分解（身体/衣服/头发分离）的高质量 3D 角色的流水线，核心是 Semantic-aware Large Reconstruction Model (S-LRM)…
+  [CVPR 2025][3D视觉][3D角色生成] StdGEN 提出了一个从单张图像高效生成语义分解（身体/衣服/头发分离）的高质量 3D 角色的流水线，核心是 Semantic-aware Large Reconstruction Model (S-LRM)，通过在 NeRF/SDF 中引入语义场实现前馈式的几何-颜色-语义联合重建，3 分钟内即可生成可直接用于游戏/动画的分层 3D 角色。
 tags:
   - "CVPR 2025"
   - "3D视觉"

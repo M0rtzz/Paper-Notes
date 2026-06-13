@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interlocking-free Selective Rationalization Through Genetic-based Learning
 description: >-
-  [ACL 2025][选择性合理化] 本文提出 GenSPP，首个完全消除 interlocking 问题的选择性合理化框架，通过遗传算法对生成器和预测器进行分离优化，在合成数据集和仇恨言论检测任务上显著提升了高亮质量（Hl-F1 提升 6.5%–10.3%），同时保持了可比的分类性能。
+  [ACL 2025][选择性合理化] 本文提出 GenSPP，首个完全消除 interlocking 问题的选择性合理化框架，通过遗传算法对生成器和预测器进行分离优化，在合成数据集和仇恨言论检测任务上显著提升了高亮质量（Hl-F1 提升 6.5%–10.3%），同时保持了可比的分类性能。 领域现状：选择性合理化（select…
 tags:
   - "ACL 2025"
   - "选择性合理化"

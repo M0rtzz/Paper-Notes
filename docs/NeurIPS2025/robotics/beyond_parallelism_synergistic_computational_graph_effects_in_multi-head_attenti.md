@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Parallelism: Synergistic Computational Graph Effects in Multi-Head Attention
 description: >-
-  [NeurIPS 2025 (Workshop: Symmetry and Geometry in Neural Representations)][机器人][多头注意力] 将多头注意力重新建模为共享汇节点的多个前馈 DAG 系统，理论证明多头可通过跨头路径实现协同效应——降低混合时间(mixing time)并放大 minimax…
+  [NeurIPS 2025 (Workshop: Symmetry and Geometry in Neural Representations)][机器人][多头注意力] 将多头注意力重新建模为共享汇节点的多个前馈 DAG 系统，理论证明多头可通过跨头路径实现协同效应——降低混合时间(mixing time)并放大 minimax 保真度(fidelity)，在序列操作任务上实验验证了该效应。
 tags:
   - "NeurIPS 2025 (Workshop: Symmetry and Geometry in Neural Representations)"
   - "机器人"

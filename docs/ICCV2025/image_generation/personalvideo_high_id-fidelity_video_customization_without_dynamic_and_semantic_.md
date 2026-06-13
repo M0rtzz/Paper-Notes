@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PersonalVideo: High ID-Fidelity Video Customization without Dynamic and Semantic Degradation
 description: >-
-  [ICCV 2025][图像生成][视频定制化] 本文提出 PersonalVideo 框架，通过混合奖励监督（身份一致性奖励+语义一致性奖励）直接对生成视频施加反馈，消除了传统方法中 T2I 调优与 T2V 推理之间的分布差距，在保持高身份保真度的同时避免了运动动态和语义跟随的退化。
+  [ICCV 2025][图像生成][视频定制化] 本文提出 PersonalVideo 框架，通过混合奖励监督（身份一致性奖励+语义一致性奖励）直接对生成视频施加反馈，消除了传统方法中 T2I 调优与 T2V 推理之间的分布差距，在保持高身份保真度的同时避免了运动动态和语义跟随的退化。 文本到视频（T2V）生成已经取得了显著…
 tags:
   - "ICCV 2025"
   - "图像生成"

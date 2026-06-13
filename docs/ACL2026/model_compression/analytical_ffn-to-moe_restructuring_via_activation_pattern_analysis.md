@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis
 description: >-
-  [ACL 2026][模型压缩][FFN转MoE] 提出一种分析式后训练框架，通过神经元激活模式分析将dense FFN快速重构为sparse MoE——区分高频共享专家和低频路由专家，并从激活统计量构建路由器，仅需2k样本微调即可实现1.17×加速。
+  [ACL 2026][模型压缩][FFN转MoE] 提出一种分析式后训练框架，通过神经元激活模式分析将dense FFN快速重构为sparse MoE——区分高频共享专家和低频路由专家，并从激活统计量构建路由器，仅需2k样本微调即可实现1.17×加速。 领域现状：MoE架构通过稀疏激活实现参数规模与计算成本的解耦…
 tags:
   - "ACL 2026"
   - "模型压缩"

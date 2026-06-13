@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Skill-Based Mixture-of-Experts: Adaptive Routing for Heterogeneous Reasoning via Inferred Skills
 description: >-
-  [ICML2026][LLM效率][符号化 MoE] SKILL-MOE 提出一个无需训练、以"技能"为路由信号的符号化 MoE 框架：从每个问题里抽取所需技能、按技能-模型档案在 16 个预训练 LLM 中为每条样本动态招募 k 个专家、再用任务级最优聚合器把多条 CoT 融成最终答案…
+  [ICML2026][LLM效率][符号化 MoE] SKILL-MOE 提出一个无需训练、以"技能"为路由信号的符号化 MoE 框架：从每个问题里抽取所需技能、按技能-模型档案在 16 个预训练 LLM 中为每条样本动态招募 k 个专家、再用任务级最优聚合器把多条 CoT 融成最终答案；配合按专家分桶的批量推理，单卡就能跑 16 个 7-8B 模型，平均比最强多智能体基线高 8.15%。
 tags:
   - "ICML2026"
   - "LLM效率"

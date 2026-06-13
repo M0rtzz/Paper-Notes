@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AFMRL: Attribute-Enhanced Fine-Grained Multi-Modal Representation Learning in E-commerce
 description: >-
-  [ACL 2026][多模态VLM][电商检索] 提出 AFMRL 框架，将电商产品的细粒度理解定义为属性生成任务，通过 MLLM 生成关键属性来增强对比学习（AGCL），并用检索性能作为奖励信号反向优化属性生成器（RAR），在大规模电商数据集上实现 SOTA 检索性能。
+  [ACL 2026][多模态VLM][电商检索] 提出 AFMRL 框架，将电商产品的细粒度理解定义为属性生成任务，通过 MLLM 生成关键属性来增强对比学习（AGCL），并用检索性能作为奖励信号反向优化属性生成器（RAR），在大规模电商数据集上实现 SOTA 检索性能。 领域现状：多模态表示学习正从 CLIP 等判别式匹配…
 tags:
   - "ACL 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LAOF: Robust Latent Action Learning with Optical Flow Constraints
 description: >-
-  [CVPR 2026][视频理解][潜动作学习] 提出LAOF框架，利用智能体的光流作为伪监督信号约束潜动作学习，使潜动作表示对干扰更鲁棒，在LIBERO和PROCGEN上显著超越无监督基线，且在无标签条件下匹配或超越使用1%动作标签的监督方法。
+  [CVPR 2026][视频理解][潜动作学习] 提出LAOF框架，利用智能体的光流作为伪监督信号约束潜动作学习，使潜动作表示对干扰更鲁棒，在LIBERO和PROCGEN上显著超越无监督基线，且在无标签条件下匹配或超越使用1%动作标签的监督方法。 从大规模无动作标签视频中学习潜动作表示是构建可扩展具身基础模型的关键路径…
 tags:
   - "CVPR 2026"
   - "视频理解"

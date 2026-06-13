@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sublinear Time Quantum Algorithm for Attention Approximation
 description: >-
-  [ICLR2026][物理/科学计算][量子计算] 提出首个对序列长度 $n$ 具有**亚线性**时间复杂度的量子数据结构，用于近似 Transformer 注意力矩阵的行查询，预处理时间 $\widetilde{O}(\epsilon^{-1} n^{0.5} \cdot \text{poly}(d…
+  [ICLR2026][物理/科学计算][量子计算] 提出首个对序列长度 $n$ 具有**亚线性**时间复杂度的量子数据结构，用于近似 Transformer 注意力矩阵的行查询，预处理时间 $\widetilde{O}(\epsilon^{-1} n^{0.5} \cdot \text{poly}(d, s_\lambda, \alpha))$，每次行查询 $\widetilde{O}(s_\lambda^2 + s_\lambda d)$，相对经典算法实现了关于 $n$ 的二次加速。
 tags:
   - "ICLR2026"
   - "物理/科学计算"

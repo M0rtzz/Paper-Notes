@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparser Block-Sparse Attention via Token Permutation
 description: >-
-  [ICML 2026][LLM效率][块稀疏注意力] 本文提出 PBS-Attn，利用注意力的置换不变性，先按"全局重要性"对 key 在段内重排，把散落各处的 heavy hitter 聚拢成连续高密度块，再做块稀疏计算，从而在保持精度近乎追平 full attention 的同时…
+  [ICML 2026][LLM效率][块稀疏注意力] 本文提出 PBS-Attn，利用注意力的置换不变性，先按"全局重要性"对 key 在段内重排，把散落各处的 heavy hitter 聚拢成连续高密度块，再做块稀疏计算，从而在保持精度近乎追平 full attention 的同时，把长上下文 prefilling 端到端加速最高 2.75 倍。
 tags:
   - "ICML 2026"
   - "LLM效率"

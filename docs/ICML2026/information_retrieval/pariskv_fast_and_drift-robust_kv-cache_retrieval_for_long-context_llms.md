@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ParisKV: Fast and Drift-Robust KV-Cache Retrieval for Long-Context LLMs
 description: >-
-  [ICML 2026][信息检索/RAG][KV-Cache 检索] ParisKV 通过把 key/query 归一化并随机正交旋转到单位超球上、用"数据无关的解析质心"代替从 prefill 学习出来的质心…
+  [ICML 2026][信息检索/RAG][KV-Cache 检索] ParisKV 通过把 key/query 归一化并随机正交旋转到单位超球上、用"数据无关的解析质心"代替从 prefill 学习出来的质心，再叠加一个 GPU 原生的"碰撞投票 + 4-bit 量化重排"两阶段检索 + UVA 按需取 KV，在百万 token 上下文上把 Top-$k$ KV 检索的解码延迟相比 MagicPIG/PQCache 降低 17–44×，并在 9 个长生成任务里 7 个达到或超过 full attention 精度。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

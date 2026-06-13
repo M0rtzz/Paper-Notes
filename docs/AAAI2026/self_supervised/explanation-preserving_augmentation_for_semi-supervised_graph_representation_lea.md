@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explanation-Preserving Augmentation for Semi-Supervised Graph Representation Learning
 description: >-
-  [AAAI 2026][自监督学习][图对比学习] 提出EPA-GRL（Explanation-Preserving Augmentation），利用少量标签训练的GNN explainer识别图的语义子图（explanation subgraph）…
+  [AAAI 2026][自监督学习][图对比学习] 提出EPA-GRL（Explanation-Preserving Augmentation），利用少量标签训练的GNN explainer识别图的语义子图（explanation subgraph），增强时只扰动非语义部分（marginal subgraph），实现语义保持的图增强，在6个benchmark上显著优于语义无关的随机增强方法。
 tags:
   - "AAAI 2026"
   - "自监督学习"

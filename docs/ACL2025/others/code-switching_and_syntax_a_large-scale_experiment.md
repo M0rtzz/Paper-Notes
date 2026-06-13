@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Code-Switching and Syntax: A Large-Scale Experiment
 description: >-
-  [ACL 2025 (Findings)][语码转换] 本文通过大规模、多语言、跨现象的实验，首次系统性验证了"句法信息足以解释语码转换（code-switching）模式"这一语言学共识，仅用句法特征就能达到与双语人类相当的判断准确率，且学到的句法模式可泛化到未见过的语言对。
+  [ACL 2025 (Findings)][语码转换] 本文通过大规模、多语言、跨现象的实验，首次系统性验证了"句法信息足以解释语码转换（code-switching）模式"这一语言学共识，仅用句法特征就能达到与双语人类相当的判断准确率，且学到的句法模式可泛化到未见过的语言对。 领域现状：语码转换（Code-Switchin…
 tags:
   - "ACL 2025 (Findings)"
   - "语码转换"

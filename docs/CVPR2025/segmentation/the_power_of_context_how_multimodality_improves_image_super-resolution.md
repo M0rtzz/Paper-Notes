@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Power of Context: How Multimodality Improves Image Super-Resolution
 description: >-
-  [CVPR 2025][语义分割][多模态超分辨率] 提出 MMSR，一种融合深度、语义分割、边缘和文本描述等多模态信息的扩散模型超分辨率方法，通过多模态潜在连接器和多模态 CFG 有效抑制幻觉并提升 SR 质量。
+  [CVPR 2025][语义分割][多模态超分辨率] 提出 MMSR，一种融合深度、语义分割、边缘和文本描述等多模态信息的扩散模型超分辨率方法，通过多模态潜在连接器和多模态 CFG 有效抑制幻觉并提升 SR 质量。 - 单图超分辨率（SISR）是一个不适定问题，从低分辨率输入恢复高频细节极具挑战性 - 近年来基于扩散模型的超…
 tags:
   - "CVPR 2025"
   - "语义分割"

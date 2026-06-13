@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AutoExp: Automatic Experiment Design and Execution by LLMs
 description: >-
-  [ACL 2025][LLM/NLP][自动实验设计] 本文提出AutoExp框架，利用LLM作为智能代理自动完成NLP实验的全流程——从研究问题分析、实验方案设计、代码生成执行到结果分析解读，在多个标准NLP研究场景中展示了LLM自动化科研实验的可行性与局限性。
+  [ACL 2025][LLM 其他][自动实验设计] 本文提出AutoExp框架，利用LLM作为智能代理自动完成NLP实验的全流程——从研究问题分析、实验方案设计、代码生成执行到结果分析解读，在多个标准NLP研究场景中展示了LLM自动化科研实验的可行性与局限性。 领域现状：随着LLM能力的增强，AI for Science成…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动实验设计"
   - "LLM代理"
   - "实验执行"

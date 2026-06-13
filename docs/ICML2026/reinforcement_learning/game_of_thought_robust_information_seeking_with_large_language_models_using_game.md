@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Game of Thought: Robust Information Seeking with Large Language Models Using Game Theory
 description: >-
-  [ICML 2026][强化学习][20 Questions] 本文把 LLM 主动提问场景（20 Questions / 医疗诊断 / 故障排查）建模成两人零和扩展式博弈 (EFG)，提出 Game of Thought (GoT)：用深度有限的子博弈构造 + CFR 求 Nash 均衡来产生“随机化提问策…
+  [ICML 2026][强化学习][20 Questions] 本文把 LLM 主动提问场景（20 Questions / 医疗诊断 / 故障排查）建模成两人零和扩展式博弈 (EFG)，提出 Game of Thought (GoT)：用深度有限的子博弈构造 + CFR 求 Nash 均衡来产生“随机化提问策略”，在所有数据集上把 worst-case 交互轮数显著降低，且 weighted 变体下相对 UoT 提升 15–40%。
 tags:
   - "ICML 2026"
   - "强化学习"

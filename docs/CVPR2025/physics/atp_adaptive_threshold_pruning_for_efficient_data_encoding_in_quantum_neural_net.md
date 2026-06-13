@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ATP: Adaptive Threshold Pruning for Efficient Data Encoding in Quantum Neural Networks
 description: >-
-  [CVPR 2025][物理/科学计算][量子神经网络] 提出 ATP（Adaptive Threshold Pruning），在量子数据编码前自适应地剪除低信息量的数据特征，通过 L-BFGS-B 优化阈值…
+  [CVPR 2025][物理/科学计算][量子神经网络] 提出 ATP（Adaptive Threshold Pruning），在量子数据编码前自适应地剪除低信息量的数据特征，通过 L-BFGS-B 优化阈值，在 MNIST/FashionMNIST/CIFAR/PneumoniaMNIST 四个数据集的二分类任务上取得最高准确率的同时显著降低纠缠熵。
 tags:
   - "CVPR 2025"
   - "物理/科学计算"
@@ -112,10 +112,10 @@ ATP 在数据编码之前引入预处理步骤：(1) 计算每个类别的平均
 - 思路可迁移到经典深度学习中的输入特征选择和数据增强策略
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 前量子编码剪枝的想法清晰，但方法相对简单
-- 实验充分度: ⭐⭐⭐⭐ 4 个数据集、噪声/对抗攻击/真实硬件多角度验证
-- 写作质量: ⭐⭐⭐ 结构通顺，但量子背景概念篇幅较大
-- 价值: ⭐⭐⭐ 对量子计算社区有价值，但 CVPR 读者可能关注度有限
+- 新颖性: ⭐⭐⭐⭐ 前量子编码剪枝的想法清晰，但方法相对简单
+- 实验充分度: ⭐⭐⭐⭐⭐ 4 个数据集、噪声/对抗攻击/真实硬件多角度验证
+- 写作质量: ⭐⭐⭐⭐ 结构通顺，但量子背景概念篇幅较大
+- 价值: ⭐⭐⭐⭐ 对量子计算社区有价值，但 CVPR 读者可能关注度有限
 
 <!-- RELATED:START -->
 

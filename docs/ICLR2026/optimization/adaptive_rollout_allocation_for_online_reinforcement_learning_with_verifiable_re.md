@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)
 description: >-
-  [ICLR 2026][优化/理论][GRPO] 提出 VIP（Variance-Informed Predictive allocation），通过高斯过程预测每个 prompt 的成功概率，据此用凸优化在计算预算约束下分配 rollout 数量以最小化梯度方差…
+  [ICLR 2026][优化/理论][GRPO] 提出 VIP（Variance-Informed Predictive allocation），通过高斯过程预测每个 prompt 的成功概率，据此用凸优化在计算预算约束下分配 rollout 数量以最小化梯度方差，在数学推理任务上一致提升 GRPO/RLOO 的采样效率，AIME24/25 上 Pass@32 最高提升 12.3 个点。
 tags:
   - "ICLR 2026"
   - "优化/理论"

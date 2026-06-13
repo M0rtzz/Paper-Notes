@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Threshold-Based Exclusive Batching for LLM Inference
 description: >-
-  [ICML 2026][自动驾驶][LLM 推理] 本文系统刻画了 LLM 推理中 mixed batching (MB) 与 exclusive batching (EB) 的性能交叉条件，证明带宽受限 GPU 上 prefill–decode 同批会因带宽争抢拖慢 Attention…
+  [ICML 2026][自动驾驶][LLM 推理] 本文系统刻画了 LLM 推理中 mixed batching (MB) 与 exclusive batching (EB) 的性能交叉条件，证明带宽受限 GPU 上 prefill–decode 同批会因带宽争抢拖慢 Attention，进而推导出基于 hazard rate 的最优相位切换阈值 $\theta^*$ 和内存安全的批大小，并设计在线自适应调度器 EB+，在带宽受限硬件上吞吐最多提升 41.9%，非平稳流量下相对 MB 最多提升 36.4%。
 tags:
   - "ICML 2026"
   - "自动驾驶"

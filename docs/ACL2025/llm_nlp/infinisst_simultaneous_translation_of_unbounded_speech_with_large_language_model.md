@@ -2,10 +2,10 @@
 title: >-
   [论文解读] InfiniSST: Simultaneous Translation of Unbounded Speech with Large Language Model
 description: >-
-  [ACL 2025][LLM/NLP][simultaneous translation] 提出 InfiniSST，将无界流式语音同声传译建模为 LLM 多轮对话任务，结合鲁棒片段训练数据构造、多延迟增强策略和 Λ-shaped KV cache 管理…
+  [ACL 2025][LLM 其他][simultaneous translation] 提出 InfiniSST，将无界流式语音同声传译建模为 LLM 多轮对话任务，结合鲁棒片段训练数据构造、多延迟增强策略和 Λ-shaped KV cache 管理，在 MuST-C En-Es/De/Zh 三个方向上将计算感知延迟降低 0.5-1 秒而不损失翻译质量。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "simultaneous translation"
   - "streaming speech"
   - "KV cache"

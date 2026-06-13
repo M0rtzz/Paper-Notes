@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs
 description: >-
-  [ACL 2025][LLM安全][越狱攻击] 本文提出 Task-in-Prompt (TIP) 攻击——一类通过在 prompt 中嵌入序列到序列任务（如密码解码、谜语、代码执行）来间接生成违禁内容的新型越狱攻击类别，并构建 PHRYGE benchmark 系统评估…
+  [ACL 2025][LLM安全][越狱攻击] 本文提出 Task-in-Prompt (TIP) 攻击——一类通过在 prompt 中嵌入序列到序列任务（如密码解码、谜语、代码执行）来间接生成违禁内容的新型越狱攻击类别，并构建 PHRYGE benchmark 系统评估，证明该攻击可成功绕过 GPT-4o、LLaMA 3.2 等六种 SOTA LLM 的安全防护。
 tags:
   - "ACL 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Offline RL via Efficient and Expressive Shortcut Models
 description: >-
-  [NeurIPS 2025][图像生成][Offline RL] 提出 SORL，利用 shortcut models 的自一致性实现离线 RL 中高效一阶段训练与可变推理步数的策略优化，同时支持推理时的顺序和并行扩展。
+  [NeurIPS 2025][图像生成][Offline RL] 提出 SORL，利用 shortcut models 的自一致性实现离线 RL 中高效一阶段训练与可变推理步数的策略优化，同时支持推理时的顺序和并行扩展。 领域现状：离线强化学习 (Offline RL) 通过固定数据集训练智能体而无需在线探索…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

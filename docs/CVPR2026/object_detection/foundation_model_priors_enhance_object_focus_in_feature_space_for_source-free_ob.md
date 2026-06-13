@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection
 description: >-
-  [CVPR2026][目标检测][无源域自适应目标检测] 提出 FALCON-SFOD 框架，通过基础模型（OV-SAM）生成的类别无关二值掩码正则化检测器特征空间（SPAR），结合不平衡感知的噪声鲁棒伪标签损失（IRPL），在无源域目标检测中增强目标聚焦表征，多个基准上达到 SOTA。
+  [CVPR2026][目标检测][无源域自适应目标检测] 提出 FALCON-SFOD 框架，通过基础模型（OV-SAM）生成的类别无关二值掩码正则化检测器特征空间（SPAR），结合不平衡感知的噪声鲁棒伪标签损失（IRPL），在无源域目标检测中增强目标聚焦表征，多个基准上达到 SOTA。 1. 无源域目标检测 (SFOD)：…
 tags:
   - "CVPR2026"
   - "目标检测"

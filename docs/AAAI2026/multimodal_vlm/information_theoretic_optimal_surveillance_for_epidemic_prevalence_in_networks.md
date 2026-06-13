@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Information Theoretic Optimal Surveillance for Epidemic Prevalence in Networks
 description: >-
-  [AAAI 2026][多模态VLM][流行病监测] 本文首次提出以互信息作为优化准则的流行病监测框架 TestPrev，旨在选择网络中的最优节点子集以最大化与疾病流行度分布的互信息，从而提供传统方法无法给出的暴发规模分布级别洞察，并证明了其 NP-hard 性质…
+  [AAAI 2026][多模态VLM][流行病监测] 本文首次提出以互信息作为优化准则的流行病监测框架 TestPrev，旨在选择网络中的最优节点子集以最大化与疾病流行度分布的互信息，从而提供传统方法无法给出的暴发规模分布级别洞察，并证明了其 NP-hard 性质，设计了贪心算法 GreedyMI 在合成与真实网络上优于基线方法。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

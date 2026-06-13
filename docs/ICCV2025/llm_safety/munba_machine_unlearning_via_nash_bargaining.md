@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUNBa: Machine Unlearning via Nash Bargaining
 description: >-
-  [ICCV 2025][LLM安全][机器遗忘] 将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。
+  [ICCV 2025][LLM安全][机器遗忘] 将机器遗忘（Machine Unlearning）建模为双玩家合作博弈问题，利用 Nash 讨价还价理论推导闭式解来同时解决遗忘目标与保留目标之间的梯度冲突和梯度支配问题，在分类和生成任务上实现遗忘与保留的最优平衡。 机器遗忘（Machine Unlearning…
 tags:
   - "ICCV 2025"
   - "LLM安全"

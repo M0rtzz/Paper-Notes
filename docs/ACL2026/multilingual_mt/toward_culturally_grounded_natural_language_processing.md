@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Culturally Grounded Natural Language Processing
 description: >-
-  [ACL2026][多语言/翻译][文化扎根NLP] 这篇综述型论文综合 50 余篇多语与文化 NLP 工作，指出“语言覆盖率”不等于“文化能力”，并提出以 communicative ecologies 为中心的分层评估协议和研究议程。
+  [ACL2026][多语言/翻译][文化扎根NLP] 这篇综述型论文综合 50 余篇多语与文化 NLP 工作，指出“语言覆盖率”不等于“文化能力”，并提出以 communicative ecologies 为中心的分层评估协议和研究议程。 领域现状：多语 NLP 常被视为全球包容性的技术路径，主流工作会扩大语言数量、做跨语言…
 tags:
   - "ACL2026"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Learning is Not So Mysterious or Different
 description: >-
-  [ICML 2025][自监督学习][泛化理论] 本文是一篇 position paper，论证深度学习中被认为"神秘"的泛化现象（良性过拟合、双重下降、过参数化的成功）并非深度学习独有，也不神秘，可以通过长期存在的泛化框架（PAC-Bayes、可数假设界）形式化描述…
+  [ICML 2025][自监督学习][泛化理论] 本文是一篇 position paper，论证深度学习中被认为"神秘"的泛化现象（良性过拟合、双重下降、过参数化的成功）并非深度学习独有，也不神秘，可以通过长期存在的泛化框架（PAC-Bayes、可数假设界）形式化描述，并提出**软归纳偏置（soft inductive biases）**作为统一解释原则。
 tags:
   - "ICML 2025"
   - "自监督学习"

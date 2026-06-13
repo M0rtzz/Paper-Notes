@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot 4D Lidar Panoptic Segmentation
 description: >-
-  [CVPR 2025][自动驾驶][零样本分割] 本文提出 SAL-4D（Segment Anything in Lidar-4D），利用多模态传感器设置作为桥梁，将视频对象分割（VOS）模型和 CLIP 视觉语言特征蒸馏到 LiDAR 空间，实现零样本 4D LiDAR 全景分割…
+  [CVPR 2025][自动驾驶][零样本分割] 本文提出 SAL-4D（Segment Anything in Lidar-4D），利用多模态传感器设置作为桥梁，将视频对象分割（VOS）模型和 CLIP 视觉语言特征蒸馏到 LiDAR 空间，实现零样本 4D LiDAR 全景分割，在 3D 零样本 LPS 上超越先前方法 5+ PQ。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

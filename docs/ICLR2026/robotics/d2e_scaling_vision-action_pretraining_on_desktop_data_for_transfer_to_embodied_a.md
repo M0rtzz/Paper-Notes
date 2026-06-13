@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D2E: Scaling Vision-Action Pretraining on Desktop Data for Transfer to Embodied AI
 description: >-
-  [ICLR 2026][机器人][embodied AI] 提出 D2E 框架，证明桌面游戏交互数据可作为具身 AI 的有效预训练基底：通过 OWA 工具包收集 335h 人类演示 + Generalist-IDM 伪标注 1000+h YouTube 游戏视频 + VAPT 迁移训练…
+  [ICLR 2026][机器人][embodied AI] 提出 D2E 框架，证明桌面游戏交互数据可作为具身 AI 的有效预训练基底：通过 OWA 工具包收集 335h 人类演示 + Generalist-IDM 伪标注 1000+h YouTube 游戏视频 + VAPT 迁移训练，1B 参数模型在 LIBERO 操作达 96.6%、CANVAS 导航达 83.3%，匹敌或超越 7x 更大的模型。
 tags:
   - "ICLR 2026"
   - "机器人"

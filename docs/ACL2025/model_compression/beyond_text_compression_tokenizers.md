@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Text Compression: Evaluating Tokenizers Across Scales
 description: >-
-  [ACL 2025][模型压缩][tokenizer evaluation] 本文系统评估了 6 种 tokenizer 在 350M 和 2.7B 参数模型上的影响，发现 tokenizer 选择对英文任务影响极小但对多语言任务（如机器翻译）有显著且跨尺度一致的影响…
+  [ACL 2025][模型压缩][tokenizer evaluation] 本文系统评估了 6 种 tokenizer 在 350M 和 2.7B 参数模型上的影响，发现 tokenizer 选择对英文任务影响极小但对多语言任务（如机器翻译）有显著且跨尺度一致的影响，并提出了基于 Zipf 定律的新型内在评估指标，比文本压缩率能更好地预测多语言场景下的下游性能。
 tags:
   - "ACL 2025"
   - "模型压缩"

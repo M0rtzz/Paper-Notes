@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Holo Pockets to Electron Density: GPT-style Drug Design with Density
 description: >-
-  [ICML 2026][计算生物][structure-based drug design] 本文把结构药物设计的 condition 从"刚性 empty pocket"换成"包含配体与溶剂的 filler 低分辨率电子云"…
+  [ICML 2026][计算生物][structure-based drug design] 本文把结构药物设计的 condition 从"刚性 empty pocket"换成"包含配体与溶剂的 filler 低分辨率电子云"，并提出第一个 decoder-only autoregressive 的 EDMolGPT，在 DUD-E 101 个靶点上 bioactive recovery 达 41%、远超先前 ED-based 方法。
 tags:
   - "ICML 2026"
   - "计算生物"

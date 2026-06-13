@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoNSA: Native Sparse Attention Scales Video Understanding
 description: >-
-  [ICLR 2026][视频理解][注意力机制] 本文提出 VideoNSA，将 Native Sparse Attention（NSA）引入视频语言模型，通过压缩、选择和滑动窗口三分支动态门控的混合稀疏注意力机制，在仅使用 3.6% 注意力预算的条件下实现 128K token 的视频理解…
+  [ICLR 2026][视频理解][注意力机制] 本文提出 VideoNSA，将 Native Sparse Attention（NSA）引入视频语言模型，通过压缩、选择和滑动窗口三分支动态门控的混合稀疏注意力机制，在仅使用 3.6% 注意力预算的条件下实现 128K token 的视频理解，在长视频理解、时序推理和空间理解任务上全面超越 token 压缩和无训练稀疏注意力基线。
 tags:
   - "ICLR 2026"
   - "视频理解"

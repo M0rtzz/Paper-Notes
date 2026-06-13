@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Measuring What Matters Beyond Text: Evaluating Multimodal Summaries by Quality, Alignment, and Diversity (MM-Eval)
 description: >-
-  [ACL 2026][多模态VLM][多模态摘要] 针对"多模态摘要带多模态输出 (MSMO)"任务，提出 MM-Eval 评测框架：把文本质量 (OpenFActScore + G-Eval)、跨模态对齐 (MLLM-as-Judge) 和视觉多样性 (Truncated CLIP Entropy) 三个分…
+  [ACL 2026 Findings][多模态VLM][多模态摘要] 针对"多模态摘要带多模态输出 (MSMO)"任务，提出 MM-Eval 评测框架：把文本质量 (OpenFActScore + G-Eval)、跨模态对齐 (MLLM-as-Judge) 和视觉多样性 (Truncated CLIP Entropy) 三个分项分数用 Ridge 回归学到的权重聚合成单一打分，在 mLLM-EVAL 新闻基准上对人类偏好的 Kendall $\tau$ 从 equal-weight baseline 的 0.041 提升到 0.374。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多模态摘要"
   - "评测框架"

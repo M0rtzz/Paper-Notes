@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SharpDepth: Sharpening Metric Depth Predictions Using Diffusion Distillation
 description: >-
-  [CVPR 2025][3D视觉][单目深度估计] 提出 SharpDepth，通过扩散蒸馏将生成式深度模型（如 Lotus）的精细边缘细节知识注入判别式度量深度模型（如 UniDepth）的预测中，利用噪声感知门控和无标注训练实现度量精度与边缘锐利度的最佳平衡。
+  [CVPR 2025][3D视觉][单目深度估计] 提出 SharpDepth，通过扩散蒸馏将生成式深度模型（如 Lotus）的精细边缘细节知识注入判别式度量深度模型（如 UniDepth）的预测中，利用噪声感知门控和无标注训练实现度量精度与边缘锐利度的最佳平衡。 - 零样本单目度量深度估计存在两类方法的互补缺陷：(1) 判…
 tags:
   - "CVPR 2025"
   - "3D视觉"

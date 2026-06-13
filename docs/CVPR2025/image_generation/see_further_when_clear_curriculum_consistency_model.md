@@ -2,7 +2,7 @@
 title: >-
   [论文解读] See Further When Clear: Curriculum Consistency Model
 description: >-
-  [CVPR 2025][图像生成][一致性模型] 本文提出 Curriculum Consistency Model (CCM)，发现一致性蒸馏中不同时间步的学习难度（知识差异）高度不均衡，通过基于 PSNR 的 KDC 指标动态调整教师模型的迭代步数以保持课程难度一致…
+  [CVPR 2025][图像生成][一致性模型] 本文提出 Curriculum Consistency Model (CCM)，发现一致性蒸馏中不同时间步的学习难度（知识差异）高度不均衡，通过基于 PSNR 的 KDC 指标动态调整教师模型的迭代步数以保持课程难度一致，在 CIFAR-10 单步 FID 达到 1.64，并成功扩展到 SDXL 和 SD3。
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Refuse Whenever You Feel Unsafe: Improving Safety in LLMs via Decoupled Refusal Training
 description: >-
-  [ACL 2025][LLM/NLP][LLM安全] 发现标准安全微调数据存在"拒绝位置偏差"——模型只学会在回答开头拒绝，中途发现不安全时无法中断。提出 DeRTa（Decoupled Refusal Training）…
+  [ACL 2025][LLM 其他][LLM安全] 发现标准安全微调数据存在"拒绝位置偏差"——模型只学会在回答开头拒绝，中途发现不安全时无法中断。提出 DeRTa（Decoupled Refusal Training），通过"有害前缀+安全拒绝"的 MLE 训练和在每个位置模拟"从有害到安全"转换的 RTO 训练，让 LLM 能在回答的任何位置感知到不安全时拒绝，在六种攻击场景下超越 GPT-4 和 LLaMA3-Instruct。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM安全"
   - "拒绝训练"
   - "越狱防御"

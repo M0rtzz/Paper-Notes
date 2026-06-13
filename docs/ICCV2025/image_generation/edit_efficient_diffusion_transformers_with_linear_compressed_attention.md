@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDiT: Efficient Diffusion Transformers with Linear Compressed Attention
 description: >-
-  [图像生成] EDiT 提出线性压缩注意力机制，通过 ConvFusion 增强 query 的局部信息并用 Spatial Compressor 压缩 key/value token，实现对 DiT 和 MM-DiT 的高效加速（最高 2.2 倍），同时保持可比的图像质量。
+  [图像生成] EDiT 提出线性压缩注意力机制，通过 ConvFusion 增强 query 的局部信息并用 Spatial Compressor 压缩 key/value token，实现对 DiT 和 MM-DiT 的高效加速（最高 2.2 倍），同时保持可比的图像质量。 Diffusion Transformers (…
 tags:
   - "图像生成"
 ---

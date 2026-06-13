@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certification for Differentially Private Prediction in Gradient-Based Training
 description: >-
-  [ICML2025][医学图像][差分隐私] 提出 Abstract Gradient Training (AGT) 框架，通过凸松弛与界传播技术计算训练过程中模型参数的可达集上界，从而利用平滑敏感度机制大幅收紧隐私预测的隐私分析，在医学影像和 NLP 任务上实现比全局敏感度紧数个数量级的隐私界。
+  [ICML2025][医学图像][差分隐私] 提出 Abstract Gradient Training (AGT) 框架，通过凸松弛与界传播技术计算训练过程中模型参数的可达集上界，从而利用平滑敏感度机制大幅收紧隐私预测的隐私分析，在医学影像和 NLP 任务上实现比全局敏感度紧数个数量级的隐私界。 差分隐私 (DP) 是保护…
 tags:
   - "ICML2025"
   - "医学图像"

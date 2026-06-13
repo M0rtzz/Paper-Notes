@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalized Recorrupted-to-Recorrupted: Self-Supervised Learning Beyond Gaussian Noise
 description: >-
-  [CVPR 2025][图像恢复][自监督去噪] 本文提出Generalized R2R (GR2R)，将原始R2R自监督去噪框架从高斯噪声推广到自然指数族（NEF）分布——包括Poisson/Gamma/Binomial噪声，证明GR2R损失是有监督损失的无偏估计，并且SURE可视为其特例…
+  [CVPR 2025][图像恢复][自监督去噪] 本文提出Generalized R2R (GR2R)，将原始R2R自监督去噪框架从高斯噪声推广到自然指数族（NEF）分布——包括Poisson/Gamma/Binomial噪声，证明GR2R损失是有监督损失的无偏估计，并且SURE可视为其特例，在低光成像和SAR等应用中达到接近监督学习的性能。
 tags:
   - "CVPR 2025"
   - "图像恢复"

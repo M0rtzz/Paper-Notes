@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Variational Autoencoder with Normalizing Flow for X-ray Spectral Fitting
 description: >-
-  [NeurIPS 2025][医学图像][变分自编码器] 将归一化流 (NF) 嵌入自编码器架构中，对黑洞 X 射线双星的 NICER 光谱数据进行快速物理参数推断和完整后验分布估计，比传统 MCMC 方法快约 2000 倍，且精度可比拟。
+  [NeurIPS 2025][医学图像][变分自编码器] 将归一化流 (NF) 嵌入自编码器架构中，对黑洞 X 射线双星的 NICER 光谱数据进行快速物理参数推断和完整后验分布估计，比传统 MCMC 方法快约 2000 倍，且精度可比拟。 领域现状 领域现状：黑洞 X 射线双星 (BHBs) 的光谱拟合是研究极端引力环境中…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

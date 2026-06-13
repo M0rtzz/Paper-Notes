@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LASER: Attention with Exponential Transformation
 description: >-
-  [ICML 2025][LLM/NLP][注意力机制] 通过分析注意力机制中 softmax 的梯度反向传播瓶颈，提出 LASER 注意力——在指数变换的 Value 空间中做注意力计算（即对 exp(V) 做 attention 再取 log），从而获得更大的 Jacobian 信号，改善参数学习效率。
+  [ICML 2025][LLM 其他][注意力机制] 通过分析注意力机制中 softmax 的梯度反向传播瓶颈，提出 LASER 注意力——在指数变换的 Value 空间中做注意力计算（即对 exp(V) 做 attention 再取 log），从而获得更大的 Jacobian 信号，改善参数学习效率。
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "注意力机制"
   - "梯度消失"
   - "Log-Sum-Exp"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auto temperature
 description: >-
-  [ICML 2026][强化学习][MeanFlow] MFPO 用 MeanFlow models（学 average velocity 而非 instantaneous velocity）当 RL policy 把扩散策略采样步数从 20+ 降到 2 步…
+  [ICML 2026][强化学习][MeanFlow] MFPO 用 MeanFlow models（学 average velocity 而非 instantaneous velocity）当 RL policy 把扩散策略采样步数从 20+ 降到 2 步，用 average divergence network 解决 action likelihood 计算、用 ESS-weighted SNIS 组合 Gaussian + policy proposal 解决 soft policy improvement，在 MuJoCo/DMC/HumanoidBench 上性能 ≥ diffusion baseline 且训练时间降 ~…
 tags:
   - "ICML 2026"
   - "强化学习"

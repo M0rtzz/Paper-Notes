@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tighter CMI-Based Generalization Bounds via Stochastic Projection and Quantization
 description: >-
-  [NeurIPS 2025][模型压缩][generalization bounds] 通过在 CMI（条件互信息）框架中引入**随机投影**和**有损压缩**，推导出更紧的泛化界，解决了经典 CMI 界在 SCO 反例上失效的问题，并证明记忆化对良好泛化并非必要。
+  [NeurIPS 2025 Oral][模型压缩][generalization bounds] 通过在 CMI（条件互信息）框架中引入随机投影：和有损压缩：，推导出更紧的泛化界，解决了经典 CMI 界在 SCO 反例上失效的问题，并证明记忆化对良好泛化并非必要。 领域现状：信息论方法是分析学习算法泛化误差的重要工具…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "模型压缩"
   - "generalization bounds"
   - "conditional mutual information"

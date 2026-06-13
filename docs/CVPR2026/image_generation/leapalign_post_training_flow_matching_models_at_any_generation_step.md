@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LeapAlign: Post-Training Flow Matching Models at Any Generation Step by Building Two-Step Trajectories
 description: >-
-  [CVPR 2026][图像生成][flow matching] 提出 LeapAlign，通过构建两步跳跃轨迹将长生成路径缩短为两步，使奖励梯度可直接反向传播到早期生成步骤，结合轨迹相似性加权和梯度折扣策略实现 flow matching 模型的高效后训练对齐。
+  [CVPR 2026][图像生成][flow matching] 提出 LeapAlign，通过构建两步跳跃轨迹将长生成路径缩短为两步，使奖励梯度可直接反向传播到早期生成步骤，结合轨迹相似性加权和梯度折扣策略实现 flow matching 模型的高效后训练对齐。 将 flow matching 模型与人类偏好对齐是重要方向…
 tags:
   - "CVPR 2026"
   - "图像生成"

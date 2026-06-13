@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EventHub: Data Factory for Generalizable Event-Based Stereo Networks without Active Sensors
 description: >-
-  [CVPR 2026][3D视觉][事件相机] 本文提出 EventHub，一个无需 LiDAR 等主动传感器标注的事件相机立体匹配训练数据工厂，通过新视角合成生成代理事件+深度标签和跨模态蒸馏从 RGB 立体模型迁移知识…
+  [CVPR 2026][3D视觉][事件相机] 本文提出 EventHub，一个无需 LiDAR 等主动传感器标注的事件相机立体匹配训练数据工厂，通过新视角合成生成代理事件+深度标签和跨模态蒸馏从 RGB 立体模型迁移知识，训练出的事件立体模型在跨域泛化上超越 LiDAR 监督模型（M3ED 和 MVSEC 上误差降低最高 50%）。
 tags:
   - "CVPR 2026"
   - "3D视觉"

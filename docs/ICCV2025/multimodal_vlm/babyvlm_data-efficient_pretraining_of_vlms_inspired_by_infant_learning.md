@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BabyVLM: Data-Efficient Pretraining of VLMs Inspired by Infant Learning
 description: >-
-  [ICCV 2025][多模态VLM][数据高效预训练] 受人类婴儿高效学习能力的启发，提出BabyVLM框架，包括合成训练数据集（将通用数据转化为儿童导向的格式）和多个发展对齐的评估基准，实现了紧凑VLM在有限数据下的高效预训练，性能优于仅用SAYCam或通用数据训练的模型。
+  [ICCV 2025][多模态VLM][数据高效预训练] 受人类婴儿高效学习能力的启发，提出BabyVLM框架，包括合成训练数据集（将通用数据转化为儿童导向的格式）和多个发展对齐的评估基准，实现了紧凑VLM在有限数据下的高效预训练，性能优于仅用SAYCam或通用数据训练的模型。 当前大规模视觉语言模型（如LLaVA、CLIP…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseSSP: 3D Subcellular Structure Prediction from Sparse-View Transmitted Light Images
 description: >-
-  [ECCV 2024][3D视觉][亚细胞结构预测] 提出 SparseSSP，一种混合维度拓扑的高效框架，通过 Z 轴深度到通道变换将 3D 亚细胞结构预测转化为 2D 网络任务，最多减少 87.5% 的成像频次同时保持领先精度。
+  [ECCV 2024][3D视觉][亚细胞结构预测] 提出 SparseSSP，一种混合维度拓扑的高效框架，通过 Z 轴深度到通道变换将 3D 亚细胞结构预测转化为 2D 网络任务，最多减少 87.5% 的成像频次同时保持领先精度。 领域现状：亚细胞结构预测（SSP）从透射光图像直接预测荧光标记图像，作为免染色替代方案具有低…
 tags:
   - "ECCV 2024"
   - "3D视觉"

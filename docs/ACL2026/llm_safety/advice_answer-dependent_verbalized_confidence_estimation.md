@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ADVICE: Answer-Dependent Verbalized Confidence Estimation
 description: >-
-  [ACL 2026][LLM安全][verbalized confidence] 本文通过 JSD 与归因分析诊断出 LLM 口头置信度过自信的根因是「置信度几乎不依赖于自己生成的答案」，并提出基于对比答案对的轻量微调框架 ADVICE…
+  [ACL 2026][LLM安全][verbalized confidence] 本文通过 JSD 与归因分析诊断出 LLM 口头置信度过自信的根因是「置信度几乎不依赖于自己生成的答案」，并提出基于对比答案对的轻量微调框架 ADVICE，用 JSD/Margin/Sum 三项损失强迫置信度分布对正确答案显著高于错误答案，在保持任务精度的同时把 Gemma2-9b 在 TriviaQA 的 ECE 从 21.9% 压到 6.2%。
 tags:
   - "ACL 2026"
   - "LLM安全"

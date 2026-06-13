@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming
 description: >-
-  [NeurIPS 2025][LLM安全][competitive programming retrieval] 针对竞赛编程中重复/相似题目泛滥导致比赛不公平及 LLM 评测分数虚高的问题，构建了包含四种检索任务的大规模基准 CPRet…
+  [NeurIPS 2025][LLM安全][competitive programming retrieval] 针对竞赛编程中重复/相似题目泛滥导致比赛不公平及 LLM 评测分数虚高的问题，构建了包含四种检索任务的大规模基准 CPRet，并提出 Group-InfoNCE 损失训练的专用检索模型 CPRetriever，在所有任务上超越 20+ 现有嵌入模型，同时揭示了题目相似性对 LiveCodeBench 评测的系统性偏差。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

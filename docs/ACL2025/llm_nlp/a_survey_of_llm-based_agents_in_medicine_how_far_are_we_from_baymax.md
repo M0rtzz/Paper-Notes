@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?
 description: >-
-  [ACL 2025][LLM/NLP][LLM医学Agent] 系统综述 LLM-based Agent 在医学中的四层架构（Profile/临床规划/医学推理/外部能力增强）、四大应用场景和评估框架，覆盖 2022-2024 年 60 篇研究…
+  [ACL 2025][LLM 其他][LLM医学Agent] 系统综述 LLM-based Agent 在医学中的四层架构（Profile/临床规划/医学推理/外部能力增强）、四大应用场景和评估框架，覆盖 2022-2024 年 60 篇研究，提出四种 Agent 运作范式并识别幻觉管理、多模态整合和伦理等关键挑战。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM医学Agent"
   - "临床决策"
   - "多Agent协作"

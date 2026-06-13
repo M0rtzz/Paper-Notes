@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities
 description: >-
-  [NeurIPS 2025][图像生成][Boltzmann采样] 提出 PITA（Progressive Inference-Time Annealing），一种结合温度退火与扩散平滑两种互补插值策略的框架，通过在高温下训练初始扩散模型…
+  [NeurIPS 2025 Spotlight][图像生成][Boltzmann采样] 提出 PITA（Progressive Inference-Time Annealing），一种结合温度退火与扩散平滑两种互补插值策略的框架，通过在高温下训练初始扩散模型，然后利用新颖的 Feynman-Kac PDE 与 SMC 重采样在推理时降温生成低温样本，逐步训练一系列扩散模型直达目标温度，首次实现了对丙氨酸二肽和三肽的笛卡尔坐标下平衡态采样。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "Boltzmann采样"
   - "温度退火"

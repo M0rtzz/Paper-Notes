@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning
 description: >-
-  [ICLR 2026  \n][强化学习][continuous-time RL] 提出 VIP（Value Iteration via PINN）框架，首次将物理信息神经网络（PINN）用于求解连续时间多智能体强化学习中的 HJB 偏微分方程…
+  [ICLR 2026  \n][强化学习][continuous-time RL] 提出 VIP（Value Iteration via PINN）框架，首次将物理信息神经网络（PINN）用于求解连续时间多智能体强化学习中的 HJB 偏微分方程，并引入 Value Gradient Iteration（VGI）模块迭代精炼价值梯度，在连续时间 MPE 和 MuJoCo 多智能体任务上始终优于离散时间和连续时间基线。
 tags:
   - "ICLR 2026  \\n"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hyperbolic Continuous Structural Entropy for Hierarchical Clustering
 description: >-
-  [AAAI 2026][图学习][层次聚类] 提出 HypCSE，将离散结构熵（SE）松弛为双曲空间中的连续结构熵（CSE），结合图结构学习和对比学习，实现端到端可微的层次聚类，在 7 个数据集上全面超越离散和连续层次聚类方法。
+  [AAAI 2026][图学习][层次聚类] 提出 HypCSE，将离散结构熵（SE）松弛为双曲空间中的连续结构熵（CSE），结合图结构学习和对比学习，实现端到端可微的层次聚类，在 7 个数据集上全面超越离散和连续层次聚类方法。 层次聚类将数据点组织为树状图（dendrogram），是经典的无监督学习任务…
 tags:
   - "AAAI 2026"
   - "图学习"

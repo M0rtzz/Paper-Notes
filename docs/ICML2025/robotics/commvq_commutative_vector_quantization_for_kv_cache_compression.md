@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CommVQ: Commutative Vector Quantization for KV Cache Compression
 description: >-
-  [ICML 2025][机器人][KV缓存压缩] 提出 CommVQ——通过可加向量量化压缩 KV cache，创新性地设计与 RoPE 可交换的码本并用 EM 算法训练，在 2-bit 下几乎无损、1-bit 下仍保持可用精度，使 LLaMA-3.1 8B 在单张 RTX 4090 上支持 128K 上下文…
+  [ICML 2025][机器人][KV缓存压缩] 提出 CommVQ——通过可加向量量化压缩 KV cache，创新性地设计与 RoPE 可交换的码本并用 EM 算法训练，在 2-bit 下几乎无损、1-bit 下仍保持可用精度，使 LLaMA-3.1 8B 在单张 RTX 4090 上支持 128K 上下文。
 tags:
   - "ICML 2025"
   - "机器人"

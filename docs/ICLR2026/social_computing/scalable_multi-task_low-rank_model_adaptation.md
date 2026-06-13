@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Multi-Task Low-Rank Model Adaptation
 description: >-
-  [ICLR 2026][社会计算][LoRA] 系统分析多任务 LoRA 在任务数量增大时崩溃的根因（均匀正则化破坏共享知识 + 组件级 LoRA 放大梯度冲突），提出 mtLoRA：谱感知正则化 + 块级适配 + 细粒度路由，在 15-25 个任务上平均超越 SOTA 2.3%…
+  [ICLR 2026][社会计算][LoRA] 系统分析多任务 LoRA 在任务数量增大时崩溃的根因（均匀正则化破坏共享知识 + 组件级 LoRA 放大梯度冲突），提出 mtLoRA：谱感知正则化 + 块级适配 + 细粒度路由，在 15-25 个任务上平均超越 SOTA 2.3%，同时减少 47% 参数和 24% 训练时间。
 tags:
   - "ICLR 2026"
   - "社会计算"

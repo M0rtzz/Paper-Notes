@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Position: Zeroth-Order Optimization in Deep Learning Is Underexplored, Not Underpowered
 description: >-
-  [ICML2026][可解释性][零阶优化] 这是一篇 position paper，作者主张深度学习中的零阶（ZO）优化并非"无能"而是"未被充分探索"——他们沿算法/系统/评估三条主线给出 6 个论断（P1–P6），核心立场是：跳出"全空间逐元素估计器"的窠臼…
+  [ICML2026 Spotlight][可解释性][零阶优化] 这是一篇 position paper，作者主张深度学习中的零阶（ZO）优化并非"无能"而是"未被充分探索"——他们沿算法/系统/评估三条主线给出 6 个论断（P1–P6），核心立场是：跳出"全空间逐元素估计器"的窠臼，转向子空间/谱域估计、前向单向流的系统级红利以及去混淆的评测协议，ZO 才能从内存高效微调的小众工具走向可扩展的训练范式。
 tags:
-  - "ICML2026"
+  - "ICML2026 Spotlight"
   - "可解释性"
   - "零阶优化"
   - "方差控制"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026 Spotlight  
 **arXiv**: [2605.15622](https://arxiv.org/abs/2605.15622)  
 **代码**: 待确认  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: 零阶优化, 方差控制, 子空间优化, 分布式训练, 前向梯度
 
 ## 一句话总结

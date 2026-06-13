@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theoretical Guarantees on the Best-of-n Alignment Policy
 description: >-
-  [ICML2025][图像生成][best-of-n采样] 本文推翻了文献中广泛使用的 best-of-n 策略 KL 散度公式 $\log(n) - (n-1)/n$ 的精确性声明，证明它只是一个上界，并提出了更紧的 KL 散度估计器和 win rate 理论界。
+  [ICML2025][图像生成][best-of-n采样] 本文推翻了文献中广泛使用的 best-of-n 策略 KL 散度公式 $\log(n) - (n-1)/n$ 的精确性声明，证明它只是一个上界，并提出了更紧的 KL 散度估计器和 win rate 理论界。 Best-of-n 采样是一种简单高效的推理时对齐方法：从…
 tags:
   - "ICML2025"
   - "图像生成"

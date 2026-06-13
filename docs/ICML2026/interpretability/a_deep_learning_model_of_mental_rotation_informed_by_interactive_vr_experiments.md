@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Deep Learning Model of Mental Rotation Informed by Interactive VR Experiments
 description: >-
-  [ICML 2026][可解释性][mental rotation] 这篇论文用 VR 交互实验约束模型设计，提出一个由 3D 等变空间编码器、神经符号对象编码器和动作决策 MLP 组成的心理旋转模型，在准确率、动作次数和部分反应时趋势上复现了人类 mental rotation 行为。
+  [ICML 2026][可解释性][mental rotation] 这篇论文用 VR 交互实验约束模型设计，提出一个由 3D 等变空间编码器、神经符号对象编码器和动作决策 MLP 组成的心理旋转模型，在准确率、动作次数和部分反应时趋势上复现了人类 mental rotation 行为。 领域现状：心理旋转是认知科学里研究空…
 tags:
   - "ICML 2026"
   - "可解释性"

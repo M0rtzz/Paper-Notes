@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models
 description: >-
-  [ACL 2026][多智能体][agentic evaluation] AgenticEval 把 LLM 安全评估重新定义为「持续、自我演化的红队过程」：Specialist 把非结构化法规文本拆成原子规则知识库，Generator 围绕每条规则生成多模态多形式的 Question Group…
+  [ACL 2026 Findings][多智能体][agentic evaluation] AgenticEval 把 LLM 安全评估重新定义为「持续、自我演化的红队过程」：Specialist 把非结构化法规文本拆成原子规则知识库，Generator 围绕每条规则生成多模态多形式的 Question Group，Evaluator + Analyst 不断把当轮失败转化为下一轮更狠的攻击策略，三轮迭代后 GPT-5 对 EU AI Act 的合规率从 72.50% 暴跌到 36.36%，揭示静态 benchmark 严重高估了大模型的安全水位。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "agentic evaluation"
   - "regulation-grounded"

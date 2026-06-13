@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Space Imaging
 description: >-
-  [CVPR 2025][图像生成][隐空间成像] Latent Space Imaging (LSI) 提出了一种将光学编码与生成模型解码结合的新成像范式，通过将图像信息直接编码到 StyleGAN 的语义隐空间中，实现 1:100 到 1:16384 的极端压缩比…
+  [CVPR 2025][图像生成][隐空间成像] Latent Space Imaging (LSI) 提出了一种将光学编码与生成模型解码结合的新成像范式，通过将图像信息直接编码到 StyleGAN 的语义隐空间中，实现 1:100 到 1:16384 的极端压缩比，同时仍能完成人脸重建、属性分类、分割和关键点检测等下游任务。
 tags:
   - "CVPR 2025"
   - "图像生成"

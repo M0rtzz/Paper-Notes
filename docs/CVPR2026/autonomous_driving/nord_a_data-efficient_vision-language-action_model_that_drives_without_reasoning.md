@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NoRD: A Data-Efficient Vision-Language-Action Model that Drives without Reasoning
 description: >-
-  [CVPR 2026][自动驾驶][VLA模型] NoRD 证明自动驾驶 VLA 不需要大规模推理标注和海量数据：通过识别 GRPO 在弱 SFT 策略上失败的根因是 **difficulty bias**（高方差 rollout 组的学习信号被压制）…
+  [CVPR 2026][自动驾驶][VLA模型] NoRD 证明自动驾驶 VLA 不需要大规模推理标注和海量数据：通过识别 GRPO 在弱 SFT 策略上失败的根因是 **difficulty bias**（高方差 rollout 组的学习信号被压制），采用 Dr. GRPO 替代标准 GRPO 做 RL 后训练，仅用 <60% 数据、无推理标注、3× 更少 token，在 NAVSIM（85.6 PDMS）和 WaymoE2E（7.709 RFS）上达到与推理型 VLA 竞争的性能。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

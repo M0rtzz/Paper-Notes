@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Margin-Adaptive Confidence Ranking for Reliable LLM Judgement
 description: >-
-  [ICML 2026][LLM/NLP][LLM-as-a-judge] 本文针对 LLM-as-a-judge 中"置信度高就一定靠谱"这一常被违反的单调性假设，提出用一个小 MLP 把多组 in-context 预测概率映射成置信度…
+  [ICML 2026][LLM评测][LLM-as-a-judge] 本文针对 LLM-as-a-judge 中"置信度高就一定靠谱"这一常被违反的单调性假设，提出用一个小 MLP 把多组 in-context 预测概率映射成置信度，并通过 margin-based ranking loss + PAC-Bayes 泛化界推导出一个 margin 自适应训练策略，使学到的置信度在四个数据集与六个 judge 模型上都获得更低的 ranking loss、更高的 AUROC，并显著提升 fixed-sequence 测试的目标一致性达成率。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM评测"
   - "LLM-as-a-judge"
   - "置信度估计"
   - "margin ranking"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Intrinsic-Aware Monocular 3D Object Detection
 description: >-
-  [CVPR 2026][3D视觉][单目3D检测] MonoIA 提出将数值型相机内参转化为语言引导的语义表征（通过 LLM 生成内参描述 + CLIP 编码），并通过分层自适应模块将其融入检测网络，实现对未见焦距的零样本泛化和跨数据集统一训练，在 KITTI/Waymo/nuScenes 上达到新 SOTA…
+  [CVPR 2026][3D视觉][单目3D检测] MonoIA 提出将数值型相机内参转化为语言引导的语义表征（通过 LLM 生成内参描述 + CLIP 编码），并通过分层自适应模块将其融入检测网络，实现对未见焦距的零样本泛化和跨数据集统一训练，在 KITTI/Waymo/nuScenes 上达到新 SOTA。
 tags:
   - "CVPR 2026"
   - "3D视觉"

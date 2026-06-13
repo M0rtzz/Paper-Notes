@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving MLLM's Document Image Machine Translation via Synchronously Self-reviewing Its OCR Proficiency
 description: >-
-  [ACL 2025 (Findings)][多模态VLM][文档图像翻译] 本文提出 Synchronously Self-Reviewing (SSR) 范式，通过在文档图像翻译过程中让 MLLM 先生成 OCR 文本再生成翻译文本，利用"双语认知优势"缓解微调导致的灾难性遗忘…
+  [ACL 2025 (Findings)][多模态VLM][文档图像翻译] 本文提出 Synchronously Self-Reviewing (SSR) 范式，通过在文档图像翻译过程中让 MLLM 先生成 OCR 文本再生成翻译文本，利用"双语认知优势"缓解微调导致的灾难性遗忘，同时提升 OCR 和文档图像机器翻译（DIMT）的性能。
 tags:
   - "ACL 2025 (Findings)"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation
 description: >-
-  [ICLR 2026][图像生成][异步去噪] AsynDM 通过为不同像素分配不同的时间步调度（prompt 相关区域去噪更慢），使其能利用更清晰的上下文参考，从而在不需要微调的情况下显著提升文图生成的语义对齐。
+  [ICLR 2026][图像生成][异步去噪] AsynDM 通过为不同像素分配不同的时间步调度（prompt 相关区域去噪更慢），使其能利用更清晰的上下文参考，从而在不需要微调的情况下显著提升文图生成的语义对齐。 领域现状：扩散模型在文图生成中取得了优异的多样性和保真度，但文图对齐（alignment）仍是显著痛点——生成…
 tags:
   - "ICLR 2026"
   - "图像生成"

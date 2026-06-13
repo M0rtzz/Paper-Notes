@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Erase Diffusion: Empowering Object Removal Through Calibrating Diffusion Pathways (EraDiff)
 description: >-
-  [CVPR 2025][LLM评测][目标移除] 本文提出EraDiff，通过链式校正优化范式（CRO）建立从"含物体"到"纯背景"的渐进扩散路径，并用自校正注意力机制（SRA）在采样时抑制伪影，使扩散模型真正理解"擦除意图"，在OpenImages V5上取得SOTA的Local FID（3.799）…
+  [CVPR 2025][LLM评测][目标移除] 本文提出EraDiff，通过链式校正优化范式（CRO）建立从"含物体"到"纯背景"的渐进扩散路径，并用自校正注意力机制（SRA）在采样时抑制伪影，使扩散模型真正理解"擦除意图"，在OpenImages V5上取得SOTA的Local FID（3.799），在复杂真实场景中显著优于SD2-Inpaint和LaMa。
 tags:
   - "CVPR 2025"
   - "LLM评测"

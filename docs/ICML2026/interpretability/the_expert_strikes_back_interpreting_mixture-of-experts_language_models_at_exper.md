@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Expert Strikes Back: Interpreting Mixture-of-Experts Language Models at Expert Level
 description: >-
-  [ICML 2026][可解释性][Mixture-of-Experts] 本文用 $k$-sparse probing 系统比较了 MoE 专家神经元与 dense FFN 神经元的多义性，发现 MoE 在稀疏路由压力下天然更接近单义，进而把分析单元从"神经元"升到"整个专家"…
+  [ICML 2026][可解释性][Mixture-of-Experts] 本文用 $k$-sparse probing 系统比较了 MoE 专家神经元与 dense FFN 神经元的多义性，发现 MoE 在稀疏路由压力下天然更接近单义，进而把分析单元从"神经元"升到"整个专家"，用 LLM 自动给数百个专家打自然语言标签并通过因果触发实验验证，最终得出"专家既不是宽域领域专家、也不是 token 级处理器，而是细粒度任务专家"的结论。
 tags:
   - "ICML 2026"
   - "可解释性"

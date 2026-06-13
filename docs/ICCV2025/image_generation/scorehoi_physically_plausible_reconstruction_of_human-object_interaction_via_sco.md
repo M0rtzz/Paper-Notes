@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScoreHOI: Physically Plausible Reconstruction of Human-Object Interaction via Score-Guided Diffusion
 description: >-
-  [ICCV 2025][图像生成][人物交互重建] ScoreHOI 利用 score-based 扩散模型作为优化器，结合 DDIM 逆向-正向采样与物理约束（接触、穿透、地面接触）引导去噪过程，并通过接触驱动的迭代细化策略，从单目图像实现物理合理的人体-物体交互三维重建…
+  [ICCV 2025][图像生成][人物交互重建] ScoreHOI 利用 score-based 扩散模型作为优化器，结合 DDIM 逆向-正向采样与物理约束（接触、穿透、地面接触）引导去噪过程，并通过接触驱动的迭代细化策略，从单目图像实现物理合理的人体-物体交互三维重建，在 BEHAVE 上接触 F-Score 提升 9%。
 tags:
   - "ICCV 2025"
   - "图像生成"

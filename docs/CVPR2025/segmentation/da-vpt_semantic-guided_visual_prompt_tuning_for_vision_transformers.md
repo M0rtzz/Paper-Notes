@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DA-VPT: Semantic-Guided Visual Prompt Tuning for Vision Transformers
 description: >-
-  [CVPR 2025][语义分割][视觉提示微调] DA-VPT 提出了一种分布感知的视觉提示微调框架，通过在 ViT 深层利用度量学习构建 prompt 与视觉 token/CLS token 之间的语义度量空间，引导 prompt 作为"语义桥梁"传递图像 patch 的类特异性信息到 CLS token…
+  [CVPR 2025][语义分割][视觉提示微调] DA-VPT 提出了一种分布感知的视觉提示微调框架，通过在 ViT 深层利用度量学习构建 prompt 与视觉 token/CLS token 之间的语义度量空间，引导 prompt 作为"语义桥梁"传递图像 patch 的类特异性信息到 CLS token，在 24 个识别任务和 2 个分割任务上以极少参数显著超越标准 VPT。
 tags:
   - "CVPR 2025"
   - "语义分割"

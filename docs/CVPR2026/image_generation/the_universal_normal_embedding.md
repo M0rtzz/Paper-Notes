@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Universal Normal Embedding
 description: >-
-  [CVPR 2026][图像生成][隐空间高斯性] 提出 Universal Normal Embedding (UNE) 假说：生成模型（扩散模型）和视觉编码器（CLIP、DINO）的隐空间共享一个近似高斯的底层几何结构，二者可视为该共享空间的含噪线性投影…
+  [CVPR 2026][图像生成][隐空间高斯性] 提出 Universal Normal Embedding (UNE) 假说：生成模型（扩散模型）和视觉编码器（CLIP、DINO）的隐空间共享一个近似高斯的底层几何结构，二者可视为该共享空间的含噪线性投影；通过 NoiseZoo 数据集和大量实验验证了该假说，并展示了在 DDIM 反演噪声空间中直接进行线性语义编辑的能力。
 tags:
   - "CVPR 2026"
   - "图像生成"

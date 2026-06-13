@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Den-TP: A Density-Balanced Data Curation and Evaluation Framework for Trajectory Prediction
 description: >-
-  [CVPR 2026][自动驾驶][轨迹预测] 从数据中心视角出发，提出 Den-TP 框架通过密度感知的数据集筛选和评估协议来解决轨迹预测数据集中场景密度的长尾不平衡问题，仅用 50% 数据就能保持整体性能并显著改善高密度场景的鲁棒性。
+  [CVPR 2026][自动驾驶][轨迹预测] 从数据中心视角出发，提出 Den-TP 框架通过密度感知的数据集筛选和评估协议来解决轨迹预测数据集中场景密度的长尾不平衡问题，仅用 50% 数据就能保持整体性能并显著改善高密度场景的鲁棒性。 轨迹预测是自动驾驶中的关键任务，近年来基于 Transformer 和 GNN 的方法…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

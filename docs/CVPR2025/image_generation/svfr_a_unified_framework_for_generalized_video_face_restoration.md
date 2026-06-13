@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SVFR: A Unified Framework for Generalized Video Face Restoration
 description: >-
-  [CVPR 2025][图像生成][视频人脸修复] 本文提出 SVFR，一个基于 Stable Video Diffusion 的统一视频人脸修复框架，将盲人脸修复（BFR）、着色和修复三个任务纳入同一模型中联合训练，通过任务嵌入、统一隐空间正则化和面部先验学习等设计…
+  [CVPR 2025][图像生成][视频人脸修复] 本文提出 SVFR，一个基于 Stable Video Diffusion 的统一视频人脸修复框架，将盲人脸修复（BFR）、着色和修复三个任务纳入同一模型中联合训练，通过任务嵌入、统一隐空间正则化和面部先验学习等设计，在多个视频人脸修复任务上取得 SOTA 效果。
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VOSR: A Vision-Only Generative Model for Image Super-Resolution
 description: >-
-  [CVPR 2026][图像生成][超分辨率] 提出 VOSR，首个证明纯视觉训练的生成式超分模型可以媲美甚至超越基于 T2I 预训练方法的工作，通过视觉语义条件和面向恢复的引导策略实现高质量 SR，训练成本仅为 T2I 方法的 1/10。
+  [CVPR 2026][图像生成][超分辨率] 提出 VOSR，首个证明纯视觉训练的生成式超分模型可以媲美甚至超越基于 T2I 预训练方法的工作，通过视觉语义条件和面向恢复的引导策略实现高质量 SR，训练成本仅为 T2I 方法的 1/10。 当前生成式图像超分领域被基于 Text-to-Image (T2I) 扩散模型（如…
 tags:
   - "CVPR 2026"
   - "图像生成"

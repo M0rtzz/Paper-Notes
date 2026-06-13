@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Augmentation of Contrastive Learning is Estimating Positive-incentive Noise
 description: >-
-  [ICML 2026][自监督学习][Positive-incentive Noise] 作者证明对比学习里的"预定义数据增强 (旋转/裁剪/翻转)"等价于对 Positive-incentive Noise (π-noise) 的点估计, 然后把 π-noise 从"点估计"升级为可学习分布…
+  [ICML 2026][自监督学习][Positive-incentive Noise] 作者证明对比学习里的"预定义数据增强 (旋转/裁剪/翻转)"等价于对 Positive-incentive Noise (π-noise) 的点估计, 然后把 π-noise 从"点估计"升级为可学习分布, 训练一个 π-noise 生成器在原图上加可学噪声当增强 (PiNDA), 使 SimCLR / BYOL / SimSiam / MoCo / DINO 在 vision 上稳定涨点, 且天然适配 HAR / Reuters / Epsilon 等无人工增强的非视觉数据。
 tags:
   - "ICML 2026"
   - "自监督学习"

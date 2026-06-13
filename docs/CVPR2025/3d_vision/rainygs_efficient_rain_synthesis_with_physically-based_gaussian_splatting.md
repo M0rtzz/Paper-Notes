@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RainyGS: Efficient Rain Synthesis with Physically-Based Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] RainyGS 将基于物理的雨滴仿真和浅水动力学与 3D 高斯溅射渲染框架结合，首次实现了开放世界场景中高保真、物理准确且实时（>30fps）的动态雨天效果合成，支持从小雨到暴雨的灵活控制。
+  [CVPR 2025][3D视觉][3D高斯溅射] RainyGS 将基于物理的雨滴仿真和浅水动力学与 3D 高斯溅射渲染框架结合，首次实现了开放世界场景中高保真、物理准确且实时（30fps）的动态雨天效果合成，支持从小雨到暴雨的灵活控制。 领域现状：3D场景建模近年取得重大进展，NeRF 和 3DGS 成为强大的场景表示工…
 tags:
   - "CVPR 2025"
   - "3D视觉"

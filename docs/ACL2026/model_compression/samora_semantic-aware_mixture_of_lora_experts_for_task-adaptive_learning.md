@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SAMoRA: Semantic-Aware Mixture of LoRA Experts for Task-Adaptive Learning
 description: >-
-  [ACL 2026][模型压缩][混合专家] SAMoRA 通过语义感知路由器和任务自适应缩放机制，解决了现有 MoE-LoRA 方法中路由不精确和权重融合缺乏灵活性的问题，在多任务基准上以最少可训练参数（0.15%）达到 SOTA。
+  [ACL 2026 Findings][模型压缩][混合专家] SAMoRA 通过语义感知路由器和任务自适应缩放机制，解决了现有 MoE-LoRA 方法中路由不精确和权重融合缺乏灵活性的问题，在多任务基准上以最少可训练参数（0.15%）达到 SOTA。 领域现状：LoRA 作为参数高效微调的主流方案，在单任务上表现出色…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "混合专家"
   - "LoRA"

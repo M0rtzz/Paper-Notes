@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SaMam: Style-aware State Space Model for Arbitrary Image Style Transfer
 description: >-
-  [CVPR 2025][图像生成][风格迁移] 提出 SaMam，首个基于 Mamba 状态空间模型的任意图像风格迁移框架，通过风格感知 S7 块从风格嵌入预测 SSM 权重参数，配合锯齿形扫描和局部增强机制，在变换质量和效率之间取得最佳平衡。
+  [CVPR 2025][图像生成][风格迁移] 提出 SaMam，首个基于 Mamba 状态空间模型的任意图像风格迁移框架，通过风格感知 S7 块从风格嵌入预测 SSM 权重参数，配合锯齿形扫描和局部增强机制，在变换质量和效率之间取得最佳平衡。 - 全局有效感受野对风格迁移至关重要：(1) 大感受野能更好地捕获风格模式…
 tags:
   - "CVPR 2025"
   - "图像生成"

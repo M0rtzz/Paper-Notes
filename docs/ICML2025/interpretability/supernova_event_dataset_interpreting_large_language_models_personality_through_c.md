@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Supernova Event Dataset: Interpreting Large Language Models' Personality through Critical Event Analysis
 description: >-
-  [ICML 2025][可解释性][LLM人格分析] 提出 Supernova Event Dataset（包含传记、历史事件、新闻、科学发现的 Wikipedia 文章），通过让 LLM 从长文本中抽取并排序关键事件，再由另一个 LLM 作为评判者推断目标模型的"人格特质"…
+  [ICML 2025][可解释性][LLM人格分析] 提出 Supernova Event Dataset（包含传记、历史事件、新闻、科学发现的 Wikipedia 文章），通过让 LLM 从长文本中抽取并排序关键事件，再由另一个 LLM 作为评判者推断目标模型的"人格特质"，揭示不同 LLM 在主观决策中的一致性行为模式差异。
 tags:
   - "ICML 2025"
   - "可解释性"

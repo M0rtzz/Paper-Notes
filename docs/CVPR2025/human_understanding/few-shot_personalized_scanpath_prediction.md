@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Few-Shot Personalized Scanpath Prediction
 description: >-
-  [CVPR 2025][扫视路径预测] 提出少样本个性化扫视路径预测（FS-PSP）任务 和 Subject-Embedding Network（SE-Net），通过将主体嵌入学习与扫视路径预测解耦，仅需 1-10 张图像的注视数据即可适配新用户…
+  [CVPR 2025][人体理解][扫视路径预测] 提出少样本个性化扫视路径预测（FS-PSP）任务 和 Subject-Embedding Network（SE-Net），通过将主体嵌入学习与扫视路径预测解耦，仅需 1-10 张图像的注视数据即可适配新用户，在 OSIE、COCO-FreeView、COCO-Search18 三个数据集上 ScanMatch 指标超越第二名 5.9%-7.9%，且适配时间仅 3.6 秒、无需微调。
 tags:
   - "CVPR 2025"
+  - "人体理解"
   - "扫视路径预测"
   - "少样本学习"
   - "个性化"

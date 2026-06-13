@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][个性化工具使用] 提出ToolSpectrum基准，首次定义并评估LLM的个性化工具使用能力——根据用户画像和环境因素选择最合适的工具，实验表明个性化显著提升用户体验，但现有LLM在联合推理用户和环境因素时能力有限。
+  [ACL 2025][LLM 其他][个性化工具使用] 提出ToolSpectrum基准，首次定义并评估LLM的个性化工具使用能力——根据用户画像和环境因素选择最合适的工具，实验表明个性化显著提升用户体验，但现有LLM在联合推理用户和环境因素时能力有限。 领域现状：将外部工具集成到LLM中已成为增强其能力的主流方案…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "个性化工具使用"
   - "大语言模型"
   - "用户画像"

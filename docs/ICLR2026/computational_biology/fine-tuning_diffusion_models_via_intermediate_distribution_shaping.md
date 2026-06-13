@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Tuning Diffusion Models via Intermediate Distribution Shaping
 description: >-
-  [ICLR 2026][计算生物][扩散模型微调] 统一拒绝采样微调方法为GRAFT框架并证明其隐式执行KL正则化奖励最大化，进而提出P-GRAFT在中间去噪步骤做分布整形（偏差-方差权衡更优），以及Inverse Noise Correction无需奖励即可改进流模型质量…
+  [ICLR 2026][计算生物][扩散模型微调] 统一拒绝采样微调方法为GRAFT框架并证明其隐式执行KL正则化奖励最大化，进而提出P-GRAFT在中间去噪步骤做分布整形（偏差-方差权衡更优），以及Inverse Noise Correction无需奖励即可改进流模型质量，在T2I上VQAScore提升8.81%。
 tags:
   - "ICLR 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unified Reinforcement and Imitation Learning for Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][VLM蒸馏] 提出 RIL（Unified Reinforcement and Imitation Learning）训练框架，结合 GRPO 强化学习和 GAIL 对抗模仿学习，让小型 VLM（7B）通过学习大型 VLM（72B）的文本生成风格来大幅提升性能…
+  [NeurIPS 2025][多模态VLM][VLM蒸馏] 提出 RIL（Unified Reinforcement and Imitation Learning）训练框架，结合 GRPO 强化学习和 GAIL 对抗模仿学习，让小型 VLM（7B）通过学习大型 VLM（72B）的文本生成风格来大幅提升性能，无需增加推理延迟或"思考"过程。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ultrametric Cluster Hierarchies: I Want 'em All!
 description: >-
-  [NeurIPS 2025][层次聚类] 证明了对于任意合理的聚类层次树，都可以快速找到任意中心型聚类目标（如 k-means）的最优解，且这些解本身也是层次化的，从而从一棵树中解锁大量等价有意义的层次结构。
+  [NeurIPS 2025][层次聚类] 证明了对于任意合理的聚类层次树，都可以快速找到任意中心型聚类目标（如 k-means）的最优解，且这些解本身也是层次化的，从而从一棵树中解锁大量等价有意义的层次结构。 层次聚类（Hierarchical Clustering）将数据组织成一棵树状结构，用户可以从中自由选择所需层级的划…
 tags:
   - "NeurIPS 2025"
   - "层次聚类"

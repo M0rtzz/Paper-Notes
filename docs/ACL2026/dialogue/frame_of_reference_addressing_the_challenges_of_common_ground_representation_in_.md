@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Frame of Reference: Addressing the Challenges of Common Ground Representation in Dialogue
 description: >-
-  [ACL 2026][对话系统][共识建立] 本文提出 IndiRef 基准测试，用于评估对话系统通过"关系指代"（如"昨天我们去的那个公园旁边的咖啡馆"）建立和利用持久共识（common ground）的能力，发现现有 LLM 在全上下文条件下准确率不超过 50%…
+  [ACL 2026 Findings][对话系统][共识建立] 本文提出 IndiRef 基准测试，用于评估对话系统通过"关系指代"（如"昨天我们去的那个公园旁边的咖啡馆"）建立和利用持久共识（common ground）的能力，发现现有 LLM 在全上下文条件下准确率不超过 50%，并通过合成数据 + GRPO 强化学习训练将性能提升 15-20%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "对话系统"
   - "共识建立"
   - "关系指代"

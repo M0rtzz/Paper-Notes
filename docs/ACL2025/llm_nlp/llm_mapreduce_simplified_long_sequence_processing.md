@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLM×MapReduce: Simplified Long-Sequence Processing using Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][长文本处理] 提出 LLM×MapReduce，一个无需训练的分治框架，通过结构化信息协议和上下文内置信度校准机制解决长文本分块后的跨块依赖和跨块冲突问题，使 8K 上下文的 LLM 能有效处理超过 100K 甚至 1280K tokens 的长文本…
+  [ACL 2025][LLM 其他][长文本处理] 提出 LLM×MapReduce，一个无需训练的分治框架，通过结构化信息协议和上下文内置信度校准机制解决长文本分块后的跨块依赖和跨块冲突问题，使 8K 上下文的 LLM 能有效处理超过 100K 甚至 1280K tokens 的长文本，性能超越 GPT-4 等长上下文模型。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "长文本处理"
   - "分治策略"
   - "MapReduce"

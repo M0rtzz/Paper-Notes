@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Semantically Consistent Dataset for Data-Efficient Query-Based Universal Sound Separation
 description: >-
-  [ICML 2026][音频/语音][通用声音分离] 这篇论文提出 Hive，一个通过单事件净化和语义一致混合构造的通用声音分离数据集，用约 2.4k 小时高纯度源音频让 AudioSep、FlowSep 在多项分离指标上接近甚至超过百万小时级训练的系统。
+  [ICML 2026][音频/语音][通用声音分离] 这篇论文提出 Hive，一个通过单事件净化和语义一致混合构造的通用声音分离数据集，用约 2.4k 小时高纯度源音频让 AudioSep、FlowSep 在多项分离指标上接近甚至超过百万小时级训练的系统。 领域现状：Query-based Universal Sound S…
 tags:
   - "ICML 2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EXIT: Context-Aware Extractive Compression for Enhancing Retrieval-Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 提出 EXIT——一种抽取式上下文压缩框架，通过上下文感知的句子级二分类并行选取与查询相关的句子，在 QA 准确率和推理延迟上同时优于现有的抽生式和抽取式压缩方法。
+  [ACL 2025][信息检索/RAG][RAG] 提出 EXIT——一种抽取式上下文压缩框架，通过上下文感知的句子级二分类并行选取与查询相关的句子，在 QA 准确率和推理延迟上同时优于现有的抽生式和抽取式压缩方法。 - 领域现状： 检索增强生成（RAG）通过检索外部文档来增强 LLM 的回答质量，但检索模型有时无法将最相关…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

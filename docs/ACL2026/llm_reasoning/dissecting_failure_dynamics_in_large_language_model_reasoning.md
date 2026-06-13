@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dissecting Failure Dynamics in Large Language Model Reasoning
 description: >-
-  [ACL 2026][LLM推理][推理失败分析] 通过分析 LLM 推理轨迹，发现错误集中在早期的少数关键转折点，错误发生后模型进入"认知螺旋"——局部连贯但全局错误地不断延伸；基于此提出 GUARD 框架，在熵信号检测到的高风险转折点处进行短距分支修复。
+  [ACL 2026][LLM推理][推理失败分析] 通过分析 LLM 推理轨迹，发现错误集中在早期的少数关键转折点，错误发生后模型进入"认知螺旋"——局部连贯但全局错误地不断延伸；基于此提出 GUARD 框架，在熵信号检测到的高风险转折点处进行短距分支修复。 领域现状：大型推理模型（LRM）如 DeepSeek-R1、Ope…
 tags:
   - "ACL 2026"
   - "LLM推理"

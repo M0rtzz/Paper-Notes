@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domain-Specific Data Generation Framework for RAG Adaptation
 description: >-
-  [ACL 2026][信息检索/RAG][RAG适配] 本文提出 RAGen，一个可扩展的模块化数据生成框架，通过文档级概念提取、多块证据组装和 Bloom 分类学引导的问题生成，自动合成领域特定的 QAC（问题-答案-上下文）数据，支持嵌入模型对比微调和 LLM 监督微调…
+  [ACL 2026][信息检索/RAG][RAG适配] 本文提出 RAGen，一个可扩展的模块化数据生成框架，通过文档级概念提取、多块证据组装和 Bloom 分类学引导的问题生成，自动合成领域特定的 QAC（问题-答案-上下文）数据，支持嵌入模型对比微调和 LLM 监督微调，在三个领域数据集上显著优于 AutoRAG 和 LlamaIndex 基线。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

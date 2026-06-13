@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Stop Automating Peer Review Without Rigorous Evaluation
 description: >-
-  [ICML 2026][LLM/NLP][AI 审稿] 这是一篇立场论文：作者通过对 ICLR 2026 真实评审和 60 篇模拟评审的实证测量，发现当前 LLM 审稿存在 hivemind（高度趋同）+ paper laundering（零样本改写就能涨 0.45 分）两大失效，因此论证「在没有严格评估之前…
+  [ICML 2026 Spotlight][LLM 其他][AI 审稿] 这是一篇立场论文：作者通过对 ICLR 2026 真实评审和 60 篇模拟评审的实证测量，发现当前 LLM 审稿存在 hivemind（高度趋同）+ paper laundering（零样本改写就能涨 0.45 分）两大失效，因此论证「在没有严格评估之前，不应让 LLM 直接生成审稿意见」，并呼吁建立一门"审稿自动化的科学"。
 tags:
-  - "ICML 2026"
-  - "LLM/NLP"
+  - "ICML 2026 Spotlight"
+  - "LLM 其他"
   - "AI 审稿"
   - "Hivemind 效应"
   - "Paper Laundering"

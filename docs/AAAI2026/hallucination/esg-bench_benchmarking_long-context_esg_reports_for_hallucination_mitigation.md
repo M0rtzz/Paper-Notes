@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation
 description: >-
-  [AAAI 2026][幻觉检测][ESG报告] 构建 ESG-Bench——270 个人工标注 QA 对来自 94 份真实 ESG 报告（2020-2024），提出三阶段幻觉缓解：SFT（有基础答案+「不提供」弃权标签）→ CoT Prompting（2/4步提示模板）→ CoT 微调（人工推理链）…
+  [AAAI 2026][幻觉检测][ESG报告] 构建 ESG-Bench——270 个人工标注 QA 对来自 94 份真实 ESG 报告（2020-2024），提出三阶段幻觉缓解：SFT（有基础答案+「不提供」弃权标签）→ CoT Prompting（2/4步提示模板）→ CoT 微调（人工推理链），其中 4 步 CoT 微调的 Llama-3 达到 92.52% 有答案准确率 + 99.37% 无答案准确率（平衡 96%），且迁移到 HaluEval/BioASQ 也有提升。
 tags:
   - "AAAI 2026"
   - "幻觉检测"

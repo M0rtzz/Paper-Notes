@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provable Scaling Laws for the Test-Time Compute of Large Language Models
 description: >-
-  [NeurIPS 2025][LLM推理][测试时计算] 提出 Knockout（淘汰赛式两两淘汰）和 League（联赛式平均胜率排序）两种两阶段测试时计算算法，在"LLM 能以非零概率生成正确解"和"LLM 两两比较优于随机"的极弱假设下，从理论上证明失败概率随测试时计算量增长呈指数或幂律衰减至零…
+  [NeurIPS 2025][LLM推理][测试时计算] 提出 Knockout（淘汰赛式两两淘汰）和 League（联赛式平均胜率排序）两种两阶段测试时计算算法，在"LLM 能以非零概率生成正确解"和"LLM 两两比较优于随机"的极弱假设下，从理论上证明失败概率随测试时计算量增长呈指数或幂律衰减至零，且整个算法仅需黑盒 LLM，无需外部验证器或奖励模型。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

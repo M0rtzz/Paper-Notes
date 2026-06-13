@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SmartThinker: Progressive Chain-of-Thought Length Calibration for Efficient Large Language Model Reasoning
 description: >-
-  [ICML 2026][LLM推理][GRPO] 本文提出 SmartThinker，一种基于 GRPO 的高效推理后训练方法，通过对每个 prompt 的"全部轨迹长度分布"与"正确轨迹长度分布"做高斯建模，解析推导出"使正确率最大的最优长度"$l^{\text{opt}}$…
+  [ICML 2026][LLM推理][GRPO] 本文提出 SmartThinker，一种基于 GRPO 的高效推理后训练方法，通过对每个 prompt 的"全部轨迹长度分布"与"正确轨迹长度分布"做高斯建模，解析推导出"使正确率最大的最优长度"$l^{\text{opt}}$，并配合一个动态长度奖励系数 $\Lambda$ 保证正确轨迹的归一化优势非负，从而在最多压缩 52.6% token 的同时把 AIME25 准确率相对提升最多 16.6%。
 tags:
   - "ICML 2026"
   - "LLM推理"

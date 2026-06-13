@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dense Policy: Bidirectional Autoregressive Learning of Actions
 description: >-
-  [ICCV 2025][图像生成][自回归策略] 提出 Dense Policy，一种基于双向自回归扩展的机器人操作策略，通过对数时间的粗到细层次化动作生成，在仿真和真实世界任务中超越 Diffusion Policy 和 ACT 等主流生成式策略。
+  [ICCV 2025][图像生成][自回归策略] 提出 Dense Policy，一种基于双向自回归扩展的机器人操作策略，通过对数时间的粗到细层次化动作生成，在仿真和真实世界任务中超越 Diffusion Policy 和 ACT 等主流生成式策略。 模仿学习中的动作生成范式分为两类： - 整体生成式策略：（ACT…
 tags:
   - "ICCV 2025"
   - "图像生成"

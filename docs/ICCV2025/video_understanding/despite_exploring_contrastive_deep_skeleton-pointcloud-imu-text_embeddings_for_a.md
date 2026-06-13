@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeSPITE: Exploring Contrastive Deep Skeleton-PointCloud-IMU-Text Embeddings for Action Recognition
 description: >-
-  [ICCV 2025][视频理解][多模态对比学习] DeSPITE 提出了一种隐私保护的多模态对比预训练模型，将 LiDAR 点云、骨架姿态、IMU 和文本四种模态对齐到统一嵌入空间，实现了跨模态匹配、检索以及人体活动识别的预训练范式。
+  [ICCV 2025][视频理解][多模态对比学习] DeSPITE 提出了一种隐私保护的多模态对比预训练模型，将 LiDAR 点云、骨架姿态、IMU 和文本四种模态对齐到统一嵌入空间，实现了跨模态匹配、检索以及人体活动识别的预训练范式。 现有多模态对比学习方法（如 ImageBind、IMU2CLIP、MotionCLIP…
 tags:
   - "ICCV 2025"
   - "视频理解"

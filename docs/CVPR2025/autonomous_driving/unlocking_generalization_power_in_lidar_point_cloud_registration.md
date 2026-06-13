@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlocking Generalization Power in LiDAR Point Cloud Registration
 description: >-
-  [CVPR 2025][自动驾驶][点云配准] 提出 UGP 框架，通过消除交叉注意力、引入渐进式自注意力和 BEV 特征融合，显著提升 LiDAR 点云配准在跨距离和跨数据集场景下的泛化能力。
+  [CVPR 2025][自动驾驶][点云配准] 提出 UGP 框架，通过消除交叉注意力、引入渐进式自注意力和 BEV 特征融合，显著提升 LiDAR 点云配准在跨距离和跨数据集场景下的泛化能力。 LiDAR 点云配准是自动驾驶和 SLAM 的核心任务。现实场景中，点云对之间存在两大变化：(1) 跨距离变化——不同速度或时间采…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

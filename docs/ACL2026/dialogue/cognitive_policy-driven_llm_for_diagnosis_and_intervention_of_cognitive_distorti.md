@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cognitive Policy-Driven LLM for Diagnosis and Intervention of Cognitive Distortions in Emotional Support Conversation
 description: >-
-  [ACL 2026][对话系统][情感支持对话] 提出CoPoLLM框架，通过构建首个带认知扭曲标注的情感支持对话数据集CogBiasESC，结合认知策略强化学习（CPRL）引擎和双流条件优化（DSCO），使LLM能诊断8类认知扭曲并生成策略感知的干预回复，在15个SOTA基线上全面领先。
+  [ACL 2026][对话系统][情感支持对话] 提出CoPoLLM框架，通过构建首个带认知扭曲标注的情感支持对话数据集CogBiasESC，结合认知策略强化学习（CPRL）引擎和双流条件优化（DSCO），使LLM能诊断8类认知扭曲并生成策略感知的干预回复，在15个SOTA基线上全面领先。 领域现状：LLM在情感支持对话（E…
 tags:
   - "ACL 2026"
   - "对话系统"

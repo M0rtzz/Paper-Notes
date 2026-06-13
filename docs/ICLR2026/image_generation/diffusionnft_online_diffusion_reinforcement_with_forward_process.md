@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DiffusionNFT: Online Diffusion Reinforcement with Forward Process
 description: >-
-  [ICLR 2026][图像生成][online RL] 提出 DiffusionNFT，一种全新的扩散模型在线 RL 范式：不在反向采样过程上做策略优化（如 GRPO），而是在前向过程上通过 flow matching 目标对正样本和负样本做对比式训练，定义隐式的策略改进方向…
+  [ICLR 2026 Oral][图像生成][online RL] 提出 DiffusionNFT，一种全新的扩散模型在线 RL 范式：不在反向采样过程上做策略优化（如 GRPO），而是在前向过程上通过 flow matching 目标对正样本和负样本做对比式训练，定义隐式的策略改进方向，比 FlowGRPO 快 3-25×，且无需 CFG。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "图像生成"
   - "online RL"
   - "forward process"

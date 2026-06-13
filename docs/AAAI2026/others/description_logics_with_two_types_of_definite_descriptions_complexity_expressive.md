@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction
 description: >-
-  [AAAI 2026][描述逻辑] 引入描述逻辑 ALC 的两种定冠描述扩展——局部定冠描述 $\{ι C\}$ 和全局定冠描述 $ι C.D$，证明三个扩展逻辑的可满足性问题均为 ExpTime-complete…
+  [AAAI 2026][描述逻辑] 引入描述逻辑 ALC 的两种定冠描述扩展——局部定冠描述 $\{ι C\}$ 和全局定冠描述 $ι C.D$，证明三个扩展逻辑的可满足性问题均为 ExpTime-complete，但全局定冠描述严格比局部更具表达力（$\mathcal{ALC}\iota_L < \mathcal{ALC}\iota_G = \mathcal{ALC}\iota$），并给出表列演算决策过程及实验评估。
 tags:
   - "AAAI 2026"
   - "描述逻辑"

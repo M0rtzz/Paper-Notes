@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Learning-Augmented Hierarchical Clustering
 description: >-
-  [ICML 2025][hierarchical clustering] 本文研究借助分裂预言机（splitting oracle）的辅助信息来突破层次聚类的近似硬度障碍，获得 Dasgupta 目标的 $O(1)$ 常数近似和 Moseley-Wang 目标的 $(1-o(1))$ 近似…
+  [ICML 2025][算法 / 聚类][hierarchical clustering] 本文研究借助分裂预言机（splitting oracle）的辅助信息来突破层次聚类的近似硬度障碍，获得 Dasgupta 目标的 $O(1)$ 常数近似和 Moseley-Wang 目标的 $(1-o(1))$ 近似，并推广到流式和并行计算场景。
 tags:
   - "ICML 2025"
+  - "算法 / 聚类"
   - "hierarchical clustering"
   - "learning-augmented algorithms"
   - "splitting oracle"

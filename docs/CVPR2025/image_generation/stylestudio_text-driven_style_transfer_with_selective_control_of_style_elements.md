@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StyleStudio: Text-Driven Style Transfer with Selective Control of Style Elements
 description: >-
-  [CVPR 2025][图像生成][文本驱动风格迁移] StyleStudio提出跨模态AdaIN、基于风格的无分类器引导(SCFG)和教师模型三个互补策略，解决文本驱动风格迁移中的风格过拟合、文本对齐不准和布局不稳定问题，实现了对风格元素的选择性控制。
+  [CVPR 2025][图像生成][文本驱动风格迁移] StyleStudio提出跨模态AdaIN、基于风格的无分类器引导(SCFG)和教师模型三个互补策略，解决文本驱动风格迁移中的风格过拟合、文本对齐不准和布局不稳定问题，实现了对风格元素的选择性控制。 文本驱动的风格迁移旨在将参考图像的风格与文本提示描述的内容融合…
 tags:
   - "CVPR 2025"
   - "图像生成"

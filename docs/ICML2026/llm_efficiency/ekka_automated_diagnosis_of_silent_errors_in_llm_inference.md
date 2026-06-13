@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ekka: Automated Diagnosis of Silent Errors in LLM Inference
 description: >-
-  [ICML 2026][LLM效率][静默错误] Ekka 把 LLM 服务框架里"输出悄悄变烂、却没有报错"的静默错误诊断问题，建模为以 HuggingFace 这类参考实现为 oracle 的差分调试任务，用一套"组件映射 → 激活对齐 → 变点分析"的 agentic 流水线自动定位到出问题的具体模块…
+  [ICML 2026][LLM效率][静默错误] Ekka 把 LLM 服务框架里"输出悄悄变烂、却没有报错"的静默错误诊断问题，建模为以 HuggingFace 这类参考实现为 oracle 的差分调试任务，用一套"组件映射 → 激活对齐 → 变点分析"的 agentic 流水线自动定位到出问题的具体模块，在 17 个真实 vLLM/SGLang issue 上取得 80% pass@1 / 88% pass@5 的诊断准确率，并新发现 4 个被开发者确认的隐藏 bug。
 tags:
   - "ICML 2026"
   - "LLM效率"

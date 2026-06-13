@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COSMOS: Cross-Modality Self-Distillation for Vision Language Pre-training
 description: >-
-  [CVPR 2025][语义分割][视觉语言预训练] COSMOS 提出了一种跨模态自蒸馏框架，通过文本裁剪策略和交叉注意力模块在学生-教师结构中学习细粒度的跨模态表征，在仅使用 30M 数据预训练的情况下，在零样本检索、分类和语义分割任务上全面超越 CLIP 类基线…
+  [CVPR 2025][语义分割][视觉语言预训练] COSMOS 提出了一种跨模态自蒸馏框架，通过文本裁剪策略和交叉注意力模块在学生-教师结构中学习细粒度的跨模态表征，在仅使用 30M 数据预训练的情况下，在零样本检索、分类和语义分割任务上全面超越 CLIP 类基线，甚至超越在数十亿数据上训练的 OpenCLIP。
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SADA: Stability-guided Adaptive Diffusion Acceleration
 description: >-
-  [ICML2025][图像生成][扩散模型加速] 提出基于ODE轨迹二阶差分的稳定性准则（Stability Criterion），统一调控步级（step-wise）和token级（token-wise）稀疏决策，在SD-2/SDXL/Flux上实现≥1.8×加速且LPIPS≤0.10、FID≤4.5…
+  [ICML2025][图像生成][扩散模型加速] 提出基于ODE轨迹二阶差分的稳定性准则（Stability Criterion），统一调控步级（step-wise）和token级（token-wise）稀疏决策，在SD-2/SDXL/Flux上实现≥1.8×加速且LPIPS≤0.10、FID≤4.5，显著优于DeepCache和AdaptiveDiffusion。
 tags:
   - "ICML2025"
   - "图像生成"

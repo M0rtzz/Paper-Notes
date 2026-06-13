@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration
 description: >-
-  [CVPR 2025][LLM Agent][GUI Agent] 提出 GUI-Xplore 数据集（312 个应用、32K+ QA 对、五层级任务）和 Xplore-Agent 框架（Action-aware GUI 建模 + GUI Transition Graph 推理）…
+  [CVPR 2025][LLM Agent][GUI Agent] 提出 GUI-Xplore 数据集（312 个应用、32K+ QA 对、五层级任务）和 Xplore-Agent 框架（Action-aware GUI 建模 + GUI Transition Graph 推理），通过模拟"先探索再推理"的人类策略，在陌生应用上比 SOTA GUI Agent 提升约 10% StepSR。
 tags:
   - "CVPR 2025"
   - "LLM Agent"

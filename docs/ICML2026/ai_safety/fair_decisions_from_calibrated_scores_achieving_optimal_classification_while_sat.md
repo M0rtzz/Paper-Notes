@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fair Decisions from Calibrated Scores: Achieving Optimal Classification While Satisfying Sufficiency
 description: >-
-  [ICML 2026][AI安全][算法公平] 本文针对"即使分数在各群体上完全 group-calibrated，对其取单一阈值也会违反 sufficiency（predictive parity）"这一长期被忽视的痛点…
+  [ICML 2026][AI安全][算法公平] 本文针对"即使分数在各群体上完全 group-calibrated，对其取单一阈值也会违反 sufficiency（predictive parity）"这一长期被忽视的痛点，给出有限离散分数下 sufficiency 约束最优二元分类器的**精确解**：通过对 $(\mathrm{PPV}, \mathrm{FOR})$ 可行域的几何刻画，得到一个只依赖分数和群体标签的后处理算法，并证明该算法同时可解"损失最小化"和"在 sufficiency 下最小化与 separation 的偏差"两类目标。
 tags:
   - "ICML 2026"
   - "AI安全"

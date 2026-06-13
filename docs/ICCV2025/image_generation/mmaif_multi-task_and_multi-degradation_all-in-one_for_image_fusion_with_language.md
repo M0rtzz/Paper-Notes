@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMAIF: Multi-task and Multi-degradation All-in-One for Image Fusion with Language Guidance
 description: >-
-  [ICCV 2025][图像生成][图像融合] MMAIF 提出统一的多任务、多退化、语言引导图像融合框架，通过实际退化流水线和现代化 DiT 架构在潜在空间操作，同时提供回归和 Flow Matching 两个版本，在各类退化融合任务上超越现有 restoration+fusion 流水线。
+  [ICCV 2025][图像生成][图像融合] MMAIF 提出统一的多任务、多退化、语言引导图像融合框架，通过实际退化流水线和现代化 DiT 架构在潜在空间操作，同时提供回归和 Flow Matching 两个版本，在各类退化融合任务上超越现有 restoration+fusion 流水线。 图像融合旨在将多模态/多参数图…
 tags:
   - "ICCV 2025"
   - "图像生成"

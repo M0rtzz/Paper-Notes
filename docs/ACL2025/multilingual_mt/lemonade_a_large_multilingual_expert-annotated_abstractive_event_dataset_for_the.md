@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEMONADE: A Large Multilingual Expert-Annotated Abstractive Event Dataset for the Real World
 description: >-
-  [ACL 2025 (Findings)][多语言/翻译][event extraction] 发布 Lemonade——基于 ACLED 冲突数据的大规模多语言专家标注事件数据集（39,786 事件，20 种语言，171 个国家，10,707 实体）…
+  [ACL 2025 (Findings)][多语言/翻译][event extraction] 发布 Lemonade——基于 ACLED 冲突数据的大规模多语言专家标注事件数据集（39,786 事件，20 种语言，171 个国家，10,707 实体），提出 Abstractive Event Extraction (AEE) 新任务范式，事件参数不限于文本 span 而是归一化为数值/类别/实体，配套 Zest 零样本实体链接系统在 AEL 子任务上 F1=45.7% 大幅超越 baseline 的 23.7%。
 tags:
   - "ACL 2025 (Findings)"
   - "多语言/翻译"

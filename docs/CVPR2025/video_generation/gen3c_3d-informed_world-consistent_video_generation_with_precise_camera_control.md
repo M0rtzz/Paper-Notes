@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEN3C: 3D-Informed World-Consistent Video Generation with Precise Camera Control
 description: >-
-  [CVPR 2025 (Highlight)][视频生成][3D一致性视频生成] GEN3C 提出了一种基于 3D 缓存（point cloud cache）引导的视频生成框架，通过对种子图像预测深度并反投影得到 3D 点云，在生成下一帧时将 3D 缓存按用户指定的相机轨迹渲染为 2D 条件图…
+  [CVPR 2025 (Highlight)][视频生成][3D一致性视频生成] GEN3C 提出了一种基于 3D 缓存（point cloud cache）引导的视频生成框架，通过对种子图像预测深度并反投影得到 3D 点云，在生成下一帧时将 3D 缓存按用户指定的相机轨迹渲染为 2D 条件图，从而实现精确的相机控制和跨帧 3D 一致性。
 tags:
   - "CVPR 2025 (Highlight)"
   - "视频生成"

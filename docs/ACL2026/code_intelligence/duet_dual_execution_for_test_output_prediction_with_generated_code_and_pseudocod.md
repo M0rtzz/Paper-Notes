@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DUET: Dual Execution for Test Output Prediction with Generated Code and Pseudocode
 description: >-
-  [ACL 2026][代码智能][测试输出预测] 本文提出 DUET，一个结合直接代码执行和 LLM 伪代码执行的双路框架，通过功能多数投票融合两种互补的执行路径——前者在代码正确时可靠但受实现错误影响…
+  [ACL 2026 Findings][代码智能][测试输出预测] 本文提出 DUET，一个结合直接代码执行和 LLM 伪代码执行的双路框架，通过功能多数投票融合两种互补的执行路径——前者在代码正确时可靠但受实现错误影响，后者绕过实现细节但可能产生执行幻觉——在 LiveCodeBench 测试输出预测上提升 Pass@1 13.6 个百分点。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "测试输出预测"
   - "伪代码执行"

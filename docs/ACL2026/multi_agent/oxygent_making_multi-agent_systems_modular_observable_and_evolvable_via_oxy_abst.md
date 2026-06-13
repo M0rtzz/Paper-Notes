@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OxyGent: Making Multi-Agent Systems Modular, Observable, and Evolvable via Oxy Abstraction
 description: >-
-  [ACL2026][多智能体][多智能体系统] OxyGent 把 agent、工具、LLM 与推理流程统一封装成可插拔的 Oxy 原子组件，并用权限驱动的动态规划与 OxyBank 数据回流机制，让工业级多智能体系统更容易搭建、监控和持续演化。
+  [ACL2026][多智能体][多智能体系统] OxyGent 把 agent、工具、LLM 与推理流程统一封装成可插拔的 Oxy 原子组件，并用权限驱动的动态规划与 OxyBank 数据回流机制，让工业级多智能体系统更容易搭建、监控和持续演化。 领域现状：LLM agent 正在从单个聊天助手走向多智能体系统…
 tags:
   - "ACL2026"
   - "多智能体"

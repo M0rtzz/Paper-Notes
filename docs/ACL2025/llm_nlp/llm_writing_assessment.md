@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLMs can Perform Multi-Dimensional Analytic Writing Assessments
 description: >-
-  [ACL 2025][LLM/NLP][自动写作评估] 利用 L2 研究生文献综述语料库，系统评估了 LLM 在多维分析写作评估（评分+评论）上的能力，并提出可解释的反馈质量评估框架 ProEval。
+  [ACL 2025][LLM 其他][自动写作评估] 利用 L2 研究生文献综述语料库，系统评估了 LLM 在多维分析写作评估（评分+评论）上的能力，并提出可解释的反馈质量评估框架 ProEval。 多维分析评估成本高：人工对作文按多个维度同时打分并撰写评论，认知负荷大、耗时且昂贵，导致 L2 写作领域此类高质量标注语料极度…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动写作评估"
   - "多维分析评分"
   - "反馈评论生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-Solver: A Generalized ODE Solver for Diffusion Models with Dual Prediction
 description: >-
-  [ICLR 2026][图像生成][ODE solver] 提出 Dual-Solver，通过三组可学习参数（预测类型插值 $\gamma$、积分域选择 $\tau$、残差调整 $\kappa$）泛化扩散模型多步采样器，用冻结预训练分类器（MobileNet/CLIP）的分类损失学习参数（无需教师轨迹）…
+  [ICLR 2026][图像生成][ODE solver] 提出 Dual-Solver，通过三组可学习参数（预测类型插值 $\gamma$、积分域选择 $\tau$、残差调整 $\kappa$）泛化扩散模型多步采样器，用冻结预训练分类器（MobileNet/CLIP）的分类损失学习参数（无需教师轨迹），在 3-9 NFE 低步区间全面优于 DPM-Solver++ 等方法。
 tags:
   - "ICLR 2026"
   - "图像生成"

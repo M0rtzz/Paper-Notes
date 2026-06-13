@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Semantic Collapse in Partially Relevant Video Retrieval
 description: >-
-  [NeurIPS 2025][模型压缩][部分相关视频检索] 针对部分相关视频检索（PRVR）中的语义坍塌问题，提出文本相关性保持学习和跨分支视频对齐（CBVA）方法，在文本和视频嵌入空间中分别解决坍塌现象，显著提升检索准确率。
+  [NeurIPS 2025][模型压缩][部分相关视频检索] 针对部分相关视频检索（PRVR）中的语义坍塌问题，提出文本相关性保持学习和跨分支视频对齐（CBVA）方法，在文本和视频嵌入空间中分别解决坍塌现象，显著提升检索准确率。 - PRVR 任务定义：部分相关视频检索，即给定文本查询，检索那些 仅部分内容匹配：的视频（而非…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

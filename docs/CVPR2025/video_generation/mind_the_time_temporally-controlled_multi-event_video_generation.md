@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Time: Temporally-Controlled Multi-Event Video Generation
 description: >-
-  [CVPR 2025][视频生成][多事件视频生成] 提出 MinT，首个支持事件时间控制的多事件视频生成器，通过 Rescaled RoPE (ReRoPE) 位置编码将事件描述绑定到特定时间段，在预训练视频 DiT 上微调实现平滑连贯的多事件视频合成。
+  [CVPR 2025][视频生成][多事件视频生成] 提出 MinT，首个支持事件时间控制的多事件视频生成器，通过 Rescaled RoPE (ReRoPE) 位置编码将事件描述绑定到特定时间段，在预训练视频 DiT 上微调实现平滑连贯的多事件视频合成。 现有视频生成模型依赖单个文本 prompt 描述整个视频…
 tags:
   - "CVPR 2025"
   - "视频生成"

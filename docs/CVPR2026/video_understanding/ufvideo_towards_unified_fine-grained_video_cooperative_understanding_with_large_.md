@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models
 description: >-
-  [CVPR 2026][视频理解][统一视频理解] UFVideo 是首个统一全局、像素级和时序级三种粒度视频理解能力的 Video LLM，通过视觉-语言引导对齐策略和 SAM2 mask decoder，在单一模型内同时支持视频问答、目标引用、视频分割和时序定位…
+  [CVPR 2026][视频理解][统一视频理解] UFVideo 是首个统一全局、像素级和时序级三种粒度视频理解能力的 Video LLM，通过视觉-语言引导对齐策略和 SAM2 mask decoder，在单一模型内同时支持视频问答、目标引用、视频分割和时序定位，并构建了多粒度协同理解基准 UFVideo-Bench。
 tags:
   - "CVPR 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Skill-Attributes for Transferable Assessment in Video
 description: >-
-  [NeurIPS 2025][多模态VLM][技能评估] 提出CrossTrainer方法，通过发现跨运动通用的技能属性（如平衡、控制、手部定位）作为中间表示，训练多模态语言模型从视频中生成可操作反馈和水平评估，在跨运动零样本迁移中相对SOTA提升高达60%。
+  [NeurIPS 2025][多模态VLM][技能评估] 提出CrossTrainer方法，通过发现跨运动通用的技能属性（如平衡、控制、手部定位）作为中间表示，训练多模态语言模型从视频中生成可操作反馈和水平评估，在跨运动零样本迁移中相对SOTA提升高达60%。 领域现状：视频技能评估的目标是给运动员的表现打分并指出可改进之处…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

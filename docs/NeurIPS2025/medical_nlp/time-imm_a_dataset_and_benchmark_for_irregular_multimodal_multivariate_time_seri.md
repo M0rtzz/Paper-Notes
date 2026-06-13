@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series
 description: >-
-  [NeurIPS 2025][医疗NLP][不规则时序] 构建 Time-IMM 数据集——首个按因果机制分类不规则性的多模态多变量时序 benchmark（9 种不规则类型分为触发/约束/伪影三大类，9 个数据集），配套 IMM-TSF 预测库支持异步多模态融合…
+  [NeurIPS 2025][医疗NLP][不规则时序] 构建 Time-IMM 数据集——首个按因果机制分类不规则性的多模态多变量时序 benchmark（9 种不规则类型分为触发/约束/伪影三大类，9 个数据集），配套 IMM-TSF 预测库支持异步多模态融合，实验表明显式建模多模态在不规则时序上平均降低 MSE 6.71%，最高达 38.38%。
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

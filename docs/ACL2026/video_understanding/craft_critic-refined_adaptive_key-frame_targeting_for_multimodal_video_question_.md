@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering
 description: >-
-  [ACL2026][视频理解][多视频问答] CRAFT 是一个面向新闻事件多视频问答的 claim-centric pipeline，它结合动态关键帧选择、ASR 转写、UNLI/MNLI/LLM critic 迭代修正和引用合并…
+  [ACL2026][视频理解][多视频问答] CRAFT 是一个面向新闻事件多视频问答的 claim-centric pipeline，它结合动态关键帧选择、ASR 转写、UNLI/MNLI/LLM critic 迭代修正和引用合并，在 MAGMaR-Test 上取得 0.739 macro average、0.810 reference recall 和 0.635 citation F1。
 tags:
   - "ACL2026"
   - "视频理解"

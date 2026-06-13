@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How Catastrophic is Your LLM? Certifying Risk in Conversation
 description: >-
-  [ICLR 2026][LLM/NLP][safety certification] 提出 C3LLM（Certification of Catastrophic risks in multi-turn Conversation for LLMs）…
+  [ICLR 2026][LLM 其他][safety certification] 提出 C3LLM（Certification of Catastrophic risks in multi-turn Conversation for LLMs），首个为多轮 LLM 对话中灾难性风险提供统计认证的框架：用语义相似度图上的 Markov 过程建模对话分布，定义 3 种对话采样策略 + 增强层，使用 Clopper-Pearson 95% 置信区间认证模型产生有害输出的概率界——发现最差模型风险下界高达 72%。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "safety certification"
   - "multi-turn attack"
   - "Markov process"

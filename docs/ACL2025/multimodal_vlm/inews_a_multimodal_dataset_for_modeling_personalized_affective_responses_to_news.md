@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iNews: A Multimodal Dataset for Modeling Personalized Affective Responses to News
 description: >-
-  [ACL 2025][多模态VLM][个性化情感响应] 构建了一个包含 291 位英国标注者对 2,899 条 Facebook 多模态新闻帖子的个性化情感标注数据集 iNews，标注者特征（人口统计、人格、媒体信任等）可解释 15.2% 的标注方差…
+  [ACL 2025][多模态VLM][个性化情感响应] 构建了一个包含 291 位英国标注者对 2,899 条 Facebook 多模态新闻帖子的个性化情感标注数据集 iNews，标注者特征（人口统计、人格、媒体信任等）可解释 15.2% 的标注方差，结合 persona 信息的 LLM 零样本预测准确率提升最高 7%。
 tags:
   - "ACL 2025"
   - "多模态VLM"

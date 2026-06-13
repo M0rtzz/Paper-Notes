@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Length Controlled Generation for Black-box LLMs
 description: >-
-  [ACL 2025][LLM/NLP][长度控制] 提出基于 Metropolis-Hastings 算法的迭代采样框架，结合重要性采样加速策略，在**不修改模型参数**的前提下实现黑盒 LLM 的精确长度控制，在 Llama3.1 上达到**100%**的长度控制成功率，最多仅需 5 次迭代…
+  [ACL 2025][LLM 其他][长度控制] 提出基于 Metropolis-Hastings 算法的迭代采样框架，结合重要性采样加速策略，在**不修改模型参数**的前提下实现黑盒 LLM 的精确长度控制，在 Llama3.1 上达到**100%**的长度控制成功率，最多仅需 5 次迭代，且不损害生成质量。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "长度控制"
   - "黑盒LLM"
   - "Metropolis-Hastings采样"

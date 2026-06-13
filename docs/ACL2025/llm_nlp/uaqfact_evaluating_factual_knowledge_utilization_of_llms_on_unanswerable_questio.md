@@ -2,10 +2,10 @@
 title: >-
   [论文解读] UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions
 description: >-
-  [ACL 2025][LLM/NLP][不可回答问题] 提出双语不可回答问题数据集UAQFact（13,970题），每个问题附带知识图谱事实知识，定义三个评估任务分别衡量LLM区分不可回答问题（UAQ）与可回答问题（ABQ）、利用内部/外部事实知识处理UAQ的能力…
+  [ACL 2025][LLM 其他][不可回答问题] 提出双语不可回答问题数据集UAQFact（13,970题），每个问题附带知识图谱事实知识，定义三个评估任务分别衡量LLM区分不可回答问题（UAQ）与可回答问题（ABQ）、利用内部/外部事实知识处理UAQ的能力，实验揭示即使LLM已存储相关知识也难以有效利用。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "不可回答问题"
   - "事实性知识"
   - "知识图谱"

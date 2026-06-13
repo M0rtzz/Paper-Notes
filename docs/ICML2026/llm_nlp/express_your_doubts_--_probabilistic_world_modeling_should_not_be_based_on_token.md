@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Express Your Doubts: Probabilistic World Modeling Should Not Be Based on Token logprobs
 description: >-
-  [ICML 2026 (Position Paper)][LLM/NLP][token logprob] 这是一篇 position paper，主张：**用 LLM 的 token softmax 概率（logprob）当成"世界事件概率"是理论上错的**——因为 distribution estimati…
+  [ICML 2026 (Position Paper)][LLM 其他][token logprob] 这是一篇 position paper，主张：**用 LLM 的 token softmax 概率（logprob）当成"世界事件概率"是理论上错的**——因为 distribution estimation、response prediction 和 target distribution estimation 是三个不同任务，对应不同 ideal 输出分布；获取世界概率的正确做法是**二阶预测**——让 LLM 在输出里**显式写出**它对事件的概率（数值或语言修饰词），而不是去算"它说 X 的概率"。
 tags:
   - "ICML 2026 (Position Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "token logprob"
   - "世界建模"
   - "二阶预测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CUBE: Representing 3D Faces with Learnable B-Spline Volumes
 description: >-
-  [CVPR 2026][3D视觉][B样条体] 提出 CUBE（Control-based Unified B-spline Encoding），一种结合 B 样条体和可学习高维控制特征的混合几何表示，通过两阶段解码（B 样条基插值 + 轻量 MLP 残差）实现可编辑、高精度的 3D 人脸重建和扫描配准。
+  [CVPR 2026 Highlight][3D视觉][B样条体] 提出 CUBE（Control-based Unified B-spline Encoding），一种结合 B 样条体和可学习高维控制特征的混合几何表示，通过两阶段解码（B 样条基插值 + 轻量 MLP 残差）实现可编辑、高精度的 3D 人脸重建和扫描配准。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "3D视觉"
   - "B样条体"
   - "人脸表示"

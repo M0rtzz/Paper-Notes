@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PAM: A Pose-Appearance-Motion Engine for Sim-to-Real HOI Video Generation
 description: >-
-  [CVPR 2026][视频生成][手物交互] 提出PAM——首个仅需初始/目标手部姿态和物体几何即可生成逼真手物交互视频的引擎，通过解耦姿态生成、外观生成和运动生成三阶段，在DexYCB上FVD 29.13（vs InterDyn 38.83）、MPJPE 19.37mm（vs CosHand 30.05m…
+  [CVPR 2026][视频生成][手物交互] 提出PAM——首个仅需初始/目标手部姿态和物体几何即可生成逼真手物交互视频的引擎，通过解耦姿态生成、外观生成和运动生成三阶段，在DexYCB上FVD 29.13（vs InterDyn 38.83）、MPJPE 19.37mm（vs CosHand 30.05mm），生成的合成数据还能有效增强下游手部姿态估计任务。
 tags:
   - "CVPR 2026"
   - "视频生成"

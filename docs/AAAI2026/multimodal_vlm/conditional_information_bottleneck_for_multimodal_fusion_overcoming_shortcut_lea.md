@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Information Bottleneck for Multimodal Fusion: Overcoming Shortcut Learning in Sarcasm Detection
 description: >-
-  [AAAI 2026][多模态VLM][多模态融合] 系统分析多模态反讽检测中三类捷径学习问题（角色标签、罐头笑声、情感不一致），构建去捷径数据集 MUStARD++R，提出基于条件信息瓶颈的多模态融合模型 MCIB，在压缩模态冗余的同时保留互补信息，不依赖捷径即达到 SOTA。
+  [AAAI 2026][多模态VLM][多模态融合] 系统分析多模态反讽检测中三类捷径学习问题（角色标签、罐头笑声、情感不一致），构建去捷径数据集 MUStARD++R，提出基于条件信息瓶颈的多模态融合模型 MCIB，在压缩模态冗余的同时保留互补信息，不依赖捷径即达到 SOTA。 领域现状：多模态讽刺检测需要综合文本、音频、…
 tags:
   - "AAAI 2026"
   - "多模态VLM"

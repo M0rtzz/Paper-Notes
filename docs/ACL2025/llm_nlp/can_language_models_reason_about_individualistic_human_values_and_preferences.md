@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can Language Models Reason about Individualistic Human Values and Preferences?
 description: >-
-  [ACL2025][LLM/NLP][individualistic alignment] 提出"个体价值对齐"范式，构建 IndieValueCatalog 数据集（基于世界价值观调查 WVS 的 9.3 万真人数据），评估并训练语言模型根据个人价值表达陈述推理其在新情境下的价值判断…
+  [ACL2025][LLM 其他][individualistic alignment] 提出"个体价值对齐"范式，构建 IndieValueCatalog 数据集（基于世界价值观调查 WVS 的 9.3 万真人数据），评估并训练语言模型根据个人价值表达陈述推理其在新情境下的价值判断，揭示前沿 LM 仅达 55%-65% 准确率且存在显著的跨群体不公平性。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "individualistic alignment"
   - "value reasoning"
   - "World Values Survey"

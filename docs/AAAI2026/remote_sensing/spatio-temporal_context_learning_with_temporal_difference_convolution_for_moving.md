@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD
 description: >-
-  [AAAI 2026][遥感][红外小目标检测] 提出 TDCNet，将时间差分和 3D 卷积融合为统一的时间差分卷积 (TDC)，通过重参数化实现推理零额外开销，配合 TDC 引导的时空注意力，在自建 IRSTD-UAV 数据集上 F1 达 97.12%（AP50 93.83%），同时发布 15…
+  [AAAI 2026][遥感][红外小目标检测] 提出 TDCNet，将时间差分和 3D 卷积融合为统一的时间差分卷积 (TDC)，通过重参数化实现推理零额外开销，配合 TDC 引导的时空注意力，在自建 IRSTD-UAV 数据集上 F1 达 97.12%（AP50 93.83%），同时发布 15,106 帧真实红外无人机数据集。
 tags:
   - "AAAI 2026"
   - "遥感"

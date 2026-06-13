@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Next-Scale Autoregressive Models for Text-to-Motion Generation
 description: >-
-  [CVPR 2026][人体理解][文本到动作生成] MoScale 提出了一种 next-scale 自回归动作生成框架，替代传统 next-token 预测，通过从粗到细的层次化因果生成来捕获全局语义结构，并引入跨尺度层次精化和尺度内时间精化…
+  [CVPR 2026][人体理解][文本到动作生成] MoScale 提出了一种 next-scale 自回归动作生成框架，替代传统 next-token 预测，通过从粗到细的层次化因果生成来捕获全局语义结构，并引入跨尺度层次精化和尺度内时间精化，在 HumanML3D 和 KIT-ML 上达到 SOTA（Top-1 0.540，FID 0.046）。
 tags:
   - "CVPR 2026"
   - "人体理解"

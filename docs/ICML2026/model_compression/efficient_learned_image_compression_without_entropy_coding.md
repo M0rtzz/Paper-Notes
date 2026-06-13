@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Learned Image Compression without Entropy Coding
 description: >-
-  [ICML 2026][模型压缩][学习型图像压缩] EF-LIC 用"无约束向量量化最大化索引熵 + 表征域上下文重参数化消除潜变量间相关性"两步替代了 learned image compression 流水线里慢且串行的熵编码模块，理论证明其 R–D 性能可逼近熵编码方案…
+  [ICML 2026][模型压缩][学习型图像压缩] EF-LIC 用"无约束向量量化最大化索引熵 + 表征域上下文重参数化消除潜变量间相关性"两步替代了 learned image compression 流水线里慢且串行的熵编码模块，理论证明其 R–D 性能可逼近熵编码方案，实际在 Kodak/LPIPS 上比 MS-ILLM 省码 67.86% 且解码快 10 倍。
 tags:
   - "ICML 2026"
   - "模型压缩"

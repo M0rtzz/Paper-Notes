@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Affectron: Emotional Speech Synthesis with Affective and Contextually Aligned Nonverbal Vocalizations
 description: >-
-  [ACL 2026][音频/语音][非语言发声] 本文提出 Affectron 框架，通过情感驱动的 Top-K NV 匹配和情感感知的 Top-K 路由两个训练时增强策略，在小规模开源解耦语料上实现了多样且情感对齐的非语言发声（如笑声、叹息）合成，显著超越了基于纯语言预训练的 VoiceCraft 基线。
+  [ACL 2026 Findings][音频/语音][非语言发声] 本文提出 Affectron 框架，通过情感驱动的 Top-K NV 匹配和情感感知的 Top-K 路由两个训练时增强策略，在小规模开源解耦语料上实现了多样且情感对齐的非语言发声（如笑声、叹息）合成，显著超越了基于纯语言预训练的 VoiceCraft 基线。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "非语言发声"
   - "情感语音合成"

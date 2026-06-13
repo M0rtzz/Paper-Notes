@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EmoTaG: Emotion-Aware Talking Head Synthesis on Gaussian Splatting with Few-Shot Personalization
 description: >-
-  [CVPR 2026][3D视觉][3D Gaussian Splatting] 提出 EmoTaG，一个基于 FLAME-Gaussian 结构先验和门控残差运动网络（GRMN）的情感感知 3D 说话人头合成框架，仅需 5 秒视频即可实现 few-shot 个性化适配，同时兼顾情感表达、唇音同步和几何稳定性…
+  [CVPR 2026][3D视觉][3D Gaussian Splatting] 提出 EmoTaG，一个基于 FLAME-Gaussian 结构先验和门控残差运动网络（GRMN）的情感感知 3D 说话人头合成框架，仅需 5 秒视频即可实现 few-shot 个性化适配，同时兼顾情感表达、唇音同步和几何稳定性。
 tags:
   - "CVPR 2026"
   - "3D视觉"

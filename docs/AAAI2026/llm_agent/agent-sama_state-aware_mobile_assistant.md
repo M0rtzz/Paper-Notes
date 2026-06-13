@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Agent-SAMA: State-Aware Mobile Assistant
 description: >-
-  [AAAI 2026][GUI Agent] 提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
+  [AAAI 2026][LLM Agent][GUI Agent] 提出Agent-SAMA，首次将有限状态机（FSM）引入移动端GUI Agent，将UI屏幕建模为状态、用户操作建模为转移，通过四个专门化Agent协作实现状态感知的任务规划、执行验证和错误恢复，在跨App基准上成功率提升最高12%、恢复率提升13.8%。
 tags:
   - "AAAI 2026"
+  - "LLM Agent"
   - "GUI Agent"
   - "有限状态机"
   - "多Agent协作"

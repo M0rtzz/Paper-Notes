@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildAvatar: Learning In-the-Wild 3D Avatars from the Web
 description: >-
-  [CVPR 2025][人体理解][3D人体avatar] 提出自动化标注管线和过滤协议，从 YouTube 视频中构建了 WildAvatar——一个包含 10,000+ 人体对象的大规模野外 3D avatar 创建数据集，规模比此前数据集大 10 倍以上…
+  [CVPR 2025][人体理解][3D人体avatar] 提出自动化标注管线和过滤协议，从 YouTube 视频中构建了 WildAvatar——一个包含 10,000+ 人体对象的大规模野外 3D avatar 创建数据集，规模比此前数据集大 10 倍以上，并在 EMDB 基准上超越现有 SMPL 标注方法。
 tags:
   - "CVPR 2025"
   - "人体理解"

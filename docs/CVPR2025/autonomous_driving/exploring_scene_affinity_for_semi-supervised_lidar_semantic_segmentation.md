@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Scene Affinity for Semi-Supervised LiDAR Semantic Segmentation
 description: >-
-  [CVPR 2025][自动驾驶][半监督学习] 提出 AIScene 框架利用场景内一致性（点擦除策略）和场景间关联（MixPatch + InsFill 跨场景增强），在仅 1% 标注的 SemanticKITTI 上将半监督 LiDAR 分割提升 1.9 mIoU。
+  [CVPR 2025][自动驾驶][半监督学习] 提出 AIScene 框架利用场景内一致性（点擦除策略）和场景间关联（MixPatch + InsFill 跨场景增强），在仅 1% 标注的 SemanticKITTI 上将半监督 LiDAR 分割提升 1.9 mIoU。 领域现状：半监督 LiDAR 语义分割使用少量标注数…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

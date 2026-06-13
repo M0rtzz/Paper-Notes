@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Complexity Scaling Laws for Neural Models using Combinatorial Optimization
 description: >-
-  [NeurIPS 2025][强化学习][神经缩放定律] 以旅行商问题（TSP）为案例，研究固定模型容量下问题复杂度（解空间大小、表示空间维度）与模型性能之间的可预测缩放规律，揭示了 RL 和 SFT 在组合优化中的系统性性能趋势。
+  [NeurIPS 2025][强化学习][神经缩放定律] 以旅行商问题（TSP）为案例，研究固定模型容量下问题复杂度（解空间大小、表示空间维度）与模型性能之间的可预测缩放规律，揭示了 RL 和 SFT 在组合优化中的系统性性能趋势。 领域现状 领域现状：神经缩放定律已证明模型性能随计算预算、模型大小和数据集大小可预测地改善…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

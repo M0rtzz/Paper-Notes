@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-Guided Camera Motion Understanding in VideoLLMs
 description: >-
-  [CVPR 2025][可解释性][camera motion] 提出一个从基准构建、诊断到注入的完整框架，通过 3D 基础模型（VGGT）提取相机运动线索并以结构化提示注入 VideoLLM，实现无需训练的相机运动感知增强。
+  [CVPR 2025][可解释性][camera motion] 提出一个从基准构建、诊断到注入的完整框架，通过 3D 基础模型（VGGT）提取相机运动线索并以结构化提示注入 VideoLLM，实现无需训练的相机运动感知增强。 领域现状： VideoLLM 在高层视频语义（物体、动作、叙事）上表现良好，但对相机运动（pan、…
 tags:
   - "CVPR 2025"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamRelation: Relation-Centric Video Customization
 description: >-
-  [ICCV 2025][视频生成][关系视频定制] 提出 DreamRelation，首个关系中心的视频定制方法，通过 Relation LoRA Triplet + Hybrid Mask Training 实现关系与外观的解耦，并通过时空关系对比损失增强关系动态学习，使动物能模仿人类交互。
+  [ICCV 2025][视频生成][关系视频定制] 提出 DreamRelation，首个关系中心的视频定制方法，通过 Relation LoRA Triplet + Hybrid Mask Training 实现关系与外观的解耦，并通过时空关系对比损失增强关系动态学习，使动物能模仿人类交互。 现有视频定制方法可以个性化主体…
 tags:
   - "ICCV 2025"
   - "视频生成"

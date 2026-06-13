@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts
 description: >-
-  [NeurIPS 2025][优化/理论][混合专家模型] 首次对 softmax 门控的污染混合专家（contaminated MoE）模型进行系统理论分析，提出可区分性条件（distinguishability）…
+  [NeurIPS 2025][优化/理论][混合专家模型] 首次对 softmax 门控的污染混合专家（contaminated MoE）模型进行系统理论分析，提出可区分性条件（distinguishability），在该条件成立时证明 MLE 达到参数级 $\widetilde{\mathcal{O}}(n^{-1/2})$ 极小极大最优估计速率，在条件不成立（prompt 与预训练模型知识重叠）时揭示估计速率显著变慢的本质机制。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

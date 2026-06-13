@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How can embedding models bind concepts?
 description: >-
-  [ICML2026][信息检索/RAG][概念绑定] 本文把 "embedding 模型为什么不会绑定概念" 形式化成 "binding function 的复杂度问题"：通过几何分析证明 CLIP 的场景嵌入可加性分解成对象与概念之和（解释了单模态可探测、跨模态却失败）…
+  [ICML2026][信息检索/RAG][概念绑定] 本文把 "embedding 模型为什么不会绑定概念" 形式化成 "binding function 的复杂度问题"：通过几何分析证明 CLIP 的场景嵌入可加性分解成对象与概念之和（解释了单模态可探测、跨模态却失败），并在受控 Transformer 上证明当数据覆盖足够时，模型会学到一个由概念间**乘性交互**主导的低复杂度 binding，从而实现对未见对象组合的系统性泛化。
 tags:
   - "ICML2026"
   - "信息检索/RAG"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.31503](https://arxiv.org/abs/2605.31503)  
 **代码**: 有（论文文末公开仓库）  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: 概念绑定, CLIP, 嵌入几何, 组合泛化, 多模态对齐
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Omni-RAG: Comprehensive Retrieval-Augmented Generation for Large Language Models in Medical Applications
 description: >-
-  [ACL 2025][医疗NLP][RAG] 本文提出了 MedOmniKB 医学多源知识库和 Source Planning Optimisation (SPO) 方法，通过让专家模型探索多源检索计划并训练小模型学习源对齐，显著提升了医学多源检索规划能力，使 7B 小模型超越 72B 大模型。
+  [ACL 2025][医疗NLP][RAG] 本文提出了 MedOmniKB 医学多源知识库和 Source Planning Optimisation (SPO) 方法，通过让专家模型探索多源检索计划并训练小模型学习源对齐，显著提升了医学多源检索规划能力，使 7B 小模型超越 72B 大模型。 领域现状：大语言模型在医学推…
 tags:
   - "ACL 2025"
   - "医疗NLP"

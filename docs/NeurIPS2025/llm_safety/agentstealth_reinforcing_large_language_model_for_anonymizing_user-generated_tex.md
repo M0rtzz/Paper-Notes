@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text
 description: >-
-  [NeurIPS 2025][LLM安全][文本匿名化] 提出 AgentStealth 框架，通过对抗式匿名化工作流、监督微调（SFT）和在线强化学习三阶段训练小型语言模型（SLM），实现在保持文本效用的同时有效匿名化用户生成内容，匿名化效果提升12.3%、效用提升6.8%。
+  [NeurIPS 2025][LLM安全][文本匿名化] 提出 AgentStealth 框架，通过对抗式匿名化工作流、监督微调（SFT）和在线强化学习三阶段训练小型语言模型（SLM），实现在保持文本效用的同时有效匿名化用户生成内容，匿名化效果提升12.3%、效用提升6.8%。 在数字时代，用户在社交媒体、论坛等平台上生成的…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

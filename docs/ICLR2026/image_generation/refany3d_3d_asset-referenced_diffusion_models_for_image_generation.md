@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RefAny3D: 3D Asset-Referenced Diffusion Models for Image Generation
 description: >-
-  [ICLR 2026][图像生成][3D 资产参考] 提出 RefAny3D，一个 3D 资产参考的图像生成框架，通过联合建模 RGB 图像和点图（point map）的双分支生成策略，实现生成图像与 3D 参考资产在几何和纹理上的精确一致性。
+  [ICLR 2026][图像生成][3D 资产参考] 提出 RefAny3D，一个 3D 资产参考的图像生成框架，通过联合建模 RGB 图像和点图（point map）的双分支生成策略，实现生成图像与 3D 参考资产在几何和纹理上的精确一致性。 领域现状：现有的参考图像生成方法（如 IP-Adapter、OminiContr…
 tags:
   - "ICLR 2026"
   - "图像生成"

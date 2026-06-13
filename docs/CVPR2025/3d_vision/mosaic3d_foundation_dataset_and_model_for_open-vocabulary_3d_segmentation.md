@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mosaic3D: Foundation Dataset and Model for Open-Vocabulary 3D Segmentation
 description: >-
-  [CVPR 2025][3D视觉][图像分割] 提出自动化数据生成管线构建大规模3D mask-text数据集Mosaic3D-5.6M（5.6M对、30K场景），训练语言对齐3D编码器+mask decoder，实现首个单阶段开放词汇3D实例分割。
+  [CVPR 2025][3D视觉][图像分割] 提出自动化数据生成管线构建大规模3D mask-text数据集Mosaic3D-5.6M（5.6M对、30K场景），训练语言对齐3D编码器+mask decoder，实现首个单阶段开放词汇3D实例分割。 领域现状： 开放词汇3D场景理解是计算机视觉基础问题…
 tags:
   - "CVPR 2025"
   - "3D视觉"

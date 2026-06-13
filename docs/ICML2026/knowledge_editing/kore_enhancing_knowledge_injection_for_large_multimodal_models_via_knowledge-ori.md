@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KORE: Enhancing Knowledge Injection for Large Multimodal Models via Knowledge-Oriented Controls
 description: >-
-  [ICML 2026][知识编辑][知识注入] KORE 通过两阶段"知识导向控制"为 LMM 注入新知识 — 一边把单条事实自动扩成结构化的多轮对话+指令任务（提升泛化），一边用先前知识的协方差矩阵零空间初始化 LoRA 适配器（最小化对旧能力的干扰）…
+  [ICML 2026][知识编辑][知识注入] KORE 通过两阶段"知识导向控制"为 LMM 注入新知识 — 一边把单条事实自动扩成结构化的多轮对话+指令任务（提升泛化），一边用先前知识的协方差矩阵零空间初始化 LoRA 适配器（最小化对旧能力的干扰），在 LLaVA-v1.5 / Qwen2.5-VL 上同时实现强适配和强保留。
 tags:
   - "ICML 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models
 description: >-
-  [ICLR 2026][LLM对齐][扩散模型] 提出 A2D，一种针对扩散语言模型（dLLM）的 token 级安全对齐方法，通过训练模型在遇到有害内容的 mask 位置输出 [EOS] token 来实现任意解码顺序、任意解码步的安全防御…
+  [ICLR 2026][LLM对齐][扩散模型] 提出 A2D，一种针对扩散语言模型（dLLM）的 token 级安全对齐方法，通过训练模型在遇到有害内容的 mask 位置输出 [EOS] token 来实现任意解码顺序、任意解码步的安全防御，将 DIJA 模板攻击成功率从 80%+ 降到近零（1.3%/0.0%），并支持早期拒绝实现 19.3x 加速。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

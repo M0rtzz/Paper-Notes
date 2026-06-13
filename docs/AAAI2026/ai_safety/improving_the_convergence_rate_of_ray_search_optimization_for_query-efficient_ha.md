@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving the Convergence Rate of Ray Search Optimization for Query-Efficient Hard-Label Attacks
 description: >-
-  [AAAI 2026 (Oral)][AI安全][硬标签攻击] 本文针对硬标签黑盒对抗攻击中的查询效率瓶颈，提出基于 Nesterov 加速梯度的动量算法 ARS-OPT，并引入代理模型先验得到增强版 PARS-OPT，在理论上证明了更快的收敛率…
+  [AAAI 2026 (Oral)][AI安全][硬标签攻击] 本文针对硬标签黑盒对抗攻击中的查询效率瓶颈，提出基于 Nesterov 加速梯度的动量算法 ARS-OPT，并引入代理模型先验得到增强版 PARS-OPT，在理论上证明了更快的收敛率，在 ImageNet 和 CIFAR-10 上超越 13 种 SOTA 方法。
 tags:
   - "AAAI 2026 (Oral)"
   - "AI安全"

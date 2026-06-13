@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Modeling Hierarchical Thinking in Large Reasoning Models
 description: >-
-  [ICML2026][LLM推理][有限状态机] 作者把大推理模型（LRM）的长 CoT 抽象成一个 6 状态有限状态机（FSM），用「成功 vs 失败」的状态转移概率差构造 Transition Advantage Matrix，并基于 Q-Value 迭代得到长视野规划策略…
+  [ICML2026 Oral][LLM推理][有限状态机] 作者把大推理模型（LRM）的长 CoT 抽象成一个 6 状态有限状态机（FSM），用「成功 vs 失败」的状态转移概率差构造 Transition Advantage Matrix，并基于 Q-Value 迭代得到长视野规划策略，仅在句子边界做稀疏的正交激活引导，就能用约 25× 更少的干预次数把 AIME25 等难题的准确率拉高最高 +13%。
 tags:
-  - "ICML2026"
+  - "ICML2026 Oral"
   - "LLM推理"
   - "有限状态机"
   - "思维链"

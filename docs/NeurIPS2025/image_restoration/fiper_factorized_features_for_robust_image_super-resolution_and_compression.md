@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FIPER: Factorized Features for Robust Image Super-Resolution and Compression
 description: >-
-  [NeurIPS 2025][图像恢复][超分辨率] 提出 Factorized Features 统一表示——将图像分解为可学习的非均匀基与空间变化系数，配合锯齿坐标变换和多频调制，在 4× 超分辨率上 PSNR 相对提升 204.4%（HAT-L-F vs SwinIR）…
+  [NeurIPS 2025][图像恢复][超分辨率] 提出 Factorized Features 统一表示——将图像分解为可学习的非均匀基与空间变化系数，配合锯齿坐标变换和多频调制，在 4× 超分辨率上 PSNR 相对提升 204.4%（HAT-L-F vs SwinIR），在图像压缩上 BD-rate 相比 VTM 降低 21.09%。
 tags:
   - "NeurIPS 2025"
   - "图像恢复"

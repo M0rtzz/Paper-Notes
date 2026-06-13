@@ -2,7 +2,7 @@
 title: >-
   [论文解读] INSTINCT: Instance-Level Interaction Architecture for Query-Based Collaborative Perception
 description: >-
-  [ICCV 2025][自动驾驶][collaborative perception] 提出 INSTINCT，一种基于 LiDAR 的实例级交互协作感知框架，通过质量感知过滤、双分支检测路由和跨智能体局部实例融合三个核心模块…
+  [ICCV 2025][自动驾驶][collaborative perception] 提出 INSTINCT，一种基于 LiDAR 的实例级交互协作感知框架，通过质量感知过滤、双分支检测路由和跨智能体局部实例融合三个核心模块，在多个数据集上实现 SOTA 性能的同时将通信带宽降低至现有方法的 1/264~1/281。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

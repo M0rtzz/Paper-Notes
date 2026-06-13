@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Dolphin: Document Image Parsing via Heterogeneous Anchor Prompting
 description: >-
-  [ACL 2025][LLM/NLP][文档解析] 提出 Dolphin，一个轻量级（322M）的文档图像解析模型，采用"先分析后解析"（analyze-then-parse）两阶段范式——先进行页面级布局分析生成阅读顺序的元素序列…
+  [ACL 2025][LLM 其他][文档解析] 提出 Dolphin，一个轻量级（322M）的文档图像解析模型，采用"先分析后解析"（analyze-then-parse）两阶段范式——先进行页面级布局分析生成阅读顺序的元素序列，再利用异构锚点提示（heterogeneous anchor prompting）并行解析各元素内容，以仅 322M 参数在页面级和元素级解析任务上超越 7B+ 模型和商业系统。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "文档解析"
   - "布局分析"
   - "多模态VLM"

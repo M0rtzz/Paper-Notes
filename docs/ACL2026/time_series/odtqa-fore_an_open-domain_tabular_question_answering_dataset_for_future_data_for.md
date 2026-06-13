@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ODTQA-FoRe: An Open-Domain Tabular Question Answering Dataset for Future Data Forecasting and Reasoning
 description: >-
-  [ACL2026][时间序列][open-domain tabular QA] ODTQA-FoRe 提出面向未来数值预测和预测后推理的开放域表格问答任务，并用 TimeFore 三代理框架把表格检索、SQL 取数、专用时间序列预测和答案规范化串成一个可评测 baseline。
+  [ACL2026 Findings][时间序列][open-domain tabular QA] ODTQA-FoRe 提出面向未来数值预测和预测后推理的开放域表格问答任务，并用 TimeFore 三代理框架把表格检索、SQL 取数、专用时间序列预测和答案规范化串成一个可评测 baseline。 领域现状：LLM + RAG…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "时间序列"
   - "open-domain tabular QA"
   - "time-series forecasting"

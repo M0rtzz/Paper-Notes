@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MI-DETR: An Object Detection Model with Multi-time Inquiries Mechanism
 description: >-
-  [CVPR 2025][目标检测][DETR] MI-DETR 提出了并行多次查询（MI）机制替代传统 DETR 级联解码器架构，让 object queries 通过多个参数独立的 inquiry heads 并行地从图像特征中学习多模式信息…
+  [CVPR 2025][目标检测][DETR] MI-DETR 提出了并行多次查询（MI）机制替代传统 DETR 级联解码器架构，让 object queries 通过多个参数独立的 inquiry heads 并行地从图像特征中学习多模式信息，配合 U-like Feature Interaction（UFI），在 COCO 上以 ResNet-50 backbone 达到 52.7 AP，超越所有已有 DETR 变体。
 tags:
   - "CVPR 2025"
   - "目标检测"

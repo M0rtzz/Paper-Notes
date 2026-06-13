@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models
 description: >-
-  [ACL 2026][幻觉检测][扩散语言模型] 首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。
+  [ACL 2026 Findings][幻觉检测][扩散语言模型] 首次系统性地对比扩散大语言模型（dLLM）与自回归（AR）对应模型的幻觉模式，揭示当前 dLLM 幻觉倾向更高，并识别出三种扩散特有的失败模式：过早终止、不完全去噪和上下文入侵。 领域现状：扩散大语言模型（dLLM）作为非自回归生成范式正迅速崛起…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "幻觉检测"
   - "扩散语言模型"
   - "幻觉"

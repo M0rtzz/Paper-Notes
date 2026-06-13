@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Open-World Amodal Appearance Completion
 description: >-
-  [CVPR 2025][3D视觉][开放世界物体补全] 提出一种免训练的开放世界 amodal 外观补全框架，接受灵活的自然语言查询（包括直接名称和抽象描述），通过统一分割、遮挡分析和迭代 inpainting 重建被遮挡物体的完整外观，输出 RGBA 格式支持 3D 重建和图像编辑等下游应用。
+  [CVPR 2025][3D视觉][开放世界物体补全] 提出一种免训练的开放世界 amodal 外观补全框架，接受灵活的自然语言查询（包括直接名称和抽象描述），通过统一分割、遮挡分析和迭代 inpainting 重建被遮挡物体的完整外观，输出 RGBA 格式支持 3D 重建和图像编辑等下游应用。 Amodal complet…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Action-Dependent Optimality-Preserving Reward Shaping (ADOPS)
 description: >-
-  [ICML 2025][强化学习][reward shaping] 提出ADOPS方法，通过查询critic网络的外在/内在值函数估计，仅在内在奖励会改变最优动作偏好时调整奖励，从而实现action-dependent的optimality-preserving reward shaping…
+  [ICML 2025][强化学习][reward shaping] 提出ADOPS方法，通过查询critic网络的外在/内在值函数估计，仅在内在奖励会改变最优动作偏好时调整奖励，从而实现action-dependent的optimality-preserving reward shaping，突破了PBRS只能处理action-independent形式的限制，在Montezuma's Revenge上超越所有先前的optimality-preserving方法和baseline RND。
 tags:
   - "ICML 2025"
   - "强化学习"

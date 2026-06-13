@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rethink the Role of Neural Decoders in Quantum Error Correction
 description: >-
-  [ICML 2026][表面码] 本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导…
+  [ICML 2026][物理/科学计算][表面码] 本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
 tags:
   - "ICML 2026"
+  - "物理/科学计算"
   - "表面码"
   - "神经解码器"
   - "FPGA"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuantVLA: Scale-Calibrated Post-Training Quantization for Vision-Language-Action Models
 description: >-
-  [CVPR 2026][机器人] 提出 QuantVLA，首个面向 Vision-Language-Action (VLA) 模型的免训练后量化框架，通过选择性量化布局和两个轻量级标定机制（注意力温度匹配 ATM 和输出头平衡 OHB），在 W4A8 精度下实现约 70% 的内存节省…
+  [CVPR 2026][机器人] 提出 QuantVLA，首个面向 Vision-Language-Action (VLA) 模型的免训练后量化框架，通过选择性量化布局和两个轻量级标定机制（注意力温度匹配 ATM 和输出头平衡 OHB），在 W4A8 精度下实现约 70% 的内存节省，同时任务成功率超过全精度基线。
 tags:
   - "CVPR 2026"
   - "机器人"

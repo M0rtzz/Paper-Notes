@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiveStar: Live Streaming Assistant for Real-World Online Video Understanding
 description: >-
-  [NEURIPS2025][视频理解][streaming decoding] 提出 LiveStar，一个始终在线的直播流视频理解助手，通过 Streaming Causal Attention Masks (SCAM) 训练策略和 Streaming Verification Decoding (SVeD…
+  [NEURIPS2025][视频理解][streaming decoding] 提出 LiveStar，一个始终在线的直播流视频理解助手，通过 Streaming Causal Attention Masks (SCAM) 训练策略和 Streaming Verification Decoding (SVeD) 推理框架，实现自适应响应时机判断，在 OmniStar 基准上语义正确性提升 19.5%，时间偏差降低 18.1%。
 tags:
   - "NEURIPS2025"
   - "视频理解"

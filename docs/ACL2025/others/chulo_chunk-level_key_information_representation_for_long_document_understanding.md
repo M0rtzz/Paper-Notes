@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChuLo: Chunk-Level Key Information Representation for Long Document Understanding
 description: >-
-  [ACL2025][长文档理解] ChuLo 的核心不是单纯把长文档切小，而是先在全文范围内找出最关键的语义短语，再把这些关键信息重新注入每个 chunk 的表示里，从而在只用紧凑块表示的前提下，同时保住全局语义和细粒度 token 信息。
+  [ACL2025][长文档理解] ChuLo 的核心不是单纯把长文档切小，而是先在全文范围内找出最关键的语义短语，再把这些关键信息重新注入每个 chunk 的表示里，从而在只用紧凑块表示的前提下，同时保住全局语义和细粒度 token 信息。 Transformer 在文档理解任务里已经非常强，但一旦文档长度变长…
 tags:
   - "ACL2025"
   - "长文档理解"

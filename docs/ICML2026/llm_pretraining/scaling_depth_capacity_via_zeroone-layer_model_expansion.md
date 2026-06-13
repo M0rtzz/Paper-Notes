@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Depth Capacity via Zero/One-Layer Model Expansion
 description: >-
-  [ICML 2026][预训练][progressive training] 本文提出"零层/一层渐进式训练"——先训一个几乎没有 Transformer 层的极浅模型，再在训练后期（≈80% iterations）一次性把深度扩展到目标层数，配合 WSD 学习率和 muP 超参传递…
+  [ICML 2026][预训练][progressive training] 本文提出"零层/一层渐进式训练"——先训一个几乎没有 Transformer 层的极浅模型，再在训练后期（≈80% iterations）一次性把深度扩展到目标层数，配合 WSD 学习率和 muP 超参传递，可在 GPT2/LLAMA3/DeepSeekV3 上节省约 80% 计算（≈5× 加速）且最终 loss 几乎不掉。
 tags:
   - "ICML 2026"
   - "预训练"

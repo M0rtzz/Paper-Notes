@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoMamba: State Space Model for Efficient Video Understanding
 description: >-
-  [ECCV 2024][视频理解][State Space Model] 将 Mamba 的选择性状态空间模型创新性地适配到视频领域，提出纯 SSM 架构的 VideoMamba，以线性复杂度实现高效的时空上下文建模，在短视频和长视频理解任务上均展现出优越性能。
+  [ECCV 2024][视频理解][State Space Model] 将 Mamba 的选择性状态空间模型创新性地适配到视频领域，提出纯 SSM 架构的 VideoMamba，以线性复杂度实现高效的时空上下文建模，在短视频和长视频理解任务上均展现出优越性能。 领域现状：视频理解的核心在于掌握时空表征…
 tags:
   - "ECCV 2024"
   - "视频理解"

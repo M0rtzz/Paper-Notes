@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VS-Bench: Evaluating VLMs for Strategic Abilities in Multi-Agent Environments
 description: >-
-  [CVPR 2026 (Oral)][多模态VLM][视觉语言模型] 本文提出 VS-Bench，一个包含十个视觉化博弈环境的多模态基准，从感知、策略推理和决策三个维度系统评估 VLM 在多智能体环境中的策略能力，发现当前最强模型在推理和决策上仍与最优表现有显著差距。
+  [CVPR 2026 (Oral)][多模态VLM][视觉语言模型] 本文提出 VS-Bench，一个包含十个视觉化博弈环境的多模态基准，从感知、策略推理和决策三个维度系统评估 VLM 在多智能体环境中的策略能力，发现当前最强模型在推理和决策上仍与最优表现有显著差距。 1. 领域现状：VLM 的评估已从静态任务（图像描述、V…
 tags:
   - "CVPR 2026 (Oral)"
   - "多模态VLM"

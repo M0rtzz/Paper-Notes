@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LapSum -- One Method to Differentiate Them All: Ranking, Sorting and Top-k Selection
 description: >-
-  [ICML2025][differentiable sorting] 提出 LapSum，基于 Laplace 分布累积密度函数之和的闭式可逆公式，统一解决可微 ranking、sorting、top-k 选择和置换矩阵四大排序问题，时间复杂度仅 $O(n\log n)$、空间 $O(n)$…
+  [ICML2025][differentiable sorting] 提出 LapSum，基于 Laplace 分布累积密度函数之和的闭式可逆公式，统一解决可微 ranking、sorting、top-k 选择和置换矩阵四大排序问题，时间复杂度仅 $O(n\log n)$、空间 $O(n)$，在大规模场景下显著优于现有方法。
 tags:
   - "ICML2025"
   - "differentiable sorting"

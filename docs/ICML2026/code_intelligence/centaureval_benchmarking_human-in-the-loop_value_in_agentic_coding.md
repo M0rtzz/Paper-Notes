@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CentaurEval: Benchmarking Human-in-the-Loop Value in Agentic Coding
 description: >-
-  [ICML 2026][代码智能][人机协作评测] 提出 CentaurEval，首个面向人机协作编程的统一评测框架，通过设计 45 个"协作必需"(Collaboration-Necessary) 任务模板，证明单独 LLM 仅 0.67% 通过率、人类独立仅 18.89%，而人机协作可达 31.11%…
+  [ICML 2026][代码智能][人机协作评测] 提出 CentaurEval，首个面向人机协作编程的统一评测框架，通过设计 45 个"协作必需"(Collaboration-Necessary) 任务模板，证明单独 LLM 仅 0.67% 通过率、人类独立仅 18.89%，而人机协作可达 31.11%，揭示 LLM 正从执行工具演变为共推理伙伴。
 tags:
   - "ICML 2026"
   - "代码智能"

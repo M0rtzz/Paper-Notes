@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sample Efficient Demonstration Selection for In-Context Learning
 description: >-
-  [ICML 2025][LLM评测][上下文学习] 本文提出了一种样本高效的上下文学习(ICL)示例选择方法，能够在有限的标注预算下高效地选择最佳示例组合，显著提升 LLM 的 ICL 性能，同时大幅减少所需的标注数据量。
+  [ICML 2025][LLM评测][上下文学习] 本文提出了一种样本高效的上下文学习(ICL)示例选择方法，能够在有限的标注预算下高效地选择最佳示例组合，显著提升 LLM 的 ICL 性能，同时大幅减少所需的标注数据量。 领域现状：上下文学习(ICL)是 LLM 的核心能力之一——通过在提示中提供少量示例即可完成新任务…
 tags:
   - "ICML 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Optimization by Estimating the Ratio of the Data Distribution
 description: >-
-  [NeurIPS 2025][LLM对齐][DPO] 将 DPO 重新解释为似然比估计（ratio matching）问题，基于 Bregman 散度框架提出 BPO（Bregman Preference Optimization），包含 DPO 为特例的广义损失函数族…
+  [NeurIPS 2025][LLM对齐][DPO] 将 DPO 重新解释为似然比估计（ratio matching）问题，基于 Bregman 散度框架提出 BPO（Bregman Preference Optimization），包含 DPO 为特例的广义损失函数族，并设计了 SBA（Scaled Basu's Power Divergence）实例，在 Llama-3-8B 上实现 55.9% AlpacaEval2 length-controlled win rate 的 SOTA。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations
 description: >-
-  [NeurIPS 2025][幻觉检测][语义幻觉] 发现大多模态模型（LMMs）在场景文字识别中存在"语义幻觉"问题（将无语义文本误识为语义合理的词），分析发现注意力集中于文本区域的Transformer层更不易幻觉，据此提出训练无关的ZoomText+Grounded Layer Correction框架…
+  [NeurIPS 2025][幻觉检测][语义幻觉] 发现大多模态模型（LMMs）在场景文字识别中存在"语义幻觉"问题（将无语义文本误识为语义合理的词），分析发现注意力集中于文本区域的Transformer层更不易幻觉，据此提出训练无关的ZoomText+Grounded Layer Correction框架，在TextHalu-Bench上提升约4-5%，在ST-VQA上提升约4%。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

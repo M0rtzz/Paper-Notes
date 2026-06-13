@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LatentChem: From Textual CoT to Latent Thinking in Chemical Reasoning
 description: >-
-  [ICML 2026][LLM推理][化学推理] LatentChem 在化学 LLM 上把"显式 CoT 文本链"换成"连续 latent 思考向量 + 动态分子感知更新"，并在 GRPO 纯结果奖励下观察到模型**自发抛弃文本 CoT**、改用 latent 推理…
+  [ICML 2026][LLM推理][化学推理] LatentChem 在化学 LLM 上把"显式 CoT 文本链"换成"连续 latent 思考向量 + 动态分子感知更新"，并在 GRPO 纯结果奖励下观察到模型**自发抛弃文本 CoT**、改用 latent 推理，在 ChemCoTBench 上对显式 CoT baseline 非平局胜率 59.88%，推理步数平均下降 10.84 倍、wall-clock 加速 5.96 倍。
 tags:
   - "ICML 2026"
   - "LLM推理"

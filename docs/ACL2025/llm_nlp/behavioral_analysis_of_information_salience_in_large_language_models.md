@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Behavioral Analysis of Information Salience in Large Language Models
 description: >-
-  [ACL 2025 (Findings)][LLM/NLP][信息显著性] 提出一个可解释的分析框架，通过长度受控的摘要生成行为探针和 Questions Under Discussion（QUD）的可回答性追踪，系统推导并研究 LLM 内化的信息显著性（salience）概念…
+  [ACL 2025 (Findings)][LLM 其他][信息显著性] 提出一个可解释的分析框架，通过长度受控的摘要生成行为探针和 Questions Under Discussion（QUD）的可回答性追踪，系统推导并研究 LLM 内化的信息显著性（salience）概念，发现 LLM 具有层次化的一致显著性观念，但这一观念无法通过内省获取且与人类感知仅弱相关。
 tags:
   - "ACL 2025 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "信息显著性"
   - "摘要生成"
   - "内容选择"

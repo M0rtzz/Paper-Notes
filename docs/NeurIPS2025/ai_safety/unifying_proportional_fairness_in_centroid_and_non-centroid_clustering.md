@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Proportional Fairness in Centroid and Non-Centroid Clustering
 description: >-
-  [NeurIPS 2025][AI安全][公平聚类] 将质心聚类(centroid)和非质心聚类(non-centroid)的比例公平性研究统一到"半质心聚类"框架中，证明了两者不可同时实现的不可能性定理，并设计了新算法在双度量损失下实现常数倍近似的核(core)保证。
+  [NeurIPS 2025][AI安全][公平聚类] 将质心聚类(centroid)和非质心聚类(non-centroid)的比例公平性研究统一到"半质心聚类"框架中，证明了两者不可同时实现的不可能性定理，并设计了新算法在双度量损失下实现常数倍近似的核(core)保证。 公平聚类要求对每一个可能的群体：提供与其规模成比例的公…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

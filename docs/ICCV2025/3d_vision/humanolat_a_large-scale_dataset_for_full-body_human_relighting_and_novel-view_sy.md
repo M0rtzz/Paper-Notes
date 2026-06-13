@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HumanOLAT: A Large-Scale Dataset for Full-Body Human Relighting and Novel-View Synthesis
 description: >-
-  [ICCV 2025][3D视觉][人体重打光] 提出HumanOLAT——首个公开可用的大规模全身人体多视角OLAT(One-Light-at-a-Time)数据集，包含21个被试×3个姿态×40视角×344种光照≈850K帧，为人体重打光和新视角合成提供了高质量基准。
+  [ICCV 2025][3D视觉][人体重打光] 提出HumanOLAT——首个公开可用的大规模全身人体多视角OLAT(One-Light-at-a-Time)数据集，包含21个被试×3个姿态×40视角×344种光照≈850K帧，为人体重打光和新视角合成提供了高质量基准。 现有痛点 现有痛点：全身人体同时重打光和新视角渲染是…
 tags:
   - "ICCV 2025"
   - "3D视觉"

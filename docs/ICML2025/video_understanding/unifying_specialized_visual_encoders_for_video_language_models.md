@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Specialized Visual Encoders for Video Language Models
 description: >-
-  [ICML 2025][视频理解][多编码器融合] MERV 提出了多编码器视频表示方法，将四种专长不同的视觉编码器（DINOv2、ViViT、SigLIP、LanguageBind）通过时空对齐和跨注意力融合整合到单一 VideoLLM 中…
+  [ICML 2025][视频理解][多编码器融合] MERV 提出了多编码器视频表示方法，将四种专长不同的视觉编码器（DINOv2、ViViT、SigLIP、LanguageBind）通过时空对齐和跨注意力融合整合到单一 VideoLLM 中，在视频推理基准上比基线 Video-LLaVA 提升最高 4.62%，并验证了不同编码器的互补专长。
 tags:
   - "ICML 2025"
   - "视频理解"

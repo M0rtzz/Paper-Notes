@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization
 description: >-
-  [CVPR2026][医学图像][单源域泛化] 提出 GenEval，通过域共形界（DCB）量化因果覆盖差距，并将人类专家知识量化精炼后与医学 VLM（MedGemma-4B）融合，以 LoRA 微调实现单源域泛化，在 DR 分级和癫痫灶检测上显著超越基线。
+  [CVPR2026][医学图像][单源域泛化] 提出 GenEval，通过域共形界（DCB）量化因果覆盖差距，并将人类专家知识量化精炼后与医学 VLM（MedGemma-4B）融合，以 LoRA 微调实现单源域泛化，在 DR 分级和癫痫灶检测上显著超越基线。 域泛化难题：医学图像分类在跨域部署时性能急剧下降…
 tags:
   - "CVPR2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Analysis of Datasets, Metrics and Models in Keyphrase Generation
 description: >-
-  [ACL 2025 (GEM²)][关键短语生成] 对关键短语生成（keyphrase generation）领域50+篇论文进行系统性分析，揭示了基准数据集高度相似、评估指标计算不一致导致性能被高估等关键问题，并发布了一个强力PLM-based模型以促进未来研究。
+  [ACL 2025 (GEM²)][关键短语生成] 对关键短语生成（keyphrase generation）领域50+篇论文进行系统性分析，揭示了基准数据集高度相似、评估指标计算不一致导致性能被高估等关键问题，并发布了一个强力PLM-based模型以促进未来研究。 关键短语生成（Keyphrase Generation…
 tags:
   - "ACL 2025 (GEM²)"
   - "关键短语生成"

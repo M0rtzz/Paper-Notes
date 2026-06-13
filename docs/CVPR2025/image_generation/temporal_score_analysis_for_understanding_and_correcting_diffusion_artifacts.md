@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Score Analysis for Understanding and Correcting Diffusion Artifacts
 description: >-
-  [CVPR 2025][图像生成][扩散模型伪影] 发现扩散生成过程中的三阶段（Profiling-Mutation-Refinement）及伪影形成的"分数陷阱"机制，提出 ASCED 通过监控异常分数动力学实时检测和校正伪影，无需训练即可匹配或超越有监督方法。
+  [CVPR 2025][图像生成][扩散模型伪影] 发现扩散生成过程中的三阶段（Profiling-Mutation-Refinement）及伪影形成的"分数陷阱"机制，提出 ASCED 通过监控异常分数动力学实时检测和校正伪影，无需训练即可匹配或超越有监督方法。 领域现状 领域现状：即使在大规模数据集上训练…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlearners Can Lie: Evaluating and Improving Honesty in LLM Unlearning
 description: >-
-  [ACL2026][LLM安全][LLM unlearning] 这篇论文指出现有 LLM unlearning 方法即使“忘掉了”目标知识，也常会幻觉、伪装拒答或前后不一致，于是提出 honest unlearning 评测框架和 ReVa 表示对齐方法，让模型在遗忘后更稳定地承认自己不知道。
+  [ACL2026][LLM安全][LLM unlearning] 这篇论文指出现有 LLM unlearning 方法即使“忘掉了”目标知识，也常会幻觉、伪装拒答或前后不一致，于是提出 honest unlearning 评测框架和 ReVa 表示对齐方法，让模型在遗忘后更稳定地承认自己不知道。 领域现状：LLM unlea…
 tags:
   - "ACL2026"
   - "LLM安全"

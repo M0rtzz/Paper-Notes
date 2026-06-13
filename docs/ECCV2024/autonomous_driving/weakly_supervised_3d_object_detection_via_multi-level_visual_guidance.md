@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance
 description: >-
-  [ECCV 2024][自动驾驶][弱监督3D检测] 提出 VG-W3D 框架，仅使用 2D 标注（无需任何 3D 标签），通过特征级、输出级和训练级三层视觉引导来训练 3D 目标检测器，在 KITTI 上取得了与使用 500 帧 3D 标注方法相当的性能。
+  [ECCV 2024][自动驾驶][弱监督3D检测] 提出 VG-W3D 框架，仅使用 2D 标注（无需任何 3D 标签），通过特征级、输出级和训练级三层视觉引导来训练 3D 目标检测器，在 KITTI 上取得了与使用 500 帧 3D 标注方法相当的性能。 3D 目标检测是自动驾驶感知系统的核心，但 3D 标注成本极高（比…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

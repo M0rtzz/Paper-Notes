@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework
 description: >-
-  [ICLR 2026][时间序列][multivariate time series] 提出ChannelTokenFormer（CTF），一个统一的Transformer框架同时解决真实世界多变量时序预测的三大挑战：(1) 通道间复杂依赖——channel token跨通道注意力…
+  [ICLR 2026][时间序列][multivariate time series] 提出ChannelTokenFormer（CTF），一个统一的Transformer框架同时解决真实世界多变量时序预测的三大挑战：(1) 通道间复杂依赖——channel token跨通道注意力；(2) 各通道异步采样——频域动态patching保持原始分辨率；(3) 测试时块缺失——训练时patch masking模拟+推理时直接移除全缺失patch，在ETT/SolarWind/Weather/EPA/CHS等6个数据集上全面SOTA。
 tags:
   - "ICLR 2026"
   - "时间序列"

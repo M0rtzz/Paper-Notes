@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Panoramic Image Generation via Masked Autoregressive Modeling
 description: >-
-  [NeurIPS 2025][图像生成][全景图像生成] 提出PAR（Panoramic AutoRegressive model），首次用掩码自回归建模统一文本到全景图和全景图外延两大任务，通过循环平移一致性损失和双空间循环填充解决ERP全景图的边界不连续问题…
+  [NeurIPS 2025][图像生成][全景图像生成] 提出PAR（Panoramic AutoRegressive model），首次用掩码自回归建模统一文本到全景图和全景图外延两大任务，通过循环平移一致性损失和双空间循环填充解决ERP全景图的边界不连续问题，在Matterport3D上取得37.37 FID，同时展示出良好的可扩展性和零样本泛化能力。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

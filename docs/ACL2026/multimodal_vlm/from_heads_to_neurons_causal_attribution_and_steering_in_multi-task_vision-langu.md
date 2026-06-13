@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Heads to Neurons: Causal Attribution and Steering in Multi-Task Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][神经元归因] 提出 HONES 框架，通过先定位任务关键注意力头再以其为条件引导 FFN 神经元归因，实现了多任务 VLM 中跨异构任务的统一、无梯度的神经元级因果分析和轻量级任务性能提升。
+  [ACL 2026 Findings][多模态VLM][神经元归因] 提出 HONES 框架，通过先定位任务关键注意力头再以其为条件引导 FFN 神经元归因，实现了多任务 VLM 中跨异构任务的统一、无梯度的神经元级因果分析和轻量级任务性能提升。 领域现状：大型视觉语言模型（VLM）在 VQA、OCR、图像描述等多任务中表现…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "神经元归因"
   - "因果分析"

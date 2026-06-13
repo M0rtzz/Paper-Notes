@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Illusions of Confidence? Diagnosing LLM Truthfulness via Neighborhood Consistency
 description: >-
-  [ACL 2026][LLM安全][信念鲁棒性] 本文指出 LLM 的"高 self-consistency 不等于真实信念"——在 995 道全样一致答对的题上加一点点上下文干扰，准确率从 100% 直接掉到 33.8%…
+  [ACL 2026][LLM安全][信念鲁棒性] 本文指出 LLM 的"高 self-consistency 不等于真实信念"——在 995 道全样一致答对的题上加一点点上下文干扰，准确率从 100% 直接掉到 33.8%。作者提出 **Neighbor-Consistency Belief (NCB)**：把目标事实和它的"概念邻居（前提/蕴含/主题）"做联合一致性估计，作为信念鲁棒性的结构化代理；并基于 Asch 从众实验与 Source Credibility 理论设计了 cognitive stress-test 协议，在 4 个 LLM 上证明高 NCB 数据明显更抗干扰；进一步提出 **Structure-Aware T…
 tags:
   - "ACL 2026"
   - "LLM安全"

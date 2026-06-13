@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stitch: Simultaneous Thinking and Talking with Chunked Reasoning for Spoken Language Models
 description: >-
-  [ICLR 2026][音频/语音][口语模型] 提出 Stitch，在口语语言模型中实现"边想边说"——将无声推理 token 与语音 token 交替分块生成，利用音频播放期间的空闲算力完成推理。Stitch-S 首帧延迟与无推理基线一致，数学推理准确率提升约 15 个百分点。
+  [ICLR 2026][音频/语音][口语模型] 提出 Stitch，在口语语言模型中实现"边想边说"——将无声推理 token 与语音 token 交替分块生成，利用音频播放期间的空闲算力完成推理。Stitch-S 首帧延迟与无推理基线一致，数学推理准确率提升约 15 个百分点。 当前主流口语语言模型（SLM…
 tags:
   - "ICLR 2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety
 description: >-
-  [ICLR 2026 Oral][LLM对齐][safety alignment] 重新审视安全约束 RLHF 目标并证明其存在闭式最优策略，据此推导出等价的可处理目标 SafeDPO，仅需在标准 DPO 上加入安全感知数据变换和安全 margin 项（1 个额外超参数），无需奖励/代价模型…
+  [ICLR 2026 Oral][LLM对齐][safety alignment] 重新审视安全约束 RLHF 目标并证明其存在闭式最优策略，据此推导出等价的可处理目标 SafeDPO，仅需在标准 DPO 上加入安全感知数据变换和安全 margin 项（1 个额外超参数），无需奖励/代价模型，在 PKU-SafeRLHF-30K 上实现 96.87% 无害率且保持竞争力的有用性，训练速度比 SafeRLHF 快 25×。
 tags:
   - "ICLR 2026 Oral"
   - "LLM对齐"

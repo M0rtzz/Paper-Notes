@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Contrastive Learning for Graph Collaborative Filtering: Limitations and a Simple Remedy
 description: >-
-  [ICML 2026][推荐系统][图协同过滤] 作者把 LightGCN 的前向预测打开成"多跳邻居对的可学习权重之和"，发现 Sampled Softmax 损失只按物品侧邻居的结构相似度来加权、且对 UU/II/UI/IU 四类邻居对一视同仁…
+  [ICML 2026][推荐系统][图协同过滤] 作者把 LightGCN 的前向预测打开成"多跳邻居对的可学习权重之和"，发现 Sampled Softmax 损失只按物品侧邻居的结构相似度来加权、且对 UU/II/UI/IU 四类邻居对一视同仁，于是提出 NT-SSM——把用户侧结构相似度也接入梯度、并按邻居对类型分别校准加权策略，在四个数据集和多种 GCF 主干上稳定优于 SSM。
 tags:
   - "ICML 2026"
   - "推荐系统"

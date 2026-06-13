@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Answers to Arguments: Toward Trustworthy Clinical Diagnostic Reasoning with Toulmin-Guided Curriculum Goal-Conditioned Learning
 description: >-
-  [ACL 2026][医疗NLP][临床推理] 本文将Toulmin论证模型适配到临床诊断过程，提出CGCL三阶段课程训练框架（事实收集→假设检验→综合结论），配合T-Eval量化评估推理结构完整性，在无需RL的情况下实现与RL方法可比的诊断推理质量。
+  [ACL 2026][医疗NLP][临床推理] 本文将Toulmin论证模型适配到临床诊断过程，提出CGCL三阶段课程训练框架（事实收集→假设检验→综合结论），配合T-Eval量化评估推理结构完整性，在无需RL的情况下实现与RL方法可比的诊断推理质量。 领域现状：LLM在医学基准（如MedQA、USMLE）上表现优异甚至超越…
 tags:
   - "ACL 2026"
   - "医疗NLP"

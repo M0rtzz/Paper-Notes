@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SyncTrack: Rhythmic Stability and Synchronization in Multi-Track Music Generation
 description: >-
-  [ICLR 2026][音频/语音][多轨音乐生成] 提出 SyncTrack，通过轨道共享模块（双跨轨注意力确保节奏同步）和轨道特定模块（可学习乐器先验保留音色差异）的统一架构，以及三个新的节奏一致性评估指标（IRS/CBS/CBD），显著提升多轨音乐生成质量（FAD 从 6.55→1.26…
+  [ICLR 2026][音频/语音][多轨音乐生成] 提出 SyncTrack，通过轨道共享模块（双跨轨注意力确保节奏同步）和轨道特定模块（可学习乐器先验保留音色差异）的统一架构，以及三个新的节奏一致性评估指标（IRS/CBS/CBD），显著提升多轨音乐生成质量（FAD 从 6.55→1.26，主观 MOS 3.42 vs 1.57）。
 tags:
   - "ICLR 2026"
   - "音频/语音"

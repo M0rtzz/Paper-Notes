@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free
 description: >-
-  [NeurIPS 2025][Schrödinger桥] 将Schrödinger桥问题从布朗运动参考过程推广到多变量Ornstein-Uhlenbeck（mvOU）参考过程，推导高斯情形精确解，并提出无模拟的mvOU-OTFM算法处理一般分布。
+  [NeurIPS 2025][Schrödinger桥] 将Schrödinger桥问题从布朗运动参考过程推广到多变量Ornstein-Uhlenbeck（mvOU）参考过程，推导高斯情形精确解，并提出无模拟的mvOU-OTFM算法处理一般分布。 领域现状：Schrödinger桥问题（SBP）是从种群快照重建随机动力学的理…
 tags:
   - "NeurIPS 2025"
   - "Schrödinger桥"

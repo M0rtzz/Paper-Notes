@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ParallelComp: Parallel Long-Context Compressor for Length Extrapolation
 description: >-
-  [ICML 2025][模型压缩][length extrapolation] 提出 ParallelComp，一种免训练的并行长上下文压缩方法，通过并行 KV cache 驱逐和注意力校准策略，使 8B 参数 LLM 在单块 A100 GPU 上从 8K 外推至 128K tokens。
+  [ICML 2025][模型压缩][length extrapolation] 提出 ParallelComp，一种免训练的并行长上下文压缩方法，通过并行 KV cache 驱逐和注意力校准策略，使 8B 参数 LLM 在单块 A100 GPU 上从 8K 外推至 128K tokens。 现有痛点 现有痛点：超长上下文外推…
 tags:
   - "ICML 2025"
   - "模型压缩"

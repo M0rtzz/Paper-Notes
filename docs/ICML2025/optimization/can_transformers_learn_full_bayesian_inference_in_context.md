@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Transformers Learn Full Bayesian Inference In Context?
 description: >-
-  [ICML 2025][优化/理论][上下文学习] 证明 Transformer 可以在上下文中执行完整的贝叶斯推断——通过在合成数据上预训练一个编码器-解码器架构（TabPFN 编码器 + 扩散 Transformer 解码器）…
+  [ICML 2025][优化/理论][上下文学习] 证明 Transformer 可以在上下文中执行完整的贝叶斯推断——通过在合成数据上预训练一个编码器-解码器架构（TabPFN 编码器 + 扩散 Transformer 解码器），模型在部署时无需参数更新即可为 GLM、混合高斯模型等统计模型生成与 HMC 质量媲美的后验样本。
 tags:
   - "ICML 2025"
   - "优化/理论"

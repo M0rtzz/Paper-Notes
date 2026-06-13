@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedLA: A Logic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models
 description: >-
-  [AAAI 2026][多智能体][三段论推理] 提出 MedLA，首个基于三段论逻辑树的医学多 Agent 推理框架：每个 Agent 将推理组织为显式的逻辑树（大前提-小前提-结论三段论节点），多个 Agent 通过图引导的多轮讨论在前提级别对齐和修正逻辑树…
+  [AAAI 2026][多智能体][三段论推理] 提出 MedLA，首个基于三段论逻辑树的医学多 Agent 推理框架：每个 Agent 将推理组织为显式的逻辑树（大前提-小前提-结论三段论节点），多个 Agent 通过图引导的多轮讨论在前提级别对齐和修正逻辑树，在 MedDDx 上超越所有基线 7.4%（8B 模型），在医学 QA 上以 8B 模型达到 69.9% 平均准确率（超 70B RAG 模型）。
 tags:
   - "AAAI 2026"
   - "多智能体"

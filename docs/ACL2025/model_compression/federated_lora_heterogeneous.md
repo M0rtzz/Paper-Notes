@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients
 description: >-
-  [ACL 2025 (Long Paper, pp. 416–429)][联邦学习] 提出 LoRA-A²（Low Rank Adaptation with Alternating freeze and Adaptive rank selection）…
+  [ACL 2025 (Long Paper, pp. 416–429)][模型压缩][联邦学习] 提出 LoRA-A²（Low Rank Adaptation with Alternating freeze and Adaptive rank selection），通过交替冻结 A/B 矩阵解决联邦 LoRA 聚合不一致问题，并结合自适应秩选择机制在大幅压缩上传参数量（最高减少 99.8%）的同时保持鲁棒性，尤其在低秩+高数据异构场景下显著优于现有方法。
 tags:
   - "ACL 2025 (Long Paper, pp. 416–429)"
+  - "模型压缩"
   - "联邦学习"
   - "LoRA"
   - "Aggregation Discordance"

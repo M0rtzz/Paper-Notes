@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks
 description: >-
-  [ICLR 2026][LLM对齐][假新闻生成] 提出首个评估 LLM 在越狱攻击下生成假新闻鲁棒性的多语言多区域基准 JailNewsBench，覆盖 34 个地区和 22 种语言、约 30 万实例，揭示最高 86.3% 的攻击成功率以及英语/美国话题防御显著弱于其他地区的安全不平衡现象。
+  [ICLR 2026][LLM对齐][假新闻生成] 提出首个评估 LLM 在越狱攻击下生成假新闻鲁棒性的多语言多区域基准 JailNewsBench，覆盖 34 个地区和 22 种语言、约 30 万实例，揭示最高 86.3% 的攻击成功率以及英语/美国话题防御显著弱于其他地区的安全不平衡现象。 假新闻对社会信任和决策构成严重…
 tags:
   - "ICLR 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSR: Scaling Multi-Subject Personalized Image Generation with Pairwise Subject-Consistency Rewards
 description: >-
-  [CVPR 2026][图像生成][多主体个性化生成] 针对多主体个性化图像生成中主体一致性差和文本遵循不足的问题，提出可扩展的多主体数据构建管线和成对主体一致性奖励（PSR），通过两阶段训练（SFT + RL）在自建的 PSRBench 上全面超越现有 SOTA。
+  [CVPR 2026][图像生成][多主体个性化生成] 针对多主体个性化图像生成中主体一致性差和文本遵循不足的问题，提出可扩展的多主体数据构建管线和成对主体一致性奖励（PSR），通过两阶段训练（SFT + RL）在自建的 PSRBench 上全面超越现有 SOTA。 1. 领域现状：单主体个性化生成模型（如 FLUX.1 K…
 tags:
   - "CVPR 2026"
   - "图像生成"

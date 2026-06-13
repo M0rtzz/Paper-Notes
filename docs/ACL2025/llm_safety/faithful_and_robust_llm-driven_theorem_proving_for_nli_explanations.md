@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Faithful and Robust LLM-Driven Theorem Proving for NLI Explanations
 description: >-
-  [ACL 2025][LLM安全][自然语言推理] 本文研究 LLM 与定理证明器（TP）的交互架构，提出四种策略来缓解自动形式化中的语义信息损失、语法错误、证明构造不足和反馈解读困难等问题…
+  [ACL 2025][LLM安全][自然语言推理] 本文研究 LLM 与定理证明器（TP）的交互架构，提出四种策略来缓解自动形式化中的语义信息损失、语法错误、证明构造不足和反馈解读困难等问题，在 e-SNLI、QASC 和 WorldTree 三个数据集上分别实现了形式化精度 +18.46%/+34.2%/+39.77% 和解释质量 +29.5%/+51.5%/+41.25% 的显著提升。
 tags:
   - "ACL 2025"
   - "LLM安全"

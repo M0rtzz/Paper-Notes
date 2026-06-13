@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Permutation-Consensus Listwise Judging for Robust Factuality Evaluation
 description: >-
-  [ACL 2026][LLM安全][LLM-as-a-Judge] PCFJudge 将候选答案顺序视为 listwise 事实性评估中的干扰变量，通过对同一候选集运行 7 种排列并聚合分数、排序、top-set 投票和校准不确定性…
+  [ACL 2026][LLM安全][LLM-as-a-Judge] PCFJudge 将候选答案顺序视为 listwise 事实性评估中的干扰变量，通过对同一候选集运行 7 种排列并聚合分数、排序、top-set 投票和校准不确定性，在 RewardBench 2 Factuality 上相对单次直接评审提升最高 7 个百分点。
 tags:
   - "ACL 2026"
   - "LLM安全"

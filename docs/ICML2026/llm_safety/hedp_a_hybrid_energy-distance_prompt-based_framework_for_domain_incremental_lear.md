@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HEDP: A Hybrid Energy-Distance Prompt-based Framework for Domain Incremental Learning
 description: >-
-  [ICML 2026][LLM安全][领域增量学习] 借鉴 Helmholtz 自由能的物理直觉，把每个领域的提示参数训练出一条"压缩到边界 $\Theta$、对齐到中线 $\Delta$"的能量曲线，推理时再用能量因子 + 距离因子联合加权各领域提示…
+  [ICML 2026][LLM安全][领域增量学习] 借鉴 Helmholtz 自由能的物理直觉，把每个领域的提示参数训练出一条"压缩到边界 $\Theta$、对齐到中线 $\Delta$"的能量曲线，推理时再用能量因子 + 距离因子联合加权各领域提示，在 CDDB / DomainNet / CORe50 三个 DIL 基准的未知领域上分别提升 1.76 / 3.12 / 2.57 个百分点。
 tags:
   - "ICML 2026"
   - "LLM安全"

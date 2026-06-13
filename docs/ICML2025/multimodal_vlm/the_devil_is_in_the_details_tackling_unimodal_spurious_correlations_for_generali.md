@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Devil Is in the Details: Tackling Unimodal Spurious Correlations for Generalizable Multimodal Reward Models
 description: >-
-  [ICML 2025][多模态VLM][多模态] 发现多模态奖励模型 (MM-RM) 在训练时会过度依赖文本单模态捷径 (shortcuts)，导致分布外泛化能力差，提出 Shortcut-aware MM-RM 学习算法通过动态样本重加权来减少对单模态伪相关性的依赖…
+  [ICML 2025][多模态VLM][多模态] 发现多模态奖励模型 (MM-RM) 在训练时会过度依赖文本单模态捷径 (shortcuts)，导致分布外泛化能力差，提出 Shortcut-aware MM-RM 学习算法通过动态样本重加权来减少对单模态伪相关性的依赖，OOD 准确率从 68.1% 提升至 78.5%。
 tags:
   - "ICML 2025"
   - "多模态VLM"

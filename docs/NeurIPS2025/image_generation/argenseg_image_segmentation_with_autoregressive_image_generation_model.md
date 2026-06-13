@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ARGenSeg: Image Segmentation with Autoregressive Image Generation Model
 description: >-
-  [NeurIPS 2025][图像生成][自回归图像生成] 提出ARGenSeg——首个利用自回归图像生成范式实现图像分割的统一MLLM框架，让模型直接输出visual tokens并通过VQ-VAE解码为分割mask，无需额外分割头，搭配next-scale prediction并行生成策略实现4×加速…
+  [NeurIPS 2025][图像生成][自回归图像生成] 提出ARGenSeg——首个利用自回归图像生成范式实现图像分割的统一MLLM框架，让模型直接输出visual tokens并通过VQ-VAE解码为分割mask，无需额外分割头，搭配next-scale prediction并行生成策略实现4×加速，在RefCOCO/+/g上以更少训练数据超越SOTA。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

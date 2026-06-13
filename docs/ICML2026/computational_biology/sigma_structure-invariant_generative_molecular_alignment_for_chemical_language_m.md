@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIGMA: Structure-Invariant Generative Molecular Alignment for Chemical Language Models via Autoregressive Contrastive Learning
 description: >-
-  [ICML 2026][计算生物][SMILES] SIGMA 用 token 级对比损失把同一分子不同 SMILES 排列的隐状态强制对齐到同一条轨迹，并配套提出 IsoBeam 在解码阶段剪掉同构冗余路径，让序列模型在化学空间中真正"按图而非按字符串"思考。
+  [ICML 2026][计算生物][SMILES] SIGMA 用 token 级对比损失把同一分子不同 SMILES 排列的隐状态强制对齐到同一条轨迹，并配套提出 IsoBeam 在解码阶段剪掉同构冗余路径，让序列模型在化学空间中真正"按图而非按字符串"思考。 领域现状：当前化学语言模型 (ChemLM) 把分子图序列化成…
 tags:
   - "ICML 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLAP: The Semantic Least Action Principle for Variational Video-Language Modeling
 description: >-
-  [ICML 2026][视频理解][视频语言模型] SLAP 把"经典力学的最小作用量原理"搬到视频语义流形上，把稀疏采样视频的缺帧补全建模为 Riemannian 流形上的两点边界值问题——用语义动力学替代概率生成来强制物体持久性…
+  [ICML 2026][视频理解][视频语言模型] SLAP 把"经典力学的最小作用量原理"搬到视频语义流形上，把稀疏采样视频的缺帧补全建模为 Riemannian 流形上的两点边界值问题——用语义动力学替代概率生成来强制物体持久性，在隧道遮挡测试上准确率 83.9%（超扩散模型 12 个点）且推理加速 177×。
 tags:
   - "ICML 2026"
   - "视频理解"

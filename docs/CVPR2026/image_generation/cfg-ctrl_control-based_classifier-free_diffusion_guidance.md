@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CFG-Ctrl: Control-Based Classifier-Free Diffusion Guidance
 description: >-
-  [CVPR2026][图像生成][Classifier-Free Guidance] 将 Classifier-Free Guidance (CFG) 重新解释为流匹配扩散模型中的反馈控制过程，提出统一框架 CFG-Ctrl，并基于滑模控制 (SMC) 设计非线性反馈引导机制 SMC-CFG…
+  [CVPR2026][图像生成][Classifier-Free Guidance] 将 Classifier-Free Guidance (CFG) 重新解释为流匹配扩散模型中的反馈控制过程，提出统一框架 CFG-Ctrl，并基于滑模控制 (SMC) 设计非线性反馈引导机制 SMC-CFG，在大引导尺度下显著提升语义一致性和生成鲁棒性。
 tags:
   - "CVPR2026"
   - "图像生成"

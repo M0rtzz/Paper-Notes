@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vulnerable Agent Identification in Large-Scale Multi-Agent Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][Mean-field MARL] 本文研究"在 N 个智能体的大规模 MARL 系统中挑出 K 个最脆弱的智能体"这一双层 NP-hard 问题，把它建模为 HAD-MFC（Hierarchical Adversarial Decentralized Mean Field…
+  [ICML 2026][强化学习][Mean-field MARL] 本文研究"在 N 个智能体的大规模 MARL 系统中挑出 K 个最脆弱的智能体"这一双层 NP-hard 问题，把它建模为 HAD-MFC（Hierarchical Adversarial Decentralized Mean Field Control），用 Fenchel-Rockafellar 变换把下层最坏对抗策略的训练折叠成一个加正则项的"鲁棒 mean-field Bellman 算子"，再把上层组合选择问题转化为带稠密 reward 的 MDP 用贪心或 RL 求解，证明分解保持最优性，在 18 个任务中 17 个超 baseline。
 tags:
   - "ICML 2026"
   - "强化学习"

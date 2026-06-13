@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M2S: Multi-turn to Single-turn jailbreak in Red Teaming for LLMs
 description: >-
-  [ACL 2025][LLM对齐][jailbreak] 提出 M2S 框架，通过三种简单的格式转换方法（Hyphenize/Numberize/Pythonize）将多轮人类越狱对话压缩为单轮 prompt，不仅保持甚至超越原始多轮攻击效果（ASR 高达 95.9%，比多轮提升最多 17.5%）…
+  [ACL 2025][LLM对齐][jailbreak] 提出 M2S 框架，通过三种简单的格式转换方法（Hyphenize/Numberize/Pythonize）将多轮人类越狱对话压缩为单轮 prompt，不仅保持甚至超越原始多轮攻击效果（ASR 高达 95.9%，比多轮提升最多 17.5%），同时 token 使用量减半以上。
 tags:
   - "ACL 2025"
   - "LLM对齐"

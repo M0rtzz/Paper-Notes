@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diversity Over Frequency: Rethinking Tool Use in Visual Chain-of-Thought Agents
 description: >-
-  [ICML 2026][LLM推理][视觉链式推理] 在 3D 空间推理这类"工具非必需"的视觉 Agent 任务上，作者发现 vanilla RFT 会让工具调用率塌缩到接近 0、强制鼓励工具调用又只带来边际收益；真正驱动性能提升的是 rollout 的探索多样性…
+  [ICML 2026][LLM推理][视觉链式推理] 在 3D 空间推理这类"工具非必需"的视觉 Agent 任务上，作者发现 vanilla RFT 会让工具调用率塌缩到接近 0、强制鼓励工具调用又只带来边际收益；真正驱动性能提升的是 rollout 的探索多样性，于是用自适应熵正则化把 3DSRBench 准确率从 59.2% 推到 62.9%，并把工具重新定位为"训练期脚手架"而非推理期必备品。
 tags:
   - "ICML 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding How Knowledge Evolves in Large Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][LVLM可解释性] 首次系统分析LVLM中多模态知识的演化过程，从**单token概率**、**token概率分布**和**特征编码**三个层次揭示知识演化的"关键层-突变层"双节点模式，将演化过程划分为**快速演化→稳定→突变**三个阶段…
+  [CVPR 2025][多模态VLM][LVLM可解释性] 首次系统分析LVLM中多模态知识的演化过程，从**单token概率**、**token概率分布**和**特征编码**三个层次揭示知识演化的"关键层-突变层"双节点模式，将演化过程划分为**快速演化→稳定→突变**三个阶段，并发现深层突变与幻觉现象密切相关。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

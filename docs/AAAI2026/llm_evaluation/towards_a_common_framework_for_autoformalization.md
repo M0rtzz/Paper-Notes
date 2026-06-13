@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards a Common Framework for Autoformalization
 description: >-
-  [AAAI 2026][LLM评测][autoformalization] 本文系统回顾了"自动形式化"（autoformalization）在数学证明、逻辑推理、规划和知识表示等领域的现有工作，提出了一个统一的跨学科定义框架，将自动形式化定义为从非形式语言到形式推理语言的语义等价转换…
+  [AAAI 2026][LLM评测][autoformalization] 本文系统回顾了"自动形式化"（autoformalization）在数学证明、逻辑推理、规划和知识表示等领域的现有工作，提出了一个统一的跨学科定义框架，将自动形式化定义为从非形式语言到形式推理语言的语义等价转换，旨在促进不同研究社区间的方法共享并加速下一代 AI 推理系统的发展。
 tags:
   - "AAAI 2026"
   - "LLM评测"

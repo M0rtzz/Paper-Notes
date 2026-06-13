@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnchorSplat: Feed-Forward 3D Gaussian Splatting with 3D Geometric Priors
 description: >-
-  [CVPR 2026][3D视觉][3D高斯喷射] AnchorSplat 提出了一种锚点对齐的前馈 3DGS 框架，以 3D 几何先验（稀疏点云）为锚点直接在 3D 空间预测高斯，用约 20 倍更少的高斯数量和一半的重建时间在 ScanNet++ v2 上达到 SOTA 性能（PSNR 21.48）…
+  [CVPR 2026][3D视觉][3D高斯喷射] AnchorSplat 提出了一种锚点对齐的前馈 3DGS 框架，以 3D 几何先验（稀疏点云）为锚点直接在 3D 空间预测高斯，用约 20 倍更少的高斯数量和一半的重建时间在 ScanNet++ v2 上达到 SOTA 性能（PSNR 21.48），同时具备更好的深度估计精度。
 tags:
   - "CVPR 2026"
   - "3D视觉"

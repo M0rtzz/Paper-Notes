@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DISC: Dynamic Decomposition Improves LLM Inference Scaling
 description: >-
-  [NeurIPS 2025][LLM效率][推理时计算] DISC 提出了一种动态分解算法，在推理时根据每一步的 z-score（采样奖励的标准化最大值）自动、递归地调整推理步骤的粒度——困难步骤分更细、简单步骤一步跨过——可以即插即用地与贪心搜索、Beam Search、MCTS 结合…
+  [NeurIPS 2025][LLM效率][推理时计算] DISC 提出了一种动态分解算法，在推理时根据每一步的 z-score（采样奖励的标准化最大值）自动、递归地调整推理步骤的粒度——困难步骤分更细、简单步骤一步跨过——可以即插即用地与贪心搜索、Beam Search、MCTS 结合，在 APPS、MATH、LiveCodeBench 上以更少的 token 预算达到更高的 pass@k。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

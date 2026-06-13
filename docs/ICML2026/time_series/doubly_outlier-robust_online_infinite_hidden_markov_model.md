@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Doubly Outlier-Robust Online Infinite Hidden Markov Model
 description: >-
-  [ICML 2026][时间序列][无限隐马尔可夫模型] 本文提出 BR-iHMM：把"鲁棒观测更新（WoLF）"与"批量化状态推断（degenerate sticky HDP prior）"结合起来…
+  [ICML 2026][时间序列][无限隐马尔可夫模型] 本文提出 BR-iHMM：把"鲁棒观测更新（WoLF）"与"批量化状态推断（degenerate sticky HDP prior）"结合起来，给在线无限隐马模型同时在观测空间和状态空间提供有界的 Posterior Influence Function（PIF），在金融订单簿、电力负荷、合成回归三类含异常值的流式数据上把一步预测 RMSE 最多降低 67%。
 tags:
   - "ICML 2026"
   - "时间序列"

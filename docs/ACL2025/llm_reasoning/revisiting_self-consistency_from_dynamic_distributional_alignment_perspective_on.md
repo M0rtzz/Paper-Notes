@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Self-Consistency from Dynamic Distributional Alignment Perspective on Answer Aggregation
 description: >-
-  [ACL 2025][LLM推理][self-consistency] 将 Self-Consistency 重新理解为采样分布与真实答案分布的动态对齐问题，揭示温度不仅控制采样随机性还直接塑造真实答案分布，据此提出置信度驱动的三阶段动态温度调节机制（FSD 阈值理论推导）…
+  [ACL 2025][LLM推理][self-consistency] 将 Self-Consistency 重新理解为采样分布与真实答案分布的动态对齐问题，揭示温度不仅控制采样随机性还直接塑造真实答案分布，据此提出置信度驱动的三阶段动态温度调节机制（FSD 阈值理论推导），在 10 个模型 × GSM8K/MATH 上零训练开销同时提升平均和最佳性能。
 tags:
   - "ACL 2025"
   - "LLM推理"

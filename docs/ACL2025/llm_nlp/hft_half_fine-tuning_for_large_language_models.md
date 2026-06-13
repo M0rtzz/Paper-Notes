@@ -2,10 +2,10 @@
 title: >-
   [论文解读] HFT: Half Fine-Tuning for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][Half Fine-Tuning] 本文提出Half Fine-Tuning (HFT)，在每轮微调中随机冻结一半参数、只更新另一半，不改变模型架构的情况下显著缓解灾难性遗忘问题，同时在下游任务上取得与FFT相当甚至更好的性能，并减少约30%的训练时间。
+  [ACL 2025][LLM 其他][Half Fine-Tuning] 本文提出Half Fine-Tuning (HFT)，在每轮微调中随机冻结一半参数、只更新另一半，不改变模型架构的情况下显著缓解灾难性遗忘问题，同时在下游任务上取得与FFT相当甚至更好的性能，并减少约30%的训练时间。 LLM微调的遗忘困境：大模型经历…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Half Fine-Tuning"
   - "灾难性遗忘"
   - "参数选择"

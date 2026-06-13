@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LadderSym: A Multimodal Interleaved Transformer for Music Practice Error Detection
 description: >-
-  [ICLR 2026][强化学习][音乐错误检测] 提出LadderSym架构解决音乐练习错误检测任务，通过交替式跨流对齐模块（Ladder）克服晚期融合的对齐不足，并用符号乐谱提示（Sym）减少纯音频乐谱的频率歧义，在MAESTRO-E上将漏音F1从26.8%提升到56.3%。
+  [ICLR 2026][强化学习][音乐错误检测] 提出LadderSym架构解决音乐练习错误检测任务，通过交替式跨流对齐模块（Ladder）克服晚期融合的对齐不足，并用符号乐谱提示（Sym）减少纯音频乐谱的频率歧义，在MAESTRO-E上将漏音F1从26.8%提升到56.3%。 领域现状：音乐练习错误检测将练习录音与参考乐…
 tags:
   - "ICLR 2026"
   - "强化学习"

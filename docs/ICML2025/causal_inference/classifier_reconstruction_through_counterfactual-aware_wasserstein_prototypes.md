@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes
 description: >-
-  [ICML 2025][因果推理][反事实解释] 提出利用 Wasserstein 重心将原始样本与反事实样本融合为类别原型，从而在有限查询预算下高保真地重建目标二分类器，有效缓解了朴素使用反事实样本导致的决策边界偏移问题。
+  [ICML 2025][因果推理][反事实解释] 提出利用 Wasserstein 重心将原始样本与反事实样本融合为类别原型，从而在有限查询预算下高保真地重建目标二分类器，有效缓解了朴素使用反事实样本导致的决策边界偏移问题。 反事实解释（Counterfactual Explanation）通过找到使模型预测翻转的最小输入改…
 tags:
   - "ICML 2025"
   - "因果推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind Dreamer: Untethering Imagination via Active Causal Intervention on Latent Manifolds
 description: >-
-  [ICML2026][强化学习][模型基RL] 本文为模型基强化学习（MBRL）提出 Mind Dreamer，用一个对抗式生成器在世界模型已学到的隐空间流形上"跳跃"到非历史轨迹覆盖的关键锚点…
+  [ICML2026][强化学习][模型基RL] 本文为模型基强化学习（MBRL）提出 Mind Dreamer，用一个对抗式生成器在世界模型已学到的隐空间流形上"跳跃"到非历史轨迹覆盖的关键锚点，并通过新设计的 Relay Value/Uncertainty 函数（含 $\gamma^2$ 折扣）解决跨断点的信用分配，在 DMC 上相对 DreamerV3 平均提速 $1.67\times$、稀疏奖励任务最高提速 $8.8\times$。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.16030](https://arxiv.org/abs/2605.16030)  
 **代码**: 待确认  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: 模型基RL, 隐空间想象, 主动因果干预, 自由能, Dreamer
 
 ## 一句话总结

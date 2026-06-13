@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Testing the Test: Score-Direction Instability in Class-Split Anomaly Detection
 description: >-
-  [ICML2026][目标检测][异常检测] 作者指出"类内拆分"(class-split) 异常检测基准在异常类与正常混合分布在表示空间重叠时是病态的——AUROC 会塌缩到随机甚至反转，方向取决于未知的异常类，并提出一个无需训练的"邻域类泄漏"指标 $L_k$ 来在跑分前诊断这种基准失效。
+  [ICML2026][目标检测][异常检测] 作者指出"类内拆分"(class-split) 异常检测基准在异常类与正常混合分布在表示空间重叠时是病态的——AUROC 会塌缩到随机甚至反转，方向取决于未知的异常类，并提出一个无需训练的"邻域类泄漏"指标 $L_k$ 来在跑分前诊断这种基准失效。 领域现状：评估完全无条件 OO…
 tags:
   - "ICML2026"
   - "目标检测"

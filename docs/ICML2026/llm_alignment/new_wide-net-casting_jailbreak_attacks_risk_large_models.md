@@ -2,7 +2,7 @@
 title: >-
   [论文解读] New Wide-Net-Casting Jailbreak Attacks Risk Large Models
 description: >-
-  [ICML 2026][LLM对齐][wide-net-casting] 本文首次定义并系统分析了"广撒网"越狱场景（攻击者同时向一组大模型发起请求，只要任一模型被攻破即视为成功），并据此设计了一种基于 exploration-to-exploitation 调度的"专家化"对抗样本生成器联合训练方法…
+  [ICML 2026][LLM对齐][wide-net-casting] 本文首次定义并系统分析了"广撒网"越狱场景（攻击者同时向一组大模型发起请求，只要任一模型被攻破即视为成功），并据此设计了一种基于 exploration-to-exploitation 调度的"专家化"对抗样本生成器联合训练方法，在多个 LLM/MLLM 上把无外加防御时的攻击成功率推到 100%，揭示现行单模型越狱评估严重低估了真实世界风险。
 tags:
   - "ICML 2026"
   - "LLM对齐"

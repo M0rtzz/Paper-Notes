@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Ensembling Gaussian Splatting for Few-Shot Novel View Synthesis
 description: >-
-  [3D视觉] SE-GS 通过不确定性感知扰动策略在训练过程中动态生成多样化的 3DGS 模型，并利用自集成机制使 Σ-model 聚合扰动模型的信息，有效缓解稀疏视角下的过拟合问题，在多个数据集上实现 SOTA 的少样本新视角合成性能。
+  [3D视觉] SE-GS 通过不确定性感知扰动策略在训练过程中动态生成多样化的 3DGS 模型，并利用自集成机制使 Σ-model 聚合扰动模型的信息，有效缓解稀疏视角下的过拟合问题，在多个数据集上实现 SOTA 的少样本新视角合成性能。 3D Gaussian Splatting（3DGS）在新视角合成中表现优异…
 tags:
   - "3D视觉"
 ---

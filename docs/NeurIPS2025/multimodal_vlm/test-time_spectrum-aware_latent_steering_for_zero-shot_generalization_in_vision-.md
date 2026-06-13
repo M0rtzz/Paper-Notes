@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Spectrum-Aware Latent Steering for Zero-Shot Generalization in Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][测试时适应] 提出STS（Spectrum-Aware Test-Time Steering），一种轻量级测试时适应方法：通过文本嵌入的SVD分解提取低维语义子空间，学习少量系数在该子空间内对文本原型进行"转向"以适应域偏移，无需反向传播通过大编码器…
+  [NeurIPS 2025][多模态VLM][测试时适应] 提出STS（Spectrum-Aware Test-Time Steering），一种轻量级测试时适应方法：通过文本嵌入的SVD分解提取低维语义子空间，学习少量系数在该子空间内对文本原型进行"转向"以适应域偏移，无需反向传播通过大编码器，推理速度比TPT快8倍、内存占用减少12倍，同时在OOD数据集上大幅超越现有TTA方法。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

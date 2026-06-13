@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineLIP: Extending CLIP's Reach via Fine-Grained Alignment with Longer Text Inputs
 description: >-
-  [CVPR 2025][图像生成][CLIP扩展] 提出 FineLIP，通过位置嵌入拉伸支持 248 token 长文本输入，并引入自适应 token 细化和跨模态 token 级对齐，在长描述文本的检索和文生图任务上显著超越 SOTA。
+  [CVPR 2025][图像生成][CLIP扩展] 提出 FineLIP，通过位置嵌入拉伸支持 248 token 长文本输入，并引入自适应 token 细化和跨模态 token 级对齐，在长描述文本的检索和文生图任务上显著超越 SOTA。 领域现状：CLIP 限制为 77 token，无法处理丰富详细的长描述…
 tags:
   - "CVPR 2025"
   - "图像生成"

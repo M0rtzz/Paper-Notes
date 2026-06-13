@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Algebraic View of the Expressivity of Recurrent Language Models
 description: >-
-  [ICML2026][模型压缩][循环语言模型] 这篇论文把 RNN/SSM 的形式语言表达能力统一为一个代数问题：在固定数值语义后，模型能识别的语言由其层级转移幺半群及其 wreath product 决定，并且同一架构在浮点与无符号整数语义下会得到完全不同的计数能力。
+  [ICML2026][模型压缩][循环语言模型] 这篇论文把 RNN/SSM 的形式语言表达能力统一为一个代数问题：在固定数值语义后，模型能识别的语言由其层级转移幺半群及其 wreath product 决定，并且同一架构在浮点与无符号整数语义下会得到完全不同的计数能力。 领域现状：近年来，语言模型表达能力分析常把 RNN、…
 tags:
   - "ICML2026"
   - "模型压缩"

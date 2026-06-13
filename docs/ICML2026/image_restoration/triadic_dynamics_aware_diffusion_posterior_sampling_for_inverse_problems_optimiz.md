@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Triadic Dynamics Aware Diffusion Posterior Sampling for Inverse Problems: Optimizing Guidance and Stochasticity Schedules
 description: >-
-  [ICML 2026][图像恢复][扩散后验采样] 本文把扩散后验采样中长期被当作常数的三个力——数据一致性 (DC) 引导、Classifier-Free Guidance (CFG)、随机性 (stochasticity)——首次系统地视为一个**耦合的时变三体系统**…
+  [ICML 2026][图像恢复][扩散后验采样] 本文把扩散后验采样中长期被当作常数的三个力——数据一致性 (DC) 引导、Classifier-Free Guidance (CFG)、随机性 (stochasticity)——首次系统地视为一个**耦合的时变三体系统**，理论 + 实证证明早期 CFG 与 DC 方向冲突、而随机性能把轨迹拉回高概率流形，据此提出"DC↓、CFG↑、η↓"的单调三体调度趋势，并用"模板搜索 + GRPO 强化学习"两套方法找最优曲线，在 FFHQ / DIV2K 的超分与去模糊上同时刷新失真和感知指标。
 tags:
   - "ICML 2026"
   - "图像恢复"

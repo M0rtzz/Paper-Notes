@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video Summarization with Large Language Models
 description: >-
-  [CVPR 2025][视频理解][视频摘要] LLMVS 提出一个基于 LLM 的视频摘要框架，先用多模态 LLM 将视频帧转换为文本描述，再用 LLM 通过滑动窗口上下文学习评估每帧的局部重要性分数，最后通过全局自注意力机制聚合全局上下文生成最终预测…
+  [CVPR 2025][视频理解][视频摘要] LLMVS 提出一个基于 LLM 的视频摘要框架，先用多模态 LLM 将视频帧转换为文本描述，再用 LLM 通过滑动窗口上下文学习评估每帧的局部重要性分数，最后通过全局自注意力机制聚合全局上下文生成最终预测，在 SumMe 和 TVSum 上取得了 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "视频理解"

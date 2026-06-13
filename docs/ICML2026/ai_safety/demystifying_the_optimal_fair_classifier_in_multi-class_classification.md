@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Demystifying the Optimal Fair Classifier in Multi-Class Classification
 description: >-
-  [ICML 2026][AI安全][公平分类] 本文给出多分类公平分类问题中 Bayes 最优分类器的解析可处理形式（带熵正则的闭式解），并据此推出一对统一的算法 OptFair：训练阶段用 reduction 转化为代价敏感交叉熵的 saddle-point 优化…
+  [ICML 2026][AI安全][公平分类] 本文给出多分类公平分类问题中 Bayes 最优分类器的解析可处理形式（带熵正则的闭式解），并据此推出一对统一的算法 OptFair：训练阶段用 reduction 转化为代价敏感交叉熵的 saddle-point 优化，部署阶段用 plug-in 估计求解凸近端梯度问题，两者在理论上都收敛到 accuracy-fairness Pareto 前沿。
 tags:
   - "ICML 2026"
   - "AI安全"

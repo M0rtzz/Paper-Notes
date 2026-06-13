@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniSplat: Learning 3D Representations for Spatial Intelligence from Unposed Multi-View Images
 description: >-
-  [CVPR 2026][3D视觉][3D表示学习] UniSplat 通过双掩码策略、粗到细高斯溅射和位姿条件重校准三个组件，从无位姿多视角图像中学习统一的几何-外观-语义 3D 表示，为空间智能奠定感知基础。
+  [CVPR 2026][3D视觉][3D表示学习] UniSplat 通过双掩码策略、粗到细高斯溅射和位姿条件重校准三个组件，从无位姿多视角图像中学习统一的几何-外观-语义 3D 表示，为空间智能奠定感知基础。 领域现状：3D 表示学习正从监督方法（需要标定位姿）向自监督方法（直接从原始多视角图像学习）发展…
 tags:
   - "CVPR 2026"
   - "3D视觉"

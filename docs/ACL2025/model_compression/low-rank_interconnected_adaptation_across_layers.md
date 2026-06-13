@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Low-Rank Interconnected Adaptation across Layers
 description: >-
-  [ACL 2025][LoRA] 提出 Lily（Low-rank Interconnected Adaptation across Layers），通过将 LoRA 的 A/B 适配器跨层解耦并互联共享，配合数据依赖的路由机制，在相同或更少参数下实现高秩权重更新…
+  [ACL 2025][模型压缩][LoRA] 提出 Lily（Low-rank Interconnected Adaptation across Layers），通过将 LoRA 的 A/B 适配器跨层解耦并互联共享，配合数据依赖的路由机制，在相同或更少参数下实现高秩权重更新，在多模态、多架构、多规模场景中均优于 LoRA。
 tags:
   - "ACL 2025"
+  - "模型压缩"
   - "LoRA"
   - "参数高效微调"
   - "跨层适配"

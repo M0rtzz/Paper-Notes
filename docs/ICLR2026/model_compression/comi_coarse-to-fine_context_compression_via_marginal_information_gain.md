@@ -2,7 +2,7 @@
 title: >-
   [论文解读] COMI: Coarse-to-fine Context Compression via Marginal Information Gain
 description: >-
-  [ICLR2026][模型压缩][context compression] 提出 COMI，一种基于边际信息增益（MIG = 查询相关性 - 语义冗余度）的粗到细自适应上下文压缩框架，在 32x 压缩率下 NaturalQuestions EM 比次优方法提高约 25 分…
+  [ICLR2026][模型压缩][context compression] 提出 COMI，一种基于边际信息增益（MIG = 查询相关性 - 语义冗余度）的粗到细自适应上下文压缩框架，在 32x 压缩率下 NaturalQuestions EM 比次优方法提高约 25 分，核心在于同时优化保留信息的相关性和多样性。
 tags:
   - "ICLR2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protecting Bystander Privacy via Selective Hearing in Audio LLMs
 description: >-
-  [ACL 2026][音频/语音][旁观者隐私] 提出首个旁观者隐私基准 SH-Bench 和旁观者隐私微调（BPFT）方法，评估和提升音频 LLM 在多说话人环境中仅关注主说话人、拒绝泄漏旁观者信息的能力，BPFT 后 SE 指标比 Gemini 2.5 Pro 高 16%。
+  [ACL 2026][音频/语音][旁观者隐私] 提出首个旁观者隐私基准 SH-Bench 和旁观者隐私微调（BPFT）方法，评估和提升音频 LLM 在多说话人环境中仅关注主说话人、拒绝泄漏旁观者信息的能力，BPFT 后 SE 指标比 Gemini 2.5 Pro 高 16%。 领域现状：音频 LLM（如 SALMONN、Q…
 tags:
   - "ACL 2026"
   - "音频/语音"

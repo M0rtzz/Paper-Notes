@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffSim: Taming Diffusion Models for Evaluating Visual Similarity
 description: >-
-  [ICCV 2025][图像生成][扩散模型] DiffSim 首次发现预训练扩散模型（Stable Diffusion）的注意力层特征可用于测量视觉相似度，提出 Aligned Attention Score (AAS) 在 U-Net 的 self-attention / cross-attention…
+  [ICCV 2025][图像生成][扩散模型] DiffSim 首次发现预训练扩散模型（Stable Diffusion）的注意力层特征可用于测量视觉相似度，提出 Aligned Attention Score (AAS) 在 U-Net 的 self-attention / cross-attention 层中对齐两张图像特征后计算余弦相似度，在人类感知一致性、风格相似度和实例一致性等多个 benchmark 上达到 SOTA。
 tags:
   - "ICCV 2025"
   - "图像生成"

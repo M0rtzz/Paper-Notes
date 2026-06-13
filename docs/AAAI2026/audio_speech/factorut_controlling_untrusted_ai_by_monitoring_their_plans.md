@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Factor(U,T): Controlling Untrusted AI by Monitoring their Plans
 description: >-
-  [AAAI 2026][音频/语音][AI控制] 研究不可信 AI 做任务分解、可信 AI 做执行的 Factor(U,T) 协议安全性，发现监控分解计划的 AUROC 仅 0.52（接近随机），而监控具体代码实现可达 0.96——恶意意图在抽象计划中难以检测但在具体实现中暴露…
+  [AAAI 2026][音频/语音][AI控制] 研究不可信 AI 做任务分解、可信 AI 做执行的 Factor(U,T) 协议安全性，发现监控分解计划的 AUROC 仅 0.52（接近随机），而监控具体代码实现可达 0.96——恶意意图在抽象计划中难以检测但在具体实现中暴露，结论是"结构性预防（可信分解器）优于事后监控"。
 tags:
   - "AAAI 2026"
   - "音频/语音"

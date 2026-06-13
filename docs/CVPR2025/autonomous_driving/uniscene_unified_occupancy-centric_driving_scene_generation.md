@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniScene: Unified Occupancy-centric Driving Scene Generation
 description: >-
-  [CVPR 2025][自动驾驶][占用网格生成] 提出 UniScene，以占用网格为统一中间表示的两阶段驾驶场景生成：Occupancy Diffusion Transformer 从 BEV 布局生成语义占用，再通过高斯泼溅联合渲染语义+深度图条件化双扩散模型生成视频和 LiDAR…
+  [CVPR 2025][自动驾驶][占用网格生成] 提出 UniScene，以占用网格为统一中间表示的两阶段驾驶场景生成：Occupancy Diffusion Transformer 从 BEV 布局生成语义占用，再通过高斯泼溅联合渲染语义+深度图条件化双扩散模型生成视频和 LiDAR，FVD 71.94（前 SOTA Drive-WM 122.70），下游数据增强提升 3D 检测 mAP 3.62%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Generative Models through Post-hoc Concept Bottlenecks
 description: >-
-  [CVPR 2025][图像生成][概念瓶颈模型] 本文提出两种低成本的后置方法——概念瓶颈自编码器(CB-AE)和概念控制器(CC)——将预训练生成模型转化为可解释且可操控的模型，无需从头训练或真实标注数据…
+  [CVPR 2025][图像生成][概念瓶颈模型] 本文提出两种低成本的后置方法——概念瓶颈自编码器(CB-AE)和概念控制器(CC)——将预训练生成模型转化为可解释且可操控的模型，无需从头训练或真实标注数据，在 CelebA/CelebA-HQ/CUB 上的可操控性(steerability)平均超过先前 CBGM 方法约25%，训练速度快4-15倍。
 tags:
   - "CVPR 2025"
   - "图像生成"

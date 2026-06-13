@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion
 description: >-
-  [ICML2026][图像生成][少数样本生成] 提出 JEPA Guidance，利用 JEPA（如 DINOv2）编码器的隐式密度信号引导扩散模型采样，将少数样本（minority sample）的定义从"生成模型先验下的低密度"转变为"世界先验下的低密度"…
+  [ICML2026][图像生成][少数样本生成] 提出 JEPA Guidance，利用 JEPA（如 DINOv2）编码器的隐式密度信号引导扩散模型采样，将少数样本（minority sample）的定义从"生成模型先验下的低密度"转变为"世界先验下的低密度"，在无条件、类条件和文生图场景均实现更具语义意义的稀有样本生成。
 tags:
   - "ICML2026"
   - "图像生成"

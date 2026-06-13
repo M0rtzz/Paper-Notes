@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Two Causally Related Needles in a Video Haystack
 description: >-
-  [NeurIPS 2025][视频理解][长视频理解] 提出Causal2Needles基准（4,100个问答对），通过设计"桥接实体"将两个因果相关事件的理解绑定在一起，强制VLM必须联合检索和推理两个分散在长视频中的"针"…
+  [NeurIPS 2025][视频理解][长视频理解] 提出Causal2Needles基准（4,100个问答对），通过设计"桥接实体"将两个因果相关事件的理解绑定在一起，强制VLM必须联合检索和推理两个分散在长视频中的"针"，揭示现有最强模型在因果双针问题上的严重不足（ChatGPT-4o双针Both准确率仅13.4%）。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

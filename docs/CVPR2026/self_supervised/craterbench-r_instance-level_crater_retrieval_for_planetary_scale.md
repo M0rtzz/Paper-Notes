@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CraterBench-R: Instance-Level Crater Retrieval for Planetary Scale
 description: >-
-  [CVPR 2026][自监督学习][陨石坑检索] 首次将陨石坑分析形式化为实例级图像检索问题——提出CraterBench-R基准(~25K火星陨石坑ID, 50K gallery, 5K查询)，诊断发现单向量池化有精度上限+有监督度量学习反而退化…
+  [CVPR 2026][自监督学习][陨石坑检索] 首次将陨石坑分析形式化为实例级图像检索问题——提出CraterBench-R基准(~25K火星陨石坑ID, 50K gallery, 5K查询)，诊断发现单向量池化有精度上限+有监督度量学习反而退化，提出无训练的实例token聚合(选K个种子+余弦最近邻残差分配)将196个ViT patch token压缩为K个代表token做late interaction匹配，K=64时匹配全token精度且存储大幅降低，实用两阶段管线(单向量粗筛+实例token精排)恢复89-94%完整精度。
 tags:
   - "CVPR 2026"
   - "自监督学习"

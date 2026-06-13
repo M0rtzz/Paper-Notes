@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation
 description: >-
-  [ECCV 2024][3D视觉][人像动画] 提出 Export3D，通过对比预训练获取与外观解耦的表情表示（CLeBS），结合表情自适应层归一化（EAdaLN）直接生成条件tri-plane，实现无外观交换的跨身份3D-aware人像表情动画。
+  [ECCV 2024][3D视觉][人像动画] 提出 Export3D，通过对比预训练获取与外观解耦的表情表示（CLeBS），结合表情自适应层归一化（EAdaLN）直接生成条件tri-plane，实现无外观交换的跨身份3D-aware人像表情动画。 - 人像动画的核心需求： 虚拟人服务（跨语言配音、虚拟化身、视频会议等）要求…
 tags:
   - "ECCV 2024"
   - "3D视觉"

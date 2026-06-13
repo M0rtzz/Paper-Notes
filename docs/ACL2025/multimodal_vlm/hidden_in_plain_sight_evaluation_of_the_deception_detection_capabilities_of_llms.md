@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hidden in Plain Sight: Evaluation of the Deception Detection Capabilities of LLMs in Multimodal Settings
 description: >-
-  [ACL 2025][多模态VLM][欺骗检测] 本文系统评估了LLM和多模态大模型在文本、视频、音频等多种模态上的欺骗检测能力，发现微调后的LLM在文本欺骗检测上达到SOTA，但多模态模型在利用跨模态线索方面仍存在显著不足。
+  [ACL 2025][多模态VLM][欺骗检测] 本文系统评估了LLM和多模态大模型在文本、视频、音频等多种模态上的欺骗检测能力，发现微调后的LLM在文本欺骗检测上达到SOTA，但多模态模型在利用跨模态线索方面仍存在显著不足。 领域现状：欺骗检测是一个涉及安全、法律、网络诚信等多个领域的关键任务。传统方法依赖手工特征工程和小…
 tags:
   - "ACL 2025"
   - "多模态VLM"

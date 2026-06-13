@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DyCoke: Dynamic Compression of Tokens for Fast Video Large Language Models
 description: >-
-  [CVPR 2025][模型压缩][视频大语言模型] 提出DyCoke，一种免训练的动态视觉Token压缩方法，通过两阶段策略——时序Token合并（消除跨帧冗余50-60%）和KV Cache动态剪枝（在每个解码步动态保留最相关的token，进一步减少70-90%）…
+  [CVPR 2025][模型压缩][视频大语言模型] 提出DyCoke，一种免训练的动态视觉Token压缩方法，通过两阶段策略——时序Token合并（消除跨帧冗余50-60%）和KV Cache动态剪枝（在每个解码步动态保留最相关的token，进一步减少70-90%），将视频LLM的每帧平均token数降至15个，实现1.5倍加速且性能不降反微升。
 tags:
   - "CVPR 2025"
   - "模型压缩"

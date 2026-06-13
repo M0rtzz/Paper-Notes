@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation
 description: >-
-  [ICLR 2026][图像生成][并行解码] 提出 Locality-aware Parallel Decoding (LPD)，通过灵活并行化自回归建模架构和局部性感知的生成顺序调度，将 256×256 图像的生成步数从 256 降至 20，实现至少 3.4× 的延迟降低。
+  [ICLR 2026 Oral][图像生成][并行解码] 提出 Locality-aware Parallel Decoding (LPD)，通过灵活并行化自回归建模架构和局部性感知的生成顺序调度，将 256×256 图像的生成步数从 256 降至 20，实现至少 3.4× 的延迟降低。 - 自回归图像生成的 next-pa…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "图像生成"
   - "并行解码"
   - "自回归建模"

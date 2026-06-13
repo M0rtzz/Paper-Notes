@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mamba-Adaptor: State Space Model Adaptor for Visual Recognition
 description: >-
-  [CVPR 2025][模型压缩][Mamba适配器] 提出 Mamba-Adaptor，通过两个模块增强 Vision Mamba/SSM：Adaptor-T（时序）用可学习记忆选择机制保留关键历史状态，Adaptor-S（空间）用多尺度空心深度卷积增强空间局部性…
+  [CVPR 2025][模型压缩][Mamba适配器] 提出 Mamba-Adaptor，通过两个模块增强 Vision Mamba/SSM：Adaptor-T（时序）用可学习记忆选择机制保留关键历史状态，Adaptor-S（空间）用多尺度空心深度卷积增强空间局部性，在 ImageNet 上 83.0% Top-1（Mamba-Adaptor-b2），检测/分割+迁移学习全面提升。
 tags:
   - "CVPR 2025"
   - "模型压缩"

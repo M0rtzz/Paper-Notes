@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Active Budget Allocation for Efficient Scaling Law Estimation via Surrogate-Guided Pruning
 description: >-
-  [ICML2026][模型压缩][scaling law] 本文把 scaling law 实验中的训练预算分配建模为多轮资源选择问题，用 Successive Halving 结合学习曲线 surrogate 预测未来潜力…
+  [ICML2026][模型压缩][scaling law] 本文把 scaling law 实验中的训练预算分配建模为多轮资源选择问题，用 Successive Halving 结合学习曲线 surrogate 预测未来潜力，在 synthetic 和 nanoGPT 学习曲线上以最高 98.7% 的训练成本节省近似完整 scaling law。
 tags:
   - "ICML2026"
   - "模型压缩"

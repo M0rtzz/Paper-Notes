@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coeff-Tuning: A Graph Filter Subspace View for Tuning Attention-Based Large Models
 description: >-
-  [CVPR 2025][图学习][PEFT] 将多头注意力重新解释为图卷积滤波器子空间，通过学习一组极小的子空间组合系数（$H \times H$ 矩阵）来线性组合预训练的注意力图，突破 softmax 造成的凸包约束从而扩展特征空间，以几乎零参数量的代价即插即用地提升各种 PEFT 方法的性能。
+  [CVPR 2025][图学习][PEFT] 将多头注意力重新解释为图卷积滤波器子空间，通过学习一组极小的子空间组合系数（$H \times H$ 矩阵）来线性组合预训练的注意力图，突破 softmax 造成的凸包约束从而扩展特征空间，以几乎零参数量的代价即插即用地提升各种 PEFT 方法的性能。 领域现状：参数高效微调 (…
 tags:
   - "CVPR 2025"
   - "图学习"

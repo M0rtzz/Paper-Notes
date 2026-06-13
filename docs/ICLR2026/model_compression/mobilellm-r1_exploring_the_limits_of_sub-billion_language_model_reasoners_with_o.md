@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MobileLLM-R1: Exploring the Limits of Sub-Billion Language Model Reasoners with Open Training Recipes
 description: >-
-  [ICLR 2026][模型压缩][小模型推理] 通过精心的数据筛选和自适应混合策略，仅用4.2T token（Qwen3的11.7%）预训练出亿级参数的推理模型 MobileLLM-R1-950M，在AIME等推理基准上匹配或超越 Qwen3-0.6B，同时完全开源数据源和训练配方。
+  [ICLR 2026][模型压缩][小模型推理] 通过精心的数据筛选和自适应混合策略，仅用4.2T token（Qwen3的11.7%）预训练出亿级参数的推理模型 MobileLLM-R1-950M，在AIME等推理基准上匹配或超越 Qwen3-0.6B，同时完全开源数据源和训练配方。 大模型推理能力（o1范式）正在改变AI…
 tags:
   - "ICLR 2026"
   - "模型压缩"

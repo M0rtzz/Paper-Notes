@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSL-Topic: Improving Topic Modeling by Distilling Soft Labels from Language Models
 description: >-
-  [ICML 2026][模型压缩][神经主题模型] 作者用小语言模型在"给文档生成一个主题词"提示下产生的下一 token 概率投影到主题模型词表，作为 dense 软标签替换传统的 BoW 重构目标来训练神经主题模型 (ProdLDA / ECRTM / FASTopic)…
+  [ICML 2026][模型压缩][神经主题模型] 作者用小语言模型在"给文档生成一个主题词"提示下产生的下一 token 概率投影到主题模型词表，作为 dense 软标签替换传统的 BoW 重构目标来训练神经主题模型 (ProdLDA / ECRTM / FASTopic)，在 20NewsGroup、TweetTopic、StackOverflow 三个数据集上把分配纯度 (Purity) 拉高一大截，并给出"把 LM 隐式后验预测投影到结构化主题家族"的贝叶斯解释。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pattern Analogies: Learning to Perform Programmatic Image Edits by Analogy
 description: >-
-  [CVPR 2025][图像生成][图案编辑] Pattern Analogies 提出了一种无需推断底层程序即可对图案图像进行结构化编辑的框架：用户通过一对简单图案 $(A, A')$ 展示期望的编辑操作，TriFuser 扩散模型将此编辑迁移到复杂目标图案 $B$ 上生成 $B'$…
+  [CVPR 2025][图像生成][图案编辑] Pattern Analogies 提出了一种无需推断底层程序即可对图案图像进行结构化编辑的框架：用户通过一对简单图案 $(A, A')$ 展示期望的编辑操作，TriFuser 扩散模型将此编辑迁移到复杂目标图案 $B$ 上生成 $B'$，在真实世界艺术家设计的图案上忠实执行并泛化到训练未见的图案风格。
 tags:
   - "CVPR 2025"
   - "图像生成"

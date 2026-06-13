@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Kaputt: A Large-Scale Dataset for Visual Defect Detection
 description: >-
-  [ICCV 2025][缺陷检测] Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%…
+  [ICCV 2025][目标检测][缺陷检测] Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%，揭示了现有方法在真实零售场景中的严重不足。
 tags:
   - "ICCV 2025"
+  - "目标检测"
   - "缺陷检测"
   - "异常检测"
   - "大规模数据集"

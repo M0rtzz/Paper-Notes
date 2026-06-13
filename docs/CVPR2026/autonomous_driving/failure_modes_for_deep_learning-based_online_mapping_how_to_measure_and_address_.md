@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Failure Modes for Deep Learning-Based Online Mapping: How to Measure and Address Them
 description: >-
-  [CVPR 2026][自动驾驶][在线建图] 本文系统性地定义和量化了深度学习在线建图模型的两种失败模式——定位过拟合和地图几何过拟合，提出基于 Fréchet 距离的性能度量和基于最小生成树（MST）的训练集稀疏化策略…
+  [CVPR 2026][自动驾驶][在线建图] 本文系统性地定义和量化了深度学习在线建图模型的两种失败模式——定位过拟合和地图几何过拟合，提出基于 Fréchet 距离的性能度量和基于最小生成树（MST）的训练集稀疏化策略，在 nuScenes 和 Argoverse 2 上验证了几何多样且均衡的训练集能改善模型泛化能力。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

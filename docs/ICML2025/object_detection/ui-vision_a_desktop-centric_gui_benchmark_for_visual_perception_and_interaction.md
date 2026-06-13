@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UI-Vision: A Desktop-centric GUI Benchmark for Visual Perception and Interaction
 description: >-
-  [ICML 2025][目标检测][GUI benchmark] 提出 UI-Vision——首个面向桌面环境的综合离线评估基准，覆盖 83 个软件应用，提供密集的 bounding box、UI 标签和操作轨迹标注…
+  [ICML 2025][目标检测][GUI benchmark] 提出 UI-Vision——首个面向桌面环境的综合离线评估基准，覆盖 83 个软件应用，提供密集的 bounding box、UI 标签和操作轨迹标注，定义从细粒度到粗粒度的三级评估任务（Element Grounding → Layout Grounding → Action Prediction），系统评估并揭示 SOTA 模型在专业软件理解、空间推理和复杂操作上的关键短板。
 tags:
   - "ICML 2025"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionReFit: Dynamic Motion Blending for Versatile Motion Editing
 description: >-
-  [CVPR 2025][人体理解][文本引导动作编辑] 提出 MotionReFit，首个通用文本引导动作编辑框架，通过 MotionCutMix 数据增强和自回归扩散模型+运动协调器，同时支持空间和时序编辑，无需额外规格说明或 LLM。
+  [CVPR 2025][人体理解][文本引导动作编辑] 提出 MotionReFit，首个通用文本引导动作编辑框架，通过 MotionCutMix 数据增强和自回归扩散模型+运动协调器，同时支持空间和时序编辑，无需额外规格说明或 LLM。 领域现状：文本引导动作编辑可实现语义编辑（如改变手部动作）和风格编辑（如愤怒风格）…
 tags:
   - "CVPR 2025"
   - "人体理解"

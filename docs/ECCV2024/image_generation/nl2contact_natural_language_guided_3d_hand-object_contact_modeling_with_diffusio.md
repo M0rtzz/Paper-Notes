@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NL2Contact: Natural Language Guided 3D Hand-Object Contact Modeling with Diffusion Model
 description: >-
-  [ECCV 2024][图像生成] 提出 NL2Contact，首次利用自然语言描述来可控地建模 3D 手-物体接触图，通过分阶段扩散模型从文本生成手势姿态和接触区域，并构建了首个带有细粒度语言描述的手-物体接触数据集 ContactDescribe。
+  [ECCV 2024][图像生成] 提出 NL2Contact，首次利用自然语言描述来可控地建模 3D 手-物体接触图，通过分阶段扩散模型从文本生成手势姿态和接触区域，并构建了首个带有细粒度语言描述的手-物体接触数据集 ContactDescribe。 手-物体接触建模对于动画、VR/AR 和机器人抓取等应用至关重要…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vamos: Versatile Action Models for Video Understanding
 description: >-
-  [ECCV 2024][视频理解][文本表征] 提出 Vamos 框架，以大语言模型作为推理器，灵活统一视觉嵌入和通用文本描述作为视频表征，发现纯文本表征在多个视频理解基准上一致性地取得竞争甚至更优性能，并设计 Token Bottleneck Model 实现可解释证据选择与 5 倍推理加速。
+  [ECCV 2024][视频理解][文本表征] 提出 Vamos 框架，以大语言模型作为推理器，灵活统一视觉嵌入和通用文本描述作为视频表征，发现纯文本表征在多个视频理解基准上一致性地取得竞争甚至更优性能，并设计 Token Bottleneck Model 实现可解释证据选择与 5 倍推理加速。 领域现状：视频理解的核心问题…
 tags:
   - "ECCV 2024"
   - "视频理解"

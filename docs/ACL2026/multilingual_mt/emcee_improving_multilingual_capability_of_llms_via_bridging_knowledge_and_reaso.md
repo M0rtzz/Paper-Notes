@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMCEE: Improving Multilingual Capability of LLMs via Bridging Knowledge and Reasoning with Extracted Synthetic Multilingual Context
 description: >-
-  [ACL2026][多语言/翻译][提示学习] EMCEE 让 LLM 先从自身参数中抽取与非英语 query 相关的合成多语言上下文，再把上下文增强回答与 CoT 推理回答交给 LLM-as-a-Judge 合并，在四个多语言任务上显著提升低资源语言表现。
+  [ACL2026][多语言/翻译][提示学习] EMCEE 让 LLM 先从自身参数中抽取与非英语 query 相关的合成多语言上下文，再把上下文增强回答与 CoT 推理回答交给 LLM-as-a-Judge 合并，在四个多语言任务上显著提升低资源语言表现。 领域现状：LLM 在英语任务上表现强，但预训练语料高度英语中心…
 tags:
   - "ACL2026"
   - "多语言/翻译"

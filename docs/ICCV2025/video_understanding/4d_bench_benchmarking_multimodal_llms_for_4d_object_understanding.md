@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding
 description: >-
-  [ICCV 2025][视频理解][4D理解] 本文提出 4D-Bench，首个评估多模态大模型 (MLLM) 在 4D 物体（动态 3D 物体）理解能力的基准，包含 4D 物体问答和 4D 物体描述两大任务，揭示了即使是 GPT-4o 在简单 4D 物体上也仅达 63% 准确率（人类基线 91%）…
+  [ICCV 2025][视频理解][4D理解] 本文提出 4D-Bench，首个评估多模态大模型 (MLLM) 在 4D 物体（动态 3D 物体）理解能力的基准，包含 4D 物体问答和 4D 物体描述两大任务，揭示了即使是 GPT-4o 在简单 4D 物体上也仅达 63% 准确率（人类基线 91%），尤其在物体计数和时序理解上表现薄弱。
 tags:
   - "ICCV 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenFusion: Closing the Loop between Reconstruction and Generation via Videos
 description: >-
-  [CVPR 2025][3D视觉][3D重建] 提出 GenFusion，通过重建驱动的视频扩散模型修复 3D 重建伪影并生成不可见区域内容，设计循环融合管线迭代地将生成结果加入训练集，实现稀疏视图下高质量 3D 场景重建和内容扩展。
+  [CVPR 2025][3D视觉][3D重建] 提出 GenFusion，通过重建驱动的视频扩散模型修复 3D 重建伪影并生成不可见区域内容，设计循环融合管线迭代地将生成结果加入训练集，实现稀疏视图下高质量 3D 场景重建和内容扩展。 领域现状：3D 重建（NeRF/3DGS）和 3D 生成是两个高速发展的领域…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Patch Visual SLAM
 description: >-
-  [ECCV 2024][3D视觉][视觉SLAM] 基于 DPVO 视觉里程计系统，通过高效的邻近回环检测和经典回环检测机制，将其扩展为完整的 SLAM 系统 DPV-SLAM，在单 GPU 上实现实时、高精度、低显存的单目视觉 SLAM。
+  [ECCV 2024][3D视觉][视觉SLAM] 基于 DPVO 视觉里程计系统，通过高效的邻近回环检测和经典回环检测机制，将其扩展为完整的 SLAM 系统 DPV-SLAM，在单 GPU 上实现实时、高精度、低显存的单目视觉 SLAM。 领域现状：基于深度网络的视觉 SLAM（如 DROID-SLAM）在精度上已显著超越…
 tags:
   - "ECCV 2024"
   - "3D视觉"

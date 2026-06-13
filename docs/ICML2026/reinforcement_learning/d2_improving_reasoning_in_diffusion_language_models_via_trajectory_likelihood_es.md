@@ -2,7 +2,7 @@
 title: >-
   [论文解读] d2: Improving Reasoning in Diffusion Language Models via Trajectory Likelihood Estimation
 description: >-
-  [ICML 2026][强化学习][掩码扩散语言模型] 本文为掩码扩散语言模型（masked DLM）提出 d2 强化学习框架，核心是用两种"轨迹似然估计器"（d2-AnyOrder 对支持 any-order 解码的模型给出单次前向的精确估计…
+  [ICML 2026][强化学习][掩码扩散语言模型] 本文为掩码扩散语言模型（masked DLM）提出 d2 强化学习框架，核心是用两种"轨迹似然估计器"（d2-AnyOrder 对支持 any-order 解码的模型给出单次前向的精确估计，d2-StepMerge 对标准 MDM 给出可调精度的近似估计）来正确实现 GRPO，使 LLaDA-8B-Instruct 在 Sudoku/Countdown/GSM8K/MATH500 上分别达到 91.9% / 56.6% / 85.0% / 41.6%，全面超越 d1、wd1 等扩散 RL 基线。
 tags:
   - "ICML 2026"
   - "强化学习"

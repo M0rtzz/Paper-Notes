@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdvMark: Decoupling Defense Strategies for Robust Image Watermarking
 description: >-
-  [CVPR2026][AI安全][图像水印] 提出 AdvMark 两阶段解耦防御框架：Stage 1 Encoder Adversarial Training（EAT）将水印图像移入 non-attackable 区域抵御对抗攻击，Stage 2 直接图像优化抵御失真+再生攻击并保留对抗鲁棒性…
+  [CVPR2026][AI安全][图像水印] 提出 AdvMark 两阶段解耦防御框架：Stage 1 Encoder Adversarial Training（EAT）将水印图像移入 non-attackable 区域抵御对抗攻击，Stage 2 直接图像优化抵御失真+再生攻击并保留对抗鲁棒性，在 9 种水印方法 ×10 种攻击上分别提升失真/再生/对抗准确率 29%/33%/46%，且图像质量最优。
 tags:
   - "CVPR2026"
   - "AI安全"

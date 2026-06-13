@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient-LVSM: Faster, Cheaper, and Better Large View Synthesis Model via Decoupled Co-Refinement Attention
 description: >-
-  [ICLR2026][3D视觉][novel view synthesis] 提出 Efficient-LVSM，通过解耦输入视图编码与目标视图生成的双流架构，将新视图合成的复杂度从 $O(N_{in}^2)$ 降至 $O(N_{in})$…
+  [ICLR2026][3D视觉][novel view synthesis] 提出 Efficient-LVSM，通过解耦输入视图编码与目标视图生成的双流架构，将新视图合成的复杂度从 $O(N_{in}^2)$ 降至 $O(N_{in})$，在 RealEstate10K 上以 50% 训练时间达到 SOTA（29.86 dB PSNR），推理速度提升 4.4 倍。
 tags:
   - "ICLR2026"
   - "3D视觉"

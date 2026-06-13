@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing
 description: >-
-  [CVPR2026][图像生成][图像编辑] 提出 CARE-Edit，一种条件感知的专家路由框架，通过异构专家（Text/Mask/Reference/Base）配合轻量级 latent-attention 路由器，在 DiT 骨干上实现动态计算分配…
+  [CVPR2026][图像生成][图像编辑] 提出 CARE-Edit，一种条件感知的专家路由框架，通过异构专家（Text/Mask/Reference/Base）配合轻量级 latent-attention 路由器，在 DiT 骨干上实现动态计算分配，有效解决统一图像编辑器中多条件信号（文本、掩码、参考图）冲突导致的颜色溢出、身份漂移等问题。
 tags:
   - "CVPR2026"
   - "图像生成"

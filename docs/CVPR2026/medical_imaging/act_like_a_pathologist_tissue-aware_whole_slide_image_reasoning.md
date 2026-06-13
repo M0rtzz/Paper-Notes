@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Act Like a Pathologist: Tissue-Aware Whole Slide Image Reasoning
 description: >-
-  [CVPR 2026][医学图像][Whole Slide Image] 提出 HistoSelect 框架，模拟病理学家从粗到细的推理过程，通过组织分割→Group Sampler→Patch Selector 的三级筛选机制，基于信息瓶颈(IB)理论压缩无关视觉token…
+  [CVPR 2026][医学图像][Whole Slide Image] 提出 HistoSelect 框架，模拟病理学家从粗到细的推理过程，通过组织分割→Group Sampler→Patch Selector 的三级筛选机制，基于信息瓶颈(IB)理论压缩无关视觉token，在减少约70%计算量的同时实现三个数据集上的SOTA。
 tags:
   - "CVPR 2026"
   - "医学图像"

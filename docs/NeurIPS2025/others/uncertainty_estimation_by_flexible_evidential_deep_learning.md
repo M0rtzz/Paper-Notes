@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty Estimation by Flexible Evidential Deep Learning
 description: >-
-  [NeurIPS 2025][不确定性量化] 提出 $\mathcal{F}$-EDL，通过将 EDL 中的 Dirichlet 分布推广为 Flexible Dirichlet (FD) 分布来建模类别概率分布，从而在保持单次前向传播效率的同时…
+  [NeurIPS 2025][不确定性量化] 提出 $\mathcal{F}$-EDL，通过将 EDL 中的 Dirichlet 分布推广为 Flexible Dirichlet (FD) 分布来建模类别概率分布，从而在保持单次前向传播效率的同时，显著增强不确定性估计在噪声、长尾、分布偏移等复杂场景下的泛化能力。
 tags:
   - "NeurIPS 2025"
   - "不确定性量化"

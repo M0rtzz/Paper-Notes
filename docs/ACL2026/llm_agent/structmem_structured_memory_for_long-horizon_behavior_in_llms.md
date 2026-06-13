@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StructMem: Structured Memory for Long-Horizon Behavior in LLMs
 description: >-
-  [ACL 2026][LLM Agent][长期记忆] StructMem 提出了一种结构增强的层次化记忆框架，通过事件级双视角提取和跨事件语义整合，在 LoCoMo 长对话基准上实现 SOTA 性能（76.82%）…
+  [ACL 2026][LLM Agent][长期记忆] StructMem 提出了一种结构增强的层次化记忆框架，通过事件级双视角提取和跨事件语义整合，在 LoCoMo 长对话基准上实现 SOTA 性能（76.82%），同时大幅降低 token 消耗（1.94M vs. 图记忆的 35.8M）和 API 调用次数。
 tags:
   - "ACL 2026"
   - "LLM Agent"

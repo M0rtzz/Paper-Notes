@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STARE: Step-wise Temporal Alignment and Red-teaming Engine for Multi-modal Toxicity Attack
 description: >-
-  [ICML 2026][图像生成][多模态红队] 本文把 T2I 模型的整个去噪轨迹本身当成 VLM 红队攻击的"攻击面"，用一个 high-level prompt editor + low-level GRPO 微调 rectified-flow 模型的分层 RL 框架（STARE）…
+  [ICML 2026][图像生成][多模态红队] 本文把 T2I 模型的整个去噪轨迹本身当成 VLM 红队攻击的"攻击面"，用一个 high-level prompt editor + low-level GRPO 微调 rectified-flow 模型的分层 RL 框架（STARE），不仅把 attack success rate 比 SOTA 提升 68%，更揭示了一个全新现象——Optimization-Induced Phase Alignment：对抗优化会自动把"概念性毒性"绑到去噪早期、"细节性毒性"绑到后期，从而把混沌的毒性形成过程变成几个可预测的"漏洞时间窗"。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PicoSAM3: Real-Time In-Sensor Region-of-Interest Segmentation
 description: >-
-  [CVPR 2025][语义分割][传感器内计算] PicoSAM3 是一个 1.3M 参数的超轻量可提示分割模型，通过 ROI 隐式提示编码、密集 CNN 架构（无 Transformer）、SAM3 知识蒸馏和 INT8 量化，在 COCO 上达 65.45% mIoU…
+  [CVPR 2025][语义分割][传感器内计算] PicoSAM3 是一个 1.3M 参数的超轻量可提示分割模型，通过 ROI 隐式提示编码、密集 CNN 架构（无 Transformer）、SAM3 知识蒸馏和 INT8 量化，在 COCO 上达 65.45% mIoU，并实现在 Sony IMX500 视觉传感器上 11.82ms 实时推理。
 tags:
   - "CVPR 2025"
   - "语义分割"

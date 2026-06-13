@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EngiBench: A Benchmark for Evaluating Large Language Models on Engineering Problem Solving
 description: >-
-  [ACL 2026][LLM评测][工程推理] 提出 EngiBench——首个面向真实工程问题求解的多层级 LLM 评测基准，把任务按三档难度 (基础知识检索 → 上下文推理 → 开放式建模) 组织、配以三种受控变体 (扰动 / 知识增强 / 数学抽象)，覆盖三大工程子领域 1,760 题…
+  [ACL 2026 Findings][LLM评测][工程推理] 提出 EngiBench——首个面向真实工程问题求解的多层级 LLM 评测基准，把任务按三档难度 (基础知识检索 → 上下文推理 → 开放式建模) 组织、配以三种受控变体 (扰动 / 知识增强 / 数学抽象)，覆盖三大工程子领域 1,760 题，发现即使 GPT-4.1 / Claude 3.7 Sonnet 在 Level 3 开放式工程任务上也明显落后于人类专家。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "工程推理"
   - "分层评测"

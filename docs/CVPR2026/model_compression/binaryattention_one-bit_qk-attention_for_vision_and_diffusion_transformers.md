@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BinaryAttention: One-Bit QK-Attention for Vision and Diffusion Transformers
 description: >-
-  [CVPR 2026][模型压缩][量化] 提出 BinaryAttention，将 Transformer 注意力中的 Query 和 Key 量化为 1-bit 二值表示，通过 XNOR + popcount 位运算替代浮点点积，在 A100 上实现比 FlashAttention2 快 2 倍以上的加速…
+  [CVPR 2026][模型压缩][量化] 提出 BinaryAttention，将 Transformer 注意力中的 Query 和 Key 量化为 1-bit 二值表示，通过 XNOR + popcount 位运算替代浮点点积，在 A100 上实现比 FlashAttention2 快 2 倍以上的加速，同时在视觉分类/检测/分割/扩散生成等任务上性能持平甚至超越全精度注意力。
 tags:
   - "CVPR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revelio: Interpreting and Leveraging Semantic Information in Diffusion Models
 description: >-
-  [ICCV 2025][图像生成][扩散模型可解释性] Revelio 使用 k-稀疏自编码器（k-SAE）揭示扩散模型不同层和时间步中蕴含的单语义（monosemantic）可解释特征，并通过轻量分类器 Diff-C 验证这些特征的迁移学习价值，实现对黑盒扩散模型的深度解读。
+  [ICCV 2025][图像生成][扩散模型可解释性] Revelio 使用 k-稀疏自编码器（k-SAE）揭示扩散模型不同层和时间步中蕴含的单语义（monosemantic）可解释特征，并通过轻量分类器 Diff-C 验证这些特征的迁移学习价值，实现对黑盒扩散模型的深度解读。 现有痛点 现有痛点：领域现状：扩散模型在生成高…
 tags:
   - "ICCV 2025"
   - "图像生成"

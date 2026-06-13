@@ -2,7 +2,7 @@
 title: >-
   [论文解读] River-LLM: Large Language Model Seamless Exit Based on KV Share
 description: >-
-  [ACL 2026][代码智能][早退机制] 本文提出 River-LLM，一个无需训练的框架，通过构建轻量级 KV 共享退出通道（Exit River）解决了 decoder-only 架构中 Early Exit 的 KV Cache 缺失问题，利用状态转换相似度引导退出决策…
+  [ACL 2026][代码智能][早退机制] 本文提出 River-LLM，一个无需训练的框架，通过构建轻量级 KV 共享退出通道（Exit River）解决了 decoder-only 架构中 Early Exit 的 KV Cache 缺失问题，利用状态转换相似度引导退出决策，实现 1.71×-2.16× 的实际推理加速且保持近无损生成质量。
 tags:
   - "ACL 2026"
   - "代码智能"

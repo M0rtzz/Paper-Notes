@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.20302](https://arxiv.org/abs/2605.20302)  
 **代码**: https://github.com/pakoromilas/nc_by_design  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: 神经坍缩, 超球面, 原型对比, 归一化 Softmax, 监督对比学习
 
 ## 一句话总结

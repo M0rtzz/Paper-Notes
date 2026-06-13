@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-Dancer: Expressive Music to Human Dance Video Generation
 description: >-
-  [ICCV 2025][视频生成][音乐驱动舞蹈生成] X-Dancer 提出了一个统一的 Transformer-扩散框架，从单张静态图像和音乐输入出发，通过自回归 Transformer 生成与音乐节拍同步的 2D 全身舞蹈姿态 token 序列，再利用扩散模型将这些 token 转化为高保真的舞蹈视频…
+  [ICCV 2025][视频生成][音乐驱动舞蹈生成] X-Dancer 提出了一个统一的 Transformer-扩散框架，从单张静态图像和音乐输入出发，通过自回归 Transformer 生成与音乐节拍同步的 2D 全身舞蹈姿态 token 序列，再利用扩散模型将这些 token 转化为高保真的舞蹈视频，在多样性、表达力和视频质量上均超越了现有方法。
 tags:
   - "ICCV 2025"
   - "视频生成"

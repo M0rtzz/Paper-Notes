@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AfriMed-QA: A Pan-African, Multi-Specialty, Medical Question-Answering Benchmark Dataset
 description: >-
-  [ACL 2025][医疗NLP][medical QA] 构建首个大规模泛非洲医学问答基准 AfriMed-QA（15,275 题，涵盖 16 国 32 个专科），系统评估 30 个 LLM 在非洲医疗场景下的表现，发现显著的地域差异和专科差异。
+  [ACL 2025][医疗NLP][medical QA] 构建首个大规模泛非洲医学问答基准 AfriMed-QA（15,275 题，16 国 60+ 医学院校、32 个专科），系统评估 30 个 LLM 并发现非洲医疗场景下存在显著的地域性能差距和生物医学模型反不如通用模型的反直觉现象。 领域现状： LLM 在医学领域（如…
 tags:
   - "ACL 2025"
   - "医疗NLP"
@@ -10,7 +10,7 @@ tags:
   - "LLM evaluation"
   - "African healthcare"
   - "benchmark"
-  - "multilingual"
+  - "pan-African"
 ---
 
 # AfriMed-QA: A Pan-African, Multi-Specialty, Medical Question-Answering Benchmark Dataset
@@ -165,3 +165,19 @@ tags:
   - benchmark
   - multilingual
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] ArgHiTZ at ArchEHR-QA 2025: A Two-Step Divide and Conquer Approach to Patient Question Answering for Top Factuality](arghitz_at_archehr-qa_2025_a_two-step_divide_and_conquer_approach_to_patient_que.md)
+- [\[NeurIPS 2025\] Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series](../../NeurIPS2025/medical_nlp/time-imm_a_dataset_and_benchmark_for_irregular_multimodal_multivariate_time_seri.md)
+- [\[ACL 2025\] MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](medbiorag_semantic_search_and_retrieval-augmented_generation_with_large_language.md)
+- [\[AAAI 2026\] Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering](../../AAAI2026/medical_nlp/expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical.md)
+- [\[ACL 2026\] Query Pipeline Optimization for Cancer Patient Question Answering Systems](../../ACL2026/medical_nlp/query_pipeline_optimization_for_cancer_patient_question_answering_systems.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Justice in Judgment: Unveiling (Hidden) Bias in LLM-assisted Peer Reviews
 description: >-
-  [ACL 2026][社会计算][反事实评测] 作者用"只改作者元数据、不改论文内容"的反事实评测在 9 个 LLM 上系统性地审计了 LLM 同行评议偏见，发现所有模型都对名校（RS）有显著好感、对资深 PI 与高产作者更宽容，且关键是：当模型在 hard rating 上看似中立时…
+  [ACL 2026 Findings][社会计算][反事实评测] 作者用"只改作者元数据、不改论文内容"的反事实评测在 9 个 LLM 上系统性地审计了 LLM 同行评议偏见，发现所有模型都对名校（RS）有显著好感、对资深 PI 与高产作者更宽容，且关键是：当模型在 hard rating 上看似中立时，soft rating（基于 token 概率的期望评分）暴露出更强的隐藏偏见，揭示了"对齐只是把偏好藏起来而没消除"的对齐失败模式。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "社会计算"
   - "反事实评测"
   - "affiliation bias"

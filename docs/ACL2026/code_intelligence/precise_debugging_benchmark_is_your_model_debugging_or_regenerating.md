@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Precise Debugging Benchmark: Is Your Model Debugging or Regenerating?
 description: >-
-  [ACL 2026][代码智能][代码调试] 本文揭示前沿 LLM 在调试任务中的"重生成"倾向——通过引入 PDB 框架和编辑级精度/bug 级召回指标，发现 GPT-5.1-Codex 等模型虽能通过 76% 以上单元测试，但编辑精度不足 45%，且迭代和 agent 调试策略也无法显著改善精度。
+  [ACL 2026 Findings][代码智能][代码调试] 本文揭示前沿 LLM 在调试任务中的"重生成"倾向——通过引入 PDB 框架和编辑级精度/bug 级召回指标，发现 GPT-5.1-Codex 等模型虽能通过 76% 以上单元测试，但编辑精度不足 45%，且迭代和 agent 调试策略也无法显著改善精度。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "代码调试"
   - "LLM编程"

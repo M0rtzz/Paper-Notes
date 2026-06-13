@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Interpretation of Training-Time Out-of-Distribution Detection
 description: >-
-  [ICCV 2025][3D视觉][OOD 检测] 从输入变量间"交互"的新视角出发，统一解释了不同训练时 OOD 检测方法为何有效——它们都促使模型编码更多高阶交互，并进一步验证了高阶交互在 OOD 检测中的主导作用，以及 near-OOD 样本难以检测的交互分布原因。
+  [ICCV 2025][3D视觉][OOD 检测] 从输入变量间"交互"的新视角出发，统一解释了不同训练时 OOD 检测方法为何有效——它们都促使模型编码更多高阶交互，并进一步验证了高阶交互在 OOD 检测中的主导作用，以及 near-OOD 样本难以检测的交互分布原因。 为什么需要统一理解？：现有训练时 OOD 检测方法（…
 tags:
   - "ICCV 2025"
   - "3D视觉"

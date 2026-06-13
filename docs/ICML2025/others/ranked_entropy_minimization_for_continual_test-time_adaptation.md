@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ranked Entropy Minimization for Continual Test-Time Adaptation
 description: >-
-  [ICML 2025][测试时自适应] 提出 Ranked Entropy Minimization (REM)，通过渐进式遮挡策略构建预测难度的显式排序结构，结合遮挡一致性损失和熵排序损失，解决了熵最小化方法在持续测试时自适应(CTTA)中的模型崩塌问题，同时保持了计算效率。
+  [ICML 2025][测试时自适应] 提出 Ranked Entropy Minimization (REM)，通过渐进式遮挡策略构建预测难度的显式排序结构，结合遮挡一致性损失和熵排序损失，解决了熵最小化方法在持续测试时自适应(CTTA)中的模型崩塌问题，同时保持了计算效率。 问题定义 测试时自适应(TTA)旨在推理阶段在…
 tags:
   - "ICML 2025"
   - "测试时自适应"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOS: Modeling Object-Scene Associations in Generalized Category Discovery
 description: >-
-  [CVPR 2025][自监督学习][广义类别发现] 挑战了GCD中"场景信息是噪声"的传统观点，发现场景被误解为噪声是因为"歧义挑战"（目标与场景的base/novel关系冲突），提出MOS框架通过双分支网络+MLP场景感知模块有效利用场景信息，在细粒度GCD上平均提升4%。
+  [CVPR 2025][自监督学习][广义类别发现] 挑战了GCD中"场景信息是噪声"的传统观点，发现场景被误解为噪声是因为"歧义挑战"（目标与场景的base/novel关系冲突），提出MOS框架通过双分支网络+MLP场景感知模块有效利用场景信息，在细粒度GCD上平均提升4%。 广义类别发现（Generalized Cate…
 tags:
   - "CVPR 2025"
   - "自监督学习"

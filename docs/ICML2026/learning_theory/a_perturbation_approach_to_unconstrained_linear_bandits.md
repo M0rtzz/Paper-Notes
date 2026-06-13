@@ -2,9 +2,10 @@
 title: >-
   [论文解读] A Perturbation Approach to Unconstrained Linear Bandits
 description: >-
-  [ICML2026][无约束线性bandit] 本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题…
+  [ICML2026][优化 / 在线学习 / Bandit理论][无约束线性bandit] 本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题，并由此得到 comparator-adaptive 静态/动态 regret、高概率界以及若干下界讨论。
 tags:
   - "ICML2026"
+  - "优化 / 在线学习 / Bandit理论"
   - "无约束线性bandit"
   - "在线线性优化"
   - "扰动估计"

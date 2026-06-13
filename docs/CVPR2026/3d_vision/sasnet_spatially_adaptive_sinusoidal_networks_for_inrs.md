@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SASNet: Spatially-Adaptive Sinusoidal Networks for INRs
 description: >-
-  [CVPR 2026][3D视觉][隐式神经表示] 提出 SASNet，通过将冻结的频率嵌入层与轻量级哈希网格 MLP 学习的空间自适应掩码相结合，解决 SIREN 中频率初始化敏感和高频泄漏问题，在图像拟合、体数据拟合和 SDF 重建任务上实现更快收敛和更高重建质量。
+  [CVPR 2026][3D视觉][隐式神经表示] 提出 SASNet，通过将冻结的频率嵌入层与轻量级哈希网格 MLP 学习的空间自适应掩码相结合，解决 SIREN 中频率初始化敏感和高频泄漏问题，在图像拟合、体数据拟合和 SDF 重建任务上实现更快收敛和更高重建质量。 隐式神经表示 (INR) 已成为计算机视觉和图形学中建…
 tags:
   - "CVPR 2026"
   - "3D视觉"

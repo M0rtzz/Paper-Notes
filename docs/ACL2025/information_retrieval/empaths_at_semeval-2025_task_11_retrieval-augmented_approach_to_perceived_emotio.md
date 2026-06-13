@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Empaths at SemEval-2025 Task 11: Retrieval-Augmented Approach to Perceived Emotions Prediction
 description: >-
-  [ACL 2025 (SemEval Workshop)][信息检索/RAG][情感检测] 提出 EmoRAG 系统，用检索增强生成（RAG）管道结合多 LLM 集成聚合，在 SemEval-2025 Task 11 多标签情感检测任务上无需额外训练即在 28 种语言中取得有竞争力的结果…
+  [ACL 2025 (SemEval Workshop)][信息检索/RAG][情感检测] 提出 EmoRAG 系统，用检索增强生成（RAG）管道结合多 LLM 集成聚合，在 SemEval-2025 Task 11 多标签情感检测任务上无需额外训练即在 28 种语言中取得有竞争力的结果，平均 F1-micro 0.638。
 tags:
   - "ACL 2025 (SemEval Workshop)"
   - "信息检索/RAG"

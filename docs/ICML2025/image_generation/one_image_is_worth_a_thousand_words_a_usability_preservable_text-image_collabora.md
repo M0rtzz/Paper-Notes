@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework
 description: >-
-  [ICML2025][图像生成][Concept Erasing] 提出 Co-Erasing，首次将图像监督引入概念擦除流程，通过文本-图像协同的负引导和文本引导的图像概念精炼模块，在保持良性生成质量（usability）的同时显著提升不良概念的擦除效果（efficacy）。
+  [ICML2025][图像生成][Concept Erasing] 提出 Co-Erasing，首次将图像监督引入概念擦除流程，通过文本-图像协同的负引导和文本引导的图像概念精炼模块，在保持良性生成质量（usability）的同时显著提升不良概念的擦除效果（efficacy）。 文本到图像扩散模型（如 Stable Diff…
 tags:
   - "ICML2025"
   - "图像生成"

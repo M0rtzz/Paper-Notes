@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth
 description: >-
-  [ECCV 2024][遥感][cross-view localization] 针对细粒度跨视角定位模型在新区域部署时精度下降的问题，提出基于知识自蒸馏的弱监督学习方法——通过模式化伪GT生成、粗粒度监督和离群值过滤三个策略，仅使用目标区域的地面-航拍图像对（无需精确GT）…
+  [ECCV 2024][遥感][cross-view localization] 针对细粒度跨视角定位模型在新区域部署时精度下降的问题，提出基于知识自蒸馏的弱监督学习方法——通过模式化伪GT生成、粗粒度监督和离群值过滤三个策略，仅使用目标区域的地面-航拍图像对（无需精确GT），即可在VIGOR和KITTI上将定位误差降低12%~20%。
 tags:
   - "ECCV 2024"
   - "遥感"

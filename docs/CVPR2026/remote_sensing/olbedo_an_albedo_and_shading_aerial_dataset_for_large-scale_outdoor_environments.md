@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments
 description: >-
-  [CVPR 2026][遥感][内在图像分解] Olbedo 提出首个大规模真实航拍反照率-着色分解数据集（5664 张 UAV 图像、4 种地貌、跨年多光照），通过物理逆渲染管线生成多视图一致的伪真值标注…
+  [CVPR 2026][遥感][内在图像分解] Olbedo 提出首个大规模真实航拍反照率-着色分解数据集（5664 张 UAV 图像、4 种地貌、跨年多光照），通过物理逆渲染管线生成多视图一致的伪真值标注，证明合成预训练+Olbedo LoRA 微调可以显著提升室外反照率预测并支持重光照/材质编辑/场景变化分析等下游应用。
 tags:
   - "CVPR 2026"
   - "遥感"

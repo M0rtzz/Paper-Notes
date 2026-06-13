@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAD-VAE: Leveraging Correlation-Aware Latents for Comprehensive Fair Disentanglement
 description: >-
-  [AAAI 2026][图像生成][fair disentanglement] 提出 CAD-VAE 引入相关性感知潜编码（correlated latent code）捕获目标属性与敏感属性的共享信息，通过直接最小化条件互信息实现解纠缠，配合相关性驱动优化策略精确调控共享编码…
+  [AAAI 2026][图像生成][fair disentanglement] 提出 CAD-VAE 引入相关性感知潜编码（correlated latent code）捕获目标属性与敏感属性的共享信息，通过直接最小化条件互信息实现解纠缠，配合相关性驱动优化策略精确调控共享编码，在公平表示学习、反事实生成和公平图像编辑上取得 SOTA。
 tags:
   - "AAAI 2026"
   - "图像生成"

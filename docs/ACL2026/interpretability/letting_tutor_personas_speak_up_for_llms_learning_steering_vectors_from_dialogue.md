@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Letting Tutor Personas Speak Up for LLMs: Learning Steering Vectors from Dialogue via Preference Optimization
 description: >-
-  [ACL2026][可解释性][steering vector] 本文从真实师生对话中学习共享 steering direction 和导师专属缩放系数，让 LLM 在不显式写 persona prompt 的情况下生成更接近特定真人导师风格的辅导话语。
+  [ACL2026][可解释性][steering vector] 本文从真实师生对话中学习共享 steering direction 和导师专属缩放系数，让 LLM 在不显式写 persona prompt 的情况下生成更接近特定真人导师风格的辅导话语。 领域现状：LLM 已经大量用于教育辅导系统，常见做法是用 prompt…
 tags:
   - "ACL2026"
   - "可解释性"

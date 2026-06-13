@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification
 description: >-
-  [NeurIPS 2025][图像生成][统一框架] 提出 Latent Zoning Network (LZN)——一种通过共享高斯潜在空间将生成建模、表征学习和分类统一在同一框架下的方法，每种数据类型配备编码器-解码器对将样本映射到不相交的潜在区域…
+  [NeurIPS 2025][图像生成][统一框架] 提出 Latent Zoning Network (LZN)——一种通过共享高斯潜在空间将生成建模、表征学习和分类统一在同一框架下的方法，每种数据类型配备编码器-解码器对将样本映射到不相交的潜在区域，仅依赖"潜在计算"和"潜在对齐"两个原子操作即可支持多种 ML 任务，并在 CIFAR10 上将无条件生成 FID 从 2.76 降至 2.59，在 ImageNet 线性分类上超越 SimCLR。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

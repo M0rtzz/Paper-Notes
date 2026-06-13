@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization
 description: >-
-  [CVPR 2026][视频理解][说话人分离] 提出 CineSRD，一个免训练的多模态说话人分离框架，通过视觉锚点聚类进行说话人注册，结合音频语言模型进行说话人转换检测，解决影视作品中长视频、大量角色、音视频不同步等开放世界挑战。
+  [CVPR 2026][视频理解][说话人分离] 提出 CineSRD，一个免训练的多模态说话人分离框架，通过视觉锚点聚类进行说话人注册，结合音频语言模型进行说话人转换检测，解决影视作品中长视频、大量角色、音视频不同步等开放世界挑战。 传统说话人分离（Speaker Diarization）主要聚焦于会议、访谈等受限场景…
 tags:
   - "CVPR 2026"
   - "视频理解"

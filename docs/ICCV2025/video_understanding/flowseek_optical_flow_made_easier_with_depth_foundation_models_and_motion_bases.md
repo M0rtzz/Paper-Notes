@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases
 description: >-
-  [ICCV 2025][视频理解][光流估计] FlowSeek 将深度基础模型（Depth Anything V2）的先验知识和经典的低维运动参数化（motion bases）融入光流网络，在仅使用单张消费级 GPU 训练的条件下即可实现 SOTA 的跨数据集泛化性能。
+  [ICCV 2025][视频理解][光流估计] FlowSeek 将深度基础模型（Depth Anything V2）的先验知识和经典的低维运动参数化（motion bases）融入光流网络，在仅使用单张消费级 GPU 训练的条件下即可实现 SOTA 的跨数据集泛化性能。 光流估计是计算机视觉的经典问题…
 tags:
   - "ICCV 2025"
   - "视频理解"

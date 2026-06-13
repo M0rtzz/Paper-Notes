@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral-Progressive Thought Flow for Lightweight Multimodal Reasoning
 description: >-
-  [ICML 2026][多模态VLM][多模态空间推理] SpecFlow 把多模态空间推理从"像素思维"切到"谱思维"——用块离散余弦变换 + 流匹配 + 渐进式频率激活在固定大小的谱工作空间里维护可视化中间思想，加上分类器无关引导（CFG）让文本制导视觉演化…
+  [ICML 2026][多模态VLM][多模态空间推理] SpecFlow 把多模态空间推理从"像素思维"切到"谱思维"——用块离散余弦变换 + 流匹配 + 渐进式频率激活在固定大小的谱工作空间里维护可视化中间思想，加上分类器无关引导（CFG）让文本制导视觉演化，在保持空间推理精度的同时把 KV 缓存削减 1.6–2.1×。
 tags:
   - "ICML 2026"
   - "多模态VLM"

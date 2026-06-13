@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Scores Learn Geometry: Rate Separations under the Manifold Hypothesis
 description: >-
-  [ICLR 2026][图像生成][Score Learning] 在流形假设下揭示score学习中几何信息与分布信息的尺度分离现象——流形几何信息强度为 $\Theta(\sigma^{-2})$，比分布信息强 $O(\sigma^{-2})$ 倍，由此证明扩散模型的成功主要来自学习数据流形而非完整分布…
+  [ICLR 2026][图像生成][Score Learning] 在流形假设下揭示score学习中几何信息与分布信息的尺度分离现象——流形几何信息强度为 $\Theta(\sigma^{-2})$，比分布信息强 $O(\sigma^{-2})$ 倍，由此证明扩散模型的成功主要来自学习数据流形而非完整分布，并提出一行代码修改即可生成流形上的均匀分布。
 tags:
   - "ICLR 2026"
   - "图像生成"

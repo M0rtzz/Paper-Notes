@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AudioTrust: Benchmarking the Multifaceted Trustworthiness of Audio Large Language Models
 description: >-
-  [ICLR 2026][LLM安全][Audio LLM] 提出 AudioTrust，首个针对音频大语言模型（ALLM）的多维度可信度评估基准，涵盖公平性、幻觉、安全性、隐私、鲁棒性和认证六大维度，设计 26 个子任务和 4420+ 音频样本…
+  [ICLR 2026][LLM安全][Audio LLM] 提出 AudioTrust，首个针对音频大语言模型（ALLM）的多维度可信度评估基准，涵盖公平性、幻觉、安全性、隐私、鲁棒性和认证六大维度，设计 26 个子任务和 4420+ 音频样本，系统评估了 14 个 SOTA 开/闭源 ALLM 在高风险音频场景下的可信度边界。
 tags:
   - "ICLR 2026"
   - "LLM安全"

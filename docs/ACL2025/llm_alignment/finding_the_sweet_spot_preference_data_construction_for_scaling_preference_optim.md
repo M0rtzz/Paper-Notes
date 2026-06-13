@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Finding the Sweet Spot: Preference Data Construction for Scaling Preference Optimization
 description: >-
-  [ACL2025][LLM对齐][DPO] 发现传统的 DPO 偏好数据构建策略（max-min）在增加采样量时性能反而下降，通过基于奖励分布的系统性探索发现 rejected 响应应选在 μ−2σ 而非最小值，据此提出了一种随采样量增加而持续提升的偏好数据构建方法。
+  [ACL2025][LLM对齐][DPO] 发现传统的 DPO 偏好数据构建策略（max-min）在增加采样量时性能反而下降，通过基于奖励分布的系统性探索发现 rejected 响应应选在 μ−2σ 而非最小值，据此提出了一种随采样量增加而持续提升的偏好数据构建方法。 DPO（Direct Preference Optimi…
 tags:
   - "ACL2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T-REG: Preference Optimization with Token-Level Reward Regularization
 description: >-
-  [ACL 2025][LLM对齐][偏好优化] T-REG 提出了一种 token 级奖励正则化方法，利用 LLM 的对比提示自生成 token 级奖励信号，将其作为弱监督来引导 DPO 隐式学习到的 token 级奖励分配…
+  [ACL 2025][LLM对齐][偏好优化] T-REG 提出了一种 token 级奖励正则化方法，利用 LLM 的对比提示自生成 token 级奖励信号，将其作为弱监督来引导 DPO 隐式学习到的 token 级奖励分配，在 Alpaca Eval 2 和 Arena-Hard 上分别超过 DPO 最多 3.8% 和 4.4%。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Do LLMs Give Psychometrically Plausible Responses in Educational Assessments?
 description: >-
-  [ACL 2025][LLM/NLP][心理测量学] 从心理测量学（经典测试理论 CTT 和项目反应理论 IRT）的角度评估 18 个指令微调 LLM 在教育评估中的"类人性"，发现即使经过温度缩放校准，LLM 的响应分布与人类仍有本质差异——大模型过度自信，且无法预测人类被干扰项吸引的模式…
+  [ACL 2025][LLM 其他][心理测量学] 从心理测量学（经典测试理论 CTT 和项目反应理论 IRT）的角度评估 18 个指令微调 LLM 在教育评估中的"类人性"，发现即使经过温度缩放校准，LLM 的响应分布与人类仍有本质差异——大模型过度自信，且无法预测人类被干扰项吸引的模式，零样本 LLM 不适合替代人类进行测试预试验。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "心理测量学"
   - "项目反应理论"
   - "经典测试理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TawPipe: Topology-Aware Weight Pipeline Parallelism for Accelerating Long-Context Large Models Training
 description: >-
-  [AAAI 2026][自动驾驶][流水线并行] 提出 TawPipe——拓扑感知的权重流水线并行框架，通过分组式权重调度、设备绑定存储和通信-计算重叠三大组件，利用分布式集群的层次化带宽特性…
+  [AAAI 2026][自动驾驶][流水线并行] 提出 TawPipe——拓扑感知的权重流水线并行框架，通过分组式权重调度、设备绑定存储和通信-计算重叠三大组件，利用分布式集群的层次化带宽特性，在 24 GPU 上训练 LLaMA 模型时吞吐量相比 WeiPipe/1F1B/FSDP 分别提升 11.8%/23.6%/44.1%，同时通信时间减少 82.1%。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

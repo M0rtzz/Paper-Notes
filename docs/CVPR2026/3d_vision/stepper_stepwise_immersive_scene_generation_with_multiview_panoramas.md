@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Stepper: Stepwise Immersive Scene Generation with Multiview Panoramas
 description: >-
-  [CVPR 2026][3D视觉][全景图生成] 提出 Stepper 框架，通过逐步生成多视角全景图并结合前馈式3D重建管线，实现文本驱动的高保真沉浸式3D场景生成，在PSNR上比现有方法平均提升3.3 dB。
+  [CVPR 2026 Findings][3D视觉][全景图生成] 提出 Stepper 框架，通过逐步生成多视角全景图并结合前馈式3D重建管线，实现文本驱动的高保真沉浸式3D场景生成，在PSNR上比现有方法平均提升3.3 dB。 领域现状：从文本或图像合成可探索的沉浸式3D场景是计算机视觉的核心任务，在AR/VR和空间计算…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "全景图生成"
   - "3D场景合成"

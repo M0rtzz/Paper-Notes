@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SMARTER: A Data-efficient Framework to Improve Toxicity Detection with Explanation via Self-augmenting Large Language Models
 description: >-
-  [ACL2026][社会计算][毒性检测] SMARTER 用少量标注样本让 LLM 为正确和错误标签分别生成解释，再用偏好优化和跨模型训练提升可解释毒性检测，在 3 个数据集上以 6%-57% 的训练数据达到全量训练 86%-100% 的性能。
+  [ACL2026][社会计算][毒性检测] SMARTER 用少量标注样本让 LLM 为正确和错误标签分别生成解释，再用偏好优化和跨模型训练提升可解释毒性检测，在 3 个数据集上以 6%-57% 的训练数据达到全量训练 86%-100% 的性能。 领域现状：社交平台需要检测仇恨、冒犯和隐性有害表达等内容。传统分类器能给出标签…
 tags:
   - "ACL2026"
   - "社会计算"

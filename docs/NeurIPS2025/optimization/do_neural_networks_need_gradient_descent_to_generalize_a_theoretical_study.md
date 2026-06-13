@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Neural Networks Need Gradient Descent to Generalize? A Theoretical Study
 description: >-
-  [NeurIPS 2025][优化/理论][generalization] 本文在矩阵分解（神经网络理论的经典测试平台）上证明了 Guess & Check（随机抽参数直到拟合训练集）的泛化能力随宽度增加而退化（首次证明存在 G&C 可证明劣于梯度下降的典范情况），但随深度增加而改善…
+  [NeurIPS 2025][优化/理论][generalization] 本文在矩阵分解（神经网络理论的经典测试平台）上证明了 Guess & Check（随机抽参数直到拟合训练集）的泛化能力随宽度增加而退化（首次证明存在 G&C 可证明劣于梯度下降的典范情况），但随深度增加而改善，揭示了宽度和深度对泛化的截然不同作用。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

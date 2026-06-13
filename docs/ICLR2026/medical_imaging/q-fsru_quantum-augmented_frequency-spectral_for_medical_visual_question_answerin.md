@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Q-FSRU: Quantum-Augmented Frequency-Spectral Fusion for Medical Visual Question Answering
 description: >-
-  [ICLR 2026][医学图像][医学VQA] 提出 Q-FSRU 框架，通过 FFT 将医学图像和文本特征变换到频率域进行融合，并引入量子启发的检索增强机制（Quantum RAG）从外部知识库中获取医学事实，在 VQA-RAD 数据集上取得 90.0% 准确率。
+  [ICLR 2026][医学图像][医学VQA] 提出 Q-FSRU 框架，通过 FFT 将医学图像和文本特征变换到频率域进行融合，并引入量子启发的检索增强机制（Quantum RAG）从外部知识库中获取医学事实，在 VQA-RAD 数据集上取得 90.0% 准确率。 - 医学视觉问答（Med-VQA）需要同时理解医学图像和…
 tags:
   - "ICLR 2026"
   - "医学图像"

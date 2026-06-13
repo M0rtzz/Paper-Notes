@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Of Mice and Machines: A Comparison of Learning Between Real World Mice and RL Agents
 description: >-
-  [ICML2025][3D视觉][生物启发RL] 系统比较真实小鼠与RL智能体在捕食者-猎物迷宫中的行为差异，发现RL缺乏自我保护本能，提出创伤启发安全缓冲（TISB）和方差惩罚TD学习（VP-TDMPC-2）两种机制，将智能体与小鼠的状态访问重叠率从20.9%提升至86.1%。
+  [ICML2025][3D视觉][生物启发RL] 系统比较真实小鼠与RL智能体在捕食者-猎物迷宫中的行为差异，发现RL缺乏自我保护本能，提出创伤启发安全缓冲（TISB）和方差惩罚TD学习（VP-TDMPC-2）两种机制，将智能体与小鼠的状态访问重叠率从20.9%提升至86.1%。 RL近年在复杂决策任务上取得巨大进步…
 tags:
   - "ICML2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating Robust Portfolios of Optimization Models using Large Language Models
 description: >-
-  [ICML 2026][AIGC检测][优化建模] 本文提出一个轻量、无需训练的算法：用同一个 LLM 同时扮演"随机生成器"和"打分评审"两个角色，把生成概率前缀和达到 $1-\alpha$ 的候选优化模型打包成 portfolio，从理论上证明只要"生成器"或"评审"任一与人类偏好对齐…
+  [ICML 2026][AIGC检测][优化建模] 本文提出一个轻量、无需训练的算法：用同一个 LLM 同时扮演"随机生成器"和"打分评审"两个角色，把生成概率前缀和达到 $1-\alpha$ 的候选优化模型打包成 portfolio，从理论上证明只要"生成器"或"评审"任一与人类偏好对齐，portfolio 就一定包含高质量优化模型，并在 NL4LP 上用 GPT 验证 portfolio 在最差情况下也稳定优于随机采样。
 tags:
   - "ICML 2026"
   - "AIGC检测"

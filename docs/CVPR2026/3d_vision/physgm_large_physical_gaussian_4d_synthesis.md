@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysGM: Large Physical Gaussian Model for Feed-Forward 4D Synthesis
 description: >-
-  [CVPR 2026][3D视觉][4D合成] 首个从单张图像前馈预测3DGS+物理属性（材质类别/杨氏模量/泊松比）的框架，两阶段训练（监督预训练+DPO偏好微调）完全绕过SDS和可微物理引擎，配合50K+ PhysAssets数据集，1分钟内生成高保真4D物理仿真…
+  [CVPR 2026][3D视觉][4D合成] 首个从单张图像前馈预测3DGS+物理属性（材质类别/杨氏模量/泊松比）的框架，两阶段训练（监督预训练+DPO偏好微调）完全绕过SDS和可微物理引擎，配合50K+ PhysAssets数据集，1分钟内生成高保真4D物理仿真，CLIP_sim和人类偏好率均超越逐场景优化方法。
 tags:
   - "CVPR 2026"
   - "3D视觉"

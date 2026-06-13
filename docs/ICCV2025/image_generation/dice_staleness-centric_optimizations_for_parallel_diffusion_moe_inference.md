@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DICE: Staleness-Centric Optimizations for Parallel Diffusion MoE Inference
 description: >-
-  [ICCV 2025][图像生成][MoE] 针对 MoE 扩散模型并行推理中的"陈旧性"问题 (staleness)，提出 DICE 框架，通过步级交织并行、层级选择性同步和 token 级条件通信三层优化策略，在 DiT-MoE 上实现 1.26× 加速且质量损失极小。
+  [ICCV 2025][图像生成][MoE] 针对 MoE 扩散模型并行推理中的"陈旧性"问题 (staleness)，提出 DICE 框架，通过步级交织并行、层级选择性同步和 token 级条件通信三层优化策略，在 DiT-MoE 上实现 1.26× 加速且质量损失极小。 基于 Mixture-of-Experts 的扩散…
 tags:
   - "ICCV 2025"
   - "图像生成"

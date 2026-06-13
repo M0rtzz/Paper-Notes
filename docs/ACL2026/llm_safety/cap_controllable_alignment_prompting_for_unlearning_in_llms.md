@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAP: Controllable Alignment Prompting for Unlearning in LLMs
 description: >-
-  [ACL 2026][LLM安全][LLM遗忘] 提出 CAP 框架，通过训练轻量 SLM 生成可控的提示前缀来引导冻结的 LLM 选择性遗忘目标知识，无需修改模型参数，实现了可逆、可迁移的 LLM 知识遗忘。
+  [ACL 2026][LLM安全][LLM遗忘] 提出 CAP 框架，通过训练轻量 SLM 生成可控的提示前缀来引导冻结的 LLM 选择性遗忘目标知识，无需修改模型参数，实现了可逆、可迁移的 LLM 知识遗忘。 领域现状：LLM 在无过滤语料上训练，不可避免地保留敏感信息。GDPR 等法规要求选择性知识遗忘（unlearni…
 tags:
   - "ACL 2026"
   - "LLM安全"

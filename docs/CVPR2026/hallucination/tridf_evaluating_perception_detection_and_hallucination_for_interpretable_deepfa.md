@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TriDF: Evaluating Perception, Detection, and Hallucination for Interpretable DeepFake Detection
 description: >-
-  [CVPR 2026][幻觉检测][深度伪造检测] 提出TriDF——首个从感知 (Perception)、检测 (Detection) 和幻觉 (Hallucination) 三个维度综合评估可解释深度伪造检测的基准，包含55K高质量样本覆盖16种DeepFake类型和3种模态…
+  [CVPR 2026][幻觉检测][深度伪造检测] 提出TriDF——首个从感知 (Perception)、检测 (Detection) 和幻觉 (Hallucination) 三个维度综合评估可解释深度伪造检测的基准，包含55K高质量样本覆盖16种DeepFake类型和3种模态，揭示了准确感知是可靠检测的基础但幻觉会严重破坏决策的三方耦合关系。
 tags:
   - "CVPR 2026"
   - "幻觉检测"

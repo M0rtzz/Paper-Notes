@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral Informed Mamba for Robust Point Cloud Processing
 description: >-
-  [CVPR 2025][3D视觉][点云分析] 提出基于图拉普拉斯谱的点云 Mamba 遍历策略 SST，通过表面感知谱遍历（SAST）实现等距变换不变的分类、分层局部遍历（HLT）实现精确分割、遍历感知重定位（TAR）解决 Mamba 中 MAE 的 token 放置问题。
+  [CVPR 2025][3D视觉][点云分析] 提出基于图拉普拉斯谱的点云 Mamba 遍历策略 SST，通过表面感知谱遍历（SAST）实现等距变换不变的分类、分层局部遍历（HLT）实现精确分割、遍历感知重定位（TAR）解决 Mamba 中 MAE 的 token 放置问题。 状态空间模型（SSM）如 Mamba 因线性复杂…
 tags:
   - "CVPR 2025"
   - "3D视觉"

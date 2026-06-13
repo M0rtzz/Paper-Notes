@@ -1,15 +1,15 @@
 ---
 title: >-
-  [论文解读] Do Language Models Understand the Cognitive Tasks Given to Them?
+  [论文解读] Do Language Models Understand the Cognitive Tasks Given to Them? Investigations with the N-Back Paradigm
 description: >-
-  [ACL 2025][LLM/NLP][cognitive evaluation] 用 N-back 任务系统分析 LLM 认知任务理解能力，发现性能低下的主因是任务理解不足而非工作记忆限制，挑战了 LLM 工作记忆容量约 3 的结论。
+  [ACL 2025][LLM 其他][cognitive evaluation] 通过 N-back 范式系统分析多个 LLM 的认知任务表现，发现性能低下的主因是任务理解不足和任务集维持失败，而非工作记忆容量限制，最佳模型（Llama 3.1 70b）在课程学习辅助下甚至能完成 10-back 任务（准确率 84.75%）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "cognitive evaluation"
   - "N-back"
   - "working memory"
-  - "task understanding"
+  - "task comprehension"
   - "LLM"
 ---
 
@@ -123,3 +123,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 七个维度的系统分析，多层级模型对比，覆盖 1-10 back
 - 写作质量: ⭐⭐⭐⭐⭐ 逻辑清晰，实验设计层层递进，图表直观
 - 价值: ⭐⭐⭐⭐ 对 LLM 认知评估方法论有重要指导意义
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Do Language Models Understand Honorific Systems in Javanese?](do_language_models_understand_honorific_systems_in_javanese.md)
+- [\[ACL 2025\] Can Large Language Models Understand Internet Buzzwords Through User-Generated Content](buzzword_understanding_ugc.md)
+- [\[ACL 2025\] Perspective Transition of Large Language Models for Solving Subjective Tasks](perspective_transition_of_large_language_models_for_solving_subjective_tasks.md)
+- [\[ACL 2025\] SCoP: Evaluating the Comprehension Process of Large Language Models from a Cognitive View](scop_evaluating_the_comprehension_process_of_large_language_models_from_a_cognit.md)
+- [\[ACL 2025\] OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens](olmotrace_tracing_language_model_outputs_back_to_trillions_of_training_tokens.md)
+
+</div>
+
+<!-- RELATED:END -->

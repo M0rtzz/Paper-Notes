@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints
 description: >-
-  [AAAI 2026][AI安全][蛋糕切割] 提出首个隐私保护的蛋糕切割协议 PP_CC_puv，基于秘密共享和安全多方计算（MPC）技术改造 Chen et al. 的策略防操纵算法，在保持无嫉妒、Pareto 最优和策略防操纵性质的同时防止任何参与方获知他人偏好信息。
+  [AAAI 2026][AI安全][蛋糕切割] 提出首个隐私保护的蛋糕切割协议 PP_CC_puv，基于秘密共享和安全多方计算（MPC）技术改造 Chen et al. 的策略防操纵算法，在保持无嫉妒、Pareto 最优和策略防操纵性质的同时防止任何参与方获知他人偏好信息。 领域现状：蛋糕切割问题是公平分配理论的经典问题——…
 tags:
   - "AAAI 2026"
   - "AI安全"

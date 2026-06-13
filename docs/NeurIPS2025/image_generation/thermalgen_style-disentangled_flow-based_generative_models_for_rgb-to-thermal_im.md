@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ThermalGen: Style-Disentangled Flow-Based Generative Models for RGB-to-Thermal Image Translation
 description: >-
-  [NeurIPS 2025][图像生成][RGB-热红外翻译] 提出 ThermalGen，一种基于 Flow 的自适应生成模型，通过 RGB 图像条件化架构和风格解耦机制，首次实现了跨视角、跨传感器、跨环境条件的高保真 RGB-to-Thermal 图像翻译…
+  [NeurIPS 2025][图像生成][RGB-热红外翻译] 提出 ThermalGen，一种基于 Flow 的自适应生成模型，通过 RGB 图像条件化架构和风格解耦机制，首次实现了跨视角、跨传感器、跨环境条件的高保真 RGB-to-Thermal 图像翻译，并发布了三个新的大规模卫星-航拍 RGB-T 配对数据集。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

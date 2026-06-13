@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Silent Thought: Modeling Internal Cognition in Full-Duplex Spoken Dialogue Models via Latent Reasoning
 description: >-
-  [ICML 2026][音频/语音][全双工语音对话] 本文提出 FLAIR：让全双工口语对话模型（SDLM）在"听用户说话"的同时，把通常用来填 `<SIL>` 的步骤改成连续的隐式推理——通过一个 ELBO 训练目标 + 非因果"全局专家"提供后验，让因果 LLM 学会用一串嵌入向量"边听边想"…
+  [ICML 2026][音频/语音][全双工语音对话] 本文提出 FLAIR：让全双工口语对话模型（SDLM）在"听用户说话"的同时，把通常用来填 `<SIL>` 的步骤改成连续的隐式推理——通过一个 ELBO 训练目标 + 非因果"全局专家"提供后验，让因果 LLM 学会用一串嵌入向量"边听边想"，从而显著提升问答质量却不引入任何推理延迟。
 tags:
   - "ICML 2026"
   - "音频/语音"

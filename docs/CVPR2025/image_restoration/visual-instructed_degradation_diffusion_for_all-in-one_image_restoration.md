@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual-Instructed Degradation Diffusion for All-in-One Image Restoration
 description: >-
-  [CVPR 2025][图像恢复][全能图像复原] Defusion 提出用"视觉指令"替代文本指令来引导 all-in-one 图像复原，通过将退化效果施加到标准化视觉元素上构建可视化的退化描述，并在退化空间（而非图像空间）进行扩散去噪…
+  [CVPR 2025][图像恢复][全能图像复原] Defusion 提出用"视觉指令"替代文本指令来引导 all-in-one 图像复原，通过将退化效果施加到标准化视觉元素上构建可视化的退化描述，并在退化空间（而非图像空间）进行扩散去噪，在 8 个复原任务上超越 task-specific 和 all-in-one 方法。
 tags:
   - "CVPR 2025"
   - "图像恢复"

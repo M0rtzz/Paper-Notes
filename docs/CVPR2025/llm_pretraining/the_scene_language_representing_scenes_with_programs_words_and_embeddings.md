@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Scene Language: Representing Scenes with Programs, Words, and Embeddings
 description: >-
-  [CVPR 2025][预训练][Scene Representation] 提出 Scene Language——一种用程序（P, 编码层级结构）+ 词语（W, 语义类别）+ 嵌入（Z, 视觉身份）三元组 $\Phi(s)=(W,P,Z)$ 表示视觉场景的新范式…
+  [CVPR 2025][预训练][Scene Representation] 提出 Scene Language——一种用程序（P, 编码层级结构）+ 词语（W, 语义类别）+ 嵌入（Z, 视觉身份）三元组 $\Phi(s)=(W,P,Z)$ 表示视觉场景的新范式，通过 Claude 3.5 Sonnet 的 training-free 推理从文本/图像输入生成场景表示，支持传统/神经/混合渲染，在 3D/4D 场景生成质量和可控编辑上超越场景图等现有表示。
 tags:
   - "CVPR 2025"
   - "预训练"

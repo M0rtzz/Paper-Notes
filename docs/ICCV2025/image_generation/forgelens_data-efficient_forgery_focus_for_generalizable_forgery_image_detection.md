@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection
 description: >-
-  [ICCV 2025][图像生成][伪造图像检测] 提出 ForgeLens，一个基于冻结 CLIP-ViT 的特征引导框架，通过轻量级的权重共享引导模块（WSGM）和伪造感知特征集成器（FAFormer），引导冻结预训练网络聚焦伪造特征，仅用 1% 训练数据即达到 SOTA 泛化性能。
+  [ICCV 2025][图像生成][伪造图像检测] 提出 ForgeLens，一个基于冻结 CLIP-ViT 的特征引导框架，通过轻量级的权重共享引导模块（WSGM）和伪造感知特征集成器（FAFormer），引导冻结预训练网络聚焦伪造特征，仅用 1% 训练数据即达到 SOTA 泛化性能。 随着 GAN 和扩散模型的快速发展…
 tags:
   - "ICCV 2025"
   - "图像生成"

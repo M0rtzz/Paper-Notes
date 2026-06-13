@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Molmo and PixMo: Open Weights and Open Data for State-of-the-Art Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言模型] 本文提出Molmo系列VLM和PixMo数据集，完全不依赖闭源VLM的合成数据，通过创新的数据收集方式（语音描述图像、交互式问答标注、2D指向标注）从零构建高质量训练数据…
+  [CVPR 2025][多模态VLM][视觉语言模型] 本文提出Molmo系列VLM和PixMo数据集，完全不依赖闭源VLM的合成数据，通过创新的数据收集方式（语音描述图像、交互式问答标注、2D指向标注）从零构建高质量训练数据，其72B模型在学术基准和人类评估中超越Claude 3.5 Sonnet和Gemini 1.5 Pro，仅次于GPT-4o。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

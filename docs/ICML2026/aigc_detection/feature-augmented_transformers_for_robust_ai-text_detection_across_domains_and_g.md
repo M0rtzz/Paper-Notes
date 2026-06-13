@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Feature-Augmented Transformers for Robust AI-Text Detection Across Domains and Generators
 description: >-
-  [ICML 2026][AIGC检测][AI 文本检测] 本文在「单阈值固定协议」下系统暴露 AI 文本检测器在跨数据集/跨生成器 shift 下的脆弱性，并提出把可学注意力加权的手工语言特征与 transformer [CLS] 表征融合，配合 DeBERTa-v3 backbone…
+  [ICML 2026][AIGC检测][AI 文本检测] 本文在「单阈值固定协议」下系统暴露 AI 文本检测器在跨数据集/跨生成器 shift 下的脆弱性，并提出把可学注意力加权的手工语言特征与 transformer [CLS] 表征融合，配合 DeBERTa-v3 backbone，在 M4 多域多生成器基准上达到 85.9% balanced accuracy，比强 zero-shot 基线（Fast-DetectGPT、RADAR、Log-Rank）高最多 +7.22。
 tags:
   - "ICML 2026"
   - "AIGC检测"

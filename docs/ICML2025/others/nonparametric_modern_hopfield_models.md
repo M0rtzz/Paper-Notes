@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nonparametric Modern Hopfield Models
 description: >-
-  [ICML 2025][Hopfield models] 本文提出现代 Hopfield 模型的非参数框架，将记忆存储与检索过程建模为非参数回归问题，由此推导出首个具有亚二次复杂度的高效稀疏结构现代 Hopfield 模型，并提供了完备的理论分析（检索误差界、噪声鲁棒性、指数记忆容量）。
+  [ICML 2025][Hopfield models] 本文提出现代 Hopfield 模型的非参数框架，将记忆存储与检索过程建模为非参数回归问题，由此推导出首个具有亚二次复杂度的高效稀疏结构现代 Hopfield 模型，并提供了完备的理论分析（检索误差界、噪声鲁棒性、指数记忆容量）。 领域现状：现代 Hopfield 模…
 tags:
   - "ICML 2025"
   - "Hopfield models"

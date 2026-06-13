@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions
 description: >-
-  [NeurIPS 2025][优化/理论][多目标贝叶斯优化] 提出MOBO-OSD算法，通过在逼近的个体极小值凸包（CHIM）上定义正交搜索方向来生成多样化的Pareto最优解，结合Pareto前沿估计和批量选择策略，在合成与真实基准上持续超越SOTA多目标贝叶斯优化方法。
+  [NeurIPS 2025][优化/理论][多目标贝叶斯优化] 提出MOBO-OSD算法，通过在逼近的个体极小值凸包（CHIM）上定义正交搜索方向来生成多样化的Pareto最优解，结合Pareto前沿估计和批量选择策略，在合成与真实基准上持续超越SOTA多目标贝叶斯优化方法。 多目标贝叶斯优化（MOBO）旨在有限评估预算下优…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

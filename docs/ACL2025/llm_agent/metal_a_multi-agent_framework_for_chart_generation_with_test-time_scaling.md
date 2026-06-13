@@ -2,7 +2,7 @@
 title: >-
   [论文解读] METAL: A Multi-Agent Framework for Chart Generation with Test-Time Scaling
 description: >-
-  [LLM Agent] 提出 METAL，一个基于 VLM 的多智能体框架，将图表生成任务（chart-to-code）分解为生成、视觉评审、代码评审和修订四个专门化智能体的迭代协作，在 ChartMIMIC 基准上比现有最佳方法提升 5.2% F1…
+  [LLM Agent] 提出 METAL，一个基于 VLM 的多智能体框架，将图表生成任务（chart-to-code）分解为生成、视觉评审、代码评审和修订四个专门化智能体的迭代协作，在 ChartMIMIC 基准上比现有最佳方法提升 5.2% F1，并展现了测试时缩放（test-time scaling）现象。
 tags:
   - "LLM Agent"
 ---

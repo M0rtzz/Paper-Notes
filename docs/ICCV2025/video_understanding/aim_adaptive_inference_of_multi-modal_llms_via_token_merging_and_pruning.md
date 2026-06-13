@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning
 description: >-
-  [ICCV 2025][视频理解][多模态大语言模型] 提出一种无需训练的自适应推理方法，通过 LLM 前基于嵌入相似度的迭代式 token 合并 + LLM 层内基于 PageRank 多模态重要性的渐进式 token 剪枝，实现多模态 LLM 在 40 倍 FLOPs 减少范围内的灵活精度-效率权衡…
+  [ICCV 2025][视频理解][多模态大语言模型] 提出一种无需训练的自适应推理方法，通过 LLM 前基于嵌入相似度的迭代式 token 合并 + LLM 层内基于 PageRank 多模态重要性的渐进式 token 剪枝，实现多模态 LLM 在 40 倍 FLOPs 减少范围内的灵活精度-效率权衡，在视频和图像理解任务上均取得优异表现。
 tags:
   - "ICCV 2025"
   - "视频理解"

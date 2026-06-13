@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CORE-3D: Context-aware Open-vocabulary Retrieval by Embeddings in 3D
 description: >-
-  [ICLR 2026][3D视觉][开放词汇3D语义分割] 提出CORE-3D，一个无需训练的开放词汇3D语义分割与自然语言目标检索流水线，通过渐进式粒度掩码生成、上下文感知CLIP编码和多视角3D融合，在Replica和ScanNet上超越现有方法。
+  [ICLR 2026][3D视觉][开放词汇3D语义分割] 提出CORE-3D，一个无需训练的开放词汇3D语义分割与自然语言目标检索流水线，通过渐进式粒度掩码生成、上下文感知CLIP编码和多视角3D融合，在Replica和ScanNet上超越现有方法。 领域现状：3D场景理解是机器人和具身AI的基础需求。近年来…
 tags:
   - "ICLR 2026"
   - "3D视觉"

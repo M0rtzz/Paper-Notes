@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Optimal Transport-driven Approach for Cultivating Latent Space in Online Incremental Learning
 description: >-
-  [CVPR 2026][自监督学习][在线类增量学习] 提出基于最优传输理论的在线混合模型学习框架 (MMOT)，通过为每个类别维护多个自适应质心来更精确地表征在线数据流的多模态特性，结合动态保持策略增强类别区分能力，在在线类增量学习 (OCIL) 中有效缓解灾难性遗忘。
+  [CVPR 2026][自监督学习][在线类增量学习] 提出基于最优传输理论的在线混合模型学习框架 (MMOT)，通过为每个类别维护多个自适应质心来更精确地表征在线数据流的多模态特性，结合动态保持策略增强类别区分能力，在在线类增量学习 (OCIL) 中有效缓解灾难性遗忘。 在线类增量学习 (OCIL) 是持续学习中最具挑战性…
 tags:
   - "CVPR 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConfHit: Conformal Generative Design with Oracle Free Guarantees
 description: >-
-  [ICLR 2026][计算生物][conformal prediction] 提出 ConfHit 框架，利用密度比加权的共形排列 p 值实现"认证"（判断生成批次是否包含 hit）和"设计"（精简候选集同时保持统计保证），在无需实验验证 oracle 和存在分布偏移的条件下…
+  [ICLR 2026][计算生物][conformal prediction] 提出 ConfHit 框架，利用密度比加权的共形排列 p 值实现"认证"（判断生成批次是否包含 hit）和"设计"（精简候选集同时保持统计保证），在无需实验验证 oracle 和存在分布偏移的条件下，为生成式分子设计提供有限样本 $1-\alpha$ 覆盖保证。
 tags:
   - "ICLR 2026"
   - "计算生物"

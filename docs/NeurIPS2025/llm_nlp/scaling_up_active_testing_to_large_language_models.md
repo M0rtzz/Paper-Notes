@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Scaling Up Active Testing to Large Language Models
 description: >-
-  [NeurIPS 2025][LLM/NLP][active testing] 通过三项关键简化——用 in-context learning 构建固定代理模型、使用小代理模型评估大目标模型、无需目标模型预测进行数据采集——将 active testing 扩展到 LLM…
+  [NeurIPS 2025][LLM 其他][active testing] 通过三项关键简化——用 in-context learning 构建固定代理模型、使用小代理模型评估大目标模型、无需目标模型预测进行数据采集——将 active testing 扩展到 LLM，风险估计误差比随机采样降低 25%-80%。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "active testing"
   - "LLM evaluation"
   - "risk estimation"

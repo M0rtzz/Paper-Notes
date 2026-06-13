@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-Free Coverless Multi-Image Steganography with Access Control
 description: >-
-  [ICML 2026][AI安全][无载体隐写] 提出 MIDAS，一种基于预训练扩散模型的 training-free 无载体多图隐写框架，用 Random Basis 正交随机基替代传统 Noise Flip 实现按私钥的细粒度访问控制，配合 Latent Vector Fusion 消除拼接边界…
+  [ICML 2026][AI安全][无载体隐写] 提出 MIDAS，一种基于预训练扩散模型的 training-free 无载体多图隐写框架，用 Random Basis 正交随机基替代传统 Noise Flip 实现按私钥的细粒度访问控制，配合 Latent Vector Fusion 消除拼接边界，在不传输任何与秘密相关的附加信息的前提下实现多图隐藏 + 抗隐写分析。
 tags:
   - "ICML 2026"
   - "AI安全"

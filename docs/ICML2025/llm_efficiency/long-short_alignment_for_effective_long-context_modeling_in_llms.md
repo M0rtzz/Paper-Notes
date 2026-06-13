@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Long-Short Alignment for Effective Long-Context Modeling in LLMs
 description: >-
-  [ICML 2025][LLM效率][长度泛化] 本文从模型输出分布的角度提出长度泛化的新视角——长短对齐 (Long-Short Alignment)，指出不同长度输入的输出分布一致性是长度泛化的关键因素，提出 Long-Short Misalignment 度量并将其作为训练正则项…
+  [ICML 2025][LLM效率][长度泛化] 本文从模型输出分布的角度提出长度泛化的新视角——长短对齐 (Long-Short Alignment)，指出不同长度输入的输出分布一致性是长度泛化的关键因素，提出 Long-Short Misalignment 度量并将其作为训练正则项，在合成任务和自然语言任务上均显著提升长上下文建模能力。
 tags:
   - "ICML 2025"
   - "LLM效率"

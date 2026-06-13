@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-Free Meets 3D Priors: Novel View Synthesis from a Single Image with Pretrained Diffusion Guidance
 description: >-
-  [AAAI 2026][3D视觉][新视角合成] 提出将 3D-free 方法（HawkI 风格的 test-time optimization）与 3D-based 先验（Zero123++ 的弱引导图）结合的框架，无需额外 3D 数据或训练即可从单张图片生成指定仰角/方位角的相机控制视图…
+  [AAAI 2026][3D视觉][新视角合成] 提出将 3D-free 方法（HawkI 风格的 test-time optimization）与 3D-based 先验（Zero123++ 的弱引导图）结合的框架，无需额外 3D 数据或训练即可从单张图片生成指定仰角/方位角的相机控制视图，在复杂场景下 LPIPS、CLIP-Score 等指标全面超越 Zero123++、HawkI 和 Stable Zero123。
 tags:
   - "AAAI 2026"
   - "3D视觉"
@@ -129,10 +129,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐ 融合思路直觉但不算突破性，各组件都是现有方法
-- 实验充分度: ⭐⭐⭐ 评估场景偏少，缺少标准 3D 基准对比
-- 写作质量: ⭐⭐⭐⭐ 分析部分（CLIP 3D 理解、引导图重要性）论证清晰
-- 价值: ⭐⭐⭐ 提供了一种不需要 3D 数据的相机控制方案，但推理速度限制实用性
+- 新颖性: ⭐⭐⭐⭐ 融合思路直觉但不算突破性，各组件都是现有方法
+- 实验充分度: ⭐⭐⭐⭐ 评估场景偏少，缺少标准 3D 基准对比
+- 写作质量: ⭐⭐⭐⭐⭐ 分析部分（CLIP 3D 理解、引导图重要性）论证清晰
+- 价值: ⭐⭐⭐⭐ 提供了一种不需要 3D 数据的相机控制方案，但推理速度限制实用性
 
 <!-- RELATED:START -->
 

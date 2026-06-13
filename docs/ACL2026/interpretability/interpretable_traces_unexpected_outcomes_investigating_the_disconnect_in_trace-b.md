@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Traces, Unexpected Outcomes: Investigating the Disconnect in Trace-Based Knowledge Distillation
 description: >-
-  [ACL 2026][可解释性][CoT推理链] 通过规则化问题分解方法构建可验证的中间推理链数据集，揭示 CoT 推理链的语义正确性与最终答案准确率不可靠地相关（正确链仅 28% 导致正确答案），且最可解释的推理链并非最提升性能的——冗长的 R1 链性能最优但用户评为最不可解释。
+  [ACL 2026][可解释性][CoT推理链] 通过规则化问题分解方法构建可验证的中间推理链数据集，揭示 CoT 推理链的语义正确性与最终答案准确率不可靠地相关（正确链仅 28% 导致正确答案），且最可解释的推理链并非最提升性能的——冗长的 R1 链性能最优但用户评为最不可解释。 领域现状：推理型 LLM（如 DeepSe…
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying Lexical Semantic Shift via Unbalanced Optimal Transport
 description: >-
-  [ACL 2025][语义变迁] 将Unbalanced Optimal Transport（UOT）应用于上下文化词嵌入集合，提出Sense Usage Shift（SUS）指标在每个用法实例级别量化语义变化，统一解决实例级变化检测、词级变化幅度量化和词义扩展/缩小判定三项任务。
+  [ACL 2025][语义变迁] 将Unbalanced Optimal Transport（UOT）应用于上下文化词嵌入集合，提出Sense Usage Shift（SUS）指标在每个用法实例级别量化语义变化，统一解决实例级变化检测、词级变化幅度量化和词义扩展/缩小判定三项任务。 领域现状 领域现状：领域现状： 词汇语义变…
 tags:
   - "ACL 2025"
   - "语义变迁"

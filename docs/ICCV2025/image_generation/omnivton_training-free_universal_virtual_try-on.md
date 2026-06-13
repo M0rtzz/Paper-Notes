@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniVTON: Training-Free Universal Virtual Try-On
 description: >-
-  [ICCV2025][图像生成][virtual try-on] OmniVTON 提出首个无需训练的通用虚拟试穿框架，通过解耦服装纹理与姿态条件，利用结构化服装变形、连续边界缝合和频谱姿态注入三大模块，在 in-shop 和 in-the-wild 场景中均实现高保真试穿，并首次支持多人试穿。
+  [ICCV2025][图像生成][virtual try-on] OmniVTON 提出首个无需训练的通用虚拟试穿框架，通过解耦服装纹理与姿态条件，利用结构化服装变形、连续边界缝合和频谱姿态注入三大模块，在 in-shop 和 in-the-wild 场景中均实现高保真试穿，并首次支持多人试穿。 - 问题定义：图像虚拟试穿（…
 tags:
   - "ICCV2025"
   - "图像生成"

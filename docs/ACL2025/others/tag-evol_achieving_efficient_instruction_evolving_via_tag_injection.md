@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tag-Evol: Achieving Efficient Instruction Evolving via Tag Injection
 description: >-
-  [ACL 2025][指令进化] Tag-Evol 提出了一种基于知识标签注入的指令进化框架，通过构建多步细粒度标签池和预算控制注入机制，无需迭代即可生成不同难度的高质量进化指令数据，在多任务多骨干上显著优于 Evol-Instruct。
+  [ACL 2025][指令进化] Tag-Evol 提出了一种基于知识标签注入的指令进化框架，通过构建多步细粒度标签池和预算控制注入机制，无需迭代即可生成不同难度的高质量进化指令数据，在多任务多骨干上显著优于 Evol-Instruct。 Evol-Instruct 是当前最主流的指令数据合成方法，通过迭代进化提升指令难度和…
 tags:
   - "ACL 2025"
   - "指令进化"

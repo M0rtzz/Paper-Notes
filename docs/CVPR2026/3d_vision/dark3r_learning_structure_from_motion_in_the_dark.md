@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dark3R: Learning Structure from Motion in the Dark
 description: >-
-  [CVPR2026][3D视觉][低光照3D重建] 提出 Dark3R 框架，通过教师-学生蒸馏将 MASt3R 的3D先验迁移到极端低光照（SNR < −4 dB）原始图像上，实现了传统方法完全失败的暗光环境下的运动恢复结构（SfM）和新视角合成。
+  [CVPR2026][3D视觉][低光照3D重建] 提出 Dark3R 框架，通过教师-学生蒸馏将 MASt3R 的3D先验迁移到极端低光照（SNR < −4 dB）原始图像上，实现了传统方法完全失败的暗光环境下的运动恢复结构（SfM）和新视角合成。 传统SfM在低光下崩溃：现有SfM流水线（COLMAP等）依赖特征检测与匹…
 tags:
   - "CVPR2026"
   - "3D视觉"

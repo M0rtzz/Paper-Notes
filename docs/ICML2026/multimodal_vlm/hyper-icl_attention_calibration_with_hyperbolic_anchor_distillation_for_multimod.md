@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hyper-ICL: Attention Calibration with Hyperbolic Anchor Distillation for Multimodal ICL
 description: >-
-  [ICML 2026][多模态VLM][多模态 ICL] Hyper-ICL 通过将 **CLIP 嵌入提升到双曲空间**形成结构化"超球面锚"，结合**层次感知蒸馏注意力**为多模态 LVLM 上下文学习提供结构先验——在 VQA / Captioning / Caption Editing 等任务上稳定超…
+  [ICML 2026][多模态VLM][多模态 ICL] Hyper-ICL 通过将 **CLIP 嵌入提升到双曲空间**形成结构化"超球面锚"，结合**层次感知蒸馏注意力**为多模态 LVLM 上下文学习提供结构先验——在 VQA / Captioning / Caption Editing 等任务上稳定超越传统 demo 选择策略。
 tags:
   - "ICML 2026"
   - "多模态VLM"

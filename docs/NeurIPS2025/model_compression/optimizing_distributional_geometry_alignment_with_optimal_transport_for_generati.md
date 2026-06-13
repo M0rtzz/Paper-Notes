@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation
 description: >-
-  [NeurIPS 2025][模型压缩][数据集蒸馏] 将数据集蒸馏重新表述为最优传输（OT）距离最小化问题，通过三阶段（OT引导扩散采样、标签-图像对齐软重标注、OT logit匹配）实现细粒度分布几何对齐，在ImageNet-1K IPC=10上比之前SOTA提升至少4%。
+  [NeurIPS 2025][模型压缩][数据集蒸馏] 将数据集蒸馏重新表述为最优传输（OT）距离最小化问题，通过三阶段（OT引导扩散采样、标签-图像对齐软重标注、OT logit匹配）实现细粒度分布几何对齐，在ImageNet-1K IPC=10上比之前SOTA提升至少4%。 数据集蒸馏旨在合成一个小型数据集…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

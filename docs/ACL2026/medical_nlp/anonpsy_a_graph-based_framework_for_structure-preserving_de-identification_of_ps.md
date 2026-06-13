@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Anonpsy: A Graph-Based Framework for Structure-Preserving De-identification of Psychiatric Narratives
 description: >-
-  [ACL 2026][医疗NLP][去标识化] 提出Anonpsy框架，将精神科叙事的去标识化重新定义为图引导的语义重写问题——先将叙事转换为语义图，在图上进行受约束的扰动以修改身份信息同时保持临床结构，最后通过图条件生成重建叙事。
+  [ACL 2026 Findings][医疗NLP][去标识化] 提出Anonpsy框架，将精神科叙事的去标识化重新定义为图引导的语义重写问题——先将叙事转换为语义图，在图上进行受约束的扰动以修改身份信息同时保持临床结构，最后通过图条件生成重建叙事。 领域现状：精神科叙事包含丰富的临床信息（症状时间线、因果关系、诊断逻辑）…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "去标识化"
   - "精神科叙事"

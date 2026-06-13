@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space
 description: >-
-  [ICLR2026][医学图像][semantic navigation] 提出将人类概念产生过程建模为 Transformer 嵌入空间中的累积轨迹，定义 5 个运动学指标（距离、速度、加速度、熵、质心距离），在 4 个数据集（3 种语言、神经退行性疾病/脏话流畅性/属性列举）上成功区分临床组和概念类别…
+  [ICLR2026][医学图像][semantic navigation] 提出将人类概念产生过程建模为 Transformer 嵌入空间中的累积轨迹，定义 5 个运动学指标（距离、速度、加速度、熵、质心距离），在 4 个数据集（3 种语言、神经退行性疾病/脏话流畅性/属性列举）上成功区分临床组和概念类别，且不同嵌入模型产生高度一致的结果。
 tags:
   - "ICLR2026"
   - "医学图像"

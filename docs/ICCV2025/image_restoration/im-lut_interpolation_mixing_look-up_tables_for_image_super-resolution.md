@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IM-LUT: Interpolation Mixing Look-Up Tables for Image Super-Resolution
 description: >-
-  [ICCV 2025][图像恢复][任意尺度超分] 本文提出 IM-LUT，通过学习混合多种插值函数的权重来实现任意尺度图像超分辨率，并将预测网络转换为查找表形式，在 CPU 上实现轻量快速推理同时保持重建质量。
+  [ICCV 2025][图像恢复][任意尺度超分] 本文提出 IM-LUT，通过学习混合多种插值函数的权重来实现任意尺度图像超分辨率，并将预测网络转换为查找表形式，在 CPU 上实现轻量快速推理同时保持重建质量。 领域现状：图像超分辨率（SR）是提升图像分辨率的基础视觉任务。主流方法包括基于 CNN 的 EDSR、RCAN…
 tags:
   - "ICCV 2025"
   - "图像恢复"

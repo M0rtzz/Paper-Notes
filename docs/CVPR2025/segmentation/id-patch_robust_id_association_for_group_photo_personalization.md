@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ID-Patch: Robust ID Association for Group Photo Personalization
 description: >-
-  [CVPR 2025][语义分割][身份关联] ID-Patch 通过将同一人脸特征同时生成 ID patch（用于空间控制）和 ID embedding（用于身份相似度保持），解决了多身份图像生成中的 ID 泄漏问题，在面部相似度、ID-位置关联精度和生成效率上全面超越 baseline。
+  [CVPR 2025][语义分割][身份关联] ID-Patch 通过将同一人脸特征同时生成 ID patch（用于空间控制）和 ID embedding（用于身份相似度保持），解决了多身份图像生成中的 ID 泄漏问题，在面部相似度、ID-位置关联精度和生成效率上全面超越 baseline。 领域现状：个性化图像生成是扩散模…
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OSCBench: Benchmarking Object State Change in Text-to-Video Generation
 description: >-
-  [ACL 2026][视频生成][文生视频] 提出 OSCBench——首个专门评估文生视频模型中物体状态变化（OSC）能力的基准，基于烹饪场景构建 1,120 条提示覆盖常规/新颖/组合三类场景，揭示即使最强 T2V 模型在 OSC 准确率上也仅达 0.786。
+  [ACL 2026][视频生成][文生视频] 提出 OSCBench——首个专门评估文生视频模型中物体状态变化（OSC）能力的基准，基于烹饪场景构建 1,120 条提示覆盖常规/新颖/组合三类场景，揭示即使最强 T2V 模型在 OSC 准确率上也仅达 0.786。 领域现状：T2V 模型在视觉质量和时间一致性上取得显著进展…
 tags:
   - "ACL 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Preference Poisoning Attack on Offline RLHF
 description: >-
-  [ICML 2026][LLM对齐][偏好投毒] 针对 log-linear DPO 提出"翻一条偏好标签 = 给损失梯度加一个与策略参数无关的固定向量"的关键观察，把目标投毒攻击归约为二值稀疏近似问题…
+  [ICML 2026][LLM对齐][偏好投毒] 针对 log-linear DPO 提出"翻一条偏好标签 = 给损失梯度加一个与策略参数无关的固定向量"的关键观察，把目标投毒攻击归约为二值稀疏近似问题，给出基于 LLL 格基约化的 BAL-A 和基于匹配追踪的 BMP-A 两种算法以及可证明的恢复 / 不可能性条件。
 tags:
   - "ICML 2026"
   - "LLM对齐"

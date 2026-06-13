@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Training-Free Online Routing for High-Volume Multi-LLM Serving
 description: >-
-  [NeurIPS 2025][LLM效率][LLM路由] 提出首个无需训练的在线 LLM 路由算法 PORT，通过近似最近邻搜索估计查询特征，并在少量初始查询上一次性优化对偶变量作为路由权重，在有限 token 预算下实现接近离线最优 ($1-o(1)$ 竞争比) 的路由性能…
+  [NeurIPS 2025][LLM效率][LLM路由] 提出首个无需训练的在线 LLM 路由算法 PORT，通过近似最近邻搜索估计查询特征，并在少量初始查询上一次性优化对偶变量作为路由权重，在有限 token 预算下实现接近离线最优 ($1-o(1)$ 竞争比) 的路由性能，平均较基线提升 3.55× 性能、1.85× 成本效率和 4.25× 吞吐量。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers
 description: >-
-  [NeurIPS 2025][幻觉检测][out-of-context reasoning] 本文论证 LLM 的泛化能力和幻觉产生源于同一机制——脱语境推理（OCR），并在单层注意力模型上理论证明：分解参数化 $(W_O, W_V)$ 因梯度下降的核范数隐式偏差而能执行 OCR…
+  [NeurIPS 2025][幻觉检测][out-of-context reasoning] 本文论证 LLM 的泛化能力和幻觉产生源于同一机制——脱语境推理（OCR），并在单层注意力模型上理论证明：分解参数化 $(W_O, W_V)$ 因梯度下降的核范数隐式偏差而能执行 OCR，而合并参数化 $W_{OV}$ 因 Frobenius 范数偏差而不能，且 OCR 是样本高效的（仅需 $m_{\text{train}}>0$）。
 tags:
   - "NeurIPS 2025"
   - "幻觉检测"

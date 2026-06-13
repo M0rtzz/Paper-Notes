@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Personalized Search with Regularized Low-Rank Parameter Updates
 description: >-
-  [CVPR 2025][多模态VLM][个性化检索] 本文提出POLAR方法，通过对CLIP文本编码器**最后一层**的value矩阵施加**rank-1的LoRA更新**加正则化，仅用少量样本即可学习个性化概念并保留通用知识…
+  [CVPR 2025][多模态VLM][个性化检索] 本文提出POLAR方法，通过对CLIP文本编码器**最后一层**的value矩阵施加**rank-1的LoRA更新**加正则化，仅用少量样本即可学习个性化概念并保留通用知识，在DeepFashion2和ConCon-Chi基准上超越基于文本反转的先前方法4%~22%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

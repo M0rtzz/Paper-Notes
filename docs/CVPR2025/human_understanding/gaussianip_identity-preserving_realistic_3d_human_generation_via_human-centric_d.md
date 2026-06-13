@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior
 description: >-
-  [CVPR 2025][人体理解][3D人体生成] 提出 GaussianIP 两阶段框架，通过自适应人体蒸馏采样（AHDS）从人体中心扩散模型高效生成身份一致的 3D 高斯人体，再通过视角一致性精炼（VCR）机制利用 mutual attention 增强面部和服饰纹理细节…
+  [CVPR 2025][人体理解][3D人体生成] 提出 GaussianIP 两阶段框架，通过自适应人体蒸馏采样（AHDS）从人体中心扩散模型高效生成身份一致的 3D 高斯人体，再通过视角一致性精炼（VCR）机制利用 mutual attention 增强面部和服饰纹理细节，在 40 分钟内完成训练并显著优于现有方法。
 tags:
   - "CVPR 2025"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking PCA Through Duality
 description: >-
-  [NeurIPS 2025][主成分分析] 通过 Difference-of-Convex (DC) 框架重新审视 PCA,建立了核化和样本外推广能力,揭示了同步迭代是 DCA 的特例,并提出了鲁棒 $\ell_1$-PCA 的核化对偶公式。
+  [NeurIPS 2025][主成分分析] 通过 Difference-of-Convex (DC) 框架重新审视 PCA,建立了核化和样本外推广能力,揭示了同步迭代是 DCA 的特例,并提出了鲁棒 $\ell_1$-PCA 的核化对偶公式。 核心矛盾 核心矛盾：领域现状：主成分分析（PCA）是数据科学中最基础的工具之一…
 tags:
   - "NeurIPS 2025"
   - "主成分分析"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] In-Context Algebra
 description: >-
-  [ICLR2026][in-context learning] 本文设计了一个 **in-context 代数任务**——令 token 成为纯变量、每条序列重新随机分配含义——发现 Transformer 在此设定下不再学习经典的傅里叶/几何表示…
+  [ICLR2026][LLM 其他][in-context learning] 本文设计了一个 **in-context 代数任务**——令 token 成为纯变量、每条序列重新随机分配含义——发现 Transformer 在此设定下不再学习经典的傅里叶/几何表示，而是涌现出三种 **符号推理机制**（交换复制、单位元识别、闭包消去），并揭示了训练过程中这些能力按阶段性相变依次出现的规律。
 tags:
   - "ICLR2026"
+  - "LLM 其他"
   - "in-context learning"
   - "mechanistic interpretability"
   - "symbolic reasoning"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Linearized Behavior into Non-Linear Fine-Tuning for Effective Task Arithmetic
 description: >-
-  [ICML 2026][优化/理论][task arithmetic] 本文提出 DELTA：在线把"切空间线性化教师"的中间激活蒸馏到普通非线性学生 + EK-FAC 曲率正则 + 沿插值路径采样…
+  [ICML 2026][优化/理论][task arithmetic] 本文提出 DELTA：在线把"切空间线性化教师"的中间激活蒸馏到普通非线性学生 + EK-FAC 曲率正则 + 沿插值路径采样，让常规非线性 fine-tune 出来的 task vector 也具备线性化模型那种"可叠加、低干扰、对缩放鲁棒"的性质，同时不引入任何推理开销。
 tags:
   - "ICML 2026"
   - "优化/理论"

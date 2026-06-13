@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution
 description: >-
-  [AAAI 2026][模型压缩][视频超分辨率] 提出 QuantVSR，首个面向扩散模型视频超分（VSR）的低比特（4/6-bit）后训练量化框架：通过时空复杂度感知（STCA）机制实现层自适应秩分配，并引入可学习偏置对齐（LBA）模块缓解低比特量化偏差…
+  [AAAI 2026][模型压缩][视频超分辨率] 提出 QuantVSR，首个面向扩散模型视频超分（VSR）的低比特（4/6-bit）后训练量化框架：通过时空复杂度感知（STCA）机制实现层自适应秩分配，并引入可学习偏置对齐（LBA）模块缓解低比特量化偏差，在 4-bit 设置下将参数量压缩 84.39%、计算量压缩 82.56%，同时保持与全精度模型接近的性能。
 tags:
   - "AAAI 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Monotonicity: Revisiting Factorization Principles in Multi-Agent Q-Learning
 description: >-
-  [AAAI 2026 (Oral)][强化学习][多智能体强化学习] 通过动力系统分析证明：在近似贪心探索策略下，非单调值分解Q学习中所有违反IGM一致性的零损失解都是不稳定鞍点，只有IGM一致解才是稳定吸引子，因此无需单调性约束即可可靠收敛到最优解。
+  [AAAI 2026 (Oral)][强化学习][多智能体强化学习] 通过动力系统分析证明：在近似贪心探索策略下，非单调值分解Q学习中所有违反IGM一致性的零损失解都是不稳定鞍点，只有IGM一致解才是稳定吸引子，因此无需单调性约束即可可靠收敛到最优解。 多智能体强化学习(MARL)中，集中训练-分布式执行(CTDE)范式下的…
 tags:
   - "AAAI 2026 (Oral)"
   - "强化学习"

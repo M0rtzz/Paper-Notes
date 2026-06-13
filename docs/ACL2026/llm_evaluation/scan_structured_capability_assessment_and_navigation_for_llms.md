@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCAN: Structured Capability Assessment and Navigation for LLMs
 description: >-
-  [ACL2026][LLM评测][细粒度评测] SCAN 将大模型评测从单一排行榜推进到可导航的能力画像：它自动构建层级能力标签、用 RealMix 生成覆盖长尾能力的真实感查询，并用 PC2 judge 提升自动评分可靠性，从而在 21 个主流 LLM 上揭示总分掩盖的细粒度强弱项。
+  [ACL2026][LLM评测][细粒度评测] SCAN 将大模型评测从单一排行榜推进到可导航的能力画像：它自动构建层级能力标签、用 RealMix 生成覆盖长尾能力的真实感查询，并用 PC2 judge 提升自动评分可靠性，从而在 21 个主流 LLM 上揭示总分掩盖的细粒度强弱项。 领域现状：LLM 评测长期依赖 Cha…
 tags:
   - "ACL2026"
   - "LLM评测"

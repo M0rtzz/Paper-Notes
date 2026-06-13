@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEt3R: Measuring Multi-View Consistency in Generated Images
 description: >-
-  [CVPR 2025][3D视觉][多视角一致性] 本文提出MEt3R，一种基于DUSt3R重建和DINO特征比较的多视角一致性评价指标，无需相机位姿即可衡量生成图像的3D一致性，并附带开源了一个多视角潜在扩散模型MV-LDM。
+  [CVPR 2025][3D视觉][多视角一致性] 本文提出MEt3R，一种基于DUSt3R重建和DINO特征比较的多视角一致性评价指标，无需相机位姿即可衡量生成图像的3D一致性，并附带开源了一个多视角潜在扩散模型MV-LDM。 1. 领域现状：大规模图像/视频扩散模型正被广泛用于多视角图像生成和3D重建…
 tags:
   - "CVPR 2025"
   - "3D视觉"

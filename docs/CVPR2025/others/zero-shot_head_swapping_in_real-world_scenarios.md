@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Head Swapping in Real-World Scenarios
 description: >-
-  [CVPR 2025][头部替换] 提出HID（Head Injection Diffusion），一种零样本头部替换方法，通过IOMask自动生成上下文感知的编辑掩码实现无缝头身融合，并引入hair injection模块精确迁移发型细节，在包含上半身和多角度面部的真实场景中实现SOTA性能。
+  [CVPR 2025][头部替换] 提出HID（Head Injection Diffusion），一种零样本头部替换方法，通过IOMask自动生成上下文感知的编辑掩码实现无缝头身融合，并引入hair injection模块精确迁移发型细节，在包含上半身和多角度面部的真实场景中实现SOTA性能。 与仅替换面部身份(ID)的f…
 tags:
   - "CVPR 2025"
   - "头部替换"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization
 description: >-
-  [NeurIPS 2025][模型压缩][视觉Tokenizer] 本文通过scaling law系统研究了视觉tokenizer压缩率与生成质量的权衡关系，发现对小模型而言更激进的压缩（虽然重建更差）反而有利于生成…
+  [NeurIPS 2025 Spotlight][模型压缩][视觉Tokenizer] 本文通过scaling law系统研究了视觉tokenizer压缩率与生成质量的权衡关系，发现对小模型而言更激进的压缩（虽然重建更差）反而有利于生成，并提出因果正则化Tokenization(CRT)方法在stage 1训练中嵌入自回归归纳偏置，实现2-3倍计算效率提升，以775M参数和256 token/image匹配LlamaGen-3B的2.18 FID。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "视觉Tokenizer"
   - "压缩-生成权衡"

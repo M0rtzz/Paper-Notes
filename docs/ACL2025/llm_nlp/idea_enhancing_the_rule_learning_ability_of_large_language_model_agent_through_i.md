@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Enhancing the Rule Learning Ability of Large Language Model Agent through Induction, Deduction, and Abduction
 description: >-
-  [ACL 2025][LLM/NLP][规则学习] 提出 RULEARN benchmark（300 个手工交互式文字环境谜题，涵盖三类场景）和 IDEA 框架（溯因假设生成→演绎计划验证→归纳反馈修正的迭代循环），在 GPT-4o 上达到 50.33% 成功率（+7% vs ReAct baseline）…
+  [ACL 2025][LLM 其他][规则学习] 提出 RULEARN benchmark（300 个手工交互式文字环境谜题，涵盖三类场景）和 IDEA 框架（溯因假设生成→演绎计划验证→归纳反馈修正的迭代循环），在 GPT-4o 上达到 50.33% 成功率（+7% vs ReAct baseline），但仍远低于人类 63.33%，细粒度人类评估揭示了 LLM 在假设修正阶段的根本瓶颈。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "规则学习"
   - "归纳推理"
   - "演绎推理"

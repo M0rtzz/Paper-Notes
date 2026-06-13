@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Fine-Grained Activation Steering: Steering Less, Achieving More
 description: >-
-  [ICLR 2026][LLM/NLP][激活转向] AUSteer 发现块级激活转向（steering）本质上是异质的——不同维度控制不同 token 分布，混合转向既放大有益信号也放大有害信号。提出原子单元（AU）级细粒度转向：用激活动量定位判别性维度，自适应调节转向强度…
+  [ICLR 2026][LLM 其他][激活转向] AUSteer 发现块级激活转向（steering）本质上是异质的——不同维度控制不同 token 分布，混合转向既放大有益信号也放大有害信号。提出原子单元（AU）级细粒度转向：用激活动量定位判别性维度，自适应调节转向强度，仅转向 ≤100 个维度即大幅超越转向数千维度的 SOTA 方法。
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "激活转向"
   - "原子单元"
   - "细粒度干预"

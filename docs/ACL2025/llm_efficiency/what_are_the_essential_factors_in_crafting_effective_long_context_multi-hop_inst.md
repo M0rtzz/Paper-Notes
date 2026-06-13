@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What are the Essential Factors in Crafting Effective Long Context Multi-Hop Instruction Datasets? Insights and Best Practices
 description: >-
-  [ACL 2025][LLM效率][长上下文] 提出多智能体交互式多跳生成（MIMG）框架，通过质量验证、单跳问题生成、多问题采样和多跳合并四个模块，系统性地合成高质量长上下文多跳指令数据，训练后模型平均提升7.54%，甚至超越更大规模人工标注数据集。
+  [ACL 2025][LLM效率][长上下文] 提出多智能体交互式多跳生成（MIMG）框架，通过质量验证、单跳问题生成、多问题采样和多跳合并四个模块，系统性地合成高质量长上下文多跳指令数据，训练后模型平均提升7.54%，甚至超越更大规模人工标注数据集。 领域现状： 长上下文LLM在信息抽取、问答和规划等任务中表现突出…
 tags:
   - "ACL 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards 3D Object-Centric Feature Learning for Semantic Scene Completion
 description: >-
-  [AAAI 2026][自动驾驶][语义场景补全] 提出Ocean框架，利用MobileSAM提取的实例掩码引导3D物体中心特征学习，通过语义组注意力（SGA3D）和全局相似性引导注意力（GSGA）在3D空间实现实例级特征聚合，并用实例感知局部扩散（ILD）模块精炼场景表征…
+  [AAAI 2026][自动驾驶][语义场景补全] 提出Ocean框架，利用MobileSAM提取的实例掩码引导3D物体中心特征学习，通过语义组注意力（SGA3D）和全局相似性引导注意力（GSGA）在3D空间实现实例级特征聚合，并用实例感知局部扩散（ILD）模块精炼场景表征，在SemanticKITTI和SSCBench-KITTI360上达到SOTA。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

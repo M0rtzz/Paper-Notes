@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReCAD: Reinforcement Learning Enhanced Parametric CAD Model Generation with Vision-Language Models
 description: >-
-  [多模态VLM] 提出 ReCAD 框架，通过将 CAD 脚本重写为参数化代码进行 SFT，再利用 GRPO 强化学习与分层基元课程学习策略，使 VLM 能从文本或图像输入生成高精度、可编辑的参数化 CAD 模型，在分布内和分布外设置上均大幅超越现有方法。
+  [多模态VLM] 提出 ReCAD 框架，通过将 CAD 脚本重写为参数化代码进行 SFT，再利用 GRPO 强化学习与分层基元课程学习策略，使 VLM 能从文本或图像输入生成高精度、可编辑的参数化 CAD 模型，在分布内和分布外设置上均大幅超越现有方法。 - CAD 建模的现实需求：工业 CAD 建模耗时且需要高精度…
 tags:
   - "多模态VLM"
 ---

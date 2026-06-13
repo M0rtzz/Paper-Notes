@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BOSCH: Black-Box Binary Optimization for Short-Context Attention-Head Selection in LLMs
 description: >-
-  [ACL 2026][LLM效率][滑动窗口注意力] 提出 BOSCH，一种免训练的注意力头级别 SWA 混合方法，将 SWA 头选择建模为大邻域搜索问题并分解为三阶段优化（层重要性探测→自适应比例分配→分组头选择），在 4 个模型 4 种比例设置下系统性超越层级启发式和 6 种静态头级别方法。
+  [ACL 2026][LLM效率][滑动窗口注意力] 提出 BOSCH，一种免训练的注意力头级别 SWA 混合方法，将 SWA 头选择建模为大邻域搜索问题并分解为三阶段优化（层重要性探测→自适应比例分配→分组头选择），在 4 个模型 4 种比例设置下系统性超越层级启发式和 6 种静态头级别方法。 领域现状：后训练混合化通过将…
 tags:
   - "ACL 2026"
   - "LLM效率"

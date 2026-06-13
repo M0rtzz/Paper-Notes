@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOS: Segment Object System for Open-World Instance Segmentation With Object Priors
 description: >-
-  [ECCV 2024][语义分割][图像分割] 提出 SOS 方法，通过用 DINO 自注意力图作为物体先验生成聚焦于物体的 SAM 提示点，从而产出高质量伪标注来训练标准实例分割系统，在 COCO/LVIS/ADE20k 跨类别/跨数据集设置下大幅超越 SOTA，精度提升高达 81.6%。
+  [ECCV 2024][语义分割][图像分割] 提出 SOS 方法，通过用 DINO 自注意力图作为物体先验生成聚焦于物体的 SAM 提示点，从而产出高质量伪标注来训练标准实例分割系统，在 COCO/LVIS/ADE20k 跨类别/跨数据集设置下大幅超越 SOTA，精度提升高达 81.6%。 领域现状：开放世界实例分割（Op…
 tags:
   - "ECCV 2024"
   - "语义分割"

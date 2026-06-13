@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S2WTM: Spherical Sliced-Wasserstein Autoencoder for Topic Modeling
 description: >-
-  [ACL 2025][主题建模] 提出 S2WTM，一种基于球面切片 Wasserstein 自编码器的主题模型，在超球面潜空间上对齐聚合后验与先验分布，有效避免 VAE 的后验坍塌问题，同时在主题连贯性和多样性上超越现有 SOTA。
+  [ACL 2025][主题建模] 提出 S2WTM，一种基于球面切片 Wasserstein 自编码器的主题模型，在超球面潜空间上对齐聚合后验与先验分布，有效避免 VAE 的后验坍塌问题，同时在主题连贯性和多样性上超越现有 SOTA。 主题建模旨在从文档语料库中发现潜在主题。从 LDA 到神经主题模型（VAE-NTM）…
 tags:
   - "ACL 2025"
   - "主题建模"

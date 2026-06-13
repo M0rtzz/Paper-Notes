@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoGigaGAN: Towards Detail-rich Video Super-Resolution
 description: >-
-  [CVPR 2025][视频生成][视频超分辨率] 提出 VideoGigaGAN，首个大规模 GAN 视频超分模型，通过光流引导特征传播、抗锯齿模块和高频穿梭机制，在保持时序一致性的同时生成丰富的高频细节，支持 8× 超分。
+  [CVPR 2025][视频生成][视频超分辨率] 提出 VideoGigaGAN，首个大规模 GAN 视频超分模型，通过光流引导特征传播、抗锯齿模块和高频穿梭机制，在保持时序一致性的同时生成丰富的高频细节，支持 8× 超分。 视频超分辨率（VSR）面临两大核心挑战：时序一致性：和高频细节生成：。现有方法如 BasicVSR…
 tags:
   - "CVPR 2025"
   - "视频生成"

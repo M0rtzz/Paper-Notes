@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inductive Generative Recommendation via Retrieval-based Speculation
 description: >-
-  [AAAI 2026 (Oral)][推荐系统][生成式推荐] 本文揭示生成式推荐（GR）模型无法推荐训练中未见过的新物品的关键局限，提出 SpecGR 即插即用框架——用具有归纳能力的 drafter 模型提议候选物品（包括新物品），GR 模型作为 verifier 对候选进行排序验证…
+  [AAAI 2026 (Oral)][推荐系统][生成式推荐] 本文揭示生成式推荐（GR）模型无法推荐训练中未见过的新物品的关键局限，提出 SpecGR 即插即用框架——用具有归纳能力的 drafter 模型提议候选物品（包括新物品），GR 模型作为 verifier 对候选进行排序验证，结合引导式重起草技术提升验证效率，在三个数据集上取得最佳整体性能。
 tags:
   - "AAAI 2026 (Oral)"
   - "推荐系统"

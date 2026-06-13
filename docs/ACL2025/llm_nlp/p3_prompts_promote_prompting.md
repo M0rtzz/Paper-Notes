@@ -2,10 +2,10 @@
 title: >-
   [论文解读] P3: Prompts Promote Prompting
 description: >-
-  [ACL 2025 (Findings)][LLM/NLP][提示优化] 本文提出 P3 框架，首次同时优化系统提示（system prompt）和用户提示（user prompt），通过离线迭代优化生成高质量的提示模板，再用这些模板进行在线 query-dependent 提示优化…
+  [ACL 2025 (Findings)][LLM 其他][提示优化] 本文提出 P3 框架，首次同时优化系统提示（system prompt）和用户提示（user prompt），通过离线迭代优化生成高质量的提示模板，再用这些模板进行在线 query-dependent 提示优化，在 Arena-Hard、AlpacaEval、GSM8K、GPQA 等通用和推理任务上均超过仅优化单侧提示的方法。
 tags:
   - "ACL 2025 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示优化"
   - "自改进框架"
   - "系统提示"

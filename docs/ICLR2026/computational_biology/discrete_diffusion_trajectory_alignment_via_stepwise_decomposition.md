@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition
 description: >-
-  [ICLR2026][计算生物][扩散模型] 提出 SDPO（Stepwise Decomposition Preference Optimization），将离散扩散模型的轨迹对齐问题分解为逐步后验对齐子问题，避免了在整条去噪链上反传梯度的困难…
+  [ICLR2026][计算生物][扩散模型] 提出 SDPO（Stepwise Decomposition Preference Optimization），将离散扩散模型的轨迹对齐问题分解为逐步后验对齐子问题，避免了在整条去噪链上反传梯度的困难，在 DNA 序列设计、蛋白质逆折叠和语言建模三个任务上均显著超越现有方法。
 tags:
   - "ICLR2026"
   - "计算生物"

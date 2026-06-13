@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification
 description: >-
-  [CVPR2026][强化学习][开放世界分类] 提出 SpeciaRL——一种特异性感知的强化学习框架，通过基于在线 rollout 最佳预测的动态奖励信号，引导推理型大型多模态模型在开放世界细粒度图像分类中同时提升预测的特异性和正确性。
+  [CVPR2026][强化学习][开放世界分类] 提出 SpeciaRL——一种特异性感知的强化学习框架，通过基于在线 rollout 最佳预测的动态奖励信号，引导推理型大型多模态模型在开放世界细粒度图像分类中同时提升预测的特异性和正确性。 开放世界分类需求日益增长：传统图像分类在封闭词表下运行，但真实场景需要处理新兴类别和…
 tags:
   - "CVPR2026"
   - "强化学习"

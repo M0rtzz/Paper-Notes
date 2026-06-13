@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Research Brings Deeper Harm
 description: >-
-  [NeurIPS 2025][信息检索/RAG][deep research agent] 揭示 Deep Research (DR) 智能体的严重安全隐患——即使底层 LLM 能正确拒绝有害请求，部署为 DR 智能体后仍能生成详细专业的危险报告…
+  [NeurIPS 2025][信息检索/RAG][deep research agent] 揭示 Deep Research (DR) 智能体的严重安全隐患——即使底层 LLM 能正确拒绝有害请求，部署为 DR 智能体后仍能生成详细专业的危险报告；提出 Plan Injection 和 Intent Hijack 两种针对性越狱方法，以及 DeepREJECT 评估指标，在 6 个 LLM 上验证了 DR 智能体系统性地削弱了对齐机制。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

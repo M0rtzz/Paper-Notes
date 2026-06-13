@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Language Models to Reason Efficiently
 description: >-
-  [NeurIPS 2025][强化学习][高效推理] 通过在 RL 奖励中加入长度惩罚项——正确回答的奖励乘以 $(1 - \alpha \cdot \sigma(\text{norm\_len}))$，用单一超参数 $\alpha$ 控制 token-准确率权衡曲线…
+  [NeurIPS 2025][强化学习][高效推理] 通过在 RL 奖励中加入长度惩罚项——正确回答的奖励乘以 $(1 - \alpha \cdot \sigma(\text{norm\_len}))$，用单一超参数 $\alpha$ 控制 token-准确率权衡曲线，仅 100 步 RL 训练即可让 7B 推理模型减少 50% token 使用量而准确率仅下降 <5%。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

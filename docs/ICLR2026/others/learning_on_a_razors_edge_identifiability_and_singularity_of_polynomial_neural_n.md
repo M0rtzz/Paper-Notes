@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks
 description: >-
-  [ICLR 2026][可辨识性] 本文利用代数几何工具，对多项式激活的 MLP 和 CNN 进行了系统性分析：证明了 MLP 的有限可辨识性和 CNN 的唯一可辨识性，揭示了稀疏子网络对应神经流形的奇异点，并从"临界暴露性"角度给出了 MLP 稀疏偏差的几何解释——而 CNN 不具备这种偏差。
+  [ICLR 2026][可辨识性] 本文利用代数几何工具，对多项式激活的 MLP 和 CNN 进行了系统性分析：证明了 MLP 的有限可辨识性和 CNN 的唯一可辨识性，揭示了稀疏子网络对应神经流形的奇异点，并从"临界暴露性"角度给出了 MLP 稀疏偏差的几何解释——而 CNN 不具备这种偏差。 - 领域现状： 神经网络参数…
 tags:
   - "ICLR 2026"
   - "可辨识性"

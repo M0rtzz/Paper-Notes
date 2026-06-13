@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pixel Motion Diffusion Is What We Need for Robot Control
 description: >-
-  [CVPR 2026][图像生成][像素运动扩散] DAWN 提出两阶段全扩散框架——Motion Director 生成稠密像素运动场作为可解释中间表征，Action Expert 将其转化为可执行机器人动作序列…
+  [CVPR 2026][图像生成][像素运动扩散] DAWN 提出两阶段全扩散框架——Motion Director 生成稠密像素运动场作为可解释中间表征，Action Expert 将其转化为可执行机器人动作序列，在 CALVIN（Avg Len 4.00）、MetaWorld（Overall 65.4%）和真实世界均达到 SOTA，且模型容量和训练数据远小于竞争方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

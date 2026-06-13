@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CharaConsist: Fine-Grained Consistent Character Generation
 description: >-
-  [ICCV 2025][图像生成][一致性角色生成] 提出一种免训练的细粒度一致性角色生成方法，通过点跟踪注意力（Point-Tracking Attention）、自适应 token 合并和前景-背景解耦控制，首次在 DiT 架构（FLUX.1）上实现了高质量的跨图像角色一致性生成。
+  [ICCV 2025][图像生成][一致性角色生成] 提出一种免训练的细粒度一致性角色生成方法，通过点跟踪注意力（Point-Tracking Attention）、自适应 token 合并和前景-背景解耦控制，首次在 DiT 架构（FLUX.1）上实现了高质量的跨图像角色一致性生成。 一致性角色生成（Consistent…
 tags:
   - "ICCV 2025"
   - "图像生成"

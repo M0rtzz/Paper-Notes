@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning
 description: >-
-  [ICCV 2025][人体理解][视觉机器人操控] 提出 AR-VRM，首个通过显式模仿人类手部关键点来增强视觉机器人操控的方法，采用关键点视觉语言模型预训练从大规模人类动作视频中学习动作知识，并通过类比推理(Analogical Reasoning)建立人手关键点与机器人组件的映射。
+  [ICCV 2025][人体理解][视觉机器人操控] 提出 AR-VRM，首个通过显式模仿人类手部关键点来增强视觉机器人操控的方法，采用关键点视觉语言模型预训练从大规模人类动作视频中学习动作知识，并通过类比推理(Analogical Reasoning)建立人手关键点与机器人组件的映射。 视觉机器人操控(VRM)需要配对的图…
 tags:
   - "ICCV 2025"
   - "人体理解"

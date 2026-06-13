@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WebClipper: Efficient Evolution of Web Agents with Graph-based Trajectory Pruning
 description: >-
-  [ACL2026][LLM Agent][Web Agent] WebClipper 把 Web Agent 的长工具调用轨迹建模成“动作节点-信息节点”状态图，再挖掘最小必要 DAG 来剪掉循环搜索和无效分支…
+  [ACL2026][LLM Agent][Web Agent] WebClipper 把 Web Agent 的长工具调用轨迹建模成“动作节点-信息节点”状态图，再挖掘最小必要 DAG 来剪掉循环搜索和无效分支，使 Deep Research 类 agent 平均减少约 21% 工具轮次和 19.4% token，同时保持甚至提升准确率。
 tags:
   - "ACL2026"
   - "LLM Agent"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2602.12852](https://arxiv.org/abs/2602.12852)  
 **代码**: https://github.com/AQ-MedAI/AntAFu-DeepResearch  
-**领域**: llm_agent  
+**领域**: LLM Agent  
 **关键词**: Web Agent、轨迹剪枝、状态图、工具调用效率、Agent 训练
 
 ## 一句话总结

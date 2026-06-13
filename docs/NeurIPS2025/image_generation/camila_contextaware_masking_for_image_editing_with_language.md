@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAMILA: Context-Aware Masking for Image Editing with Language Alignment
 description: >-
-  [NeurIPS 2025][图像生成][上下文感知编辑] 提出 CAMILA，一种上下文感知的图像编辑方法，利用多模态大语言模型（MLLM）自动判断指令是否可在给定图像上执行，生成 [MASK]/[NEG] 专用 token 区分可编辑区域和应忽略区域，实现精准多指令编辑并有效过滤不可执行指令。
+  [NeurIPS 2025][图像生成][上下文感知编辑] 提出 CAMILA，一种上下文感知的图像编辑方法，利用多模态大语言模型（MLLM）自动判断指令是否可在给定图像上执行，生成 [MASK]/[NEG] 专用 token 区分可编辑区域和应忽略区域，实现精准多指令编辑并有效过滤不可执行指令。 文本引导图像编辑已成为内容…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

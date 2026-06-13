@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tracing and Reversing Edits in LLMs
 description: >-
-  [ICLR 2026][社会计算][knowledge editing] 针对知识编辑（Knowledge Editing）的双重使用风险，提出 EditScope 方法从编辑后的权重中推断被编辑的目标实体（准确率高达 99%）…
+  [ICLR 2026][社会计算][knowledge editing] 针对知识编辑（Knowledge Editing）的双重使用风险，提出 EditScope 方法从编辑后的权重中推断被编辑的目标实体（准确率高达 99%），以及基于 SVD bottom-rank 近似的无训练编辑逆转方法（逆转率高达 94%），仅依赖编辑后的权重、不需要编辑 prompt 或原始权重信息。
 tags:
   - "ICLR 2026"
   - "社会计算"

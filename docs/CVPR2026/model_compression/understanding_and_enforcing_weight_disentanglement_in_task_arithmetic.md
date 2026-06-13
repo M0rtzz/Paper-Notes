@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Enforcing Weight Disentanglement in Task Arithmetic
 description: >-
-  [CVPR 2026][模型压缩][任务算术] 本文提出任务特征专业化（TFS）作为权重解耦的充分条件，揭示其几何结果是权重向量正交性，并基于此提出 OrthoReg 正则化方法，通过在微调时强制权重更新矩阵的列向量正交来促进任务向量解耦，显著提升各种任务算术方法的性能。
+  [CVPR 2026][模型压缩][任务算术] 本文提出任务特征专业化（TFS）作为权重解耦的充分条件，揭示其几何结果是权重向量正交性，并基于此提出 OrthoReg 正则化方法，通过在微调时强制权重更新矩阵的列向量正交来促进任务向量解耦，显著提升各种任务算术方法的性能。 1. 领域现状：任务算术（Task Arithmet…
 tags:
   - "CVPR 2026"
   - "模型压缩"

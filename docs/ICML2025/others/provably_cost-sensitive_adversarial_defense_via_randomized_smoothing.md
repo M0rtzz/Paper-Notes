@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing
 description: >-
-  [ICML2025][randomized smoothing] 基于 randomized smoothing 框架提出"代价敏感认证半径"（cost-sensitive certified radius），首次实现可扩展到大模型与高维数据的代价敏感对抗鲁棒性认证与训练…
+  [ICML2025][randomized smoothing] 基于 randomized smoothing 框架提出"代价敏感认证半径"（cost-sensitive certified radius），首次实现可扩展到大模型与高维数据的代价敏感对抗鲁棒性认证与训练，在保持整体准确率的同时显著提升对高代价误分类的鲁棒性。
 tags:
   - "ICML2025"
   - "randomized smoothing"

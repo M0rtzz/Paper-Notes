@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Erasure or Erosion? Evaluating Compositional Degradation in Unlearned Text-To-Image Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][概念擦除] 本文系统评估了16种文本到图像扩散模型概念擦除（unlearning）方法在安全性（擦除成功率）与组合性生成能力之间的权衡，揭示了激进擦除策略在去除不良内容的同时严重破坏了模型的属性绑定、空间推理和计数能力，强调安全干预不应以牺牲模型语义逻辑为代价。
+  [CVPR 2026][图像生成][概念擦除] 本文系统评估了16种文本到图像扩散模型概念擦除（unlearning）方法在安全性（擦除成功率）与组合性生成能力之间的权衡，揭示了激进擦除策略在去除不良内容的同时严重破坏了模型的属性绑定、空间推理和计数能力，强调安全干预不应以牺牲模型语义逻辑为代价。 1. 领域现状：文本到图像…
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Which LLM Multi-Agent Protocol to Choose?
 description: >-
-  [ICLR 2026][多智能体][多Agent协议] 本文提出ProtocolBench基准和ProtocolRouter路由器，首次系统性比较了多Agent系统中的通信协议（A2A、ACP、ANP、Agora等）在任务成功率、延迟、消息开销和鲁棒性四个维度上的差异…
+  [ICLR 2026][多智能体][多Agent协议] 本文提出ProtocolBench基准和ProtocolRouter路由器，首次系统性比较了多Agent系统中的通信协议（A2A、ACP、ANP、Agora等）在任务成功率、延迟、消息开销和鲁棒性四个维度上的差异，并通过可学习的协议路由器实现场景自适应的协议选择，最高降低18.1%的故障恢复时间。
 tags:
   - "ICLR 2026"
   - "多智能体"

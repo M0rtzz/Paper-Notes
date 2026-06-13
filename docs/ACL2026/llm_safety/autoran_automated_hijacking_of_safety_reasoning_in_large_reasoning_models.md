@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoRAN: Automated Hijacking of Safety Reasoning in Large Reasoning Models
 description: >-
-  [ACL 2026][LLM安全][推理劫持] 本文提出首个自动化攻击 LRM 内部安全推理的框架 AutoRAN：用一个**弱但少对齐**的小模型先模拟目标 LRM 的「执行推理」生成叙事性 prompt，再根据目标拒绝时泄露的 CoT 反馈迭代精炼…
+  [ACL 2026][LLM安全][推理劫持] 本文提出首个自动化攻击 LRM 内部安全推理的框架 AutoRAN：用一个**弱但少对齐**的小模型先模拟目标 LRM 的「执行推理」生成叙事性 prompt，再根据目标拒绝时泄露的 CoT 反馈迭代精炼，在 gpt-o3 / o4-mini / Gemini-2.5-Flash 上对 AdvBench、HarmBench、StrongReject 达到**接近 100% 的攻击成功率**，且常常只需 1 轮。
 tags:
   - "ACL 2026"
   - "LLM安全"

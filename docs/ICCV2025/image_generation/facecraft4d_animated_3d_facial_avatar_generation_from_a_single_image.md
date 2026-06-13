@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FaceCraft4D: Animated 3D Facial Avatar Generation from a Single Image
 description: >-
-  [ICCV 2025][图像生成][4D头部生成] 本文提出 FaceCraft4D 框架，通过组合 3D形状先验（PanoHead GAN反演）、2D图像先验（扩散模型增强纹理）和视频先验（LivePortrait 生成表情动画），从单张图像生成可动画的360度4D面部头像…
+  [ICCV 2025][图像生成][4D头部生成] 本文提出 FaceCraft4D 框架，通过组合 3D形状先验（PanoHead GAN反演）、2D图像先验（扩散模型增强纹理）和视频先验（LivePortrait 生成表情动画），从单张图像生成可动画的360度4D面部头像，并提出 COIN 训练策略解决多视角数据不一致问题，实现高质量实时渲染（156 FPS）。
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TLPO: Token-Level Policy Optimization for Mitigating Language Confusion in Large Language Models
 description: >-
-  [ACL2026][多语言/翻译][语言混淆] TLPO 将多语言 LLM 的语言混淆视为可定位的局部 token 错误，只在首次混淆位置的高概率候选 token 上做策略优化，从而在显著提高目标语言一致性的同时尽量保留模型原有推理和知识能力。
+  [ACL2026][多语言/翻译][语言混淆] TLPO 将多语言 LLM 的语言混淆视为可定位的局部 token 错误，只在首次混淆位置的高概率候选 token 上做策略优化，从而在显著提高目标语言一致性的同时尽量保留模型原有推理和知识能力。 领域现状：多语言 LLM 在跨语言指令、目标语言回答和代码/数学混合语境中经常发…
 tags:
   - "ACL2026"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incorporating Domain Knowledge into Materials Tokenization
 description: >-
-  [ACL 2025][预训练][材料科学] 提出 MATTER——一种面向材料科学的领域感知分词框架，通过训练材料概念检测器 MatDetector 并将检测结果注入分词的合并排序中，避免领域术语碎片化，在生成和分类任务上分别平均提升 4% 和 2%。
+  [ACL 2025][预训练][材料科学] 提出 MATTER——一种面向材料科学的领域感知分词框架，通过训练材料概念检测器 MatDetector 并将检测结果注入分词的合并排序中，避免领域术语碎片化，在生成和分类任务上分别平均提升 4% 和 2%。 领域现状 领域现状：领域现状：语言模型在材料科学中的应用日益增多（Mat…
 tags:
   - "ACL 2025"
   - "预训练"

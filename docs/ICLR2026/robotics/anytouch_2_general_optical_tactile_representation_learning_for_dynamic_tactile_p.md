@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception
 description: >-
-  [ICLR 2026][机器人][触觉表示学习] AnyTouch 2提出触觉动态金字塔框架，构建包含242.6万接触样本的ToucHD层级数据集（涵盖原子动作、真实操控和触力配对数据），并设计统一像素级、语义级和物理级三层次动态感知的触觉表征学习框架…
+  [ICLR 2026][机器人][触觉表示学习] AnyTouch 2提出触觉动态金字塔框架，构建包含242.6万接触样本的ToucHD层级数据集（涵盖原子动作、真实操控和触力配对数据），并设计统一像素级、语义级和物理级三层次动态感知的触觉表征学习框架，在静态属性识别、动态物理预测和真实世界操控四项任务上全面超越现有方法。
 tags:
   - "ICLR 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboTwin: Dual-Arm Robot Benchmark with Generative Digital Twins
 description: >-
-  [CVPR 2025 (Highlight)][机器人][双臂机器人] RoboTwin提出了一个基于生成式数字孪生的双臂机器人基准框架，利用3D生成基础模型从单张2D图像创建物体数字孪生，并结合大语言模型自动生成机器人操作代码…
+  [CVPR 2025 (Highlight)][机器人][双臂机器人] RoboTwin提出了一个基于生成式数字孪生的双臂机器人基准框架，利用3D生成基础模型从单张2D图像创建物体数字孪生，并结合大语言模型自动生成机器人操作代码，在仿真预训练+少量真实数据微调的范式下实现了单臂任务成功率提升70%、双臂任务提升40%的显著效果。
 tags:
   - "CVPR 2025 (Highlight)"
   - "机器人"

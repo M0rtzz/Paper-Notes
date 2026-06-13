@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Label Cluster Discrimination for Visual Representation Learning
 description: >-
-  [ECCV 2024][信息检索/RAG][视觉表征学习] 提出多标签聚类判别方法 MLCD，通过为每张图像分配多个聚类伪标签并设计消歧多标签分类损失，在 LAION-400M 上预训练的 ViT 在 linear probe、zero-shot 分类和检索任务上全面超越 OpenCLIP、FLIP 和 UN…
+  [ECCV 2024][信息检索/RAG][视觉表征学习] 提出多标签聚类判别方法 MLCD，通过为每张图像分配多个聚类伪标签并设计消歧多标签分类损失，在 LAION-400M 上预训练的 ViT 在 linear probe、zero-shot 分类和检索任务上全面超越 OpenCLIP、FLIP 和 UNICOM。
 tags:
   - "ECCV 2024"
   - "信息检索/RAG"

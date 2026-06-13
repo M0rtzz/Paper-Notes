@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Raising the Bar: Investigating the Values of Large Language Models via Generative Evolving Testing
 description: >-
-  [ICML 2025][社会计算][价值对齐评估] 提出 GETA 框架，将心理测量学中的计算机自适应测试（CAT）与自动出题（AIG）结合，通过变分 IRT 和 LLM 驱动的题目生成器动态探测 LLM 的价值边界…
+  [ICML 2025][社会计算][价值对齐评估] 提出 GETA 框架，将心理测量学中的计算机自适应测试（CAT）与自动出题（AIG）结合，通过变分 IRT 和 LLM 驱动的题目生成器动态探测 LLM 的价值边界，解决静态基准因数据泄漏和难度饱和导致的"评估时效性效应"（evaluation chronoeffect）问题。
 tags:
   - "ICML 2025"
   - "社会计算"

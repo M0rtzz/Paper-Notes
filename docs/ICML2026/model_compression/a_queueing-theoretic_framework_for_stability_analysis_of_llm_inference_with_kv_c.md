@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Queueing-Theoretic Framework for Stability Analysis of LLM Inference with KV Cache Memory Constraints
 description: >-
-  [ICML 2026][模型压缩][排队论] 本文建立首个显式纳入 KV 缓存显存动态的 LLM 推理排队模型，给出闭形稳定性条件 $\lambda < \mu(1-\delta)$，使运维人员可直接计算所需 GPU 数…
+  [ICML 2026][模型压缩][排队论] 本文建立首个显式纳入 KV 缓存显存动态的 LLM 推理排队模型，给出闭形稳定性条件 $\lambda < \mu(1-\delta)$，使运维人员可直接计算所需 GPU 数；在单 GPU、8 GPU 集群与 LongBench 真实数据上验证误差均 $\leq 10\%$。
 tags:
   - "ICML 2026"
   - "模型压缩"

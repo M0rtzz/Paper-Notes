@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conspiracy Theories and Where to Find Them on TikTok
 description: >-
-  [ACL 2025][社会计算][阴谋论] 首个TikTok阴谋论系统性分析：通过官方API收集美国150万条长视频，利用标签富集和远程监督识别阴谋论内容（每月约1000条新视频），评估TikTok创作者激励计划的影响…
+  [ACL 2025][社会计算][阴谋论] 首个TikTok阴谋论系统性分析：通过官方API收集美国150万条长视频，利用标签富集和远程监督识别阴谋论内容（每月约1000条新视频），评估TikTok创作者激励计划的影响，并测试开源LLM（Llama3、Mistral、Gemma）在基于音频转录的阴谋论检测上的效果（精确率高达96%但整体水平与微调RoBERTa相当）。
 tags:
   - "ACL 2025"
   - "社会计算"

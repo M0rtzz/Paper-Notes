@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Open-Canopy: Towards Very High Resolution Forest Monitoring
 description: >-
-  [CVPR 2025][自动驾驶][树冠高度估计] Open-Canopy 提出了首个开放获取的国家级超高分辨率（1.5m）树冠高度估计基准数据集，覆盖法国超过 87,000 km²，结合 SPOT 卫星影像和航空 LiDAR 数据，同时还提出了树冠高度变化检测的基准任务 Open-Canopy-Δ…
+  [CVPR 2025][自动驾驶][树冠高度估计] Open-Canopy 提出了首个开放获取的国家级超高分辨率（1.5m）树冠高度估计基准数据集，覆盖法国超过 87,000 km²，结合 SPOT 卫星影像和航空 LiDAR 数据，同时还提出了树冠高度变化检测的基准任务 Open-Canopy-Δ，在系列 SOTA 模型上建立了全面的实验基准。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

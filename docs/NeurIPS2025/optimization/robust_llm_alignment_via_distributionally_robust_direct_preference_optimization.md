@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust LLM Alignment via Distributionally Robust Direct Preference Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][DRO] 通过分布鲁棒优化（DRO）框架提出 WDPO（Wasserstein）和 KLDPO（KL散度）两种鲁棒 DPO 变体，解决用户偏好分布转移导致的对齐失败问题，提供 $O(n^{-1/4})$ 收敛保证…
+  [NeurIPS 2025][优化/理论][DRO] 通过分布鲁棒优化（DRO）框架提出 WDPO（Wasserstein）和 KLDPO（KL散度）两种鲁棒 DPO 变体，解决用户偏好分布转移导致的对齐失败问题，提供 $O(n^{-1/4})$ 收敛保证，在多维对齐任务和 OpenLLM 榜单上显著优于标准 DPO。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

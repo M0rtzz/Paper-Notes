@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TimeRewarder: Learning Dense Reward from Passive Videos via Frame-wise Temporal Distance
 description: >-
-  [ICML 2026][机器人][稠密奖励学习] TimeRewarder 把"任务进度"形式化为视频帧对之间的归一化时间距离，仅用动作无关的专家视频自监督训练一个 ViT 距离回归器，并将相邻帧距离作为稠密奖励喂给 DrQ-v2…
+  [ICML 2026 Spotlight][机器人][稠密奖励学习] TimeRewarder 把"任务进度"形式化为视频帧对之间的归一化时间距离，仅用动作无关的专家视频自监督训练一个 ViT 距离回归器，并将相邻帧距离作为稠密奖励喂给 DrQ-v2，在 10 个 Meta-World 任务上以 200K 交互逼近 9/10 满分，甚至超过手工设计的环境稠密奖励。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "机器人"
   - "稠密奖励学习"
   - "时间距离"

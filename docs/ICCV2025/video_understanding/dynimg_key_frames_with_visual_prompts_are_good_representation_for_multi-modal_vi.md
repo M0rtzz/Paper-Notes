@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynImg: Key Frames with Visual Prompts are Good Representation for Multi-Modal Video Understanding
 description: >-
-  [ICCV 2025][视频理解][视频表示] DynImg 提出了一种新颖的视频表示方法，将非关键帧作为"时序视觉提示"叠加在关键帧下方形成动态图像，在视觉编码器内部实现细粒度时空交互（而非高层token级交互），配合4D旋转位置编码维护正确的时空序列关系…
+  [ICCV 2025][视频理解][视频表示] DynImg 提出了一种新颖的视频表示方法，将非关键帧作为"时序视觉提示"叠加在关键帧下方形成动态图像，在视觉编码器内部实现细粒度时空交互（而非高层token级交互），配合4D旋转位置编码维护正确的时空序列关系，在多个视频理解基准上以更少的视觉token超越SOTA约2%。
 tags:
   - "ICCV 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Zero-Shot Generalization for CLIP with Variational Adapter
 description: >-
-  [ECCV 2024][模型压缩][CLIP] 提出 Prompt-based Variational Adapter (PVA)，通过变分适配器将 base 和 novel 类别样本在隐空间中分离，采用分治策略分别处理，结合残差连接增强 novel 类别的迁移能力…
+  [ECCV 2024][模型压缩][CLIP] 提出 Prompt-based Variational Adapter (PVA)，通过变分适配器将 base 和 novel 类别样本在隐空间中分离，采用分治策略分别处理，结合残差连接增强 novel 类别的迁移能力，在广义零样本学习和跨数据集迁移学习基准上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stage-wise Distortion-Perception Traversal in Zero-shot Inverse Problems with Diffusion Models
 description: >-
-  [ICML 2026][图像生成][distortion-perception tradeoff] 提出 MAP-RPS 两阶段框架：先用扩散模型的 score 做 MAP 估计逼近 MMSE 解（低失真起点）…
+  [ICML 2026][图像生成][distortion-perception tradeoff] 提出 MAP-RPS 两阶段框架：先用扩散模型的 score 做 MAP 估计逼近 MMSE 解（低失真起点），再把 MAP 结果 re-noise 到时刻 $t_0$ 后做后验采样（沿 D-P 曲线滑向高感知质量），单一预训练扩散模型就能在推理时灵活遍历 distortion-perception trade-off，并扩展到 latent diffusion 后在 MS-COCO 上多任务 SOTA。
 tags:
   - "ICML 2026"
   - "图像生成"

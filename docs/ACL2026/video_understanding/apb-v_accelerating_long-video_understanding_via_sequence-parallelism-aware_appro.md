@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APB-V: Accelerating Long-Video Understanding via Sequence-Parallelism-aware Approximate Attention
 description: >-
-  [ACL2026][视频理解][长视频理解] APB-V 用面向序列并行的近似注意力和系统级负载均衡加速长视频 LMM 推理，在保留完整视觉 embedding 的同时，在 64 帧 1440p 设置下相对 FlashAttn、ZigZagRing 和 APB 分别达到 12.72×、1.70× 和 1.18…
+  [ACL2026][视频理解][长视频理解] APB-V 用面向序列并行的近似注意力和系统级负载均衡加速长视频 LMM 推理，在保留完整视觉 embedding 的同时，在 64 帧 1440p 设置下相对 FlashAttn、ZigZagRing 和 APB 分别达到 12.72×、1.70× 和 1.18× 加速，且没有显著性能损失。
 tags:
   - "ACL2026"
   - "视频理解"

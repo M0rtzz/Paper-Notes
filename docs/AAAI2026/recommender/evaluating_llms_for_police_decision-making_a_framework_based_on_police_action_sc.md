@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating LLMs for Police Decision-Making: A Framework Based on Police Action Scenarios
 description: >-
-  [AAAI 2026][推荐系统][LLM评估] 提出 PAS（Police Action Scenarios）评估框架，一个面向警务场景的 LLM 评估体系，涵盖场景定义、参考答案构建、LLM 响应生成、核心指标提取和性能解读五个阶段，基于 8000+ 韩国警察官方文件构建评估数据集…
+  [AAAI 2026][推荐系统][LLM评估] 提出 PAS（Police Action Scenarios）评估框架，一个面向警务场景的 LLM 评估体系，涵盖场景定义、参考答案构建、LLM 响应生成、核心指标提取和性能解读五个阶段，基于 8000+ 韩国警察官方文件构建评估数据集，发现商用 LLM（GPT-4、Gemini、Claude）在警务任务上显著低于参考答案，尤其在事实性和逻辑正确性方面。
 tags:
   - "AAAI 2026"
   - "推荐系统"

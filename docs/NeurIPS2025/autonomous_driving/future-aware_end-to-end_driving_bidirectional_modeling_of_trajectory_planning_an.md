@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution
 description: >-
-  [NEURIPS2025][自动驾驶][end-to-end driving] 提出 SeerDrive，通过双向建模场景演化与轨迹规划（未来感知规划 + 迭代交互），在 NAVSIM 和 nuScenes 上取得 SOTA。
+  [NEURIPS2025][自动驾驶][end-to-end driving] 提出 SeerDrive，通过双向建模场景演化与轨迹规划（未来感知规划 + 迭代交互），在 NAVSIM 和 nuScenes 上取得 SOTA。 现有端到端自动驾驶方法大多采用"一步式"范式：仅基于当前帧的传感器观测直接预测未来数秒的轨迹…
 tags:
   - "NEURIPS2025"
   - "自动驾驶"

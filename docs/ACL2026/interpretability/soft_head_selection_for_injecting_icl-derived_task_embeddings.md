@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SITE: Soft Head Selection for Injecting ICL-Derived Task Embeddings
 description: >-
-  [ACL 2026][可解释性][注意力头选择] SITE 提出了一种基于梯度优化的软注意力头选择方法，通过识别任务相关的注意力头来有效注入 ICL 衍生的任务嵌入，在 12 个 LLM（4B-70B）上显著超越 ICL 和现有嵌入方法，同时用远少于 PEFT 的可训练参数达到可比性能。
+  [ACL 2026 Findings][可解释性][注意力头选择] SITE 提出了一种基于梯度优化的软注意力头选择方法，通过识别任务相关的注意力头来有效注入 ICL 衍生的任务嵌入，在 12 个 LLM（4B-70B）上显著超越 ICL 和现有嵌入方法，同时用远少于 PEFT 的可训练参数达到可比性能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "可解释性"
   - "注意力头选择"
   - "任务嵌入"

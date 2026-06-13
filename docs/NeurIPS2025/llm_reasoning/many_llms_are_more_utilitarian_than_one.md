@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Many LLMs Are More Utilitarian Than One
 description: >-
-  [NeurIPS 2025][LLM推理][多Agent系统] 在6款LLM的对照实验中发现"功利主义增强(Utilitarian Boost)"现象——LLM在成对/三人组讨论道德困境后比独立判断时更倾向接受"为了多数人的利益而伤害少数人"，这一效应在涉及直接伤害的个人困境中尤为显著（$\beta=0.31…
+  [NeurIPS 2025][LLM推理][多Agent系统] 在6款LLM的对照实验中发现"功利主义增强(Utilitarian Boost)"现象——LLM在成对/三人组讨论道德困境后比独立判断时更倾向接受"为了多数人的利益而伤害少数人"，这一效应在涉及直接伤害的个人困境中尤为显著（$\beta=0.31, p<.0001$），且各模型产生功利主义增强的机制不同（有的因规范敏感性降低，有的因公正性增强）。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

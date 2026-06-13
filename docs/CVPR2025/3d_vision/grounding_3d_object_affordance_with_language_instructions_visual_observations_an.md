@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grounding 3D Object Affordance with Language Instructions, Visual Observations and Interactions
 description: >-
-  [CVPR 2025][3D视觉][3D affordance grounding] 提出首个多模态多视角 3D 功能区域定位任务和 AGPIL 数据集（30,972 对点云-图像-语言三元组），并设计基于 VLM 的 LMAffordance3D 框架…
+  [CVPR 2025][3D视觉][3D affordance grounding] 提出首个多模态多视角 3D 功能区域定位任务和 AGPIL 数据集（30,972 对点云-图像-语言三元组），并设计基于 VLM 的 LMAffordance3D 框架，融合 2D/3D 空间特征与语言语义实现从 full-view 到 partial/rotation-view 的泛化。
 tags:
   - "CVPR 2025"
   - "3D视觉"

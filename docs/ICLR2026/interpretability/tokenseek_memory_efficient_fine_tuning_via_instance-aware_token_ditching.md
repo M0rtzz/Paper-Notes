@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching
 description: >-
-  [ICLR 2026][可解释性][内存高效微调] 提出 TokenSeek，一个通用的 Transformer 微调内存优化插件，通过结合上下文注意力信息和梯度信息进行实例级 token 重要性评估，仅保留 10% 高价值 token 参与梯度更新…
+  [ICLR 2026][可解释性][内存高效微调] 提出 TokenSeek，一个通用的 Transformer 微调内存优化插件，通过结合上下文注意力信息和梯度信息进行实例级 token 重要性评估，仅保留 10% 高价值 token 参与梯度更新，实现最高 65.7% 内存节省且性能持平甚至超越全 token 微调。
 tags:
   - "ICLR 2026"
   - "可解释性"

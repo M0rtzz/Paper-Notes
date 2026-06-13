@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamDiT: Real-Time Streaming Text-to-Video Generation
 description: >-
-  [CVPR 2026][视频生成][流式视频生成] StreamDiT 提出了一套完整的流式视频生成方案（包括训练、建模和蒸馏），通过在 Flow Matching 中引入带渐进去噪的移动缓冲区和混合分区训练策略，结合时变 DiT 架构和窗口注意力，以及定制化的多步蒸馏方法…
+  [CVPR 2026][视频生成][流式视频生成] StreamDiT 提出了一套完整的流式视频生成方案（包括训练、建模和蒸馏），通过在 Flow Matching 中引入带渐进去噪的移动缓冲区和混合分区训练策略，结合时变 DiT 架构和窗口注意力，以及定制化的多步蒸馏方法，使 4B 参数模型在单 GPU 上达到 512p@16FPS 的实时流式视频生成。
 tags:
   - "CVPR 2026"
   - "视频生成"

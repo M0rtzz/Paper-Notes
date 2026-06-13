@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Subnet-Aware Dynamic Supernet Training for Neural Architecture Search
 description: >-
-  [CVPR 2025][神经架构搜索] 提出动态超网训练策略（CaLR + MS），通过复杂度感知的学习率调度解决子网训练不公平问题，以及动量分离技术缓解梯度噪声问题，以极低额外开销显著提升 N-shot NAS 的搜索性能。
+  [CVPR 2025][神经架构搜索] 提出动态超网训练策略（CaLR + MS），通过复杂度感知的学习率调度解决子网训练不公平问题，以及动量分离技术缓解梯度噪声问题，以极低额外开销显著提升 N-shot NAS 的搜索性能。 N-shot NAS 方法使用超网（supernet）包含所有候选子网，通过训练超网来预测子网性能…
 tags:
   - "CVPR 2025"
   - "神经架构搜索"

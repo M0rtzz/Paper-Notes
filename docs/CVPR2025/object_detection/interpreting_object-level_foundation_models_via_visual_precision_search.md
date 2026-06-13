@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpreting Object-level Foundation Models via Visual Precision Search
 description: >-
-  [CVPR 2025][目标检测][模型可解释性] 针对 Grounding DINO 和 Florence-2 等目标级基础模型的可解释性问题，本文提出 Visual Precision Search (VPS) 方法，通过超像素稀疏化+子模函数引导的贪心搜索精确定位关键决策子区域…
+  [CVPR 2025][目标检测][模型可解释性] 针对 Grounding DINO 和 Florence-2 等目标级基础模型的可解释性问题，本文提出 Visual Precision Search (VPS) 方法，通过超像素稀疏化+子模函数引导的贪心搜索精确定位关键决策子区域，在 MS COCO/RefCOCO/LVIS 上的忠实度指标(Insertion)分别超过 SOTA 方法 D-RISE 达 23.7%/20.1%/31.6%。
 tags:
   - "CVPR 2025"
   - "目标检测"

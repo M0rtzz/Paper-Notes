@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unseen Visual Anomaly Generation
 description: >-
-  [CVPR 2025][目标检测][视觉异常生成] 提出 AnomalyAny 框架，利用预训练 Stable Diffusion 的生成能力，通过注意力引导优化和提示引导精化，在仅需单张正常样本且无需额外训练的条件下，生成多样化逼真的未见异常样本。
+  [CVPR 2025][目标检测][视觉异常生成] 提出 AnomalyAny 框架，利用预训练 Stable Diffusion 的生成能力，通过注意力引导优化和提示引导精化，在仅需单张正常样本且无需额外训练的条件下，生成多样化逼真的未见异常样本。 视觉异常检测 (AD) 面临异常数据稀缺的核心挑战。现有异常生成方法存在两…
 tags:
   - "CVPR 2025"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Machines and Mathematical Mutations: Using GNNs to Characterize Quiver Mutation Classes
 description: >-
-  [ICML2025][图学习][图神经网络] 利用图神经网络 (GNN) 和可解释性技术研究箭图变异等价类问题，**独立重新发现**了 $\tilde{D}$ 型箭图变异类的组合刻画定理，展示了 ML 作为数学研究工具的价值。
+  [ICML2025][图学习][图神经网络] 利用图神经网络 (GNN) 和可解释性技术研究箭图变异等价类问题，独立重新发现：了 $\tilde{D}$ 型箭图变异类的组合刻画定理，展示了 ML 作为数学研究工具的价值。 箭图与箭图变异 箭图 (quiver)：是无自环、无 2-环的有向多重图，是簇代数理论的核心对象…
 tags:
   - "ICML2025"
   - "图学习"

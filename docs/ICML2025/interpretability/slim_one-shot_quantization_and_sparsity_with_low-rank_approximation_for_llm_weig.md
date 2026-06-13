@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLiM: One-shot Quantization and Sparsity with Low-rank Approximation for LLM Weight Compression
 description: >-
-  [ICML 2025][可解释性][one-shot compression] 提出 SLiM，一种一次性压缩框架，将硬件友好的均匀量化、半结构化稀疏和基于显著性的低秩适配器无缝整合，在 4-bit + 2:4 稀疏条件下准确率提升最高 5.66%。
+  [ICML 2025][可解释性][one-shot compression] 提出 SLiM，一种一次性压缩框架，将硬件友好的均匀量化、半结构化稀疏和基于显著性的低秩适配器无缝整合，在 4-bit + 2:4 稀疏条件下准确率提升最高 5.66%。 - 单独使用剪枝或量化可以有效降低推理成本，但联合使用时误差累积：导致严重…
 tags:
   - "ICML 2025"
   - "可解释性"

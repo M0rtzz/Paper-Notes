@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Prediction for Causal Effects of Continuous Treatments
 description: >-
-  [NeurIPS 2025][优化/理论][conformal prediction] 首次为连续处理变量（如药物剂量）的因果效应构建共形预测区间，通过倾向性偏移参数化和分位数回归，在已知/未知倾向性两种场景下均提供有限样本 $1-\alpha$ 覆盖保证。
+  [NeurIPS 2025][优化/理论][conformal prediction] 首次为连续处理变量（如药物剂量）的因果效应构建共形预测区间，通过倾向性偏移参数化和分位数回归，在已知/未知倾向性两种场景下均提供有限样本 $1-\alpha$ 覆盖保证。 领域现状：共形预测（Conformal Prediction…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

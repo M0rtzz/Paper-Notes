@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Has Machine Translation Evaluation Achieved Human Parity?
 description: >-
-  [ACL 2025][多语言/翻译][机器翻译评估] 首次将人类基线引入 WMT Metrics Shared Task 的排名，发现最先进的自动指标经常与人类评估者排名持平甚至更高，但论证了现在声称"人类对等"为时尚早，并讨论了衡量 MT 评估进步的根本困难。
+  [ACL 2025][多语言/翻译][机器翻译评估] 首次将人类基线引入 WMT Metrics Shared Task 的排名，发现最先进的自动指标经常与人类评估者排名持平甚至更高，但论证了现在声称"人类对等"为时尚早，并讨论了衡量 MT 评估进步的根本困难。 领域现状：MT 评估中，自动指标的性能通过与人类判断的一致性来…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

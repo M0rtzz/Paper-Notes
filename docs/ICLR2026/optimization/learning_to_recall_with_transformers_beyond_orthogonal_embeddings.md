@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Recall with Transformers Beyond Orthogonal Embeddings
 description: >-
-  [ICLR 2026][优化/理论][Transformer] 在随机（非正交）嵌入条件下分析单层 Transformer 在 token 检索任务上经验梯度下降的"早期阶段"，推导出模型存储容量的显式公式，揭示了样本量 N、嵌入维度 d 和序列长度 L 之间的乘法依赖关系…
+  [ICLR 2026][优化/理论][Transformer] 在随机（非正交）嵌入条件下分析单层 Transformer 在 token 检索任务上经验梯度下降的"早期阶段"，推导出模型存储容量的显式公式，揭示了样本量 N、嵌入维度 d 和序列长度 L 之间的乘法依赖关系，并证明这一缩放关系是信息论下界固有的。
 tags:
   - "ICLR 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting the Reliability of Language Models in Instruction-Following
 description: >-
-  [ACL2026][LLM评测][指令遵循] 本文提出 nuance-oriented reliability 和 reliable@k，用 IFEval++ 检验模型能否稳定处理语义相近但细节不同的 cousin prompts，发现即便高分模型在细微提示变化下也会显著掉线。
+  [ACL2026][LLM评测][指令遵循] 本文提出 nuance-oriented reliability 和 reliable@k，用 IFEval++ 检验模型能否稳定处理语义相近但细节不同的 cousin prompts，发现即便高分模型在细微提示变化下也会显著掉线。 领域现状：指令遵循能力通常通过 IFEval、…
 tags:
   - "ACL2026"
   - "LLM评测"

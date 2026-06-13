@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Document Summarization with Conformal Importance Guarantees
 description: >-
-  [NeurIPS 2025][医疗NLP][文档摘要] 首次将Conformal Prediction应用于文档摘要，通过校准句子重要性分数的阈值，为抽取式摘要提供用户可控的覆盖率($1-\alpha$)和召回率($\beta$)的严格统计保证，方法模型无关且仅需小规模校准集。
+  [NeurIPS 2025][医疗NLP][文档摘要] 首次将Conformal Prediction应用于文档摘要，通过校准句子重要性分数的阈值，为抽取式摘要提供用户可控的覆盖率($1-\alpha$)和召回率($\beta$)的严格统计保证，方法模型无关且仅需小规模校准集。 领域现状：LLM大幅提升了摘要质量…
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

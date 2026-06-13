@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is PRM Necessary? Problem-Solving RL Implicitly Induces PRM Capability in LLMs
 description: >-
-  [NeurIPS 2025][信息检索/RAG][过程奖励模型] 系统研究表明纯 RL 训练（无需显式 PRM 监督）能隐式诱导出强大的过程判断能力，且现有 PRM 在 DeepSeek-R1/QwQ-32B 等强推理模型上甚至不如简单多数投票有效；提出 Self-PRM 让模型用自身的内部奖励信号重排输出…
+  [NeurIPS 2025][信息检索/RAG][过程奖励模型] 系统研究表明纯 RL 训练（无需显式 PRM 监督）能隐式诱导出强大的过程判断能力，且现有 PRM 在 DeepSeek-R1/QwQ-32B 等强推理模型上甚至不如简单多数投票有效；提出 Self-PRM 让模型用自身的内部奖励信号重排输出，一致性地优于外部 PRM。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

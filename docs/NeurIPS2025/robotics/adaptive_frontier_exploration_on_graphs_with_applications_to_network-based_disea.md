@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Frontier Exploration on Graphs with Applications to Network-Based Disease Testing
 description: >-
-  [NeurIPS 2025][机器人][Gittins Index] 提出 Adaptive Frontier Exploration on Graphs (AFEG) 问题框架，设计基于 Gittins index 的策略，在图是森林时可证明最优…
+  [NeurIPS 2025][机器人][Gittins Index] 提出 Adaptive Frontier Exploration on Graphs (AFEG) 问题框架，设计基于 Gittins index 的策略，在图是森林时可证明最优，在实际性传播疾病检测网络上仅测试一半人口即可检出几乎全部 HIV 感染者，大幅超越贪心和 DQN 等基线。
 tags:
   - "NeurIPS 2025"
   - "机器人"

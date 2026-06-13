@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting MLLM Reasoning with Text-Debiased Hint-GRPO
 description: >-
-  [ICCV 2025][多模态VLM][MLLM推理] 揭示GRPO在MLLM推理中的两大问题——低数据利用率（难题上所有输出均错误导致梯度无效）和文本偏差（模型忽视图像仅依赖文本推理），提出Hint-GRPO（自适应提供推理提示）和文本偏差校准（测试时增强图像条件）两套方案…
+  [ICCV 2025][多模态VLM][MLLM推理] 揭示GRPO在MLLM推理中的两大问题——低数据利用率（难题上所有输出均错误导致梯度无效）和文本偏差（模型忽视图像仅依赖文本推理），提出Hint-GRPO（自适应提供推理提示）和文本偏差校准（测试时增强图像条件）两套方案，在3个基座MLLM上的11个数据集上显著提升推理能力。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIMU: Selective Influence Machine Unlearning
 description: >-
-  [NeurIPS 2025][LLM安全][机器遗忘] 提出 SIMU 两阶段框架：先通过梯度聚合识别编码遗忘集信息的关键 MLP 神经元，再仅对这些神经元进行二阶（Sophia）优化遗忘，在保持遗忘效果的同时大幅提升模型原有能力的保留。
+  [NeurIPS 2025][LLM安全][机器遗忘] 提出 SIMU 两阶段框架：先通过梯度聚合识别编码遗忘集信息的关键 MLP 神经元，再仅对这些神经元进行二阶（Sophia）优化遗忘，在保持遗忘效果的同时大幅提升模型原有能力的保留。 大语言模型（LLM）会记忆训练数据中的敏感信息，这在数据隐私和 AI 安全方面引发严重…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

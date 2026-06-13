@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Over-Alignment vs Over-Fitting: The Role of Feature Learning Strength in Generalization
 description: >-
-  [ICML2026][特征学习强度] 首次在标准分类任务里实证发现"特征学习强度（FLS）存在最优值"——既不是越大越好也不是越小越好——并用两层 ReLU 网络在 logistic loss 下的有限时间梯度流分析，把过大 FLS 引起的过拟合与过小 FLS 引起的"过对齐"分解为可量化的两个对立项…
+  [ICML2026][特征学习强度] 首次在标准分类任务里实证发现"特征学习强度（FLS）存在最优值"——既不是越大越好也不是越小越好——并用两层 ReLU 网络在 logistic loss 下的有限时间梯度流分析，把过大 FLS 引起的过拟合与过小 FLS 引起的"过对齐"分解为可量化的两个对立项，从而严格刻画最优 FLS 的存在性。
 tags:
   - "ICML2026"
   - "特征学习强度"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition
 description: >-
-  [ECCV 2024][人体理解][知识蒸馏] 提出AdaDistill，将知识蒸馏概念嵌入margin penalty softmax loss中，通过基于EMA的自适应类中心（早期用sample-sample简单知识、后期用sample-center复杂知识）和困难样本感知机制…
+  [ECCV 2024][人体理解][知识蒸馏] 提出AdaDistill，将知识蒸馏概念嵌入margin penalty softmax loss中，通过基于EMA的自适应类中心（早期用sample-sample简单知识、后期用sample-center复杂知识）和困难样本感知机制，无需额外超参数即可提升轻量级人脸识别模型的判别能力，在IJB-B/C和ICCV21-MFR等挑战性基准上超越SOTA蒸馏方法。
 tags:
   - "ECCV 2024"
   - "人体理解"

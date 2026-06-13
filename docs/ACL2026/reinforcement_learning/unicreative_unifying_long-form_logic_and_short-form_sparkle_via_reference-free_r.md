@@ -2,9 +2,9 @@
 title: >-
   [论文解读] UniCreative: Unifying Long-form Logic and Short-form Sparkle via Reference-Free Reinforcement Learning
 description: >-
-  [ACL 2026][强化学习][创意写作] 本文提出 UniCreative 框架，通过自适应约束偏好优化（ACPO）和自适应标准生成式奖励模型（AC-GenRM），在无需 SFT 和参考答案的条件下统一长文本（规划→写作）和短文本（直接生成）两种创意写作模式，模型涌现出自主区分任务类型的元认知能力。
+  [ACL 2026 Findings][强化学习][创意写作] 本文提出 UniCreative 框架，通过自适应约束偏好优化（ACPO）和自适应标准生成式奖励模型（AC-GenRM），在无需 SFT 和参考答案的条件下统一长文本（规划→写作）和短文本（直接生成）两种创意写作模式，模型涌现出自主区分任务类型的元认知能力。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "创意写作"
   - "无参考强化学习"

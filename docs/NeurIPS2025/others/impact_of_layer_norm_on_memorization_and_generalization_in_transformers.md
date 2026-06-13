@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Impact of Layer Norm on Memorization and Generalization in Transformers
 description: >-
-  [NeurIPS 2025][Layer Normalization] 系统揭示了LayerNorm在Pre-LN和Post-LN Transformer中的**截然不同**角色：Pre-LN中LN对学习至关重要，移除会破坏泛化；Post-LN中LN驱动记忆化，移除可抑制记忆化并恢复真实标签。
+  [NeurIPS 2025][Layer Normalization] 系统揭示了LayerNorm在Pre-LN和Post-LN Transformer中的截然不同：角色：Pre-LN中LN对学习至关重要，移除会破坏泛化；Post-LN中LN驱动记忆化，移除可抑制记忆化并恢复真实标签。 Layer Normalizatio…
 tags:
   - "NeurIPS 2025"
   - "Layer Normalization"

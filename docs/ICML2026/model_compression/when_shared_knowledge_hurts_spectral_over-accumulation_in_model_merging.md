@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Shared Knowledge Hurts: Spectral Over-Accumulation in Model Merging
 description: >-
-  [ICML2026][模型压缩][模型合并] 这篇论文指出模型合并不仅会有任务冲突，还会把跨任务共享的谱方向重复累加成过大的奇异值，并提出无需训练和数据的 Singular Value Calibration，在不改奇异向量的情况下重标定奇异值，从而稳定提升视觉与语言任务的合并效果。
+  [ICML2026][模型压缩][模型合并] 这篇论文指出模型合并不仅会有任务冲突，还会把跨任务共享的谱方向重复累加成过大的奇异值，并提出无需训练和数据的 Singular Value Calibration，在不改奇异向量的情况下重标定奇异值，从而稳定提升视觉与语言任务的合并效果。 领域现状：模型合并希望把多个同底座微调模…
 tags:
   - "ICML2026"
   - "模型压缩"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.05536](https://arxiv.org/abs/2602.05536)  
 **代码**: https://github.com/lyymuwu/SVC  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: 模型合并, 谱校准, 奇异值, 任务向量, 数据无关后处理
 
 ## 一句话总结

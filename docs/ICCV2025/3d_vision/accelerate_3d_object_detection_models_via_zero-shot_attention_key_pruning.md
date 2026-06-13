@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accelerate 3D Object Detection Models via Zero-Shot Attention Key Pruning
 description: >-
-  [ICCV 2025][3D视觉][3D目标检测] 提出 tgGBC（trim keys gradually Guided By Classification scores），一种零样本运行时剪枝方法，利用分类分数与注意力图的乘积计算键重要性，逐层剪除不重要的键…
+  [ICCV 2025][3D视觉][3D目标检测] 提出 tgGBC（trim keys gradually Guided By Classification scores），一种零样本运行时剪枝方法，利用分类分数与注意力图的乘积计算键重要性，逐层剪除不重要的键，在多个3D检测器上实现Transformer解码器近2×加速且性能损失<1%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

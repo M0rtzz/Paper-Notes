@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoDa-4DGS: Dynamic Gaussian Splatting with Context and Deformation Awareness for Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][4D高斯泼溅] CoDa-4DGS 在 4D 高斯泼溅（4DGS）框架中引入上下文感知（2D 语义基础模型自监督 4D 语义特征）和时序形变感知（追踪相邻帧间高斯的形变），通过联合编码语义和形变特征为每个高斯提供动态补偿线索…
+  [ICCV 2025][自动驾驶][4D高斯泼溅] CoDa-4DGS 在 4D 高斯泼溅（4DGS）框架中引入上下文感知（2D 语义基础模型自监督 4D 语义特征）和时序形变感知（追踪相邻帧间高斯的形变），通过联合编码语义和形变特征为每个高斯提供动态补偿线索，在自动驾驶动态场景渲染中捕获更精细的细节并超越现有自监督方法。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

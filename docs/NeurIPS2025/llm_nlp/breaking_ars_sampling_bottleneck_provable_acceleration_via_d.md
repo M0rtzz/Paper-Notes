@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models
 description: >-
-  [NeurIPS2025][LLM/NLP][扩散模型] 从信息论角度为掩码扩散语言模型建立了完整的采样收敛理论：证明 KL 散度形式的采样误差以 $O(1/T)$ 速率衰减、与 token 间互信息线性相关，并给出匹配的下界证明了分析的紧性…
+  [NeurIPS2025][LLM 其他][扩散模型] 从信息论角度为掩码扩散语言模型建立了完整的采样收敛理论：证明 KL 散度形式的采样误差以 $O(1/T)$ 速率衰减、与 token 间互信息线性相关，并给出匹配的下界证明了分析的紧性，理论上论证了扩散模型可以在 $T < L$（序列长度）步内生成高质量样本。
 tags:
   - "NeurIPS2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散模型"
   - "convergence guarantee"
   - "mutual information"

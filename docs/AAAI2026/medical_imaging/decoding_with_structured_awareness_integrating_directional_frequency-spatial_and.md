@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decoding with Structured Awareness: Integrating Directional, Frequency-Spatial, and Structural Attention for Medical Image Segmentation
 description: >-
-  [AAAI 2026][医学图像][医学图像分割] 提出面向医学图像分割的新型解码器框架，包含三个模块：方向感知的自适应交叉融合注意力（ACFA）、空间-频率-小波三分支融合注意力（TFFA）和结构感知多尺度掩码模块（SMMM），在多个基准数据集上超越现有方法。
+  [AAAI 2026][医学图像][医学图像分割] 提出面向医学图像分割的新型解码器框架，包含三个模块：方向感知的自适应交叉融合注意力（ACFA）、空间-频率-小波三分支融合注意力（TFFA）和结构感知多尺度掩码模块（SMMM），在多个基准数据集上超越现有方法。 - 医学图像分割对器官/肿瘤/病变的精确勾画至关重要…
 tags:
   - "AAAI 2026"
   - "医学图像"

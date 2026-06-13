@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Life, Machine Learning, and the Search for Habitability: Predicting Biosignature Fluxes for the Habitable Worlds Observatory
 description: >-
-  [AAAI 2026 (IAAI Emerging Applications)][系外行星] 本文为 NASA 宜居世界天文台（HWO）的系外行星观测优先级排序需求，提出贝叶斯卷积神经网络（BCNN）和新型光谱查询自适应 Transformer（SQuAT）两种架构，从行星反射光谱中预测生物标志物种类的通量…
+  [AAAI 2026 (IAAI Emerging Applications)][系外行星] 本文为 NASA 宜居世界天文台（HWO）的系外行星观测优先级排序需求，提出贝叶斯卷积神经网络（BCNN）和新型光谱查询自适应 Transformer（SQuAT）两种架构，从行星反射光谱中预测生物标志物种类的通量，两者在增强数据集上均实现了高预测精度，且分别在不确定性量化和可解释性方面各有优势。
 tags:
   - "AAAI 2026 (IAAI Emerging Applications)"
   - "系外行星"

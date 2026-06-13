@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Estimation of Tokenisation Bias
 description: >-
-  [ACL 2025][tokenisation bias] 本文首次将 tokeniser 选择对语言模型输出的影响定义为"分词偏差"(tokenisation bias)，并利用因果推断中的断点回归设计(RDD)来量化这一效应——发现当一个 subword 被纳入词表时…
+  [ACL 2025][tokenisation bias] 本文首次将 tokeniser 选择对语言模型输出的影响定义为"分词偏差"(tokenisation bias)，并利用因果推断中的断点回归设计(RDD)来量化这一效应——发现当一个 subword 被纳入词表时，其对应字符串的概率最高可提升 17 倍（小模型），揭示分词是语言建模中一个被低估的关键设计选择。
 tags:
   - "ACL 2025"
   - "tokenisation bias"

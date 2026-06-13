@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DistinctAD: Distinctive Audio Description Generation in Contexts
 description: >-
-  [CVPR 2025][音频/语音][audio description] 生成上下文中有区分度的音频描述（AD），避免生成泛化无特色的描述，通过对比学习鼓励与前后AD的差异性
+  [CVPR 2025][音频/语音][audio description] 生成上下文中有区分度的音频描述（AD），避免生成泛化无特色的描述，通过对比学习鼓励与前后AD的差异性 领域现状 领域现状：DistinctAD 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不足…
 tags:
   - "CVPR 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViRC: Enhancing Visual Interleaved Mathematical CoT with Reason Chunking
 description: >-
-  [CVPR 2026 (Main Track)][多模态VLM][视觉数学推理] ViRC 提出 Reason Chunking 机制，将多模态数学 CoT 结构化为连续的"关键推理单元（CRU）"，模拟人类专家反复审视图像并逐步证明中间命题的过程…
+  [CVPR 2026 (Main Track)][多模态VLM][视觉数学推理] ViRC 提出 Reason Chunking 机制，将多模态数学 CoT 结构化为连续的"关键推理单元（CRU）"，模拟人类专家反复审视图像并逐步证明中间命题的过程，通过 CRUX 数据集和渐进式训练策略（Instructional SFT → Practice SFT → Strategic RL），实现ViRC-7B 在数学基准上平均提升 18.8%。
 tags:
   - "CVPR 2026 (Main Track)"
   - "多模态VLM"

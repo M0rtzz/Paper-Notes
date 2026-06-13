@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering
 description: >-
-  [ICLR 2026][视频理解][video QA] 提出 A.I.R.，一种无需训练的自适应-迭代-推理驱动帧选择框架，通过两阶段策略（GMM 自适应初始采样 + 迭代式 VLM 精细分析）解决 VideoQA 中轻量模型（CLIP）相似度不准确和 VLM 分析成本爆炸的双重困境…
+  [ICLR 2026][视频理解][video QA] 提出 A.I.R.，一种无需训练的自适应-迭代-推理驱动帧选择框架，通过两阶段策略（GMM 自适应初始采样 + 迭代式 VLM 精细分析）解决 VideoQA 中轻量模型（CLIP）相似度不准确和 VLM 分析成本爆炸的双重困境，在最坏情况下也仅需分析 72 帧（vs 基线 128 帧），同时显著提升多个长视频 benchmark 性能。
 tags:
   - "ICLR 2026"
   - "视频理解"

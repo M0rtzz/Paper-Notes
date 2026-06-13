@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One2Any: One-Reference 6D Pose Estimation for Any Object
 description: >-
-  [CVPR 2025][人体理解][单参考] 提出 One2Any，仅需单张参考图像即可估计任意新物体的 6D 位姿——用参考物体坐标（ROC，以参考相机帧为基准而非规范坐标）编码参考姿态，通过 VQVAE+U-Net 条件生成密集 ROC 图，再用 Umeyama 算法恢复位姿…
+  [CVPR 2025][人体理解][单参考] 提出 One2Any，仅需单张参考图像即可估计任意新物体的 6D 位姿——用参考物体坐标（ROC，以参考相机帧为基准而非规范坐标）编码参考姿态，通过 VQVAE+U-Net 条件生成密集 ROC 图，再用 Umeyama 算法恢复位姿，在 YCB-Video 上 93.7% ADD-S AUC，推理仅 0.09 秒。
 tags:
   - "CVPR 2025"
   - "人体理解"

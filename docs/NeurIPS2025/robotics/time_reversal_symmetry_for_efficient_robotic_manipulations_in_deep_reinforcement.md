@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time Reversal Symmetry for Efficient Robotic Manipulations in Deep Reinforcement Learning
 description: >-
-  [NeurIPS 2025][机器人][时间反转对称] 提出 TR-DRL 框架，利用机器人操作任务中的时间反转对称性——通过轨迹反转增强（完全可逆的转移）和时间反转引导的势函数奖励塑形（部分可逆的转移）——显著提升 DRL 在成对任务（如开门/关门）中的样本效率和最终性能。
+  [NeurIPS 2025][机器人][时间反转对称] 提出 TR-DRL 框架，利用机器人操作任务中的时间反转对称性——通过轨迹反转增强（完全可逆的转移）和时间反转引导的势函数奖励塑形（部分可逆的转移）——显著提升 DRL 在成对任务（如开门/关门）中的样本效率和最终性能。 领域现状：DRL 中对称性利用主要集中在空间对称…
 tags:
   - "NeurIPS 2025"
   - "机器人"

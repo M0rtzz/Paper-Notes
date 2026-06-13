@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScanReason: Empowering 3D Visual Grounding with Reasoning Capabilities
 description: >-
-  [ECCV 2024][3D视觉][3D visual grounding] 提出 3D reasoning grounding 新任务和 ScanReason 基准（10K+ QA-location pairs，5种推理类型）…
+  [ECCV 2024][3D视觉][3D visual grounding] 提出 3D reasoning grounding 新任务和 ScanReason 基准（10K+ QA-location pairs，5种推理类型），设计 ReGround3D 框架将 MLLM 推理与 3D grounding 模块通过 Chain-of-Grounding 机制协同，在隐式指令下实现准确的 3D 目标定位。
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ParetoHqD: Fast Offline Multiobjective Alignment of Large Language Models Using Pareto High-Quality Data
 description: >-
-  [AAAI 2026][LLM/NLP][多目标对齐] 提出 ParetoHqD，将人类偏好表示为目标空间中的偏好方向（而非线性标量化），通过选取靠近 Pareto 前沿的高质量数据做两阶段 SFT，用仅 42% 的 GPU 时间实现优于 5 个基线的多目标 LLM 对齐效果。
+  [AAAI 2026][LLM 其他][多目标对齐] 提出 ParetoHqD，将人类偏好表示为目标空间中的偏好方向（而非线性标量化），通过选取靠近 Pareto 前沿的高质量数据做两阶段 SFT，用仅 42% 的 GPU 时间实现优于 5 个基线的多目标 LLM 对齐效果。 LLM 对齐通常需要同时满足多个目标（如 hel…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多目标对齐"
   - "Pareto最优"
   - "SFT"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometric Knowledge-Guided Localized Global Distribution Alignment for Federated Learning
 description: >-
-  [CVPR 2025][AI安全][联邦学习] 在联邦学习中通过从局部协方差矩阵精确重建全局协方差来获取全局嵌入分布的几何形状，沿全局主方向生成增强样本本地化全局分布信息，在 CIFAR-100 极端异质场景（β=0.01）下提升 17 个百分点。
+  [CVPR 2025][AI安全][联邦学习] 在联邦学习中通过从局部协方差矩阵精确重建全局协方差来获取全局嵌入分布的几何形状，沿全局主方向生成增强样本本地化全局分布信息，在 CIFAR-100 极端异质场景（β=0.01）下提升 17 个百分点。 领域现状：联邦学习（FL）面临严重的数据异质性问题——各客户端数据分布不同导…
 tags:
   - "CVPR 2025"
   - "AI安全"

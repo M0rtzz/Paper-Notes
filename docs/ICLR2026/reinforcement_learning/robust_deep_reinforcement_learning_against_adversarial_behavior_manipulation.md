@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation
 description: >-
-  [ICLR 2026][强化学习][行为目标攻击] 本文研究 RL 中一种新型威胁——行为目标攻击（adversary 通过篡改观测来引导 victim 执行特定目标策略），提出不需要白盒访问的 BIA 攻击方法和基于时间折扣的 TDRT 防御方法…
+  [ICLR 2026][强化学习][行为目标攻击] 本文研究 RL 中一种新型威胁——行为目标攻击（adversary 通过篡改观测来引导 victim 执行特定目标策略），提出不需要白盒访问的 BIA 攻击方法和基于时间折扣的 TDRT 防御方法，TDRT 在保持对攻击鲁棒性的同时比现有防御（SA-PPO）的原始任务性能高 28.2%。
 tags:
   - "ICLR 2026"
   - "强化学习"

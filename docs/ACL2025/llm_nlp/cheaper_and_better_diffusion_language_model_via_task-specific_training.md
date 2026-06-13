@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Cheaper and Better Diffusion Language Model via Task-Specific Training
 description: >-
-  [ACL 2025][LLM/NLP][扩散语言模型] 本文提出通过任务特定的训练策略优化扩散语言模型，在保持生成质量的同时大幅降低训练和推理成本，使扩散模型在文本生成任务上更具实用性。
+  [ACL 2025][LLM 其他][扩散语言模型] 本文提出通过任务特定的训练策略优化扩散语言模型，在保持生成质量的同时大幅降低训练和推理成本，使扩散模型在文本生成任务上更具实用性。 领域现状：扩散模型在图像生成领域取得了巨大成功（如DALL-E、Stable Diffusion），近年来也被引入文本生成领域…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散语言模型"
   - "任务特定训练"
   - "文本生成"

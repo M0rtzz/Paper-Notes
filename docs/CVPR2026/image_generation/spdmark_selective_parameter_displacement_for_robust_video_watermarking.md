@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPDMark: Selective Parameter Displacement for Robust Video Watermarking
 description: >-
-  [CVPR 2026][图像生成][视频水印] SPDMark 提出了一种基于选择性参数位移（SPD）的视频扩散模型内嵌水印框架，通过在解码器中学习低秩基 shift 字典并根据水印密钥选择组合，实现了逐帧水印嵌入、不可感知、高鲁棒性和低计算开销，同时支持时序篡改检测与定位。
+  [CVPR 2026][图像生成][视频水印] SPDMark 提出了一种基于选择性参数位移（SPD）的视频扩散模型内嵌水印框架，通过在解码器中学习低秩基 shift 字典并根据水印密钥选择组合，实现了逐帧水印嵌入、不可感知、高鲁棒性和低计算开销，同时支持时序篡改检测与定位。 1. 领域现状：高质量视频生成模型（如 Sora…
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability
 description: >-
-  [ICML2025][强化学习][信息不对称] 在信息不对称（代理拥有隐私类型和动作作为混淆变量）且需要跨分布知识迁移的在线强化学习场景中，提出基于非参数工具变量（NPIV）方法的模型算法 OPME，证明以 $\tilde{O}(1/\epsilon^2)$ 样本复杂度学得 $\epsilon$-最优策略…
+  [ICML2025][强化学习][信息不对称] 在信息不对称（代理拥有隐私类型和动作作为混淆变量）且需要跨分布知识迁移的在线强化学习场景中，提出基于非参数工具变量（NPIV）方法的模型算法 OPME，证明以 $\tilde{O}(1/\epsilon^2)$ 样本复杂度学得 $\epsilon$-最优策略，并匹配对应下界。
 tags:
   - "ICML2025"
   - "强化学习"

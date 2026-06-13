@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation
 description: >-
-  [ICCV 2025][语义分割][图像分割] 提出 OmniSAM，首次将 SAM2 应用于全景语义分割的无监督域适应任务，通过滑动窗口将全景图切分为 patch 序列并利用 SAM2 的记忆机制捕获跨 patch 对应关系，结合 FoV-based 原型自适应和动态伪标签更新策略…
+  [ICCV 2025][语义分割][图像分割] 提出 OmniSAM，首次将 SAM2 应用于全景语义分割的无监督域适应任务，通过滑动窗口将全景图切分为 patch 序列并利用 SAM2 的记忆机制捕获跨 patch 对应关系，结合 FoV-based 原型自适应和动态伪标签更新策略，在室内外场景均大幅超越 SOTA（+10.22% / +6.58%）。
 tags:
   - "ICCV 2025"
   - "语义分割"

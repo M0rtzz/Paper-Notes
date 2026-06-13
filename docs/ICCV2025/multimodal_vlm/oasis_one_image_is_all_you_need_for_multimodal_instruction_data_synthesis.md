@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis
 description: >-
-  [ICCV 2025][多模态VLM][多模态数据合成] 提出Oasis方法，仅需输入图像（无需任何文本提示）即可诱导MLLM自回归生成高质量多模态指令跟随数据，配合精细的指令质量控制机制，合成50万数据给LLaVA-NeXT带来平均3.1%的全面性能提升，且超越其他合成方法。
+  [ICCV 2025][多模态VLM][多模态数据合成] 提出Oasis方法，仅需输入图像（无需任何文本提示）即可诱导MLLM自回归生成高质量多模态指令跟随数据，配合精细的指令质量控制机制，合成50万数据给LLaVA-NeXT带来平均3.1%的全面性能提升，且超越其他合成方法。 多模态大语言模型(MLLM)的成功高度依赖大规…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

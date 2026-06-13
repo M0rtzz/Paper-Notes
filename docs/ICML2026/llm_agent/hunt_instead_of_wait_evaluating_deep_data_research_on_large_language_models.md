@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hunt Instead of Wait: Evaluating Deep Data Research on Large Language Models
 description: >-
-  [ICML 2026][LLM Agent][Deep Data Research] 本文提出 Deep Data Research（DDR）这一开放式 agentic 任务范式——只给 LLM 一个结构化数据库和最小工具集（SQL+Python），不给任何具体问题或回合上限…
+  [ICML 2026][LLM Agent][Deep Data Research] 本文提出 Deep Data Research（DDR）这一开放式 agentic 任务范式——只给 LLM 一个结构化数据库和最小工具集（SQL+Python），不给任何具体问题或回合上限，要求模型自主探索、提出假设并决定何时停止；并构建 DDR-Bench（MIMIC-IV / GLOBEM / 10-K，291 个实体、2058 条 checklist），用从非结构化文本抽取的可验证 fact checklist 客观评测主流 LLM 的"investigatory intelligence"，结果显示即使 Claude 4.5 Sonnet…
 tags:
   - "ICML 2026"
   - "LLM Agent"

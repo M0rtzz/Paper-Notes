@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeAR: Graph-enhanced Agent for Retrieval-augmented Generation
 description: >-
-  [ACL 2025 (Findings)][LLM Agent][图增强检索] GeAR 通过图扩展机制（SyncGE）增强传统检索器的多跳发现能力，并结合 Gist Memory 代理框架实现多步检索推理，在 MuSiQue 等多跳QA数据集上超过现有SOTA 10%+…
+  [ACL 2025 (Findings)][LLM Agent][图增强检索] GeAR 通过图扩展机制（SyncGE）增强传统检索器的多跳发现能力，并结合 Gist Memory 代理框架实现多步检索推理，在 MuSiQue 等多跳QA数据集上超过现有SOTA 10%+，同时消耗更少的 token 和迭代次数。
 tags:
   - "ACL 2025 (Findings)"
   - "LLM Agent"

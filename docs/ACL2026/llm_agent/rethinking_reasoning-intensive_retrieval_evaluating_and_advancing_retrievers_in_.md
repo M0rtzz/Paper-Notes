@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Reasoning-Intensive Retrieval: Evaluating and Advancing Retrievers in Agentic Search Systems
 description: >-
-  [ACL2026][LLM Agent][reasoning-intensive retrieval] 本文提出 BRIGHT-PRO，用多方面证据标注和 agentic search 协议重新评测 reasoning-intensive retriever…
+  [ACL2026][LLM Agent][reasoning-intensive retrieval] 本文提出 BRIGHT-PRO，用多方面证据标注和 agentic search 协议重新评测 reasoning-intensive retriever，并用 RTriever-Synth 训练 RTriever-4B，证明检索器应优化“证据组合覆盖”而非单篇相关性。
 tags:
   - "ACL2026"
   - "LLM Agent"

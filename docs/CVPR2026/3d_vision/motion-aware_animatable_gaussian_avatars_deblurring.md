@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Motion-Aware Animatable Gaussian Avatars Deblurring
 description: >-
-  [CVPR 2026][3D视觉][3D人体重建] 提出首个从模糊视频直接重建清晰可动画3D人体高斯Avatar的方法，通过3D感知的物理模糊形成模型和基于SMPL的人体运动模型，联合优化Avatar表示和运动参数。
+  [CVPR 2026][3D视觉][3D人体重建] 提出首个从模糊视频直接重建清晰可动画3D人体高斯Avatar的方法，通过3D感知的物理模糊形成模型和基于SMPL的人体运动模型，联合优化Avatar表示和运动参数。 从多视角视频创建3D人体Avatar是计算机视觉中的重要任务。现有方法（如GauHuman）依赖高质量清晰图…
 tags:
   - "CVPR 2026"
   - "3D视觉"

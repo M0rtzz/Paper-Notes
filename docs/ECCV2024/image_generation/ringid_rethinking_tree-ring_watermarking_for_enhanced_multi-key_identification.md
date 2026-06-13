@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RingID: Rethinking Tree-Ring Watermarking for Enhanced Multi-Key Identification
 description: >-
-  [ECCV 2024][图像生成][扩散模型水印] 本文深入分析了 Tree-Ring 水印方法的鲁棒性来源（发现分布偏移是其验证任务中意外的隐藏助力），揭示其在多密钥识别任务中的严重缺陷，并提出 RingID——一种多通道异构水印框架，通过离散化、无损嵌入和更圆环形设计…
+  [ECCV 2024][图像生成][扩散模型水印] 本文深入分析了 Tree-Ring 水印方法的鲁棒性来源（发现分布偏移是其验证任务中意外的隐藏助力），揭示其在多密钥识别任务中的严重缺陷，并提出 RingID——一种多通道异构水印框架，通过离散化、无损嵌入和更圆环形设计，将2048个密钥的识别准确率从0.07提升至0.82。
 tags:
   - "ECCV 2024"
   - "图像生成"

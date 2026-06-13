@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alternate Diverse Teaching for Semi-supervised Medical Image Segmentation
 description: >-
-  [ECCV 2024][医学图像][半监督学习] 提出 AD-MT（Alternate Diverse Mean Teacher），通过随机周期性交替更新两个教师模型 + 基于熵的冲突调和策略，在半监督医学分割中解决 confirmation bias 问题…
+  [ECCV 2024][医学图像][半监督学习] 提出 AD-MT（Alternate Diverse Mean Teacher），通过随机周期性交替更新两个教师模型 + 基于熵的冲突调和策略，在半监督医学分割中解决 confirmation bias 问题，在 ACDC/LA/Pancreas 上全面超越 SOTA。
 tags:
   - "ECCV 2024"
   - "医学图像"

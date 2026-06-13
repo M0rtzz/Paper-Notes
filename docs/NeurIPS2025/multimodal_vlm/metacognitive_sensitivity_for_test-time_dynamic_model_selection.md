@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metacognitive Sensitivity for Test-Time Dynamic Model Selection
 description: >-
-  [NeurIPS 2025 (CogInterp Workshop)][多模态VLM][metacognition] 借鉴人类认知科学中的元认知灵敏度（meta-d'）概念，提出一种测试时动态模型选择框架：用 meta-d' 量化模型"知道自己知不知道"的能力，结合即时置信度构成上下文向量…
+  [NeurIPS 2025 (CogInterp Workshop)][多模态VLM][metacognition] 借鉴人类认知科学中的元认知灵敏度（meta-d'）概念，提出一种测试时动态模型选择框架：用 meta-d' 量化模型"知道自己知不知道"的能力，结合即时置信度构成上下文向量，通过 contextual bandit 在线选择最优模型，在多数据集上超越单模型性能。
 tags:
   - "NeurIPS 2025 (CogInterp Workshop)"
   - "多模态VLM"

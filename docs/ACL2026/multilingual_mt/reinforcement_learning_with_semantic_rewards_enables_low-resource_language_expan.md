@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reinforcement Learning with Semantic Rewards Enables Low-Resource Language Expansion without Alignment Tax
 description: >-
-  [ACL2026][多语言/翻译][低资源语言] 本文把低资源语言扩展从 token 级模仿改写为语义空间对齐问题，用 GRPO 和 embedding 语义奖励训练 Qwen3-4B，在藏汉翻译和藏语标题生成上获得低资源能力，同时比强 SFT 更好地保留中文 CMRC 等主导语言能力。
+  [ACL2026 Findings][多语言/翻译][低资源语言] 本文把低资源语言扩展从 token 级模仿改写为语义空间对齐问题，用 GRPO 和 embedding 语义奖励训练 Qwen3-4B，在藏汉翻译和藏语标题生成上获得低资源能力，同时比强 SFT 更好地保留中文 CMRC 等主导语言能力。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多语言/翻译"
   - "低资源语言"
   - "语义奖励"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2605.14366](https://arxiv.org/abs/2605.14366)  
 **代码**: 未公开  
-**领域**: multilingual_mt  
+**领域**: 多语言翻译  
 **关键词**: 低资源语言、语义奖励、GRPO、对齐税、藏汉翻译
 
 ## 一句话总结

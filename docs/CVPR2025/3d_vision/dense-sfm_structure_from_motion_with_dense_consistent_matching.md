@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dense-SfM: Structure from Motion with Dense Consistent Matching
 description: >-
-  [CVPR 2025][3D视觉][运动恢复结构] 提出 Dense-SfM 框架，通过高斯泼溅进行轨迹扩展解决稠密匹配产生的碎片化轨迹问题，结合基于 Transformer 和高斯过程的多视图核化匹配精炼模块，实现高精度稠密 SfM 重建。
+  [CVPR 2025][3D视觉][运动恢复结构] 提出 Dense-SfM 框架，通过高斯泼溅进行轨迹扩展解决稠密匹配产生的碎片化轨迹问题，结合基于 Transformer 和高斯过程的多视图核化匹配精炼模块，实现高精度稠密 SfM 重建。 传统 SfM 依赖稀疏关键点匹配，在无纹理区域精度和密度有限…
 tags:
   - "CVPR 2025"
   - "3D视觉"

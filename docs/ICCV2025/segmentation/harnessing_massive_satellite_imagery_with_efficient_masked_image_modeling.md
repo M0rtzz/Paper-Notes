@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harnessing Massive Satellite Imagery with Efficient Masked Image Modeling
 description: >-
-  [ICCV 2025][语义分割][遥感基础模型] 提出一个遥感模型预训练流水线，包括 1300 万张光学遥感图像数据集 OpticalRS-13M 和基于语义丰富度选择性编码/重建的高效 MIM 方法 SelectiveMAE，仅用 40% 图像 patch 即可训练出与全量 patch 相当的模型…
+  [ICCV 2025][语义分割][遥感基础模型] 提出一个遥感模型预训练流水线，包括 1300 万张光学遥感图像数据集 OpticalRS-13M 和基于语义丰富度选择性编码/重建的高效 MIM 方法 SelectiveMAE，仅用 40% 图像 patch 即可训练出与全量 patch 相当的模型，同时实现 2 倍以上加速。
 tags:
   - "ICCV 2025"
   - "语义分割"

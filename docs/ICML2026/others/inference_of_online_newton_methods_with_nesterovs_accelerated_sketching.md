@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference of Online Newton Methods with Nesterov's Accelerated Sketching
 description: >-
-  [ICML2026][在线 Newton 法] 本文给在线 Newton 法装上 Nesterov 加速的 sketch-and-project 求解器，把每步成本压到 $O(d^2)$，并第一次刻画了"数据随机 + 求解器随机"双重不确定性下末迭代的渐近正态性…
+  [ICML2026][在线 Newton 法] 本文给在线 Newton 法装上 Nesterov 加速的 sketch-and-project 求解器，把每步成本压到 $O(d^2)$，并第一次刻画了"数据随机 + 求解器随机"双重不确定性下末迭代的渐近正态性，再配上一个无需矩阵求逆、可流式更新的协方差估计器，让带加速 sketching 的在线 Newton 真正可用于统计推断。
 tags:
   - "ICML2026"
   - "在线 Newton 法"

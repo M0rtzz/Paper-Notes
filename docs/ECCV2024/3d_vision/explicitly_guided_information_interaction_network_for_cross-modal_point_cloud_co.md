@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explicitly Guided Information Interaction Network for Cross-modal Point Cloud Completion
 description: >-
-  [ECCV 2024][3D视觉][点云补全] 提出EGIInet框架，通过统一编码器实现模态对齐，并利用显式引导的信息交互策略（FT-Loss）让网络精准识别图像中的关键结构信息，在视图引导点云补全任务上以更少参数实现了超越XMFnet 16% CD的性能。
+  [ECCV 2024][3D视觉][点云补全] 提出EGIInet框架，通过统一编码器实现模态对齐，并利用显式引导的信息交互策略（FT-Loss）让网络精准识别图像中的关键结构信息，在视图引导点云补全任务上以更少参数实现了超越XMFnet 16% CD的性能。 领域现状： 点云补全是3D视觉的基础任务…
 tags:
   - "ECCV 2024"
   - "3D视觉"

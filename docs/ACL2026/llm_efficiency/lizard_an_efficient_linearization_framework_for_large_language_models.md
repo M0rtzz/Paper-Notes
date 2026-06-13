@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lizard: An Efficient Linearization Framework for Large Language Models
 description: >-
-  [ACL 2026][LLM效率][线性化] Lizard 用一个"Gated Linear Attention（全局压缩）+ Anchor Window Attention（局部精度）+ 可学习 gate 替代 RoPE"的混合 subquadratic 注意力替换预训练 Transformer 的 sof…
+  [ACL 2026][LLM效率][线性化] Lizard 用一个"Gated Linear Attention（全局压缩）+ Anchor Window Attention（局部精度）+ 可学习 gate 替代 RoPE"的混合 subquadratic 注意力替换预训练 Transformer 的 softmax attention，只用 0.04B token 蒸馏就能在 5-shot MMLU 上把现有 linearization 方法甩开 9.4–24.5 分，并配套一个 tensor-core 友好的训练算法把吞吐量提升 32%。
 tags:
   - "ACL 2026"
   - "LLM效率"

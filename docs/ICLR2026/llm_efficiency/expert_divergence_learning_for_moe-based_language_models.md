@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Expert Divergence Learning for MoE-based Language Models
 description: >-
-  [ICLR 2026][LLM效率][混合专家] 解决 MoE 训练中的专家同质化问题，通过最大化不同数据域之间路由分布的 Jensen-Shannon 散度，鼓励不同域激活不同专家子集，在 15B-A1.5B 模型上提升专家特化程度和语言建模性能。
+  [ICLR 2026][LLM效率][混合专家] 解决 MoE 训练中的专家同质化问题，通过最大化不同数据域之间路由分布的 Jensen-Shannon 散度，鼓励不同域激活不同专家子集，在 15B-A1.5B 模型上提升专家特化程度和语言建模性能。 领域现状：混合专家模型（MoE）通过稀疏激活实现高参数量低计算量…
 tags:
   - "ICLR 2026"
   - "LLM效率"

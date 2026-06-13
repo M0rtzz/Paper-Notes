@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Reprojection Errors as Prompts for Efficient Scene Coordinate Regression
 description: >-
-  [ECCV 2024][LLM/NLP][scene coordinate regression] 本文提出 EGFS（Error-Guided Feature Selection）机制，利用低重投影误差区域作为 SAM 的 point prompts 扩展为语义掩码，迭代地筛选可靠训练样本…
+  [ECCV 2024][LLM 其他][scene coordinate regression] 本文提出 EGFS（Error-Guided Feature Selection）机制，利用低重投影误差区域作为 SAM 的 point prompts 扩展为语义掩码，迭代地筛选可靠训练样本，在 Cambridge Landmarks 和 Indoor6 数据集上以更小模型和更少训练时间超越现有无 3D 信息依赖的 SCR 方法。
 tags:
   - "ECCV 2024"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "scene coordinate regression"
   - "visual grounding"
   - "SAM"

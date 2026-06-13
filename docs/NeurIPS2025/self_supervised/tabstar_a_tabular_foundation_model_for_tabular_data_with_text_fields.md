@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TabSTAR: A Tabular Foundation Model for Tabular Data with Text Fields
 description: >-
-  [NeurIPS 2025][自监督学习][表格基础模型] 提出 TabSTAR，一个专为含文本字段的表格数据设计的基础模型：通过解冻文本编码器（e5-small-v2）端到端优化文本表征 + 目标感知 token 注入分类目标语义信息 + 无数据集特定参数的架构实现跨数据集迁移学习…
+  [NeurIPS 2025][自监督学习][表格基础模型] 提出 TabSTAR，一个专为含文本字段的表格数据设计的基础模型：通过解冻文本编码器（e5-small-v2）端到端优化文本表征 + 目标感知 token 注入分类目标语义信息 + 无数据集特定参数的架构实现跨数据集迁移学习，在 350 个数据集上预训练后，分类任务上 14 个数据集中 12 个超越 CatBoost-Tuned（4h 调参），8/11 超越 TabPFN-v2。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

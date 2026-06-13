@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MetaDefense: Defending Finetuning-based Jailbreak Attack Before and During Generation
 description: >-
-  [NeurIPS 2025][LLM对齐][越狱攻击防御] 提出 MetaDefense，一个两阶段（生成前+生成中）防御框架，通过训练 LLM 自身预测查询和部分响应的有害性来防御基于微调的越狱攻击，无需额外分类器，实现 2× 内存效率。
+  [NeurIPS 2025][LLM对齐][越狱攻击防御] 提出 MetaDefense，一个两阶段（生成前+生成中）防御框架，通过训练 LLM 自身预测查询和部分响应的有害性来防御基于微调的越狱攻击，无需额外分类器，实现 2× 内存效率。 - 微调越狱攻击（FJAttack）：攻击者利用 OpenAI 等平台的微调 API…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

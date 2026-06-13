@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Multimodal Benchmark for Framing of Oil & Gas Advertising and Potential Greenwashing Detection
 description: >-
-  [NeurIPS 2025 (Datasets and Benchmarks Track)][多模态VLM][洗绿检测] 构建了首个面向石油天然气行业视频广告的多模态框架分析基准数据集（706 个视频、13 种框架类型、50+ 实体、20 个国家）…
+  [NeurIPS 2025 (Datasets and Benchmarks Track)][多模态VLM][洗绿检测] 构建了首个面向石油天然气行业视频广告的多模态框架分析基准数据集（706 个视频、13 种框架类型、50+ 实体、20 个国家），系统评估了 6 款 VLM 在检测 greenwashing 相关 framing 中的能力，发现 GPT-4.1 零样本在环境类标签上达 79% F1 但绿色创新仅 46%，揭示了隐式框架分析和文化背景理解仍是 VLM 的核心挑战。
 tags:
   - "NeurIPS 2025 (Datasets and Benchmarks Track)"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Modularity Networks with Diversity-Preserving Regularization
 description: >-
-  [NEURIPS2025][可解释性][graph clustering] 在 Deep Modularity Networks (DMoN) 基础上引入三项多样性保持正则化（距离、方差、熵），显式促进特征空间中的簇间分离和分配多样性，在特征丰富的图数据集上显著提升聚类质量。
+  [NEURIPS2025][可解释性][graph clustering] 在 Deep Modularity Networks (DMoN) 基础上引入三项多样性保持正则化（距离、方差、熵），显式促进特征空间中的簇间分离和分配多样性，在特征丰富的图数据集上显著提升聚类质量。 图聚类是图表示学习的核心问题…
 tags:
   - "NEURIPS2025"
   - "可解释性"

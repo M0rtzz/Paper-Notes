@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VolumetricSMPL: A Neural Volumetric Body Model for Efficient Interactions, Contacts, and Collisions
 description: >-
-  [ICCV 2025][3D视觉][人体模型] 提出 VolumetricSMPL，一种基于 Neural Blend Weights（NBW）的高效神经体积人体模型，相比前代 COAP 实现 10× 推理加速、6× 显存节省，并通过 SDF（而非占据函数）表示提供更精确的可微碰撞建模。
+  [ICCV 2025][3D视觉][人体模型] 提出 VolumetricSMPL，一种基于 Neural Blend Weights（NBW）的高效神经体积人体模型，相比前代 COAP 实现 10× 推理加速、6× 显存节省，并通过 SDF（而非占据函数）表示提供更精确的可微碰撞建模。 参数化人体模型（如SMPL）是计算机…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussRender: Learning 3D Occupancy with Gaussian Rendering
 description: >-
-  [ICCV 2025][自动驾驶][3D Occupancy Prediction] 提出 GaussRender，一个即插即用的可微高斯渲染模块，通过将预测和真值的 3D occupancy 投影到 2D 视图并施加语义和深度一致性约束，消除浮空体素等视觉伪影…
+  [ICCV 2025][自动驾驶][3D Occupancy Prediction] 提出 GaussRender，一个即插即用的可微高斯渲染模块，通过将预测和真值的 3D occupancy 投影到 2D 视图并施加语义和深度一致性约束，消除浮空体素等视觉伪影，在多个 benchmark 上显著提升几何保真度，尤其在 RayIoU 等表面敏感指标上提升突出。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

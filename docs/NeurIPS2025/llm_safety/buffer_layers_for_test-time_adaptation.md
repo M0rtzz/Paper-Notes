@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Buffer Layers for Test-Time Adaptation
 description: >-
-  [NeurIPS 2025][LLM安全][测试时自适应] 提出 Buffer 层作为测试时自适应 (TTA) 的新范式，替代传统的归一化层更新，从根本上保留预训练骨干网络的完整性，有效缓解灾难性遗忘并在多种架构和 TTA 框架中实现一致的性能提升。
+  [NeurIPS 2025][LLM安全][测试时自适应] 提出 Buffer 层作为测试时自适应 (TTA) 的新范式，替代传统的归一化层更新，从根本上保留预训练骨干网络的完整性，有效缓解灾难性遗忘并在多种架构和 TTA 框架中实现一致的性能提升。 测试时自适应 (Test-Time Adaptation…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

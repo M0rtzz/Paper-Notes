@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HEALing Entropy Collapse: Enhancing Exploration in Few-Shot RLVR via Hybrid-Domain Entropy Dynamics Alignment
 description: >-
-  [ACL 2026][强化学习][RLVR] 提出 HEAL 框架，通过混合通用领域数据和熵动态对齐（EDA）奖励机制解决少样本 RLVR 中的严重熵崩溃问题，仅用32个目标域样本即可匹配甚至超越使用1K样本的全量 RLVR 性能。
+  [ACL 2026][强化学习][RLVR] 提出 HEAL 框架，通过混合通用领域数据和熵动态对齐（EDA）奖励机制解决少样本 RLVR 中的严重熵崩溃问题，仅用32个目标域样本即可匹配甚至超越使用1K样本的全量 RLVR 性能。 领域现状：RLVR（带可验证奖励的强化学习）已成为训练推理型 LLM 的关键技术…
 tags:
   - "ACL 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BESPOKE: Benchmark for Search-Augmented Large Language Model Personalization via Diagnostic Feedback
 description: >-
-  [ICML2026][LLM评测][个性化评估] 提出 Bespoke 基准，通过 30 名标注者 3 周的真实聊天+搜索历史收集 2,870 个会话，构建包含细粒度偏好评分与诊断反馈的评测框架，系统评估搜索增强 LLM 的个性化能力，发现当前模型在所有配置下平均得分均不超过 60…
+  [ICML2026][LLM评测][个性化评估] 提出 Bespoke 基准，通过 30 名标注者 3 周的真实聊天+搜索历史收集 2,870 个会话，构建包含细粒度偏好评分与诊断反馈的评测框架，系统评估搜索增强 LLM 的个性化能力，发现当前模型在所有配置下平均得分均不超过 60，个性化瓶颈在于历史推理而非生成。
 tags:
   - "ICML2026"
   - "LLM评测"

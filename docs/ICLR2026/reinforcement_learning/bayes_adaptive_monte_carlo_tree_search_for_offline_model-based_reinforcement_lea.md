@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BA-MCTS: Bayes Adaptive Monte Carlo Tree Search for Offline Model-based RL
 description: >-
-  [ICLR 2026][强化学习][离线 RL] 首次将贝叶斯自适应 MDP（BAMDP）引入离线模型基 RL，提出 Continuous BAMCP 解决连续状态/动作空间的贝叶斯规划，结合悲观奖励惩罚和搜索基策略迭代（"RL + Search"范式）…
+  [ICLR 2026][强化学习][离线 RL] 首次将贝叶斯自适应 MDP（BAMDP）引入离线模型基 RL，提出 Continuous BAMCP 解决连续状态/动作空间的贝叶斯规划，结合悲观奖励惩罚和搜索基策略迭代（"RL + Search"范式），在 D4RL 12 个任务上显著超越 19 个基线（Cohen's $d > 1.8$），并成功应用于核聚变 tokamak 控制。
 tags:
   - "ICLR 2026"
   - "强化学习"

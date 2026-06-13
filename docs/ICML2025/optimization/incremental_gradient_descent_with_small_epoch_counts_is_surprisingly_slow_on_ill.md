@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incremental Gradient Descent with Small Epoch Counts is Surprisingly Slow on Ill-Conditioned Problems
 description: >-
-  [ICML 2025][优化/理论][incremental gradient descent] 系统研究了增量梯度下降（IGD）在小 epoch 体制（$K \lesssim \kappa$）下的收敛行为，证明 IGD 在此体制下比有放回 SGD 慢至少 $n$ 倍…
+  [ICML 2025][优化/理论][incremental gradient descent] 系统研究了增量梯度下降（IGD）在小 epoch 体制（$K \lesssim \kappa$）下的收敛行为，证明 IGD 在此体制下比有放回 SGD 慢至少 $n$ 倍，且当分量函数非凸时收敛速度急剧恶化至指数级慢。
 tags:
   - "ICML 2025"
   - "优化/理论"

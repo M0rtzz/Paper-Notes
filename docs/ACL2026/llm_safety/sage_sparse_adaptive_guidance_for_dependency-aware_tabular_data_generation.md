@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAGE: Sparse Adaptive Guidance for Dependency-Aware Tabular Data Generation
 description: >-
-  [ACL2026][LLM安全][表格数据生成] SAGE 把表格特征离散为 value-aware pseudo-features，并用互信息构建稀疏动态依赖图来引导 LLM 生成，从而提升合成表格数据的下游效用、约束一致性和真实感。
+  [ACL2026][LLM安全][表格数据生成] SAGE 把表格特征离散为 value-aware pseudo-features，并用互信息构建稀疏动态依赖图来引导 LLM 生成，从而提升合成表格数据的下游效用、约束一致性和真实感。 领域现状：合成表格数据在医疗、金融、教育等隐私敏感或低资源场景中很重要…
 tags:
   - "ACL2026"
   - "LLM安全"

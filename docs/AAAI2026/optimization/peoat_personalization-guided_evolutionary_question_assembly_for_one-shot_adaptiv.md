@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PEOAT: Personalization-Guided Evolutionary Question Assembly for One-Shot Adaptive Testing
 description: >-
-  [AAAI 2026][优化/理论][自适应测试] 首次提出"一次性自适应测试 (OAT)"任务，将其建模为组合优化问题，并设计 PEOAT 框架——结合个性化初始化、认知增强进化搜索和多样性保持选择策略，在无交互反馈的条件下为每位考生一次性选出最优题集，大幅超越传统 CAT 方法。
+  [AAAI 2026][优化/理论][自适应测试] 首次提出"一次性自适应测试 (OAT)"任务，将其建模为组合优化问题，并设计 PEOAT 框架——结合个性化初始化、认知增强进化搜索和多样性保持选择策略，在无交互反馈的条件下为每位考生一次性选出最优题集，大幅超越传统 CAT 方法。 计算机自适应测试 (CAT) 的实际限制…
 tags:
   - "AAAI 2026"
   - "优化/理论"

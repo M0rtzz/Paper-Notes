@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Streaming Federated Learning with Markovian Data
 description: >-
-  [NeurIPS 2025][优化/理论][联邦学习] 首次严格分析了非凸目标函数下具有马尔可夫数据流的流式联邦学习，证明 Minibatch SGD、Local SGD 和 Local SGD-M 均能实现与客户端数成反比的样本复杂度（线性加速）…
+  [NeurIPS 2025][优化/理论][联邦学习] 首次严格分析了非凸目标函数下具有马尔可夫数据流的流式联邦学习，证明 Minibatch SGD、Local SGD 和 Local SGD-M 均能实现与客户端数成反比的样本复杂度（线性加速），且 Local SGD-M 无需异质性假设即可匹配 Minibatch SGD 的通信复杂度。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

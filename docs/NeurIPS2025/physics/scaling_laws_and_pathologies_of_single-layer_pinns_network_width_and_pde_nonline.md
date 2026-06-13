@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity
 description: >-
-  [物理/科学计算] 对单层PINN在典型非线性PDE上建立了经验缩放定律，发现了双重优化失败：宽度缩放病理（误差不随宽度下降）和复合病理（非线性加剧此失败），证明优化而非近似容量是主要瓶颈。
+  [物理/科学计算] 对单层PINN在典型非线性PDE上建立了经验缩放定律，发现了双重优化失败：宽度缩放病理（误差不随宽度下降）和复合病理（非线性加剧此失败），证明优化而非近似容量是主要瓶颈。 物理信息神经网络(PINN)将物理方程嵌入损失函数来无网格求解PDE，是计算科学的重要范式。然而PINN的模型容量、问题复杂度与解精度…
 tags:
   - "物理/科学计算"
 ---

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rethinking Evaluation Paradigms in IBP-based Certified Training
 description: >-
-  [ICML 2026][区间界传播] 作者指出 IBP 类认证训练长期以"挑一个偏心配置"的方式相互比较是不公平的，提出用多目标贝叶斯超参搜索画出每种方法的 Pareto 前沿…
+  [ICML 2026][AI安全][区间界传播] 作者指出 IBP 类认证训练长期以"挑一个偏心配置"的方式相互比较是不公平的，提出用多目标贝叶斯超参搜索画出每种方法的 Pareto 前沿，证明既有 SOTA 普遍欠调优——CROWN-IBP 干净精度可再涨约 $6\%$、Tiny ImageNet 上 MTL-IBP 同时涨 $\sim2\%$ 干净精度和认证精度。
 tags:
   - "ICML 2026"
+  - "AI安全"
   - "区间界传播"
   - "认证训练"
   - "Pareto 前沿"

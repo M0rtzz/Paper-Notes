@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMindRAG: Low-Cost LLM-Guided Knowledge Graph Traversal for Efficient RAG
 description: >-
-  [NeurIPS 2025][图学习][知识图谱] 提出ReMindRAG，一种结合LLM引导的KG遍历（节点探索+利用）与无训练记忆重放机制的KG-RAG系统，将LLM遍历经验存储在边嵌入中，在后续相似查询时显著减少LLM调用次数（约50%成本降低），同时提升回答准确率（5%-10%提升）。
+  [NeurIPS 2025][图学习][知识图谱] 提出ReMindRAG，一种结合LLM引导的KG遍历（节点探索+利用）与无训练记忆重放机制的KG-RAG系统，将LLM遍历经验存储在边嵌入中，在后续相似查询时显著减少LLM调用次数（约50%成本降低），同时提升回答准确率（5%-10%提升）。 RAG系统通过检索外部知识增强…
 tags:
   - "NeurIPS 2025"
   - "图学习"

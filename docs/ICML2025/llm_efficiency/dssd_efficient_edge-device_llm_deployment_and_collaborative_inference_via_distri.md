@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSSD: Efficient Edge-Device LLM Deployment and Collaborative Inference via Distributed Split Speculative Decoding
 description: >-
-  [ICML2025][LLM效率][推测解码] 提出分布式拆分推测解码（DSSD）框架，将推测解码的验证阶段拆分到设备端和边缘端，用一次下行传输（LLM的单个词表分布）替代多次上行传输（SLM的$\gamma$个词表分布），在保持推理质量不变的前提下大幅降低通信延迟。
+  [ICML2025][LLM效率][推测解码] 提出分布式拆分推测解码（DSSD）框架，将推测解码的验证阶段拆分到设备端和边缘端，用一次下行传输（LLM的单个词表分布）替代多次上行传输（SLM的$\gamma$个词表分布），在保持推理质量不变的前提下大幅降低通信延迟。 问题背景 大语言模型（LLM）在对话代理、机器翻译、代码…
 tags:
   - "ICML2025"
   - "LLM效率"

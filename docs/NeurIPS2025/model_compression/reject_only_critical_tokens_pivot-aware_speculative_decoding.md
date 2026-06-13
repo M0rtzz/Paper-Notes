@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reject Only Critical Tokens: Pivot-Aware Speculative Decoding
 description: >-
-  [NeurIPS 2025][模型压缩][speculative decoding] PAD 提出了基于效用匹配（而非分布匹配）的推测解码新范式：训练一个轻量分类器识别"关键 token"（pivot token），仅拒绝会导致最终输出效用下降的 draft token…
+  [NeurIPS 2025][模型压缩][speculative decoding] PAD 提出了基于效用匹配（而非分布匹配）的推测解码新范式：训练一个轻量分类器识别"关键 token"（pivot token），仅拒绝会导致最终输出效用下降的 draft token，从而在 GSM8K 上实现 2.46× 加速且几乎不损失准确率。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

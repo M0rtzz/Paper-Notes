@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 图像恢复论文汇总 · 41篇论文解读
+  CVPR2026 图像恢复论文汇总 · 55篇论文解读
 description: >-
-  41篇CVPR2026的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型、对抗鲁棒、多模态、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  55篇CVPR2026的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型、对抗鲁棒、多模态、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "图像恢复"
@@ -14,10 +14,14 @@ tags:
   - "多模态"
   - "自监督学习"
 item_list:
+  - u: "a_deep_learning_iterative_framework_for_sentinel-1_stripmap_enhancement_based_on/"
+    t: "A Deep Learning Iterative Framework for Sentinel-1 Stripmap Enhancement Based on Azimuth Doppler Decomposition"
   - u: "acetone_bridging_words_and_colors_for_conditional_image_grading/"
     t: "AceTone: Bridging Words and Colors for Conditional Image Grading"
   - u: "beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora/"
     t: "Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration"
+  - u: "beyond_single_solution_multi-hypothesis_collaborative_deep_unfolding_network_for/"
+    t: "Beyond Single Solution: Multi-Hypothesis Collaborative Deep Unfolding Network for Image Compressive Sensing"
   - u: "beyond_the_ground_truth_enhanced_supervision_for_image_restoration/"
     t: "Beyond the Ground Truth: Enhanced Supervision for Image Restoration"
   - u: "bhcast_unlocking_black_hole_plasma_dynamics_from_a_single_blurry_image_with_long/"
@@ -28,18 +32,30 @@ item_list:
     t: "BluRef: Unsupervised Image Deblurring with Dense-Matching References"
   - u: "bridging_the_perception_gap_in_image_super-resolution_evaluation/"
     t: "Bridging the Perception Gap in Image Super-Resolution Evaluation"
+  - u: "canoncgt_reference-based_color_grading_via_canonical_pivot_representation/"
+    t: "CanonCGT: Reference-Based Color Grading via Canonical Pivot Representation"
+  - u: "customized_fusion_a_closed-loop_dynamic_network_for_adaptive_multi-task-aware_in/"
+    t: "Customized Fusion: A Closed-Loop Dynamic Network for Adaptive Multi-Task-Aware Infrared-Visible Image Fusion"
   - u: "diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio/"
     t: "PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning"
   - u: "disentangled_textual_priors_for_diffusion-based_image_super-resolution/"
     t: "Disentangled Textual Priors for Diffusion-based Image Super-Resolution"
   - u: "drfusion_degradation_robust_fusion_via_degradation_aware_diffusion_framework/"
     t: "DRFusion: Degradation-Robust Fusion via Degradation-Aware Diffusion Framework"
+  - u: "drift_deep_restoration_isp_fusion_and_tone-mapping/"
+    t: "DRIFT: Deep Restoration, ISP Fusion, and Tone-mapping"
+  - u: "edit-aware_raw_reconstruction/"
+    t: "Edit-aware RAW Reconstruction"
+  - u: "efficient_int8_single-image_super-resolution_via_deployment-aware_quantization_a/"
+    t: "Efficient INT8 Single-Image Super-Resolution via Deployment-Aware Quantization and Teacher-Guided Training"
   - u: "evlf_early_vision-language_fusion_for_generative_dataset_distillation/"
     t: "EVLF: Early Vision-Language Fusion for Generative Dataset Distillation"
   - u: "fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution/"
     t: "FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution"
   - u: "finpercep_rm_a_fine_grained_reward_model_and_co_evolutionary_curriculum_for_rl_ba/"
     t: "FinPercep-RM: A Fine-grained Reward Model and Co-evolutionary Curriculum for RL-based Real-world Super-Resolution"
+  - u: "fsm-net_an_efficient_frequency-spatial_network_for_real-world_deblurring/"
+    t: "FSM-Net: An Efficient Frequency-Spatial Network for Real-World Deblurring"
   - u: "gsnr_graph_smooth_null_space_representation_for_inverse_problems/"
     t: "GSNR: Graph Smooth Null-Space Representation for Inverse Problems"
   - u: "ia_clahe_image_adaptive_clip_limit/"
@@ -54,37 +70,25 @@ item_list:
     t: "NEC-Diff: Noise-Robust Event–RAW Complementary Diffusion for Seeing Motion in Extreme Darkness"
   - u: "ntire_2026_ai_flash_portrait_challenge/"
     t: "NTIRE 2026 The 3rd RAIM Challenge: AI Flash Portrait (Track 3)"
+  - u: "ntire_2026_challenge_on_short-form_ugc_video_restoration_in_the_wild_with_genera/"
+    t: "NTIRE 2026 Challenge on Short-form UGC Video Restoration in the Wild with Generative Models"
   - u: "ntire_2026_raindrop_removal_challenge/"
     t: "NTIRE 2026 The Second Challenge on Day and Night Raindrop Removal for Dual-Focused Images"
-  - u: "phasr_generalized_image_shadow_removal_with_physically_aligned_priors/"
-    t: "PhaSR: Generalized Image Shadow Removal with Physically Aligned Priors"
-  - u: "polishing_the_sky_wide-field_and_high-dynamic_range_interferometric_image_recons/"
-    t: "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction"
-  - u: "rar_restore_assess_repeat_a_unified_framework_for_iterative_image_restoration/"
-    t: "RAR: Restore, Assess, Repeat - A Unified Framework for Iterative Image Restoration"
-  - u: "rawdomain_degradation_models_smartphone_sr/"
-    t: "RAW-Domain Degradation Models for Realistic Smartphone Super-Resolution"
-  - u: "real_iisr_infrared_image_super_resolution_autoregressive/"
-    t: "Toward Real-world Infrared Image Super-Resolution: A Unified Autoregressive Framework and Benchmark Dataset"
-  - u: "reflexsplit_single_image_reflection_separation_via_layer_fusion-separation/"
-    t: "ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation"
-  - u: "sat_selective_aggregation_transformer_for_image_super_resolution/"
-    t: "SAT: Selective Aggregation Transformer for Image Super-Resolution"
-  - u: "selfhvd_self-supervised_handheld_video_deblurring/"
-    t: "SelfHVD: Self-Supervised Handheld Video Deblurring"
-  - u: "shadow_removal_cascaded_refinement/"
-    t: "Winner of CVPR2026 NTIRE Challenge on Image Shadow Removal: Semantic and Geometric Guidance for Shadow Removal via Cascaded Refinement"
-item_total: 41
+item_total: 55
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**📷 CVPR2026** · **41** 篇论文解读
+**📷 CVPR2026** · **55** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
-🔥 **高频主题：** 图像恢复 ×11 · 超分辨率 ×9 · 扩散模型 ×5 · 对抗鲁棒 ×4 · 多模态 ×2
+🔥 **高频主题：** 图像恢复 ×14 · 超分辨率 ×10 · 扩散模型 ×9 · 对抗鲁棒 ×5 · 多模态 ×3
+
+**[A Deep Learning Iterative Framework for Sentinel-1 Stripmap Enhancement Based on Azimuth Doppler Decomposition](a_deep_learning_iterative_framework_for_sentinel-1_stripmap_enhancement_based_on.md)**
+
+:   利用方位多普勒子孔径分解，把同一景 SAR 影像拆成多个"低有效方位分辨率"的子孔径作为输入、全孔径影像作为参考，从而无需外部传感器或干净真值就构造出自监督配对，并用单帧/多帧网络 + 迭代细化联合做去斑与细节增强，在 PSNR/SSIM 上稳定超过自监督基线 MERLIN。
 
 **[AceTone: Bridging Words and Colors for Conditional Image Grading](acetone_bridging_words_and_colors_for_conditional_image_grading.md)**
 
@@ -93,6 +97,10 @@ item_total: 41
 **[Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration](beyond_ground-truth_leveraging_image_quality_priors_for_real-world_image_restora.md)**
 
 :   提出IQPIR框架，引入预训练NR-IQA模型的图像质量先验(IQP)作为条件信号，通过质量条件化Transformer、双Codebook结构和离散表示空间质量优化三个机制，引导图像修复过程趋向最高感知质量，在盲人脸修复等任务上全面超越SOTA。
+
+**[Beyond Single Solution: Multi-Hypothesis Collaborative Deep Unfolding Network for Image Compressive Sensing](beyond_single_solution_multi-hypothesis_collaborative_deep_unfolding_network_for.md)**
+
+:   针对压缩感知（CS）问题"欠定、解不唯一"的本质，本文提出 MHC-DUN：把传统深度展开网络（DUN）里"只重建一个解"的范式扩展成"同时重建 $T$ 个假设解并让它们协同优化"，在梯度下降步用 AlphaNet 给每个假设预测逐像素自适应步长、在近端映射步用 MHCB 挖掘假设间相关性融合，在 Set11/Urban100/CS-MRI 上全面超过现有 SOTA（Set11 平均 PSNR 比 USB-Net 高 0.45 dB）。
 
 **[Beyond the Ground Truth: Enhanced Supervision for Image Restoration](beyond_the_ground_truth_enhanced_supervision_for_image_restoration.md)**
 
@@ -114,6 +122,14 @@ item_total: 41
 
 :   通过大规模用户研究揭示现有 SR 评估指标（PSNR、SSIM、LPIPS 等）与人类感知严重不一致，分析其内在缺陷后提出极简但有效的 RQI（Relative Quality Index）框架，通过学习图像对之间的相对质量差异实现更可靠的 SR 评估，且可作为损失函数指导 SR 训练。
 
+**[CanonCGT: Reference-Based Color Grading via Canonical Pivot Representation](canoncgt_reference-based_color_grading_via_canonical_pivot_representation.md)**
+
+:   CanonCGT 把"参考图调色"拆成两步——先用 canonicalizer 把输入图洗成一张"无风格"的中性图（canonical pivot），再用 grader 把参考图的色调贴上去；配合监督+自监督的双阶段训练（DP-CGT），在 6 个数据集上 PSNR 从次优的 18.62 拉到 28.99，明显更稳更自然。
+
+**[Customized Fusion: A Closed-Loop Dynamic Network for Adaptive Multi-Task-Aware Infrared-Visible Image Fusion](customized_fusion_a_closed-loop_dynamic_network_for_adaptive_multi-task-aware_in.md)**
+
+:   提出闭环动态网络 CLDyN，让一个冻结的融合网络在不重训的前提下，通过一个仅 0.46M 参数的"需求驱动语义补偿（RSC）"模块接收下游任务（检测/分割/显著性）反馈的语义特征、动态定制卷积结构来做任务专属补偿，从而用一套模块同时适配多个任务，在 M3FD/FMB/VT5000 上既保住融合质量又取得领先的多任务适应性。
+
 **[PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning](diffusion-based_srgb_real_noise_generation_via_prompt-driven_noise_representatio.md)**
 
 :   PNG提出用可学习的Global/Local Prompt组件从真实噪声中自动提取噪声特征（替代ISO/相机型号等metadata），通过Prompt AutoEncoder编码噪声到latent空间+Prompt DiT（基于一致性模型）一步生成latent code，实现无需任何metadata的真实sRGB噪声合成，下游DnCNN去噪在SIDD上仅落后真实数据0.08dB。
@@ -126,6 +142,18 @@ item_total: 41
 
 :   提出退化感知扩散框架 DRFusion，通过直接回归融合图像（而非显式预测噪声）和联合观测模型校正机制，在少量扩散步骤内实现任意退化场景下的多模态图像融合。
 
+**[DRIFT: Deep Restoration, ISP Fusion, and Tone-mapping](drift_deep_restoration_isp_fusion_and_tone-mapping.md)**
+
+:   DRIFT 把手机相机里"多帧恢复 + HDR 融合 + 色调映射"三段串成一条端到端可在旗舰手机 NPU 上 <4s 跑完的 AI ISP 管线，用判别器特征匹配代替 LPIPS 解决恢复阶段的网格伪影，再用"预测残差增强 + 全局/局部/元数据三编码器"的色调映射网络换来可部署后调参、且跨 tile 一致的高分辨率出图。
+
+**[Edit-aware RAW Reconstruction](edit-aware_raw_reconstruction.md)**
+
+:   针对"RAW 重建的真实目的是后期编辑、而现有方法只优化逐像素 RAW 保真度"的错配，本文提出一个即插即用的 **edit-aware loss**——用一个可微、模块化、参数随机采样的简化 ISP 把真值 RAW 与重建 RAW 都渲染到 sRGB 再算误差，使重建结果在各种渲染风格/编辑下更鲁棒，在多种编辑条件下 sRGB PSNR 提升最高 1.5–2 dB。
+
+**[Efficient INT8 Single-Image Super-Resolution via Deployment-Aware Quantization and Teacher-Guided Training](efficient_int8_single-image_super-resolution_via_deployment-aware_quantization_a.md)**
+
+:   针对手机 NPU 上的 $\times 3$ 单图超分，本文用「LR 空间 MobileOne 重参数化骨干 + 三阶段教师引导训练 + 先融合再 QAT」的部署导向流水线，在 MAI 2026 量化超分挑战赛上以 82K 参数拿到 INT8 29.79 dB / 0.8634 SSIM、final score 1.8。
+
 **[EVLF: Early Vision-Language Fusion for Generative Dataset Distillation](evlf_early_vision-language_fusion_for_generative_dataset_distillation.md)**
 
 :   提出 EVLF，一种在编码器-骨干网络接口处进行视觉-语言早期融合的即插即用方法，解决了扩散模型数据集蒸馏中晚期语义注入导致的文本过度主导和视觉保真度下降问题。
@@ -137,6 +165,10 @@ item_total: 41
 **[FinPercep-RM: A Fine-grained Reward Model and Co-evolutionary Curriculum for RL-based Real-world Super-Resolution](finpercep_rm_a_fine_grained_reward_model_and_co_evolutionary_curriculum_for_rl_ba.md)**
 
 :   提出细粒度感知奖励模型 FinPercep-RM 和协同进化课程学习（CCL）策略，解决 RLHF 应用于真实世界超分辨率时的奖励黑客和训练不稳定问题，通过同时输出全局质量分数和空间退化热力图实现局部缺陷感知。
+
+**[FSM-Net: An Efficient Frequency-Spatial Network for Real-World Deblurring](fsm-net_an_efficient_frequency-spatial_network_for_real-world_deblurring.md)**
+
+:   FSM-Net 在轻量化 NAFNet 主干上插入「复数频域注意力 FSMBlock」与「交叉门控 Vision E-Branchformer 瓶颈」，用频域+空域双路解耦显式恢复运动模糊丢失的高频结构，仅 4.94M 参数、159.35 GMACs 就在 RSBlur 上拿到 33.144 dB PSNR，斩获 NTIRE 2026 高效去模糊挑战赛亚军。
 
 **[GSNR: Graph Smooth Null-Space Representation for Inverse Problems](gsnr_graph_smooth_null_space_representation_for_inverse_problems.md)**
 
@@ -166,9 +198,17 @@ item_total: 41
 
 :   NTIRE 2026第三届RAIM挑战赛AI Flash Portrait赛道：将弱闪光灯低光照人像映射为强闪光灯专业级人像，提供800组真实配对数据（含专业设计师修图GT），采用区域感知客观指标+专家盲评的双重评估体系，118支队伍注册、3187次有效提交。
 
+**[NTIRE 2026 Challenge on Short-form UGC Video Restoration in the Wild with Generative Models](ntire_2026_challenge_on_short-form_ugc_video_restoration_in_the_wild_with_genera.md)**
+
+:   这是 NTIRE 2026「真实场景短视频 UGC 视频恢复」挑战赛的官方报告：基于新发布的 KwaiVIR 基准（合成退化 + 真实野外短视频），分主观（用户研究）和客观（PSNR/SSIM/LPIPS/MUSIQ/WarpError 综合分）两条赛道，95 队报名、12 队提交有效方案，冠军 RedMediaTech 用「Wan2.1 单步扩散 + 双 VAE 两阶段」方案在两条赛道同时夺冠。
+
 **[NTIRE 2026 The Second Challenge on Day and Night Raindrop Removal for Dual-Focused Images](ntire_2026_raindrop_removal_challenge.md)**
 
 :   NTIRE 2026第二届日夜双焦点雨滴去除挑战赛总结报告：基于Raindrop Clarity真实数据集（14,139训练/407验证/593测试），168支队伍参赛，17支提交有效方案，冠军AIIA-Lab以MSDT骨干+伪GT精修流水线取得35.24分最佳成绩。
+
+**[Outlier-Robust Diffusion Solvers for Inverse Problems](outlier-robust_diffusion_solvers_for_inverse_problems.md)**
+
+:   针对真实测量中常见的离群值（outlier），本文给基于预训练扩散模型的逆问题求解器加了两道保险——先用显式噪声估计精炼测量，再把数据保真项从平方 $\ell_2$ 换成 Huber 损失的迭代重加权最小二乘，并分别用梯度下降（Robust-GD）和共轭梯度（Robust-CG）求解，在超分/修复/去模糊等线性与非线性任务上对离群污染显著比 DPS、DAPS 等近期方法更稳。
 
 **[PhaSR: Generalized Image Shadow Removal with Physically Aligned Priors](phasr_generalized_image_shadow_removal_with_physically_aligned_priors.md)**
 
@@ -190,9 +230,17 @@ item_total: 41
 
 :   提出 Real-IISR 统一自回归框架，通过热-结构引导模块、条件自适应码本和热序一致性损失解决真实红外图像超分辨率的特有挑战，并构建了 FLIR-IISR 数据集（1457 对真实 LR-HR 红外图像）。
 
+**[Reflection Separation from a Single Image via Joint Latent Diffusion](reflection_separation_from_a_single_image_via_joint_latent_diffusion.md)**
+
+:   针对单张图在强眩光、弱反射等极端场景下难以同时还原透射层和反射层的问题，本文微调一个潜扩散模型，用统一模型加「Transmission / Reflection」提示词**同时**生成两层，配合跨层自注意力、解耦采样和测试时潜空间合成优化，在多个真实基准上把透射和反射的分离质量都刷到 SOTA（Real20 PSNR 25.32、反射层 LPIPS 从 0.52 降到 0.37）。
+
 **[ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation](reflexsplit_single_image_reflection_separation_via_layer_fusion-separation.md)**
 
 :   ReflexSplit提出一种显式层融合-分离框架，通过跨尺度门控融合(CrGF)自适应聚合多尺度特征，层融合-分离模块(LFSB)中的差分双维度注意力 $\mathbf{A}^t - \lambda_\ell \mathbf{A}^r$ 进行跨流干扰抑制，配合深度依赖初始化+epoch-wise warmup的课程训练，在合成和真实世界反射分离基准上取得SOTA。
+
+**[Residual Diffusion Bridge Model for Image Restoration](residual_diffusion_bridge_model_for_image_restoration.md)**
+
+:   本文把扩散桥重新推导成由「均值回归 OU 过程 + Doob h-变换」统一刻画的随机插值，并用**配对图像的残差 $\boldsymbol{\pi}=\mathbf{x}_0-\boldsymbol{\mu}$ 去调制噪声的注入与去除**，让模型只在退化区域施加扰动、保护干净区域不被反复重建，从而在去雨/低光/去雪/去雾/去模糊五类通用恢复任务上平均涨 1.55 dB PSNR，同时把现有各种桥模型证明为本框架的特例。
 
 **[SAT: Selective Aggregation Transformer for Image Super-Resolution](sat_selective_aggregation_transformer_for_image_super_resolution.md)**
 
@@ -249,3 +297,11 @@ item_total: 41
 **[Variational Garrote for Sparse Inverse Problems](variational_garrote_for_sparse_inverse_problems.md)**
 
 :   在统一的稀疏逆问题框架下，系统比较 $\ell_1$ 正则化（LASSO）与 Variational Garrote（VG，一种通过变分二值门控近似 $\ell_0$ 的方法），在信号重采样、去噪和稀疏视角 CT 重建三个任务上证明 VG 在强欠定场景下能显著降低最小泛化误差，尤其在采样率 <20% 或投影角度极少时优势最大。
+
+**[White-Balance First, Adjust Later: Cross-Camera Color Constancy via Vision-Language Evaluation](white-balance_first_adjust_later_cross-camera_color_constancy_via_vision-languag.md)**
+
+:   把颜色恒常性（估计光源色）从"直接回归 RGB"改写成"先白平衡、再让 VLM 看图给反馈、迭代修正"的闭环过程：每轮用当前估计白平衡并转成 pseudo-sRGB，让一个 LoRA 微调的 VLM 判断画面还偏红/绿/蓝，据此把光源方向往对应轴旋转一个角度，直至收敛——无需目标相机的标定或重训，就在四个跨相机基准上拿到 SOTA，尤其大幅压低了最难 25% 样本的误差。
+
+**[ZeroIDIR: Zero-Reference Illumination Degradation Image Restoration with Perturbed Consistency Diffusion Models](zeroidir_zero-reference_illumination_degradation_image_restoration_with_perturbe.md)**
+
+:   ZeroIDIR 把光照退化图像复原拆成「自适应光照校正 + 扩散重建」两步，**只用低质退化图训练、不需要任何参考图/配对数据**：先用自适应 Gamma 校正模块（AGCM）把曝光修正到自然分布，再把校正结果当作扩散过程的中间噪声态喂给扰动一致性扩散模型（PCDM）补细节去噪，在无监督方法里全面领先、对未见场景的泛化甚至超过有监督方法。

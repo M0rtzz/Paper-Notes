@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-task Adversarial Attacks against Black-box Model with Few-shot Queries
 description: >-
-  [ACL 2025][AI安全][adversarial attack] 提出 CEMA（Cluster and Ensemble Multi-task Text Adversarial Attack）方法，通过训练"深层替代模型"将复杂的多任务黑盒攻击转化为单任务文本分类攻击…
+  [ACL 2025][AI安全][adversarial attack] 提出 CEMA（Cluster and Ensemble Multi-task Text Adversarial Attack）方法，通过训练"深层替代模型"将复杂的多任务黑盒攻击转化为单任务文本分类攻击，仅需约 100 次查询即可同时攻击分类、翻译、摘要、文生图等多种任务，并在 ChatGPT-4o、百度翻译、Stable Diffusion 等商用模型上验证了有效性。
 tags:
   - "ACL 2025"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoRA Subtraction for Drift-Resistant Space in Exemplar-Free Continual Learning
 description: >-
-  [CVPR 2025][模型压缩][持续学习] LoRA-DRS 提出"LoRA 减法"操作——在学习新任务前将旧任务的 LoRA 权重从预训练权重中减去以构建漂移抵抗空间（DRS），然后在该空间中通过梯度投影训练新任务的 LoRA，结合增强三元组损失提升可塑性，在无样本持续学习中实现了 SOTA 性能…
+  [CVPR 2025][模型压缩][持续学习] LoRA-DRS 提出"LoRA 减法"操作——在学习新任务前将旧任务的 LoRA 权重从预训练权重中减去以构建漂移抵抗空间（DRS），然后在该空间中通过梯度投影训练新任务的 LoRA，结合增强三元组损失提升可塑性，在无样本持续学习中实现了 SOTA 性能，尤其在长任务序列上优势显著。
 tags:
   - "CVPR 2025"
   - "模型压缩"

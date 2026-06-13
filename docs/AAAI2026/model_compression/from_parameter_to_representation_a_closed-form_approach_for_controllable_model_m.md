@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Parameter to Representation: A Closed-Form Approach for Controllable Model Merging
 description: >-
-  [AAAI 2026][模型压缩][model merging] 提出 ReACT，将可控模型合并从参数空间优化转移到表征空间校正，通过闭式解实现任意用户偏好下的 Pareto 最优模型即时生成，比现有方法快 36-208 倍且性能更优。
+  [AAAI 2026][模型压缩][model merging] 提出 ReACT，将可控模型合并从参数空间优化转移到表征空间校正，通过闭式解实现任意用户偏好下的 Pareto 最优模型即时生成，比现有方法快 36-208 倍且性能更优。 领域现状：模型合并（Model Merging）通过将多个任务专用模型合并为一个通用模…
 tags:
   - "AAAI 2026"
   - "模型压缩"

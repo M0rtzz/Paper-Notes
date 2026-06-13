@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies
 description: >-
-  [NeurIPS 2025][图像生成][合成图像检测] 基于马尔可夫随机场（MRF）理论，提出局部像素依赖（LPD）特征表示，通过中值滤波重建暴露生成图像的纹理不一致性，配合仅 1.1M 参数的轻量卷积网络 FerretNet，在仅用 4 类 ProGAN 数据训练的情况下…
+  [NeurIPS 2025][图像生成][合成图像检测] 基于马尔可夫随机场（MRF）理论，提出局部像素依赖（LPD）特征表示，通过中值滤波重建暴露生成图像的纹理不一致性，配合仅 1.1M 参数的轻量卷积网络 FerretNet，在仅用 4 类 ProGAN 数据训练的情况下，实现跨 22 个生成模型 97.1% 的平均检测准确率。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

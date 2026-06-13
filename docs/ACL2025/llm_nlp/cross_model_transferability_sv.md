@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts
 description: >-
-  [ACL 2025][LLM/NLP][steering vectors] 提出 L-Cross Modulation 方法，通过简单线性变换将一个 LLM 的概念方向向量（steering vectors）迁移到另一个 LLM 中实现行为控制，发现三个关键结论：(1) 跨模型 SV 迁移有效…
+  [ACL 2025][LLM 其他][steering vectors] 提出 L-Cross Modulation 方法，通过简单线性变换将一个 LLM 的概念方向向量（steering vectors）迁移到另一个 LLM 中实现行为控制，发现三个关键结论：(1) 跨模型 SV 迁移有效；(2) 不同概念共享同一变换矩阵；(3) 小模型的 SV 可以控制大模型（弱到强迁移）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "steering vectors"
   - "cross-model transfer"
   - "representation alignment"

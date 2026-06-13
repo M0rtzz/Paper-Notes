@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EventGPT: Event Stream Understanding with Multimodal Large Language Models
 description: >-
-  [CVPR 2025][多模态VLM][事件相机] 首个专为事件相机流设计的 MLLM，通过三阶段渐进训练范式（视觉-语言对齐→事件-语言对齐→指令微调）跨越异步事件数据与语言之间的巨大领域差距，在事件场景描述和 VQA 上大幅超越通用 MLLM。
+  [CVPR 2025][多模态VLM][事件相机] 首个专为事件相机流设计的 MLLM，通过三阶段渐进训练范式（视觉-语言对齐→事件-语言对齐→指令微调）跨越异步事件数据与语言之间的巨大领域差距，在事件场景描述和 VQA 上大幅超越通用 MLLM。 领域现状：事件相机以异步、高时间分辨率的方式记录亮度变化…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

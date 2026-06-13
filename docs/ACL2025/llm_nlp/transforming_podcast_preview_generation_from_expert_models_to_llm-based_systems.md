@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Transforming Podcast Preview Generation: From Expert Models to LLM-Based Systems
 description: >-
-  [ACL 2025][LLM/NLP][podcast preview] Spotify 提出用 LLM（Gemini 1.5 Pro）替代传统多模型特征工程流水线来生成播客预览片段，在离线人工评估和线上 A/B 测试中均显著优于传统系统，用户互动时长提升 4.6%，处理效率提升 5 倍。
+  [ACL 2025][LLM 其他][podcast preview] Spotify 提出用 LLM（Gemini 1.5 Pro）替代传统多模型特征工程流水线来生成播客预览片段，在离线人工评估和线上 A/B 测试中均显著优于传统系统，用户互动时长提升 4.6%，处理效率提升 5 倍。 领域现状：播客等长内容的发现和评估对…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "podcast preview"
   - "LLM application"
   - "content understanding"

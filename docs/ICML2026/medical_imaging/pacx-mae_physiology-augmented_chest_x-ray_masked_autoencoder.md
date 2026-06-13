@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PaCX-MAE: Physiology-Augmented Chest X-Ray Masked Autoencoder
 description: >-
-  [ICML 2026][医学图像][胸片] PaCX-MAE 在 MAE 预训练的胸片 ViT 之上，用 LoRA 微调把 ECG 和实验室检验两类生理信号编码器作为冻结教师，通过 InfoNCE 对比 + 余弦回归的双重蒸馏，把"看不见的生理上下文"注入纯图像编码器…
+  [ICML 2026][医学图像][胸片] PaCX-MAE 在 MAE 预训练的胸片 ViT 之上，用 LoRA 微调把 ECG 和实验室检验两类生理信号编码器作为冻结教师，通过 InfoNCE 对比 + 余弦回归的双重蒸馏，把"看不见的生理上下文"注入纯图像编码器，推理时只需胸片即可在 9 个下游基准上整体超越同架构 MAE 基线，对生理依赖性任务尤为明显（MedMod +2.7 AUROC、VinDr +6.5 F1）。
 tags:
   - "ICML 2026"
   - "医学图像"

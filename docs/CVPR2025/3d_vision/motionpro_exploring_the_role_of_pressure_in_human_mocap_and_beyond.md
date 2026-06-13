@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionPRO: Exploring the Role of Pressure in Human MoCap and Beyond
 description: >-
-  [CVPR 2025][3D视觉][human motion capture] 构建大规模压力-RGB-光学动捕数据集 MotionPRO（70人/400类动作/12.4M帧），并提出 FRAPPE 基线将压力信号与单目 RGB 融合，显著提升全身姿态估计的物理合理性和全局轨迹精度…
+  [CVPR 2025][3D视觉][human motion capture] 构建大规模压力-RGB-光学动捕数据集 MotionPRO（70人/400类动作/12.4M帧），并提出 FRAPPE 基线将压力信号与单目 RGB 融合，显著提升全身姿态估计的物理合理性和全局轨迹精度，进一步将压力先验扩展至人形机器人驱动。
 tags:
   - "CVPR 2025"
   - "3D视觉"

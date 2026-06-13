@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision Transformers Need More Than Registers
 description: >-
-  [CVPR 2026][自监督学习][Transformer] 这篇论文认为 ViT 在标签监督、文本监督和自监督下普遍存在的 dense feature 伪影，本质上不是单纯的 high-norm token 问题，而是模型在粗粒度监督和全局注意力共同作用下学会了用背景 patch 充当全局语义捷径…
+  [CVPR 2026][自监督学习][Transformer] 这篇论文认为 ViT 在标签监督、文本监督和自监督下普遍存在的 dense feature 伪影，本质上不是单纯的 high-norm token 问题，而是模型在粗粒度监督和全局注意力共同作用下学会了用背景 patch 充当全局语义捷径；作者据此提出 LaSt-ViT，用频域稳定性引导的选择性聚合替代原始 CLS 聚合，在 12 个基准上稳定改善定位、分割和开放词汇任务。
 tags:
   - "CVPR 2026"
   - "自监督学习"

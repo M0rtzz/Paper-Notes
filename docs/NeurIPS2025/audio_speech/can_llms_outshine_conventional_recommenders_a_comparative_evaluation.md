@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can LLMs Outshine Conventional Recommenders? A Comparative Evaluation
 description: >-
-  [NeurIPS 2025][音频/语音][LLM-as-RS] 提出 RecBench 综合评估框架，在5个领域数据集上系统对比17个LLM与10个传统DLRM，发现LLM推荐器在CTR任务上AUC提升最高5%、在序列推荐上NDCG@10提升最高170%，但推理速度慢10-1000倍…
+  [NeurIPS 2025][音频/语音][LLM-as-RS] 提出 RecBench 综合评估框架，在5个领域数据集上系统对比17个LLM与10个传统DLRM，发现LLM推荐器在CTR任务上AUC提升最高5%、在序列推荐上NDCG@10提升最高170%，但推理速度慢10-1000倍，而传统DLRM结合LLM语义嵌入（LLM-for-RS）可以20倍更快的速度达到LLM约95%的性能，是当前最具工业可行性的方案。
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

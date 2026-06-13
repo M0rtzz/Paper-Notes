@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Sonnet: Spectral Operator Neural Network for Multivariable Time Series Forecasting
 description: >-
-  [AAAI 2026 (Oral)][多变量时间序列] 提出 Sonnet，通过可学习小波变换将输入映射到时频域，引入基于谱相干性的多变量注意力（MVCA）建模变量间依赖关系，并利用 Koopman 算子进行稳定的时间演化预测，在 47 个预测任务中的 34 个取得最优，平均 MAE 降低 2.2%。
+  [AAAI 2026 (Oral)][时间序列][多变量时间序列] 提出 Sonnet，通过可学习小波变换将输入映射到时频域，引入基于谱相干性的多变量注意力（MVCA）建模变量间依赖关系，并利用 Koopman 算子进行稳定的时间演化预测，在 47 个预测任务中的 34 个取得最优，平均 MAE 降低 2.2%。
 tags:
   - "AAAI 2026 (Oral)"
+  - "时间序列"
   - "多变量时间序列"
   - "频谱分析"
   - "小波变换"

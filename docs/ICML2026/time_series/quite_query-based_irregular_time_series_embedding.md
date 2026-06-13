@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuITE: Query-based Irregular Time Series Embedding
 description: >-
-  [ICML 2026][时间序列][不规则时间序列] QuITE 是一个**即插即用的嵌入模块**——使用可学习的查询令牌通过自注意力直接聚合不规则观测，将任意 MTS 模型适配到不规则多变量时间序列（IMTS），无需改动架构或生成人工值…
+  [ICML 2026][时间序列][不规则时间序列] QuITE 是一个**即插即用的嵌入模块**——使用可学习的查询令牌通过自注意力直接聚合不规则观测，将任意 MTS 模型适配到不规则多变量时间序列（IMTS），无需改动架构或生成人工值；在 iTransformer + QuITE 上预测平均相对提升 54.7%。
 tags:
   - "ICML 2026"
   - "时间序列"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reclaiming Lost Text Layers for Source-Free Cross-Domain Few-Shot Learning
 description: >-
-  [CVPR2026][医学图像][CLIP] 发现 CLIP 文本编码器中存在"Lost Layers"——在 Source-Free Cross-Domain Few-Shot Learning (SF-CDFSL) 中移除某些中间层反而提升性能；论文证明这些层并非冗余而是因视觉域偏移未被充分利用…
+  [CVPR2026][医学图像][CLIP] 发现 CLIP 文本编码器中存在"Lost Layers"——在 Source-Free Cross-Domain Few-Shot Learning (SF-CDFSL) 中移除某些中间层反而提升性能；论文证明这些层并非冗余而是因视觉域偏移未被充分利用，提出 VtT 模型在层级和编码器级别重新利用这些信息，取得 SOTA。
 tags:
   - "CVPR2026"
   - "医学图像"

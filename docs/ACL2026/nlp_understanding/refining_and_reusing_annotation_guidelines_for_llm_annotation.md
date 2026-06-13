@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Refining and Reusing Annotation Guidelines for LLM Annotation
 description: >-
-  [ACL2026][NLP理解][标注规范] 这篇论文把传统人工标注项目中的 guideline reuse 和 moderation 流程迁移到 LLM 标注中，证明显式标注规范、推理型模型和少量 gold discrepancy 驱动的迭代规范细化…
+  [ACL2026][NLP理解][标注规范] 这篇论文把传统人工标注项目中的 guideline reuse 和 moderation 流程迁移到 LLM 标注中，证明显式标注规范、推理型模型和少量 gold discrepancy 驱动的迭代规范细化，都能提升生物医学 NER 的严格 span+type F1。
 tags:
   - "ACL2026"
   - "NLP理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReconDreamer++: Harmonizing Generative and Reconstructive Models for Driving Scene Representation
 description: >-
-  [ICCV 2025][自动驾驶][驾驶场景重建] ReconDreamer++ 在 ReconDreamer 基础上，通过引入新轨迹可变形网络（NTDNet）弥合生成数据与真实观测的域差距，并独立建模地面以保留几何先验…
+  [ICCV 2025][自动驾驶][驾驶场景重建] ReconDreamer++ 在 ReconDreamer 基础上，通过引入新轨迹可变形网络（NTDNet）弥合生成数据与真实观测的域差距，并独立建模地面以保留几何先验，在 Waymo 上实现了原始轨迹性能持平 Street Gaussians、新轨迹 NTA-IoU 提升 6.1%、FID 改善 23.0% 的显著效果。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

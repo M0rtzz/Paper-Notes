@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Reliable Benchmarking: A Contamination Free, Controllable Evaluation Framework for Multi-step LLM Function Calling
 description: >-
-  [ICLR 2026][模型压缩][工具增强LLM] 提出 FuncBenchGen 框架，通过将多步函数调用建模为 DAG 图遍历问题，实现无数据污染、可精细控制任务难度的 LLM 工具使用能力评估，并揭示了推理模型在长调用链和连接型干扰函数下的关键失败模式。
+  [ICLR 2026][模型压缩][工具增强LLM] 提出 FuncBenchGen 框架，通过将多步函数调用建模为 DAG 图遍历问题，实现无数据污染、可精细控制任务难度的 LLM 工具使用能力评估，并揭示了推理模型在长调用链和连接型干扰函数下的关键失败模式。 现有的工具增强语言模型（TaLM）评估基准面临两大核心问题：…
 tags:
   - "ICLR 2026"
   - "模型压缩"

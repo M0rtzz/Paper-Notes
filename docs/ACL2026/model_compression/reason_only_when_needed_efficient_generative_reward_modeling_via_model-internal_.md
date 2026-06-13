@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reason Only When Needed: Efficient Generative Reward Modeling via Model-Internal Uncertainty
 description: >-
-  [ACL 2026][模型压缩][生成式奖励模型] 提出 E-GRM 框架，利用模型并行解码的收敛行为估计不确定性，仅在必要时触发 CoT 推理，并通过混合损失训练的判别式评分器精细评估推理路径质量，在多个奖励模型基准上实现 SOTA 同时降低 62% 推理延迟。
+  [ACL 2026 Findings][模型压缩][生成式奖励模型] 提出 E-GRM 框架，利用模型并行解码的收敛行为估计不确定性，仅在必要时触发 CoT 推理，并通过混合损失训练的判别式评分器精细评估推理路径质量，在多个奖励模型基准上实现 SOTA 同时降低 62% 推理延迟。 领域现状：生成式奖励模型（GRM）通过 C…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "生成式奖励模型"
   - "动态CoT触发"

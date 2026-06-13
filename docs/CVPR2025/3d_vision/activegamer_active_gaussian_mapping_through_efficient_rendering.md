@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ActiveGAMER: Active GAussian Mapping through Efficient Rendering
 description: >-
-  [CVPR 2025][3D视觉][3D Gaussian Splatting] 提出 ActiveGAMER，首次将 3D Gaussian Splatting 用于主动建图，通过基于渲染的信息增益模块高效选择最优下一视角，结合粗到细探索、后精修和全局-局部关键帧策略…
+  [CVPR 2025][3D视觉][3D Gaussian Splatting] 提出 ActiveGAMER，首次将 3D Gaussian Splatting 用于主动建图，通过基于渲染的信息增益模块高效选择最优下一视角，结合粗到细探索、后精修和全局-局部关键帧策略，在 Replica 和 MP3D 数据集上大幅超越 NeRF-based 方法的几何精度和渲染保真度。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rays as Pixels: Learning A Joint Distribution of Videos and Camera Trajectories
 description: >-
-  [ICML 2026][视频生成][视频扩散] 把每个相机的 per-pixel 光线"原点+方向"打包成一张与 RGB 同形状的 3 通道 raxel 图，让预训练视频 VAE 直接当相机编码器…
+  [ICML 2026][视频生成][视频扩散] 把每个相机的 per-pixel 光线"原点+方向"打包成一张与 RGB 同形状的 3 通道 raxel 图，让预训练视频 VAE 直接当相机编码器，再用 Decoupled Self-Cross Attention 把 raxel 和视频帧塞进同一个 Flow Matching DiT 联合去噪，从而第一次用一组权重同时支持位姿估计、相机可控视频生成与"视频+轨迹"联合生成三件事。
 tags:
   - "ICML 2026"
   - "视频生成"

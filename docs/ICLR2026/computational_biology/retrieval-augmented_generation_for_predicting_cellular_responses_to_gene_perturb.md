@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieval-Augmented Generation for Predicting Cellular Responses to Gene Perturbation
 description: >-
-  [ICLR2026][计算生物][RAG] 提出 **PT-RAG**（Perturbation-aware Two-stage Retrieval-Augmented Generation）…
+  [ICLR2026][计算生物][RAG] 提出 **PT-RAG**（Perturbation-aware Two-stage Retrieval-Augmented Generation），首次将可微检索增强生成范式应用于单细胞基因扰动响应预测：通过 GenePT 语义检索候选扰动 + Gumbel-Softmax 条件离散采样实现细胞类型感知的端到端检索优化，在 Replogle-Nadig 数据集上超越 STATE 基线（Pearson 0.633 vs 0.624），同时发现朴素 RAG 会严重损害性能（Pearson 仅 0.396），证明**可微且细胞类型感知的检索**在该领域不可或缺。
 tags:
   - "ICLR2026"
   - "计算生物"

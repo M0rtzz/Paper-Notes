@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Better Embeddings with Coupled Adam
 description: >-
-  [ACL 2025][词嵌入各向异性] 从理论上证明 Adam 优化器的逐 token 二阶矩是导致 LLM 词嵌入各向异性（均值偏移）的根因，提出 Coupled Adam——对嵌入层的二阶矩取词汇平均——消除了各向异性问题，并在大规模实验中提升了嵌入质量和下游性能。
+  [ACL 2025][LLM 其他][词嵌入各向异性] 从理论上证明 Adam 优化器的逐 token 二阶矩是导致 LLM 词嵌入各向异性（均值偏移）的根因，提出 Coupled Adam——对嵌入层的二阶矩取词汇平均——消除了各向异性问题，并在大规模实验中提升了嵌入质量和下游性能。 领域现状：LLM 训练出的词嵌入表现出…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "词嵌入各向异性"
   - "Adam优化器"
   - "Coupled Adam"

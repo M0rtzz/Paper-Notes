@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parameter-free Dynamic Regret: Time-varying Movement Costs, Delayed Feedback, and Memory
 description: >-
-  [ICML2026][强化学习][动态遗憾] 本文给出第一个针对**无约束**在线凸优化、**时变移动代价**与**动态比较序列**三重设定的 parameter-free 算法，把延迟反馈与时变记忆都规约为带时变移动代价的 OCO，从而统一刷新这三个场景的动态遗憾上界。
+  [ICML2026][强化学习][动态遗憾] 本文给出第一个针对无约束：在线凸优化、时变移动代价：与动态比较序列：三重设定的 parameter-free 算法，把延迟反馈与时变记忆都规约为带时变移动代价的 OCO，从而统一刷新这三个场景的动态遗憾上界。 领域现状：在线凸优化（OCO）的标准设定假设决策域有界、比较器是单一最…
 tags:
   - "ICML2026"
   - "强化学习"

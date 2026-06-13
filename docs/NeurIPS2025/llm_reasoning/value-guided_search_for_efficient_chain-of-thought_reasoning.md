@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Value-Guided Search for Efficient Chain-of-Thought Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][故障检测] 本文扩展置信度估计到多步任务，证明步级评估相比整体评估能更有效地检测推理失败，相对整体评估在CoQA上AUC-ROC提升15%，为多步推理系统的可信部署提供实用框架。
+  [NeurIPS 2025][LLM推理][故障检测] 本文扩展置信度估计到多步任务，证明步级评估相比整体评估能更有效地检测推理失败，相对整体评估在CoQA上AUC-ROC提升15%，为多步推理系统的可信部署提供实用框架。 现有痛点 现有痛点：领域现状：单步研究饱和：存在大量置信度估计工作，但几乎全部聚焦单次输出…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

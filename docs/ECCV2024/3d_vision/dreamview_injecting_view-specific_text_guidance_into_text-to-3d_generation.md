@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamView: Injecting View-specific Text Guidance into Text-to-3D Generation
 description: >-
-  [ECCV 2024][3D视觉][文本到3D生成] 提出DreamView，通过自适应文本引导注入模块，将视角特定的文本描述和全局文本描述协同注入扩散模型，实现可定制化且多视角一致的文本到3D生成。
+  [ECCV 2024][3D视觉][文本到3D生成] 提出DreamView，通过自适应文本引导注入模块，将视角特定的文本描述和全局文本描述协同注入扩散模型，实现可定制化且多视角一致的文本到3D生成。 领域现状：文本到3D生成（text-to-3D）方法主要分为两类：(a) 直接3D生成方法（如Point-E、Shap-E）…
 tags:
   - "ECCV 2024"
   - "3D视觉"

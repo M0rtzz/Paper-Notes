@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Improving Preference Extraction In LLMs By Identifying Latent Knowledge Through Classifying Probes
 description: >-
-  [ACL 2025][LLM/NLP][LLM-as-Judge] 本文提出使用线性分类探针（classifying probes）结合对比对（contrast pairs）来提取LLM的隐含偏好判断，在LLM-as-Judge任务中持续优于传统的生成式评估方法，且监督探针甚至超越微调评估器…
+  [ACL 2025][LLM 其他][LLM-as-Judge] 本文提出使用线性分类探针（classifying probes）结合对比对（contrast pairs）来提取LLM的隐含偏好判断，在LLM-as-Judge任务中持续优于传统的生成式评估方法，且监督探针甚至超越微调评估器，同时保持类似的计算成本。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-as-Judge"
   - "线性探针"
   - "对比对"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EpiAgent: An Agent-Centric System for Ancient Inscription Restoration
 description: >-
-  [CVPR 2026][LLM Agent][古代铭文修复] EpiAgent是首个面向古代铭文修复的Agent系统，通过LLM中央规划器协调多模态分析、专用修复工具和迭代自我优化，在文字真实性和视觉保真度上超越现有方法。
+  [CVPR 2026][LLM Agent][古代铭文修复] EpiAgent是首个面向古代铭文修复的Agent系统，通过LLM中央规划器协调多模态分析、专用修复工具和迭代自我优化，在文字真实性和视觉保真度上超越现有方法。 领域现状：AI驱动的古代文字修复已有进展，但现有方法要么局限于单字符级修复，要么使用固定流水线进行全铭…
 tags:
   - "CVPR 2026"
   - "LLM Agent"

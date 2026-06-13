@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Prompt-Agnostic Evolution
 description: >-
-  [ICLR2026][多模态VLM][提示学习] 提出 Prompt-Agnostic Evolution (PAE)，通过频域感知的任务初始化 (MPA) 和 Koopman-Lyapunov 动力系统 (KLD) 跨层关联 prompt…
+  [ICLR2026][多模态VLM][提示学习] 提出 Prompt-Agnostic Evolution (PAE)，通过频域感知的任务初始化 (MPA) 和 Koopman-Lyapunov 动力系统 (KLD) 跨层关联 prompt，加速 VPT 收敛（平均 1.41× 加速）并在 25 个数据集上提升 1–3% 精度，且对各类 VPT 变体即插即用、无推理开销。
 tags:
   - "ICLR2026"
   - "多模态VLM"

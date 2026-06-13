@@ -2,7 +2,7 @@
 title: >-
   [论文解读] URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model
 description: >-
-  [NeurIPS 2025][3D视觉][关节物体重建] 提出URDF-Anything，首个基于3D多模态大语言模型（MLLM）的端到端关节物体重建框架，通过[SEG] token机制实现几何分割与运动学参数的联合预测…
+  [NeurIPS 2025][3D视觉][关节物体重建] 提出URDF-Anything，首个基于3D多模态大语言模型（MLLM）的端到端关节物体重建框架，通过[SEG] token机制实现几何分割与运动学参数的联合预测，在分割精度（mIoU提升17%）、参数误差（降低29%）和物理可执行性（超越基线50%）上均达到SOTA。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedVLA: Federated Vision-Language-Action Learning with Dual Gating Mixture-of-Experts for Robotic Manipulation
 description: >-
-  [ICCV 2025][AI安全][联邦学习] 本文提出 FedVLA——首个面向视觉-语言-动作（VLA）模型的联邦学习框架，通过指令导向场景解析（IOSP）增强任务感知特征提取、双门控混合专家（DGMoE）实现自适应知识路由、以及专家驱动聚合（EDA）策略确保跨客户端有效知识整合…
+  [ICCV 2025][AI安全][联邦学习] 本文提出 FedVLA——首个面向视觉-语言-动作（VLA）模型的联邦学习框架，通过指令导向场景解析（IOSP）增强任务感知特征提取、双门控混合专家（DGMoE）实现自适应知识路由、以及专家驱动聚合（EDA）策略确保跨客户端有效知识整合，在保护数据隐私的同时达到与集中式训练相当的任务成功率。
 tags:
   - "ICCV 2025"
   - "AI安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predictive Regularization Against Visual Representation Degradation in Multimodal Large Language Models
 description: >-
-  [CVPR 2026][多模态VLM][视觉表征退化] 本文系统诊断了MLLM中LLM中间层视觉表征在全局功能和patch语义结构两个层面的退化现象，揭示其本质是纯文本生成目标下的"视觉牺牲"…
+  [CVPR 2026][多模态VLM][视觉表征退化] 本文系统诊断了MLLM中LLM中间层视觉表征在全局功能和patch语义结构两个层面的退化现象，揭示其本质是纯文本生成目标下的"视觉牺牲"，并提出Predictive Regularization (PRe) 通过让退化的中间层特征预测初始视觉特征来缓解退化，在多个VL基准上取得一致提升。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

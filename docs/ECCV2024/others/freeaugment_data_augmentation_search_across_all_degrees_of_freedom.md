@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeAugment: Data Augmentation Search Across All Degrees of Freedom
 description: >-
-  [ECCV 2024][数据增强] 提出 FreeAugment，首个能够同时全局优化数据增强策略的四个自由度（变换数量/类型/顺序/强度）的全可微搜索方法，通过 Gumbel-Softmax 学习深度分布、Gumbel-Sinkhorn 学习排列分布来避免重复采样，在多个基准上取得 SOTA。
+  [ECCV 2024][数据增强] 提出 FreeAugment，首个能够同时全局优化数据增强策略的四个自由度（变换数量/类型/顺序/强度）的全可微搜索方法，通过 Gumbel-Softmax 学习深度分布、Gumbel-Sinkhorn 学习排列分布来避免重复采样，在多个基准上取得 SOTA。 数据增强是深度学习中提升泛化…
 tags:
   - "ECCV 2024"
   - "数据增强"

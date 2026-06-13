@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Meaning Beyond Truth Conditions: Evaluating Discourse Level Understanding via Anaphora Accessibility
 description: >-
-  [ACL 2025][话语语义理解] 本文提出语义理解能力的层级框架（词汇/句子/话语），构建了基于照应可及性（anaphora accessibility）的评估数据集，发现 LLM 在某些结构上与人类一致但在其他结构上存在系统性分歧——LLM 依赖词汇线索而非结构化抽象。
+  [ACL 2025][LLM 其他][话语语义理解] 本文提出语义理解能力的层级框架（词汇/句子/话语），构建了基于照应可及性（anaphora accessibility）的评估数据集，发现 LLM 在某些结构上与人类一致但在其他结构上存在系统性分歧——LLM 依赖词汇线索而非结构化抽象。 LLM 的成功依赖于自然语言理解…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "话语语义理解"
   - "照应可及性"
   - "动态语义学"

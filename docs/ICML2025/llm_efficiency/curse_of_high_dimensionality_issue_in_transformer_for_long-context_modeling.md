@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curse of High Dimensionality Issue in Transformer for Long-context Modeling
 description: >-
-  [ICML 2025][LLM效率][注意力稀疏性] 本文从监督学习视角重新审视序列建模中的注意力冗余问题，提出了 Dynamic Group Attention (DGA) 机制，通过将不重要的 token 动态分组聚合来减少注意力计算中的冗余…
+  [ICML 2025][LLM效率][注意力稀疏性] 本文从监督学习视角重新审视序列建模中的注意力冗余问题，提出了 Dynamic Group Attention (DGA) 机制，通过将不重要的 token 动态分组聚合来减少注意力计算中的冗余，在保持竞争性能的同时大幅降低推理延迟（LLaMA2-7B 在 16K 上下文下推理速度提升 2.42 倍）。
 tags:
   - "ICML 2025"
   - "LLM效率"

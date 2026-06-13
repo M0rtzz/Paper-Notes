@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Navigating Simply, Aligning Deeply: Winning Solutions for Mouse vs. AI 2025
 description: >-
-  [NeurIPS 2025][模型压缩][视觉鲁棒性] 在NeurIPS 2025 Mouse vs. AI竞赛中，本文展示了轻量级两层CNN在视觉鲁棒性任务上大幅超越深度网络的反直觉发现，同时证明深层ResNet架构在神经对齐任务上更具优势，揭示了行为鲁棒性与生物合理性之间的根本张力。
+  [NeurIPS 2025][模型压缩][视觉鲁棒性] 在NeurIPS 2025 Mouse vs. AI竞赛中，本文展示了轻量级两层CNN在视觉鲁棒性任务上大幅超越深度网络的反直觉发现，同时证明深层ResNet架构在神经对齐任务上更具优势，揭示了行为鲁棒性与生物合理性之间的根本张力。 视觉导航中的分布外鲁棒性一直是强化学…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

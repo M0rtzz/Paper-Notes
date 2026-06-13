@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes AI Research Replicable? Executable Knowledge Graphs as Scientific Knowledge Representations
 description: >-
-  [ACL2026][图学习][可执行知识图谱] 本文提出 Executable Knowledge Graphs (xKG)，把论文中的技术概念和可运行代码片段组织成 Paper- Technique- Code 三层图结构，作为可插拔知识库辅助科研复现 agent…
+  [ACL2026][图学习][可执行知识图谱] 本文提出 Executable Knowledge Graphs (xKG)，把论文中的技术概念和可运行代码片段组织成 Paper- Technique- Code 三层图结构，作为可插拔知识库辅助科研复现 agent，在 PaperBench Code-Dev 上为不同 agent 带来最高 10.90 个百分点的复制得分提升。
 tags:
   - "ACL2026"
   - "图学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.17795](https://arxiv.org/abs/2510.17795)  
 **代码**: https://github.com/zjunlp/xKG  
-**领域**: graph_learning  
+**领域**: 图学习  
 **关键词**: 可执行知识图谱、论文复现、代码检索、科研 Agent、PaperBench
 
 ## 一句话总结

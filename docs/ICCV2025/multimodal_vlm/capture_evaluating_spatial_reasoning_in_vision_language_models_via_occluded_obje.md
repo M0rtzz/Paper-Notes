@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAPTURe: Evaluating Spatial Reasoning in Vision Language Models via Occluded Object Counting
 description: >-
-  [ICCV 2025][多模态VLM][VLM evaluation] 本文提出CAPTURe基准，通过要求VLM在遮挡场景中对规律排列的物体进行"模态补全计数"（amodal counting），系统评估VLM的空间推理和世界模型构建能力，发现即使最强的GPT-4o在遮挡场景下也有14.75%的计数误差…
+  [ICCV 2025][多模态VLM][VLM evaluation] 本文提出CAPTURe基准，通过要求VLM在遮挡场景中对规律排列的物体进行"模态补全计数"（amodal counting），系统评估VLM的空间推理和世界模型构建能力，发现即使最强的GPT-4o在遮挡场景下也有14.75%的计数误差，而人类几乎无误差。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

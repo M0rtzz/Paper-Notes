@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation
 description: >-
-  [ECCV 2024][自动驾驶][LiDAR语义分割] 本文提出 RAPiD 特征（Range-Aware Pointwise Distance Distribution），一种对刚体变换不变且适应点密度变化的 LiDAR 点云局部几何特征，配合双层嵌套自编码器和通道注意力融合…
+  [ECCV 2024][自动驾驶][LiDAR语义分割] 本文提出 RAPiD 特征（Range-Aware Pointwise Distance Distribution），一种对刚体变换不变且适应点密度变化的 LiDAR 点云局部几何特征，配合双层嵌套自编码器和通道注意力融合，在 SemanticKITTI（76.1 mIoU）和 nuScenes（83.6 mIoU）上达到 SOTA 分割性能。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

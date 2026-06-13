@@ -2,7 +2,7 @@
 title: >-
   [论文解读] End-to-End HOI Reconstruction Transformer with Graph-based Encoding
 description: >-
-  [CVPR 2025][3D视觉][人物交互重建] 提出 HOI-TG 框架，用 Transformer 的自注意力机制隐式学习人物交互关系，并在编码器中嵌入图残差模块分别增强人体和物体的拓扑结构建模，在 BEHAVE 和 InterCap 数据集上实现 SOTA 的 HOI 三维重建。
+  [CVPR 2025][3D视觉][人物交互重建] 提出 HOI-TG 框架，用 Transformer 的自注意力机制隐式学习人物交互关系，并在编码器中嵌入图残差模块分别增强人体和物体的拓扑结构建模，在 BEHAVE 和 InterCap 数据集上实现 SOTA 的 HOI 三维重建。 领域现状：从单张图像重建人物交互（H…
 tags:
   - "CVPR 2025"
   - "3D视觉"

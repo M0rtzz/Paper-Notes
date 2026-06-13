@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CaMiT: A Time-Aware Car Model Dataset for Classification and Generation
 description: >-
-  [NeurIPS 2025][图像生成][时序数据集] 提出 CaMiT 数据集（787K 标注 + 5.1M 无标注汽车图像，2005–2023），系统研究细粒度视觉类别的时间漂移问题，并在静态预训练、时间增量预训练、时间增量分类器学习和时间感知图像生成四个场景下提供 benchmark。
+  [NeurIPS 2025][图像生成][时序数据集] 提出 CaMiT 数据集（787K 标注 + 5.1M 无标注汽车图像，2005–2023），系统研究细粒度视觉类别的时间漂移问题，并在静态预训练、时间增量预训练、时间增量分类器学习和时间感知图像生成四个场景下提供 benchmark。 现有大规模视觉数据集（Image…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

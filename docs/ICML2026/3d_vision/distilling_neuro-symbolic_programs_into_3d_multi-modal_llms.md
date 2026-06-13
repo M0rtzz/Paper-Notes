@@ -2,7 +2,7 @@
 title: >-
   [论文解读] APEIRIA: Distilling Neuro-Symbolic Programs into 3D Multi-modal LLMs
 description: >-
-  [ICML 2026][3D视觉][神经符号] 本文提出 APEIRIA，把神经符号 3D 概念学习器的程序执行轨迹蒸馏成 3D MLLM 的自然语言 chain-of-thought，再通过 GRPO 强化学习把这种推理模式推广到开放词汇与深层嵌套指令…
+  [ICML 2026][3D视觉][神经符号] 本文提出 APEIRIA，把神经符号 3D 概念学习器的程序执行轨迹蒸馏成 3D MLLM 的自然语言 chain-of-thought，再通过 GRPO 强化学习把这种推理模式推广到开放词汇与深层嵌套指令，在 ScanRefer、Multi3DRefer、SQA3D、Scan2Cap 上同时超越传统 NS3D 方法和当前最强的 3D MLLM，并保留了符号系统的可解释性与模块可替换性。
 tags:
   - "ICML 2026"
   - "3D视觉"

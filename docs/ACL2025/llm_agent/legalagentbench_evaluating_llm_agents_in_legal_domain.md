@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LegalAgentBench: Evaluating LLM Agents in Legal Domain
 description: >-
-  [ACL2025][LLM Agent][法律领域] 提出 LegalAgentBench，一个面向中国法律领域的 LLM Agent 综合评测基准，包含 17 个真实语料库、37 个工具和 300 个覆盖多跳推理与写作的任务，通过关键词匹配和过程进度率实现细粒度评估。
+  [ACL2025][LLM Agent][法律领域] 提出 LegalAgentBench，一个面向中国法律领域的 LLM Agent 综合评测基准，包含 17 个真实语料库、37 个工具和 300 个覆盖多跳推理与写作的任务，通过关键词匹配和过程进度率实现细粒度评估。 - LLM Agent 在法律领域的应用潜力巨大…
 tags:
   - "ACL2025"
   - "LLM Agent"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series
 description: >-
-  [NeurIPS 2025][时间序列预测] 提出SynTSBench合成数据驱动评估范式，通过可编程的特征配置和理论最优基准，系统评估时间序列预测模型在趋势、周期、依赖性、噪声鲁棒性等维度的实际建模能力。
+  [NeurIPS 2025][时间序列][时间序列预测] 提出SynTSBench合成数据驱动评估范式，通过可编程的特征配置和理论最优基准，系统评估时间序列预测模型在趋势、周期、依赖性、噪声鲁棒性等维度的实际建模能力。 现有痛点 现有痛点：领域现状：当前时间序列预测领域的评估存在两个核心问题： 1. 缺乏特征隔离能力：真实时…
 tags:
   - "NeurIPS 2025"
+  - "时间序列"
   - "时间序列预测"
   - "合成数据"
   - "模型评估"

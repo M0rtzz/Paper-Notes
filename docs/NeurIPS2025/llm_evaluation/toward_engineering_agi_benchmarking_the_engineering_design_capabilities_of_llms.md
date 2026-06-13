@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs
 description: >-
-  [NeurIPS 2025][LLM评测][工程设计] 提出 EngDesign——首个跨 9 个工程领域（操作系统、计算机架构、控制系统、机械、结构、数字硬件、模拟电路、机器人、信号处理）的 LLM 工程设计能力基准，用仿真驱动的评估管线替代传统的问答匹配，揭示即使最强推理模型 o3 也仅达 34% 通过率…
+  [NeurIPS 2025][LLM评测][工程设计] 提出 EngDesign——首个跨 9 个工程领域（操作系统、计算机架构、控制系统、机械、结构、数字硬件、模拟电路、机器人、信号处理）的 LLM 工程设计能力基准，用仿真驱动的评估管线替代传统的问答匹配，揭示即使最强推理模型 o3 也仅达 34% 通过率。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SkillVerse: Assessing and Enhancing LLMs with Tree Evaluation
 description: >-
-  [ACL 2025][LLM/NLP][细粒度评测] 提出SkillVerse——一种无监督的树结构LLM诊断框架，通过将LLM-as-Judge的评价反馈组织为层次化的技能树（dendrogram），在任意粒度上揭示模型能力的优劣势…
+  [ACL 2025][LLM 其他][细粒度评测] 提出SkillVerse——一种无监督的树结构LLM诊断框架，通过将LLM-as-Judge的评价反馈组织为层次化的技能树（dendrogram），在任意粒度上揭示模型能力的优劣势，并进一步用于选择更优的few-shot示例（ICL提升25%）和预测未知场景下的模型弱点（55%成功率，比无信息基线高22%）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "细粒度评测"
   - "层次聚类"
   - "树状图"

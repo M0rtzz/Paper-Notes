@@ -2,14 +2,16 @@
 title: >-
   [论文解读] The Parameterized Complexity of Computing the VC-Dimension
 description: >-
-  [NeurIPS 2025][VC维] 本文系统研究了计算VC维的参数化复杂性，证明朴素穷举算法在ETH假设下是渐近最优的，提出按最大度参数化的FPT 1-可加近似算法和按树宽参数化的2^{O(tw·log tw)}·|V|时间精确算法。
+  [NeurIPS 2025][计算复杂性理论, 机器学习理论][VC维] 本文系统研究了计算VC维问题的参数化复杂性，证明朴素穷举算法在ETH假设下是渐近最优的，给出按最大度参数化的FPT 1-可加近似算法，以及按树宽参数化的 $2^{O(\text{tw} \cdot \log \text{tw})} \cdot |V|$ 精确算法，并完整刻画了各结构参数下的可处理性景观。
 tags:
   - "NeurIPS 2025"
+  - "计算复杂性理论, 机器学习理论"
   - "VC维"
   - "参数化复杂性"
   - "树宽"
   - "固定参数可处理"
   - "ETH下界"
+  - "超图"
 ---
 
 # The Parameterized Complexity of Computing the VC-Dimension
@@ -149,3 +151,19 @@ tags:
   - 固定参数可处理
   - ETH下界
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] The Structural Complexity of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)
+- [\[NeurIPS 2025\] How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension](how_many_domains_suffice_for_domain_generalization_a_tight_characterization_via_.md)
+- [\[ICML 2025\] Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications](../../ICML2025/learning_theory/improved_generalization_bounds_for_transductive_learning_by_transductive_local_c.md)
+- [\[ICML 2026\] On the Learnability of Test-Time Adaptation: A Recovery Complexity Perspective](../../ICML2026/learning_theory/on_the_learnability_of_test-time_adaptation_a_recovery_complexity_perspective.md)
+- [\[NeurIPS 2025\] Kernel Conditional Tests from Learning-Theoretic Bounds](kernel_conditional_tests_from_learning-theoretic_bounds.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Free Energy Mixer
 description: >-
-  [ICLR 2026][时间序列][注意力机制] 提出 Free Energy Mixer (FEM)，通过将注意力的值读取重新定义为自由能（log-sum-exp）优化问题，实现了逐通道的值感知后验选择，克服了标准注意力"无损存储但有损读取"的固有瓶颈…
+  [ICLR 2026][时间序列][注意力机制] 提出 Free Energy Mixer (FEM)，通过将注意力的值读取重新定义为自由能（log-sum-exp）优化问题，实现了逐通道的值感知后验选择，克服了标准注意力"无损存储但有损读取"的固有瓶颈，可即插即用替换 softmax/线性注意力/RNN/SSM，在 NLP、视觉和时间序列任务上一致提升。
 tags:
   - "ICLR 2026"
   - "时间序列"

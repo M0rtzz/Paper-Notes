@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Label Name Refinement for Few-Shot Dialogue Intent Classification
 description: >-
-  [ACL 2025][对话系统][intent classification] 提出动态标签名称精炼方法，在检索式 ICL 意图分类中，利用 LLM 根据检索到的示例动态生成更具区分性的意图标签名称（如 "Verify PAN" → "Verify PAN card details"）…
+  [ACL 2025][对话系统][intent classification] 提出动态标签名称精炼方法，在检索式 ICL 意图分类中，利用 LLM 根据检索到的示例动态生成更具区分性的意图标签名称（如 "Verify PAN" → "Verify PAN card details"），有效降低语义相似意图间的混淆，在 6 个数据集上一致提升 2.07%-7.51% 准确率。
 tags:
   - "ACL 2025"
   - "对话系统"

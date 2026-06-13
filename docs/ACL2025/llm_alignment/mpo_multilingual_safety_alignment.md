@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MPO: Multilingual Safety Alignment via Reward Gap Optimization
 description: >-
-  [ACL 2025][LLM对齐][multilingual safety] MPO 发现 LLM 在主导语言（英文）和目标语言间的隐式 Reward Gap 与安全性能强相关，提出直接最小化两者 Reward Gap 差异来将主导语言的安全对齐能力迁移到多语言…
+  [ACL 2025][LLM对齐][multilingual safety] MPO 发现 LLM 在主导语言（英文）和目标语言间的隐式 Reward Gap 与安全性能强相关，提出直接最小化两者 Reward Gap 差异来将主导语言的安全对齐能力迁移到多语言，在三个模型上显著降低了低资源语言的攻击成功率且不损害通用能力。
 tags:
   - "ACL 2025"
   - "LLM对齐"

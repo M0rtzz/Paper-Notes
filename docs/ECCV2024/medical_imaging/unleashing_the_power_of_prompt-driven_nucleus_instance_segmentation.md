@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unleashing the Power of Prompt-driven Nucleus Instance Segmentation
 description: >-
-  [ECCV 2024][医学图像][图像分割] 提出 PromptNucSeg 框架，通过训练一个 prompter 自动生成细胞核中心点 prompt，并微调 SAM 进行逐核分割，同时引入相邻核作为 negative prompt 解决重叠核分割问题…
+  [ECCV 2024][医学图像][图像分割] 提出 PromptNucSeg 框架，通过训练一个 prompter 自动生成细胞核中心点 prompt，并微调 SAM 进行逐核分割，同时引入相邻核作为 negative prompt 解决重叠核分割问题，无需复杂后处理即在三个 benchmark 上达到 SOTA。
 tags:
   - "ECCV 2024"
   - "医学图像"

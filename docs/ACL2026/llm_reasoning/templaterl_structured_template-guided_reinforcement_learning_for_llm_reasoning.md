@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning
 description: >-
-  [ACL 2026][LLM推理][强化学习] TemplateRL 通过从小规模种子集合用 MCTS 抽象出结构化推理模板，在强化学习训练中引入这些模板作为显式指导，显著提升 LLM 多步推理效率和稳定性，在 AIME 上相比 GRPO 提升 99%。
+  [ACL 2026][LLM推理][强化学习] TemplateRL 通过从小规模种子集合用 MCTS 抽象出结构化推理模板，在强化学习训练中引入这些模板作为显式指导，显著提升 LLM 多步推理效率和稳定性，在 AIME 上相比 GRPO 提升 99%。 LLM 推理能力的瓶颈：近年来强化学习被证明是增强 LLM 推理能力的…
 tags:
   - "ACL 2026"
   - "LLM推理"

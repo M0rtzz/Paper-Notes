@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Environment Inference for Learning Generalizable Dynamical System
 description: >-
-  [NeurIPS 2025][AI安全][dynamical systems] 提出 DynaInfer 框架，通过分析固定神经网络的预测误差来推断未标注轨迹的环境标签，实现无环境标签条件下的动态系统泛化学习，在 ODE/PDE 系统上性能匹配甚至超越 Oracle（已知标签）。
+  [NeurIPS 2025 Spotlight][AI安全][dynamical systems] 提出 DynaInfer 框架，通过分析固定神经网络的预测误差来推断未标注轨迹的环境标签，实现无环境标签条件下的动态系统泛化学习，在 ODE/PDE 系统上性能匹配甚至超越 Oracle（已知标签）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "AI安全"
   - "dynamical systems"
   - "environment inference"

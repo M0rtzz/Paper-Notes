@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain-of-Retrieval Augmented Generation (CoRAG)
 description: >-
-  [NeurIPS 2025][信息检索/RAG][RAG] 提出 CoRAG 框架，通过拒绝采样自动生成中间检索链（子查询→子答案），微调 LLM 学习迭代检索和推理，并支持多种测试时解码策略（贪心 / Best-of-N / 树搜索）灵活扩展计算量，在多跳 QA 上 EM 提升 26+ 点…
+  [NeurIPS 2025][信息检索/RAG][RAG] 提出 CoRAG 框架，通过拒绝采样自动生成中间检索链（子查询→子答案），微调 LLM 学习迭代检索和推理，并支持多种测试时解码策略（贪心 / Best-of-N / 树搜索）灵活扩展计算量，在多跳 QA 上 EM 提升 26+ 点，KILT 基准 9/10 任务达到 SOTA。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

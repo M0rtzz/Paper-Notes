@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation
 description: >-
-  [ICML2025][因果推理][因果推断] 提出基于 Transformer 的时空反事实结果估计框架，利用 CNN 计算高维倾向性得分、Transformer 估计强度函数，在合成与真实数据上均优于传统因果推理方法。
+  [ICML2025][因果推理][因果推断] 提出基于 Transformer 的时空反事实结果估计框架，利用 CNN 计算高维倾向性得分、Transformer 估计强度函数，在合成与真实数据上均优于传统因果推理方法。 现实世界的数据天然具有时间和空间两个维度（如冲突对森林损失的因果影响），因此需要在时空属性下估计反事实结…
 tags:
   - "ICML2025"
   - "因果推理"

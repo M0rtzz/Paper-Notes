@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version
 description: >-
-  [AAAI 2026][高斯过程] 提出 SkyGP（Streaming Kernel-induced Progressively Generated Expert GP），通过**核距离驱动的渐进式专家生成**和**时间感知可配置聚合**处理流数据，继承精确 GP 的学习保证同时保持有界计算复杂度…
+  [AAAI 2026][机器学习 / 在线学习][高斯过程] 提出 SkyGP（Streaming Kernel-induced Progressively Generated Expert GP），通过**核距离驱动的渐进式专家生成**和**时间感知可配置聚合**处理流数据，继承精确 GP 的学习保证同时保持有界计算复杂度，在基准测试和实时控制实验中全面超越 SOTA。
 tags:
   - "AAAI 2026"
+  - "机器学习 / 在线学习"
   - "高斯过程"
   - "在线学习"
   - "流数据"

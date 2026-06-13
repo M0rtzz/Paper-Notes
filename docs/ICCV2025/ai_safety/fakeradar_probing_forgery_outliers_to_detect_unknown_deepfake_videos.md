@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos
 description: >-
-  [ICCV 2025][AI安全][Deepfake检测] 提出FakeRadar深度伪造视频检测框架，通过Forgery Outlier Probing在特征空间中主动生成模拟未知伪造的异常值样本，并设计Outlier-Guided Tri-Training三分类优化策略…
+  [ICCV 2025][AI安全][Deepfake检测] 提出FakeRadar深度伪造视频检测框架，通过Forgery Outlier Probing在特征空间中主动生成模拟未知伪造的异常值样本，并设计Outlier-Guided Tri-Training三分类优化策略，在跨数据集/跨操纵类型评估中显著超越现有方法。
 tags:
   - "ICCV 2025"
   - "AI安全"

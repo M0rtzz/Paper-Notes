@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DisenQ: Disentangling Q-Former for Activity-Biometrics
 description: >-
-  [ICCV 2025][多模态VLM][活动生物特征识别] 提出 DisenQ（Disentangling Q-Former），通过结构化语言引导将视频特征解纠缠为生物特征、动作和非生物特征三个独立空间，无需额外视觉模态即可实现活动感知的行人识别 SOTA。
+  [ICCV 2025][多模态VLM][活动生物特征识别] 提出 DisenQ（Disentangling Q-Former），通过结构化语言引导将视频特征解纠缠为生物特征、动作和非生物特征三个独立空间，无需额外视觉模态即可实现活动感知的行人识别 SOTA。 活动生物特征识别（Activity-Biometrics）：是在人…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

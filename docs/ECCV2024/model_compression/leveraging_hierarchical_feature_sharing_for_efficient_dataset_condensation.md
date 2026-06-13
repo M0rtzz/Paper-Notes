@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Hierarchical Feature Sharing for Efficient Dataset Condensation
 description: >-
-  [ECCV 2024][模型压缩][数据蒸馏] 提出层级记忆网络（HMN），将数据蒸馏中的合成数据存储为三层结构（数据集级-类级-实例级记忆），通过层级化特征共享提升存储效率，并利用实例级剪枝进一步去除冗余，仅用低GPU内存的 batch-based loss 即超越所有基线方法。
+  [ECCV 2024][模型压缩][数据蒸馏] 提出层级记忆网络（HMN），将数据蒸馏中的合成数据存储为三层结构（数据集级-类级-实例级记忆），通过层级化特征共享提升存储效率，并利用实例级剪枝进一步去除冗余，仅用低GPU内存的 batch-based loss 即超越所有基线方法。 数据蒸馏的核心目标 数据蒸馏（Data C…
 tags:
   - "ECCV 2024"
   - "模型压缩"

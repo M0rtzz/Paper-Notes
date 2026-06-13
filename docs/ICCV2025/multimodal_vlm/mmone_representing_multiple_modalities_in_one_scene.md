@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMOne: Representing Multiple Modalities in One Scene
 description: >-
-  [ICCV 2025][多模态VLM][多模态场景表示] 提出 MMOne 通用框架，通过模态建模模块（含模态指示器）和多模态分解机制解决多模态场景表示中的属性差异和粒度差异问题，在单一 3DGS 表示中同时建模 RGB、热成像和语言等多种模态并均获提升。
+  [ICCV 2025][多模态VLM][多模态场景表示] 提出 MMOne 通用框架，通过模态建模模块（含模态指示器）和多模态分解机制解决多模态场景表示中的属性差异和粒度差异问题，在单一 3DGS 表示中同时建模 RGB、热成像和语言等多种模态并均获提升。 3D 场景表示从 NeRF 到 3D 高斯泼溅（3DGS）已在 RG…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

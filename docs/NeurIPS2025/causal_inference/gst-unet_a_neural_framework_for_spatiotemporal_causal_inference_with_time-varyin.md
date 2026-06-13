@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GST-UNet: A Neural Framework for Spatiotemporal Causal Inference with Time-Varying Confounding
 description: >-
-  [NeurIPS 2025][因果推理][时空因果推断] 提出 GST-UNet，将 U-Net 时空编码器与迭代 G-computation 相结合，从**单条时空观测轨迹**中估计位置特异性的条件平均潜在结果 (CAPO)，可同时处理干扰（interference）、空间混杂、时间延续和时变混杂…
+  [NeurIPS 2025][因果推理][时空因果推断] 提出 GST-UNet，将 U-Net 时空编码器与迭代 G-computation 相结合，从**单条时空观测轨迹**中估计位置特异性的条件平均潜在结果 (CAPO)，可同时处理干扰（interference）、空间混杂、时间延续和时变混杂，并在加州山火烟雾对呼吸系统住院率的因果分析中验证了实用价值。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

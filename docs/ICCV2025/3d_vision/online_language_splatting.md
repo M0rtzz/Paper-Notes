@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Language Splatting
 description: >-
-  [ICCV 2025][3D视觉][3D Gaussian Splatting] 首个在 3DGS-SLAM 系统中实现**在线、近实时、开放词汇**语言建图的框架，通过高分辨率 CLIP 嵌入、两阶段在线自编码器压缩和颜色-语言解耦优化三项创新…
+  [ICCV 2025][3D视觉][3D Gaussian Splatting] 首个在 3DGS-SLAM 系统中实现**在线、近实时、开放词汇**语言建图的框架，通过高分辨率 CLIP 嵌入、两阶段在线自编码器压缩和颜色-语言解耦优化三项创新，在精度超越离线 SOTA 的同时实现 40×–200× 的效率提升。
 tags:
   - "ICCV 2025"
   - "3D视觉"

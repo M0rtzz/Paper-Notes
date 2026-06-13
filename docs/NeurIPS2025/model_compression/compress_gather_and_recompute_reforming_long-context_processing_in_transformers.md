@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compress, Gather, and Recompute: REFORMing Long-Context Processing in Transformers
 description: >-
-  [NEURIPS2025][模型压缩][KV cache compression] 提出 REFORM 推理框架，通过"压缩—检索—重算"三阶段流水线高效处理超长上下文（百万级 token），在 RULER 和 BABILong 上相比最强基线分别提升 52% 和 34%…
+  [NEURIPS2025][模型压缩][KV cache compression] 提出 REFORM 推理框架，通过"压缩—检索—重算"三阶段流水线高效处理超长上下文（百万级 token），在 RULER 和 BABILong 上相比最强基线分别提升 52% 和 34%，同时降低 30% 推理时间和 5% 峰值显存。
 tags:
   - "NEURIPS2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-free Motion Factorization for Compositional Video Generation
 description: >-
-  [CVPR 2026][视频生成][组合式视频生成] 提出一个运动分解框架，将场景中多实例的运动分解为静止、刚体运动和非刚体运动三类，通过结构化运动图推理（SMR）解决 prompt 的语义歧义，通过解耦运动引导（DMG）在扩散过程中针对性地调控三类运动的生成…
+  [CVPR 2026][视频生成][组合式视频生成] 提出一个运动分解框架，将场景中多实例的运动分解为静止、刚体运动和非刚体运动三类，通过结构化运动图推理（SMR）解决 prompt 的语义歧义，通过解耦运动引导（DMG）在扩散过程中针对性地调控三类运动的生成，无需额外训练即可在 VideoCrafter-v2.0 和 CogVideoX-2B 上显著提升运动多样性和保真度。
 tags:
   - "CVPR 2026"
   - "视频生成"

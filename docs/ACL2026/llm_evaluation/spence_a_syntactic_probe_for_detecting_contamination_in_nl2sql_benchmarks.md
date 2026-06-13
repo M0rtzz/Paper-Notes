@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPENCE: A Syntactic Probe for Detecting Contamination in NL2SQL Benchmarks
 description: >-
-  [ACL 2026][LLM评测][数据污染检测] SPENCE 通过对 NL2SQL 基准查询进行系统性句法改写并测量执行准确率随句法距离的衰减程度，检测和量化 LLM 在 NL2SQL 基准上的数据污染行为，发现越老的基准（如 Spider）污染信号越强，而较新的 BIRD 基准几乎不受影响。
+  [ACL 2026][LLM评测][数据污染检测] SPENCE 通过对 NL2SQL 基准查询进行系统性句法改写并测量执行准确率随句法距离的衰减程度，检测和量化 LLM 在 NL2SQL 基准上的数据污染行为，发现越老的基准（如 Spider）污染信号越强，而较新的 BIRD 基准几乎不受影响。 领域现状：LLM 在 NL…
 tags:
   - "ACL 2026"
   - "LLM评测"

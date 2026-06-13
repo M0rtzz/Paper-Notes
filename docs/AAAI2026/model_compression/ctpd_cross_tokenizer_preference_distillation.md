@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CTPD: Cross Tokenizer Preference Distillation
 description: >-
-  [AAAI 2026][模型压缩][知识蒸馏] 提出 Cross-Tokenizer Preference Distillation (CTPD)，首个支持不同分词器间偏好蒸馏的统一框架…
+  [AAAI 2026][模型压缩][知识蒸馏] 提出 Cross-Tokenizer Preference Distillation (CTPD)，首个支持不同分词器间偏好蒸馏的统一框架，通过 Aligned Span Projection、跨分词器重要性加权和 Teacher-Anchored Reference 三项创新，在多个 benchmark 上显著超越现有方法。
 tags:
   - "AAAI 2026"
   - "模型压缩"

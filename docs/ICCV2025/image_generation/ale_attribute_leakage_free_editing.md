@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ALE: Attribute-Leakage-free Editing for Text-based Image Editing
 description: >-
-  [ICCV 2025][图像生成][文本引导图像编辑] 揭示文本引导图像编辑中属性泄漏的根本原因是自回归文本编码器中 EOS 嵌入的语义纠缠，提出 ALE 框架通过目标受限嵌入(ORE)、区域引导交叉注意力遮蔽(RGB-CAM)和背景融合(BB)三个组件消除属性泄漏…
+  [ICCV 2025][图像生成][文本引导图像编辑] 揭示文本引导图像编辑中属性泄漏的根本原因是自回归文本编码器中 EOS 嵌入的语义纠缠，提出 ALE 框架通过目标受限嵌入(ORE)、区域引导交叉注意力遮蔽(RGB-CAM)和背景融合(BB)三个组件消除属性泄漏，并构建了专门的 ALE-Bench 评测基准。
 tags:
   - "ICCV 2025"
   - "图像生成"

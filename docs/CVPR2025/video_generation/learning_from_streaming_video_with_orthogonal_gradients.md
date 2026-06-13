@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from Streaming Video with Orthogonal Gradients
 description: >-
-  [CVPR 2025][视频生成][流式视频学习] 针对流式视频学习中连续帧高度相关导致梯度冗余、模型崩溃的问题，提出正交梯度优化器（Orthogonal Optimizer），通过将当前梯度投影到历史梯度的正交分量来去相关，可无缝集成到 SGD/AdamW 中…
+  [CVPR 2025][视频生成][流式视频学习] 针对流式视频学习中连续帧高度相关导致梯度冗余、模型崩溃的问题，提出正交梯度优化器（Orthogonal Optimizer），通过将当前梯度投影到历史梯度的正交分量来去相关，可无缝集成到 SGD/AdamW 中，在 DoRA、VideoMAE、未来预测三个场景下均显著恢复了从打乱训练到顺序训练的性能损失。
 tags:
   - "CVPR 2025"
   - "视频生成"

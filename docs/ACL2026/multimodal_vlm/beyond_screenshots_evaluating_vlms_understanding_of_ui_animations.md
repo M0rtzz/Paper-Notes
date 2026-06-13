@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations
 description: >-
-  [ACL 2026][多模态VLM][UI 动画] 构建首个 UI 动画理解评测集 AniMINT（300 段密集标注的动画视频 + 3 位专家 + 300 用户标注），系统测试 9 个 SOTA VLM 后发现：基础运动效果能识别，但动画用途分类和高层语义解读与人类差距巨大…
+  [ACL 2026 Findings][多模态VLM][UI 动画] 构建首个 UI 动画理解评测集 AniMINT（300 段密集标注的动画视频 + 3 位专家 + 300 用户标注），系统测试 9 个 SOTA VLM 后发现：基础运动效果能识别，但动画用途分类和高层语义解读与人类差距巨大，进一步用 Motion-Context-Perceptual Cue (MCPC) 增强能在 Gemini-2.5-Flash 上同时提升分类和解读性能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "UI 动画"
   - "VLM 评测"

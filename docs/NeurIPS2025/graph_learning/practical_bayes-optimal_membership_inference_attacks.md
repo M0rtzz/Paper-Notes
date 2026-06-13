@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Practical Bayes-Optimal Membership Inference Attacks
 description: >-
-  [NeurIPS 2025][图学习][成员推断攻击] 提出 BASE 和 G-BASE 两种实用的贝叶斯最优成员推断攻击方法，分别针对 i.i.d. 数据和图结构数据,在保持理论最优性的同时大幅降低计算成本。
+  [NeurIPS 2025][图学习][成员推断攻击] 提出 BASE 和 G-BASE 两种实用的贝叶斯最优成员推断攻击方法，分别针对 i.i.d. 数据和图结构数据,在保持理论最优性的同时大幅降低计算成本。 成员推断攻击（Membership Inference Attack, MIA）旨在判断某个数据样本是否被用于训练…
 tags:
   - "NeurIPS 2025"
   - "图学习"

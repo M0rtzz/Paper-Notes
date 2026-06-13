@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent
 description: >-
-  [NeurIPS 2025][优化/理论][Transformer] 从梯度下降训练动力学出发，严格证明了单层多头 Transformer 通过 CoT 过程可学会树路径查找的前向和后向推理任务，并揭示不同注意力头会自主专业化以协调解决多阶段子任务。
+  [NeurIPS 2025][优化/理论][Transformer] 从梯度下降训练动力学出发，严格证明了单层多头 Transformer 通过 CoT 过程可学会树路径查找的前向和后向推理任务，并揭示不同注意力头会自主专业化以协调解决多阶段子任务。 领域现状：Transformer 在多步推理任务中展示了出色能力…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

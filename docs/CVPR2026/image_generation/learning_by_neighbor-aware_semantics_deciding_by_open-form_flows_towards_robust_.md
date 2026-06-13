@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition
 description: >-
-  [CVPR 2026][图像生成][零样本学习] Flora 通过邻居感知语义校准实现稳健的骨架-语义跨模态对齐，并利用无噪声流匹配构建分布感知的开放式分类器，在零样本骨架动作识别上取得 SOTA，尤其在低样本训练场景中表现突出。
+  [CVPR 2026 Findings][图像生成][零样本学习] Flora 通过邻居感知语义校准实现稳健的骨架-语义跨模态对齐，并利用无噪声流匹配构建分布感知的开放式分类器，在零样本骨架动作识别上取得 SOTA，尤其在低样本训练场景中表现突出。 零样本骨架动作识别旨在让模型识别训练阶段未见过的骨架动作类别…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "零样本学习"
   - "骨架动作识别"

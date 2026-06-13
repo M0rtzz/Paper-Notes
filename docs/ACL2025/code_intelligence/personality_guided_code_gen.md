@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Personality-Guided Code Generation Using Large Language Models
 description: >-
-  [ACL 2025][代码智能][code generation] 用 GPT-4o 为每个编程任务动态生成适配的 MBTI 人格类型和详细描述，再让目标 LLM 以该人格角色扮演程序员生成代码，在 7 个 LLM × 4 个数据集的 28 个组合中 23 个取得 pass rate 提升，最高达 12.9%…
+  [ACL 2025][代码智能][code generation] 用 GPT-4o 为每个编程任务动态生成适配的 MBTI 人格类型和详细描述，再让目标 LLM 以该人格角色扮演程序员生成代码，在 7 个 LLM × 4 个数据集的 28 个组合中 23 个取得 pass rate 提升，最高达 12.9%，关键因素是人格多样性而非某个特定人格。
 tags:
   - "ACL 2025"
   - "代码智能"

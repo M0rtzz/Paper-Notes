@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IGL-Nav: Incremental 3D Gaussian Localization for Image-goal Navigation
 description: >-
-  [ICCV 2025][自动驾驶][image-goal navigation] 提出 IGL-Nav，基于增量式 3D 高斯表示构建可渲染场景记忆，并通过粗到精的目标定位策略高效解决图像目标导航问题，同时支持任意相机视角的自由视图设定。
+  [ICCV 2025][自动驾驶][image-goal navigation] 提出 IGL-Nav，基于增量式 3D 高斯表示构建可渲染场景记忆，并通过粗到精的目标定位策略高效解决图像目标导航问题，同时支持任意相机视角的自由视图设定。 图像目标导航（Image-goal Navigation）要求智能体根据一张目标图像导…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

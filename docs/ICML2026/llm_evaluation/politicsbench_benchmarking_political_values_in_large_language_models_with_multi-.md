@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoliticsBench: Benchmarking Political Values in Large Language Models with Multi-Stage Roleplay
 description: >-
-  [ICML 2026][LLM评测][政治偏见] PoliticsBench 是基于**多阶段角色扮演**的新型基准——通过 20 个政治情景和 4 阶段交互评测 LLM 的政治价值观表达，发现 7 个主流 LLM 都呈左倾（19-39 分），唯有 Grok 右倾（-22.7）但波动性最大…
+  [ICML 2026][LLM评测][政治偏见] PoliticsBench 是基于**多阶段角色扮演**的新型基准——通过 20 个政治情景和 4 阶段交互评测 LLM 的政治价值观表达，发现 7 个主流 LLM 都呈左倾（19-39 分），唯有 Grok 右倾（-22.7）但波动性最大；**情景提示比直接提问更能激发模型的价值观维度**（特征激活 +0.48、承诺度 +1.39）。
 tags:
   - "ICML 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Objective Fine-tuning: How LLMs' Prior Knowledge Causes Potential Poor Calibration?
 description: >-
-  [ACL 2025][LLM评测][校准] 揭示LLM的先验知识在微调过程中会导致校准退化（已知数据引发过度自信，未知数据反而有利于校准），提出CogCalib认知感知校准框架，在训练中根据知识偏差动态应用不同学习策略，在保持任务性能的同时平均降低57%的ECE。
+  [ACL 2025][LLM评测][校准] 揭示LLM的先验知识在微调过程中会导致校准退化（已知数据引发过度自信，未知数据反而有利于校准），提出CogCalib认知感知校准框架，在训练中根据知识偏差动态应用不同学习策略，在保持任务性能的同时平均降低57%的ECE。 微调后的LLM通常表现出较差的校准性（calibration…
 tags:
   - "ACL 2025"
   - "LLM评测"

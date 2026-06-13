@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DBLoss: Decomposition-based Loss Function for Time Series Forecasting
 description: >-
-  [NeurIPS 2025][自动驾驶][时间序列预测] 提出 DBLoss——一种基于指数移动平均分解的通用损失函数，在预测窗口内将预测值与真实值分别分解为季节和趋势分量并分开计算损失，可即插即用替换 MSE 为任意深度学习预测模型带来一致性提升…
+  [NeurIPS 2025][自动驾驶][时间序列预测] 提出 DBLoss——一种基于指数移动平均分解的通用损失函数，在预测窗口内将预测值与真实值分别分解为季节和趋势分量并分开计算损失，可即插即用替换 MSE 为任意深度学习预测模型带来一致性提升，在 8 个基准数据集 × 8 个 SOTA 模型上全面验证有效性。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

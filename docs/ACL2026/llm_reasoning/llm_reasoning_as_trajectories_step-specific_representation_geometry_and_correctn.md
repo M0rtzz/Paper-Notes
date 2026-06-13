@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Reasoning as Trajectories: Step-Specific Representation Geometry and Correctness Signals
 description: >-
-  [ACL 2026][LLM推理][chain-of-thought] 本文把 LLM 的 chain-of-thought 推理看成在表征空间里的一条几何轨迹，发现 (a) 每个推理步骤都占据一个线性可分的子空间且越深层越清晰、(b) 正确与错误解在早期重叠、在后期系统性分叉…
+  [ACL 2026][LLM推理][chain-of-thought] 本文把 LLM 的 chain-of-thought 推理看成在表征空间里的一条几何轨迹，发现 (a) 每个推理步骤都占据一个线性可分的子空间且越深层越清晰、(b) 正确与错误解在早期重叠、在后期系统性分叉，由此能在尚未输出答案时以 ROC-AUC 0.87 预测最终对错，并据此提出"轨迹引导"做推理修正和长度控制。
 tags:
   - "ACL 2026"
   - "LLM推理"

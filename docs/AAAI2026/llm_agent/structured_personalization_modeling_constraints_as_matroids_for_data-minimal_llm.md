@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structured Personalization: Modeling Constraints as Matroids for Data-Minimal LLM Agents
 description: >-
-  [AAAI 2026][LLM Agent][个性化数据选择] 将 LLM Agent 个性化中的结构化约束（逻辑依赖 + 层级配额）形式化为层叠拟阵（laminar matroid），证明贪心算法在此约束下仍具有常数因子近似保证，解决了有依赖关系和层级限制的数据最小化选择问题。
+  [AAAI 2026][LLM Agent][个性化数据选择] 将 LLM Agent 个性化中的结构化约束（逻辑依赖 + 层级配额）形式化为层叠拟阵（laminar matroid），证明贪心算法在此约束下仍具有常数因子近似保证，解决了有依赖关系和层级限制的数据最小化选择问题。 领域现状：LLM Agent 的个性化通常通…
 tags:
   - "AAAI 2026"
   - "LLM Agent"

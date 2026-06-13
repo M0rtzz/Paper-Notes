@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The Knowledge Microscope: Features as Better Analytical Lenses than Neurons
 description: >-
-  [ACL 2025][稀疏自编码器] 本文通过系统实验验证了 SAE（稀疏自编码器）分解出的特征（features）在知识表达影响力、可解释性、单义性（monosemanticity）三个维度上全面优于传统神经元（neurons）作为分析单元…
+  [ACL 2025][可解释性][稀疏自编码器] 本文通过系统实验验证了 SAE（稀疏自编码器）分解出的特征（features）在知识表达影响力、可解释性、单义性（monosemanticity）三个维度上全面优于传统神经元（neurons）作为分析单元，并提出首个基于 feature 的模型编辑方法 FeatureEdit，在隐私知识擦除任务上大幅超越神经元方法。
 tags:
   - "ACL 2025"
+  - "可解释性"
   - "稀疏自编码器"
   - "知识神经元"
   - "特征分析"

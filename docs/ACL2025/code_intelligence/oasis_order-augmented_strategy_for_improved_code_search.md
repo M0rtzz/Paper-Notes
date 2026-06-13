@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OASIS: Order-Augmented Strategy for Improved Code Search
 description: >-
-  [ACL 2025][代码智能][代码搜索] 提出OASIS方法，通过为负样本对引入基于序的相似度标签来捕捉代码语义中的细微差异，结合InfoNCE和CoSENT双重损失函数训练代码嵌入模型…
+  [ACL 2025][代码智能][代码搜索] 提出OASIS方法，通过为负样本对引入基于序的相似度标签来捕捉代码语义中的细微差异，结合InfoNCE和CoSENT双重损失函数训练代码嵌入模型，在CoSQA、AdvTest和CodeSearchNet三个基准的NL2Code和Code2Code搜索任务上全面超越现有SOTA。
 tags:
   - "ACL 2025"
   - "代码智能"

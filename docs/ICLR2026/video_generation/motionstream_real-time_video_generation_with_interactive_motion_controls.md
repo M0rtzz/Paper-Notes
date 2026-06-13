@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionStream: Real-Time Video Generation with Interactive Motion Controls
 description: >-
-  [ICLR 2026][视频生成][streaming video generation] 提出MotionStream——首个运动控制的实时流式视频生成系统：先训练轻量track head的双向运动控制teacher，再通过Self Forcing + DMD蒸馏为因果student…
+  [ICLR 2026][视频生成][streaming video generation] 提出MotionStream——首个运动控制的实时流式视频生成系统：先训练轻量track head的双向运动控制teacher，再通过Self Forcing + DMD蒸馏为因果student，引入注意力沉降（attention sink）+滚动KV缓存（rolling KV cache）实现训练-推理分布完全匹配，单H100 GPU上480P达17FPS/29FPS（+Tiny VAE），支持无限长度恒速生成。
 tags:
   - "ICLR 2026"
   - "视频生成"

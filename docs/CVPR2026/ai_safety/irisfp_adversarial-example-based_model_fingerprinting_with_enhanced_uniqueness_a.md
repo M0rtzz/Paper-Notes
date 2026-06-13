@@ -2,9 +2,10 @@
 title: >-
   [论文解读] IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness
 description: >-
-  [CVPR 2026][模型指纹] 提出IrisFP模型指纹框架，通过将指纹放置在多类决策边界交叉点处、构建复合样本指纹、以及基于统计可分性的指纹筛选三项创新，同时增强指纹的唯一性和鲁棒性，在5个数据集上AUC一致超过SOTA方法。
+  [CVPR 2026][AI安全][模型指纹] 提出IrisFP模型指纹框架，通过将指纹放置在多类决策边界交叉点处、构建复合样本指纹、以及基于统计可分性的指纹筛选三项创新，同时增强指纹的唯一性和鲁棒性，在5个数据集上AUC一致超过SOTA方法。 基于对抗样本的模型指纹技术通过向干净输入添加微小扰动来引出模型特定的响应行为…
 tags:
   - "CVPR 2026"
+  - "AI安全"
   - "模型指纹"
   - "对抗样本"
   - "知识产权保护"

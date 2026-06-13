@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCOPE: Semantic Coreset with Orthogonal Projection Embeddings for Federated Learning
 description: >-
-  [CVPR 2025][优化/理论][联邦学习] SCOPE 提出了一种面向联邦学习的语义 coreset 选择框架，利用 VLM（MobileCLIP-S2）零样本提取三种标量指标（表示分数、多样性分数、边界接近度），通过服务器聚合全局共识后指导客户端进行两阶段剪枝（异常过滤+冗余消除）…
+  [CVPR 2025][优化/理论][联邦学习] SCOPE 提出了一种面向联邦学习的语义 coreset 选择框架，利用 VLM（MobileCLIP-S2）零样本提取三种标量指标（表示分数、多样性分数、边界接近度），通过服务器聚合全局共识后指导客户端进行两阶段剪枝（异常过滤+冗余消除），在 128-512× 上行带宽减少和 7.72× 加速的同时保持竞争精度。
 tags:
   - "CVPR 2025"
   - "优化/理论"

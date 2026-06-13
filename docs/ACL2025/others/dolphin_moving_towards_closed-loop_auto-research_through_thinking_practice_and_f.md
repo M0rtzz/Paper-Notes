@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dolphin: Moving Towards Closed-loop Auto-research through Thinking, Practice, and Feedback
 description: >-
-  > 提出 Dolphin，一个闭环自动科研框架，包含"想法生成→实验验证→结果反馈"三阶段循环，通过任务属性引导的论文排序和异常回溯引导的调试流程，在 3D 分类等任务上自动提出并验证了接近人类设计 SOTA 的方法。
+  提出 Dolphin，一个闭环自动科研框架，包含"想法生成→实验验证→结果反馈"三阶段循环，通过任务属性引导的论文排序和异常回溯引导的调试流程，在 3D 分类等任务上自动提出并验证了接近人类设计 SOTA 的方法。 - 科研范式变革：AI 辅助科研正从"完全人类驱动"向"自动科研"演进，经历四个阶段：完全人驱 → AI 辅…
 tags:
 
 ---

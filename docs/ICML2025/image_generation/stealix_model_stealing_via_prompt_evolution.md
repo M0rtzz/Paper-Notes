@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stealix: Model Stealing via Prompt Evolution
 description: >-
-  [ICML2025][图像生成][模型窃取] Stealix 提出首个无需人工设计 prompt 的模型窃取方法，通过遗传算法迭代进化 prompt，利用 Stable Diffusion 生成目标类别图像并查询受害模型，仅需每类 1 张真实图像即可在低查询预算下超越依赖类名或手工 prompt 的已有方法…
+  [ICML2025][图像生成][模型窃取] Stealix 提出首个无需人工设计 prompt 的模型窃取方法，通过遗传算法迭代进化 prompt，利用 Stable Diffusion 生成目标类别图像并查询受害模型，仅需每类 1 张真实图像即可在低查询预算下超越依赖类名或手工 prompt 的已有方法，准确率提升最高达 22.2%。
 tags:
   - "ICML2025"
   - "图像生成"

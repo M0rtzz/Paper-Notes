@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Semi-supervised Learning with Zero-shot Pseudolabels
 description: >-
-  [NeurIPS 2025][模型压缩][半监督学习] ZeroMatch 提出两阶段框架将基础模型的零样本伪标签与半监督学习相结合：先用知识蒸馏初始化学生模型，再以辅助 KD loss 防止灾难性遗忘的方式执行 SSL 训练，在 6 个视觉/NLP 基准上一致超越标准 SSL 和零样本增强方法。
+  [NeurIPS 2025][模型压缩][半监督学习] ZeroMatch 提出两阶段框架将基础模型的零样本伪标签与半监督学习相结合：先用知识蒸馏初始化学生模型，再以辅助 KD loss 防止灾难性遗忘的方式执行 SSL 训练，在 6 个视觉/NLP 基准上一致超越标准 SSL 和零样本增强方法。 领域现状：半监督学习 (S…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

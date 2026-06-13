@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation
 description: >-
-  [AAAI 2026][机器人][VLA模型] 提出 SemanticVLA 框架，通过语义引导的双视觉编码器剪枝（SD-Pruner）、语义互补层次融合（SH-Fuser）和语义条件动作耦合（SA-Coupler）三个模块，在大幅减少视觉冗余的同时增强指令-视觉-动作对齐…
+  [AAAI 2026 Oral][机器人][VLA模型] 提出 SemanticVLA 框架，通过语义引导的双视觉编码器剪枝（SD-Pruner）、语义互补层次融合（SH-Fuser）和语义条件动作耦合（SA-Coupler）三个模块，在大幅减少视觉冗余的同时增强指令-视觉-动作对齐，在 LIBERO 基准上以 97.7% 成功率超越 OpenVLA 达 21.1%，同时训练成本和推理延迟分别降低 3.0× 和 2.7×。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "机器人"
   - "VLA模型"
   - "视觉稀疏化"

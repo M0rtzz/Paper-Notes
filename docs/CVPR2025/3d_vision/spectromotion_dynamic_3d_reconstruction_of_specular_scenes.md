@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpectroMotion: Dynamic 3D Reconstruction of Specular Scenes
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] SpectroMotion 基于 3DGS 框架，通过可变形高斯 MLP 建模动态物体、可变形反射 MLP 建模时变光照效果，并结合规范环境贴图和粗到细的三阶段训练策略，首次实现了对动态镜面场景的高质量 3D 重建和实时渲染。
+  [CVPR 2025][3D视觉][3D高斯溅射] SpectroMotion 基于 3DGS 框架，通过可变形高斯 MLP 建模动态物体、可变形反射 MLP 建模时变光照效果，并结合规范环境贴图和粗到细的三阶段训练策略，首次实现了对动态镜面场景的高质量 3D 重建和实时渲染。 1. 领域现状：3D 高斯溅射（3DGS）在静…
 tags:
   - "CVPR 2025"
   - "3D视觉"

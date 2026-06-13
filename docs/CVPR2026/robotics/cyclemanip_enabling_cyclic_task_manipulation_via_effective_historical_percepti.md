@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CycleManip: Enabling Cyclic Task Manipulation via Effective Historical Perception and Understanding
 description: >-
-  [CVPR 2026][机器人][循环操作] CycleManip 首次系统性地解决机器人循环操作任务（如摇瓶子N次），通过成本感知的历史采样策略增强历史感知，配合多任务学习辅助目标提升历史理解，以端到端模仿学习方式实现循环次数可控的操作。
+  [CVPR 2026][机器人][循环操作] CycleManip 首次系统性地解决机器人循环操作任务（如摇瓶子N次），通过成本感知的历史采样策略增强历史感知，配合多任务学习辅助目标提升历史理解，以端到端模仿学习方式实现循环次数可控的操作。 1. 领域现状：机器人操作领域的模仿学习和VLA模型在顺序任务上表现出色…
 tags:
   - "CVPR 2026"
   - "机器人"

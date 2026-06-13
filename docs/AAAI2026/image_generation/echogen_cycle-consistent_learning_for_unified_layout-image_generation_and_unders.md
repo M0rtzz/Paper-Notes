@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoGen: Cycle-Consistent Learning for Unified Layout-Image Generation and Understanding
 description: >-
-  [AAAI 2026][图像生成][布局控制生成] 提出 EchoGen，统一布局到图像生成（L2I）和图像定位（I2L）两个任务的框架，通过渐进式训练——并行预训练→双任务联合优化→循环强化学习（CycleRL）——利用布局→图像→布局回环的一致性约束作为自监督奖励…
+  [AAAI 2026][图像生成][布局控制生成] 提出 EchoGen，统一布局到图像生成（L2I）和图像定位（I2L）两个任务的框架，通过渐进式训练——并行预训练→双任务联合优化→循环强化学习（CycleRL）——利用布局→图像→布局回环的一致性约束作为自监督奖励，在 MS-COCO 和 LayoutSAM 上达到 SOTA。
 tags:
   - "AAAI 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning the Interaction Prior for Protein-Protein Interaction Prediction: A Model-Agnostic Approach
 description: >-
-  [ICML 2026][计算生物][PPI 预测] L3-PPI 把生物学里的 "L3 规则"（蛋白质对之间的 length-3 路径越多越可能相互作用）变成可学习的 graph prompt：用预训练 GNN 识别 L3 模式，再用门控网络生成虚拟 L3 路径并按 PPI 标签正则路径数量…
+  [ICML 2026][计算生物][PPI 预测] L3-PPI 把生物学里的 "L3 规则"（蛋白质对之间的 length-3 路径越多越可能相互作用）变成可学习的 graph prompt：用预训练 GNN 识别 L3 模式，再用门控网络生成虚拟 L3 路径并按 PPI 标签正则路径数量，做成一个即插即用的分类头，把任意 PPI 表征模型平均涨 2-4 个点。
 tags:
   - "ICML 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instant Adversarial Purification with Adversarial Consistency Distillation
 description: >-
-  [CVPR 2025][图像生成][adversarial purification] 提出 One Step Control Purification (OSCP) 框架，结合 Gaussian Adversarial Noise Distillation (GAND) 和 Controlled Adver…
+  [CVPR 2025][图像生成][adversarial purification] 提出 One Step Control Purification (OSCP) 框架，结合 Gaussian Adversarial Noise Distillation (GAND) 和 Controlled Adversarial Purification (CAP)，在单次 U-Net 推理（~0.1 秒）内完成对抗净化，相比传统扩散净化方法加速 100 倍。
 tags:
   - "CVPR 2025"
   - "图像生成"

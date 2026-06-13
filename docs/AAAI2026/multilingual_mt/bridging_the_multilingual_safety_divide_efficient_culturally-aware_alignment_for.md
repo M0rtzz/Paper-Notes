@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Multilingual Safety Divide: Efficient, Culturally-Aware Alignment for Global South Languages
 description: >-
-  [AAAI 2026][多语言/翻译][多语言安全] 本文综合多项实证研究，揭示LLM安全机制在低资源语言和代码混合场景下的严重失效，并提出基于参数高效安全引导、文化驱动偏好数据和社区参与式对齐的资源感知蓝图。
+  [AAAI 2026][多语言/翻译][多语言安全] 本文综合多项实证研究，揭示LLM安全机制在低资源语言和代码混合场景下的严重失效，并提出基于参数高效安全引导、文化驱动偏好数据和社区参与式对齐的资源感知蓝图。 大语言模型在全球南方（Global South）的部署日益广泛，但支撑安全的管道、基准和对齐策略仍以英语和少数高资…
 tags:
   - "AAAI 2026"
   - "多语言/翻译"

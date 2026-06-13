@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ExpSeek: Self-Triggered Experience Seeking for Web Agents
 description: >-
-  [ACL 2026][LLM Agent][Web Agent] ExpSeek 提出了一种基于步级熵自触发的经验主动寻求框架，让 Web Agent 在交互过程中根据自身信号判断何时需要指导、获取什么指导，在 Qwen3-8B/32B 上分别实现 9.3% 和 7.5% 的绝对提升。
+  [ACL 2026 Findings][LLM Agent][Web Agent] ExpSeek 提出了一种基于步级熵自触发的经验主动寻求框架，让 Web Agent 在交互过程中根据自身信号判断何时需要指导、获取什么指导，在 Qwen3-8B/32B 上分别实现 9.3% 和 7.5% 的绝对提升。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "Web Agent"
   - "经验干预"

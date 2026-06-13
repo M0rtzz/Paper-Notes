@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Single to Societal: Analyzing Persona-Induced Bias in Multi-Agent Interactions
 description: >-
-  [AAAI 2026][LLM安全][Multi-Agent System] 本文首次系统研究了 LLM 多智能体交互中的人格诱导偏见，通过在协作问题解决和说服任务中的受控实验，揭示了三个关键发现：(1) 不同人格在可信度和坚持度上存在显著偏差（优势群体如男性和白人被视为更不可信）…
+  [AAAI 2026][LLM安全][Multi-Agent System] 本文首次系统研究了 LLM 多智能体交互中的人格诱导偏见，通过在协作问题解决和说服任务中的受控实验，揭示了三个关键发现：(1) 不同人格在可信度和坚持度上存在显著偏差（优势群体如男性和白人被视为更不可信）；(2) 智能体表现出显著的内群体偏好；(3) 这些偏见在多轮、多智能体场景中持续存在且有放大趋势。
 tags:
   - "AAAI 2026"
   - "LLM安全"

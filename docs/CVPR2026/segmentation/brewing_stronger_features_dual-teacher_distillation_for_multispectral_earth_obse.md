@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation
 description: >-
-  [CVPR 2026][语义分割][遥感基础模型] 提出**DEO(Distillation for Earth Observation)**，一种双教师对比蒸馏框架——用多光谱自蒸馏教师学习光谱表示、用光学VFM教师（DINOv3）注入高级语义先验，使单一学生网络同时擅长光学和多光谱遥感任务…
+  [CVPR 2026][语义分割][遥感基础模型] 提出**DEO(Distillation for Earth Observation)**，一种双教师对比蒸馏框架——用多光谱自蒸馏教师学习光谱表示、用光学VFM教师（DINOv3）注入高级语义先验，使单一学生网络同时擅长光学和多光谱遥感任务，在语义分割、变化检测和分类上全面达到SOTA。
 tags:
   - "CVPR 2026"
   - "语义分割"

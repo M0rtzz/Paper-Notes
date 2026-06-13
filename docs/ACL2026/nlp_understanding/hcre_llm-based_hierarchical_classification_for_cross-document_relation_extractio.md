@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HCRE: LLM-based Hierarchical Classification for Cross-Document Relation Extraction
 description: >-
-  [ACL 2026][NLP理解][跨文档关系抽取] 提出 HCRE 模型，通过构建层次化关系树将跨文档关系抽取从大规模关系集的直接分类转化为逐层层次化分类，并设计预测-验证推理策略缓解层间错误传播，在 CodRED 数据集上显著超越 SLM 和 LLM 基线。
+  [ACL 2026 Findings][NLP理解][跨文档关系抽取] 提出 HCRE 模型，通过构建层次化关系树将跨文档关系抽取从大规模关系集的直接分类转化为逐层层次化分类，并设计预测-验证推理策略缓解层间错误传播，在 CodRED 数据集上显著超越 SLM 和 LLM 基线。 领域现状：跨文档关系抽取（RE）旨在识别分布…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "跨文档关系抽取"
   - "层次化分类"

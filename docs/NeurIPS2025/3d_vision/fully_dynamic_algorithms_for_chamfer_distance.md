@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fully Dynamic Algorithms for Chamfer Distance
 description: >-
-  [NeurIPS 2025][3D视觉][Chamfer距离] 提出首个全动态 Chamfer 距离维护算法，将问题归约为近似最近邻（ANN）查询，实现 $(1+\epsilon)$ 近似且更新时间 $\tilde{O}(\epsilon^{-d})$，大幅突破了静态重算的线性时间下界…
+  [NeurIPS 2025][3D视觉][Chamfer距离] 提出首个全动态 Chamfer 距离维护算法，将问题归约为近似最近邻（ANN）查询，实现 $(1+\epsilon)$ 近似且更新时间 $\tilde{O}(\epsilon^{-d})$，大幅突破了静态重算的线性时间下界，在真实数据集上误差 <10% 且速度比朴素方法快数个数量级。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

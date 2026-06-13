@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Rewrite: Generalized LLM-Generated Text Detection
 description: >-
-  [ACL 2025][AIGC检测][AI文本检测] 提出Learning2Rewrite（L2R）框架，通过微调LLM的改写模型来放大人写文本和AI生成文本在改写编辑距离上的差异，从而实现跨领域高度泛化的AI文本检测——在21个独立领域上平均AUROC达0.9009…
+  [ACL 2025][AIGC检测][AI文本检测] 提出Learning2Rewrite（L2R）框架，通过微调LLM的改写模型来放大人写文本和AI生成文本在改写编辑距离上的差异，从而实现跨领域高度泛化的AI文本检测——在21个独立领域上平均AUROC达0.9009，域外测试超越RAIDAR达4.67%、超越直接分类微调达51.35%。
 tags:
   - "ACL 2025"
   - "AIGC检测"

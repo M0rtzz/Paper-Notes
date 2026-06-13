@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BuildAnyPoint: 3D Building Structured Abstraction from Diverse Point Clouds
 description: >-
-  [CVPR 2026][自动驾驶][建筑抽象重建] 提出BuildAnyPoint，通过**松耦合级联扩散Transformer(Loca-DiT)**实现从多样分布的点云（机载LiDAR、SfM、稀疏噪声点云）到结构化3D建筑Mesh的统一重建——先用分层潜在扩散恢复底层点云分布…
+  [CVPR 2026][自动驾驶][建筑抽象重建] 提出BuildAnyPoint，通过**松耦合级联扩散Transformer(Loca-DiT)**实现从多样分布的点云（机载LiDAR、SfM、稀疏噪声点云）到结构化3D建筑Mesh的统一重建——先用分层潜在扩散恢复底层点云分布，再用自回归Transformer生成紧凑多边形Mesh。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

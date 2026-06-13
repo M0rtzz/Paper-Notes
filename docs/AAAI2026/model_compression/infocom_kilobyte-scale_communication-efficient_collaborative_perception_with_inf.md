@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression
 description: >-
-  [AAAI 2026][模型压缩][协同感知] 提出InfoCom框架，基于扩展的信息瓶颈原理将协同感知的通信量从MB级压缩至KB级（相比Where2comm降低440倍），同时保持近无损的感知性能，核心包含信息感知编码、稀疏掩码生成和多尺度解码三个模块。
+  [AAAI 2026][模型压缩][协同感知] 提出InfoCom框架，基于扩展的信息瓶颈原理将协同感知的通信量从MB级压缩至KB级（相比Where2comm降低440倍），同时保持近无损的感知性能，核心包含信息感知编码、稀疏掩码生成和多尺度解码三个模块。 协同感知通过多智能体信息共享来弥补单智能体感知的局限性（遮挡、远距离…
 tags:
   - "AAAI 2026"
   - "模型压缩"

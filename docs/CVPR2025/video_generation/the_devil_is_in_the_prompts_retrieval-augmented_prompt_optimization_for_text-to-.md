@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Devil is in the Prompts: Retrieval-Augmented Prompt Optimization for Text-to-Video Generation
 description: >-
-  [CVPR 2025][视频生成][文本到视频] RAPO 提出一个检索增强的 Prompt 优化框架，通过从训练数据中构建关系图检索相关修饰语、微调 LLM 重构句式、以及判别器选取最优 prompt，将用户简短 prompt 转换为与训练数据分布对齐的优化 prompt…
+  [CVPR 2025][视频生成][文本到视频] RAPO 提出一个检索增强的 Prompt 优化框架，通过从训练数据中构建关系图检索相关修饰语、微调 LLM 重构句式、以及判别器选取最优 prompt，将用户简短 prompt 转换为与训练数据分布对齐的优化 prompt，在 VBench 上将多物体生成从 37.71% 提升至 64.86%。
 tags:
   - "CVPR 2025"
   - "视频生成"

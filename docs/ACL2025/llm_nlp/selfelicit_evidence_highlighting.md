@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence
 description: >-
-  [ACL 2025][LLM/NLP][注意力分析] SelfElicit 发现 LLM 深层注意力分数天然具有定位上下文中关键证据的能力（即使模型回答错误时也是如此），据此提出一种推理时的上下文增强方法：仅需生成一个额外 token 即可自动识别并高亮关键证据句，引导模型给出更准确的回答。
+  [ACL 2025][LLM 其他][注意力分析] SelfElicit 发现 LLM 深层注意力分数天然具有定位上下文中关键证据的能力（即使模型回答错误时也是如此），据此提出一种推理时的上下文增强方法：仅需生成一个额外 token 即可自动识别并高亮关键证据句，引导模型给出更准确的回答。 现有痛点 现有痛点：核心矛盾：上下…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "注意力分析"
   - "证据定位"
   - "上下文高亮"

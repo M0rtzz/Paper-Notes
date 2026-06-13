@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Prediction for Zero-Shot Models
 description: >-
-  [CVPR 2025][优化/理论][共形预测] 将保形预测（Conformal Prediction）应用于零样本模型，为 CLIP 等模型的预测提供有理论保证的不确定性量化和校准预测集
+  [CVPR 2025][优化/理论][共形预测] 将保形预测（Conformal Prediction）应用于零样本模型，为 CLIP 等模型的预测提供有理论保证的不确定性量化和校准预测集 领域现状 领域现状：Con 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、效率或鲁棒性方面存在不足…
 tags:
   - "CVPR 2025"
   - "优化/理论"

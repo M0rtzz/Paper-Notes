@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agentic Reasoning: A Streamlined Framework for Enhancing LLM Reasoning with Agentic Tools
 description: >-
-  [ACL 2025][LLM Agent][agentic reasoning] Agentic Reasoning 提出了一个将 Web 搜索、代码执行和知识图谱记忆（Mind-Map）三种 Agent 工具集成到 LLM 推理过程中的框架…
+  [ACL 2025][LLM Agent][agentic reasoning] Agentic Reasoning 提出了一个将 Web 搜索、代码执行和知识图谱记忆（Mind-Map）三种 Agent 工具集成到 LLM 推理过程中的框架，在 DeepSeek-R1 上将 Humanity's Last Exam 准确率从 9.4% 提升到 23.8%（+14.4%），GPQA 从 71.5% 到 81.2%，接近 OpenAI Deep Research 水平。
 tags:
   - "ACL 2025"
   - "LLM Agent"

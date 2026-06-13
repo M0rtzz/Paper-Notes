@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let the Model Learn to Feel: Mode-Guided Tonality Injection for Symbolic Music Emotion Recognition
 description: >-
-  [AAAI 2026][音频/语音][symbolic music emotion recognition] 通过 MoGE 诊断策略系统发现 MIDIBERT 未有效编码调式-情感关联，提出 MoFi 注入框架通过 FiLM 机制将大调/小调先验注入 MIDIBERT 第 1 层（诊断确定的最弱情感信息层）…
+  [AAAI 2026][音频/语音][symbolic music emotion recognition] 通过 MoGE 诊断策略系统发现 MIDIBERT 未有效编码调式-情感关联，提出 MoFi 注入框架通过 FiLM 机制将大调/小调先验注入 MIDIBERT 第 1 层（诊断确定的最弱情感信息层），在 EMOPIA 上准确率 75.2%（+11.8%），VGMIDI 上 59.1%（+11.8%），F1 提升 12.3%/15.5%。
 tags:
   - "AAAI 2026"
   - "音频/语音"

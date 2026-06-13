@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WikiMixQA: A Multimodal Benchmark for Question Answering over Tables and Charts
 description: >-
-  [ACL 2025][多模态VLM][多模态问答] 提出 WikiMixQA 基准，包含 1,000 道需要跨表格和图表进行多模态推理的多选题，评估 12 个 VLLM 后发现闭源模型在提供精确上下文时准确率约 70%，但需从长文档检索时性能骤降，开源模型最高仅 27%…
+  [ACL 2025][多模态VLM][多模态问答] 提出 WikiMixQA 基准，包含 1,000 道需要跨表格和图表进行多模态推理的多选题，评估 12 个 VLLM 后发现闭源模型在提供精确上下文时准确率约 70%，但需从长文档检索时性能骤降，开源模型最高仅 27%，揭示了当前视觉语言模型在长上下文多模态文档理解上的严重不足。
 tags:
   - "ACL 2025"
   - "多模态VLM"

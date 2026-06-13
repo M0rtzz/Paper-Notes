@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiREC-Net: A Target-Free and Learning-Based Network for LiDAR, RGB, and Event Calibration
 description: >-
-  [CVPR 2026][自动驾驶][多传感器标定] 提出LiREC-Net，首个统一框架同时完成LiDAR-RGB和LiDAR-Event相机的无靶标外参标定，通过共享LiDAR表示（融合3D点特征和投影深度特征）和成对代价体积实现跨模态对齐…
+  [CVPR 2026][自动驾驶][多传感器标定] 提出LiREC-Net，首个统一框架同时完成LiDAR-RGB和LiDAR-Event相机的无靶标外参标定，通过共享LiDAR表示（融合3D点特征和投影深度特征）和成对代价体积实现跨模态对齐，在KITTI上达到1.80cm/0.11°、DSEC上达到2.51cm/0.14°（LiDAR-RGB）和1.18cm/0.07°（LiDAR-Event）的标定精度。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

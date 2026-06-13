@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention
 description: >-
-  [ECCV 2024][3D视觉][3D目标检测] 提出 ScatterFormer，首个直接对跨窗口的变长体素序列施加线性注意力的体素 Transformer，通过 Scattered Linear Attention (SLA) 模块和 chunk-wise 矩阵乘法算法实现亚毫秒级延迟…
+  [ECCV 2024][3D视觉][3D目标检测] 提出 ScatterFormer，首个直接对跨窗口的变长体素序列施加线性注意力的体素 Transformer，通过 Scattered Linear Attention (SLA) 模块和 chunk-wise 矩阵乘法算法实现亚毫秒级延迟，配合 Cross-Window Interaction (CWI) 模块替代窗口平移，在 Waymo 和 nuScenes 上达到 SOTA 精度的同时保持 23 FPS 的检测速度。
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongDiff: Training-Free Long Video Generation in One Go
 description: >-
-  [CVPR 2025][视频生成][长视频生成] LongDiff 通过理论分析揭示短视频模型生成长视频时的两个关键挑战——时序位置模糊和信息稀释，并提出 Position Mapping（GROUP+SHIFT）和 Informative Frame Selection（IFS）两个简洁的时序注意力修改策略…
+  [CVPR 2025][视频生成][长视频生成] LongDiff 通过理论分析揭示短视频模型生成长视频时的两个关键挑战——时序位置模糊和信息稀释，并提出 Position Mapping（GROUP+SHIFT）和 Informative Frame Selection（IFS）两个简洁的时序注意力修改策略，无需训练即可让短视频模型一次性生成高质量长视频。
 tags:
   - "CVPR 2025"
   - "视频生成"

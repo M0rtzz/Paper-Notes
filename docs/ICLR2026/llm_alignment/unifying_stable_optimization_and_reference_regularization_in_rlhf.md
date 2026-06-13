@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Stable Optimization and Reference Regularization in RLHF (DAR)
 description: >-
-  [ICLR 2026][LLM对齐][RLHF] 提出DAR(Dual-regularized Advantage Regression)：发现标准RLHF中参考模型正则化(防reward hacking)和策略稳定约束(防崩溃)会逐步冲突导致优化空间过度受限…
+  [ICLR 2026][LLM对齐][RLHF] 提出DAR(Dual-regularized Advantage Regression)：发现标准RLHF中参考模型正则化(防reward hacking)和策略稳定约束(防崩溃)会逐步冲突导致优化空间过度受限，通过双KL目标在对数空间插值参考策略+回归变换消除策略比率不稳定性，在直接AI对齐和标准RLHF设置中达到92.42%平均胜率，超GRPO 7.27%。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auto-DAS: Automated Proxy Discovery for Training-free Distillation-aware Architecture Search
 description: >-
-  [ECCV 2024][模型压缩][知识蒸馏] 本文提出 Auto-DAS，一个基于进化算法的自动化代理发现框架，用于免训练的蒸馏感知架构搜索（DAS），通过在由学生内在统计量和师生交互统计量构成的搜索空间中自动发现最优代理指标，避免了手工设计代理的局限性…
+  [ECCV 2024][模型压缩][知识蒸馏] 本文提出 Auto-DAS，一个基于进化算法的自动化代理发现框架，用于免训练的蒸馏感知架构搜索（DAS），通过在由学生内在统计量和师生交互统计量构成的搜索空间中自动发现最优代理指标，避免了手工设计代理的局限性，在 ResNet、ViT、NAS-Bench-101/201 等多种架构和搜索空间上达到了 SOTA 的排序相关性和搜索精度。
 tags:
   - "ECCV 2024"
   - "模型压缩"

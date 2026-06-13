@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIKING: Deep Variational Inference with Stochastic Projections
 description: >-
-  [NeurIPS 2025][优化/理论][变分推断] VIKING 提出了一种基于 Fisher-Rao 度量核空间与像空间分解的变分近似后验族，通过随机交替投影算法实现可扩展的全相关贝叶斯训练，在多个基准上超越了现有贝叶斯深度学习方法。
+  [NeurIPS 2025][优化/理论][变分推断] VIKING 提出了一种基于 Fisher-Rao 度量核空间与像空间分解的变分近似后验族，通过随机交替投影算法实现可扩展的全相关贝叶斯训练，在多个基准上超越了现有贝叶斯深度学习方法。 贝叶斯深度学习的核心困难在于过参数化：带来的多对一映射——不同参数配置可以描述完全相…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

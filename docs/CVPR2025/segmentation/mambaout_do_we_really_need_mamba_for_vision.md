@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaOut: Do We Really Need Mamba for Vision?
 description: >-
-  [CVPR 2025][语义分割][Mamba] 本文通过概念分析指出 Mamba 的 SSM 机制适用于长序列+自回归任务，而 ImageNet 图像分类两者都不满足，因此构建了去掉 SSM 的 MambaOut（纯 Gated CNN）系列模型，在图像分类上全面超越所有视觉 Mamba 模型…
+  [CVPR 2025][语义分割][Mamba] 本文通过概念分析指出 Mamba 的 SSM 机制适用于长序列+自回归任务，而 ImageNet 图像分类两者都不满足，因此构建了去掉 SSM 的 MambaOut（纯 Gated CNN）系列模型，在图像分类上全面超越所有视觉 Mamba 模型，有力证明了 SSM 对视觉分类是不必要的。
 tags:
   - "CVPR 2025"
   - "语义分割"

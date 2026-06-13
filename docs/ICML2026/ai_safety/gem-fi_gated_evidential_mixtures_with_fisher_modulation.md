@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEM-FI: Gated Evidential Mixtures with Fisher Modulation
 description: >-
-  [ICML 2026][AI安全][Evidential Deep Learning] 本文针对证据深度学习 (EDL) 在分布外样本上过自信、且单头难以表达多模态认知不确定性的问题，提出三件套 GEM-Core/MIX/FI：用学到的特征能量门控证据、用混合证据头单次推理近似 ensemble、用 Fish…
+  [ICML 2026][AI安全][Evidential Deep Learning] 本文针对证据深度学习 (EDL) 在分布外样本上过自信、且单头难以表达多模态认知不确定性的问题，提出三件套 GEM-Core/MIX/FI：用学到的特征能量门控证据、用混合证据头单次推理近似 ensemble、用 Fisher 信息正则稳定混合分配，在 CIFAR-10→SVHN/CIFAR-100 等 OOD 检测上比 DAEDL 强且保持 single-pass。
 tags:
   - "ICML 2026"
   - "AI安全"

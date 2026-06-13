@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAET: Two-Stage Adversarial Equalization Training on Long-Tailed Distributions
 description: >-
-  [CVPR 2025][长尾分布] 提出TAET两阶段对抗均衡训练框架：先用交叉熵损失稳定早期训练，再用层级对抗鲁棒学习(HARL)联合BCL/HDL/RCEL三种损失均衡各类性能，并引入平衡鲁棒性(Balanced Robustness)评估指标，解决长尾分布下对抗训练的尾部类鲁棒性不足问题。
+  [CVPR 2025][长尾分布] 提出TAET两阶段对抗均衡训练框架：先用交叉熵损失稳定早期训练，再用层级对抗鲁棒学习(HARL)联合BCL/HDL/RCEL三种损失均衡各类性能，并引入平衡鲁棒性(Balanced Robustness)评估指标，解决长尾分布下对抗训练的尾部类鲁棒性不足问题。 对抗训练在平衡数据集（CIF…
 tags:
   - "CVPR 2025"
   - "长尾分布"

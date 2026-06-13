@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Adversarial Transferability with Spatial Adversarial Alignment
 description: >-
-  [NEURIPS2025][AI安全][adversarial transferability] 提出 Spatial Adversarial Alignment (SAA)，通过空间感知对齐和对抗感知对齐两个模块微调代理模型，使其特征与见证模型对齐…
+  [NEURIPS2025][AI安全][adversarial transferability] 提出 Spatial Adversarial Alignment (SAA)，通过空间感知对齐和对抗感知对齐两个模块微调代理模型，使其特征与见证模型对齐，从而显著提升对抗样本的跨架构迁移性（CNN→ViT 迁移率提升 25-39%）。
 tags:
   - "NEURIPS2025"
   - "AI安全"

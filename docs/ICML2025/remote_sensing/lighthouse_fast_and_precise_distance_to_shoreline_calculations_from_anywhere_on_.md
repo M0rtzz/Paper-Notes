@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LIGHTHOUSE: Fast and Precise Distance to Shoreline Calculations from Anywhere on Earth
 description: >-
-  [ICML 2025][遥感][海岸线距离计算] 提出了一个全球10米分辨率的海岸线数据集和毫秒级查询库 Lighthouse，通过融合 ESA WorldCover 与 OpenStreetMap 数据…
+  [ICML 2025][遥感][海岸线距离计算] 提出了一个全球10米分辨率的海岸线数据集和毫秒级查询库 Lighthouse，通过融合 ESA WorldCover 与 OpenStreetMap 数据，结合分层 BallTree + 球面 Voronoi 索引实现仅需1 CPU/2GB RAM的实时海岸距离查询，精度比已有数据集提升100倍以上。
 tags:
   - "ICML 2025"
   - "遥感"

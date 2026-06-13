@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration
 description: >-
-  [ICCV 2025][图像恢复][注意力机制] 针对标准Multi-Head Attention (MHA)中各head使用均匀子空间导致的冗余问题，提出HINT模型，通过异构层级多头注意力(HMHA)和Query-Key缓存更新(QKCU)机制增强head间多样性与交互…
+  [ICCV 2025][图像恢复][注意力机制] 针对标准Multi-Head Attention (MHA)中各head使用均匀子空间导致的冗余问题，提出HINT模型，通过异构层级多头注意力(HMHA)和Query-Key缓存更新(QKCU)机制增强head间多样性与交互，在5类图像恢复任务的12个benchmark上取得SOTA结果。
 tags:
   - "ICCV 2025"
   - "图像恢复"

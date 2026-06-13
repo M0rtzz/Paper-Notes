@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MCA-Ctrl: Multi-party Collaborative Attention Control for Image Customization
 description: >-
-  [CVPR 2025][图像生成][图像定制] 提出 MCA-Ctrl，一种免微调的图像定制方法，通过三个并行扩散过程在自注意力层中的全局注入（SAGI）和局部查询（SALQ）操作，同时支持文本和图像条件的高质量主体生成、替换和添加。
+  [CVPR 2025][图像生成][图像定制] 提出 MCA-Ctrl，一种免微调的图像定制方法，通过三个并行扩散过程在自注意力层中的全局注入（SAGI）和局部查询（SALQ）操作，同时支持文本和图像条件的高质量主体生成、替换和添加。 领域现状：图像定制方法分为需微调（Dreambooth、Textual Inversion…
 tags:
   - "CVPR 2025"
   - "图像生成"

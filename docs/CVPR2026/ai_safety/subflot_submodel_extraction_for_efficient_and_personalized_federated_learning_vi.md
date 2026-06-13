@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SubFLOT: Submodel Extraction for Efficient and Personalized Federated Learning via Optimal Transport
 description: >-
-  [CVPR 2026][AI安全][联邦学习] 提出 SubFLOT 框架，在服务器端利用最优传输（Optimal Transport）将全局模型的参数分布与客户端历史模型对齐，实现无需访问原始数据的个性化剪枝，并通过自适应正则化抑制剪枝导致的参数偏移，在多个数据集上大幅超越现有联邦剪枝方法。
+  [CVPR 2026][AI安全][联邦学习] 提出 SubFLOT 框架，在服务器端利用最优传输（Optimal Transport）将全局模型的参数分布与客户端历史模型对齐，实现无需访问原始数据的个性化剪枝，并通过自适应正则化抑制剪枝导致的参数偏移，在多个数据集上大幅超越现有联邦剪枝方法。 领域现状：联邦学习（FL）在保…
 tags:
   - "CVPR 2026"
   - "AI安全"

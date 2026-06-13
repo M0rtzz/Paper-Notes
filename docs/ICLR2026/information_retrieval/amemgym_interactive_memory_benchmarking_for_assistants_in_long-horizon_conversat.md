@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations
 description: >-
-  [ICLR 2026][信息检索/RAG][对话记忆评测] 提出AMemGym——首个支持on-policy交互式评估的长程对话记忆基准环境，通过结构化数据采样（用户画像→状态演化→个性化问答）驱动LLM模拟用户进行角色扮演，揭示了off-policy评估的排名偏差问题…
+  [ICLR 2026][信息检索/RAG][对话记忆评测] 提出AMemGym——首个支持on-policy交互式评估的长程对话记忆基准环境，通过结构化数据采样（用户画像→状态演化→个性化问答）驱动LLM模拟用户进行角色扮演，揭示了off-policy评估的排名偏差问题，并系统诊断了RAG/长上下文/Agent记忆系统的write/read/utilization三阶段失败模式。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

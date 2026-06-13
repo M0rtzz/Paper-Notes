@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Multi-modal Medical Image Registration via Invertible Translation
 description: >-
-  [ECCV 2024][医学图像][多模态配准] 本文提出 INNReg，通过可逆神经网络将多模态医学图像翻译为单模态，再利用单模态图像进行配准，结合基于归一化互信息的 barrier 损失函数，在 MRI T1/T2 和 MRI/CT 数据集上取得了优于现有方法的配准精度。
+  [ECCV 2024][医学图像][多模态配准] 本文提出 INNReg，通过可逆神经网络将多模态医学图像翻译为单模态，再利用单模态图像进行配准，结合基于归一化互信息的 barrier 损失函数，在 MRI T1/T2 和 MRI/CT 数据集上取得了优于现有方法的配准精度。 领域现状：多模态医学图像配准在临床诊断和图像引导…
 tags:
   - "ECCV 2024"
   - "医学图像"

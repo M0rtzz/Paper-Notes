@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniVerifier-M1: Multimodal Meta-Verifier with Explicit Structured Recalibration
 description: >-
-  [ICML 2026][目标检测][多模态 meta-verifier] 针对多模态视觉验证器只输出 True/False 二值判断信号过粗、且文本解释易被 reward-hacking 的问题…
+  [ICML 2026][目标检测][多模态 meta-verifier] 针对多模态视觉验证器只输出 True/False 二值判断信号过粗、且文本解释易被 reward-hacking 的问题，本文提出 OmniVerifier-M1：用 bounding box 等符号化输出代替文本作为 meta-verification rationale 以支持 IoU 这种 rule-based reward，并在理论与实验上证明把二值判断与 meta-verification 解耦成两条独立 reward 流（而非合并成乘性 joint reward）能显著提升 SNR，最终把验证器升级为可驱动 region-level 自校正的 ag…
 tags:
   - "ICML 2026"
   - "目标检测"

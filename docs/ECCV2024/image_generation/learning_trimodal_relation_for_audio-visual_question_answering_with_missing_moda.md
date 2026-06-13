@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Trimodal Relation for Audio-Visual Question Answering with Missing Modality
 description: >-
-  [ECCV 2024][图像生成] 提出基于三模态关系的缺失模态 AVQA 框架，通过 RMM 生成器召回缺失模态特征并用 AVR 扩散模型跨模态增强，即使音频或视觉缺失也能准确回答问题。
+  [ECCV 2024][图像生成] 提出基于三模态关系的缺失模态 AVQA 框架，通过 RMM 生成器召回缺失模态特征并用 AVR 扩散模型跨模态增强，即使音频或视觉缺失也能准确回答问题。 现有音频-视觉问答（AVQA）方法依赖完整的视觉和音频输入，但在真实场景中设备故障、数据传输错误等常导致某一模态缺失…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heterogeneous Adversarial Play in Interactive Environments
 description: >-
-  [NeurIPS 2025][预训练][对抗课程学习] 提出 **HAP（Heterogeneous Adversarial Play）**，将教师-学生交互形式化为极小极大博弈：教师网络自动生成针对学生弱点的挑战任务，学生策略不断适应进化…
+  [NeurIPS 2025][预训练][对抗课程学习] 提出 **HAP（Heterogeneous Adversarial Play）**，将教师-学生交互形式化为极小极大博弈：教师网络自动生成针对学生弱点的挑战任务，学生策略不断适应进化，形成无需手工设计的自适应课程——在多任务 RL 环境中超越 SOTA 基线，且生成的课程对人类学习者同样有效。
 tags:
   - "NeurIPS 2025"
   - "预训练"

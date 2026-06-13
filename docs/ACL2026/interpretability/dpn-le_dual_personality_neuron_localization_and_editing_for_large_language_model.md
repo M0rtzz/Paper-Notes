@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DPN-LE: Dual Personality Neuron Localization and Editing for Large Language Models
 description: >-
-  [ACL2026][可解释性][人格编辑] 这篇论文提出 DPN-LE，通过对比高/低人格特质样本的 MLP 激活来定位互斥的人格相关神经元，只干预约 0.5% 神经元即可实现人格控制，并比既有大规模神经元编辑更好地保留通用能力。
+  [ACL2026 Findings][可解释性][人格编辑] 这篇论文提出 DPN-LE，通过对比高/低人格特质样本的 MLP 激活来定位互斥的人格相关神经元，只干预约 0.5% 神经元即可实现人格控制，并比既有大规模神经元编辑更好地保留通用能力。 领域现状：LLM 人格控制常用于角色扮演、社会调查、个性化助手和人格分析…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "可解释性"
   - "人格编辑"
   - "神经元定位"

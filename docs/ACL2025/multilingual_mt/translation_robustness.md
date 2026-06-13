@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Did Translation Models Get More Robust Without Anyone Even Noticing?
 description: >-
-  [多语言/翻译] 通过合成噪声和社交媒体文本实验发现，近年大规模预训练翻译模型（如 TowerInstruct 13B、GPT-3.5）在未使用任何专门鲁棒性训练技术的情况下，对多种字符级噪声的鲁棒性远超传统 NMT 模型（OPUS），且源端纠错+LLM 翻译的组合可进一步超越 GPT-3.5。
+  [多语言/翻译] 通过合成噪声和社交媒体文本实验发现，近年大规模预训练翻译模型（如 TowerInstruct 13B、GPT-3.5）在未使用任何专门鲁棒性训练技术的情况下，对多种字符级噪声的鲁棒性远超传统 NMT 模型（OPUS），且源端纠错+LLM 翻译的组合可进一步超越 GPT-3.5。 - 现有痛点：长期以来 NL…
 tags:
   - "多语言/翻译"
 ---

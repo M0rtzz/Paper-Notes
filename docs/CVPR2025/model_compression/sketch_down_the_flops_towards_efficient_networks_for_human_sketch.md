@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sketch Down the FLOPs: Towards Efficient Networks for Human Sketch
 description: >-
-  [CVPR 2025][模型压缩][FG-SBIR] 首次针对人类草图（sketch）数据的特有特性设计高效推理网络：通过跨模态知识蒸馏（SketchyNetV1）将大网络压缩到轻量级网络并保持 FG-SBIR 精度…
+  [CVPR 2025][模型压缩][FG-SBIR] 首次针对人类草图（sketch）数据的特有特性设计高效推理网络：通过跨模态知识蒸馏（SketchyNetV1）将大网络压缩到轻量级网络并保持 FG-SBIR 精度，再通过强化学习驱动的自适应画布尺寸选择器（SketchyNetV2）利用草图的稀疏抽象特性进一步减少 FLOPs，最终实现 99.37% 的 FLOPs 缩减（40.18G→0.254G）而几乎不损失精度。
 tags:
   - "CVPR 2025"
   - "模型压缩"

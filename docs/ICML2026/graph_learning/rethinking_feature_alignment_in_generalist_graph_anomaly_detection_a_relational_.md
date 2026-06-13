@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Feature Alignment in Generalist Graph Anomaly Detection: A Relational Fingerprint-based Approach
 description: >-
-  [ICML 2026][图学习][通用图异常检测] 针对通用图异常检测中"PCA 对齐只统一维度、不统一语义"导致的负迁移问题，本文用一组 5 维"关系指纹"（邻域位置/方向/全局方向一致性 + 度 + 聚类系数）显式提取异常指示性线索作为跨域通用特征…
+  [ICML 2026][图学习][通用图异常检测] 针对通用图异常检测中"PCA 对齐只统一维度、不统一语义"导致的负迁移问题，本文用一组 5 维"关系指纹"（邻域位置/方向/全局方向一致性 + 度 + 聚类系数）显式提取异常指示性线索作为跨域通用特征，再叠加一个 Transformer 域共享编码器和 SNR 引导的域自适应重校准模块，在 14 个数据集上几乎做到了"全员正迁移"的 SOTA。
 tags:
   - "ICML 2026"
   - "图学习"

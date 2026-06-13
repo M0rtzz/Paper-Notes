@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can We Further Elicit Reasoning in LLMs? Critic-Guided Planning with Retrieval-Augmentation for Solving Challenging Tasks
 description: >-
-  [ACL 2025][LLM/NLP][批判引导规划] 本文提出CR-Planner框架，通过微调的批判模型（critic model）引导推理和检索过程的规划，结合蒙特卡洛树搜索（MCTS）来训练critic，在竞赛编程、定理驱动的数学推理和复杂领域检索问题上显著优于基线方法。
+  [ACL 2025][LLM 其他][批判引导规划] 本文提出CR-Planner框架，通过微调的批判模型（critic model）引导推理和检索过程的规划，结合蒙特卡洛树搜索（MCTS）来训练critic，在竞赛编程、定理驱动的数学推理和复杂领域检索问题上显著优于基线方法。 领域现状：大语言模型在一般推理任务上表现优秀…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "批判引导规划"
   - "检索增强"
   - "蒙特卡洛树搜索"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualReg: Dual-Space Filtering and Reinforcement for Rigid Registration
 description: >-
-  [CVPR 2026][模型压缩][刚性配准] DualReg提出双空间配准范式，先用轻量级1-point RANSAC + 3-point RANSAC渐进过滤特征空间对应点，再基于过滤后的锚点构建几何代理点集进行双空间联合优化，在3DMatch上实现SOTA精度的同时比MAC快32倍。
+  [CVPR 2026][模型压缩][刚性配准] DualReg提出双空间配准范式，先用轻量级1-point RANSAC + 3-point RANSAC渐进过滤特征空间对应点，再基于过滤后的锚点构建几何代理点集进行双空间联合优化，在3DMatch上实现SOTA精度的同时比MAC快32倍。 刚性配准旨在估计源点云到目标点云的…
 tags:
   - "CVPR 2026"
   - "模型压缩"

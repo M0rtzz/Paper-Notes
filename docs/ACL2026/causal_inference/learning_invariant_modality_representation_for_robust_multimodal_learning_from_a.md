@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Invariant Modality Representation for Robust Multimodal Learning from a Causal Inference Perspective
 description: >-
-  [ACL 2026][因果推理][因果不变表示] 本文提出 CmIR（因果模态不变表示学习），基于因果推理理论将每种模态显式解纠缠为因果不变表示和环境特定虚假表示，通过不变性约束+互信息约束+重建约束的优雅目标函数确保不变表示具有跨环境的稳定预测关系，在多模态情感/幽默/讽刺检测上取得 SOTA…
+  [ACL 2026][因果推理][因果不变表示] 本文提出 CmIR（因果模态不变表示学习），基于因果推理理论将每种模态显式解纠缠为因果不变表示和环境特定虚假表示，通过不变性约束+互信息约束+重建约束的优雅目标函数确保不变表示具有跨环境的稳定预测关系，在多模态情感/幽默/讽刺检测上取得 SOTA，尤其在 OOD 和噪声场景下表现突出。
 tags:
   - "ACL 2026"
   - "因果推理"

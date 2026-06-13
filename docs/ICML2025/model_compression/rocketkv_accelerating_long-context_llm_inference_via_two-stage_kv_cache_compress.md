@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RocketKV: Accelerating Long-Context LLM Inference via Two-Stage KV Cache Compression
 description: >-
-  [ICML 2025][模型压缩][KV缓存压缩] 提出 RocketKV，一种无需训练的两阶段 KV 缓存压缩方法：第一阶段用 SnapKV 做粗粒度永久驱逐，第二阶段用混合稀疏注意力（HSA）做细粒度动态 top-k 选择…
+  [ICML 2025][模型压缩][KV缓存压缩] 提出 RocketKV，一种无需训练的两阶段 KV 缓存压缩方法：第一阶段用 SnapKV 做粗粒度永久驱逐，第二阶段用混合稀疏注意力（HSA）做细粒度动态 top-k 选择，在 Mistral-7B 等模型上实现高达 400× 压缩比、3.7× 端到端加速和 32.6% 峰值内存节省，精度损失可忽略。
 tags:
   - "ICML 2025"
   - "模型压缩"

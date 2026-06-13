@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InEx: Hallucination Mitigation via Introspection and Cross-Modal Multi-Agent Collaboration
 description: >-
-  [AAAI 2026][幻觉检测][多模态幻觉] 提出 InEx 框架，通过内部自省推理（TVER 驱动的不确定性感知视觉增强）和外部跨模态多智能体协作（文本自反思 + 图像编辑验证 + 视觉自反思）迭代验证和修正 MLLM 输出，在 POPE 上提升 8.9%…
+  [AAAI 2026][幻觉检测][多模态幻觉] 提出 InEx 框架，通过内部自省推理（TVER 驱动的不确定性感知视觉增强）和外部跨模态多智能体协作（文本自反思 + 图像编辑验证 + 视觉自反思）迭代验证和修正 MLLM 输出，在 POPE 上提升 8.9%，在多个幻觉和通用 benchmark 上持续超越 OPERA/VCD/ICD。
 tags:
   - "AAAI 2026"
   - "幻觉检测"

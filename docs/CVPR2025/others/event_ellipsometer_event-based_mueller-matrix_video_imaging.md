@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event Ellipsometer: Event-based Mueller-Matrix Video Imaging
 description: >-
-  [CVPR 2025][事件相机] 首个实现 30fps 视频级穆勒矩阵成像的系统——用事件相机捕捉快速旋转 QWP 产生的光强调制，将事件时间差映射到穆勒矩阵比值，通过 SVD 估计+时空传播重建物理有效的穆勒矩阵视频。
+  [CVPR 2025][事件相机] 首个实现 30fps 视频级穆勒矩阵成像的系统——用事件相机捕捉快速旋转 QWP 产生的光强调制，将事件时间差映射到穆勒矩阵比值，通过 SVD 估计+时空传播重建物理有效的穆勒矩阵视频。 领域现状 领域现状：穆勒矩阵（Mueller Matrix）完整描述了材料对偏振光的变换特性…
 tags:
   - "CVPR 2025"
   - "事件相机"

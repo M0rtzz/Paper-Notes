@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping
 description: >-
-  [ICLR 2026][多模态VLM][MLLM] 提出 AttWarp，一种即插即用的测试时图像变形方法，利用 MLLM 自身的跨模态注意力图进行矩形网格重采样，
+  [ICLR 2026][多模态VLM][MLLM] 提出 AttWarp，一种即插即用的测试时图像变形方法，利用 MLLM 自身的跨模态注意力图进行矩形网格重采样， 领域现状： 多模态大语言模型（MLLM）如 LLaVA、Qwen-VL 在图像对话和推理方面取得进展，但在细粒度感知方面仍有明显缺陷——遗漏小目标、混淆相似物体…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

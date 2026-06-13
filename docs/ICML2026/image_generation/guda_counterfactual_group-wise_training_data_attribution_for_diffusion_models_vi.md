@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GUDA: Counterfactual Group-wise Training Data Attribution for Diffusion Models via Unlearning
 description: >-
-  [ICML 2026][图像生成][训练数据归因] GUDA 把"群组级训练数据归因"重新表述成"如果训练时没有这个群组，模型对该样本的对数似然会掉多少"的反事实问题，用机器遗忘从全量模型上"擦掉某个群组"近似 Leave-One-Group-Out (LOGO) 重训得到的反事实模型…
+  [ICML 2026][图像生成][训练数据归因] GUDA 把"群组级训练数据归因"重新表述成"如果训练时没有这个群组，模型对该样本的对数似然会掉多少"的反事实问题，用机器遗忘从全量模型上"擦掉某个群组"近似 Leave-One-Group-Out (LOGO) 重训得到的反事实模型，再用 ELBO 差作为归因分数，在 CIFAR-10 和 Stable Diffusion 艺术风格归因上比 CLIP 相似度和实例级梯度归因更准，且比 LOGO 重训快约 100 倍。
 tags:
   - "ICML 2026"
   - "图像生成"

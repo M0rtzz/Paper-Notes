@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Everything in Its Place: Benchmarking Spatial Intelligence of Text-to-Image Models
 description: >-
-  [ICLR 2026][图像生成][空间智能] 提出 SpatialGenEval 基准，通过 1,230 条长且信息密集的提示覆盖 10 个空间子领域，系统评估 23 个 SOTA T2I 模型的空间智能，揭示空间推理是主要瓶颈；同时构建 SpatialT2I 数据集实现数据中心的空间智能提升。
+  [ICLR 2026][图像生成][空间智能] 提出 SpatialGenEval 基准，通过 1,230 条长且信息密集的提示覆盖 10 个空间子领域，系统评估 23 个 SOTA T2I 模型的空间智能，揭示空间推理是主要瓶颈；同时构建 SpatialT2I 数据集实现数据中心的空间智能提升。 当前 T2I 模型在生成高…
 tags:
   - "ICLR 2026"
   - "图像生成"

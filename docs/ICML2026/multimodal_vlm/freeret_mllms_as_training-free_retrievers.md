@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeRet: MLLMs as Training-Free Retrievers
 description: >-
-  [ICML 2026][多模态VLM][训练-free 检索] FreeRet 提出一个完全不训练的两阶段多模态检索框架：第一阶段绕过 MLLM 最后一层 MLP 并配合受控生成 prompt 抽取语义忠实的 embedding 做候选检索…
+  [ICML 2026][多模态VLM][训练-free 检索] FreeRet 提出一个完全不训练的两阶段多模态检索框架：第一阶段绕过 MLLM 最后一层 MLP 并配合受控生成 prompt 抽取语义忠实的 embedding 做候选检索，第二阶段把 reranking 改成多项选择题来规避 LLM 的 framing 偏置；在 MMEB 上比训练了千万级配对数据的检索模型还要强。
 tags:
   - "ICML 2026"
   - "多模态VLM"

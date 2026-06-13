@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IQA-Spider: Unifying Multi-Granularity Image Quality Assessment with Reasoning, Grounding and Referring
 description: >-
-  [ICML 2026][可解释性][多粒度IQA] 本文提出 IQA-Spider，一个把"全局质量描述 + 局部质量描述 + 像素级 grounding + 区域级 referring"四类任务统一到一个 LMM 框架里的多粒度图像质量评估方法，配套构建了 33K 规模的多任务数据集…
+  [ICML 2026][可解释性][多粒度IQA] 本文提出 IQA-Spider，一个把"全局质量描述 + 局部质量描述 + 像素级 grounding + 区域级 referring"四类任务统一到一个 LMM 框架里的多粒度图像质量评估方法，配套构建了 33K 规模的多任务数据集，并用一种 training-free 的 text-to-point 范式把语言模型的位置词 logits 直接映射成 SAM 的点 prompt，在多粒度 IQA 基准上全面超越现有 Q-Instruct / Q-Ground 等专用模型。
 tags:
   - "ICML 2026"
   - "可解释性"

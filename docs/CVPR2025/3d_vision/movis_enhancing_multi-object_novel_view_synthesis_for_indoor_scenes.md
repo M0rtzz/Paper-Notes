@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOVIS: Enhancing Multi-Object Novel View Synthesis for Indoor Scenes
 description: >-
-  [CVPR 2025][3D视觉][novel view synthesis] 针对多物体室内场景的新视角合成（NVS），通过注入结构感知特征（深度+物体掩码）、引入辅助掩码预测任务、设计结构引导的时间步采样调度器三项设计，显著提升跨视角的物体放置和几何一致性。
+  [CVPR 2025][3D视觉][novel view synthesis] 针对多物体室内场景的新视角合成（NVS），通过注入结构感知特征（深度+物体掩码）、引入辅助掩码预测任务、设计结构引导的时间步采样调度器三项设计，显著提升跨视角的物体放置和几何一致性。 领域现状： 基于预训练扩散模型的单物体 NVS（如 Zero-…
 tags:
   - "CVPR 2025"
   - "3D视觉"

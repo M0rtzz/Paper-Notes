@@ -2,7 +2,7 @@
 title: >-
   [论文解读] m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks
 description: >-
-  [ECCV 2024][多模态VLM][工具使用] 提出 m&m's 基准，包含 4K+ 多步骤多模态任务和 33 个可执行工具，系统评估 10 个 LLM 在不同规划策略（多步 vs 逐步）、计划格式（JSON vs 代码）和反馈类型（解析/验证/执行）下的工具使用能力…
+  [ECCV 2024][多模态VLM][工具使用] 提出 m&m's 基准，包含 4K+ 多步骤多模态任务和 33 个可执行工具，系统评估 10 个 LLM 在不同规划策略（多步 vs 逐步）、计划格式（JSON vs 代码）和反馈类型（解析/验证/执行）下的工具使用能力，发现多步JSON规划配合反馈是当前最优设计。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

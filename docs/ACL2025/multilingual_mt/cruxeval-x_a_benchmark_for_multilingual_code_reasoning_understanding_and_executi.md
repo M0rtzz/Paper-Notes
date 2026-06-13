@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CruxEval-X: A Benchmark for Multilingual Code Reasoning, Understanding and Execution
 description: >-
-  [ACL 2025][多语言/翻译][代码推理] 提出 CruxEval-X，一个覆盖 19 种编程语言的多语言代码推理基准，通过全自动的测试引导翻译流水线从 Python 版 CruxEval 扩展而来，包含 12,660 个题目和 19K 测试用例…
+  [ACL 2025][多语言/翻译][代码推理] 提出 CruxEval-X，一个覆盖 19 种编程语言的多语言代码推理基准，通过全自动的测试引导翻译流水线从 Python 版 CruxEval 扩展而来，包含 12,660 个题目和 19K 测试用例，对 24 个 LLM 的评估揭示了编程语言间的相关性以及单语言训练模型的跨语言泛化能力。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

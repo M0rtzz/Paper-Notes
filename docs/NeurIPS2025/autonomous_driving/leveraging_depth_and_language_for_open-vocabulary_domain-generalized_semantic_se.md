@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation
 description: >-
-  [NeurIPS 2025][自动驾驶][开放词汇分割] 提出Vireo框架，首次将开放词汇语义分割（OVSS）和域泛化语义分割（DGSS）统一到单阶段框架中，通过GeoText Query融合深度几何特征与语言线索，在极端环境和未见类别上均实现SOTA表现。
+  [NeurIPS 2025][自动驾驶][开放词汇分割] 提出Vireo框架，首次将开放词汇语义分割（OVSS）和域泛化语义分割（DGSS）统一到单阶段框架中，通过GeoText Query融合深度几何特征与语言线索，在极端环境和未见类别上均实现SOTA表现。 领域现状：开放词汇语义分割（OVSS）能识别任意文本描述的类别…
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

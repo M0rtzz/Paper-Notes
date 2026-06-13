@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvolveR: Self-Evolving LLM Agents through an Experience-Driven Lifecycle
 description: >-
-  [ICML 2026][LLM Agent][经验生命周期] EvolveR 给 LLM agent 套一个「在线交互 → 离线自蒸馏成原则库 → GRPO 策略进化」的闭环生命周期：agent 不再丢弃过去轨迹，而是把自己的成功失败抽象成可检索的「策略原则」…
+  [ICML 2026][LLM Agent][经验生命周期] EvolveR 给 LLM agent 套一个「在线交互 → 离线自蒸馏成原则库 → GRPO 策略进化」的闭环生命周期：agent 不再丢弃过去轨迹，而是把自己的成功失败抽象成可检索的「策略原则」，再用 RL 学会**如何用自己的原则**去解新问题，在 7 个多跳 QA benchmark 上明显跑赢 Search-R1 等 RL agent baseline。
 tags:
   - "ICML 2026"
   - "LLM Agent"

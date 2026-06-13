@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Referring Multiple Regions with Large Multimodal Models via Contextual Latent Steering
 description: >-
-  [ICML 2026][多模态VLM][多区域指代] CSteer 提出一种训练无关的 latent steering 方法,通过在错误/正确指代回答的隐藏激活差上构造"上下文向量",并在推理时分层注入到 query 早期层和 decode 中后期层…
+  [ICML 2026][多模态VLM][多区域指代] CSteer 提出一种训练无关的 latent steering 方法,通过在错误/正确指代回答的隐藏激活差上构造"上下文向量",并在推理时分层注入到 query 早期层和 decode 中后期层,让通用 LMM (Qwen3-VL、InternVL-3.5) 在多区域视觉指代任务上反超专门微调的 region LMM。
 tags:
   - "ICML 2026"
   - "多模态VLM"

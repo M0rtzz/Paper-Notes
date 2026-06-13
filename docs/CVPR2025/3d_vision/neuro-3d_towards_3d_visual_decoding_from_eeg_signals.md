@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neuro-3D: Towards 3D Visual Decoding from EEG Signals
 description: >-
-  [CVPR 2025][3D视觉][EEG解码] Neuro-3D 是首个从脑电信号（EEG）重建彩色 3D 点云的工作，构建了 EEG-3D 数据集（12 名受试者、72 类 Objaverse 物体、动态视频+静态图像刺激）…
+  [CVPR 2025][3D视觉][EEG解码] Neuro-3D 是首个从脑电信号（EEG）重建彩色 3D 点云的工作，构建了 EEG-3D 数据集（12 名受试者、72 类 Objaverse 物体、动态视频+静态图像刺激），通过动态-静态 EEG 融合编码器、CLIP 对齐对比学习和扩散点云生成+颜色预测实现跨模态 3D 视觉解码。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models
 description: >-
-  [AAAI 2026][推荐系统][Inference-Aware Optimization] 揭示 prompt 选择与推理策略（Best-of-N、Majority Voting）之间存在非平凡交互关系，提出 IAPO 框架将 prompt 设计与推理规模联合优化为上下文最优臂识别问题…
+  [AAAI 2026][推荐系统][Inference-Aware Optimization] 揭示 prompt 选择与推理策略（Best-of-N、Majority Voting）之间存在非平凡交互关系，提出 IAPO 框架将 prompt 设计与推理规模联合优化为上下文最优臂识别问题，并设计 PSST 固定预算训练算法，在 6 个任务上相比推理无关方法提升最高 50%。
 tags:
   - "AAAI 2026"
   - "推荐系统"

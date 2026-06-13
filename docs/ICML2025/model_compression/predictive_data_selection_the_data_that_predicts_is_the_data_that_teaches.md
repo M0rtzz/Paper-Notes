@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Predictive Data Selection: The Data That Predicts Is the Data That Teaches
 description: >-
-  [ICML2025][模型压缩][预训练数据选择] 提出 PreSelect 方法，基于"能预测模型能力的数据就是能教会模型的数据"这一假设，利用多模型损失排名相关性量化文档预测强度，训练 fastText 分类器实现高效数据选择…
+  [ICML2025][模型压缩][预训练数据选择] 提出 PreSelect 方法，基于"能预测模型能力的数据就是能教会模型的数据"这一假设，利用多模型损失排名相关性量化文档预测强度，训练 fastText 分类器实现高效数据选择，在 1B 模型上用 30B tokens 超越随机选取 300B tokens 的性能，实现 10 倍计算节省。
 tags:
   - "ICML2025"
   - "模型压缩"

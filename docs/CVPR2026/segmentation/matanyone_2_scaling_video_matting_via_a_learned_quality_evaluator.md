@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator
 description: >-
-  [CVPR2026][语义分割][video matting] 提出学习型 Matting Quality Evaluator (MQE)，在无 ground-truth 条件下逐像素评估 alpha 质量，既作为在线训练引导又作为离线数据筛选器…
+  [CVPR2026][语义分割][video matting] 提出学习型 Matting Quality Evaluator (MQE)，在无 ground-truth 条件下逐像素评估 alpha 质量，既作为在线训练引导又作为离线数据筛选器，构建了 28K 片段 / 240 万帧的真实世界视频抠图数据集 VMReal，配合参考帧训练策略，显著超越所有现有方法。
 tags:
   - "CVPR2026"
   - "语义分割"

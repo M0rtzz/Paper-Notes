@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wavelet Policy: Lifting Scheme for Policy Learning in Long-Horizon Tasks
 description: >-
-  [ICCV 2025][自动驾驶][策略学习] Wavelet Policy 首次将小波分析引入具身智能的策略学习，设计了基于可学习提升方案（lifting scheme）的多尺度策略网络，通过将观测序列分解为不同频率分量后逐层合成动作序列…
+  [ICCV 2025][自动驾驶][策略学习] Wavelet Policy 首次将小波分析引入具身智能的策略学习，设计了基于可学习提升方案（lifting scheme）的多尺度策略网络，通过将观测序列分解为不同频率分量后逐层合成动作序列，在自动驾驶（CARLA）、机器人操作、多机器人协作等5个长horizon任务上取得了优于或持平基线的性能。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

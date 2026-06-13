@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Frequency-Spatial Entanglement Learning for Camouflaged Object Detection
 description: >-
-  [ECCV 2024][语义分割][伪装目标检测] 提出频率-空间纠缠学习（FSEL）框架，通过在频率域和空间域之间进行纠缠学习（entanglement learning），利用全局频率特征弥补空间特征的局部性和敏感性限制，在三个COD基准上超越21个SOTA方法。
+  [ECCV 2024][语义分割][伪装目标检测] 提出频率-空间纠缠学习（FSEL）框架，通过在频率域和空间域之间进行纠缠学习（entanglement learning），利用全局频率特征弥补空间特征的局部性和敏感性限制，在三个COD基准上超越21个SOTA方法。 伪装目标检测（COD）的核心挑战在于目标与背景在空间域中…
 tags:
   - "ECCV 2024"
   - "语义分割"

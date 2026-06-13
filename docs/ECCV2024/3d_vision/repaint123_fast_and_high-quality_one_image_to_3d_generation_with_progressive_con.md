@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Repaint123: Fast and High-Quality One Image to 3D Generation with Progressive Controllable Repainting
 description: >-
-  [ECCV 2024][3D视觉][单图生成3D] Repaint123 提出了一种渐进式可控重绘策略，用 2D 扩散模型生成多视角一致的高质量图像，再通过简单的 MSE 损失快速优化 3D 表征，仅需 2 分钟即可从单张图像生成纹理精细、多视角一致的 3D 内容，大幅超越基于 SDS 的方法。
+  [ECCV 2024][3D视觉][单图生成3D] Repaint123 提出了一种渐进式可控重绘策略，用 2D 扩散模型生成多视角一致的高质量图像，再通过简单的 MSE 损失快速优化 3D 表征，仅需 2 分钟即可从单张图像生成纹理精细、多视角一致的 3D 内容，大幅超越基于 SDS 的方法。 领域现状：单图到 3D 生成…
 tags:
   - "ECCV 2024"
   - "3D视觉"

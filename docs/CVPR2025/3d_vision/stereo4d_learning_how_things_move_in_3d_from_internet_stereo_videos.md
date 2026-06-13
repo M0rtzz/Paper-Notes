@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stereo4D: Learning How Things Move in 3D from Internet Stereo Videos
 description: >-
-  [CVPR 2025][3D视觉][4D重建] Stereo4D 提出了一套从互联网立体鱼眼视频（VR180）中自动挖掘高质量 4D 重建数据的流水线，生成了超过 100K 段带有世界坐标系下伪度量 3D 点云和长程运动轨迹的数据，并训练了 DynaDUSt3R 模型…
+  [CVPR 2025][3D视觉][4D重建] Stereo4D 提出了一套从互联网立体鱼眼视频（VR180）中自动挖掘高质量 4D 重建数据的流水线，生成了超过 100K 段带有世界坐标系下伪度量 3D 点云和长程运动轨迹的数据，并训练了 DynaDUSt3R 模型，实现了从图像对预测 3D 结构和运动的能力。
 tags:
   - "CVPR 2025"
   - "3D视觉"

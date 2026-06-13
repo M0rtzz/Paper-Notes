@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SketchFusion: Learning Universal Sketch Features through Fusing Foundation Models
 description: >-
-  [CVPR 2025][语义分割][草图特征表示] 提出 SketchFusion，通过将 CLIP 视觉特征动态注入 Stable Diffusion 的去噪过程以互补 SD 的高频偏置和草图特征缺陷，结合自适应多尺度特征聚合，首次实现了基础模型时代的通用草图特征表示…
+  [CVPR 2025][语义分割][草图特征表示] 提出 SketchFusion，通过将 CLIP 视觉特征动态注入 Stable Diffusion 的去噪过程以互补 SD 的高频偏置和草图特征缺陷，结合自适应多尺度特征聚合，首次实现了基础模型时代的通用草图特征表示，在检索、识别、分割和对应学习四项任务上均达 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

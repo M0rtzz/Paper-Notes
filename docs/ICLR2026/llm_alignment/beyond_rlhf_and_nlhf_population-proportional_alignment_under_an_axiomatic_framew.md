@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework
 description: >-
-  [ICLR 2026][LLM对齐][RLHF] 提出基于社会选择理论公理的偏好学习框架，从成对比较数据中推断评估者人群分布的可行集，构造满足人群比例对齐(PPA)和人群有界可操纵性(PBM)公理的策略。
+  [ICLR 2026][LLM对齐][RLHF] 提出基于社会选择理论公理的偏好学习框架，从成对比较数据中推断评估者人群分布的可行集，构造满足人群比例对齐(PPA)和人群有界可操纵性(PBM)公理的策略。 领域现状：主流偏好学习有两条路线。RLHF 用 Bradley-Terry 模型把多人的偏好压缩成单一标量奖励再优化策略…
 tags:
   - "ICLR 2026"
   - "LLM对齐"

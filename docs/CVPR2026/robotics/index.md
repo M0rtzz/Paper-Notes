@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 机器人/具身智能论文汇总 · 42篇论文解读
+  CVPR2026 机器人/具身智能论文汇总 · 58篇论文解读
 description: >-
-  42篇CVPR2026的机器人/具身智能方向论文解读，涵盖机器人、多模态、推理、导航、Agent、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  58篇CVPR2026的机器人/具身智能方向论文解读，涵盖机器人、多模态、推理、导航、Agent、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "机器人/具身智能"
@@ -15,20 +15,28 @@ tags:
   - "Agent"
   - "扩散模型"
 item_list:
+  - u: "activegrasp_information-guided_active_grasping_with_calibrated_energy-based_mode/"
+    t: "ActiveGrasp: Information-Guided Active Grasping with Calibrated Energy-based Model"
   - u: "adaptive_action_chunking_at_inference-time_for_vision-language-action_models/"
     t: "Adaptive Action Chunking at Inference-time for Vision-Language-Action Models"
   - u: "atomicvla_unlocking_the_potential_of_atomic_skill_learning_in_robots/"
     t: "AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots"
   - u: "ava_vla_improving_vision_language_action_models_with_active_visual_attention/"
     t: "AVA-VLA: Improving Vision-Language-Action models with Active Visual Attention"
+  - u: "awarevln_reasoning_with_self-awareness_for_vision-language_navigation/"
+    t: "AwareVLN: Reasoning with Self-awareness for Vision-Language Navigation"
   - u: "bipremanip_learning_affordance-based_bimanual_preparatory_manipulation_through_a/"
     t: "BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration"
   - u: "boosting_vision-language-action_finetuning_with_feasible_action_neighborhood_pri/"
     t: "Boosting Vision-Language-Action Finetuning with Feasible Action Neighborhood Prior"
   - u: "chain_of_world_world_model_thinking_in_latent_motion/"
     t: "Chain of World: World Model Thinking in Latent Motion (CoWVLA)"
+  - u: "closed-loop_neural_activation_control_in_vision-language-action_models/"
+    t: "Closed-Loop Neural Activation Control in Vision-Language-Action Models"
   - u: "como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l/"
     t: "CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning"
+  - u: "context_as_prior_bayesian-inspired_intent_inference_for_non-speaking_agents_with/"
+    t: "Context as Prior: Bayesian-Inspired Intent Inference for Non-Speaking Agents with a Household Cat Testbed"
   - u: "cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning/"
     t: "Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning"
   - u: "cyclemanip_enabling_cyclic_task_manipulation_via_effective_historical_percepti/"
@@ -37,6 +45,8 @@ item_list:
     t: "DAWN: Pixel Motion Diffusion is What We Need for Robot Control"
   - u: "decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_/"
     t: "DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation"
+  - u: "dexter_language-driven_dexterous_grasp_generation_with_embodied_reasoning/"
+    t: "DextER: Language-driven Dexterous Grasp Generation with Embodied Reasoning"
   - u: "diagnose_correct_and_learn_from_manipulation_failures_via_visual_symbols/"
     t: "Diagnose, Correct, and Learn from Manipulation Failures via Visual Symbols"
   - u: "expert_pyramid_tuning_efficient_parameter_fine-tuning_for_expertise-driven_task_/"
@@ -49,6 +59,8 @@ item_list:
     t: "ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation"
   - u: "gecosrt_geometryaware_continual_adaptation_for_rob/"
     t: "GeCo-SRT: Geometry-aware Continual Adaptation for Robotic Cross-Task Sim-to-Real Transfer"
+  - u: "global_prior_meets_local_consistency_dual-memory_augmented_vision-language-actio/"
+    t: "Global Prior Meets Local Consistency: Dual-Memory Augmented Vision-Language-Action Model for Efficient Robotic Manipulation"
   - u: "graspldp_towards_generalizable_grasping_policy_via_latent_diffusion/"
     t: "GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion"
   - u: "hif-vla_hindsight_insight_and_foresight_through_motion_representation_for_vision/"
@@ -57,35 +69,27 @@ item_list:
     t: "IGen: Scalable Data Generation for Robot Learning from Open-World Images"
   - u: "influence_malleability_in_linearized_attention_dual_implications_of_non-converge/"
     t: "Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics"
+  - u: "instance-level_visual_active_tracking_with_occlusion-aware_planning/"
+    t: "Instance-level Visual Active Tracking with Occlusion-Aware Planning"
   - u: "lada_robotic_manipulation/"
     t: "Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)"
-  - u: "learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula/"
-    t: "Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation"
-  - u: "lifelong_imitation_learning_multimodal_latent_rep/"
-    t: "Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment"
-  - u: "maniparena_comprehensive_real-world_evaluation_of_reasoning-oriented_generalist_/"
-    t: "ManipArena: Comprehensive Real-world Evaluation of Reasoning-Oriented Generalist Robot Manipulation"
-  - u: "mergevla_cross-skill_model_merging_toward_a_generalist_vision-language-action_ag/"
-    t: "MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent"
-  - u: "palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro/"
-    t: "PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation"
-  - u: "panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen/"
-    t: "PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments"
-  - u: "pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co/"
-    t: "Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition"
-  - u: "profocus_proactive_perception_and_focused_reasoning_in_vision-and-language_navig/"
-    t: "ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation"
-item_total: 42
+  - u: "lead_minimizing_learner-expert_asymmetry_in_end-to-end_driving/"
+    t: "LEAD: Minimizing Learner-Expert Asymmetry in End-to-End Driving"
+item_total: 58
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**📷 CVPR2026** · **42** 篇论文解读
+**📷 CVPR2026** · **58** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (42)](../../ICML2026/robotics/index.md) · [💬 ACL2026 (10)](../../ACL2026/robotics/index.md) · [🔬 ICLR2026 (46)](../../ICLR2026/robotics/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/robotics/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/robotics/index.md) · [📹 ICCV2025 (26)](../../ICCV2025/robotics/index.md)
 
-🔥 **高频主题：** 机器人 ×17 · 多模态 ×12 · 推理 ×8 · 导航 ×6 · Agent ×4
+🔥 **高频主题：** 机器人 ×20 · 多模态 ×15 · 推理 ×11 · 导航 ×8 · Agent ×5
+
+**[ActiveGrasp: Information-Guided Active Grasping with Calibrated Energy-based Model](activegrasp_information-guided_active_grasping_with_calibrated_energy-based_mode.md)**
+
+:   针对杂乱场景下机器人靠有限视角难以抓准目标的问题，ActiveGrasp 用一个**校准过的能量模型**直接在 SE(3) 流形上建模抓取分布，把"下一最佳视角"的信息增益定义为**抓取成功熵的下降量**，从而把机器人引导到"抓取最不确定"的区域，在仿真和真机上以更少视角预算取得最高成功率（仿真 79% SR）。
 
 **[Adaptive Action Chunking at Inference-time for Vision-Language-Action Models](adaptive_action_chunking_at_inference-time_for_vision-language-action_models.md)**
 
@@ -99,6 +103,10 @@ item_total: 42
 
 :   从POMDP视角重新审视VLA模型的视觉处理，提出AVA-VLA框架通过循环状态和主动视觉注意力模块，根据历史上下文动态调制当前帧的视觉token重要性，在LIBERO和CALVIN等基准上达到SOTA。
 
+**[AwareVLN: Reasoning with Self-awareness for Vision-Language Navigation](awarevln_reasoning_with_self-awareness_for_vision-language_navigation.md)**
+
+:   AwareVLN 给端到端 VLN 模型装上"自我感知推理"能力——只在关键导航节点（子任务完成 / 走偏 / 停错）稀疏触发结构化推理，并用一个无需人工标注的自动数据引擎生成这种自省式监督，使纯单目 RGB 智能体在 R2R-CE / RxR-CE 上大幅超过此前 SOTA。
+
 **[BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration](bipremanip_learning_affordance-based_bimanual_preparatory_manipulation_through_a.md)**
 
 :   提出 BiPreManip 框架，基于视觉可供性表示实现双臂预备操作：先预想主手的目标交互区域，再引导辅助手进行预备动作（如翻转瓶子使瓶盖朝向主手），在仿真和真实环境中大幅优于基线。
@@ -111,9 +119,17 @@ item_total: 42
 
 :   提出CoWVLA，统一世界模型VLA和隐动作VLA的优势：通过Latent Motion Extractor将视频分解为结构隐变量和运动隐变量，VLA在隐运动空间做世界模型预测而非重建冗余像素，配合Co-Fine-tuning交替生成关键帧和动作token，LIBERO-LONG达95.2%超越π₀(85.2%)，SimplerEnv-WidowX avg 0.560超π₀(0.425)。
 
+**[Closed-Loop Neural Activation Control in Vision-Language-Action Models](closed-loop_neural_activation_control_in_vision-language-action_models.md)**
+
+:   针对现有 VLA 激活转向用**固定系数、开环操作**导致过冲与任务失败的问题，本文提出 CTRL-STEER：先用机制可解释性挑出与运动概念对齐的一组 FFN 神经元，再用 PID / RL 控制器在推理时**逐步在线调整**这组神经元的干预强度，从而在「转向到位」和「任务成功」之间取得更好折中——不改、不重训基座模型，把 OpenVLA 在强干预下从 1.8% 的成功率救回到接近甚至超过未转向基线。
+
 **[CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning](como_learning_continuous_latent_motion_from_internet_videos_for_scalable_robot_l.md)**
 
 :   提出 CoMo，通过早期时序差分（Td）和时序对比学习（Tcl）两个机制协同解决连续隐运动学习中的捷径学习问题，从互联网视频中提取精细的连续伪动作标签，使视频数据与机器人动作在统一连续分布下联合训练，显著提升策略性能。
+
+**[Context as Prior: Bayesian-Inspired Intent Inference for Non-Speaking Agents with a Household Cat Testbed](context_as_prior_bayesian-inspired_intent_inference_for_non-speaking_agents_with.md)**
+
+:   针对无法用语言表达目标的智能体（宠物、婴儿等），本文把"空间上下文"当成贝叶斯先验而非普通输入特征，用一个上下文门控的 Product-of-Experts（PoE）框架融合上下文先验、姿态证据和音频证据，在家猫意图推断测试床上把整体准确率从特征拼接的 71.83% 提到 77.72%，并大幅压低"看见碗就猜吃饭"这类上下文捷径错误。
 
 **[Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)**
 
@@ -130,6 +146,10 @@ item_total: 42
 **[DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)**
 
 :   提出 DecoVLN 框架，将 VLN 任务中的观察、推理和纠错三个过程解耦，通过自适应记忆优化机制和基于状态-动作对的纠错微调策略，在仅使用自中心 RGB 输入的条件下实现了 R2R-CE 和 RxR-CE 上的 SOTA 性能。
+
+**[DextER: Language-driven Dexterous Grasp Generation with Embodied Reasoning](dexter_language-driven_dexterous_grasp_generation_with_embodied_reasoning.md)**
+
+:   DextER 把"语言驱动的多指灵巧抓取"重新写成一条自回归序列——模型先生成**接触 token**（哪根手指链节碰物体表面的哪个 3D 位置），再生成抓取动作 token，用"接触推理"当作具身版的思维链中间步骤，在 DexGYS 上把成功率推到 67.14%（+3.83 p.p.），意图对齐指标 P-FID 相对前 SOTA 改善 96.4%。
 
 **[Diagnose, Correct, and Learn from Manipulation Failures via Visual Symbols](diagnose_correct_and_learn_from_manipulation_failures_via_visual_symbols.md)**
 
@@ -155,6 +175,10 @@ item_total: 42
 
 :   GeCo-SRT提出持续跨任务Sim-to-Real迁移范式，利用局部几何特征的域不变性和任务不变性，通过几何感知MoE模块提取可复用的几何知识并用专家引导的优先经验回放防遗忘，在4个操作任务上比基线平均提升52%成功率且仅需1/6数据。
 
+**[Global Prior Meets Local Consistency: Dual-Memory Augmented Vision-Language-Action Model for Efficient Robotic Manipulation](global_prior_meets_local_consistency_dual-memory_augmented_vision-language-actio.md)**
+
+:   OptimusVLA 给分层 VLA 的动作生成器配了两块记忆——全局先验记忆（GPM）用检索到的相似轨迹替换高斯噪声起点、缩短流匹配生成路径，局部一致性记忆（LCM）用轻量结构建模历史动作、注入时序一致性约束——在三个仿真平台和真机上同时拿到更高成功率（LIBERO 98.6%）和 2.9× 的推理加速。
+
 **[GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion](graspldp_towards_generalizable_grasping_policy_via_latent_diffusion.md)**
 
 :   提出 GraspLDP，将预训练抓取检测器的 grasp pose 先验和 graspness map 视觉线索注入潜在扩散策略框架，通过 VAE 编码的动作潜空间引导和自监督重建目标，显著提升抓取精度和泛化能力。
@@ -171,9 +195,21 @@ item_total: 42
 
 :   本文揭示线性化注意力机制在 NTK 框架下不收敛至无穷宽极限，并提出"影响力可塑性"(influence malleability) 度量，证明注意力的强大能力与对抗脆弱性共享同一来源——偏离核regime的数据依赖核结构。
 
+**[Instance-level Visual Active Tracking with Occlusion-Aware Planning](instance-level_visual_active_tracking_with_occlusion-aware_planning.md)**
+
+:   OA-VAT 用一张参考图离线构建判别性"实例原型"来对抗相似干扰物，在线 EMA 增强原型 + 置信度自适应卡尔曼滤波保持稳定跟踪，并训练一个以目标框为条件的扩散轨迹规划器在目标被遮挡时主动绕障找回——在 UnrealCV 上平均 SR 0.93、真实图像平均 CAR 90.8%、真机无人机 TSR 81.6%，且 RTX 3090 上 35 FPS 实时。
+
 **[Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)**
 
 :   提出 LaDA 框架，用自然语言作为语义桥梁将连续 7-DoF 动作解耦为平移/旋转/夹爪三个可解释原语，通过软标签对比学习在共享嵌入空间中对齐跨任务动作表示，仅 0.6B 参数在 LIBERO 上达 93.6% 成功率，超越 1.3B~8.5B 参数的所有基线。
+
+**[LEAD: Minimizing Learner-Expert Asymmetry in End-to-End Driving](lead_minimizing_learner-expert_asymmetry_in_end-to-end_driving.md)**
+
+:   这篇论文指出 CARLA 里"学车（student）学不会老司机（privileged expert）"的根因不是模型不够强，而是专家用了学生看不到/测不准的特权信息、以及导航意图给得太稀疏；通过把专家的感知和决策约束到学生能观测的范围（LEAD 专家+数据集）、并重构学生策略的目标点注入方式（TFv6），在 Bench2Drive 上拿到 95 DS、在 Longest6 v2 / Town13 上把此前最好成绩翻倍以上。
+
+**[Learning Predictive Visuomotor Coordination](learning_predictive_visuomotor_coordination.md)**
+
+:   本文把"头部姿态 + 视线 + 上半身关节"统一成一个**视觉-运动协调表征（VCR）**，用一个条件扩散模型从第一人称视频和运动历史预测未来 1 秒的协调运动，在 EgoExo4D 上做到平移误差 59 mm、头部旋转误差 13.2°，比 Diffusion Policy 等强基线全面更优。
 
 **[Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation](learning_to_see_and_act_task-aware_virtual_view_exploration_for_robotic_manipula.md)**
 
@@ -187,9 +223,21 @@ item_total: 42
 
 :   ManipArena 提出了一个标准化的真实世界机器人操作评估框架，包含 20 个推理导向任务和 10,812 条专家轨迹，通过绿幕受控环境、系统化多样性设计和分层 OOD 评估，为 VLA 模型和世界模型提供公平、可复现的评测基准。
 
+**[Materialistic RIR: Material Conditioned Realistic RIR Generation](materialistic_rir_material_conditioned_realistic_rir_generation.md)**
+
+:   给定一张室内 RGB 图和一张用户指定的「材质分割图」，MatRIR 用**空间模块**先预测只跟房间布局有关的初始 RIR，再用**材质感知模块**按材质把它"调制"成最终的双耳房间脉冲响应，从而让用户能在不改变空间结构的前提下任意换材质（如给地板铺地毯、给墙贴钢板）并听到对应的混响变化，在 RT60 误差上比最强基线再降约 16.8%、在材质一致性指标上提升约 71%。
+
 **[MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent](mergevla_cross-skill_model_merging_toward_a_generalist_vision-language-action_ag.md)**
 
 :   首次系统诊断 VLA 模型不可合并的两大根因（LoRA 自私参数冲突 + 动作专家自注意力导致的任务耦合），提出 MergeVLA——通过任务掩码稀疏激活 LoRA、去自注意力动作专家、无训练测试时路由，将多个单技能 VLA 专家合并为一个通用 agent，在 LIBERO 上达 90.2% 成功率，真机 SO101 达 90%。
+
+**[MindClaw: Closed-Loop Embodied Mental-State Reasoning for Precision Intervention](mindclaw_closed-loop_embodied_mental-state_reasoning_for_precision_intervention.md)**
+
+:   把机器人的「心智理论」推理从「看完一段视频后输出最终动作」改造成实时闭环系统——核心是把「下一步该更新记忆 / 推理 / 行动 / 还是什么都不做」当成一个可学习的**具身认知技能(Trigger)**来调度，让机器人只在真正需要时才介入，在 MindPower benchmark 上把任务准确率与精准干预准确率显著拉高。
+
+**[Multi-SpatialMLLM: Multi-Frame Spatial Understanding with Multi-Modal Large Language Models](multi-spatialmllm_multi-frame_spatial_understanding_with_multi-modal_large_langu.md)**
+
+:   针对 MLLM 只会单图空间推理、连左右都分不清的问题，本文用已标注的 3D/4D 场景数据集自动生成 2700 万条多帧空间问答（MultiSPA），把深度、视觉对应、动态感知三大基础能力灌进 InternVL2，训出的 Multi-SpatialMLLM 在自建 benchmark 上平均比基座涨 36%，甚至追平闭源大模型和专用 3D 模型。
 
 **[PALM: Progress-Aware Policy Learning via Affordance Reasoning for Long-Horizon Robotic Manipulation](palm_progress-aware_policy_learning_via_affordance_reasoning_for_long-horizon_ro.md)**
 
@@ -198,6 +246,10 @@ item_total: 42
 **[PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen.md)**
 
 :   提出首个面向360°全景室内环境的整体affordance定位框架PanoAffordanceNet，通过畸变感知频谱调制器(DASM)和全球面稠密化头(OSDH)系统性解决ERP几何畸变、稀疏功能区域和语义漂移问题，并构建了首个全景affordance数据集360-AGD。
+
+**[PInVerify: An Offline Embodied Benchmark for Active Instance Verification](pinverify_an_offline_embodied_benchmark_for_active_instance_verification.md)**
+
+:   本文提出"主动实例验证(Active Instance Verification, AIV)"任务——智能体到达候选物体附近后，主动绕物体选视角、逐步核对细粒度文字描述以判断"是不是这一个"，并配套离线 benchmark PInVerify（3,000 测试 episode、18 类、6 扇区导航拓扑、含陷阱视角/不可达扇区标注），用 ≤8B 开源 MLLM 搭了 training-free 与 LoRA 微调两条参考基线，发现检测质量是主要瓶颈、而现有 NBV 主动选视角并未带来可靠增益。
 
 **[Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)**
 
@@ -247,6 +299,10 @@ item_total: 42
 
 :   首次提出 Test-time Ego-Exo Adaptation for Action Anticipation（TE2A3）任务，设计 DCPGN 网络通过多标签原型增长和双线索（视觉+文本）一致性，在测试时将源视角训练模型在线适配到目标视角进行动作预测，大幅超越现有 TTA 方法。
 
+**[Think Twice, Act Once: Verifier-Guided Action Selection For Embodied Agents](think_twice_act_once_verifier-guided_action_selection_for_embodied_agents.md)**
+
+:   针对 MLLM 具身智能体「贪心解一个动作、错了也没法自检」的脆弱性，VeGAS 在测试时让策略采样一组候选动作、再用一个**专门训练过的生成式验证器**打分选最优；其关键发现是「现成 MLLM 当验证器毫无增益」，必须用 LLM 自动合成的失败轨迹课程把验证器训出来——在 LangR 和 EB-ALFRED 上最难的多物体长程任务上相对 CoT 基线最高提升 36%。
+
 **[Towards Open Environments and Instructions: General Vision-Language Navigation via Fast-Slow Interactive Reasoning](towards_open_environments_and_instructions_general_vision-language_navigation_vi.md)**
 
 :   针对开放环境下视觉语言导航（GSA-VLN）任务，受人类快慢认知双系统启发，提出 slow4fast-VLN 框架：快推理模块基于端到端策略网络实时导航并积累历史记忆，慢推理模块借助 LLM 反思生成结构化泛化经验，经验通过注意力融合反馈增强快推理网络，实现在未见环境和多样指令下的持续适应，在 GSA-R2R 数据集上全面超越前 SOTA（GR-DUET）。
@@ -254,3 +310,11 @@ item_total: 42
 **[Towards Training-Free Scene Text Editing](towards_training-free_scene_text_editing.md)**
 
 :   提出TextFlow，一个免训练的场景文字编辑框架，通过在去噪早期阶段使用Flow Manifold Steering（FMS）保持风格一致性、后期阶段使用Attention Boost（AttnBoost）增强文字渲染准确性，在不需要任务特定训练的情况下达到与训练方法可比甚至更优的编辑质量。
+
+**[Training One Model to Master Cross-Level Agentic Actions via Reinforcement Learning](training_one_model_to_master_cross-level_agentic_actions_via_reinforcement_learn.md)**
+
+:   CrossHA 把"语言/grounding/motion/原子/latent"等异构动作空间统一进一个 VLM 智能体，用"混合 SFT → 单步 RL → 多轮 RL"的三阶段 GRPO 管线训练它**在轨迹每一步自主挑选最合适的动作空间**，仅用 30 个 Minecraft 任务训练就泛化到 800+ 任务并刷到 SOTA（全任务 ASR 54.6%）。
+
+**[TrajRAG: Retrieving Geometric-Semantic Experience for Zero-Shot Object Navigation](trajrag_retrieving_geometric-semantic_experience_for_zero-shot_object_navigation.md)**
+
+:   TrajRAG 把历史导航轨迹压缩成"拓扑-极坐标"结构存进一个可终身累积的 RAG 知识库，导航时让每个候选前沿生成一条假想轨迹去粗到精地检索相似历史经验，再把检索到的经验喂给 LLM 规划器选下一个 waypoint，在 MP3D / HM3D-v1 / HM3D-v2 三个零样本 ObjectNav 基准上都刷到了新 SOTA。

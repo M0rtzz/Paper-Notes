@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Transformer-Based Aligned Generation with Self-Coherence Guidance
 description: >-
-  [CVPR 2025][图像生成][文本到图像] 提出 Self-Coherence Guidance (SCG)，一种针对 Transformer 架构文本引导扩散模型的训练无关对齐方法，通过直接优化跨注意力图（而非潜变量）来改善属性绑定、细粒度属性绑定和风格绑定。
+  [CVPR 2025][图像生成][文本到图像] 提出 Self-Coherence Guidance (SCG)，一种针对 Transformer 架构文本引导扩散模型的训练无关对齐方法，通过直接优化跨注意力图（而非潜变量）来改善属性绑定、细粒度属性绑定和风格绑定。 文本引导扩散模型(TGDMs)在生成与复杂文本提示语义对…
 tags:
   - "CVPR 2025"
   - "图像生成"

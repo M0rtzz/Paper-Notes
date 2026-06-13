@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynerMedGen: Synergizing Medical Multimodal Understanding with Generation via Task Alignment
 description: >-
-  [ICML 2026][医学图像][统一医学MLLM] SynerMedGen 提出"生成对齐理解（generation-aligned understanding）"原则——把理解任务直接从同一份配对合成数据里派生出来（CTS / MI / TIA 三个任务），先两阶段训练让理解分支学到对合成有用的表征…
+  [ICML 2026][医学图像][统一医学MLLM] SynerMedGen 提出"生成对齐理解（generation-aligned understanding）"原则——把理解任务直接从同一份配对合成数据里派生出来（CTS / MI / TIA 三个任务），先两阶段训练让理解分支学到对合成有用的表征，再迁移到 latent flow matching 生成分支，在 22 个医学合成任务上同时碾压专用合成模型和已有统一 MLLM。
 tags:
   - "ICML 2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Domain Incremental Learning: Selecting the Optimal Parameters Is All You Need
 description: >-
-  [CVPR 2025][目标检测][domain incremental learning] 发现在域增量学习中选择最优参数子集比微调全部参数更有效，提出参数选择策略解决域增量目标检测的灾难性遗忘
+  [CVPR 2025][目标检测][domain incremental learning] 发现在域增量学习中选择最优参数子集比微调全部参数更有效，提出参数选择策略解决域增量目标检测的灾难性遗忘 领域现状 领域现状：Boosting Domain Incremental Learning 方向近年取得了显著进展…
 tags:
   - "CVPR 2025"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recover Biological Structure from Sparse-View Diffraction Images with Neural Volumetric Prior
 description: >-
-  [ICCV 2025][稀疏视角重建] 提出Neural Volumetric Prior (NVP)，通过融合显式3D特征网格与隐式MLP的混合神经表示，结合基于衍射光学的物理渲染方程，首次实现了从稀疏视角（仅6-7张荧光图像）对半透明生物样本3D折射率的高保真体积重建…
+  [ICCV 2025][稀疏视角重建] 提出Neural Volumetric Prior (NVP)，通过融合显式3D特征网格与隐式MLP的混合神经表示，结合基于衍射光学的物理渲染方程，首次实现了从稀疏视角（仅6-7张荧光图像）对半透明生物样本3D折射率的高保真体积重建，所需图像数量减少约50倍、处理时间缩短3倍。
 tags:
   - "ICCV 2025"
   - "稀疏视角重建"

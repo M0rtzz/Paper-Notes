@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness
 description: >-
-  [ICML 2025][LLM推理][Chain-of-Thought] 本文从有效性（effectiveness）和忠实性（faithfulness）两个维度系统分析了 CoT 的性能影响因素，发现问题难度、信息增益和信息流是影响 CoT 有效性的关键因子…
+  [ICML 2025][LLM推理][Chain-of-Thought] 本文从有效性（effectiveness）和忠实性（faithfulness）两个维度系统分析了 CoT 的性能影响因素，发现问题难度、信息增益和信息流是影响 CoT 有效性的关键因子，而不忠实 CoT 的根因在于模型在预测答案时绕过 CoT 直接从问题中召回了正确信息，并据此提出 QUIRE 方法同时提升 CoT 的有效性和忠实性。
 tags:
   - "ICML 2025"
   - "LLM推理"

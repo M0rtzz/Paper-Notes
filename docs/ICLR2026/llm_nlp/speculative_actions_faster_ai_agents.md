@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Speculative Actions: A Lossless Framework for Faster AI Agents
 description: >-
-  [ICLR 2026 Oral][speculative execution] 借鉴 CPU 推测执行和 LLM 推测解码的思想，提出 Speculative Actions 框架：在慢速 Actor（大模型）计算时用快速 Speculator（小模型）预测未来动作并预执行，匹配时跳过等待实现无损加速…
+  [ICLR 2026 Oral][LLM 其他][speculative execution] 借鉴 CPU 推测执行和 LLM 推测解码的思想，提出 Speculative Actions 框架：在慢速 Actor（大模型）计算时用快速 Speculator（小模型）预测未来动作并预执行，匹配时跳过等待实现无损加速，在 Chess/电商/问答等场景实现 15-30% 延迟降低，置信度动态分支策略用 40% 更少 token 达到近似 3 条推测的加速效果。
 tags:
   - "ICLR 2026 Oral"
+  - "LLM 其他"
   - "speculative execution"
   - "AI agents"
   - "latency reduction"

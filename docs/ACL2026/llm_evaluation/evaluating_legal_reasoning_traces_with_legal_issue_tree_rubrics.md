@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Legal Reasoning Traces with Legal Issue Tree Rubrics
 description: >-
-  [ACL 2026][LLM评测][legal judgment prediction] LEGIT 把韩国民事/行政判决书自动抽成「层级化的争议点树」当 rubric，让 LLM-as-judge 既能评 "issue coverage" 又能评 "issue correctness"…
+  [ACL 2026][LLM评测][legal judgment prediction] LEGIT 把韩国民事/行政判决书自动抽成「层级化的争议点树」当 rubric，让 LLM-as-judge 既能评 "issue coverage" 又能评 "issue correctness"，并据此发现 RAG 与 RL 在法律推理上有互补效应：RAG 全面提升、RL 牺牲覆盖换正确性。
 tags:
   - "ACL 2026"
   - "LLM评测"

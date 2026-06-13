@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R2-Router: A New Paradigm for LLM Routing with Reasoning
 description: >-
-  [ICML 2026][LLM推理][LLM 路由] 本文提出 R2-Router，把"输出 token 预算"从被动估计量改造成可控变量，让路由器在 (LLM, 预算) 联合空间里搜索，用一个轻量的多头质量预测器把每个 LLM 从一个静态点扩展成一条质量-成本曲线…
+  [ICML 2026][LLM推理][LLM 路由] 本文提出 R2-Router，把"输出 token 预算"从被动估计量改造成可控变量，让路由器在 (LLM, 预算) 联合空间里搜索，用一个轻量的多头质量预测器把每个 LLM 从一个静态点扩展成一条质量-成本曲线，从而以 4–5× 更低的成本达到与现有路由器相当的质量。
 tags:
   - "ICML 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MNE-SLAM: Multi-Agent Neural SLAM for Mobile Robots
 description: >-
-  [CVPR 2025][3D视觉][多智能体SLAM] 提出首个完全分布式的多智能体协作神经 SLAM 框架 MNE-SLAM，每个智能体独立运行神经建图与追踪，通过点对点通信进行分层回环检测（内到外）和多子地图融合实现去中心化协作…
+  [CVPR 2025][3D视觉][多智能体SLAM] 提出首个完全分布式的多智能体协作神经 SLAM 框架 MNE-SLAM，每个智能体独立运行神经建图与追踪，通过点对点通信进行分层回环检测（内到外）和多子地图融合实现去中心化协作，在 Replica、ScanNet、TUM RGB-D 和自建 INS 数据集上验证；同时发布首个覆盖单/多智能体场景的真实室内神经 SLAM（INS）数据集。
 tags:
   - "CVPR 2025"
   - "3D视觉"

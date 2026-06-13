@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model
 description: >-
-  [AAAI 2026][图像恢复][遥感图像] 提出MFmamba多功能网络，基于UNet++骨架结合Mamba上采样模块（MUB）、双池化注意力（DPA）和多尺度混合交叉块（MHCB），仅使用全色（PAN）图像输入即可同时实现超分辨率、光谱恢复及联合SR与着色三种任务。
+  [AAAI 2026][图像恢复][遥感图像] 提出MFmamba多功能网络，基于UNet++骨架结合Mamba上采样模块（MUB）、双池化注意力（DPA）和多尺度混合交叉块（MHCB），仅使用全色（PAN）图像输入即可同时实现超分辨率、光谱恢复及联合SR与着色三种任务。 问题背景 遥感图像在目标检测、城市规划、环境监测等领…
 tags:
   - "AAAI 2026"
   - "图像恢复"

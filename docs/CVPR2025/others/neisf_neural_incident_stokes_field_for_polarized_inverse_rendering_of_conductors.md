@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics
 description: >-
-  [CVPR 2025][偏振逆渲染] NeISF++ 将偏振逆渲染从仅支持介电体扩展到同时支持导体和介电体，通过引入二元控制变量 $m$ 的广义 pBRDF 模型、复折射率建模和 DoLP 几何初始化，在合成导体场景上法线角度误差降至 1.789°（比 NeISF 的 10.303°低 83%）。
+  [CVPR 2025][偏振逆渲染] NeISF++ 将偏振逆渲染从仅支持介电体扩展到同时支持导体和介电体，通过引入二元控制变量 $m$ 的广义 pBRDF 模型、复折射率建模和 DoLP 几何初始化，在合成导体场景上法线角度误差降至 1.789°（比 NeISF 的 10.303°低 83%）。 1. 领域现状：基于偏振的…
 tags:
   - "CVPR 2025"
   - "偏振逆渲染"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inferring Functionality of Attention Heads from their Parameters
 description: >-
-  [ACL 2025][注意力头] 提出MAPS框架，通过将注意力头参数投影到词汇空间构建token映射矩阵$M$，无需任何推理或训练即可推断注意力头实现的功能，在6个LLM上验证了20种关系操作的映射准确性，并开发自动化pipeline发现了大量此前未被识别的注意力头功能。
+  [ACL 2025][注意力头] 提出MAPS框架，通过将注意力头参数投影到词汇空间构建token映射矩阵$M$，无需任何推理或训练即可推断注意力头实现的功能，在6个LLM上验证了20种关系操作的映射准确性，并开发自动化pipeline发现了大量此前未被识别的注意力头功能。 问题背景 注意力头是LLM的核心构建模块…
 tags:
   - "ACL 2025"
   - "注意力头"

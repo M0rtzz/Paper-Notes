@@ -2,7 +2,7 @@
 title: >-
   [论文解读] YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information
 description: >-
-  [ECCV 2024][目标检测][YOLO] YOLOv9 提出可编程梯度信息 (PGI) 和广义高效层聚合网络 (GELAN) 来解决深度网络中的信息瓶颈问题，在 MS COCO 上以更少参数和计算量全面超越现有实时目标检测器，从零训练即可超过使用大数据集预训练的方法。
+  [ECCV 2024][目标检测][YOLO] YOLOv9 提出可编程梯度信息 (PGI) 和广义高效层聚合网络 (GELAN) 来解决深度网络中的信息瓶颈问题，在 MS COCO 上以更少参数和计算量全面超越现有实时目标检测器，从零训练即可超过使用大数据集预训练的方法。 领域现状： 深度学习已在计算机视觉等领域取得远超传…
 tags:
   - "ECCV 2024"
   - "目标检测"

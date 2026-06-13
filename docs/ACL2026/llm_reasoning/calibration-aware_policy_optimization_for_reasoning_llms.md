@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibration-Aware Policy Optimization for Reasoning LLMs
 description: >-
-  [ACL 2026][LLM推理][GRPO] 作者首先证明 GRPO 类算法的"奖励-only"advantage 估计等价于一个对 AUC 不一致的 surrogate（$\phi(t)=-t$，scale-不变性破坏），导致准确率上升的同时相对校准 (perplexity AUC) 持续退化…
+  [ACL 2026][LLM推理][GRPO] 作者首先证明 GRPO 类算法的"奖励-only"advantage 估计等价于一个对 AUC 不一致的 surrogate（$\phi(t)=-t$，scale-不变性破坏），导致准确率上升的同时相对校准 (perplexity AUC) 持续退化；据此提出 CAPO：把 advantage 换成基于 logistic AUC consistent surrogate 的"成对、uncertainty-aware"形式，再用 reference-model PPL 做去噪 masking，在 Qwen2.5-Math 1.5B/7B 上实现校准 +15~25%、准确率持平或反超 GR…
 tags:
   - "ACL 2026"
   - "LLM推理"

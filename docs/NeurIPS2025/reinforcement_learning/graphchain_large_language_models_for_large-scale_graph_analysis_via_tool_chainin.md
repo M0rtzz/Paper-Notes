@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining
 description: >-
-  [NeurIPS 2025][强化学习][大规模图分析] 提出 GraphChain 框架，通过渐进式图蒸馏（RL驱动的工具链序列生成）和结构感知测试时自适应（基于图拓扑指纹的轻量适配器），使 LLM 能像人类探索未知环境一样，通过动态工具链序列逐步分析大规模图数据…
+  [NeurIPS 2025][强化学习][大规模图分析] 提出 GraphChain 框架，通过渐进式图蒸馏（RL驱动的工具链序列生成）和结构感知测试时自适应（基于图拓扑指纹的轻量适配器），使 LLM 能像人类探索未知环境一样，通过动态工具链序列逐步分析大规模图数据，平均准确率 84.7% 超越最优基线 20.7%，可扩展至 20 万节点。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

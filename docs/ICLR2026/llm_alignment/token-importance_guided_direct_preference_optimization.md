@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Token-Importance Guided Direct Preference Optimization (TI-DPO)
 description: >-
-  [ICLR 2026][LLM对齐][token级DPO] 提出TI-DPO，通过梯度归因+高斯先验的混合权重机制精确量化每个token对偏好的贡献，结合三元组损失在连续语义空间引导优化，在6个基准上平均62.3分达到SOTA，同时具备可解释的token级控制能力。
+  [ICLR 2026 Oral][LLM对齐][token级DPO] 提出TI-DPO，通过梯度归因+高斯先验的混合权重机制精确量化每个token对偏好的贡献，结合三元组损失在连续语义空间引导优化，在6个基准上平均62.3分达到SOTA，同时具备可解释的token级控制能力。 领域现状：DPO在序列级优化偏好…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "LLM对齐"
   - "token级DPO"
   - "梯度归因"

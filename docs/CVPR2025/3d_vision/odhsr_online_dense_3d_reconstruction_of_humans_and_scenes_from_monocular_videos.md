@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos
 description: >-
-  [CVPR 2025][3D视觉][人体重建] ODHSR 提出首个统一框架，从单目 RGB 视频中以在线方式同时完成相机追踪、人体姿态估计和人-场景联合稠密重建，基于 3D Gaussian Splatting 实现了比离线方法快 75 倍的速度，且重建质量达到或超越 SOTA。
+  [CVPR 2025][3D视觉][人体重建] ODHSR 提出首个统一框架，从单目 RGB 视频中以在线方式同时完成相机追踪、人体姿态估计和人-场景联合稠密重建，基于 3D Gaussian Splatting 实现了比离线方法快 75 倍的速度，且重建质量达到或超越 SOTA。 领域现状：从单目视频重建三维世界一直是计算…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Whose Alignment? Comparing LLM Process Alignment Across Diverse Organizational Decision Contexts
 description: >-
-  [ICML2026][LLM评测][pluralistic alignment] 这篇论文提出 CALM 来评估 LLM 是否按组织真实决策过程而不只是输出结果对齐，并通过 ECHR 法律裁判与 German Credit 信贷决策的对比说明：在规范稳定的领域过程对齐能预测准确率，而在价值争议领域…
+  [ICML2026][LLM评测][pluralistic alignment] 这篇论文提出 CALM 来评估 LLM 是否按组织真实决策过程而不只是输出结果对齐，并通过 ECHR 法律裁判与 German Credit 信贷决策的对比说明：在规范稳定的领域过程对齐能预测准确率，而在价值争议领域，高过程对齐既难实现也未必应该追求。
 tags:
   - "ICML2026"
   - "LLM评测"

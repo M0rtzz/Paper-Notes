@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffDoctor: Diagnosing Image Diffusion Models Before Treating
 description: >-
-  [ICCV 2025][图像生成][扩散模型] 提出 DiffDoctor，首个利用像素级反馈微调扩散模型的方法：先训练鲁棒的 artifact 检测器（1M+ 样本，类别平衡策略），再通过最小化合成图中每个像素的 artifact 置信度反向传播梯度到扩散模型…
+  [ICCV 2025][图像生成][扩散模型] 提出 DiffDoctor，首个利用像素级反馈微调扩散模型的方法：先训练鲁棒的 artifact 检测器（1M+ 样本，类别平衡策略），再通过最小化合成图中每个像素的 artifact 置信度反向传播梯度到扩散模型，使其在未见 prompt 上也能显著减少 artifact 生成。
 tags:
   - "ICCV 2025"
   - "图像生成"

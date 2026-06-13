@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CheX: Interactive Localization and Region Description in Chest X-rays
 description: >-
-  [ECCV 2024][医学图像][胸部X光] 提出ChEX——一个同时支持文本提示和边界框查询的交互式胸部X光解释模型，通过DETR风格的prompt检测器和多任务联合训练，在9个胸部X光任务上与SOTA竞争，同时提供独特的定位可解释性和用户交互能力。
+  [ECCV 2024][医学图像][胸部X光] 提出ChEX——一个同时支持文本提示和边界框查询的交互式胸部X光解释模型，通过DETR风格的prompt检测器和多任务联合训练，在9个胸部X光任务上与SOTA竞争，同时提供独特的定位可解释性和用户交互能力。 胸部X光的自动报告生成模型虽然进展迅速，但在临床应用上面临两个核心障碍…
 tags:
   - "ECCV 2024"
   - "医学图像"

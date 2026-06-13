@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussReg: Fast 3D Registration with Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][Gaussian Splatting] 首次探索3D Gaussian Splatting场景之间的配准问题，提出粗到精的GaussReg框架——粗阶段利用点云配准方法估计初始变换，精阶段通过渲染图像提取体积特征进行精细对齐，速度比HLoc快44倍且精度可比。
+  [ECCV 2024][3D视觉][Gaussian Splatting] 首次探索3D Gaussian Splatting场景之间的配准问题，提出粗到精的GaussReg框架——粗阶段利用点云配准方法估计初始变换，精阶段通过渲染图像提取体积特征进行精细对齐，速度比HLoc快44倍且精度可比。 领域现状： 点云配准已经发展…
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇分割] 揭示了开放词汇分割中 mask pooling 方法的性能上界瓶颈——精确 mask 往往无法获得准确分类，提出 Mask-Adapter 从 proposal mask 和 CLIP 特征中提取语义激活图来替代直接 mask pooling…
+  [CVPR 2025][语义分割][开放词汇分割] 揭示了开放词汇分割中 mask pooling 方法的性能上界瓶颈——精确 mask 往往无法获得准确分类，提出 Mask-Adapter 从 proposal mask 和 CLIP 特征中提取语义激活图来替代直接 mask pooling，以即插即用方式显著提升多种 OVS 方法的分类准确率。
 tags:
   - "CVPR 2025"
   - "语义分割"

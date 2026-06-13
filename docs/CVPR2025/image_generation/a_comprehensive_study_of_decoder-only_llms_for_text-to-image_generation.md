@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation
 description: >-
-  [CVPR 2025][图像生成][文本编码器] 系统研究了使用decoder-only LLM作为文本到图像扩散模型文本编码器的效果，发现直接使用最后一层embedding效果差于T5，但通过层归一化平均（layer-normalized averaging）聚合所有层的embedding可显著超越T5基线…
+  [CVPR 2025][图像生成][文本编码器] 系统研究了使用decoder-only LLM作为文本到图像扩散模型文本编码器的效果，发现直接使用最后一层embedding效果差于T5，但通过层归一化平均（layer-normalized averaging）聚合所有层的embedding可显著超越T5基线。
 tags:
   - "CVPR 2025"
   - "图像生成"

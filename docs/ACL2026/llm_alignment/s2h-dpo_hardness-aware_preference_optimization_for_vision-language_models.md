@@ -2,9 +2,9 @@
 title: >-
   [论文解读] S2H-DPO: Hardness-Aware Preference Optimization for Vision-Language Models
 description: >-
-  [ACL 2026][LLM对齐][多图推理] 提出 Simple-to-Hard（S2H）DPO 框架，通过构建三个递进难度级别的多图偏好数据（定点推理→跨图比较→全局视觉搜索），系统性地提升 VLM 的多图推理能力，同时保持单图性能。
+  [ACL 2026 Findings][LLM对齐][多图推理] 提出 Simple-to-Hard（S2H）DPO 框架，通过构建三个递进难度级别的多图偏好数据（定点推理→跨图比较→全局视觉搜索），系统性地提升 VLM 的多图推理能力，同时保持单图性能。 领域现状：VLM 在单图理解上取得了显著进步，但跨多张图片的有效推理…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM对齐"
   - "多图推理"
   - "DPO偏好优化"

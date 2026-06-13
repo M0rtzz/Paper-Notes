@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NLPrompt: Noise-Label Prompt Learning for Vision-Language Models
 description: >-
-  [CVPR 2025][多模态VLM][噪声标签学习] 本文发现在 CLIP 提示学习中简单替换 MAE 损失就能显著提升对噪声标签的鲁棒性，并通过特征学习理论证明了这一现象，进而提出 NLPrompt 方法——结合基于最优传输的数据净化（PromptOT）将数据分为干净/噪声子集后分别用 CE 和 MAE…
+  [CVPR 2025][多模态VLM][噪声标签学习] 本文发现在 CLIP 提示学习中简单替换 MAE 损失就能显著提升对噪声标签的鲁棒性，并通过特征学习理论证明了这一现象，进而提出 NLPrompt 方法——结合基于最优传输的数据净化（PromptOT）将数据分为干净/噪声子集后分别用 CE 和 MAE 损失训练，在多种噪声设置下大幅超越现有方法。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

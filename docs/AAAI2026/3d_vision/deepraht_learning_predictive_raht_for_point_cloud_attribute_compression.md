@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepRAHT: Learning Predictive RAHT for Point Cloud Attribute Compression
 description: >-
-  [AAAI 2026][3D视觉][点云压缩] 提出首个端到端可微的 RAHT（Region Adaptive Hierarchical Transform）框架 DeepRAHT，用于有损点云属性压缩…
+  [AAAI 2026][3D视觉][点云压缩] 提出首个端到端可微的 RAHT（Region Adaptive Hierarchical Transform）框架 DeepRAHT，用于有损点云属性压缩，通过可学习的预测模型和基于 Laplace 分布的码率代理实现了超越 G-PCC 标准和现有深度学习方法的压缩性能。
 tags:
   - "AAAI 2026"
   - "3D视觉"

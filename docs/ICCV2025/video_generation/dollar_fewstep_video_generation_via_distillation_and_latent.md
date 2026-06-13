@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DOLLAR: Few-Step Video Generation via Distillation and Latent Reward Optimization
 description: >-
-  [ICCV 2025][视频生成][video generation] 结合变分分数蒸馏（VSD）和一致性蒸馏实现few-step视频生成，同时提出潜空间奖励模型微调方法进一步优化生成质量，4步生成的10秒视频（128帧@12FPS）在VBench上达82.57分超越teacher模型和Gen-3/Kling…
+  [ICCV 2025][视频生成][video generation] 结合变分分数蒸馏（VSD）和一致性蒸馏实现少步视频生成，同时提出潜空间奖励模型微调方法进一步优化特定质量维度，4步student模型在VBench上达82.57分超越teacher模型和Gen-3/Kling等商业基线，1步蒸馏实现278.6倍采样加速。
 tags:
   - "ICCV 2025"
   - "视频生成"
@@ -10,8 +10,7 @@ tags:
   - "distillation"
   - "consistency distillation"
   - "latent reward"
-  - "few-step"
-  - "VBench"
+  - "few-step generation"
 ---
 
 # DOLLAR: Few-Step Video Generation via Distillation and Latent Reward Optimization
@@ -148,3 +147,19 @@ tags:
   - few-step
   - VBench
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICML 2026\] SGMD: Score Gradient Matching Distillation for Few-Step Video Diffusion](../../ICML2026/video_generation/sgmd_score_gradient_matching_distillation_for_few-step_video_diffusion_distillat.md)
+- [\[CVPR 2025\] FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2025/video_generation/flashmotion_few-step_controllable_video_generation_with_trajectory_guidance.md)
+- [\[CVPR 2026\] Identity-Preserving Image-to-Video Generation via Reward-Guided Optimization](../../CVPR2026/video_generation/identity-preserving_image-to-video_generation_via_reward-guided_optimization.md)
+- [\[ICCV 2025\] VPO: Aligning Text-to-Video Generation Models with Prompt Optimization](vpo_aligning_text-to-video_generation_models_with_prompt_optimization.md)
+- [\[ICCV 2025\] Adversarial Distribution Matching for Diffusion Distillation Towards Efficient Image and Video Synthesis](adversarial_distribution_matching_for_diffusion_distillation_towards_efficient_i.md)
+
+</div>
+
+<!-- RELATED:END -->

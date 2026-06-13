@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion
 description: >-
-  [CVPR 2025][视频生成][4D视频生成] 提出4Real-Video，一种基于双流架构的4D视频生成框架，通过将视频token分为时间流和视角流并行处理，引入hard/soft同步层协调两流信息，约1分钟即可生成8×8的高质量时空视频网格，在视觉质量和多视角一致性上超越现有方法。
+  [CVPR 2025][视频生成][4D视频生成] 提出4Real-Video，一种基于双流架构的4D视频生成框架，通过将视频token分为时间流和视角流并行处理，引入hard/soft同步层协调两流信息，约1分钟即可生成8×8的高质量时空视频网格，在视觉质量和多视角一致性上超越现有方法。 随着视频扩散模型（如Sora）的崛…
 tags:
   - "CVPR 2025"
   - "视频生成"

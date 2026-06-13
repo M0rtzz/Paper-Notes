@@ -2,7 +2,7 @@
 title: >-
   [论文解读] In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents
 description: >-
-  [ACL 2025][长期记忆管理] 本文提出 Reflective Memory Management (RMM) 机制，通过前瞻性反思（多粒度记忆摘要）和回顾性反思（强化学习驱动的在线检索优化）两个方向的结合，为长期个性化对话系统构建了高效的记忆管理框架…
+  [ACL 2025][长期记忆管理] 本文提出 Reflective Memory Management (RMM) 机制，通过前瞻性反思（多粒度记忆摘要）和回顾性反思（强化学习驱动的在线检索优化）两个方向的结合，为长期个性化对话系统构建了高效的记忆管理框架，在 LongMemEval 上准确率提升超过 10%。
 tags:
   - "ACL 2025"
   - "长期记忆管理"

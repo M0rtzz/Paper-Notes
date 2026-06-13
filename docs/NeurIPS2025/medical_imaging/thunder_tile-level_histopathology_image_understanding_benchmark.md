@@ -2,7 +2,7 @@
 title: >-
   [论文解读] THUNDER: Tile-level Histopathology image UNDERstanding benchmark
 description: >-
-  [NeurIPS 2025 Datasets and Benchmarks Track (Spotlight)][医学图像][数字病理学] 提出 THUNDER，一个面向数字病理学基础模型的 tile 级别综合基准，支持 23 个基础模型在 16 个数据集上的高效比较…
+  [NeurIPS 2025 Datasets and Benchmarks Track (Spotlight)][医学图像][数字病理学] 提出 THUNDER，一个面向数字病理学基础模型的 tile 级别综合基准，支持 23 个基础模型在 16 个数据集上的高效比较，覆盖下游任务性能、特征空间分析、鲁棒性和不确定性评估。
 tags:
   - "NeurIPS 2025 Datasets and Benchmarks Track (Spotlight)"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLoE: Expert Consistency Learning for Missing Modality Segmentation
 description: >-
-  [CVPR 2025][医学图像][missing modality] 提出 CLoE 框架，将缺失模态分割的鲁棒性问题重新定义为决策层专家一致性控制问题，通过全局模态专家一致性(MEC)和区域专家一致性(REC)双分支约束减少专家漂移，并用轻量门控网络将一致性分数转化为可靠性权重指导特征融合…
+  [CVPR 2025][医学图像][missing modality] 提出 CLoE 框架，将缺失模态分割的鲁棒性问题重新定义为决策层专家一致性控制问题，通过全局模态专家一致性(MEC)和区域专家一致性(REC)双分支约束减少专家漂移，并用轻量门控网络将一致性分数转化为可靠性权重指导特征融合，在 BraTS 2020 和 MSD Prostate 上超越 SOTA。
 tags:
   - "CVPR 2025"
   - "医学图像"

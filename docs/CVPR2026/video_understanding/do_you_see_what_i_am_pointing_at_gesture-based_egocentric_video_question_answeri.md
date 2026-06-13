@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering
 description: >-
-  [CVPR 2026][视频理解][第一人称视频QA] 提出 EgoPointVQA 数据集和 HINT（Hand Intent Tokens）方法，通过将 3D 手部关键点编码为手意图 token 并与视觉 token 交错输入 MLLM，解决第一人称视频中基于手势指向的指示性问答任务…
+  [CVPR 2026][视频理解][第一人称视频QA] 提出 EgoPointVQA 数据集和 HINT（Hand Intent Tokens）方法，通过将 3D 手部关键点编码为手意图 token 并与视觉 token 交错输入 MLLM，解决第一人称视频中基于手势指向的指示性问答任务，HINT-14B 达 68.1% 准确率超越 InternVL3-14B 5.4pp。
 tags:
   - "CVPR 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment
 description: >-
-  [AAAI 2026][不完整多视图聚类] 提出 DIMVC-HIA，一个集成层次化填充与双重对齐的深度不完整多视图聚类框架，先填充缺失聚类分配再填充缺失特征，在高缺失率（70%）下仍保持稳健性能。
+  [AAAI 2026][不完整多视图聚类] 提出 DIMVC-HIA，一个集成层次化填充与双重对齐的深度不完整多视图聚类框架，先填充缺失聚类分配再填充缺失特征，在高缺失率（70%）下仍保持稳健性能。 多视图聚类（MVC）通过整合多源异构数据提供比单视图更丰富的洞察。然而，现实场景中"所有视图完整可观测"的假设通常不成立：——…
 tags:
   - "AAAI 2026"
   - "不完整多视图聚类"

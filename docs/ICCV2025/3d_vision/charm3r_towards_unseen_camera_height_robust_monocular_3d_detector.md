@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CHARM3R: Towards Unseen Camera Height Robust Monocular 3D Detector
 description: >-
-  [ICCV 2025][3D视觉][单目3D检测] 通过数学证明回归深度和地平面深度在相机高度变化时具有相反的外推趋势，提出CHARM3R在模型内简单平均两种深度估计来抵消趋势，实现Mono3D对未见相机高度的鲁棒泛化，AP3D提升超过45%。
+  [ICCV 2025][3D视觉][单目3D检测] 通过数学证明回归深度和地平面深度在相机高度变化时具有相反的外推趋势，提出CHARM3R在模型内简单平均两种深度估计来抵消趋势，实现Mono3D对未见相机高度的鲁棒泛化，AP3D提升超过45%。 现有痛点 现有痛点：领域现状：单目3D检测在自动驾驶中至关重要…
 tags:
   - "ICCV 2025"
   - "3D视觉"

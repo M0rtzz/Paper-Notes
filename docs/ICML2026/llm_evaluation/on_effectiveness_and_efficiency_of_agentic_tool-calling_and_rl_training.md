@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Effectiveness and Efficiency of Agentic Tool-calling and RL Training
 description: >-
-  [ICML 2026][LLM评测][工具调用] 作者从「评测有效性」和「训练效率」两条主线系统审视 LLM 工具调用：一方面用 BFCL 作为案例证明随机种子、多轮模板、思考历史、系统提示等"小细节"能让排行榜分数大幅漂移，使跨论文比较不可靠…
+  [ICML 2026][LLM评测][工具调用] 作者从「评测有效性」和「训练效率」两条主线系统审视 LLM 工具调用：一方面用 BFCL 作为案例证明随机种子、多轮模板、思考历史、系统提示等"小细节"能让排行榜分数大幅漂移，使跨论文比较不可靠；另一方面定位 RL（GRPO）训练中 rollout 和 policy update 两个阶段的浪费，提出"在线预 rollout 过滤 + 最大方差 rollout 下采样"两件套，在单轮/多轮工具调用上实现 1.7× 和 2.6× 端到端加速且性能不降。
 tags:
   - "ICML 2026"
   - "LLM评测"

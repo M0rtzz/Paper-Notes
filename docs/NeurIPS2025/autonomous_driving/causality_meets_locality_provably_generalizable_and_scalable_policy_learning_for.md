@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Causality Meets Locality: Provably Generalizable and Scalable Policy Learning for Networked Systems
 description: >-
-  [NeurIPS 2025][自动驾驶][网络MARL] 提出 GSAC 框架，将因果表示学习与元 Actor-Critic 结合，通过从网络 MARL 中学习稀疏因果掩码构建近似紧凑表示 (ACR) 实现可扩展性，通过域因子条件化策略实现跨域泛化，给出了因果恢复、收敛和自适应间隙的有限样本保证。
+  [NeurIPS 2025 Spotlight][自动驾驶][网络MARL] 提出 GSAC 框架，将因果表示学习与元 Actor-Critic 结合，通过从网络 MARL 中学习稀疏因果掩码构建近似紧凑表示 (ACR) 实现可扩展性，通过域因子条件化策略实现跨域泛化，给出了因果恢复、收敛和自适应间隙的有限样本保证。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "自动驾驶"
   - "网络MARL"
   - "因果掩码"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] The Realignment Problem: When Right becomes Wrong in LLMs
 description: >-
-  [ICML 2026][realignment] 本文把"模型部署后政策变了怎么办"形式化为 Realignment 问题,提出 TRACE 框架:用更强的 proxy 模型把已有 preference pair 三分类 (Invert / Punish / Retain) 后用混合 IPO+NPO+KL 目…
+  [ICML 2026][LLM对齐][realignment] 本文把"模型部署后政策变了怎么办"形式化为 Realignment 问题,提出 TRACE 框架:用更强的 proxy 模型把已有 preference pair 三分类 (Invert / Punish / Retain) 后用混合 IPO+NPO+KL 目标做手术式再对齐,无需新一轮人工标注就能跟上政策漂移。
 tags:
   - "ICML 2026"
+  - "LLM对齐"
   - "realignment"
   - "alignment-reality gap"
   - "triage"

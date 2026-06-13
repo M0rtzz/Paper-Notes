@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TRAM: Global Trajectory and Motion of 3D Humans from in-the-wild Videos
 description: >-
-  [ECCV 2024][3D视觉] 提出TRAM，一个两阶段方法，通过鲁棒化SLAM恢复度量尺度相机运动 + 视频Transformer（VIMO）回归相机坐标系下的人体运动，组合两者实现准确的世界坐标系3D人体全局轨迹与动作重建。
+  [ECCV 2024][3D视觉] 提出TRAM，一个两阶段方法，通过鲁棒化SLAM恢复度量尺度相机运动 + 视频Transformer（VIMO）回归相机坐标系下的人体运动，组合两者实现准确的世界坐标系3D人体全局轨迹与动作重建。 领域现状 领域现状：从野外视频恢复人类在世界空间中的完整运动（全局轨迹+局部姿态）至关重要但…
 tags:
   - "ECCV 2024"
   - "3D视觉"

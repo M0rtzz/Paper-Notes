@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Red-Bandit: Test-Time Adaptation for LLM Red-Teaming via Bandit-Guided LoRA Experts
 description: >-
-  [ACL2026][LLM安全][LLM红队] Red-Bandit 将自动化 LLM 红队建模为“多个攻击风格 LoRA 专家 + 测试时 bandit 路由”的在线适应问题，在多个开源和闭源目标模型上用更高 ASR@10 和更低困惑度展示了风格级自适应红队的有效性。
+  [ACL2026][LLM安全][LLM红队] Red-Bandit 将自动化 LLM 红队建模为“多个攻击风格 LoRA 专家 + 测试时 bandit 路由”的在线适应问题，在多个开源和闭源目标模型上用更高 ASR@10 和更低困惑度展示了风格级自适应红队的有效性。 领域现状：LLM 部署前通常需要红队测试来发现安全薄弱…
 tags:
   - "ACL2026"
   - "LLM安全"

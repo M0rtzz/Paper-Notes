@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoT-Valve: Length-Compressible Chain-of-Thought Tuning
 description: >-
-  [ACL 2025][LLM推理][Chain-of-Thought压缩] 本文提出CoT-Valve，一种通过在参数空间中识别"长度控制方向"（以LoRA实现）来弹性控制推理链长度的方法，仅训练一次即可生成从长到短不同长度的推理路径…
+  [ACL 2025][LLM推理][Chain-of-Thought压缩] 本文提出CoT-Valve，一种通过在参数空间中识别"长度控制方向"（以LoRA实现）来弹性控制推理链长度的方法，仅训练一次即可生成从长到短不同长度的推理路径，在QwQ-32B-Preview上将GSM8K推理链从741压缩至225 tokens且准确率仅降0.15%（95.07%→94.92%）。
 tags:
   - "ACL 2025"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HierarQ: Task-Aware Hierarchical Q-Former for Enhanced Video Understanding
 description: >-
-  [CVPR 2025][视频理解][Q-Former] 提出 HierarQ，一种任务感知的层次化 Q-Former 框架，通过双流语言引导特征调制器（实体流 + 场景流）和短/长期记忆库实现自回归式逐帧视频处理，无需帧采样即可绕过 LLM 上下文长度限制…
+  [CVPR 2025][视频理解][Q-Former] 提出 HierarQ，一种任务感知的层次化 Q-Former 框架，通过双流语言引导特征调制器（实体流 + 场景流）和短/长期记忆库实现自回归式逐帧视频处理，无需帧采样即可绕过 LLM 上下文长度限制，在 10 个视频理解基准上取得 SOTA 或接近 SOTA 的性能。
 tags:
   - "CVPR 2025"
   - "视频理解"

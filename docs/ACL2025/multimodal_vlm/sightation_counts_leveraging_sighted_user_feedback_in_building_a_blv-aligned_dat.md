@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Sightation Counts: Leveraging Sighted User Feedback in Building a BLV-aligned Dataset of Diagram Descriptions
 description: >-
-  [ACL 2025][视觉无障碍] 提出让视力正常者「评估」而非「生成」VLM 的图表描述，构建了首个经 BLV 专业教育者验证的 5k 图表 / 137k 样本多任务数据集 Sightation，偏好微调 2B 模型后在 BLV 有用性评分上平均提升 1.67σ。
+  [ACL 2025][多模态VLM][视觉无障碍] 提出让视力正常者「评估」而非「生成」VLM 的图表描述，构建了首个经 BLV 专业教育者验证的 5k 图表 / 137k 样本多任务数据集 Sightation，偏好微调 2B 模型后在 BLV 有用性评分上平均提升 1.67σ。 领域现状：视觉语言模型（VLM）在图像理解…
 tags:
   - "ACL 2025"
+  - "多模态VLM"
   - "视觉无障碍"
   - "图表描述"
   - "BLV偏好对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks
 description: >-
-  [ICML 2025][强化学习][并行数据采集] 系统研究 on-policy RL 中并行数据采集的两个维度（并行环境数 $N_{\text{envs}}$ vs 轨迹长度 $N_{\text{RO}}$）对 PPO 性能的影响，发现在固定数据预算下增加并行环境数比增加轨迹长度更有效…
+  [ICML 2025][强化学习][并行数据采集] 系统研究 on-policy RL 中并行数据采集的两个维度（并行环境数 $N_{\text{envs}}$ vs 轨迹长度 $N_{\text{RO}}$）对 PPO 性能的影响，发现在固定数据预算下增加并行环境数比增加轨迹长度更有效，且更大的数据集可改善网络可塑性和优化稳定性。
 tags:
   - "ICML 2025"
   - "强化学习"

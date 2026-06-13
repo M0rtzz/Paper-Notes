@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CC-Tuning: A Cross-Lingual Connection Mechanism for Improving Joint Multilingual Supervised Fine-Tuning
 description: >-
-  [ACL 2025 Main Conference (Long Paper)][多语言/翻译][跨语言连接] 本文提出 CC-Tuning，一种在隐空间层面显式建立跨语言连接的多语言微调范式，通过融合英语和非英语输入的前馈激活来提升非英语语言的能力…
+  [ACL 2025 Main Conference (Long Paper)][多语言/翻译][跨语言连接] 本文提出 CC-Tuning，一种在隐空间层面显式建立跨语言连接的多语言微调范式，通过融合英语和非英语输入的前馈激活来提升非英语语言的能力，并在推理时利用 Transform Matrix 模拟跨语言连接。
 tags:
   - "ACL 2025 Main Conference (Long Paper)"
   - "多语言/翻译"

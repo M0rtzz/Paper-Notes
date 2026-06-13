@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pessimism Principle Can Be Effective: Towards a Framework for Zero-Shot Transfer RL
 description: >-
-  [ICML 2025][强化学习][transfer RL] 提出基于悲观主义原则的迁移RL框架：用鲁棒MDP构建目标域性能保守下界作为代理目标优化，设计Averaged Operator和Minimal Pessimism两种代理及分布式算法，确保安全迁移并避免负迁移。
+  [ICML 2025][强化学习][transfer RL] 提出基于悲观主义原则的迁移RL框架：用鲁棒MDP构建目标域性能保守下界作为代理目标优化，设计Averaged Operator和Minimal Pessimism两种代理及分布式算法，确保安全迁移并避免负迁移。 领域现状 领域现状：领域现状: 迁移RL利用源域数据…
 tags:
   - "ICML 2025"
   - "强化学习"

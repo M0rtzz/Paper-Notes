@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stability Analysis of Sharpness-Aware Minimization
 description: >-
-  [ICML 2026][优化/理论][SAM] 本文从动力系统视角剖析 SAM 在鞍点附近的收敛不稳定：先在确定性梯度流下证明只要邻域半径 $\rho > -1/\lambda_1$，鞍点就会变成 SAM 的吸引子…
+  [ICML 2026][优化/理论][SAM] 本文从动力系统视角剖析 SAM 在鞍点附近的收敛不稳定：先在确定性梯度流下证明只要邻域半径 $\rho > -1/\lambda_1$，鞍点就会变成 SAM 的吸引子；再在随机扩散框架下证明 SAM 的鞍点逃逸均方位移比 SGD 小 $2\eta t^2|\lambda_j|^3\rho/B$；最后用 SAM 扩散公式解释 momentum 和 batch size 为什么是 SAM 取得 SOTA 泛化性能的真正幕后功臣。
 tags:
   - "ICML 2026"
   - "优化/理论"

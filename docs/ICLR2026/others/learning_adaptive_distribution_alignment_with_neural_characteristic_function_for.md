@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation
 description: >-
-  [ICLR 2026][图域适应] 提出ADAlign框架，利用神经特征函数在谱域自适应对齐源/目标图分布——无需手动选择对齐标准，自动识别每个迁移场景中最显著的分布差异。在10个数据集16个迁移任务上达SOTA，同时降低内存和训练时间。
+  [ICLR 2026][图域适应] 提出ADAlign框架，利用神经特征函数在谱域自适应对齐源/目标图分布——无需手动选择对齐标准，自动识别每个迁移场景中最显著的分布差异。在10个数据集16个迁移任务上达SOTA，同时降低内存和训练时间。 图域适应(GDA)旨在将有标签源图的知识迁移到无标签目标图。分布偏移的来源复杂多样——…
 tags:
   - "ICLR 2026"
   - "图域适应"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Call to Lagrangian Action: Learning Population Mechanics from Temporal Snapshots
 description: >-
-  [ICML 2026][物理/科学计算][人口动力学] 本文从最小作用原理出发，提出 Wasserstein 拉格朗日力学（WLM）框架，学习二阶人口动力学而非传统梯度流的一阶动力学，从而能够捕捉周期性、旋转等更丰富的群体现象，并可在不需要参考过程的情况下完成插值与未来预报。
+  [ICML 2026 Spotlight][物理/科学计算][人口动力学] 本文从最小作用原理出发，提出 Wasserstein 拉格朗日力学（WLM）框架，学习二阶人口动力学而非传统梯度流的一阶动力学，从而能够捕捉周期性、旋转等更丰富的群体现象，并可在不需要参考过程的情况下完成插值与未来预报。 领域现状：传统人口动力学建模…
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "物理/科学计算"
   - "人口动力学"
   - "Wasserstein 力学"

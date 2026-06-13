@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 6DGS: 6D Pose Estimation from a Single Image and a 3D Gaussian Splatting Model
 description: >-
-  [ECCV 2024][3D视觉][6D位姿估计] 提出6DGS，通过反转3DGS渲染流程——从椭球体表面均匀发射光线（Ellicell），利用注意力机制将光线与目标图像像素绑定，再用加权最小二乘闭式求解相机位姿，无需迭代和初始位姿，在真实场景上旋转精度提升12%、平移精度提升22%，达到15fps近实时性能…
+  [ECCV 2024][3D视觉][6D位姿估计] 提出6DGS，通过反转3DGS渲染流程——从椭球体表面均匀发射光线（Ellicell），利用注意力机制将光线与目标图像像素绑定，再用加权最小二乘闭式求解相机位姿，无需迭代和初始位姿，在真实场景上旋转精度提升12%、平移精度提升22%，达到15fps近实时性能。
 tags:
   - "ECCV 2024"
   - "3D视觉"

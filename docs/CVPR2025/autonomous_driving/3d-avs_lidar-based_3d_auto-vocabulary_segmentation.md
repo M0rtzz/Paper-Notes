@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation
 description: >-
-  [CVPR 2025][自动驾驶][Auto-Vocabulary] 提出3D-AVS，首个针对LiDAR点云的**自动词表分割**方法：无需用户指定目标类别，系统自动从图像和点云中识别场景中存在的语义实体并生成词表，再用开放词表分割器完成逐点语义分割…
+  [CVPR 2025][自动驾驶][Auto-Vocabulary] 提出3D-AVS，首个针对LiDAR点云的**自动词表分割**方法：无需用户指定目标类别，系统自动从图像和点云中识别场景中存在的语义实体并生成词表，再用开放词表分割器完成逐点语义分割，在nuScenes和ScanNet200上展示了生成精细语义类别的能力。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

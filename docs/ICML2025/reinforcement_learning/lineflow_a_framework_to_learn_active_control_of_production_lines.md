@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LineFlow: A Framework to Learn Active Control of Production Lines
 description: >-
-  [ICML2025][强化学习][production line control] 提出 LineFlow，一个可扩展的开源 Python 框架，用于模拟任意复杂度的生产线并训练 RL 智能体进行主动产线控制（自适应路由、工人重分配、调度等），同时给出了若干子问题的数学最优解作为基准。
+  [ICML2025][强化学习][production line control] 提出 LineFlow，一个可扩展的开源 Python 框架，用于模拟任意复杂度的生产线并训练 RL 智能体进行主动产线控制（自适应路由、工人重分配、调度等），同时给出了若干子问题的数学最优解作为基准。 产线主动控制的挑战 生产线在运行中会遇…
 tags:
   - "ICML2025"
   - "强化学习"

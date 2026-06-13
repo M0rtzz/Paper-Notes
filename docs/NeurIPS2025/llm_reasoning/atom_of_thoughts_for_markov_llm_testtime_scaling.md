@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Atom of Thoughts for Markov LLM Test-Time Scaling
 description: >-
-  [NeurIPS 2025][LLM推理][test-time scaling] 提出 Atom of Thoughts (AoT)，将 LLM 推理建模为马尔可夫链，每个状态是与原问题答案等价但复杂度递减的自包含子问题，通过 DAG 分解+收缩的两阶段转移机制消除历史依赖，可与 ToT/反思等方法无缝集成…
+  [NeurIPS 2025][LLM推理][test-time scaling] 提出 Atom of Thoughts (AoT)，将 LLM 推理建模为马尔可夫链，每个状态是与原问题答案等价但复杂度递减的自包含子问题，通过 DAG 分解+收缩的两阶段转移机制消除历史依赖，可与 ToT/反思等方法无缝集成，在数学/代码/多跳QA等6个benchmark上全面领先现有推理框架。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

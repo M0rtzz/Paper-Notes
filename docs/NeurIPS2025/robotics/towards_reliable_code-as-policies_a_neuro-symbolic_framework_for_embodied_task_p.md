@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Reliable Code-as-Policies: A Neuro-Symbolic Framework for Embodied Task Planning
 description: >-
-  [NeurIPS 2025 (Spotlight)][机器人][Code-as-Policies] 提出一种神经-符号具身任务规划框架，在 LLM 代码生成过程中引入显式的符号验证（检查前置条件是否满足）和交互式验证（主动探索获取缺失信息）…
+  [NeurIPS 2025 (Spotlight)][机器人][Code-as-Policies] 提出一种神经-符号具身任务规划框架，在 LLM 代码生成过程中引入显式的符号验证（检查前置条件是否满足）和交互式验证（主动探索获取缺失信息），使生成的代码在动态和部分可观测场景中更可靠——在 RLBench 上任务成功率从基线 38.5% 提升到 84.7%，可执行性达 86.8%。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Hands in 3D Whole-Body Pose Estimation with Conditional Hands Modulator
 description: >-
-  [CVPR 2026][3D视觉][全身姿态估计] 提出Hand4Whole++模块化框架，通过轻量级CHAM模块将预训练手部估计器的特征注入冻结的全身姿态估计器中，实现手腕方向的精准预测，并通过可微刚性对齐从手部模型迁移精细手指关节和手部形状。
+  [CVPR 2026][3D视觉][全身姿态估计] 提出Hand4Whole++模块化框架，通过轻量级CHAM模块将预训练手部估计器的特征注入冻结的全身姿态估计器中，实现手腕方向的精准预测，并通过可微刚性对齐从手部模型迁移精细手指关节和手部形状。 3D全身姿态估计面临一个根本性的监督差距(supervision gap)：问…
 tags:
   - "CVPR 2026"
   - "3D视觉"

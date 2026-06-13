@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DenseSteer: Steering Small Language Models towards Dense Math Reasoning
 description: >-
-  [ICML 2026][LLM推理][dense reasoning] 观察到强模型 CoT 步数更少但每步信息密度更高（Dense Reasoning），DenseSteer 用 GPT-5.1 把小模型自己的稀疏解答改写成"信息更密"的同分布正样本，与原解答构成对比对…
+  [ICML 2026][LLM推理][dense reasoning] 观察到强模型 CoT 步数更少但每步信息密度更高（Dense Reasoning），DenseSteer 用 GPT-5.1 把小模型自己的稀疏解答改写成"信息更密"的同分布正样本，与原解答构成对比对，在中间层（≈ L17）残差流注入一条均值差分得到的 steering vector，零训练即可在 GSM8K / MATH500 / AMC / AIME 等数学基准上稳定涨点且不抬高 token-level NLL。
 tags:
   - "ICML 2026"
   - "LLM推理"

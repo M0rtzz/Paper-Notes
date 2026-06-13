@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Calibration of Large Vision-Language Adapters
 description: >-
-  [ECCV 2024][多模态VLM][CLIP适配] 本文发现CLIP适配方法（Adapter/Prompt Learning/TTA）在OOD场景下严重损害了零样本基线的校准能力，揭示logit范围增大（而非logit范数增大）是误校准的根本原因…
+  [ECCV 2024][多模态VLM][CLIP适配] 本文发现CLIP适配方法（Adapter/Prompt Learning/TTA）在OOD场景下严重损害了零样本基线的校准能力，揭示logit范围增大（而非logit范数增大）是误校准的根本原因，并提出三种简单且模型无关的logit范围约束方案（ZS-Norm、Penalty、SaLS），有效缓解误校准同时保持判别性能。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

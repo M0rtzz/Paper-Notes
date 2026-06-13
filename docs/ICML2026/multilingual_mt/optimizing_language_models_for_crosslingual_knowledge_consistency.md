@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing Language Models for Crosslingual Knowledge Consistency
 description: >-
-  [ICML 2026][多语言/翻译][跨语言一致性] 本文针对多语言 LLM 在不同语言间回答同一问题却给出冲突答案的问题，设计了一个**用"另一种语言下回答的对数似然"作为 reward 的 RL 目标**…
+  [ICML 2026][多语言/翻译][跨语言一致性] 本文针对多语言 LLM 在不同语言间回答同一问题却给出冲突答案的问题，设计了一个**用"另一种语言下回答的对数似然"作为 reward 的 RL 目标**，证明其最优策略呈 product-of-experts 形式并在 $\gamma_1\gamma_2=\beta^2$ 时保证跨语言偏好一致；据此推导出无需 reward model、无需 online 采样的 **DCO（Direct Consistency Optimization）** 算法，在 9 个 LLM、3 个多语言 QA 基准、26 种语言上同时提升跨语言一致性（RankC）与回答准确率。
 tags:
   - "ICML 2026"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Cost of Scaffold! Benign Clients May Even Become Accomplices of Backdoor Attack
 description: >-
-  [ICCV 2025][AI安全][联邦学习] 提出 BadSFL，首个针对 Scaffold 联邦学习算法的后门攻击方法，通过篡改控制变量（control variate）将良性客户端变为"帮凶"，结合 GAN 数据增强和预测全局模型收敛方向的优化策略…
+  [ICCV 2025][AI安全][联邦学习] 提出 BadSFL，首个针对 Scaffold 联邦学习算法的后门攻击方法，通过篡改控制变量（control variate）将良性客户端变为"帮凶"，结合 GAN 数据增强和预测全局模型收敛方向的优化策略，在 non-IID 场景下实现了攻击停止后仍持续 60+ 轮的后门效果，持久性是基线方法的 3 倍。
 tags:
   - "ICCV 2025"
   - "AI安全"

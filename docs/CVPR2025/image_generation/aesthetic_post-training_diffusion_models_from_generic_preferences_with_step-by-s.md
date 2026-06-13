@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization
 description: >-
-  [CVPR 2025][图像生成][逐步偏好优化] 本文提出 Step-by-step Preference Optimization（SPO），在每个去噪步中从同一噪声潜变量采样多个候选，用 step-aware 偏好模型选择 win/lose 对来指导扩散模型微调，从通用偏好数据中隐式蒸馏美学信息…
+  [CVPR 2025][图像生成][逐步偏好优化] 本文提出 Step-by-step Preference Optimization（SPO），在每个去噪步中从同一噪声潜变量采样多个候选，用 step-aware 偏好模型选择 win/lose 对来指导扩散模型微调，从通用偏好数据中隐式蒸馏美学信息，在 SD-1.5 和 SDXL 上显著提升美学质量且收敛速度远快于 DPO。
 tags:
   - "CVPR 2025"
   - "图像生成"

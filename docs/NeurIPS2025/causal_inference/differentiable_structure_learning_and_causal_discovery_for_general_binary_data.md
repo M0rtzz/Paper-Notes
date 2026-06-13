@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentiable Structure Learning and Causal Discovery for General Binary Data
 description: >-
-  [NEURIPS2025][因果推理][因果发现] 提出基于多元伯努利分布（MVB）的通用可微结构学习框架，不假设特定数据生成过程，能捕获二值离散变量间的任意高阶依赖关系，并证明在一般设定下DAG不可识别但可恢复最小等价类（Markov等价类）。
+  [NEURIPS2025][因果推理][因果发现] 提出基于多元伯努利分布（MVB）的通用可微结构学习框架，不假设特定数据生成过程，能捕获二值离散变量间的任意高阶依赖关系，并证明在一般设定下DAG不可识别但可恢复最小等价类（Markov等价类）。 领域背景：因果发现旨在从观测数据中学习有向无环图（DAG），是NP完全问题…
 tags:
   - "NEURIPS2025"
   - "因果推理"

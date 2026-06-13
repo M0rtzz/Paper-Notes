@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCRAPL: Scattering Transform with Random Paths for Machine Learning
 description: >-
-  [ICLR 2026][优化/理论][散射变换] 针对多变量散射变换(ST)作为可微损失函数时因路径数P过多导致计算代价过高的问题，提出SCRAPL——每步仅随机采样一条路径并通过P-Adam（路径自适应动量）、P-SAGA（路径随机平均梯度）和θ-重要性采样三种方差缩减技术来稳定梯度…
+  [ICLR 2026][优化/理论][散射变换] 针对多变量散射变换(ST)作为可微损失函数时因路径数P过多导致计算代价过高的问题，提出SCRAPL——每步仅随机采样一条路径并通过P-Adam（路径自适应动量）、P-SAGA（路径随机平均梯度）和θ-重要性采样三种方差缩减技术来稳定梯度，在无监督声音匹配任务上以接近全路径ST的精度、MSS级别的低计算成本实现了Pareto最优。
 tags:
   - "ICLR 2026"
   - "优化/理论"

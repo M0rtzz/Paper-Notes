@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMPB: It's Time for Multi-Modal Personalization
 description: >-
-  [NeurIPS 2025][推荐系统][VLM] 提出首个 VLM 个性化评测基准 MMPB，包含 111 个可个性化概念、10k+ 图文问答对和 15 种任务类型，评测了 23 个 VLM 后发现即使最强的 GPT-4o 在个性化任务上也表现不佳…
+  [NeurIPS 2025][推荐系统][VLM] 提出首个 VLM 个性化评测基准 MMPB，包含 111 个可个性化概念、10k+ 图文问答对和 15 种任务类型，评测了 23 个 VLM 后发现即使最强的 GPT-4o 在个性化任务上也表现不佳，揭示了 VLM 在偏好推理、视觉线索利用和安全对齐与个性化的冲突等方面的重大局限。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"

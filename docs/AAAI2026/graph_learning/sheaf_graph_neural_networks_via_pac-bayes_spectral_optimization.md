@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization
 description: >-
-  [AAAI 2026][图学习][Sheaf Neural Networks] 提出 SGPC（Sheaf GNNs with PAC-Bayes Calibration），结合 Wasserstein 最优传输学习 sheaf 限制映射、方差缩减扩散与自适应频率混合层、以及 PAC-Bayes 谱正则化…
+  [AAAI 2026][图学习][Sheaf Neural Networks] 提出 SGPC（Sheaf GNNs with PAC-Bayes Calibration），结合 Wasserstein 最优传输学习 sheaf 限制映射、方差缩减扩散与自适应频率混合层、以及 PAC-Bayes 谱正则化，在同质和异质图节点分类上全面超越现有 GNN 和 sheaf 方法，同时提供理论泛化保证。
 tags:
   - "AAAI 2026"
   - "图学习"

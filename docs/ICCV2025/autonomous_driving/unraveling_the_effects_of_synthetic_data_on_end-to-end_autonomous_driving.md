@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unraveling the Effects of Synthetic Data on End-to-End Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][合成数据] 提出 SceneCrafter，一个基于 3DGS 的统一仿真框架，通过自适应运动学模型和双向交互式智能体控制，同时支持合成数据生成和闭环评估，实验证明合成数据可显著提升端到端自动驾驶模型的泛化能力（Route Completion 提升 18%）。
+  [ICCV 2025][自动驾驶][合成数据] 提出 SceneCrafter，一个基于 3DGS 的统一仿真框架，通过自适应运动学模型和双向交互式智能体控制，同时支持合成数据生成和闭环评估，实验证明合成数据可显著提升端到端自动驾驶模型的泛化能力（Route Completion 提升 18%）。 端到端（E2E）自动驾驶模…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

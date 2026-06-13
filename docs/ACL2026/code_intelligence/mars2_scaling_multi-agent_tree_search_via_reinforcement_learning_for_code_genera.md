@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARS2: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation
 description: >-
-  [ACL 2026][代码智能][多智能体] MARS2 提出多智能体强化树搜索框架，将多个独立优化的策略嵌入共享搜索树中协作探索，通过 Thompson 采样选择智能体-节点对、树一致性奖励塑形和路径级组优势估计…
+  [ACL 2026][代码智能][多智能体] MARS2 提出多智能体强化树搜索框架，将多个独立优化的策略嵌入共享搜索树中协作探索，通过 Thompson 采样选择智能体-节点对、树一致性奖励塑形和路径级组优势估计，在代码生成基准上一致提升单模型 Pass@1 最高 8.0%、系统级 Pass@1(MCTS) 最高 6.5%。
 tags:
   - "ACL 2026"
   - "代码智能"

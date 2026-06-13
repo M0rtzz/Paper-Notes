@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Factuality Controlled LLMs with Generalization Certificates via Conformal Sampling
 description: >-
-  [CVPR 2026][优化/理论][保形预测] 提出 CFC（Conditional Factuality Control），一种后验保形框架，通过增广分位数回归学习特征条件化的接受阈值，为LLM/VLM采样输出提供条件覆盖率保证，在保持紧凑预测集的同时显著改善难题子群的可靠性。
+  [CVPR 2026][优化/理论][保形预测] 提出 CFC（Conditional Factuality Control），一种后验保形框架，通过增广分位数回归学习特征条件化的接受阈值，为LLM/VLM采样输出提供条件覆盖率保证，在保持紧凑预测集的同时显著改善难题子群的可靠性。 大语言模型（LLM）在推理和生成任务上取得…
 tags:
   - "CVPR 2026"
   - "优化/理论"

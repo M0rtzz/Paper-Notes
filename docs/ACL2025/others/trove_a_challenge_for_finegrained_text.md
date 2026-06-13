@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TROVE: A Challenge for Fine-Grained Text Provenance via Source Sentence Tracing and Relationship Classification
 description: >-
-  [ACL 2025][文本溯源] 提出TROVE文本溯源挑战，将目标文本中每个句子追溯到源文档中的具体源句，并分类其细粒度关系（引用、压缩、推理等），覆盖多文档和长文档场景。
+  [ACL 2025][文本溯源] 提出TROVE文本溯源挑战，将目标文本中每个句子追溯到源文档中的具体源句，并分类其细粒度关系（引用、压缩、推理等），覆盖多文档和长文档场景。 领域现状： LLM生成文本的可靠性和可追溯性受到关注，现有引用生成和事实验证工作主要聚焦于文档级或粗粒度溯源。 现有痛点： 高风险领域（法律、医疗）需…
 tags:
   - "ACL 2025"
   - "文本溯源"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Fine-Tuning via Reparameterized Policy Gradient of the Soft Q-Function
 description: >-
-  [ICLR 2026][图像生成][扩散模型微调] 提出 SQDF（Soft Q-based Diffusion Finetuning），通过无需训练的可微软 Q 函数估计和重参数化策略梯度，在 KL 正则化 RL 框架下微调扩散模型，配合折扣因子、一致性模型和离策略回放缓冲三个创新组件…
+  [ICLR 2026][图像生成][扩散模型微调] 提出 SQDF（Soft Q-based Diffusion Finetuning），通过无需训练的可微软 Q 函数估计和重参数化策略梯度，在 KL 正则化 RL 框架下微调扩散模型，配合折扣因子、一致性模型和离策略回放缓冲三个创新组件，在优化目标奖励的同时有效缓解奖励过优化问题，保持样本的自然性和多样性。
 tags:
   - "ICLR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DC-Solver: Improving Predictor-Corrector Diffusion Sampler via Dynamic Compensation
 description: >-
-  [ECCV2024][扩散模型] 提出 DC-Solver，通过动态补偿（Dynamic Compensation）缓解 predictor-corrector 扩散采样器中的 misalignment 问题，仅需 10 个数据点即可优化补偿比率…
+  [ECCV2024][扩散模型] 提出 DC-Solver，通过动态补偿（Dynamic Compensation）缓解 predictor-corrector 扩散采样器中的 misalignment 问题，仅需 10 个数据点即可优化补偿比率，并通过级联多项式回归（CPR）实现对未见 NFE/CFG 配置的即时泛化。
 tags:
   - "ECCV2024"
   - "扩散模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArtFormer: Controllable Generation of Diverse 3D Articulated Objects
 description: >-
-  [CVPR 2025][文本生成][关节物体] 提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。
+  [CVPR 2025][文本生成][关节物体] 提出ArtFormer框架，通过树结构参数化和条件扩散Shape Prior，从文本/图像描述生成高质量、多样化且运动学关系准确的3D关节物体，在生成质量和多样性上显著超越现有方法。 领域现状 领域现状：关节物体（多刚体通过关节相连）生成研究有限。NAP受限于预定义图结构…
 tags:
   - "CVPR 2025"
   - "文本生成"

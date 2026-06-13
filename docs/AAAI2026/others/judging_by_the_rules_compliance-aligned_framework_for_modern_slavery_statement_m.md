@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring
 description: >-
-  [AAAI 2026][合规验证] 提出以"合规对齐法官"（CA-Judge）为核心的训练框架，利用规则级对齐反馈训练 3B 参数的 CALLM 模型，使其生成基于法定条款的可追溯合规判断理由，在现代奴役声明的句子级合规分类任务上超越 GPT-4o 和 DeepSeek-R1。
+  [AAAI 2026][合规验证] 提出以"合规对齐法官"（CA-Judge）为核心的训练框架，利用规则级对齐反馈训练 3B 参数的 CALLM 模型，使其生成基于法定条款的可追溯合规判断理由，在现代奴役声明的句子级合规分类任务上超越 GPT-4o 和 DeepSeek-R1。 全球超过 5000 万人受现代奴役影响…
 tags:
   - "AAAI 2026"
   - "合规验证"

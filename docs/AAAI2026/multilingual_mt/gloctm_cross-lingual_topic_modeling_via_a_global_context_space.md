@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GloCTM: Cross-Lingual Topic Modeling via a Global Context Space
 description: >-
-  [AAAI 2026][多语言/翻译][跨语言] 提出GloCTM，通过双路径VAE架构（局部语言路径+全局上下文路径）结合Polyglot Augmentation（跨语言近邻词扩充输入）、KL散度内部对齐、统一解码器结构对齐和CKA语义对齐四重机制…
+  [AAAI 2026][多语言/翻译][跨语言] 提出GloCTM，通过双路径VAE架构（局部语言路径+全局上下文路径）结合Polyglot Augmentation（跨语言近邻词扩充输入）、KL散度内部对齐、统一解码器结构对齐和CKA语义对齐四重机制，在3个跨语言数据集上全面超越现有方法的主题质量和跨语言对齐度。
 tags:
   - "AAAI 2026"
   - "多语言/翻译"

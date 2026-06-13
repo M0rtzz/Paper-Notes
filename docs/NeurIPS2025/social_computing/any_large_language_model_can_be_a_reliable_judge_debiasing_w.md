@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector
 description: >-
-  [NeurIPS 2025][社会计算][LLM-as-judge] 提出 Reasoning-based Bias Detector（RBD）作为 LLM 评判器的即插即用去偏模块——通过外部检测 4 种评估偏见（冗长/位置/从众/情感），生成带推理链的结构化反馈引导评判器自我纠正…
+  [NeurIPS 2025][社会计算][LLM-as-judge] 提出 Reasoning-based Bias Detector（RBD）作为 LLM 评判器的即插即用去偏模块——通过外部检测 4 种评估偏见（冗长/位置/从众/情感），生成带推理链的结构化反馈引导评判器自我纠正，RBD-8B 在 8 个 LLM 评判器上平均提升准确率 18.5%、一致性 10.9%。
 tags:
   - "NeurIPS 2025"
   - "社会计算"

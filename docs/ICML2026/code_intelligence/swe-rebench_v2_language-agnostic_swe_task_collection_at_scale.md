@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SWE-rebench V2: Language-Agnostic SWE Task Collection at Scale
 description: >-
-  [ICML 2026][代码智能][SWE Agent] 作者用"语言无关的统一构造流水线 + 交互式安装 Agent + 三模型集成的 Issue 清晰度过滤"，从 GitHub 上自动挖掘出 32,079 个跨 20 种语言、3,617 个仓库的可执行 SWE 任务（并附 12 万+ PR 衍生任务）…
+  [ICML 2026][代码智能][SWE Agent] 作者用"语言无关的统一构造流水线 + 交互式安装 Agent + 三模型集成的 Issue 清晰度过滤"，从 GitHub 上自动挖掘出 32,079 个跨 20 种语言、3,617 个仓库的可执行 SWE 任务（并附 12 万+ PR 衍生任务），每个任务都带预构建 Docker 镜像、fail-to-pass 测试以及实例级诊断元数据，为 SWE Agent 的大规模强化学习提供面向训练的、而非面向评测的稳定底料。
 tags:
   - "ICML 2026"
   - "代码智能"

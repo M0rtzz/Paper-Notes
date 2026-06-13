@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning to Extract Rational Evidence via Reinforcement Learning for Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][信息检索/RAG][检索增强生成] 提出 EviOmni，通过"先推理再提取"的范式学习从检索文档中提取理性证据：将证据推理和证据提取整合为统一轨迹，用知识 token 掩码避免信息泄露，通过 GRPO 以可验证奖励优化，在 5 个基准上以极高压缩比（~38x）取得优于全文检索的准确率。
+  [ACL 2026 Findings][信息检索/RAG][检索增强生成] 提出 EviOmni，通过"先推理再提取"的范式学习从检索文档中提取理性证据：将证据推理和证据提取整合为统一轨迹，用知识 token 掩码避免信息泄露，通过 GRPO 以可验证奖励优化，在 5 个基准上以极高压缩比（~38x）取得优于全文检索的准确率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "检索增强生成"
   - "证据提取"

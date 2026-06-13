@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Preference Optimization via Dynamic Target Margins
 description: >-
-  [ACL 2025 (Findings)][LLM对齐][偏好优化] 本文提出 γ-PO，一种通过在偏好对级别动态调整目标奖励边际的方式来增强 DPO 鲁棒性的即插即用方法，在 AlpacaEval2 和 Arena-Hard 上平均提升 4.4%。
+  [ACL 2025 (Findings)][LLM对齐][偏好优化] 本文提出 γ-PO，一种通过在偏好对级别动态调整目标奖励边际的方式来增强 DPO 鲁棒性的即插即用方法，在 AlpacaEval2 和 Arena-Hard 上平均提升 4.4%。 领域现状：大语言模型 (LLM) 的对齐是保证安全性与实用性的关键步骤…
 tags:
   - "ACL 2025 (Findings)"
   - "LLM对齐"

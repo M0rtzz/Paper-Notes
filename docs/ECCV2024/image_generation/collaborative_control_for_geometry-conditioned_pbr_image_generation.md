@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Collaborative Control for Geometry-Conditioned PBR Image Generation
 description: >-
-  [ECCV 2024][图像生成][PBR材质生成] 提出 Collaborative Control 范式，通过冻结预训练RGB扩散模型并训练一个并行PBR模型，利用双向跨网络通信层联合建模RGB与PBR图像分布，在有限数据下实现高质量的几何条件PBR材质图像生成。
+  [ECCV 2024][图像生成][PBR材质生成] 提出 Collaborative Control 范式，通过冻结预训练RGB扩散模型并训练一个并行PBR模型，利用双向跨网络通信层联合建模RGB与PBR图像分布，在有限数据下实现高质量的几何条件PBR材质图像生成。 领域现状：扩散模型在RGB图像生成领域取得了巨大成功…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAPD: Dependency-Aware Parallel Decoding via Attention for Diffusion LLMs
 description: >-
-  [ICML 2026][图像恢复][dLLM] DAPD 把 dLLM 单步并行解掩问题转化为「在自注意力诱导的 MRF 上选独立集」的动态图着色问题，无需训练即可同时解掩弱依赖位置，在 LLaDA / Dream 上把多问题混合提示的解码步数压到原始的 1/3.87，且准确率几乎不掉。
+  [ICML 2026][图像恢复][dLLM] DAPD 把 dLLM 单步并行解掩问题转化为「在自注意力诱导的 MRF 上选独立集」的动态图着色问题，无需训练即可同时解掩弱依赖位置，在 LLaDA / Dream 上把多问题混合提示的解码步数压到原始的 1/3.87，且准确率几乎不掉。 领域现状：以 LLaDA、Dream…
 tags:
   - "ICML 2026"
   - "图像恢复"

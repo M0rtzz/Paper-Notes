@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Restoring Pruned Large Language Models via Lost Component Compensation
 description: >-
-  [NeurIPS 2025][模型压缩][LLM剪枝] RestoreLCC 提出了一种面向剪枝 LLM 的定向恢复策略：通过对比探测定位关键注意力头，利用 SVD 分解提取剪枝丢失的激活成分，将其作为可优化的偏置向量注入回剪枝模型，在不影响稀疏性和推理速度的前提下显著恢复性能。
+  [NeurIPS 2025 Spotlight][模型压缩][LLM剪枝] RestoreLCC 提出了一种面向剪枝 LLM 的定向恢复策略：通过对比探测定位关键注意力头，利用 SVD 分解提取剪枝丢失的激活成分，将其作为可优化的偏置向量注入回剪枝模型，在不影响稀疏性和推理速度的前提下显著恢复性能。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "LLM剪枝"
   - "性能恢复"

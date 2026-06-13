@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Image Layer Decomposition with Visual Effects
 description: >-
-  [CVPR 2025][图像生成][图层分解] LayerDecomp 提出了一个基于 Diffusion Transformer 的图像图层分解框架，将输入图像分解为干净的 RGB 背景层和带有透明视觉效果（阴影、反射）的 RGBA 前景层，通过一致性损失在无标注数据上也能学到正确的前景表示…
+  [CVPR 2025][图像生成][图层分解] LayerDecomp 提出了一个基于 Diffusion Transformer 的图像图层分解框架，将输入图像分解为干净的 RGB 背景层和带有透明视觉效果（阴影、反射）的 RGBA 前景层，通过一致性损失在无标注数据上也能学到正确的前景表示，大幅超越现有物体移除和空间编辑方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

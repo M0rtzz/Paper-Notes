@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards 3D Objectness Learning in an Open World
 description: >-
-  [NeurIPS 2025][3D视觉][3D objectness] 提出 OP3Det，一个无需文本提示的类无关开放世界 3D 检测器，通过 2D 基础模型进行 3D 物体发现，并设计跨模态混合专家（MoE）动态融合点云与图像特征，大幅提升新类别物体的召回率。
+  [NeurIPS 2025][3D视觉][3D objectness] 提出 OP3Det，一个无需文本提示的类无关开放世界 3D 检测器，通过 2D 基础模型进行 3D 物体发现，并设计跨模态混合专家（MoE）动态融合点云与图像特征，大幅提升新类别物体的召回率。 3D 感知系统（自动驾驶、机器人等）面临的核心挑战是：现实世…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

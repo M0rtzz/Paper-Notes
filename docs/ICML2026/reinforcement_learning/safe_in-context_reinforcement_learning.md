@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safe In-Context Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][安全RL] 本文首次把"安全约束"引入 in-context 强化学习（ICRL），提出 SCARED：在预训练阶段用一个**单乘子 + 取正号 hinge** 的精确罚 Lagrangian 让 Transformer 策略学会在测试时**不更新任何参数**地依靠 cos…
+  [ICML 2026][强化学习][安全RL] 本文首次把"安全约束"引入 in-context 强化学习（ICRL），提出 SCARED：在预训练阶段用一个**单乘子 + 取正号 hinge** 的精确罚 Lagrangian 让 Transformer 策略学会在测试时**不更新任何参数**地依靠 cost-to-go 上下文做 CMDP 适应，在 OOD 网格 / MuJoCo / Velocity 基准上 reward 单调上升、cost 单调下降，并能随用户给的预算 $\delta$ 在保守与激进之间平滑切换。
 tags:
   - "ICML 2026"
   - "强化学习"

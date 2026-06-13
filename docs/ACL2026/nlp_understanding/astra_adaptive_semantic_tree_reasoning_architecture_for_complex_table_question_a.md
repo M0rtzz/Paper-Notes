@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASTRA: Adaptive Semantic Tree Reasoning Architecture for Complex Table Question Answering
 description: >-
-  [ACL2026][NLP理解][复杂表格问答] ASTRA 把复杂表格自适应重构为语义树，再用文本树导航和符号代码执行双模式推理回答问题，在 AIT-QA、SSTQA 和 HiTab 上分别达到 91.6%、81.9% 和 90.1% 准确率，超过强 LLM 和已有表格结构化方法。
+  [ACL2026][NLP理解][复杂表格问答] ASTRA 把复杂表格自适应重构为语义树，再用文本树导航和符号代码执行双模式推理回答问题，在 AIT-QA、SSTQA 和 HiTab 上分别达到 91.6%、81.9% 和 90.1% 准确率，超过强 LLM 和已有表格结构化方法。 领域现状：LLM 处理表格问答通常要先把…
 tags:
   - "ACL2026"
   - "NLP理解"

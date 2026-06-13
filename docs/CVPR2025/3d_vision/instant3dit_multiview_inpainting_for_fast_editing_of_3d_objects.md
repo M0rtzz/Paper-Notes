@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instant3dit: Multiview Inpainting for Fast Editing of 3D Objects
 description: >-
-  [CVPR 2025][3D视觉][3D editing] 将 3D 编辑问题转化为多视角一致的 2D inpainting 问题，通过微调 SDXL-inpainting 模型在 2×2 视角网格上同时生成一致的填充内容，再用 LRM 重建 3D…
+  [CVPR 2025][3D视觉][3D editing] 将 3D 编辑问题转化为多视角一致的 2D inpainting 问题，通过微调 SDXL-inpainting 模型在 2×2 视角网格上同时生成一致的填充内容，再用 LRM 重建 3D，实现约 3 秒完成高质量 3D 编辑——比 SDS 方法快数百倍。
 tags:
   - "CVPR 2025"
   - "3D视觉"

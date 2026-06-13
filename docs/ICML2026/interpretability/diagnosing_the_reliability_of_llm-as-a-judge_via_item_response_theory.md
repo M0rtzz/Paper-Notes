@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diagnosing the Reliability of LLM-as-a-Judge via Item Response Theory
 description: >-
-  [ICML 2026][可解释性][Item Response Theory] 本文把心理测量学里的 Item Response Theory (IRT) 中的 Graded Response Model (GRM) 搬到 LLM-as-a-Judge 上，把"评判分数"分解成评判者属性 $(\alpha…
+  [ICML 2026][可解释性][Item Response Theory] 本文把心理测量学里的 Item Response Theory (IRT) 中的 Graded Response Model (GRM) 搬到 LLM-as-a-Judge 上，把"评判分数"分解成评判者属性 $(\alpha, \beta)$ 与样本潜在质量 $\theta$，再用 4 个可解释指标分两阶段（内在一致性 + 人类对齐）系统诊断 7 个主流 LLM 在 11 类评判准则上"是不是一台稳定的测量仪器"。
 tags:
   - "ICML 2026"
   - "可解释性"

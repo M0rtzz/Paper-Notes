@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Privacy-protected Retrieval-Augmented Generation for Knowledge Graph Question Answering
 description: >-
-  [AAAI 2026][LLM安全][隐私保护RAG] 首次探索知识图谱问答（KGQA）中的隐私保护 RAG 场景，提出 ARoG（Abstraction Reasoning on Graph）框架，通过关系中心抽象和结构导向抽象两种策略，在实体被匿名化（替换为无意义的 MID）的条件下…
+  [AAAI 2026][LLM安全][隐私保护RAG] 首次探索知识图谱问答（KGQA）中的隐私保护 RAG 场景，提出 ARoG（Abstraction Reasoning on Graph）框架，通过关系中心抽象和结构导向抽象两种策略，在实体被匿名化（替换为无意义的 MID）的条件下，仍能有效检索和利用知识图谱回答问题。
 tags:
   - "AAAI 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One-to-More: High-Fidelity Training-Free Anomaly Generation with Attention Control
 description: >-
-  [CVPR 2026][AI安全][异常生成] O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和双重注意力增强(DAE)确保掩码区域完整填充…
+  [CVPR 2026][AI安全][异常生成] O2MAG 提出一种无需训练的少样本异常生成方法，通过三分支扩散过程中的自注意力嫁接(TriAG)从单张参考异常图像合成更多逼真异常，配合异常引导优化(AGO)对齐文本语义和双重注意力增强(DAE)确保掩码区域完整填充，在 MVTec-AD 下游异常检测任务中显著优于现有方法。
 tags:
   - "CVPR 2026"
   - "AI安全"

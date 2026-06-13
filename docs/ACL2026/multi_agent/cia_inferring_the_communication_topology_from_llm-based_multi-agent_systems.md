@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CIA: Inferring the Communication Topology from LLM-based Multi-Agent Systems
 description: >-
-  [ACL 2026][多智能体][通信拓扑推断] 本文提出 CIA（Communication Inference Attack），在严格黑盒只能观测最终输出的设定下，通过对抗性查询诱导多智能体系统暴露中间 agent 的推理输出，再用全局偏置解纠缠 + LLM 弱监督建模语义相关性…
+  [ACL 2026][多智能体][通信拓扑推断] 本文提出 CIA（Communication Inference Attack），在严格黑盒只能观测最终输出的设定下，通过对抗性查询诱导多智能体系统暴露中间 agent 的推理输出，再用全局偏置解纠缠 + LLM 弱监督建模语义相关性，成功反演出 MAS 的通信拓扑，平均 AUC 0.87、峰值 0.99。
 tags:
   - "ACL 2026"
   - "多智能体"

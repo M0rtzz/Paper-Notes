@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency
 description: >-
-  [NeurIPS 2025][图像生成][场景一致性] SceneDecorator 提出了一个无需训练的框架，通过 VLM 引导的场景规划（global-to-local）和长期场景共享注意力机制，首次系统性地解决了故事生成中的场景规划和场景一致性问题，在场景对齐和一致性指标上显著优于现有方法。
+  [NeurIPS 2025][图像生成][场景一致性] SceneDecorator 提出了一个无需训练的框架，通过 VLM 引导的场景规划（global-to-local）和长期场景共享注意力机制，首次系统性地解决了故事生成中的场景规划和场景一致性问题，在场景对齐和一致性指标上显著优于现有方法。 故事生成（story ge…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

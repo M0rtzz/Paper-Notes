@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Refining Context-Entangled Content Segmentation via Curriculum Selection and Anti-Curriculum Promotion
 description: >-
-  [ICML 2026][语义分割][伪装目标分割] CurriSeg 不动分割网络结构，只换训练计划：先用"时间损失统计 + 像素熵加权"的稳健课程把模型推到稳态，再用反课程的"频谱失明"微调（砍掉高频迫使模型读结构语义）…
+  [ICML 2026][语义分割][伪装目标分割] CurriSeg 不动分割网络结构，只换训练计划：先用"时间损失统计 + 像素熵加权"的稳健课程把模型推到稳态，再用反课程的"频谱失明"微调（砍掉高频迫使模型读结构语义），就让 FEDER / FSEL / RUN 在 CHAMELEON / CAMO / COD10K / NC4K 等伪装/息肉分割基准上稳定涨 2–4%，零额外参数、训练时间还更短。
 tags:
   - "ICML 2026"
   - "语义分割"

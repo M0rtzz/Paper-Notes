@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing
 description: >-
-  [ICCV 2025][图像生成][指令编辑] SuperEdit 通过利用扩散生成先验引导 VLM 修正编辑指令、并构建对比监督信号（正/负指令 + triplet loss）来解决指令式图像编辑中的噪声监督问题，以更少数据和更小模型超越 SmartEdit 9.19%。
+  [ICCV 2025][图像生成][指令编辑] SuperEdit 通过利用扩散生成先验引导 VLM 修正编辑指令、并构建对比监督信号（正/负指令 + triplet loss）来解决指令式图像编辑中的噪声监督问题，以更少数据和更小模型超越 SmartEdit 9.19%。 指令式图像编辑的训练数据通常由自动流水线生成（LL…
 tags:
   - "ICCV 2025"
   - "图像生成"

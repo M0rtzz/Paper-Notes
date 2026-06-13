@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Sensor Data: Foundation Models of Behavioral Data from Wearables Improve Health Predictions
 description: >-
-  [ICML 2025][自监督学习][wearable foundation model] 在 Apple Heart and Movement Study 的 162K 参与者、25 亿小时可穿戴行为数据上，系统探索 tokenizer 和架构组合…
+  [ICML 2025][自监督学习][wearable foundation model] 在 Apple Heart and Movement Study 的 162K 参与者、25 亿小时可穿戴行为数据上，系统探索 tokenizer 和架构组合，以 TST+Mamba-2+对比学习构建行为数据基础模型 WBM，在 57 项健康检测任务上显著优于手工特征基线，并与 PPG 传感器模型形成互补。
 tags:
   - "ICML 2025"
   - "自监督学习"

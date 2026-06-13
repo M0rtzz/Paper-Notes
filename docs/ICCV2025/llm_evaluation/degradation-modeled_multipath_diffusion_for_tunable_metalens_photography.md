@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Degradation-Modeled Multipath Diffusion for Tunable Metalens Photography
 description: >-
-  [ICCV 2025][LLM评测][metalens] 提出DMDiff框架，利用预训练扩散模型的自然图像先验，通过正/中/负三路径多提示扩散策略和空间变化退化感知注意力（SVDA）模块，实现毫米级超透镜相机的高保真可调图像重建，在多项指标上超越现有方法。
+  [ICCV 2025][LLM评测][metalens] 提出DMDiff框架，利用预训练扩散模型的自然图像先验，通过正/中/负三路径多提示扩散策略和空间变化退化感知注意力（SVDA）模块，实现毫米级超透镜相机的高保真可调图像重建，在多项指标上超越现有方法。 超透镜（metalens）作为超紧凑成像系统具有巨大潜力…
 tags:
   - "ICCV 2025"
   - "LLM评测"

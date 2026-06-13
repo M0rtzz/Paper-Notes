@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Diffusion Sampling
 description: >-
-  [ICML 2026][多模态VLM][Parallel Tempering] 本文提出 Conditional Diffusion Sampling（CDS）：通过推导一类条件随机插值（conditional interpolants）…
+  [ICML 2026][多模态VLM][Parallel Tempering] 本文提出 Conditional Diffusion Sampling（CDS）：通过推导一类条件随机插值（conditional interpolants），得到一个对未归一化目标分布的**精确闭式 SDE**（不需要神经网络拟合），再用 Parallel Tempering 高效采样这个 SDE 的初始分布——把 PT 的全局探索能力和扩散过程的局部细化能力拼起来，在 8 个目标分布、4 类任务上以更少的密度评估次数同时击败传统 MCMC、训练自由 MCMC 和神经采样器。
 tags:
   - "ICML 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BEAF: Observing BEfore-AFter Changes to Evaluate Hallucination in Vision-Language Models
 description: >-
-  [ECCV 2024][幻觉检测][视觉语言模型] BEAF提出"前-后对比"的幻觉评估范式：通过图像编辑移除物体后观察VLM回答的变化，引入TU/IG/SB/ID四个变化感知指标，揭示了传统文本轴评估无法发现的幻觉行为。
+  [ECCV 2024][幻觉检测][视觉语言模型] BEAF提出"前-后对比"的幻觉评估范式：通过图像编辑移除物体后观察VLM回答的变化，引入TU/IG/SB/ID四个变化感知指标，揭示了传统文本轴评估无法发现的幻觉行为。 1. 领域现状：VLM（如LLaVA、InstructBLIP等）展现出强大的多模态推理能力…
 tags:
   - "ECCV 2024"
   - "幻觉检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction
 description: >-
-  [CVPR 2026][代码智能][图表转代码] 提出 MM-ReCoder，首个具备自我纠错能力的图表转代码多模态 LLM，通过两阶段多轮 GRPO 强化学习（先共享首轮优化纠错能力，再全轨迹优化编码能力），在 ChartMimic 上以仅 7B 参数达到 86.5% low-level score…
+  [CVPR 2026][代码智能][图表转代码] 提出 MM-ReCoder，首个具备自我纠错能力的图表转代码多模态 LLM，通过两阶段多轮 GRPO 强化学习（先共享首轮优化纠错能力，再全轨迹优化编码能力），在 ChartMimic 上以仅 7B 参数达到 86.5% low-level score，媲美 Qwen3-VL-235B。
 tags:
   - "CVPR 2026"
   - "代码智能"

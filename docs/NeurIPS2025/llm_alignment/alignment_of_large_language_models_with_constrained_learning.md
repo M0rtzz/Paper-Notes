@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alignment of Large Language Models with Constrained Learning
 description: >-
-  [NeurIPS 2025][LLM对齐][约束对齐] 本文提出 CAID（Constrained Alignment via Iterative Dualization），通过迭代对偶方法交替更新 LLM 策略和对偶变量，在理论上证明了对偶方法可以找到最优约束 LLM 策略（至多存在参数化间隙）…
+  [NeurIPS 2025][LLM对齐][约束对齐] 本文提出 CAID（Constrained Alignment via Iterative Dualization），通过迭代对偶方法交替更新 LLM 策略和对偶变量，在理论上证明了对偶方法可以找到最优约束 LLM 策略（至多存在参数化间隙），并在 PKU-SafeRLHF 数据集上显著改善了约束满足和 helpfulness-safety 权衡。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Do Graph Foundation Models Transfer? A Data-Centric Theory
 description: >-
-  [ICML2026][图学习][图基础模型] 这篇论文用 graphon 把不同大小、不同域的图放到同一连续空间里，证明图基础模型的跨域输出差异可以分解为两个有限采样误差和一个内在 graphon 域差异，并用合成与真实图实验说明图大小、结构偏移和谱位置编码稳定性共同决定迁移成败。
+  [ICML2026][图学习][图基础模型] 这篇论文用 graphon 把不同大小、不同域的图放到同一连续空间里，证明图基础模型的跨域输出差异可以分解为两个有限采样误差和一个内在 graphon 域差异，并用合成与真实图实验说明图大小、结构偏移和谱位置编码稳定性共同决定迁移成败。 领域现状：图基础模型希望像语言基础模型一样…
 tags:
   - "ICML2026"
   - "图学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.29828](https://arxiv.org/abs/2605.29828)  
 **代码**: https://github.com/zhuconv/GraphFM  
-**领域**: graph_learning  
+**领域**: 图学习  
 **关键词**: 图基础模型, graphon, 迁移理论, 位置编码, 图数据策展
 
 ## 一句话总结

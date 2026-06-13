@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeAR: Fine-Grained VLM Adaptation by Decomposing Attention Head Roles
 description: >-
-  [CVPR 2026][多模态VLM][提示学习] 提出 DeAR，通过 Concept Entropy 指标将 ViT 深层注意力头分解为属性头/泛化头/混合头三类功能角色，并设计基于角色的注意力掩码机制精确控制信息流，在15个数据集上实现任务适配与零样本泛化的最佳平衡。
+  [CVPR 2026][多模态VLM][提示学习] 提出 DeAR，通过 Concept Entropy 指标将 ViT 深层注意力头分解为属性头/泛化头/混合头三类功能角色，并设计基于角色的注意力掩码机制精确控制信息流，在15个数据集上实现任务适配与零样本泛化的最佳平衡。 CLIP 适配的核心挑战：预训练 VLM 需要适配…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Textured Gaussians for Enhanced 3D Scene Appearance Modeling
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] Textured Gaussians 将传统图形学中的纹理映射和Alpha映射引入 3DGS，为每个高斯体分配独立的 2D RGBA 纹理图，使单个高斯体能表达空间变化的颜色和透明度，大幅提升了3DGS的表达能力——在相同高斯数量下提升渲染质量…
+  [CVPR 2025][3D视觉][3D高斯溅射] Textured Gaussians 将传统图形学中的纹理映射和Alpha映射引入 3DGS，为每个高斯体分配独立的 2D RGBA 纹理图，使单个高斯体能表达空间变化的颜色和透明度，大幅提升了3DGS的表达能力——在相同高斯数量下提升渲染质量，在 1% 高斯数量下 PSNR 提升近 2dB。
 tags:
   - "CVPR 2025"
   - "3D视觉"

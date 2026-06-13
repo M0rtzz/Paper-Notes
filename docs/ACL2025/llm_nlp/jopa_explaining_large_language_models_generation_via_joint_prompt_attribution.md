@@ -2,10 +2,10 @@
 title: >-
   [论文解读] JoPA: Explaining Large Language Model's Generation via Joint Prompt Attribution
 description: >-
-  [ACL 2025][LLM/NLP][提示学习] 提出 JoPA（Joint Prompt Attribution）框架，将 LLM 生成任务的 prompt 归因建模为组合优化问题，用概率搜索算法高效寻找对输出有因果影响的输入 token 组合，解决了现有方法忽略 token 间协同效应的问题。
+  [ACL 2025][LLM 其他][提示学习] 提出 JoPA（Joint Prompt Attribution）框架，将 LLM 生成任务的 prompt 归因建模为组合优化问题，用概率搜索算法高效寻找对输出有因果影响的输入 token 组合，解决了现有方法忽略 token 间协同效应的问题。 领域现状：LLM 生成的可…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示学习"
   - "interpretability"
   - "counterfactual"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Visual Surface Wave Elastography: Revealing Subsurface Physical Properties via Visible Surface Waves
 description: >-
-  [ICCV 2025][医学图像][弹性成像] 本文提出 VSWE（Visual Surface Wave Elastography），仅通过一段表面波传播的视频，提取色散关系并结合基于物理的有限元优化，推断介质的亚表面厚度和刚度参数，在模拟和真实明胶实验中均实现了高精度的参数恢复…
+  [ICCV 2025][医学图像][弹性成像] 本文提出 VSWE（Visual Surface Wave Elastography），仅通过一段表面波传播的视频，提取色散关系并结合基于物理的有限元优化，推断介质的亚表面厚度和刚度参数，在模拟和真实明胶实验中均实现了高精度的参数恢复，为居家健康监测提供了概念验证。
 tags:
   - "ICCV 2025"
   - "医学图像"

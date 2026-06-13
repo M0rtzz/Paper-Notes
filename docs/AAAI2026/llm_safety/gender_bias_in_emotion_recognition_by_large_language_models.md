@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gender Bias in Emotion Recognition by Large Language Models
 description: >-
-  [AAAI 2026][LLM安全][性别偏见] 系统性地评估了多个 LLM（GPT-4/5、Mistral、LLaMA 等）在情感识别任务中的性别偏见，发现大多数模型对至少一个情感标签存在显著性别偏见，并通过实验证明推理时 prompt 策略（提示工程、上下文学习、CoT）无法有效去偏…
+  [AAAI 2026][LLM安全][性别偏见] 系统性地评估了多个 LLM（GPT-4/5、Mistral、LLaMA 等）在情感识别任务中的性别偏见，发现大多数模型对至少一个情感标签存在显著性别偏见，并通过实验证明推理时 prompt 策略（提示工程、上下文学习、CoT）无法有效去偏，而基于训练的微调方法可以有效缓解偏见。
 tags:
   - "AAAI 2026"
   - "LLM安全"

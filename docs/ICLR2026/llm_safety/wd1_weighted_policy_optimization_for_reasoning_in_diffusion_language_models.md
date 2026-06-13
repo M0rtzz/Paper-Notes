@@ -2,7 +2,7 @@
 title: >-
   [论文解读] wd1: Weighted Policy Optimization for Reasoning in Diffusion Language Models
 description: >-
-  [ICLR 2026][LLM安全][扩散语言模型] 提出 wd1，一种无需策略比率（ratio-free）的加权对数似然策略优化方法用于扩散语言模型（dLLM）的 RL 微调，通过正样本加权和负样本惩罚避免了 GRPO 中策略比率估计的偏差和高方差问题…
+  [ICLR 2026][LLM安全][扩散语言模型] 提出 wd1，一种无需策略比率（ratio-free）的加权对数似然策略优化方法用于扩散语言模型（dLLM）的 RL 微调，通过正样本加权和负样本惩罚避免了 GRPO 中策略比率估计的偏差和高方差问题，在 LLaDA-8B 上实现了 Sudoku +59%、GSM8K 84.5% 的 SOTA 性能。
 tags:
   - "ICLR 2026"
   - "LLM安全"

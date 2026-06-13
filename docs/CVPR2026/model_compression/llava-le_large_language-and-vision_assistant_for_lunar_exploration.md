@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLaVA-LE: Large Language-and-Vision Assistant for Lunar Exploration
 description: >-
-  [CVPR 2026][模型压缩][月球探测] LLaVA-LE 是首个面向月球探测的视觉语言模型，通过构建大规模真实月球图像-文本数据集 LUCID（96K 图像+81K QA对）和两阶段课程学习微调 LLaVA，在月球地质理解和多模态推理上实现 3.3× 基线提升。
+  [CVPR 2026][模型压缩][月球探测] LLaVA-LE 是首个面向月球探测的视觉语言模型，通过构建大规模真实月球图像-文本数据集 LUCID（96K 图像+81K QA对）和两阶段课程学习微调 LLaVA，在月球地质理解和多模态推理上实现 3.3× 基线提升。 VLM 在自然图像理解方面取得了巨大进展…
 tags:
   - "CVPR 2026"
   - "模型压缩"

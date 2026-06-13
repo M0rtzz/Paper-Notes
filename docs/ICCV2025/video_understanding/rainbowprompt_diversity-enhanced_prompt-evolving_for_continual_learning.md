@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RainbowPrompt: Diversity-Enhanced Prompt-Evolving for Continual Learning
 description: >-
-  [ICCV 2025][视频理解][持续学习] 提出 RainbowPrompt，通过注意力变换和任务引导对齐的提示演化机制，将多个任务特定提示整合为多样性增强的统一提示，在图像分类和视频动作识别任务上平均超越现有方法 8.23%。
+  [ICCV 2025][视频理解][持续学习] 提出 RainbowPrompt，通过注意力变换和任务引导对齐的提示演化机制，将多个任务特定提示整合为多样性增强的统一提示，在图像分类和视频动作识别任务上平均超越现有方法 8.23%。 基于提示的持续学习（PCL）通过微调少量提示参数保持预训练模型冻结，是一种无需回放的有效方案…
 tags:
   - "ICCV 2025"
   - "视频理解"

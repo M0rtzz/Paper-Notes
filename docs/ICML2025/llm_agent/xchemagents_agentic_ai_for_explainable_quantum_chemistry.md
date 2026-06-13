@@ -2,7 +2,7 @@
 title: >-
   [论文解读] xChemAgents: Agentic AI for Explainable Quantum Chemistry
 description: >-
-  [ICML2025][LLM Agent][多Agent协作] xChemAgents 提出了一个 Selector-Validator 双 Agent 协作框架，将物理感知的推理注入多模态分子性质预测中：Selector Agent 自适应选择稀疏加权描述符子集并给出自然语言解释…
+  [ICML2025][LLM Agent][多Agent协作] xChemAgents 提出了一个 Selector-Validator 双 Agent 协作框架，将物理感知的推理注入多模态分子性质预测中：Selector Agent 自适应选择稀疏加权描述符子集并给出自然语言解释，Validator Agent 通过量纲一致性和标度律检验迭代验证，在 QM9 基准上实现最高 22% 的 MAE 降低。
 tags:
   - "ICML2025"
   - "LLM Agent"

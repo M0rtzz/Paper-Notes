@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought
 description: >-
-  [CVPR 2026][LLM推理][电商海报评估] 构建首个面向中文电商海报的多维度质量评估框架 E-comIQ-ZH，包含18K专家标注数据集（含CoT推理链）、专用评估模型 E-comIQ-M（SFT+GRPO训练）和标准化基准 E-comIQ-Bench。
+  [CVPR 2026][LLM推理][电商海报评估] 构建首个面向中文电商海报的多维度质量评估框架 E-comIQ-ZH，包含18K专家标注数据集（含CoT推理链）、专用评估模型 E-comIQ-M（SFT+GRPO训练）和标准化基准 E-comIQ-Bench。 领域现状：生成式AI大量应用于电商海报制作…
 tags:
   - "CVPR 2026"
   - "LLM推理"

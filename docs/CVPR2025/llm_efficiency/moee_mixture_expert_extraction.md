@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Data Driven Mixture-of-Expert Extraction from Trained Networks
 description: >-
-  [CVPR 2025][LLM效率][混合专家] 提出一种从预训练 ViT 中提取 MoE 变体的后训练方法，通过 HDBSCAN 聚类 MLP 隐层激活模式自动发现专家结构，无需重新训练即可在 ImageNet-1k 上减少 36% MACs 和 32% 参数的同时保留 98% 原始精度。
+  [CVPR 2025][LLM效率][混合专家] 提出一种从预训练 ViT 中提取 MoE 变体的后训练方法，通过 HDBSCAN 聚类 MLP 隐层激活模式自动发现专家结构，无需重新训练即可在 ImageNet-1k 上减少 36% MACs 和 32% 参数的同时保留 98% 原始精度。 领域现状：ViT 性能出色但计算…
 tags:
   - "CVPR 2025"
   - "LLM效率"

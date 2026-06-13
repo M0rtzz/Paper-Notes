@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Two-Stage Dual-Modality Model for Facial Expression Recognition
 description: >-
-  [CVPR 2026][人体理解][面部表情识别] 提出两阶段双模态面部表情识别框架：Stage I 通过填充感知增强和训练期 MoE 头在外部数据集上适配 DINOv2 编码器；Stage II 通过多尺度面部裁剪、Wav2Vec 2.0 音频特征提取和门控融合实现帧级音视觉表情分类…
+  [CVPR 2026][人体理解][面部表情识别] 提出两阶段双模态面部表情识别框架：Stage I 通过填充感知增强和训练期 MoE 头在外部数据集上适配 DINOv2 编码器；Stage II 通过多尺度面部裁剪、Wav2Vec 2.0 音频特征提取和门控融合实现帧级音视觉表情分类，在 ABAW 2026 竞赛中取得 0.5368 Macro-F1。
 tags:
   - "CVPR 2026"
   - "人体理解"

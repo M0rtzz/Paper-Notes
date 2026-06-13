@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Underappreciated Power of Vision Models for Graph Structural Understanding
 description: >-
-  [NeurIPS 2025][图学习][视觉模型] 揭示视觉模型（ResNet/ViT/Swin等）在图结构理解方面被严重低估的能力——通过将图渲染为图像并用视觉编码器处理，在全局拓扑感知和跨尺度泛化上显著优于GNN，并提出GraphAbstract benchmark系统评估这一发现。
+  [NeurIPS 2025][图学习][视觉模型] 揭示视觉模型（ResNet/ViT/Swin等）在图结构理解方面被严重低估的能力——通过将图渲染为图像并用视觉编码器处理，在全局拓扑感知和跨尺度泛化上显著优于GNN，并提出GraphAbstract benchmark系统评估这一发现。 领域现状：GNN通过消息传递（mes…
 tags:
   - "NeurIPS 2025"
   - "图学习"

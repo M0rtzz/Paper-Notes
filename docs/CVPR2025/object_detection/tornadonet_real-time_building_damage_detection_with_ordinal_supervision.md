@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TornadoNet: Real-Time Building Damage Detection with Ordinal Supervision
 description: >-
-  [CVPR 2025][目标检测][建筑损坏检测] TornadoNet 构建了首个针对龙卷风灾后街景建筑损坏评估的系统性 benchmark，通过对比 YOLO 系列（CNN）和 RT-DETR（Transformer）在五级损坏检测任务上的表现，并提出序数感知（ordinal-aware）监督策略…
+  [CVPR 2025][目标检测][建筑损坏检测] TornadoNet 构建了首个针对龙卷风灾后街景建筑损坏评估的系统性 benchmark，通过对比 YOLO 系列（CNN）和 RT-DETR（Transformer）在五级损坏检测任务上的表现，并提出序数感知（ordinal-aware）监督策略，使 RT-DETR 的 mAP@0.5 提升 4.8 个百分点，证明了将损坏严重度的有序性质纳入损失函数设计的有效性。
 tags:
   - "CVPR 2025"
   - "目标检测"

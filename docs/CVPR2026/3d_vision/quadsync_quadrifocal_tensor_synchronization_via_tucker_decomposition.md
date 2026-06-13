@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuadSync: Quadrifocal Tensor Synchronization via Tucker Decomposition
 description: >-
-  [CVPR 2026][3D视觉][四焦张量] 首次提出四焦张量(quadrifocal tensor)的全局同步算法 QuadSync，通过构造块四焦张量并证明其承认多线性秩为 (4,4,4,4) 的 Tucker 分解，利用 ADMM-IRLS 优化框架从四视图测量中恢复相机位姿…
+  [CVPR 2026][3D视觉][四焦张量] 首次提出四焦张量(quadrifocal tensor)的全局同步算法 QuadSync，通过构造块四焦张量并证明其承认多线性秩为 (4,4,4,4) 的 Tucker 分解，利用 ADMM-IRLS 优化框架从四视图测量中恢复相机位姿，在密集视图场景下取得优于两视图/三视图方法的同步精度。
 tags:
   - "CVPR 2026"
   - "3D视觉"

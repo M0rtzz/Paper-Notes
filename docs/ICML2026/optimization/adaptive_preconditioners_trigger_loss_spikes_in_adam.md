@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Adaptive Preconditioners Trigger Loss Spikes in Adam
 description: >-
-  [ICML 2026][Adam优化器] 这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。
+  [ICML 2026][优化/理论][Adam优化器] 这篇论文把 Adam 训练中的 loss spike 归因于二阶矩预条件器与当前梯度平方的滞后解耦，并用预条件 Hessian 的梯度方向曲率解释和预测 spike 的发生。 领域现状：神经网络训练中经常出现 loss spike，尤其是在使用 Adam 训练 Tran…
 tags:
   - "ICML 2026"
+  - "优化/理论"
   - "Adam优化器"
   - "loss spike"
   - "预条件 Hessian"

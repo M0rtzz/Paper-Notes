@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlareX: A Physics-Informed Dataset for Lens Flare Removal via 2D Synthesis and 3D Rendering
 description: >-
-  [NeurIPS 2025][3D视觉][镜头光晕去除] 提出 FlareX 数据集，通过参数化模板创建、基于光照定律的 2D 合成和基于物理引擎的 3D 渲染三个阶段生成物理真实的镜头光晕数据，训练的模型在真实世界测试集上显著超越此前所有数据集。
+  [NeurIPS 2025][3D视觉][镜头光晕去除] 提出 FlareX 数据集，通过参数化模板创建、基于光照定律的 2D 合成和基于物理引擎的 3D 渲染三个阶段生成物理真实的镜头光晕数据，训练的模型在真实世界测试集上显著超越此前所有数据集。 领域现状：镜头光晕（lens flare）在强光条件下拍摄时会导致颜色偏移和…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring
 description: >-
-  [ICLR 2026][时间序列][XAI] 提出 Delta-XAI 统一框架，通过包装函数将14种现有XAI方法适配到在线时间序列预测变化解释场景，并提出 SWING（Shifted Window Integrated Gradients）方法，利用过去观测值构建积分路径以捕获时序依赖关系…
+  [ICLR 2026][时间序列][XAI] 提出 Delta-XAI 统一框架，通过包装函数将14种现有XAI方法适配到在线时间序列预测变化解释场景，并提出 SWING（Shifted Window Integrated Gradients）方法，利用过去观测值构建积分路径以捕获时序依赖关系，在多种评估指标上持续优于现有方法。
 tags:
   - "ICLR 2026"
   - "时间序列"

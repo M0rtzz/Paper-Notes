@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CapeLLM: Support-Free Category-Agnostic Pose Estimation with Multimodal Large Language Models
 description: >-
-  [ICCV 2025][多模态VLM][类别无关姿态估计] 首次将多模态大语言模型（MLLM）引入类别无关姿态估计（CAPE），仅需查询图像和文本描述即可预测任意类别的关键点位置，无需传统的支持图像和标注，在MP-100基准上超越5-shot SOTA。
+  [ICCV 2025][多模态VLM][类别无关姿态估计] 首次将多模态大语言模型（MLLM）引入类别无关姿态估计（CAPE），仅需查询图像和文本描述即可预测任意类别的关键点位置，无需传统的支持图像和标注，在MP-100基准上超越5-shot SOTA。 类别无关姿态估计（CAPE）旨在泛化到训练集中未见过的物体类别…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

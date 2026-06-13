@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BUFFER-X: Towards Zero-Shot Point Cloud Registration in Diverse Scenes
 description: >-
-  [ICCV 2025 (Highlight)][3D视觉][点云配准] 通过几何自适应bootstrapping确定体素大小/搜索半径、用FPS替代学习型关键点检测器、以及patch级坐标归一化，构建了一个无需人工调参即可在11个跨域数据集上实现零样本点云配准的pipeline BUFFER-X…
+  [ICCV 2025 (Highlight)][3D视觉][点云配准] 通过几何自适应bootstrapping确定体素大小/搜索半径、用FPS替代学习型关键点检测器、以及patch级坐标归一化，构建了一个无需人工调参即可在11个跨域数据集上实现零样本点云配准的pipeline BUFFER-X，在室内外多传感器多场景下取得了平均排名第一的成功率。
 tags:
   - "ICCV 2025 (Highlight)"
   - "3D视觉"

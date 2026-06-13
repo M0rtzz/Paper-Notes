@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging the Gap: Studio-Like Avatar Creation from a Monocular Phone Capture
 description: >-
-  [ECCV2024][图像生成][avatar creation] 提出从单目手机视频生成类似影棚级质量的面部纹理贴图的方法，结合 StyleGAN2 的 W+ 空间参数化与扩散模型超分辨率，实现从手机扫描到高质量 3D 头像的跨越。
+  [ECCV2024][图像生成][avatar creation] 提出从单目手机视频生成类似影棚级质量的面部纹理贴图的方法，结合 StyleGAN2 的 W+ 空间参数化与扩散模型超分辨率，实现从手机扫描到高质量 3D 头像的跨越。 传统的高质量头像创建依赖 LightStage 等复杂昂贵的影棚设备进行多角度、均匀光照下…
 tags:
   - "ECCV2024"
   - "图像生成"

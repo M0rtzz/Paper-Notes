@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokenMotion: Decoupled Motion Control via Token Disentanglement for Human-centric Video Generation
 description: >-
-  [CVPR 2025][视频生成][视频扩散模型] TokenMotion 提出首个基于 DiT 的视频扩散框架，通过将相机轨迹和人体姿态表示为时空 token，并利用"解耦-融合"策略与人体感知动态掩码，实现对相机运动与人体运动的精细联合控制…
+  [CVPR 2025][视频生成][视频扩散模型] TokenMotion 提出首个基于 DiT 的视频扩散框架，通过将相机轨迹和人体姿态表示为时空 token，并利用"解耦-融合"策略与人体感知动态掩码，实现对相机运动与人体运动的精细联合控制，在 text-to-video 和 image-to-video 范式上均超越现有 SOTA。
 tags:
   - "CVPR 2025"
   - "视频生成"

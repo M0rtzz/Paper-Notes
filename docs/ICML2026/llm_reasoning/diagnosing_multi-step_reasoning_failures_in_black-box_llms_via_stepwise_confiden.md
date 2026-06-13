@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diagnosing Multi-step Reasoning Failures in Black-box LLMs via Stepwise Confidence Attribution
 description: >-
-  [ICML2026][LLM推理][步骤级置信度] 本文把"找出 CoT 推理链里哪一步出错"形式化为黑盒场景下的步级置信度归因问题，用信息瓶颈原则把"同一问题多次采样得到的正确推理轨迹"压成共识结构，分别给出免训练的 NIBS（语义共识对齐）和可学习的 GIBS（图共识子图选择）两种实例…
+  [ICML2026][LLM推理][步骤级置信度] 本文把"找出 CoT 推理链里哪一步出错"形式化为黑盒场景下的步级置信度归因问题，用信息瓶颈原则把"同一问题多次采样得到的正确推理轨迹"压成共识结构，分别给出免训练的 NIBS（语义共识对齐）和可学习的 GIBS（图共识子图选择）两种实例，在 GSM8K / Math / MoreHopQA 上稳定优于白盒基线，并用步级反馈把自我纠错成功率提升最多 13.5%。
 tags:
   - "ICML2026"
   - "LLM推理"

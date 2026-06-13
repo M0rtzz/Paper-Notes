@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Creating Blank Canvas Against AI-Enabled Image Forgery
 description: >-
-  [AAAI 2026][图像生成][图像篡改检测] 提出"空白画布"机制，通过对抗扰动使 SAM 对受保护图像"视而不见"，当图像被篡改后篡改区域会被 SAM 自动识别，实现无需篡改训练数据的主动式篡改定位。
+  [AAAI 2026][图像生成][图像篡改检测] 提出"空白画布"机制，通过对抗扰动使 SAM 对受保护图像"视而不见"，当图像被篡改后篡改区域会被 SAM 自动识别，实现无需篡改训练数据的主动式篡改定位。 AIGC 图像编辑技术（如 SD Inpaint、ControlNet、SDXL）使得高度逼真的图像篡改变得极为简单…
 tags:
   - "AAAI 2026"
   - "图像生成"

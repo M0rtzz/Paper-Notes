@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DRO-BAS: Decision Making under the Exponential Family DRO with Bayesian Ambiguity Sets
 description: >-
-  [ICML 2025][distributionally robust optimization] 提出 DRO-BAS 框架，利用贝叶斯后验信念构建两种后验知情的不确定集（BASPP 和 BASPE），在指数族共轭模型下可化为高效单阶段随机规划…
+  [ICML 2025 Spotlight][distributionally robust optimization] 提出 DRO-BAS 框架，利用贝叶斯后验信念构建两种后验知情的不确定集（BASPP 和 BASPE），在指数族共轭模型下可化为高效单阶段随机规划，在 Newsvendor 和 Portfolio 问题上 Pareto 支配现有 Bayesian DRO 方法。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "distributionally robust optimization"
   - "exponential family"
   - "Bayesian ambiguity sets"

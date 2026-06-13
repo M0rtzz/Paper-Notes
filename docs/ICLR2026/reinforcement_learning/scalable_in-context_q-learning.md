@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable In-Context Q-Learning
 description: >-
-  [ICLR 2026][强化学习][情境RL] 提出 S-ICQL——将动态规划（Q-learning）和世界模型引入监督式 ICRL 框架，通过多头 Transformer 同时预测策略和情境值函数，预训练世界模型构建轻量级精确提示，advantage-weighted regression 提取策略…
+  [ICLR 2026][强化学习][情境RL] 提出 S-ICQL——将动态规划（Q-learning）和世界模型引入监督式 ICRL 框架，通过多头 Transformer 同时预测策略和情境值函数，预训练世界模型构建轻量级精确提示，advantage-weighted regression 提取策略，在离散和连续环境中从次优数据学习时一致超越所有基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

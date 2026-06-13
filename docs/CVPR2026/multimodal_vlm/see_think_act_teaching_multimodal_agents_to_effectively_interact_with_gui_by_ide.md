@@ -2,7 +2,7 @@
 title: >-
   [论文解读] See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles
 description: >-
-  [CVPR 2026][多模态VLM][GUI Agent] 提出 State-aware Reasoning (StaR)，通过教会多模态 Agent "感知当前状态→分析目标状态→决定是否操作"的三步推理链，将 GUI 开关控制准确率提升超 30%，同时不损害通用 Agent 任务性能。
+  [CVPR 2026][多模态VLM][GUI Agent] 提出 State-aware Reasoning (StaR)，通过教会多模态 Agent "感知当前状态→分析目标状态→决定是否操作"的三步推理链，将 GUI 开关控制准确率提升超 30%，同时不损害通用 Agent 任务性能。 1. 领域现状 多模态 Agen…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

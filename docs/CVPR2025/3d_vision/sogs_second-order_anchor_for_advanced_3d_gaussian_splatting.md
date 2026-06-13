@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOGS: Second-Order Anchor for Advanced 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯泼溅] 提出 SOGS，在基于锚点的 3D-GS 中引入二阶锚点（利用协方差矩阵捕获特征维度间相关性进行特征增强）和选择性梯度损失，在将锚点特征维度从 32 降至 12-16 的同时实现了超越 Scaffold-GS 的渲染质量。
+  [CVPR 2025][3D视觉][3D高斯泼溅] 提出 SOGS，在基于锚点的 3D-GS 中引入二阶锚点（利用协方差矩阵捕获特征维度间相关性进行特征增强）和选择性梯度损失，在将锚点特征维度从 32 降至 12-16 的同时实现了超越 Scaffold-GS 的渲染质量。 基于锚点的 3D-GS（如 Scaffold-GS…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents
 description: >-
-  [ICLR 2026][AI安全][视觉注入攻击] 构建首个完整的视觉prompt注入攻击基准VPI-Bench（306样本），系统评估Computer-Use和Browser-Use Agent在5个平台上的安全性…
+  [ICLR 2026][AI安全][视觉注入攻击] 构建首个完整的视觉prompt注入攻击基准VPI-Bench（306样本），系统评估Computer-Use和Browser-Use Agent在5个平台上的安全性。发现Browser-Use Agent极度脆弱（Amazon/Booking上100% AR），即使Anthropic的CUA也存在严重漏洞（最高59% AR），系统prompt防御无效。
 tags:
   - "ICLR 2026"
   - "AI安全"

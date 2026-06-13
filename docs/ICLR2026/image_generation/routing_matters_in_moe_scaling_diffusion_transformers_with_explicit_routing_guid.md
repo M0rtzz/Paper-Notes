@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Routing Matters in MoE: Scaling Diffusion Transformers with Explicit Routing Guidance
 description: >-
-  [ICLR 2026][图像生成][Mixture-of-Experts] 提出 ProMoE，一种针对扩散 Transformer 的 MoE 框架，通过两步路由器（条件路由 + 原型路由）和路由对比损失提供显式语义引导，促进专家特化，在 ImageNet 上显著超越现有 MoE 和稠密模型。
+  [ICLR 2026][图像生成][Mixture-of-Experts] 提出 ProMoE，一种针对扩散 Transformer 的 MoE 框架，通过两步路由器（条件路由 + 原型路由）和路由对比损失提供显式语义引导，促进专家特化，在 ImageNet 上显著超越现有 MoE 和稠密模型。 MoE 在 LLM 中取得了…
 tags:
   - "ICLR 2026"
   - "图像生成"

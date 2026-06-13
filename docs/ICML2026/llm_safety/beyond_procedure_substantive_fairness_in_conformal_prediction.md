@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Procedure: Substantive Fairness in Conformal Prediction
 description: >-
-  [ICML2026][LLM安全][保形预测] 本文超越保形预测（CP）的过程公平性视角，从下游决策的实质公平性出发，理论证明并实验验证了**等化预测集大小**（而非等化覆盖率）才是与实质公平强相关的程序指标…
+  [ICML2026][LLM安全][保形预测] 本文超越保形预测（CP）的过程公平性视角，从下游决策的实质公平性出发，理论证明并实验验证了**等化预测集大小**（而非等化覆盖率）才是与实质公平强相关的程序指标，并提出基于 LLM-in-the-loop 的可扩展评估框架和标签聚类 CP 方法来有效平衡效用与公平。
 tags:
   - "ICML2026"
   - "LLM安全"

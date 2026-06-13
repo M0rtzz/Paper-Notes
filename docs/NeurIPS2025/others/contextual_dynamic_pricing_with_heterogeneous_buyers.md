@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextual Dynamic Pricing with Heterogeneous Buyers
 description: >-
-  [NeurIPS 2025][动态定价] 首次系统研究买家类型异质（$K_\star$ 种未知类型）的上下文动态定价问题，提出基于乐观后验采样 (OPS) 的算法实现 $\tilde{O}(K_\star\sqrt{dT})$ 遗憾界（对 $d$ 和 $T$ 最优）…
+  [NeurIPS 2025][动态定价] 首次系统研究买家类型异质（$K_\star$ 种未知类型）的上下文动态定价问题，提出基于乐观后验采样 (OPS) 的算法实现 $\tilde{O}(K_\star\sqrt{dT})$ 遗憾界（对 $d$ 和 $T$ 最优），并在非上下文情形通过方差感知自适应离散化算法 ZoomV 实现 $\tilde{O}(\sqrt{K_\star T})$ 最优遗憾。
 tags:
   - "NeurIPS 2025"
   - "动态定价"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Left-Right Symmetry Breaking in CLIP-style Vision-Language Models Trained on Synthetic Spatial-Relation Data
 description: >-
-  [ICML 2026][多模态VLM][CLIP] 作者用一个 1D 合成 image-text 测试床端到端训练 CLIP-style Transformer，发现这类模型能学到"左/右"关系并泛化到未见物体对…
+  [ICML 2026][多模态VLM][CLIP] 作者用一个 1D 合成 image-text 测试床端到端训练 CLIP-style Transformer，发现这类模型能学到"左/右"关系并泛化到未见物体对，机制是**位置嵌入与 token 嵌入的交叉项 $EW_{QK}P^T$ 在 vision encoder 注意力 logit 中诱导出一条水平梯度**，打破左右对称；消融该项后左右判别准确率掉到随机水平。
 tags:
   - "ICML 2026"
   - "多模态VLM"

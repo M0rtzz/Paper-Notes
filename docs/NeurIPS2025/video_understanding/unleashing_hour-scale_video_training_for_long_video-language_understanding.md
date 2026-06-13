@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unleashing Hour-Scale Video Training for Long Video-Language Understanding
 description: >-
-  [NeurIPS 2025][视频理解][长视频理解] 构建首个大规模小时级视频指令跟随数据集 VideoMarathon（9700小时、330万QA对、22种任务），并提出 Hour-LLaVA 模型，通过记忆仓库+遗忘机制+MemAug模块实现1-FPS下小时级视频的高效训练与推理…
+  [NeurIPS 2025][视频理解][长视频理解] 构建首个大规模小时级视频指令跟随数据集 VideoMarathon（9700小时、330万QA对、22种任务），并提出 Hour-LLaVA 模型，通过记忆仓库+遗忘机制+MemAug模块实现1-FPS下小时级视频的高效训练与推理，在四个长视频基准上全面领先同规模开源模型。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

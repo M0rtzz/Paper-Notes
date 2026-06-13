@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization
 description: >-
-  [NeurIPS 2025][视频理解][video LLM] 提出 RRPO（Refined Regularized Preference Optimization），通过子序列级细粒度奖励和 token 级 KL 正则化替代 DPO 的响应级奖励，结合自对齐数据生成框架…
+  [NeurIPS 2025][视频理解][video LLM] 提出 RRPO（Refined Regularized Preference Optimization），通过子序列级细粒度奖励和 token 级 KL 正则化替代 DPO 的响应级奖励，结合自对齐数据生成框架，在视频理解任务上减少幻觉、提升时间推理能力。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

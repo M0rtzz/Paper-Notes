@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physically Inspired Gaussian Splatting for HDR Novel View Synthesis
 description: >-
-  [CVPR 2026][3D视觉][HDR新视角合成] 提出PhysHDR-GS——一个物理渲染启发的HDR新视角合成框架：将高斯颜色分解为固有反射率和可调环境光照，通过图像-曝光(IE)分支和高斯-光照(GI)分支互补捕获HDR细节，跨分支HDR一致性损失提供无GT的显式HDR监督…
+  [CVPR 2026][3D视觉][HDR新视角合成] 提出PhysHDR-GS——一个物理渲染启发的HDR新视角合成框架：将高斯颜色分解为固有反射率和可调环境光照，通过图像-曝光(IE)分支和高斯-光照(GI)分支互补捕获HDR细节，跨分支HDR一致性损失提供无GT的显式HDR监督，光照引导梯度缩放解决曝光偏差的梯度饥饿问题，在多个基准上优于HDR-GS 2.04dB且保持76FPS实时渲染。
 tags:
   - "CVPR 2026"
   - "3D视觉"

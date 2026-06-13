@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images
 description: >-
-  [ECCV 2024][新兴图像] 本文提出了一个通用框架 HiEI，通过人类中心的颜色量化模块（TTNet）、感知难度控制模块（PDC）和模板矢量化模块（TV），将自然图像转化为高质量的新兴图像（Emerging Images），在内容和风格质量上超越现有方法，同时可有效对抗深度视觉模型的攻击…
+  [ECCV 2024][新兴图像] 本文提出了一个通用框架 HiEI，通过人类中心的颜色量化模块（TTNet）、感知难度控制模块（PDC）和模板矢量化模块（TV），将自然图像转化为高质量的新兴图像（Emerging Images），在内容和风格质量上超越现有方法，同时可有效对抗深度视觉模型的攻击，适用于 CAPTCHA 机制。
 tags:
   - "ECCV 2024"
   - "新兴图像"

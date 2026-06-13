@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval
 description: >-
-  [音频/语音] 提出 SAVE 方法，通过添加专用语音分支（Whisper ASR + CLIP 文本编码器）和 soft-ALBEF 视觉-音频早期对齐策略，实现语音感知的视频表示学习，在五个视频-文本检索基准上全面超越 SOTA。
+  [音频/语音] 提出 SAVE 方法，通过添加专用语音分支（Whisper ASR + CLIP 文本编码器）和 soft-ALBEF 视觉-音频早期对齐策略，实现语音感知的视频表示学习，在五个视频-文本检索基准上全面超越 SOTA。 视频-文本检索（VTR）领域普遍采用 CLIP 作为基础，但由于 CLIP 仅提供图像和文…
 tags:
   - "音频/语音"
 ---

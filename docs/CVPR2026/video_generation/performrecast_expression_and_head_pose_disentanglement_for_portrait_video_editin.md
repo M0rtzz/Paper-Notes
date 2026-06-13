@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PerformRecast: Expression and Head Pose Disentanglement for Portrait Video Editing
 description: >-
-  [CVPR 2026][视频生成][人像视频编辑] PerformRecast 提出了一种基于改进 3DMM 关键点变换公式的 GAN 人像视频编辑方法，通过将表情形变加在头部旋转之前（与 FLAME 模型一致）实现表情与头部姿态的精确解耦，并引入边界对齐模块解决面部/非面部区域的拼接错位问题…
+  [CVPR 2026][视频生成][人像视频编辑] PerformRecast 提出了一种基于改进 3DMM 关键点变换公式的 GAN 人像视频编辑方法，通过将表情形变加在头部旋转之前（与 FLAME 模型一致）实现表情与头部姿态的精确解耦，并引入边界对齐模块解决面部/非面部区域的拼接错位问题，在表情替换和表情增强两种模式下均显著优于现有方法。
 tags:
   - "CVPR 2026"
   - "视频生成"

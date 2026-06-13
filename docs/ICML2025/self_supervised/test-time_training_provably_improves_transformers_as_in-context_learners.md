@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Training Provably Improves Transformers as In-Context Learners
 description: >-
-  [ICML 2025][自监督学习][test-time-training] 本文从理论上严格证明了测试时训练（TTT）能够可证明地提升 Transformer 的上下文学习（ICL）能力，并在表格基础模型 TabPFN 上验证 TTT 可将所需样本量减少 3-5 倍，同时带来显著的推理效率提升。
+  [ICML 2025][自监督学习][test-time-training] 本文从理论上严格证明了测试时训练（TTT）能够可证明地提升 Transformer 的上下文学习（ICL）能力，并在表格基础模型 TabPFN 上验证 TTT 可将所需样本量减少 3-5 倍，同时带来显著的推理效率提升。 核心问题 现代语言模型在处…
 tags:
   - "ICML 2025"
   - "自监督学习"

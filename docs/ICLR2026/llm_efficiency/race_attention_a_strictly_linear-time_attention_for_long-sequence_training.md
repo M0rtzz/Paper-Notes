@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RACE Attention: A Strictly Linear-Time Attention for Long-Sequence Training
 description: >-
-  [ICLR 2026][LLM效率][线性注意力] 提出 RACE Attention——用幂次角核替代 softmax 并通过可微 LSH 草图近似注意力输出，实现严格线性时间复杂度，支持单 GPU 处理 1200 万 token、单 CPU 处理 7500 万 token…
+  [ICLR 2026][LLM效率][线性注意力] 提出 RACE Attention——用幂次角核替代 softmax 并通过可微 LSH 草图近似注意力输出，实现严格线性时间复杂度，支持单 GPU 处理 1200 万 token、单 CPU 处理 7500 万 token，在多种任务上匹配或超越 softmax 精度。
 tags:
   - "ICLR 2026"
   - "LLM效率"

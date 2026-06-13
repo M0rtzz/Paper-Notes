@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers
 description: >-
-  [CVPR 2026][3D视觉][可供性学习] AffordMatcher 提出了一种从视觉信号（RGB 图像中的人物交互）定位 3D 场景中可供性区域的方法，通过大规模 AffordBridge 数据集和基于不相似度矩阵的 Match-to-Match 注意力机制…
+  [CVPR 2026][3D视觉][可供性学习] AffordMatcher 提出了一种从视觉信号（RGB 图像中的人物交互）定位 3D 场景中可供性区域的方法，通过大规模 AffordBridge 数据集和基于不相似度矩阵的 Match-to-Match 注意力机制，在零样本可供性分割上达到 53.4 mAP，超越次优方法 7.8 个点。
 tags:
   - "CVPR 2026"
   - "3D视觉"

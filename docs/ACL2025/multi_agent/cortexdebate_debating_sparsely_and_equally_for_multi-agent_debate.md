@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate
 description: >-
-  [ACL 2025][多智能体][多智能体辩论] 提出 CortexDebate，一种受人脑皮层工作机制启发的多智能体辩论方法，通过构建稀疏动态辩论图和基于 McKinsey 信任公式的评估模块（MDM），同时解决了现有 MAD 方法中"输入上下文过长"和"过度自信导致不平等辩论"两大核心问题。
+  [ACL 2025][多智能体][多智能体辩论] 提出 CortexDebate，一种受人脑皮层工作机制启发的多智能体辩论方法，通过构建稀疏动态辩论图和基于 McKinsey 信任公式的评估模块（MDM），同时解决了现有 MAD 方法中"输入上下文过长"和"过度自信导致不平等辩论"两大核心问题。 多智能体辩论（Multi-A…
 tags:
   - "ACL 2025"
   - "多智能体"

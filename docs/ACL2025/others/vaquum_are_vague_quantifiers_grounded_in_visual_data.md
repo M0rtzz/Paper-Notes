@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VAQUUM: Are Vague Quantifiers Grounded in Visual Data?
 description: >-
-  [ACL 2025][vague quantifiers] 本文发布了VAQUUM数据集（20,300条人类评分，1,089张图片），系统评估视觉语言模型在模糊量词（few/many等）使用上与人类的一致性，发现VLM像人类一样受物体数量影响，但不同评估范式下模型表现差异大…
+  [ACL 2025][vague quantifiers] 本文发布了VAQUUM数据集（20,300条人类评分，1,089张图片），系统评估视觉语言模型在模糊量词（few/many等）使用上与人类的一致性，发现VLM像人类一样受物体数量影响，但不同评估范式下模型表现差异大，表明判断和生成模糊量词依赖不同认知过程。
 tags:
   - "ACL 2025"
   - "vague quantifiers"

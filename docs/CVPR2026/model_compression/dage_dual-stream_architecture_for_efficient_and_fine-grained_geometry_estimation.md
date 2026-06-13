@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation
 description: >-
-  [CVPR 2026][模型压缩][多视图几何估计] 提出 DAGE 双流 Transformer 架构，将全局一致性建模（低分辨率流）与细粒度细节保持（高分辨率流）解耦，通过轻量 Cross-Attention Adapter 融合，实现 2K 分辨率和 1000 帧长序列上的高质量深度/点图估计和位姿预测…
+  [CVPR 2026][模型压缩][多视图几何估计] 提出 DAGE 双流 Transformer 架构，将全局一致性建模（低分辨率流）与细粒度细节保持（高分辨率流）解耦，通过轻量 Cross-Attention Adapter 融合，实现 2K 分辨率和 1000 帧长序列上的高质量深度/点图估计和位姿预测，速度比 Pi3 快 2-28 倍，视频几何估计取得新 SOTA。
 tags:
   - "CVPR 2026"
   - "模型压缩"

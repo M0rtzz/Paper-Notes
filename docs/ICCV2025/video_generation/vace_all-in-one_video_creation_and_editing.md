@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VACE: All-in-One Video Creation and Editing
 description: >-
-  [ICCV 2025][视频生成][视频编辑] 本文提出VACE，一个基于Diffusion Transformer的视频生成与编辑一体化框架，通过统一的Video Condition Unit (VCU)接口和可插拔的Context Adapter结构…
+  [ICCV 2025][视频生成][视频编辑] 本文提出VACE，一个基于Diffusion Transformer的视频生成与编辑一体化框架，通过统一的Video Condition Unit (VCU)接口和可插拔的Context Adapter结构，用单一模型覆盖参考生成、视频编辑、mask编辑等12+种视频任务，性能与任务专用模型持平。
 tags:
   - "ICCV 2025"
   - "视频生成"

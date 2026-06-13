@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3iGS: Factorised Tensorial Illumination for 3D Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][3D Gaussian Splatting] 3iGS 用基于张量分解的连续入射光照场替代 3DGS 中每个高斯体独立优化的球谐系数，结合可学习 BRDF 特征和轻量神经渲染器来建模出射辐射，在保持实时渲染速度的同时显著提升了镜面反射等视角依赖效果的渲染质量。
+  [ECCV 2024][3D视觉][3D Gaussian Splatting] 3iGS 用基于张量分解的连续入射光照场替代 3DGS 中每个高斯体独立优化的球谐系数，结合可学习 BRDF 特征和轻量神经渲染器来建模出射辐射，在保持实时渲染速度的同时显著提升了镜面反射等视角依赖效果的渲染质量。 领域现状：3D Gaussi…
 tags:
   - "ECCV 2024"
   - "3D视觉"

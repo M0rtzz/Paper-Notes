@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Functional Attention: From Pairwise Affinities to Functional Correspondences
 description: >-
-  [ICML 2026][语义分割][算子学习] 本文把 Transformer 里的 softmax 注意力重新解释为"两个学得到的函数基之间的最小二乘线性算子"，借用形状匹配里的 functional maps 思想，把 $n\times n$ 的点对亲和矩阵压缩成 $k\times k$ 的紧致谱算子…
+  [ICML 2026][语义分割][算子学习] 本文把 Transformer 里的 softmax 注意力重新解释为"两个学得到的函数基之间的最小二乘线性算子"，借用形状匹配里的 functional maps 思想，把 $n\times n$ 的点对亲和矩阵压缩成 $k\times k$ 的紧致谱算子，在 PDE 求解、3D 点云分割和 OOD 推广上同时拿到 SOTA。
 tags:
   - "ICML 2026"
   - "语义分割"

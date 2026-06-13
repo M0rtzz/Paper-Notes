@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sat2City: 3D City Generation from A Single Satellite Image with Cascaded Latent Diffusion
 description: >-
-  [ICCV 2025][3D视觉][城市级3D生成] 提出 Sat2City，首个从单张卫星图像同时生成城市级几何和外观的3D生成框架，通过将稀疏体素与级联潜扩散模型结合，引入 Re-Hash 多尺度特征网格和逆采样策略，在自建3D城市数据集上实现了优于现有方法的高保真生成。
+  [ICCV 2025][3D视觉][城市级3D生成] 提出 Sat2City，首个从单张卫星图像同时生成城市级几何和外观的3D生成框架，通过将稀疏体素与级联潜扩散模型结合，引入 Re-Hash 多尺度特征网格和逆采样策略，在自建3D城市数据集上实现了优于现有方法的高保真生成。 城市级3D场景生成：在游戏、城市规划和数字孪生等…
 tags:
   - "ICCV 2025"
   - "3D视觉"

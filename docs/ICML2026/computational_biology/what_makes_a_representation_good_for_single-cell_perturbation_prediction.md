@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Makes a Representation Good for Single-Cell Perturbation Prediction?
 description: >-
-  [ICML2026][计算生物][单细胞] 这篇论文提出 PerturbedVAE，认为单细胞扰动预测的好表征必须显式分离占主导的扰动不变背景程序和稀疏的扰动响应信号，并用因果结构组织后者，从而更好泛化到未见双基因组合扰动。
+  [ICML2026][计算生物][单细胞] 这篇论文提出 PerturbedVAE，认为单细胞扰动预测的好表征必须显式分离占主导的扰动不变背景程序和稀疏的扰动响应信号，并用因果结构组织后者，从而更好泛化到未见双基因组合扰动。 领域现状：单细胞扰动建模希望预测基因被 CRISPR 等方式干预后，细胞的基因表达谱会如何变化…
 tags:
   - "ICML2026"
   - "计算生物"

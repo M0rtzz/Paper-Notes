@@ -2,10 +2,10 @@
 title: >-
   [论文解读] BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute
 description: >-
-  [ICML 2025][LLM/NLP][LLM routing] 提出 BEST-Route（Best-of-n Enhanced Sampling and Test-time Route Optimization），在传统查询路由的基础上引入 best-of-n 采样策略，使路由器不仅选择模型…
+  [ICML 2025][LLM 其他][LLM routing] 提出 BEST-Route（Best-of-n Enhanced Sampling and Test-time Route Optimization），在传统查询路由的基础上引入 best-of-n 采样策略，使路由器不仅选择模型，还自适应决定采样数量 n，通过小模型多次采样+选优替代大模型单次调用，在不到 1% 性能损失下降低高达 60% 的推理成本。
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM routing"
   - "best-of-n sampling"
   - "测试时计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Multimodal Learning from the Perspective of Mitigating Classification Ability Disproportion
 description: >-
-  [NeurIPS 2025][多模态VLM][modality imbalance] 提出"**分类能力不均衡**"视角理解多模态学习中的模态不平衡，设计 Sustained Boosting 算法（共享编码器 + 多可配置分类器，同时优化分类和残差误差）配合自适应分类器分配（ACA）…
+  [NeurIPS 2025][多模态VLM][modality imbalance] 提出"**分类能力不均衡**"视角理解多模态学习中的模态不平衡，设计 Sustained Boosting 算法（共享编码器 + 多可配置分类器，同时优化分类和残差误差）配合自适应分类器分配（ACA），理论证明跨模态 gap loss 以 $\mathcal{O}(1/T)$ 收敛，在 CREMAD 等 6 个数据集上大幅超越 SOTA。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][视觉语言导航] NavGPT-2通过将冻结LLM的隐层表征作为视觉-语言特征输入拓扑图导航策略网络，在保留LLM可解释性导航推理能力的同时，消除了基于LM的智能体与VLN专用模型之间的性能差距，并展现出优异的数据效率。
+  [ECCV 2024][多模态VLM][视觉语言导航] NavGPT-2通过将冻结LLM的隐层表征作为视觉-语言特征输入拓扑图导航策略网络，在保留LLM可解释性导航推理能力的同时，消除了基于LM的智能体与VLN专用模型之间的性能差距，并展现出优异的数据效率。 视觉语言导航（VLN）要求智能体在真实3D环境中按自然语言指令导航…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

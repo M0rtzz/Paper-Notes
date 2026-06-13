@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Prediction Adaptive to Unknown Subpopulation Shifts
 description: >-
-  [ICLR 2026][优化/理论][共形预测] 针对子群体偏移（subpopulation shift）下标准 conformal prediction 失效的问题，提出三种自适应算法：利用学习的 domain classifier 加权校准数据（Algorithm 1/2）或利用嵌入相似度加权（Algor…
+  [ICLR 2026][优化/理论][共形预测] 针对子群体偏移（subpopulation shift）下标准 conformal prediction 失效的问题，提出三种自适应算法：利用学习的 domain classifier 加权校准数据（Algorithm 1/2）或利用嵌入相似度加权（Algorithm 3），在不完美甚至无 domain 标签的情况下仍能保证覆盖率，并应用于视觉分类和 LLM 幻觉检测。
 tags:
   - "ICLR 2026"
   - "优化/理论"

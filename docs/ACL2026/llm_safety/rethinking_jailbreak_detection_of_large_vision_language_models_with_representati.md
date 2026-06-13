@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Jailbreak Detection of Large Vision Language Models with Representational Contrastive Scoring
 description: >-
-  [ACL 2026][LLM安全][越狱检测] 提出表征对比评分（RCS）框架，通过分析 LVLM 内部中间层表征的几何结构，用轻量投影和对比评分区分恶意意图与良性分布偏移，在跨攻击类型泛化的严格评估协议下实现 SOTA 越狱检测性能。
+  [ACL 2026][LLM安全][越狱检测] 提出表征对比评分（RCS）框架，通过分析 LVLM 内部中间层表征的几何结构，用轻量投影和对比评分区分恶意意图与良性分布偏移，在跨攻击类型泛化的严格评估协议下实现 SOTA 越狱检测性能。 领域现状：大型视觉语言模型面临越来越多的多模态越狱攻击——对抗图像、跨模态提示注入、文本…
 tags:
   - "ACL 2026"
   - "LLM安全"

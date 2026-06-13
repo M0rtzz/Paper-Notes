@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIRe: Enhancing Multimodal Queries Representation via Fusion-Free Modality Interaction
 description: >-
-  [ACL 2025][多模态VLM][多模态检索] 提出MIRe框架，通过"无融合模态交互"（fusion-free modality interaction）在视觉-文本对齐阶段避免直接融合文本特征，利用查询引导注意力池化模块让文本嵌入引导视觉信息提取但不将文本信号反馈回视觉表示…
+  [ACL 2025][多模态VLM][多模态检索] 提出MIRe框架，通过"无融合模态交互"（fusion-free modality interaction）在视觉-文本对齐阶段避免直接融合文本特征，利用查询引导注意力池化模块让文本嵌入引导视觉信息提取但不将文本信号反馈回视觉表示，有效缓解多模态检索中的文本主导问题，在四个基准上取得零样本SOTA。
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FF3R: Feedforward Feature 3D Reconstruction from Unconstrained Views
 description: >-
-  [CVPR 2026][3D视觉][3D重建] FF3R是首个完全无标注的前馈框架，能从无约束多视角图像序列中同时进行几何重建和开放词汇语义理解，处理64+张图像的速度比优化方法快180倍。
+  [CVPR 2026 Findings][3D视觉][3D重建] FF3R是首个完全无标注的前馈框架，能从无约束多视角图像序列中同时进行几何重建和开放词汇语义理解，处理64+张图像的速度比优化方法快180倍。 领域现状：几何重建和语义理解是3D视觉的两大支柱，但将两者分割为独立框架导致冗余流水线和累积误差…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "3D重建"
   - "语义理解"

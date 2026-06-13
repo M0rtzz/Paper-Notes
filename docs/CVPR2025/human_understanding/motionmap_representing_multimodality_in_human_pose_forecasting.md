@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionMap: Representing Multimodality in Human Pose Forecasting
 description: >-
-  [CVPR 2025][人体理解][human pose forecasting] 提出MotionMap——用热力图表示运动空间分布的新范式，通过t-SNE降维+codebook实现可变数量模式预测和置信度量化，以最少采样实现最佳模式覆盖。
+  [CVPR 2025][人体理解][human pose forecasting] 提出MotionMap——用热力图表示运动空间分布的新范式，通过t-SNE降维+codebook实现可变数量模式预测和置信度量化，以最少采样实现最佳模式覆盖。 领域现状： 人体姿态预测本质上是多模态问题——同一观测序列存在无穷多可能的未来运动…
 tags:
   - "CVPR 2025"
   - "人体理解"

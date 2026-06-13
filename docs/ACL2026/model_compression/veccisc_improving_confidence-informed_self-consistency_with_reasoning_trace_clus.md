@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VecCISC: Improving Confidence-Informed Self-Consistency with Reasoning Trace Clustering and Candidate Answer Selection
 description: >-
-  [ACL2026][模型压缩][推理时计算] VecCISC 在 CISC 的置信度加权自一致性之前加入“按答案分组的推理轨迹嵌入聚类”，只把每个语义簇的代表轨迹交给 critic 打分，从而在基本保持甚至略微提升准确率的同时显著减少 critic 调用和 token 成本。
+  [ACL2026 Findings][模型压缩][推理时计算] VecCISC 在 CISC 的置信度加权自一致性之前加入“按答案分组的推理轨迹嵌入聚类”，只把每个语义簇的代表轨迹交给 critic 打分，从而在基本保持甚至略微提升准确率的同时显著减少 critic 调用和 token 成本。 领域现状：推理时扩展常见做法是…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "模型压缩"
   - "推理时计算"
   - "自一致性"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2605.08070](https://arxiv.org/abs/2605.08070)  
 **代码**: 无  
-**领域**: model_compression  
+**领域**: 模型压缩  
 **关键词**: 推理时计算, 自一致性, 置信度加权投票, 轨迹聚类, 成本压缩  
 
 ## 一句话总结

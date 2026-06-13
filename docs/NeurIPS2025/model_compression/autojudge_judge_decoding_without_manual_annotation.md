@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoJudge: Judge Decoding Without Manual Annotation
 description: >-
-  [NeurIPS 2025][模型压缩][投机解码] AutoJudge 自动化了 Judge Decoding 中"重要 token"的标注——通过半贪心搜索替换不匹配 token 并检查答案是否改变来标注重要性，训练逻辑回归分类器预测 token 重要性…
+  [NeurIPS 2025][模型压缩][投机解码] AutoJudge 自动化了 Judge Decoding 中"重要 token"的标注——通过半贪心搜索替换不匹配 token 并检查答案是否改变来标注重要性，训练逻辑回归分类器预测 token 重要性，使投机解码每轮接受 40+ token（vs 标准 ~20），在 GSM8K 上加速 1.5× 且准确率损失 <1%。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

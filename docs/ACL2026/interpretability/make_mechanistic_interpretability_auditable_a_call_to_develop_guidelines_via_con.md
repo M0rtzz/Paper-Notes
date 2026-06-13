@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Make Mechanistic Interpretability Auditable: A Call to Develop Guidelines via Continuous Collaborative Reviewing
 description: >-
-  [ACL2026][可解释性][机制可解释性] 这是一篇 position paper，主张机制可解释性研究需要补上“可审计性”这一层，通过连续协作评审平台、社区精炼指南和源证据追踪系统，把零散复现、负结果和方法学批评沉淀成可用于安全关键场景的审计协议。
+  [ACL2026][可解释性][机制可解释性] 这是一篇 position paper，主张机制可解释性研究需要补上“可审计性”这一层，通过连续协作评审平台、社区精炼指南和源证据追踪系统，把零散复现、负结果和方法学批评沉淀成可用于安全关键场景的审计协议。 领域现状：Mechanistic Interpretability（M…
 tags:
   - "ACL2026"
   - "可解释性"

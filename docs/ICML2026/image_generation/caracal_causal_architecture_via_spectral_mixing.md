@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Caracal: Causal Architecture via Spectral Mixing
 description: >-
-  [ICML 2026][图像生成][FFT] Caracal 用 $\mathcal{O}(L \log L)$ 的多头傅立叶（MHF）模块替换 Transformer 的 $\mathcal{O}(L^2)$ 注意力…
+  [ICML 2026][图像生成][FFT] Caracal 用 $\mathcal{O}(L \log L)$ 的多头傅立叶（MHF）模块替换 Transformer 的 $\mathcal{O}(L^2)$ 注意力，通过"pad-FFT-multiply-iFFT-truncate"实现频域内的严格因果掩码，并完全去掉位置编码，仅用标准 FFT 算子（不依赖 Mamba 那样的 CUDA kernel）就在 Tiny→Large 全尺度上与 Llama / Mamba / Mamba-2 / Jamba 性能相当。
 tags:
   - "ICML 2026"
   - "图像生成"

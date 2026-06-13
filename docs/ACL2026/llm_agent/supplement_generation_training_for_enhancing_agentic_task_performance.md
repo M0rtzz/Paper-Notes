@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Supplement Generation Training for Enhancing Agentic Task Performance
 description: >-
-  [ACL 2026][LLM Agent][补充生成训练] SGT（Supplement Generation Training）训练一个小型 LLM（1.7B）生成逐实例的补充文本（推理线索、摘要、错误提醒等），附加到输入后让冻结的大型 Actor 模型更有效地解决任务，在 5 个基准上平均提升 21%…
+  [ACL 2026 Findings][LLM Agent][补充生成训练] SGT（Supplement Generation Training）训练一个小型 LLM（1.7B）生成逐实例的补充文本（推理线索、摘要、错误提醒等），附加到输入后让冻结的大型 Actor 模型更有效地解决任务，在 5 个基准上平均提升 21%，无需修改大模型参数。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "补充生成训练"
   - "提示优化"

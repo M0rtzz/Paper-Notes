@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tripartite Weight-Space Ensemble for Few-Shot Class-Incremental Learning
 description: >-
-  [CVPR 2025][模型压缩][少样本类增量学习] 本文提出 Tri-WE 方法通过在权重空间插值 base、前一 session 和当前 session 三个分类头来更新整个模型（而非冻结特征提取器），并用 amplified data 知识蒸馏（ADKD）缓解少样本场景下的遗忘问题…
+  [CVPR 2025][模型压缩][少样本类增量学习] 本文提出 Tri-WE 方法通过在权重空间插值 base、前一 session 和当前 session 三个分类头来更新整个模型（而非冻结特征提取器），并用 amplified data 知识蒸馏（ADKD）缓解少样本场景下的遗忘问题，在 miniImageNet/CUB200/CIFAR100 上达到 FSCIL SOTA。
 tags:
   - "CVPR 2025"
   - "模型压缩"

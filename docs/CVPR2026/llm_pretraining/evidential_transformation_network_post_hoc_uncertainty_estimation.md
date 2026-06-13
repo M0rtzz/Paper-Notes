@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Evidential Transformation Network: Turning Pretrained Models into Evidential Models for Post-hoc Uncertainty Estimation
 description: >-
-  [CVPR 2026][预训练][不确定性估计] 本文提出 Evidential Transformation Network (ETN)，一个轻量级后置模块，通过在 logit 空间学习样本相关的仿射变换，将预训练分类器或 LLM 转化为证据模型，以最小的计算开销实现可靠的不确定性估计。
+  [CVPR 2026 Highlight][预训练][不确定性估计] 本文提出 Evidential Transformation Network (ETN)，一个轻量级后置模块，通过在 logit 空间学习样本相关的仿射变换，将预训练分类器或 LLM 转化为证据模型，以最小的计算开销实现可靠的不确定性估计。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "预训练"
   - "不确定性估计"
   - "证据深度学习"

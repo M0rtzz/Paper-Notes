@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dense Dispersed Structured Light for Hyperspectral 3D Imaging of Dynamic Scenes
 description: >-
-  [CVPR 2025][遥感][hyperspectral 3D imaging] 提出 Dense Dispersed Structured Light（DDSL）方法，利用廉价衍射光栅薄膜（<\$20）+ 立体 RGB 相机 + RGB 投影仪，设计光谱复用 DDSL 图案大幅减少所需投影帧数…
+  [CVPR 2025][遥感][hyperspectral 3D imaging] 提出 Dense Dispersed Structured Light（DDSL）方法，利用廉价衍射光栅薄膜（<\$20）+ 立体 RGB 相机 + RGB 投影仪，设计光谱复用 DDSL 图案大幅减少所需投影帧数，实现 6.6fps 实时高光谱 3D 成像，光谱分辨率 15.5nm FWHM，深度误差 4mm。
 tags:
   - "CVPR 2025"
   - "遥感"

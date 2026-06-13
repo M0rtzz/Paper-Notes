@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Incremental BPE Tokenization
 description: >-
-  [ICML 2026][预训练][BPE 分词] 本文提出首个具有严格 $\mathcal{O}(\log^2 t)$ 单字节最坏复杂度的增量 BPE 分词算法，通过 Aho–Corasick 自动机定位搜索空间、Centroid Decomposition 上的二分搜索定位"最后一个 token"…
+  [ICML 2026 Spotlight][预训练][BPE 分词] 本文提出首个具有严格 $\mathcal{O}(\log^2 t)$ 单字节最坏复杂度的增量 BPE 分词算法，通过 Aho–Corasick 自动机定位搜索空间、Centroid Decomposition 上的二分搜索定位"最后一个 token"，作为 drop-in replacement 相对 Hugging Face tokenizers 最高 $\sim 3\times$ 加速，并在病态输入上消除了 tiktoken 的 $\mathcal{O}(n^2)$ 退化。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "预训练"
   - "BPE 分词"
   - "增量算法"

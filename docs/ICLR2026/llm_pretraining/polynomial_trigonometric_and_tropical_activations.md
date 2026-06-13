@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Polynomial, trigonometric, and tropical activations
 description: >-
-  [ICLR 2026][预训练][激活函数] 系统探索基于正交基（Hermite多项式、Fourier三角基）和热带化（tropicalization）的可学习激活函数族，通过方差保持初始化解决多项式激活的梯度爆炸/消失问题，在GPT-2和ConvNeXt上成功替代GELU实现有效训练。
+  [ICLR 2026][预训练][激活函数] 系统探索基于正交基（Hermite多项式、Fourier三角基）和热带化（tropicalization）的可学习激活函数族，通过方差保持初始化解决多项式激活的梯度爆炸/消失问题，在GPT-2和ConvNeXt上成功替代GELU实现有效训练。 激活函数是深度神经网络的核心组件…
 tags:
   - "ICLR 2026"
   - "预训练"

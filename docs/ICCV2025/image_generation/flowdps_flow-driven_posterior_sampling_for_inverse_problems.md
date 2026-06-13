@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowDPS: Flow-Driven Posterior Sampling for Inverse Problems
 description: >-
-  [ICCV 2025][图像生成][Flow Matching] FlowDPS 通过推导 Flow 模型的 Tweedie 公式将 Flow ODE 分解为干净图像估计和噪声估计两个分量，在干净图像分量中注入似然梯度、在噪声分量中引入随机噪声，实现了基于 Flow 模型的后验采样逆问题求解…
+  [ICCV 2025][图像生成][Flow Matching] FlowDPS 通过推导 Flow 模型的 Tweedie 公式将 Flow ODE 分解为干净图像估计和噪声估计两个分量，在干净图像分量中注入似然梯度、在噪声分量中引入随机噪声，实现了基于 Flow 模型的后验采样逆问题求解，在 SD3.0 上的四种线性逆问题中超越所有已有方法。
 tags:
   - "ICCV 2025"
   - "图像生成"

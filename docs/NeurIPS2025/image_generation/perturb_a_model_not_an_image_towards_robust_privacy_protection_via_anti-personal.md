@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models
 description: >-
-  [NeurIPS 2025][图像生成][反个性化扩散模型] 提出Anti-Personalized Diffusion Model (APDM)，首次将隐私保护从数据级（图像扰动）转移到模型级（参数更新）…
+  [NeurIPS 2025][图像生成][反个性化扩散模型] 提出Anti-Personalized Diffusion Model (APDM)，首次将隐私保护从数据级（图像扰动）转移到模型级（参数更新），通过Direct Protective Optimization损失和Learning to Protect双路径优化策略，鲁棒地阻止扩散模型对特定主体的个性化，同时保持模型对其他主体的生成和个性化能力。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

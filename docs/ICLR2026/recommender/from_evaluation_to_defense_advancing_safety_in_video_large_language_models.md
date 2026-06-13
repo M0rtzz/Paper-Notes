@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Evaluation to Defense: Advancing Safety in Video Large Language Models
 description: >-
-  [ICLR2026][推荐系统][video LLM safety] 构建 VideoSafetyEval（11.4k 视频-查询对覆盖 19 种风险类别）揭示视频模态使安全性能下降 34.2%…
+  [ICLR2026][推荐系统][video LLM safety] 构建 VideoSafetyEval（11.4k 视频-查询对覆盖 19 种风险类别）揭示视频模态使安全性能下降 34.2%，提出 VideoSafety-R1 三阶段框架（报警 Token+SFT+Safety-guided GRPO）在 VSE-HH 上提升 71.1% 防御成功率。
 tags:
   - "ICLR2026"
   - "推荐系统"

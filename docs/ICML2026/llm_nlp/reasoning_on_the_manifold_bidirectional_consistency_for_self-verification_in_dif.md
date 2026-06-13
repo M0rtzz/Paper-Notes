@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Reasoning on the Manifold: Bidirectional Consistency for Self-Verification in Diffusion Language Models
 description: >-
-  [ICML2026][LLM/NLP][扩散语言模型] 本文从"有效推理轨迹是学习分布上的稳定吸引子"这一几何视角出发，提出 BMC（Bidirectional Manifold Consistency）这一无监督、训练自由的度量：通过对扩散语言模型（dLLM）生成结果做一次"前向重新掩码 + 后向少步重构"…
+  [ICML2026][LLM 其他][扩散语言模型] 本文从"有效推理轨迹是学习分布上的稳定吸引子"这一几何视角出发，提出 BMC（Bidirectional Manifold Consistency）这一无监督、训练自由的度量：通过对扩散语言模型（dLLM）生成结果做一次"前向重新掩码 + 后向少步重构"，用重构稳定性来打分；BMC 同时支撑错误诊断、推理时拒绝采样和 RL 稠密奖励三大任务，在四个推理基准上系统超越置信度、Self-Consistency、Self-Evaluation 等基线。
 tags:
   - "ICML2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散语言模型"
   - "流形几何"
   - "双向一致性"

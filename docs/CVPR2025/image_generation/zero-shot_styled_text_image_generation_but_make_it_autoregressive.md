@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emuru: Zero-Shot Styled Text Image Generation, but Make It Autoregressive
 description: >-
-  [CVPR 2025][图像生成][手写文本生成] 提出 Emuru，首个用于手写文本图像生成(HTG)的自回归模型，结合专用 VAE 和 T5 Transformer 编解码器，仅在 10 万+字体的合成数据上训练即可零样本泛化到未见过的手写风格，支持任意长度文本生成。
+  [CVPR 2025][图像生成][手写文本生成] 提出 Emuru，首个用于手写文本图像生成(HTG)的自回归模型，结合专用 VAE 和 T5 Transformer 编解码器，仅在 10 万+字体的合成数据上训练即可零样本泛化到未见过的手写风格，支持任意长度文本生成。 风格化手写文本生成(HTG)旨在生成指定内容和风格的…
 tags:
   - "CVPR 2025"
   - "图像生成"

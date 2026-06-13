@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Neural Radiance Field from Defocused Monocular Video
 description: >-
-  [ECCV 2024][3D视觉][动态NeRF] 提出 $D^2RF$，首个从散焦单目视频中恢复清晰动态NeRF的方法，通过将景深(DoF)渲染与体积渲染统一，引入分层DoF体积渲染来建模散焦模糊并恢复清晰新视角。
+  [ECCV 2024][3D视觉][动态NeRF] 提出 $D^2RF$，首个从散焦单目视频中恢复清晰动态NeRF的方法，通过将景深(DoF)渲染与体积渲染统一，引入分层DoF体积渲染来建模散焦模糊并恢复清晰新视角。 领域现状 动态NeRF从单目视频进行时空新视角合成已取得优秀成果，现有方法（NSFF、HyperNeRF、D…
 tags:
   - "ECCV 2024"
   - "3D视觉"

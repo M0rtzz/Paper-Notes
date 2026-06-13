@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Language and Items for Retrieval and Recommendation: Benchmarking LLMs as Semantic Encoders
 description: >-
-  [ACL 2026][推荐系统][BLaIR] 本文发布 Amazon Reviews 2023 大规模数据集（570M reviews / 48M items）并基于它构建 BLaIR 基准，覆盖序列推荐 / 协同过滤 / 商品搜索 (短 query + 复杂 query) 三大场景…
+  [ACL 2026][推荐系统][BLaIR] 本文发布 Amazon Reviews 2023 大规模数据集（570M reviews / 48M items）并基于它构建 BLaIR 基准，覆盖序列推荐 / 协同过滤 / 商品搜索 (短 query + 复杂 query) 三大场景，benchmark 了 11 个顶尖 LLM 作为语义编码器，发现它们在 BLaIR 上的排名与 MTEB 几乎不相关（Spearman -0.476），并指出推荐场景对语义编码器有独特要求。
 tags:
   - "ACL 2026"
   - "推荐系统"

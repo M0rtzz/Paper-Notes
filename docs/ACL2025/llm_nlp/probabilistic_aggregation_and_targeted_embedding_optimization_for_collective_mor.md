@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Probabilistic Aggregation and Targeted Embedding Optimization for Collective Moral Reasoning
 description: >-
-  [ACL 2025][LLM/NLP][道德推理] 提出一种双阶段框架：先用截断正态分布EM算法将多个LLM的连续道德评分聚合为集体共识概率，再对偏离共识的模型进行道德理论token级嵌入优化，使其与集体意见对齐，实现多LLM间一致的道德推理。
+  [ACL 2025][LLM 其他][道德推理] 提出一种双阶段框架：先用截断正态分布EM算法将多个LLM的连续道德评分聚合为集体共识概率，再对偏离共识的模型进行道德理论token级嵌入优化，使其与集体意见对齐，实现多LLM间一致的道德推理。 问题背景 LLM在道德推理上已具备一定能力，但面对复杂社会道德困境时…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "道德推理"
   - "LLM对齐"
   - "多模型聚合"

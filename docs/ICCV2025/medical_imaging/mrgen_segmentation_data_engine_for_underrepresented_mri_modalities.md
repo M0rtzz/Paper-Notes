@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MRGen: Segmentation Data Engine for Underrepresented MRI Modalities
 description: >-
-  [ICCV 2025][医学图像][MRI合成] 针对稀缺 MRI 模态缺乏分割标注的难题，构建了大规模放射影像数据集 MRGen-DB（~25 万张切片、100+ 模态），并训练了可控扩散数据引擎 MRGen，通过文本+掩码双条件控制生成目标模态的高质量 MR 图像用于训练分割模型…
+  [ICCV 2025][医学图像][MRI合成] 针对稀缺 MRI 模态缺乏分割标注的难题，构建了大规模放射影像数据集 MRGen-DB（~25 万张切片、100+ 模态），并训练了可控扩散数据引擎 MRGen，通过文本+掩码双条件控制生成目标模态的高质量 MR 图像用于训练分割模型，在 10 对跨模态实验中平均 DSC 从 10%~27% 提升至 43%~45%，实现了标注稀缺模态的"零样本"分割。
 tags:
   - "ICCV 2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Upper-Body Hierarchical Graph for Skeleton Based Emotion Recognition in Assistive Driving
 description: >-
-  [ECCV 2024][人体理解][情感识别] 本文针对辅助驾驶场景提出 UbH-GCN，利用上半身骨骼序列构建层次化图结构（UbH-Graph）动态建模关节运动与情感的关系，并引入类别特定变化机制平衡不均衡数据分布，在 AIDE 辅助驾驶数据集上超越现有多模态方法。
+  [ECCV 2024][人体理解][情感识别] 本文针对辅助驾驶场景提出 UbH-GCN，利用上半身骨骼序列构建层次化图结构（UbH-Graph）动态建模关节运动与情感的关系，并引入类别特定变化机制平衡不均衡数据分布，在 AIDE 辅助驾驶数据集上超越现有多模态方法。 领域现状：情感识别在辅助驾驶中至关重要——理解驾驶员的情…
 tags:
   - "ECCV 2024"
   - "人体理解"

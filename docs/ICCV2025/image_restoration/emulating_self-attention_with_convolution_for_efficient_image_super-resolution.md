@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emulating Self-Attention with Convolution for Efficient Image Super-Resolution
 description: >-
-  [ICCV 2025][图像恢复][图像超分辨率] 观察到自注意力在相邻层之间的特征和注意力图高度相似（89%/87%），提出用共享大核卷积和动态卷积核组成的 ConvAttn 模块替代大部分自注意力，同时首次在轻量级超分辨率中引入 Flash Attention 将窗口扩展到 32×32…
+  [ICCV 2025][图像恢复][图像超分辨率] 观察到自注意力在相邻层之间的特征和注意力图高度相似（89%/87%），提出用共享大核卷积和动态卷积核组成的 ConvAttn 模块替代大部分自注意力，同时首次在轻量级超分辨率中引入 Flash Attention 将窗口扩展到 32×32，以极低延迟和内存代价实现了 SOTA 性能。
 tags:
   - "ICCV 2025"
   - "图像恢复"

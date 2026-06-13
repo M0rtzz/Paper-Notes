@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws
 description: >-
-  [ICLR 2026][LLM效率][batch size scheduling] 通过 Functional Scaling Law 框架理论推导出 batch size scheduling 的最优策略——对困难任务，最优策略是训练大部分时间用小 batch…
+  [ICLR 2026][LLM效率][batch size scheduling] 通过 Functional Scaling Law 框架理论推导出 batch size scheduling 的最优策略——对困难任务，最优策略是训练大部分时间用小 batch，仅在最后阶段切换到大 batch（late switching）；并揭示了 fast catch-up 效应——切换后 loss 迅速追上全程大 batch 的轨迹，在 1.1B 参数 1T token 的 LLM 预训练中验证了该原则。
 tags:
   - "ICLR 2026"
   - "LLM效率"

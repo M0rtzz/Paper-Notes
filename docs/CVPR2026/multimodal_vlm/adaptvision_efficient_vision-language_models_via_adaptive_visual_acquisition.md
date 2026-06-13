@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition
 description: >-
-  [CVPR2026][多模态VLM][视觉token压缩] 提出 AdaptVision，通过由粗到精的主动视觉机制和强化学习训练，让 VLM 自主决定每个样本所需的最少视觉 token 数量，配合解耦式多轮策略优化 (DTPO) 实现效率与精度的最优平衡。
+  [CVPR2026][多模态VLM][视觉token压缩] 提出 AdaptVision，通过由粗到精的主动视觉机制和强化学习训练，让 VLM 自主决定每个样本所需的最少视觉 token 数量，配合解耦式多轮策略优化 (DTPO) 实现效率与精度的最优平衡。 1. VLM 依赖大量视觉 token（如 Qwen2.5-VL…
 tags:
   - "CVPR2026"
   - "多模态VLM"

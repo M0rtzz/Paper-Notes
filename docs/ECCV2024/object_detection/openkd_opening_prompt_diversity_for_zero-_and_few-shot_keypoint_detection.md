@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection
 description: >-
-  [ECCV 2024][目标检测][Zero-shot Keypoint Detection] 提出 OpenKD 模型，从模态（视觉+文本）、语义（seen vs. unseen）、语言（多样化文本）三个维度开放 prompt 多样性…
+  [ECCV 2024][目标检测][Zero-shot Keypoint Detection] 提出 OpenKD 模型，从模态（视觉+文本）、语义（seen vs. unseen）、语言（多样化文本）三个维度开放 prompt 多样性，通过多模态 prototype set、辅助关键点-文本插值和 LLM 文本解析，实现通用的 zero- and few-shot keypoint detection，在 Animal Pose、AwA、CUB、NABird 上取得 SOTA。
 tags:
   - "ECCV 2024"
   - "目标检测"

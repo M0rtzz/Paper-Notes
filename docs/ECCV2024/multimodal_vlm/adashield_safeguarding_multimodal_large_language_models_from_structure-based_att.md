@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting
 description: >-
-  [ECCV2024][多模态VLM][MLLM安全] 提出AdaShield框架，通过精心设计的静态防御提示(AdaShield-S)和基于LLM的自适应迭代优化框架(AdaShield-A)，在不微调MLLM或训练额外模块的前提下，有效防御结构化越狱攻击…
+  [ECCV2024][多模态VLM][MLLM安全] 提出AdaShield框架，通过精心设计的静态防御提示(AdaShield-S)和基于LLM的自适应迭代优化框架(AdaShield-A)，在不微调MLLM或训练额外模块的前提下，有效防御结构化越狱攻击，将攻击成功率从75%以上降至15%以下并保持正常任务性能。
 tags:
   - "ECCV2024"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VPD-100K: Towards Generalizable and Fine-grained Visual Privacy Protection
 description: >-
-  [ICML 2026][AI安全][隐私检测] 作者构造了 10 万张图、33 个细粒度类别、19 万+ 实例的大规模视觉隐私数据集 VPD-100K（覆盖人脸/屏上 PII/物理证件/位置标记四大域）…
+  [ICML 2026][AI安全][隐私检测] 作者构造了 10 万张图、33 个细粒度类别、19 万+ 实例的大规模视觉隐私数据集 VPD-100K（覆盖人脸/屏上 PII/物理证件/位置标记四大域），并提出三件套频域增强模块（FDAF + 自适应频谱门控 + 频域一致性损失）插入 YOLOv10 的 Neck，使 YOLOv10-L 在 VPD-100K 上 AP 从 53.8 涨到 58.6（+4.8），同时在 7.51ms 延迟下稳定跑直播流。
 tags:
   - "ICML 2026"
   - "AI安全"

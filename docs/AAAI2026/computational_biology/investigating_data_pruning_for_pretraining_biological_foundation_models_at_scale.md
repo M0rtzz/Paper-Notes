@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Investigating Data Pruning for Pretraining Biological Foundation Models at Scale
 description: >-
-  [AAAI 2026][计算生物][数据剪枝] 提出一个基于影响函数的后验数据剪枝框架，通过子集自影响估计（Subset-Based Self-Influence）和两种选择策略（Top-k Influence 和 Coverage-Centric Influence），在超过 99% 的极端剪枝率下…
+  [AAAI 2026][计算生物][数据剪枝] 提出一个基于影响函数的后验数据剪枝框架，通过子集自影响估计（Subset-Based Self-Influence）和两种选择策略（Top-k Influence 和 Coverage-Centric Influence），在超过 99% 的极端剪枝率下，用仅 0.2M 序列预训练的 RNA-FM 在多项下游任务上媲美甚至超越用 23M 序列训练的完整模型，揭示了生物序列数据集的巨大冗余性。
 tags:
   - "AAAI 2026"
   - "计算生物"

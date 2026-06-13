@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MODIX: Training-Free Multimodal Information-Driven Positional Index Scaling for VLMs
 description: >-
-  [CVPR 2026][多模态VLM][位置编码] 提出 MODIX，一个免训练框架，通过信息论分析（协方差熵+跨模态对齐）动态调整 VLM 中视觉和文本 token 的位置编码步长，将位置粒度分配给信息密集的模态以提升多模态推理。
+  [CVPR 2026 Highlight][多模态VLM][位置编码] 提出 MODIX，一个免训练框架，通过信息论分析（协方差熵+跨模态对齐）动态调整 VLM 中视觉和文本 token 的位置编码步长，将位置粒度分配给信息密集的模态以提升多模态推理。 领域现状：VLM 普遍使用 RoPE 位置编码，对所有 token 分配…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "多模态VLM"
   - "位置编码"
   - "RoPE"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Less is More: Clustered Cross-Covariance Control for Offline RL
 description: >-
-  [ICLR 2026][强化学习][离线强化学习] 本文揭示了离线RL中标准平方误差目标会引入有害的TD交叉协方差，并提出C⁴（Clustered Cross-Covariance Control for TD）方法，通过分区缓冲区采样和显式梯度校正惩罚来抑制这一效应…
+  [ICLR 2026][强化学习][离线强化学习] 本文揭示了离线RL中标准平方误差目标会引入有害的TD交叉协方差，并提出C⁴（Clustered Cross-Covariance Control for TD）方法，通过分区缓冲区采样和显式梯度校正惩罚来抑制这一效应，在小数据集和OOD区域主导的场景下实现高达30%的回报提升。
 tags:
   - "ICLR 2026"
   - "强化学习"

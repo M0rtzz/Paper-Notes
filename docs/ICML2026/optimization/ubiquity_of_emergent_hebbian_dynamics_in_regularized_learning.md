@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ubiquity of Emergent Hebbian Dynamics in Regularized Learning
 description: >-
-  [ICML 2026][优化/理论][Hebbian 学习] 本文证明：在 L2 权重衰减附近的稳态附近，**几乎任何**学习规则（SGD、Adam、DFA，甚至随机网络）的学习信号都会**自发**朝 Hebbian 方向对齐，而足够强的噪声又会把它翻成 anti-Hebbian…
+  [ICML 2026][优化/理论][Hebbian 学习] 本文证明：在 L2 权重衰减附近的稳态附近，**几乎任何**学习规则（SGD、Adam、DFA，甚至随机网络）的学习信号都会**自发**朝 Hebbian 方向对齐，而足够强的噪声又会把它翻成 anti-Hebbian，并在 $\gamma \propto \sigma^2$ 处出现明确的相变边界。
 tags:
   - "ICML 2026"
   - "优化/理论"

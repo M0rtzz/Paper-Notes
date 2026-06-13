@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Scaling Laws for Symbolic Regression
 description: >-
-  [NeurIPS 2025][可解释性][符号回归] 首次系统研究符号回归（SR）中的缩放定律，证明基于 Transformer 的端到端 SR 在三个数量级的计算范围内遵循幂律缩放趋势…
+  [NeurIPS 2025][可解释性][符号回归] 首次系统研究符号回归（SR）中的缩放定律，证明基于 Transformer 的端到端 SR 在三个数量级的计算范围内遵循幂律缩放趋势，并给出最优 token-to-parameter ratio $\approx 15$、batch size 和学习率随模型规模增长的经验规律。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

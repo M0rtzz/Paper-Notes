@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHARP: Short-Window Streaming for Accurate and Robust Prediction in Motion Forecasting
 description: >-
-  [CVPR 2026][自动驾驶][流式运动预测] 提出 SHARP，一种基于短窗口流式推理的运动预测框架，通过实例感知上下文流模块显式维护和更新跨时间步的智能体潜在表示，结合双目标训练策略，在 Argoverse 2 多智能体基准上达到流式推理 SOTA，同时保持极低延迟。
+  [CVPR 2026][自动驾驶][流式运动预测] 提出 SHARP，一种基于短窗口流式推理的运动预测框架，通过实例感知上下文流模块显式维护和更新跨时间步的智能体潜在表示，结合双目标训练策略，在 Argoverse 2 多智能体基准上达到流式推理 SOTA，同时保持极低延迟。 1. 领域现状：轨迹预测是自动驾驶控制栈的核心组…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

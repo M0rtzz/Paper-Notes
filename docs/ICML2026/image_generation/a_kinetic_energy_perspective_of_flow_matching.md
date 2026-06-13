@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Kinetic Energy Perspective of Flow Matching
 description: >-
-  [ICML2026][图像生成][Flow Matching] 这篇论文把 flow matching 采样轨迹看成粒子运动，定义 Kinetic Path Energy（KPE）来度量每个样本生成过程的累积动能，并据此提出训练-free 的 Kinetic Trajectory Shaping…
+  [ICML2026 Spotlight][图像生成][Flow Matching] 这篇论文把 flow matching 采样轨迹看成粒子运动，定义 Kinetic Path Energy（KPE）来度量每个样本生成过程的累积动能，并据此提出训练-free 的 Kinetic Trajectory Shaping，在提升生成质量的同时抑制末端能量尖峰导致的记忆化。
 tags:
-  - "ICML2026"
+  - "ICML2026 Spotlight"
   - "图像生成"
   - "Flow Matching"
   - "Kinetic Path Energy"

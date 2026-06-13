@@ -2,10 +2,10 @@
 title: >-
   [论文解读] "I've Seen How This Goes"：用渐进条件惊奇度刻画 LLM 与人类写作的多样性
 description: >-
-  [ICML 2026][LLM/NLP][多样性度量] 本文提出 $D_{Ca_n}=C\cdot a_n$ 这一无需 embedding、无需参考语料、无需人工标签的多样性度量：用一个基座模型 $\theta$ 在单次前向里读完所有响应…
+  [ICML 2026][LLM 其他][多样性度量] 本文提出 $D_{Ca_n}=C\cdot a_n$ 这一无需 embedding、无需参考语料、无需人工标签的多样性度量：用一个基座模型 $\theta$ 在单次前向里读完所有响应，把"最后一条响应在已见过 $n-1$ 条之后还剩多少 per-byte 条件惊奇"乘上"响应整体的可读性"，在 McDiv 人评基准上逼近 SentBERT，并在 OLMo-2-7B 的 base→SFT→DPO→RLVR 上单调下降，准确捕捉后训练带来的模式坍缩。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多样性度量"
   - "条件惊奇度"
   - "上下文学习"

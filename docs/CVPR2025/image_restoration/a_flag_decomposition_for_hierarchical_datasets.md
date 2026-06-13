@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Flag Decomposition for Hierarchical Datasets
 description: >-
-  [CVPR 2025][图像恢复][Flag流形] 本文提出Flag Decomposition (FD)，一种将层次结构数据分解为保持层级关系的flag流形表示（Stiefel坐标）的算法，在去噪、聚类和少样本学习任务中展示了相比SVD等标准方法的优势。
+  [CVPR 2025][图像恢复][Flag流形] 本文提出Flag Decomposition (FD)，一种将层次结构数据分解为保持层级关系的flag流形表示（Stiefel坐标）的算法，在去噪、聚类和少样本学习任务中展示了相比SVD等标准方法的优势。 领域现状：层次结构广泛存在于数据中——分类体系、光谱层级、特征层级等…
 tags:
   - "CVPR 2025"
   - "图像恢复"

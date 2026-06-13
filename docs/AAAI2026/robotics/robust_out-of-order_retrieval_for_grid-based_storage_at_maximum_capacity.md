@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Out-of-Order Retrieval for Grid-Based Storage at Maximum Capacity
 description: >-
-  [AAAI 2026][机器人][网格存储] 针对满载 2D 网格存储系统中检索顺序不确定的问题，提出 k-bounded perturbation 不确定性模型，证明 Θ(k) 列宽是零重定位的充要条件，并给出高效鲁棒存储求解器与贪心检索策略，当 k ≤ 0.5c 时几乎消除重定位…
+  [AAAI 2026][机器人][网格存储] 针对满载 2D 网格存储系统中检索顺序不确定的问题，提出 k-bounded perturbation 不确定性模型，证明 Θ(k) 列宽是零重定位的充要条件，并给出高效鲁棒存储求解器与贪心检索策略，当 k ≤ 0.5c 时几乎消除重定位，k 到达 c 时仍减少 50%+ 重定位。
 tags:
   - "AAAI 2026"
   - "机器人"

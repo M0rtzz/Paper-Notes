@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRP: Distilled Reasoning Pruning with Skill-aware Step Decomposition for Efficient Large Reasoning Models
 description: >-
-  [ACL 2026][LLM推理][Long-CoT 剪枝] DRP 让"短 CoT 老师 (GPT-4o)"在"长 CoT 学生 (R1-Distill-Qwen)"自己的推理轨迹上做技能级分步+剪枝/重写，再把这条"裁掉冗余但保留学生说话风格"的轨迹蒸馏回学生…
+  [ACL 2026][LLM推理][Long-CoT 剪枝] DRP 让"短 CoT 老师 (GPT-4o)"在"长 CoT 学生 (R1-Distill-Qwen)"自己的推理轨迹上做技能级分步+剪枝/重写，再把这条"裁掉冗余但保留学生说话风格"的轨迹蒸馏回学生，在 GSM8K 把 7B 模型 token 从 917 砍到 328（−64%）的同时把 Pass@1 从 91.7% 提到 94.1%，且在 AIME/AMC/MATH500 等 OOD 任务上同时降 token、涨准确率。
 tags:
   - "ACL 2026"
   - "LLM推理"

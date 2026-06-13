@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Random Initialization of Gated Sparse Adapters (RIGSA)
 description: >-
-  [ICML 2025][模型压缩][sparse fine-tuning] 提出 RIGSA，一种基于随机初始化全秩适配器 + ReZero 门控 + 迭代幅度剪枝的稀疏微调方法，在学习新任务的同时比 QLoRA 更好地保留源任务性能。
+  [ICML 2025][模型压缩][sparse fine-tuning] 提出 RIGSA，一种基于随机初始化全秩适配器 + ReZero 门控 + 迭代幅度剪枝的稀疏微调方法，在学习新任务的同时比 QLoRA 更好地保留源任务性能。 现有痛点 现有痛点：微调 LLM 学习新任务时面临灾难性遗忘：问题 领域现状 领域现状：…
 tags:
   - "ICML 2025"
   - "模型压缩"

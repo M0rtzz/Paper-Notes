@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantum Optimization via Gradient-Based Hamiltonian Descent
 description: >-
-  [ICML2025][优化/理论][量子哈密顿下降] 将梯度信息融入量子哈密顿下降 (QHD) 框架，提出 gradient-based QHD，在凸和非凸优化中均实现了比原始 QHD 及经典方法（NAG、SGDM）快至少一个数量级的收敛速度和更高的全局最优命中概率。
+  [ICML2025][优化/理论][量子哈密顿下降] 将梯度信息融入量子哈密顿下降 (QHD) 框架，提出 gradient-based QHD，在凸和非凸优化中均实现了比原始 QHD 及经典方法（NAG、SGDM）快至少一个数量级的收敛速度和更高的全局最优命中概率。 - 经典优化瓶颈：一阶梯度方法（GD、NAG）在高度非凸…
 tags:
   - "ICML2025"
   - "优化/理论"

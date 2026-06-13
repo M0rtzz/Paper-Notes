@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking
 description: >-
-  [CVPR 2025][遥感][无人机跟踪] 提出 ORTrack 框架，通过基于空间 Cox 过程的随机遮罩来学习遮挡鲁棒的 ViT 特征表征（训练时加遮罩约束、推理时零开销），并设计自适应特征蒸馏方法将大模型压缩为轻量级学生模型 ORTrack-D…
+  [CVPR 2025][遥感][无人机跟踪] 提出 ORTrack 框架，通过基于空间 Cox 过程的随机遮罩来学习遮挡鲁棒的 ViT 特征表征（训练时加遮罩约束、推理时零开销），并设计自适应特征蒸馏方法将大模型压缩为轻量级学生模型 ORTrack-D，在多个无人机跟踪基准上实现 SOTA 精度与实时速度的最佳平衡。
 tags:
   - "CVPR 2025"
   - "遥感"

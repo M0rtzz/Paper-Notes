@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMTok: Multimodal Coverage Maximization for Efficient Inference of VLMs
 description: >-
-  [ICLR 2026][多模态VLM][vision token selection] 提出MMTok——一种基于最大覆盖问题（Maximum Coverage Problem）的多模态视觉token选择框架，同时利用文本-视觉和视觉-视觉覆盖信息来选择最具信息量的视觉token子集…
+  [ICLR 2026][多模态VLM][vision token selection] 提出MMTok——一种基于最大覆盖问题（Maximum Coverage Problem）的多模态视觉token选择框架，同时利用文本-视觉和视觉-视觉覆盖信息来选择最具信息量的视觉token子集，在training-free设置下显著优于单模态baseline，甚至超越需要微调的方法。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

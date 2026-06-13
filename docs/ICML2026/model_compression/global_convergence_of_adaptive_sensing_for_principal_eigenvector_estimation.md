@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Global Convergence of Adaptive Sensing for Principal Eigenvector Estimation
 description: >-
-  [ICML 2026][模型压缩][主成分分析] 本文建立压缩流式 PCA 的最优收敛率——使用每步两个**自适应**测量的 Oja 算法在有噪声观测下的误差上界与信息论下界匹配（均为 $\Theta(\lambda_1 \lambda_2 d^2 / (\Delta^2 t))$）…
+  [ICML 2026][模型压缩][主成分分析] 本文建立压缩流式 PCA 的最优收敛率——使用每步两个**自适应**测量的 Oja 算法在有噪声观测下的误差上界与信息论下界匹配（均为 $\Theta(\lambda_1 \lambda_2 d^2 / (\Delta^2 t))$），首次揭示压缩相对完全观测的根本代价是额外的 $d$ 因子，而自适应相对非自适应又救回一个 $d$ 因子。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A General Framework for Dynamic Consistent Submodular Maximization
 description: >-
-  [ICML2026][优化/理论][子模最大化] 这篇论文给出了 fully dynamic 子模最大化的一般一致性框架，在允许插入和删除的流式环境中，首次为 cardinality 与 matroid 约束同时实现常数近似和次线性级别的 worst-case 每步解变动。
+  [ICML2026][优化/理论][子模最大化] 这篇论文给出了 fully dynamic 子模最大化的一般一致性框架，在允许插入和删除的流式环境中，首次为 cardinality 与 matroid 约束同时实现常数近似和次线性级别的 worst-case 每步解变动。 领域现状：子模最大化常用于数据摘要、推荐、主动学习…
 tags:
   - "ICML2026"
   - "优化/理论"

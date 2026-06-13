@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Supervision for Continual Representation Learning
 description: >-
-  [ECCV 2024][自监督学习][continual learning] 挑战了"自监督学习在持续表征学习中优于监督学习"的普遍观点，发现**监督学习加上 MLP 投影头**即可在持续学习场景下构建出比 SSL 更强的表征——关键不在于有无标签，而在于 MLP projector 对特征可迁移性的提升作用…
+  [ECCV 2024][自监督学习][continual learning] 挑战了"自监督学习在持续表征学习中优于监督学习"的普遍观点，发现**监督学习加上 MLP 投影头**即可在持续学习场景下构建出比 SSL 更强的表征——关键不在于有无标签，而在于 MLP projector 对特征可迁移性的提升作用。
 tags:
   - "ECCV 2024"
   - "自监督学习"

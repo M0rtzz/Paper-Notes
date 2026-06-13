@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Splatting for Efficient Satellite Image Photogrammetry (EOGS)
 description: >-
-  [CVPR 2025][3D视觉][高斯溅射] 本文提出 EOGS，首个基于 3D 高斯溅射的地球观测框架，通过仿射相机近似、阴影映射和三种正则化策略，在卫星图像三维重建任务上达到与 EO-NeRF 相当的精度，同时训练速度快 300 倍（3 分钟 vs 15 小时）。
+  [CVPR 2025][3D视觉][高斯溅射] 本文提出 EOGS，首个基于 3D 高斯溅射的地球观测框架，通过仿射相机近似、阴影映射和三种正则化策略，在卫星图像三维重建任务上达到与 EO-NeRF 相当的精度，同时训练速度快 300 倍（3 分钟 vs 15 小时）。 领域现状：卫星遥感摄影测量旨在从多视角卫星图像恢复地表…
 tags:
   - "CVPR 2025"
   - "3D视觉"

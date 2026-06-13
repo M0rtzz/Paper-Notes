@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-Stream Diffusion for World-Model Augmented Vision-Language-Action Model
 description: >-
-  [ICML 2026][机器人][VLA] DUST 用一套"分流式"多模态扩散 Transformer（MMDiT）把动作流与未来视觉嵌入流并排走，靠共享 attention 做跨模态融合，再配独立噪声调度和动作-视觉异步采样，让 VLA 同时学会"做什么动作"和"动作会产生什么后果"…
+  [ICML 2026][机器人][VLA] DUST 用一套"分流式"多模态扩散 Transformer（MMDiT）把动作流与未来视觉嵌入流并排走，靠共享 attention 做跨模态融合，再配独立噪声调度和动作-视觉异步采样，让 VLA 同时学会"做什么动作"和"动作会产生什么后果"，在 RoboCasa / GR-1 / Franka 真机上稳定刷过 GR00T-N1.5+FLARE。
 tags:
   - "ICML 2026"
   - "机器人"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2510.27607](https://arxiv.org/abs/2510.27607)  
 **代码**: 项目主页已公开（论文中以"Project page here"形式给出）  
-**领域**: robotics  
+**领域**: 机器人  
 **关键词**: VLA、世界模型、多模态扩散、flow matching、异步采样  
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BITS Pilani at SemEval-2026 Task 9: Structured Supervised Fine-Tuning with DPO Refinement for Polarization Detection
 description: >-
-  [ACL 2026 (SemEval workshop)][社会计算][极化检测] 本文为 SemEval-2026 POLAR 极化检测任务（英文子集）提出「结构化 slot-filling SFT + DPO 偏好优化」两阶段流水线，赛中提交 Qwen2.5-7B 系统取得 0.7664 Macro-F1…
+  [ACL 2026 (SemEval workshop)][社会计算][极化检测] 本文为 SemEval-2026 POLAR 极化检测任务（英文子集）提出「结构化 slot-filling SFT + DPO 偏好优化」两阶段流水线，赛中提交 Qwen2.5-7B 系统取得 0.7664 Macro-F1，赛后换 Mistral-Nemo-12B + LLM-judge 过滤的偏好对，Macro-F1 提升至 0.8162，超过 organiser baseline (0.7802)。
 tags:
   - "ACL 2026 (SemEval workshop)"
   - "社会计算"

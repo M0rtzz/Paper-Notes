@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: The Future of Bayesian Prediction Is Prior-Fitted
 description: >-
-  [ICML 2025][预训练][Prior-Data Fitted Networks] 本文是一篇 position paper，主张 **Prior-Data Fitted Networks (PFNs)**——在随机生成的合成数据集上训练神经网络以近似贝叶斯后验预测分布——代表了贝叶斯推断的未来方向…
+  [ICML 2025][预训练][Prior-Data Fitted Networks] 本文是一篇 position paper，主张 **Prior-Data Fitted Networks (PFNs)**——在随机生成的合成数据集上训练神经网络以近似贝叶斯后验预测分布——代表了贝叶斯推断的未来方向，因为它在实现简洁性、先验定义灵活性、推理速度上全面超越传统 MCMC/VI/GP 方法，并已在表格学习 (TabPFN) 中证明了超越 XGBoost 的实力。
 tags:
   - "ICML 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoRA Fine-Tuning without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs
 description: >-
-  [ICML 2025][模型压缩][LoRA] 提出在 CPU 上高效进行 LoRA 微调的元生成框架，通过预计算和缓存策略避免 GPU 依赖，使资源受限环境下的 LLM 微调成为可能。
+  [ICML 2025][模型压缩][LoRA] 提出在 CPU 上高效进行 LoRA 微调的元生成框架，通过预计算和缓存策略避免 GPU 依赖，使资源受限环境下的 LLM 微调成为可能。 领域现状 领域现状：模型压缩领域近年来取得了显著进展，但仍面临若干关键挑战。现有方法在处理复杂场景时存在性能瓶颈，需要更有效的解决方案…
 tags:
   - "ICML 2025"
   - "模型压缩"

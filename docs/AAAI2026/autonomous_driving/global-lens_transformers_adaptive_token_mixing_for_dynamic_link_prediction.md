@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction
 description: >-
-  [AAAI 2026][自动驾驶][动态图学习] 提出 GLFormer，一个轻量级的无注意力 Transformer 框架用于动态图链接预测，用基于交互顺序和时间间隔的自适应令牌混合器替代自注意力，配合层次化聚合机制扩展时间感受野，在 6 个基准上取得了与 Transformer 基线持平或更优的性能…
+  [AAAI 2026][自动驾驶][动态图学习] 提出 GLFormer，一个轻量级的无注意力 Transformer 框架用于动态图链接预测，用基于交互顺序和时间间隔的自适应令牌混合器替代自注意力，配合层次化聚合机制扩展时间感受野，在 6 个基准上取得了与 Transformer 基线持平或更优的性能，同时大幅降低计算复杂度。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

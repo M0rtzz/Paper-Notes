@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream
 description: >-
-  [ECCV 2024][3D视觉][NeRF] 提出 BeNeRF，仅从**单张模糊图像**及其对应的事件流（event stream）联合恢复神经辐射场与相机运动轨迹，无需多视角输入或已知位姿，即可实现高质量去模糊与新视角合成。
+  [ECCV 2024][3D视觉][NeRF] 提出 BeNeRF，仅从单张模糊图像：及其对应的事件流（event stream）联合恢复神经辐射场与相机运动轨迹，无需多视角输入或已知位姿，即可实现高质量去模糊与新视角合成。 NeRF 依赖多视角清晰图像：传统 NeRF 需要多张标定好的清晰 RGB 图像才能重建 3D 场景…
 tags:
   - "ECCV 2024"
   - "3D视觉"

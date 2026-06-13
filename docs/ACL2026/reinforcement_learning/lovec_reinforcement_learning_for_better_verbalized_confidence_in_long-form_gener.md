@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoVeC: Reinforcement Learning for Better Verbalized Confidence in Long-Form Generations
 description: >-
-  [ACL 2026][强化学习][长文本生成] LoVeC 教 LLM 在长文本生成过程中每写完一句就追加一个 0–10 的 `<confidence>` 数字标签，用 GRPO（在线，需 oracle fact-checker）或 DPO（离线偏好对）训练让该标签与 GPT-4o 判定的事实性对齐…
+  [ACL 2026][强化学习][长文本生成] LoVeC 教 LLM 在长文本生成过程中每写完一句就追加一个 0–10 的 `<confidence>` 数字标签，用 GRPO（在线，需 oracle fact-checker）或 DPO（离线偏好对）训练让该标签与 GPT-4o 判定的事实性对齐，单次解码即可输出可校准、可机器解析的置信度，比 SOTA LUQ 在 Brier/ECE/Spearman 上全面更好且推理速度快 20 倍。
 tags:
   - "ACL 2026"
   - "强化学习"

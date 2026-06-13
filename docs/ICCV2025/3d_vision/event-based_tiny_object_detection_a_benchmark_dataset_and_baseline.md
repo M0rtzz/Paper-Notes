@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event-based Tiny Object Detection: A Benchmark Dataset and Baseline
 description: >-
-  [ICCV 2025][3D视觉][Event Camera] 提出首个大规模事件相机反无人机小目标检测基准EV-UAV数据集（147序列/230万事件级标注/平均目标仅6.8×5.4像素），并设计EV-SpSegNet——基于稀疏3D点云分割的检测框架，利用小目标在时空事件点云中形成连续曲线的特征…
+  [ICCV 2025][3D视觉][Event Camera] 提出首个大规模事件相机反无人机小目标检测基准EV-UAV数据集（147序列/230万事件级标注/平均目标仅6.8×5.4像素），并设计EV-SpSegNet——基于稀疏3D点云分割的检测框架，利用小目标在时空事件点云中形成连续曲线的特征，配合时空相关性损失(STC loss)引导网络保留目标事件，在IoU/ACC/检测概率上全面超越13种SOTA方法，推理速度快10-100倍。
 tags:
   - "ICCV 2025"
   - "3D视觉"

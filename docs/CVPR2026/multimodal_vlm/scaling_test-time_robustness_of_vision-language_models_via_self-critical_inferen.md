@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Test-Time Robustness of Vision-Language Models via Self-Critical Inference Framework
 description: >-
-  [CVPR 2026][多模态VLM][LVLM鲁棒性] 提出 Self-Critical Inference (SCI) 框架，通过多轮文本+视觉反事实推理的 logit 聚合来同时解决 LVLM 的语言偏差和语言敏感性问题，并提出 DRBench 动态鲁棒性基准来模型特异地评估鲁棒性…
+  [CVPR 2026][多模态VLM][LVLM鲁棒性] 提出 Self-Critical Inference (SCI) 框架，通过多轮文本+视觉反事实推理的 logit 聚合来同时解决 LVLM 的语言偏差和语言敏感性问题，并提出 DRBench 动态鲁棒性基准来模型特异地评估鲁棒性。增加反事实推理轮次可持续提升鲁棒性，开辟了测试时缩放的新方向。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning-Driven Anomaly Detection and Localization with Image-Level Supervision
 description: >-
-  [CVPR 2026][目标检测][异常检测与定位] 提出 ReAL 和 CGRO 两个模块，通过提取 MLLM 自回归推理过程中的异常相关 token 并聚合其视觉注意力来生成像素级异常图，再通过一致性引导的强化学习对齐推理与视觉证据，实现仅凭图像级监督的端到端异常检测、定位与可解释推理。
+  [CVPR 2026][目标检测][异常检测与定位] 提出 ReAL 和 CGRO 两个模块，通过提取 MLLM 自回归推理过程中的异常相关 token 并聚合其视觉注意力来生成像素级异常图，再通过一致性引导的强化学习对齐推理与视觉证据，实现仅凭图像级监督的端到端异常检测、定位与可解释推理。 工业异常检测面临多重挑战： -…
 tags:
   - "CVPR 2026"
   - "目标检测"

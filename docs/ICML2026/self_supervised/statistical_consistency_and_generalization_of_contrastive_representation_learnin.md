@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Statistical Consistency and Generalization of Contrastive Representation Learning
 description: >-
-  [ICML 2026][自监督学习][对比学习] 本文首次为对比表示学习 (CRL) 建立了"上游对比损失最小化等价于下游 AUC 型检索性能最优"的 Fisher / 统计一致性…
+  [ICML 2026][自监督学习][对比学习] 本文首次为对比表示学习 (CRL) 建立了"上游对比损失最小化等价于下游 AUC 型检索性能最优"的 Fisher / 统计一致性, 并给出依赖于正样本数 $n$ 和负样本数 $m$ 的精细泛化界 $O(1/m+1/\sqrt n)$ (监督) 与 $O(1/\sqrt m+1/\sqrt n)$ (自监督), 从而首次从理论上解释了 CLIP / SimCLR 使用上万负样本能持续涨点的现象。
 tags:
   - "ICML 2026"
   - "自监督学习"

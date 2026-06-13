@@ -2,7 +2,7 @@
 title: >-
   [论文解读] XTrack: Multimodal Training Boosts RGB-X Video Object Trackers
 description: >-
-  [ICCV 2025][视频理解][多模态跟踪] 提出 XTrack，通过 Mixture of Modal Experts (MeME) 框架和软路由分类器，实现 RGB-D/T/E 跨模态知识共享，使推理时仅用单模态即可受益于多模态训练知识，平均精度提升 3%。
+  [ICCV 2025][视频理解][多模态跟踪] 提出 XTrack，通过 Mixture of Modal Experts (MeME) 框架和软路由分类器，实现 RGB-D/T/E 跨模态知识共享，使推理时仅用单模态即可受益于多模态训练知识，平均精度提升 3%。 多模态感知（深度/热红外/事件相机）可弥补 RGB 跟踪在…
 tags:
   - "ICCV 2025"
   - "视频理解"

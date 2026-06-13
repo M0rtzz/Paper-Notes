@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRIT: Graph-Based Automatic Data Synthesis to Enhance Cross-Modal Multi-Hop Reasoning
 description: >-
-  [CVPR 2026][多模态VLM][跨模态] 提出基于图结构的自动数据生成 pipeline，构建了 CRIT 数据集与 benchmark，用于训练和评测 VLM 在交错图文内容上的跨模态多跳推理能力，训练后的模型在 SPIQA 等多个基准上取得显著提升。
+  [CVPR 2026][多模态VLM][跨模态] 提出基于图结构的自动数据生成 pipeline，构建了 CRIT 数据集与 benchmark，用于训练和评测 VLM 在交错图文内容上的跨模态多跳推理能力，训练后的模型在 SPIQA 等多个基准上取得显著提升。 现实世界推理常需跨模态整合信息：例如阅读 DIY 教程时需不断…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

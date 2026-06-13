@@ -2,9 +2,9 @@
 title: >-
   [论文解读] VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding
 description: >-
-  [NeurIPS 2025][视频理解][graph RAG] 提出 VGEnt，一个基于图的检索-推理增强生成框架，通过构建视频知识图谱保留跨片段语义关系，并引入结构化推理步骤过滤噪声、聚合信息，在多个长视频理解基准上一致提升开源 LVLM 3.0%~5.4%，超越现有视频 RAG 方法 8.6%。
+  [NeurIPS 2025 Spotlight][视频理解][graph RAG] 提出 VGEnt，一个基于图的检索-推理增强生成框架，通过构建视频知识图谱保留跨片段语义关系，并引入结构化推理步骤过滤噪声、聚合信息，在多个长视频理解基准上一致提升开源 LVLM 3.0%~5.4%，超越现有视频 RAG 方法 8.6%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "视频理解"
   - "graph RAG"
   - "structured reasoning"

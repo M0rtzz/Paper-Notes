@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Bandit Algorithms for Contextual Matching Markets
 description: >-
-  [ICML 2026][强化学习][contextual bandit] 本文研究带上下文的在线匹配市场，把玩家对动态 arm context 的线性偏好作为 bandit 学习目标，提出适用于 stochastic contexts 的 BARB 和 adversarial contexts 的 AdECO…
+  [ICML 2026][强化学习][contextual bandit] 本文研究带上下文的在线匹配市场，把玩家对动态 arm context 的线性偏好作为 bandit 学习目标，提出适用于 stochastic contexts 的 BARB 和 adversarial contexts 的 AdECO，并给出 player-optimal stable regret 的自适应上界与紧的 $\tilde O(T^{2/3})$ 级别理论结果。
 tags:
   - "ICML 2026"
   - "强化学习"

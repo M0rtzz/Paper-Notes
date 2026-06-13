@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Position: Stop Chasing the C-index when Evaluating Survival Analysis Models
 description: >-
-  [ICML 2026][LLM安全][生存分析] 作者审计了 2023–2025 年 92 篇生存分析论文，发现约 72% 的工作所用评估指标（尤其是被滥用的 C-index）与其建模目标和删失假设不对齐，并提出"双螺旋阶梯假设"（Ladder Hypothesis）：模型与指标必须站在同一级"删失假设"上…
+  [ICML 2026 Spotlight][LLM安全][生存分析] 作者审计了 2023–2025 年 92 篇生存分析论文，发现约 72% 的工作所用评估指标（尤其是被滥用的 C-index）与其建模目标和删失假设不对齐，并提出"双螺旋阶梯假设"（Ladder Hypothesis）：模型与指标必须站在同一级"删失假设"上，否则报告的性能与排名都可能是偏差伪影。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM安全"
   - "生存分析"
   - "C-index"

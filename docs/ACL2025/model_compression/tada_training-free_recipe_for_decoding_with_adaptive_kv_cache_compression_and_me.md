@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TaDA: Training-free recipe for Decoding with Adaptive KV Cache Compression and Mean-centering
 description: >-
-  [ACL 2025][模型压缩] 提出 TaDA——无需训练的 KV cache 压缩方法，通过对 K/V 激活做 head 维度均值中心化后量化偏差（而非原始激活），自动消除离群值问题，配合逐层自适应量化精度搜索，将 KV cache 压缩至原始 16 位的 27% 同时保持接近基线的精度。
+  [ACL 2025][模型压缩] 提出 TaDA——无需训练的 KV cache 压缩方法，通过对 K/V 激活做 head 维度均值中心化后量化偏差（而非原始激活），自动消除离群值问题，配合逐层自适应量化精度搜索，将 KV cache 压缩至原始 16 位的 27% 同时保持接近基线的精度。 1. KV cache 是长上…
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction
 description: >-
-  [NeurIPS 2025][LLM安全][Text-to-SQL] 提出 MaskSQL 框架，通过提示抽象（abstraction）将敏感的表名、列名和数据值替换为抽象符号后发送给远程 LLM，结合本地 SLM 做 schema linking 和 SQL 重建…
+  [NeurIPS 2025][LLM安全][Text-to-SQL] 提出 MaskSQL 框架，通过提示抽象（abstraction）将敏感的表名、列名和数据值替换为抽象符号后发送给远程 LLM，结合本地 SLM 做 schema linking 和 SQL 重建，在保护隐私同时超越 SLM-only 方案的 SQL 生成精度。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

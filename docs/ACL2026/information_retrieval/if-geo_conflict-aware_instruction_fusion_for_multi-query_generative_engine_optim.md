@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IF-GEO: Conflict-Aware Instruction Fusion for Multi-Query Generative Engine Optimization
 description: >-
-  [ACL 2026][信息检索/RAG][GEO] 本文把"为多条潜在查询同时优化一篇文档"视为受限多目标优化问题，提出 IF-GEO："先发散后收敛"——先用 LLM 反向挖掘代表性 query 并生成结构化编辑请求…
+  [ACL 2026][信息检索/RAG][GEO] 本文把"为多条潜在查询同时优化一篇文档"视为受限多目标优化问题，提出 IF-GEO："先发散后收敛"——先用 LLM 反向挖掘代表性 query 并生成结构化编辑请求，再通过 **优先级×必要性打分 + 去重 + 冲突解决 + Global Revision Blueprint** 把多个互相打架的编辑指令融合成一份可执行的修改蓝图，并配套引入 WCP/DR/WTR 三项 risk-aware 稳定性指标；在 GEO-Bench 上把 objective overall 从 Auto-GEO 的 7.59 推到 11.03，同时把最坏单查询跌幅从 -0.0511 降至 -0.009…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

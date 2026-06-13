@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration
 description: >-
-  [ICLR 2026][图像恢复][全能图像复原] 提出首个多域全能图像复原方法DATPRL-IR，通过双提示池（任务提示池+域提示池）学习域感知的任务提示表征，利用MLLM蒸馏域先验并通过自适应门控融合指导复原，在自然/医学/遥感三域9任务上显著超越SOTA。
+  [ICLR 2026][图像恢复][全能图像复原] 提出首个多域全能图像复原方法DATPRL-IR，通过双提示池（任务提示池+域提示池）学习域感知的任务提示表征，利用MLLM蒸馏域先验并通过自适应门控融合指导复原，在自然/医学/遥感三域9任务上显著超越SOTA。 领域现状：现有全能图像复原（AiOIR）方法（如PromptI…
 tags:
   - "ICLR 2026"
   - "图像恢复"

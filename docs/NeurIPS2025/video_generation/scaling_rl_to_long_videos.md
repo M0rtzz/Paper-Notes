@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling RL to Long Videos
 description: >-
-  [NeurIPS 2025][视频生成][长视频推理] 提出 LongVILA-R1 全栈框架，通过 104K 长视频推理数据集、两阶段 CoT-SFT + RL 训练管线、以及 MR-SP 多模态强化序列并行系统，将 VLM 的推理能力扩展到长视频（最高 8192 帧）…
+  [NeurIPS 2025][视频生成][长视频推理] 提出 LongVILA-R1 全栈框架，通过 104K 长视频推理数据集、两阶段 CoT-SFT + RL 训练管线、以及 MR-SP 多模态强化序列并行系统，将 VLM 的推理能力扩展到长视频（最高 8192 帧），在 VideoMME 上达到 65.1%/71.1%。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

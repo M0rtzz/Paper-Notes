@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fair Generation without Unfair Distortions: Debiasing Text-to-Image Generation with Entanglement-Free Attention
 description: >-
-  [ICCV 2025][图像生成][去偏见] 提出 Entanglement-Free Attention（EFA），一种推理时应用的去偏见方法，通过修改跨注意力机制将目标属性（如性别、种族）注入人物区域，同时保持非目标属性（如背景、物品）不变，在消除生成偏见的同时避免引入新的不公平关联。
+  [ICCV 2025][图像生成][去偏见] 提出 Entanglement-Free Attention（EFA），一种推理时应用的去偏见方法，通过修改跨注意力机制将目标属性（如性别、种族）注入人物区域，同时保持非目标属性（如背景、物品）不变，在消除生成偏见的同时避免引入新的不公平关联。 扩散模型（如 Stable Dif…
 tags:
   - "ICCV 2025"
   - "图像生成"

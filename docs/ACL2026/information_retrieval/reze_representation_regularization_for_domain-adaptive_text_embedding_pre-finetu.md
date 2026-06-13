@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REZE: Representation Regularization for Domain-adaptive Text Embedding Pre-finetuning
 description: >-
-  [ACL2026][信息检索/RAG][文本向量] REZE 在领域 embedding 预微调中对 anchor-positive 关系表示做 eigenspace 分解，用鲁棒统计识别任务特异偏移并软收缩，从而吸收共享领域知识、抑制异构任务带来的表示漂移。
+  [ACL2026][信息检索/RAG][文本向量] REZE 在领域 embedding 预微调中对 anchor-positive 关系表示做 eigenspace 分解，用鲁棒统计识别任务特异偏移并软收缩，从而吸收共享领域知识、抑制异构任务带来的表示漂移。 领域现状：现代文本 embedding 模型通常经过大规模弱监督…
 tags:
   - "ACL2026"
   - "信息检索/RAG"

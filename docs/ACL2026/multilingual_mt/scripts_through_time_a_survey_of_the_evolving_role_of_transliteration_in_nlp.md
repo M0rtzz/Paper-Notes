@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Scripts Through Time: A Survey of the Evolving Role of Transliteration in NLP
 description: >-
-  [ACL 2026][多语言/翻译][音译] 本文系统综述了音译（transliteration）在跨语言 NLP 中的演变角色，提出五大动机分类（命名实体/OOV处理、代码混合、跨文字相似性利用、英语中心迁移、统一预处理），比较了六种整合方式的优劣，并在现代 LLM 语境下讨论了音译是否仍然必要。
+  [ACL 2026 Findings][多语言/翻译][音译] 本文系统综述了音译（transliteration）在跨语言 NLP 中的演变角色，提出五大动机分类（命名实体/OOV处理、代码混合、跨文字相似性利用、英语中心迁移、统一预处理），比较了六种整合方式的优劣，并在现代 LLM 语境下讨论了音译是否仍然必要。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "音译"
   - "跨文字迁移"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeCLIP: Decoupled Learning for Open-Vocabulary Dense Perception
 description: >-
-  [CVPR 2025][语义分割][开放词汇分割] DeCLIP 发现 CLIP 的自注意力中存在"代理 token"现象导致图像 token 无法聚合空间相关信息，提出将自注意力模块解耦为"内容"和"上下文"特征并分别用 CLIP 自蒸馏和视觉基础模型蒸馏进行优化的框架…
+  [CVPR 2025][语义分割][开放词汇分割] DeCLIP 发现 CLIP 的自注意力中存在"代理 token"现象导致图像 token 无法聚合空间相关信息，提出将自注意力模块解耦为"内容"和"上下文"特征并分别用 CLIP 自蒸馏和视觉基础模型蒸馏进行优化的框架，在开放词汇目标检测和语义分割上全面超越现有方法。
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-Mem: 3D Scene Memory for Embodied Exploration and Reasoning
 description: >-
-  [CVPR 2025][3D视觉][场景记忆] 提出3D-Mem——基于"记忆快照"的3D场景记忆框架，用少量精选多视角图像紧凑表示已探索区域，结合Frontier Snapshot表示未探索区域，配合VLM实现高效的具身探索与推理。
+  [CVPR 2025][3D视觉][场景记忆] 提出3D-Mem——基于"记忆快照"的3D场景记忆框架，用少量精选多视角图像紧凑表示已探索区域，结合Frontier Snapshot表示未探索区域，配合VLM实现高效的具身探索与推理。 具身智能体在复杂3D环境中需要持久的场景记忆来支持长时间探索和推理…
 tags:
   - "CVPR 2025"
   - "3D视觉"

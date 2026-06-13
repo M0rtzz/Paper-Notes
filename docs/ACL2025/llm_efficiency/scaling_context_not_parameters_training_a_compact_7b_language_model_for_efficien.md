@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Context, Not Parameters: Training a Compact 7B Language Model for Efficient Long-Context Processing
 description: >-
-  [ACL 2025][LLM效率][long context] 提出 MegaBeam-Mistral-7B，一个支持 512K token 上下文长度的 7B 语言模型，通过四阶段渐进式训练、RoPE theta 调优、bfloat16 精度修复和 XLA 编译器内存优化等工程实践…
+  [ACL 2025][LLM效率][long context] 提出 MegaBeam-Mistral-7B，一个支持 512K token 上下文长度的 7B 语言模型，通过四阶段渐进式训练、RoPE theta 调优、bfloat16 精度修复和 XLA 编译器内存优化等工程实践，使紧凑型模型在长上下文任务上达到甚至超越大参数模型（如 Llama-3.1-70B、GPT-4）的性能。
 tags:
   - "ACL 2025"
   - "LLM效率"

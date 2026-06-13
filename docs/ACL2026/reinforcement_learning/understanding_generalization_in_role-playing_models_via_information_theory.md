@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Understanding Generalization in Role-Playing Models via Information Theory
 description: >-
-  [ACL 2026][强化学习][角色扮演模型] 本文提出首个信息论框架 R-EMID 来量化角色扮演模型（RPM）在用户/角色/对话分布偏移下的性能退化，通过引入推理过程和协同进化强化学习（CoRL）实现准确估计，发现用户偏移是最大的泛化风险，且强化学习是唯一一致有效的改进方法。
+  [ACL 2026 Findings][强化学习][角色扮演模型] 本文提出首个信息论框架 R-EMID 来量化角色扮演模型（RPM）在用户/角色/对话分布偏移下的性能退化，通过引入推理过程和协同进化强化学习（CoRL）实现准确估计，发现用户偏移是最大的泛化风险，且强化学习是唯一一致有效的改进方法。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "角色扮演模型"
   - "泛化性"

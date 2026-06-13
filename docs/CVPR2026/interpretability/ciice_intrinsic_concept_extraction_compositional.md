@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CI-ICE: Intrinsic Concept Extraction Based on Compositional Interpretability
 description: >-
-  [CVPR 2026][可解释性][概念提取] 提出CI-ICE新任务和HyperExpress方法：在双曲空间(Poincaré球)中利用层次建模能力提取可组合的物体级/属性级内在概念，通过Horosphere投影保证概念嵌入空间的可组合性…
+  [CVPR 2026][可解释性][概念提取] 提出CI-ICE新任务和HyperExpress方法：在双曲空间(Poincaré球)中利用层次建模能力提取可组合的物体级/属性级内在概念，通过Horosphere投影保证概念嵌入空间的可组合性，在UCEBench上概念解耦ACC₁达0.504(较ICE的0.325提升55%)。
 tags:
   - "CVPR 2026"
   - "可解释性"

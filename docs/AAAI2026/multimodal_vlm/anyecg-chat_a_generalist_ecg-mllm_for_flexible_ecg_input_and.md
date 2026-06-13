@@ -2,7 +2,7 @@
 title: >-
   [论文解读] anyECG-chat: A Generalist ECG-MLLM for Flexible ECG Input and Multi-Task Understanding
 description: >-
-  [AAAI 2026][多模态VLM][ECG-MLLM] 构建anyECG数据集（含报告生成、波形定位、多ECG比较三大任务）并提出anyECG-chat模型，通过动态ECG输入机制支持变长/少导联/多ECG输入，采用三阶段课程学习训练…
+  [AAAI 2026][多模态VLM][ECG-MLLM] 构建anyECG数据集（含报告生成、波形定位、多ECG比较三大任务）并提出anyECG-chat模型，通过动态ECG输入机制支持变长/少导联/多ECG输入，采用三阶段课程学习训练，在报告生成的OOD泛化、秒级异常波形定位和多ECG对比分析上全面超越现有ECG-MLLM。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

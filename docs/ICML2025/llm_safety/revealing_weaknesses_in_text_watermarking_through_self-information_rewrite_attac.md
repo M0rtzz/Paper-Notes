@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revealing Weaknesses in Text Watermarking Through Self-Information Rewrite Attacks
 description: >-
-  [ICML 2025][LLM安全][文本水印] 提出 SIRA（Self-Information Rewrite Attack），利用自信息识别水印嵌入的高熵 token 并进行定向替换，在 7 种主流水印方法上实现近 100% 攻击成功率，成本仅 $0.88/百万 token…
+  [ICML 2025][LLM安全][文本水印] 提出 SIRA（Self-Information Rewrite Attack），利用自信息识别水印嵌入的高熵 token 并进行定向替换，在 7 种主流水印方法上实现近 100% 攻击成功率，成本仅 $0.88/百万 token，且完全黑盒、可迁移至任意 LLM 甚至移动端模型。
 tags:
   - "ICML 2025"
   - "LLM安全"

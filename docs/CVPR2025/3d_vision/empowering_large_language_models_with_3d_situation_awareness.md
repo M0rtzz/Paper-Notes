@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Empowering Large Language Models with 3D Situation Awareness
 description: >-
-  [CVPR 2025][3D视觉][3D场景理解] 本文提出利用 RGB-D 视频的相机轨迹自动生成情境感知（situation-aware）数据集 View2Cap（20 万+描述、55 万+ QA），并设计情境定位模块（SG）将位姿估计转为锚点分类任务…
+  [CVPR 2025][3D视觉][3D场景理解] 本文提出利用 RGB-D 视频的相机轨迹自动生成情境感知（situation-aware）数据集 View2Cap（20 万+描述、55 万+ QA），并设计情境定位模块（SG）将位姿估计转为锚点分类任务，使 3D LLM 能理解第一人称视角下的空间关系描述（如"左边""右边"随视角变化），在 SQA3D 上 EM@1 达 54.0%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

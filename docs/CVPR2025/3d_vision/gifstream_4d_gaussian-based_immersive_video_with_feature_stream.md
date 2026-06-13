@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GIFStream: 4D Gaussian-based Immersive Video with Feature Stream
 description: >-
-  [CVPR 2025][3D视觉][沉浸式视频] 提出GIFStream，一种基于canonical空间+变形场的4D高斯表示方法，通过为每个anchor点附加时间相关的特征流（feature stream）来增强复杂运动建模能力，同时利用时间对齐的结构和端到端压缩实现30 Mbps高质量1080p沉浸式视频…
+  [CVPR 2025][3D视觉][沉浸式视频] 提出GIFStream，一种基于canonical空间+变形场的4D高斯表示方法，通过为每个anchor点附加时间相关的特征流（feature stream）来增强复杂运动建模能力，同时利用时间对齐的结构和端到端压缩实现30 Mbps高质量1080p沉浸式视频。
 tags:
   - "CVPR 2025"
   - "3D视觉"

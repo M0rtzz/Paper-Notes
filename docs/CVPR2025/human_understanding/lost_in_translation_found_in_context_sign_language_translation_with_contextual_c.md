@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lost in Translation, Found in Context: Sign Language Translation with Contextual Cues
 description: >-
-  [CVPR 2025][人体理解][手语翻译] 通过引入背景视频描述、历史翻译和伪词汇表三种上下文线索，结合Llama3-8B的LoRA微调，实现了连续手语到文本的精确翻译，在BOBSL数据集上相比SOTA提升40%以上。
+  [CVPR 2025][人体理解][手语翻译] 通过引入背景视频描述、历史翻译和伪词汇表三种上下文线索，结合Llama3-8B的LoRA微调，实现了连续手语到文本的精确翻译，在BOBSL数据集上相比SOTA提升40%以上。 核心矛盾 核心矛盾：领域现状：自动手语翻译(SLT)面临数据稀缺、空间上下文依赖强、同音异义手势频繁等…
 tags:
   - "CVPR 2025"
   - "人体理解"

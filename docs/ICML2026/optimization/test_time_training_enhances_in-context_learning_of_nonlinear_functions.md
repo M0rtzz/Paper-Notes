@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test time training enhances in-context learning of nonlinear functions
 description: >-
-  [ICML 2026][优化/理论][in-context learning] 本文给单层 softmax-attention transformer + LoRA 测试时微调的组合建立了首个严格泛化界…
+  [ICML 2026][优化/理论][in-context learning] 本文给单层 softmax-attention transformer + LoRA 测试时微调的组合建立了首个严格泛化界，证明在 single-index 多项式任务上 TTT 把 ICL 的样本复杂度从 $r^{\Theta(\mathrm{ie}(\sigma_*))}$ 压到 $r^{\Theta(\mathrm{ge}(\sigma_*))}$ 并允许 link 函数逐任务变化、推理误差可随上下文长度 $\to$ 噪声水平。
 tags:
   - "ICML 2026"
   - "优化/理论"

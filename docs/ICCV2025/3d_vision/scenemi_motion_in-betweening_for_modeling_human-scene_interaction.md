@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneMI: Motion In-betweening for Modeling Human-Scene Interactions
 description: >-
-  [ICCV 2025][3D视觉][人体-场景交互] 首次正式研究场景感知运动插值（scene-aware motion in-betweening）问题，提出 SceneMI 框架，通过双层场景描述符（全局体素 + 局部 BPS）全面编码场景上下文，利用扩散模型的去噪特性处理含噪关键帧…
+  [ICCV 2025][3D视觉][人体-场景交互] 首次正式研究场景感知运动插值（scene-aware motion in-betweening）问题，提出 SceneMI 框架，通过双层场景描述符（全局体素 + 局部 BPS）全面编码场景上下文，利用扩散模型的去噪特性处理含噪关键帧，在 TRUMANS 上碰撞帧率降低 56.9%，在真实世界 GIMO 上脚部滑动减少 37.5%、抖动减少 56.5%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

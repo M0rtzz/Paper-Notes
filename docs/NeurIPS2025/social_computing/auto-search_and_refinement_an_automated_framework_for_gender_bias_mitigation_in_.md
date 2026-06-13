@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Auto-Search and Refinement: An Automated Framework for Gender Bias Mitigation in LLMs
 description: >-
-  [NeurIPS 2025][社会计算][性别偏见缓解] 提出 FaIRMaker 框架，通过"自动搜索+精化"范式先用梯度优化找到去偏见触发词（Fairwords），再训练 seq2seq 模型将其转化为可读指令，在开源和闭源 LLM 上有效缓解性别偏见同时保持甚至提升任务性能。
+  [NeurIPS 2025][社会计算][性别偏见缓解] 提出 FaIRMaker 框架，通过"自动搜索+精化"范式先用梯度优化找到去偏见触发词（Fairwords），再训练 seq2seq 模型将其转化为可读指令，在开源和闭源 LLM 上有效缓解性别偏见同时保持甚至提升任务性能。 领域现状：LLM 预训练中编码了社会偏见（…
 tags:
   - "NeurIPS 2025"
   - "社会计算"

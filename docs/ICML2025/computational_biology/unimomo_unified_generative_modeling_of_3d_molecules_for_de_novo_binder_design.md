@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design
 description: >-
-  [ICML2025][计算生物][统一分子生成] 提出 UniMoMo，首个统一小分子、肽和抗体三类分子的 3D binder 设计框架，使用“块图”作为统一表示、迭代全原子自编码器压缩潜空间、E(3)-等变扩散模型生成，在三个基准上超越领域特定模型。
+  [ICML2025][计算生物][统一分子生成] 提出 UniMoMo，首个统一小分子、肽和抗体三类分子的 3D binder 设计框架，使用“块图”作为统一表示、迭代全原子自编码器压缩潜空间、E(3)-等变扩散模型生成，在三个基准上超越领域特定模型。 领域现状 领域现状：三类分子各有优势：小分子适合口服（吸收好）、肽擅长细…
 tags:
   - "ICML2025"
   - "计算生物"

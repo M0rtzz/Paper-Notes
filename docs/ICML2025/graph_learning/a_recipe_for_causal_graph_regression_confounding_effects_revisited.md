@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Recipe for Causal Graph Regression: Confounding Effects Revisited
 description: >-
-  [ICML 2025][图学习][因果图学习] 首次系统性地将因果图学习从分类扩展到回归任务，通过增强型图信息瓶颈（Enhanced GIB）承认混淆子图的预测能力，并用对比学习替代依赖离散标签的因果干预方法，在图级 OOD 回归基准上显著超越现有方法。
+  [ICML 2025][图学习][因果图学习] 首次系统性地将因果图学习从分类扩展到回归任务，通过增强型图信息瓶颈（Enhanced GIB）承认混淆子图的预测能力，并用对比学习替代依赖离散标签的因果干预方法，在图级 OOD 回归基准上显著超越现有方法。 因果图学习（Causal Graph Learning…
 tags:
   - "ICML 2025"
   - "图学习"

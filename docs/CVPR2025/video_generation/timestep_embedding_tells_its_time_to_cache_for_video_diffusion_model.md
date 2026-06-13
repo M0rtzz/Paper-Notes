@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model
 description: >-
-  [CVPR 2025][视频生成][视频扩散模型] 本文提出 TeaCache，一种免训练的视频扩散模型缓存加速方法，通过时间步嵌入调制噪声输入来估计相邻时间步模型输出的差异，配合多项式拟合进行缩放校准，从而自适应决定何时缓存/复用输出…
+  [CVPR 2025][视频生成][视频扩散模型] 本文提出 TeaCache，一种免训练的视频扩散模型缓存加速方法，通过时间步嵌入调制噪声输入来估计相邻时间步模型输出的差异，配合多项式拟合进行缩放校准，从而自适应决定何时缓存/复用输出，在 Open-Sora-Plan 上实现 4.41× 加速且视觉质量几乎无损（VBench 仅降 0.07%）。
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RecMem: Recurrence-based Memory Consolidation for Efficient and Effective Long-Running LLM Agents
 description: >-
-  [ACL2026][LLM Agent][长程Agent] RecMem 借鉴人类记忆中的“重复出现才固化”原则，把原始交互先放入轻量 subconscious memory，只有检测到语义复现时才调用 LLM 生成 episodic 与 semantic memory…
+  [ACL2026 Findings][LLM Agent][长程Agent] RecMem 借鉴人类记忆中的“重复出现才固化”原则，把原始交互先放入轻量 subconscious memory，只有检测到语义复现时才调用 LLM 生成 episodic 与 semantic memory，从而在 LoCoMo 和 LongMemEval-S 上以显著更低构建 token 成本达到或超过主流记忆系统的问答准确率。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM Agent"
   - "长程Agent"
   - "记忆固化"

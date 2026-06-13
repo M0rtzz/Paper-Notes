@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LAION-C: An Out-of-Distribution Benchmark for Web-Scale Vision Models
 description: >-
-  [ICML 2025][多模态VLM][OOD鲁棒性] 本文指出经典的 ImageNet-C 分布外鲁棒性基准对于在 LAION 等网络规模数据集上训练的模型已不再是真正的 OOD，为此设计了6种全新的高度合成化图像畸变构建 LAION-C 基准，配合19名被试的心理物理学实验…
+  [ICML 2025][多模态VLM][OOD鲁棒性] 本文指出经典的 ImageNet-C 分布外鲁棒性基准对于在 LAION 等网络规模数据集上训练的模型已不再是真正的 OOD，为此设计了6种全新的高度合成化图像畸变构建 LAION-C 基准，配合19名被试的心理物理学实验，揭示了 OOD 泛化的范式转变——最优模型已追平甚至超越人类。
 tags:
   - "ICML 2025"
   - "多模态VLM"

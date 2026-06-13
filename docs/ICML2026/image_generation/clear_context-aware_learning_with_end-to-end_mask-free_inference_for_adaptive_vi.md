@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CLEAR: Context-Aware Learning with End-to-End Mask-Free Inference for Adaptive Video Subtitle Removal
 description: >-
-  [ICML 2026][图像生成][视频字幕去除] 本文针对视频字幕擦除提出 CLEAR：两阶段训练（Stage I 用 dual encoder + 正交解耦学自监督字幕先验掩码；Stage II 在 Wan2.1 视频扩散模型上加 LoRA + occlusion head 做自适应加权）…
+  [ICML 2026 Spotlight][图像生成][视频字幕去除] 本文针对视频字幕擦除提出 CLEAR：两阶段训练（Stage I 用 dual encoder + 正交解耦学自监督字幕先验掩码；Stage II 在 Wan2.1 视频扩散模型上加 LoRA + occlusion head 做自适应加权），推理完全不需要任何 mask 或文本检测器，仅训练 0.77% 参数就在中文测试集上把 PSNR 推到 26.80 dB（比最强基线 +6.77 dB），并零样本泛化到 6 种语言。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "图像生成"
   - "视频字幕去除"
   - "扩散模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MTSQL-R1: Towards Long-Horizon Multi-Turn Text-to-SQL via Agentic Training
 description: >-
-  [ACL2026][NLP理解][多轮Text-to-SQL] MTSQL-R1把多轮 Text-to-SQL 从“一次性翻译”改造成可与数据库和对话记忆交互的长程智能体训练问题，通过自教式 warm-start SFT 与多层级 GRPO 奖励…
+  [ACL2026][NLP理解][多轮Text-to-SQL] MTSQL-R1把多轮 Text-to-SQL 从“一次性翻译”改造成可与数据库和对话记忆交互的长程智能体训练问题，通过自教式 warm-start SFT 与多层级 GRPO 奖励，让小规模 Qwen3 模型在 CoSQL 和 SParC 上超过强闭源提示基线与短程 SFT/RL 基线。
 tags:
   - "ACL2026"
   - "NLP理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Process Reward Models Meet Planning: Generating Precise and Scalable Datasets for Step-Level Rewards
 description: >-
-  [ACL 2026][LLM推理][过程奖励模型] 本文提出利用规划领域定义语言（PDDL）自动生成大规模、高精度的步骤级奖励数据集，用于训练过程奖励模型（PRM），在数学和非数学推理基准上均取得显著提升。
+  [ACL 2026][LLM推理][过程奖励模型] 本文提出利用规划领域定义语言（PDDL）自动生成大规模、高精度的步骤级奖励数据集，用于训练过程奖励模型（PRM），在数学和非数学推理基准上均取得显著提升。 领域现状：过程奖励模型（PRM）已成为评估大语言模型推理质量的重要工具，通过对思维链（CoT）中每一步给出奖励反馈…
 tags:
   - "ACL 2026"
   - "LLM推理"

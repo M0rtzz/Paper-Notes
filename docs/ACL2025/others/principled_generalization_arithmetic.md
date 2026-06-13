@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Principled Understanding of Generalization for Generative Transformer Models in Arithmetic Reasoning Tasks
 description: >-
-  [ACL 2025][Transformer] 建立首个统一理论框架来理解 Transformer 在算术任务（加法/乘法/模运算）上的泛化行为——从任务性质（平移不变性）和位置编码类型（APE/RPE）的交互出发，解释了之前困扰领域的多个泛化谜题（如加法能泛化但乘法不能，模100能泛化但模101不能）…
+  [ACL 2025][Transformer] 建立首个统一理论框架来理解 Transformer 在算术任务（加法/乘法/模运算）上的泛化行为——从任务性质（平移不变性）和位置编码类型（APE/RPE）的交互出发，解释了之前困扰领域的多个泛化谜题（如加法能泛化但乘法不能，模100能泛化但模101不能），实验验证了理论预测。
 tags:
   - "ACL 2025"
   - "Transformer"

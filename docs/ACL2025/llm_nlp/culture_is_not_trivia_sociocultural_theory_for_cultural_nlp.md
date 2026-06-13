@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Culture is Not Trivia: Sociocultural Theory for Cultural NLP
 description: >-
-  [LLM/NLP] 本文从社会文化语言学理论出发，指出当前文化 NLP 的方法论局限（粗粒度国家边界、静态基准、缺乏统一文化定义），论证文化是动态建构的过程而非静态知识，并提出"本地化"作为更可行的研究框架。
+  [LLM 其他] 本文从社会文化语言学理论出发，指出当前文化 NLP 的方法论局限（粗粒度国家边界、静态基准、缺乏统一文化定义），论证文化是动态建构的过程而非静态知识，并提出"本地化"作为更可行的研究框架。 研究问题：文化 NLP 领域缺乏统一的文化定义，各种文化代理指标（国籍、宗教、食物等）导致反复出现的方法论局限…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # Culture is Not Trivia: Sociocultural Theory for Cultural NLP

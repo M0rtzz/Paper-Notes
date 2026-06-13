@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AutoDiscovery: Open-ended Scientific Discovery via Bayesian Surprise
 description: >-
-  [NeurIPS 2025][LLM/NLP][贝叶斯惊奇度] AutoDiscovery 提出用贝叶斯惊奇度（Bayesian Surprise）作为开放式科学发现的客观奖励信号——通过 LLM 采样估计先验/后验信念分布的 KL 散度，配合 MCTS+渐进展宽在假设空间中探索…
+  [NeurIPS 2025][LLM 其他][贝叶斯惊奇度] AutoDiscovery 提出用贝叶斯惊奇度（Bayesian Surprise）作为开放式科学发现的客观奖励信号——通过 LLM 采样估计先验/后验信念分布的 KL 散度，配合 MCTS+渐进展宽在假设空间中探索，在 21 个真实数据集上比贪心/束搜索产生 5-29% 更多的惊奇发现，人类评估确认贝叶斯惊奇度与专家"惊讶感"的一致性（0.67）远超 LLM 自身评估的"新颖性"和"有用性"。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "贝叶斯惊奇度"
   - "开放式发现"
   - "MCTS"

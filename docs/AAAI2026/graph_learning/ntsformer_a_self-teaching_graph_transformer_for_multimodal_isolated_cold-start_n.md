@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification
 description: >-
-  [AAAI 2026][图学习][冷启动节点分类] 提出 NTSFormer（Neighbor-to-Self Graph Transformer），一个统一的图Transformer框架，通过冷启动注意力掩码实现**自教学范式**——同一模型同时产生基于自身特征的"学生"预测和基于邻居信息的"教师"预测…
+  [AAAI 2026][图学习][冷启动节点分类] 提出 NTSFormer（Neighbor-to-Self Graph Transformer），一个统一的图Transformer框架，通过冷启动注意力掩码实现**自教学范式**——同一模型同时产生基于自身特征的"学生"预测和基于邻居信息的"教师"预测，无需退化为MLP即可处理多模态图上的孤立冷启动节点分类，结合MoE输入投影和多模态图预计算有效处理模态缺失问题。
 tags:
   - "AAAI 2026"
   - "图学习"

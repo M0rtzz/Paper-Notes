@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAM4D: Segment Anything in Camera and LiDAR Streams
 description: >-
-  [ICCV 2025][自动驾驶][多模态分割] 提出 SAM4D，首个面向相机和 LiDAR 流的可提示多模态分割基础模型，通过统一多模态位置编码（UMPE）实现跨模态提示与交互，通过运动感知跨模态记忆注意力（MCMA）确保时序一致性…
+  [ICCV 2025][自动驾驶][多模态分割] 提出 SAM4D，首个面向相机和 LiDAR 流的可提示多模态分割基础模型，通过统一多模态位置编码（UMPE）实现跨模态提示与交互，通过运动感知跨模态记忆注意力（MCMA）确保时序一致性，并构建包含 30 万+ masklet 的 Waymo-4DSeg 数据集，在跨模态分割和数据标注方面展示了强大能力。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

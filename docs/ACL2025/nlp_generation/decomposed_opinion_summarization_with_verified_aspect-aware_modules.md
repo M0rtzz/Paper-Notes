@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decomposed Opinion Summarization with Verified Aspect-Aware Modules
 description: >-
-  [ACL 2025][文本生成][观点摘要] 本文将观点摘要（opinion summarization）任务分解为三个可逐步验证的模块——方面识别、观点汇总、元评论合成，通过 LLM 零样本提示实现领域无关的模块化处理，在科研论文、商业评论和产品评论三个领域生成了更可追溯、更全面的摘要。
+  [ACL 2025][文本生成][观点摘要] 本文将观点摘要（opinion summarization）任务分解为三个可逐步验证的模块——方面识别、观点汇总、元评论合成，通过 LLM 零样本提示实现领域无关的模块化处理，在科研论文、商业评论和产品评论三个领域生成了更可追溯、更全面的摘要。 领域现状：观点摘要旨在将大量在线评…
 tags:
   - "ACL 2025"
   - "文本生成"

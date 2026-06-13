@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pano360: Perspective to Panoramic Vision with Geometric Consistency
 description: >-
-  [CVPR 2025][3D视觉][全景拼接] 提出 Pano360，首个在3D摄影测量空间进行全景拼接的 Transformer 框架，利用预训练 VGGT 骨干获取3D感知的多视角特征对齐 + 多特征联合优化接缝检测，支持2到数百张输入图像，在弱纹理/大视差/重复模式场景下成功率达97.8%。
+  [CVPR 2025][3D视觉][全景拼接] 提出 Pano360，首个在3D摄影测量空间进行全景拼接的 Transformer 框架，利用预训练 VGGT 骨干获取3D感知的多视角特征对齐 + 多特征联合优化接缝检测，支持2到数百张输入图像，在弱纹理/大视差/重复模式场景下成功率达97.8%。 领域现状：全景拼接传统上依…
 tags:
   - "CVPR 2025"
   - "3D视觉"

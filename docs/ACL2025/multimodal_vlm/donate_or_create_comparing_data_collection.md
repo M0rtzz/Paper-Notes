@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Donate or Create? Comparing Data Collection Strategies for Emotion-labeled Multimodal Social Media Posts
 description: >-
-  [ACL 2025][多模态VLM][emotion detection] 本文系统比较了三种收集作者标注情感数据的策略（创建、捐赠、近期帖子），发现研究创建的数据在文本长度、情感原型性和图文关系上与真实数据存在显著差异，但创建数据仍可有效训练泛化模型，不过真实数据对准确评估模型效果不可或缺。
+  [ACL 2025][多模态VLM][emotion detection] 本文系统比较了三种收集作者标注情感数据的策略（创建、捐赠、近期帖子），发现研究创建的数据在文本长度、情感原型性和图文关系上与真实数据存在显著差异，但创建数据仍可有效训练泛化模型，不过真实数据对准确评估模型效果不可或缺。 1. 领域现状：情感分析需要作…
 tags:
   - "ACL 2025"
   - "多模态VLM"

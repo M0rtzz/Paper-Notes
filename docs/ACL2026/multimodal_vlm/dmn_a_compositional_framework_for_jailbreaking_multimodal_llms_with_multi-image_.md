@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DMN: A Compositional Framework for Jailbreaking Multimodal LLMs with Multi-Image Inputs
 description: >-
-  [ACL2026][多模态VLM][多图输入] 这篇论文提出 DMN，用分布式指令、多模态证据和数字链辅助任务组合成多图越狱评测框架，证明当前支持多图输入的 MLLM 在跨图安全对齐上存在明显弱点，同时给出一个 multi-image-aware filter 作为初步防御。
+  [ACL2026][多模态VLM][多图输入] 这篇论文提出 DMN，用分布式指令、多模态证据和数字链辅助任务组合成多图越狱评测框架，证明当前支持多图输入的 MLLM 在跨图安全对齐上存在明显弱点，同时给出一个 multi-image-aware filter 作为初步防御。 领域现状：多模态大模型已经能同时处理文本与图像…
 tags:
   - "ACL2026"
   - "多模态VLM"

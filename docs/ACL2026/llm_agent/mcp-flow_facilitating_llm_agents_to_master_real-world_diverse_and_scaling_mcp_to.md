@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MCP-Flow: Facilitating LLM Agents to Master Real-World, Diverse and Scaling MCP Tools
 description: >-
-  [ACL 2026][LLM Agent][Model Context Protocol] MCP-Flow 提出了一个基于 Web Agent 的自动化管道，从 1166 个真实 MCP 服务器中收集工具信息并合成 68733 条高质量训练数据…
+  [ACL 2026][LLM Agent][Model Context Protocol] MCP-Flow 提出了一个基于 Web Agent 的自动化管道，从 1166 个真实 MCP 服务器中收集工具信息并合成 68733 条高质量训练数据，使小规模微调模型（0.6B-8B）在 MCP 工具使用上超越 GPT-4o 等 SOTA 大模型。
 tags:
   - "ACL 2026"
   - "LLM Agent"

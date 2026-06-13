@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Way You Select Negative Texts: Pursuing the Distance Consistency in OOD Detection with VLMs
 description: >-
-  [CVPR 2026][多模态VLM][OOD检测] 指出现有基于 VLM 的 OOD 检测方法使用模态内距离（文本-文本或图像-图像）选择负文本，与 CLIP 优化的跨模态距离不一致，提出 InterNeg 从文本和视觉两个视角系统地利用跨模态距离，在 ImageNet 上实现 FPR95 降低 3.47%…
+  [CVPR 2026][多模态VLM][OOD检测] 指出现有基于 VLM 的 OOD 检测方法使用模态内距离（文本-文本或图像-图像）选择负文本，与 CLIP 优化的跨模态距离不一致，提出 InterNeg 从文本和视觉两个视角系统地利用跨模态距离，在 ImageNet 上实现 FPR95 降低 3.47%。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

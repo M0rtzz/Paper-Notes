@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RE-IMAGINE: Symbolic Benchmark Synthesis for Reasoning Evaluation
 description: >-
-  [ICML 2025 (Poster)][因果推理][推理评估] 受 Pearl 因果阶梯启发，提出 RE-IMAGINE 框架，通过将问题转化为中间符号表示（代码）并在计算图上执行多层级变异，生成不可通过记忆化解决的基准变体，系统评估 LLM 的真实推理能力。
+  [ICML 2025 (Poster)][因果推理][推理评估] 受 Pearl 因果阶梯启发，提出 RE-IMAGINE 框架，通过将问题转化为中间符号表示（代码）并在计算图上执行多层级变异，生成不可通过记忆化解决的基准变体，系统评估 LLM 的真实推理能力。 近年来 LLM 在推理基准（如 GSM8K）上的准确率持续攀升…
 tags:
   - "ICML 2025 (Poster)"
   - "因果推理"

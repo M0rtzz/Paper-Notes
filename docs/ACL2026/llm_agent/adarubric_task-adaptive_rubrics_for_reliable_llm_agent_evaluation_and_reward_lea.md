@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaRubric: Task-Adaptive Rubrics for Reliable LLM Agent Evaluation and Reward Learning
 description: >-
-  [ACL 2026][LLM Agent][LLM-as-Judge] 本文指出 "LLM-as-Judge + 固定 rubric"（Helpfulness/Safety/Fluency）对评估目标导向的 agent 轨迹严重不匹配…
+  [ACL 2026][LLM Agent][LLM-as-Judge] 本文指出 "LLM-as-Judge + 固定 rubric"（Helpfulness/Safety/Fluency）对评估目标导向的 agent 轨迹严重不匹配，提出 AdaRubric——由 LLM 根据任务描述自动生成任务专属的 N 维评估 rubric，再用置信度加权的逐步评估产出密集 reward 信号；并设计 DimensionAwareFilter 在 DPO 数据构建中防止"维度掩盖"，在 WebArena/ToolBench/AgentBench 上 Pearson r=0.79，DPO 训练带来 +6.8~+8.5% 任务成功率提升。
 tags:
   - "ACL 2026"
   - "LLM Agent"

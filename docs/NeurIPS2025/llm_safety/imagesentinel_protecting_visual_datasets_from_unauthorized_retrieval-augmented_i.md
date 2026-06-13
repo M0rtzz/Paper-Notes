@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation
 description: >-
-  [NeurIPS 2025][LLM安全][检索增强图像生成] 提出 ImageSentinel 框架，通过合成与私有数据集视觉一致的哨兵图像（sentinel images）并绑定随机字符检索键…
+  [NeurIPS 2025][LLM安全][检索增强图像生成] 提出 ImageSentinel 框架，通过合成与私有数据集视觉一致的哨兵图像（sentinel images）并绑定随机字符检索键，实现对检索增强图像生成（RAIG）系统未授权使用私有数据集的可靠检测——仅需 3–10 次查询即可达到接近 100% 的 AUC。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

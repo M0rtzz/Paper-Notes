@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Agents Fix Agent Issues?
 description: >-
-  [NeurIPS 2025][机器人][Agent系统维护] 本文首次系统地研究了 LLM-based Agent 系统的 issue 自动修复问题——通过人工分析 201 个真实 Agent issue 构建了涵盖 6 大类 20 个子类的 Agent issue 分类体系…
+  [NeurIPS 2025][机器人][Agent系统维护] 本文首次系统地研究了 LLM-based Agent 系统的 issue 自动修复问题——通过人工分析 201 个真实 Agent issue 构建了涵盖 6 大类 20 个子类的 Agent issue 分类体系，耗费 500 人时构建了包含 50 个可复现任务的 AgentIssue-Bench 基准，并评估发现当前最先进的软件工程 Agent（如 SWE-agent、Agentless、AutoCodeRover）在 Agent issue 上的正确修复率仅为 3.33%–12.67%，远低于它们在传统软件上的 23%–51% 修复率。
 tags:
   - "NeurIPS 2025"
   - "机器人"

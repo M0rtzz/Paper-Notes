@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LightLoc: Learning Outdoor LiDAR Localization at Light Speed
 description: >-
-  [CVPR 2025][自动驾驶][LiDAR定位] 本文提出LightLoc，通过样本分类引导 (SCG) 减少视觉相似区域的回归歧义，以及冗余样本下采样 (RSD) 剔除已学好的帧，实现大规模室外LiDAR定位训练50倍加速（1小时 vs 2天），同时达到0.83m SOTA位置精度。
+  [CVPR 2025][自动驾驶][LiDAR定位] 本文提出LightLoc，通过样本分类引导 (SCG) 减少视觉相似区域的回归歧义，以及冗余样本下采样 (RSD) 剔除已学好的帧，实现大规模室外LiDAR定位训练50倍加速（1小时 vs 2天），同时达到0.83m SOTA位置精度。 领域现状 领域现状：LiDAR定位…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

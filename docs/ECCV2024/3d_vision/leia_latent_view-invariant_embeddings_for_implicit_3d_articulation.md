@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEIA: Latent View-Invariant Embeddings for Implicit 3D Articulation
 description: >-
-  [ECCV 2024][3D视觉][铰接物体] 提出LEIA方法，通过学习视角不变的潜在嵌入来表征铰接物体的不同状态，利用超网络(HyperNetwork)调制NeRF权重，实现在未见过的铰接配置之间进行平滑插值，无需任何运动先验或3D监督。
+  [ECCV 2024][3D视觉][铰接物体] 提出LEIA方法，通过学习视角不变的潜在嵌入来表征铰接物体的不同状态，利用超网络(HyperNetwork)调制NeRF权重，实现在未见过的铰接配置之间进行平滑插值，无需任何运动先验或3D监督。 领域现状： NeRF在静态场景重建上取得了巨大成功，但将其扩展到动态物体或物体铰接…
 tags:
   - "ECCV 2024"
   - "3D视觉"

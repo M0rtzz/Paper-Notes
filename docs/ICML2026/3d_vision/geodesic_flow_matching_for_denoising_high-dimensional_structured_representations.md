@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geodesic Flow Matching for Denoising High-Dimensional Structured Representations
 description: >-
-  [ICML 2026][3D视觉][测地线流匹配] 针对 Vector Symbolic Architecture 里 Spatial Semantic Pointer 这种"被嵌进单位超球面 Clifford 超环面"的高维结构化表示…
+  [ICML 2026][3D视觉][测地线流匹配] 针对 Vector Symbolic Architecture 里 Spatial Semantic Pointer 这种"被嵌进单位超球面 Clifford 超环面"的高维结构化表示，作者指出标准 Flow Matching 的欧氏直线插值会从球面内部"穿心而过"导致幅值塌缩、相位毁掉，于是用 Log/Exp 映射把流约束在球面上做 **Geodesic Flow Matching (GFM)**，在脉冲神经 SLAM 上把路径误差降低 72%，并让 1500 神经元的路径积分器达到 2500 神经元 baseline 的精度。
 tags:
   - "ICML 2026"
   - "3D视觉"

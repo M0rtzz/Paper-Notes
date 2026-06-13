@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Small Drafts, Big Verdict: Information-Intensive Visual Reasoning via Speculation
 description: >-
-  [ICLR 2026][多模态VLM][speculative decoding] 借鉴 Speculative Decoding 的 draft-then-verify 范式提出 Speculative Verdict (SV)，用多个轻量 VLM 生成多样推理路径作为 draft…
+  [ICLR 2026][多模态VLM][speculative decoding] 借鉴 Speculative Decoding 的 draft-then-verify 范式提出 Speculative Verdict (SV)，用多个轻量 VLM 生成多样推理路径作为 draft，大模型作为 verdict 综合验证并纠错，在信息密集型 VQA 上无需训练即超过 GPT-4o 达 11.9%，且能修复 47-53% 的少数正确案例。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

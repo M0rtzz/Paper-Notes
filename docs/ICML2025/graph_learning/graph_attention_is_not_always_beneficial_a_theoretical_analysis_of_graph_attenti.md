@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Graph Attention is Not Always Beneficial: A Theoretical Analysis of Graph Attention Mechanisms via Contextual Stochastic Block Models
 description: >-
-  [ICML 2025][图学习][注意力机制] 本文通过上下文随机块模型（CSBM）框架理论分析了图注意力机制的有效性条件，证明当结构噪声大于特征噪声时注意力有益、反之有害，并设计了多层 GAT 将完美节点分类的 SNR 要求从 $\omega(\sqrt{\log n})$ 放宽到 $\omega(\sqr…
+  [ICML 2025][图学习][注意力机制] 本文通过上下文随机块模型（CSBM）框架理论分析了图注意力机制的有效性条件，证明当结构噪声大于特征噪声时注意力有益、反之有害，并设计了多层 GAT 将完美节点分类的 SNR 要求从 $\omega(\sqrt{\log n})$ 放宽到 $\omega(\sqrt{\log n}/\sqrt[3]{n})$。
 tags:
   - "ICML 2025"
   - "图学习"

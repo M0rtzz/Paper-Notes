@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KnapSpec: Self-Speculative Decoding via Adaptive Layer Selection as a Knapsack Problem
 description: >-
-  [ICML 2026][LLM效率][自推测解码] KnapSpec 把自推测解码（SSD）的草稿层选择重新建模为 0/1 背包问题，把 Attention 与 MLP 解耦、用上下文长度依赖的硬件延迟作为"重量"、用 hidden state 余弦相似度（首次给出严格证明）作为"价值"…
+  [ICML 2026][LLM效率][自推测解码] KnapSpec 把自推测解码（SSD）的草稿层选择重新建模为 0/1 背包问题，把 Attention 与 MLP 解耦、用上下文长度依赖的硬件延迟作为"重量"、用 hidden state 余弦相似度（首次给出严格证明）作为"价值"，通过并行 DP 在每一步自适应找出最大化 Tokens-per-Time 的子网络，在 Qwen3 / Llama3 上长上下文场景拿到最高 1.47× 的真实墙钟加速且无需额外训练。
 tags:
   - "ICML 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PersonaVLM: Long-Term Personalized Multimodal LLMs
 description: >-
-  [CVPR 2026][多模态VLM][个性化] 本文提出 PersonaVLM，一个面向长期个性化的多模态智能体框架，通过主动记忆管理（四类记忆数据库）、多步推理检索和动量式人格演化机制，将通用 MLLM 转化为能适应用户偏好变化的个性化助手，在 128K 上下文下超越 GPT-4o 5.2%。
+  [CVPR 2026][多模态VLM][个性化] 本文提出 PersonaVLM，一个面向长期个性化的多模态智能体框架，通过主动记忆管理（四类记忆数据库）、多步推理检索和动量式人格演化机制，将通用 MLLM 转化为能适应用户偏好变化的个性化助手，在 128K 上下文下超越 GPT-4o 5.2%。 1. 领域现状：多模态大语…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

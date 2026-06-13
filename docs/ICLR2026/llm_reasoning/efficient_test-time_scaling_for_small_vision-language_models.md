@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Test-Time Scaling for Small Vision-Language Models
 description: >-
-  [ICLR 2026][LLM推理][test-time scaling] 为小型 VLM 提出两种高效的测试时缩放策略：TTAug（对输入做多种增强后在 token 级别聚合输出概率）和 TTAdapt（用 TTAug 生成的伪标签自适应调整模型参数），在 9 个基准上一致提升性能…
+  [ICLR 2026][LLM推理][test-time scaling] 为小型 VLM 提出两种高效的测试时缩放策略：TTAug（对输入做多种增强后在 token 级别聚合输出概率）和 TTAdapt（用 TTAug 生成的伪标签自适应调整模型参数），在 9 个基准上一致提升性能，同时计算效率远优于现有的基于重复采样的测试时方法。
 tags:
   - "ICLR 2026"
   - "LLM推理"

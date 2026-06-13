@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming the Loss Landscape of PINNs with Noisy Feynman-Kac Supervision: Operator Preconditioning and Non-Asymptotic Error Bounds
 description: >-
-  [ICML 2026][优化/理论][PINN] 在 PINN 损失里加入由 Feynman–Kac 公式蒙特卡洛模拟得到的少量内点伪标签，本质上就是给 PDE 算子做了一次预条件——本文同时给出"条件数在 collocation 数 $N$ 上保持有界"的算子级证明和带 $\tanh$ 激活的非渐近 $L^…
+  [ICML 2026][优化/理论][PINN] 在 PINN 损失里加入由 Feynman–Kac 公式蒙特卡洛模拟得到的少量内点伪标签，本质上就是给 PDE 算子做了一次预条件——本文同时给出"条件数在 collocation 数 $N$ 上保持有界"的算子级证明和带 $\tanh$ 激活的非渐近 $L^2$ 误差界，且在 Schrödinger、Poisson、committor 等问题上让本来彻底失败的 PINN 重新可解。
 tags:
   - "ICML 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Agents Persuade: Propaganda Generation and Mitigation in LLMs
 description: >-
-  [ICLR 2026][社会计算][GAN] 系统研究LLM的宣传生成行为，训练专用检测器量化3个LLM使用的6种修辞技术，发现所有LLM均能生成宣传且大量使用Loaded Language和Flag-Waving，通过SFT/DPO/ORPO三种微调方法缓解…
+  [ICLR 2026][社会计算][GAN] 系统研究LLM的宣传生成行为，训练专用检测器量化3个LLM使用的6种修辞技术，发现所有LLM均能生成宣传且大量使用Loaded Language和Flag-Waving，通过SFT/DPO/ORPO三种微调方法缓解，ORPO将宣传分类率从77%降至10%、修辞技术使用减少13.4倍。
 tags:
   - "ICLR 2026"
   - "社会计算"

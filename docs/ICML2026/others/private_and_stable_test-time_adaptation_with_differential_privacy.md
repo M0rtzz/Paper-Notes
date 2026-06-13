@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Private and Stable Test-Time Adaptation with Differential Privacy
 description: >-
-  [ICML 2026][Test-Time Adaptation] 本文首次指出测试时自适应 (TTA) 会让模型参数泄露测试数据隐私，并把 Tent / EATA / SAR / DeYO / COME 五种主流 TTA 方法系统改造为带 per-sample 梯度裁剪 + 高斯噪声的 DP 版本…
+  [ICML 2026][Test-Time Adaptation] 本文首次指出测试时自适应 (TTA) 会让模型参数泄露测试数据隐私，并把 Tent / EATA / SAR / DeYO / COME 五种主流 TTA 方法系统改造为带 per-sample 梯度裁剪 + 高斯噪声的 DP 版本，在 ImageNet-C 上既给出可证明的 $(\epsilon,\delta)$-DP 保证，又意外发现"裁剪本身"就能让 TTA 精度提升 $0.1\%$–$4.1\%$。
 tags:
   - "ICML 2026"
   - "Test-Time Adaptation"

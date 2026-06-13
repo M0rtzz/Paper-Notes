@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Look Before You Fuse: 2D-Guided Cross-Modal Alignment for Robust 3D Detection
 description: >-
-  [CVPR 2026][自动驾驶][3D目标检测] 揭示了LiDAR-Camera融合中特征不对齐主要集中在**前景-背景深度突变边界**，提出PGDC（2D先验引导深度校准）+DAGF（不连续感知几何融合）+SGDM（结构引导深度调制器）三个协同模块，在融合前主动修正不对齐问题…
+  [CVPR 2026][自动驾驶][3D目标检测] 揭示了LiDAR-Camera融合中特征不对齐主要集中在**前景-背景深度突变边界**，提出PGDC（2D先验引导深度校准）+DAGF（不连续感知几何融合）+SGDM（结构引导深度调制器）三个协同模块，在融合前主动修正不对齐问题，在nuScenes验证集达到mAP 71.5%、NDS 73.6%的SOTA。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

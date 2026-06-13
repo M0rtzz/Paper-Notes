@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation
 description: >-
-  [CVPR 2026][模型压缩][多标签标注] 提出全自动流水线，利用自监督 ViT 特征进行无监督目标发现，为 ImageNet-1K 全部 128 万训练图像生成带空间定位的多标签标注，无需人工标注，模型在域内和下游多标签任务上均获一致提升（ReaL +2.0 top-1, COCO +4.2 mAP）…
+  [CVPR 2026 Findings][模型压缩][多标签标注] 提出全自动流水线，利用自监督 ViT 特征进行无监督目标发现，为 ImageNet-1K 全部 128 万训练图像生成带空间定位的多标签标注，无需人工标注，模型在域内和下游多标签任务上均获一致提升（ReaL +2.0 top-1, COCO +4.2 mAP）。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "模型压缩"
   - "多标签标注"
   - "ImageNet重标注"

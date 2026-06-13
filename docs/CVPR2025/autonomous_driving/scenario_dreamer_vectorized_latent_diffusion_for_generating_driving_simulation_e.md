@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments
 description: >-
-  [CVPR 2025][自动驾驶][驾驶仿真] 提出 Scenario Dreamer，将自动驾驶仿真环境生成分解为三部分：向量化潜扩散模型生成初始场景（车道+智能体）、回报条件的 CtRL-Sim 生成闭环行为、场景修补实现无界环境扩展…
+  [CVPR 2025][自动驾驶][驾驶仿真] 提出 Scenario Dreamer，将自动驾驶仿真环境生成分解为三部分：向量化潜扩散模型生成初始场景（车道+智能体）、回报条件的 CtRL-Sim 生成闭环行为、场景修补实现无界环境扩展，在 nuPlan 上 Frechet Distance 0.67（基线 SLEDGE 1.44），生成仅需 0.16 秒。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

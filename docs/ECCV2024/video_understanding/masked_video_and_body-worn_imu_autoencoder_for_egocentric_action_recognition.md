@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition
 description: >-
-  [ECCV 2024][视频理解][第一人称动作识别] 提出 EVI-MAE，首个联合第一人称视频与身体穿戴 IMU 的多模态表示学习方法，通过 MAE 自监督预训练学习视频-IMU 跨模态对齐，并用图神经网络建模多 IMU 设备间的协同运动关系，在动作识别中取得 SOTA 且具备优秀的鲁棒性。
+  [ECCV 2024][视频理解][第一人称动作识别] 提出 EVI-MAE，首个联合第一人称视频与身体穿戴 IMU 的多模态表示学习方法，通过 MAE 自监督预训练学习视频-IMU 跨模态对齐，并用图神经网络建模多 IMU 设备间的协同运动关系，在动作识别中取得 SOTA 且具备优秀的鲁棒性。 第一人称 (egocentr…
 tags:
   - "ECCV 2024"
   - "视频理解"

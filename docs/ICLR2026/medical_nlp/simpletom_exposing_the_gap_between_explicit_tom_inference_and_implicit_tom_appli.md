@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimpleToM: Exposing the Gap between Explicit ToM Inference and Implicit ToM Application in LLMs
 description: >-
-  [ICLR 2026][医疗NLP][Theory of Mind] SimpleToM 揭示了 LLM 在 Theory of Mind 上的关键缺陷：前沿模型能准确推断他人心理状态（显式 ToM），但在将此知识应用于行为预测和行为判断时性能急剧下降（应用 ToM）…
+  [ICLR 2026][医疗NLP][Theory of Mind] SimpleToM 揭示了 LLM 在 Theory of Mind 上的关键缺陷：前沿模型能准确推断他人心理状态（显式 ToM），但在将此知识应用于行为预测和行为判断时性能急剧下降（应用 ToM），暴露了"知道什么"与"如何使用所知"之间的重大鸿沟。
 tags:
   - "ICLR 2026"
   - "医疗NLP"

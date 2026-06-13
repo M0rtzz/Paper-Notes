@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Local Hessian Spectral Filtering for Robust Intrinsic Dimension Estimation
 description: >-
-  [ICML 2026][图像生成][局部内禀维度] 本文提出 LHSD，把 score 模型的对数密度 Hessian 做一个 Hill 型谱滤波只保留近零特征值来数切空间维数，再用 Stochastic Lanczos Quadrature 把 $\mathcal{O}(D^3)$ 的代价压到 $\math…
+  [ICML 2026][图像生成][局部内禀维度] 本文提出 LHSD，把 score 模型的对数密度 Hessian 做一个 Hill 型谱滤波只保留近零特征值来数切空间维数，再用 Stochastic Lanczos Quadrature 把 $\mathcal{O}(D^3)$ 的代价压到 $\mathcal{O}(D)$，从而在 3072 维图像空间稳定估计局部内禀维度，并用于诊断扩散模型的训练样本记忆化。
 tags:
   - "ICML 2026"
   - "图像生成"

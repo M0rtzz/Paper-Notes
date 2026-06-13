@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights
 description: >-
-  [ACL 2025][LLM/NLP][product description] 提出 PRAISE，一个 4 步 LLM pipeline（属性提取 → 跨产品对比 → 语义分组 → 结构化呈现），使用 Gemini 2.0 Flash 从 Amazon 产品描述中自动生成结构化洞察…
+  [ACL 2025][LLM 其他][product description] 提出 PRAISE，一个 4 步 LLM pipeline（属性提取 → 跨产品对比 → 语义分组 → 结构化呈现），使用 Gemini 2.0 Flash 从 Amazon 产品描述中自动生成结构化洞察。在 90 个产品 × 9 个类别上验证，多步 pipeline 显著优于单次生成；效果与产品主观性高度相关（Arts&Crafts F1=0.82 vs Books F1=0.36），每产品仅需 $2R+1$ 次 API 调用。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "product description"
   - "attribute extraction"
   - "multi-step pipeline"

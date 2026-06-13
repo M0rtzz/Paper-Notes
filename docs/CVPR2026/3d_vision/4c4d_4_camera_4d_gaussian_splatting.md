@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 4C4D: 4 Camera 4D Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][4D高斯溅射] 提出 4C4D 框架，通过神经衰减函数（Neural Decaying Function）自适应控制高斯不透明度衰减，解决稀疏（仅4个相机）4D高斯溅射中几何与外观学习的不平衡问题，在多个数据集上达到SOTA。
+  [CVPR 2026][3D视觉][4D高斯溅射] 提出 4C4D 框架，通过神经衰减函数（Neural Decaying Function）自适应控制高斯不透明度衰减，解决稀疏（仅4个相机）4D高斯溅射中几何与外观学习的不平衡问题，在多个数据集上达到SOTA。 领域现状：4D动态场景的新视角合成需要密集相机阵列（数十到数百…
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Antidistillation Fingerprinting
 description: >-
-  [ICML2026][LLM安全][模型指纹] 这篇论文提出 Antidistillation Fingerprinting (ADFP)，用代理学生模型估计哪些水印 token 最容易被蒸馏过程吸收，从而在几乎不牺牲教师输出质量的情况下，更可靠地检测第三方模型是否训练过教师模型输出。
+  [ICML2026][LLM安全][模型指纹] 这篇论文提出 Antidistillation Fingerprinting (ADFP)，用代理学生模型估计哪些水印 token 最容易被蒸馏过程吸收，从而在几乎不牺牲教师输出质量的情况下，更可靠地检测第三方模型是否训练过教师模型输出。 领域现状：前沿 LLM 的训练成本极高…
 tags:
   - "ICML2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Expression Generation for Referring Image Segmentation and Grounding
 description: >-
-  [ICCV 2025][语义分割][指代图像分割] 提出 Latent-VG 框架，通过从单个文本描述生成多个潜在表达式（共享同一主语、但具有不同视觉属性），利用互补的视觉细节弥补稀疏文本与丰富视觉信息之间的语义差距，在指代图像分割和指代表达理解任务上同时达到 SOTA。
+  [ICCV 2025][语义分割][指代图像分割] 提出 Latent-VG 框架，通过从单个文本描述生成多个潜在表达式（共享同一主语、但具有不同视觉属性），利用互补的视觉细节弥补稀疏文本与丰富视觉信息之间的语义差距，在指代图像分割和指代表达理解任务上同时达到 SOTA。 指代图像分割（RIS）和指代表达理解（REC）需要根…
 tags:
   - "ICCV 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffOP: Reinforcement Learning of Optimization-Based Control Policies via Implicit Policy Gradients
 description: >-
-  [AAAI2026][强化学习][optimization-based control] 提出 DiffOP 框架，将优化型控制策略（如 MPC）视为可微分模块，通过隐式微分推导解析策略梯度，实现端到端强化学习训练，并给出首个非渐近收敛保证。
+  [AAAI2026][强化学习][optimization-based control] 提出 DiffOP 框架，将优化型控制策略（如 MPC）视为可微分模块，通过隐式微分推导解析策略梯度，实现端到端强化学习训练，并给出首个非渐近收敛保证。 现实控制系统（电网、机器人、交通网络等）对策略的可解释性、安全性和鲁棒性：有严格要…
 tags:
   - "AAAI2026"
   - "强化学习"

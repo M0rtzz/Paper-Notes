@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompting Future Driven Diffusion Model for Hand Motion Prediction
 description: >-
-  [ECCV 2024][图像生成][手部运动预测] 本文提出PromptFDDM，一个基于prompt的未来驱动扩散模型用于手部运动预测，通过空间-时间提取网络(STEN)结合Ground Truth提取网络(GTEN)和参考数据生成网络(RDGN)的引导机制，以及交互式prompt增强…
+  [ECCV 2024][图像生成][手部运动预测] 本文提出PromptFDDM，一个基于prompt的未来驱动扩散模型用于手部运动预测，通过空间-时间提取网络(STEN)结合Ground Truth提取网络(GTEN)和参考数据生成网络(RDGN)的引导机制，以及交互式prompt增强，在第一和第三人称视角的手部运动预测中达到SOTA。
 tags:
   - "ECCV 2024"
   - "图像生成"

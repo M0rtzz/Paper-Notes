@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPPO: Sequence-Level PPO for Long-Horizon Reasoning Tasks
 description: >-
-  [ACL 2026][LLM推理][Sequence-Level PPO] SPPO 把长链 CoT 推理中的 RLVR 从 token-level MDP 重写为 sequence-level contextual bandit，用只看 prompt 的标量 critic 估计题目可解性…
+  [ACL 2026][LLM推理][Sequence-Level PPO] SPPO 把长链 CoT 推理中的 RLVR 从 token-level MDP 重写为 sequence-level contextual bandit，用只看 prompt 的标量 critic 估计题目可解性，从而用单样本 PPO 获得接近或超过 GRPO 的稳定性与性能，同时带来约 5.9 倍训练加速和更低显存占用。
 tags:
   - "ACL 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh
 description: >-
-  [CVPR 2025][3D视觉][虚拟人生成] 提出 DAGSM，一种文本驱动的解耦数字人生成方法，通过 GS-enhanced Mesh（GSM）分别表示人体和各件衣物，支持换装、真实动画和纹理编辑。
+  [CVPR 2025][3D视觉][虚拟人生成] 提出 DAGSM，一种文本驱动的解耦数字人生成方法，通过 GS-enhanced Mesh（GSM）分别表示人体和各件衣物，支持换装、真实动画和纹理编辑。 领域现状 领域现状：现有文本驱动3D人体生成方法将人体和衣物作为单一模型生成，无法换装，动画不真实（衣物粘附身体）…
 tags:
   - "CVPR 2025"
   - "3D视觉"

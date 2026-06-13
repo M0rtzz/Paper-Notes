@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent
 description: >-
-  [CVPR 2026][机器人][VLA模型合并] 首次系统诊断 VLA 模型不可合并的两大根因（LoRA 自私参数冲突 + 动作专家自注意力导致的任务耦合），提出 MergeVLA——通过任务掩码稀疏激活 LoRA、去自注意力动作专家、无训练测试时路由，将多个单技能 VLA 专家合并为一个通用 agent…
+  [CVPR 2026][机器人][VLA模型合并] 首次系统诊断 VLA 模型不可合并的两大根因（LoRA 自私参数冲突 + 动作专家自注意力导致的任务耦合），提出 MergeVLA——通过任务掩码稀疏激活 LoRA、去自注意力动作专家、无训练测试时路由，将多个单技能 VLA 专家合并为一个通用 agent，在 LIBERO 上达 90.2% 成功率，真机 SO101 达 90%。
 tags:
   - "CVPR 2026"
   - "机器人"

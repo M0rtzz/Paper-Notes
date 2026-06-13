@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Vision Language Models Need to Process Image Tokens?
 description: >-
-  [CVPR 2026][多模态VLM][视觉语言模型] 本文系统揭示了VLM中图像token表征在浅层即趋于稳定且跨层可互换，而文本token持续动态重构——图像处理深度的必要性高度依赖输出任务类型。
+  [CVPR 2026][多模态VLM][视觉语言模型] 本文系统揭示了VLM中图像token表征在浅层即趋于稳定且跨层可互换，而文本token持续动态重构——图像处理深度的必要性高度依赖输出任务类型。 领域现状：VLM通过将视觉编码器与LLM结合实现多模态推理，但处理密集图像token穿越深层Transformer带来巨大计…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

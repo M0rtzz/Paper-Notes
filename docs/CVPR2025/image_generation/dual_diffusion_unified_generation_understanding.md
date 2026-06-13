@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Diffusion for Unified Image Generation and Understanding
 description: >-
-  [CVPR 2025][图像生成][多模态扩散] 提出 D-DiT（Dual Diffusion Transformer），首个完全端到端的多模态扩散模型，在图像分支用连续流匹配、文本分支用离散掩码扩散，统一损失函数下同时训练图像生成和文本理解。
+  [CVPR 2025][图像生成][多模态扩散] 提出 D-DiT（Dual Diffusion Transformer），首个完全端到端的多模态扩散模型，在图像分支用连续流匹配、文本分支用离散掩码扩散，统一损失函数下同时训练图像生成和文本理解。 领域现状：扩散模型在文生图领域占据主导，自回归模型在视觉语言理解方面表现卓越…
 tags:
   - "CVPR 2025"
   - "图像生成"

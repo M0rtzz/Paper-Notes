@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Membership Privacy Risks of Sharpness Aware Minimization
 description: >-
-  [ICLR 2026][AI安全][Sharpness-Aware Minimization] 本文首次系统性地揭示了 SAM（Sharpness-Aware Minimization）训练的模型虽然泛化性能更好，但反而比 SGD 更容易遭受成员推断攻击（MIA）…
+  [ICLR 2026][AI安全][Sharpness-Aware Minimization] 本文首次系统性地揭示了 SAM（Sharpness-Aware Minimization）训练的模型虽然泛化性能更好，但反而比 SGD 更容易遭受成员推断攻击（MIA），并从记忆化行为和方差收缩两个角度给出了理论和实验解释。
 tags:
   - "ICLR 2026"
   - "AI安全"

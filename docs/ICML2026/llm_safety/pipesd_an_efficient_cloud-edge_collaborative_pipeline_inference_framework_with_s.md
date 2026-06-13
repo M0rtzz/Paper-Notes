@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PipeSD: An Efficient Cloud-Edge Collaborative Pipeline Inference Framework with Speculative Decoding
 description: >-
-  [ICML 2026][LLM安全][Speculative Decoding] 本文提出 PipeSD：把投机解码（speculative decoding）从端云顺序执行改成 token-batch 流水线，并用双阈值 NAV 触发 + 贝叶斯自动调参替代固定 draft 长度…
+  [ICML 2026][LLM安全][Speculative Decoding] 本文提出 PipeSD：把投机解码（speculative decoding）从端云顺序执行改成 token-batch 流水线，并用双阈值 NAV 触发 + 贝叶斯自动调参替代固定 draft 长度，在 5G 带宽的真实端云测试床上拿到 1.16×–2.16× 加速、14–25% 云端能耗下降。
 tags:
   - "ICML 2026"
   - "LLM安全"

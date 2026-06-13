@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Uni-MuMER: Unified Multi-Task Fine-Tuning of Vision-Language Model for Handwritten Mathematical Expression Recognition
 description: >-
-  [NeurIPS 2025][多模态VLM][手写数学公式识别] 提出 Uni-MuMER，通过三种数据驱动任务（Tree-CoT、Error-Driven Learning、Symbol Counting）对开源 VLM 进行统一多任务微调…
+  [NeurIPS 2025 Spotlight][多模态VLM][手写数学公式识别] 提出 Uni-MuMER，通过三种数据驱动任务（Tree-CoT、Error-Driven Learning、Symbol Counting）对开源 VLM 进行统一多任务微调，在 CROHME 和 HME100K 数据集上大幅超越专用轻量模型和零样本商用 VLM。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "多模态VLM"
   - "手写数学公式识别"
   - "视觉语言模型"

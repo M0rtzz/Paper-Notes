@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Center-Outward q-Dominance: A Sample-Computable Proxy for Strong Stochastic Dominance in Multi-Objective Optimisation
 description: >-
-  [AAAI 2026][随机多目标优化] 基于最优传输理论中的中心向外分布函数，提出 q-dominance 关系作为强一阶随机支配（strong FSD）的可计算近似，证明全分位数范围的 q-dominance 可推导出强 FSD，并给出显式样本量阈值控制 Type I 错误…
+  [AAAI 2026][随机多目标优化] 基于最优传输理论中的中心向外分布函数，提出 q-dominance 关系作为强一阶随机支配（strong FSD）的可计算近似，证明全分位数范围的 q-dominance 可推导出强 FSD，并给出显式样本量阈值控制 Type I 错误，在超参数调优排名和噪声多目标优化中验证了其实用性。
 tags:
   - "AAAI 2026"
   - "随机多目标优化"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TagRAG: Tag-guided Hierarchical Knowledge Graph Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][图学习][GraphRAG] TagRAG 用“对象标签 + 领域标签链”替代 GraphRAG 中昂贵的实体社区划分和全图摘要，在保持全局知识整合能力的同时显著降低构图与检索成本…
+  [ACL 2026 Findings][图学习][GraphRAG] TagRAG 用“对象标签 + 领域标签链”替代 GraphRAG 中昂贵的实体社区划分和全图摘要，在保持全局知识整合能力的同时显著降低构图与检索成本，并在 UltraDomain 四个领域上以小模型 Qwen3-4B 获得高于 NaiveRAG、GraphRAG、LightRAG 和 MiniRAG 的胜率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "图学习"
   - "GraphRAG"
   - "层级标签链"

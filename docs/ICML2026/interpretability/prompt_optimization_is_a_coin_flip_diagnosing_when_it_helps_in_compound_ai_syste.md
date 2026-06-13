@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prompt Optimization Is a Coin Flip: Diagnosing When It Helps in Compound AI Systems
 description: >-
-  [ICML 2026][可解释性][提示学习] 本文用 18,000 次网格评估和 144 次优化运行实证检验了 compound AI 系统中端到端 prompt 优化的两个隐含假设——agent 之间存在耦合、单 agent prompt 值得优化——发现两者在主流 mid-tier 模型上几乎都不成立（…
+  [ICML 2026][可解释性][提示学习] 本文用 18,000 次网格评估和 144 次优化运行实证检验了 compound AI 系统中端到端 prompt 优化的两个隐含假设——agent 之间存在耦合、单 agent prompt 值得优化——发现两者在主流 mid-tier 模型上几乎都不成立（49% 的优化运行表现差于 zero-shot，A×B 交互项 $p>0.52$），并据此提出一个两阶段诊断框架（\$80 的 ANOVA 耦合预测 + \$5 的 10 分钟 headroom 测试），把"是否做 prompt 优化"从抛硬币变成可量化的决策。
 tags:
   - "ICML 2026"
   - "可解释性"

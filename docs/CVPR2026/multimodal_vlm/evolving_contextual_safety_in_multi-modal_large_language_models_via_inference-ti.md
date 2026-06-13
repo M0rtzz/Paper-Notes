@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory
 description: >-
-  [CVPR 2026][多模态VLM][MLLM安全] 提出 MM-SafetyBench++ 基准和 EchoSafe 框架，通过推理时维护自反思记忆库来累积安全洞察，使 MLLM 能够根据上下文区分看起来相似但安全意图不同的场景，无需训练即可提升上下文安全性。
+  [CVPR 2026][多模态VLM][MLLM安全] 提出 MM-SafetyBench++ 基准和 EchoSafe 框架，通过推理时维护自反思记忆库来累积安全洞察，使 MLLM 能够根据上下文区分看起来相似但安全意图不同的场景，无需训练即可提升上下文安全性。 领域现状：MLLM 在多模态推理任务上表现出色…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

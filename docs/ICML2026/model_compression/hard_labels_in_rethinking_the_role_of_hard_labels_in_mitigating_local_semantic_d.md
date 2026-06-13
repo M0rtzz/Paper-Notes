@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hard Labels In! Rethinking the Role of Hard Labels in Mitigating Local Semantic Drift
 description: >-
-  [ICML 2026][模型压缩][数据集蒸馏] 针对大规模数据集蒸馏中"每张图存大量软标签"导致的天价存储成本，本文证明在每图软标签数 $s$ 受限时会发生**局部视图语义漂移 (LVSD)**，并提出 soft→hard→soft 三阶段训练范式 HALD…
+  [ICML 2026][模型压缩][数据集蒸馏] 针对大规模数据集蒸馏中"每张图存大量软标签"导致的天价存储成本，本文证明在每图软标签数 $s$ 受限时会发生**局部视图语义漂移 (LVSD)**，并提出 soft→hard→soft 三阶段训练范式 HALD，用平滑后的硬标签作为语义锚把训练拉回正轨——ImageNet-1K 上 285M 软标签存储取得 42.7% 准确率，比 SOTA LPLD 涨 9.0%、软标签存储压缩 100 倍。
 tags:
   - "ICML 2026"
   - "模型压缩"

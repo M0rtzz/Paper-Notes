@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaRadar: Rate Adaptive Spectral Compression for Radar-based Perception
 description: >-
-  [CVPR2026][自动驾驶][雷达感知] 提出 AdaRadar——基于 DCT 频谱剪枝与零阶代理梯度的在线自适应雷达数据压缩框架，在 100× 以上压缩率下仅损失 ~1%p 检测/分割性能，有效缓解雷达传感器到计算端的带宽瓶颈。
+  [CVPR2026][自动驾驶][雷达感知] 提出 AdaRadar——基于 DCT 频谱剪枝与零阶代理梯度的在线自适应雷达数据压缩框架，在 100× 以上压缩率下仅损失 ~1%p 检测/分割性能，有效缓解雷达传感器到计算端的带宽瓶颈。 雷达在自动驾驶中的核心地位：相比相机和 LiDAR，毫米波雷达具有全天候、全光照的鲁棒性…
 tags:
   - "CVPR2026"
   - "自动驾驶"

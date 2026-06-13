@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnomalyNCD: Towards Novel Anomaly Class Discovery in Industrial Scenarios
 description: >-
-  [CVPR 2025][目标检测][novel class discovery] 提出 AnomalyNCD，首个基于自监督的工业多类异常分类方法：MEBin 提取主要异常区域 → 掩码引导 ViT 聚焦弱语义异常 → 区域融合策略实现灵活的区域/图像级分类，MVTec AD 上 F1 提升 10.8%…
+  [CVPR 2025][目标检测][novel class discovery] 提出 AnomalyNCD，首个基于自监督的工业多类异常分类方法：MEBin 提取主要异常区域 → 掩码引导 ViT 聚焦弱语义异常 → 区域融合策略实现灵活的区域/图像级分类，MVTec AD 上 F1 提升 10.8%，NMI 提升 8.8%。
 tags:
   - "CVPR 2025"
   - "目标检测"

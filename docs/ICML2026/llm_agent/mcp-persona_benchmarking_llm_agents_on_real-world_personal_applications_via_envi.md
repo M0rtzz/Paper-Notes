@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MCP-Persona: 用环境模拟评估 LLM agent 在真实个人化应用上的能力
 description: >-
-  [ICML 2026][LLM Agent][MCP] MCP-Persona 是首个针对真实个人化 MCP 工具（Slack/Rednote/Instagram/Lark 等 12 服务器）的 LLM agent benchmark…
+  [ICML 2026][LLM Agent][MCP] MCP-Persona 是首个针对真实个人化 MCP 工具（Slack/Rednote/Instagram/Lark 等 12 服务器）的 LLM agent benchmark；提出 Tool-Traverse + Context-Tree + Persona-Gen 三套方法，用 LLM 自动 synthesize Python simulator 代码避免真实账号问题；测 10+ SOTA agent 发现连 Claude-Sonnet-4.5 也只达 38.66% Acc，证明个人化工具使用是被严重低估的能力短板。
 tags:
   - "ICML 2026"
   - "LLM Agent"

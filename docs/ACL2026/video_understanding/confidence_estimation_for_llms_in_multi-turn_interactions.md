@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Confidence Estimation for LLMs in Multi-turn Interactions
 description: >-
-  [ACL 2026][视频理解][多轮对话] 首次系统研究多轮对话场景下的 LLM 置信度估计，提出两个核心准则（per-turn 校准 + 信息增加时单调性）、对应的 InfoECE 指标和 Kendall's $\tau$ 评估、Hinter-Guesser 数据集构造范式…
+  [ACL 2026 Findings][视频理解][多轮对话] 首次系统研究多轮对话场景下的 LLM 置信度估计，提出两个核心准则（per-turn 校准 + 信息增加时单调性）、对应的 InfoECE 指标和 Kendall's $\tau$ 评估、Hinter-Guesser 数据集构造范式，并提出新颖的 P(SUFFICIENT) logit 探针——结果发现现有方法（verbalized / SC / P(TRUE)）在多轮场景中校准和单调性都很差，而 P(SUFFICIENT) 在 GUESS 上 InfoECE 降到 5.27（vs P(TRUE) 79.97）、$\tau$ 达 81.51，但任务远未解决。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "视频理解"
   - "多轮对话"
   - "置信度估计"

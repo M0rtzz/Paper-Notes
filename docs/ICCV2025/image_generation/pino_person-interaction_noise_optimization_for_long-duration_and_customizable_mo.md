@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PINO: Person-Interaction Noise Optimization for Long-Duration and Customizable Motion Generation of Arbitrary-Sized Groups
 description: >-
-  [ICCV 2025][图像生成][多人交互生成] 提出Person-Interaction Noise Optimization（PINO），一种无需训练的框架，将复杂的多人群体交互分解为语义明确的两人交互对，利用预训练的两人交互扩散模型通过噪声优化和物理惩罚项顺序合成任意规模的群体交互运动…
+  [ICCV 2025][图像生成][多人交互生成] 提出Person-Interaction Noise Optimization（PINO），一种无需训练的框架，将复杂的多人群体交互分解为语义明确的两人交互对，利用预训练的两人交互扩散模型通过噪声优化和物理惩罚项顺序合成任意规模的群体交互运动，支持精细化用户控制和长时序运动生成。
 tags:
   - "ICCV 2025"
   - "图像生成"

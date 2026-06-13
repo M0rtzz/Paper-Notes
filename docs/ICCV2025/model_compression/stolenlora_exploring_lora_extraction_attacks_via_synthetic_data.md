@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StolenLoRA: Exploring LoRA Extraction Attacks via Synthetic Data
 description: >-
-  [ICCV 2025][模型压缩][LoRA extraction] StolenLoRA 首次提出针对 LoRA 自适应模型的模型提取攻击方向，利用 LLM 驱动的 Stable Diffusion 生成高质量合成数据替代真实数据集搜索，并设计基于分歧的半监督学习（DSL）策略通过选择性查询最大化信息增益…
+  [ICCV 2025][模型压缩][LoRA extraction] StolenLoRA 首次提出针对 LoRA 自适应模型的模型提取攻击方向，利用 LLM 驱动的 Stable Diffusion 生成高质量合成数据替代真实数据集搜索，并设计基于分歧的半监督学习（DSL）策略通过选择性查询最大化信息增益，仅需 10k 次查询即可达到高达 96.60% 的攻击成功率，揭示了 LoRA 适配模型的严重安全漏洞。
 tags:
   - "ICCV 2025"
   - "模型压缩"

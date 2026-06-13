@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prototype Transformer: Towards Language Model Architectures Interpretable by Design
 description: >-
-  [ICML 2026][可解释性][原型网络] ProtoT 把 Transformer 里 $O(N^2)$ 的自注意力替换成 $R$ 个可学习"原型向量"驱动的线性通信通道（write/read gate + 带时间折扣的 prefix mean）…
+  [ICML 2026][可解释性][原型网络] ProtoT 把 Transformer 里 $O(N^2)$ 的自注意力替换成 $R$ 个可学习"原型向量"驱动的线性通信通道（write/read gate + 带时间折扣的 prefix mean），让每个原型在训练中自动绑定一个可命名的概念（如"woman""COVID""New Zealand"），从而支持对模型行为做"手术式"的概念级编辑，且文本生成 Elo 超过同规模 LLaMA。
 tags:
   - "ICML 2026"
   - "可解释性"

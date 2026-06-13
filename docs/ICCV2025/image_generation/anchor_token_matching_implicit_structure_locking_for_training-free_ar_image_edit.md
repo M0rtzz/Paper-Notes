@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Anchor Token Matching: Implicit Structure Locking for Training-free AR Image Editing
 description: >-
-  [ICCV 2025][图像生成][自回归模型] 提出 ISLock，首个面向自回归(AR)视觉生成模型的无训练图像编辑方法，通过锚点 Token 匹配(ATM)在隐空间中隐式对齐自注意力模式，实现结构一致的文本引导图像编辑。
+  [ICCV 2025][图像生成][自回归模型] 提出 ISLock，首个面向自回归(AR)视觉生成模型的无训练图像编辑方法，通过锚点 Token 匹配(ATM)在隐空间中隐式对齐自注意力模式，实现结构一致的文本引导图像编辑。 扩散模型已经在文本引导图像编辑中取得了巨大成功，通过交叉注意力操纵实现精确的空间控制。然而…
 tags:
   - "ICCV 2025"
   - "图像生成"

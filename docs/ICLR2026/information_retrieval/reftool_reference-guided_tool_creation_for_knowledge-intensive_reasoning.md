@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RefTool: Reference-Guided Tool Creation for Knowledge-Intensive Reasoning
 description: >-
-  [ICLR 2026][信息检索/RAG][tool creation] 提出 RefTool 框架基于外部参考资料（教材、知识片段）自动创建可执行 Python 工具，解决了现有工具创建方法依赖 LLM 内在知识在专业领域失败的问题，在因果推理、物理和化学任务上平均超过已有方法 12.3%。
+  [ICLR 2026][信息检索/RAG][tool creation] 提出 RefTool 框架基于外部参考资料（教材、知识片段）自动创建可执行 Python 工具，解决了现有工具创建方法依赖 LLM 内在知识在专业领域失败的问题，在因果推理、物理和化学任务上平均超过已有方法 12.3%。 领域现状：LLM 工具创建（t…
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

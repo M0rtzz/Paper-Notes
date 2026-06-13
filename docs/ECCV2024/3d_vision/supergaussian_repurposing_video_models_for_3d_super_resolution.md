@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SuperGaussian: Repurposing Video Models for 3D Super Resolution
 description: >-
-  [ECCV 2024][3D视觉][3D超分辨率] 提出SuperGaussian，通过复用预训练视频上采样模型实现3D超分辨率，无需类别特定训练，可处理多种3D输入格式（高斯、NeRF、网格等），输出高质量Gaussian Splat模型。
+  [ECCV 2024][3D视觉][3D超分辨率] 提出SuperGaussian，通过复用预训练视频上采样模型实现3D超分辨率，无需类别特定训练，可处理多种3D输入格式（高斯、NeRF、网格等），输出高质量Gaussian Splat模型。 领域现状 领域现状：当前3D生成模型的细节质量远不及图像和视频生成模型…
 tags:
   - "ECCV 2024"
   - "3D视觉"

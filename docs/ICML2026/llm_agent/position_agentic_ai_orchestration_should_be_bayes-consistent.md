@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Agentic AI Orchestration Should Be Bayes-Consistent
 description: >-
-  [ICML 2026 (Position Paper)][LLM Agent][贝叶斯控制层] 这篇 position paper 主张：不要再尝试让 LLM 本身 "Bayesian"（那条路在工程上和理论上都跳不过去）…
+  [ICML 2026 (Position Paper)][LLM Agent][贝叶斯控制层] 这篇 position paper 主张：不要再尝试让 LLM 本身 "Bayesian"（那条路在工程上和理论上都跳不过去），而是把贝叶斯结构搬到 agentic AI 的**编排控制层**——让控制器维护一个低维任务级隐变量的信念，按 Bayes 规则在 agent/工具返回的"消息观测"上更新，并用期望效用或 value-of-information 做路由、停止、升级和预算分配。
 tags:
   - "ICML 2026 (Position Paper)"
   - "LLM Agent"

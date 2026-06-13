@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Perturbation-based Explanations by Understanding the Role of Uncertainty Calibration
 description: >-
-  [NeurIPS 2025][可解释性][扰动解释方法] 揭示了不确定性校准（模型置信度与实际准确率的对齐）与扰动式可解释性方法质量之间的根本联系，证明模型在扰动输入下的误校准直接损害全局和局部解释质量，并提出 ReCalX 通过扰动级别自适应温度缩放显著改善解释的鲁棒性和保真度。
+  [NeurIPS 2025][可解释性][扰动解释方法] 揭示了不确定性校准（模型置信度与实际准确率的对齐）与扰动式可解释性方法质量之间的根本联系，证明模型在扰动输入下的误校准直接损害全局和局部解释质量，并提出 ReCalX 通过扰动级别自适应温度缩放显著改善解释的鲁棒性和保真度。 扰动式解释方法（如 SHAP、LIME）是…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

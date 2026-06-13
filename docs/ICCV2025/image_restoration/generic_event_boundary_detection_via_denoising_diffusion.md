@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generic Event Boundary Detection via Denoising Diffusion (DiffGEBD)
 description: >-
-  [ICCV 2025][图像恢复][通用事件边界检测] DiffGEBD 首次将扩散模型引入通用事件边界检测（GEBD），通过将边界预测建模为从随机噪声到合理边界分布的去噪过程，利用 Classifier-Free Guidance 控制预测多样性…
+  [ICCV 2025][图像恢复][通用事件边界检测] DiffGEBD 首次将扩散模型引入通用事件边界检测（GEBD），通过将边界预测建模为从随机噪声到合理边界分布的去噪过程，利用 Classifier-Free Guidance 控制预测多样性，并提出了对称 F1 和 Diversity Score 两项新评估指标来衡量多预测场景下的质量与多样性。
 tags:
   - "ICCV 2025"
   - "图像恢复"

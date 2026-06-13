@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CRAFTQA: A Code-Driven Adaptive Framework for Complex Structured Data Reasoning
 description: >-
-  [ACL2026][图学习][结构化数据问答] CRAFTQA 用 CodeSTEP 生成可执行的逐步 Python 推理代码，并在预定义操作不够时由 CRAFT 动态生成自定义函数，从而显著提升表格、知识图谱和时序知识图谱上的复杂结构化数据问答能力…
+  [ACL2026 Findings][图学习][结构化数据问答] CRAFTQA 用 CodeSTEP 生成可执行的逐步 Python 推理代码，并在预定义操作不够时由 CRAFT 动态生成自定义函数，从而显著提升表格、知识图谱和时序知识图谱上的复杂结构化数据问答能力，GPT-4o 版本在复杂推理 Overall 上达到 76.6%。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "图学习"
   - "结构化数据问答"
   - "代码推理"

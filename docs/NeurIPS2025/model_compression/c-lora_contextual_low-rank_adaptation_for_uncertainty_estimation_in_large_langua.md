@@ -2,7 +2,7 @@
 title: >-
   [论文解读] C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models
 description: >-
-  [NeurIPS 2025][模型压缩][LoRA] 提出 C-LoRA，通过引入轻量级上下文模块使 LoRA 低秩矩阵的分布依赖于输入数据，实现样本级的异方差不确定性估计，在少样本微调场景中显著改善校准质量。
+  [NeurIPS 2025][模型压缩][LoRA] 提出 C-LoRA，通过引入轻量级上下文模块使 LoRA 低秩矩阵的分布依赖于输入数据，实现样本级的异方差不确定性估计，在少样本微调场景中显著改善校准质量。 - 领域现状：LoRA 等参数高效微调方法已是 LLM 下游适配的主流范式，近期 BLoB、Laplace-LoR…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

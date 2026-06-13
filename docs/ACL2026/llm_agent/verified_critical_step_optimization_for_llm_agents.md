@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Verified Critical Step Optimization for LLM Agents
 description: >-
-  [ACL2026][LLM Agent][关键步骤优化] CSO 从 agent 自己失败的轨迹中找出“换一个动作就能让任务成功”的 verified critical steps，只在这些关键决策点构造 DPO 偏好对，从而用更少、更可靠的监督提升长程 LLM agent 的后训练效果。
+  [ACL2026 Findings][LLM Agent][关键步骤优化] CSO 从 agent 自己失败的轨迹中找出“换一个动作就能让任务成功”的 verified critical steps，只在这些关键决策点构造 DPO 偏好对，从而用更少、更可靠的监督提升长程 LLM agent 的后训练效果。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM Agent"
   - "关键步骤优化"
   - "DPO"
@@ -17,7 +17,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2602.03412](https://arxiv.org/abs/2602.03412)  
 **代码**: https://github.com/kiaia/CSO；https://github.com/Tencent/CognitiveKernel-Pro  
-**领域**: llm_agent  
+**领域**: LLM Agent  
 **关键词**: LLM Agent, 关键步骤优化, DPO, 过程奖励模型, 信用分配  
 
 ## 一句话总结

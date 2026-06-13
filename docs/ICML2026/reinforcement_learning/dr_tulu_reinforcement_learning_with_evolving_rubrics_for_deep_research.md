@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dr. Tulu: Reinforcement Learning with Evolving Rubrics for Deep Research
 description: >-
-  [ICML 2026][强化学习][演化 rubric] Dr. Tulu 提出 RLER（Reinforcement Learning with Evolving Rubrics），让评估 rubric 在训练过程中与策略共同演化，把 RLVR 从短答案 QA 推广到带引用的长文深度研究任务…
+  [ICML 2026][强化学习][演化 rubric] Dr. Tulu 提出 RLER（Reinforcement Learning with Evolving Rubrics），让评估 rubric 在训练过程中与策略共同演化，把 RLVR 从短答案 QA 推广到带引用的长文深度研究任务，最终用 Qwen3-8B 训出的 DR Tulu-8B 在四个长文 deep research 基准上平均超 Tongyi DR-30B 15.6 个点，并以 1000 倍更低成本达到 OpenAI Deep Research 同等水平。
 tags:
   - "ICML 2026"
   - "强化学习"

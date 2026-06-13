@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Selective Learning for Deep Time Series Forecasting
 description: >-
-  [NeurIPS 2025][时间序列][时间序列预测] 提出选择性学习（Selective Learning）策略，通过不确定性掩码和异常掩码组成的双掩码机制筛选可泛化时间步计算 MSE 损失…
+  [NeurIPS 2025][时间序列][时间序列预测] 提出选择性学习（Selective Learning）策略，通过不确定性掩码和异常掩码组成的双掩码机制筛选可泛化时间步计算 MSE 损失，在 8 个数据集上为 Informer 降低 37.4% MSE、TimesNet 降低 8.4%、iTransformer 降低 6.5%。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

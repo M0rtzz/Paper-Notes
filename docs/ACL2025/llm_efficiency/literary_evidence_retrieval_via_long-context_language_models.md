@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Literary Evidence Retrieval via Long-Context Language Models
 description: >-
-  [ACL 2025][LLM效率][长上下文理解] 将 RELiC 数据集改造为长上下文文学证据检索 benchmark（292 个高质量样本），要求模型在完整小说文本（45k-125k tokens）中为文学评论找到缺失引用；Gemini Pro 2.5 以 62.5% 准确率首次超越人类专家（55%）…
+  [ACL 2025][LLM效率][长上下文理解] 将 RELiC 数据集改造为长上下文文学证据检索 benchmark（292 个高质量样本），要求模型在完整小说文本（45k-125k tokens）中为文学评论找到缺失引用；Gemini Pro 2.5 以 62.5% 准确率首次超越人类专家（55%），但最佳开源模型 DeepSeek-R1 仅 29.1%，揭示了闭源/开源模型在解释性推理上的巨大鸿沟。
 tags:
   - "ACL 2025"
   - "LLM效率"

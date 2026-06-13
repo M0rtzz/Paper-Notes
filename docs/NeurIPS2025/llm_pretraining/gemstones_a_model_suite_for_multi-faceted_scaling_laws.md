@@ -2,14 +2,15 @@
 title: >-
   [论文解读] Gemstones: A Model Suite for Multi-Faceted Scaling Laws
 description: >-
-  [NeurIPS 2025][预训练][宽度-深度比] Gemstones开源4000+检查点数据集（至2B参数），系统研究宽度-深度-训练代币在缩放律中的影响，揭示缩放律对设计选择的高度敏感性。
+  [NeurIPS 2025][预训练][缩放律] 开源由超过4000个检查点（覆盖50M-2B参数、多种宽度-深度比）组成的Gemstones模型套件，通过系统实验揭示缩放律对模型选择、学习率调度、冷却策略等设计选择高度敏感，并提出基于凸包的新拟合方法提升稀疏采样下的缩放律稳定性。 领域现状： 缩放律是LLM训练预算分配的关…
 tags:
   - "NeurIPS 2025"
   - "预训练"
+  - "缩放律"
   - "宽度-深度比"
   - "计算最优性"
-  - "扩展律"
   - "模型设计"
+  - "凸包拟合"
 ---
 
 # Gemstones: A Model Suite for Multi-Faceted Scaling Laws
@@ -144,3 +145,19 @@ tags:
   - 扩展律
   - 模型设计
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training](power_lines_scaling_laws_for_weight_decay_and_batch_size_in_llm_pre-training.md)
+- [\[ACL 2025\] Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning](../../ACL2025/llm_pretraining/training_dynamics_underlying_language_model_scaling_laws_loss_deceleration_and_z.md)
+- [\[NeurIPS 2025\] Scaling Embedding Layers in Language Models](scaling_embedding_layers_in_language_models.md)
+- [\[ICML 2026\] Dropout Universality: Scaling Laws and Optimal Scheduling at the Edge-of-Chaos](../../ICML2026/llm_pretraining/dropout_universality_scaling_laws_and_optimal_scheduling_at_the_edge-of-chaos.md)
+- [\[ACL 2025\] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](../../ACL2025/llm_pretraining/diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+
+</div>
+
+<!-- RELATED:END -->

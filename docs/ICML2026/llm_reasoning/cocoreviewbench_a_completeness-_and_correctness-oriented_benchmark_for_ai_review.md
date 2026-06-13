@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCoReviewBench: A Completeness- and Correctness-Oriented Benchmark for AI Reviewers
 description: >-
-  [ICML 2026][LLM推理][AI Reviewer] 本文提出 CoCoReviewBench，通过"按类别建子基准 + 用 meta-review 仲裁审稿人/作者冲突来过滤错误意见"两步，把 3,900 篇 ICLR/NeurIPS 论文的人工审稿改造成一个更可信的 AI 审稿评测参考…
+  [ICML 2026][LLM推理][AI Reviewer] 本文提出 CoCoReviewBench，通过"按类别建子基准 + 用 meta-review 仲裁审稿人/作者冲突来过滤错误意见"两步，把 3,900 篇 ICLR/NeurIPS 论文的人工审稿改造成一个更可信的 AI 审稿评测参考，并发现现有 AI 审稿在 correctness 和 thoroughness 上仍落后于人类、推理模型则更有潜力。
 tags:
   - "ICML 2026"
   - "LLM推理"

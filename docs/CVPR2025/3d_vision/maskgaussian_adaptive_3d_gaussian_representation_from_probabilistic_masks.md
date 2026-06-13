@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks
 description: >-
-  [CVPR 2025][3D视觉][3D Gaussian Splatting] 将 3DGS 中的高斯剪枝从确定性移除改为概率性存在建模，提出 masked-rasterization 技术使未被采样的高斯仍能接收梯度以动态评估其贡献…
+  [CVPR 2025][3D视觉][3D Gaussian Splatting] 将 3DGS 中的高斯剪枝从确定性移除改为概率性存在建模，提出 masked-rasterization 技术使未被采样的高斯仍能接收梯度以动态评估其贡献，在 Mip-NeRF360/T&T/DeepBlending 上实现 62-75% 的高斯剪枝率且仅损失 0.02 PSNR。
 tags:
   - "CVPR 2025"
   - "3D视觉"

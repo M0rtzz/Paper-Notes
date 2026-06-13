@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models
 description: >-
-  [ICML2025][图像生成][inference-time scaling] 系统性研究了在不依赖外部模型（VLM/CLIP）的前提下，对文本到图像扩散模型的初始噪声优化算法施加 Best-of-N 推理时缩放的效果，发现性能会迅速达到平台期（plateau），少量优化步数即可逼近该设置下的最大性能…
+  [ICML2025][图像生成][inference-time scaling] 系统性研究了在不依赖外部模型（VLM/CLIP）的前提下，对文本到图像扩散模型的初始噪声优化算法施加 Best-of-N 推理时缩放的效果，发现性能会迅速达到平台期（plateau），少量优化步数即可逼近该设置下的最大性能，且不同底层扩散模型上的最优算法不同。
 tags:
   - "ICML2025"
   - "图像生成"

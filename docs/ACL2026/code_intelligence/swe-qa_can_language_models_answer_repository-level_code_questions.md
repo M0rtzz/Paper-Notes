@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SWE-QA: Can Language Models Answer Repository-level Code Questions?
 description: >-
-  [ACL 2026][代码智能][仓库级代码理解] SWE-QA 构建了一个覆盖 15 个真实 Python 仓库、720 个高质量问答对的仓库级代码问答基准，用 GitHub issue 归纳问题类型并用人工校验答案，实验显示单纯 LLM 直接回答很弱…
+  [ACL 2026 Findings][代码智能][仓库级代码理解] SWE-QA 构建了一个覆盖 15 个真实 Python 仓库、720 个高质量问答对的仓库级代码问答基准，用 GitHub issue 归纳问题类型并用人工校验答案，实验显示单纯 LLM 直接回答很弱，RAG 与 OpenHands/SWE-agent 这类工具化 agent 才能接近真实开发问答需求。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "代码智能"
   - "仓库级代码理解"
   - "Code QA"

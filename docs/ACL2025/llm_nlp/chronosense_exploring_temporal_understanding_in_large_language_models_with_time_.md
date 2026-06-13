@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ChronoSense: Exploring Temporal Understanding in Large Language Models with Time Intervals of Events
 description: >-
-  [ACL2025][LLM/NLP][时间推理] 提出 ChronoSense 基准，首次完整覆盖 Allen 区间代数全部 13 种时间关系并加入 3 类时间算术任务，通过对 7 个 LLM 在 0-shot / few-shot / CoT 下的系统评估，揭示模型时间理解能力普遍薄弱且严重依赖预训练记忆。
+  [ACL2025][LLM 其他][时间推理] 提出 ChronoSense 基准，首次完整覆盖 Allen 区间代数全部 13 种时间关系并加入 3 类时间算术任务，通过对 7 个 LLM 在 0-shot / few-shot / CoT 下的系统评估，揭示模型时间理解能力普遍薄弱且严重依赖预训练记忆。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "时间推理"
   - "Allen区间关系"
   - "benchmark"

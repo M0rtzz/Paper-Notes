@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Reward Model Evaluation Through the Lens of Reward Overoptimization
 description: >-
-  [ACL 2025][LLM对齐][奖励模型评估] 本文从奖励过优化（reward overoptimization）的视角重新审视奖励模型评估方法，发现现有基准与下游策略性能相关性弱，并提出了三条构建可靠评估基准的关键准则：最小化正负样本的非正确性差异、使用多次比较覆盖广泛响应范围、以及从多样模型中采样响应…
+  [ACL 2025][LLM对齐][奖励模型评估] 本文从奖励过优化（reward overoptimization）的视角重新审视奖励模型评估方法，发现现有基准与下游策略性能相关性弱，并提出了三条构建可靠评估基准的关键准则：最小化正负样本的非正确性差异、使用多次比较覆盖广泛响应范围、以及从多样模型中采样响应。
 tags:
   - "ACL 2025"
   - "LLM对齐"

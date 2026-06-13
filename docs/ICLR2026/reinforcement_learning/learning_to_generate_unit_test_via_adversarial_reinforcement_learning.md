@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Generate Unit Test via Adversarial Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][单元测试生成] 提出UTRL框架，通过对抗RL迭代训练单元测试生成器和代码生成器——测试生成器学习生成能区分LLM代码与正确代码的判别性测试用例，代码生成器学习通过这些测试——Qwen3-4B训练后超越GPT-4.1的测试生成质量。
+  [ICLR 2026][强化学习][单元测试生成] 提出UTRL框架，通过对抗RL迭代训练单元测试生成器和代码生成器——测试生成器学习生成能区分LLM代码与正确代码的判别性测试用例，代码生成器学习通过这些测试——Qwen3-4B训练后超越GPT-4.1的测试生成质量。 领域现状：单元测试是编程核心实践，高质量测试用于best…
 tags:
   - "ICLR 2026"
   - "强化学习"

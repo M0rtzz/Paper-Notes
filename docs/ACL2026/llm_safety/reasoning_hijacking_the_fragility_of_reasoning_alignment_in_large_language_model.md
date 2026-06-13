@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Hijacking: The Fragility of Reasoning Alignment in Large Language Models
 description: >-
-  [ACL 2026][LLM安全][推理劫持] 本文提出"推理劫持"(Reasoning Hijacking) 这一新型攻击范式，通过在数据通道注入虚假决策标准来操纵 LLM 的推理逻辑而非改变任务目标，实现高攻击成功率且能绕过基于意图检测的防御方法。
+  [ACL 2026][LLM安全][推理劫持] 本文提出"推理劫持"(Reasoning Hijacking) 这一新型攻击范式，通过在数据通道注入虚假决策标准来操纵 LLM 的推理逻辑而非改变任务目标，实现高攻击成功率且能绕过基于意图检测的防御方法。 领域现状：LLM 越来越多地集成到第三方应用中（如自动简历筛选、邮件过滤…
 tags:
   - "ACL 2026"
   - "LLM安全"

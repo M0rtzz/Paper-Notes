@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Video Understanding: OVBench and VideoChat-Online
 description: >-
-  [CVPR 2025][自动驾驶][在线视频理解] 本文从评估基准、模型架构和训练策略三个角度推进在线视频理解：提出 OVBench（包含 6 大任务类型 16 个子任务的在线视频 QA 基准），设计金字塔记忆库（PMB）高效压缩流式视频信息…
+  [CVPR 2025][自动驾驶][在线视频理解] 本文从评估基准、模型架构和训练策略三个角度推进在线视频理解：提出 OVBench（包含 6 大任务类型 16 个子任务的在线视频 QA 基准），设计金字塔记忆库（PMB）高效压缩流式视频信息，并通过离线到在线的渐进训练构建 4B 参数的 VideoChat-Online 模型，在 OVBench 上超越 7B 离线模型 4.2%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

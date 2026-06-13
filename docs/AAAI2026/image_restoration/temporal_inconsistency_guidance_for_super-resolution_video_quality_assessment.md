@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Inconsistency Guidance for Super-resolution Video Quality Assessment
 description: >-
-  [AAAI 2026][图像恢复][视频质量评估] 提出 TIG-SVQA 框架，首次将时间不一致性（temporal inconsistency）作为显式引导信号融入超分辨率视频质量评估，设计了不一致性高亮空间模块（IHSM）和不一致性引导时间模块（IGTM）…
+  [AAAI 2026][图像恢复][视频质量评估] 提出 TIG-SVQA 框架，首次将时间不一致性（temporal inconsistency）作为显式引导信号融入超分辨率视频质量评估，设计了不一致性高亮空间模块（IHSM）和不一致性引导时间模块（IGTM），在 SFD、MFD 和 Combined-VSR 三个数据集上 SRCC 分别达到 0.950、0.942、0.939，全面超越现有 IQA/VQA 方法。
 tags:
   - "AAAI 2026"
   - "图像恢复"

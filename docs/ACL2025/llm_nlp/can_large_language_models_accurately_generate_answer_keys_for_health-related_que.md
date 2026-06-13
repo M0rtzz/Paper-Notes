@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Can Large Language Models Accurately Generate Answer Keys for Health-related Questions?
 description: >-
-  [ACL 2025 (Short Paper)][LLM/NLP][医学问答] 本文探索使用LLM自动生成医学问答的答案关键点（information nuggets），对比多种生成方法与人类专家标注的一致性，发现提供示例+从答案中提取nugget的方法效果最好，但LLM提取原子事实的能力仍然有限…
+  [ACL 2025 (Short Paper)][LLM 其他][医学问答] 本文探索使用LLM自动生成医学问答的答案关键点（information nuggets），对比多种生成方法与人类专家标注的一致性，发现提供示例+从答案中提取nugget的方法效果最好，但LLM提取原子事实的能力仍然有限，其中Llama 3.3表现最佳。
 tags:
   - "ACL 2025 (Short Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "医学问答"
   - "信息nugget"
   - "答案关键点"

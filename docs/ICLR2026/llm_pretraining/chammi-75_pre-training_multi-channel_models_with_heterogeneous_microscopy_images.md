@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CHAMMI-75: Pre-training multi-channel models with heterogeneous microscopy images
 description: >-
-  [ICLR2026][预训练][microscopy] 构建 CHAMMI-75——最大的异构多通道显微镜图像预训练数据集（280 万图像，75 个来源，25 种通道类型，16 种物种），证明成像模态多样性是提升多通道模型泛化能力的关键因素…
+  [ICLR2026][预训练][microscopy] 构建 CHAMMI-75——最大的异构多通道显微镜图像预训练数据集（280 万图像，75 个来源，25 种通道类型，16 种物种），证明成像模态多样性是提升多通道模型泛化能力的关键因素，训练的 MorphEm 模型在 7 个 benchmark 中 6 个达到 SOTA。
 tags:
   - "ICLR2026"
   - "预训练"

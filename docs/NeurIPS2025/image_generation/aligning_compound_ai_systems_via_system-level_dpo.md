@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Compound AI Systems via System-level DPO
 description: >-
-  [NeurIPS 2025][图像生成][compound AI system] 将复合 AI 系统建模为 DAG，提出 SysDPO 框架将 DPO 扩展到多组件联合对齐，通过 DAG 分解将系统级偏好转化为可端到端优化的损失函数，理论证明了 β-完美对齐保证…
+  [NeurIPS 2025][图像生成][compound AI system] 将复合 AI 系统建模为 DAG，提出 SysDPO 框架将 DPO 扩展到多组件联合对齐，通过 DAG 分解将系统级偏好转化为可端到端优化的损失函数，理论证明了 β-完美对齐保证，在 LLM+扩散模型和 LLM+LLM 系统上显著提升协作质量。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

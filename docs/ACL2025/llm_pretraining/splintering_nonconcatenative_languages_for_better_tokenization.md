@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Splintering Nonconcatenative Languages for Better Tokenization
 description: >-
-  [ACL 2025][预训练][子词分词] 本文提出 **Splinter**——一个加在 BPE/UnigramLM 之前的「预分词」步骤，通过迭代删字把希伯来语、阿拉伯语、马来语这类"词根藏在模板里"的词重排成线性可切的序列，让普通分词器也能把词根切成连续的 token…
+  [ACL 2025][预训练][子词分词] 本文提出 **Splinter**——一个加在 BPE/UnigramLM 之前的「预分词」步骤，通过迭代删字把希伯来语、阿拉伯语、马来语这类"词根藏在模板里"的词重排成线性可切的序列，让普通分词器也能把词根切成连续的 token，从而在内在指标与希伯来语下游任务上都拿到提升。
 tags:
   - "ACL 2025"
   - "预训练"

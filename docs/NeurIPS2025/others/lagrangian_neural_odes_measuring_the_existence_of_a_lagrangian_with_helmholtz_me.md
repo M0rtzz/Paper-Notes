@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lagrangian neural ODEs: Measuring the existence of a Lagrangian with Helmholtz metrics
 description: >-
-  [NeurIPS 2025][Neural ODE] 提出 Helmholtz metrics——基于 Helmholtz 条件的可微度量，用于量化给定 ODE 与 Euler-Lagrange 方程的接近程度，并将其作为正则化项加入二阶 Neural ODE 训练中…
+  [NeurIPS 2025][Neural ODE] 提出 Helmholtz metrics——基于 Helmholtz 条件的可微度量，用于量化给定 ODE 与 Euler-Lagrange 方程的接近程度，并将其作为正则化项加入二阶 Neural ODE 训练中，形成 Lagrangian Neural ODE，在零额外推理开销下引导模型收敛到真正的物理定律。
 tags:
   - "NeurIPS 2025"
   - "Neural ODE"

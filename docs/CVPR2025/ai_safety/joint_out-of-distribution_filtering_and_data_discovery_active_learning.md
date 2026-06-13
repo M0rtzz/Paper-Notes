@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint Out-of-Distribution Filtering and Data Discovery Active Learning
 description: >-
-  [CVPR 2025][AI安全][active learning] 提出 Open-Set Discovery Active Learning (OSDAL) 场景，并设计 Joda 算法，通过训练-过滤-选择三阶段流程，用单一模型同时过滤 OOD 数据和发现新类别，无需额外辅助模型…
+  [CVPR 2025][AI安全][active learning] 提出 Open-Set Discovery Active Learning (OSDAL) 场景，并设计 Joda 算法，通过训练-过滤-选择三阶段流程，用单一模型同时过滤 OOD 数据和发现新类别，无需额外辅助模型，在 18 个配置上持续达到最高准确率。
 tags:
   - "CVPR 2025"
   - "AI安全"

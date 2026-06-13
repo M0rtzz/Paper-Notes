@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GS-Quant: Granular Semantic and Generative Structural Quantization for Knowledge Graph Completion
 description: >-
-  [ACL 2026][图学习][KGC] GS-Quant 把 KG 实体量化成"由粗到细"的离散 code 序列——用层次聚类树约束 RQ-VAE 让浅层 code 编码全局类别（如 "Person"）、深层 code 编码细粒度属性（如 "Artist"）…
+  [ACL 2026][图学习][KGC] GS-Quant 把 KG 实体量化成"由粗到细"的离散 code 序列——用层次聚类树约束 RQ-VAE 让浅层 code 编码全局类别（如 "Person"）、深层 code 编码细粒度属性（如 "Artist"），再用 GPT-style decoder 重构 entity + ancestor 强制 code 之间产生因果依赖，最后把这些 code 加到 LLM 词表里做 LoRA 微调，在 WN18RR / FB15k-237 上 Hits@1 比 SOTA SSQR 高 2.2-2.4 个点。
 tags:
   - "ACL 2026"
   - "图学习"

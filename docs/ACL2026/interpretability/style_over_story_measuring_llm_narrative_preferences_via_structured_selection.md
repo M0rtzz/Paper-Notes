@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Style over Story: Measuring LLM Narrative Preferences via Structured Selection
 description: >-
-  [ACL 2026][可解释性][叙事偏好] 本文设计了一种基于约束选择的实验范式来测量 LLM 的叙事偏好，使用叙事学理论构建的 200 个约束库让 6 个 LLM 在不同指令类型下进行选择…
+  [ACL 2026 Findings][可解释性][叙事偏好] 本文设计了一种基于约束选择的实验范式来测量 LLM 的叙事偏好，使用叙事学理论构建的 200 个约束库让 6 个 LLM 在不同指令类型下进行选择，发现模型系统性地优先选择"风格"（Style）而非"事件"（Event）、"角色"（Character）和"场景"（Setting）等内容元素。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "可解释性"
   - "叙事偏好"
   - "LLM偏见"

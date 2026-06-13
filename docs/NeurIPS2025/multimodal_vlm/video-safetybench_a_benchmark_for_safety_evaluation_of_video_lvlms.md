@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video-SafetyBench: A Benchmark for Safety Evaluation of Video LVLMs
 description: >-
-  [NeurIPS 2025][多模态VLM][视频安全] 构建首个面向视频 LVLM 安全评估的综合基准 Video-SafetyBench，包含 2264 个视频-文本对覆盖 48 个细粒度不安全类别，通过可控视频生成管线和基于 LLM 置信度的 RJScore 指标…
+  [NeurIPS 2025][多模态VLM][视频安全] 构建首个面向视频 LVLM 安全评估的综合基准 Video-SafetyBench，包含 2264 个视频-文本对覆盖 48 个细粒度不安全类别，通过可控视频生成管线和基于 LLM 置信度的 RJScore 指标，对 24 个 LVLM 进行大规模安全评测，揭示良性查询下视频攻击平均成功率达 67.2%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Laytrol: Preserving Pretrained Knowledge in Layout Control for Multimodal Diffusion Transformers
 description: >-
-  [AAAI 2026][图像生成][布局控制] 通过从 MM-DiT 复制参数初始化布局控制网络、设计专用初始化方案（布局编码器初始化为纯文本编码器 + 输出零初始化）、并用 FLUX 自己生成的图像构建 LaySyn 数据集来缓解分布偏移，实现了在 FLUX 上高质量的布局到图像生成。
+  [AAAI 2026][图像生成][布局控制] 通过从 MM-DiT 复制参数初始化布局控制网络、设计专用初始化方案（布局编码器初始化为纯文本编码器 + 输出零初始化）、并用 FLUX 自己生成的图像构建 LaySyn 数据集来缓解分布偏移，实现了在 FLUX 上高质量的布局到图像生成。 领域现状 领域现状：随着 MM-Di…
 tags:
   - "AAAI 2026"
   - "图像生成"

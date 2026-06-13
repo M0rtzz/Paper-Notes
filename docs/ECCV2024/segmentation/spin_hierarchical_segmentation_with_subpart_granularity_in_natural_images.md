@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPIN: Hierarchical Segmentation with Subpart Granularity in Natural Images
 description: >-
-  [ECCV 2024][语义分割][层级分割] SPIN 构建了首个自然图像子部件（subpart）级层级语义分割数据集 SubPartImageNet——包含 203 个子部件类别和 10.6 万条标注——并提出两个层级一致性评估指标（SpCS / SeCS），在 20+ 现代模型上全面基准测试…
+  [ECCV 2024][语义分割][层级分割] SPIN 构建了首个自然图像子部件（subpart）级层级语义分割数据集 SubPartImageNet——包含 203 个子部件类别和 10.6 万条标注——并提出两个层级一致性评估指标（SpCS / SeCS），在 20+ 现代模型上全面基准测试，揭示了当前模型在子部件层面的严重不足。
 tags:
   - "ECCV 2024"
   - "语义分割"

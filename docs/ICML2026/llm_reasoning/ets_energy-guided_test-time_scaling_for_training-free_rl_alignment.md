@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ETS: Energy-Guided Test-Time Scaling for Training-Free RL Alignment
 description: >-
-  [ICML 2026][LLM推理][KL 正则 RL 闭式解] ETS 直接从 KL 正则化 RLHF 目标的**闭式最优解**采样，把它写成「参考策略 × 指数 reward 的条件期望（能量项）」，再用 Monte Carlo + 自归一化重要性采样在测试时近似这个能量项…
+  [ICML 2026][LLM推理][KL 正则 RL 闭式解] ETS 直接从 KL 正则化 RLHF 目标的**闭式最优解**采样，把它写成「参考策略 × 指数 reward 的条件期望（能量项）」，再用 Monte Carlo + 自归一化重要性采样在测试时近似这个能量项，从而**不训练**就达到甚至超过经过 RL 后训练的策略，并通过 lightweight proposal + Fast-dLLM 把延迟控制在可用范围。
 tags:
   - "ICML 2026"
   - "LLM推理"

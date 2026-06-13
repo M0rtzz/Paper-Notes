@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEGA: Memory-Efficient 4D Gaussian Splatting for Dynamic Scenes
 description: >-
-  [ICCV 2025][3D视觉][4D高斯溅射] 提出 MEGA，一个面向4D Gaussian Splatting的内存高效框架，通过DC-AC颜色分解消除冗余球谐系数（8×压缩），结合熵约束Gaussian形变技术扩大每个Gaussian的作用范围并减少数量…
+  [ICCV 2025][3D视觉][4D高斯溅射] 提出 MEGA，一个面向4D Gaussian Splatting的内存高效框架，通过DC-AC颜色分解消除冗余球谐系数（8×压缩），结合熵约束Gaussian形变技术扩大每个Gaussian的作用范围并减少数量，最终在Technicolor和Neural 3D Video数据集上分别实现约190×和125×存储压缩，同时保持可比的渲染质量和实时速度。
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MAPS: Motivation-Aware Personalized Search via LLM-Driven Consultation Alignment
 description: >-
-  [ACL 2025][LLM/NLP][个性化搜索] 首次建模电商搜索中的"搜索动机"——用户在搜索前的咨询行为蕴含的真实需求，提出MAPS框架融合LLM语义、MoAE池化和双重对齐机制，在真实商业数据上HR@10提升24.4%（从0.5685到0.7071）。
+  [ACL 2025][LLM 其他][个性化搜索] 首次建模电商搜索中的"搜索动机"——用户在搜索前的咨询行为蕴含的真实需求，提出MAPS框架融合LLM语义、MoAE池化和双重对齐机制，在真实商业数据上HR@10提升24.4%（从0.5685到0.7071）。 - 核心发现：分析真实电商平台数据发现，相当比例用户在搜索前会进…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "个性化搜索"
   - "搜索动机"
   - "咨询对齐"

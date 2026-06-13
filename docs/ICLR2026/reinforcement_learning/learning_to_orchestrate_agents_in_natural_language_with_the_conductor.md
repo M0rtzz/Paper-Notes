@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Orchestrate Agents in Natural Language with the Conductor
 description: >-
-  [ICLR 2026][强化学习][multi-agent coordination] 用GRPO训练一个7B Qwen2.5模型作为"Conductor"，通过自然语言输出完整的Agent工作流（子任务指令+worker分配+通信拓扑访问列表）…
+  [ICLR 2026][强化学习][multi-agent coordination] 用GRPO训练一个7B Qwen2.5模型作为"Conductor"，通过自然语言输出完整的Agent工作流（子任务指令+worker分配+通信拓扑访问列表），协调GPT-5/Claude Sonnet 4/Gemini 2.5 Pro等frontier模型，仅用960题×200迭代训练，在7个推理benchmark上平均77.27%超越所有单模型（GPT-5为74.78%）和多Agent基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

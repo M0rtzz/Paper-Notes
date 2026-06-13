@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-View Completion Models are Zero-shot Correspondence Estimators
 description: >-
-  [CVPR 2025][3D视觉][跨视图补全] 揭示跨视图补全（CVC）模型中交叉注意力图（cross-attention map）本质上学到了精确的稠密对应关系，提出ZeroCo在零样本匹配和学习型几何匹配中利用这一发现，显著超越基于编码器/解码器特征的常规用法。
+  [CVPR 2025][3D视觉][跨视图补全] 揭示跨视图补全（CVC）模型中交叉注意力图（cross-attention map）本质上学到了精确的稠密对应关系，提出ZeroCo在零样本匹配和学习型几何匹配中利用这一发现，显著超越基于编码器/解码器特征的常规用法。 - 跨视图补全（CroCo/CroCo-v2）已成为强大…
 tags:
   - "CVPR 2025"
   - "3D视觉"

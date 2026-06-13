@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniFC: Rethinking Federated Clustering via Lossless and Secure Distance Reconstruction
 description: >-
-  [NeurIPS 2025][AI安全][联邦聚类] 提出 OmniFC，一个模型无关的联邦聚类框架：通过 Lagrange 编码计算在有限域上精确重建全局成对距离矩阵，任意集中式聚类方法（K-Means/谱聚类/DBSCAN/层次聚类等）可直接在其上运行，仅需一轮通信，天然抵抗 Non-IID…
+  [NeurIPS 2025][AI安全][联邦聚类] 提出 OmniFC，一个模型无关的联邦聚类框架：通过 Lagrange 编码计算在有限域上精确重建全局成对距离矩阵，任意集中式聚类方法（K-Means/谱聚类/DBSCAN/层次聚类等）可直接在其上运行，仅需一轮通信，天然抵抗 Non-IID，在 7 个数据集上全面超越 k-FED/MUFC/FedSC 等专用方法。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

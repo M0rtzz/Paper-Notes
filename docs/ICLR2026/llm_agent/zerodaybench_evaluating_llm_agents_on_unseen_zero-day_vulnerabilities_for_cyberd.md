@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroDayBench: Evaluating LLM Agents on Unseen Zero-Day Vulnerabilities for Cyberdefense
 description: >-
-  [ICLR 2026][LLM Agent][zero-day vulnerability] 提出首个评估 LLM Agent 发现并修补新型零日漏洞的 benchmark，通过将真实 CVE 移植到不同代码库创建 22 个新颖高危漏洞任务，在 5 个信息层级评估 Agent 能力…
+  [ICLR 2026][LLM Agent][zero-day vulnerability] 提出首个评估 LLM Agent 发现并修补新型零日漏洞的 benchmark，通过将真实 CVE 移植到不同代码库创建 22 个新颖高危漏洞任务，在 5 个信息层级评估 Agent 能力，发现最强模型在 zero-day 级别仅 14.4% 通过率，说明自主漏洞发现仍是重大挑战。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

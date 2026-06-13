@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STRUCTURE: With Limited Data for Multimodal Alignment, Let the Structure Guide You
 description: >-
-  [NeurIPS 2025][多模态VLM][多模态对齐] 提出 STRUCTURE 正则化和基于表示相似度的层选择策略，仅用少量配对数据（数万对，不到常规方法的1%）即可实现冻结单模态基础模型的高质量跨模态对齐，在24个零样本分类和检索基准上平均提升51.6%和91.8%。
+  [NeurIPS 2025][多模态VLM][多模态对齐] 提出 STRUCTURE 正则化和基于表示相似度的层选择策略，仅用少量配对数据（数万对，不到常规方法的1%）即可实现冻结单模态基础模型的高质量跨模态对齐，在24个零样本分类和检索基准上平均提升51.6%和91.8%。 单模态基础模型（LLM、DINOv2、Alpha…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

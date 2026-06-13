@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Deepfake Detectors in the Wild
 description: >-
-  [ICML 2025][图像恢复][Deepfake检测] 构建包含50万+高质量deepfake图像的新数据集，通过引入JPEG压缩、降分辨率、图像增强等真实场景增强，系统评估6种开源deepfake检测器，揭示不到一半检测器AUC>60%，最低仅约50%（随机水平）。
+  [ICML 2025][图像恢复][Deepfake检测] 构建包含50万+高质量deepfake图像的新数据集，通过引入JPEG压缩、降分辨率、图像增强等真实场景增强，系统评估6种开源deepfake检测器，揭示不到一半检测器AUC60%，最低仅约50%（随机水平）。 领域现状：随着生成模型（GAN/扩散模型）的发展…
 tags:
   - "ICML 2025"
   - "图像恢复"

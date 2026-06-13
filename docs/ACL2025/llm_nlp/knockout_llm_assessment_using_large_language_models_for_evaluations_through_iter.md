@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Knockout LLM Assessment: Using Large Language Models for Evaluations through Iterative Pairwise Comparisons
 description: >-
-  [ACL 2025][LLM/NLP][LLM-as-a-Judge] 提出 Knockout Assessment——基于淘汰赛制的迭代成对比较 LLM-as-a-Judge 方法，通过多轮锦标赛让回答之间反复对比以建立全局排名视角…
+  [ACL 2025][LLM 其他][LLM-as-a-Judge] 提出 Knockout Assessment——基于淘汰赛制的迭代成对比较 LLM-as-a-Judge 方法，通过多轮锦标赛让回答之间反复对比以建立全局排名视角，在科学考试评分和机器翻译评估上比个体评估方法平均提升 0.07 Pearson 相关系数。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-as-a-Judge"
   - "pairwise comparison"
   - "knockout tournament"
@@ -122,10 +122,10 @@ Knockout Assessment 的核心流程：（1）将 $N$ 个回答随机配对；（
 - **vs Liusie et al. 2024**: 提出成对排名 prompt 和去偏方法，Knockout 在此基础上增加了迭代锦标赛机制
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 淘汰赛的 idea 直觉但不算深刻，本质上是给成对比较加了多轮迭代
-- 实验充分度: ⭐⭐⭐ 两个数据集 + 三个模型，但缺少与更多 baseline 的对比和更大规模闭源模型的验证
-- 写作质量: ⭐⭐⭐⭐ 清晰简洁，方法描述到位
-- 价值: ⭐⭐⭐ 提供了一种简单有效的 LLM 评估改进策略，但适用范围有限（主要对复杂任务有效）
+- 新颖性: ⭐⭐⭐⭐ 淘汰赛的 idea 直觉但不算深刻，本质上是给成对比较加了多轮迭代
+- 实验充分度: ⭐⭐⭐⭐ 两个数据集 + 三个模型，但缺少与更多 baseline 的对比和更大规模闭源模型的验证
+- 写作质量: ⭐⭐⭐⭐⭐ 清晰简洁，方法描述到位
+- 价值: ⭐⭐⭐⭐ 提供了一种简单有效的 LLM 评估改进策略，但适用范围有限（主要对复杂任务有效）
 
 <!-- RELATED:START -->
 

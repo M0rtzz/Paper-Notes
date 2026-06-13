@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SQ-LLaVA: Self-Questioning for Large Vision-Language Assistant
 description: >-
-  [ECCV 2024][多模态VLM][Visual Instruction Tuning] 提出视觉自提问（Visual Self-Questioning）训练范式，让 LLM 不仅学习回答问题，还学习根据图像主动提问，通过充分利用指令数据中问题本身的丰富语义信息来增强视觉-语言对齐。
+  [ECCV 2024][多模态VLM][Visual Instruction Tuning] 提出视觉自提问（Visual Self-Questioning）训练范式，让 LLM 不仅学习回答问题，还学习根据图像主动提问，通过充分利用指令数据中问题本身的丰富语义信息来增强视觉-语言对齐。 当前大规模视觉语言模型（如 LLaV…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Unseen Threat: Residual Knowledge in Machine Unlearning under Perturbed Samples
 description: >-
-  [NeurIPS 2025][AI安全][机器遗忘] 发现机器遗忘的关键安全漏洞：即使遗忘后的模型在统计意义上与重训练模型不可区分，对遗忘样本施加微小对抗扰动后，遗忘模型仍能正确识别而重训练模型则失败——揭示了"残余知识"这一新型隐私风险。提出 RURK 微调策略…
+  [NeurIPS 2025][AI安全][机器遗忘] 发现机器遗忘的关键安全漏洞：即使遗忘后的模型在统计意义上与重训练模型不可区分，对遗忘样本施加微小对抗扰动后，遗忘模型仍能正确识别而重训练模型则失败——揭示了"残余知识"这一新型隐私风险。提出 RURK 微调策略，通过惩罚对扰动遗忘样本的正确预测来消除残余知识，在 CIFAR-10 和 ImageNet-100 上有效抑制 11 种遗忘方法的残余知识。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

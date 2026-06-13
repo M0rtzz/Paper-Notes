@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Neuro-Symbolic Framework Combining Inductive and Deductive Reasoning for Autonomous Driving Planning
 description: >-
-  [CVPR 2025][自动驾驶][神经符号系统] 本文提出首个将 ASP 符号推理决策以可学习嵌入形式直接嵌入端到端规划器轨迹解码的神经-符号框架，用 LLM 动态提取场景规则、Clingo 求解器进行逻辑仲裁、可微 KBM 生成物理可行轨迹并配合神经残差修正…
+  [CVPR 2025][自动驾驶][神经符号系统] 本文提出首个将 ASP 符号推理决策以可学习嵌入形式直接嵌入端到端规划器轨迹解码的神经-符号框架，用 LLM 动态提取场景规则、Clingo 求解器进行逻辑仲裁、可微 KBM 生成物理可行轨迹并配合神经残差修正，在 nuScenes 上 L₂ 误差 0.57m、碰撞率 0.075%、TPC 0.47m 全面超越 MomAD。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

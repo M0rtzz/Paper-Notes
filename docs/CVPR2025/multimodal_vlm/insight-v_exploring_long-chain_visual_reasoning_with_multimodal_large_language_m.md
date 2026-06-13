@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models
 description: >-
-  [CVPR 2025][多模态VLM][长链推理] Insight-V 提出一个包含数据生成 pipeline 和多智能体推理系统的视觉推理增强方案：通过渐进式生成+多粒度评估构建高质量长链推理数据，设计推理Agent和总结Agent协作解题，配合迭代DPO进一步提升推理质量…
+  [CVPR 2025][多模态VLM][长链推理] Insight-V 提出一个包含数据生成 pipeline 和多智能体推理系统的视觉推理增强方案：通过渐进式生成+多粒度评估构建高质量长链推理数据，设计推理Agent和总结Agent协作解题，配合迭代DPO进一步提升推理质量，在7个视觉推理基准上实现平均7%的提升。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

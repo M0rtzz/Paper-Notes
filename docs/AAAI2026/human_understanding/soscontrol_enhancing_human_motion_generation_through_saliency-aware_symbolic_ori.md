@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control
 description: >-
-  [AAAI2026][人体理解][人体运动生成] 提出Salient Orientation Symbolic (SOS) script——基于Labanotation启发的可编程符号化运动表示框架，通过时序约束的凝聚聚类提取关键帧显著性…
+  [AAAI2026][人体理解][人体运动生成] 提出Salient Orientation Symbolic (SOS) script——基于Labanotation启发的可编程符号化运动表示框架，通过时序约束的凝聚聚类提取关键帧显著性，结合SMS数据增强和梯度优化的SOSControl框架实现对身体部位朝向和运动时序的精确控制，在HumanML3D上SOS-Acc达0.988且FID仅3.892。
 tags:
   - "AAAI2026"
   - "人体理解"

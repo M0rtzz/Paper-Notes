@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiVOS: Light Video Object Segmentation with Gated Linear Matching
 description: >-
-  [CVPR 2025][语义分割][图像分割] 提出 LiVOS——首个使用门控线性注意力替代 softmax 注意力进行内存匹配的轻量 VOS 网络，将时空注意力矩阵压缩为恒定大小的 2D 状态矩阵，实现任意长视频的恒定内存占用，并在 32G 消费级 GPU 上支持 4096p 推理。
+  [CVPR 2025][语义分割][图像分割] 提出 LiVOS——首个使用门控线性注意力替代 softmax 注意力进行内存匹配的轻量 VOS 网络，将时空注意力矩阵压缩为恒定大小的 2D 状态矩阵，实现任意长视频的恒定内存占用，并在 32G 消费级 GPU 上支持 4096p 推理。 领域现状： 半监督 VOS 主要由时…
 tags:
   - "CVPR 2025"
   - "语义分割"

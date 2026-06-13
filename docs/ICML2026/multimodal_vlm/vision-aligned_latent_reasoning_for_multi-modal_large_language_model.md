@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-aligned Latent Reasoning for Multi-modal Large Language Model
 description: >-
-  [ICML 2026][多模态VLM][潜空间推理] 本文提出 VaLR：在 MLLM 的 CoT 推理每一步之前插入若干"潜在 token"，并用 DINOv3/SigLIP/π³ 等视觉编码器的 patch 特征对这些 token 做表征对齐（REPA），从而在长链推理中持续把视觉信息"喂回"模型…
+  [ICML 2026][多模态VLM][潜空间推理] 本文提出 VaLR：在 MLLM 的 CoT 推理每一步之前插入若干"潜在 token"，并用 DINOv3/SigLIP/π³ 等视觉编码器的 patch 特征对这些 token 做表征对齐（REPA），从而在长链推理中持续把视觉信息"喂回"模型，把 Qwen2.5-VL 在 VSI-Bench 上的准确率从 33.0% 拉到 52.9%，并首次让 MLLM 表现出"推理越长越准"的 test-time scaling 行为。
 tags:
   - "ICML 2026"
   - "多模态VLM"

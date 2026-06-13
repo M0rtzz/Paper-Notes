@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepPersona: A Generative Engine for Scaling Deep Synthetic Personas
 description: >-
-  [NeurIPS 2025][LLM安全][合成人格] 提出 DeepPersona——一个两阶段分类引导的合成人格生成引擎：先从真实用户-ChatGPT 对话中挖掘构建 8000+ 节点的人类属性分类树，再通过渐进式属性采样生成平均 200+ 结构化属性的叙事完整人格…
+  [NeurIPS 2025][LLM安全][合成人格] 提出 DeepPersona——一个两阶段分类引导的合成人格生成引擎：先从真实用户-ChatGPT 对话中挖掘构建 8000+ 节点的人类属性分类树，再通过渐进式属性采样生成平均 200+ 结构化属性的叙事完整人格，在个性化 QA 准确率上提升 11.6%，社会调查模拟偏差缩小 31.7%。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

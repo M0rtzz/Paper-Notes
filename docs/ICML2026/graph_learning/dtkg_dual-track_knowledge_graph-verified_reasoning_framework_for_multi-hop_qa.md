@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DTKG: Dual-Track Knowledge Graph-Verified Reasoning Framework for Multi-Hop QA
 description: >-
-  [ICML 2026][图学习][知识图谱] DTKG 把多跳问答按"并行事实核验 vs 链式推理"二分，先用 few-shot 分类器把问题路由到合适的分支，并行分支用 KG 三元组核验原子事实，链式分支在 Wikidata 上做 DFS 路径扩展+评分剪枝，外加一套"任务感知"去噪…
+  [ICML 2026][图学习][知识图谱] DTKG 把多跳问答按"并行事实核验 vs 链式推理"二分，先用 few-shot 分类器把问题路由到合适的分支，并行分支用 KG 三元组核验原子事实，链式分支在 Wikidata 上做 DFS 路径扩展+评分剪枝，外加一套"任务感知"去噪，在 6 个数据集上比 KGR / ToG 等单策略 baseline 提升 5%–29.5%。
 tags:
   - "ICML 2026"
   - "图学习"

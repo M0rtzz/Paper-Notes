@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One-stage Prompt-based Continual Learning
 description: >-
-  [ECCV 2024][AI安全][提示学习] 提出 OS-Prompt 框架，通过直接使用 ViT 中间层 token embedding 作为 prompt query（而非额外的 query ViT 前向传播），将 Prompt-based Continual Learning 的计算成本降低约 50%…
+  [ECCV 2024][AI安全][提示学习] 提出 OS-Prompt 框架，通过直接使用 ViT 中间层 token embedding 作为 prompt query（而非额外的 query ViT 前向传播），将 Prompt-based Continual Learning 的计算成本降低约 50%，并通过 Query-Pool Regularization (QR) loss 补偿表征能力损失，在 CIFAR-100、ImageNet-R、DomainNet 上超越 CodaPrompt 约 1.4%。
 tags:
   - "ECCV 2024"
   - "AI安全"

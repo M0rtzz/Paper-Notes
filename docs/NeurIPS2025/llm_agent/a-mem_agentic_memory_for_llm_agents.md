@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A-MEM: Agentic Memory for LLM Agents
 description: >-
-  [NeurIPS 2025][LLM Agent][Agentic Memory] 提出 A-Mem，一种受 Zettelkasten 启发的 LLM Agent 智能记忆系统，每条记忆自动生成结构化笔记（关键词/标签/上下文描述），动态建立记忆间链接，并在新记忆加入时触发旧记忆的演化更新…
+  [NeurIPS 2025][LLM Agent][Agentic Memory] 提出 A-Mem，一种受 Zettelkasten 启发的 LLM Agent 智能记忆系统，每条记忆自动生成结构化笔记（关键词/标签/上下文描述），动态建立记忆间链接，并在新记忆加入时触发旧记忆的演化更新，在 LoCoMo 长对话 QA 上显著超越 MemGPT 等基线。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

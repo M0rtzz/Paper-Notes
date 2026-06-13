@@ -2,10 +2,10 @@
 title: >-
   [论文解读] When Will It Fail?: Anomaly to Prompt for Forecasting Future Anomalies in Time Series
 description: >-
-  [ICML 2025][LLM/NLP][异常预测] 提出 Anomaly to Prompt (A2P) 框架，通过异常感知预测 (AAF) 和合成异常提示 (SAP) 两大模块，首次有效解决时间序列中"未来异常预测"(Anomaly Prediction) 这一新任务——不仅预测未来信号走势…
+  [ICML 2025][LLM 其他][异常预测] 提出 Anomaly to Prompt (A2P) 框架，通过异常感知预测 (AAF) 和合成异常提示 (SAP) 两大模块，首次有效解决时间序列中"未来异常预测"(Anomaly Prediction) 这一新任务——不仅预测未来信号走势，还能精准定位未来哪些时间点会出现异常。
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "异常预测"
   - "时间序列预测"
   - "异常检测"

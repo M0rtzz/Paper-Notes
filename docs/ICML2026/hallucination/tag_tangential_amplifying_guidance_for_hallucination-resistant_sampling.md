@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAG: Tangential Amplifying Guidance for Hallucination-Resistant Sampling
 description: >-
-  [ICML 2026][幻觉检测][切向放大] TAG 把每一步扩散更新沿当前潜变量方向分解为"径向 + 切向"两个分量，只对切向分量额外乘一个 $\eta \ge 1$ 的放大系数，从一阶 Taylor 展开上证明这等价于单调提升对数似然增益，从而把样本拉向数据流形高密度区…
+  [ICML 2026][幻觉检测][切向放大] TAG 把每一步扩散更新沿当前潜变量方向分解为"径向 + 切向"两个分量，只对切向分量额外乘一个 $\eta \ge 1$ 的放大系数，从一阶 Taylor 展开上证明这等价于单调提升对数似然增益，从而把样本拉向数据流形高密度区，几乎零额外算力地缓解扩散模型的语义幻觉。
 tags:
   - "ICML 2026"
   - "幻觉检测"

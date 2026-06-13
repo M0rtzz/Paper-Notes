@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Action-Minimization Meets Generative Modeling: Efficient Transition Path Sampling with the Onsager-Machlup Functional
 description: >-
-  [ICML2025][图像生成][Transition Path Sampling] 本文提出将预训练生成模型（扩散模型和流匹配）的 score 函数解释为随机动力学中的漂移项，通过最小化 Onsager-Machlup (OM) 作用泛函来**零样本**复用预训练模型进行分子系统的过渡路径采样 (TPS)…
+  [ICML2025][图像生成][Transition Path Sampling] 本文提出将预训练生成模型（扩散模型和流匹配）的 score 函数解释为随机动力学中的漂移项，通过最小化 Onsager-Machlup (OM) 作用泛函来**零样本**复用预训练模型进行分子系统的过渡路径采样 (TPS)，在丙氨酸二肽、快速折叠蛋白等系统上以远低于传统方法的计算成本获得了物理真实的过渡路径。
 tags:
   - "ICML2025"
   - "图像生成"

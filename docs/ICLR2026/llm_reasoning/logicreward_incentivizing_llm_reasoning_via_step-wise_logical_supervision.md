@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision
 description: >-
-  [ICLR2026][LLM推理][逻辑推理] 提出LogicReward奖励函数，用Isabelle定理证明器做步骤级逻辑正确性验证，结合Autoformalization with Soft Unification减少自然语言歧义…
+  [ICLR2026][LLM推理][逻辑推理] 提出LogicReward奖励函数，用Isabelle定理证明器做步骤级逻辑正确性验证，结合Autoformalization with Soft Unification减少自然语言歧义，训练出的8B模型在NLI和逻辑推理任务上超越GPT-4o 11.6%和o4-mini 2%。
 tags:
   - "ICLR2026"
   - "LLM推理"

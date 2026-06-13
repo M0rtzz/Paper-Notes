@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AQuA: Toward Strategic Response Generation for Ambiguous Visual Questions
 description: >-
-  [ICLR 2026][对话系统][ambiguity] 提出 AQuA，首个按模糊度细粒度分级（4 级）的视觉问答数据集（7.2K 样本），为每级定义最优回应策略（直接回答/推断/列举/请求澄清），发现 GPT-5 和 Gemini 在模糊 VQA 上都过度自信地直接回答…
+  [ICLR 2026][对话系统][ambiguity] 提出 AQuA，首个按模糊度细粒度分级（4 级）的视觉问答数据集（7.2K 样本），为每级定义最优回应策略（直接回答/推断/列举/请求澄清），发现 GPT-5 和 Gemini 在模糊 VQA 上都过度自信地直接回答，通过 SFT+GRPO 训练的 3B 模型反而能超越闭源大模型的策略适应能力。
 tags:
   - "ICLR 2026"
   - "对话系统"

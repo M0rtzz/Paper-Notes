@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIGMA: Sinkhorn-Guided Masked Video Modeling
 description: >-
-  [ECCV 2024][LLM评测][masked video modeling] 本文提出 SIGMA，通过引入投影网络将 masked video modeling 的重建目标从像素级升级为可学习的深层特征聚类分配，利用 Sinkhorn 算法的最优传输实施高熵正则化避免坍缩…
+  [ECCV 2024][LLM评测][masked video modeling] 本文提出 SIGMA，通过引入投影网络将 masked video modeling 的重建目标从像素级升级为可学习的深层特征聚类分配，利用 Sinkhorn 算法的最优传输实施高熵正则化避免坍缩，在 10 个数据集 3 个 benchmark 上全面超越 VideoMAE 等 SOTA 方法。
 tags:
   - "ECCV 2024"
   - "LLM评测"

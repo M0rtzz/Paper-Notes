@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nonverbal Interaction Detection
 description: >-
-  [ECCV 2024][目标检测][非语言交互] 首次系统性研究人类非语言交互（手势、表情、注视、姿态、触碰），提出大规模数据集 NVI、新任务 NVI-DET 和基于双重多尺度超图的检测模型 NVI-DEHR，在非语言交互检测和 HOI 检测任务上均取得最优性能。
+  [ECCV 2024][目标检测][非语言交互] 首次系统性研究人类非语言交互（手势、表情、注视、姿态、触碰），提出大规模数据集 NVI、新任务 NVI-DET 和基于双重多尺度超图的检测模型 NVI-DEHR，在非语言交互检测和 HOI 检测任务上均取得最优性能。 非语言行为（facial expression, gaze…
 tags:
   - "ECCV 2024"
   - "目标检测"

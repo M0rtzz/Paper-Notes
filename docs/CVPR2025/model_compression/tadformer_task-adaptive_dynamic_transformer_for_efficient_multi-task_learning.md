@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TADFormer: Task-Adaptive Dynamic Transformer for Efficient Multi-Task Learning
 description: >-
-  [CVPR 2025][模型压缩][参数高效微调] TADFormer 提出一种面向多任务学习的参数高效微调框架，通过动态任务滤波器（DTF）根据输入上下文动态提取细粒度任务特征，结合任务提示条件操作和跨任务交互，在 PASCAL-Context 上以少于全微调 8.4 倍的参数量实现更高精度。
+  [CVPR 2025][模型压缩][参数高效微调] TADFormer 提出一种面向多任务学习的参数高效微调框架，通过动态任务滤波器（DTF）根据输入上下文动态提取细粒度任务特征，结合任务提示条件操作和跨任务交互，在 PASCAL-Context 上以少于全微调 8.4 倍的参数量实现更高精度。 领域现状：随着预训练模型规模…
 tags:
   - "CVPR 2025"
   - "模型压缩"

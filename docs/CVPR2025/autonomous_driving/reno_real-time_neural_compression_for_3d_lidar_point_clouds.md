@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds
 description: >-
-  [CVPR 2025][自动驾驶][点云压缩] RENO提出稀疏占用码（Sparse Occupancy Codes）和一次性推理策略，首次实现了3D LiDAR点云的实时神经压缩（10fps@14-bit），以仅1MB的模型大小超越G-PCC标准12.25%码率节省。
+  [CVPR 2025][自动驾驶][点云压缩] RENO提出稀疏占用码（Sparse Occupancy Codes）和一次性推理策略，首次实现了3D LiDAR点云的实时神经压缩（10fps@14-bit），以仅1MB的模型大小超越G-PCC标准12.25%码率节省。 LiDAR点云在自动驾驶、机器人和3D建图中广泛使用…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

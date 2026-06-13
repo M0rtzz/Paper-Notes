@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG
 description: >-
-  [ICML 2026][LLM安全][on-device RAG] EPIC 把端侧 RAG 的核心瓶颈从「检索时怎么用偏好」前移到「索引时存什么」，用「粗筛 + 细验证 + 查询偏移」三段式 pipeline 只保留与用户偏好对齐的数据并生成「指令-条目」对作为索引单元…
+  [ICML 2026][LLM安全][on-device RAG] EPIC 把端侧 RAG 的核心瓶颈从「检索时怎么用偏好」前移到「索引时存什么」，用「粗筛 + 细验证 + 查询偏移」三段式 pipeline 只保留与用户偏好对齐的数据并生成「指令-条目」对作为索引单元，在 4 个偏好基准上把存储减小 2404× 的同时偏好对齐准确率绝对提升 20.17 个百分点。
 tags:
   - "ICML 2026"
   - "LLM安全"

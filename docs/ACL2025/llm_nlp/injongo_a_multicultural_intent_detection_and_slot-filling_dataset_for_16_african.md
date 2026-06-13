@@ -2,9 +2,10 @@
 title: >-
   [论文解读] INJONGO: A Multicultural Intent Detection and Slot-filling Dataset for 16 African Languages
 description: >-
-  [ACL 2025][低资源语言] 本文引入 Injongo——一个覆盖 16 种非洲语言的多文化意图检测与槽位填充基准数据集，由母语者在银行、旅行、家庭、餐饮等领域原创生成，实验揭示 LLM 在非洲语言上的槽位填充表现极差（GPT-4o 仅 26 F1），意图检测也明显落后于微调基线。
+  [ACL 2025][LLM 其他][低资源语言] 本文引入 Injongo——一个覆盖 16 种非洲语言的多文化意图检测与槽位填充基准数据集，由母语者在银行、旅行、家庭、餐饮等领域原创生成，实验揭示 LLM 在非洲语言上的槽位填充表现极差（GPT-4o 仅 26 F1），意图检测也明显落后于微调基线。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "低资源语言"
   - "意图检测"
   - "槽位填充"

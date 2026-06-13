@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Phrase-Instance Alignment for Generalized Referring Segmentation
 description: >-
-  [CVPR 2026][语义分割][广义指代分割] 本文提出 InstAlign，将广义指代分割 (GRES) 重构为实例级推理问题，通过短语-目标对齐 (POA) 损失建立语言短语与视觉实例的细粒度对应关系，并用相关性加权聚合机制统一处理多目标和无目标场景…
+  [CVPR 2026][语义分割][广义指代分割] 本文提出 InstAlign，将广义指代分割 (GRES) 重构为实例级推理问题，通过短语-目标对齐 (POA) 损失建立语言短语与视觉实例的细粒度对应关系，并用相关性加权聚合机制统一处理多目标和无目标场景，在 gRefCOCO 上 cIoU 提升 3.22%、N-acc 提升 12.25%。
 tags:
   - "CVPR 2026"
   - "语义分割"

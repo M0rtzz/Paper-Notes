@@ -2,10 +2,10 @@
 title: >-
   [论文解读] If Eleanor Rigby Had Met ChatGPT: A Study on Loneliness in a Post-LLM World
 description: >-
-  [ACL 2025][LLM/NLP][loneliness] 对 79,951 条 ChatGPT 对话（WildChat 数据集）进行定性和定量分析，研究孤独用户如何使用 LLM 服务，发现孤独用户对话更长（12 vs 5 轮）且 37% 在寻求建议/倾听…
+  [ACL 2025][LLM 其他][loneliness] 对 79,951 条 ChatGPT 对话（WildChat 数据集）进行定性和定量分析，研究孤独用户如何使用 LLM 服务，发现孤独用户对话更长（12 vs 5 轮）且 37% 在寻求建议/倾听，但 ChatGPT 在自杀意念等严重场景中回应不当，且孤独对话的有毒内容高达 55%（主语料 20%），其中女性被攻击概率是男性的 22 倍。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "loneliness"
   - "human-AI interaction"
   - "ChatGPT"

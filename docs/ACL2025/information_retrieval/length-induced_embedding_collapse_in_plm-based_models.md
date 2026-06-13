@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Length-Induced Embedding Collapse in PLM-based Models
 description: >-
-  [ACL 2025 (Findings)][text embedding] 发现并严格证明了 PLM 文本嵌入模型中的"长度坍缩"现象——长文本嵌入趋于聚集，源于 self-attention 作为低通滤波器随文本长度增加而滤波率增强，高频信息被过度抑制…
+  [ACL 2025 (Findings)][信息检索/RAG][text embedding] 发现并严格证明了 PLM 文本嵌入模型中的"长度坍缩"现象——长文本嵌入趋于聚集，源于 self-attention 作为低通滤波器随文本长度增加而滤波率增强，高频信息被过度抑制；提出 TempScale 方法通过降低 attention 温度来缓解长短文本嵌入分布差异，在 MTEB 上提升 0.94%、LongEmbed 上提升 1.10%。
 tags:
   - "ACL 2025 (Findings)"
+  - "信息检索/RAG"
   - "text embedding"
   - "length collapse"
   - "注意力机制"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Authority Backdoor: A Certifiable Backdoor Mechanism for Authoring DNNs
 description: >-
-  [AAAI 2026][AI安全][DNN 知识产权保护] 提出 Authority Backdoor，将硬件指纹作为后门触发器嵌入 DNN，使模型仅在授权设备上正常工作，并通过随机平滑实现可认证鲁棒性，抵御自适应触发器逆向攻击。
+  [AAAI 2026][AI安全][DNN 知识产权保护] 提出 Authority Backdoor，将硬件指纹作为后门触发器嵌入 DNN，使模型仅在授权设备上正常工作，并通过随机平滑实现可认证鲁棒性，抵御自适应触发器逆向攻击。 - DNN 知识产权面临威胁：DNN 模型作为高价值知识产权，面临内部人员直接复制和外部对手模…
 tags:
   - "AAAI 2026"
   - "AI安全"

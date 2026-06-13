@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KnowCoder-X: Boosting Multilingual Information Extraction via Code
 description: >-
-  [ACL 2025][多语言/翻译][跨语言IE] 提出 KnowCoder-X，通过统一的 Python 类表示多语言 IE schema，并引入 IE 跨语言对齐指令微调阶段（含高质量 ParallelNER 数据集），在 64 个 IE 基准上大幅提升跨语言信息抽取性能。
+  [ACL 2025][多语言/翻译][跨语言IE] 提出 KnowCoder-X，通过统一的 Python 类表示多语言 IE schema，并引入 IE 跨语言对齐指令微调阶段（含高质量 ParallelNER 数据集），在 64 个 IE 基准上大幅提升跨语言信息抽取性能。 - 领域现状： 大语言模型在多语言语料上预训练…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

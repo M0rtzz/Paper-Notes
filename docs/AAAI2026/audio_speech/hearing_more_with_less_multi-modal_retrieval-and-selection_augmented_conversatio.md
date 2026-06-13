@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hearing More with Less: Multi-Modal Retrieval-and-Selection Augmented Conversational LLM-Based ASR
 description: >-
-  [AAAI 2026][音频/语音][对话式语音识别] MARS 提出多模态检索-选择方法为对话式 LLM-ASR 挑选最相关的历史上下文（而非固定前几句或全部历史），在仅用 1.5K 小时训练数据的情况下超越了用 179K 小时数据训练的 SOTA 系统 TEA-ASLP。
+  [AAAI 2026][音频/语音][对话式语音识别] MARS 提出多模态检索-选择方法为对话式 LLM-ASR 挑选最相关的历史上下文（而非固定前几句或全部历史），在仅用 1.5K 小时训练数据的情况下超越了用 179K 小时数据训练的 SOTA 系统 TEA-ASLP。 领域现状：对话式语音识别需要利用历史上下文来处理…
 tags:
   - "AAAI 2026"
   - "音频/语音"

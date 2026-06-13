@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Tokens: Enhancing RTL Quality Estimation via Structural Graph Learning
 description: >-
-  [ICML 2026][模型压缩][RTL质量估计] 提出 StructRTL，在 RTL 设计的控制数据流图（CDFG）上做结构感知的图自监督预训练（掩码节点建模 + 边预测），再配合从后映射网表到 CDFG 的知识蒸馏，大幅超越 LLM 和手工特征方法在面积/延迟预测任务上的 SOTA。
+  [ICML 2026][模型压缩][RTL质量估计] 提出 StructRTL，在 RTL 设计的控制数据流图（CDFG）上做结构感知的图自监督预训练（掩码节点建模 + 边预测），再配合从后映射网表到 CDFG 的知识蒸馏，大幅超越 LLM 和手工特征方法在面积/延迟预测任务上的 SOTA。 领域现状：现代硬件设计流程中…
 tags:
   - "ICML 2026"
   - "模型压缩"

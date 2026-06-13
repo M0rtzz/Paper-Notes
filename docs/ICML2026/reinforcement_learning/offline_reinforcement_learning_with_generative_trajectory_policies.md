@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Offline Reinforcement Learning with Generative Trajectory Policies
 description: >-
-  [ICML2026][强化学习][离线强化学习] 本文用「连续时间 ODE 解映射」把扩散策略、Flow Matching、一致性策略统一为同一族「生成轨迹策略 (GTP)」，再加上一个对齐离线样本的闭式 score 近似与一个优势加权的训练目标…
+  [ICML2026][强化学习][离线强化学习] 本文用「连续时间 ODE 解映射」把扩散策略、Flow Matching、一致性策略统一为同一族「生成轨迹策略 (GTP)」，再加上一个对齐离线样本的闭式 score 近似与一个优势加权的训练目标，使策略在 D4RL 上既能少步采样、又能在 AntMaze 等硬任务上拿到接近满分的成绩。
 tags:
   - "ICML2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BioBench: A Blueprint to Move Beyond ImageNet for Scientific ML Benchmarks
 description: >-
-  [NeurIPS 2025][模型压缩][生态图像] 提出 BioBench——一个统一 9 个生态视觉任务、4 个分类界、6 种图像模态、310 万张图像的基准，证明 ImageNet top-1 准确率仅解释 34% 的生态任务方差，在 >75% 精度的前沿模型中 30% 的排名是错误的。
+  [NeurIPS 2025][模型压缩][生态图像] 提出 BioBench——一个统一 9 个生态视觉任务、4 个分类界、6 种图像模态、310 万张图像的基准，证明 ImageNet top-1 准确率仅解释 34% 的生态任务方差，在 75% 精度的前沿模型中 30% 的排名是错误的。 领域现状：视觉研究仍以 Imag…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

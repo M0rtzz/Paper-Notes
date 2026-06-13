@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TriDi: Trilateral Diffusion of 3D Humans, Objects, and Interactions
 description: >-
-  [ICCV 2025][3D视觉][3D人体-物体交互] 提出 TriDi，首个建模人体(H)、物体(O)和交互(I)三变量联合分布的统一扩散模型，一个网络覆盖 7 种条件生成模式，超越各专用单向基线。
+  [ICCV 2025][3D视觉][3D人体-物体交互] 提出 TriDi，首个建模人体(H)、物体(O)和交互(I)三变量联合分布的统一扩散模型，一个网络覆盖 7 种条件生成模式，超越各专用单向基线。 领域现状：3D 人体-物体交互（HOI）建模对于 AR/VR、虚拟人生成等应用至关重要。现有方法以单向条件：方式运作：有的…
 tags:
   - "ICCV 2025"
   - "3D视觉"

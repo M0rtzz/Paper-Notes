@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ELMO: Efficiency via Low-precision and Peak Memory Optimization in Large Output Spaces
 description: >-
-  [ICML 2025][推荐系统][极端多标签分类] 提出 ELMO 框架，通过纯 BFloat16/Float8 低精度训练结合梯度融合、分块策略等峰值显存优化，将 300 万标签的 XMC 模型训练显存从 39.7 GiB 降至 6.6 GiB，且不损失分类精度。
+  [ICML 2025][推荐系统][极端多标签分类] 提出 ELMO 框架，通过纯 BFloat16/Float8 低精度训练结合梯度融合、分块策略等峰值显存优化，将 300 万标签的 XMC 模型训练显存从 39.7 GiB 降至 6.6 GiB，且不损失分类精度。 极端多标签分类（Extreme Multilabel C…
 tags:
   - "ICML 2025"
   - "推荐系统"

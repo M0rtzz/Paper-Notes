@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Manifolds and Modules: How Function Develops in a Neural Foundation Model
 description: >-
-  [NeurIPS 2025][自监督学习][神经基础模型] 从计算神经科学视角"打开黑箱"分析 SOTA 神经活动基础模型 (FNN)，通过构建解码流形和编码流形发现其各处理模块（编码器、循环、读出）展现出质性不同的表征结构，且与生物视觉系统存在关键差异。
+  [NeurIPS 2025 Findings][自监督学习][神经基础模型] 从计算神经科学视角"打开黑箱"分析 SOTA 神经活动基础模型 (FNN)，通过构建解码流形和编码流形发现其各处理模块（编码器、循环、读出）展现出质性不同的表征结构，且与生物视觉系统存在关键差异。 领域现状： 神经基础模型（如 FNN）在拟合生物视…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Findings"
   - "自监督学习"
   - "神经基础模型"
   - "编码流形"

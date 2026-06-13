@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ranking-Free RAG: Replacing Re-Ranking with Selection in RAG for Sensitive Domains
 description: >-
-  [ICML 2026][信息检索/RAG][RAG] 本文提出 METEORA，用 DPO 训练的"理由生成器 + 统计肘部检测 + 同框架 Verifier"三件套，把 RAG 中不可解释、依赖 top-$k$ 的 re-ranker 整段替换掉…
+  [ICML 2026][信息检索/RAG][RAG] 本文提出 METEORA，用 DPO 训练的"理由生成器 + 统计肘部检测 + 同框架 Verifier"三件套，把 RAG 中不可解释、依赖 top-$k$ 的 re-ranker 整段替换掉，在 6 个敏感领域数据集上同时拿到更高召回、80% 的证据量削减和 4.4× 的对抗鲁棒性提升。
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

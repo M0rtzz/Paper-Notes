@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ergodic Generative Flows
 description: >-
-  [ICML2025][强化学习][Generative Flow Networks] 提出 Ergodic Generative Flows (EGFs)，通过有限个全局微分同胚构建生成流，利用遍历性 (ergodicity) 保证通用性，并设计 KL-weakFM 损失实现无需独立奖励模型的模仿学习训练…
+  [ICML2025][强化学习][Generative Flow Networks] 提出 Ergodic Generative Flows (EGFs)，通过有限个全局微分同胚构建生成流，利用遍历性 (ergodicity) 保证通用性，并设计 KL-weakFM 损失实现无需独立奖励模型的模仿学习训练，在 NASA 地球科学数据集上以 30 倍更小的模型超越基线。
 tags:
   - "ICML2025"
   - "强化学习"

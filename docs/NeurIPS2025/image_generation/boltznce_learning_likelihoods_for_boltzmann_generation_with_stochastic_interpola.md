@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BoltzNCE: Learning Likelihoods for Boltzmann Generation with Stochastic Interpolants
 description: >-
-  [NeurIPS 2025][图像生成][Boltzmann分布] BoltzNCE 用 Score Matching + InfoNCE 混合训练 Energy-Based Model 来近似 Boltzmann Generator 的似然，避免了昂贵的 Jacobian trace 计算…
+  [NeurIPS 2025][图像生成][Boltzmann分布] BoltzNCE 用 Score Matching + InfoNCE 混合训练 Energy-Based Model 来近似 Boltzmann Generator 的似然，避免了昂贵的 Jacobian trace 计算，在丙氨酸二肽构象生成上实现 100× 推理加速且自由能误差仅 0.02 $k_BT$。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

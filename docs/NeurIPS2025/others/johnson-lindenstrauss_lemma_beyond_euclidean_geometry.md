@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Johnson-Lindenstrauss Lemma Beyond Euclidean Geometry
 description: >-
-  [NeurIPS 2025][降维] 将Johnson-Lindenstrauss引理从欧几里得空间扩展到一般对称空心相异度矩阵，提出伪欧空间JL变换和广义幂距离JL变换两种互补方法，误差与数据偏离欧几何的程度成正比。
+  [NeurIPS 2025][降维] 将Johnson-Lindenstrauss引理从欧几里得空间扩展到一般对称空心相异度矩阵，提出伪欧空间JL变换和广义幂距离JL变换两种互补方法，误差与数据偏离欧几何的程度成正比。 1. 领域现状： JL引理是欧几里得空间降维的基石，保证随机线性投影可在 $O(\log n/\varep…
 tags:
   - "NeurIPS 2025"
   - "降维"

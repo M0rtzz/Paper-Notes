@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controllable Financial Market Generation with Diffusion Guided Meta Agent
 description: >-
-  [AAAI 2026][金融市场生成] 提出Diffusion Guided Meta Agent（DigMA）模型，将可控金融市场生成形式化为条件生成任务，用条件扩散模型捕捉市场状态动态（中间价收益率与订单到达率的时变分布参数），结合具有金融经济学先验的Meta Agent生成订单流…
+  [AAAI 2026][金融市场生成] 提出Diffusion Guided Meta Agent（DigMA）模型，将可控金融市场生成形式化为条件生成任务，用条件扩散模型捕捉市场状态动态（中间价收益率与订单到达率的时变分布参数），结合具有金融经济学先验的Meta Agent生成订单流，在可控性和生成保真度上均超越现有方法。
 tags:
   - "AAAI 2026"
   - "金融市场生成"

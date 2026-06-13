@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distance between Relevant Information Pieces Causes Bias in Long-Context LLMs
 description: >-
-  [ACL 2025 (Findings)][LLM效率][位置偏差] 本文提出 LongPiBench 基准，首次系统研究当长上下文中存在多个相关信息片段时，LLM 对信息片段间距离（spacing）的敏感性，揭示了当前模型虽已基本克服"中间丢失"问题，但在相关信息间距变化时仍存在显著的位置偏差。
+  [ACL 2025 (Findings)][LLM效率][位置偏差] 本文提出 LongPiBench 基准，首次系统研究当长上下文中存在多个相关信息片段时，LLM 对信息片段间距离（spacing）的敏感性，揭示了当前模型虽已基本克服"中间丢失"问题，但在相关信息间距变化时仍存在显著的位置偏差。 领域现状：近年来长上下文L…
 tags:
   - "ACL 2025 (Findings)"
   - "LLM效率"

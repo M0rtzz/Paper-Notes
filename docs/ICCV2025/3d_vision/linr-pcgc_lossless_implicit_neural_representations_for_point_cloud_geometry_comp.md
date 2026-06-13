@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LINR-PCGC: Lossless Implicit Neural Representations for Point Cloud Geometry Compression
 description: >-
-  [ICCV 2025][3D视觉][点云无损压缩] LINR-PCGC 提出了首个基于隐式神经表征（INR）的点云几何无损压缩方法，通过设计轻量级多尺度 SparseConv 网络（含尺度上下文提取 SCE 和子节点预测 CNP 模块），结合 GoP 级帧共享解码器和初始化策略…
+  [ICCV 2025][3D视觉][点云无损压缩] LINR-PCGC 提出了首个基于隐式神经表征（INR）的点云几何无损压缩方法，通过设计轻量级多尺度 SparseConv 网络（含尺度上下文提取 SCE 和子节点预测 CNP 模块），结合 GoP 级帧共享解码器和初始化策略，在不依赖特定训练数据分布的前提下，在 MVUB 数据集上比 G-PCC TMC13v23 降低 21.21% 码率，比 SparsePCGC 降低 21.95%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RISurConv: Rotation Invariant Surface Attention-Augmented Convolutions for 3D Point Cloud Classification and Segmentation
 description: >-
-  [ECCV 2024][3D视觉][点云分类] 提出 RISurConv，通过构建局部三角表面并提取高表达力旋转不变表面属性（RISP），结合注意力增强卷积，实现首次在精度上超越非旋转不变方法的旋转不变点云分析网络。
+  [ECCV 2024][3D视觉][点云分类] 提出 RISurConv，通过构建局部三角表面并提取高表达力旋转不变表面属性（RISP），结合注意力增强卷积，实现首次在精度上超越非旋转不变方法的旋转不变点云分析网络。 核心矛盾 核心矛盾：领域现状：3D点云深度学习大多关注平移和点排列不变性，旋转不变性被较少研究…
 tags:
   - "ECCV 2024"
   - "3D视觉"

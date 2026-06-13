@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Realistic Face Reconstruction from Facial Embeddings via Diffusion Models
 description: >-
-  [AAAI 2026][图像生成][人脸重建] 提出 FEM（Face Embedding Mapping）框架，利用 KAN 网络将任意人脸识别/隐私保护人脸识别系统的嵌入向量映射到预训练身份保持（ID-Preserving）扩散模型的嵌入空间，实现高分辨率真实人脸重建，可用于评估人脸识别系统的隐私泄露风险…
+  [AAAI 2026][图像生成][人脸重建] 提出 FEM（Face Embedding Mapping）框架，利用 KAN 网络将任意人脸识别/隐私保护人脸识别系统的嵌入向量映射到预训练身份保持（ID-Preserving）扩散模型的嵌入空间，实现高分辨率真实人脸重建，可用于评估人脸识别系统的隐私泄露风险。
 tags:
   - "AAAI 2026"
   - "图像生成"

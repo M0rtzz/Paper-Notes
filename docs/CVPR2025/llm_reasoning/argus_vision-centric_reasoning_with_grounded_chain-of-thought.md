@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought
 description: >-
-  [CVPR 2025][LLM推理][视觉链式思维] Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题相关的bounding box（RoI），然后重新采样/编码该区域的视觉token作为推理上下文，实现了显式的目标导向视觉注意力…
+  [CVPR 2025][LLM推理][视觉链式思维] Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题相关的bounding box（RoI），然后重新采样/编码该区域的视觉token作为推理上下文，实现了显式的目标导向视觉注意力，在7B/8B级MLLM中取得视觉推理和目标grounding双料SOTA。
 tags:
   - "CVPR 2025"
   - "LLM推理"

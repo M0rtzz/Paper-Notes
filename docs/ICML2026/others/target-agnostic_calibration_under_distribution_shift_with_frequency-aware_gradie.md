@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Target-Agnostic Calibration under Distribution Shift with Frequency-Aware Gradient Rectification
 description: >-
-  [ICML 2026][校准] FGR 用 DCT 低通滤波去掉训练图像里的高频虚假捷径来在 OOD 上校准更准，再把「校准要变好」与「ID 不能塌」之间的梯度冲突用一次几何投影按硬约束方式解决，无需调权重就同时压住 OOD 的 ECE 和保住 ID 表现。
+  [ICML 2026][校准] FGR 用 DCT 低通滤波去掉训练图像里的高频虚假捷径来在 OOD 上校准更准，再把「校准要变好」与「ID 不能塌」之间的梯度冲突用一次几何投影按硬约束方式解决，无需调权重就同时压住 OOD 的 ECE 和保住 ID 表现。 领域现状：深度模型部署时不仅要预测准，更要把置信度报准——医疗、自…
 tags:
   - "ICML 2026"
   - "校准"

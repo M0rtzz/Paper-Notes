@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoMamba: Spatio-Temporal Selective State Space Model
 description: >-
-  [ECCV 2024][视频理解][State Space Model] 提出基于纯 Mamba 架构的视频识别模型 VideoMamba（KAIST 版），通过设计时空前向-后向 SSM（Spatio-Temporal Forward and Backward SSM）来有效处理视频中非序列空间信息与序列时…
+  [ECCV 2024][视频理解][State Space Model] 提出基于纯 Mamba 架构的视频识别模型 VideoMamba（KAIST 版），通过设计时空前向-后向 SSM（Spatio-Temporal Forward and Backward SSM）来有效处理视频中非序列空间信息与序列时间信息的复杂交互，以线性复杂度实现了与 Transformer 竞争的性能。
 tags:
   - "ECCV 2024"
   - "视频理解"

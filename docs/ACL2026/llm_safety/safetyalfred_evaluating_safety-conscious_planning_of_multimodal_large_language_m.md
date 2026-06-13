@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SafetyALFRED: Evaluating Safety-Conscious Planning of Multimodal Large Language Models
 description: >-
-  [ACL 2026][LLM安全][具身安全] 本文提出 SafetyALFRED 基准，在 ALFRED 具身任务中引入六类厨房安全隐患，揭示了多模态大语言模型在静态 QA 中能识别危险（最高 92%）但在具身规划中却难以主动缓解危险（<60%）的严重对齐差距，倡导从 QA 评估范式转向具身安全评估。
+  [ACL 2026 Findings][LLM安全][具身安全] 本文提出 SafetyALFRED 基准，在 ALFRED 具身任务中引入六类厨房安全隐患，揭示了多模态大语言模型在静态 QA 中能识别危险（最高 92%）但在具身规划中却难以主动缓解危险（<60%）的严重对齐差距，倡导从 QA 评估范式转向具身安全评估。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "具身安全"
   - "危险缓解"

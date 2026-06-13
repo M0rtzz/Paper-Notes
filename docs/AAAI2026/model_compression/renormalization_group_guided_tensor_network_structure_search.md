@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Renormalization Group Guided Tensor Network Structure Search
 description: >-
-  [AAAI 2026][模型压缩][张量网络] 提出 RGTN 框架，将统计物理中的重正化群（Renormalization Group）理论引入张量网络结构搜索，通过多尺度粗粒化-扩展-压缩流程和可学习边门控实现连续拓扑演化，在光场压缩、高阶张量分解和视频补全任务上达到 SOTA 压缩率…
+  [AAAI 2026][模型压缩][张量网络] 提出 RGTN 框架，将统计物理中的重正化群（Renormalization Group）理论引入张量网络结构搜索，通过多尺度粗粒化-扩展-压缩流程和可学习边门控实现连续拓扑演化，在光场压缩、高阶张量分解和视频补全任务上达到 SOTA 压缩率，同时比已有方法快 4–600 倍。
 tags:
   - "AAAI 2026"
   - "模型压缩"

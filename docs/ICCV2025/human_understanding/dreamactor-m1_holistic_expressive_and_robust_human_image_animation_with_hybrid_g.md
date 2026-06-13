@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamActor-M1: Holistic, Expressive and Robust Human Image Animation with Hybrid Guidance
 description: >-
-  [ICCV 2025][人体理解][人体动画] DreamActor-M1提出基于DiT架构的人体图像动画框架，通过隐式面部表征+3D头部球体+3D身体骨架的混合控制信号实现精细面部和身体控制，结合互补外观引导和渐进式训练策略支持肖像到全身的多尺度生成。
+  [ICCV 2025][人体理解][人体动画] DreamActor-M1提出基于DiT架构的人体图像动画框架，通过隐式面部表征+3D头部球体+3D身体骨架的混合控制信号实现精细面部和身体控制，结合互补外观引导和渐进式训练策略支持肖像到全身的多尺度生成。 人体图像动画是视频生成中的热门研究方向，广泛应用于影视制作、广告和游戏…
 tags:
   - "ICCV 2025"
   - "人体理解"

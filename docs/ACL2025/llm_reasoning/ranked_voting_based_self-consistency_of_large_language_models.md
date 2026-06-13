@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ranked Voting based Self-Consistency of Large Language Models
 description: >-
-  [ACL 2025][LLM推理][Self-Consistency] 将 Self-Consistency 的多数投票升级为排序投票，让 LLM 每次推理生成多个候选答案的偏好排序而非单一答案，用三种排序投票方法（IRV/BCV/MRRV）聚合多次推理的排序信息，在 6 个数据集上一致超越传统 SC…
+  [ACL 2025][LLM推理][Self-Consistency] 将 Self-Consistency 的多数投票升级为排序投票，让 LLM 每次推理生成多个候选答案的偏好排序而非单一答案，用三种排序投票方法（IRV/BCV/MRRV）聚合多次推理的排序信息，在 6 个数据集上一致超越传统 SC，最高提升 12.46%。
 tags:
   - "ACL 2025"
   - "LLM推理"

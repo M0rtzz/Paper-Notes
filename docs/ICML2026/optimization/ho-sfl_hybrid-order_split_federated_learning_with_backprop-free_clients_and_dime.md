@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HO-SFL: Hybrid-Order Split Federated Learning with Backprop-Free Clients and Dimension-Free Aggregation
 description: >-
-  [ICML 2026][优化/理论][拆分联邦学习] HO-SFL 通过拉格朗日变量提升把 split federated learning (SFL) 的客户端和服务端解耦——服务端继续做一阶反向传播 (BP)，客户端只做零阶 (ZO) 扰动前向…
+  [ICML 2026][优化/理论][拆分联邦学习] HO-SFL 通过拉格朗日变量提升把 split federated learning (SFL) 的客户端和服务端解耦——服务端继续做一阶反向传播 (BP)，客户端只做零阶 (ZO) 扰动前向，再借共享随机种子把每轮上行通信压到 $\mathcal{O}(P)$ 个标量，从而在端侧把大模型微调的显存降到推理级、收敛率仍可达 $\mathcal{O}(\sqrt{d_c/PT})$。
 tags:
   - "ICML 2026"
   - "优化/理论"

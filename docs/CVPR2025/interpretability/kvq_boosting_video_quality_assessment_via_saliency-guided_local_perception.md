@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KVQ: Boosting Video Quality Assessment via Saliency-Guided Local Perception
 description: >-
-  [CVPR 2025][可解释性][视频质量评估] KVQ 受人类视觉系统启发，将视频全局质量显式解耦为视觉显著性和局部纹理两个因素，通过 Fusion-Window Attention 提取跨区域显著性、Local Perception Constraint 增强独立区域的纹理感知…
+  [CVPR 2025][可解释性][视频质量评估] KVQ 受人类视觉系统启发，将视频全局质量显式解耦为视觉显著性和局部纹理两个因素，通过 Fusion-Window Attention 提取跨区域显著性、Local Perception Constraint 增强独立区域的纹理感知，在五个 VQA benchmark 上显著超越 SOTA。
 tags:
   - "CVPR 2025"
   - "可解释性"

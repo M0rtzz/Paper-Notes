@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConInstruct: Evaluating Large Language Models on Conflict Detection and Resolution in Instructions
 description: >-
-  [AAAI 2026][LLM评测][指令冲突检测] 提出 ConInstruct 基准，评估 LLM 在指令包含冲突约束时的检测和解决能力，发现多数专有模型能较好检测冲突但很少主动告知用户…
+  [AAAI 2026][LLM评测][指令冲突检测] 提出 ConInstruct 基准，评估 LLM 在指令包含冲突约束时的检测和解决能力，发现多数专有模型能较好检测冲突但很少主动告知用户，其中 DeepSeek-R1 和 Claude-4.5-Sonnet 在冲突检测上表现最佳（F1 分别达 91.5% 和 87.3%）。
 tags:
   - "AAAI 2026"
   - "LLM评测"

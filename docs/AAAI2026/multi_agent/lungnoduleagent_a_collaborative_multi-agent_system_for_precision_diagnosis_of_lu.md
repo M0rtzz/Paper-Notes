@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules
 description: >-
-  [AAAI 2026][多智能体][肺结节诊断] 提出 LungNoduleAgent，首个面向肺结节分析的协作式多智能体系统，通过"Nodule Spotter + Simulated Radiologist + Doctor Agent System"三阶段流水线模拟临床工作流…
+  [AAAI 2026][多智能体][肺结节诊断] 提出 LungNoduleAgent，首个面向肺结节分析的协作式多智能体系统，通过"Nodule Spotter + Simulated Radiologist + Doctor Agent System"三阶段流水线模拟临床工作流，在 CT 报告生成和恶性分级任务上大幅超越 GPT-4o、Claude 3.7 Sonnet 等主流 VLM 及 MedAgent-Pro 等医学智能体。
 tags:
   - "AAAI 2026"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Virtual Multiplex Staining for Histological Images Using a Marker-wise Conditioned Diffusion Model
 description: >-
-  [AAAI 2026][图像生成][虚拟多重染色] 提出基于标记物条件扩散模型的虚拟多重染色框架，通过两阶段训练（标记物条件扩散学习+像素级微调），首次从单张H&E图像生成多达18种不同标记物的多重免疫荧光图像，在HEMIT和Orion-CRC两个公开数据集上全面超越现有方法。
+  [AAAI 2026][图像生成][虚拟多重染色] 提出基于标记物条件扩散模型的虚拟多重染色框架，通过两阶段训练（标记物条件扩散学习+像素级微调），首次从单张H&E图像生成多达18种不同标记物的多重免疫荧光图像，在HEMIT和Orion-CRC两个公开数据集上全面超越现有方法。 领域现状：组织病理分析依赖H&E染色作为金标准…
 tags:
   - "AAAI 2026"
   - "图像生成"

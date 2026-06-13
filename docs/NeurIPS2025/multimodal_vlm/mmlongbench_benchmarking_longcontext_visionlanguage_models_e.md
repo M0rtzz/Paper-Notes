@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly
 description: >-
-  [NeurIPS 2025][多模态VLM][long-context VLM] 构建首个全面的长上下文视觉语言模型（LCVLM）评估基准 MMLongBench——13,331 个样本覆盖 5 类下游任务、混合图像类型、5 级标准化输入长度（8K-128K tokens）…
+  [NeurIPS 2025 Spotlight][多模态VLM][long-context VLM] 构建首个全面的长上下文视觉语言模型（LCVLM）评估基准 MMLongBench——13,331 个样本覆盖 5 类下游任务、混合图像类型、5 级标准化输入长度（8K-128K tokens），评估 46 个模型后发现单任务性能是整体能力的弱代理，且强推理能力与长上下文性能正相关。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "多模态VLM"
   - "long-context VLM"
   - "benchmark"

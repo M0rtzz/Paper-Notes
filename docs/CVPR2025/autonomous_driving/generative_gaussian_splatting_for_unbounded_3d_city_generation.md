@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Gaussian Splatting for Unbounded 3D City Generation
 description: >-
-  [CVPR 2025][自动驾驶][3D高斯溅射] 提出 GaussianCity，首个将 3D 高斯溅射应用于无界 3D 城市生成的框架，通过引入 BEV-Point 紧凑中间表示使显存占用与场景规模解耦（保持恒定）…
+  [CVPR 2025][自动驾驶][3D高斯溅射] 提出 GaussianCity，首个将 3D 高斯溅射应用于无界 3D 城市生成的框架，通过引入 BEV-Point 紧凑中间表示使显存占用与场景规模解耦（保持恒定），并设计 Point Serializer 将无序 BEV 点转为有序序列以捕获结构和上下文特征，在无人机视角和街景视角的城市生成中达到 SOTA，渲染速度比 CityDreamer（基于 NeRF）快 60 倍。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

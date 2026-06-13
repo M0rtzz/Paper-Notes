@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AtelierEval: Agentic Evaluation of Humans & LLMs as Text-to-Image Prompters
 description: >-
-  [ICML2026][图像生成][文本到图像] AtelierEval 首次把文本到图像流程中的“提示词编写者”作为评测对象，用 360 个专家任务、三类认知任务和 AtelierJudge agentic evaluator 系统量化人类与 MLLM 的提示词能力…
+  [ICML2026][图像生成][文本到图像] AtelierEval 首次把文本到图像流程中的“提示词编写者”作为评测对象，用 360 个专家任务、三类认知任务和 AtelierJudge agentic evaluator 系统量化人类与 MLLM 的提示词能力，并发现图像模仿式 prompting 往往比纯文本规划式 prompting 更可靠。
 tags:
   - "ICML2026"
   - "图像生成"

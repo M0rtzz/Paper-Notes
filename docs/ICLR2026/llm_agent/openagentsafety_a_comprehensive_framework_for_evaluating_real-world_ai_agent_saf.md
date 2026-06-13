@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenAgentSafety: A Comprehensive Framework for Evaluating Real-World AI Agent Safety
 description: >-
-  [ICLR 2026][LLM Agent][AI agent safety] 提出 OpenAgentSafety，一个综合性 AI agent 安全评估框架，包含 350+ 可执行任务、真实工具集（浏览器/终端/文件系统/消息平台）、多轮多用户交互场景…
+  [ICLR 2026][LLM Agent][AI agent safety] 提出 OpenAgentSafety，一个综合性 AI agent 安全评估框架，包含 350+ 可执行任务、真实工具集（浏览器/终端/文件系统/消息平台）、多轮多用户交互场景，揭示即使最先进的 LLM 在 49%-73% 的安全敏感任务中表现出不安全行为。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

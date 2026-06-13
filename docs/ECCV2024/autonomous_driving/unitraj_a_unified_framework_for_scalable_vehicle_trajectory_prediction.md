@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniTraj: A Unified Framework for Scalable Vehicle Trajectory Prediction
 description: >-
-  [ECCV 2024][自动驾驶][轨迹预测] UniTraj 构建了一个统一多数据集（nuScenes、Argoverse 2、WOMD）、多模型（AutoBot、MTR、Wayformer）和多评估策略的车辆轨迹预测框架，揭示模型跨数据集泛化能力显著下降，但通过扩大数据规模和多样性可大幅提升性能…
+  [ECCV 2024][自动驾驶][轨迹预测] UniTraj 构建了一个统一多数据集（nuScenes、Argoverse 2、WOMD）、多模型（AutoBot、MTR、Wayformer）和多评估策略的车辆轨迹预测框架，揭示模型跨数据集泛化能力显著下降，但通过扩大数据规模和多样性可大幅提升性能，合并训练在 nuScenes 排行榜达到第 1 名。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

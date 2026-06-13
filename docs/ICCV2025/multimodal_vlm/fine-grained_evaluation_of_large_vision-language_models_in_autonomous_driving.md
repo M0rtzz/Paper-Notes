@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-Grained Evaluation of Large Vision-Language Models in Autonomous Driving
 description: >-
-  [ICCV 2025][多模态VLM][视觉语言模型评估] 本文提出 VLADBench，一个面向自动驾驶场景的细粒度视觉语言模型评测基准，涵盖 5 大领域、11 个二级维度和 29 个三级任务，采用封闭式 QA 形式从静态知识到动态推理逐步递进评估 VLM 能力…
+  [ICCV 2025][多模态VLM][视觉语言模型评估] 本文提出 VLADBench，一个面向自动驾驶场景的细粒度视觉语言模型评测基准，涵盖 5 大领域、11 个二级维度和 29 个三级任务，采用封闭式 QA 形式从静态知识到动态推理逐步递进评估 VLM 能力，并基于 1.4M 领域特定 QA 数据训练小规模 DS 模型验证领域间认知交互。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

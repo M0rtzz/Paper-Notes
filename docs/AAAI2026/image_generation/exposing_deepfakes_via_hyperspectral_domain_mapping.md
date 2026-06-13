@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exposing DeepFakes via Hyperspectral Domain Mapping
 description: >-
-  [AAAI 2026][图像生成][深度伪造检测] 本文提出 HSI-Detect，一个两阶段的深度伪造检测框架——先将 RGB 图像重建为 31 通道高光谱图像以放大生成模型引入的光谱伪影，再在高光谱域中进行检测，在 FaceForensics++ 上跨操纵类型检测的平均 AUC 达到 68.92%…
+  [AAAI 2026][图像生成][深度伪造检测] 本文提出 HSI-Detect，一个两阶段的深度伪造检测框架——先将 RGB 图像重建为 31 通道高光谱图像以放大生成模型引入的光谱伪影，再在高光谱域中进行检测，在 FaceForensics++ 上跨操纵类型检测的平均 AUC 达到 68.92%，超越 RGB-only 基线。
 tags:
   - "AAAI 2026"
   - "图像生成"

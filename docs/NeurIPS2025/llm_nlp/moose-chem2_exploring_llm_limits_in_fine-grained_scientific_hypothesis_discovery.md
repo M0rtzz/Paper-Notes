@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MOOSE-Chem2: Exploring LLM Limits in Fine-Grained Scientific Hypothesis Discovery
 description: >-
-  [NeurIPS 2025][LLM/NLP][假设生成] 将细粒度科学假设生成形式化为组合优化问题，提出层次启发式搜索（HHS）——利用 LLM 的成对比较作为梯度信号在假设空间中导航，层次化抽象平滑奖励景观减少局部最优陷阱…
+  [NeurIPS 2025][LLM 其他][假设生成] 将细粒度科学假设生成形式化为组合优化问题，提出层次启发式搜索（HHS）——利用 LLM 的成对比较作为梯度信号在假设空间中导航，层次化抽象平滑奖励景观减少局部最优陷阱，在 2024 年后化学论文 51 篇的专家标注 benchmark 上 Soft Recall 从 19.99% 提升到 40.35%。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "假设生成"
   - "层次搜索"
   - "化学"

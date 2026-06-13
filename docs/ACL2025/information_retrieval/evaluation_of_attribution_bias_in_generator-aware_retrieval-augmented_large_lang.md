@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluation of Attribution Bias in Generator-Aware Retrieval-Augmented Large Language Models
 description: >-
-  [ACL 2025][信息检索/RAG][attribution bias] 定义并研究 RAG 中 LLM 对作者身份信息的归因敏感性和偏差，通过反事实评估发现告知 LLM 文档作者身份可显著改变归因质量 3-18%，且 LLM 存在对人类作者身份的归因偏差。
+  [ACL 2025][信息检索/RAG][attribution bias] 定义并研究 RAG 中 LLM 对作者身份信息的归因敏感性和偏差，通过反事实评估发现告知 LLM 文档作者身份可显著改变归因质量 3-18%，且 LLM 存在对人类作者身份的归因偏差。 领域现状：RAG 通过让 LLM 引用来源文档来增强答案可验证…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Drama: Diverse Augmentation from Large Language Models to Smaller Dense Retrievers
 description: >-
-  [ACL 2025][信息检索/RAG][稠密检索] 提出 Drama 框架，系统性地探索多种基于 LLM 的数据增强策略（裁剪句+合成查询+LLM 重排序偏好）与 LLM 剪枝 backbone 的结合，在单阶段对比学习中训练出 0.1B-1B 参数的小型检索器…
+  [ACL 2025][信息检索/RAG][稠密检索] 提出 Drama 框架，系统性地探索多种基于 LLM 的数据增强策略（裁剪句+合成查询+LLM 重排序偏好）与 LLM 剪枝 backbone 的结合，在单阶段对比学习中训练出 0.1B-1B 参数的小型检索器，在 BEIR 上以 0.3B 参数匹配 1B 参数的 Gecko，且具备强多语言和长上下文能力。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

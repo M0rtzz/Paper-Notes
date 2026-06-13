@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distribution Learning Meets Graph Structure Sampling
 description: >-
-  [NeurIPS 2025][强化学习][贝叶斯网络] 本文建立了高维概率图模型 PAC 学习与图结构高效计数/采样之间的新联系，利用在线学习框架（EWA/RWM）将指数级专家集合的维护问题转化为 DAG 结构的加权采样问题，首次给出了弦图骨架贝叶斯网络的高效 agnostic 学习算法…
+  [NeurIPS 2025][强化学习][贝叶斯网络] 本文建立了高维概率图模型 PAC 学习与图结构高效计数/采样之间的新联系，利用在线学习框架（EWA/RWM）将指数级专家集合的维护问题转化为 DAG 结构的加权采样问题，首次给出了弦图骨架贝叶斯网络的高效 agnostic 学习算法，并将树结构分布的样本复杂度从 O(nk³/ε) 改进到最优的 O(nk²/ε)。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

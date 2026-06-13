@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CO-EVO: Co-evolving Semantic Anchoring and Style Diversification for Federated DG-ReID
 description: >-
-  [ACL 2026][人体理解][联邦域泛化] CO-EVO 针对联邦域泛化行人重识别（FedDG-ReID）中的"语义-风格冲突"，提出 CSA（相机不变语义锚定）学习冻结的身份级文本原型作为"引力中心"+ GSD（全局风格多样化）用轻量 GCSB（全局相机风格库）合成真实跨域扰动…
+  [ACL 2026][人体理解][联邦域泛化] CO-EVO 针对联邦域泛化行人重识别（FedDG-ReID）中的"语义-风格冲突"，提出 CSA（相机不变语义锚定）学习冻结的身份级文本原型作为"引力中心"+ GSD（全局风格多样化）用轻量 GCSB（全局相机风格库）合成真实跨域扰动，二者耦合优化在 Market-1501/MSMT17/CUHK03 leave-one-out 上 ViT mAP 平均比 SOTA 提升 14 个点（34.1→48.1）。
 tags:
   - "ACL 2026"
   - "人体理解"

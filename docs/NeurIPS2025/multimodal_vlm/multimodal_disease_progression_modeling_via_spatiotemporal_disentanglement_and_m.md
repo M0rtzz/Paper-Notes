@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment
 description: >-
-  [NeurIPS 2025][多模态VLM][疾病进展建模] 提出 DiPro 框架，通过区域感知的时空解耦（分离静态解剖与动态病理特征）和多时间尺度对齐（局部-全局融合 CXR 与 EHR），解决了纵向胸部X光序列的冗余问题和跨模态时间错位挑战，在疾病进展识别和 ICU 预测任务上达到 SOTA。
+  [NeurIPS 2025 Spotlight][多模态VLM][疾病进展建模] 提出 DiPro 框架，通过区域感知的时空解耦（分离静态解剖与动态病理特征）和多时间尺度对齐（局部-全局融合 CXR 与 EHR），解决了纵向胸部X光序列的冗余问题和跨模态时间错位挑战，在疾病进展识别和 ICU 预测任务上达到 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "多模态VLM"
   - "疾病进展建模"
   - "多模态融合"

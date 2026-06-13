@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiPPO Zoo: Explicit Memory Mechanisms for Interpretable State Space Models
 description: >-
-  [ICML 2026][时间序列][HiPPO] 将现代 SSM（如 Mamba）中隐式的内存机制**显式化**——通过扩展 HiPPO 框架提出"HiPPO Zoo"（5 个变体），每个变体用可解释的多项式表示来实现特定的现代 SSM 能力（非线性、自适应内存、关联记忆、多尺度、预测目标约束）…
+  [ICML 2026][时间序列][HiPPO] 将现代 SSM（如 Mamba）中隐式的内存机制**显式化**——通过扩展 HiPPO 框架提出"HiPPO Zoo"（5 个变体），每个变体用可解释的多项式表示来实现特定的现代 SSM 能力（非线性、自适应内存、关联记忆、多尺度、预测目标约束）；选择性复制和关联回忆任务上达到 100%。
 tags:
   - "ICML 2026"
   - "时间序列"

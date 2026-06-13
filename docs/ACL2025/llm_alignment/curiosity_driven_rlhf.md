@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curiosity-Driven Reinforcement Learning from Human Feedback
 description: >-
-  [ACL 2025][LLM对齐][curiosity-driven] CD-RLHF 将好奇心驱动探索（curiosity-driven RL）引入 RLHF，通过前向动力学模型的预测误差作为内在奖励，结合 top-k 门控过滤与 reward whitening…
+  [ACL 2025][LLM对齐][curiosity-driven] CD-RLHF 将好奇心驱动探索（curiosity-driven RL）引入 RLHF，通过前向动力学模型的预测误差作为内在奖励，结合 top-k 门控过滤与 reward whitening，在不损失对齐质量的前提下大幅提升 LLM 输出多样性（Llama-3.2-1B 上 Diversity 提升 40.26%，EAD 提升 8.92%）。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting
 description: >-
-  [AAAI 2026][时间序列][不规则多变量时间序列] 首次论证了规范预对齐(CPA)在不规则多变量时间序列(IMTS)预测中不应被抛弃，提出 KAFNet 通过预卷积平滑、时间核聚合(TKA)压缩和频域线性注意力(FLA)三个模块解决 CPA 的效率问题…
+  [AAAI 2026][时间序列][不规则多变量时间序列] 首次论证了规范预对齐(CPA)在不规则多变量时间序列(IMTS)预测中不应被抛弃，提出 KAFNet 通过预卷积平滑、时间核聚合(TKA)压缩和频域线性注意力(FLA)三个模块解决 CPA 的效率问题，在 4 个 IMTS 数据集上实现 SOTA 精度，同时参数量减少 7.2 倍、训练推理加速 8.4 倍。
 tags:
   - "AAAI 2026"
   - "时间序列"

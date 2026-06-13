@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMSU: A Massive Multi-task Spoken Language Understanding and Reasoning Benchmark
 description: >-
-  [ICLR 2026][音频/语音][语音理解] 提出 MMSU（5000 条音频 QA、47 个任务），首个系统融合语言学理论的语音理解与推理基准，评测 22 个 SpeechLLM，发现现有模型在音韵感知和复杂推理上仍存在显著差距。
+  [ICLR 2026][音频/语音][语音理解] 提出 MMSU（5000 条音频 QA、47 个任务），首个系统融合语言学理论的语音理解与推理基准，评测 22 个 SpeechLLM，发现现有模型在音韵感知和复杂推理上仍存在显著差距。 领域现状： SpeechLLM（如 Qwen-Audio、Kimi-Audio、Gemi…
 tags:
   - "ICLR 2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Set-Valued Predictions for Robust Domain Generalization
 description: >-
-  [ICML2025][集值预测] 提出集值预测器（set-valued predictor）解决域泛化（DG）中的鲁棒性问题：输出标签子集而非单一标签，使预测在尽可能多的未见域上满足预定义的覆盖率要求，同时最小化预测集大小。
+  [ICML2025][集值预测] 提出集值预测器（set-valued predictor）解决域泛化（DG）中的鲁棒性问题：输出标签子集而非单一标签，使预测在尽可能多的未见域上满足预定义的覆盖率要求，同时最小化预测集大小。 - 域泛化的核心挑战：模型在训练分布上表现好，但在未见测试分布（域）上性能下降严重…
 tags:
   - "ICML2025"
   - "集值预测"

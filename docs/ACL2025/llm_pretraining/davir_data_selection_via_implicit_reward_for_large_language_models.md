@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DavIR: Data Selection via Implicit Reward for Large Language Models
 description: >-
-  [ACL 2025][预训练][数据选择] 提出 DavIR 数据选择方法，通过对基座模型与参考模型的损失差进行**参考模型损失归一化**（而非 token 数归一化），有效消除 RHO 目标中的序列长度依赖，使仅 **6%** 的 Alpaca 数据集（3K/52K）训练出的模型优于全量数据训练模型…
+  [ACL 2025][预训练][数据选择] 提出 DavIR 数据选择方法，通过对基座模型与参考模型的损失差进行**参考模型损失归一化**（而非 token 数归一化），有效消除 RHO 目标中的序列长度依赖，使仅 **6%** 的 Alpaca 数据集（3K/52K）训练出的模型优于全量数据训练模型，同时将归一化思想推广到 DPO 得到 DavIR-DPO，在 AlpacaEval 上提升 Zephyr 8% 的对齐性能。
 tags:
   - "ACL 2025"
   - "预训练"

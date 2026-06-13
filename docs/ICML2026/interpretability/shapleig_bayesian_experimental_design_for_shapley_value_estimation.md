@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShaplEIG: Bayesian Experimental Design for Shapley Value Estimation
 description: >-
-  [ICML 2026][可解释性][Shapley 值] 在评估预算极度受限（如需要重训模型）的代价昂贵游戏上，用带 Hamming 核的 GP 作为价值函数代理、按"对 Shapley 值的期望信息增益（EIG）"自适应挑下一个 coalition…
+  [ICML 2026][可解释性][Shapley 值] 在评估预算极度受限（如需要重训模型）的代价昂贵游戏上，用带 Hamming 核的 GP 作为价值函数代理、按"对 Shapley 值的期望信息增益（EIG）"自适应挑下一个 coalition，并把 EIG 计算从 $O(4^p t)$ 压到 $O(p^4 + t^3)$。
 tags:
   - "ICML 2026"
   - "可解释性"

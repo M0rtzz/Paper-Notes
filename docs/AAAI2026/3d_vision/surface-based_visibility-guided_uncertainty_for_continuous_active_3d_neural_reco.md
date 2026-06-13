@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Surface-Based Visibility-Guided Uncertainty for Continuous Active 3D Neural Reconstruction
 description: >-
-  [AAAI 2026][3D视觉][主动3D重建] 提出基于表面的可见性场(SBV)，通过SDF推导的表面置信度和体素网格更新机制在连续主动学习过程中准确估计不确定性的可见性，指导Next-Best View选择…
+  [AAAI 2026][3D视觉][主动3D重建] 提出基于表面的可见性场(SBV)，通过SDF推导的表面置信度和体素网格更新机制在连续主动学习过程中准确估计不确定性的可见性，指导Next-Best View选择，在DTU/Blender/TanksAndTemples/BlendedMVS四个基准上图像渲染质量提升最高11.6%。
 tags:
   - "AAAI 2026"
   - "3D视觉"

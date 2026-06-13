@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLARC: C/C++ Benchmark for Robust Code Search
 description: >-
-  [ICLR 2026][AIGC检测][代码检索] 构建首个可编译的 C/C++ 代码检索基准 CLARC（6717 查询-代码对），自动化 pipeline 从 GitHub 提取代码并用 LLM+假设检验生成/验证查询；覆盖标准/匿名化/汇编/WebAssembly 四种检索场景…
+  [ICLR 2026][AIGC检测][代码检索] 构建首个可编译的 C/C++ 代码检索基准 CLARC（6717 查询-代码对），自动化 pipeline 从 GitHub 提取代码并用 LLM+假设检验生成/验证查询；覆盖标准/匿名化/汇编/WebAssembly 四种检索场景，揭示现有代码嵌入模型过度依赖词汇特征（匿名化后 NDCG@10 从 0.89 降至 0.67）且在二进制级别检索上严重不足。
 tags:
   - "ICLR 2026"
   - "AIGC检测"

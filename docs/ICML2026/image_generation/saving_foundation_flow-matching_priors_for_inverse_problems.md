@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Saving Foundation Flow-Matching Priors for Inverse Problems
 description: >-
-  [ICML 2026][图像生成][基础流匹配先验] 针对 Stable Diffusion / Flux 这类基础流匹配模型在求解逆问题上明显逊于领域专用先验甚至未训练先验的现象，作者提出 FMPlug：用一个由近似样本指导、时间可学习的 warm-start 加上锐利高斯壳层约束…
+  [ICML 2026][图像生成][基础流匹配先验] 针对 Stable Diffusion / Flux 这类基础流匹配模型在求解逆问题上明显逊于领域专用先验甚至未训练先验的现象，作者提出 FMPlug：用一个由近似样本指导、时间可学习的 warm-start 加上锐利高斯壳层约束，把基础 FM 的潜变量塞回它真正"懂"的薄壳上，从而显著恢复其作为逆问题先验的能力。
 tags:
   - "ICML 2026"
   - "图像生成"

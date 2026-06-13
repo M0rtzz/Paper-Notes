@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unlearning Evaluation through Subset Statistical Independence
 description: >-
-  [LLM安全] 提出 Split-half Dependence Evaluation (SDE)，利用 HSIC 统计独立性检验在子集级别评估机器遗忘效果，无需重训模型或辅助分类器。
+  [LLM安全] 提出 Split-half Dependence Evaluation (SDE)，利用 HSIC 统计独立性检验在子集级别评估机器遗忘效果，无需重训模型或辅助分类器。 核心问题 如何验证机器遗忘过程是否成功？现有评估方法存在根本性局限： 重训比较：需要训练一个新模型作为参考——与遗忘的初衷矛盾 成员推理攻击…
 tags:
   - "LLM安全"
 ---

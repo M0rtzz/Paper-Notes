@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align Once, Benefit Multilingually: Enforcing Multilingual Consistency for LLM Safety Alignment
 description: >-
-  [ICLR 2026][LLM对齐][multilingual safety] 提出 Multi-Lingual Consistency (MLC) 辅助损失，通过 SVD 操控多语言表示矩阵的奇异值使其趋向秩-1（即多语言表示共线），仅需多语言 prompt 翻译（无需目标语言的 response）…
+  [ICLR 2026][LLM对齐][multilingual safety] 提出 Multi-Lingual Consistency (MLC) 辅助损失，通过 SVD 操控多语言表示矩阵的奇异值使其趋向秩-1（即多语言表示共线），仅需多语言 prompt 翻译（无需目标语言的 response），即可将一种语言的安全对齐效果一致性地迁移到所有语言。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

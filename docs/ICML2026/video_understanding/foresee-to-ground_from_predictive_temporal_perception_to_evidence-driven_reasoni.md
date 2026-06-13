@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foresee-to-Ground: From Predictive Temporal Perception to Evidence-Driven Reasoning
 description: >-
-  [ICML 2026][视频理解][视频时序定位] Foresee-to-Ground (F2G) 把视频时序定位（VTG）从直接时间戳回归重构为「识别-测量」两阶段问题——先用预测性时序感知 + 跨度证据编码器构建候选事件证据池，再用 LLM 在选中事件的约束下精确生成边界…
+  [ICML 2026][视频理解][视频时序定位] Foresee-to-Ground (F2G) 把视频时序定位（VTG）从直接时间戳回归重构为「识别-测量」两阶段问题——先用预测性时序感知 + 跨度证据编码器构建候选事件证据池，再用 LLM 在选中事件的约束下精确生成边界，使 Charades-STA R@0.7 提升 4.1 个点、ActivityNet 提升 6.7 个点。
 tags:
   - "ICML 2026"
   - "视频理解"

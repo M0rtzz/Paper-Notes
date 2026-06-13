@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeaLion: Semantic Part-Aware Latent Point Diffusion Models for 3D Generation
 description: >-
-  [CVPR 2025][医学图像][点云生成] 提出 SeaLion，通过语义部件感知的潜点扩散技术，在去噪过程中联合预测噪声和逐点分割标签，并以分割标签为条件解码点云，生成具有高质量部件间一致性和精确分割标签的 3D 点云…
+  [CVPR 2025][医学图像][点云生成] 提出 SeaLion，通过语义部件感知的潜点扩散技术，在去噪过程中联合预测噪声和逐点分割标签，并以分割标签为条件解码点云，生成具有高质量部件间一致性和精确分割标签的 3D 点云；同时提出 part-aware Chamfer distance (p-CD) 评价指标，在 ShapeNet 和 IntrA 数据集上大幅超越 DiffFacto。
 tags:
   - "CVPR 2025"
   - "医学图像"

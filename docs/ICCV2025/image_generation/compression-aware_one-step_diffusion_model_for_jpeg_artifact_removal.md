@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal
 description: >-
-  [ICCV 2025][图像生成][JPEG伪影去除] 提出 CODiff，一种压缩感知的单步扩散模型用于 JPEG 伪影去除，核心是设计了压缩感知视觉嵌入器（CaVE）通过显式+隐式双重学习策略提取 JPEG 压缩先验，引导扩散模型实现高质量复原…
+  [ICCV 2025][图像生成][JPEG伪影去除] 提出 CODiff，一种压缩感知的单步扩散模型用于 JPEG 伪影去除，核心是设计了压缩感知视觉嵌入器（CaVE）通过显式+隐式双重学习策略提取 JPEG 压缩先验，引导扩散模型实现高质量复原，在 LIVE-1、Urban100、DIV2K-Val 上全面超越现有方法同时推理效率极高。
 tags:
   - "ICCV 2025"
   - "图像生成"

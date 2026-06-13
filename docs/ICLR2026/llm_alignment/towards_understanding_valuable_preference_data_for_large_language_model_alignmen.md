@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding Valuable Preference Data for Large Language Model Alignment
 description: >-
-  [ICLR 2026][LLM对齐][偏好数据选择] 从模型依赖视角研究偏好数据质量：提出截断影响函数(TIF)发现中等IF值的数据才是最有价值的(而非经典观点中的高IF) -> 设计LossDiff和IRM两个轻量代理指标近似TIF -> 两者组合的LossDiff-IRM选择器仅用50-64%数据即可平均…
+  [ICLR 2026][LLM对齐][偏好数据选择] 从模型依赖视角研究偏好数据质量：提出截断影响函数(TIF)发现中等IF值的数据才是最有价值的(而非经典观点中的高IF) -> 设计LossDiff和IRM两个轻量代理指标近似TIF -> 两者组合的LossDiff-IRM选择器仅用50-64%数据即可平均提升WinRate 13.58%，在多个LLM家族和对齐benchmark上均有效。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

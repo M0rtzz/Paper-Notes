@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionStreamer: Streaming Motion Generation via Diffusion-based Autoregressive Model in Causal Latent Space
 description: >-
-  [图像生成] 提出 MotionStreamer，将连续因果潜空间与扩散头结合到自回归框架中，实现文本条件下的流式人体动作生成，支持在线多轮生成和动态运动组合。
+  [图像生成] 提出 MotionStreamer，将连续因果潜空间与扩散头结合到自回归框架中，实现文本条件下的流式人体动作生成，支持在线多轮生成和动态运动组合。 流式动作生成（streaming motion generation）要求模型在接收到增量文本输入的同时，逐步生成连贯的人体动作序列，这对实时游戏、动画和机器人等应…
 tags:
   - "图像生成"
 ---

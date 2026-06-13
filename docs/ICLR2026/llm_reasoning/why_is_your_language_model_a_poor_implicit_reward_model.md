@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why is Your Language Model a Poor Implicit Reward Model?
 description: >-
-  [ICLR 2026][LLM推理][隐式奖励模型] 本文通过理论和实验揭示了隐式奖励模型（IM-RM，如DPO）比显式奖励模型（EX-RM）泛化更差的根本原因——IM-RM过度依赖表面token级线索而非语义表示，导致在token分布偏移下准确率大幅下降，同时反驳了"生成-验证差距"假说。
+  [ICLR 2026][LLM推理][隐式奖励模型] 本文通过理论和实验揭示了隐式奖励模型（IM-RM，如DPO）比显式奖励模型（EX-RM）泛化更差的根本原因——IM-RM过度依赖表面token级线索而非语义表示，导致在token分布偏移下准确率大幅下降，同时反驳了"生成-验证差距"假说。 领域现状：奖励模型是LLM后训练…
 tags:
   - "ICLR 2026"
   - "LLM推理"

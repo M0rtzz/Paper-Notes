@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structured Reinforcement Learning for Combinatorial Decision-Making
 description: >-
-  [NeurIPS 2025][强化学习][combinatorial MDP] 提出 Structured Reinforcement Learning (SRL)，将组合优化求解器作为可微层嵌入 actor-critic 的 actor 中…
+  [NeurIPS 2025][强化学习][combinatorial MDP] 提出 Structured Reinforcement Learning (SRL)，将组合优化求解器作为可微层嵌入 actor-critic 的 actor 中，通过 Fenchel-Young 损失 + 高斯扰动实现端到端梯度传播，纯在线学习、无需专家数据，在6个工业级组合决策问题上匹配模仿学习、超越无结构 RL 最高 92%。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

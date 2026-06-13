@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StyleMaster: Stylize Your Video with Artistic Generation and Translation
 description: >-
-  [CVPR 2025][图像生成][视频风格化] StyleMaster通过基于prompt-patch相似度的局部纹理选择和基于模型幻觉生成的对比学习全局风格提取，结合运动适配器和灰度Tile ControlNet，实现了兼具风格忠实度和内容保持的高质量视频风格化生成与迁移。
+  [CVPR 2025][图像生成][视频风格化] StyleMaster通过基于prompt-patch相似度的局部纹理选择和基于模型幻觉生成的对比学习全局风格提取，结合运动适配器和灰度Tile ControlNet，实现了兼具风格忠实度和内容保持的高质量视频风格化生成与迁移。 视频风格化任务需要生成或迁移视频到给定参考图像…
 tags:
   - "CVPR 2025"
   - "图像生成"

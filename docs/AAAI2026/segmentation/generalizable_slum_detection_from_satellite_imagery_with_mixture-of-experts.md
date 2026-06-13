@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizable Slum Detection from Satellite Imagery with Mixture-of-Experts
 description: >-
-  [AAAI 2026][语义分割][贫民窟检测] 提出 GRAM（Generalized Region-Aware Mixture-of-Experts），一个两阶段测试时自适应框架：第一阶段用 MoE 架构在12个城市的百万级卫星图像上训练区域特化专家，第二阶段通过跨区域预测一致性筛选可靠伪标签进行自训练…
+  [AAAI 2026][语义分割][贫民窟检测] 提出 GRAM（Generalized Region-Aware Mixture-of-Experts），一个两阶段测试时自适应框架：第一阶段用 MoE 架构在12个城市的百万级卫星图像上训练区域特化专家，第二阶段通过跨区域预测一致性筛选可靠伪标签进行自训练，实现对未见非洲城市的贫民窟分割泛化。
 tags:
   - "AAAI 2026"
   - "语义分割"

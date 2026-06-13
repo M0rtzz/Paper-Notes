@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPA-VL: A Comprehensive Safety Preference Alignment Dataset for Vision Language Models
 description: >-
-  [CVPR 2025][多模态VLM][安全对齐] SPA-VL 构建了一个包含 100,788 个四元组（问题、图像、优选回答、劣选回答）的大规模VLM安全偏好对齐数据集，覆盖6大领域/13类/53子类有害内容，基于12个VLM的多样化回答和全自动化标注流程…
+  [CVPR 2025][多模态VLM][安全对齐] SPA-VL 构建了一个包含 100,788 个四元组（问题、图像、优选回答、劣选回答）的大规模VLM安全偏好对齐数据集，覆盖6大领域/13类/53子类有害内容，基于12个VLM的多样化回答和全自动化标注流程，使用DPO/PPO训练后模型在安全性上大幅提升同时保持帮助性。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

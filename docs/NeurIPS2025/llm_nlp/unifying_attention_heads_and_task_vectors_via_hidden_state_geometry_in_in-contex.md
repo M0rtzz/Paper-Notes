@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Unifying Attention Heads and Task Vectors via Hidden State Geometry in In-Context Learning
 description: >-
-  [NeurIPS 2025][LLM/NLP][in-context learning] 本文提出基于隐状态几何（可分离性+对齐性）的统一框架，将ICL的两大解释路线——注意力头（PTH/IH）和任务向量——联系起来，揭示ICL在分类任务中的两阶段机制：早期层通过PTH建立可分离性…
+  [NeurIPS 2025][LLM 其他][in-context learning] 本文提出基于隐状态几何（可分离性+对齐性）的统一框架，将ICL的两大解释路线——注意力头（PTH/IH）和任务向量——联系起来，揭示ICL在分类任务中的两阶段机制：早期层通过PTH建立可分离性，后期层通过IH改善与标签unembedding方向的对齐性。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "in-context learning"
   - "注意力机制"
   - "task vectors"

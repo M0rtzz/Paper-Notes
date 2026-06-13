@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BookAgent: Orchestrating Safety-Aware Visual Narratives via Multi-Agent Cognitive Calibration
 description: >-
-  [ACL 2026][多智能体][绘本生成] BookAgent 是一个安全感知的多智能体框架，通过**价值对齐故事板（VAS）+ 迭代跨模态精炼（ICR）+ 时序认知校准（TCC）**三阶段闭环架构，从用户草稿端到端生成高质量、角色一致、内容安全的绘本故事。
+  [ACL 2026][多智能体][绘本生成] BookAgent 是一个安全感知的多智能体框架，通过价值对齐故事板（VAS）+ 迭代跨模态精炼（ICR）+ 时序认知校准（TCC）：三阶段闭环架构，从用户草稿端到端生成高质量、角色一致、内容安全的绘本故事。 领域现状：大型生成模型在文本和图像生成上取得惊人进展…
 tags:
   - "ACL 2026"
   - "多智能体"

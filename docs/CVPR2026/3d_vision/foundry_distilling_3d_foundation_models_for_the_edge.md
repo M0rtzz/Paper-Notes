@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundry: Distilling 3D Foundation Models for the Edge
 description: >-
-  [CVPR 2026][3D视觉][基础模型蒸馏] 提出 Foundation Model Distillation（FMD）范式和 Foundry 框架，通过 compress-and-reconstruct 目标让学生模型学习一组可学习的 SuperToken 来压缩教师的潜空间基向量…
+  [CVPR 2026][3D视觉][基础模型蒸馏] 提出 Foundation Model Distillation（FMD）范式和 Foundry 框架，通过 compress-and-reconstruct 目标让学生模型学习一组可学习的 SuperToken 来压缩教师的潜空间基向量，生成的单一蒸馏模型在分类、分割、少样本等多任务上保持通用性，同时将 FLOPs 从 478G 降至最低 137G。
 tags:
   - "CVPR 2026"
   - "3D视觉"

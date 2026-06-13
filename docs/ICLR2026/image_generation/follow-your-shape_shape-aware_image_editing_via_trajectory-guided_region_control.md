@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control
 description: >-
-  [ICLR 2026][图像生成][Shape Editing] 提出 Follow-Your-Shape，一个无需训练和掩码的形状感知编辑框架，通过计算反演与编辑轨迹间的 token 级速度差异构建 Trajectory Divergence Map (TDM) 来精确定位编辑区域…
+  [ICLR 2026][图像生成][Shape Editing] 提出 Follow-Your-Shape，一个无需训练和掩码的形状感知编辑框架，通过计算反演与编辑轨迹间的 token 级速度差异构建 Trajectory Divergence Map (TDM) 来精确定位编辑区域，配合分阶段 KV 注入实现大幅形状变换且严格保持背景。
 tags:
   - "ICLR 2026"
   - "图像生成"

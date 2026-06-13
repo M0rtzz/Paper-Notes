@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Real-Time Trust Verification for Safe Agentic Actions Using TrustBench
 description: >-
-  [AAAI 2026][医疗NLP][信任验证] 提出实时信任验证框架及 TrustBench 基准，用于评估和保障 AI Agent 在执行操作时的安全性与可信度。
+  [AAAI 2026][医疗NLP][信任验证] 提出实时信任验证框架及 TrustBench 基准，用于评估和保障 AI Agent 在执行操作时的安全性与可信度。 领域现状：AgentBench等评估Agent任务完成能力，TrustLLM/HELM评估LLM可信度，但都是事后评估。SafeAgentBench发现Age…
 tags:
   - "AAAI 2026"
   - "医疗NLP"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Analysis-by-Synthesis Transformer for Single-View 3D Reconstruction
 description: >-
-  [ECCV 2024][3D视觉][单视图3D重建] 提出Analysis-by-Synthesis Transformer（AST），在统一框架中通过Shape Transformer和Texture Transformer分别建模像素到形状和像素到纹理的关系…
+  [ECCV 2024][3D视觉][单视图3D重建] 提出Analysis-by-Synthesis Transformer（AST），在统一框架中通过Shape Transformer和Texture Transformer分别建模像素到形状和像素到纹理的关系，仅使用2D标注就能实现高质量的网格重建和纹理生成，在CUB-200-2011和ShapeNet上超越已有方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

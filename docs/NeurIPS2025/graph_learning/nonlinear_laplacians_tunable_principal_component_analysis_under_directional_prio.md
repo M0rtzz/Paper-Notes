@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nonlinear Laplacians: Tunable Principal Component Analysis under Directional Prior Information
 description: >-
-  [NeurIPS 2025][图学习][非线性Laplacian] 提出非线性Laplacian谱算法，通过在观测矩阵 $\bm{Y}$ 上添加由度数向量经非线性函数 $\sigma$ 变换后得到的对角矩阵，将谱信息与方向先验信息融合…
+  [NeurIPS 2025][图学习][非线性Laplacian] 提出非线性Laplacian谱算法，通过在观测矩阵 $\bm{Y}$ 上添加由度数向量经非线性函数 $\sigma$ 变换后得到的对角矩阵，将谱信息与方向先验信息融合，在稀疏偏向PCA问题中显著降低信号检测阈值（从 $\beta^*=1$ 降至约 $0.76$）。
 tags:
   - "NeurIPS 2025"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HieraMamba: Video Temporal Grounding via Hierarchical Anchor-Mamba Pooling
 description: >-
-  [CVPR 2026][视频理解][视频时间定位] HieraMamba 提出了基于 Mamba 的层次化视频时间定位架构，核心是 Anchor-MambaPooling（AMP）模块，用 Mamba 的选择性扫描将视频特征逐层压缩为多尺度锚点 token…
+  [CVPR 2026][视频理解][视频时间定位] HieraMamba 提出了基于 Mamba 的层次化视频时间定位架构，核心是 Anchor-MambaPooling（AMP）模块，用 Mamba 的选择性扫描将视频特征逐层压缩为多尺度锚点 token，配合 anchor-conditioned 和 segment-pooled 对比损失增强层次表示的紧凑性和判别性，在 Ego4D-NLQ、MAD 和 TACoS 上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "视频理解"

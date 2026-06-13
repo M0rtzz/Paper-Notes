@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure
 description: >-
-  [ICLR 2026][LLM/NLP][反转诅咒] 提出反转诅咒（Reversal Curse）是认知科学中"绑定问题"在Transformer中的表现——源于概念表示的不一致性和纠缠性，并首次设计出基于JEPA和记忆层的架构真正突破反转诅咒（非绕过）。
+  [ICLR 2026][LLM 其他][反转诅咒] 提出反转诅咒（Reversal Curse）是认知科学中"绑定问题"在Transformer中的表现——源于概念表示的不一致性和纠缠性，并首次设计出基于JEPA和记忆层的架构真正突破反转诅咒（非绕过）。 LLM存在一个基本的泛化失败——反转诅咒：训练时学到"Tom Smit…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "反转诅咒"
   - "绑定问题"
   - "JEPA"

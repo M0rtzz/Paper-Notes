@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Localized Concept Erasure in Text-to-Image Diffusion Models via High-Level Representation Misdirection
 description: >-
-  [ICLR 2026][图像生成][概念擦除] HiRM 提出"更新位置与擦除目标解耦"的概念擦除策略——仅更新 CLIP 文本编码器第一层的权重，但将擦除监督施加在最后一层的高层语义表征上，通过引导目标概念表征偏向随机方向（HiRM-R）或语义方向（HiRM-S）…
+  [ICLR 2026][图像生成][概念擦除] HiRM 提出"更新位置与擦除目标解耦"的概念擦除策略——仅更新 CLIP 文本编码器第一层的权重，但将擦除监督施加在最后一层的高层语义表征上，通过引导目标概念表征偏向随机方向（HiRM-R）或语义方向（HiRM-S），在 UnlearnCanvas 和 NSFW 基准上实现风格/物体/裸体的高效擦除，且可零样本迁移到 Flux 架构。
 tags:
   - "ICLR 2026"
   - "图像生成"

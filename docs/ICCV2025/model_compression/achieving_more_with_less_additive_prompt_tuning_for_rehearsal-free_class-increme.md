@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning
 description: >-
-  [ICCV 2025][模型压缩][类增量学习] 提出 APT（Additive Prompt Tuning），用加法操作替代传统的提示拼接范式，仅在 CLS token 的 key/value 上添加两个可学习向量…
+  [ICCV 2025][模型压缩][类增量学习] 提出 APT（Additive Prompt Tuning），用加法操作替代传统的提示拼接范式，仅在 CLS token 的 key/value 上添加两个可学习向量，在大幅降低计算开销（GFLOPs 减少 41.5%）和可训练参数（减少 78.2%）的同时实现 SOTA 的类增量学习性能。
 tags:
   - "ICCV 2025"
   - "模型压缩"

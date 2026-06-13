@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthesizing Performance Constraints for Evaluating and Improving Code Efficiency
 description: >-
-  [NeurIPS 2025][AIGC检测][性能约束合成] 提出Wedge框架——通过LLM合成性能刻画约束（performance-characterizing constraints）指导约束感知模糊测试，生成能暴露代码性能瓶颈的压力测试输入，构建PerfForge基准…
+  [NeurIPS 2025][AIGC检测][性能约束合成] 提出Wedge框架——通过LLM合成性能刻画约束（performance-characterizing constraints）指导约束感知模糊测试，生成能暴露代码性能瓶颈的压力测试输入，构建PerfForge基准，使LLM代码优化器（如Effi-Learner）多减24% CPU指令。
 tags:
   - "NeurIPS 2025"
   - "AIGC检测"

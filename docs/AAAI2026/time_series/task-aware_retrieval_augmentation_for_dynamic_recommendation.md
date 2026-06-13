@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task-Aware Retrieval Augmentation for Dynamic Recommendation
 description: >-
-  [AAAI 2026][时间序列][检索增强] 提出 TarDGR 框架，通过任务感知的评估机制自动构建训练数据，训练 Graph Transformer 来评估历史子图的任务相关性，在推理时检索并融合任务相关子图以增强推荐的时序泛化能力。
+  [AAAI 2026][时间序列][检索增强] 提出 TarDGR 框架，通过任务感知的评估机制自动构建训练数据，训练 Graph Transformer 来评估历史子图的任务相关性，在推理时检索并融合任务相关子图以增强推荐的时序泛化能力。 问题场景 动态推荐系统需要通过建模用户-物品交互的时序演变来提供个性化建议…
 tags:
   - "AAAI 2026"
   - "时间序列"

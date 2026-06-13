@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nymeria: A Massive Collection of Multimodal Egocentric Daily Motion in the Wild
 description: >-
-  [ECCV 2024][多模态VLM][自我中心视角] Nymeria 是目前世界最大的野外人体运动数据集（300 小时、264 名参与者），首次提供同步定位的多设备多模态自我中心数据（Project Aria 眼镜+腕带+动捕服），并配套 310.5K 句层次化运动语言描述。
+  [ECCV 2024][多模态VLM][自我中心视角] Nymeria 是目前世界最大的野外人体运动数据集（300 小时、264 名参与者），首次提供同步定位的多设备多模态自我中心数据（Project Aria 眼镜+腕带+动捕服），并配套 310.5K 句层次化运动语言描述。 领域现状： 随着智能眼镜和可穿戴设备的兴起（M…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

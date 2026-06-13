@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffPO: Diffusion Alignment with Direct Preference Optimization
 description: >-
-  [ACL 2025][LLM对齐][扩散模型] 提出 DiffPO，将 LLM 对齐重新建模为句子级扩散去噪过程，通过 parallel decoding 实现高效推理时对齐，作为即插即用模块可增强任意底座模型的对齐质量。
+  [ACL 2025][LLM对齐][扩散模型] 提出 DiffPO，将 LLM 对齐重新建模为句子级扩散去噪过程，通过 parallel decoding 实现高效推理时对齐，作为即插即用模块可增强任意底座模型的对齐质量。 领域现状： RLHF 和 DPO 是主流对齐方法，但需要针对每个策略单独训练，计算资源消耗大…
 tags:
   - "ACL 2025"
   - "LLM对齐"

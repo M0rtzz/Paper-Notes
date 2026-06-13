@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data
 description: >-
-  [AAAI 2026][优化/理论][联邦学习] 提出 SMoFi 框架，通过在 Split FL 的 server 端每步同步各 surrogate 模型的 momentum buffer，有效缓解 non-IID 数据导致的梯度分歧，在精度最高提升 7.1%、收敛速度最高加速 10.25 倍。
+  [AAAI 2026][优化/理论][联邦学习] 提出 SMoFi 框架，通过在 Split FL 的 server 端每步同步各 surrogate 模型的 momentum buffer，有效缓解 non-IID 数据导致的梯度分歧，在精度最高提升 7.1%、收敛速度最高加速 10.25 倍。 领域现状 领域现状：Spl…
 tags:
   - "AAAI 2026"
   - "优化/理论"

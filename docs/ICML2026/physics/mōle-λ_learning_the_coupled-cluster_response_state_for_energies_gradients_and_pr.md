@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MōLe-Λ: Learning the Coupled-Cluster Response State for Energies, Gradients, and Properties
 description: >-
-  [ICML 2026][物理/科学计算][耦合簇理论] MōLe-Λ 把分子轨道学习从只预测耦合簇右态 $T$ 振幅扩展到同时预测左态 $\Lambda$ 振幅，用一套等变网络从局域化 Hartree–Fock 轨道直接读出 $(T_1,T_2,\Lambda_1,\Lambda_2)$…
+  [ICML 2026][物理/科学计算][耦合簇理论] MōLe-Λ 把分子轨道学习从只预测耦合簇右态 $T$ 振幅扩展到同时预测左态 $\Lambda$ 振幅，用一套等变网络从局域化 Hartree–Fock 轨道直接读出 $(T_1,T_2,\Lambda_1,\Lambda_2)$，在 QM7 上能量/受力 MAE 仅 0.10 mHa / 0.12 mHa/Bohr，同时把偶极、四极、极化率、电子密度、对密度等响应性质都从同一个学到的"响应态"里解出，相对 CCSD+$\Lambda$ 求解器加速两个数量级以上。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

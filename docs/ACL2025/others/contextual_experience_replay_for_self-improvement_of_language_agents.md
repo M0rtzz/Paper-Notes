@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextual Experience Replay for Self-Improvement of Language Agents
 description: >-
-  [ACL 2025][经验回放] CER（Contextual Experience Replay）提出了一个无需训练的语言 agent 自我改进框架，通过将过去的交互经验累积并合成为动态记忆缓冲区，在推理时让 agent 检索相关知识来增强新任务的决策…
+  [ACL 2025][经验回放] CER（Contextual Experience Replay）提出了一个无需训练的语言 agent 自我改进框架，通过将过去的交互经验累积并合成为动态记忆缓冲区，在推理时让 agent 检索相关知识来增强新任务的决策，在 WebArena 上相对 GPT-4o baseline 提升了 51.0% 的成功率。
 tags:
   - "ACL 2025"
   - "经验回放"

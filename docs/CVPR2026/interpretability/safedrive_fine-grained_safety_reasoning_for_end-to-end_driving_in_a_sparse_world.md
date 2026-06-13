@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeDrive: Fine-Grained Safety Reasoning for End-to-End Driving in a Sparse World
 description: >-
-  [CVPR 2026][可解释性][端到端驾驶] 提出 SafeDrive 端到端规划框架，通过轨迹条件化的稀疏世界模型（SWNet）模拟关键实体的未来行为，再由细粒度推理网络（FRNet）进行逐实例碰撞评估和逐时刻可行驶区域合规评估，在 NAVSIM 上 PDMS 达 91.6、仅 0.5% 碰撞率…
+  [CVPR 2026][可解释性][端到端驾驶] 提出 SafeDrive 端到端规划框架，通过轨迹条件化的稀疏世界模型（SWNet）模拟关键实体的未来行为，再由细粒度推理网络（FRNet）进行逐实例碰撞评估和逐时刻可行驶区域合规评估，在 NAVSIM 上 PDMS 达 91.6、仅 0.5% 碰撞率，Bench2Drive 驾驶分 66.8%。
 tags:
   - "CVPR 2026"
   - "可解释性"

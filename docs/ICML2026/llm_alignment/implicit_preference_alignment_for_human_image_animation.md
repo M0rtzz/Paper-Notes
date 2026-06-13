@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Preference Alignment for Human Image Animation
 description: >-
-  [ICML 2026][LLM对齐][偏好对齐] 作者提出 Implicit Preference Alignment (IPA)：一种只需"好样本"、不需要构造好/坏配对的后训练方法，通过最大化与预训练参考模型 KL 间隔来等价地最大化隐式奖励，并配合一个把手部 mask 加权进损失的 HALO 模块…
+  [ICML 2026][LLM对齐][偏好对齐] 作者提出 Implicit Preference Alignment (IPA)：一种只需"好样本"、不需要构造好/坏配对的后训练方法，通过最大化与预训练参考模型 KL 间隔来等价地最大化隐式奖励，并配合一个把手部 mask 加权进损失的 HALO 模块，让大尺度视频 DiT 在仅 93 个挑选样本下显著改善人体动画的手部保真度。
 tags:
   - "ICML 2026"
   - "LLM对齐"

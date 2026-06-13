@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AttnZero: Efficient Attention Discovery for Vision Transformers
 description: >-
-  [ECCV 2024][线性注意力] 本文提出 AttnZero，首个自动发现高效注意力模块的框架，通过构建包含六类计算图和丰富算子的搜索空间、利用进化算法进行多目标搜索，自动发现了适用于多种 ViT 的线性注意力公式…
+  [ECCV 2024][线性注意力] 本文提出 AttnZero，首个自动发现高效注意力模块的框架，通过构建包含六类计算图和丰富算子的搜索空间、利用进化算法进行多目标搜索，自动发现了适用于多种 ViT 的线性注意力公式，在 DeiT/PVT/Swin/CSwin 上分别达到 74.9%/78.1%/82.1%/82.9% 的 ImageNet top-1 准确率，并构建了包含 2000 种注意力变体的 Attn-Bench-101 基准。
 tags:
   - "ECCV 2024"
   - "线性注意力"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeedleInATable: Exploring Long-Context Capability of Large Language Models towards Long-Structured Tables
 description: >-
-  [NeurIPS 2025][多模态VLM][长上下文理解] 提出 NeedleInATable (NIAT) 基准，将表格中每个单元格视为"针"，评估 LLM 对长结构化表格的细粒度感知能力，揭示现有模型在复杂下游任务上的高分可能依赖数据捷径而非真正的表格理解。
+  [NeurIPS 2025][多模态VLM][长上下文理解] 提出 NeedleInATable (NIAT) 基准，将表格中每个单元格视为"针"，评估 LLM 对长结构化表格的细粒度感知能力，揭示现有模型在复杂下游任务上的高分可能依赖数据捷径而非真正的表格理解。 领域现状： 长上下文 LLM 发展迅速…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

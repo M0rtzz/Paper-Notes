@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MikuDance: Animating Character Art with Mixed Motion Dynamics
 description: >-
-  [ICCV 2025][视频理解][Character Animation] 提出 MikuDance，一种基于扩散模型的角色艺术动画系统，通过 Mixed Motion Modeling（将角色运动和 3D 相机运动统一到像素空间表示）和 Mixed-Control Diffusion（在 Referenc…
+  [ICCV 2025][视频理解][Character Animation] 提出 MikuDance，一种基于扩散模型的角色艺术动画系统，通过 Mixed Motion Modeling（将角色运动和 3D 相机运动统一到像素空间表示）和 Mixed-Control Diffusion（在 Reference UNet 中隐式对齐角色形状/尺度与运动引导），实现了复杂角色画作的高动态动画生成。
 tags:
   - "ICCV 2025"
   - "视频理解"

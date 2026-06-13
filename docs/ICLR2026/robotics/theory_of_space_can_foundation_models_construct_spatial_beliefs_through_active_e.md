@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theory of Space: Can Foundation Models Construct Spatial Beliefs through Active Exploration?
 description: >-
-  [ICLR 2026][机器人][Theory of Space] 提出Theory of Space框架，通过文本和视觉双环境中的主动探索、认知地图探查和False Belief范式，系统性评估基础模型构建和修正空间信念的能力，揭示了当前SOTA模型在主动-被动性能差距、探索效率和信念修正方面的关键失败模式…
+  [ICLR 2026][机器人][Theory of Space] 提出Theory of Space框架，通过文本和视觉双环境中的主动探索、认知地图探查和False Belief范式，系统性评估基础模型构建和修正空间信念的能力，揭示了当前SOTA模型在主动-被动性能差距、探索效率和信念修正方面的关键失败模式。
 tags:
   - "ICLR 2026"
   - "机器人"

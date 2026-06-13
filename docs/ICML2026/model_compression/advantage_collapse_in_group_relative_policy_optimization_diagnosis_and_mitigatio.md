@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Advantage Collapse in Group Relative Policy Optimization: Diagnosis and Mitigation
 description: >-
-  [ICML 2026][模型压缩][GRPO] 这篇论文指出 GRPO 在二值可验证奖励下会因为组内奖励全同而失去梯度信号，提出 ACR 指标实时诊断这种“优势坍塌”，并用 AVSPO 注入虚拟奖励样本恢复组内方差，从而在多个 Qwen2.5 数学推理模型上稳定提升 4-6 个百分点。
+  [ICML 2026][模型压缩][GRPO] 这篇论文指出 GRPO 在二值可验证奖励下会因为组内奖励全同而失去梯度信号，提出 ACR 指标实时诊断这种“优势坍塌”，并用 AVSPO 注入虚拟奖励样本恢复组内方差，从而在多个 Qwen2.5 数学推理模型上稳定提升 4-6 个百分点。 领域现状：LLM 数学推理的后训练越来…
 tags:
   - "ICML 2026"
   - "模型压缩"

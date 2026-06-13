@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Does YOLO Really Need to See Every Training Image in Every Epoch?
 description: >-
-  [CVPR 2026][目标检测][YOLO] 提出 Anti-Forgetting Sampling Strategy (AFSS)，根据每张训练图像的学习充分度（min(Precision, Recall)）动态决定哪些图像参与训练、哪些可以跳过…
+  [CVPR 2026][目标检测][YOLO] 提出 Anti-Forgetting Sampling Strategy (AFSS)，根据每张训练图像的学习充分度（min(Precision, Recall)）动态决定哪些图像参与训练、哪些可以跳过，实现 YOLO 系列检测器 1.43× 以上的训练加速同时保持甚至提升检测精度。
 tags:
   - "CVPR 2026"
   - "目标检测"

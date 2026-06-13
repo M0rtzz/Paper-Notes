@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zeroth-Order Fine-Tuning of LLMs in Random Subspaces
 description: >-
-  [ICCV 2025][优化/理论][零阶优化] 提出 SubZero（random Subspace Zeroth-order），通过逐层低秩扰动在随机子空间中估计梯度，显著降低零阶优化的梯度方差和角度误差，以接近推理的内存开销实现 LLM 的高效微调。
+  [ICCV 2025][优化/理论][零阶优化] 提出 SubZero（random Subspace Zeroth-order），通过逐层低秩扰动在随机子空间中估计梯度，显著降低零阶优化的梯度方差和角度误差，以接近推理的内存开销实现 LLM 的高效微调。 大语言模型（LLMs）的微调通常依赖一阶优化器（SGD/Adam）…
 tags:
   - "ICCV 2025"
   - "优化/理论"

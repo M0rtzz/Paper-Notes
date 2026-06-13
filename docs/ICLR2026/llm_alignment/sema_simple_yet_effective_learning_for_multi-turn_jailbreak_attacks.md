@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks
 description: >-
-  [ICLR 2026][LLM对齐][多轮越狱攻击] 提出 SEMA 框架，通过预填充自调优和带意图漂移感知奖励的 RL 两阶段训练，在无需任何现有攻击策略或外部数据的条件下，训练出能自动生成多轮越狱攻击的 attacker，在 AdvBench 上跨三个受害模型平均 ASR@1 达 80.1%…
+  [ICLR 2026][LLM对齐][多轮越狱攻击] 提出 SEMA 框架，通过预填充自调优和带意图漂移感知奖励的 RL 两阶段训练，在无需任何现有攻击策略或外部数据的条件下，训练出能自动生成多轮越狱攻击的 attacker，在 AdvBench 上跨三个受害模型平均 ASR@1 达 80.1%，超越 SOTA 33.9%。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

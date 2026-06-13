@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compass Control: Multi Object Orientation Control for Text-to-Image Generation
 description: >-
-  [CVPR 2025][图像生成][方向控制] 提出 Compass Control，通过引入轻量级方向编码器预测 compass token 并结合耦合注意力定位（CALL）机制，实现文本到图像扩散模型中多物体的精确3D方向控制，仅需合成数据训练即可泛化到未见类别和多物体场景。
+  [CVPR 2025][图像生成][方向控制] 提出 Compass Control，通过引入轻量级方向编码器预测 compass token 并结合耦合注意力定位（CALL）机制，实现文本到图像扩散模型中多物体的精确3D方向控制，仅需合成数据训练即可泛化到未见类别和多物体场景。 领域现状 领域现状：现有文本到图像（T2I）…
 tags:
   - "CVPR 2025"
   - "图像生成"

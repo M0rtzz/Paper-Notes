@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Demystifying Multimodal Biomolecular Co-design with Intrinsic Geodesic Coupling
 description: >-
-  [ICML 2026][计算生物][生物分子共设计] 作者把"序列 + 三维结构"这种异质模态的共生成问题，重新建模为**时序最优传输 (Temporal Optimal Transport)** 问题…
+  [ICML 2026][计算生物][生物分子共设计] 作者把"序列 + 三维结构"这种异质模态的共生成问题，重新建模为**时序最优传输 (Temporal Optimal Transport)** 问题，用双层优化 + 高斯过程代理 (GeoCoupling) 在训练过程中**自动学出非对角的时间耦合曲线**（即让结构和序列以各自适合的节奏被去噪），在 SBDD 和无条件蛋白质共设计两个任务上同时打败"同步耦合"和"随机耦合"两大类基线，并意外发现一条普适的"结构先行 (structure-leading)"几何先于语义的生成规律。
 tags:
   - "ICML 2026"
   - "计算生物"

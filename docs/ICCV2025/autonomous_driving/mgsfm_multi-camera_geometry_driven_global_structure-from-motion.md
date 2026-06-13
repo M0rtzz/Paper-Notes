@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MGSfM: Multi-Camera Geometry Driven Global Structure-from-Motion
 description: >-
-  [ICCV 2025][自动驾驶][Structure-from-Motion] 提出 MGSfM，一个面向多相机系统的全局 Structure-from-Motion (SfM) 框架，通过**解耦旋转平均 (DMRA)** 和**混合平移平均 (MGP)** 两个核心模块，充分利用多相机刚性约束…
+  [ICCV 2025][自动驾驶][Structure-from-Motion] 提出 MGSfM，一个面向多相机系统的全局 Structure-from-Motion (SfM) 框架，通过**解耦旋转平均 (DMRA)** 和**混合平移平均 (MGP)** 两个核心模块，充分利用多相机刚性约束，在大规模场景中实现与增量式 SfM 媲美甚至更优的精度，同时速度提升约 10 倍。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

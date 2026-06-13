@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LFQ: Logit-aware Final-block Quantization for Boosting the Generation Quality of Low-Bit Quantized LLMs
 description: >-
-  [ICML 2026][模型压缩][低比特量化] 针对 block-wise PTQ 在生成任务上的质量退化问题，LFQ 将最后一个 Transformer block 的量化目标从 MSE 替换为 logit 级交叉熵损失，使量化模型的 token 分布与全精度模型对齐…
+  [ICML 2026][模型压缩][低比特量化] 针对 block-wise PTQ 在生成任务上的质量退化问题，LFQ 将最后一个 Transformer block 的量化目标从 MSE 替换为 logit 级交叉熵损失，使量化模型的 token 分布与全精度模型对齐，在 IFEval/GSM8K/MATH500/AIME 等生成基准上一致提升精度。
 tags:
   - "ICML 2026"
   - "模型压缩"

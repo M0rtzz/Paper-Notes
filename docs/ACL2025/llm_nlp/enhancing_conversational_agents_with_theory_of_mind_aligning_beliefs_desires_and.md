@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Enhancing Conversational Agents with Theory of Mind: Aligning Beliefs, Desires, and Intentions for Human-Like Interaction
 description: >-
-  [ACL 2025 (Findings)][Theory of Mind] 本文探索了从开源 LLM（LLaMA）内部表征中提取心智理论（ToM）相关信息的可行性，并利用 BDI（信念-愿望-意图）框架操纵这些表征来生成更符合人类社交认知的对话回复…
+  [ACL 2025 (Findings)][LLM 其他][Theory of Mind] 本文探索了从开源 LLM（LLaMA）内部表征中提取心智理论（ToM）相关信息的可行性，并利用 BDI（信念-愿望-意图）框架操纵这些表征来生成更符合人类社交认知的对话回复，ToM 对齐后的模型在 3B 和 8B 上分别达到 67% 和 63% 的胜率。
 tags:
   - "ACL 2025 (Findings)"
+  - "LLM 其他"
   - "Theory of Mind"
   - "BDI 框架"
   - "对话对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MSEarth: A Multimodal Benchmark for Earth Science Phenomenon Discovery with MLLMs
 description: >-
-  [ACL 2026][多模态VLM][地球科学 Benchmark] 从 64,560 篇 CC-BY 开源地球科学论文里抽出 289K 张图，用「raw caption + 正文上下文」合成 refined caption，再用 5 模型多智能体投票 + 三阶段 PhD 专家校验生成 7…
+  [ACL 2026][多模态VLM][地球科学 Benchmark] 从 64,560 篇 CC-BY 开源地球科学论文里抽出 289K 张图，用「raw caption + 正文上下文」合成 refined caption，再用 5 模型多智能体投票 + 三阶段 PhD 专家校验生成 7,195 题 graduate-level 测试集（含 captioning / MCQ / open-ended），系统揭示了 SOTA MLLM 在 Earth-science 多图推理上"感知 >> 推理"的 20+ 分鸿沟，并给出 441K 训练集让开源 7B 模型 GRPO 后媲美 GPT-4o。
 tags:
   - "ACL 2026"
   - "多模态VLM"

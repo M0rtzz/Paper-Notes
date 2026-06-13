@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Long Story Short: Disentangling Compositionality and Long-Caption Understanding in Contrastive VLMs
 description: >-
-  [ACL 2026][多模态VLM][CLIP] 系统拆解了对比 VLM 里"组合性推理 (compositionality)"和"长 caption 理解 (long-caption understanding)" 这两项能力之间的关系——发现它俩是双向相互促进的…
+  [ACL 2026 Findings][多模态VLM][CLIP] 系统拆解了对比 VLM 里"组合性推理 (compositionality)"和"长 caption 理解 (long-caption understanding)" 这两项能力之间的关系——发现它俩是双向相互促进的，但这种迁移**对训练数据质量和优化策略极度敏感**：用 grounded + 高词表覆盖的长 caption 数据 + 全参数微调能同时拿满两个能力，而 DAC/DCI 的低质量合成 caption + LoRA 部分更新就会两头垮；LongCLIP 把前 20 个位置 embedding 冻结看似保护了通用对齐…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "CLIP"
   - "组合性推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linearizing Vision Transformer with Test-Time Training
 description: >-
-  [ICML 2026][图像生成][Test-Time Training] 作者发现两层 TTT 内模型在结构上等价于 Softmax 注意力（Softmax 可看作两层动态 MLP），由此实现 Q/K/V/MLP 的全权重直接继承…
+  [ICML 2026][图像生成][Test-Time Training] 作者发现两层 TTT 内模型在结构上等价于 Softmax 注意力（Softmax 可看作两层动态 MLP），由此实现 Q/K/V/MLP 的全权重直接继承，再通过 key Instance Normalization 处理 shift-invariance、depthwise conv on Q/K 补齐 locality，仅 1 小时微调就把 Stable Diffusion 3.5 线性化并加速 1.32×–1.47×。
 tags:
   - "ICML 2026"
   - "图像生成"

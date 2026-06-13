@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SVIP: Semantically Contextualized Visual Patches for Zero-Shot Learning
 description: >-
-  [ICCV 2025][可解释性][零样本学习] 提出SVIP框架，通过在**输入阶段**识别并替换语义无关的图像patch（用属性级word embedding初始化的可学习嵌入替代），从根源上解决零样本学习中的语义错位问题。
+  [ICCV 2025][可解释性][零样本学习] 提出SVIP框架，通过在输入阶段：识别并替换语义无关的图像patch（用属性级word embedding初始化的可学习嵌入替代），从根源上解决零样本学习中的语义错位问题。 零样本学习（ZSL）依赖视觉特征与语义属性的对齐来识别未见类别。核心挑战是语义错位（semantic…
 tags:
   - "ICCV 2025"
   - "可解释性"

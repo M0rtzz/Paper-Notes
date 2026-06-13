@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BriMA: Bridged Modality Adaptation for Multi-Modal Continual Action Quality Assessment
 description: >-
-  [CVPR2026][多模态VLM][动作质量评估] 提出 BriMA，通过记忆引导的桥接补全和模态感知回放机制，解决多模态持续动作质量评估中非平稳模态不平衡问题，在三个基准上平均提升 6-8% 相关系数、降低 12-15% 误差。
+  [CVPR2026][多模态VLM][动作质量评估] 提出 BriMA，通过记忆引导的桥接补全和模态感知回放机制，解决多模态持续动作质量评估中非平稳模态不平衡问题，在三个基准上平均提升 6-8% 相关系数、降低 12-15% 误差。 1. 动作质量评估（AQA）广泛应用于体育分析、康复评估、技能评价，多模态方法（视觉+运动学…
 tags:
   - "CVPR2026"
   - "多模态VLM"

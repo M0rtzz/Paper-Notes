@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChartEditor: A Reinforcement Learning Framework for Robust Chart Editing
 description: >-
-  [AAAI2026][强化学习][chart editing] 提出 ChartEditVista 基准（7,964 样本、31 种图表类型）和 ChartEditor 模型，通过 GRPO 强化学习框架结合新颖的 rendering reward…
+  [AAAI2026][强化学习][chart editing] 提出 ChartEditVista 基准（7,964 样本、31 种图表类型）和 ChartEditor 模型，通过 GRPO 强化学习框架结合新颖的 rendering reward，仅用 3B 参数即在图表编辑任务上超越 GPT-4o 和多个 72B 级模型。
 tags:
   - "AAAI2026"
   - "强化学习"

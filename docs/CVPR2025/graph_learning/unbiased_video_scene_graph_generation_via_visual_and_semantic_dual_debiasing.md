@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unbiased Video Scene Graph Generation via Visual and Semantic Dual Debiasing
 description: >-
-  [CVPR 2025][图学习][视频场景图] 提出 VISA 框架，从视觉（记忆引导序列建模 MGSM 降低特征方差）和语义（迭代关系生成器 IRG 引入层次上下文减少对偏置先验的依赖）双重角度对视频场景图生成进行去偏置，在 Action Genome 等数据集上大幅提升尾部类别性能。
+  [CVPR 2025][图学习][视频场景图] 提出 VISA 框架，从视觉（记忆引导序列建模 MGSM 降低特征方差）和语义（迭代关系生成器 IRG 引入层次上下文减少对偏置先验的依赖）双重角度对视频场景图生成进行去偏置，在 Action Genome 等数据集上大幅提升尾部类别性能。 领域现状：视频场景图生成（VidSG…
 tags:
   - "CVPR 2025"
   - "图学习"

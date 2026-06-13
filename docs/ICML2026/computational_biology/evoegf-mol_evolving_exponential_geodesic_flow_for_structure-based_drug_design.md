@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoEGF-Mol: Evolving Exponential Geodesic Flow for Structure-based Drug Design
 description: >-
-  [ICML 2026][计算生物][信息几何] EvoEGF-Mol 把 SBDD 的连续坐标与离散原子/键类型放到同一个指数族自然参数空间里，用动态收紧的目标分布替代奇异的 Dirac 端点，沿着 Fisher-Rao 几何下的指数测地线同步演化…
+  [ICML 2026][计算生物][信息几何] EvoEGF-Mol 把 SBDD 的连续坐标与离散原子/键类型放到同一个指数族自然参数空间里，用动态收紧的目标分布替代奇异的 Dirac 端点，沿着 Fisher-Rao 几何下的指数测地线同步演化，在 CrossDock 上把 PoseBusters 通过率推到 93.4%，逼近参考分子水平。
 tags:
   - "ICML 2026"
   - "计算生物"

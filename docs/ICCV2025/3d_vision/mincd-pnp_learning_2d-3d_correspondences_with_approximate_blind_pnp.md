@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MinCD-PnP: Learning 2D-3D Correspondences with Approximate Blind PnP
 description: >-
-  [ICCV 2025][3D视觉][图像-点云配准] 本文提出 MinCD-PnP，通过三重近似将计算昂贵的 Blind PnP 简化为最小化 2D-3D 关键点间 Chamfer 距离的问题，设计轻量级多任务学习模块 MinCD-Net 集成到现有 I2P 配准框架中…
+  [ICCV 2025][3D视觉][图像-点云配准] 本文提出 MinCD-PnP，通过三重近似将计算昂贵的 Blind PnP 简化为最小化 2D-3D 关键点间 Chamfer 距离的问题，设计轻量级多任务学习模块 MinCD-Net 集成到现有 I2P 配准框架中，在跨场景和跨数据集设置下显著提升内点率和配准召回率。
 tags:
   - "ICCV 2025"
   - "3D视觉"

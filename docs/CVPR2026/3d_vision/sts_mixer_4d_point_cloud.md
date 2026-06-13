@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STS-Mixer: Spatio-Temporal-Spectral Mixer for 4D Point Cloud Video Understanding
 description: >-
-  [CVPR 2026][3D视觉][4D点云视频] STS-Mixer 首次将图傅里叶变换（GFT）引入 4D 点云视频理解，通过频域分解捕获不同尺度的几何结构（低频=全局形状、高频=局部细节），与时空信息混合后在动作识别和语义分割上达到 SOTA。
+  [CVPR 2026][3D视觉][4D点云视频] STS-Mixer 首次将图傅里叶变换（GFT）引入 4D 点云视频理解，通过频域分解捕获不同尺度的几何结构（低频=全局形状、高频=局部细节），与时空信息混合后在动作识别和语义分割上达到 SOTA。 领域现状：4D 点云视频包含 3D 空间+时间信息，现有方法（P4Tran…
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HandOS: 3D Hand Reconstruction in One Stage
 description: >-
-  [CVPR 2025][3D视觉][手部重建] HandOS 提出了一个端到端的单阶段3D手部重建框架，通过冻结预训练检测器并引入交互式2D-3D解码器，将手部检测、2D姿态估计和3D mesh重建统一到一个pipeline中，消除了传统多阶段方法的冗余计算和累积误差…
+  [CVPR 2025][3D视觉][手部重建] HandOS 提出了一个端到端的单阶段3D手部重建框架，通过冻结预训练检测器并引入交互式2D-3D解码器，将手部检测、2D姿态估计和3D mesh重建统一到一个pipeline中，消除了传统多阶段方法的冗余计算和累积误差，在 FreiHand 上达到 5.0 PA-MPJPE 的 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

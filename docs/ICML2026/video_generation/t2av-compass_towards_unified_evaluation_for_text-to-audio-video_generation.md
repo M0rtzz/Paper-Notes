@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T2AV-Compass: Towards Unified Evaluation for Text-to-Audio-Video Generation
 description: >-
-  [ICML 2026][视频生成][文本到音视频生成] T2AV-Compass 是首个针对文本到音视频（T2AV）生成的综合评估基准——500 条复杂提示 + 双层评估框架（低层信号指标 + 高层 MLLM 诊断），系统评估 15 个前沿 T2AV 系统…
+  [ICML 2026][视频生成][文本到音视频生成] T2AV-Compass 是首个针对文本到音视频（T2AV）生成的综合评估基准——500 条复杂提示 + 双层评估框架（低层信号指标 + 高层 MLLM 诊断），系统评估 15 个前沿 T2AV 系统，定量揭示了即便顶级模型也存在的"音频真实感瓶颈"现象（视频维度 85%+ 真实感 vs 音频仅 50%）。
 tags:
   - "ICML 2026"
   - "视频生成"

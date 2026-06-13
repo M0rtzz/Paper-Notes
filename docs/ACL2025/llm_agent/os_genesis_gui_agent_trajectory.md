@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis
 description: >-
-  [ACL 2025][LLM Agent][GUI Agent] 提出 OS-Genesis，一种交互驱动的 GUI Agent 轨迹合成 pipeline，通过先让 agent 在环境中探索交互再反向推导任务（Reverse Task Synthesis），结合轨迹奖励模型 (TRM) 过滤质量…
+  [ACL 2025][LLM Agent][GUI Agent] 提出 OS-Genesis，一种交互驱动的 GUI Agent 轨迹合成 pipeline，通过先让 agent 在环境中探索交互再反向推导任务（Reverse Task Synthesis），结合轨迹奖励模型 (TRM) 过滤质量，生成高质量多样化的训练轨迹，在 AndroidWorld 上性能接近翻倍。
 tags:
   - "ACL 2025"
   - "LLM Agent"

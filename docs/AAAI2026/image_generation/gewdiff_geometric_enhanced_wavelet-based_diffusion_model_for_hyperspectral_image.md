@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution
 description: >-
-  [AAAI 2026][图像生成][高光谱图像超分辨率] 提出GEWDiff，一种几何增强的基于小波的扩散模型，通过小波编码器-解码器高效压缩高光谱数据到潜在空间，引入边缘感知噪声调度和mask条件控制保持几何完整性，并设计多级损失函数促进稳定收敛，实现4倍高光谱图像超分辨率的SOTA效果。
+  [AAAI 2026][图像生成][高光谱图像超分辨率] 提出GEWDiff，一种几何增强的基于小波的扩散模型，通过小波编码器-解码器高效压缩高光谱数据到潜在空间，引入边缘感知噪声调度和mask条件控制保持几何完整性，并设计多级损失函数促进稳定收敛，实现4倍高光谱图像超分辨率的SOTA效果。 高光谱图像（HSI）捕获地面物体…
 tags:
   - "AAAI 2026"
   - "图像生成"

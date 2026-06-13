@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Efficient 4-bit Preconditioned Stochastic Optimization
 description: >-
-  [ICCV 2025][优化/理论][Shampoo] 提出基于 Cholesky 分解 + 误差反馈的 4-bit 量化方案，将 Shampoo 优化器的预条件矩阵压缩至 4-bit 精度，在大幅降低 GPU 显存的同时保持与 32-bit Shampoo 接近的训练性能…
+  [ICCV 2025][优化/理论][Shampoo] 提出基于 Cholesky 分解 + 误差反馈的 4-bit 量化方案，将 Shampoo 优化器的预条件矩阵压缩至 4-bit 精度，在大幅降低 GPU 显存的同时保持与 32-bit Shampoo 接近的训练性能，并给出了光滑与非光滑两种场景下的收敛性证明。
 tags:
   - "ICCV 2025"
   - "优化/理论"

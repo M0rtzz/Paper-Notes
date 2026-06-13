@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explorer: Scaling Exploration-Driven Web Trajectory Synthesis for Multimodal Web Agents
 description: >-
-  [ACL 2025][LLM Agent][Web Agent] 提出 Explorer——一个可扩展的多智能体 pipeline，通过自主网页探索和逐步精炼来合成大规模多模态 web 轨迹数据集（94K 成功轨迹，49K+ URL，720K 截图）…
+  [ACL 2025][LLM Agent][Web Agent] 提出 Explorer——一个可扩展的多智能体 pipeline，通过自主网页探索和逐步精炼来合成大规模多模态 web 轨迹数据集（94K 成功轨迹，49K+ URL，720K 截图），训练的 Explorer-7B 在 Mind2Web-Live、MiniWob++ 等 benchmark 上达到甚至超过 GPT-4 水平。
 tags:
   - "ACL 2025"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Multi-Scale Hypergraph for High-Order Brain Connectivity Analysis
 description: >-
-  [ICML 2026][医学图像][脑网络] MuHL 用可学习尺度的图小波把脑 ROI 特征分解成多分辨率表征，再以"节点嵌入 × 共享投影矩阵"动态生成 soft 超边，让 AD/PD 多阶段分类在 ADNI 上做到 93.2% Acc、PPMI 上做到 76.8% Acc…
+  [ICML 2026][医学图像][脑网络] MuHL 用可学习尺度的图小波把脑 ROI 特征分解成多分辨率表征，再以"节点嵌入 × 共享投影矩阵"动态生成 soft 超边，让 AD/PD 多阶段分类在 ADNI 上做到 93.2% Acc、PPMI 上做到 76.8% Acc，同时给出可解释的关键 ROI 与超边。
 tags:
   - "ICML 2026"
   - "医学图像"

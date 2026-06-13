@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models
 description: >-
-  [AAAI 2026][多模态VLM][零阶优化] 本文系统探索了零阶（ZO）优化在基于PEFT的视觉-语言持续学习（VLCL）中的应用，发现全ZO替换会导致训练不稳定，提出从分支级（branch-wise）到层级（layer-wise）的渐进式ZO-FO混合策略…
+  [AAAI 2026][多模态VLM][零阶优化] 本文系统探索了零阶（ZO）优化在基于PEFT的视觉-语言持续学习（VLCL）中的应用，发现全ZO替换会导致训练不稳定，提出从分支级（branch-wise）到层级（layer-wise）的渐进式ZO-FO混合策略，并基于视觉模态方差更大的理论发现提出MoZO策略（梯度符号归一化+视觉扰动约束），在四个benchmark上达到SOTA。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contact-Aware Refinement of Human Pose Pseudo-Ground Truth via Bioimpedance Sensing
 description: >-
-  [ICCV 2025][人体理解][自接触检测] 提出BioTUCH框架，通过手腕间生物阻抗传感检测自接触事件，结合视觉姿态估计器进行接触感知的3D手臂姿态优化，平均提升重建精度11.7%。
+  [ICCV 2025][人体理解][自接触检测] 提出BioTUCH框架，通过手腕间生物阻抗传感检测自接触事件，结合视觉姿态估计器进行接触感知的3D手臂姿态优化，平均提升重建精度11.7%。 现有痛点 现有痛点：领域现状：3D人体姿态估计在面对自接触场景（如手触脸、双手握紧）时表现很差，主要原因有两个： 深度歧义：沿相机光轴…
 tags:
   - "ICCV 2025"
   - "人体理解"

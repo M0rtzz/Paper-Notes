@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-identity Human Image Animation with Structural Video Diffusion
 description: >-
-  [ICCV 2025][视频生成][多身份人体动画] 本文提出Structural Video Diffusion框架，通过基于掩码引导的身份特定嵌入保持多人外观一致性，联合学习RGB/深度/法线三模态几何结构信息建模人物-物体交互，配合25K多人交互视频数据集Multi-HumanVid…
+  [ICCV 2025][视频生成][多身份人体动画] 本文提出Structural Video Diffusion框架，通过基于掩码引导的身份特定嵌入保持多人外观一致性，联合学习RGB/深度/法线三模态几何结构信息建模人物-物体交互，配合25K多人交互视频数据集Multi-HumanVid，实现多身份人体视频生成。
 tags:
   - "ICCV 2025"
   - "视频生成"

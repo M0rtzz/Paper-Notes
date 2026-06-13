@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaskGWM: A Generalizable Driving World Model with Video Mask Reconstruction
 description: >-
-  [CVPR 2025][自动驾驶][世界模型] 本文将MAE式掩码重建任务与扩散生成过程相结合，提出MaskGWM驾驶世界模型，通过扩散相关掩码token、行式掩码注意力和行式跨视角模块三项创新设计，在长时序预测和多视角生成两个场景下均显著超越了现有SOTA。
+  [CVPR 2025][自动驾驶][世界模型] 本文将MAE式掩码重建任务与扩散生成过程相结合，提出MaskGWM驾驶世界模型，通过扩散相关掩码token、行式掩码注意力和行式跨视角模块三项创新设计，在长时序预测和多视角生成两个场景下均显著超越了现有SOTA。 领域现状：驾驶世界模型旨在根据动作预测未来环境变化…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

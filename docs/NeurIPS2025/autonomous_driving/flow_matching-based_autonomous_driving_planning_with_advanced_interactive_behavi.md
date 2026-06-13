@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flow Matching-Based Autonomous Driving Planning with Advanced Interactive Behavior Modeling
 description: >-
-  [NeurIPS 2025][自动驾驶][自动驾驶规划] 提出 Flow Planner——通过细粒度轨迹 token 化、交互增强时空融合架构和 flow matching + classifier-free guidance 三项协同创新…
+  [NeurIPS 2025][自动驾驶][自动驾驶规划] 提出 Flow Planner——通过细粒度轨迹 token 化、交互增强时空融合架构和 flow matching + classifier-free guidance 三项协同创新，在 nuPlan Val14 上首次作为纯学习方法突破 90 分大关（90.43），在交互密集的 interPlan 基准上比 Diffusion Planner 高 8.92 分。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CNSL-bench: Benchmarking the Sign Language Understanding Capabilities of MLLMs on Chinese National Sign Language
 description: >-
-  [ACL 2026][多模态VLM][中国国家手语] CNSL-bench 是首个基于《国家通用手语词典》的权威中国手语 MLLM 评测基准，覆盖 6,707 个唯一手语词条 × 文本/图片/视频三模态 × 三种手部 articulation（空写/指拼/手指字母）共 20,121 道四选一题…
+  [ACL 2026][多模态VLM][中国国家手语] CNSL-bench 是首个基于《国家通用手语词典》的权威中国手语 MLLM 评测基准，覆盖 6,707 个唯一手语词条 × 文本/图片/视频三模态 × 三种手部 articulation（空写/指拼/手指字母）共 20,121 道四选一题，在 21 个 SOTA MLLM 上揭示：GPT-5 文本 89.6%、图片 67.0%、视频 56.7%，相对人类 97% 仍有巨大 gap，且 CoT 推理对视频帮助微弱。
 tags:
   - "ACL 2026"
   - "多模态VLM"

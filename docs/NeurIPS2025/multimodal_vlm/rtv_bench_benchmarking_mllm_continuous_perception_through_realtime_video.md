@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video
 description: >-
-  [NeurIPS 2025][多模态VLM][实时视频理解] 提出 RTV-Bench，一个面向多模态大模型（MLLM）实时视频连续分析能力的细粒度评测基准，包含552个视频和4608个QA对，通过多时间戳问答、层次化问题结构和多维度评估来全面测试模型在动态视频流中的感知、理解和推理能力。
+  [NeurIPS 2025][多模态VLM][实时视频理解] 提出 RTV-Bench，一个面向多模态大模型（MLLM）实时视频连续分析能力的细粒度评测基准，包含552个视频和4608个QA对，通过多时间戳问答、层次化问题结构和多维度评估来全面测试模型在动态视频流中的感知、理解和推理能力。 领域现状：多模态大模型在感知、理解…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaRI: Material Retrieval Integration across Domains
 description: >-
-  [CVPR 2025][自监督学习][material retrieval] 提出 MaRI 框架，用双 DINOv2 编码器（图像 + 材质）通过对比学习构建共享嵌入空间，结合 Blender 合成数据和 ZeST 生成的真实世界材质数据，实现跨域准确的 PBR 材质检索。
+  [CVPR 2025][自监督学习][material retrieval] 提出 MaRI 框架，用双 DINOv2 编码器（图像 + 材质）通过对比学习构建共享嵌入空间，结合 Blender 合成数据和 ZeST 生成的真实世界材质数据，实现跨域准确的 PBR 材质检索。 领域现状： 准确的材质检索对创建逼真 3D 资产…
 tags:
   - "CVPR 2025"
   - "自监督学习"

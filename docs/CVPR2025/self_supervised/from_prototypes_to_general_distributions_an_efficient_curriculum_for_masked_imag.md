@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Prototypes to General Distributions: An Efficient Curriculum for Masked Image Modeling
 description: >-
-  [CVPR 2025][自监督学习][MAE课程学习] 提出原型驱动的 MAE 课程学习——用 K-means 聚类识别数据集中的"原型"样本（靠近聚类中心的代表性图像），通过温度控制的采样策略从原型逐步过渡到全分布训练…
+  [CVPR 2025][自监督学习][MAE课程学习] 提出原型驱动的 MAE 课程学习——用 K-means 聚类识别数据集中的"原型"样本（靠近聚类中心的代表性图像），通过温度控制的采样策略从原型逐步过渡到全分布训练，实现 8× 训练加速（200 epoch 原型课程 ≈ 800 epoch 标准 MAE）。
 tags:
   - "CVPR 2025"
   - "自监督学习"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] U2Flow: Uncertainty-Aware Unsupervised Optical Flow Estimation
 description: >-
-  [CVPR 2026][视频理解][光流估计] U2Flow是首个联合估计光流和逐像素不确定性的循环无监督框架，通过基于增强一致性的解耦不确定性学习和不确定性引导的双向光流融合，在KITTI和Sintel上实现无监督SOTA。
+  [CVPR 2026 Oral][视频理解][光流估计] U2Flow是首个联合估计光流和逐像素不确定性的循环无监督框架，通过基于增强一致性的解耦不确定性学习和不确定性引导的双向光流融合，在KITTI和Sintel上实现无监督SOTA。 领域现状：基于全对相关的深度循环模型（如RAFT）在全监督下达到SOTA…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Oral"
   - "视频理解"
   - "光流估计"
   - "不确定性估计"

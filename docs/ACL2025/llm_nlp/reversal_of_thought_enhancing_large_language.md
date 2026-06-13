@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Reversal of Thought: Enhancing Large Language Models with Preference-Guided Reverse Reasoning Warm-up
 description: >-
-  [ACL 2025][LLM/NLP][reverse reasoning] 提出 Reversal of Thought (RoT)，一个即插即用的推理框架，通过偏好引导的逆向推理预热策略，让 LLM 从示例中反向生成"LLM 口味"的最优 prompt，再通过认知偏好管理器自动区分已知/未知任务…
+  [ACL 2025][LLM 其他][reverse reasoning] 提出 Reversal of Thought (RoT)，一个即插即用的推理框架，通过偏好引导的逆向推理预热策略，让 LLM 从示例中反向生成"LLM 口味"的最优 prompt，再通过认知偏好管理器自动区分已知/未知任务，在多种推理任务上超越 CoT/ToT/GoT 等基线。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "reverse reasoning"
   - "cognitive preference"
   - "meta-cognition"

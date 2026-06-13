@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Score Rescaling for Temperature Sampling in Diffusion and Flow Models
 description: >-
-  [ICML 2026][计算生物][temperature sampling] 通过对预训练扩散/流模型的 score 输出乘以一个仅依赖时间步、变量 $k$ 与 $\sigma$ 的解析重标缩因子 $r_t$，即可在推理阶段把采样分布"局部"地变得更尖或更平，而无需任何微调…
+  [ICML 2026][计算生物][temperature sampling] 通过对预训练扩散/流模型的 score 输出乘以一个仅依赖时间步、变量 $k$ 与 $\sigma$ 的解析重标缩因子 $r_t$，即可在推理阶段把采样分布"局部"地变得更尖或更平，而无需任何微调，对 DDIM 等确定性采样器也完全兼容。
 tags:
   - "ICML 2026"
   - "计算生物"

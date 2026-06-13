@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting
 description: >-
-  [NeurIPS 2025][图像生成][文本引导图像修复] 提出NTN-Diff频率感知扩散模型，通过将语义一致性问题分解为中频和低频频带各自的一致性任务，利用"空文本-文本-空文本"三阶段去噪策略，同时解决文本引导图像修复中的未遮盖区域保持和遮盖/未遮盖区域语义一致性两大挑战。
+  [NeurIPS 2025][图像生成][文本引导图像修复] 提出NTN-Diff频率感知扩散模型，通过将语义一致性问题分解为中频和低频频带各自的一致性任务，利用"空文本-文本-空文本"三阶段去噪策略，同时解决文本引导图像修复中的未遮盖区域保持和遮盖/未遮盖区域语义一致性两大挑战。 文本引导图像修复（text-guided…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

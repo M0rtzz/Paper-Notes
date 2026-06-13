@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning
 description: >-
-  [CVPR 2026][视频生成][相机控制] 提出FaceCam系统，通过面部地标(facial landmarks)作为尺度感知的相机表示来解决单目人像视频的相机控制问题，避免了传统相机外参表示的尺度歧义，并设计了合成相机运动和多镜头拼接两种数据增强策略支持连续相机轨迹推理。
+  [CVPR 2026][视频生成][相机控制] 提出FaceCam系统，通过面部地标(facial landmarks)作为尺度感知的相机表示来解决单目人像视频的相机控制问题，避免了传统相机外参表示的尺度歧义，并设计了合成相机运动和多镜头拼接两种数据增强策略支持连续相机轨迹推理。 可控视频生成中的相机运动控制是核心问题…
 tags:
   - "CVPR 2026"
   - "视频生成"

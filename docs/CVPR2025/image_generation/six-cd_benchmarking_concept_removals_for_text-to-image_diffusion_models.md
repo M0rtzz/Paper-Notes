@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Six-CD: Benchmarking Concept Removals for Text-to-Image Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][概念移除] 提出 Six-CD 基准，包含六类不良概念（有害、裸露、名人、版权角色、物体、艺术风格）和新评估指标 in-prompt CLIP score，首次系统性地对比评估文生图扩散模型的概念移除方法。
+  [CVPR 2025][图像生成][概念移除] 提出 Six-CD 基准，包含六类不良概念（有害、裸露、名人、版权角色、物体、艺术风格）和新评估指标 in-prompt CLIP score，首次系统性地对比评估文生图扩散模型的概念移除方法。 文生图扩散模型（如 Stable Diffusion）能生成高质量图像…
 tags:
   - "CVPR 2025"
   - "图像生成"

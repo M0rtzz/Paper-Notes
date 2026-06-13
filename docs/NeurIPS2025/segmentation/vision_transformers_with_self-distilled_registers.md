@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Vision Transformers with Self-Distilled Registers
 description: >-
-  [NeurIPS 2025][语义分割][Transformer] 提出PH-Reg（Post Hoc Registers），一种高效的自蒸馏方法，无需标注数据和完整重训练即可为已有预训练ViT添加register token，通过测试时增强去噪教师特征+自蒸馏学生网络…
+  [NeurIPS 2025 Spotlight][语义分割][Transformer] 提出PH-Reg（Post Hoc Registers），一种高效的自蒸馏方法，无需标注数据和完整重训练即可为已有预训练ViT添加register token，通过测试时增强去噪教师特征+自蒸馏学生网络，有效消除ViT密集特征中的伪影token，提升分割和深度估计性能。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "语义分割"
   - "Transformer"
   - "Register Token"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Collaborative Performance Prediction for Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][性能预测] 本文提出协同性能预测框架CPP，利用多个LLM在多个任务上的历史性能数据及模型/任务的设计因素进行协同过滤式预测，突破了传统Scaling Law仅限单模型族预测的限制，能跨模型族准确预测LLM的下游性能。
+  [ACL 2025][LLM 其他][性能预测] 本文提出协同性能预测框架CPP，利用多个LLM在多个任务上的历史性能数据及模型/任务的设计因素进行协同过滤式预测，突破了传统Scaling Law仅限单模型族预测的限制，能跨模型族准确预测LLM的下游性能。 领域现状：理解和预测大语言模型在各种下游任务上的性能是NLP研究中的…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "性能预测"
   - "Scaling Law"
   - "协同过滤"

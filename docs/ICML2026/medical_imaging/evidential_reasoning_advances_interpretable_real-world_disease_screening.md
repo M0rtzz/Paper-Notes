@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evidential Reasoning Advances Interpretable Real-World Disease Screening
 description: >-
-  [ICML 2026][医学图像][双知识库] EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 cross-attention + self-attention 在当前病例和证据间做循证推理…
+  [ICML 2026][医学图像][双知识库] EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 cross-attention + self-attention 在当前病例和证据间做循证推理，既给出**回溯式可解释性**（哪几个历史病例支持当前判断）又给出**定位可解释性**（对比检索得到的异常图），在 4 个真实外部测试集上把高召回处的特异性提升到 SOTA。
 tags:
   - "ICML 2026"
   - "医学图像"

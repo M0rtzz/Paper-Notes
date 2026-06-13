@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents
 description: >-
-  [ICLR 2026][LLM Agent][Web Agent] 提出首个专门评估 Web Agent 安全性和可信赖性的基准 ST-WebAgentBench，通过策略层级框架和完成度策略（CuP）指标，揭示当前 SOTA Agent 在企业场景中存在严重的策略违规问题。
+  [ICLR 2026][LLM Agent][Web Agent] 提出首个专门评估 Web Agent 安全性和可信赖性的基准 ST-WebAgentBench，通过策略层级框架和完成度策略（CuP）指标，揭示当前 SOTA Agent 在企业场景中存在严重的策略违规问题。 近年来基于 LLM 的 Web Agent 发展…
 tags:
   - "ICLR 2026"
   - "LLM Agent"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness
 description: >-
-  [CVPR2026][模型压缩][数据集蒸馏] 提出 QuADD 框架，将可微量化模块嵌入数据集蒸馏循环中，联合优化合成数据与量化参数，实现在固定比特预算下"更少样本 + 更低精度"的帕累托最优压缩。
+  [CVPR 2026 Findings][模型压缩][数据集蒸馏] 提出 QuADD 框架，将可微量化模块嵌入数据集蒸馏循环中，联合优化合成数据与量化参数，实现在固定比特预算下"更少样本 + 更低精度"的帕累托最优压缩。 1. 数据集蒸馏的局限：现有 DD 方法主要通过减少合成样本数量 $M$ 或数据维度 $D$ 来提升紧凑…
 tags:
-  - "CVPR2026"
+  - "CVPR 2026 Findings"
   - "模型压缩"
   - "数据集蒸馏"
   - "量化感知训练"

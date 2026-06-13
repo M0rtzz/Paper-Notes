@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NutriScreener: Retrieval-Augmented Multi-Pose Graph Attention Network for Malnourishment Screening
 description: >-
-  [AAAI 2026][医学图像][儿童营养不良检测] 提出 NutriScreener，一个结合CLIP视觉编码器、多姿态图注意力网络（GAT）和基于FAISS的检索增强分类/回归模块的框架，通过跨姿态注意力和类别增强检索来实现鲁棒的儿童营养不良检测与人体测量学预测…
+  [AAAI 2026][医学图像][儿童营养不良检测] 提出 NutriScreener，一个结合CLIP视觉编码器、多姿态图注意力网络（GAT）和基于FAISS的检索增强分类/回归模块的框架，通过跨姿态注意力和类别增强检索来实现鲁棒的儿童营养不良检测与人体测量学预测，在AnthroVision等跨大洲数据集上达到0.79 recall和0.82 AUC，临床医生评价准确性4.3/5、效率4.6/5。
 tags:
   - "AAAI 2026"
   - "医学图像"

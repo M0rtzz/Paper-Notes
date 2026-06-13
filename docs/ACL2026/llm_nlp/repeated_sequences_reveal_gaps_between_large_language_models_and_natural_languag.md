@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Repeated Sequences Reveal Gaps between Large Language Models and Natural Language
 description: >-
-  [ACL 2026][LLM/NLP][重复子序列] 本文提出基于重复子序列分布的评估框架，通过高阶 Rényi 熵刻画文本的熵增长行为，发现自然语言呈现稳定的次线性熵增长模式，而 GPT 生成文本的熵指数随模型规模单调增大，揭示了 LLM 在长程统计组织上与自然语言的系统性差异。
+  [ACL 2026][LLM 其他][重复子序列] 本文提出基于重复子序列分布的评估框架，通过高阶 Rényi 熵刻画文本的熵增长行为，发现自然语言呈现稳定的次线性熵增长模式，而 GPT 生成文本的熵指数随模型规模单调增大，揭示了 LLM 在长程统计组织上与自然语言的系统性差异。 领域现状： LLM 在各类任务 benchm…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "重复子序列"
   - "Rényi熵"
   - "LLM评估"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2605.24850](https://arxiv.org/abs/2605.24850)  
 **代码**: 无  
-**领域**: llm_nlp  
+**领域**: LLM/NLP  
 **关键词**: 重复子序列, Rényi熵, LLM评估, 长程结构, 熵增长分析
 
 ## 一句话总结

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Nature of NLP: Analyzing Contributions in NLP Papers
 description: >-
-  [ACL2025][LLM/NLP][NLP scientometrics] 提出 NLP 论文贡献的分类体系（知识/工件 × 8 子类），构建 ~2k 人工标注数据集 NLPContributions，训练 SciBERT 自动识别贡献声明…
+  [ACL2025][LLM 其他][NLP scientometrics] 提出 NLP 论文贡献的分类体系（知识/工件 × 8 子类），构建 ~2k 人工标注数据集 NLPContributions，训练 SciBERT 自动识别贡献声明，并对 ~29k 篇 ACL Anthology 论文做 50 年纵向趋势分析，揭示 NLP 研究从语言学导向转向方法/模型主导、近年又重拾人文与语言关注的演化轨迹。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "NLP scientometrics"
   - "贡献分类"
   - "研究趋势分析"

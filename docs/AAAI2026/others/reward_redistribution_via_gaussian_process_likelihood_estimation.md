@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reward Redistribution via Gaussian Process Likelihood Estimation
 description: >-
-  [AAAI 2026][稀疏奖励] 本文提出了基于高斯过程似然的奖励重分配框架 GP-LRR，通过核函数显式建模 state-action 对之间的相关性，利用 leave-one-out 策略最大化轨迹回报的边际似然来学习逐步奖励函数，理论证明传统 MSE 方法是其退化特例…
+  [AAAI 2026][稀疏奖励] 本文提出了基于高斯过程似然的奖励重分配框架 GP-LRR，通过核函数显式建模 state-action 对之间的相关性，利用 leave-one-out 策略最大化轨迹回报的边际似然来学习逐步奖励函数，理论证明传统 MSE 方法是其退化特例，并在 MuJoCo 基准上配合 SAC 实现了优越的样本效率和策略性能。
 tags:
   - "AAAI 2026"
   - "稀疏奖励"

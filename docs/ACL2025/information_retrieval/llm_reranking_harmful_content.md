@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Re-ranking Using Large Language Models for Mitigating Exposure to Harmful Content on Social Media Platforms
 description: >-
-  [ACL 2025][信息检索/RAG][内容审核] 提出基于 LLM 的成对偏好重排序方法，在零样本和少样本设置下对社交媒体推荐序列中的有害内容进行降级排序，显著优于 Perspective API 和 OpenAI Moderation API 等工业级分类器…
+  [ACL 2025][信息检索/RAG][内容审核] 提出基于 LLM 的成对偏好重排序方法，在零样本和少样本设置下对社交媒体推荐序列中的有害内容进行降级排序，显著优于 Perspective API 和 OpenAI Moderation API 等工业级分类器，同时引入 PP-k 和 EWN 两个新评估指标。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

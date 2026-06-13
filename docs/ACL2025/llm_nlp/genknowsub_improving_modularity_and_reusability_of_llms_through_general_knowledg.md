@@ -2,10 +2,10 @@
 title: >-
   [论文解读] GenKnowSub: Improving Modularity and Reusability of LLMs through General Knowledge Subtraction
 description: >-
-  [ACL 2025][LLM/NLP][LoRA] 提出 GenKnowSub（通用知识减法），通过在 Wikipedia 语料上训练通用知识 LoRA 并从任务特定 LoRA 中减去它（$LoRA_{res}^i = LoRA_{ts}^i - LoRA_g$），得到更纯净的残差模块…
+  [ACL 2025][LLM 其他][LoRA] 提出 GenKnowSub（通用知识减法），通过在 Wikipedia 语料上训练通用知识 LoRA 并从任务特定 LoRA 中减去它（$LoRA_{res}^i = LoRA_{ts}^i - LoRA_g$），得到更纯净的残差模块；结合 Arrow 路由算法动态选择最相关的模块，在 Phi-3 上零样本迁移平均准确率提升 1.6%，跨语言场景提升更大（德语+3.9%，法语+3.6%）。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LoRA"
   - "通用知识减法"
   - "Arrow路由"

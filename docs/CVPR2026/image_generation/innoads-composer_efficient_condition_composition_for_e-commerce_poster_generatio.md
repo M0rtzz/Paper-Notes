@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InnoAds-Composer: Efficient Condition Composition for E-Commerce Poster Generation
 description: >-
-  [CVPR 2026][图像生成][电商海报生成] 提出 InnoAds-Composer，一个基于 MM-DiT 的单阶段电商海报生成框架，通过统一 token 化将商品主体、字形文本和背景风格三类条件映射到同一空间，结合文本特征增强模块（TFEM）和重要性感知条件注入策略…
+  [CVPR 2026][图像生成][电商海报生成] 提出 InnoAds-Composer，一个基于 MM-DiT 的单阶段电商海报生成框架，通过统一 token 化将商品主体、字形文本和背景风格三类条件映射到同一空间，结合文本特征增强模块（TFEM）和重要性感知条件注入策略，在保持高质量生成的同时显著降低推理开销。
 tags:
   - "CVPR 2026"
   - "图像生成"

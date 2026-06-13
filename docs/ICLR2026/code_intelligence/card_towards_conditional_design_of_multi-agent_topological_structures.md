@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CARD: Towards Conditional Design of Multi-agent Topological Structures
 description: >-
-  [ICLR 2026][代码智能][多Agent通信拓扑] CARD提出了一种条件图生成框架(Conditional Agentic Graph Designer)，通过条件变分图编码器和环境感知优化，根据模型能力、工具可用性和知识源变化等动态环境信号自适应地设计多Agent通信拓扑结构…
+  [ICLR 2026][代码智能][多Agent通信拓扑] CARD提出了一种条件图生成框架(Conditional Agentic Graph Designer)，通过条件变分图编码器和环境感知优化，根据模型能力、工具可用性和知识源变化等动态环境信号自适应地设计多Agent通信拓扑结构，在HumanEval、MATH和MMLU上一致超越静态和基于提示的基线方法。
 tags:
   - "ICLR 2026"
   - "代码智能"

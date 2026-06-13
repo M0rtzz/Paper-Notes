@@ -2,15 +2,15 @@
 title: >-
   [论文解读] FAST: Foreground-aware Diffusion with Accelerated Sampling Trajectory for Segmentation-oriented Anomaly Synthesis
 description: >-
-  [NeurIPS 2025][语义分割][工业异常合成] 提出FAST前景感知扩散框架，包含无训练的异常信息加速采样（AIAS）和前景感知重建模块（FARM），将扩散步骤从1000减少到10步同时实现SOTA异常分割性能（MVTec-AD上mIoU 76.72%）。
+  [NeurIPS 2025][语义分割][工业异常合成] FAST 把“异常区域要被持续保留下来”这件事做成了显式机制，一边用 AIAS 把离散扩散的多步反演压缩成少量粗到细更新，一边用 FARM 在每一步都重建并回灌异常前景，因此既快又更适合给下游异常分割模型喂训练数据。 工业异常分割和普通异常检测不一样…
 tags:
   - "NeurIPS 2025"
   - "语义分割"
   - "工业异常合成"
-  - "扩散模型"
-  - "前景感知"
+  - "前景感知扩散"
   - "加速采样"
   - "异常分割"
+  - "掩码引导"
 ---
 
 # FAST: Foreground-aware Diffusion with Accelerated Sampling Trajectory for Segmentation-oriented Anomaly Synthesis
@@ -265,3 +265,19 @@ tags:
   - 加速采样
   - 异常分割
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Fast and Fluent Diffusion Language Models via Convolutional Decoding and Rejective Fine-tuning](fast_and_fluent_diffusion_language_models_via_convolutional_decoding_and_rejecti.md)
+- [\[CVPR 2026\] Task-Oriented Data Synthesis and Control-Rectify Sampling for Remote Sensing Semantic Segmentation](../../CVPR2026/segmentation/task-oriented_data_synthesis_and_control-rectify_sampling_for_remote_sensing_sem.md)
+- [\[NeurIPS 2025\] HopaDIFF: Holistic-Partial Aware Fourier Conditioned Diffusion for Referring Human Action Segmentation in Multi-Person Scenarios](hopadiff_holistic-partial_aware_fourier_conditioned_diffusion_for_referring_huma.md)
+- [\[NeurIPS 2025\] Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation](diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)
+- [\[ICCV 2025\] UniGlyph: Unified Segmentation-Conditioned Diffusion for Precise Visual Text Synthesis](../../ICCV2025/segmentation/uniglyph_unified_segmentation-conditioned_diffusion_for_precise_visual_text_synt.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TGV-KV: Text-Grounded KV Eviction for Vision-Language Models
 description: >-
-  [ICML2026][多模态VLM][VLM 推理加速] TGV-KV 通过"用文本注意力来支配视觉 KV"的三件套——按 text-vision 注意力分层预算、用主导文本 token 加权重排视觉重要性、并在驱逐时优先保住文本 KV——把为纯文本 LLM 设计的 KV eviction 思路成功迁移到 V…
+  [ICML2026][多模态VLM][VLM 推理加速] TGV-KV 通过"用文本注意力来支配视觉 KV"的三件套——按 text-vision 注意力分层预算、用主导文本 token 加权重排视觉重要性、并在驱逐时优先保住文本 KV——把为纯文本 LLM 设计的 KV eviction 思路成功迁移到 VLM，在 LLaVA-NeXT/Qwen3-VL 上 5% 保留率下仍能保住接近满 KV 的精度，吞吐量提升 52.6%。
 tags:
   - "ICML2026"
   - "多模态VLM"

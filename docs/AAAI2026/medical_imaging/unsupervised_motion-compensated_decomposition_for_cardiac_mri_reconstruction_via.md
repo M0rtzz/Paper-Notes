@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Motion-Compensated Decomposition for Cardiac MRI Reconstruction via Neural Representation
 description: >-
-  [AAAI 2026][医学图像][心脏MRI重建] 提出 MoCo-INR，首次将隐式神经表示（INR）引入运动补偿（MoCo）框架，通过无监督方式实现心脏 MRI 的高质量动态重建，在超高加速因子（20x Cartesian / 69x Non-Cartesian）下显著优于现有无监督方法。
+  [AAAI 2026][医学图像][心脏MRI重建] 提出 MoCo-INR，首次将隐式神经表示（INR）引入运动补偿（MoCo）框架，通过无监督方式实现心脏 MRI 的高质量动态重建，在超高加速因子（20x Cartesian / 69x Non-Cartesian）下显著优于现有无监督方法。 1. 领域现状： 心脏磁共振…
 tags:
   - "AAAI 2026"
   - "医学图像"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Do Language Models Understand Honorific Systems in Javanese?
 description: >-
-  [ACL 2025][LLM/NLP][honorifics] 构建首个爪哇语敬语语料库 Unggah-Ungguh（4,024 句，覆盖四个敬语层级），通过分类/风格转换/跨语言翻译/对话生成四个任务系统评估 LLM 对爪哇语敬语系统的理解能力…
+  [ACL 2025][LLM 其他][honorifics] 构建首个爪哇语敬语语料库 Unggah-Ungguh（4,024 句，覆盖四个敬语层级），通过分类/风格转换/跨语言翻译/对话生成四个任务系统评估 LLM 对爪哇语敬语系统的理解能力，发现即使最强闭源模型（GPT-4o）的零样本分类准确率也仅 53.5%，且普遍偏向特定敬语层级。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "honorifics"
   - "Javanese"
   - "low-resource"

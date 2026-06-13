@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Information Processing of One-Dimensional Wasserstein Distances with Finite Samples
 description: >-
-  [AAAI 2026][计算生物][Wasserstein距离] 本文通过Poisson过程框架，解析刻画了一维Wasserstein距离在有限样本下同时编码概率密度函数的逐点密度差异（rate difference）和支撑差异（support difference）的能力…
+  [AAAI 2026][计算生物][Wasserstein距离] 本文通过Poisson过程框架，解析刻画了一维Wasserstein距离在有限样本下同时编码概率密度函数的逐点密度差异（rate difference）和支撑差异（support difference）的能力，并在神经脉冲数据和氨基酸接触频率数据上验证了其实际价值。
 tags:
   - "AAAI 2026"
   - "计算生物"

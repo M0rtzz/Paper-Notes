@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation
 description: >-
-  [ICCV 2025][图像生成][机器人操作] 提出 A₀，一个可供性感知的分层扩散模型，通过将操作任务分解为高层空间可供性理解（预测接触点和轨迹）和低层动作执行，在100万接触点数据上预训练后仅需少量任务数据微调即可跨平台(Franka/Kinova/Realman/Dobot)部署…
+  [ICCV 2025][图像生成][机器人操作] 提出 A₀，一个可供性感知的分层扩散模型，通过将操作任务分解为高层空间可供性理解（预测接触点和轨迹）和低层动作执行，在100万接触点数据上预训练后仅需少量任务数据微调即可跨平台(Franka/Kinova/Realman/Dobot)部署，在擦白板等复杂轨迹任务中成功率达45%。
 tags:
   - "ICCV 2025"
   - "图像生成"

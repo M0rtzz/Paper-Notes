@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SPA-Cache: Singular Proxies for Adaptive Caching in Diffusion Language Models
 description: >-
-  [ICML 2026][LLM/NLP][扩散模型] SPA-Cache 把扩散语言模型 (DLM) 中"哪些 token 需要更新"的判定，从原本在 $d=4096$ 维 Value 空间做余弦相似度，压缩到 $r=128$ 的奇异子空间，并按层动态分配更新预算…
+  [ICML 2026][LLM 其他][扩散模型] SPA-Cache 把扩散语言模型 (DLM) 中"哪些 token 需要更新"的判定，从原本在 $d=4096$ 维 Value 空间做余弦相似度，压缩到 $r=128$ 的奇异子空间，并按层动态分配更新预算，在不掉精度的前提下让 LLaDA-8B 在 GSM8K 上达到 $6.4\times$、在 MBPP 上达到 $8\times$ 的吞吐提升，叠加并行解码后总加速 $28\times$。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散模型"
   - "KV Cache"
   - "奇异值分解"

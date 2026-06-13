@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Exponential Convergence for Offline RLHF with Pairwise Comparisons
 description: >-
-  [AAAI 2026][LLM对齐][离线RLHF] 在离线RLHF的成对比较设定下，提出RL-LOW算法实现了simple regret的指数收敛 $\exp(-\Omega(n/H))$，并首次导出实例依赖下界证明该速率在指数意义上是最优的。
+  [AAAI 2026 Oral][LLM对齐][离线RLHF] 在离线RLHF的成对比较设定下，提出RL-LOW算法实现了simple regret的指数收敛 $\exp(-\Omega(n/H))$，并首次导出实例依赖下界证明该速率在指数意义上是最优的。 领域现状：RLHF（基于人类反馈的强化学习）已成为LLM对齐的核心范…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM对齐"
   - "离线RLHF"
   - "指数收敛"

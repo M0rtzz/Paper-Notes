@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Tug of War Within: Mitigating the Fairness-Privacy Conflicts in Large Language Models
 description: >-
-  [ACL 2025][LLM安全][公平性] 发现 LLM 通过 SFT 增强隐私意识会显著降低公平性意识（trade-off），提出无训练方法 SPIN（抑制公平-隐私耦合神经元），基于信息论解耦两种意识，在 Qwen2-7B 上同时提升公平性 12.2% 和隐私意识 14.0%。
+  [ACL 2025][LLM安全][公平性] 发现 LLM 通过 SFT 增强隐私意识会显著降低公平性意识（trade-off），提出无训练方法 SPIN（抑制公平-隐私耦合神经元），基于信息论解耦两种意识，在 Qwen2-7B 上同时提升公平性 12.2% 和隐私意识 14.0%。 领域现状：LLM 在医疗、金融等敏感领域…
 tags:
   - "ACL 2025"
   - "LLM安全"

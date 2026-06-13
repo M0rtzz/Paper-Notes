@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizable End-to-End Tool-Use RL with Synthetic CodeGym
 description: >-
-  [ICLR2026][LLM推理][tool-use] 提出 CodeGym 框架，将编程题自动转化为多轮工具调用的交互式环境，用于 LLM agent 的强化学习训练，在分布外基准上取得显著泛化提升（如 Qwen2.5-32B 在 τ-Bench 上 +8.7 点）。
+  [ICLR2026][LLM推理][tool-use] 提出 CodeGym 框架，将编程题自动转化为多轮工具调用的交互式环境，用于 LLM agent 的强化学习训练，在分布外基准上取得显著泛化提升（如 Qwen2.5-32B 在 τ-Bench 上 +8.7 点）。 工具增强的大语言模型（LLM agent）通过调用外部…
 tags:
   - "ICLR2026"
   - "LLM推理"

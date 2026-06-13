@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ApET: Approximation-Error Guided Token Compression for Efficient VLMs
 description: >-
-  [CVPR 2026][多模态VLM][Token压缩] 从信息论角度提出基于线性近似重建误差的视觉 token 重要性评估方法，不依赖 attention 权重，天然兼容 FlashAttention，在 LLaVA-1.5 上压缩 88.9% 视觉 token 仍保持 95.2% 性能。
+  [CVPR 2026][多模态VLM][Token压缩] 从信息论角度提出基于线性近似重建误差的视觉 token 重要性评估方法，不依赖 attention 权重，天然兼容 FlashAttention，在 LLaVA-1.5 上压缩 88.9% 视觉 token 仍保持 95.2% 性能。 VLM 视觉 token 冗余严…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions
 description: >-
-  [ACL 2025][LLM推理][Chain-of-Thought] 本文提出QuaSAR（Quasi-Symbolic Abstract Reasoning），一种CoT变体方法，通过引导LLM先对问题进行符号化抽象（提取变量/谓词）、再用半形式化表示重构问题、最后基于准符号推理链求解…
+  [ACL 2025][LLM推理][Chain-of-Thought] 本文提出QuaSAR（Quasi-Symbolic Abstract Reasoning），一种CoT变体方法，通过引导LLM先对问题进行符号化抽象（提取变量/谓词）、再用半形式化表示重构问题、最后基于准符号推理链求解，在GPT-4o上相比CoT提高最多8%准确率，并显著增强了对对抗性变体（选项打乱、数值替换）的鲁棒性。
 tags:
   - "ACL 2025"
   - "LLM推理"

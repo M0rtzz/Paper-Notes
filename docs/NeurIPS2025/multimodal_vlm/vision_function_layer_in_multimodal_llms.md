@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision Function Layer in Multimodal LLMs
 description: >-
-  [NeurIPS 2025][多模态VLM][MLLM内部机制] 发现MLLM中视觉相关的功能解码分布在特定的窄层块中（Vision Function Layer），且跨模型家族呈现一致的层级顺序（识别→计数→定位→OCR）…
+  [NeurIPS 2025][多模态VLM][MLLM内部机制] 发现MLLM中视觉相关的功能解码分布在特定的窄层块中（Vision Function Layer），且跨模型家族呈现一致的层级顺序（识别→计数→定位→OCR），据此提出VFL-LoRA（仅用1/3参数匹配full-LoRA性能）和VFL-select（20%数据达98%全量性能）。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

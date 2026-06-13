@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboPearls: Editable Video Simulation for Robot Manipulation
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 提出 RoboPearls，基于 3D 高斯溅射（3DGS）构建的可编辑视频仿真框架，从演示视频中构建照片级真实感仿真环境，通过增量语义蒸馏（ISD）和3D正则化NNFM损失支持丰富的场景编辑操作，并利用 LLM 智能体自动化仿真生成流程…
+  [ICCV 2025][3D视觉][3D高斯溅射] 提出 RoboPearls，基于 3D 高斯溅射（3DGS）构建的可编辑视频仿真框架，从演示视频中构建照片级真实感仿真环境，通过增量语义蒸馏（ISD）和3D正则化NNFM损失支持丰富的场景编辑操作，并利用 LLM 智能体自动化仿真生成流程，形成以 VLM 闭环驱动的机器人学习增强系统。
 tags:
   - "ICCV 2025"
   - "3D视觉"

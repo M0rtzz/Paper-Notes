@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Soft Quality-Diversity Optimization
 description: >-
-  提出 Soft QD Score 作为无需行为空间离散化的质量多样性优化新目标，并据此推导出可微分算法 SQUAD，在高维行为空间中具有更好的可扩展性，且在标准基准上与 SOTA 竞争力相当。
+  提出 Soft QD Score 作为无需行为空间离散化的质量多样性优化新目标，并据此推导出可微分算法 SQUAD，在高维行为空间中具有更好的可扩展性，且在标准基准上与 SOTA 竞争力相当。 - Quality-Diversity (QD) 优化：寻找一组既高质量又行为多样的解，应用于 RL 策略多样化、红队测试、内容生…
 tags:
 
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEARL: Joint Optimization of Policy and Tool Graph Memory for Self-Evolving Agents
 description: >-
-  [ACL2026][LLM Agent][自进化智能体] SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工具锚定的 step-level advantage 与过程奖励解决长轨迹信用分配，使小模型在多跳问答和复杂数学任务中能持续创建、复用和整合工具。
+  [ACL2026][LLM Agent][自进化智能体] SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工具锚定的 step-level advantage 与过程奖励解决长轨迹信用分配，使小模型在多跳问答和复杂数学任务中能持续创建、复用和整合工具。 领域现状：RLVR 已经在…
 tags:
   - "ACL2026"
   - "LLM Agent"

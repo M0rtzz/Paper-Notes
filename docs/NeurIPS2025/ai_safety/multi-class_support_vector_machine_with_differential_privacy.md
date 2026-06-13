@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Class Support Vector Machine with Differential Privacy
 description: >-
-  [NeurIPS 2025][AI安全][差分隐私] 提出PMSVM框架，利用all-in-one多类SVM的单次数据访问特性，结合权重扰动和梯度扰动方法，在保持差分隐私的前提下显著降低多类SVM的隐私预算消耗，实现了更优的隐私-效用权衡。
+  [NeurIPS 2025][AI安全][差分隐私] 提出PMSVM框架，利用all-in-one多类SVM的单次数据访问特性，结合权重扰动和梯度扰动方法，在保持差分隐私的前提下显著降低多类SVM的隐私预算消耗，实现了更优的隐私-效用权衡。 差分隐私（DP）是构建隐私保护机器学习模型的重要框架。SVM在二分类任务上表现优异且…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

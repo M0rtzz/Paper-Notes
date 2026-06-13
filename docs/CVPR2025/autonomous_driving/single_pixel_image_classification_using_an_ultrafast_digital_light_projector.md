@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Single Pixel Image Classification using an Ultrafast Digital Light Projector
 description: >-
-  [CVPR2025][自动驾驶][single pixel imaging] 利用 microLED-on-CMOS 超快数字光投影器实现基于单像素成像（SPI）的 MNIST 图像分类，在 1.2 kfps 帧率下达到 >90% 分类精度，完全绕过图像重建直接从时序光信号分类。
+  [CVPR2025][自动驾驶][single pixel imaging] 利用 microLED-on-CMOS 超快数字光投影器实现基于单像素成像（SPI）的 MNIST 图像分类，在 1.2 kfps 帧率下达到 90% 分类精度，完全绕过图像重建直接从时序光信号分类。 核心矛盾 核心矛盾：领域现状：1. 机器视觉对…
 tags:
   - "CVPR2025"
   - "自动驾驶"

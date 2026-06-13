@@ -2,7 +2,7 @@
 title: >-
   [论文解读] To See or To Read: User Behavior Reasoning in Multimodal LLMs
 description: >-
-  [NeurIPS 2025][多模态VLM][用户行为推理] 提出BehaviorLens基准框架，系统比较文本、散点图和流程图三种用户行为历史的表示方式对MLLM次购预测的影响，发现图像表示相比等效文本表示最高可提升87.5%的预测准确率，且无需额外计算开销。
+  [NeurIPS 2025][多模态VLM][用户行为推理] 提出BehaviorLens基准框架，系统比较文本、散点图和流程图三种用户行为历史的表示方式对MLLM次购预测的影响，发现图像表示相比等效文本表示最高可提升87.5%的预测准确率，且无需额外计算开销。 多模态大语言模型（MLLM）正在重塑智能系统对用户行为序列数据…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

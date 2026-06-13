@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Creative Generation on Stable Diffusion-based Models
 description: >-
-  [CVPR 2025][图像生成][创意生成] 本文提出 C3（Creative Concept Catalyst），一种免训练方法，通过在 Stable Diffusion 的去噪过程中选择性放大特征来增强创意生成能力，并提供基于创意两个主要维度的放大因子选择指南。
+  [CVPR 2025][图像生成][创意生成] 本文提出 C3（Creative Concept Catalyst），一种免训练方法，通过在 Stable Diffusion 的去噪过程中选择性放大特征来增强创意生成能力，并提供基于创意两个主要维度的放大因子选择指南。 领域现状：Stable Diffusion 及其蒸馏变体…
 tags:
   - "CVPR 2025"
   - "图像生成"

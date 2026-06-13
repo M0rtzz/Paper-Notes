@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizer Choice Matters for the Emergence of Neural Collapse
 description: >-
-  [ICLR 2026][优化/理论][Neural Collapse] 通过 3,900+ 次训练实验和理论分析，揭示了优化器选择（特别是权重衰减的耦合方式）对 Neural Collapse 现象涌现起关键决定性作用——AdamW（解耦权重衰减）无法产生 Neural Collapse…
+  [ICLR 2026][优化/理论][Neural Collapse] 通过 3,900+ 次训练实验和理论分析，揭示了优化器选择（特别是权重衰减的耦合方式）对 Neural Collapse 现象涌现起关键决定性作用——AdamW（解耦权重衰减）无法产生 Neural Collapse，而 SGD 和 Adam（耦合权重衰减）可以。
 tags:
   - "ICLR 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboMME: Benchmarking and Understanding Memory for Robotic Generalist Policies
 description: >-
-  [ICML 2026][机器人][记忆增强] RoboMME 首次把人类认知里的"时序/空间/物体/程序"四类记忆系统性映射到 16 个长时机器人操控任务（770k 高质量时间步），并在 π0.5 底座上系统消融 14 种"记忆表征 × 集成方式"…
+  [ICML 2026][机器人][记忆增强] RoboMME 首次把人类认知里的"时序/空间/物体/程序"四类记忆系统性映射到 16 个长时机器人操控任务（770k 高质量时间步），并在 π0.5 底座上系统消融 14 种"记忆表征 × 集成方式"，得出"感知记忆 + AdaLN 调制器"是当前最佳综合权衡的结论。
 tags:
   - "ICML 2026"
   - "机器人"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2603.04639](https://arxiv.org/abs/2603.04639)  
 **代码**: https://robomme.github.io/  
-**领域**: robotics  
+**领域**: 机器人  
 **关键词**: 记忆增强、VLA、机器人基准、长时操控、π0.5
 
 ## 一句话总结

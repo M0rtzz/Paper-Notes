@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Navigation Instruction Generation with BEV Perception and Large Language Models
 description: >-
-  [ECCV 2024][自动驾驶][导航指令生成] 提出 BEVInstructor，将鸟瞰图 (BEV) 特征融合到多模态大语言模型中，通过 Perspective-BEV 融合编码器、参数高效的 Prompt Tuning 以及实例引导的迭代优化策略，在室内外导航指令生成任务上取得 SOTA。
+  [ECCV 2024][自动驾驶][导航指令生成] 提出 BEVInstructor，将鸟瞰图 (BEV) 特征融合到多模态大语言模型中，通过 Perspective-BEV 融合编码器、参数高效的 Prompt Tuning 以及实例引导的迭代优化策略，在室内外导航指令生成任务上取得 SOTA。 导航指令生成要求具身智能体…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

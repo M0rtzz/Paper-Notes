@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agent3D-Zero: An Agent for Zero-shot 3D Understanding
 description: >-
-  [ECCV 2024][LLM Agent][Zero-shot 3D Understanding] Agent3D-Zero 提出一个基于 VLM 的零样本 3D 场景理解 Agent 框架，通过鸟瞰图上的 Set-of-Line 视觉提示引导 VLM 主动选择观察视角，并综合多视角图像进行 3D 推理…
+  [ECCV 2024][LLM Agent][Zero-shot 3D Understanding] Agent3D-Zero 提出一个基于 VLM 的零样本 3D 场景理解 Agent 框架，通过鸟瞰图上的 Set-of-Line 视觉提示引导 VLM 主动选择观察视角，并综合多视角图像进行 3D 推理，在 ScanQA 等任务上超越了需要微调的 3D-LLM 方法。
 tags:
   - "ECCV 2024"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TheoremExplainAgent: Towards Video-based Multimodal Explanations for LLM Theorem Understanding
 description: >-
-  [ACL 2025][多模态VLM][theorem explanation] 提出 TheoremExplainAgent，一个双 Agent 系统（Planner + Coder），通过 Manim 动画脚本自动生成长达 10 分钟的定理讲解视频…
+  [ACL 2025][多模态VLM][theorem explanation] 提出 TheoremExplainAgent，一个双 Agent 系统（Planner + Coder），通过 Manim 动画脚本自动生成长达 10 分钟的定理讲解视频，配套 TheoremExplainBench（240 个 STEM 定理 × 5 维评估指标），证明 agentic planning 是长视频生成的关键，且视觉解释能暴露文本评估无法发现的推理缺陷。
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games
 description: >-
-  [AAAI 2026][可解释性][行为博弈论] 提出 ElementaryNet，一种**可证明不具备策略性推理能力**的神经网络架构，用于建模博弈中人类的"level-0"（非策略性）行为，在预测准确率上与 GameNet（当前 SOTA）无统计差异，同时具备更好的可解释性。
+  [AAAI 2026][可解释性][行为博弈论] 提出 ElementaryNet，一种可证明不具备策略性推理能力：的神经网络架构，用于建模博弈中人类的"level-0"（非策略性）行为，在预测准确率上与 GameNet（当前 SOTA）无统计差异，同时具备更好的可解释性。 问题场景 在非重复同时移动博弈（normal-fo…
 tags:
   - "AAAI 2026"
   - "可解释性"

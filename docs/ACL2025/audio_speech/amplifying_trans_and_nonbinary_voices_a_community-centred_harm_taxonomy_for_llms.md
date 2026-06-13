@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Amplifying Trans and Nonbinary Voices: A Community-Centred Harm Taxonomy for LLMs
 description: >-
-  [ACL 2025][音频/语音][跨性别群体] 本文采用社区导向（community-centred）的研究方法，通过与跨性别和非二元性别（Trans and Nonbinary, TNB）群体的深入合作，构建了一套专门针对LLM输出中对TNB群体伤害的分类体系（harm taxonomy）…
+  [ACL 2025][音频/语音][跨性别群体] 本文采用社区导向（community-centred）的研究方法，通过与跨性别和非二元性别（Trans and Nonbinary, TNB）群体的深入合作，构建了一套专门针对LLM输出中对TNB群体伤害的分类体系（harm taxonomy），揭示了现有LLM安全评估未覆盖的TNB特有伤害类型。
 tags:
   - "ACL 2025"
   - "音频/语音"

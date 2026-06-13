@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Reasoning VLA: Latent Thinking and Prediction for Vision-Language-Action Models
 description: >-
-  [ICML 2026][机器人][VLA] LaRA-VLA 把 VLA 模型里的文本 CoT 和视觉 CoT 全部内化为连续 latent，通过三阶段 curriculum 训练（显式 CoT → latent 替换 → 动作专家适配）让推理留在 latent 空间里完成…
+  [ICML 2026][机器人][VLA] LaRA-VLA 把 VLA 模型里的文本 CoT 和视觉 CoT 全部内化为连续 latent，通过三阶段 curriculum 训练（显式 CoT → latent 替换 → 动作专家适配）让推理留在 latent 空间里完成，推理延迟相比显式 CoT 降低高达 90%，控制频率重回实时区间。
 tags:
   - "ICML 2026"
   - "机器人"

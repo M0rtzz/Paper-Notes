@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDP-CROWN: Efficient Bound Propagation for Neural Network Verification with Tightness of Semidefinite Programming
 description: >-
-  [ICML2025][优化/理论][神经网络验证] 提出 SDP-CROWN，将半定规划（SDP）松弛的紧致性融入线性界传播框架，每层仅增加一个参数 λ，便可在 ℓ₂ 扰动下将验证松弛度最多收紧 √n 倍，同时保持与 α-CROWN 同级的可扩展性。
+  [ICML2025][优化/理论][神经网络验证] 提出 SDP-CROWN，将半定规划（SDP）松弛的紧致性融入线性界传播框架，每层仅增加一个参数 λ，便可在 ℓ₂ 扰动下将验证松弛度最多收紧 √n 倍，同时保持与 α-CROWN 同级的可扩展性。 - 线性界传播：（CROWN / α-CROWN / β-CROWN）是当…
 tags:
   - "ICML2025"
   - "优化/理论"

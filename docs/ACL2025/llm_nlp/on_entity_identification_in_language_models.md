@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On Entity Identification in Language Models
 description: >-
-  [ACL 2025][LLM/NLP][实体识别] 提出基于聚类的评估框架（Purity/Inverse Purity）分析 LLM 内部表示中的实体区分能力，发现实体信息在早期层（~归一化位置 0.2）的 20 维子空间中达到线性可分（F1~0.9）…
+  [ACL 2025][LLM 其他][实体识别] 提出基于聚类的评估框架（Purity/Inverse Purity）分析 LLM 内部表示中的实体区分能力，发现实体信息在早期层（~归一化位置 0.2）的 20 维子空间中达到线性可分（F1~0.9），且不同大模型收敛到结构同构的实体编码——为"LLM 从纯文本训练中涌现离散知识结构"提供了系统性证据。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "实体识别"
   - "内部表示"
   - "线性可分性"

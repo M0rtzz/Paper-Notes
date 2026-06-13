@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reason2Drive: Towards Interpretable and Chain-Based Reasoning for Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][chain-based reasoning] 构建 Reason2Drive 基准数据集（600K+ 视频-文本对，覆盖感知-预测-推理链式任务），提出 ADRScore 评估链式推理正确性的新指标…
+  [ECCV 2024][自动驾驶][chain-based reasoning] 构建 Reason2Drive 基准数据集（600K+ 视频-文本对，覆盖感知-预测-推理链式任务），提出 ADRScore 评估链式推理正确性的新指标，并设计 Prior Tokenizer + Instructed Vision Decoder 框架增强 VLM 的目标级感知和推理能力，在自动驾驶推理任务上显著超越所有基线。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

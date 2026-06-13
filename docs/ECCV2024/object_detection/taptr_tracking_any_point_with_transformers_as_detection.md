@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TAPTR: Tracking Any Point with Transformers as Detection
 description: >-
-  [ECCV 2024][目标检测][点跟踪] TAPTR 将 Tracking Any Point (TAP) 任务重新建模为类 DETR 的检测问题，将每个跟踪点表示为包含位置和内容的 point query，通过多层 Transformer 解码器逐层优化…
+  [ECCV 2024][目标检测][点跟踪] TAPTR 将 Tracking Any Point (TAP) 任务重新建模为类 DETR 的检测问题，将每个跟踪点表示为包含位置和内容的 point query，通过多层 Transformer 解码器逐层优化，结合 cost volume 和滑动窗口特征更新策略，在 TAP-Vid 基准上达到 SOTA 且推理速度更快。
 tags:
   - "ECCV 2024"
   - "目标检测"

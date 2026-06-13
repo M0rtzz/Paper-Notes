@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FR-Spec: Accelerating Large-Vocabulary Language Models via Frequency-Ranked Speculative Sampling
 description: >-
-  [预训练] 提出FR-Spec框架，通过基于词频的词表空间压缩优化投机采样的draft候选选择，将LM Head计算开销降低75%，在保持输出分布不变的前提下实现EAGLE-2之上额外1.12×加速。
+  [预训练] 提出FR-Spec框架，通过基于词频的词表空间压缩优化投机采样的draft候选选择，将LM Head计算开销降低75%，在保持输出分布不变的前提下实现EAGLE-2之上额外1.12×加速。 - 领域现状： 投机采样（Speculative Sampling）通过"先草拟后验证"机制每次前向传播生成多个token…
 tags:
   - "预训练"
 ---

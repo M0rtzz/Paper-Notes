@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAGICIAN: Efficient Long-Term Planning with Imagined Gaussians for Active Mapping
 description: >-
-  [CVPR 2026][3D视觉][主动建图] 提出MAGICIAN框架，利用预训练占据度网络生成"想象高斯"（Imagined Gaussians）来高效估计表面覆盖增益，结合束搜索实现主动建图中的长期轨迹规划，在室内外场景均达到SOTA，覆盖率提升超10%。
+  [CVPR 2026][3D视觉][主动建图] 提出MAGICIAN框架，利用预训练占据度网络生成"想象高斯"（Imagined Gaussians）来高效估计表面覆盖增益，结合束搜索实现主动建图中的长期轨迹规划，在室内外场景均达到SOTA，覆盖率提升超10%。 1. 领域现状：主动建图（Active Mapping）要求智…
 tags:
   - "CVPR 2026"
   - "3D视觉"

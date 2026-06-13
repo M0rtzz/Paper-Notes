@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lying with Truths: Open-Channel Multi-Agent Collusion for Belief Manipulation via Generative Montage
 description: >-
-  [ACL2026][LLM安全][认知合谋] 这篇论文提出认知合谋攻击这一安全问题：多个代理只公开发布真实但经过叙事编排的证据碎片，也能诱导 LLM 受害代理形成错误因果信念，并在下游验证层中继续传播。
+  [ACL2026 Oral][LLM安全][认知合谋] 这篇论文提出认知合谋攻击这一安全问题：多个代理只公开发布真实但经过叙事编排的证据碎片，也能诱导 LLM 受害代理形成错误因果信念，并在下游验证层中继续传播。 领域现状：多智能体安全研究常关注隐蔽通信、后门、隐写或协同欺骗等“通道型”合谋。与此同时，LLM 正在成为社交平…
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "LLM安全"
   - "认知合谋"
   - "真实碎片"

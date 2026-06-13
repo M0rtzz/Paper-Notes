@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Opt3DGS: Optimizing 3D Gaussian Splatting with Adaptive Exploration and Curvature-Aware Exploitation
 description: >-
-  [AAAI 2026][3D视觉][3D高斯泼溅] 提出 Opt3DGS 框架，将 3DGS 训练分为探索和利用两阶段：探索阶段用自适应加权 SGLD 逃离局部最优，利用阶段用局部拟牛顿 Adam 优化器实现精确收敛，在不修改高斯表示的前提下达到 SOTA 渲染质量。
+  [AAAI 2026][3D视觉][3D高斯泼溅] 提出 Opt3DGS 框架，将 3DGS 训练分为探索和利用两阶段：探索阶段用自适应加权 SGLD 逃离局部最优，利用阶段用局部拟牛顿 Adam 优化器实现精确收敛，在不修改高斯表示的前提下达到 SOTA 渲染质量。 3D 高斯泼溅（3DGS）通过显式高斯基元建模场景…
 tags:
   - "AAAI 2026"
   - "3D视觉"

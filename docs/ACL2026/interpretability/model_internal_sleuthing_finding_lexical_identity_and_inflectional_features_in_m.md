@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Internal Sleuthing: Finding Lexical Identity and Inflectional Features in Modern Language Models
 description: >-
-  [ACL 2026][可解释性][语言探针] 本文系统地对 25 个 Transformer 语言模型（从 BERT Base 到 Qwen2.5-7B）进行探针分析，发现词汇同一性（lexeme）在早期层线性可解码但随深度衰减，而屈折特征（inflection）在所有层中保持稳定可读，且占据紧凑可控的子空间…
+  [ACL 2026][可解释性][语言探针] 本文系统地对 25 个 Transformer 语言模型（从 BERT Base 到 Qwen2.5-7B）进行探针分析，发现词汇同一性（lexeme）在早期层线性可解码但随深度衰减，而屈折特征（inflection）在所有层中保持稳定可读，且占据紧凑可控的子空间。
 tags:
   - "ACL 2026"
   - "可解释性"

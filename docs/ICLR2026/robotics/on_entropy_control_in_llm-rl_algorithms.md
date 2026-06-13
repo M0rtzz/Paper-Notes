@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Entropy Control in LLM-RL Algorithms
 description: >-
-  [ICLR 2026][机器人][熵控制] 从理论解释为什么传统熵正则化在LLM-RL中几乎无效（因极大动作空间+稀疏最优导致熵偏差压倒优化增益），提出AEnt方法用截断熵（在缩小的token空间上计算）+自适应系数来有效平衡偏差与收益，在数学推理上持续超越baseline。
+  [ICLR 2026][机器人][熵控制] 从理论解释为什么传统熵正则化在LLM-RL中几乎无效（因极大动作空间+稀疏最优导致熵偏差压倒优化增益），提出AEnt方法用截断熵（在缩小的token空间上计算）+自适应系数来有效平衡偏差与收益，在数学推理上持续超越baseline。 领域现状：策略梯度方法（PPO/GRPO/DAP…
 tags:
   - "ICLR 2026"
   - "机器人"

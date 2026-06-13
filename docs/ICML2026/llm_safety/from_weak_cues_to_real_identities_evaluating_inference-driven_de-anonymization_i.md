@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Weak Cues to Real Identities: Evaluating Inference-Driven De-Anonymization in LLM Agents
 description: >-
-  [ICML 2026][LLM安全][去匿名化] 论文指出 LLM agent 可以把零散的、单独不可识别的线索与公开证据交叉印证，从而把匿名化数据重新链接到具体真人身份，并通过经典案例复刻 + 受控基准 InferLink + 真实人机对话日志三类场景系统地量化了这种"推理驱动的去匿名化"风险。
+  [ICML 2026][LLM安全][去匿名化] 论文指出 LLM agent 可以把零散的、单独不可识别的线索与公开证据交叉印证，从而把匿名化数据重新链接到具体真人身份，并通过经典案例复刻 + 受控基准 InferLink + 真实人机对话日志三类场景系统地量化了这种"推理驱动的去匿名化"风险。 领域现状：业界与监管普遍把…
 tags:
   - "ICML 2026"
   - "LLM安全"

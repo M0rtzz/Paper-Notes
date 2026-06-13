@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition
 description: >-
-  [ICCV 2025][音频/语音][omni-cognition] 提出Lyra，一个以语音为中心的全模态MLLM框架，通过三大核心组件（DTW-based跨模态正则化器、多模态LoRA、Latent多模态提取器）和首个12K长语音SFT数据集，在仅用2.7M数据和少量训练的情况下…
+  [ICCV 2025][音频/语音][omni-cognition] 提出Lyra，一个以语音为中心的全模态MLLM框架，通过三大核心组件（DTW-based跨模态正则化器、多模态LoRA、Latent多模态提取器）和首个12K长语音SFT数据集，在仅用2.7M数据和少量训练的情况下，同时在视觉-语言、视觉-语音、语音-语言benchmark上达到SOTA，并能处理长达2小时的语音输入。
 tags:
   - "ICCV 2025"
   - "音频/语音"

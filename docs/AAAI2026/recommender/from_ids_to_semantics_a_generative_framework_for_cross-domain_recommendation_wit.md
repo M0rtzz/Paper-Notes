@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From IDs to Semantics: A Generative Framework for Cross-Domain Recommendation with Adaptive Semantic Tokenization
 description: >-
-  [AAAI 2026][推荐系统][跨域推荐] 提出 GenCDR 框架，通过领域自适应语义分词和跨域自回归推荐两大模块，首次将生成式语义 ID 范式引入 LLM 驱动的跨域推荐，有效解决传统方法中 item ID 不可迁移和领域个性化建模不足的问题。
+  [AAAI 2026][推荐系统][跨域推荐] 提出 GenCDR 框架，通过领域自适应语义分词和跨域自回归推荐两大模块，首次将生成式语义 ID 范式引入 LLM 驱动的跨域推荐，有效解决传统方法中 item ID 不可迁移和领域个性化建模不足的问题。 跨域推荐（CDR）旨在利用用户在多个异质领域的交互行为来提升推荐精度和泛…
 tags:
   - "AAAI 2026"
   - "推荐系统"

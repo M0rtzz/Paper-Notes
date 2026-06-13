@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Temporal Reasoning for Timeline Summarisation in Social Media
 description: >-
-  [ACL 2025][时序推理] 本文提出通过构建新的叙事时序推理数据集 NarrativeReason 来增强 LLM 的时序推理能力，并通过知识蒸馏框架将时序推理知识迁移到小模型中，同时训练其完成时间线摘要任务，在跨域心理健康摘要任务上取得最优效果并显著减少幻觉。
+  [ACL 2025][LLM 其他][时序推理] 本文提出通过构建新的叙事时序推理数据集 NarrativeReason 来增强 LLM 的时序推理能力，并通过知识蒸馏框架将时序推理知识迁移到小模型中，同时训练其完成时间线摘要任务，在跨域心理健康摘要任务上取得最优效果并显著减少幻觉。 1. 领域现状： 时间线摘要（Timel…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "时序推理"
   - "时间线摘要"
   - "知识蒸馏"

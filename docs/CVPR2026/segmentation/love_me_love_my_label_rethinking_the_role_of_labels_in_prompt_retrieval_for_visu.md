@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Love Me, Love My Label: Rethinking the Role of Labels in Prompt Retrieval for Visual In-Context Learning
 description: >-
-  [CVPR 2026][语义分割][视觉上下文学习] 揭示了视觉上下文学习（VICL）中 prompt 检索忽略标签信息导致标签不一致的问题，提出 LaPR 框架通过图像-标签联合表示和混合专家机制实现标签感知的 prompt 检索，在前景分割、目标检测和图像着色任务上一致超越 SOTA。
+  [CVPR 2026][语义分割][视觉上下文学习] 揭示了视觉上下文学习（VICL）中 prompt 检索忽略标签信息导致标签不一致的问题，提出 LaPR 框架通过图像-标签联合表示和混合专家机制实现标签感知的 prompt 检索，在前景分割、目标检测和图像着色任务上一致超越 SOTA。 领域现状：视觉上下文学习（VICL…
 tags:
   - "CVPR 2026"
   - "语义分割"

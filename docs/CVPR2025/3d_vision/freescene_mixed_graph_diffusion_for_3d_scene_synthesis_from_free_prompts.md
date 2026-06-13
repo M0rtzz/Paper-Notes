@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeScene: Mixed Graph Diffusion for 3D Scene Synthesis from Free Prompts
 description: >-
-  [CVPR 2025][3D视觉][室内场景合成] FreeScene 提出了一个用户友好的室内场景合成框架，通过 VLM 驱动的 Graph Designer 将自由形式的文本/图像输入转化为场景图…
+  [CVPR 2025][3D视觉][室内场景合成] FreeScene 提出了一个用户友好的室内场景合成框架，通过 VLM 驱动的 Graph Designer 将自由形式的文本/图像输入转化为场景图，再用 Mixed Graph Diffusion Transformer (MG-DiT) 在混合连续-离散空间上进行图感知去噪，统一支持 text-to-scene、graph-to-scene 等多种任务，在生成质量和可控性上均超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RUBIK: A Structured Benchmark for Image Matching across Geometric Challenges
 description: >-
-  [CVPR 2025][人体理解][图像匹配] RUBIK提出了一个基于nuScenes数据集的结构化图像匹配基准，通过重叠度、尺度比和视角差三个互补的几何难度准则将16.5K图像对组织成33个难度等级…
+  [CVPR 2025][人体理解][图像匹配] RUBIK提出了一个基于nuScenes数据集的结构化图像匹配基准，通过重叠度、尺度比和视角差三个互补的几何难度准则将16.5K图像对组织成33个难度等级，系统评估了14种方法后发现最好的detector-free方法（DUSt3R）也仅在54.8%的图像对上成功，暴露了当前方法在极端几何条件下的严重不足。
 tags:
   - "CVPR 2025"
   - "人体理解"

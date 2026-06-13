@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SciCustom: A Framework for Custom Evaluation of Scientific Capabilities in Large Language Models
 description: >-
-  [ACL2026][LLM评测][科学LLM评估] SciCustom 将科学评测需求拆成可复用的本体知识单元，并通过 tagger、multi-model voting、binary-search relevance filtering 和 proxy subset selection 自动构建领域定制 b…
+  [ACL2026][LLM评测][科学LLM评估] SciCustom 将科学评测需求拆成可复用的本体知识单元，并通过 tagger、multi-model voting、binary-search relevance filtering 和 proxy subset selection 自动构建领域定制 benchmark，在 10/11 个化学与医疗子任务上取得最高 Spearman 排名一致性。
 tags:
   - "ACL2026"
   - "LLM评测"

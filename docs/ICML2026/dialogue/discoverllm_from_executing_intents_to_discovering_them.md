@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiscoverLLM: From Executing Intents to Discovering Them
 description: >-
-  [ICML 2026][对话系统][意图发现] DiscoverLLM 把 "用户没想清楚自己要什么" 形式化为意图层级树的渐进发现过程，用可奖励的层级化用户模拟器训练模型在不清晰时主动发散探索、在清晰时收敛执行…
+  [ICML 2026][对话系统][意图发现] DiscoverLLM 把 "用户没想清楚自己要什么" 形式化为意图层级树的渐进发现过程，用可奖励的层级化用户模拟器训练模型在不清晰时主动发散探索、在清晰时收敛执行，在创意写作 / 技术写作 / SVG 三任务上比 CollabLLM 等 baseline 满意度 +10%、对话长度 -40%。
 tags:
   - "ICML 2026"
   - "对话系统"

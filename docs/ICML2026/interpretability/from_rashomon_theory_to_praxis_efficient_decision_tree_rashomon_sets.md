@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Rashomon Theory to PRAXIS: Efficient Decision Tree Rashomon Sets
 description: >-
-  [ICML 2026][可解释性][Rashomon 集] PRAXIS 用一个"快但近似"的代理算法（改良版 LicketySPLIT）来估计每个子问题的最优目标值，从而对稀疏决策树的 Rashomon 集做"按需展开"式剪枝搜索，把原本与树空间指数相关的运行时和内存压成"每棵输出树只花多项式时间"…
+  [ICML 2026][可解释性][Rashomon 集] PRAXIS 用一个"快但近似"的代理算法（改良版 LicketySPLIT）来估计每个子问题的最优目标值，从而对稀疏决策树的 Rashomon 集做"按需展开"式剪枝搜索，把原本与树空间指数相关的运行时和内存压成"每棵输出树只花多项式时间"，在 11M 样本/472 特征级别仍能跑完且 recall ≥ 0.98。
 tags:
   - "ICML 2026"
   - "可解释性"

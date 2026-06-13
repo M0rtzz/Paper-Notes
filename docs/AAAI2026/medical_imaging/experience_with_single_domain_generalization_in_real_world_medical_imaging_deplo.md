@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Experience with Single Domain Generalization in Real World Medical Imaging Deployments
 description: >-
-  [AAAI2026][医学图像][单域泛化] 提出DL+EKE框架，将领域不变的专家知识与深度学习集成，解决医学影像中稀有类（rare class）的单域泛化（SDG）问题，在糖尿病视网膜病变分级、rs-fMRI癫痫灶定位和应激心电图CAD检测三个真实部署场景中显著优于SOTA SDG方法。
+  [AAAI2026][医学图像][单域泛化] 提出DL+EKE框架，将领域不变的专家知识与深度学习集成，解决医学影像中稀有类（rare class）的单域泛化（SDG）问题，在糖尿病视网膜病变分级、rs-fMRI癫痫灶定位和应激心电图CAD检测三个真实部署场景中显著优于SOTA SDG方法。 域泛化在医学影像中的重要性 域泛…
 tags:
   - "AAAI2026"
   - "医学图像"

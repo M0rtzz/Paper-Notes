@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BAT: Learning Event-based Optical Flow with Bidirectional Adaptive Temporal Correlation
 description: >-
-  [AAAI2026][视频理解][event camera] 提出双向自适应时序相关性（BAT）框架，将事件相机的时序密集运动线索转化为空间密集线索，实现高精度事件光流估计，在 DSEC-Flow 基准上排名第一。
+  [AAAI2026][视频理解][event camera] 提出双向自适应时序相关性（BAT）框架，将事件相机的时序密集运动线索转化为空间密集线索，实现高精度事件光流估计，在 DSEC-Flow 基准上排名第一。 事件相机以高动态范围和高时间分辨率持续捕捉异步亮度变化，非常适合快速运动和复杂光照下的光流估计…
 tags:
   - "AAAI2026"
   - "视频理解"

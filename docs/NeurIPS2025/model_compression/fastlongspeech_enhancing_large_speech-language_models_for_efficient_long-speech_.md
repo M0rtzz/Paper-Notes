@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastLongSpeech: Enhancing Large Speech-Language Models for Efficient Long-Speech Processing
 description: >-
-  [NeurIPS 2025][模型压缩][speech compression] 提出 FastLongSpeech，通过迭代融合策略压缩冗余语音表征和动态压缩训练转移短语音能力到长语音场景，使 LSLM 无需长语音训练数据即可高效处理长语音，在长语音 QA 上实现最优性能且推理效率提升 70%。
+  [NeurIPS 2025][模型压缩][speech compression] 提出 FastLongSpeech，通过迭代融合策略压缩冗余语音表征和动态压缩训练转移短语音能力到长语音场景，使 LSLM 无需长语音训练数据即可高效处理长语音，在长语音 QA 上实现最优性能且推理效率提升 70%。 大语音语言模型（LSLM）…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

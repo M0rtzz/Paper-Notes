@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToMA: Token Merge with Attention for Diffusion Models
 description: >-
-  [ICML2025][图像生成][token merging] 提出 ToMA，将 token merge 重新建模为子模优化问题并以 attention-like 线性变换实现 merge/unmerge，使其与 FlashAttention 等 GPU 优化方案兼容…
+  [ICML2025][图像生成][token merging] 提出 ToMA，将 token merge 重新建模为子模优化问题并以 attention-like 线性变换实现 merge/unmerge，使其与 FlashAttention 等 GPU 优化方案兼容，在 SDXL/Flux 上分别实现 24%/23% 的实际端到端加速，同时图像质量损失极小（DINO Δ<0.07）。
 tags:
   - "ICML2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Audio-Guided Video Representation with Gated Attention for Video-Text Retrieval
 description: >-
-  [CVPR 2025][视频理解][视频-文本检索] 提出 AVIGATE 框架，通过门控注意力机制选择性地融合音频与视觉信息（过滤无用音频噪声），并设计自适应间距对比损失处理视频-文本之间模糊的正负关系，在多个视频-文本检索基准上取得 SOTA。
+  [CVPR 2025][视频理解][视频-文本检索] 提出 AVIGATE 框架，通过门控注意力机制选择性地融合音频与视觉信息（过滤无用音频噪声），并设计自适应间距对比损失处理视频-文本之间模糊的正负关系，在多个视频-文本检索基准上取得 SOTA。 领域现状：视频-文本检索主要依赖视觉和文本特征进行跨模态对齐…
 tags:
   - "CVPR 2025"
   - "视频理解"

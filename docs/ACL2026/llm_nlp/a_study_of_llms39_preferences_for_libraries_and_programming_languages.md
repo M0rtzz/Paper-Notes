@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Study of LLMs' Preferences for Libraries and Programming Languages
 description: >-
-  [ACL 2026 (Findings)][LLM/NLP][代码生成偏好] 首次系统研究8个LLM在代码生成中对库和编程语言的偏好行为，发现LLM严重偏好NumPy等流行库（45%的使用不必要）和Python语言（58%的高性能任务仍选Python），且自然语言推荐与实际代码选择不一致。
+  [ACL 2026 (Findings)][LLM 其他][代码生成偏好] 首次系统研究8个LLM在代码生成中对库和编程语言的偏好行为，发现LLM严重偏好NumPy等流行库（45%的使用不必要）和Python语言（58%的高性能任务仍选Python），且自然语言推荐与实际代码选择不一致。 领域现状：LLM在代码生成方面取得了…
 tags:
   - "ACL 2026 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "代码生成偏好"
   - "库选择偏差"
   - "编程语言偏好"

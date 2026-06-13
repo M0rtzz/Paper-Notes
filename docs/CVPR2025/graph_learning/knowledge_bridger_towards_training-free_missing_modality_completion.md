@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge Bridger: Towards Training-Free Missing Modality Completion
 description: >-
-  [CVPR 2025][图学习][缺失模态补全] 本文提出 Knowledge Bridger，一个免训练的缺失模态补全框架，通过利用大型多模态模型（LMM）自动挖掘多模态知识、构建知识图谱来指导缺失模态的生成与排序，在通用场景和医学OOD场景下均超越了现有方法。
+  [CVPR 2025][图学习][缺失模态补全] 本文提出 Knowledge Bridger，一个免训练的缺失模态补全框架，通过利用大型多模态模型（LMM）自动挖掘多模态知识、构建知识图谱来指导缺失模态的生成与排序，在通用场景和医学OOD场景下均超越了现有方法。 1. 领域现状：缺失模态补全（MMC）是多模态学习中的关键问…
 tags:
   - "CVPR 2025"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Local Learning Match Self-Supervised Backpropagation?
 description: >-
-  [ICML 2026][自监督学习][局部学习规则] 本文从理论上证明了在深度线性网络中局部自监督学习（local-SSL）可以精确实现全局反向传播自监督学习（BP-SSL）的梯度更新，并据此提出 CLAPP++ 算法（引入 2D 空间依赖和直接反馈）…
+  [ICML 2026][自监督学习][局部学习规则] 本文从理论上证明了在深度线性网络中局部自监督学习（local-SSL）可以精确实现全局反向传播自监督学习（BP-SSL）的梯度更新，并据此提出 CLAPP++ 算法（引入 2D 空间依赖和直接反馈），在 CIFAR-10/STL-10/Tiny ImageNet 上达到了与全局 BP-SSL 相当的性能，刷新了 local-SSL 的 SOTA。
 tags:
   - "ICML 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LADDER: Language Driven Slice Discovery and Error Rectification in Vision Classifiers
 description: >-
-  [ACL 2025][计算生物][错误切片发现] LADDER 把预训练视觉分类器的内部激活"翻译"成自然语言、检索出与错误相关的句子，再让 LLM 据此推理出"模型在缺少哪个属性时会犯错"的可检验假设，从而无需任何属性标注就能发现并缓解任意现成分类器的多重偏见…
+  [ACL 2025][计算生物][错误切片发现] LADDER 把预训练视觉分类器的内部激活"翻译"成自然语言、检索出与错误相关的句子，再让 LLM 据此推理出"模型在缺少哪个属性时会犯错"的可检验假设，从而无需任何属性标注就能发现并缓解任意现成分类器的多重偏见；在 6 个自然/医学数据集、200+ 分类器上一致超过 Domino/Facts/DFR 等基线。
 tags:
   - "ACL 2025"
   - "计算生物"
@@ -146,3 +146,19 @@ GPT-4o 虽然贵，但 caption 质量最好、对应最高 WGA；不过即便换
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 数据集、200+ 分类器、4 LLM、多架构/预训练，自然与医学影像双覆盖，消融完整。
 - 写作质量: ⭐⭐⭐⭐ 方法与动机清晰，公式规范；部分细节（阈值/超参敏感性）下放附录略影响自洽阅读。
 - 价值: ⭐⭐⭐⭐⭐ 给任意现成模型提供低成本、可持续的偏见审计 + 去偏工具，医学影像场景实用价值高。
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Retrieve to Explain: Evidence-driven Predictions for Explainable Drug Target Identification](retrieve_to_explain_drug_target_identification.md)
+- [\[NeurIPS 2025\] scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](../../NeurIPS2025/computational_biology/scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
+- [\[ICML 2026\] Influence-Guided Symbolic Regression: Scientific Discovery via LLM-Driven Equation Search with Granular Feedback](../../ICML2026/computational_biology/influence-guided_symbolic_regression_scientific_discovery_via_llm-driven_equatio.md)
+- [\[ACL 2025\] Concept Bottleneck Language Models For Protein Design](concept_bottleneck_language_models_for_protein_design.md)
+- [\[CVPR 2025\] DiffVsgg: Diffusion-Driven Online Video Scene Graph Generation](../../CVPR2025/computational_biology/diffvsgg_diffusion-driven_online_video_scene_graph_generation.md)
+
+</div>
+
+<!-- RELATED:END -->

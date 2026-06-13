@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Does It Take to Build a Performant Selective Classifier?
 description: >-
-  [NeurIPS 2025][选择性分类] 首次对选择性分类的性能差距（selective classification gap）进行有限样本分解，将差距归因于五个源头——贝叶斯噪声、逼近误差、排序误差、统计噪声和实现偏差，并证明单调校准方法对缩小差距效果有限。
+  [NeurIPS 2025][选择性分类] 首次对选择性分类的性能差距（selective classification gap）进行有限样本分解，将差距归因于五个源头——贝叶斯噪声、逼近误差、排序误差、统计噪声和实现偏差，并证明单调校准方法对缩小差距效果有限。 在医疗、金融、自动驾驶等高风险场景中，模型需要能够在不确定时"…
 tags:
   - "NeurIPS 2025"
   - "选择性分类"

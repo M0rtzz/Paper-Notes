@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Intent-Driven Semantic ID Generation for Grounded Conversational News Recommendation
 description: >-
-  [ACL 2026][推荐系统][Semantic ID] 本文提出 NewsRec-Chat，把对话式新闻推荐从"先检索再生成"反转为"先生成 SID 再模糊匹配"，靠两阶段 SID 对齐 + GPT-4 CoT 蒸馏让 7B 模型直接生成层级 Semantic ID 前缀并与当日新闻池模糊匹配…
+  [ACL 2026 Oral][推荐系统][Semantic ID] 本文提出 NewsRec-Chat，把对话式新闻推荐从"先检索再生成"反转为"先生成 SID 再模糊匹配"，靠两阶段 SID 对齐 + GPT-4 CoT 蒸馏让 7B 模型直接生成层级 Semantic ID 前缀并与当日新闻池模糊匹配，腾讯新闻平台上 152K 开放生成空间里取得 12.4% L1（4× 随机）、0% 幻觉，并通过 Profile-Aware Dual-Signal Reasoning 让 0 历史用户达到 18.0% L1（其他基线 0%）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "推荐系统"
   - "Semantic ID"
   - "对话推荐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Splat Feature Solver
 description: >-
-  [ICLR 2026][3D视觉][Feature Lifting] 将3D splat表示的特征提升(feature lifting)问题统一建模为稀疏线性逆问题 $AX=B$，提出闭式求解器并证明其在凸损失下的 $(1+\beta)$-近似误差上界，配合 Tikhonov 引导和后聚合过滤两种正则化策略…
+  [ICLR 2026][3D视觉][Feature Lifting] 将3D splat表示的特征提升(feature lifting)问题统一建模为稀疏线性逆问题 $AX=B$，提出闭式求解器并证明其在凸损失下的 $(1+\beta)$-近似误差上界，配合 Tikhonov 引导和后聚合过滤两种正则化策略，在开放词汇3D分割任务上达到SOTA。
 tags:
   - "ICLR 2026"
   - "3D视觉"

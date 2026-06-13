@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DP-KFC: Data-Free Preconditioning for Privacy-Preserving Deep Learning
 description: >-
-  [ICML 2026][医学图像][差分隐私] 本文提出 DP-KFC：基于"Fisher 矩阵的标度由架构决定、相关结构可用模态级频谱统计近似"的观察，用结构化合成噪声（图像用 $1/f^\alpha$ pink noise，文本用 Zipf 采样）探测网络重建 KFAC 预条件子…
+  [ICML 2026][医学图像][差分隐私] 本文提出 DP-KFC：基于"Fisher 矩阵的标度由架构决定、相关结构可用模态级频谱统计近似"的观察，用结构化合成噪声（图像用 $1/f^\alpha$ pink noise，文本用 Zipf 采样）探测网络重建 KFAC 预条件子，既不消耗隐私预算也不引入分布偏移，在强隐私（$\varepsilon\le 3$）下持续超过 DP-SGD 与公共数据预条件方法。
 tags:
   - "ICML 2026"
   - "医学图像"

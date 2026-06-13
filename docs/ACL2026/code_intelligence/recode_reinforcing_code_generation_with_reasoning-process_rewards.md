@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReCode: Reinforcing Code Generation with Reasoning-Process Rewards
 description: >-
-  [ACL 2026][代码智能][代码生成] ReCode 通过 CRPL 训练能评价代码推理过程质量的奖励模型，并用 CG-GRPO 只在代码执行正确时激活过程奖励，从而在避免 reward hacking 的同时提升代码生成模型的 Pass@1。
+  [ACL 2026][代码智能][代码生成] ReCode 通过 CRPL 训练能评价代码推理过程质量的奖励模型，并用 CG-GRPO 只在代码执行正确时激活过程奖励，从而在避免 reward hacking 的同时提升代码生成模型的 Pass@1。 领域现状：代码生成天然有可执行验证信号，近年来很多 RL 方法直接用单元测…
 tags:
   - "ACL 2026"
   - "代码智能"

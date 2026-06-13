@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Flat Language Labels to Typological Priors: Structured Language Conditioning for Multilingual Speech-to-Speech Translation
 description: >-
-  [ACL2026][音频/语音][语音到语音翻译] 本文提出 S2ST-Omni 2，把多语言语音翻译中的扁平 language label 改成结构化类型学先验，并在表示、声学调制和 LLM 解码三层注入这些先验，从而在 CVSS-C 上提升 BLEU、ASR-BLEU、COMET 和 BLASER 2.0…
+  [ACL2026 Findings][音频/语音][语音到语音翻译] 本文提出 S2ST-Omni 2，把多语言语音翻译中的扁平 language label 改成结构化类型学先验，并在表示、声学调制和 LLM 解码三层注入这些先验，从而在 CVSS-C 上提升 BLEU、ASR-BLEU、COMET 和 BLASER 2.0，尤其改善低资源和类型差异较大的语言。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "音频/语音"
   - "语音到语音翻译"
   - "类型学先验"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exemplar-Free Continual Representation Learning via Learnable Drift Compensation
 description: >-
-  [ECCV 2024][自监督学习][持续学习] 提出可学习漂移补偿(LDC)，通过训练一个前向投影器将旧特征空间映射到新特征空间，在无需存储旧样本的情况下有效补偿类原型的语义漂移，首次实现了无样本半监督持续学习。
+  [ECCV 2024][自监督学习][持续学习] 提出可学习漂移补偿(LDC)，通过训练一个前向投影器将旧特征空间映射到新特征空间，在无需存储旧样本的情况下有效补偿类原型的语义漂移，首次实现了无样本半监督持续学习。 持续学习（Continual Learning）要求模型在非平稳数据流上依次学习多个任务，而不遗忘旧知识…
 tags:
   - "ECCV 2024"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedRot-LoRA: Mitigating Rotational Misalignment in Federated LoRA
 description: >-
-  [ICML 2026][模型压缩][联邦学习] 本文指出联邦 LoRA 中朴素 factor-wise 平均的真正"敌人"是旋转不变性导致的潜在子空间错位，提出在客户端用正交 Procrustes 求解出旋转矩阵 $R_i^t$ 对齐 $A,B$ 因子后再聚合…
+  [ICML 2026][模型压缩][联邦学习] 本文指出联邦 LoRA 中朴素 factor-wise 平均的真正"敌人"是旋转不变性导致的潜在子空间错位，提出在客户端用正交 Procrustes 求解出旋转矩阵 $R_i^t$ 对齐 $A,B$ 因子后再聚合，理论与实验都证明能显著降低聚合误差且不增加通信开销。
 tags:
   - "ICML 2026"
   - "模型压缩"

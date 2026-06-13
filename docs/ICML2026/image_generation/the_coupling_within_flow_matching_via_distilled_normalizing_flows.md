@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Coupling Within: Flow Matching via Distilled Normalizing Flows
 description: >-
-  [ICML 2026][图像生成][Flow Matching] 本文提出 NFM（Normalized Flow Matching），用预训练 TarFlow 这种自回归归一化流（NF）产生的"准确定性 data→noise 双射"作为 Flow Matching 的噪声-数据配对…
+  [ICML 2026][图像生成][Flow Matching] 本文提出 NFM（Normalized Flow Matching），用预训练 TarFlow 这种自回归归一化流（NF）产生的"准确定性 data→noise 双射"作为 Flow Matching 的噪声-数据配对，从而把 FM 收敛速度、少步数 FID 同时拉到新的水平，并反过来比当老师的 NF 推理快若干个数量级。
 tags:
   - "ICML 2026"
   - "图像生成"

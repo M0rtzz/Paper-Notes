@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PENCIL: Long Thoughts with Short Memory
 description: >-
-  [ICML2025][LLM推理][Chain-of-Thought] 提出 **PENCIL**（PENCIL ENables Context-efficient Inference and Learning），在自回归生成过程中引入受函数调用栈启发的**归约规则（reduction rule）**…
+  [ICML2025][LLM推理][Chain-of-Thought] 提出 **PENCIL**（PENCIL ENables Context-efficient Inference and Learning），在自回归生成过程中引入受函数调用栈启发的**归约规则（reduction rule）**，递归地清除不再需要的中间推理步骤，使LLM能以多项式级上下文长度解决本需指数级上下文的计算难题。
 tags:
   - "ICML2025"
   - "LLM推理"

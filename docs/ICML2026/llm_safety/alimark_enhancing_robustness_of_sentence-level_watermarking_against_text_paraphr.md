@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AliMark: Enhancing Robustness of Sentence-Level Watermarking Against Text Paraphrasing
 description: >-
-  [ICML 2026][LLM安全][句子级水印] AliMark 将句子级文本水印从“前缀条件下的逐句检测”改写为“全局秘密比特序列的编码与对齐”，通过重构候选文本和自适应块编辑距离显著提升了对 DIPPER、GPT-3.5 等强改写攻击的检测鲁棒性。
+  [ICML 2026][LLM安全][句子级水印] AliMark 将句子级文本水印从“前缀条件下的逐句检测”改写为“全局秘密比特序列的编码与对齐”，通过重构候选文本和自适应块编辑距离显著提升了对 DIPPER、GPT-3.5 等强改写攻击的检测鲁棒性。 领域现状：LLM 文本水印通常分为 token 级和句子级两类…
 tags:
   - "ICML 2026"
   - "LLM安全"

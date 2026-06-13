@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic-TMoE: A Drift-Aware Dynamic Mixture of Experts Framework for Non-Stationary Time Series
 description: >-
-  [ICML 2026][时间序列][时间序列预测] 通过 **MMD 检测分布漂移**并动态扩展异构专家池，结合**时间记忆路由器**保证选择一致性，Dynamic-TMoE 在九个时间序列基准上达到新的 SOTA——相比所有基线平均降低 MSE 10.4%、MAE 7.8%。
+  [ICML 2026][时间序列][时间序列预测] 通过 MMD 检测分布漂移：并动态扩展异构专家池，结合时间记忆路由器：保证选择一致性，Dynamic-TMoE 在九个时间序列基准上达到新的 SOTA——相比所有基线平均降低 MSE 10.4%、MAE 7.8%。 领域现状：时间序列预测是从能源管理到医疗监测等关键决策系统…
 tags:
   - "ICML 2026"
   - "时间序列"

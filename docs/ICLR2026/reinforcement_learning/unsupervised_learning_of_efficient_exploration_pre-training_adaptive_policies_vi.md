@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals
 description: >-
-  [强化学习] 提出 ULEE 方法，通过对抗式目标生成和基于适应后难度的课程学习，在无监督环境中元学习出具备高效探索和快速适应能力的预训练策略。
+  [强化学习] 提出 ULEE 方法，通过对抗式目标生成和基于适应后难度的课程学习，在无监督环境中元学习出具备高效探索和快速适应能力的预训练策略。 核心问题 大规模预训练在视觉和语言领域取得了巨大成功，但强化学习仍然以从头训练为主。如何在没有外部奖励的情况下预训练出通用的 RL 策略（foundation policy）…
 tags:
   - "强化学习"
 ---

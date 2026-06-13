@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDUMATH: Generating Standards-aligned Educational Math Word Problems
 description: >-
-  [ACL 2026][文本生成][数学应用题生成] 作者把"按 K-12 数学课程标准生成应用题（MWP）"任务系统化，搜集了 11,000+ 由真实美国教师标注的 MWP 训练数据 STEM…
+  [ACL 2026][文本生成][数学应用题生成] 作者把"按 K-12 数学课程标准生成应用题（MWP）"任务系统化，搜集了 11,000+ 由真实美国教师标注的 MWP 训练数据 STEM，用 SFT + KTO + ModernBERT 过滤训出 EDUMATH-12B/30B 两个开源 SOTA 生成器，并在 3-5 年级真实学生身上做了第一个 RCT，发现学生在 LLM 题与人写题上正确率相当但**几乎一致偏好定制 LLM 题**。
 tags:
   - "ACL 2026"
   - "文本生成"

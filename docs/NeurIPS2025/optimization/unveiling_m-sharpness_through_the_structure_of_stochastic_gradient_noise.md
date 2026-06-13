@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling m-Sharpness Through the Structure of Stochastic Gradient Noise
 description: >-
-  [NeurIPS 2025][优化/理论][SAM] 本文通过扩展的随机微分方程(SDE)框架揭示了SAM中m-sharpness现象的理论机制——更小的微批次尺寸m带来更强的随机梯度噪声(SGN)协方差隐式正则化，并据此提出了可并行化的Reweighted SAM (RW-SAM)方法。
+  [NeurIPS 2025][优化/理论][SAM] 本文通过扩展的随机微分方程(SDE)框架揭示了SAM中m-sharpness现象的理论机制——更小的微批次尺寸m带来更强的随机梯度噪声(SGN)协方差隐式正则化，并据此提出了可并行化的Reweighted SAM (RW-SAM)方法。 Sharpness-Aware M…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

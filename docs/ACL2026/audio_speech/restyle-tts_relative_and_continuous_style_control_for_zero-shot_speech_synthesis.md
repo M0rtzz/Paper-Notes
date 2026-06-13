@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReStyle-TTS: Relative and Continuous Style Control for Zero-Shot Speech Synthesis
 description: >-
-  [ACL2026][音频/语音][零样本语音合成] ReStyle-TTS 通过解耦文本/参考音频 guidance、可连续缩放的风格 LoRA、正交 LoRA 融合和音色一致性优化，让零样本 TTS 不再被参考音频风格锁死，可以相对地调高/调低音高、能量和情绪，同时保持文本可懂度与说话人音色。
+  [ACL2026][音频/语音][零样本语音合成] ReStyle-TTS 通过解耦文本/参考音频 guidance、可连续缩放的风格 LoRA、正交 LoRA 融合和音色一致性优化，让零样本 TTS 不再被参考音频风格锁死，可以相对地调高/调低音高、能量和情绪，同时保持文本可懂度与说话人音色。 领域现状：零样本 TTS 已…
 tags:
   - "ACL2026"
   - "音频/语音"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2601.03632](https://arxiv.org/abs/2601.03632)  
 **代码**: https://cucl-2.github.io/Restyle-TTS  
-**领域**: audio_speech  
+**领域**: 音频语音  
 **关键词**: 零样本语音合成、风格控制、LoRA 融合、相对控制、音色一致性
 
 ## 一句话总结

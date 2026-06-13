@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineSteer: A Unified Framework for Fine-Grained Inference-Time Steering in Large Language Models
 description: >-
-  [ACL 2026][可解释性][推理时转向] FineSteer 将推理时转向分解为两个互补阶段：子空间引导的条件转向（SCS）决定"何时转向"——用 IR 查询子空间的能量比做门控；混合转向专家（MoSE）决定"如何转向"——通过注意力门控网络动态聚合原型专家+残差精炼生成查询特异性转向向量…
+  [ACL 2026][可解释性][推理时转向] FineSteer 将推理时转向分解为两个互补阶段：子空间引导的条件转向（SCS）决定"何时转向"——用 IR 查询子空间的能量比做门控；混合转向专家（MoSE）决定"如何转向"——通过注意力门控网络动态聚合原型专家+残差精炼生成查询特异性转向向量，在安全和真实性 benchmark 上超越 SOTA。
 tags:
   - "ACL 2026"
   - "可解释性"

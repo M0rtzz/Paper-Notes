@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Right Looks, Wrong Reasons: Compositional Fidelity in Text-to-Image Generation
 description: >-
-  [AAAI 2026][图像生成][组合性生成] 本文系统性地调研了文本到图像(T2I)模型在组合性忠实度方面的根本缺陷，聚焦否定(negation)、计数(counting)和空间关系(spatial relations)三大基本原语…
+  [AAAI 2026][图像生成][组合性生成] 本文系统性地调研了文本到图像(T2I)模型在组合性忠实度方面的根本缺陷，聚焦否定(negation)、计数(counting)和空间关系(spatial relations)三大基本原语，揭示了模型在单一原语上表现尚可但联合组合时性能急剧下降的"亚乘性"(submultiplicative)干扰现象，并将其归因于训练数据稀缺、连续注意力架构不适合离散逻辑、以及评估指标偏向视觉合理性而非约束满足。
 tags:
   - "AAAI 2026"
   - "图像生成"

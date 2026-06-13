@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HACHIMI: Scalable and Controllable Student Persona Generation via Orchestrated Agents
 description: >-
-  [ACL 2026][多智能体][学生画像] HACHIMI 把"学生画像生成"形式化为 TAD-PG（理论对齐 + 分布可控）任务，用"提议–验证–修订"多智能体框架配合神经符号验证器和分层采样，产出 100 万条 1–12 年级合成学生画像…
+  [ACL 2026][多智能体][学生画像] HACHIMI 把"学生画像生成"形式化为 TAD-PG（理论对齐 + 分布可控）任务，用"提议–验证–修订"多智能体框架配合神经符号验证器和分层采样，产出 100 万条 1–12 年级合成学生画像；在 CEPS / PISA 2022 群体级评测中显示出明显的「保真梯度」——数学与好奇心相关构念高度对齐，而幸福感和家庭动态构念则只能弱对齐。
 tags:
   - "ACL 2026"
   - "多智能体"

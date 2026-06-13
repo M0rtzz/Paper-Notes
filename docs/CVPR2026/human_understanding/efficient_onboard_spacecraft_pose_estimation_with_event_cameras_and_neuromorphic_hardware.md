@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Onboard Spacecraft Pose Estimation with Event Cameras and Neuromorphic Hardware
 description: >-
-  [CVPR 2026][人体理解][event camera] 首次在 BrainChip Akida 神经形态硬件上实现端到端航天器 6-DoF 位姿估计，探索事件相机表示和量化感知训练在低功耗星载部署中的精度-效率权衡。
+  [CVPR 2026][人体理解][event camera] 首次在 BrainChip Akida 神经形态硬件上实现端到端航天器 6-DoF 位姿估计，探索事件相机表示和量化感知训练在低功耗星载部署中的精度-效率权衡。 未来在轨服务和主动碎片清除任务需要自主交会和近距操作，其中相对位姿估计是关键能力…
 tags:
   - "CVPR 2026"
   - "人体理解"

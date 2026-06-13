@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAB-DQA: Addressing Query Aspect Importance in Document Question Answering with Multi-Armed Bandits
 description: >-
-  [ACL 2026][信息检索/RAG][文档问答] 提出 MAB-DQA 框架，将复杂查询分解为多个方面子查询，用多臂老虎机机制（Thompson Sampling）动态评估各方面的重要性并重新分配检索预算，显著提升多模态文档问答的检索精度和回答准确率。
+  [ACL 2026][信息检索/RAG][文档问答] 提出 MAB-DQA 框架，将复杂查询分解为多个方面子查询，用多臂老虎机机制（Thompson Sampling）动态评估各方面的重要性并重新分配检索预算，显著提升多模态文档问答的检索精度和回答准确率。 - 领域现状：文档问答（DQA）要求 AI 根据用户查询从文档中生成…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations
 description: >-
-  [ICML 2026][多任务学习] 作者把多任务学习里"负迁移"的根因从"梯度冲突"重新归到"共享表征里语义和噪声纠缠"，提出 CORE-MTL：双流编码器把表征拆成语义 $\hat{Z}_s$ 和残差 $\hat{Z}_r$，用 CKA 独立性约束 + 反事实风格替换 + 反演渲染重构来落地"因果正交"…
+  [ICML 2026][优化 / 多任务学习 / 因果表示学习][多任务学习] 作者把多任务学习里"负迁移"的根因从"梯度冲突"重新归到"共享表征里语义和噪声纠缠"，提出 CORE-MTL：双流编码器把表征拆成语义 $\hat{Z}_s$ 和残差 $\hat{Z}_r$，用 CKA 独立性约束 + 反事实风格替换 + 反演渲染重构来落地"因果正交"，理论上给出比梯度平衡更紧的 OOD 上界，实验上在 NYUv2/Cityscapes 的 ID 与 GTA5→Cityscapes、Cityscapes-C 的 OOD 设定上同时压过 PCGrad/GradNorm/STCH/FairGrad 等十种 baseline。
 tags:
   - "ICML 2026"
+  - "优化 / 多任务学习 / 因果表示学习"
   - "多任务学习"
   - "梯度冲突"
   - "因果解耦"

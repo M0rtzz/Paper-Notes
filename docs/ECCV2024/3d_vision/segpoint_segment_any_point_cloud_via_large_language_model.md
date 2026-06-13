@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SegPoint: Segment Any Point Cloud via Large Language Model
 description: >-
-  [ECCV 2024][3D视觉][图像分割] 提出 SegPoint，首个利用多模态 LLM 推理能力在统一框架中完成 3D 指令分割、引用分割、语义分割和开放词汇分割四种任务的模型，并构建 Instruct3D 基准测试（2,565 对），mIoU 达 27.5%。
+  [ECCV 2024][3D视觉][图像分割] 提出 SegPoint，首个利用多模态 LLM 推理能力在统一框架中完成 3D 指令分割、引用分割、语义分割和开放词汇分割四种任务的模型，并构建 Instruct3D 基准测试（2,565 对），mIoU 达 27.5%。 领域现状：3D 点云分割已有大量进展（Mask3D、S…
 tags:
   - "ECCV 2024"
   - "3D视觉"

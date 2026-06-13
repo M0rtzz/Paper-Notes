@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IdEst: Assessing Self-Supervised Learning Representations via Intrinsic Dimension
 description: >-
-  [ICML2026][可解释性][自监督学习] 本文提出 IdEst：用最小生成树维度估计器 $\mathrm{dim}_{\mathrm{MST}}$ 去测自监督表示的内在维度（ID），把这个无标签的几何量当作下游线性 probe 精度的代理…
+  [ICML2026][可解释性][自监督学习] 本文提出 IdEst：用最小生成树维度估计器 $\mathrm{dim}_{\mathrm{MST}}$ 去测自监督表示的内在维度（ID），把这个无标签的几何量当作下游线性 probe 精度的代理，在 33 个 SSL 模型上 Spearman $\rho \approx -0.8$，并可用于无标签超参选择。
 tags:
   - "ICML2026"
   - "可解释性"

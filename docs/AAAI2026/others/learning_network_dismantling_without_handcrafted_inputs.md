@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Network Dismantling Without Handcrafted Inputs
 description: >-
-  [AAAI 2026][网络拆解] 提出MIND（Message Iteration Network Dismantler），通过全新的All-to-One注意力机制和消息迭代轮廓（Message Iteration Profiles）消除GNN对手工特征的依赖…
+  [AAAI 2026][网络拆解] 提出MIND（Message Iteration Network Dismantler），通过全新的All-to-One注意力机制和消息迭代轮廓（Message Iteration Profiles）消除GNN对手工特征的依赖，仅利用原始邻接信息就能在百万节点级真实网络上实现SOTA的网络拆解性能，同时具有最低的计算复杂度 $O(|V|+|E|)$。
 tags:
   - "AAAI 2026"
   - "网络拆解"

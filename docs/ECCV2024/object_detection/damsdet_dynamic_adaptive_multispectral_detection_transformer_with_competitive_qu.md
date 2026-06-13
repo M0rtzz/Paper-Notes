@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DAMSDet: Dynamic Adaptive Multispectral Detection Transformer
 description: >-
-  [ECCV 2024][目标检测][红外-可见光检测] DAMSDet 提出一种基于 DETR 架构的动态自适应红外-可见光目标检测方法，通过模态竞争 Query 选择（为每个目标动态选择主导模态特征作为初始 query）和多光谱可变形交叉注意力（在多语义层级上自适应采样和聚合双模态特征）…
+  [ECCV 2024][目标检测][红外-可见光检测] DAMSDet 提出一种基于 DETR 架构的动态自适应红外-可见光目标检测方法，通过模态竞争 Query 选择（为每个目标动态选择主导模态特征作为初始 query）和多光谱可变形交叉注意力（在多语义层级上自适应采样和聚合双模态特征），同时解决互补信息融合和模态未对齐两大挑战，在 4 个公开数据集上显著超越 SOTA。
 tags:
   - "ECCV 2024"
   - "目标检测"

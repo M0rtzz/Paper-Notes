@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShowUI: One Vision-Language-Action Model for GUI Visual Agent
 description: >-
-  [CVPR 2025][机器人][GUI视觉代理] ShowUI 基于 Qwen2-VL-2B，通过 UI 连通图引导的视觉 token 选择减少 33% 冗余 token 并加速 1.4 倍，配合交错式视觉-语言-动作流和精选 256K 训练数据…
+  [CVPR 2025][机器人][GUI视觉代理] ShowUI 基于 Qwen2-VL-2B，通过 UI 连通图引导的视觉 token 选择减少 33% 冗余 token 并加速 1.4 倍，配合交错式视觉-语言-动作流和精选 256K 训练数据，仅 2B 参数即在零样本 ScreenSpot 上达到 75.1% 的 SOTA 精度。
 tags:
   - "CVPR 2025"
   - "机器人"

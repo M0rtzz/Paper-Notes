@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cultivating Forensic Reasoning for Generalizable Multimodal Manipulation Detection
 description: >-
-  [ACL2026][机器人][多模态伪造检测] 这篇论文提出 REFORM，把多模态伪造检测从“直接拟合标签”改成“学习可验证的取证推理过程”，并通过 ROM 推理标注数据集、双解码器和 GRPO 训练，在 ROM、DGM4 与 MMFakeBench 上取得更强的跨域泛化和可解释检测结果。
+  [ACL2026][机器人][多模态伪造检测] 这篇论文提出 REFORM，把多模态伪造检测从“直接拟合标签”改成“学习可验证的取证推理过程”，并通过 ROM 推理标注数据集、双解码器和 GRPO 训练，在 ROM、DGM4 与 MMFakeBench 上取得更强的跨域泛化和可解释检测结果。 领域现状：多模态媒体伪造已经从局…
 tags:
   - "ACL2026"
   - "机器人"

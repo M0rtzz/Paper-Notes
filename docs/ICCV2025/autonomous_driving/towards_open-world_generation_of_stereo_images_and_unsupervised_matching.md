@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Open-World Generation of Stereo Images and Unsupervised Matching
 description: >-
-  [ICCV 2025][自动驾驶][立体图像生成] 提出 GenStereo，一种基于扩散模型的立体图像生成框架，通过视差感知坐标嵌入、跨视图注意力和自适应融合机制，同时实现高视觉质量和高几何精度的立体图像生成，并推动无监督立体匹配达到新 SOTA。
+  [ICCV 2025][自动驾驶][立体图像生成] 提出 GenStereo，一种基于扩散模型的立体图像生成框架，通过视差感知坐标嵌入、跨视图注意力和自适应融合机制，同时实现高视觉质量和高几何精度的立体图像生成，并推动无监督立体匹配达到新 SOTA。 立体图像是 XR 设备、自动驾驶和机器人等领域的基础数据形式…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

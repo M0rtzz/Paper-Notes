@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models
 description: >-
-  [CVPR 2025][目标检测][零样本异常检测] 首个专用于零样本异常检测和推理的 MLLM（Anomaly-OV），通过 Look-Twice Feature Matching 机制生成异常显著性图，配合视觉 Token 选择器聚焦可疑区域…
+  [CVPR 2025][目标检测][零样本异常检测] 首个专用于零样本异常检测和推理的 MLLM（Anomaly-OV），通过 Look-Twice Feature Matching 机制生成异常显著性图，配合视觉 Token 选择器聚焦可疑区域，在 9 个基准上实现 88.6% 平均 AUROC 的零样本异常检测 SOTA。
 tags:
   - "CVPR 2025"
   - "目标检测"

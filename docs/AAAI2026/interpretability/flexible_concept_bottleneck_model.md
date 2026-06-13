@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flexible Concept Bottleneck Model
 description: >-
-  [AAAI 2026][可解释性][概念瓶颈模型] 本文提出Flexible Concept Bottleneck Model (FCBM)，通过引入超网络动态生成概念权重和可学习温度的sparsemax模块，实现了概念池的动态适配（包括完全替换）…
+  [AAAI 2026][可解释性][概念瓶颈模型] 本文提出Flexible Concept Bottleneck Model (FCBM)，通过引入超网络动态生成概念权重和可学习温度的sparsemax模块，实现了概念池的动态适配（包括完全替换），并在5个公开数据集上以相似的有效概念数达到了与SOTA基线可比的精度，仅需单个epoch微调即可适应全新概念集。
 tags:
   - "AAAI 2026"
   - "可解释性"

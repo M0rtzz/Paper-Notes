@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Delayed Momentum Aggregation: Communication-efficient Byzantine-robust Federated Learning with Partial Participation
 description: >-
-  [ICML 2026][优化/理论][联邦学习] 针对部分参与下"采样客户端中拜占庭客户端临时占多数"会击垮已有鲁棒聚合的痛点，本文提出延迟动量聚合原则——服务器把当轮新动量与未被采样客户端的最近一次缓存动量一起送入鲁棒聚合器，将全局拜占庭比例 $\delta<1/2$ 永远延续到每一轮聚合…
+  [ICML 2026][优化/理论][联邦学习] 针对部分参与下"采样客户端中拜占庭客户端临时占多数"会击垮已有鲁棒聚合的痛点，本文提出延迟动量聚合原则——服务器把当轮新动量与未被采样客户端的最近一次缓存动量一起送入鲁棒聚合器，将全局拜占庭比例 $\delta<1/2$ 永远延续到每一轮聚合，并据此设计 DeMoA 优化器，在 $p=0.1$、$\delta=0.2$ 的极端设置下仍能稳定训练 ResNet-18/CIFAR-10。
 tags:
   - "ICML 2026"
   - "优化/理论"

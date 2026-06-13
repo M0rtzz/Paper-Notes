@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NaviMaster: Learning a Unified Policy for GUI and Embodied Navigation Tasks
 description: >-
-  [ACL2026][强化学习][统一导航策略] NaviMaster 把 GUI 操作和具身导航都改写成“视觉目标定位 + 动作执行”的统一 MDP，并用混合轨迹上的 GRPO 与距离感知密集奖励训练一个 Qwen2.5-VL-7B 策略…
+  [ACL2026][强化学习][统一导航策略] NaviMaster 把 GUI 操作和具身导航都改写成“视觉目标定位 + 动作执行”的统一 MDP，并用混合轨迹上的 GRPO 与距离感知密集奖励训练一个 Qwen2.5-VL-7B 策略，在 OOD GUI、空间可供性预测和 ObjectNav 上都超过单域训练与主流基线。
 tags:
   - "ACL2026"
   - "强化学习"

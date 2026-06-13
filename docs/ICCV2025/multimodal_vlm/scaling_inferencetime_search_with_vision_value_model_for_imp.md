@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension
 description: >-
-  [ICCV 2025][多模态VLM][inference-time scaling] 提出Vision Value Model（VisVM），用TD learning训练一个能预测VLM生成句子长期价值的价值网络，指导推理时逐句搜索生成更少幻觉、更丰富细节的图像描述…
+  [ICCV 2025][多模态VLM][inference-time scaling] 提出Vision Value Model（VisVM），用TD learning训练一个能预测VLM生成句子长期价值的价值网络，指导推理时逐句搜索生成更少幻觉、更丰富细节的图像描述，并进一步将VisVM生成的高质量caption用于自训练，在9个benchmark上平均提升LLaVA-Next 10.8%。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

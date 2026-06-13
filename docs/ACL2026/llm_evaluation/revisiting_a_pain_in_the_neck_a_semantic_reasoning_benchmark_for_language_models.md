@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Revisiting a Pain in the Neck: A Semantic Reasoning Benchmark for Language Models
 description: >-
-  [ACL2026][LLM评测][SEMANTICQA] 这篇论文提出 SEMANTICQA，把习语、词汇搭配、名词复合词和动词多词表达统一到分类、抽取、解释及顺序组合任务中，发现强 LLM 在开放解释上看似不错，但在结构化抽取、细粒度语义分类和级联工作流中仍明显不稳。
+  [ACL2026 Oral][LLM评测][SEMANTICQA] 这篇论文提出 SEMANTICQA，把习语、词汇搭配、名词复合词和动词多词表达统一到分类、抽取、解释及顺序组合任务中，发现强 LLM 在开放解释上看似不错，但在结构化抽取、细粒度语义分类和级联工作流中仍明显不稳。 领域现状：大语言模型常在数学、代码、逻辑推理…
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "LLM评测"
   - "SEMANTICQA"
   - "semantic phrase"

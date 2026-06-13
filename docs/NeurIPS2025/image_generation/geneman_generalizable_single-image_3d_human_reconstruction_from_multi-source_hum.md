@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeneMAN: Generalizable Single-Image 3D Human Reconstruction from Multi-Source Human Data
 description: >-
-  [NeurIPS 2025][图像生成][单图3D人体重建] GeneMAN 提出一种**无需人体参数模型(如 SMPL)**的通用单图 3D 人体重建框架，通过在大规模多源人体数据上训练人体专属的 2D/3D 扩散先验模型，结合几何初始化-雕刻流水线与多空间纹理精炼…
+  [NeurIPS 2025][图像生成][单图3D人体重建] GeneMAN 提出一种**无需人体参数模型(如 SMPL)**的通用单图 3D 人体重建框架，通过在大规模多源人体数据上训练人体专属的 2D/3D 扩散先验模型，结合几何初始化-雕刻流水线与多空间纹理精炼，实现了对野外图片中不同体型比例、复杂姿态与个人物品的高保真 3D 人体重建。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

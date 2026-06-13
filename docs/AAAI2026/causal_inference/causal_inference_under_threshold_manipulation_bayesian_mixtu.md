@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Inference Under Threshold Manipulation: Bayesian Mixture Modeling and Heterogeneous Treatment Effects
 description: >-
-  [AAAI 2026][因果推理][阈值操纵] 提出 BMTM/HBMTM 贝叶斯混合模型框架，在消费者策略性操纵消费额以达到奖励阈值的场景下，通过将观测分布拆解为 bunching 与 non-bunching 两个子分布，准确估计阈值因果效应及跨子群的异质性处理效应。
+  [AAAI 2026][因果推理][阈值操纵] 提出 BMTM/HBMTM 贝叶斯混合模型框架，在消费者策略性操纵消费额以达到奖励阈值的场景下，通过将观测分布拆解为 bunching 与 non-bunching 两个子分布，准确估计阈值因果效应及跨子群的异质性处理效应。 领域现状：信用卡激励计划、忠诚度计划等营销策略普遍通…
 tags:
   - "AAAI 2026"
   - "因果推理"

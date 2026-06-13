@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning
 description: >-
-  [NeurIPS 2025][模型压缩][过程奖励模型] 提出 SCAN 框架，通过分析 Monte Carlo 注释中的噪声分布，设计自去噪采样策略和鲁棒学习损失，仅用 1.5B 模型生成的 101K 样本训练的 PRM 即超越人工标注数据集 PRM800K 的效果。
+  [NeurIPS 2025][模型压缩][过程奖励模型] 提出 SCAN 框架，通过分析 Monte Carlo 注释中的噪声分布，设计自去噪采样策略和鲁棒学习损失，仅用 1.5B 模型生成的 101K 样本训练的 PRM 即超越人工标注数据集 PRM800K 的效果。 过程奖励模型（PRM）通过步骤级评估来引导 LLM 的…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

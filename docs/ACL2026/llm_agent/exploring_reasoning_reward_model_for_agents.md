@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Exploring Reasoning Reward Model for Agents
 description: >-
-  [ACL 2026][LLM Agent][agentic RL] 作者发现现在 agentic RL 普遍用 sparse outcome reward（只看最终对错），导致中间多步推理质量信号被丢掉…
+  [ACL 2026 Findings][LLM Agent][agentic RL] 作者发现现在 agentic RL 普遍用 sparse outcome reward（只看最终对错），导致中间多步推理质量信号被丢掉，于是提出 **Agent-RRM**——一个产生 `<think>/<critique>/<score>` 三段结构化反馈的 reasoning reward model，并系统对比三种整合方式（C：纯 critique refinement、R：scalar reward 增强、U：critique + score 联合 GRPO），最终 **Reagent-U** 在 12 个 benchmark 上把 Qwe…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "agentic RL"
   - "reasoning reward model"

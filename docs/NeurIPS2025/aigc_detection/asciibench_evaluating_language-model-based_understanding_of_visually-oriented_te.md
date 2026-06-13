@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASCIIBench: Evaluating Language-Model-Based Understanding of Visually-Oriented Text
 description: >-
-  [NeurIPS 2025][AIGC检测][ASCII艺术] 提出 ASCIIBench，首个公开可用的 ASCII 艺术理解与生成基准（5,315 张图像，752 类），系统评估发现视觉模态显著优于文本模态，多模态融合反而不帮忙…
+  [NeurIPS 2025][AIGC检测][ASCII艺术] 提出 ASCIIBench，首个公开可用的 ASCII 艺术理解与生成基准（5,315 张图像，752 类），系统评估发现视觉模态显著优于文本模态，多模态融合反而不帮忙，且 CLIP 对 ASCII 结构的表征能力存在根本性瓶颈——只有内部一致性高的类别才能被有效区分。
 tags:
   - "NeurIPS 2025"
   - "AIGC检测"

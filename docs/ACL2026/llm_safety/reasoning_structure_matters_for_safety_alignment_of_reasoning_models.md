@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Structure Matters for Safety Alignment of Reasoning Models
 description: >-
-  [ACL 2026][LLM安全][大型推理模型] 论文指出大型推理模型的安全问题根源在“先理解问题、再全力求解”的推理结构，并提出 AltTrain 用 1K 条 SFT 数据把推理结构改成“问题理解 → 有害性评估 → 条件推理”，显著降低有害响应同时基本保留推理能力。
+  [ACL 2026][LLM安全][大型推理模型] 论文指出大型推理模型的安全问题根源在“先理解问题、再全力求解”的推理结构，并提出 AltTrain 用 1K 条 SFT 数据把推理结构改成“问题理解 → 有害性评估 → 条件推理”，显著降低有害响应同时基本保留推理能力。 领域现状：R1、o 系列等大型推理模型通过长链式推…
 tags:
   - "ACL 2026"
   - "LLM安全"

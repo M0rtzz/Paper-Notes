@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Better Tokens for Better 3D: Advancing Vision-Language Modeling in 3D Medical Imaging
 description: >-
-  [NeurIPS 2025][多模态VLM][3D medical VLM] 提出 BTB3D，一种基于因果卷积编解码器 + 3D Haar 小波压缩 + 三阶段渐进训练的 3D CT tokenizer，在放射报告生成和文本条件 CT 合成两大下游任务上大幅刷新 SOTA…
+  [NeurIPS 2025][多模态VLM][3D medical VLM] 提出 BTB3D，一种基于因果卷积编解码器 + 3D Haar 小波压缩 + 三阶段渐进训练的 3D CT tokenizer，在放射报告生成和文本条件 CT 合成两大下游任务上大幅刷新 SOTA，证明"更好的 token 比更大的语言模型更重要"。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

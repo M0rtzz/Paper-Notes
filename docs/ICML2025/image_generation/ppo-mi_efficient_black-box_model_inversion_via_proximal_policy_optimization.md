@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PPO-MI: Efficient Black-Box Model Inversion via Proximal Policy Optimization
 description: >-
-  [ICML 2025][图像生成][模型反转攻击] 将黑盒模型反转攻击形式化为 MDP，用 PPO 强化学习在生成模型的隐空间中导航搜索，仅依赖目标模型的预测概率即可高效重建训练样本，以更少查询和更少类别数据实现了 SOTA 攻击成功率。
+  [ICML 2025][图像生成][模型反转攻击] 将黑盒模型反转攻击形式化为 MDP，用 PPO 强化学习在生成模型的隐空间中导航搜索，仅依赖目标模型的预测概率即可高效重建训练样本，以更少查询和更少类别数据实现了 SOTA 攻击成功率。 领域现状：模型反转攻击旨在从已训练模型的预测中重建私有训练数据。白盒方法（GMI、KE…
 tags:
   - "ICML 2025"
   - "图像生成"

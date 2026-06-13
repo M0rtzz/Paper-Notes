@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CyberGym-E2E: Scalable Real-World Benchmark for AI Agents' End-to-End Cybersecurity Capabilities
 description: >-
-  [ICML2026][漏洞发现] 本文构建了 CyberGym-E2E——首个覆盖"漏洞发现 → PoC 生成 → 补丁生成 → 功能回归测试"全生命周期的大规模真实世界 AI Agent 安全基准（920 个漏洞 × 139 个开源项目），并通过 agent 辅助 + 专家终审的四步流水线把人工成本压到最低…
+  [ICML2026][漏洞发现] 本文构建了 CyberGym-E2E——首个覆盖"漏洞发现 → PoC 生成 → 补丁生成 → 功能回归测试"全生命周期的大规模真实世界 AI Agent 安全基准（920 个漏洞 × 139 个开源项目），并通过 agent 辅助 + 专家终审的四步流水线把人工成本压到最低；评测显示前沿模型在 patch-only 任务上能到 80%+，但在端到端任务上 S3 成功率最高仅 65.9%（GPT-5.4），漏洞发现而非补丁生成是真正的瓶颈。
 tags:
   - "ICML2026"
   - "漏洞发现"

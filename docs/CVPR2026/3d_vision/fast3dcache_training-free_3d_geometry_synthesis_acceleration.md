@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast3Dcache: Training-free 3D Geometry Synthesis Acceleration
 description: >-
-  [CVPR 2026][3D视觉][3D几何生成加速] 本文提出 Fast3Dcache，一个面向 3D 扩散模型的无需训练的几何感知缓存框架，通过预测性缓存调度约束（PCSC）根据体素稳定化模式动态分配缓存预算，以及时空稳定性准则（SSC）基于速度和加速度选择稳定 token 进行复用…
+  [CVPR 2026][3D视觉][3D几何生成加速] 本文提出 Fast3Dcache，一个面向 3D 扩散模型的无需训练的几何感知缓存框架，通过预测性缓存调度约束（PCSC）根据体素稳定化模式动态分配缓存预算，以及时空稳定性准则（SSC）基于速度和加速度选择稳定 token 进行复用，实现最高 27.12% 的吞吐提升和 54.83% 的 FLOPs 降低，几何质量仅损失约 2%。
 tags:
   - "CVPR 2026"
   - "3D视觉"

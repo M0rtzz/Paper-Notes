@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VITAL: More Understandable Feature Visualization through Distribution Alignment and Relevant Information Flow
 description: >-
-  [ICCV 2025][可解释性][特征可视化] 提出VITAL方法，通过将特征可视化重新定义为真实图像特征分布对齐问题（而非传统的激活最大化），并结合相关性评分过滤无关特征，生成对人类更易理解的神经元可视化结果。
+  [ICCV 2025][可解释性][特征可视化] 提出VITAL方法，通过将特征可视化重新定义为真实图像特征分布对齐问题（而非传统的激活最大化），并结合相关性评分过滤无关特征，生成对人类更易理解的神经元可视化结果。 特征可视化（Feature Visualization, FV）是理解神经网络内部学到什么信息的重要工具…
 tags:
   - "ICCV 2025"
   - "可解释性"

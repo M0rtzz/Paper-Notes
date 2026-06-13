@@ -2,10 +2,10 @@
 title: >-
   [论文解读] RiOT: Efficient Prompt Refinement with Residual Optimization Tree
 description: >-
-  [ACL 2025][LLM/NLP][提示学习] 提出 Residual Optimization Tree（RiOT），一种自动 prompt 优化框架，通过树结构管理优化过程、基于困惑度的节点选择增强多样性、以及文本残差连接缓解语义漂移问题。
+  [ACL 2025][LLM 其他][提示学习] 提出 Residual Optimization Tree（RiOT），一种自动 prompt 优化框架，通过树结构管理优化过程、基于困惑度的节点选择增强多样性、以及文本残差连接缓解语义漂移问题。 问题背景 LLM 的性能高度依赖 prompt 设计，手动设计 prompt…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示学习"
   - "residual connection"
   - "perplexity"

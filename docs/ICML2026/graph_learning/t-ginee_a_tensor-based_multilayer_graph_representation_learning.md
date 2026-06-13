@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T-GINEE: A Tensor-Based Multilayer Graph Representation Learning
 description: >-
-  [ICML 2026][图学习][多层图] T-GINEE 结合 **CP 张量分解**与**广义估计方程（GEE）**显式建模多层网络中的**跨层依赖关系**——具有理论保证和优异的可扩展性，在百万级节点图（DBLP、Stack Overflow）上突破其他张量方法 OOM 的限制。
+  [ICML 2026][图学习][多层图] T-GINEE 结合 CP 张量分解：与广义估计方程（GEE）：显式建模多层网络中的跨层依赖关系：——具有理论保证和优异的可扩展性，在百万级节点图（DBLP、Stack Overflow）上突破其他张量方法 OOM 的限制。 领域现状：现实世界中大量存在多层网络（社交网络中朋友 /…
 tags:
   - "ICML 2026"
   - "图学习"

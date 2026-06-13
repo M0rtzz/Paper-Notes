@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Utility of 3D Hand Poses for Action Recognition
 description: >-
-  [ECCV2024][视频理解][3D hand pose] 提出 HandFormer，一种轻量级多模态 Transformer，将密集采样的 3D 手部姿态（捕捉细粒度动作）与稀疏采样的 RGB 帧（提供场景语义）结合…
+  [ECCV2024][视频理解][3D hand pose] 提出 HandFormer，一种轻量级多模态 Transformer，将密集采样的 3D 手部姿态（捕捉细粒度动作）与稀疏采样的 RGB 帧（提供场景语义）结合，通过 micro-action 时序分解和 trajectory 编码高效建模手-物交互，在 Assembly101 和 H2O 上达到 SOTA，且纯 pose 模型以 5× 更少 FLOPs 超越已有骨架方法。
 tags:
   - "ECCV2024"
   - "视频理解"

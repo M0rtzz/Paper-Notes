@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to See and Act: Task-Aware Virtual View Exploration for Robotic Manipulation
 description: >-
-  [CVPR 2026][机器人][视角探索] 提出 TVVE 框架，通过强化学习驱动的多视角探索策略（MVEP）选择最优虚拟相机视角并在线重渲染观测，同时设计任务感知 MoE 视觉编码器（TaskMoE）解决多任务特征干扰问题，在 RLBench 18 个任务上平均成功率达 86.6%。
+  [CVPR 2026][机器人][视角探索] 提出 TVVE 框架，通过强化学习驱动的多视角探索策略（MVEP）选择最优虚拟相机视角并在线重渲染观测，同时设计任务感知 MoE 视觉编码器（TaskMoE）解决多任务特征干扰问题，在 RLBench 18 个任务上平均成功率达 86.6%。 领域现状：VLA（Vision-La…
 tags:
   - "CVPR 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Verifier-Constrained Flow Expansion for Discovery Beyond the Data
 description: >-
-  [ICLR 2026][计算生物][Flow Expansion] 提出Flow Expander (FE)，通过验证器约束的熵最大化在概率空间中扩展预训练流模型的覆盖范围，使其生成超越训练数据分布但保持有效性的设计样本，在分子构象设计中增加多样性同时保持化学有效性。
+  [ICLR 2026][计算生物][Flow Expansion] 提出Flow Expander (FE)，通过验证器约束的熵最大化在概率空间中扩展预训练流模型的覆盖范围，使其生成超越训练数据分布但保持有效性的设计样本，在分子构象设计中增加多样性同时保持化学有效性。 领域现状：流模型和扩散模型通过散度最小化训练…
 tags:
   - "ICLR 2026"
   - "计算生物"

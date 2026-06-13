@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoundPose: Unseen Object Pose Estimation with Foundation Features
 description: >-
-  [ECCV 2024][人体理解][6D位姿估计] FoundPose 利用冻结的 DINOv2 基础模型提取 patch 描述子，通过 bag-of-words 模板检索和 kNN 匹配建立 2D-3D 对应关系，无需任何任务特定训练即可实现未见物体的 6D 位姿估计…
+  [ECCV 2024][人体理解][6D位姿估计] FoundPose 利用冻结的 DINOv2 基础模型提取 patch 描述子，通过 bag-of-words 模板检索和 kNN 匹配建立 2D-3D 对应关系，无需任何任务特定训练即可实现未见物体的 6D 位姿估计，在 BOP 基准上显著超越现有 RGB 方法。
 tags:
   - "ECCV 2024"
   - "人体理解"

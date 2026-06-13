@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm
 description: >-
-  [ICLR 2026][模型压缩][GPTQ] 首次证明 GPTQ（从后向前执行时）在数学上等价于经典格理论中的 Babai 最近平面算法，由此获得几何解释和层级误差上界，并基于此设计了无裁剪的改进量化方法。
+  [ICLR 2026][模型压缩][GPTQ] 首次证明 GPTQ（从后向前执行时）在数学上等价于经典格理论中的 Babai 最近平面算法，由此获得几何解释和层级误差上界，并基于此设计了无裁剪的改进量化方法。 GPTQ 是 LLM 后训练量化的标准方法之一，能够将16位权重一次性量化至4位并保持接近基线的精度。然而…
 tags:
   - "ICLR 2026"
   - "模型压缩"

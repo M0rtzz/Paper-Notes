@@ -2,9 +2,9 @@
 title: >-
   [论文解读] InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective
 description: >-
-  [ICML2025][语义分割][SAM微调] 提出 InfoSAM，从信息论角度为 SAM 的参数高效微调（PEFT）设计了基于 Rényi 互信息的关系压缩与蒸馏框架，通过压缩伪不变信息、保留域不变关系来提升微调效果。
+  [ICML2025 Spotlight][语义分割][SAM微调] 提出 InfoSAM，从信息论角度为 SAM 的参数高效微调（PEFT）设计了基于 Rényi 互信息的关系压缩与蒸馏框架，通过压缩伪不变信息、保留域不变关系来提升微调效果。 - 问题： SAM 在通用分割上表现优异，但在医学影像、遥感、农业等专业领域表现不…
 tags:
-  - "ICML2025"
+  - "ICML2025 Spotlight"
   - "语义分割"
   - "SAM微调"
   - "信息瓶颈"

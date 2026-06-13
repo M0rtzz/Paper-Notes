@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Actor-Free Continuous Control via Structurally Maximizable Q-Functions
 description: >-
-  [NeurIPS 2025][强化学习][无actor Q-learning] 提出 Q3C（Q-learning for Continuous Control with Control-points），通过学习一组控制点来逼近 Q 函数并保证最大值恰好在控制点上取到…
+  [NeurIPS 2025][强化学习][无actor Q-learning] 提出 Q3C（Q-learning for Continuous Control with Control-points），通过学习一组控制点来逼近 Q 函数并保证最大值恰好在控制点上取到，配合动作条件化 Q 值生成、控制点多样性损失和尺度归一化等关键改进，在标准基准上匹配 TD3，在受限动作空间中显著超越所有 actor-critic 方法。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

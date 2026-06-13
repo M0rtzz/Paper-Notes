@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Mitigating Hallucinations in Large Vision-Language Models via Causal Route Gating
 description: >-
-  [ICML 2026][幻觉检测][LVLM 幻觉] CRG 把每个注意力头的输出沿视觉/文本两条路线做精确线性分解，用一前向一反向梯度估计两条路线对当前 token 的因果"do-effect"，再仅压制那些视觉与文本符号冲突且 VRI 偏低（即先验主导）的头的文本路线…
+  [ICML 2026 Spotlight][幻觉检测][LVLM 幻觉] CRG 把每个注意力头的输出沿视觉/文本两条路线做精确线性分解，用一前向一反向梯度估计两条路线对当前 token 的因果"do-effect"，再仅压制那些视觉与文本符号冲突且 VRI 偏低（即先验主导）的头的文本路线，从而在无需训练的前提下系统性削弱 LVLM 的语言先验幻觉。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "幻觉检测"
   - "LVLM 幻觉"
   - "因果干预"

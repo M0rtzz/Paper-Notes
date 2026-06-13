@@ -2,7 +2,7 @@
 title: >-
   [论文解读] It's a (Blind) Match! Towards Vision-Language Correspondence without Parallel Data
 description: >-
-  [CVPR 2025][多模态VLM][无监督对齐] 本文首次系统研究了在**完全无配对数据**的情况下，仅利用视觉和语言嵌入空间各自内部的成对距离进行"盲匹配"的可行性，提出了一种分解式Hahn-Grant QAP求解器（内存从 $O(N^4)$ 降到 $O(N^3)$）…
+  [CVPR 2025][多模态VLM][无监督对齐] 本文首次系统研究了在**完全无配对数据**的情况下，仅利用视觉和语言嵌入空间各自内部的成对距离进行"盲匹配"的可行性，提出了一种分解式Hahn-Grant QAP求解器（内存从 $O(N^4)$ 降到 $O(N^3)$），并在33个视觉模型×27个语言模型的大规模实验中证明了该匹配的可行性，甚至实现了无监督图像分类。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

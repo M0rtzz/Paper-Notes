@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Plan and Budget: Effective and Efficient Test-Time Scaling on Reasoning LLMs
 description: >-
-  [ICLR 2026][LLM推理][测试时缩放] 提出 Plan-and-Budget 框架，通过将复杂查询分解为子问题并基于估计复杂度自适应分配 token 预算，实现推理 LLM 的高效测试时缩放——最高提升 70% 准确率、减少 39% token、E3 指标提升 193.8%。
+  [ICLR 2026][LLM推理][测试时缩放] 提出 Plan-and-Budget 框架，通过将复杂查询分解为子问题并基于估计复杂度自适应分配 token 预算，实现推理 LLM 的高效测试时缩放——最高提升 70% 准确率、减少 39% token、E3 指标提升 193.8%。 推理型大语言模型（如 DeepSee…
 tags:
   - "ICLR 2026"
   - "LLM推理"

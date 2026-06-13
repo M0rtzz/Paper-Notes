@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EDU-CIRCUIT-HW: Evaluating Multimodal Large Language Models on Real-World University-Level STEM Student Handwritten Solutions
 description: >-
-  [ACL 2026][多模态VLM][STEM 手写理解] 作者发布 1,334 条真实大学电路课手写作业的 EDU-CIRCUIT-HW 数据集，并提出"upstream 识别 + downstream 评分"双层评测协议…
+  [ACL 2026 Findings][多模态VLM][STEM 手写理解] 作者发布 1,334 条真实大学电路课手写作业的 EDU-CIRCUIT-HW 数据集，并提出"upstream 识别 + downstream 评分"双层评测协议，发现即便最强 MLLM（GPT-5.1 / Gemini-3-Preview）也有 37–85% 样本含识别错误，但仅 7–20% 会传播到评分；通过 LLM-judge 错误模式 + 仅 3.3% 人工兜底的 regrading 模块，可把 point-agreement 从 70 %提升到 76 %。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "STEM 手写理解"
   - "MLLM 评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Depth-Supervised Fusion Network for Seamless-Free Image Stitching
 description: >-
-  [NeurIPS 2025][图像拼接] DSFN 提出深度一致性约束的无缝图像拼接方法：通过深度感知的两阶段变换估计解决大视差对齐，软缝合区域扩散实现自然融合，结合重参数化策略提升效率，在 UDIS-D 和 IVSD 数据集上全面超越 SOTA。
+  [NeurIPS 2025][图像拼接] DSFN 提出深度一致性约束的无缝图像拼接方法：通过深度感知的两阶段变换估计解决大视差对齐，软缝合区域扩散实现自然融合，结合重参数化策略提升效率，在 UDIS-D 和 IVSD 数据集上全面超越 SOTA。 领域现状：图像拼接将多视角图像合成宽视场全景图，广泛应用于全景摄影、遥感、医…
 tags:
   - "NeurIPS 2025"
   - "图像拼接"

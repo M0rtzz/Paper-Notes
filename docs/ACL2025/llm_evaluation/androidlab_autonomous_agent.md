@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AndroidLab: Training and Systematic Benchmarking of Android Autonomous Agents
 description: >-
-  [LLM评测] 提出AndroidLab——一个系统性的Android智能体评测与训练框架，包含统一的操作环境、138个任务的可复现基准测试和94.3K步骤的指令数据集，通过微调将开源LLM成功率从4.59%提升至21.50%。
+  [LLM评测] 提出AndroidLab——一个系统性的Android智能体评测与训练框架，包含统一的操作环境、138个任务的可复现基准测试和94.3K步骤的指令数据集，通过微调将开源LLM成功率从4.59%提升至21.50%。 - 领域现状： 使用LLM/LMM作为移动端自主智能体的研究日益增多，但现有训练和评估工作缺乏系…
 tags:
   - "LLM评测"
 ---

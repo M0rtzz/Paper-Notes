@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping
 description: >-
-  [ICCV 2025][图像生成][拖拽编辑] 提出Inpaint4Drag，将拖拽式图像编辑分解为像素空间双向warp和图像修复两个阶段，受弹性物体变形启发设计双向warping算法实现实时预览（0.01s）和高效生成（0.3s），比现有方法快600倍，且可作为任意修复模型的通用适配器。
+  [ICCV 2025][图像生成][拖拽编辑] 提出Inpaint4Drag，将拖拽式图像编辑分解为像素空间双向warp和图像修复两个阶段，受弹性物体变形启发设计双向warping算法实现实时预览（0.01s）和高效生成（0.3s），比现有方法快600倍，且可作为任意修复模型的通用适配器。 - 拖拽编辑的兴起：DragGAN…
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unifying Appearance Codes and Bilateral Grids for Driving Scene Gaussian Splatting
 description: >-
-  [NeurIPS 2025][自动驾驶][Gaussian Splatting] 提出多尺度双边网格金字塔统一全局外观编码和像素级双边网格——3 级层级（粗→中→细）分别捕捉全局/区域/像素级光度变化，通过亮度引导的切片-融合管线和自适应正则化解决驾驶场景 3DGS 的光度不一致问题…
+  [NeurIPS 2025][自动驾驶][Gaussian Splatting] 提出多尺度双边网格金字塔统一全局外观编码和像素级双边网格——3 级层级（粗→中→细）分别捕捉全局/区域/像素级光度变化，通过亮度引导的切片-融合管线和自适应正则化解决驾驶场景 3DGS 的光度不一致问题，Waymo 上 Chamfer Distance 比 OmniRe 改善 28.2%。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

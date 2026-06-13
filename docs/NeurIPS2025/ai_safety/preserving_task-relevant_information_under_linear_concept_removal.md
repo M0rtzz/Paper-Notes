@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preserving Task-Relevant Information Under Linear Concept Removal
 description: >-
-  [NeurIPS 2025][AI安全][概念擦除] SPLINCE通过构造一种斜投影(oblique projection)，在保证线性守护性（不可被线性分类器预测敏感属性）的同时，精确保留表征与目标标签之间的协方差，解决了现有概念擦除方法在移除敏感概念的同时误删任务相关信息的问题。
+  [NeurIPS 2025][AI安全][概念擦除] SPLINCE通过构造一种斜投影(oblique projection)，在保证线性守护性（不可被线性分类器预测敏感属性）的同时，精确保留表征与目标标签之间的协方差，解决了现有概念擦除方法在移除敏感概念的同时误删任务相关信息的问题。 深度神经网络（DNN）的表示(embe…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

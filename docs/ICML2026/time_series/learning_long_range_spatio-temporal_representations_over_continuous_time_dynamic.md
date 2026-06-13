@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Long Range Spatio-Temporal Representations over Continuous Time Dynamic Graphs with State Space Models
 description: >-
-  [ICML 2026][时间序列][连续时间动态图] CTDG-SSM 首次通过**拓扑感知 HiPPO 投影**和状态空间模型，同时捕捉动态图中的多跳长距离空间依赖（LRS）和长距离时间依赖（LRT），在链接预测 / 节点分类等任务上超越 SOTA 且参数量仅为竞争方法的 1/10。
+  [ICML 2026][时间序列][连续时间动态图] CTDG-SSM 首次通过拓扑感知 HiPPO 投影：和状态空间模型，同时捕捉动态图中的多跳长距离空间依赖（LRS）和长距离时间依赖（LRT），在链接预测 / 节点分类等任务上超越 SOTA 且参数量仅为竞争方法的 1/10。 领域现状：连续时间动态图（CTDG）提供了建…
 tags:
   - "ICML 2026"
   - "时间序列"

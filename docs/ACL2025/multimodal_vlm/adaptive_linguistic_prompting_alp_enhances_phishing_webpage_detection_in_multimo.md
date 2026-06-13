@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Linguistic Prompting (ALP) Enhances Phishing Webpage Detection in Multimodal Large Language Models
 description: >-
-  [ACL 2025][多模态VLM][钓鱼网页检测] 提出 Adaptive Linguistic Prompting (ALP)，一种 8-shot 结构化提示方法，引导多模态 LLM 从 HTML 文本、截图和 URL 三个维度联合推理，检测钓鱼网页，在 GPT-4o 上组合分析达到 F1=0.93…
+  [ACL 2025][多模态VLM][钓鱼网页检测] 提出 Adaptive Linguistic Prompting (ALP)，一种 8-shot 结构化提示方法，引导多模态 LLM 从 HTML 文本、截图和 URL 三个维度联合推理，检测钓鱼网页，在 GPT-4o 上组合分析达到 F1=0.93，超过传统零样本基线。
 tags:
   - "ACL 2025"
   - "多模态VLM"
@@ -120,10 +120,10 @@ tags:
 - **vs 视觉方法 (PhishPedia等)**：视觉方法需要持续重训练来适应新品牌，而 LLM + 提示方法天然具有零样本泛化能力
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 核心贡献是提示设计，方法新颖性一般但实用性强
-- 实验充分度: ⭐⭐⭐ 数据集规模偏小，缺少与更多 baseline 的对比和鲁棒性测试
-- 写作质量: ⭐⭐⭐⭐ 结构清晰，实验描述详细，附录提供了完整的提示模板和输出示例
-- 价值: ⭐⭐⭐ 实用性强，提示工程的发现（特别是 suspicious-first）有参考价值，但整体深度有限
+- 新颖性: ⭐⭐⭐⭐ 核心贡献是提示设计，方法新颖性一般但实用性强
+- 实验充分度: ⭐⭐⭐⭐ 数据集规模偏小，缺少与更多 baseline 的对比和鲁棒性测试
+- 写作质量: ⭐⭐⭐⭐⭐ 结构清晰，实验描述详细，附录提供了完整的提示模板和输出示例
+- 价值: ⭐⭐⭐⭐ 实用性强，提示工程的发现（特别是 suspicious-first）有参考价值，但整体深度有限
 
 <!-- RELATED:START -->
 

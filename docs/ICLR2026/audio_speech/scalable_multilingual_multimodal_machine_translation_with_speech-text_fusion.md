@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion
 description: >-
-  [ICLR 2026][音频/语音][语音引导翻译] 提出 Speech-guided Machine Translation（SMT）框架，用 TTS 将源文本合成语音后与文本联合输入 MLLM 做翻译，通过自我进化机制自动筛选有益的合成语音样本进行持续训练…
+  [ICLR 2026][音频/语音][语音引导翻译] 提出 Speech-guided Machine Translation（SMT）框架，用 TTS 将源文本合成语音后与文本联合输入 MLLM 做翻译，通过自我进化机制自动筛选有益的合成语音样本进行持续训练。在 Multi30K 超越所有 MMT 方法取得 SOTA，在 FLORES-200 的 108 个翻译方向上以仅 9B 参数达到平均 SOTA。
 tags:
   - "ICLR 2026"
   - "音频/语音"

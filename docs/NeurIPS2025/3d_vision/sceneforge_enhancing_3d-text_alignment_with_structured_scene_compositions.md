@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneForge: Enhancing 3D-text alignment with Structured Scene Compositions
 description: >-
-  [NeurIPS 2025][3D视觉][3D-文本对比学习] 提出SceneForge框架，通过将单个3D点云对象组合成带显式空间关系的多物体场景，配合LLM精炼的组合描述，增强3D-文本对比学习的数据多样性和复杂度，在多个下游任务上带来一致性能提升。
+  [NeurIPS 2025][3D视觉][3D-文本对比学习] 提出SceneForge框架，通过将单个3D点云对象组合成带显式空间关系的多物体场景，配合LLM精炼的组合描述，增强3D-文本对比学习的数据多样性和复杂度，在多个下游任务上带来一致性能提升。 大规模对比学习已经彻底改变了视觉-语言建模，CLIP/ALIGN在2D…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

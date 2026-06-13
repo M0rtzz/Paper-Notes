@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contrastive Representations for Temporal Reasoning
 description: >-
-  [NeurIPS 2025][自监督学习][对比学习] 提出 CRTR（Contrastive Representations for Temporal Reasoning），通过在训练批次中重复同一轨迹来引入轨迹内负样本对，消除标准时间对比学习对静态上下文特征的依赖，学习到反映时间结构的表征…
+  [NeurIPS 2025][自监督学习][对比学习] 提出 CRTR（Contrastive Representations for Temporal Reasoning），通过在训练批次中重复同一轨迹来引入轨迹内负样本对，消除标准时间对比学习对静态上下文特征的依赖，学习到反映时间结构的表征，在魔方等组合推理任务上首次实现无搜索求解。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

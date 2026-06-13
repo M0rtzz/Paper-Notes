@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Debiasing Reward Models via Causally Motivated Inference-Time Intervention
 description: >-
-  [ACL 2026][LLM对齐][reward model] 作者把 Bradley-Terry reward model 视作估计 total effect 的因果图，识别出与五类风格性偏差（长度 / 段落 / 词重叠 / 感叹号 / 粗体）激活高度相关的 bias-specific neurons（占总…
+  [ACL 2026][LLM对齐][reward model] 作者把 Bradley-Terry reward model 视作估计 total effect 的因果图，识别出与五类风格性偏差（长度 / 段落 / 词重叠 / 感叹号 / 粗体）激活高度相关的 bias-specific neurons（占总神经元 < 2%），在推理时把这些神经元激活替换为验证集中位数（估计 controlled direct effect），在 RewardBench / RM-Bench 上既不掉点又消除偏差，DPO 下游使用后让 8B 模型的对齐分数追平 70B SOTA reward model。
 tags:
   - "ACL 2026"
   - "LLM对齐"

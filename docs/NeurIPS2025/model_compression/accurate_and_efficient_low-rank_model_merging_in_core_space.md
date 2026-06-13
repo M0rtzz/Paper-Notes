@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accurate and Efficient Low-Rank Model Merging in Core Space
 description: >-
-  [NeurIPS 2025][模型压缩][模型合并] 提出 Core Space Merging 框架——通过在低秩 LoRA 矩阵的公共参考基空间中进行模型合并，**无信息损失**地将合并操作从 $m \times n$ 全尺寸空间压缩到 $Tr \times Tr$ 紧凑空间（$T$ 为任务数…
+  [NeurIPS 2025][模型压缩][模型合并] 提出 Core Space Merging 框架——通过在低秩 LoRA 矩阵的公共参考基空间中进行模型合并，**无信息损失**地将合并操作从 $m \times n$ 全尺寸空间压缩到 $Tr \times Tr$ 紧凑空间（$T$ 为任务数，$r$ 为 LoRA 秩），在 Llama 3 8B 上达到 SOTA 合并精度同时计算成本降低数个数量级。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

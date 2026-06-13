@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Faithful Summarization of Consumer Health Queries: A Cross-Lingual Framework with LLMs
 description: >-
-  [NeurIPS 2025][医疗NLP][医学文本摘要] 提出结合 TextRank 抽取式句子选择和医学命名实体识别 (NER) 来引导 LLM 生成忠实医学摘要的框架，在英文 MeQSum 和孟加拉语 BanglaCHQ-Summ 数据集上通过微调 LLaMA-2-7B 实现质量和忠实性的一致提升…
+  [NeurIPS 2025][医疗NLP][医学文本摘要] 提出结合 TextRank 抽取式句子选择和医学命名实体识别 (NER) 来引导 LLM 生成忠实医学摘要的框架，在英文 MeQSum 和孟加拉语 BanglaCHQ-Summ 数据集上通过微调 LLaMA-2-7B 实现质量和忠实性的一致提升，SummaC 达 0.57，人工评估 82% 摘要保留关键医学信息。
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

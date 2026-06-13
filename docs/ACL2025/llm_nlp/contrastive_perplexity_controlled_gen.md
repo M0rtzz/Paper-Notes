@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Contrastive Perplexity for Controlled Generation: An Application in Detoxifying Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][可控生成] 提出基于原型对比困惑度（Contrastive Perplexity, CP）的框架，通过构造语义相似但毒性属性不同的正负样本对，在困惑度空间中进行对比学习来微调 LLM…
+  [ACL 2025][LLM 其他][可控生成] 提出基于原型对比困惑度（Contrastive Perplexity, CP）的框架，通过构造语义相似但毒性属性不同的正负样本对，在困惑度空间中进行对比学习来微调 LLM，实现显著的毒性降低（Mistral-7b 毒性从 33.1% 降至 4.3%）且几乎不影响下游任务性能。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "可控生成"
   - "去毒化"
   - "对比学习"

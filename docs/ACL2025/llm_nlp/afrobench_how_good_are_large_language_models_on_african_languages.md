@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AfroBench: How Good are Large Language Models on African Languages?
 description: >-
-  [ACL 2025][LLM/NLP][非洲语言] 提出AfroBench——覆盖64种非洲语言、15个NLP任务、22个数据集的综合评测基准，评估12个LLM发现闭源模型(GPT-4o)领先最佳开源模型(Gemma 2 27B)约12分，但所有LLM仍落后于微调基线，与英语的差距在开源模型上超过40分。
+  [ACL 2025][LLM 其他][非洲语言] 提出AfroBench——覆盖64种非洲语言、15个NLP任务、22个数据集的综合评测基准，评估12个LLM发现闭源模型(GPT-4o)领先最佳开源模型(Gemma 2 27B)约12分，但所有LLM仍落后于微调基线，与英语的差距在开源模型上超过40分。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "非洲语言"
   - "低资源语言"
   - "多语言基准"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] "Give Me BF16 or Give Me Death"? Accuracy-Performance Trade-Offs in LLM Quantization
 description: >-
-  [ACL 2025][模型压缩][量化] 这是迄今最全面的 LLM 量化实证研究，在 Llama-3.1 全系列（8B/70B/405B）上对 FP8/INT8/INT4 进行了超过 50 万次评估，发现 FP8 几乎无损、INT8 仅降 1-3%、INT4 出奇地有竞争力…
+  [ACL 2025][模型压缩][量化] 这是迄今最全面的 LLM 量化实证研究，在 Llama-3.1 全系列（8B/70B/405B）上对 FP8/INT8/INT4 进行了超过 50 万次评估，发现 FP8 几乎无损、INT8 仅降 1-3%、INT4 出奇地有竞争力，并给出了不同部署场景的量化格式选择建议。
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Is Attention Sparse in Particle Transformer?
 description: >-
-  [NeurIPS 2025][物理/科学计算][Transformer] 本文系统性地分析了 Particle Transformer（ParT）在 jet tagging 任务中训练后出现的近乎二值化稀疏 attention 现象…
+  [NeurIPS 2025][物理/科学计算][Transformer] 本文系统性地分析了 Particle Transformer（ParT）在 jet tagging 任务中训练后出现的近乎二值化稀疏 attention 现象，通过跨数据集对比和消融实验揭示了稀疏性主要源自 attention 机制自身而非物理启发的 interaction 矩阵，但 interaction 矩阵通过影响绝大多数 token 的 argmax 选择对最终性能不可或缺。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

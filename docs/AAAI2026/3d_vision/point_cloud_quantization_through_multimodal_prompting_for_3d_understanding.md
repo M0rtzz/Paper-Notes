@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Point Cloud Quantization through Multimodal Prompting for 3D Understanding
 description: >-
-  [AAAI 2026][3D视觉][点云量化] 提出 PCQ（Point Cloud Quantization），利用预训练视觉-语言模型的文本嵌入作为语义原型，通过 Gumbel-Softmax 可微量化将连续点云特征离散化到文本原型空间，结合跨模态特征融合实现3D理解的显著提升。
+  [AAAI 2026][3D视觉][点云量化] 提出 PCQ（Point Cloud Quantization），利用预训练视觉-语言模型的文本嵌入作为语义原型，通过 Gumbel-Softmax 可微量化将连续点云特征离散化到文本原型空间，结合跨模态特征融合实现3D理解的显著提升。 向量量化（VQ）在大规模多模态模型中是统…
 tags:
   - "AAAI 2026"
   - "3D视觉"

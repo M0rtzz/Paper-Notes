@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts
 description: >-
-  [ICLR 2026][多模态VLM][视觉提示调优] 从混合专家（MoE）视角揭示 VPT 的局限性——prompt experts 是输入无关的常量函数表达力受限，提出 VAPT 通过 token-wise 投影器和共享特征投影器使 prompt experts 自适应输入，用更少参数实现更优性能…
+  [ICLR 2026][多模态VLM][视觉提示调优] 从混合专家（MoE）视角揭示 VPT 的局限性——prompt experts 是输入无关的常量函数表达力受限，提出 VAPT 通过 token-wise 投影器和共享特征投影器使 prompt experts 自适应输入，用更少参数实现更优性能，并给出了最优样本效率的理论保证。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

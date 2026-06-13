@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Connecting Independently Trained Modes via Layer-Wise Connectivity
 description: >-
-  [ICML2026][模态连通性] 提出 Low-Loss Path Finding (LLPF) 算法，通过逐层连通性和方差球约束，可靠地在独立训练的神经网络模型之间构建低损失路径，支持 MobileNet、EfficientNet、CCT 等现代架构，且结果高度可复现。
+  [ICML2026][模态连通性] 提出 Low-Loss Path Finding (LLPF) 算法，通过逐层连通性和方差球约束，可靠地在独立训练的神经网络模型之间构建低损失路径，支持 MobileNet、EfficientNet、CCT 等现代架构，且结果高度可复现。 领域现状：模态连通性（mode connectiv…
 tags:
   - "ICML2026"
   - "模态连通性"

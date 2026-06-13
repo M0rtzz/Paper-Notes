@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Synthesizing Post-Training Data for LLMs through Multi-Agent Simulation
 description: >-
-  [ACL 2025][预训练][多智能体模拟] 本文提出 MATRIX 多智能体模拟器和 MATRIX-Gen 场景驱动指令生成器，通过模拟真实社会场景来合成高质量的 LLM 后训练数据…
+  [ACL 2025][预训练][多智能体模拟] 本文提出 MATRIX 多智能体模拟器和 MATRIX-Gen 场景驱动指令生成器，通过模拟真实社会场景来合成高质量的 LLM 后训练数据，仅用 20K 条合成数据训练的 Llama-3-8B 在 AlpacaEval 2 和 Arena-Hard 上超过了使用超过 10M 数据训练的 Meta 官方 Llama-3-8B-Instruct。
 tags:
   - "ACL 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming System Complexity: Demystifying Software Engineering Agents in Diagnosing Linux Kernel Faults
 description: >-
-  [ACL2026][代码智能][故障定位] 通过建立大规模 Linux 内核故障定位基准 LinuxFLBench，揭示现有 LLM Agent 在复杂系统中的局限，并提出 LinuxFL+ 框架通过目录感知和潜在原因双维扩展，以低成本显著提升故障定位精度。
+  [ACL2026][代码智能][故障定位] 通过建立大规模 Linux 内核故障定位基准 LinuxFLBench，揭示现有 LLM Agent 在复杂系统中的局限，并提出 LinuxFL+ 框架通过目录感知和潜在原因双维扩展，以低成本显著提升故障定位精度。 领域现状：故障定位（Fault Localization…
 tags:
   - "ACL2026"
   - "代码智能"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DiBO: 用扩散语言模型做离线黑盒优化（DNA + 机器人形态）
 description: >-
-  [ICML 2026][机器人][离线 BBO] DiBO 把扩散语言模型 LLaDA-8B 适配到离线黑盒优化场景，用 delimiter token 统一 prompt/design/label 三类异构信号…
+  [ICML 2026 Spotlight][机器人][离线 BBO] DiBO 把扩散语言模型 LLaDA-8B 适配到离线黑盒优化场景，用 delimiter token 统一 prompt/design/label 三类异构信号，再走「域适应 → masked-response SFT → label-improvement RL」三段后训练，让模型能在 500 条标注样本下学到 Design-Bench 多个任务的 SOTA（DNA 任务上 +8% 归一化分），单 H100 1.5 小时就能跑完一个离散任务。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "机器人"
   - "离线 BBO"
   - "扩散 LLM"

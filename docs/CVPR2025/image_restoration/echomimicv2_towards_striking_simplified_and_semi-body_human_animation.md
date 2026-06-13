@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation
 description: >-
-  [CVPR 2025][图像恢复][人体动画] 提出 Audio-Pose Dynamic Harmonization（APDH）策略渐进式将控制权从全身姿态转移到音频——逐步移除关键点（保留手部）同时扩大音频控制范围（从唇部到全身），实现仅需音频+参考图+手部姿态的高质量半身动画。
+  [CVPR 2025][图像恢复][人体动画] 提出 Audio-Pose Dynamic Harmonization（APDH）策略渐进式将控制权从全身姿态转移到音频——逐步移除关键点（保留手部）同时扩大音频控制范围（从唇部到全身），实现仅需音频+参考图+手部姿态的高质量半身动画。 领域现状：音频驱动人体动画从参考图像+音…
 tags:
   - "CVPR 2025"
   - "图像恢复"

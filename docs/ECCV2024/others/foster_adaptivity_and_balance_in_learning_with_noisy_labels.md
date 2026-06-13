@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foster Adaptivity and Balance in Learning with Noisy Labels
 description: >-
-  [ECCV 2024][noisy labels] 提出SED方法，通过自适应且类别平衡的样本选择与重加权机制来应对标签噪声问题，在无需预定义阈值等先验知识的前提下，在合成和真实噪声数据集上取得SOTA性能。
+  [ECCV 2024][noisy labels] 提出SED方法，通过自适应且类别平衡的样本选择与重加权机制来应对标签噪声问题，在无需预定义阈值等先验知识的前提下，在合成和真实噪声数据集上取得SOTA性能。 领域现状：深度神经网络在图像分类等任务上取得了显著成就，但依赖大规模高质量标注数据。现实中通过众包或网络爬取获得的标…
 tags:
   - "ECCV 2024"
   - "noisy labels"

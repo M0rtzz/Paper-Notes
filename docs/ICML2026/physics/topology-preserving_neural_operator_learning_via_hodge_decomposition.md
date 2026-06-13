@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology-Preserving Neural Operator Learning via Hodge Decomposition
 description: >-
-  [ICML 2026][物理/科学计算][Hodge分解] 本文提出 Hodge Spectral Duality (HSD) 神经算子，把流形 PDE 的解算子按 Hodge 正交分解拆成"低频拓扑分量（谱基底）+ 高频几何分量（FNO 辅助网格）"双分支，再用一个交换子修正项耦合二者…
+  [ICML 2026][物理/科学计算][Hodge分解] 本文提出 Hodge Spectral Duality (HSD) 神经算子，把流形 PDE 的解算子按 Hodge 正交分解拆成"低频拓扑分量（谱基底）+ 高频几何分量（FNO 辅助网格）"双分支，再用一个交换子修正项耦合二者，从而在复杂网格上同时获得高精度与守恒律保真。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Synthetic Eggs in Many Baskets: The Impact of Synthetic Data Diversity on LLM Fine-Tuning
 description: >-
-  [ACL 2026 Findings][LLM/NLP][合成数据多样性] 这篇论文系统比较了单一模型、多模型和人类数据作为监督微调来源时对 Llama 模型的影响，发现多源合成数据能缓解分布坍缩和自偏好，但合成数据也可能在保留输出质量的同时削弱安全护栏，且风险会随源模型规模和混合方式发生复杂变化。
+  [ACL 2026 Findings][LLM 其他][合成数据多样性] 这篇论文系统比较了单一模型、多模型和人类数据作为监督微调来源时对 Llama 模型的影响，发现多源合成数据能缓解分布坍缩和自偏好，但合成数据也可能在保留输出质量的同时削弱安全护栏，且风险会随源模型规模和混合方式发生复杂变化。 领域现状：随着高质量人工文…
 tags:
   - "ACL 2026 Findings"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "合成数据多样性"
   - "模型坍缩"
   - "LoRA 微调"

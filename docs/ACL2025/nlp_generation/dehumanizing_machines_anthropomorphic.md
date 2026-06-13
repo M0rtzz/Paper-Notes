@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dehumanizing Machines: Mitigating Anthropomorphic Behaviors in Text Generation Systems
 description: >-
-  [ACL 2025][文本生成][anthropomorphism] 通过文献综述和众包研究，系统整理出 21 类干预措施来降低文本生成系统输出的拟人化程度，提出包含干预类型、目标行为、操作化方式和负面影响四个维度的概念框架，为去拟人化研究提供最全面的基础设施。
+  [ACL 2025][文本生成][anthropomorphism] 通过文献综述和众包研究，系统整理出 21 类干预措施来降低文本生成系统输出的拟人化程度，提出包含干预类型、目标行为、操作化方式和负面影响四个维度的概念框架，为去拟人化研究提供最全面的基础设施。 领域现状：文本生成系统的输出越来越拟人化——使用第一人称代词、…
 tags:
   - "ACL 2025"
   - "文本生成"

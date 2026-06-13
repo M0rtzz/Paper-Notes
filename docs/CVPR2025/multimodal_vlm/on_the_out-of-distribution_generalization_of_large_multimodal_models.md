@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Out-of-Distribution Generalization of Multimodal Large Language Models
 description: >-
-  [CVPR 2025][多模态VLM][多模态大语言模型] 本文系统评估了14个MLLM在20个数据集上的分布外泛化能力，发现MLLM在医学/分子等领域特定数据上性能近似随机，通过三假设分析确定"语义-视觉映射缺陷"为主因，并证明上下文学习（ICL）能显著缓解该问题但对标签偏移和伪相关偏移敏感。
+  [CVPR 2025][多模态VLM][多模态大语言模型] 本文系统评估了14个MLLM在20个数据集上的分布外泛化能力，发现MLLM在医学/分子等领域特定数据上性能近似随机，通过三假设分析确定"语义-视觉映射缺陷"为主因，并证明上下文学习（ICL）能显著缓解该问题但对标签偏移和伪相关偏移敏感。 多模态大语言模型（MLLM）…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

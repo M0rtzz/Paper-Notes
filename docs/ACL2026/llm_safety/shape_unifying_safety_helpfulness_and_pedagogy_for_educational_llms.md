@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHAPE: Unifying Safety, Helpfulness and Pedagogy for Educational LLMs
 description: >-
-  [ACL2026][LLM安全][教育LLM] 这篇论文把教育 LLM 的安全、帮助性和教学性统一到知识掌握图上，提出 SHAPE 基准评估模型在答案诱导压力下是否仍能按学生掌握状态选择“引导”或“直接作答”，并用图增强 gating pipeline 大幅提升鲁棒性。
+  [ACL2026][LLM安全][教育LLM] 这篇论文把教育 LLM 的安全、帮助性和教学性统一到知识掌握图上，提出 SHAPE 基准评估模型在答案诱导压力下是否仍能按学生掌握状态选择“引导”或“直接作答”，并用图增强 gating pipeline 大幅提升鲁棒性。 领域现状：LLM 已经被广泛用于智能辅导、备课和学习支…
 tags:
   - "ACL2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WaDi: Weight Direction-aware Distillation for One-step Image Synthesis
 description: >-
-  [CVPR 2026][图像生成][扩散蒸馏] 通过分析蒸馏过程中权重变化的范数-方向分解，发现方向变化是蒸馏的关键驱动因素（变化幅度比范数大 22×），提出 LoRaD（低秩权重方向旋转）适配器，集成到 VSD 框架中构成 WaDi，仅用 ~10% 可训练参数即在 COCO 上取得一步生成 SOTA FID…
+  [CVPR 2026][图像生成][扩散蒸馏] 通过分析蒸馏过程中权重变化的范数-方向分解，发现方向变化是蒸馏的关键驱动因素（变化幅度比范数大 22×），提出 LoRaD（低秩权重方向旋转）适配器，集成到 VSD 框架中构成 WaDi，仅用 ~10% 可训练参数即在 COCO 上取得一步生成 SOTA FID。
 tags:
   - "CVPR 2026"
   - "图像生成"

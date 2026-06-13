@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Imagined Futures to Executable Actions: Mixture of Latent Actions for Robot Manipulation
 description: >-
-  [ICML 2026][机器人][潜动作] MoLA 用一组在大规模机器人数据上预训练好的"模态感知逆动力学模型 (IDM)"，把视频生成模型预测出的未来帧翻译成语义/深度/光流三路离散潜动作，再让策略头基于这些动作中心的表征做控制…
+  [ICML 2026][机器人][潜动作] MoLA 用一组在大规模机器人数据上预训练好的"模态感知逆动力学模型 (IDM)"，把视频生成模型预测出的未来帧翻译成语义/深度/光流三路离散潜动作，再让策略头基于这些动作中心的表征做控制，从而在 CALVIN、LIBERO、LIBERO-Plus 以及真实 UR5e 上把"想象-执行"接口做得既稳又准。
 tags:
   - "ICML 2026"
   - "机器人"

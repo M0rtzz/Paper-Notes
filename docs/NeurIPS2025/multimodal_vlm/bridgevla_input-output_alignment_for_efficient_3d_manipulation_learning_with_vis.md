@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BridgeVLA: Input-Output Alignment for Efficient 3D Manipulation Learning with Vision-Language Models
 description: >-
-  [NEURIPS2025][多模态VLM][视觉语言] 提出 BridgeVLA，通过将 3D 点云投影为多视角 2D 图像并以 2D 热力图作为中间表示来对齐输入输出空间，实现了高效且有效的 3D 机器人操作学习。
+  [NEURIPS2025][多模态VLM][视觉语言] 提出 BridgeVLA，通过将 3D 点云投影为多视角 2D 图像并以 2D 热力图作为中间表示来对齐输入输出空间，实现了高效且有效的 3D 机器人操作学习。 - 利用预训练视觉语言模型（VLM）构建视觉语言动作（VLA）模型已成为学习通用机器人操作策略的主流方向 -…
 tags:
   - "NEURIPS2025"
   - "多模态VLM"

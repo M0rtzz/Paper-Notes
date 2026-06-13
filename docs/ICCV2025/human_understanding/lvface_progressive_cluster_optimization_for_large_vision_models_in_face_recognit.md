@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition
 description: >-
-  [ICCV 2025][人体理解][人脸识别] 提出 LVFace，通过渐进式聚类优化（PCO）策略解决 ViT 在大规模人脸识别中训练不稳定的问题，将训练分解为特征对齐、质心稳定和边界精炼三个阶段，在多个基准上取得 SOTA。
+  [ICCV 2025][人体理解][人脸识别] 提出 LVFace，通过渐进式聚类优化（PCO）策略解决 ViT 在大规模人脸识别中训练不稳定的问题，将训练分解为特征对齐、质心稳定和边界精炼三个阶段，在多个基准上取得 SOTA。 现状问题： - ViT 在视觉领域已取代 CNN 成为主流，但人脸识别仍以 CNN 为主 - 直…
 tags:
   - "ICCV 2025"
   - "人体理解"

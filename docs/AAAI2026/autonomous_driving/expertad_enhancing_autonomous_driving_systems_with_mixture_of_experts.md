@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExpertAD: Enhancing Autonomous Driving Systems with Mixture of Experts
 description: >-
-  [AAAI 2026][自动驾驶][端到端自动驾驶] 提出 ExpertAD，将混合专家（MoE）架构引入端到端自动驾驶系统的感知和预测模块——Perception Adapter 动态重加权 BEV 特征以放大任务关键语义…
+  [AAAI 2026][自动驾驶][端到端自动驾驶] 提出 ExpertAD，将混合专家（MoE）架构引入端到端自动驾驶系统的感知和预测模块——Perception Adapter 动态重加权 BEV 特征以放大任务关键语义，Mixture of Sparse Experts 通过路由器动态激活相关驾驶任务专家并用稀疏注意力降低计算量，在保持或提升规划效果的同时降低约 25% 推理延迟。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] JAEGER: Joint 3D Audio-Visual Grounding and Reasoning in Simulated Physical Environments
 description: >-
-  [ICML 2026][音频/语音][空间音频] JAEGER 在 Qwen2.5-Omni 基础上用 LoRA 适配出一个端到端的 3D 音视频大模型，通过 RGB-D 深度位置编码 + 一阶 Ambisonics (FOA) 双路音频 + 新提出的 Neural Intensity Vector…
+  [ICML 2026][音频/语音][空间音频] JAEGER 在 Qwen2.5-Omni 基础上用 LoRA 适配出一个端到端的 3D 音视频大模型，通过 RGB-D 深度位置编码 + 一阶 Ambisonics (FOA) 双路音频 + 新提出的 Neural Intensity Vector，将传统 AV-LLM 从「2D RGB + 单声道」扩展到「3D 几何 + 多通道空间音频」，并配套发布了 61k 样本的 SpatialSceneQA 仿真基准。
 tags:
   - "ICML 2026"
   - "音频/语音"

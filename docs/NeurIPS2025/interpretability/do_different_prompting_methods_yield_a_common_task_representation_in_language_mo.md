@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Different Prompting Methods Yield a Common Task Representation?
 description: >-
-  [NeurIPS 2025][可解释性][任务表征] 通过将函数向量（Function Vectors）方法从 few-shot 示例推广到文本指令，发现不同提示方式（demonstrations vs. instructions）并不会在 LLM 中诱导出统一的任务表征…
+  [NeurIPS 2025][可解释性][任务表征] 通过将函数向量（Function Vectors）方法从 few-shot 示例推广到文本指令，发现不同提示方式（demonstrations vs. instructions）并不会在 LLM 中诱导出统一的任务表征，而是激活部分重叠但主要不同的注意力头机制。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

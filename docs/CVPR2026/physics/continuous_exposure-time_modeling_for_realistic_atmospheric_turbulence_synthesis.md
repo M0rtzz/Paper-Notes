@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Exposure-Time Modeling for Realistic Atmospheric Turbulence Synthesis
 description: >-
-  [CVPR 2026][物理/科学计算][大气湍流合成] 提出曝光时间依赖的调制传递函数（ET-MTF），将曝光时间建模为连续变量，构建了大规模合成湍流数据集 ET-Turb（5083视频、200万帧），显著提升湍流复原模型在真实数据上的泛化能力。
+  [CVPR 2026][物理/科学计算][大气湍流合成] 提出曝光时间依赖的调制传递函数（ET-MTF），将曝光时间建模为连续变量，构建了大规模合成湍流数据集 ET-Turb（5083视频、200万帧），显著提升湍流复原模型在真实数据上的泛化能力。 大气湍流通过折射率的随机波动，对远距离成像引入几何扭曲（tilt）和曝光时间…
 tags:
   - "CVPR 2026"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safety Generalization Under Distribution Shift in Safe Reinforcement Learning: A Diabetes Testbed
 description: >-
-  [ICML 2026][强化学习][安全强化学习] 作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%…
+  [ICML 2026][强化学习][安全强化学习] 作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%，于是提出用 Basis-Adaptive Neural ODE 预测血糖轨迹、再用预测性屏蔽 (predictive shielding) 在测试时过滤危险动作，让 PPO-Lag / CPO 等基线在 OOD 病人上重新拿回 13–14% TIR。
 tags:
   - "ICML 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation
 description: >-
-  [ICLR 2026][3D视觉][开放词汇3D分割] 提出 GeoPurify 框架，通过从 3D 自监督教师模型蒸馏几何先验来净化 2D VLM 投影到 3D 的噪声特征，仅用约 1.5% 的训练数据即可达到或超越全量训练的 SOTA 开放词汇 3D 分割性能。
+  [ICLR 2026][3D视觉][开放词汇3D分割] 提出 GeoPurify 框架，通过从 3D 自监督教师模型蒸馏几何先验来净化 2D VLM 投影到 3D 的噪声特征，仅用约 1.5% 的训练数据即可达到或超越全量训练的 SOTA 开放词汇 3D 分割性能。 开放词汇 3D 场景理解旨在让模型识别任意文本描述的物体…
 tags:
   - "ICLR 2026"
   - "3D视觉"

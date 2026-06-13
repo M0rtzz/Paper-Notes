@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Rationality in the Reasoning Process of Language Models through Self-playing Game
 description: >-
-  [ICML 2025][LLM推理][自博弈] 本文提出 Critic-Discernment Game（CDG），通过自博弈语言游戏让 LLM 与"有帮助的批评者"和"误导性批评者"互动，用 ReST 强化学习联合优化三个角色，无需人类或更强模型的监督即可显著提升 LLM 对自身推理过程的理性理解…
+  [ICML 2025][LLM推理][自博弈] 本文提出 Critic-Discernment Game（CDG），通过自博弈语言游戏让 LLM 与"有帮助的批评者"和"误导性批评者"互动，用 ReST 强化学习联合优化三个角色，无需人类或更强模型的监督即可显著提升 LLM 对自身推理过程的理性理解，在数学推理、逐步错误检测、自我纠错和长链推理四个任务上均取得一致提升。
 tags:
   - "ICML 2025"
   - "LLM推理"

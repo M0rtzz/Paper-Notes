@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TELA: Text to Layer-wise 3D Clothed Human Generation
 description: >-
-  [ECCV 2024][人体理解][3D人体生成] TELA提出了分层的3D穿衣人体表示方法和渐进优化策略，从文本描述生成服装可解耦的3D人体模型，支持逐层穿衣生成和虚拟试衣等编辑应用。
+  [ECCV 2024][人体理解][3D人体生成] TELA提出了分层的3D穿衣人体表示方法和渐进优化策略，从文本描述生成服装可解耦的3D人体模型，支持逐层穿衣生成和虚拟试衣等编辑应用。 领域现状：文本到3D穿衣人体生成是3D内容创建的重要方向。现有方法（如DreamAvatar、AvatarCLIP等）通常将人体和服装编码…
 tags:
   - "ECCV 2024"
   - "人体理解"

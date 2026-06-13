@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligned Multi-View Scripts for Universal Chart-to-Code Generation
 description: >-
-  [ACL 2026][代码智能][Chart-to-Code] 把"同一张图表用 Python / R / LaTeX 三种语言写出语义等价脚本"作为新的监督信号，构建了 176K 四元组数据集 Chart2NCode…
+  [ACL 2026][代码智能][Chart-to-Code] 把"同一张图表用 Python / R / LaTeX 三种语言写出语义等价脚本"作为新的监督信号，构建了 176K 四元组数据集 Chart2NCode，并提出在 LLaVA 投影器上加一个"语言条件的低秩子空间路由"的轻量适配器 CharLuMA，让一个模型在三种绘图语言上都达到可执行率与视觉保真度双高的水准。
 tags:
   - "ACL 2026"
   - "代码智能"

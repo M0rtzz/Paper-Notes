@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ToC: Tree-of-Claims Search with Multi-Agent Language Models
 description: >-
-  [AAAI 2026][可解释性][专利权利要求优化] 提出 Tree-of-Claims (ToC) 框架，将专利权利要求编辑建模为结构化搜索问题，通过 MCTS 与 EditorAgent/ExaminerAgent 多智能体协作，在新颖性、范围保持和语义一致性之间联合优化…
+  [AAAI 2026 Oral][可解释性][专利权利要求优化] 提出 Tree-of-Claims (ToC) 框架，将专利权利要求编辑建模为结构化搜索问题，通过 MCTS 与 EditorAgent/ExaminerAgent 多智能体协作，在新颖性、范围保持和语义一致性之间联合优化，比零/少样本 LLM 基线平均提升约 8% 综合分。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "可解释性"
   - "专利权利要求优化"
   - "蒙特卡洛树搜索"

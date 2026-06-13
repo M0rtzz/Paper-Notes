@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoBridge: A Semantic-Anchored Multi-View Foundation Model for Geo-Localization
 description: >-
-  [CVPR 2026][自监督学习][跨视角地理定位] GeoBridge 提出语义锚定的多视角地理定位基础模型，将无人机/街景/卫星影像通过文本描述构建跨模态语义桥梁，实现双向跨视角匹配和语言到图像定位，并构建了GeoLoc数据集（50K+对，36国）。
+  [CVPR 2026][自监督学习][跨视角地理定位] GeoBridge 提出语义锚定的多视角地理定位基础模型，将无人机/街景/卫星影像通过文本描述构建跨模态语义桥梁，实现双向跨视角匹配和语言到图像定位，并构建了GeoLoc数据集（50K+对，36国）。 1. 领域现状：跨视角地理定位通过检索地理标记的参考图像推断查询图像…
 tags:
   - "CVPR 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Domain Generalization to Multimodal Domain Generalization via Unified Representations
 description: >-
-  [ICCV 2025][机器人][多模态域泛化] 提出URMMDG框架，通过监督对比学习构建跨模态统一表示空间，并利用互信息最小化解耦类别通用信息与模态/域特定信息，将传统单模态域泛化方法（Mixup、JiGen、IBN-Net）有效迁移到多模态域泛化场景…
+  [ICCV 2025][机器人][多模态域泛化] 提出URMMDG框架，通过监督对比学习构建跨模态统一表示空间，并利用互信息最小化解耦类别通用信息与模态/域特定信息，将传统单模态域泛化方法（Mixup、JiGen、IBN-Net）有效迁移到多模态域泛化场景，在EPIC-Kitchens和HAC基准上取得SOTA。
 tags:
   - "ICCV 2025"
   - "机器人"

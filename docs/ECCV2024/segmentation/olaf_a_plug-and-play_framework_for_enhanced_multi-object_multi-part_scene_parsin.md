@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OLAF: A Plug-and-Play Framework for Enhanced Multi-object Multi-part Scene Parsing
 description: >-
-  [ECCV 2024][语义分割][图像分割] 提出即插即用框架 OLAF，通过将前景/边缘掩码作为额外输入通道、引入低层稠密特征提取模块 LDF 和针对性权重适配策略，在不改变基础架构的前提下为多种分割网络（CNN/U-Net/Transformer）带来显著的多物体多部件分割增益…
+  [ECCV 2024][语义分割][图像分割] 提出即插即用框架 OLAF，通过将前景/边缘掩码作为额外输入通道、引入低层稠密特征提取模块 LDF 和针对性权重适配策略，在不改变基础架构的前提下为多种分割网络（CNN/U-Net/Transformer）带来显著的多物体多部件分割增益，在最具挑战的 Pascal-Parts-201 上超越 SOTA 达 4.0 mIoU。
 tags:
   - "ECCV 2024"
   - "语义分割"

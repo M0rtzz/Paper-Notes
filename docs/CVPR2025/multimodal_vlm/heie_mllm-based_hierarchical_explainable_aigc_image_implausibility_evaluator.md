@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HEIE: MLLM-Based Hierarchical Explainable AIGC Image Implausibility Evaluator
 description: >-
-  [CVPR 2025][多模态VLM][AIGC图像评估] 提出HEIE——基于多模态大语言模型（MLLM）的层次化可解释AIGC图像不合理性评估器，通过CoT驱动的三位一体评估器同时输出热力图、评分和文字解释，并用自适应层次化不合理性映射器实现全局-局部缺陷的精准定位…
+  [CVPR 2025][多模态VLM][AIGC图像评估] 提出HEIE——基于多模态大语言模型（MLLM）的层次化可解释AIGC图像不合理性评估器，通过CoT驱动的三位一体评估器同时输出热力图、评分和文字解释，并用自适应层次化不合理性映射器实现全局-局部缺陷的精准定位，在RichHF-18K和AbHuman数据集上达到SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

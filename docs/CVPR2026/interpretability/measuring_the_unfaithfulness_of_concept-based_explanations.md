@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Measuring the (Un)Faithfulness of Concept-Based Explanations
 description: >-
-  [CVPR 2026][可解释性][概念解释] 本文揭示了现有无监督概念解释方法 (U-CBEMs) 的忠实度被高估——原因是使用了过于复杂的代理模型和有缺陷的删除式评估。作者提出 SURF（Surrogate Faithfulness），一个简单的线性代理 + 双空间度量框架…
+  [CVPR 2026][可解释性][概念解释] 本文揭示了现有无监督概念解释方法 (U-CBEMs) 的忠实度被高估——原因是使用了过于复杂的代理模型和有缺陷的删除式评估。作者提出 SURF（Surrogate Faithfulness），一个简单的线性代理 + 双空间度量框架，通过"随机概念应该更不忠实"的 sanity check 验证了其正确性，并首次系统地揭示了多个 SOTA U-CBEMs 实际上并不忠实。
 tags:
   - "CVPR 2026"
   - "可解释性"

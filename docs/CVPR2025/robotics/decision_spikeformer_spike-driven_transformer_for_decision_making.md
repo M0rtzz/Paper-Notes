@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decision SpikeFormer: Spike-Driven Transformer for Decision Making
 description: >-
-  [CVPR 2025][机器人][脉冲神经网络] 提出 DSFormer，首个用于离线强化学习的脉冲驱动 Transformer，设计了时序脉冲自注意力 (TSSA) 和位置脉冲自注意力 (PSSA) 来捕获 RL 中的时序/位置依赖，并引入渐进式阈值依赖批归一化 (PTBN) 解决归一化与脉冲特性的冲突…
+  [CVPR 2025][机器人][脉冲神经网络] 提出 DSFormer，首个用于离线强化学习的脉冲驱动 Transformer，设计了时序脉冲自注意力 (TSSA) 和位置脉冲自注意力 (PSSA) 来捕获 RL 中的时序/位置依赖，并引入渐进式阈值依赖批归一化 (PTBN) 解决归一化与脉冲特性的冲突，在 D4RL 基准上超越 ANN 对手且节省 78.4% 能耗。
 tags:
   - "CVPR 2025"
   - "机器人"

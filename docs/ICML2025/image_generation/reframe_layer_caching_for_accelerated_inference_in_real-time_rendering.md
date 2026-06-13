@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReFrame: Layer Caching for Accelerated Inference in Real-Time Rendering
 description: >-
-  [ICML 2025][图像生成][层缓存] 将扩散模型中的中间层缓存技术（DeepCache）扩展到实时渲染 pipeline 中的 U-Net/U-Net++ 网络，通过帧差自适应缓存策略实现平均 1.4× 推理加速，且画质损失微乎其微。
+  [ICML 2025][图像生成][层缓存] 将扩散模型中的中间层缓存技术（DeepCache）扩展到实时渲染 pipeline 中的 U-Net/U-Net++ 网络，通过帧差自适应缓存策略实现平均 1.4× 推理加速，且画质损失微乎其微。 领域现状：实时渲染（如 DLSS 4.0）大量依赖 U-Net 风格神经网络进行去…
 tags:
   - "ICML 2025"
   - "图像生成"

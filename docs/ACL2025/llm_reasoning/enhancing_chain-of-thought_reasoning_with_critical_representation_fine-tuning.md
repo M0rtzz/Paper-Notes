@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Chain-of-Thought Reasoning with Critical Representation Fine-tuning
 description: >-
-  [ACL 2025][LLM推理][表征微调] 提出 CRFT 方法，通过信息流分析自动识别 Transformer 各层中对推理输出影响最大的"关键表征"，并在低秩线性子空间中对这些表征进行有监督优化，在仅使用模型 0.016% 参数的情况下…
+  [ACL 2025][LLM推理][表征微调] 提出 CRFT 方法，通过信息流分析自动识别 Transformer 各层中对推理输出影响最大的"关键表征"，并在低秩线性子空间中对这些表征进行有监督优化，在仅使用模型 0.016% 参数的情况下，将 LLaMA-2-7B 在 GSM8K 上的准确率提升了 18.2%。
 tags:
   - "ACL 2025"
   - "LLM推理"

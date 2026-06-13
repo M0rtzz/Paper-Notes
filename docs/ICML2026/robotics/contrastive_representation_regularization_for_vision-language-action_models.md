@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contrastive Representation Regularization for Vision-Language-Action Models
 description: >-
-  [ICML 2026][机器人][视觉语言动作模型] 作者发现 VLA 模型里继承自 VLM 的表征被视觉外观主导、对机器人本体状态不敏感，提出 Robot State-aware Contrastive Loss（RS-CL）把本体感受状态之间的欧氏距离当作"软对比标签"重塑表征…
+  [ICML 2026][机器人][视觉语言动作模型] 作者发现 VLA 模型里继承自 VLM 的表征被视觉外观主导、对机器人本体状态不敏感，提出 Robot State-aware Contrastive Loss（RS-CL）把本体感受状态之间的欧氏距离当作"软对比标签"重塑表征，并配合"view cutoff"的表征级增广，把 GR00T N1.5 在 RoboCasa-Kitchen 推到 69.7% SOTA，在真实 Franka 拾放任务上把成功率从 45.0% 抬到 58.3%。
 tags:
   - "ICML 2026"
   - "机器人"

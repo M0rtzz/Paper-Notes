@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deep SPI: Safe Policy Improvement via World Models
 description: >-
-  [ICLR 2026][强化学习][safe policy improvement] 构建了安全策略改进（SPI）的理论框架，将世界模型和表示学习与策略更新保证统一起来：通过基于重要性比率的邻域算子约束策略更新，确保单调改进和收敛；结合局部转移/奖励损失控制世界模型质量和表示稳定性…
+  [ICLR 2026][强化学习][safe policy improvement] 构建了安全策略改进（SPI）的理论框架，将世界模型和表示学习与策略更新保证统一起来：通过基于重要性比率的邻域算子约束策略更新，确保单调改进和收敛；结合局部转移/奖励损失控制世界模型质量和表示稳定性，提出 DeepSPI 算法在 ALE-57 基准上匹配或超越 PPO 和 DeepMDP。
 tags:
   - "ICLR 2026"
   - "强化学习"

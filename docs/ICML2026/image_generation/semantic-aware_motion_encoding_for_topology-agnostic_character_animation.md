@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic-Aware Motion Encoding for Topology-Agnostic Character Animation
 description: >-
-  [ICML 2026][图像生成][运动表征] SATA 用 MLLM 生成的关节语义标签做 FiLM 风格的特征调制，配合空间-时间交错的图自编码器，把任意骨架拓扑的 BVH 动作压到一个共享潜空间，实现高保真重建以及无配对数据的零样本跨物种动作重定向。
+  [ICML 2026][图像生成][运动表征] SATA 用 MLLM 生成的关节语义标签做 FiLM 风格的特征调制，配合空间-时间交错的图自编码器，把任意骨架拓扑的 BVH 动作压到一个共享潜空间，实现高保真重建以及无配对数据的零样本跨物种动作重定向。 领域现状：当前角色动画的运动表征学习几乎都建立在「规范骨架」的假设之…
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GCIB: Graph Contrastive Information Bottleneck for Multi-Behavior Recommendation
 description: >-
-  [ICML 2026][推荐系统][多行为推荐] GCIB 用"图信息瓶颈 + 跨行为对比学习"双管齐下，先在结构层把辅助行为图里与目标任务无关的边剪掉（最大化与目标行为的互信息、用 HSIC 替代项最小化与原始辅助图的互信息），再在特征层把去噪后的辅助表示和稀疏的目标表示做 InfoNCE 对齐…
+  [ICML 2026][推荐系统][多行为推荐] GCIB 用"图信息瓶颈 + 跨行为对比学习"双管齐下，先在结构层把辅助行为图里与目标任务无关的边剪掉（最大化与目标行为的互信息、用 HSIC 替代项最小化与原始辅助图的互信息），再在特征层把去噪后的辅助表示和稀疏的目标表示做 InfoNCE 对齐，从而在四个多行为推荐基准上把 HR@10 / NDCG@10 相对最佳 baseline 再推高 7%–40%。
 tags:
   - "ICML 2026"
   - "推荐系统"

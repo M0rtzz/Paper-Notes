@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3DTeethSAM: Taming SAM2 for 3D Teeth Segmentation
 description: >-
-  [AAAI 2026][3D视觉][3D牙齿分割] 将SAM2基础模型迁移到3D牙齿分割任务，通过多视角渲染将3D mesh转为2D图像、设计三个轻量适配器（Prompt生成器、Mask精化器、Mask分类器）和可变形全局注意力插件（DGAP）来解决自动提示、边界精化和语义分类问题…
+  [AAAI 2026][3D视觉][3D牙齿分割] 将SAM2基础模型迁移到3D牙齿分割任务，通过多视角渲染将3D mesh转为2D图像、设计三个轻量适配器（Prompt生成器、Mask精化器、Mask分类器）和可变形全局注意力插件（DGAP）来解决自动提示、边界精化和语义分类问题，在Teeth3DS上以91.90% T-mIoU刷新SOTA。
 tags:
   - "AAAI 2026"
   - "3D视觉"

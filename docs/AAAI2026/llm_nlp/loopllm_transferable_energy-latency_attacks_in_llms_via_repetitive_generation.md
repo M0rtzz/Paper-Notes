@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LoopLLM: Transferable Energy-Latency Attacks in LLMs via Repetitive Generation
 description: >-
-  [AAAI 2026][LLM/NLP][能耗延迟攻击] 提出LoopLLM，一种通过诱导LLM进入重复生成模式来发起能耗延迟攻击的框架，利用重复诱导提示优化和token对齐的集成优化，在12个开源和2个商业LLM上实现超过90%最大输出长度的攻击效果，跨模型迁移性提升约40%。
+  [AAAI 2026][LLM 其他][能耗延迟攻击] 提出LoopLLM，一种通过诱导LLM进入重复生成模式来发起能耗延迟攻击的框架，利用重复诱导提示优化和token对齐的集成优化，在12个开源和2个商业LLM上实现超过90%最大输出长度的攻击效果，跨模型迁移性提升约40%。 领域现状： LLM的推理过程消耗大量计算资源…
 tags:
   - "AAAI 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "能耗延迟攻击"
   - "重复生成"
   - "对抗后缀"

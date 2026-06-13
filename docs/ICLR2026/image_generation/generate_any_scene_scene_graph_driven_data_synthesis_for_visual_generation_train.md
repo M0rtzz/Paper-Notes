@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training
 description: >-
-  [ICLR 2026][图像生成][场景图] 提出 Generate Any Scene 数据引擎，基于 28K 物体×1.5K 属性×10K 关系的视觉元素分类法系统枚举场景图并转化为标题+VQA 对…
+  [ICLR 2026][图像生成][场景图] 提出 Generate Any Scene 数据引擎，基于 28K 物体×1.5K 属性×10K 关系的视觉元素分类法系统枚举场景图并转化为标题+VQA 对，支持四种应用：自我改进（SD1.5 +4%）、定向蒸馏（<800 条数据 TIFA +10%）、场景图奖励模型（DPG-Bench +5% vs CLIP）和内容审核增强。
 tags:
   - "ICLR 2026"
   - "图像生成"

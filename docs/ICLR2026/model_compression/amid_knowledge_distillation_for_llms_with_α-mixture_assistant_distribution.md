@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution
 description: >-
-  [ICLR 2026][模型压缩][知识蒸馏] 提出α-mixture assistant distribution及统一蒸馏框架AMiD，通过引入新设计变量α（控制教师-学生分布插值路径的几何形状）泛化了现有辅助分布方法（m-mixture和e-mixture为α=±1的特例）…
+  [ICLR 2026][模型压缩][知识蒸馏] 提出α-mixture assistant distribution及统一蒸馏框架AMiD，通过引入新设计变量α（控制教师-学生分布插值路径的几何形状）泛化了现有辅助分布方法（m-mixture和e-mixture为α=±1的特例），并证明了在任意散度和α下的最优性保证，在多个LLM蒸馏基准上取得SOTA性能。
 tags:
   - "ICLR 2026"
   - "模型压缩"

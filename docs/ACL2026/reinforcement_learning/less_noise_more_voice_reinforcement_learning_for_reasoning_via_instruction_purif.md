@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LENS: Less Noise, More Voice — Reinforcement Learning for Reasoning via Instruction Purification
 description: >-
-  [ACL 2026][强化学习][RLVR] LENS 发现 RLVR 中许多探索失败并非因为问题难度，而是因为 prompt 中少量（<5%）干扰 token，通过识别和删除这些 token 来提升 rollout 成功率，并将净化 rollout 的学习信号转移到原始噪声 prompt 的策略优化中…
+  [ACL 2026][强化学习][RLVR] LENS 发现 RLVR 中许多探索失败并非因为问题难度，而是因为 prompt 中少量（<5%）干扰 token，通过识别和删除这些 token 来提升 rollout 成功率，并将净化 rollout 的学习信号转移到原始噪声 prompt 的策略优化中，平均提升 3.88% 并加速 1.6 倍。
 tags:
   - "ACL 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta-Adaptive Prompt Distillation for Few-Shot Visual Question Answering
 description: >-
-  [ICLR 2026][多模态VLM][元学习] 提出 MAPD（Meta-Adaptive Prompt Distillation），一种基于 MAML 元学习的提示蒸馏方法，通过注意力映射器从任务相关的图像特征中蒸馏软提示，使 LMM 在测试时仅用少量梯度步即可适应新的视觉问答任务…
+  [ICLR 2026][多模态VLM][元学习] 提出 MAPD（Meta-Adaptive Prompt Distillation），一种基于 MAML 元学习的提示蒸馏方法，通过注意力映射器从任务相关的图像特征中蒸馏软提示，使 LMM 在测试时仅用少量梯度步即可适应新的视觉问答任务，性能超越 ICL 21.2%。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VL-Calibration: Decoupled Confidence Calibration for Large Vision-Language Models Reasoning
 description: >-
-  [ACL2026][多模态VLM][多模态校准] VL-Calibration 将 LVLM 的口头置信度拆成视觉置信度和推理置信度，并用图像扰动 KL、token 熵与 token 级优势重加权训练模型，在 13 个视觉推理基准上同时降低 ECE、提升准确率。
+  [ACL2026][多模态VLM][多模态校准] VL-Calibration 将 LVLM 的口头置信度拆成视觉置信度和推理置信度，并用图像扰动 KL、token 熵与 token 级优势重加权训练模型，在 13 个视觉推理基准上同时降低 ECE、提升准确率。 领域现状：大视觉语言模型已经能处理数学图表、几何题、常识问答和…
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2604.09529](https://arxiv.org/abs/2604.09529)  
 **代码**: https://github.com/Mr-Loevan/VL-Calibration  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: 多模态校准, 置信度解耦, 视觉不确定性, 强化学习, 幻觉抑制
 
 ## 一句话总结

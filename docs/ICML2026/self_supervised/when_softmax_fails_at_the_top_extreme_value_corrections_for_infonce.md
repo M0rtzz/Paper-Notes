@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Softmax Fails at the Top: Extreme Value Corrections for InfoNCE
 description: >-
-  [ICML 2026][自监督学习][InfoNCE] 这篇论文把 InfoNCE 解释为 top-1 选择似然，指出标准 softmax 隐含 Gumbel 尾部分布假设，而归一化 embedding 的高相似度 hard negatives 更常呈现有限端点的 Weibull 行为…
+  [ICML 2026][自监督学习][InfoNCE] 这篇论文把 InfoNCE 解释为 top-1 选择似然，指出标准 softmax 隐含 Gumbel 尾部分布假设，而归一化 embedding 的高相似度 hard negatives 更常呈现有限端点的 Weibull 行为，因此提出无额外参数的 WEINCE，用 batch 内尾部统计自适应混合 softmax logit 和 endpoint shortfall logit，稳定提升自监督表征质量。
 tags:
   - "ICML 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Locomotive Crowd Behavior Generation
 description: >-
-  [CVPR 2025][语义分割][crowd simulation] 生成连续的人群运动行为，实现轨迹和动作的联合合成，产生自然且多样的群体运动模式
+  [CVPR 2025][语义分割][crowd simulation] 生成连续的人群运动行为，实现轨迹和动作的联合合成，产生自然且多样的群体运动模式 领域现状 领域现状：Continuous Locomotive Crowd Behavior Generation 方向近年取得了显著进展，但仍存在关键挑战…
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flowing Backwards: Improving Normalizing Flows via Reverse Representation Alignment
 description: >-
-  [AAAI 2026][图像生成][Normalizing Flows] 提出 R-REPA（Reverse Representation Alignment），创造性地利用 Normalizing Flows 的可逆性，在生成（反向）路径上将中间特征与视觉基础模型对齐，同时提出免训练分类算法…
+  [AAAI 2026][图像生成][Normalizing Flows] 提出 R-REPA（Reverse Representation Alignment），创造性地利用 Normalizing Flows 的可逆性，在生成（反向）路径上将中间特征与视觉基础模型对齐，同时提出免训练分类算法，在 ImageNet 64×64 和 256×256 上实现 NF 新 SOTA，训练加速 3.3 倍。
 tags:
   - "AAAI 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRAF: Graph Retrieval Augmented by Facts for Romanian Legal Multi-Choice Question Answering
 description: >-
-  [ACL 2025][信息检索/RAG][法律问答] 提出GRAF算法，结合法律知识图谱（Law-RoG）和图注意力网络进行罗马尼亚语法律多选题问答，同时开源了首个罗马尼亚语法律MCQA数据集JuRO（10,836题）和法律语料库CROL。
+  [ACL 2025][信息检索/RAG][法律问答] 提出GRAF算法，结合法律知识图谱（Law-RoG）和图注意力网络进行罗马尼亚语法律多选题问答，同时开源了首个罗马尼亚语法律MCQA数据集JuRO（10,836题）和法律语料库CROL。 领域现状： 法律问答(Legal QA)是NLP的新兴应用领域…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

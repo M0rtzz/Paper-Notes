@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Securing Multi-Agent Systems Against Corruptions via Node Contribution Backpropagation
 description: >-
-  [ICML 2026][多智能体][Multi-Agent System] BPD 把 LLM 多智能体系统的多轮交互重构成 "带符号有向无环图"，把每条消息打成 $\{-1, 0, 1\}$ 的同意 / 漠视 / 反对分数，再用 PageRank 式的一次反向拓扑传播算出每个 agent 对最终答案的贡献分…
+  [ICML 2026][多智能体][Multi-Agent System] BPD 把 LLM 多智能体系统的多轮交互重构成 "带符号有向无环图"，把每条消息打成 $\{-1, 0, 1\}$ 的同意 / 漠视 / 反对分数，再用 PageRank 式的一次反向拓扑传播算出每个 agent 对最终答案的贡献分，分数离群者直接判定为恶意 agent 并切掉其出边——免训练、单次查询即用、对动态拓扑天然鲁棒。
 tags:
   - "ICML 2026"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iSeal: Encrypted Fingerprinting for Reliable LLM Ownership Verification
 description: >-
-  [AAAI 2026][LLM安全][LLM指纹] 提出 iSeal——首个在模型窃取者完全控制推理过程的黑盒场景下仍能可靠验证 LLM 所有权的主动指纹方法，通过外部加密编码器 + RSC 纠错 + 相似度匹配三重机制，在 12 个 LLM、10+ 种攻击下均保持 100% 指纹成功率（FSR）…
+  [AAAI 2026][LLM安全][LLM指纹] 提出 iSeal——首个在模型窃取者完全控制推理过程的黑盒场景下仍能可靠验证 LLM 所有权的主动指纹方法，通过外部加密编码器 + RSC 纠错 + 相似度匹配三重机制，在 12 个 LLM、10+ 种攻击下均保持 100% 指纹成功率（FSR），而已有方法降至 0%。
 tags:
   - "AAAI 2026"
   - "LLM安全"

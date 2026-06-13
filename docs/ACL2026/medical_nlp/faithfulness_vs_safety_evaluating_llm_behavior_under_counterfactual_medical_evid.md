@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Faithfulness vs. Safety: Evaluating LLM Behavior Under Counterfactual Medical Evidence
 description: >-
-  [ACL 2026][医疗NLP][忠实度-安全冲突] 本文构建 MedCounterFact 数据集——用无义词、医学术语、非医学物品和有毒物质系统替换临床试验中的干预措施——发现前沿 LLM 在反事实医疗证据面前几乎无条件遵从上下文，即便"证据"表明海洛因或芥子气有疗效也自信回答…
+  [ACL 2026 Findings][医疗NLP][忠实度-安全冲突] 本文构建 MedCounterFact 数据集——用无义词、医学术语、非医学物品和有毒物质系统替换临床试验中的干预措施——发现前沿 LLM 在反事实医疗证据面前几乎无条件遵从上下文，即便"证据"表明海洛因或芥子气有疗效也自信回答，揭示了忠实度与安全之间缺乏明确边界的严重问题。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "忠实度-安全冲突"
   - "反事实证据"

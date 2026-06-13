@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AGZO: Activation-Guided Zeroth-Order Optimization for LLM Fine-Tuning
 description: >-
-  [ICML2026][LLM评测][零阶微调] AGZO 发现线性层梯度行空间受前向激活子空间约束，并据此在零阶微调中只沿激活引导的低秩方向扰动参数，从而在几乎保持 MeZO 级别显存占用的同时提升梯度对齐和下游任务性能。
+  [ICML2026][LLM评测][零阶微调] AGZO 发现线性层梯度行空间受前向激活子空间约束，并据此在零阶微调中只沿激活引导的低秩方向扰动参数，从而在几乎保持 MeZO 级别显存占用的同时提升梯度对齐和下游任务性能。 领域现状：LLM 下游适配通常依赖反向传播微调，但反传需要保存前向激活，长序列和大 batch 下显存…
 tags:
   - "ICML2026"
   - "LLM评测"

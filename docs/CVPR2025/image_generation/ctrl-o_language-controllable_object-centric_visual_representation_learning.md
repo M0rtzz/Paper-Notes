@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CTRL-O: Language-Controllable Object-Centric Visual Representation Learning
 description: >-
-  [CVPR 2025][图像生成][目标中心表示] CTRL-O 将语言可控性引入目标中心表示学习，通过语言嵌入初始化 slot query、解码器语言条件化和控制对比损失，在无 mask 监督下实现语言-物体绑定，COCO 上 FG-ARI 47.5（比 Dinosaur +7.0）…
+  [CVPR 2025][图像生成][目标中心表示] CTRL-O 将语言可控性引入目标中心表示学习，通过语言嵌入初始化 slot query、解码器语言条件化和控制对比损失，在无 mask 监督下实现语言-物体绑定，COCO 上 FG-ARI 47.5（比 Dinosaur +7.0），同时支持零样本参考表达分割、实例级图像生成和 VQA。
 tags:
   - "CVPR 2025"
   - "图像生成"

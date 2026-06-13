@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Understanding Continual Factual Knowledge Acquisition of Language Models: From Theory to Algorithm
 description: >-
-  [ICML 2026][优化/理论][持续预训练] 作者在简化单层线性注意力 Transformer 上推出闭式训练动力学，证明正则化方法只能改变收敛速度而无法挪动收敛点（因此在 cFKA 场景几乎注定失效），数据回放则能直接改变收敛点并加大震荡幅度从而稳住旧知识…
+  [ICML 2026][优化/理论][持续预训练] 作者在简化单层线性注意力 Transformer 上推出闭式训练动力学，证明正则化方法只能改变收敛速度而无法挪动收敛点（因此在 cFKA 场景几乎注定失效），数据回放则能直接改变收敛点并加大震荡幅度从而稳住旧知识，进而提出按 token 注意力贡献裁切片段、引导预训练模型生成回放语料的 STOC，在合成 + KnowEdit + IndustryCorpus 法律语料上一致比 LAMOL 更能压制遗忘。
 tags:
   - "ICML 2026"
   - "优化/理论"

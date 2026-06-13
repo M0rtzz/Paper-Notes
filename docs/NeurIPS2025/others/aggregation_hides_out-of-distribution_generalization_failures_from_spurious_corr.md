@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Aggregation Hides OOD Generalization Failures from Spurious Correlations
 description: >-
-  [NeurIPS 2025][OOD泛化] 揭示 OOD 泛化 benchmark 中"聚合掩蔽"现象——aggregate 评估显示 accuracy-on-the-line（ID 与 OOD 准确率正相关），但 OODSelect 方法可从同一 OOD 数据中找到大规模语义连贯子集（最高达 75%）…
+  [NeurIPS 2025 Spotlight][OOD泛化] 揭示 OOD 泛化 benchmark 中"聚合掩蔽"现象——aggregate 评估显示 accuracy-on-the-line（ID 与 OOD 准确率正相关），但 OODSelect 方法可从同一 OOD 数据中找到大规模语义连贯子集（最高达 75%），这些子集上 ID 越高 OOD 反而越低（Pearson R 低至 -0.92），证明虚假相关的危害被聚合评估系统性隐藏。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "OOD泛化"
   - "虚假相关"
   - "聚合偏差"

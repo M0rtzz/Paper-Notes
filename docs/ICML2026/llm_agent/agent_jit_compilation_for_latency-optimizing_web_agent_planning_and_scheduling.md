@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agent JIT Compilation for Latency-Optimizing Web Agent Planning and Scheduling
 description: >-
-  [ICML 2026][LLM Agent][computer-use agent] 这篇论文把网页 Computer-Use Agent 从逐步截图-调用 LLM-执行的循环，改造成类似 JIT 编译器的系统：把自然语言任务编译成可校验、可缓存、可并行调度的代码计划…
+  [ICML 2026][LLM Agent][computer-use agent] 这篇论文把网页 Computer-Use Agent 从逐步截图-调用 LLM-执行的循环，改造成类似 JIT 编译器的系统：把自然语言任务编译成可校验、可缓存、可并行调度的代码计划，从而让 JIT-Planner 比 Browser-Use 快 10.4×且准确率高 28pp，让 JIT-Scheduler 比 OpenAI CUA 快 2.4×且准确率高 9pp。
 tags:
   - "ICML 2026"
   - "LLM Agent"

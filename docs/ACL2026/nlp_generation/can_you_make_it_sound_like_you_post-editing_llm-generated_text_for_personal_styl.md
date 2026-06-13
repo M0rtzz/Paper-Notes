@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can You Make It Sound Like You? Post-Editing LLM-Generated Text for Personal Style
 description: >-
-  [ACL 2026][文本生成][个人写作风格] 作者设计一项 81 人预注册在线研究，让被试用 GPT-o4-mini 起草+人工 post-edit 重写婚礼誓词、道歉信等"在意个人风格"的文本，发现 post-edit 确实能显著拉近被试自身风格、远离 LLM 风格…
+  [ACL 2026][文本生成][个人写作风格] 作者设计一项 81 人预注册在线研究，让被试用 GPT-o4-mini 起草+人工 post-edit 重写婚礼誓词、道歉信等"在意个人风格"的文本，发现 post-edit 确实能显著拉近被试自身风格、远离 LLM 风格，但被编辑后的文本仍系统性地比独立写作更"AI 味"——而被试自己却感知不到这种残留风格痕迹。
 tags:
   - "ACL 2026"
   - "文本生成"

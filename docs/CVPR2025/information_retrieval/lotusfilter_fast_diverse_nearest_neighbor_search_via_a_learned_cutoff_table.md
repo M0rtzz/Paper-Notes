@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LotusFilter: Fast Diverse Nearest Neighbor Search via a Learned Cutoff Table
 description: >-
-  [CVPR 2025][信息检索/RAG][多样化最近邻搜索] 提出LotusFilter，通过离线预计算每个向量的邻近关系构建截断表(cutoff table)，在线阶段用贪心集合删除实现多样化过滤，将传统 $O(DS^2)$ 的多样化搜索降至 $O(T+S+KL)$，过滤仅需0.02ms/query…
+  [CVPR 2025][信息检索/RAG][多样化最近邻搜索] 提出LotusFilter，通过离线预计算每个向量的邻近关系构建截断表(cutoff table)，在线阶段用贪心集合删除实现多样化过滤，将传统 $O(DS^2)$ 的多样化搜索降至 $O(T+S+KL)$，过滤仅需0.02ms/query，内存仅为传统方法的1/40。
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

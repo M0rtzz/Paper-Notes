@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToolMATH: A Math Tool Benchmark for Realistic Long-Horizon Multi-Tool Reasoning
 description: >-
-  [ICML 2026][LLM推理][工具调用评测] 作者把 MATH 数据集的人工标注解题步骤逐步翻译成"带描述与类型签名的可复用 Python 工具"，构造出含 8K 题 + 12K 工具的 ToolMATH 基准…
+  [ICML 2026][LLM推理][工具调用评测] 作者把 MATH 数据集的人工标注解题步骤逐步翻译成"带描述与类型签名的可复用 Python 工具"，构造出含 8K 题 + 12K 工具的 ToolMATH 基准；它同时覆盖长程多工具组合（hop 1-8+）、可控的干扰工具相似度（5 级 × 4 种密度）、以及"金标工具被全部移除"的工具缺失场景，验证显示模型失败的主导因素不是工具选择而是推理本身——thought error 占 90%+，而干扰工具会把早期的小偏差放大成不可逆的执行漂移。
 tags:
   - "ICML 2026"
   - "LLM推理"

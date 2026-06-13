@@ -2,7 +2,7 @@
 title: >-
   [论文解读] YOLO-IOD: Towards Real Time Incremental Object Detection
 description: >-
-  [AAAI 2026][目标检测][增量目标检测] 首次系统性地将增量目标检测（IOD）引入 YOLO 实时框架，识别三种知识冲突类型，提出 CPR + IKS + CAKD 三模块协同解决方案，并引入更真实的 LoCo COCO 基准评估。
+  [AAAI 2026][目标检测][增量目标检测] 首次系统性地将增量目标检测（IOD）引入 YOLO 实时框架，识别三种知识冲突类型，提出 CPR + IKS + CAKD 三模块协同解决方案，并引入更真实的 LoCo COCO 基准评估。 增量目标检测（IOD）：要求模型在学习新类别的同时保留旧类别的检测能力…
 tags:
   - "AAAI 2026"
   - "目标检测"

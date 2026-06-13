@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SVL: Spike-based Vision-Language Pretraining for Efficient 3D Open-World Understanding
 description: >-
-  [ICML 2026][3D视觉][脉冲神经网络] SVL 用「3D-图像-文本」三模态对比预训练给脉冲神经网络（SNN）注入开放世界理解能力，并通过把文本编码器"重参数化"为一组分类权重，让推理阶段完全脱离文本塔、保持纯脉冲驱动…
+  [ICML 2026 Spotlight][3D视觉][脉冲神经网络] SVL 用「3D-图像-文本」三模态对比预训练给脉冲神经网络（SNN）注入开放世界理解能力，并通过把文本编码器"重参数化"为一组分类权重，让推理阶段完全脱离文本塔、保持纯脉冲驱动，在 ModelNet40 零样本分类上达到 85.4% 同时能耗仅为同档 ANN 方法的 0.5%–11%。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "3D视觉"
   - "脉冲神经网络"
   - "3D开放世界理解"

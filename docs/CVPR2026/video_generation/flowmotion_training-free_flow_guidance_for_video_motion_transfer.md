@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowMotion: Training-Free Flow Guidance for Video Motion Transfer
 description: >-
-  [CVPR2026][视频生成][video motion transfer] 提出 FlowMotion，一种无需训练的视频运动迁移框架，通过直接利用 flow-based T2V 模型的预测输出（latent prediction）构建运动引导信号，避免对模型内部层做梯度回传…
+  [CVPR2026][视频生成][video motion transfer] 提出 FlowMotion，一种无需训练的视频运动迁移框架，通过直接利用 flow-based T2V 模型的预测输出（latent prediction）构建运动引导信号，避免对模型内部层做梯度回传，在保持运动保真度的同时大幅降低推理时间和显存开销。
 tags:
   - "CVPR2026"
   - "视频生成"

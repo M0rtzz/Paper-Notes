@@ -2,7 +2,7 @@
 title: >-
   [论文解读] P-Check: Advancing Personalized Reward Model via Learning to Generate Dynamic Checklist
 description: >-
-  [ACL2026][LLM对齐][个性化奖励模型] P-Check 把个性化奖励建模从“给用户历史塞进 judge”改成“先为当前用户和当前问题生成带权重的动态评价 checklist，再用它指导奖励打分”…
+  [ACL2026][LLM对齐][个性化奖励模型] P-Check 把个性化奖励建模从“给用户历史塞进 judge”改成“先为当前用户和当前问题生成带权重的动态评价 checklist，再用它指导奖励打分”，在 PRISM、Arena、BESPOKE 的个性化偏好预测和下游生成任务上都显著优于 persona、记忆检索和微调奖励模型基线。
 tags:
   - "ACL2026"
   - "LLM对齐"

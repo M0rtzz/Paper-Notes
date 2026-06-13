@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scene-VLM: Multimodal Video Scene Segmentation via Vision-Language Models
 description: >-
-  [CVPR2026][多模态VLM][视频场景分割] 提出 Scene-VLM——首个基于微调 VLM 的视频场景分割框架，通过结构化多模态镜头表征（视觉帧+对白+元数据）、因果序列预测、上下文-焦点窗口机制和 token logits 置信度提取…
+  [CVPR2026][多模态VLM][视频场景分割] 提出 Scene-VLM——首个基于微调 VLM 的视频场景分割框架，通过结构化多模态镜头表征（视觉帧+对白+元数据）、因果序列预测、上下文-焦点窗口机制和 token logits 置信度提取，在 MovieNet 上取得 +6 AP 和 +13.7 F1 的大幅提升，并展示了自然语言解释能力。
 tags:
   - "CVPR2026"
   - "多模态VLM"

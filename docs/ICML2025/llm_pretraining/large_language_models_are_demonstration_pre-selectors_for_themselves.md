@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Language Models are Demonstration Pre-Selectors for Themselves
 description: >-
-  [ICML 2025][预训练][in-context learning] 提出 FEEDER（FEw yet Essential Demonstration prE-selectoR），一个基于"充分性"和"必要性"度量的示例预选框架，利用 LLM 自身能力从训练数据中识别代表性子集…
+  [ICML 2025][预训练][in-context learning] 提出 FEEDER（FEw yet Essential Demonstration prE-selectoR），一个基于"充分性"和"必要性"度量的示例预选框架，利用 LLM 自身能力从训练数据中识别代表性子集，在 ICL 和微调两个场景下均可减少 20%+ 数据量同时保持甚至提升性能。
 tags:
   - "ICML 2025"
   - "预训练"

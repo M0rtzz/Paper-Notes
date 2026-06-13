@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Classic Video Denoising in a Machine Learning World: Robust, Fast, and Controllable
 description: >-
-  [CVPR 2025][图像恢复][去噪] 重新审视经典视频去噪方法并与现代ML工具结合，实现鲁棒、快速且噪声级别可控的视频去噪
+  [CVPR 2025][图像恢复][去噪] 重新审视经典视频去噪方法并与现代ML工具结合，实现鲁棒、快速且噪声级别可控的视频去噪 领域现状 领域现状：Classic Video Denoising in a Machine Learning World 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化性、…
 tags:
   - "CVPR 2025"
   - "图像恢复"

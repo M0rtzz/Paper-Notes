@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event2Vec: Processing Neuromorphic Events Directly by Representations in Vector Space
 description: >-
-  [ICML 2026][模型压缩][event camera] 仿照 word2vec 的思路，把事件相机产生的稀疏异步事件 $(x,y,t,p)$ 直接嵌入到向量空间，用参数化空间嵌入 + 卷积时间嵌入 + K-Means++ 聚合，让标准 Transformer 既能保留事件的稀疏异步特性…
+  [ICML 2026][模型压缩][event camera] 仿照 word2vec 的思路，把事件相机产生的稀疏异步事件 $(x,y,t,p)$ 直接嵌入到向量空间，用参数化空间嵌入 + 卷积时间嵌入 + K-Means++ 聚合，让标准 Transformer 既能保留事件的稀疏异步特性，又能在 GPU 上高吞吐运行，参数量只有以往 SOTA 的 $\tfrac{1}{2.8} \sim \tfrac{1}{816}$。
 tags:
   - "ICML 2026"
   - "模型压缩"

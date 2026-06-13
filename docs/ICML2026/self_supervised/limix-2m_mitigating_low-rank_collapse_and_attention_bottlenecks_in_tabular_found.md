@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LimiX-2M: Mitigating Low-Rank Collapse and Attention Bottlenecks in Tabular Foundation Models
 description: >-
-  [ICML 2026][自监督学习][表格基础模型] 针对 TabPFN-v2 等表格基础模型在浅层出现严重低秩坍缩、且最后一层 sample-attention 对预测信号贡献微弱的两个病灶，作者提出用径向基函数把每个标量扩展成一组局部响应（RaBEL）来打开"值方向"的自由度…
+  [ICML 2026][自监督学习][表格基础模型] 针对 TabPFN-v2 等表格基础模型在浅层出现严重低秩坍缩、且最后一层 sample-attention 对预测信号贡献微弱的两个病灶，作者提出用径向基函数把每个标量扩展成一组局部响应（RaBEL）来打开"值方向"的自由度，并把双向注意力块从 F→S→N 重排成 S→N→F 以确保所有注意力路径都汇入读出，仅用 2M 参数就在主流表格 benchmark 上稳定胜过 7M 的 TabPFN-v2 和 27M 的 TabICL。
 tags:
   - "ICML 2026"
   - "自监督学习"

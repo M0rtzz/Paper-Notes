@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers
 description: >-
-  [AAAI 2026][位置编码] Tab-PET 提出从表格特征间关联关系中估计图结构，利用图拉普拉斯特征向量构造位置编码（PE）注入 Tabular Transformer，理论和实验均证明 PE 可降低嵌入的有效秩从而提升泛化…
+  [AAAI 2026][位置编码] Tab-PET 提出从表格特征间关联关系中估计图结构，利用图拉普拉斯特征向量构造位置编码（PE）注入 Tabular Transformer，理论和实验均证明 PE 可降低嵌入的有效秩从而提升泛化，在 50 个数据集上为 TabTransformer / SAINT / FT-Transformer 带来一致改进，且 Spearman 关联图效果最佳。
 tags:
   - "AAAI 2026"
   - "位置编码"

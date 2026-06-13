@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mdok-style at SemEval-2026 Task 9: Finetuning LLMs for Multilingual Polarization Detection
 description: >-
-  [ACL 2026 (SemEval-2026 Task 9 system paper)][社会计算][极化检测] 将原本用于多语言机器生成文本检测的 mdok 系统（QLoRA 微调 Qwen3-32B / Gemma-3-27B）迁移到 SemEval-2026 Task 9 多语言极化检测…
+  [ACL 2026 (SemEval-2026 Task 9 system paper)][社会计算][极化检测] 将原本用于多语言机器生成文本检测的 mdok 系统（QLoRA 微调 Qwen3-32B / Gemma-3-27B）迁移到 SemEval-2026 Task 9 多语言极化检测，并叠加匿名化、大小写、同形字四种数据增强，在 22 种语言上跑出比官方 baseline 平均高 3–4% Macro-F1 的结果。
 tags:
   - "ACL 2026 (SemEval-2026 Task 9 system paper)"
   - "社会计算"
@@ -137,10 +137,10 @@ subtask 1 用标准 cross-entropy；subtask 2/3 用 BCE-with-logits 处理 multi
 - **vs 数据增强工作**：相比 EDA / back-translation，对偶式增强（原文 + 增强副本 + 全局去重）更轻量，且同形字攻击是文本鲁棒性社区里少见的训练侧用法。
 
 ## 评分
-- 新颖性: ⭐⭐☆☆☆ 主要贡献是迁移已有 mdok pipeline 到新任务，技术创新有限，但同形字训练增强 + 22 语言合并是实用 trick。
-- 实验充分度: ⭐⭐⭐☆☆ 22 语言 × 3 subtask 完整跑出，per-label 细粒度分析齐全；但缺少消融（同形字 / 匿名化各自的贡献未单独验证）。
-- 写作质量: ⭐⭐⭐☆☆ system paper 标准写法，方法清晰但缺失关键细节（LoRA rank、目标模块等）。
-- 价值: ⭐⭐⭐☆☆ 对参加 SemEval / 做多语言文本分类的工程团队有直接复用价值；学术上贡献有限。
+- 新颖性: ⭐⭐⭐☆☆☆ 主要贡献是迁移已有 mdok pipeline 到新任务，技术创新有限，但同形字训练增强 + 22 语言合并是实用 trick。
+- 实验充分度: ⭐⭐⭐⭐☆☆ 22 语言 × 3 subtask 完整跑出，per-label 细粒度分析齐全；但缺少消融（同形字 / 匿名化各自的贡献未单独验证）。
+- 写作质量: ⭐⭐⭐⭐☆☆ system paper 标准写法，方法清晰但缺失关键细节（LoRA rank、目标模块等）。
+- 价值: ⭐⭐⭐⭐☆☆ 对参加 SemEval / 做多语言文本分类的工程团队有直接复用价值；学术上贡献有限。
 
 <!-- RELATED:START -->
 

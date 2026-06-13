@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Fin-Bias: Comprehensive Evaluation for LLM Decision-Making under human bias in Finance Domain
 description: >-
-  [ACL 2026][LLM评测][Herding] Fin-Bias 用 8868 份长篇分析师报告构造了一个"原始 / 去掉评级 / 替换为假评级"三版输入的对照基准，证明 18 个 LLM（含 GPT-5、Claude-4-Sonnet）在金融投资评级时严重"羊群" — 即使是无中生有的 fake ra…
+  [ACL 2026 Findings][LLM评测][Herding] Fin-Bias 用 8868 份长篇分析师报告构造了一个"原始 / 去掉评级 / 替换为假评级"三版输入的对照基准，证明 18 个 LLM（含 GPT-5、Claude-4-Sonnet）在金融投资评级时严重"羊群" — 即使是无中生有的 fake rating 也会被 30% 的样本盲从，而用 MPQA 主观词典过滤上下文里的人类观点 + DPO 微调可以把开源 8B 模型反推到比 GPT-5 还准的水准。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "Herding"
   - "分析师报告"

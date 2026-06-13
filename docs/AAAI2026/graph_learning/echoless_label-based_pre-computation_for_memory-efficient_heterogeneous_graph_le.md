@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoLess: Label-Based Pre-Computation for Memory-Efficient Heterogeneous Graph Learning
 description: >-
-  [AAAI 2026][图学习][异构图学习] Echoless-LP 通过分区聚焦的无回声传播（PFEP）消除标签预计算中多跳消息传递导致的训练标签泄露（回声效应），结合非对称分区方案（APS）和 PostAdjust 机制解决分区造成的信息损失和分布偏移，在保持内存高效的同时兼容任意消息传递方法…
+  [AAAI 2026][图学习][异构图学习] Echoless-LP 通过分区聚焦的无回声传播（PFEP）消除标签预计算中多跳消息传递导致的训练标签泄露（回声效应），结合非对称分区方案（APS）和 PostAdjust 机制解决分区造成的信息损失和分布偏移，在保持内存高效的同时兼容任意消息传递方法，在多个异构图数据集上取得 SOTA 性能。
 tags:
   - "AAAI 2026"
   - "图学习"

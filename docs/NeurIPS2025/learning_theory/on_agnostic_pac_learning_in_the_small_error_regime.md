@@ -2,9 +2,10 @@
 title: >-
   [论文解读] On Agnostic PAC Learning in the Small Error Regime
 description: >-
-  [NeurIPS 2025][PAC 学习] 本文在不可知 PAC 学习的小误差域（$\tau \approx d/m$）中，构造了一个基于 ERM 聚合的计算高效学习器，实现了 $c \cdot \tau + O(\sqrt{\tau d/m} + d/m)$ 的误差上界（$c \leq 2.1$）…
+  [NeurIPS 2025][学习理论 / 计算学习论][PAC 学习] 本文在不可知 PAC 学习的小误差域（$\tau \approx d/m$）中，构造了一个基于 ERM 聚合的计算高效学习器，实现了 $c \cdot \tau + O(\sqrt{\tau d/m} + d/m)$ 的误差上界（$c \leq 2.1$），匹配了已知下界，推进了不可知学习的精确复杂度刻画。
 tags:
   - "NeurIPS 2025"
+  - "学习理论 / 计算学习论"
   - "PAC 学习"
   - "不可知学习"
   - "ERM"

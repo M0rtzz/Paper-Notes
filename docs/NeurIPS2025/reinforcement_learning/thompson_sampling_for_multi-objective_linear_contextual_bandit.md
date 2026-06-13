@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thompson Sampling for Multi-Objective Linear Contextual Bandit
 description: >-
-  [NeurIPS 2025][强化学习][Thompson采样] 提出MOL-TS——首个具有worst-case Pareto regret理论保证的多目标线性上下文Bandit Thompson Sampling算法，通过定义"有效Pareto最优臂"概念和乐观采样策略…
+  [NeurIPS 2025][强化学习][Thompson采样] 提出MOL-TS——首个具有worst-case Pareto regret理论保证的多目标线性上下文Bandit Thompson Sampling算法，通过定义"有效Pareto最优臂"概念和乐观采样策略，实现$\widetilde{O}(d^{3/2}\sqrt{T})$的regret上界，目标数$L$仅增加$O(\log L)$因子。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

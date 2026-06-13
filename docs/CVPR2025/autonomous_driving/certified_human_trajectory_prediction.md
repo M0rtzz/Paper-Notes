@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certified Human Trajectory Prediction
 description: >-
-  [CVPR 2025][自动驾驶][认证鲁棒性] 首次将随机平滑（Randomized Smoothing）认证技术引入人类轨迹预测任务，通过mean/median聚合函数和扩散去噪器为轨迹预测模型提供保证性鲁棒性——即无论输入噪声如何扰动（在半径R内），输出始终保持在认证边界内。
+  [CVPR 2025][自动驾驶][认证鲁棒性] 首次将随机平滑（Randomized Smoothing）认证技术引入人类轨迹预测任务，通过mean/median聚合函数和扩散去噪器为轨迹预测模型提供保证性鲁棒性——即无论输入噪声如何扰动（在半径R内），输出始终保持在认证边界内。 领域现状：人类轨迹预测是自动驾驶的关键任务…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

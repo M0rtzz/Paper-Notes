@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DriveDPO: Policy Learning via Safety DPO For End-to-End Autonomous Driving
 description: >-
-  [NeurIPS 2025][自动驾驶][端到端自动驾驶] 提出DriveDPO两阶段框架——先通过统一策略蒸馏将人类模仿相似度与规则安全分数融合为单一监督分布，再用Safety DPO构建"看似human-like但不安全 vs 既human-like又安全"的轨迹偏好对进行策略微调——在NAVSIM上达P…
+  [NeurIPS 2025][自动驾驶][端到端自动驾驶] 提出DriveDPO两阶段框架——先通过统一策略蒸馏将人类模仿相似度与规则安全分数融合为单一监督分布，再用Safety DPO构建"看似human-like但不安全 vs 既human-like又安全"的轨迹偏好对进行策略微调——在NAVSIM上达PDMS 90.0新SOTA。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

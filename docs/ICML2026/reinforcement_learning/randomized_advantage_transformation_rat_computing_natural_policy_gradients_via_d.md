@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Randomized Advantage Transformation (RAT): Computing Natural Policy Gradients via Direct Backpropagation
 description: >-
-  [ICML2026][强化学习][自然策略梯度] 通过 Woodbury 恒等式把 Tikhonov 正则化的自然策略梯度改写为"带有变换后优势的普通策略梯度"，再用随机分块 Kaczmarz 迭代在 mini-batch 上求解这个优势变换…
+  [ICML2026][强化学习][自然策略梯度] 通过 Woodbury 恒等式把 Tikhonov 正则化的自然策略梯度改写为"带有变换后优势的普通策略梯度"，再用随机分块 Kaczmarz 迭代在 mini-batch 上求解这个优势变换，从而完全绕开 Fisher 矩阵的显式构造、共轭梯度内循环以及 KFAC 那类架构相关的曲率近似——只用一次标准反向传播就能拿到自然策略梯度，并在 MuJoCo 与 Procgen 上匹配或超过 TRPO/ACKTR/KFAC 的表现。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.18591](https://arxiv.org/abs/2605.18591)  
 **代码**: https://github.com/agent-lab/ICML2026-RAT  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: 自然策略梯度, Woodbury 公式, Kaczmarz 迭代, 优势变换, on-policy RL  
 
 ## 一句话总结

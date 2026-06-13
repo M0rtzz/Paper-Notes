@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Backdoor Detection for Object Detection Models
 description: >-
-  [CVPR 2025][目标检测][后门攻击检测] TRACE（TRAnsformation Consistency Evaluation）提出了首个面向目标检测模型的测试时后门样本检测方法…
+  [CVPR 2025][目标检测][后门攻击检测] TRACE（TRAnsformation Consistency Evaluation）提出了首个面向目标检测模型的测试时后门样本检测方法，基于两个关键观察——中毒样本在不同背景下检测结果更一致、干净样本在不同聚焦信息下更一致——通过对前景和背景施加变换后计算目标置信度方差来检测中毒样本，实现黑盒通用检测，AUROC 比 SOTA 提升 30%。
 tags:
   - "CVPR 2025"
   - "目标检测"

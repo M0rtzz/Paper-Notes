@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beautiful Images, Toxic Words: Understanding and Addressing Offensive Text in Generated Images
 description: >-
-  [AAAI2026][图像生成][扩散模型] 揭示扩散模型在生成图像中嵌入 NSFW 文字的新威胁，提出基于文本生成层定向 LoRA 微调的 NSFW-Intervention 方法，并发布 ToxicBench 基准。
+  [AAAI2026][图像生成][扩散模型] 揭示扩散模型在生成图像中嵌入 NSFW 文字的新威胁，提出基于文本生成层定向 LoRA 微调的 NSFW-Intervention 方法，并发布 ToxicBench 基准。 - 当前主流扩散模型（SD3、SDXL、Flux、DeepFloyd IF）在生成图像时不仅能渲染逼真视…
 tags:
   - "AAAI2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nearly Optimal Sample Complexity for Learning with Label Proportions
 description: >-
-  [ICML 2025][优化/理论][learning from label proportions] 本文研究从标签比例学习（LLP）的样本复杂度，在平方损失下给出了近最优的样本复杂度上下界，并设计了基于 ERM 和 SGD 的算法，在关于 bag size 的依赖关系上显著改进了现有结果。
+  [ICML 2025][优化/理论][learning from label proportions] 本文研究从标签比例学习（LLP）的样本复杂度，在平方损失下给出了近最优的样本复杂度上下界，并设计了基于 ERM 和 SGD 的算法，在关于 bag size 的依赖关系上显著改进了现有结果。 领域现状： Learning…
 tags:
   - "ICML 2025"
   - "优化/理论"

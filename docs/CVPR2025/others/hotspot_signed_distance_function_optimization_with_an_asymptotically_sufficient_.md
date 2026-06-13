@@ -2,14 +2,14 @@
 title: >-
   [论文解读] HotSpot: Signed Distance Function Optimization with an Asymptotically Sufficient Condition
 description: >-
-  [CVPR 2025][符号距离函数] 提出 HotSpot，基于 screened Poisson 方程与距离的经典关系设计新的 SDF 优化损失，提供了渐近充分条件保证收敛到真正的距离函数（而非仅满足 Eikonal 的伪解），同时自然惩罚多余表面积，在复杂形状上显著优于 SAL/DiGS/StEik。
+  [CVPR 2025][签名距离函数] 本文提出 HotSpot，利用屏蔽泊松方程与距离场的经典关系设计新的 heat loss，为神经签名距离函数优化提供渐近充分条件，保证隐式函数收敛到真实距离场，在复杂拓扑的2D/3D表面重建中显著超越现有方法。 领域现状：神经签名距离函数（neural SDF）是当前隐式表面表示的主流…
 tags:
   - "CVPR 2025"
-  - "符号距离函数"
+  - "签名距离函数"
+  - "神经隐式表面"
+  - "点云重建"
+  - "热方程"
   - "表面重建"
-  - "Poisson方程"
-  - "Eikonal约束"
-  - "距离场优化"
 ---
 
 # HotSpot: Signed Distance Function Optimization with an Asymptotically Sufficient Condition
@@ -128,3 +128,19 @@ tags:
   - Eikonal约束
   - 距离场优化
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Sufficient Invariant Learning for Distribution Shift](sufficient_invariant_learning_for_distribution_shift.md)
+- [\[AAAI 2026\] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
+- [\[CVPR 2025\] Locally Orderless Images for Optimization in Differentiable Rendering](locally_orderless_images_for_optimization_in_differentiable_rendering.md)
+- [\[CVPR 2025\] Instance-wise Supervision-level Optimization in Active Learning](instance-wise_supervision-level_optimization_in_active_learning.md)
+- [\[NeurIPS 2025\] Learning to Condition: A Neural Heuristic for Scalable MPE Inference](../../NeurIPS2025/others/learning_to_condition_a_neural_heuristic_for_scalable_mpe_inference.md)
+
+</div>
+
+<!-- RELATED:END -->

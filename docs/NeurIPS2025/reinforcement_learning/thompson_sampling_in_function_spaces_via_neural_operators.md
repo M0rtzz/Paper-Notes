@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thompson Sampling in Function Spaces via Neural Operators
 description: >-
-  [NeurIPS 2025][强化学习][Thompson采样] 将 Thompson 采样 (TS) 从有限维参数空间扩展到无限维函数空间，利用神经算子 (Neural Operators) 作为高斯过程后验的近似采样器，实现了对涉及偏微分方程 (PDE) 的功能优化问题的高效求解。
+  [NeurIPS 2025][强化学习][Thompson采样] 将 Thompson 采样 (TS) 从有限维参数空间扩展到无限维函数空间，利用神经算子 (Neural Operators) 作为高斯过程后验的近似采样器，实现了对涉及偏微分方程 (PDE) 的功能优化问题的高效求解。 功能优化问题 许多科学和工程问题可以表…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

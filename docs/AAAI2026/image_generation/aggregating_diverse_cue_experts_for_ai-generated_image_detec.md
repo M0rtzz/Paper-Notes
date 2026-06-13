@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aggregating Diverse Cue Experts for AI-Generated Image Detection
 description: >-
-  [AAAI 2026][图像生成][AI生成图像检测] 提出Multi-Cue Aggregation Network (MCAN)，通过混合编码器适配器(MoEA)将原始图像、高频信息和新提出的色度不一致性(CI)三种互补线索统一融合，实现跨生成模型的鲁棒AI生成图像检测。
+  [AAAI 2026][图像生成][AI生成图像检测] 提出Multi-Cue Aggregation Network (MCAN)，通过混合编码器适配器(MoEA)将原始图像、高频信息和新提出的色度不一致性(CI)三种互补线索统一融合，实现跨生成模型的鲁棒AI生成图像检测。 领域现状 领域现状：随着图像生成模型（GAN、扩…
 tags:
   - "AAAI 2026"
   - "图像生成"

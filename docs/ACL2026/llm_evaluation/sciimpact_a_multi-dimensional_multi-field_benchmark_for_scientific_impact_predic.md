@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction
 description: >-
-  [ACL 2026][LLM评测][科学影响力预测] 本文构建 SciImpact——首个跨 19 个学科领域、涵盖 7 个影响力维度（引用、奖项、专利、媒体、代码、数据集、模型）的大规模科学影响力预测基准，包含 215,928 个对比论文对，通过多任务微调使 4B 模型超越 o4-mini 等大模型。
+  [ACL 2026 Findings][LLM评测][科学影响力预测] 本文构建 SciImpact——首个跨 19 个学科领域、涵盖 7 个影响力维度（引用、奖项、专利、媒体、代码、数据集、模型）的大规模科学影响力预测基准，包含 215,928 个对比论文对，通过多任务微调使 4B 模型超越 o4-mini 等大模型。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "科学影响力预测"
   - "多维度基准"

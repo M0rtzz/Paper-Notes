@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MLLM-as-a-Judge for Image Safety without Human Labeling
 description: >-
-  [CVPR 2025][多模态VLM][image safety] 提出 CLUE 框架，通过规则客观化、CLIP 相关性扫描、前置条件链分解和去偏 token 概率分析，实现无需人工标注的零样本图像安全判定，在多个 MLLM 上大幅超越基线。
+  [CVPR 2025][多模态VLM][image safety] 提出 CLUE 框架，通过规则客观化、CLIP 相关性扫描、前置条件链分解和去偏 token 概率分析，实现无需人工标注的零样本图像安全判定，在多个 MLLM 上大幅超越基线。 领域现状： 在线平台和 AIGC 时代，图像内容安全审核至关重要…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

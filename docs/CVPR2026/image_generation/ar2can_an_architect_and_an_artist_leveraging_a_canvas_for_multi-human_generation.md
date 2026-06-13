@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ar2Can: An Architect and an Artist Leveraging a Canvas for Multi-Human Generation
 description: >-
-  [CVPR 2026][图像生成][Multi-Human Generation] Ar2Can 提出将多人图像生成分解为空间规划（Architect）和身份保留渲染（Artist）两阶段，通过 GRPO 强化学习配合基于匈牙利匹配的空间锚定人脸奖励函数训练 Artist 模型…
+  [CVPR 2026][图像生成][Multi-Human Generation] Ar2Can 提出将多人图像生成分解为空间规划（Architect）和身份保留渲染（Artist）两阶段，通过 GRPO 强化学习配合基于匈牙利匹配的空间锚定人脸奖励函数训练 Artist 模型，在 MultiHuman-Testbench 上实现了 68.2 的身份保留分数和 90.2 的计数准确率，大幅超越所有基线。
 tags:
   - "CVPR 2026"
   - "图像生成"

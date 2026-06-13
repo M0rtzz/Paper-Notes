@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Topology-Driven Multi-Subspace Fusion for Grassmannian Deep Networks
 description: >-
-  [AAAI 2026][视频理解][Grassmannian] 提出拓扑驱动的 Grassmann 流形多子空间融合网络 GMSF-Net，通过自适应多子空间构建和基于 Fréchet 均值的子空间交互机制，将欧氏空间中多通道交互的思想成功迁移到非欧几何域…
+  [AAAI 2026][视频理解][Grassmannian] 提出拓扑驱动的 Grassmann 流形多子空间融合网络 GMSF-Net，通过自适应多子空间构建和基于 Fréchet 均值的子空间交互机制，将欧氏空间中多通道交互的思想成功迁移到非欧几何域，在 3D 动作识别、EEG 分类和图任务上取得 SOTA 性能。
 tags:
   - "AAAI 2026"
   - "视频理解"

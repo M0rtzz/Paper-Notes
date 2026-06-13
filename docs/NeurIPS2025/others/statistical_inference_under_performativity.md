@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Statistical Inference Under Performativity
 description: >-
-  [NeurIPS 2025][表演性预测] 本文首次建立了表演性预测（performative prediction）下完整的端到端统计推断框架，为重复风险最小化算法推导出中心极限定理和数据驱动的协方差估计方法，并将预测驱动推断（PPI）扩展到动态表演性设置以获得更紧的置信区间。
+  [NeurIPS 2025][表演性预测] 本文首次建立了表演性预测（performative prediction）下完整的端到端统计推断框架，为重复风险最小化算法推导出中心极限定理和数据驱动的协方差估计方法，并将预测驱动推断（PPI）扩展到动态表演性设置以获得更紧的置信区间。 领域现状：表演性预测（performativ…
 tags:
   - "NeurIPS 2025"
   - "表演性预测"

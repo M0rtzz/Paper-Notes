@@ -2,9 +2,9 @@
 title: >-
   [论文解读] GoViG: Goal-Conditioned Visual Navigation Instruction Generation via Multimodal Reasoning
 description: >-
-  [ACL 2026][机器人][导航指令生成] GoViG 提出一个**只靠第一视角初始与目标观测**就能生成导航指令的新任务，并把它拆成"先想象中间画面再写指令"两步，用 Anole-7B 在 token 级 MSE + 标签平滑 CE 双目标下联合训练…
+  [ACL 2026 Findings][机器人][导航指令生成] GoViG 提出一个**只靠第一视角初始与目标观测**就能生成导航指令的新任务，并把它拆成"先想象中间画面再写指令"两步，用 Anole-7B 在 token 级 MSE + 标签平滑 CE 双目标下联合训练，配合 one-pass / interleaved 两种多模态推理策略，把 BLEU-4 从基线 0.08 推到 0.32 并在跨域真实视频上保持 0.27。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "机器人"
   - "导航指令生成"
   - "egocentric"

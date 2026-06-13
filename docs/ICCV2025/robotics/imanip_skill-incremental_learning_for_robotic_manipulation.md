@@ -2,7 +2,7 @@
 title: >-
   [论文解读] iManip: Skill-Incremental Learning for Robotic Manipulation
 description: >-
-  [ICCV 2025][机器人][增量学习] 提出 iManip 框架，通过时序回放策略和可扩展 PerceiverIO 架构，使机器人能够在不重新训练的情况下持续学习新的操作技能，同时缓解对已学技能的灾难性遗忘，在 RLBench 上比传统增量基线平均提升 9.4%。
+  [ICCV 2025][机器人][增量学习] 提出 iManip 框架，通过时序回放策略和可扩展 PerceiverIO 架构，使机器人能够在不重新训练的情况下持续学习新的操作技能，同时缓解对已学技能的灾难性遗忘，在 RLBench 上比传统增量基线平均提升 9.4%。 领域现状：机器人操作领域的主流方法集中于提升单一或多任…
 tags:
   - "ICCV 2025"
   - "机器人"

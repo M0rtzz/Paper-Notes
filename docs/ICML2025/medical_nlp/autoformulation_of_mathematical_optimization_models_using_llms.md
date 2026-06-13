@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autoformulation of Mathematical Optimization Models Using LLMs
 description: >-
-  [ICML 2025][医疗NLP][autoformulation] 本文提出一种利用大语言模型结合蒙特卡洛树搜索（MCTS）自动将自然语言描述的优化问题转化为可求解器求解的数学规划模型的方法，通过符号剪枝和 LLM 价值评估显著提升了搜索效率。
+  [ICML 2025][医疗NLP][autoformulation] 本文提出一种利用大语言模型结合蒙特卡洛树搜索（MCTS）自动将自然语言描述的优化问题转化为可求解器求解的数学规划模型的方法，通过符号剪枝和 LLM 价值评估显著提升了搜索效率。 领域现状： 数学优化是决策科学的核心工具，在运筹学、供应链管理、医疗调度等众…
 tags:
   - "ICML 2025"
   - "医疗NLP"

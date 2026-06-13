@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Dual Hierarchical Dialogue Policy Learning for Legal Inquisitive Conversational Agents
 description: >-
-  [ACL 2026][对话系统][Inquisitive Conversational Agent] 作者把"美国最高法院法官审律师"这种"AI 主动提问、对方未必合作"的对话定义为 Inquisitive Dialogue…
+  [ACL 2026 Findings][对话系统][Inquisitive Conversational Agent] 作者把"美国最高法院法官审律师"这种"AI 主动提问、对方未必合作"的对话定义为 Inquisitive Dialogue，提出 Dual Hierarchical RL 框架——一个 Appraisal Agent 实时打分律师回答（9 种 appraisal 类）、一个 Hierarchical Dialogue Agent 在三层（act/subtype/utterance）Poincaré 动作空间上做 DDQN 选 act，再叠加目标相关性/新颖性/简洁性三重 reward 与一个 conservativ…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "对话系统"
   - "Inquisitive Conversational Agent"
   - "Dual Hierarchical RL"

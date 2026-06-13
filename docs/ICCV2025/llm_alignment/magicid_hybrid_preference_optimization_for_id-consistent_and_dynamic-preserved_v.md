@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MagicID: Hybrid Preference Optimization for ID-Consistent and Dynamic-Preserved Video Customization
 description: >-
-  [ICCV 2025][LLM对齐][视频定制化] 提出 MagicID 框架，通过构建身份偏好和动态偏好的混合视频对数据，并设计两阶段混合偏好优化（HPO）训练策略，首次将 DPO 应用于身份定制化视频生成，同时解决传统自重建训练导致的身份退化和动态减弱问题。
+  [ICCV 2025][LLM对齐][视频定制化] 提出 MagicID 框架，通过构建身份偏好和动态偏好的混合视频对数据，并设计两阶段混合偏好优化（HPO）训练策略，首次将 DPO 应用于身份定制化视频生成，同时解决传统自重建训练导致的身份退化和动态减弱问题。 问题定义 视频身份定制化旨在给定少量用户参考图像…
 tags:
   - "ICCV 2025"
   - "LLM对齐"

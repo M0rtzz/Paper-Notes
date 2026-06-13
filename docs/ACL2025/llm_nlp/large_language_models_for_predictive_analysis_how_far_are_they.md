@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Large Language Models for Predictive Analysis: How Far Are They?
 description: >-
-  [ACL 2025][LLM/NLP][predictive analysis] 提出 PredictiQ 基准——首个系统评估 LLM 预测分析能力的综合框架，整合 8 个领域 44 个真实数据集和 1130 条专家设计的查询，从文本分析、代码生成、文本-代码对齐三个维度七个方面评估 12 个主流 LLM…
+  [ACL 2025][LLM 其他][predictive analysis] 提出 PredictiQ 基准——首个系统评估 LLM 预测分析能力的综合框架，整合 8 个领域 44 个真实数据集和 1130 条专家设计的查询，从文本分析、代码生成、文本-代码对齐三个维度七个方面评估 12 个主流 LLM，揭示即使最强的 GPT4O3Mini 在深度分析（2.91/4）和数据预处理（51%缺失）上仍存在显著不足。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "predictive analysis"
   - "benchmark"
   - "code generation"

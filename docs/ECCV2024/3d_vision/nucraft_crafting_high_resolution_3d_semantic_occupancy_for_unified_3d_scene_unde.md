@@ -2,7 +2,7 @@
 title: >-
   [论文解读] nuCraft: Crafting High Resolution 3D Semantic Occupancy for Unified 3D Scene Understanding
 description: >-
-  [ECCV 2024][3D视觉][3D语义占用预测] 本文构建了基于nuScenes的高精度3D语义占用数据集nuCraft（分辨率达0.1m体素、8倍于现有benchmark），并提出VQ-Occ方法利用VQ-VAE将占用数据编码到紧凑潜在空间中进行预测…
+  [ECCV 2024][3D视觉][3D语义占用预测] 本文构建了基于nuScenes的高精度3D语义占用数据集nuCraft（分辨率达0.1m体素、8倍于现有benchmark），并提出VQ-Occ方法利用VQ-VAE将占用数据编码到紧凑潜在空间中进行预测，首次实现了无需后处理上采样的高分辨率语义占用直接生成。
 tags:
   - "ECCV 2024"
   - "3D视觉"

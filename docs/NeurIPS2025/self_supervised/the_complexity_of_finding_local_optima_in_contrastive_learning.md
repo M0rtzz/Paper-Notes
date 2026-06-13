@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Complexity of Finding Local Optima in Contrastive Learning
 description: >-
-  [NeurIPS 2025][自监督学习][对比学习] 证明对比学习中寻找局部最优是计算困难的：离散三元组最大化问题是 PLS-hard（即使 $d=1$），连续三元组损失最小化是 CLS-hard，意味着（在标准假设下）不存在多项式时间算法找到局部最优。
+  [NeurIPS 2025][自监督学习][对比学习] 证明对比学习中寻找局部最优是计算困难的：离散三元组最大化问题是 PLS-hard（即使 $d=1$），连续三元组损失最小化是 CLS-hard，意味着（在标准假设下）不存在多项式时间算法找到局部最优。 领域现状：对比学习（contrastive learning）通过三…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

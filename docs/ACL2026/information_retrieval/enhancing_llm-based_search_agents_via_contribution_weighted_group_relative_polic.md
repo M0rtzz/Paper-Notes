@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing LLM-based Search Agents via Contribution Weighted Group Relative Policy Optimization
 description: >-
-  [ACL 2026][信息检索/RAG][搜索代理] CW-GRPO 将过程监督重新定义为"优势重分配"：用 LLM 判断器评估每轮搜索的检索有用性和推理正确性，计算贡献分数来缩放基于结果的优势，实现轮级别信用分配而不引入不稳定的价值函数，在 Qwen3-8B 上超越标准 GRPO 5.0%。
+  [ACL 2026][信息检索/RAG][搜索代理] CW-GRPO 将过程监督重新定义为"优势重分配"：用 LLM 判断器评估每轮搜索的检索有用性和推理正确性，计算贡献分数来缩放基于结果的优势，实现轮级别信用分配而不引入不稳定的价值函数，在 Qwen3-8B 上超越标准 GRPO 5.0%。 领域现状：搜索代理（如 Sea…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

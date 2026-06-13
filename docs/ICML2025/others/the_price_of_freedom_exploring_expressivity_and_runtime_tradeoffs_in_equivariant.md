@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Price of Freedom: Exploring Expressivity and Runtime Tradeoffs in Equivariant Networks
 description: >-
-  [ICML 2025][E(3)-equivariance] 本文系统分析了 $E(3)$-等变神经网络中多种张量积操作的表达力与运行时间权衡，发现理论复杂度与实际性能差距悬殊，并提出基于球面网格的简化 Gaunt 张量积实现，在 MACE 原子间势能训练中加速 30%。
+  [ICML 2025][E(3)-equivariance] 本文系统分析了 $E(3)$-等变神经网络中多种张量积操作的表达力与运行时间权衡，发现理论复杂度与实际性能差距悬殊，并提出基于球面网格的简化 Gaunt 张量积实现，在 MACE 原子间势能训练中加速 30%。 领域现状：$E(3)$-等变网络在分子模拟、材料科学…
 tags:
   - "ICML 2025"
   - "E(3)-equivariance"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PlanarSplatting: Accurate Planar Surface Reconstruction in 3 Minutes
 description: >-
-  [CVPR 2025][预训练][平面重建] 本文提出 PlanarSplatting，通过直接优化可学习的 3D 矩形平面基元，利用新设计的矩形 splatting 函数将平面可微地渲染为深度和法线图，仅需 3 分钟即可从多视角图像重建精确的室内平面场景，无需任何平面标注。
+  [CVPR 2025][预训练][平面重建] 本文提出 PlanarSplatting，通过直接优化可学习的 3D 矩形平面基元，利用新设计的矩形 splatting 函数将平面可微地渲染为深度和法线图，仅需 3 分钟即可从多视角图像重建精确的室内平面场景，无需任何平面标注。 领域现状：室内平面 3D 重建是计算机视觉中的经…
 tags:
   - "CVPR 2025"
   - "预训练"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FastKV: Decoupling of Context Reduction and KV Cache Compression for Prefill-Decoding Acceleration
 description: >-
-  [ACL 2026][模型压缩][KV缓存压缩] 本文提出 FastKV，通过将上下文缩减（prefill 阶段的 Token-Selective Propagation）与 KV 缓存压缩（decoding 阶段的层级 KV 保留）解耦…
+  [ACL 2026 Findings][模型压缩][KV缓存压缩] 本文提出 FastKV，通过将上下文缩减（prefill 阶段的 Token-Selective Propagation）与 KV 缓存压缩（decoding 阶段的层级 KV 保留）解耦，在 LLaMA-3.1-8B-Instruct 上实现 prefill 1.82× 和 decoding 2.87× 加速，同时在 LongBench 上精度下降控制在 1% 以内。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "KV缓存压缩"
   - "Prefill加速"

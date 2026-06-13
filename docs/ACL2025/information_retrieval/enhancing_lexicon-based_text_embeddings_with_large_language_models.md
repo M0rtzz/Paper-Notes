@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Lexicon-Based Text Embeddings with Large Language Models
 description: >-
-  [ACL 2025][信息检索/RAG][词汇嵌入] 提出 LENS 框架，首次将 LLM 用于通用词汇级文本嵌入（lexicon-based embedding），通过 token 嵌入聚类解决 LLM 词表冗余问题、引入双向注意力克服因果 LLM 的限制，在 MTEB 上超越同数据训练的稠密嵌入…
+  [ACL 2025][信息检索/RAG][词汇嵌入] 提出 LENS 框架，首次将 LLM 用于通用词汇级文本嵌入（lexicon-based embedding），通过 token 嵌入聚类解决 LLM 词表冗余问题、引入双向注意力克服因果 LLM 的限制，在 MTEB 上超越同数据训练的稠密嵌入，且与稠密嵌入结合后在 BEIR 上达到 SOTA。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

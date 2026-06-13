@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Continual Learning with MLLMs from Multi-scenario Perspectives
 description: >-
-  [ICML 2026][多模态VLM][多模态持续学习] 针对 MLLM 在跨场景 VQA 中的视觉遗忘问题，本文构建 MSVQA（高空/水下/低空/室内 4 场景）基准，并提出 Unifier 框架——在视觉 block 里加入 CSR 多分支 + 投影器（VRE）做参数隔离…
+  [ICML 2026][多模态VLM][多模态持续学习] 针对 MLLM 在跨场景 VQA 中的视觉遗忘问题，本文构建 MSVQA（高空/水下/低空/室内 4 场景）基准，并提出 Unifier 框架——在视觉 block 里加入 CSR 多分支 + 投影器（VRE）做参数隔离，再用 KL 软约束（VCC）对齐不同分支表征，单次推理即可在 20 步持续学习上把 VQA 提升 2.70-10.62%、F1 提升 3.40-7.69%。
 tags:
   - "ICML 2026"
   - "多模态VLM"

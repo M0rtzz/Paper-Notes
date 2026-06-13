@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing
 description: >-
-  [CVPR 2026][图像生成][视频物体移除] 提出 EffectErase 框架，将视频物体插入作为移除的逆辅助任务进行联合学习，并构建包含 60K 视频对的大规模 VOR 数据集，实现对物体及其遮挡、阴影、反射、光照、变形等视觉副效应的高质量擦除。
+  [CVPR 2026][图像生成][视频物体移除] 提出 EffectErase 框架，将视频物体插入作为移除的逆辅助任务进行联合学习，并构建包含 60K 视频对的大规模 VOR 数据集，实现对物体及其遮挡、阴影、反射、光照、变形等视觉副效应的高质量擦除。 视频物体移除不仅需要去除目标物体本身，还需要擦除物体引入的各种视觉副…
 tags:
   - "CVPR 2026"
   - "图像生成"

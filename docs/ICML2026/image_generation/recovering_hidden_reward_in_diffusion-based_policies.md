@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recovering Hidden Reward in Diffusion-Based Policies
 description: >-
-  [ICML 2026][图像生成][扩散模型] EnergyFlow 把 diffusion policy 的 score field 显式参数化为一个标量 energy function 的负梯度，论证了 maximum-entropy 最优下 score = 软 Q-函数梯度…
+  [ICML 2026][图像生成][扩散模型] EnergyFlow 把 diffusion policy 的 score field 显式参数化为一个标量 energy function 的负梯度，论证了 maximum-entropy 最优下 score = 软 Q-函数梯度，从而在不做对抗优化的情况下"白送"一个可用作下游 RL shaping reward 的标量信号，同时保守场约束改善 OOD 泛化。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Omni-ID: Holistic Identity Representation Designed for Generative Tasks
 description: >-
-  [CVPR 2025][人体理解][人脸表征] Omni-ID 提出了一种专为生成任务设计的全息人脸身份表征，通过 few-to-many 身份重建训练范式和多解码器目标（Masked Transformer + Flow Matching），将不定数量的输入图像编码为固定大小的结构化表征…
+  [CVPR 2025][人体理解][人脸表征] Omni-ID 提出了一种专为生成任务设计的全息人脸身份表征，通过 few-to-many 身份重建训练范式和多解码器目标（Masked Transformer + Flow Matching），将不定数量的输入图像编码为固定大小的结构化表征，在可控人脸生成和个性化 T2I 任务中显著超越 ArcFace 和 CLIP。
 tags:
   - "CVPR 2025"
   - "人体理解"

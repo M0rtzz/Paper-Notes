@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AI Progress Should Be Measured by Capability-Per-Resource, Not Scale Alone: A Framework for Gradient-Guided Resource Allocation in LLMs
 description: >-
-  [NEURIPS2025][预训练][capability-per-resource] 本文以 position paper 的形式挑战"规模至上主义"，提出以**能力-每-资源（Capability-Per-Resource, CPR）**取代单纯的规模扩张来衡量 AI 进步…
+  [NEURIPS2025][预训练][capability-per-resource] 本文以 position paper 的形式挑战"规模至上主义"，提出以**能力-每-资源（Capability-Per-Resource, CPR）**取代单纯的规模扩张来衡量 AI 进步，并给出一套基于梯度引导的资源分配理论框架——通过发布"梯度蓝图"元数据，使下游适配者仅微调高影响力参数子集即可在资源占用大幅降低的同时保持接近全参数微调的性能。
 tags:
   - "NEURIPS2025"
   - "预训练"
@@ -136,10 +136,10 @@ Stage 2: 梯度引导的下游适配（模型适配者）
 - **评估框架**：HELM (Liang et al., 2023) — 包含效率指标的整体评估
 
 ## 评分
-- 新颖性: ⭐⭐⭐⭐ — CPR 视角和梯度蓝图概念有原创性，将分散的效率方法统一为理论框架
-- 实验充分度: ⭐⭐ — Position paper 无实验，理论分析依赖强假设，说服力有限
-- 写作质量: ⭐⭐⭐⭐ — 论述逻辑清晰，从动机到理论到实践路径完整，notation 一致
-- 价值: ⭐⭐⭐ — 理念有启发性但缺乏实证落地，梯度蓝图需要社区采纳才有实际意义
+- 新颖性: ⭐⭐⭐⭐⭐ — CPR 视角和梯度蓝图概念有原创性，将分散的效率方法统一为理论框架
+- 实验充分度: ⭐⭐⭐ — Position paper 无实验，理论分析依赖强假设，说服力有限
+- 写作质量: ⭐⭐⭐⭐⭐ — 论述逻辑清晰，从动机到理论到实践路径完整，notation 一致
+- 价值: ⭐⭐⭐⭐ — 理念有启发性但缺乏实证落地，梯度蓝图需要社区采纳才有实际意义
 
 <!-- RELATED:START -->
 

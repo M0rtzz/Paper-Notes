@@ -2,7 +2,7 @@
 title: >-
   [论文解读] YESciEval: Robust LLM-as-a-Judge for Scientific Question Answering
 description: >-
-  [ACL 2025][LLM评测][LLM-as-a-Judge] 提出YESciEval框架，结合九维细粒度评估准则和SFT+RL对齐策略来缓解LLM评估者的乐观偏差(optimism bias)，在科学问答场景下构建鲁棒的开源LLM-as-a-Judge系统，无需人类标注和闭源模型。
+  [ACL 2025][LLM评测][LLM-as-a-Judge] 提出YESciEval框架，结合九维细粒度评估准则和SFT+RL对齐策略来缓解LLM评估者的乐观偏差(optimism bias)，在科学问答场景下构建鲁棒的开源LLM-as-a-Judge系统，无需人类标注和闭源模型。 领域现状：科学搜索引擎（Elicit…
 tags:
   - "ACL 2025"
   - "LLM评测"

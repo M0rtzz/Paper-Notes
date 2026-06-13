@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion
 description: >-
-  [ICCV 2025][图像生成][高分辨率生成] 提出 FreeScale，一种无需训练的推理范式，通过尺度融合（Scale Fusion）机制从不同感受野尺度提取并融合信息（全局高频 + 局部低频），配合定制化级联上采样和约束膨胀卷积，首次在单张 A800 GPU 上实现了 8K 分辨率的文本到图像生成…
+  [ICCV 2025][图像生成][高分辨率生成] 提出 FreeScale，一种无需训练的推理范式，通过尺度融合（Scale Fusion）机制从不同感受野尺度提取并融合信息（全局高频 + 局部低频），配合定制化级联上采样和约束膨胀卷积，首次在单张 A800 GPU 上实现了 8K 分辨率的文本到图像生成，同时支持高分辨率视频生成。
 tags:
   - "ICCV 2025"
   - "图像生成"

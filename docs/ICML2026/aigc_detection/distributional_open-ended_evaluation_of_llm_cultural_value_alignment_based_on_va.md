@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributional Open-Ended Evaluation of LLM Cultural Value Alignment Based on Value Codebook
 description: >-
-  [ICML 2026][AIGC检测][文化对齐] DOVE 用率失真变分优化从 1 万篇人类文本中自动构造紧凑的"价值码本"，再用不平衡最优传输度量人类与 LLM 长文本在价值空间上的分布差异，从而在 12 个 LLM 上把"评测—下游任务"相关性从基线 ≤24% 拉到 31.56%。
+  [ICML 2026][AIGC检测][文化对齐] DOVE 用率失真变分优化从 1 万篇人类文本中自动构造紧凑的"价值码本"，再用不平衡最优传输度量人类与 LLM 长文本在价值空间上的分布差异，从而在 12 个 LLM 上把"评测—下游任务"相关性从基线 ≤24% 拉到 31.56%。 领域现状：现有 LLM 文化价值评测…
 tags:
   - "ICML 2026"
   - "AIGC检测"

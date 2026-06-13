@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Optimal Design for Multinomial Logit Model with Applications to Best Assortment Identification
 description: >-
-  [ICML2026][MNL bandits] 在多项式逻辑斯蒂（MNL）bandit 的组合动作空间里首次给出**计算可行**的 G-optimal 实验设计——把 Frank–Wolfe 线性最大化谱写成 0–1 MILP 或多项式时间 Schur 补松弛——并据此造出第一个面向"线性效用 + 非均匀收益…
+  [ICML2026][others（多项式逻辑斯蒂 bandits / 实验设计 / 纯探索）][MNL bandits] 在多项式逻辑斯蒂（MNL）bandit 的组合动作空间里首次给出**计算可行**的 G-optimal 实验设计——把 Frank–Wolfe 线性最大化谱写成 0–1 MILP 或多项式时间 Schur 补松弛——并据此造出第一个面向"线性效用 + 非均匀收益"的最佳组合识别算法，样本复杂度 $\tilde{\mathcal{O}}(d\log N / \Delta^2)$。
 tags:
   - "ICML2026"
+  - "others（多项式逻辑斯蒂 bandits / 实验设计 / 纯探索）"
   - "MNL bandits"
   - "G-optimal design"
   - "Frank-Wolfe"

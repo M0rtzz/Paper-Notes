@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin
 description: >-
-  [ICML2025][多模态VLM][VLM伪标签] 提出 CAP 框架，通过**概念对齐**（检测并修复 concept mismatch）和**混淆感知校准边距**（缓解 concept confusion），解决 VLM 生成伪标签时的类别不平衡问题…
+  [ICML2025][多模态VLM][VLM伪标签] 提出 CAP 框架，通过**概念对齐**（检测并修复 concept mismatch）和**混淆感知校准边距**（缓解 concept confusion），解决 VLM 生成伪标签时的类别不平衡问题，在六个数据集三种范式下相对 SOTA 提升 6.29%。
 tags:
   - "ICML2025"
   - "多模态VLM"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian
 description: >-
-  [ACL 2025][LLM/NLP][Conceptual Categories] 通过构建首个意大利语下位类别心理语言学数据集（187 个基本类别），系统对比了人类和 LLM 在下位概念层级上的类别组织结构，发现两者的对齐度较低但在不同语义领域存在显著差异。
+  [ACL 2025][LLM 其他][Conceptual Categories] 通过构建首个意大利语下位类别心理语言学数据集（187 个基本类别），系统对比了人类和 LLM 在下位概念层级上的类别组织结构，发现两者的对齐度较低但在不同语义领域存在显著差异。 领域现状： - 概念是人类认知的"基本构件"…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Conceptual Categories"
   - "Subordinate Level"
   - "Typicality"

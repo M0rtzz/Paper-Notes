@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation
 description: >-
-  [AAAI 2026][视频生成][多主体视频生成] 提出 MoFu，通过 Scale-Aware Modulation（LLM 引导的尺度感知调制）和 Fourier Fusion（基于 FFT 的排列不变特征融合）两个核心模块，同时解决多主体视频生成中的**尺度不一致**和**排列敏感性**两大挑战…
+  [AAAI 2026][视频生成][多主体视频生成] 提出 MoFu，通过 Scale-Aware Modulation（LLM 引导的尺度感知调制）和 Fourier Fusion（基于 FFT 的排列不变特征融合）两个核心模块，同时解决多主体视频生成中的**尺度不一致**和**排列敏感性**两大挑战，并构建了 MoFu-1M 训练数据集和 MoFu-Bench 评测基准。
 tags:
   - "AAAI 2026"
   - "视频生成"

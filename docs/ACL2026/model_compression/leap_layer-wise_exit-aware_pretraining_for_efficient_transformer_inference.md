@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEAP: Layer-wise Exit-Aware Pretraining for Efficient Transformer Inference
 description: >-
-  [ACL 2026 (Industry Track · Emerging)][模型压缩][早退推理] 首先在理论 + 实证上指出"逐层对齐蒸馏"与"基于收敛的早退"在标准部署下**系统性不兼容**——蒸馏模型每一层都在干活、没有冗余可早退，然后提出 LEAP 这种零额外参数的辅助训练目标…
+  [ACL 2026 (Industry Track · Emerging)][模型压缩][早退推理] 首先在理论 + 实证上指出"逐层对齐蒸馏"与"基于收敛的早退"在标准部署下**系统性不兼容**——蒸馏模型每一层都在干活、没有冗余可早退，然后提出 LEAP 这种零额外参数的辅助训练目标，让中间层提前逼近最终层表示，在 MiniLM-L12 上拿到 1.61× 实测墙钟加速（batch=1，91.9% 样本在 L7 退出）。
 tags:
   - "ACL 2026 (Industry Track · Emerging)"
   - "模型压缩"

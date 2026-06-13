@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Weights to Concepts: Data-Free Interpretability of CLIP via Singular Vector Decomposition
 description: >-
-  [CVPR 2026][可解释性][CLIP可解释性] 本文提出 SITH（Semantic Inspection of Transformer Heads），一个完全无需数据和训练的 CLIP 可解释性框架：直接对注意力头的 Value-Output 权重矩阵做 SVD 分解…
+  [CVPR 2026][可解释性][CLIP可解释性] 本文提出 SITH（Semantic Inspection of Transformer Heads），一个完全无需数据和训练的 CLIP 可解释性框架：直接对注意力头的 Value-Output 权重矩阵做 SVD 分解，然后用自研的 COMP 算法将每个奇异向量解释为语义一致的概念稀疏组合，实现了比现有方法更细粒度的 intra-head 级别可解释性，并支持精准的权重编辑来改善下游性能。
 tags:
   - "CVPR 2026"
   - "可解释性"

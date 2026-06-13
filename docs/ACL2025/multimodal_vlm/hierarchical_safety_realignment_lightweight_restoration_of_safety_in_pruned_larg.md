@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Safety Realignment: Lightweight Restoration of Safety in Pruned Large Vision-Language Models
 description: >-
-  [ACL 2025][多模态VLM][模型剪枝] 提出层次化安全重对齐方法HSR，通过先识别安全关键注意力头、再在这些头中定位并恢复被剪枝的安全关键神经元，以极低参数开销（万分之几）显著恢复被剪枝LVLM丢失的安全性能。
+  [ACL 2025][多模态VLM][模型剪枝] 提出层次化安全重对齐方法HSR，通过先识别安全关键注意力头、再在这些头中定位并恢复被剪枝的安全关键神经元，以极低参数开销（万分之几）显著恢复被剪枝LVLM丢失的安全性能。 问题背景 大视觉语言模型（LVLM）参数规模庞大，部署到资源受限环境时常需网络剪枝压缩。然而…
 tags:
   - "ACL 2025"
   - "多模态VLM"

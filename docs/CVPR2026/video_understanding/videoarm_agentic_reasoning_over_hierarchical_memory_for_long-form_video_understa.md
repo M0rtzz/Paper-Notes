@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoARM: Agentic Reasoning over Hierarchical Memory for Long-Form Video Understanding
 description: >-
-  [CVPR 2026][视频理解][长视频理解] VideoARM 提出了一种基于分层多模态记忆（HM3）的 Agent 推理范式，通过"观察-思考-行动-记忆"的自适应循环和粗到细的工具调用策略，在长视频理解基准上超越 SOTA 的同时将 token 消耗降低到 DVD 的 1/34。
+  [CVPR 2026][视频理解][长视频理解] VideoARM 提出了一种基于分层多模态记忆（HM3）的 Agent 推理范式，通过"观察-思考-行动-记忆"的自适应循环和粗到细的工具调用策略，在长视频理解基准上超越 SOTA 的同时将 token 消耗降低到 DVD 的 1/34。 1. 领域现状：长视频理解需要在数十…
 tags:
   - "CVPR 2026"
   - "视频理解"

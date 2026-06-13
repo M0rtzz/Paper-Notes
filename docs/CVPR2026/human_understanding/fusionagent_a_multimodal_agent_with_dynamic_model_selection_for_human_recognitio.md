@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FusionAgent: A Multimodal Agent with Dynamic Model Selection for Human Recognition
 description: >-
-  [CVPR 2026][人体理解][模型融合] 本文提出 FusionAgent，一个基于多模态大语言模型（MLLM）的智能体框架，用于全身生物特征识别中的动态样本级模型选择——将每个专家模型（人脸识别/步态识别/行人重识别）封装为工具…
+  [CVPR 2026][人体理解][模型融合] 本文提出 FusionAgent，一个基于多模态大语言模型（MLLM）的智能体框架，用于全身生物特征识别中的动态样本级模型选择——将每个专家模型（人脸识别/步态识别/行人重识别）封装为工具，通过强化微调（RFT）让 agent 学会根据每个测试样本的特征自适应选择最优模型组合，配合新提出的 ACT 分数融合策略，显著超越现有 SOTA 融合方法。
 tags:
   - "CVPR 2026"
   - "人体理解"

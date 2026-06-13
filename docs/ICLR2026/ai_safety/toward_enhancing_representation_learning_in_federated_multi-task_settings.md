@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Enhancing Representation Learning in Federated Multi-Task Settings
 description: >-
-  [ICLR 2026][AI安全][联邦多任务学习] 提出Muscle损失——一种N-tuple级多模型对比学习目标函数，其最小化等价于最大化所有模型表示间互信息的下界；基于此设计FedMuscle算法，通过公共数据集对齐异构模型的表示空间，自然处理模型和任务异构性…
+  [ICLR 2026][AI安全][联邦多任务学习] 提出Muscle损失——一种N-tuple级多模型对比学习目标函数，其最小化等价于最大化所有模型表示间互信息的下界；基于此设计FedMuscle算法，通过公共数据集对齐异构模型的表示空间，自然处理模型和任务异构性，在CV/NLP多任务设定下一致超越SOTA基线(Δ最高+28.65%)。
 tags:
   - "ICLR 2026"
   - "AI安全"

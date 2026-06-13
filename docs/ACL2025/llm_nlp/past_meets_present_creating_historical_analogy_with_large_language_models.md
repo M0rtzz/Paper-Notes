@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Past Meets Present: Creating Historical Analogy with Large Language Models
 description: >-
-  [ACL 2025 (Outstanding Paper Award)][LLM/NLP][历史类比] 本文首次定义了"历史类比获取"任务，系统探索了基于LLM的检索和生成方法，并提出自反思机制来减轻LLM生成历史类比时的幻觉和刻板印象问题，通过人工评估和自动多维评估验证了LLM在历史类比方面的潜力。
+  [ACL 2025 (Outstanding Paper Award)][LLM 其他][历史类比] 本文首次定义了"历史类比获取"任务，系统探索了基于LLM的检索和生成方法，并提出自反思机制来减轻LLM生成历史类比时的幻觉和刻板印象问题，通过人工评估和自动多维评估验证了LLM在历史类比方面的潜力。
 tags:
   - "ACL 2025 (Outstanding Paper Award)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "历史类比"
   - "大语言模型"
   - "自反思"

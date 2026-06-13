@@ -2,9 +2,10 @@
 title: >-
   [论文解读] DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding
 description: >-
-  [ICCV 2025][多模态对比学习] 提出 DeSPITE，一个将 LiDAR 点云、骨架姿态、IMU 信号和文本四种模态对齐到联合嵌入空间的对比学习框架，首次以 LiDAR（而非 RGB）作为核心视觉模态，实现了跨模态匹配/检索等此前不可能的任务…
+  [ICCV 2025][自动驾驶][多模态对比学习] 提出 DeSPITE，一个将 LiDAR 点云、骨架姿态、IMU 信号和文本四种模态对齐到联合嵌入空间的对比学习框架，首次以 LiDAR（而非 RGB）作为核心视觉模态，实现了跨模态匹配/检索等此前不可能的任务，同时作为有效的 HAR 预训练策略在 MSR-Action3D 和 HMPEAR 上取得 SOTA。
 tags:
   - "ICCV 2025"
+  - "自动驾驶"
   - "多模态对比学习"
   - "LiDAR点云"
   - "人体动作识别"

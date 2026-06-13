@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarks for Vision-Language Models in Urban Perception Should Be Reliability-Aware and Negotiated
 description: >-
-  [ICML2026][多模态VLM][VLM评估] 本文提出 VLM 城市感知评估应具备"可靠性感知"和"可协商"两大属性，通过 100 张蒙特利尔街景图像、12 名社区标注者、30 个维度的基准测试，揭示了模型对齐度与标注者一致性正相关，且在主观评价维度上模型与人类存在系统性分布偏差。
+  [ICML2026][多模态VLM][VLM评估] 本文提出 VLM 城市感知评估应具备"可靠性感知"和"可协商"两大属性，通过 100 张蒙特利尔街景图像、12 名社区标注者、30 个维度的基准测试，揭示了模型对齐度与标注者一致性正相关，且在主观评价维度上模型与人类存在系统性分布偏差。 领域现状：视觉-语言模型（VLM）正…
 tags:
   - "ICML2026"
   - "多模态VLM"

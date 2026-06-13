@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL
 description: >-
-  [NeurIPS 2025][强化学习][离线多智能体强化学习] 本文提出 Oryx，一种面向离线合作 MARL 的可扩展序列模型算法，将基于 Retention 的 Sable 架构与自回归形式的 ICQ 离线正则化结合，通过双解码器输出策略和 Q 值并利用反事实优势估计…
+  [NeurIPS 2025][强化学习][离线多智能体强化学习] 本文提出 Oryx，一种面向离线合作 MARL 的可扩展序列模型算法，将基于 Retention 的 Sable 架构与自回归形式的 ICQ 离线正则化结合，通过双解码器输出策略和 Q 值并利用反事实优势估计，在 65 个数据集上超过 80% 达到 SOTA，并展示了在 50 智能体规模下的稳健扩展能力。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

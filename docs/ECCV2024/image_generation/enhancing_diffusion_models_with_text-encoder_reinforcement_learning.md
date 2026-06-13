@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Diffusion Models with Text-Encoder Reinforcement Learning
 description: >-
-  [ECCV 2024][图像生成][扩散模型] 提出 TexForce，通过强化学习（DDPO）结合 LoRA 微调扩散模型的文本编码器以提升图文对齐和视觉质量，并可无缝与已有 U-Net 微调方法组合获得更优效果。
+  [ECCV 2024][图像生成][扩散模型] 提出 TexForce，通过强化学习（DDPO）结合 LoRA 微调扩散模型的文本编码器以提升图文对齐和视觉质量，并可无缝与已有 U-Net 微调方法组合获得更优效果。 当前文本到图像扩散模型（如 Stable Diffusion）的训练目标是优化 log-likelihood…
 tags:
   - "ECCV 2024"
   - "图像生成"

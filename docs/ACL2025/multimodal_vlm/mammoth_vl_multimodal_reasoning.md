@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAmmoTH-VL: Eliciting Multimodal Reasoning with Instruction Tuning at Scale
 description: >-
-  [多模态VLM] 提出一种可扩展、低成本的方法，仅使用开源模型构建含 1200 万条富含中间推理过程 (CoT) 的多模态指令微调数据集 MAmmoTH-VL-Instruct，训练的 MAmmoTH-VL-8B 在推理基准上达到 SOTA（MathVerse +8.1%, MMMU-Pro +7%…
+  [多模态VLM] 提出一种可扩展、低成本的方法，仅使用开源模型构建含 1200 万条富含中间推理过程 (CoT) 的多模态指令微调数据集 MAmmoTH-VL-Instruct，训练的 MAmmoTH-VL-8B 在推理基准上达到 SOTA（MathVerse +8.1%, MMMU-Pro +7%, MuirBench +13.3%）。
 tags:
   - "多模态VLM"
 ---

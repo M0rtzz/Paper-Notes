@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval
 description: >-
-  [ICCV 2025][Hyperbolic Space] 首次提出在双曲空间中编码用户定义的多层视觉层次结构的学习范式，通过基于角度的 entailment 对比损失在无需显式层次标签的情况下学习 scene→object→part 层次，并引入基于最优传输的层次检索评估指标。
+  [ICCV 2025][Hyperbolic Space] 首次提出在双曲空间中编码用户定义的多层视觉层次结构的学习范式，通过基于角度的 entailment 对比损失在无需显式层次标签的情况下学习 scene→object→part 层次，并引入基于最优传输的层次检索评估指标。 人类以层次结构组织世界知识…
 tags:
   - "ICCV 2025"
   - "Hyperbolic Space"

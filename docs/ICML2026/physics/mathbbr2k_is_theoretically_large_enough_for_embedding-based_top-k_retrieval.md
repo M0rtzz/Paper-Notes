@@ -2,7 +2,7 @@
 title: >-
   [论文解读] $\mathbb{R}^{2k}$ is Theoretically Large Enough for Embedding-based Top-$k$ Retrieval
 description: >-
-  [ICML 2026][物理/科学计算][最小可嵌入维度] 本文证明对于内积、欧式距离与余弦三种打分函数，能够把 $m$ 个对象的全部 size $\le k$ 子集都用 score-thresholding 精确召回所需的最小嵌入维度（MED）是 $\Theta(k)$，与 $m$ 无关…
+  [ICML 2026][物理/科学计算][最小可嵌入维度] 本文证明对于内积、欧式距离与余弦三种打分函数，能够把 $m$ 个对象的全部 size $\le k$ 子集都用 score-thresholding 精确召回所需的最小嵌入维度（MED）是 $\Theta(k)$，与 $m$ 无关；在加上单位归一化与正向 score margin $\epsilon$ 之后，鲁棒 MED 的可行 margin 被 $\epsilon_\star(m,k)=m/\sqrt{k(m-1)(m-k)}\sim 1/\sqrt{k}$ 上限锁死，而 Gaussian centroid 构造则给出 $O(k^2\log m)$ 维的可行上界。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

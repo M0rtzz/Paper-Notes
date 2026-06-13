@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection
 description: >-
-  [ACL 2025][性别歧视检测] 针对在线性别歧视检测中的数据稀疏和细粒度分类歧义问题，提出两种基于prompt的数据增强技术——定义驱动数据增强（DDA）利用类别定义生成语义对齐的合成样本，上下文语义扩展（CSE）通过分析模型错误的语义特征丰富训练数据——并结合 Mistral-7B 回退集成策略…
+  [ACL 2025][性别歧视检测] 针对在线性别歧视检测中的数据稀疏和细粒度分类歧义问题，提出两种基于prompt的数据增强技术——定义驱动数据增强（DDA）利用类别定义生成语义对齐的合成样本，上下文语义扩展（CSE）通过分析模型错误的语义特征丰富训练数据——并结合 Mistral-7B 回退集成策略，在 EDOS 数据集上实现全任务 SOTA。
 tags:
   - "ACL 2025"
   - "性别歧视检测"

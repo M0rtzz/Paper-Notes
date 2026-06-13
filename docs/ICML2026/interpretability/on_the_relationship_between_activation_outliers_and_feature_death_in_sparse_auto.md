@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Relationship Between Activation Outliers and Feature Death in Sparse Autoencoders
 description: >-
-  [ICML 2026][可解释性][稀疏自编码器] 本文指出 SAE 中"死特征"问题的真正根源不是训练动力学而是激活分布的几何性质——用 $\gamma=\|\bm{\mu}\|/\|\bm{\sigma}\|$ 量化"维度级离群"严重程度…
+  [ICML 2026][可解释性][稀疏自编码器] 本文指出 SAE 中"死特征"问题的真正根源不是训练动力学而是激活分布的几何性质——用 $\gamma=\|\bm{\mu}\|/\|\bm{\sigma}\|$ 量化"维度级离群"严重程度，从初始化就解析地预测死率（454 个模型-层组合上 Spearman $\rho=0.82\sim0.89$），并证明仅用 mean-centering 就能把 AlphaFold3/ESM3 等高 $\gamma$ 模型的死率从 70%+ 降到接近零。
 tags:
   - "ICML 2026"
   - "可解释性"

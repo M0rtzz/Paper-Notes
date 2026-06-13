@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data
 description: >-
-  [NeurIPS 2025][机器人][cross-embodiment] 提出 EgoBridge 框架，利用最优传输(OT)在策略潜在空间中对齐人类和机器人数据的联合分布（特征+动作），结合动态时间规整(DTW)构建伪配对，实现从第一人称人类数据到机器人的跨具身知识迁移…
+  [NeurIPS 2025 Oral][机器人][cross-embodiment] 提出 EgoBridge 框架，利用最优传输(OT)在策略潜在空间中对齐人类和机器人数据的联合分布（特征+动作），结合动态时间规整(DTW)构建伪配对，实现从第一人称人类数据到机器人的跨具身知识迁移，在真实世界任务中绝对成功率提升达 44%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "机器人"
   - "cross-embodiment"
   - "域适应"

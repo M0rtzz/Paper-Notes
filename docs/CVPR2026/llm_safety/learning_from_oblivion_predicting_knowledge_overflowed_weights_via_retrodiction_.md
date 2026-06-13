@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from Oblivion: Predicting Knowledge-Overflowed Weights via Retrodiction of Forgetting
 description: >-
-  [CVPR 2026][LLM安全][weight prediction] 提出KNOW prediction：通过在逐步缩小的数据子集上sequential fine-tuning诱导结构化遗忘过程，收集权重转变轨迹…
+  [CVPR 2026][LLM安全][weight prediction] 提出KNOW prediction：通过在逐步缩小的数据子集上sequential fine-tuning诱导结构化遗忘过程，收集权重转变轨迹，然后用meta-learned hyper-model（KNOWN）反转forgetting方向，预测"仿佛在更大数据集上训练"的虚拟知识增强权重。跨多数据集(CIFAR/ImageNet/PACS等)和多架构(ResNet/PVTv2/DeepLabV3+)持续超越naive fine-tuning及多种weight prediction基线，在图像分类、语义分割、图像描述、域泛化等下游任务上均有显著提升。
 tags:
   - "CVPR 2026"
   - "LLM安全"

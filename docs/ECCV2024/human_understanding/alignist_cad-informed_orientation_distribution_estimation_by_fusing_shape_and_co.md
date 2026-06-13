@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alignist: CAD-Informed Orientation Distribution Estimation by Fusing Shape and Correspondences
 description: >-
-  [ECCV 2024][人体理解][Pose Distribution] 提出 Alignist，首个利用 CAD 模型信息（SDF + SurfEmb 对应特征）训练隐式分布网络来推断 SO(3) 上姿态分布的方法，通过 product of experts 融合几何和特征对齐…
+  [ECCV 2024][人体理解][Pose Distribution] 提出 Alignist，首个利用 CAD 模型信息（SDF + SurfEmb 对应特征）训练隐式分布网络来推断 SO(3) 上姿态分布的方法，通过 product of experts 融合几何和特征对齐，在低数据场景下显著优于对比学习方法。
 tags:
   - "ECCV 2024"
   - "人体理解"

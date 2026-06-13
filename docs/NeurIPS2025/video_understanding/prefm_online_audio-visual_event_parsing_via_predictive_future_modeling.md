@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PreFM: Online Audio-Visual Event Parsing via Predictive Future Modeling
 description: >-
-  [NeurIPS 2025][视频理解][在线音视频解析] 本文首次提出在线音视频事件解析（On-AVEP）范式，通过预测性未来建模框架 PreFM，利用伪未来序列增强当前上下文理解，同时借助模态无关的知识蒸馏和焦点时间优先策略…
+  [NeurIPS 2025][视频理解][在线音视频解析] 本文首次提出在线音视频事件解析（On-AVEP）范式，通过预测性未来建模框架 PreFM，利用伪未来序列增强当前上下文理解，同时借助模态无关的知识蒸馏和焦点时间优先策略，以仅 2.7% 的参数量超越离线 SOTA 方法 +9.3 的事件级平均 F1 分数。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

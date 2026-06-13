@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Variational Approach for Mitigating Entity Bias in Relation Extraction
 description: >-
-  [ACL 2025][NLP理解][实体偏差] 提出基于变分信息瓶颈（VIB）的实体去偏方法，将实体token映射为高斯分布以选择性压缩实体特定信息、保留上下文语义，在通用/金融/生物医学三个领域的关系抽取数据集上均取得SOTA，特别是在OOD场景下BioRED提升5.3个F1点。
+  [ACL 2025][NLP理解][实体偏差] 提出基于变分信息瓶颈（VIB）的实体去偏方法，将实体token映射为高斯分布以选择性压缩实体特定信息、保留上下文语义，在通用/金融/生物医学三个领域的关系抽取数据集上均取得SOTA，特别是在OOD场景下BioRED提升5.3个F1点。 领域现状：关系抽取（RE）是信息抽取的核心…
 tags:
   - "ACL 2025"
   - "NLP理解"

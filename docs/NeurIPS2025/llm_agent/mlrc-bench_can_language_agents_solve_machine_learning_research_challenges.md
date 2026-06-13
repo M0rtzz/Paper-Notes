@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MLRC-Bench: Can Language Agents Solve Machine Learning Research Challenges?
 description: >-
-  [NeurIPS 2025][LLM Agent][研究Agent] 本文提出MLRC-Bench，一个基于ML会议竞赛任务的动态benchmark，用于客观评估LLM agent提出和实现新研究方法的能力…
+  [NeurIPS 2025][LLM Agent][研究Agent] 本文提出MLRC-Bench，一个基于ML会议竞赛任务的动态benchmark，用于客观评估LLM agent提出和实现新研究方法的能力，发现最强agent（gemini-exp-1206）也仅缩小了baseline与人类顶级方案之间9.3%的差距，且LLM主观评分的"创新性"与实际效果之间几乎无相关性。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

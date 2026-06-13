@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion
 description: >-
-  [NeurIPS 2025][视频生成][自回归视频生成] 提出 Self Forcing 训练范式，通过在训练时执行自回归自展开（self-rollout）并使用整体视频级分布匹配损失（DMD/SiD/GAN）…
+  [NeurIPS 2025 Spotlight][视频生成][自回归视频生成] 提出 Self Forcing 训练范式，通过在训练时执行自回归自展开（self-rollout）并使用整体视频级分布匹配损失（DMD/SiD/GAN），消除了 Teacher Forcing 和 Diffusion Forcing 中训练-推理分布不匹配导致的暴露偏差问题，基于 Wan2.1-1.3B 实现了单 GPU 上 17 FPS 实时流式视频生成，同时质量匹敌甚至超越慢几十倍的双向扩散模型。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "视频生成"
   - "自回归视频生成"
   - "暴露偏差"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnomSeer: Reinforcing Multimodal LLMs to Reason for Time-Series Anomaly Detection
 description: >-
-  [ICML2026][时间序列][时间序列异常检测] AnomSeer 将经典时间序列异常检测的统计证据写成专家推理轨迹，并用 TimerPO 强化多模态大模型，使其在折线图输入上同时完成异常类型判断、区间定位和细粒度解释。
+  [ICML2026][时间序列][时间序列异常检测] AnomSeer 将经典时间序列异常检测的统计证据写成专家推理轨迹，并用 TimerPO 强化多模态大模型，使其在折线图输入上同时完成异常类型判断、区间定位和细粒度解释。 领域现状：时间序列异常检测过去主要依赖统计方法、传统机器学习或重构/预测式深度模型…
 tags:
   - "ICML2026"
   - "时间序列"

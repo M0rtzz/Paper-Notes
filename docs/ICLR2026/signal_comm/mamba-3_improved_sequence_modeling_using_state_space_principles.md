@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mamba-3: Improved Sequence Modeling using State Space Principles
 description: >-
-  [ICLR 2026][信号/通信][状态空间模型] 从SSM视角提出三项核心改进：指数-梯形离散化、复值状态空间、多输入多输出(MIMO)公式化，在不增加解码延迟的前提下显著提升模型质量和状态追踪能力，推进性能-效率Pareto前沿。
+  [ICLR 2026][信号/通信][状态空间模型] 从SSM视角提出三项核心改进：指数-梯形离散化、复值状态空间、多输入多输出(MIMO)公式化，在不增加解码延迟的前提下显著提升模型质量和状态追踪能力，推进性能-效率Pareto前沿。 推理时计算(test-time compute)已成为LLM性能的关键驱动力…
 tags:
   - "ICLR 2026"
   - "信号/通信"

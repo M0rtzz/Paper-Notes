@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EXECUTE: A Multilingual Benchmark for LLM Token Understanding
 description: >-
-  [ACL 2025][多语言/翻译][multilingual] 扩展字符理解基准 CUTE 到 8 种语言和多种文字系统，提出 EXECUTE 框架，发现 LLM 在不同语言的字符/词/子字符级别表现差异巨大，且意外发现 LLM 对越不熟悉的语言反而在 token 理解任务上表现越好。
+  [ACL 2025][多语言/翻译][multilingual] 扩展字符理解基准 CUTE 到 8 种语言和多种文字系统，提出 EXECUTE 框架，发现 LLM 在不同语言的字符/词/子字符级别表现差异巨大，且意外发现 LLM 对越不熟悉的语言反而在 token 理解任务上表现越好。 领域现状：CUTE 基准证明 LLM…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

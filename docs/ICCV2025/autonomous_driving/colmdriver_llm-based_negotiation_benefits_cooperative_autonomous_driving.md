@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoLMDriver: LLM-based Negotiation Benefits Cooperative Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][cooperative driving] 首个全流程 LLM 驱动的协作驾驶系统，通过 Actor-Critic 范式的语言协商模块和意图引导的轨迹生成器，在多种 V2V 交互场景中实现比现有方法高 11% 的成功率。
+  [ICCV 2025][自动驾驶][cooperative driving] 首个全流程 LLM 驱动的协作驾驶系统，通过 Actor-Critic 范式的语言协商模块和意图引导的轨迹生成器，在多种 V2V 交互场景中实现比现有方法高 11% 的成功率。 核心问题：车辆间 (V2V) 协作自动驾驶能通过共享感知信息来弥补单车…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

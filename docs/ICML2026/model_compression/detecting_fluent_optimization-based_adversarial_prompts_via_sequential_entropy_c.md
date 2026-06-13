@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting Fluent Optimization-Based Adversarial Prompts via Sequential Entropy Changes
 description: >-
-  [ICML 2026][模型压缩][对抗后缀] 作者把"流畅型优化越狱后缀检测"建模成 token-level 熵流上的在线变点检测：用固定系统提示的熵分布算 MAD 鲁棒基线把用户 token 熵标准化，跑一边 Page-CUSUM 累计统计量 $W_t^+$ 越阈值就报警…
+  [ICML 2026][模型压缩][对抗后缀] 作者把"流畅型优化越狱后缀检测"建模成 token-level 熵流上的在线变点检测：用固定系统提示的熵分布算 MAD 鲁棒基线把用户 token 熵标准化，跑一边 Page-CUSUM 累计统计量 $W_t^+$ 越阈值就报警，在 6 个开源对齐 LLM 上对 GCG / AutoDAN / AdvPrompter / BEAST / AutoDAN-HGA 五类攻击都比窗口困惑度 F1 更高，并能把 79.6% 的报警精确定位到 suffix 内部，还能当 LLaMA Guard 的轻量门，节省 17-42% 的 guard 调用。
 tags:
   - "ICML 2026"
   - "模型压缩"

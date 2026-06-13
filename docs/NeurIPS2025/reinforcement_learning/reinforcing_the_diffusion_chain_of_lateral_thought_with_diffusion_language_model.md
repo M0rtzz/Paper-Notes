@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforcing the Diffusion Chain of Lateral Thought with Diffusion Language Models
 description: >-
-  [NeurIPS 2025][强化学习][扩散语言模型] 提出扩散横向思维链（DCoLT），将扩散语言模型逆向过程中的每个中间步视为潜在"思考"动作，通过基于最终结果的强化学习优化整条推理轨迹，在SEDD和LLaDA两种扩散语言模型上实现了数学和代码生成的SOTA表现。
+  [NeurIPS 2025][强化学习][扩散语言模型] 提出扩散横向思维链（DCoLT），将扩散语言模型逆向过程中的每个中间步视为潜在"思考"动作，通过基于最终结果的强化学习优化整条推理轨迹，在SEDD和LLaDA两种扩散语言模型上实现了数学和代码生成的SOTA表现。 现有大语言模型的推理能力主要依赖链式思维（CoT）…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

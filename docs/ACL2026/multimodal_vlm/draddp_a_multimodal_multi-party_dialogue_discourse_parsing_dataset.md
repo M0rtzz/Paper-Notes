@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DraDDP: A Multimodal Multi-Party Dialogue Discourse Parsing Dataset
 description: >-
-  [ACL 2026][多模态VLM][多方对话] DraDDP 构建了首个公开的英文多模态多方对话话语解析数据集，并用传统解析器、LLM 与多模态 LLM 系统评测了文本、音频、视频线索对依存边和话语关系识别的不同贡献。
+  [ACL 2026 Findings][多模态VLM][多方对话] DraDDP 构建了首个公开的英文多模态多方对话话语解析数据集，并用传统解析器、LLM 与多模态 LLM 系统评测了文本、音频、视频线索对依存边和话语关系识别的不同贡献。 领域现状：多方对话话语解析希望从一段对话中识别话语单元之间的依存结构和关系类型…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多方对话"
   - "话语解析"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Traversing Distortion-Perception Tradeoff Using a Single Score-Based Generative Model
 description: >-
-  [CVPR 2025][图像生成][失真-感知权衡] 本文提出方差缩放反向扩散过程，通过一个参数 $\lambda \in [0,1]$ 控制反向采样的方差大小，从而用单个预训练 score 网络灵活遍历 distortion-perception tradeoff 曲线的最优解…
+  [CVPR 2025][图像生成][失真-感知权衡] 本文提出方差缩放反向扩散过程，通过一个参数 $\lambda \in [0,1]$ 控制反向采样的方差大小，从而用单个预训练 score 网络灵活遍历 distortion-perception tradeoff 曲线的最优解，并在条件高斯分布下证明了其最优性。
 tags:
   - "CVPR 2025"
   - "图像生成"

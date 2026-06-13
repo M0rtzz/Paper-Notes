@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Less More? Exploring Token Condensation as Training-free Test-time Adaptation
 description: >-
-  [ICCV 2025][多模态VLM][测试时自适应] 提出 Token Condensation as Adaptation（TCA），一种免训练的测试时自适应方法，通过领域感知的 token 库（DTR）引导跨头 token 裁剪/合并和 logits 自校正，在不修改模型参数的情况下…
+  [ICCV 2025][多模态VLM][测试时自适应] 提出 Token Condensation as Adaptation（TCA），一种免训练的测试时自适应方法，通过领域感知的 token 库（DTR）引导跨头 token 裁剪/合并和 logits 自校正，在不修改模型参数的情况下，将 CLIP/SigLIP 系列的跨数据集性能提升最高 21.4%，同时减少 12.2%-48.9% 的 GFLOPs。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

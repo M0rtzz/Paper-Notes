@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning
 description: >-
-  [ACL 2026][LLM推理][RLVR] 本文提出 APMPO，用一个由当前奖励均值控制的"幂平均"统一了 GRPO（算术平均）与 GMPO（几何平均）目标，并配合基于奖励稳定度的自适应 clip 范围，使 RLVR 训练能在不同阶段动态切换"放大稀有高奖励"与"强调一致性"的策略…
+  [ACL 2026 Findings][LLM推理][RLVR] 本文提出 APMPO，用一个由当前奖励均值控制的"幂平均"统一了 GRPO（算术平均）与 GMPO（几何平均）目标，并配合基于奖励稳定度的自适应 clip 范围，使 RLVR 训练能在不同阶段动态切换"放大稀有高奖励"与"强调一致性"的策略，在 9 个数学/SQL/多模态推理基准上稳定超越 GRPO/DAPO/GMPO。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "RLVR"
   - "GRPO"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-component Causal Tracing in Large Language Models
 description: >-
-  [ACL 2026][LLM安全][因果追踪] 这篇论文把 causal tracing 从单组件分析扩展到多组件子集搜索，并提出 PGB-CT 用软干预、指标变换和稀疏二值惩罚高效找到共同影响 LLM 行为的 attention heads 与 MLP neurons。
+  [ACL 2026][LLM安全][因果追踪] 这篇论文把 causal tracing 从单组件分析扩展到多组件子集搜索，并提出 PGB-CT 用软干预、指标变换和稀疏二值惩罚高效找到共同影响 LLM 行为的 attention heads 与 MLP neurons。 领域现状：LLM 安全和可解释性研究常需要定位模型内…
 tags:
   - "ACL 2026"
   - "LLM安全"

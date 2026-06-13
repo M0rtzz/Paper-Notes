@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting
 description: >-
-  [ICLR2026][图像生成][probabilistic forecasting] 提出 CW-Gen（条件白化生成模型），通过联合估计条件均值和滑动窗口协方差矩阵来替代扩散模型/流匹配中的标准高斯终端分布，理论证明了当估计器满足充分条件时采样质量必然提升…
+  [ICLR2026][图像生成][probabilistic forecasting] 提出 CW-Gen（条件白化生成模型），通过联合估计条件均值和滑动窗口协方差矩阵来替代扩散模型/流匹配中的标准高斯终端分布，理论证明了当估计器满足充分条件时采样质量必然提升，在 5 个数据集 × 6 个生成模型上一致改善多变量时间序列概率预测性能。
 tags:
   - "ICLR2026"
   - "图像生成"

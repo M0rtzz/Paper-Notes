@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Characterization and Learning of Causal Graphs from Hard Interventions
 description: >-
-  [NeurIPS 2025][因果推理][hard intervention] 首次系统分析硬干预（hard interventions）在含隐变量因果发现中的理论优势，提出广义do-演算（4条规则）和孪生增强MAG图表示，给出 $\mathcal{I}$-Markov 等价类的充要图条件…
+  [NeurIPS 2025][因果推理][hard intervention] 首次系统分析硬干预（hard interventions）在含隐变量因果发现中的理论优势，提出广义do-演算（4条规则）和孪生增强MAG图表示，给出 $\mathcal{I}$-Markov 等价类的充要图条件，并设计可证明正确的FCI变体学习算法；实验表明硬干预比软干预将等价类缩小37-57%。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Update Your Transformer to the Latest Release: Re-Basin of Task Vectors
 description: >-
-  [ICML2025][自监督学习][模型再基化] 提出 TransFusion，一种专为 Transformer 设计的两级权重置换方法（头间+头内），实现将旧模型的微调知识（任务向量）免数据免训练地迁移至新版基础模型。
+  [ICML2025][自监督学习][模型再基化] 提出 TransFusion，一种专为 Transformer 设计的两级权重置换方法（头间+头内），实现将旧模型的微调知识（任务向量）免数据免训练地迁移至新版基础模型。 领域现状 领域现状：模型更新问题：预训练模型频繁更新，旧版微调模型过时需重训 解决思路 ：解决思路：任务…
 tags:
   - "ICML2025"
   - "自监督学习"

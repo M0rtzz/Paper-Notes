@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather
 description: >-
-  [ECCV 2024][自动驾驶][LiDAR 语义分割] 通过数据中心分析识别出恶劣天气对 LiDAR 的两大核心干扰模式（几何扰动和点丢失），提出 Selective Jittering 和 Learnable Point Drop 两种针对性数据增强方法…
+  [ECCV 2024][自动驾驶][LiDAR 语义分割] 通过数据中心分析识别出恶劣天气对 LiDAR 的两大核心干扰模式（几何扰动和点丢失），提出 Selective Jittering 和 Learnable Point Drop 两种针对性数据增强方法，在 SemanticKITTI→SemanticSTF 基准上将 baseline 提升 8.1 mIoU 达到 SOTA。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

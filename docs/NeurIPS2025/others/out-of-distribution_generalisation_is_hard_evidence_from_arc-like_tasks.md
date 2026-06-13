@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks
 description: >-
-  [NeurIPS 2025][OOD泛化] 通过构建具有明确OOD度量的ARC类任务，证明标准神经网络(MLP/CNN/Transformer)无法实现组合OOD泛化，即使设计具有正确归纳偏置的架构达到近乎完美的OOD性能，也可能学到错误的组合特征。
+  [NeurIPS 2025][OOD泛化] 通过构建具有明确OOD度量的ARC类任务，证明标准神经网络(MLP/CNN/Transformer)无法实现组合OOD泛化，即使设计具有正确归纳偏置的架构达到近乎完美的OOD性能，也可能学到错误的组合特征。 分布外 (OOD) 泛化被认为是人类和动物智能的标志性能力…
 tags:
   - "NeurIPS 2025"
   - "OOD泛化"

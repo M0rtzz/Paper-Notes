@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedGRPO: Multi-Task Reinforcement Learning for Heterogeneous Medical Video Understanding
 description: >-
-  [CVPR 2026][医学图像][医学视频理解] MedGRPO 提出了两项关键创新解决医学视频多数据集强化学习中的训练崩溃问题：跨数据集奖励归一化（用 logistic 函数将不同难度数据集的中位表现映射到相同奖励值）和医学 LLM 评审（通过五个临床维度的比较性评分）…
+  [CVPR 2026][医学图像][医学视频理解] MedGRPO 提出了两项关键创新解决医学视频多数据集强化学习中的训练崩溃问题：跨数据集奖励归一化（用 logistic 函数将不同难度数据集的中位表现映射到相同奖励值）和医学 LLM 评审（通过五个临床维度的比较性评分），基于 Qwen2.5-VL-7B 在 MedVidBench（532K 视频指令对）上超越 GPT-4.1 和 Gemini-2.5-Flash。
 tags:
   - "CVPR 2026"
   - "医学图像"

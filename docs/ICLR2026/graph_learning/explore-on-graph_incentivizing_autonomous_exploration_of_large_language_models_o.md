@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explore-on-Graph: Incentivizing Autonomous Exploration of LLMs on Knowledge Graphs
 description: >-
-  [ICLR 2026][图学习][知识图谱问答] 提出 Explore-on-Graph（EoG），通过 SFT + 两阶段强化学习（结果奖励 + 路径精炼奖励），激励 LLM 在知识图谱上自主探索超出训练分布的推理路径，在五个 KGQA 基准上超越 GPT-5 和 Gemini 2.5 Pro。
+  [ICLR 2026][图学习][知识图谱问答] 提出 Explore-on-Graph（EoG），通过 SFT + 两阶段强化学习（结果奖励 + 路径精炼奖励），激励 LLM 在知识图谱上自主探索超出训练分布的推理路径，在五个 KGQA 基准上超越 GPT-5 和 Gemini 2.5 Pro。 - LLM 在 QA 中容…
 tags:
   - "ICLR 2026"
   - "图学习"

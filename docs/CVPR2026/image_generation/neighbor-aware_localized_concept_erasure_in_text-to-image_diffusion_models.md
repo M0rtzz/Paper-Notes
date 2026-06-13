@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neighbor-Aware Localized Concept Erasure in Text-to-Image Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][概念擦除] 提出 NLCE，一个 training-free 的三阶段概念擦除框架，通过谱加权表征调制、注意力引导空间门控和门控特征清理三步实现目标概念的精确局部擦除，同时显式保留语义邻近概念…
+  [CVPR 2026][图像生成][概念擦除] 提出 NLCE，一个 training-free 的三阶段概念擦除框架，通过谱加权表征调制、注意力引导空间门控和门控特征清理三步实现目标概念的精确局部擦除，同时显式保留语义邻近概念，在 Oxford Flowers、Stanford Dogs、名人身份和敏感内容擦除任务上均优于现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

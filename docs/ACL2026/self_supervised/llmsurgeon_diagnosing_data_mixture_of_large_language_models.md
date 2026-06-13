@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLMSurgeon: Diagnosing Data Mixture of Large Language Models
 description: >-
-  [ACL2026][自监督学习][数据混合审计] LLMSurgeon 把“这个 LLM 到底训练在什么数据上”形式化为 Data Mixture Surgery，并用代理分类器的软混淆矩阵反演生成文本中的领域分布，从而在只访问模型输出的条件下估计预训练数据混合比例。
+  [ACL2026][自监督学习][数据混合审计] LLMSurgeon 把“这个 LLM 到底训练在什么数据上”形式化为 Data Mixture Surgery，并用代理分类器的软混淆矩阵反演生成文本中的领域分布，从而在只访问模型输出的条件下估计预训练数据混合比例。 领域现状：大型语言模型的行为、偏差和能力很大程度上来自预…
 tags:
   - "ACL2026"
   - "自监督学习"

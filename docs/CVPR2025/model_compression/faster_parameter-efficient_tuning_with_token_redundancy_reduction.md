@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)
 description: >-
-  [CVPR 2025][模型压缩][参数高效微调] 提出 FPET（Faster Parameter-Efficient Tuning），在参数高效微调（PET）中引入即插即用的 token 冗余压缩模块——在 ViT 中间层用可微的二分匹配策略合并约一半的 token…
+  [CVPR 2025][模型压缩][参数高效微调] 提出 FPET（Faster Parameter-Efficient Tuning），在参数高效微调（PET）中引入即插即用的 token 冗余压缩模块——在 ViT 中间层用可微的二分匹配策略合并约一半的 token，实现比原始 backbone 更快 20% 的推理速度、减少约 40% GPU显存、且精度与 SOTA PET 方法持平。
 tags:
   - "CVPR 2025"
   - "模型压缩"

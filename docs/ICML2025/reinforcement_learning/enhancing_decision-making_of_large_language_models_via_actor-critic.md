@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Decision-Making of Large Language Models via Actor-Critic
 description: >-
-  [ICML2025][强化学习][Actor-Critic] 提出 LAC（LLM-based Actor-Critic）框架，通过 token logits 的正/负结果概率比构建 Q 函数（Critic），并用 KL 约束闭式解实现无梯度策略优化（Actor）…
+  [ICML2025][强化学习][Actor-Critic] 提出 LAC（LLM-based Actor-Critic）框架，通过 token logits 的正/负结果概率比构建 Q 函数（Critic），并用 KL 约束闭式解实现无梯度策略优化（Actor），在 ALFWorld、BabyAI-Text、WebShop 三个基准上用 7B/8B 模型超越 GPT-4 + ReAct。
 tags:
   - "ICML2025"
   - "强化学习"

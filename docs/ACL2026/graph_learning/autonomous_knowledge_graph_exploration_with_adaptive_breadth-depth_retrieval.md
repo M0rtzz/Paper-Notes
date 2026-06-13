@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autonomous Knowledge Graph Exploration with Adaptive Breadth-Depth Retrieval
 description: >-
-  [ACL 2026][图学习][知识图谱] 本文提出 ARK：一个 training-free 的知识图谱检索 agent，只暴露「全局词法搜索」和「单跳邻居展开」两个最小工具，让 LLM 自主在广度和深度之间切换，无需种子节点或固定跳数；在 STaRK 三图上把 Hit@1 平均推到 59.1%…
+  [ACL 2026][图学习][知识图谱] 本文提出 ARK：一个 training-free 的知识图谱检索 agent，只暴露「全局词法搜索」和「单跳邻居展开」两个最小工具，让 LLM 自主在广度和深度之间切换，无需种子节点或固定跳数；在 STaRK 三图上把 Hit@1 平均推到 59.1%，最高比 training-free baseline 提升 31.4%，并可把策略 label-free 蒸馏进 Qwen3-8B。
 tags:
   - "ACL 2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FALIP: Visual Prompt as Foveal Attention Boosts CLIP Zero-Shot Performance
 description: >-
-  [ECCV 2024][3D视觉][CLIP] 提出FALIP（Foveal-Attention CLIP），一种免训练方法，通过在CLIP的多头自注意力模块中插入类似人类中央凹视觉的注意力掩码，在不修改原始图像的情况下增强CLIP的区域感知能力，在指代表达理解、图像分类和3D点云识别等零样本任务上均取得提升…
+  [ECCV 2024][3D视觉][CLIP] 提出FALIP（Foveal-Attention CLIP），一种免训练方法，通过在CLIP的多头自注意力模块中插入类似人类中央凹视觉的注意力掩码，在不修改原始图像的情况下增强CLIP的区域感知能力，在指代表达理解、图像分类和3D点云识别等零样本任务上均取得提升。
 tags:
   - "ECCV 2024"
   - "3D视觉"

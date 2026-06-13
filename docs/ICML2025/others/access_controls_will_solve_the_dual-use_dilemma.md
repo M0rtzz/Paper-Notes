@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Access Controls Will Solve the Dual-Use Dilemma
 description: >-
-  [ICML 2025][双用途困境] 提出基于访问控制的概念框架来解决AI安全中的双用途困境（dual-use dilemma），通过用户身份验证获取真实世界上下文，结合内容分类实现细粒度的权限管理，同时缓解过度拒绝（over-refusal）和不足拒绝（under-refusal）问题。
+  [ICML 2025][双用途困境] 提出基于访问控制的概念框架来解决AI安全中的双用途困境（dual-use dilemma），通过用户身份验证获取真实世界上下文，结合内容分类实现细粒度的权限管理，同时缓解过度拒绝（over-refusal）和不足拒绝（under-refusal）问题。 领域现状：当前 LLM 安全系统主…
 tags:
   - "ICML 2025"
   - "双用途困境"

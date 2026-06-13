@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimDiff: Simpler Yet Better Diffusion Model for Time Series Point Forecasting
 description: >-
-  [AAAI 2026][图像生成][时间序列预测] 提出SimDiff——首个纯端到端扩散模型实现时间序列点预测SOTA，通过统一的Transformer网络同时充当去噪器和预测器…
+  [AAAI 2026][图像生成][时间序列预测] 提出SimDiff——首个纯端到端扩散模型实现时间序列点预测SOTA，通过统一的Transformer网络同时充当去噪器和预测器，结合Normalization Independence处理分布偏移和Median-of-Means集成策略将概率采样转化为精确点预测，在9个数据集上6个第一、3个第二。
 tags:
   - "AAAI 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Multi-prompt Contrastive Network for Few-shot Out-of-distribution Detection
 description: >-
-  [ICML2025][AI安全][OOD检测] 提出 AMCN（Adaptive Multi-prompt Contrastive Network），通过生成三类自适应文本 prompt（可学习 ID prompt、标签固定 OOD prompt、标签自适应 OOD prompt）并结合类别自适应阈值…
+  [ICML2025][AI安全][OOD检测] 提出 AMCN（Adaptive Multi-prompt Contrastive Network），通过生成三类自适应文本 prompt（可学习 ID prompt、标签固定 OOD prompt、标签自适应 OOD prompt）并结合类别自适应阈值，在仅有少量 ID 标注样本的条件下实现高质量 OOD 检测，显著超越现有 few-shot OOD 检测方法。
 tags:
   - "ICML2025"
   - "AI安全"

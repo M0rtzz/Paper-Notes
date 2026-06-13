@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretability and Generalization Bounds for Learning Spatial Physics
 description: >-
-  [ICML 2026][优化/理论][神经算子] 论文用数值分析工具证明：在线性 PDE（1D Poisson 等）上学到的解算子 $\mathbf{W}$ 只会收敛到真算子 $\mathbf{A}$ 在训练函数空间上的投影 $\mathbf{A}\mathbf{U}\mathbf{U}^\top$…
+  [ICML 2026][优化/理论][神经算子] 论文用数值分析工具证明：在线性 PDE（1D Poisson 等）上学到的解算子 $\mathbf{W}$ 只会收敛到真算子 $\mathbf{A}$ 在训练函数空间上的投影 $\mathbf{A}\mathbf{U}\mathbf{U}^\top$，所以**函数空间本身**——而非数据量或网格细度——决定 OOD 泛化；并提出一种把权重矩阵作用在 one-hot 上即可看出"是否学到 Green 函数结构"的机械可解释技术，用 25×25 跨数据集 cross-evaluation 把 8 类 SciML 模型（含 PINN/DeepONet/FNO/PI-DeepONet）的失败…
 tags:
   - "ICML 2026"
   - "优化/理论"

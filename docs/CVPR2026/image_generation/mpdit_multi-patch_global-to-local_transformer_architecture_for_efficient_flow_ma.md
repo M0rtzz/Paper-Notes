@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching
 description: >-
-  [CVPR 2026][图像生成][Transformer] 提出 MPDiT，一个多尺度 patch 的全局到局部扩散 Transformer 架构，前期用大 patch（4×4）处理全局上下文仅需 64 个 token，后期上采样到小 patch（2×2）的 256 个 token 精修局部细节…
+  [CVPR 2026][图像生成][Transformer] 提出 MPDiT，一个多尺度 patch 的全局到局部扩散 Transformer 架构，前期用大 patch（4×4）处理全局上下文仅需 64 个 token，后期上采样到小 patch（2×2）的 256 个 token 精修局部细节，将 GFLOPs 降低高达 50%，且 XL 模型在 240 epoch 即达到 FID 2.05（cfg）。
 tags:
   - "CVPR 2026"
   - "图像生成"

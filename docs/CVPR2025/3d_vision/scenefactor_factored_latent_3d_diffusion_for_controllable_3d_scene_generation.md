@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneFactor: Factored Latent 3D Diffusion for Controllable 3D Scene Generation
 description: >-
-  [CVPR 2025][3D视觉][3D场景生成] 提出SceneFactor，通过分解式潜空间扩散（先生成粗语义box布局，再生成精细几何），实现文本引导的大规模3D室内场景生成，并支持通过语义box操作进行直观的局部编辑。
+  [CVPR 2025][3D视觉][3D场景生成] 提出SceneFactor，通过分解式潜空间扩散（先生成粗语义box布局，再生成精细几何），实现文本引导的大规模3D室内场景生成，并支持通过语义box操作进行直观的局部编辑。 3D场景的可编辑生成对AR/VR、游戏和建筑设计至关重要。内容创作天然是迭代过程…
 tags:
   - "CVPR 2025"
   - "3D视觉"

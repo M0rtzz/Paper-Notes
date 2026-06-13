@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Force Field: Few-shot Learning of Generalized Physical Reasoning
 description: >-
-  [ICLR 2026][neural force field] 提出Neural Force Field（NFF），将物体交互建模为连续力场，通过神经算子学习力场函数并用ODE积分器解码轨迹，在I-PHYRE（100条轨迹）、N-body（200条轨迹）、PHYRE（0.012M数据…
+  [ICLR 2026][neural force field] 提出Neural Force Field（NFF），将物体交互建模为连续力场，通过神经算子学习力场函数并用ODE积分器解码轨迹，在I-PHYRE（100条轨迹）、N-body（200条轨迹）、PHYRE（0.012M数据,比SOTA少267倍）三个基准上实现少样本SOTA，跨场景RMSE降低32-64%,规划任务接近人类水平。
 tags:
   - "ICLR 2026"
   - "neural force field"

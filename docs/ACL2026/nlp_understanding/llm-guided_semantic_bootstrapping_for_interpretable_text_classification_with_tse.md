@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LLM-Guided Semantic Bootstrapping for Interpretable Text Classification with Tsetlin Machines
 description: >-
-  [ACL 2026][NLP理解][Tsetlin Machine] 本文提出 LLM 引导的语义引导框架，通过 LLM 生成子意图和三阶段课程式合成数据训练非否定 Tsetlin Machine（NTM），提取高置信度符号特征注入真实数据，使标准 TM 在保持完全可解释性的同时逼近 BERT 的分类性能。
+  [ACL 2026 Findings][NLP理解][Tsetlin Machine] 本文提出 LLM 引导的语义引导框架，通过 LLM 生成子意图和三阶段课程式合成数据训练非否定 Tsetlin Machine（NTM），提取高置信度符号特征注入真实数据，使标准 TM 在保持完全可解释性的同时逼近 BERT 的分类性能。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "Tsetlin Machine"
   - "语义引导"

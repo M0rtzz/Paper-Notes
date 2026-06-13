@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering Ordinary Differential Equations with LLM-Based Qualitative and Quantitative Evaluation
 description: >-
-  [ICML 2026][LLM评测][符号回归] DoLQ 在 LLM 符号回归的搜索循环里插入一个 "Scientist Agent"，对候选项同时做定性（物理合理性）+ 定量（消融式 MSE 贡献）评估，把 LLM-SR 那种 "低误差但项数臃肿、物理上荒谬" 的方程逼到既数值精确又结构紧凑。
+  [ICML 2026][LLM评测][符号回归] DoLQ 在 LLM 符号回归的搜索循环里插入一个 "Scientist Agent"，对候选项同时做定性（物理合理性）+ 定量（消融式 MSE 贡献）评估，把 LLM-SR 那种 "低误差但项数臃肿、物理上荒谬" 的方程逼到既数值精确又结构紧凑。 领域现状：从观测数据反推常…
 tags:
   - "ICML 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Linear Regression with Paid Stochastic Features
 description: >-
-  [AAAI2026][在线线性回归] 研究了在线线性回归中特征被噪声污染、学习者可以**付费降低噪声强度**的新问题设定，证明了已知噪声协方差时最优遗憾率为 $\widetilde{\mathcal{O}}(\sqrt{T})$、未知时为 $\widetilde{\mathcal{O}}(T^{2/3})$…
+  [AAAI2026][在线线性回归] 研究了在线线性回归中特征被噪声污染、学习者可以**付费降低噪声强度**的新问题设定，证明了已知噪声协方差时最优遗憾率为 $\widetilde{\mathcal{O}}(\sqrt{T})$、未知时为 $\widetilde{\mathcal{O}}(T^{2/3})$，并给出匹配的下界，所有界关于时间 $T$ 的依赖都是阶最优的。
 tags:
   - "AAAI2026"
   - "在线线性回归"

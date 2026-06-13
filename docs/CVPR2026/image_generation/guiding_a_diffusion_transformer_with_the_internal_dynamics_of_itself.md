@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guiding a Diffusion Transformer with the Internal Dynamics of Itself
 description: >-
-  [CVPR 2026][图像生成][内部引导] 本文提出 Internal Guidance (IG)，通过在 Diffusion Transformer 的中间层添加辅助监督损失使其产生较弱的生成输出，然后在采样时外推中间层和深层输出的差异来实现类似 Autoguidance 的引导效果…
+  [CVPR 2026][图像生成][内部引导] 本文提出 Internal Guidance (IG)，通过在 Diffusion Transformer 的中间层添加辅助监督损失使其产生较弱的生成输出，然后在采样时外推中间层和深层输出的差异来实现类似 Autoguidance 的引导效果，无需额外采样步骤或外部模型训练，在 ImageNet 256×256 上将 LightningDiT-XL/1 的 FID 推至 1.34（无 CFG）和 1.19（+CFG），达到同期 SOTA。
 tags:
   - "CVPR 2026"
   - "图像生成"

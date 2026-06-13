@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Low-Light Image Enhancement using Event-Based Illumination Estimation (RetinEV)
 description: >-
-  [ICCV 2025][图像恢复][低光照增强] RetinEV 提出利用事件相机的"时间映射事件"（temporal-mapping events，由透射率调制触发）而非传统"运动事件"进行光照估计，结合 Retinex 理论将低光照图像分解为光照和反射率分量…
+  [ICCV 2025][图像恢复][低光照增强] RetinEV 提出利用事件相机的"时间映射事件"（temporal-mapping events，由透射率调制触发）而非传统"运动事件"进行光照估计，结合 Retinex 理论将低光照图像分解为光照和反射率分量，通过光照辅助反射率增强（IRE）模块实现高质量低光照图像增强，在 640×480 分辨率下达到 35.6 FPS 实时速度。
 tags:
   - "ICCV 2025"
   - "图像恢复"

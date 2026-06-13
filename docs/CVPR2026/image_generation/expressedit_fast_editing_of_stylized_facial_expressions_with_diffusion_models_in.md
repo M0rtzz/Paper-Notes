@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExpressEdit: Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop
 description: >-
-  [CVPR 2026][图像生成][表情编辑] 本文提出 ExpressEdit，一个完全开源的 Photoshop 插件，通过基于 SPICE 的扩散模型后端结合 Danbooru 表情标签数据库和 RAG 系统，在单个消费级 GPU 上 3 秒内完成风格化面部表情的无噪声编辑…
+  [CVPR 2026][图像生成][表情编辑] 本文提出 ExpressEdit，一个完全开源的 Photoshop 插件，通过基于 SPICE 的扩散模型后端结合 Danbooru 表情标签数据库和 RAG 系统，在单个消费级 GPU 上 3 秒内完成风格化面部表情的无噪声编辑，显著优于 GPT/Grok/Nano Banana 2 等商业模型。
 tags:
   - "CVPR 2026"
   - "图像生成"

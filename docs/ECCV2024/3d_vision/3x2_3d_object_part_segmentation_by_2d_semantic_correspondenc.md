@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3×2: 3D Object Part Segmentation by 2D Semantic Correspondences
 description: >-
-  [ECCV 2024][3D视觉][图像分割] 提出了一种无需训练的3D物体部件分割方法3-By-2，利用扩散模型(DIFT)的2D语义对应关系从已标注2D数据集或少量3D标注对象中迁移部件标签到3D，在zero-shot和few-shot设置下均达到SOTA。
+  [ECCV 2024][3D视觉][图像分割] 提出了一种无需训练的3D物体部件分割方法3-By-2，利用扩散模型(DIFT)的2D语义对应关系从已标注2D数据集或少量3D标注对象中迁移部件标签到3D，在zero-shot和few-shot设置下均达到SOTA。 3D物体部件分割在机器人、图形学等领域至关重要…
 tags:
   - "ECCV 2024"
   - "3D视觉"

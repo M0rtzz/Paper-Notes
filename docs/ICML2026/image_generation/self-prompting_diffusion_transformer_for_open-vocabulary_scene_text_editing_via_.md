@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Prompting Diffusion Transformer for Open-Vocabulary Scene Text Editing via In-Context Learning
 description: >-
-  [ICML 2026][图像生成][场景文字编辑] 本文提出一种基于 FLUX-Fill (MM-DiT) 的自提示场景文字编辑方法：直接从原图裁出风格 prompt、用 Pillow 渲染出 glyph prompt，两者与 masked image 沿通道拼接后送入扩散 backbone…
+  [ICML 2026][图像生成][场景文字编辑] 本文提出一种基于 FLUX-Fill (MM-DiT) 的自提示场景文字编辑方法：直接从原图裁出风格 prompt、用 Pillow 渲染出 glyph prompt，两者与 masked image 沿通道拼接后送入扩散 backbone，再用 4000 张 Nano Banana Pro 生成的高质量配对图做 cooldown 训练，从而在 13 种语言上同时实现开放词表与原始风格一致的文字替换。
 tags:
   - "ICML 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Atomic LLM: A Fine-Grained Information Retrieval Evaluation Benchmark for Language Models
 description: >-
-  [ACL 2025][信息检索/RAG][细粒度评估] 本文提出Atomic LLM基准，通过将信息检索评估分解为原子级别（Atomic Level）的事实检索任务，从事实精确性、来源归因、粒度覆盖等多个维度对LLM的信息检索能力进行细粒度评估，揭示了现有LLM在精确事实提取方面的系统性不足。
+  [ACL 2025][信息检索/RAG][细粒度评估] 本文提出Atomic LLM基准，通过将信息检索评估分解为原子级别（Atomic Level）的事实检索任务，从事实精确性、来源归因、粒度覆盖等多个维度对LLM的信息检索能力进行细粒度评估，揭示了现有LLM在精确事实提取方面的系统性不足。 领域现状：随着检索增强生成（R…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

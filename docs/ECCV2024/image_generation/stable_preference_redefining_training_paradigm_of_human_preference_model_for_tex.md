@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Preference: Redefining Training Paradigm of Human Preference Model for Text-to-Image Synthesis
 description: >-
-  [ECCV 2024][图像生成][人类偏好模型] 重新定义了文本到图像生成中人类偏好模型的训练范式，通过引入质量感知的margin机制和抗干扰损失函数，解决了传统交叉熵训练中"相似质量图像对的盲目惩罚"和"对视觉扰动不鲁棒"两大问题，在主流人类偏好数据集上取得了SOTA性能。
+  [ECCV 2024][图像生成][人类偏好模型] 重新定义了文本到图像生成中人类偏好模型的训练范式，通过引入质量感知的margin机制和抗干扰损失函数，解决了传统交叉熵训练中"相似质量图像对的盲目惩罚"和"对视觉扰动不鲁棒"两大问题，在主流人类偏好数据集上取得了SOTA性能。 领域现状：随着Stable Diffusion…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemGrad: Gradients w.r.t. Semantics-Preserving Embeddings Tell LLM Uncertainty
 description: >-
-  [ICML 2026][LLM安全][自由生成 UQ] SemGrad 首次把"基于梯度"的不确定性量化搬到 LLM 自由生成场景——用语义保留分 (SPS) 找到能编码输入语义的隐藏态，把对它们求出的对数似然梯度范数当作 LLM 自信度的度量…
+  [ICML 2026][LLM安全][自由生成 UQ] SemGrad 首次把"基于梯度"的不确定性量化搬到 LLM 自由生成场景——用语义保留分 (SPS) 找到能编码输入语义的隐藏态，把对它们求出的对数似然梯度范数当作 LLM 自信度的度量，无需采样、单次反向即可在 3 个 QA 数据集上击败 11 个 SOTA baseline，特别在多有效答案的 TruthfulQA 上比 SAR 高 3.27 AUROC。
 tags:
   - "ICML 2026"
   - "LLM安全"

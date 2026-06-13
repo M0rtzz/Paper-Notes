@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAIL: Similarity-Aware Guidance and Inter-Caption Augmentation-based Learning for Weakly-Supervised Dense Video Captioning
 description: >-
-  [CVPR 2026][视频理解][弱监督密集视频描述] 提出 SAIL，通过跨模态相似度引导的语义感知掩码生成和 LLM 合成字幕的辅助监督，在仅有字幕标注（无时间边界）的弱监督设置下，在 ActivityNet 和 YouCook2 上实现密集视频描述和事件定位的双 SOTA。
+  [CVPR 2026][视频理解][弱监督密集视频描述] 提出 SAIL，通过跨模态相似度引导的语义感知掩码生成和 LLM 合成字幕的辅助监督，在仅有字幕标注（无时间边界）的弱监督设置下，在 ActivityNet 和 YouCook2 上实现密集视频描述和事件定位的双 SOTA。 Dense Video Captionin…
 tags:
   - "CVPR 2026"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chart-based Reasoning: Transferring Capabilities from LLMs to VLMs
 description: >-
-  [ACL 2025][多模态VLM][图表问答] 本文提出一种将LLM的推理能力迁移到VLM的方法，通过改进图表表示预训练、构造大规模合成推理数据集和多任务微调，使5B参数的PaLI-3在ChartQA上超越10倍大的模型。
+  [ACL 2025][多模态VLM][图表问答] 本文提出一种将LLM的推理能力迁移到VLM的方法，通过改进图表表示预训练、构造大规模合成推理数据集和多任务微调，使5B参数的PaLI-3在ChartQA上超越10倍大的模型。 领域现状：视觉语言模型（VLM）在多模态任务上取得了越来越好的表现，但其推理能力——特别是涉及数值计…
 tags:
   - "ACL 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionChain: Conversational Motion Controllers via Multimodal Prompts
 description: >-
-  [ECCV 2024][图像生成] 提出 MotionChain，一个视觉-运动-语言统一模型，通过多模态提示在多轮对话中生成连续、长期的人体运动序列，支持文本、图像和运动的联合理解与生成。
+  [ECCV 2024][图像生成] 提出 MotionChain，一个视觉-运动-语言统一模型，通过多模态提示在多轮对话中生成连续、长期的人体运动序列，支持文本、图像和运动的联合理解与生成。 - 大语言模型（LLM）的成功：LLM 在多轮对话和上下文保持方面表现出色，但这种能力在人体运动生成领域几乎未被探索 - 现有运动生成…
 tags:
   - "ECCV 2024"
   - "图像生成"

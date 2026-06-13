@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Image-Dense Annotation Generation Model for Underwater Scenes
 description: >-
-  [CVPR 2025][3D视觉][水下场景] 本文提出TIDE，一种统一的文本到图像和密集标注生成方法，仅以文本为输入就能同时生成高度一致的水下图像、深度图和语义掩码，通过隐式布局共享（ILS）和时间自适应归一化（TAN）机制确保多模态输出的一致性…
+  [CVPR 2025][3D视觉][水下场景] 本文提出TIDE，一种统一的文本到图像和密集标注生成方法，仅以文本为输入就能同时生成高度一致的水下图像、深度图和语义掩码，通过隐式布局共享（ILS）和时间自适应归一化（TAN）机制确保多模态输出的一致性，合成的SynTIDE数据集显著提升了水下深度估计和语义分割性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

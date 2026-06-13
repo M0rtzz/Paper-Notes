@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where the Devil Hides: Deepfake Detectors Can No Longer Be Trusted
 description: >-
-  [CVPR 2025][AI安全][后门攻击] 揭示了 Deepfake 检测器面临的严重安全风险——第三方数据提供者可以通过注入密码控制的、自适应的、不可见的触发器来植入后门，使被污染的检测器在遇到带特定触发器的样本时产生错误判断，同时在正常样本上保持正常性能…
+  [CVPR 2025][AI安全][后门攻击] 揭示了 Deepfake 检测器面临的严重安全风险——第三方数据提供者可以通过注入密码控制的、自适应的、不可见的触发器来植入后门，使被污染的检测器在遇到带特定触发器的样本时产生错误判断，同时在正常样本上保持正常性能。支持 dirty-label 和 clean-label 两种攻击场景。
 tags:
   - "CVPR 2025"
   - "AI安全"

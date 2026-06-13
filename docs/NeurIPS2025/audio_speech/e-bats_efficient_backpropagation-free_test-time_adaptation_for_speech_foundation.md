@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models
 description: >-
-  [NeurIPS 2025][音频/语音][test-time adaptation] 提出首个面向语音基础模型的无反向传播测试时自适应框架 E-BATS，通过轻量级 prompt 自适应、多尺度损失函数和测试时 EMA 机制，在保持高精度的同时实现 2.0×–6.4× 的 GPU 显存节省。
+  [NeurIPS 2025][音频/语音][test-time adaptation] 提出首个面向语音基础模型的无反向传播测试时自适应框架 E-BATS，通过轻量级 prompt 自适应、多尺度损失函数和测试时 EMA 机制，在保持高精度的同时实现 2.0×–6.4× 的 GPU 显存节省。 语音基础模型（Speech F…
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

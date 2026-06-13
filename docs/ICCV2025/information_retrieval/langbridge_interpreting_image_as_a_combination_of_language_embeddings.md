@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LangBridge: Interpreting Image as a Combination of Language Embeddings
 description: >-
-  [信息检索/RAG] LangBridge 通过将视觉特征显式分解为 LLM 词汇嵌入的线性组合，实现了可解释的视觉-语言对齐，并支持跨 LLM 的预训练无关适配器迁移。
+  [信息检索/RAG] LangBridge 通过将视觉特征显式分解为 LLM 词汇嵌入的线性组合，实现了可解释的视觉-语言对齐，并支持跨 LLM 的预训练无关适配器迁移。 主流大型视觉语言模型（LVLM）遵循 LLaVA 范式，使用 MLP 将视觉特征映射到 LLM 的文本嵌入空间。虽然这种方法有效…
 tags:
   - "信息检索/RAG"
 ---

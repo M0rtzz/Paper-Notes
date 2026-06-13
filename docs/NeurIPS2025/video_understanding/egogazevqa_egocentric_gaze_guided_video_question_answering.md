@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoGazeVQA: Egocentric Gaze-Guided Video Question Answering Benchmark
 description: >-
-  [NeurIPS 2025][视频理解][第一人称视频] 提出 EgoGazeVQA，首个融合用户眼动注视数据的第一人称视频问答基准，通过注视引导的提示策略（文本/视觉/显著性图）显著提升 MLLM 对用户意图的理解能力…
+  [NeurIPS 2025][视频理解][第一人称视频] 提出 EgoGazeVQA，首个融合用户眼动注视数据的第一人称视频问答基准，通过注视引导的提示策略（文本/视觉/显著性图）显著提升 MLLM 对用户意图的理解能力，Gaze Salience Map 策略最高可将 MiniCPM-o 的准确率从35.9%提升至53.7%。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

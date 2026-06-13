@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CamGeo: Sparse Camera-Conditioned Image-to-Video Generation with 3D Geometry Prior
 description: >-
-  [ICML 2026][视频生成][图像到视频生成] CamGeo 通过**训练专用蒸馏**（training-only distillation）从预训练 3D 视频模型（VGGT）蒸馏 3D 几何知识——仅在训练阶段提供监督信号使扩散模型能在**稀疏相机输入**条件下生成几何一致且运动平滑的高质量视频…
+  [ICML 2026][视频生成][图像到视频生成] CamGeo 通过**训练专用蒸馏**（training-only distillation）从预训练 3D 视频模型（VGGT）蒸馏 3D 几何知识——仅在训练阶段提供监督信号使扩散模型能在**稀疏相机输入**条件下生成几何一致且运动平滑的高质量视频，推理时完全移除 VGGT 以保持效率。
 tags:
   - "ICML 2026"
   - "视频生成"

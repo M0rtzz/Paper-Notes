@@ -2,9 +2,10 @@
 title: >-
   [论文解读] ConSim: Measuring Concept-Based Explanations' Effectiveness with Automated Simulatability
 description: >-
-  [ACL 2025][概念解释] ConSim 提出用 LLM 作为"模拟器"来自动评估概念解释（concept-based explanation）的有效性——通过检测 LLM 能否仅凭解释来预测被解释模型的输出，从而同时衡量概念空间的质量和解释的可理解性，实现了可扩展、一致且全面的解释方法评估。
+  [ACL 2025][LLM 其他][概念解释] ConSim 提出用 LLM 作为"模拟器"来自动评估概念解释（concept-based explanation）的有效性——通过检测 LLM 能否仅凭解释来预测被解释模型的输出，从而同时衡量概念空间的质量和解释的可理解性，实现了可扩展、一致且全面的解释方法评估。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "概念解释"
   - "可模拟性评估"
   - "LLM自动评测"

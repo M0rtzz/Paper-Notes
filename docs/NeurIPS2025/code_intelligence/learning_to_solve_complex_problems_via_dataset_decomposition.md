@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Solve Complex Problems via Dataset Decomposition
 description: >-
-  [NeurIPS 2025][代码智能][数据集分解] 提出Decomp方法，利用教师模型将复杂数学题按推理步骤递归分解为更简单的子问题，构建概念依赖图量化难度，再按从易到难的课程顺序训练学生模型——Qwen2.5-1.5B在MATH-500上达51.6%（超MuggleMath用147K数据的50.4%）…
+  [NeurIPS 2025][代码智能][数据集分解] 提出Decomp方法，利用教师模型将复杂数学题按推理步骤递归分解为更简单的子问题，构建概念依赖图量化难度，再按从易到难的课程顺序训练学生模型——Qwen2.5-1.5B在MATH-500上达51.6%（超MuggleMath用147K数据的50.4%），Qwen3-4B在AIME2025仅用385样本达16.7%（超Qwen2.5-72B的15%）。
 tags:
   - "NeurIPS 2025"
   - "代码智能"

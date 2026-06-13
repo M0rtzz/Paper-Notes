@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Angular Constraint Embedding via SpherePair Loss for Constrained Clustering
 description: >-
-  [NeurIPS 2025][自监督学习][约束聚类] 本文提出SpherePair损失函数，通过在角度空间（而非欧几里得空间）进行成对约束嵌入学习，实现了不依赖锚点(anchor)、不需要预知聚类数的深度约束聚类方法，并提供了严格的理论保证来确定最优超参数。
+  [NeurIPS 2025][自监督学习][约束聚类] 本文提出SpherePair损失函数，通过在角度空间（而非欧几里得空间）进行成对约束嵌入学习，实现了不依赖锚点(anchor)、不需要预知聚类数的深度约束聚类方法，并提供了严格的理论保证来确定最优超参数。 领域现状：深度约束聚类(DCC)通过整合领域知识（成对约束：同簇…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

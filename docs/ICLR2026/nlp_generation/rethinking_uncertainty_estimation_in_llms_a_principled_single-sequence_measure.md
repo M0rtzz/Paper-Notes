@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure
 description: >-
-  [ICLR 2026][文本生成][不确定性估计] 从 proper scoring rules 框架出发，证明最高概率输出序列的负对数似然（MSP）是理论上合理的不确定性度量，并提出 G-NLL——仅用一次贪心解码就能逼近该度量，在多个场景下匹配或超越需要多次采样的 SOTA 方法。
+  [ICLR 2026][文本生成][不确定性估计] 从 proper scoring rules 框架出发，证明最高概率输出序列的负对数似然（MSP）是理论上合理的不确定性度量，并提出 G-NLL——仅用一次贪心解码就能逼近该度量，在多个场景下匹配或超越需要多次采样的 SOTA 方法。 领域现状：LLM 不确定性估计主要基于…
 tags:
   - "ICLR 2026"
   - "文本生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TransiT: Transient Transformer for Non-line-of-sight Videography
 description: >-
-  [ICCV 2025][机器人][非视距成像] 设计了 TransiT 架构，通过瞬态信号压缩、帧间特征融合和时空 Transformer，实现从稀疏快速扫描（16×16、0.4ms/点）的 NLOS 瞬态信号实时重建 64×64 分辨率的隐藏场景视频（10 FPS）…
+  [ICCV 2025][机器人][非视距成像] 设计了 TransiT 架构，通过瞬态信号压缩、帧间特征融合和时空 Transformer，实现从稀疏快速扫描（16×16、0.4ms/点）的 NLOS 瞬态信号实时重建 64×64 分辨率的隐藏场景视频（10 FPS），并提出基于 MMD 的迁移学习方法弥合合成与真实数据的分布差距。
 tags:
   - "ICCV 2025"
   - "机器人"

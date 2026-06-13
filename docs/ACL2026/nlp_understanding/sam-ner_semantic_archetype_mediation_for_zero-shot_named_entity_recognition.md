@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SAM-NER: Semantic Archetype Mediation for Zero-Shot Named Entity Recognition
 description: >-
-  [ACL2026][NLP理解][零样本 NER] SAM-NER 用“实体发现 → 14 类通用语义原型 → 目标类型定义校准”的三阶段中介框架缓解零样本 NER 的 schema drift，在 CrossNER 上取得 66.3 平均 micro-F1，超过一系列强基线。
+  [ACL2026 Findings][NLP理解][零样本 NER] SAM-NER 用“实体发现 → 14 类通用语义原型 → 目标类型定义校准”的三阶段中介框架缓解零样本 NER 的 schema drift，在 CrossNER 上取得 66.3 平均 micro-F1，超过一系列强基线。 领域现状：零样本 NER 希…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "NLP理解"
   - "零样本 NER"
   - "语义原型"

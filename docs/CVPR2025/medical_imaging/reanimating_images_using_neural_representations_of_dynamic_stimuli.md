@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reanimating Images using Neural Representations of Dynamic Stimuli
 description: >-
-  [CVPR 2025][医学图像][fMRI脑活动解码] 提出 BrainNRDS 框架，将静态图像表征与运动生成解耦，利用 fMRI 脑活动解码光流信息，结合运动条件扩散模型从初始帧生成视频，同时发现视频编码器（VideoMAE）在预测脑活动方面优于图像编码器。
+  [CVPR 2025][医学图像][fMRI脑活动解码] 提出 BrainNRDS 框架，将静态图像表征与运动生成解耦，利用 fMRI 脑活动解码光流信息，结合运动条件扩散模型从初始帧生成视频，同时发现视频编码器（VideoMAE）在预测脑活动方面优于图像编码器。 尽管计算机视觉在静态图像识别上已取得巨大突破…
 tags:
   - "CVPR 2025"
   - "医学图像"

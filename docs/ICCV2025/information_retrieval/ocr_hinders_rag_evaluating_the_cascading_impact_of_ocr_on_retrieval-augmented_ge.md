@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OCR Hinders RAG: Evaluating the Cascading Impact of OCR on Retrieval-Augmented Generation
 description: >-
-  [ICCV 2025][信息检索/RAG][OCR] 提出 OHRBench——首个评估 OCR 对 RAG 系统级联影响的基准，包含 7 个领域的 8561 张文档图像和 8498 个 QA 对…
+  [ICCV 2025][信息检索/RAG][OCR] 提出 OHRBench——首个评估 OCR 对 RAG 系统级联影响的基准，包含 7 个领域的 8561 张文档图像和 8498 个 QA 对，系统性地揭示了 OCR 产生的语义噪声（Semantic Noise）和格式噪声（Formatting Noise）对检索和生成两阶段的不同影响模式。
 tags:
   - "ICCV 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search
 description: >-
-  [NeurIPS 2025][强化学习][Quantum Architecture Search] 提出 TensorRL-QAS 框架，通过用张量网络（MPS/DMRG）对强化学习量子架构搜索进行 warm-start，显著降低电路深度和 CNOT 门数量（最高 10 倍），同时加速训练（最高 98%）…
+  [NeurIPS 2025][强化学习][Quantum Architecture Search] 提出 TensorRL-QAS 框架，通过用张量网络（MPS/DMRG）对强化学习量子架构搜索进行 warm-start，显著降低电路深度和 CNOT 门数量（最高 10 倍），同时加速训练（最高 98%），有效解决了 RL-QAS 在大规模量子系统上的可扩展性瓶颈。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

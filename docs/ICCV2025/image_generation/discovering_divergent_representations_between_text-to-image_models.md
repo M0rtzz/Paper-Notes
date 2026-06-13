@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering Divergent Representations between Text-to-Image Models
 description: >-
-  [ICCV 2025][图像生成][文生图模型对比] 提出 CompCon（Comparing Concepts），一种进化搜索算法，自动发现两个文生图模型之间的"分歧表征"——即在哪些视觉属性上、被哪类提示词触发时，两个模型会产生截然不同的输出，并构建了 ID² 基准数据集进行系统评估。
+  [ICCV 2025][图像生成][文生图模型对比] 提出 CompCon（Comparing Concepts），一种进化搜索算法，自动发现两个文生图模型之间的"分歧表征"——即在哪些视觉属性上、被哪类提示词触发时，两个模型会产生截然不同的输出，并构建了 ID² 基准数据集进行系统评估。 领域现状：文生图（Text-to-…
 tags:
   - "ICCV 2025"
   - "图像生成"

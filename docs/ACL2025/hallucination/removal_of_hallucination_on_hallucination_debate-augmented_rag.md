@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Removal of Hallucination on Hallucination: Debate-Augmented RAG
 description: >-
-  [ACL 2025][幻觉检测][检索增强生成] DRAG（Debate-Augmented RAG）提出在RAG系统的检索和生成两个阶段均引入多智能体辩论（MAD）机制，通过正反方辩论+裁判仲裁的结构化流程，消除因错误检索导致的"幻觉传递幻觉"问题，在6个QA基准上显著提升事实准确性。
+  [ACL 2025][幻觉检测][检索增强生成] DRAG（Debate-Augmented RAG）提出在RAG系统的检索和生成两个阶段均引入多智能体辩论（MAD）机制，通过正反方辩论+裁判仲裁的结构化流程，消除因错误检索导致的"幻觉传递幻觉"问题，在6个QA基准上显著提升事实准确性。 领域现状：检索增强生成（RAG）通过…
 tags:
   - "ACL 2025"
   - "幻觉检测"

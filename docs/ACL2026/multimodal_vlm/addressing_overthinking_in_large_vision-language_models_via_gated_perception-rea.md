@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Addressing Overthinking in Large Vision-Language Models via Gated Perception-Reasoning Optimization
 description: >-
-  [ACL 2026][多模态VLM][过度思考] 提出GPRO框架，通过元推理控制器在每个token生成步动态路由计算到三条路径（快速/感知重检/推理反思），解决LVLM的过度思考问题，同时提升精度和效率。
+  [ACL 2026][多模态VLM][过度思考] 提出GPRO框架，通过元推理控制器在每个token生成步动态路由计算到三条路径（快速/感知重检/推理反思），解决LVLM的过度思考问题，同时提升精度和效率。 领域现状：大型视觉语言模型（LVLM）通过chain-of-thought机制展现了强大的推理能力…
 tags:
   - "ACL 2026"
   - "多模态VLM"

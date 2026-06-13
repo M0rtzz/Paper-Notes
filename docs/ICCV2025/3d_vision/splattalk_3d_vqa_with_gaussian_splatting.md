@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SplatTalk: 3D VQA with Gaussian Splatting
 description: >-
-  [3D视觉] 提出SplatTalk，利用可泛化的3D Gaussian Splatting框架生成与LLM兼容的3D token，仅需多视角RGB图像即可实现零样本3D视觉问答，性能超越2D LMM方法并接近3D LMM。
+  [3D视觉] 提出SplatTalk，利用可泛化的3D Gaussian Splatting框架生成与LLM兼容的3D token，仅需多视角RGB图像即可实现零样本3D视觉问答，性能超越2D LMM方法并接近3D LMM。 现有痛点 现有痛点：领域现状：语言引导的3D场景理解对于机器人、AR/VR等应用至关重要…
 tags:
   - "3D视觉"
 ---

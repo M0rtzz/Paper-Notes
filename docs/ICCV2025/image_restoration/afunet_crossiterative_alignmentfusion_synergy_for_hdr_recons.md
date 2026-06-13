@@ -2,9 +2,10 @@
 title: >-
   [论文解读] AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm
 description: >-
-  [ICCV 2025][HDR成像] 将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA…
+  [ICCV 2025][图像恢复][HDR成像] 将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA，PSNR-μ达44.91dB（Kalantari数据集）。
 tags:
   - "ICCV 2025"
+  - "图像恢复"
   - "HDR成像"
   - "深度展开网络"
   - "MAP估计"

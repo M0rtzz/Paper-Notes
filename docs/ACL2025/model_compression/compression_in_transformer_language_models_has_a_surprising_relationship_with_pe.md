@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compression in Transformer Language Models Has a Surprising Relationship with Performance
 description: >-
-  [ACL 2025][模型压缩][信息论] 本文从信息论角度研究Transformer语言模型中压缩（权重的可压缩性）与模型性能之间的关系，发现了一个反直觉的现象：在一定范围内，更容易被压缩的模型反而具有更好的泛化性能，这与最小描述长度（MDL）原理的预测一致。
+  [ACL 2025][模型压缩][信息论] 本文从信息论角度研究Transformer语言模型中压缩（权重的可压缩性）与模型性能之间的关系，发现了一个反直觉的现象：在一定范围内，更容易被压缩的模型反而具有更好的泛化性能，这与最小描述长度（MDL）原理的预测一致。 领域现状：模型压缩通常被视为性能的对手——压缩意味着信息丢失…
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Scale Finetuning for Encoder-based Time Series Foundation Models
 description: >-
-  [NeurIPS 2025][时间序列][时间序列基础模型] 提出 MSFT（Multi-Scale FineTuning），通过因果分析揭示 naive 微调忽略尺度混淆问题，设计多尺度建模框架对 encoder-based 时间序列基础模型进行高效微调…
+  [NeurIPS 2025][时间序列][时间序列基础模型] 提出 MSFT（Multi-Scale FineTuning），通过因果分析揭示 naive 微调忽略尺度混淆问题，设计多尺度建模框架对 encoder-based 时间序列基础模型进行高效微调，显著超越 naive 微调和从头训练的 SOTA 方法。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

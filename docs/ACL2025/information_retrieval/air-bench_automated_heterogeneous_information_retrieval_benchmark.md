@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AIR-Bench: Automated Heterogeneous Information Retrieval Benchmark
 description: >-
-  [ACL 2025][信息检索/RAG][Information Retrieval] 提出AIR-Bench——首个利用LLM自动生成测试数据的异构IR基准，覆盖2个任务（QA/长文档）、9个领域、13种语言共69个数据集，三阶段质量控制管线确保生成数据与人工标注高度一致…
+  [ACL 2025][信息检索/RAG][Information Retrieval] 提出AIR-Bench——首个利用LLM自动生成测试数据的异构IR基准，覆盖2个任务（QA/长文档）、9个领域、13种语言共69个数据集，三阶段质量控制管线确保生成数据与人工标注高度一致，解决了传统IR基准领域覆盖有限和更新成本高的问题。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

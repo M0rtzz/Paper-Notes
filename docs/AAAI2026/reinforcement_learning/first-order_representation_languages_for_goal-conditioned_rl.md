@@ -2,7 +2,7 @@
 title: >-
   [论文解读] First-Order Representation Languages for Goal-Conditioned RL
 description: >-
-  [AAAI 2026][强化学习][目标条件强化学习] 本文研究一阶关系语言在目标条件强化学习（goal-conditioned RL）和泛化规划中的应用，提出将目标表示为原子集合的子集或提升版本，结合 HER 自动创建由简到难的目标课程，在大规模稀疏奖励规划问题上成功学习到泛化策略。
+  [AAAI 2026][强化学习][目标条件强化学习] 本文研究一阶关系语言在目标条件强化学习（goal-conditioned RL）和泛化规划中的应用，提出将目标表示为原子集合的子集或提升版本，结合 HER 自动创建由简到难的目标课程，在大规模稀疏奖励规划问题上成功学习到泛化策略。 领域现状：一阶关系语言在 MDP 规划…
 tags:
   - "AAAI 2026"
   - "强化学习"

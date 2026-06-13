@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transferring Textual Preferences to Vision-Language Understanding through Model Merging
 description: >-
-  [ACL 2025][多模态VLM][模型合并] 提出一种免训练方法，通过模型参数合并（model merging）将纯文本奖励模型（RM）的偏好能力迁移到大视觉语言模型（LVLM）中，构建视觉语言奖励模型（VLRM），在多个多模态评估基准上超越LVLM直接评分和纯文本RM。
+  [ACL 2025][多模态VLM][模型合并] 提出一种免训练方法，通过模型参数合并（model merging）将纯文本奖励模型（RM）的偏好能力迁移到大视觉语言模型（LVLM）中，构建视觉语言奖励模型（VLRM），在多个多模态评估基准上超越LVLM直接评分和纯文本RM。 问题背景 大视觉语言模型（LVLM）在多模态任务…
 tags:
   - "ACL 2025"
   - "多模态VLM"

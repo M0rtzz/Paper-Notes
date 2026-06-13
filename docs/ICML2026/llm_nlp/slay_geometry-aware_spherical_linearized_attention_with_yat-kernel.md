@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SLAY: Geometry-Aware Spherical Linearized Attention with Yat-Kernel
 description: >-
-  [ICML 2026][LLM/NLP][Yat-kernel] SLAY 把受物理"逆平方相互作用"启发的 Yat-kernel 通过 (1) 球面归一化 (2) Bernstein 定理的 Laplace 积分表示 (3) Gauss-Laguerre 求积 (4) 多项式+指数核张量积正随机特征四步连击…
+  [ICML 2026][LLM 其他][Yat-kernel] SLAY 把受物理"逆平方相互作用"启发的 Yat-kernel 通过 (1) 球面归一化 (2) Bernstein 定理的 Laplace 积分表示 (3) Gauss-Laguerre 求积 (4) 多项式+指数核张量积正随机特征四步连击线性化，得到 $O(L)$ 时间复杂度且与 softmax 几乎无差异的注意力机制。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Yat-kernel"
   - "球面归一化"
   - "Bernstein 定理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAM: Recover Any 3D Human Motion in-the-Wild
 description: >-
-  [CVPR 2026][人体理解][多人3D运动恢复] RAM 提出统一的多人 3D 运动恢复框架，集成运动感知语义跟踪器 SegFollow（基于 SAM2 + 自适应卡尔曼滤波）、记忆增强的时序人体网格恢复模块 T-HMR、轻量运动预测器和门控组合器…
+  [CVPR 2026][人体理解][多人3D运动恢复] RAM 提出统一的多人 3D 运动恢复框架，集成运动感知语义跟踪器 SegFollow（基于 SAM2 + 自适应卡尔曼滤波）、记忆增强的时序人体网格恢复模块 T-HMR、轻量运动预测器和门控组合器，在 PoseTrack 和 3DPW 等基准上实现零样本跟踪稳定性和 3D 精度的 SOTA，且推理速度比之前方法快 2-3 倍。
 tags:
   - "CVPR 2026"
   - "人体理解"

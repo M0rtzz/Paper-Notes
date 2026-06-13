@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Interpretability and Scalability
 description: >-
-  [CVPR 2025][可解释性][概念瓶颈模型] 本文提出ALBM（属性形成的语言瓶颈模型），通过构建属性引导的类特异概念空间避免虚假线索推理问题，并利用视觉属性提示学习提取细粒度属性特征，结合描述-摘要-补充（DSS）策略自动生成高质量概念集，在9个基准上实现了更好的可解释性和可扩展性。
+  [CVPR 2025][可解释性][概念瓶颈模型] 本文提出ALBM（属性形成的语言瓶颈模型），通过构建属性引导的类特异概念空间避免虚假线索推理问题，并利用视觉属性提示学习提取细粒度属性特征，结合描述-摘要-补充（DSS）策略自动生成高质量概念集，在9个基准上实现了更好的可解释性和可扩展性。 1. 领域现状：语言瓶颈模型（L…
 tags:
   - "CVPR 2025"
   - "可解释性"

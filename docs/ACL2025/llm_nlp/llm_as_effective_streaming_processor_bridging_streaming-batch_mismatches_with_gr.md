@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLM as Effective Streaming Processor: Bridging Streaming-Batch Mismatches with Group Position Encoding
 description: >-
-  [ACL 2025][LLM/NLP][流式推理] 系统性地识别并量化了 batch-trained LLM 适配流式场景的三种不匹配（输入注意力 / 输出注意力 / 位置 ID），发现仅输入注意力不匹配才是关键瓶颈（+2.20 BLEU）…
+  [ACL 2025][LLM 其他][流式推理] 系统性地识别并量化了 batch-trained LLM 适配流式场景的三种不匹配（输入注意力 / 输出注意力 / 位置 ID），发现仅输入注意力不匹配才是关键瓶颈（+2.20 BLEU），据此提出组位置编码（Group Position Encoding）——源/目标各自维护连续位置 ID 即可，无需昂贵的 KV cache 重编码，在机器翻译和 ASR 两种跨模态任务上均超越专用流式架构。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "流式推理"
   - "位置编码"
   - "批次-流式不匹配"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Repetition-Invariant Representations for Polymer Informatics
 description: >-
-  [NeurIPS 2025][计算生物][聚合物信息学] 提出 GRIN（Graph Repetition-Invariant Network），通过 Max 聚合和特殊的图构建策略使 GNN 对聚合物重复单元的拼接数量不变，解决了聚合物表示中的基本对称性问题。
+  [NeurIPS 2025][计算生物][聚合物信息学] 提出 GRIN（Graph Repetition-Invariant Network），通过 Max 聚合和特殊的图构建策略使 GNN 对聚合物重复单元的拼接数量不变，解决了聚合物表示中的基本对称性问题。 领域现状 领域现状：聚合物（polymer）是由重复单元（mo…
 tags:
   - "NeurIPS 2025"
   - "计算生物"

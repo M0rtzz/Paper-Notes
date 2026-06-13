@@ -2,7 +2,7 @@
 title: >-
   [论文解读] World4Drive: End-to-End Autonomous Driving via Intention-aware Physical Latent World Model
 description: >-
-  [自动驾驶] 构建意图感知的潜在世界模型 World4Drive，利用视觉基础模型的空间-语义先验，在无感知标注条件下实现端到端规划，L2误差降低18.1%，碰撞率降低46.7%。
+  [自动驾驶] 构建意图感知的潜在世界模型 World4Drive，利用视觉基础模型的空间-语义先验，在无感知标注条件下实现端到端规划，L2误差降低18.1%，碰撞率降低46.7%。 端到端自动驾驶直接从原始传感器数据生成规划轨迹，但面临以下挑战： 感知标注成本高：UniAD、VAD、SparseDrive 等方法依赖 3D…
 tags:
   - "自动驾驶"
 ---

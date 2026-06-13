@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CORDIAL: Can Multimodal Large Language Models Effectively Understand Coherence Relations?
 description: >-
-  [ACL 2025][多模态VLM][多模态话语分析] 本文提出CORDIAL，首个用连贯关系（Coherence Relations）评估MLLM多模态话语分析能力的基准，涵盖灾难管理、社交媒体和在线文章3个话语领域的不同粒度连贯关系…
+  [ACL 2025][多模态VLM][多模态话语分析] 本文提出CORDIAL，首个用连贯关系（Coherence Relations）评估MLLM多模态话语分析能力的基准，涵盖灾难管理、社交媒体和在线文章3个话语领域的不同粒度连贯关系，实验发现即使Gemini 1.5 Pro和GPT-4o也无法匹配简单的CLIP分类器基线，揭示了MLLM在语用理解方面的根本不足。
 tags:
   - "ACL 2025"
   - "多模态VLM"

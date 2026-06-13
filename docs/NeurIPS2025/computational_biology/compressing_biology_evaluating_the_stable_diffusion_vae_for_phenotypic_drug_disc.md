@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery
 description: >-
-  [NeurIPS 2025][计算生物][Cell Painting] 首次系统评估 Stable Diffusion VAE（SD-VAE）在 Cell Painting 显微镜图像上的重建质量，发现 SD-VAE 在像素级和生物信号层面均能良好保留表型信息（FR 几乎无下降）…
+  [NeurIPS 2025][计算生物][Cell Painting] 首次系统评估 Stable Diffusion VAE（SD-VAE）在 Cell Painting 显微镜图像上的重建质量，发现 SD-VAE 在像素级和生物信号层面均能良好保留表型信息（FR 几乎无下降），且通用特征提取器 InceptionV3 在检索任务上与领域专用模型 OpenPhenom 持平甚至更优。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Denoising Functional Maps: Diffusion Models for Shape Correspondence
 description: >-
-  [CVPR 2025][3D视觉][功能图] 本文提出 DenoisFM，首次用去噪扩散模型直接预测形状间的功能图（functional map），通过模板匹配降低学习复杂度，并提出无监督方法解决拉普拉斯特征向量符号歧义问题，在人体和动物形状匹配上取得有竞争力的性能。
+  [CVPR 2025][3D视觉][功能图] 本文提出 DenoisFM，首次用去噪扩散模型直接预测形状间的功能图（functional map），通过模板匹配降低学习复杂度，并提出无监督方法解决拉普拉斯特征向量符号歧义问题，在人体和动物形状匹配上取得有竞争力的性能。 领域现状：形状对应（找两个3D形状间的点对点映射）常通过…
 tags:
   - "CVPR 2025"
   - "3D视觉"

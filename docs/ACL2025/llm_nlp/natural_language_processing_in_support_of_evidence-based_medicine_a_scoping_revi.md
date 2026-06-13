@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Natural Language Processing in Support of Evidence-based Medicine: A Scoping Review
 description: >-
-  [ACL2025][LLM/NLP][evidence-based medicine] 基于 PRISMA 指南对 129 篇研究（2019-2024）进行范围综述，以 EBM 五步流程（Ask-Acquire-Appraise-Apply-Assess）为组织框架…
+  [ACL2025][LLM 其他][evidence-based medicine] 基于 PRISMA 指南对 129 篇研究（2019-2024）进行范围综述，以 EBM 五步流程（Ask-Acquire-Appraise-Apply-Assess）为组织框架，全面梳理了 NLP 技术在循证医学中的应用现状、技术演进路径与未来方向。
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "evidence-based medicine"
   - "NLP survey"
   - "clinical NLP"

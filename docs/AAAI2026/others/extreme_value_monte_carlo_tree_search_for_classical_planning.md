@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extreme Value Monte Carlo Tree Search for Classical Planning
 description: >-
-  [AAAI 2026][MCTS] 利用 Peaks-Over-Threshold 极值理论（POT EVT）为经典规划中 MCTS 的 Full Bellman Backup 提供统计理论基础，提出 UCB1-Uniform bandit 算法…
+  [AAAI 2026][MCTS] 利用 Peaks-Over-Threshold 极值理论（POT EVT）为经典规划中 MCTS 的 Full Bellman Backup 提供统计理论基础，提出 UCB1-Uniform bandit 算法，用均匀分布（Generalized Pareto 的特例）的 MLE 估计指导动作选择，在 Pyperplan 上以 $10^4$ 节点预算超越 GBFS 67.8 个实例、超越 Softmin-Type(h) 33.2 个实例。
 tags:
   - "AAAI 2026"
   - "MCTS"

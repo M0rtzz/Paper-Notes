@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Self-Distillation for Zero-Shot Customized Image Generation
 description: >-
-  [CVPR 2025][图像生成][自蒸馏] 本文提出 Diffusion Self-Distillation，利用预训练 T2I 模型的网格图生成能力来自动构建身份保持的配对数据集（LLM 生成 prompt + VLM 筛选），再微调同一模型实现零样本身份保持图像生成…
+  [CVPR 2025][图像生成][自蒸馏] 本文提出 Diffusion Self-Distillation，利用预训练 T2I 模型的网格图生成能力来自动构建身份保持的配对数据集（LLM 生成 prompt + VLM 筛选），再微调同一模型实现零样本身份保持图像生成，无需测试时优化即达到接近 DreamBooth 的效果。
 tags:
   - "CVPR 2025"
   - "图像生成"

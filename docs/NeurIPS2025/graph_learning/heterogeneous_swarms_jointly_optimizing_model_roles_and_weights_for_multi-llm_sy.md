@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems
 description: >-
-  [NeurIPS 2025][图学习][多LLM协作] 提出 Heterogeneous Swarms 算法，将多 LLM 系统建模为有向无环图（DAG），通过粒子群优化（PSO）交替执行 role-step（优化 LLM 之间的拓扑连接结构）和 weight-step（通过 JFK-score 量化个体贡献…
+  [NeurIPS 2025][图学习][多LLM协作] 提出 Heterogeneous Swarms 算法，将多 LLM 系统建模为有向无环图（DAG），通过粒子群优化（PSO）交替执行 role-step（优化 LLM 之间的拓扑连接结构）和 weight-step（通过 JFK-score 量化个体贡献后优化模型权重），在 12 个任务上平均超过 17 种基线方法 18.5%。
 tags:
   - "NeurIPS 2025"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Team-Based Self-Play With Dual Adaptive Weighting for Fine-Tuning LLMs
 description: >-
-  [ACL 2026][LLM对齐][自博弈微调] TPAW 将 LLM 自训练改造成“当前模型与历史模型组队博弈”的对齐过程，并用目标响应权重与主玩家权重两套自适应机制稳定偏好优化，在不额外引入人工偏好标注的情况下提升 Open LLM Leaderboard 与 GSM8K 表现。
+  [ACL 2026][LLM对齐][自博弈微调] TPAW 将 LLM 自训练改造成“当前模型与历史模型组队博弈”的对齐过程，并用目标响应权重与主玩家权重两套自适应机制稳定偏好优化，在不额外引入人工偏好标注的情况下提升 Open LLM Leaderboard 与 GSM8K 表现。 领域现状：LLM 对齐通常依赖 SFT、…
 tags:
   - "ACL 2026"
   - "LLM对齐"

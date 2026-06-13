@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning
 description: >-
-  [ICCV 2025][机器人][多任务学习] 提出 DTME-MTL 框架，通过在 token 空间中识别和分类梯度冲突（值域空间冲突 vs 零空间冲突），分别采用 Token Modulation（仿射变换）和 Token Expansion（添加任务特定token）来缓解 Transformer 多任务…
+  [ICCV 2025][机器人][多任务学习] 提出 DTME-MTL 框架，通过在 token 空间中识别和分类梯度冲突（值域空间冲突 vs 零空间冲突），分别采用 Token Modulation（仿射变换）和 Token Expansion（添加任务特定token）来缓解 Transformer 多任务学习中的负迁移问题，以极低参数开销实现一致性能提升。
 tags:
   - "ICCV 2025"
   - "机器人"

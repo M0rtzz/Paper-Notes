@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes
 description: >-
-  [ICCV 2025][语义分割][显著性检测] 构建首个无约束显著性和伪装目标检测数据集USC12K（覆盖四种场景类型），提出基于SAM的USCNet网络，通过属性关系建模（ARM）模块显式建模显著和伪装目标的关系，并设计新指标CSCS衡量混淆程度，在所有场景中达到SOTA。
+  [ICCV 2025][语义分割][显著性检测] 构建首个无约束显著性和伪装目标检测数据集USC12K（覆盖四种场景类型），提出基于SAM的USCNet网络，通过属性关系建模（ARM）模块显式建模显著和伪装目标的关系，并设计新指标CSCS衡量混淆程度，在所有场景中达到SOTA。 显著性目标检测（SOD）和伪装目标检测（COD…
 tags:
   - "ICCV 2025"
   - "语义分割"

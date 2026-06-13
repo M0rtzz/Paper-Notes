@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimePerceiver: An Encoder-Decoder Framework for Generalized Time-Series Forecasting
 description: >-
-  [NeurIPS 2025][时间序列][时间序列预测] 提出 TimePerceiver 统一编码器-解码器框架，通过广义化预测任务（同时包含外推、插值和填补）以及潜在瓶颈编码器 + 查询式解码器设计，在 8 个标准基准上取得全面 SOTA。
+  [NeurIPS 2025][时间序列][时间序列预测] 提出 TimePerceiver 统一编码器-解码器框架，通过广义化预测任务（同时包含外推、插值和填补）以及潜在瓶颈编码器 + 查询式解码器设计，在 8 个标准基准上取得全面 SOTA。 时间序列预测领域近年来涌现了大量新架构（Transformer、CNN、MLP、…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

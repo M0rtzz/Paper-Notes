@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications
 description: >-
-  [NeurIPS 2025][LLM Agent][推测解码] 利用后缀树缓存长序列，通过自适应推测长度实现 5.3 倍加速，特别针对 Agent 场景中高度可预测的重复推理任务。
+  [NeurIPS 2025 Spotlight][LLM Agent][推测解码] 利用后缀树缓存长序列，通过自适应推测长度实现 5.3 倍加速，特别针对 Agent 场景中高度可预测的重复推理任务。 领域现状 领域现状：领域现状：推测解码已成为降低 LLM 推理延迟的标准技术，draft 模型+验证器的组合广泛采用…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM Agent"
   - "推测解码"
   - "后缀树"

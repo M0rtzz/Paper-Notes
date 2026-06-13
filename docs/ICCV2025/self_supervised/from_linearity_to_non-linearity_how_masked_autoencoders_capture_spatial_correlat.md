@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Linearity to Non-Linearity: How Masked Autoencoders Capture Spatial Correlations
 description: >-
-  [ICCV 2025][自监督学习][Masked Autoencoder] 从理论角度分析 MAE 如何学习图像中的空间相关性，推导出线性 MAE 的解析解，揭示了掩码比例和 patch 大小如何选择短距离和长距离空间特征，并将分析扩展到非线性 MAE，为实践中的超参数选择提供了理论指导。
+  [ICCV 2025][自监督学习][Masked Autoencoder] 从理论角度分析 MAE 如何学习图像中的空间相关性，推导出线性 MAE 的解析解，揭示了掩码比例和 patch 大小如何选择短距离和长距离空间特征，并将分析扩展到非线性 MAE，为实践中的超参数选择提供了理论指导。 MAE（Masked Autoe…
 tags:
   - "ICCV 2025"
   - "自监督学习"

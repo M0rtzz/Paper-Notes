@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evian: Towards Explainable Visual Instruction-tuning Data Auditing
 description: >-
-  [ACL 2026][可解释性][数据审计] 提出"分解-再评估"（Decomposition-then-Evaluation）范式和 EVIAN 框架，将视觉指令微调数据的回答分解为视觉描述、主观推理和事实声明三个组件，沿图文一致性、逻辑连贯性和事实准确性三个正交维度评估…
+  [ACL 2026][可解释性][数据审计] 提出"分解-再评估"（Decomposition-then-Evaluation）范式和 EVIAN 框架，将视觉指令微调数据的回答分解为视觉描述、主观推理和事实声明三个组件，沿图文一致性、逻辑连贯性和事实准确性三个正交维度评估，发现用其筛选的少量高质量数据训练的模型优于大规模数据集训练的模型。
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction
 description: >-
-  [CVPR 2025][图像生成][视频tokenizer] 提出 CoordTok，一种可扩展的视频 tokenizer，将视频编码为因子化 triplane 表示，解码器学习从随机采样的 $(x,y,t)$ 坐标到对应 patch 像素的映射（而非一次重建所有帧）…
+  [CVPR 2025][图像生成][视频tokenizer] 提出 CoordTok，一种可扩展的视频 tokenizer，将视频编码为因子化 triplane 表示，解码器学习从随机采样的 $(x,y,t)$ 坐标到对应 patch 像素的映射（而非一次重建所有帧），使得可以直接在 128 帧长视频上训练大型 tokenizer，将 128 帧视频编码为仅 1280 个 token（基线需要 6144-8192 个），并驱动 DiT 实现 128 帧一次性视频生成（FVD 369.3 SOTA）。
 tags:
   - "CVPR 2025"
   - "图像生成"

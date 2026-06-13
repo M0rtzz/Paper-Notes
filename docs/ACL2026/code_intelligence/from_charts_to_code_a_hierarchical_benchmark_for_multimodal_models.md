@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Charts to Code: A Hierarchical Benchmark for Multimodal Models
 description: >-
-  [ACL 2026][代码智能][图表生成] 本文提出 Chart2Code，一个包含 2,186 个任务、覆盖 22 种图表类型的层次化基准，分为图表复现（Level 1）、图表编辑（Level 2）和长表格转图表（Level 3）三个递进难度级别，评测 29 个 SOTA 多模态模型…
+  [ACL 2026][代码智能][图表生成] 本文提出 Chart2Code，一个包含 2,186 个任务、覆盖 22 种图表类型的层次化基准，分为图表复现（Level 1）、图表编辑（Level 2）和长表格转图表（Level 3）三个递进难度级别，评测 29 个 SOTA 多模态模型，发现即使最强的 GPT-5.2 在编辑任务上的图表质量评分仅 33.41，揭示了当前模型在实际图表代码生成中的显著不足。
 tags:
   - "ACL 2026"
   - "代码智能"

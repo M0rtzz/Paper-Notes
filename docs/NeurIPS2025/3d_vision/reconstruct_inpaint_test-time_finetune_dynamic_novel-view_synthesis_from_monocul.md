@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reconstruct, Inpaint, Test-Time Finetune: Dynamic Novel-View Synthesis from Monocular Videos
 description: >-
-  [NeurIPS 2025][3D视觉][动态新视角合成] 提出 CogNVS，将动态场景新视角合成分解为三阶段管线——3D 重建（获取可见像素）→ 视频扩散修复（生成遮挡区域）→ 测试时微调（适应目标视频的分布），用纯 2D 视频自监督训练修复模型，实现零样本泛化到新测试视频。
+  [NeurIPS 2025][3D视觉][动态新视角合成] 提出 CogNVS，将动态场景新视角合成分解为三阶段管线——3D 重建（获取可见像素）→ 视频扩散修复（生成遮挡区域）→ 测试时微调（适应目标视频的分布），用纯 2D 视频自监督训练修复模型，实现零样本泛化到新测试视频。 领域现状：单目视频的动态新视角合成是极具挑战…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

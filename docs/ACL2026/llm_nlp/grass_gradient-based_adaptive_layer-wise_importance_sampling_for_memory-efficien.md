@@ -2,10 +2,10 @@
 title: >-
   [论文解读] GRASS: Gradient-based Adaptive Layer-wise Importance Sampling for Memory-Efficient LLM Fine-tuning
 description: >-
-  [ACL 2026][LLM/NLP][层级采样] 提出 GRASS 框架，使用均值梯度范数（MGN）作为任务感知和训练阶段感知的层重要性指标，自适应地采样和更新模型层子集进行微调，配合层级优化器状态卸载机制，在平均准确率提升最高 4.38 分的同时减少最高 19.97% 的内存使用。
+  [ACL 2026 Findings][LLM 其他][层级采样] 提出 GRASS 框架，使用均值梯度范数（MGN）作为任务感知和训练阶段感知的层重要性指标，自适应地采样和更新模型层子集进行微调，配合层级优化器状态卸载机制，在平均准确率提升最高 4.38 分的同时减少最高 19.97% 的内存使用。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "层级采样"
   - "梯度重要性"
   - "内存高效微调"

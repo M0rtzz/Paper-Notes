@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RankLLM: Weighted Ranking of LLMs by Quantifying Question Difficulty
 description: >-
-  [ICLR 2026][LLM评测][LLM evaluation] 提出 RankLLM，一个基于有向二部图双向分数传播的非参数化框架，联合估计题目难度和模型能力，实现难度感知的 LLM 排名，与人类判断达到 90% 一致性。
+  [ICLR 2026][LLM评测][LLM evaluation] 提出 RankLLM，一个基于有向二部图双向分数传播的非参数化框架，联合估计题目难度和模型能力，实现难度感知的 LLM 排名，与人类判断达到 90% 一致性。 现有主流 LLM 评测基准（如 MMLU-Pro、MATH、GSM8K 等）通常将性能压缩为各主…
 tags:
   - "ICLR 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Anti-adversarial Learning: Desensitizing Prompts for Large Language Models
 description: >-
-  [AAAI 2026][LLM安全][提示学习] 提出 PromptObfus，通过"反对抗学习"思路将用户 prompt 中的敏感词替换为语义不同但不影响任务输出的词，从而在不降低远端 LLM 任务表现的前提下彻底消除显式隐私泄露，并将隐式隐私推理攻击成功率降低 62.70%。
+  [AAAI 2026][LLM安全][提示学习] 提出 PromptObfus，通过"反对抗学习"思路将用户 prompt 中的敏感词替换为语义不同但不影响任务输出的词，从而在不降低远端 LLM 任务表现的前提下彻底消除显式隐私泄露，并将隐式隐私推理攻击成功率降低 62.70%。 用户与云端 LLM 交互时…
 tags:
   - "AAAI 2026"
   - "LLM安全"

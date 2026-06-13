@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TMDC: A Two-Stage Modality Denoising and Complementation Framework for Multimodal Sentiment Analysis
 description: >-
-  [AAAI 2026][图像恢复][多模态] 提出 TMDC 两阶段框架，第一阶段在完整数据上学习去噪的 modality-specific 和 modality-common 表示，第二阶段利用可用模态的去噪表示补全缺失模态，首次同时处理 MSA 中的噪声和缺失问题。
+  [AAAI 2026][图像恢复][多模态] 提出 TMDC 两阶段框架，第一阶段在完整数据上学习去噪的 modality-specific 和 modality-common 表示，第二阶段利用可用模态的去噪表示补全缺失模态，首次同时处理 MSA 中的噪声和缺失问题。 现有痛点 现有痛点：多模态情感分析（MSA）融合文本、…
 tags:
   - "AAAI 2026"
   - "图像恢复"

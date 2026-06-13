@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparVAR: Exploring Sparsity in Visual Autoregressive Modeling for Training-Free Acceleration
 description: >-
-  [CVPR 2026][图像生成][Visual AutoRegressive] 对VAR模型注意力激活模式进行系统分析，揭示三大稀疏特性（注意力汇、跨尺度相似性、空间局部性），并提出SparVAR无训练加速框架，通过跨尺度自相似稀疏注意力（CS⁴A）和跨尺度局部稀疏注意力（CSLA）两个即插即用模块…
+  [CVPR 2026][图像生成][Visual AutoRegressive] 对VAR模型注意力激活模式进行系统分析，揭示三大稀疏特性（注意力汇、跨尺度相似性、空间局部性），并提出SparVAR无训练加速框架，通过跨尺度自相似稀疏注意力（CS⁴A）和跨尺度局部稀疏注意力（CSLA）两个即插即用模块，实现8B模型1024×1024生成降至1秒级（1.57×加速），且几乎不损失高频细节。
 tags:
   - "CVPR 2026"
   - "图像生成"

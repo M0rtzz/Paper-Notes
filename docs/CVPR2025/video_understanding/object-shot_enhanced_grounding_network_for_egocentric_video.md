@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Object-Shot Enhanced Grounding Network for Egocentric Video
 description: >-
-  [CVPR 2025][视频理解][Ego4D NLQ] OSGNet 针对第一人称视频自然语言查询 (NLQ) 的两大短板——视觉特征缺细粒度物体信息、忽略头戴相机运动暗含的注意力切换——提出"object branch (Co-DETR + CLIP 文本编码) + shot branch (按头转分镜…
+  [CVPR 2025][视频理解][Ego4D NLQ] OSGNet 针对第一人称视频自然语言查询 (NLQ) 的两大短板——视觉特征缺细粒度物体信息、忽略头戴相机运动暗含的注意力切换——提出"object branch (Co-DETR + CLIP 文本编码) + shot branch (按头转分镜 + 镜头级对比)"双分支架构，在 Ego4D-NLQ / Goal-Step / TACoS 上刷新 SOTA。
 tags:
   - "CVPR 2025"
   - "视频理解"

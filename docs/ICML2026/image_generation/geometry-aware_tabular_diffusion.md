@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-Aware Tabular Diffusion
 description: >-
-  [ICML 2026][图像生成][表格扩散] 作者提出 GATD（Geometry-Aware Tabular Diffusion），在表格扩散去噪器输入和损失里显式加入"列对之间的角度和长度"几何特征作为辅助监督信号…
+  [ICML 2026][图像生成][表格扩散] 作者提出 GATD（Geometry-Aware Tabular Diffusion），在表格扩散去噪器输入和损失里显式加入"列对之间的角度和长度"几何特征作为辅助监督信号，用一个参数量仅 TabDiff 1/3.5（分类任务甚至 1/25）的小 MLP 就在 10 个数据集上拿下 8/10 Shape、7/10 Trend、9/10 下游效用胜场，并且同一套默认超参可直接迁移到 GNN 和 Transformer 去噪器（27/30 Shape、25/30 Trend 涨点）。
 tags:
   - "ICML 2026"
   - "图像生成"

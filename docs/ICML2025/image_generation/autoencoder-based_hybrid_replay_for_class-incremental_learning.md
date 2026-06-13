@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autoencoder-Based Hybrid Replay for Class-Incremental Learning
 description: >-
-  [ICML 2025][图像生成][类增量学习] 提出基于自编码器的混合重放策略(AHR)，利用混合自编码器(HAE)将样本压缩存储在潜空间中而非原始输入空间，结合带电粒子系统能量最小化(CPSEM)和斥力算法(RFA)增量嵌入新类质心…
+  [ICML 2025][图像生成][类增量学习] 提出基于自编码器的混合重放策略(AHR)，利用混合自编码器(HAE)将样本压缩存储在潜空间中而非原始输入空间，结合带电粒子系统能量最小化(CPSEM)和斥力算法(RFA)增量嵌入新类质心，在最坏情况下将内存复杂度从 $\mathcal{O}(t)$ 降低到 $\mathcal{O}(0.1t)$，同时保持 SOTA 性能。
 tags:
   - "ICML 2025"
   - "图像生成"

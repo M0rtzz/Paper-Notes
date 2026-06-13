@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probing Cross-modal Information Hubs in Audio-Visual LLMs
 description: >-
-  [ICML 2026][音频/语音][AVLLM] 作者用因果追踪 + 单模态主导框架揭示了音视频 LLM 中存在一类被称为"跨模态 sink token"的隐藏枢纽,绝大多数跨模态信息都凝聚在这些 token 上,据此提出训练免费的注意力放大策略显著缓解物体幻觉。
+  [ICML 2026][音频/语音][AVLLM] 作者用因果追踪 + 单模态主导框架揭示了音视频 LLM 中存在一类被称为"跨模态 sink token"的隐藏枢纽,绝大多数跨模态信息都凝聚在这些 token 上,据此提出训练免费的注意力放大策略显著缓解物体幻觉。 领域现状：音视频大语言模型 (AVLLM) 把音频编码、视…
 tags:
   - "ICML 2026"
   - "音频/语音"

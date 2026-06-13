@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embodied Image Captioning: Self-supervised Learning Agents for Spatially Coherent Image Descriptions
 description: >-
-  [ICCV 2025][LLM Agent][具身感知] 提出一个三阶段自监督框架，通过agent自主导航收集多视角观测、LLM共识机制生成伪标注、对比学习微调captioner，显著提升室内环境中同一物体跨视角描述的一致性和准确性。
+  [ICCV 2025][LLM Agent][具身感知] 提出一个三阶段自监督框架，通过agent自主导航收集多视角观测、LLM共识机制生成伪标注、对比学习微调captioner，显著提升室内环境中同一物体跨视角描述的一致性和准确性。 领域现状：图像描述（Image Captioning）模型在自主agent上部署时…
 tags:
   - "ICCV 2025"
   - "LLM Agent"

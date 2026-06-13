@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge Poisoning Attacks on Medical Multi-Modal Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][LLM安全][知识投毒] 作者提出 M3Att——首个面向医学多模态 RAG 的 **query-agnostic** 知识投毒框架，用"分布引导的视觉 PGD 触发"做检索劫持 + "临床歧义引导的文本改写"绕过 LVLM 自纠错…
+  [ACL 2026][LLM安全][知识投毒] 作者提出 M3Att——首个面向医学多模态 RAG 的 **query-agnostic** 知识投毒框架，用"分布引导的视觉 PGD 触发"做检索劫持 + "临床歧义引导的文本改写"绕过 LVLM 自纠错，在 5 个 LVLM × 5 数据集 × 4 个医学任务上以 <1% 的投毒率（无需查询知识、视觉扰动 $\epsilon=16/255$）平均把下游效用拉低 8.78%，且对图聚类 / 文本聚类 / 图文一致性等 3 种 pre-retrieval 防御鲁棒。
 tags:
   - "ACL 2026"
   - "LLM安全"

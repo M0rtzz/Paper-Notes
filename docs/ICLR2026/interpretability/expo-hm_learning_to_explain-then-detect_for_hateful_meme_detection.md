@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExPO-HM: Learning to Explain-then-Detect for Hateful Meme Detection
 description: >-
-  [ICLR 2026][可解释性][仇恨言论检测] 提出 ExPO-HM，受人类审核员培训流程启发，结合策略手册 SFT 预热、GRPO 课程学习和条件决策熵（CDE）奖励，首次实现 Explain-then-Detect 仇恨 Meme 检测在二分类、细粒度分类和推理质量上全面超越直接检测基线…
+  [ICLR 2026][可解释性][仇恨言论检测] 提出 ExPO-HM，受人类审核员培训流程启发，结合策略手册 SFT 预热、GRPO 课程学习和条件决策熵（CDE）奖励，首次实现 Explain-then-Detect 仇恨 Meme 检测在二分类、细粒度分类和推理质量上全面超越直接检测基线，F1 提升最高达 15-17%。
 tags:
   - "ICLR 2026"
   - "可解释性"

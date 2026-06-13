@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Eigen Models for Human Heads
 description: >-
-  [CVPR 2025][3D视觉][Gaussian人头建模] 提出 Gaussian Eigen Models (GEM)，通过 PCA 将高质量 CNN-based Gaussian Avatar 蒸馏为轻量级线性特征基表示，仅需低维系数的线性组合即可生成面部动画…
+  [CVPR 2025][3D视觉][Gaussian人头建模] 提出 Gaussian Eigen Models (GEM)，通过 PCA 将高质量 CNN-based Gaussian Avatar 蒸馏为轻量级线性特征基表示，仅需低维系数的线性组合即可生成面部动画，实现高质量、超轻量（7MB起）和超快速（200+ fps）的可动画头像，并支持从单目视频的实时跨人表情驱动。
 tags:
   - "CVPR 2025"
   - "3D视觉"

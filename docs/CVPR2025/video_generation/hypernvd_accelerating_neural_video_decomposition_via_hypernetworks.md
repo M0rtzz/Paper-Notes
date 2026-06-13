@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyperNVD: Accelerating Neural Video Decomposition via Hypernetworks
 description: >-
-  [CVPR 2025][视频生成][视频分解] HyperNVD 提出利用超网络 (Hypernetwork) 根据 VideoMAE 编码的视频嵌入动态生成隐式神经表示 (INR) 的参数，实现跨视频的通用视频分解模型，在新视频上可比从头训练快 30+ 分钟达到相同 PSNR…
+  [CVPR 2025][视频生成][视频分解] HyperNVD 提出利用超网络 (Hypernetwork) 根据 VideoMAE 编码的视频嵌入动态生成隐式神经表示 (INR) 的参数，实现跨视频的通用视频分解模型，在新视频上可比从头训练快 30+ 分钟达到相同 PSNR，同时最终性能平均提升 0.8dB。
 tags:
   - "CVPR 2025"
   - "视频生成"

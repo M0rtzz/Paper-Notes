@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation
 description: >-
-  [ACL 2025][信息检索/RAG][RAG] 构建首个原生多语言 RAG 元评估基准 MEMERAG，覆盖 5 种语言，通过流程图引导的标注达到高标注者一致性，用于评估和比较多语言 RAG 自动评估器。
+  [ACL 2025][信息检索/RAG][RAG] 构建首个原生多语言 RAG 元评估基准 MEMERAG，覆盖 5 种语言，通过流程图引导的标注达到高标注者一致性，用于评估和比较多语言 RAG 自动评估器。 检索增强生成（RAG）是 LLM 最重要的应用范式之一，但如何可靠地评估 RAG 系统的生成质量仍是一个未解决的问题…
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

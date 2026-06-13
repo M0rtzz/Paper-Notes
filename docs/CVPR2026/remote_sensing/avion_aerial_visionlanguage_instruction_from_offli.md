@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network
 description: >-
-  [CVPR 2026][遥感][Remote Sensing] AVION 提出一种知识蒸馏框架，通过 LLM 生成语义丰富的遥感文本原型作为 Teacher 监督、同时在 Student 的视觉和文本编码器中注入可学习 prompt，实现三维度对齐蒸馏，在少样本分类和跨模态检索上显著优于现有 PEFT 方法…
+  [CVPR 2026][遥感][Remote Sensing] AVION 提出一种知识蒸馏框架，通过 LLM 生成语义丰富的遥感文本原型作为 Teacher 监督、同时在 Student 的视觉和文本编码器中注入可学习 prompt，实现三维度对齐蒸馏，在少样本分类和跨模态检索上显著优于现有 PEFT 方法。
 tags:
   - "CVPR 2026"
   - "遥感"

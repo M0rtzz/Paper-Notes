@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoWiki: Evaluating LLMs on Evolving Knowledge
 description: >-
-  [ACL 2025][LLM评测][知识演化] 提出 EvoWiki，一个可自动更新的动态评估基准，将知识分为稳定 (stable)、演化 (evolved) 和未知 (uncharted) 三级，系统评估 LLM 对演化知识的利用能力，发现 RAG 和持续学习 (CL) 结合使用具有协同效应。
+  [ACL 2025][LLM评测][知识演化] 提出 EvoWiki，一个可自动更新的动态评估基准，将知识分为稳定 (stable)、演化 (evolved) 和未知 (uncharted) 三级，系统评估 LLM 对演化知识的利用能力，发现 RAG 和持续学习 (CL) 结合使用具有协同效应。 - 问题定义： LLM 的知…
 tags:
   - "ACL 2025"
   - "LLM评测"

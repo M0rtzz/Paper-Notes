@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm
 description: >-
-  [AAAI 2026][LLM效率][test-time adaptation] 本文提出 MoETTA，一种将 LayerNorm 重参数化为多个结构解耦专家分支的测试时自适应框架，通过路由机制为不同域的样本选择不同的适应方向，解决了混合分布偏移下单一适应路径的局限性…
+  [AAAI 2026][LLM效率][test-time adaptation] 本文提出 MoETTA，一种将 LayerNorm 重参数化为多个结构解耦专家分支的测试时自适应框架，通过路由机制为不同域的样本选择不同的适应方向，解决了混合分布偏移下单一适应路径的局限性，并提出 potpourri/potpourri+ 两个更真实的评估基准，在所有设定下取得 SOTA。
 tags:
   - "AAAI 2026"
   - "LLM效率"

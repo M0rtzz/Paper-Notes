@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cook and Clean Together: Teaching Embodied Agents for Parallel Task Execution
 description: >-
-  [AAAI 2026 (Oral)][LLM Agent][运筹学] 提出ORS3D任务——将运筹学(OR)知识引入具身AI的任务调度，要求智能体利用可并行子任务的等待时间执行其他任务以最小化总完成时间，同时在3D场景中定位目标物体；构建60K级数据集ORS3D-60K…
+  [AAAI 2026 (Oral)][LLM Agent][运筹学] 提出ORS3D任务——将运筹学(OR)知识引入具身AI的任务调度，要求智能体利用可并行子任务的等待时间执行其他任务以最小化总完成时间，同时在3D场景中定位目标物体；构建60K级数据集ORS3D-60K，并提出GRANT模型通过调度token机制连接外部动态规划求解器，在时间效率上比baseline提升30.53%。
 tags:
   - "AAAI 2026 (Oral)"
   - "LLM Agent"

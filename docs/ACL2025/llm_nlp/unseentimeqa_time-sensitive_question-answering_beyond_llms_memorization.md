@@ -2,10 +2,10 @@
 title: >-
   [论文解读] UnSeenTimeQA: Time-Sensitive Question-Answering Beyond LLMs' Memorization
 description: >-
-  [ACL 2025][LLM/NLP][时间敏感问答] 提出UnSeenTimeQA——一个基于合成事实（而非真实世界事件）的时间敏感问答基准，通过避免网络可搜索的查询来消除数据污染风险，设计了三类时间推理问题来评估LLM的真实时序推理能力，发现LLM在长程事件依赖和并行事件推理上表现较差。
+  [ACL 2025][LLM 其他][时间敏感问答] 提出UnSeenTimeQA——一个基于合成事实（而非真实世界事件）的时间敏感问答基准，通过避免网络可搜索的查询来消除数据污染风险，设计了三类时间推理问题来评估LLM的真实时序推理能力，发现LLM在长程事件依赖和并行事件推理上表现较差。 领域现状：时间敏感问答（Time-…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "时间敏感问答"
   - "时序推理"
   - "数据污染"

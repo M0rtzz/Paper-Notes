@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting
 description: >-
-  [ICML 2025][LLM/NLP][时间序列预测] 提出 TimeFuse——一个样本级自适应模型融合框架，通过元特征描述输入时间序列特征并训练可学习融合器预测最优模型组合权重，在多个预测基准上对 SOTA 模型实现近乎普遍的改进（95.1% 样本优于最佳单模型）。
+  [ICML 2025][LLM 其他][时间序列预测] 提出 TimeFuse——一个样本级自适应模型融合框架，通过元特征描述输入时间序列特征并训练可学习融合器预测最优模型组合权重，在多个预测基准上对 SOTA 模型实现近乎普遍的改进（95.1% 样本优于最佳单模型）。 领域现状：时间序列预测模型不断进步（Transform…
 tags:
   - "ICML 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "时间序列预测"
   - "模型融合"
   - "元学习"

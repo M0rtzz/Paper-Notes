@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Maximizing Incremental Information Entropy for Contrastive Learning
 description: >-
-  [ICLR2026][自监督学习][对比学习] 提出IE-CL（Incremental-Entropy Contrastive Learning）框架，通过显式优化增强视图间的熵增益（而非仅最大化互信息），将编码器视为信息瓶颈并联合优化可学习变换（生成熵）与编码器正则化器（保留熵）…
+  [ICLR2026][自监督学习][对比学习] 提出IE-CL（Incremental-Entropy Contrastive Learning）框架，通过显式优化增强视图间的熵增益（而非仅最大化互信息），将编码器视为信息瓶颈并联合优化可学习变换（生成熵）与编码器正则化器（保留熵），在小batch设置下一致提升CIFAR-10/100、STL-10和ImageNet上的对比学习性能，且核心模块可即插即用集成到现有框架。
 tags:
   - "ICLR2026"
   - "自监督学习"

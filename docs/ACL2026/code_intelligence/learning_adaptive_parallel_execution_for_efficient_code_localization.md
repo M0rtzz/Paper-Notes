@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning Adaptive Parallel Execution for Efficient Code Localization
 description: >-
-  [ACL2026][代码智能][代码定位] FuseSearch 把代码定位中的并行工具调用建模为质量-效率联合优化问题，用 SFT+RL 学会按任务阶段自适应调节搜索宽度，在 SWE-bench Verified 上用紧凑模型取得高 F1 和显著更低的时间/Token 成本。
+  [ACL2026 Findings][代码智能][代码定位] FuseSearch 把代码定位中的并行工具调用建模为质量-效率联合优化问题，用 SFT+RL 学会按任务阶段自适应调节搜索宽度，在 SWE-bench Verified 上用紧凑模型取得高 F1 和显著更低的时间/Token 成本。 领域现状：自动软件开发 ag…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "代码智能"
   - "代码定位"
   - "并行工具调用"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preserving LLM Capabilities through Calibration Data Curation: From Analysis to Optimization
 description: >-
-  [NeurIPS 2025][代码智能][LLM压缩] 系统研究了校准数据的组成特性（序列长度/样本量/来源/格式）和领域对应关系对LLM压缩后能力保持的影响，发现激活空间中的代表性和多样性是数据质量的本质决定因素，并据此提出三阶段校准数据策展框架COLA。
+  [NeurIPS 2025][代码智能][LLM压缩] 系统研究了校准数据的组成特性（序列长度/样本量/来源/格式）和领域对应关系对LLM压缩后能力保持的影响，发现激活空间中的代表性和多样性是数据质量的本质决定因素，并据此提出三阶段校准数据策展框架COLA。 问题背景 后训练压缩（剪枝和量化）是部署LLM的主流方案…
 tags:
   - "NeurIPS 2025"
   - "代码智能"

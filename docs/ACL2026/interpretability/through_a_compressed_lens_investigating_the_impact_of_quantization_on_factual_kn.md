@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Through a Compressed Lens: Investigating The Impact of Quantization on Factual Knowledge Recall
 description: >-
-  [ACL 2026][可解释性][量化] 这篇论文系统评估 GPTQ、AWQ、BitsAndBytes 等权重量化对 LLM 事实知识回忆的影响，发现量化通常会造成信息损失并削弱知识调用，尤其伤害较小模型和未饱和关系，但 8-bit / BitsAndBytes 往往能较好保留能力…
+  [ACL 2026][可解释性][量化] 这篇论文系统评估 GPTQ、AWQ、BitsAndBytes 等权重量化对 LLM 事实知识回忆的影响，发现量化通常会造成信息损失并削弱知识调用，尤其伤害较小模型和未饱和关系，但 8-bit / BitsAndBytes 往往能较好保留能力，个别量化甚至会提升多跳事实回忆。
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling External Knowledge Input Beyond Context Windows of LLMs via Multi-Agent Collaboration
 description: >-
-  [ACL 2026][多智能体][上下文窗口扩展] 提出 ExtAgents 多智能体框架，通过全局知识同步（所有Seeking Agent间交换信息）和知识累积推理（逐步向Reasoning Agent注入筛选后的知识）两个机制，解决现有多智能体方法在扩展外部知识输入超出上下文窗口时性能不升反降的瓶颈…
+  [ACL 2026][多智能体][上下文窗口扩展] 提出 ExtAgents 多智能体框架，通过全局知识同步（所有Seeking Agent间交换信息）和知识累积推理（逐步向Reasoning Agent注入筛选后的知识）两个机制，解决现有多智能体方法在扩展外部知识输入超出上下文窗口时性能不升反降的瓶颈，在多跳QA和长综述生成任务上显著提升。
 tags:
   - "ACL 2026"
   - "多智能体"

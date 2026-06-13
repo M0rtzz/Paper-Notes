@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation
 description: >-
-  [ECCV 2024][图像生成][人体动作生成] 提出 EMDM，通过条件去噪扩散 GAN 捕获大步长下的复杂去噪分布，实现仅需不超过 10 步采样即可实时生成高质量人体动作，推理速度较 MDM 提升约 200 倍。
+  [ECCV 2024][图像生成][人体动作生成] 提出 EMDM，通过条件去噪扩散 GAN 捕获大步长下的复杂去噪分布，实现仅需不超过 10 步采样即可实时生成高质量人体动作，推理速度较 MDM 提升约 200 倍。 当前基于扩散模型的人体动作生成方法（如 MDM、MotionDiffuse）虽然在生成质量上表现出色…
 tags:
   - "ECCV 2024"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting
 description: >-
-  [NeurIPS 2025][3D视觉][3D重光照] 提出MetaGS，通过将可微Blinn-Phong反射模型嵌入3D高斯splatting并结合双层优化的元学习训练策略，实现在分布外（OOD）光照条件下的高质量3D场景重光照。
+  [NeurIPS 2025 Spotlight][3D视觉][3D重光照] 提出MetaGS，通过将可微Blinn-Phong反射模型嵌入3D高斯splatting并结合双层优化的元学习训练策略，实现在分布外（OOD）光照条件下的高质量3D场景重光照。 3D场景重光照（relighting）要求模型在保持场景几何不变的情况下…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "3D视觉"
   - "3D重光照"
   - "分布外泛化"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CENTAUR: Bridging the Impossible Trinity of Privacy, Efficiency, and Performance in Privacy-Preserving Transformer Inference
 description: >-
-  [ACL 2025][AI安全][privacy-preserving inference] 提出 Centaur 框架，融合随机置换矩阵和安全多方计算（SMPC）来打破隐私保护 Transformer 推理（PPTI）中的"不可能三角"——同时实现强隐私保护、5-30x 加速和明文级别推理精度。
+  [ACL 2025][AI安全][privacy-preserving inference] 提出 Centaur 框架，融合随机置换矩阵和安全多方计算（SMPC）来打破隐私保护 Transformer 推理（PPTI）中的"不可能三角"——同时实现强隐私保护、5-30x 加速和明文级别推理精度。 领域现状：Transfor…
 tags:
   - "ACL 2025"
   - "AI安全"

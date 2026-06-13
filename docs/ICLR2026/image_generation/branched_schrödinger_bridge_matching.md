@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Branched Schrödinger Bridge Matching
 description: >-
-  [ICLR 2026][图像生成][Schrödinger Bridge] 提出 BranchSBM 框架，通过参数化多个时间依赖的速度场和增长过程，将 Schrödinger Bridge Matching 扩展到分支场景，能够建模从单一初始分布到多个目标分布的分叉动态轨迹…
+  [ICLR 2026][图像生成][Schrödinger Bridge] 提出 BranchSBM 框架，通过参数化多个时间依赖的速度场和增长过程，将 Schrödinger Bridge Matching 扩展到分支场景，能够建模从单一初始分布到多个目标分布的分叉动态轨迹，在 LiDAR 表面导航和单细胞扰动建模等任务上显著优于单分支方法。
 tags:
   - "ICLR 2026"
   - "图像生成"

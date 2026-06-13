@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPAR: Single-Pass Any-Resolution ViT for Open-Vocabulary Segmentation
 description: >-
-  [CVPR 2026][语义分割][开放词汇分割] 提出 SPAR，一种通过将细步幅滑窗教师的空间推理能力蒸馏到单次前向传递学生的方法，将 ViT 变为分辨率无关的密集特征提取器，在开放词汇分割中比单次前向基线提升 10.5 mIoU，同时比教师快 52 倍。
+  [CVPR 2026][语义分割][开放词汇分割] 提出 SPAR，一种通过将细步幅滑窗教师的空间推理能力蒸馏到单次前向传递学生的方法，将 ViT 变为分辨率无关的密集特征提取器，在开放词汇分割中比单次前向基线提升 10.5 mIoU，同时比教师快 52 倍。 领域现状：基础 ViT（CLIP、SigLIP2、DINOv3）…
 tags:
   - "CVPR 2026"
   - "语义分割"

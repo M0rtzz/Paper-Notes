@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Many-Shot CoT-ICL: Making In-Context Learning Truly Learn
 description: >-
-  [ICML 2026][LLM推理][many-shot ICL] 本文系统揭示了非推理任务的 many-shot ICL “经验法则”在 CoT 推理任务上**全部失效**——相似度检索反而有害、顺序敏感性随 shot 数增长——并把成功的 many-shot CoT 重新解读为“in-context 测试…
+  [ICML 2026][LLM推理][many-shot ICL] 本文系统揭示了非推理任务的 many-shot ICL “经验法则”在 CoT 推理任务上**全部失效**——相似度检索反而有害、顺序敏感性随 shot 数增长——并把成功的 many-shot CoT 重新解读为“in-context 测试时学习”，由此提出按 embedding 轨迹曲率排序 demonstration 的 CDS 方法，在 64-shot 几何题上提升 5.42 pp。
 tags:
   - "ICML 2026"
   - "LLM推理"

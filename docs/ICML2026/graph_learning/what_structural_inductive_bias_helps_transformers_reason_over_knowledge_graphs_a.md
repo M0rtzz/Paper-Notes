@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Structural Inductive Bias Helps Transformers Reason Over Knowledge Graphs? A Study with Tabula RASA
 description: >-
-  [ICML2026][图学习][知识图谱问答] 这篇论文用一个可拆卸的最小图 Transformer 变体 RASA 做控制实验，发现知识图谱多跳问答中最有用的结构归纳偏置主要是邻接 mask 带来的拓扑约束…
+  [ICML2026][图学习][知识图谱问答] 这篇论文用一个可拆卸的最小图 Transformer 变体 RASA 做控制实验，发现知识图谱多跳问答中最有用的结构归纳偏置主要是邻接 mask 带来的拓扑约束，而不是关系类型 bias、query scaling 或 value gating 这类可学习关系参数。
 tags:
   - "ICML2026"
   - "图学习"

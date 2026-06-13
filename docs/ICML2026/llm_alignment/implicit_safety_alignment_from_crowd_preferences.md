@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Safety Alignment from Crowd Preferences
 description: >-
-  [ICML 2026][LLM对齐][众包偏好] 针对众包偏好数据中"用户目标各异但安全准则共享"的结构，作者证明传统 reward combination 会被多数用户偏好污染且对权重敏感…
+  [ICML 2026][LLM对齐][众包偏好] 针对众包偏好数据中"用户目标各异但安全准则共享"的结构，作者证明传统 reward combination 会被多数用户偏好污染且对权重敏感，转而提出 Safe Crowd Preference-based RL：用 VAE 把众包偏好编码成 latent-conditioned 低层 skill，再训练高层策略在 skill 空间组合，从而在没有显式安全奖励的情况下把下游 cost 压到接近 Oracle，同时任务回报基本不掉。
 tags:
   - "ICML 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMAT-1M: A Large Reasoning Dataset for Multimodal Agent Tuning
 description: >-
-  [ICCV 2025][多模态VLM][多模态] 提出首个百万规模的多模态agent调优数据集MMAT-1M，通过四阶段数据引擎（基础数据→推理轨迹生成→反思纠错→格式整合）为MLLM注入CoT推理、工具调用和反思能力，在InternVL2.5-8B上平均提升2.7%，RAG任务上提升8.8%。
+  [ICCV 2025][多模态VLM][多模态] 提出首个百万规模的多模态agent调优数据集MMAT-1M，通过四阶段数据引擎（基础数据→推理轨迹生成→反思纠错→格式整合）为MLLM注入CoT推理、工具调用和反思能力，在InternVL2.5-8B上平均提升2.7%，RAG任务上提升8.8%。 领域现状：LLM通过agen…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Lighthouse of Language: Enhancing LLM Agents via Critique-Guided Improvement
 description: >-
-  [NeurIPS 2025][LLM Agent][自然语言反馈] 提出 CGI（Critique-Guided Improvement）双角色框架，训练专门的 Critic 模型为 Actor Agent 提供结构化自然语言反馈（判别+修正建议），并通过迭代动作精炼让 Actor 学会利用这些反馈…
+  [NeurIPS 2025][LLM Agent][自然语言反馈] 提出 CGI（Critique-Guided Improvement）双角色框架，训练专门的 Critic 模型为 Actor Agent 提供结构化自然语言反馈（判别+修正建议），并通过迭代动作精炼让 Actor 学会利用这些反馈，在 WebShop/ScienceWorld/TextCraft 三个环境中平均得分 74.20%，超越 GPT-4o（45.46%）和 Iterative SFT（58.21%）。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

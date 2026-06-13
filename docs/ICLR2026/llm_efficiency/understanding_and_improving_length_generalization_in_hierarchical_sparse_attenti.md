@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models
 description: >-
-  [ICLR 2026][LLM效率][长上下文] 系统解剖基于 chunk 的稀疏注意力架构，识别出三个关键设计原则（非线性 Chunk Encoder + CLS token、Bypassing Residual Path、训练时强制选择稀疏性）…
+  [ICLR 2026][LLM效率][长上下文] 系统解剖基于 chunk 的稀疏注意力架构，识别出三个关键设计原则（非线性 Chunk Encoder + CLS token、Bypassing Residual Path、训练时强制选择稀疏性），将 4K 上下文训练的模型成功外推到 3200 万 token。
 tags:
   - "ICLR 2026"
   - "LLM效率"

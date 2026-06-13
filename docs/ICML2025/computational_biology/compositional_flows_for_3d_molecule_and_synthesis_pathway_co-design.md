@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compositional Flows for 3D Molecule and Synthesis Pathway Co-design
 description: >-
-  [ICML 2025][计算生物][组合生成流] 提出 CGFlow（Compositional Generative Flows）——将 flow matching 扩展到组合对象的逐步生成，交织组合结构采样（合成路径）和连续状态传输（3D 构象），作为 3DSynthFlow 应用于可合成药物设计…
+  [ICML 2025][计算生物][组合生成流] 提出 CGFlow（Compositional Generative Flows）——将 flow matching 扩展到组合对象的逐步生成，交织组合结构采样（合成路径）和连续状态传输（3D 构象），作为 3DSynthFlow 应用于可合成药物设计，在 LIT-PCBA 15个靶标上首次同时达到结合亲和力和可合成性的 SOTA。
 tags:
   - "ICML 2025"
   - "计算生物"

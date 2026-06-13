@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning with Preserving for Continual Multitask Learning
 description: >-
-  [AAAI 2026][医学图像][持续多任务学习] 提出 Learning with Preserving（LwP）框架，通过动态加权距离保持（DWDP）损失函数维护共享表示空间的几何结构，在无需回放缓冲的条件下解决持续多任务学习（CMTL）中的灾难性遗忘问题…
+  [AAAI 2026][医学图像][持续多任务学习] 提出 Learning with Preserving（LwP）框架，通过动态加权距离保持（DWDP）损失函数维护共享表示空间的几何结构，在无需回放缓冲的条件下解决持续多任务学习（CMTL）中的灾难性遗忘问题，在 BDD100k、CelebA、PhysiQ 等基准上显著超越现有持续学习方法，并且是唯一超越单任务学习基线的方法。
 tags:
   - "AAAI 2026"
   - "医学图像"

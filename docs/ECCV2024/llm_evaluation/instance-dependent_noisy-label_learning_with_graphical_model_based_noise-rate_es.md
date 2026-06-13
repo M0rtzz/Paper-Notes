@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instance-dependent Noisy-label Learning with Graphical Model Based Noise-rate Estimation
 description: >-
-  [ECCV 2024][LLM评测][噪声标签学习] 本文提出一种基于概率图模型的噪声率估计方法，可自动估计训练集标签噪声率，并利用估计值指导样本选择策略的课程设计，可无缝集成到 DivideMix、InstanceGM 等 SOTA 噪声标签学习方法中，在合成和真实世界基准上提升其分类精度。
+  [ECCV 2024][LLM评测][噪声标签学习] 本文提出一种基于概率图模型的噪声率估计方法，可自动估计训练集标签噪声率，并利用估计值指导样本选择策略的课程设计，可无缝集成到 DivideMix、InstanceGM 等 SOTA 噪声标签学习方法中，在合成和真实世界基准上提升其分类精度。 领域现状：深度学习模型因高容量…
 tags:
   - "ECCV 2024"
   - "LLM评测"

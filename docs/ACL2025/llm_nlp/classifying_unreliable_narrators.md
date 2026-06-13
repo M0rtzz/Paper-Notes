@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Classifying Unreliable Narrators with Large Language Models
 description: >-
-  [LLM/NLP] 借鉴文学叙事学理论，定义三种不同层次的不可靠叙事者（intra-narrational / inter-narrational / inter-textual），构建专家标注数据集 TUNa，系统评估 LLM 在分类不可靠叙事者任务上的表现。
+  [LLM 其他] 借鉴文学叙事学理论，定义三种不同层次的不可靠叙事者（intra-narrational / inter-narrational / inter-textual），构建专家标注数据集 TUNa，系统评估 LLM 在分类不可靠叙事者任务上的表现。 - 问题定义：在日常生活中，我们频繁接触第一人称叙事（评论、社交…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # Classifying Unreliable Narrators with Large Language Models

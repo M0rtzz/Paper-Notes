@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Enhancing Visual Representation with Textual Semantics: Textual Semantics-Powered Prototypes for Heterogeneous Federated Learning
 description: >-
-  [CVPR 2026][优化/理论][联邦学习] 针对联邦原型学习中现有方法破坏类间语义关系的问题，提出FedTSP方法利用预训练语言模型构建保留语义结构的文本原型，在异构联邦学习中显著提升性能并加速收敛。
+  [CVPR 2026 Highlight][优化/理论][联邦学习] 针对联邦原型学习中现有方法破坏类间语义关系的问题，提出FedTSP方法利用预训练语言模型构建保留语义结构的文本原型，在异构联邦学习中显著提升性能并加速收敛。 联邦原型学习（FedPL）是处理联邦学习中数据异质性的有效策略，核心思想是让客户端协同构建全局原型…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "优化/理论"
   - "联邦学习"
   - "原型学习"

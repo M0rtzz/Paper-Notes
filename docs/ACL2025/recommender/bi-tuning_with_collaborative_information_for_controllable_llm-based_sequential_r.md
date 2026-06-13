@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Laser: Bi-Tuning with Collaborative Information for Controllable LLM-Based Sequential Recommendation
 description: >-
-  [ACL 2025][推荐系统][序列推荐] 本文提出Laser框架，通过在LLM输入的前缀和后缀分别插入可训练虚拟token（Bi-Tuning），将用户-物品协同信息注入冻结的LLM，并设计基于MoE的M-Former来捕获不同类型用户的差异化特征，实现参数高效的序列推荐。
+  [ACL 2025][推荐系统][序列推荐] 本文提出Laser框架，通过在LLM输入的前缀和后缀分别插入可训练虚拟token（Bi-Tuning），将用户-物品协同信息注入冻结的LLM，并设计基于MoE的M-Former来捕获不同类型用户的差异化特征，实现参数高效的序列推荐。 领域现状：序列推荐系统通过分析用户的历史交互序…
 tags:
   - "ACL 2025"
   - "推荐系统"

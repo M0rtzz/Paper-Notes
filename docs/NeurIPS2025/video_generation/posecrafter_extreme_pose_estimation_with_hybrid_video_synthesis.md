@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoseCrafter: Extreme Pose Estimation with Hybrid Video Synthesis
 description: >-
-  [NeurIPS 2025][视频生成][极端位姿估计] 提出 PoseCrafter，一种无需训练的极端位姿估计框架：通过混合视频生成（HVG，DynamiCrafter+ViewCrafter双阶段）合成高保真中间帧解决极小/无重叠图像对的位姿估计，配合特征匹配选择器（FMS）高效选取最有用的中间帧…
+  [NeurIPS 2025][视频生成][极端位姿估计] 提出 PoseCrafter，一种无需训练的极端位姿估计框架：通过混合视频生成（HVG，DynamiCrafter+ViewCrafter双阶段）合成高保真中间帧解决极小/无重叠图像对的位姿估计，配合特征匹配选择器（FMS）高效选取最有用的中间帧，在四个数据集上显著提升极端位姿估计精度。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

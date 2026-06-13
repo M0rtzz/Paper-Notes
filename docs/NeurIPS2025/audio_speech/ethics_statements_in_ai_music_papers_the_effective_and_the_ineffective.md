@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ethics Statements in AI Music Papers: The Effective and the Ineffective
 description: >-
-  [NeurIPS 2025 (AI for Music Workshop)][音频/语音][ethics statements] 对 AI 音乐领域论文中伦理声明（ethics statements）的使用现状进行系统审查，发现绝大多数伦理声明未被有效利用，并提出面向会议与研究者的改进建议。
+  [NeurIPS 2025 (AI for Music Workshop)][音频/语音][ethics statements] 对 AI 音乐领域论文中伦理声明（ethics statements）的使用现状进行系统审查，发现绝大多数伦理声明未被有效利用，并提出面向会议与研究者的改进建议。 AI 音乐生成与分析模型近年来快…
 tags:
   - "NeurIPS 2025 (AI for Music Workshop)"
   - "音频/语音"

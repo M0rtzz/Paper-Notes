@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Token Pruning is Worse than Random: Understanding Visual Token Information in VLLMs
 description: >-
-  [CVPR 2026][多模态VLM][token剪枝] 发现VLLM深层中现有token剪枝方法不如随机剪枝的现象，提出基于输出概率变化量化视觉token信息的方法，揭示了"信息地平线"——视觉token信息在某层均匀消散至零的临界层，其位置受任务视觉复杂度和模型能力动态影响…
+  [CVPR 2026][多模态VLM][token剪枝] 发现VLLM深层中现有token剪枝方法不如随机剪枝的现象，提出基于输出概率变化量化视觉token信息的方法，揭示了"信息地平线"——视觉token信息在某层均匀消散至零的临界层，其位置受任务视觉复杂度和模型能力动态影响，并证明简单集成随机剪枝能有效提升现有方法。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

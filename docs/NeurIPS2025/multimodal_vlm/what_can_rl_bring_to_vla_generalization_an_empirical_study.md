@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Can RL Bring to VLA Generalization? An Empirical Study
 description: >-
-  [NeurIPS 2025][多模态VLM][VLA模型] 本文系统研究了RL微调对VLA（视觉-语言-动作）模型泛化能力的影响，发现PPO是最有效的RL算法且显著优于DPO和GRPO，RL在语义理解和执行鲁棒性方面的OOD泛化远超SFT，同时在视觉鲁棒性上与SFT持平。
+  [NeurIPS 2025][多模态VLM][VLA模型] 本文系统研究了RL微调对VLA（视觉-语言-动作）模型泛化能力的影响，发现PPO是最有效的RL算法且显著优于DPO和GRPO，RL在语义理解和执行鲁棒性方面的OOD泛化远超SFT，同时在视觉鲁棒性上与SFT持平。 VLA模型将感知、语言理解和具身控制统一到一个端到端…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

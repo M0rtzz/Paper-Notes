@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling the Ignorance of MLLMs: Seeing Clearly, Answering Incorrectly
 description: >-
-  [CVPR 2025][多模态VLM][MLLM评估] 揭示MLLM"**理解了视觉内容但仍给出错误回答**"的普遍现象，构建包含12类正负样本对的**MMVU基准**，发现根因在于训练数据正样本偏倚和视觉token注意力不足…
+  [CVPR 2025][多模态VLM][MLLM评估] 揭示MLLM"**理解了视觉内容但仍给出错误回答**"的普遍现象，构建包含12类正负样本对的**MMVU基准**，发现根因在于训练数据正样本偏倚和视觉token注意力不足，提出**MMVU-Train数据集**（112K正负样本对）+ **内容引导精炼（CGR）**+ **视觉注意力精炼（VAR）**三管齐下的解决方案。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

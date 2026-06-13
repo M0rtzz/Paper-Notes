@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Far Ahead Do LLMs Plan? Uncovering the Latent Horizon in Chain-of-Thought Reasoning
 description: >-
-  [ICML 2026][LLM推理][Chain-of-Thought] 本文用一个叫 Tele-Lens 的低秩 adapter 探针在 12 个跨域任务上系统度量 LLM 隐状态对"未来推理"的预测能力，发现 LLM 的内部规划是**近视**（myopic）的——只在 CoT 末端才精确锁定答案…
+  [ICML 2026][LLM推理][Chain-of-Thought] 本文用一个叫 Tele-Lens 的低秩 adapter 探针在 12 个跨域任务上系统度量 LLM 隐状态对"未来推理"的预测能力，发现 LLM 的内部规划是**近视**（myopic）的——只在 CoT 末端才精确锁定答案，并据此提出"木桶原理"用稀疏 pivot 位置的不确定性代表整条 CoT，可显著改善不确定性校准并实现 16% 的 CoT 旁路。
 tags:
   - "ICML 2026"
   - "LLM推理"

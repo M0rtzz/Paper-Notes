@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpectralGCD: Spectral Concept Selection and Cross-modal Representation Learning for Generalized Category Discovery
 description: >-
-  [ICLR 2026][多模态VLM][广义类别发现] 提出SpectralGCD，将图像表示为CLIP概念字典上的语义混合（跨模态相似度向量），通过谱过滤自动选择任务相关概念，配合正反知识蒸馏保持语义质量，在6个基准上以与单模态方法可比的计算代价达到多模态SOTA。
+  [ICLR 2026][多模态VLM][广义类别发现] 提出SpectralGCD，将图像表示为CLIP概念字典上的语义混合（跨模态相似度向量），通过谱过滤自动选择任务相关概念，配合正反知识蒸馏保持语义质量，在6个基准上以与单模态方法可比的计算代价达到多模态SOTA。 广义类别发现(GCD)：GCD旨在利用少量已知类的标注子…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

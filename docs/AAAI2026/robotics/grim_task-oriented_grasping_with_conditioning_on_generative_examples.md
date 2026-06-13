@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GRIM: Task-Oriented Grasping with Conditioning on Generative Examples
 description: >-
-  [AAAI 2026][机器人][任务导向抓取] 本文提出 GRIM（Grasp Re-alignment via Iterative Matching），一种**免训练**的任务导向抓取（TOG）框架，通过 **retrieve–align–transfer** 流水线结合视频生成模型和多源记忆库…
+  [AAAI 2026][机器人][任务导向抓取] 本文提出 GRIM（Grasp Re-alignment via Iterative Matching），一种**免训练**的任务导向抓取（TOG）框架，通过 **retrieve–align–transfer** 流水线结合视频生成模型和多源记忆库，利用基于 DINO 特征的语义 3D 对齐实现跨物体的功能性抓取迁移，仅用 210 个记忆实例即超越了在 379K 样本上训练的 GraspMolmo。
 tags:
   - "AAAI 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 7 Points to Tsinghua but 10 Points to 清华? Assessing Agentic Large Language Models in Multilingual National Bias
 description: >-
-  [ACL 2025 Findings][多语言/翻译][多语言偏见] 首次系统研究LLM作为多语言智能建议agent在推理型决策任务中的国籍偏见，通过大学申请/旅行/搬迁三类场景+Thurstone比较法量化GPT-3.5/GPT-4/Claude Sonnet在6种语言下的评分偏差…
+  [ACL 2025 Findings][多语言/翻译][多语言偏见] 首次系统研究LLM作为多语言智能建议agent在推理型决策任务中的国籍偏见，通过大学申请/旅行/搬迁三类场景+Thurstone比较法量化GPT-3.5/GPT-4/Claude Sonnet在6种语言下的评分偏差，发现"本地语言偏见"（local language bias）普遍存在，且CoT推理在非英语语言中反而加剧偏见。
 tags:
   - "ACL 2025 Findings"
   - "多语言/翻译"

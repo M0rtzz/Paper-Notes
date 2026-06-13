@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AdaptiveAD: Decoupling Scene Perception and Ego Status for End-to-End Autonomous Driving
 description: >-
-  [AAAI 2026][自动驾驶][端到端自动驾驶] 识别出端到端自动驾驶中ego status过度依赖的架构根源（BEV编码器中ego status的过早融合），提出AdaptiveAD双分支架构：场景驱动分支（去除ego status）和自我驱动分支独立生成决策，再通过场景感知融合模块自适应整合…
+  [AAAI 2026 Oral][自动驾驶][端到端自动驾驶] 识别出端到端自动驾驶中ego status过度依赖的架构根源（BEV编码器中ego status的过早融合），提出AdaptiveAD双分支架构：场景驱动分支（去除ego status）和自我驱动分支独立生成决策，再通过场景感知融合模块自适应整合，配合路径注意力、BEV单向蒸馏和自回归在线建图辅助任务，在nuScenes上达到SOTA规划性能。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自动驾驶"
   - "端到端自动驾驶"
   - "因果混淆"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepASA: An Object-Oriented Multi-Purpose Network for Auditory Scene Analysis
 description: >-
-  [NeurIPS 2025][音频/语音][auditory scene analysis] 提出 DeepASA，一个面向对象的多任务统一架构，通过 object-oriented processing 和 chain-of-inference 机制在单一模型中同时完成多通道声源分离（MIMO）、去混响、声…
+  [NeurIPS 2025][音频/语音][auditory scene analysis] 提出 DeepASA，一个面向对象的多任务统一架构，通过 object-oriented processing 和 chain-of-inference 机制在单一模型中同时完成多通道声源分离（MIMO）、去混响、声事件检测（SED）、音频分类和到达方向估计（DoAE），在多个空间音频基准上达到 SOTA。
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

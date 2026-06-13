@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-CAS: Dynamic Neuron Perturbation for Real-Time Hallucination Correction
 description: >-
-  [AAAI 2026][幻觉检测][动态神经元扰动] LLM-CAS 首次将 LLM 实时幻觉纠正建模为层次强化学习（HRL）问题，训练 RL Agent 在推理时动态选择最优的神经元扰动策略（高层选择功能网络类别，低层选择扰动类型和幅度），结合自适应掩码+因果追踪精确定位目标神经元…
+  [AAAI 2026][幻觉检测][动态神经元扰动] LLM-CAS 首次将 LLM 实时幻觉纠正建模为层次强化学习（HRL）问题，训练 RL Agent 在推理时动态选择最优的神经元扰动策略（高层选择功能网络类别，低层选择扰动类型和幅度），结合自适应掩码+因果追踪精确定位目标神经元，在 StoryCloze 上提升 10.98%，超越 ITI/CAA/SADI 等静态/动态基线。
 tags:
   - "AAAI 2026"
   - "幻觉检测"

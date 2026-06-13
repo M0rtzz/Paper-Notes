@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Agree, Disagree, Explain: Decomposing Human Label Variation in NLI through the Lens of Explanations
 description: >-
-  [ACL 2026][NLP理解][标注分歧] 将LiTEx推理分类法从"标签一致下的解释变异"扩展到"标签不一致"场景，发现标注者可能标签不同但推理类似，推理类别的一致性比标签一致性更好地反映解释的语义相似度。
+  [ACL 2026 Findings][NLP理解][标注分歧] 将LiTEx推理分类法从"标签一致下的解释变异"扩展到"标签不一致"场景，发现标注者可能标签不同但推理类似，推理类别的一致性比标签一致性更好地反映解释的语义相似度。 领域现状：NLI数据集中普遍存在标注者分歧，理解这些分歧对构建可靠的NLU系统至关重要…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "标注分歧"
   - "自然语言推理"

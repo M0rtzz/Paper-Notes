@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deadline-Aware, Energy-Efficient Control of Domestic Immersion Hot Water Heaters
 description: >-
-  [AAAI 2026][能源效率] 提出一种基于截止时间感知的家用热水器节能控制方法，通过 Gymnasium 仿真环境比较 bang-bang 基线、MCTS 规划器和 PPO 策略，证明 PPO 在相同物理条件下能节省高达 69% 的能量。
+  [AAAI 2026][能源效率] 提出一种基于截止时间感知的家用热水器节能控制方法，通过 Gymnasium 仿真环境比较 bang-bang 基线、MCTS 规划器和 PPO 策略，证明 PPO 在相同物理条件下能节省高达 69% 的能量。 家用热水器加热是家庭能源消耗的重要组成部分。现实中，热水需求通常集中在可预测的时…
 tags:
   - "AAAI 2026"
   - "能源效率"

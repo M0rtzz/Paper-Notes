@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Maximizing Asynchronicity in Event-based Neural Networks
 description: >-
-  [ICLR 2026][自监督学习][事件相机] 提出EVA框架，将事件类比为语言token，用基于RWKV-6的线性注意力异步编码器实现逐事件特征更新，结合多表示预测(MRP)+下一表示预测(NRP)的自监督学习获得可泛化特征…
+  [ICLR 2026][自监督学习][事件相机] 提出EVA框架，将事件类比为语言token，用基于RWKV-6的线性注意力异步编码器实现逐事件特征更新，结合多表示预测(MRP)+下一表示预测(NRP)的自监督学习获得可泛化特征，首次在异步-同步(A2S)范式中成功完成高难度目标检测任务(Gen1数据集0.477 mAP)。
 tags:
   - "ICLR 2026"
   - "自监督学习"

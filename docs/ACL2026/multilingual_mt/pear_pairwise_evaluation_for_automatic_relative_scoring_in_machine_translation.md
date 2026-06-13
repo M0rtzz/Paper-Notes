@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PEAR: Pairwise Evaluation for Automatic Relative Scoring in Machine Translation
 description: >-
-  [ACL2026][多语言/翻译][成对评估] PEAR 将无参考机器翻译质量估计从“给单个译文打绝对分”改成“直接比较两个候选译文的相对差值”，在 WMT24 MQM 评测中以更小模型超过匹配的单候选 QE 基线和部分大规模指标。
+  [ACL2026][多语言/翻译][成对评估] PEAR 将无参考机器翻译质量估计从“给单个译文打绝对分”改成“直接比较两个候选译文的相对差值”，在 WMT24 MQM 评测中以更小模型超过匹配的单候选 QE 基线和部分大规模指标。 领域现状：机器翻译系统通常依赖自动指标做系统选择、模型调参与候选排序…
 tags:
   - "ACL2026"
   - "多语言/翻译"

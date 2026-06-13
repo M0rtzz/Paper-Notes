@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Statistical Advantage of Softmax Attention: Insights from Single-Location Regression
 description: >-
-  [ICLR2026][LLM/NLP][注意力机制] 通过提出"单位置回归"(Single-Location Regression, SLR) 理论框架，结合统计物理中的 order parameter 方法…
+  [ICLR2026][LLM 其他][注意力机制] 通过提出"单位置回归"(Single-Location Regression, SLR) 理论框架，结合统计物理中的 order parameter 方法，在高维极限下严格证明了 softmax attention 在种群层面达到 Bayes 风险而线性 attention 本质上无法做到，并在有限样本情形下证实 softmax 始终优于线性 attention，为 softmax 在检索任务中的优势提供了首个原理性解释。
 tags:
   - "ICLR2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "注意力机制"
   - "信息检索"
   - "统计物理"

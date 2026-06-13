@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeqPO-SiMT: Sequential Policy Optimization for Simultaneous Machine Translation
 description: >-
-  [ACL 2025][多语言/翻译][同步机器翻译] 将同步机器翻译（SiMT）建模为多步序列决策问题，提出 SeqPO-SiMT 策略优化框架，融合翻译质量和延迟的奖励信号，在 7B LLM 上实现 SiMT 性能媲美离线翻译的强模型。
+  [ACL 2025][多语言/翻译][同步机器翻译] 将同步机器翻译（SiMT）建模为多步序列决策问题，提出 SeqPO-SiMT 策略优化框架，融合翻译质量和延迟的奖励信号，在 7B LLM 上实现 SiMT 性能媲美离线翻译的强模型。 同步机器翻译（SiMT）在源文本流式输入的同时实时生成翻译，应用于同声传译等场景…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

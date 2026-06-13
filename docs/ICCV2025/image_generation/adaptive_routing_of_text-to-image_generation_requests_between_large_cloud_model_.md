@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Routing of Text-to-Image Generation Requests Between Large Cloud Models and Small Edge Models
 description: >-
-  [ICCV 2025][图像生成][文本到图像生成] 提出 RouteT2I，首个面向文本到图像生成的边缘-云模型路由框架，通过多维质量度量、Pareto 相对优越性和双门控 token 选择 MoE 架构，在控制成本的同时最大化图像生成质量。
+  [ICCV 2025][图像生成][文本到图像生成] 提出 RouteT2I，首个面向文本到图像生成的边缘-云模型路由框架，通过多维质量度量、Pareto 相对优越性和双门控 token 选择 MoE 架构，在控制成本的同时最大化图像生成质量。 核心问题 大型文本到图像（T2I）模型（如 SD3.5，80亿参数）生成质量优秀…
 tags:
   - "ICCV 2025"
   - "图像生成"

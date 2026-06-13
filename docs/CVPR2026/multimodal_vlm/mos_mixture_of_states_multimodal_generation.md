@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mixture of States (MoS): Routing Token-Level Dynamics for Multimodal Generation
 description: >-
-  [CVPR 2026][多模态VLM][多模态融合] 提出Mixture of States (MoS)——一种新的多模态扩散模型融合范式，用可学习的token级路由器将理解塔(冻结LLM/VLM)的任意层hidden state动态路由到生成塔(DiT)的任意层…
+  [CVPR 2026][多模态VLM][多模态融合] 提出Mixture of States (MoS)——一种新的多模态扩散模型融合范式，用可学习的token级路由器将理解塔(冻结LLM/VLM)的任意层hidden state动态路由到生成塔(DiT)的任意层，以3-5B参数在图像生成和编辑上匹配或超越20B的Qwen-Image。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

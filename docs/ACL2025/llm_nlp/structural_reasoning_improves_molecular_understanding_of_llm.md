@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Structural Reasoning Improves Molecular Understanding of LLM
 description: >-
-  [LLM/NLP][molecular reasoning] 提出 Molecular Structural Reasoning (MSR) 框架，通过显式融入分子的六种关键结构信息（分子式、最长碳链、芳环、环化合物、官能团、手性中心）作为推理中间步骤，显著提升 LLM 在分子理解任务上的表现。
+  [LLM 其他][molecular reasoning] 提出 Molecular Structural Reasoning (MSR) 框架，通过显式融入分子的六种关键结构信息（分子式、最长碳链、芳环、环化合物、官能团、手性中心）作为推理中间步骤，显著提升 LLM 在分子理解任务上的表现。 问题定义： LLM 在化学领域…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
   - "molecular reasoning"
   - "structural information"
   - "chain-of-thought"

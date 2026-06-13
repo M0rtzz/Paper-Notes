@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Mean Pooling Works: Quantifying Second-Order Collapse in Text Embeddings
 description: >-
-  [ACL2026][信息检索/RAG][Mean Pooling] 本文指出 mean pooling 理论上会丢失 token embedding 的二阶结构，并提出 SOCM 指标量化这种二阶坍缩；实验证明现代对比微调文本编码器的 token embedding 更集中，因此比基座模型更不容易发生坍缩…
+  [ACL2026][信息检索/RAG][Mean Pooling] 本文指出 mean pooling 理论上会丢失 token embedding 的二阶结构，并提出 SOCM 指标量化这种二阶坍缩；实验证明现代对比微调文本编码器的 token embedding 更集中，因此比基座模型更不容易发生坍缩，且低 SOCM 与更高 MTEB 表现相关。
 tags:
   - "ACL2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts
 description: >-
-  [AAAI 2026][LLM效率][Mixture-of-Experts] 提出MASS框架，通过基于梯度的语义漂移检测自适应扩展MoE专家池，并结合Top-p置信度路由策略，在无需超参搜索的情况下自动发现最优专家数量，同时增强专家间的语义分化。
+  [AAAI 2026][LLM效率][Mixture-of-Experts] 提出MASS框架，通过基于梯度的语义漂移检测自适应扩展MoE专家池，并结合Top-p置信度路由策略，在无需超参搜索的情况下自动发现最优专家数量，同时增强专家间的语义分化。 问题背景 稀疏混合专家（SMoE）是扩展大规模模型容量的有效手段…
 tags:
   - "AAAI 2026"
   - "LLM效率"

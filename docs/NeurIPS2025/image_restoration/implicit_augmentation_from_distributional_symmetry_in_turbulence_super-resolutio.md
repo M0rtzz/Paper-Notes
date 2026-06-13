@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Implicit Augmentation from Distributional Symmetry in Turbulence Super-Resolution
 description: >-
-  [图像恢复] 本文揭示湍流的统计各向同性本身就是一种隐式数据增强，使得标准CNN在超分辨率任务中无需显式旋转增强或等变架构即可部分习得旋转等变性，并展示了等变误差的尺度依赖性与Kolmogorov局部各向同性假说一致。
+  [图像恢复] 本文揭示湍流的统计各向同性本身就是一种隐式数据增强，使得标准CNN在超分辨率任务中无需显式旋转增强或等变架构即可部分习得旋转等变性，并展示了等变误差的尺度依赖性与Kolmogorov局部各向同性假说一致。 问题背景 湍流模拟的计算成本极高，机器学习超分辨率（SR）方法被广泛用于从低分辨率流场重建高分辨率细节…
 tags:
   - "图像恢复"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Recover to Predict: Progressive Retrospective Learning for Variable-Length Trajectory Prediction
 description: >-
-  [CVPR2026][自动驾驶][轨迹预测] 提出渐进式回溯框架 PRF，通过级联回溯单元逐步将不完整观测的特征对齐到完整观测，大幅提升变长轨迹预测性能，且即插即用兼容现有方法。
+  [CVPR2026][自动驾驶][轨迹预测] 提出渐进式回溯框架 PRF，通过级联回溯单元逐步将不完整观测的特征对齐到完整观测，大幅提升变长轨迹预测性能，且即插即用兼容现有方法。 1. 轨迹预测是自动驾驶核心任务：准确预测动态交通参与者的未来运动对安全规划和碰撞避免至关重要 2. 现有方法依赖固定长度观测：绝大多数方法在标准…
 tags:
   - "CVPR2026"
   - "自动驾驶"

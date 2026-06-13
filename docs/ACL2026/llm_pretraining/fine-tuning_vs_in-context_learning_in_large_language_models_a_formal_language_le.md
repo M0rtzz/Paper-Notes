@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-tuning vs. In-context Learning in Large Language Models: A Formal Language Learning Perspective
 description: >-
-  [ACL 2026][预训练][形式语言] 作者用概率层级化上下文无关文法 (HPCFG) 构造一组"无污染、有边界、可精确采样"的形式语言作为受控测试床，并提出"判别式 AUC 测试"作为统一指标…
+  [ACL 2026][预训练][形式语言] 作者用概率层级化上下文无关文法 (HPCFG) 构造一组"无污染、有边界、可精确采样"的形式语言作为受控测试床，并提出"判别式 AUC 测试"作为统一指标，在 18 个 LLM、6 个家族、6 种语言上系统比较 FT 与 ICL：FT 在 in-distribution 上稳定胜出，但在 out-of-distribution 上两者打平，ICL 的归纳偏置与 FT 相近但对 token 敏感得多。
 tags:
   - "ACL 2026"
   - "预训练"

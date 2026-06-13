@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relink: Constructing Query-Driven Evidence Graph On-the-Fly for GraphRAG
 description: >-
-  [AAAI 2026][图学习][GraphRAG] 提出从"先构建再推理"到"边推理边构建"的GraphRAG范式转变，通过Relink框架动态构建查询特定的证据图——结合高精度KG骨架和高召回潜在关系池…
+  [AAAI 2026][图学习][GraphRAG] 提出从"先构建再推理"到"边推理边构建"的GraphRAG范式转变，通过Relink框架动态构建查询特定的证据图——结合高精度KG骨架和高召回潜在关系池，用查询驱动的排序器统一评估、按需补全缺失路径并过滤干扰事实——在5个多跳QA基准上平均提升EM 5.4%和F1 5.2%。
 tags:
   - "AAAI 2026"
   - "图学习"

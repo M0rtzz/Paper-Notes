@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Transformers for Generalizable First-Order Logical Entailment
 description: >-
-  [ACL 2025][一阶逻辑蕴涵] 系统性研究 Transformer 在一阶逻辑蕴涵任务中的泛化推理能力，揭示了查询语法、token 嵌入和 Transformer 架构（特别是位置编码）的影响…
+  [ACL 2025][一阶逻辑蕴涵] 系统性研究 Transformer 在一阶逻辑蕴涵任务中的泛化推理能力，揭示了查询语法、token 嵌入和 Transformer 架构（特别是位置编码）的影响，并提出 TEGA（Transformer Encoder with Guided Attention）在相对位置编码设定下显著提升逻辑推理性能。
 tags:
   - "ACL 2025"
   - "一阶逻辑蕴涵"

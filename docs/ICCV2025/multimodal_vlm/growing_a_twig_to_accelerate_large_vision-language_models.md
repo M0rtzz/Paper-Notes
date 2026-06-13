@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Growing a Twig to Accelerate Large Vision-Language Models
 description: >-
-  [ICCV 2025][多模态VLM][VLM加速] 提出 TwigVLM，通过在 VLM 早期层上"生长"一个轻量级 twig 模块，同时实现 twig 引导的视觉 token 剪枝（TTP，prefilling 加速）和自推测解码（SSD，decoding 加速）…
+  [ICCV 2025][多模态VLM][VLM加速] 提出 TwigVLM，通过在 VLM 早期层上"生长"一个轻量级 twig 模块，同时实现 twig 引导的视觉 token 剪枝（TTP，prefilling 加速）和自推测解码（SSD，decoding 加速），在 LLaVA-1.5-7B 上剪枝 88.9% 视觉 token 后保留 96% 精度，长回答生成速度提升 154%，在精度和速度上均大幅超越现有方法。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

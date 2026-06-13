@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Nemotron-Flash: Towards Latency-Optimal Hybrid Small Language Models
 description: >-
-  [NeurIPS 2025][LLM/NLP][混合算子] Nemotron-Flash 通过系统优化深宽比、进化搜索混合算子组合（DeltaNet+Mamba2+Attention）以及权重归一化训练，构建延迟最优的小语言模型家族…
+  [NeurIPS 2025][LLM 其他][混合算子] Nemotron-Flash 通过系统优化深宽比、进化搜索混合算子组合（DeltaNet+Mamba2+Attention）以及权重归一化训练，构建延迟最优的小语言模型家族，相比 Qwen3-1.7B/0.6B 分别实现 1.3×/1.9× 延迟下降与 +5.5% 平均准确率提升。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "混合算子"
   - "深宽比"
   - "权重归一化"

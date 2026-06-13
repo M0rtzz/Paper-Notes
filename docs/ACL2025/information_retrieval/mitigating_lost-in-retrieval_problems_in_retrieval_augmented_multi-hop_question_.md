@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA
 description: >-
-  [ACL 2025][信息检索/RAG][多跳问答] 本文识别 RAG 多跳问答中的"检索丢失"（lost-in-retrieval）问题——子问题分解后后续子问题因缺少关键实体导致检索性能骤降，提出 ChainRAG 框架通过构建句子图 + 渐进式检索 + 子问题重写（补全缺失实体）形成完整推理链…
+  [ACL 2025][信息检索/RAG][多跳问答] 本文识别 RAG 多跳问答中的"检索丢失"（lost-in-retrieval）问题——子问题分解后后续子问题因缺少关键实体导致检索性能骤降，提出 ChainRAG 框架通过构建句子图 + 渐进式检索 + 子问题重写（补全缺失实体）形成完整推理链，在 MuSiQue、2Wiki、HotpotQA 三个数据集上一致超越基线。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

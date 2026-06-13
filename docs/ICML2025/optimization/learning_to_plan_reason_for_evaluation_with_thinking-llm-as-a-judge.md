@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Plan & Reason for Evaluation with Thinking-LLM-as-a-Judge
 description: >-
-  [ICML 2025][优化/理论][LLM-as-a-Judge] 提出 EvalPlanner，通过将 LLM-as-a-Judge 的推理过程解耦为"评估计划生成"和"计划执行"两个阶段，并在自训练循环中用 DPO 迭代优化计划与执行的偏好对…
+  [ICML 2025][优化/理论][LLM-as-a-Judge] 提出 EvalPlanner，通过将 LLM-as-a-Judge 的推理过程解耦为"评估计划生成"和"计划执行"两个阶段，并在自训练循环中用 DPO 迭代优化计划与执行的偏好对，在 RewardBench 上以仅 22K 合成偏好对达到 93.9 的生成式奖励模型新 SOTA。
 tags:
   - "ICML 2025"
   - "优化/理论"

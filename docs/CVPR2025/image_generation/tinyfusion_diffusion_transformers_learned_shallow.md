@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TinyFusion: Diffusion Transformers Learned Shallow
 description: >-
-  [CVPR 2025][图像生成][Transformer] 提出 TinyFusion，一种可学习的深度剪枝方法，通过 Gumbel-Softmax 可微采样层掩码与协同优化权重更新模拟微调，显式优化剪枝后模型的可恢复性（而非最小化剪枝后损失）…
+  [CVPR 2025][图像生成][Transformer] 提出 TinyFusion，一种可学习的深度剪枝方法，通过 Gumbel-Softmax 可微采样层掩码与协同优化权重更新模拟微调，显式优化剪枝后模型的可恢复性（而非最小化剪枝后损失），在 DiT-XL 上以不到 7% 预训练成本制造浅层扩散 Transformer，实现 2× 加速且 FID 仅 2.86。
 tags:
   - "CVPR 2025"
   - "图像生成"

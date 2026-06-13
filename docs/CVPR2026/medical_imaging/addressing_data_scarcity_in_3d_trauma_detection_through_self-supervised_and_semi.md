@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding
 description: >-
-  [CVPR 2026][医学图像][自监督学习] 提出两阶段标签高效框架：先用 patch-based MIM 在1,206个无标注CT上自监督预训练3D U-Net编码器，再用VDETR+3D顶点相对位置编码做3D损伤检测，配合Mean Teacher半监督一致性正则化利用2,000个无标注体数据…
+  [CVPR 2026][医学图像][自监督学习] 提出两阶段标签高效框架：先用 patch-based MIM 在1,206个无标注CT上自监督预训练3D U-Net编码器，再用VDETR+3D顶点相对位置编码做3D损伤检测，配合Mean Teacher半监督一致性正则化利用2,000个无标注体数据，仅用144个有标注样本即实现56.57% val mAP@0.50（比纯监督提升115%）。
 tags:
   - "CVPR 2026"
   - "医学图像"
@@ -160,10 +160,10 @@ $$\mathcal{L}_{total} = \mathcal{L}_{supervised} + \lambda(t) \times (\mathcal{L
 - **vs RSNA 2023竞赛获胜方案**: 竞赛冠军用两阶段pipeline+模型集成达98% AUC，本文用单模型冻结编码器达94.07% Acc(少29%数据，复杂度低得多)
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 各个组件(MIM, V-DETR, Mean Teacher)都不新，创新在于系统整合和面向标签稀缺场景的完整pipeline设计
-- 实验充分度: ⭐⭐⭐ 消融实验覆盖了自监督/半监督/分类/检测，但缺少跨数据集验证和与领域SOTA的直接对比，测试集规模偏小(32个)
-- 写作质量: ⭐⭐⭐⭐ 论文结构清晰，两阶段训练策略的设计动机阐述得当，公式推导完整
-- 对我的价值: ⭐⭐⭐ 标签稀缺场景下自监督+半监督的整合范式可借鉴，3D RPE在医学检测中的应用有参考意义
+- 新颖性: ⭐⭐⭐⭐ 各个组件(MIM, V-DETR, Mean Teacher)都不新，创新在于系统整合和面向标签稀缺场景的完整pipeline设计
+- 实验充分度: ⭐⭐⭐⭐ 消融实验覆盖了自监督/半监督/分类/检测，但缺少跨数据集验证和与领域SOTA的直接对比，测试集规模偏小(32个)
+- 写作质量: ⭐⭐⭐⭐⭐ 论文结构清晰，两阶段训练策略的设计动机阐述得当，公式推导完整
+- 对我的价值: ⭐⭐⭐⭐ 标签稀缺场景下自监督+半监督的整合范式可借鉴，3D RPE在医学检测中的应用有参考意义
 - 价值: 待评
 
 <!-- RELATED:START -->

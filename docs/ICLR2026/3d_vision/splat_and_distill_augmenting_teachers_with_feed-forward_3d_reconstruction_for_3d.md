@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Splat and Distill: Augmenting Teachers with Feed-Forward 3D Reconstruction for 3D-Aware Distillation
 description: >-
-  [ICLR 2026][3D视觉][3D-Aware Distillation] 在 student-teacher 蒸馏框架中，用预训练的前馈式 3D 重建模型（MVSplat）增强 teacher，将 2D 特征提升到 3D Gaussian 表示后渲染到新视角…
+  [ICLR 2026][3D视觉][3D-Aware Distillation] 在 student-teacher 蒸馏框架中，用预训练的前馈式 3D 重建模型（MVSplat）增强 teacher，将 2D 特征提升到 3D Gaussian 表示后渲染到新视角，从而让 student 学到几何一致的 3D-aware 2D 特征，在深度估计、法线估计、语义分割和多视图对应等下游任务上全面超越现有方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

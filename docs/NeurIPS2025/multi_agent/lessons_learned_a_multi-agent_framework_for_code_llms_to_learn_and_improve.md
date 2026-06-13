@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lessons Learned: A Multi-Agent Framework for Code LLMs to Learn and Improve
 description: >-
-  [NeurIPS 2025][多智能体][多智能体协作] 提出 LessonL 框架，使多个小 LLM 智能体通过相互学习的"课程"(lesson)对成功和失败案例进行反思，协同优化代码性能，3 个 7B-14B 模型组合达到 GPT-4o 甚至接近 o3 的代码优化效果。
+  [NeurIPS 2025][多智能体][多智能体协作] 提出 LessonL 框架，使多个小 LLM 智能体通过相互学习的"课程"(lesson)对成功和失败案例进行反思，协同优化代码性能，3 个 7B-14B 模型组合达到 GPT-4o 甚至接近 o3 的代码优化效果。 领域现状：代码优化是软件开发关键环节…
 tags:
   - "NeurIPS 2025"
   - "多智能体"

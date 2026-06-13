@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Bias-Free Training Paradigm for More General AI-generated Image Detection
 description: >-
-  [CVPR 2025][图像生成][AI生成图像检测] 提出B-Free训练范式——通过stable diffusion的自条件重构从真实图像生成语义对齐的假图，结合inpainting内容增强，消除格式/内容/分辨率等偏差，使检测器聚焦于生成器特有的伪影痕迹…
+  [CVPR 2025][图像生成][AI生成图像检测] 提出B-Free训练范式——通过stable diffusion的自条件重构从真实图像生成语义对齐的假图，结合inpainting内容增强，消除格式/内容/分辨率等偏差，使检测器聚焦于生成器特有的伪影痕迹，在27种生成模型（含FLUX、SD 3.5等最新模型）上泛化AUC>99%，balanced accuracy达95.2%。
 tags:
   - "CVPR 2025"
   - "图像生成"

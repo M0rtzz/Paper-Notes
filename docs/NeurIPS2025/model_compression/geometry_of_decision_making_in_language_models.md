@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry of Decision Making in Language Models
 description: >-
-  [NeurIPS 2025][模型压缩][内在维度] 通过在 28 个开源 Transformer 模型上大规模测量各层隐藏表示的**内在维度（Intrinsic Dimension, ID）**，揭示了一致的"低-高-低"维度变化模式：早期层在低维流形上操作，中间层扩展空间…
+  [NeurIPS 2025][模型压缩][内在维度] 通过在 28 个开源 Transformer 模型上大规模测量各层隐藏表示的**内在维度（Intrinsic Dimension, ID）**，揭示了一致的"低-高-低"维度变化模式：早期层在低维流形上操作，中间层扩展空间，后期层再压缩至与决策相关的低维表示。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

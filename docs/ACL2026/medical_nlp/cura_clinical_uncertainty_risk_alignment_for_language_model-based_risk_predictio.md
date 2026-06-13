@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CURA: Clinical Uncertainty Risk Alignment for Language Model-Based Risk Prediction
 description: >-
-  [ACL 2026][医疗NLP][临床风险预测] CURA 提出一个双层不确定性校准框架：个体层面将预测不确定性与错误概率对齐，队列层面通过嵌入空间的邻域风险率正则化预测，在 MIMIC-IV 的五个临床风险预测任务上一致提升校准指标而不牺牲判别性能。
+  [ACL 2026][医疗NLP][临床风险预测] CURA 提出一个双层不确定性校准框架：个体层面将预测不确定性与错误概率对齐，队列层面通过嵌入空间的邻域风险率正则化预测，在 MIMIC-IV 的五个临床风险预测任务上一致提升校准指标而不牺牲判别性能。 领域现状：临床语言模型（如 BioClinicalBERT、BioGP…
 tags:
   - "ACL 2026"
   - "医疗NLP"

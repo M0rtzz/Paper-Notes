@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Autoregressive Image Generation with Randomized Parallel Decoding
 description: >-
-  [ICLR 2026][图像生成][自回归图像生成] 本文提出 ARPG，一种基于"引导解码"框架的视觉自回归模型，通过将位置引导（query）与内容表示（key-value）解耦，实现了完全随机顺序的训练与生成，并支持高效并行解码——在ImageNet-1K 256×256上以64步达到1.94 FID…
+  [ICLR 2026][图像生成][自回归图像生成] 本文提出 ARPG，一种基于"引导解码"框架的视觉自回归模型，通过将位置引导（query）与内容表示（key-value）解耦，实现了完全随机顺序的训练与生成，并支持高效并行解码——在ImageNet-1K 256×256上以64步达到1.94 FID，吞吐量提升20倍以上，内存消耗降低75%以上。
 tags:
   - "ICLR 2026"
   - "图像生成"

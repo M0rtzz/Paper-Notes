@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoRefer Suite: Advancing Spatial-Temporal Object Understanding with Video LLM
 description: >-
-  [CVPR 2025][视频理解][视频区域理解] VideoRefer Suite 从数据集（700K 目标级视频指令数据）、模型（时空目标编码器实现像素级区域理解）和基准（多维度评估）三方面构建完整体系，使 Video LLM 具备对视频中任意目标在任意时刻的感知、推理和检索能力。
+  [CVPR 2025][视频理解][视频区域理解] VideoRefer Suite 从数据集（700K 目标级视频指令数据）、模型（时空目标编码器实现像素级区域理解）和基准（多维度评估）三方面构建完整体系，使 Video LLM 具备对视频中任意目标在任意时刻的感知、推理和检索能力。 领域现状：Video LLM（如 Vi…
 tags:
   - "CVPR 2025"
   - "视频理解"

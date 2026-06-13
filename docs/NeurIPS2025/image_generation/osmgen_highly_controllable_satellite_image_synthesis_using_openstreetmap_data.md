@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OSMGen: Highly Controllable Satellite Image Synthesis using OpenStreetMap Data
 description: >-
-  [NeurIPS 2025 (Workshop: UrbanAI 2025)][图像生成][卫星图像合成] OSMGen 直接从 OSM JSON 数据（矢量几何、语义标签、位置和时间信息）合成高保真卫星图像，并通过 DDIM 反演生成一致的前后对比图像对，支持城市变化模拟和数据增强。
+  [NeurIPS 2025 (Workshop: UrbanAI 2025)][图像生成][卫星图像合成] OSMGen 直接从 OSM JSON 数据（矢量几何、语义标签、位置和时间信息）合成高保真卫星图像，并通过 DDIM 反演生成一致的前后对比图像对，支持城市变化模拟和数据增强。 精确且及时的地理空间数据对城市规划、基…
 tags:
   - "NeurIPS 2025 (Workshop: UrbanAI 2025)"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ALE-Bench: A Benchmark for Long-Horizon Objective-Driven Algorithm Engineering
 description: >-
-  [NeurIPS 2025 (Datasets & Benchmarks Track)][图像生成][算法工程基准] 提出ALE-Bench，首个面向分数制算法工程竞赛（AtCoder Heuristic Contest）的AI基准，收集40道NP-hard优化赛题并提供交互式Agent评估框架…
+  [NeurIPS 2025 (Datasets & Benchmarks Track)][图像生成][算法工程基准] 提出ALE-Bench，首个面向分数制算法工程竞赛（AtCoder Heuristic Contest）的AI基准，收集40道NP-hard优化赛题并提供交互式Agent评估框架，发现最强模型o3-high在one-shot设置下仅达人类平均水平，且AI在跨问题一致性和长时间迭代改进上与人类专家差距显著。
 tags:
   - "NeurIPS 2025 (Datasets & Benchmarks Track)"
   - "图像生成"

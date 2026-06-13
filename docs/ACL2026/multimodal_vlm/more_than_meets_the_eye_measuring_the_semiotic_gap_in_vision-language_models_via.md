@@ -2,7 +2,7 @@
 title: >-
   [论文解读] More Than Meets the Eye: Measuring the Semiotic Gap in Vision-Language Models via Semantic Anchorage
 description: >-
-  [ACL 2026][多模态VLM][视觉语言模型] 本文从认知符号学角度揭示 VLM 的"字面优越偏差"——模型在高保真图像上倾向于字面解读而非隐喻/习语理解，通过引入 DIVA 基准（图标化简化图像）和 Semantic Alignment Gap 指标…
+  [ACL 2026][多模态VLM][视觉语言模型] 本文从认知符号学角度揭示 VLM 的"字面优越偏差"——模型在高保真图像上倾向于字面解读而非隐喻/习语理解，通过引入 DIVA 基准（图标化简化图像）和 Semantic Alignment Gap 指标，证明降低视觉保真度能显著缩小字面与习语解读之间的鸿沟。
 tags:
   - "ACL 2026"
   - "多模态VLM"

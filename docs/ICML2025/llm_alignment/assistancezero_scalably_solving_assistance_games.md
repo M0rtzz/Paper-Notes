@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AssistanceZero: Scalably Solving Assistance Games
 description: >-
-  [ICML 2025][LLM对齐][assistance game] 提出 AssistanceZero，首次将 assistance game 扩展到复杂环境（Minecraft 建筑辅助，$10^{400}$ 种可能目标），通过扩展 AlphaZero 增加 reward 预测头和人类行为预测头…
+  [ICML 2025][LLM对齐][assistance game] 提出 AssistanceZero，首次将 assistance game 扩展到复杂环境（Minecraft 建筑辅助，$10^{400}$ 种可能目标），通过扩展 AlphaZero 增加 reward 预测头和人类行为预测头，在 MCTS 下进行不确定性规划，显著优于 PPO 和模仿学习基线，人类实验证明能有效减少用户操作并展现挖地基、推断屋顶、从纠正中学习等涌现行为。
 tags:
   - "ICML 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReFeed: Retrieval Feedback-Guided Dataset Construction for Style-Aware Query Rewriting
 description: >-
-  [AAAI 2026][信息检索/RAG][query rewriting] 提出一个检索反馈驱动的数据集生成框架，通过识别检索失败case、LLM风格化改写、重检索验证三步闭环，自动构建高质量的风格感知查询改写数据集，为训练检索对齐的改写模型提供数据基础。
+  [AAAI 2026][信息检索/RAG][query rewriting] 提出一个检索反馈驱动的数据集生成框架，通过识别检索失败case、LLM风格化改写、重检索验证三步闭环，自动构建高质量的风格感知查询改写数据集，为训练检索对齐的改写模型提供数据基础。 领域现状： 检索增强生成(RAG)系统在实际应用中广泛使用…
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

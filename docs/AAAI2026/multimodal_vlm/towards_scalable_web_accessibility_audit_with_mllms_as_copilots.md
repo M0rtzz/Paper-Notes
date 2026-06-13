@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Scalable Web Accessibility Audit with MLLMs as Copilots
 description: >-
-  [AAAI2026][多模态VLM][web accessibility] 提出 AAA 框架，通过 GRASP（基于图的多模态页面采样）和 MaC（MLLM 作为 Copilot）两大创新，将 WCAG-EM 标准操作化，实现可扩展的端到端网页无障碍审计。
+  [AAAI2026][多模态VLM][web accessibility] 提出 AAA 框架，通过 GRASP（基于图的多模态页面采样）和 MaC（MLLM 作为 Copilot）两大创新，将 WCAG-EM 标准操作化，实现可扩展的端到端网页无障碍审计。 Web 无障碍性是数字包容的基础，但最新调查显示 94.8%：的百…
 tags:
   - "AAAI2026"
   - "多模态VLM"

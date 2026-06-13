@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Bias After Another: Mechanistic Reward Shaping and Persistent Biases in Language Reward Models
 description: >-
-  [ICML 2026][强化学习][奖励模型] 本文系统测量五个高质量 RM（含 SOTA Skywork-Reward-V2）的长度、不确定性、位置、谄媚、模型风格五类偏置，把它们划分为"低复杂度（线性可修）"和"高复杂度（线性不可修）"两类…
+  [ICML 2026][强化学习][奖励模型] 本文系统测量五个高质量 RM（含 SOTA Skywork-Reward-V2）的长度、不确定性、位置、谄媚、模型风格五类偏置，把它们划分为"低复杂度（线性可修）"和"高复杂度（线性不可修）"两类，并提出 mechanistic reward shaping —— 用 DiffMean 线性探针在最后一层隐藏态上做零空间投影 —— 在不掉 RewardBench2 准确率的前提下显著缓解前三类偏置且能 OOD 泛化到 best-of-N。
 tags:
   - "ICML 2026"
   - "强化学习"

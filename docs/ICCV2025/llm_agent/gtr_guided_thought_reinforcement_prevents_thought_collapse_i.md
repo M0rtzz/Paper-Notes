@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-based VLM Agent Training
 description: >-
-  [ICCV 2025][LLM Agent][思维坍塌] 发现RL训练VLM Agent时的"思维坍塌"现象——CoT推理迅速退化为与状态无关的模板化思维并导致无效动作，提出GTR框架用VLM纠正器自动修正思维(SFT) + PPO优化动作的双目标训练，在24点游戏和ALFWorld上实现3-5倍的成功率提升…
+  [ICCV 2025][LLM Agent][思维坍塌] 发现RL训练VLM Agent时的"思维坍塌"现象——CoT推理迅速退化为与状态无关的模板化思维并导致无效动作，提出GTR框架用VLM纠正器自动修正思维(SFT) + PPO优化动作的双目标训练，在24点游戏和ALFWorld上实现3-5倍的成功率提升。
 tags:
   - "ICCV 2025"
   - "LLM Agent"

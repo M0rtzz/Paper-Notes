@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery
 description: >-
-  [CVPR2026][多模态VLM][广义类别发现] 提出 SSR²-GCD 框架，通过半监督编码率减少（Semi-Supervised Rate Reduction）损失学习模态内均匀压缩的结构化表征，并结合检索式文本聚合策略增强跨模态知识迁移，在8个数据集上超越现有多模态GCD方法。
+  [CVPR2026][多模态VLM][广义类别发现] 提出 SSR²-GCD 框架，通过半监督编码率减少（Semi-Supervised Rate Reduction）损失学习模态内均匀压缩的结构化表征，并结合检索式文本聚合策略增强跨模态知识迁移，在8个数据集上超越现有多模态GCD方法。 1. 广义类别发现 (GCD) 的实…
 tags:
   - "CVPR2026"
   - "多模态VLM"

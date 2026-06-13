@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastJAM: a Fast Joint Alignment Model for Images
 description: >-
-  [NeurIPS 2025][图学习][图像联合对齐] 提出 FastJAM，一种基于图的快速图像联合对齐方法：利用现成图像匹配器计算成对关键点对应，通过快速非参数聚类构建关键点图，GNN 传播聚合信息后预测每张图像的单应性参数…
+  [NeurIPS 2025][图学习][图像联合对齐] 提出 FastJAM，一种基于图的快速图像联合对齐方法：利用现成图像匹配器计算成对关键点对应，通过快速非参数聚类构建关键点图，GNN 传播聚合信息后预测每张图像的单应性参数，配合反向合成损失（inverse-compositional loss）消除正则化超参数需求。将联合对齐时间从小时/分钟级降至约 49 秒，同时对齐质量优于或持平现有方法。
 tags:
   - "NeurIPS 2025"
   - "图学习"

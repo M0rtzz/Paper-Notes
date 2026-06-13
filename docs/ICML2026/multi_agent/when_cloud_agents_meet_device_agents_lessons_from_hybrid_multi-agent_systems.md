@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems
 description: >-
-  [ICML2026][多智能体][混合多智能体] 这篇论文系统研究云端 GPT-4o 监督者与端侧 Qwen3 执行者组成的混合多智能体系统，发现 PEVR 和 EVA 在 UI assistance 与 deep search 上各有优势，更多云端介入不一定更好…
+  [ICML2026][多智能体][混合多智能体] 这篇论文系统研究云端 GPT-4o 监督者与端侧 Qwen3 执行者组成的混合多智能体系统，发现 PEVR 和 EVA 在 UI assistance 与 deep search 上各有优势，更多云端介入不一定更好，而上下文重置与摘要能显著改善端侧长任务的成本和 KV-cache 压力。
 tags:
   - "ICML2026"
   - "多智能体"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.30102](https://arxiv.org/abs/2605.30102)  
 **代码**: 无  
-**领域**: multi_agent  
+**领域**: 多智能体  
 **关键词**: 混合多智能体, 云端模型, 端侧模型, Agent 评测, 上下文效率
 
 ## 一句话总结

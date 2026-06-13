@@ -2,10 +2,10 @@
 title: >-
   [论文解读] GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization
 description: >-
-  [ACL 2025 (Long Paper)][LLM/NLP][提示学习] 提出 GAPO（Generative Adversarial Policy Optimization）框架，将 GAN 的对抗训练机制与 PPO 结合，使用 encoder-only 奖励模型替代传统 decoder-only 架构…
+  [ACL 2025 (Long Paper)][LLM 其他][提示学习] 提出 GAPO（Generative Adversarial Policy Optimization）框架，将 GAN 的对抗训练机制与 PPO 结合，使用 encoder-only 奖励模型替代传统 decoder-only 架构，通过"Preferential Prompt"（修改 prompt 中的约束而非 response）的新范式来增强 LLM 对细粒度约束的理解和遵循能力，在 IFEval 和产品描述生成任务上大幅超越 DPO/KTO/SimPO 等基线。
 tags:
   - "ACL 2025 (Long Paper)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示学习"
   - "GAN"
   - "PPO"

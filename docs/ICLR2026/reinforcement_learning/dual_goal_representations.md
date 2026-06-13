@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Goal Representations
 description: >-
-  [ICLR 2026][强化学习][goal-conditioned RL] 提出"对偶目标表征"（dual goal representation），用"所有状态到目标状态的时间距离集合"来编码目标，理论证明该表征对最优策略恢复是充分的且天然过滤外生噪声，并设计基于非对称内积参数化的实用学习算法…
+  [ICLR 2026][强化学习][goal-conditioned RL] 提出"对偶目标表征"（dual goal representation），用"所有状态到目标状态的时间距离集合"来编码目标，理论证明该表征对最优策略恢复是充分的且天然过滤外生噪声，并设计基于非对称内积参数化的实用学习算法，在 OGBench 20 个任务上作为可插拔模块一致提升三种主流离线 GCRL 方法的性能。
 tags:
   - "ICLR 2026"
   - "强化学习"

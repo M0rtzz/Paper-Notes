@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reason-before-Retrieve: One-Stage Reflective Chain-of-Thoughts for Training-Free Zero-Shot Composed Image Retrieval
 description: >-
-  [CVPR 2025][LLM推理][组合图像检索] 本文提出OSrCIR，一种免训练的单阶段零样本组合图像检索方法，利用多模态大语言模型直接处理参考图像和修改文本，并通过反思式链式思维推理准确理解用户隐含意图，在多个基准上比现有免训练方法提升1.80%~6.44%。
+  [CVPR 2025][LLM推理][组合图像检索] 本文提出OSrCIR，一种免训练的单阶段零样本组合图像检索方法，利用多模态大语言模型直接处理参考图像和修改文本，并通过反思式链式思维推理准确理解用户隐含意图，在多个基准上比现有免训练方法提升1.80%~6.44%。 1. 领域现状：组合图像检索（CIR）通过参考图像+修改…
 tags:
   - "CVPR 2025"
   - "LLM推理"

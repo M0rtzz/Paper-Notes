@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreaking? One Step Is Enough!
 description: >-
-  [ACL 2025][LLM对齐][越狱攻击] 本文提出REDA（Reverse Embedded Defense Attack）方法，将攻击意图伪装为"防御"有害内容的任务，通过反转攻击视角+ICL示例引导+请求意图削弱，实现一步生成、跨模型通用的高成功率越狱攻击。
+  [ACL 2025][LLM对齐][越狱攻击] 本文提出REDA（Reverse Embedded Defense Attack）方法，将攻击意图伪装为"防御"有害内容的任务，通过反转攻击视角+ICL示例引导+请求意图削弱，实现一步生成、跨模型通用的高成功率越狱攻击。 - 领域现状：LLM越狱攻击是安全研究的热点…
 tags:
   - "ACL 2025"
   - "LLM对齐"

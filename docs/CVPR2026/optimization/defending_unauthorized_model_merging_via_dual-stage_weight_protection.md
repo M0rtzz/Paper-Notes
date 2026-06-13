@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Defending Unauthorized Model Merging via Dual-Stage Weight Protection
 description: >-
-  [CVPR 2026][优化/理论][模型合并防御] 提出 MergeGuard，一种主动式双阶段权重保护框架：Stage 1通过L2正则化分散任务关键权重，Stage 2注入结构化扰动破坏合并兼容性，在保持保护模型<1.5%性能损失的同时使合并模型精度下降高达90%。
+  [CVPR 2026][优化/理论][模型合并防御] 提出 MergeGuard，一种主动式双阶段权重保护框架：Stage 1通过L2正则化分散任务关键权重，Stage 2注入结构化扰动破坏合并兼容性，在保持保护模型<1.5%性能损失的同时使合并模型精度下降高达90%。 领域现状：预训练-微调范式成为现代AI基石…
 tags:
   - "CVPR 2026"
   - "优化/理论"

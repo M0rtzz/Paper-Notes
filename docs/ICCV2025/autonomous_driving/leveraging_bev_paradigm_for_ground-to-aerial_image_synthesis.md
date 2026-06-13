@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SkyDiffusion: Leveraging BEV Paradigm for Ground-to-Aerial Image Synthesis
 description: >-
-  [ICCV 2025][自动驾驶][跨视角图像合成] 提出SkyDiffusion，结合Curved-BEV变换和BEV引导扩散模型，实现从地面街景图像到航拍/卫星图像的高质量跨视角合成，并引入Ground2Aerial-3多场景数据集。
+  [ICCV 2025][自动驾驶][跨视角图像合成] 提出SkyDiffusion，结合Curved-BEV变换和BEV引导扩散模型，实现从地面街景图像到航拍/卫星图像的高质量跨视角合成，并引入Ground2Aerial-3多场景数据集。 跨视角地面到航拍图像合成旨在从街景图像生成对应位置的鸟瞰航拍图像…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

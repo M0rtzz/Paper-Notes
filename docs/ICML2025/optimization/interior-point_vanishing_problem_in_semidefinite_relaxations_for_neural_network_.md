@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interior-Point Vanishing Problem in Semidefinite Relaxations for Neural Network Verification
 description: >-
-  [ICML2025][优化/理论][SDP松弛] 本文首次识别了SDP松弛用于深度神经网络验证时的"内点消失"(interior-point vanishing)问题——随着网络深度增加，SDP问题丧失严格可行性导致数值不稳定和求解失败——并提出五种缓解方法，其中B-Remove（移除层边界约束）最有效…
+  [ICML2025][优化/理论][SDP松弛] 本文首次识别了SDP松弛用于深度神经网络验证时的"内点消失"(interior-point vanishing)问题——随着网络深度增加，SDP问题丧失严格可行性导致数值不稳定和求解失败——并提出五种缓解方法，其中B-Remove（移除层边界约束）最有效，解决了88%原本无法求解的问题。
 tags:
   - "ICML2025"
   - "优化/理论"

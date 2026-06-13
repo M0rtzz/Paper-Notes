@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploration-Driven Generative Interactive Environments
 description: >-
-  [CVPR 2025][预训练][世界模型] 开源实现 Genie 世界模型（GenieRedux），增加真实动作条件、Token 距离交叉熵（TDCE）损失和 token 跳连得到 GenieRedux-G…
+  [CVPR 2025][预训练][世界模型] 开源实现 Genie 世界模型（GenieRedux），增加真实动作条件、Token 距离交叉熵（TDCE）损失和 token 跳连得到 GenieRedux-G，并提出 AutoExplore 探索智能体用世界模型的 token 预测不确定性作为内在奖励驱动多样数据收集，将仿真质量提升高达 7.4 PSNR。
 tags:
   - "CVPR 2025"
   - "预训练"

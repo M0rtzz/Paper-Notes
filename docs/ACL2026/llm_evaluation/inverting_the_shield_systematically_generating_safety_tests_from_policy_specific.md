@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inverting the Shield: Systematically Generating Safety Tests from Policy Specifications
 description: >-
-  [ACL2026][LLM评测][安全策略规约] POLARIS把自然语言安全策略先编译成一阶逻辑规约，再构造语义策略图并系统遍历生成测试查询，从而让LLM安全评测从启发式红队转向可追踪、可覆盖、可复现的规约驱动测试。
+  [ACL2026][LLM评测][安全策略规约] POLARIS把自然语言安全策略先编译成一阶逻辑规约，再构造语义策略图并系统遍历生成测试查询，从而让LLM安全评测从启发式红队转向可追踪、可覆盖、可复现的规约驱动测试。 领域现状：LLM安全评测通常有两条路线：一类是AdvBench、HarmBench、SORRY-Bench…
 tags:
   - "ACL2026"
   - "LLM评测"

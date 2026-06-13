@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM-XTM: Enhancing Cross-Lingual Topic Models with Large Language Models
 description: >-
-  [ACL 2026][多语言/翻译][跨语言主题模型] 在已训练好的跨语言主题模型外面套一层"LLM 精炼 + 自一致性投票 + MMD 词分布对齐 + QA 式文档语义对齐"的两段式增强模块，可作为插件挂到 NMTM / InfoCTM / XTRA 等多种 backbone 上…
+  [ACL 2026][多语言/翻译][跨语言主题模型] 在已训练好的跨语言主题模型外面套一层"LLM 精炼 + 自一致性投票 + MMD 词分布对齐 + QA 式文档语义对齐"的两段式增强模块，可作为插件挂到 NMTM / InfoCTM / XTRA 等多种 backbone 上，在 EC News、Amazon Review、Rakuten Amazon 三个双语语料上把 CNPMI 涨了 9%–51%、TQ 涨了 6%–44%，同时把 LLM 调用次数降到了"每隔 $f$ 个 epoch 才一次"。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving the Diffusability of Autoencoders
 description: >-
-  [ICML 2025][图像生成][扩散模型] 通过DCT频谱分析发现自编码器潜在空间存在与RGB不匹配的过强高频成分，提出尺度等变正则化（Scale Equivariance）对齐两者频率分布，仅需10-20K步微调即可将ImageNet FID降19%、Kinetics FVD降44%+。
+  [ICML 2025][图像生成][扩散模型] 通过DCT频谱分析发现自编码器潜在空间存在与RGB不匹配的过强高频成分，提出尺度等变正则化（Scale Equivariance）对齐两者频率分布，仅需10-20K步微调即可将ImageNet FID降19%、Kinetics FVD降44%+。 领域现状：潜在扩散模型（LDM…
 tags:
   - "ICML 2025"
   - "图像生成"

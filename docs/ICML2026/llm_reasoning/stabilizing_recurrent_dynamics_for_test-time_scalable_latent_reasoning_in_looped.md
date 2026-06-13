@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models
 description: >-
-  [ICML 2026][LLM推理][Looped LM] 本文从动力系统视角诊断 Looped Language Model (LoopLM) 在 test-time 扩展深度时"先涨后崩"的根因——归一化位置导致的"稳定—有效"二元困境…
+  [ICML 2026][LLM推理][Looped LM] 本文从动力系统视角诊断 Looped Language Model (LoopLM) 在 test-time 扩展深度时"先涨后崩"的根因——归一化位置导致的"稳定—有效"二元困境，并提出 STARS：用 Jacobian 谱半径正则化 (JSRR) + 随机循环采样把潜在轨迹拉向"渐近稳定的有效不动点"，在 GSM8K 上把 8 步循环的性能跌幅从 20.47% 压到 8.26%，同时峰值提升 4.01%。
 tags:
   - "ICML 2026"
   - "LLM推理"

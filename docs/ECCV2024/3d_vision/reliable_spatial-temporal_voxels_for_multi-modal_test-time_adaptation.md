@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reliable Spatial-Temporal Voxels For Multi-Modal Test-Time Adaptation
 description: >-
-  [ECCV 2024][3D视觉][多模态测试时适应] 本文提出 Latte（ReLiable Spatial-temporal Voxels），一种多模态测试时适应方法，通过滑动窗口帧聚合构建时空体素（ST voxels）并计算时空熵（ST entropy）来评估预测可靠性，进而实现自适应跨模态学习…
+  [ECCV 2024][3D视觉][多模态测试时适应] 本文提出 Latte（ReLiable Spatial-temporal Voxels），一种多模态测试时适应方法，通过滑动窗口帧聚合构建时空体素（ST voxels）并计算时空熵（ST entropy）来评估预测可靠性，进而实现自适应跨模态学习，在三个 MM-TTA 基准上取得 SOTA 性能。
 tags:
   - "ECCV 2024"
   - "3D视觉"

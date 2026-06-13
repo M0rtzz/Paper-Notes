@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dictionary-Aligned Concept Control for Safeguarding Multimodal LLMs
 description: >-
-  [CVPR 2026][多模态VLM][多模态安全] 本文提出 DACO 框架，通过从 WordNet 和 CC-3M 构建包含 15,000 个多模态概念的字典，结合稀疏自编码器（SAE）实现对冻结 MLLM 激活空间的细粒度概念控制，在多个安全基准上显著提升安全性的同时保持通用能力。
+  [CVPR 2026][多模态VLM][多模态安全] 本文提出 DACO 框架，通过从 WordNet 和 CC-3M 构建包含 15,000 个多模态概念的字典，结合稀疏自编码器（SAE）实现对冻结 MLLM 激活空间的细粒度概念控制，在多个安全基准上显著提升安全性的同时保持通用能力。 1. 领域现状：多模态大语言模型（M…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

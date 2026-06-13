@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pixels Don't Lie (But Your Detector Might): Bootstrapping MLLM-as-a-Judge for Trustworthy Deepfake Detection and Reasoning Supervision
 description: >-
-  [CVPR 2026][LLM安全][Deepfake Detection] 提出 DeepfakeJudge 框架，通过 bootstrapped generator-evaluator 流程将人类标注的推理监督扩展为大规模结构化评分数据…
+  [CVPR 2026][LLM安全][Deepfake Detection] 提出 DeepfakeJudge 框架，通过 bootstrapped generator-evaluator 流程将人类标注的推理监督扩展为大规模结构化评分数据，训练出 3B/7B 视觉语言模型作为 deepfake 检测推理质量的自动评判者，在 pointwise 和 pairwise 评估上均达到与人类高度一致的水平。
 tags:
   - "CVPR 2026"
   - "LLM安全"

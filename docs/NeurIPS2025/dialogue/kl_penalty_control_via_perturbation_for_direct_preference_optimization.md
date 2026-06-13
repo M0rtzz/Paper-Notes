@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KL Penalty Control via Perturbation for Direct Preference Optimization
 description: >-
-  [NeurIPS 2025][对话系统][DPO] 提出 ε-DPO，通过观察训练时扰动 β 后 logit 作为偏好模型的单调性，实现实例级自适应 KL 惩罚控制，无需额外计算开销即可显著超越 DPO 及大多数直接对齐算法…
+  [NeurIPS 2025][对话系统][DPO] 提出 ε-DPO，通过观察训练时扰动 β 后 logit 作为偏好模型的单调性，实现实例级自适应 KL 惩罚控制，无需额外计算开销即可显著超越 DPO 及大多数直接对齐算法，在 AlpacaEval 2 上达到 46.4% LC win rate（DPO 仅 40.3%）。
 tags:
   - "NeurIPS 2025"
   - "对话系统"

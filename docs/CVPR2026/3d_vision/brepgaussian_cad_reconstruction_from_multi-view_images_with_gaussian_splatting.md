@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][CAD重建] BRepGaussian 首次实现了从多视图图像直接重建完整 B-rep CAD 模型，通过两阶段的 2D 高斯泼溅学习边缘和面片特征，再经参数化拟合生成水密的边界表示，无需点云监督。
+  [CVPR 2026][3D视觉][CAD重建] BRepGaussian 首次实现了从多视图图像直接重建完整 B-rep CAD 模型，通过两阶段的 2D 高斯泼溅学习边缘和面片特征，再经参数化拟合生成水密的边界表示，无需点云监督。 领域现状：CAD 重建（逆向工程）是计算机视觉和图形学的经典问题。传统方法主要以高质量点云…
 tags:
   - "CVPR 2026"
   - "3D视觉"

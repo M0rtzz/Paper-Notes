@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Scalar Rewards: Dense Feedback for LLM Policy Synthesis in Sequential Social Dilemmas
 description: >-
-  [ICML2026][强化学习][LLM策略合成] 提出 LLM 迭代策略合成框架，让 LLM 直接生成 Python 策略代码用于多智能体序贯社会困境，并通过"反馈工程"证明：在标量奖励基础上加入效率/公平/可持续/和平四项社会指标作为 dense feedback，可以打破"反馈混叠"问题…
+  [ICML2026][强化学习][LLM策略合成] 提出 LLM 迭代策略合成框架，让 LLM 直接生成 Python 策略代码用于多智能体序贯社会困境，并通过"反馈工程"证明：在标量奖励基础上加入效率/公平/可持续/和平四项社会指标作为 dense feedback，可以打破"反馈混叠"问题，在 Cleanup 游戏中实现高达 54% 的效率提升。
 tags:
   - "ICML2026"
   - "强化学习"

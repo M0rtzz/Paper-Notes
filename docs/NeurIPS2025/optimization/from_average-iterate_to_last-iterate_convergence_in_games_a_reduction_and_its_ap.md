@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Average-Iterate to Last-Iterate Convergence in Games: A Reduction and Its Applications
 description: >-
-  [NeurIPS 2025][优化/理论][博弈学习] 提出 A2L (Average to Last-iterate) 黑箱规约，对效用函数关于自身策略和对手联合策略均线性的博弈，能将任意非耦合学习动力学的平均迭代转换为新动力学的末迭代…
+  [NeurIPS 2025][优化/理论][博弈学习] 提出 A2L (Average to Last-iterate) 黑箱规约，对效用函数关于自身策略和对手联合策略均线性的博弈，能将任意非耦合学习动力学的平均迭代转换为新动力学的末迭代，由此在多人零和多矩阵博弈中取得 $O(\log d / T)$ 梯度反馈和 $\tilde{O}(d^{1/5}T^{-1/5})$ bandit 反馈的 SOTA last-iterate 收敛率。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

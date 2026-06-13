@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STAMP: Spatial-Temporal Adapter with Multi-Head Pooling
 description: >-
-  [NeurIPS 2025][医学图像][EEG分类] STAMP 为时间序列基础模型（TSFM）设计了仅 750K 参数的轻量空间-时间适配器，通过三组位置编码（token/空间/时间）+ 交叉 GMLP 混合 + 多头注意力池化…
+  [NeurIPS 2025][医学图像][EEG分类] STAMP 为时间序列基础模型（TSFM）设计了仅 750K 参数的轻量空间-时间适配器，通过三组位置编码（token/空间/时间）+ 交叉 GMLP 混合 + 多头注意力池化，使冻结的 TSFM（如 MOMENT 385M）在 8 个 EEG 数据集上与 29M 参数的 EEG 专用模型（CBraMod）竞争或超越，在 BCIC-IV-2a 上 Kappa 比 CBraMod 高 193%。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

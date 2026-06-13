@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Step-GRPO: Internalizing Dynamic Early Exit for Efficient Reasoning
 description: >-
-  [ACL 2026][LLM推理][高效推理] 提出 Step-GRPO，将动态早退能力内化到模型中——通过语义步骤而非原始 token 来度量推理复杂度，用动态截断 Rollout 暴露简短正确轨迹，配合步骤感知相对奖励引导模型学习在适当时机停止推理…
+  [ACL 2026][LLM推理][高效推理] 提出 Step-GRPO，将动态早退能力内化到模型中——通过语义步骤而非原始 token 来度量推理复杂度，用动态截断 Rollout 暴露简短正确轨迹，配合步骤感知相对奖励引导模型学习在适当时机停止推理，在 Qwen3-8B 上减少32%的 token 消耗且无准确率下降。
 tags:
   - "ACL 2026"
   - "LLM推理"

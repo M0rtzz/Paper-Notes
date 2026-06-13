@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incentive-Aligned Multi-Source LLM Summaries
 description: >-
-  [ICLR 2026][音频/语音][truthful summarization] 将博弈论中的多任务 peer prediction 机制引入 LLM 多源摘要管线，提出 Truthful Text Summarization (TTS) 框架：通过 leave-one-out 交叉构造评价声明集、提取每…
+  [ICLR 2026][音频/语音][truthful summarization] 将博弈论中的多任务 peer prediction 机制引入 LLM 多源摘要管线，提出 Truthful Text Summarization (TTS) 框架：通过 leave-one-out 交叉构造评价声明集、提取每个来源对声明的立场、用 informative agreement 评分来源可靠性并过滤不可靠来源后重新摘要，理论上证明"如实报告是效用最大策略"，实验中有效抵御 prompt injection、虚假信息源和协同攻击。
 tags:
   - "ICLR 2026"
   - "音频/语音"

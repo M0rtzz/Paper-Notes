@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provably Learning Attention with Queries
 description: >-
-  [ICML 2026][模型压缩][model stealing] 作者证明单头 softmax attention 在 value-query 访问下可以惊人简洁地被精确恢复 —— 只需 $O(d^2)$ 次查询，比同等结构的 ReLU MLP 容易得多…
+  [ICML 2026][模型压缩][model stealing] 作者证明单头 softmax attention 在 value-query 访问下可以惊人简洁地被精确恢复 —— 只需 $O(d^2)$ 次查询，比同等结构的 ReLU MLP 容易得多；当头维 $r\ll d$ 时还能借压缩感知降到 $O(rd)$，并把结论扩展到带噪 oracle、membership query 以及多头不可识别性。
 tags:
   - "ICML 2026"
   - "模型压缩"

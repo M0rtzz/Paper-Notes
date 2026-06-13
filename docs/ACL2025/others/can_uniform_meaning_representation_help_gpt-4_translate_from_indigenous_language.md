@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Uniform Meaning Representation Help GPT-4 Translate from Indigenous Languages?
 description: >-
-  [ACL 2025][统一意义表示(UMR)] 探索将统一意义表示（UMR）语义图纳入 GPT-4 提示中，翻译三种原住民语言（纳瓦霍语、阿拉帕霍语、库卡马语），发现在大多数情况下 UMR 的加入带来统计显著的性能提升。
+  [ACL 2025][统一意义表示(UMR)] 探索将统一意义表示（UMR）语义图纳入 GPT-4 提示中，翻译三种原住民语言（纳瓦霍语、阿拉帕霍语、库卡马语），发现在大多数情况下 UMR 的加入带来统计显著的性能提升。 ChatGPT/GPT 系列模型在高资源语言任务上表现出色，但在极低资源语言（特别是原住民语言）上严重挣…
 tags:
   - "ACL 2025"
   - "统一意义表示(UMR)"

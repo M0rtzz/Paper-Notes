@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Towards Harmonized Uncertainty Estimation for Large Language Models
 description: >-
-  [ACL2025][LLM/NLP][不确定性估计] 提出 CUE 框架，通过训练一个与目标 LLM 性能对齐的轻量级分类器（Corrector）来校正现有不确定性估计方法的分数，在指示性、精确-召回平衡和校准三个维度上实现协调一致的改进，最高提升达 60%。
+  [ACL2025][LLM 其他][不确定性估计] 提出 CUE 框架，通过训练一个与目标 LLM 性能对齐的轻量级分类器（Corrector）来校正现有不确定性估计方法的分数，在指示性、精确-召回平衡和校准三个维度上实现协调一致的改进，最高提升达 60%。 1. LLM 幻觉风险：大语言模型在回答问题时常常"自信地犯错"…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "不确定性估计"
   - "LLM可信部署"
   - "校准"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] End-to-End Implicit Neural Representations for Classification
 description: >-
-  [CVPR 2025][3D视觉][隐式神经表示] 提出 Meta Weight Transformer (MWT)，通过端到端元学习 SIREN 初始化参数和学习率调度，让 INR 的权重结构同时优化重建质量和分类性能，使用简单标准 Transformer 在 SIREN 权重上分类即可超越所有等变架构方法…
+  [CVPR 2025][3D视觉][隐式神经表示] 提出 Meta Weight Transformer (MWT)，通过端到端元学习 SIREN 初始化参数和学习率调度，让 INR 的权重结构同时优化重建质量和分类性能，使用简单标准 Transformer 在 SIREN 权重上分类即可超越所有等变架构方法，首次在高分辨率 ImageNet-1K 上实现 INR 分类。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reward-free World Models for Online Imitation Learning
 description: >-
-  [ICML2025][强化学习][imitation learning] 提出 IQ-MPC，一种无需显式奖励建模的世界模型在线模仿学习方法，通过逆软Q学习在潜空间中联合学习动态模型与Q函数，利用 MPPI 规划实现对高维观测和复杂动力学任务的稳定专家级模仿。
+  [ICML2025][强化学习][imitation learning] 提出 IQ-MPC，一种无需显式奖励建模的世界模型在线模仿学习方法，通过逆软Q学习在潜空间中联合学习动态模型与Q函数，利用 MPPI 规划实现对高维观测和复杂动力学任务的稳定专家级模仿。 - 离线模仿学习的局限：行为克隆（BC）方法（如 Diffusi…
 tags:
   - "ICML2025"
   - "强化学习"

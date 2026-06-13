@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatialStack: Layered Geometry-Language Fusion for 3D VLM Spatial Reasoning
 description: >-
-  [CVPR2026][多模态VLM][3D空间推理] 提出SpatialStack框架，将多视图几何编码器（VGGT）的多层级几何特征逐层注入LLM解码器的不同层（而非仅融合最后一层），通过浅层→细粒度空间感知、深层→高层语义推理的层级对齐，在多个3D空间推理基准上达到开源SOTA。
+  [CVPR2026][多模态VLM][3D空间推理] 提出SpatialStack框架，将多视图几何编码器（VGGT）的多层级几何特征逐层注入LLM解码器的不同层（而非仅融合最后一层），通过浅层→细粒度空间感知、深层→高层语义推理的层级对齐，在多个3D空间推理基准上达到开源SOTA。 大型视觉语言模型（VLM）在3D空间推理…
 tags:
   - "CVPR2026"
   - "多模态VLM"

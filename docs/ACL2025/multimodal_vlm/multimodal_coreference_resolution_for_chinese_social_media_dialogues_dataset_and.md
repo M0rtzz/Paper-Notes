@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Coreference Resolution for Chinese Social Media Dialogues: Dataset and Benchmark Approach
 description: >-
-  [多模态VLM] 提出 TikTalkCoref，首个面向中文社交媒体对话的多模态共指消解数据集（基于抖音短视频），并构建了包含文本共指消解、视觉人物追踪和跨模态对齐三个模块的 pipeline benchmark。
+  [多模态VLM] 提出 TikTalkCoref，首个面向中文社交媒体对话的多模态共指消解数据集（基于抖音短视频），并构建了包含文本共指消解、视觉人物追踪和跨模态对齐三个模块的 pipeline benchmark。 问题定义 多模态共指消解（MCR）旨在识别跨文本和视觉模态中指向同一实体的指称（mention）…
 tags:
   - "多模态VLM"
 ---

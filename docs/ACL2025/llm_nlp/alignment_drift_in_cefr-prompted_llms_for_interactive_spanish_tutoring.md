@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Alignment Drift in CEFR-prompted LLMs for Interactive Spanish Tutoring
 description: >-
-  [ACL 2025][LLM/NLP][alignment drift] 通过 LLM 模拟师生对话实验，发现基于 CEFR 等级的 system prompting 虽然能初步约束 LLM 输出的西班牙语难度，但随着对话轮次增加，这种约束效果逐渐衰减——作者将此现象命名为"alignment drift"…
+  [ACL 2025][LLM 其他][alignment drift] 通过 LLM 模拟师生对话实验，发现基于 CEFR 等级的 system prompting 虽然能初步约束 LLM 输出的西班牙语难度，但随着对话轮次增加，这种约束效果逐渐衰减——作者将此现象命名为"alignment drift"，表明仅靠提示工程不足以支撑长期的自适应语言教学。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "alignment drift"
   - "CEFR"
   - "语言教学"

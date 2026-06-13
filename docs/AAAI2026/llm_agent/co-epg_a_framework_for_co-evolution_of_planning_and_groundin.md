@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents
 description: >-
-  [AAAI 2026][LLM Agent][GUI Agent] 提出Co-EPG框架，将GUI Agent解耦为Planning和Grounding两个模型，通过GRPO协同训练和基于置信度的动态奖励集成机制（C-DREM）建立正反馈循环，使两个模型自迭代协同进化…
+  [AAAI 2026][LLM Agent][GUI Agent] 提出Co-EPG框架，将GUI Agent解耦为Planning和Grounding两个模型，通过GRPO协同训练和基于置信度的动态奖励集成机制（C-DREM）建立正反馈循环，使两个模型自迭代协同进化，仅用基准数据集（无需外部数据）即在Multimodal-Mind2Web（58.4%）和AndroidControl（83.1%）上达到SOTA。
 tags:
   - "AAAI 2026"
   - "LLM Agent"

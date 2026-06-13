@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Building Arabic NLP from the Ground Up: Twenty Years of Lessons, Failures, and Open Problems
 description: >-
-  [ACL2026][社会计算][Arabic NLP] 这是一篇完整缓存的反思型论文而非实验论文，作者回顾二十年阿拉伯语 NLP 建设，指出低资源语言最难的问题往往不是语言学或模型技术，而是社区、制度、部署治理和知识生产方式。
+  [ACL2026][社会计算][Arabic NLP] 这是一篇完整缓存的反思型论文而非实验论文，作者回顾二十年阿拉伯语 NLP 建设，指出低资源语言最难的问题往往不是语言学或模型技术，而是社区、制度、部署治理和知识生产方式。 领域现状：NLP 论文通常汇报成功：新数据集覆盖更广，新模型超过 SOTA，新 shared ta…
 tags:
   - "ACL2026"
   - "社会计算"

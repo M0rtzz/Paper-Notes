@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextual Integrity in LLMs via Reasoning and Reinforcement Learning
 description: >-
-  [NeurIPS 2025][LLM安全][contextual integrity] 提出 CI-RL 框架，通过 Chain-of-Thought 推理提示 + GRPO 强化学习，用仅约 700 个合成样本训练 LLM 理解"上下文完整性"（contextual integrity）…
+  [NeurIPS 2025][LLM安全][contextual integrity] 提出 CI-RL 框架，通过 Chain-of-Thought 推理提示 + GRPO 强化学习，用仅约 700 个合成样本训练 LLM 理解"上下文完整性"（contextual integrity），在 PrivacyLens 基准上将隐私泄露率降低最高 40%，且小模型训练后可超越更大基线模型。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

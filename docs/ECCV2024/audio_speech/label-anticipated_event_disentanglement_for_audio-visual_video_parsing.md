@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Label-Anticipated Event Disentanglement for Audio-Visual Video Parsing
 description: >-
-  [ECCV2024][音频/语音][Audio-Visual Video Parsing] 提出 LEAP（Label semantic-based Projection）解码范式，利用事件类别的标签文本嵌入作为语义锚点，通过跨模态注意力机制将音频/视觉隐特征中潜在重叠的事件语义解耦到独立的标签嵌入中…
+  [ECCV2024][音频/语音][Audio-Visual Video Parsing] 提出 LEAP（Label semantic-based Projection）解码范式，利用事件类别的标签文本嵌入作为语义锚点，通过跨模态注意力机制将音频/视觉隐特征中潜在重叠的事件语义解耦到独立的标签嵌入中，配合基于 EIoU 的音视觉语义相似度损失，在 AVVP 任务上取得 SOTA。
 tags:
   - "ECCV2024"
   - "音频/语音"

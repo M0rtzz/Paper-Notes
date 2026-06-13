@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Framework for Motion Reasoning and Generation in Human Interaction
 description: >-
-  [ICCV 2025][图像生成][人体交互动作] 提出 MoLaM，一个统一的交互式动作-语言模型，通过三阶段训练和新构建的 Inter-MT² 数据集（82.7K 多轮指令），首次在单一框架内同时实现双人交互动作的理解、生成、编辑和推理。
+  [ICCV 2025][图像生成][人体交互动作] 提出 MoLaM，一个统一的交互式动作-语言模型，通过三阶段训练和新构建的 Inter-MT² 数据集（82.7K 多轮指令），首次在单一框架内同时实现双人交互动作的理解、生成、编辑和推理。 现有的动作-语言模型存在三个核心局限性，这驱动了本文的研究： 为什么需要统一框架？…
 tags:
   - "ICCV 2025"
   - "图像生成"

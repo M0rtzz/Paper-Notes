@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Theory of Mind in Large Language Models: Assessment and Enhancement
 description: >-
-  [ACL 2025][LLM/NLP][Theory of Mind] 系统综述了 LLM 的心智理论（ToM）能力的评估基准（10+ story-based benchmarks）和增强策略（prompt-only 和 fine-tuning 两类方法），指出当前 LLM 在 ToM 推理上仍有显著不足…
+  [ACL 2025][LLM 其他][Theory of Mind] 系统综述了 LLM 的心智理论（ToM）能力的评估基准（10+ story-based benchmarks）和增强策略（prompt-only 和 fine-tuning 两类方法），指出当前 LLM 在 ToM 推理上仍有显著不足，并提出未来方向。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Theory of Mind"
   - "ToM"
   - "benchmark survey"

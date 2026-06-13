@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MPO: An Efficient Post-Processing Framework for Mixing Diverse Preference Alignment
 description: >-
-  [ICML 2025][LLM对齐][多目标对齐] 提出 MPO（Mixing Preference Optimization），一个轻量级后处理框架，通过对数线性组合已有单目标策略来实现多偏好对齐，避免了多目标 RLHF 中昂贵的强化学习过程。
+  [ICML 2025][LLM对齐][多目标对齐] 提出 MPO（Mixing Preference Optimization），一个轻量级后处理框架，通过对数线性组合已有单目标策略来实现多偏好对齐，避免了多目标 RLHF 中昂贵的强化学习过程。 领域现状： RLHF 已成为 LLM 对齐的主流范式，但传统 RLHF 依赖单…
 tags:
   - "ICML 2025"
   - "LLM对齐"

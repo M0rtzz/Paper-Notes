@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InCaRPose: In-Cabin Relative Camera Pose Estimation Model and Dataset
 description: >-
-  [CVPR 2026][自动驾驶][相机位姿估计] 本文提出 InCaRPose，一个基于冻结 ViT 骨干和 Transformer 解码器的车内相对相机位姿估计模型，仅在合成数据上训练即可泛化到真实车内环境，实现绝对度量级翻译预测和实时推理（>45 FPS）…
+  [CVPR 2026][自动驾驶][相机位姿估计] 本文提出 InCaRPose，一个基于冻结 ViT 骨干和 Transformer 解码器的车内相对相机位姿估计模型，仅在合成数据上训练即可泛化到真实车内环境，实现绝对度量级翻译预测和实时推理（>45 FPS），同时发布了配套的真实世界高畸变车内测试数据集 In-Cabin-Pose。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

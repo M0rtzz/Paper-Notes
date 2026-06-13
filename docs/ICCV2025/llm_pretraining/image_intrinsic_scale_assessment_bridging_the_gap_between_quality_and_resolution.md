@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image Intrinsic Scale Assessment: Bridging the Gap Between Quality and Resolution
 description: >-
-  [ICCV 2025][预训练][图像质量评估] 本文定义了图像内在尺度（IIS）这一新概念——即图像展现最高感知质量的最大缩放比例，并提出 IISA 任务、构建了 785 张图像的数据集，以及基于弱标签的 WIISA 训练策略，在多个 NR-IQA 方法上一致提升了 IIS 预测性能。
+  [ICCV 2025][预训练][图像质量评估] 本文定义了图像内在尺度（IIS）这一新概念——即图像展现最高感知质量的最大缩放比例，并提出 IISA 任务、构建了 785 张图像的数据集，以及基于弱标签的 WIISA 训练策略，在多个 NR-IQA 方法上一致提升了 IIS 预测性能。 图像质量评估（IQA）是计算机视觉的…
 tags:
   - "ICCV 2025"
   - "预训练"

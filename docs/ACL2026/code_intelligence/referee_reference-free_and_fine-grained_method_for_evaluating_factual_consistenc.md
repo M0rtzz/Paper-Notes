@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReFEree: Reference-Free and Fine-Grained Method for Evaluating Factual Consistency in Real-World Code Summarization
 description: >-
-  [ACL 2026][代码智能][事实一致性] 本文提出 ReFEree，一种针对真实世界代码摘要的无参考、细粒度事实一致性评估方法，定义四类不一致标准并在句段级别评估，结合依赖信息搜索机制，在 Python 和 Java 上相比前 SOTA 提升 15-18% 的人类判断相关性。
+  [ACL 2026][代码智能][事实一致性] 本文提出 ReFEree，一种针对真实世界代码摘要的无参考、细粒度事实一致性评估方法，定义四类不一致标准并在句段级别评估，结合依赖信息搜索机制，在 Python 和 Java 上相比前 SOTA 提升 15-18% 的人类判断相关性。 领域现状：LLM（GPT-4、Codex、…
 tags:
   - "ACL 2026"
   - "代码智能"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Position: Good Embodied Reward Models Need Bad Behavior Data
 description: >-
-  [ICML 2026][机器人][具身奖励模型] 一篇 position paper：作者用 RoboArena 真人评分实证了三类 SOTA 具身奖励模型（ReWind / GVL / Dopamine）会系统性"高估"实际失败的机器人行为，根因是训练数据几乎只有专家成功示范…
+  [ICML 2026 Spotlight][机器人][具身奖励模型] 一篇 position paper：作者用 RoboArena 真人评分实证了三类 SOTA 具身奖励模型（ReWind / GVL / Dopamine）会系统性"高估"实际失败的机器人行为，根因是训练数据几乎只有专家成功示范，并通过把真实"坏"行为视频 + 稠密负向奖励标签塞进 GVL 的 in-context 提示，证明哪怕极少量负样本就能显著修正偏好排序，从而呼吁社区主动收集和发布"坏"机器人数据。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "机器人"
   - "具身奖励模型"
   - "失败数据"

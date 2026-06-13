@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SaFiRe: Saccade-Fixation Reiteration with Mamba for Referring Image Segmentation
 description: >-
-  [NeurIPS 2025][语义分割][指代图像分割] 提出 SaFiRe 框架，模拟人类"扫视-注视"两阶段认知过程，利用 Mamba 的扫描-更新特性实现线性复杂度的多轮细化，有效处理歧义指代表达下的图像分割任务。
+  [NeurIPS 2025][语义分割][指代图像分割] 提出 SaFiRe 框架，模拟人类"扫视-注视"两阶段认知过程，利用 Mamba 的扫描-更新特性实现线性复杂度的多轮细化，有效处理歧义指代表达下的图像分割任务。 指代图像分割 (RIS) 根据自然语言表达分割目标物体。现有方法的核心问题： 过度简化的表达假设：现有方…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

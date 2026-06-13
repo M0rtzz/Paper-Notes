@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Consistent Multi-Label Classification Under Inexact Supervision
 description: >-
-  [ICLR 2026][优化/理论][多标签分类] 提出 COMES 框架，通过一阶（Hamming loss）和二阶（Ranking loss）策略，为不精确监督下的多标签分类提供一致性风险估计器，无需估计标签生成过程或均匀分布假设。
+  [ICLR 2026][优化/理论][多标签分类] 提出 COMES 框架，通过一阶（Hamming loss）和二阶（Ranking loss）策略，为不精确监督下的多标签分类提供一致性风险估计器，无需估计标签生成过程或均匀分布假设。 多标签分类（MLC）要求每个实例关联多个相关标签，标注成本远高于单标签任务…
 tags:
   - "ICLR 2026"
   - "优化/理论"

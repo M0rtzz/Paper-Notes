@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DR.Q: Debiased Model-based Representations for Sample-efficient Continuous Control
 description: >-
-  [ICML 2026][强化学习][模型化表示] DR.Q 在 MR.Q 类"模型化表示 + actor-critic"骨架上加两件事——用 InfoNCE 显式最大化 $z_{sa}$ 与下一状态表示 $z_{s'}$ 的互信息…
+  [ICML 2026][强化学习][模型化表示] DR.Q 在 MR.Q 类"模型化表示 + actor-critic"骨架上加两件事——用 InfoNCE 显式最大化 $z_{sa}$ 与下一状态表示 $z_{s'}$ 的互信息，再用"PER × forget"融合的 faded prioritized replay 缓解早期经验过拟合——在 73 个连续控制任务上用单一超参组击败 SimBaV2 / MR.Q / TDMPC2 等强基线。
 tags:
   - "ICML 2026"
   - "强化学习"

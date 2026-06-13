@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S2S-Arena: Evaluating Paralinguistic Instruction Following in Speech-to-Speech Models
 description: >-
-  [ACL2026][音频/语音][语音到语音] S2S-Arena 提出一个直接在语音模态评测 S2S 模型的 benchmark，用四级副语言交互协议、1,243 条语音样本和 1,001 次 pairwise comparison 揭示当前系统在复杂语气、情绪、说话风格和表达控制上的明显差距。
+  [ACL2026][音频/语音][语音到语音] S2S-Arena 提出一个直接在语音模态评测 S2S 模型的 benchmark，用四级副语言交互协议、1,243 条语音样本和 1,001 次 pairwise comparison 揭示当前系统在复杂语气、情绪、说话风格和表达控制上的明显差距。 领域现状：LLM 推动了…
 tags:
   - "ACL2026"
   - "音频/语音"

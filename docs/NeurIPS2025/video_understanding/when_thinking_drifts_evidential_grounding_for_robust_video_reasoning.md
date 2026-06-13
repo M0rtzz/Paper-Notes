@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Thinking Drifts: Evidential Grounding for Robust Video Reasoning
 description: >-
-  [NeurIPS 2025][视频理解][视频推理] 系统揭示了CoT推理在视频理解中经常导致性能下降的"视觉思维漂移"现象，并提出Visual Evidence Reward（VER）强化学习框架，通过显式奖励与视觉证据对齐的推理链来纠正这一问题。
+  [NeurIPS 2025][视频理解][视频推理] 系统揭示了CoT推理在视频理解中经常导致性能下降的"视觉思维漂移"现象，并提出Visual Evidence Reward（VER）强化学习框架，通过显式奖励与视觉证据对齐的推理链来纠正这一问题。 CoT在视频推理中反而有害 Chain-of-Thought（CoT）推理…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

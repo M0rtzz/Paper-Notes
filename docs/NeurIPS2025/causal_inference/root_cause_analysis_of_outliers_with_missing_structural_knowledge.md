@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Root Cause Analysis of Outliers with Missing Structural Knowledge
 description: >-
-  [NeurIPS 2025][因果推理][Root Cause Analysis] 提出仅用**边际异常分数**即可做根因分析的两个简单高效算法——已知因果图时用 SMOOTH TRAVERSAL（沿因果路径找分数跳变最大的节点），未知因果图时用 SCORE ORDERING（按分数排序取 top-k）…
+  [NeurIPS 2025][因果推理][Root Cause Analysis] 提出仅用**边际异常分数**即可做根因分析的两个简单高效算法——已知因果图时用 SMOOTH TRAVERSAL（沿因果路径找分数跳变最大的节点），未知因果图时用 SCORE ORDERING（按分数排序取 top-k），在 polytree 结构下给出非参数概率保证，仅需单个异常样本即可工作。
 tags:
   - "NeurIPS 2025"
   - "因果推理"

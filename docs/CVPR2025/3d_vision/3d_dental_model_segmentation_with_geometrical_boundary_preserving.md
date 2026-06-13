@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Dental Model Segmentation with Geometrical Boundary Preserving
 description: >-
-  [CVPR 2025][3D视觉][图像分割] 提出 CrossTooth，通过基于曲率先验的选择性下采样（边界区域顶点密度提升 10-15%）和多视角渲染图像的跨模态边界特征融合，在 3DTeethSeg'22 公开数据集上实现 95.86% mIoU 和 82.05% boundary IoU…
+  [CVPR 2025][3D视觉][图像分割] 提出 CrossTooth，通过基于曲率先验的选择性下采样（边界区域顶点密度提升 10-15%）和多视角渲染图像的跨模态边界特征融合，在 3DTeethSeg'22 公开数据集上实现 95.86% mIoU 和 82.05% boundary IoU，分别比之前 SOTA（ToothGroupNet）提升 2.3% 和 5.7%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

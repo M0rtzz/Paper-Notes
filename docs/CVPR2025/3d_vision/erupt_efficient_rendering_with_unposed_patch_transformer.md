@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ERUPT: Efficient Rendering with Unposed Patch Transformer
 description: >-
-  [CVPR 2025][3D视觉][新视角合成] ERUPT 提出了一种高效的潜在视角合成模型，通过 patch-based 解码器替代像素级解码、可学习的潜在相机位姿以及冻结 DINOv2 特征提取器，在不需要精确相机位姿的情况下仅用 5 张无位姿图像即可实现 600fps 的新视角合成…
+  [CVPR 2025][3D视觉][新视角合成] ERUPT 提出了一种高效的潜在视角合成模型，通过 patch-based 解码器替代像素级解码、可学习的潜在相机位姿以及冻结 DINOv2 特征提取器，在不需要精确相机位姿的情况下仅用 5 张无位姿图像即可实现 600fps 的新视角合成，在 MSN 数据集上达到 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

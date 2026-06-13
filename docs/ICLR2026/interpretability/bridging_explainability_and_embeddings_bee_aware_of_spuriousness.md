@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Explainability and Embeddings: BEE Aware of Spuriousness
 description: >-
-  [ICLR 2026][可解释性][虚假相关性检测] 提出BEE框架，通过分析微调如何扰动预训练表征的权重空间几何结构，直接从分类器学到的权重中识别和命名虚假相关性（spurious correlations），无需反例样本即可发现隐藏的数据偏差…
+  [ICLR 2026][可解释性][虚假相关性检测] 提出BEE框架，通过分析微调如何扰动预训练表征的权重空间几何结构，直接从分类器学到的权重中识别和命名虚假相关性（spurious correlations），无需反例样本即可发现隐藏的数据偏差，在ImageNet-1k上发现可导致准确率下降高达95%的虚假关联。
 tags:
   - "ICLR 2026"
   - "可解释性"

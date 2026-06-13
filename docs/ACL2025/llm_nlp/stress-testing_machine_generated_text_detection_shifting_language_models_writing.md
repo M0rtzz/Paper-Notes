@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Stress-testing Machine Generated Text Detection: Shifting Language Models Writing Style to Fool Detectors
 description: >-
-  [ACL2025][LLM/NLP][机器生成文本检测] 通过 DPO 微调将 LLM 的写作风格对齐到人类文本的语言特征分布，生成更难被检测的机器文本，揭示了现有 MGT 检测器对浅层语言线索的过度依赖。
+  [ACL2025][LLM 其他][机器生成文本检测] 通过 DPO 微调将 LLM 的写作风格对齐到人类文本的语言特征分布，生成更难被检测的机器文本，揭示了现有 MGT 检测器对浅层语言线索的过度依赖。 领域现状：LLM（GPT-4、Llama 3、DeepSeek V3 等）生成的文本质量已达到人类难以区分的水平…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "机器生成文本检测"
   - "对抗攻击"
   - "DPO"

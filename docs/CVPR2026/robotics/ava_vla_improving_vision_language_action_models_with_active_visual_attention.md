@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AVA-VLA: Improving Vision-Language-Action models with Active Visual Attention
 description: >-
-  [CVPR 2026][机器人][VLA模型] 从POMDP视角重新审视VLA模型的视觉处理，提出AVA-VLA框架通过循环状态和主动视觉注意力模块，根据历史上下文动态调制当前帧的视觉token重要性，在LIBERO和CALVIN等基准上达到SOTA。
+  [CVPR 2026 Highlight][机器人][VLA模型] 从POMDP视角重新审视VLA模型的视觉处理，提出AVA-VLA框架通过循环状态和主动视觉注意力模块，根据历史上下文动态调制当前帧的视觉token重要性，在LIBERO和CALVIN等基准上达到SOTA。 视觉-语言-动作（VLA）模型在机器人操作任务中展现…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "机器人"
   - "VLA模型"
   - "主动视觉注意力"

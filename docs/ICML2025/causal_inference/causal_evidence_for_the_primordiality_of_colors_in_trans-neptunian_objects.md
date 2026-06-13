@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Evidence for the Primordiality of Colors in Trans-Neptunian Objects
 description: >-
-  [ICML 2025][因果推理][因果发现] 利用模型无关的因果发现方法（FCI算法），以 98.7% 的置信度证明海王星外天体（TNO）的颜色是其轨道倾角分布的根本原因，从而强有力地支持了 TNO 颜色的"原生性"假说——即颜色反映的是形成位置而非后期碰撞演化的结果。
+  [ICML 2025][因果推理][因果发现] 利用模型无关的因果发现方法（FCI算法），以 98.7% 的置信度证明海王星外天体（TNO）的颜色是其轨道倾角分布的根本原因，从而强有力地支持了 TNO 颜色的"原生性"假说——即颜色反映的是形成位置而非后期碰撞演化的结果。 问题定义 海王星外天体（Trans-Neptunia…
 tags:
   - "ICML 2025"
   - "因果推理"

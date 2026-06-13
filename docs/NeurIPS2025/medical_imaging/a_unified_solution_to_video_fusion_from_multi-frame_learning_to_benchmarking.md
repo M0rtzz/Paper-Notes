@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking
 description: >-
-  [NeurIPS 2025][医学图像][视频融合] 提出首个统一视频融合框架 UniVF（基于多帧学习 + 光流特征 warping + 时序一致性损失），并构建首个覆盖四大融合任务（多曝光、多焦点、红外-可见光、医学）的视频融合基准 VF-Bench，在全部子任务上取得 SOTA。
+  [NeurIPS 2025 Spotlight][医学图像][视频融合] 提出首个统一视频融合框架 UniVF（基于多帧学习 + 光流特征 warping + 时序一致性损失），并构建首个覆盖四大融合任务（多曝光、多焦点、红外-可见光、医学）的视频融合基准 VF-Bench，在全部子任务上取得 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "医学图像"
   - "视频融合"
   - "多帧学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Trust Functions: Near-Lossless Weak-to-Strong Generalization by Learning When to Trust the Weak Teacher
 description: >-
-  [ICML 2026][预训练][弱到强泛化] 本文把"弱到强泛化（Weak-to-Strong Generalization）"重新框架成一个**数据选择**问题，提出"信任函数（Trust Function）"用一个轻量 MLP 读取教师模型最后一层隐藏状态、预测弱标签是否可靠…
+  [ICML 2026][预训练][弱到强泛化] 本文把"弱到强泛化（Weak-to-Strong Generalization）"重新框架成一个**数据选择**问题，提出"信任函数（Trust Function）"用一个轻量 MLP 读取教师模型最后一层隐藏状态、预测弱标签是否可靠，然后只挑高信任样本去训练强学生，从而在多任务上实现近无损甚至超越 ground-truth 的监督效果，并可迭代成"弱到强链"放大收益。
 tags:
   - "ICML 2026"
   - "预训练"

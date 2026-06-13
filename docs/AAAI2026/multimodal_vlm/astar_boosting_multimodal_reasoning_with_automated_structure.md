@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AStar: Boosting Multimodal Reasoning with Automated Structured Thinking
 description: >-
-  [AAAI 2026][多模态VLM][多模态推理] 提出AStar，一种training-free的多模态推理范式，通过从500个种子样本中构建高层"thought cards"推理模板库，在推理时自适应检索最优模板引导MLLM结构化推理…
+  [AAAI 2026 Oral][多模态VLM][多模态推理] 提出AStar，一种training-free的多模态推理范式，通过从500个种子样本中构建高层"thought cards"推理模板库，在推理时自适应检索最优模板引导MLLM结构化推理，7B模型在MathVerse上达53.9%准确率（超越GPT-4o的50.2%），仅需50分钟预处理时间且无需训练。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "多模态推理"
   - "thought cards"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Membership Inference Attacks on Diffusion Models from a Frequency-Domain Perspective
 description: >-
-  [ICML 2026][图像生成][成员推断攻击] 本文从频域视角分析了扩散模型成员推断攻击（MIA）的失败模式，指出高频内容会同时放大 member 和 hold-out 样本得分的标准差从而稀释成员优势，提出一个无需训练、零额外推理代价的"高频滤波器"模块…
+  [ICML 2026][图像生成][成员推断攻击] 本文从频域视角分析了扩散模型成员推断攻击（MIA）的失败模式，指出高频内容会同时放大 member 和 hold-out 样本得分的标准差从而稀释成员优势，提出一个无需训练、零额外推理代价的"高频滤波器"模块，只需在计算重建误差前对预测图与目标图做相同的 FFT 低通处理，就能把 Naive/SecMI/PIA 等主流 MIA 在 DDIM、Stable Diffusion 上的 ASR/AUC/TPR@1%FPR 普遍拉高 4–11 个百分点（个别场景 TPR@1%FPR 直接从 6% 跃到 41%）。
 tags:
   - "ICML 2026"
   - "图像生成"

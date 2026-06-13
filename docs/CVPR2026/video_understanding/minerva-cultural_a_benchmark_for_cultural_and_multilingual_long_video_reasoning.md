@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MINERVA-Cultural: A Benchmark for Cultural and Multilingual Long Video Reasoning
 description: >-
-  [CVPR 2026][视频理解][视频问答] 提出 MINERVA-Cultural 基准，包含 18 个语种/地区的 2400 个人工标注视频推理问题，通过证据图（evidence graph）和迭代错误隔离策略揭示当前 SOTA Video-LLM 在文化视觉感知上的严重不足（最强模型 Gemini-2…
+  [CVPR 2026][视频理解][视频问答] 提出 MINERVA-Cultural 基准，包含 18 个语种/地区的 2400 个人工标注视频推理问题，通过证据图（evidence graph）和迭代错误隔离策略揭示当前 SOTA Video-LLM 在文化视觉感知上的严重不足（最强模型 Gemini-2.5-Pro 仅 45.07% vs 人类 95.22%）。
 tags:
   - "CVPR 2026"
   - "视频理解"

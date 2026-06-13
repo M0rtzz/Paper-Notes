@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment
 description: >-
-  [NeurIPS 2025][地理空间ABM] 提出一种整合地理空间气候灾害数据与进化学习机制的Agent-Based Model（ABM），在包含商品-制造-零售三级供应链的简化经济网络上，通过RCP8.5洪水投影模拟2025-2100年的经济响应…
+  [NeurIPS 2025][地理空间ABM] 提出一种整合地理空间气候灾害数据与进化学习机制的Agent-Based Model（ABM），在包含商品-制造-零售三级供应链的简化经济网络上，通过RCP8.5洪水投影模拟2025-2100年的经济响应，证明了进化自适应机制使企业在气候压力下维持显著更高的生产、资本、流动性和就业水平，同时揭示了传统资产级评估无法捕捉的供应链系统性风险。
 tags:
   - "NeurIPS 2025"
   - "地理空间ABM"

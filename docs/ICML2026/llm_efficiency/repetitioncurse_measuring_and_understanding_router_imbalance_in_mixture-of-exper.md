@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RepetitionCurse: Measuring and Understanding Router Imbalance in Mixture-of-Experts LLMs under DoS Stress
 description: >-
-  [ICML 2026][LLM效率][MoE路由失衡] 通过给 MoE 大模型喂"同一个 token 重复 N 遍"这种极简的 OOD 提示，作者发现 router 会把几乎所有 token 路由到固定的少数几个 top-$k$ 专家上…
+  [ICML 2026][LLM效率][MoE路由失衡] 通过给 MoE 大模型喂"同一个 token 重复 N 遍"这种极简的 OOD 提示，作者发现 router 会把几乎所有 token 路由到固定的少数几个 top-$k$ 专家上，从而在专家并行（EP）部署下制造单卡瓶颈、把别的 GPU 全部 idle 住，在 8-GPU 集群上把 TTFT 拉高 20%–148%，把 MoE 的并行加速器反过来变成 DoS 攻击面。
 tags:
   - "ICML 2026"
   - "LLM效率"

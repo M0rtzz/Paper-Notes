@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Human-Like Text Liked by Humans? Multilingual Human Detection and Preference Against AI
 description: >-
-  [ACL 2026][多语言/翻译][MGT 检测] 作者组织 19 位母语专家对 9 种语言、9 个领域、11 个 SOTA LLM 共 16 个数据集做了 8.8k 例的人机文本判别，发现专家平均准确率高达 87.6%（远高于"接近随机"的早期结论）…
+  [ACL 2026][多语言/翻译][MGT 检测] 作者组织 19 位母语专家对 9 种语言、9 个领域、11 个 SOTA LLM 共 16 个数据集做了 8.8k 例的人机文本判别，发现专家平均准确率高达 87.6%（远高于"接近随机"的早期结论），并进一步揭示：用显式说明差异的 prompt 改写后机器文本能把检测准确率压到 72.5%，但人在分不清来源时反而倾向选机器文本，挑战了"human-like 等于 liked-by-human"的隐含假设。
 tags:
   - "ACL 2026"
   - "多语言/翻译"

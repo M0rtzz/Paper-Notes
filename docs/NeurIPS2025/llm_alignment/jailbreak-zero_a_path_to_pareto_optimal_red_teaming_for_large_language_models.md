@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models
 description: >-
-  [NeurIPS 2025][LLM对齐][红队测试] 提出基于策略（而非示例）的 LLM 红队评估框架和 Jailbreak-Zero 方法，通过简单的大规模并行采样策略（无需人工越狱策略）…
+  [NeurIPS 2025][LLM对齐][红队测试] 提出基于策略（而非示例）的 LLM 红队评估框架和 Jailbreak-Zero 方法，通过简单的大规模并行采样策略（无需人工越狱策略），在 HarmBench 上对 GPT-4o 和 Claude 3.5 分别达到 99.5% 和 96.0% 的攻击成功率，同时通过微调实现覆盖率、多样性和保真度三个目标的 Pareto 最优。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

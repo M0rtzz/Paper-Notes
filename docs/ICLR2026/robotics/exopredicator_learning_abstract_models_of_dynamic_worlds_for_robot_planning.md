@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning
 description: >-
-  [ICLR 2026][机器人][抽象世界模型] 提出 ExoPredicator 框架，联合学习符号化状态抽象和因果过程（含内生动作与外生机制），通过变分贝叶斯推断 + LLM 提议从少量轨迹中学习带随机延迟的因果世界模型，在 5 个桌面机器人环境中实现快速泛化规划。
+  [ICLR 2026][机器人][抽象世界模型] 提出 ExoPredicator 框架，联合学习符号化状态抽象和因果过程（含内生动作与外生机制），通过变分贝叶斯推断 + LLM 提议从少量轨迹中学习带随机延迟的因果世界模型，在 5 个桌面机器人环境中实现快速泛化规划。 现有痛点 1. 长期具身规划中…
 tags:
   - "ICLR 2026"
   - "机器人"

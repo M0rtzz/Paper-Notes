@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Model Readiness: Institutional Readiness for AI Deployment in Public Systems
 description: >-
-  [ICML2026][机构就绪度] 针对公共部门AI系统"技术上可行但部署上失败"的普遍现象，提出**机构对齐就绪度 (Institutional Alignment Readiness, IAR)** 五维评估框架…
+  [ICML2026][机构就绪度] 针对公共部门AI系统"技术上可行但部署上失败"的普遍现象，提出**机构对齐就绪度 (Institutional Alignment Readiness, IAR)** 五维评估框架，从制度兼容性、数据生态成熟度、人工监督能力、财政可持续性和法规对齐五个维度评估接收机构是否具备负责任部署AI系统的条件。
 tags:
   - "ICML2026"
   - "机构就绪度"

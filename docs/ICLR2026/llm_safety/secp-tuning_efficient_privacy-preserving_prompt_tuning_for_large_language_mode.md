@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC
 description: >-
-  [ICLR 2026][LLM安全][隐私保护] 提出首个基于安全多方计算（MPC）的隐私保护提示调优框架 SecP-Tuning，通过前向调优消除反向传播开销、通过隐私保护随机特征注意力（RFA）替代 softmax 降低通信复杂度，实现约 12-16 倍加速和 17-20 倍通信量缩减。
+  [ICLR 2026][LLM安全][隐私保护] 提出首个基于安全多方计算（MPC）的隐私保护提示调优框架 SecP-Tuning，通过前向调优消除反向传播开销、通过隐私保护随机特征注意力（RFA）替代 softmax 降低通信复杂度，实现约 12-16 倍加速和 17-20 倍通信量缩减。 1. 隐私敏感领域的 LLM 适…
 tags:
   - "ICLR 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Probe-based Steering for Robust LLM Jailbreaking
 description: >-
-  [ICML 2026][LLM对齐][LLM越狱] 这篇论文把 probe-based contrastive steering 改造成更强的白盒红队评测工具，用自适应重训练修正有偏 probe，并用激活统计自适应设定 steering 强度，从而显著暴露加固 LLM 的越狱脆弱性。
+  [ICML 2026][LLM对齐][LLM越狱] 这篇论文把 probe-based contrastive steering 改造成更强的白盒红队评测工具，用自适应重训练修正有偏 probe，并用激活统计自适应设定 steering 强度，从而显著暴露加固 LLM 的越狱脆弱性。 领域现状：对齐后的 LLM 通常会拒绝有…
 tags:
   - "ICML 2026"
   - "LLM对齐"

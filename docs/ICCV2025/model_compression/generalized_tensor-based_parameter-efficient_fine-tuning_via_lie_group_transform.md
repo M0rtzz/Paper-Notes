@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
 description: >-
-  [ICCV 2025][模型压缩][PEFT] 提出 LieRA，利用李群理论将矩阵级 PEFT 方法（如 LoRA）推广到高维参数空间（如卷积核），通过在李代数中表示扰动并用指数映射回李群，在保持参数空间结构性质的同时实现高效微调。
+  [ICCV 2025][模型压缩][PEFT] 提出 LieRA，利用李群理论将矩阵级 PEFT 方法（如 LoRA）推广到高维参数空间（如卷积核），通过在李代数中表示扰动并用指数映射回李群，在保持参数空间结构性质的同时实现高效微调。 现有 PEFT 方法（LoRA 及其变体）主要针对二维矩阵（线性层）设计…
 tags:
   - "ICCV 2025"
   - "模型压缩"

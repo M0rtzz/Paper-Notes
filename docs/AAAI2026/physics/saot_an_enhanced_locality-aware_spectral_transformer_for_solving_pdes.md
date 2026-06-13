@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs
 description: >-
-  [AAAI 2026][物理/科学计算][神经算子] 提出 SAOT（Spectral Attention Operator Transformer），通过线性复杂度的小波注意力（WA）捕获高频局部细节，与傅里叶注意力（FA）的全局感受野经门控融合互补，在 6 个算子学习基准上取得 SOTA…
+  [AAAI 2026][物理/科学计算][神经算子] 提出 SAOT（Spectral Attention Operator Transformer），通过线性复杂度的小波注意力（WA）捕获高频局部细节，与傅里叶注意力（FA）的全局感受野经门控融合互补，在 6 个算子学习基准上取得 SOTA，Navier-Stokes 相对误差比 Transolver 下降 22.3%。
 tags:
   - "AAAI 2026"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ParalESN: Enabling Parallel Information Processing in Reservoir Computing
 description: >-
-  [ICML2026][回声状态网络] 将 LRU 风格的复数对角线性递推注入到 Echo State Network 的"未训练储备池"中，让传统 RC 的序列时间可并行化、维度可扩展到 10 万级，同时严格保持 Echo State Property 与衰退记忆滤波器的普适逼近性质。
+  [ICML2026][回声状态网络] 将 LRU 风格的复数对角线性递推注入到 Echo State Network 的"未训练储备池"中，让传统 RC 的序列时间可并行化、维度可扩展到 10 万级，同时严格保持 Echo State Property 与衰退记忆滤波器的普适逼近性质。 领域现状：储备池计算（Reservoi…
 tags:
   - "ICML2026"
   - "回声状态网络"

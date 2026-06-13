@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoLife: Towards Egocentric Life Assistant
 description: >-
-  [CVPR 2025][视频理解][第一人称视觉] 发布EgoLife数据集（6名参与者共居一周、300小时第一人称多模态视频）和EgoLifeQA基准，提出EgoButler系统（EgoGPT + EgoRAG）探索超长上下文第一人称视觉生活助手的建设路径。
+  [CVPR 2025][视频理解][第一人称视觉] 发布EgoLife数据集（6名参与者共居一周、300小时第一人称多模态视频）和EgoLifeQA基准，提出EgoButler系统（EgoGPT + EgoRAG）探索超长上下文第一人称视觉生活助手的建设路径。 构建一个能理解用户超长期行为模式和复杂社交互动的AI生活助手…
 tags:
   - "CVPR 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIGNETTE: Socially Grounded Bias Evaluation for Vision-Language Models
 description: >-
-  [ACL2026][多模态VLM][VLM偏见评估] VIGNETTE 构建了一个 30M+ 合成配对图像的 VQA 偏见评估基准，用事实性、感知、刻板印象和决策四类问题揭示 VLM 会把身份线索、活动语境和社会等级联系起来，产生细粒度且有时相互矛盾的偏见。
+  [ACL2026][多模态VLM][VLM偏见评估] VIGNETTE 构建了一个 30M+ 合成配对图像的 VQA 偏见评估基准，用事实性、感知、刻板印象和决策四类问题揭示 VLM 会把身份线索、活动语境和社会等级联系起来，产生细粒度且有时相互矛盾的偏见。 领域现状：LLM 偏见评估已经相对成熟，但 VLM 的偏见更复杂…
 tags:
   - "ACL2026"
   - "多模态VLM"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2505.22897](https://arxiv.org/abs/2505.22897)  
 **代码**: https://github.com/chahatraj/Vignette  
-**领域**: multimodal_vlm  
+**领域**: 多模态VLM  
 **关键词**: VLM偏见评估, 社会刻板印象, VQA基准, 合成图像, 多模态公平性
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction
 description: >-
-  [ICCV 2025][3D视觉][单图3D生成] 提出AR-1-to-3，一种基于扩散模型的自回归下一视角预测框架，通过"先近后远"的渐进式生成策略，配合Stacked-LE（堆叠局部特征编码）和LSTM-GE（全局特征编码）两种条件注入机制，显著提升了单图到多视角生成的一致性…
+  [ICCV 2025][3D视觉][单图3D生成] 提出AR-1-to-3，一种基于扩散模型的自回归下一视角预测框架，通过"先近后远"的渐进式生成策略，配合Stacked-LE（堆叠局部特征编码）和LSTM-GE（全局特征编码）两种条件注入机制，显著提升了单图到多视角生成的一致性，在GSO数据集上PSNR达13.18（相比InstantMesh的10.67提升23.5%），Chamfer Distance降至0.063（InstantMesh为0.117）。
 tags:
   - "ICCV 2025"
   - "3D视觉"

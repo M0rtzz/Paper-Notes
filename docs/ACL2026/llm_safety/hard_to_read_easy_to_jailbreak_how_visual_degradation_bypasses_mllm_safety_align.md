@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Hard to Read, Easy to Jailbreak: How Visual Degradation Bypasses MLLM Safety Alignment
 description: >-
-  [ACL 2026][LLM安全][Attack Comfort Zone] 本文首次揭示了 MLLM 在「视觉文本压缩」范式下的安全盲区——当渲染图像 DPI 落在 45–150 的 Attack Comfort Zone (ACZ) 时，模型 OCR 仍准但安全对齐崩塌（ASR 从 0% 飙至 70%+）…
+  [ACL 2026 Findings][LLM安全][Attack Comfort Zone] 本文首次揭示了 MLLM 在「视觉文本压缩」范式下的安全盲区——当渲染图像 DPI 落在 45–150 的 Attack Comfort Zone (ACZ) 时，模型 OCR 仍准但安全对齐崩塌（ASR 从 0% 飙至 70%+），原因是浅层算力被"认字"耗尽导致有害语义只在深层才出现，浅层 guardrail 被绕过；用 prompt 级的 Structured Cognitive Offloading（先转录→再审计→再回答）就能把 ASR 打回近基线水平。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "Attack Comfort Zone"
   - "认知过载"

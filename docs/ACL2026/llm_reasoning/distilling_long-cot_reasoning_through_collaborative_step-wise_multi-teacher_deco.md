@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding (CoRD)
 description: >-
-  [ACL 2026][LLM推理][多教师蒸馏] 作者提出 CoRD（Collaborative Reasoning Decoding），把多教师 Long-CoT 推理蒸馏从「先生成完整轨迹再后选」改造成「step-wise 协同解码」——每步让多个 LRM 提议候选 step…
+  [ACL 2026 Findings][LLM推理][多教师蒸馏] 作者提出 CoRD（Collaborative Reasoning Decoding），把多教师 Long-CoT 推理蒸馏从「先生成完整轨迹再后选」改造成「step-wise 协同解码」——每步让多个 LRM 提议候选 step，用 meta-prover 的 predictive perplexity 评分 + beam search 保留 Top-B 部分轨迹，最终 32B 学生在 AIME24/25 上超越所有单教师（79.6 / 70.2 vs 78.9 / 67.9）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "多教师蒸馏"
   - "Long-CoT"

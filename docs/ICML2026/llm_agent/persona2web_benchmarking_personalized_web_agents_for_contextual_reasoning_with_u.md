@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Persona2Web: Benchmarking Personalized Web Agents for Contextual Reasoning with User History
 description: >-
-  [ICML 2026][LLM Agent][个性化 web agent] 本文提出首个针对个性化 web agent 的开放网页 benchmark Persona2Web，用「隐式用户历史 + 三档模糊查询 + 推理感知评分」逼迫 agent 从浏览记录中推断用户偏好来消歧 ambiguous query…
+  [ICML 2026][LLM Agent][个性化 web agent] 本文提出首个针对个性化 web agent 的开放网页 benchmark Persona2Web，用「隐式用户历史 + 三档模糊查询 + 推理感知评分」逼迫 agent 从浏览记录中推断用户偏好来消歧 ambiguous query；在 GPT-4.1 / o3 等 5 个主流模型上，即使提供历史，level-2 query 的成功率也只有 13%，揭示当前 web agent 缺乏真正的个性化能力。
 tags:
   - "ICML 2026"
   - "LLM Agent"

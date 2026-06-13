@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models
 description: >-
-  [AAAI 2026][多模态VLM][神经符号推理] 提出Concept-RuleNet——一个三智能体协作的神经符号推理框架，通过从训练图像中提取视觉概念来条件化符号生成和规则构建，解决了现有方法（如Symbol-LLM）仅依赖标签导致的符号幻觉和不代表性问题，在5个OOD基准上平均提升~5%准确率…
+  [AAAI 2026 Oral][多模态VLM][神经符号推理] 提出Concept-RuleNet——一个三智能体协作的神经符号推理框架，通过从训练图像中提取视觉概念来条件化符号生成和规则构建，解决了现有方法（如Symbol-LLM）仅依赖标签导致的符号幻觉和不代表性问题，在5个OOD基准上平均提升~5%准确率，幻觉符号减少达50%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "神经符号推理"
   - "多智能体系统"

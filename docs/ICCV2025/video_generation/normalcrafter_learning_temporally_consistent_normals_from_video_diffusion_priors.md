@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NormalCrafter: Learning Temporally Consistent Normals from Video Diffusion Priors
 description: >-
-  [ICCV 2025][视频生成][表面法线估计] NormalCrafter 基于视频扩散模型（SVD）提出视频法线估计方法，通过语义特征正则化（SFR）和两阶段训练策略，生成具有精细细节和时序一致性的法线序列，在视频基准上大幅超越现有单帧方法。
+  [ICCV 2025][视频生成][表面法线估计] NormalCrafter 基于视频扩散模型（SVD）提出视频法线估计方法，通过语义特征正则化（SFR）和两阶段训练策略，生成具有精细细节和时序一致性的法线序列，在视频基准上大幅超越现有单帧方法。 表面法线估计是 3D 重建、重光照、视频编辑等应用的基石…
 tags:
   - "ICCV 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Offline Multi-agent Reinforcement Learning via Sequential Score Decomposition
 description: >-
-  [ICML 2026][图像生成][Offline MARL] OMSD 用"链式条件分解 + 每个 agent 一个条件扩散模型"取代传统离线 MARL 里"各 agent 独立边缘回归"的行为约束,把每个 agent 的策略沿着前缀 agent 已经选定的动作做条件正则…
+  [ICML 2026][图像生成][Offline MARL] OMSD 用"链式条件分解 + 每个 agent 一个条件扩散模型"取代传统离线 MARL 里"各 agent 独立边缘回归"的行为约束,把每个 agent 的策略沿着前缀 agent 已经选定的动作做条件正则,从而避免多模态联合行为分布下"边缘对齐但联合错位"的 OOD 失配,在 MPE / MaMuJoCo 多个数据集上把平均回报刷到现有 SOTA 的 +33% ~ +74%。
 tags:
   - "ICML 2026"
   - "图像生成"

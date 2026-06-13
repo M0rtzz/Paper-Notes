@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SyncHuman: Synchronizing 2D and 3D Generative Models for Single-View Human Reconstruction
 description: >-
-  [NeurIPS 2025][3D视觉][单视图人体重建] SyncHuman首次将2D多视图生成模型与3D原生生成模型统一在一个框架中，通过像素对齐的2D-3D同步注意力机制实现互补增强，在复杂人体姿态下实现了高保真纹理网格重建，几何精度和视觉质量均超越现有方法。
+  [NeurIPS 2025][3D视觉][单视图人体重建] SyncHuman首次将2D多视图生成模型与3D原生生成模型统一在一个框架中，通过像素对齐的2D-3D同步注意力机制实现互补增强，在复杂人体姿态下实现了高保真纹理网格重建，几何精度和视觉质量均超越现有方法。 从单张RGB图像重建3D穿衣人体是AR/VR、虚拟试穿、游…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

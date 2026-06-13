@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Fixed Psychological Personas: State Beats Trait, but Language Models are State-Blind
 description: >-
-  [ACL 2026][LLM评测][Latent State-Trait] 构建覆盖 1667 用户 × 多 subreddit 上下文的 Chameleon 心理画像数据集，用 ICC 分解证明 72-74% 心理变异来自「状态（情境）」而非「特质（人格）」…
+  [ACL 2026 Findings][LLM评测][Latent State-Trait] 构建覆盖 1667 用户 × 多 subreddit 上下文的 Chameleon 心理画像数据集，用 ICC 分解证明 72-74% 心理变异来自「状态（情境）」而非「特质（人格）」，进一步揭示 LLM 几乎对状态视而不见、reward model 反应到状态却方向相反——RLHF 因此盲目继承了奖励模型的状态偏好。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "Latent State-Trait"
   - "persona"

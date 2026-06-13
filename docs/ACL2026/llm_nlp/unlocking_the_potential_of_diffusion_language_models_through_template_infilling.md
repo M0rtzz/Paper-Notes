@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Unlocking the Potential of Diffusion Language Models through Template Infilling
 description: >-
-  [ACL2026][LLM/NLP][扩散语言模型] 本文提出 Template Infilling，把扩散语言模型的生成条件从单一前缀改成分布在整段输出中的结构锚点，并用动态片段分配给复杂推理留出空间，从而在数学推理、代码生成和全局规划任务上显著稳定并提升并行生成质量。
+  [ACL2026][LLM 其他][扩散语言模型] 本文提出 Template Infilling，把扩散语言模型的生成条件从单一前缀改成分布在整段输出中的结构锚点，并用动态片段分配给复杂推理留出空间，从而在数学推理、代码生成和全局规划任务上显著稳定并提升并行生成质量。 领域现状：扩散语言模型不按从左到右的顺序逐 token…
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "扩散语言模型"
   - "模板填充"
   - "结构化生成"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.13870](https://arxiv.org/abs/2510.13870)  
 **代码**: 无  
-**领域**: code_intelligence  
+**领域**: 代码智能  
 **关键词**: 扩散语言模型, 模板填充, 结构化生成, 动态片段分配, 代码生成  
 
 ## 一句话总结

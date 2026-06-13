@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models
 description: >-
-  [ACL 2025][推荐系统][食谱推荐] 提出 KERL 统一食品推荐系统，结合 FoodKG 知识图谱和 Phi-3-mini 多 LoRA 微调，实现个性化食谱推荐（F1=0.973）、食谱生成和微量营养素估算三个功能，大幅超越基线 LLM 和传统嵌入方法。
+  [ACL 2025][推荐系统][食谱推荐] 提出 KERL 统一食品推荐系统，结合 FoodKG 知识图谱和 Phi-3-mini 多 LoRA 微调，实现个性化食谱推荐（F1=0.973）、食谱生成和微量营养素估算三个功能，大幅超越基线 LLM 和传统嵌入方法。 领域现状：食谱推荐系统需考虑个人偏好、饮食约束和健康指南…
 tags:
   - "ACL 2025"
   - "推荐系统"

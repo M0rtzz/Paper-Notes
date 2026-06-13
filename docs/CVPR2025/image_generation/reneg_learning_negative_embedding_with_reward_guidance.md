@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReNeg: Learning Negative Embedding with Reward Guidance
 description: >-
-  [CVPR 2025][图像生成][负面提示优化] ReNeg 提出通过奖励模型引导在连续文本嵌入空间中直接学习负面嵌入（negative embedding），替代手工制作的负面提示，仅优化极少参数即可在 HPSv2 基准上媲美全模型微调方法的生成质量，且学到的嵌入可直接迁移到其他 T2I 和 T2V 模型…
+  [CVPR 2025][图像生成][负面提示优化] ReNeg 提出通过奖励模型引导在连续文本嵌入空间中直接学习负面嵌入（negative embedding），替代手工制作的负面提示，仅优化极少参数即可在 HPSv2 基准上媲美全模型微调方法的生成质量，且学到的嵌入可直接迁移到其他 T2I 和 T2V 模型。
 tags:
   - "CVPR 2025"
   - "图像生成"

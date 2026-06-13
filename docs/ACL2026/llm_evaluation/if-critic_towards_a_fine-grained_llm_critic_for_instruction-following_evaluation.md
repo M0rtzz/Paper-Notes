@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IF-Critic: Towards a Fine-Grained LLM Critic for Instruction-Following Evaluation
 description: >-
-  [ACL 2026][LLM评测][指令跟随评测] 本文提出 IF-Critic-14B：先用一个 Checklist Generator 把复杂指令拆成约束清单，再让 critic 在**一次推理内**对所有约束逐条给出"解释+0/1 判断"…
+  [ACL 2026][LLM评测][指令跟随评测] 本文提出 IF-Critic-14B：先用一个 Checklist Generator 把复杂指令拆成约束清单，再让 critic 在**一次推理内**对所有约束逐条给出"解释+0/1 判断"，并通过多阶段过滤的高质量 critique 训练 + 约束级 DPO 进行训练，最终在四个指令跟随评测榜上超过 o4-mini / Gemini-3-Pro，并以约 1/3 的算力让 7B/8B 策略模型在 Multi-IF / CFBench / SysBench 上经 GRPO 训练后追平 32B/70B 同族模型。
 tags:
   - "ACL 2026"
   - "LLM评测"

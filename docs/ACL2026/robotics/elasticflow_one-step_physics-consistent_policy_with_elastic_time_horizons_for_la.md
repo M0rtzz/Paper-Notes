@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ElasticFlow: One-Step Physics-Consistent Policy with Elastic Time Horizons for Language-Guided Manipulation
 description: >-
-  [ACL 2026][机器人][单步扩散] 提出 ElasticFlow：用平均速度场 (MeanFlow) 取代瞬时速度场学习语言条件机器人动作，配合 "弹性时间区间 $\Delta t=t-r$" 显式编码控制粒度，实现 1-NFE 单步推理 (∼71Hz)…
+  [ACL 2026 Findings][机器人][单步扩散] 提出 ElasticFlow：用平均速度场 (MeanFlow) 取代瞬时速度场学习语言条件机器人动作，配合 "弹性时间区间 $\Delta t=t-r$" 显式编码控制粒度，实现 1-NFE 单步推理 (∼71Hz)，在 LIBERO-Long、CALVIN ABC-D 等长程任务上超过 OpenVLA 与 $\pi_0$。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "机器人"
   - "单步扩散"
   - "平均速度场"

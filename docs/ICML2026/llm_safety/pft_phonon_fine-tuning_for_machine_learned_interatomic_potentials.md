@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PFT: Phonon Fine-tuning for Machine Learned Interatomic Potentials
 description: >-
-  [ICML 2026][LLM安全][MLIP] 本文提出 PFT (Phonon Fine-tuning)，通过 Hessian-vector product 随机采样力常数列、并在 MLIP 微调时直接监督能量 Hessian 与 DFT 力常数对齐，配合 co-training 缓解灾难性遗忘…
+  [ICML 2026][LLM安全][MLIP] 本文提出 PFT (Phonon Fine-tuning)，通过 Hessian-vector product 随机采样力常数列、并在 MLIP 微调时直接监督能量 Hessian 与 DFT 力常数对齐，配合 co-training 缓解灾难性遗忘，将 Nequix MP 在 MDR Phonon 基准上的声子热力学误差平均降低 55%，并将热导率 $\kappa_{\text{SRME}}$ 从 0.446 降到 0.307，在 MPtrj 训练的模型中达到 SOTA。
 tags:
   - "ICML 2026"
   - "LLM安全"

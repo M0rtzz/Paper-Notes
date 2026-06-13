@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][Gaussian Splatting] CLIPGaussian 提出首个基于 Gaussian Splatting 的统一风格迁移框架，支持文本和图像引导的 2D 图像、视频、3D 物体和 4D 动态场景的风格化，作为即插即用模块集成到现有 GS 管线中…
+  [NeurIPS 2025][3D视觉][Gaussian Splatting] CLIPGaussian 提出首个基于 Gaussian Splatting 的统一风格迁移框架，支持文本和图像引导的 2D 图像、视频、3D 物体和 4D 动态场景的风格化，作为即插即用模块集成到现有 GS 管线中，无需大规模生成模型或从头重训，且不改变模型大小。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

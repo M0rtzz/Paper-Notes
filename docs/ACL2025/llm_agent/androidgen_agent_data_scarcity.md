@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AndroidGen: Building an Android Language Agent under Data Scarcity
 description: >-
-  [LLM Agent] 提出 AndroidGen 框架，通过经验检索（ExpSearch）、反思规划（ReflectPlan）、自动校验（AutoCheck）和步骤级评判（StepCritic）四个模块，在高质量训练数据稀缺的条件下增强LLM的Android操作能力…
+  [LLM Agent] 提出 AndroidGen 框架，通过经验检索（ExpSearch）、反思规划（ReflectPlan）、自动校验（AutoCheck）和步骤级评判（StepCritic）四个模块，在高质量训练数据稀缺的条件下增强LLM的Android操作能力，并通过自动生成轨迹数据训练出无需人工标注的开源移动端agent。
 tags:
   - "LLM Agent"
 ---

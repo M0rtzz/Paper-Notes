@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Representation Learning for Spatiotemporal Physical Systems
 description: >-
-  [CVPR2025][自监督学习][时空物理系统] 系统评估通用自监督方法在时空物理系统上学习物理相关表征的能力，发现在潜空间做预测的 JEPA 显著优于像素级重建的 MAE 和自回归模型，接近专用物理建模方法 DISCO。
+  [CVPR2025][自监督学习][时空物理系统] 系统评估通用自监督方法在时空物理系统上学习物理相关表征的能力，发现在潜空间做预测的 JEPA 显著优于像素级重建的 MAE 和自回归模型，接近专用物理建模方法 DISCO。 - 机器学习在时空物理系统上的应用主要聚焦逐帧预测：（surrogate modeling）…
 tags:
   - "CVPR2025"
   - "自监督学习"

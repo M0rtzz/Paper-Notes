@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiPER: Hierarchical Reinforcement Learning with Explicit Credit Assignment for Large Language Model Agents
 description: >-
-  [ICML 2026][LLM评测][分层强化学习] HiPER 把 LLM agent 的扁平 RL 改造成"高层规划子目标 + 低层执行原子动作"的两级 Plan-Execute 结构…
+  [ICML 2026][LLM评测][分层强化学习] HiPER 把 LLM agent 的扁平 RL 改造成"高层规划子目标 + 低层执行原子动作"的两级 Plan-Execute 结构，并配套提出 Hierarchical Advantage Estimation (HAE) 把 GAE 沿子目标段切开做有界差分耦合的优势估计，在 ALFWorld / WebShop 上分别拿到 97.4% / 83.3% 成功率（Qwen2.5-7B），相对最强基线 GiGPO 提 +6.6% 与 +8.3%。
 tags:
   - "ICML 2026"
   - "LLM评测"

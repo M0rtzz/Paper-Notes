@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Presto: Long Video Diffusion Generation with Segmented Cross-Attention and Content-Rich Video Data Curation
 description: >-
-  [CVPR 2025][视频生成][长视频生成] Presto 提出分段交叉注意力（SCA）策略，将隐状态沿时间维度分段并与对应子描述分别交叉注意力，结合精心策展的 261K 高质量长视频数据集 LongTake-HD，实现了 15 秒内容丰富且长程连贯的视频生成…
+  [CVPR 2025][视频生成][长视频生成] Presto 提出分段交叉注意力（SCA）策略，将隐状态沿时间维度分段并与对应子描述分别交叉注意力，结合精心策展的 261K 高质量长视频数据集 LongTake-HD，实现了 15 秒内容丰富且长程连贯的视频生成，在 VBench 语义得分达到 78.5%、Dynamic Degree 达到 100%。
 tags:
   - "CVPR 2025"
   - "视频生成"

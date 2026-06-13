@@ -2,7 +2,7 @@
 title: >-
   [论文解读] First-Order Error Matters: Accurate Compensation for Quantized Large Language Models
 description: >-
-  [AAAI 2026][模型压缩][后训练量化] 本文揭示了LLM后训练量化中逐列补偿过程会导致一阶梯度项不可忽略的问题，提出FOEM方法通过将一阶项纳入误差补偿公式来提升量化精度，在3-bit量化下将Llama3-8B的困惑度降低17.3%，且几乎不增加计算开销。
+  [AAAI 2026][模型压缩][后训练量化] 本文揭示了LLM后训练量化中逐列补偿过程会导致一阶梯度项不可忽略的问题，提出FOEM方法通过将一阶项纳入误差补偿公式来提升量化精度，在3-bit量化下将Llama3-8B的困惑度降低17.3%，且几乎不增加计算开销。 领域现状 大语言模型（LLM）在语言理解、对话系统、代码生…
 tags:
   - "AAAI 2026"
   - "模型压缩"

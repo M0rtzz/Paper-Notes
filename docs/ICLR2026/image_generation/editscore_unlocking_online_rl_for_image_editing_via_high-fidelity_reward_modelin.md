@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling
 description: >-
-  [ICLR 2026][图像生成][reward model] 提出首个系统性的"基准评测→奖励模型→强化学习训练"图像编辑 RL 管线：构建 EditReward-Bench 基准，训练 EditScore 系列奖励模型（7B-72B，超过 GPT-5）…
+  [ICLR 2026][图像生成][reward model] 提出首个系统性的"基准评测→奖励模型→强化学习训练"图像编辑 RL 管线：构建 EditReward-Bench 基准，训练 EditScore 系列奖励模型（7B-72B，超过 GPT-5），并成功将其用于 Online RL 训练显著提升编辑模型性能。
 tags:
   - "ICLR 2026"
   - "图像生成"

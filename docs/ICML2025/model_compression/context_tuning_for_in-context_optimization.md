@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Context Tuning for In-Context Optimization
 description: >-
-  [ICML 2025][模型压缩][上下文学习] 提出 Context Tuning，用少样本示例初始化可训练的 prompt/KV 前缀，通过梯度优化上下文表示（而非模型参数）来增强 LLM 的 few-shot 适应能力，CT-KV 变体在线性时间复杂度下达到与 TTT 竞争的精度。
+  [ICML 2025][模型压缩][上下文学习] 提出 Context Tuning，用少样本示例初始化可训练的 prompt/KV 前缀，通过梯度优化上下文表示（而非模型参数）来增强 LLM 的 few-shot 适应能力，CT-KV 变体在线性时间复杂度下达到与 TTT 竞争的精度。 大语言模型（LLM）通过 In-Co…
 tags:
   - "ICML 2025"
   - "模型压缩"

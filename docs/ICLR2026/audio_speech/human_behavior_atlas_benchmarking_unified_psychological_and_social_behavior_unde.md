@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding
 description: >-
-  [ICLR 2026][音频/语音][行为理解基准] 构建 Human Behavior Atlas——首个覆盖情感、认知、病理和社会过程四大维度的大规模多模态行为理解统一基准（101K+ 样本），并训练三种 OmniSapiens-7B 模型变体验证其在多任务训练和迁移学习中的有效性。
+  [ICLR 2026][音频/语音][行为理解基准] 构建 Human Behavior Atlas——首个覆盖情感、认知、病理和社会过程四大维度的大规模多模态行为理解统一基准（101K+ 样本），并训练三种 OmniSapiens-7B 模型变体验证其在多任务训练和迁移学习中的有效性。 利用智能系统感知心理和社会行为——即…
 tags:
   - "ICLR 2026"
   - "音频/语音"

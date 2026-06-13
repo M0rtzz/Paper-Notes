@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoWizard: Unleashing the Diffusion Priors for 3D Geometry Estimation from a Single Image
 description: >-
-  [ECCV 2024][3D视觉][深度估计] 本文提出GeoWizard，一个基于Stable Diffusion先验的几何估计基础模型，通过几何切换器（Geometry Switcher）实现单一模型联合预测深度和法线…
+  [ECCV 2024][3D视觉][深度估计] 本文提出GeoWizard，一个基于Stable Diffusion先验的几何估计基础模型，通过几何切换器（Geometry Switcher）实现单一模型联合预测深度和法线，并通过场景分布解耦策略（Scene Distribution Decoupler）消除混合场景布局的歧义，在零样本深度和法线基准上达到SOTA。
 tags:
   - "ECCV 2024"
   - "3D视觉"

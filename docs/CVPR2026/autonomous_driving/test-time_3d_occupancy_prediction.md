@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TT-Occ: Test-Time 3D Occupancy Prediction
 description: >-
-  [CVPR2026][自动驾驶][3D occupancy prediction] 提出 TT-Occ，一种无需预训练的测试时3D占用预测框架，通过在推理时集成视觉基础模型（VFMs）来增量构建、优化和体素化时间感知的3D高斯…
+  [CVPR2026][自动驾驶][3D occupancy prediction] 提出 TT-Occ，一种无需预训练的测试时3D占用预测框架，通过在推理时集成视觉基础模型（VFMs）来增量构建、优化和体素化时间感知的3D高斯，在 Occ3D-nuScenes 和 nuCraft 上超越了所有需要大量训练的自监督方法。
 tags:
   - "CVPR2026"
   - "自动驾驶"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Synergizing Unsupervised Episode Detection with LLMs for Large-Scale News Events
 description: >-
-  [ACL2025][LLM/NLP][事件检测] 本文提出 EpiMine，一种无监督的 episode 检测框架，通过判别性词项共现驱动的文章分割与 LLM 协同，从新闻语料中检测关键事件下的 episode（子事件片段），在三个真实数据集上平均提升 59.2%。
+  [ACL2025][LLM 其他][事件检测] 本文提出 EpiMine，一种无监督的 episode 检测框架，通过判别性词项共现驱动的文章分割与 LLM 协同，从新闻语料中检测关键事件下的 episode（子事件片段），在三个真实数据集上平均提升 59.2%。 事件层级结构启发：神经科学研究表明人类以自顶向下的层级结构编…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "事件检测"
   - "片段检测"
   - "无监督"

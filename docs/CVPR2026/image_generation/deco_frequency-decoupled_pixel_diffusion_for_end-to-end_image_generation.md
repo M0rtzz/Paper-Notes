@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeCo: Frequency-Decoupled Pixel Diffusion for End-to-End Image Generation
 description: >-
-  [CVPR 2026][图像生成][像素扩散] DeCo 提出频率解耦的像素扩散框架，用轻量像素解码器处理高频细节并让DiT专注低频语义建模，配合频率感知flow matching损失，在ImageNet上达到FID 1.62（256）和2.22（512），缩小了像素扩散与潜空间扩散的差距。
+  [CVPR 2026][图像生成][像素扩散] DeCo 提出频率解耦的像素扩散框架，用轻量像素解码器处理高频细节并让DiT专注低频语义建模，配合频率感知flow matching损失，在ImageNet上达到FID 1.62（256）和2.22（512），缩小了像素扩散与潜空间扩散的差距。 1. 领域现状：潜空间扩散（LD…
 tags:
   - "CVPR 2026"
   - "图像生成"

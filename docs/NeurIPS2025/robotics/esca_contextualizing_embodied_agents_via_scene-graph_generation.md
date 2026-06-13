@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ESCA: Contextualizing Embodied Agents via Scene-Graph Generation
 description: >-
-  [NeurIPS 2025 (Spotlight)][机器人][场景图生成] 提出 ESCA 框架，通过开放域场景图生成（SGClip 模型）为 MLLM 驱动的具身智能体提供结构化视觉理解上下文，显著降低了感知错误率并提升了任务完成率。
+  [NeurIPS 2025 (Spotlight)][机器人][场景图生成] 提出 ESCA 框架，通过开放域场景图生成（SGClip 模型）为 MLLM 驱动的具身智能体提供结构化视觉理解上下文，显著降低了感知错误率并提升了任务完成率。 多模态大语言模型（MLLM）在具身智能体中的应用取得了快速进展，但现有 MLLM 在以…
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "机器人"

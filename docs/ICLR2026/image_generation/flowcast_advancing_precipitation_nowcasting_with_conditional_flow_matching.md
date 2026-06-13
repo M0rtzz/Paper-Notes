@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching
 description: >-
-  [ICLR 2026][图像生成][Conditional Flow Matching] 首次将条件流匹配(CFM)作为端到端概率生成模型应用于降水临近预报，在压缩潜空间中学习噪声到数据的直接映射，以更少的采样步数超越扩散模型的预测精度和概率性能。
+  [ICLR 2026][图像生成][Conditional Flow Matching] 首次将条件流匹配(CFM)作为端到端概率生成模型应用于降水临近预报，在压缩潜空间中学习噪声到数据的直接映射，以更少的采样步数超越扩散模型的预测精度和概率性能。 领域现状：降水临近预报（nowcasting）对防洪和决策至关重要…
 tags:
   - "ICLR 2026"
   - "图像生成"

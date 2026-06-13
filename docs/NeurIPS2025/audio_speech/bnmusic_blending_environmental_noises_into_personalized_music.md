@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BNMusic: Blending Environmental Noises into Personalized Music
 description: >-
-  [NeurIPS 2025][音频/语音][noise blending] 提出 BNMusic，一个两阶段框架将环境噪声融合到个性化生成音乐中：第一阶段通过 mel-spectrogram 的 outpainting + inpainting 生成与噪声节奏对齐的音乐…
+  [NeurIPS 2025][音频/语音][noise blending] 提出 BNMusic，一个两阶段框架将环境噪声融合到个性化生成音乐中：第一阶段通过 mel-spectrogram 的 outpainting + inpainting 生成与噪声节奏对齐的音乐，第二阶段利用听觉掩蔽理论自适应放大音乐信号以降低噪声感知，无需额外训练，在 EPIC-SOUNDS 和 ESC-50 上显著优于 baseline。
 tags:
   - "NeurIPS 2025"
   - "音频/语音"

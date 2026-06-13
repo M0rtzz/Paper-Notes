@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fine-grained Hallucination Detection and Mitigation in Long-form Question Answering
 description: >-
-  [ACL 2025 (Findings)][幻觉检测][长文问答] 本文构建了首个包含 span 级别错误标注的 LFQA 幻觉数据集 HaluQuestQA（698 QA 对，4.7k 错误标注，5 种错误类型），训练了一个自动反馈模型来检测不完整信息的错误 span 并生成解释…
+  [ACL 2025 (Findings)][幻觉检测][长文问答] 本文构建了首个包含 span 级别错误标注的 LFQA 幻觉数据集 HaluQuestQA（698 QA 对，4.7k 错误标注，5 种错误类型），训练了一个自动反馈模型来检测不完整信息的错误 span 并生成解释，最后提出 Error-informed Refinement 方法利用反馈信号精炼答案，将幻觉减少约 3%，且人类评估中 84% 的用户更偏好精炼后的答案。
 tags:
   - "ACL 2025 (Findings)"
   - "幻觉检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-Dyna: Expressive Dynamic Human Image Animation
 description: >-
-  [CVPR 2025][人体理解][人体动画] X-Dyna提出了一种基于扩散模型的零样本人体图像动画管线，通过轻量级Dynamics-Adapter模块在保持外观一致性的同时生成逼真的人体和场景动态效果，并引入S-Face ControlNet实现身份解耦的面部表情迁移。
+  [CVPR 2025][人体理解][人体动画] X-Dyna提出了一种基于扩散模型的零样本人体图像动画管线，通过轻量级Dynamics-Adapter模块在保持外观一致性的同时生成逼真的人体和场景动态效果，并引入S-Face ControlNet实现身份解耦的面部表情迁移。 人体视频动画旨在利用驱动视频中的身体姿态和面部表情…
 tags:
   - "CVPR 2025"
   - "人体理解"

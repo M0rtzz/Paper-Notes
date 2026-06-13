@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeRL+: Improving Code Generation via Reinforcement with Execution Semantics Alignment
 description: >-
-  [ACL 2026][代码智能][代码生成] 本文提出 CodeRL+，将执行语义对齐集成到 RLVR 训练管道中，通过让模型推断变量级执行轨迹来弥合代码文本表示与执行语义之间的差距，在代码生成上平均 pass@1 提升 4.6%，在代码推理和测试输出生成基准上分别提升 15.5% 和 4.4%。
+  [ACL 2026][代码智能][代码生成] 本文提出 CodeRL+，将执行语义对齐集成到 RLVR 训练管道中，通过让模型推断变量级执行轨迹来弥合代码文本表示与执行语义之间的差距，在代码生成上平均 pass@1 提升 4.6%，在代码推理和测试输出生成基准上分别提升 15.5% 和 4.4%。 领域现状：LLM 通过自回…
 tags:
   - "ACL 2026"
   - "代码智能"

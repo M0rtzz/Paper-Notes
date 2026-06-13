@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Granularity Navigation in Image Editing
 description: >-
-  [ICML 2026][图像生成][真实图像编辑] NaviEdit 把 diffusion/flow 编辑器中"模型尺度坐标 = 编辑进度时钟"的隐式耦合拆开，在固定 step budget 下用一个训练无关的推理时控制器把算力集中在一个有效尺度窗口的密度上而非把范围扩到高噪声区…
+  [ICML 2026][图像生成][真实图像编辑] NaviEdit 把 diffusion/flow 编辑器中"模型尺度坐标 = 编辑进度时钟"的隐式耦合拆开，在固定 step budget 下用一个训练无关的推理时控制器把算力集中在一个有效尺度窗口的密度上而非把范围扩到高噪声区，从而在 PIE-Bench / ImgEdit-Bench / 多种 flow backbone 上同时改善背景保真和语义一致性。
 tags:
   - "ICML 2026"
   - "图像生成"

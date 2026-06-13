@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BLADE: Single-view Body Mesh Learning through Accurate Depth Estimation
 description: >-
-  [CVPR 2025][3D视觉][人体网格恢复] 提出BLADE方法，通过准确估计人体骨盆Z方向深度$T_z$来解耦透视投影参数，再用$T_z$-aware的姿态估计器恢复人体网格，最后通过可微分光栅化求解焦距和XY平移…
+  [CVPR 2025][3D视觉][人体网格恢复] 提出BLADE方法，通过准确估计人体骨盆Z方向深度$T_z$来解耦透视投影参数，再用$T_z$-aware的姿态估计器恢复人体网格，最后通过可微分光栅化求解焦距和XY平移，首次在不依赖正交相机启发式假设的情况下实现了从单张图像准确恢复透视投影参数和人体3D Mesh。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR
 description: >-
-  [CVPR 2026][自动驾驶][地面分割] 本文提出 TerraSeg，首个自监督的域无关 LiDAR 地面分割模型，通过构建统一的 OmniLiDAR 大规模数据集（12个公开基准、15种传感器、近2200万次扫描）和创新的 PseudoLabeler 自监督伪标签生成模块…
+  [CVPR 2026][自动驾驶][地面分割] 本文提出 TerraSeg，首个自监督的域无关 LiDAR 地面分割模型，通过构建统一的 OmniLiDAR 大规模数据集（12个公开基准、15种传感器、近2200万次扫描）和创新的 PseudoLabeler 自监督伪标签生成模块，在不使用任何人工标注的情况下在 nuScenes、SemanticKITTI 和 Waymo 上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUPO: All Roads Lead to Rome - Incentivizing Divergent Thinking in Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][强化学习] MUPO 揭示了 GRPO 训练导致推理多样性坍缩的问题——模型过早收敛到少数推理策略而丢弃大多数替代方案。通过将响应分组进行局部化优势估计并引入多样性奖励，MUPO 激励 VLM 保持发散思维，在多个推理基准上提升 2-7%。
+  [CVPR 2026][多模态VLM][强化学习] MUPO 揭示了 GRPO 训练导致推理多样性坍缩的问题——模型过早收敛到少数推理策略而丢弃大多数替代方案。通过将响应分组进行局部化优势估计并引入多样性奖励，MUPO 激励 VLM 保持发散思维，在多个推理基准上提升 2-7%。 RL（特别是 GRPO）已成为增强 VLM…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Deep Normalization-Free Spiking Neural Networks with Lateral Inhibition
 description: >-
-  提出基于皮层兴奋-抑制（E-I）回路的无归一化学习框架 DeepEISNN，通过 E-I Init 和 E-I Prop 两项技术实现深度 SNN 的稳定端到端训练，兼顾性能与生物合理性。
+  提出基于皮层兴奋-抑制（E-I）回路的无归一化学习框架 DeepEISNN，通过 E-I Init 和 E-I Prop 两项技术实现深度 SNN 的稳定端到端训练，兼顾性能与生物合理性。 核心矛盾 SNN 训练面临性能与生物合理性：的权衡： - 高性能方法：（反向传播 + 批归一化）：将 SNN 当作普通深度学习构件…
 tags:
 
 ---

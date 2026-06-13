@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FIction: 4D Future Interaction Prediction from Video
 description: >-
-  [CVPR 2025 (Highlight)][4D交互预测] 本文提出 FIction，首个从视频中进行 4D 未来交互预测的模型，给定输入视频预测人将与环境中哪些物体在什么 3D 位置发生交互，以及如何执行该交互（3D 人体姿态），在 EgoExo4D 数据集上超越前方法 30%+ 相对增益。
+  [CVPR 2025 (Highlight)][4D交互预测] 本文提出 FIction，首个从视频中进行 4D 未来交互预测的模型，给定输入视频预测人将与环境中哪些物体在什么 3D 位置发生交互，以及如何执行该交互（3D 人体姿态），在 EgoExo4D 数据集上超越前方法 30%+ 相对增益。 领域现状：预测人如何与环境…
 tags:
   - "CVPR 2025 (Highlight)"
   - "4D交互预测"

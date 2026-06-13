@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UNICBench: UNIfied Counting Benchmark for MLLM
 description: >-
-  [CVPR 2026][多模态VLM][counting benchmark] 推出UNICBench，首个统一的跨模态（图像/文本/音频）多层级计数基准，包含5,508+5,888+2,905共14…
+  [CVPR 2026][多模态VLM][counting benchmark] 推出UNICBench，首个统一的跨模态（图像/文本/音频）多层级计数基准，包含5,508+5,888+2,905共14,301个QA对及三级能力(Pattern/Semantic/Reasoning)×三级难度(Easy/Medium/Hard)分类，系统评估45个SOTA MLLM，揭示基本计数任务趋近但推理级和困难任务存在显著差距。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression
 description: >-
-  [NeurIPS 2025][迁移学习] 提出两步式Transfer MNI方法，在高维过参数化线性回归中通过"保留目标信号+零空间迁移源知识"机制增强良性过拟合的泛化能力，刻画了模型偏移和协变量偏移下的非渐近excess risk，并发现了"免费午餐"协变量偏移区间。
+  [NeurIPS 2025 Spotlight][迁移学习] 提出两步式Transfer MNI方法，在高维过参数化线性回归中通过"保留目标信号+零空间迁移源知识"机制增强良性过拟合的泛化能力，刻画了模型偏移和协变量偏移下的非渐近excess risk，并发现了"免费午餐"协变量偏移区间。 问题背景 迁移学习通过利用源任务知…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "迁移学习"
   - "良性过拟合"
   - "高维线性回归"

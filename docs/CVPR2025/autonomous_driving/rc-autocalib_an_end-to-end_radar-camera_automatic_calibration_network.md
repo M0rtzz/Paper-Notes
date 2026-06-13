@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RC-AutoCalib: An End-to-End Radar-Camera Automatic Calibration Network
 description: >-
-  [CVPR 2025][自动驾驶][雷达-相机标定] 提出 RC-AutoCalib，首个针对 3D 雷达和相机的端到端在线自动几何标定方法，通过双视角（前视+鸟瞰）特征表示、选择性融合机制和噪声抗性匹配器，有效解决雷达数据稀疏和高度不确定性问题…
+  [CVPR 2025][自动驾驶][雷达-相机标定] 提出 RC-AutoCalib，首个针对 3D 雷达和相机的端到端在线自动几何标定方法，通过双视角（前视+鸟瞰）特征表示、选择性融合机制和噪声抗性匹配器，有效解决雷达数据稀疏和高度不确定性问题，在 nuScenes 数据集上大幅超越现有 LiDAR-相机标定方法。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model
 description: >-
-  [ICML 2025][推荐系统][multi-objective alignment] 提出 PARM 单一统一的偏好感知自回归奖励模型，通过 PBLoRA（Preference-Aware Bilinear Low-Rank Adaptation）将偏好向量条件化到 ARM 中…
+  [ICML 2025][推荐系统][multi-objective alignment] 提出 PARM 单一统一的偏好感知自回归奖励模型，通过 PBLoRA（Preference-Aware Bilinear Low-Rank Adaptation）将偏好向量条件化到 ARM 中，实现高效的多目标测试时对齐——用 1 个奖励模型替代 k 个独立 ARM，降低推理成本且支持弱到强引导（7B 引导 65B）。
 tags:
   - "ICML 2025"
   - "推荐系统"

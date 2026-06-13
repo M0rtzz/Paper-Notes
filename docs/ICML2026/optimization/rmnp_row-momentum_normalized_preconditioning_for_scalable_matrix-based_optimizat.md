@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RMNP: Row-Momentum Normalized Preconditioning for Scalable Matrix-Based Optimization
 description: >-
-  [ICML 2026][优化/理论][Preconditioning] 本文基于 Transformer 层级 Hessian 的「行块对角占优」结构，把 Muon 优化器里昂贵的 Newton-Schulz 正交化换成一次行级 $\ell_2$ 归一化…
+  [ICML 2026][优化/理论][Preconditioning] 本文基于 Transformer 层级 Hessian 的「行块对角占优」结构，把 Muon 优化器里昂贵的 Newton-Schulz 正交化换成一次行级 $\ell_2$ 归一化，将每步预条件复杂度从 $\mathcal{O}(mn\min(m,n))$ 降到 $\mathcal{O}(mn)$，在 GPT-2 / LLaMA 预训练上 wall-clock 提速 13–44×、ppl 不降反略升。
 tags:
   - "ICML 2026"
   - "优化/理论"

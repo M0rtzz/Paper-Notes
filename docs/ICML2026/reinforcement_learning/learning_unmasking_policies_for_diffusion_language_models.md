@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning Unmasking Policies for Diffusion Language Models
 description: >-
-  [ICML 2026][强化学习][dLLM 采样] 本文把掩码扩散语言模型的解码过程显式建模为一个 MDP，用 GRPO 训练一个仅以 token 置信度为输入、参数量不到底座模型 0.01% 的单层 Transformer 策略，自适应地决定每一步要 unmask 哪些位置…
+  [ICML 2026 Oral Spotlight][强化学习][dLLM 采样] 本文把掩码扩散语言模型的解码过程显式建模为一个 MDP，用 GRPO 训练一个仅以 token 置信度为输入、参数量不到底座模型 0.01% 的单层 Transformer 策略，自适应地决定每一步要 unmask 哪些位置，在 semi-AR 设定下追平 Fast-dLLM 等手工启发式，在 full-diffusion 设定下显著反超并展现跨模型、跨任务、跨长度的迁移性。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral Spotlight"
   - "强化学习"
   - "dLLM 采样"
   - "unmasking 策略"

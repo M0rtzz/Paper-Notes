@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Noise Diffusion for Enhancing Semantic Faithfulness in Text-to-Image Synthesis
 description: >-
-  [CVPR 2025][图像生成][噪声优化] Noise Diffusion 提出利用大型视觉语言模型（VLM）的 VQA 评分监督优化扩散模型的初始噪声，通过分布保持的噪声更新公式 $z'_T = \sqrt{1-\gamma} z_T + \sqrt{\gamma} \sigma$（保证 $z'_T \…
+  [CVPR 2025][图像生成][噪声优化] Noise Diffusion 提出利用大型视觉语言模型（VLM）的 VQA 评分监督优化扩散模型的初始噪声，通过分布保持的噪声更新公式 $z'_T = \sqrt{1-\gamma} z_T + \sqrt{\gamma} \sigma$（保证 $z'_T \sim \mathcal{N}(0,I)$）和梯度引导噪声选择，在复杂 prompt 上 VQA Score 提升 19.3%，适配所有 SD 版本和多种 VLM。
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VSSD: Vision Mamba with Non-Causal State Space Duality
 description: >-
-  [ICCV 2025][语义分割][状态空间模型] 提出非因果状态空间对偶（NC-SSD），通过保留 token 贡献的相对权重取代隐状态的累积衰减，将 Mamba2 的 SSD 无缝转化为非因果形式，构建 VSSD 视觉骨干，在分类/检测/分割多任务上超越现有 SSM 模型，同时训练速度提升 20%-50%…
+  [ICCV 2025][语义分割][状态空间模型] 提出非因果状态空间对偶（NC-SSD），通过保留 token 贡献的相对权重取代隐状态的累积衰减，将 Mamba2 的 SSD 无缝转化为非因果形式，构建 VSSD 视觉骨干，在分类/检测/分割多任务上超越现有 SSM 模型，同时训练速度提升 20%-50%。
 tags:
   - "ICCV 2025"
   - "语义分割"

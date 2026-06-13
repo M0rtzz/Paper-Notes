@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V-LynX: Token Interface Alignment for VideoX LLMs
 description: >-
-  [ICML 2026][多模态VLM][Video LLM] V-LynX 通过发现 Video LLM 内部的**连续 token interface（流形）**——视觉编码器 + 投影层雕刻出的与 LLM 内部操作空间兼容的几何先验——仅用轻量级 LoRA（68.7M 参数）和**未配对的单模态数据**就…
+  [ICML 2026][多模态VLM][Video LLM] V-LynX 通过发现 Video LLM 内部的**连续 token interface（流形）**——视觉编码器 + 投影层雕刻出的与 LLM 内部操作空间兼容的几何先验——仅用轻量级 LoRA（68.7M 参数）和**未配对的单模态数据**就能将新模态（音频、3D、高帧率视频）高效集成到预训练 Video LLM 中，AVSD 上 CIDEr 145.7 vs PAVE 134.5（参数减少 46%）。
 tags:
   - "ICML 2026"
   - "多模态VLM"

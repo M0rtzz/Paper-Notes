@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundation Models as World Models: A Foundational Study in Text-Based GridWorlds
 description: >-
-  [NeurIPS 2025][强化学习][基础模型] 系统性评估了基础模型（LLM）作为零样本世界模型（FWM）和直接决策智能体（FA）在文本网格世界中的表现，揭示了两种策略在确定性/随机性环境中的互补优势。
+  [NeurIPS 2025][强化学习][基础模型] 系统性评估了基础模型（LLM）作为零样本世界模型（FWM）和直接决策智能体（FA）在文本网格世界中的表现，揭示了两种策略在确定性/随机性环境中的互补优势。 强化学习（RL）智能体在复杂游戏中表现出色，但其样本效率极低，通常需要数百万次交互才能学到有效策略…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

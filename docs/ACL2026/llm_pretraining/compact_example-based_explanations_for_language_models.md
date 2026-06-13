@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Compact Example-Based Explanations for Language Models
 description: >-
-  [ACL 2026][预训练][训练数据影响力] 本文提出选择相关性分数（Selection Relevance Score），一种无需重训练的指标来评估训练样本子集作为示例解释的质量，并证明常见的"选最高影响力"策略常不如随机选择，进而提出平衡影响力与代表性的新策略。
+  [ACL 2026 Findings][预训练][训练数据影响力] 本文提出选择相关性分数（Selection Relevance Score），一种无需重训练的指标来评估训练样本子集作为示例解释的质量，并证明常见的"选最高影响力"策略常不如随机选择，进而提出平衡影响力与代表性的新策略。 领域现状：训练数据影响力估计方法（如…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "预训练"
   - "训练数据影响力"
   - "示例解释"

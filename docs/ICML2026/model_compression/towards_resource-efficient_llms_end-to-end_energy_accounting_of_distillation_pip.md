@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Resource-Efficient LLMs: End-to-End Energy Accounting of Distillation Pipelines
 description: >-
-  [ICML 2026][模型压缩][蒸馏能耗] 作者搭了一套基于 NVML 的分阶段 GPU 能耗采集框架，把蒸馏流水线拆成"教师侧 + 学生侧 + 评估"逐段计量，发现一次性运行时教师 logit 缓存 / 合成数据生成才是大头…
+  [ICML 2026][模型压缩][蒸馏能耗] 作者搭了一套基于 NVML 的分阶段 GPU 能耗采集框架，把蒸馏流水线拆成"教师侧 + 学生侧 + 评估"逐段计量，发现一次性运行时教师 logit 缓存 / 合成数据生成才是大头，让 KD 和 synthetic SFT 在 1B–13B OLMo-2 学生上反而比直接 SFT 多耗约 $2.4\times$ 能量，并给出闭式 break-even 公式说明只有当教师产物被复用 $N^*$ 次以上时蒸馏才真"省电"。
 tags:
   - "ICML 2026"
   - "模型压缩"

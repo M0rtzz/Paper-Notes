@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PhysX-3D: Physical-Grounded 3D Asset Generation
 description: >-
-  [NeurIPS 2025][3D视觉][物理属性3D生成] PhysX提出了首个端到端的物理属性驱动3D资产生成范式，包括PhysXNet（首个系统标注了绝对尺度、材料、功能可供性、运动学和功能描述五个维度的物理3D数据集，含26K+对象）和PhysXGen（双分支前馈生成框架…
+  [NeurIPS 2025 Spotlight][3D视觉][物理属性3D生成] PhysX提出了首个端到端的物理属性驱动3D资产生成范式，包括PhysXNet（首个系统标注了绝对尺度、材料、功能可供性、运动学和功能描述五个维度的物理3D数据集，含26K+对象）和PhysXGen（双分支前馈生成框架，将物理知识注入预训练的3D结构空间中）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "3D视觉"
   - "物理属性3D生成"
   - "3D数据集"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Which of These Best Describes Multiple Choice Evaluation with LLMs?
 description: >-
-  [ACL 2025][LLM/NLP][多选题评估] 系统论证 MCQA 作为 LLM 标准评估格式存在三大类问题：(1) 格式缺陷——无法测试生成/主观性、不匹配 LLM 真实使用场景、不能充分测试知识深度；(2) 数据集缺陷——泄露、不可回答、捷径和饱和…
+  [ACL 2025][LLM 其他][多选题评估] 系统论证 MCQA 作为 LLM 标准评估格式存在三大类问题：(1) 格式缺陷——无法测试生成/主观性、不匹配 LLM 真实使用场景、不能充分测试知识深度；(2) 数据集缺陷——泄露、不可回答、捷径和饱和；(3) 模型行为问题——鲁棒性差、选项偏置和不忠实解释。借鉴教育测试学提出 Constructed Response、Explanation MCQA、IRT 分析等系统化修复方案。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多选题评估"
   - "MCQA 缺陷"
   - "教育测试学"

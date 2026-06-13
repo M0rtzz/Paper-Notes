@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering Differences in Strategic Behavior Between Humans and LLMs
 description: >-
-  [ICML 2026][可解释性][行为博弈论] 本文用 AlphaEvolve（基于 LLM 的程序合成框架）直接从行为数据里"进化"出可解释的 Python 行为模型，并在迭代石头剪刀布（IRPS）上对比人类与前沿 LLM…
+  [ICML 2026][可解释性][行为博弈论] 本文用 AlphaEvolve（基于 LLM 的程序合成框架）直接从行为数据里"进化"出可解释的 Python 行为模型，并在迭代石头剪刀布（IRPS）上对比人类与前沿 LLM，发现 Gemini 2.5 Pro/Flash 与 GPT 5.1 在胜率和"对手模型"维度上都明显超过人类，而 GPT OSS 120B 反而越打越差。
 tags:
   - "ICML 2026"
   - "可解释性"

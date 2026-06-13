@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Scaling Evaluation-Time Compute with Reasoning Models as Evaluators
 description: >-
-  [ACL2026][LLM推理][evaluation-time compute] 这篇论文把 test-time scaling 从“生成答案”扩展到“评估答案”，发现让 reasoning model 在评估时生成更多推理 token、逐步检查过程并结合 outcome/process 分数…
+  [ACL2026 Findings][LLM推理][evaluation-time compute] 这篇论文把 test-time scaling 从“生成答案”扩展到“评估答案”，发现让 reasoning model 在评估时生成更多推理 token、逐步检查过程并结合 outcome/process 分数，可以在 ProcessBench 和 Best-of-N 重排序中超过训练好的 PRM/ORM。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM推理"
   - "evaluation-time compute"
   - "reasoning evaluator"

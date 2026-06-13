@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controllable Navigation Instruction Generation with Chain of Thought Prompting
 description: >-
-  [ECCV 2024][LLM推理][导航指令生成] 提出 C-Instructor，利用 LLM 的思维链提示实现风格和内容可控的导航指令生成，通过 CoTL（带地标的思维链）、STMT（空间拓扑建模）和 SMT（混合风格训练）三大机制，在四个室内外导航数据集上全面超越已有方法。
+  [ECCV 2024][LLM推理][导航指令生成] 提出 C-Instructor，利用 LLM 的思维链提示实现风格和内容可控的导航指令生成，通过 CoTL（带地标的思维链）、STMT（空间拓扑建模）和 SMT（混合风格训练）三大机制，在四个室内外导航数据集上全面超越已有方法。 领域现状：视觉语言导航（VLN）中…
 tags:
   - "ECCV 2024"
   - "LLM推理"

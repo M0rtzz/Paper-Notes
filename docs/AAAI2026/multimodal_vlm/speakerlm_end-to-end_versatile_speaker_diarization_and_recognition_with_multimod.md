@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpeakerLM: End-to-End Versatile Speaker Diarization and Recognition with Multimodal Large Language Models
 description: >-
-  [AAAI 2026][多模态VLM][说话人分离与识别] SpeakerLM 是首个专为端到端说话人分离与识别（SDR）设计的多模态大语言模型，通过音频编码器-投影器-LLM 架构和灵活的说话人注册机制，在多个公开基准上大幅超越级联基线系统（cpCER 绝对降低最高达 13.82%）…
+  [AAAI 2026][多模态VLM][说话人分离与识别] SpeakerLM 是首个专为端到端说话人分离与识别（SDR）设计的多模态大语言模型，通过音频编码器-投影器-LLM 架构和灵活的说话人注册机制，在多个公开基准上大幅超越级联基线系统（cpCER 绝对降低最高达 13.82%），并在域外测试集上展现强鲁棒性。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Click That: Teaching Web Agents to Resist Deceptive Interfaces
 description: >-
-  [ACL 2026][LLM Agent][Deceptive UI Defense] 作者首次把"对抗欺骗性 UI"形式化为 web agent 的独立防御问题，提出两阶段框架 **DUDE**（不对称惩罚的 hybrid-reward RL 学一个 evaluator + 用 experience sum…
+  [ACL 2026][LLM Agent][Deceptive UI Defense] 作者首次把"对抗欺骗性 UI"形式化为 web agent 的独立防御问题，提出两阶段框架 **DUDE**（不对称惩罚的 hybrid-reward RL 学一个 evaluator + 用 experience summarization 把失败模式蒸馏成可迁移上下文），并发布含 1407 个真实/合成场景的 **RUC** 基准，在 3 个 VLM agent base 上把欺骗诱发失败率从 23.5% 降到 1.5%、任务成功率从 9.5% 推到 60.5%，且 Stage-2 优化的 prompt 能零样本迁移到闭源模型。
 tags:
   - "ACL 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BD-Net: Has Depth-Wise Convolution Ever Been Applied in Binary Neural Networks?
 description: >-
-  [AAAI 2026][模型压缩][二值神经网络] 本文提出 BD-Net，通过引入 1.58-bit 卷积和 pre-BN 残差连接，首次成功将深度可分离卷积（depth-wise convolution）应用于二值神经网络（BNN）…
+  [AAAI 2026][模型压缩][二值神经网络] 本文提出 BD-Net，通过引入 1.58-bit 卷积和 pre-BN 残差连接，首次成功将深度可分离卷积（depth-wise convolution）应用于二值神经网络（BNN），在 ImageNet 上以 33M OPs 的极低计算量实现了 BNN 领域的新 SOTA，多个数据集上精度提升最高达 9.3 个百分点。
 tags:
   - "AAAI 2026"
   - "模型压缩"

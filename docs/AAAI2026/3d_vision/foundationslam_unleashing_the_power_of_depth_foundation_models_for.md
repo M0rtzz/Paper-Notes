@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoundationSLAM: Unleashing the Power of Depth Foundation Models for End-to-End Dense Visual SLAM
 description: >-
-  [AAAI 2026 (Oral)][3D视觉][单目SLAM] 将深度基础模型的几何先验注入光流式SLAM系统，通过混合光流网络、双向一致BA层和可靠性感知精炼三个模块形成闭环，在TUM/EuRoC/7Scenes/ETH3D四大数据集取得SOTA轨迹精度和稠密重建质量，18 FPS实时运行。
+  [AAAI 2026 (Oral)][3D视觉][单目SLAM] 将深度基础模型的几何先验注入光流式SLAM系统，通过混合光流网络、双向一致BA层和可靠性感知精炼三个模块形成闭环，在TUM/EuRoC/7Scenes/ETH3D四大数据集取得SOTA轨迹精度和稠密重建质量，18 FPS实时运行。 现有基于光流的单目稠密SLA…
 tags:
   - "AAAI 2026 (Oral)"
   - "3D视觉"

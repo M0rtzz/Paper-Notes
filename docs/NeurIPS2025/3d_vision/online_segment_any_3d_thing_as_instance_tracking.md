@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Segment Any 3D Thing as Instance Tracking
 description: >-
-  [NeurIPS 2025][3D视觉][在线3D实例分割] 将在线3D实例分割重新建模为实例跟踪问题（AutoSeg3D），通过长期记忆进行实例关联、短期记忆进行实例更新、以及空间一致性学习缓解VFM过分割，在ScanNet200上超越ESAM 2.8 AP并保持实时性。
+  [NeurIPS 2025][3D视觉][在线3D实例分割] 将在线3D实例分割重新建模为实例跟踪问题（AutoSeg3D），通过长期记忆进行实例关联、短期记忆进行实例更新、以及空间一致性学习缓解VFM过分割，在ScanNet200上超越ESAM 2.8 AP并保持实时性。 在线、实时、细粒度的3D实例分割是具身智能体感知和…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMet: Metaphor-Driven Covert Communication for Multi-Agent Language Games
 description: >-
-  [ACL 2025 (Main)][多智能体][隐喻推理] 本文提出 CoMet 框架，通过整合基于假设检验的隐喻推理器和自改进式隐喻生成器，使 LLM 智能体能在多智能体语言博弈中运用隐喻进行隐蔽通信和语义规避…
+  [ACL 2025 (Main)][多智能体][隐喻推理] 本文提出 CoMet 框架，通过整合基于假设检验的隐喻推理器和自改进式隐喻生成器，使 LLM 智能体能在多智能体语言博弈中运用隐喻进行隐蔽通信和语义规避，在 Undercover 和 Adversarial Taboo 两个游戏中显著提升了智能体的策略沟通能力（胜率从 0.20 提升至 0.70）。
 tags:
   - "ACL 2025 (Main)"
   - "多智能体"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pruning as a Cooperative Game: Surrogate-Assisted Layer Contribution Estimation for Large Language Models
 description: >-
-  [ICLR 2026][强化学习][层剪枝] 将LLM层剪枝建模为合作博弈（每层=玩家，模型性能=效用）→精确Shapley值计算不可行（$2^L$种组合）→提出两阶段近似：(1)分层蒙特卡洛采样生成mask+评估PPL作为监督信号→(2)训练轻量代理网络预测任意mask的性能→高效估算每层Shapley值→…
+  [ICLR 2026][强化学习][层剪枝] 将LLM层剪枝建模为合作博弈（每层=玩家，模型性能=效用）→精确Shapley值计算不可行（$2^L$种组合）→提出两阶段近似：(1)分层蒙特卡洛采样生成mask+评估PPL作为监督信号→(2)训练轻量代理网络预测任意mask的性能→高效估算每层Shapley值→捕获层间依赖→显著优于静态启发式剪枝基线。
 tags:
   - "ICLR 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedALT: Federated Fine-Tuning through Adaptive Local Training with Rest-of-World LoRA
 description: >-
-  [AAAI 2026][LLM安全][联邦学习] 提出 FedALT，通过为每个客户端维护独立的 Individual LoRA（本地训练更新）和冻结的 Rest-of-World (RoW) LoRA（其他客户端平均），配合自适应 MoE 混合器动态平衡本地知识与全局知识…
+  [AAAI 2026][LLM安全][联邦学习] 提出 FedALT，通过为每个客户端维护独立的 Individual LoRA（本地训练更新）和冻结的 Rest-of-World (RoW) LoRA（其他客户端平均），配合自适应 MoE 混合器动态平衡本地知识与全局知识，彻底避免 FedAvg 聚合导致的跨客户端干扰，在异构任务联邦 LLM 微调上显著优于 SOTA。
 tags:
   - "AAAI 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Material Anything: Generating Materials for Any 3D Object via Diffusion
 description: >-
-  [CVPR 2025][3D视觉][PBR材质生成] 提出 Material Anything，一个全自动的统一扩散框架，通过三头 U-Net 架构、置信度掩码和渲染损失适配预训练图像扩散模型生成 PBR 材质（albedo/roughness/metallic/bump）…
+  [CVPR 2025][3D视觉][PBR材质生成] 提出 Material Anything，一个全自动的统一扩散框架，通过三头 U-Net 架构、置信度掩码和渲染损失适配预训练图像扩散模型生成 PBR 材质（albedo/roughness/metallic/bump），配合置信度引导的渐进式多视角生成策略和 UV 空间精化模型，为不同光照条件（无纹理/纯 albedo/扫描/生成）下的 3D 物体统一生成高质量材质贴图。
 tags:
   - "CVPR 2025"
   - "3D视觉"

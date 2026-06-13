@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WirelessMathBench: A Mathematical Modeling Benchmark for LLMs in Wireless Communications
 description: >-
-  [ACL 2025][信号/通信][无线通信] 本文提出WirelessMathBench，一个包含587道题目的无线通信数学建模基准，从40篇前沿论文中提取，系统评估LLM在领域特定数学推导上的能力，揭示即使最强的DeepSeek-R1平均准确率也仅38.05%，完整公式推导仅7.83%。
+  [ACL 2025][信号/通信][无线通信] 本文提出WirelessMathBench，一个包含587道题目的无线通信数学建模基准，从40篇前沿论文中提取，系统评估LLM在领域特定数学推导上的能力，揭示即使最强的DeepSeek-R1平均准确率也仅38.05%，完整公式推导仅7.83%。 领域现状： LLM在通用数学推理…
 tags:
   - "ACL 2025"
   - "信号/通信"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Browsing Like Human: A Multimodal Web Agent with Experiential Fast-and-Slow Thinking
 description: >-
-  [ACL 2025][LLM Agent][Web Agent] 本文提出WebExperT框架，模拟人类"快思考与慢思考"的规划模式，并通过从失败中反思的经验学习机制不断改进决策，在Mind2Web基准上取得了监督和无监督设置下的优异表现。
+  [ACL 2025][LLM Agent][Web Agent] 本文提出WebExperT框架，模拟人类"快思考与慢思考"的规划模式，并通过从失败中反思的经验学习机制不断改进决策，在Mind2Web基准上取得了监督和无监督设置下的优异表现。 领域现状：自动化网页导航任务要求Agent根据用户指令（如"预订一张从北京到上海的…
 tags:
   - "ACL 2025"
   - "LLM Agent"

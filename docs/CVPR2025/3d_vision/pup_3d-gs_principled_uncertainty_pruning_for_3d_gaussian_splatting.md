@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 提出基于 Fisher 信息矩阵的有原则的 3D 高斯溅射剪枝方法 PUP 3D-GS，通过空间参数（位置+尺度）的二阶敏感度评分实现 90% 高斯剪枝率，同时保持比现有启发式方法更好的视觉质量和前景细节。
+  [CVPR 2025][3D视觉][3D高斯溅射] 提出基于 Fisher 信息矩阵的有原则的 3D 高斯溅射剪枝方法 PUP 3D-GS，通过空间参数（位置+尺度）的二阶敏感度评分实现 90% 高斯剪枝率，同时保持比现有启发式方法更好的视觉质量和前景细节。 3D Gaussian Splatting (3D-GS) 在新视…
 tags:
   - "CVPR 2025"
   - "3D视觉"

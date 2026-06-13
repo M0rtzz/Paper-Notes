@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Multi-View Spatial Reasoning from Cross-View Relations
 description: >-
-  [CVPR 2026][3D视觉][多视角空间推理] XVR（Cross-View Relations）构建了一个 10 万样本的大规模多视角视觉问答数据集，通过对应关系、几何验证和视点定位三类任务显式训练 VLM 的跨视图空间推理能力，在多视角基准和机器人操作任务上均取得显著提升。
+  [CVPR 2026][3D视觉][多视角空间推理] XVR（Cross-View Relations）构建了一个 10 万样本的大规模多视角视觉问答数据集，通过对应关系、几何验证和视点定位三类任务显式训练 VLM 的跨视图空间推理能力，在多视角基准和机器人操作任务上均取得显著提升。 视觉语言模型（VLMs）在单视图视觉任务…
 tags:
   - "CVPR 2026"
   - "3D视觉"

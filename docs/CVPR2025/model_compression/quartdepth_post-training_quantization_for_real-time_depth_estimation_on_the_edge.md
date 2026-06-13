@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QuartDepth: Post-Training Quantization for Real-Time Depth Estimation on the Edge
 description: >-
-  [CVPR 2025][模型压缩][训练后量化] 提出 QuartDepth，一个面向ASIC边缘设备的训练后量化框架，通过LogNP激活磨光（将异常分布的激活值变换为量化友好的分布）、激活量化补偿（更新权重补偿激活量化误差）和Fisher信息引导的权重重建，将深度估计基础模型量化到W4A4/W4A8…
+  [CVPR 2025][模型压缩][训练后量化] 提出 QuartDepth，一个面向ASIC边缘设备的训练后量化框架，通过LogNP激活磨光（将异常分布的激活值变换为量化友好的分布）、激活量化补偿（更新权重补偿激活量化误差）和Fisher信息引导的权重重建，将深度估计基础模型量化到W4A4/W4A8，并设计可编程硬件加速器实现实时推理。
 tags:
   - "CVPR 2025"
   - "模型压缩"

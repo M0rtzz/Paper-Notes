@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FoundationStereo: Zero-Shot Stereo Matching
 description: >-
-  [CVPR 2025][3D视觉][零样本立体匹配] 提出 FoundationStereo，一个大规模立体深度估计基础模型，通过百万级高保真合成数据集、Side-Tuning Adapter 融合单目深度先验、以及混合代价体过滤（含 Axial-Planar Convolution 和 Disparity…
+  [CVPR 2025][3D视觉][零样本立体匹配] 提出 FoundationStereo，一个大规模立体深度估计基础模型，通过百万级高保真合成数据集、Side-Tuning Adapter 融合单目深度先验、以及混合代价体过滤（含 Axial-Planar Convolution 和 Disparity Transformer），实现了无需目标域微调的强零样本泛化性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

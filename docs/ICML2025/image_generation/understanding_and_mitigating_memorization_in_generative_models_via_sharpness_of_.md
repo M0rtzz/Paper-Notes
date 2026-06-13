@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes
 description: >-
-  [ICML2025][图像生成][扩散模型] 通过对数概率密度的 Hessian 曲率（sharpness）建立扩散模型记忆化的几何分析框架，提出可在生成初始阶段检测记忆化的新指标，并设计无需重训练的 SAIL 初始噪声优化策略来缓解记忆化。
+  [ICML2025 Spotlight][图像生成][扩散模型] 通过对数概率密度的 Hessian 曲率（sharpness）建立扩散模型记忆化的几何分析框架，提出可在生成初始阶段检测记忆化的新指标，并设计无需重训练的 SAIL 初始噪声优化策略来缓解记忆化。 扩散模型（Diffusion Models）在图像生成领域取得…
 tags:
-  - "ICML2025"
+  - "ICML2025 Spotlight"
   - "图像生成"
   - "扩散模型"
   - "记忆"

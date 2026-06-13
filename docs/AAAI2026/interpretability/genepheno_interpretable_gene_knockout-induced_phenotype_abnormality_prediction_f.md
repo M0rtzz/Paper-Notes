@@ -2,9 +2,9 @@
 title: >-
   [论文解读] GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework
 description: >-
-  [AAAI 2026][可解释性][基因序列] 本文提出 GenePheno，首个从基因序列端到端预测基因敲除诱导表型异常的可解释多标签预测框架，通过对比式多标签学习捕获表型间相关性、互斥正则化强制生物学一致性、以及基因本体（GO）瓶颈层提供可解释性…
+  [AAAI 2026 Oral][可解释性][基因序列] 本文提出 GenePheno，首个从基因序列端到端预测基因敲除诱导表型异常的可解释多标签预测框架，通过对比式多标签学习捕获表型间相关性、互斥正则化强制生物学一致性、以及基因本体（GO）瓶颈层提供可解释性，在 4 个数据集上取得 SOTA 的基因中心 $F_{\max}$ 和表型中心 AUC。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "可解释性"
   - "基因序列"
   - "表型异常预测"

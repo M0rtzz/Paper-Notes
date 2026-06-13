@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Query Circuits: Explaining How Language Models Answer User Prompts
 description: >-
-  [ICML 2026][可解释性][查询电路] 本文提出 **查询电路 (query circuit) 发现** 任务——直接在原 LLM 内部追踪解释"模型为何对某个具体输入产生该输出"的稀疏子网络，并配套提出更稳健的忠实度指标 NDF 和 Best-of-N 采样算法…
+  [ICML 2026][可解释性][查询电路] 本文提出 **查询电路 (query circuit) 发现** 任务——直接在原 LLM 内部追踪解释"模型为何对某个具体输入产生该输出"的稀疏子网络，并配套提出更稳健的忠实度指标 NDF 和 Best-of-N 采样算法，使得 MMLU 上仅占模型 1.3% 边的电路即可恢复约 60% 的单题行为。
 tags:
   - "ICML 2026"
   - "可解释性"

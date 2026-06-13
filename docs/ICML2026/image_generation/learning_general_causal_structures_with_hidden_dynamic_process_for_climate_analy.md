@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning General Causal Structures with Hidden Dynamic Process for Climate Analysis
 description: >-
-  [ICML 2026][图像生成][因果发现] 本文提出 CaDRe，用一个带结构约束的时序 VAE 把"观测变量之间的因果图"与"驱动观测的隐动力过程"放在同一个非参数框架下联合识别，并给出了从时序数据同时恢复二者的可识别性定理…
+  [ICML 2026][图像生成][因果发现] 本文提出 CaDRe，用一个带结构约束的时序 VAE 把"观测变量之间的因果图"与"驱动观测的隐动力过程"放在同一个非参数框架下联合识别，并给出了从时序数据同时恢复二者的可识别性定理，在合成数据上验证理论、在 CESM2 气候数据上得到与领域专家一致的因果图与有竞争力的温度预测精度。
 tags:
   - "ICML 2026"
   - "图像生成"

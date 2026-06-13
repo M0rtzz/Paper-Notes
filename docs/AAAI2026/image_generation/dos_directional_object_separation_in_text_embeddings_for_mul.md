@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DOS: Directional Object Separation in Text Embeddings for Multi-Object Image Generation
 description: >-
-  [AAAI 2026][图像生成][多物体图像生成] 识别出多物体生成失败的四种场景（相似形状/纹理、不同背景偏好、多物体），通过构建方向性分离向量修改CLIP的三类文本嵌入（语义token/EOT/pooled），在SDXL上将成功率提升16-25%并将融合率降低3-12%…
+  [AAAI 2026][图像生成][多物体图像生成] 识别出多物体生成失败的四种场景（相似形状/纹理、不同背景偏好、多物体），通过构建方向性分离向量修改CLIP的三类文本嵌入（语义token/EOT/pooled），在SDXL上将成功率提升16-25%并将融合率降低3-12%，推理速度接近baseline（约4×快于Attend-and-Excite）。
 tags:
   - "AAAI 2026"
   - "图像生成"

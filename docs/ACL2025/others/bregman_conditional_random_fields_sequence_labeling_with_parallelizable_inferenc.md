@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bregman Conditional Random Fields: Sequence Labeling with Parallelizable Inference
 description: >-
-  [ACL 2025][CRF] 提出 Bregman CRF (Bcrf)，一种基于均值正则化（mean regularization）的新型序列标注判别模型，使用迭代 Bregman 投影实现可并行化的推理算法，替代传统 CRF 中固有顺序的 Viterbi/Forward 算法…
+  [ACL 2025][CRF] 提出 Bregman CRF (Bcrf)，一种基于均值正则化（mean regularization）的新型序列标注判别模型，使用迭代 Bregman 投影实现可并行化的推理算法，替代传统 CRF 中固有顺序的 Viterbi/Forward 算法，在 POS/NER/分词任务上性能与标准 CRF 持平但更快，且在有禁止标签转移约束的场景下优于 Mean Field 方法。
 tags:
   - "ACL 2025"
   - "CRF"

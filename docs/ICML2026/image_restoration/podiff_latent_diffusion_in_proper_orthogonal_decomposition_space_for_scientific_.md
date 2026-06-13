@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PODiff: Latent Diffusion in Proper Orthogonal Decomposition Space for Scientific Super-Resolution
 description: >-
-  [ICML 2026][图像恢复][POD 潜空间] PODiff 把扩散模型从像素空间搬到固定的、按方差排序的 POD 系数空间里跑，用极小的 MLP 就能在 $640\times 480$ SST 降尺度任务上拿到与像素级扩散相当的精度，同时因为重构是线性的…
+  [ICML 2026][图像恢复][POD 潜空间] PODiff 把扩散模型从像素空间搬到固定的、按方差排序的 POD 系数空间里跑，用极小的 MLP 就能在 $640\times 480$ SST 降尺度任务上拿到与像素级扩散相当的精度，同时因为重构是线性的，集成方差可以通过 $\Sigma_u=\Phi\Sigma_a\Phi^\top$ 解析回传到物理空间，得到空间上可解释、且校准良好的不确定性。
 tags:
   - "ICML 2026"
   - "图像恢复"

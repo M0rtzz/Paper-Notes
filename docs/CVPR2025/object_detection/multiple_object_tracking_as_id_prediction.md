@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multiple Object Tracking as ID Prediction
 description: >-
-  [CVPR 2025][目标检测][多目标跟踪] 本文提出MOTIP，将多目标跟踪中的目标关联问题重新定义为in-context ID预测任务：给定携带ID嵌入的历史轨迹，直接用标准Transformer解码器预测当前检测的ID标签…
+  [CVPR 2025][目标检测][多目标跟踪] 本文提出MOTIP，将多目标跟踪中的目标关联问题重新定义为in-context ID预测任务：给定携带ID嵌入的历史轨迹，直接用标准Transformer解码器预测当前检测的ID标签，无需启发式匹配算法即在DanceTrack上以69.6 HOTA大幅超越前SOTA CO-MOT (65.3)。
 tags:
   - "CVPR 2025"
   - "目标检测"

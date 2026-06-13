@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneScribe-1M: A Large-Scale Video Dataset with Comprehensive Geometric and Semantic Annotations
 description: >-
-  [CVPR 2026][3D视觉][视频数据集] 提出SceneScribe-1M——一个包含100万个野外视频、超4000小时的大规模多模态视频数据集，提供详细文本描述、精确相机参数、连续深度图和一致性3D点轨迹等全面标注，为3D几何感知和视频生成任务提供统一资源。
+  [CVPR 2026][3D视觉][视频数据集] 提出SceneScribe-1M——一个包含100万个野外视频、超4000小时的大规模多模态视频数据集，提供详细文本描述、精确相机参数、连续深度图和一致性3D点轨迹等全面标注，为3D几何感知和视频生成任务提供统一资源。 1. 领域现状：3D几何感知和视频合成的融合是构建世界基…
 tags:
   - "CVPR 2026"
   - "3D视觉"

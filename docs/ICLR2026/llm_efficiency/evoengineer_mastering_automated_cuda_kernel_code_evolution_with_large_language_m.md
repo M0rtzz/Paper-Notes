@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models
 description: >-
-  [ICLR 2026][LLM效率][CUDA Kernel Optimization] 提出 EvoEngineer，首个系统化的 LLM-based 代码演化框架，将代码演化分解为 traverse technique（含两层设计：solution guiding + prompt engineering…
+  [ICLR 2026][LLM效率][CUDA Kernel Optimization] 提出 EvoEngineer，首个系统化的 LLM-based 代码演化框架，将代码演化分解为 traverse technique（含两层设计：solution guiding + prompt engineering）和 population management 两个正交组件，在 91 个真实 CUDA kernel 上实现最高 2.72× 中位加速比和 69.8% 代码有效率，在性能和正确性两个维度上超越现有方法。
 tags:
   - "ICLR 2026"
   - "LLM效率"

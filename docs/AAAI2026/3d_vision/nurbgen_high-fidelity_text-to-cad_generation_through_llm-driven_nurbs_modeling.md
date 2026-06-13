@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NURBGen: High-Fidelity Text-to-CAD Generation through LLM-Driven NURBS Modeling
 description: >-
-  [AAAI 2026][3D视觉][Text-to-CAD] 首次提出基于NURBS表面表示的文本到CAD生成框架NURBGen，通过微调LLM将自然语言描述转换为结构化的NURBS参数JSON，并引入混合表示（untrimmed NURBS + 解析原语）和大规模partABC数据集…
+  [AAAI 2026][3D视觉][Text-to-CAD] 首次提出基于NURBS表面表示的文本到CAD生成框架NURBGen，通过微调LLM将自然语言描述转换为结构化的NURBS参数JSON，并引入混合表示（untrimmed NURBS + 解析原语）和大规模partABC数据集，在几何保真度和尺寸精度上显著超越现有方法。
 tags:
   - "AAAI 2026"
   - "3D视觉"

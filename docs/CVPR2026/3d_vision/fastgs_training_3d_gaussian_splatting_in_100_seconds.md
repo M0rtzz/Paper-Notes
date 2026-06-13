@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastGS: Training 3D Gaussian Splatting in 100 Seconds
 description: >-
-  [CVPR2026][3D视觉][3D Gaussian Splatting] 提出 FastGS，一个基于多视角一致性的 3DGS 加速框架，通过多视角一致性密集化（VCD）和多视角一致性剪枝（VCP）策略精准控制 Gaussian 数量…
+  [CVPR2026][3D视觉][3D Gaussian Splatting] 提出 FastGS，一个基于多视角一致性的 3DGS 加速框架，通过多视角一致性密集化（VCD）和多视角一致性剪枝（VCP）策略精准控制 Gaussian 数量，在 Mip-NeRF 360 等数据集上实现约 100 秒完成场景训练，相比 vanilla 3DGS 加速 15× 以上，且渲染质量可比。
 tags:
   - "CVPR2026"
   - "3D视觉"

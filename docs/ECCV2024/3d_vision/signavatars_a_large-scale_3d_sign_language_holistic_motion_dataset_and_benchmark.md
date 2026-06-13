@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SignAvatars: A Large-scale 3D Sign Language Holistic Motion Dataset and Benchmark
 description: >-
-  [ECCV 2024][3D视觉][sign language] 提出 SignAvatars，首个大规模多提示（HamNoSys/语言/单词）3D 手语全身运动数据集（70K 视频、8.34M 帧、153 名手语者），设计了带生物力学约束的自动 3D 标注流水线…
+  [ECCV 2024][3D视觉][sign language] 提出 SignAvatars，首个大规模多提示（HamNoSys/语言/单词）3D 手语全身运动数据集（70K 视频、8.34M 帧、153 名手语者），设计了带生物力学约束的自动 3D 标注流水线，并提出基于 VQ-VAE 的 SignVAE 模型作为 3D 手语生产（SLP）的首个 benchmark baseline。
 tags:
   - "ECCV 2024"
   - "3D视觉"

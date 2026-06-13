@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAISI-v2: Accelerated 3D High-Resolution Medical Image Synthesis with Rectified Flow and Region-specific Contrastive Loss
 description: >-
-  [AAAI 2026][医学图像][3D医学图像合成] 提出 MAISI-v2，首个将 Rectified Flow 引入 3D 医学图像合成的框架，通过替换 DDPM 实现 33 倍加速，并设计区域特异性对比损失增强对肿瘤等小区域条件的忠实度，在下游肿瘤分割任务中验证了合成数据的增强价值。
+  [AAAI 2026][医学图像][3D医学图像合成] 提出 MAISI-v2，首个将 Rectified Flow 引入 3D 医学图像合成的框架，通过替换 DDPM 实现 33 倍加速，并设计区域特异性对比损失增强对肿瘤等小区域条件的忠实度，在下游肿瘤分割任务中验证了合成数据的增强价值。 医学图像合成在数据增强、模态转换…
 tags:
   - "AAAI 2026"
   - "医学图像"

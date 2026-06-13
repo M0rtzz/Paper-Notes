@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributive Fairness in Large Language Models: Evaluating Alignment with Human Values
 description: >-
-  [NeurIPS 2025][LLM安全][分配公平性] 本文系统评估多个 SOTA LLM（GPT-4o、Claude-3.5S、Llama3-70b、Gemini-1.5P）在非策略性资源分配任务中的分配公平性偏好…
+  [NeurIPS 2025][LLM安全][分配公平性] 本文系统评估多个 SOTA LLM（GPT-4o、Claude-3.5S、Llama3-70b、Gemini-1.5P）在非策略性资源分配任务中的分配公平性偏好，发现 LLM 与人类存在显著偏差：LLM 偏好效率和无嫉妒性 (EF) 而忽视人类更看重的公平性/平等性 (EQ)，但在选择题模式下 GPT-4o 和 Claude 能正确识别公平方案。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

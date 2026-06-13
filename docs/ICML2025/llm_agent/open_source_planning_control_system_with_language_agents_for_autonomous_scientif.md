@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Open Source Planning & Control System with Language Agents for Autonomous Scientific Discovery
 description: >-
-  [ICML 2025 (Workshop on Machine Learning for Astrophysics)][LLM Agent][多智能体系统] 本文提出 cmbagent，一个由约 30 个 LLM Agent 组成的多智能体系统，采用 Planning & Control 策略编排无人干预的科研工作流…
+  [ICML 2025 (Workshop on Machine Learning for Astrophysics)][LLM Agent][多智能体系统] 本文提出 cmbagent，一个由约 30 个 LLM Agent 组成的多智能体系统，采用 Planning & Control 策略编排无人干预的科研工作流，各 Agent 分别负责论文检索、代码编写、结果解读、输出评审等专业任务，并可在本地执行代码；该系统成功完成了博士级别的宇宙学任务（用超新星数据测量宇宙学参数），在两个基准测试集上优于当前最先进的 LLM。
 tags:
   - "ICML 2025 (Workshop on Machine Learning for Astrophysics)"
   - "LLM Agent"

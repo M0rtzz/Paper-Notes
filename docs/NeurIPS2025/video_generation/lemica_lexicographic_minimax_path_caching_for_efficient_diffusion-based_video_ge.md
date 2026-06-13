@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation
 description: >-
-  [NeurIPS 2025][视频生成][扩散模型] 提出 LeMiCa，一种免训练的扩散视频生成加速框架，将缓存调度建模为有向无环图上的字典序极小极大路径优化问题，通过全局误差控制实现速度和质量的双重提升（Latte 上 2.9× 加速，Open-Sora 上 LPIPS 低至 0.05）。
+  [NeurIPS 2025 Spotlight][视频生成][扩散模型] 提出 LeMiCa，一种免训练的扩散视频生成加速框架，将缓存调度建模为有向无环图上的字典序极小极大路径优化问题，通过全局误差控制实现速度和质量的双重提升（Latte 上 2.9× 加速，Open-Sora 上 LPIPS 低至 0.05）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "视频生成"
   - "扩散模型"
   - "video generation"

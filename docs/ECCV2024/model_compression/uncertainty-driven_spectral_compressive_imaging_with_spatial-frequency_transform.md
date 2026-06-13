@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty-Driven Spectral Compressive Imaging with Spatial-Frequency Transformer
 description: >-
-  [ECCV 2024][模型压缩][高光谱图像重建] 本文提出 Specformer，通过并行的空间局部窗口自注意力（LWSA）和频率域自注意力（FWSA）模块充分捕获高光谱图像（HSI）的空间稀疏性和光谱间相似性先验，并引入不确定性驱动的损失函数增强网络对纹理丰富和边缘区域的重建能力…
+  [ECCV 2024][模型压缩][高光谱图像重建] 本文提出 Specformer，通过并行的空间局部窗口自注意力（LWSA）和频率域自注意力（FWSA）模块充分捕获高光谱图像（HSI）的空间稀疏性和光谱间相似性先验，并引入不确定性驱动的损失函数增强网络对纹理丰富和边缘区域的重建能力，在模拟和真实 HSI 数据集上以更低计算量超越 SOTA。
 tags:
   - "ECCV 2024"
   - "模型压缩"

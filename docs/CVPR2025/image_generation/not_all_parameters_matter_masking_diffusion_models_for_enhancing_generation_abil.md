@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Not All Parameters Matter: Masking Diffusion Models for Enhancing Generation Ability
 description: >-
-  [CVPR 2025][图像生成][参数掩码] MaskUNet 发现扩散模型中"将某些 U-Net 参数置零反而能提升生成质量"这一反直觉现象，提出基于时间步和样本内容的可学习二值掩码动态选择参数，COCO 2014 FID 从 12.85 降至 11.72（+8.8%）…
+  [CVPR 2025][图像生成][参数掩码] MaskUNet 发现扩散模型中"将某些 U-Net 参数置零反而能提升生成质量"这一反直觉现象，提出基于时间步和样本内容的可学习二值掩码动态选择参数，COCO 2014 FID 从 12.85 降至 11.72（+8.8%），T2I-CompBench 颜色绑定从 0.375 提升至 0.699。
 tags:
   - "CVPR 2025"
   - "图像生成"

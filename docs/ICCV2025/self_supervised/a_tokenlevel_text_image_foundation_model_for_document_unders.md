@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Token-level Text Image Foundation Model for Document Understanding (TokenFD/TokenVL)
 description: >-
-  [ICCV 2025][自监督学习][token-level对齐] 提出首个 token 级别文本图像基础模型 TokenFD，通过在 2000 万图像、18 亿 BPE token-mask 对上进行 token 级视觉-语言对齐预训练，实现 image-as-text 语义能力…
+  [ICCV 2025][自监督学习][token-level对齐] 提出首个 token 级别文本图像基础模型 TokenFD，通过在 2000 万图像、18 亿 BPE token-mask 对上进行 token 级视觉-语言对齐预训练，实现 image-as-text 语义能力，并基于此构建文档理解 MLLM TokenVL，在 OCRBench 上得分 860（8B 组最高），在 DocVQA 等十项 VQA 任务上平均提升 8.8%。
 tags:
   - "ICCV 2025"
   - "自监督学习"

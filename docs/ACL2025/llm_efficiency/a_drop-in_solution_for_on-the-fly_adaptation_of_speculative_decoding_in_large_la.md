@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Drop-In Solution for On-the-Fly Adaptation of Speculative Decoding in Large Language Models
 description: >-
-  [ACL 2025][LLM效率][推测解码] 本文提出一种即插即用的推测解码自适应方案，能够在推理过程中动态调整草稿模型的推测窗口大小γ（以及可能的草稿模型选择），从而在不同输入分布下最大化推测解码的端到端加速比。
+  [ACL 2025][LLM效率][推测解码] 本文提出一种即插即用的推测解码自适应方案，能够在推理过程中动态调整草稿模型的推测窗口大小γ（以及可能的草稿模型选择），从而在不同输入分布下最大化推测解码的端到端加速比。 领域现状：大语言模型（LLM）基于 Transformer 架构构建，在实时推理时对内存和计算资源需求极高…
 tags:
   - "ACL 2025"
   - "LLM效率"

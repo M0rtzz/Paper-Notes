@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics
 description: >-
-  [NeurIPS 2025][强化学习][平均场博弈] 提出DEDA-FP算法，首次在连续状态/动作空间的非平稳平均场博弈（MFG）中同时学习Nash均衡策略和种群分布，通过结合深度RL计算最优响应、监督学习表示平均策略、条件Normalizing Flow建模时变种群分布…
+  [NeurIPS 2025][强化学习][平均场博弈] 提出DEDA-FP算法，首次在连续状态/动作空间的非平稳平均场博弈（MFG）中同时学习Nash均衡策略和种群分布，通过结合深度RL计算最优响应、监督学习表示平均策略、条件Normalizing Flow建模时变种群分布，实现了比现有方法快10倍以上的采样效率。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

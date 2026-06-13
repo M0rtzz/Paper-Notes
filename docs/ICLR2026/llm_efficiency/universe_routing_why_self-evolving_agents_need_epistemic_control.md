@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universe Routing: Why Self-Evolving Agents Need Epistemic Control
 description: >-
-  [ICLR 2026][LLM效率][认知路由] 将自主Agent在链式推理中容易混淆认识论框架（如频率主义vs贝叶斯）的问题形式化为"宇宙路由"，训练一个465M参数的轻量路由器将问题分类到7个互斥信念空间后分发给专用求解器，证明硬路由比软MoE快7倍且精度相同…
+  [ICLR 2026][LLM效率][认知路由] 将自主Agent在链式推理中容易混淆认识论框架（如频率主义vs贝叶斯）的问题形式化为"宇宙路由"，训练一个465M参数的轻量路由器将问题分类到7个互斥信念空间后分发给专用求解器，证明硬路由比软MoE快7倍且精度相同，模块化架构配合rehearsal可实现零遗忘的持续学习。
 tags:
   - "ICLR 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust 3D Object Detection using Probabilistic Point Clouds from Single-Photon LiDARs
 description: >-
-  [ICCV2025][自动驾驶][概率点云] 提出概率点云(PPC)表示——将单光子LiDAR原始时间直方图中的测量置信度作为概率属性附加到每个3D点上，配合轻量级NPD滤波和FPPS采样方法，实现低信噪比(SBR)下鲁棒的3D目标检测，在SUN RGB-D和KITTI上大幅超越点云去噪基线…
+  [ICCV2025][自动驾驶][概率点云] 提出概率点云(PPC)表示——将单光子LiDAR原始时间直方图中的测量置信度作为概率属性附加到每个3D点上，配合轻量级NPD滤波和FPPS采样方法，实现低信噪比(SBR)下鲁棒的3D目标检测，在SUN RGB-D和KITTI上大幅超越点云去噪基线，且几乎不增加计算开销。
 tags:
   - "ICCV2025"
   - "自动驾驶"

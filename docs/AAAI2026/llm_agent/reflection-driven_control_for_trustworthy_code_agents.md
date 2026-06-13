@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reflection-Driven Control for Trustworthy Code Agents
 description: >-
-  [AAAI 2026][LLM Agent][反思驱动控制] 提出 Reflection-Driven Control 模块，将"自我反思"从事后补丁提升为 Agent 推理过程中的一等控制回路，通过轻量自检、证据驱动修复和反思记忆库三个组件，在安全代码生成任务上显著提升代码安全率。
+  [AAAI 2026][LLM Agent][反思驱动控制] 提出 Reflection-Driven Control 模块，将"自我反思"从事后补丁提升为 Agent 推理过程中的一等控制回路，通过轻量自检、证据驱动修复和反思记忆库三个组件，在安全代码生成任务上显著提升代码安全率。 领域现状：LLM Agent 正从单轮文…
 tags:
   - "AAAI 2026"
   - "LLM Agent"

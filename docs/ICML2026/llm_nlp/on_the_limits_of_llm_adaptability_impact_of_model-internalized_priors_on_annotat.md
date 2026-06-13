@@ -2,10 +2,10 @@
 title: >-
   [论文解读] On the Limits of LLM Adaptability: Impact of Model-Internalized Priors on Annotation
 description: >-
-  [ICML 2026][LLM/NLP][LLM 标注] 通过对毒性检测的大规模实验（9 模型 × 5 数据集），论文发现 LLM 标注性能主要由**定义对齐**而非文本记忆决定；模型内化的先验使得绝大多数零样本错误对提示词纠正"有韧性"——即使明确提供定义和示例…
+  [ICML 2026 Oral Spotlight][LLM 其他][LLM 标注] 通过对毒性检测的大规模实验（9 模型 × 5 数据集），论文发现 LLM 标注性能主要由**定义对齐**而非文本记忆决定；模型内化的先验使得绝大多数零样本错误对提示词纠正"有韧性"——即使明确提供定义和示例，**三分之二的错误**仍无法被修正（救援率仅 34.8%），且置信度无法用于检测定义错误。
 tags:
-  - "ICML 2026"
-  - "LLM/NLP"
+  - "ICML 2026 Oral Spotlight"
+  - "LLM 其他"
   - "LLM 标注"
   - "模型内化先验"
   - "决策粘性"

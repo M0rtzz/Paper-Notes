@@ -2,9 +2,10 @@
 title: >-
   [论文解读] From Generalist to Specialist Representation
 description: >-
-  [ICML 2026][identifiability] 本文给出第一个完全非参数（无 intervention、无 functional 约束）的两层 hierarchical 可识别性证明：时间-任务结构由 collider 视角下的 CI test 可识别…
+  [ICML 2026][物理/科学计算][identifiability] 本文给出第一个完全非参数（无 intervention、无 functional 约束）的两层 hierarchical 可识别性证明：时间-任务结构由 collider 视角下的 CI test 可识别，任务相关 latent 由 sparsity 正则可从 generalist 表示中分离出来。
 tags:
   - "ICML 2026"
+  - "物理/科学计算"
   - "identifiability"
   - "task-relevant representation"
   - "nonparametric"

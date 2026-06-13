@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Retrieving Counterfactuals Improves Visual In-Context Learning
 description: >-
-  [CVPR 2026][因果推理][visual in-context learning] 提出 CIRCLES 框架，通过属性引导的 composed image retrieval 检索反事实示例，构建因果+相关性双通道 in-context demonstration…
+  [CVPR 2026][因果推理][visual in-context learning] 提出 CIRCLES 框架，通过属性引导的 composed image retrieval 检索反事实示例，构建因果+相关性双通道 in-context demonstration，显著提升 VLM 的细粒度视觉推理能力。
 tags:
   - "CVPR 2026"
   - "因果推理"

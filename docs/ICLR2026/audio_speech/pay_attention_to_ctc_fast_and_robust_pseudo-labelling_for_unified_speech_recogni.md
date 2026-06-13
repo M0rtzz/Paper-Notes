@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pay Attention to CTC: Fast and Robust Pseudo-Labelling for Unified Speech Recognition
 description: >-
-  [ICLR 2026][音频/语音][统一语音识别] 提出 USR 2.0，用 CTC 驱动的教师强制替代自回归伪标签生成，注意力伪标签在单次前向传播中完成，训练速度提升近 2×，通过 CTC-注意力联合预测增强分布外鲁棒性…
+  [ICLR 2026][音频/语音][统一语音识别] 提出 USR 2.0，用 CTC 驱动的教师强制替代自回归伪标签生成，注意力伪标签在单次前向传播中完成，训练速度提升近 2×，通过 CTC-注意力联合预测增强分布外鲁棒性，在 LRS3/LRS2/WildVSR 上实现 ASR/VSR/AVSR 三任务统一模型 SOTA。
 tags:
   - "ICLR 2026"
   - "音频/语音"

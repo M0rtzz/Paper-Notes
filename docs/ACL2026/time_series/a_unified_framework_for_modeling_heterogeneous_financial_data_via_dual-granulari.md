@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting
 description: >-
-  [ACL 2026][时间序列][信用风险预测] 提出FinLangNet框架，通过双模块架构（DeepFM处理静态特征 + 双粒度提示机制的Transformer处理时序行为）实现多尺度信用风险预测，在滴滴金融平台部署后实现KS提升6.3pp和坏账率下降9.9%。
+  [ACL 2026 Oral][时间序列][信用风险预测] 提出FinLangNet框架，通过双模块架构（DeepFM处理静态特征 + 双粒度提示机制的Transformer处理时序行为）实现多尺度信用风险预测，在滴滴金融平台部署后实现KS提升6.3pp和坏账率下降9.9%。 领域现状：工业信用评分系统仍高度依赖XGBoos…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Oral"
   - "时间序列"
   - "信用风险预测"
   - "异构金融数据"

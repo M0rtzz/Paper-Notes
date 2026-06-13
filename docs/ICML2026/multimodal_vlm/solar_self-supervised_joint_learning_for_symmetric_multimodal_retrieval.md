@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOLAR: Self-supervised Joint Learning for Symmetric Multimodal Retrieval
 description: >-
-  [ICML2026][多模态VLM][对称多模态检索] SOLAR 提出第一套面向"对称 MM2MM 检索"（查询和文档都是 image+text 对、且角色可互换）的两阶段自监督学习框架——第一阶段通过全局-局部对齐 + QDA 自适应阈值学习出"交集 mask"以解耦图文的共享/独有信息…
+  [ICML2026][多模态VLM][对称多模态检索] SOLAR 提出第一套面向"对称 MM2MM 检索"（查询和文档都是 image+text 对、且角色可互换）的两阶段自监督学习框架——第一阶段通过全局-局部对齐 + QDA 自适应阈值学习出"交集 mask"以解耦图文的共享/独有信息，第二阶段利用该 mask 通过对图文不同区域分别掩码构造正/硬负样本做对比学习，并配套发布 214 个人工校验的 sym-MM2MM benchmark；最终以 0.2B 参数和 768 维嵌入超过最强 7.75B VLM 基线 7.08 个百分点。
 tags:
   - "ICML2026"
   - "多模态VLM"

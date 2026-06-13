@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction
 description: >-
-  [ACL 2025][自监督学习][手语表示学习] 提出 SHuBERT（Sign Hidden-Unit BERT），将语音自监督学习模型 HuBERT 的 masked cluster prediction 范式迁移到手语视频——对手部、面部、身体姿态四个流分别聚类并同时预测 masked 帧的聚类标签…
+  [ACL 2025][自监督学习][手语表示学习] 提出 SHuBERT（Sign Hidden-Unit BERT），将语音自监督学习模型 HuBERT 的 masked cluster prediction 范式迁移到手语视频——对手部、面部、身体姿态四个流分别聚类并同时预测 masked 帧的聚类标签，在约 984 小时 ASL 视频上预训练后，在翻译/孤立识别/指拼检测多任务上达到公开数据 SOTA。
 tags:
   - "ACL 2025"
   - "自监督学习"

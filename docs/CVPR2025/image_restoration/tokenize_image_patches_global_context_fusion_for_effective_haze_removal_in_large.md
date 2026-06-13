@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tokenize Image Patches: Global Context Fusion for Effective Haze Removal in Large Images
 description: >-
-  [CVPR 2025][图像恢复][大图像去雾] DehazeXL 提出了一种端到端的大图像去雾方法，将输入图像分割为固定大小的 patch 并编码为 token，通过高效全局注意力模块融合上下文信息，使得在仅 21GB 显存下即可推理 10240×10240 图像…
+  [CVPR 2025][图像恢复][大图像去雾] DehazeXL 提出了一种端到端的大图像去雾方法，将输入图像分割为固定大小的 patch 并编码为 token，通过高效全局注意力模块融合上下文信息，使得在仅 21GB 显存下即可推理 10240×10240 图像，并在自建的 8K 去雾数据集上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "图像恢复"

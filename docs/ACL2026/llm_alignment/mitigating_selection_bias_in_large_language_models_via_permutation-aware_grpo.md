@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Selection Bias in Large Language Models via Permutation-Aware GRPO
 description: >-
-  [ACL 2026][LLM对齐][GRPO] 作者发现标准 GRPO 把同一题目的不同选项顺序当成独立 prompt 训练，导致模型在"换顺序"后选择会变化（permutation-blindness），于是提出 PA-GRPO：把同一语义实例的多种排列组成 permutation group…
+  [ACL 2026][LLM对齐][GRPO] 作者发现标准 GRPO 把同一题目的不同选项顺序当成独立 prompt 训练，导致模型在"换顺序"后选择会变化（permutation-blindness），于是提出 PA-GRPO：把同一语义实例的多种排列组成 permutation group，用跨排列的 advantage baseline + 一致性 reward 显式优化"换顺序不换选择"，在 7 个 MCQ/Judge benchmark 上把 selection bias 大幅压低同时保持准确率。
 tags:
   - "ACL 2026"
   - "LLM对齐"

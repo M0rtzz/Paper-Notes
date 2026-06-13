@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Explaining CLIP Zero-shot Predictions Through Concepts
 description: >-
-  [CVPR 2026][信息检索/RAG][CLIP] 本文提出 EZPC，通过学习一个线性投影矩阵将 CLIP 的图像-文本嵌入映射到可解释的概念空间，在几乎不损失零样本分类精度的前提下（CIFAR-100/CUB/ImageNet-100 上 H-mean 仅差约 1%）…
+  [CVPR 2026][信息检索/RAG][CLIP] 本文提出 EZPC，通过学习一个线性投影矩阵将 CLIP 的图像-文本嵌入映射到可解释的概念空间，在几乎不损失零样本分类精度的前提下（CIFAR-100/CUB/ImageNet-100 上 H-mean 仅差约 1%），为 CLIP 的预测提供基于人类可理解概念的忠实解释，且推理开销仅增加约 0.1ms。
 tags:
   - "CVPR 2026"
   - "信息检索/RAG"

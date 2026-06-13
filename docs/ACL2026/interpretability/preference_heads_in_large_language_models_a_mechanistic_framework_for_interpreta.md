@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference Heads in Large Language Models: A Mechanistic Framework for Interpretable Personalization
 description: >-
-  [ACL2026][可解释性][机制可解释性] 这篇论文提出 Preference Heads 与 Differential Preference Steering，用因果消融找出少量承载用户偏好的注意力头，再在解码时放大这些头带来的偏好信号，从而在不改模型参数的情况下提升个性化生成与预测效果。
+  [ACL2026][可解释性][机制可解释性] 这篇论文提出 Preference Heads 与 Differential Preference Steering，用因果消融找出少量承载用户偏好的注意力头，再在解码时放大这些头带来的偏好信号，从而在不改模型参数的情况下提升个性化生成与预测效果。 领域现状：LLM 已经表现出…
 tags:
   - "ACL2026"
   - "可解释性"

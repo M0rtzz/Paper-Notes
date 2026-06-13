@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation
 description: >-
-  [ICLR 2026][对话系统][个性化生成] FlyThinker 提出了一种高效的 "think-while-generating" 框架，使用独立的推理模型(Reasoner)在 token 级别并行生成潜在推理信号，动态融入生成模型(Generator)以指导个性化长文本生成，同时保持训练和推理效率…
+  [ICLR 2026][对话系统][个性化生成] FlyThinker 提出了一种高效的 "think-while-generating" 框架，使用独立的推理模型(Reasoner)在 token 级别并行生成潜在推理信号，动态融入生成模型(Generator)以指导个性化长文本生成，同时保持训练和推理效率。
 tags:
   - "ICLR 2026"
   - "对话系统"

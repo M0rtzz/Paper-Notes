@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing is Understanding: Unlocking Causal Attention into Modality-Mutual Attention for Multimodal LLMs
 description: >-
-  [ICML 2026][多模态VLM][MLLM] 作者把 decoder-only MLLM 里的因果注意力掩码改一个"洞"，让排在前面的图像 token 反过来去看后面的文本问题 token——这一行掩码修改不加任何参数、不改训练数据…
+  [ICML 2026][多模态VLM][MLLM] 作者把 decoder-only MLLM 里的因果注意力掩码改一个"洞"，让排在前面的图像 token 反过来去看后面的文本问题 token——这一行掩码修改不加任何参数、不改训练数据，在 3 个 LLM backbone 与 12 个多模态基准上平均涨 6.2 个点。
 tags:
   - "ICML 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LUCID: Learning-Enabled Uncertainty-Aware Certification of Stochastic Dynamical Systems
 description: >-
-  [AAAI 2026][医疗NLP][安全认证] 本文提出 LUCID，首个可为黑盒随机动力系统提供量化安全保证的验证引擎，通过数据驱动的控制障碍证书方法、条件均值嵌入和有限傅里叶核展开，将半无限非凸优化问题重构为可处理的线性规划。
+  [AAAI 2026][医疗NLP][安全认证] 本文提出 LUCID，首个可为黑盒随机动力系统提供量化安全保证的验证引擎，通过数据驱动的控制障碍证书方法、条件均值嵌入和有限傅里叶核展开，将半无限非凸优化问题重构为可处理的线性规划。 领域现状：AI 组件（如深度学习控制器）越来越多地嵌入到自动驾驶、医疗设备等高风险系统中…
 tags:
   - "AAAI 2026"
   - "医疗NLP"

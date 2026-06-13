@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpreto: An Explainability Library for Transformers
 description: >-
-  [ACL2026][可解释性][Transformer] Interpreto 是一个面向 HuggingFace 语言模型的开源 Python 可解释性库，把 token/word/sentence attribution 与 activation-level concept explanations 统一…
+  [ACL2026][可解释性][Transformer] Interpreto 是一个面向 HuggingFace 语言模型的开源 Python 可解释性库，把 token/word/sentence attribution 与 activation-level concept explanations 统一到一个 API 中，并提供 demo、教程、指标和端到端概念解释流水线。
 tags:
   - "ACL2026"
   - "可解释性"

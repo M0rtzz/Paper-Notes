@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Object-aware Sound Source Localization via Audio-Visual Scene Understanding
 description: >-
-  [CVPR 2025][音频/语音][声源定位] 本文提出 OA-SSL：在训练阶段用 MLLM 为每张图生成"K 个发声物 + 1 个静音物"的细粒度描述作为额外监督锚点，再用 OCA (object-aware contrastive alignment) 和 ORI (object region iso…
+  [CVPR 2025][音频/语音][声源定位] 本文提出 OA-SSL：在训练阶段用 MLLM 为每张图生成"K 个发声物 + 1 个静音物"的细粒度描述作为额外监督锚点，再用 OCA (object-aware contrastive alignment) 和 ORI (object region isolation) 两个损失，让模型即使在画面里有多把吉他、只有一把在弹的复杂场景下也能只定位真正在发声的物体。
 tags:
   - "CVPR 2025"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Joint Shadow Generation and Relighting via Light-Geometry Interaction Maps
 description: >-
-  [ICLR2026][3D视觉][shadow generation] 提出 Light-Geometry Interaction (LGI) maps，一种从单目深度估计中编码光照-遮挡关系的 2.5D 表示，嵌入 bridge matching 生成框架中实现阴影生成与物体重光照的联合建模…
+  [ICLR2026][3D视觉][shadow generation] 提出 Light-Geometry Interaction (LGI) maps，一种从单目深度估计中编码光照-遮挡关系的 2.5D 表示，嵌入 bridge matching 生成框架中实现阴影生成与物体重光照的联合建模，在合成和真实图像上均取得 SOTA 效果。
 tags:
   - "ICLR2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MiniMax Learning of Interpretable Factored Stochastic Policies from Conjoint Data, with Uncertainty Quantification
 description: >-
-  [ICML 2026][可解释性][conjoint analysis] 本文把传统社会科学里的联合实验 (conjoint analysis) 从"估计 AMCE 边际效应"重新表述为"在指数级因子动作空间上学习可解释的乘积型 Categorical 随机策略"…
+  [ICML 2026][可解释性][conjoint analysis] 本文把传统社会科学里的联合实验 (conjoint analysis) 从"估计 AMCE 边际效应"重新表述为"在指数级因子动作空间上学习可解释的乘积型 Categorical 随机策略"，给出二阶交互模型下带 $L_2$ 信赖域的闭式解、可微分通解、以及含政党初选制度的两人 minimax 扩展，并通过 Delta 方法把结果模型的不确定性传播到策略概率和价值上，在 2016 美国总统联合实验上首次让对抗均衡的"票房份额"落回历史区间。
 tags:
   - "ICML 2026"
   - "可解释性"

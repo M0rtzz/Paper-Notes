@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GuidedBridge: Training-freely Improving Bridge Models with Prior Guidance
 description: >-
-  [ICML 2026][图像生成][bridge model] 针对 diffusion bridge 模型（data-to-data 生成），论文提出训练免费的 Prior Guidance (PG)：通过对干净 prior 加扰动构造"弱 prior"…
+  [ICML 2026][图像生成][bridge model] 针对 diffusion bridge 模型（data-to-data 生成），论文提出训练免费的 Prior Guidance (PG)：通过对干净 prior 加扰动构造"弱 prior"，再把强/弱 prior 的两个 denoising 结果做外推来放大模型对 prior 的利用，并进一步用 U 型频率调制（FMPG）和 CFG-FMPG 级联框架，在 Edges→Handbags、DIODE、ImageNet inpainting 等任务上不增训练、不增 NFE 地稳定提升 DDBM / DBIM 等预训练 bridge 模型的 FID。
 tags:
   - "ICML 2026"
   - "图像生成"

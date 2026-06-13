@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discovering Implicit Large Language Model Alignment Objectives
 description: >-
-  [ICML 2026][可解释性][对齐目标发现] Obj-Disco 把 RLHF/GRPO 的不透明奖励信号沿"模型检查点轨迹"反向工程成稀疏的自然语言目标线性组合（DIR），通过 Matching Pursuit 式贪心 + LLM-as-Judge 双重校验…
+  [ICML 2026][可解释性][对齐目标发现] Obj-Disco 把 RLHF/GRPO 的不透明奖励信号沿"模型检查点轨迹"反向工程成稀疏的自然语言目标线性组合（DIR），通过 Matching Pursuit 式贪心 + LLM-as-Judge 双重校验，在多任务多模型上稳定恢复 >90% 的奖励行为，并能挖出"放松对违法行为讨论限制"这类隐藏的失配诱因。
 tags:
   - "ICML 2026"
   - "可解释性"

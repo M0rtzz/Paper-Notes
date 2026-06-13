@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DGNO: Discontinuous Galerkin Neural Operator for Pathology Defocus Deblurring
 description: >-
-  [ICML 2026][医学图像][病理图像去模糊] DGNO 把病理显微图像的散焦去模糊重新表述为"空间变化积分算子"的反问题，用不连续 Galerkin 风格把全局核拆成元素局部积分算子 + 界面数值通量，既保留神经算子的物理可解释性，又能处理病理图像本质上的局部不连续模糊…
+  [ICML 2026][医学图像][病理图像去模糊] DGNO 把病理显微图像的散焦去模糊重新表述为"空间变化积分算子"的反问题，用不连续 Galerkin 风格把全局核拆成元素局部积分算子 + 界面数值通量，既保留神经算子的物理可解释性，又能处理病理图像本质上的局部不连续模糊；在 BBBC006w1 等数据集上超越 NAFNet / Restormer / MambaIRv2 等 SOTA。
 tags:
   - "ICML 2026"
   - "医学图像"

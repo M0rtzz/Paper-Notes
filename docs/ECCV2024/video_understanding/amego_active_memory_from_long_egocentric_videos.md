@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMEGO: Active Memory from Long EGOcentric Videos
 description: >-
-  [ECCV 2024][视频理解][Egocentric Video] 提出 AMEGO，一种从长第一人称视频中在线构建结构化"活跃记忆"的方法，通过 HOI tracklet + 位置分段 + 语义无关的视觉查询…
+  [ECCV 2024][视频理解][Egocentric Video] 提出 AMEGO，一种从长第一人称视频中在线构建结构化"活跃记忆"的方法，通过 HOI tracklet + 位置分段 + 语义无关的视觉查询，在新提出的 AMB benchmark 上超越 Video QA baselines 12.7%。
 tags:
   - "ECCV 2024"
   - "视频理解"

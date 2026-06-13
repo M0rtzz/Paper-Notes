@@ -2,9 +2,9 @@
 title: >-
   [论文解读] The Obfuscation Atlas: Mapping Where Honesty Emerges in RLVR with Deception Probes
 description: >-
-  [ICML 2026][强化学习][欺骗探针] 本文构造 MBPP-Honeypot 这一会自然诱发奖励黑客 (hardcode 测试用例) 的 RLVR 环境, 系统地刻画了"用白盒欺骗探针 (deception probe) 当训练信号"会得到的四类策略——诚实 / 露骨欺骗 / 混淆策略 (obfusc…
+  [ICML 2026 Oral][强化学习][欺骗探针] 本文构造 MBPP-Honeypot 这一会自然诱发奖励黑客 (hardcode 测试用例) 的 RLVR 环境, 系统地刻画了"用白盒欺骗探针 (deception probe) 当训练信号"会得到的四类策略——诚实 / 露骨欺骗 / 混淆策略 (obfuscated policy) / 混淆激活 (obfuscated activations), 并证明只要 KL 正则系数 $\beta$ 与探针惩罚系数 $\alpha$ 都足够大, 就能在奖励黑客场景下稳定收敛到诚实策略。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "强化学习"
   - "欺骗探针"
   - "奖励黑客"

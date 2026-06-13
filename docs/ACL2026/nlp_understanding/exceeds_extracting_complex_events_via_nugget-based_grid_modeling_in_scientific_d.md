@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EXCEEDS: Extracting Complex Events via Nugget-based Grid Modeling in Scientific Domain
 description: >-
-  [ACL 2026][NLP理解][事件抽取] 作者发现"科学文献摘要"这种 EE 场景同时存在**信息密度高**（每 100 token 5.54 个事件 + 12.82 个 argument）和**事件结构复杂**（重叠/不连续/逆序 nugget + 子事件）两个老 EE 数据集都没碰过的痛点…
+  [ACL 2026][NLP理解][事件抽取] 作者发现"科学文献摘要"这种 EE 场景同时存在**信息密度高**（每 100 token 5.54 个事件 + 12.82 个 argument）和**事件结构复杂**（重叠/不连续/逆序 nugget + 子事件）两个老 EE 数据集都没碰过的痛点，于是 (a) 标注了 2,508 文档/24,381 事件的 SciEvents 数据集，(b) 提出 EXCEEDS——把 EE 重构成"在 $l \times l$ word-word 网格上做多标签关系分类"的端到端框架，用 HTL/THL/EAL 三种边把 trigger/argument/sub-event 全部统一建模…
 tags:
   - "ACL 2026"
   - "NLP理解"

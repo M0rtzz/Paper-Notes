@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Metis: Learning to Jailbreak LLMs via Self-Evolving Metacognitive Policy Optimization
 description: >-
-  [ICML 2026][强化学习][红队] 把多轮 jailbreak 重新形式化为推理时的策略优化问题——在 adversarial POMDP 框架下，Attacker 与 Metacognitive Evaluator 构成闭环：Evaluator 输出的密集分析反馈被当作「语义梯度」来引导 Attac…
+  [ICML 2026][强化学习][红队] 把多轮 jailbreak 重新形式化为推理时的策略优化问题——在 adversarial POMDP 框架下，Attacker 与 Metacognitive Evaluator 构成闭环：Evaluator 输出的密集分析反馈被当作「语义梯度」来引导 Attacker 的 belief 更新与策略改进，从而在不重新训练任何权重的情况下，对包括 O1 / GPT-5-chat / Claude-3.7 在内的 10 个前沿模型平均 ASR 89.2%，token 消耗较强 baseline 平均降低 8.2 倍。
 tags:
   - "ICML 2026"
   - "强化学习"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Test-Time Visual In-Context Tuning
 description: >-
-  [CVPR 2025][LLM/NLP][上下文学习] 本文提出VICT（Visual In-Context Tuning），通过翻转任务提示和测试样本的角色并利用循环一致性损失，在测试时对视觉上下文学习模型（如Painter）进行单样本自适应，显著提升其在分布偏移下的泛化能力。
+  [CVPR 2025][LLM 其他][上下文学习] 本文提出VICT（Visual In-Context Tuning），通过翻转任务提示和测试样本的角色并利用循环一致性损失，在测试时对视觉上下文学习模型（如Painter）进行单样本自适应，显著提升其在分布偏移下的泛化能力。 领域现状：视觉上下文学习（VICL）是计算机视…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "上下文学习"
   - "测试时训练"
   - "循环一致性"

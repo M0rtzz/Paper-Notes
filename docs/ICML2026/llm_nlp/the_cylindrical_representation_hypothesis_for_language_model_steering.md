@@ -2,10 +2,10 @@
 title: >-
   [论文解读] The Cylindrical Representation Hypothesis for Language Model Steering
 description: >-
-  [ICML 2026][LLM/NLP][Activation Steering] 本文提出 Cylindrical Representation Hypothesis（CRH），在保留"概念线性"的前提下放弃 LRH 的正交性，证明概念向量的叠加会自然诱导出"轴 + 法平面 + 敏感扇区"的圆柱几何…
+  [ICML 2026][LLM 其他][Activation Steering] 本文提出 Cylindrical Representation Hypothesis（CRH），在保留"概念线性"的前提下放弃 LRH 的正交性，证明概念向量的叠加会自然诱导出"轴 + 法平面 + 敏感扇区"的圆柱几何，从而首次几何化地解释了 activation steering 为什么在样本层面不可预测但在群体层面可观测。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Activation Steering"
   - "Linear Representation Hypothesis"
   - "表征几何"

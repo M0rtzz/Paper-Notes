@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Reward-Free Representations to Preferences: Rethinking Offline Preference-Based Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][PbRL] 本文把离线偏好强化学习 (PbRL) 改写在 Forward-Backward (FB) 表示空间里，证明在 FB 框架下标准的 Bradley-Terry 偏好损失等价于 SimCLR 对比损失，从而提出 FB-PbRL：先在无奖励离线数据上预训练 FB 表示…
+  [ICML 2026][强化学习][PbRL] 本文把离线偏好强化学习 (PbRL) 改写在 Forward-Backward (FB) 表示空间里，证明在 FB 框架下标准的 Bradley-Terry 偏好损失等价于 SimCLR 对比损失，从而提出 FB-PbRL：先在无奖励离线数据上预训练 FB 表示，再在偏好数据上用对比目标搜索任务向量 $\boldsymbol{z}^\star$ 并微调表示，整个流程不再训练任何显式奖励或偏好模型。
 tags:
   - "ICML 2026"
   - "强化学习"

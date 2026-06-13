@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Judging the Judges: Can Large Vision-Language Models Fairly Evaluate Chart Comprehension and Reasoning?
 description: >-
-  [ACL 2025][多模态VLM][LVLM-as-a-Judge] 系统评估了 13 个开源小型 LVLM（≤9B 参数）作为图表理解和推理任务的评判者，发现部分开源模型（如 LLaVA-Critic-7B）可达到接近 GPT-4 水平的评判能力（约 80% 一致率）…
+  [ACL 2025][多模态VLM][LVLM-as-a-Judge] 系统评估了 13 个开源小型 LVLM（≤9B 参数）作为图表理解和推理任务的评判者，发现部分开源模型（如 LLaVA-Critic-7B）可达到接近 GPT-4 水平的评判能力（约 80% 一致率），但位置偏差和长度偏差等问题仍然普遍存在。
 tags:
   - "ACL 2025"
   - "多模态VLM"

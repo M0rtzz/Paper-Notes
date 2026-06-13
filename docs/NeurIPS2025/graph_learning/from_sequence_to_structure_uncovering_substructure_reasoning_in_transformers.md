@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Sequence to Structure: Uncovering Substructure Reasoning in Transformers
 description: >-
-  [NeurIPS 2025][图学习][Transformer] 本文通过实证和理论分析揭示 decoder-only Transformer 如何从文本序列中理解图结构，提出"诱导子图过滤"（ISF）解释子结构逐层识别机制…
+  [NeurIPS 2025][图学习][Transformer] 本文通过实证和理论分析揭示 decoder-only Transformer 如何从文本序列中理解图结构，提出"诱导子图过滤"（ISF）解释子结构逐层识别机制，并扩展到 LLM 验证一致性、复合图推理（Thinking-in-Substructures）和属性图（分子图）子结构提取。
 tags:
   - "NeurIPS 2025"
   - "图学习"

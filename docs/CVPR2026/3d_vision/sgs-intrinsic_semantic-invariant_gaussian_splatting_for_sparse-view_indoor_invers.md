@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SGS-Intrinsic: Semantic-Invariant Gaussian Splatting for Sparse-View Indoor Inverse Rendering
 description: >-
-  [CVPR 2026][3D视觉][逆渲染] SGS-Intrinsic 提出两阶段室内逆渲染框架，第一阶段利用语义和几何先验构建稠密几何一致的高斯场，第二阶段结合混合光照模型和材质先验进行材质-光照分解，并通过去阴影模块防止阴影烘焙到反照率中。
+  [CVPR 2026][3D视觉][逆渲染] SGS-Intrinsic 提出两阶段室内逆渲染框架，第一阶段利用语义和几何先验构建稠密几何一致的高斯场，第二阶段结合混合光照模型和材质先验进行材质-光照分解，并通过去阴影模块防止阴影烘焙到反照率中。 稀疏视图的室内逆渲染是极度病态的问题：监督信号稀疏、室内光照复杂（近场+高频）…
 tags:
   - "CVPR 2026"
   - "3D视觉"

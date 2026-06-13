@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Language-Free Visual Representation Learning
 description: >-
-  [ICCV 2025][自监督学习][CLIP对比] 通过在MetaCLIP的20亿web图像上训练DINOv2/MAE系列模型（1B-7B参数），系统性地证明纯视觉自监督学习在模型和数据规模上展现优于CLIP的scaling behavior…
+  [ICCV 2025][自监督学习][CLIP对比] 通过在MetaCLIP的20亿web图像上训练DINOv2/MAE系列模型（1B-7B参数），系统性地证明纯视觉自监督学习在模型和数据规模上展现优于CLIP的scaling behavior，5B+参数时在VQA平均性能上超越CLIP——包括传统认为需要语言监督的OCR/Chart任务。
 tags:
   - "ICCV 2025"
   - "自监督学习"

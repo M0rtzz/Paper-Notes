@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FinMMR: Make Financial Numerical Reasoning More Multimodal, Comprehensive, and Challenging
 description: >-
-  [ICCV 2025][多模态VLM][金融数值推理] 提出 FinMMR，一个双语（中英文）多模态金融数值推理基准，包含 4300 道题目和 8700 张图像，覆盖 14 个金融子领域，要求模型进行多步精确数值计算；评测了 15 个 SOTA MLLM，最好模型在 Hard 子集仅达 53% 准确率…
+  [ICCV 2025][多模态VLM][金融数值推理] 提出 FinMMR，一个双语（中英文）多模态金融数值推理基准，包含 4300 道题目和 8700 张图像，覆盖 14 个金融子领域，要求模型进行多步精确数值计算；评测了 15 个 SOTA MLLM，最好模型在 Hard 子集仅达 53% 准确率，揭示了当前 MLLM 在专业领域多模态推理中的核心瓶颈。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

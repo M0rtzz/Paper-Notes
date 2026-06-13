@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics
 description: >-
-  [ICML 2025][LLM Agent][RAG] 本文构建了宇宙学领域的 RAG 评测基准 CosmoPaperQA（105 个专家 QA 对），系统评估了 9 种 RAG agent 配置（涵盖商业 API、混合架构、学术工具），发现 OpenAI RAG 方案以 91.4% 准确率领先…
+  [ICML 2025][LLM Agent][RAG] 本文构建了宇宙学领域的 RAG 评测基准 CosmoPaperQA（105 个专家 QA 对），系统评估了 9 种 RAG agent 配置（涵盖商业 API、混合架构、学术工具），发现 OpenAI RAG 方案以 91.4% 准确率领先，并校准了可替代人工评审的 LLM-as-a-Judge 系统。
 tags:
   - "ICML 2025"
   - "LLM Agent"

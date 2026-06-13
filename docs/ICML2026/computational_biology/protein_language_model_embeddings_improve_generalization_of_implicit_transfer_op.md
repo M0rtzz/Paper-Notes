@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protein Language Model Embeddings Improve Generalization of Implicit Transfer Operators
 description: >-
-  [ICML 2026][计算生物][蛋白质语言模型] 本文把预训练蛋白质语言模型（pLM）的残基嵌入直接灌进可迁移隐式转移算子（TITO），训出 PLaTITO 在 mdCATH 上仅用 56 ms 轨迹和 1100 GPU 小时就让小到 19 M 参数的粗粒化 $C_\alpha$ 模型在快折叠蛋白等离群系…
+  [ICML 2026][计算生物][蛋白质语言模型] 本文把预训练蛋白质语言模型（pLM）的残基嵌入直接灌进可迁移隐式转移算子（TITO），训出 PLaTITO 在 mdCATH 上仅用 56 ms 轨迹和 1100 GPU 小时就让小到 19 M 参数的粗粒化 $C_\alpha$ 模型在快折叠蛋白等离群系统的平衡采样上全面超过 BioEmu。
 tags:
   - "ICML 2026"
   - "计算生物"

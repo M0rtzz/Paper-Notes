@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flatten Graphs as Sequences: Transformers are Scalable Graph Generators
 description: >-
-  [NeurIPS 2025][图像生成][graph generation] 提出 AutoGraph，通过分段欧拉邻域路径（SENT）将图无损展平为 token 序列，直接用 decoder-only Transformer 建模，实现比扩散模型快 100× 的图生成速度…
+  [NeurIPS 2025][图像生成][graph generation] 提出 AutoGraph，通过分段欧拉邻域路径（SENT）将图无损展平为 token 序列，直接用 decoder-only Transformer 建模，实现比扩散模型快 100× 的图生成速度，同时在合成和分子基准上达到 SOTA。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

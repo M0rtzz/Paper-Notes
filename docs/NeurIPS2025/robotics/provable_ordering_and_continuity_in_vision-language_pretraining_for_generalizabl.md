@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents
 description: >-
-  [NeurIPS 2025][机器人][视觉语言预训练] 提出 AcTOL，通过视觉-语言排序损失和布朗桥约束来学习有序且连续的视觉-语言表征，无需刚性目标到达假设，在模拟和真实机器人操作任务上显著提升下游表现。
+  [NeurIPS 2025][机器人][视觉语言预训练] 提出 AcTOL，通过视觉-语言排序损失和布朗桥约束来学习有序且连续的视觉-语言表征，无需刚性目标到达假设，在模拟和真实机器人操作任务上显著提升下游表现。 领域现状 领域现状：利用人类动作视频预训练视觉-语言表征以减少机器人专家演示依赖是一个有前景的方向…
 tags:
   - "NeurIPS 2025"
   - "机器人"

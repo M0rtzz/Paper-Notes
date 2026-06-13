@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do We Really Need Curated Malicious Data for Safety Alignment in Multi-Modal LLMs?
 description: >-
-  [CVPR 2025][LLM对齐][safety alignment] 探讨多模态大语言模型安全对齐是否真正需要精心策划的恶意数据，发现利用现有良性数据并结合简单的安全微调策略即可实现有效的安全对齐，大幅降低了安全对齐的数据成本。
+  [CVPR 2025][LLM对齐][safety alignment] 探讨多模态大语言模型安全对齐是否真正需要精心策划的恶意数据，发现利用现有良性数据并结合简单的安全微调策略即可实现有效的安全对齐，大幅降低了安全对齐的数据成本。 领域现状 领域现状：LLM对齐领域近年来取得了显著进展，但仍面临若干关键挑战…
 tags:
   - "CVPR 2025"
   - "LLM对齐"

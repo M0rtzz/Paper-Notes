@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bypass Back-propagation: Optimization-based Structural Pruning for Large Language Models via Policy Gradient
 description: >-
-  [ACL 2025][强化学习][结构化剪枝] 本文提出一种基于策略梯度的LLM结构化剪枝方法，通过在概率空间中学习伯努利剪枝掩码来直接优化剪枝模型的损失函数，全程无需对LLM本身进行反向传播，仅需前向推理即可完成剪枝优化。
+  [ACL 2025][强化学习][结构化剪枝] 本文提出一种基于策略梯度的LLM结构化剪枝方法，通过在概率空间中学习伯努利剪枝掩码来直接优化剪枝模型的损失函数，全程无需对LLM本身进行反向传播，仅需前向推理即可完成剪枝优化。 领域现状：大语言模型的参数量从数十亿到数千亿不等，部署成本高昂。模型剪枝（pruning）是压缩LL…
 tags:
   - "ACL 2025"
   - "强化学习"

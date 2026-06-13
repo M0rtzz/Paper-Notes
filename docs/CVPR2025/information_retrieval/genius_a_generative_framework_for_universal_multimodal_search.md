@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GENIUS: A Generative Framework for Universal Multimodal Search
 description: >-
-  [CVPR 2025][信息检索/RAG][生成式检索] 首个通用生成式多模态检索框架，通过模态解耦的语义量化将多模态数据编码为离散 ID，用自回归解码器直接从查询生成目标 ID，在 Flickr30K 文本→图像检索上超越先前生成式方法 25+ 个点，存储开销比 CLIP 降低 99%。
+  [CVPR 2025][信息检索/RAG][生成式检索] 首个通用生成式多模态检索框架，通过模态解耦的语义量化将多模态数据编码为离散 ID，用自回归解码器直接从查询生成目标 ID，在 Flickr30K 文本→图像检索上超越先前生成式方法 25+ 个点，存储开销比 CLIP 降低 99%。 领域现状：多模态检索（文本→图像、…
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

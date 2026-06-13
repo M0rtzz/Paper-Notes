@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-MuTeST: A Multilingual Benchmark for Explainable Hate Speech Detection and A Novel LLM-consulted Explanation Framework
 description: >-
-  [AAAI 2026][多语言/翻译][仇恨言论检测] 本文提出X-MuTeST框架，结合LLM语义推理和n-gram attention增强的两阶段训练方法，用于可解释的多语言仇恨言论检测，并提供了印地语和泰卢固语的首个token级人工标注理据基准数据集。
+  [AAAI 2026][多语言/翻译][仇恨言论检测] 本文提出X-MuTeST框架，结合LLM语义推理和n-gram attention增强的两阶段训练方法，用于可解释的多语言仇恨言论检测，并提供了印地语和泰卢固语的首个token级人工标注理据基准数据集。 领域现状：仇恨言论检测已从单纯分类发展到需要提供可解释理据（rat…
 tags:
   - "AAAI 2026"
   - "多语言/翻译"

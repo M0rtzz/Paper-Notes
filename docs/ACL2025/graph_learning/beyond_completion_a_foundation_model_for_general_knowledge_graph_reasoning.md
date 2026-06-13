@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Completion: A Foundation Model for General Knowledge Graph Reasoning
 description: >-
-  [ACL 2025][图学习][知识图谱基础模型] 提出 MERRY，一个统一处理 KG 内（零样本 KGC）和 KG 外（KGQA）推理任务的知识图谱基础模型，通过多视角条件消息传递 (CMP) 融合文本和结构信息，在 28 个数据集上超越现有方法。
+  [ACL 2025][图学习][知识图谱基础模型] 提出 MERRY，一个统一处理 KG 内（零样本 KGC）和 KG 外（KGQA）推理任务的知识图谱基础模型，通过多视角条件消息传递 (CMP) 融合文本和结构信息，在 28 个数据集上超越现有方法。 领域现状：NLP/CV 的基础模型已成功跨任务迁移…
 tags:
   - "ACL 2025"
   - "图学习"

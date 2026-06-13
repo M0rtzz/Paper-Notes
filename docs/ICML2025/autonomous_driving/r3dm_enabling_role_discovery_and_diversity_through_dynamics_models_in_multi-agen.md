@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R3DM: Enabling Role Discovery and Diversity Through Dynamics Models in Multi-agent Reinforcement Learning
 description: >-
-  [ICML 2025][自动驾驶][多智能体强化学习] 提出 R3DM 框架，通过最大化智能体角色、历史轨迹与未来预期行为之间的互信息，利用动力学模型驱动的内在奖励实现角色多样性与协调性的平衡，在 SMAC/SMACv2 环境中将胜率提升最高 20%。
+  [ICML 2025][自动驾驶][多智能体强化学习] 提出 R3DM 框架，通过最大化智能体角色、历史轨迹与未来预期行为之间的互信息，利用动力学模型驱动的内在奖励实现角色多样性与协调性的平衡，在 SMAC/SMACv2 环境中将胜率提升最高 20%。 多智能体强化学习（MARL）在交通控制、自动驾驶、协作机器人等领域取得重…
 tags:
   - "ICML 2025"
   - "自动驾驶"

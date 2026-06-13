@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Uncertainty: On Evidential Learning for Partially Relevant Video Retrieval
 description: >-
-  [ICML 2026][视频理解][PRVR] 本文针对 Partially Relevant Video Retrieval (PRVR) 中"短查询 vs 长视频"导致的查询歧义与时间稀疏监督问题，提出基于 Dirichlet 分布的层次证据学习框架 Holmes…
+  [ICML 2026][视频理解][PRVR] 本文针对 Partially Relevant Video Retrieval (PRVR) 中"短查询 vs 长视频"导致的查询歧义与时间稀疏监督问题，提出基于 Dirichlet 分布的层次证据学习框架 Holmes，在视频间用三重原则区分精确/多义/欠定查询并自适应校准标签，在视频内用带 dustbin 的柔性最优传输获得稠密对齐，在 ActivityNet/Charades/TVR 三个数据集上取得 SOTA。
 tags:
   - "ICML 2026"
   - "视频理解"

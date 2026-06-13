@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prioritize the Process, Not Just the Outcome: Rewarding Latent Thought Trajectories Improves Reasoning in Looped Language Models
 description: >-
-  [ICML 2026][LLM推理][Looped Language Model] 针对 Looped Language Model（LoopLM）在每个 token 输出前会反复迭代 $T_{\max}$ 次潜在表征的特点…
+  [ICML 2026][LLM推理][Looped Language Model] 针对 Looped Language Model（LoopLM）在每个 token 输出前会反复迭代 $T_{\max}$ 次潜在表征的特点，本文提出 RLTT：把 GRPO 中"只奖励最后一圈"的策略梯度改成"按权重 $\omega_t$ 给每一圈的 next-token 分布都打分"，在不引入外部 verifier、计算开销几乎为零的情况下，把 Ouro-2.6B 在 MATH/AIME/BeyondAIME 上的平均准确率提升 +10.9%，并出现训练时间下降 10% + 响应长度自发缩短的副产物。
 tags:
   - "ICML 2026"
   - "LLM推理"

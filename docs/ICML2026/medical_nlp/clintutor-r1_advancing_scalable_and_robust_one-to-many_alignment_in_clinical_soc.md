@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ClinTutor-R1: Advancing Scalable and Robust One-to-Many Alignment in Clinical Socratic Education
 description: >-
-  [ICML 2026][医疗NLP][临床教育] 提出 ClinTutor-R1，首个面向临床苏格拉底式教学的一对多对齐视觉语言 Agent，通过多智能体模拟器 ClinEdu 构建 48k 对话数据集 ClinTeach，利用显式心智理论推理和三轴 rubric 强化学习…
+  [ICML 2026 Spotlight][医疗NLP][临床教育] 提出 ClinTutor-R1，首个面向临床苏格拉底式教学的一对多对齐视觉语言 Agent，通过多智能体模拟器 ClinEdu 构建 48k 对话数据集 ClinTeach，利用显式心智理论推理和三轴 rubric 强化学习，在学员扩展至 10 人时仍保持教学质量稳定，超越基线模型 20% 并达到 GPT-4o 水平。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "医疗NLP"
   - "临床教育"
   - "一对多对齐"

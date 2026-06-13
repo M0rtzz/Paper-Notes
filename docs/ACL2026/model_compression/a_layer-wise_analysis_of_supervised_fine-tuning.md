@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Layer-wise Analysis of Supervised Fine-Tuning
 description: >-
-  [ACL 2026][模型压缩][监督微调] 通过信息论、几何和优化三个视角对 1B-32B 模型的 SFT 进行逐层分析，发现指令跟随能力集中在中间层（20%-80%），而非均匀分布，据此提出 Mid-Block Efficient Tuning 策略，选择性更新中间层…
+  [ACL 2026][模型压缩][监督微调] 通过信息论、几何和优化三个视角对 1B-32B 模型的 SFT 进行逐层分析，发现指令跟随能力集中在中间层（20%-80%），而非均匀分布，据此提出 Mid-Block Efficient Tuning 策略，选择性更新中间层，在 GSM8K 上比标准 LoRA 提升高达 10.2%。
 tags:
   - "ACL 2026"
   - "模型压缩"

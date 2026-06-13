@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RSVP: Reasoning Segmentation via Visual Prompting and Multi-modal Chain-of-Thought
 description: >-
-  [ACL 2025 (Main)][LLM推理][推理分割] 本文提出 RSVP 框架，通过两阶段结构（推理驱动定位 + 分割精炼）将多模态大模型的推理能力与视觉分割相统一，利用多模态思维链视觉提示在 ReasonSeg 上超越 SOTA 达 +6.5 gIoU / +9.2 cIoU…
+  [ACL 2025 (Main)][LLM推理][推理分割] 本文提出 RSVP 框架，通过两阶段结构（推理驱动定位 + 分割精炼）将多模态大模型的推理能力与视觉分割相统一，利用多模态思维链视觉提示在 ReasonSeg 上超越 SOTA 达 +6.5 gIoU / +9.2 cIoU，零样本 SegInW 达到 49.7 mAP。
 tags:
   - "ACL 2025 (Main)"
   - "LLM推理"

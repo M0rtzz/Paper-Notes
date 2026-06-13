@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Uncertainty Quantification in LLMs is Just Unsupervised Clustering
 description: >-
-  [ICML 2026][LLM安全][Position Paper] 这是一篇位置论文，核心论断：当前 LLM 不确定性量化（UQ）的主流方法（Semantic Entropy、图谱方法、P(true) 等）在机制上与无监督聚类同构——它们只衡量"模型生成的内部一致性"而非"外部正确性"…
+  [ICML 2026][LLM安全][Position Paper] 这是一篇位置论文，核心论断：当前 LLM 不确定性量化（UQ）的主流方法（Semantic Entropy、图谱方法、P(true) 等）在机制上与无监督聚类同构——它们只衡量"模型生成的内部一致性"而非"外部正确性"，因此面对"自信幻觉"（confident hallucination）天然失效；作者诊断出参数敏感性、内部评估循环、缺乏 ground truth 三大病灶，并提出从评估、机制、grounding 三个支柱转向"监督式保障"的路线图。
 tags:
   - "ICML 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Radiative Gaussian Splatting for Efficient X-ray Novel View Synthesis
 description: >-
-  [ECCV 2024][医学图像][3D Gaussian Splatting] 提出 X-Gaussian，首个将 3D 高斯泼溅（3DGS）应用于 X 射线新视角合成的框架，通过设计辐射高斯点云模型（替代球谐函数）和角度位姿长方体均匀初始化策略（替代 SfM）…
+  [ECCV 2024][医学图像][3D Gaussian Splatting] 提出 X-Gaussian，首个将 3D 高斯泼溅（3DGS）应用于 X 射线新视角合成的框架，通过设计辐射高斯点云模型（替代球谐函数）和角度位姿长方体均匀初始化策略（替代 SfM），在性能上超越 SOTA NeRF 方法 6.5 dB 的同时，实现 73× 推理加速和仅 15% 的训练时间。
 tags:
   - "ECCV 2024"
   - "医学图像"

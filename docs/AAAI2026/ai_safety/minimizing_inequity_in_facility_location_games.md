@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Minimizing Inequity in Facility Location Games
 description: >-
-  [AAAI 2026][AI安全][设施选址] 研究实数轴上设施选址博弈中最小化组间最大加权效果（Maximum Group Effect）的问题，提出 BALANCED 和 MAJOR-PHANTOM 两种策略防护机制，在单设施场景下实现紧近似比…
+  [AAAI 2026][AI安全][设施选址] 研究实数轴上设施选址博弈中最小化组间最大加权效果（Maximum Group Effect）的问题，提出 BALANCED 和 MAJOR-PHANTOM 两种策略防护机制，在单设施场景下实现紧近似比，统一了功利主义（社会成本）、平等主义（最大成本）等经典目标和组公平目标，并将 endpoint 机制扩展到双设施场景。
 tags:
   - "AAAI 2026"
   - "AI安全"

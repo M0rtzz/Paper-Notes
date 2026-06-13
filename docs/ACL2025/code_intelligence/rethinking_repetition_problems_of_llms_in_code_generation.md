@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Repetition Problems of LLMs in Code Generation
 description: >-
-  [ACL 2025][代码智能][代码生成] 本文重新定义了代码生成中的重复问题，区分出比内容重复更普遍且更难处理的"结构性重复"，并提出基于语法规则的重复惩罚解码方法RPG（Repetition Penalization based on Grammar）…
+  [ACL 2025][代码智能][代码生成] 本文重新定义了代码生成中的重复问题，区分出比内容重复更普遍且更难处理的"结构性重复"，并提出基于语法规则的重复惩罚解码方法RPG（Repetition Penalization based on Grammar），在新构建的CodeRepetEval和标准基准上大幅缓解重复问题。
 tags:
   - "ACL 2025"
   - "代码智能"

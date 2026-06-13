@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coreference as an Indicator of Context Scope in Multimodal Narrative
 description: >-
-  [ACL 2025 (GEM2 Workshop)][多模态VLM][共指消解] 本文揭示了大型多模态语言模型在视觉叙事（visual storytelling）任务中的共指表达（coreferential expressions）分布与人类存在显著差异——人类能变化丰富地交错引用不同实体并保持跨文本-图像的…
+  [ACL 2025 (GEM2 Workshop)][多模态VLM][共指消解] 本文揭示了大型多模态语言模型在视觉叙事（visual storytelling）任务中的共指表达（coreferential expressions）分布与人类存在显著差异——人类能变化丰富地交错引用不同实体并保持跨文本-图像的一致性，而机器在追踪混合引用方面能力不足，并提出了一系列量化共指模式特征的指标。
 tags:
   - "ACL 2025 (GEM2 Workshop)"
   - "多模态VLM"

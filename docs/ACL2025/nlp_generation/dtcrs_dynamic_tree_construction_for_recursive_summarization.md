@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DTCRS: Dynamic Tree Construction for Recursive Summarization
 description: >-
-  [ACL 2025][文本生成][Recursive Summarization] 提出 DTCRS 方法，根据文档结构和查询语义动态构建摘要树，通过问题分解和子问题引导聚类减少冗余摘要节点，在三个 QA 数据集上显著优于静态摘要树方法 RAPTOR。
+  [ACL 2025][文本生成][Recursive Summarization] 提出 DTCRS 方法，根据文档结构和查询语义动态构建摘要树，通过问题分解和子问题引导聚类减少冗余摘要节点，在三个 QA 数据集上显著优于静态摘要树方法 RAPTOR。 问题背景 检索增强生成（RAG）通过整合外部知识来缓解大语言模型（LLM…
 tags:
   - "ACL 2025"
   - "文本生成"

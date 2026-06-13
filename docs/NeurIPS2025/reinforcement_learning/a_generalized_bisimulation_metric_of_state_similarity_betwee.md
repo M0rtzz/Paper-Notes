@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Generalized Bisimulation Metric of State Similarity between Markov Decision Processes: From Theoretical Propositions to Applications
 description: >-
-  [NeurIPS 2025 (Poster)][强化学习][bisimulation metric] 将传统只能在单个MDP内度量状态相似性的bisimulation metric (BSM)推广到跨MDP场景，提出广义双模拟度量(GBSM)…
+  [NeurIPS 2025 (Poster)][强化学习][bisimulation metric] 将传统只能在单个MDP内度量状态相似性的bisimulation metric (BSM)推广到跨MDP场景，提出广义双模拟度量(GBSM)，严格证明了对称性、跨MDP三角不等式和同状态距离上界三个基本度量性质，并在策略迁移、状态聚合和基于采样的估计三个应用中推导出比标准BSM更紧的误差界和闭式样本复杂度。
 tags:
   - "NeurIPS 2025 (Poster)"
   - "强化学习"

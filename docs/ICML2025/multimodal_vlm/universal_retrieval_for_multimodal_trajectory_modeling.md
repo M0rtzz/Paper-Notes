@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universal Retrieval for Multimodal Trajectory Modeling
 description: >-
-  [ICML 2025][多模态VLM][trajectory retrieval] 首次系统定义多模态轨迹检索任务，构建统一代理轨迹数据集 UATD（7,747 个演示、82,793 个状态）和 GAE-Bench 基准（714,628 正样本对）…
+  [ICML 2025][多模态VLM][trajectory retrieval] 首次系统定义多模态轨迹检索任务，构建统一代理轨迹数据集 UATD（7,747 个演示、82,793 个状态）和 GAE-Bench 基准（714,628 正样本对），提出基于 VLM2Vec 的 GAE-Retriever 框架，在 5 个 GUI 环境上相比最强基线 VLM2Vec-V2.2 平均提升 10.22 个百分点。
 tags:
   - "ICML 2025"
   - "多模态VLM"

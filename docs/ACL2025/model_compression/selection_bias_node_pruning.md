@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mitigating Selection Bias with Node Pruning and Auxiliary Options
 description: >-
-  [ACL 2025][模型压缩][选择偏差] 提出 Bias Node Pruning (BNP) 和 Auxiliary Option Injection (AOI) 两种互补方法，通过定位并剪除模型输出层中 0.002% 的偏差参数（白盒）与注入"I don't know"辅助选项（黑盒通用）…
+  [ACL 2025][模型压缩][选择偏差] 提出 Bias Node Pruning (BNP) 和 Auxiliary Option Injection (AOI) 两种互补方法，通过定位并剪除模型输出层中 0.002% 的偏差参数（白盒）与注入"I don't know"辅助选项（黑盒通用），从内外两端同时缓解 LLM 在多选题中的选择偏差，同时提出分布级偏差度量 CKLD，组合方法在 Llama-3 上将 ARC-Challenge 准确率从 52.3% 提升至 65.3%。
 tags:
   - "ACL 2025"
   - "模型压缩"

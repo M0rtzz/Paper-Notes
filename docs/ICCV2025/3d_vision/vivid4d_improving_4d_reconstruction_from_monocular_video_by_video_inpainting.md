@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting
 description: >-
-  [ICCV 2025][3D视觉][4D重建] 本文提出Vivid4D，将单目视频的多视角增广任务转化为视频修复（inpainting）问题——先用单目深度先验将视频warp到新视角，再用视频扩散模型修复遮挡区域，通过迭代视角扩展策略和鲁棒重建损失显著改善了单目4D动态场景的重建质量。
+  [ICCV 2025][3D视觉][4D重建] 本文提出Vivid4D，将单目视频的多视角增广任务转化为视频修复（inpainting）问题——先用单目深度先验将视频warp到新视角，再用视频扩散模型修复遮挡区域，通过迭代视角扩展策略和鲁棒重建损失显著改善了单目4D动态场景的重建质量。 从随意拍摄的单目视频重建4D动态场景是…
 tags:
   - "ICCV 2025"
   - "3D视觉"

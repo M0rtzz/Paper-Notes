@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Large Language Models for Multi-Subject In-Context Image Generation
 description: >-
-  [ACL2026][图像生成][多主体生成] 这篇论文提出 MUSIC，把多模态大语言模型的视觉推理能力引入多主体 in-context 图像生成，通过自动合成训练数据、视觉 CoT 和语义驱动空间布局规划，显著缓解多个参考主体同时生成时的主体遗漏、身份混淆和语义漂移问题。
+  [ACL2026][图像生成][多主体生成] 这篇论文提出 MUSIC，把多模态大语言模型的视觉推理能力引入多主体 in-context 图像生成，通过自动合成训练数据、视觉 CoT 和语义驱动空间布局规划，显著缓解多个参考主体同时生成时的主体遗漏、身份混淆和语义漂移问题。 领域现状：文本到图像模型已经能根据自然语言生成较稳…
 tags:
   - "ACL2026"
   - "图像生成"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Probabilistic Hash Embeddings for Online Learning of Categorical Features
 description: >-
-  [AAAI 2026][推荐系统][hash embedding] 提出概率哈希嵌入 (PHE)，将哈希嵌入表建模为随机变量并通过贝叶斯在线学习进行后验推断，解决了确定性哈希嵌入在流式数据场景下因参数共享导致的灾难性遗忘问题，在分类、序列建模和推荐系统中显著优于确定性基线…
+  [AAAI 2026 Oral][推荐系统][hash embedding] 提出概率哈希嵌入 (PHE)，将哈希嵌入表建模为随机变量并通过贝叶斯在线学习进行后验推断，解决了确定性哈希嵌入在流式数据场景下因参数共享导致的灾难性遗忘问题，在分类、序列建模和推荐系统中显著优于确定性基线，且仅需无碰撞嵌入表 2%~4% 的内存。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "推荐系统"
   - "hash embedding"
   - "Bayesian online learning"

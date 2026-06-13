@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolve to Inspire: Novelty Search for Diverse Image Generation
 description: >-
-  [NeurIPS 2025][图像生成][新颖性搜索] 提出 Wander 框架，基于新颖性搜索（novelty search）和 LLM 驱动的 prompt 进化，从单个文本提示出发生成高度多样化的图像集合，在 Vendi Score 上超越现有进化式 prompt 优化基线。
+  [NeurIPS 2025][图像生成][新颖性搜索] 提出 Wander 框架，基于新颖性搜索（novelty search）和 LLM 驱动的 prompt 进化，从单个文本提示出发生成高度多样化的图像集合，在 Vendi Score 上超越现有进化式 prompt 优化基线。 文本到图像扩散模型（如 FLUX、Stab…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

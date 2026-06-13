@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adversarial Inception Backdoor Attacks against Reinforcement Learning
 description: >-
-  [ICML 2025][AI安全][backdoor attack] 提出"inception"后门攻击框架——通过在 RL 智能体的训练轨迹中插入触发器并将高回报动作替换为目标对抗动作，首次在严格奖励约束下实现 100% 攻击成功率，同时保持智能体在正常任务上的表现。
+  [ICML 2025][AI安全][backdoor attack] 提出"inception"后门攻击框架——通过在 RL 智能体的训练轨迹中插入触发器并将高回报动作替换为目标对抗动作，首次在严格奖励约束下实现 100% 攻击成功率，同时保持智能体在正常任务上的表现。 领域现状：DRL 在安全关键领域（自动驾驶、网络防御、…
 tags:
   - "ICML 2025"
   - "AI安全"

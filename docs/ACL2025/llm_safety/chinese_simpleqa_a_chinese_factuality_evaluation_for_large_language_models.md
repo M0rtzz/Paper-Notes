@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chinese SimpleQA: A Chinese Factuality Evaluation for Large Language Models
 description: >-
-  [ACL 2025][LLM安全][中文基准] 提出 Chinese SimpleQA——首个全面的中文事实性评估基准，包含 3000 个高质量短问答（覆盖 6 大主题、99 个子主题），评估 41 个 LLM 后发现仅 o1-preview（63.8%）和 Doubao-pro-32k（61.9%）能通过…
+  [ACL 2025][LLM安全][中文基准] 提出 Chinese SimpleQA——首个全面的中文事实性评估基准，包含 3000 个高质量短问答（覆盖 6 大主题、99 个子主题），评估 41 个 LLM 后发现仅 o1-preview（63.8%）和 Doubao-pro-32k（61.9%）能通过，并系统揭示了"大模型更好"、"RAG缩小差距"、"对齐降低事实性"等关键洞察。
 tags:
   - "ACL 2025"
   - "LLM安全"

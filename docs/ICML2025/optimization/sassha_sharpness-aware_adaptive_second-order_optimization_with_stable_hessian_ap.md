@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation
 description: >-
-  [ICML2025][优化/理论][二阶优化] 提出 Sassha 优化器，将 sharpness-aware minimization（SAM）引入二阶优化框架，通过稳定 Hessian 近似和 lazy 更新策略，使二阶方法首次在泛化性能上全面超越 SGD、AdamW 和 SAM 等一阶方法。
+  [ICML2025][优化/理论][二阶优化] 提出 Sassha 优化器，将 sharpness-aware minimization（SAM）引入二阶优化框架，通过稳定 Hessian 近似和 lazy 更新策略，使二阶方法首次在泛化性能上全面超越 SGD、AdamW 和 SAM 等一阶方法。 近似二阶优化方法（如 Ad…
 tags:
   - "ICML2025"
   - "优化/理论"

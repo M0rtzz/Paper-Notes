@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning
 description: >-
-  [NeurIPS 2025][推荐系统][Mistake Log] 提出 Transformer Copilot 框架，在 LLM 微调过程中系统记录"错误日志"(Mistake Log)，训练一个辅助 Copilot 模型学习 Pilot 的错误模式，推理时通过 logits 修正提升生成质量…
+  [NeurIPS 2025 Spotlight][推荐系统][Mistake Log] 提出 Transformer Copilot 框架，在 LLM 微调过程中系统记录"错误日志"(Mistake Log)，训练一个辅助 Copilot 模型学习 Pilot 的错误模式，推理时通过 logits 修正提升生成质量，在 12 个基准上最高提升 34.5%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "推荐系统"
   - "Mistake Log"
   - "Pilot-Copilot"

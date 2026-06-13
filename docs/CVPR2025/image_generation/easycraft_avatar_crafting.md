@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting
 description: >-
-  [CVPR 2025][图像生成][虚拟角色创建] 提出 EasyCraft，一个端到端的自动角色定制框架，通过自监督预训练的通用 ViT 编码器实现任意风格照片到游戏捏脸参数的转换，并结合 Stable Diffusion 支持文本驱动的角色创建。
+  [CVPR 2025][图像生成][虚拟角色创建] 提出 EasyCraft，一个端到端的自动角色定制框架，通过自监督预训练的通用 ViT 编码器实现任意风格照片到游戏捏脸参数的转换，并结合 Stable Diffusion 支持文本驱动的角色创建。 领域现状：RPG 游戏中的角色定制（"捏脸"）是核心玩法…
 tags:
   - "CVPR 2025"
   - "图像生成"

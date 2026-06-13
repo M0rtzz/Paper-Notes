@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Privacy-Aware Video Anomaly Detection through Orthogonal Subspace Projection
 description: >-
-  [ICML 2026][视频理解][视频异常检测] 作者提出 OPL（Orthogonal Projection Layer）和加强版 G-OPL，用一个 QR 分解出来的可学习正交子空间，在视频异常检测特征空间中显式投影掉"任务无关变量"和"人脸隐私分量"…
+  [ICML 2026 Spotlight][视频理解][视频异常检测] 作者提出 OPL（Orthogonal Projection Layer）和加强版 G-OPL，用一个 QR 分解出来的可学习正交子空间，在视频异常检测特征空间中显式投影掉"任务无关变量"和"人脸隐私分量"，同时引入 SSC/ARD/PD/FPD 四个隐私感知指标，在保持/提升 VAD AUC 的前提下让线性 SVM 探针对面部预测的准确率显著下降。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "视频理解"
   - "视频异常检测"
   - "正交投影"

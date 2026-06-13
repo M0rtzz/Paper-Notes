@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Deliberate Evolution: Agentic Reasoning for Sample-Efficient Symbolic Regression with LLMs
 description: >-
-  [ICML 2026][LLM推理][符号回归] 把 LLM 主导的符号回归"出招—打分"循环拆成"提案 vs. 导航"两层——再用自适应算子（方向）、诊断工具（残差/量纲）、反思记忆（轨迹经验）三路信号显式引导 LLM…
+  [ICML 2026][LLM推理][符号回归] 把 LLM 主导的符号回归"出招—打分"循环拆成"提案 vs. 导航"两层——再用自适应算子（方向）、诊断工具（残差/量纲）、反思记忆（轨迹经验）三路信号显式引导 LLM，只用 40% 评估预算就在 LLM-SRBench 上把 NMSE 平均压低 37–55%。
 tags:
   - "ICML 2026"
   - "LLM推理"

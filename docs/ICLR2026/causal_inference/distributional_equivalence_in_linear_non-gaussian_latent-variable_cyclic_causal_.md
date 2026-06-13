@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributional Equivalence in Linear Non-Gaussian Latent-Variable Cyclic Causal Models
 description: >-
-  [ICLR 2026 (Oral)][因果推理][因果发现] 首次在线性非高斯设定下、不依赖任何结构假设，给出了含潜变量和环的因果图之间分布等价性的完整图准则，核心工具是新提出的**边秩约束**（edge rank constraints）…
+  [ICLR 2026 (Oral)][因果推理][因果发现] 首次在线性非高斯设定下、不依赖任何结构假设，给出了含潜变量和环的因果图之间分布等价性的完整图准则，核心工具是新提出的**边秩约束**（edge rank constraints），据此开发了遍历等价类和从数据恢复因果模型的算法——这是参数化因果模型中首个无结构假设的等价性刻画和发现方法。
 tags:
   - "ICLR 2026 (Oral)"
   - "因果推理"

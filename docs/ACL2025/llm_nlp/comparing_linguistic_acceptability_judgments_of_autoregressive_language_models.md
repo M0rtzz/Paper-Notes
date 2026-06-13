@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Comparing Linguistic Acceptability Judgments of Autoregressive Language Models
 description: >-
-  [ACL 2025][LLM/NLP][语言可接受性] 本文比较了多种自回归语言模型（GPT系列、Llama系列等）在语言可接受性判断任务上的表现，通过系统实验揭示了模型规模、训练数据和架构对语法判断能力的影响，并探讨了模型的语法知识是否与人类语言直觉一致。
+  [ACL 2025][LLM 其他][语言可接受性] 本文比较了多种自回归语言模型（GPT系列、Llama系列等）在语言可接受性判断任务上的表现，通过系统实验揭示了模型规模、训练数据和架构对语法判断能力的影响，并探讨了模型的语法知识是否与人类语言直觉一致。 领域现状：语言可接受性判断（Linguistic Acceptabi…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "语言可接受性"
   - "自回归语言模型"
   - "语法判断"

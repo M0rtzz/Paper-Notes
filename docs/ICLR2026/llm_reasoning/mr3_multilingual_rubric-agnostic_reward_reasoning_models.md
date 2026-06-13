@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mR3: Multilingual Rubric-Agnostic Reward Reasoning Models
 description: >-
-  [ICLR 2026][LLM推理][多语言奖励模型] 提出 mR3，一系列覆盖72种语言的多语言rubric-agnostic推理奖励模型，通过系统化的数据构建（GPT-OSS-120B蒸馏+难度过滤）和课程学习策略训练，14B模型在多语言评估基准上超越120B教师模型及所有同类基线…
+  [ICLR 2026][LLM推理][多语言奖励模型] 提出 mR3，一系列覆盖72种语言的多语言rubric-agnostic推理奖励模型，通过系统化的数据构建（GPT-OSS-120B蒸馏+难度过滤）和课程学习策略训练，14B模型在多语言评估基准上超越120B教师模型及所有同类基线，同时支持point-wise/pair-wise/binary三种评估范式。
 tags:
   - "ICLR 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Riemannian Networks over Full-Rank Correlation Matrices
 description: >-
-  [ICML 2026][相关矩阵流形] 本文把 MLR、FC、Conv 三种基础层系统地推广到满秩相关矩阵流形 $\mathrm{Cor}^+(n)$ 上的五种黎曼几何（ECM、LECM、OLM、LSM、PHCM），并为 OLM 与 LSM 推导出精确的反传…
+  [ICML 2026][相关矩阵流形] 本文把 MLR、FC、Conv 三种基础层系统地推广到满秩相关矩阵流形 $\mathrm{Cor}^+(n)$ 上的五种黎曼几何（ECM、LECM、OLM、LSM、PHCM），并为 OLM 与 LSM 推导出精确的反传，构造的 CorNet 在 Radar、HDM05、FPHA、NTU120 上一致超过同体量的 SPDNet / Grassmann 网络。
 tags:
   - "ICML 2026"
   - "相关矩阵流形"

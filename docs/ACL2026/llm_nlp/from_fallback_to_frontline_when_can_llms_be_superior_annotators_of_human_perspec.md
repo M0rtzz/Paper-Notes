@@ -2,10 +2,10 @@
 title: >-
   [论文解读] From Fallback to Frontline: When Can LLMs be Superior Annotators of Human Perspectives?
 description: >-
-  [ACL 2026][LLM/NLP][Perspective-Taking] 本文把"perspective-taking (PT)"这个长期被视为人类专属的主观标注任务重新形式化为「对潜在群体均值 $f^*(x,g)$ 的统计估计问题」…
+  [ACL 2026][LLM 其他][Perspective-Taking] 本文把"perspective-taking (PT)"这个长期被视为人类专属的主观标注任务重新形式化为「对潜在群体均值 $f^*(x,g)$ 的统计估计问题」，用偏差-方差-相关性三项分解证明 LLM 在低预算 / 群体宽泛 / out-group 场景下不只是廉价替代品，而是**比 in-group 人类标注者更优**的估计器，并发现"打开 reasoning 反而变差"的 reasoning paradox。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Perspective-Taking"
   - "LLM as Annotator"
   - "Bias-Variance Decomposition"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Robust Intervention Representations with Delta Embeddings
 description: >-
-  [ICLR 2026][因果推理][Causal Representation Learning] 提出因果 Delta 嵌入（CDE）框架，将干预/动作表示为预干预和后干预状态在潜空间中的向量差，通过独立性、稀疏性和不变性三种约束学习鲁棒的干预表示…
+  [ICLR 2026][因果推理][Causal Representation Learning] 提出因果 Delta 嵌入（CDE）框架，将干预/动作表示为预干预和后干预状态在潜空间中的向量差，通过独立性、稀疏性和不变性三种约束学习鲁棒的干预表示，在 Causal Triplet 挑战中显著超越基线的 OOD 泛化性能，且能自动发现反义动作的反平行语义结构。
 tags:
   - "ICLR 2026"
   - "因果推理"

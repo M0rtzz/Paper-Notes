@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Federated Variational Preference Alignment with Gumbel-Softmax Prior for Personalized User Preferences
 description: >-
-  [ICML 2026][LLM安全][联邦偏好对齐] 本文提出 FedVPA-GP：在联邦学习的隐私约束下，用"客户端混合先验 + Gumbel-Softmax 可学习权重 + 正交原型损失"把每个客户端的偏好建模成一个连续隐变量 $z$，从根上修掉了把 VPL 直接搬到 FL 时遭遇的"后验崩溃"…
+  [ICML 2026][LLM安全][联邦偏好对齐] 本文提出 FedVPA-GP：在联邦学习的隐私约束下，用"客户端混合先验 + Gumbel-Softmax 可学习权重 + 正交原型损失"把每个客户端的偏好建模成一个连续隐变量 $z$，从根上修掉了把 VPL 直接搬到 FL 时遭遇的"后验崩溃"，使一个奖励模型可以在 helpful 与 harmless 这两种冲突偏好之间动态切换。
 tags:
   - "ICML 2026"
   - "LLM安全"

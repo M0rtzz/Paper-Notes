@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallelized Autoregressive Visual Generation
 description: >-
-  [CVPR 2025][视频生成][自回归生成] 提出 PAR（Parallelized Autoregressive），通过分析视觉 token 依赖性，将空间距离远的弱依赖 token 并行生成而保持局部强依赖 token 的顺序生成，实现 3.6-9.5 倍加速且质量几乎无损。
+  [CVPR 2025][视频生成][自回归生成] 提出 PAR（Parallelized Autoregressive），通过分析视觉 token 依赖性，将空间距离远的弱依赖 token 并行生成而保持局部强依赖 token 的顺序生成，实现 3.6-9.5 倍加速且质量几乎无损。 自回归模型在视觉生成中展现了强大能力…
 tags:
   - "CVPR 2025"
   - "视频生成"

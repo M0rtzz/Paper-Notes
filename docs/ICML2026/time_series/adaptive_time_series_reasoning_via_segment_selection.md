@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Time Series Reasoning via Segment Selection
 description: >-
-  [ICML 2026][时间序列][时间序列推理] 这篇论文提出 ARTIST，把时间序列问答变成“边推理边选择片段”的序贯决策问题，通过 controller-reasoner 架构和层级自博弈 RL，让模型只读取与问题相关的时间片段并提升推理准确率。
+  [ICML 2026][时间序列][时间序列推理] 这篇论文提出 ARTIST，把时间序列问答变成“边推理边选择片段”的序贯决策问题，通过 controller-reasoner 架构和层级自博弈 RL，让模型只读取与问题相关的时间片段并提升推理准确率。 领域现状：时间序列任务正在从传统预测、分类、异常检测扩展到自然语言问答…
 tags:
   - "ICML 2026"
   - "时间序列"

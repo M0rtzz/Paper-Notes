@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Noise-Robustness Through Noise: A Framework Combining Asymmetric LoRA with Poisoning MoE
 description: >-
-  [NeurIPS 2025][社会计算][LoRA] 提出 LoPE，在非对称 LoRA 架构中设置专门的"中毒专家"接收注入噪声，推理时屏蔽该专家，仅通过正常专家输出实现噪声鲁棒——以噪声对抗噪声，完全无需数据清洗。
+  [NeurIPS 2025][社会计算][LoRA] 提出 LoPE，在非对称 LoRA 架构中设置专门的"中毒专家"接收注入噪声，推理时屏蔽该专家，仅通过正常专家输出实现噪声鲁棒——以噪声对抗噪声，完全无需数据清洗。 参数高效微调（PEFT）在将预训练语言模型适配下游任务时，容易受到噪声数据干扰。现有降噪方法分两类：(1)…
 tags:
   - "NeurIPS 2025"
   - "社会计算"

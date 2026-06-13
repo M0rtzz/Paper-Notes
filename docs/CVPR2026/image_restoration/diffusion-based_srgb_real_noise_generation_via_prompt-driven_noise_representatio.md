@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PNG: Diffusion-Based sRGB Real Noise Generation via Prompt-Driven Noise Representation Learning
 description: >-
-  [CVPR 2026][图像恢复][sRGB噪声生成] PNG提出用可学习的Global/Local Prompt组件从真实噪声中自动提取噪声特征（替代ISO/相机型号等metadata）…
+  [CVPR 2026][图像恢复][sRGB噪声生成] PNG提出用可学习的Global/Local Prompt组件从真实噪声中自动提取噪声特征（替代ISO/相机型号等metadata），通过Prompt AutoEncoder编码噪声到latent空间+Prompt DiT（基于一致性模型）一步生成latent code，实现无需任何metadata的真实sRGB噪声合成，下游DnCNN去噪在SIDD上仅落后真实数据0.08dB。
 tags:
   - "CVPR 2026"
   - "图像恢复"

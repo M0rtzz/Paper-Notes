@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency
 description: >-
-  [NeurIPS 2025][模型压缩][在线缓存] 提出 Guard 框架，一种轻量级鲁棒化方法，将广泛的学习增强缓存算法的鲁棒性提升至 $2H_{k-1}+2$，同时保持 1-一致性和 O(1) 的额外请求开销。
+  [NeurIPS 2025][模型压缩][在线缓存] 提出 Guard 框架，一种轻量级鲁棒化方法，将广泛的学习增强缓存算法的鲁棒性提升至 $2H_{k-1}+2$，同时保持 1-一致性和 O(1) 的额外请求开销。 领域现状 领域现状：在线缓存问题要求在有限缓存大小 $k$ 下最小化缓存未命中数。学习增强缓存算法利用ML预…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

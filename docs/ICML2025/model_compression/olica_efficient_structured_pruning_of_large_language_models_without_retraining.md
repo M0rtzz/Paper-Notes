@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Olica: Efficient Structured Pruning of Large Language Models without Retraining
 description: >-
-  [ICML2025][模型压缩][结构化剪枝] 提出 Olica 框架，通过对 MHA 层矩阵乘积做正交分解（PCA/SVD）并对 FFN 层做线性校准（岭回归闭式解 + 低秩近似），实现 LLM 结构化剪枝无需重训练…
+  [ICML2025][模型压缩][结构化剪枝] 提出 Olica 框架，通过对 MHA 层矩阵乘积做正交分解（PCA/SVD）并对 FFN 层做线性校准（岭回归闭式解 + 低秩近似），实现 LLM 结构化剪枝无需重训练，仅需 256 样本、3GB 显存、7 分钟即可完成 LLaMA-7B 剪枝且性能优于需要重训练的方法。
 tags:
   - "ICML2025"
   - "模型压缩"

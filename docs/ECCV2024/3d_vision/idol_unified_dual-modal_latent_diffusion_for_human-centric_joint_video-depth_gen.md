@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IDOL: Unified Dual-Modal Latent Diffusion for Human-Centric Joint Video-Depth Generation
 description: >-
-  [ECCV 2024][3D视觉][视频生成] 提出IDOL框架，通过统一双模态U-Net和运动一致性损失，实现以人为中心的视频与深度图联合生成，显著优于现有方法。
+  [ECCV 2024][3D视觉][视频生成] 提出IDOL框架，通过统一双模态U-Net和运动一致性损失，实现以人为中心的视频与深度图联合生成，显著优于现有方法。 领域现状： 基于扩散模型的人体视频生成已取得显著进展，但生成的视频缺乏深度信息，限制了AR/VR等需要空间感知的下游应用。 现有痛点： 判别式单目深度估计方法（…
 tags:
   - "ECCV 2024"
   - "3D视觉"

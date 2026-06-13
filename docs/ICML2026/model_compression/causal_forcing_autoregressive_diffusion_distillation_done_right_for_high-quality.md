@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Causal Forcing: Autoregressive Diffusion Distillation Done Right for High-Quality Real-Time Interactive Video
 description: >-
-  [ICML 2026][模型压缩][自回归视频生成] 本文通过识别"**帧级单射性**"的理论需求，提出 Causal Forcing 方法——用**自回归教师模型替代双向教师**进行 ODE 蒸馏初始化，避免 Self-Forcing 中的性能坍缩…
+  [ICML 2026][模型压缩][自回归视频生成] 本文通过识别"**帧级单射性**"的理论需求，提出 Causal Forcing 方法——用**自回归教师模型替代双向教师**进行 ODE 蒸馏初始化，避免 Self-Forcing 中的性能坍缩；相比 Self-Forcing 动态度 +19.3%、VisionReward +8.7%、指令遵循 +16.7%，同时保持相同推理延迟（0.69s）。
 tags:
   - "ICML 2026"
   - "模型压缩"

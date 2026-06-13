@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Investigating the Representation of Backchannels and Fillers in Fine-tuned Language Models
 description: >-
-  [ACL 2026][文本生成][backchannel] 论文在英日双语口语对话语料上用 MASK / NTP / TTP 三种微调任务训练 BERT / GPT-2 / TurnGPT / LLaMA-3 8B / Qwen-3 8B…
+  [ACL 2026][文本生成][backchannel] 论文在英日双语口语对话语料上用 MASK / NTP / TTP 三种微调任务训练 BERT / GPT-2 / TurnGPT / LLaMA-3 8B / Qwen-3 8B，再用 t-SNE 可视化和 silhouette 聚类量化"哼哈词"（backchannel 如 *uh-huh*）和"语气词"（filler 如 *um*）的表征质量；发现微调能让这些被视为"语义漂白"的功能词在嵌入空间里被显著区分开，并让模型在 NLG 生成时自然地说出多种 backchannel/filler，向"像人一样对话的 LM"迈出可量化的第一步。
 tags:
   - "ACL 2026"
   - "文本生成"

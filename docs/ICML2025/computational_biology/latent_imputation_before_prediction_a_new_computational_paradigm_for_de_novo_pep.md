@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Imputation before Prediction: A New Computational Paradigm for De Novo Peptide Sequencing
 description: >-
-  [ICML 2025][计算生物][De Novo Peptide Sequencing] LIPNovo 提出在肽段预测前，通过隐空间补全（latent imputation）来弥补质谱中碎片缺失信息的新范式，利用可学习peak queries和二部匹配补全理论peak隐表示…
+  [ICML 2025][计算生物][De Novo Peptide Sequencing] LIPNovo 提出在肽段预测前，通过隐空间补全（latent imputation）来弥补质谱中碎片缺失信息的新范式，利用可学习peak queries和二部匹配补全理论peak隐表示，在三个基准上大幅超越 CasaNovo 等 SOTA（氨基酸精度提升 5.6%-20%）。
 tags:
   - "ICML 2025"
   - "计算生物"

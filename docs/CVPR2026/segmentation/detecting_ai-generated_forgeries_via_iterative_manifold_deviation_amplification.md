@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification
 description: >-
-  [CVPR 2026][语义分割][AI 生成图像检测] 提出 IFA-Net，从"建模什么是真"而非"学什么是假"的角度检测 AI 伪造：利用冻结 MAE 重建输入产生残差暴露偏离自然图像流形的区域，再通过两阶段闭环——粗检测→任务自适应先验注入→放大残差→精细化——迭代放大流形偏差…
+  [CVPR 2026][语义分割][AI 生成图像检测] 提出 IFA-Net，从"建模什么是真"而非"学什么是假"的角度检测 AI 伪造：利用冻结 MAE 重建输入产生残差暴露偏离自然图像流形的区域，再通过两阶段闭环——粗检测→任务自适应先验注入→放大残差→精细化——迭代放大流形偏差，在 diffusion inpainting 和传统篡改检测上均取得 SOTA。
 tags:
   - "CVPR 2026"
   - "语义分割"

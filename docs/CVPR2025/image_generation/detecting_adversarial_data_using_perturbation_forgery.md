@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting Adversarial Data Using Perturbation Forgery
 description: >-
-  [CVPR 2025][图像生成][对抗检测] 通过建模对抗噪声的高斯分布并证明其近邻性，提出 Perturbation Forgery 方法在训练时持续扰动噪声分布形成开覆盖，配合稀疏掩码生成伪对抗数据训练二分类器，仅需 FGSM 一种攻击的噪声分布就能泛化检测梯度、GAN、扩散和物理等各类未见攻击…
+  [CVPR 2025][图像生成][对抗检测] 通过建模对抗噪声的高斯分布并证明其近邻性，提出 Perturbation Forgery 方法在训练时持续扰动噪声分布形成开覆盖，配合稀疏掩码生成伪对抗数据训练二分类器，仅需 FGSM 一种攻击的噪声分布就能泛化检测梯度、GAN、扩散和物理等各类未见攻击，AUROC 达 0.99+ 且推理开销极低。
 tags:
   - "CVPR 2025"
   - "图像生成"

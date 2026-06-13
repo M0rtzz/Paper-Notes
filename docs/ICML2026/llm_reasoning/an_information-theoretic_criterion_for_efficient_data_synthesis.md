@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Information-Theoretic Criterion for Efficient Data Synthesis
 description: >-
-  [ICML2026][LLM推理][合成数据] 这篇论文用数据处理不等式解释合成数据为何有时有效、有时导致模型坍塌：只有当训练闭环持续引入稳定外部信号时，合成数据才是 information-open；而高 meta-level 的验证信号比实例级模仿更高效、更容易泛化。
+  [ICML2026][LLM推理][合成数据] 这篇论文用数据处理不等式解释合成数据为何有时有效、有时导致模型坍塌：只有当训练闭环持续引入稳定外部信号时，合成数据才是 information-open；而高 meta-level 的验证信号比实例级模仿更高效、更容易泛化。 领域现状：大模型训练越来越依赖合成数据…
 tags:
   - "ICML2026"
   - "LLM推理"

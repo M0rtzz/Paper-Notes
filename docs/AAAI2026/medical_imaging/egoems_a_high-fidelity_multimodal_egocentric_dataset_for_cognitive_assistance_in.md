@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services
 description: >-
-  [AAAI 2026][医学图像][自我中心视角] 发布首个高保真多人多模态自我中心EMS数据集，包含233个试验20小时视频、9项干预67个关键步骤标注，提供三个基准任务（步骤分类/在线分割/CPR质量估计）推动EMS认知协助系统开发。
+  [AAAI 2026][医学图像][自我中心视角] 发布首个高保真多人多模态自我中心EMS数据集，包含233个试验20小时视频、9项干预67个关键步骤标注，提供三个基准任务（步骤分类/在线分割/CPR质量估计）推动EMS认知协助系统开发。 领域现状：应急医疗服务（EMS）中一线应急人员面临巨大认知压力，AI和LLM的进展为虚…
 tags:
   - "AAAI 2026"
   - "医学图像"

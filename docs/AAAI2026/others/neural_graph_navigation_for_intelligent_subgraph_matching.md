@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Graph Navigation for Intelligent Subgraph Matching
 description: >-
-  [AAAI 2026][子图匹配] 提出 NeuGN（Neural Graph Navigation）框架，首次将生成式神经导航集成到子图匹配的核心枚举阶段，通过 QSExtractor 提取查询图结构信号 + GGNavigator 将暴力枚举转为结构感知的候选节点优先排序…
+  [AAAI 2026][子图匹配] 提出 NeuGN（Neural Graph Navigation）框架，首次将生成式神经导航集成到子图匹配的核心枚举阶段，通过 QSExtractor 提取查询图结构信号 + GGNavigator 将暴力枚举转为结构感知的候选节点优先排序，在保证完备性的同时将 First Match Steps 最高减少 98.2%。
 tags:
   - "AAAI 2026"
   - "子图匹配"

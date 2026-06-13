@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Video-Text Understanding: Retrieval from Counterfactually Augmented Data
 description: >-
-  [ECCV 2024][视频理解][video-text understanding] 提出反事实增强数据检索（RCAD）任务和 Feint6K 数据集，揭示 SOTA 视频文本模型在动作语义理解上远落后于人类（InternVideo 58.2% vs 人类 95.2%）…
+  [ECCV 2024][视频理解][video-text understanding] 提出反事实增强数据检索（RCAD）任务和 Feint6K 数据集，揭示 SOTA 视频文本模型在动作语义理解上远落后于人类（InternVideo 58.2% vs 人类 95.2%），并提出 LLM-teacher 通过 LLM 知识蒸馏改善动作嵌入学习。
 tags:
   - "ECCV 2024"
   - "视频理解"

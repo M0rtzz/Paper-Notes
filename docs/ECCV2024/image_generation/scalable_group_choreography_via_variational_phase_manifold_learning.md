@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Group Choreography via Variational Phase Manifold Learning
 description: >-
-  [ECCV 2024][图像生成][群舞生成] 本文提出 PDVAE（Phase-conditioned Dance VAE），一种基于相位参数的变分生成模型用于可扩展群舞生成——通过在频域学习舞蹈运动的相位流形（幅度、频率、偏移、相移），实现对**任意数量**舞者的高质量群舞生成，且内存消耗恒定不变…
+  [ECCV 2024][图像生成][群舞生成] 本文提出 PDVAE（Phase-conditioned Dance VAE），一种基于相位参数的变分生成模型用于可扩展群舞生成——通过在频域学习舞蹈运动的相位流形（幅度、频率、偏移、相移），实现对**任意数量**舞者的高质量群舞生成，且内存消耗恒定不变，在AIOZ-GDance和AIST-M数据集上全面超越现有方法。
 tags:
   - "ECCV 2024"
   - "图像生成"

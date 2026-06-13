@@ -2,7 +2,7 @@
 title: >-
   [论文解读] B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens
 description: >-
-  [ICCV 2025][模型压缩][视觉大语言模型] 本文提出B-VLLM框架，通过文本条件自适应帧选择、时序帧Token合并和空间Token采样三个模块，在VLLM的上下文窗口限制内动态平衡视频的时空线索，在MVBench上带来10%的性能提升。
+  [ICCV 2025][模型压缩][视觉大语言模型] 本文提出B-VLLM框架，通过文本条件自适应帧选择、时序帧Token合并和空间Token采样三个模块，在VLLM的上下文窗口限制内动态平衡视频的时空线索，在MVBench上带来10%的性能提升。 当前VLLM在处理视频特别是长视频时面临视觉Token过载问题——视频帧数增…
 tags:
   - "ICCV 2025"
   - "模型压缩"

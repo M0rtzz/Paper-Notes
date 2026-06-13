@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2505.20110](https://arxiv.org/abs/2505.20110)  
 **代码**: https://github.com/Chenruishuo/TD-GFN  
-**领域**: reinforcement_learning  
+**领域**: 强化学习  
 **关键词**: GFlowNet, 离线训练, 逆强化学习, DAG剪枝, 无代理奖励  
 
 ## 一句话总结

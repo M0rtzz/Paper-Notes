@@ -2,9 +2,10 @@
 title: >-
   [论文解读] One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit
 description: >-
-  [ACL 2025][知识编辑] 提出 OnceEdit，通过编辑一个轻量级插件模型并利用异构模型集成技术将编辑后的知识迁移到多个 LLM，实现"一次编辑，多模型更新"，在 ZsRE 和 Counterfact 数据集上显著超越现有方法。
+  [ACL 2025][LLM 其他][知识编辑] 提出 OnceEdit，通过编辑一个轻量级插件模型并利用异构模型集成技术将编辑后的知识迁移到多个 LLM，实现"一次编辑，多模型更新"，在 ZsRE 和 Counterfact 数据集上显著超越现有方法。 大语言模型虽然在预训练阶段编码了大量世界知识，但随着现实信息的动态变化…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "知识编辑"
   - "模型集成"
   - "多模型更新"

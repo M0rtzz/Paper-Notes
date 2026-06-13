@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysReason: A Comprehensive Benchmark towards Physics-Based Reasoning
 description: >-
-  [ACL 2025][LLM评测][物理推理] 提出 PhysReason 基准，包含 1200 道物理题（平均 8.1 步解题），设计了答案级和步骤级两层自动评估框架 PSAS，揭示顶尖模型（Deepseek-R1、o3-mini）在物理推理上准确率不足 60%，并识别出四大推理瓶颈。
+  [ACL 2025][LLM评测][物理推理] 提出 PhysReason 基准，包含 1200 道物理题（平均 8.1 步解题），设计了答案级和步骤级两层自动评估框架 PSAS，揭示顶尖模型（Deepseek-R1、o3-mini）在物理推理上准确率不足 60%，并识别出四大推理瓶颈。 大语言模型在数学和逻辑推理上表现优异…
 tags:
   - "ACL 2025"
   - "LLM评测"

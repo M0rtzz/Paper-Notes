@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ElasticMM: Efficient MLLM Serving with Elastic Multimodal Parallelism
 description: >-
-  [NeurIPS 2025][多模态VLM][MLLM推理服务] 提出弹性多模态并行（EMP）范式和 ElasticMM 系统，通过模态感知负载均衡和弹性分区调度将多模态推理的不同阶段解耦到独立实例，相比 vLLM TTFT 降低最高 4.2 倍、吞吐量提升 3.2-4.5 倍。
+  [NeurIPS 2025 Oral][多模态VLM][MLLM推理服务] 提出弹性多模态并行（EMP）范式和 ElasticMM 系统，通过模态感知负载均衡和弹性分区调度将多模态推理的不同阶段解耦到独立实例，相比 vLLM TTFT 降低最高 4.2 倍、吞吐量提升 3.2-4.5 倍。 MLLM 推理比纯文本 LLM 复…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "多模态VLM"
   - "MLLM推理服务"
   - "弹性并行"

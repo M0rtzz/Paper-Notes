@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Astra: General Interactive World Model with Autoregressive Denoising
 description: >-
-  [ICLR 2026][自动驾驶][world model] 提出 Astra，一个通用交互式世界模型，通过自回归去噪框架在预训练视频扩散模型上实现动作条件化的长程视频预测，引入 ACT-Adapter（动作注入）、噪声增强历史记忆（缓解视觉惯性）和 Mixture of Action Experts（统一多…
+  [ICLR 2026][自动驾驶][world model] 提出 Astra，一个通用交互式世界模型，通过自回归去噪框架在预训练视频扩散模型上实现动作条件化的长程视频预测，引入 ACT-Adapter（动作注入）、噪声增强历史记忆（缓解视觉惯性）和 Mixture of Action Experts（统一多异构动作模态），在自动驾驶、机器人操控和场景探索等多场景上实现 SOTA 的保真度和动作跟随能力。
 tags:
   - "ICLR 2026"
   - "自动驾驶"

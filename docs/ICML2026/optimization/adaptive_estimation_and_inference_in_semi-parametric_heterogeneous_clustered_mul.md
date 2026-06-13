@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Estimation and Inference in Semi-parametric Heterogeneous Clustered Multitask Learning via Neyman Orthogonality
 description: >-
-  [ICML 2026][优化/理论][Neyman 正交性] 本文桥接双重机器学习与聚类多任务学习，提出自适应框架结合 Neyman 正交性与数据驱动的配对融合罚项，在异质（可能无限维）噪声的半参数设置中精确恢复任务潜在聚类、以汇总率达到预言水平，并建立渐近正态性，实现有效统计推断。
+  [ICML 2026][优化/理论][Neyman 正交性] 本文桥接双重机器学习与聚类多任务学习，提出自适应框架结合 Neyman 正交性与数据驱动的配对融合罚项，在异质（可能无限维）噪声的半参数设置中精确恢复任务潜在聚类、以汇总率达到预言水平，并建立渐近正态性，实现有效统计推断。 领域现状：多任务学习（MTL）通过共享结…
 tags:
   - "ICML 2026"
   - "优化/理论"

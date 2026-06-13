@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Logits DeConfusion with CLIP for Few-Shot Learning
 description: >-
-  [CVPR 2025][模型压缩][few-shot learning] 发现 CLIP 在下游任务中 logits 存在严重的类间混淆问题，提出 Logits DeConfusion（LDC）方法，通过多层级 Adapter 融合（MAF）增强特征表示…
+  [CVPR 2025][模型压缩][few-shot learning] 发现 CLIP 在下游任务中 logits 存在严重的类间混淆问题，提出 Logits DeConfusion（LDC）方法，通过多层级 Adapter 融合（MAF）增强特征表示，结合类间去混淆模块（ICD）以残差结构学习并消除混淆模式，在 11 个基准上取得 SOTA。
 tags:
   - "CVPR 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis
 description: >-
-  [NeurIPS 2025][医学图像][内窥镜] 提出 EndoBench，首个覆盖 4 种内窥镜场景、12 项临床任务、5 级视觉提示粒度的综合 MLLM 评估基准，包含 6,832 个经临床验证的 VQA 对，对 23 个 MLLM 的评估显示商用模型整体领先但仍落后人类专家。
+  [NeurIPS 2025][医学图像][内窥镜] 提出 EndoBench，首个覆盖 4 种内窥镜场景、12 项临床任务、5 级视觉提示粒度的综合 MLLM 评估基准，包含 6,832 个经临床验证的 VQA 对，对 23 个 MLLM 的评估显示商用模型整体领先但仍落后人类专家。 内窥镜 AI 需求：胃肠和泌尿系统疾病是…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

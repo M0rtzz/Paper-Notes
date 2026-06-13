@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vary: Scaling up the Vision Vocabulary for Large Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][vision vocabulary] 提出 Vary 方法，通过生成并融合新的视觉词汇表（vision vocabulary）来扩展 LVLM 的视觉感知能力，使模型在保持原有通用能力的同时，获得文档级 OCR、图表理解等细粒度视觉感知新能力。
+  [ECCV 2024][多模态VLM][vision vocabulary] 提出 Vary 方法，通过生成并融合新的视觉词汇表（vision vocabulary）来扩展 LVLM 的视觉感知能力，使模型在保持原有通用能力的同时，获得文档级 OCR、图表理解等细粒度视觉感知新能力。 当前主流 LVLM（如 BLIP-2、M…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

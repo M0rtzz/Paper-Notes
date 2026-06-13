@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning
 description: >-
-  [CVPR 2026][3D视觉][测试时适配] BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文本和几何模态建模为高斯分布，并通过贝叶斯模型平均自动调节模态权重，在多个点云基准上实现了鲁棒的测试时适配，平均提升超过 4%。
+  [CVPR 2026][3D视觉][测试时适配] BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文本和几何模态建模为高斯分布，并通过贝叶斯模型平均自动调节模态权重，在多个点云基准上实现了鲁棒的测试时适配，平均提升超过 4%。 领域现状：大型多模态 3D 视觉-语言模型（如 ULIP-2、Uni3D）通过对比预…
 tags:
   - "CVPR 2026"
   - "3D视觉"

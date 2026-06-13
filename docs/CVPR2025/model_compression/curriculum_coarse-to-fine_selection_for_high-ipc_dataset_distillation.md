@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation
 description: >-
-  [CVPR 2025][模型压缩][数据集蒸馏] 提出CCFS方法，通过课程学习框架渐进式地从原始数据集中选择合适的真实样本补充蒸馏数据，解决高IPC场景下蒸馏数据与真实数据的不兼容问题，在CIFAR-10/100和Tiny-ImageNet上大幅超越SOTA（最高+6.6%）。
+  [CVPR 2025][模型压缩][数据集蒸馏] 提出CCFS方法，通过课程学习框架渐进式地从原始数据集中选择合适的真实样本补充蒸馏数据，解决高IPC场景下蒸馏数据与真实数据的不兼容问题，在CIFAR-10/100和Tiny-ImageNet上大幅超越SOTA（最高+6.6%）。 领域现状：数据集蒸馏旨在将大规模训练数据压缩…
 tags:
   - "CVPR 2025"
   - "模型压缩"

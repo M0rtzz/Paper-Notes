@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedHPro: Federated Hyper-Prototype Learning via Gradient Matching
 description: >-
-  [ICML 2026][AI安全][联邦学习] 针对原型类联邦学习中"对局部原型直接平均会继承客户端偏差"的问题，本文用一组可学习的全局超原型 (hyper-prototypes)，通过梯度匹配在服务器侧模拟集中式训练得到的原型，再配合客户端对比学习与对齐损失显著提升异质场景下的精度。
+  [ICML 2026][AI安全][联邦学习] 针对原型类联邦学习中"对局部原型直接平均会继承客户端偏差"的问题，本文用一组可学习的全局超原型 (hyper-prototypes)，通过梯度匹配在服务器侧模拟集中式训练得到的原型，再配合客户端对比学习与对齐损失显著提升异质场景下的精度。 领域现状：联邦学习 (FL) 通过共享…
 tags:
   - "ICML 2026"
   - "AI安全"

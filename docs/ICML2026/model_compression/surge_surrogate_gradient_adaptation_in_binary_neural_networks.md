@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SURGE: Surrogate Gradient Adaptation in Binary Neural Networks
 description: >-
-  [ICML 2026][模型压缩][BNN] SURGE 给每个二值化层并联一个"全精度辅助分支"，前向输出不变但反向能从全精度分支额外回传一份"非 STE 截断"的高阶梯度，并用 AGS 按梯度范数比动态平衡两路贡献，让 BNN 在 ResNet-18/ImageNet 上做到 62.0% top-1…
+  [ICML 2026][模型压缩][BNN] SURGE 给每个二值化层并联一个"全精度辅助分支"，前向输出不变但反向能从全精度分支额外回传一份"非 STE 截断"的高阶梯度，并用 AGS 按梯度范数比动态平衡两路贡献，让 BNN 在 ResNet-18/ImageNet 上做到 62.0% top-1，比 ReCU 高 1.0%、比 IR-Net 高 3.9%。
 tags:
   - "ICML 2026"
   - "模型压缩"

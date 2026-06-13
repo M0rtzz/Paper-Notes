@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRIME: Planning and Retrieval-Integrated Memory for Enhanced Reasoning
 description: >-
-  [AAAI 2026][信息检索/RAG][双系统推理] 受双系统认知理论启发，提出PRIME多Agent推理框架——Quick Thinking Agent（System 1）快速生成直觉答案，Reflection Agent评估可信度…
+  [AAAI 2026][信息检索/RAG][双系统推理] 受双系统认知理论启发，提出PRIME多Agent推理框架——Quick Thinking Agent（System 1）快速生成直觉答案，Reflection Agent评估可信度，不确定时触发System 2的6个专门化Agent（规划/搜索/阅读/假设/整合/决策）进行深度知识检索推理，使开源LLaMA 3在医学/多跳QA上接近GPT-4o性能。
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

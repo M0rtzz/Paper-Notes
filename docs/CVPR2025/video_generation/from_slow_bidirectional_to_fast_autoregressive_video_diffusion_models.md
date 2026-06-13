@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Slow Bidirectional to Fast Autoregressive Video Diffusion Models
 description: >-
-  [CVPR 2025][视频生成][自回归扩散] CausVid 通过非对称蒸馏将预训练的双向视频扩散 Transformer 蒸馏为因果自回归 4 步生成器，结合 ODE 初始化和 KV 缓存，实现 9.4 FPS 的流式视频生成（比 CogVideoX 快 160×）…
+  [CVPR 2025][视频生成][自回归扩散] CausVid 通过非对称蒸馏将预训练的双向视频扩散 Transformer 蒸馏为因果自回归 4 步生成器，结合 ODE 初始化和 KV 缓存，实现 9.4 FPS 的流式视频生成（比 CogVideoX 快 160×），在 VBench-Long 基准上以 84.27 分排名第一。
 tags:
   - "CVPR 2025"
   - "视频生成"

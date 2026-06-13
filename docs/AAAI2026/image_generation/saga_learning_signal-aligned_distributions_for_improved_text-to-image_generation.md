@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAGA: Learning Signal-Aligned Distributions for Improved Text-to-Image Generation
 description: >-
-  [AAAI 2026][图像生成][扩散模型] 提出SAGA方法，通过学习与提示词对齐的高斯分布来改进文本到图像生成模型的语义对齐，无需重新训练且支持文本和空间双条件生成，在SD 1.4和SD 3上大幅提升对齐性能（TIAM-3从8.4%提升到50.7%）。
+  [AAAI 2026][图像生成][扩散模型] 提出SAGA方法，通过学习与提示词对齐的高斯分布来改进文本到图像生成模型的语义对齐，无需重新训练且支持文本和空间双条件生成，在SD 1.4和SD 3上大幅提升对齐性能（TIAM-3从8.4%提升到50.7%）。 领域现状：T2I生成模型（扩散模型、流匹配模型）虽然视觉质量优秀但…
 tags:
   - "AAAI 2026"
   - "图像生成"

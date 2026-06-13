@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Feasibility and Opportunity of Autoregressive 3D Object Detection
 description: >-
-  [CVPR2026][自动驾驶][自回归检测] 提出 AutoReg3D，首个将 LiDAR 3D 目标检测建模为自回归序列生成的框架，利用近到远排序和参数特定词表将 bounding box 离散为 token 序列，无需 anchor/NMS 即可达到与主流方法竞争的性能…
+  [CVPR 2026 Findings][自动驾驶][自回归检测] 提出 AutoReg3D，首个将 LiDAR 3D 目标检测建模为自回归序列生成的框架，利用近到远排序和参数特定词表将 bounding box 离散为 token 序列，无需 anchor/NMS 即可达到与主流方法竞争的性能，并解锁 RL 微调和级联精炼等新能力。
 tags:
-  - "CVPR2026"
+  - "CVPR 2026 Findings"
   - "自动驾驶"
   - "自回归检测"
   - "LiDAR 3D检测"

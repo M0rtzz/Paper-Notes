@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images
 description: >-
-  [ECCV 2024][模型压缩][图像联合对齐] 提出 SpaceJAM，一种仅约 16K 可训练参数的无监督图像联合对齐方法，无需正则化项或 atlas 维护，在 SPair-71K 和 CUB 数据集上匹配现有方法的对齐能力同时实现 10 倍以上加速。
+  [ECCV 2024][模型压缩][图像联合对齐] 提出 SpaceJAM，一种仅约 16K 可训练参数的无监督图像联合对齐方法，无需正则化项或 atlas 维护，在 SPair-71K 和 CUB 数据集上匹配现有方法的对齐能力同时实现 10 倍以上加速。 图像联合对齐（Joint Alignment…
 tags:
   - "ECCV 2024"
   - "模型压缩"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs
 description: >-
-  [AAAI 2026][强化学习][神经符号AI] 提出DeepProofLog（DPrL），一种基于随机逻辑程序的神经符号系统，通过在每个证明步骤引入神经网络参数化，并建立SLD解析过程与MDP的形式化映射，使得动态规划和强化学习技术可用于高效推理与学习，显著提升了神经符号系统的可扩展性。
+  [AAAI 2026 Oral][强化学习][神经符号AI] 提出DeepProofLog（DPrL），一种基于随机逻辑程序的神经符号系统，通过在每个证明步骤引入神经网络参数化，并建立SLD解析过程与MDP的形式化映射，使得动态规划和强化学习技术可用于高效推理与学习，显著提升了神经符号系统的可扩展性。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "强化学习"
   - "神经符号AI"
   - "随机逻辑程序"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Diffusion Models with Masked AutoEncoders
 description: >-
-  [ICCV 2025][图像生成][潜在扩散模型] 系统性地分析了 LDM 中自编码器应具备的三个关键属性（潜空间平滑性、感知压缩质量、重建质量），发现现有自编码器无法同时满足，提出 Variational Masked AutoEncoders (VMAEs)…
+  [ICCV 2025][图像生成][潜在扩散模型] 系统性地分析了 LDM 中自编码器应具备的三个关键属性（潜空间平滑性、感知压缩质量、重建质量），发现现有自编码器无法同时满足，提出 Variational Masked AutoEncoders (VMAEs)，结合 MAE 的层次化特征和 VAE 的概率编码，在仅 13.4% 参数和 4.1% GFLOPs 的条件下显著提升生成质量（ImageNet-1K gFID: 5.98 vs SD-VAE 的 6.49）。
 tags:
   - "ICCV 2025"
   - "图像生成"

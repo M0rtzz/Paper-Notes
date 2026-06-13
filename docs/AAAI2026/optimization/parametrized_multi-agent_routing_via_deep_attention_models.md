@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parametrized Multi-Agent Routing via Deep Attention Models
 description: >-
-  [AAAI2026][优化/理论][组合优化] 提出Deep FLPO框架，将最大熵原理（MEP）的代数结构与permutation-invariant的encoder-decoder神经网络（SPN）融合，解决设施选址与路径联合优化的NP-hard混合整数问题…
+  [AAAI2026][优化/理论][组合优化] 提出Deep FLPO框架，将最大熵原理（MEP）的代数结构与permutation-invariant的encoder-decoder神经网络（SPN）融合，解决设施选址与路径联合优化的NP-hard混合整数问题，实现策略推理100倍加速、与Gurobi精确解匹配且快1500倍。
 tags:
   - "AAAI2026"
   - "优化/理论"

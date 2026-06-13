@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Differentially Private Synthetic Text Generation for Retrieval-Augmented Generation (RAG)
 description: >-
-  [ACL 2026][LLM安全][差分隐私] DP-SynRAG 用 LLM 把私有 RAG 数据库**一次性**蒸馏成差分隐私合成文本库，之后任意次查询都不再消耗 privacy budget…
+  [ACL 2026 Findings][LLM安全][差分隐私] DP-SynRAG 用 LLM 把私有 RAG 数据库**一次性**蒸馏成差分隐私合成文本库，之后任意次查询都不再消耗 privacy budget，在 Medical Synth / MovieLens / SearchQA 三个数据集上 accuracy 远超 query-time DP-RAG（多查询场景下 DP-RAG 退化到崩盘）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "差分隐私"
   - "合成数据"

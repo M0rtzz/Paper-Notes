@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Advantage Fields
 description: >-
-  [ICML 2026 Workshop on Decision Making][机器人][离线 GCRL] 本文观察到双线性目标条件价值模型 $V_\theta(s,g)=\psi_\theta(s)^\top\phi_\theta(g)$ 中…
+  [ICML 2026 Workshop on Decision Making][机器人][离线 GCRL] 本文观察到双线性目标条件价值模型 $V_\theta(s,g)=\psi_\theta(s)^\top\phi_\theta(g)$ 中，目标嵌入 $\phi_\theta(g)$ 恰好就是价值场对状态嵌入的梯度方向，于是用一个 "动作特征位移预测器" $u_\xi(s,a)\approx\gamma\psi(s')-\psi(s)$ 与目标嵌入做内积，得到一个免学习 Q 网络的局部优势分数，在 OGBench 长程导航 + 操控 + 谜题任务上把 RLiable 聚合指标全面拉高。
 tags:
   - "ICML 2026 Workshop on Decision Making"
   - "机器人"

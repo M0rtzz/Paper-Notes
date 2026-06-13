@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Access Denied Inc: The First Benchmark Environment for Sensitivity Awareness
 description: >-
-  [ACL 2025][LLM评测][敏感性感知] 首次形式化定义 LLM "敏感性感知"（Sensitivity Awareness）概念——评估 LLM 能否根据基于角色的访问控制（RBAC）规则决定信息是否可以提供——并构建自动化评估基准 Access Denied Inc…
+  [ACL 2025][LLM评测][敏感性感知] 首次形式化定义 LLM "敏感性感知"（Sensitivity Awareness）概念——评估 LLM 能否根据基于角色的访问控制（RBAC）规则决定信息是否可以提供——并构建自动化评估基准 Access Denied Inc，在 7 个主流 LLM 上发现即使数据高度结构化且规则极简，最佳模型 Grok-2 仍有 18.28% 的泄露率。
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lego: Learning to Disentangle and Invert Personalized Concepts Beyond Object Appearance in Text-to-Image Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][概念解纠缠] 提出Lego方法，通过主体分离和上下文损失实现超越外观的个性化概念（如形容词、动词）的解纠缠与反演，用于扩散模型的个性化内容生成。
+  [ECCV 2024][图像生成][概念解纠缠] 提出Lego方法，通过主体分离和上下文损失实现超越外观的个性化概念（如形容词、动词）的解纠缠与反演，用于扩散模型的个性化内容生成。 个性化内容生成是文本到图像生成领域的重要研究方向。Textual Inversion和DreamBooth等方法已经展示了从少量示例图像中学习并…
 tags:
   - "ECCV 2024"
   - "图像生成"

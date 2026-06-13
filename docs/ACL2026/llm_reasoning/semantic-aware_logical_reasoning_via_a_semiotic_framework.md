@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic-Aware Logical Reasoning via a Semiotic Framework
 description: >-
-  [ACL 2026][LLM推理][符号推理] 提出 LogicAgent，一个基于格雷马斯符号方阵(Semiotic Square)的逻辑推理框架，通过多视角语义分析和反思验证，在语义复杂和逻辑复杂双重挑战下实现 SOTA 逻辑推理性能。
+  [ACL 2026][LLM推理][符号推理] 提出 LogicAgent，一个基于格雷马斯符号方阵(Semiotic Square)的逻辑推理框架，通过多视角语义分析和反思验证，在语义复杂和逻辑复杂双重挑战下实现 SOTA 逻辑推理性能。 领域现状：LLM 的逻辑推理能力是其核心能力之一。现有方法主要分为三类：线性推理(C…
 tags:
   - "ACL 2026"
   - "LLM推理"

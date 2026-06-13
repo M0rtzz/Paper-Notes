@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instance-wise Supervision-level Optimization in Active Learning
 description: >-
-  [CVPR 2025][主动学习] 本文提出 ISO (Instance-wise Supervision-level Optimization) 框架，在主动学习中不仅选择哪些样本标注，还为每个样本自动决定最优的标注级别（精确标签 vs 粗标签），通过价值-成本比(VCR)和多样性感知的批次选择算法…
+  [CVPR 2025][主动学习] 本文提出 ISO (Instance-wise Supervision-level Optimization) 框架，在主动学习中不仅选择哪些样本标注，还为每个样本自动决定最优的标注级别（精确标签 vs 粗标签），通过价值-成本比(VCR)和多样性感知的批次选择算法，在固定预算约束下达到比传统主动学习高10%+的准确率。
 tags:
   - "CVPR 2025"
   - "主动学习"

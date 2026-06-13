@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Limitations and Power of NP-Oracle-Based Functional Synthesis Techniques
 description: >-
-  [AAAI 2026][函数综合] 系统性地从理论层面研究了依赖NP预言机的函数综合方法的能力与局限，证明了朴素的逐位学习方法在多输出场景下必然失败、基于Resolution插值的方法会产生指数级电路，同时证明了NP预言机是高效综合的必要条件…
+  [AAAI 2026][函数综合] 系统性地从理论层面研究了依赖NP预言机的函数综合方法的能力与局限，证明了朴素的逐位学习方法在多输出场景下必然失败、基于Resolution插值的方法会产生指数级电路，同时证明了NP预言机是高效综合的必要条件，并给出了利用NP预言机在多项式时间内综合小规模Skolem函数的正面结果。
 tags:
   - "AAAI 2026"
   - "函数综合"

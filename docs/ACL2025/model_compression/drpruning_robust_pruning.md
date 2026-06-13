@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization
 description: >-
-  [ACL 2025][模型压缩][剪枝] DRPruning 将分布稳健优化（DRO）引入 LLM 结构化剪枝，通过 scaling law 预测各领域最终 loss 作为参考、动态调整训练数据分布来平衡剪枝后各领域性能…
+  [ACL 2025][模型压缩][剪枝] DRPruning 将分布稳健优化（DRO）引入 LLM 结构化剪枝，通过 scaling law 预测各领域最终 loss 作为参考、动态调整训练数据分布来平衡剪枝后各领域性能，在单语和多语设置下分别以 -5.59% PPL 和 +2.95% 下游任务的提升超越 Sheared LLaMA。
 tags:
   - "ACL 2025"
   - "模型压缩"

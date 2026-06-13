@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alterbute: Editing Intrinsic Attributes of Objects in Images
 description: >-
-  [ICML 2026][多模态VLM][图像编辑] Alterbute 用 VLM 自动挖掘 Visual Named Entity 身份簇，并在扩散模型中联合条件化身份参考、属性文本、背景和 mask，从而统一编辑物体颜色、纹理、材质和形状，同时尽量保持物体身份与场景上下文。
+  [ICML 2026][多模态VLM][图像编辑] Alterbute 用 VLM 自动挖掘 Visual Named Entity 身份簇，并在扩散模型中联合条件化身份参考、属性文本、背景和 mask，从而统一编辑物体颜色、纹理、材质和形状，同时尽量保持物体身份与场景上下文。 领域现状：图像编辑模型已经能做大范围文本引导修…
 tags:
   - "ICML 2026"
   - "多模态VLM"

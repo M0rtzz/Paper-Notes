@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Search Arena: Analyzing Search-Augmented LLMs
 description: >-
-  [ICLR 2026][推荐系统][search-augmented LLM] 构建 Search Arena——首个大规模搜索增强 LLM 人类偏好数据集（24069 对话 + 12652 偏好投票，71 种语言），发现用户偏好受引用数量影响（即使引用不支持声明）…
+  [ICLR 2026][推荐系统][search-augmented LLM] 构建 Search Arena——首个大规模搜索增强 LLM 人类偏好数据集（24069 对话 + 12652 偏好投票，71 种语言），发现用户偏好受引用数量影响（即使引用不支持声明），社区驱动平台比 Wikipedia 更受偏好，搜索增强不降低通用聊天性能但通用 LLM 在搜索场景显著退化。
 tags:
   - "ICLR 2026"
   - "推荐系统"

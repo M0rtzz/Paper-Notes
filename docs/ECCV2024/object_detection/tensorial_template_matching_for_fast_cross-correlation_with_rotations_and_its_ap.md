@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tensorial Template Matching for Fast Cross-Correlation with Rotations and Its Application for Tomography
 description: >-
-  [ECCV 2024][目标检测][模板匹配] 提出张量模板匹配（TTM）算法，通过对称张量场将模板在所有旋转下的信息整合为固定数量的相关计算，使得计算复杂度与旋转精度无关，在3D断层扫描图像中实现快速且准确的目标检测与旋转估计。
+  [ECCV 2024][目标检测][模板匹配] 提出张量模板匹配（TTM）算法，通过对称张量场将模板在所有旋转下的信息整合为固定数量的相关计算，使得计算复杂度与旋转精度无关，在3D断层扫描图像中实现快速且准确的目标检测与旋转估计。 模板匹配（Template Matching, TM）是计算机视觉中任意目标检测的经典方法…
 tags:
   - "ECCV 2024"
   - "目标检测"

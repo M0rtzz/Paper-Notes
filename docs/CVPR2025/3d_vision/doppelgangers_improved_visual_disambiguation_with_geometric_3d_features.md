@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features
 description: >-
-  [CVPR 2025][3D视觉][视觉消歧] 提出 Doppelgangers++，通过引入多样化的 VisymScenes 日常场景训练数据和利用 MASt3R 多层解码器 3D 感知特征训练 Transformer 分类器，显著提升了 doppelganger（视觉混淆图像对）检测的精度和泛化性…
+  [CVPR 2025][3D视觉][视觉消歧] 提出 Doppelgangers++，通过引入多样化的 VisymScenes 日常场景训练数据和利用 MASt3R 多层解码器 3D 感知特征训练 Transformer 分类器，显著提升了 doppelganger（视觉混淆图像对）检测的精度和泛化性，并无缝集成到 COLMAP 和 MASt3R-SfM 管线中改善重复结构场景的 3D 重建质量。
 tags:
   - "CVPR 2025"
   - "3D视觉"

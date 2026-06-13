@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Generalization Capacities of MLLMs for Spatial Intelligence
 description: >-
-  [ICLR 2026][多模态VLM][相机感知] 揭示了 RGB-only 空间推理 MLLM 因忽略相机内参导致的焦距-深度歧义这一根本缺陷，提出 Camera-Aware MLLM 框架，通过稠密相机射线嵌入、相机感知数据增强和几何先验蒸馏…
+  [ICLR 2026 Oral][多模态VLM][相机感知] 揭示了 RGB-only 空间推理 MLLM 因忽略相机内参导致的焦距-深度歧义这一根本缺陷，提出 Camera-Aware MLLM 框架，通过稠密相机射线嵌入、相机感知数据增强和几何先验蒸馏，在跨相机泛化的空间定位任务上将 F1 从 39.1% 提升至 52.1%。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "多模态VLM"
   - "相机感知"
   - "空间智能"

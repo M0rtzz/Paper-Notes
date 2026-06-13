@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback
 description: >-
-  [CVPR2025][人体理解][virtual try-on] 提出 VTON-IQA，一个无参考的虚拟试穿图像质量评估框架，通过大规模人类标注基准 VTON-QBench（62,688 张试穿图 + 431…
+  [CVPR2025][人体理解][virtual try-on] 提出 VTON-IQA，一个无参考的虚拟试穿图像质量评估框架，通过大规模人类标注基准 VTON-QBench（62,688 张试穿图 + 431,800 条标注）和 Interleaved Cross-Attention 模块实现与人类感知对齐的图像级质量预测。
 tags:
   - "CVPR2025"
   - "人体理解"

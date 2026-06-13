@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Manga109-v2026: Revisiting Manga109 Annotations for Modern Manga Understanding
 description: >-
-  [ICML 2026][多模态VLM][漫画理解] 作者重审 Manga109 这一漫画 AI 研究的基础数据集，识别出五类对话文本标注问题，结合商用 OCR + GPT-5/Gemini 3 Flash 双 LLM 投票 + 人工校验，修订约 29,000 条标注（占全部 147…
+  [ICML 2026][多模态VLM][漫画理解] 作者重审 Manga109 这一漫画 AI 研究的基础数据集，识别出五类对话文本标注问题，结合商用 OCR + GPT-5/Gemini 3 Flash 双 LLM 投票 + 人工校验，修订约 29,000 条标注（占全部 147,887 条文本标注的 19.6%）发布 Manga109-v2026，使端到端 OCR 评测 H-mean 从 48.5 提升到 62.9（+14.4 pp）。
 tags:
   - "ICML 2026"
   - "多模态VLM"

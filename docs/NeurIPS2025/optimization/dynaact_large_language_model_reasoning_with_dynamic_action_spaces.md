@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynaAct: Large Language Model Reasoning with Dynamic Action Spaces
 description: >-
-  [NeurIPS 2025][优化/理论][动态动作空间] DynaAct 将 LLM 推理中的动作空间构建建模为子集选择问题，通过兼顾效用和多样性的子模函数在每步动态构建紧凑动作空间，在 6 个基准上显著优于 rStar、RAP 等方法，MATH-500 上比 rStar 高 6.8%。
+  [NeurIPS 2025][优化/理论][动态动作空间] DynaAct 将 LLM 推理中的动作空间构建建模为子集选择问题，通过兼顾效用和多样性的子模函数在每步动态构建紧凑动作空间，在 6 个基准上显著优于 rStar、RAP 等方法，MATH-500 上比 rStar 高 6.8%。 领域现状：LLM 复杂推理通常在…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

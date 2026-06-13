@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning
 description: >-
-  [ICLR 2026][AI安全][backdoor attack] 提出 Daze 攻击——恶意模拟器开发者无需访问或修改智能体的奖励函数，仅通过操控状态转移来植入后门：智能体在触发状态下不执行目标动作时被迫执行随机动作（"眩晕"），从而在理论上保证攻击成功且隐蔽…
+  [ICLR 2026][AI安全][backdoor attack] 提出 Daze 攻击——恶意模拟器开发者无需访问或修改智能体的奖励函数，仅通过操控状态转移来植入后门：智能体在触发状态下不执行目标动作时被迫执行随机动作（"眩晕"），从而在理论上保证攻击成功且隐蔽，并首次在真实机器人硬件上演示了 RL 后门攻击。
 tags:
   - "ICLR 2026"
   - "AI安全"

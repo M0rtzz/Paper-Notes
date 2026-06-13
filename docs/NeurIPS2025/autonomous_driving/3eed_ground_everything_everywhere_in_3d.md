@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3EED: Ground Everything Everywhere in 3D
 description: >-
-  [NeurIPS 2025][自动驾驶][3D visual grounding] 提出 3EED——首个大规模多平台（车、无人机、四足机器人）、多模态（LiDAR+RGB）室外 3D 视觉定位基准，包含超 12.8 万目标和 2.2 万语言描述，规模是现有室外数据集的 10 倍…
+  [NeurIPS 2025][自动驾驶][3D visual grounding] 提出 3EED——首个大规模多平台（车、无人机、四足机器人）、多模态（LiDAR+RGB）室外 3D 视觉定位基准，包含超 12.8 万目标和 2.2 万语言描述，规模是现有室外数据集的 10 倍；同时设计了跨平台对齐、多尺度采样和尺度自适应融合的基线方法，揭示了跨平台 3D grounding 的巨大性能差距。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

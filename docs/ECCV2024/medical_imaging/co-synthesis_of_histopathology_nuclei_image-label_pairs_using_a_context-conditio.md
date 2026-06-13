@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model
 description: >-
-  [ECCV 2024][医学图像][组织病理学] 提出一种上下文条件化的联合扩散模型，能够同时合成组织病理学细胞核图像、语义标签和距离图，通过点图（centroid layout）和文本提示两种条件实现对合成过程的精确控制，并生成高质量的实例级标签用于下游核分割和分类任务。
+  [ECCV 2024][医学图像][组织病理学] 提出一种上下文条件化的联合扩散模型，能够同时合成组织病理学细胞核图像、语义标签和距离图，通过点图（centroid layout）和文本提示两种条件实现对合成过程的精确控制，并生成高质量的实例级标签用于下游核分割和分类任务。 组织病理学细胞核分割与分类是数字病理学中的关键任务…
 tags:
   - "ECCV 2024"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Has a Foundation Model Found? Using Inductive Bias to Probe for World Models
 description: >-
-  [ICML 2025][自监督学习][world model] 本文提出"归纳偏置探针"（Inductive Bias Probe），通过在合成数据上反复微调基础模型来测试其外推行为是否符合预设的世界模型，发现在轨道力学、Othello、格问题等领域中，基础模型虽然能准确预测序列但未真正学到底层世界模型…
+  [ICML 2025][自监督学习][world model] 本文提出"归纳偏置探针"（Inductive Bias Probe），通过在合成数据上反复微调基础模型来测试其外推行为是否符合预设的世界模型，发现在轨道力学、Othello、格问题等领域中，基础模型虽然能准确预测序列但未真正学到底层世界模型，而是发展出特定于任务的启发式策略。
 tags:
   - "ICML 2025"
   - "自监督学习"

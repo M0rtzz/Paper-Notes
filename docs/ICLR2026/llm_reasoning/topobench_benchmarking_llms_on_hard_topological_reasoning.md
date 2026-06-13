@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TopoBench: Benchmarking LLMs on Hard Topological Reasoning
 description: >-
-  [ICLR2026][LLM推理][benchmark] 构建TopoBench基准(6类拓扑谜题×3难度)评估LLM的全局空间推理能力，发现前沿模型hard tier仅解决<24%，并通过因果干预实验发现错误频率不等于因果影响——低频的约束遗忘比高频的重复推理更具破坏性。
+  [ICLR2026][LLM推理][benchmark] 构建TopoBench基准(6类拓扑谜题×3难度)评估LLM的全局空间推理能力，发现前沿模型hard tier仅解决<24%，并通过因果干预实验发现错误频率不等于因果影响——低频的约束遗忘比高频的重复推理更具破坏性。 1. LLM在代数/符号推理上表现强劲…
 tags:
   - "ICLR2026"
   - "LLM推理"

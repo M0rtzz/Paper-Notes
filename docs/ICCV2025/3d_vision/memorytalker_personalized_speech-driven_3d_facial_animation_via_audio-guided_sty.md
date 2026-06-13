@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MemoryTalker: Personalized Speech-Driven 3D Facial Animation via Audio-Guided Stylization
 description: >-
-  [3D视觉] 提出 MemoryTalker，通过两阶段训练策略（Memorizing + Animating）利用键值记忆网络存储通用面部运动，并通过音频驱动的风格化记忆实现仅凭音频即可生成个性化 3D 面部动画，无需任何额外先验信息。
+  [3D视觉] 提出 MemoryTalker，通过两阶段训练策略（Memorizing + Animating）利用键值记忆网络存储通用面部运动，并通过音频驱动的风格化记忆实现仅凭音频即可生成个性化 3D 面部动画，无需任何额外先验信息。 语音驱动的 3D 面部动画旨在从语音信号合成与说话人风格匹配的面部运动序列…
 tags:
   - "3D视觉"
 ---

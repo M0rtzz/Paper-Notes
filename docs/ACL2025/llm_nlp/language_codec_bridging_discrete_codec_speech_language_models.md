@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Language-Codec: Bridging Discrete Codec Representations and Speech Language Models
 description: >-
-  [ACL 2025][LLM/NLP][离散音频编解码器] 提出 Language-Codec，通过掩码通道残差向量量化（MCRVQ）机制和改进的傅里叶变换解码器，弥合离散编解码器表示与下游语音语言模型之间的鸿沟，仅用4个码本通道即实现高质量音频重建。
+  [ACL 2025][LLM 其他][离散音频编解码器] 提出 Language-Codec，通过掩码通道残差向量量化（MCRVQ）机制和改进的傅里叶变换解码器，弥合离散编解码器表示与下游语音语言模型之间的鸿沟，仅用4个码本通道即实现高质量音频重建。 大型语言模型在语音合成、音乐生成、音频生成等领域取得了显著进展…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "离散音频编解码器"
   - "残差向量量化"
   - "语音语言模型"

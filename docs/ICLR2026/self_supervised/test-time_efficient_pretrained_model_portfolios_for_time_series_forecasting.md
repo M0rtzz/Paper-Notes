@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Efficient Pretrained Model Portfolios for Time Series Forecasting
 description: >-
-  [ICLR 2026][自监督学习][模型组合] 提出 Chroma——小型预训练时序模型组合（portfolio）框架：从通用模型通过后训练（post-training）产出频率/领域专家（训练加速 10×），测试时通过模型选择或贪心集成组合…
+  [ICLR 2026][自监督学习][模型组合] 提出 Chroma——小型预训练时序模型组合（portfolio）框架：从通用模型通过后训练（post-training）产出频率/领域专家（训练加速 10×），测试时通过模型选择或贪心集成组合，4M 参数的 portfolio 在 Chronos Benchmark II 上匹配 205M-500M 参数的大型单体模型性能，同时推理计算远低于 test-time fine-tuning。
 tags:
   - "ICLR 2026"
   - "自监督学习"

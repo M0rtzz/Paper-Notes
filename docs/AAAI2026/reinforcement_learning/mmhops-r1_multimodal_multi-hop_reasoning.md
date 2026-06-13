@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMhops-R1: Multimodal Multi-hop Reasoning
 description: >-
-  [AAAI 2026][强化学习][多模态多跳推理] 提出了 MMhops 基准（31K 样本、3-4 跳推理深度）和 MMhops-R1 框架，通过强化学习训练 MLLM 自主规划推理路径、动态调用图像/文本检索器，实现多模态多跳推理，7B 模型超越 72B 基线和现有 mRAG 方法。
+  [AAAI 2026][强化学习][多模态多跳推理] 提出了 MMhops 基准（31K 样本、3-4 跳推理深度）和 MMhops-R1 框架，通过强化学习训练 MLLM 自主规划推理路径、动态调用图像/文本检索器，实现多模态多跳推理，7B 模型超越 72B 基线和现有 mRAG 方法。 现有 MLLM 的推理能力主要集中…
 tags:
   - "AAAI 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification
 description: >-
-  [CVPR2025][医学图像][Multiple Instance Learning] 提出 MIL-PF 框架，利用冻结的基础视觉模型预计算特征，配合仅 ~40k 参数的轻量 MIL 聚合头，在乳腺 X 光分类任务上达到 SOTA 性能，大幅降低训练成本。
+  [CVPR2025][医学图像][Multiple Instance Learning] 提出 MIL-PF 框架，利用冻结的基础视觉模型预计算特征，配合仅 ~40k 参数的轻量 MIL 聚合头，在乳腺 X 光分类任务上达到 SOTA 性能，大幅降低训练成本。 领域现状 领域现状：乳腺癌是女性最常见的恶性肿瘤和癌症死亡的首要…
 tags:
   - "CVPR2025"
   - "医学图像"

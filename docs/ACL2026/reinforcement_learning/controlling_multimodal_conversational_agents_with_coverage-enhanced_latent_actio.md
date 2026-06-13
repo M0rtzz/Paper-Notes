@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions
 description: >-
-  [ACL 2026][强化学习][潜在动作] 提出为多模态对话智能体（MCA）构建紧凑的潜在动作空间来替代巨大的 token 动作空间进行 RL 微调，通过跨模态投影器和循环一致性损失利用配对图文数据和纯文本数据共同构建码本，将动作空间从 152K（词表大小）压缩到 128（码本大小）…
+  [ACL 2026][强化学习][潜在动作] 提出为多模态对话智能体（MCA）构建紧凑的潜在动作空间来替代巨大的 token 动作空间进行 RL 微调，通过跨模态投影器和循环一致性损失利用配对图文数据和纯文本数据共同构建码本，将动作空间从 152K（词表大小）压缩到 128（码本大小），在两个对话任务上全面超越 token 级 RL 基线。
 tags:
   - "ACL 2026"
   - "强化学习"

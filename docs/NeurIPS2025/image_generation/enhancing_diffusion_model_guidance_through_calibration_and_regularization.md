@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Diffusion Model Guidance through Calibration and Regularization
 description: >-
-  [NeurIPS 2025 (SPIGM Workshop)][图像生成][classifier guidance] 针对分类器引导扩散模型中分类器过度自信导致梯度消失的问题，提出两类互补方案：(1) Smooth ECE 校准损失微调分类器，FID 改善 ~3%…
+  [NeurIPS 2025 (SPIGM Workshop)][图像生成][classifier guidance] 针对分类器引导扩散模型中分类器过度自信导致梯度消失的问题，提出两类互补方案：(1) Smooth ECE 校准损失微调分类器，FID 改善 ~3%；(2) 基于 f-散度的正则化采样引导（RKL/FKL/JS），无需重训练即在 ImageNet 128×128 上达到 FID 2.13。
 tags:
   - "NeurIPS 2025 (SPIGM Workshop)"
   - "图像生成"

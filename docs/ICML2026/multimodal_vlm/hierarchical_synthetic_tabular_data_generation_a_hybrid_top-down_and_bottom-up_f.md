@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hierarchical Synthetic Tabular Data Generation: A Hybrid Top-Down and Bottom-Up Framework
 description: >-
-  [ICML 2026][多模态VLM][表格合成] 本文提出 H-TDBU 框架：用 LLM 或人工写的规则在 top-down 路径生成"逻辑骨架" $\mathcal{S}$，再用 RandomForest/XGBoost/CTGAN 等轻量 bottom-up 生成器学习"统计纹理" $z$…
+  [ICML 2026][多模态VLM][表格合成] 本文提出 H-TDBU 框架：用 LLM 或人工写的规则在 top-down 路径生成"逻辑骨架" $\mathcal{S}$，再用 RandomForest/XGBoost/CTGAN 等轻量 bottom-up 生成器学习"统计纹理" $z$，最后通过条件生成器 $G(z\in\mathcal{Z}\mid\mathcal{S})$ 把两者拼起来并用 TSTR + XModal 反馈循环迭代修正，在弱多模态金融基准上 TSTR AUROC 优于纯神经网络 baseline 同时保持跨模态一致性。
 tags:
   - "ICML 2026"
   - "多模态VLM"
@@ -148,10 +148,10 @@ XGBoost ablation（变训练行数与 conditioning columns 数）：
 - **vs Shumailov et al. 2024 (Nature, model collapse)**：那篇 Nature 论证递归用合成数据训练会让分布坍缩，本文的 top-down 路径正是缓解这一问题的可行方案——通过规则把罕见事件强制留在数据集里，而不是让模型在递归训练中把它们抹掉。
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 概念上"LLM 写规则 + 便宜模型生数据"的解耦颇有启发，但单独看各组件（CTGAN/RF/XGBoost/JSON 规则）都是已有工具，缝合方式偏工程。
-- 实验充分度: ⭐⭐ 只在 2 个弱多模态 benchmark + 2 个 tabular-only 数据集上验证，缺少与同期 reasoning-driven 方法的对比，硬约束违反率、LLM 鲁棒性、反馈循环收敛性都没报告。
-- 写作质量: ⭐⭐⭐ 思路讲得清楚、图表干净，但方法部分细节（reconciliation 触发阈值、$G(z\mid\mathcal{S})$ 的具体实现）较抽象。
-- 价值: ⭐⭐⭐⭐ 给"LLM 在表格合成里到底该扮演什么角色"提供了一个简洁可用的答案，把成本控制思路推广到其它 LLM-augmented pipeline 都有借鉴价值。
+- 新颖性: ⭐⭐⭐⭐ 概念上"LLM 写规则 + 便宜模型生数据"的解耦颇有启发，但单独看各组件（CTGAN/RF/XGBoost/JSON 规则）都是已有工具，缝合方式偏工程。
+- 实验充分度: ⭐⭐⭐ 只在 2 个弱多模态 benchmark + 2 个 tabular-only 数据集上验证，缺少与同期 reasoning-driven 方法的对比，硬约束违反率、LLM 鲁棒性、反馈循环收敛性都没报告。
+- 写作质量: ⭐⭐⭐⭐ 思路讲得清楚、图表干净，但方法部分细节（reconciliation 触发阈值、$G(z\mid\mathcal{S})$ 的具体实现）较抽象。
+- 价值: ⭐⭐⭐⭐⭐ 给"LLM 在表格合成里到底该扮演什么角色"提供了一个简洁可用的答案，把成本控制思路推广到其它 LLM-augmented pipeline 都有借鉴价值。
 
 <!-- RELATED:START -->
 

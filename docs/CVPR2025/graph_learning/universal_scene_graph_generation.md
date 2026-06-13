@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universal Scene Graph Generation
 description: >-
-  [CVPR 2025][图学习][通用场景图] 本文提出 Universal Scene Graph（USG）表示及其解析器 USG-Par，通过跨模态对象关联器和文本中心场景对比学习，从任意模态组合（图像、文本、视频、3D）输入中生成统一的场景图，同时刻画模态不变和模态特有的场景语义。
+  [CVPR 2025][图学习][通用场景图] 本文提出 Universal Scene Graph（USG）表示及其解析器 USG-Par，通过跨模态对象关联器和文本中心场景对比学习，从任意模态组合（图像、文本、视频、3D）输入中生成统一的场景图，同时刻画模态不变和模态特有的场景语义。 领域现状：场景图（Scene Gra…
 tags:
   - "CVPR 2025"
   - "图学习"

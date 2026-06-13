@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Generalizable 3D Medical Image Representations from Mask-Guided Self-Supervision
 description: >-
-  [CVPR 2026][医学图像][自监督学习] 提出 MASS（MAsk-guided Self-Supervised learning），利用 SAM2 自动生成的类别无关 mask 作为伪标注，以 in-context 分割为 pretext task 进行自监督预训练…
+  [CVPR 2026][医学图像][自监督学习] 提出 MASS（MAsk-guided Self-Supervised learning），利用 SAM2 自动生成的类别无关 mask 作为伪标注，以 in-context 分割为 pretext task 进行自监督预训练，无需任何人工标注即可学到语义丰富、泛化性强的 3D 医学图像表征，在 few-shot 分割和冻结编码器分类上均取得优异表现。
 tags:
   - "CVPR 2026"
   - "医学图像"

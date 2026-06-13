@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Human Preferences Flip: An Instance-Dependent Robust Loss for RLHF
 description: >-
-  [AAAI 2026][LLM对齐][RLHF] 针对人类偏好标注中普遍存在的"偏好翻转"问题，提出 FA-DPO（Flipping-Aware DPO），将标注过程建模为"真实意图 + 实例依赖翻转概率"两阶段，通过修正 BT 模型损失和迭代优化翻转估计模块，在多种噪声场景下显著提升对齐鲁棒性…
+  [AAAI 2026][LLM对齐][RLHF] 针对人类偏好标注中普遍存在的"偏好翻转"问题，提出 FA-DPO（Flipping-Aware DPO），将标注过程建模为"真实意图 + 实例依赖翻转概率"两阶段，通过修正 BT 模型损失和迭代优化翻转估计模块，在多种噪声场景下显著提升对齐鲁棒性，实例依赖翻转率高时比 DPO 提升 16.7%。
 tags:
   - "AAAI 2026"
   - "LLM对齐"

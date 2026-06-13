@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients
 description: >-
-  [AAAI 2026][自监督学习][联邦学习] 提出 FedGRPO，将大模型优化重新定义为基于奖励的评估过程，通过能力感知的专家选择和联邦组相对策略优化（仅传输标量奖励信号），实现了隐私保护且通信效率极高的联邦基础模型优化，在数学推理和问答任务上性能接近甚至超越集中式 GRPO。
+  [AAAI 2026 Oral][自监督学习][联邦学习] 提出 FedGRPO，将大模型优化重新定义为基于奖励的评估过程，通过能力感知的专家选择和联邦组相对策略优化（仅传输标量奖励信号），实现了隐私保护且通信效率极高的联邦基础模型优化，在数学推理和问答任务上性能接近甚至超越集中式 GRPO。 联邦基础模型（FedFMs）旨…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "自监督学习"
   - "联邦学习"
   - "基础模型"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers
 description: >-
-  [ICCV 2025][图像生成][MM-DiT] 分析发现 MM-DiT 架构（FLUX、SD3.5）中视觉与文本 token 数量不对称导致交叉注意力被抑制、且注意力权重对时间步不敏感…
+  [ICCV 2025][图像生成][MM-DiT] 分析发现 MM-DiT 架构（FLUX、SD3.5）中视觉与文本 token 数量不对称导致交叉注意力被抑制、且注意力权重对时间步不敏感，提出 TACA（Temperature-Adjusted Cross-modal Attention）通过温度缩放和时间步自适应调整重新平衡多模态交互，结合 LoRA 微调在 T2I-CompBench 上显著提升文图对齐（空间关系+16.4%、形状+5.9%），且几乎无额外计算开销。
 tags:
   - "ICCV 2025"
   - "图像生成"

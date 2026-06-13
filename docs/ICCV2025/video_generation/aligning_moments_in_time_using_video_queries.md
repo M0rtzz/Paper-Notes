@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Moments in Time using Video Queries
 description: >-
-  [ICCV 2025][视频生成][视频时刻检索] 本文提出MATR（Moment Alignment TRansformer），通过双阶段序列对齐（soft-DTW）将目标视频表示条件化于查询视频特征，实现视频到视频的时刻检索（Vid2VidMR），并设计自监督预训练策略…
+  [ICCV 2025][视频生成][视频时刻检索] 本文提出MATR（Moment Alignment TRansformer），通过双阶段序列对齐（soft-DTW）将目标视频表示条件化于查询视频特征，实现视频到视频的时刻检索（Vid2VidMR），并设计自监督预训练策略，在ActivityNet-VRL上R@1提升13.1%、mIoU提升8.1%。
 tags:
   - "ICCV 2025"
   - "视频生成"

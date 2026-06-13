@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VIRTUE: Visual-Interactive Text-Image Universal Embedder
 description: >-
-  [ICLR 2026][语义分割][提示学习] 提出 VIRTUE，将分割模型 SAM2 与 VLM 结合构建视觉交互式通用嵌入器，支持用户通过点/框/掩码指定兴趣区域产生实体级+全局级联合嵌入，并构建百万级 SCaR 基准评估视觉交互检索能力…
+  [ICLR 2026][语义分割][提示学习] 提出 VIRTUE，将分割模型 SAM2 与 VLM 结合构建视觉交互式通用嵌入器，支持用户通过点/框/掩码指定兴趣区域产生实体级+全局级联合嵌入，并构建百万级 SCaR 基准评估视觉交互检索能力，在 36 个 MMEB 任务（+3.1%-8.5%）和 5 个 SCaR 任务（+15.2%-20.3%）上均达到 SOTA。
 tags:
   - "ICLR 2026"
   - "语义分割"

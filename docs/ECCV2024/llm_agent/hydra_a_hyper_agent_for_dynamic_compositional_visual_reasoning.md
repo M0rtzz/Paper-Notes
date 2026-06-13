@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HYDRA: A Hyper Agent for Dynamic Compositional Visual Reasoning
 description: >-
-  [ECCV 2024][LLM Agent][compositional visual reasoning] （注：基于摘要的简要笔记）提出 HYDRA，一种多阶段动态组合式视觉推理框架，通过规划器（Planner）、强化学习认知控制器（RL Agent）和推理器（Reasoner）三模块协作…
+  [ECCV 2024][LLM Agent][compositional visual reasoning] （注：基于摘要的简要笔记）提出 HYDRA，一种多阶段动态组合式视觉推理框架，通过规划器（Planner）、强化学习认知控制器（RL Agent）和推理器（Reasoner）三模块协作，实现可靠且渐进式的视觉推理，在 RefCOCO/RefCOCO+、OK-VQA、GQA 等多个数据集上取得 SOTA。
 tags:
   - "ECCV 2024"
   - "LLM Agent"

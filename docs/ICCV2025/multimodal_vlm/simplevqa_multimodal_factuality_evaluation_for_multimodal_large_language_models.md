@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimpleVQA: Multimodal Factuality Evaluation for Multimodal Large Language Models
 description: >-
-  [ICCV 2025][多模态VLM][事实性评估] SimpleVQA 是首个全面评估 MLLM 多模态事实性的 VQA 基准，涵盖 9 种任务类型和 9 个主题领域，通过简短确定性答案设计和 LLM-as-a-judge 评分体系…
+  [ICCV 2025][多模态VLM][事实性评估] SimpleVQA 是首个全面评估 MLLM 多模态事实性的 VQA 基准，涵盖 9 种任务类型和 9 个主题领域，通过简短确定性答案设计和 LLM-as-a-judge 评分体系，系统揭示了 18 个 MLLM 和 8 个纯文本 LLM 在事实性方面的优劣。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

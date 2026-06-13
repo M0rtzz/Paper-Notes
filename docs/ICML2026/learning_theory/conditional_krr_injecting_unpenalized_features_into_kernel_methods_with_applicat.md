@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Conditional KRR: Injecting Unpenalized Features into Kernel Methods with Applications to Kernel Thresholding
 description: >-
-  [ICML2026][条件核岭回归] 本文提出条件核岭回归（Conditional KRR）框架，将一组非惩罚特征注入核方法中，通过残差核将其归约为标准 KRR，证明了归约代价为 $\mathcal{O}(1/\sqrt{N})$…
+  [ICML2026][机器学习理论][条件核岭回归] 本文提出条件核岭回归（Conditional KRR）框架，将一组非惩罚特征注入核方法中，通过残差核将其归约为标准 KRR，证明了归约代价为 $\mathcal{O}(1/\sqrt{N})$，并在硬阈值（top-k 本征函数）和软阈值（随机高斯特征）两种设定下验证了条件 KRR 优于标准 KRR 的充分条件。
 tags:
   - "ICML2026"
+  - "机器学习理论"
   - "条件核岭回归"
   - "条件正定核"
   - "残差核"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seg4Diff: Unveiling Open-Vocabulary Segmentation in Text-to-Image Diffusion Transformers
 description: >-
-  [NeurIPS 2025][图像生成][扩散模型] 通过系统分析多模态扩散Transformer（MM-DiT）的联合注意力机制，发现特定层（"语义定位专家层"）天然具备高质量语义分割能力，并提出轻量微调方法MAGNET同时提升分割与生成性能。
+  [NeurIPS 2025][图像生成][扩散模型] 通过系统分析多模态扩散Transformer（MM-DiT）的联合注意力机制，发现特定层（"语义定位专家层"）天然具备高质量语义分割能力，并提出轻量微调方法MAGNET同时提升分割与生成性能。 文本到图像扩散模型通过交叉注意力机制将语言概念隐式地定位到图像区域…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

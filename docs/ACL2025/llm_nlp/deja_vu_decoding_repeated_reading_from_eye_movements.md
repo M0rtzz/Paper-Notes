@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Déjà Vu? Decoding Repeated Reading from Eye Movements
 description: >-
-  [ACL 2025][LLM/NLP][眼动追踪] 首次提出从眼动模式自动判断读者是否曾经阅读过某文本的预测任务，通过基于特征的 XGBoost 和神经网络 RoBERTEye 模型，在单次试验中达到 ~70% 准确率、配对试验中达到 ~91% 准确率…
+  [ACL 2025][LLM 其他][眼动追踪] 首次提出从眼动模式自动判断读者是否曾经阅读过某文本的预测任务，通过基于特征的 XGBoost 和神经网络 RoBERTEye 模型，在单次试验中达到 ~70% 准确率、配对试验中达到 ~91% 准确率，并引入 E-Z Reader 认知模型生成的合成扫视路径作为辅助参考信号来增强预测。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "眼动追踪"
   - "重复阅读"
   - "阅读行为解码"

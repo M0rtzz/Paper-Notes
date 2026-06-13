@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Πnet: Optimizing Hard-Constrained Neural Networks with Orthogonal Projection Layers
 description: >-
-  [ICLR 2026 (Oral)][优化/理论][硬约束神经网络] 提出 Πnet 架构，通过在神经网络输出层附加基于 Douglas-Rachford 算子分裂的正交投影层来保证凸约束的严格满足，并利用隐函数定理进行高效反向传播，在训练时间、求解质量和超参数鲁棒性上大幅超越现有方法。
+  [ICLR 2026 (Oral)][优化/理论][硬约束神经网络] 提出 Πnet 架构，通过在神经网络输出层附加基于 Douglas-Rachford 算子分裂的正交投影层来保证凸约束的严格满足，并利用隐函数定理进行高效反向传播，在训练时间、求解质量和超参数鲁棒性上大幅超越现有方法。 许多实际应用需要求解参数化约束优化问…
 tags:
   - "ICLR 2026 (Oral)"
   - "优化/理论"

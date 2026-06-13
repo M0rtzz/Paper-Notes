@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Differentiable Resampling
 description: >-
-  [ICML 2026][图像生成][扩散模型] 本文提出 **diffusion resampling**：用一个**无需训练**的扩散过程为顺序蒙特卡洛 (SMC) 的重采样步骤提供天然可微的 reparametrisation 替代，证明其在 Wasserstein 距离下相对样本数 $N$ 一致收敛…
+  [ICML 2026][图像生成][扩散模型] 本文提出 **diffusion resampling**：用一个**无需训练**的扩散过程为顺序蒙特卡洛 (SMC) 的重采样步骤提供天然可微的 reparametrisation 替代，证明其在 Wasserstein 距离下相对样本数 $N$ 一致收敛，并在多个粒子滤波与参数估计基准上超越 OT / Gumbel-Softmax / Soft 等现有可微重采样方法。
 tags:
   - "ICML 2026"
   - "图像生成"

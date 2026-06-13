@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallel Token Prediction for Language Models
 description: >-
-  [ICLR 2026][模型压缩][并行解码] 提出 Parallel Token Prediction (PTP)，通过将采样随机性从后处理移至模型输入（辅助变量），使未来 token 成为确定性函数，从而在单次前向传播中联合预测多个 token。
+  [ICLR 2026][模型压缩][并行解码] 提出 Parallel Token Prediction (PTP)，通过将采样随机性从后处理移至模型输入（辅助变量），使未来 token 成为确定性函数，从而在单次前向传播中联合预测多个 token。 自回归 Transformer 的顺序生成过程是推理延迟的主要瓶颈——每预…
 tags:
   - "ICLR 2026"
   - "模型压缩"

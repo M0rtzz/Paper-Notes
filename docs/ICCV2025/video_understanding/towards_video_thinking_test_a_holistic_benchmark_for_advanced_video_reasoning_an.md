@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Video Thinking Test: A Holistic Benchmark for Advanced Video Reasoning and Understanding
 description: >-
-  [ICCV 2025][视频理解][Video LLM] 提出 Video Thinking Test (Video-TT)，一个评估视频大语言模型正确性和鲁棒性的基准，包含 1000 个 YouTube Shorts 视频和 5000 个问题…
+  [ICCV 2025][视频理解][Video LLM] 提出 Video Thinking Test (Video-TT)，一个评估视频大语言模型正确性和鲁棒性的基准，包含 1000 个 YouTube Shorts 视频和 5000 个问题，通过视觉/叙事复杂性因子和自然对抗问题揭示了当前最强模型（GPT-4o 36.6%）与人类（84.3%）之间的巨大差距。
 tags:
   - "ICCV 2025"
   - "视频理解"

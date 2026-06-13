@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GPO: Learning from Critical Steps to Improve LLM Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][关键步骤识别] GPO 通过蒙特卡洛模拟估计推理轨迹中每一步的优势函数，识别出"关键步骤"（模型犯错的转折点），然后从关键步骤重置并重新采样轨迹用于训练，可以即插即用地提升 PPO、DPO、KTO、SimPO、ORPO 等多种优化算法在推理任务上的表现。
+  [NeurIPS 2025][LLM推理][关键步骤识别] GPO 通过蒙特卡洛模拟估计推理轨迹中每一步的优势函数，识别出"关键步骤"（模型犯错的转折点），然后从关键步骤重置并重新采样轨迹用于训练，可以即插即用地提升 PPO、DPO、KTO、SimPO、ORPO 等多种优化算法在推理任务上的表现。 领域现状：当前 LLM 推…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

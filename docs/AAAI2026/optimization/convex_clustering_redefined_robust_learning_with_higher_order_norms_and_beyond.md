@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convex Clustering Redefined: Robust Learning with the Median of Means Estimator
 description: >-
-  [AAAI 2026][优化/理论][凸聚类] 本文将 Median of Means (MoM) 估计器融入凸聚类框架，提出 COMET 算法，通过随机分箱与中位数聚合实现对噪声和离群点的鲁棒性，同时无需预知簇数 $k$，理论上证明了弱一致性…
+  [AAAI 2026][优化/理论][凸聚类] 本文将 Median of Means (MoM) 估计器融入凸聚类框架，提出 COMET 算法，通过随机分箱与中位数聚合实现对噪声和离群点的鲁棒性，同时无需预知簇数 $k$，理论上证明了弱一致性，实验在多个真实数据集上显著超越 k-means、MoM k-means、凸聚类等六种基线方法。
 tags:
   - "AAAI 2026"
   - "优化/理论"

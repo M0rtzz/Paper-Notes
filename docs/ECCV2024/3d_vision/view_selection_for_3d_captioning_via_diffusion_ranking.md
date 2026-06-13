@@ -2,7 +2,7 @@
 title: >-
   [论文解读] View Selection for 3D Captioning via Diffusion Ranking
 description: >-
-  [ECCV 2024][3D视觉][3D captioning] 提出DiffuRank方法，利用预训练text-to-3D扩散模型（Shap·E）对3D物体渲染视角进行对齐度评分和排序，选出最具代表性的Top-6视角送入GPT4-Vision生成高质量字幕…
+  [ECCV 2024][3D视觉][3D captioning] 提出DiffuRank方法，利用预训练text-to-3D扩散模型（Shap·E）对3D物体渲染视角进行对齐度评分和排序，选出最具代表性的Top-6视角送入GPT4-Vision生成高质量字幕，修正Cap3D中约200k错误标注并扩展至150万条字幕。
 tags:
   - "ECCV 2024"
   - "3D视觉"

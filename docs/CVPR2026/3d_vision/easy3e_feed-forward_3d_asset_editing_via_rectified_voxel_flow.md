@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow
 description: >-
-  [CVPR 2026][3D视觉][3D编辑] 提出基于 TRELLIS 3D 生成骨干的前馈式 3D 资产编辑框架，通过 Voxel FlowEdit 在稀疏体素潜空间中实现全局一致的几何形变，并结合法线引导的多视角纹理精修恢复高频细节。
+  [CVPR 2026][3D视觉][3D编辑] 提出基于 TRELLIS 3D 生成骨干的前馈式 3D 资产编辑框架，通过 Voxel FlowEdit 在稀疏体素潜空间中实现全局一致的几何形变，并结合法线引导的多视角纹理精修恢复高频细节。 现有 3D 编辑方法可分为两大类：(1) 2D-lifting 管线：（如 Inst…
 tags:
   - "CVPR 2026"
   - "3D视觉"

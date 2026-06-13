@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guidelines for Fine-grained Sentence-level Arabic Readability Annotation
 description: >-
-  [ACL 2025][Arabic Readability] 本文提出了 BAREC 语料库及其标注指南，这是一个拥有 69K+ 句子、覆盖 19 个可读性等级的大规模阿拉伯语句子级可读性评估资源，并在此基础上建立了自动可读性评估的基准模型。
+  [ACL 2025][Arabic Readability] 本文提出了 BAREC 语料库及其标注指南，这是一个拥有 69K+ 句子、覆盖 19 个可读性等级的大规模阿拉伯语句子级可读性评估资源，并在此基础上建立了自动可读性评估的基准模型。 文本可读性在阅读理解、知识保留和学习参与度等方面扮演重要角色。在教育场景中…
 tags:
   - "ACL 2025"
   - "Arabic Readability"

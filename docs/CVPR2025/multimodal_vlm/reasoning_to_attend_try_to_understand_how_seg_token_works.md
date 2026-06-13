@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning to Attend: Try to Understand How \<SEG\> Token Works
 description: >-
-  [CVPR 2025][多模态VLM][推理分割] 深入分析了 \<SEG\> token 在推理分割任务中的工作机制——发现其学到了与文本直接提及相似的语义特征并用于图像-文本语义对齐，在此基础上提出 READ 方法，将 \<SEG\> token 与图像 token 的相似度图转换为点提示…
+  [CVPR 2025][多模态VLM][推理分割] 深入分析了 \<SEG\> token 在推理分割任务中的工作机制——发现其学到了与文本直接提及相似的语义特征并用于图像-文本语义对齐，在此基础上提出 READ 方法，将 \<SEG\> token 与图像 token 的相似度图转换为点提示，以即插即用方式指导 SAM 解码器生成更精确的分割掩码。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

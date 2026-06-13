@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linearly Controllable GAN: Unsupervised Feature Categorization and Decomposition for Image Generation and Manipulation
 description: >-
-  [ECCV 2024][图像生成][GAN] 本文提出LC-GAN，通过对比特征分类和谱正则化实现GAN潜在空间的无监督几何-外观特征解耦，使得生成图像的各个属性可以被线性独立控制，在FFHQ、CelebA-HQ和AFHQ-V2上达到SOTA生成质量。
+  [ECCV 2024][图像生成][GAN] 本文提出LC-GAN，通过对比特征分类和谱正则化实现GAN潜在空间的无监督几何-外观特征解耦，使得生成图像的各个属性可以被线性独立控制，在FFHQ、CelebA-HQ和AFHQ-V2上达到SOTA生成质量。 领域现状：GAN的潜在空间可控编辑是图像生成领域的核心问题之一…
 tags:
   - "ECCV 2024"
   - "图像生成"

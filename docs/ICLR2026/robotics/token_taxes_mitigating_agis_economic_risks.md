@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token Taxes: Mitigating AGI's Economic Risks
 description: >-
-  [ICLR 2026][机器人][AGI 治理] 提出 Token Tax（基于模型推理 token 使用量的附加税）作为缓解后 AGI 时代经济风险的一线治理工具——利用云计算提供商作为中介实施三阶段审计管道（黑盒 token 验证 → 基于规范的税率 → 白盒审计）…
+  [ICLR 2026][机器人][AGI 治理] 提出 Token Tax（基于模型推理 token 使用量的附加税）作为缓解后 AGI 时代经济风险的一线治理工具——利用云计算提供商作为中介实施三阶段审计管道（黑盒 token 验证 → 基于规范的税率 → 白盒审计），相比传统机器人税具有两大独特优势：可通过现有计算治理基础设施执行，以及在 AI token 使用地而非模型托管地征收以缓解全球不平等。
 tags:
   - "ICLR 2026"
   - "机器人"

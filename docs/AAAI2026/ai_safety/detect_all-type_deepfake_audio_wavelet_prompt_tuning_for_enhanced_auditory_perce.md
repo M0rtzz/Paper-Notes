@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detect All-Type Deepfake Audio: Wavelet Prompt Tuning for Enhanced Auditory Perception
 description: >-
-  [AAAI 2026][AI安全][深伪音频检测] 首次建立全类型（语音/声音/歌声/音乐）音频深伪检测基准，提出小波提示调优（WPT）方法通过离散小波变换增强 SSL 特征的全频域感知能力，在不增加训练参数的前提下超越全量微调，co-training 后平均 EER 仅 3.58%。
+  [AAAI 2026][AI安全][深伪音频检测] 首次建立全类型（语音/声音/歌声/音乐）音频深伪检测基准，提出小波提示调优（WPT）方法通过离散小波变换增强 SSL 特征的全频域感知能力，在不增加训练参数的前提下超越全量微调，co-training 后平均 EER 仅 3.58%。 音频生成技术的快速发展使得合成任何类型…
 tags:
   - "AAAI 2026"
   - "AI安全"

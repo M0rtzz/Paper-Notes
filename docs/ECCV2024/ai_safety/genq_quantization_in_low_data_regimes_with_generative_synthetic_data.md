@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event Trojan: Asynchronous Event-based Backdoor Attacks
 description: >-
-  [ECCV2024][AI安全][backdoor attack] 提出 Event Trojan 框架，首次针对异步事件数据流设计后门攻击方法，包含不可变触发器和可变触发器两种模式，直接在事件流层面注入恶意事件实现隐蔽高效的后门攻击。
+  [ECCV2024][AI安全][backdoor attack] 提出 Event Trojan 框架，首次针对异步事件数据流设计后门攻击方法，包含不可变触发器和可变触发器两种模式，直接在事件流层面注入恶意事件实现隐蔽高效的后门攻击。 事件相机（event camera）因其高动态范围、低延迟、高时间分辨率等优势…
 tags:
   - "ECCV2024"
   - "AI安全"

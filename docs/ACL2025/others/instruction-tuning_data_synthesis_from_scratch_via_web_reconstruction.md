@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Instruction-Tuning Data Synthesis from Scratch via Web Reconstruction
 description: >-
-  [ACL 2025][指令微调] 提出 Web Reconstruction (WebR)，一种从原始网页文档全自动合成高质量指令微调数据的框架，通过"Web作为指令"和"Web作为回复"双视角范式，无需人工标注即可生成优于现有SOTA的IT数据。
+  [ACL 2025][指令微调] 提出 Web Reconstruction (WebR)，一种从原始网页文档全自动合成高质量指令微调数据的框架，通过"Web作为指令"和"Web作为回复"双视角范式，无需人工标注即可生成优于现有SOTA的IT数据。 LLM 的指令遵循能力高度依赖指令-回复对的质量。现有数据合成方法存在明显局…
 tags:
   - "ACL 2025"
   - "指令微调"

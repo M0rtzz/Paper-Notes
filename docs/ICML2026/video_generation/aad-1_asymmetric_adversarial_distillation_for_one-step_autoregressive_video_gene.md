@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AAD-1: Asymmetric Adversarial Distillation for One-Step Autoregressive Video Generation
 description: >-
-  [ICML 2026][视频生成][自回归扩散] AAD-1 用“因果生成器 + 双向视频级判别器”的非对称对抗蒸馏和 DMD warmup，把自回归 image-to-video 生成压缩到每个 chunk 只需一步采样，同时缓解 motion collapse 和长程漂移。
+  [ICML 2026][视频生成][自回归扩散] AAD-1 用“因果生成器 + 双向视频级判别器”的非对称对抗蒸馏和 DMD warmup，把自回归 image-to-video 生成压缩到每个 chunk 只需一步采样，同时缓解 motion collapse 和长程漂移。 领域现状：视频扩散模型通常能生成短片段…
 tags:
   - "ICML 2026"
   - "视频生成"

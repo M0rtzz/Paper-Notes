@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Estimation of Pairwise Mutual Information in Masked Discrete Sequence Models
 description: >-
-  [ICML2026][计算生物][掩码扩散模型] 本文从一个预训练 masked diffusion model (MDM) 的隐藏状态出发，训练一个轻量级"互信息预测头"，一次前向就能输出全部 token 对之间的条件互信息矩阵，并据此挑选"条件独立"的 token 子集做并行解码…
+  [ICML2026][计算生物][掩码扩散模型] 本文从一个预训练 masked diffusion model (MDM) 的隐藏状态出发，训练一个轻量级"互信息预测头"，一次前向就能输出全部 token 对之间的条件互信息矩阵，并据此挑选"条件独立"的 token 子集做并行解码，在 Sudoku 和蛋白质 (ESM-C) 上把推理 NFE 降低 3-5 倍同时保持甚至超过顺序解码的质量。
 tags:
   - "ICML2026"
   - "计算生物"

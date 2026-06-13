@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Iterative Foundation Model Fine-Tuning on Multiple Rewards
 description: >-
-  [NeurIPS 2025][计算生物][多目标微调] 提出 IterativeRS（迭代 Rewarded Soups），通过在多目标专家策略的独立微调和策略合并之间交替迭代，统一了奖励组合和专家合并两类方法…
+  [NeurIPS 2025][计算生物][多目标微调] 提出 IterativeRS（迭代 Rewarded Soups），通过在多目标专家策略的独立微调和策略合并之间交替迭代，统一了奖励组合和专家合并两类方法，在小分子设计、DNA 序列生成和文本摘要任务上均优于 MORLHF 和 Rewarded Soups。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

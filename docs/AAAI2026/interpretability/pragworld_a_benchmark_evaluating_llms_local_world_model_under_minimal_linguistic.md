@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics
 description: >-
-  [AAAI 2026][可解释性][LLM评估] 提出 PragWorld 基准测试，通过对对话施加 7 种最小语言学扰动来评估 LLM 内隐世界模型的可塑性和鲁棒性，并设计双视角可解释性框架定位有害/有用层，提出层正则化微调策略提升鲁棒性。
+  [AAAI 2026 Oral][可解释性][LLM评估] 提出 PragWorld 基准测试，通过对对话施加 7 种最小语言学扰动来评估 LLM 内隐世界模型的可塑性和鲁棒性，并设计双视角可解释性框架定位有害/有用层，提出层正则化微调策略提升鲁棒性。 领域现状 Transformer 语言模型仅通过大量非结构化文本学习即展…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "可解释性"
   - "LLM评估"
   - "世界模型"

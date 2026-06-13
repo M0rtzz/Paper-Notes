@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EEG-DLite: Dataset Distillation for Efficient Large EEG Model Training
 description: >-
-  [AAAI 2026][模型压缩][数据蒸馏] 提出 EEG-DLite 数据蒸馏框架，通过自监督编码+异常值过滤+多样性采样，将2500小时 EEG 数据集压缩至仅5%即可达到甚至超越全数据集预训练的基础模型性能，GPU预训练时间从30小时降至2小时。
+  [AAAI 2026][模型压缩][数据蒸馏] 提出 EEG-DLite 数据蒸馏框架，通过自监督编码+异常值过滤+多样性采样，将2500小时 EEG 数据集压缩至仅5%即可达到甚至超越全数据集预训练的基础模型性能，GPU预训练时间从30小时降至2小时。 领域现状 大规模 EEG 基础模型（如 LaBraM）通过在大量无标签…
 tags:
   - "AAAI 2026"
   - "模型压缩"

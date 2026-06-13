@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions
 description: >-
-  [ICCV 2025][目标检测][人体姿态估计] 提出 VOccl3D，一个基于3DGS渲染的大规模合成视频数据集（25万帧，400视频序列），专注于真实遮挡场景的3D人体姿态与形状估计，在该数据集上微调的模型显著提升了遮挡场景下的HPS性能。
+  [ICCV 2025][目标检测][人体姿态估计] 提出 VOccl3D，一个基于3DGS渲染的大规模合成视频数据集（25万帧，400视频序列），专注于真实遮挡场景的3D人体姿态与形状估计，在该数据集上微调的模型显著提升了遮挡场景下的HPS性能。 3D人体姿态与形状估计（HPS）方法在标准场景下已经表现优异…
 tags:
   - "ICCV 2025"
   - "目标检测"

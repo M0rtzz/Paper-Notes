@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AMDP: Asynchronous Multi-Directional Pipeline Parallelism for Large-Scale Models Training
 description: >-
-  [ICML 2026][pipeline parallelism] AMDP 用多方向异步流水线、一步参数错配上界、梯度累积和 ZeRO 状态分片，在保持近同步收敛的同时提升大模型流水线并行训练吞吐，在 8 GPU GPT/BERT 实验中相对最强异步基线最高提升约 17%。
+  [ICML 2026][pipeline parallelism] AMDP 用多方向异步流水线、一步参数错配上界、梯度累积和 ZeRO 状态分片，在保持近同步收敛的同时提升大模型流水线并行训练吞吐，在 8 GPU GPT/BERT 实验中相对最强异步基线最高提升约 17%。 领域现状：大模型训练通常需要 pipeline…
 tags:
   - "ICML 2026"
   - "pipeline parallelism"

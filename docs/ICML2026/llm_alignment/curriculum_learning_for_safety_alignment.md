@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curriculum Learning for Safety Alignment
 description: >-
-  [ICML 2026][LLM对齐][DPO] 本文提出 Staged-Competence —— 一个把"模型自身的偏好对齐 margin"作为难度分、再用"分阶段更新参考模型 + 阶段内 competence-based 采样"双重课程的 DPO 安全对齐框架…
+  [ICML 2026][LLM对齐][DPO] 本文提出 Staged-Competence —— 一个把"模型自身的偏好对齐 margin"作为难度分、再用"分阶段更新参考模型 + 阶段内 competence-based 采样"双重课程的 DPO 安全对齐框架，在三种 8B 量级 LLM 上把 OOD 有害回答率平均降 16%、越狱攻击成功率降 20%，同时几乎不损伤通用能力与不引入过度拒答。
 tags:
   - "ICML 2026"
   - "LLM对齐"

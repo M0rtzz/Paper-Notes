@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Symmetry-Aware GFlowNets
 description: >-
-  [ICML 2025][GFlowNets] 揭示 GFlowNets 在图生成中因等价动作（不同动作产出同构图）导致的系统性采样偏差——节点生成偏向低对称图、片段生成偏向高对称组件，提出通过终态自同构群大小缩放奖励的简单修正方法 SA-GFN，仅需一次自同构群计算即可实现无偏采样。
+  [ICML 2025][GFlowNets] 揭示 GFlowNets 在图生成中因等价动作（不同动作产出同构图）导致的系统性采样偏差——节点生成偏向低对称图、片段生成偏向高对称组件，提出通过终态自同构群大小缩放奖励的简单修正方法 SA-GFN，仅需一次自同构群计算即可实现无偏采样。 领域现状：GFlowNets 是一种学习…
 tags:
   - "ICML 2025"
   - "GFlowNets"

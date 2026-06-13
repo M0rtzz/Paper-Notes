@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intention Chain-of-Thought Prompting with Dynamic Routing for Code Generation
 description: >-
-  [AAAI 2026][LLM推理][意图链] 提出 RoutingGen——基于认知经济原则的难度感知代码生成框架：用 Qwen3-8B 分类器动态路由任务到简单路径（few-shot 直接生成）或复杂路径（Intention CoT = 规格约束 + 算法意图 + 复杂度分析）…
+  [AAAI 2026][LLM推理][意图链] 提出 RoutingGen——基于认知经济原则的难度感知代码生成框架：用 Qwen3-8B 分类器动态路由任务到简单路径（few-shot 直接生成）或复杂路径（Intention CoT = 规格约束 + 算法意图 + 复杂度分析），在 McEval 上提升 +45.15% 同时平均减少 46.37% token 消耗。
 tags:
   - "AAAI 2026"
   - "LLM推理"

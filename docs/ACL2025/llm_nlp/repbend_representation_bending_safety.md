@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Representation Bending for Large Language Model Safety
 description: >-
-  [ACL 2025][LLM/NLP][表示工程] 提出 RepBend，将 activation steering 的核心思想（安全/不安全表示的向量差异）引入 LoRA 微调的损失函数设计，通过"弯曲"模型的表示空间使安全和不安全状态在潜在空间中远离彼此…
+  [ACL 2025][LLM 其他][表示工程] 提出 RepBend，将 activation steering 的核心思想（安全/不安全表示的向量差异）引入 LoRA 微调的损失函数设计，通过"弯曲"模型的表示空间使安全和不安全状态在潜在空间中远离彼此，在多种越狱攻击基准上实现高达 95% 的攻击成功率降低，且对模型通用能力影响极小。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "表示工程"
   - "激活转向"
   - "LLM安全"

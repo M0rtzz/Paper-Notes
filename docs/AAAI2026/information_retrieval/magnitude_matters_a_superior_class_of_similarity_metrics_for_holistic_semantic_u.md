@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Magnitude Matters: A Superior Class of Similarity Metrics for Holistic Semantic Understanding
 description: >-
-  [AAAI 2026][信息检索/RAG][Similarity Metrics] 提出两种无参数、幅度感知的向量相似度度量——Overlap Similarity (OS) 和 Hyperbolic Tangent Similarity (HTS)，在 4 个句子嵌入模型和 8 个 NLP 基准上…
+  [AAAI 2026][信息检索/RAG][Similarity Metrics] 提出两种无参数、幅度感知的向量相似度度量——Overlap Similarity (OS) 和 Hyperbolic Tangent Similarity (HTS)，在 4 个句子嵌入模型和 8 个 NLP 基准上，对分类任务（释义、推理）的 MSE 显著低于 Cosine Similarity 和 Dot Product，且无需任何额外训练开销。
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

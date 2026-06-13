@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoBaxBuilder: Bootstrapping Code Security Benchmarking
 description: >-
-  [ICML2026][AIGC检测][代码安全评测] AUTOBAXBUILDER用LLM代理流水线自动生成Web后端安全评测场景、功能测试和端到端安全测试，把人工构建BAXBENCH式任务的成本降低约12倍，并构建出40个新场景的AUTOBAXBENCH来评估当代代码模型的正确性与安全性差距。
+  [ICML2026][AIGC检测][代码安全评测] AUTOBAXBUILDER用LLM代理流水线自动生成Web后端安全评测场景、功能测试和端到端安全测试，把人工构建BAXBENCH式任务的成本降低约12倍，并构建出40个新场景的AUTOBAXBENCH来评估当代代码模型的正确性与安全性差距。 领域现状：LLM已经被广泛用…
 tags:
   - "ICML2026"
   - "AIGC检测"

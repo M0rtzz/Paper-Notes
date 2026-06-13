@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GuideBench: Benchmarking Domain-Oriented Guideline Following for LLM Agents
 description: >-
-  [ACL 2025][LLM Agent][Guideline Following] 提出 GuideBench 基准测试，系统评估 LLM 在领域导向指南遵循方面的能力，覆盖 7 个任务类别共 1272 个实例，从规则遵循、规则更新鲁棒性和人类偏好对齐三个维度评估 18 个 LLM…
+  [ACL 2025][LLM Agent][Guideline Following] 提出 GuideBench 基准测试，系统评估 LLM 在领域导向指南遵循方面的能力，覆盖 7 个任务类别共 1272 个实例，从规则遵循、规则更新鲁棒性和人类偏好对齐三个维度评估 18 个 LLM，发现当前模型在复杂领域规则遵循上仍有较大提升空间。
 tags:
   - "ACL 2025"
   - "LLM Agent"

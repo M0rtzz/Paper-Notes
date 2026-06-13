@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Estimation and Learning under Temporal Distribution Shift
 description: >-
-  [ICML 2025][图像恢复][distribution_shift] 提出基于小波软阈值的估计算法，在无需先验知识的情况下实现时间分布偏移下的最优逐点估计误差界，将序列非平稳性与小波域稀疏性建立联系，并应用于分布偏移下的二分类和全变分去噪问题。
+  [ICML 2025][图像恢复][distribution_shift] 提出基于小波软阈值的估计算法，在无需先验知识的情况下实现时间分布偏移下的最优逐点估计误差界，将序列非平稳性与小波域稀疏性建立联系，并应用于分布偏移下的二分类和全变分去噪问题。 传统统计估计假设数据是独立同分布（i.i.d.）的，但在股票价格预测、温度…
 tags:
   - "ICML 2025"
   - "图像恢复"

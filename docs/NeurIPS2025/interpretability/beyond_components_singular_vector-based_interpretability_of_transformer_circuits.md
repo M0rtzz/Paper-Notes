@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits
 description: >-
-  [NeurIPS 2025][可解释性][SVD interpretability] 提出基于奇异向量的方向级可解释性框架，通过 SVD 分解 Transformer 注意力头与 MLP 的增广矩阵，配合可学习对角掩码（KL+L₁）优化…
+  [NeurIPS 2025][可解释性][SVD interpretability] 提出基于奇异向量的方向级可解释性框架，通过 SVD 分解 Transformer 注意力头与 MLP 的增广矩阵，配合可学习对角掩码（KL+L₁）优化，发现组件内部存在正交的低秩子函数——IOI 任务仅保留 ~9% 方向即可 KLD=0.21 复现模型行为，且 Head 9.6 内部沿不同奇异方向分别编码语义实体分离、实体显著性和序列初始化等独立计算原语。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

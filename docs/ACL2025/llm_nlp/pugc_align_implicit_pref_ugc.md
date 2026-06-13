@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Aligning Large Language Models with Implicit Preferences from User-Generated Content
 description: >-
-  [ACL 2025][LLM/NLP][LLM对齐] 提出 PUGC 框架，利用非标注用户生成内容（UGC）中的隐式人类偏好来生成偏好数据——将 UGC 转化为查询+参考文本，以此评分模型生成的响应，用 DPO 实现可扩展的领域特定对齐…
+  [ACL 2025][LLM 其他][LLM对齐] 提出 PUGC 框架，利用非标注用户生成内容（UGC）中的隐式人类偏好来生成偏好数据——将 UGC 转化为查询+参考文本，以此评分模型生成的响应，用 DPO 实现可扩展的领域特定对齐，在 Alpaca Eval 2 上基于 Mistral-7B 达到 35.93% 长度控制胜率 SOTA。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM对齐"
   - "隐式偏好"
   - "用户生成内容"

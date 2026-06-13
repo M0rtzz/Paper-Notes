@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CountSteer: Steering Attention for Object Counting in Diffusion Models
 description: >-
-  [AAAI2026][目标检测][扩散模型] 提出 CountSteer，一种免训练的推理时方法，通过在扩散模型的 cross-attention 隐状态中注入自适应 steering vector，将物体计数准确率提升约 4%，且不损害图像质量。
+  [AAAI2026][目标检测][扩散模型] 提出 CountSteer，一种免训练的推理时方法，通过在扩散模型的 cross-attention 隐状态中注入自适应 steering vector，将物体计数准确率提升约 4%，且不损害图像质量。 - 文本到图像 (T2I) 扩散模型（如 Stable Diffusion）…
 tags:
   - "AAAI2026"
   - "目标检测"

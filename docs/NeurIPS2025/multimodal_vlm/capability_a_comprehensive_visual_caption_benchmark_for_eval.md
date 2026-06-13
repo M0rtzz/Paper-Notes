@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness
 description: >-
-  [NeurIPS 2025][多模态VLM][视觉描述评测] 提出CAPability，一个涵盖6大视角12个维度的综合视觉描述评测基准，通过人工标注近11K图像/视频的视觉元素（而非句子），同时评估描述的正确性（precision）和全面性（hit）…
+  [NeurIPS 2025][多模态VLM][视觉描述评测] 提出CAPability，一个涵盖6大视角12个维度的综合视觉描述评测基准，通过人工标注近11K图像/视频的视觉元素（而非句子），同时评估描述的正确性（precision）和全面性（hit），并引入"知道但说不出"（$K\bar{T}$）指标揭示MLLM在QA与caption任务之间的显著能力差距。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

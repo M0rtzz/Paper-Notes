@@ -2,10 +2,10 @@
 title: >-
   [论文解读] CAST: Achieving Stable LLM-based Text Analysis for Data Analytics
 description: >-
-  [ACL 2026][LLM/NLP][输出稳定性] 提出CAST框架，通过算法提示（Algorithmic Prompting）和先思考后输出（Thinking-before-Speaking）两种机制约束LLM的潜在推理路径，显著提升文本摘要和标注任务的运行间稳定性，同时不损失输出质量。
+  [ACL 2026 Findings][LLM 其他][输出稳定性] 提出CAST框架，通过算法提示（Algorithmic Prompting）和先思考后输出（Thinking-before-Speaking）两种机制约束LLM的潜在推理路径，显著提升文本摘要和标注任务的运行间稳定性，同时不损失输出质量。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "输出稳定性"
   - "文本分析"
   - "表格数据"

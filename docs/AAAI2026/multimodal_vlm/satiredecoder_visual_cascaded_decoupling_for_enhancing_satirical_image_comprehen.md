@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SatireDecoder: Visual Cascaded Decoupling for Enhancing Satirical Image Comprehension
 description: >-
-  [AAAI 2026][多模态VLM][讽刺理解] 提出SatireDecoder，一种无需训练的框架，通过多智能体视觉级联解耦和不确定性引导的CoT推理来增强MLLM对讽刺图像的深层语义理解，在YesBut数据集上正确性、完整性和忠实性三项指标分别提升10%-40%。
+  [AAAI 2026][多模态VLM][讽刺理解] 提出SatireDecoder，一种无需训练的框架，通过多智能体视觉级联解耦和不确定性引导的CoT推理来增强MLLM对讽刺图像的深层语义理解，在YesBut数据集上正确性、完整性和忠实性三项指标分别提升10%-40%。 领域现状 讽刺图像在社交媒体上被广泛使用来表达对社会现…
 tags:
   - "AAAI 2026"
   - "多模态VLM"

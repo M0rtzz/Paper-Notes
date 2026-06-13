@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models
 description: >-
-  [ICLR 2026][时间序列][时间序列推理] TimeOmni-1 提出了首个统一的时间序列推理模型，通过 TSR-Suite（首个推理导向的时序数据集套件）和两阶段训练（SFT注入时序先验 + RL精炼推理），在多项时间序列推理任务上显著超越 GPT-4.1。
+  [ICLR 2026][时间序列][时间序列推理] TimeOmni-1 提出了首个统一的时间序列推理模型，通过 TSR-Suite（首个推理导向的时序数据集套件）和两阶段训练（SFT注入时序先验 + RL精炼推理），在多项时间序列推理任务上显著超越 GPT-4.1。 时间序列理解正从基础模式分析向高级推理转变…
 tags:
   - "ICLR 2026"
   - "时间序列"

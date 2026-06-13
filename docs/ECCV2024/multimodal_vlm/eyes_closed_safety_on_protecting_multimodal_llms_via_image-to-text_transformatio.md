@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Eyes Closed, Safety On: Protecting Multimodal LLMs via Image-to-Text Transformation
 description: >-
-  [ECCV 2024][多模态VLM][MLLM安全] 提出ECSO（Eyes Closed, Safety On），一种无需训练的MLLM保护方法，通过检测自身响应的安全性，并将不安全查询中的图像自适应转换为文本描述，从而恢复预对齐LLM的内在安全机制…
+  [ECCV 2024][多模态VLM][MLLM安全] 提出ECSO（Eyes Closed, Safety On），一种无需训练的MLLM保护方法，通过检测自身响应的安全性，并将不安全查询中的图像自适应转换为文本描述，从而恢复预对齐LLM的内在安全机制，在MM-SafetyBench上实现最高71.3%的安全性提升，且不损害常规性能。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

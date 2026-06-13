@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REGEN: Learning Compact Video Embedding with (Re-)Generative Decoder
 description: >-
-  [图像生成] 提出 REGEN，用扩散 Transformer（DiT）替代传统 VAE 解码器作为视频的再生式解码器，通过"生成而非精确重建"的学习范式突破视频时序压缩瓶颈，实现最高 32× 时序压缩。
+  [图像生成] 提出 REGEN，用扩散 Transformer（DiT）替代传统 VAE 解码器作为视频的再生式解码器，通过"生成而非精确重建"的学习范式突破视频时序压缩瓶颈，实现最高 32× 时序压缩。 当前视频生成的潜扩散模型（LDM）严重依赖视频嵌入器将视频压缩到潜空间进行建模。以 MAGVIT-v2 为代表的 SOT…
 tags:
   - "图像生成"
 ---

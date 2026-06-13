@@ -2,9 +2,9 @@
 title: >-
   [论文解读] How Large Language Models Balance Internal Knowledge with User and Document Assertions
 description: >-
-  [ACL 2026][信息检索/RAG][三源交互] 本文跳出"参数知识 vs 单一外部源"的二元冲突范式，提出"参数 / 用户主张 / 文档主张"三源交互评测框架，在 27 个 LLM × 2 数据集上发现：大多数模型对文档比对用户更轻信，后训练进一步强化这一偏好…
+  [ACL 2026 Findings][信息检索/RAG][三源交互] 本文跳出"参数知识 vs 单一外部源"的二元冲突范式，提出"参数 / 用户主张 / 文档主张"三源交互评测框架，在 27 个 LLM × 2 数据集上发现：大多数模型对文档比对用户更轻信，后训练进一步强化这一偏好，且大部分模型属于"impressionable"——分不清外部信息是帮还是害。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "三源交互"
   - "文档偏好"

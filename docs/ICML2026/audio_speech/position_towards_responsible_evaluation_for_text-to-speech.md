@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Towards Responsible Evaluation for Text-to-Speech
 description: >-
-  [ICML 2026][音频/语音][TTS评测] 这是一篇立场论文，提出 TTS 评测应从"只看技术指标"升级为三层递进的 **Responsible Evaluation**——保真度与准确性、可比性与标准化、治理-公平-安全——并系统性诊断了当前 WER/SIM/MOS/RTF 等指标的失效模式…
+  [ICML 2026][音频/语音][TTS评测] 这是一篇立场论文，提出 TTS 评测应从"只看技术指标"升级为三层递进的 **Responsible Evaluation**——保真度与准确性、可比性与标准化、治理-公平-安全——并系统性诊断了当前 WER/SIM/MOS/RTF 等指标的失效模式，给出 13 条可执行建议。
 tags:
   - "ICML 2026"
   - "音频/语音"

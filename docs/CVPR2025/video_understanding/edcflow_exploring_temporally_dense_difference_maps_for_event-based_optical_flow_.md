@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation
 description: >-
-  [CVPR 2025][视频理解][事件相机] 提出EDCFlow，利用相邻事件帧之间时间密集的特征差分图与低分辨率代价体积的互补性，在1/4分辨率上实现高质量且轻量的事件光流估计。
+  [CVPR 2025][视频理解][事件相机] 提出EDCFlow，利用相邻事件帧之间时间密集的特征差分图与低分辨率代价体积的互补性，在1/4分辨率上实现高质量且轻量的事件光流估计。 事件相机通过检测亮度变化产生异步事件流，具备细粒度时间分辨率、高动态范围和无运动模糊等优势，非常适用于运动捕捉。现有基于RAFT的事件光流方法…
 tags:
   - "CVPR 2025"
   - "视频理解"

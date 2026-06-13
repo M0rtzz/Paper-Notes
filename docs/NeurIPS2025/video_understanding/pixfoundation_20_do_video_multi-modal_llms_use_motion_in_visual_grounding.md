@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PixFoundation 2.0: Do Video Multi-Modal LLMs Use Motion in Visual Grounding?
 description: >-
-  [NeurIPS 2025][视频理解][运动中心评估] 通过提出四项运动中心的探测技术和 MoCentric-Bench 基准，证明当前视频多模态 LLM 在像素级视觉接地任务中未能真正利用运动信息，可被静态关键帧欺骗。
+  [NeurIPS 2025][视频理解][运动中心评估] 通过提出四项运动中心的探测技术和 MoCentric-Bench 基准，证明当前视频多模态 LLM 在像素级视觉接地任务中未能真正利用运动信息，可被静态关键帧欺骗。 领域现状：多模态大语言模型在视频高层任务（QA、描述）表现良好，但像素级视觉接地能力未被深入探讨…
 tags:
   - "NeurIPS 2025"
   - "视频理解"

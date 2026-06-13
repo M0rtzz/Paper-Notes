@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Neural Operators Through Diffusion Last Layer
 description: >-
-  [ICML 2026][物理/科学计算][神经算子] 在任何神经算子骨干（FNO/DeepONet）后挂一个"扩散末层"（DLL）：用一个输入相关基 $\Phi_a$ 把目标场压成 $r$ 维系数向量，再用一个小 MLP 速度场在系数空间做条件流匹配…
+  [ICML 2026][物理/科学计算][神经算子] 在任何神经算子骨干（FNO/DeepONet）后挂一个"扩散末层"（DLL）：用一个输入相关基 $\Phi_a$ 把目标场压成 $r$ 维系数向量，再用一个小 MLP 速度场在系数空间做条件流匹配，从而把确定性算子升级成既能采样随机解又能给出滚动不确定性的生成式算子。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

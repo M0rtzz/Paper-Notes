@@ -2,7 +2,7 @@
 title: >-
   [论文解读] In-Context Compositional Learning via Sparse Coding Transformer
 description: >-
-  [NeurIPS 2025][多模态VLM][稀疏编码] 受稀疏编码启发，将 Transformer 注意力机制重新解释为在编码字典和解码字典上的投影，通过稀疏系数显式表示组合规则，并利用提升方案（lifting scheme）将上下文任务的组合规则迁移到目标任务。
+  [NeurIPS 2025][多模态VLM][稀疏编码] 受稀疏编码启发，将 Transformer 注意力机制重新解释为在编码字典和解码字典上的投影，通过稀疏系数显式表示组合规则，并利用提升方案（lifting scheme）将上下文任务的组合规则迁移到目标任务。 In-context compositional lear…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

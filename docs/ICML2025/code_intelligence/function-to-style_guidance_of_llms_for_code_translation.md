@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Function-to-Style Guidance of LLMs for Code Translation
 description: >-
-  [ICML 2025][代码智能][code translation] 提出 F2STrans，通过功能学习（正确性）和风格学习（可读性）两阶段渐进式微调 LLM，使 Qwen-1.5B 在 20 种代码翻译场景中平均超越 prompt 增强的 Qwen-32B 和 GPT-4。
+  [ICML 2025][代码智能][code translation] 提出 F2STrans，通过功能学习（正确性）和风格学习（可读性）两阶段渐进式微调 LLM，使 Qwen-1.5B 在 20 种代码翻译场景中平均超越 prompt 增强的 Qwen-32B 和 GPT-4。 领域现状 领域现状：领域现状: LLM 在代…
 tags:
   - "ICML 2025"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching
 description: >-
-  [NeurIPS 2025][模型压缩][跨分词器蒸馏] 本文提出 Approximate Likelihood Matching (ALM)，一种基于二值化 f-散度的原则性跨分词器蒸馏方法，首次实现了跨根本不同分词器（如子词→字节级）的有效蒸馏和纯蒸馏。
+  [NeurIPS 2025][模型压缩][跨分词器蒸馏] 本文提出 Approximate Likelihood Matching (ALM)，一种基于二值化 f-散度的原则性跨分词器蒸馏方法，首次实现了跨根本不同分词器（如子词→字节级）的有效蒸馏和纯蒸馏。 知识蒸馏是创建高效语言模型的重要范式，但现有蒸馏方法要求教师模型和…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revealing POMDPs: Qualitative and Quantitative Analysis for Parity Objectives
 description: >-
-  [AAAI 2026][强化学习][POMDP] 本文证明了揭示型POMDPs（revealing POMDPs）在奇偶目标（parity objectives）下的极限确定性分析（limit-sure analysis）等价于几乎确定性分析（EXPTIME-complete）…
+  [AAAI 2026][强化学习][POMDP] 本文证明了揭示型POMDPs（revealing POMDPs）在奇偶目标（parity objectives）下的极限确定性分析（limit-sure analysis）等价于几乎确定性分析（EXPTIME-complete），且定量分析（quantitative analysis）也可在EXPTIME内完成，解决了该子类的两个重要开放问题。
 tags:
   - "AAAI 2026"
   - "强化学习"

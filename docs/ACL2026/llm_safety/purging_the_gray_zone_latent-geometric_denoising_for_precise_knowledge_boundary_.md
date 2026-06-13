@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Purging the Gray Zone: Latent-Geometric Denoising for Precise Knowledge Boundary Awareness
 description: >-
-  [ACL 2026][LLM安全][知识边界感知] 本文提出 GeoDe 框架，通过在 LLM 隐空间中训练线性探针构建真值超平面，利用样本到超平面的几何距离作为置信度信号来筛选高质量弃权微调数据，有效消除决策边界附近的"灰色地带"噪声，显著提升模型的真实性和可靠性。
+  [ACL 2026 Findings][LLM安全][知识边界感知] 本文提出 GeoDe 框架，通过在 LLM 隐空间中训练线性探针构建真值超平面，利用样本到超平面的几何距离作为置信度信号来筛选高质量弃权微调数据，有效消除决策边界附近的"灰色地带"噪声，显著提升模型的真实性和可靠性。 领域现状：LLM 经常产生幻觉（生成事…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "知识边界感知"
   - "弃权微调"

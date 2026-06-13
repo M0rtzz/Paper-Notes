@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alleviating Hallucinations from Knowledge Misalignment in Large Language Models via Selective Abstention Learning
 description: >-
-  [ACL 2025][幻觉检测][知识错位] 本文针对LLM中因知识错位（模型参数知识与事实不一致）导致的幻觉问题，提出选择性弃权学习（Selective Abstention Learning）方法，让模型在遇到知识边界外的问题时学会主动拒绝回答而非编造内容，从而减少幻觉。
+  [ACL 2025][幻觉检测][知识错位] 本文针对LLM中因知识错位（模型参数知识与事实不一致）导致的幻觉问题，提出选择性弃权学习（Selective Abstention Learning）方法，让模型在遇到知识边界外的问题时学会主动拒绝回答而非编造内容，从而减少幻觉。 领域现状：大语言模型存在严重的"幻觉"（hall…
 tags:
   - "ACL 2025"
   - "幻觉检测"

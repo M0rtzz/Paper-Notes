@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaVin-DiT: Large Vision Diffusion Transformer
 description: >-
-  [CVPR 2025][图像生成][大视觉模型] LaVin-DiT 提出一种基于扩散 Transformer 的大视觉基础模型，通过空间-时序 VAE 编码、联合扩散 Transformer 去噪、以及 in-context learning 实现超过 20 种视觉任务的统一处理…
+  [CVPR 2025][图像生成][大视觉模型] LaVin-DiT 提出一种基于扩散 Transformer 的大视觉基础模型，通过空间-时序 VAE 编码、联合扩散 Transformer 去噪、以及 in-context learning 实现超过 20 种视觉任务的统一处理，从 0.1B 扩展至 3.4B 参数，在多项任务上显著超越自回归式大视觉模型 LVM。
 tags:
   - "CVPR 2025"
   - "图像生成"

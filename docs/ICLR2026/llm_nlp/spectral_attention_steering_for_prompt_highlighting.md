@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Spectral Attention Steering for Prompt Highlighting
 description: >-
-  [ICLR2026][LLM/NLP][注意力机制] 提出 SEKA/AdaSEKA，通过对 key embedding 进行谱分解学习"相关性子空间"，在注意力计算前直接编辑 key 向量来实现 prompt highlighting，无需存储完整注意力矩阵，与 FlashAttention 完全兼容…
+  [ICLR2026][LLM 其他][注意力机制] 提出 SEKA/AdaSEKA，通过对 key embedding 进行谱分解学习"相关性子空间"，在注意力计算前直接编辑 key 向量来实现 prompt highlighting，无需存储完整注意力矩阵，与 FlashAttention 完全兼容，且开销极低（+0.03s/sample）。
 tags:
   - "ICLR2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "注意力机制"
   - "提示学习"
   - "spectral decomposition"

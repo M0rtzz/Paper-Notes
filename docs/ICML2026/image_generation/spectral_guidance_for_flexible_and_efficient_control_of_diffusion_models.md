@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral Guidance for Flexible and Efficient Control of Diffusion Models
 description: >-
-  [ICML 2026][图像生成][谱引导] 本文提出 Spectral Guidance：通过自监督学习扩散过程条件期望算子的左奇异函数，把任意引导信号（标签 / CLIP / mask）投影到这组与扩散动力学对齐的谱基上，绕开 denoiser 反向传播…
+  [ICML 2026][图像生成][谱引导] 本文提出 Spectral Guidance：通过自监督学习扩散过程条件期望算子的左奇异函数，把任意引导信号（标签 / CLIP / mask）投影到这组与扩散动力学对齐的谱基上，绕开 denoiser 反向传播，在 CIFAR-10 上较最强 training-free 基线提升 37 个百分点准确率且采样快 4 倍。
 tags:
   - "ICML 2026"
   - "图像生成"

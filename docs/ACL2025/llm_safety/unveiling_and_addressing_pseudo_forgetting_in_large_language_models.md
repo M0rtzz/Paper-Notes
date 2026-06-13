@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unveiling and Addressing Pseudo Forgetting in Large Language Models
 description: >-
-  [ACL2025][LLM安全][continual learning] 揭示 LLM 持续学习中的"伪遗忘"现象：性能下降并非因为模型丧失了旧任务能力，而是指令无法正确激活已有能力。通过归因分析证明遗忘模型的指令依赖度降低…
+  [ACL2025][LLM安全][continual learning] 揭示 LLM 持续学习中的"伪遗忘"现象：性能下降并非因为模型丧失了旧任务能力，而是指令无法正确激活已有能力。通过归因分析证明遗忘模型的指令依赖度降低，并提出基于 Rationale-Guidance Difficulty（RGD）的动态数据回放框架 RGD-R 来缓解伪遗忘。
 tags:
   - "ACL2025"
   - "LLM安全"

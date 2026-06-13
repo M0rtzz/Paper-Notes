@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeuroCircuitry-Inspired Hierarchical Graph Causal Attention Networks for Explainable Depression Identification
 description: >-
-  [ICLR 2026][医学图像][脑网络图神经网络] 提出 NH-GCAT 框架，将神经科学中的抑郁症神经环路先验知识显式融入 GNN，在区域、环路和网络三个空间尺度上建模，在 REST-meta-MDD 数据集上取得 SOTA 分类效果（AUC 78.5%、ACC 73.8%）…
+  [ICLR 2026][医学图像][脑网络图神经网络] 提出 NH-GCAT 框架，将神经科学中的抑郁症神经环路先验知识显式融入 GNN，在区域、环路和网络三个空间尺度上建模，在 REST-meta-MDD 数据集上取得 SOTA 分类效果（AUC 78.5%、ACC 73.8%），并提供与神经科学相符的可解释性分析。
 tags:
   - "ICLR 2026"
   - "医学图像"

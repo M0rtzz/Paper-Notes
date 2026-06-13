@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HRC + DSPPO: 用博弈论分解把传递偏好和循环偏好分开学
 description: >-
-  [ICML 2026][LLM对齐][偏好建模] HRC 把人类偏好显式拆成正交的「传递标量分量」（BT 模型）+「循环向量分量」（GPM），用博弈论分解定理证明这种 hybrid 形式既能保 dominant 候选又能建模 RPS 式循环，再配套时变博弈 DSPPO 让对齐过程从「先稳住传递骨架…
+  [ICML 2026][LLM对齐][偏好建模] HRC 把人类偏好显式拆成正交的「传递标量分量」（BT 模型）+「循环向量分量」（GPM），用博弈论分解定理证明这种 hybrid 形式既能保 dominant 候选又能建模 RPS 式循环，再配套时变博弈 DSPPO 让对齐过程从「先稳住传递骨架，再学循环细节」走到 Nash 均衡——在 RewardBench 2 上 Gemma-2B-it 平均涨 1.23%、AlpacaEval 2.0 LC win-rate 拉到 44.75%。
 tags:
   - "ICML 2026"
   - "LLM对齐"

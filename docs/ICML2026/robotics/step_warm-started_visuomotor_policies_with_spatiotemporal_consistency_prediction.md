@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STEP: Warm-Started Visuomotor Policies with Spatiotemporal Consistency Prediction
 description: >-
-  [ICML 2026][机器人][扩散模型] STEP 给 diffusion policy 接了一个轻量的 "前一段历史动作 + 当前观测 → 下一段动作"的 Transformer 预测器, 用它的输出作为去噪起点 (warm-start), 把 100 步去噪压到 2 步…
+  [ICML 2026][机器人][扩散模型] STEP 给 diffusion policy 接了一个轻量的 "前一段历史动作 + 当前观测 → 下一段动作"的 Transformer 预测器, 用它的输出作为去噪起点 (warm-start), 把 100 步去噪压到 2 步, 又附带一个 "动作变化太小就注一点噪声"的执行死锁防御机制, 在 9 个仿真任务和 2 个真机任务上比 BRIDGER / DDIM 平均提 21.6% / 27.5% 成功率。
 tags:
   - "ICML 2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond N-Grams: Rethinking Evaluation Metrics and Strategies for Multilingual Abstractive Summarization
 description: >-
-  [ACL 2025][多语言/翻译][multilingual evaluation] 系统评估了 n-gram 和神经网络评估指标在 8 种语言（4 个形态类型族）上与人类判断的相关性，发现 n-gram 指标在高融合语言（阿拉伯语、希伯来语）上与人类判断负相关…
+  [ACL 2025][多语言/翻译][multilingual evaluation] 系统评估了 n-gram 和神经网络评估指标在 8 种语言（4 个形态类型族）上与人类判断的相关性，发现 n-gram 指标在高融合语言（阿拉伯语、希伯来语）上与人类判断负相关，而专门训练的神经指标 COMET 在所有语言类型上一致优于其他方法。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

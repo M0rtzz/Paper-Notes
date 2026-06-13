@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Faster Algorithms for Structured John Ellipsoid Computation
 description: >-
-  [NeurIPS 2025][优化/理论][John椭球] 针对对称凸多面体 $P = \{x \in \mathbb{R}^d : -\mathbf{1}_n \leq Ax \leq \mathbf{1}_n\}$ 的 John 椭球计算问题…
+  [NeurIPS 2025][优化/理论][John椭球] 针对对称凸多面体 $P = \{x \in \mathbb{R}^d : -\mathbf{1}_n \leq Ax \leq \mathbf{1}_n\}$ 的 John 椭球计算问题，提出两个快速算法：基于 sketching 的近输入稀疏度算法 $\widetilde{O}(\text{nnz}(A) + d^\omega)$ 每次迭代，和基于树宽的算法 $O(n\tau^2)$ 每次迭代，均显著优于已有最优 $O(nd^2)$。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

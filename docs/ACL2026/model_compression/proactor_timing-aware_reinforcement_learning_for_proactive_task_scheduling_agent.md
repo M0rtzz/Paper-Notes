@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProActor: Timing-Aware Reinforcement Learning for Proactive Task Scheduling Agents
 description: >-
-  [ACL2026][模型压缩][主动式智能体] ProActor 把对话式任务调度从“等用户明确指令后反应”推进到“在合适时机主动触发动作”，通过自动 reference action 标注、proactiveness metrics、turn-level GRPO 和 ART-F 高效训练框架…
+  [ACL2026][模型压缩][主动式智能体] ProActor 把对话式任务调度从“等用户明确指令后反应”推进到“在合适时机主动触发动作”，通过自动 reference action 标注、proactiveness metrics、turn-level GRPO 和 ART-F 高效训练框架，让 4-bit Qwen2.5-14B-ProActor-Q4 在 ABCD+ 上取得最高 PRI 0.7293，并在保持动作一致性的同时显著提升 proactive timing。
 tags:
   - "ACL2026"
   - "模型压缩"

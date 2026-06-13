@@ -2,9 +2,10 @@
 title: >-
   [论文解读] QualiSpeech: A Speech Quality Assessment Dataset with Natural Language Reasoning
 description: >-
-  [ACL2025][语音质量评估] 本文提出 QualiSpeech，首个包含 11 个维度标注和详细自然语言推理描述的语音质量评估数据集，以及配套的评测基准，证明了微调后的听觉 LLM 能生成关于噪声和失真的详细描述，并展示了推理增强质量评估的潜力。
+  [ACL2025][LLM 其他][语音质量评估] 本文提出 QualiSpeech，首个包含 11 个维度标注和详细自然语言推理描述的语音质量评估数据集，以及配套的评测基准，证明了微调后的听觉 LLM 能生成关于噪声和失真的详细描述，并展示了推理增强质量评估的潜力。 语音质量评估是评价语音合成系统和通信网络失真的核心任务…
 tags:
   - "ACL2025"
+  - "LLM 其他"
   - "语音质量评估"
   - "自然语言描述"
   - "听觉大语言模型"

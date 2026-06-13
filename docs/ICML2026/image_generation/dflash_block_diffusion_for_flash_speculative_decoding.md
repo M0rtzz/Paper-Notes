@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DFlash: Block Diffusion for Flash Speculative Decoding
 description: >-
-  [ICML 2026][图像生成][推测解码] DFlash 用一个轻量级的"块扩散"草稿模型替代 EAGLE-3 那种自回归草稿器，并通过把目标模型的多层 hidden features 作为 KV 注入到草稿模型每一层，在单次前向中并行起草整块 token，端到端最高拿到 6× 无损加速…
+  [ICML 2026][图像生成][推测解码] DFlash 用一个轻量级的"块扩散"草稿模型替代 EAGLE-3 那种自回归草稿器，并通过把目标模型的多层 hidden features 作为 KV 注入到草稿模型每一层，在单次前向中并行起草整块 token，端到端最高拿到 6× 无损加速，比 EAGLE-3 再快 2.5× 左右。
 tags:
   - "ICML 2026"
   - "图像生成"

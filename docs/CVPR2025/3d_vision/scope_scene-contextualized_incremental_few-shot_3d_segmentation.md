@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation
 description: >-
-  [CVPR 2025][3D视觉][增量少样本3D分割] SCOPE 提出了一种背景引导的原型丰富化框架用于增量少样本 3D 分割，通过从背景区域中挖掘伪实例并存入实例原型库（IPB），利用上下文原型检索（CPR）和注意力原型丰富化（APE）融合上下文与少样本原型，在不重训 backbone 的前提下…
+  [CVPR 2025][3D视觉][增量少样本3D分割] SCOPE 提出了一种背景引导的原型丰富化框架用于增量少样本 3D 分割，通过从背景区域中挖掘伪实例并存入实例原型库（IPB），利用上下文原型检索（CPR）和注意力原型丰富化（APE）融合上下文与少样本原型，在不重训 backbone 的前提下，ScanNet 上新类 IoU +6.98%、平均 IoU +2.25%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

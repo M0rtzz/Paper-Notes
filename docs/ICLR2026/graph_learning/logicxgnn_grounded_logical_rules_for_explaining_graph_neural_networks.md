@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LogicXGNN: Grounded Logical Rules for Explaining Graph Neural Networks
 description: >-
-  [ICLR 2026][图学习][图神经网络可解释性] LogicXGNN 提出了一种从已训练的图神经网络中提取可解释一阶逻辑规则的 post-hoc 框架：通过图结构哈希和隐藏层嵌入模式识别谓词、用决策树确定判别式 DNF 规则结构、并将抽象谓词接地到输入空间，最终生成可替代原始 GNN 的规则化分类器…
+  [ICLR 2026][图学习][图神经网络可解释性] LogicXGNN 提出了一种从已训练的图神经网络中提取可解释一阶逻辑规则的 post-hoc 框架：通过图结构哈希和隐藏层嵌入模式识别谓词、用决策树确定判别式 DNF 规则结构、并将抽象谓词接地到输入空间，最终生成可替代原始 GNN 的规则化分类器，同时可作为可控的图生成模型。
 tags:
   - "ICLR 2026"
   - "图学习"

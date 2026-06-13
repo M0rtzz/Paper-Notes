@@ -2,10 +2,10 @@
 title: >-
   [论文解读] PiFi: Plug-in and Fine-tuning: Bridging the Gap between Small Language Models and Large Language Models
 description: >-
-  [ACL 2025][LLM/NLP][知识蒸馏] 提出 PiFi 框架，将 LLM 的单层冻结参数插入到 SLM 中并微调，以极低计算开销显著提升 SLM 在 NLU 和 NLG 任务上的性能。
+  [ACL 2025][LLM 其他][知识蒸馏] 提出 PiFi 框架，将 LLM 的单层冻结参数插入到 SLM 中并微调，以极低计算开销显著提升 SLM 在 NLU 和 NLG 任务上的性能。 核心问题：LLM 具有强大的泛化能力和语言知识，但计算开销大、难以部署在资源受限环境；SLM 高效但泛化能力不足…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "知识蒸馏"
   - "小语言模型"
   - "大语言模型"

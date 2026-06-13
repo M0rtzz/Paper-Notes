@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizing Visual Geometry Priors to Sparse Gaussian Occupancy Prediction
 description: >-
-  [CVPR 2026][自动驾驶][占据预测] GPOcc 提出利用可泛化的视觉几何先验（如 VGGT、DepthAnything）进行单目 3D 占据预测，通过沿相机射线向内延伸表面点生成体积采样，以稀疏高斯基元进行概率占据推断，并设计免训练增量更新策略处理流式输入…
+  [CVPR 2026][自动驾驶][占据预测] GPOcc 提出利用可泛化的视觉几何先验（如 VGGT、DepthAnything）进行单目 3D 占据预测，通过沿相机射线向内延伸表面点生成体积采样，以稀疏高斯基元进行概率占据推断，并设计免训练增量更新策略处理流式输入，在 Occ-ScanNet 上单目 mIoU 提升 +9.99、流式提升 +11.79 超越前 SOTA，同时在相同深度先验下速度快 2.65 倍。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

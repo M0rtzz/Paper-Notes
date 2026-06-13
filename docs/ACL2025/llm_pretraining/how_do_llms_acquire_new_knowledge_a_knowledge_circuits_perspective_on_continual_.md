@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Do LLMs Acquire New Knowledge? A Knowledge Circuits Perspective on Continual Pre-Training
 description: >-
-  [ACL 2025][预训练][知识电路] 从知识电路(knowledge circuit)演化视角研究LLM持续预训练中的新知识获取机制，在GPT-2/Llama/Phi三个架构上发现：(1)与已有知识相关的新知识更容易获取；(2)知识电路经历"形成→优化"的明显相变…
+  [ACL 2025][预训练][知识电路] 从知识电路(knowledge circuit)演化视角研究LLM持续预训练中的新知识获取机制，在GPT-2/Llama/Phi三个架构上发现：(1)与已有知识相关的新知识更容易获取；(2)知识电路经历"形成→优化"的明显相变；(3)电路演化遵循"中深层先建立提取功能→浅层后丰富知识表示"的深到浅模式。
 tags:
   - "ACL 2025"
   - "预训练"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Copresheaf Topological Neural Networks: A Generalized Deep Learning Framework
 description: >-
-  [NeurIPS 2025][3D视觉][拓扑神经网络] 本文提出 Copresheaf Topological Neural Networks (CTNNs)，基于代数拓扑中的余预层（copresheaf）概念，在组合复形（combinatorial complex）上定义方向性、异质的消息传递机制…
+  [NeurIPS 2025][3D视觉][拓扑神经网络] 本文提出 Copresheaf Topological Neural Networks (CTNNs)，基于代数拓扑中的余预层（copresheaf）概念，在组合复形（combinatorial complex）上定义方向性、异质的消息传递机制，统一了 CNN、GNN、Transformer、Sheaf Neural Networks 和拓扑神经网络等多种深度学习架构，并在物理模拟、图分类和高阶复形分类任务上超越传统基线。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

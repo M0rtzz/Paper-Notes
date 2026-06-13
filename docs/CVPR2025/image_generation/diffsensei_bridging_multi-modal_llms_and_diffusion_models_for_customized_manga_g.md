@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffSensei: Bridging Multi-Modal LLMs and Diffusion Models for Customized Manga Generation
 description: >-
-  [CVPR 2025][图像生成][漫画生成] 本文提出新任务"定制化漫画生成"并引入 DiffSensei 框架，用 MLLM 作为文本兼容的角色适配器连接扩散模型，通过 masked cross-attention 实现精确布局控制…
+  [CVPR 2025][图像生成][漫画生成] 本文提出新任务"定制化漫画生成"并引入 DiffSensei 框架，用 MLLM 作为文本兼容的角色适配器连接扩散模型，通过 masked cross-attention 实现精确布局控制，在自建的大规模 MangaZero 数据集（43K页/427K标注面板）上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

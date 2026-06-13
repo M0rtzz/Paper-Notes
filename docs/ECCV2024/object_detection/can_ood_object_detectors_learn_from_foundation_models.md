@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can OOD Object Detectors Learn from Foundation Models?
 description: >-
-  [ECCV 2024][目标检测][OOD目标检测] SyncOOD 提出一种自动化数据策展方法，利用 LLM 想象语义新颖的 OOD 概念，通过 Stable Diffusion Inpainting 在 ID 图像上进行区域级编辑合成场景级 OOD 样本…
+  [ECCV 2024][目标检测][OOD目标检测] SyncOOD 提出一种自动化数据策展方法，利用 LLM 想象语义新颖的 OOD 概念，通过 Stable Diffusion Inpainting 在 ID 图像上进行区域级编辑合成场景级 OOD 样本，再经 SAM 精炼框和特征相似度过滤后训练轻量 MLP 分类器，在多个 OOD 检测基准上以极少量合成数据大幅超越 SOTA。
 tags:
   - "ECCV 2024"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Tool Knowledge into Language Models via Back-Translated Traces
 description: >-
-  [ICML 2025 (Workshop: Multi-Agent Systems in the Era of Foundation Models)][模型压缩][工具集成推理] 本文提出一个多智能体回译流水线，先用 Solver Agent 调用工具（代码解释器）解数学题生成 TIR trace…
+  [ICML 2025 (Workshop: Multi-Agent Systems in the Era of Foundation Models)][模型压缩][工具集成推理] 本文提出一个多智能体回译流水线，先用 Solver Agent 调用工具（代码解释器）解数学题生成 TIR trace，再用 Translator Agent + Rephrase Agent 将工具调用轨迹转化为纯自然语言推理链，最终用这些合成数据微调小模型，使其在无需工具访问的情况下内化工具知识和结构化推理能力。
 tags:
   - "ICML 2025 (Workshop: Multi-Agent Systems in the Era of Foundation Models)"
   - "模型压缩"

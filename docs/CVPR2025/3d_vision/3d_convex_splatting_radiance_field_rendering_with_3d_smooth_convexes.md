@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes
 description: >-
-  [CVPR 2025 (Highlight)][3D视觉][3D Gaussian Splatting] 用3D光滑凸体（Smooth Convex）替代高斯基元进行辐射场渲染，通过点集定义凸包+LogSumExp平滑化+自定义CUDA光栅化器，在T&T和Deep Blending上超越3DGS…
+  [CVPR 2025 (Highlight)][3D视觉][3D Gaussian Splatting] 用3D光滑凸体（Smooth Convex）替代高斯基元进行辐射场渲染，通过点集定义凸包+LogSumExp平滑化+自定义CUDA光栅化器，在T&T和Deep Blending上超越3DGS，且所需基元更少。
 tags:
   - "CVPR 2025 (Highlight)"
   - "3D视觉"

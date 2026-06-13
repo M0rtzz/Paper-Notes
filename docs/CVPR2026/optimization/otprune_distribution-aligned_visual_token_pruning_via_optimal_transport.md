@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OTPrune: Distribution-Aligned Visual Token Pruning via Optimal Transport
 description: >-
-  [CVPR2026][优化/理论][剪枝] 将视觉 token 裁剪建模为最优传输（OT）下的分布对齐问题，通过最小化完整与裁剪后 token 集合间的 2-Wasserstein 距离…
+  [CVPR2026][优化/理论][剪枝] 将视觉 token 裁剪建模为最优传输（OT）下的分布对齐问题，通过最小化完整与裁剪后 token 集合间的 2-Wasserstein 距离，以 Gaussian 代理 + log-det 子模目标 + 贪心 Cholesky 选择实现 training-free、$O(mk^2)$ 复杂度的高效裁剪，在 11 个多模态基准上取得 SOTA 精度-效率折中。
 tags:
   - "CVPR2026"
   - "优化/理论"

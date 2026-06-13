@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CORAL: Adaptive Retrieval Loop for Culturally-Aligned Multilingual RAG
 description: >-
-  [ACL 2026][信息检索/RAG][多文化 RAG] CORAL 把多语言 RAG 失败重新定位成"retrieval condition misalignment"——不仅要改写 query…
+  [ACL 2026 Findings][信息检索/RAG][多文化 RAG] CORAL 把多语言 RAG 失败重新定位成"retrieval condition misalignment"——不仅要改写 query，更要动态切换检索的语料库——通过 planner + critic 两个 agent 形成"选语料 → 检索 → 评分过滤 → 充分性检查 → 改语料 + 改 query"的闭环，在两个文化基准上对低资源语言相对最强 baseline 提升 3.58pp，对 CLIcK 韩国文化 QA 提升 3.91pp。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "多文化 RAG"
   - "planner-critic 循环"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EM-KD: Distilling Efficient Multimodal Large Language Model with Unbalanced Vision Tokens
 description: >-
-  [AAAI 2026][多模态VLM][知识蒸馏] 提出EM-KD框架，通过Hungarian算法解决teacher-student间视觉token数量不平衡问题，结合视觉语义蒸馏(VSD)和视觉-语言亲和力蒸馏(VLAD)将vanilla teacher的知识迁移到高效student MLLM…
+  [AAAI 2026][多模态VLM][知识蒸馏] 提出EM-KD框架，通过Hungarian算法解决teacher-student间视觉token数量不平衡问题，结合视觉语义蒸馏(VSD)和视觉-语言亲和力蒸馏(VLAD)将vanilla teacher的知识迁移到高效student MLLM，在11个benchmark上以144 token/patch达到50.4均分，超越576 token的LLaVA-NeXT(49.4)同时推理速度提升近2倍。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

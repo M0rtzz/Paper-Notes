@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unique Hard Attention: A Tale of Two Sides
 description: >-
-  [ACL 2025][Transformer] 本文证明在有限精度transformer中，leftmost unique hard attention (UHA)严格弱于rightmost UHA，前者等价于线性时序逻辑片段LTL[$\Diamond^-$]（即部分有序有限自动机）…
+  [ACL 2025][Transformer] 本文证明在有限精度transformer中，leftmost unique hard attention (UHA)严格弱于rightmost UHA，前者等价于线性时序逻辑片段LTL[$\Diamond^-$]（即部分有序有限自动机），并与soft attention transformer表达能力等价，从而精确刻画了注意力方向性对transformer表达力的影响。
 tags:
   - "ACL 2025"
   - "Transformer"

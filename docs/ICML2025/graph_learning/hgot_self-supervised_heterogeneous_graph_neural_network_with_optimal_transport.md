@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport
 description: >-
-  [ICML2025][图学习][异质图神经网络] 提出 HGOT，首次将最优传输理论引入异质图自监督学习，用 branch view（元路径视图）与 central view（聚合视图）之间的 Fused Gromov-Wasserstein 传输计划替代传统对比学习中的数据增强与正负样本选取…
+  [ICML2025][图学习][异质图神经网络] 提出 HGOT，首次将最优传输理论引入异质图自监督学习，用 branch view（元路径视图）与 central view（聚合视图）之间的 Fused Gromov-Wasserstein 传输计划替代传统对比学习中的数据增强与正负样本选取，在节点分类上平均提升超过 6%。
 tags:
   - "ICML2025"
   - "图学习"

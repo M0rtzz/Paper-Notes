@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AG-REPA: Causal Layer Selection for Representation Alignment in Audio Flow Matching
 description: >-
-  [ICML 2026][图像生成][REPA] AG-REPA 发现音频 Flow Matching 中“存储语义信息的层”和“真正驱动速度场的层”并不重合，提出用 forward-only gate ablation 选择因果贡献最高的层做表示对齐…
+  [ICML 2026][图像生成][REPA] AG-REPA 发现音频 Flow Matching 中“存储语义信息的层”和“真正驱动速度场的层”并不重合，提出用 forward-only gate ablation 选择因果贡献最高的层做表示对齐，在语音和通用音频生成上比固定层 REPA 更快收敛、更低 FAD。
 tags:
   - "ICML 2026"
   - "图像生成"

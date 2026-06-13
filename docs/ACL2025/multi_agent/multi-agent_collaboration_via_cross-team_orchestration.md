@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Agent Collaboration via Cross-Team Orchestration
 description: >-
-  [ACL 2025][多智能体][多智能体协作] 提出 Cross-Team Orchestration (Croto)，一个可扩展的多团队协作框架，通过将多个独立 agent 团队组织起来进行跨团队交互…
+  [ACL 2025][多智能体][多智能体协作] 提出 Cross-Team Orchestration (Croto)，一个可扩展的多团队协作框架，通过将多个独立 agent 团队组织起来进行跨团队交互，利用层次化分组 (Hierarchy Partitioning) 和贪心聚合 (Greedy Aggregation) 机制将各团队的多样化解决方案融合为更优结果。
 tags:
   - "ACL 2025"
   - "多智能体"

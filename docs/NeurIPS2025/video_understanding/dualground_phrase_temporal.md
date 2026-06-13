@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualGround: Structured Phrase and Sentence-Level Temporal Grounding
 description: >-
-  [NeurIPS 2025][视频理解][视频时间定位] 本文发现现有视频时间定位模型过度依赖 [EOS] token 的全局句子语义而忽略词级信号，提出 DualGround 双分支架构，通过句子级路径（自适应交叉注意力）和短语级路径（循环短语生成+Slot Attention）显式分离全局和局部语义…
+  [NeurIPS 2025][视频理解][视频时间定位] 本文发现现有视频时间定位模型过度依赖 [EOS] token 的全局句子语义而忽略词级信号，提出 DualGround 双分支架构，通过句子级路径（自适应交叉注意力）和短语级路径（循环短语生成+Slot Attention）显式分离全局和局部语义，在 QVHighlights 和 Charades-STA 上实现 SOTA。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

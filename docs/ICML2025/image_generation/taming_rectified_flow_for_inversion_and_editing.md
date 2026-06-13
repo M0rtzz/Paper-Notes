@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Rectified Flow for Inversion and Editing
 description: >-
-  [ICML 2025][图像生成][Rectified Flow] 提出 RF-Solver 和 RF-Edit 两个无训练方法，通过高阶 Taylor 展开精确求解 Rectified Flow ODE 来大幅提升反演精度，并利用自注意力特征共享实现高质量图像/视频编辑…
+  [ICML 2025][图像生成][Rectified Flow] 提出 RF-Solver 和 RF-Edit 两个无训练方法，通过高阶 Taylor 展开精确求解 Rectified Flow ODE 来大幅提升反演精度，并利用自注意力特征共享实现高质量图像/视频编辑，兼容 FLUX、OpenSora 等主流模型。
 tags:
   - "ICML 2025"
   - "图像生成"

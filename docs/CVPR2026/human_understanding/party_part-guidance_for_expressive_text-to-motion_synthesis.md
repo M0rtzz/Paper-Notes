@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ParTY: Part-Guidance for Expressive Text-to-Motion Synthesis
 description: >-
-  [CVPR 2026][人体理解][text-to-motion] 提出 ParTY 框架，通过部位引导网络（Part-Guided Network）和部位感知文本对齐（Part-aware Text Grounding），在保持全身动作连贯性的同时大幅提升身体各部位的文本-动作语义对齐精度…
+  [CVPR 2026][人体理解][text-to-motion] 提出 ParTY 框架，通过部位引导网络（Part-Guided Network）和部位感知文本对齐（Part-aware Text Grounding），在保持全身动作连贯性的同时大幅提升身体各部位的文本-动作语义对齐精度，解决了现有整体式方法与部位拆分方法之间"部位表达力 vs 全身连贯性"的根本矛盾。
 tags:
   - "CVPR 2026"
   - "人体理解"

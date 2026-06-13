@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structured 3D Latents for Scalable and Versatile 3D Generation
 description: >-
-  [CVPR 2025][3D视觉][3D生成] 提出 Structured LATents (SLat/TRELLIS)，一种统一的 3D 隐空间表示，将稀疏 3D 网格与 DINOv2 多视图特征融合，支持解码为辐射场/3D 高斯/网格等多种格式…
+  [CVPR 2025][3D视觉][3D生成] 提出 Structured LATents (SLat/TRELLIS)，一种统一的 3D 隐空间表示，将稀疏 3D 网格与 DINOv2 多视图特征融合，支持解码为辐射场/3D 高斯/网格等多种格式，在 500K 3D 资产上训练高达 2B 参数的整流流 Transformer，约 10 秒生成高质量 3D 资产并支持灵活局部编辑。
 tags:
   - "CVPR 2025"
   - "3D视觉"

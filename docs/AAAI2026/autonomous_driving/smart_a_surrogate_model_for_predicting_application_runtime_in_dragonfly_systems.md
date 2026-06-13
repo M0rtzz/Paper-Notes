@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Smart: A Surrogate Model for Predicting Application Runtime in Dragonfly Systems
 description: >-
-  [AAAI 2026][自动驾驶][Dragonfly 网络] 提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1…
+  [AAAI 2026][自动驾驶][Dragonfly 网络] 提出 Smart（Surrogate Model for Predicting Application RunTime），首次将 GNN 和 LLM（Time-LLM）融合用于 Dragonfly 互连网络中的应用迭代运行时预测，在 1,056 节点系统上 MAPE 最低达 1.78%（LAMMPS），推理时间仅 0.515 秒，相比原始仿真实现数量级加速。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

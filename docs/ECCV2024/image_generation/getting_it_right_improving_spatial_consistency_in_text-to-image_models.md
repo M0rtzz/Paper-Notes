@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Getting it Right: Improving Spatial Consistency in Text-to-Image Models
 description: >-
-  [ECCV 2024][图像生成][文本到图像] 系统性调查文本到图像模型的空间关系生成缺陷，发现现有视觉-语言数据集严重缺乏空间描述，据此创建 SPRIGHT 数据集（~600 万张图像重标注空间关系）…
+  [ECCV 2024][图像生成][文本到图像] 系统性调查文本到图像模型的空间关系生成缺陷，发现现有视觉-语言数据集严重缺乏空间描述，据此创建 SPRIGHT 数据集（~600 万张图像重标注空间关系），仅用 <500 张多物体图像微调即在 T2I-CompBench 空间得分上达到 SOTA（0.2133），相比基线提升 41%。
 tags:
   - "ECCV 2024"
   - "图像生成"

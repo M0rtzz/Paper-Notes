@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IAM: Efficient Inference through Attention Mapping between Different-scale LLMs
 description: >-
-  [ACL 2025][模型压缩] 发现不同规模 LLM 的注意力矩阵具有高度相似性，提出 IAM 框架——在 prefill 阶段建立小模型与大模型注意力头之间的余弦相似度映射，decode 阶段用小模型的注意力矩阵替代大模型映射层的注意力计算，实现 KV cache 减少 22% 和推理加速 11%…
+  [ACL 2025][模型压缩] 发现不同规模 LLM 的注意力矩阵具有高度相似性，提出 IAM 框架——在 prefill 阶段建立小模型与大模型注意力头之间的余弦相似度映射，decode 阶段用小模型的注意力矩阵替代大模型映射层的注意力计算，实现 KV cache 减少 22% 和推理加速 11%，且与现有 KV cache 压缩方法正交。
 tags:
   - "ACL 2025"
   - "模型压缩"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SceneSmith: Agentic Generation of Simulation-Ready Indoor Scenes
 description: >-
-  [ICML 2026][图像生成][室内场景合成] SceneSmith 用 designer-critic-orchestrator 三角 VLM agent 在「布局→家具→小物件」的层级树上逐层构建室内场景，并把 text-to-3D 生成、铰接物体检索与物理属性估计深度耦合到 agent 工具链中…
+  [ICML 2026 Spotlight][图像生成][室内场景合成] SceneSmith 用 designer-critic-orchestrator 三角 VLM agent 在「布局→家具→小物件」的层级树上逐层构建室内场景，并把 text-to-3D 生成、铰接物体检索与物理属性估计深度耦合到 agent 工具链中，从单条自然语言提示直接产出"可直接喂给物理仿真器"的稠密、可操作环境，每个房间平均 71 个物体（基线只有 11–23 个），物体间碰撞率 <2%、重力下稳定率 96%，远超此前所有方法。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "图像生成"
   - "室内场景合成"
   - "VLM Agent"

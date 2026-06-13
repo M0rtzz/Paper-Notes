@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KeyFace: Expressive Audio-Driven Facial Animation for Long Sequences via KeyFrame Interpolation
 description: >-
-  [CVPR 2025][人体理解][音频驱动面部动画] KeyFace 提出一个两阶段扩散框架——先以低帧率生成捕捉关键表情的锚帧，再通过插值模型填充中间帧——解决了现有音频驱动面部动画方法在长序列中身份漂移和质量退化的问题…
+  [CVPR 2025][人体理解][音频驱动面部动画] KeyFace 提出一个两阶段扩散框架——先以低帧率生成捕捉关键表情的锚帧，再通过插值模型填充中间帧——解决了现有音频驱动面部动画方法在长序列中身份漂移和质量退化的问题，同时首次支持连续情感（valence/arousal）建模和多种非语音发声 (NSV) 的动画生成。
 tags:
   - "CVPR 2025"
   - "人体理解"

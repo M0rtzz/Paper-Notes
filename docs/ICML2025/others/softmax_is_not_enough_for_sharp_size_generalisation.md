@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Softmax is not Enough (for Sharp Size Generalisation)
 description: >-
-  [ICML2025][softmax] 本文从理论上证明了 softmax 注意力在输入规模增大时**必然发生系数分散（dispersion）**，无法保持对少量关键元素的尖锐聚焦，并提出自适应温度（adaptive temperature）作为缓解手段。
+  [ICML2025][softmax] 本文从理论上证明了 softmax 注意力在输入规模增大时必然发生系数分散（dispersion）：，无法保持对少量关键元素的尖锐聚焦，并提出自适应温度（adaptive temperature）作为缓解手段。 Transformer 中的 softmax 注意力被广泛认为能学到"电路…
 tags:
   - "ICML2025"
   - "softmax"

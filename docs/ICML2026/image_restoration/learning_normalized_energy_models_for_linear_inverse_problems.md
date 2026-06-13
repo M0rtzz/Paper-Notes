@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Normalized Energy Models for Linear Inverse Problems
 description: >-
-  [ICML 2026][图像恢复][各向异性去噪] 作者把"线性逆问题"重写为"各向异性去噪"，并提出 Anisotropic Covariance Score Matching (A-CSM) 训出一个**归一化**的能量模型 $U_\theta(\mathbf{y}…
+  [ICML 2026][图像恢复][各向异性去噪] 作者把"线性逆问题"重写为"各向异性去噪"，并提出 Anisotropic Covariance Score Matching (A-CSM) 训出一个**归一化**的能量模型 $U_\theta(\mathbf{y},\boldsymbol{\Sigma})\approx -\log p(\mathbf{y}|\boldsymbol{\Sigma})$，单个模型即可处理 inpainting、deblurring、super-resolution，并解锁能量引导自适应调度、MALA 无偏校正和盲逆问题三大新能力。
 tags:
   - "ICML 2026"
   - "图像恢复"

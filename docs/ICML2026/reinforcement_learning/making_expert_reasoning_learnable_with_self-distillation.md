@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Making Expert Reasoning Learnable with Self-Distillation
 description: >-
-  [ICML 2026][强化学习][专家轨迹] DAIL 用一个"教师 = 看过专家解的自己 + 学生 = 没看过专家解的自己"的混合策略 rollout，把不到 1000 条专家解题轨迹改写成与学生策略分布一致的推理链，再用对比损失压低"只看中间答案的负参考模型"高概率的捷径 token…
+  [ICML 2026][强化学习][专家轨迹] DAIL 用一个"教师 = 看过专家解的自己 + 学生 = 没看过专家解的自己"的混合策略 rollout，把不到 1000 条专家解题轨迹改写成与学生策略分布一致的推理链，再用对比损失压低"只看中间答案的负参考模型"高概率的捷径 token，在 Qwen2.5-Instruct / Qwen3 上拿到最高 31% 的 pass@128 提升，并把所需推理 token 砍掉一半。
 tags:
   - "ICML 2026"
   - "强化学习"

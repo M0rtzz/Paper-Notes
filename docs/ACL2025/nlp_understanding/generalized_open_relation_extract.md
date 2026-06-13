@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards a More Generalized Approach in Open Relation Extraction
 description: >-
-  [ACL 2025][NLP理解][Open Relation Extraction] 提出 MixORE 框架，在更通用的 Open Relation Extraction 设定下（无标注数据同时包含已知和新颖关系，且不做长尾或预分割假设）…
+  [ACL 2025][NLP理解][Open Relation Extraction] 提出 MixORE 框架，在更通用的 Open Relation Extraction 设定下（无标注数据同时包含已知和新颖关系，且不做长尾或预分割假设），通过 Semantic Autoencoder 检测新关系 + 开放世界半监督联合学习，在 FewRel/TACRED/Re-TACRED 上全面超越 SOTA。
 tags:
   - "ACL 2025"
   - "NLP理解"

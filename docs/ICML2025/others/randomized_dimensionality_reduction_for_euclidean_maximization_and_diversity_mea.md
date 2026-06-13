@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures
 description: >-
-  [ICML2025][随机降维] 证明了对一大类欧氏最大化问题（最大匹配、最大TSP、最大生成树、子图多样性等），使用数据无关的高斯 JL 变换将维度降至 $O(\lambda)$（$\lambda$ 为数据集倍增维度）即可近似保持所有候选解的值，并证明该依赖是紧的。
+  [ICML2025][随机降维] 证明了对一大类欧氏最大化问题（最大匹配、最大TSP、最大生成树、子图多样性等），使用数据无关的高斯 JL 变换将维度降至 $O(\lambda)$（$\lambda$ 为数据集倍增维度）即可近似保持所有候选解的值，并证明该依赖是紧的。 现有痛点 现有痛点：领域现状：随机降维（如 JL 变换）…
 tags:
   - "ICML2025"
   - "随机降维"

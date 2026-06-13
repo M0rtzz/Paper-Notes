@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynaQuant: Dynamic Mixed-Precision Quantization for Learned Image Compression
 description: >-
-  [AAAI 2026][模型压缩][图像压缩量化] 针对学习图像压缩（LIC）模型部署效率低的痛点，提出DynaQuant框架，在参数层面通过可学习scale/zero-point + Distance-Aware Gradient Modulator实现内容自适应量化…
+  [AAAI 2026][模型压缩][图像压缩量化] 针对学习图像压缩（LIC）模型部署效率低的痛点，提出DynaQuant框架，在参数层面通过可学习scale/zero-point + Distance-Aware Gradient Modulator实现内容自适应量化，在架构层面通过轻量Bit-Width Selector动态为每层分配最优比特宽度，在Cheng2020/ELIC/Ballé三个基线上实现接近FP32的R-D性能，同时获得最高5.17×加速和模型大小降至原来的~1/4。
 tags:
   - "AAAI 2026"
   - "模型压缩"

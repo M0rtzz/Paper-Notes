@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis
 description: >-
-  [CVPR 2025][3D视觉][稀疏视角合成] 提出CoMapGS，利用像素级共视性图（covisibility map）来指导稀疏视角3DGS中初始点云增强和自适应加权监督，首次显式关注并恢复高不确定性的单视角区域。
+  [CVPR 2025][3D视觉][稀疏视角合成] 提出CoMapGS，利用像素级共视性图（covisibility map）来指导稀疏视角3DGS中初始点云增强和自适应加权监督，首次显式关注并恢复高不确定性的单视角区域。 稀疏视角新视角合成面临三个核心挑战： 1. 区域不平衡监督：高共视区域因多视角存在被过度优化…
 tags:
   - "CVPR 2025"
   - "3D视觉"

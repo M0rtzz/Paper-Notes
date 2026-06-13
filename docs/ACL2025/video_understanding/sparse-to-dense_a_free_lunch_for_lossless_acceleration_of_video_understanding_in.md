@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse-to-Dense: A Free Lunch for Lossless Acceleration of Video Understanding in LLMs
 description: >-
-  [ACL 2025][视频理解][视频大语言模型] 基于Video-LLM中注意力分数的稀疏性观察，提出Sparse-to-Dense (StD)解码策略，用top-K稀疏注意力模型作为draft model快速生成候选token，再用全注意力模型并行验证，实现最高1.94倍的无损加速…
+  [ACL 2025][视频理解][视频大语言模型] 基于Video-LLM中注意力分数的稀疏性观察，提出Sparse-to-Dense (StD)解码策略，用top-K稀疏注意力模型作为draft model快速生成候选token，再用全注意力模型并行验证，实现最高1.94倍的无损加速，且无需额外训练或架构修改。
 tags:
   - "ACL 2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiMuon: Light and Fast Muon Optimizer for Large Models
 description: >-
-  [ICML 2026][优化/理论][Muon] LiMuon 把 STORM 风格的动量方差缩减和随机 SVD（RSVD）一起塞进 Muon 优化器，把矩阵参数的动量从 $m \times n$ 压成 $(m+n)\hat{r}$、同时把求 $\epsilon$-稳态点的 SFO 复杂度从 $\mathca…
+  [ICML 2026][优化/理论][Muon] LiMuon 把 STORM 风格的动量方差缩减和随机 SVD（RSVD）一起塞进 Muon 优化器，把矩阵参数的动量从 $m \times n$ 压成 $(m+n)\hat{r}$、同时把求 $\epsilon$-稳态点的 SFO 复杂度从 $\mathcal{O}(\epsilon^{-4})$ 降到 $\mathcal{O}(\epsilon^{-3})$，在 Mamba-130M / Qwen2.5-0.5B / ViT 上同时取得更低 perplexity / 更高 accuracy 和更小显存。
 tags:
   - "ICML 2026"
   - "优化/理论"

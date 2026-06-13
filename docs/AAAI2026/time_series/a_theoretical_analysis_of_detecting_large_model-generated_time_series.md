@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Theoretical Analysis of Detecting Large Model-Generated Time Series
 description: >-
-  [AAAI 2026][时间序列][time series large model] 首次提出时间序列大模型（TSLM）生成内容检测理论框架，通过收缩假说（Contraction Hypothesis）揭示TSLM生成序列在递归预测下不确定性指数级衰减的本质特征，据此设计UCE检测器…
+  [AAAI 2026][时间序列][time series large model] 首次提出时间序列大模型（TSLM）生成内容检测理论框架，通过收缩假说（Contraction Hypothesis）揭示TSLM生成序列在递归预测下不确定性指数级衰减的本质特征，据此设计UCE检测器，在32个数据集上In-Distribution AUROC达0.855，显著超越10种文本检测baseline。
 tags:
   - "AAAI 2026"
   - "时间序列"

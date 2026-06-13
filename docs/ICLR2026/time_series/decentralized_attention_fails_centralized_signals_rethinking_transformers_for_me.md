@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Decentralized Attention Fails Centralized Signals: Rethinking Transformers for Medical Time Series
 description: >-
-  [ICLR 2026][时间序列][医学时间序列] 提出 TeCh 框架，核心是用 CoTAR（Core Token Aggregation-Redistribution）模块替代 Transformer 中的标准注意力来建模医学时间序列的通道依赖——通过引入全局"核心 token"充当代理…
+  [ICLR 2026 Oral][时间序列][医学时间序列] 提出 TeCh 框架，核心是用 CoTAR（Core Token Aggregation-Redistribution）模块替代 Transformer 中的标准注意力来建模医学时间序列的通道依赖——通过引入全局"核心 token"充当代理，先聚合所有通道信息再重分配回每个通道，复杂度从 $O(n^2)$ 降至 $O(n)$，在 APAVA 数据集上精度 86.86%（超 Medformer 12.13%），内存仅 33%、推理时间仅 20%。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "时间序列"
   - "医学时间序列"
   - "Transformer"

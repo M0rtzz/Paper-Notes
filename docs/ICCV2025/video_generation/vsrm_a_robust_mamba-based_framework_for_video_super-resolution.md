@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VSRM: A Robust Mamba-Based Framework for Video Super-Resolution
 description: >-
-  [ICCV 2025][视频生成][视频超分辨率] 首次将 Mamba 引入视频超分辨率任务，提出双聚合 Mamba 模块（DAMB）捕获时空长程依赖、可变形交叉 Mamba 对齐模块（DCA）增强帧间对齐灵活性，以及频域 Charbonnier 损失（FCL）改善高频细节恢复…
+  [ICCV 2025][视频生成][视频超分辨率] 首次将 Mamba 引入视频超分辨率任务，提出双聚合 Mamba 模块（DAMB）捕获时空长程依赖、可变形交叉 Mamba 对齐模块（DCA）增强帧间对齐灵活性，以及频域 Charbonnier 损失（FCL）改善高频细节恢复，在 REDS4/Vid4/Vimeo-90K 上取得 SOTA。
 tags:
   - "ICCV 2025"
   - "视频生成"

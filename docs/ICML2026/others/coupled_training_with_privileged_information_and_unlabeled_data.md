@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coupled Training with Privileged Information and Unlabeled Data
 description: >-
-  [ICML2026][privileged information] 针对"训练时能用、部署时拿不到"的特权特征 $W$，作者提出一种**部署模型 $f$ 与富视图模型 $g$ 联合训练**的框架，通过显式约束 $g$ 在标注数据上的拟合误差来自适应控制特权信息的影响强度…
+  [ICML2026][privileged information] 针对"训练时能用、部署时拿不到"的特权特征 $W$，作者提出一种**部署模型 $f$ 与富视图模型 $g$ 联合训练**的框架，通过显式约束 $g$ 在标注数据上的拟合误差来自适应控制特权信息的影响强度，从而在 $W$ 信号弱或带噪时避免传统两阶段伪标签法的负迁移现象。
 tags:
   - "ICML2026"
   - "privileged information"

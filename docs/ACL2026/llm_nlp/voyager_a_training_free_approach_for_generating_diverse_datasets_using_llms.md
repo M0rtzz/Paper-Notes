@@ -2,10 +2,10 @@
 title: >-
   [论文解读] VOYAGER: A Training Free Approach for Generating Diverse Datasets using LLMs
 description: >-
-  [ACL2026][LLM/NLP][数据多样性] Voyager 是一个无需训练的 LLM 数据生成算法，用 DPP 维护多样 anchor 和 explorer，并用 textual gradients 迭代改写提示词，从而在创意写作和推理数据生成中显著提高 Vendi 多样性且基本不牺牲质量。
+  [ACL2026][LLM 其他][数据多样性] Voyager 是一个无需训练的 LLM 数据生成算法，用 DPP 维护多样 anchor 和 explorer，并用 textual gradients 迭代改写提示词，从而在创意写作和推理数据生成中显著提高 Vendi 多样性且基本不牺牲质量。 领域现状：LLM 已经常被…
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "数据多样性"
   - "合成数据生成"
   - "DPP"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2512.12072](https://arxiv.org/abs/2512.12072)  
 **代码**: 无  
-**领域**: llm_nlp  
+**领域**: LLM/NLP  
 **关键词**: 数据多样性, 合成数据生成, DPP, 文本梯度, LLM采样
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing Realism from Simulation: Efficient Video Transfer for Vision-Language-Action Data Augmentation
 description: >-
-  [ICML 2026][机器人][Sim-to-Real] 针对 VLA（vision-language-action）模型在简单扰动下性能崩塌的问题，本文用"提取语义/几何条件 → 改写 caption → 条件视频扩散重渲染"的视频迁移流水线给仿真数据补上视觉与环境多样性…
+  [ICML 2026][机器人][Sim-to-Real] 针对 VLA（vision-language-action）模型在简单扰动下性能崩塌的问题，本文用"提取语义/几何条件 → 改写 caption → 条件视频扩散重渲染"的视频迁移流水线给仿真数据补上视觉与环境多样性，同时配以三段式 velocity caching 把生成时间砍掉 61% 以及 difficulty + diversity 双驱动的 coreset 采样仅选 10% 关键轨迹，最终在 Robotwin 2.0、LIBERO-Plus 和真机上让 RDT-1B / $\pi_0$ 涨 5–15%。
 tags:
   - "ICML 2026"
   - "机器人"

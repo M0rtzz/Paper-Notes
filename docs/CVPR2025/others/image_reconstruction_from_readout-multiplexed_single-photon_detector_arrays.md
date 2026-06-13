@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Image Reconstruction from Readout-Multiplexed Single-Photon Detector Arrays
 description: >-
-  [CVPR 2025][单光子探测器] 本文将行列读出复用的单光子探测器阵列中的多光子碰巧分辨问题形式化为逆成像问题，提出了一种概率性的多光子估计器（Multiphoton Estimator），能够解析最多4个同时入射的光子的空间位置，在32×32阵列上相比传统方法提升3-4 dB PSNR…
+  [CVPR 2025][单光子探测器] 本文将行列读出复用的单光子探测器阵列中的多光子碰巧分辨问题形式化为逆成像问题，提出了一种概率性的多光子估计器（Multiphoton Estimator），能够解析最多4个同时入射的光子的空间位置，在32×32阵列上相比传统方法提升3-4 dB PSNR，并将所需帧数减少约4倍。
 tags:
   - "CVPR 2025"
   - "单光子探测器"

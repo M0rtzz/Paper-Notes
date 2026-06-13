@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning
 description: >-
-  [ECCV 2024][图像生成][第一人称视角] 提出 LEGO 模型，通过视觉指令微调增强 VLLM 的动作描述能力，并将 VLLM 的图像/文本嵌入作为额外条件注入扩散模型，实现从第一人称视角生成动作执行帧。
+  [ECCV 2024][图像生成][第一人称视角] 提出 LEGO 模型，通过视觉指令微调增强 VLLM 的动作描述能力，并将 VLLM 的图像/文本嵌入作为额外条件注入扩散模型，实现从第一人称视角生成动作执行帧。 现有痛点 现有痛点：核心问题：如何从第一人称视角（egocentric）合成展示动作执行过程的图像（actio…
 tags:
   - "ECCV 2024"
   - "图像生成"

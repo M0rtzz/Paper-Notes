@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Defect Spectrum: A Granular Look of Large-Scale Defect Datasets with Rich Semantics
 description: >-
-  [ECCV 2024][信号/通信][缺陷检测] 本文构建了 Defect Spectrum 数据集，在四个工业基准之上提供精细的、语义丰富的、大规模的多类缺陷标注（125种缺陷类别，3518+1920张），并提出两阶段扩散生成器 Defect-Gen 在少样本条件下合成高质量多样性缺陷图像…
+  [ECCV 2024][信号/通信][缺陷检测] 本文构建了 Defect Spectrum 数据集，在四个工业基准之上提供精细的、语义丰富的、大规模的多类缺陷标注（125种缺陷类别，3518+1920张），并提出两阶段扩散生成器 Defect-Gen 在少样本条件下合成高质量多样性缺陷图像，合成数据将缺陷分割 mIoU 最高提升 9.85。
 tags:
   - "ECCV 2024"
   - "信号/通信"

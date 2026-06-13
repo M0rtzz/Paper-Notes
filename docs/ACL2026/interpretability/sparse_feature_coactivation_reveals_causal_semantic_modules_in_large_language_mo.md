@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Feature Coactivation Reveals Causal Semantic Modules in Large Language Models
 description: >-
-  [ACL2026][可解释性][稀疏自编码器] 论文用少量 prompt 中 SAE 特征的跨层共激活图自动发现 LLM 中表示概念和关系的语义模块，并证明对这些模块进行消融和放大能在最高 98% 的单概念/关系场景、最高 90% 的组合场景中可预测地操控 Gemma 2 2B 的关系推理输出。
+  [ACL2026][可解释性][稀疏自编码器] 论文用少量 prompt 中 SAE 特征的跨层共激活图自动发现 LLM 中表示概念和关系的语义模块，并证明对这些模块进行消融和放大能在最高 98% 的单概念/关系场景、最高 90% 的组合场景中可预测地操控 Gemma 2 2B 的关系推理输出。 领域现状：机制可解释性近年常…
 tags:
   - "ACL2026"
   - "可解释性"

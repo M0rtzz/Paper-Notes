@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CostFilter-AD: Enhancing Anomaly Detection through Matching Cost Filtering
 description: >-
-  [ICML 2025][目标检测][无监督异常检测] 将立体匹配/光流估计中的**代价体滤波（cost volume filtering）**思想引入无监督异常检测（UAD），构造输入与模板之间的匹配代价体，并通过3D U-Net 加双流注意力引导进行去噪滤波…
+  [ICML 2025][目标检测][无监督异常检测] 将立体匹配/光流估计中的**代价体滤波（cost volume filtering）**思想引入无监督异常检测（UAD），构造输入与模板之间的匹配代价体，并通过3D U-Net 加双流注意力引导进行去噪滤波，作为通用后处理插件可同时提升重建型和嵌入型 UAD 方法的性能，在 MVTec-AD 和 VisA 上取得 SOTA。
 tags:
   - "ICML 2025"
   - "目标检测"

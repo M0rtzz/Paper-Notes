@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer
 description: >-
-  [ICML 2026][音频/语音][空间音频生成] SwanSphere 提出"因果 AR 语言模型 + 局部 DiT（LocDiT）"的两阶段流式架构，从全景视频或文本生成一阶 Ambisonics（FOA）四通道空间音频，配合 SVAC 物理感知对比学习与三目标 ODPO…
+  [ICML 2026][音频/语音][空间音频生成] SwanSphere 提出"因果 AR 语言模型 + 局部 DiT（LocDiT）"的两阶段流式架构，从全景视频或文本生成一阶 Ambisonics（FOA）四通道空间音频，配合 SVAC 物理感知对比学习与三目标 ODPO，把首块延迟压到 0.21s 的同时在 FD/KL/角度误差上全面超越级联与端到端基线。
 tags:
   - "ICML 2026"
   - "音频/语音"

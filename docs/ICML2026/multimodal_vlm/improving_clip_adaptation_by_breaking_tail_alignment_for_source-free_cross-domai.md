@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ATHA: 通过打破尾部对齐改进 CLIP 在源数据无关跨域小样本上的适配
 description: >-
-  [ICML 2026][多模态VLM][CLIP 微调] ATHA 提出在 CLIP 跨域小样本微调中"对齐头部 token、推开尾部 token"的非对称对齐范式——把语义稀薄的 patch 主动从文本嵌入推开,反而能减轻过拟合并把 1-shot 平均精度从 55.92% 推到 58.35%。
+  [ICML 2026][多模态VLM][CLIP 微调] ATHA 提出在 CLIP 跨域小样本微调中"对齐头部 token、推开尾部 token"的非对称对齐范式——把语义稀薄的 patch 主动从文本嵌入推开,反而能减轻过拟合并把 1-shot 平均精度从 55.92% 推到 58.35%。 领域现状：CLIP 等视觉-…
 tags:
   - "ICML 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Put the Space of LoRA Initialization to the Extreme to Preserve Pre-trained Knowledge
 description: >-
-  [AAAI2026][模型压缩][LoRA] 提出 LoRA-Null，将 LoRA 初始化在预训练知识 input activation 的 null space 中（而非权重的 null space），从信息论角度论证 activation 的 effective rank 远小于权重…
+  [AAAI2026][模型压缩][LoRA] 提出 LoRA-Null，将 LoRA 初始化在预训练知识 input activation 的 null space 中（而非权重的 null space），从信息论角度论证 activation 的 effective rank 远小于权重，因此其 null space 包含更少预训练知识信息，显著减轻微调时的灾难性遗忘。
 tags:
   - "AAAI2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Memory-Enhanced Improvement Heuristics for Flexible Job Shop Scheduling
 description: >-
-  [NeurIPS 2025][强化学习][flexible job shop scheduling] 提出 MIStar——首个基于深度强化学习 (DRL) 的改进型启发式框架，用于求解柔性作业车间调度问题 (FJSP)…
+  [NeurIPS 2025][强化学习][flexible job shop scheduling] 提出 MIStar——首个基于深度强化学习 (DRL) 的改进型启发式框架，用于求解柔性作业车间调度问题 (FJSP)。核心创新包括有向异构析取图表示、记忆增强异构图神经网络 (MHGNN) 和并行贪心搜索策略，在合成数据和公开 benchmark 上全面超越手工改进启发式和 SOTA 构造型 DRL 方法。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

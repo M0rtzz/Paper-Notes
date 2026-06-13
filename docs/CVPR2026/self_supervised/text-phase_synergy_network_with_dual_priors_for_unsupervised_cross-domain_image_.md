@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval
 description: >-
-  [CVPR 2026][自监督学习][UCDIR] 提出TPSNet，将CLIP学习的域提示（domain prompt）作为文本先验提供精细语义监督，同时引入相位谱特征作为相位先验来桥接域分布差异并保持语义完整性，通过文本-相位双先验的协同实现无监督跨域图像检索的显著提升。
+  [CVPR 2026][自监督学习][UCDIR] 提出TPSNet，将CLIP学习的域提示（domain prompt）作为文本先验提供精细语义监督，同时引入相位谱特征作为相位先验来桥接域分布差异并保持语义完整性，通过文本-相位双先验的协同实现无监督跨域图像检索的显著提升。 领域现状：无监督跨域图像检索（UCDIR）旨在无…
 tags:
   - "CVPR 2026"
   - "自监督学习"

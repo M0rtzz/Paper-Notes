@@ -2,15 +2,10 @@
 title: >-
   [论文解读] Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning
 description: >-
-  [NeurIPS 2025][推荐系统][Crosscoder] 识别并解决 Crosscoder 中 L1 训练损失引入的两类稀疏性伪影（导致虚假的模型特定潜变量归因），提出 Latent Scaling 诊断方法和 BatchTopK 损失替代方案…
+  [NeurIPS 2025][推荐系统] 识别 Crosscoder 中 L1 损失引入的两类稀疏性伪影（Complete Shrinkage 将弱共享概念错误归零、Latent Decoupling 将共享概念拆分为虚假模型特定潜变量），提出 Latent Scaling 诊断方法和 BatchTopK Crosscoder 替代方案，显著提升 chat-tuning 概念发现的可靠性。
 tags:
   - "NeurIPS 2025"
   - "推荐系统"
-  - "Crosscoder"
-  - "稀疏性伪影"
-  - "BatchTopK"
-  - "Latent Scaling"
-  - "chat-tuning"
 ---
 
 # Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning
@@ -153,3 +148,19 @@ tags:
   - Latent Scaling
   - chat-tuning
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)
+- [\[ACL 2025\] RecLM: Recommendation Instruction Tuning](../../ACL2025/recommender/reclm_recommendation_instruction_tuning.md)
+- [\[ACL 2025\] Laser: Bi-Tuning with Collaborative Information for Controllable LLM-Based Sequential Recommendation](../../ACL2025/recommender/bi-tuning_with_collaborative_information_for_controllable_llm-based_sequential_r.md)
+- [\[ACL 2026\] ReRec: Reasoning-Augmented LLM-based Recommendation Assistant via Reinforcement Fine-tuning](../../ACL2026/recommender/rerec_reasoning-augmented_llm-based_recommendation_assistant_via_reinforcement_f.md)
+- [\[NeurIPS 2025\] Who You Are Matters: Bridging Topics and Social Roles via LLM-Enhanced Logical Recommendation](who_you_are_matters_bridging_topics_and_social_roles_via_llm-enhanced_logical_re.md)
+
+</div>
+
+<!-- RELATED:END -->

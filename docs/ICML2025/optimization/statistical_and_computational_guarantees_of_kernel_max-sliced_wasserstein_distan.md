@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Statistical and Computational Guarantees of Kernel Max-Sliced Wasserstein Distances
 description: >-
-  [ICML2025][优化/理论][Wasserstein距离] 本文为 Kernel Max-Sliced (KMS) Wasserstein 距离提供了**尖锐的有限样本统计保证**（无维度依赖、收敛速率 $n^{-1/(2p)}$）和**计算保证**（证明精确计算是 NP-hard 后提出高效的半定松弛…
+  [ICML2025][优化/理论][Wasserstein距离] 本文为 Kernel Max-Sliced (KMS) Wasserstein 距离提供了**尖锐的有限样本统计保证**（无维度依赖、收敛速率 $n^{-1/(2p)}$）和**计算保证**（证明精确计算是 NP-hard 后提出高效的半定松弛 SDR 及一阶算法），并在高维两样本检验、人体活动检测和生成建模上验证了优越性能。
 tags:
   - "ICML2025"
   - "优化/理论"

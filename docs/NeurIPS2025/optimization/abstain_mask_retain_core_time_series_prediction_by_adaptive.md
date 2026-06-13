@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Abstain Mask Retain Core: Time Series Prediction by Adaptive Masking Loss with Representation Consistency
 description: >-
-  [NeurIPS 2025 (Spotlight)][优化/理论][time series forecasting] 揭示了时间序列预测中"适当截断历史数据反而提升精度"的反直觉现象（冗余特征学习问题），基于信息瓶颈理论提出AMRC方法，通过自适应掩码损失和表征一致性约束来抑制冗余特征学习…
+  [NeurIPS 2025 (Spotlight)][优化/理论][time series forecasting] 揭示了时间序列预测中"适当截断历史数据反而提升精度"的反直觉现象（冗余特征学习问题），基于信息瓶颈理论提出AMRC方法，通过自适应掩码损失和表征一致性约束来抑制冗余特征学习，作为模型无关的训练框架在多种架构上显著提升性能。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dialogue Systems for Emotional Support via Value Reinforcement
 description: >-
-  [ACL 2025][对话系统][emotional support] 提出 ES-VR，首个将人类价值观强化融入情感支持对话系统的方法，通过目标价值检测器和参考生成器（均在 Reddit 数据上训练），结合 SFT + DPO 两阶段训练，使支持者模型不仅能缓解求助者的负面情绪，还能探索和强化其积极价值观…
+  [ACL 2025][对话系统][emotional support] 提出 ES-VR，首个将人类价值观强化融入情感支持对话系统的方法，通过目标价值检测器和参考生成器（均在 Reddit 数据上训练），结合 SFT + DPO 两阶段训练，使支持者模型不仅能缓解求助者的负面情绪，还能探索和强化其积极价值观，实现更深层的内在转变。
 tags:
   - "ACL 2025"
   - "对话系统"

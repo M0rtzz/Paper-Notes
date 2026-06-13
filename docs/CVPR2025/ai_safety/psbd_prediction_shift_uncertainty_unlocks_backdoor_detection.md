@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSBD: Prediction Shift Uncertainty Unlocks Backdoor Detection
 description: >-
-  [CVPR 2025][AI安全][后门检测] 提出 PSBD 方法，发现被植入后门的模型在推理时开启 dropout 后，干净数据的预测会偏移向目标类别而后门数据预测保持稳定（Prediction Shift 现象）…
+  [CVPR 2025][AI安全][后门检测] 提出 PSBD 方法，发现被植入后门的模型在推理时开启 dropout 后，干净数据的预测会偏移向目标类别而后门数据预测保持稳定（Prediction Shift 现象），基于此设计 Prediction Shift Uncertainty (PSU) 指标实现 SOTA 后门训练数据检测。
 tags:
   - "CVPR 2025"
   - "AI安全"

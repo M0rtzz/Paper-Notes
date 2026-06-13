@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hankel Singular Value Regularization for Highly Compressible State Space Models
 description: >-
-  [NeurIPS 2025][模型压缩][SSM压缩] 通过在训练中正则化 SSM 层的 **Hankel 奇异值核范数**促使其快速衰减，使训练后模型可用平衡截断压缩至原始阶数的 **10%** 而保持精度…
+  [NeurIPS 2025][模型压缩][SSM压缩] 通过在训练中正则化 SSM 层的 **Hankel 奇异值核范数**促使其快速衰减，使训练后模型可用平衡截断压缩至原始阶数的 **10%** 而保持精度，并利用旋转矩阵块对角参数化将 Gramian 计算从 $\mathcal{O}(n^3)$ 降至 $\mathcal{O}(n^2)$。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

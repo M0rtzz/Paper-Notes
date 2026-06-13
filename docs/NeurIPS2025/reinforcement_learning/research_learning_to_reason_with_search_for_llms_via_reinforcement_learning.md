@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReSearch: Learning to Reason with Search for LLMs via Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][推理-搜索融合] ReSearch框架将搜索操作嵌入推理链中作为第一类原语，通过GRPO强化学习自动学习何时何如搜索，无需任何推理步骤的监督标注，在多跳QA任务上相对基线平均提升15.81%。
+  [NeurIPS 2025][强化学习][推理-搜索融合] ReSearch框架将搜索操作嵌入推理链中作为第一类原语，通过GRPO强化学习自动学习何时何如搜索，无需任何推理步骤的监督标注，在多跳QA任务上相对基线平均提升15.81%。 多步RAG的困境：现有方法依赖手工设计启发式策略或繁琐的推理步骤标注…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

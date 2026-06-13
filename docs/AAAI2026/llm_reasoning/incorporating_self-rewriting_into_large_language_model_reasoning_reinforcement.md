@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Incorporating Self-Rewriting into Large Language Model Reasoning Reinforcement
 description: >-
-  [AAAI 2026][LLM推理][推理质量改进] 提出Self-Rewriting框架，让LRM在RL训练中对"简单"样本（全部回答正确的query）重写自身推理文本并从中学习，仅增加约10%训练开销即可在保持准确率的同时将推理长度减少46%，内部推理质量（LLM-as-Judge）提升7.2分…
+  [AAAI 2026][LLM推理][推理质量改进] 提出Self-Rewriting框架，让LRM在RL训练中对"简单"样本（全部回答正确的query）重写自身推理文本并从中学习，仅增加约10%训练开销即可在保持准确率的同时将推理长度减少46%，内部推理质量（LLM-as-Judge）提升7.2分，有效缓解过度思考、冗余思考等问题。
 tags:
   - "AAAI 2026"
   - "LLM推理"

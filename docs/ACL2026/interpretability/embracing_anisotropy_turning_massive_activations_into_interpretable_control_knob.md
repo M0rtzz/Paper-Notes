@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Embracing Anisotropy: Turning Massive Activations into Interpretable Control Knobs for Large Language Models
 description: >-
-  [ACL2026][可解释性][anisotropy] 本文把 LLM 中常被视为异常值的 massive activations 重新解释为可解释的领域关键维度，用无需训练的激活幅值准则识别这些维度，并只在这些维度上做 activation steering…
+  [ACL2026][可解释性][anisotropy] 本文把 LLM 中常被视为异常值的 massive activations 重新解释为可解释的领域关键维度，用无需训练的激活幅值准则识别这些维度，并只在这些维度上做 activation steering，从而在领域适配和 jailbreak 场景中比全维度 steering 更有效。
 tags:
   - "ACL2026"
   - "可解释性"

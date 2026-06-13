@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps
 description: >-
-  [NeurIPS 2025][图像生成][Layout-to-Image] OverLayBench 构建了首个聚焦密集重叠场景的 Layout-to-Image 基准（4052 样本 + OverLayScore 难度指标），揭示 SOTA 方法在复杂重叠下 mIoU 从 71%→54% 急剧退化…
+  [NeurIPS 2025][图像生成][Layout-to-Image] OverLayBench 构建了首个聚焦密集重叠场景的 Layout-to-Image 基准（4052 样本 + OverLayScore 难度指标），揭示 SOTA 方法在复杂重叠下 mIoU 从 71%→54% 急剧退化，提出 Amodal Mask 监督在重叠 IoU 上提升 15.9%。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

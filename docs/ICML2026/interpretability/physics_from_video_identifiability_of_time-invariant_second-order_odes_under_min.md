@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Physics from Video: Identifiability of Time-Invariant Second-Order ODEs under Minimal Trajectory Conditions
 description: >-
-  [ICML 2026][可解释性][结构可识别性] 本文给出了"只用 encoder（无 decoder/无像素重建）从原始视频识别二阶线性 ODE 参数 $(\gamma_1,\gamma_0)$"的首个结构可识别性定理：用一个几何条件 **level-set slope coverage** 刻画"单条轨…
+  [ICML 2026][可解释性][结构可识别性] 本文给出了"只用 encoder（无 decoder/无像素重建）从原始视频识别二阶线性 ODE 参数 $(\gamma_1,\gamma_0)$"的首个结构可识别性定理：用一个几何条件 **level-set slope coverage** 刻画"单条轨迹够 vs. 必须三条轨迹"的临界，证明欠阻尼可单视频识别、其它阻尼区必须三条不同轨迹，并配套提出"方差下限正则 + 中心差分"的有限样本估计器。
 tags:
   - "ICML 2026"
   - "可解释性"

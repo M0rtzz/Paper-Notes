@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Editing Physiological Signals in Videos Using Latent Representations
 description: >-
-  [CVPR 2026][人体理解][心率编辑] 提出PhysioLatent框架，将输入面部视频编码到3D VAE潜空间，与目标心率CLIP文本嵌入融合，通过AdaLN增强的时空融合层捕捉rPPG时间相干性，结合FiLM调制解码器和微调输出层实现精确心率修改…
+  [CVPR 2026][人体理解][心率编辑] 提出PhysioLatent框架，将输入面部视频编码到3D VAE潜空间，与目标心率CLIP文本嵌入融合，通过AdaLN增强的时空融合层捕捉rPPG时间相干性，结合FiLM调制解码器和微调输出层实现精确心率修改，在保持PSNR 38.96dB/SSIM 0.98的视觉质量下达到10 bpm MAE的心率调制精度。
 tags:
   - "CVPR 2026"
   - "人体理解"

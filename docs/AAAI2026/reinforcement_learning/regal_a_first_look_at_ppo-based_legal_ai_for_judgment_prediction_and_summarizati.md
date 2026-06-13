@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReGal: A First Look at PPO-based Legal AI for Judgment Prediction and Summarization in India
 description: >-
-  [AAAI 2026][强化学习][法律AI] 本文首次将基于PPO的强化学习（RLAIF）应用于印度法律领域的判决预测与摘要生成任务，虽然性能未超越SFT和商业模型，但作为定位论文（position paper）揭示了RL在法律NLP中的关键挑战与未来方向。
+  [AAAI 2026][强化学习][法律AI] 本文首次将基于PPO的强化学习（RLAIF）应用于印度法律领域的判决预测与摘要生成任务，虽然性能未超越SFT和商业模型，但作为定位论文（position paper）揭示了RL在法律NLP中的关键挑战与未来方向。 问题背景 法律AI在印度司法系统中具有重要应用前景…
 tags:
   - "AAAI 2026"
   - "强化学习"

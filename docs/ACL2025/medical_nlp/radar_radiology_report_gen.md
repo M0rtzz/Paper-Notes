@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection
 description: >-
-  [ACL 2025][医疗NLP][radiology report generation] 提出 Radar 框架，通过区分 LLM 已掌握的可信内部知识和需要外部补充的知识，系统性地融合两种知识源以生成更准确的放射学报告。
+  [ACL 2025][医疗NLP][radiology report generation] 提出 Radar 框架，通过区分 LLM 已掌握的可信内部知识和需要外部补充的知识，系统性地融合两种知识源以生成更准确的放射学报告。 研究领域现状：大语言模型（LLMs）在放射学报告生成任务中展现了卓越的文本生成能力…
 tags:
   - "ACL 2025"
   - "医疗NLP"

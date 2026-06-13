@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wanda++: Pruning Large Language Models via Regional Gradients
 description: >-
-  [ACL 2025][模型压缩] 提出 Wanda++——基于 decoder block 级别区域梯度的轻量级 LLM 剪枝框架，通过区域梯度评分（RGS）改进剪枝准则 + 区域优化（RO）最小化稠密/稀疏块输出差异，在 2:4 稀疏下 WikiText 困惑度较 Wanda 最高降低 32%…
+  [ACL 2025][模型压缩] 提出 Wanda++——基于 decoder block 级别区域梯度的轻量级 LLM 剪枝框架，通过区域梯度评分（RGS）改进剪枝准则 + 区域优化（RO）最小化稠密/稀疏块输出差异，在 2:4 稀疏下 WikiText 困惑度较 Wanda 最高降低 32%，单 H100 GPU 10 分钟内完成 7B 模型剪枝。
 tags:
   - "ACL 2025"
   - "模型压缩"

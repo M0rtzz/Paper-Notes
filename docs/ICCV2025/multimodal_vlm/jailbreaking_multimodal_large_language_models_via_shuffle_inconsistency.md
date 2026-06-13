@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jailbreaking Multimodal Large Language Models via Shuffle Inconsistency
 description: >-
-  [ICCV 2025][多模态VLM][多模态大语言模型安全] 发现多模态大语言模型(MLLMs)在理解能力和安全能力之间存在**打乱不一致性(Shuffle Inconsistency)**——模型能理解打乱后的有害指令，但安全机制却无法防御；据此提出基于查询的黑盒越狱攻击方法 SI-Attack…
+  [ICCV 2025][多模态VLM][多模态大语言模型安全] 发现多模态大语言模型(MLLMs)在理解能力和安全能力之间存在**打乱不一致性(Shuffle Inconsistency)**——模型能理解打乱后的有害指令，但安全机制却无法防御；据此提出基于查询的黑盒越狱攻击方法 SI-Attack，在开源和闭源商用模型上均显著提升攻击成功率。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

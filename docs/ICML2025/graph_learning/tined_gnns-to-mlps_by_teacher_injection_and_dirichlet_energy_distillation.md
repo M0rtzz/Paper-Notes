@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation
 description: >-
-  [ICML 2025][图学习][图神经网络] 提出 TINED，将 GNN 中特征变换（FT）的参数直接注入 MLP（Teacher Injection），并用 Dirichlet 能量蒸馏传递 GNN 层中 FT 与图传播（GP）的对立平滑特性，在 7 个数据集上超越 GNN 教师，推理速度提升 94 倍…
+  [ICML 2025][图学习][图神经网络] 提出 TINED，将 GNN 中特征变换（FT）的参数直接注入 MLP（Teacher Injection），并用 Dirichlet 能量蒸馏传递 GNN 层中 FT 与图传播（GP）的对立平滑特性，在 7 个数据集上超越 GNN 教师，推理速度提升 94 倍。
 tags:
   - "ICML 2025"
   - "图学习"

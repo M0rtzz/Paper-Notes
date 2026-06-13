@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Structured Diffusion Bridges: Inductive Bias for Denoising Diffusion Bridges
 description: >-
-  [ICML 2026][图像恢复][扩散模型] SDB 把模态翻译重写为"在所有满足边缘约束的耦合集合 $\mathcal{P}$ 中挑一个"，在 LDDBM 之上叠加边缘匹配（WTA + 容量约束）+ 端点级 + 轨迹级双层 cycle consistency，把成对监督仅作为可选启发式之一…
+  [ICML 2026][图像恢复][扩散模型] SDB 把模态翻译重写为"在所有满足边缘约束的耦合集合 $\mathcal{P}$ 中挑一个"，在 LDDBM 之上叠加边缘匹配（WTA + 容量约束）+ 端点级 + 轨迹级双层 cycle consistency，把成对监督仅作为可选启发式之一，从而在零成对、半成对、全成对三种监督预算下都能跑，并且全成对时也比 paired-only 基线更好（FFHQ→CelebA-HQ PSNR 从 25.6 提到 25.9）。
 tags:
   - "ICML 2026"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViUniT: Visual Unit Tests for More Robust Visual Programming
 description: >-
-  [CVPR 2025][图像生成][视觉编程] ViUniT提出了一个自动生成视觉单元测试的框架，通过LLM生成图像描述和预期答案、文本到图像模型生成测试图像，验证视觉程序的逻辑正确性，将7B开源模型提升到超越gpt-4o-mini的水平并减少40%的"对了但原因错误"的程序。
+  [CVPR 2025][图像生成][视觉编程] ViUniT提出了一个自动生成视觉单元测试的框架，通过LLM生成图像描述和预期答案、文本到图像模型生成测试图像，验证视觉程序的逻辑正确性，将7B开源模型提升到超越gpt-4o-mini的水平并减少40%的"对了但原因错误"的程序。 视觉编程（Visual Programming…
 tags:
   - "CVPR 2025"
   - "图像生成"

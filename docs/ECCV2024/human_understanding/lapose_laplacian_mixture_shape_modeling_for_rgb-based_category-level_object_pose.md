@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation
 description: >-
-  [ECCV 2024][人体理解][类别级物体位姿估计] 提出 LaPose 框架，通过拉普拉斯混合模型 (LMM) 建模物体形状不确定性，结合 DINOv2 通用3D流和卷积专用特征流的双流架构预测 NOCS 坐标分布，并引入尺度无关的位姿表示解决 RGB-only 场景下的固有尺度歧义…
+  [ECCV 2024][人体理解][类别级物体位姿估计] 提出 LaPose 框架，通过拉普拉斯混合模型 (LMM) 建模物体形状不确定性，结合 DINOv2 通用3D流和卷积专用特征流的双流架构预测 NOCS 坐标分布，并引入尺度无关的位姿表示解决 RGB-only 场景下的固有尺度歧义，在 NOCS 数据集上取得 SOTA。
 tags:
   - "ECCV 2024"
   - "人体理解"

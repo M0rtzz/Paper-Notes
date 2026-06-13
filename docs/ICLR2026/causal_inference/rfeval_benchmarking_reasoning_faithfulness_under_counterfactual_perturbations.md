@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Perturbations
 description: >-
-  [ICLR 2026][因果推理][reasoning_faithfulness] 本文提出推理忠实性的形式化框架（立场一致性 + 因果影响）和 RFEval 基准（7,186 实例 × 7 任务），通过输出层反事实干预评估 12 个开源 LRM，发现 49.7% 的输出不忠实…
+  [ICLR 2026][因果推理][reasoning_faithfulness] 本文提出推理忠实性的形式化框架（立场一致性 + 因果影响）和 RFEval 基准（7,186 实例 × 7 任务），通过输出层反事实干预评估 12 个开源 LRM，发现 49.7% 的输出不忠实，且准确率不是忠实性的可靠代理指标。
 tags:
   - "ICLR 2026"
   - "因果推理"

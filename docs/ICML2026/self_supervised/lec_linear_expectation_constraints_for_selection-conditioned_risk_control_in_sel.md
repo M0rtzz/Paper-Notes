@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEC: Linear Expectation Constraints for Selection-Conditioned Risk Control in Selective Prediction and Routing Systems
 description: >-
-  [ICML 2026][自监督学习][选择性预测] 针对大模型 selective prediction 中"UCB 风险界过于保守、能用阈值很少"这个老问题，作者把"接受后错误率 ≤ α"重写成一条关于选择/错误两个 0-1 指示函数的**线性期望约束**…
+  [ICML 2026][自监督学习][选择性预测] 针对大模型 selective prediction 中"UCB 风险界过于保守、能用阈值很少"这个老问题，作者把"接受后错误率 ≤ α"重写成一条关于选择/错误两个 0-1 指示函数的**线性期望约束**，由此推出一个只依赖校准集的有限样本充分条件（Eq. 5），既保持有限样本严格保证又显著比 UCB 紧，同时把同一套框架自然推广到两模型路由系统并联合标定两个阈值，在 CommonsenseQA / TriviaQA / ScienceQA / MM-Vet v2 上 power 普涨、TriviaQA 上比 Clopper-Pearson UCB 多接受 9.5% 样本。
 tags:
   - "ICML 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detecting Sockpuppetry on Wikipedia Using Meta-Learning
 description: >-
-  [ACL 2025][马甲账号检测] 本文将元学习（meta-learning）应用于维基百科的恶意马甲账号（sockpuppet）检测任务，通过跨多个马甲组的训练优化模型的快速适应能力，在数据稀缺场景下显著提升了检测精度，并发布了新的马甲调查数据集。
+  [ACL 2025][马甲账号检测] 本文将元学习（meta-learning）应用于维基百科的恶意马甲账号（sockpuppet）检测任务，通过跨多个马甲组的训练优化模型的快速适应能力，在数据稀缺场景下显著提升了检测精度，并发布了新的马甲调查数据集。 领域现状：维基百科作为全球最大的开放编辑百科全书…
 tags:
   - "ACL 2025"
   - "马甲账号检测"

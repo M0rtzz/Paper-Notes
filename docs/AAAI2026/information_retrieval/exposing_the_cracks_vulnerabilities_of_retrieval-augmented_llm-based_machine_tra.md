@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exposing the Cracks: Vulnerabilities of Retrieval-Augmented LLM-Based Machine Translation
 description: >-
-  [AAAI 2026][信息检索/RAG][检索增强翻译] 开发受控噪声注入框架系统评估检索增强翻译（REAL-MT），引入Fidelity和CAR两个新指标，在10语言对×4种噪声类型上揭示模型即使面对矛盾上下文仍盲目采纳（CAR保持65-78%），大推理模型（LRM）反而更脆弱（会"合理化"错误上下文）…
+  [AAAI 2026][信息检索/RAG][检索增强翻译] 开发受控噪声注入框架系统评估检索增强翻译（REAL-MT），引入Fidelity和CAR两个新指标，在10语言对×4种噪声类型上揭示模型即使面对矛盾上下文仍盲目采纳（CAR保持65-78%），大推理模型（LRM）反而更脆弱（会"合理化"错误上下文），且噪声鲁棒性与干净上下文利用率存在根本性trade-off。
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

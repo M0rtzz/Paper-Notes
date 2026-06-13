@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Graph Matching Improves Retrieval Augmented Generation in Molecular Machine Learning
 description: >-
-  [ICML2025][计算生物][神经图匹配] 提出 MARASON，将**神经图匹配（Neural Graph Matching）**引入分子机器学习的检索增强生成（RAG）框架，通过可微分的碎片级对齐机制，把检索到的参考分子谱图信息有效融入目标分子的质谱预测中…
+  [ICML2025][计算生物][神经图匹配] 提出 MARASON，将**神经图匹配（Neural Graph Matching）**引入分子机器学习的检索增强生成（RAG）框架，通过可微分的碎片级对齐机制，把检索到的参考分子谱图信息有效融入目标分子的质谱预测中，在 NIST 数据集上将 top-1 检索准确率从 19% 提升到 28%。
 tags:
   - "ICML2025"
   - "计算生物"

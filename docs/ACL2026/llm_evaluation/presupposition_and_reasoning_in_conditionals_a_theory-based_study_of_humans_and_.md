@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Presupposition and Reasoning in Conditionals: A Theory-Based Study of Humans and LLMs
 description: >-
-  [ACL2026][LLM评测][预设投射] 这篇论文用基于语言学理论的条件句预设投射任务对比人类和四个 LLM，发现人类会联合使用概率、前件-预设相关性和上下文线索，而 LLM 的评分相似性与理论化推理质量明显脱钩，很多看似贴近人类的判断可能来自表层模式匹配。
+  [ACL2026][LLM评测][预设投射] 这篇论文用基于语言学理论的条件句预设投射任务对比人类和四个 LLM，发现人类会联合使用概率、前件-预设相关性和上下文线索，而 LLM 的评分相似性与理论化推理质量明显脱钩，很多看似贴近人类的判断可能来自表层模式匹配。 领域现状：LLM 语义和语用能力评测正在从简单 NLI 或分类…
 tags:
   - "ACL2026"
   - "LLM评测"

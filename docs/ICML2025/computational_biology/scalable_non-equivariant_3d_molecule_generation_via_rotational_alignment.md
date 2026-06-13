@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment
 description: >-
-  [计算生物] 提出 **RADM (Rotationally Aligned Diffusion Model)**，通过学习样本相关的 SO(3) 旋转变换构建对齐的潜空间，使非等变扩散模型能够有效生成 3D 分子，在生成质量上媲美 SOTA 等变模型，同时提供更好的可扩展性和采样效率。
+  [计算生物] 提出 RADM (Rotationally Aligned Diffusion Model)：，通过学习样本相关的 SO(3) 旋转变换构建对齐的潜空间，使非等变扩散模型能够有效生成 3D 分子，在生成质量上媲美 SOTA 等变模型，同时提供更好的可扩展性和采样效率。 3D 分子生成中…
 tags:
   - "计算生物"
 ---

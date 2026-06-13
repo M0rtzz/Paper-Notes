@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoshiRAG: Asynchronous Knowledge Retrieval for Full-Duplex Speech Language Models
 description: >-
-  [ICML 2026][音频/语音][full-duplex] MoshiRAG 在 Moshi 这一全双工语音模型里加入一个特殊的 ⟨ret⟩ 触发 token，让模型边说边异步调用 LLM/搜索后端去取参考文档，利用"开口到关键词出现"的自然 keyword delay 把 2 秒以内的检索延迟完全藏起来…
+  [ICML 2026][音频/语音][full-duplex] MoshiRAG 在 Moshi 这一全双工语音模型里加入一个特殊的 ⟨ret⟩ 触发 token，让模型边说边异步调用 LLM/搜索后端去取参考文档，利用"开口到关键词出现"的自然 keyword delay 把 2 秒以内的检索延迟完全藏起来，从而在 LlamaQ/WebQ/TriviaQA/HaluEval 上把语音模型的事实性拉到 GPT-4o Audio 量级，同时保留全双工实时性。
 tags:
   - "ICML 2026"
   - "音频/语音"

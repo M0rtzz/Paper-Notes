@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing without Pixels: Perception from Camera Trajectories
 description: >-
-  [CVPR 2026][人体理解][相机轨迹] 本文首次系统性地将相机位姿轨迹（6DoF pose sequence）提升为一种独立的视频感知模态，通过对比学习框架训练轻量级 Transformer 编码器 CamFormer，将相机轨迹映射到与文本对齐的联合嵌入空间…
+  [CVPR 2026][人体理解][相机轨迹] 本文首次系统性地将相机位姿轨迹（6DoF pose sequence）提升为一种独立的视频感知模态，通过对比学习框架训练轻量级 Transformer 编码器 CamFormer，将相机轨迹映射到与文本对齐的联合嵌入空间，在 5 个数据集的 10 个下游任务上证明相机轨迹是既轻量又鲁棒的视频内容信号——在物理活动上甚至可以超越计算量大数千倍的视频模型。
 tags:
   - "CVPR 2026"
   - "人体理解"

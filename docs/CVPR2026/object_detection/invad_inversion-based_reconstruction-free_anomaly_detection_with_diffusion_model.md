@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models
 description: >-
-  [CVPR 2026][目标检测][异常检测] 提出 InvAD，将扩散模型异常检测从"RGB 空间去噪重建"范式转变为"潜空间加噪反演"范式，通过 DDIM 反演直接推断最终潜变量并在先验分布下度量偏差来检测异常，仅需 3 步反演即达 SOTA 性能且推理速度提升约 2 倍。
+  [CVPR 2026][目标检测][异常检测] 提出 InvAD，将扩散模型异常检测从"RGB 空间去噪重建"范式转变为"潜空间加噪反演"范式，通过 DDIM 反演直接推断最终潜变量并在先验分布下度量偏差来检测异常，仅需 3 步反演即达 SOTA 性能且推理速度提升约 2 倍。 基于扩散模型的异常检测（AD）方法虽然成功…
 tags:
   - "CVPR 2026"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Collapse-Proof Non-Contrastive Self-Supervised Learning
 description: >-
-  [ICML 2025][自监督学习][非对比自监督学习] 提出 FALCON 方法，基于超维计算 (hyperdimensional computing) 原理设计投影器和损失函数，理论证明可同时避免四种已知训练失败模式（表示崩塌、维度崩塌、聚类崩塌、簇内崩塌），并使表征自然具备去相关和聚类特性。
+  [ICML 2025][自监督学习][非对比自监督学习] 提出 FALCON 方法，基于超维计算 (hyperdimensional computing) 原理设计投影器和损失函数，理论证明可同时避免四种已知训练失败模式（表示崩塌、维度崩塌、聚类崩塌、簇内崩塌），并使表征自然具备去相关和聚类特性。 自监督学习 (SSL) 虽…
 tags:
   - "ICML 2025"
   - "自监督学习"

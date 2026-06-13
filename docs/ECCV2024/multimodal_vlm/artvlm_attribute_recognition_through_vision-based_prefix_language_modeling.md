@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling
 description: >-
-  [ECCV 2024][多模态VLM][属性识别] 本文提出将视觉属性识别问题重新建模为基于图像条件的前缀语言模型（PrefixLM）下的句子生成概率问题，通过"生成式检索"（Generative Retrieval）替代传统的"对比式检索"（Contrastive Retrieval）…
+  [ECCV 2024][多模态VLM][属性识别] 本文提出将视觉属性识别问题重新建模为基于图像条件的前缀语言模型（PrefixLM）下的句子生成概率问题，通过"生成式检索"（Generative Retrieval）替代传统的"对比式检索"（Contrastive Retrieval），显式建模物体-属性间的条件依赖关系，在VAW和新提出的VGARank数据集上显著超越对比检索方法。
 tags:
   - "ECCV 2024"
   - "多模态VLM"

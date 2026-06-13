@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents
 description: >-
-  [AAAI 2026][隐蔽通信] 首次形式化定义了智能体互联网（IoA）中的"隐蔽事件通道"（Covert Event Channel），并设计了 ΠCCAP 协议，通过在智能体对话的存储、时序和行为维度中嵌入秘密数据，实现了高容量、高鲁棒性且对 LLM 审查员不可感知的隐蔽通信。
+  [AAAI 2026][LLM 其他][隐蔽通信] 首次形式化定义了智能体互联网（IoA）中的"隐蔽事件通道"（Covert Event Channel），并设计了 ΠCCAP 协议，通过在智能体对话的存储、时序和行为维度中嵌入秘密数据，实现了高容量、高鲁棒性且对 LLM 审查员不可感知的隐蔽通信。
 tags:
   - "AAAI 2026"
+  - "LLM 其他"
   - "隐蔽通信"
   - "隐写术"
   - "智能体互联网"

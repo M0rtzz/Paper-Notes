@@ -2,10 +2,10 @@
 title: >-
   [论文解读] VA-GPT: Aligning Effective Tokens with Video Anomaly in Large Language Models
 description: >-
-  [ICCV 2025][LLM/NLP][视频异常检测] 提出 VA-GPT，一个面向视频异常事件理解的多模态大模型，通过空间有效token选择(SETS)和时间有效token生成(TETG)两个模块，让MLLM在空间和时间维度上精准对齐异常相关信息，在域内和跨域异常检测基准上均达到SOTA。
+  [ICCV 2025][LLM 其他][视频异常检测] 提出 VA-GPT，一个面向视频异常事件理解的多模态大模型，通过空间有效token选择(SETS)和时间有效token生成(TETG)两个模块，让MLLM在空间和时间维度上精准对齐异常相关信息，在域内和跨域异常检测基准上均达到SOTA。 领域现状：传统视频异常检测方法本…
 tags:
   - "ICCV 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "视频异常检测"
   - "多模态大模型"
   - "空间有效token"

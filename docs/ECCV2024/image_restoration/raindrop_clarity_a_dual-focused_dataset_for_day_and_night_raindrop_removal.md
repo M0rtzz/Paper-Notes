@@ -2,14 +2,14 @@
 title: >-
   [论文解读] Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal
 description: >-
-  [ECCV 2024][雨滴去除] 提出了一个大规模真实世界雨滴去除数据集 Raindrop Clarity，包含15,186组高质量图像对/三元组，首次涵盖雨滴聚焦（清晰雨滴+模糊背景）和夜间雨滴两种现有数据集缺失的场景。
+  [ECCV 2024][图像恢复][雨滴去除] 提出了一个大规模真实世界雨滴去除数据集 Raindrop Clarity，包含15,186组高质量图像对/三元组，首次涵盖雨滴聚焦（清晰雨滴+模糊背景）和夜间雨滴两种现有数据集缺失的场景。 附着在镜头或挡风玻璃上的雨滴会严重降低视觉质量，对监控、自动驾驶、目标检测等应用产生影响…
 tags:
   - "ECCV 2024"
+  - "图像恢复"
   - "雨滴去除"
   - "数据集"
   - "夜间图像"
   - "双焦点"
-  - "图像恢复"
 ---
 
 # Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal

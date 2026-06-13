@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BlackMirror: Black-Box Backdoor Detection for Text-to-Image Models via Instruction-Response Deviation
 description: >-
-  [CVPR2026][图像生成][后门检测] 提出 BlackMirror 框架，通过细粒度的指令-响应语义偏差检测（MirrorMatch）和跨 prompt 稳定性验证（MirrorVerify）两阶段流程，在黑盒条件下实现对 T2I 模型多种后门攻击的通用检测，F1 平均达 89.46%…
+  [CVPR2026][图像生成][后门检测] 提出 BlackMirror 框架，通过细粒度的指令-响应语义偏差检测（MirrorMatch）和跨 prompt 稳定性验证（MirrorVerify）两阶段流程，在黑盒条件下实现对 T2I 模型多种后门攻击的通用检测，F1 平均达 89.46%，大幅超越已有黑盒方法 UFID。
 tags:
   - "CVPR2026"
   - "图像生成"

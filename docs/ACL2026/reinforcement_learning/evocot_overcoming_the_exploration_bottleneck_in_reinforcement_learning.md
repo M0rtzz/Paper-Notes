@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs
 description: >-
-  [ACL 2026][强化学习][RLVR] 本文提出 EvoCoT，一个两阶段自我进化的课程学习框架：先用最终答案约束 LLM 自生成可验证的 CoT 轨迹，再渐进地从尾部删除推理步骤，逐步扩大探索空间，从而在 sparse reward 的硬题上稳定训练 RLVR，不依赖任何教师模型或人写 CoT…
+  [ACL 2026][强化学习][RLVR] 本文提出 EvoCoT，一个两阶段自我进化的课程学习框架：先用最终答案约束 LLM 自生成可验证的 CoT 轨迹，再渐进地从尾部删除推理步骤，逐步扩大探索空间，从而在 sparse reward 的硬题上稳定训练 RLVR，不依赖任何教师模型或人写 CoT，就让 R1-Qwen-1.5B 在 MATH 训练集上的硬题正确率从 55.7 飙升到 87.8。
 tags:
   - "ACL 2026"
   - "强化学习"

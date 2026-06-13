@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flickerformer: A Duet of Periodicity and Directionality for Burst Flicker Removal
 description: >-
-  [CVPR 2026][图像恢复][Burst Flicker Removal] 揭示闪烁伪影具有周期性和方向性两个内在物理特性，设计Flickerformer三模块（PFM/AFFN/WDAM）分别针对帧间/帧内周期性和方向性建模…
+  [CVPR 2026][图像恢复][Burst Flicker Removal] 揭示闪烁伪影具有周期性和方向性两个内在物理特性，设计Flickerformer三模块（PFM/AFFN/WDAM）分别针对帧间/帧内周期性和方向性建模，以3.92M参数量在BurstDeflicker基准上达到31.226dB PSNR，超越第二名AST +0.580dB且仅用其19.70%参数。
 tags:
   - "CVPR 2026"
   - "图像恢复"

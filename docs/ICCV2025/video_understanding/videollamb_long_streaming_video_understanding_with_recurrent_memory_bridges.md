@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges
 description: >-
-  [ICCV 2025][视频理解][长视频理解] 提出 VideoLLaMB，通过 SceneTiling 语义分段、循环记忆桥接层和记忆缓存检索机制，以线性 GPU 内存扩展实现长流式视频理解，在 4 个 VideoQA 基准上平均提升 4.2 分。
+  [ICCV 2025][视频理解][长视频理解] 提出 VideoLLaMB，通过 SceneTiling 语义分段、循环记忆桥接层和记忆缓存检索机制，以线性 GPU 内存扩展实现长流式视频理解，在 4 个 VideoQA 基准上平均提升 4.2 分。 大规模视频语言模型（如 GPT-4o）在理解流式视频方面展示了巨大潜力…
 tags:
   - "ICCV 2025"
   - "视频理解"

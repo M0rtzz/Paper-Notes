@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending
 description: >-
-  [CVPR 2025][制造设计(DFM)] 提出一个面向板金弯曲工艺的可制造性度量分类法（按配置依赖性×可行性/复杂度两个维度划分为四象限），并构建首个包含20,000个零件（含可制造与不可制造样本）的合成数据集BenDFM，基准测试表明图结构表示（UV-Net）优于点云（PointNext）…
+  [CVPR 2025][制造设计(DFM)] 提出一个面向板金弯曲工艺的可制造性度量分类法（按配置依赖性×可行性/复杂度两个维度划分为四象限），并构建首个包含20,000个零件（含可制造与不可制造样本）的合成数据集BenDFM，基准测试表明图结构表示（UV-Net）优于点云（PointNext），配置依赖性指标的预测更具挑战性。
 tags:
   - "CVPR 2025"
   - "制造设计(DFM)"

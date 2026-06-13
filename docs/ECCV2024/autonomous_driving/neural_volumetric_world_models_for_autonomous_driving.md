@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Volumetric World Models for Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][体素世界模型] 本文提出 NeMo（Neural Volumetric World Model），一种基于体积表示的端到端自动驾驶框架，通过 3D 体素表征场景、运动流模块建模动态、时间注意力整合未来预测信息…
+  [ECCV 2024][自动驾驶][体素世界模型] 本文提出 NeMo（Neural Volumetric World Model），一种基于体积表示的端到端自动驾驶框架，通过 3D 体素表征场景、运动流模块建模动态、时间注意力整合未来预测信息，以自监督方式训练并在 nuScenes 和 CARLA 上实现了超越前人方法 18%+ 的驾驶性能。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Whisperer: Efficient Data Selection for Task-Specific LLM Fine-Tuning via Few-Shot In-Context Learning
 description: >-
-  [ACL 2025][预训练][data selection] Data Whisperer 提出一种无需训练的注意力加权 few-shot ICL 数据选择方法，利用预训练模型自身的 ICL 能力和注意力分数为训练样本打分，仅用 10% 数据即可超越全量微调性能，同时比现有方法快 7-20 倍。
+  [ACL 2025][预训练][data selection] Data Whisperer 提出一种无需训练的注意力加权 few-shot ICL 数据选择方法，利用预训练模型自身的 ICL 能力和注意力分数为训练样本打分，仅用 10% 数据即可超越全量微调性能，同时比现有方法快 7-20 倍。 领域现状：LLM 微调需要…
 tags:
   - "ACL 2025"
   - "预训练"

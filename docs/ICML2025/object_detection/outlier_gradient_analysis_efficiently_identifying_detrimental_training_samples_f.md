@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Outlier Gradient Analysis: Efficiently Identifying Detrimental Training Samples for Deep Learning Models
 description: >-
-  [ICML 2025][目标检测][数据中心学习] 提出 Outlier Gradient Analysis (OGA)，将影响函数中识别有害训练样本的问题转化为梯度空间上的异常点检测，绕开了 Hessian 矩阵求逆的高计算开销…
+  [ICML 2025 Oral][目标检测][数据中心学习] 提出 Outlier Gradient Analysis (OGA)，将影响函数中识别有害训练样本的问题转化为梯度空间上的异常点检测，绕开了 Hessian 矩阵求逆的高计算开销，同时在噪声标签校正、NLP 数据筛选和 LLM 影响力数据识别等任务上取得优于传统影响函数方法的效果。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Oral"
   - "目标检测"
   - "数据中心学习"
   - "影响函数"

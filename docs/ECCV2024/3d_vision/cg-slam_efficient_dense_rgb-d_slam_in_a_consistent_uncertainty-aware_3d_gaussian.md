@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field
 description: >-
-  [ECCV 2024][3D视觉][稠密视觉SLAM] 提出CG-SLAM,基于一致性和几何稳定性优化的不确定性感知3D高斯场,实现高效稠密RGB-D SLAM,在定位精度和建图质量上均达到SOTA,跟踪速度最高15Hz。
+  [ECCV 2024][3D视觉][稠密视觉SLAM] 提出CG-SLAM,基于一致性和几何稳定性优化的不确定性感知3D高斯场,实现高效稠密RGB-D SLAM,在定位精度和建图质量上均达到SOTA,跟踪速度最高15Hz。 基于NeRF的SLAM方法(NICE-SLAM、Co-SLAM、Point-SLAM)效果好但体渲染管…
 tags:
   - "ECCV 2024"
   - "3D视觉"

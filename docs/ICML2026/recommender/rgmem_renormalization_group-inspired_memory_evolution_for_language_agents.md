@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RGMem: Renormalization Group-Inspired Memory Evolution for Language Agents
 description: >-
-  [ICML 2026][推荐系统][重整化群] RGMem 借统计物理里的重整化群思想，把语言 agent 的长期对话记忆建模成"事件层 → 关系层 → 概念层"的多尺度系统，通过阈值触发的非线性算子把零散对话粗粒化成稳定的用户画像，从而打破"稳定 vs 可塑"权衡。
+  [ICML 2026][推荐系统][重整化群] RGMem 借统计物理里的重整化群思想，把语言 agent 的长期对话记忆建模成"事件层 → 关系层 → 概念层"的多尺度系统，通过阈值触发的非线性算子把零散对话粗粒化成稳定的用户画像，从而打破"稳定 vs 可塑"权衡。 领域现状：基于 LLM 的对话 agent 越来越被期望…
 tags:
   - "ICML 2026"
   - "推荐系统"

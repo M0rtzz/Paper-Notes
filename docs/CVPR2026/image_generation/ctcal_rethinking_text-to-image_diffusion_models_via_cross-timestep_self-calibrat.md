@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration
 description: >-
-  [CVPR 2026][图像生成][文本到图像生成] 提出 CTCal（Cross-Timestep Self-Calibration），利用扩散模型在小时间步（低噪声）下形成的可靠文本-图像对齐（cross-attention maps）来校准大时间步（高噪声）下的表征学习…
+  [CVPR 2026][图像生成][文本到图像生成] 提出 CTCal（Cross-Timestep Self-Calibration），利用扩散模型在小时间步（低噪声）下形成的可靠文本-图像对齐（cross-attention maps）来校准大时间步（高噪声）下的表征学习，为文本到图像生成提供显式的跨时间步自监督，在 T2I-CompBench++ 和 GenEval 上全面超越现有方法。
 tags:
   - "CVPR 2026"
   - "图像生成"

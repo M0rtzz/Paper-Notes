@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Robustness and Chain-of-Thought Consistency of RL-Finetuned VLMs
 description: >-
-  [ICML 2026][LLM推理][RL 微调] 本文通过在视觉推理基准上注入"误导性 caption"与"错误 CoT 前缀"两类受控文本扰动，系统暴露 RL 微调后开源 VLM 在视觉接地与思维链忠实性上的脆弱，揭示出 RL 优化下"准确率↑ vs CoT 忠实性↓"的显式 trade-off…
+  [ICML 2026][LLM推理][RL 微调] 本文通过在视觉推理基准上注入"误导性 caption"与"错误 CoT 前缀"两类受控文本扰动，系统暴露 RL 微调后开源 VLM 在视觉接地与思维链忠实性上的脆弱，揭示出 RL 优化下"准确率↑ vs CoT 忠实性↓"的显式 trade-off，并表明数据增强与忠实性奖励都无法同时解决两端。
 tags:
   - "ICML 2026"
   - "LLM推理"

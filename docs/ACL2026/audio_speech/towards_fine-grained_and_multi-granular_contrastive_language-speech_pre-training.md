@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Fine-Grained and Multi-Granular Contrastive Language-Speech Pre-training
 description: >-
-  [ACL 2026][音频/语音][语音风格建模] 本文提出FCaps大规模数据集（47k小时语音、19M细粒度标注）和CLSP对比学习模型，通过端到端标注管线和细粒度多粒度对比监督，实现了首个能统一表征全局和细粒度语音风格的语音-文本对齐模型。
+  [ACL 2026][音频/语音][语音风格建模] 本文提出FCaps大规模数据集（47k小时语音、19M细粒度标注）和CLSP对比学习模型，通过端到端标注管线和细粒度多粒度对比监督，实现了首个能统一表征全局和细粒度语音风格的语音-文本对齐模型。 领域现状：语音风格（speaking style）传递了丰富的副语言信息…
 tags:
   - "ACL 2026"
   - "音频/语音"

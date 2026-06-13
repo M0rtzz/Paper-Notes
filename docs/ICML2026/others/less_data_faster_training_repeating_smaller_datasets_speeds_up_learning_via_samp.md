@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Less Data, Faster Training: Repeating Smaller Datasets Speeds Up Learning via Sampling Biases
 description: >-
-  [ICML 2026][small-vs-large gap] 本文系统刻画并解释了"小数据多重复反而比大数据更快收敛"的 small-vs-large gap 现象：作者证明该加速既不能由 CSQ-SQ 差距、梯度方差减少、输入分布偏置三种已有理论解释…
+  [ICML 2026][small-vs-large gap] 本文系统刻画并解释了"小数据多重复反而比大数据更快收敛"的 small-vs-large gap 现象：作者证明该加速既不能由 CSQ-SQ 差距、梯度方差减少、输入分布偏置三种已有理论解释，又通过 2-sparse parity 上的 2-layer 二次激活 MLP 给出闭式步数界 $T = O((Nd)^{1/4} \log(d/\varepsilon))$，并通过随机标签、初始化缩放、层间学习率等一系列干预实验验证：真正驱动加速的是"小数据集天然存在的 $O(N^{-1/2})$ 采样偏差通过加快第二层范数增长来加速第一层特征学习"。
 tags:
   - "ICML 2026"
   - "small-vs-large gap"

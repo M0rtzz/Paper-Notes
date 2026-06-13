@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Leveraging In-Context Learning for Political Bias Testing of LLMs
 description: >-
-  [ACL 2025][LLM/NLP][政治偏见检测] 本文提出"问卷建模"（Questionnaire Modeling, QM）这一新探测任务，利用人类调查数据作为上下文示例来改善LLM政治偏见检测的稳定性，发现指令微调可以改变偏见方向，且更大的模型能更有效地利用上下文示例并展现更小的偏见分数。
+  [ACL 2025][LLM 其他][政治偏见检测] 本文提出"问卷建模"（Questionnaire Modeling, QM）这一新探测任务，利用人类调查数据作为上下文示例来改善LLM政治偏见检测的稳定性，发现指令微调可以改变偏见方向，且更大的模型能更有效地利用上下文示例并展现更小的偏见分数。 领域现状：越来越多的研究通…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "政治偏见检测"
   - "大语言模型"
   - "上下文学习"

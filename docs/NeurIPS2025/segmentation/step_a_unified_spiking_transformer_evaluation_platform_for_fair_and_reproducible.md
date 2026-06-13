@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STEP: A Unified Spiking Transformer Evaluation Platform for Fair and Reproducible Benchmarking
 description: >-
-  [NeurIPS 2025][语义分割][Transformer] STEP 是首个统一的脉冲 Transformer (Spiking Transformer) 评估平台，支持分类/分割/检测多任务、多后端（SpikingJelly/BrainCog/BrainPy）…
+  [NeurIPS 2025][语义分割][Transformer] STEP 是首个统一的脉冲 Transformer (Spiking Transformer) 评估平台，支持分类/分割/检测多任务、多后端（SpikingJelly/BrainCog/BrainPy），通过系统消融揭示了当前脉冲 Transformer 严重依赖卷积前端、注意力贡献有限、时序建模能力不足的关键发现，并提出了考虑位宽稀疏性和内存访问的统一能耗分析框架。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

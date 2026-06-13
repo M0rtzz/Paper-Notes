@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Random Walk on Pixel Manifolds for Anomaly Segmentation of Complex Driving Scenes
 description: >-
-  [ECCV 2024][自动驾驶][异常分割] 提出 Random Walk on Pixel Manifolds (RWPM)，利用随机游走捕获像素嵌入的流形结构来修正因驾驶场景多样性导致的流形畸变，从而提升异常分割评分函数的准确性，无需额外训练即可即插即用地集成到现有异常分割框架中。
+  [ECCV 2024][自动驾驶][异常分割] 提出 Random Walk on Pixel Manifolds (RWPM)，利用随机游走捕获像素嵌入的流形结构来修正因驾驶场景多样性导致的流形畸变，从而提升异常分割评分函数的准确性，无需额外训练即可即插即用地集成到现有异常分割框架中。 异常分割旨在检测驾驶场景中语义分割模…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

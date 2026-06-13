@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hanging in the Balance: Pivotal Moments in Crisis Counseling Conversations
 description: >-
-  [ACL 2025][Pivotal Moments] 本文提出了一种无监督方法来检测对话中的"关键时刻"（pivotal moments）——即下一步回应可能极大影响对话结局的节点，并在危机心理咨询场景中验证了该方法的有效性。
+  [ACL 2025][Pivotal Moments] 本文提出了一种无监督方法来检测对话中的"关键时刻"（pivotal moments）——即下一步回应可能极大影响对话结局的节点，并在危机心理咨询场景中验证了该方法的有效性。 在对话中，某些时刻具有特殊重要性：此时的回应方式可能将对话引向截然不同的轨迹和结果…
 tags:
   - "ACL 2025"
   - "Pivotal Moments"

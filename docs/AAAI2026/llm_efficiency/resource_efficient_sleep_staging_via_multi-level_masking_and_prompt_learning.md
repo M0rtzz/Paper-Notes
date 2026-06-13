@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Resource Efficient Sleep Staging via Multi-Level Masking and Prompt Learning
 description: >-
-  [AAAI2026][LLM效率][sleep staging] 提出 MASS (Mask-Aware Sleep Staging) 框架，通过多层级 masking 策略和层次化 prompt learning 机制，仅用 **10% 的原始 EEG 信号**即可实现可靠的睡眠分期…
+  [AAAI2026][LLM效率][sleep staging] 提出 MASS (Mask-Aware Sleep Staging) 框架，通过多层级 masking 策略和层次化 prompt learning 机制，仅用 **10% 的原始 EEG 信号**即可实现可靠的睡眠分期，为资源受限的可穿戴睡眠监测系统提供方案。
 tags:
   - "AAAI2026"
   - "LLM效率"

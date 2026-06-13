@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FedGUI: Benchmarking Federated GUI Agents across Heterogeneous Platforms, Devices, and Operating Systems
 description: >-
-  [ACL 2026][LLM Agent][联邦学习] FedGUI 是首个面向跨平台 GUI 代理的联邦学习综合基准，包含六个数据集覆盖移动端/网页端/桌面端，系统研究跨平台、跨设备、跨操作系统和跨数据源四种异构性对联邦 GUI 代理训练的影响。
+  [ACL 2026 Findings][LLM Agent][联邦学习] FedGUI 是首个面向跨平台 GUI 代理的联邦学习综合基准，包含六个数据集覆盖移动端/网页端/桌面端，系统研究跨平台、跨设备、跨操作系统和跨数据源四种异构性对联邦 GUI 代理训练的影响。 领域现状：GUI 代理通过视觉语言模型（VLM）感知图形界…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "联邦学习"
   - "GUI代理"

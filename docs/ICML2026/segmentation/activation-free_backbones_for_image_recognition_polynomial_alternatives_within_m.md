@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Activation-Free Backbones for Image Recognition: Polynomial Alternatives within MetaFormer-Style Vision Models
 description: >-
-  [ICML2026][语义分割][激活函数替代] 本文用 Hadamard 乘积构造 PolyMLP、PolyConv 和 PolyAttn，替代 MLP、卷积和注意力中的点激活/softmax…
+  [ICML2026][语义分割][激活函数替代] 本文用 Hadamard 乘积构造 PolyMLP、PolyConv 和 PolyAttn，替代 MLP、卷积和注意力中的点激活/softmax，在 MetaFormer 风格骨干中无需常规激活函数也能在 ImageNet、鲁棒性和 ADE20K 分割上达到或超过激活式模型。
 tags:
   - "ICML2026"
   - "语义分割"

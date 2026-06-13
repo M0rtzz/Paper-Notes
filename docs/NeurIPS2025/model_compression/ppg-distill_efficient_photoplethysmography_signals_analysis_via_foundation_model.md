@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PPG-Distill: Efficient Photoplethysmography Signals Analysis via Foundation Model Distillation
 description: >-
-  [NeurIPS 2025][模型压缩][知识蒸馏] PPG-Distill提出一种针对PPG信号的知识蒸馏框架，通过预测级、特征级和Patch级（形态+节律）蒸馏，将大型PPG基础模型的知识迁移到轻量学生模型，在保持性能（最高提升21.8%）的同时实现7倍推理加速和19倍内存压缩。
+  [NeurIPS 2025][模型压缩][知识蒸馏] PPG-Distill提出一种针对PPG信号的知识蒸馏框架，通过预测级、特征级和Patch级（形态+节律）蒸馏，将大型PPG基础模型的知识迁移到轻量学生模型，在保持性能（最高提升21.8%）的同时实现7倍推理加速和19倍内存压缩。 光电容积脉搏波（PPG）是可穿戴健康监测…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

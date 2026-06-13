@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RARE: Retrieval-Augmented Reasoning Enhancement for Large Language Models
 description: >-
-  [ACL 2025][信息检索/RAG][检索增强推理] 提出 RARE，在 rStar 的 MCTS 推理框架中引入两个检索增强动作（A6: 基于原始问题生成搜索查询并检索，A7: 对子问题进行检索并重新回答），并用检索增强的事实性评分器（RAFS）替代原始判别器…
+  [ACL 2025][信息检索/RAG][检索增强推理] 提出 RARE，在 rStar 的 MCTS 推理框架中引入两个检索增强动作（A6: 基于原始问题生成搜索查询并检索，A7: 对子问题进行检索并重新回答），并用检索增强的事实性评分器（RAFS）替代原始判别器，使 LLaMA 3.1 在医学和常识推理任务上达到甚至超越 GPT-4o 的水平。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

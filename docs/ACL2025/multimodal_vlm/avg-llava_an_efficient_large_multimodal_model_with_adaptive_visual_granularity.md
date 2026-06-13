@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVG-LLaVA: An Efficient Large Multimodal Model with Adaptive Visual Granularity
 description: >-
-  [ACL 2025][多模态VLM][自适应视觉粒度] 在 LLaVA-NeXT 上增加视觉粒度缩放器（空间金字塔池化获取多级粒度 token）和视觉粒度路由器（基于图像+指令自适应选粒度），并提出 RGLF 训练范式用 LMM 自身的生成概率作为反馈来训练路由器…
+  [ACL 2025][多模态VLM][自适应视觉粒度] 在 LLaVA-NeXT 上增加视觉粒度缩放器（空间金字塔池化获取多级粒度 token）和视觉粒度路由器（基于图像+指令自适应选粒度），并提出 RGLF 训练范式用 LMM 自身的生成概率作为反馈来训练路由器，在 11 个基准上实现"减少 token 反而提升性能"的效果。
 tags:
   - "ACL 2025"
   - "多模态VLM"

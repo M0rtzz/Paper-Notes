@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniMRSeg: Unified Modality-Relax Segmentation via Hierarchical Self-Supervised Compensation
 description: >-
-  [NeurIPS 2025][医学图像][缺失模态分割] 提出UniMRSeg，一种统一的模态缺失分割框架，通过层次化自监督补偿机制（HSSC）——从输入级模态重建、特征级对比学习到输出级一致性约束——用100%共享参数在所有可能的模态组合下实现最优平均性能和最小性能波动。
+  [NeurIPS 2025][医学图像][缺失模态分割] 提出UniMRSeg，一种统一的模态缺失分割框架，通过层次化自监督补偿机制（HSSC）——从输入级模态重建、特征级对比学习到输出级一致性约束——用100%共享参数在所有可能的模态组合下实现最优平均性能和最小性能波动。 多模态图像分割在自动驾驶、医学诊断和机器人等关键应…
 tags:
   - "NeurIPS 2025"
   - "医学图像"

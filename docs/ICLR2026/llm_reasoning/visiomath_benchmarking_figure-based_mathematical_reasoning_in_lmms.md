@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs
 description: >-
-  [ICLR 2026][LLM推理][数学推理基准] 提出VisioMath基准，包含1800道K-12数学题目，所有选项均为高度视觉相似的图表，揭示了LMM在多图像-文本对齐上的核心短板，并探索三种对齐策略实现+12.6%的提升。
+  [ICLR 2026][LLM推理][数学推理基准] 提出VisioMath基准，包含1800道K-12数学题目，所有选项均为高度视觉相似的图表，揭示了LMM在多图像-文本对齐上的核心短板，并探索三种对齐策略实现+12.6%的提升。 现有多模态数学推理基准大多关注单图场景或文本选项，忽略了一类重要且常见的题型：所有答案选项均…
 tags:
   - "ICLR 2026"
   - "LLM推理"

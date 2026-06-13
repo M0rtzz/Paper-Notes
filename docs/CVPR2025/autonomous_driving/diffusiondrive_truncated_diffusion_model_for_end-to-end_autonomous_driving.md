@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving
 description: >-
-  [CVPR 2025][自动驾驶][扩散模型] 本文提出DiffusionDrive，通过截断扩散策略（将去噪步骤从20步减少到2步）和级联扩散解码器，首次将扩散模型成功应用于端到端自动驾驶的实时多模态轨迹规划，在NAVSIM数据集上以88.1 PDMS刷新记录，同时保持45 FPS的实时速度。
+  [CVPR 2025][自动驾驶][扩散模型] 本文提出DiffusionDrive，通过截断扩散策略（将去噪步骤从20步减少到2步）和级联扩散解码器，首次将扩散模型成功应用于端到端自动驾驶的实时多模态轨迹规划，在NAVSIM数据集上以88.1 PDMS刷新记录，同时保持45 FPS的实时速度。 端到端自动驾驶近年来取得了显…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

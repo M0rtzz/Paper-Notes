@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TeRA: Rethinking Text-guided Realistic 3D Avatar Generation
 description: >-
-  [ICCV 2025][图像生成][3D Avatar] 提出TeRA，首个基于隐空间扩散模型的文本引导3D真人头像生成框架，通过蒸馏大规模人体重建模型构建结构化隐空间，12秒生成写实3D人物，比SDS方法快两个数量级。
+  [ICCV 2025][图像生成][3D Avatar] 提出TeRA，首个基于隐空间扩散模型的文本引导3D真人头像生成框架，通过蒸馏大规模人体重建模型构建结构化隐空间，12秒生成写实3D人物，比SDS方法快两个数量级。 3D人物头像创建是元宇宙、影视游戏、AR/VR的关键需求。现有方法面临两个路线的困境： SDS路线（TA…
 tags:
   - "ICCV 2025"
   - "图像生成"

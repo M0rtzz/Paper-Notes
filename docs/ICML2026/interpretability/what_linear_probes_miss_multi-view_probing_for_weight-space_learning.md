@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What Linear Probes Miss: Multi-View Probing for Weight-Space Learning
 description: >-
-  [ICML2026][可解释性][权重空间学习] 这篇论文指出单视角一阶 probe 会漏掉权重矩阵的行列交互与二阶相关结构，并提出 MVProbe 用行/列一阶投影加行/列 Gram 分支的多视角表示，在 Model Jungle 和 Stable Diffusion LoRA 识别上显著超过 ProbeX…
+  [ICML2026][可解释性][权重空间学习] 这篇论文指出单视角一阶 probe 会漏掉权重矩阵的行列交互与二阶相关结构，并提出 MVProbe 用行/列一阶投影加行/列 Gram 分支的多视角表示，在 Model Jungle 和 Stable Diffusion LoRA 识别上显著超过 ProbeX。
 tags:
   - "ICML2026"
   - "可解释性"

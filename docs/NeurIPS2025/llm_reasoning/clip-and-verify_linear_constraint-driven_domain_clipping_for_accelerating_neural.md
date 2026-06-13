@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Clip-and-Verify: Linear Constraint-Driven Domain Clipping for Accelerating Neural Network Verification
 description: >-
-  [NeurIPS 2025][LLM推理][神经网络验证] 提出Clip-and-Verify验证流水线，利用线性界传播过程中"免费"产生的线性约束，通过完全裁剪（坐标上升对偶求解）和松弛裁剪（闭式输入域收缩）两种GPU高效算法收紧全网络中间层界，在多个benchmark上减少高达96%的BaB子问题数量…
+  [NeurIPS 2025][LLM推理][神经网络验证] 提出Clip-and-Verify验证流水线，利用线性界传播过程中"免费"产生的线性约束，通过完全裁剪（坐标上升对偶求解）和松弛裁剪（闭式输入域收缩）两种GPU高效算法收紧全网络中间层界，在多个benchmark上减少高达96%的BaB子问题数量，是VNN-COMP 2025获胜验证器的核心组件。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

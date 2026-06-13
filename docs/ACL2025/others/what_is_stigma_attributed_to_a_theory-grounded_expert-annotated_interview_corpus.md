@@ -2,7 +2,7 @@
 title: >-
   [论文解读] What is Stigma Attributed to? A Theory-Grounded, Expert-Annotated Interview Corpus for Demystifying Mental-Health Stigma
 description: >-
-  [ACL 2025 (Oral, SAC Highlight)][心理健康污名] 基于归因理论构建了一个专家标注的心理健康污名访谈语料库（4,141 条片段、684 名参与者），涵盖 7 种细粒度污名类型和社会文化背景信息，并以此为基准评测了多种 SOTA 神经模型在污名检测任务上的表现与挑战。
+  [ACL 2025 (Oral, SAC Highlight)][心理健康污名] 基于归因理论构建了一个专家标注的心理健康污名访谈语料库（4,141 条片段、684 名参与者），涵盖 7 种细粒度污名类型和社会文化背景信息，并以此为基准评测了多种 SOTA 神经模型在污名检测任务上的表现与挑战。 领域现状：心理健康污名是一个…
 tags:
   - "ACL 2025 (Oral, SAC Highlight)"
   - "心理健康污名"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NSW-EPNews: A News-Augmented Benchmark for Electricity Price Forecasting with LLMs
 description: >-
-  [NeurIPS 2025][时间序列][电力价格预测] 提出首个融合新闻文本的电力价格预测基准 NSW-EPNews，系统评估传统模型和 LLM 在多模态电价预测中的表现，发现新闻特征对传统模型增益有限，而 LLM 存在严重幻觉问题。
+  [NeurIPS 2025][时间序列][电力价格预测] 提出首个融合新闻文本的电力价格预测基准 NSW-EPNews，系统评估传统模型和 LLM 在多模态电价预测中的表现，发现新闻特征对传统模型增益有限，而 LLM 存在严重幻觉问题。 电力价格预测是能源管理系统的核心任务。现有方法过度依赖历史数值数据…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Survey of Multimodal Mathematical Reasoning: From Perception, Alignment to Reasoning
 description: >-
-  [ACL 2026][多模态VLM][PAR 框架] 本综述提出 Perception–Alignment–Reasoning (PAR) 过程框架 + Answer–Process–Executable (APE) 评估框架两个互补视角，系统地组织几何/图表表格/视觉应用题三大任务族…
+  [ACL 2026][多模态VLM][PAR 框架] 本综述提出 Perception–Alignment–Reasoning (PAR) 过程框架 + Answer–Process–Executable (APE) 评估框架两个互补视角，系统地组织几何/图表表格/视觉应用题三大任务族，把现有方法和 benchmark 都映射到这两个十字坐标上，是首篇 process-centric 多模态数学推理综述。
 tags:
   - "ACL 2026"
   - "多模态VLM"

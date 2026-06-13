@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SVC 2026: The Second Multimodal Deception Detection Challenge and the First Domain Generalized Remote Physiological Measurement Challenge
 description: >-
-  [CVPR 2026][人体理解][欺骗检测] 组织SVC 2026挑战赛，包含跨域多模态欺骗检测和域泛化远程生理信号测量两个赛道，提供统一评估框架和基线模型，共22支队伍提交最终结果。
+  [CVPR 2026][人体理解][欺骗检测] 组织SVC 2026挑战赛，包含跨域多模态欺骗检测和域泛化远程生理信号测量两个赛道，提供统一评估框架和基线模型，共22支队伍提交最终结果。 领域现状：微弱视觉信号（如面部微小颜色变化、细微肌肉运动）虽然人眼难以感知，但包含重要的生理和心理状态信息。计算机视觉和表征学习技术的发展…
 tags:
   - "CVPR 2026"
   - "人体理解"

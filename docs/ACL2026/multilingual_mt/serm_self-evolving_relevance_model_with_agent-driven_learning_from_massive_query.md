@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SERM: Self-Evolving Relevance Model with Agent-Driven Learning from Massive Query Streams
 description: >-
-  [ACL 2026][多语言/翻译][搜索相关性] 提出 SERM 框架，通过多智能体样本挖掘器和多智能体相关性标注器，从大规模真实查询流中持续自进化搜索相关性模型，经三轮迭代在工业搜索平台上实现 NDCG@1 提升 +2.99，并在在线 A/B 测试中显著提升用户留存率。
+  [ACL 2026 Findings][多语言/翻译][搜索相关性] 提出 SERM 框架，通过多智能体样本挖掘器和多智能体相关性标注器，从大规模真实查询流中持续自进化搜索相关性模型，经三轮迭代在工业搜索平台上实现 NDCG@1 提升 +2.99，并在在线 A/B 测试中显著提升用户留存率。 领域现状：搜索相关性建模是信息检…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多语言/翻译"
   - "搜索相关性"
   - "自进化模型"

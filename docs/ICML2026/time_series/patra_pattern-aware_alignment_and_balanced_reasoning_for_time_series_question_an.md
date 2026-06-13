@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PATRA: Pattern-Aware Alignment and Balanced Reasoning for Time Series Question Answering
 description: >-
-  [ICML 2026][时间序列][时间序列问答] 针对时间序列问答 (TSQA)，PATRA 在表征端把序列显式拆成 full / trend / season 三类模式，并通过三组可学习对齐 token 与文本做深度交叉对齐；在训练端用 SFT + GRPO 两阶段强化学习…
+  [ICML 2026][时间序列][时间序列问答] 针对时间序列问答 (TSQA)，PATRA 在表征端把序列显式拆成 full / trend / season 三类模式，并通过三组可学习对齐 token 与文本做深度交叉对齐；在训练端用 SFT + GRPO 两阶段强化学习，把判别式与生成式任务的奖励统一映射到 $[0,2]$ 解决难度失衡，从而在四类 TSQA 任务上全面超越文本 LLM、ChatTS 等多模态时序 LLM。
 tags:
   - "ICML 2026"
   - "时间序列"

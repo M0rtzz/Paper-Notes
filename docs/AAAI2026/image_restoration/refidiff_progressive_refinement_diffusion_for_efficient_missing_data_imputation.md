@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RefiDiff: Progressive Refinement Diffusion for Efficient Missing Data Imputation
 description: >-
-  [AAAI 2026][图像恢复][missing data imputation] 提出 RefiDiff 四阶段框架（预处理→warm-up→扩散→polish），首次将 predictive 和 generative 缺失值填补范式渐进统一…
+  [AAAI 2026][图像恢复][missing data imputation] 提出 RefiDiff 四阶段框架（预处理→warm-up→扩散→polish），首次将 predictive 和 generative 缺失值填补范式渐进统一，结合 Mamba-based denoising 在 9 个数据集上取得 SOTA，速度比 DIFFPUTER 快 4 倍。
 tags:
   - "AAAI 2026"
   - "图像恢复"

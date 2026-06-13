@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agentic Retoucher for Text-To-Image Generation
 description: >-
-  [CVPR 2026][图像生成][T2I后处理] Agentic Retoucher 将 T2I 生成后的缺陷修复重构为"感知→推理→行动"的人类式闭环决策过程，用三个协作 agent 分别做上下文感知的扭曲检测、人类对齐的诊断推理和自适应局部修复…
+  [CVPR 2026][图像生成][T2I后处理] Agentic Retoucher 将 T2I 生成后的缺陷修复重构为"感知→推理→行动"的人类式闭环决策过程，用三个协作 agent 分别做上下文感知的扭曲检测、人类对齐的诊断推理和自适应局部修复，在 GenBlemish-27K 上 plausibility 提升 2.89 分，83.2% 的结果被人类评为优于原图。
 tags:
   - "CVPR 2026"
   - "图像生成"

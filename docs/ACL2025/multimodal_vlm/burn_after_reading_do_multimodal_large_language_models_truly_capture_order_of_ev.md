@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Burn After Reading: Do Multimodal Large Language Models Truly Capture Order of Events in Image Sequences?
 description: >-
-  [ACL 2025][多模态VLM][时序推理] 提出 TempVS 基准测试，系统评估 38 个 MLLM 在图像序列中对多事件时序关系的 grounding 和推理能力，揭示 SOTA 模型与人类之间存在巨大性能差距。
+  [ACL 2025][多模态VLM][时序推理] 提出 TempVS 基准测试，系统评估 38 个 MLLM 在图像序列中对多事件时序关系的 grounding 和推理能力，揭示 SOTA 模型与人类之间存在巨大性能差距。 领域现状：多模态大语言模型（MLLMs）在单图视觉理解任务上表现出色，但对多图场景下时序理解和推理的评…
 tags:
   - "ACL 2025"
   - "多模态VLM"

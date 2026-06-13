@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Object-Centric Representation Learning for Enhanced 3D Semantic Scene Graph Prediction
 description: >-
-  [NeurIPS 2025][3D视觉][3D语义场景图] 通过实证分析揭示物体特征可区分性是 3D 场景图谓词预测的关键瓶颈（物体分类错误导致 92%+ 的谓词错误），提出独立对比预训练的物体编码器（3D-2D-Text 三模态对齐）+ 几何正则化关系编码器 + 双向边门控 GNN…
+  [NeurIPS 2025][3D视觉][3D语义场景图] 通过实证分析揭示物体特征可区分性是 3D 场景图谓词预测的关键瓶颈（物体分类错误导致 92%+ 的谓词错误），提出独立对比预训练的物体编码器（3D-2D-Text 三模态对齐）+ 几何正则化关系编码器 + 双向边门控 GNN，在 3DSSG 上 Object R@1 59.53%、Predicate R@50 91.40% 均达新 SOTA。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

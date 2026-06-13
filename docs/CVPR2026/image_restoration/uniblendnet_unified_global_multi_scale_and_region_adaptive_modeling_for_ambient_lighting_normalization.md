@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniBlendNet: Unified Global, Multi-Scale, and Region-Adaptive Modeling for Ambient Lighting Normalization
 description: >-
-  [CVPR 2026][图像恢复][ambient lighting normalization] 提出 UniBlendNet，在 IFBlend 基础上统一融合全局上下文建模、多尺度特征聚合和区域自适应残差精修三个模块，用于复杂空间变化光照条件下的环境光归一化任务。
+  [CVPR 2026][图像恢复][ambient lighting normalization] 提出 UniBlendNet，在 IFBlend 基础上统一融合全局上下文建模、多尺度特征聚合和区域自适应残差精修三个模块，用于复杂空间变化光照条件下的环境光归一化任务。 环境光归一化 (ALN) 旨在恢复因多光源、物体几何和…
 tags:
   - "CVPR 2026"
   - "图像恢复"

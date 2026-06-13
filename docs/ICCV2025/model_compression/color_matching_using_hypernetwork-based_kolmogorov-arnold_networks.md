@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)
 description: >-
-  [ICCV 2025][模型压缩][color matching] 提出cmKAN，利用超网络驱动的Kolmogorov-Arnold Network进行颜色匹配，通过生成器预测空间变化的KAN样条参数…
+  [ICCV 2025][模型压缩][color matching] 提出cmKAN，利用超网络驱动的Kolmogorov-Arnold Network进行颜色匹配，通过生成器预测空间变化的KAN样条参数，支持有监督/无监督/配对优化三种场景和raw-to-raw/raw-to-sRGB/sRGB-to-sRGB三种任务，在所有任务上平均超越现有方法37.3%且极轻量（76.4K参数）。
 tags:
   - "ICCV 2025"
   - "模型压缩"

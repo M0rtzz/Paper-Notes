@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoThinker: Unveiling Egocentric Reasoning with Spatio-Temporal CoT
 description: >-
-  [NeurIPS 2025][机器人][第一人称视频] EgoThinker 构建了 500 万级第一人称视频 QA 数据集 EgoRe-5M（含因果 CoT 标注和手-物体精细定位数据），并通过"先 SFT 学推理、后 GRPO 练定位"的两阶段训练范式…
+  [NeurIPS 2025][机器人][第一人称视频] EgoThinker 构建了 500 万级第一人称视频 QA 数据集 EgoRe-5M（含因果 CoT 标注和手-物体精细定位数据），并通过"先 SFT 学推理、后 GRPO 练定位"的两阶段训练范式，让 7B MLLM 首次同时具备第一人称因果推理和时空精细定位能力，在 8+ 个基准上刷新 SOTA，7B 参数量在时间定位上甚至超过 72B 模型。
 tags:
   - "NeurIPS 2025"
   - "机器人"

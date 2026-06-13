@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Chain-of-Thought for Visual Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][visual reasoning] 将视觉CoT推理重新建模为后验推断问题，提出基于摊销变分推断(AVI)的LaCoT训练框架——包含参考引导GFlowNet微调(RGFN)、token级奖励近似和贝叶斯推理缩放(BiN)——在Qwen2.5-VL 3B/7B上比G…
+  [NeurIPS 2025][LLM推理][visual reasoning] 将视觉CoT推理重新建模为后验推断问题，提出基于摊销变分推断(AVI)的LaCoT训练框架——包含参考引导GFlowNet微调(RGFN)、token级奖励近似和贝叶斯推理缩放(BiN)——在Qwen2.5-VL 3B/7B上比GRPO高出10.6%，在7个视觉推理基准上达到开源SOTA。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Thought Space Exploration Through Strategic Intervention
 description: >-
-  [AAAI 2026][LLM推理][推理效率] 提出 Hint-Practice Reasoning（HPR）框架，通过大模型（hinter）在稀疏关键 token 处提供短提示、小模型（practitioner）完成主要推理的协作模式…
+  [AAAI 2026][LLM推理][推理效率] 提出 Hint-Practice Reasoning（HPR）框架，通过大模型（hinter）在稀疏关键 token 处提供短提示、小模型（practitioner）完成主要推理的协作模式，仅需1/5的 token 即可达到 self-consistency 基线的性能，同时在相同 FLOPs 下精度最高提升5.1%。
 tags:
   - "AAAI 2026"
   - "LLM推理"

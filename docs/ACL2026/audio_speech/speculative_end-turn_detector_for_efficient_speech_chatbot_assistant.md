@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Speculative End-Turn Detector for Efficient Speech Chatbot Assistant
 description: >-
-  [ACL2026][音频/语音][端点检测] 论文构建首个公开 end-turn detection 数据集 OpenETD，并提出 SpeculativeETD，让端侧 GRU 持续检测 speaking/non-speaking…
+  [ACL2026][音频/语音][端点检测] 论文构建首个公开 end-turn detection 数据集 OpenETD，并提出 SpeculativeETD，让端侧 GRU 持续检测 speaking/non-speaking，只有遇到 200 ms 静音时才调用服务端 Wav2Vec2 区分 Gap 与 Pause，从而在真实语音上以 38 倍更低 FLOPs 和亚毫秒端侧延迟换取接近大模型的实时 turn-taking 效果。
 tags:
   - "ACL2026"
   - "音频/语音"

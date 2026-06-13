@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hidden Error Awareness in Chain-of-Thought Reasoning: The Signal Is Diagnostic, Not Causal
 description: >-
-  [ICML 2026][LLM推理][思维链] 用一个简单的逻辑回归探针在 LLM 思维链生成时的隐藏状态上能以 0.95 AUROC 预测整条推理是否会出错（从第 1 步就有 0.79），但文本表面同样训出来的分类器只有 0.59…
+  [ICML 2026][LLM推理][思维链] 用一个简单的逻辑回归探针在 LLM 思维链生成时的隐藏状态上能以 0.95 AUROC 预测整条推理是否会出错（从第 1 步就有 0.79），但文本表面同样训出来的分类器只有 0.59；可惜 4 种干预手段（激活引导、探针引导 best-of-N、自我修正、激活补丁）全部失败——这个错误信号是"诊断性"的而非"因果性"的。
 tags:
   - "ICML 2026"
   - "LLM推理"

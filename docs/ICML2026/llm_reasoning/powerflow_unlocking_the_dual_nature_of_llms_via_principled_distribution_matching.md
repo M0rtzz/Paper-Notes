@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PowerFlow: Unlocking the Dual Nature of LLMs via Principled Distribution Matching
 description: >-
-  [ICML 2026][LLM推理][RLIF] 本文把无监督 LLM 微调重新表述为"匹配基模型 $\alpha$-power 分布"的问题，用 GFlowNet 的 Trajectory-Balance 目标作为摊销采样器，并通过长度感知的 LA-TB 重参数化消除自回归生成中的结构性长度偏置…
+  [ICML 2026][LLM推理][RLIF] 本文把无监督 LLM 微调重新表述为"匹配基模型 $\alpha$-power 分布"的问题，用 GFlowNet 的 Trajectory-Balance 目标作为摊销采样器，并通过长度感知的 LA-TB 重参数化消除自回归生成中的结构性长度偏置；同一个旋钮 $\alpha$ 控制方向——$\alpha>1$ 锐化分布激发推理（媲美或超过有监督 GRPO），$\alpha<1$ 平滑分布释放对齐模型被压制的创造力，在 Pareto 前沿上同时拉高质量与多样性。
 tags:
   - "ICML 2026"
   - "LLM推理"

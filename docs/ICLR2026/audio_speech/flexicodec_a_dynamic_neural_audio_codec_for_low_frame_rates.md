@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates
 description: >-
-  [ICLR 2026][音频/语音][Neural Audio Codec] 提出 FlexiCodec，通过 ASR 特征引导的动态帧率合并策略，在 3–12.5Hz 超低帧率下实现高质量语音编解码，同时保持优异的语义信息保留能力。
+  [ICLR 2026][音频/语音][Neural Audio Codec] 提出 FlexiCodec，通过 ASR 特征引导的动态帧率合并策略，在 3–12.5Hz 超低帧率下实现高质量语音编解码，同时保持优异的语义信息保留能力。 领域现状：Neural audio codec（如 EnCodec、DAC、SpeechT…
 tags:
   - "ICLR 2026"
   - "音频/语音"

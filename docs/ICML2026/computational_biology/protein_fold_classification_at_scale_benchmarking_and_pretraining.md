@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Protein Fold Classification at Scale: Benchmarking and Pretraining
 description: >-
-  [ICML 2026][计算生物][蛋白质折叠分类] 作者基于 TED + Foldseek 聚类的 AlphaFold 结构构建了规模空前（约 49 万条、965 类）的非冗余蛋白质折叠分类基准 TEDBench…
+  [ICML 2026 Spotlight][计算生物][蛋白质折叠分类] 作者基于 TED + Foldseek 聚类的 AlphaFold 结构构建了规模空前（约 49 万条、965 类）的非冗余蛋白质折叠分类基准 TEDBench，并提出 SE(3)-不变的掩码自编码器 MiAE：用高达 90% 的极端掩码率 + 重编码器/轻解码器的非对称架构，仅 100M 参数即在线性探测和微调上击败 ESM2-650M、SaProt-650M 等更大模型。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "计算生物"
   - "蛋白质折叠分类"
   - "大规模基准"

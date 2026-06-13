@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Topology-Enhanced Alignment for Large Language Models: Trajectory Topology Loss and Topological Preference Optimization
 description: >-
-  [ACL2026][LLM对齐][拓扑数据分析] 这篇论文把 LLM 对齐看成隐藏空间中的“语义轨迹”塑形问题，在 SFT 阶段用 0 维持久同调抽取 prompt-answer 拓扑桥并加入 TTL，在 DPO 阶段用主题偏好方向加入 TPO…
+  [ACL2026][LLM对齐][拓扑数据分析] 这篇论文把 LLM 对齐看成隐藏空间中的“语义轨迹”塑形问题，在 SFT 阶段用 0 维持久同调抽取 prompt-answer 拓扑桥并加入 TTL，在 DPO 阶段用主题偏好方向加入 TPO，使 UltraChat 和 HH-RLHF 上的奖励、胜率和无害性指标都稳定优于非拓扑基线。
 tags:
   - "ACL2026"
   - "LLM对齐"

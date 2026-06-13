@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallel Universes, Parallel Languages: A Comprehensive Study on LLM-based Multilingual Counterfactual Example Generation
 description: >-
-  [ACL 2026][因果推理][多语言反事实生成] 本文系统研究了 LLM 在六种语言上的多语言反事实样本生成能力，通过直接生成和翻译两种路径对比，发现翻译路径的标签翻转率更高但需要更多编辑，识别出四类常见错误模式，并验证多语言反事实数据增强优于跨语言增强，尤其对低资源语言更有效。
+  [ACL 2026][因果推理][多语言反事实生成] 本文系统研究了 LLM 在六种语言上的多语言反事实样本生成能力，通过直接生成和翻译两种路径对比，发现翻译路径的标签翻转率更高但需要更多编辑，识别出四类常见错误模式，并验证多语言反事实数据增强优于跨语言增强，尤其对低资源语言更有效。 领域现状：反事实样本（counterfa…
 tags:
   - "ACL 2026"
   - "因果推理"

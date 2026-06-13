@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretable Debiasing of Vision-Language Models for Social Fairness
 description: >-
-  [CVPR 2026][LLM安全][VLM去偏] 提出 DeBiasLens，通过在 VLM 编码器上训练稀疏自编码器（SAE）来定位编码社会属性的"社会神经元"，然后在推理时选择性去激活这些神经元以缓解偏见，在 CLIP 上降低 Max Skew 9-16%…
+  [CVPR 2026][LLM安全][VLM去偏] 提出 DeBiasLens，通过在 VLM 编码器上训练稀疏自编码器（SAE）来定位编码社会属性的"社会神经元"，然后在推理时选择性去激活这些神经元以缓解偏见，在 CLIP 上降低 Max Skew 9-16%，在 InternVL2 上降低性别偏差比例 40-50%，同时保持通用性能。
 tags:
   - "CVPR 2026"
   - "LLM安全"

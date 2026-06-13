@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the (Data) Gap: Evaluating Vision Systems in Small Data Applications
 description: >-
-  [NeurIPS 2025][医学图像][小数据评估] 在 NeWT 生态分类基准上系统比较了 MLLMs（如 Gemini、Qwen2.5-VL）和视觉编码器+SVM 在"小数据区间"（10~1000 标注样本）的表现，发现 MLLMs 在 10-30 个样本后即触顶，而视觉方法持续近对数增长…
+  [NeurIPS 2025][医学图像][小数据评估] 在 NeWT 生态分类基准上系统比较了 MLLMs（如 Gemini、Qwen2.5-VL）和视觉编码器+SVM 在"小数据区间"（10~1000 标注样本）的表现，发现 MLLMs 在 10-30 个样本后即触顶，而视觉方法持续近对数增长，呼吁社区重视小数据评估。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

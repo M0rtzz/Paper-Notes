@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing and Seeing Through the Glass: Real and Synthetic Data for Multi-Layer Depth Estimation
 description: >-
-  [ICCV 2025][3D视觉][多层深度估计] 提出多层深度估计(multi-layer depth estimation)新任务，构建了包含1500张真实图像的LayeredDepth基准和程序化合成数据生成器，揭示了现有深度估计方法在透明物体上的严重不足。
+  [ICCV 2025][3D视觉][多层深度估计] 提出多层深度估计(multi-layer depth estimation)新任务，构建了包含1500张真实图像的LayeredDepth基准和程序化合成数据生成器，揭示了现有深度估计方法在透明物体上的严重不足。 透明物体在日常生活中无处不在，理解其多层深度信息对实际应用至…
 tags:
   - "ICCV 2025"
   - "3D视觉"

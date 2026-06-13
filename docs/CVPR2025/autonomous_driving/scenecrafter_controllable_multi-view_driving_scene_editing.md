@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneCrafter: Controllable Multi-View Driving Scene Editing
 description: >-
-  [CVPR 2025][自动驾驶][多视角一致性] SceneCrafter 提出了一个基于多视角扩散模型的驾驶场景编辑框架，通过 teacher-student 两阶段训练范式生成高质量合成配对数据，支持天气/时间全局编辑和前景目标增删的局部编辑，同时保持跨相机的 3D 几何一致性。
+  [CVPR 2025][自动驾驶][多视角一致性] SceneCrafter 提出了一个基于多视角扩散模型的驾驶场景编辑框架，通过 teacher-student 两阶段训练范式生成高质量合成配对数据，支持天气/时间全局编辑和前景目标增删的局部编辑，同时保持跨相机的 3D 几何一致性。 领域现状：自动驾驶仿真需要逼真的传感器…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

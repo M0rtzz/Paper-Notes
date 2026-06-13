@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PRISMM-Bench: A Benchmark of Peer-Review Grounded Multimodal Inconsistencies
 description: >-
-  [ICLR 2026][多模态VLM][多模态一致性] 构建首个基于真实审稿人标记的科学论文多模态不一致性基准PRISMM-Bench，从18009条ICLR开放评审中挖掘384个跨模态不一致，设计识别/修复/配对匹配三任务并提出JSON结构化去偏答案表示…
+  [ICLR 2026][多模态VLM][多模态一致性] 构建首个基于真实审稿人标记的科学论文多模态不一致性基准PRISMM-Bench，从18009条ICLR开放评审中挖掘384个跨模态不一致，设计识别/修复/配对匹配三任务并提出JSON结构化去偏答案表示，21个顶级LMM最高仅53.9%→系统性暴露当前模型在科学文档跨模态推理上的严重不足。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

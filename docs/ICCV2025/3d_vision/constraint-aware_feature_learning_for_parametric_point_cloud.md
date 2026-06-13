@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CstNet: Constraint-Aware Feature Learning for Parametric Point Cloud
 description: >-
-  [ICCV 2025][3D视觉][CAD 点云] 提出首个面向参数化点云的约束感知特征学习方法 CstNet，将 CAD 约束编码为点级别的 MAD-Adj-PT 三元组表示，通过两阶段网络（约束获取 + 约束特征学习）在自建的 Param20K 数据集上实现分类精度 +3.49%、旋转鲁棒性 +26.17…
+  [ICCV 2025][3D视觉][CAD 点云] 提出首个面向参数化点云的约束感知特征学习方法 CstNet，将 CAD 约束编码为点级别的 MAD-Adj-PT 三元组表示，通过两阶段网络（约束获取 + 约束特征学习）在自建的 Param20K 数据集上实现分类精度 +3.49%、旋转鲁棒性 +26.17% 的 SOTA 提升。
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Minority-Focused Text-to-Image Generation via Prompt Optimization
 description: >-
-  [CVPR 2025][图像生成][少数样本生成] MinorityPrompt 提出了一种在线 prompt 优化框架，通过在推理过程中迭代优化可学习 token embedding 来最大化似然度损失，引导 T2I 扩散模型生成处于数据分布低密度区域的少数(minority)样本…
+  [CVPR 2025][图像生成][少数样本生成] MinorityPrompt 提出了一种在线 prompt 优化框架，通过在推理过程中迭代优化可学习 token embedding 来最大化似然度损失，引导 T2I 扩散模型生成处于数据分布低密度区域的少数(minority)样本，同时保持语义一致性和生成质量。
 tags:
   - "CVPR 2025"
   - "图像生成"

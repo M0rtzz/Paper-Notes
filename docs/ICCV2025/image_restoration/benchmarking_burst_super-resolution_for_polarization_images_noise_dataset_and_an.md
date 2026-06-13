@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis
 description: >-
-  [ICCV 2025][图像恢复][偏振图像超分辨率] 本文针对偏振图像 burst 超分辨率的缺乏数据集和噪声模型的问题，构建了两个专用数据集 PolarNS（噪声统计）和 PolarBurstSR（超分基准），提出了偏振噪声传播分析模型，并系统比较了现有 burst SR 方法在偏振场景下的表现…
+  [ICCV 2025][图像恢复][偏振图像超分辨率] 本文针对偏振图像 burst 超分辨率的缺乏数据集和噪声模型的问题，构建了两个专用数据集 PolarNS（噪声统计）和 PolarBurstSR（超分基准），提出了偏振噪声传播分析模型，并系统比较了现有 burst SR 方法在偏振场景下的表现，为偏振图像重建领域建立了标准化评测基准。
 tags:
   - "ICCV 2025"
   - "图像恢复"

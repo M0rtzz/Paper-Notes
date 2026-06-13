@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExpGuard: LLM Content Moderation in Specialized Domains
 description: >-
-  [ICLR2026][LLM安全][LLM safety] 提出面向金融、医疗、法律等专业领域的安全护栏模型 ExpGuard 及配套数据集 ExpGuardMix（58,928 样本），在领域特定测试集上 prompt 分类 F1 超 WildGuard 8.9%、response 分类超 15.3%…
+  [ICLR2026][LLM安全][LLM safety] 提出面向金融、医疗、法律等专业领域的安全护栏模型 ExpGuard 及配套数据集 ExpGuardMix（58,928 样本），在领域特定测试集上 prompt 分类 F1 超 WildGuard 8.9%、response 分类超 15.3%，同时在通用安全基准上保持 SOTA 水平。
 tags:
   - "ICLR2026"
   - "LLM安全"

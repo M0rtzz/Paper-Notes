@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation
 description: >-
-  [ACL 2025][LLM推理][PCoT] 提出 PCoT（Persuasion-Augmented Chain of Thought），一种两阶段零样本方法：第一阶段用融入说服知识的提示引导 LLM 识别文本中的六类说服策略，第二阶段将说服分析作为上下文融入虚假信息检测推理…
+  [ACL 2025][LLM推理][PCoT] 提出 PCoT（Persuasion-Augmented Chain of Thought），一种两阶段零样本方法：第一阶段用融入说服知识的提示引导 LLM 识别文本中的六类说服策略，第二阶段将说服分析作为上下文融入虚假信息检测推理，在 5 个 LLM × 5 个数据集上平均 F1 提升 15%，包括 2 个全新的后截止日期数据集。
 tags:
   - "ACL 2025"
   - "LLM推理"

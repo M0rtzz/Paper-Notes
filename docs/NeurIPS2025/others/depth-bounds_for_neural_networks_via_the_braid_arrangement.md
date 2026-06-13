@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Depth-Bounds for Neural Networks via the Braid Arrangement
 description: >-
-  [NeurIPS 2025][ReLU网络深度下界] 本文证明了在 $\mathcal{B}_d^0$-conforming 约束下，ReLU 网络精确表示 $\max\{0, x_1, \ldots, x_d\}$ 需要 $\Omega(\log \log d)$ 层——这是首个不限制权重的非常数深度下界…
+  [NeurIPS 2025][ReLU网络深度下界] 本文证明了在 $\mathcal{B}_d^0$-conforming 约束下，ReLU 网络精确表示 $\max\{0, x_1, \ldots, x_d\}$ 需要 $\Omega(\log \log d)$ 层——这是首个不限制权重的非常数深度下界；同时证明 rank-(3,2) maxout 网络可以计算 7 个数的最大值，说明标准上界不紧。
 tags:
   - "NeurIPS 2025"
   - "ReLU网络深度下界"

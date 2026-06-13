@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Modeling LLM Unlearning as an Asymmetric Two-Task Learning Problem
 description: >-
-  [ACL 2026][LLM安全][LLM Unlearning] 把 LLM unlearning 显式建模为「retain 为主、forget 为辅」的非对称两任务问题，提出 SAGO——对 retain/forget 梯度做**元素级符号对齐门控**…
+  [ACL 2026][LLM安全][LLM Unlearning] 把 LLM unlearning 显式建模为「retain 为主、forget 为辅」的非对称两任务问题，提出 SAGO——对 retain/forget 梯度做**元素级符号对齐门控**，在 WMDP 与 RWKU 上把 retention 性能逼近原模型，同时几乎不损失 forget 效果。
 tags:
   - "ACL 2026"
   - "LLM安全"

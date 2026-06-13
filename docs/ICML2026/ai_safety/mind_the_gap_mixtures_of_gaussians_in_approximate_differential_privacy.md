@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mind the Gap: Mixtures of Gaussians in Approximate Differential Privacy
 description: >-
-  [ICML 2026][AI安全][近似差分隐私] 本文为 $(\varepsilon,\delta)$-DP 设计了一类高斯混合加性噪声机制（multi-Gaussian mixture 与无超参的 quasi-Gaussian mixture），在中低隐私域将解析高斯机制的次优间隙关闭高达 99%…
+  [ICML 2026][AI安全][近似差分隐私] 本文为 $(\varepsilon,\delta)$-DP 设计了一类高斯混合加性噪声机制（multi-Gaussian mixture 与无超参的 quasi-Gaussian mixture），在中低隐私域将解析高斯机制的次优间隙关闭高达 99%，同时保留高斯的 zCDP 紧组合性质。
 tags:
   - "ICML 2026"
   - "AI安全"

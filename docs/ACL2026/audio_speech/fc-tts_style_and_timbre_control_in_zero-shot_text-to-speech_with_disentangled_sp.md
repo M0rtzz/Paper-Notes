@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FC-TTS: Style and Timbre Control in Zero-Shot Text-to-Speech with Disentangled Speech Representations
 description: >-
-  [ACL2026][音频/语音][零样本 TTS] FC-TTS 用 FACodec 的解耦语音表示作为条件来源，再通过两阶段谱图生成、VQ-VAE 风格编码和条件一致性损失，把零样本 TTS 中原本纠缠在同一 reference 里的音色和说话风格拆成两个可独立控制的输入。
+  [ACL2026][音频/语音][零样本 TTS] FC-TTS 用 FACodec 的解耦语音表示作为条件来源，再通过两阶段谱图生成、VQ-VAE 风格编码和条件一致性损失，把零样本 TTS 中原本纠缠在同一 reference 里的音色和说话风格拆成两个可独立控制的输入。 领域现状：零样本文本转语音已经能从一段参考语音中…
 tags:
   - "ACL2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AD-GS: Object-Aware B-Spline Gaussian Splatting for Self-Supervised Autonomous Driving
 description: >-
-  [ICCV 2025][自动驾驶][Gaussian Splatting] 本文提出 AD-GS，一种基于 3D Gaussian Splatting 的自监督自动驾驶场景渲染框架，核心创新是将可学习 B-spline 曲线与三角函数结合进行局部-全局运动建模，并通过简化的二值伪分割实现鲁棒的场景分解…
+  [ICCV 2025][自动驾驶][Gaussian Splatting] 本文提出 AD-GS，一种基于 3D Gaussian Splatting 的自监督自动驾驶场景渲染框架，核心创新是将可学习 B-spline 曲线与三角函数结合进行局部-全局运动建模，并通过简化的二值伪分割实现鲁棒的场景分解，在不依赖人工 3D 标注的条件下大幅超越现有自监督方法。
 tags:
   - "ICCV 2025"
   - "自动驾驶"

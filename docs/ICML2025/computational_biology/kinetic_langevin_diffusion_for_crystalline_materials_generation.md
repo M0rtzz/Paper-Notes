@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Kinetic Langevin Diffusion for Crystalline Materials Generation
 description: >-
-  [ICML 2025][计算生物][晶体材料生成] KLDM 提出用 Kinetic Langevin Diffusion 处理晶体材料生成中原子分数坐标位于超环面的问题，通过引入辅助速度变量将扩散偏移到平坦欧几里得空间，同时保持周期平移对称性，在晶体结构预测和从头生成任务上达到竞争力性能。
+  [ICML 2025][计算生物][晶体材料生成] KLDM 提出用 Kinetic Langevin Diffusion 处理晶体材料生成中原子分数坐标位于超环面的问题，通过引入辅助速度变量将扩散偏移到平坦欧几里得空间，同时保持周期平移对称性，在晶体结构预测和从头生成任务上达到竞争力性能。 领域现状：使用扩散模型进行晶体材…
 tags:
   - "ICML 2025"
   - "计算生物"

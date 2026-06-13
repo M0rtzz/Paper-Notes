@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Difficulty and the Generalization--Extrapolation Tradeoff in LLM Fine-Tuning
 description: >-
-  [ICML 2026][预训练][数据难度] 本文系统研究 SFT 中数据难度的作用，发现并不存在"普适最优难度"，而是存在一个**随数据规模增大而向更难方向漂移**的最优难度，并用"in-distribution 泛化 gap"与"extrapolation gap"两个 gap 的 trade-off 给…
+  [ICML 2026][预训练][数据难度] 本文系统研究 SFT 中数据难度的作用，发现并不存在"普适最优难度"，而是存在一个**随数据规模增大而向更难方向漂移**的最优难度，并用"in-distribution 泛化 gap"与"extrapolation gap"两个 gap 的 trade-off 给出 PAC-Bayes 解释。
 tags:
   - "ICML 2026"
   - "预训练"

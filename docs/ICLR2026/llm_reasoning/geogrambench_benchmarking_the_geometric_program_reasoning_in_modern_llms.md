@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs
 description: >-
-  [ICLR 2026][LLM推理][几何推理] 形式化Program-to-Geometry任务并提出GeoGramBench（500题），按三级几何复杂度分类法评估19个前沿LLM从过程式绘图代码构建几何表征并推理的能力，发现即使GPT-5在最高抽象级别也仅39.26%准确率…
+  [ICLR 2026][LLM推理][几何推理] 形式化Program-to-Geometry任务并提出GeoGramBench（500题），按三级几何复杂度分类法评估19个前沿LLM从过程式绘图代码构建几何表征并推理的能力，发现即使GPT-5在最高抽象级别也仅39.26%准确率，揭示了LLM空间抽象的根本性短板。
 tags:
   - "ICLR 2026"
   - "LLM推理"

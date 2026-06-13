@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data- and Variance-dependent Regret Bounds for Online Tabular MDPs
 description: >-
-  [ICML 2026][强化学习][在线 MDP] 本文针对已知转移的在线 episodic tabular MDP，基于带 log-barrier 的乐观 follow-the-regularized-leader（OFTRL）设计了单一 best-of-both-worlds 算法…
+  [ICML 2026][强化学习][在线 MDP] 本文针对已知转移的在线 episodic tabular MDP，基于带 log-barrier 的乐观 follow-the-regularized-leader（OFTRL）设计了单一 best-of-both-worlds 算法，同时给出对抗 regime 下的一阶/二阶/路径长度三种数据依赖 regret 上界，以及随机 regime 下的方差感知 gap-无关和 gap-相关 polylog 界，并配套证明匹配的下界。
 tags:
   - "ICML 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the Modality Barrier: Generative Modeling for Accurate Molecule Retrieval from Mass Spectra
 description: >-
-  [AAAI 2026][图像生成][质谱分析] 提出 GLMR 两阶段框架（对比学习预检索 + 生成式语言模型重排），通过生成与输入质谱对齐的分子结构将跨模态检索转化为单模态检索，在 MassSpecGym 上 Recall@1 提升超 40%。
+  [AAAI 2026][图像生成][质谱分析] 提出 GLMR 两阶段框架（对比学习预检索 + 生成式语言模型重排），通过生成与输入质谱对齐的分子结构将跨模态检索转化为单模态检索，在 MassSpecGym 上 Recall@1 提升超 40%。 串联质谱（MS/MS）是分子结构鉴定的核心工具，从质谱中检索匹配的分子结构是代…
 tags:
   - "AAAI 2026"
   - "图像生成"

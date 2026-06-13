@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite
 description: >-
-  [ICLR 2026 Oral][LLM评测][Agent 基准] AI2 团队针对现有科研 Agent 基准的 5 大方法学缺陷，构建了首个覆盖科学研究全流程的 Agent 评估套件 AstaBench，包含 4 大类 11 个子基准共 2400+ 问题…
+  [ICLR 2026 Oral][LLM评测][Agent 基准] AI2 团队针对现有科研 Agent 基准的 5 大方法学缺陷，构建了首个覆盖科学研究全流程的 Agent 评估套件 AstaBench，包含 4 大类 11 个子基准共 2400+ 问题，配备基于 Semantic Scholar 的生产级可控搜索工具和 9 类科研优化 Asta Agent 基线，对 57 个 Agent（22 类）进行了迄今最大规模的系统评估，发现尽管在文献检索等单项任务上取得了进展，AI 在端到端科学研究辅助方面仍远未达标。
 tags:
   - "ICLR 2026 Oral"
   - "LLM评测"

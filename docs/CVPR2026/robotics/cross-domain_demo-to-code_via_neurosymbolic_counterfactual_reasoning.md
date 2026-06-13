@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning
 description: >-
-  [CVPR2026][机器人][video-instructed robotic programming] 提出 NeSyCR 神经符号反事实推理框架，将视频示教抽象为符号世界模型，通过反事实状态推演检测跨域不兼容并自动修正程序步骤…
+  [CVPR2026][机器人][video-instructed robotic programming] 提出 NeSyCR 神经符号反事实推理框架，将视频示教抽象为符号世界模型，通过反事实状态推演检测跨域不兼容并自动修正程序步骤，在跨域 demo-to-code 任务上比最强基线 Statler 提升 31.14% 成功率。
 tags:
   - "CVPR2026"
   - "机器人"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport
 description: >-
-  [ICLR 2026 (Oral)][模型压缩][optimal transport] 将跨域有损压缩（编码器观测退化源、解码器重建不同目标分布）形式化为带压缩率和分类损失双重约束的最优传输问题，推导Bernoulli源（Hamming失真）和Gaussian源（MSE）的闭式DRC/RDC及DRPC权衡函数…
+  [ICLR 2026 (Oral)][模型压缩][optimal transport] 将跨域有损压缩（编码器观测退化源、解码器重建不同目标分布）形式化为带压缩率和分类损失双重约束的最优传输问题，推导Bernoulli源（Hamming失真）和Gaussian源（MSE）的闭式DRC/RDC及DRPC权衡函数，通过深度端到端压缩模型在超分/去噪/修复任务上验证理论预测与实验行为一致。
 tags:
   - "ICLR 2026 (Oral)"
   - "模型压缩"

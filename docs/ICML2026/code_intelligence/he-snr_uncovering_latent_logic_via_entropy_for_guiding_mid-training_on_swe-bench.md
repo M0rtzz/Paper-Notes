@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HE-SNR: Uncovering Latent Logic via Entropy for Guiding Mid-Training on SWE-bench
 description: >-
-  [ICML 2026][代码智能][SWE-bench] 在 SWE-bench 上传统 PPL 既受"长上下文税"干扰又无法预测 SFT 后的智能体能力，本文提出"熵压缩假说"和 HE-SNR 指标，只在 Top-10 熵大于 $(\ln 3 + \ln 4)/2$ 的"高熵决策点"上算信号噪声比…
+  [ICML 2026][代码智能][SWE-bench] 在 SWE-bench 上传统 PPL 既受"长上下文税"干扰又无法预测 SFT 后的智能体能力，本文提出"熵压缩假说"和 HE-SNR 指标，只在 Top-10 熵大于 $(\ln 3 + \ln 4)/2$ 的"高熵决策点"上算信号噪声比，与下游 SWE-bench 得分的 Pearson 相关达 0.96，Kendall 一致性 0.98。
 tags:
   - "ICML 2026"
   - "代码智能"

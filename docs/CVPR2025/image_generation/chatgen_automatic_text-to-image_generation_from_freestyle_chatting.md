@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ChatGen: Automatic Text-to-Image Generation From FreeStyle Chatting
 description: >-
-  [CVPR 2025][图像生成][自动T2I] 提出 ChatGen，将文本到图像生成中的 prompt 编写、模型选择和参数配置三个繁琐步骤自动化，通过多阶段进化训练策略（ChatGen-Evo）让用户以自由聊天方式描述需求即可获得高质量生成图像。
+  [CVPR 2025][图像生成][自动T2I] 提出 ChatGen，将文本到图像生成中的 prompt 编写、模型选择和参数配置三个繁琐步骤自动化，通过多阶段进化训练策略（ChatGen-Evo）让用户以自由聊天方式描述需求即可获得高质量生成图像。 领域现状：T2I 生成模型日趋丰富，Civitai 等平台上有数千个定制…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDF-Net: Structure-Aware Disentangled Feature Learning for Optical–SAR Ship Re-Identification
 description: >-
-  [CVPR2026][目标检测][光学-SAR跨模态匹配] 提出 SDF-Net，利用船舶刚体几何结构作为跨模态不变锚点，在中间层提取梯度能量强制结构一致性，在终端层解耦模态共享/特定特征并通过加法残差融合，在 HOSS-ReID 上取得 SOTA（All mAP 60.9%，超 TransOSS 3.5%）…
+  [CVPR2026][目标检测][光学-SAR跨模态匹配] 提出 SDF-Net，利用船舶刚体几何结构作为跨模态不变锚点，在中间层提取梯度能量强制结构一致性，在终端层解耦模态共享/特定特征并通过加法残差融合，在 HOSS-ReID 上取得 SOTA（All mAP 60.9%，超 TransOSS 3.5%）。
 tags:
   - "CVPR2026"
   - "目标检测"

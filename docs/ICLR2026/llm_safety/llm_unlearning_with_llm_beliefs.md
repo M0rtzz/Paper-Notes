@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Unlearning with LLM Beliefs
 description: >-
-  [ICLR 2026][LLM安全][LLM遗忘] 揭示GA/NPO等LLM遗忘方法存在"挤压效应"(squeezing effect)——降低目标响应概率后概率质量转移到语义相关的高似然区域导致虚假遗忘，提出基于Bootstrapping的框架…
+  [ICLR 2026][LLM安全][LLM遗忘] 揭示GA/NPO等LLM遗忘方法存在"挤压效应"(squeezing effect)——降低目标响应概率后概率质量转移到语义相关的高似然区域导致虚假遗忘，提出基于Bootstrapping的框架，利用模型自身高置信度预测(model beliefs)作为额外遗忘目标，BS-T(token级)和BS-S(序列级)两种实现在TOFU/MUSE/WMDP多个基准上实现更彻底的遗忘且保持模型效用。
 tags:
   - "ICLR 2026"
   - "LLM安全"

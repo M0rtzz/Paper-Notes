@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BAH Dataset for Ambivalence/Hesitancy Recognition in Videos for Digital Behaviour Analysis
 description: >-
-  [ICLR 2026][人体理解][矛盾犹豫识别] 提出首个面向视频中矛盾/犹豫（A/H）识别的多模态数据集 BAH，包含来自加拿大9省224名参与者的1,118段视频共8.26小时，由行为科学专家标注，并提供了帧级和视频级的基线实验结果。
+  [ICLR 2026][人体理解][矛盾犹豫识别] 提出首个面向视频中矛盾/犹豫（A/H）识别的多模态数据集 BAH，包含来自加拿大9省224名参与者的1,118段视频共8.26小时，由行为科学专家标注，并提供了帧级和视频级的基线实验结果。 矛盾和犹豫（Ambivalence/Hesitancy, A/H）是行为变化过程中的…
 tags:
   - "ICLR 2026"
   - "人体理解"

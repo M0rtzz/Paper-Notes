@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Narrow to Panoramic Vision: Attention-Guided Cold-Start Reshapes Multimodal Reasoning
 description: >-
-  [ICLR 2026][强化学习][视觉注意力] 发现多模态 LLM 的推理性能与视觉注意力分数（VAS）高度相关（r=0.96），提出 AVAR 框架通过视觉锚定数据合成、注意力引导训练目标和视觉锚定奖励塑造三个阶段提升 VAS，在 77 个基准上平均提升 7%。
+  [ICLR 2026][强化学习][视觉注意力] 发现多模态 LLM 的推理性能与视觉注意力分数（VAS）高度相关（r=0.96），提出 AVAR 框架通过视觉锚定数据合成、注意力引导训练目标和视觉锚定奖励塑造三个阶段提升 VAS，在 77 个基准上平均提升 7%。 领域现状：多模态 LLM（如 Qwen2.5-VL）在推理…
 tags:
   - "ICLR 2026"
   - "强化学习"

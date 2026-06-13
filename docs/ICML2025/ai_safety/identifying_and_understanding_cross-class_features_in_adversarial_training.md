@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Identifying and Understanding Cross-Class Features in Adversarial Training
 description: >-
-  [ICML2025][AI安全][对抗训练] 从类别级特征归因的角度揭示对抗训练(AT)中的"跨类特征"如何先被学习后被遗忘，统一解释了鲁棒过拟合和软标签训练优势两大现象。
+  [ICML2025][AI安全][对抗训练] 从类别级特征归因的角度揭示对抗训练(AT)中的"跨类特征"如何先被学习后被遗忘，统一解释了鲁棒过拟合和软标签训练优势两大现象。 对抗训练(AT)是使深度网络抵抗对抗攻击最有效的方法之一，其核心为最小-最大优化： $$\min_{\boldsymbol{\theta}} \frac…
 tags:
   - "ICML2025"
   - "AI安全"

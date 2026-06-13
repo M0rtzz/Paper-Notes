@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blended Point Cloud Diffusion for Localized Text-guided Shape Editing
 description: >-
-  [ICCV 2025 (Highlight)][3D视觉][点云编辑] 提出 BlendedPC，将局部文本引导的3D形状编辑重新定义为语义inpainting问题，通过在Point·E基础上训练Inpaint-E模型…
+  [ICCV 2025 (Highlight)][3D视觉][点云编辑] 提出 BlendedPC，将局部文本引导的3D形状编辑重新定义为语义inpainting问题，通过在Point·E基础上训练Inpaint-E模型，并在推理时引入无需反演(inversion-free)的坐标混合(coordinate blending)机制，在保持原始形状身份的同时实现精准局部编辑，在ShapeTalk数据集上全面超越现有方法。
 tags:
   - "ICCV 2025 (Highlight)"
   - "3D视觉"

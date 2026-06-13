@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Point of Order: Action-Aware LLM Persona Modeling for Realistic Civic Simulation
 description: >-
-  [ACL2026][社会计算][说话人归因] 这篇论文把公开 Zoom 会议视频转成跨视频说话人可追踪、带行动标签和 persona 元数据的政府协商语料，并用 QLoRA 微调 LLM 生成特定参与者发言，使困惑度最多降低 67%，人类在图灵式测试中也很难区分模拟对话和真实会议片段。
+  [ACL2026][社会计算][说话人归因] 这篇论文把公开 Zoom 会议视频转成跨视频说话人可追踪、带行动标签和 persona 元数据的政府协商语料，并用 QLoRA 微调 LLM 生成特定参与者发言，使困惑度最多降低 67%，人类在图灵式测试中也很难区分模拟对话和真实会议片段。 领域现状：LLM multi-agen…
 tags:
   - "ACL2026"
   - "社会计算"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2511.17813](https://arxiv.org/abs/2511.17813)  
 **代码**: 未公开  
-**领域**: audio_speech  
+**领域**: 音频语音  
 **关键词**: 说话人归因、行动标签、角色建模、市政协商仿真、QLoRA
 
 ## 一句话总结

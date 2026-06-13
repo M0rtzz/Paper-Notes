@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond the Leaderboard: Rethinking Medical Benchmarks for Large Language Models
 description: >-
-  [ACL 2026][医疗NLP][MedCheck] 作者提出 MedCheck——首个面向医学 LLM benchmark **生命周期**的评估框架，把 benchmark 构建拆成 5 个阶段共 46 条标准，用它对 56 个医学 benchmark 做审计…
+  [ACL 2026][医疗NLP][MedCheck] 作者提出 MedCheck——首个面向医学 LLM benchmark **生命周期**的评估框架，把 benchmark 构建拆成 5 个阶段共 46 条标准，用它对 56 个医学 benchmark 做审计，发现医学 NLP 评测领域存在 3 个系统性问题：(1) 50% 不对齐任何医学标准（ICD/SNOMED），(2) 88% 不处理数据污染，(3) 89% 不测模型 robustness、91% 不测 uncertainty——结论是当前"排行榜进步"很大程度是幻象。
 tags:
   - "ACL 2026"
   - "医疗NLP"

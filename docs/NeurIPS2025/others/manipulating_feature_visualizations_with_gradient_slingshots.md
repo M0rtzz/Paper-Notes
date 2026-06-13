@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Manipulating Feature Visualizations with Gradient Slingshots
 description: >-
-  [NeurIPS 2025][特征可视化] 提出 Gradient Slingshots（梯度弹弓）方法，通过在模型的分布外输入区域"雕刻"出导向任意目标图像的二次激活景观，使特征可视化（Feature Visualization）的梯度优化过程收敛到预设的虚假图像…
+  [NeurIPS 2025][特征可视化] 提出 Gradient Slingshots（梯度弹弓）方法，通过在模型的分布外输入区域"雕刻"出导向任意目标图像的二次激活景观，使特征可视化（Feature Visualization）的梯度优化过程收敛到预设的虚假图像，同时保持模型架构、分类精度和内部特征表示基本不变，暴露了 FV 作为模型审计工具的严重脆弱性。
 tags:
   - "NeurIPS 2025"
   - "特征可视化"

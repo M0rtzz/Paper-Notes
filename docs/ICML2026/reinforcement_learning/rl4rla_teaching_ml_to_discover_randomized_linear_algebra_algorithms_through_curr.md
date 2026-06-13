@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RL4RLA: Teaching ML to Discover Randomized Linear Algebra Algorithms Through Curriculum Design and Graph-Based Search
 description: >-
-  [ICML 2026][强化学习][课程学习] RL4RLA 用"难度递增的数值课程 + 蒙特卡洛图搜索 (MCGS)"驱动一个 RL agent 从线性代数原语里组合出可解释的随机数值线性代数 (RLA) 算法…
+  [ICML 2026][强化学习][课程学习] RL4RLA 用"难度递增的数值课程 + 蒙特卡洛图搜索 (MCGS)"驱动一个 RL agent 从线性代数原语里组合出可解释的随机数值线性代数 (RLA) 算法，成功重现了 Sketch-and-Precondition、Randomized Kaczmarz、Newton Sketch 等经典方法。
 tags:
   - "ICML 2026"
   - "强化学习"

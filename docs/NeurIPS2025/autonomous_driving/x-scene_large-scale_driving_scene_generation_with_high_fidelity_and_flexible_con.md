@@ -2,7 +2,7 @@
 title: >-
   [论文解读] X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability
 description: >-
-  [NeurIPS 2025][自动驾驶][大规模场景生成] 提出 X-Scene，一个统一的大规模驾驶场景生成框架，支持从高层文本提示到底层 BEV 布局的多粒度控制，通过联合生成 3D 语义 occupancy、多视图图像和视频，并利用一致性感知外推实现大规模场景扩展…
+  [NeurIPS 2025][自动驾驶][大规模场景生成] 提出 X-Scene，一个统一的大规模驾驶场景生成框架，支持从高层文本提示到底层 BEV 布局的多粒度控制，通过联合生成 3D 语义 occupancy、多视图图像和视频，并利用一致性感知外推实现大规模场景扩展，在生成质量（FID 11.29）和下游任务上全面超越现有方法。
 tags:
   - "NeurIPS 2025"
   - "自动驾驶"

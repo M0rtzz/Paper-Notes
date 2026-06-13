@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QAEncoder: Towards Aligned Representation Learning in Question Answering Systems
 description: >-
-  [ACL 2025][自监督学习][document-query alignment] 提出 QAEncoder，一种免训练方法通过蒙特卡洛采样估计文档对应查询的期望嵌入作为文档表示的代理，配合文档指纹保持区分性，在 BEIR 上将 bge-large 从 58.5 提升到 61.8 NDCG@10…
+  [ACL 2025][自监督学习][document-query alignment] 提出 QAEncoder，一种免训练方法通过蒙特卡洛采样估计文档对应查询的期望嵌入作为文档表示的代理，配合文档指纹保持区分性，在 BEIR 上将 bge-large 从 58.5 提升到 61.8 NDCG@10，零额外存储和延迟开销。
 tags:
   - "ACL 2025"
   - "自监督学习"

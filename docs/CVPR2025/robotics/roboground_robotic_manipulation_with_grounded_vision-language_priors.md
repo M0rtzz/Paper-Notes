@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RoboGround: Robotic Manipulation with Grounded Vision-Language Priors
 description: >-
-  [CVPR 2025][机器人][视觉语言接地] 提出 RoboGround，一个两阶段框架：先用 Grounded VLM（GLaMM）从图像和文本指令中生成目标物体和放置区域的分割掩码，再通过 Grounded Perceiver 将掩码作为中间表示引导机器人策略网络执行操作…
+  [CVPR 2025][机器人][视觉语言接地] 提出 RoboGround，一个两阶段框架：先用 Grounded VLM（GLaMM）从图像和文本指令中生成目标物体和放置区域的分割掩码，再通过 Grounded Perceiver 将掩码作为中间表示引导机器人策略网络执行操作，在复杂语义操作任务上实现 60-100% 的相对提升。
 tags:
   - "CVPR 2025"
   - "机器人"

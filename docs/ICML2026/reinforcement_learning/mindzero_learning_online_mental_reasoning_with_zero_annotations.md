@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MindZero: Learning Online Mental Reasoning with Zero Annotations
 description: >-
-  [ICML2026][强化学习][心智推理] MindZero 把贝叶斯逆向规划改写成一个对多模态 LLM 的「自监督 RL」目标——奖励模型生成的心智假设使观察到的人类动作似然最大，再用 GRPO 训练，使小模型在不需要任何心智标注的前提下实现单次前向、快速且鲁棒的在线心智推理。
+  [ICML2026][强化学习][心智推理] MindZero 把贝叶斯逆向规划改写成一个对多模态 LLM 的「自监督 RL」目标——奖励模型生成的心智假设使观察到的人类动作似然最大，再用 GRPO 训练，使小模型在不需要任何心智标注的前提下实现单次前向、快速且鲁棒的在线心智推理。 领域现状：要让 AI 在真实环境里主动协助…
 tags:
   - "ICML2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Language Models Create Cross-Modal Task Representations
 description: >-
-  [ICML 2025][多模态VLM][任务向量] 本文发现自回归视觉语言模型（VLMs）会将概念上等价的输入（不论是文本还是图像示例、指令还是少样本）压缩为共享的"任务向量"，并通过跨模态 patching 实验验证了这种表征对齐的存在和实用性。
+  [ICML 2025][多模态VLM][任务向量] 本文发现自回归视觉语言模型（VLMs）会将概念上等价的输入（不论是文本还是图像示例、指令还是少样本）压缩为共享的"任务向量"，并通过跨模态 patching 实验验证了这种表征对齐的存在和实用性。 领域现状： 自回归 VLMs（如 Idefics2、LLaVA 等）可以在单…
 tags:
   - "ICML 2025"
   - "多模态VLM"

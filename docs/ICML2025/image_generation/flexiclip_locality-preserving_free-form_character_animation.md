@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlexiClip: Locality-Preserving Free-Form Character Animation
 description: >-
-  [图像生成] FlexiClip 提出了一种基于时域Jacobian校正、概率流ODE连续时间建模和GFlowNet流匹配损失的剪贴画动画框架，在保持视觉一致性的同时显著提升了动画的时间平滑性和几何完整性。
+  [图像生成] FlexiClip 提出了一种基于时域Jacobian校正、概率流ODE连续时间建模和GFlowNet流匹配损失的剪贴画动画框架，在保持视觉一致性的同时显著提升了动画的时间平滑性和几何完整性。 将静态剪贴画（clipart）转化为流畅动画是计算机图形学中的经典难题。现有方法面临两大核心挑战： 时间不一致性：An…
 tags:
   - "图像生成"
 ---

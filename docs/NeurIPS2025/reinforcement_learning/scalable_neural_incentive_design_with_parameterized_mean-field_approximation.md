@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Neural Incentive Design with Parameterized Mean-Field Approximation
 description: >-
-  [NeurIPS 2025][强化学习][incentive design] 提出 AMID 算法，将多智能体激励设计（ID）问题形式化为参数化平均场博弈（PMFG），证明有限$N$智能体目标以$\mathscr{O}(1/\sqrt{N})$速率逼近无限种群极限，在多种拍卖场景大幅提升收益。
+  [NeurIPS 2025][强化学习][incentive design] 提出 AMID 算法，将多智能体激励设计（ID）问题形式化为参数化平均场博弈（PMFG），证明有限$N$智能体目标以$\mathscr{O}(1/\sqrt{N})$速率逼近无限种群极限，在多种拍卖场景大幅提升收益。 领域现状：激励设计（Incen…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

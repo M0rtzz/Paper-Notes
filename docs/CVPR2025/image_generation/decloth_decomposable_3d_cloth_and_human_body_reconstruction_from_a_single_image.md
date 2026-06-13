@@ -2,15 +2,15 @@
 title: >-
   [论文解读] DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image
 description: >-
-  [CVPR 2025][图像生成][3D服装重建] 提出 DeClotH，用 DMTet 表示+3D 模板正则化（SMPLicit/SMPL）分别重建服装和人体，并训练 ClothDiffusion（ControlNet 微调）生成纯服装图像作为 SDS 损失指导…
+  [CVPR 2025][图像生成][3D服装重建] 提出 DeClotH，从单张图像分别重建可分解的3D服装和人体mesh——利用3D模板(SMPLicit+SMPL)作为几何先验缓解遮挡问题，并训练专用的 ClothDiffusion 提供服装特定的纹理/几何指导。 1. 领域现状：基于扩散模型的3D穿衣人体重建（SiTH…
 tags:
   - "CVPR 2025"
   - "图像生成"
   - "3D服装重建"
   - "人体重建"
+  - "可分解"
   - "模板正则化"
-  - "DMTet"
-  - "扩散模型"
+  - "服装扩散模型"
 ---
 
 # DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image
@@ -115,3 +115,19 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 两个数据集+定量定性评估+消融
 - 写作质量: ⭐⭐⭐⭐ pipeline描述清晰
 - 价值: ⭐⭐⭐⭐ 对虚拟试穿、AR/VR有实际应用价值
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Visual Persona: Foundation Model for Full-Body Human Customization](visual_persona_foundation_model_for_full-body_human_customization.md)
+- [\[CVPR 2025\] DiffLocks: Generating 3D Hair from a Single Image using Diffusion Models](difflocks_generating_3d_hair_from_a_single_image_using_diffusion_models.md)
+- [\[NeurIPS 2025\] GeneMAN: Generalizable Single-Image 3D Human Reconstruction from Multi-Source Human Data](../../NeurIPS2025/image_generation/geneman_generalizable_single-image_3d_human_reconstruction_from_multi-source_hum.md)
+- [\[ICCV 2025\] DPoser-X: Diffusion Model as Robust 3D Whole-Body Human Pose Prior](../../ICCV2025/image_generation/dposer-x_diffusion_model_as_robust_3d_whole-body_human_pose_prior.md)
+- [\[CVPR 2025\] InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing](interedit_navigating_text-guided_multi-human_3d_motion_editing.md)
+
+</div>
+
+<!-- RELATED:END -->

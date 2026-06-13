@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Dissecting Multimodal In-Context Learning: Modality Asymmetries and Circuit Dynamics in modern Transformers
 description: >-
-  [ICML 2026][可解释性][多模态 ICL] 作者用可控的两层 Transformer + 合成 GMM 数据系统拆解了多模态 in-context learning 的训练数据条件与注意力电路，发现一个"主-次模态非对称"现象：在高多样性主模态上预训练后…
+  [ICML 2026 Spotlight][可解释性][多模态 ICL] 作者用可控的两层 Transformer + 合成 GMM 数据系统拆解了多模态 in-context learning 的训练数据条件与注意力电路，发现一个"主-次模态非对称"现象：在高多样性主模态上预训练后，次模态只需极低数据复杂度就能解锁多模态 ICL，并通过 head knockout 在 Qwen2.5-VL-3B 上验证了"induction head 主导多模态 ICL、多模态训练只是 refine 而非重建"的电路图景。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "可解释性"
   - "多模态 ICL"
   - "induction head"

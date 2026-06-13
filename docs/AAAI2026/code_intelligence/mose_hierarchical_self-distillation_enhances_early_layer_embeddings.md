@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoSE: Hierarchical Self-Distillation Enhances Early Layer Embeddings
 description: >-
-  [AAAI 2026][代码智能][自蒸馏] 提出 ModularStarEncoder（MoSE），一个 10 亿参数的多出口编码器，通过新颖的自蒸馏机制（高层引导低层训练）显著增强早期层表示，在 CodeSearchNet 等代码理解任务上超越所有开源模型，同时支持灵活的计算-精度权衡部署。
+  [AAAI 2026][代码智能][自蒸馏] 提出 ModularStarEncoder（MoSE），一个 10 亿参数的多出口编码器，通过新颖的自蒸馏机制（高层引导低层训练）显著增强早期层表示，在 CodeSearchNet 等代码理解任务上超越所有开源模型，同时支持灵活的计算-精度权衡部署。 领域现状 大语言模型在 NL…
 tags:
   - "AAAI 2026"
   - "代码智能"

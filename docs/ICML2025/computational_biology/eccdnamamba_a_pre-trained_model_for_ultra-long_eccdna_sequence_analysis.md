@@ -2,7 +2,7 @@
 title: >-
   [论文解读] eccDNAMamba: A Pre-Trained Model for Ultra-Long eccDNA Sequence Analysis
 description: >-
-  [ICML 2025][计算生物][染色体外环状DNA] eccDNAMamba 是首个面向环状DNA的双向状态空间编码器，结合BPE分词、环状数据增强和SpanBERT式预训练，在保持线性时间复杂度的同时支持高达200Kbp的超长eccDNA序列建模…
+  [ICML 2025][计算生物][染色体外环状DNA] eccDNAMamba 是首个面向环状DNA的双向状态空间编码器，结合BPE分词、环状数据增强和SpanBERT式预训练，在保持线性时间复杂度的同时支持高达200Kbp的超长eccDNA序列建模，在癌症分类和真实eccDNA识别任务上显著超越DNABERT-2、HyenaDNA和Caduceus。
 tags:
   - "ICML 2025"
   - "计算生物"

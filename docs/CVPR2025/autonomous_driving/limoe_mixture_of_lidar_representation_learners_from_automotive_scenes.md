@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LiMoE: Mixture of LiDAR Representation Learners from Automotive Scenes
 description: >-
-  [CVPR 2025][自动驾驶][LiDAR自监督] 提出 LiMoE，通过混合专家（MoE）机制融合三种互补的 LiDAR 表示（距离图/稀疏体素/原始点云），三阶段训练（图像→LiDAR 预训练 → 对比混合学习 → 语义混合监督），在 nuScenes 分割上达到 51.4% mIoU…
+  [CVPR 2025][自动驾驶][LiDAR自监督] 提出 LiMoE，通过混合专家（MoE）机制融合三种互补的 LiDAR 表示（距离图/稀疏体素/原始点云），三阶段训练（图像→LiDAR 预训练 → 对比混合学习 → 语义混合监督），在 nuScenes 分割上达到 51.4% mIoU，跨域泛化到 7 个数据集。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

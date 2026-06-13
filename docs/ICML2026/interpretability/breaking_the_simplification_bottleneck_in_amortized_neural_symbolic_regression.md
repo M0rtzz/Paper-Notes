@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Breaking the Simplification Bottleneck in Amortized Neural Symbolic Regression
 description: >-
-  [ICML 2026][可解释性][符号回归] 提出 SimpliPy（基于规则的化简引擎，比 SymPy 快 100 倍）和 Flash-ANSR（基于 Transformer 的摊销符号回归框架），在 FastSRB 基准上以 ~58% 的恢复率匹敌甚至超越遗传编程方法 PySR…
+  [ICML 2026][可解释性][符号回归] 提出 SimpliPy（基于规则的化简引擎，比 SymPy 快 100 倍）和 Flash-ANSR（基于 Transformer 的摊销符号回归框架），在 FastSRB 基准上以 ~58% 的恢复率匹敌甚至超越遗传编程方法 PySR，同时随推理预算增加生成更简洁的表达式。
 tags:
   - "ICML 2026"
   - "可解释性"

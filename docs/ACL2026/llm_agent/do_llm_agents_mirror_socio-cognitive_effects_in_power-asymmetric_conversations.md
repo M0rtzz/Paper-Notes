@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do LLM Agents Mirror Socio-Cognitive Effects in Power-Asymmetric Conversations?
 description: >-
-  [ACL2026][LLM Agent][权力不对称] 这篇论文用职业角色和 persona 模拟权力不对称对话，发现 LLM agent 会复现代词使用、语言协调、权威说服和有害服从等社会认知效应，其中一些效应提升对话真实感，另一些则带来安全风险。
+  [ACL2026][LLM Agent][权力不对称] 这篇论文用职业角色和 persona 模拟权力不对称对话，发现 LLM agent 会复现代词使用、语言协调、权威说服和有害服从等社会认知效应，其中一些效应提升对话真实感，另一些则带来安全风险。 领域现状：LLM agent 正在被用于医疗、教育、法律、金融咨询等高风险…
 tags:
   - "ACL2026"
   - "LLM Agent"

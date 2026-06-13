@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Amortized Sampling with Transferable Normalizing Flows
 description: >-
-  [NeurIPS 2025][计算生物][normalizing flow] 提出 Prose——一个 285M 参数的全原子可迁移归一化流，基于 TarFlow 架构训练在 21,700 个短肽 MD 轨迹上（总计 4.3ms 模拟时长），实现对任意短肽系统的零样本无相关性提议采样…
+  [NeurIPS 2025][计算生物][normalizing flow] 提出 Prose——一个 285M 参数的全原子可迁移归一化流，基于 TarFlow 架构训练在 21,700 个短肽 MD 轨迹上（总计 4.3ms 模拟时长），实现对任意短肽系统的零样本无相关性提议采样，在能量评估预算相同时超越 MD 基线，生成速度比之前的可迁移玻尔兹曼生成器 (TBG) 快 4000 倍。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

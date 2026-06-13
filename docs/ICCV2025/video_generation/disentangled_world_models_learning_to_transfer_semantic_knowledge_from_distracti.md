@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangled World Models: Learning to Transfer Semantic Knowledge from Distracting Videos for Reinforcement Learning
 description: >-
-  [ICCV 2025][视频生成][视觉强化学习] 提出DisWM框架，通过从"干扰视频"中预训练解纠缠表示，然后通过离线到在线的潜空间蒸馏将语义知识迁移到下游世界模型，提升视觉强化学习在环境变化下的样本效率和鲁棒性。
+  [ICCV 2025][视频生成][视觉强化学习] 提出DisWM框架，通过从"干扰视频"中预训练解纠缠表示，然后通过离线到在线的潜空间蒸馏将语义知识迁移到下游世界模型，提升视觉强化学习在环境变化下的样本效率和鲁棒性。 核心矛盾 核心矛盾：领域现状：视觉强化学习（VRL）在实际场景中面临严峻挑战：环境的复杂性、易变性和视觉干…
 tags:
   - "ICCV 2025"
   - "视频生成"

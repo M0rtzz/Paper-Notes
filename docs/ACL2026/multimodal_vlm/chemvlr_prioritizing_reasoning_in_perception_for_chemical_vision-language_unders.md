@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ChemVLR: Prioritizing Reasoning in Perception for Chemical Vision-Language Understanding
 description: >-
-  [ACL 2026][多模态VLM][化学视觉理解] 提出 ChemVLR，首个化学领域推理型 VLM，通过跨模态逆向工程策略构建 760K 推理数据集，结合持续预训练-SFT-RL 三阶段训练流程，在分子识别和反应预测任务上显著超越专有模型和领域专家 VLM。
+  [ACL 2026 Findings][多模态VLM][化学视觉理解] 提出 ChemVLR，首个化学领域推理型 VLM，通过跨模态逆向工程策略构建 760K 推理数据集，结合持续预训练-SFT-RL 三阶段训练流程，在分子识别和反应预测任务上显著超越专有模型和领域专家 VLM。 领域现状：化学领域的 VLM（如 ChemV…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "化学视觉理解"
   - "推理VLM"

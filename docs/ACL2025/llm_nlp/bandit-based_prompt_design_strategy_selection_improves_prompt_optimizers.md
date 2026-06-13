@@ -2,10 +2,10 @@
 title: >-
   [论文解读] OPTS: Bandit-Based Prompt Design Strategy Selection Improves Prompt Optimizers
 description: >-
-  [ACL 2025][LLM/NLP][提示学习] 首次提出 prompt 设计策略的显式选择机制 OPTS，将 11 种策略（CoT、角色提示、情感提示等）建模为多臂老虎机的臂，用 Thompson 采样自动选择最合适的策略并集成到 EvoPrompt 优化器中…
+  [ACL 2025][LLM 其他][提示学习] 首次提出 prompt 设计策略的显式选择机制 OPTS，将 11 种策略（CoT、角色提示、情感提示等）建模为多臂老虎机的臂，用 Thompson 采样自动选择最合适的策略并集成到 EvoPrompt 优化器中，在 BIG-Bench Hard 的 23 个任务上用 GPT-4o mini 实现最高 50% 的性能提升。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "提示学习"
   - "Thompson采样"
   - "多臂老虎机"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Reproduction: A Paired-Task Framework for Assessing LLM Comprehension and Creativity in Literary Translation
 description: >-
-  [ACL 2026][LLM评测][文学翻译] 提出配对任务框架联合评估 LLM 的文学文本理解能力和翻译创造力，基于 11 本英文经典小说对 23 个模型进行大规模测评，发现强理解力并不能转化为人类水平的翻译创造力。
+  [ACL 2026 Findings][LLM评测][文学翻译] 提出配对任务框架联合评估 LLM 的文学文本理解能力和翻译创造力，基于 11 本英文经典小说对 23 个模型进行大规模测评，发现强理解力并不能转化为人类水平的翻译创造力。 领域现状：LLM 日益用于文学翻译等创造性任务，部分研究甚至宣称达到了人类水平。然而…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "文学翻译"
   - "翻译创造力"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Do Vision Models Perceive Illusory Motion in Static Images Like Humans?
 description: >-
-  [CVPR 2026][运动错觉] 本文系统评估了多种光流模型在旋转蛇等静态图像运动错觉上的表现，发现仅人类启发的Dual-Channel模型在模拟眼跳条件下能再现人类感知的旋转运动。
+  [CVPR 2026 Findings][运动错觉] 本文系统评估了多种光流模型在旋转蛇等静态图像运动错觉上的表现，发现仅人类启发的Dual-Channel模型在模拟眼跳条件下能再现人类感知的旋转运动。 领域现状：DNN在光流估计基准上已超越人类，但在鲁棒性上仍有差距。视觉运动错觉为探测人机差异提供了有力工具…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "运动错觉"
   - "光流模型"
   - "人类视觉"

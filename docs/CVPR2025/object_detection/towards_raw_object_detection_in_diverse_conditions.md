@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards RAW Object Detection in Diverse Conditions
 description: >-
-  [CVPR 2025][目标检测][RAW图像检测] 提出 AODRaw 数据集（7,785张高分辨率真实RAW图像，62类，9种光照/天气条件），并通过RAW域预训练+跨域蒸馏方案，无需ISP模块即可在多种恶劣条件下实现优异的RAW目标检测性能。
+  [CVPR 2025][目标检测][RAW图像检测] 提出 AODRaw 数据集（7,785张高分辨率真实RAW图像，62类，9种光照/天气条件），并通过RAW域预训练+跨域蒸馏方案，无需ISP模块即可在多种恶劣条件下实现优异的RAW目标检测性能。 - 现有目标检测方法主要基于 sRGB 图像，而 sRGB 图像是从 RAW…
 tags:
   - "CVPR 2025"
   - "目标检测"

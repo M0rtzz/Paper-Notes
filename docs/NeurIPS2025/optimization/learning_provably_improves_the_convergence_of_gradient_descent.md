@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Provably Improves the Convergence of Gradient Descent
 description: >-
-  [NeurIPS 2025][优化/理论][Learn to Optimize] 首次严格证明了基于unrolling的Learn to Optimize (L2O)框架（Math-L2O）的训练收敛性，利用NTK理论建立了线性收敛速率，并提出确定性初始化策略确保L2O可证明地改善梯度下降算法的收敛性能…
+  [NeurIPS 2025][优化/理论][Learn to Optimize] 首次严格证明了基于unrolling的Learn to Optimize (L2O)框架（Math-L2O）的训练收敛性，利用NTK理论建立了线性收敛速率，并提出确定性初始化策略确保L2O可证明地改善梯度下降算法的收敛性能，实验验证相比标准GD提升超50%的最优性。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

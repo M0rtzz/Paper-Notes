@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Internalizing Safety Understanding in Large Reasoning Models via Verification
 description: >-
-  [ICML 2026][LLM推理][安全对齐] 本文论证「会生成安全答案」≠「懂安全」，提出 SInternal 框架：只训练大型推理模型去 verify 自己生成答案的安全性，由此涌现的内在安全理解大幅压制 jailbreak 攻击（StrongREJECT ASR 从 41% 降到 0.6%）并成为后续…
+  [ICML 2026][LLM推理][安全对齐] 本文论证「会生成安全答案」≠「懂安全」，提出 SInternal 框架：只训练大型推理模型去 verify 自己生成答案的安全性，由此涌现的内在安全理解大幅压制 jailbreak 攻击（StrongREJECT ASR 从 41% 降到 0.6%）并成为后续 RL 的更好起点。
 tags:
   - "ICML 2026"
   - "LLM推理"

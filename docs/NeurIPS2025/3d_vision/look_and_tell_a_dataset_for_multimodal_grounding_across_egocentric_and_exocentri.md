@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Look and Tell: A Dataset for Multimodal Grounding Across Egocentric and Exocentric Views
 description: >-
-  [NeurIPS 2025][3D视觉][多模态定位] Look and Tell 构建了一个多模态数据集，在厨房场景中使用 Meta Aria 智能眼镜和固定 GoPro 摄像头同步采集 25 名参与者的注视、语音和双视角视频，结合 3D 场景重建和多层级标注流水线…
+  [NeurIPS 2025][3D视觉][多模态定位] Look and Tell 构建了一个多模态数据集，在厨房场景中使用 Meta Aria 智能眼镜和固定 GoPro 摄像头同步采集 25 名参与者的注视、语音和双视角视频，结合 3D 场景重建和多层级标注流水线，提供了首个跨第一人称/第三人称视角的指称交际研究基准。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

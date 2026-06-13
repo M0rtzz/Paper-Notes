@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScaleBox: Enabling High-Fidelity and Scalable Code Verification for Large Language Models
 description: >-
-  [ACL2026][LLM评测][代码沙箱] ScaleBox 通过自动 special judge 合成、统一验证流程和分布式细粒度并行，提高 LLM 代码训练与评测中的验证精度和吞吐，并在 LiveCodeBench RLVR 实验中带来更稳定的 Pass@1 提升。
+  [ACL2026][LLM评测][代码沙箱] ScaleBox 通过自动 special judge 合成、统一验证流程和分布式细粒度并行，提高 LLM 代码训练与评测中的验证精度和吞吐，并在 LiveCodeBench RLVR 实验中带来更稳定的 Pass@1 提升。 领域现状：代码能力是当前 LLM 训练和评测的重要方…
 tags:
   - "ACL2026"
   - "LLM评测"

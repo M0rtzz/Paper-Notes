@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from Neighbors: Category Extrapolation for Long-Tail Learning
 description: >-
-  [CVPR 2025][社会计算][长尾学习] 发现更细粒度的类别划分天然减轻长尾不平衡的影响，提出用 LLM 发现与现有类别相关的细粒度辅助类 + 网络爬虫收集图像 + 邻近静默损失防止辅助类喧宾夺主，在 ImageNet-LT 上 Few 类提升 16 个百分点（41.4→57.4）。
+  [CVPR 2025][社会计算][长尾学习] 发现更细粒度的类别划分天然减轻长尾不平衡的影响，提出用 LLM 发现与现有类别相关的细粒度辅助类 + 网络爬虫收集图像 + 邻近静默损失防止辅助类喧宾夺主，在 ImageNet-LT 上 Few 类提升 16 个百分点（41.4→57.4）。 领域现状：长尾学习中少数类（头部）…
 tags:
   - "CVPR 2025"
   - "社会计算"

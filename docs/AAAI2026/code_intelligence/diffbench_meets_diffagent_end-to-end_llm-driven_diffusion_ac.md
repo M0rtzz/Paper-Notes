@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffBench Meets DiffAgent: End-to-End LLM-Driven Diffusion Acceleration Code Generation
 description: >-
-  [AAAI 2026][代码智能][LLM Agent] 提出DiffBench（604个扩散模型加速任务的评估基准，分5个难度等级）和DiffAgent（集成规划-编码-调试三Agent + 遗传算法选择器的闭环框架）…
+  [AAAI 2026][代码智能][LLM Agent] 提出DiffBench（604个扩散模型加速任务的评估基准，分5个难度等级）和DiffAgent（集成规划-编码-调试三Agent + 遗传算法选择器的闭环框架），在Claude Sonnet 4上将扩散加速代码生成通过率从54.30%提升到81.59%，复杂优化任务达成率68.27%。
 tags:
   - "AAAI 2026"
   - "代码智能"

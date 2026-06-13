@@ -2,10 +2,10 @@
 title: >-
   [论文解读] 结构化广义线性 token mixing：用 SND + Kronecker 在复杂度与表达力之间换挡
 description: >-
-  [ICML 2026][LLM/NLP][token mixing] 论文提出统一的"直接输入混合 $\mathbf{A}$ + 输出递归混合 $\mathbf{B}$"框架 $Y = (I - B)^{-1} A X$ 涵盖 attention/SSM/linear recurrence/高阶递归…
+  [ICML 2026][LLM 其他][token mixing] 论文提出统一的"直接输入混合 $\mathbf{A}$ + 输出递归混合 $\mathbf{B}$"框架 $Y = (I - B)^{-1} A X$ 涵盖 attention/SSM/linear recurrence/高阶递归，证明 sparsity pattern of $A, B$ 直接控制 $\mathcal{O}(n^{\log n})$ 到 $\mathcal{O}(n^2)$ 的复杂度梯度，提出 $f(k) = 2^k$ 和 $f(k) = k^2+1$ 两种 translation-invariant 模式给出 $\mathcal{O}(n \lo…
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "token mixing"
   - "注意力机制"
   - "SSM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPSeg: Dual-Prompt Cost Volume Learning for Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇分割] DPSeg 提出在开放词汇语义分割中同时利用文本提示和 Stable Diffusion 生成的视觉提示来构建双提示代价体积，通过多尺度视觉代价体积引导解码器和两轮推理的语义精炼策略，在 5 个公开数据集上全面超越现有方法。
+  [CVPR 2025][语义分割][开放词汇分割] DPSeg 提出在开放词汇语义分割中同时利用文本提示和 Stable Diffusion 生成的视觉提示来构建双提示代价体积，通过多尺度视觉代价体积引导解码器和两轮推理的语义精炼策略，在 5 个公开数据集上全面超越现有方法。 领域现状：开放词汇语义分割（OVSS）旨在对包含…
 tags:
   - "CVPR 2025"
   - "语义分割"

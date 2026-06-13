@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization
 description: >-
-  [AAAI 2026][DCOP] 针对 GDBA 在一般值域 DCOP 上表现不佳的问题，本文系统分析了三大病因（过于激进的违反条件、无界惩罚累积、不协调的惩罚更新），提出了 DGLS 框架，通过自适应违反条件、蒸发机制和同步方案全面释放引导式局部搜索的性能，在多种标准基准上大幅超越 SOTA。
+  [AAAI 2026][DCOP] 针对 GDBA 在一般值域 DCOP 上表现不佳的问题，本文系统分析了三大病因（过于激进的违反条件、无界惩罚累积、不协调的惩罚更新），提出了 DGLS 框架，通过自适应违反条件、蒸发机制和同步方案全面释放引导式局部搜索的性能，在多种标准基准上大幅超越 SOTA。 分布式约束优化问题（DCO…
 tags:
   - "AAAI 2026"
   - "DCOP"

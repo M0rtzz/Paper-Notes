@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Prompt Fits All: Universal Graph Adaptation for Pretrained Models
 description: >-
-  [NeurIPS 2025][预训练][提示学习] 理论证明表示级图提示（representation-level prompt）本质等价于线性探针，据此提出 UniPrompt——基于可学习 kNN 拓扑提示图的输入级方法，通过 bootstrapping 策略融合提示图和原图…
+  [NeurIPS 2025][预训练][提示学习] 理论证明表示级图提示（representation-level prompt）本质等价于线性探针，据此提出 UniPrompt——基于可学习 kNN 拓扑提示图的输入级方法，通过 bootstrapping 策略融合提示图和原图，在同域和跨域 few-shot 节点分类中一致超越现有图提示学习方法。
 tags:
   - "NeurIPS 2025"
   - "预训练"

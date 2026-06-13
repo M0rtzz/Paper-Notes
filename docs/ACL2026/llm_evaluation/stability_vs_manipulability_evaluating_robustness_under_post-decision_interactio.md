@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stability vs. Manipulability: Evaluating Robustness Under Post-Decision Interaction in LLM Judges
 description: >-
-  [ACL2026][LLM评测][LLM 评估] 本文揭示了 LLM 评估器的关键脆弱性：虽然在重复评估下高度稳定，但在后续对话质询下会产生大幅反转（49% 翻转率，权威框架下 74%），表明稳定性不等于鲁棒性，且置信度无法预测真实可靠性。
+  [ACL2026][LLM评测][LLM 评估] 本文揭示了 LLM 评估器的关键脆弱性：虽然在重复评估下高度稳定，但在后续对话质询下会产生大幅反转（49% 翻转率，权威框架下 74%），表明稳定性不等于鲁棒性，且置信度无法预测真实可靠性。 领域现状：LLM-as-judge 范式已成为基准测试的主流…
 tags:
   - "ACL2026"
   - "LLM评测"

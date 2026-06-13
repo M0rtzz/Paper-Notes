@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Relational Reasoning in LLMs with REL
 description: >-
-  [ICML 2026][LLM推理][关系复杂度] 作者把认知科学里的"关系复杂度"（Relational Complexity, RC）—— 即一次推理步骤里必须同时绑定的独立变量数 —— 作为衡量任务难度的统一坐标轴，构建了横跨代数 / 生物 / 化学三个学科的生成式 benchmark REL…
+  [ICML 2026][LLM推理][关系复杂度] 作者把认知科学里的"关系复杂度"（Relational Complexity, RC）—— 即一次推理步骤里必须同时绑定的独立变量数 —— 作为衡量任务难度的统一坐标轴，构建了横跨代数 / 生物 / 化学三个学科的生成式 benchmark REL，发现前沿 LLM（Claude Opus 4.5 / Gemini 3 Pro / GPT-5.2）的准确率随 RC 单调下降，且 test-time compute、ICL、外接工具都救不回来。
 tags:
   - "ICML 2026"
   - "LLM推理"

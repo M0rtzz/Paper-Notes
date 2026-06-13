@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Jigsaw++: Imagining Complete Shape Priors for Object Reassembly
 description: >-
-  [ICCV 2025][物体重组] Jigsaw++ 提出了一种基于生成模型的完整形状先验学习方法，通过"retargeting"策略将部分组装的碎片点云映射到完整物体的形状空间，与现有组装算法正交地提升重组质量。
+  [ICCV 2025][物体重组] Jigsaw++ 提出了一种基于生成模型的完整形状先验学习方法，通过"retargeting"策略将部分组装的碎片点云映射到完整物体的形状空间，与现有组装算法正交地提升重组质量。 物体重组（Object Reassembly）广泛应用于数字考古、机器人家具组装和骨骼修复等场景…
 tags:
   - "ICCV 2025"
   - "物体重组"

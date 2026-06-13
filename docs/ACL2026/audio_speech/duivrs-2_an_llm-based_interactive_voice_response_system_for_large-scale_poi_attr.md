@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DuIVRS-2: An LLM-based Interactive Voice Response System for Large-scale POI Attribute Acquisition
 description: >-
-  [ACL 2026][音频/语音][IVR] DuIVRS-2 将百度地图大规模 POI 属性采集的模块化电话 IVR 系统改造成 LLM 驱动的端到端对话系统，通过 FSM 数据增强、选择式生成和双评估器迭代学习，在生产中达到 83.9% TSR、130ms 平均响应和每天 0.4M 通话能力。
+  [ACL 2026][音频/语音][IVR] DuIVRS-2 将百度地图大规模 POI 属性采集的模块化电话 IVR 系统改造成 LLM 驱动的端到端对话系统，通过 FSM 数据增强、选择式生成和双评估器迭代学习，在生产中达到 83.9% TSR、130ms 平均响应和每天 0.4M 通话能力。 领域现状：地图服务需要持续…
 tags:
   - "ACL 2026"
   - "音频/语音"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] From Lists to Emojis: How Format Bias Affects Model Alignment
 description: >-
-  [ACL 2025][RLHF] 本文系统研究了 RLHF 中偏好模型（包括人类评估者、GPT-4 和开源模型）对粗体、列表、emoji 等格式模式的偏好偏差，展示了不到 1% 的偏差数据即可显著注入偏差，并提出了双头奖励模型的去偏方法。
+  [ACL 2025][LLM对齐][RLHF] 本文系统研究了 RLHF 中偏好模型（包括人类评估者、GPT-4 和开源模型）对粗体、列表、emoji 等格式模式的偏好偏差，展示了不到 1% 的偏差数据即可显著注入偏差，并提出了双头奖励模型的去偏方法。 RLHF（基于人类反馈的强化学习）已成为 LLM 训练管线中的关键技术…
 tags:
   - "ACL 2025"
+  - "LLM对齐"
   - "RLHF"
   - "格式偏差"
   - "奖励模型"

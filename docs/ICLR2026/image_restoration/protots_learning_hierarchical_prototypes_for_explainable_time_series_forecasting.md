@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProtoTS: Learning Hierarchical Prototypes for Explainable Time Series Forecasting
 description: >-
-  [ICLR 2026][图像恢复][可解释预测] 提出 ProtoTS，通过层级原型学习实现可解释时间序列预测：少量粗粒度原型提供全局模式概览，逐级细分捕捉局部变化，结合多通道嵌入与瓶颈融合处理异质外生变量。在 LOF 数据集上 MSE 降低 48.3%，MAE 降低 20.9%…
+  [ICLR 2026][图像恢复][可解释预测] 提出 ProtoTS，通过层级原型学习实现可解释时间序列预测：少量粗粒度原型提供全局模式概览，逐级细分捕捉局部变化，结合多通道嵌入与瓶颈融合处理异质外生变量。在 LOF 数据集上 MSE 降低 48.3%，MAE 降低 20.9%，且支持专家编辑原型以进一步提升性能。
 tags:
   - "ICLR 2026"
   - "图像恢复"

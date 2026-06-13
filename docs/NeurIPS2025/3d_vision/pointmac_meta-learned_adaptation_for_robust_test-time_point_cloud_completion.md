@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PointMAC: Meta-Learned Adaptation for Robust Test-Time Point Cloud Completion
 description: >-
-  [NeurIPS 2025][3D视觉][点云补全] 提出 PointMAC，首个将元辅助学习和测试时适应（TTA）引入点云补全的框架：通过 Bi-Aux Units（随机掩码重建+噪声去除）提供自监督信号，MAML 对齐辅助目标与主任务，推理时仅更新共享编码器实现样本级精化…
+  [NeurIPS 2025][3D视觉][点云补全] 提出 PointMAC，首个将元辅助学习和测试时适应（TTA）引入点云补全的框架：通过 Bi-Aux Units（随机掩码重建+噪声去除）提供自监督信号，MAML 对齐辅助目标与主任务，推理时仅更新共享编码器实现样本级精化，在合成/模拟/真实数据上达到 SOTA。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

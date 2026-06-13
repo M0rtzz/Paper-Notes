@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ALSO: Adversarial Online Strategy Optimization for Social Agents
 description: >-
-  [ICML 2026][强化学习][LLM社会智能] ALSO 把 LLM 社会智能模拟中的动态策略选择建模为对抗在线 bandit，并用轻量级奖励代理模型从对话历史中泛化稀疏反馈，在 Sotopia-Hard 上把整体分数从 3.02 提升到 3.53，尤其显著改善关系维度。
+  [ICML 2026][强化学习][LLM社会智能] ALSO 把 LLM 社会智能模拟中的动态策略选择建模为对抗在线 bandit，并用轻量级奖励代理模型从对话历史中泛化稀疏反馈，在 Sotopia-Hard 上把整体分数从 3.02 提升到 3.53，尤其显著改善关系维度。 领域现状：LLM 社会模拟通常用 person…
 tags:
   - "ICML 2026"
   - "强化学习"

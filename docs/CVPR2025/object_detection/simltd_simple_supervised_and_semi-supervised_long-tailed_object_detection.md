@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SimLTD: Simple Supervised and Semi-Supervised Long-Tailed Object Detection
 description: >-
-  [CVPR 2025][目标检测][长尾目标检测] SimLTD 提出一个简洁直观的三阶段框架——先在头部类预训练、再迁移到尾部类、最后在混合采样数据上微调——可选配合无标注图像的半监督学习，在 LVIS v1 基准上全面超越依赖 ImageNet 标签的现有方法。
+  [CVPR 2025][目标检测][长尾目标检测] SimLTD 提出一个简洁直观的三阶段框架——先在头部类预训练、再迁移到尾部类、最后在混合采样数据上微调——可选配合无标注图像的半监督学习，在 LVIS v1 基准上全面超越依赖 ImageNet 标签的现有方法。 领域现状：目标检测在 PASCAL VOC 和 MS-CO…
 tags:
   - "CVPR 2025"
   - "目标检测"

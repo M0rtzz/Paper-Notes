@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeFormer: Capturing Temporal Relationships of Deformable 3D Gaussians for Robust Reconstruction
 description: >-
-  [ICCV 2025][3D视觉][动态场景重建] 提出TimeFormer模块,通过跨时间Transformer编码器隐式学习可变形3D Gaussian的时序关系,并设计双流优化策略在训练时迁移运动知识,推理时无额外开销。
+  [ICCV 2025][3D视觉][动态场景重建] 提出TimeFormer模块,通过跨时间Transformer编码器隐式学习可变形3D Gaussian的时序关系,并设计双流优化策略在训练时迁移运动知识,推理时无额外开销。 动态场景重建中,现有方法通过变形场将3DGS扩展到动态场景,但存在关键问题:时序关系建模不足：…
 tags:
   - "ICCV 2025"
   - "3D视觉"

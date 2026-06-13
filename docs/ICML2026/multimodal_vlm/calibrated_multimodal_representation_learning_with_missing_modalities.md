@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibrated Multimodal Representation Learning with Missing Modalities
 description: >-
-  [ICML 2026][多模态VLM][多模态对齐] 针对"想用 V-T、A-T 等部分模态数据训练统一多模态对齐"这种现实场景，本文用奇异值扰动给出"缺失模态会导致 anchor shift"的理论上下界，并提出 CalMRL：用概率 PCA 风格的生成模型对缺失模态在表示层做闭式 EM 插补…
+  [ICML 2026][多模态VLM][多模态对齐] 针对"想用 V-T、A-T 等部分模态数据训练统一多模态对齐"这种现实场景，本文用奇异值扰动给出"缺失模态会导致 anchor shift"的理论上下界，并提出 CalMRL：用概率 PCA 风格的生成模型对缺失模态在表示层做闭式 EM 插补，再把观测 + 插补一起喂给 GRAM/PMRL 的 SVD 对齐目标，在 VAST 之上把跨模态平均 Recall@1 从 44.8 推到 54.2 (+9.4)。
 tags:
   - "ICML 2026"
   - "多模态VLM"

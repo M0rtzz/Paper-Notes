@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAGEval: Scenario Specific RAG Evaluation Dataset Generation Framework
 description: >-
-  [ACL 2025][信息检索/RAG][检索增强生成] RAGEval 提出了一个基于 schema 的自动化评估数据集生成框架，能够针对不同垂直领域（金融、法律、医疗等）自动生成高质量的文档-问题-答案-参考四元组…
+  [ACL 2025][信息检索/RAG][检索增强生成] RAGEval 提出了一个基于 schema 的自动化评估数据集生成框架，能够针对不同垂直领域（金融、法律、医疗等）自动生成高质量的文档-问题-答案-参考四元组，并引入完整性（Completeness）、幻觉（Hallucination）和无关性（Irrelevance）三个新评估指标来严格评估 RAG 系统的事实准确性。
 tags:
   - "ACL 2025"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning
 description: >-
-  [NeurIPS 2025][机器人][桌面场景生成] 提出 MesaTask 框架，通过 Spatial Reasoning Chain 将任务描述分解为对象推理→空间关系推理→场景图构建→3D 布局，结合 10K+ 人工标注数据集和 DPO 优化，生成物理合理且任务对齐的桌面操控场景。
+  [NeurIPS 2025][机器人][桌面场景生成] 提出 MesaTask 框架，通过 Spatial Reasoning Chain 将任务描述分解为对象推理→空间关系推理→场景图构建→3D 布局，结合 10K+ 人工标注数据集和 DPO 优化，生成物理合理且任务对齐的桌面操控场景。 领域现状：机器人操控需要多样化的桌…
 tags:
   - "NeurIPS 2025"
   - "机器人"

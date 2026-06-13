@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment
 description: >-
-  [NeurIPS 2025][强化学习][个性化对齐] 将个性化对话对齐建模为多轮马尔可夫决策过程，提出 RLPA 框架，让 LLM 通过与模拟用户的在线交互学习动态推断和维护用户画像，并据此生成个性化回复。
+  [NeurIPS 2025][强化学习][个性化对齐] 将个性化对话对齐建模为多轮马尔可夫决策过程，提出 RLPA 框架，让 LLM 通过与模拟用户的在线交互学习动态推断和维护用户画像，并据此生成个性化回复。 大语言模型的对齐技术（如 RLHF）已让模型很好地服务于"大众化"的偏好，但现实场景中每个用户的需求、目标、风格都不…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

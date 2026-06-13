@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Model-Agnostic Meta Learning for Class Imbalance Adaptation
 description: >-
-  [ACL 2026][LLM/NLP][类不平衡] 本文提出 HAMR（Hardness-Aware Meta-Resample），一个统一的元学习框架，通过双层优化动态估计实例级权重优先处理真正困难的样本，配合邻域感知重采样机制将训练焦点放在困难样本及其语义邻居上…
+  [ACL 2026 Findings][LLM 其他][类不平衡] 本文提出 HAMR（Hardness-Aware Meta-Resample），一个统一的元学习框架，通过双层优化动态估计实例级权重优先处理真正困难的样本，配合邻域感知重采样机制将训练焦点放在困难样本及其语义邻居上，在 6 个不平衡 NLP 数据集上持续超越强基线。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "类不平衡"
   - "元学习"
   - "自适应权重"

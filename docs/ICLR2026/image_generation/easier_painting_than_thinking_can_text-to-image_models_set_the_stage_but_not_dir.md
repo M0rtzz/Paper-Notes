@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Easier Painting Than Thinking: Can Text-to-Image Models Set the Stage, but Not Direct the Play?
 description: >-
-  [ICLR 2026][图像生成][T2I评测] 提出 T2I-CoReBench，首个同时系统评估 T2I 模型**组合能力**(Composition)和**推理能力**(Reasoning)的综合性基准…
+  [ICLR 2026][图像生成][T2I评测] 提出 T2I-CoReBench，首个同时系统评估 T2I 模型**组合能力**(Composition)和**推理能力**(Reasoning)的综合性基准，涵盖 12 个评估维度、1080 条高难度 prompt 和约 13500 个 checklist 问题，通过对 38 个模型的大规模评测揭示：推理能力远远落后于组合能力，是当前 T2I 生成的核心瓶颈。
 tags:
   - "ICLR 2026"
   - "图像生成"

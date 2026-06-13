@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching
 description: >-
-  [CVPR 2026][图像生成][荧光显微镜去雾] 提出 HazeMatching，一种基于引导式条件流匹配（Guided CFM）的显微图像去雾方法，通过在速度场中引入退化观测条件，在不需要显式退化算子的前提下，同时实现高数据保真度和高感知质量，并能生成校准良好的不确定性估计。
+  [CVPR 2026 Findings][图像生成][荧光显微镜去雾] 提出 HazeMatching，一种基于引导式条件流匹配（Guided CFM）的显微图像去雾方法，通过在速度场中引入退化观测条件，在不需要显式退化算子的前提下，同时实现高数据保真度和高感知质量，并能生成校准良好的不确定性估计。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "荧光显微镜去雾"
   - "条件流匹配"

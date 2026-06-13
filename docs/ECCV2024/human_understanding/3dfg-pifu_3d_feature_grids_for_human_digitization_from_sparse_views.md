@@ -2,9 +2,10 @@
 title: >-
   [论文解读] 3DFG-PIFu: 3D Feature Grids for Human Digitization from Sparse Views
 description: >-
-  [ECCV 2024][人体重建] 本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
+  [ECCV 2024][人体理解][人体重建] 本文提出 3DFG-PIFu，通过引入3D特征网格（3D Feature Grids）在整个 pipeline 中全局融合多视图特征，替代传统逐点局部融合方式，并结合迭代网格精炼机制和基于 SDF 的 SMPL-X 特征，显著超越现有稀疏视图人体数字化 SOTA 方法。
 tags:
   - "ECCV 2024"
+  - "人体理解"
   - "人体重建"
   - "多视图重建"
   - "像素对齐隐式函数"

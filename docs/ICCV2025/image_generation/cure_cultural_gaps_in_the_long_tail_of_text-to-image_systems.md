@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CURE: Cultural Gaps in the Long Tail of Text-to-Image Systems
 description: >-
-  [ICCV 2025][图像生成][文本到图像生成] 提出 CURE 基准与评分套件，利用**属性规范的边际效用**（Marginal Information Attribution）作为人类判断的代理指标，系统评估 T2I 系统在全球文化长尾分布上的代表性能力。
+  [ICCV 2025][图像生成][文本到图像生成] 提出 CURE 基准与评分套件，利用属性规范的边际效用：（Marginal Information Attribution）作为人类判断的代理指标，系统评估 T2I 系统在全球文化长尾分布上的代表性能力。 当前主流 T2I 系统（如 Stable Diffusion、FL…
 tags:
   - "ICCV 2025"
   - "图像生成"

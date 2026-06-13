@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting
 description: >-
-  [NeurIPS 2025][多智能体][多agent系统] 提出 MASFIN 多 agent 系统，将金融预测任务分解为多个子任务（宏观分析、行业分析、技术分析、情感分析等），由专门的 LLM agent 协作完成，实现比单一模型更准确和可解释的金融预测。
+  [NeurIPS 2025][多智能体][多agent系统] 提出 MASFIN 多 agent 系统，将金融预测任务分解为多个子任务（宏观分析、行业分析、技术分析、情感分析等），由专门的 LLM agent 协作完成，实现比单一模型更准确和可解释的金融预测。 领域现状：金融预测需要同时考虑宏观经济、行业趋势、技术指标、市场…
 tags:
   - "NeurIPS 2025"
   - "多智能体"

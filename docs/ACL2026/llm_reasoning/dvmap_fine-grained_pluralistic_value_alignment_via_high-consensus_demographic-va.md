@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DVMap: Fine-Grained Pluralistic Value Alignment via High-Consensus Demographic-Value Mapping
 description: >-
-  [ACL 2026][LLM推理][多元价值对齐] DVMap 把 LLM 的"多元价值对齐"从粗粒度的国家标签下沉到 11 维 demographic 属性档案，先用 Shannon 熵 = 0 的"高一致性档案"过滤出 5.6 万条 WVS 数据…
+  [ACL 2026][LLM推理][多元价值对齐] DVMap 把 LLM 的"多元价值对齐"从粗粒度的国家标签下沉到 11 维 demographic 属性档案，先用 Shannon 熵 = 0 的"高一致性档案"过滤出 5.6 万条 WVS 数据，再用 Structured CoT + GRPO（二值奖励）训练 Qwen3-8B，使其在 cross-demographic / cross-country / cross-value 三重泛化测试中超越 DeepSeek-v3.2、并和 GPT-4o 持平。
 tags:
   - "ACL 2026"
   - "LLM推理"

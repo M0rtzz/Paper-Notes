@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improve Vision Language Model Chain-of-thought Reasoning
 description: >-
-  [ACL 2025][LLM推理][Chain-of-thought] 通过(1)从GPT-4o蒸馏193K多任务CoT推理数据进行SFT，(2)利用模型自生成的推理链构建正负样本对进行DPO强化学习，显著提升VLM的链式推理能力，CoT预测平均+11.7%，同时直接回答也提升+7.3%。
+  [ACL 2025][LLM推理][Chain-of-thought] 通过(1)从GPT-4o蒸馏193K多任务CoT推理数据进行SFT，(2)利用模型自生成的推理链构建正负样本对进行DPO强化学习，显著提升VLM的链式推理能力，CoT预测平均+11.7%，同时直接回答也提升+7.3%。 领域现状：链式推理（CoT）对提升…
 tags:
   - "ACL 2025"
   - "LLM推理"

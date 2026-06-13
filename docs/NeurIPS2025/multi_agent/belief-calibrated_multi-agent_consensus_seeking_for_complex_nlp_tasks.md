@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Belief-Calibrated Multi-Agent Consensus Seeking for Complex NLP Tasks
 description: >-
-  [NeurIPS 2025][多智能体][多智能体系统] 提出 Belief-Calibrated Consensus Seeking (BCCS) 框架，通过引入信念（belief）校准的共识判断、冲突感知的协作者分配和领导者选择三个模块，让多智能体系统在复杂NLP任务上达成更稳定的共识…
+  [NeurIPS 2025][多智能体][多智能体系统] 提出 Belief-Calibrated Consensus Seeking (BCCS) 框架，通过引入信念（belief）校准的共识判断、冲突感知的协作者分配和领导者选择三个模块，让多智能体系统在复杂NLP任务上达成更稳定的共识，在 MATH 和 MMLU 上的困难任务分别提升 2.23% 和 3.95%。
 tags:
   - "NeurIPS 2025"
   - "多智能体"

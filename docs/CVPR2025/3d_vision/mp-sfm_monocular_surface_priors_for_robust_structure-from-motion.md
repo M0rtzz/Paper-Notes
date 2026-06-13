@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MP-SfM: Monocular Surface Priors for Robust Structure-from-Motion
 description: >-
-  [CVPR 2025][3D视觉][structure-from-motion] 将单目深度和法线先验紧密集成到经典增量 SfM 中，通过不确定性传播和交替优化突破三视图轨迹的根本限制，首次实现仅凭两视图轨迹的可靠 3D 重建，在极端低重叠和低视差场景下显著超越所有现有方法。
+  [CVPR 2025][3D视觉][structure-from-motion] 将单目深度和法线先验紧密集成到经典增量 SfM 中，通过不确定性传播和交替优化突破三视图轨迹的根本限制，首次实现仅凭两视图轨迹的可靠 3D 重建，在极端低重叠和低视差场景下显著超越所有现有方法。 领域现状： SfM 经过数十年发展…
 tags:
   - "CVPR 2025"
   - "3D视觉"

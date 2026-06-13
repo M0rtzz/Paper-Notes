@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ZeroStereo: Zero-shot Stereo Matching from Single Images
 description: >-
-  [ICCV2025][3D视觉][stereo matching] 提出 ZeroStereo 管线：从任意单张图像出发，利用单目深度估计生成伪视差，再用微调的扩散修复模型合成高质量右视图，实现只需 35K 合成数据即达到 SOTA 零样本立体匹配泛化性能。
+  [ICCV2025][3D视觉][stereo matching] 提出 ZeroStereo 管线：从任意单张图像出发，利用单目深度估计生成伪视差，再用微调的扩散修复模型合成高质量右视图，实现只需 35K 合成数据即达到 SOTA 零样本立体匹配泛化性能。 - 核心痛点：有监督立体匹配模型在标准基准上表现优异…
 tags:
   - "ICCV2025"
   - "3D视觉"

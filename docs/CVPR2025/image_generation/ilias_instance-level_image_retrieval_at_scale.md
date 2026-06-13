@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ILIAS: Instance-Level Image Retrieval At Scale
 description: >-
-  [CVPR 2025][图像生成][实例级检索] ILIAS 是一个包含 1000 个实例对象、1 亿干扰图像的大规模实例级图像检索测试基准，通过全面 benchmarking 揭示了当前基础模型在特定物体识别上的能力与不足，为该领域提供了一个远未饱和的评测标准。
+  [CVPR 2025][图像生成][实例级检索] ILIAS 是一个包含 1000 个实例对象、1 亿干扰图像的大规模实例级图像检索测试基准，通过全面 benchmarking 揭示了当前基础模型在特定物体识别上的能力与不足，为该领域提供了一个远未饱和的评测标准。 领域现状：实例级图像检索（Instance-Level Im…
 tags:
   - "CVPR 2025"
   - "图像生成"

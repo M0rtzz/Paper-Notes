@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Effect of Uncertainty on Layer-wise Inference Dynamics
 description: >-
-  [ICML 2025 (Actionable Interpretability Workshop)][可解释性][uncertainty] 使用 Tuned Lens 系统分析 5 个 LLM 在 11 个数据集上各层的 token 概率演化轨迹…
+  [ICML 2025 (Actionable Interpretability Workshop)][可解释性][uncertainty] 使用 Tuned Lens 系统分析 5 个 LLM 在 11 个数据集上各层的 token 概率演化轨迹，发现确定性和不确定性预测的层间推理动力学高度对齐（信心突变出现在相似的层），表明不确定性并不影响模型的推理动态结构，挑战了通过简单中间层特征检测不确定性的方法可行性。
 tags:
   - "ICML 2025 (Actionable Interpretability Workshop)"
   - "可解释性"

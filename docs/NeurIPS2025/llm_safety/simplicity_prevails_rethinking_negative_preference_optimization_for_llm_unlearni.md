@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simplicity Prevails: Rethinking Negative Preference Optimization for LLM Unlearning
 description: >-
-  [NeurIPS 2025][LLM安全][LLM unlearning] 发现 NPO（负偏好优化）中的参考模型偏差导致遗忘数据的优化功率分配不均和早期梯度权重平滑失效，提出 SimNPO 通过去除参考模型依赖并采用长度归一化奖励，在 TOFU 上将 FQ 从 0.79 提升至 0.99…
+  [NeurIPS 2025][LLM安全][LLM unlearning] 发现 NPO（负偏好优化）中的参考模型偏差导致遗忘数据的优化功率分配不均和早期梯度权重平滑失效，提出 SimNPO 通过去除参考模型依赖并采用长度归一化奖励，在 TOFU 上将 FQ 从 0.79 提升至 0.99，在所有基准上一致优于 NPO。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoArena: Evaluating Open-World Geographic Reasoning in Large Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][地理推理] 本文提出 **GeoArena**，一个面向 LVLM 开放世界地理推理的"动态、无标签、过程导向"评测平台，把 in-the-wild 图像下的地理定位评估改写为成对推理对齐任务…
+  [ACL 2026][多模态VLM][地理推理] 本文提出 **GeoArena**，一个面向 LVLM 开放世界地理推理的"动态、无标签、过程导向"评测平台，把 in-the-wild 图像下的地理定位评估改写为成对推理对齐任务，用人类偏好 + Bradley-Terry 评分对 17 个前沿 LVLM 排榜，专家-众包一致率达 78%。
 tags:
   - "ACL 2026"
   - "多模态VLM"

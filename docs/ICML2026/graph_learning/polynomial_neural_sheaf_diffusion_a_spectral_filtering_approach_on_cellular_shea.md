@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Polynomial Neural Sheaf Diffusion: A Spectral Filtering Approach on Cellular Sheaves
 description: >-
-  [ICML 2026][图学习][神经层扩散] PolyNSD 把 Sheaf 神经网络的"一步空间扩散"换成对归一化 sheaf 拉普拉斯的可学习 $K$ 阶多项式谱滤波器，用 Chebyshev 三项递推稳定计算，单层就拥有 $K$-hop 感受野和可控的低/带/高通响应…
+  [ICML 2026][图学习][神经层扩散] PolyNSD 把 Sheaf 神经网络的"一步空间扩散"换成对归一化 sheaf 拉普拉斯的可学习 $K$ 阶多项式谱滤波器，用 Chebyshev 三项递推稳定计算，单层就拥有 $K$-hop 感受野和可控的低/带/高通响应；意外的发现是只用对角 restriction maps 就能超越所有需要稠密大维 stalk 的现有 NSD，参数、显存、运行时间都大幅下降。
 tags:
   - "ICML 2026"
   - "图学习"

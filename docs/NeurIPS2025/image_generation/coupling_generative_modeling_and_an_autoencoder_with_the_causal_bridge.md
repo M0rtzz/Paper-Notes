@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coupling Generative Modeling and an Autoencoder with the Causal Bridge
 description: >-
-  [NeurIPS 2025][图像生成][causal bridge] 在存在未观测混淆因子的因果推断中，提出将生成模型与自编码器耦合来提升因果桥函数 (causal bridge) 的估计质量——通过共享编码器在处理/控制/结果变量间传递统计强度，并将框架扩展到生存分析。
+  [NeurIPS 2025][图像生成][causal bridge] 在存在未观测混淆因子的因果推断中，提出将生成模型与自编码器耦合来提升因果桥函数 (causal bridge) 的估计质量——通过共享编码器在处理/控制/结果变量间传递统计强度，并将框架扩展到生存分析。 领域现状：估计处理 (treatment) 对结果…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distilling Monocular Foundation Model for Fine-grained Depth Completion
 description: >-
-  [CVPR 2025][自动驾驶][深度补全] 本文提出DMD3C，一个两阶段知识蒸馏框架，将单目深度基础模型（如Depth Anything V2）的几何知识迁移到深度补全网络，第一阶段通过合成训练数据进行预训练，第二阶段通过尺度-偏移不变损失（SSI Loss）在真实数据上微调…
+  [CVPR 2025][自动驾驶][深度补全] 本文提出DMD3C，一个两阶段知识蒸馏框架，将单目深度基础模型（如Depth Anything V2）的几何知识迁移到深度补全网络，第一阶段通过合成训练数据进行预训练，第二阶段通过尺度-偏移不变损失（SSI Loss）在真实数据上微调，在KITTI深度补全排行榜上取得第一名。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Privacy-R1: Privacy-Aware Multi-LLM Agent Collaboration via Reinforcement Learning
 description: >-
-  [ACL 2026][LLM安全][隐私委托] Privacy-R1 将隐私敏感查询的本地/远程模型委托问题建模为逐句路由的序列决策任务，用轻量 Transformer policy + PPO 学到隐私与任务质量之间的动态折中…
+  [ACL 2026][LLM安全][隐私委托] Privacy-R1 将隐私敏感查询的本地/远程模型委托问题建模为逐句路由的序列决策任务，用轻量 Transformer policy + PPO 学到隐私与任务质量之间的动态折中，在 PUPA 和高 PII 密度的 Med-PCD 上都比静态改写方法取得更好的质量-泄露前沿。
 tags:
   - "ACL 2026"
   - "LLM安全"

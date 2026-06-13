@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enforcing Governing Equation Constraints in Neural PDE Solvers via Training-free Projections
 description: >-
-  [NeurIPS 2025][物理/科学计算][偏微分方程] 提出两种无需训练的后处理投影方法（非线性LBFGS优化和局部线性化投影），将神经PDE求解器的输出投影到满足控制方程约束的可行流形上，在Lorenz/KS/Navier-Stokes上大幅降低约束违反并提升精度…
+  [NeurIPS 2025][物理/科学计算][偏微分方程] 提出两种无需训练的后处理投影方法（非线性LBFGS优化和局部线性化投影），将神经PDE求解器的输出投影到满足控制方程约束的可行流形上，在Lorenz/KS/Navier-Stokes上大幅降低约束违反并提升精度，且效果显著优于physics-informed训练。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

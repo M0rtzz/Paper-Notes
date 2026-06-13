@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wear-Any-Way: Manipulable Virtual Try-on via Sparse Correspondence Alignment
 description: >-
-  [ECCV 2024][人体理解][虚拟试穿] 提出 Wear-Any-Way 框架，基于双 U-Net 扩散模型构建强基线实现高保真虚拟试穿，并通过稀疏对应对齐（Sparse Correspondence Alignment）引入点控制机制…
+  [ECCV 2024][人体理解][虚拟试穿] 提出 Wear-Any-Way 框架，基于双 U-Net 扩散模型构建强基线实现高保真虚拟试穿，并通过稀疏对应对齐（Sparse Correspondence Alignment）引入点控制机制，支持用户通过点击和拖拽精确操控穿着方式（如卷袖子、开合外套、塞衣角等），在标准试穿和可操控试穿两个维度均达到 SOTA。
 tags:
   - "ECCV 2024"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Slower Isn't Truer: Inverse Scaling Law of Truthfulness in Multimodal Reasoning
 description: >-
-  [ACL 2026][多模态VLM][多模态推理] 本文发现多模态推理模型的"逆缩放定律"——慢思考（reasoning）模型在面对误导性视觉输入时比快思考（chat）模型更容易产生不真实输出…
+  [ACL 2026][多模态VLM][多模态推理] 本文发现多模态推理模型的"逆缩放定律"——慢思考（reasoning）模型在面对误导性视觉输入时比快思考（chat）模型更容易产生不真实输出，并构建了 TruthfulVQA 基准（5000+ 样本、50 名标注员、三层分级提示）和 TruthfulJudge 评估模型（88.4% 准确率）来系统诊断这一现象。
 tags:
   - "ACL 2026"
   - "多模态VLM"

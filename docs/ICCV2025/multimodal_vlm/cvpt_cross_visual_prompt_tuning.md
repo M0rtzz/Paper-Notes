@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CVPT: Cross Visual Prompt Tuning
 description: >-
-  [ICCV2025][多模态VLM][提示学习] 针对 Visual Prompt Tuning (VPT) 中 prompt token 参与 self-attention 导致的计算冗余和注意力破坏问题，提出 CVPT…
+  [ICCV2025][多模态VLM][提示学习] 针对 Visual Prompt Tuning (VPT) 中 prompt token 参与 self-attention 导致的计算冗余和注意力破坏问题，提出 CVPT，通过 cross-attention 解耦 prompt 与 image token 的交互，并利用权重共享机制初始化 cross-attention，在 25 个数据集上显著超越 VPT，性能媲美主流 adapter 方法。
 tags:
   - "ICCV2025"
   - "多模态VLM"

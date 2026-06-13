@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Diffusion Pretraining for Crystal Property Prediction
 description: >-
-  [ICML2026][图像生成][晶体性质预测] CrysLDNet 把"扩散预训练"从原始晶体特征空间搬到 VAE 学到的平滑潜空间，让 PDDFormer 编码器在 38 万无标注 GNoME 晶体上学到更紧凑、更对称感知的结构语义…
+  [ICML2026][图像生成][晶体性质预测] CrysLDNet 把"扩散预训练"从原始晶体特征空间搬到 VAE 学到的平滑潜空间，让 PDDFormer 编码器在 38 万无标注 GNoME 晶体上学到更紧凑、更对称感知的结构语义，下游 JARVIS / MP 性质预测平均比强监督 SOTA 再降 4.26% / 4.90% MAE，且在低数据和实验数据校正场景下优势更大。
 tags:
   - "ICML2026"
   - "图像生成"

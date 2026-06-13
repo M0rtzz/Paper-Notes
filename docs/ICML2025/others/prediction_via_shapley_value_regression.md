@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prediction via Shapley Value Regression (ViaSHAP)
 description: >-
-  [ICML2025][Shapley值] 提出 ViaSHAP，将 Shapley 值的计算融入模型训练过程，使得推理时通过对 Shapley 值求和直接得到预测，无需后验解释器，在表格数据上达到 XGBoost 级别的预测精度，同时 Shapley 值近似质量显著优于 FastSHAP。
+  [ICML2025][Shapley值] 提出 ViaSHAP，将 Shapley 值的计算融入模型训练过程，使得推理时通过对 Shapley 值求和直接得到预测，无需后验解释器，在表格数据上达到 XGBoost 级别的预测精度，同时 Shapley 值近似质量显著优于 FastSHAP。 - 核心矛盾：Shapley 值具…
 tags:
   - "ICML2025"
   - "Shapley值"

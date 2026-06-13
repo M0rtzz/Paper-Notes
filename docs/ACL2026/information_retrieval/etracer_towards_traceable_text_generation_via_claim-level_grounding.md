@@ -2,7 +2,7 @@
 title: >-
   [论文解读] eTracer: Towards Traceable Text Generation via Claim-Level Grounding
 description: >-
-  [ACL 2026][信息检索/RAG][claim-level grounding] eTracer 把 RAG 响应拆成原子 claim 再去上下文里搜支持/反驳的句级证据，用三步流水线（分解 → 嵌入检索 → 蕴含判定）输出带符号分数矩阵…
+  [ACL 2026][信息检索/RAG][claim-level grounding] eTracer 把 RAG 响应拆成原子 claim 再去上下文里搜支持/反驳的句级证据，用三步流水线（分解 → 嵌入检索 → 蕴含判定）输出带符号分数矩阵，从而在生物医学场景下既能精确反查每条事实的出处、又能定量评估响应的忠实度。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

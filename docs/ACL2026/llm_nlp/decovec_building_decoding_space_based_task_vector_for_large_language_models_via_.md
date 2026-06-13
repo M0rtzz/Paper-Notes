@@ -2,10 +2,10 @@
 title: >-
   [论文解读] DeCoVec: Building Decoding Space based Task Vector for Large Language Models via In-Context Learning
 description: >-
-  [ACL 2026][LLM/NLP][任务向量] 提出 DeCoVec（Decoding Space based Task Vector），一个无训练、非侵入式的框架，通过对比 few-shot 和 zero-shot prompt 的输出 logit 分布差异构建解码空间中的任务向量，注入解码过程引导生成…
+  [ACL 2026 Findings][LLM 其他][任务向量] 提出 DeCoVec（Decoding Space based Task Vector），一个无训练、非侵入式的框架，通过对比 few-shot 和 zero-shot prompt 的输出 logit 分布差异构建解码空间中的任务向量，注入解码过程引导生成，在 TruthfulQA、Math-500 和 AQUA-RAT 上比标准 few-shot 基线平均提升高达 5.50 准确率。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "任务向量"
   - "解码空间"
   - "上下文学习"

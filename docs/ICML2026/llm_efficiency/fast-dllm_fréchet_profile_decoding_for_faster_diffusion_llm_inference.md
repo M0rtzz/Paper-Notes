@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference
 description: >-
-  [ICML 2026 (Workshop on Structured Probabilistic Inference & Generative Modeling)][LLM/NLP][扩散 LLM] 针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步…
+  [ICML 2026 (Workshop on Structured Probabilistic Inference & Generative Modeling)][LLM效率][扩散 LLM] 针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步并行 commit 多少 token，把 Fast-dLLM 的 factor 规则严格推广到异质置信度场景，在 LLaDA-8B 上四个基准平均吞吐 1.36×、NFE 降 29%，精度几乎不变。
 tags:
   - "ICML 2026 (Workshop on Structured Probabilistic Inference & Generative Modeling)"
-  - "LLM/NLP"
+  - "LLM效率"
   - "扩散 LLM"
   - "并行解码"
   - "Fréchet 下界"

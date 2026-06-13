@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Test-Time Training for Predicting Need for Invasive Mechanical Ventilation in Multi-Center Cohorts
 description: >-
-  [ICLR 2026][自监督学习][测试时训练] 提出AdaTTT框架，通过动态特征感知self-supervised学习（自适应掩码策略）和原型引导的部分最优传输对齐，在ICU多中心EHR数据上实现鲁棒的测试时适应，用于提前24小时预测有创机械通气需求。
+  [ICLR 2026][自监督学习][测试时训练] 提出AdaTTT框架，通过动态特征感知self-supervised学习（自适应掩码策略）和原型引导的部分最优传输对齐，在ICU多中心EHR数据上实现鲁棒的测试时适应，用于提前24小时预测有创机械通气需求。 领域现状：ICU中有创机械通气（IMV）预测对及时临床干预至关重要…
 tags:
   - "ICLR 2026"
   - "自监督学习"

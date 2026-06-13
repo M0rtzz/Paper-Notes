@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EfficientFlow: Efficient Equivariant Flow Policy Learning for Embodied AI
 description: >-
-  [AAAI 2026][图像生成][Flow Matching] 提出 EfficientFlow，将等变性引入 Flow Matching 策略学习框架，理论证明各向同性先验+等变速度网络保证动作分布等变，并提出 Flow Acceleration Upper Bound (FABO) 正则化加速采样…
+  [AAAI 2026][图像生成][Flow Matching] 提出 EfficientFlow，将等变性引入 Flow Matching 策略学习框架，理论证明各向同性先验+等变速度网络保证动作分布等变，并提出 Flow Acceleration Upper Bound (FABO) 正则化加速采样，在 MimicGen 12 个任务上实现比 EquiDiff 快 20-56 倍的推理速度且性能更优。
 tags:
   - "AAAI 2026"
   - "图像生成"

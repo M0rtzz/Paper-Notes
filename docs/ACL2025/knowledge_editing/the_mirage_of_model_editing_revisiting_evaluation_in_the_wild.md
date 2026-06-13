@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Mirage of Model Editing: Revisiting Evaluation in the Wild
 description: >-
-  [ACL 2025 Main][知识编辑][模型编辑] 本文揭示了模型编辑领域评估实践中的系统性缺陷——先前方法报告的近完美成功率（~96.8%）在真实应用场景下骤降至 38.5%，根本原因是测试中使用 teacher forcing 泄露了真值信息…
+  [ACL 2025 Main][知识编辑][模型编辑] 本文揭示了模型编辑领域评估实践中的系统性缺陷——先前方法报告的近完美成功率（~96.8%）在真实应用场景下骤降至 38.5%，根本原因是测试中使用 teacher forcing 泄露了真值信息，并提出 QAEdit 基准和 WILD 评估框架来推动更可靠的评估。
 tags:
   - "ACL 2025 Main"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying and Improving the Robustness of Retrieval-Augmented Language Models Against Spurious Features in Grounding Data
 description: >-
-  [ACL2026][信息检索/RAG][RAG] 本文提出 SURE 框架，系统评估 RAG 生成端对检索文档中风格、来源、逻辑、格式、元数据等语义无关虚假特征的敏感性，并用 SURE 生成的合成数据通过 SFT/DPO 显著提升 RALM 鲁棒性。
+  [ACL2026][信息检索/RAG][RAG] 本文提出 SURE 框架，系统评估 RAG 生成端对检索文档中风格、来源、逻辑、格式、元数据等语义无关虚假特征的敏感性，并用 SURE 生成的合成数据通过 SFT/DPO 显著提升 RALM 鲁棒性。 领域现状：RAG 通过检索外部文档缓解 LLM 幻觉…
 tags:
   - "ACL2026"
   - "信息检索/RAG"

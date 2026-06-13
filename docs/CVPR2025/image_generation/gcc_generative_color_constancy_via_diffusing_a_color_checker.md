@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GCC: Generative Color Constancy via Diffusing a Color Checker
 description: >-
-  [CVPR 2025][图像生成][颜色恒常性] GCC 利用预训练扩散模型的图像先验，通过 inpainting 生成反映场景光照的色卡来估计光照颜色，借助 Laplacian 分解保留色卡结构的同时适应光照变化，在跨相机场景中展现出优越的泛化能力。
+  [CVPR 2025][图像生成][颜色恒常性] GCC 利用预训练扩散模型的图像先验，通过 inpainting 生成反映场景光照的色卡来估计光照颜色，借助 Laplacian 分解保留色卡结构的同时适应光照变化，在跨相机场景中展现出优越的泛化能力。 领域现状：颜色恒常性（Color Constancy）旨在估计场景的光照…
 tags:
   - "CVPR 2025"
   - "图像生成"

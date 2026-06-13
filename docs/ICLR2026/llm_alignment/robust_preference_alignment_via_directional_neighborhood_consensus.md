@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Preference Alignment via Directional Neighborhood Consensus
 description: >-
-  [ICLR 2026][LLM对齐][偏好对齐] 提出Robust Preference Selection (RPS)，一种无需重训练的推理时偏好对齐增强方法，通过从目标偏好的局部邻域采样多个候选方向并生成响应、再根据原始偏好选择最优响应，在OOD偏好上相比基线达到最高69%的胜率。
+  [ICLR 2026][LLM对齐][偏好对齐] 提出Robust Preference Selection (RPS)，一种无需重训练的推理时偏好对齐增强方法，通过从目标偏好的局部邻域采样多个候选方向并生成响应、再根据原始偏好选择最优响应，在OOD偏好上相比基线达到最高69%的胜率。 将大语言模型（LLM）与人类偏好对齐是…
 tags:
   - "ICLR 2026"
   - "LLM对齐"

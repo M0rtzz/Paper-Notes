@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity
 description: >-
-  [NeurIPS 2025][视频理解][point tracking] 受流体力学中格子玻尔兹曼方法启发，提出 LBM（Lattice Boltzmann Model）用于在线实时像素跟踪，将视频像素建模为流体格子并通过碰撞-流式过程求解运动状态…
+  [NeurIPS 2025][视频理解][point tracking] 受流体力学中格子玻尔兹曼方法启发，提出 LBM（Lattice Boltzmann Model）用于在线实时像素跟踪，将视频像素建模为流体格子并通过碰撞-流式过程求解运动状态，以 18M 参数实现 SOTA 在线跟踪性能且可在边缘设备上实时运行。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

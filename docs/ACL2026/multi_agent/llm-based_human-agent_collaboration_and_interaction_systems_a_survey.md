@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey
 description: >-
-  [ACL 2026][多智能体][human-in-the-loop] 本文首次系统性梳理"LLM 基础的人-agent 协作系统（LLM-HAS）"——把人重新拉回 agent loop，从环境/画像、人类反馈、交互类型、编排范式、通信结构 5 个维度建立统一分类…
+  [ACL 2026 Findings][多智能体][human-in-the-loop] 本文首次系统性梳理"LLM 基础的人-agent 协作系统（LLM-HAS）"——把人重新拉回 agent loop，从环境/画像、人类反馈、交互类型、编排范式、通信结构 5 个维度建立统一分类，并补充了一个 A1–A5 的 Human Agency Scale 量化"任务里到底该让人参与多深"。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多智能体"
   - "human-in-the-loop"
   - "agent orchestration"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Watermarking LLM Agent Trajectories (ACTHOOK)
 description: >-
-  [ICML 2026][LLM安全][trajectory数据集水印] ACTHOOK 把"软件 hook"思想搬进 agent 轨迹：在 action 边界处插入一个由秘密 key 触发的额外动作作为水印，被它训练过的 LLM 会在带 key 的 prompt 上以显著更高频率执行 hook…
+  [ICML 2026][LLM安全][trajectory数据集水印] ACTHOOK 把"软件 hook"思想搬进 agent 轨迹：在 action 边界处插入一个由秘密 key 触发的额外动作作为水印，被它训练过的 LLM 会在带 key 的 prompt 上以显著更高频率执行 hook，从而支持只通过黑盒查询就完成版权检测，平均 AUC 达 94.3 而几乎不影响下游任务表现。
 tags:
   - "ICML 2026"
   - "LLM安全"

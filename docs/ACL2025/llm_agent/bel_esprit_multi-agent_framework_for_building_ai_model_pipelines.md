@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bel Esprit: Multi-Agent Framework for Building AI Model Pipelines
 description: >-
-  [ACL 2025][LLM Agent][AI管线构建] 提出 Bel Esprit 多 Agent 对话框架，通过 Mentalist（需求澄清）→ Builder（管线构建）→ Inspector（验证）→ Matchmaker（模型分配）四步协作，将用户模糊的自然语言需求自动转化为多模型 AI 管线图…
+  [ACL 2025][LLM Agent][AI管线构建] 提出 Bel Esprit 多 Agent 对话框架，通过 Mentalist（需求澄清）→ Builder（管线构建）→ Inspector（验证）→ Matchmaker（模型分配）四步协作，将用户模糊的自然语言需求自动转化为多模型 AI 管线图，在 441 条管线数据上达到 25.2% EM 和 37.0 GED（GPT-4o Builder）。
 tags:
   - "ACL 2025"
   - "LLM Agent"

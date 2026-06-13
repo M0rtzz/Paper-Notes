@@ -2,7 +2,7 @@
 title: >-
   [论文解读] L-SWAG: Layer-Sample Wise Activation with Gradients for Zero-Shot NAS on Vision Transformers
 description: >-
-  [CVPR 2025][模型压缩][零样本NAS] 本文提出 L-SWAG 零成本代理指标，结合层级梯度方差统计（可训练性）和激活模式基数（表达性），首次在 ViT 搜索空间上实现稳定正相关排名，并提出 LIBRA-NAS 集成算法组合多个代理指标…
+  [CVPR 2025][模型压缩][零样本NAS] 本文提出 L-SWAG 零成本代理指标，结合层级梯度方差统计（可训练性）和激活模式基数（表达性），首次在 ViT 搜索空间上实现稳定正相关排名，并提出 LIBRA-NAS 集成算法组合多个代理指标，在 ImageNet1k 上以 0.1 GPU-day 找到 17.0% 测试错误率的架构。
 tags:
   - "CVPR 2025"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DMQ: Dissecting Outliers of Diffusion Models for Post-Training Quantization
 description: >-
-  [ICCV 2025][图像生成][训练后量化] 提出 DMQ 框架，结合学习型等价缩放（LES）和通道级 Power-of-Two 缩放（PTS）来处理扩散模型量化中的异常值问题，首次在 W4A6 低比特设定下实现稳定的高质量图像生成。
+  [ICCV 2025][图像生成][训练后量化] 提出 DMQ 框架，结合学习型等价缩放（LES）和通道级 Power-of-Two 缩放（PTS）来处理扩散模型量化中的异常值问题，首次在 W4A6 低比特设定下实现稳定的高质量图像生成。 扩散模型虽然在图像生成中取得了卓越成果，但迭代去噪过程带来的巨大计算开销严重限制了其在…
 tags:
   - "ICCV 2025"
   - "图像生成"

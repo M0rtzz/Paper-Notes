@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models
 description: >-
-  [NeurIPS 2025][模型压缩][视觉基础模型] VESSA提出了一种利用短视频进行视觉基础模型无监督自适应的方法，通过自蒸馏框架结合LoRA参数高效微调和不确定性加权损失，在不需要任何标注数据的情况下显著提升基础模型在目标域的分类性能。
+  [NeurIPS 2025][模型压缩][视觉基础模型] VESSA提出了一种利用短视频进行视觉基础模型无监督自适应的方法，通过自蒸馏框架结合LoRA参数高效微调和不确定性加权损失，在不需要任何标注数据的情况下显著提升基础模型在目标域的分类性能。 视觉基础模型（VFMs）如DINO、DINOv2等通过大规模自监督预训练获得了…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

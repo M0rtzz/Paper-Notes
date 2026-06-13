@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP
 description: >-
-  [ACL 2025][LLM安全][机器遗忘] 提出 CLIPErase，一种专为 CLIP 多模态模型设计的机器遗忘框架，通过遗忘模块、保留模块和一致性模块三部分协同，选择性地移除特定视觉-文本关联，同时保持模型在保留数据上的性能。
+  [ACL 2025][LLM安全][机器遗忘] 提出 CLIPErase，一种专为 CLIP 多模态模型设计的机器遗忘框架，通过遗忘模块、保留模块和一致性模块三部分协同，选择性地移除特定视觉-文本关联，同时保持模型在保留数据上的性能。 机器遗忘（Machine Unlearning）旨在从已训练模型中移除特定数据的影响…
 tags:
   - "ACL 2025"
   - "LLM安全"

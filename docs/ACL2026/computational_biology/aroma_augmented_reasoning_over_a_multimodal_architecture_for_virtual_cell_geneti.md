@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AROMA: Augmented Reasoning Over a Multimodal Architecture for Virtual Cell Genetic Perturbation Modeling
 description: >-
-  [ACL 2026][计算生物][虚拟细胞建模] 提出 AROMA 框架，通过整合文本证据、知识图谱拓扑信息和蛋白质序列特征的多模态架构，结合两阶段训练策略（SFT + GRPO），实现了可解释且精确的基因扰动效应预测。
+  [ACL 2026 Findings][计算生物][虚拟细胞建模] 提出 AROMA 框架，通过整合文本证据、知识图谱拓扑信息和蛋白质序列特征的多模态架构，结合两阶段训练策略（SFT + GRPO），实现了可解释且精确的基因扰动效应预测。 领域现状：虚拟细胞建模旨在预测基因扰动后的分子状态变化，对生物机制研究至关重要…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "计算生物"
   - "虚拟细胞建模"
   - "基因扰动预测"

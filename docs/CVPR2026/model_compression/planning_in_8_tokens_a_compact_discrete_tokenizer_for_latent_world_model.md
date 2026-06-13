@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Planning in 8 Tokens: A Compact Discrete Tokenizer for Latent World Model
 description: >-
-  [CVPR2026][模型压缩][紧凑离散tokenizer] 提出 CompACT，将每张图像压缩至仅 8 个离散 token（约 128 bits），通过冻结预训练视觉编码器保留规划关键语义信息、生成式解码补充感知细节，使基于世界模型的规划速度提升约 40 倍且精度不降。
+  [CVPR2026][模型压缩][紧凑离散tokenizer] 提出 CompACT，将每张图像压缩至仅 8 个离散 token（约 128 bits），通过冻结预训练视觉编码器保留规划关键语义信息、生成式解码补充感知细节，使基于世界模型的规划速度提升约 40 倍且精度不降。 1. 世界模型的规划瓶颈：现有世界模型（如 NW…
 tags:
   - "CVPR2026"
   - "模型压缩"

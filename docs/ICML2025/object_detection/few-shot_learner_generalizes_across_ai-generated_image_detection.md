@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Few-Shot Learner Generalizes Across AI-Generated Image Detection
 description: >-
-  [ICML 2025][目标检测][AI-generated image detection] 首次将 AI 生成图像检测重新定义为少样本分类任务，提出 FSD (Few-Shot Detector) 基于原型网络学习度量空间，仅用 10 个来自未见生成模型的样本…
+  [ICML 2025][目标检测][AI-generated image detection] 首次将 AI 生成图像检测重新定义为少样本分类任务，提出 FSD (Few-Shot Detector) 基于原型网络学习度量空间，仅用 10 个来自未见生成模型的样本，在 GenImage 数据集上平均准确率达 84.1%，超越此前 SOTA (LARE2) +11.6%。
 tags:
   - "ICML 2025"
   - "目标检测"

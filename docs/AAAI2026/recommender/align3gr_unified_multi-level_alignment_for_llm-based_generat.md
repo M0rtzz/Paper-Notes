@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation
 description: >-
-  [AAAI 2026 (Oral)][推荐系统][生成式推荐] 提出统一三层对齐框架 Align³GR，在 token 级（双端 SCID）、行为建模级（多任务 SFT）和偏好级（渐进式 DPO）系统性弥合 LLM 与推荐系统之间的语义-行为鸿沟。
+  [AAAI 2026 (Oral)][推荐系统][生成式推荐] 提出统一三层对齐框架 Align³GR，在 token 级（双端 SCID）、行为建模级（多任务 SFT）和偏好级（渐进式 DPO）系统性弥合 LLM 与推荐系统之间的语义-行为鸿沟。 LLM 作为生成式推荐器（Generative Recommender）直接…
 tags:
   - "AAAI 2026 (Oral)"
   - "推荐系统"

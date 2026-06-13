@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Imaging Interiors: An Implicit Solution to Electromagnetic Inverse Scattering Problems
 description: >-
-  [ECCV 2024][LLM评测][电磁逆散射] 提出基于隐式神经表示（INR）的电磁逆散射问题（EISP）求解方案，通过将散射体的相对介电常数建模为连续隐式表示并在前向框架中优化，有效避免了逆估计的困难和离散化导致的低分辨率问题。
+  [ECCV 2024][LLM评测][电磁逆散射] 提出基于隐式神经表示（INR）的电磁逆散射问题（EISP）求解方案，通过将散射体的相对介电常数建模为连续隐式表示并在前向框架中优化，有效避免了逆估计的困难和离散化导致的低分辨率问题。 电磁逆散射问题（EISP）是计算成像领域的重要课题。通过电磁波穿透物体表面…
 tags:
   - "ECCV 2024"
   - "LLM评测"

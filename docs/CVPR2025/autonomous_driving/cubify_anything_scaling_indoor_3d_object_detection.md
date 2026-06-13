@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cubify Anything: Scaling Indoor 3D Object Detection
 description: >-
-  [CVPR 2025][自动驾驶][室内3D物体检测] 本文提出 Cubify Anything 1M (CA-1M) 数据集——首个在激光扫描上穷尽标注所有物体的大规模室内3D检测数据集（440K物体/1K场景/3.5K采集/13M帧/像素完美投影），并提出全 Transformer 检测器 CuTR…
+  [CVPR 2025][自动驾驶][室内3D物体检测] 本文提出 Cubify Anything 1M (CA-1M) 数据集——首个在激光扫描上穷尽标注所有物体的大规模室内3D检测数据集（440K物体/1K场景/3.5K采集/13M帧/像素完美投影），并提出全 Transformer 检测器 CuTR，证明在数据充沛时无需3D归纳偏置（点云/体素）即可超越点云方法。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

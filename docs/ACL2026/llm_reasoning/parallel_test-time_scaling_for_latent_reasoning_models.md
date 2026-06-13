@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallel Test-Time Scaling for Latent Reasoning Models
 description: >-
-  [ACL 2026 Main Conference][LLM推理][测试时缩放] 本文首次将并行测试时缩放（parallel TTS）引入潜在推理模型，提出两种基于不确定性理论的随机采样策略（MC-Dropout 和加性高斯噪声）以及一个步级对比训练的潜在奖励模型（LatentRM）…
+  [ACL 2026 Main Conference][LLM推理][测试时缩放] 本文首次将并行测试时缩放（parallel TTS）引入潜在推理模型，提出两种基于不确定性理论的随机采样策略（MC-Dropout 和加性高斯噪声）以及一个步级对比训练的潜在奖励模型（LatentRM），使得在连续向量空间中进行推理的模型也能通过并行采样+聚合获得稳定的性能提升。
 tags:
   - "ACL 2026 Main Conference"
   - "LLM推理"

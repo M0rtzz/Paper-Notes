@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Building Reliable Long-Form Generation via Hallucination Rejection Sampling
 description: >-
-  [ICML 2026][幻觉检测][幻觉缓解] 提出 SHARS 框架，在推理时逐句检测并拒绝幻觉内容、仅保留经验证的事实段落继续生成，配合改进的语义熵检测器 HalluSE，在 FactScore 上将事实精度提升约 20–26%，同时保持甚至增加生成中的事实信息量。
+  [ICML 2026][幻觉检测][幻觉缓解] 提出 SHARS 框架，在推理时逐句检测并拒绝幻觉内容、仅保留经验证的事实段落继续生成，配合改进的语义熵检测器 HalluSE，在 FactScore 上将事实精度提升约 20–26%，同时保持甚至增加生成中的事实信息量。 领域现状：大语言模型在开放式长文本生成中表现出色…
 tags:
   - "ICML 2026"
   - "幻觉检测"

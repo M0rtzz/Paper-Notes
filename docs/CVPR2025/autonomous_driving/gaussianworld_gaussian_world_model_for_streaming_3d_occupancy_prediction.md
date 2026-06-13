@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussianWorld: Gaussian World Model for Streaming 3D Occupancy Prediction
 description: >-
-  [CVPR 2025][自动驾驶][3D占用预测] 提出 GaussianWorld，将 3D 占用预测重新定义为以当前传感器输入为条件的 4D 占用预测问题，通过将场景演化分解为自车运动对齐、动态物体运动和新区域补全三个因素，在 3D 高斯空间中用世界模型显式建模场景变化…
+  [CVPR 2025][自动驾驶][3D占用预测] 提出 GaussianWorld，将 3D 占用预测重新定义为以当前传感器输入为条件的 4D 占用预测问题，通过将场景演化分解为自车运动对齐、动态物体运动和新区域补全三个因素，在 3D 高斯空间中用世界模型显式建模场景变化，在 nuScenes 上不增加额外计算量的前提下将单帧方法的 mIoU 提升超过 2%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

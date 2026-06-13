@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation
 description: >-
-  [ICCV 2025][人体理解][共语手势生成] 提出 GestureHYDRA，一个基于混合模态扩散 Transformer 和级联同步检索增强生成的共语手势合成系统，能够可靠地激活语义明确的手势（如数字和方向指示）。
+  [ICCV 2025][人体理解][共语手势生成] 提出 GestureHYDRA，一个基于混合模态扩散 Transformer 和级联同步检索增强生成的共语手势合成系统，能够可靠地激活语义明确的手势（如数字和方向指示）。 共语手势合成旨在生成与语音同步的人体手势，广泛应用于影视、游戏、机器人和虚拟人制作…
 tags:
   - "ICCV 2025"
   - "人体理解"

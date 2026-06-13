@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BAD-Gaussians: Bundle Adjusted Deblur Gaussian Splatting
 description: >-
-  [ECCV 2024][3D视觉][3D Gaussian Splatting] 首次将运动模糊物理成像模型引入 3D Gaussian Splatting 框架，联合优化场景 Gaussian 参数与曝光时间内的相机运动轨迹，从模糊图像中恢复清晰 3D 场景并实现实时渲染。
+  [ECCV 2024][3D视觉][3D Gaussian Splatting] 首次将运动模糊物理成像模型引入 3D Gaussian Splatting 框架，联合优化场景 Gaussian 参数与曝光时间内的相机运动轨迹，从模糊图像中恢复清晰 3D 场景并实现实时渲染。 NeRF 和 3D-GS 依赖清晰图像：现有神经…
 tags:
   - "ECCV 2024"
   - "3D视觉"

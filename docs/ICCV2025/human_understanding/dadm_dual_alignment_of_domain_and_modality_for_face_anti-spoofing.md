@@ -2,10 +2,10 @@
 title: >-
   [论文解读] DADM: Dual Alignment of Domain and Modality for Face Anti-Spoofing
 description: >-
-  [ICCV 2025][多模态VLM][人脸反欺骗] 提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。
+  [ICCV 2025][人体理解][人脸反欺骗] 提出 DADM 框架，通过互信息掩码（MIM）模块和域-模态双对齐优化策略，同时解决多模态人脸反欺骗中的域内模态不对齐和域间模态不对齐问题，在四种协议下取得 SOTA 性能。 多模态人脸反欺骗（FAS）利用 RGB、深度（Depth）和红外（Infrared）三种模态的互补信…
 tags:
   - "ICCV 2025"
-  - "多模态VLM"
+  - "人体理解"
   - "人脸反欺骗"
   - "多模态融合"
   - "域泛化"

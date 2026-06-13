@@ -2,7 +2,7 @@
 title: >-
   [论文解读] All You Need is One: Capsule Prompt Tuning with a Single Vector
 description: >-
-  [NeurIPS 2025][模型压缩][提示学习] 提出 Capsule Prompt-Tuning (CaPT)，发现现有 task-aware soft prompts 实际上与输入 tokens 缺乏交互（"attention 孤岛"）…
+  [NeurIPS 2025][模型压缩][提示学习] 提出 Capsule Prompt-Tuning (CaPT)，发现现有 task-aware soft prompts 实际上与输入 tokens 缺乏交互（"attention 孤岛"），而将 instance-aware 信息融入单个 capsule prompt 可以作为"attention anchor"激活对关键结构信息的注意力，以极低参数量（如 Llama3.2-1B 上仅 0.003% 参数）实现超越多 prompt 方法的性能。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

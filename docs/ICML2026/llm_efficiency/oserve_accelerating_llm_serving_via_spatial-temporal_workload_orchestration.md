@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OServe: Accelerating LLM Serving via Spatial-Temporal Workload Orchestration
 description: >-
-  [ICML 2026][LLM效率][LLM 推理服务] OServe 把 LLM 服务的「资源分配 + 并行策略 + 请求路由」联合建模为流网络上的双层最大流问题，配合 LSTM 工作负载预测和基于 GPU 互联的 ad hoc 模型切换…
+  [ICML 2026][LLM效率][LLM 推理服务] OServe 把 LLM 服务的「资源分配 + 并行策略 + 请求路由」联合建模为流网络上的双层最大流问题，配合 LSTM 工作负载预测和基于 GPU 互联的 ad hoc 模型切换，应对真实流量在空间（不同请求类型）和时间（成分随时刻变化）两个维度的异质性，端到端 P99 延迟和吞吐相比 vLLM 平均提升 1.5×、最大 2×。
 tags:
   - "ICML 2026"
   - "LLM效率"

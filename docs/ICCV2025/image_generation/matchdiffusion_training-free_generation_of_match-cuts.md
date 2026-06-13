@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MatchDiffusion: Training-free Generation of Match-Cuts
 description: >-
-  [图像生成] 提出MatchDiffusion，利用扩散模型早期去噪步骤定义场景宏观结构、后期步骤添加细节的特性，通过Joint Diffusion和Disjoint Diffusion两阶段无训练方法实现自动match-cut视频生成。
+  [图像生成] 提出MatchDiffusion，利用扩散模型早期去噪步骤定义场景宏观结构、后期步骤添加细节的特性，通过Joint Diffusion和Disjoint Diffusion两阶段无训练方法实现自动match-cut视频生成。 Match-cut（匹配剪辑）是电影中极具表现力的转场技术，能在两个语义截然不同但结构…
 tags:
   - "图像生成"
 ---

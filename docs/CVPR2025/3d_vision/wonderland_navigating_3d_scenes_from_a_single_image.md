@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wonderland: Navigating 3D Scenes from a Single Image
 description: >-
-  [CVPR 2025][3D视觉][3D场景生成] Wonderland 提出了一种从单张图像生成高质量、宽范围 3D 场景的流水线：先用带双分支相机控制的视频扩散 Transformer 生成 3D 感知的视频潜变量…
+  [CVPR 2025][3D视觉][3D场景生成] Wonderland 提出了一种从单张图像生成高质量、宽范围 3D 场景的流水线：先用带双分支相机控制的视频扩散 Transformer 生成 3D 感知的视频潜变量，再用 Latent Large Reconstruction Model (LaLRM) 直接在潜空间中前馈式回归 3D 高斯溅射表示，首次证明可以在视频扩散模型的潜空间上高效构建 3D 重建模型。
 tags:
   - "CVPR 2025"
   - "3D视觉"

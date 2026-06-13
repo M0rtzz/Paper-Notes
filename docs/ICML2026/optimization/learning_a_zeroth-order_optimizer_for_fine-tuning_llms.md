@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning a Zeroth-Order Optimizer for Fine-Tuning LLMs
 description: >-
-  [ICML 2026][优化/理论][零阶优化] 本文提出 ZO Fine-tuner：用一个"per-block 的轻量神经网络 PertNN"自动学习 LLM 各参数块的扰动方差，把 MeZO 中固定的 $\mathcal{N}(0,I)$ 升级为按块自适应的非均匀扰动…
+  [ICML 2026][优化/理论][零阶优化] 本文提出 ZO Fine-tuner：用一个"per-block 的轻量神经网络 PertNN"自动学习 LLM 各参数块的扰动方差，把 MeZO 中固定的 $\mathcal{N}(0,I)$ 升级为按块自适应的非均匀扰动；在 OPT-30B 上辅助网络仅占 <2MB，却在 4 个 LLM × 7 个数据集（28 对）中 82.1% 跑赢现有零阶基线，且"一次训练、跨任务/跨衍生模型复用"。
 tags:
   - "ICML 2026"
   - "优化/理论"

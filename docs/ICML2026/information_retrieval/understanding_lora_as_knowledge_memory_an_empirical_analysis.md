@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding LoRA as Knowledge Memory: An Empirical Analysis
 description: >-
-  [ICML 2026][信息检索/RAG][LoRA] 作者用 PhoneBook 与新构造的 PaperQA 基准做系统实证审计，把 LoRA 看作可独立训练 / 加载 / 组合的知识记忆单元，定量给出"秩 → 容量 → 效率 → 多模块组合 → 与 RAG/ICL 互补"全链路的设计准则。
+  [ICML 2026][信息检索/RAG][LoRA] 作者用 PhoneBook 与新构造的 PaperQA 基准做系统实证审计，把 LoRA 看作可独立训练 / 加载 / 组合的知识记忆单元，定量给出"秩 → 容量 → 效率 → 多模块组合 → 与 RAG/ICL 互补"全链路的设计准则。 领域现状：LLM 想要"持续吸…
 tags:
   - "ICML 2026"
   - "信息检索/RAG"

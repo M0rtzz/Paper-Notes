@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NaviAgent: Graph-Driven Bilevel Planning for Scalable Tool Orchestration
 description: >-
-  [ICML 2026][LLM Agent][函数调用] NaviAgent 把 LLM 工具调用拆成"高层四选一决策 + 低层图上路径搜索"两层，由一个用 HGT 训练的 Tool World Navigation Model（TWNM）显式建模工具之间的结构与行为依赖…
+  [ICML 2026][LLM Agent][函数调用] NaviAgent 把 LLM 工具调用拆成"高层四选一决策 + 低层图上路径搜索"两层，由一个用 HGT 训练的 Tool World Navigation Model（TWNM）显式建模工具之间的结构与行为依赖，在 ToolBench/API-Bank 与 50 个真实 RapidAPI 上把任务成功率（TSR）相对最强基线整体提升 4.3–18.2 个点，同时显著减少调用步数。
 tags:
   - "ICML 2026"
   - "LLM Agent"

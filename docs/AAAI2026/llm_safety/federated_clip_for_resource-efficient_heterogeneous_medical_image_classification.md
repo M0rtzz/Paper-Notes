@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification
 description: >-
-  [AAAI 2026][LLM安全][联邦学习] 提出 FedMedCLIP，一种面向医学图像分类的联邦 CLIP 框架，通过冻结 CLIP 编码器 + 掩码特征适配模块（FAM）+ 本地掩码 MLP + 类别级 KL 蒸馏正则化…
+  [AAAI 2026][LLM安全][联邦学习] 提出 FedMedCLIP，一种面向医学图像分类的联邦 CLIP 框架，通过冻结 CLIP 编码器 + 掩码特征适配模块（FAM）+ 本地掩码 MLP + 类别级 KL 蒸馏正则化，在保持极低通信/计算开销的同时实现对数据异构场景的鲁棒分类（ISIC2019 上超第二名 8%，比 FedAVG 快 120 倍）。
 tags:
   - "AAAI 2026"
   - "LLM安全"

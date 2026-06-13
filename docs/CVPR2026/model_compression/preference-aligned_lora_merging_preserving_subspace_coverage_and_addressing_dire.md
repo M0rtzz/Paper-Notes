@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy
 description: >-
-  [CVPR 2026][模型压缩][LoRA合并] 本文从子空间覆盖（subspace coverage）和方向各向异性（anisotropy）两个视角重新审视LoRA合并问题，提出TARA-Merging框架，通过保留LoRA方向并结合偏好加权的交叉熵伪损失进行方向级重新加权…
+  [CVPR 2026][模型压缩][LoRA合并] 本文从子空间覆盖（subspace coverage）和方向各向异性（anisotropy）两个视角重新审视LoRA合并问题，提出TARA-Merging框架，通过保留LoRA方向并结合偏好加权的交叉熵伪损失进行方向级重新加权，在8个视觉和6个NLI基准上持续超越现有合并方法。
 tags:
   - "CVPR 2026"
   - "模型压缩"

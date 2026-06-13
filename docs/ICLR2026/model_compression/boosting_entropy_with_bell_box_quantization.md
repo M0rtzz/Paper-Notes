@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Entropy with Bell Box Quantization
 description: >-
-  [ICLR 2026][模型压缩][量化感知预训练] 提出 Bell Box Quantization (BBQ)，首个同时满足"信息论最优"(ITO) 和"计算高效"(compute-efficient) 的量化方法，核心洞察是学习的域无关性——量化器输出域不必与输入域相同…
+  [ICLR 2026][模型压缩][量化感知预训练] 提出 Bell Box Quantization (BBQ)，首个同时满足"信息论最优"(ITO) 和"计算高效"(compute-efficient) 的量化方法，核心洞察是学习的域无关性——量化器输出域不必与输入域相同，由此在输入域做 ITO 量化以最大化熵，在输出域映射到硬件可加速的数据类型，在 1-4 bit QAPT 场景下全面超越 QuEST 和 LSQ。
 tags:
   - "ICLR 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FairQE: Multi-Agent Framework for Mitigating Gender Bias in Translation Quality Estimation
 description: >-
-  [ACL 2026][多语言/翻译][翻译质量估计] 提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。
+  [ACL 2026][多语言/翻译][翻译质量估计] 提出 FairQE 多智能体框架，通过性别线索检测、性别翻转变体生成和动态偏见感知分数聚合机制，在不牺牲翻译质量评估准确性的前提下有效缓解 QE 模型中的系统性性别偏见。 领域现状：翻译质量估计（QE）旨在无需参考译文的情况下自动评估机器翻译质量。COMETKiwi、Me…
 tags:
   - "ACL 2026"
   - "多语言/翻译"

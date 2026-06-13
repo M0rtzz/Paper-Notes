@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery
 description: >-
-  [NeurIPS 2025][物理/科学计算][causal discovery] 提出 SciNO（Score-informed Neural Operator），一种在光滑函数空间中设计的概率生成模型，稳定近似 log-密度 Hessian 对角以提升排序式因果发现…
+  [NeurIPS 2025][物理/科学计算][causal discovery] 提出 SciNO（Score-informed Neural Operator），一种在光滑函数空间中设计的概率生成模型，稳定近似 log-密度 Hessian 对角以提升排序式因果发现，合成图上 order divergence 降低 42.7%，真实数据降低 31.5%。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

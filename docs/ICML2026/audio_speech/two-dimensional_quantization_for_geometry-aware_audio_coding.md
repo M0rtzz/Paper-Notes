@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Two-Dimensional Quantization for Geometry-Aware Audio Coding
 description: >-
-  [ICML 2026][音频/语音][二维量化] 作者把神经音频 codec 中的标量量化器换成"成对通道 + 结构化二维网格"的几何量化器 Q2D2，用固定的六边形 / 矩形 / 菱形格点替代可学习码本…
+  [ICML 2026][音频/语音][二维量化] 作者把神经音频 codec 中的标量量化器换成"成对通道 + 结构化二维网格"的几何量化器 Q2D2，用固定的六边形 / 矩形 / 菱形格点替代可学习码本，在单一 quantizer + 极低 token rate 下追平甚至超越 RVQ / VQ / FSQ 的语音重建质量。
 tags:
   - "ICML 2026"
   - "音频/语音"

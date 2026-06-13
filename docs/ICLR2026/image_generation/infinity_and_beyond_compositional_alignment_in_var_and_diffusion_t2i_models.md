@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models
 description: >-
-  [ICLR 2026][图像生成][组合对齐] 首次系统性地对比 Visual Autoregressive (VAR) 模型和扩散模型在组合文本-图像对齐上的表现，在 T2I-CompBench++ 和 GenEval 两个基准上评测 6 个 T2I 模型…
+  [ICLR 2026][图像生成][组合对齐] 首次系统性地对比 Visual Autoregressive (VAR) 模型和扩散模型在组合文本-图像对齐上的表现，在 T2I-CompBench++ 和 GenEval 两个基准上评测 6 个 T2I 模型，发现 Infinity-8B 在几乎所有组合维度上取得最强表现，VAR 架构在组合生成方面展现出显著优势。
 tags:
   - "ICLR 2026"
   - "图像生成"

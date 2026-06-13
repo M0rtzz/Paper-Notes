@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemHiTok: A Unified Image Tokenizer via Semantic-Guided Hierarchical Codebook
 description: >-
-  [ICLR 2026][预训练][图像tokenizer] 提出SemHiTok——通过语义引导层次codebook(SGHC)统一理解和生成的tokenizer：预训练语义codebook上建像素子codebook，结构和训练解耦(分阶段优化)避免联合训练的语义-像素冲突…
+  [ICLR 2026][预训练][图像tokenizer] 提出SemHiTok——通过语义引导层次codebook(SGHC)统一理解和生成的tokenizer：预训练语义codebook上建像素子codebook，结构和训练解耦(分阶段优化)避免联合训练的语义-像素冲突，LLaVA设定下离散tokenizer中理解和重建都SOTA。
 tags:
   - "ICLR 2026"
   - "预训练"

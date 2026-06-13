@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Authentic Movie Dubbing with Retrieve-Augmented Director-Actor Interaction Learning
 description: >-
-  [AAAI 2026][音频/语音][电影配音] Authentic-Dubber 模拟真实配音工作流程中导演与演员的交互过程，通过构建多模态参考素材库、基于情感相似度的检索增强策略和渐进式图语音生成方法，显著提升了自动电影配音的情感表现力…
+  [AAAI 2026][音频/语音][电影配音] Authentic-Dubber 模拟真实配音工作流程中导演与演员的交互过程，通过构建多模态参考素材库、基于情感相似度的检索增强策略和渐进式图语音生成方法，显著提升了自动电影配音的情感表现力，在V2C-Animation数据集上的情感准确率和MOS评分均达到SOTA。
 tags:
   - "AAAI 2026"
   - "音频/语音"

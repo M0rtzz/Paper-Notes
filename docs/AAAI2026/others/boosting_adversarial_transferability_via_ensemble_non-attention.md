@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Boosting Adversarial Transferability via Ensemble Non-Attention
 description: >-
-  [AAAI 2026][对抗迁移性] 提出 NAMEA（Non-Attention Meta Ensemble Attack），首次利用集成模型的非注意力区域（non-attention areas）融合 CNN 和 ViT 的可迁移信息，结合元学习梯度优化…
+  [AAAI 2026][对抗迁移性] 提出 NAMEA（Non-Attention Meta Ensemble Attack），首次利用集成模型的非注意力区域（non-attention areas）融合 CNN 和 ViT 的可迁移信息，结合元学习梯度优化，在跨架构对抗迁移性上平均超越 SOTA 方法 AdaEA 和 SMER 分别 15.0% 和 9.6%。
 tags:
   - "AAAI 2026"
   - "对抗迁移性"

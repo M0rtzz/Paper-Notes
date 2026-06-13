@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynWorld: Virtual Scenario Synthesis for Agentic Action Knowledge Refinement
 description: >-
-  [ACL 2025][LLM Agent][action knowledge] SynWorld 提出让 Agent 在合成的虚拟场景中通过蒙特卡洛树搜索（MCTS）来探索和优化动作知识（工具描述和工作流），使 Agent 能够自主适应新环境的工具使用…
+  [ACL 2025][LLM Agent][action knowledge] SynWorld 提出让 Agent 在合成的虚拟场景中通过蒙特卡洛树搜索（MCTS）来探索和优化动作知识（工具描述和工作流），使 Agent 能够自主适应新环境的工具使用，在 ToolBench 上比 ReAct 基线提升约 9 个百分点。
 tags:
   - "ACL 2025"
   - "LLM Agent"

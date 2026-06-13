@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RegionDrag: Fast Region-Based Image Editing with Diffusion Models
 description: >-
-  [ECCV 2024][图像生成][区域拖拽编辑] 提出基于区域的拷贝-粘贴拖拽编辑方法RegionDrag，用区域指令替代点拖拽指令，实现更快（100倍以上）、更精确且意图更清晰的图像编辑。
+  [ECCV 2024][图像生成][区域拖拽编辑] 提出基于区域的拷贝-粘贴拖拽编辑方法RegionDrag，用区域指令替代点拖拽指令，实现更快（100倍以上）、更精确且意图更清晰的图像编辑。 现有痛点 现有痛点：领域现状：基于点拖拽的图像编辑方法（如DragGAN、DragDiffusion）近年来受到广泛关注…
 tags:
   - "ECCV 2024"
   - "图像生成"

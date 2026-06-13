@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty Matters in Dynamic Gaussian Splatting for Monocular 4D Reconstruction
 description: >-
-  [ICLR2026][3D视觉][Dynamic Gaussian Splatting] 提出 USplat4D，一种不确定性感知的动态高斯泼溅框架，通过估计每个高斯的时变不确定性并构建不确定性引导的时空图来传播可靠运动线索，显著提升了遮挡区域和极端新视角下的单目 4D 重建质量。
+  [ICLR2026][3D视觉][Dynamic Gaussian Splatting] 提出 USplat4D，一种不确定性感知的动态高斯泼溅框架，通过估计每个高斯的时变不确定性并构建不确定性引导的时空图来传播可靠运动线索，显著提升了遮挡区域和极端新视角下的单目 4D 重建质量。 从单目视频重建动态 3D 场景是 AR、机…
 tags:
   - "ICLR2026"
   - "3D视觉"

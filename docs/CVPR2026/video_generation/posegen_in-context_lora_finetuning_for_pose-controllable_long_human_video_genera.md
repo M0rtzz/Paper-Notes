@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PoseGen: In-Context LoRA Finetuning for Pose-Controllable Long Human Video Generation
 description: >-
-  [CVPR 2026][视频生成][人体视频生成] PoseGen 通过 in-context LoRA 微调实现双重条件注入（token级外观 + 通道级姿态），并提出分段交错生成策略（KV共享+姿态感知插帧），仅用33小时视频数据即可生成高保真长时人体视频。
+  [CVPR 2026 Findings][视频生成][人体视频生成] PoseGen 通过 in-context LoRA 微调实现双重条件注入（token级外观 + 通道级姿态），并提出分段交错生成策略（KV共享+姿态感知插帧），仅用33小时视频数据即可生成高保真长时人体视频。 1. 领域现状：基于扩散模型的可控视频生成取…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "视频生成"
   - "人体视频生成"
   - "姿态控制"

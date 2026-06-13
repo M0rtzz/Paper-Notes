@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neural Gabor Splatting: Enhanced Gaussian Splatting with Neural Gabor for High-frequency Surface Reconstruction
 description: >-
-  [CVPR 2026][3D视觉][高斯溅射] Neural Gabor Splatting 为每个高斯原语嵌入一个轻量级 MLP（SIREN 架构），使单个原语能表示复杂的空间变化颜色模式，配合频率感知致密化策略，在相同数据预算下显著提升高频表面重建质量。
+  [CVPR 2026][3D视觉][高斯溅射] Neural Gabor Splatting 为每个高斯原语嵌入一个轻量级 MLP（SIREN 架构），使单个原语能表示复杂的空间变化颜色模式，配合频率感知致密化策略，在相同数据预算下显著提升高频表面重建质量。 领域现状：3D 高斯溅射（3DGS）因其显式点云表示的优势（快速训…
 tags:
   - "CVPR 2026"
   - "3D视觉"

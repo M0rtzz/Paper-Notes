@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Biased Oracle: Assessing LLMs' Understandability and Empathy in Medical Diagnoses
 description: >-
-  [NeurIPS 2025][LLM评测][医疗沟通] 系统评估 GPT-4o 和 Claude-3.7 在医疗诊断沟通中的可读性和共情能力，发现两者均产生超标的阅读难度（9-13 年级 vs 推荐的 6-8 年级），情感共情随诊断类型和患者教育水平显著变化…
+  [NeurIPS 2025][LLM评测][医疗沟通] 系统评估 GPT-4o 和 Claude-3.7 在医疗诊断沟通中的可读性和共情能力，发现两者均产生超标的阅读难度（9-13 年级 vs 推荐的 6-8 年级），情感共情随诊断类型和患者教育水平显著变化，且 LLM-as-Judge 存在严重自我偏见（GPT 对自身共情评分膨胀 ~0.3 分）。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

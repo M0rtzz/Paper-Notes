@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controllable Latent Space Augmentation for Digital Pathology
 description: >-
-  [ICCV 2025][医学图像][数据增强] 提出HistAug——一种基于Transformer的轻量级潜在空间增强模型，通过条件式跨注意力机制在特征空间中模拟真实图像变换（色相、腐蚀等），以极低计算开销为病理MIL训练提供可控且高效的数据增强。
+  [ICCV 2025][医学图像][数据增强] 提出HistAug——一种基于Transformer的轻量级潜在空间增强模型，通过条件式跨注意力机制在特征空间中模拟真实图像变换（色相、腐蚀等），以极低计算开销为病理MIL训练提供可控且高效的数据增强。 数字病理面临几个核心挑战使得数据增强尤为困难： WSI分辨率极高：一张切片…
 tags:
   - "ICCV 2025"
   - "医学图像"

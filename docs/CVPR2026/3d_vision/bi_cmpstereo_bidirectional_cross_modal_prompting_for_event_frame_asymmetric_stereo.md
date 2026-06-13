@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bi-CMPStereo: Bidirectional Cross-Modal Prompting for Event-Frame Asymmetric Stereo
 description: >-
-  [CVPR 2026][3D视觉][event camera] 提出 Bi-CMPStereo，一种双向跨模态提示框架，交替将事件和帧设为目标域进行立体规范化约束和跨域嵌入适配，同时利用两个方向的代价体实现鲁棒的事件-帧非对称立体匹配。
+  [CVPR 2026][3D视觉][event camera] 提出 Bi-CMPStereo，一种双向跨模态提示框架，交替将事件和帧设为目标域进行立体规范化约束和跨域嵌入适配，同时利用两个方向的代价体实现鲁棒的事件-帧非对称立体匹配。 事件相机的高时间分辨率和高动态范围与帧相机的丰富上下文信息互补，使事件-帧非对称立体在高…
 tags:
   - "CVPR 2026"
   - "3D视觉"

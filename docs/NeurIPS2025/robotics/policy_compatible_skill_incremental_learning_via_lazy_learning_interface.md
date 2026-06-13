@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Policy Compatible Skill Incremental Learning via Lazy Learning Interface
 description: >-
-  [NeurIPS 2025][机器人][技能增量学习] 提出SIL-C框架，通过双向惰性学习接口(bilateral lazy learning interface)实现技能增量学习中的技能-策略兼容性，使增量更新的技能能直接提升下游策略性能而无需重训练或结构调整。
+  [NeurIPS 2025 Spotlight][机器人][技能增量学习] 提出SIL-C框架，通过双向惰性学习接口(bilateral lazy learning interface)实现技能增量学习中的技能-策略兼容性，使增量更新的技能能直接提升下游策略性能而无需重训练或结构调整。 问题背景 终身具身智能体需要持续从数据…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "机器人"
   - "技能增量学习"
   - "层次化策略"

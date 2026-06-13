@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrap Off-policy with World Model (BOOM)
 description: >-
-  [NeurIPS 2025][强化学习][基于模型的强化学习] 提出 BOOM 框架，通过 bootstrap 循环将在线规划器（MPPI）与 off-policy 策略学习紧密结合：策略初始化规划器，规划器反过来通过无似然对齐损失（likelihood-free alignment）引导策略改进…
+  [NeurIPS 2025][强化学习][基于模型的强化学习] 提出 BOOM 框架，通过 bootstrap 循环将在线规划器（MPPI）与 off-policy 策略学习紧密结合：策略初始化规划器，规划器反过来通过无似然对齐损失（likelihood-free alignment）引导策略改进，配合 soft Q-weighted 机制优先学习高回报行为，在高维连续控制任务上取得 SOTA。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

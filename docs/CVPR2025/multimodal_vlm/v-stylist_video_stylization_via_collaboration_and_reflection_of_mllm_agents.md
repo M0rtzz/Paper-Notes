@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V-Stylist: Video Stylization via Collaboration and Reflection of MLLM Agents
 description: >-
-  [CVPR 2025][多模态VLM][视频风格化] 提出 V-Stylist，一个基于 MLLM 多 agent 协作和反思的视频风格化系统，通过 Video Parser（视频分镜）、Style Parser（风格树搜索）和 Style Artist（多轮自反思渲染）三个角色协作…
+  [CVPR 2025][多模态VLM][视频风格化] 提出 V-Stylist，一个基于 MLLM 多 agent 协作和反思的视频风格化系统，通过 Video Parser（视频分镜）、Style Parser（风格树搜索）和 Style Artist（多轮自反思渲染）三个角色协作，在复杂转场视频和开放风格描述上实现 SOTA，整体指标超越 FRESCO 6.05%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

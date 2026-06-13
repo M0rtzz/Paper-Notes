@@ -1,16 +1,23 @@
 ---
 title: >-
-  CVPR2026 其他论文汇总 · 22篇论文解读
+  CVPR2026 其他论文汇总 · 27篇论文解读
 description: >-
-  22篇CVPR2026的其他方向论文解读，涵盖少样本学习、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇CVPR2026的其他方向论文解读，涵盖少样本学习、持续学习、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "其他"
   - "论文解读"
   - "论文笔记"
   - "少样本学习"
+  - "持续学习"
   - "联邦学习"
 item_list:
+  - u: "a_large-scale_study_on_the_accuracy_vs_cost_trade-offs_of_training_and_evaluatio/"
+    t: "A Large-Scale Study on the Accuracy vs Cost Trade-offs of Training and Evaluation Settings in Fine-Grained Image Recognition"
+  - u: "back_to_source_open-set_continual_test-time_adaptation_via_domain_compensation/"
+    t: "Back to Source: Open-Set Continual Test-Time Adaptation via Domain Compensation"
+  - u: "bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz/"
+    t: "Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group"
   - u: "bendfm_a_taxonomy_and_synthetic_cad_dataset_for_ma/"
     t: "BenDFM: A Taxonomy and Synthetic CAD Dataset for Manufacturability Assessment in Sheet Metal Bending"
   - u: "bounds_on_agreement_between_subjective_and_objecti/"
@@ -19,6 +26,8 @@ item_list:
     t: "Coded-E2LF: Coded Aperture Light Field Imaging from Events"
   - u: "crowdsourcing_of_real_world_image_annotation_via_visual_properties/"
     t: "Crowdsourcing of Real-world Image Annotation via Visual Properties"
+  - u: "dance_across_shifts_forward-facilitation_continual_test-time_adaptation_through_/"
+    t: "Dance Across Shifts: Forward-Facilitation Continual Test-Time Adaptation through Dynamic Style Bridging"
   - u: "deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis/"
     t: "Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis"
   - u: "diffbmp_differentiable_rendering_with_bitmap_primitives/"
@@ -29,6 +38,8 @@ item_list:
     t: "Do Vision Models Perceive Illusory Motion in Static Images Like Humans?"
   - u: "dual_band_thermal_videography_separating_time-varying_reflection_and_emission_ne/"
     t: "Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions"
+  - u: "exemplar-free_continual_learning_for_state_space_models/"
+    t: "Exemplar-Free Continual Learning for State Space Models"
   - u: "feat_federated_geometry_aware_correction_for_exemplar_replay_under_continual_dynamic_heterogeneity/"
     t: "FEAT: Federated Geometry-Aware Correction for Exemplar Replay under Continual Dynamic Heterogeneity"
   - u: "gardendesigner_encoding_aesthetic_principles_into_jiangnan_garden_construction_v/"
@@ -55,15 +66,27 @@ item_list:
     t: "What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁"
   - u: "what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_/"
     t: "What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution"
-item_total: 22
+item_total: 27
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2026** · **22** 篇论文解读
+**📷 CVPR2026** · **27** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (33)](../../ICCV2025/others/index.md)
+
+**[A Large-Scale Study on the Accuracy vs Cost Trade-offs of Training and Evaluation Settings in Fine-Grained Image Recognition](a_large-scale_study_on_the_accuracy_vs_cost_trade-offs_of_training_and_evaluatio.md)**
+
+:   这是一篇关于细粒度图像识别(FGIR)的大规模实证研究——用 2000+ 次实验、跨 9 个 backbone × 17 个数据集 × 6 种训练/评估设置，系统量化了「训练评估设置越复杂、精度越高但算力成本越大」这条 trade-off 曲线；并据此提出去掉推理期判别裁剪的高效变体 CAL-NC / CALMix-NC，在精度几乎不掉的前提下把推理吞吐拉回 FT 水平。
+
+**[Back to Source: Open-Set Continual Test-Time Adaptation via Domain Compensation](back_to_source_open-set_continual_test-time_adaptation_via_domain_compensation.md)**
+
+:   针对"域持续漂移 + 未知新类同时出现"的开放集持续测试时自适应（OCTTA）场景，本文提出 DOCO：先把当前 batch 分成像 ID / 像 OOD 两堆，只用 ID 样本学一个把特征统计"拉回源域"的视觉 prompt，再把这个 prompt 直接复用到同 batch 的 OOD 样本上以剥离它们的语义新颖度，三步形成闭环互助，在 ImageNet-C 上 H-score 比次优方法高 4.7%。
+
+**[Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group](bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
+
+:   提出一种绕过 Clebsch-Gordan 系数的方法来求解等变CNN中的可转向核（steerable kernel）约束，通过在稳定子群上求解简单的不变性条件再"转向（steer）"到任意点，为 SO(2) 到 Lorentz 群等不同对称群给出了显式的核基底。
 
 **[BenDFM: A Taxonomy and Synthetic CAD Dataset for Manufacturability Assessment in Sheet Metal Bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_ma.md)**
 
@@ -80,6 +103,10 @@ item_total: 22
 **[Crowdsourcing of Real-world Image Annotation via Visual Properties](crowdsourcing_of_real_world_image_annotation_via_visual_properties.md)**
 
 :   提出一种基于视觉属性约束的图像标注方法论，通过知识表示构建对象类别层次结构并结合交互式众包框架，利用视觉属和视觉差引导标注过程，减少标注者主观性和语义鸿沟问题。
+
+**[Dance Across Shifts: Forward-Facilitation Continual Test-Time Adaptation through Dynamic Style Bridging](dance_across_shifts_forward-facilitation_continual_test-time_adaptation_through_.md)**
+
+:   针对持续测试时适应(CTTA)里"监督信号又少又不可靠"的老大难，本文不再像以往那样把变化的测试数据硬拉回源域静态锚点(backward-alignment)，而是反过来——离线用扩散模型造一批语义纯净的类别样例，测试时把它们动态"染"上当前目标域的风格(输入/统计/表示三级桥接)，从而现场产出带真标签、又贴合当前分布的可靠监督，在 ImageNet-C / CIFAR100-C / CIFAR10-C 上把平均错误率分别降到 44.1% / 29.8% / 9.1%，且显存和延迟远低于扩散类方法。
 
 **[Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis](deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis.md)**
 
@@ -100,6 +127,10 @@ item_total: 22
 **[Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions](dual_band_thermal_videography_separating_time-varying_reflection_and_emission_ne.md)**
 
 :   提出一种双波段长波红外视频分析框架，利用光谱线索（双波段发射率比恒定）和时间线索（物体辐射平滑变化、背景辐射突变）联合约束，首次实现近环境温度条件下动态场景中反射与发射分量的逐像素分离，并恢复物体发射率和温度场。
+
+**[Exemplar-Free Continual Learning for State Space Models](exemplar-free_continual_learning_for_state_space_models.md)**
+
+:   本文提出 Inf-SSM——一种几何感知、无需存旧样本的正则化方法，把 SSM（如 Vim/Mamba）的"无穷时域行为"编码成扩展可观测子空间上的一个点，通过约束新旧任务子空间在无穷维 Grassmann 流形上的距离来抑制灾难性遗忘，并把原本 $\mathcal{O}(n^3)$ 的求解代价降到 $\mathcal{O}(n^2)$，即插即用地把现有持续学习方法平均 AA 提升 8.31%、遗忘 FM 降低 9.36%。
 
 **[FEAT: Federated Geometry-Aware Correction for Exemplar Replay under Continual Dynamic Heterogeneity](feat_federated_geometry_aware_correction_for_exemplar_replay_under_continual_dynamic_heterogeneity.md)**
 

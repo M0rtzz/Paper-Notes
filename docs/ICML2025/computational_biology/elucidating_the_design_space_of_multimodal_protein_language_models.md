@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Elucidating the Design Space of Multimodal Protein Language Models
 description: >-
-  [ICML2025][计算生物][多模态蛋白质语言模型] 系统性地探索了基于token的多模态蛋白质语言模型（PLM）的设计空间，通过比特级离散建模、几何感知架构、表征对齐和多聚体数据扩展四个维度的创新，将650M参数模型的折叠RMSD从5.52降至2.36，超越3B基线模型，接近专用折叠模型水平。
+  [ICML2025 Spotlight][计算生物][多模态蛋白质语言模型] 系统性地探索了基于token的多模态蛋白质语言模型（PLM）的设计空间，通过比特级离散建模、几何感知架构、表征对齐和多聚体数据扩展四个维度的创新，将650M参数模型的折叠RMSD从5.52降至2.36，超越3B基线模型，接近专用折叠模型水平。
 tags:
-  - "ICML2025"
+  - "ICML2025 Spotlight"
   - "计算生物"
   - "多模态蛋白质语言模型"
   - "离散结构tokenizer"

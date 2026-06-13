@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOBA: A Material-Oriented Backdoor Attack against LiDAR-based 3D Object Detection
 description: >-
-  [AAAI 2026][自动驾驶][backdoor attack] 提出 MOBA（Material-Oriented Backdoor Attack），首个基于**材料反射特性建模**的物理可实现后门攻击框架…
+  [AAAI 2026][自动驾驶][backdoor attack] 提出 MOBA（Material-Oriented Backdoor Attack），首个基于**材料反射特性建模**的物理可实现后门攻击框架，通过系统性选择二氧化钛（TiO₂）作为触发材料并利用**Oren-Nayar BRDF模型的角度无关近似**进行LiDAR强度仿真，在真实物理数据上实现了**93.50%攻击成功率**，比现有方法高出41%以上。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

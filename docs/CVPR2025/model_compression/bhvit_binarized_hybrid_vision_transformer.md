@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BHViT: Binarized Hybrid Vision Transformer
 description: >-
-  [CVPR 2025][模型压缩][二值化神经网络] 针对 ViT 二值化性能严重下降的问题，提出专为二值化设计的混合 ViT 架构 BHViT，包含多尺度分组空洞卷积 token mixer、量化分解注意力矩阵二值化、shift 增强的 MLP 和正则化损失…
+  [CVPR 2025][模型压缩][二值化神经网络] 针对 ViT 二值化性能严重下降的问题，提出专为二值化设计的混合 ViT 架构 BHViT，包含多尺度分组空洞卷积 token mixer、量化分解注意力矩阵二值化、shift 增强的 MLP 和正则化损失，在 ImageNet-1K 上达到 1-bit 二值化模型的 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "模型压缩"

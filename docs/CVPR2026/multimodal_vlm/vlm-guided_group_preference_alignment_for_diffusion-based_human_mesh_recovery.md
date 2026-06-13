@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLM-Guided Group Preference Alignment for Diffusion-based Human Mesh Recovery
 description: >-
-  [CVPR2026][多模态VLM][Human Mesh Recovery] 提出基于VLM的双记忆自反思评判代理（Critique Agent）为扩散式人体网格恢复生成组级偏好信号，再通过组偏好对齐（Group Preference Alignment）微调扩散模型…
+  [CVPR2026][多模态VLM][Human Mesh Recovery] 提出基于VLM的双记忆自反思评判代理（Critique Agent）为扩散式人体网格恢复生成组级偏好信号，再通过组偏好对齐（Group Preference Alignment）微调扩散模型，无需3D标注即可大幅提升野外场景下的HMR精度。
 tags:
   - "CVPR2026"
   - "多模态VLM"

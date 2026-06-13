@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards an Optimal Control Perspective of ResNet Training
 description: >-
-  [ICML 2025][模型压缩][ResNet] 将 ResNet 训练形式化为最优控制问题，通过在中间层添加阶段成本 (stage cost) 损失实现自正则化，证明多余的深层权重渐近趋零，为理论驱动的层剪枝奠定基础。
+  [ICML 2025][模型压缩][ResNet] 将 ResNet 训练形式化为最优控制问题，通过在中间层添加阶段成本 (stage cost) 损失实现自正则化，证明多余的深层权重渐近趋零，为理论驱动的层剪枝奠定基础。 - ResNet 的残差连接可视为连续时间神经 ODE 的欧拉前向离散化 - 从最优控制视角：数据前向…
 tags:
   - "ICML 2025"
   - "模型压缩"

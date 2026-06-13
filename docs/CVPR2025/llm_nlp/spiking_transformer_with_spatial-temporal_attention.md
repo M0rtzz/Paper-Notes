@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Spiking Transformer with Spatial-Temporal Attention
 description: >-
-  [CVPR 2025][LLM/NLP][Transformer] 将空间-时间注意力机制融入脉冲Transformer架构，通过时空解耦的注意力设计和脉冲驱动的自注意机制，在保持SNN能效优势的同时缩小与ANN的性能差距，在多个视觉基准上达到SNN SOTA。
+  [CVPR 2025][LLM 其他][Transformer] 将空间-时间注意力机制融入脉冲Transformer架构，通过时空解耦的注意力设计和脉冲驱动的自注意机制，在保持SNN能效优势的同时缩小与ANN的性能差距，在多个视觉基准上达到SNN SOTA。 领域现状 领域现状：SNN因低功耗和生物可解释性受关注…
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Transformer"
   - "时空注意力"
   - "SNN"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation
 description: >-
-  [ICCV 2025][模型压缩][知识蒸馏] 提出PAT（Perspective-Aware Teaching）框架，通过区域感知注意力（RAA）解决异构架构间的视角不匹配问题，通过自适应反馈提示（AFP）解决教师无感知问题，使得特征级蒸馏首次在异构知识蒸馏场景中全面超越logits级方法。
+  [ICCV 2025][模型压缩][知识蒸馏] 提出PAT（Perspective-Aware Teaching）框架，通过区域感知注意力（RAA）解决异构架构间的视角不匹配问题，通过自适应反馈提示（AFP）解决教师无感知问题，使得特征级蒸馏首次在异构知识蒸馏场景中全面超越logits级方法。 知识蒸馏（KD）需要将预训练大…
 tags:
   - "ICCV 2025"
   - "模型压缩"

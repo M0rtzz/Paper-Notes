@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Precise Event Spotting in Sports Videos: Solving Long-Range Dependency and Class Imbalance
 description: >-
-  [CVPR 2025][预训练][精确事件定位] 提出端到端可训练的精确事件定位框架，通过自适应时空精炼模块（ASTRM）增强特征的时空信息，并引入Soft Instance Contrastive（SoftIC）损失解决类别不平衡问题…
+  [CVPR 2025][预训练][精确事件定位] 提出端到端可训练的精确事件定位框架，通过自适应时空精炼模块（ASTRM）增强特征的时空信息，并引入Soft Instance Contrastive（SoftIC）损失解决类别不平衡问题，在SoccerNet V2 tight设置上以73.74 mAP超越SOTA。
 tags:
   - "CVPR 2025"
   - "预训练"

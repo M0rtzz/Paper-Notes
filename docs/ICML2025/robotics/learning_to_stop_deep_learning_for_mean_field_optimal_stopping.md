@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Stop: Deep Learning for Mean Field Optimal Stopping
 description: >-
-  [机器人] 首次在离散时间有限状态空间下形式化并计算求解平均场最优停止（MFOS）问题，证明 MFOS 以 $O(1/N)$ 速率逼近多智能体最优停止（MAOS），并提出两种深度学习算法（直接法 DA 和动态规划法 DPP），在维度高达 300 的 6 个场景中验证有效性。
+  [机器人] 首次在离散时间有限状态空间下形式化并计算求解平均场最优停止（MFOS）问题，证明 MFOS 以 $O(1/N)$ 速率逼近多智能体最优停止（MAOS），并提出两种深度学习算法（直接法 DA 和动态规划法 DPP），在维度高达 300 的 6 个场景中验证有效性。 最优停止（Optimal Stopping…
 tags:
   - "机器人"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Words or Vision: Do Vision-Language Models Have Blind Faith in Text?
 description: >-
-  [CVPR 2025][多模态VLM][模态偏好] 本文发现VLM存在"盲目信任文本"现象——当视觉与文本输入不一致时，模型系统性地偏向文本（即使文本是错误的），通过构建包含Match/Corruption/Irrelevance三类文本变体的benchmark评估了10个VLM，分析了5个影响因素…
+  [CVPR 2025][多模态VLM][模态偏好] 本文发现VLM存在"盲目信任文本"现象——当视觉与文本输入不一致时，模型系统性地偏向文本（即使文本是错误的），通过构建包含Match/Corruption/Irrelevance三类文本变体的benchmark评估了10个VLM，分析了5个影响因素，并证明SFT+文本增强可有效缓解，同时从理论上解释了该现象源于纯文本与多模态训练数据的不平衡。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

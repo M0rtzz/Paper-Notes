@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attend to Anything: Foundation Model for Unified Human Attention Modeling
 description: >-
-  [ICML2026][音频/语音][人类注意力] AAM把图像、视频和音视频显著性预测统一为一个带文本条件、双曲层级约束和Fokker-Planck时间动力学的注意力基础模型，在16个基准上整体优于专用模型，并把视频推理速度提升到约111 FPS。
+  [ICML2026][音频/语音][人类注意力] AAM把图像、视频和音视频显著性预测统一为一个带文本条件、双曲层级约束和Fokker-Planck时间动力学的注意力基础模型，在16个基准上整体优于专用模型，并把视频推理速度提升到约111 FPS。 领域现状：人类注意力建模通常被拆成图像显著性、视频显著性、音视频注意力等多个…
 tags:
   - "ICML2026"
   - "音频/语音"

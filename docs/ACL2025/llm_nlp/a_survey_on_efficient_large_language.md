@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Survey on Efficient Large Language Model Training: From Data-centric Perspectives
 description: >-
-  [ACL 2025][LLM/NLP][数据高效训练] 本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。
+  [ACL 2025][LLM 其他][数据高效训练] 本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。 - 核心问题： LLM 后训练（SFT、RLHF 等）是释放模型泛化能力的关键阶段…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "数据高效训练"
   - "后训练"
   - "数据选择"

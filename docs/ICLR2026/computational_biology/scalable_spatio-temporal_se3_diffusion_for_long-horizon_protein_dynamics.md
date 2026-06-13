@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Spatio-Temporal SE(3) Diffusion for Long-Horizon Protein Dynamics
 description: >-
-  [ICLR 2026][计算生物][蛋白质构象生成] 提出 STAR-MD，一个 SE(3) 等变的因果扩散 Transformer，通过联合时空注意力和上下文噪声扰动实现微秒级蛋白质动力学轨迹生成，在 ATLAS 基准上所有指标达到 SOTA，且能稳定外推到训练中未见的微秒时间尺度。
+  [ICLR 2026][计算生物][蛋白质构象生成] 提出 STAR-MD，一个 SE(3) 等变的因果扩散 Transformer，通过联合时空注意力和上下文噪声扰动实现微秒级蛋白质动力学轨迹生成，在 ATLAS 基准上所有指标达到 SOTA，且能稳定外推到训练中未见的微秒时间尺度。 领域现状：分子动力学（MD）模拟是研究…
 tags:
   - "ICLR 2026"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simple and Critical Iterative Denoising: A Recasting of Discrete Diffusion in Graph Generation
 description: >-
-  [ICML2025][图像生成][离散扩散] 提出 Simple Iterative Denoising (SID) 与 Critical Iterative Denoising (CID) 框架，通过假设中间噪声状态的条件独立性来消除离散扩散的复合去噪误差…
+  [ICML2025][图像生成][离散扩散] 提出 Simple Iterative Denoising (SID) 与 Critical Iterative Denoising (CID) 框架，通过假设中间噪声状态的条件独立性来消除离散扩散的复合去噪误差，并引入 Critic 网络自适应调节元素级重加噪概率，在图/分子生成任务上大幅超越标准离散扩散基线。
 tags:
   - "ICML2025"
   - "图像生成"

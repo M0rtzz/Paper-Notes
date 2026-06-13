@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sequential Gaussian Avatars with Hierarchical Motion Context
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 提出 SeqAvatar，利用显式3DGS表示结合层次化运动上下文（粗粒度骨骼运动 + 细粒度逐点速度）建模人体化身的运动相关外观变化，并通过时空多尺度采样增强运动条件的鲁棒性，在多个数据集上取得SOTA渲染质量同时保持实时渲染速度。
+  [ICCV 2025][3D视觉][3D高斯溅射] 提出 SeqAvatar，利用显式3DGS表示结合层次化运动上下文（粗粒度骨骼运动 + 细粒度逐点速度）建模人体化身的运动相关外观变化，并通过时空多尺度采样增强运动条件的鲁棒性，在多个数据集上取得SOTA渲染质量同时保持实时渲染速度。 基于3DGS的可动画人体化身重建近年来…
 tags:
   - "ICCV 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReacTOD: Bounded Neuro-Symbolic Agentic NLU for Zero-Shot Dialogue State Tracking
 description: >-
-  [ACL2026][对话系统][零样本DST] ReacTOD 将任务型对话状态跟踪拆成受限工具调用，并用确定性符号校验器拦截和反馈 LLM 错误，使 8B 到 32B 级模型也能在零样本 MultiWOZ 和 SGD 上获得强于先前大模型提示方法的 JGA。
+  [ACL2026][对话系统][零样本DST] ReacTOD 将任务型对话状态跟踪拆成受限工具调用，并用确定性符号校验器拦截和反馈 LLM 错误，使 8B 到 32B 级模型也能在零样本 MultiWOZ 和 SGD 上获得强于先前大模型提示方法的 JGA。 领域现状：任务型对话系统通常需要把用户话语转成可执行的意图、槽位…
 tags:
   - "ACL2026"
   - "对话系统"

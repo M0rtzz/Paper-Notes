@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Logit Distributions for Reliable Out-of-Distribution Detection
 description: >-
-  [NeurIPS 2025][AI安全][OOD检测] 提出 LogitGap，一种新的 post-hoc OOD 检测评分函数，通过显式利用最大 logit 与其余 logit 之间的"间隔"来区分 ID 和 OOD 样本，并引入 top-N 选择策略过滤噪声 logit…
+  [NeurIPS 2025][AI安全][OOD检测] 提出 LogitGap，一种新的 post-hoc OOD 检测评分函数，通过显式利用最大 logit 与其余 logit 之间的"间隔"来区分 ID 和 OOD 样本，并引入 top-N 选择策略过滤噪声 logit，理论和实验证明其在多种场景下超越 MCM 和 MaxLogit。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

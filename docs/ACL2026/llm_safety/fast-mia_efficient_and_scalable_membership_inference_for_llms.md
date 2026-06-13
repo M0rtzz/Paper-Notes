@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast-MIA: Efficient and Scalable Membership Inference for LLMs
 description: >-
-  [ACL 2026][LLM安全][Membership Inference] Fast-MIA 把 9 种主流 LLM 成员推理攻击（MIA）方法塞进同一个 vLLM 批量推理引擎，并加一层跨方法 log-prob 缓存…
+  [ACL 2026][LLM安全][Membership Inference] Fast-MIA 把 9 种主流 LLM 成员推理攻击（MIA）方法塞进同一个 vLLM 批量推理引擎，并加一层跨方法 log-prob 缓存，使评测在 LLaMA-30B / WikiMIA 上整体加速约 5×（SaMIA 单方法加速 19.5×）、AUC 几乎不变，让大规模 MIA 审计第一次变得真的"跑得起"。
 tags:
   - "ACL 2026"
   - "LLM安全"

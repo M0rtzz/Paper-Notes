@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-as-context: Modulating Explicit 3D in Scene-consistent Video Generation to Geometry Context
 description: >-
-  [CVPR 2026][视频生成][场景一致性视频生成] 提出 Geometry-as-Context (GaC) 框架，将基于重建的场景视频生成中的不可微算子（3D重建+渲染）替换为统一的自回归视频生成模型，通过将几何信息（深度图）作为交错上下文嵌入生成序列，实现端到端训练并缓解累积误差。
+  [CVPR 2026][视频生成][场景一致性视频生成] 提出 Geometry-as-Context (GaC) 框架，将基于重建的场景视频生成中的不可微算子（3D重建+渲染）替换为统一的自回归视频生成模型，通过将几何信息（深度图）作为交错上下文嵌入生成序列，实现端到端训练并缓解累积误差。 场景一致性视频生成旨在沿相机轨迹…
 tags:
   - "CVPR 2026"
   - "视频生成"

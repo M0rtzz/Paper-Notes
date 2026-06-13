@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSK@EEUCA 2026: Fine-Tuning Large Language Models with Synthetic Data Augmentation for Multi-Class Toxicity Detection in Gaming Chat
 description: >-
-  [ACL2026][社会计算][游戏聊天审核] 这篇系统论文面向 EEUCA 2026 游戏聊天毒性识别任务，用 Llama 3.1 8B + LoRA + 经过严格过滤的 5% 少数类合成改写数据，在六分类 macro-F1 上达到 0.6234，并揭示了验证集高分但测试集迁移差的“验证陷阱”。
+  [ACL2026][社会计算][游戏聊天审核] 这篇系统论文面向 EEUCA 2026 游戏聊天毒性识别任务，用 Llama 3.1 8B + LoRA + 经过严格过滤的 5% 少数类合成改写数据，在六分类 macro-F1 上达到 0.6234，并揭示了验证集高分但测试集迁移差的“验证陷阱”。 领域现状：在线游戏社区的聊…
 tags:
   - "ACL2026"
   - "社会计算"

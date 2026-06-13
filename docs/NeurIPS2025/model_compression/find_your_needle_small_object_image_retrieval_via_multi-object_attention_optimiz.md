@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization
 description: >-
-  [NeurIPS 2025][模型压缩][小目标检索] MaO 提出了一种针对小目标图像检索（SoIR）的新方法，通过多目标预训练和基于注意力的特征优化，将多个目标的表示融合为单一全局描述符，在多个基准上大幅超越现有检索方法。
+  [NeurIPS 2025][模型压缩][小目标检索] MaO 提出了一种针对小目标图像检索（SoIR）的新方法，通过多目标预训练和基于注意力的特征优化，将多个目标的表示融合为单一全局描述符，在多个基准上大幅超越现有检索方法。 在大规模图像语料库中检索包含特定小目标的图像，犹如"大海捞针"。传统的实例级图像检索（IBIR）方…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

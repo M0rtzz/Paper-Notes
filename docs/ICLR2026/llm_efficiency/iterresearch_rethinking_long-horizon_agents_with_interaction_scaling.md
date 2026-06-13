@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IterResearch: Rethinking Long-Horizon Agents with Interaction Scaling
 description: >-
-  [ICLR 2026][LLM效率][深度研究Agent] 提出 IterResearch，一种基于MDP的迭代深度研究范式，通过周期性工作区重构替代单上下文线性累积，使Agent在40K上下文长度下扩展到2048次交互（性能从3.5%提升至42.5%）…
+  [ICLR 2026][LLM效率][深度研究Agent] 提出 IterResearch，一种基于MDP的迭代深度研究范式，通过周期性工作区重构替代单上下文线性累积，使Agent在40K上下文长度下扩展到2048次交互（性能从3.5%提升至42.5%），在6个benchmark上平均超出开源Agent 14.5个百分点。
 tags:
   - "ICLR 2026"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Code Localization with Repository Memory
 description: >-
-  [ICLR 2026][代码智能][代码定位] 通过利用代码仓库的 commit 历史构建情景记忆（过去 commit）和语义记忆（活跃代码功能摘要），增强语言代理的代码定位能力，在 SWE-bench 上取得显著提升。
+  [ICLR 2026][代码智能][代码定位] 通过利用代码仓库的 commit 历史构建情景记忆（过去 commit）和语义记忆（活跃代码功能摘要），增强语言代理的代码定位能力，在 SWE-bench 上取得显著提升。 代码定位是仓库级软件工程任务（如 bug 修复）的关键第一步，即找到需要修改的文件和代码片段。现有方法…
 tags:
   - "ICLR 2026"
   - "代码智能"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InftyThink+: Effective and Efficient Infinite-Horizon Reasoning via Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][迭代推理] 本文把"迭代推理 + 显式摘要"这一推理范式从纯 SFT 升级到端到端 RL，提出 InftyThink+：用轨迹级 GRPO 同时优化"何时摘要、保留什么、如何续推"三个决策，并配以效率奖励…
+  [ICML 2026][强化学习][迭代推理] 本文把"迭代推理 + 显式摘要"这一推理范式从纯 SFT 升级到端到端 RL，提出 InftyThink+：用轨迹级 GRPO 同时优化"何时摘要、保留什么、如何续推"三个决策，并配以效率奖励，在 DeepSeek-R1-Distill-Qwen-1.5B 上把 AIME24 准确率提升 21%、延迟降低 32.8%。
 tags:
   - "ICML 2026"
   - "强化学习"

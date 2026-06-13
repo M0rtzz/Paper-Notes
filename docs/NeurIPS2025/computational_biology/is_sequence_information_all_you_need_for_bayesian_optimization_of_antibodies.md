@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Is Sequence Information All You Need for Bayesian Optimization of Antibodies?
 description: >-
-  [NeurIPS 2025 (AI for Science Workshop)][计算生物][贝叶斯优化] 本文系统比较了序列信息和结构信息在抗体贝叶斯优化中的作用，发现通过蛋白质语言模型（pLM）软约束，纯序列方法可以匹配结构方法的性能，质疑了结构信息在抗体贝叶斯优化中的必要性。
+  [NeurIPS 2025 (AI for Science Workshop)][计算生物][贝叶斯优化] 本文系统比较了序列信息和结构信息在抗体贝叶斯优化中的作用，发现通过蛋白质语言模型（pLM）软约束，纯序列方法可以匹配结构方法的性能，质疑了结构信息在抗体贝叶斯优化中的必要性。 领域现状： 治疗性抗体是一类重要的药物…
 tags:
   - "NeurIPS 2025 (AI for Science Workshop)"
   - "计算生物"

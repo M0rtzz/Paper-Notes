@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distraction is All You Need for Multimodal Large Language Model Jailbreaking
 description: >-
-  [CVPR 2025][多模态VLM][MLLM安全] 提出"分散假说"——通过构造高对比度多子图复合输入增加视觉复杂度来制造 OOD 效果，配合查询分解和精心设计的无害指令，实现对 GPT-4o 等闭源 MLLM 高达 42-64% 攻击成功率的黑盒越狱。
+  [CVPR 2025][多模态VLM][MLLM安全] 提出"分散假说"——通过构造高对比度多子图复合输入增加视觉复杂度来制造 OOD 效果，配合查询分解和精心设计的无害指令，实现对 GPT-4o 等闭源 MLLM 高达 42-64% 攻击成功率的黑盒越狱。 领域现状：MLLM 的安全对齐机制（safety alignmen…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

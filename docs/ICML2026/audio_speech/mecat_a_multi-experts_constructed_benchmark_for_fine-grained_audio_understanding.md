@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MECAT: A Multi-Experts Constructed Benchmark for Fine-Grained Audio Understanding Tasks
 description: >-
-  [ICML 2026][音频/语音][细粒度音频理解] MECAT 用「多专家模型 + CoT 大模型推理」构造了 20k 条多视角细粒度音频字幕与 10 万条开放式 QA，并提出 DATE 指标（语义相似度 × 跨样本可区分度的调和平均），首次能稳定区分泛泛而谈与细节准确的音频模型输出。
+  [ICML 2026][音频/语音][细粒度音频理解] MECAT 用「多专家模型 + CoT 大模型推理」构造了 20k 条多视角细粒度音频字幕与 10 万条开放式 QA，并提出 DATE 指标（语义相似度 × 跨样本可区分度的调和平均），首次能稳定区分泛泛而谈与细节准确的音频模型输出。 领域现状：大型音频-语言模型（LA…
 tags:
   - "ICML 2026"
   - "音频/语音"

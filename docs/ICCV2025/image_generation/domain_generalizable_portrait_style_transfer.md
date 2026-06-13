@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domain Generalizable Portrait Style Transfer
 description: >-
-  [ICCV 2025][图像生成][人像风格迁移] DGPST 提出了一个基于扩散模型的人像风格迁移框架，通过 semantic adapter 建立跨域稠密语义对应来扭曲参考图像，配合 AdaIN-Wavelet Transform 进行潜空间初始化以平衡风格化与内容保持…
+  [ICCV 2025][图像生成][人像风格迁移] DGPST 提出了一个基于扩散模型的人像风格迁移框架，通过 semantic adapter 建立跨域稠密语义对应来扭曲参考图像，配合 AdaIN-Wavelet Transform 进行潜空间初始化以平衡风格化与内容保持，结合 ControlNet（高频结构引导）和 style adapter（风格引导）的双条件扩散模型生成最终结果，仅在 30K 真实肖像照片上训练即可泛化到照片、卡通、素描、动漫等多种域。
 tags:
   - "ICCV 2025"
   - "图像生成"

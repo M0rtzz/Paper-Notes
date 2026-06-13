@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perturb Your Data: Paraphrase-Guided Training Data Watermarking
 description: >-
-  [AAAI2026][LLM安全][训练数据水印] 提出SPECTRA——一种基于paraphrase采样的训练数据水印方法，通过LLM生成改写文本并利用Min-K%++评分选择与原文分数接近的paraphrase作为水印，在数据仅占训练语料0.001%的情况下…
+  [AAAI2026][LLM安全][训练数据水印] 提出SPECTRA——一种基于paraphrase采样的训练数据水印方法，通过LLM生成改写文本并利用Min-K%++评分选择与原文分数接近的paraphrase作为水印，在数据仅占训练语料0.001%的情况下，member与non-member的p-value差距稳定超过9个数量级。
 tags:
   - "AAAI2026"
   - "LLM安全"

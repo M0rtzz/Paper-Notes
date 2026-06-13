@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLAVIDAL: A Large Language Vision Model for Daily Activities of Living
 description: >-
-  [CVPR 2025][视频理解][日常活动理解] 针对日常生活活动（ADL）理解，构建了多视角多模态指令微调数据集 ADL-X，提出 LLAVIDAL 模型融合视频、3D 骨架和 HOI 线索，采用 MMPro 渐进式训练策略实现 SOTA 性能。
+  [CVPR 2025][视频理解][日常活动理解] 针对日常生活活动（ADL）理解，构建了多视角多模态指令微调数据集 ADL-X，提出 LLAVIDAL 模型融合视频、3D 骨架和 HOI 线索，采用 MMPro 渐进式训练策略实现 SOTA 性能。 现有大语言视觉模型（LLVM）主要在网络视频上训练，擅长运动、电影等场景…
 tags:
   - "CVPR 2025"
   - "视频理解"

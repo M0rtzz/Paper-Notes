@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Localized, High-resolution Geographic Representations with Slepian Functions
 description: >-
-  [ICML 2026][遥感][Slepian 函数] 本文用球面 Slepian 函数构造一种把表征容量集中在感兴趣区域 (ROI) 的地理位置编码器，并提出 Slepian-球面调和混合编码以同时兼顾局部高分辨率与全球粗粒度上下文…
+  [ICML 2026][遥感][Slepian 函数] 本文用球面 Slepian 函数构造一种把表征容量集中在感兴趣区域 (ROI) 的地理位置编码器，并提出 Slepian-球面调和混合编码以同时兼顾局部高分辨率与全球粗粒度上下文，在五个分类、回归与图像增强预测任务上稳定超过 SH、Wavelet、RFF 等主流基线。
 tags:
   - "ICML 2026"
   - "遥感"

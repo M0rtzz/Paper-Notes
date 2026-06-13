@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReconDreamer: Crafting World Models for Driving Scene Reconstruction via Online Restoration
 description: >-
-  [CVPR 2025][自动驾驶][驾驶场景重建] 本文提出 ReconDreamer，通过增量式整合世界模型知识来增强驾驶场景重建，核心是 DriveRestorer（在线修复渲染伪影的微调世界模型）和渐进式数据更新策略（PDUS），首次实现了大幅机动（如跨越 6 米多车道变道）下的高质量新轨迹渲染…
+  [CVPR 2025][自动驾驶][驾驶场景重建] 本文提出 ReconDreamer，通过增量式整合世界模型知识来增强驾驶场景重建，核心是 DriveRestorer（在线修复渲染伪影的微调世界模型）和渐进式数据更新策略（PDUS），首次实现了大幅机动（如跨越 6 米多车道变道）下的高质量新轨迹渲染，在 NTA-IoU 上较基线提升 24.87%。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

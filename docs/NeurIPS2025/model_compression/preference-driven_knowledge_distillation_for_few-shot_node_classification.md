@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PKD: Preference-driven Knowledge Distillation for Few-shot Node Classification
 description: >-
-  [NeurIPS 2025][模型压缩][少样本节点分类] PKD 框架协同 LLM 和多 GNN 教师做文本属性图少样本节点分类——GNN 偏好节点选择器（GNS）用 KL 散度不确定性选择需要 LLM 标注的节点，节点偏好 GNN 选择器（NGS）用 RL 为每个节点匹配最优 GNN 教师…
+  [NeurIPS 2025][模型压缩][少样本节点分类] PKD 框架协同 LLM 和多 GNN 教师做文本属性图少样本节点分类——GNN 偏好节点选择器（GNS）用 KL 散度不确定性选择需要 LLM 标注的节点，节点偏好 GNN 选择器（NGS）用 RL 为每个节点匹配最优 GNN 教师，在 9 个数据集上一致 SOTA（Cornell 87% vs 基线 59-82%）。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

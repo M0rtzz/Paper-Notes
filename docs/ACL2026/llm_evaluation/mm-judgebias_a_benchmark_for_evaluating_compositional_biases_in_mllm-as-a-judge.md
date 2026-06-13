@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-JudgeBias: A Benchmark for Evaluating Compositional Biases in MLLM-as-a-Judge
 description: >-
-  [ACL 2026][LLM评测][MLLM-as-a-Judge] 作者把"MLLM 当 judge 时是否真的把图像、查询、回答三者综合起来评判"形式化为 Compositional Bias…
+  [ACL 2026][LLM评测][MLLM-as-a-Judge] 作者把"MLLM 当 judge 时是否真的把图像、查询、回答三者综合起来评判"形式化为 Compositional Bias，并构建 MM-JudgeBias——一个含 9 类偏见、1804 条来自 29 个源 benchmark 样本的诊断集，用 Bias-Deviation（语义破坏后该降分但没降）+ Bias-Conformity（语义保不变时该稳但不稳）两个互补指标，发现 26 个 SOTA MLLM judge（含 Gemini-3 Pro、GPT-5.1、Claude Opus 4.5）都存在严重的 modality neglect。
 tags:
   - "ACL 2026"
   - "LLM评测"

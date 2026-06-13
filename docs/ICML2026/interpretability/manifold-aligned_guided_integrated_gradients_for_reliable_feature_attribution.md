@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Manifold-Aligned Guided Integrated Gradients for Reliable Feature Attribution
 description: >-
-  [ICML 2026][可解释性][integrated gradients] 本文提出 MA-GIG：把 Guided IG 的“按低梯度幅值选特征再走一步”策略从像素空间搬到预训练 VAE 的潜在空间，借助 decoder Jacobian 把潜空间内的轴对齐更新映射成数据流形切空间上的更新…
+  [ICML 2026][可解释性][integrated gradients] 本文提出 MA-GIG：把 Guided IG 的“按低梯度幅值选特征再走一步”策略从像素空间搬到预训练 VAE 的潜在空间，借助 decoder Jacobian 把潜空间内的轴对齐更新映射成数据流形切空间上的更新，从而既避开高梯度噪声区域，又让积分路径上的样本始终贴近真实数据流形，归因更可靠。
 tags:
   - "ICML 2026"
   - "可解释性"

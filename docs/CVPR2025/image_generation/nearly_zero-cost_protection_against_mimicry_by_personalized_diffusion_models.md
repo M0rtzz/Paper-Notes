@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][图像保护] 本文提出FastProtect，首个关注延迟的图像保护框架，通过预训练Mixture-of-Perturbations (MoP)替代传统逐图迭代优化…
+  [CVPR 2025][图像生成][图像保护] 本文提出FastProtect，首个关注延迟的图像保护框架，通过预训练Mixture-of-Perturbations (MoP)替代传统逐图迭代优化，配合Multi-Layer Protection Loss增强训练效果、Adaptive Targeted Protection和Adaptive Protection Strength优化推理，实现了比现有最快方法PhotoGuard快175×（A100 GPU上0.04秒 vs 7秒处理512²图像）的实时保护，同时保持相当的保护效力和更优的不可见性。
 tags:
   - "CVPR 2025"
   - "图像生成"

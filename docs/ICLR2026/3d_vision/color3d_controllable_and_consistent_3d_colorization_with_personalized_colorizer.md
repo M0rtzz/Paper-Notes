@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Color3D: Controllable and Consistent 3D Colorization with Personalized Colorizer
 description: >-
-  [ICLR 2026][3D视觉][3D上色] Color3D 提出"只上色一张关键视角→微调个性化 colorizer→传播颜色到所有视角和时间步"的范式，将复杂的 3D 上色问题转化为单图上色+颜色传播问题，在静态和动态 3D 场景上都实现了丰富色彩、跨视角一致性和用户可控性的统一。
+  [ICLR 2026][3D视觉][3D上色] Color3D 提出"只上色一张关键视角→微调个性化 colorizer→传播颜色到所有视角和时间步"的范式，将复杂的 3D 上色问题转化为单图上色+颜色传播问题，在静态和动态 3D 场景上都实现了丰富色彩、跨视角一致性和用户可控性的统一。 领域现状：3DGS/NeRF 实现了…
 tags:
   - "ICLR 2026"
   - "3D视觉"

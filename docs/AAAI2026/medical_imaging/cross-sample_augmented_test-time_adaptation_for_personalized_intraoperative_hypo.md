@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction
 description: >-
-  [AAAI 2026][医学图像][术中低血压预测] 提出 CSA-TTA 框架，通过跨样本库构建、粗到细检索和多任务优化，在测试时从其他患者数据中检索低血压事件信号来增强个性化术中低血压预测。
+  [AAAI 2026][医学图像][术中低血压预测] 提出 CSA-TTA 框架，通过跨样本库构建、粗到细检索和多任务优化，在测试时从其他患者数据中检索低血压事件信号来增强个性化术中低血压预测。 - 术中低血压（IOH）：MAP < 65 mmHg 持续≥1分钟，可导致急性肾损伤、心肌梗死、中风甚至死亡 - 准确预测 IOH…
 tags:
   - "AAAI 2026"
   - "医学图像"

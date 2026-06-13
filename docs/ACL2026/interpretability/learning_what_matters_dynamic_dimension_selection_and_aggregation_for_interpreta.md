@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning What Matters: Dynamic Dimension Selection and Aggregation for Interpretable Vision-Language Reward Modeling
 description: >-
-  [ACL 2026][可解释性][视觉语言奖励模型] VL-MDR 把"单标量黑盒"的判别式视觉语言奖励模型升级成"动态选维度 + 各维度打分 + 自适应加权"的三头架构，配合 321k 条带 21 维细粒度偏好标注的数据集，在 VL-RewardBench 上击败现有开源 RM…
+  [ACL 2026][可解释性][视觉语言奖励模型] VL-MDR 把"单标量黑盒"的判别式视觉语言奖励模型升级成"动态选维度 + 各维度打分 + 自适应加权"的三头架构，配合 321k 条带 21 维细粒度偏好标注的数据集，在 VL-RewardBench 上击败现有开源 RM，并能产出更高质量的 DPO 偏好对来缓解 VLM 幻觉。
 tags:
   - "ACL 2026"
   - "可解释性"

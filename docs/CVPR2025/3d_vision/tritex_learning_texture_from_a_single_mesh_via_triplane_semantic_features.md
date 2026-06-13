@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TriTex: Learning Texture from a Single Mesh via Triplane Semantic Features
 description: >-
-  [CVPR 2025][3D视觉][纹理迁移] 提出 TriTex，一种从单个纹理网格学习体积纹理场（volumetric texture field）的方法，利用Diff3F语义特征投影到三平面（triplane）表示中，通过卷积网络和MLP实现语义感知的前馈式纹理迁移，在推理速度和纹理保真度上超越现有方法…
+  [CVPR 2025][3D视觉][纹理迁移] 提出 TriTex，一种从单个纹理网格学习体积纹理场（volumetric texture field）的方法，利用Diff3F语义特征投影到三平面（triplane）表示中，通过卷积网络和MLP实现语义感知的前馈式纹理迁移，在推理速度和纹理保真度上超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

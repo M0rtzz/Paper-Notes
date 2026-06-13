@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Voxels Rasterization: Real-time High-fidelity Radiance Field Rendering
 description: >-
-  [CVPR 2025][3D视觉][稀疏体素] 本文提出 SVRaster，一种无需神经网络或 3D 高斯的高效辐射场渲染方法，通过自适应多层次稀疏体素表示和基于方向相关 Morton 排序的定制光栅化器，实现了无伪影的实时高保真渲染。
+  [CVPR 2025][3D视觉][稀疏体素] 本文提出 SVRaster，一种无需神经网络或 3D 高斯的高效辐射场渲染方法，通过自适应多层次稀疏体素表示和基于方向相关 Morton 排序的定制光栅化器，实现了无伪影的实时高保真渲染。 领域现状：新视角合成领域有两大主流路线——基于光线追踪的 NeRF 方法使用密集采样进行…
 tags:
   - "CVPR 2025"
   - "3D视觉"

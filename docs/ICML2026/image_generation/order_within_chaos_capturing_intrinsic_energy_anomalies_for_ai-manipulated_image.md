@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Order within Chaos: Capturing Intrinsic Energy Anomalies for AI-Manipulated Image Forgery Localization
 description: >-
-  [ICML 2026][图像生成][AI-IFL] 本文从扩散模型的频谱偏置出发，理论证明扩散生成区域的局部 Gibbs 能量必然低于真实成像区域，据此构造 LAD（Local Adjacency Discrepancy）能量图作为内禀取证指纹…
+  [ICML 2026][图像生成][AI-IFL] 本文从扩散模型的频谱偏置出发，理论证明扩散生成区域的局部 Gibbs 能量必然低于真实成像区域，据此构造 LAD（Local Adjacency Discrepancy）能量图作为内禀取证指纹，再用一个轻量适配器把 LAD 线索注入 SAM 完成像素级伪造定位，并配套 EditStream 多智能体自动从 HuggingFace 拉取最新编辑模型不断刷新训练数据，在 7 个 AI 编辑数据集上把平均 IoU 从前 SOTA 的 ~0.25 拉到 0.46。
 tags:
   - "ICML 2026"
   - "图像生成"

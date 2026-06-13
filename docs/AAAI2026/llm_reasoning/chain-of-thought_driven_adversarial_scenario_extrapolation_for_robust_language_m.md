@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain-of-Thought Driven Adversarial Scenario Extrapolation for Robust Language Models
 description: >-
-  [AAAI 2026][LLM推理][adversarial defense] 提出 ASE（Adversarial Scenario Extrapolation），一种推理时 CoT 防御框架，让 LLM 在回答前自主模拟对抗场景并制定防御策略，在四类安全威胁（越狱、毒性、幻觉、偏见）上实现近零攻击成功率…
+  [AAAI 2026][LLM推理][adversarial defense] 提出 ASE（Adversarial Scenario Extrapolation），一种推理时 CoT 防御框架，让 LLM 在回答前自主模拟对抗场景并制定防御策略，在四类安全威胁（越狱、毒性、幻觉、偏见）上实现近零攻击成功率，同时将直接拒绝率降至≤4%，兼顾鲁棒性和用户体验。
 tags:
   - "AAAI 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LK Losses: Direct Acceptance Rate Optimization for Speculative Decoding
 description: >-
-  [ICML 2026][模型压缩][推测解码] 本文指出推测解码训练时长期用 KL 散度作为接受率的 proxy 是次优的——小容量 draft 模型在有限容量下 KL 最小化不蕴含接受率最大化…
+  [ICML 2026][模型压缩][推测解码] 本文指出推测解码训练时长期用 KL 散度作为接受率的 proxy 是次优的——小容量 draft 模型在有限容量下 KL 最小化不蕴含接受率最大化；提出 LK losses（直接最大化负 log 接受率 + 与 KL 的 trust-region 混合）作为 plug-in 替代，4 个 draft 架构 × 6 个 target 模型（8B-685B）一致提升 8-10% 平均接受长度。
 tags:
   - "ICML 2026"
   - "模型压缩"

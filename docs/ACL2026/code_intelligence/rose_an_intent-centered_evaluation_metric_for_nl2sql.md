@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ROSE: An Intent-Centered Evaluation Metric for NL2SQL
 description: >-
-  [ACL2026][代码智能][意图中心评测] ROSE 将 NL2SQL 评测从“预测 SQL 是否匹配单一参考 SQL”改为“预测 SQL 是否满足用户意图”，通过 SQL Prover 与 Adversarial Refuter 两阶段推理…
+  [ACL2026][代码智能][意图中心评测] ROSE 将 NL2SQL 评测从“预测 SQL 是否匹配单一参考 SQL”改为“预测 SQL 是否满足用户意图”，通过 SQL Prover 与 Adversarial Refuter 两阶段推理，在 ROSE-VEC 上比现有最佳指标高近 24 个百分点 Cohen's Kappa，并揭示 BIRD 等基准中参考 SQL 错误和问题歧义造成的评测危机。
 tags:
   - "ACL2026"
   - "代码智能"

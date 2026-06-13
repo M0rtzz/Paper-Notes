@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Structural Origin of Attention Sink: Variance Discrepancy, Super Neurons, and Dimension Disparity
 description: >-
-  [ICML 2026][3D视觉][注意力机制] 本文揭示 LLM 中"注意力汇聚到第一个 token"的结构性根源 —— 因果掩码下首 token 缺乏 value 聚合导致维度方差差异,被 FFN 中的 super neurons 选择性放大形成维度极度悬殊…
+  [ICML 2026][3D视觉][注意力机制] 本文揭示 LLM 中"注意力汇聚到第一个 token"的结构性根源 —— 因果掩码下首 token 缺乏 value 聚合导致维度方差差异,被 FFN 中的 super neurons 选择性放大形成维度极度悬殊,最终锁死 QK 投影迫使形成 attention sink;并据此提出 head-wise RMSNorm 在预训练阶段从根上抑制 sink。
 tags:
   - "ICML 2026"
   - "3D视觉"

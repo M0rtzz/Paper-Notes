@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShotAdapter: Text-to-Multi-Shot Video Generation with Diffusion Models
 description: >-
-  [CVPR 2025][视频生成][多镜头视频生成] ShotAdapter 提出了一个轻量框架，通过引入可学习的"转场token"和局部注意力掩码策略，仅需约 5000 次迭代的微调即可将预训练的单镜头 T2V 模型转变为支持多镜头视频生成（T2MSV）的生成器…
+  [CVPR 2025][视频生成][多镜头视频生成] ShotAdapter 提出了一个轻量框架，通过引入可学习的"转场token"和局部注意力掩码策略，仅需约 5000 次迭代的微调即可将预训练的单镜头 T2V 模型转变为支持多镜头视频生成（T2MSV）的生成器，实现角色身份一致、各镜头独立可控的多镜头视频生成。
 tags:
   - "CVPR 2025"
   - "视频生成"

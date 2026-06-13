@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lightweight Optimal-Transport Harmonization on Edge Devices
 description: >-
-  [AAAI 2026][模型压缩][颜色协调] 提出 MKL-Harmonizer，利用经典最优传输理论中的 Monge-Kantorovich 线性映射（MKL），训练一个轻量级编码器预测 12 维颜色变换参数，实现边缘设备上的实时图像颜色协调，在 AR 场景的感知质量-速度综合指标上达到最优。
+  [AAAI 2026 Oral][模型压缩][颜色协调] 提出 MKL-Harmonizer，利用经典最优传输理论中的 Monge-Kantorovich 线性映射（MKL），训练一个轻量级编码器预测 12 维颜色变换参数，实现边缘设备上的实时图像颜色协调，在 AR 场景的感知质量-速度综合指标上达到最优。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "模型压缩"
   - "颜色协调"
   - "最优传输"

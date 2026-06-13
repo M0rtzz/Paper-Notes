@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents
 description: >-
-  [ICLR 2026][LLM Agent][Web Agent] 受Bloom教育分类学启发，提出 Web-CogKnowledge Framework，将Web Agent能力分解为 Factual→Conceptual→Procedural 三层知识的渐进式学习…
+  [ICLR 2026][LLM Agent][Web Agent] 受Bloom教育分类学启发，提出 Web-CogKnowledge Framework，将Web Agent能力分解为 Factual→Conceptual→Procedural 三层知识的渐进式学习，配合 Knowledge-driven CoT 推理框架训练得到 Web-CogReasoner，在Web-CogBench上以84.4%超越Claude Sonnet 4 (76.8%)和Gemini 2.5 Pro (80.4%)。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

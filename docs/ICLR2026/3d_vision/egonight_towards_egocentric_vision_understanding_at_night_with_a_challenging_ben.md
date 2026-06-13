@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark
 description: >-
-  [ICLR 2026][3D视觉] 提出首个夜间第一人称视觉基准 EgoNight，包含日夜对齐视频和 3658 个人工验证 QA 对，揭示 MLLM 在低光照下存在高达 32.8% 的性能下降。
+  [ICLR 2026][3D视觉] 提出首个夜间第一人称视觉基准 EgoNight，包含日夜对齐视频和 3658 个人工验证 QA 对，揭示 MLLM 在低光照下存在高达 32.8% 的性能下降。 领域现状 第一人称视觉理解近年来取得了显著进展，大规模数据集如 EPIC-KITCHENS、Ego4D、Ego-Exo4D 推动…
 tags:
   - "ICLR 2026"
   - "3D视觉"

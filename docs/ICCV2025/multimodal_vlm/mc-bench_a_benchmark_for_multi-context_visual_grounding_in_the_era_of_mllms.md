@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MC-Bench: A Benchmark for Multi-Context Visual Grounding in the Era of MLLMs
 description: >-
-  [ICCV 2025][多模态VLM][多上下文视觉定位] 提出多上下文视觉定位（Multi-Context Visual Grounding）这一新任务和 MC-Bench 基准——包含 2000 个人工标注样本、3 种文本描述风格、20 项实用技能，评估了 20+ 个 MLLM 和基础模型…
+  [ICCV 2025][多模态VLM][多上下文视觉定位] 提出多上下文视觉定位（Multi-Context Visual Grounding）这一新任务和 MC-Bench 基准——包含 2000 个人工标注样本、3 种文本描述风格、20 项实用技能，评估了 20+ 个 MLLM 和基础模型，揭示现有模型与人类之间存在显著性能差距（人类 AP50=41.3% vs. 最优端到端模型 AP50=30.7%），并提供了一个 GPT-4o + G-DINO 的 agentic 基线（AP50=36.2%）。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

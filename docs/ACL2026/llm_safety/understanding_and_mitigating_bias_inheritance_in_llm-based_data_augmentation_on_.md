@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Mitigating Bias Inheritance in LLM-based Data Augmentation on Downstream Tasks
 description: >-
-  [ACL2026][LLM安全][偏见继承] 这篇论文系统研究 LLM 生成的有偏增强数据如何在监督微调中被继承、放大并影响下游任务，并用六类偏见生成框架、十个任务和三类缓解方法揭示了“合成数据越多不一定越安全”的复杂现象。
+  [ACL2026][LLM安全][偏见继承] 这篇论文系统研究 LLM 生成的有偏增强数据如何在监督微调中被继承、放大并影响下游任务，并用六类偏见生成框架、十个任务和三类缓解方法揭示了“合成数据越多不一定越安全”的复杂现象。 领域现状：LLM-based data augmentation 已经成为低资源任务和指令微调中的常…
 tags:
   - "ACL2026"
   - "LLM安全"

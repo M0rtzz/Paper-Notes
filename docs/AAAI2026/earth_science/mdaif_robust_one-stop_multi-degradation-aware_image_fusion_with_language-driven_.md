@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MdaIF: Robust One-Stop Multi-Degradation-Aware Image Fusion with Language-Driven Semantics
 description: >-
-  [AAAI 2026][地球科学][红外可见光融合] 提出 MdaIF 框架，利用视觉语言模型（VLM）提取退化感知语义先验来引导混合专家（MoE）路由和通道注意力调制，实现无需退化类型标注的一站式多退化场景红外-可见光图像融合。
+  [AAAI 2026][地球科学][红外可见光融合] 提出 MdaIF 框架，利用视觉语言模型（VLM）提取退化感知语义先验来引导混合专家（MoE）路由和通道注意力调制，实现无需退化类型标注的一站式多退化场景红外-可见光图像融合。 领域现状：红外-可见光图像融合（IVF）旨在整合红外热辐射信息与可见光纹理细节…
 tags:
   - "AAAI 2026"
   - "地球科学"

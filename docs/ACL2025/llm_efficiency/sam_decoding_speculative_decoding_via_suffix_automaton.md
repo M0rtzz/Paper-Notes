@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAM Decoding: Speculative Decoding via Suffix Automaton
 description: >-
-  [ACL 2025][LLM效率][推测解码] 提出SAM-Decoding，利用后缀自动机（Suffix Automaton）对通用文本语料和当前文本序列进行最长后缀匹配来高效生成推测解码的草稿，平均O(1)时间复杂度，在Spec-Bench上比现有检索式方法快18%+…
+  [ACL 2025][LLM效率][推测解码] 提出SAM-Decoding，利用后缀自动机（Suffix Automaton）对通用文本语料和当前文本序列进行最长后缀匹配来高效生成推测解码的草稿，平均O(1)时间复杂度，在Spec-Bench上比现有检索式方法快18%+，并可与EAGLE-2等方法互补组合进一步提速3.28%-11.13%。
 tags:
   - "ACL 2025"
   - "LLM效率"

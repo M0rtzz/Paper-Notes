@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Evaluating LLMs for Multi-Step Tasks: Stepwise Confidence Estimation for Failure Detection
 description: >-
-  [NeurIPS 2025][LLM推理][多语言基准] PolyMath构建的18语言、4难度级、500问题数学推理基准揭露：(1)推理性能跨语言差异达10分，(2)推理模型输入-输出语言一致性低且可能影响性能，(3)思考长度在语言间显著不一致，为多语言推理研究提供新视角。
+  [NeurIPS 2025][LLM推理][多语言基准] PolyMath构建的18语言、4难度级、500问题数学推理基准揭露：(1)推理性能跨语言差异达10分，(2)推理模型输入-输出语言一致性低且可能影响性能，(3)思考长度在语言间显著不一致，为多语言推理研究提供新视角。 核心矛盾 核心矛盾：领域现状：多语言基准滞后：虽…
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

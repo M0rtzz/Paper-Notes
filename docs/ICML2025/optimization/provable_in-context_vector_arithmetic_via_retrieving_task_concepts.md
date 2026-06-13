@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provable In-Context Vector Arithmetic via Retrieving Task Concepts
 description: >-
-  [ICML2025][优化/理论][in-context learning] 本文从优化理论角度证明：带残差连接和层归一化的非线性 Transformer 经梯度下降在 QA 数据上训练后，能通过向量加法（task vector + query）完成事实召回型 ICL 任务…
+  [ICML2025][优化/理论][in-context learning] 本文从优化理论角度证明：带残差连接和层归一化的非线性 Transformer 经梯度下降在 QA 数据上训练后，能通过向量加法（task vector + query）完成事实召回型 ICL 任务，且在 ICL 数据上训练反而会导致低层特征的有害记忆。
 tags:
   - "ICML2025"
   - "优化/理论"

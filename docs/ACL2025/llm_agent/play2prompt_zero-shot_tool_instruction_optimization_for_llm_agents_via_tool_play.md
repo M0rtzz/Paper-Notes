@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Play2Prompt: Zero-shot Tool Instruction Optimization for LLM Agents via Tool Play
 description: >-
-  [ACL 2025][LLM Agent][tool learning] 提出 Play2Prompt，通过让 LLM 自主"玩"工具（试探输入输出行为）来零样本地生成工具使用示例和优化工具文档，无需任何标注数据即可显著提升 LLM agent 的工具调用能力。
+  [ACL 2025][LLM Agent][tool learning] 提出 Play2Prompt，通过让 LLM 自主"玩"工具（试探输入输出行为）来零样本地生成工具使用示例和优化工具文档，无需任何标注数据即可显著提升 LLM agent 的工具调用能力。 领域现状：LLM agent 框架通过调用外部工具解决复杂任务…
 tags:
   - "ACL 2025"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Shielded Diffusion: Generating Novel and Diverse Images using Sparse Repellency
 description: >-
-  [ICML2025][图像生成][扩散模型多样性] 提出 SPELL（Sparse Repellency）方法，在扩散模型生成过程中添加**稀疏排斥项**，将采样轨迹推离参考图像集合（受保护图像或已生成图像），以**免训练**方式提升输出多样性并防止复制训练集。
+  [ICML2025][图像生成][扩散模型多样性] 提出 SPELL（Sparse Repellency）方法，在扩散模型生成过程中添加稀疏排斥项：，将采样轨迹推离参考图像集合（受保护图像或已生成图像），以免训练：方式提升输出多样性并防止复制训练集。 文本到图像扩散模型在部署时面临两大问题： 多样性不足：使用 Classif…
 tags:
   - "ICML2025"
   - "图像生成"

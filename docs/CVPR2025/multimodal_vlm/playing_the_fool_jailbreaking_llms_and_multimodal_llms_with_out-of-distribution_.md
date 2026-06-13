@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy
 description: >-
-  [CVPR 2025][多模态VLM][越狱攻击] 提出 JOOD 框架，通过将恶意输入进行分布外（OOD）化变换（如图像/文本混合），大幅提升模型不确定性，从而绕过 LLM 和 MLLM 的安全对齐防护，实现高成功率的黑盒越狱攻击。
+  [CVPR 2025][多模态VLM][越狱攻击] 提出 JOOD 框架，通过将恶意输入进行分布外（OOD）化变换（如图像/文本混合），大幅提升模型不确定性，从而绕过 LLM 和 MLLM 的安全对齐防护，实现高成功率的黑盒越狱攻击。 当前 LLM/MLLM 通过 RLHF 等方法进行了安全对齐，能有效拒绝直接的恶意请求…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

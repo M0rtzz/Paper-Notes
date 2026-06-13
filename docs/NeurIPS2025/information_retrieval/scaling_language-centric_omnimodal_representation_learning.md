@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Language-Centric Omnimodal Representation Learning
 description: >-
-  [NeurIPS 2025][信息检索/RAG][多模态表示学习] 提出 LCO-Emb 框架，发现多模态大模型（MLLM）在生成式预训练中已隐式建立跨模态对齐，仅需轻量级的纯文本对比学习微调即可激活全模态表示能力…
+  [NeurIPS 2025][信息检索/RAG][多模态表示学习] 提出 LCO-Emb 框架，发现多模态大模型（MLLM）在生成式预训练中已隐式建立跨模态对齐，仅需轻量级的纯文本对比学习微调即可激活全模态表示能力，并发现生成能力与表示性能正相关的 Generation-Representation Scaling Law (GRSL)。
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

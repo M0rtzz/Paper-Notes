@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis
 description: >-
-  [NeurIPS 2025][视频理解][视频异常检测] 提出一个完全零样本、无需训练的视频异常分析框架，通过Intra-Task Reasoning（置信度门控的自我精化）和Inter-Task Chaining（从时序检测到空间定位到语义理解的级联prompt传递）…
+  [NeurIPS 2025][视频理解][视频异常检测] 提出一个完全零样本、无需训练的视频异常分析框架，通过Intra-Task Reasoning（置信度门控的自我精化）和Inter-Task Chaining（从时序检测到空间定位到语义理解的级联prompt传递），在4个benchmark上全面超越先前零样本方法4-6% AUC。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

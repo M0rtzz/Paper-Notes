@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models
 description: >-
-  [ICML2025][机器人][世界模型] 提出 SENSEI 框架：利用 VLM 成对比较观测图像的"有趣程度"，蒸馏出语义内在奖励，再与集成不确定性驱动的新颖性奖励结合，通过世界模型实现语义有意义的无任务探索，并显著加速下游任务学习。
+  [ICML2025][机器人][世界模型] 提出 SENSEI 框架：利用 VLM 成对比较观测图像的"有趣程度"，蒸馏出语义内在奖励，再与集成不确定性驱动的新颖性奖励结合，通过世界模型实现语义有意义的无任务探索，并显著加速下游任务学习。 内在动机是强化学习（RL）中实现自主探索的核心研究方向。传统的内在奖励设计（如信息增益…
 tags:
   - "ICML2025"
   - "机器人"

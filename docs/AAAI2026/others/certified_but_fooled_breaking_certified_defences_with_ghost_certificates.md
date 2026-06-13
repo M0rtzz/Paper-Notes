@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certified but Fooled! Breaking Certified Defences with Ghost Certificates
 description: >-
-  [AAAI 2026][对抗攻击] 提出 GhostCert，一种基于显著性区域的对抗攻击方法，能在保持扰动不可感知的同时误导分类器并伪造大半径的认证证书（ghost certificates）…
+  [AAAI 2026][对抗攻击] 提出 GhostCert，一种基于显著性区域的对抗攻击方法，能在保持扰动不可感知的同时误导分类器并伪造大半径的认证证书（ghost certificates），在 ImageNet 上对包括 DensePure 在内的 SOTA 认证防御取得显著优于 Shadow Attack 的攻击成功率和更大的伪造认证半径。
 tags:
   - "AAAI 2026"
   - "对抗攻击"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual Mechanisms of Value Expression: Intrinsic vs. Prompted Values in Large Language Models
 description: >-
-  [ICML 2026][可解释性][价值向量] 本文用 difference-in-means 在残差流里抽出 LLM 表达 10 个 Schwartz 价值时的 "intrinsic"（无系统提示）与 "prompted"（带价值系统提示）两类方向，再用 SVD 把两者拆成共享轴与各自独有轴…
+  [ICML 2026][可解释性][价值向量] 本文用 difference-in-means 在残差流里抽出 LLM 表达 10 个 Schwartz 价值时的 "intrinsic"（无系统提示）与 "prompted"（带价值系统提示）两类方向，再用 SVD 把两者拆成共享轴与各自独有轴，在向量层与 MLP 神经元层同时给出因果证据：共享分量承载真正的价值语义并能跨语言泛化、复现 Schwartz 圆环结构；intrinsic 独有分量带来词汇/语义多样性；prompted 独有分量编码的是与价值无关的"通用指令服从"通道，能直接把越狱攻击成功率从 13%–27% 推到 83%–97%。
 tags:
   - "ICML 2026"
   - "可解释性"

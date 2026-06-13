@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WikiBigEdit: Understanding the Limits of Lifelong Knowledge Editing in LLMs
 description: >-
-  [ICML 2025][知识编辑][终身学习] 本文提出 WikiBigEdit，一个包含 50 万+ 真实 Wikidata 知识编辑的大规模终身知识编辑基准，揭示了现有知识编辑方法在实际规模下的严重局限性——检索增强和持续微调+模型合并等通用方法反而表现更优。
+  [ICML 2025][知识编辑][终身学习] 本文提出 WikiBigEdit，一个包含 50 万+ 真实 Wikidata 知识编辑的大规模终身知识编辑基准，揭示了现有知识编辑方法在实际规模下的严重局限性——检索增强和持续微调+模型合并等通用方法反而表现更优。 领域现状：大语言模型 (LLM) 存在知识截止日期问题…
 tags:
   - "ICML 2025"
   - "知识编辑"

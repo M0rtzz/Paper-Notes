@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tree-Sliced Wasserstein Distance with Nonlinear Projection
 description: >-
-  [ICML2025][图像生成][最优传输] 提出非线性投影框架下的 Tree-Sliced Wasserstein（TSW）距离，通过 Circular/Spatial 两种非线性 Radon 变换替代原有线性投影，在保持度量良定义和单射性的同时…
+  [ICML2025][图像生成][最优传输] 提出非线性投影框架下的 Tree-Sliced Wasserstein（TSW）距离，通过 Circular/Spatial 两种非线性 Radon 变换替代原有线性投影，在保持度量良定义和单射性的同时，在梯度流、自监督学习和生成模型等任务上显著优于已有 SW 和 TSW 变体。
 tags:
   - "ICML2025"
   - "图像生成"

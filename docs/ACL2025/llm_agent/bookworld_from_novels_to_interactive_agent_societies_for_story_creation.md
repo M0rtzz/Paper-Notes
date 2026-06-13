@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BookWorld: From Novels to Interactive Agent Societies for Story Creation
 description: >-
-  [ACL 2025][LLM Agent][多智能体系统] BookWorld是首个基于小说的多智能体社会模拟系统，通过从源书籍中提取角色数据和世界观信息来构建交互式虚拟世界，让小说角色在其中自主行动和互动，进而生成创意故事，在75.36%的对比中超越了之前的故事生成方法。
+  [ACL 2025][LLM Agent][多智能体系统] BookWorld是首个基于小说的多智能体社会模拟系统，通过从源书籍中提取角色数据和世界观信息来构建交互式虚拟世界，让小说角色在其中自主行动和互动，进而生成创意故事，在75.36%的对比中超越了之前的故事生成方法。 领域现状：基于LLM的多智能体系统在社会模拟和协作…
 tags:
   - "ACL 2025"
   - "LLM Agent"

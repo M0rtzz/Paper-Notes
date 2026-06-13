@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rare Text Semantics Were Always There in Your Diffusion Transformer
 description: >-
-  [NeurIPS 2025][图像生成][Transformer] 发现通过在 MM-DiT 的联合注意力块前对文本 token 嵌入进行方差放大,即可在无需额外训练或外部模块的情况下让扩散模型呈现稀有文本语义。
+  [NeurIPS 2025][图像生成][Transformer] 发现通过在 MM-DiT 的联合注意力块前对文本 token 嵌入进行方差放大,即可在无需额外训练或外部模块的情况下让扩散模型呈现稀有文本语义。 现有痛点 现有痛点：领域现状：基于 flow 和 diffusion 的多模态扩散 Transformer（MM…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

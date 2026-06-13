@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Autoencoders for Interpretable Emotion Control in Text-to-Speech
 description: >-
-  [ICML 2026][音频/语音][稀疏自编码器] 作者在 LLM-based TTS（IndexTTS2）的语义骨干残差流上训练 Top-k 稀疏自编码器（SAE），用"句级激活率差"挑出少量与目标情感强相关的稀疏潜在特征，推理时只对这几个特征做加/减干预…
+  [ICML 2026][音频/语音][稀疏自编码器] 作者在 LLM-based TTS（IndexTTS2）的语义骨干残差流上训练 Top-k 稀疏自编码器（SAE），用"句级激活率差"挑出少量与目标情感强相关的稀疏潜在特征，推理时只对这几个特征做加/减干预，就能在不动主干参数的前提下实现可解释的双向情感诱导与抑制，效果优于全局均值差引导和现有 TTS 基线。
 tags:
   - "ICML 2026"
   - "音频/语音"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models
 description: >-
-  [ICLR 2026][信息检索/RAG][Knowledge Advantage Gap] 构建结构完全相同但实体分别映射到真实/合成名称的平行语料库，通过对比两个"平行世界"上的任务表现来量化 LLM 的参数化知识优势差距（Knowledge Advantage Gap）…
+  [ICLR 2026][信息检索/RAG][Knowledge Advantage Gap] 构建结构完全相同但实体分别映射到真实/合成名称的平行语料库，通过对比两个"平行世界"上的任务表现来量化 LLM 的参数化知识优势差距（Knowledge Advantage Gap），发现即使有 RAG 和 CoT 增强，该差距依然持续存在。
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

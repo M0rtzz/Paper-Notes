@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do Not Merge My Model! Safeguarding Open-Source LLMs Against Unauthorized Model Merging
 description: >-
-  [AAAI 2026][模型压缩][模型合并窃取] 提出MergeBarrier，一种即插即用的防御方法，通过对注意力层施加正交投影、对FFN层进行激活函数展开重参数化，破坏受保护模型与同源模型之间的线性模态连通性（LMC），从而在不损失模型性能的前提下主动阻止未授权的模型合并。
+  [AAAI 2026][模型压缩][模型合并窃取] 提出MergeBarrier，一种即插即用的防御方法，通过对注意力层施加正交投影、对FFN层进行激活函数展开重参数化，破坏受保护模型与同源模型之间的线性模态连通性（LMC），从而在不损失模型性能的前提下主动阻止未授权的模型合并。 领域现状 领域现状：领域现状： 模型合并（M…
 tags:
   - "AAAI 2026"
   - "模型压缩"

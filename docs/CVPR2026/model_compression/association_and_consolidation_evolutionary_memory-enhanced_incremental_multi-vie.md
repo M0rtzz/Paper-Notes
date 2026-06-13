@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Association and Consolidation: Evolutionary Memory-Enhanced Incremental Multi-View Clustering
 description: >-
-  [CVPR2026][模型压缩][incremental multi-view clustering] 提出 EMIMC 框架，受大脑海马-前额叶协作记忆机制启发，通过 Rapid Associative Module (正交映射保证可塑性)、Cognitive Forgetting Module (幂律衰减…
+  [CVPR2026][模型压缩][incremental multi-view clustering] 提出 EMIMC 框架，受大脑海马-前额叶协作记忆机制启发，通过 Rapid Associative Module (正交映射保证可塑性)、Cognitive Forgetting Module (幂律衰减模拟遗忘曲线) 和 Knowledge Consolidation Module (时序张量低秩分解提炼长期记忆) 三模块协同，解决增量多视图聚类中的稳定性-可塑性困境。
 tags:
   - "CVPR2026"
   - "模型压缩"

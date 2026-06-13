@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems
 description: >-
-  [NeurIPS 2025][强化学习][inverse optimization] 提出 IO-LVM（Inverse Optimization Latent Variable Model），用 VAE 式编码器映射观测的 COP 解到潜在成本空间…
+  [NeurIPS 2025][强化学习][inverse optimization] 提出 IO-LVM（Inverse Optimization Latent Variable Model），用 VAE 式编码器映射观测的 COP 解到潜在成本空间，通过 Fenchel-Young 损失和黑盒求解器（Dijkstra/TSP solver）在解码端保证可行性，无需 agent 标签即可从路径数据中学到成本函数的分布，成功不可监督地分离不同 agent 的导航偏好。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

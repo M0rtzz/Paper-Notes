@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Single-Rollout Hidden-State Dynamics for Training-Free RLVR Data Selection
 description: >-
-  [ICML 2026][强化学习][RLVR] SHIFT 用一次贪心解码下的"开始 token → 结束 token"隐状态差 $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$ 同时充当 RLVR 样本的效用代理和多样性特征…
+  [ICML 2026][强化学习][RLVR] SHIFT 用一次贪心解码下的"开始 token → 结束 token"隐状态差 $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$ 同时充当 RLVR 样本的效用代理和多样性特征，再用质量加权的最远优先 CoreSet 在大规模无标注池里挑出极少量样本，全过程不训练、不需要奖励或答案。
 tags:
   - "ICML 2026"
   - "强化学习"

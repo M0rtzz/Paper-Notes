@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PERSA: Reinforcement Learning for Professor-Style Personalized Feedback with LLMs
 description: >-
-  [ACL2026][LLM对齐][教育反馈] PERSA 用“教授示范 + 教授偏好奖励 + 只更新高层 LoRA 的 PPO”把通用 LLM 调成特定教师的编程反馈风格，在 APPS、PyFiXV、CodeReviewQA 上显著提升风格一致性，同时基本保持 100% 诊断正确率。
+  [ACL2026][LLM对齐][教育反馈] PERSA 用“教授示范 + 教授偏好奖励 + 只更新高层 LoRA 的 PPO”把通用 LLM 调成特定教师的编程反馈风格，在 APPS、PyFiXV、CodeReviewQA 上显著提升风格一致性，同时基本保持 100% 诊断正确率。 领域现状：LLM 已经能为编程题、代码审…
 tags:
   - "ACL2026"
   - "LLM对齐"

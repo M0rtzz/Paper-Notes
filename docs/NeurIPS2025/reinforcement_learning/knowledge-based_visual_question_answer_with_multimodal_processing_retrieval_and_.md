@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering
 description: >-
-  [NeurIPS 2025][强化学习][KB-VQA] 提出 Wiki-PRF，一套三阶段（处理-检索-过滤）的多模态 RAG 框架，通过强化学习训练 VLM 自主调用视觉工具和过滤检索结果，在 E-VQA 和 InfoSeek 上达到 SOTA。
+  [NeurIPS 2025][强化学习][KB-VQA] 提出 Wiki-PRF，一套三阶段（处理-检索-过滤）的多模态 RAG 框架，通过强化学习训练 VLM 自主调用视觉工具和过滤检索结果，在 E-VQA 和 InfoSeek 上达到 SOTA。 领域现状：知识密集型视觉问答（KB-VQA）要求模型同时理解图像内容并检索…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

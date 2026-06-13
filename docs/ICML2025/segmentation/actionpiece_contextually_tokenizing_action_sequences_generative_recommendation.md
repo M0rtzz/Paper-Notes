@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation
 description: >-
-  [ICML 2025][语义分割][生成式推荐] 提出 ActionPiece，首个上下文感知的动作序列分词方法，将每个动作表示为无序特征集合，通过加权共现统计在集合内和相邻集合间学习合并规则构建词表，使同一动作在不同上下文中被分词为不同token，在推荐任务中显著提升生成式推荐的准确性。
+  [ICML 2025 Spotlight][语义分割][生成式推荐] 提出 ActionPiece，首个上下文感知的动作序列分词方法，将每个动作表示为无序特征集合，通过加权共现统计在集合内和相邻集合间学习合并规则构建词表，使同一动作在不同上下文中被分词为不同token，在推荐任务中显著提升生成式推荐的准确性。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "语义分割"
   - "生成式推荐"
   - "动作分词"

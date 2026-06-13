@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GiT: Towards Generalist Vision Transformer through Universal Language Interface
 description: >-
-  [ECCV 2024][语义分割][generalist vision model] 提出 GiT 框架，通过通用语言接口将图像描述、目标检测、实例分割、语义分割和视觉定位五大视觉任务统一为自回归序列生成，仅用纯 ViT（无任何任务特定模块）实现多任务联合训练，且任务间互相增强。
+  [ECCV 2024][语义分割][generalist vision model] 提出 GiT 框架，通过通用语言接口将图像描述、目标检测、实例分割、语义分割和视觉定位五大视觉任务统一为自回归序列生成，仅用纯 ViT（无任何任务特定模块）实现多任务联合训练，且任务间互相增强。 领域现状：LLM 已经证明多层 Transf…
 tags:
   - "ECCV 2024"
   - "语义分割"

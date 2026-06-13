@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Courtroom Analogy: New Perspective on Uncertainty-Aware Classification
 description: >-
-  [ICML 2026][可解释性][不确定性量化] 本文提出"法庭辩论 (courtroom analogy)"视角，将分类的二阶不确定性建模为 $K$ 个类别辩护人 Dirichlet 意见在输入相关权重下的结构化混合…
+  [ICML 2026][可解释性][不确定性量化] 本文提出"法庭辩论 (courtroom analogy)"视角，将分类的二阶不确定性建模为 $K$ 个类别辩护人 Dirichlet 意见在输入相关权重下的结构化混合，并实例化为 MoDEX 网络（共享证据 $\bm{\alpha}$ + 类专属辩护强度 $\tau_k$ + 可信度 $\bm{\omega}$ 三个轻量头），单次前向即可在 CIFAR/SVHN/TIN/CIFAR-10-C/CIFAR-10-LT 等基准上稳定刷过 EDL / $\mathcal{F}$-EDL 等一系列 baseline，并给出语义明确的不确定性分解。
 tags:
   - "ICML 2026"
   - "可解释性"
@@ -17,7 +17,7 @@ tags:
 **会议**: ICML 2026  
 **arXiv**: [2605.25616](https://arxiv.org/abs/2605.25616)  
 **代码**: 待确认  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: 不确定性量化, 证据深度学习, Dirichlet 混合, 可解释性, 单次前向 UQ
 
 ## 一句话总结

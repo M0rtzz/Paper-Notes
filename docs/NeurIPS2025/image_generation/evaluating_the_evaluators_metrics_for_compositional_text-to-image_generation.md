@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation
 description: >-
-  [NeurIPS 2025][图像生成][评估指标] 系统评估了 12 种文本-图像组合对齐指标与人类判断的一致性，发现没有单一指标在所有组合任务上一致表现最优，VQA 指标并非总是最好的，embedding 类指标（ImageReward、HPS）在特定类别上更强。
+  [NeurIPS 2025][图像生成][评估指标] 系统评估了 12 种文本-图像组合对齐指标与人类判断的一致性，发现没有单一指标在所有组合任务上一致表现最优，VQA 指标并非总是最好的，embedding 类指标（ImageReward、HPS）在特定类别上更强。 文本到图像生成的评估严重依赖自动化指标…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

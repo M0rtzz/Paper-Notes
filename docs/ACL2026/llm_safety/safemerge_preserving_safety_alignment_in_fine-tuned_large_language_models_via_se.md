@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SafeMERGE: Preserving Safety Alignment in Fine-Tuned Large Language Models via Selective Layer-Wise Model Merging
 description: >-
-  [ACL 2026][LLM安全][安全对齐] 本文提出 SafeMERGE，一种轻量级后微调框架，通过余弦相似度检测偏离安全行为的微调层，仅将这些层与安全模型的对应层合并，在四个 LLM 上显著降低有害输出同时保持甚至提升任务性能。
+  [ACL 2026 Findings][LLM安全][安全对齐] 本文提出 SafeMERGE，一种轻量级后微调框架，通过余弦相似度检测偏离安全行为的微调层，仅将这些层与安全模型的对应层合并，在四个 LLM 上显著降低有害输出同时保持甚至提升任务性能。 领域现状：微调 LLM 以适应特定领域是常见做法，但研究表明微调（即使用…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "安全对齐"
   - "模型合并"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HN-MVTS: HyperNetwork-based Multivariate Time Series Forecasting
 description: >-
-  [AAAI 2026][LLM效率][多变量时间序列预测] 提出 HN-MVTS，利用超网络(HyperNetwork)为每个通道生成特定的最后一层权重，在通道独立(CI)和通道依赖(CD)之间取得平衡，作为即插即用模块可提升 DLinear、PatchTST、TSMixer 等多种主干模型的预测精度…
+  [AAAI 2026][LLM效率][多变量时间序列预测] 提出 HN-MVTS，利用超网络(HyperNetwork)为每个通道生成特定的最后一层权重，在通道独立(CI)和通道依赖(CD)之间取得平衡，作为即插即用模块可提升 DLinear、PatchTST、TSMixer 等多种主干模型的预测精度，且不增加推理时间。
 tags:
   - "AAAI 2026"
   - "LLM效率"

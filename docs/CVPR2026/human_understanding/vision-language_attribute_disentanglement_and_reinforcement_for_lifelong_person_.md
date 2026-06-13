@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vision-Language Attribute Disentanglement and Reinforcement for Lifelong Person Re-Identification
 description: >-
-  [CVPR 2026][人体理解][终身行人重识别] VLADR 提出利用视觉-语言模型（VLM）中的细粒度属性知识来增强终身行人重识别，通过多粒度文本属性解耦（MTAD）和跨域跨模态属性强化（ICAR）两阶段训练，显式建模跨域共享的人体属性以实现高效知识转移和遗忘缓解…
+  [CVPR 2026][人体理解][终身行人重识别] VLADR 提出利用视觉-语言模型（VLM）中的细粒度属性知识来增强终身行人重识别，通过多粒度文本属性解耦（MTAD）和跨域跨模态属性强化（ICAR）两阶段训练，显式建模跨域共享的人体属性以实现高效知识转移和遗忘缓解，在抗遗忘和泛化能力上分别超越 SOTA 1.9%-2.2% 和 2.1%-2.5%。
 tags:
   - "CVPR 2026"
   - "人体理解"

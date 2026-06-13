@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Language Models Process Negation
 description: >-
-  [ICML2026][可解释性][否定理解] 本文用机制可解释性方法剖析 Llama-3.1-8B / Mistral-7B 处理"X that is not Y is __"类否定句的内部电路，发现模型其实"会"做否定（中层注意力在最后位置直接构造出 $\bar Y$ 表示…
+  [ICML2026][可解释性][否定理解] 本文用机制可解释性方法剖析 Llama-3.1-8B / Mistral-7B 处理"X that is not Y is __"类否定句的内部电路，发现模型其实"会"做否定（中层注意力在最后位置直接构造出 $\bar Y$ 表示，例如 "not gas" → solid），但被晚层"捷径"注意力头压住——把这些头按"注意力下沉"方式消融，否定题准确率最高可绝对提升 17%。
 tags:
   - "ICML2026"
   - "可解释性"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.03052](https://arxiv.org/abs/2605.03052)  
 **代码**: https://github.com/Ja1Zhou/LM_Negation  
-**领域**: interpretability  
+**领域**: 可解释性  
 **关键词**: 否定理解, 机制可解释性, 注意力捷径, 构造与抑制, LogitLens
 
 ## 一句话总结

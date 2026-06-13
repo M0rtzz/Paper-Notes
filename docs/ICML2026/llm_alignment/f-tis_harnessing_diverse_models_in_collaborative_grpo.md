@@ -2,7 +2,7 @@
 title: >-
   [论文解读] F-TIS: Harnessing Diverse Models in Collaborative GRPO
 description: >-
-  [ICML 2026][LLM对齐][GRPO] F-TIS 把"截断重要性采样 (TIS)"与"按 KL 阈值过滤负优势 off-policy 样本"两件事拼到一个 GRPO 损失里，让大小不同、专长不同、甚至只有一部分参数可训的多个 LLM 在同一次去中心化 GRPO 训练中互相喂样本…
+  [ICML 2026][LLM对齐][GRPO] F-TIS 把"截断重要性采样 (TIS)"与"按 KL 阈值过滤负优势 off-policy 样本"两件事拼到一个 GRPO 损失里，让大小不同、专长不同、甚至只有一部分参数可训的多个 LLM 在同一次去中心化 GRPO 训练中互相喂样本，最终收敛和纯 on-policy 持平，并在 OOD 数学任务上最高带来 +12% 的性能。
 tags:
   - "ICML 2026"
   - "LLM对齐"

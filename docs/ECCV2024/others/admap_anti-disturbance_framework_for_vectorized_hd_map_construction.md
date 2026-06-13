@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ADMap: Anti-disturbance Framework for Vectorized HD Map Construction
 description: >-
-  [ECCV 2024][高精地图构建] 本文提出 ADMap 框架，通过多尺度感知颈部(MPN)、实例交互注意力(IIA)和矢量方向差异损失(VDDL)三个模块，从实例间和实例内两个层面级联式监控点序列预测过程，有效缓解了矢量化高精地图构建中的点序列抖动/锯齿问题…
+  [ECCV 2024][高精地图构建] 本文提出 ADMap 框架，通过多尺度感知颈部(MPN)、实例交互注意力(IIA)和矢量方向差异损失(VDDL)三个模块，从实例间和实例内两个层面级联式监控点序列预测过程，有效缓解了矢量化高精地图构建中的点序列抖动/锯齿问题，在 nuScenes 和 Argoverse2 上取得了 SOTA 性能。
 tags:
   - "ECCV 2024"
   - "高精地图构建"

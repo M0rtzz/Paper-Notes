@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Multiagent Planning via Shared Action Suggestions
 description: >-
-  [AAAI 2026][强化学习][Dec-POMDP] 提出MCAS算法，通过在Dec-POMDP中仅通信建议的联合动作（而非共享观测），利用动作信息推断其他智能体的信念状态，实现接近集中式方法的协调性能，同时大幅降低计算复杂度。
+  [AAAI 2026][强化学习][Dec-POMDP] 提出MCAS算法，通过在Dec-POMDP中仅通信建议的联合动作（而非共享观测），利用动作信息推断其他智能体的信念状态，实现接近集中式方法的协调性能，同时大幅降低计算复杂度。 问题背景 多智能体系统在复杂工程项目和应急响应等场景中至关重要。Dec-POMDP（分布式部…
 tags:
   - "AAAI 2026"
   - "强化学习"

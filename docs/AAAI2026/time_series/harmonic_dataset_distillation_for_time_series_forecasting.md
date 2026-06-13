@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harmonic Dataset Distillation for Time Series Forecasting
 description: >-
-  [AAAI 2026][时间序列][数据集蒸馏] 提出HDT（Harmonic Dataset Distillation for Time Series Forecasting），通过FFT将时间序列分解为正弦基底，在频域上通过谐波匹配（Harmonic Matching）对齐合成数据与原始数据的核心周期结构…
+  [AAAI 2026][时间序列][数据集蒸馏] 提出HDT（Harmonic Dataset Distillation for Time Series Forecasting），通过FFT将时间序列分解为正弦基底，在频域上通过谐波匹配（Harmonic Matching）对齐合成数据与原始数据的核心周期结构，实现强跨架构泛化和良好可扩展性的时间序列数据集蒸馏。
 tags:
   - "AAAI 2026"
   - "时间序列"

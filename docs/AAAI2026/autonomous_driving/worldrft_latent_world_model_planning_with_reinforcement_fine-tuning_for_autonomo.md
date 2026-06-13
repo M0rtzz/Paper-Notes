@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WorldRFT: Latent World Model Planning with Reinforcement Fine-Tuning for Autonomous Driving
 description: >-
-  [AAAI 2026][自动驾驶][潜在世界模型] 提出面向规划的潜在世界模型框架WorldRFT，通过VGGT空间编码、分层规划分解+局部感知迭代精炼、基于GRPO的碰撞感知强化微调，在nuScenes上将碰撞率降低83%（0.30%→0.05%）…
+  [AAAI 2026][自动驾驶][潜在世界模型] 提出面向规划的潜在世界模型框架WorldRFT，通过VGGT空间编码、分层规划分解+局部感知迭代精炼、基于GRPO的碰撞感知强化微调，在nuScenes上将碰撞率降低83%（0.30%→0.05%），在NavSim上仅用相机即逼近LiDAR SOTA（87.8 vs 88.1 PDMS）。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RM-R1: Reward Modeling as Reasoning
 description: >-
-  [ICLR 2026][强化学习][奖励模型] 将奖励建模重新定义为推理任务，提出RM-R1系列推理奖励模型（ReasRM），通过推理蒸馏+RL训练以及Chain-of-Rubrics（CoR）机制，在三大奖励模型基准上平均超越70B和GPT-4o模型达4.9%。
+  [ICLR 2026][强化学习][奖励模型] 将奖励建模重新定义为推理任务，提出RM-R1系列推理奖励模型（ReasRM），通过推理蒸馏+RL训练以及Chain-of-Rubrics（CoR）机制，在三大奖励模型基准上平均超越70B和GPT-4o模型达4.9%。 奖励模型是RLHF中对齐LLM的核心组件…
 tags:
   - "ICLR 2026"
   - "强化学习"

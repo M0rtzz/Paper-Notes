@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning 3D-Aware GANs from Unposed Images with Template Feature Field
 description: >-
-  [ECCV 2024][3D视觉][GAN] 提出模板特征场(TeFF)，通过联合学习生成辐射场和语义特征场，从无姿态标注的野外图像中自动提取3D模板并在线估计相机位姿，从而实现完整3D几何的生成对抗学习。
+  [ECCV 2024][3D视觉][GAN] 提出模板特征场(TeFF)，通过联合学习生成辐射场和语义特征场，从无姿态标注的野外图像中自动提取3D模板并在线估计相机位姿，从而实现完整3D几何的生成对抗学习。 3D-aware GAN近年来取得了显著进展，核心思路是将生成器提升到3D空间（如NeRF），通过体渲染生成2D图像…
 tags:
   - "ECCV 2024"
   - "3D视觉"

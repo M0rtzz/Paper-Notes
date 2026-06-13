@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScaleDiff: Higher-Resolution Image Synthesis via Efficient and Model-Agnostic Diffusion
 description: >-
-  [NeurIPS 2025][图像生成][高分辨率生成] 提出 ScaleDiff 框架，通过 Neighborhood Patch Attention (NPA) 消除传统 patch 方法中的重叠计算冗余，结合潜空间频率混合 (LFM) 和结构引导 (SG)…
+  [NeurIPS 2025][图像生成][高分辨率生成] 提出 ScaleDiff 框架，通过 Neighborhood Patch Attention (NPA) 消除传统 patch 方法中的重叠计算冗余，结合潜空间频率混合 (LFM) 和结构引导 (SG)，在无需额外训练的前提下将预训练扩散模型扩展到高分辨率（如 4096²），在 U-Net 和 DiT 架构上均实现了 training-free 方法中的 SOTA 质量和显著的推理加速（相比 DemoFusion 快 8.9 倍）。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

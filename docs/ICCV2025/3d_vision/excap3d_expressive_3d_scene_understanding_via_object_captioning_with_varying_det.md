@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ExCap3D: Expressive 3D Scene Understanding via Object Captioning with Varying Detail
 description: >-
-  [ICCV 2025][3D视觉][3D场景理解] 提出 ExCap3D，一个在 3D 室内场景中对物体生成多粒度描述的方法，包含物体级和部件级两个描述层次，通过部件→物体的信息共享和语义/文本一致性损失确保描述的准确性与一致性…
+  [ICCV 2025][3D视觉][3D场景理解] 提出 ExCap3D，一个在 3D 室内场景中对物体生成多粒度描述的方法，包含物体级和部件级两个描述层次，通过部件→物体的信息共享和语义/文本一致性损失确保描述的准确性与一致性，在新建的 190K 描述数据集上 CIDEr 评分比 SOTA 分别提升 17% 和 124%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

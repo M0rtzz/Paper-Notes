@@ -2,9 +2,9 @@
 title: >-
   [论文解读] When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking
 description: >-
-  [AAAI 2026][目标检测][水下多鱼跟踪] 提出 MFT25 大规模水下多鱼跟踪数据集（15 序列, 408K 标注）和 SU-T 跟踪框架（UKF + FishIoU），实现 34.1 HOTA 和 44.6 IDF1 的 SOTA 性能，并通过统计分析揭示鱼类跟踪与陆地目标跟踪的本质差异。
+  [AAAI 2026 Oral][目标检测][水下多鱼跟踪] 提出 MFT25 大规模水下多鱼跟踪数据集（15 序列, 408K 标注）和 SU-T 跟踪框架（UKF + FishIoU），实现 34.1 HOTA 和 44.6 IDF1 的 SOTA 性能，并通过统计分析揭示鱼类跟踪与陆地目标跟踪的本质差异。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "目标检测"
   - "水下多鱼跟踪"
   - "MOT 基准"

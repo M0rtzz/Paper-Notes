@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simple Approximation and Derivative Free Inference-Time Scaling for Diffusion Models via Sequential Monte Carlo on Path Measures
 description: >-
-  [ICML 2026][图像生成][推理时缩放] 作者把扩散模型的推理时 reward 引导从"粒子空间 SMC + 高阶导数"升级为"路径空间 SMC + Girsanov 似然比"，得到 URGE 算法：每条轨迹只需对 guidance $G$ 做一阶梯度并累加一个简单的 Itô 项当权重…
+  [ICML 2026][图像生成][推理时缩放] 作者把扩散模型的推理时 reward 引导从"粒子空间 SMC + 高阶导数"升级为"路径空间 SMC + Girsanov 似然比"，得到 URGE 算法：每条轨迹只需对 guidance $G$ 做一阶梯度并累加一个简单的 Itô 项当权重，完全不需要 reward $r$ 的导数 / Hessian / score 估计，在 GMM、逆问题和文生图三类任务上都打平或优于 FK-Corrector / AFDPS / FK-Steering。
 tags:
   - "ICML 2026"
   - "图像生成"

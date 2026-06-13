@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Chebyshev Policies and the Mountain Car Problem: Reinforcement Learning for Low-Dimensional Control Tasks
 description: >-
-  [ICML2026][强化学习][Chebyshev多项式] 本文首次解析求解了经典 Mountain Car 最优控制问题（36 年未解），揭示出最优策略形式极简（$\alpha = C \cdot \dot{x}$）而现有 RL 智能体存在惊人高的遗憾值…
+  [ICML2026 Oral][强化学习][Chebyshev多项式] 本文首次解析求解了经典 Mountain Car 最优控制问题（36 年未解），揭示出最优策略形式极简（$\alpha = C \cdot \dot{x}$）而现有 RL 智能体存在惊人高的遗憾值，进而提出基于多元 Chebyshev 多项式的策略参数化方法，在参数量减少 277 倍的同时将遗憾值降低 4.18 倍。
 tags:
-  - "ICML2026"
+  - "ICML2026 Oral"
   - "强化学习"
   - "Chebyshev多项式"
   - "Mountain Car"

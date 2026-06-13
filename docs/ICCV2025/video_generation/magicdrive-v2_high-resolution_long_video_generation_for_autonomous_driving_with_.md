@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MagicDrive-V2: High-Resolution Long Video Generation for Autonomous Driving with Adaptive Control
 description: >-
-  [ICCV 2025][视频生成][DiT] MagicDrive-V2 提出了基于 DiT + 3D VAE 的多视角驾驶视频生成框架，通过时空条件编码模块和渐进式训练策略，实现了 848×1600×6 视角、241 帧的高分辨率长视频生成，显著超越现有方法的分辨率和帧数限制。
+  [ICCV 2025][视频生成][DiT] MagicDrive-V2 提出了基于 DiT + 3D VAE 的多视角驾驶视频生成框架，通过时空条件编码模块和渐进式训练策略，实现了 848×1600×6 视角、241 帧的高分辨率长视频生成，显著超越现有方法的分辨率和帧数限制。 领域现状：自动驾驶中可控视频生成是关键研究方…
 tags:
   - "ICCV 2025"
   - "视频生成"

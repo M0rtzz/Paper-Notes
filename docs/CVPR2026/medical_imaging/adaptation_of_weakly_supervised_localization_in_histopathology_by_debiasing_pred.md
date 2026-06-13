@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptation of Weakly Supervised Localization in Histopathology by Debiasing Predictions
 description: >-
-  [CVPR 2026][医学图像][WSOL] 提出 SFDA-DeP，受机器遗忘启发，将 SFDA 重新定义为"识别并纠正预测偏差"的迭代过程：对 dominant class 中高熵不确定样本执行"遗忘"操作迫使模型放弃偏向性预测，对可靠样本保持自训练，同时用像素级分类器锚定定位能力…
+  [CVPR 2026][医学图像][WSOL] 提出 SFDA-DeP，受机器遗忘启发，将 SFDA 重新定义为"识别并纠正预测偏差"的迭代过程：对 dominant class 中高熵不确定样本执行"遗忘"操作迫使模型放弃偏向性预测，对可靠样本保持自训练，同时用像素级分类器锚定定位能力，在跨器官/跨中心病理基准上持续优于现有 SFDA 方法。
 tags:
   - "CVPR 2026"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VERA: Variational Inference Framework for Jailbreaking Large Language Models
 description: >-
-  [NeurIPS 2025][优化/理论][越狱攻击] 将黑盒 LLM 越狱攻击形式化为变分推断问题，训练小型攻击者 LLM 近似目标 LLM 的对抗提示后验分布，一次训练后可高效、多样地生成越狱提示，无需依赖人工模板。
+  [NeurIPS 2025][优化/理论][越狱攻击] 将黑盒 LLM 越狱攻击形式化为变分推断问题，训练小型攻击者 LLM 近似目标 LLM 的对抗提示后验分布，一次训练后可高效、多样地生成越狱提示，无需依赖人工模板。 领域现状 领域现状：现有黑盒越狱方法依赖遗传算法或搜索，需为每个行为单独优化，计算成本高 现有痛点 现有…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

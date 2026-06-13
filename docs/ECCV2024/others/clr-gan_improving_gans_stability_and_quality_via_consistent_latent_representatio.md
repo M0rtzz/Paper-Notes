@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction
 description: >-
-  [ECCV 2024][GAN] 本文提出了CLR-GAN训练范式，通过让判别器恢复生成器的预定义隐码、让生成器重建真实输入，建立了G和D隐空间之间的一致性约束，使GAN训练更公平稳定，在CIFAR10上FID提升31.22%，在AFHQ-Cat上提升39.5%。
+  [ECCV 2024][GAN] 本文提出了CLR-GAN训练范式，通过让判别器恢复生成器的预定义隐码、让生成器重建真实输入，建立了G和D隐空间之间的一致性约束，使GAN训练更公平稳定，在CIFAR10上FID提升31.22%，在AFHQ-Cat上提升39.5%。 领域现状：生成对抗网络（GAN）因其卓越的图像生成能力而受到…
 tags:
   - "ECCV 2024"
   - "GAN"

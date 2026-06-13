@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Surprising Effectiveness of Negative Reinforcement in LLM Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][RLVR分解] 将可验证奖励的强化学习（RLVR）分解为正样本强化（PSR，增强正确回答概率）和负样本强化（NSR，惩罚错误回答），发现仅用 NSR 就能在整个 Pass@k 谱上持续提升推理性能且通常匹配或超越 PPO/GRPO…
+  [NeurIPS 2025][LLM推理][RLVR分解] 将可验证奖励的强化学习（RLVR）分解为正样本强化（PSR，增强正确回答概率）和负样本强化（NSR，惩罚错误回答），发现仅用 NSR 就能在整个 Pass@k 谱上持续提升推理性能且通常匹配或超越 PPO/GRPO，据此提出 Weighted-REINFORCE（降低 PSR 权重至 0.1）在 MATH/AIME 2025/AMC23 上取得全面最优。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bayesian Network Structural Consensus via Greedy Min-Cut Analysis
 description: >-
-  [AAAI 2026][Bayesian network] 提出 MCBNC 算法，基于最小割（min-cut）分析量化边的结构支持度，并将其嵌入贪心等价搜索（GES）的后向阶段来迭代剪枝融合贝叶斯网络中的冗余边，在不访问数据的情况下生成更稀疏、更精确的共识结构，适用于联邦学习场景。
+  [AAAI 2026][Bayesian network] 提出 MCBNC 算法，基于最小割（min-cut）分析量化边的结构支持度，并将其嵌入贪心等价搜索（GES）的后向阶段来迭代剪枝融合贝叶斯网络中的冗余边，在不访问数据的情况下生成更稀疏、更精确的共识结构，适用于联邦学习场景。 - 贝叶斯网络融合的需求：在联邦学习、专…
 tags:
   - "AAAI 2026"
   - "Bayesian network"

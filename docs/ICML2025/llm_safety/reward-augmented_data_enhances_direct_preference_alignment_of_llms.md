@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reward-Augmented Data Enhances Direct Preference Alignment of LLMs
 description: >-
-  [ICML2025][LLM安全][DPO] 提出一种**奖励增强的数据重标注方法**，通过将偏好对条件化于奖励分数构建扩增数据集，使DPO能感知回复质量全谱，缓解高质量rejected回复被遗忘和低质量chosen回复被盲目学习的问题，在多个基准上一致性大幅提升DPO性能。
+  [ICML2025][LLM安全][DPO] 提出一种奖励增强的数据重标注方法：，通过将偏好对条件化于奖励分数构建扩增数据集，使DPO能感知回复质量全谱，缓解高质量rejected回复被遗忘和低质量chosen回复被盲目学习的问题，在多个基准上一致性大幅提升DPO性能。 直接偏好对齐的三大局限 现有直接对齐算法（如DPO）仅…
 tags:
   - "ICML2025"
   - "LLM安全"

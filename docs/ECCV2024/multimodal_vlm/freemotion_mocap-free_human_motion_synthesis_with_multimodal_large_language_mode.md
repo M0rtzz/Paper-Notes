@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeMotion: MoCap-Free Human Motion Synthesis with Multimodal Large Language Models
 description: >-
-  [ECCV2024][多模态VLM][人体运动合成] 首次在**完全不使用动捕数据**的情况下，利用 MLLM（GPT-4V）作为关键帧设计师和动画师，结合基于物理的运动跟踪，实现开放集人体运动合成。
+  [ECCV2024][多模态VLM][人体运动合成] 首次在完全不使用动捕数据：的情况下，利用 MLLM（GPT-4V）作为关键帧设计师和动画师，结合基于物理的运动跟踪，实现开放集人体运动合成。 核心问题 传统人体运动合成方法高度依赖动作捕捉（MoCap）数据，但： 数据获取成本高：最大的公开动捕数据集仅包含数十小时的运动…
 tags:
   - "ECCV2024"
   - "多模态VLM"

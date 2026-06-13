@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MARBLE: Material Recomposition and Blending in CLIP-Space
 description: >-
-  [CVPR 2025][图像生成][material editing] 仅在 CLIP 空间操作材质嵌入，通过定向注入 UNet 中的材质响应层实现材质迁移和混合，并通过轻量 MLP 预测属性编辑方向实现粗糙度/金属度/透明度/发光的参数化控制，无需微调扩散模型。
+  [CVPR 2025][图像生成][material editing] 仅在 CLIP 空间操作材质嵌入，通过定向注入 UNet 中的材质响应层实现材质迁移和混合，并通过轻量 MLP 预测属性编辑方向实现粗糙度/金属度/透明度/发光的参数化控制，无需微调扩散模型。 领域现状： 材质编辑是计算机图形学核心问题…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Impact of Auxiliary Patient Data on Automated Chest X-Ray Report Generation and How to Incorporate It
 description: >-
-  [ACL 2025 (Long Paper)][医疗NLP][胸部X光报告生成] 本文研究如何将急诊科患者数据（生命体征、药物、分诊信息等）整合到多模态语言模型中用于自动胸部X光报告生成，提出将异构表格数据、文本和图像转化为统一嵌入的方法…
+  [ACL 2025 (Long Paper)][医疗NLP][胸部X光报告生成] 本文研究如何将急诊科患者数据（生命体征、药物、分诊信息等）整合到多模态语言模型中用于自动胸部X光报告生成，提出将异构表格数据、文本和图像转化为统一嵌入的方法，在MIMIC-CXR + MIMIC-IV-ED数据集上显著提升了报告的诊断准确性，超越了包括CXRMate-RRG24在内的多个基准模型。
 tags:
   - "ACL 2025 (Long Paper)"
   - "医疗NLP"

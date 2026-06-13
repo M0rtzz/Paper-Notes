@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Conformal Online Learning of Deep Koopman Linear Embeddings
 description: >-
-  [NEURIPS2025][Koopman operator] 提出 COLoKe 框架，将 conformal prediction 重新解读为模型一致性诊断工具，仅在 Koopman 模型的预测误差超过动态校准阈值时才触发参数更新，从而实现对非线性动力系统的高效在线 Koopman 线性嵌入学习。
+  [NEURIPS2025][LLM评测][Koopman operator] 提出 COLoKe 框架，将 conformal prediction 重新解读为模型一致性诊断工具，仅在 Koopman 模型的预测误差超过动态校准阈值时才触发参数更新，从而实现对非线性动力系统的高效在线 Koopman 线性嵌入学习。
 tags:
   - "NEURIPS2025"
+  - "LLM评测"
   - "Koopman operator"
   - "在线学习"
   - "共形预测"

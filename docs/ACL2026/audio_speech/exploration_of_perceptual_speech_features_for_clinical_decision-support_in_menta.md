@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploration of Perceptual Speech Features for Clinical Decision-Support in Mental Health Care
 description: >-
-  [ACL2026][音频/语音][语音心理健康] 这篇论文提出一个面向心理健康临床辅助的可解释语音分析框架，用感知可理解的声学与语言特征结合 XGBoost、统计检验、SHAP 和 LIME，在压力、抑郁、焦虑、ADHD 等多个数据集上寻找稳定的语音行为线索，而不是追求黑盒端到端诊断。
+  [ACL2026][音频/语音][语音心理健康] 这篇论文提出一个面向心理健康临床辅助的可解释语音分析框架，用感知可理解的声学与语言特征结合 XGBoost、统计检验、SHAP 和 LIME，在压力、抑郁、焦虑、ADHD 等多个数据集上寻找稳定的语音行为线索，而不是追求黑盒端到端诊断。 领域现状：语音与语言已经被广泛用于心理…
 tags:
   - "ACL2026"
   - "音频/语音"

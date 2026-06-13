@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Library Adaptation: LoRA Retrieval and Fusion for Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇语义分割] SemLA 提出了一个无需训练的测试时域适应框架，通过构建基于 CLIP 索引的 LoRA 适配器库，在推理时根据输入图像与各域质心的嵌入距离动态检索和融合最相关的适配器，为开放词汇语义分割模型实现了即时、高效的域适应。
+  [CVPR 2025][语义分割][开放词汇语义分割] SemLA 提出了一个无需训练的测试时域适应框架，通过构建基于 CLIP 索引的 LoRA 适配器库，在推理时根据输入图像与各域质心的嵌入距离动态检索和融合最相关的适配器，为开放词汇语义分割模型实现了即时、高效的域适应。 领域现状：开放词汇（OV）语义分割通过视觉-文本…
 tags:
   - "CVPR 2025"
   - "语义分割"

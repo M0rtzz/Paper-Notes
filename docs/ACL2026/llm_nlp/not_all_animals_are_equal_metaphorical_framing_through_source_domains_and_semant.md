@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Not All Animals Are Equal: Metaphorical Framing through Source Domains and Semantic Frames
 description: >-
-  [ACL 2026][LLM/NLP][隐喻检测] 本文提出首个结合 FrameNet 语义框架和概念隐喻理论（CMT）源域的计算框架 ConceptFrameMet，通过 RoBERTa 多任务模型检测隐喻并预测其语义框架和源域，配合对数似然比统计方法发现话语中显著的隐喻模式…
+  [ACL 2026 Findings][LLM 其他][隐喻检测] 本文提出首个结合 FrameNet 语义框架和概念隐喻理论（CMT）源域的计算框架 ConceptFrameMet，通过 RoBERTa 多任务模型检测隐喻并预测其语义框架和源域，配合对数似然比统计方法发现话语中显著的隐喻模式，揭示了自由派和保守派在移民话语中使用相同源域但选择不同语义框架来传达截然不同的联想。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "隐喻检测"
   - "概念隐喻理论"
   - "语义框架"

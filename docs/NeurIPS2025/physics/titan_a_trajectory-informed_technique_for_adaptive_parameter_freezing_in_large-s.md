@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE
 description: >-
-  [NeurIPS 2025][物理/科学计算][VQE] 提出TITAN框架，用深度学习模型预测VQE中的"冻结参数"（训练过程中始终不活跃的参数），在初始化阶段即冻结40-60%参数，实现最高3倍收敛加速和40-60%电路评估量减少，在30量子比特的分子系统上匹配或超越基线精度。
+  [NeurIPS 2025][物理/科学计算][VQE] 提出TITAN框架，用深度学习模型预测VQE中的"冻结参数"（训练过程中始终不活跃的参数），在初始化阶段即冻结40-60%参数，实现最高3倍收敛加速和40-60%电路评估量减少，在30量子比特的分子系统上匹配或超越基线精度。 领域现状：变分量子本征求解器（VQE）是利…
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

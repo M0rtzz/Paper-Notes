@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Skywork-Reward-V2: Scaling Preference Data Curation via Human-AI Synergy
 description: >-
-  [ICLR 2026][LLM对齐][奖励模型] 提出 Human-AI 协同的两阶段偏好数据策展流水线：阶段一通过人工验证、错误驱动自适应检索和偏好引导 LLM 标注迭代 8 轮积累约 1M 偏好对；阶段二借助双 RM 一致性过滤将数据规模扩展到 26M 对…
+  [ICLR 2026][LLM对齐][奖励模型] 提出 Human-AI 协同的两阶段偏好数据策展流水线：阶段一通过人工验证、错误驱动自适应检索和偏好引导 LLM 标注迭代 8 轮积累约 1M 偏好对；阶段二借助双 RM 一致性过滤将数据规模扩展到 26M 对。最终训练的 Skywork-Reward-V2 8B 模型在 RewardBench 达 97.8%，7 个主流基准平均 88.6%，全面超越所有开源 70B 奖励模型。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

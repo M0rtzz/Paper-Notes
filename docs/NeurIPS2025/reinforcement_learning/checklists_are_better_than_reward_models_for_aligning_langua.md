@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Checklists Are Better Than Reward Models For Aligning Language Models
 description: >-
-  [NeurIPS 2025][强化学习][RLCF] 提出 Reinforcement Learning from Checklist Feedback (RLCF)，将指令分解为动态生成的 yes/no checklist，结合 AI judge 和代码验证器逐项评分后做 DPO 训练…
+  [NeurIPS 2025][强化学习][RLCF] 提出 Reinforcement Learning from Checklist Feedback (RLCF)，将指令分解为动态生成的 yes/no checklist，结合 AI judge 和代码验证器逐项评分后做 DPO 训练，在 5 个 benchmark 上一致性提升 Qwen2.5-7B-Instruct，是唯一在所有 benchmark 上都有正收益的方法（FollowBench +4pt, InFoBench +6pt, Arena-Hard +3pt）。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

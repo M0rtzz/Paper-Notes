@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Time-RA: Towards Time Series Reasoning for Anomaly Diagnosis with LLM Feedback
 description: >-
-  [ACL 2026][时间序列][时间序列异常检测] 定义 Time-RA 新任务将时间序列异常检测从二分类升级为生成式推理诊断（检测+分类+原因解释），构建首个包含约 4 万样本、10 个领域、20 种异常类型的多模态基准 RATs40K，并通过 AI 反馈标注流程和 LLM 微调验证了该范式的可行性。
+  [ACL 2026 Findings][时间序列][时间序列异常检测] 定义 Time-RA 新任务将时间序列异常检测从二分类升级为生成式推理诊断（检测+分类+原因解释），构建首个包含约 4 万样本、10 个领域、20 种异常类型的多模态基准 RATs40K，并通过 AI 反馈标注流程和 LLM 微调验证了该范式的可行性。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "时间序列"
   - "时间序列异常检测"
   - "异常推理诊断"

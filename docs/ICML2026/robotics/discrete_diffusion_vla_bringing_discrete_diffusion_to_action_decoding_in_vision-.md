@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrete Diffusion VLA: Bringing Discrete Diffusion to Action Decoding in Vision-Language-Action Policies
 description: >-
-  [ICML 2026][机器人][VLA] 本文把 VLA 的动作解码从自回归（AR）或外挂连续扩散头改成"在统一 Transformer 内部对离散动作 token 做掩码扩散"，配合按置信度自适应排序的并行解码和二次重掩码纠错…
+  [ICML 2026][机器人][VLA] 本文把 VLA 的动作解码从自回归（AR）或外挂连续扩散头改成"在统一 Transformer 内部对离散动作 token 做掩码扩散"，配合按置信度自适应排序的并行解码和二次重掩码纠错，在 LIBERO 上达到 96.4% 平均成功率、SimplerEnv-Fractal 64.1% 总均分，且在 OOD 语言/视觉扰动下退化仅 0.8% / 20.4%，显著优于连续扩散和并行解码 baseline，同时保留了预训练 VLM 的多模态先验。
 tags:
   - "ICML 2026"
   - "机器人"

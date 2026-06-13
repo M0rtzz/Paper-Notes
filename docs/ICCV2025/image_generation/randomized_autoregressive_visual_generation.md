@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Randomized Autoregressive Visual Generation
 description: >-
-  [ICCV2025][图像生成][自回归图像生成] 提出 Randomized AutoRegressive modeling (RAR)：在标准自回归训练中以随机排列输入序列并逐步退火回光栅扫描顺序，使模型学习双向上下文，在 ImageNet-256 上以 FID 1.48 刷新自回归图像生成 SOTA…
+  [ICCV2025][图像生成][自回归图像生成] 提出 Randomized AutoRegressive modeling (RAR)：在标准自回归训练中以随机排列输入序列并逐步退火回光栅扫描顺序，使模型学习双向上下文，在 ImageNet-256 上以 FID 1.48 刷新自回归图像生成 SOTA，同时保持与语言模型框架的完全兼容。
 tags:
   - "ICCV2025"
   - "图像生成"

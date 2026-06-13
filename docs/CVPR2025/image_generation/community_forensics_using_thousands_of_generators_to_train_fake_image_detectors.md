@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Community Forensics: Using Thousands of Generators to Train Fake Image Detectors
 description: >-
-  [CVPR 2025][图像生成][AI生成图像检测] 构建包含 4803 个生成模型、270 万张图像的 Community Forensics 数据集，发现即使架构相似的模型也能通过增加数量显著提升假图检测泛化性，在多个基准上达到最优平均 mAP 0.966。
+  [CVPR 2025][图像生成][AI生成图像检测] 构建包含 4803 个生成模型、270 万张图像的 Community Forensics 数据集，发现即使架构相似的模型也能通过增加数量显著提升假图检测泛化性，在多个基准上达到最优平均 mAP 0.966。 领域现状：AI 生成图像检测面临严峻的泛化挑战——检测器在训…
 tags:
   - "CVPR 2025"
   - "图像生成"

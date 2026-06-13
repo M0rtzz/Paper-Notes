@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Adaptation of Parameter-Efficient Fine-Tuning in Diffusion Models
 description: >-
-  [ICML 2025][图像生成][LoRA迁移] 提出 ProLoRA，一种免训练的闭式 LoRA 跨模型迁移方法，通过将源 LoRA 在源模型权重子空间和零空间的投影分解重新投射到目标模型的对应空间，实现风格/概念/加速 LoRA 在不同扩散模型间的无损迁移。
+  [ICML 2025][图像生成][LoRA迁移] 提出 ProLoRA，一种免训练的闭式 LoRA 跨模型迁移方法，通过将源 LoRA 在源模型权重子空间和零空间的投影分解重新投射到目标模型的对应空间，实现风格/概念/加速 LoRA 在不同扩散模型间的无损迁移。 领域现状：LoRA 是主流的扩散模型 PEFT 方法…
 tags:
   - "ICML 2025"
   - "图像生成"

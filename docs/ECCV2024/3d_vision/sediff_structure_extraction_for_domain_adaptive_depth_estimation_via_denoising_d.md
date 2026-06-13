@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SEDiff: Structure Extraction for Domain Adaptive Depth Estimation via Denoising Diffusion Models
 description: >-
-  [ECCV 2024][3D视觉][单目深度估计] 提出 SEDiff，首次利用扩散模型提取域不变的结构信息，通过结构一致的风格迁移消除合成数据与真实数据之间的域差距，实现了高性能的域自适应单目深度估计。
+  [ECCV 2024][3D视觉][单目深度估计] 提出 SEDiff，首次利用扩散模型提取域不变的结构信息，通过结构一致的风格迁移消除合成数据与真实数据之间的域差距，实现了高性能的域自适应单目深度估计。 领域现状：单目深度估计是计算机视觉的基础任务，但获取大量真实深度标注数据成本极高，因此训练通常依赖合成数据集（如 Vir…
 tags:
   - "ECCV 2024"
   - "3D视觉"

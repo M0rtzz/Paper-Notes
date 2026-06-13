@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimizing User Profiles via Contextual Bandits for Retrieval-Augmented LLM Personalization
 description: >-
-  [ACL 2026][信息检索/RAG][用户画像优化] 提出 PURPLE 框架，将检索增强 LLM 个性化中的用户画像构建问题建模为上下文老虎机问题，通过 Plackett-Luce 排序模型捕捉记录间依赖关系，以 LLM 对参考回复的 log-likelihood 作为奖励信号…
+  [ACL 2026][信息检索/RAG][用户画像优化] 提出 PURPLE 框架，将检索增强 LLM 个性化中的用户画像构建问题建模为上下文老虎机问题，通过 Plackett-Luce 排序模型捕捉记录间依赖关系，以 LLM 对参考回复的 log-likelihood 作为奖励信号，直接优化检索以匹配生成质量。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

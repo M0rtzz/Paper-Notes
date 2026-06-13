@@ -2,9 +2,10 @@
 title: >-
   [论文解读] On Fine-Grained Distinct Element Estimation
 description: >-
-  [ICML2025][distinct element estimation] 提出以**成对碰撞数** $C$（pairwise collisions）作为分布式去重计数问题的细粒度复杂度参数，设计了通信量随 $C$ 减小而显著降低的协议…
+  [ICML2025][其他/算法理论][distinct element estimation] 提出以**成对碰撞数** $C$（pairwise collisions）作为分布式去重计数问题的细粒度复杂度参数，设计了通信量随 $C$ 减小而显著降低的协议，打破了此前 $\Omega(\alpha/\varepsilon^2)$ 的最坏情况下界，并给出了所有参数区间的匹配下界。
 tags:
   - "ICML2025"
+  - "其他/算法理论"
   - "distinct element estimation"
   - "distributed computing"
   - "communication complexity"

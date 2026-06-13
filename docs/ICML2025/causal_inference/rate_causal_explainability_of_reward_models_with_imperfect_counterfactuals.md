@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals
 description: >-
-  [ICML2025][因果推理][因果推断] 提出 RATE（Rewrite-based Attribute Treatment Estimator），通过"双重重写"策略消除 LLM 不完美反事实重写引入的偏差，从而正确估计高层属性对奖励模型评分的因果效应。
+  [ICML2025][因果推理][因果推断] 提出 RATE（Rewrite-based Attribute Treatment Estimator），通过"双重重写"策略消除 LLM 不完美反事实重写引入的偏差，从而正确估计高层属性对奖励模型评分的因果效应。 奖励模型（RM）在 LLM 对齐中扮演核心角色…
 tags:
   - "ICML2025"
   - "因果推理"

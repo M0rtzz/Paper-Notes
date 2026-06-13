@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis
 description: >-
-  [ECCV 2024][人体理解][文本到动作生成] 提出FreeMotion框架，通过条件概率分解将多人运动联合分布递归拆解为单人条件运动生成，首次实现任意人数的文本驱动运动合成，并支持多人空间控制。
+  [ECCV 2024][人体理解][文本到动作生成] 提出FreeMotion框架，通过条件概率分解将多人运动联合分布递归拆解为单人条件运动生成，首次实现任意人数的文本驱动运动合成，并支持多人空间控制。 文本驱动的人体运动合成（Text-to-Motion, T2M）是计算机视觉中的重要任务，在机器人控制、电影制作、动画生产…
 tags:
   - "ECCV 2024"
   - "人体理解"

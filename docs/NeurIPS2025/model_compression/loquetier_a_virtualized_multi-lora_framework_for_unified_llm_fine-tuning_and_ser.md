@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Loquetier: A Virtualized Multi-LoRA Framework for Unified LLM Fine-tuning and Serving
 description: >-
-  [NeurIPS 2025][模型压缩][LoRA] 提出Loquetier框架，通过虚拟化模块（Virtualized Module）和分段多LoRA乘法内核（SMLM），将多个LoRA适配器的微调和推理统一到单一运行时中，实现推理任务3.0×吞吐率提升和统一任务46.4×更高的SLO达成率。
+  [NeurIPS 2025][模型压缩][LoRA] 提出Loquetier框架，通过虚拟化模块（Virtualized Module）和分段多LoRA乘法内核（SMLM），将多个LoRA适配器的微调和推理统一到单一运行时中，实现推理任务3.0×吞吐率提升和统一任务46.4×更高的SLO达成率。 LoRA（Low-Rank…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

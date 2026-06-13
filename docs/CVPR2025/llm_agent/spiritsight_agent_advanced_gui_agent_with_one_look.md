@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpiritSight Agent: Advanced GUI Agent with One Look
 description: >-
-  [CVPR 2025][LLM Agent][GUI Agent] 提出 SpiritSight，一个基于视觉的端到端 GUI agent，通过 573 万样本的多层级数据集 GUI-Lasagne 和 Universal Block Parsing (UBP) 方法解决动态高分辨率输入的定位歧义…
+  [CVPR 2025][LLM Agent][GUI Agent] 提出 SpiritSight，一个基于视觉的端到端 GUI agent，通过 573 万样本的多层级数据集 GUI-Lasagne 和 Universal Block Parsing (UBP) 方法解决动态高分辨率输入的定位歧义，SpiritSight-8B 在 Multimodal-Mind2Web 上非候选元素设置下 Step SR 达 52.7%，全面超越所有视觉/语言/混合方法。
 tags:
   - "CVPR 2025"
   - "LLM Agent"

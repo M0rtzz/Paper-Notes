@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Target-unspecific Tasks through a Features Matrix
 description: >-
-  [ICML 2025][多模态VLM][CLIP] 提出 Features Matrix (FM) 方法，利用多个手工 prompt 模板从冻结 CLIP 中提取通用知识构成特征矩阵…
+  [ICML 2025][多模态VLM][CLIP] 提出 Features Matrix (FM) 方法，利用多个手工 prompt 模板从冻结 CLIP 中提取通用知识构成特征矩阵，通过对齐 unexpected features 与微调视觉特征来增强模型在目标无关任务（如 base-to-novel 泛化、跨数据集泛化、域泛化）上的表现。
 tags:
   - "ICML 2025"
   - "多模态VLM"

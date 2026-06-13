@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time, Identity and Consciousness in Language Model Agents
 description: >-
-  [AAAI 2026 Spring Symposium][LLM Agent][机器意识] 本文将Stack Theory的时间间隙概念应用于LLM智能体评估，提出区分"说得像一个稳定自我"和"组织得像一个稳定自我"的保守评估工具包…
+  [AAAI 2026 Spring Symposium][LLM Agent][机器意识] 本文将Stack Theory的时间间隙概念应用于LLM智能体评估，提出区分"说得像一个稳定自我"和"组织得像一个稳定自我"的保守评估工具包，通过持久性得分和身份形态空间揭示不同scaffold结构的身份trade-off。
 tags:
   - "AAAI 2026 Spring Symposium"
   - "LLM Agent"

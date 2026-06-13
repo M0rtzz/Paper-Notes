@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VerbDiff: Text-Only Diffusion Models with Enhanced Interaction Awareness
 description: >-
-  [CVPR 2025][图像生成][人物交互生成] 提出 VerbDiff，一个无需额外条件（如边界框）即可生成准确人物交互图像的文本到图像扩散模型，通过关系解耦引导（RDG）消除交互词偏差，利用交互区域模块（IR Module）从交叉注意力图中提取局部交互区域进行方向引导。
+  [CVPR 2025][图像生成][人物交互生成] 提出 VerbDiff，一个无需额外条件（如边界框）即可生成准确人物交互图像的文本到图像扩散模型，通过关系解耦引导（RDG）消除交互词偏差，利用交互区域模块（IR Module）从交叉注意力图中提取局部交互区域进行方向引导。 - 文本到图像扩散模型在描绘人物交互方面表现不佳…
 tags:
   - "CVPR 2025"
   - "图像生成"

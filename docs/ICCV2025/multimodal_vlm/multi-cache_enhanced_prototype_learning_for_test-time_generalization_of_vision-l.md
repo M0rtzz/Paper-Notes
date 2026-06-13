@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models
 description: >-
-  [ICCV 2025][多模态VLM][测试时适应] 提出 MCP/MCP++ 多缓存增强的原型学习框架，通过 entropy cache、align cache 和 negative cache 三种互补缓存机制构建紧致的类内分布，并引入跨模态残差学习进一步优化视觉和文本原型对齐…
+  [ICCV 2025][多模态VLM][测试时适应] 提出 MCP/MCP++ 多缓存增强的原型学习框架，通过 entropy cache、align cache 和 negative cache 三种互补缓存机制构建紧致的类内分布，并引入跨模态残差学习进一步优化视觉和文本原型对齐，在 15 个下游任务上实现了 SOTA 的零样本泛化性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

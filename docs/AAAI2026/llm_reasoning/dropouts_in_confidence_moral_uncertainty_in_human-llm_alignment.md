@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dropouts in Confidence: Moral Uncertainty in Human-LLM Alignment
 description: >-
-  [AAAI 2026][LLM推理][道德推理] 系统研究 32 个开源 LLM 在道德困境（电车问题）中的决策不确定性，发现不确定性主要受模型架构而非道德维度驱动；在推理时引入 attention dropout 增加随机性后，模型的互信息显著上升…
+  [AAAI 2026][LLM推理][道德推理] 系统研究 32 个开源 LLM 在道德困境（电车问题）中的决策不确定性，发现不确定性主要受模型架构而非道德维度驱动；在推理时引入 attention dropout 增加随机性后，模型的互信息显著上升，human-LLM 道德对齐度也随之改善——表明降低 LLM 在道德场景中的过度自信可以改善与人类偏好的一致性。
 tags:
   - "AAAI 2026"
   - "LLM推理"

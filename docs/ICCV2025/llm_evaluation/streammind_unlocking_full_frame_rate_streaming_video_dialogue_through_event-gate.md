@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamMind: Unlocking Full Frame Rate Streaming Video Dialogue through Event-Gated Cognition
 description: >-
-  [ICCV 2025][LLM评测][流式视频对话] StreamMind 提出"事件门控 LLM 调用"范式替代现有的"逐帧 LLM 调用"，通过在视频编码器和 LLM 之间插入认知门控网络（Cognition Gate），仅在查询相关事件发生时才调用 LLM…
+  [ICCV 2025][LLM评测][流式视频对话] StreamMind 提出"事件门控 LLM 调用"范式替代现有的"逐帧 LLM 调用"，通过在视频编码器和 LLM 之间插入认知门控网络（Cognition Gate），仅在查询相关事件发生时才调用 LLM，配合基于状态空间方法的事件保持特征提取器（EPFE）实现常量感知成本，在单张 A100 上达到 **100 fps** 的流式视频处理速度。
 tags:
   - "ICCV 2025"
   - "LLM评测"

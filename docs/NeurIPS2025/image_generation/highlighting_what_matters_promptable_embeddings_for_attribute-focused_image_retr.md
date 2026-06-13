@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Highlighting What Matters: Promptable Embeddings for Attribute-Focused Image Retrieval
 description: >-
-  [NeurIPS 2025][图像生成][属性聚焦检索] 提出可提示图像嵌入(Promptable Embeddings)方法，通过在检索时高亮目标视觉属性来提升属性聚焦的文本到图像检索性能，同时构建了COCO-Facet基准数据集。
+  [NeurIPS 2025][图像生成][属性聚焦检索] 提出可提示图像嵌入(Promptable Embeddings)方法，通过在检索时高亮目标视觉属性来提升属性聚焦的文本到图像检索性能，同时构建了COCO-Facet基准数据集。 在文本到图像(T2I)检索任务中，理想的检索器应该能根据查询关注特定的视觉属性（如颜色、材…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

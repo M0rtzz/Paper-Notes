@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShiftLUT: Spatial Shift Enhanced Look-Up Tables for Efficient Image Restoration
 description: >-
-  [CVPR 2026][图像恢复][查找表] 提出 ShiftLUT，通过可学习空间偏移模块（LSS）实现 LUT 方法中最大感受野（65×65），配合非对称双分支架构和误差有界自适应采样（EAS），在存储 104KB + 推理 84ms 的条件下超越所有现有 LUT 方法。
+  [CVPR 2026][图像恢复][查找表] 提出 ShiftLUT，通过可学习空间偏移模块（LSS）实现 LUT 方法中最大感受野（65×65），配合非对称双分支架构和误差有界自适应采样（EAS），在存储 104KB + 推理 84ms 的条件下超越所有现有 LUT 方法。 LUT（查找表）方法通过"空间换时间"策略…
 tags:
   - "CVPR 2026"
   - "图像恢复"

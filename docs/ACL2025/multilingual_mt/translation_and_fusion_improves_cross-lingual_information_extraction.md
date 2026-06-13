@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Translation and Fusion Improves Zero-shot Cross-lingual Information Extraction
 description: >-
-  [ACL 2025][多语言/翻译][跨语言迁移] 提出 TransFusion 框架，通过在推理时先将低资源语言文本翻译为英语、在英语上进行信息抽取标注、再用融合模型将英语标注与原文结合来生成最终预测，在50种语言的零样本跨语言IE任务上显著优于基线（MasakhaNER2平均F1从47.9提升到62.4）…
+  [ACL 2025][多语言/翻译][跨语言迁移] 提出 TransFusion 框架，通过在推理时先将低资源语言文本翻译为英语、在英语上进行信息抽取标注、再用融合模型将英语标注与原文结合来生成最终预测，在50种语言的零样本跨语言IE任务上显著优于基线（MasakhaNER2平均F1从47.9提升到62.4）。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

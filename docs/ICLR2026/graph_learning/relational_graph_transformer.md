@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relational Graph Transformer
 description: >-
-  [ICLR 2026][图学习][Transformer] 提出 RelGT，首个专为关系型数据库设计的图 Transformer，通过多元素 Token 化（特征/类型/跳距/时间/局部结构 5 元组）和局部-全局混合注意力机制，在 RelBench 基准的 21 个任务上一致超越 GNN 基线…
+  [ICLR 2026][图学习][Transformer] 提出 RelGT，首个专为关系型数据库设计的图 Transformer，通过多元素 Token 化（特征/类型/跳距/时间/局部结构 5 元组）和局部-全局混合注意力机制，在 RelBench 基准的 21 个任务上一致超越 GNN 基线，最高提升 18%。
 tags:
   - "ICLR 2026"
   - "图学习"

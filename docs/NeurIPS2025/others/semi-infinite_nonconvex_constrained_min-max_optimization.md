@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semi-infinite Nonconvex Constrained Min-Max Optimization
 description: >-
-  [NeurIPS 2025][半无穷规划] 针对带有无穷多非凸约束的非凸 min-max 优化问题，提出 iDB-PD（不精确动态障碍原始-对偶）算法，在 Łojasiewicz 正则条件下建立了首个全局非渐近收敛保证…
+  [NeurIPS 2025][半无穷规划] 针对带有无穷多非凸约束的非凸 min-max 优化问题，提出 iDB-PD（不精确动态障碍原始-对偶）算法，在 Łojasiewicz 正则条件下建立了首个全局非渐近收敛保证，稳定性 $\mathcal{O}(\epsilon^{-3})$、可行性 $\mathcal{O}(\epsilon^{-6\theta})$、互补松弛 $\mathcal{O}(\epsilon^{-3\theta/(1-\theta)})$。
 tags:
   - "NeurIPS 2025"
   - "半无穷规划"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FAIR Universe HiggsML Uncertainty Dataset and Competition
 description: >-
-  [NeurIPS 2025][物理/科学计算][Higgs玻色子] 提供2.8亿模拟LHC碰撞事件的标准化数据集和竞赛平台，包含6种参数化系统偏差（探测器校准+背景成分）及不对称覆盖惩罚评估指标，要求参赛者为Higgs信号强度$\mu$估计鲁棒的68.27%置信区间…
+  [NeurIPS 2025][物理/科学计算][Higgs玻色子] 提供2.8亿模拟LHC碰撞事件的标准化数据集和竞赛平台，包含6种参数化系统偏差（探测器校准+背景成分）及不对称覆盖惩罚评估指标，要求参赛者为Higgs信号强度$\mu$估计鲁棒的68.27%置信区间，优胜方案通过无聚焦替代建模实现比传统binned方法窄约20%的置信区间。
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts
 description: >-
-  [ICLR 2026 Oral][强化学习][long-context reasoning] 提出 LoongRL，通过构建 KeyChain 合成数据进行强化学习训练，使 LLM 涌现出 plan–retrieve–reason–recheck 的长上下文推理模式…
+  [ICLR 2026 Oral][强化学习][long-context reasoning] 提出 LoongRL，通过构建 KeyChain 合成数据进行强化学习训练，使 LLM 涌现出 plan–retrieve–reason–recheck 的长上下文推理模式，仅在 16K 上下文上训练即可泛化到 128K，14B 模型达到 74.2 分接近 o3-mini (74.5) 和 DeepSeek-R1 (74.9)。
 tags:
   - "ICLR 2026 Oral"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WebWalker: Benchmarking LLMs in Web Traversal
 description: >-
-  [ACL 2025][LLM评测][网页遍历] 提出 WebWalkerQA 基准评测 LLM 在网页深层遍历中的信息获取能力，并设计 WebWalker 多智能体框架通过 Explore-Critic 范式模仿人类网页导航行为，结合 RAG 的横向-纵向集成显著提升了复杂问答性能。
+  [ACL 2025][LLM评测][网页遍历] 提出 WebWalkerQA 基准评测 LLM 在网页深层遍历中的信息获取能力，并设计 WebWalker 多智能体框架通过 Explore-Critic 范式模仿人类网页导航行为，结合 RAG 的横向-纵向集成显著提升了复杂问答性能。 领域现状：检索增强生成（RAG）在开放域…
 tags:
   - "ACL 2025"
   - "LLM评测"

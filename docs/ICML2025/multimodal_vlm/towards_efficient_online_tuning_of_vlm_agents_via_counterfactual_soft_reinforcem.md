@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Efficient Online Tuning of VLM Agents via Counterfactual Soft Reinforcement Learning
 description: >-
-  [ICML 2025][多模态VLM][VLM Agent] 提出 Counterfactual Soft Reinforcement Learning (CoSo)，利用反事实推理评估每个 token 对最终动作的因果影响，通过因果加权熵正则优化集中探索关键 token…
+  [ICML 2025][多模态VLM][VLM Agent] 提出 Counterfactual Soft Reinforcement Learning (CoSo)，利用反事实推理评估每个 token 对最终动作的因果影响，通过因果加权熵正则优化集中探索关键 token，解决 VLM 智能体在线 RL 微调中文本动作空间爆炸问题，在 Android 控制、卡牌游戏、具身 AI 上分别提升 12.3%、9.3%、16.7%。
 tags:
   - "ICML 2025"
   - "多模态VLM"

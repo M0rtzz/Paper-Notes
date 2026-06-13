@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LASER: Layer-wise Scale Alignment for Training-Free Streaming 4D Reconstruction
 description: >-
-  [CVPR2026][3D视觉][流式4D重建] 提出 LASER，一个无需重训练的框架，通过层级深度尺度对齐（Layer-wise Scale Alignment）将离线前馈重建模型（如 VGGT、π³）转换为流式系统…
+  [CVPR2026][3D视觉][流式4D重建] 提出 LASER，一个无需重训练的框架，通过层级深度尺度对齐（Layer-wise Scale Alignment）将离线前馈重建模型（如 VGGT、π³）转换为流式系统，在 RTX A6000 上以 14 FPS、6GB 峰值显存实现千米级视频的实时流式 4D 重建。
 tags:
   - "CVPR2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Two-Stage Regularization-Based Structured Pruning for LLMs
 description: >-
-  [ACL2026][模型压缩][结构化剪枝] TRSP 用第一阶段正则学习每个 Transformer 层的重要性，再用第二阶段正则把待删层的输入输出拉近，让知识转移到保留层中，从而在无需重训练的情况下实现 LLM 层级结构化剪枝和实际推理加速。
+  [ACL2026][模型压缩][结构化剪枝] TRSP 用第一阶段正则学习每个 Transformer 层的重要性，再用第二阶段正则把待删层的输入输出拉近，让知识转移到保留层中，从而在无需重训练的情况下实现 LLM 层级结构化剪枝和实际推理加速。 领域现状：LLM 部署的瓶颈主要来自参数规模、显存占用和推理延迟…
 tags:
   - "ACL2026"
   - "模型压缩"

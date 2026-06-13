@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniAID: Decoupling Semantic and Artifacts for Universal AI-Generated Image Detection in the Wild
 description: >-
-  [ICML 2026][图像生成][AIGI 检测] OmniAID 用一个"语义专家 + 通用伪影专家"的解耦 MoE 架构，在 CLIP-ViT 注意力权重 SVD 出的低秩残差子空间里分别学习"画了什么会露馅"和"怎么画都会露馅"两类伪造线索，再配上新的现代化数据集 Mirage…
+  [ICML 2026][图像生成][AIGI 检测] OmniAID 用一个"语义专家 + 通用伪影专家"的解耦 MoE 架构，在 CLIP-ViT 注意力权重 SVD 出的低秩残差子空间里分别学习"画了什么会露馅"和"怎么画都会露馅"两类伪造线索，再配上新的现代化数据集 Mirage，在 GenImage / Chameleon / Mirage-Test 三套基准上把通用 AIGI 检测平均准确率推到 95.9% / 91.4% / 88.4%。
 tags:
   - "ICML 2026"
   - "图像生成"

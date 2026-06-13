@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MapTracker: Tracking with Strided Memory Fusion for Consistent Vector HD Mapping
 description: >-
-  [ECCV 2024][自动驾驶][向量高精地图] 将在线向量高精地图构建重新定义为追踪任务，通过双表示（BEV栅格+道路元素向量）的步进式记忆缓冲区融合机制实现时间一致的高精地图重建，在nuScenes和Argoverse2上分别以76.1和76.9 mAP大幅超越现有方法。
+  [ECCV 2024][自动驾驶][向量高精地图] 将在线向量高精地图构建重新定义为追踪任务，通过双表示（BEV栅格+道路元素向量）的步进式记忆缓冲区融合机制实现时间一致的高精地图重建，在nuScenes和Argoverse2上分别以76.1和76.9 mAP大幅超越现有方法。 在线向量高精地图（Vector HD Mapp…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

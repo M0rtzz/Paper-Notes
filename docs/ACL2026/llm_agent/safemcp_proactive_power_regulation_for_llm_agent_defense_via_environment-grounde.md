@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeMCP: Proactive Power Regulation for LLM Agent Defense via Environment-Grounded Look-Ahead Reasoning
 description: >-
-  [ACL2026][LLM Agent][MCP] SafeMCP 是一个部署在 MCP server 侧的 agent 防御插件，通过环境动力学世界模型做 look-ahead reasoning，先过滤会扩大危险能力边界的工具，再对已发起的危险调用做即时拦截…
+  [ACL2026][LLM Agent][MCP] SafeMCP 是一个部署在 MCP server 侧的 agent 防御插件，通过环境动力学世界模型做 look-ahead reasoning，先过滤会扩大危险能力边界的工具，再对已发起的危险调用做即时拦截，在 PowerSeeking Bench、ToolEmu 和 AgentHarm 上同时提升安全性并尽量保留任务效用。
 tags:
   - "ACL2026"
   - "LLM Agent"

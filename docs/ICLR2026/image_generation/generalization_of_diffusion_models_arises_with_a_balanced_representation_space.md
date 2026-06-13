@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization of Diffusion Models Arises with a Balanced Representation Space
 description: >-
-  [ICLR 2026][图像生成] 本文是扩散模型泛化理论领域的重要突破。通过分析两层非线性 ReLU DAE 的最优解，统一刻画了记忆化和泛化两种行为模式，并创造性地从表征空间的角度提供了一个以表征为中心的泛化理解…
+  [ICLR 2026][图像生成] 本文是扩散模型泛化理论领域的重要突破。通过分析两层非线性 ReLU DAE 的最优解，统一刻画了记忆化和泛化两种行为模式，并创造性地从表征空间的角度提供了一个以表征为中心的泛化理解。理论结论在 EDM、DiT 和 Stable Diffusion v1.4 上获得了一致的实验验证，且催生了两个实用应用：记忆化检测和可控编辑。理论的深度与实用性兼备。
 tags:
   - "ICLR 2026"
   - "图像生成"

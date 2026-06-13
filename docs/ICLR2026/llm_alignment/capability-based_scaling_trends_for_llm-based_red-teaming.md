@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Capability-Based Scaling Trends for LLM-Based Red-Teaming
 description: >-
-  [ICLR 2026][LLM对齐][红队测试] 在 600+ 对攻击者-目标 LLM 组合上系统评估了 4 种越狱方法，发现攻击成功率（ASR）与攻击者-目标的能力差距遵循 sigmoid 缩放定律（R^2=0.83），能力差距可用 MMLU-Pro 的 logit 变换量化。
+  [ICLR 2026][LLM对齐][红队测试] 在 600+ 对攻击者-目标 LLM 组合上系统评估了 4 种越狱方法，发现攻击成功率（ASR）与攻击者-目标的能力差距遵循 sigmoid 缩放定律（R^2=0.83），能力差距可用 MMLU-Pro 的 logit 变换量化。 领域现状：LLM 红队测试（red-team…
 tags:
   - "ICLR 2026"
   - "LLM对齐"

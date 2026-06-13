@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VisionArena: 230K Real World User-VLM Conversations with Preference Labels
 description: >-
-  [CVPR 2025][多模态VLM][视觉语言模型] VisionArena 构建了一个包含 230K 条真实用户与 VLM 交互记录的大规模数据集（含偏好标签），涵盖 73K 用户、45 个 VLM、138 种语言，揭示了当前 VLM 在空间推理和规划任务上的不足…
+  [CVPR 2025][多模态VLM][视觉语言模型] VisionArena 构建了一个包含 230K 条真实用户与 VLM 交互记录的大规模数据集（含偏好标签），涵盖 73K 用户、45 个 VLM、138 种语言，揭示了当前 VLM 在空间推理和规划任务上的不足，并展示了用真实对话数据微调可显著超越 LLaVA-Instruct。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

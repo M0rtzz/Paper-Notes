@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring and Leveraging Class Vectors for Classifier Editing
 description: >-
-  [NeurIPS 2025][医学图像][Class Vector] 提出 Class Vector（类向量），通过计算预训练与微调模型在潜空间中类别质心的差异来捕获类别级适应，利用线性和独立性两个性质，通过简单向量算术实现分类器编辑（遗忘、环境适应、对抗防御），无需重训练即可完成潜空间注入…
+  [NeurIPS 2025][医学图像][Class Vector] 提出 Class Vector（类向量），通过计算预训练与微调模型在潜空间中类别质心的差异来捕获类别级适应，利用线性和独立性两个性质，通过简单向量算术实现分类器编辑（遗忘、环境适应、对抗防御），无需重训练即可完成潜空间注入，或用 <1.5K 参数在 1.5 秒内完成权重空间映射。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

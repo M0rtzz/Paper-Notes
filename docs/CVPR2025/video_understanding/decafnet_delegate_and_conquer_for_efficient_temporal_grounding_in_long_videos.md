@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeCafNet: Delegate and Conquer for Efficient Temporal Grounding in Long Videos
 description: >-
-  [CVPR 2025][视频理解][长视频时序定位] 提出DeCafNet，通过**delegate-and-conquer双编码器策略**（轻量sidekick encoder密集提特征+生成显著性图，expert encoder仅处理top-c%关键clip）…
+  [CVPR 2025][视频理解][长视频时序定位] 提出DeCafNet，通过**delegate-and-conquer双编码器策略**（轻量sidekick encoder密集提特征+生成显著性图，expert encoder仅处理top-c%关键clip），配合**DeCaf-Grounder**统一不同时序分辨率特征，在长视频时序定位任务上以**减少47% TFLOPs**的代价超越所有先前方法。
 tags:
   - "CVPR 2025"
   - "视频理解"

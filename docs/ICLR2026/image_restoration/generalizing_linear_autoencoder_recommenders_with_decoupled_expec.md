@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalizing Linear Autoencoder Recommenders with Decoupled Expected Quadratic Loss
 description: >-
-  [ICLR 2026][图像恢复][线性自编码器] 将 EDLAE 推荐模型的目标函数推广为解耦期望二次损失（DEQL），在超参数 $b>0$ 的更广范围内推导出闭式解，并通过 Miller 矩阵逆定理将计算复杂度从 $O(n^4)$ 降至 $O(n^3)$，在多个基准数据集上超越 EDLAE 和深度学习模型…
+  [ICLR 2026][图像恢复][线性自编码器] 将 EDLAE 推荐模型的目标函数推广为解耦期望二次损失（DEQL），在超参数 $b>0$ 的更广范围内推导出闭式解，并通过 Miller 矩阵逆定理将计算复杂度从 $O(n^4)$ 降至 $O(n^3)$，在多个基准数据集上超越 EDLAE 和深度学习模型。
 tags:
   - "ICLR 2026"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Long Context Language Model Retrieval with Compression
 description: >-
-  [ACL 2025][模型压缩][长上下文语言模型] 提出 CoLoR（Compression for Long context Retrieval），通过偏好优化和长度正则化联合训练段落压缩模型，在保持长上下文语言模型检索性能提升 6% 的同时将上下文长度压缩 1.91 倍。
+  [ACL 2025][模型压缩][长上下文语言模型] 提出 CoLoR（Compression for Long context Retrieval），通过偏好优化和长度正则化联合训练段落压缩模型，在保持长上下文语言模型检索性能提升 6% 的同时将上下文长度压缩 1.91 倍。 领域现状：长上下文语言模型（LCLM）已成为信…
 tags:
   - "ACL 2025"
   - "模型压缩"

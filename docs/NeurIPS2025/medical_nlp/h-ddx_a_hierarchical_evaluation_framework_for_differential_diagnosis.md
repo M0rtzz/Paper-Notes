@@ -2,7 +2,7 @@
 title: >-
   [论文解读] H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis
 description: >-
-  [NeurIPS 2025][医疗NLP][鉴别诊断] H-DDx 提出基于 ICD-10 分类层级的鉴别诊断评估框架——将预测和真实诊断扩展到祖先节点后计算层级 F1（HDF1），奖励"临床相关的近似正确"而非仅精确匹配…
+  [NeurIPS 2025][医疗NLP][鉴别诊断] H-DDx 提出基于 ICD-10 分类层级的鉴别诊断评估框架——将预测和真实诊断扩展到祖先节点后计算层级 F1（HDF1），奖励"临床相关的近似正确"而非仅精确匹配，评估 22 个 LLM 后发现领域特化模型（MediPhi）在 HDF1 上从第 20 名升至第 2 名（Top-5 指标完全遮蔽其优势）。
 tags:
   - "NeurIPS 2025"
   - "医疗NLP"

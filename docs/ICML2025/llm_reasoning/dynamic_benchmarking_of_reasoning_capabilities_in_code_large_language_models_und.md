@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DyCodeEval: Dynamic Benchmarking of Reasoning Capabilities in Code Large Language Models Under Data Contamination
 description: >-
-  [ICML 2025][LLM推理][Code LLM benchmarking] 基于蜕变测试思想，将编程问题分解为复杂度相关的算法抽象和复杂度无关的上下文描述，通过四个 LLM Agent 协作自动生成语义等价但文本不同的编程问题变体，有效规避数据污染并评估 Code LLM 的真实推理能力…
+  [ICML 2025][LLM推理][Code LLM benchmarking] 基于蜕变测试思想，将编程问题分解为复杂度相关的算法抽象和复杂度无关的上下文描述，通过四个 LLM Agent 协作自动生成语义等价但文本不同的编程问题变体，有效规避数据污染并评估 Code LLM 的真实推理能力，在 18 个模型上验证了框架的有效性。
 tags:
   - "ICML 2025"
   - "LLM推理"

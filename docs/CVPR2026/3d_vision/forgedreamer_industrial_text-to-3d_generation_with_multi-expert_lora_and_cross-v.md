@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph
 description: >-
-  [CVPR 2026][3D视觉][文生3D] 提出 ForgeDreamer 框架，通过多专家 LoRA 师生蒸馏解决工业领域语义适配问题，结合跨视角超图几何增强实现高阶几何一致性约束，在工业文本到3D生成任务上超越现有方法。
+  [CVPR 2026 Findings][3D视觉][文生3D] 提出 ForgeDreamer 框架，通过多专家 LoRA 师生蒸馏解决工业领域语义适配问题，结合跨视角超图几何增强实现高阶几何一致性约束，在工业文本到3D生成任务上超越现有方法。 文本到3D生成技术（如 DreamFusion、ProlificDreamer…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "文生3D"
   - "工业3D生成"

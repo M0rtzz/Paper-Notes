@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EVT: Efficient View Transformation for Multi-Modal 3D Object Detection
 description: >-
-  [ICCV 2025][自动驾驶][BEV表示] 提出EVT框架，通过自适应采样与自适应投影(ASAP)实现高效的LiDAR引导视图变换，结合分组混合查询选择和几何感知交叉注意力，在nuScenes测试集上以实时速度达到75.3% NDS的SOTA性能。
+  [ICCV 2025][自动驾驶][BEV表示] 提出EVT框架，通过自适应采样与自适应投影(ASAP)实现高效的LiDAR引导视图变换，结合分组混合查询选择和几何感知交叉注意力，在nuScenes测试集上以实时速度达到75.3% NDS的SOTA性能。 多模态传感器融合在BEV表示下的3D目标检测是当前主流方案…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

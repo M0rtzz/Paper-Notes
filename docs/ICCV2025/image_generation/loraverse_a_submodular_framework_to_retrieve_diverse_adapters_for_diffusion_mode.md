@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoRAverse: A Submodular Framework to Retrieve Diverse Adapters for Diffusion Models
 description: >-
-  [图像生成] 将从100K+ LoRA适配器库中检索相关且多样化的LoRA组合建模为组合优化问题，提出基于子模函数最大化的LoRAverse框架，通过概念提取+子模检索实现兼顾相关性和多样性的LoRA选择。
+  [图像生成] 将从100K+ LoRA适配器库中检索相关且多样化的LoRA组合建模为组合优化问题，提出基于子模函数最大化的LoRAverse框架，通过概念提取+子模检索实现兼顾相关性和多样性的LoRA选择。 CivitAI等平台托管着超过100K个LoRA模型，每个针对特定风格/主题/角色微调。用户面临三重挑战： 数量爆炸：…
 tags:
   - "图像生成"
 ---

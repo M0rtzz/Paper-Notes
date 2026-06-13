@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Forgotten Words: Benchmarking NeoBERT for Dementia Detection in Low-Resource Conversational Filipino and English Speech
 description: >-
-  [ACL2026][医疗NLP][痴呆检测] 这篇论文用 4000 条英菲平行 DementiaBank 对话转写系统评测 TF-IDF、BERT、NeoBERT、XLM-R 和 RoBERTa-Tagalog，发现痴呆检测的跨语言鲁棒性主要来自训练阶段的语言覆盖，而不是更现代的编码器架构。
+  [ACL2026][医疗NLP][痴呆检测] 这篇论文用 4000 条英菲平行 DementiaBank 对话转写系统评测 TF-IDF、BERT、NeoBERT、XLM-R 和 RoBERTa-Tagalog，发现痴呆检测的跨语言鲁棒性主要来自训练阶段的语言覆盖，而不是更现代的编码器架构。 领域现状：从自发语音或对话转写中…
 tags:
   - "ACL2026"
   - "医疗NLP"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPOT: Bridging Natural Language and Geospatial Search for Investigative Journalists
 description: >-
-  提出 SPOT 系统，通过微调 LLaMA 3 将自然语言场景描述转换为 YAML 查询，结合语义标签捆绑机制实现对 OpenStreetMap 数据的可靠自然语言访问，服务于调查新闻的地理定位验证。
+  提出 SPOT 系统，通过微调 LLaMA 3 将自然语言场景描述转换为 YAML 查询，结合语义标签捆绑机制实现对 OpenStreetMap 数据的可靠自然语言访问，服务于调查新闻的地理定位验证。 - 核心问题： OpenStreetMap (OSM) 是调查记者进行地理定位验证的重要资源，但其查询语言 Overpas…
 tags:
 
 ---

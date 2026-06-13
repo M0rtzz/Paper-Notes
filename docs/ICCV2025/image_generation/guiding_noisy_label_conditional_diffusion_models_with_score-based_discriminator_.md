@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Guiding Noisy Label Conditional Diffusion Models with Score-based Discriminator Correction
 description: >-
-  [ICCV 2025][图像生成][噪声标签] 提出Score-based Discriminator Correction (SBDC)，通过训练一个轻量判别器在推理时校正噪声标签条件扩散模型的生成轨迹，利用噪声检测将训练集分为干净/腐败子集来训练判别器…
+  [ICCV 2025][图像生成][噪声标签] 提出Score-based Discriminator Correction (SBDC)，通过训练一个轻量判别器在推理时校正噪声标签条件扩散模型的生成轨迹，利用噪声检测将训练集分为干净/腐败子集来训练判别器，并发现仅在采样过程的早中期阶段施加引导即可获得最优效果。
 tags:
   - "ICCV 2025"
   - "图像生成"

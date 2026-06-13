@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HAWK: Head Importance-Aware Visual Token Pruning in Multimodal Models
 description: >-
-  [CVPR 2026][多模态VLM][视觉token剪枝] 提出 HAWK，一种基于注意力头重要性感知的视觉 token 剪枝方法，通过离线计算各注意力头对视觉理解的贡献权重，并结合文本引导的注意力分数动态评估每个视觉 token 的重要性…
+  [CVPR 2026][多模态VLM][视觉token剪枝] 提出 HAWK，一种基于注意力头重要性感知的视觉 token 剪枝方法，通过离线计算各注意力头对视觉理解的贡献权重，并结合文本引导的注意力分数动态评估每个视觉 token 的重要性，在 Qwen2.5-VL 上剪枝 80.2% 视觉 token 后仍保留 96.0% 原始性能，同时减少 26% 推理延迟。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Simple and Efficient Heterogeneous Temporal Graph Neural Network
 description: >-
-  [NeurIPS 2025][时间序列][异构时序图] 提出 SE-HTGNN，通过动态注意力机制将时序建模融入空间学习，并用 LLM 初始化注意力系数，在异构时序图任务上实现 10 倍加速的同时保持最优预测精度。
+  [NeurIPS 2025][时间序列][异构时序图] 提出 SE-HTGNN，通过动态注意力机制将时序建模融入空间学习，并用 LLM 初始化注意力系数，在异构时序图任务上实现 10 倍加速的同时保持最优预测精度。 异构时序图（HTG）广泛存在于电商网络、流行病网络和交通网络等场景中，每个时间快照都是一个包含多种节点类型和关…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

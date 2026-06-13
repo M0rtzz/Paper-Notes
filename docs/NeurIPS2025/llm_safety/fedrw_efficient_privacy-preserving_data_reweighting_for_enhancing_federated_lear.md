@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedRW: Efficient Privacy-Preserving Data Reweighting for Enhancing Federated Learning of Language Models
 description: >-
-  [NeurIPS 2025][LLM安全][联邦学习] FedRW 提出首个无需可信第三方的联邦学习隐私保护软去重框架，通过安全多方计算获取全局样本频率并进行频率感知的样本加权，在预处理上实现最高 28.78× 加速，在模型性能上实现约 11.42% 的 perplexity 改善。
+  [NeurIPS 2025][LLM安全][联邦学习] FedRW 提出首个无需可信第三方的联邦学习隐私保护软去重框架，通过安全多方计算获取全局样本频率并进行频率感知的样本加权，在预处理上实现最高 28.78× 加速，在模型性能上实现约 11.42% 的 perplexity 改善。 领域现状：大规模语料中的数据重复严重影响…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhaSR: Generalized Image Shadow Removal with Physically Aligned Priors
 description: >-
-  [CVPR 2026][图像恢复][阴影去除] 提出PhaSR框架，通过双层物理先验对齐——全局级的PAN执行无参数Retinex分解抑制色彩偏差、局部级的GSRA利用差分注意力对齐DepthAnything深度先验和DINO-v2语义嵌入——实现从单光源直射阴影到多光源环境光场景的泛化阴影去除…
+  [CVPR 2026][图像恢复][阴影去除] 提出PhaSR框架，通过双层物理先验对齐——全局级的PAN执行无参数Retinex分解抑制色彩偏差、局部级的GSRA利用差分注意力对齐DepthAnything深度先验和DINO-v2语义嵌入——实现从单光源直射阴影到多光源环境光场景的泛化阴影去除，在WSRD+和Ambient6K上达到SOTA且FLOPs最低。
 tags:
   - "CVPR 2026"
   - "图像恢复"

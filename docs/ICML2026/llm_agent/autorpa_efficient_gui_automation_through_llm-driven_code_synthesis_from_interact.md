@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AutoRPA: Efficient GUI Automation through LLM-Driven Code Synthesis from Interactions
 description: >-
-  [ICML2026][LLM Agent][GUI自动化] 提出 AutoRPA 框架，通过翻译器-构建器流水线将 ReAct 风格 GUI Agent 的交互轨迹自动蒸馏为可复用的 RPA 函数，结合混合修复策略迭代优化代码…
+  [ICML2026][LLM Agent][GUI自动化] 提出 AutoRPA 框架，通过翻译器-构建器流水线将 ReAct 风格 GUI Agent 的交互轨迹自动蒸馏为可复用的 RPA 函数，结合混合修复策略迭代优化代码，在保持甚至超越原始 Agent 成功率的前提下减少 82%~96% 的 token 消耗。
 tags:
   - "ICML2026"
   - "LLM Agent"

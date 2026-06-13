@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Abstraction to Instantiation: Learning Behavioral Representation for Vision-Language-Action Model
 description: >-
-  [ICML 2026][机器人][VLA] BehaviorVLA 用因果三流 Mamba 编码器 (VBE) 把长视野演示压缩成时间不变的"行为原型 $z_{\text{proto}}$"+ 时间变化的"相位状态 $z_{\text{phase}}$"…
+  [ICML 2026 Oral][机器人][VLA] BehaviorVLA 用因果三流 Mamba 编码器 (VBE) 把长视野演示压缩成时间不变的"行为原型 $z_{\text{proto}}$"+ 时间变化的"相位状态 $z_{\text{phase}}$"，再用相位条件解码器 (PBD) 以 Predictor-Corrector 方式把行为骨架展开成相位对齐的高斯先验去引导流匹配策略，在 LIBERO/RoboTwin 2.0/CALVIN 三套基准刷新 SOTA，并且只用 50% 真机数据就追平 OpenVLA-OFT。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Oral"
   - "机器人"
   - "VLA"
   - "行为表示"

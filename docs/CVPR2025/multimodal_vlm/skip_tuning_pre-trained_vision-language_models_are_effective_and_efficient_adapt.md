@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Skip Tuning: Pre-trained Vision-Language Models are Effective and Efficient Adapters Themselves
 description: >-
-  [CVPR 2025][多模态VLM][VLM微调] 揭示 prompt tuning 冻结 VLM 参数既不促进知识迁移也未显著提升效率（仅减 6% 内存/16% 时间），提出 Skip Tuning 通过层级跳过（LSkip）和类别跳过（CSkip）缩短全微调的梯度传播流…
+  [CVPR 2025][多模态VLM][VLM微调] 揭示 prompt tuning 冻结 VLM 参数既不促进知识迁移也未显著提升效率（仅减 6% 内存/16% 时间），提出 Skip Tuning 通过层级跳过（LSkip）和类别跳过（CSkip）缩短全微调的梯度传播流，实现 15× 时间效率和 6.4× 内存效率提升的同时精度更优。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

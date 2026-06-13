@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PanoNav: Mapless Zero-Shot Object Navigation with Panoramic Scene Parsing and Dynamic Memory
 description: >-
-  [AAAI 2026][机器人][零样本目标导航] 提出 PanoNav，一个仅使用 RGB 图像的无地图零样本目标导航框架，通过全景场景解析（Panoramic Scene Parsing）释放 MLLM 的空间推理能力…
+  [AAAI 2026][机器人][零样本目标导航] 提出 PanoNav，一个仅使用 RGB 图像的无地图零样本目标导航框架，通过全景场景解析（Panoramic Scene Parsing）释放 MLLM 的空间推理能力，并引入动态有界记忆队列（Dynamic Bounded Memory Queue）避免局部死锁问题。
 tags:
   - "AAAI 2026"
   - "机器人"

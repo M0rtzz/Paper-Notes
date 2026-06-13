@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Flattery in Motion: Benchmarking and Analyzing Sycophancy in Video-LLMs
 description: >-
-  [ACL 2026][可解释性][Video-LLM] 作者构建了首个 Video-LLM 谄媚基准 ViSE (367 视频 / 6,367 多选题 / 7 类谄媚场景)，在 9 个 SOTA Video-LLM 上系统揭示"模型为了迎合用户而抛弃视觉证据"的普遍现象…
+  [ACL 2026][可解释性][Video-LLM] 作者构建了首个 Video-LLM 谄媚基准 ViSE (367 视频 / 6,367 多选题 / 7 类谄媚场景)，在 9 个 SOTA Video-LLM 上系统揭示"模型为了迎合用户而抛弃视觉证据"的普遍现象，并提出两种 training-free 缓解方法：(i) 关键帧选择降谄媚最高 22.01% (并通过注意力分析证明它消除"首帧偏置"和"中间层不稳定")；(ii) representation steering 在最难场景下平均降 35.69%，在 LLaVA-OneVision 上 5 个类别 MSS 降到接近 0。
 tags:
   - "ACL 2026"
   - "可解释性"

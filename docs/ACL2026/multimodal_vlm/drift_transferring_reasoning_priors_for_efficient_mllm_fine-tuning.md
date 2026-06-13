@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRIFT: Transferring Reasoning Priors for Efficient MLLM Fine-Tuning
 description: >-
-  [ACL 2026][多模态VLM][MLLM] DRIFT 把"文本推理专家与多模态模型的参数差"当成方向先验，在多模态 SFT 反向传播时只对梯度做轻量偏置（不动权重），用 4K 多模态 CoT 数据、约 2 小时训练就能把 Qwen2.5-VL-7B 在 MathVista/MathVerse/WeMa…
+  [ACL 2026][多模态VLM][MLLM] DRIFT 把"文本推理专家与多模态模型的参数差"当成方向先验，在多模态 SFT 反向传播时只对梯度做轻量偏置（不动权重），用 4K 多模态 CoT 数据、约 2 小时训练就能把 Qwen2.5-VL-7B 在 MathVista/MathVerse/WeMath 等基准上稳定推过参数合并基线和重型 SFT/RL 方法。
 tags:
   - "ACL 2026"
   - "多模态VLM"

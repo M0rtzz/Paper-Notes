@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributional Consistency Loss: Beyond Pointwise Data Terms in Inverse Problems
 description: >-
-  [ICLR 2026][医学图像][逆问题] 提出分布一致性（DC）损失，用分布级别的校准替代传统逐点数据保真项（如MSE/NLL），避免对噪声的过拟合，在DIP去噪和PET图像重建中显著提升性能且无需早停。
+  [ICLR 2026][医学图像][逆问题] 提出分布一致性（DC）损失，用分布级别的校准替代传统逐点数据保真项（如MSE/NLL），避免对噪声的过拟合，在DIP去噪和PET图像重建中显著提升性能且无需早停。 逆问题（医学成像、地球物理、信号处理等）的核心挑战是从噪声测量中恢复真实信号。传统方法将目标函数分为数据保真项：和正…
 tags:
   - "ICLR 2026"
   - "医学图像"

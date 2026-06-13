@@ -2,9 +2,9 @@
 title: >-
   [论文解读] InfoNCE Induces Gaussian Distribution
 description: >-
-  [ICLR 2026][自监督学习][InfoNCE] 从理论上证明 InfoNCE 损失函数在两种互补机制下会诱导表征趋向高斯分布：经验理想化路线（对齐+球面均匀性→高斯）和正则化路线（消失正则项→各向同性高斯），并在合成数据和 CIFAR-10 上验证。
+  [ICLR 2026 Oral][自监督学习][InfoNCE] 从理论上证明 InfoNCE 损失函数在两种互补机制下会诱导表征趋向高斯分布：经验理想化路线（对齐+球面均匀性→高斯）和正则化路线（消失正则项→各向同性高斯），并在合成数据和 CIFAR-10 上验证。 领域现状：对比学习（SimCLR, MoCo…
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "自监督学习"
   - "InfoNCE"
   - "对比学习"

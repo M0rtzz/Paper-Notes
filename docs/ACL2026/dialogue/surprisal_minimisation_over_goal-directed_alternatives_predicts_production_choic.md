@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Surprisal Minimisation over Goal-directed Alternatives Predicts Production Choice in Dialogue
 description: >-
-  [ACL2026][对话系统][surprisal] 这篇论文把自然对话中的话语生成建模为在上下文替代项中的成本敏感选择，并发现相对于“同一交际目标”的 goal-directed alternatives 最小化 surprisal，最能预测人类实际说出的 continuation。
+  [ACL2026][对话系统][surprisal] 这篇论文把自然对话中的话语生成建模为在上下文替代项中的成本敏感选择，并发现相对于“同一交际目标”的 goal-directed alternatives 最小化 surprisal，最能预测人类实际说出的 continuation。 领域现状：语言理解研究中…
 tags:
   - "ACL2026"
   - "对话系统"

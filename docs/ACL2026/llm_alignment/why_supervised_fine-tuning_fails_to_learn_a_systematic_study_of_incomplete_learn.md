@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models
 description: >-
-  [ACL 2026][LLM对齐][不完全学习] 本文首次系统研究了 SFT 中的"不完全学习现象"（ILP）——即模型收敛后仍无法正确复现部分训练数据，识别了五种反复出现的原因（知识缺失、知识冲突、数据内部矛盾、左侧遗忘、不充分优化），并提出诊断框架和针对性缓解策略。
+  [ACL 2026][LLM对齐][不完全学习] 本文首次系统研究了 SFT 中的"不完全学习现象"（ILP）——即模型收敛后仍无法正确复现部分训练数据，识别了五种反复出现的原因（知识缺失、知识冲突、数据内部矛盾、左侧遗忘、不充分优化），并提出诊断框架和针对性缓解策略。 领域现状：SFT 是 LLM 适应下游任务的标准方法…
 tags:
   - "ACL 2026"
   - "LLM对齐"

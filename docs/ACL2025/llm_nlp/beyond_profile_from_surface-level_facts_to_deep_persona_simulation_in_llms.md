@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Beyond Profile: From Surface-Level Facts to Deep Persona Simulation in LLMs
 description: >-
-  [ACL 2025][LLM/NLP][深度人格模拟] 提出 CharacterBot，通过 4 个训练任务（视角重建预训练 + 选择题/生成式QA/风格迁移微调）和 CharLoRA 参数更新机制，从鲁迅 17 部杂文集中学习其语言风格和深层思想模式，在语言准确性和观点理解上显著超越各基线。
+  [ACL 2025][LLM 其他][深度人格模拟] 提出 CharacterBot，通过 4 个训练任务（视角重建预训练 + 选择题/生成式QA/风格迁移微调）和 CharLoRA 参数更新机制，从鲁迅 17 部杂文集中学习其语言风格和深层思想模式，在语言准确性和观点理解上显著超越各基线。 领域现状：LLM 角色模拟主要通…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "深度人格模拟"
   - "CharLoRA"
   - "鲁迅"

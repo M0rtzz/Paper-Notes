@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamShot: Personalized Storyboard Synthesis with Video Diffusion Prior
 description: >-
-  [CVPR 2026][视频生成][故事板生成] 提出 DreamShot，利用视频扩散模型的时空先验来生成人物一致、场景连贯的多镜头故事板，通过 Role-Attention Consistency Loss 解决多角色混淆问题，统一支持文本到镜头、参考到镜头和镜头到镜头三种模式。
+  [CVPR 2026][视频生成][故事板生成] 提出 DreamShot，利用视频扩散模型的时空先验来生成人物一致、场景连贯的多镜头故事板，通过 Role-Attention Consistency Loss 解决多角色混淆问题，统一支持文本到镜头、参考到镜头和镜头到镜头三种模式。 领域现状：故事板生成旨在为电影叙事生成连…
 tags:
   - "CVPR 2026"
   - "视频生成"

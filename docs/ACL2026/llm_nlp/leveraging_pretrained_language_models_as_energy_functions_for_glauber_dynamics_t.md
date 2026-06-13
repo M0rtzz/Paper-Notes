@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Leveraging Pretrained Language Models as Energy Functions for Glauber Dynamics Text Diffusion
 description: >-
-  [ACL 2026][LLM/NLP][Glauber 动力学] 本文用统计物理中的 Glauber 动力学构造离散文本扩散：把预训练 UL2 模型当成"能量函数 / 噪声分布"，每一步把 mask infilling 当 Markov 转移核…
+  [ACL 2026][LLM 其他][Glauber 动力学] 本文用统计物理中的 Glauber 动力学构造离散文本扩散：把预训练 UL2 模型当成"能量函数 / 噪声分布"，每一步把 mask infilling 当 Markov 转移核，训出的 Glauber-UL2 在生成 perplexity 上**首次匹配 GPT-2-M/L 同尺寸 AR 模型**，并在 Sudoku/Zebra 等搜索规划任务上击败 MDLM，同 compute 下 best-of-N 也优于 AR。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "Glauber 动力学"
   - "离散扩散语言模型"
   - "UL2"

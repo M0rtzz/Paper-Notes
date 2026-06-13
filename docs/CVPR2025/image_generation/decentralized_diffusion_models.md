@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decentralized Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][去中心化训练] Decentralized Diffusion Models（DDM）提出了一种将扩散模型训练分布到完全隔离的计算集群上的方法，通过在数据分区上独立训练专家模型并用轻量路由器在推理时集成，证明该集成精确优化与单模型相同的全局 Flow Matching 目标…
+  [CVPR 2025][图像生成][去中心化训练] Decentralized Diffusion Models（DDM）提出了一种将扩散模型训练分布到完全隔离的计算集群上的方法，通过在数据分区上独立训练专家模型并用轻量路由器在推理时集成，证明该集成精确优化与单模型相同的全局 Flow Matching 目标，在 FLOP-for-FLOP 下优于单一大模型。
 tags:
   - "CVPR 2025"
   - "图像生成"

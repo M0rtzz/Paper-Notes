@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLQ: Bridging Modalities via Shared Latent Queries for Retrieval with Frozen MLLMs
 description: >-
-  [ICML 2026][多模态VLM][冻结 MLLM] SLQ 把一小组"共享潜在查询" $\mathbf{Q}$ 追加到图像/文本 token 序列尾部，借助 MLLM 自身的因果注意力聚合全局上下文，**只训练几千个查询参数**就让冻结的 MLLM 变成检索器…
+  [ICML 2026][多模态VLM][冻结 MLLM] SLQ 把一小组"共享潜在查询" $\mathbf{Q}$ 追加到图像/文本 token 序列尾部，借助 MLLM 自身的因果注意力聚合全局上下文，**只训练几千个查询参数**就让冻结的 MLLM 变成检索器，在 COCO/Flickr30K 上胜过全量微调和 LoRA，并配套发布了考验"隐式知识推理"能力的 KARR-Bench。
 tags:
   - "ICML 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Editing Away the Evidence: Diffusion-Based Image Manipulation and the Failure Modes of Robust Watermarking
 description: >-
-  [CVPR 2026][图像生成][扩散模型图像编辑] 本文从理论和实验两方面统一分析了非对抗性扩散编辑如何无意中破坏鲁棒隐形水印，推导了水印 SNR 衰减和互信息衰减的界，并在指令编辑、拖拽编辑、无训练合成等场景下验证了水印恢复的系统性失效。
+  [CVPR 2026][图像生成][扩散模型图像编辑] 本文从理论和实验两方面统一分析了非对抗性扩散编辑如何无意中破坏鲁棒隐形水印，推导了水印 SNR 衰减和互信息衰减的界，并在指令编辑、拖拽编辑、无训练合成等场景下验证了水印恢复的系统性失效。 水印鲁棒性假设面临挑战：现有深度学习水印（StegaStamp、TrustMar…
 tags:
   - "CVPR 2026"
   - "图像生成"

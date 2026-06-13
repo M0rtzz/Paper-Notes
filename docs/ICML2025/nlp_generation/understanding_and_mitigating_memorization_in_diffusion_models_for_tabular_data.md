@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Mitigating Memorization in Diffusion Models for Tabular Data
 description: >-
-  [ICML2025][文本生成][表格数据生成] 首次系统研究表格扩散模型中的记忆化现象，发现记忆化随训练轮次增加而加剧且与数据集大小强相关，提出TabCutMix/TabCutMixPlus通过特征段交换缓解记忆化同时保持生成质量。
+  [ICML2025][文本生成][表格数据生成] 首次系统研究表格扩散模型中的记忆化现象，发现记忆化随训练轮次增加而加剧且与数据集大小强相关，提出TabCutMix/TabCutMixPlus通过特征段交换缓解记忆化同时保持生成质量。 现有痛点 现有痛点：扩散模型在表格数据生成上取得突破（TabDDPM/TabSyn）…
 tags:
   - "ICML2025"
   - "文本生成"

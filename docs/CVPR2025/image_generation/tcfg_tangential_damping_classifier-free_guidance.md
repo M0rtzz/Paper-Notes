@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TCFG: Tangential Damping Classifier-Free Guidance
 description: >-
-  [CVPR 2025][图像生成][分类器自由引导] 从数据流形几何视角出发，通过 SVD 分解去除无条件 score 中与条件 score 不对齐的切向分量，以极低计算开销改善 CFG 采样质量，在 SD1.5/SDXL/SD3/DiT 上均降低 FID。
+  [CVPR 2025][图像生成][分类器自由引导] 从数据流形几何视角出发，通过 SVD 分解去除无条件 score 中与条件 score 不对齐的切向分量，以极低计算开销改善 CFG 采样质量，在 SD1.5/SDXL/SD3/DiT 上均降低 FID。 1. 领域现状：Classifier-Free Guidance…
 tags:
   - "CVPR 2025"
   - "图像生成"

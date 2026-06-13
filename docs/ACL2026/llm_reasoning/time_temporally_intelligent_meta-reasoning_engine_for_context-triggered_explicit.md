@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TIME: Temporally Intelligent Meta-Reasoning Engine for Context-Triggered Explicit Reasoning
 description: >-
-  [ACL 2026][LLM推理][显式推理控制] TIME 把显式推理从“始终开启的长思维链”改造成由时间和语篇线索触发的局部控制策略，通过 `time` 标签、tick 事件、短 `think` 块和四阶段 QLoRA 课程训练…
+  [ACL 2026 Findings][LLM推理][显式推理控制] TIME 把显式推理从“始终开启的长思维链”改造成由时间和语篇线索触发的局部控制策略，通过 `time` 标签、tick 事件、短 `think` 块和四阶段 QLoRA 课程训练，让 Qwen3 系列在 TimeBench 上显著超过 thinking/no-thinking 基线，同时把推理 token 压缩到原来的约十分之一量级。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "显式推理控制"
   - "时间上下文"

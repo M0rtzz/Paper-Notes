@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Textual-Visual Logic Challenge: Understanding and Reasoning in Text-to-Image Generation
 description: >-
-  [ECCV 2024][图像生成][文本到图像生成] 本文提出了一个新任务——逻辑丰富的文本到图像生成（Logic-Rich T2I），构建了Textual-Visual Logic数据集来评估模型处理复杂关系描述的能力，并设计了包含关系理解模块、多模态融合模块和负样本判别器三个核心组件的基线模型…
+  [ECCV 2024][图像生成][文本到图像生成] 本文提出了一个新任务——逻辑丰富的文本到图像生成（Logic-Rich T2I），构建了Textual-Visual Logic数据集来评估模型处理复杂关系描述的能力，并设计了包含关系理解模块、多模态融合模块和负样本判别器三个核心组件的基线模型，显著提升了复杂逻辑文本的图像生成质量。
 tags:
   - "ECCV 2024"
   - "图像生成"

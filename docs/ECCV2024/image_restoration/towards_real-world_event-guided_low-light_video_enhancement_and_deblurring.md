@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Real-world Event-guided Low-light Video Enhancement and Deblurring
 description: >-
-  [ECCV 2024][图像恢复][事件相机] 本文首次提出事件相机引导的低光视频增强与去模糊联合任务，构建了基于分光棱镜的真实世界数据集 RELED，并设计了包含事件引导可变形时序对齐 (ED-TFA) 和频谱滤波跨模态增强 (SFCM-FE) 两个核心模块的端到端框架…
+  [ECCV 2024][图像恢复][事件相机] 本文首次提出事件相机引导的低光视频增强与去模糊联合任务，构建了基于分光棱镜的真实世界数据集 RELED，并设计了包含事件引导可变形时序对齐 (ED-TFA) 和频谱滤波跨模态增强 (SFCM-FE) 两个核心模块的端到端框架，在 PSNR 上比此前最佳方法提升 1.2dB 以上。
 tags:
   - "ECCV 2024"
   - "图像恢复"

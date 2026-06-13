@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamics Within Latent Chain-of-Thought: An Empirical Study of Causal Structure
 description: >-
-  [ICML 2026][LLM推理][隐式思维链] 作者把 latent CoT 看作一个可干预的结构因果模型（SCM），对每个连续"思考步"做 step-wise `do`-intervention + 早停解码 + teacher-forced 读出…
+  [ICML 2026][LLM推理][隐式思维链] 作者把 latent CoT 看作一个可干预的结构因果模型（SCM），对每个连续"思考步"做 step-wise `do`-intervention + 早停解码 + teacher-forced 读出，系统量化 Coconut/CODI 在数学和常识推理上的步级必要性、传播结构与轨迹叠加性，发现 latent step 并不是同质化的"加深"，而是高度异质、非局部路由、且输出层早承诺先于表示层承诺的结构化界面。
 tags:
   - "ICML 2026"
   - "LLM推理"

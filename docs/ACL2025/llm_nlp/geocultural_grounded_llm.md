@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Towards Geo-Culturally Grounded LLM Generations
 description: >-
-  [ACL 2025][LLM/NLP][文化感知] 本文系统评估了知识库增强（KB grounding）和搜索增强（search grounding）两种RAG策略对LLM文化感知能力的影响，发现搜索增强显著提升了命题性文化知识但加剧了刻板印象风险，且两种策略均未能改善人类评估中的文化流利度。
+  [ACL 2025][LLM 其他][文化感知] 本文系统评估了知识库增强（KB grounding）和搜索增强（search grounding）两种RAG策略对LLM文化感知能力的影响，发现搜索增强显著提升了命题性文化知识但加剧了刻板印象风险，且两种策略均未能改善人类评估中的文化流利度。 领域现状： LLM在全球文化意识…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "文化感知"
   - "RAG"
   - "搜索增强"

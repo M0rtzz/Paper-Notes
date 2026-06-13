@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing
 description: >-
-  [ACL 2026][模型压缩][KV缓存] 提出 DASH-KV 框架，将注意力机制重构为近似最近邻搜索问题，通过非对称深度哈希将高维浮点相似度计算替换为高效的汉明距离比特操作，配合动态混合精度机制，将长上下文推理复杂度从 $O(N^2)$ 降至 $O(N)$ 且性能匹配全注意力。
+  [ACL 2026 Findings][模型压缩][KV缓存] 提出 DASH-KV 框架，将注意力机制重构为近似最近邻搜索问题，通过非对称深度哈希将高维浮点相似度计算替换为高效的汉明距离比特操作，配合动态混合精度机制，将长上下文推理复杂度从 $O(N^2)$ 降至 $O(N)$ 且性能匹配全注意力。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "KV缓存"
   - "深度哈希"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Challenging Forgets: Unveiling the Worst-Case Forget Sets in Machine Unlearning
 description: >-
-  [ECCV 2024][图像生成][machine unlearning] 提出从对抗视角识别"最坏情况遗忘集"的方法，通过双层优化框架找到最难被遗忘的数据子集，利用 SignSGD 将二阶 BLO 简化为一阶问题，从而更可靠地评估机器遗忘方法的真实效能。
+  [ECCV 2024][图像生成][machine unlearning] 提出从对抗视角识别"最坏情况遗忘集"的方法，通过双层优化框架找到最难被遗忘的数据子集，利用 SignSGD 将二阶 BLO 简化为一阶问题，从而更可靠地评估机器遗忘方法的真实效能。 机器遗忘（Machine Unlearning, MU）旨在从已训练…
 tags:
   - "ECCV 2024"
   - "图像生成"

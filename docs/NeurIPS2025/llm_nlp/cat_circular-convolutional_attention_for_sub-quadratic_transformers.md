@@ -2,10 +2,10 @@
 title: >-
   [论文解读] CAT: Circular-Convolutional Attention for Sub-Quadratic Transformers
 description: >-
-  [NeurIPS 2025][LLM/NLP][循环卷积] CAT 将标准自注意力中的 $N \times N$ 注意力矩阵替换为一个由 $N$ 维向量生成的循环矩阵（circulant matrix），利用 FFT 实现 $O(N \log N)$ 复杂度的注意力计算…
+  [NeurIPS 2025][LLM 其他][循环卷积] CAT 将标准自注意力中的 $N \times N$ 注意力矩阵替换为一个由 $N$ 维向量生成的循环矩阵（circulant matrix），利用 FFT 实现 $O(N \log N)$ 复杂度的注意力计算，在严格保持 softmax 行归一化结构的前提下，在 ImageNet-1k（avg pool 下 CLIP-L 准确率 0.694 vs 标准注意力 0.646）和 WikiText-103 masked LM（PPL 8.32 vs 9.82）上匹配或超越标准注意力。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "循环卷积"
   - "FFT注意力"
   - "次二次复杂度"

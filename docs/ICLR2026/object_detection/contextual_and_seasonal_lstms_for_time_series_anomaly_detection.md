@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Contextual and Seasonal LSTMs for Time Series Anomaly Detection
 description: >-
-  [ICLR 2026][目标检测][time series anomaly detection] 针对单变量时间序列中现有方法难以检测的"小幅点异常"和"缓慢上升异常"，提出 CS-LSTMs 双分支架构——S-LSTM 在频域建模周期性演化、C-LSTM 在时域捕捉局部趋势，结合小波噪声分解策略…
+  [ICLR 2026][目标检测][time series anomaly detection] 针对单变量时间序列中现有方法难以检测的"小幅点异常"和"缓慢上升异常"，提出 CS-LSTMs 双分支架构——S-LSTM 在频域建模周期性演化、C-LSTM 在时域捕捉局部趋势，结合小波噪声分解策略，在四个基准上全面超越 SOTA 且推理速度提升 40%。
 tags:
   - "ICLR 2026"
   - "目标检测"

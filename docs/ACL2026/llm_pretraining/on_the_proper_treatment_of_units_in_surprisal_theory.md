@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Proper Treatment of Units in Surprisal Theory
 description: >-
-  [ACL2026][预训练][惊奇理论] 这篇论文指出 surprisal theory 中“下一个单位”的单位选择一直被预训练语言模型 tokenizer 悄悄决定，因而提出一个把模型 token、语言学单位和实验 ROI 明确分离的有限状态转导框架…
+  [ACL2026][预训练][惊奇理论] 这篇论文指出 surprisal theory 中“下一个单位”的单位选择一直被预训练语言模型 tokenizer 悄悄决定，因而提出一个把模型 token、语言学单位和实验 ROI 明确分离的有限状态转导框架，并在 MECO 眼动数据上验证不同单位库存会改变 surprisal 对阅读时间的预测问题本身。
 tags:
   - "ACL2026"
   - "预训练"

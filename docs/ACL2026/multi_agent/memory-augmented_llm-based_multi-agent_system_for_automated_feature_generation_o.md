@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Memory-Augmented LLM-based Multi-Agent System for Automated Feature Generation on Tabular Data
 description: >-
-  [ACL 2026][多智能体][自动特征工程] 提出 MALMAS，一个记忆增强的 LLM 多智能体系统用于表格数据自动特征生成，通过六个专职 Agent 分工探索不同特征空间维度 + 三级记忆机制（过程/反馈/概念）实现跨轮迭代优化，在 16 个分类和 7 个回归数据集上超越现有基线。
+  [ACL 2026][多智能体][自动特征工程] 提出 MALMAS，一个记忆增强的 LLM 多智能体系统用于表格数据自动特征生成，通过六个专职 Agent 分工探索不同特征空间维度 + 三级记忆机制（过程/反馈/概念）实现跨轮迭代优化，在 16 个分类和 7 个回归数据集上超越现有基线。 领域现状：自动特征生成是 Auto…
 tags:
   - "ACL 2026"
   - "多智能体"

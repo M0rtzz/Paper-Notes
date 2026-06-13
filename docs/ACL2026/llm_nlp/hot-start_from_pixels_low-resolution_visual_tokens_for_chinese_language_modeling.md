@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Hot-Start from Pixels: Low-Resolution Visual Tokens for Chinese Language Modeling
 description: >-
-  [ACL 2026][LLM/NLP][pixel-based LM] 把中文字符渲染成 $8\times 8$ 灰度小图喂给 GPT-2 风格解码器做 next-character 预测，最终精度（39.21%）追平 index-based 基线（39.10%）…
+  [ACL 2026][LLM 其他][pixel-based LM] 把中文字符渲染成 $8\times 8$ 灰度小图喂给 GPT-2 风格解码器做 next-character 预测，最终精度（39.21%）追平 index-based 基线（39.10%），并且在训练早期（0.4% 数据时）就把基线翻一倍以上——展示了"视觉结构"作为汉字建模的天然 hot-start 先验。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "pixel-based LM"
   - "Chinese characters"
   - "hot-start"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DARTS: Distribution-Aware Active Rollout Trajectory Shaping for Accelerating LLM Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][GRPO] DARTS 把 LLM RL 训练的 rollout 长尾瓶颈从"调度绕开"重新定义成"主动塑形分布"，通过 intra-prompt 冗余采样 + 双端长度采样 + 方差驱动的冗余预算分配，把模型的 rollout 长度分布显式压短压紧…
+  [ICML 2026][强化学习][GRPO] DARTS 把 LLM RL 训练的 rollout 长尾瓶颈从"调度绕开"重新定义成"主动塑形分布"，通过 intra-prompt 冗余采样 + 双端长度采样 + 方差驱动的冗余预算分配，把模型的 rollout 长度分布显式压短压紧，在 Qwen 系列 3B–32B 模型上相比 VeRL 取得最高 1.77 倍加速，同时不损失下游精度。
 tags:
   - "ICML 2026"
   - "强化学习"

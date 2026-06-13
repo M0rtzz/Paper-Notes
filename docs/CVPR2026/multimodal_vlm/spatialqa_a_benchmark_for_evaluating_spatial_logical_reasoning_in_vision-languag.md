@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatiaLQA: A Benchmark for Evaluating Spatial Logical Reasoning in Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][空间逻辑推理] 提出SpatiaLQA基准（9605个QA对、241个真实室内场景），系统评估41个VLM在空间逻辑推理上的表现，并设计递归场景图辅助推理方法来提升VLM的空间逻辑推理能力。
+  [CVPR 2026][多模态VLM][空间逻辑推理] 提出SpatiaLQA基准（9605个QA对、241个真实室内场景），系统评估41个VLM在空间逻辑推理上的表现，并设计递归场景图辅助推理方法来提升VLM的空间逻辑推理能力。 领域现状：VLM在通用VQA和逻辑推理任务上已取得不错成绩，但在需要结合空间理解和多步逻辑推理…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoRet: Improved Retriever for Code Editing
 description: >-
-  [ACL 2025][代码智能][代码检索] 提出 CoRet，一个面向代码编辑任务的稠密检索模型，通过整合代码语义、仓库文件层级结构和调用图依赖关系，并使用针对仓库级检索设计的对数似然损失函数，在 SWE-bench 和 Long Code Arena 上比现有模型的 Recall 至少提升 15 个百分点…
+  [ACL 2025][代码智能][代码检索] 提出 CoRet，一个面向代码编辑任务的稠密检索模型，通过整合代码语义、仓库文件层级结构和调用图依赖关系，并使用针对仓库级检索设计的对数似然损失函数，在 SWE-bench 和 Long Code Arena 上比现有模型的 Recall 至少提升 15 个百分点。
 tags:
   - "ACL 2025"
   - "代码智能"

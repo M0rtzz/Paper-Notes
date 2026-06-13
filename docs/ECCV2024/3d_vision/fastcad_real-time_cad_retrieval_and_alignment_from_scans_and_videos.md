@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastCAD: Real-Time CAD Retrieval and Alignment from Scans and Videos
 description: >-
-  [ECCV 2024][3D视觉][CAD模型检索] 提出FastCAD，通过对比学习嵌入空间蒸馏和直接参数预测，实现50ms内完成场景中所有物体的CAD模型检索与对齐，比现有方法快50倍且精度更优。
+  [ECCV 2024][3D视觉][CAD模型检索] 提出FastCAD，通过对比学习嵌入空间蒸馏和直接参数预测，实现50ms内完成场景中所有物体的CAD模型检索与对齐，比现有方法快50倍且精度更优。 领域现状： 将3D环境表示为对齐的CAD模型对AR和机器人等下游任务至关重要，相比噪声点云/网格，CAD表示具有无孔洞、干净…
 tags:
   - "ECCV 2024"
   - "3D视觉"

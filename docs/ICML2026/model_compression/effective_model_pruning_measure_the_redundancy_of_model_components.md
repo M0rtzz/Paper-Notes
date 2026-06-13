@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Effective Model Pruning: Measure the Redundancy of Model Components
 description: >-
-  [ICML 2026][模型压缩][模型剪枝] 本文借鉴粒子滤波中的「有效样本量」概念，把任意打分向量直接映射到一个自适应保留个数 $N_{\text{eff}} = \lfloor 1/\sum_i \omega_i^2 \rfloor$，作为剪枝阈值，避免人工设定稀疏度并给出剪枝前后损失变化的理论上界。
+  [ICML 2026 Spotlight][模型压缩][模型剪枝] 本文借鉴粒子滤波中的「有效样本量」概念，把任意打分向量直接映射到一个自适应保留个数 $N_{\text{eff}} = \lfloor 1/\sum_i \omega_i^2 \rfloor$，作为剪枝阈值，避免人工设定稀疏度并给出剪枝前后损失变化的理论上界。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "模型压缩"
   - "模型剪枝"
   - "有效样本量"

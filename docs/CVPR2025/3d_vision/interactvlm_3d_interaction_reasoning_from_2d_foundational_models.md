@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InteractVLM: 3D Interaction Reasoning from 2D Foundational Models
 description: >-
-  [CVPR 2025][3D视觉][人物交互重建] InteractVLM 利用大规模视觉语言模型(VLM)的广泛视觉知识，通过"渲染-定位-提升"(Render-Localize-Lift)框架将2D基础模型的推理能力迁移到3D空间，实现了从单张野外图像估计人体和物体3D接触点，并用于人物交互联合重建…
+  [CVPR 2025][3D视觉][人物交互重建] InteractVLM 利用大规模视觉语言模型(VLM)的广泛视觉知识，通过"渲染-定位-提升"(Render-Localize-Lift)框架将2D基础模型的推理能力迁移到3D空间，实现了从单张野外图像估计人体和物体3D接触点，并用于人物交互联合重建，在接触估计任务上F1分数提升20.6%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MasRouter: Learning to Route LLMs for Multi-Agent Systems
 description: >-
-  [ACL 2025][LLM/NLP][多智能体路由] 首次提出多智能体系统路由（MASR）问题，设计 MasRouter 级联控制器网络，依次决定协作模式、角色分配和 LLM 路由，在保持高性能的同时将 MAS 的推理成本降低最高 52%，实现效果与效率的平衡。
+  [ACL 2025][LLM 其他][多智能体路由] 首次提出多智能体系统路由（MASR）问题，设计 MasRouter 级联控制器网络，依次决定协作模式、角色分配和 LLM 路由，在保持高性能的同时将 MAS 的推理成本降低最高 52%，实现效果与效率的平衡。 领域现状：基于 LLM 的多智能体系统（MAS）通过多个 LL…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "多智能体路由"
   - "LLM选择"
   - "协作模式"

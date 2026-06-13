@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Decomposed Trust: Privacy, Adversarial Robustness, Ethics, and Fairness in Low-Rank LLMs
 description: >-
-  [ACL 2026 (Findings)][LLM安全][低秩分解] 首篇系统评估**低秩分解 (SVD/FWSVD/BASEL)** 对 LLM 可信性影响的研究，发现"训练数据隐私 ↑、对抗鲁棒 ↑、PII 防护 ↓、伦理对齐 ↓、公平性 ↓"的非对称 trade-off…
+  [ACL 2026 (Findings)][LLM安全][低秩分解] 首篇系统评估**低秩分解 (SVD/FWSVD/BASEL)** 对 LLM 可信性影响的研究，发现"训练数据隐私 ↑、对抗鲁棒 ↑、PII 防护 ↓、伦理对齐 ↓、公平性 ↓"的非对称 trade-off，并用梯度归因把对抗脆弱性定位到 `embed_tokens` 与 `down_proj` 两个子层。
 tags:
   - "ACL 2026 (Findings)"
   - "LLM安全"

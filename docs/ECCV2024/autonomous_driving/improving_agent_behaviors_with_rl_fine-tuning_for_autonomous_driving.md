@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving
 description: >-
-  [ECCV 2024][自动驾驶][强化学习微调] 通过闭环强化学习微调改善监督学习训练的交通智能体行为模型，解决开环训练的分布偏移问题，在Waymo仿真基准上取得SOTA。
+  [ECCV 2024][自动驾驶][强化学习微调] 通过闭环强化学习微调改善监督学习训练的交通智能体行为模型，解决开环训练的分布偏移问题，在Waymo仿真基准上取得SOTA。 交通智能体行为建模是自动驾驶研究的核心问题之一，其应用场景包括：(1) 构建逼真可靠的仿真环境用于离线评估（off-board evaluation）…
 tags:
   - "ECCV 2024"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PunchBench: Benchmarking MLLMs in Multimodal Punchline Comprehension
 description: >-
-  [ACL 2025][多模态VLM][punchline comprehension] 本文提出PunchBench，一个包含6,000个图文对和54,000个问答对的多模态幽默/讽刺理解基准，通过同义/反义标题生成消除语言捷径…
+  [ACL 2025][多模态VLM][punchline comprehension] 本文提出PunchBench，一个包含6,000个图文对和54,000个问答对的多模态幽默/讽刺理解基准，通过同义/反义标题生成消除语言捷径，同时提出Simple-to-Complex Chain-of-Question (SC-CoQ)策略，在所有模型和问题格式上一致性提升punchline理解能力。
 tags:
   - "ACL 2025"
   - "多模态VLM"

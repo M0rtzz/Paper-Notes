@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LT-Soups: Bridging Head and Tail Classes via Subsampled Model Soups
 description: >-
-  [NeurIPS 2025][模型压缩][长尾分布] 提出 LT-Soups，一个两阶段模型融合框架，通过在不同不平衡比例的子采样数据上训练多个模型并进行权重平均，在长尾分布的全频谱上实现头部类和尾部类的均衡性能。
+  [NeurIPS 2025][模型压缩][长尾分布] 提出 LT-Soups，一个两阶段模型融合框架，通过在不同不平衡比例的子采样数据上训练多个模型并进行权重平均，在长尾分布的全频谱上实现头部类和尾部类的均衡性能。 领域现状：真实数据集通常呈长尾分布，少数头部类占据主导。CLIP 等视觉语言基础模型通过 PEFT（如 LoR…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

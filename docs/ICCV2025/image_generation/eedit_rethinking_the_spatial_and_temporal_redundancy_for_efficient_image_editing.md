@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EEdit: Rethinking the Spatial and Temporal Redundancy for Efficient Image Editing
 description: >-
-  [图像生成] 提出 EEdit 高效图像编辑框架，通过空间局部性缓存（SLoC）跳过未编辑区域计算、Token 索引预处理（TIP）无损加速缓存操作、以及反演步跳过（ISS）减少反演冗余，在 prompt 引导、拖拽、图像合成等多种编辑任务上实现平均 2.46× 加速且无质量损失。
+  [图像生成] 提出 EEdit 高效图像编辑框架，通过空间局部性缓存（SLoC）跳过未编辑区域计算、Token 索引预处理（TIP）无损加速缓存操作、以及反演步跳过（ISS）减少反演冗余，在 prompt 引导、拖拽、图像合成等多种编辑任务上实现平均 2.46× 加速且无质量损失。 - 反演式编辑的开销：当前扩散模型编辑遵循…
 tags:
   - "图像生成"
 ---

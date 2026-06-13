@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokenTiming: A Dynamic Alignment Method for Universal Speculative Decoding Model Pairs
 description: >-
-  [ACL2026][LLM效率][投机解码] TokenTiming 把草稿模型生成的 token 序列重新编码到目标 tokenizer 空间，再用动态时间规整构造多对多 token 对齐，从而让不同词表的现成小模型也能作为投机解码 draft model…
+  [ACL2026][LLM效率][投机解码] TokenTiming 把草稿模型生成的 token 序列重新编码到目标 tokenizer 空间，再用动态时间规整构造多对多 token 对齐，从而让不同词表的现成小模型也能作为投机解码 draft model，并在多个 14B-70B 目标模型上取得最高 1.57x 的异构投机解码加速。
 tags:
   - "ACL2026"
   - "LLM效率"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.15545](https://arxiv.org/abs/2510.15545)  
 **代码**: 待确认  
-**领域**: time_series / LLM推理加速  
+**领域**: 时间序列 / LLM推理加速  
 **关键词**: 投机解码, 异构词表, 动态时间规整, 推理加速, 概率映射
 
 ## 一句话总结

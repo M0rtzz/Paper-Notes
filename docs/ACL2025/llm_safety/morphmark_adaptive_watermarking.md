@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MorphMark: Flexible Adaptive Watermarking for Large Language Models
 description: >-
-  [ACL 2025][LLM安全][LLM watermarking] MorphMark 通过多目标权衡分析框架揭示了绿表概率 P_G 在水印效果与文本质量之间的关键作用，并据此提出自适应调整水印强度 r 的方法——当 P_G 高时增强水印、P_G 低时减弱水印…
+  [ACL 2025][LLM安全][LLM watermarking] MorphMark 通过多目标权衡分析框架揭示了绿表概率 P_G 在水印效果与文本质量之间的关键作用，并据此提出自适应调整水印强度 r 的方法——当 P_G 高时增强水印、P_G 低时减弱水印，实现了在不依赖额外模型训练的前提下同时提升水印可检测性和文本质量。
 tags:
   - "ACL 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stepwise Multi-grained Boundary Detector for Point-Supervised Temporal Action Localization
 description: >-
-  [ECCV 2024][目标检测][点监督时序动作定位] 针对点监督时序动作定位中稀疏标注导致的动作边界语义模糊问题，提出逐步多粒度边界检测器（SMBD），通过背景锚点生成器（BAG）和双边界检测器（DBD）为训练提供细粒度的边界监督信号，在THUMOS'14等数据集上达到SOTA。
+  [ECCV 2024][目标检测][点监督时序动作定位] 针对点监督时序动作定位中稀疏标注导致的动作边界语义模糊问题，提出逐步多粒度边界检测器（SMBD），通过背景锚点生成器（BAG）和双边界检测器（DBD）为训练提供细粒度的边界监督信号，在THUMOS'14等数据集上达到SOTA。 领域现状：时序动作定位（Temporal…
 tags:
   - "ECCV 2024"
   - "目标检测"

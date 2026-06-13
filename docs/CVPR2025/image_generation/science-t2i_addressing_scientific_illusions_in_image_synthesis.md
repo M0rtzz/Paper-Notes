@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Science-T2I: Addressing Scientific Illusions in Image Synthesis
 description: >-
-  [CVPR 2025][图像生成][文本生成图像] Science-T2I 构建了涵盖 16 个科学领域的 20k+ 对抗图像对基准，揭示当前图像生成模型在隐式科学推理上的系统性缺陷（所有模型得分低于 50/100），并提出 SciScore 奖励模型和两阶段对齐框架（SFT+OFT）…
+  [CVPR 2025][图像生成][文本生成图像] Science-T2I 构建了涵盖 16 个科学领域的 20k+ 对抗图像对基准，揭示当前图像生成模型在隐式科学推理上的系统性缺陷（所有模型得分低于 50/100），并提出 SciScore 奖励模型和两阶段对齐框架（SFT+OFT），将 FLUX.1[dev] 的科学推理能力提升超过 50%。
 tags:
   - "CVPR 2025"
   - "图像生成"

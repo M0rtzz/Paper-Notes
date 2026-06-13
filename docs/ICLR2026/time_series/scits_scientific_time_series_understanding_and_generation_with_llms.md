@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SciTS: Scientific Time Series Understanding and Generation with LLMs
 description: >-
-  [时间序列] 提出SciTS基准覆盖12个科学领域43个任务54K+实例（长度从$10^0$到$10^7$、频率达10MHz），系统评估17个模型发现通用LLM比专用时序模型泛化更好但文本/图像编码各有局限…
+  [时间序列] 提出SciTS基准覆盖12个科学领域43个任务54K+实例（长度从$10^0$到$10^7$、频率达10MHz），系统评估17个模型发现通用LLM比专用时序模型泛化更好但文本/图像编码各有局限，据此设计TimeOmni框架用多Patch专家+路由机制+Patch重编程显式建模时间动态并与LLM联合训练。
 tags:
   - "时间序列"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Browsing Lost Unformed Recollections: A Benchmark for Tip-of-the-Tongue Search and Reasoning
 description: >-
-  [LLM评测] > 提出 BLUR（Browsing Lost Unformed Recollections），一个包含 573 道真实"话到嘴边"(tip-of-the-tongue) 已知物品搜索与推理问题的基准数据集，人类准确率 98%，而最佳 AI 系统仅约 56%…
+  [LLM评测] > 提出 BLUR（Browsing Lost Unformed Recollections），一个包含 573 道真实"话到嘴边"(tip-of-the-tongue) 已知物品搜索与推理问题的基准数据集，人类准确率 98%，而最佳 AI 系统仅约 56%，揭示了当前 AI 在工具使用和多跳推理上的巨大差距。
 tags:
   - "LLM评测"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EPiC: Efficient Video Camera Control Learning with Precise Anchor-Video Guidance
 description: >-
-  [ICML 2026][视频生成][anchor video] EPiC 用"基于第一帧可见性掩码"的方式从任意 in-the-wild 视频直接构造像素级对齐的 anchor 视频，再配一个仅 26M 参数（<1% backbone）、且只在可见区域生效的 Anchor-ControlNet…
+  [ICML 2026][视频生成][anchor video] EPiC 用"基于第一帧可见性掩码"的方式从任意 in-the-wild 视频直接构造像素级对齐的 anchor 视频，再配一个仅 26M 参数（<1% backbone）、且只在可见区域生效的 Anchor-ControlNet，在冻结 CogVideoX-5B-I2V 主干、5K 视频、500 步训练的条件下，把 I2V 相机控制误差刷到 SoTA，并零样本泛化到 V2V。
 tags:
   - "ICML 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One Model to Translate Them All: Universal Any-to-Any Translation for Heterogeneous Collaborative Perception
 description: >-
-  [ICML 2026][AI安全][协同感知] UniTrans 把"为每对车端模态训一个 adapter"的传统协同感知翻译范式，改写成"在一个模态内蕴空间里推断映射 → 通过 router 线性组合一组专家参数 → 当场实例化一个映射专属翻译器"，实现对未见过的新车型的零样本 BEV 特征翻译…
+  [ICML 2026][AI安全][协同感知] UniTrans 把"为每对车端模态训一个 adapter"的传统协同感知翻译范式，改写成"在一个模态内蕴空间里推断映射 → 通过 router 线性组合一组专家参数 → 当场实例化一个映射专属翻译器"，实现对未见过的新车型的零样本 BEV 特征翻译，在 OPV2V-H / DAIR-V2X 上平均 AP@0.7 较最强基线提升 ~7 / 3 个点，同时 GFLOPs / CPU 时间均低于 Classic MoE。
 tags:
   - "ICML 2026"
   - "AI安全"

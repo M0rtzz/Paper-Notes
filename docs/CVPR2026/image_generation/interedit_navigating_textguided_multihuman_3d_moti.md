@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing
 description: >-
-  [CVPR 2026][图像生成][多人运动编辑] 首次定义文本引导的多人3D运动编辑(TMME)任务，构建含5161个源-目标-指令三元组的InterEdit3D数据集，提出InterEdit条件扩散模型——通过语义感知规划Token对齐捕捉高层编辑意图、交互感知频域Token对齐建模周期性交互动态…
+  [CVPR 2026][图像生成][多人运动编辑] 首次定义文本引导的多人3D运动编辑(TMME)任务，构建含5161个源-目标-指令三元组的InterEdit3D数据集，提出InterEdit条件扩散模型——通过语义感知规划Token对齐捕捉高层编辑意图、交互感知频域Token对齐建模周期性交互动态，在指令跟随(g2t R@1 30.82%)和源保持(g2s R@1 17.08%)上全面超越4个基线。
 tags:
   - "CVPR 2026"
   - "图像生成"

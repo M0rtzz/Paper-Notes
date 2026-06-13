@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your Language Model Secretly Contains Personality Subnetworks
 description: >-
-  [信息检索/RAG] 本文提出通过激活引导的剪枝（activation-guided pruning）从预训练 LLM 中提取人格专用子网络，无需任何训练即可实现高效的人格切换，并引入对比剪枝策略增强对立人格间的参数分离。
+  [信息检索/RAG] 本文提出通过激活引导的剪枝（activation-guided pruning）从预训练 LLM 中提取人格专用子网络，无需任何训练即可实现高效的人格切换，并引入对比剪枝策略增强对立人格间的参数分离。 - 人类在不同社交场景中自然切换人格，LLM 同样能采用不同角色，但现有方法依赖外部知识注入 - Pr…
 tags:
   - "信息检索/RAG"
 ---

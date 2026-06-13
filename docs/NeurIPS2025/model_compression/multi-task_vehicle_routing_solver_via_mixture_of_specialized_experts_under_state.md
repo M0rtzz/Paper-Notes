@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Task Vehicle Routing Solver via Mixture of Specialized Experts under State-Decomposable MDP
 description: >-
-  [NeurIPS 2025][模型压缩][车辆路径问题] 提出 **State-Decomposable MDP (SDMDP)** 框架将多种 VRP 变体重新表述为基础状态空间的笛卡尔积…
+  [NeurIPS 2025][模型压缩][车辆路径问题] 提出 **State-Decomposable MDP (SDMDP)** 框架将多种 VRP 变体重新表述为基础状态空间的笛卡尔积，再通过 **Mixture-of-Specialized-Experts Solver (MoSES)** 用专用 LoRA 专家实现基础策略的潜在空间复用，高效处理 16 种 VRP 变体。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

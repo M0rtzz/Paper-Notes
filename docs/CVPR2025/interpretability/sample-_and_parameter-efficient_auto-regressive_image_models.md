@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sample- and Parameter-Efficient Auto-Regressive Image Models
 description: >-
-  [CVPR 2025][可解释性][自回归图像模型] 本文提出 XTRA，通过在 ViT 中引入 Block Causal Mask（以 k×k token 块为因果单元），使自回归图像模型在仅用 1/152 训练样本的情况下超越了先前最佳自回归模型在 15 个图像识别基准上的平均准确率…
+  [CVPR 2025][可解释性][自回归图像模型] 本文提出 XTRA，通过在 ViT 中引入 Block Causal Mask（以 k×k token 块为因果单元），使自回归图像模型在仅用 1/152 训练样本的情况下超越了先前最佳自回归模型在 15 个图像识别基准上的平均准确率，同时以 1/7~1/16 的参数量达到更优的探测性能。
 tags:
   - "CVPR 2025"
   - "可解释性"

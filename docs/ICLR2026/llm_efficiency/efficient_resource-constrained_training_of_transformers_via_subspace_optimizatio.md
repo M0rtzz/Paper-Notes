@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Efficient Resource-Constrained Training of Transformers via Subspace Optimization
 description: >-
-  [ICLR 2026][LLM效率][subspace optimization] 提出 WASI（Weight-Activation Subspace Iteration），基于"微调过程中参数子空间稳定"的假设…
+  [ICLR 2026 Oral][LLM效率][subspace optimization] 提出 WASI（Weight-Activation Subspace Iteration），基于"微调过程中参数子空间稳定"的假设，同时压缩 Transformer 的权重（SVD + Gram-Schmidt 子空间迭代）和激活（Tucker 分解），实现训练和推理都在低秩表示中完成，达到 62× 训练内存压缩和 Raspberry Pi 5 上 1.4× 加速，且精度损失可忽略。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "LLM效率"
   - "subspace optimization"
   - "Transformer"

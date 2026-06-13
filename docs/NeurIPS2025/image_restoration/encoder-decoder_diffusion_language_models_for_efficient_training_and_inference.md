@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference
 description: >-
-  [NeurIPS 2025][图像恢复][扩散模型] 提出 E2D2，一种面向离散扩散语言模型的编码器-解码器架构，通过轻量解码器迭代去噪、大型编码器定期更新表征，同时实现更快推理（~3× vs MDLM）和更高效的 block diffusion 训练（FLOPs 减半）。
+  [NeurIPS 2025][图像恢复][扩散模型] 提出 E2D2，一种面向离散扩散语言模型的编码器-解码器架构，通过轻量解码器迭代去噪、大型编码器定期更新表征，同时实现更快推理（~3× vs MDLM）和更高效的 block diffusion 训练（FLOPs 减半）。 离散扩散模型在语言建模中能实现并行 token…
 tags:
   - "NeurIPS 2025"
   - "图像恢复"

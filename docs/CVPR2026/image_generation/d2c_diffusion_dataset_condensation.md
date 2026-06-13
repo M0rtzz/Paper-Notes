@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D2C: Accelerating Diffusion Model Training under Minimal Budgets via Condensation
 description: >-
-  [CVPR 2026][图像生成][扩散模型训练] 首次将数据集压缩(Dataset Condensation)应用于扩散模型训练，提出D2C两阶段框架——Select阶段用扩散难度分数+区间采样选出紧凑子集、Attach阶段为每个样本附加文本和视觉表示——仅用0.8% ImageNet(10K图像)在40K…
+  [CVPR 2026][图像生成][扩散模型训练] 首次将数据集压缩(Dataset Condensation)应用于扩散模型训练，提出D2C两阶段框架——Select阶段用扩散难度分数+区间采样选出紧凑子集、Attach阶段为每个样本附加文本和视觉表示——仅用0.8% ImageNet(10K图像)在40K步即达FID 4.3,比REPA快100×、比vanilla SiT快233×。
 tags:
   - "CVPR 2026"
   - "图像生成"

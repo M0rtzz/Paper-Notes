@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linear Attention for Efficient Bidirectional Sequence Modeling
 description: >-
-  [NeurIPS 2025][模型压缩][线性注意力] 提出 Lion 框架，首次系统性地将线性 Transformer 扩展到双向序列建模，统一了完整线性注意力、双向 RNN 和分块并行三种等价表示形式，训练速度比 SSM 快 10 倍且匹配 softmax Transformer 性能。
+  [NeurIPS 2025][模型压缩][线性注意力] 提出 Lion 框架，首次系统性地将线性 Transformer 扩展到双向序列建模，统一了完整线性注意力、双向 RNN 和分块并行三种等价表示形式，训练速度比 SSM 快 10 倍且匹配 softmax Transformer 性能。 1. 领域现状： 线性 Tran…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

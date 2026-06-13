@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REMem: Reasoning with Episodic Memory in Language Agents
 description: >-
-  [ICLR 2026][LLM Agent][episodic memory] 提出 REMem，一个面向语言 agent 的情节记忆框架，通过混合记忆图（时间感知的 gist 节点 + 事实三元组节点）和工具增强的 agentic 推理…
+  [ICLR 2026][LLM Agent][episodic memory] 提出 REMem，一个面向语言 agent 的情节记忆框架，通过混合记忆图（时间感知的 gist 节点 + 事实三元组节点）和工具增强的 agentic 推理，在情节回忆和情节推理任务上分别比 SOTA 提升 3.4% 和 13.4%。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

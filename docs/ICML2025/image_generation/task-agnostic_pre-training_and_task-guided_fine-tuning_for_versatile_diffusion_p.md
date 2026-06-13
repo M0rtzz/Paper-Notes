@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task-Agnostic Pre-training and Task-Guided Fine-tuning for Versatile Diffusion Planner
 description: >-
-  [ICML2025][图像生成][扩散模型] 提出 SODP 框架：先用大量无奖励标签的次优多任务轨迹预训练扩散规划器，再用基于策略梯度的 RL 微调快速适配下游任务，并引入 BC 正则化防止性能崩溃，在 Meta-World 50 任务上达到 60.56% 成功率（SOTA）。
+  [ICML2025][图像生成][扩散模型] 提出 SODP 框架：先用大量无奖励标签的次优多任务轨迹预训练扩散规划器，再用基于策略梯度的 RL 微调快速适配下游任务，并引入 BC 正则化防止性能崩溃，在 Meta-World 50 任务上达到 60.56% 成功率（SOTA）。 - 多任务 RL 的困难：传统方法假设任务间…
 tags:
   - "ICML2025"
   - "图像生成"

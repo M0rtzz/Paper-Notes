@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Bridging the Copyright Gap: Do Large Vision-Language Models Recognize and Respect Copyrighted Content?
 description: >-
-  [AAAI 2026][多模态VLM][VLM版权合规] 首次系统评估 LVLM 在多模态上下文中对版权内容的识别和遵守能力，构建了 50,000 对多模态查询-内容的大规模 benchmark，发现 11/12 个 SOTA LVLM 即使面对明确版权声明也无法有效拒绝侵权请求…
+  [AAAI 2026 Oral][多模态VLM][VLM版权合规] 首次系统评估 LVLM 在多模态上下文中对版权内容的识别和遵守能力，构建了 50,000 对多模态查询-内容的大规模 benchmark，发现 11/12 个 SOTA LVLM 即使面对明确版权声明也无法有效拒绝侵权请求，并提出 CopyGuard 工具增强框架将侵权拒绝率从 ~3% 提升至 ~62%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "VLM版权合规"
   - "多模态benchmark"

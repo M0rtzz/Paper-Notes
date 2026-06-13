@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables
 description: >-
-  [ICCV 2025][图像恢复][3D LUT] 通过将3D LUT分解为2D LUT的线性组合并进一步做SVD，结合缓存高效的空间特征融合结构，实现了在保持空间感知能力的同时将模型参数减少84%、4K分辨率推理加速2.8倍的轻量实时图像增强。
+  [ICCV 2025][图像恢复][3D LUT] 通过将3D LUT分解为2D LUT的线性组合并进一步做SVD，结合缓存高效的空间特征融合结构，实现了在保持空间感知能力的同时将模型参数减少84%、4K分辨率推理加速2.8倍的轻量实时图像增强。 基于3D查找表（3D LUT）的图像增强方法因其高效的插值操作而广受关注…
 tags:
   - "ICCV 2025"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffWind: Physics-Informed Differentiable Modeling of Wind-Driven Object Dynamics
 description: >-
-  [ICLR 2026][3D视觉][physics-informed] 提出 DiffWind，一个物理约束的可微分框架，通过将风建模为网格物理场、物体表示为 3D Gaussian Splatting 粒子系统、用 Material Point Method（MPM）建模风-物交互…
+  [ICLR 2026][3D视觉][physics-informed] 提出 DiffWind，一个物理约束的可微分框架，通过将风建模为网格物理场、物体表示为 3D Gaussian Splatting 粒子系统、用 Material Point Method（MPM）建模风-物交互，并引入 Lattice Boltzmann Method（LBM）作为物理约束，实现了从视频中联合重建风力场和物体运动，并支持新风条件下的前向仿真和风力迁移等应用，在自建的 WD-Objects 数据集上显著超越已有动态场景建模方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

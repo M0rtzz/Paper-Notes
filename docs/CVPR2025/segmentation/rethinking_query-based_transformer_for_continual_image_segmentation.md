@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Query-Based Transformer for Continual Image Segmentation
 description: >-
-  [CVPR 2025][语义分割][持续图像分割] 本文深入分析了 query-based Transformer 中 built-in objectness 的产生与消亡机制，提出 SimCIS 方法通过懒惰查询预对齐（QPA）、一致选择损失（CSL）和虚拟查询（VQ）三个模块…
+  [CVPR 2025][语义分割][持续图像分割] 本文深入分析了 query-based Transformer 中 built-in objectness 的产生与消亡机制，提出 SimCIS 方法通过懒惰查询预对齐（QPA）、一致选择损失（CSL）和虚拟查询（VQ）三个模块，在保持 objectness 的同时提升可塑性，在 ADE20K 上的持续全景分割和持续语义分割任务中显著超越 SOTA。
 tags:
   - "CVPR 2025"
   - "语义分割"

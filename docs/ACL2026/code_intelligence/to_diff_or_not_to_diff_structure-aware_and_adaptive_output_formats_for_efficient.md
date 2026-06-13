@@ -2,9 +2,9 @@
 title: >-
   [论文解读] To Diff or Not to Diff? Structure-Aware and Adaptive Output Formats for Efficient LLM-based Code Editing
 description: >-
-  [ACL2026][代码智能][代码编辑] 这篇论文把 LLM 代码编辑的“输出格式”本身作为训练对象，提出 BlockDiff、FuncDiff 和自适应格式选择策略 AdaEdit，在接近 full-code 生成准确率的同时，在长代码编辑中将延迟和输出 token 成本降低 30% 以上。
+  [ACL2026 Findings][代码智能][代码编辑] 这篇论文把 LLM 代码编辑的“输出格式”本身作为训练对象，提出 BlockDiff、FuncDiff 和自适应格式选择策略 AdaEdit，在接近 full-code 生成准确率的同时，在长代码编辑中将延迟和输出 token 成本降低 30% 以上。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "代码智能"
   - "代码编辑"
   - "结构化diff"

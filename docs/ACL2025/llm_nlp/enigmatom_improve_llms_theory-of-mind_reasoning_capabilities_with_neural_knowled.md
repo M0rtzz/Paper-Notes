@@ -2,10 +2,10 @@
 title: >-
   [论文解读] EnigmaToM: Improve LLMs' Theory-of-Mind Reasoning Capabilities with Neural Knowledge Base of Entity States
 description: >-
-  [ACL 2025 (Findings)][LLM/NLP][心智理论] 提出 EnigmaToM 神经符号框架，通过构建实体状态的神经知识库（Enigma）来生成空间场景图用于信念追踪，并结合心理学启发的迭代遮蔽机制实现准确的视角切换…
+  [ACL 2025 (Findings)][LLM 其他][心智理论] 提出 EnigmaToM 神经符号框架，通过构建实体状态的神经知识库（Enigma）来生成空间场景图用于信念追踪，并结合心理学启发的迭代遮蔽机制实现准确的视角切换，在 ToMi、HiToM 和 FANToM 三个基准上显著提升了 LLM 的心智理论推理能力，尤其在高阶推理场景中表现突出。
 tags:
   - "ACL 2025 (Findings)"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "心智理论"
   - "神经知识库"
   - "实体状态追踪"

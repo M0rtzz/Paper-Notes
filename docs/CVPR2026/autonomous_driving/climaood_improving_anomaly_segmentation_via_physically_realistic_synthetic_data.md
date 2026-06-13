@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ClimaOoD: Improving Anomaly Segmentation via Physically Realistic Synthetic Data
 description: >-
-  [CVPR 2026][自动驾驶][异常分割] 提出ClimaDrive数据生成框架和ClimaOoD基准数据集，通过语义引导的多天气场景生成+透视感知的异常物体放置，构建10K+训练集覆盖6种天气×93类异常，训练后四个SOTA方法平均AP提升3.25%。
+  [CVPR 2026][自动驾驶][异常分割] 提出ClimaDrive数据生成框架和ClimaOoD基准数据集，通过语义引导的多天气场景生成+透视感知的异常物体放置，构建10K+训练集覆盖6种天气×93类异常，训练后四个SOTA方法平均AP提升3.25%。 自动驾驶中的异常(OoD)分割旨在检测训练分布外的未知物体（如掉落…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

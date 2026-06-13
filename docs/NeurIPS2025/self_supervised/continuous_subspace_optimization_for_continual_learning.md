@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continuous Subspace Optimization for Continual Learning (CoSO)
 description: >-
-  [NeurIPS 2025][自监督学习][continual learning] 提出 CoSO 框架，通过从每步梯度的 SVD 动态导出连续子空间（而非 LoRA 的固定子空间），结合历史任务正交投影防止干扰和 Frequent Directions 高效聚合梯度信息…
+  [NeurIPS 2025][自监督学习][continual learning] 提出 CoSO 框架，通过从每步梯度的 SVD 动态导出连续子空间（而非 LoRA 的固定子空间），结合历史任务正交投影防止干扰和 Frequent Directions 高效聚合梯度信息，在 ImageNet-R 20 任务上以 78.19% 最终准确率超越最佳 baseline 2.77 个百分点。
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations
 description: >-
-  [ICCV 2025][语义分割][指代视频目标分割] 提出ReferDINO，通过将GroundingDINO视觉定位基础模型端到端适配到指代视频目标分割（RVOS）任务，设计定位引导可变形掩码解码器、目标一致性时序增强器和置信度查询剪枝策略…
+  [ICCV 2025][语义分割][指代视频目标分割] 提出ReferDINO，通过将GroundingDINO视觉定位基础模型端到端适配到指代视频目标分割（RVOS）任务，设计定位引导可变形掩码解码器、目标一致性时序增强器和置信度查询剪枝策略，在五个基准上显著超越SOTA（Ref-YouTube-VOS上+3.9% $\mathcal{J}\&\mathcal{F}$），并实现51 FPS实时推理。
 tags:
   - "ICCV 2025"
   - "语义分割"

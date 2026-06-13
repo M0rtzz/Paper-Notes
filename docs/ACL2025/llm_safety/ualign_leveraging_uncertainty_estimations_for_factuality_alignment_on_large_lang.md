@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UAlign: Leveraging Uncertainty Estimations for Factuality Alignment on Large Language Models
 description: >-
-  [ACL2025][LLM安全][不确定性估计] 提出 UAlign 框架，利用置信度分数和语义熵两种不确定性估计来显式建模 LLM 知识边界，并将其作为输入特征融入 PPO 对齐训练，使模型自信回答已知问题、坚定拒绝未知问题，在多个知识 QA 数据集上显著提升可靠性与泛化性。
+  [ACL2025][LLM安全][不确定性估计] 提出 UAlign 框架，利用置信度分数和语义熵两种不确定性估计来显式建模 LLM 知识边界，并将其作为输入特征融入 PPO 对齐训练，使模型自信回答已知问题、坚定拒绝未知问题，在多个知识 QA 数据集上显著提升可靠性与泛化性。 LLM 在预训练阶段学到了大量知识…
 tags:
   - "ACL2025"
   - "LLM安全"

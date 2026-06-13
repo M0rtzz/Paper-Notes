@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DocThinker: Explainable Multimodal Large Language Models with Rule-based Reinforcement Learning for Document Understanding
 description: >-
-  [ICCV 2025][多模态VLM][rule-based RL] 提出DocThinker，首个将GRPO（Group Relative Policy Optimization）强化学习应用于文档理解的框架…
+  [ICCV 2025][多模态VLM][rule-based RL] 提出DocThinker，首个将GRPO（Group Relative Policy Optimization）强化学习应用于文档理解的框架，通过四目标规则奖励（格式、答案准确度、RoI IoU、问题改写质量）训练MLLM自主生成可解释的推理过程，仅用4K训练数据在DocVQA上将Qwen2.5-VL-7B从0.355提升到0.579（RL vs SFT: 0.579 vs 0.355），并在视觉定位任务上达到82.4%精度。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

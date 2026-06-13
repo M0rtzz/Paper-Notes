@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition
 description: >-
-  [ICML2025][视频理解][Mamba] 提出 MoMa 框架，通过序列调制操作 (SeqMod) 将 Mamba 的线性复杂度 SSM 以 scale-bias 方式注入冻结的 CLIP Transformer，实现高效全时空动态建模，在多个视频识别基准上以更少计算量达到 SOTA 水平。
+  [ICML2025][视频理解][Mamba] 提出 MoMa 框架，通过序列调制操作 (SeqMod) 将 Mamba 的线性复杂度 SSM 以 scale-bias 方式注入冻结的 CLIP Transformer，实现高效全时空动态建模，在多个视频识别基准上以更少计算量达到 SOTA 水平。 - 核心问题：如何高效地将…
 tags:
   - "ICML2025"
   - "视频理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment
 description: >-
-  [AAAI 2026][图学习][多模态实体对齐] 提出 MyGram，通过模态感知图卷积扩散（MGD）模块捕获模态内的深层结构上下文信息，并引入基于Gram矩阵行列式的全局分布对齐损失（Gram Loss），在高维空间中强制跨模态语义一致性，实现更鲁棒的多模态实体对齐。
+  [AAAI 2026][图学习][多模态实体对齐] 提出 MyGram，通过模态感知图卷积扩散（MGD）模块捕获模态内的深层结构上下文信息，并引入基于Gram矩阵行列式的全局分布对齐损失（Gram Loss），在高维空间中强制跨模态语义一致性，实现更鲁棒的多模态实体对齐。 问题背景 多模态知识图谱（MMKG）通过整合文本、图…
 tags:
   - "AAAI 2026"
   - "图学习"

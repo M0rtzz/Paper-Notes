@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mesh Interpolation Graph Network for Dynamic and Spatially Irregular Global Weather Forecasting
 description: >-
-  [NeurIPS 2025][3D视觉][图神经网络] 提出 MIGN 框架，通过网格插值策略将不规则气象站数据映射到规则 HEALPix 网格上进行消息传递，并引入参数化球谐函数位置编码增强空间泛化能力，在全球天气预报任务中显著超越现有方法。
+  [NeurIPS 2025][3D视觉][图神经网络] 提出 MIGN 框架，通过网格插值策略将不规则气象站数据映射到规则 HEALPix 网格上进行消息传递，并引入参数化球谐函数位置编码增强空间泛化能力，在全球天气预报任务中显著超越现有方法。 现有数据驱动的天气预报模型主要聚焦于 规则网格数据：（如 ERA5）…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

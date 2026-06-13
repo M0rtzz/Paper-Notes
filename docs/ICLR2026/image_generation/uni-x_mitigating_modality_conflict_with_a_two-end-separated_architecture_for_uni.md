@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models
 description: >-
-  [ICLR 2026][图像生成][统一多模态模型] Uni-X提出一种两端分离、中间共享的X型架构来缓解统一多模态模型（UMM）中视觉与文本模态的梯度冲突，通过将浅层和深层设为模态专属、中间层共享参数，3B参数即可匹配或超越7B AR-UMM在图像生成和多模态理解上的性能。
+  [ICLR 2026][图像生成][统一多模态模型] Uni-X提出一种两端分离、中间共享的X型架构来缓解统一多模态模型（UMM）中视觉与文本模态的梯度冲突，通过将浅层和深层设为模态专属、中间层共享参数，3B参数即可匹配或超越7B AR-UMM在图像生成和多模态理解上的性能。 领域现状：统一多模态模型（UMM）旨在单一框架中…
 tags:
   - "ICLR 2026"
   - "图像生成"

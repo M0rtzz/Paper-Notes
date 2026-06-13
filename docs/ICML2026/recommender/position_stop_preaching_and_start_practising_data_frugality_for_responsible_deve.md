@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Stop Preaching and Start Practising Data Frugality for Responsible Development of AI
 description: >-
-  [ICML 2026][推荐系统][数据节俭] 这篇 position paper 指出 ML 社区在"数据节俭"(data frugality)上长期"只说不做"——大家口头承认 coreset 能省能耗，却几乎没人真去汇报能耗和碳排放…
+  [ICML 2026][推荐系统][数据节俭] 这篇 position paper 指出 ML 社区在"数据节俭"(data frugality)上长期"只说不做"——大家口头承认 coreset 能省能耗，却几乎没人真去汇报能耗和碳排放，并以 ImageNet-1K 为例算出下游训练 + 存储约 5.82 GWh / 2589 tCO2e 的保守下限，呼吁把数据节俭从口号变成可度量、可执行、可奖励的工程实践。
 tags:
   - "ICML 2026"
   - "推荐系统"

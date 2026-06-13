@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Identities Collapse: A Stress-Test Benchmark for Multi-Subject Personalization
 description: >-
-  [CVPR 2026][图像生成][多主体个性化] 本文揭示多主体个性化生成中的"身份坍塌"瓶颈——MOSAIC、XVerse、PSR 三个 SOTA 模型在 2 主体时 SCR 已达 ~50%，10 主体时飙升至 ~97%…
+  [CVPR 2026][图像生成][多主体个性化] 本文揭示多主体个性化生成中的"身份坍塌"瓶颈——MOSAIC、XVerse、PSR 三个 SOTA 模型在 2 主体时 SCR 已达 ~50%，10 主体时飙升至 ~97%；提出基于 DINOv2 的 Subject Collapse Rate (SCR) 指标替代失效的 CLIP-I，并构建了覆盖 2-10 主体×3 种场景类型的系统化 benchmark。
 tags:
   - "CVPR 2026"
   - "图像生成"

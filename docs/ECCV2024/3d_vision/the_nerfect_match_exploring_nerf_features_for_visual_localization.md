@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The NeRFect Match: Exploring NeRF Features for Visual Localization
 description: >-
-  [ECCV 2024][3D视觉][视觉定位] 提出NeRFMatch，探索NeRF内部特征作为3D描述子的潜力，建立基于注意力机制的2D-3D匹配网络，在Cambridge Landmarks上实现有竞争力的定位性能，验证了NeRF作为定位场景表示的可行性。
+  [ECCV 2024][3D视觉][视觉定位] 提出NeRFMatch，探索NeRF内部特征作为3D描述子的潜力，建立基于注意力机制的2D-3D匹配网络，在Cambridge Landmarks上实现有竞争力的定位性能，验证了NeRF作为定位场景表示的可行性。 核心矛盾 核心矛盾：领域现状：视觉定位需要确定查询图像在3D环境…
 tags:
   - "ECCV 2024"
   - "3D视觉"

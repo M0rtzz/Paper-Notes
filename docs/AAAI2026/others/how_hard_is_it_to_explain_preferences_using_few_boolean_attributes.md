@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Hard is it to Explain Preferences Using Few Boolean Attributes?
 description: >-
-  [AAAI 2026][Boolean Attribute Model] 本文系统研究了用布尔属性模型（BAM）解释偏好数据的计算复杂性：证明了当属性数 $k \geq 3$ 时问题是NP完全的，$k \leq 2$ 时线性可解…
+  [AAAI 2026][Boolean Attribute Model] 本文系统研究了用布尔属性模型（BAM）解释偏好数据的计算复杂性：证明了当属性数 $k \geq 3$ 时问题是NP完全的，$k \leq 2$ 时线性可解；进一步对投票人数 $n$、候选项数 $m$、属性数 $k$ 等参数给出了完整的参数化复杂性全景图，并分析了已知部分信息（cares/has）时问题难度的变化。
 tags:
   - "AAAI 2026"
   - "Boolean Attribute Model"

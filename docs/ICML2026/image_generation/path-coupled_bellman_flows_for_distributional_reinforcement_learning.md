@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Path-Coupled Bellman Flows for Distributional Reinforcement Learning
 description: >-
-  [ICML 2026][图像生成][分布式强化学习] 把分布式 Bellman 方程的"仿射搬运"几何性显式编织进 flow matching 的路径里：用同一份基础噪声同时驱动当前态与后继态的两条路径，再用 $\lambda$ 控制变量在偏差与方差之间换挡…
+  [ICML 2026][图像生成][分布式强化学习] 把分布式 Bellman 方程的"仿射搬运"几何性显式编织进 flow matching 的路径里：用同一份基础噪声同时驱动当前态与后继态的两条路径，再用 $\lambda$ 控制变量在偏差与方差之间换挡，从而得到一个对源分布相容、对 Bellman 端点相容、又稳定的分布式 critic。
 tags:
   - "ICML 2026"
   - "图像生成"

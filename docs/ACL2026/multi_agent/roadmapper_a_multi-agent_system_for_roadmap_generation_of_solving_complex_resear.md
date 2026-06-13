@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems
 description: >-
-  [ACL2026][多智能体][研究路线图生成] 本文提出 RoadMap 研究路线图生成基准和 RoadMapper 多智能体系统，用知识检索、逻辑/粒度批评、修订与 DPO 评估器组成闭环，在中英文复杂科研问题上比直接提示平均提升约 7-9 分，并显著降低专家设计路线图的时间成本。
+  [ACL2026 Findings][多智能体][研究路线图生成] 本文提出 RoadMap 研究路线图生成基准和 RoadMapper 多智能体系统，用知识检索、逻辑/粒度批评、修订与 DPO 评估器组成闭环，在中英文复杂科研问题上比直接提示平均提升约 7-9 分，并显著降低专家设计路线图的时间成本。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多智能体"
   - "研究路线图生成"
   - "DPO评估器"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-distribution Detection
 description: >-
-  [ICCV 2025][多模态VLM][OOD detection] 提出APLGOS框架，利用视觉语言模型的提示学习能力，通过在类条件高斯分布的低概率区域合成虚拟OOD提示和图像，以更紧凑的决策边界区分已知和未知类别，在四个主流数据集上取得SOTA。
+  [ICCV 2025][多模态VLM][OOD detection] 提出APLGOS框架，利用视觉语言模型的提示学习能力，通过在类条件高斯分布的低概率区域合成虚拟OOD提示和图像，以更紧凑的决策边界区分已知和未知类别，在四个主流数据集上取得SOTA。 OOD检测旨在让检测器在测试时区分训练中见过的类别（ID）和未见过的类别…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

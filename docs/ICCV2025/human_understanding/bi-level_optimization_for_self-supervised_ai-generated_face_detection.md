@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bi-Level Optimization for Self-Supervised AI-Generated Face Detection
 description: >-
-  [ICCV 2025][人体理解][AI生成人脸检测] 提出BLADES方法，通过双层优化（bi-level optimization）将自监督预训练与AI生成人脸检测目标显式对齐：内层优化视觉编码器学习EXIF分类/排序和人脸篡改检测等前置任务，外层优化各任务权重以提升代理检测任务性能…
+  [ICCV 2025][人体理解][AI生成人脸检测] 提出BLADES方法，通过双层优化（bi-level optimization）将自监督预训练与AI生成人脸检测目标显式对齐：内层优化视觉编码器学习EXIF分类/排序和人脸篡改检测等前置任务，外层优化各任务权重以提升代理检测任务性能，实现不依赖合成人脸的跨生成器泛化检测。
 tags:
   - "ICCV 2025"
   - "人体理解"

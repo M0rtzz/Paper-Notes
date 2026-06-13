@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tracking and Segmenting Anything in Any Modality
 description: >-
-  [AAAI 2026][语义分割][统一跟踪分割] SATA提出了一个统一的跟踪与分割框架，通过解耦混合专家（DeMoE）机制建模跨模态共享知识和特有信息，并引入任务感知多目标跟踪（TaMOT）管线统一所有任务输出，在18个跟踪和分割benchmark上展现了优越性能。
+  [AAAI 2026][语义分割][统一跟踪分割] SATA提出了一个统一的跟踪与分割框架，通过解耦混合专家（DeMoE）机制建模跨模态共享知识和特有信息，并引入任务感知多目标跟踪（TaMOT）管线统一所有任务输出，在18个跟踪和分割benchmark上展现了优越性能。 领域现状：跟踪和分割是视频理解的基础任务…
 tags:
   - "AAAI 2026"
   - "语义分割"

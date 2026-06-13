@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Leveraging Importance Sampling to Detach Alignment Modules from Large Language Models
 description: >-
-  [NeurIPS 2025][预训练][LLM alignment] 提出 Residual Alignment Model (RAM)，将 LLM 对齐过程形式化为重要性采样，将大模型分解为冻结的 Proposal Module 和可训练的小型 Residual Aligner…
+  [NeurIPS 2025][预训练][LLM alignment] 提出 Residual Alignment Model (RAM)，将 LLM 对齐过程形式化为重要性采样，将大模型分解为冻结的 Proposal Module 和可训练的小型 Residual Aligner，以不到 1/8 参数实现可比甚至超越全参数 SFT/DPO 的对齐效果，同时解决了首 token 延迟问题。
 tags:
   - "NeurIPS 2025"
   - "预训练"

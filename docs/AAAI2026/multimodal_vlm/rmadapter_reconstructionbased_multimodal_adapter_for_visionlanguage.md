@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RMAdapter: Reconstruction-based Multi-Modal Adapter for Vision-Language Models (Oral)
 description: >-
-  [AAAI 2026][多模态VLM][CLIP] 提出 RMAdapter，一种双分支适配器架构：在标准 adapter 的适应分支旁增加重建分支（类 AutoEncoder），通过共享下投影层和逐层本地重建损失，在 CLIP 少样本微调中实现任务特定适应与通用知识保持的最佳平衡…
+  [AAAI 2026 Oral][多模态VLM][CLIP] 提出 RMAdapter，一种双分支适配器架构：在标准 adapter 的适应分支旁增加重建分支（类 AutoEncoder），通过共享下投影层和逐层本地重建损失，在 CLIP 少样本微调中实现任务特定适应与通用知识保持的最佳平衡，在 Base-to-Novel 泛化、跨数据集和领域泛化三个任务上全面超越 SOTA（含 Prompt-based 方法）。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "CLIP"
   - "Adapter"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models
 description: >-
-  [ACL 2025][LLM/NLP][层冻结] 通过分析LLM推理过程中潜在表征的转移轨迹（transition traces）计算各层语义偏差，结合推导的缩放律公式估计各层对降低损失的贡献，从而确定"在哪些层微调"，实现与PEFT正交的高效微调方法。
+  [ACL 2025][LLM 其他][层冻结] 通过分析LLM推理过程中潜在表征的转移轨迹（transition traces）计算各层语义偏差，结合推导的缩放律公式估计各层对降低损失的贡献，从而确定"在哪些层微调"，实现与PEFT正交的高效微调方法。 微调是将预训练语言模型适配到下游任务的关键步骤，但全参数微调的计算开销巨…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "层冻结"
   - "微调效率"
   - "语义偏差"

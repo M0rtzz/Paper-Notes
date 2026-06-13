@@ -2,7 +2,7 @@
 title: >-
   [论文解读] StreamAvatar: Streaming Diffusion Models for Real-Time Interactive Human Avatars
 description: >-
-  [CVPR 2026][图像生成][实时数字人] 提出两阶段自回归适配加速框架（自回归蒸馏 + 对抗精炼），将双向人体视频扩散模型转化为实时流式生成器，通过 Reference Sink、RAPR 位置重编码和一致性感知判别器保证长视频稳定性，实现首个支持说话和倾听交互的全身实时数字人。
+  [CVPR 2026][图像生成][实时数字人] 提出两阶段自回归适配加速框架（自回归蒸馏 + 对抗精炼），将双向人体视频扩散模型转化为实时流式生成器，通过 Reference Sink、RAPR 位置重编码和一致性感知判别器保证长视频稳定性，实现首个支持说话和倾听交互的全身实时数字人。 1. 领域现状：扩散模型在音频驱动人…
 tags:
   - "CVPR 2026"
   - "图像生成"

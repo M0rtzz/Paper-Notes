@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionLCM: Real-time Controllable Motion Generation via Latent Consistency Model
 description: >-
-  [ECCV 2024][图像生成] 提出 MotionLCM，首次将一致性蒸馏引入人体运动生成领域，在运动潜在空间中实现单步/少步推理的实时运动生成（~30ms/序列），并通过 Motion ControlNet 实现潜在空间中的实时可控运动生成。
+  [ECCV 2024][图像生成] 提出 MotionLCM，首次将一致性蒸馏引入人体运动生成领域，在运动潜在空间中实现单步/少步推理的实时运动生成（~30ms/序列），并通过 Motion ControlNet 实现潜在空间中的实时可控运动生成。 - 扩散模型的效率瓶颈：现有运动扩散模型（MDM ~24s…
 tags:
   - "ECCV 2024"
   - "图像生成"

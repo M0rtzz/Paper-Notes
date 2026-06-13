@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Universal Soccer Video Understanding
 description: >-
-  [CVPR 2025][视频理解][足球视频理解] 本文构建了迄今最大的多模态足球数据集 SoccerReplay-1988（1988场完整比赛），并提出了足球专用的视觉编码器 MatchVision，通过时空注意力机制统一处理事件分类、评论生成和犯规识别等多任务，在多个基准上达到 SOTA。
+  [CVPR 2025][视频理解][足球视频理解] 本文构建了迄今最大的多模态足球数据集 SoccerReplay-1988（1988场完整比赛），并提出了足球专用的视觉编码器 MatchVision，通过时空注意力机制统一处理事件分类、评论生成和犯规识别等多任务，在多个基准上达到 SOTA。 领域现状：足球视频分析主要依赖…
 tags:
   - "CVPR 2025"
   - "视频理解"

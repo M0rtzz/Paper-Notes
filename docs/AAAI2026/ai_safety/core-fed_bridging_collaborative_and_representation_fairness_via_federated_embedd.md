@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoRe-Fed: Bridging Collaborative and Representation Fairness via Federated Embedding Distillation
 description: >-
-  [AAAI 2026][AI安全][联邦学习] 提出 CoRe-Fed 框架，通过嵌入级对比对齐与贡献感知聚合两个协同模块，同时解决联邦学习中的表示公平性和协作公平性问题，在异构数据分布下显著提升全局模型的公平性与泛化能力。
+  [AAAI 2026][AI安全][联邦学习] 提出 CoRe-Fed 框架，通过嵌入级对比对齐与贡献感知聚合两个协同模块，同时解决联邦学习中的表示公平性和协作公平性问题，在异构数据分布下显著提升全局模型的公平性与泛化能力。 联邦学习（FL）允许多客户端在不共享原始数据的前提下协作训练模型，但传统 FL 算法在异构数据分布下…
 tags:
   - "AAAI 2026"
   - "AI安全"

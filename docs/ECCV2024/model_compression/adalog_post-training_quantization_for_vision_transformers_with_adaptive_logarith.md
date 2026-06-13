@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdaLog: Post-Training Quantization for Vision Transformers with Adaptive Logarithm Quantizer
 description: >-
-  [ECCV 2024][模型压缩][PTQ] 提出自适应对数底量化器AdaLog，通过可搜索的对数底替代固定log₂/log√2量化器来处理ViT中post-Softmax和post-GELU激活的幂律分布，并设计快速渐进组合搜索(FPCS)策略高效确定量化超参…
+  [ECCV 2024][模型压缩][PTQ] 提出自适应对数底量化器AdaLog，通过可搜索的对数底替代固定log₂/log√2量化器来处理ViT中post-Softmax和post-GELU激活的幂律分布，并设计快速渐进组合搜索(FPCS)策略高效确定量化超参，在极低比特(3/4-bit)下显著优于现有ViT PTQ方法。
 tags:
   - "ECCV 2024"
   - "模型压缩"

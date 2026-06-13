@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians
 description: >-
-  [ECCV2024][3D视觉][3D Gaussian Splatting] 提出 CityGaussian (CityGS)，通过分治训练策略和 block-wise Level-of-Detail 机制…
+  [ECCV2024][3D视觉][3D Gaussian Splatting] 提出 CityGaussian (CityGS)，通过分治训练策略和 block-wise Level-of-Detail 机制，首次实现了城市级大规模场景（>1.5 km²）的高质量 3D Gaussian Splatting 训练与跨尺度实时渲染。
 tags:
   - "ECCV2024"
   - "3D视觉"

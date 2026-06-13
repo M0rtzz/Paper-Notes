@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controlling the Risk of Corrupted Contexts for Language Models via Early-Exiting
 description: >-
-  [ICML 2026][NLP理解][损坏上下文] 本文把"用户提供的损坏上下文会降低 LLM 性能"这个问题形式化为风险控制——以 zero-shot 表现作"安全基线"，结合动态 early-exit（在中间层就出预测避免后层 overthink 有害上下文）+ context-aware 损失 + 改进…
+  [ICML 2026][NLP理解][损坏上下文] 本文把"用户提供的损坏上下文会降低 LLM 性能"这个问题形式化为风险控制——以 zero-shot 表现作"安全基线"，结合动态 early-exit（在中间层就出预测避免后层 overthink 有害上下文）+ context-aware 损失 + 改进的 Learn-then-Test 框架（保留负损失值用风险变换而非裁剪），在 9 个任务上既保证风险 ≤ user-specified $\epsilon$，又获得 > 50% 的算力加速。
 tags:
   - "ICML 2026"
   - "NLP理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation
 description: >-
-  [ACL 2025][对话系统][人设对话] 系统性地研究了人设对话生成中**对话者（interlocutor）信息**对目标说话人生成质量的影响，通过遮蔽/揭示对话者信息的评估框架发现：模型能有效适应对话者人设、对陌生对话者泛化能力弱于陌生话题，且零样本设置下LLM倾向于"复制粘贴"人设细节。
+  [ACL 2025][对话系统][人设对话] 系统性地研究了人设对话生成中对话者（interlocutor）信息：对目标说话人生成质量的影响，通过遮蔽/揭示对话者信息的评估框架发现：模型能有效适应对话者人设、对陌生对话者泛化能力弱于陌生话题，且零样本设置下LLM倾向于"复制粘贴"人设细节。 角色扮演LLM（Role-Play…
 tags:
   - "ACL 2025"
   - "对话系统"

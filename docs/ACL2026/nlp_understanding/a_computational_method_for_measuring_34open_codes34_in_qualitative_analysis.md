@@ -2,9 +2,9 @@
 title: >-
   [论文解读] A Computational Method for Measuring "Open Codes" in Qualitative Analysis
 description: >-
-  [ACL 2026][NLP理解][归纳编码] 提出一种基于理论的计算方法，通过LLM增强的代码合并算法和四个无需ground truth的指标（Coverage, Overlap, Novelty, Divergence），系统评估人类和AI在归纳定性编码中的表现。
+  [ACL 2026 Findings][NLP理解][归纳编码] 提出一种基于理论的计算方法，通过LLM增强的代码合并算法和四个无需ground truth的指标（Coverage, Overlap, Novelty, Divergence），系统评估人类和AI在归纳定性编码中的表现。 领域现状：定性分析是社会科学中理解人类…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "NLP理解"
   - "归纳编码"
   - "定性分析"

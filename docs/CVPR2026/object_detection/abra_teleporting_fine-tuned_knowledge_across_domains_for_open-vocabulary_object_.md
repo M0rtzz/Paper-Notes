@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection
 description: >-
-  [CVPR 2026][目标检测][开放词汇目标检测] 提出 ABRA 方法，将域知识与类别知识解耦，通过 Objectification 构建类无关域专家、SVFT 提取轻量类别残差、Orthogonal Procrustes 旋转对齐实现权重空间"传送"…
+  [CVPR 2026][目标检测][开放词汇目标检测] 提出 ABRA 方法，将域知识与类别知识解耦，通过 Objectification 构建类无关域专家、SVFT 提取轻量类别残差、Orthogonal Procrustes 旋转对齐实现权重空间"传送"，在目标域完全无某些类别数据时仍可迁移这些类别的检测能力。
 tags:
   - "CVPR 2026"
   - "目标检测"

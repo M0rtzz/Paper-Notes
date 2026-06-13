@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MV-MATH: Evaluating Multimodal Math Reasoning in Multi-Visual Contexts
 description: >-
-  [CVPR 2025][多模态VLM][多图数学推理] 本文提出 MV-MATH 基准，包含 2,009 道高质量多图数学题（来自真实 K-12 场景），系统评估了 25 个多模态大模型在多图数学推理场景下的能力，发现所有模型远低于人类水平（最佳 Claude 仅 33.9%）…
+  [CVPR 2025][多模态VLM][多图数学推理] 本文提出 MV-MATH 基准，包含 2,009 道高质量多图数学题（来自真实 K-12 场景），系统评估了 25 个多模态大模型在多图数学推理场景下的能力，发现所有模型远低于人类水平（最佳 Claude 仅 33.9%），揭示了多图数学推理仍是 MLLM 的重大挑战。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

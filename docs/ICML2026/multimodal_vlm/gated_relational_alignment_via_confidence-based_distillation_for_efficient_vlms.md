@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gated Relational Alignment via Confidence-based Distillation for Efficient VLMs
 description: >-
-  [ICML 2026][多模态VLM][VLM 量化] 本文用 Information Bottleneck 视角把量化感知训练 (QAT) 与知识蒸馏统一起来，提出 GRACE 框架（置信度门控解耦蒸馏 + 关系中心化核对齐 + 自适应 IB 控制器）…
+  [ICML 2026][多模态VLM][VLM 量化] 本文用 Information Bottleneck 视角把量化感知训练 (QAT) 与知识蒸馏统一起来，提出 GRACE 框架（置信度门控解耦蒸馏 + 关系中心化核对齐 + 自适应 IB 控制器），让 INT4 量化的 LLaVA / Qwen-VL 不仅没掉点，反而在多个 benchmark 上超过 BF16 基线，同时实测 3× 吞吐 + 54% 显存节省。
 tags:
   - "ICML 2026"
   - "多模态VLM"

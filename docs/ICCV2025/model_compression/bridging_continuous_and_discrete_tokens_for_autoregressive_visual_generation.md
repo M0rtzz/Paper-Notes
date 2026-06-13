@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation
 description: >-
-  [ICCV 2025][模型压缩][自回归生成] 提出TokenBridge，通过对预训练连续VAE特征进行后训练维度级量化，将连续token转化为离散token，在保持连续token高保真表示能力的同时，使用标准交叉熵损失进行简洁的自回归建模，在ImageNet 256×256上达到与连续方法可比的生成质量…
+  [ICCV 2025][模型压缩][自回归生成] 提出TokenBridge，通过对预训练连续VAE特征进行后训练维度级量化，将连续token转化为离散token，在保持连续token高保真表示能力的同时，使用标准交叉熵损失进行简洁的自回归建模，在ImageNet 256×256上达到与连续方法可比的生成质量。
 tags:
   - "ICCV 2025"
   - "模型压缩"

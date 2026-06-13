@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NN-Former: Rethinking Graph Structure in Neural Architecture Representation
 description: >-
-  [CVPR 2025][图学习][架构预测] NN-Former 提出混合 GNN-Transformer 架构预测器，发现现有方法忽略了"兄弟节点"（共享父/子节点）的拓扑信息…
+  [CVPR 2025][图学习][架构预测] NN-Former 提出混合 GNN-Transformer 架构预测器，发现现有方法忽略了"兄弟节点"（共享父/子节点）的拓扑信息，通过 Adjacency-Sibling Multihead Attention (ASMA) 和 Bidirectional Graph Isomorphism FFN (BGIFFN) 在 NAS-Bench-101/201 上 Kendall's Tau 达 0.877/0.890，延迟预测 MAPE 降低 48-64%。
 tags:
   - "CVPR 2025"
   - "图学习"

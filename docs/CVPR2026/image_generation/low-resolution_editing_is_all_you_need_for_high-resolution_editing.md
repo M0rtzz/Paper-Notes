@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Low-Resolution Editing is All You Need for High-Resolution Editing
 description: >-
-  [CVPR 2026][图像生成][高分辨率图像编辑] ScaleEdit 首次提出高分辨率图像编辑任务，通过在预训练生成模型的中间特征空间学习 1×1 卷积迁移函数来注入源图像的精细纹理细节，配合基于 Blended-Tweedie 的分块同步策略保证全局一致性…
+  [CVPR 2026][图像生成][高分辨率图像编辑] ScaleEdit 首次提出高分辨率图像编辑任务，通过在预训练生成模型的中间特征空间学习 1×1 卷积迁移函数来注入源图像的精细纹理细节，配合基于 Blended-Tweedie 的分块同步策略保证全局一致性，以测试时优化方式实现 2K 甚至 8K 分辨率的高质量编辑。
 tags:
   - "CVPR 2026"
   - "图像生成"

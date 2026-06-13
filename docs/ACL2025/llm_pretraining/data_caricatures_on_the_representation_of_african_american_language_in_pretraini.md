@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Caricatures: On the Representation of African American Language in Pretraining Corpora
 description: >-
-  [ACL 2025][预训练][African American Language] 结合定量实验、人工判断和定性分析，系统评估了 12 个开源预训练语料库中非裔美国人语言（AAL）的数量与质量：发现 AAL 仅占 0.007%–0.18% 的文档（远低于人口比例）…
+  [ACL 2025][预训练][African American Language] 结合定量实验、人工判断和定性分析，系统评估了 12 个开源预训练语料库中非裔美国人语言（AAL）的数量与质量：发现 AAL 仅占 0.007%–0.18% 的文档（远低于人口比例），C4 中 28.9% 的 AAL 文本被判为不适合 LLM 生成、24.5% 强化有害刻板印象，且 16 种自动过滤器中有 13 种系统性地偏向保留白人主流英语（WME）而非 AAL。
 tags:
   - "ACL 2025"
   - "预训练"

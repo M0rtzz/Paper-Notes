@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Memory Matching for Unsupervised Visible-Infrared Person Re-Identification
 description: >-
-  [ECCV 2024][人体理解][无监督行人重识别] 提出 Multi-Memory Matching（MMM）框架用于无监督可见光-红外行人重识别，通过跨模态聚类（CMC）、多记忆学习与匹配（MMLM）和软聚类级对齐损失（SCA）三个模块建立可靠的跨模态对应关系…
+  [ECCV 2024][人体理解][无监督行人重识别] 提出 Multi-Memory Matching（MMM）框架用于无监督可见光-红外行人重识别，通过跨模态聚类（CMC）、多记忆学习与匹配（MMLM）和软聚类级对齐损失（SCA）三个模块建立可靠的跨模态对应关系，在 SYSU-MM01 上 Rank-1 达到 61.6%，RegDB 上 Rank-1 达到 89.7%。
 tags:
   - "ECCV 2024"
   - "人体理解"

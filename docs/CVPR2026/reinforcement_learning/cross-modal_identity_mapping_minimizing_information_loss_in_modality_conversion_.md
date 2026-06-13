@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-modal Identity Mapping: Minimizing Information Loss in Modality Conversion via Reinforcement Learning
 description: >-
-  [CVPR 2026][强化学习][图像描述] 提出 Cross-modal Identity Mapping (CIM)，通过分析用 caption 检索到的图像的表示一致性（GRC）和与源图像的相关性（QIR）来量化图像描述中的信息损失，将其作为 RL 奖励信号训练 LVLM 生成细粒度且精确的描述…
+  [CVPR 2026][强化学习][图像描述] 提出 Cross-modal Identity Mapping (CIM)，通过分析用 caption 检索到的图像的表示一致性（GRC）和与源图像的相关性（QIR）来量化图像描述中的信息损失，将其作为 RL 奖励信号训练 LVLM 生成细粒度且精确的描述，无需额外标注。
 tags:
   - "CVPR 2026"
   - "强化学习"

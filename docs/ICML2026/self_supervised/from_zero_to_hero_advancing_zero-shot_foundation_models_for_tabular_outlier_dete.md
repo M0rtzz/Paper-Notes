@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Zero to Hero: Advancing Zero-Shot Foundation Models for Tabular Outlier Detection
 description: >-
-  [ICML 2026][自监督学习][零样本异常检测] 本文提出 OutFormer —— 一个用 GMM/SCM/Copula 三类合成先验混合预训练、靠多臂老虎机自演化课程稳定多任务训练的表格 PFN，做到零样本表格异常检测：上下文 (in-context) 吃训练数据、前向一步给标签…
+  [ICML 2026][自监督学习][零样本异常检测] 本文提出 OutFormer —— 一个用 GMM/SCM/Copula 三类合成先验混合预训练、靠多臂老虎机自演化课程稳定多任务训练的表格 PFN，做到零样本表格异常检测：上下文 (in-context) 吃训练数据、前向一步给标签，在 ADBench 与两个新 1500+ 数据集 benchmark 上同时拿到 SOTA 排名和接近 shallow 模型的推理延迟。
 tags:
   - "ICML 2026"
   - "自监督学习"

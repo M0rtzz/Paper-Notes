@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Positional Encoding meets Persistent Homology on Graphs
 description: >-
-  [ICML 2025][图学习][位置编码] 理论证明图上位置编码（PE）和持续同调（PH）在区分非同构图方面互不可比，提出 PiPE（Persistence-informed Positional Encoding）通过消息传递网络统一两者，可证明比单独使用任一方法更具表达力…
+  [ICML 2025][图学习][位置编码] 理论证明图上位置编码（PE）和持续同调（PH）在区分非同构图方面互不可比，提出 PiPE（Persistence-informed Positional Encoding）通过消息传递网络统一两者，可证明比单独使用任一方法更具表达力，在 ZINC/Alchemy/DrugOOD/BREC 等多个基准上一致优于纯 PE 和纯 PH 基线。
 tags:
   - "ICML 2025"
   - "图学习"

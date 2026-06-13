@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection
 description: >-
-  [ECCV 2024][视频异常检测] 提出一个将加权单类分类 (wOCC) 与弱监督 (WS) 模型交替训练的无监督视频异常检测框架，通过软标签缓解训练波动、自适应阈值策略逐步优化分割阈值，无需任何人工标注即可实现接近弱监督方法的性能。
+  [ECCV 2024][视频理解][视频异常检测] 提出一个将加权单类分类 (wOCC) 与弱监督 (WS) 模型交替训练的无监督视频异常检测框架，通过软标签缓解训练波动、自适应阈值策略逐步优化分割阈值，无需任何人工标注即可实现接近弱监督方法的性能。 视频异常检测 (VAD) 主要有两大范式： - 单类分类 (OCC)：仅使…
 tags:
   - "ECCV 2024"
+  - "视频理解"
   - "视频异常检测"
   - "无监督学习"
   - "单类分类"

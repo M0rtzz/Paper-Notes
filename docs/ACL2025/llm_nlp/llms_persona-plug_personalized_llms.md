@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLMs + Persona-Plug = Personalized LLMs
 description: >-
-  [ACL 2025][LLM/NLP][个性化生成] 提出 PPlug 模型，通过轻量级插件式用户嵌入器将用户历史行为压缩为单一个性化嵌入，以 plug-and-play 方式引导 LLM 生成个性化输出，在 LaMP 基准上显著超越检索式和微调式基线，最高提升 35.8%。
+  [ACL 2025][LLM 其他][个性化生成] 提出 PPlug 模型，通过轻量级插件式用户嵌入器将用户历史行为压缩为单一个性化嵌入，以 plug-and-play 方式引导 LLM 生成个性化输出，在 LaMP 基准上显著超越检索式和微调式基线，最高提升 35.8%。 当前 LLM 的主流使用模式是"一刀切"：对不同用…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "个性化生成"
   - "用户建模"
   - "插件式方法"

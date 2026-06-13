@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Universal Neural Operators through Multiphysics Pretraining
 description: >-
-  [NeurIPS 2025][物理/科学计算][神经算子] 提出基于 adapter 的多物理场预训练框架，通过将 lifting/projection 层作为问题特定适配器、冻结共享的核积分算子层，实现跨 PDE 问题的迁移学习，显著降低微调成本并提升泛化能力。
+  [NeurIPS 2025][物理/科学计算][神经算子] 提出基于 adapter 的多物理场预训练框架，通过将 lifting/projection 层作为问题特定适配器、冻结共享的核积分算子层，实现跨 PDE 问题的迁移学习，显著降低微调成本并提升泛化能力。 核心问题：神经算子（Neural Operator…
 tags:
   - "NeurIPS 2025"
   - "物理/科学计算"

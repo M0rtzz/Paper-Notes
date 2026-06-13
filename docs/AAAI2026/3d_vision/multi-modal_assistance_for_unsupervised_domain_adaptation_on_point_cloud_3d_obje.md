@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection
 description: >-
-  [AAAI 2026][3D视觉][无监督域适应] 提出 MMAssist，利用图像和文本特征作为"桥梁"对齐源域和目标域的 3D 特征，同时结合 2D 检测结果增强伪标签质量，显著提升了基于 LiDAR 的 3D 无监督域适应目标检测性能。
+  [AAAI 2026][3D视觉][无监督域适应] 提出 MMAssist，利用图像和文本特征作为"桥梁"对齐源域和目标域的 3D 特征，同时结合 2D 检测结果增强伪标签质量，显著提升了基于 LiDAR 的 3D 无监督域适应目标检测性能。 基于 LiDAR 的 3D 目标检测在自动驾驶中至关重要，但由于不同域（数据集）之…
 tags:
   - "AAAI 2026"
   - "3D视觉"

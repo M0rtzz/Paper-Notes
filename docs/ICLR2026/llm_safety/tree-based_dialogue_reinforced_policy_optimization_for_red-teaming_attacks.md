@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tree-based Dialogue Reinforced Policy Optimization for Red-Teaming Attacks (DialTree)
 description: >-
-  [ICLR 2026][LLM安全][多轮越狱] 提出 DialTree，将多轮红队攻击建模为目标导向的对话策略优化问题，通过树状rollout+质量剪枝探索攻击轨迹空间，结合自适应mask防止格式遗忘，在12个目标模型上平均ASR达81.5%，比此前SOTA高44.2%…
+  [ICLR 2026][LLM安全][多轮越狱] 提出 DialTree，将多轮红队攻击建模为目标导向的对话策略优化问题，通过树状rollout+质量剪枝探索攻击轨迹空间，结合自适应mask防止格式遗忘，在12个目标模型上平均ASR达81.5%，比此前SOTA高44.2%，甚至在Claude-4-Sonnet上达71% ASR。
 tags:
   - "ICLR 2026"
   - "LLM安全"

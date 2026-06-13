@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reference-Based 3D-Aware Image Editing with Triplanes
 description: >-
-  [CVPR 2025 (Highlight)][3D视觉][三平面表示] 基于 EG3D 的三平面（triplane）表示空间，提出集成编码器、自动定位、空间解耦和融合学习四个模块的参考图像引导 3D 感知编辑框架…
+  [CVPR 2025 (Highlight)][3D视觉][三平面表示] 基于 EG3D 的三平面（triplane）表示空间，提出集成编码器、自动定位、空间解耦和融合学习四个模块的参考图像引导 3D 感知编辑框架，在人脸、360度头部、动物、卡通、全身服装等多种领域实现了超越现有 2D/3D GAN 和扩散方法的编辑效果。
 tags:
   - "CVPR 2025 (Highlight)"
   - "3D视觉"

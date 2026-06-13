@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformed Low-rank Adaptation via Tensor Decomposition and Its Applications to Text-to-image Models
 description: >-
-  [ICCV 2025][图像生成][参数高效微调] 提出 TLoRA 方法，将预训练权重的微调分解为 **变换（Transform）** 和 **残差（Residual）** 两个适应部分，分别采用张量环矩阵（TRM）和张量环（TR）分解进行参数化，在 SDXL 上实现了仅 0.4M 参数的超参数高效微调…
+  [ICCV 2025][图像生成][参数高效微调] 提出 TLoRA 方法，将预训练权重的微调分解为 **变换（Transform）** 和 **残差（Residual）** 两个适应部分，分别采用张量环矩阵（TRM）和张量环（TR）分解进行参数化，在 SDXL 上实现了仅 0.4M 参数的超参数高效微调，同时性能优于 LoRA 等基线方法。
 tags:
   - "ICCV 2025"
   - "图像生成"

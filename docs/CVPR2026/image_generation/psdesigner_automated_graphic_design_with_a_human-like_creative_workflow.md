@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSDesigner: Automated Graphic Design with a Human-Like Creative Workflow
 description: >-
-  [CVPR 2026][图像生成][自动图形设计] 本文提出PSDesigner，一个模拟人类设计师创意工作流的自动图形设计系统，通过AssetCollector（资源收集）、GraphicPlanner（规划工具调用）和ToolExecutor（执行PSD操作）三个模块协作…
+  [CVPR 2026][图像生成][自动图形设计] 本文提出PSDesigner，一个模拟人类设计师创意工作流的自动图形设计系统，通过AssetCollector（资源收集）、GraphicPlanner（规划工具调用）和ToolExecutor（执行PSD操作）三个模块协作，利用首个PSD格式设计数据集CreativePSD训练模型学习专业设计流程，能直接生成可编辑的PSD设计文件。
 tags:
   - "CVPR 2026"
   - "图像生成"

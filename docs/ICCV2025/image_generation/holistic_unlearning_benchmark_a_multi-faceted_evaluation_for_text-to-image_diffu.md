@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning
 description: >-
-  [ICCV 2025][图像生成][概念遗忘] HUB 提出了首个全面评估文生图扩散模型概念遗忘（concept unlearning）方法的基准框架，覆盖 33 个目标概念和 6 大评估维度（忠实度、对齐性、精确性、多语言鲁棒性、对抗鲁棒性、效率），每个概念使用 16,000 条 prompt…
+  [ICCV 2025][图像生成][概念遗忘] HUB 提出了首个全面评估文生图扩散模型概念遗忘（concept unlearning）方法的基准框架，覆盖 33 个目标概念和 6 大评估维度（忠实度、对齐性、精确性、多语言鲁棒性、对抗鲁棒性、效率），每个概念使用 16,000 条 prompt，发现没有任何单一方法能在所有维度上占优。
 tags:
   - "ICCV 2025"
   - "图像生成"

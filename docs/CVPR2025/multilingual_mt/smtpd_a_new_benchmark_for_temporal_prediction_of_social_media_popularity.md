@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SMTPD: A New Benchmark for Temporal Prediction of Social Media Popularity
 description: >-
-  [CVPR 2025][多语言/翻译][社交媒体流行度预测] 构建首个时间对齐的社交媒体流行度时序预测基准SMTPD（282K YouTube样本，30天连续观测），并提出基于多模态特征提取+LSTM时序回归的baseline框架，发现早期流行度（EP）是准确预测后续流行度的关键。
+  [CVPR 2025][多语言/翻译][社交媒体流行度预测] 构建首个时间对齐的社交媒体流行度时序预测基准SMTPD（282K YouTube样本，30天连续观测），并提出基于多模态特征提取+LSTM时序回归的baseline框架，发现早期流行度（EP）是准确预测后续流行度的关键。 社交媒体流行度预测对内容优化、数字营销、在…
 tags:
   - "CVPR 2025"
   - "多语言/翻译"

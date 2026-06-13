@@ -2,9 +2,9 @@
 title: >-
   [论文解读] scMRDR: A Scalable and Flexible Framework for Unpaired Single-Cell Multi-Omics Data Integration
 description: >-
-  [NeurIPS 2025][计算生物][单细胞多组学] 提出scMRDR框架，基于β-VAE将单细胞多组学数据的潜在表征解耦为模态共享和模态特异成分，通过等距正则化、对抗训练和掩码重建损失实现非配对多组学数据的可扩展整合。
+  [NeurIPS 2025 Spotlight][计算生物][单细胞多组学] 提出scMRDR框架，基于β-VAE将单细胞多组学数据的潜在表征解耦为模态共享和模态特异成分，通过等距正则化、对抗训练和掩码重建损失实现非配对多组学数据的可扩展整合。 单细胞测序技术已能从单细胞分辨率测量多种分子模态（scRNA、scATAC、蛋白…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "计算生物"
   - "单细胞多组学"
   - "非配对数据整合"

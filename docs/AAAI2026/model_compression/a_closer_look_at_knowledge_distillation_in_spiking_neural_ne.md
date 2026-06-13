@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Closer Look at Knowledge Distillation in Spiking Neural Network Training
 description: >-
-  [AAAI 2026][模型压缩][知识蒸馏] 针对ANN→SNN知识蒸馏中教师ANN连续特征/logits与学生SNN离散稀疏spike特征/logits之间分布差异被忽视的问题，提出基于显著性缩放激活图蒸馏（SAMD）和噪声平滑logits蒸馏（NLD）的CKDSNN框架…
+  [AAAI 2026][模型压缩][知识蒸馏] 针对ANN→SNN知识蒸馏中教师ANN连续特征/logits与学生SNN离散稀疏spike特征/logits之间分布差异被忽视的问题，提出基于显著性缩放激活图蒸馏（SAMD）和噪声平滑logits蒸馏（NLD）的CKDSNN框架，在CIFAR-10/100、ImageNet-1K和CIFAR10-DVS上均取得SNN训练的新SOTA。
 tags:
   - "AAAI 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Model Immunization from a Condition Number Perspective
 description: >-
-  [ICML 2025][图像生成][模型免疫] 从Hessian矩阵条件数的角度定义和分析模型免疫问题，提出最大化/最小化条件数的正则化器，使预训练模型难以被微调用于有害任务而不影响正常任务性能。
+  [ICML 2025][图像生成][模型免疫] 从Hessian矩阵条件数的角度定义和分析模型免疫问题，提出最大化/最小化条件数的正则化器，使预训练模型难以被微调用于有害任务而不影响正常任务性能。 模型免疫（Model Immunization）：由Zheng & Yeh (2024)提出，目标是预训练一个模型使其难以被微调…
 tags:
   - "ICML 2025"
   - "图像生成"

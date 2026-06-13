@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACON: Optimizing Context Compression for Long-horizon LLM Agents
 description: >-
-  [ICML2026][LLM Agent][上下文压缩] Acon 用失败轨迹对比来优化自然语言压缩指南，同时压缩 agent 的历史和观察上下文，在 AppWorld、OfficeBench 和多目标 QA 上把峰值 token 降低 26% 到 54%，并保持或提升长程任务成功率。
+  [ICML2026][LLM Agent][上下文压缩] Acon 用失败轨迹对比来优化自然语言压缩指南，同时压缩 agent 的历史和观察上下文，在 AppWorld、OfficeBench 和多目标 QA 上把峰值 token 降低 26% 到 54%，并保持或提升长程任务成功率。 领域现状：LLM agent 已经被用…
 tags:
   - "ICML2026"
   - "LLM Agent"

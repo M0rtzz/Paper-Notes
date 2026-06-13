@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compositional amortized inference for large-scale hierarchical Bayesian models
 description: >-
-  [ICLR2026][图像生成][amortized Bayesian inference] 将组合分数匹配（CSM）扩展到层次贝叶斯模型，通过新的误差衰减估计器和 mini-batch 策略解决大量数据组下的数值不稳定问题，首次实现超过 75 万参数（25 万+ 数据组）的大规模层次模型的摊销推断…
+  [ICLR2026][图像生成][amortized Bayesian inference] 将组合分数匹配（CSM）扩展到层次贝叶斯模型，通过新的误差衰减估计器和 mini-batch 策略解决大量数据组下的数值不稳定问题，首次实现超过 75 万参数（25 万+ 数据组）的大规模层次模型的摊销推断，并在荧光寿命成像的真实科学应用中验证有效性。
 tags:
   - "ICLR2026"
   - "图像生成"

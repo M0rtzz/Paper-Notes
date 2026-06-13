@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Meta-Reflection: A Feedback-Free Reflection Learning Framework
 description: >-
-  [ACL 2025][无反馈反思] 提出 Meta-Reflection 框架，通过可学习的元反思代码本（codebook）存储和检索反思性洞察，使 LLM 在推理时无需外部反馈和多轮迭代，仅需单次前向传播即可利用历史反思经验来改善输出质量，在编程、数学推理和电商意图检测任务上均取得显著提升。
+  [ACL 2025][LLM 其他][无反馈反思] 提出 Meta-Reflection 框架，通过可学习的元反思代码本（codebook）存储和检索反思性洞察，使 LLM 在推理时无需外部反馈和多轮迭代，仅需单次前向传播即可利用历史反思经验来改善输出质量，在编程、数学推理和电商意图检测任务上均取得显著提升。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "无反馈反思"
   - "代码本"
   - "最优传输对齐"

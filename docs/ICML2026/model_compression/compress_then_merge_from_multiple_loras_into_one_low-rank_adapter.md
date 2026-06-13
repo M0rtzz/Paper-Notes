@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compress then Merge: From Multiple LoRAs into One Low-Rank Adapter
 description: >-
-  [ICML2026][模型压缩][LoRA合并] 提出 Compress-then-Merge (CtM) 管线，在合并多个 LoRA 之前先学习共享 $r$ 维子空间并将各 adapter 投影为 $r \times r$ 坐标矩阵，再在低维空间中执行合并…
+  [ICML2026][模型压缩][LoRA合并] 提出 Compress-then-Merge (CtM) 管线，在合并多个 LoRA 之前先学习共享 $r$ 维子空间并将各 adapter 投影为 $r \times r$ 坐标矩阵，再在低维空间中执行合并，从而在构造层面保证输出为 rank-$r$ LoRA，避免了传统 Merge-then-Compress 方法的截断 SVD 性能损失。
 tags:
   - "ICML2026"
   - "模型压缩"

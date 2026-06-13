@@ -2,7 +2,7 @@
 title: >-
   [论文解读] D-Fusion: Direct Preference Optimization for Aligning Diffusion Models with Visually Consistent Samples
 description: >-
-  [ICML 2025][3D视觉][扩散模型] 本文提出 D-Fusion 方法，通过 mask 引导的自注意力融合（Self-Attention Fusion）构建视觉一致的偏好数据对并保留去噪轨迹，解决了 DPO 训练扩散模型时因视觉不一致导致效果受限的问题…
+  [ICML 2025][3D视觉][扩散模型] 本文提出 D-Fusion 方法，通过 mask 引导的自注意力融合（Self-Attention Fusion）构建视觉一致的偏好数据对并保留去噪轨迹，解决了 DPO 训练扩散模型时因视觉不一致导致效果受限的问题，在多种 RL 算法和 prompt 类型上显著提升了 prompt-image 对齐质量。
 tags:
   - "ICML 2025"
   - "3D视觉"

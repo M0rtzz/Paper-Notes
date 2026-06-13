@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DeepPrune: Parallel Scaling without Inter-Trace Redundancy
 description: >-
-  [ACL 2026][模型压缩][并行推理] 本文提出 DeepPrune，通过训练专门的判断模型从部分推理轨迹预测答案等价性，结合在线贪心聚类算法动态剪枝冗余的并行 CoT 路径，在保持竞争准确率（3 个百分点以内）的同时减少 65.73%-88.50% 的 token 消耗。
+  [ACL 2026 Findings][模型压缩][并行推理] 本文提出 DeepPrune，通过训练专门的判断模型从部分推理轨迹预测答案等价性，结合在线贪心聚类算法动态剪枝冗余的并行 CoT 路径，在保持竞争准确率（3 个百分点以内）的同时减少 65.73%-88.50% 的 token 消耗。 领域现状：并行扩展（如 b…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "并行推理"
   - "CoT剪枝"

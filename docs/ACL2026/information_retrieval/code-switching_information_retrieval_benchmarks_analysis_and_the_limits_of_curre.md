@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Code-Switching Information Retrieval: Benchmarks, Analysis, and the Limits of Current Retrievers
 description: >-
-  [ACL 2026][信息检索/RAG][代码混用] 论文首次系统评估"代码混用查询"对现代 IR 系统的冲击，提出人工标注的 CSR-L 基准和 LLM 生成的 11 任务 CS-MTEB 套件…
+  [ACL 2026][信息检索/RAG][代码混用] 论文首次系统评估"代码混用查询"对现代 IR 系统的冲击，提出人工标注的 CSR-L 基准和 LLM 生成的 11 任务 CS-MTEB 套件，发现即使 8B 多语言强模型在 query-side code-switching 下也会掉 4–13 个 nDCG@10、reranker 甚至从 60 暴跌到 25；并证明 lexicon-based 词表扩展能缓解但无法补齐单语基线的差距。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Robust Influence Functions with Flat Validation Minima
 description: >-
-  [ICML 2025][预训练][influence function] 揭示影响函数 (IF) 在含噪训练数据上失效的根本原因不在于 Hessian 逆近似不准（先前研究的焦点），而在于验证损失的**尖锐度**导致损失变化估计失真，理论推导出 IF 误差上界与验证风险尖锐度的联系…
+  [ICML 2025][预训练][influence function] 揭示影响函数 (IF) 在含噪训练数据上失效的根本原因不在于 Hessian 逆近似不准（先前研究的焦点），而在于验证损失的**尖锐度**导致损失变化估计失真，理论推导出 IF 误差上界与验证风险尖锐度的联系，并设计出专用于平坦验证极小值的新 IF 形式 (FVM)。
 tags:
   - "ICML 2025"
   - "预训练"

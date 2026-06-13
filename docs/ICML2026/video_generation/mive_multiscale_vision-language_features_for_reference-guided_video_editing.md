@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MiVE: Multiscale Vision-language features for reference-guided video Editing
 description: >-
-  [ICML 2026][视频生成][参考图引导] MiVE 把 Qwen3-VL 的**首层 + 末层**隐状态同时抽出来作为多尺度条件 token, 与 VAE 视觉 latent 拼成一个长序列, 在统一的自注意力 DiT 里做参考图引导的视频编辑…
+  [ICML 2026][视频生成][参考图引导] MiVE 把 Qwen3-VL 的**首层 + 末层**隐状态同时抽出来作为多尺度条件 token, 与 VAE 视觉 latent 拼成一个长序列, 在统一的自注意力 DiT 里做参考图引导的视频编辑, 在 60 段 720P benchmark 上人类偏好和 6 个 VLM 自动评分都拿到第一, 超过开源 Wan-Animate 和商用 Kling O1.
 tags:
   - "ICML 2026"
   - "视频生成"

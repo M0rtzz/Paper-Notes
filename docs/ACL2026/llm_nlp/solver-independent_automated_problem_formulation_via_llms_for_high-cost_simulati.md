@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Solver-Independent Automated Problem Formulation via LLMs for High-Cost Simulation-Driven Design
 description: >-
-  [ACL 2026][LLM/NLP][自动问题建模] 本文提出 APF（Automated Problem Formulation），一种与求解器无关的框架，利用 LLM 将工程师的自然语言设计需求转化为可执行的数学优化模型…
+  [ACL 2026 Findings][LLM 其他][自动问题建模] 本文提出 APF（Automated Problem Formulation），一种与求解器无关的框架，利用 LLM 将工程师的自然语言设计需求转化为可执行的数学优化模型，通过创新的数据生成和测试实例标注管线克服高成本仿真场景下无法使用求解器反馈筛选数据的困难，在天线设计任务上显著优于现有方法。
 tags:
-  - "ACL 2026"
-  - "LLM/NLP"
+  - "ACL 2026 Findings"
+  - "LLM 其他"
   - "自动问题建模"
   - "高成本仿真"
   - "LLM微调"

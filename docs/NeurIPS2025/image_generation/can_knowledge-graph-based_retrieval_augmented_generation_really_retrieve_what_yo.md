@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?
 description: >-
-  [NeurIPS 2025][图像生成][知识图谱] 提出 GraphFlow 框架，将知识图谱上的检索建模为 GFlowNet 的流匹配问题，通过详细平衡目标和局部探索策略联合训练检索策略与流估计器，在 STaRK 基准上检索准确率和多样性均超越 GPT-4o 约 10%。
+  [NeurIPS 2025 Spotlight][图像生成][知识图谱] 提出 GraphFlow 框架，将知识图谱上的检索建模为 GFlowNet 的流匹配问题，通过详细平衡目标和局部探索策略联合训练检索策略与流估计器，在 STaRK 基准上检索准确率和多样性均超越 GPT-4o 约 10%。 基于知识图谱（KG）的检索增…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "知识图谱"
   - "检索增强生成"

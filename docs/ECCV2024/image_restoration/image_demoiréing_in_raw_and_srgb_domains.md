@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Image Demoiréing in RAW and sRGB Domains
 description: >-
-  [ECCV 2024][图像去摩尔纹] 提出RRID框架联合利用RAW和sRGB双域数据进行图像去摩尔纹，设计了带GFM（门控反馈）和FSM（频域选择）的SCDM去摩尔纹模块，以及RGISP实现设备相关ISP学习辅助颜色恢复，在PSNR上超越SOTA 0.62dB。
+  [ECCV 2024][图像恢复][图像去摩尔纹] 提出RRID框架联合利用RAW和sRGB双域数据进行图像去摩尔纹，设计了带GFM（门控反馈）和FSM（频域选择）的SCDM去摩尔纹模块，以及RGISP实现设备相关ISP学习辅助颜色恢复，在PSNR上超越SOTA 0.62dB。 领域现状：用智能手机拍摄屏幕内容已成为日常操作…
 tags:
   - "ECCV 2024"
+  - "图像恢复"
   - "图像去摩尔纹"
   - "RAW域处理"
   - "ISP学习"

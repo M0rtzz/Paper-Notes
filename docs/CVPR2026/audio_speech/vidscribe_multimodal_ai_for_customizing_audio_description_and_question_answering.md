@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViDscribe: Multimodal AI for Customizing Audio Description and Question Answering in Online Videos
 description: >-
-  [CVPR 2026][音频/语音][音频描述] ViDscribe 是一个基于 Web 的平台，利用多模态大语言模型(Gemini 3 Pro)为盲人和低视力(BLV)用户提供可定制的 AI 生成音频描述(AD)和交互式视觉问答(VQA)功能，支持任意 YouTube 视频…
+  [CVPR 2026][音频/语音][音频描述] ViDscribe 是一个基于 Web 的平台，利用多模态大语言模型(Gemini 3 Pro)为盲人和低视力(BLV)用户提供可定制的 AI 生成音频描述(AD)和交互式视觉问答(VQA)功能，支持任意 YouTube 视频，通过为期一周的纵向用户研究验证了定制化 AD 在有效性、享受度和沉浸感方面均优于默认 AD。
 tags:
   - "CVPR 2026"
   - "音频/语音"

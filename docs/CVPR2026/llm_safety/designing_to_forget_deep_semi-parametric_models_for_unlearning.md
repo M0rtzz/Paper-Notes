@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Designing to Forget: Deep Semi-parametric Models for Unlearning
 description: >-
-  [CVPR 2026][LLM安全][机器遗忘] 提出"Designing to Forget"理念，设计了一族深度半参数模型 (SPM)，在推理时通过简单删除训练样本即可实现遗忘（无需修改模型参数），在 ImageNet 分类上将与重训基线的预测差距减少 11%，遗忘速度提升 10 倍以上。
+  [CVPR 2026][LLM安全][机器遗忘] 提出"Designing to Forget"理念，设计了一族深度半参数模型 (SPM)，在推理时通过简单删除训练样本即可实现遗忘（无需修改模型参数），在 ImageNet 分类上将与重训基线的预测差距减少 11%，遗忘速度提升 10 倍以上。 领域现状： 机器遗忘 (MU)…
 tags:
   - "CVPR 2026"
   - "LLM安全"

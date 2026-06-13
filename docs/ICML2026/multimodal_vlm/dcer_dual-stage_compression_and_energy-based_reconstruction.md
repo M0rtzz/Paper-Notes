@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DCER: Robust Multimodal Fusion via Dual-Stage Compression and Energy-Based Reconstruction
 description: >-
-  [ICML 2026][多模态VLM][双阶段压缩] DCER 把"模态内频域压缩 + 跨模态 bottleneck token"作为统一的鲁棒融合管道，并用一个学习的能量函数对缺失模态做梯度下降式重建，同时把最终能量值当作内蕴的不确定度，在 MOSI/MOSEI/SIMS 上同时刷新 SOTA。
+  [ICML 2026][多模态VLM][双阶段压缩] DCER 把"模态内频域压缩 + 跨模态 bottleneck token"作为统一的鲁棒融合管道，并用一个学习的能量函数对缺失模态做梯度下降式重建，同时把最终能量值当作内蕴的不确定度，在 MOSI/MOSEI/SIMS 上同时刷新 SOTA。 领域现状：多模态情感分析（…
 tags:
   - "ICML 2026"
   - "多模态VLM"

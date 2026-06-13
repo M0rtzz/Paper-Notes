@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When to Ensemble: Identifying Token-Level Points for Stable and Fast LLM Ensembling
 description: >-
-  [ICLR 2026][LLM评测][LLM集成] 提出 SAFE（Stable And Fast LLM Ensembling），通过 Generate-Verify-Ensemble 循环在 token 级别选择性地集成多个异构分词器 LLM，解决长序列生成中分词不匹配导致的 OOV-like 污染问题…
+  [ICLR 2026][LLM评测][LLM集成] 提出 SAFE（Stable And Fast LLM Ensembling），通过 Generate-Verify-Ensemble 循环在 token 级别选择性地集成多个异构分词器 LLM，解决长序列生成中分词不匹配导致的 OOV-like 污染问题，仅在不到 1% 的 token 上集成即可提升效果，MATH500 上将 UniTE 从 59.6% 提升到 77.4%。
 tags:
   - "ICLR 2026"
   - "LLM评测"

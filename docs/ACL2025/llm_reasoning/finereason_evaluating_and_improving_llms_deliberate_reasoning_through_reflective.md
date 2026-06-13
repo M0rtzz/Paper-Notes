@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FineReason: Evaluating and Improving LLMs' Deliberate Reasoning through Reflective Puzzle Solving
 description: >-
-  [ACL 2025][LLM推理][审慎推理] 提出 FineReason——一个基于逻辑谜题的推理基准，通过"状态检查"（判断当前状态是否可解）和"状态转换"（决定下一步操作）两个任务，对LLM的审慎推理能力（反思、回溯、纠错）进行原子级粒度评估…
+  [ACL 2025][LLM推理][审慎推理] 提出 FineReason——一个基于逻辑谜题的推理基准，通过"状态检查"（判断当前状态是否可解）和"状态转换"（决定下一步操作）两个任务，对LLM的审慎推理能力（反思、回溯、纠错）进行原子级粒度评估，并证明在谜题数据上的训练可迁移提升数学推理能力（GSM8K 提升 5.1%）。
 tags:
   - "ACL 2025"
   - "LLM推理"

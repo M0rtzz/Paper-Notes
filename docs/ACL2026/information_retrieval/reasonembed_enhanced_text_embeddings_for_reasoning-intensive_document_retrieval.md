@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReasonEmbed: Enhanced Text Embeddings for Reasoning-Intensive Document Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][文本嵌入] ReasonEmbed 提出三项技术创新——ReMixer 非平凡合成数据方法（82K 高质量样本）、Redapter 自适应推理强度加权训练和多骨干实现——在 BRIGHT 基准上以 38.1 的 nDCG@10 显著超越所有现有文本嵌入模型约 10 个…
+  [ACL 2026][信息检索/RAG][文本嵌入] ReasonEmbed 提出三项技术创新——ReMixer 非平凡合成数据方法（82K 高质量样本）、Redapter 自适应推理强度加权训练和多骨干实现——在 BRIGHT 基准上以 38.1 的 nDCG@10 显著超越所有现有文本嵌入模型约 10 个点。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

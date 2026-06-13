@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Color When It Counts: Grayscale-Guided Online Triggering for Always-On Streaming Video Sensing
 description: >-
-  [CVPR 2026][视频理解][流式视频理解] 提出"灰度常开、彩色按需"新范式，通过 ColorTrigger 在灰度流上用轻量二次规划在线检测色彩冗余，仅使用 8.1% 的 RGB 帧即保持全彩基线 91.6% 的性能，实现资源受限设备的 always-on 视频感知。
+  [CVPR 2026][视频理解][流式视频理解] 提出"灰度常开、彩色按需"新范式，通过 ColorTrigger 在灰度流上用轻量二次规划在线检测色彩冗余，仅使用 8.1% 的 RGB 帧即保持全彩基线 91.6% 的性能，实现资源受限设备的 always-on 视频感知。 Always-on 感知是下一代可穿戴/边缘…
 tags:
   - "CVPR 2026"
   - "视频理解"

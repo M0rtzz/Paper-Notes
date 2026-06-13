@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HSUGA: LLM-Enhanced Recommendation with Hierarchical Semantic Understanding and Group-Aware Alignment
 description: >-
-  [ACL 2026][推荐系统][序列推荐] HSUGA 把 LLM 增强序列推荐的两个核心环节拆开来打补丁：用"阶段式 + 四类原子编辑（Add/Delete/Update/Retain）"的 HSU 模块把长交互序列的语义抽取做稳…
+  [ACL 2026 Findings][推荐系统][序列推荐] HSUGA 把 LLM 增强序列推荐的两个核心环节拆开来打补丁：用"阶段式 + 四类原子编辑（Add/Delete/Update/Retain）"的 HSU 模块把长交互序列的语义抽取做稳，再用按活跃度分组（20% 头部 / 80% 长尾）的 GAA 自蒸馏对齐解决长尾用户欠监督、活跃用户过对齐的问题，在 Steam/Fashion/Beauty 三个数据集 + GRU4Rec/BERT4Rec/SASRec 三个 backbone 上即插即用都涨点。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "推荐系统"
   - "序列推荐"
   - "LLM 语义嵌入"

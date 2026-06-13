@@ -2,9 +2,9 @@
 title: >-
   [论文解读] If open source is to win, it must go public
 description: >-
-  [ICML 2026][预训练][开源 AI] 这是一篇 ICML 2026 立场论文（position paper），论点是：当前形态的"开源 AI"无法像 Linux/PyTorch 那样真正民主化 AI 访问与提供公共产品…
+  [ICML 2026 Spotlight][预训练][开源 AI] 这是一篇 ICML 2026 立场论文（position paper），论点是：当前形态的"开源 AI"无法像 Linux/PyTorch 那样真正民主化 AI 访问与提供公共产品，必须嵌入到"公共 AI（Public AI）"——由政府/国家实验室/大学/非营利机构提供的算力、推理、后训练、数据基础设施——之中，开源才能赢。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "预训练"
   - "开源 AI"
   - "公共 AI"

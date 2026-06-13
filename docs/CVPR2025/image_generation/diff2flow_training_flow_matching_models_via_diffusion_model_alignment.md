@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diff2Flow: Training Flow Matching Models via Diffusion Model Alignment
 description: >-
-  [CVPR 2025][图像生成][Flow Matching] 提出 Diff2Flow 框架，通过时间步重缩放、插值对齐和速度场推导，实现从预训练扩散模型到 Flow Matching 模型的高效知识迁移，在文生图、深度估计等多任务上以极少微调开销取得优于或持平 SOTA 的性能。
+  [CVPR 2025][图像生成][Flow Matching] 提出 Diff2Flow 框架，通过时间步重缩放、插值对齐和速度场推导，实现从预训练扩散模型到 Flow Matching 模型的高效知识迁移，在文生图、深度估计等多任务上以极少微调开销取得优于或持平 SOTA 的性能。 领域现状：扩散模型（如 Stable…
 tags:
   - "CVPR 2025"
   - "图像生成"

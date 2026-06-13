@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protecting NeRFs' Copyright via Plug-And-Play Watermarking Base Model
 description: >-
-  [ECCV 2024][3D视觉][NeRF版权保护] 提出 NeRFProtector，利用预训练的水印基础模型（message extractor）以即插即用方式在 NeRF 创建过程中同步嵌入二进制水印，通过渐进式全局渲染（PGR）将水印知识蒸馏到 NeRF 表示中…
+  [ECCV 2024][3D视觉][NeRF版权保护] 提出 NeRFProtector，利用预训练的水印基础模型（message extractor）以即插即用方式在 NeRF 创建过程中同步嵌入二进制水印，通过渐进式全局渲染（PGR）将水印知识蒸馏到 NeRF 表示中，无需修改 NeRF 架构即可实现高比特精度的版权保护。
 tags:
   - "ECCV 2024"
   - "3D视觉"

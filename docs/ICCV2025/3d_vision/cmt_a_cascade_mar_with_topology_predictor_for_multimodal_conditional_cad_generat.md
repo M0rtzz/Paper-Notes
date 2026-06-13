@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CMT: A Cascade MAR with Topology Predictor for Multimodal Conditional CAD Generation
 description: >-
-  [ICCV 2025][3D视觉][CAD 生成] 提出 CMT，首个基于 B-Rep 表示的多模态 CAD 生成框架，通过级联 MAR（先边后面）和拓扑预测器实现精确拓扑和几何生成，并构建了 130 万级多模态 CAD 数据集 mmABC。
+  [ICCV 2025][3D视觉][CAD 生成] 提出 CMT，首个基于 B-Rep 表示的多模态 CAD 生成框架，通过级联 MAR（先边后面）和拓扑预测器实现精确拓扑和几何生成，并构建了 130 万级多模态 CAD 数据集 mmABC。 传统 CAD 设计需要人工执行 2D 草图→3D 操作→B-Rep 转换的复杂流程…
 tags:
   - "ICCV 2025"
   - "3D视觉"

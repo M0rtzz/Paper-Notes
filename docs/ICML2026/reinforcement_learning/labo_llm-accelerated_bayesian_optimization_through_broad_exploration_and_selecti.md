@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LABO: LLM-Accelerated Bayesian Optimization through Broad Exploration and Selective Experimentation
 description: >-
-  [ICML 2026][强化学习][贝叶斯优化] 本文提出 LABO，把 LLM 当作"低保真度"评估源接入贝叶斯优化循环——用 Kennedy–O'Hagan 联合高斯过程把真实实验 $f_R$ 分解为缩放的 LLM 预测 $\rho f_L$ 加上残差过程 $\delta$…
+  [ICML 2026][强化学习][贝叶斯优化] 本文提出 LABO，把 LLM 当作"低保真度"评估源接入贝叶斯优化循环——用 Kennedy–O'Hagan 联合高斯过程把真实实验 $f_R$ 分解为缩放的 LLM 预测 $\rho f_L$ 加上残差过程 $\delta$，再用"差异主导率" $p_\Delta = \sigma_\delta^2/(\rho^2\sigma_L^2 + \sigma_\delta^2)$ 做门控决定每个候选要不要花真实实验，从而用近乎免费的 LLM 查询广撒网、把昂贵真实实验集中到 LLM 不可信的区域，在 COF、Fullerene 等 6 个科学优化任务上同等真实预算下显著超过 vanil…
 tags:
   - "ICML 2026"
   - "强化学习"

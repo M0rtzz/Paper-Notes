@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness
 description: >-
-  [ACL 2025][LLM推理][链式思维] 从有效性和忠实性两个视角系统分析 CoT 的表现模式：发现问题难度、信息增益和信息流单调性决定 CoT 有效性，并揭示不忠实 CoT 的机制——模型在预测答案时从问题中召回了 CoT 遗漏的正确信息。在此基础上提出 QUIRE 算法…
+  [ACL 2025][LLM推理][链式思维] 从有效性和忠实性两个视角系统分析 CoT 的表现模式：发现问题难度、信息增益和信息流单调性决定 CoT 有效性，并揭示不忠实 CoT 的机制——模型在预测答案时从问题中召回了 CoT 遗漏的正确信息。在此基础上提出 QUIRE 算法，同时提升 CoT 的有效性（+2.4%）和忠实性（+5.6%）。
 tags:
   - "ACL 2025"
   - "LLM推理"

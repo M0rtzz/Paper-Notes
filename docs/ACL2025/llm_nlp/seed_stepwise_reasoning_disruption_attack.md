@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Stepwise Reasoning Disruption Attack of LLMs
 description: >-
-  [ACL 2025][LLM/NLP][对抗攻击] 提出 SEED（Stepwise rEasoning Error Disruption）攻击方法，通过在 LLM 的推理链前几步中巧妙注入细微错误（如微调计算数字），让模型在后续推理中自然传播错误得出错误答案，兼容零样本/少样本设置…
+  [ACL 2025][LLM 其他][对抗攻击] 提出 SEED（Stepwise rEasoning Error Disruption）攻击方法，通过在 LLM 的推理链前几步中巧妙注入细微错误（如微调计算数字），让模型在后续推理中自然传播错误得出错误答案，兼容零样本/少样本设置，GPT-4o 检测率低至 0.8%，揭示了 LLM 逐步推理过程的严重安全漏洞。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "对抗攻击"
   - "推理安全"
   - "Chain-of-Thought"

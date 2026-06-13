@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Token Sparse Attention: Efficient Long-Context Inference with Interleaved Token Selection
 description: >-
-  [ICML 2026][模型压缩][稀疏注意力] 作者发现 token 的"重要性"在层间和头间剧烈变化，传统 token eviction 一次性删除是不可逆的早期决策错误；他们提出 Token Sparse Attention…
+  [ICML 2026][模型压缩][稀疏注意力] 作者发现 token 的"重要性"在层间和头间剧烈变化，传统 token eviction 一次性删除是不可逆的早期决策错误；他们提出 Token Sparse Attention，每层每个 attention head 独立选 $L' \ll L$ 个 token 做密集 attention，输出再 scatter 回原始序列长度，配上残差路径让被略过的 token 在下一层重新有机会被选中——既保留头/层级动态选择，又能直接调用 FlashAttention 等密集 kernel，在 128K 上下文上叠加 FlexPrefill 后达到 ×3.23 注意力加速、精度损失 <1%…
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LeviTor: 3D Trajectory Oriented Image-to-Video Synthesis
 description: >-
-  [CVPR 2025][视频生成][3D轨迹控制] LeviTor首次在image-to-video合成中引入3D物体轨迹控制，通过将物体mask用K-means聚类为少量代表点并结合深度信息作为控制信号注入SVD模型，实现了遮挡关系、前后移动和环绕等复杂3D运动的精准控制…
+  [CVPR 2025][视频生成][3D轨迹控制] LeviTor首次在image-to-video合成中引入3D物体轨迹控制，通过将物体mask用K-means聚类为少量代表点并结合深度信息作为控制信号注入SVD模型，实现了遮挡关系、前后移动和环绕等复杂3D运动的精准控制，在DAVIS上FID/FVD分别达到25.41/190.44。
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Multi-Persona Framework for Argument Quality Assessment
 description: >-
-  [ACL 2025][论点质量评估] 本文提出 MPAQ 框架，通过大语言模型模拟多个不同评估者视角（persona），对论点进行多角度质量评估，并设计粗到细的评分策略（先整数再小数），在 IBM-Rank-30k 和 IBM-ArgQ-5.3kArgs 数据集上显著超越现有基线…
+  [ACL 2025][论点质量评估] 本文提出 MPAQ 框架，通过大语言模型模拟多个不同评估者视角（persona），对论点进行多角度质量评估，并设计粗到细的评分策略（先整数再小数），在 IBM-Rank-30k 和 IBM-ArgQ-5.3kArgs 数据集上显著超越现有基线，同时提供了可解释的多视角评估理由。
 tags:
   - "ACL 2025"
   - "论点质量评估"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conf-Gen: Conformal Uncertainty Quantification for Generative Models
 description: >-
-  [ICML 2026][图像生成][保形预测] 提出 Conf-Gen 框架，将保形风险控制（CRC）扩展到生成任务，通过参数化选择函数和可容许性函数为 LLM 问答、图像生成、对话系统、AI Agent 等任务提供形式化的不确定性保证，同时放松了 CRC 的单调性等理论假设。
+  [ICML 2026][图像生成][保形预测] 提出 Conf-Gen 框架，将保形风险控制（CRC）扩展到生成任务，通过参数化选择函数和可容许性函数为 LLM 问答、图像生成、对话系统、AI Agent 等任务提供形式化的不确定性保证，同时放松了 CRC 的单调性等理论假设。 领域现状：保形预测（Conformal Pre…
 tags:
   - "ICML 2026"
   - "图像生成"

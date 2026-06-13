@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Runtime Analysis of Evolutionary NAS for Multiclass Classification
 description: >-
-  [ICML2025][进化神经架构搜索] 首次对进化神经架构搜索(ENAS)在多类分类问题上进行运行时理论分析，证明 one-bit 和 bit-wise 变异的 (1+1)-ENAS 算法均以 $O(rM\ln rM)$ 期望运行时找到最优架构…
+  [ICML2025][进化神经架构搜索] 首次对进化神经架构搜索(ENAS)在多类分类问题上进行运行时理论分析，证明 one-bit 和 bit-wise 变异的 (1+1)-ENAS 算法均以 $O(rM\ln rM)$ 期望运行时找到最优架构，说明简单的 one-bit 变异即可与复杂的 bit-wise 变异媲美。
 tags:
   - "ICML2025"
   - "进化神经架构搜索"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Where and How to Perturb: On the Design of Perturbation Guidance in Diffusion and Flow Models
 description: >-
-  [NeurIPS 2025][图像生成][注意力扰动引导] 提出 HeadHunter 框架和 SoftPAG 方法，将扩散模型中的注意力扰动粒度从层级细化到单个注意力头级别，首次发现不同注意力头控制不同视觉概念（结构、风格、纹理等），实现了更精准且可组合的生成引导。
+  [NeurIPS 2025][图像生成][注意力扰动引导] 提出 HeadHunter 框架和 SoftPAG 方法，将扩散模型中的注意力扰动粒度从层级细化到单个注意力头级别，首次发现不同注意力头控制不同视觉概念（结构、风格、纹理等），实现了更精准且可组合的生成引导。 Classifier-Free Guidance (CF…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

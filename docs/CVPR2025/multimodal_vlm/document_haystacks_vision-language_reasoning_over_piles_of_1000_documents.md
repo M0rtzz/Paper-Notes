@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents
 description: >-
-  [多模态VLM] 提出 DocHaystack 和 InfoHaystack 两个大规模文档检索基准（每个问题对应 1000+ 文档），以及 V-RAG——一个视觉中心的检索增强生成框架，在 Recall@1 上比最佳基线提升 9%-11%。
+  [多模态VLM] 提出 DocHaystack 和 InfoHaystack 两个大规模文档检索基准（每个问题对应 1000+ 文档），以及 V-RAG——一个视觉中心的检索增强生成框架，在 Recall@1 上比最佳基线提升 9%-11%。 领域现状 大型多模态模型（LMMs）在视觉-语言理解上取得了显著进展…
 tags:
   - "多模态VLM"
 ---

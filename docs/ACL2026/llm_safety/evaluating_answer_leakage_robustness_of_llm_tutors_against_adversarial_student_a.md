@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evaluating Answer Leakage Robustness of LLM Tutors against Adversarial Student Attacks
 description: >-
-  [ACL 2026][LLM安全][LLM tutor] 本文系统评估 LLM 家教在「学生想骗答案」场景下的答案泄露鲁棒性：定义 6 类对抗/说服技巧，比较 4 类对抗学生代理（基础、推理增强、多代理、SFT 微调）…
+  [ACL 2026][LLM安全][LLM tutor] 本文系统评估 LLM 家教在「学生想骗答案」场景下的答案泄露鲁棒性：定义 6 类对抗/说服技巧，比较 4 类对抗学生代理（基础、推理增强、多代理、SFT 微调），并验证两种简单防御（推理优先、多代理 tutor）可在多数模型上把泄露率从 70–85% 压到 < 10%。
 tags:
   - "ACL 2026"
   - "LLM安全"

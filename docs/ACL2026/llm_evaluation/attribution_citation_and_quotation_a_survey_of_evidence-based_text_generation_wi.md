@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attribution, Citation, and Quotation: A Survey of Evidence-based Text Generation with Large Language Models
 description: >-
-  [ACL 2026][LLM评测][证据基础文本生成] 本文系统综述了 134 篇关于 LLM 证据基础文本生成的论文，首次提出统一分类学（归因方式 × 引用特征 × 任务），分析了 300 个评估指标并归纳为七大维度六种方法，为该碎片化领域提供了全景式参考框架。
+  [ACL 2026][LLM评测][证据基础文本生成] 本文系统综述了 134 篇关于 LLM 证据基础文本生成的论文，首次提出统一分类学（归因方式 × 引用特征 × 任务），分析了 300 个评估指标并归纳为七大维度六种方法，为该碎片化领域提供了全景式参考框架。 领域现状：LLM 面临幻觉生成和知识局限等可信性挑战…
 tags:
   - "ACL 2026"
   - "LLM评测"

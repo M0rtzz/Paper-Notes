@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reverse Constitutional AI: A Framework for Controllable Toxic Data Generation via Probability-Clamped RLAIF
 description: >-
-  [ACL 2026][AI安全][红队对抗] 提出 Reverse Constitutional AI (R-CAI)，通过反转 Constitutional AI 的原则为"毒性宪法"，结合批评-修正循环和概率截断的 RLAIF 机制，实现自动化、可控的多维度对抗毒性数据合成…
+  [ACL 2026 Findings][AI安全][红队对抗] 提出 Reverse Constitutional AI (R-CAI)，通过反转 Constitutional AI 的原则为"毒性宪法"，结合批评-修正循环和概率截断的 RLAIF 机制，实现自动化、可控的多维度对抗毒性数据合成，同时通过概率截断解决奖励黑客导致的语义退化问题（语义连贯性提升15%）。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "AI安全"
   - "红队对抗"
   - "对抗数据合成"

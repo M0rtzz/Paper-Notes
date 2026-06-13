@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RSAT: Structured Attribution Makes Small Language Models Faithful Table Reasoners
 description: >-
-  [ACL2026][LLM推理][表格推理] RSAT 用“结构化引用格式的 SFT + 以 NLI 忠实性为核心奖励的 GRPO”训练 1B-8B 小语言模型，让表格问答不只给答案，还能把每一步推理绑定到具体表格单元格，并把平均忠实性从 SFT 的 0.224 提升到 0.826。
+  [ACL2026][LLM推理][表格推理] RSAT 用“结构化引用格式的 SFT + 以 NLI 忠实性为核心奖励的 GRPO”训练 1B-8B 小语言模型，让表格问答不只给答案，还能把每一步推理绑定到具体表格单元格，并把平均忠实性从 SFT 的 0.224 提升到 0.826。 领域现状：表格问答和表格事实验证已有 T…
 tags:
   - "ACL2026"
   - "LLM推理"

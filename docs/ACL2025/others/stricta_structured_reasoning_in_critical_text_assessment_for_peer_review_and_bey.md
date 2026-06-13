@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STRICTA: Structured Reasoning in Critical Text Assessment for Peer Review and Beyond
 description: >-
-  [ACL 2025][structured reasoning] 提出 STRICTA 框架，基于结构因果模型（SCM）将文本评审建模为显式的逐步推理图（workflow），在生物医学论文评审中收集 40+ 位专家的 4000+ 推理步骤数据集，发现先验知识差异是专家分歧主因、写作风格对最终评审有因果影响…
+  [ACL 2025][structured reasoning] 提出 STRICTA 框架，基于结构因果模型（SCM）将文本评审建模为显式的逐步推理图（workflow），在生物医学论文评审中收集 40+ 位专家的 4000+ 推理步骤数据集，发现先验知识差异是专家分歧主因、写作风格对最终评审有因果影响，LLM 存在错误传播但人类监督可有效缓解。
 tags:
   - "ACL 2025"
   - "structured reasoning"

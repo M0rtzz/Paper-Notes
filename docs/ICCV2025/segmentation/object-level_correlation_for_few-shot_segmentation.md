@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Object-level Correlation for Few-Shot Segmentation
 description: >-
-  [ICCV 2025][语义分割][图像分割] 提出 OCNet，通过模仿生物视觉过程构建**目标级别**（而非图像级别）的 support-query 关联，先挖掘查询图像中的通用物体，再从中识别目标物体，有效抑制背景中的无关物体噪声。
+  [ICCV 2025][语义分割][图像分割] 提出 OCNet，通过模仿生物视觉过程构建目标级别：（而非图像级别）的 support-query 关联，先挖掘查询图像中的通用物体，再从中识别目标物体，有效抑制背景中的无关物体噪声。 少样本语义分割（FSS）的核心在于构建 support 目标和 query 图像之间的关联…
 tags:
   - "ICCV 2025"
   - "语义分割"

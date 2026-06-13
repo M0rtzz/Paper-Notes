@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Uncertainty-guided Perturbation for Image Super-Resolution Diffusion Model
 description: >-
-  [CVPR 2025][图像生成][图像超分辨率] 发现 LR 图像不同区域（平坦区域 vs 边缘纹理区域）对应扩散过程的不同时间步，提出不确定性引导的噪声加权（UNW）策略，对平坦区域施加更少噪声以保留更多 LR 信息，在更小模型和更少训练开销下达到超分 SOTA。
+  [CVPR 2025][图像生成][图像超分辨率] 发现 LR 图像不同区域（平坦区域 vs 边缘纹理区域）对应扩散过程的不同时间步，提出不确定性引导的噪声加权（UNW）策略，对平坦区域施加更少噪声以保留更多 LR 信息，在更小模型和更少训练开销下达到超分 SOTA。 1. 领域现状：扩散模型在图像超分辨率中展现出超越 GA…
 tags:
   - "CVPR 2025"
   - "图像生成"

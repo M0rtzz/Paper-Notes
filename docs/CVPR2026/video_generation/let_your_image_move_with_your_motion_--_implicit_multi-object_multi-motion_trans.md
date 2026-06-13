@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Let Your Image Move with Your Motion! – Implicit Multi-Object Multi-Motion Transfer
 description: >-
-  [CVPR 2026][视频生成][运动迁移] 本文提出 FlexiMMT，首个支持隐式多目标多运动迁移的 I2V 框架，通过运动解耦掩码注意力机制（MDMA）约束 motion/text token 仅影响对应目标区域、差异化掩码提取机制（DMEM）从扩散注意力中推导目标掩码并渐进传播…
+  [CVPR 2026][视频生成][运动迁移] 本文提出 FlexiMMT，首个支持隐式多目标多运动迁移的 I2V 框架，通过运动解耦掩码注意力机制（MDMA）约束 motion/text token 仅影响对应目标区域、差异化掩码提取机制（DMEM）从扩散注意力中推导目标掩码并渐进传播，实现了精确的组合式多目标运动迁移。
 tags:
   - "CVPR 2026"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semi-Supervised Neural Super-Resolution for Mesh-Based Simulations
 description: >-
-  [ICML 2026][图像恢复][mesh 超分辨] SuperMeshNet 用两个互补 MPNN——主模型预测 LR→HR，辅助模型预测 LR-LR 对应的 HR-HR 差分——在无配对 HR 的样本上互相生成伪标签，并配合节点级 / 消息级 centering 两个轻量归纳偏置…
+  [ICML 2026][图像恢复][mesh 超分辨] SuperMeshNet 用两个互补 MPNN——主模型预测 LR→HR，辅助模型预测 LR-LR 对应的 HR-HR 差分——在无配对 HR 的样本上互相生成伪标签，并配合节点级 / 消息级 centering 两个轻量归纳偏置，使得 PDE mesh 超分仅用 10% HR 数据就能超过 100% HR 全监督基线，跨 6 种 MPNN 架构一致下降 RMSE。
 tags:
   - "ICML 2026"
   - "图像恢复"

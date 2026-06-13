@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Activation Steering Decoding: Mitigating Hallucination in Large Vision-Language Models through Bidirectional Hidden State Intervention
 description: >-
-  [ACL 2025][幻觉检测][幻觉缓解] 本文提出 ASD（Activation Steering Decoding），一种无需训练的推理时幻觉缓解方法，通过在 LVLM 的中间隐藏状态中识别幻觉方向模式，利用双向引导和对比解码来抑制幻觉输出，同时保持模型在通用视觉理解任务上的性能。
+  [ACL 2025][幻觉检测][幻觉缓解] 本文提出 ASD（Activation Steering Decoding），一种无需训练的推理时幻觉缓解方法，通过在 LVLM 的中间隐藏状态中识别幻觉方向模式，利用双向引导和对比解码来抑制幻觉输出，同时保持模型在通用视觉理解任务上的性能。 领域现状：大视觉-语言模型（LVLM…
 tags:
   - "ACL 2025"
   - "幻觉检测"

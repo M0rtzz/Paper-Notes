@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Radiant Foam: Real-Time Differentiable Ray Tracing
 description: >-
-  [ICCV 2025][3D视觉][可微渲染] 提出 Radiant Foam，一种基于体积网格（tetrahedral mesh）光线追踪的新型可微场景表示，在不依赖光栅化的前提下达到了与 Gaussian Splatting 相当的渲染速度和质量，同时天然支持反射、折射等光传输现象。
+  [ICCV 2025][3D视觉][可微渲染] 提出 Radiant Foam，一种基于体积网格（tetrahedral mesh）光线追踪的新型可微场景表示，在不依赖光栅化的前提下达到了与 Gaussian Splatting 相当的渲染速度和质量，同时天然支持反射、折射等光传输现象。 领域现状：可微场景表示正朝着更高效、…
 tags:
   - "ICCV 2025"
   - "3D视觉"

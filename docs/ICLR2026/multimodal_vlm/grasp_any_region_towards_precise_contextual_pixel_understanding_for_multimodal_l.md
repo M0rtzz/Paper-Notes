@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grasp Any Region: Towards Precise, Contextual Pixel Understanding for Multimodal LLMs
 description: >-
-  [ICLR2026][多模态VLM][Region-Level MLLM] 提出 GAR（Grasp Any Region），通过 RoI-aligned feature replay 在保持全局上下文的同时提取高保真局部特征，实现精准的单区域描述、多区域交互建模和复合推理…
+  [ICLR2026][多模态VLM][Region-Level MLLM] 提出 GAR（Grasp Any Region），通过 RoI-aligned feature replay 在保持全局上下文的同时提取高保真局部特征，实现精准的单区域描述、多区域交互建模和复合推理，1B 模型即超越 InternVL3-78B。
 tags:
   - "ICLR2026"
   - "多模态VLM"

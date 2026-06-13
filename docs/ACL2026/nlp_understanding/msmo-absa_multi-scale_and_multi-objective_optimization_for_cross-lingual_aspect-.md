@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MSMO-ABSA: Multi-Scale and Multi-Objective Optimization for Cross-Lingual Aspect-Based Sentiment Analysis
 description: >-
-  [ACL 2026][NLP理解][Cross-lingual ABSA] 针对跨语言 aspect-based 情感分析提出 MSMO 框架——句级用 Wasserstein 对抗训练 + 代码切换数据做语言判别器对齐，aspect 级用双向 KL 一致性训练对齐同情感 aspect 的预测分布…
+  [ACL 2026][NLP理解][Cross-lingual ABSA] 针对跨语言 aspect-based 情感分析提出 MSMO 框架——句级用 Wasserstein 对抗训练 + 代码切换数据做语言判别器对齐，aspect 级用双向 KL 一致性训练对齐同情感 aspect 的预测分布，再叠加多教师知识蒸馏，在 SemEval-2016 4 个目标语言 + mBERT/XLM-R 上稳定刷出新 SOTA，并显著超过 GPT-4o / Qwen2.5-7B-LoRA 等 LLM 方案。
 tags:
   - "ACL 2026"
   - "NLP理解"

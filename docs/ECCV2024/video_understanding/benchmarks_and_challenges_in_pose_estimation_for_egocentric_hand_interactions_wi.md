@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects
 description: >-
-  [ECCV2024][视频理解][位姿估计] 基于 HANDS23 挑战赛（AssemblyHands + ARCTIC 数据集），系统性地对第一人称视角下手-物体交互的 3D 姿态估计方法进行了基准测试和深入分析，揭示了畸变校正、高容量 Transformer 和多视角融合的有效性…
+  [ECCV2024][视频理解][位姿估计] 基于 HANDS23 挑战赛（AssemblyHands + ARCTIC 数据集），系统性地对第一人称视角下手-物体交互的 3D 姿态估计方法进行了基准测试和深入分析，揭示了畸变校正、高容量 Transformer 和多视角融合的有效性，以及快速运动、遮挡和窄视角下物体重建等仍未解决的挑战。
 tags:
   - "ECCV2024"
   - "视频理解"

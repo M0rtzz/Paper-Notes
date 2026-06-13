@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aligning Agents via Planning: A Benchmark for Trajectory-Level Reward Modeling
 description: >-
-  [ACL 2026][LLM对齐][奖励模型] 提出 Plan-RewardBench，一个面向复杂工具增强场景的轨迹级偏好基准，用于评估奖励模型在多步规划、工具使用和错误恢复等场景下区分优劣智能体轨迹的能力。
+  [ACL 2026][LLM对齐][奖励模型] 提出 Plan-RewardBench，一个面向复杂工具增强场景的轨迹级偏好基准，用于评估奖励模型在多步规划、工具使用和错误恢复等场景下区分优劣智能体轨迹的能力。 领域现状： 大语言模型已从被动对话系统演变为能自主调用工具、进行复杂推理的智能体系统，行为表现从单次回复扩展为包含…
 tags:
   - "ACL 2026"
   - "LLM对齐"

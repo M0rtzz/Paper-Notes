@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Turning Adaptation into Assets: Cross-Domain Bridging for Online Vision-Language Navigation
 description: >-
-  [ICML 2026][机器人][VLN] 针对在线视觉语言导航中环境分布不断漂移的问题，本文提出 IDEA 框架，把每次测试时自适应学到的 soft prompt 连同域坐标和不确定度封装为可复用"资产"，再用 Wasserstein 凸包投影把目标域映射到历史资产的组合上，得到一条免训练的跨域捷径…
+  [ICML 2026][机器人][VLN] 针对在线视觉语言导航中环境分布不断漂移的问题，本文提出 IDEA 框架，把每次测试时自适应学到的 soft prompt 连同域坐标和不确定度封装为可复用"资产"，再用 Wasserstein 凸包投影把目标域映射到历史资产的组合上，得到一条免训练的跨域捷径，在 REVERIE / R2R 上平均 +2.5% SR、+1.9% SPL。
 tags:
   - "ICML 2026"
   - "机器人"

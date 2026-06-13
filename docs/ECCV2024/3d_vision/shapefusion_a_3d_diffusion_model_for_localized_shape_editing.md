@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShapeFusion: A 3D Diffusion Model for Localized Shape Editing
 description: >-
-  [ECCV 2024][3D视觉] 提出一种基于掩码扩散训练策略的3D网格局部编辑方法ShapeFusion，通过在顶点空间直接操作实现完全局部化、可解释的3D形状编辑，无需潜在空间优化。
+  [ECCV 2024][3D视觉] 提出一种基于掩码扩散训练策略的3D网格局部编辑方法ShapeFusion，通过在顶点空间直接操作实现完全局部化、可解释的3D形状编辑，无需潜在空间优化。 - 参数化3D模型（3DMM）在数字人、游戏、虚拟现实等领域广泛应用，传统方法基于PCA进行全局形状建模 - 核心痛点：PCA的正交性约…
 tags:
   - "ECCV 2024"
   - "3D视觉"

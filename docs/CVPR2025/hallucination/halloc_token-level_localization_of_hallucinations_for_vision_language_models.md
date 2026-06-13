@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HalLoc: Token-Level Localization of Hallucinations for Vision Language Models
 description: >-
-  [CVPR 2025][幻觉检测][Token级定位] 提出HalLoc，一个15.5万样本、覆盖VQA/指令跟随/图像描述三类任务的token级幻觉标注数据集，并基于此训练了轻量级幻觉检测模型HalLocalizer，可在不影响效率的前提下即插即用地集成到现有VLM中实现实时概率化幻觉检测。
+  [CVPR 2025][幻觉检测][Token级定位] 提出HalLoc，一个15.5万样本、覆盖VQA/指令跟随/图像描述三类任务的token级幻觉标注数据集，并基于此训练了轻量级幻觉检测模型HalLocalizer，可在不影响效率的前提下即插即用地集成到现有VLM中实现实时概率化幻觉检测。 领域现状： 视觉语言模型（VL…
 tags:
   - "CVPR 2025"
   - "幻觉检测"

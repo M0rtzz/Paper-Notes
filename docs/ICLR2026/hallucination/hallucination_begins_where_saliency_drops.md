@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hallucination Begins Where Saliency Drops
 description: >-
-  [ICLR 2026][幻觉检测][幻觉缓解] 提出 LVLMs-Saliency 梯度感知诊断框架来量化每个输出 token 的视觉锚定强度，发现"当先前输出 token 对下一个 token 预测的显著性降低时，幻觉就会产生"的关键规律…
+  [ICLR 2026][幻觉检测][幻觉缓解] 提出 LVLMs-Saliency 梯度感知诊断框架来量化每个输出 token 的视觉锚定强度，发现"当先前输出 token 对下一个 token 预测的显著性降低时，幻觉就会产生"的关键规律，并基于此设计了 SGRS（显著性引导的拒绝采样）+ LocoRE（局部一致性增强）双机制推理时框架，在多个 LVLM 上显著降低幻觉率。
 tags:
   - "ICLR 2026"
   - "幻觉检测"

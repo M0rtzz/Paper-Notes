@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling and Transferability of Annealing Strategies in Large Language Model Training
 description: >-
-  [AAAI 2026][LLM效率][学习率退火] 提出模型无关的预测框架，分解训练损失为前向效应项（学习率积分S）、退火动量项（Adam-style动量积分M）和模型尺寸项N，证明退火策略可从小模型/小batch迁移到大模型/大batch，预测误差MAPE<2%。
+  [AAAI 2026][LLM效率][学习率退火] 提出模型无关的预测框架，分解训练损失为前向效应项（学习率积分S）、退火动量项（Adam-style动量积分M）和模型尺寸项N，证明退火策略可从小模型/小batch迁移到大模型/大batch，预测误差MAPE<2%。 - 领域现状：LLM训练中学习率调度（特别是退火/anne…
 tags:
   - "AAAI 2026"
   - "LLM效率"

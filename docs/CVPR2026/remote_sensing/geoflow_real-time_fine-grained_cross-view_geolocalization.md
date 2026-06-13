@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoFlow: Real-Time Fine-Grained Cross-View Geolocalization via Iterative Flow Prediction
 description: >-
-  [CVPR 2026][遥感][跨视图地理定位] 提出 GeoFlow，一种受流匹配启发的轻量级跨视图精细地理定位框架，通过学习概率位移场结合迭代精化采样（IRS）算法，在连续空间内实现从地面图像到卫星图像的精确 2-DoF 定位，以 29 FPS 的实时速度达到了与 SOTA 可比的精度。
+  [CVPR 2026][遥感][跨视图地理定位] 提出 GeoFlow，一种受流匹配启发的轻量级跨视图精细地理定位框架，通过学习概率位移场结合迭代精化采样（IRS）算法，在连续空间内实现从地面图像到卫星图像的精确 2-DoF 定位，以 29 FPS 的实时速度达到了与 SOTA 可比的精度。 精细跨视图地理定位（FG-CVG…
 tags:
   - "CVPR 2026"
   - "遥感"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Decide less, communicate more: On the construct validity of end-to-end fact-checking in medicine
 description: >-
-  [ACL 2026][社会计算][医学 fact-checking] 作者用 5 位临床专家在 RedHOT（Reddit 健康讨论）社交媒体真实声明上做了一项 1,000 实例的标注研究，发现端到端医学事实核查（end-to-end fact-checking）在 construct validity 层面…
+  [ACL 2026 Findings][社会计算][医学 fact-checking] 作者用 5 位临床专家在 RedHOT（Reddit 健康讨论）社交媒体真实声明上做了一项 1,000 实例的标注研究，发现端到端医学事实核查（end-to-end fact-checking）在 construct validity 层面就站不住脚 —— 证据连接难、声明欠规约、严重程度判定主观，三大障碍即便专家也无法消除，因此提出应把医学 fact-checking 重构为「交互式医患沟通模型」而非「分类→裁决」管线。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "社会计算"
   - "医学 fact-checking"
   - "construct validity"

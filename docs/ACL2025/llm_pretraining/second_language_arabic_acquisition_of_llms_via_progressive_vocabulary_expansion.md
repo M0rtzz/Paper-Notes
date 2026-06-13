@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Second Language (Arabic) Acquisition of LLMs via Progressive Vocabulary Expansion
 description: >-
-  [ACL 2025][预训练][Arabic LLM] 受人类第二语言习得启发，提出渐进式词表扩展（Progressive Vocabulary Expansion）方法，通过分阶段指数增长地扩展阿拉伯语子词到 LLaMA2 词表中，在保留原模型英语知识的同时高效适配阿拉伯语…
+  [ACL 2025][预训练][Arabic LLM] 受人类第二语言习得启发，提出渐进式词表扩展（Progressive Vocabulary Expansion）方法，通过分阶段指数增长地扩展阿拉伯语子词到 LLaMA2 词表中，在保留原模型英语知识的同时高效适配阿拉伯语，构建出 AraLLaMA 7B/13B 模型。
 tags:
   - "ACL 2025"
   - "预训练"

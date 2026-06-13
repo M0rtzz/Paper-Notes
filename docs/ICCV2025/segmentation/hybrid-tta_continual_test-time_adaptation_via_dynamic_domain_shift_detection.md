@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hybrid-TTA: Continual Test-time Adaptation via Dynamic Domain Shift Detection
 description: >-
-  [ICCV 2025][语义分割][测试时自适应] Hybrid-TTA 提出一种持续测试时自适应（CTTA）框架，通过动态域偏移检测（DDSD）模块判断当前输入是否来自新域，自适应地在全参数微调（Full Tuning）和高效微调（Adapter Tuning）之间切换…
+  [ICCV 2025][语义分割][测试时自适应] Hybrid-TTA 提出一种持续测试时自适应（CTTA）框架，通过动态域偏移检测（DDSD）模块判断当前输入是否来自新域，自适应地在全参数微调（Full Tuning）和高效微调（Adapter Tuning）之间切换；同时引入掩码图像建模自适应（MIMA）作为辅助任务增强模型稳定性，在 Cityscapes-to-ACDC 基准上达到 62.2% mIoU，且推理速度比可比方法快约 **20 倍**。
 tags:
   - "ICCV 2025"
   - "语义分割"

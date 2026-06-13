@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IDLM: Inverse-distilled Diffusion Language Models
 description: >-
-  [ICML 2026][模型压缩][扩散语言模型] 本文把连续扩散的"反向蒸馏 (Inverse Distillation)"扩展到离散文本扩散模型，通过证明 IDLM 损失在 SEDD/MDLM/Duo 下的唯一最优解就是真实数据分布…
+  [ICML 2026][模型压缩][扩散语言模型] 本文把连续扩散的"反向蒸馏 (Inverse Distillation)"扩展到离散文本扩散模型，通过证明 IDLM 损失在 SEDD/MDLM/Duo 下的唯一最优解就是真实数据分布，再配合 simplex 松弛与 Gaussian 重参数化解决离散反传不稳定问题，把 1024 步教师 DLM 压到 16 步甚至 4 步而保持 GenPPL/Entropy 与 MAUVE 几乎不掉。
 tags:
   - "ICML 2026"
   - "模型压缩"

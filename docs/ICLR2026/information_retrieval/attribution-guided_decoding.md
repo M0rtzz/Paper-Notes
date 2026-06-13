@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Attribution-Guided Decoding
 description: >-
-  [ICLR 2026][信息检索/RAG][attribution method] 提出AGD解码策略，在每步生成时从高概率候选token中选择对用户指定"兴趣区域"（ROI）归因得分最高的token，将归因方法从被动分析工具转变为主动生成引导工具，在指令遵循和事实性任务上均取得显著提升。
+  [ICLR 2026][信息检索/RAG][attribution method] 提出AGD解码策略，在每步生成时从高概率候选token中选择对用户指定"兴趣区域"（ROI）归因得分最高的token，将归因方法从被动分析工具转变为主动生成引导工具，在指令遵循和事实性任务上均取得显著提升。 领域现状：LLM解码策略是控制生成…
 tags:
   - "ICLR 2026"
   - "信息检索/RAG"

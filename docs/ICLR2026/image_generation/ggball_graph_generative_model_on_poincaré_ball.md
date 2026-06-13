@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GGBall: Graph Generative Model on Poincaré Ball
 description: >-
-  [ICLR 2026][图像生成][双曲空间] 提出 GGBall，首个完全基于 Poincaré 球模型的图生成框架，通过双曲向量量化自编码器（HVQVAE）和黎曼流匹配先验，在层次图和分子图生成上达到 SOTA，在层次图数据集上平均生成误差降低 18%。
+  [ICLR 2026][图像生成][双曲空间] 提出 GGBall，首个完全基于 Poincaré 球模型的图生成框架，通过双曲向量量化自编码器（HVQVAE）和黎曼流匹配先验，在层次图和分子图生成上达到 SOTA，在层次图数据集上平均生成误差降低 18%。 - 领域现状： 图生成是分子设计、材料发现等领域的核心任务…
 tags:
   - "ICLR 2026"
   - "图像生成"

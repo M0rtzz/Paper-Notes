@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ForesightKV: Optimizing KV Cache Eviction for Reasoning Models by Learning Long-Term Contribution
 description: >-
-  [ICML 2026][LLM推理][KV cache eviction] ForesightKV 训练一个轻量打分模型，按"未来注意力贡献"动态淘汰 KV 对：先用 Golden Eviction 算法从完整 trace 中蒸馏出最优淘汰序列作监督信号…
+  [ICML 2026][LLM推理][KV cache eviction] ForesightKV 训练一个轻量打分模型，按"未来注意力贡献"动态淘汰 KV 对：先用 Golden Eviction 算法从完整 trace 中蒸馏出最优淘汰序列作监督信号，再用 GRPO 强化学习以"低熵 token 损失增量平方和"为奖励微调策略，在 AIME2024/2025 上用一半 KV 预算超过 SnapKV/H2O/R-KV，4K 预算可保留 99% 原模型性能。
 tags:
   - "ICML 2026"
   - "LLM推理"

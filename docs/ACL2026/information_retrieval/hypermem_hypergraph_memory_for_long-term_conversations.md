@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HyperMem: Hypergraph Memory for Long-Term Conversations
 description: >-
-  [ACL 2026][信息检索/RAG][超图记忆] HyperMem 用"超图（hyperedge 连接 ≥3 个节点）"代替传统 RAG 的 pairwise 边，把长期对话记忆组织成"主题 → 情节 → 事实"三层结构，通过粗到细检索 + 超图嵌入传播解决多 episode 跨时间相关性的检索碎片化问题…
+  [ACL 2026][信息检索/RAG][超图记忆] HyperMem 用"超图（hyperedge 连接 ≥3 个节点）"代替传统 RAG 的 pairwise 边，把长期对话记忆组织成"主题 → 情节 → 事实"三层结构，通过粗到细检索 + 超图嵌入传播解决多 episode 跨时间相关性的检索碎片化问题，在 LoCoMo benchmark 上 LLM-as-judge 准确率打到 92.73%（前 SOTA 86.49%）。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

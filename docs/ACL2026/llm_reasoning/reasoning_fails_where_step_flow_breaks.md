@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Fails Where Step Flow Breaks
 description: >-
-  [ACL 2026][LLM推理][推理模型可解释性] 提出 Step-Saliency 诊断工具发现大推理模型中两种深度相关的信息流失败模式（Shallow Lock-in 和 Deep Decay），并设计 StepFlow 测试时干预方法在不重训练的情况下修复信息传播、提升推理准确率。
+  [ACL 2026][LLM推理][推理模型可解释性] 提出 Step-Saliency 诊断工具发现大推理模型中两种深度相关的信息流失败模式（Shallow Lock-in 和 Deep Decay），并设计 StepFlow 测试时干预方法在不重训练的情况下修复信息传播、提升推理准确率。 领域现状：大推理模型（LRM）通…
 tags:
   - "ACL 2026"
   - "LLM推理"

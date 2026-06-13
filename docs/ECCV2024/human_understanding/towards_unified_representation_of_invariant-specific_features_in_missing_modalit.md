@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Unified Representation of Invariant-Specific Features in Missing Modality Face Anti-Spoofing
 description: >-
-  [ECCV 2024][人体理解][模态缺失] 本文提出MMA-FAS框架解决多模态人脸反欺骗中的模态缺失问题，通过模态解耦适配器从频率分解角度分离模态不变和模态特有特征，结合LBP引导的对比损失和自适应模态组合采样策略，在所有模态缺失场景下均达到SOTA。
+  [ECCV 2024][人体理解][模态缺失] 本文提出MMA-FAS框架解决多模态人脸反欺骗中的模态缺失问题，通过模态解耦适配器从频率分解角度分离模态不变和模态特有特征，结合LBP引导的对比损失和自适应模态组合采样策略，在所有模态缺失场景下均达到SOTA。 领域现状：多模态人脸反欺骗（FAS）利用RGB、深度（Depth）…
 tags:
   - "ECCV 2024"
   - "人体理解"

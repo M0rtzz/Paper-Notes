@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ViewSRD: 3D Visual Grounding via Structured Multi-View Decomposition
 description: >-
-  [ICCV 2025][多模态VLM][3D视觉定位] 提出 ViewSRD 框架，将 3D 视觉定位建模为结构化多视角分解过程：通过 SRD 模块将复杂多锚点查询解耦为简单单锚点查询，并引入跨模态一致视角 token (CCVT) 解决视角变化导致的空间描述不一致问题。
+  [ICCV 2025][多模态VLM][3D视觉定位] 提出 ViewSRD 框架，将 3D 视觉定位建模为结构化多视角分解过程：通过 SRD 模块将复杂多锚点查询解耦为简单单锚点查询，并引入跨模态一致视角 token (CCVT) 解决视角变化导致的空间描述不一致问题。 领域现状 领域现状：3D 视觉定位 (3DVG) 旨…
 tags:
   - "ICCV 2025"
   - "多模态VLM"

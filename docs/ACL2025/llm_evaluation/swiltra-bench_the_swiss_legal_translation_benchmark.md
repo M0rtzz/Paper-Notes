@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SwiLTra-Bench: The Swiss Legal Translation Benchmark
 description: >-
-  [ACL 2025][LLM评测][法律翻译] 构建了 SwiLTra-Bench——一个包含超过 18 万对齐瑞士法律翻译对的大规模多语言基准（覆盖法律、判例摘要、新闻稿，涵盖德法意罗英五种语言），系统评估了前沿 LLM 和微调开源 SLM 在法律翻译上的表现…
+  [ACL 2025][LLM评测][法律翻译] 构建了 SwiLTra-Bench——一个包含超过 18 万对齐瑞士法律翻译对的大规模多语言基准（覆盖法律、判例摘要、新闻稿，涵盖德法意罗英五种语言），系统评估了前沿 LLM 和微调开源 SLM 在法律翻译上的表现，并提出 SwiLTra-Judge 自动评估方法。
 tags:
   - "ACL 2025"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment
 description: >-
-  [ECCV2024][自动驾驶][Visual-LiDAR Odometry] 提出基于聚类的 Local-to-Global 融合网络 DVLO，通过双向结构对齐（图像→伪点云 + 点云→伪图像）解决视觉与 LiDAR 的数据结构不一致问题…
+  [ECCV2024][自动驾驶][Visual-LiDAR Odometry] 提出基于聚类的 Local-to-Global 融合网络 DVLO，通过双向结构对齐（图像→伪点云 + 点云→伪图像）解决视觉与 LiDAR 的数据结构不一致问题，在 KITTI 里程计和 FlyingThings3D 场景流任务上均取得 SOTA。
 tags:
   - "ECCV2024"
   - "自动驾驶"

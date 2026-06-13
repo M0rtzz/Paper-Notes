@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments
 description: >-
-  [AAAI 2026][LLM安全][LLM Agent] 利用LLM驱动的具身智能体在模拟智能家居中"生活"，生成虚拟环境传感器数据用于预训练HAR模型，在低资源场景下显著提升活动识别性能。
+  [AAAI 2026][LLM安全][LLM Agent] 利用LLM驱动的具身智能体在模拟智能家居中"生活"，生成虚拟环境传感器数据用于预训练HAR模型，在低资源场景下显著提升活动识别性能。 领域现状 领域现状：智能家居中的人类活动识别（HAR）依赖环境传感器（运动、门、设备激活等）来监测日常活动，在医疗保健和老年护理等领…
 tags:
   - "AAAI 2026"
   - "LLM安全"

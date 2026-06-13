@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VoxEval: Benchmarking the Knowledge Understanding Capabilities of End-to-End Spoken Language Models
 description: >-
-  [ACL2025][LLM评测][spoken language model] 提出 VoxEval，首个支持端到端纯语音输入-输出评估的 SpeechQA 基准，涵盖 56 个学科、26 种输入音频条件，系统揭示了当前端到端语音大模型在知识理解和数学推理方面的严重不足。
+  [ACL2025][LLM评测][spoken language model] 提出 VoxEval，首个支持端到端纯语音输入-输出评估的 SpeechQA 基准，涵盖 56 个学科、26 种输入音频条件，系统揭示了当前端到端语音大模型在知识理解和数学推理方面的严重不足。 1. 语音交互需求增长：自然人机交互通常以口语形式发…
 tags:
   - "ACL2025"
   - "LLM评测"

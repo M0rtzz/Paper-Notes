@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tandem: Riding Together with Large and Small Language Models for Efficient Reasoning
 description: >-
-  [ACL2026][LLM效率][大小模型协作] Tandem 让大模型只生成 Goal / Planning / Retrieval / Action 四类短思维线索，再由小模型用困惑度和熵判断线索是否足够并完成答案…
+  [ACL2026 Findings][LLM效率][大小模型协作] Tandem 让大模型只生成 Goal / Planning / Retrieval / Action 四类短思维线索，再由小模型用困惑度和熵判断线索是否足够并完成答案，在 MATH、GSM8K 和 HumanEval 上用约 60% 的计算成本达到或超过单独大模型推理效果。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM效率"
   - "大小模型协作"
   - "结构化思维提示"

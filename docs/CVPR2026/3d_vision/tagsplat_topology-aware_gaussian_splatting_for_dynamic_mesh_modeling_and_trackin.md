@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TagSplat: Topology-Aware Gaussian Splatting for Dynamic Mesh Modeling and Tracking
 description: >-
-  [CVPR2026][3D视觉][Gaussian Splatting] 提出拓扑感知的高斯泼溅框架 TagSplat，通过显式编码高斯基元间的空间连接关系，在动态场景重建中生成拓扑一致的网格序列，并支持精确的3D关键点跟踪。
+  [CVPR2026][3D视觉][Gaussian Splatting] 提出拓扑感知的高斯泼溅框架 TagSplat，通过显式编码高斯基元间的空间连接关系，在动态场景重建中生成拓扑一致的网格序列，并支持精确的3D关键点跟踪。 动画产业的核心工作流基于网格（mesh）：渲染、蒙皮、编辑均需要拓扑一致的三角网格…
 tags:
   - "CVPR2026"
   - "3D视觉"

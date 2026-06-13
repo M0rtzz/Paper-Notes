@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Scaling Can Lead to Compositional Generalization
 description: >-
-  [NeurIPS 2025][图像生成][compositional generalization] 通过理论证明和大规模实验表明，标准MLP仅需扩大数据量和模型规模即可实现组合泛化，无需显式模块化架构设计，且组合泛化成功时任务成分可从隐层激活线性解码——该指标与扩散模型的图像组合成功率正相关。
+  [NeurIPS 2025 Spotlight][图像生成][compositional generalization] 通过理论证明和大规模实验表明，标准MLP仅需扩大数据量和模型规模即可实现组合泛化，无需显式模块化架构设计，且组合泛化成功时任务成分可从隐层激活线性解码——该指标与扩散模型的图像组合成功率正相关。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "compositional generalization"
   - "scaling"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait
 description: >-
-  [ICCV 2025][图像生成][流匹配] 提出 FLOAT，基于流匹配（Flow Matching）的音频驱动说话肖像生成方法，在正交运动潜空间中用 Transformer 架构预测向量场，实现高效（~10 步采样）、时序一致的高质量说话视频生成，并支持语音驱动的情绪增强和测试时头部姿态编辑。
+  [ICCV 2025][图像生成][流匹配] 提出 FLOAT，基于流匹配（Flow Matching）的音频驱动说话肖像生成方法，在正交运动潜空间中用 Transformer 架构预测向量场，实现高效（~10 步采样）、时序一致的高质量说话视频生成，并支持语音驱动的情绪增强和测试时头部姿态编辑。 音频驱动的说话肖像生成旨在…
 tags:
   - "ICCV 2025"
   - "图像生成"

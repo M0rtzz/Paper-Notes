@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Theoretical Study of (Hyper) Self-Attention through the Lens of Interactions: Representation, Training, Generalization
 description: >-
-  [ICML 2025][强化学习][注意力机制] 从"交互实体"统一视角出发，证明单层线性 self-attention 以 $\Theta(|\mathcal{S}|^2)$ 参数高效表示、学习并泛化成对交互函数（全连接网络需 $\Omega(L^2|\mathcal{S}|^2)$）…
+  [ICML 2025][强化学习][注意力机制] 从"交互实体"统一视角出发，证明单层线性 self-attention 以 $\Theta(|\mathcal{S}|^2)$ 参数高效表示、学习并泛化成对交互函数（全连接网络需 $\Omega(L^2|\mathcal{S}|^2)$），并在此理论基础上提出 HyperFeatureAttention（特征级交互耦合）和 HyperAttention（高阶多实体交互）两个新模块，在语言建模中降低了 perplexity。
 tags:
   - "ICML 2025"
   - "强化学习"

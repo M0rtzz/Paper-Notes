@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Should Video LLMs Output Time? An Analysis of Efficient Temporal Grounding Paradigms
 description: >-
-  [CVPR 2026][视频理解][视频时序定位] 本文在统一框架下对比了视频时序定位的三种主流时间输出范式（文本数字生成、时间token生成、连续时间解码），发现连续分布范式在效率-精度帕累托前沿上始终表现最优。
+  [CVPR 2026][视频理解][视频时序定位] 本文在统一框架下对比了视频时序定位的三种主流时间输出范式（文本数字生成、时间token生成、连续时间解码），发现连续分布范式在效率-精度帕累托前沿上始终表现最优。 领域现状：视频时序定位（VTG）是连接语言查询与视频时间片段的核心任务。多模态大语言模型（MLLM）已成为该任…
 tags:
   - "CVPR 2026"
   - "视频理解"

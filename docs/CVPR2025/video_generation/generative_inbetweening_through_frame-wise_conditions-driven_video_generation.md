@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Inbetweening through Frame-wise Conditions-Driven Video Generation
 description: >-
-  [CVPR 2025][视频生成][视频插帧] 提出 FCVG，通过从两个关键帧中提取匹配线段并逐帧线性插值作为帧级条件，注入 SVD 视频生成模型，显著消解了生成式中间帧合成中前向/反向路径的模糊性，实现时序稳定的视频插帧。
+  [CVPR 2025][视频生成][视频插帧] 提出 FCVG，通过从两个关键帧中提取匹配线段并逐帧线性插值作为帧级条件，注入 SVD 视频生成模型，显著消解了生成式中间帧合成中前向/反向路径的模糊性，实现时序稳定的视频插帧。 生成式中间帧合成（Generative Inbetweening）旨在给定起始帧和终止帧…
 tags:
   - "CVPR 2025"
   - "视频生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FactGuard: Event-Centric and Commonsense-Guided Fake News Detection
 description: >-
-  [AAAI2026][社会计算][fake news detection] 提出 FactGuard 框架，利用 LLM 提取事件核心内容（去风格化）并生成常识推理，通过 Rationale Usability Evaluator 动态评估 LLM 建议的可信度…
+  [AAAI2026][社会计算][fake news detection] 提出 FactGuard 框架，利用 LLM 提取事件核心内容（去风格化）并生成常识推理，通过 Rationale Usability Evaluator 动态评估 LLM 建议的可信度，并通过知识蒸馏获得无需 LLM 的轻量版 FactGuard-D，在假新闻检测中兼顾鲁棒性和效率。
 tags:
   - "AAAI2026"
   - "社会计算"

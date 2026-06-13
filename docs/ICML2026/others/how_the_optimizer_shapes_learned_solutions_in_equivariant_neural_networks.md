@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How the Optimizer Shapes Learned Solutions in Equivariant Neural Networks
 description: >-
-  [ICML2026 (Workshop on Weight-Space Symmetries)][Muon] 本文系统比较 Muon 与 Adam 在等变/几何网络（EGNN、DGCNN、PointNet、GotenNet、GINE）上的训练效果，发现 Muon 在 3D 点云任务上稳定优于 Adam…
+  [ICML2026 (Workshop on Weight-Space Symmetries)][Muon] 本文系统比较 Muon 与 Adam 在等变/几何网络（EGNN、DGCNN、PointNet、GotenNet、GINE）上的训练效果，发现 Muon 在 3D 点云任务上稳定优于 Adam，且收敛到的解在 Hessian 曲率、损失景观局部光滑度、权重/表征谱秩三个维度上都呈现显著不同的结构性差异——把"优化器选择"重新定位为等变网络训练里被严重忽视的一个 inductive bias。
 tags:
   - "ICML2026 (Workshop on Weight-Space Symmetries)"
   - "Muon"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models
 description: >-
-  [ICLR 2026][图像恢复][扩散世界模型] 提出 Horizon Imagination (HI)，让扩散世界模型并行去噪多帧未来观测，配合稳定动作采样与 Horizon 时间表，将 on-policy 想象计算量降至每帧不足一次完整去噪，同时保持控制性能。
+  [ICLR 2026][图像恢复][扩散世界模型] 提出 Horizon Imagination (HI)：让扩散世界模型在单次前向里**并行去噪**多帧未来观测，配合**稳定动作采样**抑制带噪帧上动作的无谓翻转、**Horizon 时间表**把去噪节奏与总预算解耦，从而在每帧不足一步去噪（sub-frame 预算）、算力减半下仍保持 on-policy 想象的控制性能。
 tags:
   - "ICLR 2026"
   - "图像恢复"

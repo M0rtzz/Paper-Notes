@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying and Alleviating Co-Adaptation in Sparse-View 3D Gaussian Splatting
 description: >-
-  [NeurIPS 2025][3D视觉][3D高斯溅射] 本文揭示了稀疏视角 3D Gaussian Splatting 中外观伪影的核心成因——高斯体之间的协同适应（co-adaptation）现象，提出了 Co-Adaptation Score（CA）度量指标来量化这一纠缠程度…
+  [NeurIPS 2025][3D视觉][3D高斯溅射] 本文揭示了稀疏视角 3D Gaussian Splatting 中外观伪影的核心成因——高斯体之间的协同适应（co-adaptation）现象，提出了 Co-Adaptation Score（CA）度量指标来量化这一纠缠程度，并设计了 Gaussian Dropout 和不透明度乘性噪声注入两种即插即用的正则化策略，在五种基线方法和三个数据集上均显著降低了 co-adaptation 并提升了新视角渲染质量。
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

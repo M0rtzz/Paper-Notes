@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dual-branch Robust Unlearnable Examples
 description: >-
-  [ICML 2026][LLM安全][Unlearnable Examples] 本文提出 DUNE：把不可学习样本（UE）的扰动从单一空间域扩展到"空间 + 色彩"双域优化，使扰动特征对齐到 shift-induced 标签并配合预训练模型集成增强…
+  [ICML 2026][LLM安全][Unlearnable Examples] 本文提出 DUNE：把不可学习样本（UE）的扰动从单一空间域扩展到"空间 + 色彩"双域优化，使扰动特征对齐到 shift-induced 标签并配合预训练模型集成增强，在 CIFAR-10 / ImageNet 上对 7 种主流防御（含 ECLIPSE、ISS-J、COIN）保持鲁棒，平均测试精度比 12 个 SOTA UE 方案再低 14.95%–50.82%。
 tags:
   - "ICML 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VideoAgent: A Memory-augmented Multimodal Agent for Video Understanding
 description: >-
-  [ECCV 2024][LLM Agent][视频理解Agent] 提出 VideoAgent，一个记忆增强的多模态 Agent，通过构建结构化记忆（temporal memory 存储事件描述 + object memory 存储物体跟踪状态）并利用 4 个工具与记忆交互，零样本完成长视频问答任务…
+  [ECCV 2024][LLM Agent][视频理解Agent] 提出 VideoAgent，一个记忆增强的多模态 Agent，通过构建结构化记忆（temporal memory 存储事件描述 + object memory 存储物体跟踪状态）并利用 4 个工具与记忆交互，零样本完成长视频问答任务，在 NExT-QA 上平均 +6.6%、EgoSchema 上 +26.0%，接近 Gemini 1.5 Pro 的性能。
 tags:
   - "ECCV 2024"
   - "LLM Agent"

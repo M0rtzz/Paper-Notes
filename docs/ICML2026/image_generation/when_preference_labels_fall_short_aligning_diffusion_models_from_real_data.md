@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Preference Labels Fall Short: Aligning Diffusion Models from Real Data
 description: >-
-  [ICML2026][图像生成][扩散模型] 这篇论文认为由生成图像组成的偏好标签容易把模型带向“相对更好但仍有缺陷”的样本，提出用真实图像及其可控退化版本自动构造偏好信号，在只用 512 对样本的情况下对齐 SD-1.5 和 SD-3.5-M…
+  [ICML2026][图像生成][扩散模型] 这篇论文认为由生成图像组成的偏好标签容易把模型带向“相对更好但仍有缺陷”的样本，提出用真实图像及其可控退化版本自动构造偏好信号，在只用 512 对样本的情况下对齐 SD-1.5 和 SD-3.5-M，并取得接近或补充 Diffusion-DPO / FlowGRPO 的效果。
 tags:
   - "ICML2026"
   - "图像生成"
@@ -17,7 +17,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.19839](https://arxiv.org/abs/2605.19839)  
 **代码**: https://cwyxx.github.io/RealAlign  
-**领域**: image_generation  
+**领域**: 图像生成  
 **关键词**: 扩散模型, 偏好对齐, 真实图像, Diffusion-DPO, 数据策展
 
 ## 一句话总结

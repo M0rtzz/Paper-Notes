@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extreme Rotation Estimation in the Wild
 description: >-
-  [CVPR 2025][3D视觉][极端旋转估计] 本文提出了一种面向真实互联网图像的极端三维旋转估计方法，构建了ExtremeLandmarkPairs (ELP)基准数据集，通过渐进式学习方案（全景裁剪→FoV+外观增强→真实数据微调）和辅助通道增强的Transformer模型…
+  [CVPR 2025][3D视觉][极端旋转估计] 本文提出了一种面向真实互联网图像的极端三维旋转估计方法，构建了ExtremeLandmarkPairs (ELP)基准数据集，通过渐进式学习方案（全景裁剪→FoV+外观增强→真实数据微调）和辅助通道增强的Transformer模型，在无重叠视角的互联网图像对上显著超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

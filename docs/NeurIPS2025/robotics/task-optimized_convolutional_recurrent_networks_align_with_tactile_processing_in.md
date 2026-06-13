@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Task-Optimized Convolutional Recurrent Networks Align with Tactile Processing in the Rodent Brain
 description: >-
-  [NeurIPS 2025][机器人][触觉感知] 提出Encoder-Attender-Decoder（EAD）框架系统探索触觉任务优化的时序神经网络，发现卷积循环网络（ConvRNN，特别是IntersectionRNN）在触觉物体分类和啮齿类体感皮层神经对齐上均优于前馈和状态空间模型…
+  [NeurIPS 2025 Oral][机器人][触觉感知] 提出Encoder-Attender-Decoder（EAD）框架系统探索触觉任务优化的时序神经网络，发现卷积循环网络（ConvRNN，特别是IntersectionRNN）在触觉物体分类和啮齿类体感皮层神经对齐上均优于前馈和状态空间模型，且基于触觉特定增强的对比自监督学习能达到与监督学习相当的神经拟合，为触觉的大脑计算机制提供了首个定量刻画。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "机器人"
   - "触觉感知"
   - "卷积循环网络"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Probabilistic Prompt Distribution Learning for Animal Pose Estimation
 description: >-
-  [CVPR 2025][人体理解][动物姿态估计] 提出 PPAP（Probabilistic Prompt for Animal Pose），一种基于概率提示分布学习的多物种动物姿态估计方法，通过为每个关键点构建多个可学习属性提示并建模为高斯分布，结合多样性损失和跨模态融合策略…
+  [CVPR 2025][人体理解][动物姿态估计] 提出 PPAP（Probabilistic Prompt for Animal Pose），一种基于概率提示分布学习的多物种动物姿态估计方法，通过为每个关键点构建多个可学习属性提示并建模为高斯分布，结合多样性损失和跨模态融合策略，在有监督和零样本设置下均达到 SOTA。
 tags:
   - "CVPR 2025"
   - "人体理解"

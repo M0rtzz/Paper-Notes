@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Misleading Queries to Accurate Answers: A Three-Stage Fine-Tuning Method for LLMs
 description: >-
-  [ACL 2025][LLM安全][misleading queries] 提出三阶段微调方法（误导检测->查询纠正->准确回答）增强 LLM 处理含误导信息输入的能力，在误导检测和 QA 任务上显著提升准确率，同时减少幻觉生成。
+  [ACL 2025][LLM安全][misleading queries] 提出三阶段微调方法（误导检测-查询纠正-准确回答）增强 LLM 处理含误导信息输入的能力，在误导检测和 QA 任务上显著提升准确率，同时减少幻觉生成。 领域现状 领域现状：LLM 对输入质量高度敏感，当查询包含不准确或误导性信息时容易产生幻觉…
 tags:
   - "ACL 2025"
   - "LLM安全"

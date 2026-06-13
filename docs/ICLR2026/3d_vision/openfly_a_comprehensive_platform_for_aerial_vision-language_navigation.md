@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenFly: A Comprehensive Platform for Aerial Vision-Language Navigation
 description: >-
-  [ICLR 2026][3D视觉][空中VLN] 构建OpenFly——航空视觉-语言导航(VLN)综合平台：集成4种渲染引擎(UE/GTA V/Google Earth/3DGS)+开发全自动数据生成工具链(点云获取→语义分割→轨迹生成→GPT-4o指令)+构建10万轨迹大规模数据集(18场景)+提出关键帧…
+  [ICLR 2026][3D视觉][空中VLN] 构建OpenFly——航空视觉-语言导航(VLN)综合平台：集成4种渲染引擎(UE/GTA V/Google Earth/3DGS)+开发全自动数据生成工具链(点云获取→语义分割→轨迹生成→GPT-4o指令)+构建10万轨迹大规模数据集(18场景)+提出关键帧感知VLN模型OpenFly-Agent(关键帧选择+视觉token融合)，在已见/未见场景分别以14.0%/7.9%的成功率优势超越现有方法。
 tags:
   - "ICLR 2026"
   - "3D视觉"

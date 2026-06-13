@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion
 description: >-
-  [AAAI2026][3D视觉][点云] 提出 DANCE 框架，通过基于射线的候选点采样和 opacity 预测机制实现密度无关的点云补全，并引入分类头提供语义先验，在 PCN 和 MVP 基准上取得 SOTA。
+  [AAAI2026][3D视觉][点云] 提出 DANCE 框架，通过基于射线的候选点采样和 opacity 预测机制实现密度无关的点云补全，并引入分类头提供语义先验，在 PCN 和 MVP 基准上取得 SOTA。 点云补全旨在从因遮挡或传感器视角限制导致的不完整 3D 扫描中恢复缺失的几何结构，是自动驾驶、机器人和 3D…
 tags:
   - "AAAI2026"
   - "3D视觉"

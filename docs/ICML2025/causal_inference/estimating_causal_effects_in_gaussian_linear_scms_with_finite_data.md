@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Estimating Causal Effects in Gaussian Linear SCMs with Finite Data
 description: >-
-  [ICML 2025][因果推理][结构因果模型] 提出 Centralized Gaussian Linear SCM (CGL-SCM)，通过将外生变量标准化为 $\mathcal{N}(0,1)$ 大幅减少参数量，并设计基于 EM 的估计算法，在有限观测数据下准确恢复可识别的因果效应。
+  [ICML 2025][因果推理][结构因果模型] 提出 Centralized Gaussian Linear SCM (CGL-SCM)，通过将外生变量标准化为 $\mathcal{N}(0,1)$ 大幅减少参数量，并设计基于 EM 的估计算法，在有限观测数据下准确恢复可识别的因果效应。 从观测数据中估计因果效应是因果推…
 tags:
   - "ICML 2025"
   - "因果推理"

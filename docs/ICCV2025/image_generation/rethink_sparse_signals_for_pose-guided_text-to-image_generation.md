@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethink Sparse Signals for Pose-guided Text-to-Image Generation
 description: >-
-  [ICCV 2025][图像生成][Sparse Pose] 提出 SP-Ctrl（Spatial-Pose ControlNet），通过可学习空间姿态表示（SPR）和关键点概念学习（KCL）两个核心策略…
+  [ICCV 2025][图像生成][Sparse Pose] 提出 SP-Ctrl（Spatial-Pose ControlNet），通过可学习空间姿态表示（SPR）和关键点概念学习（KCL）两个核心策略，使稀疏信号（OpenPose）在姿态引导文生图任务中达到与稠密信号（深度图、DensePose）相当的姿态对齐精度，同时保留稀疏信号在多样性生成和跨物种泛化上的天然优势。
 tags:
   - "ICCV 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] V2X-R: Cooperative LiDAR-4D Radar Fusion with Denoising Diffusion for 3D Object Detection
 description: >-
-  [CVPR 2025][自动驾驶][V2X协同感知] 本文构建了首个包含 LiDAR、相机和 4D 雷达三种模态的 V2X 仿真数据集 V2X-R，提出了协同 LiDAR-4D 雷达融合流水线及 Multi-modal Denoising Diffusion (MDD) 模块…
+  [CVPR 2025][自动驾驶][V2X协同感知] 本文构建了首个包含 LiDAR、相机和 4D 雷达三种模态的 V2X 仿真数据集 V2X-R，提出了协同 LiDAR-4D 雷达融合流水线及 Multi-modal Denoising Diffusion (MDD) 模块，利用天气鲁棒的 4D 雷达特征指导扩散模型去噪含噪 LiDAR 特征，在雾天/雪天条件下提升检测性能高达 5.73%/6.70% 且几乎不影响正常天气性能。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

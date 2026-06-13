@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Systematic Failures in Collective Reasoning under Distributed Information in Multi-Agent LLMs
 description: >-
-  [ICML 2026][多智能体][HiddenBench] 本文将社会心理学的 Hidden Profile 范式搬到多智能体 LLM 评测里，构建 65 任务的 HiddenBench，在 15 个前沿 LLM 上系统揭示：单 agent 在 Full Profile 下能 80.7% 答对的同类任务…
+  [ICML 2026][多智能体][HiddenBench] 本文将社会心理学的 Hidden Profile 范式搬到多智能体 LLM 评测里，构建 65 任务的 HiddenBench，在 15 个前沿 LLM 上系统揭示：单 agent 在 Full Profile 下能 80.7% 答对的同类任务，多 agent 在分布式信息下仅 30.1%，根本失败模式是**不会主动 elicit 别人没说出来的信息**，而轻量结构化沟通协议能跨家族大幅缓解。
 tags:
   - "ICML 2026"
   - "多智能体"

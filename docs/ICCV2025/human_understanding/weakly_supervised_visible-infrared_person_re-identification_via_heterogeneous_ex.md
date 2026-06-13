@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weakly Supervised Visible-Infrared Person Re-Identification via Heterogeneous Expert Collaborative Consistency Learning
 description: >-
-  [ICCV 2025][人体理解][可见光-红外行人重识别] 提出首个弱监督可见光-红外行人重识别（VIReID）范式，仅使用各模态内部的身份标注（无需跨模态对应标注），通过异构专家协同一致性学习框架建立跨模态身份对应关系，性能接近全监督方法。
+  [ICCV 2025][人体理解][可见光-红外行人重识别] 提出首个弱监督可见光-红外行人重识别（VIReID）范式，仅使用各模态内部的身份标注（无需跨模态对应标注），通过异构专家协同一致性学习框架建立跨模态身份对应关系，性能接近全监督方法。 可见光-红外行人重识别（VIReID）是智能安防中的核心任务…
 tags:
   - "ICCV 2025"
   - "人体理解"

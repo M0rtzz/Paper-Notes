@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Regularized Policy Optimization for Stable and Efficient Reinforcement Learning in Two-Player Games
 description: >-
-  [ICML 2026][强化学习][正则化策略优化] KLENT 把 reverse-KL 正则（控制策略更新幅度）+ 熵正则（维持探索）+ λ-return（平衡偏差方差）这三件成熟"老零件"重新组合到自博弈 model-free RL 里…
+  [ICML 2026][强化学习][正则化策略优化] KLENT 把 reverse-KL 正则（控制策略更新幅度）+ 熵正则（维持探索）+ λ-return（平衡偏差方差）这三件成熟"老零件"重新组合到自博弈 model-free RL 里，在 5 个棋类上达到比 Gumbel AlphaZero 高 4 倍训练效率，并给出 normal-form 与 finite-length 两种场景下的收敛性证明。
 tags:
   - "ICML 2026"
   - "强化学习"

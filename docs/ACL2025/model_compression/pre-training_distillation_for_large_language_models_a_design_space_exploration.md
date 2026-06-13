@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Pre-training Distillation for Large Language Models: A Design Space Exploration
 description: >-
-  [ACL 2025][模型压缩][pre-training distillation] 系统性地探索大语言模型预训练蒸馏（Pre-training Distillation）的设计空间，从 logits 处理、损失函数选择、scaling law 和 offline/online logits 四个维度进行广…
+  [ACL 2025][模型压缩][pre-training distillation] 系统性地探索大语言模型预训练蒸馏（Pre-training Distillation）的设计空间，从 logits 处理、损失函数选择、scaling law 和 offline/online logits 四个维度进行广泛实验，找到更优配置并得出有价值的结论。
 tags:
   - "ACL 2025"
   - "模型压缩"

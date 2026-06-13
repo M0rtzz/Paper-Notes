@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Computation and Communication Efficient Federated Unlearning via On-server Gradient Conflict Mitigation and Expression
 description: >-
-  [CVPR 2026][AI安全][Federated Unlearning] 提出 FOUL 框架，通过"学习阶段解耦因果/非因果特征 + 遗忘阶段服务器端梯度冲突匹配"两阶段策略，在不访问客户端数据的前提下实现高效且低通信开销的联邦遗忘。
+  [CVPR 2026][AI安全][Federated Unlearning] 提出 FOUL 框架，通过"学习阶段解耦因果/非因果特征 + 遗忘阶段服务器端梯度冲突匹配"两阶段策略，在不访问客户端数据的前提下实现高效且低通信开销的联邦遗忘。 隐私法规驱动：GDPR 等数据保护法要求用户有"被遗忘权"，联邦学习（FL）模型必…
 tags:
   - "CVPR 2026"
   - "AI安全"

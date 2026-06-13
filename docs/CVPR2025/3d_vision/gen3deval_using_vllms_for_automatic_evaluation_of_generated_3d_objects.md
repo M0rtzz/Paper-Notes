@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gen3DEval: Using vLLMs for Automatic Evaluation of Generated 3D Objects
 description: >-
-  [CVPR 2025][3D视觉][3D生成评估] 本文提出Gen3DEval，一个基于vLLM微调的text-to-3D生成质量评估框架，通过对Llama3模型在合成+人工标注数据上微调，实现对3D物体外观、表面质量和文本一致性的自动评估，在与人类偏好对齐上显著超越GPT-4o等通用模型。
+  [CVPR 2025][3D视觉][3D生成评估] 本文提出Gen3DEval，一个基于vLLM微调的text-to-3D生成质量评估框架，通过对Llama3模型在合成+人工标注数据上微调，实现对3D物体外观、表面质量和文本一致性的自动评估，在与人类偏好对齐上显著超越GPT-4o等通用模型。 1. 领域现状：Text-to-…
 tags:
   - "CVPR 2025"
   - "3D视觉"

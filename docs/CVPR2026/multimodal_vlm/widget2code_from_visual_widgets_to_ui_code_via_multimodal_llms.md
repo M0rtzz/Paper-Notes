@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Widget2Code: From Visual Widgets to UI Code via Multimodal LLMs
 description: >-
-  [CVPR 2026][多模态VLM][UI代码生成] 首次形式化 Widget-to-Code 任务，构建了首个纯图像 widget 数据集和多维评估体系，提出基于感知代理和 WidgetFactory 基础设施的模块化基线，通过组件分解、图标检索、可复用可视化模板和自适应渲染实现高保真 widget 重建…
+  [CVPR 2026][多模态VLM][UI代码生成] 首次形式化 Widget-to-Code 任务，构建了首个纯图像 widget 数据集和多维评估体系，提出基于感知代理和 WidgetFactory 基础设施的模块化基线，通过组件分解、图标检索、可复用可视化模板和自适应渲染实现高保真 widget 重建。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

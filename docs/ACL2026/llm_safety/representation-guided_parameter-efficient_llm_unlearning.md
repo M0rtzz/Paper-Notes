@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Representation-Guided Parameter-Efficient LLM Unlearning
 description: >-
-  [ACL 2026][LLM安全][LLM遗忘] 提出 ReGLU 框架，将 LLM 遗忘从"参数重要性"范式转向"表示空间几何"范式——通过表示引导的 LoRA 初始化（RILA）将遗忘更新对齐到遗忘/保留集最具区分性的子空间，配合表示正交损失（ROL）约束更新不干扰保留集知识。
+  [ACL 2026 Findings][LLM安全][LLM遗忘] 提出 ReGLU 框架，将 LLM 遗忘从"参数重要性"范式转向"表示空间几何"范式——通过表示引导的 LoRA 初始化（RILA）将遗忘更新对齐到遗忘/保留集最具区分性的子空间，配合表示正交损失（ROL）约束更新不干扰保留集知识。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "LLM遗忘"
   - "表示空间几何"

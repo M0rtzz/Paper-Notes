@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data
 description: >-
-  [ICLR 2026][时间序列][关系数据库] 提出 Relational Transformer (RT) 架构，通过 task table prompting、cell tokenization 和 Relational Attention 机制…
+  [ICLR 2026][时间序列][关系数据库] 提出 Relational Transformer (RT) 架构，通过 task table prompting、cell tokenization 和 Relational Attention 机制，在多个关系数据库上预训练后可零样本迁移到未见过的数据集和任务，22M 参数模型零样本 AUROC 达到全监督方法的 93%，远超 27B LLM 的 84%。
 tags:
   - "ICLR 2026"
   - "时间序列"

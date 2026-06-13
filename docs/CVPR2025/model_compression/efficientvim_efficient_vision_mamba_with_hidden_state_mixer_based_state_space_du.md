@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EfficientViM: Efficient Vision Mamba with Hidden State Mixer based State Space Duality
 description: >-
-  [CVPR 2025][模型压缩][Vision Mamba] 提出EfficientViM，通过将SSD层中的通道混合操作从token空间（$O(LD^2)$）迁移到压缩的隐藏状态空间（$O(ND^2)$，$N \ll L$），实现了比现有Vision Mamba模型快2-4倍的推理速度…
+  [CVPR 2025][模型压缩][Vision Mamba] 提出EfficientViM，通过将SSD层中的通道混合操作从token空间（$O(LD^2)$）迁移到压缩的隐藏状态空间（$O(ND^2)$，$N \ll L$），实现了比现有Vision Mamba模型快2-4倍的推理速度，同时保持竞争性精度（ImageNet-1K上M3模型77.9%/11952 img/s）。
 tags:
   - "CVPR 2025"
   - "模型压缩"

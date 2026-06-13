@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models
 description: >-
-  [ICML2025][多模态VLM][VLM safeguard] 提出 LlavaGuard——基于开源 VLM 的视觉内容安全审核框架，通过可定制安全分类体系、高质量人工标注数据集与策略增强训练，实现对图像内容的灵活、精准安全评估，在准确率和策略适应性上大幅超越现有开源与闭源审核工具。
+  [ICML2025][多模态VLM][VLM safeguard] 提出 LlavaGuard——基于开源 VLM 的视觉内容安全审核框架，通过可定制安全分类体系、高质量人工标注数据集与策略增强训练，实现对图像内容的灵活、精准安全评估，在准确率和策略适应性上大幅超越现有开源与闭源审核工具。 - 大规模生成式 AI（T2I、V…
 tags:
   - "ICML2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convergence of Two-Timescale Markovian Stochastic Approximations with Applications in Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][两时间尺度] 本文首次在 Markov 噪声且不依赖任何投影算子的条件下，建立了一般两时间尺度随机逼近 (SA) 的稳定性与几乎必然收敛性，并据此给出离策略线性函数逼近下 TDC($\lambda$) 算法的首个几乎必然收敛结果。
+  [ICML 2026][强化学习][两时间尺度] 本文首次在 Markov 噪声且不依赖任何投影算子的条件下，建立了一般两时间尺度随机逼近 (SA) 的稳定性与几乎必然收敛性，并据此给出离策略线性函数逼近下 TDC($\lambda$) 算法的首个几乎必然收敛结果。 领域现状：强化学习中 actor-critic、TDC、目…
 tags:
   - "ICML 2026"
   - "强化学习"

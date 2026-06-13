@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bootstrapping MLLM for Weakly-Supervised Class-Agnostic Object Counting (WS-COC)
 description: >-
-  [ICLR 2026][目标检测][object counting] 提出 WS-COC，首个基于 MLLM 的弱监督类无关目标计数框架，通过分而治之的对话微调（逐步缩小计数范围）、比较排序优化（学习图像间相对计数关系）和全局-局部计数增强三个策略，仅用图像级计数标注即可匹敌甚至超越全监督方法。
+  [ICLR 2026][目标检测][object counting] 提出 WS-COC，首个基于 MLLM 的弱监督类无关目标计数框架，通过分而治之的对话微调（逐步缩小计数范围）、比较排序优化（学习图像间相对计数关系）和全局-局部计数增强三个策略，仅用图像级计数标注即可匹敌甚至超越全监督方法。 领域现状：目标计数传统上依赖…
 tags:
   - "ICLR 2026"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Direct Preference Optimization in Diffusion Models
 description: >-
-  [AAAI 2026 (Oral)][图像生成][DPO] 提出两个正交且可插拔的改进策略来增强扩散模型的偏好优化：稳定参考模型更新（放松冻结+正则化锚点）和时间步感知训练（自适应权重平衡奖励尺度），两者可嵌入 DPO/IPO 等多种偏好优化算法并在人类偏好评估基准上取得 SOTA。
+  [AAAI 2026 (Oral)][图像生成][DPO] 提出两个正交且可插拔的改进策略来增强扩散模型的偏好优化：稳定参考模型更新（放松冻结+正则化锚点）和时间步感知训练（自适应权重平衡奖励尺度），两者可嵌入 DPO/IPO 等多种偏好优化算法并在人类偏好评估基准上取得 SOTA。 领域现状 领域现状：文到图（T2I）扩散…
 tags:
   - "AAAI 2026 (Oral)"
   - "图像生成"

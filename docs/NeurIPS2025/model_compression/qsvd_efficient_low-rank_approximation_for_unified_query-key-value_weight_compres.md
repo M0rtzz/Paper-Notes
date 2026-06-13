@@ -2,9 +2,9 @@
 title: >-
   [论文解读] QSVD: Efficient Low-Rank Approximation for Unified Query-Key-Value Weight Compression
 description: >-
-  [NeurIPS 2025][模型压缩][VLM压缩] 提出QSVD方法，通过对QKV联合权重矩阵的SVD分解共享下投影矩阵来减少KV缓存和计算开销，结合基于重要性评分的自适应秩分配和量化技术，在VLM上实现超过10%的精度提升且硬件成本更低。
+  [NeurIPS 2025 Spotlight][模型压缩][VLM压缩] 提出QSVD方法，通过对QKV联合权重矩阵的SVD分解共享下投影矩阵来减少KV缓存和计算开销，结合基于重要性评分的自适应秩分配和量化技术，在VLM上实现超过10%的精度提升且硬件成本更低。 视觉语言模型（VLM）在图像描述、视觉问答等任务中表现出色…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "VLM压缩"
   - "SVD"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spectral Defense Against Resource-Targeting Attack in 3D Gaussian Splatting
 description: >-
-  [CVPR2026][3D视觉][3D Gaussian Splatting] 提出首个针对 3DGS 资源耗尽攻击的频域防御框架，通过 3D 频率滤波器选择性剪枝异常高频高斯 + 2D 频谱正则化约束渲染图像的各向异性噪声…
+  [CVPR2026][3D视觉][3D Gaussian Splatting] 提出首个针对 3DGS 资源耗尽攻击的频域防御框架，通过 3D 频率滤波器选择性剪枝异常高频高斯 + 2D 频谱正则化约束渲染图像的各向异性噪声，在攻击下将高斯过生长抑制最高 5.92×、显存降低最高 3.66×、渲染加速最高 4.34×，同时保持重建质量。
 tags:
   - "CVPR2026"
   - "3D视觉"

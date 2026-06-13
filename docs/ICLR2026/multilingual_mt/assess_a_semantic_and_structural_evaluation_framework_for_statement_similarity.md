@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASSESS: A Semantic and Structural Evaluation Framework for Statement Similarity
 description: >-
-  [ICLR 2026][多语言/翻译][autoformalization] 提出 ASSESS 框架，其核心是 TransTED Similarity 指标——通过将形式化数学命题解析为算子树 (Operator Tree)，并在标准树编辑距离 (TED) 基础上融入 Lean 证明策略驱动的语义变换…
+  [ICLR 2026][多语言/翻译][autoformalization] 提出 ASSESS 框架，其核心是 TransTED Similarity 指标——通过将形式化数学命题解析为算子树 (Operator Tree)，并在标准树编辑距离 (TED) 基础上融入 Lean 证明策略驱动的语义变换，实现了在 EPLA 基准上 70.16% 准确率和 0.35 Kappa 分数的 SOTA 性能，同时仅需 CPU 资源即可复现。
 tags:
   - "ICLR 2026"
   - "多语言/翻译"

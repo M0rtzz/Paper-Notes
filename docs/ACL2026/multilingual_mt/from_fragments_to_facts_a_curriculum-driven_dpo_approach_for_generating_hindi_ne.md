@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Fragments to Facts: A Curriculum-Driven DPO Approach for Generating Hindi News Veracity Explanations
 description: >-
-  [ACL2026][多语言/翻译][Hindi fact-checking] 本文提出 DeFactoX，用课程学习组织 Hindi 新闻偏好数据，并在 DPO 中加入 Actuality 和 Finesse 两个事实性/稳定性信号…
+  [ACL2026 Findings][多语言/翻译][Hindi fact-checking] 本文提出 DeFactoX，用课程学习组织 Hindi 新闻偏好数据，并在 DPO 中加入 Actuality 和 Finesse 两个事实性/稳定性信号，使模型能同时预测新闻真伪并生成更接近人工事实核查解释的 Hindi rationale。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多语言/翻译"
   - "Hindi fact-checking"
   - "DPO"

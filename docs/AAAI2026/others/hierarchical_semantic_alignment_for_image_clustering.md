@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAE: Hierarchical Semantic Alignment for Image Clustering
 description: >-
-  [AAAI 2026][image clustering] 结合名词级（WordNet）和描述级（Flickr 图片描述）两种互补语义，通过最优传输对齐构建语义空间并自适应融合，实现 training-free 的图像聚类，在 ImageNet-1K 上准确率提升 4.2%。
+  [AAAI 2026][image clustering] 结合名词级（WordNet）和描述级（Flickr 图片描述）两种互补语义，通过最优传输对齐构建语义空间并自适应融合，实现 training-free 的图像聚类，在 ImageNet-1K 上准确率提升 4.2%。 领域现状：图像聚类从对比学习、自监督发展到利用外…
 tags:
   - "AAAI 2026"
   - "image clustering"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Domain Learning for Video Anomaly Detection with Limited Supervision
 description: >-
-  [ECCV2024][预训练][Video Anomaly Detection] 提出弱监督跨域学习（CDL）框架，通过不确定性驱动的伪标签机制将无标注外部视频整合到训练中，显著提升视频异常检测的跨域泛化能力。
+  [ECCV2024][预训练][Video Anomaly Detection] 提出弱监督跨域学习（CDL）框架，通过不确定性驱动的伪标签机制将无标注外部视频整合到训练中，显著提升视频异常检测的跨域泛化能力。 视频异常检测（VAD）旨在自动定位视频中的异常事件（如事故、爆炸等安全威胁），是视频监控的核心任务…
 tags:
   - "ECCV2024"
   - "预训练"

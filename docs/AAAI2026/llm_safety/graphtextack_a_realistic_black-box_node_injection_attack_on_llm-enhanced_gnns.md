@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GraphTextack: A Realistic Black-Box Node Injection Attack on LLM-Enhanced GNNs
 description: >-
-  [AAAI 2026][LLM安全][文本属性图] 提出 GraphTextack——首个针对 LLM 增强 GNN 的黑盒多模态节点注入投毒攻击，通过进化优化框架联合优化注入节点的图结构连接和语义特征，不依赖模型内部信息或代理模型，在5个数据集和2类LLM-GNN模型上显著优于12种基线方法。
+  [AAAI 2026][LLM安全][文本属性图] 提出 GraphTextack——首个针对 LLM 增强 GNN 的黑盒多模态节点注入投毒攻击，通过进化优化框架联合优化注入节点的图结构连接和语义特征，不依赖模型内部信息或代理模型，在5个数据集和2类LLM-GNN模型上显著优于12种基线方法。 - 领域现状：文本属性图（T…
 tags:
   - "AAAI 2026"
   - "LLM安全"

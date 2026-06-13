@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Splats in Splats: Robust and Effective 3D Steganography towards Gaussian Splatting
 description: >-
-  [AAAI 2026][3D视觉][3D隐写术] 提出 Splats in Splats，首个在不修改任何 vanilla 3DGS 属性的前提下将3D内容嵌入3DGS资产中的隐写术框架，通过重要性分级的球谐系数加密和自编码器辅助的不透明度映射，实现5.31%更高的场景保真度和3倍的渲染速度。
+  [AAAI 2026][3D视觉][3D隐写术] 提出 Splats in Splats，首个在不修改任何 vanilla 3DGS 属性的前提下将3D内容嵌入3DGS资产中的隐写术框架，通过重要性分级的球谐系数加密和自编码器辅助的不透明度映射，实现5.31%更高的场景保真度和3倍的渲染速度。 3D高斯溅射已成为主流的3D资…
 tags:
   - "AAAI 2026"
   - "3D视觉"

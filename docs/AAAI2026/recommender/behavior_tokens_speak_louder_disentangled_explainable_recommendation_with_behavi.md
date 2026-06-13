@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Behavior Tokens Speak Louder: Disentangled Explainable Recommendation with Behavior Vocabulary
 description: >-
-  [AAAI2026][推荐系统][Explainable Recommendation] 提出 BEAT 框架，通过向量量化自编码将用户/物品的行为表征离散化为可解释的 behavior tokens，结合多层级语义监督将协同过滤信号对齐到冻结 LLM 的语义空间，实现零样本可解释推荐。
+  [AAAI2026][推荐系统][Explainable Recommendation] 提出 BEAT 框架，通过向量量化自编码将用户/物品的行为表征离散化为可解释的 behavior tokens，结合多层级语义监督将协同过滤信号对齐到冻结 LLM 的语义空间，实现零样本可解释推荐。 现有痛点 现有痛点：领域现状：现有可…
 tags:
   - "AAAI2026"
   - "推荐系统"

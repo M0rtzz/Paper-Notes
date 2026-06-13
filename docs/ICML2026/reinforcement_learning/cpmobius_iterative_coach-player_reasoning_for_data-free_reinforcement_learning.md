@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CPMöbius: Iterative Coach–Player Reasoning for Data-Free Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][数据无关 RL] 把 self-play 从"对抗"换成"协作": Coach 出题、Player 解题、Coach 拿"Player 进步幅度 × Player 解题率"作为奖励…
+  [ICML 2026][强化学习][数据无关 RL] 把 self-play 从"对抗"换成"协作": Coach 出题、Player 解题、Coach 拿"Player 进步幅度 × Player 解题率"作为奖励, 在完全不用外部训练数据的条件下让 Qwen2.5-Math-7B-Instruct 在六个数学 benchmark 上总均分 +4.9、OOD +5.4, 超过 RENT/R-Zero 等已有 unsupervised 方法。
 tags:
   - "ICML 2026"
   - "强化学习"

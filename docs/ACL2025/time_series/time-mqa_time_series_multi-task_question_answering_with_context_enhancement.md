@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Time-MQA: Time Series Multi-Task Question Answering with Context Enhancement
 description: >-
-  [ACL 2025][时间序列][time series QA] 提出Time-MQA框架和TSQA数据集（~200k QA对），将时间序列的预测、填补、异常检测、分类和开放式推理问答统一到自然语言问答范式下，通过持续预训练LLM使其具备时间序列理解和推理能力。
+  [ACL 2025][时间序列][time series QA] 提出Time-MQA框架和TSQA数据集（~200k QA对），将时间序列的预测、填补、异常检测、分类和开放式推理问答统一到自然语言问答范式下，通过持续预训练LLM使其具备时间序列理解和推理能力。 领域现状： 时间序列分析在金融、医疗、能源等领域至关重要…
 tags:
   - "ACL 2025"
   - "时间序列"

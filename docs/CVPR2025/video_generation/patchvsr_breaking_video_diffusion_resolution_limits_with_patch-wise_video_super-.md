@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PatchVSR: Breaking Video Diffusion Resolution Limits with Patch-Wise Video Super-Resolution
 description: >-
-  [CVPR 2025][视频生成][视频超分辨率] PatchVSR 首次将预训练视频扩散模型（T2V）用于 patch 级别的视频超分辨率，通过双分支适配器（局部 patch 分支 + 全局上下文分支）和无训练的多 patch 联合调制方案…
+  [CVPR 2025][视频生成][视频超分辨率] PatchVSR 首次将预训练视频扩散模型（T2V）用于 patch 级别的视频超分辨率，通过双分支适配器（局部 patch 分支 + 全局上下文分支）和无训练的多 patch 联合调制方案，基于 512×512 分辨率的基础模型实现了高保真的 4K 视频超分辨率，同时大幅提升计算效率。
 tags:
   - "CVPR 2025"
   - "视频生成"

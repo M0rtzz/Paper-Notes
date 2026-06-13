@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ONEBench to Test Them All: Sample-Level Benchmarking Over Open-Ended Capabilities
 description: >-
-  [ACL 2025][LLM评测][基准评测] ONEBench提出了一种新的基准评测范式：将多个评测数据集的样本合并为统一数据池，通过Plackett-Luce排名聚合算法在样本级别进行模型比较，支持异构指标聚合、不完整数据处理和个性化能力探测。
+  [ACL 2025][LLM评测][基准评测] ONEBench提出了一种新的基准评测范式：将多个评测数据集的样本合并为统一数据池，通过Plackett-Luce排名聚合算法在样本级别进行模型比较，支持异构指标聚合、不完整数据处理和个性化能力探测。 深度学习已进入"后数据集时代"——基础模型的零样本能力不断扩展…
 tags:
   - "ACL 2025"
   - "LLM评测"

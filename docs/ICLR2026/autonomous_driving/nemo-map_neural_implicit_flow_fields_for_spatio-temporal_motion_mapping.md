@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NeMo-map: Neural Implicit Flow Fields for Spatio-Temporal Motion Mapping
 description: >-
-  [ICLR 2026][自动驾驶][动态地图] 提出 NeMo-map——基于神经隐式函数的连续时空动态地图，将空间-时间坐标直接映射为半包裹高斯混合模型（SWGMM）参数，消除传统方法的空间离散化和时间分段限制，在真实行人追踪数据上实现更低 NLL 和更平滑的速度分布。
+  [ICLR 2026][自动驾驶][动态地图] 提出 NeMo-map——基于神经隐式函数的连续时空动态地图，将空间-时间坐标直接映射为半包裹高斯混合模型（SWGMM）参数，消除传统方法的空间离散化和时间分段限制，在真实行人追踪数据上实现更低 NLL 和更平滑的速度分布。 领域现状：动态地图（MoD）通过编码环境中的统计运动…
 tags:
   - "ICLR 2026"
   - "自动驾驶"

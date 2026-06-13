@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OrthoGrad Improves Neural Calibration
 description: >-
-  [NeurIPS 2025][优化/理论][梯度正交化] 本文首次系统研究了OrthoGrad（⊥Grad）——一种逐层将梯度投影到与权重正交方向上的几何约束优化方法——在神经网络校准任务中的效果。实验表明在CIFAR-10低数据场景下…
+  [NeurIPS 2025][优化/理论][梯度正交化] 本文首次系统研究了OrthoGrad（⊥Grad）——一种逐层将梯度投影到与权重正交方向上的几何约束优化方法——在神经网络校准任务中的效果。实验表明在CIFAR-10低数据场景下，OrthoGrad在不降低准确率的情况下显著改善校准指标（熵、损失、置信度），并证明了简化版本在标准假设下的收敛性。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

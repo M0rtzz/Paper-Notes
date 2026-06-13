@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistency in Language Models: Current Landscape, Challenges, and Future Directions
 description: >-
-  [ICML 2025 (Workshop on Reliable and Responsible Foundation Models)][LLM评测][LLM一致性] 系统综述了 LLM 一致性研究的全景，提出包含逻辑一致性（否定/对称/传递）、语义一致性、事实/信息一致性和非逻辑一致性（道德/规范）的分类体系…
+  [ICML 2025 (Workshop on Reliable and Responsible Foundation Models)][LLM评测][LLM一致性] 系统综述了 LLM 一致性研究的全景，提出包含逻辑一致性（否定/对称/传递）、语义一致性、事实/信息一致性和非逻辑一致性（道德/规范）的分类体系，分析了 2019-2025 年间评测方法的不足，并呼吁建立标准化多语言基准和跨学科方法。
 tags:
   - "ICML 2025 (Workshop on Reliable and Responsible Foundation Models)"
   - "LLM评测"

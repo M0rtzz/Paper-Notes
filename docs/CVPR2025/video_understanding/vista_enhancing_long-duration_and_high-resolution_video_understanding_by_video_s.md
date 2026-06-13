@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VISTA: Enhancing Long-Duration and High-Resolution Video Understanding by Video SpatioTemporal Augmentation
 description: >-
-  [CVPR 2025][视频理解][长视频理解] 提出 VISTA 框架，通过时空组合现有视频-描述数据集合成长时和高分辨率视频指令数据（涵盖 7 种增强方法），构建 VISTA-400K 数据集，在长视频理解基准上平均提升 3.3%，并首创高分辨率视频理解基准 HRVideoBench 实现 6.5% 提升…
+  [CVPR 2025][视频理解][长视频理解] 提出 VISTA 框架，通过时空组合现有视频-描述数据集合成长时和高分辨率视频指令数据（涵盖 7 种增强方法），构建 VISTA-400K 数据集，在长视频理解基准上平均提升 3.3%，并首创高分辨率视频理解基准 HRVideoBench 实现 6.5% 提升。
 tags:
   - "CVPR 2025"
   - "视频理解"

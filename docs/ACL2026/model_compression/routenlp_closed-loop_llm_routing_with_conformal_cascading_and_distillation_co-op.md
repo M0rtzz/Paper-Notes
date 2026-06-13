@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RouteNLP: Closed-Loop LLM Routing with Conformal Cascading and Distillation Co-Optimization
 description: >-
-  [ACL2026][模型压缩][LLM路由] RouteNLP 是一个闭环 LLM 路由与级联框架，用任务感知路由器、 conformal 校准级联和失败簇定向蒸馏共同优化模型组合，在六任务企业基准上以 0.971 质量比达到 0.159 成本比…
+  [ACL2026][模型压缩][LLM路由] RouteNLP 是一个闭环 LLM 路由与级联框架，用任务感知路由器、 conformal 校准级联和失败簇定向蒸馏共同优化模型组合，在六任务企业基准上以 0.971 质量比达到 0.159 成本比，并在 8 周客服试点中节省 58% 推理成本、保持 91% 响应可接受率。
 tags:
   - "ACL2026"
   - "模型压缩"

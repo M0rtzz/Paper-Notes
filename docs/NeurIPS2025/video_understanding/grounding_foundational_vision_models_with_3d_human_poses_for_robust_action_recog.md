@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition
 description: >-
-  [NEURIPS2025][视频理解][动作识别] 提出一种融合 V-JEPA 2 视觉上下文特征与 CoMotion 3D 骨骼姿态数据的 cross-attention 多模态架构，在标准及高遮挡动作识别基准上优于单模态基线。
+  [NEURIPS2025][视频理解][动作识别] 提出一种融合 V-JEPA 2 视觉上下文特征与 CoMotion 3D 骨骼姿态数据的 cross-attention 多模态架构，在标准及高遮挡动作识别基准上优于单模态基线。 - 动作识别是具身 AI 的核心能力，但现有方法存在明显的模态局限性 - RGB 视频方法：（…
 tags:
   - "NEURIPS2025"
   - "视频理解"

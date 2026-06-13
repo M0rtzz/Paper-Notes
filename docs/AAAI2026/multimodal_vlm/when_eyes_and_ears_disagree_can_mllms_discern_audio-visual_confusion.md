@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?
 description: >-
-  [AAAI 2026][多模态VLM][多模态大语言模型] 发现多模态大语言模型（MLLMs）在音视觉信息不对称时严重受视觉主导而无法识别缺失音频的"音视觉混淆"现象，提出 AV-ConfuseBench 基准和 RL-CoMM 方法（引入外部音频模型做参考的阶梯式推理奖励 + 答案置信度优化）…
+  [AAAI 2026][多模态VLM][多模态大语言模型] 发现多模态大语言模型（MLLMs）在音视觉信息不对称时严重受视觉主导而无法识别缺失音频的"音视觉混淆"现象，提出 AV-ConfuseBench 基准和 RL-CoMM 方法（引入外部音频模型做参考的阶梯式推理奖励 + 答案置信度优化），在仅用约 20% 训练数据的情况下提升基线模型准确率 10~30%。
 tags:
   - "AAAI 2026"
   - "多模态VLM"

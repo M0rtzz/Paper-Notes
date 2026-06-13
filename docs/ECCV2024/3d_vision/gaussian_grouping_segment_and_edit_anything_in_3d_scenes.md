@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gaussian Grouping: Segment and Edit Anything in 3D Scenes
 description: >-
-  [ECCV2024][3D视觉][3D高斯Splatting] 为 3D Gaussian Splatting 中的每个高斯学习 16 维 Identity Encoding 实现实例级分组，使用 SAM + DEVA 视频跟踪生成多视图一致的 2D 伪标签做监督…
+  [ECCV2024][3D视觉][3D高斯Splatting] 为 3D Gaussian Splatting 中的每个高斯学习 16 维 Identity Encoding 实现实例级分组，使用 SAM + DEVA 视频跟踪生成多视图一致的 2D 伪标签做监督，在 LERF-Mask 开放词汇分割上 mIoU 达 69-77%（超 LERF 2 倍+），全景分割超 Panoptic Lifting 4.9% mIoU 且 14× 更快，同时支持 3D 物体移除/修复/着色/风格迁移等多种编辑。
 tags:
   - "ECCV2024"
   - "3D视觉"

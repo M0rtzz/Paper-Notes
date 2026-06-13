@@ -2,9 +2,9 @@
 title: >-
   [论文解读] No-Worse Context-Aware Decoding: Preventing Neutral Regression in Context-Conditioned Generation
 description: >-
-  [ACL 2026][模型压缩][上下文感知解码] 提出 NWCAD，一种解码时适配器，通过两阶段门控机制在上下文无信息时精确回退到无上下文解码（防止中性退化），在上下文有帮助时利用上下文进行修正，兼顾"无害"与"有效"两个目标。
+  [ACL 2026 Findings][模型压缩][上下文感知解码] 提出 NWCAD，一种解码时适配器，通过两阶段门控机制在上下文无信息时精确回退到无上下文解码（防止中性退化），在上下文有帮助时利用上下文进行修正，兼顾"无害"与"有效"两个目标。 领域现状：大语言模型在检索增强生成（RAG）等场景中，需要根据外部上下文（如…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "模型压缩"
   - "上下文感知解码"
   - "中性退化"

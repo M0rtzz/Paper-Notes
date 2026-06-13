@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAME-Grad: The Double Dilemma in Multi-Task Radiology Report Generation — A Gradient Dynamics Analysis and Solution
 description: >-
-  [ICML 2026][医学图像][放射学报告生成] 本文用 SDE 框架分析放射学报告生成（RRG）多任务学习里"报告生成 vs 临床约束"梯度冲突的两面性——drift term 偏离 Pareto 最优 + diffusion term 衰减无法逃局部最优…
+  [ICML 2026][医学图像][放射学报告生成] 本文用 SDE 框架分析放射学报告生成（RRG）多任务学习里"报告生成 vs 临床约束"梯度冲突的两面性——drift term 偏离 Pareto 最优 + diffusion term 衰减无法逃局部最优；提出 CAME-Grad 优化器（方向纠偏 + 能量注入 + 自适应融合）作为线性缩放的即插即用替代，在 MIMIC-CXR / IU X-Ray 上 8 个 RRG 方法平均临床效能 +2.3% / +1.9%。
 tags:
   - "ICML 2026"
   - "医学图像"

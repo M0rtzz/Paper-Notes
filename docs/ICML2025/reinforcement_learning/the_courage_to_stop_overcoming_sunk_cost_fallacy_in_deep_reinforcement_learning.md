@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEAST: The Courage to Stop — Overcoming Sunk Cost Fallacy in Deep RL
 description: >-
-  [ICML 2025][强化学习][沉没成本谬误] 提出 Learn to Stop（LEAST），一种轻量级自适应 episode 提前终止机制：维护最近 K 个 episode 的 Q 值和梯度幅值缓冲区，用步级中位数构造质量阈值 $\epsilon_i$ 和学习潜力权重 $\omega_i$…
+  [ICML 2025][强化学习][沉没成本谬误] 提出 Learn to Stop（LEAST），一种轻量级自适应 episode 提前终止机制：维护最近 K 个 episode 的 Q 值和梯度幅值缓冲区，用步级中位数构造质量阈值 $\epsilon_i$ 和学习潜力权重 $\omega_i$，当当前 Q 值低于 $\omega_i \times \epsilon_i$ 时终止并重置；在 MuJoCo 四任务上为 TD3/SAC/REDQ 均带来显著提升（归一化分数从 0.65 提升到 0.70+），DMC 视觉 RL 的 Finger Turn Hard 任务收敛速度加快约 30%。
 tags:
   - "ICML 2025"
   - "强化学习"

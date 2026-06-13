@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data Efficient Adaptation in Large Language Models via Continuous Low-Rank Fine-Tuning
 description: >-
-  [NeurIPS 2025][模型压缩][持续学习] 提出 DEAL 框架，通过小波核特征过滤保留 LoRA 低秩矩阵中的历史知识核心特征，结合受控知识更新模块和非对称正则化，实现 LLM 在小样本持续微调中学新不忘旧。
+  [NeurIPS 2025][模型压缩][持续学习] 提出 DEAL 框架，通过小波核特征过滤保留 LoRA 低秩矩阵中的历史知识核心特征，结合受控知识更新模块和非对称正则化，实现 LLM 在小样本持续微调中学新不忘旧。 LoRA 微调的 LLM 需要通过持续学习来集成新知识。然而传统持续学习方法面临两个核心挑战： 灾难性遗…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

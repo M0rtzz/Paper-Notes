@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast SceneScript: Fast and Accurate Language-Based 3D Scene Understanding via Multi-Token Prediction
 description: >-
-  [CVPR 2026][3D视觉][3D场景理解] 本文提出 Fast SceneScript，通过将多 token 预测（MTP）引入结构化语言模型实现 3D 场景理解的推理加速，配合自投机解码（SSD）和置信度引导解码（CGD）过滤不可靠 token，以及参数高效的头共享机制…
+  [CVPR 2026][3D视觉][3D场景理解] 本文提出 Fast SceneScript，通过将多 token 预测（MTP）引入结构化语言模型实现 3D 场景理解的推理加速，配合自投机解码（SSD）和置信度引导解码（CGD）过滤不可靠 token，以及参数高效的头共享机制，在布局估计和目标检测上分别实现 5.09× 和 5.14× 加速且不损失精度。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domain-Skewed Federated Learning with Feature Decoupling and Calibration
 description: >-
-  [CVPR 2026][AI安全][联邦学习] 提出 F²DC 框架，通过域特征解耦器（DFD）和域特征校正器（DFC）将联邦学习中客户端的局部特征分离为域鲁棒特征和域相关特征，并对域相关特征进行校准以挽救被丢弃的类别信息，配合域感知聚合策略，在三个多域数据集上一致超越 SOTA。
+  [CVPR 2026][AI安全][联邦学习] 提出 F²DC 框架，通过域特征解耦器（DFD）和域特征校正器（DFC）将联邦学习中客户端的局部特征分离为域鲁棒特征和域相关特征，并对域相关特征进行校准以挽救被丢弃的类别信息，配合域感知聚合策略，在三个多域数据集上一致超越 SOTA。 联邦学习中的域偏移问题：与标签偏移（lab…
 tags:
   - "CVPR 2026"
   - "AI安全"

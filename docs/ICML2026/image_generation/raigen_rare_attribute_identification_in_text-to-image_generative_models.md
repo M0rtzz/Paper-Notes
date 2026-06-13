@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RAIGen: Rare Attribute Identification in Text-to-Image Generative Models
 description: >-
-  [ICML 2026][图像生成][扩散模型] RAIGen 用 Matryoshka 稀疏自编码器把 T2I 扩散模型 bottleneck 表征分解成可解释 neuron，再用"激活稀有度 × CLIP 语义偏离度"组合分数从中挑出"模型内部已编码但生成时几乎不出现"的少数属性 neuron…
+  [ICML 2026][图像生成][扩散模型] RAIGen 用 Matryoshka 稀疏自编码器把 T2I 扩散模型 bottleneck 表征分解成可解释 neuron，再用"激活稀有度 × CLIP 语义偏离度"组合分数从中挑出"模型内部已编码但生成时几乎不出现"的少数属性 neuron，从而把偏见审计从"已知公平类目"和"显著多数模式"扩展到 label-free 的稀有属性发现。
 tags:
   - "ICML 2026"
   - "图像生成"

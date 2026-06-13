@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference
 description: >-
-  [ICCV 2025][多模态VLM][VLM] 提出SparseVILA——首个解耦prefill和decode阶段视觉稀疏性的VLM推理加速框架：prefill阶段进行query-agnostic的冗余token剪枝，decode阶段进行query-aware的相关token检索…
+  [ICCV 2025][多模态VLM][VLM] 提出SparseVILA——首个解耦prefill和decode阶段视觉稀疏性的VLM推理加速框架：prefill阶段进行query-agnostic的冗余token剪枝，decode阶段进行query-aware的相关token检索，实现最高4.0×prefill加速、2.5×decode吞吐提升、2.6×端到端加速，同时在多轮对话场景中保持精度（现有方法因永久删除token而在多轮中急剧退化）。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

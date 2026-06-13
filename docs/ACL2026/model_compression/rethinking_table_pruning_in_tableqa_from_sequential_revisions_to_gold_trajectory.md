@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Rethinking Table Pruning in TableQA: From Sequential Revisions to Gold Trajectory-Supervised Parallel Search
 description: >-
-  [ACL2026][模型压缩][TableQA] 这篇论文提出 TabTrim，把表格剪枝从容易累积错误的单路径顺序修订改成“SQL 轨迹监督的剪枝器 + loss-aware verifier + 并行轨迹搜索”，在 WikiTQ、TabFact 和 TableBench 上把平均准确率提升到 73.5%…
+  [ACL2026 Oral][模型压缩][TableQA] 这篇论文提出 TabTrim，把表格剪枝从容易累积错误的单路径顺序修订改成“SQL 轨迹监督的剪枝器 + loss-aware verifier + 并行轨迹搜索”，在 WikiTQ、TabFact 和 TableBench 上把平均准确率提升到 73.5%，比最强基线高 3.2 个点。
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "模型压缩"
   - "TableQA"
   - "剪枝"

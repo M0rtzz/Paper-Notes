@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Identity Skews Debate: Anonymization for Bias-Reduced Multi-Agent Reasoning
 description: >-
-  [ACL2026][多智能体][多智能体辩论] 这篇论文指出多智能体辩论中的 LLM 会因为“谁说的”而不是“说了什么”改变立场，并通过响应匿名化与 Identity Bias Coefficient 量化和削弱这种身份驱动偏差。
+  [ACL2026][多智能体][多智能体辩论] 这篇论文指出多智能体辩论中的 LLM 会因为“谁说的”而不是“说了什么”改变立场，并通过响应匿名化与 Identity Bias Coefficient 量化和削弱这种身份驱动偏差。 领域现状：多智能体辩论（Multi-Agent Debate, MAD）的基本假设是…
 tags:
   - "ACL2026"
   - "多智能体"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2510.07517](https://arxiv.org/abs/2510.07517)  
 **代码**: https://github.com/deeplearning-wisc/MAD-identity-bias  
-**领域**: llm_evaluation  
+**领域**: LLM评测  
 **关键词**: 多智能体辩论、身份偏差、匿名化、从众性、自我偏见
 
 ## 一句话总结

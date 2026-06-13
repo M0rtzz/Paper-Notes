@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Wizard of Shopping: Target-Oriented E-commerce Dialogue Generation with Decision Tree Branching
 description: >-
-  [ACL 2025][对话系统][对话式商品搜索] 本文提出 TRACER 方法，利用决策树模型规划对话路径，引导两个 LLM Agent（顾客和卖家）生成自然且有目标导向的电商购物对话，并发布了包含 3600 条对话的 Wizard of Shopping (WoS) 数据集…
+  [ACL 2025][对话系统][对话式商品搜索] 本文提出 TRACER 方法，利用决策树模型规划对话路径，引导两个 LLM Agent（顾客和卖家）生成自然且有目标导向的电商购物对话，并发布了包含 3600 条对话的 Wizard of Shopping (WoS) 数据集，在对话查询生成和商品排序两个下游任务上验证了数据集的有效性。
 tags:
   - "ACL 2025"
   - "对话系统"

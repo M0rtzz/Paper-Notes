@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RL-SPH: Learning to Achieve Feasible Solutions for Integer Linear Programs
 description: >-
-  [ICML 2026][强化学习][整数线性规划] 本文提出 RL-SPH —— 一种不依赖外部 ILP 求解器、能独立产出 100% 可行解的端到端强化学习启发式算法，用「可行性奖励 + 双阶段策略 + 可行性感知邻域搜索」让 Graph Transformer Agent 在包含非二元整数变量的 ILP…
+  [ICML 2026][强化学习][整数线性规划] 本文提出 RL-SPH —— 一种不依赖外部 ILP 求解器、能独立产出 100% 可行解的端到端强化学习启发式算法，用「可行性奖励 + 双阶段策略 + 可行性感知邻域搜索」让 Graph Transformer Agent 在包含非二元整数变量的 ILP 上把 primal gap 平均降低 28.6 倍。
 tags:
   - "ICML 2026"
   - "强化学习"

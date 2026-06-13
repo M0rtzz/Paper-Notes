@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DuoLoRA: Cycle-Consistent and Rank-Disentangled Content-Style Personalization
 description: >-
-  [ICCV 2025][模型压缩][LoRA合并] DuoLoRA 提出在 LoRA 的秩维度上学习掩码（ZipRank），结合 SDXL 层先验信息和循环一致性损失（Constyle loss），实现了高效的内容-风格 LoRA 合并，在多个基准上超过 ZipLoRA 等 SOTA 方法…
+  [ICCV 2025][模型压缩][LoRA合并] DuoLoRA 提出在 LoRA 的秩维度上学习掩码（ZipRank），结合 SDXL 层先验信息和循环一致性损失（Constyle loss），实现了高效的内容-风格 LoRA 合并，在多个基准上超过 ZipLoRA 等 SOTA 方法，且可训练参数减少 19 倍。
 tags:
   - "ICCV 2025"
   - "模型压缩"

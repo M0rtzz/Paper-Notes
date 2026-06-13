@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Energy-Structured Low-Rank Adaptation for Continual Learning
 description: >-
-  [ICML 2026][模型压缩][continual learning] E2-LoRA 不在参数空间或输入特征空间做正交约束，而是把视角换到"任务引起的输出特征漂移" $\Delta \mathbf{Y}_t = \Delta \mathbf{W}_t \mathbf{X}_t$…
+  [ICML 2026][模型压缩][continual learning] E2-LoRA 不在参数空间或输入特征空间做正交约束，而是把视角换到"任务引起的输出特征漂移" $\Delta \mathbf{Y}_t = \Delta \mathbf{W}_t \mathbf{X}_t$，对它做 SVD 后把 LoRA 参数重排到能量集中且按秩有序的基上，从而能丢掉低能量秩、把容量回收给新任务，并配合按能量保留率自适应分配秩的策略，在多个持续学习基准上拿到 SOTA。
 tags:
   - "ICML 2026"
   - "模型压缩"

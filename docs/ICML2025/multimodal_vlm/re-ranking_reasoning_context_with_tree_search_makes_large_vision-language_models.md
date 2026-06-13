@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Re-ranking Reasoning Context with Tree Search Makes Large Vision-Language Models Stronger
 description: >-
-  [ICML 2025][多模态VLM][多模态RAG] 提出 RCTS 框架，通过自一致性评估机制构建推理上下文丰富的知识库，并用带启发式奖励的蒙特卡罗树搜索（MCTS-HR）重排检索示例，使 LVLM 在多个 VQA 数据集上显著超越 ICL 和 Vanilla-RAG 方法（平均 +3-4%）。
+  [ICML 2025 Spotlight][多模态VLM][多模态RAG] 提出 RCTS 框架，通过自一致性评估机制构建推理上下文丰富的知识库，并用带启发式奖励的蒙特卡罗树搜索（MCTS-HR）重排检索示例，使 LVLM 在多个 VQA 数据集上显著超越 ICL 和 Vanilla-RAG 方法（平均 +3-4%）。
 tags:
-  - "ICML 2025"
+  - "ICML 2025 Spotlight"
   - "多模态VLM"
   - "多模态RAG"
   - "VQA"

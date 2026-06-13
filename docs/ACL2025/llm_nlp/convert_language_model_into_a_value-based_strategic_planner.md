@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Convert Language Model into a Value-based Strategic Planner
 description: >-
-  [ACL 2025][LLM/NLP][emotional support conversation] 提出 straQ* 框架，将 LLM 的 next-token prediction 转化为 next-strategy prediction，用 Bellman 方程训练 LLM 作为策略级 Q 网络…
+  [ACL 2025][LLM 其他][emotional support conversation] 提出 straQ* 框架，将 LLM 的 next-token prediction 转化为 next-strategy prediction，用 Bellman 方程训练 LLM 作为策略级 Q 网络，在情感支持对话（ESC）中根据长期回报规划最优支持策略，以即插即用的轻量规划器引导对话 LLM 生成高质量回复。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "emotional support conversation"
   - "Q-learning"
   - "strategic planning"

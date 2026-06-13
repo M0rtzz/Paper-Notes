@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Soft Equivariance Regularization for Invariant Self-Supervised Learning
 description: >-
-  [ICLR 2026][自监督学习][等变性] 提出 SER（Soft Equivariance Regularization），通过在 ViT 中间层施加软等变正则化、在最终层保持不变性目标的层解耦设计，在不引入额外模块的情况下，为不变性 SSL 方法（MoCo-v3, DINO…
+  [ICLR 2026][自监督学习][等变性] 提出 SER（Soft Equivariance Regularization），通过在 ViT 中间层施加软等变正则化、在最终层保持不变性目标的层解耦设计，在不引入额外模块的情况下，为不变性 SSL 方法（MoCo-v3, DINO, Barlow Twins）带来一致的分类精度和鲁棒性提升。
 tags:
   - "ICLR 2026"
   - "自监督学习"

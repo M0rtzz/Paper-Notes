@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MultiDx: A Multi-Source Knowledge Integration Framework towards Diagnostic Reasoning
 description: >-
-  [ACL 2026][医疗NLP][多源知识整合] MultiDx 将网页检索、SOAP 结构化病例、相似病例库和细粒度推理片段检索合成一个两阶段诊断推理框架，先从多路证据生成候选疾病，再通过疾病匹配、投票和鉴别诊断重排…
+  [ACL 2026 Findings][医疗NLP][多源知识整合] MultiDx 将网页检索、SOAP 结构化病例、相似病例库和细粒度推理片段检索合成一个两阶段诊断推理框架，先从多路证据生成候选疾病，再通过疾病匹配、投票和鉴别诊断重排，最终在 MedCaseReasoning 与 DiReCT 上同时提升诊断命中率和推理召回。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "医疗NLP"
   - "多源知识整合"
   - "鉴别诊断"

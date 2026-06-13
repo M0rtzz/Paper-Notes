@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Non-Clashing Teaching in Graphs: Algorithms, Complexity, and Bounds
 description: >-
-  [ICLR 2026][非冲突教学] 研究图中闭邻域概念类的非冲突教学问题，提供精确匹配的算法上下界（N-NCTD⁺ 的 $2^{\mathcal{O}(|E|)}$ 紧界）、对 treedepth/vertex cover 参数化的 FPT 算法（含首个负面标签 FPT 结果）…
+  [ICLR 2026][非冲突教学] 研究图中闭邻域概念类的非冲突教学问题，提供精确匹配的算法上下界（N-NCTD⁺ 的 $2^{\mathcal{O}(|E|)}$ 紧界）、对 treedepth/vertex cover 参数化的 FPT 算法（含首个负面标签 FPT 结果），以及平面图和单位正方形图的组合上界，全面推进了非冲突教学的计算与组合理解。
 tags:
   - "ICLR 2026"
   - "非冲突教学"

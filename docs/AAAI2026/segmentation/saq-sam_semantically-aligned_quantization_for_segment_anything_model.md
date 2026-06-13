@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model
 description: >-
-  [AAAI 2026][语义分割][SAM] 提出 SAQ-SAM，从语义对齐视角改进 SAM 的后训练量化（PTQ），通过感知一致性裁剪（PCC）处理掩码解码器中的极端异常值，并用提示感知重建（PAR）保持图像-提示交互的语义对齐。
+  [AAAI 2026][语义分割][SAM] 提出 SAQ-SAM，从语义对齐视角改进 SAM 的后训练量化（PTQ），通过感知一致性裁剪（PCC）处理掩码解码器中的极端异常值，并用提示感知重建（PAR）保持图像-提示交互的语义对齐。 SAM 模型具有强大的零样本分割能力，但其参数量大、计算开销高，难以在边缘设备上部署…
 tags:
   - "AAAI 2026"
   - "语义分割"

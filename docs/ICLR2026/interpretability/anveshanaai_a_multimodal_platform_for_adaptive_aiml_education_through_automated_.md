@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment
 description: >-
-  [ICLR 2026][可解释性][AI education] 提出 AnveshanaAI，一个基于 Bloom 认知分类学的自适应 AI/ML 教育平台，通过自动化题目生成（基于微调的 GPT-2）、语义相似度检测去重、XAI 可解释性技术和游戏化机制（积分/徽章/排行榜）…
+  [ICLR 2026][可解释性][AI education] 提出 AnveshanaAI，一个基于 Bloom 认知分类学的自适应 AI/ML 教育平台，通过自动化题目生成（基于微调的 GPT-2）、语义相似度检测去重、XAI 可解释性技术和游戏化机制（积分/徽章/排行榜），实现了覆盖数据科学到多模态 AI 七大领域的个性化学习评估系统，实验表明微调后困惑度显著下降且学习者参与度明显提升。
 tags:
   - "ICLR 2026"
   - "可解释性"
@@ -131,10 +131,10 @@ GPT-2 微调用的是标准语言模型训练目标（causal LM loss），在 Bl
 - **启发**：对于垂直领域的 AI 教育工具，教育学理论约束可能比单纯扩大 LLM 规模更重要
 
 ## 评分
-- 新颖性: ⭐⭐⭐
-- 实验充分度: ⭐⭐⭐
-- 写作质量: ⭐⭐⭐
-- 价值: ⭐⭐⭐
+- 新颖性: ⭐⭐⭐⭐
+- 实验充分度: ⭐⭐⭐⭐
+- 写作质量: ⭐⭐⭐⭐
+- 价值: ⭐⭐⭐⭐
 
 <!-- RELATED:START -->
 

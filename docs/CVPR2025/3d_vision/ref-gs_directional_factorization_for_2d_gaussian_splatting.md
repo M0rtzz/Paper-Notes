@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ref-GS: Directional Factorization for 2D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][2D高斯泼溅] 提出 Ref-GS，在 2D 高斯泼溅 (2DGS) 中引入延迟渲染和方向分解，通过 Sph-Mip 球形特征网格建模远场光照和表面粗糙度变化，再经紧凑的张量分解实现空间变化的视角相关效果…
+  [CVPR 2025][3D视觉][2D高斯泼溅] 提出 Ref-GS，在 2D 高斯泼溅 (2DGS) 中引入延迟渲染和方向分解，通过 Sph-Mip 球形特征网格建模远场光照和表面粗糙度变化，再经紧凑的张量分解实现空间变化的视角相关效果，在反射场景渲染和几何恢复上达到 SOTA 且保持 45+ FPS 实时性能。
 tags:
   - "CVPR 2025"
   - "3D视觉"

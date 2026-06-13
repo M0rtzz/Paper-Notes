@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Marker Scoring Accuracy through Ordinal Confidence Modelling in Educational Assessments
 description: >-
-  [ACL 2025 (Industry Track)][自动作文评分] 本文提出了一种基于核加权序数分类交叉熵（KWOCCE）的置信度建模方法，通过利用 CEFR 等级的序数结构和分数分箱策略，实现最高 47% 评分在 100% CEFR 一致性下释放，99% 在 ≥95% 一致性下释放…
+  [ACL 2025 (Industry Track)][自动作文评分] 本文提出了一种基于核加权序数分类交叉熵（KWOCCE）的置信度建模方法，通过利用 CEFR 等级的序数结构和分数分箱策略，实现最高 47% 评分在 100% CEFR 一致性下释放，99% 在 ≥95% 一致性下释放，显著优于无置信度过滤时的约 92%。
 tags:
   - "ACL 2025 (Industry Track)"
   - "自动作文评分"

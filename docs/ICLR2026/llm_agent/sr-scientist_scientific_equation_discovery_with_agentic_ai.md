@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SR-Scientist: Scientific Equation Discovery With Agentic AI
 description: >-
-  [ICLR 2026][LLM Agent][symbolic regression] 提出 SR-Scientist 框架，将 LLM 从简单的方程提议者提升为自主 AI 科学家，通过代码解释器工具进行数据分析和方程评估，在长时程交互中自主发现科学方程，并结合强化学习进一步提升能力。
+  [ICLR 2026][LLM Agent][symbolic regression] 提出 SR-Scientist 框架，将 LLM 从简单的方程提议者提升为自主 AI 科学家，通过代码解释器工具进行数据分析和方程评估，在长时程交互中自主发现科学方程，并结合强化学习进一步提升能力。 符号回归（Symbolic Regre…
 tags:
   - "ICLR 2026"
   - "LLM Agent"

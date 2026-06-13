@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Bias Binds: Measuring Hidden Associations for Bias Control in Text-to-Image Compositions
 description: >-
-  [AAAI 2026][图像生成][文本到图像生成] 首次研究文本到图像生成中的**组合语义绑定偏见**问题，提出Bias Adherence Score (BA-Score)量化物体-属性绑定如何激活偏见，并设计免训练的Context-Bias Control (CBC)框架…
+  [AAAI 2026][图像生成][文本到图像生成] 首次研究文本到图像生成中的**组合语义绑定偏见**问题，提出Bias Adherence Score (BA-Score)量化物体-属性绑定如何激活偏见，并设计免训练的Context-Bias Control (CBC)框架，通过token嵌入解耦和残差注入实现组合生成中超过10%的去偏改善。
 tags:
   - "AAAI 2026"
   - "图像生成"

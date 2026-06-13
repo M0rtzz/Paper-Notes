@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Continual Learning with Progressive Neural Collapse
 description: >-
-  [模型压缩] 提出 ProNC 框架，通过渐进式扩展等角紧框架（ETF）目标替代固定预定义 ETF，在持续学习中实现最大类间分离与最小遗忘的平衡。
+  [模型压缩] 提出 ProNC 框架，通过渐进式扩展等角紧框架（ETF）目标替代固定预定义 ETF，在持续学习中实现最大类间分离与最小遗忘的平衡。 问题背景 持续学习（CL）旨在让模型在不断学习新任务的同时不遗忘旧知识，核心挑战是灾难性遗忘（Catastrophic Forgetting）。近年来，研究发现深度网络训练末期会…
 tags:
   - "模型压缩"
 ---

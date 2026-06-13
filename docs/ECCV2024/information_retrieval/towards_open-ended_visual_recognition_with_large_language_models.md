@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Open-Ended Visual Recognition with Large Language Model
 description: >-
-  [ECCV 2024][信息检索/RAG][开放式视觉识别] 提出 OmniScient Model (OSM)——一个基于冻结 CLIP-ViT + 可训练 MaskQ-Former + 冻结 LLM (Vicuna-7B) 的生成式 mask 分类器…
+  [ECCV 2024][信息检索/RAG][开放式视觉识别] 提出 OmniScient Model (OSM)——一个基于冻结 CLIP-ViT + 可训练 MaskQ-Former + 冻结 LLM (Vicuna-7B) 的生成式 mask 分类器，将视觉识别从"从预定义词表中选择类别"转变为"直接生成类别名称"，消除了训练和测试时对预定义词表的依赖，在 COCO 全景分割上超越 DaTaSeg +4.3 PQ。
 tags:
   - "ECCV 2024"
   - "信息检索/RAG"

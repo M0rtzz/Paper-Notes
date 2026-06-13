@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tree-of-Evidence: Efficient "System 2" Search for Faithful Multimodal Grounding
 description: >-
-  [ACL 2026][多模态VLM][多模态可解释性] 本文提出 Tree-of-Evidence（ToE），一种推理时离散束搜索算法，将多模态模型的可解释性形式化为在粗粒度证据单元（生命体征时间窗口、放射报告片段）上的离散优化问题，仅用 5 个证据单元即可保留全输入模型 98% 以上的 AUROC…
+  [ACL 2026 Findings][多模态VLM][多模态可解释性] 本文提出 Tree-of-Evidence（ToE），一种推理时离散束搜索算法，将多模态模型的可解释性形式化为在粗粒度证据单元（生命体征时间窗口、放射报告片段）上的离散优化问题，仅用 5 个证据单元即可保留全输入模型 98% 以上的 AUROC，同时生成可审计的证据追踪路径。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "多模态可解释性"
   - "证据搜索"

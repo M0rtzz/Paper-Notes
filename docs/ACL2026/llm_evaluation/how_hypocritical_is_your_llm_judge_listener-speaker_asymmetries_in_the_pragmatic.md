@@ -2,9 +2,9 @@
 title: >-
   [论文解读] How Hypocritical Is Your LLM Judge? Listener–Speaker Asymmetries in the Pragmatic Competence of Large Language Models
 description: >-
-  [ACL 2026][LLM评测][语用能力] 本文通过三个语用任务（虚假预设、反预设、演绎推理）系统对比 14 个 LLM 作为"语用听者"（判断语用适当性）和"语用说者"（生成语用适当的语言）的表现，发现普遍存在的听者-说者不对称：多数模型作为判断者远优于生成者…
+  [ACL 2026 Findings][LLM评测][语用能力] 本文通过三个语用任务（虚假预设、反预设、演绎推理）系统对比 14 个 LLM 作为"语用听者"（判断语用适当性）和"语用说者"（生成语用适当的语言）的表现，发现普遍存在的听者-说者不对称：多数模型作为判断者远优于生成者，且项目级分析表明正确判断不能可靠预测成功生成。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "语用能力"
   - "听者-说者不对称"

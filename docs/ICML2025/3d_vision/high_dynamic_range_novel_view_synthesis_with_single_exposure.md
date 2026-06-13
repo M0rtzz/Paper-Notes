@@ -2,7 +2,7 @@
 title: >-
   [论文解读] High Dynamic Range Novel View Synthesis with Single Exposure
 description: >-
-  [ICML 2025][3D视觉][HDR新视角合成] 首次提出仅使用单曝光LDR图像进行HDR新视角合成（HDR-NVS）的问题设定，并设计了一个基于相机成像原理的元算法框架Mono-HDR-3D…
+  [ICML 2025][3D视觉][HDR新视角合成] 首次提出仅使用单曝光LDR图像进行HDR新视角合成（HDR-NVS）的问题设定，并设计了一个基于相机成像原理的元算法框架Mono-HDR-3D，通过LDR→HDR颜色转换器（L2H-CC）和HDR→LDR闭环转换器（H2L-CC）实现无HDR监督下的HDR场景建模。
 tags:
   - "ICML 2025"
   - "3D视觉"

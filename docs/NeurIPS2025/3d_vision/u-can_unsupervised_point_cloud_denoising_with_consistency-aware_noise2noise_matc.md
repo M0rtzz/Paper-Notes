@@ -2,7 +2,7 @@
 title: >-
   [论文解读] U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching
 description: >-
-  [NeurIPS 2025][3D视觉][点云去噪] 提出 U-CAN 无监督点云去噪框架，通过 Noise2Noise 匹配方案和几何一致性约束实现多步去噪路径推断，性能逼近有监督方法，且一致性约束可泛化到 2D 图像去噪。
+  [NeurIPS 2025][3D视觉][点云去噪] 提出 U-CAN 无监督点云去噪框架，通过 Noise2Noise 匹配方案和几何一致性约束实现多步去噪路径推断，性能逼近有监督方法，且一致性约束可泛化到 2D 图像去噪。 扫描传感器采集的点云不可避免地包含噪声，严重影响曲面重建和形状理解等下游任务…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

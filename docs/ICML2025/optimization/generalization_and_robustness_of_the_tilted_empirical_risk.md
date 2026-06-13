@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization and Robustness of the Tilted Empirical Risk
 description: >-
-  [ICML2025][优化/理论][tilted empirical risk] 本文为负倾斜参数(γ<0)下的 Tilted Empirical Risk (TER) 提供了系统性的泛化误差上下界和鲁棒性保证，在损失函数无界但具有有界 (1+ε) 阶矩条件下…
+  [ICML2025][优化/理论][tilted empirical risk] 本文为负倾斜参数(γ<0)下的 Tilted Empirical Risk (TER) 提供了系统性的泛化误差上下界和鲁棒性保证，在损失函数无界但具有有界 (1+ε) 阶矩条件下，通过均匀方法和信息论方法建立了 $O(n^{-\epsilon/(1+\epsilon)})$ 的收敛速率，并给出了数据驱动的倾斜参数选择方案。
 tags:
   - "ICML2025"
   - "优化/理论"

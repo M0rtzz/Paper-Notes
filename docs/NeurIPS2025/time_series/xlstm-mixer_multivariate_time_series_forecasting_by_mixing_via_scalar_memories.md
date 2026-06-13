@@ -2,9 +2,10 @@
 title: >-
   [论文解读] xLSTM-Mixer: Multivariate Time Series Forecasting by Mixing via Scalar Memories
 description: >-
-  [NeurIPS2025][时间序列预测] 提出 xLSTM-Mixer，首次将扩展长短期记忆网络（sLSTM）与混合架构（Mixer）结合，通过时间混合、联合时间-变量混合和多视角混合三阶段架构实现多变量长期时间序列预测的 SOTA 性能，同时保持极低的内存占用。
+  [NeurIPS2025][时间序列][时间序列预测] 提出 xLSTM-Mixer，首次将扩展长短期记忆网络（sLSTM）与混合架构（Mixer）结合，通过时间混合、联合时间-变量混合和多视角混合三阶段架构实现多变量长期时间序列预测的 SOTA 性能，同时保持极低的内存占用。 时间序列预测在医疗、制造、交通、金融和天气建模…
 tags:
   - "NeurIPS2025"
+  - "时间序列"
   - "时间序列预测"
   - "xLSTM"
   - "混合架构"

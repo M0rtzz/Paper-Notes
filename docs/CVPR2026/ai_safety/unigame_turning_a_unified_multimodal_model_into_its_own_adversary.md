@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniGame: Turning a Unified Multimodal Model Into Its Own Adversary
 description: >-
-  [CVPR 2026][AI安全][统一多模态模型] UniGame 提出首个针对统一多模态模型（UMM）的自对抗后训练框架，通过在共享视觉 token 接口安装轻量扰动器，让生成分支主动创造语义一致的对抗样本来挑战理解分支，形成极小极大自博弈…
+  [CVPR 2026][AI安全][统一多模态模型] UniGame 提出首个针对统一多模态模型（UMM）的自对抗后训练框架，通过在共享视觉 token 接口安装轻量扰动器，让生成分支主动创造语义一致的对抗样本来挑战理解分支，形成极小极大自博弈，显著提升一致性 (+4.6%)、理解 (+3.6%)、生成和鲁棒性。
 tags:
   - "CVPR 2026"
   - "AI安全"

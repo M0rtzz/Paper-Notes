@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AQuaMaM: An Autoregressive, Quaternion Manifold Model for Rapidly Estimating Complex SO(3) Distributions
 description: >-
-  [NeurIPS 2025][多模态VLM][SO(3)分布] 提出AQuaMaM——一种基于Transformer的自回归四元数流形模型，将单位四元数的三个投影分量建模为受几何约束的均匀分布混合，在SO(3)旋转流形上实现精确似然计算和快速采样，比IPDF推理速度快52倍、对数似然高14%…
+  [NeurIPS 2025][多模态VLM][SO(3)分布] 提出AQuaMaM——一种基于Transformer的自回归四元数流形模型，将单位四元数的三个投影分量建模为受几何约束的均匀分布混合，在SO(3)旋转流形上实现精确似然计算和快速采样，比IPDF推理速度快52倍、对数似然高14%，且采样分布与真实分布匹配极为精确。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

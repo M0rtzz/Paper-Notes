@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding
 description: >-
-  [ICLR2026][二次规划] 提出 FlexQP——基于 $\ell_1$ 弹性松弛的"永远可行"凸二次规划（QP）求解器，结合深度展开（deep unfolding）学习 LSTM 反馈策略加速收敛得到 Deep FlexQP；在 SQP 框架中作为子模块，解非线性轨迹优化比 OSQP 快 4-16 倍…
+  [ICLR2026][LLM评测][二次规划] 提出 FlexQP——基于 $\ell_1$ 弹性松弛的"永远可行"凸二次规划（QP）求解器，结合深度展开（deep unfolding）学习 LSTM 反馈策略加速收敛得到 Deep FlexQP；在 SQP 框架中作为子模块，解非线性轨迹优化比 OSQP 快 4-16 倍，预测安全滤波器的安全违规减少 70%+、任务完成率提升 43%。
 tags:
   - "ICLR2026"
+  - "LLM评测"
   - "二次规划"
   - "深度展开"
   - "ADMM"

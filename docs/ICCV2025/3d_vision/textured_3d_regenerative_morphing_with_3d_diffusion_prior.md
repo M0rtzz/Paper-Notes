@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Textured 3D Regenerative Morphing with 3D Diffusion Prior
 description: >-
-  [ICCV 2025][3D视觉][3D Morphing] 提出基于3D扩散先验的再生式3D morphing方法，通过在初始噪声、模型参数和条件特征三个层级进行插值，结合Attention Fusion、Token Reordering和Low-Frequency Enhancement三种策略…
+  [ICCV 2025][3D视觉][3D Morphing] 提出基于3D扩散先验的再生式3D morphing方法，通过在初始噪声、模型参数和条件特征三个层级进行插值，结合Attention Fusion、Token Reordering和Low-Frequency Enhancement三种策略，首次实现了跨类别纹理3D物体的平滑、合理变形序列生成。
 tags:
   - "ICCV 2025"
   - "3D视觉"

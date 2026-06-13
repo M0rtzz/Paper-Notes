@@ -2,10 +2,10 @@
 title: >-
   [论文解读] SynapticRAG: Enhancing Temporal Memory Retrieval in Large Language Models through Synaptic Mechanisms
 description: >-
-  [ACL2025][LLM/NLP][记忆检索] 提出 SynapticRAG，借鉴神经科学中突触传播和漏积分发放（LIF）模型，将时序关联触发与语义相似度融合，在对话记忆检索任务上较 SOTA 提升最高 14.66%。
+  [ACL2025][LLM 其他][记忆检索] 提出 SynapticRAG，借鉴神经科学中突触传播和漏积分发放（LIF）模型，将时序关联触发与语义相似度融合，在对话记忆检索任务上较 SOTA 提升最高 14.66%。 LLM 长期记忆不足：大语言模型在多轮对话场景中难以维持连贯的长期记忆，尤其在对话上下文跨越多个会话时…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "记忆检索"
   - "时序关联"
   - "突触机制"

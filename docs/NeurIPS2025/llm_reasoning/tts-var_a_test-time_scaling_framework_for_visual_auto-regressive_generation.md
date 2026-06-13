@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TTS-VAR: A Test-Time Scaling Framework for Visual Auto-Regressive Generation
 description: >-
-  [NeurIPS 2025][LLM推理][test-time scaling] 提出 TTS-VAR——首个针对 Visual Auto-Regressive (VAR) 模型的测试时扩展框架，将图像生成建模为路径搜索问题，通过自适应递减批量 + 早期聚类多样性搜索 + 后期重采样潜力选择…
+  [NeurIPS 2025][LLM推理][test-time scaling] 提出 TTS-VAR——首个针对 Visual Auto-Regressive (VAR) 模型的测试时扩展框架，将图像生成建模为路径搜索问题，通过自适应递减批量 + 早期聚类多样性搜索 + 后期重采样潜力选择，在 Infinity 2B 上将 GenEval 分数从 0.69 提升到 0.75（+8.7%），N=2 即超越 Best-of-N 的 N=8 效果。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

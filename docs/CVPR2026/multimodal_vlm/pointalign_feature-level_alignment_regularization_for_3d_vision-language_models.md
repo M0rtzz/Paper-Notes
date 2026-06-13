@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PointAlign: Feature-Level Alignment Regularization for 3D Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][3D点云理解] 提出 PointAlign，在 3D VLM 的 LLM 中间层对点云 token 施加特征级对齐正则化（与 Q-Former 输出对齐），仅训练轻量对齐投影器和 LoRA 适配器，即可有效防止几何信息在语言建模过程中退化…
+  [CVPR 2026][多模态VLM][3D点云理解] 提出 PointAlign，在 3D VLM 的 LLM 中间层对点云 token 施加特征级对齐正则化（与 Q-Former 输出对齐），仅训练轻量对齐投影器和 LoRA 适配器，即可有效防止几何信息在语言建模过程中退化，在开放词汇分类上提升 7.50pp。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

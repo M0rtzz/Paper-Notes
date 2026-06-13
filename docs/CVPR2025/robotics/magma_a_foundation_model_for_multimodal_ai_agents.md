@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Magma: A Foundation Model for Multimodal AI Agents
 description: >-
-  [CVPR 2025][机器人][多模态代理] Magma 通过在图像上标注可交互区域（Set-of-Mark）和在视频中标注运动轨迹（Trace-of-Mark），将 UI 截图、机器人数据和人类操作视频统一到同一个预训练框架中，使单一模型同时具备多模态理解和跨域动作预测能力…
+  [CVPR 2025][机器人][多模态代理] Magma 通过在图像上标注可交互区域（Set-of-Mark）和在视频中标注运动轨迹（Trace-of-Mark），将 UI 截图、机器人数据和人类操作视频统一到同一个预训练框架中，使单一模型同时具备多模态理解和跨域动作预测能力，在 UI 导航和机器人操控上均取得 SOTA。
 tags:
   - "CVPR 2025"
   - "机器人"

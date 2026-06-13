@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bullet Trains: Parallelizing Training of Temporally Precise Spiking Neural Networks
 description: >-
-  [ICML 2026][脉冲神经网络] 提出基于并行关联扫描（parallel associative scan）的脉冲神经网络并行训练方法，在保持精确硬重置动力学的同时实现最高 44 倍加速，并用可微分数值根求解器实现机器精度的脉冲时间计算。
+  [ICML 2026][脉冲神经网络] 提出基于并行关联扫描（parallel associative scan）的脉冲神经网络并行训练方法，在保持精确硬重置动力学的同时实现最高 44 倍加速，并用可微分数值根求解器实现机器精度的脉冲时间计算。 领域现状：脉冲神经网络（SNN）以事件驱动方式处理信息，仅在脉冲出现时进行计算…
 tags:
   - "ICML 2026"
   - "脉冲神经网络"

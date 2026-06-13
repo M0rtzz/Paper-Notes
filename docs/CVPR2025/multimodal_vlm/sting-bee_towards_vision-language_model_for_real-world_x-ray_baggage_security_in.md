@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STING-BEE: Towards Vision-Language Model for Real-World X-ray Baggage Security Inspection
 description: >-
-  [CVPR 2025][多模态VLM][X射线安检] 构建了首个多模态X射线行李安全数据集**STCray**（46,642张图像-描述对，21类威胁含IED和3D打印枪），设计**STING协议**系统生成领域感知的高质量描述，并训练领域特化VLM **STING-BEE**…
+  [CVPR 2025][多模态VLM][X射线安检] 构建了首个多模态X射线行李安全数据集**STCray**（46,642张图像-描述对，21类威胁含IED和3D打印枪），设计**STING协议**系统生成领域感知的高质量描述，并训练领域特化VLM **STING-BEE**，在场景理解、威胁定位、视觉定地和VQA四项任务上建立新基线，并展现SOTA跨域泛化能力。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Tool Decathlon: Benchmarking Language Agents for Diverse, Realistic, and Long-Horizon Task Execution
 description: >-
-  [ICLR 2026][LLM Agent][language agent] 提出 Toolathlon，一个覆盖 32 个软件应用、604 个工具和 108 个任务的语言 Agent 基准，强调真实多样的环境状态和长程多步交互（平均约 20 轮工具调用）…
+  [ICLR 2026][LLM Agent][language agent] 提出 Toolathlon，一个覆盖 32 个软件应用、604 个工具和 108 个任务的语言 Agent 基准，强调真实多样的环境状态和长程多步交互（平均约 20 轮工具调用），最强模型 Claude-4.5-Sonnet 仅达 38.6% 成功率。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I Am Big, You Are Little; I Am Right, You Are Wrong
 description: >-
-  [ICCV 2025][Minimal Pixel Sets] 利用因果推理 XAI 工具 rex 提取图像分类模型的最小充分像素集（MPS），系统比较 5 种架构 15 个模型的"注意力集中度"，发现大型模型（EVA/ConvNext）仅用图像 5% 像素即可做出分类…
+  [ICCV 2025][Minimal Pixel Sets] 利用因果推理 XAI 工具 rex 提取图像分类模型的最小充分像素集（MPS），系统比较 5 种架构 15 个模型的"注意力集中度"，发现大型模型（EVA/ConvNext）仅用图像 5% 像素即可做出分类，且不同架构的 MPS 在大小和位置上存在统计显著差异。
 tags:
   - "ICCV 2025"
   - "Minimal Pixel Sets"

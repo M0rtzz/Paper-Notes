@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sharp Monocular View Synthesis in Less Than a Second
 description: >-
-  [ICLR 2026][3D视觉][view synthesis] SHARP 通过单次前馈神经网络从单张照片生成约 120 万个 3D Gaussian，在 A100 GPU 上不到 1 秒完成推理，渲染速度超 100 FPS，在 6 个数据集上零样本泛化均达 SOTA…
+  [ICLR 2026][3D视觉][view synthesis] SHARP 通过单次前馈神经网络从单张照片生成约 120 万个 3D Gaussian，在 A100 GPU 上不到 1 秒完成推理，渲染速度超 100 FPS，在 6 个数据集上零样本泛化均达 SOTA，相比最强先前方法 LPIPS 降低 25–34%、合成时间缩短三个数量级。
 tags:
   - "ICLR 2026"
   - "3D视觉"

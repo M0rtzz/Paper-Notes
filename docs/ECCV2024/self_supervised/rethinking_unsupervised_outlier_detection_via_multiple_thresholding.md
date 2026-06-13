@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Unsupervised Outlier Detection via Multiple Thresholding
 description: >-
-  [ECCV 2024][自监督学习][无监督异常检测] 提出 Multi-T（多阈值）模块，通过生成两个阈值分别隔离目标数据集中的 inlier 和 outlier，利用识别出的 inlier 训练干净的正常流形、利用 outlier 进行特征去噪，从而大幅提升已有离群值评分方法的性能。
+  [ECCV 2024][自监督学习][无监督异常检测] 提出 Multi-T（多阈值）模块，通过生成两个阈值分别隔离目标数据集中的 inlier 和 outlier，利用识别出的 inlier 训练干净的正常流形、利用 outlier 进行特征去噪，从而大幅提升已有离群值评分方法的性能。 无监督异常检测的核心问题 无监督异常…
 tags:
   - "ECCV 2024"
   - "自监督学习"

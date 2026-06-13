@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Stabilizing Efficient Reasoning with Step-Level Advantage Selection
 description: >-
-  [ACL2026][LLM推理][推理压缩] 这篇论文发现短上下文 GRPO 本身就会强烈压缩推理长度，但会因截断样本的错误信用分配导致训练不稳；作者提出 Step-level Advantage Selection，在推理步骤粒度选择性置零 advantage…
+  [ACL2026 Findings][LLM推理][推理压缩] 这篇论文发现短上下文 GRPO 本身就会强烈压缩推理长度，但会因截断样本的错误信用分配导致训练不稳；作者提出 Step-level Advantage Selection，在推理步骤粒度选择性置零 advantage，在保持甚至提升 Pass@1 的同时显著减少推理 token。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM推理"
   - "推理压缩"
   - "GRPO"

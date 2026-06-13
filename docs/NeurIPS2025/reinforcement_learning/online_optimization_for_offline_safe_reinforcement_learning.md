@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Optimization for Offline Safe Reinforcement Learning
 description: >-
-  [NeurIPS 2025][强化学习][离线安全强化学习] 提出 O3SRL 框架，将离线安全强化学习问题形式化为极小极大优化，通过结合离线 RL oracle 和基于 EXP3 多臂老虎机的在线优化来自适应调整拉格朗日乘子，避免了不稳定的离策略评估，在严格安全约束下实现高奖励。
+  [NeurIPS 2025][强化学习][离线安全强化学习] 提出 O3SRL 框架，将离线安全强化学习问题形式化为极小极大优化，通过结合离线 RL oracle 和基于 EXP3 多臂老虎机的在线优化来自适应调整拉格朗日乘子，避免了不稳定的离策略评估，在严格安全约束下实现高奖励。 离线强化学习（Offline RL）从固定…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

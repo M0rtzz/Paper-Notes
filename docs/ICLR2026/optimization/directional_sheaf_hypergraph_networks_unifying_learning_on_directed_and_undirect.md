@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs
 description: >-
-  [ICLR 2026][sheaf neural networks] 本文提出 Directional Sheaf Hypergraph Networks (DSHN)，通过将 Cellular Sheaf 理论与有向超图的方向信息结合，构造了一种复值 Hermitian Laplacian 算子…
+  [ICLR 2026][优化/理论][sheaf neural networks] 本文提出 Directional Sheaf Hypergraph Networks (DSHN)，通过将 Cellular Sheaf 理论与有向超图的方向信息结合，构造了一种复值 Hermitian Laplacian 算子，统一并推广了现有的图和超图 Laplacian，在 7 个真实数据集上相对准确率提升 2%–20%。
 tags:
   - "ICLR 2026"
+  - "优化/理论"
   - "sheaf neural networks"
   - "directed hypergraphs"
   - "Laplacian"

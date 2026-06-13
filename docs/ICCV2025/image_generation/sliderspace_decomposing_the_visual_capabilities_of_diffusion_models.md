@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SliderSpace: Decomposing the Visual Capabilities of Diffusion Models
 description: >-
-  [ICCV 2025][图像生成][扩散模型可控生成] SliderSpace 通过对扩散模型在给定提示下生成图像的 CLIP 特征做 PCA 分解，自动发现多个语义正交的可控方向，每个方向训练为 LoRA 适配器（slider），实现了无需人工指定属性的概念分解、艺术风格探索和多样性增强。
+  [ICCV 2025][图像生成][扩散模型可控生成] SliderSpace 通过对扩散模型在给定提示下生成图像的 CLIP 特征做 PCA 分解，自动发现多个语义正交的可控方向，每个方向训练为 LoRA 适配器（slider），实现了无需人工指定属性的概念分解、艺术风格探索和多样性增强。 领域现状：文本到图像扩散模型能从…
 tags:
   - "ICCV 2025"
   - "图像生成"

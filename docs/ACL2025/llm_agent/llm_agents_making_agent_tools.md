@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Agents Making Agent Tools
 description: >-
-  [ACL 2025][LLM Agent][工具生成] 本文提出ToolMaker，一个自主将GitHub代码仓库转化为LLM兼容工具的代理框架，给定一个仓库URL和任务描述即可自动安装依赖、生成调用代码并通过闭环自修复机制调试，在涵盖多个领域15个复杂任务的新基准上正确实现了80%的任务…
+  [ACL 2025][LLM Agent][工具生成] 本文提出ToolMaker，一个自主将GitHub代码仓库转化为LLM兼容工具的代理框架，给定一个仓库URL和任务描述即可自动安装依赖、生成调用代码并通过闭环自修复机制调试，在涵盖多个领域15个复杂任务的新基准上正确实现了80%的任务，大幅超越了现有软件工程代理。
 tags:
   - "ACL 2025"
   - "LLM Agent"

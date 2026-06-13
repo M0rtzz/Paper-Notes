@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLog: Video-Language Models by Generative Retrieval of Narration Vocabulary
 description: >-
-  [CVPR 2025][图像生成][视频理解] 提出 VLog，将视频叙事（narration）定义为词汇表单元，通过生成式检索架构（GPT-2 推理 + SigLIP 检索）实现比生成式 VideoLLM 快 10-20 倍的高效视频理解。
+  [CVPR 2025][图像生成][视频理解] 提出 VLog，将视频叙事（narration）定义为词汇表单元，通过生成式检索架构（GPT-2 推理 + SigLIP 检索）实现比生成式 VideoLLM 快 10-20 倍的高效视频理解。 现有 VideoLLM 继承了 LLM 的子词词汇表（如 LLaMA-3 的 12…
 tags:
   - "CVPR 2025"
   - "图像生成"

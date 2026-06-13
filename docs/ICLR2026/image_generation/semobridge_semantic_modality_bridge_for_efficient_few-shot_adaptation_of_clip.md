@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SeMoBridge: Semantic Modality Bridge for Efficient Few-Shot Adaptation of CLIP
 description: >-
-  [ICLR 2026][图像生成][CLIP 适配] 提出 SeMoBridge，一种轻量级语义模态桥，通过将图像嵌入映射到文本模态，将不可靠的模态内（图像-图像）比较转换为可靠的模态间（文本-图像）比较，以极低训练开销在少样本分类中超越现有方法。
+  [ICLR 2026][图像生成][CLIP 适配] 提出 SeMoBridge，一种轻量级语义模态桥，通过将图像嵌入映射到文本模态，将不可靠的模态内（图像-图像）比较转换为可靠的模态间（文本-图像）比较，以极低训练开销在少样本分类中超越现有方法。 CLIP 通过对比学习将图像和文本对齐到共享嵌入空间，在零样本任务上表现优秀…
 tags:
   - "ICLR 2026"
   - "图像生成"

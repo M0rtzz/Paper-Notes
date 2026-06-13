@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Risk Management for Mitigating Benchmark Failure Modes: BenchRisk
 description: >-
-  [NeurIPS 2025][LLM评测][LLM 基准] 本文基于NIST风险管理流程，系统性地分析了26个主流LLM基准测试，识别出57种潜在失败模式和196种缓解策略，提出BenchRisk元评估框架用于量化基准测试的可靠性风险。
+  [NeurIPS 2025][LLM评测][LLM 基准] 本文基于NIST风险管理流程，系统性地分析了26个主流LLM基准测试，识别出57种潜在失败模式和196种缓解策略，提出BenchRisk元评估框架用于量化基准测试的可靠性风险。 LLM基准测试（benchmark）是指导模型选择和部署决策的核心依据…
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

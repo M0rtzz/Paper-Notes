@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PoseSOR: Human Pose Can Guide Our Attention
 description: >-
-  [ECCV 2024][人体理解][显著目标排序] 本文首次将人体姿态信息引入显著目标排序(SOR)任务，通过提出姿态感知交互模块(PAI)和姿态驱动排序模块(PDR)来建模人体活动与注意力转移的关系，在复杂场景中显著提升了SOR性能并达到SOTA。
+  [ECCV 2024][人体理解][显著目标排序] 本文首次将人体姿态信息引入显著目标排序(SOR)任务，通过提出姿态感知交互模块(PAI)和姿态驱动排序模块(PDR)来建模人体活动与注意力转移的关系，在复杂场景中显著提升了SOR性能并达到SOTA。 领域现状：显著目标排序(Salient Object Ranking…
 tags:
   - "ECCV 2024"
   - "人体理解"

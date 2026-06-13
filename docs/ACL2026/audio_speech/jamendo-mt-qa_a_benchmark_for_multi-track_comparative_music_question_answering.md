@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Jamendo-MT-QA: A Benchmark for Multi-Track Comparative Music Question Answering
 description: >-
-  [ACL 2026][音频/语音][音乐问答] 构建 Jamendo-MT-QA，一个包含 36,519 个比较问答对（覆盖 12,173 个音轨对）的多音轨比较音乐问答基准，首次系统评估音频-语言模型在跨音轨比较推理上的能力，揭示现有模型在句子级比较生成上的显著不足。
+  [ACL 2026 Findings][音频/语音][音乐问答] 构建 Jamendo-MT-QA，一个包含 36,519 个比较问答对（覆盖 12,173 个音轨对）的多音轨比较音乐问答基准，首次系统评估音频-语言模型在跨音轨比较推理上的能力，揭示现有模型在句子级比较生成上的显著不足。 领域现状：音乐问答（Music-QA…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "音频/语音"
   - "音乐问答"
   - "多音轨比较推理"

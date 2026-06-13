@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Protein Circuit Tracing via Cross-layer Transcoders
 description: >-
-  [ICML 2026][计算生物][pLM] 作者把 NLP 中的 cross-layer transcoder 搬到蛋白质语言模型 ESM2 上,提出 ProtoMech 框架以 < 1% 的稀疏潜变量电路恢复 79% 的下游性能,并能沿电路 steering 设计出高 fitness 的蛋白变体…
+  [ICML 2026][计算生物][pLM] 作者把 NLP 中的 cross-layer transcoder 搬到蛋白质语言模型 ESM2 上,提出 ProtoMech 框架以 < 1% 的稀疏潜变量电路恢复 79% 的下游性能,并能沿电路 steering 设计出高 fitness 的蛋白变体,在 70%+ 案例中击败基线。
 tags:
   - "ICML 2026"
   - "计算生物"

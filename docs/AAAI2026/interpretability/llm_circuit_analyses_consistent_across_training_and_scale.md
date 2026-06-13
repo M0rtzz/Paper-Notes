@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLM Circuit Analyses Are Consistent Across Training and Scale
 description: >-
-  [AAAI 2026][可解释性][机械可解释性] 本文首次系统追踪 decoder-only LLM 的内部电路（circuits）在 3000 亿 token 训练过程中和 70M–2.8B 参数规模间的演化，发现虽然具体注意力头会发生更替，但执行的算法保持稳定，且跨规模具有一致性…
+  [AAAI 2026][可解释性][机械可解释性] 本文首次系统追踪 decoder-only LLM 的内部电路（circuits）在 3000 亿 token 训练过程中和 70M–2.8B 参数规模间的演化，发现虽然具体注意力头会发生更替，但执行的算法保持稳定，且跨规模具有一致性，表明在小模型上做的电路分析可推广到更大模型和更长训练。
 tags:
   - "AAAI 2026"
   - "可解释性"

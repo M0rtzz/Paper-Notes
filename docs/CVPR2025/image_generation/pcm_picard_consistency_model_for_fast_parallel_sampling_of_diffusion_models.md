@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PCM: Picard Consistency Model for Fast Parallel Sampling of Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][并行采样] PCM 提出了 Picard 一致性模型来加速扩散模型的 Picard 迭代并行采样，通过训练模型直接预测不动点解并引入模型切换机制确保精确收敛，在图像生成和机器人控制任务上实现最高 2.71x 加速。
+  [CVPR 2025][图像生成][并行采样] PCM 提出了 Picard 一致性模型来加速扩散模型的 Picard 迭代并行采样，通过训练模型直接预测不动点解并引入模型切换机制确保精确收敛，在图像生成和机器人控制任务上实现最高 2.71x 加速。 领域现状：扩散模型在视觉、文本、机器人等领域取得显著进展…
 tags:
   - "CVPR 2025"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Selection
 description: >-
-  [ICLR 2026][LLM效率][memory efficient fine-tuning] 提出 TokenSeek，一个通用的实例感知 token 搜索与丢弃方法，通过结合上下文（注意力）和梯度信息评估每个 token 的重要性，仅在选中的 token 上更新参数…
+  [ICLR 2026][LLM效率][memory efficient fine-tuning] 提出 TokenSeek，一个通用的实例感知 token 搜索与丢弃方法，通过结合上下文（注意力）和梯度信息评估每个 token 的重要性，仅在选中的 token 上更新参数，实现激活内存的大幅减少（最高 65.7%）而保持甚至超越全 token 微调性能。
 tags:
   - "ICLR 2026"
   - "LLM效率"

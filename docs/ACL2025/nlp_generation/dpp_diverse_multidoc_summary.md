@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Principled Content Selection to Generate Diverse and Personalized Multi-Document Summaries
 description: >-
-  [ACL 2025][multi-document summarization] 提出将多文档摘要解耦为关键点抽取→DPP多样性选择→重写三步流水线，通过行列式点过程（DPP）进行原则性内容选择，显著提升LLM多文档摘要的源文档覆盖率。
+  [ACL 2025][文本生成][multi-document summarization] 提出将多文档摘要解耦为关键点抽取→DPP多样性选择→重写三步流水线，通过行列式点过程（DPP）进行原则性内容选择，显著提升LLM多文档摘要的源文档覆盖率。 - 问题定义：多文档多样性摘要（MDDS）要求从多篇报道同一新闻事件的文章中…
 tags:
   - "ACL 2025"
+  - "文本生成"
   - "multi-document summarization"
   - "DPP"
   - "content selection"

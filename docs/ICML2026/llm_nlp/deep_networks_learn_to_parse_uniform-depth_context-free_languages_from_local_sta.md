@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Deep Networks Learn to Parse Uniform-Depth Context-Free Languages from Local Statistics
 description: >-
-  [ICML 2026][LLM/NLP][PCFG] 作者提出一个可控歧义的"变树 RHM"概率上下文无关文法，并证明只用 root-to-pair / root-to-triple 这两个低阶矩 + 逐层聚类，就能恢复语法规则、进行 CYK 式解析，对应样本复杂度 $P^\star \asymp v\…
+  [ICML 2026][LLM 其他][PCFG] 作者提出一个可控歧义的"变树 RHM"概率上下文无关文法，并证明只用 root-to-pair / root-to-triple 这两个低阶矩 + 逐层聚类，就能恢复语法规则、进行 CYK 式解析，对应样本复杂度 $P^\star \asymp v\, m_3\, m_2^{L-1} (p_2^2/2)^{1-L}$，CNN 与 Transformer 实验完全符合该幂律。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "PCFG"
   - "句法解析"
   - "样本复杂度"

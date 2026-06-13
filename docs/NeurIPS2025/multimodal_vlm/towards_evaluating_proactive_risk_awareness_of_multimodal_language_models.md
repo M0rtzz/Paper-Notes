@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Evaluating Proactive Risk Awareness of Multimodal Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][主动安全] 提出PaSBench基准评估多模态语言模型的主动风险感知能力——要求模型在无用户提问的情况下主动观察环境并发出安全预警。评测36个模型发现最强模型（Gemini-2.5-pro）仅达71%准确率且45%的风险无法稳定检测…
+  [NeurIPS 2025][多模态VLM][主动安全] 提出PaSBench基准评估多模态语言模型的主动风险感知能力——要求模型在无用户提问的情况下主动观察环境并发出安全预警。评测36个模型发现最强模型（Gemini-2.5-pro）仅达71%准确率且45%的风险无法稳定检测，核心瓶颈是不稳定的主动推理能力而非知识缺失。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

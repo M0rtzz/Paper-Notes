@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Automated Detection of Visual Attribute Reliance with a Self-Reflective Agent
 description: >-
-  [NeurIPS 2025][目标检测][visual attribute reliance] 提出一个自反思 agent 框架，通过迭代的假设生成-测试-验证-反思循环来自动检测视觉模型中的属性依赖（如 CLIP 识别 teacher 依赖教室背景、YOLOv8 检测行人依赖人行横道）…
+  [NeurIPS 2025][目标检测][visual attribute reliance] 提出一个自反思 agent 框架，通过迭代的假设生成-测试-验证-反思循环来自动检测视觉模型中的属性依赖（如 CLIP 识别 teacher 依赖教室背景、YOLOv8 检测行人依赖人行横道），在 130 个注入已知属性依赖的模型 benchmark 上显示自反思显著提升检测准确性。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

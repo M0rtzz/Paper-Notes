@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Unified Agentic Framework for Evaluating Conditional Image Generation
 description: >-
-  [ACL 2025][图像生成][LMM Agent] 提出 CIGEval，一个基于大型多模态模型（LMM）的统一 Agent 评估框架，通过工具集成（Grounding、Highlight、Difference、Scene Graph）和分而治之的评估策略…
+  [ACL 2025][图像生成][LMM Agent] 提出 CIGEval，一个基于大型多模态模型（LMM）的统一 Agent 评估框架，通过工具集成（Grounding、Highlight、Difference、Scene Graph）和分而治之的评估策略，在 7 种条件图像生成任务上达到与人类标注者相当的相关性（0.4625 vs 人类间 0.47），且仅用 2.3K 训练数据微调 7B 模型即超越 GPT-4o 版 SOTA。
 tags:
   - "ACL 2025"
   - "图像生成"

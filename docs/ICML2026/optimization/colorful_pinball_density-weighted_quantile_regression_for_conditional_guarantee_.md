@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Colorful Pinball: Density-Weighted Quantile Regression for Conditional Guarantee of Conformal Prediction
 description: >-
-  [ICML2026][优化/理论][conformal prediction] 本文通过 Taylor 展开揭示了标准 pinball 损失在条件覆盖率优化上的固有缺陷——忽视了异方差结构，提出密度加权 pinball 损失作为条件覆盖 MSE 的更紧代理目标，并设计三头分位数网络通过有限差分估计密度权重…
+  [ICML2026][优化/理论][conformal prediction] 本文通过 Taylor 展开揭示了标准 pinball 损失在条件覆盖率优化上的固有缺陷——忽视了异方差结构，提出密度加权 pinball 损失作为条件覆盖 MSE 的更紧代理目标，并设计三头分位数网络通过有限差分估计密度权重，在 8 个高维回归基准上大幅提升条件覆盖性能。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2512.24139](https://arxiv.org/abs/2512.24139)  
 **代码**: https://github.com/Colorful-Pinball/CPCP  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: conformal prediction, 条件覆盖, 分位数回归, 密度加权, pinball损失  
 
 ## 一句话总结

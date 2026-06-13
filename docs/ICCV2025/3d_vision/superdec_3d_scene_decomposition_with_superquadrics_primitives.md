@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SuperDec: 3D Scene Decomposition with Superquadric Primitives
 description: >-
-  [ICCV 2025][3D视觉][超二次曲面] 提出SuperDec,基于Transformer的学习方法将点云分解为紧凑的超二次曲面基元集合,在ShapeNet上训练即可泛化到真实场景,支持机器人操作和可控生成。
+  [ICCV 2025][3D视觉][超二次曲面] 提出SuperDec,基于Transformer的学习方法将点云分解为紧凑的超二次曲面基元集合,在ShapeNet上训练即可泛化到真实场景,支持机器人操作和可控生成。 3D场景表示在计算机视觉和机器人领域至关重要。3D Gaussian Splatting等方法虽实现了高质量…
 tags:
   - "ICCV 2025"
   - "3D视觉"

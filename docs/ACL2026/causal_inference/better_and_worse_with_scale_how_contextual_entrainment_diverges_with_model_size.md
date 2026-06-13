@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Better and Worse with Scale: How Contextual Entrainment Diverges with Model Size
 description: >-
-  [ACL 2026][因果推理][上下文夹带效应] 本文首次为"上下文夹带效应"（contextual entrainment）建立缩放定律，发现更大的模型在语义上下文中更能抵抗虚假信息（负指数），但在非语义上下文中更容易复制无关 token（正指数），揭示了语义过滤和机械复制两种功能的对立缩放行为。
+  [ACL 2026 Findings][因果推理][上下文夹带效应] 本文首次为"上下文夹带效应"（contextual entrainment）建立缩放定律，发现更大的模型在语义上下文中更能抵抗虚假信息（负指数），但在非语义上下文中更容易复制无关 token（正指数），揭示了语义过滤和机械复制两种功能的对立缩放行为。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "因果推理"
   - "上下文夹带效应"
   - "缩放定律"

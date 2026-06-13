@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Select and Distill: Selective Dual-Teacher Knowledge Transfer for Continual Learning on Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][持续学习] 提出选择性双教师知识迁移框架（SND），通过衡量预训练VLM和最近微调VLM之间的特征差异，在无标签参考数据集上自适应选择合适的教师进行知识蒸馏，同时缓解灾难性遗忘并保持零样本分类能力。
+  [ECCV 2024][多模态VLM][持续学习] 提出选择性双教师知识迁移框架（SND），通过衡量预训练VLM和最近微调VLM之间的特征差异，在无标签参考数据集上自适应选择合适的教师进行知识蒸馏，同时缓解灾难性遗忘并保持零样本分类能力。 大规模视觉语言模型（如CLIP）展现了强大的零样本泛化能力，但在对序列下游任务进行适配…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

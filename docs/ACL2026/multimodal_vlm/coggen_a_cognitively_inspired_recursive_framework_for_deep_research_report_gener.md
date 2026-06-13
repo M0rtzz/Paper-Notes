@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CogGen: A Cognitively Inspired Recursive Framework for Deep Research Report Generation
 description: >-
-  [ACL 2026][多模态VLM][深度研究报告] CogGen 提出一个模拟人类认知写作过程的多智能体递归框架，通过宏观认知循环实现全局重构、微观认知循环实现并行章节精炼、抽象视觉表示（AVR）实现文本-图表的语义级协同规划…
+  [ACL 2026 Findings][多模态VLM][深度研究报告] CogGen 提出一个模拟人类认知写作过程的多智能体递归框架，通过宏观认知循环实现全局重构、微观认知循环实现并行章节精炼、抽象视觉表示（AVR）实现文本-图表的语义级协同规划，在 OWID 基准上达到人类专家水平并超越 Gemini Deep Research。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "多模态VLM"
   - "深度研究报告"
   - "递归写作框架"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing
 description: >-
-  [ICCV 2025][遥感][遥感基础模型] 本文提出SkySense V2，使用单一统一Transformer骨干网络处理高分辨率光学/多光谱/SAR三种遥感模态数据，通过自适应Patch合并、模态特异性Prompt Token和基于Query的语义聚合对比学习（QSACL）进行预训练…
+  [ICCV 2025][遥感][遥感基础模型] 本文提出SkySense V2，使用单一统一Transformer骨干网络处理高分辨率光学/多光谱/SAR三种遥感模态数据，通过自适应Patch合并、模态特异性Prompt Token和基于Query的语义聚合对比学习（QSACL）进行预训练，仅用665M参数（相比前作SkySense的1.26B）在16个数据集7种任务上平均提升1.8分。
 tags:
   - "ICCV 2025"
   - "遥感"

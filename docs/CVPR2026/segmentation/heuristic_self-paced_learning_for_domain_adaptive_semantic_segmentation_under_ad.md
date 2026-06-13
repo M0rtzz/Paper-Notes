@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Heuristic Self-Paced Learning for Domain Adaptive Semantic Segmentation under Adverse Conditions
 description: >-
-  [CVPR 2026][语义分割][无监督域适应] 本文将无监督域适应中的类别课程学习重新定义为强化学习的序贯决策问题，提出 HeuSCM 框架，通过高维语义状态感知和类别公平策略梯度实现自主学习课程规划…
+  [CVPR 2026][语义分割][无监督域适应] 本文将无监督域适应中的类别课程学习重新定义为强化学习的序贯决策问题，提出 HeuSCM 框架，通过高维语义状态感知和类别公平策略梯度实现自主学习课程规划，在 ACDC、Dark Zurich 和 Nighttime Driving 上达到 SOTA（72.9 mIoU）。
 tags:
   - "CVPR 2026"
   - "语义分割"

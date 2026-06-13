@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PolySAE: Modeling Feature Interactions in Sparse Autoencoders via Polynomial Decoding
 description: >-
-  [ICML 2026][可解释性][稀疏自编码器] PolySAE 在标准稀疏自编码器（SAE）线性解码器之外，新增基于共享低秩投影的二阶/三阶多项式项，用极小参数代价（GPT-2 small 上 ~3%）显式建模稀疏特征之间的乘法交互…
+  [ICML 2026][可解释性][稀疏自编码器] PolySAE 在标准稀疏自编码器（SAE）线性解码器之外，新增基于共享低秩投影的二阶/三阶多项式项，用极小参数代价（GPT-2 small 上 ~3%）显式建模稀疏特征之间的乘法交互，在 4 个 LLM × 3 种 SAE 变体上把探针 F1 平均提升约 8%、类条件分布的 Wasserstein 距离扩大 2–10 倍，并能用学到的交互方向因果引导模型输出对应的组合语义。
 tags:
   - "ICML 2026"
   - "可解释性"

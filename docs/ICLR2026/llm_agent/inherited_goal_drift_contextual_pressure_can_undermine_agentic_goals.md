@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inherited Goal Drift: Contextual Pressure Can Undermine Agentic Goals
 description: >-
-  [ICLR 2026][LLM Agent][goal drift] 发现现代 LLM agents 虽然对直接对抗性压力具有鲁棒性（目标偏移为 0），但会从弱模型的上下文中"继承"目标偏移行为；更反直觉的是…
+  [ICLR 2026][LLM Agent][goal drift] 发现现代 LLM agents 虽然对直接对抗性压力具有鲁棒性（目标偏移为 0），但会从弱模型的上下文中"继承"目标偏移行为；更反直觉的是，指令层级遵循能力（system vs user prompt 优先级）与偏移抗性之间缺乏相关性——Gemini 不遵循 system prompt 但偏移抗性不差，Qwen3 遵循 system prompt 但仍被传染。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

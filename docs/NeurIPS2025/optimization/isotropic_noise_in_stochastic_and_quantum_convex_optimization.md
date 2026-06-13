@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Isotropic Noise in Stochastic and Quantum Convex Optimization
 description: >-
-  [NeurIPS 2025][优化/理论][stochastic convex optimization] 本文引入各向同性随机梯度预言机（ISGO）概念——噪声在每个方向上都以高概率有界——并设计随机切平面算法达到 $\tilde{O}(R^2\sigma_I^2/\epsilon^2 + d)$ 的查询复…
+  [NeurIPS 2025][优化/理论][stochastic convex optimization] 本文引入各向同性随机梯度预言机（ISGO）概念——噪声在每个方向上都以高概率有界——并设计随机切平面算法达到 $\tilde{O}(R^2\sigma_I^2/\epsilon^2 + d)$ 的查询复杂度，较 SGD 在某些参数区间改进 $d$ 倍，作为推论获得了 sub-exponential 噪声下的新 SOTA 复杂度，并通过量子各向同性化子程序改进了量子随机凸优化的维度依赖。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

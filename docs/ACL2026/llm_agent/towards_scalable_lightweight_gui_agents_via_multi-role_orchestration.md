@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Towards Scalable Lightweight GUI Agents via Multi-role Orchestration
 description: >-
-  [ACL 2026][LLM Agent][GUI Agent] 本文提出 LAMO 框架，通过角色导向的数据合成和两阶段训练（SFT with Perplexity-Weighted Cross-Entropy + 多任务 RL），将轻量 3B MLLM 训练为可灵活编排多角色的 GUI Agent…
+  [ACL 2026 Findings][LLM Agent][GUI Agent] 本文提出 LAMO 框架，通过角色导向的数据合成和两阶段训练（SFT with Perplexity-Weighted Cross-Entropy + 多任务 RL），将轻量 3B MLLM 训练为可灵活编排多角色的 GUI Agent，在单体推理、多 Agent 协作和即插即用策略执行器三种模式下工作，搭配 GPT-5 规划器在 AndroidWorld 上达 77.6% 成功率，超越 72B 参数的专用 GUI Agent。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM Agent"
   - "GUI Agent"
   - "轻量模型"

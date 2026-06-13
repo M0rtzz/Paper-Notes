@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unraveling Normal Anatomy via Fluid-Driven Anomaly Randomization
 description: >-
-  [CVPR 2025][医学图像][正常解剖重建] UNA 提出基于流体驱动的异常随机化方法，通过对流-扩散 PDE 在线生成无限多样的病理模式，实现首个模态无关的脑部正常解剖重建模型，可同时处理健康和病变的 CT/MRI 扫描。
+  [CVPR 2025][医学图像][正常解剖重建] UNA 提出基于流体驱动的异常随机化方法，通过对流-扩散 PDE 在线生成无限多样的病理模式，实现首个模态无关的脑部正常解剖重建模型，可同时处理健康和病变的 CT/MRI 扫描。 医学脑影像分析面临多重挑战： - MRI 采集协议多样（T1w、T2w、FLAIR 等）…
 tags:
   - "CVPR 2025"
   - "医学图像"

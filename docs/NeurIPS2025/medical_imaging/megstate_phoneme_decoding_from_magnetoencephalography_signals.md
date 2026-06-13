@@ -2,9 +2,10 @@
 title: >-
   [论文解读] MEGState: Phoneme Decoding from Magnetoencephalography Signals
 description: >-
-  [NeurIPS 2025][MEG] 提出 MEGState，一种融合多分辨率卷积和传感器级 SSM 的架构，用于从脑磁图(MEG)信号中解码音素，在 LibriBrain 数据集上显著超越基线方法。
+  [NeurIPS 2025][医学图像][MEG] 提出 MEGState，一种融合多分辨率卷积和传感器级 SSM 的架构，用于从脑磁图(MEG)信号中解码音素，在 LibriBrain 数据集上显著超越基线方法。 现有痛点 现有痛点：领域现状：从脑活动解码语音表征对恢复瘫痪或严重语言障碍者的交流能力具有重要意义…
 tags:
   - "NeurIPS 2025"
+  - "医学图像"
   - "MEG"
   - "音素解码"
   - "状态空间模型"
@@ -116,10 +117,10 @@ MEGState 以 MEG 信号 $\mathbf{X} \in \mathbb{R}^{M \times T}$（$M$ 个传感
 - 原型平均 + mixup 的训练策略可推广到其他低 SNR 生物信号解码任务
 
 ## 评分
-- 新颖性: ⭐⭐⭐
-- 实验充分度: ⭐⭐⭐
-- 写作质量: ⭐⭐⭐
-- 价值: ⭐⭐⭐⭐
+- 新颖性: ⭐⭐⭐⭐
+- 实验充分度: ⭐⭐⭐⭐
+- 写作质量: ⭐⭐⭐⭐
+- 价值: ⭐⭐⭐⭐⭐
 
 <!-- RELATED:START -->
 

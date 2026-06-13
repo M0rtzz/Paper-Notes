@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Static to Dynamic: Exploring Self-supervised Image-to-Video Representation Transfer Learning
 description: >-
-  [CVPR 2026][视频生成][图像到视频迁移] 本文提出 Co-Settle 框架，通过在冻结的图像预训练编码器上训练一个轻量线性投影层，利用时间循环一致性损失和语义可分性约束，仅需5个epoch的自监督训练即可在8个图像基础模型上一致性提升多粒度视频下游任务性能。
+  [CVPR 2026][视频生成][图像到视频迁移] 本文提出 Co-Settle 框架，通过在冻结的图像预训练编码器上训练一个轻量线性投影层，利用时间循环一致性损失和语义可分性约束，仅需5个epoch的自监督训练即可在8个图像基础模型上一致性提升多粒度视频下游任务性能。 领域现状：将图像预训练模型迁移到视频任务已成为视频表…
 tags:
   - "CVPR 2026"
   - "视频生成"

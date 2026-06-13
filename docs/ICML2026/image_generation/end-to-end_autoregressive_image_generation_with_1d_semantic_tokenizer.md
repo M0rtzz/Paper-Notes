@@ -2,9 +2,9 @@
 title: >-
   [论文解读] End-to-End Autoregressive Image Generation with 1D Semantic Tokenizer
 description: >-
-  [ICML 2026][图像生成][1D Tokenizer] EOSTok 用单阶段端到端管线把 1D ViT tokenizer 和自回归模型一起训练，靠新提出的 APR（Autoregressive Prediction Reconstruction）loss 把「next-token 预测」的梯度真正…
+  [ICML 2026 Spotlight][图像生成][1D Tokenizer] EOSTok 用单阶段端到端管线把 1D ViT tokenizer 和自回归模型一起训练，靠新提出的 APR（Autoregressive Prediction Reconstruction）loss 把「next-token 预测」的梯度真正传回 pixel space 防止码本崩塌，再用「隐式对齐」把 DINOv2 语义注入 1D 隐空间而不破坏 1D 自回归结构，最终在 ImageNet 256 上无 guidance 拿到 1.48 的 FID（SOTA）。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "图像生成"
   - "1D Tokenizer"
   - "自回归图像生成"

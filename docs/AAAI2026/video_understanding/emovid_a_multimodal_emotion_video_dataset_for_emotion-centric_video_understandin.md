@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation
 description: >-
-  [AAAI 2026][视频理解][情感视频数据集] 提出 EmoVid，首个面向艺术化/非写实内容的大规模多模态情绪视频数据集（22,758 个视频片段），覆盖动画、电影和表情贴纸三种类型，并通过微调 Wan2.1 模型展示了情绪条件化视频生成的有效性，在情绪准确率指标上显著优于基线。
+  [AAAI 2026 Oral][视频理解][情感视频数据集] 提出 EmoVid，首个面向艺术化/非写实内容的大规模多模态情绪视频数据集（22,758 个视频片段），覆盖动画、电影和表情贴纸三种类型，并通过微调 Wan2.1 模型展示了情绪条件化视频生成的有效性，在情绪准确率指标上显著优于基线。 视频是叙事和表达的强大媒介…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "视频理解"
   - "情感视频数据集"
   - "视频生成"

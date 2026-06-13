@@ -2,9 +2,9 @@
 title: >-
   [论文解读] STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model
 description: >-
-  [LLM/NLP] 提出 STEM 框架，通过识别同架构不同规模模型间的"显著转换样本"(STS)构建轻量级评估子集，实现对未知 LLM 能力的高效相对定位，在 100 样本下达到 100% 定位准确率，远超随机采样和贝叶斯方法。
+  [LLM 其他] 提出 STEM 框架，通过识别同架构不同规模模型间的"显著转换样本"(STS)构建轻量级评估子集，实现对未知 LLM 能力的高效相对定位，在 100 样本下达到 100% 定位准确率，远超随机采样和贝叶斯方法。 - 基准可靠性下降：LLM 在 MMLU、GPQA、GSM8K 等标准基准上频繁刷新 SOTA…
 tags:
-  - "LLM/NLP"
+  - "LLM 其他"
 ---
 
 # STEM: Efficient Relative Capability Evaluation of LLMs through Structured Transitive Evaluation Model

@@ -2,15 +2,16 @@
 title: >-
   [论文解读] From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy
 description: >-
-  [NEURIPS2025][3D视觉][光场显微镜] 提出XLFM-Former用于扩展光场显微镜(XLFM)的3D重建：构建首个XLFM-Zebrafish标准化基准，设计Masked View Modeling (MVM-LF)自监督预训练学习角度先验…
+  [NeurIPS 2025][3D视觉][Light Field Microscopy] 提出 XLFM-Former，通过 **视角级 Masked View Modeling（MVM-LF）** 自监督预训练学习 XLFM 的角度–空间先验，并设计基于 PSF 可微渲染的 **光学渲染一致性损失（ORC Loss）** 约束重建体积的物理合理性，在自建的首个 XLFM-Zebrafish 标准化基准上，平均 PSNR 达 54.04 dB，较最佳基线 ConvNeXt（50.16 dB）提升 **7.7%**。
 tags:
-  - "NEURIPS2025"
+  - "NeurIPS 2025"
   - "3D视觉"
-  - "光场显微镜"
+  - "Light Field Microscopy"
   - "XLFM"
-  - "3D重建"
   - "Masked View Modeling"
-  - "物理一致性"
+  - "ORC Loss"
+  - "PSF"
+  - "自监督学习"
 ---
 
 # From Pixels to Views: Learning Angular-Aware and Physics-Consistent Representations for Light Field Microscopy
@@ -195,3 +196,19 @@ tags:
 ---
 
 <!-- 由 src/gen_stubs.py 自动生成 -->
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2026\] Three-Step Conditional Diffusion 3D Reconstruction for Light-Field Microscopy](../../CVPR2026/3d_vision/three-step_conditional_diffusion_3d_reconstruction_for_light-field_microscopy.md)
+- [\[ICML 2025\] PhysicsNeRF: Physics-Guided 3D Reconstruction from Sparse Views](../../ICML2025/3d_vision/physicsnerf_physics-guided_3d_reconstruction_from_sparse_views.md)
+- [\[CVPR 2025\] ProbeSDF: Light Field Probes for Neural Surface Reconstruction](../../CVPR2025/3d_vision/probesdf_light_field_probes_for_neural_surface_reconstruction.md)
+- [\[ICLR 2026\] LiTo: Surface Light Field Tokenization](../../ICLR2026/3d_vision/lito_surface_light_field_tokenization.md)
+- [\[ICCV 2025\] Relative Illumination Fields: Learning Medium and Light Independent Underwater Scenes](../../ICCV2025/3d_vision/relative_illumination_fields_learning_medium_and_light_independent_underwater_sc.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning
 description: >-
-  [CVPR 2026][图像生成][人脸替换] 提出身份约束的属性调优框架用于扩散模型人脸替换：先约束身份解空间，再注入属性条件，最后端到端精炼身份损失和对抗损失，结合解耦条件注入设计，在 FFHQ 上实现 SOTA 的 FID（3.61）和身份检索准确率（97.9% Top-1）。
+  [CVPR 2026][图像生成][人脸替换] 提出身份约束的属性调优框架用于扩散模型人脸替换：先约束身份解空间，再注入属性条件，最后端到端精炼身份损失和对抗损失，结合解耦条件注入设计，在 FFHQ 上实现 SOTA 的 FID（3.61）和身份检索准确率（97.9% Top-1）。 人脸替换（Face Swapping）将…
 tags:
   - "CVPR 2026"
   - "图像生成"

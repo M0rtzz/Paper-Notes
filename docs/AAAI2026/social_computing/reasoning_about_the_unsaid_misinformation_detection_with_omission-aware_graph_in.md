@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning About the Unsaid: Misinformation Detection with Omission-Aware Graph Inference
 description: >-
-  [AAAI 2026][社会计算][虚假信息检测] 提出OmiGraph，首个基于"遗漏感知"的虚假信息检测框架，通过构建遗漏感知图、利用LLM推理遗漏意图、以及遗漏导向的消息传递与聚合机制，从"未说出的内容"中提取欺骗模式，在双语数据集上平均提升+5.4% F1和+5.3% ACC。
+  [AAAI 2026][社会计算][虚假信息检测] 提出OmiGraph，首个基于"遗漏感知"的虚假信息检测框架，通过构建遗漏感知图、利用LLM推理遗漏意图、以及遗漏导向的消息传递与聚合机制，从"未说出的内容"中提取欺骗模式，在双语数据集上平均提升+5.4% F1和+5.3% ACC。 虚假信息的欺骗手段主要分为两类：（1）…
 tags:
   - "AAAI 2026"
   - "社会计算"

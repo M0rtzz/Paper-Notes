@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PIP-Stereo: Progressive Iterations Pruner for Iterative Optimization based Stereo Matching
 description: >-
-  [CVPR 2026][3D视觉][立体匹配] 揭示迭代立体匹配中视差更新的空间稀疏性和时间冗余性，提出渐进迭代裁剪（PIP）将32次迭代压缩到1次、协同学习范式实现无需独立单目编码器的深度先验迁移、以及硬件感知的 FlashGRU 算子（7.28× 加速）…
+  [CVPR 2026][3D视觉][立体匹配] 揭示迭代立体匹配中视差更新的空间稀疏性和时间冗余性，提出渐进迭代裁剪（PIP）将32次迭代压缩到1次、协同学习范式实现无需独立单目编码器的深度先验迁移、以及硬件感知的 FlashGRU 算子（7.28× 加速），使高精度迭代立体匹配首次在 Jetson Orin NX 上实现实时推理（75ms/帧，320×640）。
 tags:
   - "CVPR 2026"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Focusing Where Vision Matters: Selective Training for Large Vision Language Models via Visual Information Gain
 description: >-
-  [ICML 2026][多模态VLM][视觉信息增益] 本文提出 **Visual Information Gain (VIG)**——一个基于"有图 vs 无图（用模糊图代替）"困惑度对数比的视觉依赖度指标，从样本和 token 两个粒度量化"这条数据/这个 token 到底用没用到图"…
+  [ICML 2026][多模态VLM][视觉信息增益] 本文提出 **Visual Information Gain (VIG)**——一个基于"有图 vs 无图（用模糊图代替）"困惑度对数比的视觉依赖度指标，从样本和 token 两个粒度量化"这条数据/这个 token 到底用没用到图"，并据此做选择性指令微调：只在高 VIG 的样本和 token 上算 loss，让 LLaVA-1.5-13B 仅用 21% 的有效 token 就全面超过 vanilla 训练，并显著缓解语言偏差与幻觉。
 tags:
   - "ICML 2026"
   - "多模态VLM"

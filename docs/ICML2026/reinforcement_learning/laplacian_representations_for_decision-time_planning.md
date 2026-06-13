@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Laplacian Representations for Decision-Time Planning
 description: >-
-  [ICML 2026][强化学习][Laplacian表示] 本文提出 ALPS，将图 Laplacian 的特征向量空间（缩放后近似 commute-time distance）作为分层决策时规划的潜空间，先用 k-means 在该空间发现子目标并跑 Dijkstra 生成高层路径…
+  [ICML 2026][强化学习][Laplacian表示] 本文提出 ALPS，将图 Laplacian 的特征向量空间（缩放后近似 commute-time distance）作为分层决策时规划的潜空间，先用 k-means 在该空间发现子目标并跑 Dijkstra 生成高层路径，再用带行为先验的 CEM 在原始状态空间做短程低层规划，在 OGBench 的离线目标条件 RL 上首次让基于模型的规划方法系统性击败 model-free SOTA。
 tags:
   - "ICML 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Detached Skip-Links and $R$-Probe: Decoupling Feature Aggregation from Gradient Propagation for MLLM OCR
 description: >-
-  [ICML 2026][多模态VLM][OCR] 针对 MLLM 的 OCR 场景，作者在多层 ViT→LLM 融合架构中给浅层 skip 分支加 stop-gradient（Detached Skip-Links）…
+  [ICML 2026][多模态VLM][OCR] 针对 MLLM 的 OCR 场景，作者在多层 ViT→LLM 融合架构中给浅层 skip 分支加 stop-gradient（Detached Skip-Links），同时提出用"LLM 自身前 1/4 层"初始化的重建探针 $R$-Probe 来诊断视觉 token 是否真的把细粒度信息送到了语言模型那一侧。
 tags:
   - "ICML 2026"
   - "多模态VLM"

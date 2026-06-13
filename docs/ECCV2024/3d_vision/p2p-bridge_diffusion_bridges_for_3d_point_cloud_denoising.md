@@ -2,7 +2,7 @@
 title: >-
   [论文解读] P2P-Bridge: Diffusion Bridges for 3D Point Cloud Denoising
 description: >-
-  [ECCV 2024][3D视觉][点云去噪] 提出 P2P-Bridge，将点云去噪建模为 Schrödinger Bridge 问题，学习噪声点云到干净点云之间的最优传输计划，首次引入数据到数据（而非数据到噪声）的扩散范式…
+  [ECCV 2024][3D视觉][点云去噪] 提出 P2P-Bridge，将点云去噪建模为 Schrödinger Bridge 问题，学习噪声点云到干净点云之间的最优传输计划，首次引入数据到数据（而非数据到噪声）的扩散范式，在合成数据和真实室内场景（ScanNet++、ARKitScenes）上均大幅超越现有方法。
 tags:
   - "ECCV 2024"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PatchDPO: Patch-level DPO for Finetuning-free Personalized Image Generation
 description: >-
-  [CVPR 2025][图像生成][个性化图像生成] 提出PatchDPO，通过patch级别的质量估计替代传统DPO的整图偏好判断，对预训练个性化生成模型进行第二阶段优化，在DreamBooth和Concept101数据集上单物体和多物体生成均达到SOTA。
+  [CVPR 2025][图像生成][个性化图像生成] 提出PatchDPO，通过patch级别的质量估计替代传统DPO的整图偏好判断，对预训练个性化生成模型进行第二阶段优化，在DreamBooth和Concept101数据集上单物体和多物体生成均达到SOTA。 免微调个性化图像生成（如IP-Adapter）虽然推理高效…
 tags:
   - "CVPR 2025"
   - "图像生成"

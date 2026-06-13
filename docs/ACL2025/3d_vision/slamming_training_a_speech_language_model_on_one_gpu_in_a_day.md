@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Slamming: Training a Speech Language Model on One GPU in a Day
 description: >-
-  [ACL 2025][3D视觉][Speech Language Model] 提出 Slam 训练配方，通过系统化的模型初始化、架构选择、合成数据、偏好优化等环节优化，在单张 A5000 GPU 上 24 小时内训练出性能媲美大规模 SLM 的语音语言模型。
+  [ACL 2025][3D视觉][Speech Language Model] 提出 Slam 训练配方，通过系统化的模型初始化、架构选择、合成数据、偏好优化等环节优化，在单张 A5000 GPU 上 24 小时内训练出性能媲美大规模 SLM 的语音语言模型。 领域现状：语音语言模型（SLM）近年取得了显著进展…
 tags:
   - "ACL 2025"
   - "3D视觉"

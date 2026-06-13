@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConceptScope: Characterizing Dataset Bias via Disentangled Visual Concepts
 description: >-
-  [NeurIPS 2025][人体理解][数据集偏差] 提出 ConceptScope 框架，利用在视觉基础模型表征上训练的稀疏自编码器（SAE）自动发现和量化数据集中的视觉概念偏差，无需人工标注即可将概念分类为 target / context / bias 三类。
+  [NeurIPS 2025][人体理解][数据集偏差] 提出 ConceptScope 框架，利用在视觉基础模型表征上训练的稀疏自编码器（SAE）自动发现和量化数据集中的视觉概念偏差，无需人工标注即可将概念分类为 target / context / bias 三类。 机器学习数据集中的偏差（如特定类别与特定背景的高度相关性…
 tags:
   - "NeurIPS 2025"
   - "人体理解"

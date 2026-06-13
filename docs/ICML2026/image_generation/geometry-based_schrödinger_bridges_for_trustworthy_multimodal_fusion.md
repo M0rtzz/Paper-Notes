@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geometry-based Schrödinger Bridges for Trustworthy Multimodal Fusion
 description: >-
-  [ICML 2026][图像生成][可信多模态融合] 本文提出 GMF：用 Diffusion Schrödinger Bridge + Rectified Flow 在潜空间估计每个模态的"传输修正成本"（初始速度平方 $\|v_\theta(z,0)\|^2$）…
+  [ICML 2026][图像生成][可信多模态融合] 本文提出 GMF：用 Diffusion Schrödinger Bridge + Rectified Flow 在潜空间估计每个模态的"传输修正成本"（初始速度平方 $\|v_\theta(z,0)\|^2$），作为一个**与分类器置信度解耦**的几何可靠性信号来动态加权多模态融合，从而打破"模型自己评判自己"的循环依赖，在传感器噪声和语义冲突下显著优于基于置信度的可信融合基线。
 tags:
   - "ICML 2026"
   - "图像生成"

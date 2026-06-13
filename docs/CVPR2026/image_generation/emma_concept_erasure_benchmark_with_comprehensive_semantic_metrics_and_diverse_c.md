@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMMA: Concept Erasure Benchmark with Comprehensive Semantic Metrics and Diverse Categories
 description: >-
-  [CVPR 2026][图像生成][概念擦除] 提出 EMMA 基准，从五个维度（擦除能力、保留能力、效率、质量、偏见）共 12 个指标系统评估 T2I 模型的概念擦除方法，覆盖 206 个概念类别和 5 个领域，首次揭示现有方法在隐式提示下的浅层擦除本质和偏见放大问题。
+  [CVPR 2026][图像生成][概念擦除] 提出 EMMA 基准，从五个维度（擦除能力、保留能力、效率、质量、偏见）共 12 个指标系统评估 T2I 模型的概念擦除方法，覆盖 206 个概念类别和 5 个领域，首次揭示现有方法在隐式提示下的浅层擦除本质和偏见放大问题。 领域现状：文本到图像（T2I）生成模型（如 Stab…
 tags:
   - "CVPR 2026"
   - "图像生成"

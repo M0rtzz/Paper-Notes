@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TripTailor: A Real-World Benchmark for Personalized Travel Planning
 description: >-
-  [ACL 2025][LLM评测][Travel Planning] 提出 TripTailor，一个基于真实数据的大规模旅行规划 benchmark，包含 40 个城市的 50 万+ POI 和近 4000 条真实行程，并引入可行性、合理性和个性化三维评估框架…
+  [ACL 2025][LLM评测][Travel Planning] 提出 TripTailor，一个基于真实数据的大规模旅行规划 benchmark，包含 40 个城市的 50 万+ POI 和近 4000 条真实行程，并引入可行性、合理性和个性化三维评估框架，发现最先进 LLM 生成的行程不到 10% 能达到人类水平。
 tags:
   - "ACL 2025"
   - "LLM评测"

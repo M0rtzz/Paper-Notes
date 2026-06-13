@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lost in Transmission: When and Why LLMs Fail to Reason Globally
 description: >-
-  [NeurIPS 2025 (Spotlight)][LLM推理][communication complexity] 提出有界注意力前缀预言机(BAPO)计算框架，将LLM的注意力头建模为有限带宽通信信道，证明图可达性等全局推理问题是BAPO-hard的（需超常数带宽）…
+  [NeurIPS 2025 (Spotlight)][LLM推理][communication complexity] 提出有界注意力前缀预言机(BAPO)计算框架，将LLM的注意力头建模为有限带宽通信信道，证明图可达性等全局推理问题是BAPO-hard的（需超常数带宽），且CoT可将任何BAPO-hard问题转化为BAPO-easy问题，实验在GPT-4o/Claude/Gemini上验证理论预测。
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "LLM推理"

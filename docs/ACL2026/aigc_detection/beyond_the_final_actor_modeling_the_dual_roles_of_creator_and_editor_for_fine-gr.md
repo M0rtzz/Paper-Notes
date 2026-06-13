@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond the Final Actor: Modeling the Dual Roles of Creator and Editor for Fine-Grained LLM-Generated Text Detection
 description: >-
-  [ACL 2026][AIGC检测][LLM生成文本检测] 提出 RACE（Rhetorical Analysis for Creator-Editor Modeling），利用修辞结构理论(RST)构建逻辑图来建模文本"创作者"的思维架构，同时提取篇章单元级特征捕获"编辑者"的语言风格…
+  [ACL 2026][AIGC检测][LLM生成文本检测] 提出 RACE（Rhetorical Analysis for Creator-Editor Modeling），利用修辞结构理论(RST)构建逻辑图来建模文本"创作者"的思维架构，同时提取篇章单元级特征捕获"编辑者"的语言风格，实现四类细粒度 LLM 生成文本检测（人写/LLM写/LLM润色人文/人改写LLM文）。
 tags:
   - "ACL 2026"
   - "AIGC检测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MARCH: Evaluating the Intersection of Ambiguity Interpretation and Multi-hop Inference
 description: >-
-  [ACL 2026][LLM评测][多跳推理] 提出 MARCH 基准（2,209 个多跳歧义问题）和 CLARION 框架，首次系统研究歧义解析与多步推理交叉场景下的 QA 挑战，揭示现有 SOTA 模型在此类问题上的严重不足。
+  [ACL 2026 Findings][LLM评测][多跳推理] 提出 MARCH 基准（2,209 个多跳歧义问题）和 CLARION 框架，首次系统研究歧义解析与多步推理交叉场景下的 QA 挑战，揭示现有 SOTA 模型在此类问题上的严重不足。 领域现状：多跳 QA 要求模型跨多个文档构建逻辑链；歧义 QA 要求模型处理…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "多跳推理"
   - "歧义解析"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DreamStruct: Understanding Slides and User Interfaces via Synthetic Data Generation
 description: >-
-  [ECCV 2024][代码智能][合成数据生成] 提出利用代码生成合成结构化视觉数据（幻灯片和UI），用于训练理解模型，减少人工标注需求。
+  [ECCV 2024][代码智能][合成数据生成] 提出利用代码生成合成结构化视觉数据（幻灯片和UI），用于训练理解模型，减少人工标注需求。 幻灯片（Slides）和用户界面（UI）是日常数字交互中极为常见的结构化视觉内容，对这类内容的机器理解对于辅助残障人士使用数字工具至关重要。然而，现有的结构化视觉理解方法通常依赖大量手…
 tags:
   - "ECCV 2024"
   - "代码智能"

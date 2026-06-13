@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation
 description: >-
-  [NeurIPS 2025][预训练][上下文学习] 通过 AttnLRP 归因方法系统解剖 LLM 在 in-context retrieval augmented QA 中的内部机制，发现三类功能特化的注意力头——Task heads（中间层，解析指令/问题）、Retrieval heads（后层…
+  [NeurIPS 2025][预训练][上下文学习] 通过 AttnLRP 归因方法系统解剖 LLM 在 in-context retrieval augmented QA 中的内部机制，发现三类功能特化的注意力头——Task heads（中间层，解析指令/问题）、Retrieval heads（后层，逐字复制上下文答案）、Parametric heads（编码参数化知识），并通过 Function Vector 注入和来源追踪探针验证其功能，在 Llama-3.1/Mistral/Gemma 上 ROC AUC ≥94%。
 tags:
   - "NeurIPS 2025"
   - "预训练"

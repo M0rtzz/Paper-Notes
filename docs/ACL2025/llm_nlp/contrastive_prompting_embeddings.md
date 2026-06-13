@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering
 description: >-
-  [ACL 2025][LLM/NLP][sentence embedding] 提出对比提示（Contrastive Prompting, CP）方法，通过构造辅助提示编码句子的非核心信息，在推理时将正常提示与辅助提示的隐层激活值做"语义减法"，过滤停用词等无关语义，使 LLM 句子嵌入更聚焦核心语义…
+  [ACL 2025][LLM 其他][sentence embedding] 提出对比提示（Contrastive Prompting, CP）方法，通过构造辅助提示编码句子的非核心信息，在推理时将正常提示与辅助提示的隐层激活值做"语义减法"，过滤停用词等无关语义，使 LLM 句子嵌入更聚焦核心语义，即插即用地一致提升 PromptEOL/CoT/Knowledge 等多种提示方法在 STS 和分类任务上的表现。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "sentence embedding"
   - "提示学习"
   - "activation steering"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Few-Shot Implicit Function Generation via Equivariance
 description: >-
-  [CVPR 2025][自监督学习][few-shot] 通过等变性约束从少量样本生成隐式函数（NeRF/SDF），利用对称性先验减少对数据的需求
+  [CVPR 2025][自监督学习][few-shot] 通过等变性约束从少量样本生成隐式函数（NeRF/SDF），利用对称性先验减少对数据的需求 领域现状 领域现状：Few-Shot Implicit Function Generation via Equivariance 方向近年取得了显著进展，但仍存在关键挑战…
 tags:
   - "CVPR 2025"
   - "自监督学习"

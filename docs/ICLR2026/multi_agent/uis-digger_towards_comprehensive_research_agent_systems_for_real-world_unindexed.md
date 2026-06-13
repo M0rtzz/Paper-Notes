@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UIS-Digger: Towards Comprehensive Research Agent Systems for Real-world Unindexed Information Seeking
 description: >-
-  [ICLR 2026][多智能体][未索引信息检索] 识别并形式化"未索引信息检索"(UIS) 问题——搜索引擎无法直接检索的动态网页/嵌入文件/交互式内容，提出首个 UIS 基准 UIS-QA（110 题）和多 Agent 框架 UIS-Digger…
+  [ICLR 2026][多智能体][未索引信息检索] 识别并形式化"未索引信息检索"(UIS) 问题——搜索引擎无法直接检索的动态网页/嵌入文件/交互式内容，提出首个 UIS 基准 UIS-QA（110 题）和多 Agent 框架 UIS-Digger，以 ~30B 参数模型经 SFT+RFT 训练后达到 27.27% 准确率，超越集成 O3/GPT-4.1 的系统。
 tags:
   - "ICLR 2026"
   - "多智能体"

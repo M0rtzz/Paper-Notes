@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Taming Video Models for 3D and 4D Generation via Zero-Shot Camera Control
 description: >-
-  [CVPR 2026][图像生成][视频扩散模型] WorldForge 提出一个完全无训练的推理时引导框架，通过三个协同组件——步内递归精化（IRR）、光流门控潜变量融合（FLF）和双路径自校正引导（DSG）——将预训练视频扩散模型改造为精确相机轨迹可控的 3D/4D 生成工具…
+  [CVPR 2026][图像生成][视频扩散模型] WorldForge 提出一个完全无训练的推理时引导框架，通过三个协同组件——步内递归精化（IRR）、光流门控潜变量融合（FLF）和双路径自校正引导（DSG）——将预训练视频扩散模型改造为精确相机轨迹可控的 3D/4D 生成工具，在轨迹精度和感知质量上同时超越训练式和推理式基线。
 tags:
   - "CVPR 2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Do MLLMs Capture How Interfaces Guide User Behavior? A Benchmark for Multimodal UI/UX Design Understanding
 description: >-
-  [ACL2026][多模态VLM][UI/UX] 这篇论文提出 WiserUI-Bench，用 300 组真实 A/B 测试验证过的 UI 图片对和 684 条专家解释评测 MLLM 是否理解界面设计如何影响用户行为，结果显示现有模型在选择赢家时接近随机、在解释原因时也明显未达专家水平。
+  [ACL2026][多模态VLM][UI/UX] 这篇论文提出 WiserUI-Bench，用 300 组真实 A/B 测试验证过的 UI 图片对和 684 条专家解释评测 MLLM 是否理解界面设计如何影响用户行为，结果显示现有模型在选择赢家时接近随机、在解释原因时也明显未达专家水平。 领域现状：UI 设计不只是好不好看…
 tags:
   - "ACL2026"
   - "多模态VLM"

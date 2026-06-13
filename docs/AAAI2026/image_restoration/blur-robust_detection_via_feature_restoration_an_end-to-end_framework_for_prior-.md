@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Blur-Robust Detection via Feature Restoration: An End-to-End Framework for Prior-Guided Infrared UAV Target Detection
 description: >-
-  [AAAI 2026][图像恢复][运动模糊] 提出 JFD3 端到端双分支框架，在特征域而非图像域进行去模糊，并利用频率结构先验引导检测网络，实现运动模糊条件下红外无人机目标的高精度实时检测。
+  [AAAI 2026][图像恢复][运动模糊] 提出 JFD3 端到端双分支框架，在特征域而非图像域进行去模糊，并利用频率结构先验引导检测网络，实现运动模糊条件下红外无人机目标的高精度实时检测。 - 红外无人机检测的实际需求：红外无人机目标 (IRUT) 检测在全天候监控和侦察任务中至关重要，但传感器的快速运动常导致严重的运…
 tags:
   - "AAAI 2026"
   - "图像恢复"

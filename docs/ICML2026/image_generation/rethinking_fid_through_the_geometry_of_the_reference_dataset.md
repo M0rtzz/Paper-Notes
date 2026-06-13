@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Rethinking FID Through the Geometry of the Reference Dataset
 description: >-
-  [ICML 2026][FID] 本文指出 FID 的"越低越好"假设在不同参考数据集上系统性失效，并用分布密度 $\langle -\log d_k\rangle$ 和有效秩 $\mathrm{erank}(A)$ 两个几何描述子…
+  [ICML 2026][图像生成][FID] 本文指出 FID 的"越低越好"假设在不同参考数据集上系统性失效，并用分布密度 $\langle -\log d_k\rangle$ 和有效秩 $\mathrm{erank}(A)$ 两个几何描述子，通过分层线性模型证明它们能解释 ~70% 的"样本质量→FID"斜率跨数据集差异，从而把 FID 的脆弱性首次定量归因到参考集本身。
 tags:
   - "ICML 2026"
+  - "图像生成"
   - "FID"
   - "生成评估"
   - "参考集几何"

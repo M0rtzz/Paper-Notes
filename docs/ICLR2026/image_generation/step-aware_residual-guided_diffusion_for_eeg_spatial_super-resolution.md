@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution
 description: >-
-  [ICLR 2026][图像生成][EEG超分辨率] 提出 SRGDiff，一种步感知残差引导的扩散模型，将 EEG 空间超分辨率重新定义为动态条件生成任务，通过每步残差方向校正和步依赖仿射调制实现高保真重建。
+  [ICLR 2026][图像生成][EEG超分辨率] 提出 SRGDiff，一种步感知残差引导的扩散模型，将 EEG 空间超分辨率重新定义为动态条件生成任务，通过每步残差方向校正和步依赖仿射调制实现高保真重建。 EEG（脑电图）是无创脑活动监测技术，广泛应用于脑机接口、癫痫诊断、情感识别等领域。然而： 空间分辨率受限：高密度…
 tags:
   - "ICLR 2026"
   - "图像生成"

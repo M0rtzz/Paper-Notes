@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scout: Active Information Foraging for Long-Text Understanding with Decoupled Epistemic States
 description: >-
-  [ICML 2026][LLM效率][长文本理解] Scout 把百万级 token 的长文本理解重新建模为"主动信息觅食"过程，引入与交互轨迹解耦的、带来源锚点的 epistemic state $\mathcal{E}_t$ 作为唯一推理底座…
+  [ICML 2026][LLM效率][长文本理解] Scout 把百万级 token 的长文本理解重新建模为"主动信息觅食"过程，引入与交互轨迹解耦的、带来源锚点的 epistemic state $\mathcal{E}_t$ 作为唯一推理底座，并通过 gap-diagnosed 自评估迭代收缩到查询充分子集，在 LooGLE-v2 和 $\infty$Bench 上既追平甚至超过 Gemini-3-Pro 等前沿模型，又把 token 成本降低到约 $1/8$。
 tags:
   - "ICML 2026"
   - "LLM效率"

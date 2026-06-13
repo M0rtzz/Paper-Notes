@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards a Universal Image Degradation Model via Content-Degradation Disentanglement
 description: >-
-  [ICCV 2025][图像恢复][图像退化建模] 提出首个通用图像退化模型，通过"压缩解纠缠"方法分离退化信息与图像内容，引入 IDEN 和 IDA 层处理非均匀退化，实现跨退化类型的编码、合成和迁移，可作为 plug-in 模块将非盲图像恢复方法转化为盲方法。
+  [ICCV 2025][图像恢复][图像退化建模] 提出首个通用图像退化模型，通过"压缩解纠缠"方法分离退化信息与图像内容，引入 IDEN 和 IDA 层处理非均匀退化，实现跨退化类型的编码、合成和迁移，可作为 plug-in 模块将非盲图像恢复方法转化为盲方法。 图像退化合成在图像恢复、艺术效果模拟等领域有重要应用…
 tags:
   - "ICCV 2025"
   - "图像恢复"

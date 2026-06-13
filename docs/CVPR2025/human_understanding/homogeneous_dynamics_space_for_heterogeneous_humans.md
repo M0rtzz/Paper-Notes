@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Homogeneous Dynamics Space for Heterogeneous Humans
 description: >-
-  [CVPR 2025][人体理解][人体动力学] 本文提出 HDyS（Homogeneous Dynamics Space），通过聚合来自生物力学和强化学习的异构人体运动数据，训练一个同构潜空间来统一不同运动学和动力学表征，实现了从运动学到动力学的高质量双向映射…
+  [CVPR 2025][人体理解][人体动力学] 本文提出 HDyS（Homogeneous Dynamics Space），通过聚合来自生物力学和强化学习的异构人体运动数据，训练一个同构潜空间来统一不同运动学和动力学表征，实现了从运动学到动力学的高质量双向映射，并在逆动力学估计、地面反力预测等下游任务上展现了有效性。
 tags:
   - "CVPR 2025"
   - "人体理解"

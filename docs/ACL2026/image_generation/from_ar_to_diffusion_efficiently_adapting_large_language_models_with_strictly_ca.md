@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From AR to Diffusion: Efficiently Adapting Large Language Models with Strictly Causal and Elastic Horizons
 description: >-
-  [ACL2026][图像生成][扩散语言模型] 本文提出 FLUID，用严格因果注意力和熵感知 Elastic Horizon 把预训练自回归 LLM 高效适配为扩散式并行生成模型，在只用 2.7B 适配 tokens 的情况下取得接近强 AR 模型、优于现有扩散基线的推理和代码生成表现。
+  [ACL2026][图像生成][扩散语言模型] 本文提出 FLUID，用严格因果注意力和熵感知 Elastic Horizon 把预训练自回归 LLM 高效适配为扩散式并行生成模型，在只用 2.7B 适配 tokens 的情况下取得接近强 AR 模型、优于现有扩散基线的推理和代码生成表现。 领域现状：主流 LLM 基于 au…
 tags:
   - "ACL2026"
   - "图像生成"

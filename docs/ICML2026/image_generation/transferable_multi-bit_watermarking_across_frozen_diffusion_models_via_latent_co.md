@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transferable Multi-Bit Watermarking Across Frozen Diffusion Models via Latent Consistency Bridges
 description: >-
-  [ICML2026][图像生成][多比特水印] DiffMark 把一个学到的潜空间扰动 $\delta$ 在冻结扩散模型的每一步去噪中持续注入，让水印信号在终态潜变量 $z_0$ 上累积，并借助 Latent Consistency Model 作为可微训练桥绕过 50 步 DDIM 的反向传播…
+  [ICML2026][图像生成][多比特水印] DiffMark 把一个学到的潜空间扰动 $\delta$ 在冻结扩散模型的每一步去噪中持续注入，让水印信号在终态潜变量 $z_0$ 上累积，并借助 Latent Consistency Model 作为可微训练桥绕过 50 步 DDIM 的反向传播，实现单次前向 16.4 ms 解出 64 bit、跨模型即插即用且无需重训的水印方案。
 tags:
   - "ICML2026"
   - "图像生成"

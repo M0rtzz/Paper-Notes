@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Granular Concept Circuits: Toward a Fine-Grained Circuit Discovery for Concept Representations
 description: >-
-  [ICCV 2025][可解释性][视觉电路发现] 提出 Granular Concept Circuit (GCC) 方法，通过迭代评估神经元间的功能依赖性（Neuron Sensitivity Score）和语义一致性（Semantic Flow Score）…
+  [ICCV 2025][可解释性][视觉电路发现] 提出 Granular Concept Circuit (GCC) 方法，通过迭代评估神经元间的功能依赖性（Neuron Sensitivity Score）和语义一致性（Semantic Flow Score），自动发现深度视觉模型中编码特定概念的细粒度视觉电路——这是首个能在单个query中发现多个概念级电路的方法。
 tags:
   - "ICCV 2025"
   - "可解释性"

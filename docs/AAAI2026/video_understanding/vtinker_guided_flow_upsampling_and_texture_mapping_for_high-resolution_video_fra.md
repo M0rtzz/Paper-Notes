@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VTinker: Guided Flow Upsampling and Texture Mapping for High-Resolution Video Frame Interpolation
 description: >-
-  [AAAI 2026][视频理解][视频帧插值] 提出 VTinker 流水线，通过引导式光流上采样（GFU）解决光流边界模糊问题，并采用纹理映射替代传统逐像素融合策略来消除鬼影和不连续，在高分辨率视频帧插值上取得 SOTA。
+  [AAAI 2026][视频理解][视频帧插值] 提出 VTinker 流水线，通过引导式光流上采样（GFU）解决光流边界模糊问题，并采用纹理映射替代传统逐像素融合策略来消除鬼影和不连续，在高分辨率视频帧插值上取得 SOTA。 领域现状：基于光流的视频帧插值（VFI）是主流方法，通常包含三个阶段：运动估计（在低分辨率下进行以…
 tags:
   - "AAAI 2026"
   - "视频理解"

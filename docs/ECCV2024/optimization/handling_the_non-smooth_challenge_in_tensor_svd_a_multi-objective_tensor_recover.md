@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Handling the Non-smooth Challenge in Tensor SVD: A Multi-objective Tensor Recovery Framework
 description: >-
-  [ECCV2024][优化/理论][tensor completion] 提出基于可学习张量核范数的多目标张量恢复框架 (MOTC)，通过引入可学习酉矩阵替代固定变换来解决 t-SVD 方法在非光滑张量数据上的性能退化问题，并通过多目标优化有效利用张量各维度的低秩性。
+  [ECCV2024][优化/理论][tensor completion] 提出基于可学习张量核范数的多目标张量恢复框架 (MOTC)，通过引入可学习酉矩阵替代固定变换来解决 t-SVD 方法在非光滑张量数据上的性能退化问题，并通过多目标优化有效利用张量各维度的低秩性。 基于张量奇异值分解 (t-SVD) 的张量恢复方法近年来…
 tags:
   - "ECCV2024"
   - "优化/理论"

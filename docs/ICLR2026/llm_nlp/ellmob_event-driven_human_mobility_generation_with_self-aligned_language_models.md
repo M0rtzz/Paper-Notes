@@ -2,10 +2,10 @@
 title: >-
   [论文解读] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework
 description: >-
-  [ICLR 2026][LLM/NLP][人类移动性生成] 提出 ELLMob 框架，基于认知心理学的模糊痕迹理论（FTT），通过提取并迭代对齐"习惯 gist"和"事件 gist"来调和用户日常模式与社会事件约束之间的竞争，实现事件驱动的可解释轨迹生成。
+  [ICLR 2026][LLM 其他][人类移动性生成] 提出 ELLMob 框架，基于认知心理学的模糊痕迹理论（FTT），通过提取并迭代对齐"习惯 gist"和"事件 gist"来调和用户日常模式与社会事件约束之间的竞争，实现事件驱动的可解释轨迹生成。 人类移动性生成旨在合成合理的时空轨迹数据，广泛应用于城市规划、交通管理…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "人类移动性生成"
   - "事件驱动轨迹"
   - "LLM自对齐"

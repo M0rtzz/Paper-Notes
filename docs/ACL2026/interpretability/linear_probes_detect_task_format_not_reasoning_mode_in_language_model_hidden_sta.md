@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Linear Probes Detect Task Format, Not Reasoning Mode in Language Model Hidden States
 description: >-
-  [ACL 2026][可解释性][线性探针] 这篇论文用 Qwen3-14B 上的探针、残差去混淆、trace-anchor 和 causal steering 实验证明：线性探针看似能 100% 区分演绎、归纳、溯因推理，但实际检测到的是数据源和题目格式，而不是隐藏状态中的推理模式。
+  [ACL 2026][可解释性][线性探针] 这篇论文用 Qwen3-14B 上的探针、残差去混淆、trace-anchor 和 causal steering 实验证明：线性探针看似能 100% 区分演绎、归纳、溯因推理，但实际检测到的是数据源和题目格式，而不是隐藏状态中的推理模式。 领域现状：机械可解释性中常用线性探针来…
 tags:
   - "ACL 2026"
   - "可解释性"

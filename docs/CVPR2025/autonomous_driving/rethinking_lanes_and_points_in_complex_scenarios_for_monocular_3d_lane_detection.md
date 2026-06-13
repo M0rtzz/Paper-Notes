@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Lanes and Points in Complex Scenarios for Monocular 3D Lane Detection
 description: >-
-  [CVPR 2025][自动驾驶][3D车道线检测] 揭示现有稀疏车道线表示方法在端点处存在固有截断缺陷（最多丢失 20m），提出端点修补策略（EP-head）和融合几何先验的 PL-attention…
+  [CVPR 2025][自动驾驶][3D车道线检测] 揭示现有稀疏车道线表示方法在端点处存在固有截断缺陷（最多丢失 20m），提出端点修补策略（EP-head）和融合几何先验的 PL-attention，在 Persformer/Anchor3DLane/LATR 上分别提升 F1-score 4.4/3.2/2.8 个点。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

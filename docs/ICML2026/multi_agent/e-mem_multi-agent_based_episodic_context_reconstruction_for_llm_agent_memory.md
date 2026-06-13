@@ -2,7 +2,7 @@
 title: >-
   [论文解读] E-mem: Multi-Agent Based Episodic Context Reconstruction for LLM Agent Memory
 description: >-
-  [ICML 2026][多智能体][情景记忆] E-mem 把"预处理压缩成嵌入/图"的传统记忆范式改成"保留原始上下文 + 小模型助手就地推理"的情景重构范式：master agent 只做全局规划，多个 SLM assistant 各自守着一段未压缩的原文，按多路由检索激活后再做局部推理回传证据…
+  [ICML 2026][多智能体][情景记忆] E-mem 把"预处理压缩成嵌入/图"的传统记忆范式改成"保留原始上下文 + 小模型助手就地推理"的情景重构范式：master agent 只做全局规划，多个 SLM assistant 各自守着一段未压缩的原文，按多路由检索激活后再做局部推理回传证据，在 LoCoMo 上 F1 反超 SOTA 7.75 个点的同时把 token 消耗砍掉 70%。
 tags:
   - "ICML 2026"
   - "多智能体"

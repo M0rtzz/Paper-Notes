@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generalization Bounds for Semi-supervised Matrix Completion with Distributional Side Information
 description: >-
-  [AAAI 2026][推荐系统][半监督矩阵补全] 提出首个半监督矩阵补全学习范式：假设采样分布 $P$ 和真实矩阵 $G$ 共享低秩子空间，给定大量未标注数据 $M$ 和少量标注数据 $N$…
+  [AAAI 2026][推荐系统][半监督矩阵补全] 提出首个半监督矩阵补全学习范式：假设采样分布 $P$ 和真实矩阵 $G$ 共享低秩子空间，给定大量未标注数据 $M$ 和少量标注数据 $N$，证明泛化误差可分解为 $\tilde{O}(\sqrt{nd/M}) + \tilde{O}(\sqrt{dr/N})$ 两个独立项，在 Douban 和 MovieLens 数据集上显著优于仅用显式反馈的基线。
 tags:
   - "AAAI 2026"
   - "推荐系统"

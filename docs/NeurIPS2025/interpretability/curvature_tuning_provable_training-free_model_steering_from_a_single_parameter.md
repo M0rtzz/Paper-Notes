@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Curvature Tuning: Provable Training-free Model Steering From a Single Parameter
 description: >-
-  [NeurIPS 2025][可解释性][曲率调节] 提出 Curvature Tuning（CT），通过在激活函数中注入单个超参数 $\beta$ 来可证明地调节模型决策边界的曲率，无需修改权重即可提升泛化和鲁棒性，同时作为微调方法参数量远少于 LoRA rank 1。
+  [NeurIPS 2025][可解释性][曲率调节] 提出 Curvature Tuning（CT），通过在激活函数中注入单个超参数 $\beta$ 来可证明地调节模型决策边界的曲率，无需修改权重即可提升泛化和鲁棒性，同时作为微调方法参数量远少于 LoRA rank 1。 现有参数高效微调（PEFT）方法（如 LoRA、Ad…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TeXOCR: Advancing Document OCR Models for Compilable Page-to-LaTeX Reconstruction
 description: >-
-  [ACL2026][多模态VLM][Page-to-LaTeX] 这篇论文把科学 PDF OCR 从“转成文本/Markdown”推进到“重建可零人工编译的页面级 LaTeX”，提出 TEXOCR-Bench、TEXOCR-Train 和 SFT+RLVR 两阶段训练…
+  [ACL2026][多模态VLM][Page-to-LaTeX] 这篇论文把科学 PDF OCR 从“转成文本/Markdown”推进到“重建可零人工编译的页面级 LaTeX”，提出 TEXOCR-Bench、TEXOCR-Train 和 SFT+RLVR 两阶段训练，让一个 Qwen3-VL-2B 派生模型在结构一致性、引用有效性和编译成功率上显著优于同规模开源基线。
 tags:
   - "ACL2026"
   - "多模态VLM"

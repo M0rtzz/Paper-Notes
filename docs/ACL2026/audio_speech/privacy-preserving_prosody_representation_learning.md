@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Privacy-preserving Prosody Representation Learning
 description: >-
-  [ACL2026][音频/语音][韵律表征] 这篇论文提出一个以 glottal source 为输入的自监督 prosody encoder，通过 F0 说话人归一化和 adversarial speaker loss 减少身份泄露…
+  [ACL2026][音频/语音][韵律表征] 这篇论文提出一个以 glottal source 为输入的自监督 prosody encoder，通过 F0 说话人归一化和 adversarial speaker loss 减少身份泄露，在 phrase boundary、syllable prominence 和 pitch reconstruction 上优于 raw prosody/HuBERT baseline，同时把 VoxCeleb1 speaker identification accuracy 从 HuBERT 的 0.64 降到 0.14。
 tags:
   - "ACL2026"
   - "音频/语音"

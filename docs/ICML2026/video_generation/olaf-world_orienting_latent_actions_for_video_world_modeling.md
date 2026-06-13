@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OLAF-World: Orienting Latent Actions for Video World Modeling
 description: >-
-  [ICML 2026][视频生成][隐式动作学习] OLAF-World 通过**序列级控制-效应对齐**（Seq∆-REPA）学习可迁移的隐式动作——把无标注视频转化为动作可控的视频世界模型，实现跨上下文的零样本动作迁移…
+  [ICML 2026][视频生成][隐式动作学习] OLAF-World 通过**序列级控制-效应对齐**（Seq∆-REPA）学习可迁移的隐式动作——把无标注视频转化为动作可控的视频世界模型，实现跨上下文的零样本动作迁移；用 1 分钟的标注数据即可达到 AdaWorld 2 小时数据下的性能（旋转控制精度 0.4680 vs 0.6420）。
 tags:
   - "ICML 2026"
   - "视频生成"

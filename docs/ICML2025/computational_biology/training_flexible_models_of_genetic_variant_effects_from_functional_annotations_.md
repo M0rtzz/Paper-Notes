@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training Flexible Models of Genetic Variant Effects from Functional Annotations using Accelerated Linear Algebra
 description: >-
-  [ICML2025][计算生物][GWAS] 本文提出 DeepWAS（Deep genome Wide Association Studies），利用现代快速线性代数技术（带状矩阵近似 + 迭代求解）解决 GWAS 中大规模 LD 矩阵求逆的计算瓶颈…
+  [ICML2025][计算生物][GWAS] 本文提出 DeepWAS（Deep genome Wide Association Studies），利用现代快速线性代数技术（带状矩阵近似 + 迭代求解）解决 GWAS 中大规模 LD 矩阵求逆的计算瓶颈，首次实现用大规模神经网络最大化全似然来训练功能注释驱动的遗传变异效应预测模型，且发现只有在全似然训练下（而非传统 summary statistics 拟合）更大的模型才能带来更好的性能。
 tags:
   - "ICML2025"
   - "计算生物"

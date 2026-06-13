@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ExaGPT: Example-Based Machine-Generated Text Detection for Human Interpretability
 description: >-
-  [ACL 2026][AIGC检测][LLM 文本检测] ExaGPT 把"判定一段文本是人写还是 LLM 生成"这件事重构成"在数据存储里找哪一侧的相似 span 更多"，通过 BERT 嵌入 + k-NN 检索 + 动态规划做最优 span 切分…
+  [ACL 2026 Findings][AIGC检测][LLM 文本检测] ExaGPT 把"判定一段文本是人写还是 LLM 生成"这件事重构成"在数据存储里找哪一侧的相似 span 更多"，通过 BERT 嵌入 + k-NN 检索 + 动态规划做最优 span 切分，既给出可解释证据（最相似的检索 span 例子）又在 1% FPR 下把准确率刷到比此前可解释检测器最高高出 +37.0 个点。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "AIGC检测"
   - "LLM 文本检测"
   - "可解释性"

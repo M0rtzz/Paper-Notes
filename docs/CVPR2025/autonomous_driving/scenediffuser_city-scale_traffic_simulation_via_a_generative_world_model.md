@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneDiffuser++: City-Scale Traffic Simulation via a Generative World Model
 description: >-
-  [CVPR 2025][自动驾驶][交通仿真] 提出 SceneDiffuser++，一个端到端的城市级交通仿真扩散模型，通过软裁剪（soft clipping）处理稀疏张量中的智能体出入场问题，实现 60 秒以上的行程级（trip-level）交通仿真…
+  [CVPR 2025][自动驾驶][交通仿真] 提出 SceneDiffuser++，一个端到端的城市级交通仿真扩散模型，通过软裁剪（soft clipping）处理稀疏张量中的智能体出入场问题，实现 60 秒以上的行程级（trip-level）交通仿真，在 WOMD-XLMap 上达到 0.2423 综合 JS 散度。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Domain Shift in Diffusion Models for Cross-Modality Image Translation
 description: >-
-  [ICLR 2026][医学图像][跨模态图像翻译] 提出CDTSDE框架，在扩散模型的逆向SDE中嵌入可学习的空间自适应域混合场 $\Lambda_t$，使跨模态翻译路径沿低能量流形前进，在MRI模态转换、SAR→光学、工业缺陷语义映射任务上以更少去噪步数实现更高保真度。
+  [ICLR 2026][医学图像][跨模态图像翻译] 提出CDTSDE框架，在扩散模型的逆向SDE中嵌入可学习的空间自适应域混合场 $\Lambda_t$，使跨模态翻译路径沿低能量流形前进，在MRI模态转换、SAR→光学、工业缺陷语义映射任务上以更少去噪步数实现更高保真度。 领域现状：跨模态图像翻译（如MRI T1→T2、S…
 tags:
   - "ICLR 2026"
   - "医学图像"

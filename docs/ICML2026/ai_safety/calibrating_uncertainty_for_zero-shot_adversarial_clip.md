@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Calibrating Uncertainty for Zero-Shot Adversarial CLIP
 description: >-
-  [ICML 2026][AI安全][对抗鲁棒性] 提出 UCAT 框架，将 CLIP 的 logits 重新参数化为 Dirichlet 分布的浓度参数，通过对齐干净样本与对抗样本的 Dirichlet 分布（反向 KL 散度），在零样本对抗微调中同时校准不确定性和保持语义结构…
+  [ICML 2026][AI安全][对抗鲁棒性] 提出 UCAT 框架，将 CLIP 的 logits 重新参数化为 Dirichlet 分布的浓度参数，通过对齐干净样本与对抗样本的 Dirichlet 分布（反向 KL 散度），在零样本对抗微调中同时校准不确定性和保持语义结构，在 16 个基准上实现了鲁棒性与校准的最优平衡。
 tags:
   - "ICML 2026"
   - "AI安全"

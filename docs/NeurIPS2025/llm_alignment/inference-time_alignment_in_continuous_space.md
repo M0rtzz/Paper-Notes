@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inference-time Alignment in Continuous Space
 description: >-
-  [NeurIPS 2025][LLM对齐][inference-time alignment] 提出 Simple Energy Adaptation (SEA)，将推理时对齐从"离散空间搜索"范式转变为"连续空间优化"范式…
+  [NeurIPS 2025][LLM对齐][inference-time alignment] 提出 Simple Energy Adaptation (SEA)，将推理时对齐从"离散空间搜索"范式转变为"连续空间优化"范式，通过在连续 logit 空间上进行基于梯度的 Langevin 采样来逼近 RLHF 最优策略，在 AdvBench 上相对最优基线提升 77.51%，在 MATH 上提升 16.36%。
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

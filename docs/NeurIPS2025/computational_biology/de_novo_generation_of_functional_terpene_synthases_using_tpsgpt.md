@@ -2,7 +2,7 @@
 title: >-
   [论文解读] De novo generation of functional terpene synthases using TpsGPT
 description: >-
-  [NeurIPS 2025][计算生物][萜烯合酶] TpsGPT 通过在 79K 萜烯合酶（TPS）序列上微调蒸馏版 ProtGPT2 Tiny（38.9M 参数），生成 28K 候选序列…
+  [NeurIPS 2025][计算生物][萜烯合酶] TpsGPT 通过在 79K 萜烯合酶（TPS）序列上微调蒸馏版 ProtGPT2 Tiny（38.9M 参数），生成 28K 候选序列，经多阶段过滤（困惑度/pLDDT/EnzymeExplorer/CLEAN/InterPro/Foldseek）筛选出 7 条进化距离远（<60% 序列相似度）但结构保守的从头 TPS 序列，湿实验验证其中 2 条具有 TPS 酶活性——以不到 $200 GPU 成本实现功能酶从头设计。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRISP: Persistent Concept Unlearning via Sparse Autoencoders
 description: >-
-  [ACL 2026][LLM安全][SAE] 针对 SAE-based unlearning 大多只在推理时干预、参数仍含敏感知识的问题，CRISP 通过对比 target/retain 语料自动挑出"只在 target 上强激活"的 SAE 特征…
+  [ACL 2026][LLM安全][SAE] 针对 SAE-based unlearning 大多只在推理时干预、参数仍含敏感知识的问题，CRISP 通过对比 target/retain 语料自动挑出"只在 target 上强激活"的 SAE 特征，再用 LoRA + 三段式损失（unlearn + retain + coherence）把这些特征的激活值"焊死"为零，从而在 WMDP-Bio/Cyber 上同时刷新 unlearn-retain-fluency 三轴 Pareto 前沿，比 ELM 高 27-34 分，比 RMU 高 5-8 分。
 tags:
   - "ACL 2026"
   - "LLM安全"

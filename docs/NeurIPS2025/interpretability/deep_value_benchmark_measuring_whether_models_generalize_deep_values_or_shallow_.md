@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences
 description: >-
-  [NeurIPS 2025][可解释性][AI alignment] 提出 Deep Value Benchmark (DVB)，通过"先混淆后解混淆"的实验设计，测量 LLM 是学习了深层人类价值观还是仅记住了表层偏好模式，发现所有模型的深层价值泛化率 (DVGR) 仅为 0.30，远低于随机水平。
+  [NeurIPS 2025 Spotlight][可解释性][AI alignment] 提出 Deep Value Benchmark (DVB)，通过"先混淆后解混淆"的实验设计，测量 LLM 是学习了深层人类价值观还是仅记住了表层偏好模式，发现所有模型的深层价值泛化率 (DVGR) 仅为 0.30，远低于随机水平。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "可解释性"
   - "AI alignment"
   - "deep values"

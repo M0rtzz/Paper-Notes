@@ -2,7 +2,7 @@
 title: >-
   [论文解读] No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors
 description: >-
-  [CVPR 2026][遥感][视频稳定] 提出无监督在线视频稳定框架 LightStab，通过经典三阶段管线（运动估计→运动传播→运动补偿）搭配多线程异步缓冲，在 5 个基准数据集上首次让在线方法全面媲美离线 SOTA，并发布首个包含可见光和红外的多模态无人机航拍稳定测试集 UAV-Test。
+  [CVPR 2026][遥感][视频稳定] 提出无监督在线视频稳定框架 LightStab，通过经典三阶段管线（运动估计→运动传播→运动补偿）搭配多线程异步缓冲，在 5 个基准数据集上首次让在线方法全面媲美离线 SOTA，并发布首个包含可见光和红外的多模态无人机航拍稳定测试集 UAV-Test。 领域现状：视频稳定旨在抑制相…
 tags:
   - "CVPR 2026"
   - "遥感"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Luminance-Aware Statistical Quantization: Unsupervised Hierarchical Learning for Illumination Enhancement
 description: >-
-  [NeurIPS 2025][图像恢复][低光图像增强] 提出 LASQ 框架，将低光图像增强重新定义为基于分层亮度分布的统计采样过程，利用自然亮度转换中固有的幂律分布特性，通过 MCMC 采样生成层次化亮度适配算子，嵌入扩散模型前向过程实现无监督增强，无需正常光照参考即可工作。
+  [NeurIPS 2025][图像恢复][低光图像增强] 提出 LASQ 框架，将低光图像增强重新定义为基于分层亮度分布的统计采样过程，利用自然亮度转换中固有的幂律分布特性，通过 MCMC 采样生成层次化亮度适配算子，嵌入扩散模型前向过程实现无监督增强，无需正常光照参考即可工作。 领域现状： 低光图像增强(LLIE)方法分为…
 tags:
   - "NeurIPS 2025"
   - "图像恢复"

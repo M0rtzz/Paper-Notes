@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preventing Safety Drift in Large Language Models via Coupled Weight and Activation Constraints
 description: >-
-  [ACL 2026][LLM安全][安全漂移] 本文提出 CWAC，在微调时同时约束权重更新方向和安全关键激活特征，从理论和实验上说明单独约束权重或激活都不足以防止 LLM 安全漂移。
+  [ACL 2026][LLM安全][安全漂移] 本文提出 CWAC，在微调时同时约束权重更新方向和安全关键激活特征，从理论和实验上说明单独约束权重或激活都不足以防止 LLM 安全漂移。 领域现状：安全对齐模型在下游微调中很脆弱，即使微调数据看起来是情感分类、新闻分类、数学推理这类良性任务，也可能破坏原本的拒答能力…
 tags:
   - "ACL 2026"
   - "LLM安全"

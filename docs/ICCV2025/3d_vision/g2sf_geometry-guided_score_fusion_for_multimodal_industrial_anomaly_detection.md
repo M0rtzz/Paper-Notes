@@ -2,7 +2,7 @@
 title: >-
   [论文解读] G2SF: Geometry-Guided Score Fusion for Multimodal Industrial Anomaly Detection
 description: >-
-  [ICCV 2025][3D视觉][多模态异常检测] 提出 G2SF 框架，将基于 memory bank 的异常分数重新解释为局部特征空间中的各向同性欧氏距离，进而通过 Local Scale Prediction Network (LSPN) 学习方向感知的缩放因子，将其渐进演化为各向异性的统一融合度量…
+  [ICCV 2025][3D视觉][多模态异常检测] 提出 G2SF 框架，将基于 memory bank 的异常分数重新解释为局部特征空间中的各向同性欧氏距离，进而通过 Local Scale Prediction Network (LSPN) 学习方向感知的缩放因子，将其渐进演化为各向异性的统一融合度量，实现多模态工业异常检测 SOTA。
 tags:
   - "ICCV 2025"
   - "3D视觉"

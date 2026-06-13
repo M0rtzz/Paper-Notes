@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Energy-Regularized Sequential Model Editing on Hyperspheres
 description: >-
-  [ICLR 2026][知识编辑][model editing] 从超球面均匀性（Hyperspherical Energy）视角理解序列模型编辑中的性能退化，提出 SPHERE 方法：通过将编辑扰动投影到预训练权重主超球方向的正交补空间，实现稳定的大规模序列编辑…
+  [ICLR 2026][知识编辑][model editing] 从超球面均匀性（Hyperspherical Energy）视角理解序列模型编辑中的性能退化，提出 SPHERE 方法：通过将编辑扰动投影到预训练权重主超球方向的正交补空间，实现稳定的大规模序列编辑，在 LLaMA3-8B 上平均超越最强基线 16.41%。
 tags:
   - "ICLR 2026"
   - "知识编辑"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Extending Direct Preference Optimization to Accommodate Ties
 description: >-
-  [NeurIPS 2025][多语言/翻译][DPO] 将 DPO 中的 Bradley-Terry 偏好模型替换为 Rao-Kupper 和 Davidson 扩展，使偏好优化能够显式建模"平局"数据，避免丢弃模糊偏好对，在翻译和数学推理上获得更好的正则化和性能。
+  [NeurIPS 2025][多语言/翻译][DPO] 将 DPO 中的 Bradley-Terry 偏好模型替换为 Rao-Kupper 和 Davidson 扩展，使偏好优化能够显式建模"平局"数据，避免丢弃模糊偏好对，在翻译和数学推理上获得更好的正则化和性能。 领域现状：DPO 基于 Bradley-Terry 模型…
 tags:
   - "NeurIPS 2025"
   - "多语言/翻译"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steer Like the LLM: Activation Steering that Mimics Prompting
 description: >-
-  [ICML 2026][可解释性][activation steering] 本文把 "prompt steering"重新解释为 LLM 自己实现的一种 activation steering, 然后用一个**逐 token 的 ReLU 探针**来蒸馏 prompt 注入的激活差…
+  [ICML 2026][可解释性][activation steering] 本文把 "prompt steering"重新解释为 LLM 自己实现的一种 activation steering, 然后用一个**逐 token 的 ReLU 探针**来蒸馏 prompt 注入的激活差, 训练出 PSR (Prompt Steering Replacement) 模块, 既能在三个 steering 基准上超过现有激活引导方法 (CAA, ReFT-R1, Stolfo 等), 又在 AxBench 与人格引导上和 prompting 打成平甚至反超。
 tags:
   - "ICML 2026"
   - "可解释性"

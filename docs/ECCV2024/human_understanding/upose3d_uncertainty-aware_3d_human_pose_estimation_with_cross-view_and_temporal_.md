@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues
 description: >-
-  [ECCV 2024][人体理解][多视角3D姿态估计] 提出UPose3D，一种基于不确定性感知的多视角3D人体姿态估计方法，通过Normalizing Flow建模2D关键点不确定性、可扩展的跨视角点云投影融合策略和合成数据训练的Pose Compiler模块…
+  [ECCV 2024][人体理解][多视角3D姿态估计] 提出UPose3D，一种基于不确定性感知的多视角3D人体姿态估计方法，通过Normalizing Flow建模2D关键点不确定性、可扩展的跨视角点云投影融合策略和合成数据训练的Pose Compiler模块，在无需3D标注的情况下取得OoD场景下SOTA表现，且在InD场景下与使用3D监督的方法竞争。
 tags:
   - "ECCV 2024"
   - "人体理解"

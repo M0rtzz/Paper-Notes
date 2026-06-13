@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs
 description: >-
-  [ICLR 2026][物理/科学计算][偏微分方程] 基于Green函数理论，将叠加原理嵌入物理-神经混合架构，构建离散Green网络DGNet，在仅用数十条训练轨迹的条件下实现SOTA精度，并展现对未见源项的鲁棒零样本泛化。
+  [ICLR 2026][物理/科学计算][偏微分方程] 基于Green函数理论，将叠加原理嵌入物理-神经混合架构，构建离散Green网络DGNet，在仅用数十条训练轨迹的条件下实现SOTA精度，并展现对未见源项的鲁棒零样本泛化。 时空偏微分方程（PDE）是流体力学、天气预报、分子动力学等领域建模的基础。传统数值求解器计算开销…
 tags:
   - "ICLR 2026"
   - "物理/科学计算"

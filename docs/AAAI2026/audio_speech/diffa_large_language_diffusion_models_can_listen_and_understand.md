@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiffA: Large Language Diffusion Models Can Listen and Understand
 description: >-
-  [AAAI 2026][音频/语音][扩散语言模型] 提出 DIFFA——首个基于扩散语言模型的大型音频-语言模型，通过冻结 LLaDA-8B 骨干网络 + 轻量双适配器架构 + 两阶段训练管线…
+  [AAAI 2026][音频/语音][扩散语言模型] 提出 DIFFA——首个基于扩散语言模型的大型音频-语言模型，通过冻结 LLaDA-8B 骨干网络 + 轻量双适配器架构 + 两阶段训练管线，仅用 960 小时 ASR 数据和 127 小时合成指令数据就在 MMSU、MMAU、VoiceBench 上达到与自回归 baseline 竞争的性能。
 tags:
   - "AAAI 2026"
   - "音频/语音"

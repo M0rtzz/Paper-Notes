@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GenesisFunc: Multi-Agent Data Generation for Accurate and Generalizable Function-Calling
 description: >-
-  [ACL2026][对话系统][Function Calling] GenesisFunc 用可靠工具池、多代理对话生成和多阶段质检自动构造高质量函数调用训练数据，微调 Qwen3-8B 后在 BFCL、API-Bank 和 ACEBench 上超过同规模开源函数调用模型…
+  [ACL2026][对话系统][Function Calling] GenesisFunc 用可靠工具池、多代理对话生成和多阶段质检自动构造高质量函数调用训练数据，微调 Qwen3-8B 后在 BFCL、API-Bank 和 ACEBench 上超过同规模开源函数调用模型，并展示出向更多工具和多轮 RL 训练扩展的潜力。
 tags:
   - "ACL2026"
   - "对话系统"

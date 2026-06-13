@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RiskProp: Collision-Anchored Self-Supervised Risk Propagation for Early Accident Anticipation
 description: >-
-  [CVPR 2026][可解释性][事故预测] 提出 RiskProp，一种以碰撞帧为锚点的自监督风险传播范式，通过未来帧正则化损失和自适应单调约束损失，仅依赖碰撞帧标注即可学习时序连贯的风险演化曲线，在 CAP 和 Nexar 数据集上达到 SOTA。
+  [CVPR 2026][可解释性][事故预测] 提出 RiskProp，一种以碰撞帧为锚点的自监督风险传播范式，通过未来帧正则化损失和自适应单调约束损失，仅依赖碰撞帧标注即可学习时序连贯的风险演化曲线，在 CAP 和 Nexar 数据集上达到 SOTA。 1. 领域现状：事故预期（Accident Anticipation）…
 tags:
   - "CVPR 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales
 description: >-
-  [CVPR 2025][图像生成][Winograd卷积] 本文提出用组级量化对 Winograd 卷积全流水线进行 8-bit 量化，并通过无数据微调 Winograd 变换矩阵的缩放参数来解决输出变换中的大动态范围问题，在扩散模型上实现近无损图像生成质量和 31.3% 的卷积加速。
+  [CVPR 2025][图像生成][Winograd卷积] 本文提出用组级量化对 Winograd 卷积全流水线进行 8-bit 量化，并通过无数据微调 Winograd 变换矩阵的缩放参数来解决输出变换中的大动态范围问题，在扩散模型上实现近无损图像生成质量和 31.3% 的卷积加速。 领域现状：大规模扩散模型推理成本极高…
 tags:
   - "CVPR 2025"
   - "图像生成"

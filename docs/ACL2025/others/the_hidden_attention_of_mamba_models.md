@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Hidden Attention of Mamba Models
 description: >-
-  [ACL 2025][Mamba模型] 揭示了Mamba（选择性状态空间模型S6）可以被重新表述为一种隐式的因果自注意力机制，并基于此提出了适用于Mamba模型的注意力可视化和可解释性方法（Attention Rollout和Mamba-Attribution），证明其可解释性指标与Transformer相当…
+  [ACL 2025][Mamba模型] 揭示了Mamba（选择性状态空间模型S6）可以被重新表述为一种隐式的因果自注意力机制，并基于此提出了适用于Mamba模型的注意力可视化和可解释性方法（Attention Rollout和Mamba-Attribution），证明其可解释性指标与Transformer相当。
 tags:
   - "ACL 2025"
   - "Mamba模型"

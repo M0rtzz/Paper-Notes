@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RARE: Redundancy-Aware Retrieval Evaluation Framework for High-Similarity Corpora
 description: >-
-  [ACL 2026][信息检索/RAG][冗余感知检索] 本文提出 RARE 框架，通过将文档分解为原子事实来追踪跨文档冗余，并设计 CRRF（基于独立准则排序的倒数排名融合）稳定 LLM 多准则判断，在金融/法律/专利等高冗余企业语料上构建了 RedQA 基准…
+  [ACL 2026][信息检索/RAG][冗余感知检索] 本文提出 RARE 框架，通过将文档分解为原子事实来追踪跨文档冗余，并设计 CRRF（基于独立准则排序的倒数排名融合）稳定 LLM 多准则判断，在金融/法律/专利等高冗余企业语料上构建了 RedQA 基准，揭示主流检索器在 4-hop 高重叠设置下 PerfRecall@10 从 66.4% 暴跌至 5.0-27.9%。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

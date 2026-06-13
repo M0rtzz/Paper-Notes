@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling Vision Transformers for Functional MRI with Flat Maps
 description: >-
-  [ICML 2026][医学图像][fMRI 基础模型] 把 3D fMRI 体积按"皮层展平图"投影成 2D 视频后直接喂给标准 spacetime MAE-ViT，得到一个在 2.1K 小时 HCP 数据上训练的 CortexMAE：在认知状态解码上大幅超 SOTA…
+  [ICML 2026][医学图像][fMRI 基础模型] 把 3D fMRI 体积按"皮层展平图"投影成 2D 视频后直接喂给标准 spacetime MAE-ViT，得到一个在 2.1K 小时 HCP 数据上训练的 CortexMAE：在认知状态解码上大幅超 SOTA，验证 flat map 是体素 (volume) 和脑区平均 (parcellation) 之间的"goldilocks zone"；同时发布首个开源 fMRI 基础模型基准 Brainmarks，给出 fMRI 模型的第一份系统 scaling law 与一个"个体特质预测仍打不过简单功能连接 baseline"的诚实 null result。
 tags:
   - "ICML 2026"
   - "医学图像"

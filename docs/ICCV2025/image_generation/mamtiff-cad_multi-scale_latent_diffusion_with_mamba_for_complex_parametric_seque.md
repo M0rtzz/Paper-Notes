@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MamTiff-CAD: Multi-Scale Latent Diffusion with Mamba+ for Complex Parametric Sequence
 description: >-
-  [图像生成] 提出MamTiff-CAD框架，结合Mamba+编码器与Transformer解码器的自编码器学习CAD命令序列的潜表示，再用多尺度Transformer扩散模型生成，首次实现60-256命令长度的复杂CAD模型生成。
+  [图像生成] 提出MamTiff-CAD框架，结合Mamba+编码器与Transformer解码器的自编码器学习CAD命令序列的潜表示，再用多尺度Transformer扩散模型生成，首次实现60-256命令长度的复杂CAD模型生成。 参数化CAD通过命令序列（草图、拉伸、布尔运算等）构建3D模型，是工业设计的核心…
 tags:
   - "图像生成"
 ---

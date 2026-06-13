@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CONFETTI: Conversational Function-Calling Evaluation Through Turn-Level Interactions
 description: >-
-  [ACL 2025][函数调用] CONFETTI 提出了一个面向多轮对话场景的函数调用（function-calling）评测基准，包含 109 段人类模拟对话、313 个用户轮次和 86 个 API…
+  [ACL 2025][函数调用] CONFETTI 提出了一个面向多轮对话场景的函数调用（function-calling）评测基准，包含 109 段人类模拟对话、313 个用户轮次和 86 个 API，通过 off-policy turn-level 评估和 dialog act 标注系统性地测试 LLM 在复杂对话场景下的工具调用能力，发现即便最强模型（Nova Pro）也仅达 40% 左右，链式调用更是普遍短板。
 tags:
   - "ACL 2025"
   - "函数调用"

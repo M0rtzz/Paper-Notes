@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Evolving High-Quality Rendering and Reconstruction in a Unified Framework with Contribution-Adaptive Regularization
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 本文提出CarGS，通过发现高斯基元对渲染和重建任务的贡献冲突根源在于协方差，设计了轻量残差结构Lite-Geo来自适应解耦两个任务的几何贡献，并引入法线+SDF双引导的致密化策略，在统一模型中同时实现SOTA的渲染质量和重建精度，且存储仅为双模型方法的9%…
+  [CVPR 2025][3D视觉][3D高斯溅射] 本文提出CarGS，通过发现高斯基元对渲染和重建任务的贡献冲突根源在于协方差，设计了轻量残差结构Lite-Geo来自适应解耦两个任务的几何贡献，并引入法线+SDF双引导的致密化策略，在统一模型中同时实现SOTA的渲染质量和重建精度，且存储仅为双模型方法的9%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MOS: Mitigating Optical-SAR Modality Gap for Cross-Modal Ship Re-Identification
 description: >-
-  [CVPR 2026][图像生成][跨模态ReID] 提出 MOS 框架解决光学-SAR 跨模态船舶重识别问题，包含两个核心模块：(1) MCRL 通过 SAR 图像去噪和类别级模态对齐损失在训练阶段缩小模态差距；(2) CDGF 利用布朗桥扩散模型在推理阶段从光学图像生成伪 SAR 样本并融合特征…
+  [CVPR 2026][图像生成][跨模态ReID] 提出 MOS 框架解决光学-SAR 跨模态船舶重识别问题，包含两个核心模块：(1) MCRL 通过 SAR 图像去噪和类别级模态对齐损失在训练阶段缩小模态差距；(2) CDGF 利用布朗桥扩散模型在推理阶段从光学图像生成伪 SAR 样本并融合特征，在 HOSS ReID 数据集上 SAR→Optical 的 R1 提升 +16.4%。
 tags:
   - "CVPR 2026"
   - "图像生成"

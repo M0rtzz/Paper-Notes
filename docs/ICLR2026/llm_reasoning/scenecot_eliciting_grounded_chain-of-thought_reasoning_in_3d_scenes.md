@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes
 description: >-
-  [ICLR 2026][LLM推理][3D reasoning] 提出 SceneCOT，首个将 Chain-of-Thought 推理引入 3D 场景理解的框架，通过四阶段推理管线（任务识别→区域定位→实体接地→接地推理）将中间推理步骤显式关联到视觉 grounding…
+  [ICLR 2026][LLM推理][3D reasoning] 提出 SceneCOT，首个将 Chain-of-Thought 推理引入 3D 场景理解的框架，通过四阶段推理管线（任务识别→区域定位→实体接地→接地推理）将中间推理步骤显式关联到视觉 grounding，在 Beacon3D 上 Good Coherence 达到 34.7%（比最强 baseline 的 20.4% 高出 70%+）。
 tags:
   - "ICLR 2026"
   - "LLM推理"

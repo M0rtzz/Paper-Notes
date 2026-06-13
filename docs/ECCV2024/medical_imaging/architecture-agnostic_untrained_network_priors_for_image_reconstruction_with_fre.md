@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization
 description: >-
-  [ECCV2024][医学图像][untrained network prior] 提出三种与架构无关的频率正则化技术（带宽受限输入、带宽可控上采样、Lipschitz 正则化卷积层），统一解决 untrained network prior 的架构敏感性、过拟合和运行效率问题…
+  [ECCV2024][医学图像][untrained network prior] 提出三种与架构无关的频率正则化技术（带宽受限输入、带宽可控上采样、Lipschitz 正则化卷积层），统一解决 untrained network prior 的架构敏感性、过拟合和运行效率问题，在 MRI 重建任务中显著缩小不同架构间的性能差距。
 tags:
   - "ECCV2024"
   - "医学图像"

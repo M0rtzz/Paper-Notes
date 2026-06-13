@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Omnimatte: Learning to Decompose Video into Layers
 description: >-
-  [CVPR 2025][3D视觉][视频图层分解] Generative Omnimatte 通过微调视频 inpainting 扩散模型（Casper）学会物体及其关联效果（阴影、反射）的联合移除，结合 trimask 条件和 omnimatte 优化…
+  [CVPR 2025][3D视觉][视频图层分解] Generative Omnimatte 通过微调视频 inpainting 扩散模型（Casper）学会物体及其关联效果（阴影、反射）的联合移除，结合 trimask 条件和 omnimatte 优化，在无需静态背景假设或相机位姿的前提下实现了高质量的视频图层分解和被遮挡区域补全。
 tags:
   - "CVPR 2025"
   - "3D视觉"

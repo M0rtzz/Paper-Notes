@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models
 description: >-
-  [ACL2026][LLM/NLP][大语言模型校准] 这篇论文提出 Clustered Self-Assessment：先把 LLM 的多个采样答案按语义聚成互斥选项，再让同一个 LLM 通过多选题概率给原答案打置信分…
+  [ACL2026 Findings][LLM 其他][大语言模型校准] 这篇论文提出 Clustered Self-Assessment：先把 LLM 的多个采样答案按语义聚成互斥选项，再让同一个 LLM 通过多选题概率给原答案打置信分，从而在 TQA、NQ 和 XSum 上获得比语义熵、P(True) 等基线更好的 AUROC 与 Brier 校准表现。
 tags:
-  - "ACL2026"
-  - "LLM/NLP"
+  - "ACL2026 Findings"
+  - "LLM 其他"
   - "大语言模型校准"
   - "不确定性量化"
   - "语义聚类"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accelerated Multiple Wasserstein Gradient Flows for Multi-objective Distributional Optimization
 description: >-
-  [ICML 2026][优化/理论][Wasserstein梯度流] 这篇论文把 Multiple Wasserstein Gradient Descent 推广为连续时间梯度流，并引入 Nesterov 风格的动量加速，得到 A-MWGraD…
+  [ICML 2026][优化/理论][Wasserstein梯度流] 这篇论文把 Multiple Wasserstein Gradient Descent 推广为连续时间梯度流，并引入 Nesterov 风格的动量加速，得到 A-MWGraD，在理论上把 geodesically convex 场景的收敛率从 $O(1/t)$ 提升到 $O(1/t^2)$，实验上也让多目标采样和贝叶斯多任务学习更快收敛。
 tags:
   - "ICML 2026"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How Would It Sound? Material-Controlled Multimodal Acoustic Profile Generation for Objects
 description: >-
-  [ICCV 2025][音频/语音][房间脉冲响应] 提出材质可控的声学特征生成任务（M-CAPA），给定室内场景的音视觉观测和用户定义的新材质配置，生成反映材质变化的目标房间脉冲响应（RIR），并构建了配套的 Acoustic Wonderland 数据集。
+  [ICCV 2025][音频/语音][房间脉冲响应] 提出材质可控的声学特征生成任务（M-CAPA），给定室内场景的音视觉观测和用户定义的新材质配置，生成反映材质变化的目标房间脉冲响应（RIR），并构建了配套的 Acoustic Wonderland 数据集。 声音传播受房间几何结构和 物体/表面材质：的显著影响——同一房间…
 tags:
   - "ICCV 2025"
   - "音频/语音"

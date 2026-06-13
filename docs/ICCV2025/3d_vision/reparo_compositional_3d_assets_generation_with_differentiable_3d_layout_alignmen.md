@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REPARO: Compositional 3D Assets Generation with Differentiable 3D Layout Alignment
 description: >-
-  [ICCV 2025][3D视觉][组合式3D生成] 提出REPARO，通过先分别重建单个物体3D网格再利用基于最优传输的可微渲染进行布局对齐，实现从单张图像生成多物体组合式3D资产。
+  [ICCV 2025][3D视觉][组合式3D生成] 提出REPARO，通过先分别重建单个物体3D网格再利用基于最优传输的可微渲染进行布局对齐，实现从单张图像生成多物体组合式3D资产。 现有image-to-3D生成模型在多物体场景中面临根本性困难： 数据集偏差：3D训练数据大多为居中对齐的单物体，预处理会重新居中输入…
 tags:
   - "ICCV 2025"
   - "3D视觉"

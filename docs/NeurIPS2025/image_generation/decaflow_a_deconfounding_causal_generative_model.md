@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeCaFlow: A Deconfounding Causal Generative Model
 description: >-
-  [NeurIPS 2025 (Spotlight)][图像生成][因果推断] 提出 DeCaFlow，一个去混淆的因果生成模型，在给定因果图和观测数据的情况下，只需训练一次即可正确估计所有 do-calculus 可识别的因果查询（包括干预和反事实），即使存在隐藏混淆因子。
+  [NeurIPS 2025 (Spotlight)][图像生成][因果推断] 提出 DeCaFlow，一个去混淆的因果生成模型，在给定因果图和观测数据的情况下，只需训练一次即可正确估计所有 do-calculus 可识别的因果查询（包括干预和反事实），即使存在隐藏混淆因子。 因果推断的核心任务是从观测数据中估计干预效果和反事…
 tags:
   - "NeurIPS 2025 (Spotlight)"
   - "图像生成"

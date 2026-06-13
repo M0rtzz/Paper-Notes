@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization
 description: >-
-  [ICLR 2026][模型压缩][偏好优化] 提出MetaAPO框架，用一个轻量级meta-learner（两层MLP）动态估计offline/online数据的对齐差距，既指导"在哪些prompt上做在线采样"（解决分布不匹配），又在训练时自适应加权offline/online数据（优化学习效率）…
+  [ICLR 2026][模型压缩][偏好优化] 提出MetaAPO框架，用一个轻量级meta-learner（两层MLP）动态估计offline/online数据的对齐差距，既指导"在哪些prompt上做在线采样"（解决分布不匹配），又在训练时自适应加权offline/online数据（优化学习效率），在AlpacaEval 2/Arena-Hard/MT-Bench上超越DPO/Online DPO等基线，同时减少42%在线标注成本。
 tags:
   - "ICLR 2026"
   - "模型压缩"

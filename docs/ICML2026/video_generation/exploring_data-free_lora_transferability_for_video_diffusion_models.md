@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Data-Free LoRA Transferability for Video Diffusion Models
 description: >-
-  [ICML 2026][视频生成][扩散模型] 本文首次对视频扩散模型（VDM）的 full fine-tune (FFT) 和 LoRA 做权重空间分析，发现两者都"保留奇异谱、只旋转奇异子空间"，但在 head clusters 上路由方向冲突…
+  [ICML 2026][视频生成][扩散模型] 本文首次对视频扩散模型（VDM）的 full fine-tune (FFT) 和 LoRA 做权重空间分析，发现两者都"保留奇异谱、只旋转奇异子空间"，但在 head clusters 上路由方向冲突；据此提出 CASA——一个 data-free 的"按聚类做谱仲裁"的 LoRA 迁移方法，把基座 Wan2.1 上训的 LoRA 直接迁到 FastWan 等蒸馏后变体，无需任何用户数据/重训。
 tags:
   - "ICML 2026"
   - "视频生成"

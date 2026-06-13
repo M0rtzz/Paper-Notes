@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Your Agent May Misevolve: Emergent Risks in Self-evolving LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][自进化Agent] 本文首次系统性地提出并研究了"误进化（Misevolution）"概念——自进化LLM Agent在自主改进过程中可能偏离预期方向，沿模型、记忆、工具、工作流四条进化路径产生安全对齐退化、漏洞引入等新兴风险…
+  [ICLR 2026][LLM Agent][自进化Agent] 本文首次系统性地提出并研究了"误进化（Misevolution）"概念——自进化LLM Agent在自主改进过程中可能偏离预期方向，沿模型、记忆、工具、工作流四条进化路径产生安全对齐退化、漏洞引入等新兴风险，即使使用顶级LLM（如Gemini-2.5-Pro）也无法幸免。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

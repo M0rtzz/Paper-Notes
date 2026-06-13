@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Eliminating Warping Shakes for Unsupervised Online Video Stitching
 description: >-
-  [ECCV 2024][LLM评测][视频拼接] 定义了视频拼接中的"warping shake"新问题（图像拼接扩展到视频时非重叠区域的时域抖动），提出StabStitch首个无监督在线视频拼接框架，通过拼接轨迹生成与平滑同时实现视频拼接和稳定，达到实时28.2ms/帧。
+  [ECCV 2024][LLM评测][视频拼接] 定义了视频拼接中的"warping shake"新问题（图像拼接扩展到视频时非重叠区域的时域抖动），提出StabStitch首个无监督在线视频拼接框架，通过拼接轨迹生成与平滑同时实现视频拼接和稳定，达到实时28.2ms/帧。 视频拼接技术用于将不同视角的有限视野视频合成全景/…
 tags:
   - "ECCV 2024"
   - "LLM评测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning
 description: >-
-  [NeurIPS 2025][代码智能][自演化] 提出 CURE 框架，让同一个 LLM 同时扮演代码生成器和单元测试生成器两个角色，通过生成代码与生成测试的交叉执行构建成对奖励矩阵，用基于理论推导的奖励信号进行强化学习…
+  [NeurIPS 2025 Spotlight][代码智能][自演化] 提出 CURE 框架，让同一个 LLM 同时扮演代码生成器和单元测试生成器两个角色，通过生成代码与生成测试的交叉执行构建成对奖励矩阵，用基于理论推导的奖励信号进行强化学习，在完全不需要 ground-truth 代码标注的情况下实现代码生成能力和单元测试生成能力的共同进化，在五个编程基准上大幅超过同规模的专用 Coder 模型。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "代码智能"
   - "自演化"
   - "强化学习"

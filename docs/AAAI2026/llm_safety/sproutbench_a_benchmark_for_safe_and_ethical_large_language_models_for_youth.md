@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SproutBench: A Benchmark for Safe and Ethical Large Language Models for Youth
 description: >-
-  [AAAI 2026][LLM安全][LLM安全评估] 提出 SproutBench，一个包含 1,283 个发展心理学驱动的对抗性提示的评估基准，系统评估 47 个 LLM 在儿童和青少年（0-6、7-12、13-18 岁）场景下的安全性，发现安全性与风险预防强相关（$\rho = 0.86$）…
+  [AAAI 2026][LLM安全][LLM安全评估] 提出 SproutBench，一个包含 1,283 个发展心理学驱动的对抗性提示的评估基准，系统评估 47 个 LLM 在儿童和青少年（0-6、7-12、13-18 岁）场景下的安全性，发现安全性与风险预防强相关（$\rho = 0.86$），交互性与年龄适配性存在显著权衡（$\rho = -0.48$）。
 tags:
   - "AAAI 2026"
   - "LLM安全"

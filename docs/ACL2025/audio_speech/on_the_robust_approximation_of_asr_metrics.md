@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Robust Approximation of ASR Metrics
 description: >-
-  [ACL 2025][音频/语音][ASR evaluation] 提出一种无需真实标签的 ASR 性能指标近似方法，利用多模态统一 embedding 空间中的语音-文本相似度和高质量代理模型的 proxy metrics，训练回归模型预测 WER/CER…
+  [ACL 2025][音频/语音][ASR evaluation] 提出一种无需真实标签的 ASR 性能指标近似方法，利用多模态统一 embedding 空间中的语音-文本相似度和高质量代理模型的 proxy metrics，训练回归模型预测 WER/CER，在 40+ 模型和 14 个数据集上绝对误差控制在个位数以内，超过最新基线 50% 以上。
 tags:
   - "ACL 2025"
   - "音频/语音"

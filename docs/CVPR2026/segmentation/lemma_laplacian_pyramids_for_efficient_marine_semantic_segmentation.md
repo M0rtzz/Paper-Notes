@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEMMA: Laplacian Pyramids for Efficient Marine Semantic Segmentation
 description: >-
-  [CVPR 2026][语义分割][轻量化语义分割] 提出LEMMA，一种基于拉普拉斯金字塔的轻量级海洋语义分割模型，通过金字塔分解提取边缘信息来替代深层特征计算，在参数量减少71倍的条件下实现了SOTA级别的分割精度（MaSTr1325上98.97% mIoU）。
+  [CVPR 2026][语义分割][轻量化语义分割] 提出LEMMA，一种基于拉普拉斯金字塔的轻量级海洋语义分割模型，通过金字塔分解提取边缘信息来替代深层特征计算，在参数量减少71倍的条件下实现了SOTA级别的分割精度（MaSTr1325上98.97% mIoU）。 海洋场景的语义分割对于无人水面艇(USV)自主导航和沿海地…
 tags:
   - "CVPR 2026"
   - "语义分割"

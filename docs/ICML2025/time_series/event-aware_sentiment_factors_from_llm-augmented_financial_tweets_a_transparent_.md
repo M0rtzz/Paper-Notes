@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event-Aware Sentiment Factors from LLM-Augmented Financial Tweets: A Transparent Framework for Interpretable Quant Trading
 description: >-
-  [ICML 2025][时间序列][金融情感分析] 利用大语言模型对金融推文进行多标签事件分类标注，将非结构化社交媒体文本转化为结构化、可解释的事件驱动量化因子，发现特定事件类别（如谣言/投机）具有显著的负Alpha信号（Sharpe ratio低至-0.38）。
+  [ICML 2025][时间序列][金融情感分析] 利用大语言模型对金融推文进行多标签事件分类标注，将非结构化社交媒体文本转化为结构化、可解释的事件驱动量化因子，发现特定事件类别（如谣言/投机）具有显著的负Alpha信号（Sharpe ratio低至-0.38）。 传统金融模型依赖基本面分析和技术面价格形态等结构化数据来解释…
 tags:
   - "ICML 2025"
   - "时间序列"

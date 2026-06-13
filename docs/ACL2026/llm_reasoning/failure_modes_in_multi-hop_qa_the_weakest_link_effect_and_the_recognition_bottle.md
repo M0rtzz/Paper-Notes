@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Failure Modes in Multi-Hop QA: The Weakest Link Effect and the Recognition Bottleneck
 description: >-
-  [ACL 2026][LLM推理][多跳问答] 本文提出 Multi-Focus Attention Instruction (MFAI) 作为语义探针，揭示多跳 QA 中的"最弱链效应"——多跳推理性能由最不可见证据的绝对位置决定而非事实间距离，失败主要源于识别瓶颈而非推理缺陷…
+  [ACL 2026][LLM推理][多跳问答] 本文提出 Multi-Focus Attention Instruction (MFAI) 作为语义探针，揭示多跳 QA 中的"最弱链效应"——多跳推理性能由最不可见证据的绝对位置决定而非事实间距离，失败主要源于识别瓶颈而非推理缺陷，且 System-2 推理模型能有效抵御位置偏差和误导性注意力线索。
 tags:
   - "ACL 2026"
   - "LLM推理"

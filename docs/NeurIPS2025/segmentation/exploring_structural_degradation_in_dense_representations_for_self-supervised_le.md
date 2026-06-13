@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Structural Degradation in Dense Representations for Self-supervised Learning
 description: >-
-  [NeurIPS 2025][语义分割][自监督学习] 发现并系统研究了自监督学习中"稠密退化"（SDD）现象——训练越久分类越好但稠密任务性能反而下降，提出 DSE 度量和基于 DSE 的模型选择/正则化策略，平均提升 mIoU 3.0%。
+  [NeurIPS 2025][语义分割][自监督学习] 发现并系统研究了自监督学习中"稠密退化"（SDD）现象——训练越久分类越好但稠密任务性能反而下降，提出 DSE 度量和基于 DSE 的模型选择/正则化策略，平均提升 mIoU 3.0%。 自监督学习（SSL）已在图像级表示学习中取得巨大成功，但稠密（patch/pixe…
 tags:
   - "NeurIPS 2025"
   - "语义分割"

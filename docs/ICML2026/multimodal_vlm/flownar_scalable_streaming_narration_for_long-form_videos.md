@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowNar: Scalable Streaming Narration for Long-Form Videos
 description: >-
-  [ICML 2026][多模态VLM][流式视频解说] FlowNar 通过"段末清空视觉 KV 缓存 + 用门控线性注意力把历史视觉信息压成定长记忆 token"的组合，让流式视频解说模型在显存与计算上保持常数级开销，可处理 $10\times$ 更长的视频并取得 $3\times$ 吞吐…
+  [ICML 2026][多模态VLM][流式视频解说] FlowNar 通过"段末清空视觉 KV 缓存 + 用门控线性注意力把历史视觉信息压成定长记忆 token"的组合，让流式视频解说模型在显存与计算上保持常数级开销，可处理 $10\times$ 更长的视频并取得 $3\times$ 吞吐，同时引入自条件评测协议揭示了基线方法在真实部署下被严重高估的现象。
 tags:
   - "ICML 2026"
   - "多模态VLM"

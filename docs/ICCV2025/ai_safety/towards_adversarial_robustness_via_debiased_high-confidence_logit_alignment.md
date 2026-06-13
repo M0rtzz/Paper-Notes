@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Adversarial Robustness via Debiased High-Confidence Logit Alignment
 description: >-
-  [ICCV 2025][AI安全][对抗训练] 揭示了逆向对抗攻击（inverse adversarial attack）在对抗训练中导致模型注意力偏移至背景特征的虚假相关性问题，提出 DHAT 方法通过去偏高置信度 logit 正则化（DHLR）和前景 logit 正交增强（FLOE）两个组件来消除这种偏差…
+  [ICCV 2025][AI安全][对抗训练] 揭示了逆向对抗攻击（inverse adversarial attack）在对抗训练中导致模型注意力偏移至背景特征的虚假相关性问题，提出 DHAT 方法通过去偏高置信度 logit 正则化（DHLR）和前景 logit 正交增强（FLOE）两个组件来消除这种偏差，在 CIFAR-10/100 和 ImageNet-1K 上取得了 SOTA 的对抗鲁棒性。
 tags:
   - "ICCV 2025"
   - "AI安全"

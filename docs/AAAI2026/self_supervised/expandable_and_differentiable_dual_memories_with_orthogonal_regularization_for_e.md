@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning
 description: >-
-  [AAAI 2026][自监督学习][持续学习] 提出 **EDD（Expandable and Differentiable Dual Memory）**，一种**无需存储旧样本**的持续学习方法，通过**可微分的共享记忆和任务特定记忆**将数据分解为可复用的子特征…
+  [AAAI 2026][自监督学习][持续学习] 提出 **EDD（Expandable and Differentiable Dual Memory）**，一种**无需存储旧样本**的持续学习方法，通过**可微分的共享记忆和任务特定记忆**将数据分解为可复用的子特征，结合**记忆扩展-剪枝**和**正交正则化**机制，在 CIFAR-10/100 和 Tiny-ImageNet 上超越 14 种 SOTA 方法，最终准确率分别达到 55.13%、37.24% 和 30.11%。
 tags:
   - "AAAI 2026"
   - "自监督学习"

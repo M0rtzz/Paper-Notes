@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PixDLM: A Dual-Path Multimodal Language Model for UAV Reasoning Segmentation
 description: >-
-  [CVPR 2026][语义分割][无人机推理分割] 本文定义了 UAV Reasoning Segmentation 任务，构建了包含 10K 高分辨率无人机图像和链式推理标注的 DRSeg 基准，并提出了双路径像素级多模态大模型 PixDLM 作为基线。
+  [CVPR 2026 Highlight][语义分割][无人机推理分割] 本文定义了 UAV Reasoning Segmentation 任务，构建了包含 10K 高分辨率无人机图像和链式推理标注的 DRSeg 基准，并提出了双路径像素级多模态大模型 PixDLM 作为基线。 领域现状：推理分割（Reasoning Seg…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Highlight"
   - "语义分割"
   - "无人机推理分割"
   - "多模态大模型"

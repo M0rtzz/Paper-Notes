@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding
 description: >-
-  [ECCV 2024][视频理解][Video Temporal Grounding] 提出 R²-Tuning，通过在冻结 CLIP 的后几层反向递归附加轻量 R² Block（仅 1.5% 总参数），实现查询调制的空间池化和粗到细的时序精炼…
+  [ECCV 2024][视频理解][Video Temporal Grounding] 提出 R²-Tuning，通过在冻结 CLIP 的后几层反向递归附加轻量 R² Block（仅 1.5% 总参数），实现查询调制的空间池化和粗到细的时序精炼，在 6 个 VTG 基准 3 个任务上以 2.7M 参数超越了需要额外时序骨干网络的 SOTA 方法。
 tags:
   - "ECCV 2024"
   - "视频理解"

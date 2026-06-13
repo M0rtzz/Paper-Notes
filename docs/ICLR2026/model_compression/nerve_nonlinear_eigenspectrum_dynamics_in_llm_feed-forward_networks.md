@@ -2,7 +2,7 @@
 title: >-
   [论文解读] NerVE: Nonlinear Eigenspectrum Dynamics in LLM Feed-Forward Networks
 description: >-
-  [ICLR 2026][模型压缩][FFN 分析] 提出 NerVE，一个轻量级的特征谱分析框架，通过四个互补指标（频谱熵、参与比、特征值早期富集、JS 散度）系统揭示了 LLM 中 FFN 非线性如何重新注入方差、重塑特征谱，以及架构和优化器选择如何印刻独特的频谱签名。
+  [ICLR 2026][模型压缩][FFN 分析] 提出 NerVE，一个轻量级的特征谱分析框架，通过四个互补指标（频谱熵、参与比、特征值早期富集、JS 散度）系统揭示了 LLM 中 FFN 非线性如何重新注入方差、重塑特征谱，以及架构和优化器选择如何印刻独特的频谱签名。 在 Transformer 中…
 tags:
   - "ICLR 2026"
   - "模型压缩"

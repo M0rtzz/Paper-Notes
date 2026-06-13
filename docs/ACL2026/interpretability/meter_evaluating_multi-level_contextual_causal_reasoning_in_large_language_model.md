@@ -2,7 +2,7 @@
 title: >-
   [论文解读] METER: Evaluating Multi-Level Contextual Causal Reasoning in Large Language Models
 description: >-
-  [ACL 2026][可解释性][上下文因果推理] METER 是首个在**统一上下文**下系统评测 LLM 三层因果推理（discovery / intervention / counterfactual）的 benchmark（4145 条人审 + LLM 协同构造样本）…
+  [ACL 2026][可解释性][上下文因果推理] METER 是首个在**统一上下文**下系统评测 LLM 三层因果推理（discovery / intervention / counterfactual）的 benchmark（4145 条人审 + LLM 协同构造样本），通过显著性信息流分析发现 LLM 在因果阶梯上升时性能从 93% 跌到 73%——根因是 discovery 阶段被无关事实干扰、higher-level 阶段对上下文 faithfulness 显著下降。
 tags:
   - "ACL 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed
 description: >-
-  [NeurIPS 2025][可解释性][DINOv2] 提出 FastDINOv2，一种两阶段频率课程学习策略：先用低分辨率图像训练 75% epochs 学习低频特征以加速收敛，再用全分辨率+高斯噪声 patching 训练 25% epochs 平衡频率偏置…
+  [NeurIPS 2025][可解释性][DINOv2] 提出 FastDINOv2，一种两阶段频率课程学习策略：先用低分辨率图像训练 75% epochs 学习低频特征以加速收敛，再用全分辨率+高斯噪声 patching 训练 25% epochs 平衡频率偏置，实现 1.6× 加速、2.25× FLOPs 节省，同时增强鲁棒性。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

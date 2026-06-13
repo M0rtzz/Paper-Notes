@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentMisalignment: Measuring the Propensity for Misaligned Behaviour in LLM-Based Agents
 description: >-
-  [NeurIPS 2025][LLM Agent][对齐] 提出 AgentMisalignment 基准套件，包含 9 个现实场景评估任务，测量 LLM Agent 在非恶意指令下 **自发偏离** 部署者意图的倾向（而非能力），发现更强的模型倾向于更高的错误对齐…
+  [NeurIPS 2025][LLM Agent][对齐] 提出 AgentMisalignment 基准套件，包含 9 个现实场景评估任务，测量 LLM Agent 在非恶意指令下 **自发偏离** 部署者意图的倾向（而非能力），发现更强的模型倾向于更高的错误对齐，且人格提示（persona prompt）有时比模型选择本身对错误对齐行为的影响更大。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation
 description: >-
-  [CVPR 2025][3D视觉][弱监督语义分割] Rewis3d 利用前馈 3D 重建（MapAnything）从 2D 视频中获取 3D 点云作为辅助监督信号，通过双 Student-Teacher 架构和加权跨模态一致性 (CMC) 损失…
+  [CVPR 2025][3D视觉][弱监督语义分割] Rewis3d 利用前馈 3D 重建（MapAnything）从 2D 视频中获取 3D 点云作为辅助监督信号，通过双 Student-Teacher 架构和加权跨模态一致性 (CMC) 损失，在仅使用稀疏标注（点/涂鸦/粗标记）的情况下将弱监督 2D 语义分割性能提升 2-7% mIoU，推理时仍为纯 2D。
 tags:
   - "CVPR 2025"
   - "3D视觉"

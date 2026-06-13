@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weight-Space Linear Recurrent Neural Networks
 description: >-
-  [ICLR 2026][时间序列][权重空间学习] 提出 WARP（Weight-space Adaptive Recurrent Prediction），将线性 RNN 的隐状态显式参数化为辅助 MLP 的权重和偏置，利用输入差分驱动线性递推来更新权重，结合非线性解码实现高效序列建模…
+  [ICLR 2026][时间序列][权重空间学习] 提出 WARP（Weight-space Adaptive Recurrent Prediction），将线性 RNN 的隐状态显式参数化为辅助 MLP 的权重和偏置，利用输入差分驱动线性递推来更新权重，结合非线性解码实现高效序列建模，在分类、预测和动力系统重建等任务上达到 SOTA。
 tags:
   - "ICLR 2026"
   - "时间序列"

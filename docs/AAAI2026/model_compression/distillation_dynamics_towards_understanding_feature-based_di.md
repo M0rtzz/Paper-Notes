@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers
 description: >-
-  [AAAI 2026][模型压缩][知识蒸馏] 提出"蒸馏动力学"分析框架（通道维FFT频谱分析+Shannon熵+激活幅值追踪），揭示ViT具有独特的U型信息处理模式（先压缩后扩展）…
+  [AAAI 2026][模型压缩][知识蒸馏] 提出"蒸馏动力学"分析框架（通道维FFT频谱分析+Shannon熵+激活幅值追踪），揭示ViT具有独特的U型信息处理模式（先压缩后扩展），证明feature-based蒸馏在ViT中失败的根本原因是teacher后层的分布式高维编码范式与student有限通道容量之间的表征范式不匹配，而非简单的容量差距。
 tags:
   - "AAAI 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRInQ: Evaluating Conversational Implicature with Controlled Context Variation
 description: >-
-  [ACL 2026][音频/语音][会话含义] DRInQ 用固定问题表面形式、系统变化上下文的方式构建会话含义评测集，发现 LLM 能生成看似合理的语用场景，却常在推理时过度解读上下文、低于人类判断一致性。
+  [ACL 2026][音频/语音][会话含义] DRInQ 用固定问题表面形式、系统变化上下文的方式构建会话含义评测集，发现 LLM 能生成看似合理的语用场景，却常在推理时过度解读上下文、低于人类判断一致性。 领域现状：人类对话大量依赖 conversational implicature，也就是话里没有明说但由上下文、礼貌…
 tags:
   - "ACL 2026"
   - "音频/语音"

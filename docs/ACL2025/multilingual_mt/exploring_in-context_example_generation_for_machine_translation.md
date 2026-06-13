@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring In-context Example Generation for Machine Translation
 description: >-
-  [ACL 2025][多语言/翻译][机器翻译] 提出DAT(Demonstration Augmentation for Translation)——在**无需任何外部资源**的情况下，让LLM自动生成与用户查询相关且多样的源-目标句对作为in-context示例…
+  [ACL 2025][多语言/翻译][机器翻译] 提出DAT(Demonstration Augmentation for Translation)——在**无需任何外部资源**的情况下，让LLM自动生成与用户查询相关且多样的源-目标句对作为in-context示例，在5个低资源语言翻译任务上超越zero-shot和固定示例的few-shot基线。
 tags:
   - "ACL 2025"
   - "多语言/翻译"

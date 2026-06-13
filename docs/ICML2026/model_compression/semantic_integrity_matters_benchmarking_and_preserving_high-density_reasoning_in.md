@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Integrity Matters: Benchmarking and Preserving High-Density Reasoning in KV Cache Compression
 description: >-
-  [ICML 2026][模型压缩][KV cache 压缩] 本文先用新基准 KVFundaBench 系统揭示「检索类长上下文压得动、推理类压不动」的关键不对称，并把原因归结到 KV 压缩破坏了少样本示例这一「语义单元」的完整性…
+  [ICML 2026][模型压缩][KV cache 压缩] 本文先用新基准 KVFundaBench 系统揭示「检索类长上下文压得动、推理类压不动」的关键不对称，并把原因归结到 KV 压缩破坏了少样本示例这一「语义单元」的完整性；据此提出 ShotKV——在 prefill 阶段保留整个 shot 作为不可分割单元、在 decoding 阶段做动态 token 级压缩，让 LG-GSM8K 在 40% 压缩率下从 baseline 46.0 提升到 47.33，并在长输入设置下端到端延迟降低 11.3%。
 tags:
   - "ICML 2026"
   - "模型压缩"

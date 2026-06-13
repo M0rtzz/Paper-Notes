@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Binary Quadratic Quantization: Beyond First-Order Quantization for Real-Valued Matrix Compression
 description: >-
-  [NeurIPS 2025][模型压缩][二值量化] BQQ 提出二次二值量化——用二值矩阵的乘积（而非线性组合）表示权重矩阵，突破传统一阶量化的表达能力限制，通过扩展 AMFD（退火均场下降）到 PUBO 问题求解混合整数优化…
+  [NeurIPS 2025][模型压缩][二值量化] BQQ 提出二次二值量化——用二值矩阵的乘积（而非线性组合）表示权重矩阵，突破传统一阶量化的表达能力限制，通过扩展 AMFD（退火均场下降）到 PUBO 问题求解混合整数优化，在 2-bit 无数据 ViT 量化上实现从 10.83% 到 58.25% 的准确率飞跃。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

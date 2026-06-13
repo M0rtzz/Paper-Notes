@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Representation Alignment for Offline Goal-Conditioned Reinforcement Learning
 description: >-
-  [ICML 2026][强化学习][离线 GCRL] 通过把 goal-conditioned 价值函数显式参数化为 **非对称潜空间中的负欧氏距离** $V(s,g)=-\|\varphi_S(s)-\varphi_G(g)\|_2$ 并配合连续性正则与 HIQL 分层结构…
+  [ICML 2026][强化学习][离线 GCRL] 通过把 goal-conditioned 价值函数显式参数化为 **非对称潜空间中的负欧氏距离** $V(s,g)=-\|\varphi_S(s)-\varphi_G(g)\|_2$ 并配合连续性正则与 HIQL 分层结构，LAVL 在 OGBench 22 个数据集里拿下 20 个 SOTA，把 giant 迷宫和 stitch 数据集这类长程任务的成功率从基线的几乎为零拉到 80%+。
 tags:
   - "ICML 2026"
   - "强化学习"

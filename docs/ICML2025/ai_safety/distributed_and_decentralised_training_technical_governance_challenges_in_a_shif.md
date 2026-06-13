@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributed and Decentralised Training: Technical Governance Challenges in a Shifting AI Landscape
 description: >-
-  [ICML 2025][AI安全][分布式训练] 本文系统区分了分布式训练（multi-data centre）与去中心化训练（community-driven）两种新兴范式，分析了低通信训练算法（如 DiLoCo）如何使这两种范式成为可能…
+  [ICML 2025][AI安全][分布式训练] 本文系统区分了分布式训练（multi-data centre）与去中心化训练（community-driven）两种新兴范式，分析了低通信训练算法（如 DiLoCo）如何使这两种范式成为可能，并深入讨论了它们对AI技术治理（计算结构化、能力扩散、可关停性）带来的挑战与机遇。
 tags:
   - "ICML 2025"
   - "AI安全"

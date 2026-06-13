@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification
 description: >-
-  [CVPR2026][医学图像][HR-pQCT] 提出基于 SegFormer 的全自动多区域 HR-pQCT 分割框架，结合影像组学特征与机器学习实现骨质疏松二分类，发现软组织（肌腱/脂肪）特征的诊断价值优于传统骨骼特征。
+  [CVPR2026][医学图像][HR-pQCT] 提出基于 SegFormer 的全自动多区域 HR-pQCT 分割框架，结合影像组学特征与机器学习实现骨质疏松二分类，发现软组织（肌腱/脂肪）特征的诊断价值优于传统骨骼特征。 1. 骨质疏松诊断局限：临床金标准 DXA 仅测量面积骨密度（aBMD），无法评估骨微结构、三维形…
 tags:
   - "CVPR2026"
   - "医学图像"

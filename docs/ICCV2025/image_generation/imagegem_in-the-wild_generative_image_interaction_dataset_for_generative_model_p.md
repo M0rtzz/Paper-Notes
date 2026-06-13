@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ImageGem: In-the-wild Generative Image Interaction Dataset for Generative Model Personalization
 description: >-
-  [ICCV 2025][图像生成][生成模型个性化] 提出 **ImageGem**，首个大规模真实用户生成式交互数据集（57K用户 × 242K定制LoRA × 3M文本提示 × 5M生成图像）…
+  [ICCV 2025][图像生成][生成模型个性化] 提出 **ImageGem**，首个大规模真实用户生成式交互数据集（57K用户 × 242K定制LoRA × 3M文本提示 × 5M生成图像），利用个体用户偏好标注实现三大应用：**聚合偏好对齐**超越 Pick-a-Pic、**个性化检索与生成式推荐**（VLM排序显著提升）、以及首次提出的**生成模型个性化**——在 LoRA 潜权重空间（W2W）中学习偏好编辑方向以定制扩散模型。
 tags:
   - "ICCV 2025"
   - "图像生成"

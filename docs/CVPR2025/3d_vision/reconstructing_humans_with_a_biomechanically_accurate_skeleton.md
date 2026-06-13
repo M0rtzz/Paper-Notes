@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reconstructing Humans with a Biomechanically Accurate Skeleton
 description: >-
-  [CVPR 2025][3D视觉][人体姿态估计] HSMR 首次实现从单张图像估计生物力学准确的骨骼模型（SKEL）参数，通过伪标签迭代精炼策略解决无真值训练数据的困难，在标准人体姿态估计基准上匹配 HMR2.0 的性能，在极端姿态场景（MOYO 瑜伽数据集）上 MPJPE 大幅领先超过 18mm…
+  [CVPR 2025][3D视觉][人体姿态估计] HSMR 首次实现从单张图像估计生物力学准确的骨骼模型（SKEL）参数，通过伪标签迭代精炼策略解决无真值训练数据的困难，在标准人体姿态估计基准上匹配 HMR2.0 的性能，在极端姿态场景（MOYO 瑜伽数据集）上 MPJPE 大幅领先超过 18mm，同时有效避免不自然的关节旋转。
 tags:
   - "CVPR 2025"
   - "3D视觉"

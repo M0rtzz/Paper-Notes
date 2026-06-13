@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seq2Time: Sequential Knowledge Transfer for Video LLM Temporal Grounding
 description: >-
-  [CVPR 2025][视频理解][视频时序理解] Seq2Time 提出了一个数据驱动的训练范式，通过将大规模图像序列和短视频片段转化为模拟长视频时序结构的训练数据，并引入统一相对位置 token 表示…
+  [CVPR 2025][视频理解][视频时序理解] Seq2Time 提出了一个数据驱动的训练范式，通过将大规模图像序列和短视频片段转化为模拟长视频时序结构的训练数据，并引入统一相对位置 token 表示，在不需要大量时间戳标注的情况下显著提升了视频 LLM 的时序理解能力（YouCook2 F1 提升 27.6%，Charades-STA R@1 提升 14.7%）。
 tags:
   - "CVPR 2025"
   - "视频理解"

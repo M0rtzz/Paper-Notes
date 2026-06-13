@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks
 description: >-
-  [NEURIPS2025][图像恢复][脉冲神经网络] 提出 SpikeSR，首个基于注意力脉冲神经网络(SNN)的遥感图像超分辨率框架，通过脉冲注意力块(SAB)结合混合维度注意力(HDA)和可变形相似度注意力(DSA)，在 AID/DOTA/DIOR 上达到 SOTA 性能同时保持高计算效率。
+  [NEURIPS2025][图像恢复][脉冲神经网络] 提出 SpikeSR，首个基于注意力脉冲神经网络(SNN)的遥感图像超分辨率框架，通过脉冲注意力块(SAB)结合混合维度注意力(HDA)和可变形相似度注意力(DSA)，在 AID/DOTA/DIOR 上达到 SOTA 性能同时保持高计算效率。 领域现状：高分辨率遥感图像…
 tags:
   - "NEURIPS2025"
   - "图像恢复"

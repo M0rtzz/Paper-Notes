@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Brain-like Variational Inference
 description: >-
-  [NeurIPS 2025][AI安全][variational inference] 提出 FOND 框架（Free energy Online Natural-gradient Dynamics），从自由能最小化的第一原理推导出脉冲神经网络推断动力学，并实现 iPVAE（迭代泊松 VAE）…
+  [NeurIPS 2025][AI安全][variational inference] 提出 FOND 框架（Free energy Online Natural-gradient Dynamics），从自由能最小化的第一原理推导出脉冲神经网络推断动力学，并实现 iPVAE（迭代泊松 VAE），在重建-稀疏性权衡、生物合理性和 OOD 泛化上优于标准 VAE 和预测编码模型。
 tags:
   - "NeurIPS 2025"
   - "AI安全"

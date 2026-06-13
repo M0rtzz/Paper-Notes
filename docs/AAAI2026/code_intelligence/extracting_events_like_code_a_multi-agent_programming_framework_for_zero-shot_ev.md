@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Extracting Events Like Code: A Multi-Agent Programming Framework for Zero-Shot Event Extraction
 description: >-
-  [AAAI 2026][代码智能][零样本事件抽取] 提出 Agent-Event-Coder (AEC)，将零样本事件抽取类比为软件工程流程，用4个专职Agent（Retrieval→Planning→Coding→Verification）协作完成抽取…
+  [AAAI 2026 Oral][代码智能][零样本事件抽取] 提出 Agent-Event-Coder (AEC)，将零样本事件抽取类比为软件工程流程，用4个专职Agent（Retrieval→Planning→Coding→Verification）协作完成抽取，并将事件schema编码为可执行Python类实现编译器式确定性验证与双循环迭代修正，在5个领域、6个LLM上全面超越零样本基线。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "代码智能"
   - "零样本事件抽取"
   - "多智能体"

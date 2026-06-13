@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STaR-SQL: Self-Taught Reasoner for Text-to-SQL
 description: >-
-  [ACL 2025][代码智能][文本转SQL] 将 Text-to-SQL 任务重新定义为推理驱动的过程，通过 STaR（Self-Taught Reasoner）自举方法让 LLM 学习生成逐步推理来辅助 SQL 生成，并集成 ORM 验证器进行 best-of-N 采样…
+  [ACL 2025][代码智能][文本转SQL] 将 Text-to-SQL 任务重新定义为推理驱动的过程，通过 STaR（Self-Taught Reasoner）自举方法让 LLM 学习生成逐步推理来辅助 SQL 生成，并集成 ORM 验证器进行 best-of-N 采样，在 Spider 基准上达到 86.6% 执行准确率。
 tags:
   - "ACL 2025"
   - "代码智能"

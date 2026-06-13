@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning
 description: >-
-  [ICML 2026][极坐标嵌入] Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束…
+  [ICML 2026][极坐标嵌入] Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束，在 taxonomy expansion 任务上把 top-K 召回提升最多 19 点、mean rank 降低 60%。
 tags:
   - "ICML 2026"
   - "极坐标嵌入"

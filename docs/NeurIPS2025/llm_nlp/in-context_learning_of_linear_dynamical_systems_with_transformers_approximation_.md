@@ -2,10 +2,10 @@
 title: >-
   [论文解读] In-Context Learning of Linear Dynamical Systems with Transformers: Approximation Bounds and Depth-Separation
 description: >-
-  [NeurIPS 2025][LLM/NLP][in-context learning] 分析了线性 Transformer 在噪声线性动力系统上的 ICL 近似能力：$O(\log T)$ 深度可达到 $O(\log T / T)$ 测试误差（接近最小二乘估计器）…
+  [NeurIPS 2025][LLM 其他][in-context learning] 分析了线性 Transformer 在噪声线性动力系统上的 ICL 近似能力：$O(\log T)$ 深度可达到 $O(\log T / T)$ 测试误差（接近最小二乘估计器），而单层线性 Transformer 存在不可消除的下界——揭示了非 IID 数据下的深度分离现象。
 tags:
   - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "in-context learning"
   - "linear dynamical systems"
   - "approximation theory"

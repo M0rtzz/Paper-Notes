@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DELTA: Dynamic Layer-Aware Token Attention for Efficient Long-Context Reasoning
 description: >-
-  [ACL 2026][LLM推理][注意力机制] DELTA 是一种 **training-free 的层级稀疏 attention**：把 transformer 分成 "初始全 attention 层 + 少量 Δ-layer 重选 salient pages + 后续稀疏 attention 层" 三组…
+  [ACL 2026 Findings][LLM推理][注意力机制] DELTA 是一种 **training-free 的层级稀疏 attention**：把 transformer 分成 "初始全 attention 层 + 少量 Δ-layer 重选 salient pages + 后续稀疏 attention 层" 三组，在 AIME / GPQA-Diamond 上 accuracy 持平或反超 full attention，同时把 attended token 数减少 $4.25\times$、端到端推理加速 $1.54\times$。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM推理"
   - "注意力机制"
   - "KV cache"

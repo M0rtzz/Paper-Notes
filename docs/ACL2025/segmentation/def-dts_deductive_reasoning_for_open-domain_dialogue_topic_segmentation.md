@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DEF-DTS: Deductive Reasoning for Open-domain Dialogue Topic Segmentation
 description: >-
-  [ACL 2025][语义分割][对话话题分割] 提出 DEF-DTS，一种基于 LLM 多步演绎推理的对话话题分割方法——通过双向上下文摘要 → 话语意图分类（5 类） → 演绎话题转移判断三步 pipeline…
+  [ACL 2025][语义分割][对话话题分割] 提出 DEF-DTS，一种基于 LLM 多步演绎推理的对话话题分割方法——通过双向上下文摘要 → 话语意图分类（5 类） → 演绎话题转移判断三步 pipeline，在 TIAGE、SuperDialseg、Dialseg711 三个数据集上取得无监督/prompt 方法 SOTA，在 Dialseg711 上超越监督方法。
 tags:
   - "ACL 2025"
   - "语义分割"

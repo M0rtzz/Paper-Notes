@@ -2,9 +2,9 @@
 title: >-
   [论文解读] vMFCoOp: Towards Equilibrium on a Unified Hyperspherical Manifold for Prompting Biomedical VLMs
 description: >-
-  [AAAI 2026][多模态VLM][提示学习] 提出 vMFCoOp 框架，通过在统一超球面流形上反向估计 von Mises-Fisher 分布对齐 LLM 和 CLIP 的语义偏差，实现生物医学 VLM 的鲁棒少样本提示学习。
+  [AAAI 2026 Oral][多模态VLM][提示学习] 提出 vMFCoOp 框架，通过在统一超球面流形上反向估计 von Mises-Fisher 分布对齐 LLM 和 CLIP 的语义偏差，实现生物医学 VLM 的鲁棒少样本提示学习。 1. 领域现状： CLIP 等视觉-语言模型通过大规模对比学习实现了强大的零/少…
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多模态VLM"
   - "提示学习"
   - "生物医学VLM"

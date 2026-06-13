@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks
 description: >-
-  [CVPR 2026][自监督学习][开放集识别] 提出 SpHOR，一种两阶段解耦训练的开放集识别方法，通过球面表示学习（vMF 分布）、正交标签嵌入和 Mixup/Label Smoothing 集成，显式塑造特征空间以更好地分离已知/未知类别…
+  [CVPR 2026 Findings][自监督学习][开放集识别] 提出 SpHOR，一种两阶段解耦训练的开放集识别方法，通过球面表示学习（vMF 分布）、正交标签嵌入和 Mixup/Label Smoothing 集成，显式塑造特征空间以更好地分离已知/未知类别，在 Semantic Shift Benchmark 上取得最高 5.1% 的 OSCR 提升。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "自监督学习"
   - "开放集识别"
   - "表示学习"

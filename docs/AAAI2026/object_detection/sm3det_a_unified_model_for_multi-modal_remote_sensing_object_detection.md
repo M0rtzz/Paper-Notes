@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection
 description: >-
-  [AAAI2026][目标检测][多模态遥感] SM3Det提出了遥感领域的M2Det新任务（多模态数据集+多任务目标检测），通过网格级稀疏MoE骨干网络和动态子模块优化（DSO）机制，用单一模型同时处理SAR/光学/红外三种模态的水平/旋转框检测，显著超越各模态独立训练的三个专用模型组合。
+  [AAAI2026 Oral][目标检测][多模态遥感] SM3Det提出了遥感领域的M2Det新任务（多模态数据集+多任务目标检测），通过网格级稀疏MoE骨干网络和动态子模块优化（DSO）机制，用单一模型同时处理SAR/光学/红外三种模态的水平/旋转框检测，显著超越各模态独立训练的三个专用模型组合。
 tags:
-  - "AAAI2026"
+  - "AAAI2026 Oral"
   - "目标检测"
   - "多模态遥感"
   - "稀疏MoE"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Improving Time Series Forecasting via Instance-aware Post-hoc Revision (PIR)
 description: >-
-  [NeurIPS 2025][实例级修正] PIR 提出实例感知的事后修正框架——通过不确定性估计识别预测失败实例，用局部修正（协变量+外生变量 Transformer）和全局修正（检索相似训练实例加权平均）的残差组合，作为即插即用模块使 SparseTSF MSE 降低 25.87%…
+  [NeurIPS 2025][时间序列][实例级修正] PIR 提出实例感知的事后修正框架——通过不确定性估计识别预测失败实例，用局部修正（协变量+外生变量 Transformer）和全局修正（检索相似训练实例加权平均）的残差组合，作为即插即用模块使 SparseTSF MSE 降低 25.87%，PatchTST 降低 8.99%。
 tags:
   - "NeurIPS 2025"
+  - "时间序列"
   - "实例级修正"
   - "不确定性估计"
   - "检索增强"

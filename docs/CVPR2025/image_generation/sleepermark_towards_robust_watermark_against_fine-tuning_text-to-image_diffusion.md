@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SleeperMark: Towards Robust Watermark against Fine-Tuning Text-to-Image Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][扩散模型水印] SleeperMark 提出了一种针对 T2I 扩散模型的鲁棒水印框架，通过将水印信息与模型的语义知识显式解耦，使水印在下游微调（LoRA、DreamBooth、ControlNet）后仍可靠检测…
+  [CVPR 2025][图像生成][扩散模型水印] SleeperMark 提出了一种针对 T2I 扩散模型的鲁棒水印框架，通过将水印信息与模型的语义知识显式解耦，使水印在下游微调（LoRA、DreamBooth、ControlNet）后仍可靠检测，在各种微调攻击下 TPR@10⁻⁶FPR 保持 0.93 以上。
 tags:
   - "CVPR 2025"
   - "图像生成"

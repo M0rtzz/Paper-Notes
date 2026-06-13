@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Logits to Hierarchies: Hierarchical Clustering made Simple
 description: >-
-  [ICML 2025][模型压缩][层次聚类] 提出 L2H（Logits to Hierarchies）算法，仅利用预训练平面聚类模型的 logits 输出，通过掩码 softmax 和迭代合并策略，在无需微调的情况下构建高质量层次聚类，大幅超越专用深度层次聚类模型…
+  [ICML 2025][模型压缩][层次聚类] 提出 L2H（Logits to Hierarchies）算法，仅利用预训练平面聚类模型的 logits 输出，通过掩码 softmax 和迭代合并策略，在无需微调的情况下构建高质量层次聚类，大幅超越专用深度层次聚类模型，且在 ImageNet 规模数据集上 CPU 运行不到一分钟。
 tags:
   - "ICML 2025"
   - "模型压缩"

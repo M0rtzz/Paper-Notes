@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lightning Unified Video Editing via In-Context Sparse Attention
 description: >-
-  [ICML 2026][视频生成][In-Context Learning] 针对 In-Context Learning 范式下视频编辑的二次注意力瓶颈，作者基于"context token 显著性低于 source token"以及"Query 锐度正比于 Taylor 近似误差"两条洞察设计了 In-c…
+  [ICML 2026][视频生成][In-Context Learning] 针对 In-Context Learning 范式下视频编辑的二次注意力瓶颈，作者基于"context token 显著性低于 source token"以及"Query 锐度正比于 Taylor 近似误差"两条洞察设计了 In-context Sparse Attention（ISA），并训练出 LIVEditor，在多个 benchmark 上既加速 ~60% 又超越 SOTA 全注意力模型。
 tags:
   - "ICML 2026"
   - "视频生成"

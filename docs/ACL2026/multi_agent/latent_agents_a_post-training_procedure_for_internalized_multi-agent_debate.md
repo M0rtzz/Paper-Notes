@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate
 description: >-
-  [ACL 2026][多智能体][多智能体辩论] 提出 IMAD（Internalized Multi-Agent Debate）框架，用 SFT + GRPO 两阶段后训练把多智能体辩论"内化"进单个 LLM，token 消耗最多减少 93%…
+  [ACL 2026][多智能体][多智能体辩论] 提出 IMAD（Internalized Multi-Agent Debate）框架，用 SFT + GRPO 两阶段后训练把多智能体辩论"内化"进单个 LLM，token 消耗最多减少 93%，并通过激活引导证明内化后的模型在隐空间中保留了可分离、可控的"智能体子空间"。
 tags:
   - "ACL 2026"
   - "多智能体"

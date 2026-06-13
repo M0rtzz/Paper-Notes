@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models
 description: >-
-  [AAAI 2026][LLM效率][长上下文语言模型] 首次系统研究长上下文语言模型中参数知识(parametric knowledge)对生成的影响，发现其影响随上下文长度增长而增强，且现有方法提升外部检索能力会抑制参数召回能力…
+  [AAAI 2026][LLM效率][长上下文语言模型] 首次系统研究长上下文语言模型中参数知识(parametric knowledge)对生成的影响，发现其影响随上下文长度增长而增强，且现有方法提升外部检索能力会抑制参数召回能力，据此提出Hybrid Needle-in-a-Haystack测试来同时评估两种能力。
 tags:
   - "AAAI 2026"
   - "LLM效率"

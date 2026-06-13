@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Bridging SFT and RL: Dynamic Policy Optimization for Robust Reasoning
 description: >-
-  [ACL 2026][强化学习][SFT与RL融合] 提出 DYPO（Dynamic Policy Optimization），通过动态难度分级将样本路由到不同优化路径——Hard样本用多教师蒸馏降低SFT偏差、Mid样本用Group Alignment Loss降低RL方差…
+  [ACL 2026 Findings][强化学习][SFT与RL融合] 提出 DYPO（Dynamic Policy Optimization），通过动态难度分级将样本路由到不同优化路径——Hard样本用多教师蒸馏降低SFT偏差、Mid样本用Group Alignment Loss降低RL方差，在数学推理benchmark上平均提升4.8%，OOD任务提升13.3%。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "强化学习"
   - "SFT与RL融合"
   - "偏差-方差权衡"

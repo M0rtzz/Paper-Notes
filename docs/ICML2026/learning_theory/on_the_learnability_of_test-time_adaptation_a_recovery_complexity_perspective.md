@@ -2,9 +2,10 @@
 title: >-
   [论文解读] On the Learnability of Test-Time Adaptation: A Recovery Complexity Perspective
 description: >-
-  [ICML 2026][TTA可学习性] 本文首次为测试时自适应（TTA）建立可学习性理论框架，用 $(\epsilon,\delta)$-Recovery Complexity 衡量分布漂移后模型把超额风险压到 $\epsilon$ 所需时间，并配合 $(\epsilon…
+  [ICML 2026][学习理论 / Test-Time Adaptation / 非平稳在线学习][TTA可学习性] 本文首次为测试时自适应（TTA）建立可学习性理论框架，用 $(\epsilon,\delta)$-Recovery Complexity 衡量分布漂移后模型把超额风险压到 $\epsilon$ 所需时间，并配合 $(\epsilon,\rho)$-TTA Learnability 把局部恢复推广到整条非平稳测试流，导出匹配阶的 minimax 上/下界，揭示了 TTA 的"适应速度—信息约束"内在权衡。
 tags:
   - "ICML 2026"
+  - "学习理论 / Test-Time Adaptation / 非平稳在线学习"
   - "TTA可学习性"
   - "恢复复杂度"
   - "Wasserstein 量化"

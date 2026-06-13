@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Crit: Benchmarking Multimodal Judges on Pluralistic Criteria-Following
 description: >-
-  [CVPR 2026][多模态VLM][LMM-as-Judge] 构建首个评估多模态 Judge 模型多准则遵循能力的基准 Multi-Crit，包含准则级人类标注和偏好冲突样本，配合 PAcc/TOS/CMR 三个新指标…
+  [CVPR 2026][多模态VLM][LMM-as-Judge] 构建首个评估多模态 Judge 模型多准则遵循能力的基准 Multi-Crit，包含准则级人类标注和偏好冲突样本，配合 PAcc/TOS/CMR 三个新指标，全面评估 25 个 LMM 并揭示闭源最强模型在开放生成任务上仅 32.78% 的多准则一致性。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

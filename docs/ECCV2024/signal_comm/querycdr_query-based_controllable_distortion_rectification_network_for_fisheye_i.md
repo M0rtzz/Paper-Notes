@@ -2,7 +2,7 @@
 title: >-
   [论文解读] QueryCDR: Query-based Controllable Distortion Rectification Network for Fisheye Images
 description: >-
-  [ECCV 2024][信号/通信][鱼眼图像矫正] 提出QueryCDR网络，通过可学习查询机制（DLQM）和两种可控调制模块（CCMB/CAMB），首次实现不同畸变程度的鱼眼图像在**不重训**的情况下进行高质量可控矫正。
+  [ECCV 2024][信号/通信][鱼眼图像矫正] 提出QueryCDR网络，通过可学习查询机制（DLQM）和两种可控调制模块（CCMB/CAMB），首次实现不同畸变程度的鱼眼图像在不重训：的情况下进行高质量可控矫正。 鱼眼相机因其超大视场角（FoV）被广泛应用于安防监控和自动驾驶领域。然而鱼眼镜头带来的图像畸变严重影响下…
 tags:
   - "ECCV 2024"
   - "信号/通信"

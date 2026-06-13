@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSO: Aligning 3D Generators with Simulation Feedback for Physical Soundness
 description: >-
-  [3D视觉] 提出 Direct Simulation Optimization (DSO) 框架，利用物理仿真器的（非可微）稳定性反馈作为奖励信号，通过 DPO 或新提出的 DRO 目标函数微调 3D 生成器，使其前馈式地直接输出物理上自支撑的 3D 物体，无需测试时优化。
+  [3D视觉] 提出 Direct Simulation Optimization (DSO) 框架，利用物理仿真器的（非可微）稳定性反馈作为奖励信号，通过 DPO 或新提出的 DRO 目标函数微调 3D 生成器，使其前馈式地直接输出物理上自支撑的 3D 物体，无需测试时优化。 当前最先进的 3D 生成器（如 TRELLIS、…
 tags:
   - "3D视觉"
 ---

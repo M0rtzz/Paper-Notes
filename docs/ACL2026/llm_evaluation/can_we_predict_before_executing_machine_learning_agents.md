@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can We Predict Before Executing Machine Learning Agents?
 description: >-
-  [ACL 2026][LLM评测][ML Agent] 本文证明 LLM 可作为隐式 "world model"，仅凭 task 描述 + verified data report + 两份代码，就能预测 ML 解的优劣（DeepSeek-V3.2-Thinking 61.5% 准确率）…
+  [ACL 2026][LLM评测][ML Agent] 本文证明 LLM 可作为隐式 "world model"，仅凭 task 描述 + verified data report + 两份代码，就能预测 ML 解的优劣（DeepSeek-V3.2-Thinking 61.5% 准确率）；据此构造 ForeAgent，把 AIDE 的 Generate-Execute-Feedback 循环改成 Predict-then-Verify 循环，在 MLE-Bench 上获得 6× 加速 + 3.2× 搜索空间 + +6% Beat Ratio。
 tags:
   - "ACL 2026"
   - "LLM评测"

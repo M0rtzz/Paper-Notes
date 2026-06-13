@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents
 description: >-
-  [ICLR 2026 Workshop][LLM效率][memory-augmented agents] 将记忆增强 Agent 的多存储检索形式化为代价敏感的存储路由问题（store routing），证明选择性检索相比全量检索可在减少 62% context token 的同时提升 QA 准确率（86%…
+  [ICLR 2026 Workshop][LLM效率][memory-augmented agents] 将记忆增强 Agent 的多存储检索形式化为代价敏感的存储路由问题（store routing），证明选择性检索相比全量检索可在减少 62% context token 的同时提升 QA 准确率（86% vs 81%），并提出基于语义信号的启发式路由基线。
 tags:
   - "ICLR 2026 Workshop"
   - "LLM效率"

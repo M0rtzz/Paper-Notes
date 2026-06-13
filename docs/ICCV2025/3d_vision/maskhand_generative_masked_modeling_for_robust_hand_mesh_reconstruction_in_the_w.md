@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MaskHand: Generative Masked Modeling for Robust Hand Mesh Reconstruction in the Wild
 description: >-
-  [ICCV 2025][3D视觉][手部网格重建] 提出 MaskHand，首个将生成式掩码建模引入 3D 手部网格重建的方法，通过 VQ-MANO 将连续手部姿态离散化为 token，再利用上下文引导的掩码 Transformer 学习 2D-to-3D 映射的概率分布…
+  [ICCV 2025][3D视觉][手部网格重建] 提出 MaskHand，首个将生成式掩码建模引入 3D 手部网格重建的方法，通过 VQ-MANO 将连续手部姿态离散化为 token，再利用上下文引导的掩码 Transformer 学习 2D-to-3D 映射的概率分布，在推理时通过置信度引导的迭代采样生成高精度手部网格，在 HO3Dv3 零样本评估中 PA-MPJPE 降低 19.5%。
 tags:
   - "ICCV 2025"
   - "3D视觉"

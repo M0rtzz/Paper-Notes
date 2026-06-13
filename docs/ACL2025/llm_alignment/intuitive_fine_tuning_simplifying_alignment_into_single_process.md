@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intuitive Fine-Tuning: Towards Simplifying Alignment into a Single Process
 description: >-
-  [ACL 2025][LLM对齐][SFT] 通过 MDP 框架统一分析 SFT 和偏好优化（PO），发现 SFT 是 PO 的特例但偏好估计和转移优化均不充分，提出 IFT（Intuitive Fine-Tuning）通过时序残差连接让模型在不需要偏好数据的情况下获得接近甚至超越 SFT+PO 流水线的对齐…
+  [ACL 2025][LLM对齐][SFT] 通过 MDP 框架统一分析 SFT 和偏好优化（PO），发现 SFT 是 PO 的特例但偏好估计和转移优化均不充分，提出 IFT（Intuitive Fine-Tuning）通过时序残差连接让模型在不需要偏好数据的情况下获得接近甚至超越 SFT+PO 流水线的对齐效果。
 tags:
   - "ACL 2025"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness
 description: >-
-  [ECCV 2024][相机轨迹生成] 提出首个从真实电影中提取的**相机-角色轨迹数据集 E.T.**（115K 样本，11M 帧），以及基于扩散模型的 **Director** 方法，能根据文本描述和角色轨迹生成复杂的相机运动轨迹，同时设计了 **CLaTr** 对比嵌入用于轨迹生成质量评估。
+  [ECCV 2024][相机轨迹生成] 提出首个从真实电影中提取的相机-角色轨迹数据集 E.T.：（115K 样本，11M 帧），以及基于扩散模型的 Director：方法，能根据文本描述和角色轨迹生成复杂的相机运动轨迹，同时设计了 CLaTr：对比嵌入用于轨迹生成质量评估。 问题背景 电影摄影中，相机的放置和运动是传达导演…
 tags:
   - "ECCV 2024"
   - "相机轨迹生成"

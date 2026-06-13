@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A dataset of medication images with instance segmentation masks for preventing adverse drug events
 description: >-
-  [CVPR 2026][语义分割][药物识别] 构建了MEDISEG药物图像实例分割数据集（8262张图像，32类药片，含遮挡/重叠的真实场景），YOLOv8/v9验证3类达99.5% mAP@0.5、32类达80.1%…
+  [CVPR 2026][语义分割][药物识别] 构建了MEDISEG药物图像实例分割数据集（8262张图像，32类药片，含遮挡/重叠的真实场景），YOLOv8/v9验证3类达99.5% mAP@0.5、32类达80.1%，FsDet few-shot证明MEDISEG预训练在遮挡场景比CURE显著提升（1-shot 0.406 vs 0.131）。
 tags:
   - "CVPR 2026"
   - "语义分割"

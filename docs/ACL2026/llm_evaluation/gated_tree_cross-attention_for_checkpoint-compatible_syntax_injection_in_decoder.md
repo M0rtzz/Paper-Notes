@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gated Tree Cross-Attention for Checkpoint-Compatible Syntax Injection in Decoder-Only LLMs
 description: >-
-  [ACL 2026][LLM评测][GTCA] 作者给冻结的 decoder-only LLM（Qwen-2.5-7B、Llama-3-8B）外挂一个 Gated Tree Cross-Attention 侧支路 —— 离线 Berkeley parser 预算 constituency 树并按高度索引成 c…
+  [ACL 2026][LLM评测][GTCA] 作者给冻结的 decoder-only LLM（Qwen-2.5-7B、Llama-3-8B）外挂一个 Gated Tree Cross-Attention 侧支路 —— 离线 Berkeley parser 预算 constituency 树并按高度索引成 chunk memory，token 隐状态通过 head-wise 门控 cross-attention 读它得到残差更新，再配合 token update mask + 三阶段训练防止干扰；BLiMP 准确率从 78.58/79.95 提升到 83.12/84.61，同时 MCQA、HellaSwag、WinoGrande 完…
 tags:
   - "ACL 2026"
   - "LLM评测"

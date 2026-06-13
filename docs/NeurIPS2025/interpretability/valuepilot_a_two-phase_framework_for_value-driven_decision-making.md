@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making
 description: >-
-  [NeurIPS 2025][可解释性][value-driven decision-making] 提出 ValuePilot 两阶段框架，通过数据集生成工具包（DGT）构建价值标注场景，再用决策模块（DMM）结合用户个性化价值偏好进行多准则决策，在与人类决策对齐方面超过 GPT-5 等强基线。
+  [NeurIPS 2025][可解释性][value-driven decision-making] 提出 ValuePilot 两阶段框架，通过数据集生成工具包（DGT）构建价值标注场景，再用决策模块（DMM）结合用户个性化价值偏好进行多准则决策，在与人类决策对齐方面超过 GPT-5 等强基线。 个性化决策是人机交互中的核…
 tags:
   - "NeurIPS 2025"
   - "可解释性"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLM-AT: Automatic Transmission for LLM Tiers Optimizing Cost and Accuracy
 description: >-
-  [ACL 2025][LLM/NLP][LLM分层] 提出 LLM-AT 框架，通过 Starter（基于历史推理记录的准确率估计器选择初始 LLM 层级）→ Generator（生成回答）→ Judge（评估有效性，无效则自动升级到更高层级）的无训练迭代流程…
+  [ACL 2025][LLM 其他][LLM分层] 提出 LLM-AT 框架，通过 Starter（基于历史推理记录的准确率估计器选择初始 LLM 层级）→ Generator（生成回答）→ Judge（评估有效性，无效则自动升级到更高层级）的无训练迭代流程，在 MATH 上以 o1 单次推理 59.37% 的成本达到接近的准确率，在 MCQA 上以 o1 成本的 12% 实现近似性能。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM分层"
   - "模型选择"
   - "成本优化"

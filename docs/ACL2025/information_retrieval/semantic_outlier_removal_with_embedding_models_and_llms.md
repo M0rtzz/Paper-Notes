@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Outlier Removal with Embedding Models and LLMs
 description: >-
-  [ACL 2025 (Industry Track)][信息检索/RAG][语义离群检测] 提出 SORE（Semantic Outlier Removal），一种基于多语言句子嵌入和近似近邻搜索的文本清洗方法，通过元数据嵌入识别核心内容，并标记与预定义离群类别匹配或严重偏离核心内容的文本片段…
+  [ACL 2025 (Industry Track)][信息检索/RAG][语义离群检测] 提出 SORE（Semantic Outlier Removal），一种基于多语言句子嵌入和近似近邻搜索的文本清洗方法，通过元数据嵌入识别核心内容，并标记与预定义离群类别匹配或严重偏离核心内容的文本片段，在接近 LLM 水平的精度下实现了极低的计算成本，已在生产环境中每天处理数百万文档。
 tags:
   - "ACL 2025 (Industry Track)"
   - "信息检索/RAG"

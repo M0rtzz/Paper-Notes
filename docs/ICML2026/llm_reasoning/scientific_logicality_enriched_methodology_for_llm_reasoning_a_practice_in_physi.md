@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scientific Logicality Enriched Methodology for LLM Reasoning: A Practice in Physics
 description: >-
-  [ICML2026][LLM推理][科学逻辑性] 本文首次系统研究 LLM 科学推理中的"逻辑性"，提出"逻辑保真度 / 因果连接 / 推理进展" 三维评估指标，并基于该指标构造两种 SFT 数据采样方法（风格迁移 RST、逻辑蒸馏 Logic-Distill）…
+  [ICML2026][LLM推理][科学逻辑性] 本文首次系统研究 LLM 科学推理中的"逻辑性"，提出"逻辑保真度 / 因果连接 / 推理进展" 三维评估指标，并基于该指标构造两种 SFT 数据采样方法（风格迁移 RST、逻辑蒸馏 Logic-Distill），在自建的 PhysLogic 基准与三个公开物理 benchmark 上把 7B 模型的逻辑性与答题准确率同时提了一大截。
 tags:
   - "ICML2026"
   - "LLM推理"

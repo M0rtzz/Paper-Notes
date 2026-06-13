@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generative Multiview Relighting for 3D Reconstruction under Extreme Illumination Variation
 description: >-
-  [CVPR 2025][3D视觉][多视图重光照] 本文提出先用多视图重光照扩散模型将不同光照下拍摄的图像统一到参考光照条件，再用带有"shading embedding"的鲁棒 NeRF 模型重建 3D 表示，在极端光照变化下实现了远超现有方法的高保真外观重建，尤其擅长恢复镜面/高光效果。
+  [CVPR 2025][3D视觉][多视图重光照] 本文提出先用多视图重光照扩散模型将不同光照下拍摄的图像统一到参考光照条件，再用带有"shading embedding"的鲁棒 NeRF 模型重建 3D 表示，在极端光照变化下实现了远超现有方法的高保真外观重建，尤其擅长恢复镜面/高光效果。 1. 领域现状：三维重建和新视角…
 tags:
   - "CVPR 2025"
   - "3D视觉"

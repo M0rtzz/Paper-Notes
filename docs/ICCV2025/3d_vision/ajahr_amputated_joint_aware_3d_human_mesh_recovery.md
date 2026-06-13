@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AJAHR: Amputated Joint Aware 3D Human Mesh Recovery
 description: >-
-  [ICCV 2025][3D视觉][人体网格恢复] 首个面向截肢者的3D人体网格恢复框架——通过合成100万+截肢者图像(A3D)、设计BPAC-Net截肢分类器区分截肢与遮挡、以及双Tokenizer切换策略分别编码截肢/正常位姿先验…
+  [ICCV 2025][3D视觉][人体网格恢复] 首个面向截肢者的3D人体网格恢复框架——通过合成100万+截肢者图像(A3D)、设计BPAC-Net截肢分类器区分截肢与遮挡、以及双Tokenizer切换策略分别编码截肢/正常位姿先验，在截肢者数据上大幅领先(ITW-amputee上MVE比TokenHMR低16.87)，非截肢者数据上也保持竞争力。
 tags:
   - "ICCV 2025"
   - "3D视觉"

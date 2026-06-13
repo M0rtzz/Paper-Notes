@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning
 description: >-
-  [ICLR 2026][可解释性][多Agent系统] 提出MATA（Multi-Agent hierarchical Trainable Automaton），将多Agent视觉推理建模为层次有限状态自动机，顶层状态转移由可训练的hyper agent（基于LLM的状态控制器）学习…
+  [ICLR 2026][可解释性][多Agent系统] 提出MATA（Multi-Agent hierarchical Trainable Automaton），将多Agent视觉推理建模为层次有限状态自动机，顶层状态转移由可训练的hyper agent（基于LLM的状态控制器）学习，每个Agent内部使用规则化的子自动机，通过共享内存实现协作与竞争，在多个视觉推理基准上达到SOTA。
 tags:
   - "ICLR 2026"
   - "可解释性"

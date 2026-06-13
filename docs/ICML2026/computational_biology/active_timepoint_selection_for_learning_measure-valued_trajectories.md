@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Active Timepoint Selection for Learning Measure-Valued Trajectories
 description: >-
-  [ICML 2026][计算生物][主动采样] 本文研究“什么时候采样一个分布快照最有价值”，用 LOT 把 Wasserstein 空间中的测度轨迹线性化，再用带时间扭曲的多输出 GP 给出 epistemic uncertainty，从而主动选择最能降低轨迹重建误差的时间点。
+  [ICML 2026][计算生物][主动采样] 本文研究“什么时候采样一个分布快照最有价值”，用 LOT 把 Wasserstein 空间中的测度轨迹线性化，再用带时间扭曲的多输出 GP 给出 epistemic uncertainty，从而主动选择最能降低轨迹重建误差的时间点。 领域现状：在单细胞转录组、流体、宏观经济等场…
 tags:
   - "ICML 2026"
   - "计算生物"

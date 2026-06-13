@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Documents to Segments: A Contextual Reformulation for Topic Assignment
 description: >-
-  [ACL2026][可解释性][主题建模] 本文把主题分配的基本单位从 document 改成 segment，提出 SBTA 和 SemEval-STM 数据集，证明在多主题短文本中按语义片段分配主题能显著提升主题纯度、可解释性和下游检索可用性。
+  [ACL2026 Findings][可解释性][主题建模] 本文把主题分配的基本单位从 document 改成 segment，提出 SBTA 和 SemEval-STM 数据集，证明在多主题短文本中按语义片段分配主题能显著提升主题纯度、可解释性和下游检索可用性。 领域现状：传统主题建模通常以文档为基本单位…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "可解释性"
   - "主题建模"
   - "文本分段"

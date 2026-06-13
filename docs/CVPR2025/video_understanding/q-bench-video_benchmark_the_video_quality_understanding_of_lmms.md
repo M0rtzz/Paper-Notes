@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Q-Bench-Video: Benchmark the Video Quality Understanding of LMMs
 description: >-
-  [CVPR 2025][视频理解][视频质量评估] 首个系统评估大型多模态模型视频质量理解能力的基准 Q-Bench-Video，涵盖自然/AIGC/CG视频、四维质量关注和多题型设计。
+  [CVPR 2025][视频理解][视频质量评估] 首个系统评估大型多模态模型视频质量理解能力的基准 Q-Bench-Video，涵盖自然/AIGC/CG视频、四维质量关注和多题型设计。 核心矛盾 核心矛盾：领域现状：大型多模态模型 (LMM) 在高层语义视频理解任务上取得显著进展，但对视频质量理解的系统评估严重缺乏…
 tags:
   - "CVPR 2025"
   - "视频理解"

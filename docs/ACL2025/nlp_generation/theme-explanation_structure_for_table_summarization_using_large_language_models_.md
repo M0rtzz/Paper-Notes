@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Theme-Explanation Structure for Table Summarization Using Large Language Models
 description: >-
-  [ACL 2025][文本生成][表格摘要] 提出 Tabular-TX 管线，通过多步 CoT 推理实现深度表格理解、记者角色 prompt 生成清晰句子、并将输出结构化为 Theme（主题状语）+ Explanation（解释谓语）的格式…
+  [ACL 2025][文本生成][表格摘要] 提出 Tabular-TX 管线，通过多步 CoT 推理实现深度表格理解、记者角色 prompt 生成清晰句子、并将输出结构化为 Theme（主题状语）+ Explanation（解释谓语）的格式，在韩语行政表格摘要基准上不依赖微调即实现 ROUGE-1 0.51 的最佳性能，显著超越微调和纯 ICL 方法。
 tags:
   - "ACL 2025"
   - "文本生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning
 description: >-
-  [CVPR2025][医学图像][glioblastoma] 提出 RICE-NET，一个多模态 3D 深度学习模型，融合纵向 MRI 数据与放疗剂量分布图，用于区分胶质母细胞瘤术后放射性对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。
+  [CVPR2025][医学图像][glioblastoma] 提出 RICE-NET，一个多模态 3D 深度学习模型，融合纵向 MRI 数据与放疗剂量分布图，用于区分胶质母细胞瘤术后放射性对比增强（RICE）与肿瘤复发，在独立测试集上达到 F1=0.92。 - 胶质母细胞瘤（GBM）患者在手术切除后需接受放射治疗以消除残余肿…
 tags:
   - "CVPR2025"
   - "医学图像"

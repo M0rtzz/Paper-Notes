@@ -2,7 +2,7 @@
 title: >-
   [论文解读] One-Minute Video Generation with Test-Time Training
 description: >-
-  [CVPR 2025][视频生成][Test-Time Training] 本文将 Test-Time Training (TTT) 层引入预训练的 Diffusion Transformer，利用其以神经网络为隐藏状态的高表达能力，实现了从文本故事板生成一分钟连贯长视频的能力…
+  [CVPR 2025][视频生成][Test-Time Training] 本文将 Test-Time Training (TTT) 层引入预训练的 Diffusion Transformer，利用其以神经网络为隐藏状态的高表达能力，实现了从文本故事板生成一分钟连贯长视频的能力，在人类评估中以 34 Elo 分领先于 Mamba 2、Gated DeltaNet 等基线。
 tags:
   - "CVPR 2025"
   - "视频生成"

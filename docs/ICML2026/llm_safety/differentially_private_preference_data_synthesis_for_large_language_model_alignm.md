@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Differentially Private Preference Data Synthesis for Large Language Model Alignment
 description: >-
-  [ICML 2026][LLM安全][差分隐私] DPPrefSyn 把"在私有偏好数据上做 DP 微调"换成"用 DP 学一个偏好奖励模型分布后再用公开 prompt 合成 DP 偏好数据"…
+  [ICML 2026][LLM安全][差分隐私] DPPrefSyn 把"在私有偏好数据上做 DP 微调"换成"用 DP 学一个偏好奖励模型分布后再用公开 prompt 合成 DP 偏好数据"，借助 Bradley-Terry 线性奖励的几何结构 + DP-PCA + DP-KMeans 聚类捕捉用户偏好异质性，在 Anthropic-HH 上 $\varepsilon=2$ 拿到 56.5% GPT-4o win-rate，反超无隐私微调（55.95%）和 DP-FT（37.0%）。
 tags:
   - "ICML 2026"
   - "LLM安全"

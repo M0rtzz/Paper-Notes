@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafetyAnalyst: Interpretable, Transparent, and Steerable Safety Moderation for AI Behavior
 description: >-
-  [ICML 2025][可解释性][AI安全审核] 提出 SafetyAnalyst 框架，通过链式思维推理生成可解释的"危害-收益树"（枚举 AI 行为可能导致的有害和有益效果及其可能性/严重性/即时性），再用 28 个全可解释参数聚合为危害分数…
+  [ICML 2025][可解释性][AI安全审核] 提出 SafetyAnalyst 框架，通过链式思维推理生成可解释的"危害-收益树"（枚举 AI 行为可能导致的有害和有益效果及其可能性/严重性/即时性），再用 28 个全可解释参数聚合为危害分数，在 prompt 安全分类上以平均 F1=0.81 超越现有审核系统（F1<0.72），同时提供可解释性、透明性和可操控性。
 tags:
   - "ICML 2025"
   - "可解释性"

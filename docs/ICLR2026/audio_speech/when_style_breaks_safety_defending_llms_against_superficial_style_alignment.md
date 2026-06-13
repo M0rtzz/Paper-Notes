@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment
 description: >-
-  [ICLR 2026][音频/语音][LLM安全] 发现 LLM 越狱 benchmark 中的 ASR 被语义无关的风格模式（如"创建列表"）人为膨胀，36 个 LLM 中几乎都存在此现象；表面风格对齐微调进一步加剧此风险；提出 SafeStyle——用风格增强的安全训练数据缓解风险。
+  [ICLR 2026][音频/语音][LLM安全] 发现 LLM 越狱 benchmark 中的 ASR 被语义无关的风格模式（如"创建列表"）人为膨胀，36 个 LLM 中几乎都存在此现象；表面风格对齐微调进一步加剧此风险；提出 SafeStyle——用风格增强的安全训练数据缓解风险。 领域现状：LLM 对齐努力使其拒绝恶…
 tags:
   - "ICLR 2026"
   - "音频/语音"

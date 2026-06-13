@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Building Vision Models upon Heat Conduction
 description: >-
-  [CVPR 2025][LLM/NLP][vision backbone] 提出 vHeat 视觉 backbone，将图像 patch 建模为热源，利用物理热传导方程通过 DCT/IDCT 变换实现 $O(N^{1.5})$ 复杂度的信息传播…
+  [CVPR 2025][LLM 其他][vision backbone] 提出 vHeat 视觉 backbone，将图像 patch 建模为热源，利用物理热传导方程通过 DCT/IDCT 变换实现 $O(N^{1.5})$ 复杂度的信息传播，在 ImageNet-1K 上以 3 倍吞吐量和 80% 更少 GPU 显存达到 84.0% top-1 准确率。
 tags:
   - "CVPR 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "vision backbone"
   - "heat conduction"
   - "DCT"

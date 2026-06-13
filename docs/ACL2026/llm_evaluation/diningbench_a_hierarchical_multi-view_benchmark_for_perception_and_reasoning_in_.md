@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DiningBench: A Hierarchical Multi-view Benchmark for Perception and Reasoning in the Dietary Domain
 description: >-
-  [ACL 2026][LLM评测][食品 benchmark] 作者构建了首个层级化的多视图食品 benchmark DiningBench（3,021 道菜 / 15,928 张图 / 平均 5.27 视图/菜），覆盖「细粒度分类（同店硬负样本）→ 营养估计（4 维回归）→ VQA（推理）」三层认知任务…
+  [ACL 2026][LLM评测][食品 benchmark] 作者构建了首个层级化的多视图食品 benchmark DiningBench（3,021 道菜 / 15,928 张图 / 平均 5.27 视图/菜），覆盖「细粒度分类（同店硬负样本）→ 营养估计（4 维回归）→ VQA（推理）」三层认知任务，对 29 个 SOTA VLM 系统评测后发现：现有模型在精细视觉判别和营养量化上严重不足，且 CoT 反而损害纯视觉感知。
 tags:
   - "ACL 2026"
   - "LLM评测"

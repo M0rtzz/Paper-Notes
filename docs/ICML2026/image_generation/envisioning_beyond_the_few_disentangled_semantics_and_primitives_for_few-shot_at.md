@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Envisioning Beyond the Few: Disentangled Semantics and Primitives for Few-Shot Atypical Layout-to-Image Generation
 description: >-
-  [ICML 2026][图像生成][layout-to-image] 针对 5-shot 非典型域（航拍 / 水下 / 极暗）下 layout-to-image 生成出现的"表示碎片化"，作者把每个类别的条件表示显式拆成全局语义锚 + 局部可重组原语，并用显著性感知的损失强制前景一致…
+  [ICML 2026][图像生成][layout-to-image] 针对 5-shot 非典型域（航拍 / 水下 / 极暗）下 layout-to-image 生成出现的"表示碎片化"，作者把每个类别的条件表示显式拆成全局语义锚 + 局部可重组原语，并用显著性感知的损失强制前景一致，在 DIOR 上将 Bootstrap FID 从 82.5 压到 74.3、mAP 提到 26.1。
 tags:
   - "ICML 2026"
   - "图像生成"

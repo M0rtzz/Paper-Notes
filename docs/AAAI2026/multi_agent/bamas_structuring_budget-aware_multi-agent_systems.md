@@ -2,9 +2,9 @@
 title: >-
   [论文解读] BAMAS: Structuring Budget-Aware Multi-Agent Systems
 description: >-
-  [AAAI 2026][多智能体][预算感知] 提出 BAMAS 框架，通过整数线性规划（ILP）在预算约束下选择最优 LLM 组合，再用强化学习策略选择最佳协作拓扑（线性/星型/反馈/规划驱动），在 GSM8K/MBPP/MATH 上达到与 SOTA 多 Agent 系统相当的准确率…
+  [AAAI 2026 Oral][多智能体][预算感知] 提出 BAMAS 框架，通过整数线性规划（ILP）在预算约束下选择最优 LLM 组合，再用强化学习策略选择最佳协作拓扑（线性/星型/反馈/规划驱动），在 GSM8K/MBPP/MATH 上达到与 SOTA 多 Agent 系统相当的准确率，同时成本降低最高 86%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "多智能体"
   - "预算感知"
   - "多Agent协作"

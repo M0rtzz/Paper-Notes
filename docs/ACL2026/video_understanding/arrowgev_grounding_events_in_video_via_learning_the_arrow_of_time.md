@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ArrowGEV: Grounding Events in Video via Learning the Arrow of Time
 description: >-
-  [ACL 2026][视频理解][视频事件定位] 提出 ArrowGEV，一个受物理学"时间之箭"启发的强化学习框架，通过区分时间敏感和时间不敏感事件来建模视频中的时间方向性，提升 VLM 的事件定位精度和时序理解能力。
+  [ACL 2026 Findings][视频理解][视频事件定位] 提出 ArrowGEV，一个受物理学"时间之箭"启发的强化学习框架，通过区分时间敏感和时间不敏感事件来建模视频中的时间方向性，提升 VLM 的事件定位精度和时序理解能力。 领域现状： 视频事件定位（GEV）是视频分析的基础任务，近年来 VLM 凭借端到端推理…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "视频理解"
   - "视频事件定位"
   - "时间方向性"

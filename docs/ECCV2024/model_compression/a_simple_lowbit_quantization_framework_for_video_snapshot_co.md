@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Simple Low-bit Quantization Framework for Video Snapshot Compressive Imaging
 description: >-
-  [ECCV 2024][模型压缩][网络量化] 首个面向视频快照压缩成像（Video SCI）重建任务的低比特量化框架Q-SCI，通过高质量特征提取模块、精确视频重建模块和Transformer分支的query/key分布偏移操作，在4-bit量化下实现7.8倍理论加速且性能仅下降2.3%。
+  [ECCV 2024][模型压缩][网络量化] 首个面向视频快照压缩成像（Video SCI）重建任务的低比特量化框架Q-SCI，通过高质量特征提取模块、精确视频重建模块和Transformer分支的query/key分布偏移操作，在4-bit量化下实现7.8倍理论加速且性能仅下降2.3%。 视频快照压缩成像（Video S…
 tags:
   - "ECCV 2024"
   - "模型压缩"

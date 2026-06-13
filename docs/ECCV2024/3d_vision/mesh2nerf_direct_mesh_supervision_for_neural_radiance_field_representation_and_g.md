@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation
 description: >-
-  [ECCV 2024][3D视觉][NeRF] 提出Mesh2NeRF，通过解析解直接从纹理网格(textured mesh)构造GT辐射场，用occupancy函数建模密度场、用反射模型建模颜色场，为NeRF表示与生成任务提供精确的3D逐点监督。
+  [ECCV 2024][3D视觉][NeRF] 提出Mesh2NeRF，通过解析解直接从纹理网格(textured mesh)构造GT辐射场，用occupancy函数建模密度场、用反射模型建模颜色场，为NeRF表示与生成任务提供精确的3D逐点监督。 领域现状： NeRF作为3D生成的表示已被广泛使用，但训练生成式NeRF需要…
 tags:
   - "ECCV 2024"
   - "3D视觉"

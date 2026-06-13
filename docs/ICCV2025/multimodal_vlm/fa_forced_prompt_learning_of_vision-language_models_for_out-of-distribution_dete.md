@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FA: Forced Prompt Learning of Vision-Language Models for Out-of-Distribution Detection
 description: >-
-  [ICCV 2025][多模态VLM][OOD检测] 提出FA（Forced prompt leArning），通过引入一个可学习的"强制提示"并迫使其产生比冻结原始提示更高的ID类别匹配度，使提示学到超越标签文本语义的丰富ID类别描述…
+  [ICCV 2025][多模态VLM][OOD检测] 提出FA（Forced prompt leArning），通过引入一个可学习的"强制提示"并迫使其产生比冻结原始提示更高的ID类别匹配度，使提示学到超越标签文本语义的丰富ID类别描述，在无需外部辅助数据和额外参数的条件下显著提升基于CLIP的少样本OOD检测性能。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

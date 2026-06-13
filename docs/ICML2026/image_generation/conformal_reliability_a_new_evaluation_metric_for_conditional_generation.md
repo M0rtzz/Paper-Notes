@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conformal Reliability: A New Evaluation Metric for Conditional Generation
 description: >-
-  [ICML2026][图像生成][可靠性评估] 提出基于保形预测（Conformal Prediction）的可靠性评分 CReL，通过在隐空间构建凸预测集并优化最坏情况下的指标表现，实现对条件生成模型的不确定性感知评估，在图文互生任务上揭示了传统单输出指标无法捕捉的模型可靠性差异。
+  [ICML2026][图像生成][可靠性评估] 提出基于保形预测（Conformal Prediction）的可靠性评分 CReL，通过在隐空间构建凸预测集并优化最坏情况下的指标表现，实现对条件生成模型的不确定性感知评估，在图文互生任务上揭示了传统单输出指标无法捕捉的模型可靠性差异。 领域现状：条件生成模型（文生图、图生文等…
 tags:
   - "ICML2026"
   - "图像生成"

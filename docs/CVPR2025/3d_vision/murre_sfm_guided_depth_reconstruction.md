@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Murre: Multi-view Reconstruction via SfM-guided Monocular Depth Estimation
 description: >-
-  [CVPR 2025][3D视觉][多视角重建] 提出 Murre，一种新的多视角 3D 重建框架，通过将 SfM 稀疏点云注入扩散模型指导单目深度估计，绕过了传统 MVS 的多视角匹配步骤，在多种真实场景（室内、街景、航拍）上超越 SOTA。
+  [CVPR 2025][3D视觉][多视角重建] 提出 Murre，一种新的多视角 3D 重建框架，通过将 SfM 稀疏点云注入扩散模型指导单目深度估计，绕过了传统 MVS 的多视角匹配步骤，在多种真实场景（室内、街景、航拍）上超越 SOTA。 领域现状：学习型 MVS 方法在低纹理区域和稀疏视角下效果差…
 tags:
   - "CVPR 2025"
   - "3D视觉"

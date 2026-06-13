@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Thicker and Quicker: A Jumbo Token for Fast Plain Vision Transformers
 description: >-
-  [ICLR 2026][语义分割][Transformer] 本文提出 Jumbo 方法：将 ViT 的 CLS token 扩展为 $J$ 倍宽度，在注意力前拆分为 $J$ 个与 patch 等宽的 token 参与自注意力…
+  [ICLR 2026][语义分割][Transformer] 本文提出 Jumbo 方法：将 ViT 的 CLS token 扩展为 $J$ 倍宽度，在注意力前拆分为 $J$ 个与 patch 等宽的 token 参与自注意力，注意力后重新拼接并经过专用的宽 FFN 处理——以极低的计算开销显著增加全局建模容量，使 plain ViT 在高速推理场景下超越专用高效架构（EfficientViT、SHViT、MobileNetV4），同时保留 ViT 的所有架构优势。
 tags:
   - "ICLR 2026"
   - "语义分割"

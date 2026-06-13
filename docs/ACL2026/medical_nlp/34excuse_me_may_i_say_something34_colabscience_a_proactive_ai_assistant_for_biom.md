@@ -2,7 +2,7 @@
 title: >-
   [论文解读] "Excuse Me, May I Say Something…" CoLabScience: A Proactive AI Assistant for Biomedical Discovery
 description: >-
-  [ACL 2026][医疗NLP][主动干预] CoLabScience 通过 PULI（正无标注学习干预）框架，训练一个能在生物医学团队讨论中**主动判断何时介入、如何介入**的 LLM 助手，利用 GRPO 和强化学习协调器从流式对话中自动识别最佳干预时机并生成科学建议。
+  [ACL 2026][医疗NLP][主动干预] CoLabScience 通过 PULI（正无标注学习干预）框架，训练一个能在生物医学团队讨论中主动判断何时介入、如何介入：的 LLM 助手，利用 GRPO 和强化学习协调器从流式对话中自动识别最佳干预时机并生成科学建议。 领域现状：LLM 已广泛应用于生物医学研究…
 tags:
   - "ACL 2026"
   - "医疗NLP"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] T$^2$PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning
 description: >-
-  [ICML 2026][LLM/NLP][多轮 RL] T$^2$PO 把多轮 agentic RL 的训练崩溃归因为"hesitation（犹豫）"——token 层过思考、turn 层重复无效——并用一个融合 entropy+confidence 的自校准不确定性信号 $M_t$ 同时驱动 token-l…
+  [ICML 2026 Spotlight][LLM 其他][多轮 RL] T$^2$PO 把多轮 agentic RL 的训练崩溃归因为"hesitation（犹豫）"——token 层过思考、turn 层重复无效——并用一个融合 entropy+confidence 的自校准不确定性信号 $M_t$ 同时驱动 token-level Thinking Intervention（动态截断 think 段）和 turn-level Dynamical Sampling（重采样无效 turn），在 WebShop / ALFWorld / Search QA 上稳定超越 PPO/GRPO/GiGPO。
 tags:
-  - "ICML 2026"
-  - "LLM/NLP"
+  - "ICML 2026 Spotlight"
+  - "LLM 其他"
   - "多轮 RL"
   - "训练崩溃"
   - "自校准不确定性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MEMTRACK: Evaluating Long-Term Memory and State Tracking in Multi-Platform Dynamic Agent Environments
 description: >-
-  [NeurIPS 2025 (SEA Workshop)][LLM评测][长期记忆] 提出 MEMTRACK 基准，评估 LLM 智能体在多平台（Slack/Linear/Git）动态环境中的长期记忆和状态追踪能力，揭示即使最强的 GPT-5 也仅达 60% 正确率。
+  [NeurIPS 2025 (SEA Workshop)][LLM评测][长期记忆] 提出 MEMTRACK 基准，评估 LLM 智能体在多平台（Slack/Linear/Git）动态环境中的长期记忆和状态追踪能力，揭示即使最强的 GPT-5 也仅达 60% 正确率。 - 现有记忆评估的局限：大部分记忆基准聚焦于对话场景（如…
 tags:
   - "NeurIPS 2025 (SEA Workshop)"
   - "LLM评测"

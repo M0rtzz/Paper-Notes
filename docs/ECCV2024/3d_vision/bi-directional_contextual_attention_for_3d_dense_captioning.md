@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bi-directional Contextual Attention for 3D Dense Captioning
 description: >-
-  [ECCV2024 (Oral)][3D视觉][3D Dense Captioning] 提出 BiCA，通过双向上下文注意力机制将 instance query 和 context query 解耦并行解码，解决了 3D 密集描述中定位与描述生成之间的目标冲突…
+  [ECCV2024 (Oral)][3D视觉][3D Dense Captioning] 提出 BiCA，通过双向上下文注意力机制将 instance query 和 context query 解耦并行解码，解决了 3D 密集描述中定位与描述生成之间的目标冲突，在 ScanRefer 和 Nr3D 两个基准上取得 SOTA。
 tags:
   - "ECCV2024 (Oral)"
   - "3D视觉"

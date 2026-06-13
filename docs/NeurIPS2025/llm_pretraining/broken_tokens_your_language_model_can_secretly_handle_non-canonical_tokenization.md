@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Broken Tokens: Your Language Model Can Secretly Handle Non-Canonical Tokenization
 description: >-
-  [NeurIPS 2025][预训练][非标准分词] 揭示 LLM 能秘密处理非标准分词（如将"Hello"拆为"He"+"llo"而非标准的"Hello"整词token）——即使输入的 token 序列与训练时不同，模型表现出惊人的鲁棒性，且这种能力来自嵌入空间中子词嵌入的线性组合近似整词嵌入的特性。
+  [NeurIPS 2025 Spotlight][预训练][非标准分词] 揭示 LLM 能秘密处理非标准分词（如将"Hello"拆为"He"+"llo"而非标准的"Hello"整词token）——即使输入的 token 序列与训练时不同，模型表现出惊人的鲁棒性，且这种能力来自嵌入空间中子词嵌入的线性组合近似整词嵌入的特性。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "预训练"
   - "非标准分词"
   - "字符级"

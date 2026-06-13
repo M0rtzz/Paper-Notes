@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Polaris: A Gödel Agent Framework for Small Language Models through Experience-Abstracted Policy Repair
 description: >-
-  [ACL2026][LLM Agent][Gödel Agent] Polaris 将 Gödel Agent 的递归自我改进改造成适合 7B/8B 小模型的“失败分析 → 经验抽象 → 最小代码补丁 → 执行校验”策略修复循环…
+  [ACL2026 Findings][LLM Agent][Gödel Agent] Polaris 将 Gödel Agent 的递归自我改进改造成适合 7B/8B 小模型的“失败分析 → 经验抽象 → 最小代码补丁 → 执行校验”策略修复循环，在 MGSM、DROP、GPQA、LitBench 上让小模型获得可解释、可持久复用的 policy-level 改进。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM Agent"
   - "Gödel Agent"
   - "小语言模型"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2603.23129](https://arxiv.org/abs/2603.23129)  
 **代码**: 论文缓存中未给出公开仓库地址  
-**领域**: llm_agent  
+**领域**: LLM Agent  
 **关键词**: Gödel Agent、小语言模型、自我改进、经验抽象、策略修复
 
 ## 一句话总结

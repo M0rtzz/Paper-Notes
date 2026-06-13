@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Relevance to Authority: Authority-aware Generative Retrieval in Web Search Engines
 description: >-
-  [ACL 2026][信息检索/RAG][生成式检索] 本文提出AuthGR，首个将文档权威性系统性整合到生成式检索中的框架，通过VLM多模态权威评分、三阶段渐进式训练（CPT→SFT→GRPO）和混合集成部署管线，在Naver商业搜索引擎的大规模A/B测试中验证了显著的用户参与度提升。
+  [ACL 2026][信息检索/RAG][生成式检索] 本文提出AuthGR，首个将文档权威性系统性整合到生成式检索中的框架，通过VLM多模态权威评分、三阶段渐进式训练（CPT→SFT→GRPO）和混合集成部署管线，在Naver商业搜索引擎的大规模A/B测试中验证了显著的用户参与度提升。 领域现状：生成式信息检索（GenIR…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

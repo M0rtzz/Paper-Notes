@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LineageFlow: Flow Matching for High-Fidelity Family-Aware Protein Sequence Generation
 description: >-
-  [ICML 2026][计算生物][流匹配] 把通用的均匀/掩码噪声先验换成由祖先序列重建（ASR）得到的家族特异 Dirichlet 先验，让 Dirichlet flow matching 从"已经进化好的脚手架"出发去做结构化突变…
+  [ICML 2026][计算生物][流匹配] 把通用的均匀/掩码噪声先验换成由祖先序列重建（ASR）得到的家族特异 Dirichlet 先验，让 Dirichlet flow matching 从"已经进化好的脚手架"出发去做结构化突变，再在中间时刻插入一次 mutate–select–amplify 的 rerouting，从而在 Pfam 8886 个家族上把家族识别准确率推到接近自然序列（95.3% vs 96.6%）、同时保持高新颖度和折叠置信度。
 tags:
   - "ICML 2026"
   - "计算生物"

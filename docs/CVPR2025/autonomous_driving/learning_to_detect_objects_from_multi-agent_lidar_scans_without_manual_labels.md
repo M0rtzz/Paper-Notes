@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Detect Objects from Multi-Agent LiDAR Scans without Manual Labels
 description: >-
-  [CVPR 2025][自动驾驶][多智能体 LiDAR] 提出 DOtA（Detect Objects from Multi-Agent），一种无需人工标注的多智能体 LiDAR 3D 目标检测方法：利用协作智能体内部共享的自车位姿和车身形状完成检测器初始化，再通过智能体间互补观测进行多尺度编码…
+  [CVPR 2025][自动驾驶][多智能体 LiDAR] 提出 DOtA（Detect Objects from Multi-Agent），一种无需人工标注的多智能体 LiDAR 3D 目标检测方法：利用协作智能体内部共享的自车位姿和车身形状完成检测器初始化，再通过智能体间互补观测进行多尺度编码，解码出高低质量伪标签分别指导特征学习，实现完全无监督的高质量 3D 目标检测。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

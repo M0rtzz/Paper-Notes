@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention
 description: >-
-  [ICML 2025][多模态VLM][长上下文 VLM] 本文提出 MMInference，通过“模态感知的置换稀疏注意力 + 头级离线模式搜索 + 在线动态索引 + 定制 GPU Kernel”，在不改模型不微调的前提下…
+  [ICML 2025][多模态VLM][长上下文 VLM] 本文提出 MMInference，通过“模态感知的置换稀疏注意力 + 头级离线模式搜索 + 在线动态索引 + 定制 GPU Kernel”，在不改模型不微调的前提下，将长上下文 VLM 的 prefill 阶段在 1M token 场景最高加速到 8.3x，同时尽量保持任务精度。
 tags:
   - "ICML 2025"
   - "多模态VLM"

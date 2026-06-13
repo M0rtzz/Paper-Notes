@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Comparing Human and Large Language Model Interpretation of Implicit Information
 description: >-
-  [ACL 2026][图学习][隐含信息提取] 本文提出隐含信息提取（IIE）任务和基于 LLM 的三阶段提取管道（信息提取→推理验证→时序分析），构建结构化知识图谱来表示文本的隐含含义，并通过众包人类判断对比发现 LLM 在社交丰富语境中比人类更保守，但在短事实语境中人类更保守。
+  [ACL 2026 Findings][图学习][隐含信息提取] 本文提出隐含信息提取（IIE）任务和基于 LLM 的三阶段提取管道（信息提取→推理验证→时序分析），构建结构化知识图谱来表示文本的隐含含义，并通过众包人类判断对比发现 LLM 在社交丰富语境中比人类更保守，但在短事实语境中人类更保守。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "图学习"
   - "隐含信息提取"
   - "知识图谱"

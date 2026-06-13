@@ -2,7 +2,7 @@
 title: >-
   [论文解读] mRAKL: Multilingual Retrieval-Augmented Knowledge Graph Construction for Low-Resourced Languages
 description: >-
-  [ACL 2025][图学习][多语言知识图谱构建] 将多语言知识图谱构建（mKGC）重新定义为 QA 任务，提出基于 RAG 的 mRAKL 系统，利用非结构化单语数据作为检索源来克服低资源语言中结构化数据匮乏的困难，在 Tigrinya 和 Amharic 两种低资源语言上显著超越已有方法。
+  [ACL 2025][图学习][多语言知识图谱构建] 将多语言知识图谱构建（mKGC）重新定义为 QA 任务，提出基于 RAG 的 mRAKL 系统，利用非结构化单语数据作为检索源来克服低资源语言中结构化数据匮乏的困难，在 Tigrinya 和 Amharic 两种低资源语言上显著超越已有方法。 领域现状： 知识图谱（KG）…
 tags:
   - "ACL 2025"
   - "图学习"

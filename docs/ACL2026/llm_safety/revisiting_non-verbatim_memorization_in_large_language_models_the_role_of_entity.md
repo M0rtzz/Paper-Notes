@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Non-Verbatim Memorization in Large Language Models: The Role of Entity Surface Forms
 description: >-
-  [ACL 2026][LLM安全][非逐字记忆] 本文通过构建 RedirectQA 数据集（利用 Wikipedia 重定向信息将同一实体关联到多种表面形式），系统研究了 LLM 的非逐字记忆如何受实体命名变体的影响，发现事实记忆既非纯粹依赖特定表面形式也非完全表面无关…
+  [ACL 2026][LLM安全][非逐字记忆] 本文通过构建 RedirectQA 数据集（利用 Wikipedia 重定向信息将同一实体关联到多种表面形式），系统研究了 LLM 的非逐字记忆如何受实体命名变体的影响，发现事实记忆既非纯粹依赖特定表面形式也非完全表面无关，且实体级频率在表面频率之外仍有独立贡献。
 tags:
   - "ACL 2026"
   - "LLM安全"

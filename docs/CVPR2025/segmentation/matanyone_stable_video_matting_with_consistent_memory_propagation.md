@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MatAnyone: Stable Video Matting with Consistent Memory Propagation
 description: >-
-  [CVPR 2025][语义分割][视频抠图] 提出 MatAnyone 框架，通过区域自适应记忆融合机制在记忆空间中实现一致性传播（核心区域保持语义稳定，边界区域捕获精细 alpha 细节），配合新数据集 VM800 和利用分割数据直接监督 matting head 的训练策略…
+  [CVPR 2025][语义分割][视频抠图] 提出 MatAnyone 框架，通过区域自适应记忆融合机制在记忆空间中实现一致性传播（核心区域保持语义稳定，边界区域捕获精细 alpha 细节），配合新数据集 VM800 和利用分割数据直接监督 matting head 的训练策略，实现了鲁棒且高质量的目标指定视频抠图。
 tags:
   - "CVPR 2025"
   - "语义分割"

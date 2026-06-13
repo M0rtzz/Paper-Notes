@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer
 description: >-
-  [AAAI 2026][动态空间推理] 提出 EvoEmpirBench（EEB），包含两个动态交互式 benchmark（局部可观测迷宫导航 + 消消乐），以及 Agent-ExpVer 三智能体在线学习框架（GeoLink 交互 + InsightForce 经验抽象 + TruthWeaver 知识管理…
+  [AAAI 2026][动态空间推理] 提出 EvoEmpirBench（EEB），包含两个动态交互式 benchmark（局部可观测迷宫导航 + 消消乐），以及 Agent-ExpVer 三智能体在线学习框架（GeoLink 交互 + InsightForce 经验抽象 + TruthWeaver 知识管理），通过"经验→验证→真理归纳"的认知循环实现无参数更新的持续策略进化，使 GPT-4.1 成功率提升 5.6%、Qwen-32B 提升 29%。
 tags:
   - "AAAI 2026"
   - "动态空间推理"

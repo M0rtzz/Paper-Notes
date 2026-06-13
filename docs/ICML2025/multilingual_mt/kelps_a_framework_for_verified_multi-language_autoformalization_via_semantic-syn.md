@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment
 description: >-
-  [ICML2025][多语言/翻译][自动形式化] 提出基于断言逻辑的中间表示——知识方程(Knowledge Equation)，实现自然语言数学命题到多种形式语言(Lean4/Coq/Isabelle)的规则化翻译，在 MiniF2F 上 pass@1 句法准确率达 88.9%…
+  [ICML2025][多语言/翻译][自动形式化] 提出基于断言逻辑的中间表示——知识方程(Knowledge Equation)，实现自然语言数学命题到多种形式语言(Lean4/Coq/Isabelle)的规则化翻译，在 MiniF2F 上 pass@1 句法准确率达 88.9%，超越 DeepSeek-V3 和 Herald。
 tags:
   - "ICML2025"
   - "多语言/翻译"

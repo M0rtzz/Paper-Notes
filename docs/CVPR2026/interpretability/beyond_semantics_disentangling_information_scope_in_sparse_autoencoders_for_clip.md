@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP
 description: >-
-  [CVPR 2026][可解释性][稀疏自编码器] 提出"信息范围"（information scope）作为SAE特征可解释性的新维度，通过Contextual Dependency Score（CDS）将CLIP的SAE特征分为局部特征（低CDS）和全局特征（高CDS）…
+  [CVPR 2026 Findings][可解释性][稀疏自编码器] 提出"信息范围"（information scope）作为SAE特征可解释性的新维度，通过Contextual Dependency Score（CDS）将CLIP的SAE特征分为局部特征（低CDS）和全局特征（高CDS），揭示两类特征在分类、分割、深度估计中的差异化功能角色。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "可解释性"
   - "稀疏自编码器"
   - "CLIP"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Scalable Inter-edge Correlation Modeling in CopulaGNN for Link Sign Prediction
 description: >-
-  [ICLR 2026][签名图] 将 CopulaGNN 从节点级扩展到边级，通过将相关矩阵构造为边嵌入的 Gramian 矩阵并利用 Woodbury 恒等式重构条件概率分布，实现了在签名图上对边间统计依赖的可扩展建模，用于链接符号预测任务。
+  [ICLR 2026][签名图] 将 CopulaGNN 从节点级扩展到边级，通过将相关矩阵构造为边嵌入的 Gramian 矩阵并利用 Woodbury 恒等式重构条件概率分布，实现了在签名图上对边间统计依赖的可扩展建模，用于链接符号预测任务。 领域现状：签名图中的链接符号预测（判断边为正或负关系）是重要的图学习任务…
 tags:
   - "ICLR 2026"
   - "签名图"

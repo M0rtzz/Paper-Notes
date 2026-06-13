@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Disentangling Direction and Magnitude in Transformer Representations: A Double Dissociation Through L2-Matched Perturbation Analysis
 description: >-
-  [ICML 2026][可解释性][线性表征假设] 本文用 L2 匹配扰动协议，证明 Pythia 系列里方向（角度）扰动对语言建模 loss 的破坏力是同等位移幅值扰动的 42.9 倍，而幅值扰动对句法（主谓一致）的破坏远高于角度——这是一对认知神经科学意义上的 "双重分离"…
+  [ICML 2026][可解释性][线性表征假设] 本文用 L2 匹配扰动协议，证明 Pythia 系列里方向（角度）扰动对语言建模 loss 的破坏力是同等位移幅值扰动的 42.9 倍，而幅值扰动对句法（主谓一致）的破坏远高于角度——这是一对认知神经科学意义上的 "双重分离"，对应方向走 attention 路径、幅值走 LayerNorm 路径。
 tags:
   - "ICML 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Natural Gradient VI: Guarantees for Non-Conjugate Models
 description: >-
-  [NeurIPS 2025][优化/理论][自然梯度] 在 mean-field 参数化下，为非共轭模型的自然梯度变分推断（NGVI）建立了三个关键理论结果：变分损失的相对光滑性条件、带非欧投影的修正 NGVI 的全局收敛到驻点保证、以及在额外结构假设下的隐藏凸性和快速全局收敛保证。
+  [NeurIPS 2025][优化/理论][自然梯度] 在 mean-field 参数化下，为非共轭模型的自然梯度变分推断（NGVI）建立了三个关键理论结果：变分损失的相对光滑性条件、带非欧投影的修正 NGVI 的全局收敛到驻点保证、以及在额外结构假设下的隐藏凸性和快速全局收敛保证。 领域现状：随机自然梯度变分推断（Stoc…
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Alignment-Free Video Matching for Few-Shot Action Recognition
 description: >-
-  [CVPR 2025][视频理解][少样本动作识别] 本文提出 TEAM（TEmporal Alignment-free Matching），通过固定数量的可学习模式令牌（pattern tokens）以交叉注意力聚合视频特征，消除了对预定义时序单元和暴力对齐的依赖…
+  [CVPR 2025][视频理解][少样本动作识别] 本文提出 TEAM（TEmporal Alignment-free Matching），通过固定数量的可学习模式令牌（pattern tokens）以交叉注意力聚合视频特征，消除了对预定义时序单元和暴力对齐的依赖，在 FSAR 任务上实现了更灵活、高效的视频匹配，并在多个 benchmark 上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "视频理解"

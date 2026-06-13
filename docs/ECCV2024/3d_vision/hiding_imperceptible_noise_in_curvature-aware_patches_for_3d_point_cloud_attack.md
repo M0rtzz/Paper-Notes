@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hiding Imperceptible Noise in Curvature-Aware Patches for 3D Point Cloud Attack
 description: >-
-  [ECCV 2024][3D视觉][3D点云攻击] 提出 Wavelet Patches Attack（WPA）方法，利用小波变换分析点云的局部曲率结构，将对抗扰动隐藏在曲率一致的patch中——在平滑区域沿切平面扰动、在尖锐区域沿法向量扰动——实现比现有方法更不可感知的3D点云攻击。
+  [ECCV 2024][3D视觉][3D点云攻击] 提出 Wavelet Patches Attack（WPA）方法，利用小波变换分析点云的局部曲率结构，将对抗扰动隐藏在曲率一致的patch中——在平滑区域沿切平面扰动、在尖锐区域沿法向量扰动——实现比现有方法更不可感知的3D点云攻击。 领域现状：随着3D传感器（如LiDAR…
 tags:
   - "ECCV 2024"
   - "3D视觉"

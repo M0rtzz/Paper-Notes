@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient and Versatile Robust Fine-Tuning of Zero-shot Models
 description: >-
-  [ECCV 2024][语义分割][鲁棒微调] R-Adapter 通过在 CLIP 模型中插入轻量级 adapter 模块并结合三种自集成策略（Adapter Dropping、权重累积、权重缩放重参数化），在仅微调 13% 参数的前提下同时实现了 ID 高精度和 OOD 强鲁棒性…
+  [ECCV 2024][语义分割][鲁棒微调] R-Adapter 通过在 CLIP 模型中插入轻量级 adapter 模块并结合三种自集成策略（Adapter Dropping、权重累积、权重缩放重参数化），在仅微调 13% 参数的前提下同时实现了 ID 高精度和 OOD 强鲁棒性，并首次将鲁棒微调扩展到分类之外的跨模态检索和开放词汇分割任务。
 tags:
   - "ECCV 2024"
   - "语义分割"

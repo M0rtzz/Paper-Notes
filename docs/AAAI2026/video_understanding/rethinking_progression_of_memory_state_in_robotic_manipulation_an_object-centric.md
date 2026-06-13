@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective
 description: >-
-  [AAAI 2026][视频理解][非马尔可夫决策] 提出 LIBERO-Mem 基准（10 个非马尔可夫机器人操控任务）和 Embodied-SlotSSM 框架（结合 Slot Attention 和状态空间模型的物体中心记忆 VLA）…
+  [AAAI 2026][视频理解][非马尔可夫决策] 提出 LIBERO-Mem 基准（10 个非马尔可夫机器人操控任务）和 Embodied-SlotSSM 框架（结合 Slot Attention 和状态空间模型的物体中心记忆 VLA），解决视觉运动策略在部分可观测、需要物体级历史推理的长期任务中的失败问题。
 tags:
   - "AAAI 2026"
   - "视频理解"

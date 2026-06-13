@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MP-HSIR: A Multi-Prompt Framework for Universal Hyperspectral Image Restoration
 description: >-
-  [ICCV 2025][图像恢复][高光谱图像复原] 提出 MP-HSIR 框架，通过整合光谱提示（通用低秩光谱模式）、文本提示和视觉提示三种模态的引导信息，构建了统一的高光谱图像复原模型…
+  [ICCV 2025][图像恢复][高光谱图像复原] 提出 MP-HSIR 框架，通过整合光谱提示（通用低秩光谱模式）、文本提示和视觉提示三种模态的引导信息，构建了统一的高光谱图像复原模型，在包含去噪、去模糊、超分辨率、修复、去雾、波段补全等 9 个 HSI 复原任务上全面超越现有 all-in-one 方法和多个任务专用方法。
 tags:
   - "ICCV 2025"
   - "图像恢复"

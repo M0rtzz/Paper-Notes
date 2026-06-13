@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes
 description: >-
-  [NeurIPS 2025][优化/理论][Coreset Selection] 提出基于后验采样的 coreset 选择框架，通过在 BatchNorm 层上采样权重扰动来平滑损失曲面，保证 coreset 与全数据集的损失景观对齐（包含 Hessian 和 Newton 步的近似）…
+  [NeurIPS 2025][优化/理论][Coreset Selection] 提出基于后验采样的 coreset 选择框架，通过在 BatchNorm 层上采样权重扰动来平滑损失曲面，保证 coreset 与全数据集的损失景观对齐（包含 Hessian 和 Newton 步的近似），在高标签噪声下显著优于现有方法。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

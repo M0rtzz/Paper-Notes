@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MovSemCL: Movement-Semantics Contrastive Learning for Trajectory Similarity (Extension)
 description: >-
-  [AAAI 2026][目标检测][trajectory similarity] 提出 MovSemCL 框架，将 GPS 轨迹转化为运动语义特征（位移向量 + 航向角 + Node2Vec 空间图嵌入），通过 patch 级双层注意力实现层次编码（复杂度从 $O(L^2)$ 降为近线性）…
+  [AAAI 2026 Oral][目标检测][trajectory similarity] 提出 MovSemCL 框架，将 GPS 轨迹转化为运动语义特征（位移向量 + 航向角 + Node2Vec 空间图嵌入），通过 patch 级双层注意力实现层次编码（复杂度从 $O(L^2)$ 降为近线性），并设计曲率引导增广（CGA）保留转弯/路口等行为关键片段，在轨迹检索任务上 mean rank 接近理想值 1，推理延迟降低 43.4%。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "目标检测"
   - "trajectory similarity"
   - "对比学习"

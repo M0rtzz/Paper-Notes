@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Demeter: A Parametric Model of Crop Plant Morphology from the Real World
 description: >-
-  [3D视觉] Demeter 是一个数据驱动的参数化植物形态模型，将植物形态分解为拓扑、关节、形状和变形四个因素，支持形状生成、3D 重建和生物物理仿真。
+  [3D视觉] Demeter 是一个数据驱动的参数化植物形态模型，将植物形态分解为拓扑、关节、形状和变形四个因素，支持形状生成、3D 重建和生物物理仿真。 参数化形状模型（如人体的 SMPL、动物的 SMAL）在计算机视觉和图形学中取得了巨大成功，但植物领域缺乏同等表达能力的模型。现有植物建模方法主要依赖： 程序化模型：（L…
 tags:
   - "3D视觉"
 ---

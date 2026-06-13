@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis
 description: >-
-  [ICLR 2026][模型压缩][注意力机制] 本文提出 TAPPA 框架，从时间连续性视角统一解释了 LLM 中多种注意力模式（attention sink、对角线、周期性等）的形成机制，并通过 query 自相似性（q-similarity）指标指导 KV cache 压缩和模型剪枝任务。
+  [ICLR 2026][模型压缩][注意力机制] 本文提出 TAPPA 框架，从时间连续性视角统一解释了 LLM 中多种注意力模式（attention sink、对角线、周期性等）的形成机制，并通过 query 自相似性（q-similarity）指标指导 KV cache 压缩和模型剪枝任务。 LLM 中的注意力头呈现多种…
 tags:
   - "ICLR 2026"
   - "模型压缩"

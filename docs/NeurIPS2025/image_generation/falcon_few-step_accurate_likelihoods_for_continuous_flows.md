@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FALCON: Few-step Accurate Likelihoods for Continuous Flows
 description: >-
-  [NEURIPS2025][图像生成][Continuous Normalizing Flows] 提出 FALCON，通过混合训练目标（flow matching + 平均速度损失 + 可逆性正则化）使连续归一化流在少步采样下仍能提供足够精确的似然估计…
+  [NEURIPS2025][图像生成][Continuous Normalizing Flows] 提出 FALCON，通过混合训练目标（flow matching + 平均速度损失 + 可逆性正则化）使连续归一化流在少步采样下仍能提供足够精确的似然估计，从而实现比传统 CNF 快两个数量级的 Boltzmann 采样。
 tags:
   - "NEURIPS2025"
   - "图像生成"

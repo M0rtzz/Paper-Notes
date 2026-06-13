@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Efficient Private GPT Never Autoregressively Decodes
 description: >-
-  [ICML 2025][AI安全][隐私推理] 提出 POST（Public decOding and Secure verificaTion）方法，利用公开 GPT 模型生成草稿 token 并通过私有模型安全验证，借助安全解码对输入长度不敏感的特性，实现 2.1×~6.0× 的隐私推理加速…
+  [ICML 2025][AI安全][隐私推理] 提出 POST（Public decOding and Secure verificaTion）方法，利用公开 GPT 模型生成草稿 token 并通过私有模型安全验证，借助安全解码对输入长度不敏感的特性，实现 2.1×~6.0× 的隐私推理加速，同时保持与标准安全解码相同的隐私和生成质量。
 tags:
   - "ICML 2025"
   - "AI安全"

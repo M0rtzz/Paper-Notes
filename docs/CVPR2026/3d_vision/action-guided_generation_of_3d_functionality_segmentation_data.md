@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Action-guided Generation of 3D Functionality Segmentation Data
 description: >-
-  [CVPR 2026][3D视觉][3D功能性分割] 提出 SynthFun3D，首个从动作描述自动生成3D功能性分割训练数据的方法，通过元数据驱动的3D物体检索和场景布局，无需人工标注即可生成精确的部件级交互掩码…
+  [CVPR 2026][3D视觉][3D功能性分割] 提出 SynthFun3D，首个从动作描述自动生成3D功能性分割训练数据的方法，通过元数据驱动的3D物体检索和场景布局，无需人工标注即可生成精确的部件级交互掩码，合成+真实数据训练在 SceneFun3D 基准上提升 +2.2 mAP / +6.3 mAR / +5.7 mIoU。
 tags:
   - "CVPR 2026"
   - "3D视觉"

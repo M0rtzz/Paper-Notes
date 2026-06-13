@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts
 description: >-
-  [ACL2025][LLM/NLP][LLM-as-a-judge] 系统评估了11个LLM裁判在安全领域的鲁棒性，发现道歉前缀等表面文本特征（artifact）可将评估偏好扭曲高达98%，提出基于jury的多模型聚合方案但仍未完全解决该问题。
+  [ACL2025][LLM 其他][LLM-as-a-judge] 系统评估了11个LLM裁判在安全领域的鲁棒性，发现道歉前缀等表面文本特征（artifact）可将评估偏好扭曲高达98%，提出基于jury的多模型聚合方案但仍未完全解决该问题。 LLM-as-a-judge已成为安全评估的标准范式：人工标注成本高、速度慢…
 tags:
   - "ACL2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "LLM-as-a-judge"
   - "安全评估"
   - "artifact鲁棒性"

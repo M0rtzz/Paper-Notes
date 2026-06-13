@@ -2,7 +2,7 @@
 title: >-
   [论文解读] F3DGS: Federated 3D Gaussian Splatting for Decentralized Multi-Agent World Modeling
 description: >-
-  [CVPR 2026][自动驾驶][联邦学习] 提出F3DGS，首个将联邦学习框架应用于3DGS的方法，通过冻结几何+可见性感知聚合实现多智能体分布式3D重建，无需原始数据共享。
+  [CVPR 2026][自动驾驶][联邦学习] 提出F3DGS，首个将联邦学习框架应用于3DGS的方法，通过冻结几何+可见性感知聚合实现多智能体分布式3D重建，无需原始数据共享。 领域现状： 3DGS在新视角合成方面取得SOTA，广泛应用于机器人、自动驾驶和具身AI 现有痛点： 所有现有3DGS方法都假设集中式数据访问——所…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

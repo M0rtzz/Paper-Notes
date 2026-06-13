@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator
 description: >-
-  [CVPR 2026][3D视觉][3D高斯溅射] 提出 GaussFusion，一个几何信息引导的视频到视频生成模型，通过渲染包含深度、法线、不透明度和协方差的 Gaussian Primitives Buffer（GP-Buffer）来条件化视频生成器，有效去除 3DGS 重建中的浮动伪影、闪烁和模糊…
+  [CVPR 2026][3D视觉][3D高斯溅射] 提出 GaussFusion，一个几何信息引导的视频到视频生成模型，通过渲染包含深度、法线、不透明度和协方差的 Gaussian Primitives Buffer（GP-Buffer）来条件化视频生成器，有效去除 3DGS 重建中的浮动伪影、闪烁和模糊，且能同时适用于优化式和前馈式两种重建范式，蒸馏版本达到 16 FPS 实时推理。
 tags:
   - "CVPR 2026"
   - "3D视觉"

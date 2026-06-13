@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RouteLMT: Learned Sample Routing for Hybrid LLM Translation Deployment
 description: >-
-  [ACL2026][多语言/翻译][混合翻译部署] RouteLMT 将混合 LLM 翻译中的路由问题形式化为固定大模型预算下的边际收益分配，并用小翻译模型最后 prompt token 的内部表示预测“大模型相对小模型能带来多少提升”…
+  [ACL2026][多语言/翻译][混合翻译部署] RouteLMT 将混合 LLM 翻译中的路由问题形式化为固定大模型预算下的边际收益分配，并用小翻译模型最后 prompt token 的内部表示预测“大模型相对小模型能带来多少提升”，在四个翻译方向上比长度、质量估计和外部路由器获得更好的质量-预算 Pareto 前沿。
 tags:
   - "ACL2026"
   - "多语言/翻译"

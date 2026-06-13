@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Compositional Transduction with Latent Analogies for Offline Goal-Conditioned Reinforcement Learning
 description: >-
-  [ICML2026][强化学习][离线目标条件强化学习] 本文提出 CTA（Compositional Transduction with latent Analogies），通过将目标到达任务分解为"任务内生类比"和"任务外生上下文"两个独立因子，利用时间距离差分场作为类比表示…
+  [ICML2026][强化学习][离线目标条件强化学习] 本文提出 CTA（Compositional Transduction with latent Analogies），通过将目标到达任务分解为"任务内生类比"和"任务外生上下文"两个独立因子，利用时间距离差分场作为类比表示，并结合双线性转导实现对未见类比—上下文组合的外推，在 OGBench 操控环境上平均性能超过最强基线约 42%。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2605.20609](https://arxiv.org/abs/2605.20609)  
 **代码**: https://rllab-snu.github.io/projects/CTA/  
-**领域**: robotics  
+**领域**: 机器人  
 **关键词**: 离线目标条件强化学习, 组合泛化, 类比转导, 时间距离差分场, 双线性转导  
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TimeGuard: Channel-wise Pool Training for Backdoor Defense in Time Series Forecasting
 description: >-
-  [ICML 2026][AI安全][时间序列预测] TimeGuard 把多变量时间序列预测里的后门防御从"丢掉整条窗口"重构成"按通道+按时间步"的可靠样本池训练，先用反向一致性 (RCF) + 邻域多样性 (NDF) 交集初始化高纯度池子，再用距离正则的损失筛选 (DRLS) 渐进扩池…
+  [ICML 2026][AI安全][时间序列预测] TimeGuard 把多变量时间序列预测里的后门防御从"丢掉整条窗口"重构成"按通道+按时间步"的可靠样本池训练，先用反向一致性 (RCF) + 邻域多样性 (NDF) 交集初始化高纯度池子，再用距离正则的损失筛选 (DRLS) 渐进扩池，在不依赖任何干净数据的前提下把对 BackTime 等 SOTA 攻击的 $\text{MAE}_{\text{P}}$ 提到最强基线 PDB 的 1.96 倍。
 tags:
   - "ICML 2026"
   - "AI安全"

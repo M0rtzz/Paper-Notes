@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Characterizing the Effect of Noise in Language Generation in the Limit
 description: >-
-  [ICML2026][文本生成][语言生成极限理论] 在 Kleinberg-Mullainathan 的"语言极限生成"形式化框架下，本文证明了对于均匀和非均匀生成，噪声水平 1 与任意有限噪声水平 $i \geq 1$ 等价（层级坍缩），但无噪声与噪声 1 之间存在严格分离…
+  [ICML2026][文本生成][语言生成极限理论] 在 Kleinberg-Mullainathan 的"语言极限生成"形式化框架下，本文证明了对于均匀和非均匀生成，噪声水平 1 与任意有限噪声水平 $i \geq 1$ 等价（层级坍缩），但无噪声与噪声 1 之间存在严格分离，并首次给出了非均匀噪声依赖可生成性的完整刻画。
 tags:
   - "ICML2026"
   - "文本生成"

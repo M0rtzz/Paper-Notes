@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Adverse Weather Removal via Spectral-based Spatial Grouping (SSGformer)
 description: >-
-  [ICCV 2025][图像恢复][All-in-One天气去除] SSGformer 提出一种基于光谱分解和分组注意力的 All-in-One 恶劣天气图像复原方法：利用 Sobel 算子提取高频边缘信息和 SVD 分析低频退化纹理，将二者融合后生成空间分组掩码（grouping-mask）…
+  [ICCV 2025][图像恢复][All-in-One天气去除] SSGformer 提出一种基于光谱分解和分组注意力的 All-in-One 恶劣天气图像复原方法：利用 Sobel 算子提取高频边缘信息和 SVD 分析低频退化纹理，将二者融合后生成空间分组掩码（grouping-mask），在组内执行通道和空间注意力以实现对多种天气退化（雨、雪、雾、雨滴）的鲁棒去除。
 tags:
   - "ICCV 2025"
   - "图像恢复"

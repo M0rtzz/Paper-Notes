@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Novel View Synthesis with Pixel-Space Diffusion Models
 description: >-
-  [CVPR 2025][3D视觉][新视角合成] VIVID 用 EDM2 像素空间扩散模型实现端到端新视角合成，通过双 U-Net 编解码器+交叉注意力转移几何信息、简单的位姿嵌入（而非复杂几何编码）和基于同形变换的单视角数据增强…
+  [CVPR 2025][3D视觉][新视角合成] VIVID 用 EDM2 像素空间扩散模型实现端到端新视角合成，通过双 U-Net 编解码器+交叉注意力转移几何信息、简单的位姿嵌入（而非复杂几何编码）和基于同形变换的单视角数据增强，在 RealEstate10K 上 FID 2.89（比 GenWarp 低 51%），PSNR 17.36（+29%）。
 tags:
   - "CVPR 2025"
   - "3D视觉"

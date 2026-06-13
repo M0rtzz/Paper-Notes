@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments
 description: >-
-  [ICML2025][强化学习][鲁棒主动任务采样 (RATS)] 提出 PDTS（Posterior and Diversity Synergized Task Sampling），将鲁棒主动任务采样建模为无穷臂老虎机问题，通过后验采样替代 UCB 并引入多样性正则化…
+  [ICML2025][强化学习][鲁棒主动任务采样 (RATS)] 提出 PDTS（Posterior and Diversity Synergized Task Sampling），将鲁棒主动任务采样建模为无穷臂老虎机问题，通过后验采样替代 UCB 并引入多样性正则化，以极简实现在 Domain Randomization 和 Meta-RL 中达到接近最坏情况的鲁棒适应性能。
 tags:
   - "ICML2025"
   - "强化学习"

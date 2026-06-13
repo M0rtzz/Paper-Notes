@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ResCLIP: Residual Attention for Training-free Dense Vision-language Inference
 description: >-
-  [CVPR 2025][语义分割][开放词汇语义分割] 发现 CLIP 中间层的交叉相关自注意力具有定位属性，提出残差交叉相关自注意力（RCS）和语义反馈精炼（SFR）两个即插即用模块，显著提升 CLIP 在开放词汇语义分割中的密集推理能力。
+  [CVPR 2025][语义分割][开放词汇语义分割] 发现 CLIP 中间层的交叉相关自注意力具有定位属性，提出残差交叉相关自注意力（RCS）和语义反馈精炼（SFR）两个即插即用模块，显著提升 CLIP 在开放词汇语义分割中的密集推理能力。 - CLIP 等视觉-语言模型在图像级开放词汇任务中表现出色…
 tags:
   - "CVPR 2025"
   - "语义分割"

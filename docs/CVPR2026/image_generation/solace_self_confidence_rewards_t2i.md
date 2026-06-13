@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards
 description: >-
-  [CVPR 2026][图像生成][文本到图像] 用T2I模型自身的去噪自信心（对注入噪声的恢复精度）作为内在奖励替代外部奖励模型做后训练，在组合生成、文字渲染、文图对齐上获一致提升，且与外部奖励互补可缓解reward hacking。
+  [CVPR 2026][图像生成][文本到图像] 用T2I模型自身的去噪自信心（对注入噪声的恢复精度）作为内在奖励替代外部奖励模型做后训练，在组合生成、文字渲染、文图对齐上获一致提升，且与外部奖励互补可缓解reward hacking。 T2I后训练（post-training）是提升生成质量的重要范式…
 tags:
   - "CVPR 2026"
   - "图像生成"

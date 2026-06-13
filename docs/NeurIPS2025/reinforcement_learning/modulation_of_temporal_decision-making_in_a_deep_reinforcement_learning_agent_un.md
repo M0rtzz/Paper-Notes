@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm
 description: >-
-  [NeurIPS 2025][强化学习][时间感知] 在简化版Overcooked环境中训练DRL智能体执行单任务（时间生产）和双任务（时间生产+数字比较），发现双任务智能体在四种目标时长下均显著过度生产时间——这一涌现行为与人类时间感知研究中双任务范式下的时间高估现象高度一致。
+  [NeurIPS 2025][强化学习][时间感知] 在简化版Overcooked环境中训练DRL智能体执行单任务（时间生产）和双任务（时间生产+数字比较），发现双任务智能体在四种目标时长下均显著过度生产时间——这一涌现行为与人类时间感知研究中双任务范式下的时间高估现象高度一致。 "人类如何感知时间？"是心理学、神经科学和认…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

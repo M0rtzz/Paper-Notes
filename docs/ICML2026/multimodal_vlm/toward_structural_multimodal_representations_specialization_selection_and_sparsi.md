@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Structural Multimodal Representations: Specialization, Selection, and Sparsification via Mixture-of-Experts
 description: >-
-  [ICML 2026][多模态VLM][多模态表示] 本文提出 S3 框架，用 MoE 把多模态表征分解为概念级专家（Specialization）、按任务路由激活相关专家（Selection）、并在推理时按路由分数剪枝低贡献路径（Sparsification）…
+  [ICML 2026][多模态VLM][多模态表示] 本文提出 S3 框架，用 MoE 把多模态表征分解为概念级专家（Specialization）、按任务路由激活相关专家（Selection）、并在推理时按路由分数剪枝低贡献路径（Sparsification），在四个 MultiBench 基准上揭示了一条"性能在中间稀疏度达峰"的反 U 型曲线，给出对比学习/InfoMax 之外第三种多模态表征范式。
 tags:
   - "ICML 2026"
   - "多模态VLM"

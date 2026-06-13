@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MANIKIN: Biomechanically Accurate Neural Inverse Kinematics for Human Motion Estimation
 description: >-
-  [ECCV 2024][人体理解][逆运动学] 本文提出MANIKIN，通过在SMPL参数模型中嵌入解剖学约束并设计基于旋转角预测的神经逆运动学求解器，从头部和手部的稀疏末端执行器姿态精确恢复全身运动，同时保证生物力学合理性和地面非穿透性。
+  [ECCV 2024][人体理解][逆运动学] 本文提出MANIKIN，通过在SMPL参数模型中嵌入解剖学约束并设计基于旋转角预测的神经逆运动学求解器，从头部和手部的稀疏末端执行器姿态精确恢复全身运动，同时保证生物力学合理性和地面非穿透性。 领域现状：混合现实（MR/VR）系统需要从有限的传感器输入（通常只有头戴设备和手柄提…
 tags:
   - "ECCV 2024"
   - "人体理解"

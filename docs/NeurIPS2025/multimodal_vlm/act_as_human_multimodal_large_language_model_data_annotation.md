@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACT as Human: Multimodal Large Language Model Data Annotation with Critical Thinking
 description: >-
-  [NeurIPS 2025][多模态VLM][data annotation] 提出ACT（Annotation with Critical Thinking）数据流水线，MLLM批量标注全部数据后由另一个MLLM作为批评者估计每条标注的错误概率，仅将高可疑样本交给人类审核，配合理论推导的ACT损失函数…
+  [NeurIPS 2025][多模态VLM][data annotation] 提出ACT（Annotation with Critical Thinking）数据流水线，MLLM批量标注全部数据后由另一个MLLM作为批评者估计每条标注的错误概率，仅将高可疑样本交给人类审核，配合理论推导的ACT损失函数，在6个跨模态数据集上节省70-90%人工成本且下游性能差距<2%。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

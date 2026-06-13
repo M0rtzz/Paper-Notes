@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Core Knowledge Deficits in Multi-Modal Language Models
 description: >-
-  [ICML 2025][多模态VLM][核心知识] 提出 CoreCognition 基准（12种核心认知能力、1503题），大规模评测230个MLLM后发现：模型在基础认知能力上系统性落后于人类，且随规模增大并未改善，而是更依赖捷径学习而非真正理解。
+  [ICML 2025][多模态VLM][核心知识] 提出 CoreCognition 基准（12种核心认知能力、1503题），大规模评测230个MLLM后发现：模型在基础认知能力上系统性落后于人类，且随规模增大并未改善，而是更依赖捷径学习而非真正理解。 当前MLLM在高层次推理（图表理解、数学几何、动作识别等）上已接近甚至超…
 tags:
   - "ICML 2025"
   - "多模态VLM"

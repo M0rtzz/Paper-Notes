@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cheems: A Practical Guidance for Building and Evaluating Chinese Reward Models from Scratch
 description: >-
-  [ACL 2025][LLM对齐][reward model] 为弥补中文 Reward Model 资源的空白，本文构建了 CheemsBench（首个大规模中文 RM 评测基准）和 CheemsPreference（首个大规模中文偏好数据集）…
+  [ACL 2025][LLM对齐][reward model] 为弥补中文 Reward Model 资源的空白，本文构建了 CheemsBench（首个大规模中文 RM 评测基准）和 CheemsPreference（首个大规模中文偏好数据集），通过人机协作标注 + 远程监督过滤策略训练的 CheemsRM 在中文场景显著超越现有所有开源 RM。
 tags:
   - "ACL 2025"
   - "LLM对齐"

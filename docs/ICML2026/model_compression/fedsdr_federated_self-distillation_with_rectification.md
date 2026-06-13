@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FedSDR: Federated Self-Distillation with Rectification
 description: >-
-  [ICML 2026][模型压缩][联邦学习] 针对联邦 LLM 微调中客户端数据分布异质带来的"权重漂移"，本文先用模型自身把原始指令重写到"模型可理解空间"做数据级对齐（FedSD），再用 LoRA-S/LoRA-R 双流结构分别吸收风格噪声和锚定事实正确性、并只聚合 LoRA-R，把对齐与忠实解耦…
+  [ICML 2026][模型压缩][联邦学习] 针对联邦 LLM 微调中客户端数据分布异质带来的"权重漂移"，本文先用模型自身把原始指令重写到"模型可理解空间"做数据级对齐（FedSD），再用 LoRA-S/LoRA-R 双流结构分别吸收风格噪声和锚定事实正确性、并只聚合 LoRA-R，把对齐与忠实解耦，从而在多种 Non-IID 设置下取得 SOTA。
 tags:
   - "ICML 2026"
   - "模型压缩"

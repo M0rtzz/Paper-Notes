@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking
 description: >-
-  [CVPR 2026][图像生成][扩散模型水印] 提出 SLICE 语义水印框架，将图像语义分解为主体/环境/动作/细节四个因子并绑定到初始高斯噪声的不同空间分区，实现不仅可检测水印存在还可定位语义篡改的三状态验证机制，对最强 CSI 攻击的攻击成功率仅 19%（SEAL 为 81%）。
+  [CVPR 2026][图像生成][扩散模型水印] 提出 SLICE 语义水印框架，将图像语义分解为主体/环境/动作/细节四个因子并绑定到初始高斯噪声的不同空间分区，实现不仅可检测水印存在还可定位语义篡改的三状态验证机制，对最强 CSI 攻击的攻击成功率仅 19%（SEAL 为 81%）。 领域现状： 扩散模型水印技术从后处…
 tags:
   - "CVPR 2026"
   - "图像生成"

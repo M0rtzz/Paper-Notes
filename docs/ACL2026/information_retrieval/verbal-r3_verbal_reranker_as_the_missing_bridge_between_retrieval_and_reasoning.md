@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Verbal-R3: Verbal Reranker as the Missing Bridge between Retrieval and Reasoning
 description: >-
-  [ACL2026][信息检索/RAG][检索增强生成] Verbal-R3 把传统 reranker 从“只给相关性分数”的模块升级为“给分数并生成解释性 Verbal Annotation”的桥接模块，再用它训练和引导 RAG 推理器，在多跳问答中同时提升答案准确率和测试时扩展效率。
+  [ACL2026][信息检索/RAG][检索增强生成] Verbal-R3 把传统 reranker 从“只给相关性分数”的模块升级为“给分数并生成解释性 Verbal Annotation”的桥接模块，再用它训练和引导 RAG 推理器，在多跳问答中同时提升答案准确率和测试时扩展效率。 领域现状：RAG 系统一般先检索候选文…
 tags:
   - "ACL2026"
   - "信息检索/RAG"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.01399](https://arxiv.org/abs/2605.01399)  
 **代码**: https://github.com/0k9d0h1/VerbalR3  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: 检索增强生成, 重排序, Verbal Annotation, 强化学习, 测试时扩展  
 
 ## 一句话总结

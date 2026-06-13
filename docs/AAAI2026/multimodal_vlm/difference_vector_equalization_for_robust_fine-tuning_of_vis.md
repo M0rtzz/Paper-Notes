@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Difference Vector Equalization for Robust Fine-tuning of Vision-Language Models
 description: >-
-  [AAAI 2026][多模态VLM][CLIP微调] 提出DiVE方法，通过约束预训练和微调模型嵌入之间的"差异向量"在各样本间保持相等，从而在CLIP微调过程中保持嵌入空间的几何结构，同时在ID、OOD、零样本三个指标上取得全面优于现有方法的结果（零样本平均提升8+点）。
+  [AAAI 2026][多模态VLM][CLIP微调] 提出DiVE方法，通过约束预训练和微调模型嵌入之间的"差异向量"在各样本间保持相等，从而在CLIP微调过程中保持嵌入空间的几何结构，同时在ID、OOD、零样本三个指标上取得全面优于现有方法的结果（零样本平均提升8+点）。 CLIP等对比预训练视觉-语言模型在零样本分类上…
 tags:
   - "AAAI 2026"
   - "多模态VLM"

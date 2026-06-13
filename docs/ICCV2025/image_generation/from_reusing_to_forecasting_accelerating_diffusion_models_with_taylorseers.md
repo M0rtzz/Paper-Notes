@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Reusing to Forecasting: Accelerating Diffusion Models with TaylorSeers
 description: >-
-  [ICCV 2025][图像生成][扩散模型加速] 提出 TaylorSeer，将扩散模型特征缓存范式从"缓存-重用"升级为"缓存-预测"——利用 Taylor 级数展开基于历史特征的高阶有限差分来预测未来时间步的中间特征…
+  [ICCV 2025][图像生成][扩散模型加速] 提出 TaylorSeer，将扩散模型特征缓存范式从"缓存-重用"升级为"缓存-预测"——利用 Taylor 级数展开基于历史特征的高阶有限差分来预测未来时间步的中间特征，在 FLUX 上实现近乎无损的 4.99× 加速、在 HunyuanVideo 上实现 5.00× 加速，且完全无需额外训练。
 tags:
   - "ICCV 2025"
   - "图像生成"

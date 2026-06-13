@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MINED: Probing and Updating with Multimodal Time-Sensitive Knowledge for Large Multimodal Models
 description: >-
-  [ACL 2026][可解释性][time-sensitive knowledge] 作者提出 MINED——首个**多模态时间敏感知识**评测基准，包含 2104 条 (subject, hypernym, property…
+  [ACL 2026][可解释性][time-sensitive knowledge] 作者提出 MINED——首个**多模态时间敏感知识**评测基准，包含 2104 条 (subject, hypernym, property, attribute-list) 四元组、6 个维度（Cognition / Awareness / Trustworthiness / Understanding / Reasoning / Robustness）共 11 个子任务，4208 道题，在 15 个 LMM 上跑下来 Gemini-2.5-Pro 拿到最高平均 CEM=63.07 但仍漏掉 ~15% 知识…
 tags:
   - "ACL 2026"
   - "可解释性"

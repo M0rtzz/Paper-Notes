@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepDebater: A Superpersuasive Autonomous Policy Debating System
 description: >-
-  [AAAI 2026][音频/语音][政策辩论] 提出DeepDebater，首个能参与并赢得完整美式策略辩论赛（八轮发言+交叉质询）的自主多Agent系统，基于层级式Agent工作流分工完成正方（Advantage）/反方（DA+CP+Kritik）论证构建…
+  [AAAI 2026][音频/语音][政策辩论] 提出DeepDebater，首个能参与并赢得完整美式策略辩论赛（八轮发言+交叉质询）的自主多Agent系统，基于层级式Agent工作流分工完成正方（Advantage）/反方（DA+CP+Kritik）论证构建，以OpenDebateEvidence的300万+张证据卡做检索增强，辅以GPT-4o TTS语音合成和EchoMimic数字人动画，在专家评估中各项指标显著超越人类编写案例（Quality 4.32 vs 3.65），模拟对局胜率达85%。
 tags:
   - "AAAI 2026"
   - "音频/语音"

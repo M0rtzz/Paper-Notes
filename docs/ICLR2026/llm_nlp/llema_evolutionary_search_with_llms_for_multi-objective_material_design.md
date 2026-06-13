@@ -2,10 +2,10 @@
 title: >-
   [论文解读] LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery
 description: >-
-  [ICLR 2026][LLM/NLP][材料发现] 提出 LLEMA 框架，将 LLM 的科学知识与化学规则引导的进化搜索和记忆驱动的迭代优化相结合，在 14 个多目标材料发现任务上实现了更高的命中率、稳定性和 Pareto 前沿质量。
+  [ICLR 2026][LLM 其他][材料发现] 提出 LLEMA 框架，将 LLM 的科学知识与化学规则引导的进化搜索和记忆驱动的迭代优化相结合，在 14 个多目标材料发现任务上实现了更高的命中率、稳定性和 Pareto 前沿质量。 材料发现需要在化学和结构的巨大组合空间中搜索，同时满足多个（通常相互冲突的）目标…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "材料发现"
   - "LLM进化搜索"
   - "多目标优化"

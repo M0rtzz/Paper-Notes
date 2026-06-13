@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OS Agents: A Survey on MLLM-based Agents for General Computing Devices Use
 description: >-
-  [ACL 2025][LLM Agent][OS Agent] 全面综述了基于多模态大语言模型的操作系统 Agent（OS Agents），系统梳理了其基础概念（环境/观察/动作空间）、核心能力（理解/规划/动作落地）、构建方法（基础模型+Agent框架）和评估体系…
+  [ACL 2025][LLM Agent][OS Agent] 全面综述了基于多模态大语言模型的操作系统 Agent（OS Agents），系统梳理了其基础概念（环境/观察/动作空间）、核心能力（理解/规划/动作落地）、构建方法（基础模型+Agent框架）和评估体系，涵盖 30+ 基础模型和 20+ Agent 框架的分类对比。
 tags:
   - "ACL 2025"
   - "LLM Agent"

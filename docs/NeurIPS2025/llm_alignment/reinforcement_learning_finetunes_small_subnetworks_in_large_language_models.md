@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reinforcement Learning Finetunes Small Subnetworks in Large Language Models
 description: >-
-  [NeurIPS 2025][LLM对齐][reinforcement-learning] RL 微调 LLM 时实际上只更新了 5%-30% 的参数（稀疏子网络），且该子网络在不同种子、数据和算法间具有高度一致性，仅微调子网络即可复现完整微调的模型性能甚至参数值。
+  [NeurIPS 2025][LLM对齐][reinforcement-learning] RL 微调 LLM 时实际上只更新了 5%-30% 的参数（稀疏子网络），且该子网络在不同种子、数据和算法间具有高度一致性，仅微调子网络即可复现完整微调的模型性能甚至参数值。 - 强化学习（RL）是 LLM 后训练的重要阶段…
 tags:
   - "NeurIPS 2025"
   - "LLM对齐"

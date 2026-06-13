@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization
 description: >-
-  [NeurIPS 2025][强化学习][组合优化] 提出 PARCO 框架，通过 Communication Layers 实现智能体间协调、Multiple Pointer Mechanism 实现并行解码、Priority-based Conflict Handler 解决冲突…
+  [NeurIPS 2025][强化学习][组合优化] 提出 PARCO 框架，通过 Communication Layers 实现智能体间协调、Multiple Pointer Mechanism 实现并行解码、Priority-based Conflict Handler 解决冲突，高效求解多智能体组合优化问题。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

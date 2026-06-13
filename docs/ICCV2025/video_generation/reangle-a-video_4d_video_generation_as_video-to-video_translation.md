@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reangle-A-Video: 4D Video Generation as Video-to-Video Translation
 description: >-
-  [ICCV 2025][视频生成][多视角视频] Reangle-A-Video 将多视角视频生成重新定义为视频到视频翻译问题，通过自监督微调视频扩散模型学习视角不变运动，配合 DUSt3R 引导的多视角一致性 inpainting，从单目视频生成同步多视角视频。
+  [ICCV 2025][视频生成][多视角视频] Reangle-A-Video 将多视角视频生成重新定义为视频到视频翻译问题，通过自监督微调视频扩散模型学习视角不变运动，配合 DUSt3R 引导的多视角一致性 inpainting，从单目视频生成同步多视角视频。 从单个输入视频生成多视角同步视频是 4D 内容生成的核心需求…
 tags:
   - "ICCV 2025"
   - "视频生成"

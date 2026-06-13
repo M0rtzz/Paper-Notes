@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MarineInst: A Foundation Model for Marine Image Analysis with Instance Visual Description
 description: >-
-  [ECCV 2024][自监督学习][海洋图像分析] 本文提出MarineInst，一个面向海洋图像分析的基础模型，能够同时输出实例掩码和语义描述；并构建了MarineInst20M——迄今最大的海洋图像数据集（2000万张），支持从图像级场景理解到区域级实例理解的多层次海洋视觉分析任务。
+  [ECCV 2024][自监督学习][海洋图像分析] 本文提出MarineInst，一个面向海洋图像分析的基础模型，能够同时输出实例掩码和语义描述；并构建了MarineInst20M——迄今最大的海洋图像数据集（2000万张），支持从图像级场景理解到区域级实例理解的多层次海洋视觉分析任务。 领域现状：大规模基础模型（如SAM…
 tags:
   - "ECCV 2024"
   - "自监督学习"

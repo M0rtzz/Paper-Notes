@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MV-DUSt3R(+): Single-Stage Scene Reconstruction from Sparse Views In 2 Seconds
 description: >-
-  [CVPR 2025][3D视觉][多视图重建] MV-DUSt3R 提出单阶段前馈网络，通过多视图解码器块联合处理任意数量的无位姿输入视图，完全省去 DUSt3R 所需的全局优化，实现比 DUSt3R 快 48~78 倍的场景重建，同时 Chamfer Distance 降低 1.6~3.2 倍…
+  [CVPR 2025][3D视觉][多视图重建] MV-DUSt3R 提出单阶段前馈网络，通过多视图解码器块联合处理任意数量的无位姿输入视图，完全省去 DUSt3R 所需的全局优化，实现比 DUSt3R 快 48~78 倍的场景重建，同时 Chamfer Distance 降低 1.6~3.2 倍；进一步的 MV-DUSt3R+ 引入跨参考视图注意力块，在大场景上进一步提升重建质量。
 tags:
   - "CVPR 2025"
   - "3D视觉"

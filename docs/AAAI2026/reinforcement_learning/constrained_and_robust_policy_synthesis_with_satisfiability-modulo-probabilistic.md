@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained and Robust Policy Synthesis with Satisfiability-Modulo-Probabilistic-Model-Checking
 description: >-
-  [AAAI 2026][强化学习][马尔可夫决策过程] 本文提出首个能在任意结构约束下高效计算鲁棒策略的框架，通过将 SAT 求解器与概率模型检测算法紧密集成，实现对有限马尔可夫决策过程（MDP）的约束策略合成和鲁棒策略合成，在数百个 benchmark 上验证了可行性和竞争力。
+  [AAAI 2026][强化学习][马尔可夫决策过程] 本文提出首个能在任意结构约束下高效计算鲁棒策略的框架，通过将 SAT 求解器与概率模型检测算法紧密集成，实现对有限马尔可夫决策过程（MDP）的约束策略合成和鲁棒策略合成，在数百个 benchmark 上验证了可行性和竞争力。 领域现状：计算给定有限 MDP 的最优奖励策…
 tags:
   - "AAAI 2026"
   - "强化学习"

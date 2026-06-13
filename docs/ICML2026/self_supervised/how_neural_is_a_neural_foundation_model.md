@@ -2,7 +2,7 @@
 title: >-
   [论文解读] How 'Neural' is a Neural Foundation Model?
 description: >-
-  [ICML 2026][自监督学习][Neural Foundation Model] 作者把一只"小白鼠视觉皮层的 SOTA 基础模型（FNN）"当成生理学实验对象，用解码流形 / 编码流形 / 解码轨迹三件套挨个分析它的 encoder / recurrent / readout…
+  [ICML 2026][自监督学习][Neural Foundation Model] 作者把一只"小白鼠视觉皮层的 SOTA 基础模型（FNN）"当成生理学实验对象，用解码流形 / 编码流形 / 解码轨迹三件套挨个分析它的 encoder / recurrent / readout，发现 FNN 的拟合精度主要靠 readout 那一堆同质 feature map 撑起来，而真正"像大脑"的只有 recurrent 模块；并用新提出的 tubularity 指标定量地说"早期编码层缺少生物级时间结构"，给未来神经基础模型给出"早期加 recurrence、readout 减少 feature 维度"的明确建议。
 tags:
   - "ICML 2026"
   - "自监督学习"

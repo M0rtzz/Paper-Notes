@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TadA-Bench: A Million-Variant Benchmark for Future-Round Discovery Toward Agentic Protein Engineering
 description: >-
-  [ICML 2026][计算生物][protein engineering] TadA-Bench 用 31 轮真实定向进化湿实验中的百万级 TadA 变体序列，把蛋白工程问题形式化为"用前若干轮排出后若干轮"的固定数据回放任务，并配套 Seq2Graph 图式标签统一管线…
+  [ICML 2026][计算生物][protein engineering] TadA-Bench 用 31 轮真实定向进化湿实验中的百万级 TadA 变体序列，把蛋白工程问题形式化为"用前若干轮排出后若干轮"的固定数据回放任务，并配套 Seq2Graph 图式标签统一管线，揭示了主流生物大模型在"未来轮发现"上严重失效。
 tags:
   - "ICML 2026"
   - "计算生物"

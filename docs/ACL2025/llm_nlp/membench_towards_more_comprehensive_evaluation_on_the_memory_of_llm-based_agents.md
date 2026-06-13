@@ -2,10 +2,10 @@
 title: >-
   [论文解读] MemBench: Towards More Comprehensive Evaluation on the Memory of LLM-based Agents
 description: >-
-  [ACL 2025][LLM/NLP][memory evaluation] 构建了首个同时覆盖参与/观察两种场景、事实/反思两种记忆层次、准确性/召回/容量/效率四种指标的 LLM Agent 记忆能力评估基准 MemBench…
+  [ACL 2025][LLM 其他][memory evaluation] 构建了首个同时覆盖参与/观察两种场景、事实/反思两种记忆层次、准确性/召回/容量/效率四种指标的 LLM Agent 记忆能力评估基准 MemBench，在 7 种记忆机制上的评测显示简单的 RetrievalMemory 在大规模记忆（100K token）下表现最佳（准确率 0.833），而复杂机制（MemGPT、GenerativeAgent）未展现优势。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "memory evaluation"
   - "LLM agent"
   - "reflective memory"

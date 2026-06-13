@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Enough Coin Flips Can Make LLMs Act Bayesian
 description: >-
-  [ACL 2025][LLM/NLP][贝叶斯推理] 通过抛硬币这一受控随机过程，系统研究LLM是否在in-context learning中执行贝叶斯推理，发现LLM通常具有偏置先验，但随着上下文证据增加会以近似贝叶斯更新的方式修正后验估计，偏差主要源于校准不良的先验而非错误的更新机制。
+  [ACL 2025][LLM 其他][贝叶斯推理] 通过抛硬币这一受控随机过程，系统研究LLM是否在in-context learning中执行贝叶斯推理，发现LLM通常具有偏置先验，但随着上下文证据增加会以近似贝叶斯更新的方式修正后验估计，偏差主要源于校准不良的先验而非错误的更新机制。 领域现状： 大型语言模型通过in-c…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "贝叶斯推理"
   - "In-Context Learning"
   - "概率估计"

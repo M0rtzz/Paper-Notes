@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MExD: An Expert-Infused Diffusion Model for Whole-Slide Image Classification
 description: >-
-  [CVPR 2025][图像生成][病理全切片图像] MExD 首次将生成式扩散模型应用于全切片图像（WSI）分类，通过动态混合专家（Dyn-MoE）聚合器筛选关键实例并提供条件信息，结合扩散分类器（Diff-C）从噪声中迭代还原类别标签…
+  [CVPR 2025][图像生成][病理全切片图像] MExD 首次将生成式扩散模型应用于全切片图像（WSI）分类，通过动态混合专家（Dyn-MoE）聚合器筛选关键实例并提供条件信息，结合扩散分类器（Diff-C）从噪声中迭代还原类别标签，在Camelyon16、TCGA-NSCLC和BRACS三个基准上达到SOTA。
 tags:
   - "CVPR 2025"
   - "图像生成"

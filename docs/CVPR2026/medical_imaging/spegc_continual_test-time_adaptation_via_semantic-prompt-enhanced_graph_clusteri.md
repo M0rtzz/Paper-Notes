@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPEGC: Continual Test-Time Adaptation via Semantic-Prompt-Enhanced Graph Clustering for Medical Image Segmentation
 description: >-
-  [CVPR2026][医学图像][持续测试时自适应] 提出 SPEGC 框架，通过语义提示增强特征 + 可微分图聚类求解器，将原始相似度矩阵精炼为高阶结构表示，用于指导医学图像分割模型在持续变化的目标域上自适应，有效缓解误差累积与灾难性遗忘。
+  [CVPR2026][医学图像][持续测试时自适应] 提出 SPEGC 框架，通过语义提示增强特征 + 可微分图聚类求解器，将原始相似度矩阵精炼为高阶结构表示，用于指导医学图像分割模型在持续变化的目标域上自适应，有效缓解误差累积与灾难性遗忘。 临床部署的域偏移难题：医学图像因采集设备、操作者、扫描协议不同…
 tags:
   - "CVPR2026"
   - "医学图像"

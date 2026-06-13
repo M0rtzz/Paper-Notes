@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hidden Breakthroughs in Language Model Training
 description: >-
-  [ICLR 2026][可解释性][训练动力学] 提出 POLCA（Projection Oriented Loss Change Allocation）——一种沿低秩训练子空间任意正交基分解单样本损失变化的方法，从看似平滑的训练损失曲线中揭示出大量隐藏的概念性突破（hidden breakthroughs）…
+  [ICLR 2026][可解释性][训练动力学] 提出 POLCA（Projection Oriented Loss Change Allocation）——一种沿低秩训练子空间任意正交基分解单样本损失变化的方法，从看似平滑的训练损失曲线中揭示出大量隐藏的概念性突破（hidden breakthroughs），将训练可解释性从"先定义技能再观测"翻转为"先分解再自动发现技能"。
 tags:
   - "ICLR 2026"
   - "可解释性"

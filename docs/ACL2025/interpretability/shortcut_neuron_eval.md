@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Establishing Trustworthy LLM Evaluation via Shortcut Neuron Analysis
 description: >-
-  [ACL 2025][可解释性][Data Contamination] 提出通过对比分析和因果分析定位污染模型中的"捷径神经元"（shortcut neurons），并通过 activation patching 抑制这些神经元，实现更可信的 LLM 评估…
+  [ACL 2025][可解释性][Data Contamination] 提出通过对比分析和因果分析定位污染模型中的"捷径神经元"（shortcut neurons），并通过 activation patching 抑制这些神经元，实现更可信的 LLM 评估，与 MixEval 的 Spearman 相关系数超过 0.95。
 tags:
   - "ACL 2025"
   - "可解释性"

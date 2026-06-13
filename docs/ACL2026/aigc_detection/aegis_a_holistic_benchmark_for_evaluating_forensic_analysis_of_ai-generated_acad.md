@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AEGIS: A Holistic Benchmark for Evaluating Forensic Analysis of AI-Generated Academic Images
 description: >-
-  [ACL 2026][AIGC检测][AI-generated image forensics] AEGIS 是首个面向学术图像伪造取证的综合基准，覆盖 7 大学术图类与 39 子类、4 种伪造策略（整图捏造、参考图改写、局部修复、局部编辑）和 25 个生成模型…
+  [ACL 2026][AIGC检测][AI-generated image forensics] AEGIS 是首个面向学术图像伪造取证的综合基准，覆盖 7 大学术图类与 39 子类、4 种伪造策略（整图捏造、参考图改写、局部修复、局部编辑）和 25 个生成模型，提出取证范围判别、文字伪影识别、操作类型分类、篡改像素定位四项任务，对 25 个 MLLM 与 9 个专家模型联评后发现：即使 GPT-5.1 综合分仅 48.80%，专家模型像素 IoU 仅 30.09%，凸显「生成进化快于取证」与「MLLM 推理 vs 专家模型敏感度」的结构性互补。
 tags:
   - "ACL 2026"
   - "AIGC检测"

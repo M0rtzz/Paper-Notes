@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhysHead: Simulation-Ready Gaussian Head Avatars
 description: >-
-  [CVPR 2026][3D视觉][头部Avatar重建] 提出PhysHead——首个将物理驱动头发动力学与可动画3DGS头部Avatar结合的方法：用FLAME网格+3DGS建模可表达面部、用发丝(strand)+3DGS建模头发外观、用物理引擎驱动头发动画…
+  [CVPR 2026][3D视觉][头部Avatar重建] 提出PhysHead——首个将物理驱动头发动力学与可动画3DGS头部Avatar结合的方法：用FLAME网格+3DGS建模可表达面部、用发丝(strand)+3DGS建模头发外观、用物理引擎驱动头发动画，并通过VLM生成秃头图像实现头发与面部的分层优化。
 tags:
   - "CVPR 2026"
   - "3D视觉"

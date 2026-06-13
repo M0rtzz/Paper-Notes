@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Free-Grained Hierarchical Visual Recognition
 description: >-
-  [CVPR 2026][自监督学习][层级分类] 提出"自由粒度"层级视觉识别（free-grained hierarchical recognition），允许训练标签出现在分类法的任意层级，并提出文本引导伪属性和分类法引导半监督学习两种方法来弥补缺失监督，推理时模型自适应选择预测深度。
+  [CVPR 2026][自监督学习][层级分类] 提出"自由粒度"层级视觉识别（free-grained hierarchical recognition），允许训练标签出现在分类法的任意层级，并提出文本引导伪属性和分类法引导半监督学习两种方法来弥补缺失监督，推理时模型自适应选择预测深度。 传统层级分类假设每张训练图像在分类…
 tags:
   - "CVPR 2026"
   - "自监督学习"

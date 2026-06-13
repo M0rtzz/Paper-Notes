@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GAVEL: Towards Rule-Based Safety through Activation Monitoring
 description: >-
-  [ICLR 2026][可解释性][激活监控] 借鉴网络安全中 Snort/YARA 规则集的理念，提出将 LLM 内部激活分解为 23 个细粒度"认知元素"（CE），再通过布尔逻辑组合为可审计的安全规则…
+  [ICLR 2026][可解释性][激活监控] 借鉴网络安全中 Snort/YARA 规则集的理念，提出将 LLM 内部激活分解为 23 个细粒度"认知元素"（CE），再通过布尔逻辑组合为可审计的安全规则，在 Mistral-7B 上以 <1% 推理开销实现 9 类误用场景平均 AUC 0.99、FPR 0.004 的实时检测，并天然支持跨语言、跨模型迁移。
 tags:
   - "ICLR 2026"
   - "可解释性"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mind the Gap: How Elicitation Protocols Shape the Stated-Revealed Preference Gap in Language Models
 description: >-
-  [ACL 2026][LLM/NLP][stated-revealed preference] 作者在 LitmusValues / AIRiskDilemmas 框架上把 forced-choice 升级为 expanded-choice（允许 "Equal Preference" 和 "Depends"…
+  [ACL 2026][LLM 其他][stated-revealed preference] 作者在 LitmusValues / AIRiskDilemmas 框架上把 forced-choice 升级为 expanded-choice（允许 "Equal Preference" 和 "Depends" 中立选项），系统评测 24 个 LLM 发现：在 stated 侧允许中立可以把 SvR Spearman 相关 ρ 从 ~0.2 大幅提升到 ~0.7（因为过滤掉了模型本来就没立场的弱信号），但 revealed 侧也允许中立反而把 ρ 打到接近 0 甚至负值（很多模型在情境化场景里几乎全选 Depends/Equal）…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "stated-revealed preference"
   - "价值对齐"
   - "elicitation protocol"

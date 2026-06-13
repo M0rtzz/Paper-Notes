@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scaling, Benchmarking, and Reasoning of Vision-Language Agents for Mobile GUI Navigation
 description: >-
-  [ICML 2026][LLM Agent][移动 GUI 导航] 小米团队针对 VLM 移动 GUI 智能体提出"数据-评测-推理"三位一体的系统性研究：发布 16k 任务 / 674 个中文 App 的 HyperTrack 数据集和支持 30+ 模型的 GUIEvalKit 评测工具…
+  [ICML 2026][LLM Agent][移动 GUI 导航] 小米团队针对 VLM 移动 GUI 智能体提出"数据-评测-推理"三位一体的系统性研究：发布 16k 任务 / 674 个中文 App 的 HyperTrack 数据集和支持 30+ 模型的 GUIEvalKit 评测工具，证明 DAPO 风格 RL 在 OOD 场景明显胜过 SFT、并用半在线评测 SOEval 揭示了"显式 reasoning 会牺牲 PASS@1 稳定性但提升 PASS@n 多样性"的核心权衡。
 tags:
   - "ICML 2026"
   - "LLM Agent"

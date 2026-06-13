@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WorldCache: Accelerating World Models for Free via Heterogeneous Token Caching
 description: >-
-  [ICML 2026][视频生成][扩散世界模型] WorldCache 针对扩散式 world model 中 RGB/深度等多模态 token 演化不均匀的问题，用曲率把 token 分成稳定、线性和混沌三类并自适应触发完整前向…
+  [ICML 2026][视频生成][扩散世界模型] WorldCache 针对扩散式 world model 中 RGB/深度等多模态 token 演化不均匀的问题，用曲率把 token 分成稳定、线性和混沌三类并自适应触发完整前向，在 HunyuanVoyager、Aether 等模型上最高实现 3.65 倍到 3.7 倍端到端加速，同时基本保持世界生成和 3D 重建质量。
 tags:
   - "ICML 2026"
   - "视频生成"

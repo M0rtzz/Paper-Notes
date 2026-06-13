@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zero-Shot Embedding Drift Detection: A Lightweight Defense Against Prompt Injections in LLMs
 description: >-
-  [NeurIPS 2025][模型压缩][提示注入检测] 提出ZEDD（零样本嵌入漂移检测），通过比较良性和可疑输入在嵌入空间中的语义漂移来检测提示注入攻击，利用GMM/KDE自动确定阈值，在多种LLM架构上实现>93%的检测准确率且假阳性率<3%。
+  [NeurIPS 2025][模型压缩][提示注入检测] 提出ZEDD（零样本嵌入漂移检测），通过比较良性和可疑输入在嵌入空间中的语义漂移来检测提示注入攻击，利用GMM/KDE自动确定阈值，在多种LLM架构上实现93%的检测准确率且假阳性率<3%。 提示注入攻击已成为LLM应用的核心安全威胁。攻击者通过间接输入渠道（如邮件、…
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

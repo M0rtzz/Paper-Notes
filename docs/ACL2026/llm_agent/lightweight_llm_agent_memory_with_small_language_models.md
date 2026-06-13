@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lightweight LLM Agent Memory with Small Language Models
 description: >-
-  [ACL 2026][LLM Agent][智能体记忆] 本文提出 LightMem，一种由多个专用小语言模型（SLM）驱动的轻量级 LLM 智能体记忆系统，通过将记忆操作模块化为控制器（SLM-1）、选择器（SLM-2）和写入器（SLM-3），并将在线处理与离线整合解耦…
+  [ACL 2026][LLM Agent][智能体记忆] 本文提出 LightMem，一种由多个专用小语言模型（SLM）驱动的轻量级 LLM 智能体记忆系统，通过将记忆操作模块化为控制器（SLM-1）、选择器（SLM-2）和写入器（SLM-3），并将在线处理与离线整合解耦，在 LoCoMo 基准上平均 F1 提升约 2.5（相比 A-MEM），同时实现 83ms 检索延迟和 581ms 端到端延迟。
 tags:
   - "ACL 2026"
   - "LLM Agent"

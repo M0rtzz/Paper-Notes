@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GlyphPrinter: Region-Grouped Direct Preference Optimization for Glyph-Accurate Visual Text Rendering
 description: >-
-  [CVPR 2026][图像生成][视觉文本渲染] 提出 GlyphPrinter，通过构建区域级字形偏好数据集 GlyphCorrector 和区域分组 DPO（R-GDPO）目标函数，在不依赖显式奖励模型的情况下显著提升视觉文本渲染的字形准确度…
+  [CVPR 2026][图像生成][视觉文本渲染] 提出 GlyphPrinter，通过构建区域级字形偏好数据集 GlyphCorrector 和区域分组 DPO（R-GDPO）目标函数，在不依赖显式奖励模型的情况下显著提升视觉文本渲染的字形准确度，并引入推理时 Regional Reward Guidance 实现可控生成。
 tags:
   - "CVPR 2026"
   - "图像生成"

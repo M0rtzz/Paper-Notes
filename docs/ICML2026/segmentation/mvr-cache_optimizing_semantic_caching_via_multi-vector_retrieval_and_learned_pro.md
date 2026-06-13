@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MVR-cache: Optimizing Semantic Caching via Multi-Vector Retrieval and Learned Prompt Segmentation
 description: >-
-  [ICML 2026][语义分割][语义缓存] MVR-cache 把 LLM 语义缓存的相似度度量从"单向量 cosine"升级为"可学习分段后的多向量 MaxSim"，并用 REINFORCE 训练一个轻量分段模型，在保证错误率上界 $\delta$ 不变的前提下把缓存命中率最多再抬 37%。
+  [ICML 2026][语义分割][语义缓存] MVR-cache 把 LLM 语义缓存的相似度度量从"单向量 cosine"升级为"可学习分段后的多向量 MaxSim"，并用 REINFORCE 训练一个轻量分段模型，在保证错误率上界 $\delta$ 不变的前提下把缓存命中率最多再抬 37%。 领域现状：LLM 推理又贵…
 tags:
   - "ICML 2026"
   - "语义分割"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics
 description: >-
-  [ICLR 2026][物体中心] LPWM 是首个能扩展到真实世界多物体数据集的自监督物体中心世界模型，核心创新是为每个粒子学习独立的潜在动作分布（per-particle latent actions），通过因果时空 Transformer 并行编码所有帧，支持动作/语言/图像目标/多视角等多种条件生成…
+  [ICLR 2026 Oral][物体中心] LPWM 是首个能扩展到真实世界多物体数据集的自监督物体中心世界模型，核心创新是为每个粒子学习独立的潜在动作分布（per-particle latent actions），通过因果时空 Transformer 并行编码所有帧，支持动作/语言/图像目标/多视角等多种条件生成，在视频预测上达到 SOTA 并展示了模仿学习能力（OGBench task3 成功率 89%）。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "物体中心"
   - "潜在粒子"
   - "自监督"

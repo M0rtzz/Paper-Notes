@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OverLoCK: An Overview-first-Look-Closely-next ConvNet with Context-Mixing Dynamic Kernels
 description: >-
-  [CVPR 2025][语义分割][卷积神经网络] 提出OverLoCK，首个显式融入自顶向下注意力机制的纯卷积骨干网络，通过深层分解策略（DDS）和上下文混合动态卷积（ContMix），在ImageNet-1K上以仅1/3的FLOPs超越ConvNeXt-B，在检测和分割任务上全面领先。
+  [CVPR 2025][语义分割][卷积神经网络] 提出OverLoCK，首个显式融入自顶向下注意力机制的纯卷积骨干网络，通过深层分解策略（DDS）和上下文混合动态卷积（ContMix），在ImageNet-1K上以仅1/3的FLOPs超越ConvNeXt-B，在检测和分割任务上全面领先。 人类视觉系统中的自顶向下注意力机制…
 tags:
   - "CVPR 2025"
   - "语义分割"

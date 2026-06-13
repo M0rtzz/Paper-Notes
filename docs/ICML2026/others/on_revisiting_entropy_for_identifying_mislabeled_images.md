@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On Revisiting Entropy for Identifying Mislabeled Images
 description: >-
-  [ICML 2026][错误标签检测] 作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量…
+  [ICML 2026][错误标签检测] 作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量，在 ISIC/DeepDRiD/PANDA/CheXpert 等多个医学数据集和 CIFAR-100N 上以纯插拔方式刷新错标检测 SOTA（最高领先 11%+）。
 tags:
   - "ICML 2026"
   - "错误标签检测"

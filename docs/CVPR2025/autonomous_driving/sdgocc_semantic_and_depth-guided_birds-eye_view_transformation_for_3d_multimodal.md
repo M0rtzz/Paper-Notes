@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SDGOcc: Semantic and Depth-Guided BEV Transformation for 3D Multimodal Occupancy Prediction
 description: >-
-  [CVPR 2025][自动驾驶][3D占用预测] 本文提出 SDG-OCC，一个多模态 3D 语义占用预测框架，通过语义和深度引导的视图变换（利用 LiDAR 深度和图像语义分割掩码构建虚拟点）替代传统 LSS 管线，结合融合到占用驱动的主动蒸馏模块…
+  [CVPR 2025][自动驾驶][3D占用预测] 本文提出 SDG-OCC，一个多模态 3D 语义占用预测框架，通过语义和深度引导的视图变换（利用 LiDAR 深度和图像语义分割掩码构建虚拟点）替代传统 LSS 管线，结合融合到占用驱动的主动蒸馏模块，在 Occ3D-nuScenes 上取得 SOTA 并保持实时推理速度。
 tags:
   - "CVPR 2025"
   - "自动驾驶"

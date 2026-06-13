@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models
 description: >-
-  [ICLR 2026][LLM Agent][工具使用] 提出ToolWeaver，通过协作感知向量量化将每个工具表示为层级离散编码序列（而非单一token），实现词表对数级扩展（47000+工具仅需~512个新token），在ToolBench上全面超越ToolGen基线…
+  [ICLR 2026][LLM Agent][工具使用] 提出ToolWeaver，通过协作感知向量量化将每个工具表示为层级离散编码序列（而非单一token），实现词表对数级扩展（47000+工具仅需~512个新token），在ToolBench上全面超越ToolGen基线，同时将语言模型困惑度退化从16.5倍降至4倍。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

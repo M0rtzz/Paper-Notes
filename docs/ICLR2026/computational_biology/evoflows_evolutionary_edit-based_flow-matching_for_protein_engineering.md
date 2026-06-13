@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EvoFlows: Evolutionary Edit-Based Flow-Matching for Protein Engineering
 description: >-
-  [ICLR 2026 (Workshop on Foundation Models for Science)][计算生物][Protein Engineering] EvoFlows 提出一种基于编辑操作的 Flow Matching 方法，通过学习进化相关蛋白质序列间的突变轨迹…
+  [ICLR 2026 (Workshop on Foundation Models for Science)][计算生物][Protein Engineering] EvoFlows 提出一种基于编辑操作的 Flow Matching 方法，通过学习进化相关蛋白质序列间的突变轨迹，能在模板序列上执行可控数量的突变（插入、删除、替换），同时预测"突变什么"和"在哪里突变"。
 tags:
   - "ICLR 2026 (Workshop on Foundation Models for Science)"
   - "计算生物"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] When Agents Look the Same: Quantifying Distillation-Induced Similarity in Tool-Use Behaviors
 description: >-
-  [ACL 2026][LLM Agent][模型蒸馏] 本文提出了 RPS 和 AGS 两个互补指标来量化 LLM Agent 在工具使用行为上的蒸馏导致的同质化现象，通过区分必要行为和非必要行为，在 18 个模型上揭示了跨家族行为继承模式…
+  [ACL 2026][LLM Agent][模型蒸馏] 本文提出了 RPS 和 AGS 两个互补指标来量化 LLM Agent 在工具使用行为上的蒸馏导致的同质化现象，通过区分必要行为和非必要行为，在 18 个模型上揭示了跨家族行为继承模式，发现 Kimi-K2 与 Claude Sonnet 4.5 的行为相似度甚至超过 Anthropic 自家模型。
 tags:
   - "ACL 2026"
   - "LLM Agent"

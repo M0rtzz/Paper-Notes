@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 音频/语音论文汇总 · 14篇论文解读
+  CVPR2026 音频/语音论文汇总 · 19篇论文解读
 description: >-
-  14篇CVPR2026的音频/语音方向论文解读，涵盖语音、多模态、情感分析、个性化生成、问答等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  19篇CVPR2026的音频/语音方向论文解读，涵盖语音、多模态、压缩/编码、扩散模型、情感分析、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "音频/语音"
@@ -10,18 +10,29 @@ tags:
   - "论文笔记"
   - "语音"
   - "多模态"
+  - "压缩/编码"
+  - "扩散模型"
   - "情感分析"
   - "个性化生成"
-  - "问答"
 item_list:
   - u: "babyvlm-v2_toward_developmentally_grounded_pretraining_and_benchmarking_of_visio/"
     t: "BabyVLM-V2: Toward Developmentally Grounded Pretraining and Benchmarking of Vision Foundation Models"
   - u: "cleaning_the_pool_progressive_filtering_of_unlabeled_pools_in_deep_active_learni/"
     t: "Cleaning the Pool: Progressive Filtering of Unlabeled Pools in Deep Active Learning"
+  - u: "counterflow_a_two-phase_inference-time_sampling_for_counterfactual_video_foley_g/"
+    t: "CounterFlow: A Two-Phase Inference-Time Sampling for Counterfactual Video Foley Generation"
   - u: "echoes_over_time_unlocking_length_generalization_in_video-to-audio_generation_mo/"
     t: "Echoes Over Time: Unlocking Length Generalization in Video-to-Audio Generation Models"
   - u: "gem-tfl_bridging_weak_and_full_supervision_for_forgery_localization_through_em-g/"
     t: "GEM-TFL: Bridging Weak and Full Supervision for Forgery Localization"
+  - u: "gesture2music_a_low-latency_real-time_framework_for_continuous_gesture-driven_mu/"
+    t: "Gesture2Music: A Low-Latency Real-Time Framework for Continuous Gesture-Driven Music Generation"
+  - u: "hierarchical_codec_diffusion_for_video-to-speech_generation/"
+    t: "Hierarchical Codec Diffusion for Video-to-Speech Generation"
+  - u: "mmaudio-label_audio_event_labeling_via_audio_generation_for_silent_video/"
+    t: "MMAudio-LABEL: Audio Event Labeling via Audio Generation for Silent Video"
+  - u: "mmaudioreverbs_video-guided_acoustic_modeling_for_dereverberation_and_room_impul/"
+    t: "MMAudioReverbs: Video-Guided Acoustic Modeling for Dereverberation and Room Impulse Response Estimation"
   - u: "omni-mmsi_toward_identity-attributed_social_interaction_understanding/"
     t: "Omni-MMSI: Toward Identity-Attributed Social Interaction Understanding"
   - u: "omniret_efficient_and_high-fidelity_omni_modality_retrieval/"
@@ -42,17 +53,17 @@ item_list:
     t: "Unlocking Strong Supervision: A Data-Centric Study of General-Purpose Audio Pre-Training Methods"
   - u: "vidscribe_multimodal_ai_for_customizing_audio_description_and_question_answering/"
     t: "ViDscribe: Multimodal AI for Customizing Audio Description and Question Answering in Online Videos"
-item_total: 14
+item_total: 19
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**📷 CVPR2026** · **14** 篇论文解读
+**📷 CVPR2026** · **19** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (68)](../../ACL2026/audio_speech/index.md) · [🔬 ICLR2026 (34)](../../ICLR2026/audio_speech/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×5 · 多模态 ×5
+🔥 **高频主题：** 语音 ×8 · 多模态 ×5
 
 **[BabyVLM-V2: Toward Developmentally Grounded Pretraining and Benchmarking of Vision Foundation Models](babyvlm-v2_toward_developmentally_grounded_pretraining_and_benchmarking_of_visio.md)**
 
@@ -62,6 +73,10 @@ item_total: 14
 
 :   提出 Refine 集成主动学习方法，通过两阶段策略——渐进过滤（多策略迭代精炼无标签池）+ 覆盖选择（从精炼池中选择多样性高价值样本）——在不预知最佳策略的情况下一致超越单一 AL 策略和现有集成方法。
 
+**[CounterFlow: A Two-Phase Inference-Time Sampling for Counterfactual Video Foley Generation](counterflow_a_two-phase_inference-time_sampling_for_counterfactual_video_foley_g.md)**
+
+:   针对"给无声视频配上一个与画面物体相矛盾的声音（如猫的动作配狮吼）"这一反事实配音任务，本文提出 **CounterFlow**——一种无需重训、只在推理时介入预训练 flow-matching VT2A 模型的**两阶段采样**方法：前期用视频建立时间结构、后期丢掉视频专注塑造目标音色，并配一个基于 FLAM 共嵌入空间的新指标 $\Delta$FLAM，在 VGGSound-Sparse 上把目标声替换成功率从 0.83 提到 0.92。
+
 **[Echoes Over Time: Unlocking Length Generalization in Video-to-Audio Generation Models](echoes_over_time_unlocking_length_generalization_in_video-to-audio_generation_mo.md)**
 
 :   提出 MMHNet，一种基于层级结构和非因果 Mamba-2 的多模态层级网络，实现了在短片段（8秒）上训练、在长视频（5分钟以上）上生成高质量对齐音频的长度泛化能力，在 UnAV100 和 LongVale 基准上大幅超越现有方法。
@@ -69,6 +84,22 @@ item_total: 14
 **[GEM-TFL: Bridging Weak and Full Supervision for Forgery Localization](gem-tfl_bridging_weak_and_full_supervision_for_forgery_localization_through_em-g.md)**
 
 :   提出 GEM-TFL，通过两阶段分类-回归框架弥合弱监督与全监督之间的差距，用 EM 分解二元标签为多维潜在属性、训练无关的时序一致性精化、图扩散提案精化三大模块，在弱监督时序伪造定位上平均 mAP 提升 4-8%。
+
+**[Gesture2Music: A Low-Latency Real-Time Framework for Continuous Gesture-Driven Music Generation](gesture2music_a_low-latency_real-time_framework_for_continuous_gesture-driven_mu.md)**
+
+:   把"摄像头手势 → 音乐"重新建模成**连续流式事件预测**（而非孤立手势分类），用因果 TCN 实时预测音高/八度/onset/sustain/振幅等音符级控制事件，配合合成流训练和三重音乐后处理稳定化，做到 25–30 ms 推理延迟、60–70 ms 端到端回路延迟的实时演奏。
+
+**[Hierarchical Codec Diffusion for Video-to-Speech Generation](hierarchical_codec_diffusion_for_video-to-speech_generation.md)**
+
+:   HiCoDiT 把"哑视频→语音"这件事重新拆成**沿 RVQ 离散 token 层级逐层生成**的掩码扩散任务——低层 token 负责内容与音色、由唇动和身份引导，高层 token 负责韵律、由表情通过双尺度 AdaLN 调制，从而在 LRS2/LRS3 上跨数据集零训练就拿下自然度、可懂度和唇同步的领先成绩。
+
+**[MMAudio-LABEL: Audio Event Labeling via Audio Generation for Silent Video](mmaudio-label_audio_event_labeling_via_audio_generation_for_silent_video.md)**
+
+:   把"从无声视频生成音频"和"逐帧声音事件标注（事件类型 + 发声时刻）"放进同一个潜空间里联合建模，作者在 MMAudio 基础模型上探索了并行双头和联合单头两种结构，发现把事件 logit 当作连续潜变量与音频潜变量一起做流匹配去噪的"联合单头"最好，在 Greatest Hits 上把起音检测准确率从 46.7% 提到 75.0%、材质分类从 40.6% 提到 61.0%。
+
+**[MMAudioReverbs: Video-Guided Acoustic Modeling for Dereverberation and Room Impulse Response Estimation](mmaudioreverbs_video-guided_acoustic_modeling_for_dereverberation_and_room_impul.md)**
+
+:   本文发现预训练的视频到音频（V2A）大模型 MMAudio 其实隐式编码了"画面 ↔ 房间声学"的关系，于是**不改任何网络结构**、只在小数据集上微调，就把它复用成一个统一框架去做去混响和房间脉冲响应（RIR）估计两件事，并实验性地揭示出"视觉主要帮早期能量、晚期混响只能靠声学"的分工规律。
 
 **[Omni-MMSI: Toward Identity-Attributed Social Interaction Understanding](omni-mmsi_toward_identity-attributed_social_interaction_understanding.md)**
 

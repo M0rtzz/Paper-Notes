@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing What Matters: Empowering CLIP with Patch Generation-to-Selection
 description: >-
-  [CVPR 2025][预训练][CLIP训练效率] 提出 CLIP-PGS（Patch Generation-to-Selection），一种简洁有效的掩码策略，通过渐进式的"生成-选择"过程——先预选候选掩码patch、再用 Sobel 边缘检测保护关键语义区域、最后用最优传输归一化精细化选择——在提升…
+  [CVPR 2025][预训练][CLIP训练效率] 提出 CLIP-PGS（Patch Generation-to-Selection），一种简洁有效的掩码策略，通过渐进式的"生成-选择"过程——先预选候选掩码patch、再用 Sobel 边缘检测保护关键语义区域、最后用最优传输归一化精细化选择——在提升 CLIP 训练效率（降至 0.5-0.6× 训练时间）的同时在零样本分类、检索等任务上取得 SOTA。
 tags:
   - "CVPR 2025"
   - "预训练"

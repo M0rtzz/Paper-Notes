@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LinguIUTics at PsyDefDetect: Iterative Imbalance-Aware Fine-tuning of Qwen3-8B for Psychological Defense Mechanism Classification
 description: >-
-  [ACL 2026 / BioNLP 2026][医疗NLP][心理防御机制] 这篇 PsyDefDetect 参赛系统通过 Qwen3-8B QLoRA、少数类词法增强、分组 5-fold 交叉验证、OOF logit bias 和多种子融合…
+  [ACL 2026 / BioNLP 2026][医疗NLP][心理防御机制] 这篇 PsyDefDetect 参赛系统通过 Qwen3-8B QLoRA、少数类词法增强、分组 5-fold 交叉验证、OOF logit bias 和多种子融合，把心理防御机制 9 分类的官方 macro F1 提升到 0.3917，排名 21 支队伍中的第 4。
 tags:
   - "ACL 2026 / BioNLP 2026"
   - "医疗NLP"

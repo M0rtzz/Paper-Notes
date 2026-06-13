@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Epistemic Uncertainty of Overparametrized Neural Networks
 description: >-
-  [ICML 2026][认知不确定性] 本文指出过参数化神经网络的"认知不确定性"不会随数据增大而消失：因为参数不可识别（permutation + 神经元分裂），即便函数完全识别，参数空间后验仍然在分裂流形上保留连续不确定度…
+  [ICML 2026][认知不确定性] 本文指出过参数化神经网络的"认知不确定性"不会随数据增大而消失：因为参数不可识别（permutation + 神经元分裂），即便函数完全识别，参数空间后验仍然在分裂流形上保留连续不确定度，作者以单隐层 ReLU 网为例给出精确后验描述（Dirichlet on simplex）并实证验证。
 tags:
   - "ICML 2026"
   - "认知不确定性"

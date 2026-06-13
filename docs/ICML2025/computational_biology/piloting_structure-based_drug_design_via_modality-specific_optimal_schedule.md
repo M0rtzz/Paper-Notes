@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Piloting Structure-Based Drug Design via Modality-Specific Optimal Schedule
 description: >-
-  [ICML 2025][计算生物][基于结构的药物设计] 提出 VLB-Optimal Scheduling (VOS) 策略，通过理论分析多模态（连续3D位置+离散2D拓扑）联合噪声调度的路径依赖VLB特性，用动态规划搜索最优噪声调度路径…
+  [ICML 2025][计算生物][基于结构的药物设计] 提出 VLB-Optimal Scheduling (VOS) 策略，通过理论分析多模态（连续3D位置+离散2D拓扑）联合噪声调度的路径依赖VLB特性，用动态规划搜索最优噪声调度路径，在 CrossDock 上以 95.9% PoseBusters 通过率达到 SBDD SOTA。
 tags:
   - "ICML 2025"
   - "计算生物"

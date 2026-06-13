@@ -2,7 +2,7 @@
 title: >-
   [论文解读] USDC: A Dataset of User Stance and Dogmatism in Long Conversations
 description: >-
-  [ACL 2025 (Findings)][stance detection] 构建 USDC——首个用户级长对话立场和教条主义数据集，764 个多用户 Reddit 对话（22 子版块），用 {Mistral Large…
+  [ACL 2025 (Findings)][stance detection] 构建 USDC——首个用户级长对话立场和教条主义数据集，764 个多用户 Reddit 对话（22 子版块），用 {Mistral Large, GPT-4} × {zero/one/few-shot} 共 6 设置多数投票标注立场(5级)+教条程度(4级)，并用 7 个 SLM 微调/指令微调建立基线。
 tags:
   - "ACL 2025 (Findings)"
   - "stance detection"

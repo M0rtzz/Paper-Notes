@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision
 description: >-
-  [AAAI2026][自监督学习][urban computing] 提出 UrbanLN 框架，通过长文本感知的位置编码插值策略和数据-模型双层噪声抑制机制，改善基于 LLM 生成描述的城市区域表征学习。
+  [AAAI2026][自监督学习][urban computing] 提出 UrbanLN 框架，通过长文本感知的位置编码插值策略和数据-模型双层噪声抑制机制，改善基于 LLM 生成描述的城市区域表征学习。 城市区域表征学习旨在从无标注的城市数据中提取有意义的特征，用于人口预测、GDP 估算、碳排放预测等下游任务…
 tags:
   - "AAAI2026"
   - "自监督学习"

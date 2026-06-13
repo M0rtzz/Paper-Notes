@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding
 description: >-
-  [ICCV 2025][多模态VLM][unified VLM] 提出语义离散编码（SDE）视觉tokenizer，在VQGAN基础上加入SigLIP语义特征约束，使离散视觉token与语言token语义对齐，构建统一的自回归VLM（MUSE-VL），在仅用24M数据的条件下理解性能比Emu3提升4.8%…
+  [ICCV 2025][多模态VLM][unified VLM] 提出语义离散编码（SDE）视觉tokenizer，在VQGAN基础上加入SigLIP语义特征约束，使离散视觉token与语言token语义对齐，构建统一的自回归VLM（MUSE-VL），在仅用24M数据的条件下理解性能比Emu3提升4.8%，超过LLaVA-NeXT 34B专用理解模型3.7%，同时支持图像生成。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Maximum Total Correlation Reinforcement Learning
 description: >-
-  [ICML2025][机器人][total correlation] 提出最大化轨迹总相关（Total Correlation）作为 RL 的归纳偏置，鼓励策略产生简单、可压缩的轨迹，从而在不牺牲任务性能的前提下显著提升对观测噪声、动作噪声和动力学变化的零样本鲁棒性。
+  [ICML2025][机器人][total correlation] 提出最大化轨迹总相关（Total Correlation）作为 RL 的归纳偏置，鼓励策略产生简单、可压缩的轨迹，从而在不牺牲任务性能的前提下显著提升对观测噪声、动作噪声和动力学变化的零样本鲁棒性。 强化学习策略容易拾取高维感知输入中的虚假相关性…
 tags:
   - "ICML2025"
   - "机器人"

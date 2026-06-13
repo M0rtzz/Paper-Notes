@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowComposer: Composable Flows for Compositional Zero-Shot Learning
 description: >-
-  [CVPR 2026][多模态VLM][组合零样本学习] FlowComposer 首次将 Flow Matching 引入组合零样本学习(CZSL)，学习两个原始流(属性流和物体流)将视觉特征传输到对应文本嵌入空间，并通过可学习的 Composer 显式组合速度场得到组合流…
+  [CVPR 2026][多模态VLM][组合零样本学习] FlowComposer 首次将 Flow Matching 引入组合零样本学习(CZSL)，学习两个原始流(属性流和物体流)将视觉特征传输到对应文本嵌入空间，并通过可学习的 Composer 显式组合速度场得到组合流，同时利用泄露引导增强策略将不完美的特征解耦转化为辅助监督信号，作为即插即用模块在三个基准上持续提升 CZSL 性能。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

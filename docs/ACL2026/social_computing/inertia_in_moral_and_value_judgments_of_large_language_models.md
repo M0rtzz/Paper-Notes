@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Inertia in Moral and Value Judgments of Large Language Models
 description: >-
-  [ACL 2026][社会计算][角色扮演] 本文用"大规模随机 persona × 道德 / 价值问卷"的范式系统地测出 7 个主流 LLM 在 Harm / Fairness 维度上有高度稳定的"价值惯性"——任何 persona 都很难推动它们的回答方向…
+  [ACL 2026][社会计算][角色扮演] 本文用"大规模随机 persona × 道德 / 价值问卷"的范式系统地测出 7 个主流 LLM 在 Harm / Fairness 维度上有高度稳定的"价值惯性"——任何 persona 都很难推动它们的回答方向，并提出 Inertia Index 和 Steerability 两个可量化指标揭示这种偏好其实分布不均、与对齐目标对齐。
 tags:
   - "ACL 2026"
   - "社会计算"

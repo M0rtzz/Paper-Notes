@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Video Prediction Policy: A Generalist Robot Policy with Predictive Visual Representations
 description: >-
-  [ICML 2025 (Spotlight)][图像生成][扩散模型] 利用视频扩散模型（VDM）内部的"预测性视觉表征"（同时编码当前帧和未来帧信息）来隐式学习逆动力学模型，从而以高频闭环方式生成机器人动作，在仿真和真实世界操作任务上大幅超越已有方法。
+  [ICML 2025 (Spotlight)][图像生成][扩散模型] 利用视频扩散模型（VDM）内部的"预测性视觉表征"（同时编码当前帧和未来帧信息）来隐式学习逆动力学模型，从而以高频闭环方式生成机器人动作，在仿真和真实世界操作任务上大幅超越已有方法。 构建能执行多种任务的通用机器人策略是当前研究热点…
 tags:
   - "ICML 2025 (Spotlight)"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SapiensID: Foundation for Human Recognition
 description: >-
-  [CVPR 2025][医学图像][人体识别] 本文提出 SapiensID，一个统一的人体识别模型，通过 Retina Patch（动态 patch 分配）、Masked Recognition Model（可变 token 长度训练）和 Semantic Attention Head（基于关键点的姿态不变…
+  [CVPR 2025][医学图像][人体识别] 本文提出 SapiensID，一个统一的人体识别模型，通过 Retina Patch（动态 patch 分配）、Masked Recognition Model（可变 token 长度训练）和 Semantic Attention Head（基于关键点的姿态不变特征池化）三大设计，首次在一个模型中同时处理人脸和全身识别任务，在多个 ReID 基准上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "医学图像"

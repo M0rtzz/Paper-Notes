@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Agint: Agentic Graph Compilation for Software Engineering Agents
 description: >-
-  [NeurIPS 2025 (DL4C Workshop)][图学习][agentic graph compiler] 提出 Agint，一个将自然语言意图编译为类型化、效果感知的DAG（有向无环图）的 agentic 图编译器…
+  [NeurIPS 2025 (DL4C Workshop)][图学习][agentic graph compiler] 提出 Agint 图编译器，将自然语言意图通过六层类型地板（TEXT→TYPED→SPEC→STUB→SHIM→PURE）渐进编译为类型化DAG，配合混合JIT运行时和Unix风格工具链，使AI代码生成从脆弱的单次文本预测变为结构化、可并行、可复现的编译过程。
 tags:
   - "NeurIPS 2025 (DL4C Workshop)"
   - "图学习"
@@ -125,10 +125,10 @@ tags:
 
 ## 评分
 
-- 新颖性: ⭐⭐⭐⭐ 编译器×AI代码生成的交叉视角新颖，六层类型系统和投机执行设计有深度
-- 实验充分度: ⭐⭐ 系统论文但完全没有定量实验，只有用例展示，是最大短板
-- 写作质量: ⭐⭐⭐ 系统组件繁多但缺少清晰的端到端流程图，各模块间关系偏碎片化
-- 价值: ⭐⭐⭐ 思路有价值但需定量验证才能判断实际影响力
+- 新颖性: ⭐⭐⭐⭐⭐ 编译器×AI代码生成的交叉视角新颖，六层类型系统和投机执行设计有深度
+- 实验充分度: ⭐⭐⭐ 系统论文但完全没有定量实验，只有用例展示，是最大短板
+- 写作质量: ⭐⭐⭐⭐ 系统组件繁多但缺少清晰的端到端流程图，各模块间关系偏碎片化
+- 价值: ⭐⭐⭐⭐ 思路有价值但需定量验证才能判断实际影响力
 ---
 title: >-
   [论文解读] Agint: Agentic Graph Compilation for Software Engineering Agents
@@ -143,3 +143,19 @@ tags:
   - 代码生成
   - 工作流编排
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2026\] AgentGL: Towards Agentic Graph Learning with LLMs via Reinforcement Learning](../../ACL2026/graph_learning/agentgl_towards_agentic_graph_learning_with_llms_via_reinforcement_learning.md)
+- [\[CVPR 2026\] Graph2Eval: Automatic Multimodal Task Generation for Agents via Knowledge Graphs](../../CVPR2026/graph_learning/graph2eval_automatic_multimodal_task_generation_for_agents_via_knowledge_graphs.md)
+- [\[NeurIPS 2025\] GraphTOP: Graph Topology-Oriented Prompting for Graph Neural Networks](graphtop_graph_topology-oriented_prompting_for_graph_neural_networks.md)
+- [\[NeurIPS 2025\] Relieving the Over-Aggregating Effect in Graph Transformers](relieving_the_over-aggregating_effect_in_graph_transformers.md)
+- [\[NeurIPS 2025\] Graph Persistence goes Spectral](graph_persistence_goes_spectral.md)
+
+</div>
+
+<!-- RELATED:END -->

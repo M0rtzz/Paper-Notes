@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAP Estimation with Denoisers: Convergence Rates and Guarantees
 description: >-
-  [NEURIPS2025][图像恢复][MAP estimation] 证明了一个简单的 MMSE 去噪器迭代平均算法（与 Cold Diffusion 等实践方法密切相关）在对数凹先验假设下可证明收敛到负对数先验的近端算子，收敛速率为 Õ(1/k)…
+  [NEURIPS2025][图像恢复][MAP estimation] 证明了一个简单的 MMSE 去噪器迭代平均算法（与 Cold Diffusion 等实践方法密切相关）在对数凹先验假设下可证明收敛到负对数先验的近端算子，收敛速率为 Õ(1/k)，为一类经验上成功但缺乏理论保证的去噪方法提供了严格的理论基础，并将其嵌入近端梯度下降框架解决 MAP 估计问题。
 tags:
   - "NEURIPS2025"
   - "图像恢复"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method
 description: >-
-  [ICLR 2026][目标检测][视觉定位推理] 提出 TreeBench（首个可追溯视觉推理基准，405道高挑战 VQA，OpenAI-o3 仅 54.87%）和 TreeVGR（通过双 IoU 奖励的强化学习联合监督定位与推理的训练范式）…
+  [ICLR 2026][目标检测][视觉定位推理] 提出 TreeBench（首个可追溯视觉推理基准，405道高挑战 VQA，OpenAI-o3 仅 54.87%）和 TreeVGR（通过双 IoU 奖励的强化学习联合监督定位与推理的训练范式），7B 模型在 V\*Bench +16.8、MME-RealWorld +12.6、TreeBench +13.4，证明可追溯性是推进视觉推理的关键。
 tags:
   - "ICLR 2026"
   - "目标检测"

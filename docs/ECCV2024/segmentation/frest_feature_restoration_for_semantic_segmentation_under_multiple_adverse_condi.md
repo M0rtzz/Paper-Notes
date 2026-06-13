@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FREST: Feature Restoration for Semantic Segmentation under Multiple Adverse Conditions
 description: >-
-  [ECCV 2024][语义分割][图像分割] 提出 FREST，一种面向多种恶劣条件（雾、雨、雪、夜间）的源无关域自适应语义分割框架，通过交替学习条件嵌入空间（分离条件信息）和特征恢复（将恶劣条件特征恢复为正常条件），逐步消除恶劣条件对特征的影响…
+  [ECCV 2024][语义分割][图像分割] 提出 FREST，一种面向多种恶劣条件（雾、雨、雪、夜间）的源无关域自适应语义分割框架，通过交替学习条件嵌入空间（分离条件信息）和特征恢复（将恶劣条件特征恢复为正常条件），逐步消除恶劣条件对特征的影响，在 ACDC 和 RobotCar 基准上均达到新的 SOTA。
 tags:
   - "ECCV 2024"
   - "语义分割"

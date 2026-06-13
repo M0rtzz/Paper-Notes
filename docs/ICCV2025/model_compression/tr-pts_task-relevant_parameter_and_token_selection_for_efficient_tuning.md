@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TR-PTS: Task-Relevant Parameter and Token Selection for Efficient Tuning
 description: >-
-  [ICCV 2025][模型压缩][PEFT] 提出 TR-PTS 框架，通过 Fisher 信息矩阵进行任务驱动的逐层参数选择，同时利用 CLS 注意力分数动态筛选/合并 token，在仅微调 0.34%-0.60% 参数的情况下超越全量微调 3.40%（FGVC）和 10.35%（VTAB）。
+  [ICCV 2025][模型压缩][PEFT] 提出 TR-PTS 框架，通过 Fisher 信息矩阵进行任务驱动的逐层参数选择，同时利用 CLS 注意力分数动态筛选/合并 token，在仅微调 0.34%-0.60% 参数的情况下超越全量微调 3.40%（FGVC）和 10.35%（VTAB）。 大规模预训练 ViT 在下…
 tags:
   - "ICCV 2025"
   - "模型压缩"

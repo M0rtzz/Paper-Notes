@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PSA-SSL: Pose and Size-aware Self-Supervised Learning on LiDAR Point Clouds
 description: >-
-  [CVPR 2025][自动驾驶][自监督学习] 提出 PSA-SSL，通过在对比学习中增加自监督边界框回归预训练任务保留物体姿态和尺寸信息，并结合 LiDAR 光束模式增强实现跨传感器泛化，在 3D 语义分割和目标检测上显著超越 SOTA 自监督方法。
+  [CVPR 2025][自动驾驶][自监督学习] 提出 PSA-SSL，通过在对比学习中增加自监督边界框回归预训练任务保留物体姿态和尺寸信息，并结合 LiDAR 光束模式增强实现跨传感器泛化，在 3D 语义分割和目标检测上显著超越 SOTA 自监督方法。 自监督学习（SSL）在 LiDAR 点云上有望学到可迁移到多种下游任务…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

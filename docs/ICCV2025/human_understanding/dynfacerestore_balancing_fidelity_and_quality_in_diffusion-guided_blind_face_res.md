@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration
 description: >-
-  [ICCV 2025][人体理解][盲人脸修复] 提出 DynFaceRestore，通过动态模糊等级映射（DBLM）将盲退化转化为高斯去模糊问题，结合动态起始步查找表（DSST）和区域自适应引导缩放器（DGSA），在扩散模型采样中实现保真度与感知质量的最优平衡。
+  [ICCV 2025][人体理解][盲人脸修复] 提出 DynFaceRestore，通过动态模糊等级映射（DBLM）将盲退化转化为高斯去模糊问题，结合动态起始步查找表（DSST）和区域自适应引导缩放器（DGSA），在扩散模型采样中实现保真度与感知质量的最优平衡。 盲人脸修复（BFR）旨在从未知退化源的低质量面部图像中恢复高…
 tags:
   - "ICCV 2025"
   - "人体理解"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A2P: From 2D Alignment to 3D Plausibility for Occlusion-Robust Two-Hand Reconstruction
 description: >-
-  [CVPR 2026][人体理解][双手重建] 解耦双手重建为 2D 结构对齐 + 3D 空间交互对齐：Stage 1 用 Fusion Alignment Encoder 隐式蒸馏 Sapiens 的关键点/分割/深度三种 2D 先验（推理时免基础模型，56fps）…
+  [CVPR 2026][人体理解][双手重建] 解耦双手重建为 2D 结构对齐 + 3D 空间交互对齐：Stage 1 用 Fusion Alignment Encoder 隐式蒸馏 Sapiens 的关键点/分割/深度三种 2D 先验（推理时免基础模型，56fps），Stage 2 用穿透感知扩散模型 + 碰撞梯度引导将穿透姿态映射到物理合理配置——InterHand2.6M 上 MPJPE 降至 5.36mm（超 SOTA 4DHands 2.13mm），穿透体积降 7 倍。
 tags:
   - "CVPR 2026"
   - "人体理解"

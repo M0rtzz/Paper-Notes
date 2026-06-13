@@ -2,9 +2,9 @@
 title: >-
   [论文解读] RbtAct: Rebuttal as Supervision for Actionable Review Feedback Generation
 description: >-
-  [ACL 2026][LLM对齐][作者 rebuttal] RbtAct 把作者 rebuttal 视为“哪些评审意见真的促成修改”的隐式监督，构建 7.5 万条 review-rebuttal 段级映射，并用 SFT+DPO 训练 8B 模型生成更具体、更可执行的论文评审反馈。
+  [ACL 2026 Findings][LLM对齐][作者 rebuttal] RbtAct 把作者 rebuttal 视为“哪些评审意见真的促成修改”的隐式监督，构建 7.5 万条 review-rebuttal 段级映射，并用 SFT+DPO 训练 8B 模型生成更具体、更可执行的论文评审反馈。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM对齐"
   - "作者 rebuttal"
   - "可执行评审反馈"

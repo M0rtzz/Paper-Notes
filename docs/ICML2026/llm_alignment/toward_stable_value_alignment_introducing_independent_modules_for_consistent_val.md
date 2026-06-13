@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Toward Stable Value Alignment: Introducing Independent Modules for Consistent Value Guidance
 description: >-
-  [ICML 2026][LLM对齐][价值对齐] 本文提出 SVGT，把价值对齐从"嵌入 backbone 参数/激活"改为"挂一个独立的价值模块"，先在隔离的 value space 里持续判断当前 hidden state 的安全方向…
+  [ICML 2026 Spotlight][LLM对齐][价值对齐] 本文提出 SVGT，把价值对齐从"嵌入 backbone 参数/激活"改为"挂一个独立的价值模块"，先在隔离的 value space 里持续判断当前 hidden state 的安全方向，再用一组可学习的 Bridge Token 作为注意力锚点显式引导生成轨迹，在四种 backbone 上把有害分数普遍降低 70% 以上且几乎不损失流畅度。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM对齐"
   - "价值对齐"
   - "推理时引导"

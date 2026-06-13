@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Computational Complexity of Counting Linear Regions in ReLU Neural Networks
 description: >-
-  [NeurIPS 2025][ReLU网络] 系统梳理了ReLU网络"线性区域"的六种非等价定义，证明对所有定义计数线性区域都是#P-hard的（一层隐藏层即如此），并在多层网络中证明了强不可近似结果和多项式空间上界。
+  [NeurIPS 2025][ReLU网络] 系统梳理了ReLU网络"线性区域"的六种非等价定义，证明对所有定义计数线性区域都是P-hard的（一层隐藏层即如此），并在多层网络中证明了强不可近似结果和多项式空间上界。 ReLU网络计算的函数是连续分段线性（CPWL）的——输入空间可以被划分为有限个"线性区域"…
 tags:
   - "NeurIPS 2025"
   - "ReLU网络"

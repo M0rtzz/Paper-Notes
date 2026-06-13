@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers
 description: >-
-  [NeurIPS 2025][LLM Agent][液冷优化] 提出 LC-Opt，一个基于 Oak Ridge 国家实验室 Frontier 超级计算机冷却系统高保真数字孪生的液冷基准环境，支持强化学习控制策略的端到端液冷优化…
+  [NeurIPS 2025][LLM Agent][液冷优化] 提出 LC-Opt，一个基于 Oak Ridge 国家实验室 Frontier 超级计算机冷却系统高保真数字孪生的液冷基准环境，支持强化学习控制策略的端到端液冷优化，涵盖集中式/分散式多智能体RL、策略蒸馏为可解释决策树、以及 LLM 驱动的智能体网格架构。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

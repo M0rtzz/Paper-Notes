@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Counterfactual-Consistency Prompting for Relative Temporal Understanding in Large Language Models
 description: >-
-  [ACL 2025 (Short)][因果推理][反事实提示] 本文提出了一种反事实一致性提示（Counterfactual-Consistency Prompting）方法，通过生成反事实问题并施加集体约束来解决大语言模型在时序推理中的不一致性问题，在多个时序理解数据集上取得了显著改进。
+  [ACL 2025 (Short)][因果推理][反事实提示] 本文提出了一种反事实一致性提示（Counterfactual-Consistency Prompting）方法，通过生成反事实问题并施加集体约束来解决大语言模型在时序推理中的不一致性问题，在多个时序理解数据集上取得了显著改进。 领域现状：大语言模型（LLMs）在…
 tags:
   - "ACL 2025 (Short)"
   - "因果推理"

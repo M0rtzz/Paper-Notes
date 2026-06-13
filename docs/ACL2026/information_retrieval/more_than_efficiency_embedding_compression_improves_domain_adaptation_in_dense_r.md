@@ -2,7 +2,7 @@
 title: >-
   [论文解读] More Than Efficiency: Embedding Compression Improves Domain Adaptation in Dense Retrieval
 description: >-
-  [ACL 2026][信息检索/RAG][稠密检索] 这篇论文证明 PCA 向量压缩不只是为了提速，还能作为一种零训练的 dense retriever 域适配方法，其中只用目标域 query 拟合 PCA 在 75.4% 的模型-数据集组合上提升 NDCG@10。
+  [ACL 2026][信息检索/RAG][稠密检索] 这篇论文证明 PCA 向量压缩不只是为了提速，还能作为一种零训练的 dense retriever 域适配方法，其中只用目标域 query 拟合 PCA 在 75.4% 的模型-数据集组合上提升 NDCG@10。 领域现状：RAG 系统大量依赖 dense retriev…
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

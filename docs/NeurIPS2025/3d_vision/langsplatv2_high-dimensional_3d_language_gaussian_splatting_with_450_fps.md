@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LangSplatV2: High-dimensional 3D Language Gaussian Splatting with 450+ FPS
 description: >-
-  [NeurIPS 2025][3D视觉][3D语言场] 通过将每个3D高斯视为全局字典上的稀疏编码，LangSplatV2用稀疏系数场替代重量级解码器，实现476.2 FPS的高维特征溅射和384.6 FPS的3D开放词汇查询，较LangSplat加速47倍。
+  [NeurIPS 2025][3D视觉][3D语言场] 通过将每个3D高斯视为全局字典上的稀疏编码，LangSplatV2用稀疏系数场替代重量级解码器，实现476.2 FPS的高维特征溅射和384.6 FPS的3D开放词汇查询，较LangSplat加速47倍。 领域现状：3D语言场是视觉语言模型与3D环境建模的交叉领域…
 tags:
   - "NeurIPS 2025"
   - "3D视觉"

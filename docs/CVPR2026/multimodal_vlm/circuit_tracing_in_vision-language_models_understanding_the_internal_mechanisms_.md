@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Circuit Tracing in Vision-Language Models: Understanding the Internal Mechanisms of Multimodal Thinking
 description: >-
-  [CVPR 2026][多模态VLM][可解释性] 提出首个面向 VLM 的电路追踪框架，在 Gemma-3-4B 中训练 per-layer transcoder 并构建归因图，揭示了多模态推理的层次化整合机制、视觉数学电路和六指幻觉的内部成因…
+  [CVPR 2026 Findings][多模态VLM][可解释性] 提出首个面向 VLM 的电路追踪框架，在 Gemma-3-4B 中训练 per-layer transcoder 并构建归因图，揭示了多模态推理的层次化整合机制、视觉数学电路和六指幻觉的内部成因，并通过 steering 和 circuit patching 验证电路的因果可控性。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "多模态VLM"
   - "可解释性"
   - "电路追踪"

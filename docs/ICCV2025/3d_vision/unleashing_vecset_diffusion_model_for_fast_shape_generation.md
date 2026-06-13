@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unleashing Vecset Diffusion Model for Fast Shape Generation (FlashVDM)
 description: >-
-  [3D视觉] FlashVDM 提出系统性框架加速 Vecset Diffusion Model（VDM）的 DiT 采样和 VAE 解码：通过渐进式流蒸馏将扩散步骤降至 5 步，通过自适应 KV 选择 + 层次体素解码 + 高效解码器将 VAE 解码加速 45×…
+  [3D视觉] FlashVDM 提出系统性框架加速 Vecset Diffusion Model（VDM）的 DiT 采样和 VAE 解码：通过渐进式流蒸馏将扩散步骤降至 5 步，通过自适应 KV 选择 + 层次体素解码 + 高效解码器将 VAE 解码加速 45×，整体实现 32× 加速至 1 秒内生成高质量 3D 形状。
 tags:
   - "3D视觉"
 ---

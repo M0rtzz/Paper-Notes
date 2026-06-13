@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Gallery to Wrist: Realistic 3D Bracelet Insertion in Videos
 description: >-
-  [ICCV 2025][3D视觉][视频物体插入] 提出一种混合管线将 3D 手镯逼真插入视频：利用 3D 高斯泼溅（3DGS）保证时序一致性，用 2D 扩散模型增强光照真实感，并通过光照驱动（Shading-Driven）管线分离 albedo/shading/反射残差分别优化…
+  [ICCV 2025][3D视觉][视频物体插入] 提出一种混合管线将 3D 手镯逼真插入视频：利用 3D 高斯泼溅（3DGS）保证时序一致性，用 2D 扩散模型增强光照真实感，并通过光照驱动（Shading-Driven）管线分离 albedo/shading/反射残差分别优化，在用户研究中以 81.7% 的真实感偏好率大幅超越现有方法。
 tags:
   - "ICCV 2025"
   - "3D视觉"

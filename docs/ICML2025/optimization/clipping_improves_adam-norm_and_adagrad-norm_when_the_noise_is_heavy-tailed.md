@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Clipping Improves Adam-Norm and AdaGrad-Norm when the Noise Is Heavy-Tailed
 description: >-
-  [ICML 2025][优化/理论][梯度裁剪] 证明了 AdaGrad/Adam 在重尾噪声下的高概率收敛可能很差（依赖置信水平的多项式），并证明梯度裁剪可以修复这个问题——Clip-AdaGrad-Norm 和 Clip-Adam-Norm 在重尾噪声下实现了对置信水平的对数多项式依赖的高概率收敛界…
+  [ICML 2025][优化/理论][梯度裁剪] 证明了 AdaGrad/Adam 在重尾噪声下的高概率收敛可能很差（依赖置信水平的多项式），并证明梯度裁剪可以修复这个问题——Clip-AdaGrad-Norm 和 Clip-Adam-Norm 在重尾噪声下实现了对置信水平的对数多项式依赖的高概率收敛界，扩展到延迟步长版本。
 tags:
   - "ICML 2025"
   - "优化/理论"

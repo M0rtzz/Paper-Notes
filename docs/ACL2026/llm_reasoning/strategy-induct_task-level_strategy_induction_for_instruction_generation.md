@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Strategy-Induct: Task-Level Strategy Induction for Instruction Generation
 description: >-
-  [ACL2026][LLM推理][指令归纳] Strategy-Induct 提出一种仅需少量输入问题（无需标注答案）即可归纳任务级指令的框架：先为每个问题生成推理策略，再从策略-问题对中归纳出可复用的任务指令…
+  [ACL2026 Findings][LLM推理][指令归纳] Strategy-Induct 提出一种仅需少量输入问题（无需标注答案）即可归纳任务级指令的框架：先为每个问题生成推理策略，再从策略-问题对中归纳出可复用的任务指令，在 BBH-Induct、Evals-Induct 和 Shift Cipher 三个基准上超越现有 SOTA 方法。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "LLM推理"
   - "指令归纳"
   - "推理策略"
@@ -20,7 +20,7 @@ tags:
 **会议**: ACL2026 Findings  
 **arXiv**: [2605.20924](https://arxiv.org/abs/2605.20924)
 **代码**: 待确认
-**领域**: llm_reasoning
+**领域**: LLM推理
 **关键词**: 指令归纳, 推理策略, prompt 工程, question-only, 任务级指令, 跨模型泛化
 
 ## 一句话总结

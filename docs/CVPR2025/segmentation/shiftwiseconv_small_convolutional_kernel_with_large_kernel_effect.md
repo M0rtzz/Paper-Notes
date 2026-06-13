@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ShiftwiseConv: Small Convolutional Kernel with Large Kernel Effect
 description: >-
-  [CVPR 2025][语义分割][大卷积核] 本文揭示大卷积核的有效性可解耦为"特定粒度的特征提取"和"多路径特征融合"两个因素，据此提出ShiftwiseConv（SW Conv）——一个使用标准3×3卷积通过空间移位和多路径连接来模拟大卷积核效果的即插即用CNN模块…
+  [CVPR 2025][语义分割][大卷积核] 本文揭示大卷积核的有效性可解耦为"特定粒度的特征提取"和"多路径特征融合"两个因素，据此提出ShiftwiseConv（SW Conv）——一个使用标准3×3卷积通过空间移位和多路径连接来模拟大卷积核效果的即插即用CNN模块，在分类、检测、分割等任务上超越了SLaK和UniRepLKNet等大核CNN以及多种Transformer架构。
 tags:
   - "CVPR 2025"
   - "语义分割"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Chain-of-Models Pre-Training: Rethinking Training Acceleration of Vision Foundation Models
 description: >-
-  [CVPR 2026][自监督学习][模型链] 提出 Chain-of-Models Pre-Training (CoM-PT)，将视觉基础模型按大小排列形成"模型链"，通过从小到大的逆向知识转移（权重初始化+特征蒸馏）逐步加速训练，实现性能无损的训练加速且效率随模型家族规模增长而提升。
+  [CVPR 2026][自监督学习][模型链] 提出 Chain-of-Models Pre-Training (CoM-PT)，将视觉基础模型按大小排列形成"模型链"，通过从小到大的逆向知识转移（权重初始化+特征蒸馏）逐步加速训练，实现性能无损的训练加速且效率随模型家族规模增长而提升。 领域现状：视觉基础模型（VFM）的预…
 tags:
   - "CVPR 2026"
   - "自监督学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Targeted Data Protection for Diffusion Model by Matching Training Trajectory
 description: >-
-  [AAAI 2026][图像生成][扩散模型数据保护] TAFAP首次成功实现扩散模型目标化数据保护（TDP），通过训练轨迹匹配生成对抗扰动，使未授权微调将输出重定向至用户指定目标概念，同时保持高图像质量。
+  [AAAI 2026][图像生成][扩散模型数据保护] TAFAP首次成功实现扩散模型目标化数据保护（TDP），通过训练轨迹匹配生成对抗扰动，使未授权微调将输出重定向至用户指定目标概念，同时保持高图像质量。 领域现状：扩散模型个性化微调使任何人可用少量图片复制特定人物或风格。现有保护方法（Anti-DreamBooth、GL…
 tags:
   - "AAAI 2026"
   - "图像生成"

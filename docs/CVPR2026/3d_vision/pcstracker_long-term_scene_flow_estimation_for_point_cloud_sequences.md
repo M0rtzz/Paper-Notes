@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PCSTracker: Long-Term Scene Flow Estimation for Point Cloud Sequences
 description: >-
-  [CVPR 2026][3D视觉][点云场景流] PCSTracker 是首个端到端的点云序列长程场景流估计框架，通过迭代几何-运动联合优化、时空轨迹更新和重叠滑动窗口策略，在合成数据集 PointOdyssey3D 上将 EPE_3D 降低 57.9%，并以 32.5 FPS 实时运行。
+  [CVPR 2026 Findings][3D视觉][点云场景流] PCSTracker 是首个端到端的点云序列长程场景流估计框架，通过迭代几何-运动联合优化、时空轨迹更新和重叠滑动窗口策略，在合成数据集 PointOdyssey3D 上将 EPE_3D 降低 57.9%，并以 32.5 FPS 实时运行。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "点云场景流"
   - "长序列轨迹估计"

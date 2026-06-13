@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment
 description: >-
-  [CVPR 2026][3D视觉][3D Gaussian Splatting] 提出 GSA（Gaussian Splatting Alignment），首个实现跨实例类别级 3DGS 模型配准的方法，通过几何感知特征引导的粗配准（扩展 ICP 求解相似变换）和多视角特征一致性的精配准…
+  [CVPR 2026][3D视觉][3D Gaussian Splatting] 提出 GSA（Gaussian Splatting Alignment），首个实现跨实例类别级 3DGS 模型配准的方法，通过几何感知特征引导的粗配准（扩展 ICP 求解相似变换）和多视角特征一致性的精配准，在同物体和跨物体场景下均大幅超越现有方法。
 tags:
   - "CVPR 2026"
   - "3D视觉"

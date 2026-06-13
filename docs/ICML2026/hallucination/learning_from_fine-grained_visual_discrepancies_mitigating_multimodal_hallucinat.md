@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from Fine-Grained Visual Discrepancies: Mitigating Multimodal Hallucinations via In-Context Visual Contrastive Optimization
 description: >-
-  [ICML 2026][幻觉检测][多模态幻觉] 将原图与对比负图拼成共享多图上下文，再用锚定指令告诉模型该看哪张，从而让视觉偏好 DPO 的配分函数自动对齐、跑出理论一致的对比目标，并配合精细编辑生成的硬负样本显著降低 VLM 的多模态幻觉。
+  [ICML 2026][幻觉检测][多模态幻觉] 将原图与对比负图拼成共享多图上下文，再用锚定指令告诉模型该看哪张，从而让视觉偏好 DPO 的配分函数自动对齐、跑出理论一致的对比目标，并配合精细编辑生成的硬负样本显著降低 VLM 的多模态幻觉。 领域现状：用 DPO 对齐 VLM 是当下主流的后训练方式…
 tags:
   - "ICML 2026"
   - "幻觉检测"

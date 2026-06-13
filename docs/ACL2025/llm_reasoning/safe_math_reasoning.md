@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Safe: Enhancing Mathematical Reasoning in Large Language Models via Retrospective Step-aware Formal Verification
 description: >-
-  [ACL 2025][LLM推理][形式化验证] 提出 Safe 框架，首次利用 Lean 4 形式化语言对 LLM 数学推理的每一步进行回顾性逐步验证，通过自动形式化+自动定理证明检测幻觉，并与前瞻性 PRM 分数融合，在多个数学数据集上取得 SOTA，同时发布包含 30…
+  [ACL 2025][LLM推理][形式化验证] 提出 Safe 框架，首次利用 Lean 4 形式化语言对 LLM 数学推理的每一步进行回顾性逐步验证，通过自动形式化+自动定理证明检测幻觉，并与前瞻性 PRM 分数融合，在多个数学数据集上取得 SOTA，同时发布包含 30,809 条形式化声明的 FormalStep 基准。
 tags:
   - "ACL 2025"
   - "LLM推理"

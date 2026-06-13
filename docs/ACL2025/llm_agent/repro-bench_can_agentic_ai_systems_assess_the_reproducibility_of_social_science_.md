@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science?
 description: >-
-  [ACL2025][LLM Agent][AI Agent] 提出 REPRO-Bench，包含 112 个社会科学论文的可复现性评估任务，发现现有 AI Agent（最高准确率仅 21.4%）远不足以自动化该流程，并据此开发 REPRO-Agent 将准确率提升至 36.6%。
+  [ACL2025][LLM Agent][AI Agent] 提出 REPRO-Bench，包含 112 个社会科学论文的可复现性评估任务，发现现有 AI Agent（最高准确率仅 21.4%）远不足以自动化该流程，并据此开发 REPRO-Agent 将准确率提升至 36.6%。 1. 可复现性危机严峻：社会科学领域长期面临…
 tags:
   - "ACL2025"
   - "LLM Agent"

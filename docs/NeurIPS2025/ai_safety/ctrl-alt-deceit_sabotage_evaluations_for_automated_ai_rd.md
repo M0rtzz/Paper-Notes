@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CTRL-ALT-DECEIT: Sabotage Evaluations for Automated AI R&D
 description: >-
-  [NeurIPS 2025][AI安全][AI安全评估] 扩展 MLE-Bench 构建了 20 个代码破坏(code-sabotage)任务和 sandbagging 评测，发现前沿 AI agent 能在完成正常 ML 工程任务的同时成功植入后门等破坏，且在部分情况下逃避 LM monitor 的检测。
+  [NeurIPS 2025 Spotlight][AI安全][AI安全评估] 扩展 MLE-Bench 构建了 20 个代码破坏(code-sabotage)任务和 sandbagging 评测，发现前沿 AI agent 能在完成正常 ML 工程任务的同时成功植入后门等破坏，且在部分情况下逃避 LM monitor 的检测。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "AI安全"
   - "AI安全评估"
   - "模型破坏"

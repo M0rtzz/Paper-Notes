@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Policy to Logic for Efficient and Interpretable Coverage Assessment
 description: >-
-  [AAAI 2026][医学图像][神经符号推理] 本文提出一种神经符号方法，通过覆盖感知检索器（coverage-aware retriever）与基于PyKnow的符号规则推理相结合，帮助人类审查员高效、可解释地评估医疗CPT代码是否被保险政策覆盖，在推理成本降低44%的同时F1提升4.5%。
+  [AAAI 2026][医学图像][神经符号推理] 本文提出一种神经符号方法，通过覆盖感知检索器（coverage-aware retriever）与基于PyKnow的符号规则推理相结合，帮助人类审查员高效、可解释地评估医疗CPT代码是否被保险政策覆盖，在推理成本降低44%的同时F1提升4.5%。 医疗保险领域中…
 tags:
   - "AAAI 2026"
   - "医学图像"

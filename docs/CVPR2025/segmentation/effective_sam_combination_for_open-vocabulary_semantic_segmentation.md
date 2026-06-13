@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Effective SAM Combination for Open-Vocabulary Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][开放词汇语义分割] 提出 ESC-Net，一种单阶段开放词汇语义分割模型，通过从 CLIP 图像-文本相关性图中生成伪提示（pseudo prompts）并将其嵌入预训练 SAM 解码器 block 中，高效利用 SAM 的类无关分割能力来增强空间聚合…
+  [CVPR 2025][语义分割][开放词汇语义分割] 提出 ESC-Net，一种单阶段开放词汇语义分割模型，通过从 CLIP 图像-文本相关性图中生成伪提示（pseudo prompts）并将其嵌入预训练 SAM 解码器 block 中，高效利用 SAM 的类无关分割能力来增强空间聚合，配合 Vision-Language Fusion (VLF) 模块实现精确的掩码预测，在 ADE20K、PASCAL-VOC、PASCAL-Context 上均取得 SOTA 性能。
 tags:
   - "CVPR 2025"
   - "语义分割"

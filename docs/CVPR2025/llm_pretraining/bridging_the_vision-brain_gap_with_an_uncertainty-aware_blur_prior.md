@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior
 description: >-
-  [CVPR 2025][预训练][视觉-脑域差距] 提出不确定性感知的模糊先验，为从脑信号（fMRI）重建视觉刺激提供物理合理的图像退化模型，缓解大脑编码过程中高频信息丢失对重建质量的影响。
+  [CVPR 2025][预训练][脑信号解码] 首次提出"系统差距"（System GAP）和"随机差距"（Random GAP）的概念来描述脑信号与视觉刺激之间的信息不匹配，通过不确定性感知的模糊先验（UBP）动态调整图像模糊程度来缓解训练中的过拟合，在 200-way 零样本脑-图像检索任务上实现 50.9% top-1 准确率，超越前 SOTA 13.7 个百分点。
 tags:
   - "CVPR 2025"
   - "预训练"
-  - "视觉-脑域差距"
+  - "脑信号解码"
+  - "EEG"
   - "不确定性感知"
   - "模糊先验"
-  - "fMRI解码"
-  - "图像重建"
+  - "视觉-脑域差距"
 ---
 
 # Bridging the Vision-Brain Gap with an Uncertainty-Aware Blur Prior
@@ -124,3 +124,19 @@ tags:
   - fMRI解码
   - 图像重建
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICCV 2025\] Image Intrinsic Scale Assessment: Bridging the Gap Between Quality and Resolution](../../ICCV2025/llm_pretraining/image_intrinsic_scale_assessment_bridging_the_gap_between_quality_and_resolution.md)
+- [\[ICML 2025\] Position: The Future of Bayesian Prediction Is Prior-Fitted](../../ICML2025/llm_pretraining/position_the_future_of_bayesian_prediction_is_prior-fitted.md)
+- [\[NeurIPS 2025\] Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?](../../NeurIPS2025/llm_pretraining/does_object_binding_naturally_emerge_in_large_pretrained_vision_transformers.md)
+- [\[ICML 2025\] Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks](../../ICML2025/llm_pretraining/bayesian_neural_scaling_law_extrapolation_with_prior-data_fitted_networks.md)
+- [\[ACL 2025\] SCAR: Data Selection via Style Consistency-Aware Response Ranking for Efficient Instruction-Tuning](../../ACL2025/llm_pretraining/scar_style_consistency_data_selection.md)
+
+</div>
+
+<!-- RELATED:END -->

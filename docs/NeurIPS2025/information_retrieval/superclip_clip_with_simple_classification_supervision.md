@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SuperCLIP: CLIP with Simple Classification Supervision
 description: >-
-  [NeurIPS 2025][信息检索/RAG][CLIP] 在CLIP对比学习框架中引入一个超简单的分类损失（仅需添加一个轻量线性层，FLOPs增加仅0.077%），利用原始文本token的分类信号恢复CLIP未充分利用的细粒度文本监督，在零样本分类、图文检索和纯视觉任务上一致提升性能。
+  [NeurIPS 2025][信息检索/RAG][CLIP] 在CLIP对比学习框架中引入一个超简单的分类损失（仅需添加一个轻量线性层，FLOPs增加仅0.077%），利用原始文本token的分类信号恢复CLIP未充分利用的细粒度文本监督，在零样本分类、图文检索和纯视觉任务上一致提升性能。 CLIP通过对比学习将图像和文本对…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

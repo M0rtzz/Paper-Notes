@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMLoC: Emulator-based Memory-efficient Fine-tuning with LoRA Correction
 description: >-
-  [NeurIPS 2025][模型压缩][内存高效微调] EMLoC 通过对原始模型做 activation-aware SVD 构建轻量级 emulator 进行 LoRA 微调，并提出 LoRA 校正算法弥补 emulator 与原模型的不对齐，使得微调内存开销降至与推理持平…
+  [NeurIPS 2025][模型压缩][内存高效微调] EMLoC 通过对原始模型做 activation-aware SVD 构建轻量级 emulator 进行 LoRA 微调，并提出 LoRA 校正算法弥补 emulator 与原模型的不对齐，使得微调内存开销降至与推理持平，在单张 24GB GPU 上即可微调 38B 模型。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

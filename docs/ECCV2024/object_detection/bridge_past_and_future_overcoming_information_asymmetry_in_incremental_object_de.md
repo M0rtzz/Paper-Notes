@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bridge Past and Future: Overcoming Information Asymmetry in Incremental Object Detection
 description: >-
-  [ECCV2024][目标检测][知识蒸馏] 提出 Bridge Past and Future (BPF) 方法，通过伪标签桥接过去阶段、注意力机制排除未来潜在物体，并结合双教师蒸馏（Distillation with Future），解决增量目标检测中跨阶段信息不对称导致的优化目标不一致问题。
+  [ECCV2024][目标检测][知识蒸馏] 提出 Bridge Past and Future (BPF) 方法，通过伪标签桥接过去阶段、注意力机制排除未来潜在物体，并结合双教师蒸馏（Distillation with Future），解决增量目标检测中跨阶段信息不对称导致的优化目标不一致问题。 增量目标检测（Increm…
 tags:
   - "ECCV2024"
   - "目标检测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adapting Speech Language Model to Singing Voice Synthesis
 description: >-
-  [NeurIPS 2025 (Workshop)][音频/语音][Speech Language Model] 将 1.7B 参数的 TTS 预训练 Speech Language Model 适配到歌声合成（SVS）任务…
+  [NeurIPS 2025 (Workshop)][音频/语音][Speech Language Model] 将 1.7B 参数的 TTS 预训练 Speech Language Model 适配到歌声合成（SVS）任务，通过乐谱 tokenization + multi-stream LM 预测 + conditional flow matching 精修 + vocoder，仅用 135 小时合成歌声数据达到与专用 SVS 系统可比的性能。
 tags:
   - "NeurIPS 2025 (Workshop)"
   - "音频/语音"
@@ -115,10 +115,10 @@ SingMOS (感知质量) 与最佳专用系统 TokSing 持平
 - **vs ESPNet-SpeechLM**: 本文基于其框架，证明了其多任务扩展能力
 
 ## 评分
-- 新颖性: ⭐⭐⭐ SLM→SVS 的适配思路有趣但技术贡献增量有限
-- 实验充分度: ⭐⭐⭐ 消融充分但仅一个数据集
-- 写作质量: ⭐⭐⭐⭐ 简洁清晰（workshop paper）
-- 价值: ⭐⭐⭐ 验证了 SLM 跨任务泛化，对低资源语音生成有启发
+- 新颖性: ⭐⭐⭐⭐ SLM→SVS 的适配思路有趣但技术贡献增量有限
+- 实验充分度: ⭐⭐⭐⭐ 消融充分但仅一个数据集
+- 写作质量: ⭐⭐⭐⭐⭐ 简洁清晰（workshop paper）
+- 价值: ⭐⭐⭐⭐ 验证了 SLM 跨任务泛化，对低资源语音生成有启发
 
 <!-- RELATED:START -->
 

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CrossSDF: 3D Reconstruction of Thin Structures From Cross-Sections
 description: >-
-  [CVPR 2025][医学图像][SDF] 提出 CrossSDF，通过从 2D 截面符号距离场重建 3D SDF，结合混合编码（哈希网格 + 随机傅里叶特征）和对称差损失，首次实现对薄管状结构（如血管）的精确重建。
+  [CVPR 2025][医学图像][SDF] 提出 CrossSDF，通过从 2D 截面符号距离场重建 3D SDF，结合混合编码（哈希网格 + 随机傅里叶特征）和对称差损失，首次实现对薄管状结构（如血管）的精确重建。 领域现状 领域现状：领域现状：从平面截面数据重建 3D 结构是医学影像、制造业和地形学中的经典问题…
 tags:
   - "CVPR 2025"
   - "医学图像"

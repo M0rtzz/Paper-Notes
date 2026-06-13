@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Min-k Sampling: Decoupling Truncation from Temperature Scaling via Relative Logit Dynamics
 description: >-
-  [ACL 2026][LLM/NLP][采样策略] Min-k Sampling 通过分析排序 logit 分布的局部结构来检测"语义悬崖"（高置信候选与低质量尾部噪声的分界点），实现了严格的温度不变性截断，在极端温度下仍保持稳健的推理和创意写作质量。
+  [ACL 2026][LLM 其他][采样策略] Min-k Sampling 通过分析排序 logit 分布的局部结构来检测"语义悬崖"（高置信候选与低质量尾部噪声的分界点），实现了严格的温度不变性截断，在极端温度下仍保持稳健的推理和创意写作质量。 领域现状：LLM 文本生成质量高度依赖解码采样策略…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "采样策略"
   - "温度不变性"
   - "语义悬崖检测"

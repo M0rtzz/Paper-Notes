@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPEPO: Diverse Parallel Exploration Policy Optimization for LLM-based Agents
 description: >-
-  [ACL 2026][强化学习][Parallel Exploration] 作者提出"并行探索"新范式——agent 同步与 $K$ 个 environment 交互、跨轨迹共享经验，并给出对应的 RL 算法 **DPEPO**：先 SFT 冷启动学会并行 reasoning…
+  [ACL 2026][强化学习][Parallel Exploration] 作者提出"并行探索"新范式——agent 同步与 $K$ 个 environment 交互、跨轨迹共享经验，并给出对应的 RL 算法 **DPEPO**：先 SFT 冷启动学会并行 reasoning，再用"轨迹级成功 + 步级 Diverse Action / Diverse State Transition"分层奖励的 GRPO 训练，在 ALFWorld 与 ScienceWorld 全部 split 上拿下 SOTA（Qwen2.5-7B 上分别 98.2% / 61.4%），且在更大 $K$ 时 token 增长远低于"多采样"基线。
 tags:
   - "ACL 2026"
   - "强化学习"

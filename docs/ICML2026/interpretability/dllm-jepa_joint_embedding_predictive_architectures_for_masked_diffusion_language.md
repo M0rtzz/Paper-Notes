@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DLLM-JEPA: Joint Embedding Predictive Architectures for Masked Diffusion Language Models
 description: >-
-  [ICML 2026][可解释性][JEPA] 在掩码扩散语言模型 (masked diffusion LM) 的微调阶段加上 JEPA 表示对齐目标：把同一句话用不同掩码比例切成"低掩码上下文视图"和"高掩码目标视图"…
+  [ICML 2026][可解释性][JEPA] 在掩码扩散语言模型 (masked diffusion LM) 的微调阶段加上 JEPA 表示对齐目标：把同一句话用不同掩码比例切成"低掩码上下文视图"和"高掩码目标视图"，仅对上下文视图做一次带梯度前向同时算扩散 loss 和 JEPA embedding、对目标视图用 EMA 副本无梯度前向，相比 LLM-JEPA 节省 33% 训练 FLOPs，并在 4 个任务 × 2 个 backbone 上稳定涨点（GSM8K 最高 +18.7 pp）。
 tags:
   - "ICML 2026"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Weakly Supervised Teacher-Student Framework with Progressive Pseudo-mask Refinement for Gland Segmentation
 description: >-
-  [CVPR 2025][医学图像][腺体分割] 本文提出一种弱监督教师-学生框架，利用稀疏病理学家标注和 EMA 稳定的教师网络生成渐进式精炼的伪掩码，在腺体分割任务上以远少于全监督的标注量达到 mIoU 80.10 和 mDice 89.10 的优异性能。
+  [CVPR 2025][医学图像][腺体分割] 本文提出一种弱监督教师-学生框架，利用稀疏病理学家标注和 EMA 稳定的教师网络生成渐进式精炼的伪掩码，在腺体分割任务上以远少于全监督的标注量达到 mIoU 80.10 和 mDice 89.10 的优异性能。 领域现状：结直肠癌的组织病理学分级依赖于腺体结构的精确分割…
 tags:
   - "CVPR 2025"
   - "医学图像"

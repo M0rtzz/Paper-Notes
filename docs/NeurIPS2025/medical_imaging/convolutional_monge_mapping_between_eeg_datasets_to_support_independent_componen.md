@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Convolutional Monge Mapping between EEG Datasets to Support Independent Component Labeling
 description: >-
-  [NeurIPS 2025][医学图像][EEG] 本文扩展 CMMN（Convolutional Monge Mapping Normalization）方法，提出通道平均 PSD + $\ell_1$ 归一化质心和 subject-to-subject 匹配两种策略…
+  [NeurIPS 2025][医学图像][EEG] 本文扩展 CMMN（Convolutional Monge Mapping Normalization）方法，提出通道平均 PSD + $\ell_1$ 归一化质心和 subject-to-subject 匹配两种策略，生成单一时域滤波器实现不同通道数的 EEG 数据集间域适应，在独立成分（IC）脑/非脑分类中 F1 从 0.77 提升至 0.84，超越 ICLabel（0.88→0.91）。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

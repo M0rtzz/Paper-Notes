@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Consistency for LLM-Based Motion Trajectory Generation and Verification
 description: >-
-  [CVPR2026][多模态VLM][自一致性] 将 LLM 的自一致性范式从自然语言推理扩展到视觉域——用 Lie 变换群层次结构定义运动轨迹的形状族，通过在变换不变距离度量下聚类 LLM 采样的多条轨迹，实现无监督的轨迹生成改进（+4-6%）和验证（精度+11.8%），无需训练。
+  [CVPR2026][多模态VLM][自一致性] 将 LLM 的自一致性范式从自然语言推理扩展到视觉域——用 Lie 变换群层次结构定义运动轨迹的形状族，通过在变换不变距离度量下聚类 LLM 采样的多条轨迹，实现无监督的轨迹生成改进（+4-6%）和验证（精度+11.8%），无需训练。 自一致性：（self-consisten…
 tags:
   - "CVPR2026"
   - "多模态VLM"

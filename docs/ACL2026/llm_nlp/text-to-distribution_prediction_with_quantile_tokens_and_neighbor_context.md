@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Text-to-Distribution Prediction with Quantile Tokens and Neighbor Context
 description: >-
-  [ACL 2026][LLM/NLP][分位数回归] 本文提出Quantile Token Regression方法，通过在输入序列中插入专用分位数token并结合检索到的邻居实例及其经验分布，使LLM能够预测完整的条件分布而非单一点估计…
+  [ACL 2026][LLM 其他][分位数回归] 本文提出Quantile Token Regression方法，通过在输入序列中插入专用分位数token并结合检索到的邻居实例及其经验分布，使LLM能够预测完整的条件分布而非单一点估计，在Airbnb和StackSample数据集上相比基线降低约4个MAPE点并将预测区间收窄2倍以上。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "分位数回归"
   - "分布预测"
   - "检索增强"

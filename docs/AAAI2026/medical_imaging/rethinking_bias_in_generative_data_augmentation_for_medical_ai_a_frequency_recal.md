@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach
 description: >-
-  [AAAI 2026][医学图像][生成式数据增强] 揭示 AI 生成医学图像与真实图像之间的高频频率分布差异是生成式数据增强（GDA）不可靠的关键原因，提出 FreRec（Frequency Recalibration）方法，通过统计高频替换（SHR）和重建式高频映射（RHM）两步实现粗到细的频率分布对齐…
+  [AAAI 2026][医学图像][生成式数据增强] 揭示 AI 生成医学图像与真实图像之间的高频频率分布差异是生成式数据增强（GDA）不可靠的关键原因，提出 FreRec（Frequency Recalibration）方法，通过统计高频替换（SHR）和重建式高频映射（RHM）两步实现粗到细的频率分布对齐，作为即插即用的后处理模块显著提升下游医学图像分类性能。
 tags:
   - "AAAI 2026"
   - "医学图像"

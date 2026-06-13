@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease
 description: >-
-  [CVPR 2026][医学图像][阿尔茨海默病诊断] 提出 EMAD，一个端到端多模态视觉-语言框架，为 AD 诊断生成结构化报告，通过分层 Sentence–Evidence–Anatomy (SEA) Grounding 将每个诊断声明显式关联到临床证据和 3D 脑部解剖…
+  [CVPR 2026][医学图像][阿尔茨海默病诊断] 提出 EMAD，一个端到端多模态视觉-语言框架，为 AD 诊断生成结构化报告，通过分层 Sentence–Evidence–Anatomy (SEA) Grounding 将每个诊断声明显式关联到临床证据和 3D 脑部解剖，并用可执行规则驱动的 GRPO 强化微调确保临床一致性。
 tags:
   - "CVPR 2026"
   - "医学图像"

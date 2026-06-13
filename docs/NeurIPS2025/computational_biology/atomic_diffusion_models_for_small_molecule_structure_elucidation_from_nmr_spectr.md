@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Atomic Diffusion Models for Small Molecule Structure Elucidation from NMR Spectra
 description: >-
-  [NEURIPS2025][计算生物][NMR光谱] 提出 ChefNMR，首个基于 3D 原子扩散模型的端到端框架，仅从 1D NMR 光谱和化学式直接预测未知小分子（尤其是复杂天然产物）的分子结构，在合成和实验数据集上均达到 SOTA。
+  [NEURIPS2025][计算生物][NMR光谱] 提出 ChefNMR，首个基于 3D 原子扩散模型的端到端框架，仅从 1D NMR 光谱和化学式直接预测未知小分子（尤其是复杂天然产物）的分子结构，在合成和实验数据集上均达到 SOTA。 天然产物的重要性：天然产物（次级代谢物）贡献了超过一半的 FDA 批准小分子药物…
 tags:
   - "NEURIPS2025"
   - "计算生物"

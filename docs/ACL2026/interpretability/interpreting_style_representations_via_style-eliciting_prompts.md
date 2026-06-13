@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Interpreting Style Representations via Style-Eliciting Prompts
 description: >-
-  [ACL2026][可解释性][风格表征] 这篇论文把难解释的文本风格向量解码成可直接驱动 LLM 写作的 style-eliciting prompts，用“可控制性”作为解释标准，在风格恢复、合成文本风格控制和人类文本风格模仿上都优于直接让 LLM 描述目标文本风格的基线。
+  [ACL2026 Findings][可解释性][风格表征] 这篇论文把难解释的文本风格向量解码成可直接驱动 LLM 写作的 style-eliciting prompts，用“可控制性”作为解释标准，在风格恢复、合成文本风格控制和人类文本风格模仿上都优于直接让 LLM 描述目标文本风格的基线。 领域现状：style rep…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "可解释性"
   - "风格表征"
   - "风格提示词"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AVTrack: Audio-Visual Tracking in Human-centric Complex Scenes
 description: >-
-  [ICML 2026][视频理解][音视频跟踪] 提出 AVTrack 数据集和 AVTracker 基线方法，针对复杂人体中心场景下的音视频实例分割与跟踪（AVIS）任务，通过定义 8 种挑战条件构建高难度评测基准，并设计三阶段局部-全局分治框架（ASR 分段聚合 → 局部说话人定位 → 全局身份关联）…
+  [ICML 2026][视频理解][音视频跟踪] 提出 AVTrack 数据集和 AVTracker 基线方法，针对复杂人体中心场景下的音视频实例分割与跟踪（AVIS）任务，通过定义 8 种挑战条件构建高难度评测基准，并设计三阶段局部-全局分治框架（ASR 分段聚合 → 局部说话人定位 → 全局身份关联），在 HOTA 指标上超越现有最优方法约 8 个百分点。
 tags:
   - "ICML 2026"
   - "视频理解"

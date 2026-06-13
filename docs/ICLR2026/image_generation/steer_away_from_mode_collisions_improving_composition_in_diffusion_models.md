@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steer Away From Mode Collisions: Improving Composition In Diffusion Models
 description: >-
-  [ICLR 2026][图像生成][组合生成] 针对扩散模型多概念 prompt 中的概念缺失/碰撞问题，提出"模式碰撞"假说（联合分布与单概念分布的模式重叠），设计 CO3（Concept Contrasting Corrector）通过在 Tweedie 均值空间中组合校正分布 $\tilde{p}(x|…
+  [ICLR 2026][图像生成][组合生成] 针对扩散模型多概念 prompt 中的概念缺失/碰撞问题，提出"模式碰撞"假说（联合分布与单概念分布的模式重叠），设计 CO3（Concept Contrasting Corrector）通过在 Tweedie 均值空间中组合校正分布 $\tilde{p}(x|C) \propto p(x|C) / \prod_i p(x|c_i)$ 来远离退化模式，实现即插即用、无梯度、模型无关的组合生成改进。
 tags:
   - "ICLR 2026"
   - "图像生成"

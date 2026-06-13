@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ArtiFade: Learning to Generate High-quality Subject from Blemished Images
 description: >-
-  [CVPR 2025][图像生成][主题驱动生成] 本文提出ArtiFade，首个解决"瑕疵主题驱动生成"问题的方法，通过构建瑕疵-无瑕疵配对数据集、部分微调扩散模型的cross-attention权重并优化artifact-free embedding…
+  [CVPR 2025][图像生成][主题驱动生成] 本文提出ArtiFade，首个解决"瑕疵主题驱动生成"问题的方法，通过构建瑕疵-无瑕疵配对数据集、部分微调扩散模型的cross-attention权重并优化artifact-free embedding，使得现有主题驱动方法（Textual Inversion、DreamBooth）能从带水印/贴纸/对抗噪声等瑕疵的图像中生成高质量无伪影的主题图像。
 tags:
   - "CVPR 2025"
   - "图像生成"

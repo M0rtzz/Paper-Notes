@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving
 description: >-
-  [NeurIPS 2025][自动驾驶][稀疏感知模型] SQS 首次提出了面向稀疏感知模型（SPM）的查询式3D高斯泼溅预训练方法，通过自监督重建RGB图像和深度图学习精细3D表征，并设计查询交互模块将预训练查询与任务特定查询融合…
+  [NeurIPS 2025 Spotlight][自动驾驶][稀疏感知模型] SQS 首次提出了面向稀疏感知模型（SPM）的查询式3D高斯泼溅预训练方法，通过自监督重建RGB图像和深度图学习精细3D表征，并设计查询交互模块将预训练查询与任务特定查询融合，在占用预测和3D检测任务上显著超越现有预训练方法（+1.3 mIoU 占用预测，+1.0 NDS 检测）。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "自动驾驶"
   - "稀疏感知模型"
   - "3D高斯泼溅"

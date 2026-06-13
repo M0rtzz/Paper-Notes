@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions
 description: >-
-  [NeurIPS 2025][LLM Agent][主动式Agent] 提出 ContextAgent，首个利用可穿戴设备多模态感知（视频+音频+通知）来理解用户意图并主动提供工具增强服务的 LLM Agent 框架，同时构建了包含 1000 个样本的 ContextAgentBench 基准…
+  [NeurIPS 2025][LLM Agent][主动式Agent] 提出 ContextAgent，首个利用可穿戴设备多模态感知（视频+音频+通知）来理解用户意图并主动提供工具增强服务的 LLM Agent 框架，同时构建了包含 1000 个样本的 ContextAgentBench 基准，在主动预测准确率和工具调用上分别提升 8.5% 和 6.0%。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

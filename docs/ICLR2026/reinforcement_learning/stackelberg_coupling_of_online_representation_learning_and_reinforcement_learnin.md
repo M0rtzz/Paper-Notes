@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stackelberg Coupling of Online Representation Learning and Reinforcement Learning
 description: >-
-  [ICLR 2026][强化学习][Stackelberg 博弈] 提出 SCORER 框架，将 Deep Q-Learning 中的表征学习和值函数学习建模为 Stackelberg 博弈，通过双时间尺度更新（Q 网络为 leader 慢更新、编码器为 follower 快更新）实现稳定协同适应…
+  [ICLR 2026][强化学习][Stackelberg 博弈] 提出 SCORER 框架，将 Deep Q-Learning 中的表征学习和值函数学习建模为 Stackelberg 博弈，通过双时间尺度更新（Q 网络为 leader 慢更新、编码器为 follower 快更新）实现稳定协同适应，无需改变网络结构即可提升性能。
 tags:
   - "ICLR 2026"
   - "强化学习"

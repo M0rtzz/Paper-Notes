@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?
 description: >-
-  [ICLR 2026][多模态VLM][空间推理] 提出SpatiaLab，一个包含1400个视觉QA对的真实场景空间推理基准，涵盖6大类30子类空间任务，支持多选和开放式双格式评估，揭示当前最强VLM（InternVL3.5-72B MCQ 54.93%）与人类（87.57%）之间存在巨大空间推理鸿沟…
+  [ICLR 2026][多模态VLM][空间推理] 提出SpatiaLab，一个包含1400个视觉QA对的真实场景空间推理基准，涵盖6大类30子类空间任务，支持多选和开放式双格式评估，揭示当前最强VLM（InternVL3.5-72B MCQ 54.93%）与人类（87.57%）之间存在巨大空间推理鸿沟，且开放式设置下差距更大。
 tags:
   - "ICLR 2026"
   - "多模态VLM"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparsity-Aware Voxel Attention and Foreground Modulation for 3D Semantic Scene Completion
 description: >-
-  [CVPR 2026][自动驾驶][语义场景补全] 提出 VoxSAMNet，一个显式建模体素稀疏性和语义不均衡的单目语义场景补全框架，通过 Dummy Shortcut 跳过空体素、Foreground Dropout + Text-Guided Image Filter 缓解长尾过拟合…
+  [CVPR 2026][自动驾驶][语义场景补全] 提出 VoxSAMNet，一个显式建模体素稀疏性和语义不均衡的单目语义场景补全框架，通过 Dummy Shortcut 跳过空体素、Foreground Dropout + Text-Guided Image Filter 缓解长尾过拟合，在 SemanticKITTI 上达到 18.19% mIoU 的 SOTA（超越现有单目和立体方法）。
 tags:
   - "CVPR 2026"
   - "自动驾驶"

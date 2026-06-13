@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CRFT: Consistent-Recurrent Feature Flow Transformer for Cross-Modal Image Registration
 description: >-
-  [CVPR 2026][医学图像][跨模态配准] 提出CRFT，统一的粗到精跨模态图像配准框架——在Transformer架构中学习模态无关的特征流表示，粗阶段1/8分辨率全局对应+精阶段1/2-1/4多尺度局部细化，配合迭代差异引导注意力和空间几何变换(SGT)递归精化流场捕捉微妙空间不一致…
+  [CVPR 2026][医学图像][跨模态配准] 提出CRFT，统一的粗到精跨模态图像配准框架——在Transformer架构中学习模态无关的特征流表示，粗阶段1/8分辨率全局对应+精阶段1/2-1/4多尺度局部细化，配合迭代差异引导注意力和空间几何变换(SGT)递归精化流场捕捉微妙空间不一致，在光学/红外/SAR/多光谱等多种跨模态数据集上超越RAFT/GMFlow/LoFTR等SOTA。
 tags:
   - "CVPR 2026"
   - "医学图像"

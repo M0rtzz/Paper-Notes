@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Divide-Then-Aggregate: An Efficient Tool Learning Method via Parallel Tool Invocation
 description: >-
-  [ACL 2025][工具学习] 提出 DTA-Llama，将传统树搜索的串行工具调用路径转换为有向无环图（DAG）结构实现并行调用，设计 Process/Thread 推理框架使 LLM 在每轮中可分解任务并并行执行多个工具…
+  [ACL 2025][LLM 其他][工具学习] 提出 DTA-Llama，将传统树搜索的串行工具调用路径转换为有向无环图（DAG）结构实现并行调用，设计 Process/Thread 推理框架使 LLM 在每轮中可分解任务并并行执行多个工具，在 StableToolBench 上使 Llama2-7B 达到 GPT-3.5 Parallel Function Calling 的水平。
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "工具学习"
   - "并行工具调用"
   - "DAG结构"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic Class Distribution Learning for Debiasing Semi-Supervised Medical Image Segmentation
 description: >-
-  [CVPR2025][医学图像][半监督学习] 提出 SCDL 即插即用模块，通过学习类条件代理分布并进行双向对齐（CDBA）+ 语义锚约束（SAC），在嵌入空间显式重塑类条件特征结构，缓解半监督医学影像分割中的监督偏差和表示不平衡。
+  [CVPR2025][医学图像][半监督学习] 提出 SCDL 即插即用模块，通过学习类条件代理分布并进行双向对齐（CDBA）+ 语义锚约束（SAC），在嵌入空间显式重塑类条件特征结构，缓解半监督医学影像分割中的监督偏差和表示不平衡。 现有痛点 现有痛点：半监督医学影像分割（SSMIS）的类不平衡问题：医学分割数据天然存在像…
 tags:
   - "CVPR2025"
   - "医学图像"

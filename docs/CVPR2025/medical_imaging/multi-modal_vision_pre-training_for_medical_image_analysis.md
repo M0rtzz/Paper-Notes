@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-modal Vision Pre-training for Medical Image Analysis (BrainMVP)
 description: >-
-  [CVPR 2025][医学图像][多模态MRI预训练] BrainMVP提出首个多模态视觉预训练范式，通过跨模态掩码重建、模态模板蒸馏和模态感知对比学习三个代理任务，在16,022例多参数脑MRI扫描(240万+图像)上预训练ViT，在六个分割和四个分类下游任务上均超越SOTA…
+  [CVPR 2025][医学图像][多模态MRI预训练] BrainMVP提出首个多模态视觉预训练范式，通过跨模态掩码重建、模态模板蒸馏和模态感知对比学习三个代理任务，在16,022例多参数脑MRI扫描(240万+图像)上预训练ViT，在六个分割和四个分类下游任务上均超越SOTA，Dice Score提升最高达14.47%。
 tags:
   - "CVPR 2025"
   - "医学图像"

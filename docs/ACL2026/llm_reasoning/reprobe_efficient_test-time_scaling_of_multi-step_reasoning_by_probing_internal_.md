@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models
 description: >-
-  [ACL2026][LLM推理][测试时扩展] 这篇论文提出 ReProbe，用少于 10M 参数的轻量 transformer probe 读取冻结 LLM 的隐藏状态、注意力和 logits 来判断每一步推理是否可信，在数学、规划和问答任务上接近或超过大 750-810 倍的 PRM…
+  [ACL2026][LLM推理][测试时扩展] 这篇论文提出 ReProbe，用少于 10M 参数的轻量 transformer probe 读取冻结 LLM 的隐藏状态、注意力和 logits 来判断每一步推理是否可信，在数学、规划和问答任务上接近或超过大 750-810 倍的 PRM，并能作为 Best-of-N 和 beam search 的高效 step verifier。
 tags:
   - "ACL2026"
   - "LLM推理"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2511.06209](https://arxiv.org/abs/2511.06209)  
 **代码**: https://reprobe.github.io/  
-**领域**: llm_reasoning  
+**领域**: LLM推理  
 **关键词**: 测试时扩展、过程验证、内部状态探针、PRM、思维链
 
 ## 一句话总结

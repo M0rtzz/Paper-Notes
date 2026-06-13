@@ -2,7 +2,7 @@
 title: >-
   [论文解读] REVISION: Rendering Tools Enable Spatial Fidelity in Vision-Language Models
 description: >-
-  [ECCV 2024][多模态VLM][空间关系推理] 提出 REVISION 框架，利用 Blender 3D 渲染生成空间关系精确的合成图像，以免训练方式引导 T2I 模型生成空间一致的图像，并构建 RevQA 基准评估 MLLM 的空间推理能力。
+  [ECCV 2024][多模态VLM][空间关系推理] 提出 REVISION 框架，利用 Blender 3D 渲染生成空间关系精确的合成图像，以免训练方式引导 T2I 模型生成空间一致的图像，并构建 RevQA 基准评估 MLLM 的空间推理能力。 领域现状：文本到图像（T2I）模型（如 Stable Diffusion…
 tags:
   - "ECCV 2024"
   - "多模态VLM"

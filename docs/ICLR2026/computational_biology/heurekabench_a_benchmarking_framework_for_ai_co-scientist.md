@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HeurekaBench: A Benchmarking Framework for AI Co-scientist
 description: >-
-  [ICLR 2026][计算生物][AI co-scientist] 提出 HeurekaBench，一个基于真实科学工作流构建评测基准的框架，通过多LLM流水线从论文中提取可验证的科学洞见并生成开放式研究问题，用于评估AI co-scientist在数据驱动科学发现中的端到端能力。
+  [ICLR 2026][计算生物][AI co-scientist] 提出 HeurekaBench，一个基于真实科学工作流构建评测基准的框架，通过多LLM流水线从论文中提取可验证的科学洞见并生成开放式研究问题，用于评估AI co-scientist在数据驱动科学发现中的端到端能力。 LLM推理能力提升催生了大量科学Agen…
 tags:
   - "ICLR 2026"
   - "计算生物"

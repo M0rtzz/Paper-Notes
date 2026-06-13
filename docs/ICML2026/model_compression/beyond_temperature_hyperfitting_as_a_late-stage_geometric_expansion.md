@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Temperature: Hyperfitting as a Late-Stage Geometric Expansion
 description: >-
-  [ICML 2026][模型压缩][Hyperfitting] 本文通过控制实验证明 Hyperfitting（在小数据集上将 LLM 训练到近零损失）的本质不是温度缩放式的分布锐化，而是一种动态的、上下文相关的 token 秩重排序（Rank Reordering）机制…
+  [ICML 2026][模型压缩][Hyperfitting] 本文通过控制实验证明 Hyperfitting（在小数据集上将 LLM 训练到近零损失）的本质不是温度缩放式的分布锐化，而是一种动态的、上下文相关的 token 秩重排序（Rank Reordering）机制，该机制集中发生在 Transformer 最后一层的"终端几何扩展"（$\Delta \text{Dim} \approx +80.8$），并据此提出仅微调最后 5 层的 Late-Stage LoRA，在减少约 80% 可训练参数的同时保持生成多样性。
 tags:
   - "ICML 2026"
   - "模型压缩"

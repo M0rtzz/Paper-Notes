@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians
 description: >-
-  [ICCV 2025][3D视觉][3D高斯溅射] 提出 Can3Tok，首个可将场景级3DGS编码到低维潜空间的变分自编码器，通过规范化查询（canonical query）的交叉注意力实现高效tokenization，配合3DGS归一化和语义感知过滤解决尺度不一致问题…
+  [ICCV 2025][3D视觉][3D高斯溅射] 提出 Can3Tok，首个可将场景级3DGS编码到低维潜空间的变分自编码器，通过规范化查询（canonical query）的交叉注意力实现高效tokenization，配合3DGS归一化和语义感知过滤解决尺度不一致问题，在DL3DV-10K上成功泛化到新场景。
 tags:
   - "ICCV 2025"
   - "3D视觉"

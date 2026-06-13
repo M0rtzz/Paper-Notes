@@ -2,9 +2,9 @@
 title: >-
   [论文解读] SenseJudge: Human-Centric Preference-Driven Judgment Framework
 description: >-
-  [ACL 2026][推荐系统][LLM评估] 提出 SenseJudge，一种基于显式人类偏好的可定制化 LLM 判断框架，配合真实多轮对话基准 SenseBench，在个性化评判任务中平均准确率比基线高 16.08%，模型排名与真实人类排名一致。
+  [ACL 2026 Findings][推荐系统][LLM评估] 提出 SenseJudge，一种基于显式人类偏好的可定制化 LLM 判断框架，配合真实多轮对话基准 SenseBench，在个性化评判任务中平均准确率比基线高 16.08%，模型排名与真实人类排名一致。 领域现状： LLM-as-a-Judge 范式日益流行…
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "推荐系统"
   - "LLM评估"
   - "个性化判断"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026 Findings  
 **arXiv**: [2606.03189](https://arxiv.org/abs/2606.03189)  
 **代码**: [GitHub](https://github.com/qiongrenpiqida/SenseJudge)  
-**领域**: recommender  
+**领域**: 推荐系统  
 **关键词**: LLM评估, 个性化判断, 偏好驱动, 多轮对话, 模型排名
 
 ## 一句话总结

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving
 description: >-
-  [ACL 2025][LLM推理][Tree-of-Thought] 提出 BPP-Search 算法，将 Beam Search、过程奖励模型 (PRM) 和 Pairwise Preference 机制整合到 Tree-of-Thought 框架中，用于运筹学数学建模问题的自动求解…
+  [ACL 2025][LLM推理][Tree-of-Thought] 提出 BPP-Search 算法，将 Beam Search、过程奖励模型 (PRM) 和 Pairwise Preference 机制整合到 Tree-of-Thought 框架中，用于运筹学数学建模问题的自动求解，在 StructuredOR 等数据集上以更少的推理步骤显著超越 CoT/SC/ToT 基线。
 tags:
   - "ACL 2025"
   - "LLM推理"

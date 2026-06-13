@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scale-invariant Attention
 description: >-
-  [NeurIPS 2025][LLM效率][scale invariance] 借鉴自然图像的尺度不变性，提出对 attention logits 做位置相关的乘性缩放和加性偏移变换，使注意力在不同 token 范围上的总权重和稀疏度满足尺度不变性…
+  [NeurIPS 2025][LLM效率][scale invariance] 借鉴自然图像的尺度不变性，提出对 attention logits 做位置相关的乘性缩放和加性偏移变换，使注意力在不同 token 范围上的总权重和稀疏度满足尺度不变性，从而实现从短序列训练到长序列推理的零样本泛化（4k→64k 仅需一个超参数 $\tau$）。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

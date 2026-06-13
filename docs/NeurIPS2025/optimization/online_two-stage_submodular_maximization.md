@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Two-Stage Submodular Maximization
 description: >-
-  [NeurIPS 2025][优化/理论][submodular maximization] 首次提出在线两阶段子模最大化（O2SSM）问题，针对加权阈值势函数（WTP）设计了 RAOCO 算法，通过分数松弛+随机管道舍入实现多项式时间运行下的次线性 $(1-1/e)^2$-regret 保证…
+  [NeurIPS 2025][优化/理论][submodular maximization] 首次提出在线两阶段子模最大化（O2SSM）问题，针对加权阈值势函数（WTP）设计了 RAOCO 算法，通过分数松弛+随机管道舍入实现多项式时间运行下的次线性 $(1-1/e)^2$-regret 保证，同时改进了离线问题的近似比。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

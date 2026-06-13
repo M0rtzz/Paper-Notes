@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Large Language Models Are Bad Dice Players: LLMs Struggle to Generate Random Numbers from Statistical Distributions
 description: >-
-  [ACL 2026][LLM评测][概率采样] 本文首次大规模系统审计了 11 个前沿 LLM 在 15 种概率分布上的原生采样能力，发现 LLM 严重缺乏内在概率采样机制，且这种缺陷会传导到下游应用中造成系统性偏差。
+  [ACL 2026][LLM评测][概率采样] 本文首次大规模系统审计了 11 个前沿 LLM 在 15 种概率分布上的原生采样能力，发现 LLM 严重缺乏内在概率采样机制，且这种缺陷会传导到下游应用中造成系统性偏差。 领域现状：LLM 正从对话接口演变为复杂应用流水线的核心组件，包括合成数据生成、Agent 模拟、教育材料…
 tags:
   - "ACL 2026"
   - "LLM评测"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WeaveTime: Stream from Earlier Frames into Emergent Memory in VideoLLMs
 description: >-
-  [CVPR 2026][多模态VLM][Video-LLM] 诊断了当前 Video-LLM 存在的"时间不可知"（Time-Agnosticism）问题，提出 WeaveTime 框架，通过训练时的时序重建辅助任务（SOPE）赋予模型时序感知能力…
+  [CVPR 2026][多模态VLM][Video-LLM] 诊断了当前 Video-LLM 存在的"时间不可知"（Time-Agnosticism）问题，提出 WeaveTime 框架，通过训练时的时序重建辅助任务（SOPE）赋予模型时序感知能力，推理时用不确定性门控的粗到细记忆缓存（PCDF-Cache）实现高效自适应记忆检索，在流式视频 QA 上取得显著提升。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

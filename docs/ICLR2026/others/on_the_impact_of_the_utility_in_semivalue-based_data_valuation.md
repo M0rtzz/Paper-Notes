@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Impact of the Utility in Semivalue-based Data Valuation
 description: >-
-  [ICLR 2026][Data Valuation] 本文通过引入"空间签名"（spatial signature）的几何表示，将数据估值中的 utility 选择问题统一建模为单位圆上的方向旋转问题，并提出了一个量化鲁棒性的指标 $R_p$…
+  [ICLR 2026][Data Valuation] 本文通过引入"空间签名"（spatial signature）的几何表示，将数据估值中的 utility 选择问题统一建模为单位圆上的方向旋转问题，并提出了一个量化鲁棒性的指标 $R_p$，揭示了 Banzhaf 值在不同 utility 下表现出最高的排序稳定性。
 tags:
   - "ICLR 2026"
   - "Data Valuation"

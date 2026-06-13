@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multi-Agent Collaboration via Evolving Orchestration
 description: >-
-  [NeurIPS 2025][多智能体][多Agent协作] 提出"木偶师"(Puppeteer)式多 Agent 协作范式——一个中心化编排器通过 RL 学习在每个推理步骤动态选择激活哪个 Agent，在封闭域和开放域任务上同时提升性能和效率，并发现演化后的拓扑趋向更紧凑的环形结构。
+  [NeurIPS 2025][多智能体][多Agent协作] 提出"木偶师"(Puppeteer)式多 Agent 协作范式——一个中心化编排器通过 RL 学习在每个推理步骤动态选择激活哪个 Agent，在封闭域和开放域任务上同时提升性能和效率，并发现演化后的拓扑趋向更紧凑的环形结构。 领域现状：LLM 多 Agent 系统…
 tags:
   - "NeurIPS 2025"
   - "多智能体"

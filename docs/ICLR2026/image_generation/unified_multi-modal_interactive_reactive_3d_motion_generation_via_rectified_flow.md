@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unified Multi-Modal Interactive & Reactive 3D Motion Generation via Rectified Flow
 description: >-
-  [ICLR 2026][图像生成][双人运动生成] DualFlow提出首个统一框架，通过Rectified Flow和检索增强生成（RAG）实现文本+音乐多模态条件下的双人交互/反应式3D运动生成，引入对比流匹配和同步损失，在MDD数据集上FID提升2.5%、R-precision提升76%…
+  [ICLR 2026][图像生成][双人运动生成] DualFlow提出首个统一框架，通过Rectified Flow和检索增强生成（RAG）实现文本+音乐多模态条件下的双人交互/反应式3D运动生成，引入对比流匹配和同步损失，在MDD数据集上FID提升2.5%、R-precision提升76%，推理速度提升2.5倍。
 tags:
   - "ICLR 2026"
   - "图像生成"

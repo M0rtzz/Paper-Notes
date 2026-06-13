@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Stable-GFlowNet: Toward Diverse and Robust LLM Red-Teaming via Contrastive Trajectory Balance
 description: >-
-  [ICML 2026][LLM安全][红队攻击] 本文指出现有 GFlowNet 红队的两大不稳定来源——partition function $Z_\theta$ 估计带来的高方差…
+  [ICML 2026 Spotlight][LLM安全][红队攻击] 本文指出现有 GFlowNet 红队的两大不稳定来源——partition function $Z_\theta$ 估计带来的高方差，与 toxicity classifier 给 OOD gibberish 文本的噪声 reward 引发的 mode collapse——并用三件简单组件（pairwise 对比目标 CTB 消除 $Z$、Noisy Gradient Pruning 过滤无信息 pair、Min-K Fluency Stabilizer 卡掉 gibberish）让红队攻击在 Qwen2.5-1.5B 上独特攻击数从 17 飙到 134（约 7×…
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM安全"
   - "红队攻击"
   - "GFlowNet"

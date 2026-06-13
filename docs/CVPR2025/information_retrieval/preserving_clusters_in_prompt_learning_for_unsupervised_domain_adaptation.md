@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation
 description: >-
-  [CVPR 2025][信息检索/RAG][无监督域适应] 提出 CRPL 框架，通过源域增强的伪标签和基于最优传输的聚类保持策略，改进 CLIP 在无监督域适应（UDA）中的 prompt 学习，使得目标域 prompt 的文本嵌入能更好地覆盖视觉嵌入的聚类结构。
+  [CVPR 2025][信息检索/RAG][无监督域适应] 提出 CRPL 框架，通过源域增强的伪标签和基于最优传输的聚类保持策略，改进 CLIP 在无监督域适应（UDA）中的 prompt 学习，使得目标域 prompt 的文本嵌入能更好地覆盖视觉嵌入的聚类结构。 基于 CLIP 的 prompt 学习已成为无监督域适应的…
 tags:
   - "CVPR 2025"
   - "信息检索/RAG"

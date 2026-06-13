@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mastering Multiple-Expert Routing: Realizable H-Consistency and Strong Guarantees
 description: >-
-  [ICML 2025][医学图像][学习延迟] 本文为多专家路由(learning to defer)问题提出了新的代理损失函数和高效算法，建立了可实现 H-一致性、H-一致性界和 Bayes 一致性的理论保证，覆盖单阶段和两阶段两种学习场景。
+  [ICML 2025][医学图像][学习延迟] 本文为多专家路由(learning to defer)问题提出了新的代理损失函数和高效算法，建立了可实现 H-一致性、H-一致性界和 Bayes 一致性的理论保证，覆盖单阶段和两阶段两种学习场景。 领域现状：多专家路由（或称 learning to defer）是将输入实例最优…
 tags:
   - "ICML 2025"
   - "医学图像"

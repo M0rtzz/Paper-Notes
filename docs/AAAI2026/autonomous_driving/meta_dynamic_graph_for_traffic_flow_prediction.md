@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta Dynamic Graph for Traffic Flow Prediction
 description: >-
-  [AAAI2026][自动驾驶][交通流预测] 提出MetaDG框架，通过在每个时间步生成动态节点表示并利用时空相关性增强，将动态性建模从仅影响邻接矩阵扩展到同时生成meta参数、邻接矩阵和边权调整矩阵，实现时空异质性的统一建模（ST-unification）…
+  [AAAI2026][自动驾驶][交通流预测] 提出MetaDG框架，通过在每个时间步生成动态节点表示并利用时空相关性增强，将动态性建模从仅影响邻接矩阵扩展到同时生成meta参数、邻接矩阵和边权调整矩阵，实现时空异质性的统一建模（ST-unification），在PEMS03/04/07/08四个数据集上达到SOTA。
 tags:
   - "AAAI2026"
   - "自动驾驶"

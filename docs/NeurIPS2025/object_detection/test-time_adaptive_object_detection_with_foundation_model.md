@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test-Time Adaptive Object Detection with Foundation Model
 description: >-
-  [NeurIPS 2025][目标检测][测试时适应] 提出无需源域数据的开放词汇测试时自适应目标检测框架（TTAOD），通过多模态 Prompt Tuning + Mean-Teacher + 实例动态记忆（IDM）+ 记忆增强/幻觉策略…
+  [NeurIPS 2025][目标检测][测试时适应] 提出无需源域数据的开放词汇测试时自适应目标检测框架（TTAOD），通过多模态 Prompt Tuning + Mean-Teacher + 实例动态记忆（IDM）+ 记忆增强/幻觉策略，在 Pascal-C 上 AP50 达 56.2%（+11.0 vs SOTA），在 13 个跨域数据集上一致有效。
 tags:
   - "NeurIPS 2025"
   - "目标检测"

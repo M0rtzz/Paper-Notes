@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Robustness of Reward Models for Language Model Alignment
 description: >-
-  [ICML 2025][LLM对齐][奖励模型鲁棒性] 提出 Batch-wise Sum-to-Zero Regularization (BSR)，通过约束每个 batch 内奖励分数之和为零来抑制隐状态范数的过度弥散，从根源上解决奖励模型的过优化问题…
+  [ICML 2025][LLM对齐][奖励模型鲁棒性] 提出 Batch-wise Sum-to-Zero Regularization (BSR)，通过约束每个 batch 内奖励分数之和为零来抑制隐状态范数的过度弥散，从根源上解决奖励模型的过优化问题，使 8B 规模 RM 在复杂偏好预测任务上超越 SOTA 5%+，并在 RLHF 下游训练中将生成长度降低 40% 同时提升 7% 胜率。
 tags:
   - "ICML 2025"
   - "LLM对齐"

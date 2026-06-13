@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Reducing Belief Deviation in Reinforcement Learning for Active Reasoning of LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][active reasoning] 提出 T³（Truncating Belief-Trapped Trajectories），基于 POMDP 理论分析 LLM 智能体在多轮主动推理中的"信念陷阱"现象…
+  [ICLR 2026 Oral][LLM Agent][active reasoning] 提出 T³（Truncating Belief-Trapped Trajectories），基于 POMDP 理论分析 LLM 智能体在多轮主动推理中的"信念陷阱"现象，通过检测信念偏离并截断无信息尾部轨迹来修正 RL 训练中的信用分配错误，在 5 个挑战性任务上获得最高 30 分的性能提升并节省 34% 的 token 开销。
 tags:
-  - "ICLR 2026"
+  - "ICLR 2026 Oral"
   - "LLM Agent"
   - "active reasoning"
   - "reinforcement-learning"

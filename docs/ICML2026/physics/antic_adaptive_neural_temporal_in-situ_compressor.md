@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ANTIC: Adaptive Neural Temporal In-situ Compressor
 description: >-
-  [ICML 2026][物理/科学计算][在线压缩] 为了把 PB-EB 级别 PDE 仿真数据"边算边压"，本文提出 ANTIC：用 physics-aware 时间选择器只保留物理上重要的快照，再用神经场 + LoRA 持续微调编码相邻快照之间的残差…
+  [ICML 2026][物理/科学计算][在线压缩] 为了把 PB-EB 级别 PDE 仿真数据"边算边压"，本文提出 ANTIC：用 physics-aware 时间选择器只保留物理上重要的快照，再用神经场 + LoRA 持续微调编码相邻快照之间的残差，在 2D Kolmogorov 流上拿到 435× 压缩、在 4.2 TiB 的 3D 双黑洞合并模拟上拿到 6807× 时空联合压缩。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

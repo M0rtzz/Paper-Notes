@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fix-CLIP: Dual-Branch Hierarchical Contrastive Learning via Synthetic Captions for Better Understanding of Long Text
 description: >-
-  [ICCV 2025][图像生成][CLIP] Fix-CLIP 通过三大创新模块提升 CLIP 的长文本理解能力：（1）双分支训练管线用短文本配合 masked 图像、长文本配合原始图像分别对齐；（2）带单向掩码的可学习区域提示（Regional Prompts）提取局部视觉特征…
+  [ICCV 2025][图像生成][CLIP] Fix-CLIP 通过三大创新模块提升 CLIP 的长文本理解能力：（1）双分支训练管线用短文本配合 masked 图像、长文本配合原始图像分别对齐；（2）带单向掩码的可学习区域提示（Regional Prompts）提取局部视觉特征；（3）层级特征对齐模块对齐中间层多尺度特征。在 30M 合成长文本数据上增量训练后，长文本检索和短文本检索均大幅超越 SOTA，文本编码器可即插即用提升扩散模型长文本生成质量。
 tags:
   - "ICCV 2025"
   - "图像生成"

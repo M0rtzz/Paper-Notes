@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Moving Object Segmentation with Atmospheric Turbulence
 description: >-
-  [ECCV 2024][语义分割][无监督分割] 本文提出一种无监督方法，通过"检测-生长"（detect-then-grow）策略分割大气湍流视频中的运动目标：先用基于 Sampson 距离的极线几何一致性检查分离真实运动与湍流运动，再从高置信种子像素出发区域生长生成分割掩码，最后用时空一致性损失精细化…
+  [ECCV 2024][语义分割][无监督分割] 本文提出一种无监督方法，通过"检测-生长"（detect-then-grow）策略分割大气湍流视频中的运动目标：先用基于 Sampson 距离的极线几何一致性检查分离真实运动与湍流运动，再从高置信种子像素出发区域生长生成分割掩码，最后用时空一致性损失精细化，在首个真实湍流视频数据集 DOST 上大幅超越现有方法（IoU 提升 60.1%）。
 tags:
   - "ECCV 2024"
   - "语义分割"

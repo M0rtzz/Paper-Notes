@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WorldScore: A Unified Evaluation Benchmark for World Generation
 description: >-
-  [ICCV 2025][视频生成][世界生成] 提出 WorldScore —— 首个统一的世界生成评估基准，将世界生成分解为一系列"下一场景生成"任务，支持对 3D、4D、I2V 和 T2V 模型的统一评测，并涵盖 3000 个测试样本和 10 项指标。
+  [ICCV 2025][视频生成][世界生成] 提出 WorldScore —— 首个统一的世界生成评估基准，将世界生成分解为一系列"下一场景生成"任务，支持对 3D、4D、I2V 和 T2V 模型的统一评测，并涵盖 3000 个测试样本和 10 项指标。 近年来视频生成（Sora、CogVideoX 等）和 3D/4D 场…
 tags:
   - "ICCV 2025"
   - "视频生成"

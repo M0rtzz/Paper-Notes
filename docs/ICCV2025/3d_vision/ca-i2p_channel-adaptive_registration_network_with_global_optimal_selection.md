@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection
 description: >-
-  [ICCV 2025][3D视觉][图像-点云配准] 提出 CA-I2P，通过 Channel Adaptive Adjustment Module (CAA) 增强并过滤图像-点云特征的通道差异…
+  [ICCV 2025][3D视觉][图像-点云配准] 提出 CA-I2P，通过 Channel Adaptive Adjustment Module (CAA) 增强并过滤图像-点云特征的通道差异，并用 Global Optimal Selection (GOS) 基于最优传输替代 top-k 选择减少多对一匹配误差，在 RGB-D Scenes V2 和 7-Scenes 上实现图像-点云配准 SOTA。
 tags:
   - "ICCV 2025"
   - "3D视觉"

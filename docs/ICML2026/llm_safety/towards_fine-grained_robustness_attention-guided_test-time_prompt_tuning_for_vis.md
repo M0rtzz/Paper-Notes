@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Fine-Grained Robustness: Attention-Guided Test-Time Prompt Tuning for Vision-Language Models
 description: >-
-  [ICML 2026][LLM安全][CLIP] A-TPT 用一种针对对抗扰动加固的 Gradient Attention Rollout 提取 CLIP 视觉端"语义锚点"，再以该注意力图为引导对多视图做空间非均匀增强、并按各视图注意力的 Total Variation 进行加权集成做 prompt tu…
+  [ICML 2026][LLM安全][CLIP] A-TPT 用一种针对对抗扰动加固的 Gradient Attention Rollout 提取 CLIP 视觉端"语义锚点"，再以该注意力图为引导对多视图做空间非均匀增强、并按各视图注意力的 Total Variation 进行加权集成做 prompt tuning，在 9 个数据集上同时提升细粒度场景下的对抗精度和干净精度。
 tags:
   - "ICML 2026"
   - "LLM安全"

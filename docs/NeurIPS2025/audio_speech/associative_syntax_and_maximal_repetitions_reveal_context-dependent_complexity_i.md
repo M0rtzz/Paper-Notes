@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Associative Syntax and Maximal Repetitions Reveal Context-Dependent Complexity in Fruit Bat Communication
 description: >-
-  [NeurIPS 2025 (Workshop on AI for Non-Human Animal Communication)][音频/语音][动物通信] 本文提出一种无监督方法来推断果蝠发声的离散单元、语法类型和时序结构，并首次将最大重复子序列（Maximal Repetitions）引入动物通信领域…
+  [NeurIPS 2025 (Workshop on AI for Non-Human Animal Communication)][音频/语音][动物通信] 本文提出一种无监督方法来推断果蝠发声的离散单元、语法类型和时序结构，并首次将最大重复子序列（Maximal Repetitions）引入动物通信领域，发现冲突行为中的通信复杂度显著高于合作行为。
 tags:
   - "NeurIPS 2025 (Workshop on AI for Non-Human Animal Communication)"
   - "音频/语音"

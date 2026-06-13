@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Behind Closed Words: Creating and Investigating the forePLay Annotated Dataset for Polish Erotic Discourse
 description: >-
-  [ACL 2025][content moderation] 构建了首个波兰语色情内容检测数据集 forePLay（24,768 句，5 类标签），提出涵盖模糊性、暴力和社会不可接受行为的多维标注体系，评估发现专用波兰语模型显著优于多语言模型，且 Transformer 编码器模型在不平衡类别处理上表现最强。
+  [ACL 2025][社会计算][content moderation] 构建了首个波兰语色情内容检测数据集 forePLay（24,768 句，5 类标签），提出涵盖模糊性、暴力和社会不可接受行为的多维标注体系，评估发现专用波兰语模型显著优于多语言模型，且 Transformer 编码器模型在不平衡类别处理上表现最强。
 tags:
   - "ACL 2025"
+  - "社会计算"
   - "content moderation"
   - "erotic content detection"
   - "Polish NLP"

@@ -2,9 +2,10 @@
 title: >-
   [论文解读] MindRef: Mimicking Human Memory for Hierarchical Reference Retrieval with Fine-Grained Location Awareness
 description: >-
-  [ACL 2025][生成式检索] 提出 MindRef 框架，模拟人类先回忆文档标题再定位具体段落的两阶段记忆模式，通过 Trie 和 FM-Index 约束解码让 LLM 独立召回参考段落，无需额外检索模型或预分段。
+  [ACL 2025][LLM 其他][生成式检索] 提出 MindRef 框架，模拟人类先回忆文档标题再定位具体段落的两阶段记忆模式，通过 Trie 和 FM-Index 约束解码让 LLM 独立召回参考段落，无需额外检索模型或预分段。 知识密集型任务（如问答、事实验证）高度依赖从大规模知识源中检索相关段落…
 tags:
   - "ACL 2025"
+  - "LLM 其他"
   - "生成式检索"
   - "参数化知识"
   - "层次化召回"

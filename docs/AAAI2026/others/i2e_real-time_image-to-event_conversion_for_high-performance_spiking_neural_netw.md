@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I2E: Real-Time Image-to-Event Conversion for High-Performance Spiking Neural Networks
 description: >-
-  [AAAI 2026][脉冲神经网络] I2E 提出一个超高效的图像到事件流转换框架，通过模拟微扫视眼动并用高度并行化的卷积实现比先前方法快 300 倍以上的转换速度，首次支持 SNN 训练的在线数据增强，在 I2E-ImageNet 上达到 60.50% 的事件分类 SOTA…
+  [AAAI 2026][脉冲神经网络] I2E 提出一个超高效的图像到事件流转换框架，通过模拟微扫视眼动并用高度并行化的卷积实现比先前方法快 300 倍以上的转换速度，首次支持 SNN 训练的在线数据增强，在 I2E-ImageNet 上达到 60.50% 的事件分类 SOTA，并通过合成数据预训练 + 真实数据微调的 sim-to-real 范式在 CIFAR10-DVS 上创下 92.5% 的历史最佳。
 tags:
   - "AAAI 2026"
   - "脉冲神经网络"

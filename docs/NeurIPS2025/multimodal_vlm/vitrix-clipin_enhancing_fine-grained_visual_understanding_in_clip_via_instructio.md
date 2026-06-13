@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VITRIX-CLIPIN: Enhancing Fine-Grained Visual Understanding in CLIP via Instruction Editing Data and Long Captions
 description: >-
-  [NeurIPS 2025][多模态VLM][CLIP] 提出 CLIP-IN 框架，利用指令编辑数据集作为硬负样本和长描述增强 CLIP 的细粒度视觉理解能力，在 MMVP 等基准上显著提升且不损害零样本性能，集成到 MLLM 中可减少视觉幻觉。
+  [NeurIPS 2025][多模态VLM][CLIP] 提出 CLIP-IN 框架，利用指令编辑数据集作为硬负样本和长描述增强 CLIP 的细粒度视觉理解能力，在 MMVP 等基准上显著提升且不损害零样本性能，集成到 MLLM 中可减少视觉幻觉。 CLIP 等视觉-语言模型在粗粒度图文对齐上表现出色，但在细粒度视觉理解上存…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

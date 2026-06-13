@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionFollower: Editing Video Motion via Lightweight Score-Guided Diffusion
 description: >-
-  [ICCV2025][模型压缩][视频运动编辑] 提出 MotionFollower，通过两个轻量卷积控制器（姿态+外观）和基于分数函数正则化的一致性引导机制，实现视频运动编辑，在 GPU 显存消耗减少约 80% 的同时超越 MotionEditor 等强基线。
+  [ICCV2025][模型压缩][视频运动编辑] 提出 MotionFollower，通过两个轻量卷积控制器（姿态+外观）和基于分数函数正则化的一致性引导机制，实现视频运动编辑，在 GPU 显存消耗减少约 80% 的同时超越 MotionEditor 等强基线。 - 现有视频编辑局限：当前扩散模型驱动的视频编辑主要集中在属性…
 tags:
   - "ICCV2025"
   - "模型压缩"

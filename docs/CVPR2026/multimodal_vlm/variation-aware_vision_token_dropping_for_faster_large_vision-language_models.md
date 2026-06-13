@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Variation-Aware Vision Token Dropping for Faster Large Vision-Language Models
 description: >-
-  [CVPR2026][多模态VLM][token压缩] 提出 V2Drop，首次从 token 变化量（variation）视角出发，通过渐进式丢弃 LLM 内部变化量最小的"懒惰"视觉 token，实现无训练、无位置偏差、兼容高效算子的 LVLM 推理加速…
+  [CVPR2026][多模态VLM][token压缩] 提出 V2Drop，首次从 token 变化量（variation）视角出发，通过渐进式丢弃 LLM 内部变化量最小的"懒惰"视觉 token，实现无训练、无位置偏差、兼容高效算子的 LVLM 推理加速，在图像和视频理解任务中分别保留 94.0% 和 98.6% 原始性能，同时降低 LLM 生成延迟 31.5% 和 74.2%。
 tags:
   - "CVPR2026"
   - "多模态VLM"

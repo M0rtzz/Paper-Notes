@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Neutral-Reference Prompting for Vision-Language Models
 description: >-
-  [ICML 2026][多模态VLM][Base-Novel权衡] 本文将 VLM 高效迁移中的 Base-New Trade-off (BNT) 重新归因为"预训练带来的非对称类别偏好在未见类上未被消除"，提出 NeRP：用一个语义中性的文本 prompt 和"训练图均值"作为参考输入…
+  [ICML 2026][多模态VLM][Base-Novel权衡] 本文将 VLM 高效迁移中的 Base-New Trade-off (BNT) 重新归因为"预训练带来的非对称类别偏好在未见类上未被消除"，提出 NeRP：用一个语义中性的文本 prompt 和"训练图均值"作为参考输入，在已训练好的 VLM 上零参数估计每个类别的先验偏移，再用贝叶斯风格的代理分数在易混淆类对之间做局部翻转，从而在不动模型参数的前提下提升未见类精度并保住基类精度。
 tags:
   - "ICML 2026"
   - "多模态VLM"

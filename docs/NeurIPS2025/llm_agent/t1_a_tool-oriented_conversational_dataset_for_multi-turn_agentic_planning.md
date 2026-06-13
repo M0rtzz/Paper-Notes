@@ -2,7 +2,7 @@
 title: >-
   [论文解读] T1: A Tool-Oriented Conversational Dataset for Multi-Turn Agentic Planning
 description: >-
-  [NeurIPS 2025][LLM Agent][tool-use] 构建 T1 数据集——13.5K 多轮对话覆盖 9 个领域（4 单领域 + 5 跨领域）、14 个工具，聚焦工具间依赖和动态重规划，并提出 T1-Agent（代码生成 + 缓存机制）作为基线系统…
+  [NeurIPS 2025][LLM Agent][tool-use] 构建 T1 数据集——13.5K 多轮对话覆盖 9 个领域（4 单领域 + 5 跨领域）、14 个工具，聚焦工具间依赖和动态重规划，并提出 T1-Agent（代码生成 + 缓存机制）作为基线系统；实验发现 SFT 后的 Llama 8B 在 Tool Call F1 上达 87.17%，超越未微调的 70B 模型，但仍落后于 GPT-5/o3 等闭源模型。
 tags:
   - "NeurIPS 2025"
   - "LLM Agent"

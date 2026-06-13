@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Mind the (Belief) Gap: Group Identity in the World of LLMs
 description: >-
-  [ACL 2025][LLM/NLP][信念一致性] 通过多智能体 LLM 框架模拟信念一致性（Belief Congruence）理论，发现 LLM 表现出比人类更强的信念一致性偏向，导致错误信息传播增加和学习能力受损，并提出三种基于社会心理学的缓解策略。
+  [ACL 2025][LLM 其他][信念一致性] 通过多智能体 LLM 框架模拟信念一致性（Belief Congruence）理论，发现 LLM 表现出比人类更强的信念一致性偏向，导致错误信息传播增加和学习能力受损，并提出三种基于社会心理学的缓解策略。 信念一致性理论由 Rokeach (1960) 提出…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "信念一致性"
   - "多智能体"
   - "社会偏见"

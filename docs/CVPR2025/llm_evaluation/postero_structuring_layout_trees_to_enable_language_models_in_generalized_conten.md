@@ -2,15 +2,15 @@
 title: >-
   [论文解读] PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation
 description: >-
-  [CVPR 2025][LLM评测][布局生成] 本文提出PosterO，一种以布局为中心的海报生成方法，将数据集中的布局结构化为SVG语言的层次化树表示，通过通用形状表示、设计意图向量化和层次节点描述三大机制，使LLM能够通过in-context learning在推理时生成多样化的内容感知布局。
+  [CVPR 2025][LLM评测][内容感知版面] 提出 PosterO，将海报版面结构化为 SVG 布局树，通过设计意图向量化和层次节点表示实现与 LLM 的对接，利用意图对齐的上下文学习生成高质量内容感知版面，在多个基准上达到 SOTA 并引入首个支持多用途和多形状元素的 PStylish7 数据集。
 tags:
   - "CVPR 2025"
   - "LLM评测"
-  - "布局生成"
+  - "内容感知版面"
+  - "布局树"
+  - "SVG"
+  - "LLM上下文学习"
   - "海报设计"
-  - "LLM"
-  - "SVG树"
-  - "in-context learning"
 ---
 
 # PosterO: Structuring Layout Trees to Enable Language Models in Generalized Content-Aware Layout Generation
@@ -131,3 +131,19 @@ tags:
   - SVG树
   - in-context learning
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICCV 2025\] Lay2Story: Extending Diffusion Transformers for Layout-Togglable Story Generation](../../ICCV2025/llm_evaluation/lay2story_extending_diffusion_transformers_for_layout-togglable_story_generation.md)
+- [\[ICCV 2025\] Discontinuity-aware Normal Integration for Generic Central Camera Models](../../ICCV2025/llm_evaluation/discontinuity-aware_normal_integration_for_generic_central_camera_models.md)
+- [\[ICCV 2025\] Imbalance in Balance: Online Concept Balancing in Generation Models](../../ICCV2025/llm_evaluation/imbalance_in_balance_online_concept_balancing_in_generation_models.md)
+- [\[ACL 2025\] NorEval: A Norwegian Language Understanding and Generation Evaluation Benchmark](../../ACL2025/llm_evaluation/noreval_a_norwegian_language_understanding_and_generation_evaluation_benchmark.md)
+- [\[ACL 2025\] Retrieval Models Aren't Tool-Savvy: Benchmarking Tool Retrieval for Large Language Models](../../ACL2025/llm_evaluation/retrieval_models_arent_tool-savvy_benchmarking_tool_retrieval_for_large_language.md)
+
+</div>
+
+<!-- RELATED:END -->

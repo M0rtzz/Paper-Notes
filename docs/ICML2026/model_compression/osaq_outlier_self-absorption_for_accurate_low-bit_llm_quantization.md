@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OSAQ: Outlier Self-Absorption for Accurate Low-bit LLM Quantization
 description: >-
-  [ICML 2026][模型压缩][仅权重量化] OSAQ 利用 LLM 各层 Hessian 在不同输入下保持一致的低秩零空间，将零空间向量线性组合成一个加性权重扰动 $\Delta W$，在不改变二阶任务损失的前提下把离群权重「自吸收」掉，使 2 比特仅权重量化的困惑度比朴素 GPTQ 降低 40% 以上…
+  [ICML 2026][模型压缩][仅权重量化] OSAQ 利用 LLM 各层 Hessian 在不同输入下保持一致的低秩零空间，将零空间向量线性组合成一个加性权重扰动 $\Delta W$，在不改变二阶任务损失的前提下把离群权重「自吸收」掉，使 2 比特仅权重量化的困惑度比朴素 GPTQ 降低 40% 以上。
 tags:
   - "ICML 2026"
   - "模型压缩"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAGiC-SLAM: Multi-Agent Gaussian Globally Consistent SLAM
 description: >-
-  [CVPR 2025][3D视觉][多智能体SLAM] 提出基于刚性可变形3D高斯场景表示的多智能体SLAM系统MAGiC-SLAM，通过新颖的追踪、地图融合机制和基于DinoV2的回环检测，实现了比CP-SLAM快24倍的处理速度、7倍低的GPU占用，以及更精确的轨迹估计和高保真新视角渲染。
+  [CVPR 2025][3D视觉][多智能体SLAM] 提出基于刚性可变形3D高斯场景表示的多智能体SLAM系统MAGiC-SLAM，通过新颖的追踪、地图融合机制和基于DinoV2的回环检测，实现了比CP-SLAM快24倍的处理速度、7倍低的GPU占用，以及更精确的轨迹估计和高保真新视角渲染。 领域现状 领域现状：领域现状:…
 tags:
   - "CVPR 2025"
   - "3D视觉"

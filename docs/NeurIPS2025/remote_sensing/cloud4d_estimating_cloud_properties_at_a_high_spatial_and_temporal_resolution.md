@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Cloud4D: Estimating Cloud Properties at a High Spatial and Temporal Resolution
 description: >-
-  [NeurIPS 2025][遥感][云物理属性估计] 首个基于地面多视角相机的学习框架，通过单应性引导的2D-to-3D Transformer重建四维（3D空间+时间）云液态水含量分布，在25m空间/5s时间分辨率下实现了相对雷达<10%的误差，比卫星观测提升了一个数量级的时空分辨率。
+  [NeurIPS 2025 Spotlight][遥感][云物理属性估计] 首个基于地面多视角相机的学习框架，通过单应性引导的2D-to-3D Transformer重建四维（3D空间+时间）云液态水含量分布，在25m空间/5s时间分辨率下实现了相对雷达<10%的误差，比卫星观测提升了一个数量级的时空分辨率。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "遥感"
   - "云物理属性估计"
   - "多视角3D重建"

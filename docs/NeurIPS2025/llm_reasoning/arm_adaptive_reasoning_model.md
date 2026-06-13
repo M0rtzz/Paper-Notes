@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ARM: Adaptive Reasoning Model
 description: >-
-  [NeurIPS 2025][LLM推理][自适应推理] ARM 通过让模型自适应地选择四种推理格式（直接回答、短CoT、代码、长CoT），配合改进的 Ada-GRPO 训练算法解决 format collapse 问题，在保持与纯长CoT模型持平的准确率的同时平均节省 ~30% token…
+  [NeurIPS 2025 Spotlight][LLM推理][自适应推理] ARM 通过让模型自适应地选择四种推理格式（直接回答、短CoT、代码、长CoT），配合改进的 Ada-GRPO 训练算法解决 format collapse 问题，在保持与纯长CoT模型持平的准确率的同时平均节省 ~30% token，最多节省 ~70%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM推理"
   - "自适应推理"
   - "过度思考"

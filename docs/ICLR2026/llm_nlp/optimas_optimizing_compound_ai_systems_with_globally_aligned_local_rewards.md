@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Optimas: Optimizing Compound AI Systems with Globally Aligned Local Rewards
 description: >-
-  [ICLR 2026][LLM/NLP][复合AI系统] 提出 Optimas 框架，为复合 AI 系统中每个组件维护一个与全局奖励对齐的局部奖励函数（LRF），使异构组件（prompt、模型参数、超参数、模型选择）可独立优化，在五个真实系统上平均提升 11.92%。
+  [ICLR 2026][LLM 其他][复合AI系统] 提出 Optimas 框架，为复合 AI 系统中每个组件维护一个与全局奖励对齐的局部奖励函数（LRF），使异构组件（prompt、模型参数、超参数、模型选择）可独立优化，在五个真实系统上平均提升 11.92%。 领域现状：现代 AI 系统越来越多地集成 LLM、检索器、…
 tags:
   - "ICLR 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "复合AI系统"
   - "局部奖励函数"
   - "全局对齐"

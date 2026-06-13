@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Completion as Enhancement: A Degradation-Aware Selective Image Guided Network
 description: >-
-  [CVPR 2025][多模态VLM][image enhancement] 将图像增强重构为'补全'范式，通过退化感知选择机制引导网络聚焦于需要增强的区域，避免对已清晰区域的过度处理
+  [CVPR 2025][多模态VLM][image enhancement] 将图像增强重构为'补全'范式，通过退化感知选择机制引导网络聚焦于需要增强的区域，避免对已清晰区域的过度处理 领域现状 领域现状：Completion as Enhancement 方向近年取得了显著进展，但仍存在关键挑战。 现有痛点：现有方法在泛化…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

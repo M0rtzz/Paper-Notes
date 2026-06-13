@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling
 description: >-
-  [NeurIPS 2025][医学图像][多实例学习] 提出 HiVE-MIL，一个层级视觉-语言 MIL 框架，通过构建统一异构图建模跨尺度层级关系（5× 和 20×）和同尺度多模态对齐，配合文本引导的动态过滤机制和层级对比损失…
+  [NeurIPS 2025][医学图像][多实例学习] 提出 HiVE-MIL，一个层级视觉-语言 MIL 框架，通过构建统一异构图建模跨尺度层级关系（5× 和 20×）和同尺度多模态对齐，配合文本引导的动态过滤机制和层级对比损失，在 TCGA 肺/乳腺/肾癌三个数据集的 16-shot 设置下全面超越已有方法，Macro F1 最高提升 4.1%。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

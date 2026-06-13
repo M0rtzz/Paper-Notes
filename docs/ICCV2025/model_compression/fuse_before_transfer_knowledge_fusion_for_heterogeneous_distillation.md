@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fuse Before Transfer: Knowledge Fusion for Heterogeneous Distillation
 description: >-
-  [ICCV 2025][模型压缩][跨架构知识蒸馏] 提出 FBT（Fuse Before Transfer），通过在知识传递前先融合异构教师和学生的模块（CNN/MSA/MLP），构建一个自适应的中间融合模型来缓解跨架构蒸馏（CAKD）中的特征差距，并用空间无关的 InfoNCE 损失替代传统 MSE 损失…
+  [ICCV 2025][模型压缩][跨架构知识蒸馏] 提出 FBT（Fuse Before Transfer），通过在知识传递前先融合异构教师和学生的模块（CNN/MSA/MLP），构建一个自适应的中间融合模型来缓解跨架构蒸馏（CAKD）中的特征差距，并用空间无关的 InfoNCE 损失替代传统 MSE 损失，在 CIFAR-100 上平均提升 8.38%，在 ImageNet-1K 上平均提升 2.31%。
 tags:
   - "ICCV 2025"
   - "模型压缩"

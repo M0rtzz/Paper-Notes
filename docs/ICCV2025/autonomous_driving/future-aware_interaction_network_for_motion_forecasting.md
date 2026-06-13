@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Future-Aware Interaction Network For Motion Forecasting
 description: >-
-  [ICCV 2025][自动驾驶][运动预测] 提出 FINet，将潜在未来轨迹提前建模并融入场景编码阶段进行联合优化，同时引入 Mamba 架构替代 Transformer 进行时空建模，实现了高效且准确的运动预测。
+  [ICCV 2025][自动驾驶][运动预测] 提出 FINet，将潜在未来轨迹提前建模并融入场景编码阶段进行联合优化，同时引入 Mamba 架构替代 Transformer 进行时空建模，实现了高效且准确的运动预测。 运动预测是自动驾驶的关键组件，需要根据历史轨迹和地图信息预测多条未来可能轨迹。现有方法主要有两类： MLP…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

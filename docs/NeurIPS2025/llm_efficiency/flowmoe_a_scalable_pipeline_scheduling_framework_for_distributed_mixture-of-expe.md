@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FlowMoE: A Scalable Pipeline Scheduling Framework for Distributed Mixture-of-Experts Training
 description: >-
-  [NeurIPS 2025][LLM效率][流水线调度] FlowMoE提出统一的流水线调度框架，将MHA计算、门控、专家计算和A2A通信纳入一体化流水线，并使用优先级驱动的all-reduce张量分块机制最大化通信与计算的重叠…
+  [NeurIPS 2025][LLM效率][流水线调度] FlowMoE提出统一的流水线调度框架，将MHA计算、门控、专家计算和A2A通信纳入一体化流水线，并使用优先级驱动的all-reduce张量分块机制最大化通信与计算的重叠，在多种真实MoE模型上实现1.13×-1.82×加速、10-39%能耗降低和7-32%内存节省。
 tags:
   - "NeurIPS 2025"
   - "LLM效率"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-modal Information Flow in Multimodal Large Language Models
 description: >-
-  [CVPR 2025][多模态VLM][多模态信息流] 通过"attention knockout"方法系统性地追踪 MLLM 中视觉和语言信息的流动路径，发现视觉信息分两阶段（先全局后局部）融入语言表征，最终在中间层由问题位置传播到最后位置生成答案。
+  [CVPR 2025][多模态VLM][多模态信息流] 通过"attention knockout"方法系统性地追踪 MLLM 中视觉和语言信息的流动路径，发现视觉信息分两阶段（先全局后局部）融入语言表征，最终在中间层由问题位置传播到最后位置生成答案。 领域现状：自回归多模态大语言模型（MLLMs）在 VQA 等视觉-语言任…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

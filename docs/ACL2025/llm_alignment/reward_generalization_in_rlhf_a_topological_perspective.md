@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reward Generalization in RLHF: A Topological Perspective
 description: >-
-  [ACL 2025 (Findings)][LLM对齐][RLHF] 从信息拓扑的角度系统刻画 RLHF 中 reward 信息的流动——宏观层面将 RLHF 建模为自编码过程，微观层面提出 Induced Bayesian Network (IBN) 分析偏好数据拓扑对 reward 泛化的影响…
+  [ACL 2025 (Findings)][LLM对齐][RLHF] 从信息拓扑的角度系统刻画 RLHF 中 reward 信息的流动——宏观层面将 RLHF 建模为自编码过程，微观层面提出 Induced Bayesian Network (IBN) 分析偏好数据拓扑对 reward 泛化的影响，进而提出树结构偏好数据方法，在 HH-RLHF/GSM-8K/DialogSum 三个任务上平均 65% win rate 超越链式 baseline。
 tags:
   - "ACL 2025 (Findings)"
   - "LLM对齐"

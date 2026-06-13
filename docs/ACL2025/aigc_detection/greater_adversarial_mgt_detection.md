@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Iron Sharpens Iron: Defending Against Attacks in Machine-Generated Text Detection with Adversarial Training
 description: >-
-  [ACL 2025][AIGC检测][文本检测] 提出 GREATER 对抗训练框架，同步训练对抗攻击器（Greater-A）和 MGT 检测器（Greater-D），对抗器通过代理模型梯度识别关键 token 并在嵌入空间扰动生成对抗样本，检测器从课程式对抗样本中学习泛化防御…
+  [ACL 2025][AIGC检测][文本检测] 提出 GREATER 对抗训练框架，同步训练对抗攻击器（Greater-A）和 MGT 检测器（Greater-D），对抗器通过代理模型梯度识别关键 token 并在嵌入空间扰动生成对抗样本，检测器从课程式对抗样本中学习泛化防御，在 16 种攻击下 ASR 降至 5.53%（SOTA 为 6.20%），攻击效率比 SOTA 快 4 倍。
 tags:
   - "ACL 2025"
   - "AIGC检测"

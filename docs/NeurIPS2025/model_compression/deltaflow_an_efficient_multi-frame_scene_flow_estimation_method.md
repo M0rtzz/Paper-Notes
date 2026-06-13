@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DeltaFlow: An Efficient Multi-frame Scene Flow Estimation Method
 description: >-
-  [NeurIPS 2025][模型压缩][scene flow] 提出 DeltaFlow (ΔFlow)，通过体素帧间差分（Δ scheme）提取运动线索，实现特征尺寸不随帧数增长的多帧场景流估计，在 Argoverse 2/Waymo/nuScenes 上达到 SOTA 且比次优多帧方法快 2 倍。
+  [NeurIPS 2025 Spotlight][模型压缩][scene flow] 提出 DeltaFlow (ΔFlow)，通过体素帧间差分（Δ scheme）提取运动线索，实现特征尺寸不随帧数增长的多帧场景流估计，在 Argoverse 2/Waymo/nuScenes 上达到 SOTA 且比次优多帧方法快 2 倍。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "scene flow"
   - "multi-frame"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VLM-Pruner: Buffering for Spatial Sparsity in an Efficient VLM Centrifugal Token Pruning Paradigm
 description: >-
-  [CVPR 2026][多模态VLM][视觉token剪枝] 提出VLM-Pruner，一种免训练的离心式token剪枝方法，通过空间稀疏缓冲（BSS）准则平衡冗余消除与局部细节完整性，在88.9%剪枝率下跨5个VLM一致超越现有方法，同时实现端到端推理加速。
+  [CVPR 2026][多模态VLM][视觉token剪枝] 提出VLM-Pruner，一种免训练的离心式token剪枝方法，通过空间稀疏缓冲（BSS）准则平衡冗余消除与局部细节完整性，在88.9%剪枝率下跨5个VLM一致超越现有方法，同时实现端到端推理加速。 领域现状：VLM将视觉编码器与LLM结合，在图像理解任务上表现出…
 tags:
   - "CVPR 2026"
   - "多模态VLM"

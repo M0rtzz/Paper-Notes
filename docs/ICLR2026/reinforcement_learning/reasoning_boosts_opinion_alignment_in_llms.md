@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Reasoning Boosts Opinion Alignment in LLMs
 description: >-
-  [ICLR 2026][强化学习][opinion alignment] 用 GRPO 强化学习训练 LLM 通过结构化推理对齐个体政治观点，SFT+GRPO 在美国/德国/瑞士三国数据集上一致优于 ICL 和 ORPO 基线，但系统性揭示了左右翼偏差和 Neutral 立场预测的根本困难。
+  [ICLR 2026][强化学习][opinion alignment] 用 GRPO 强化学习训练 LLM 通过结构化推理对齐个体政治观点，SFT+GRPO 在美国/德国/瑞士三国数据集上一致优于 ICL 和 ORPO 基线，但系统性揭示了左右翼偏差和 Neutral 立场预测的根本困难。 领域现状：政治观点建模对数字民主…
 tags:
   - "ICLR 2026"
   - "强化学习"

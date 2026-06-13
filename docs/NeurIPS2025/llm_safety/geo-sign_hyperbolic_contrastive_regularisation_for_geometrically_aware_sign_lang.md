@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Geo-Sign: Hyperbolic Contrastive Regularisation for Geometrically Aware Sign Language Translation
 description: >-
-  [NeurIPS 2025][LLM安全][手语翻译] Geo-Sign 提出将骨架特征投影到 Poincaré 球模型的双曲空间中，通过双曲对比损失正则化 mT5 语言模型，使其感知手语运动的层次结构，仅用骨架数据就在 CSL-Daily 上超越了基于 RGB 的 SOTA 方法（BLEU-4 +1.81…
+  [NeurIPS 2025][LLM安全][手语翻译] Geo-Sign 提出将骨架特征投影到 Poincaré 球模型的双曲空间中，通过双曲对比损失正则化 mT5 语言模型，使其感知手语运动的层次结构，仅用骨架数据就在 CSL-Daily 上超越了基于 RGB 的 SOTA 方法（BLEU-4 +1.81, ROUGE-L +3.03）。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

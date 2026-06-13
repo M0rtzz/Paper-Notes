@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Generating Pedagogically Meaningful Visuals for Math Word Problems: A New Benchmark and Analysis of Text-to-Image Models
 description: >-
-  [ACL 2025 (Findings)][图像生成][数学应用题] Math2Visual 提出了一个从数学应用题（MWP）文本描述自动生成教学可视化图像的框架，定义了基于教师访谈的视觉语言和设计空间，构建了 1,903 张标注数据集，并评估和微调了多个 TTI 模型…
+  [ACL 2025 (Findings)][图像生成][数学应用题] Math2Visual 提出了一个从数学应用题（MWP）文本描述自动生成教学可视化图像的框架，定义了基于教师访谈的视觉语言和设计空间，构建了 1,903 张标注数据集，并评估和微调了多个 TTI 模型，揭示了当前模型在数学关系表示上的关键不足。
 tags:
   - "ACL 2025 (Findings)"
   - "图像生成"

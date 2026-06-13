@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Evolving Visual Concept Library using Vision-Language Critics
 description: >-
-  [CVPR 2025][多模态VLM][概念瓶颈模型] 提出 Escher 框架，通过 VLM 作为评判者 + LLM 作为概念生成器的迭代循环，自动进化视觉概念库以提升概念瓶颈模型在图像分类中的表现，在 CUB 数据集上将 LM4CV 从 63.26% 提升至 83.17%（+19.91%）。
+  [CVPR 2025][多模态VLM][概念瓶颈模型] 提出 Escher 框架，通过 VLM 作为评判者 + LLM 作为概念生成器的迭代循环，自动进化视觉概念库以提升概念瓶颈模型在图像分类中的表现，在 CUB 数据集上将 LM4CV 从 63.26% 提升至 83.17%（+19.91%）。 概念瓶颈视觉识别（Conce…
 tags:
   - "CVPR 2025"
   - "多模态VLM"

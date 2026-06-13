@@ -2,7 +2,7 @@
 title: >-
   [论文解读] VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection
 description: >-
-  [NeurIPS 2025][社会计算][HOI检测] 提出 VDRP 框架，通过视觉多样性感知的 prompt 学习（注入组级方差 + 高斯扰动）和区域感知的 prompt 增强（基于 LLM 生成的区域概念检索），解决零样本 HOI 检测中类内视觉多样性和类间视觉纠缠两大挑战。
+  [NeurIPS 2025][社会计算][HOI检测] 提出 VDRP 框架，通过视觉多样性感知的 prompt 学习（注入组级方差 + 高斯扰动）和区域感知的 prompt 增强（基于 LLM 生成的区域概念检索），解决零样本 HOI 检测中类内视觉多样性和类间视觉纠缠两大挑战。 人-物交互（HOI）检测需要定位人和物体并…
 tags:
   - "NeurIPS 2025"
   - "社会计算"

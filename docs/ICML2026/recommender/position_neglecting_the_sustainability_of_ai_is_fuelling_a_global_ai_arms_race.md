@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Position: Neglecting the Sustainability of AI is Fuelling a Global AI Arms Race
 description: >-
-  [ICML 2026][推荐系统][可持续 AI] 这篇 position paper 借 Karl Marx 的"基础-上层建筑"框架，主张当下"sustainable AI"的讨论被环境维度独占而忽略了经济与社会维度，呼吁同时拉高**气候意识**与**资源意识**两条轴…
+  [ICML 2026][推荐系统][可持续 AI] 这篇 position paper 借 Karl Marx 的"基础-上层建筑"框架，主张当下"sustainable AI"的讨论被环境维度独占而忽略了经济与社会维度，呼吁同时拉高**气候意识**与**资源意识**两条轴，并提出 CARAML 五层行动框架（个人 / 社区 / 工业 / 政府 / 全球）以抑制正在升级的"全球 AI 军备竞赛"。
 tags:
   - "ICML 2026"
   - "推荐系统"

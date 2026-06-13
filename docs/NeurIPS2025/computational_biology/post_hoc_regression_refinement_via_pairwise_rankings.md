@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Post Hoc Regression Refinement via Pairwise Rankings
 description: >-
-  [NeurIPS 2025][计算生物][regression refinement] 提出 RankRefine，一种模型无关的后处理回归改进方法，通过将基础回归器的预测与基于成对排序的估计进行逆方差加权融合，在无需重训练的情况下显著降低预测误差…
+  [NeurIPS 2025][计算生物][regression refinement] 提出 RankRefine，一种模型无关的后处理回归改进方法，通过将基础回归器的预测与基于成对排序的估计进行逆方差加权融合，在无需重训练的情况下显著降低预测误差，仅需 20 次成对比较和通用 LLM 即可实现分子性质预测中高达 10% 的 MAE 相对减少。
 tags:
   - "NeurIPS 2025"
   - "计算生物"

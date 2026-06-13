@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LegalGraphRAG: Multi-Agent Graph Retrieval-Augmented Generation for Reliable Legal Reasoning
 description: >-
-  [ACL2026][图学习][法律 RAG] LegalGraphRAG 用事实图、 ontology 图和规则图构成层级法律图谱，再用 Researcher-Auditor-Adjudicator 三代理流程完成检索、验证和裁决，在法律判决生成中提升准确性与证据可追溯性。
+  [ACL2026][图学习][法律 RAG] LegalGraphRAG 用事实图、 ontology 图和规则图构成层级法律图谱，再用 Researcher-Auditor-Adjudicator 三代理流程完成检索、验证和裁决，在法律判决生成中提升准确性与证据可追溯性。 领域现状：RAG 是把通用 LLM 迁移到专业领域…
 tags:
   - "ACL2026"
   - "图学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RnG: A Unified Transformer for Complete 3D Modeling from Partial Observations
 description: >-
-  [CVPR 2026][3D视觉][3D重建] RnG 提出重构引导因果注意力（Reconstruction-Guided Causal Attention），将 Transformer 的 KV-Cache 重新解释为隐式 3D 表示…
+  [CVPR 2026][3D视觉][3D重建] RnG 提出重构引导因果注意力（Reconstruction-Guided Causal Attention），将 Transformer 的 KV-Cache 重新解释为隐式 3D 表示，用单个前馈 Transformer 统一完成从无位姿稀疏图像到完整 3D 几何与外观的重建与生成，速度比扩散方法快 100 倍以上。
 tags:
   - "CVPR 2026"
   - "3D视觉"

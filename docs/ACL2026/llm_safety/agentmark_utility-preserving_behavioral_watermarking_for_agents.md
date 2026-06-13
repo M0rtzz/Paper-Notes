@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentMark: Utility-Preserving Behavioral Watermarking for Agents
 description: >-
-  [ACL 2026][LLM安全][agent watermarking] AgentMark 把 LLM agent 的「下一步选什么 tool / subgoal」建模为一个时间变化的离散信道…
+  [ACL 2026][LLM安全][agent watermarking] AgentMark 把 LLM agent 的「下一步选什么 tool / subgoal」建模为一个时间变化的离散信道，通过显式 elicit 行为分布 $P_t$ 并应用 FDPSS 式分布保持采样把多比特 ID 嵌入 planning 决策，配合 RLNC 编码使得即便 trace 被裁剪/删步也能从残余日志恢复水印；在 ALFWorld、ToolBench、OASIS 三类任务上既不掉准确率（保持任务 SR 与 baseline 差异 <0.7 pp），又能稳定提供 1.2-2.3 bps 的多比特容量，且与 SynthID-Text 的内容层水印正…
 tags:
   - "ACL 2026"
   - "LLM安全"

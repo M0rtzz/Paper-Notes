@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Distributed Algorithms for Euclidean Clustering
 description: >-
-  [ICLR2026][distributed clustering] 在分布式环境下为 Euclidean $(k,z)$-clustering 构造 $(1+\varepsilon)$-coreset…
+  [ICLR2026][distributed clustering] 在分布式环境下为 Euclidean $(k,z)$-clustering 构造 $(1+\varepsilon)$-coreset，在 coordinator 模型和 blackboard 模型中均达到通信复杂度的最优下界（至多差 polylog 因子）。
 tags:
   - "ICLR2026"
   - "distributed clustering"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment
 description: >-
-  [ICCV 2025][图像生成][扩散模型加速] 本文提出 PostDiff——一个无需训练的扩散模型加速框架，在输入层面通过混合分辨率去噪策略（早期低分辨率→后期高分辨率）和模块层面通过混合缓存策略（DeepCache + 交叉注意力缓存）减少冗余…
+  [ICCV 2025][图像生成][扩散模型加速] 本文提出 PostDiff——一个无需训练的扩散模型加速框架，在输入层面通过混合分辨率去噪策略（早期低分辨率→后期高分辨率）和模块层面通过混合缓存策略（DeepCache + 交叉注意力缓存）减少冗余，系统性地回答了"减少去噪步数 vs 降低每步计算成本哪个更有效"这一关键问题——答案是后者在大多数效率范围内更优。
 tags:
   - "ICCV 2025"
   - "图像生成"

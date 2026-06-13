@@ -2,7 +2,7 @@
 title: >-
   [论文解读] InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition
 description: >-
-  [NeurIPS 2025][语义分割][遥感] 定义指令导向目标计数/检测/分割(InstructCDS)新任务，构建EarthInstruct遥感基准（覆盖开放词汇/开放端/开放子类三种设置），提出InstructSAM——无需训练的框架：LVLM解析指令+计数、SAM2生成掩码提议、CLIP计算相似度…
+  [NeurIPS 2025][语义分割][遥感] 定义指令导向目标计数/检测/分割(InstructCDS)新任务，构建EarthInstruct遥感基准（覆盖开放词汇/开放端/开放子类三种设置），提出InstructSAM——无需训练的框架：LVLM解析指令+计数、SAM2生成掩码提议、CLIP计算相似度，通过二进制整数规划(BIP)在计数约束下实现掩码-标签最优匹配，推理时间近乎恒定且优于专用基线。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

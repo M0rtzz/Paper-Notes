@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stable Flow: Vital Layers for Training-Free Image Editing
 description: >-
-  [CVPR 2025][图像生成][图像编辑] Stable Flow 提出自动检测 DiT（FLUX）中的"关键层"（vital layers）并仅在这些层注入参考图像的注意力特征，实现无需训练的多种图像编辑操作，同时引入 latent nudging 技术改善真实图像的流模型反演质量。
+  [CVPR 2025][图像生成][图像编辑] Stable Flow 提出自动检测 DiT（FLUX）中的"关键层"（vital layers）并仅在这些层注入参考图像的注意力特征，实现无需训练的多种图像编辑操作，同时引入 latent nudging 技术改善真实图像的流模型反演质量。 - FLUX、SD3 等新一代 T…
 tags:
   - "CVPR 2025"
   - "图像生成"

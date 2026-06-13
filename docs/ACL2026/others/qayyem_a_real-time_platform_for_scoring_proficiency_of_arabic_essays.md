@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Qayyem: A Real-time Platform for Scoring Proficiency of Arabic Essays
 description: >-
-  [ACL 2026][自动作文评分] Qayyem 是首个支持跨题目（cross-prompt）多维度（multi-trait）阿拉伯语自动作文评分的 Web 平台，集成了从特征工程到 SOTA 神经模型的多种评分方案，支持端到端的学术写作评估工作流。
+  [ACL 2026][自动作文评分] Qayyem 是首个支持跨题目（cross-prompt）多维度（multi-trait）阿拉伯语自动作文评分的 Web 平台，集成了从特征工程到 SOTA 神经模型的多种评分方案，支持端到端的学术写作评估工作流。 领域现状： 自动作文评分（AES）系统在英语场景已有大量进展…
 tags:
   - "ACL 2026"
   - "自动作文评分"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL 2026  
 **arXiv**: [2603.01009](https://arxiv.org/abs/2603.01009)  
 **代码**: [https://qayyem.qu.edu.qa/](https://qayyem.qu.edu.qa/)  
-**领域**: others  
+**领域**: 其他  
 **关键词**: 自动作文评分, 阿拉伯语NLP, 多维度评分, 跨题目泛化, 教育技术
 
 ## 一句话总结

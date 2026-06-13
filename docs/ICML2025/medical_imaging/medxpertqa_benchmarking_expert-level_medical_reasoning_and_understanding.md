@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedXpertQA: Benchmarking Expert-Level Medical Reasoning and Understanding
 description: >-
-  [ICML 2025][医学图像][医学 QA 基准] MedXpertQA 构建了包含 4460 题、覆盖 17 个专科和 11 个身体系统的专家级医学 QA 基准，通过严格的筛选增强和数据合成防泄漏，评估了 18 个主流模型，并专门设计了推理子集用于评估 o1 类推理模型。
+  [ICML 2025][医学图像][医学 QA 基准] MedXpertQA 构建了包含 4460 题、覆盖 17 个专科和 11 个身体系统的专家级医学 QA 基准，通过严格的筛选增强和数据合成防泄漏，评估了 18 个主流模型，并专门设计了推理子集用于评估 o1 类推理模型。 领域现状：医学 QA 是评估 LLM/MLLM…
 tags:
   - "ICML 2025"
   - "医学图像"

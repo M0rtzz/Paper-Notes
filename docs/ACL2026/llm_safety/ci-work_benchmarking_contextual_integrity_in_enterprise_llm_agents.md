@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CI-Work: Benchmarking Contextual Integrity in Enterprise LLM Agents
 description: >-
-  [ACL 2026][LLM安全][企业隐私] 基于上下文完整性（Contextual Integrity）理论构建企业场景基准 CI-Work，揭示前沿 LLM 智能体在企业工作流中普遍存在隐私泄漏问题，且模型规模扩大反而加剧泄漏。
+  [ACL 2026][LLM安全][企业隐私] 基于上下文完整性（Contextual Integrity）理论构建企业场景基准 CI-Work，揭示前沿 LLM 智能体在企业工作流中普遍存在隐私泄漏问题，且模型规模扩大反而加剧泄漏。 领域现状：LLM 智能体正被集成到企业工作流中，能够访问邮件、会议记录等内部数据来执行复杂…
 tags:
   - "ACL 2026"
   - "LLM安全"

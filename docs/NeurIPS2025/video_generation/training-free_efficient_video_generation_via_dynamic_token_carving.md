@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Training-Free Efficient Video Generation via Dynamic Token Carving
 description: >-
-  [NeurIPS 2025][视频生成][免训练加速] 本文提出 Jenga，一种免训练的视频 DiT 推理加速方案，通过动态块注意力裁剪（基于 3D 空间填充曲线重排 token 后进行稀疏 KV block 选择）和渐进分辨率策略（从低分辨率逐步提升）正交结合…
+  [NeurIPS 2025][视频生成][免训练加速] 本文提出 Jenga，一种免训练的视频 DiT 推理加速方案，通过动态块注意力裁剪（基于 3D 空间填充曲线重排 token 后进行稀疏 KV block 选择）和渐进分辨率策略（从低分辨率逐步提升）正交结合，在 HunyuanVideo 上实现 8.83 倍加速且 VBench 仅下降 0.01%。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

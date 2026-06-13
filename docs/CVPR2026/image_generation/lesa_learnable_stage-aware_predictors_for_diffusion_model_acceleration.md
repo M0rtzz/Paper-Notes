@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration
 description: >-
-  [CVPR 2026][图像生成][扩散模型加速] 提出 LESA 框架，用 KAN（Kolmogorov-Arnold Network）作为可学习时序预测器，结合多阶段多专家架构和两阶段训练策略，在 FLUX 上实现 5× 加速仅 1.0% 质量下降…
+  [CVPR 2026][图像生成][扩散模型加速] 提出 LESA 框架，用 KAN（Kolmogorov-Arnold Network）作为可学习时序预测器，结合多阶段多专家架构和两阶段训练策略，在 FLUX 上实现 5× 加速仅 1.0% 质量下降，在 Qwen-Image 上 6.25× 加速比 TaylorSeer 质量提升 20.2%，在 HunyuanVideo 上 5× 加速 PSNR 提升 24.7%。
 tags:
   - "CVPR 2026"
   - "图像生成"

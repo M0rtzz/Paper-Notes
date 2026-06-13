@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Test of Time: Rethinking Temporal Signal of Benchmark Contamination
 description: >-
-  [ACL2026][时间序列][基准污染] 这篇论文证明“cutoff 之后性能下降”并不是稳健的 benchmark contamination 证据：同一批源文档只要从原文填空题换成 LLM 改写题，时间衰减信号就会显著改变甚至消失。
+  [ACL2026][时间序列][基准污染] 这篇论文证明“cutoff 之后性能下降”并不是稳健的 benchmark contamination 证据：同一批源文档只要从原文填空题换成 LLM 改写题，时间衰减信号就会显著改变甚至消失。 领域现状：大模型评测越来越依赖公开 benchmark，但公开题目、题解、衍生讨论很可…
 tags:
   - "ACL2026"
   - "时间序列"

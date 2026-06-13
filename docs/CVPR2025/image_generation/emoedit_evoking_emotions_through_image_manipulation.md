@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EmoEdit: Evoking Emotions through Image Manipulation
 description: >-
-  [CVPR 2025][图像生成][情感图像操纵] 本文提出 EmoEdit，首个通过内容修改（而非仅颜色/风格调整）来唤起指定情感的图像操纵框架，构建了 40,120 对的 EmoEditSet 数据集，设计了可即插即用的 Emotion Adapter，在结构保持和情感唤起之间取得了显著平衡。
+  [CVPR 2025][图像生成][情感图像操纵] 本文提出 EmoEdit，首个通过内容修改（而非仅颜色/风格调整）来唤起指定情感的图像操纵框架，构建了 40,120 对的 EmoEditSet 数据集，设计了可即插即用的 Emotion Adapter，在结构保持和情感唤起之间取得了显著平衡。 领域现状：情感图像操纵（A…
 tags:
   - "CVPR 2025"
   - "图像生成"

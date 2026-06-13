@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Turning Drift into Constraint: Robust Reasoning Alignment in Non-Stationary Multi-Stream Environments
 description: >-
-  [ICML 2026][医学图像][多源对齐] 本文把多个 MLLM 之间的推理"漂移"重新解释成 DPO 中的负样本约束，用 Plackett-Luce 偏好损失同时压制 N 个 source model 的发散轨迹，让 7B 学生模型在不需要 ground-truth 报告的前提下…
+  [ICML 2026][医学图像][多源对齐] 本文把多个 MLLM 之间的推理"漂移"重新解释成 DPO 中的负样本约束，用 Plackett-Luce 偏好损失同时压制 N 个 source model 的发散轨迹，让 7B 学生模型在不需要 ground-truth 报告的前提下，仅用 10% 的 MIMIC-CXR 就在胸片分类与报告生成任务上超过所有 source teacher。
 tags:
   - "ICML 2026"
   - "医学图像"

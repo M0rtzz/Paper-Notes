@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ELVIS: Enhance Low-Light for Video Instance Segmentation in the Dark
 description: >-
-  [CVPR 2026][语义分割][低光视频实例分割] ELVIS 提出了首个低光视频实例分割（VIS）框架，通过物理驱动的合成低光视频管线（含运动模糊建模）、无标定退化参数估计网络 VDP-Net、以及将增强解码器集成到 VIS 架构中实现退化与内容解耦…
+  [CVPR 2026][语义分割][低光视频实例分割] ELVIS 提出了首个低光视频实例分割（VIS）框架，通过物理驱动的合成低光视频管线（含运动模糊建模）、无标定退化参数估计网络 VDP-Net、以及将增强解码器集成到 VIS 架构中实现退化与内容解耦，在合成和真实低光视频上分别实现 +3.7AP 和 +2.8AP 的提升。
 tags:
   - "CVPR 2026"
   - "语义分割"

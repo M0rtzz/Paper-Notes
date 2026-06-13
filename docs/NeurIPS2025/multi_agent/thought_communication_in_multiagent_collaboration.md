@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Thought Communication in Multiagent Collaboration
 description: >-
-  [NeurIPS 2025][多智能体][多智能体协作] 提出 ThoughtComm 框架，将多智能体通信形式化为隐变量生成模型，证明了在非参数条件下共享思想和私有思想均可辨识，并通过稀疏正则化自编码器提取潜在思想、经前缀注入回馈给每个智能体…
+  [NeurIPS 2025 Spotlight][多智能体][多智能体协作] 提出 ThoughtComm 框架，将多智能体通信形式化为隐变量生成模型，证明了在非参数条件下共享思想和私有思想均可辨识，并通过稀疏正则化自编码器提取潜在思想、经前缀注入回馈给每个智能体，在数学推理任务上相比当前 SOTA 的 Multiagent Finetuning 平均提升 19.06%。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "多智能体"
   - "多智能体协作"
   - "思想通信"

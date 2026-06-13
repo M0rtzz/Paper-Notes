@@ -2,9 +2,9 @@
 title: >-
   [论文解读] EI: Early Intervention for Multimodal Imaging based Disease Recognition
 description: >-
-  [CVPR 2026][医学图像][多模态医学图像] EI 提出在单模态嵌入（UIE）**之前**就注入跨模态语义引导（[INT] token），模拟临床医生"先看一个模态形成初步判断再指导另一个模态检查"的工作流程…
+  [CVPR 2026 Findings][医学图像][多模态医学图像] EI 提出在单模态嵌入（UIE）**之前**就注入跨模态语义引导（[INT] token），模拟临床医生"先看一个模态形成初步判断再指导另一个模态检查"的工作流程，同时设计 MoR（多种秩 LoRA + 带旁路的松弛路由器）实现参数高效的 VFM 医学域适配，在视网膜/皮肤/膝关节三个数据集上以 <9M 可训练参数超越所有全参微调和 prompt learning 基线。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "医学图像"
   - "多模态医学图像"
   - "早期干预"

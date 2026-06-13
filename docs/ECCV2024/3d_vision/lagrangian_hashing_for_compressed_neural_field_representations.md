@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lagrangian Hashing for Compressed Neural Field Representations
 description: >-
-  [ECCV 2024][3D视觉][神经场压缩] 将InstantNGP的欧拉网格哈希表与拉格朗日点云表示相结合，在哈希桶中存储可移动的高斯特征点，实现**参数量减少1.8-2.8倍**但重建质量不降的紧凑神经场表示。
+  [ECCV 2024][3D视觉][神经场压缩] 将InstantNGP的欧拉网格哈希表与拉格朗日点云表示相结合，在哈希桶中存储可移动的高斯特征点，实现参数量减少1.8-2.8倍：但重建质量不降的紧凑神经场表示。 领域现状： 基于特征网格的神经场方法（如InstantNGP）在速度和质量上取得了显著进展…
 tags:
   - "ECCV 2024"
   - "3D视觉"

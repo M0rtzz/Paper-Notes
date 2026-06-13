@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Discrete Neural Algorithmic Reasoning
 description: >-
-  [ICML2025][离散化] 提出离散神经算法推理器(DNAR)，通过特征离散化、硬注意力和连续/离散数据流分离三大组件，迫使神经网络沿有限预定义状态执行算法轨迹，在 BFS/DFS/Dijkstra/Prim/MIS 等任务上实现**100%完美测试得分**，并可形式化证明所学算法的正确性。
+  [ICML2025][离散化] 提出离散神经算法推理器(DNAR)，通过特征离散化、硬注意力和连续/离散数据流分离三大组件，迫使神经网络沿有限预定义状态执行算法轨迹，在 BFS/DFS/Dijkstra/Prim/MIS 等任务上实现100%完美测试得分：，并可形式化证明所学算法的正确性。 神经算法推理(Neural Alg…
 tags:
   - "ICML2025"
   - "离散化"

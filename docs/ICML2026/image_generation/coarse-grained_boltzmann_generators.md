@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coarse-Grained Boltzmann Generators
 description: >-
-  [ICML 2026][图像生成][Boltzmann Generator] 提出 Coarse-Grained Boltzmann Generators (CG-BGs)，在粗粒化坐标空间中结合归一化流生成模型和学到的平均力势 (PMF) 进行重要性采样…
+  [ICML 2026][图像生成][Boltzmann Generator] 提出 Coarse-Grained Boltzmann Generators (CG-BGs)，在粗粒化坐标空间中结合归一化流生成模型和学到的平均力势 (PMF) 进行重要性采样，以远低于原子级 BG 的计算成本实现渐近正确的分子平衡态采样。
 tags:
   - "ICML 2026"
   - "图像生成"

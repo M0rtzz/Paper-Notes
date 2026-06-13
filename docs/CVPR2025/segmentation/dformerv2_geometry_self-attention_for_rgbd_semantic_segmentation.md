@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DFormerv2: Geometry Self-Attention for RGBD Semantic Segmentation
 description: >-
-  [CVPR 2025][语义分割][RGBD分割] 提出将深度图作为几何先验而非通过神经网络编码，设计几何自注意力（GSA）将深度距离和空间距离融合为衰减因子调制注意力权重，以约一半 FLOPs 匹配或超越双编码器 RGBD 分割方法。
+  [CVPR 2025][语义分割][RGBD分割] 提出将深度图作为几何先验而非通过神经网络编码，设计几何自注意力（GSA）将深度距离和空间距离融合为衰减因子调制注意力权重，以约一半 FLOPs 匹配或超越双编码器 RGBD 分割方法。 领域现状：RGBD 语义分割通常用双编码器分别处理 RGB 和 Depth 然后融合…
 tags:
   - "CVPR 2025"
   - "语义分割"

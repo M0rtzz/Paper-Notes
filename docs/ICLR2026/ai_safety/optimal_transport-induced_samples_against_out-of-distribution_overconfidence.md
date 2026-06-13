@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Optimal Transport-Induced Samples against Out-of-Distribution Overconfidence
 description: >-
-  [ICLR 2026][AI安全][optimal transport] 利用半离散最优传输（OT）的几何奇异边界定位语义模糊区域，在其附近生成代理OOD样本（OTIS），训练时通过置信度抑制损失迫使模型在结构性不确定区域给出均匀预测，从而系统性地缓解DNN的OOD过度自信问题。
+  [ICLR 2026][AI安全][optimal transport] 利用半离散最优传输（OT）的几何奇异边界定位语义模糊区域，在其附近生成代理OOD样本（OTIS），训练时通过置信度抑制损失迫使模型在结构性不确定区域给出均匀预测，从而系统性地缓解DNN的OOD过度自信问题。 领域现状：深度神经网络在闭集分类任务上取得了…
 tags:
   - "ICLR 2026"
   - "AI安全"

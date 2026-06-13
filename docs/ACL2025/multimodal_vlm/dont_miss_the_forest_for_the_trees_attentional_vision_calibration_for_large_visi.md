@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Don't Miss the Forest for the Trees: Attentional Vision Calibration for Large Vision Language Models
 description: >-
-  [ACL 2025][多模态VLM][视觉幻觉] 发现 LVLM 中存在"blind token"现象——少量语义无关的图像 token 吸引了不成比例的注意力权重，并提出 AvisC 方法通过测试时对比解码重新校准 blind token 影响，有效减轻视觉幻觉。
+  [ACL 2025][多模态VLM][视觉幻觉] 发现 LVLM 中存在"blind token"现象——少量语义无关的图像 token 吸引了不成比例的注意力权重，并提出 AvisC 方法通过测试时对比解码重新校准 blind token 影响，有效减轻视觉幻觉。 领域现状：大型视觉语言模型（LVLMs）在视觉理解和描述生…
 tags:
   - "ACL 2025"
   - "多模态VLM"

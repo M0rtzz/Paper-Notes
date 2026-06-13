@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks
 description: >-
-  [NeurIPS 2025][LLM推理][code reasoning] 提出 CoRe，一个包含 12,553 个人工验证任务实例的高质量 benchmark，通过数据依赖、控制依赖和信息流三类静态分析基础任务，直接评估 LLM 的代码语义推理能力…
+  [NeurIPS 2025 Spotlight][LLM推理][code reasoning] 提出 CoRe，一个包含 12,553 个人工验证任务实例的高质量 benchmark，通过数据依赖、控制依赖和信息流三类静态分析基础任务，直接评估 LLM 的代码语义推理能力，揭示模型在 trace 生成和源枚举等需要多步推理的任务上仍严重不足。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM推理"
   - "code reasoning"
   - "static analysis"

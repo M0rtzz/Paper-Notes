@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction
 description: >-
-  [3D视觉] 提出 UrbanGS，一个面向城市级场景的可扩展 3DGS 重建框架，通过深度一致的 D-Normal 正则化、空间自适应高斯剪枝和统一分区策略，同时提升几何精度、渲染质量和内存效率。
+  [3D视觉] 提出 UrbanGS，一个面向城市级场景的可扩展 3DGS 重建框架，通过深度一致的 D-Normal 正则化、空间自适应高斯剪枝和统一分区策略，同时提升几何精度、渲染质量和内存效率。 3DGS 在有限场景中表现优异，但扩展到大规模城市环境面临三大挑战： 几何一致性差：仅监督渲染法线只能更新旋转参数…
 tags:
   - "3D视觉"
 ---

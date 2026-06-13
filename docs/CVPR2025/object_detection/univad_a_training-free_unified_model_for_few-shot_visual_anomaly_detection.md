@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniVAD: A Training-free Unified Model for Few-shot Visual Anomaly Detection
 description: >-
-  [CVPR 2025][目标检测][视觉异常检测] 本文提出 UniVAD，一个免训练的统一少样本视觉异常检测方法，通过上下文组件聚类（C3）模块实现精准组件分割，结合组件感知的 patch 匹配和图增强组件建模，仅需少量正常样本即可在工业、逻辑和医学三个领域实现 SOTA 异常检测。
+  [CVPR 2025][目标检测][视觉异常检测] 本文提出 UniVAD，一个免训练的统一少样本视觉异常检测方法，通过上下文组件聚类（C3）模块实现精准组件分割，结合组件感知的 patch 匹配和图增强组件建模，仅需少量正常样本即可在工业、逻辑和医学三个领域实现 SOTA 异常检测。 领域现状：视觉异常检测（VAD）旨在识…
 tags:
   - "CVPR 2025"
   - "目标检测"

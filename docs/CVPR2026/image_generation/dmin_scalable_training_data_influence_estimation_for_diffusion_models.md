@@ -2,9 +2,9 @@
 title: >-
   [论文解读] DMin: Scalable Training Data Influence Estimation for Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][扩散模型] 提出 DMin，一个可扩展的扩散模型训练数据影响力估计框架，通过高效梯度压缩将存储需求从数百 TB 降至 MB/KB 级别，首次实现对数十亿参数扩散模型的影响力估计，支持亚秒级 top-k 检索。
+  [CVPR 2026 Findings][图像生成][扩散模型] 提出 DMin，一个可扩展的扩散模型训练数据影响力估计框架，通过高效梯度压缩将存储需求从数百 TB 降至 MB/KB 级别，首次实现对数十亿参数扩散模型的影响力估计，支持亚秒级 top-k 检索。 理解「生成图像受哪些训练数据影响最大」对模型透明度、偏差分析和…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "扩散模型"
   - "Influence Estimation"

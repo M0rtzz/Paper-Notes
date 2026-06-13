@@ -2,7 +2,7 @@
 title: >-
   [论文解读] S2Gaussian: Sparse-View Super-Resolution 3D Gaussian Splatting
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 提出 S2Gaussian 两阶段框架，首次解决稀疏+低分辨率视图联合场景重建问题：第一阶段用深度正则化优化低分辨率高斯并通过 Gaussian Shuffle Split 初始化高分辨率高斯…
+  [CVPR 2025][3D视觉][3D高斯溅射] 提出 S2Gaussian 两阶段框架，首次解决稀疏+低分辨率视图联合场景重建问题：第一阶段用深度正则化优化低分辨率高斯并通过 Gaussian Shuffle Split 初始化高分辨率高斯，第二阶段用去模糊不一致性建模和 3D 鲁棒优化策略精炼高分辨率场景。
 tags:
   - "CVPR 2025"
   - "3D视觉"

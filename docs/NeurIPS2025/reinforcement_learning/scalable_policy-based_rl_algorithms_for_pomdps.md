@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Policy-Based RL Algorithms for POMDPs
 description: >-
-  [NeurIPS 2025][强化学习][POMDP] 提出将 POMDP 近似为有限状态的 Superstate MDP（状态为截断历史），给出更紧的最优值函数差上界（随历史长度指数衰减），并首次证明标准 TD 学习 + 策略优化在此非马尔可夫采样下的有限时间收敛保证。
+  [NeurIPS 2025][强化学习][POMDP] 提出将 POMDP 近似为有限状态的 Superstate MDP（状态为截断历史），给出更紧的最优值函数差上界（随历史长度指数衰减），并首次证明标准 TD 学习 + 策略优化在此非马尔可夫采样下的有限时间收敛保证。 部分可观测马尔可夫决策过程（POMDP）是建模不确定…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

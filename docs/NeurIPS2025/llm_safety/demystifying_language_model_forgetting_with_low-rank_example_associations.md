@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Demystifying Language Model Forgetting with Low-Rank Example Associations
 description: >-
-  [NeurIPS 2025][LLM安全][灾难性遗忘] 发现 LLM 微调后上游样本遗忘与新学任务之间的关联矩阵具有低秩结构（rank-3 即 $R^2 > 0.69$），利用矩阵补全预测未见任务导致的遗忘，指导选择性回放以减轻遗忘。
+  [NeurIPS 2025][LLM安全][灾难性遗忘] 发现 LLM 微调后上游样本遗忘与新学任务之间的关联矩阵具有低秩结构（rank-3 即 $R^2 0.69$），利用矩阵补全预测未见任务导致的遗忘，指导选择性回放以减轻遗忘。 领域现状 领域现状：LLM 持续微调时会遗忘上游知识（灾难性遗忘），这是从 continua…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

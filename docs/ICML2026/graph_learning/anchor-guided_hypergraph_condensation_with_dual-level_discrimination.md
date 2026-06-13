@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Anchor-guided Hypergraph Condensation with Dual-level Discrimination
 description: >-
-  [ICML 2026][图学习][hypergraph condensation] AHGCDD 把超图凝聚 (HGC) 从"先训练结构生成器、再匹配训练轨迹"的解耦范式重写为端到端框架：用 Heat-Kernel-PageRank 把结构信息塞进初始化特征、用 anchor-guided 思路按特征距离合成…
+  [ICML 2026][图学习][hypergraph condensation] AHGCDD 把超图凝聚 (HGC) 从"先训练结构生成器、再匹配训练轨迹"的解耦范式重写为端到端框架：用 Heat-Kernel-PageRank 把结构信息塞进初始化特征、用 anchor-guided 思路按特征距离合成稀疏可学的超边，再用粗+细双级判别损失 (类原型 MMD + 实例级对比) 代替昂贵的 HNN 重训练，在 5 个超图基准上 ≥SOTA 同时最高 144× 加速。
 tags:
   - "ICML 2026"
   - "图学习"

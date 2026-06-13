@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Paired Testing Protocol for Batch-Conditioned Refusal Robustness in LLM Serving
 description: >-
-  [ICML2026][推荐系统][拒绝鲁棒性] 本文把 LLM serving 中的 batch 条件当作安全评测的处理变量，提出安全提示与能力控制成对比较、人工/打分器校正、跨模型扩展、连续批处理组合和 batch-invariant kernel 消融组成的测试协议…
+  [ICML2026][推荐系统][拒绝鲁棒性] 本文把 LLM serving 中的 batch 条件当作安全评测的处理变量，提出安全提示与能力控制成对比较、人工/打分器校正、跨模型扩展、连续批处理组合和 batch-invariant kernel 消融组成的测试协议，结论是拒绝翻转真实存在但低频、模型特异且依赖具体服务栈。
 tags:
   - "ICML2026"
   - "推荐系统"

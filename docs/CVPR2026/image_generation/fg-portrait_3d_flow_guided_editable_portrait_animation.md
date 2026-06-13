@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FG-Portrait: 3D Flow Guided Editable Portrait Animation
 description: >-
-  [CVPR 2026][图像生成][肖像动画] 提出 FG-Portrait，通过引入基于 FLAME 参数化 3D 头部模型直接计算的「3D 光流」作为无需学习的几何驱动运动对应关系，结合深度引导采样的 3D 光流编码作为扩散模型 ControlNet 的运动条件…
+  [CVPR 2026][图像生成][肖像动画] 提出 FG-Portrait，通过引入基于 FLAME 参数化 3D 头部模型直接计算的「3D 光流」作为无需学习的几何驱动运动对应关系，结合深度引导采样的 3D 光流编码作为扩散模型 ControlNet 的运动条件，显著提升驱动运动迁移精度（APD 降低 22%+），还支持推理时的表情和头部姿态编辑。
 tags:
   - "CVPR 2026"
   - "图像生成"

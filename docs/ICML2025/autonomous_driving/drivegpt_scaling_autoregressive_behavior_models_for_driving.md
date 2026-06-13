@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DriveGPT: Scaling Autoregressive Behavior Models for Driving
 description: >-
-  [ICML 2025][自动驾驶][自回归模型] 提出 DriveGPT，一个 1.4B 参数的自回归 Transformer 驾驶行为模型，在 1.2 亿真实驾驶片段上训练（比现有最大数据集多 50x），首次系统建立驾驶行为建模的数据/模型/计算缩放定律，验证数据是性能瓶颈…
+  [ICML 2025][自动驾驶][自回归模型] 提出 DriveGPT，一个 1.4B 参数的自回归 Transformer 驾驶行为模型，在 1.2 亿真实驾驶片段上训练（比现有最大数据集多 50x），首次系统建立驾驶行为建模的数据/模型/计算缩放定律，验证数据是性能瓶颈，在规划和 WOMD 预测任务上超越 SOTA。
 tags:
   - "ICML 2025"
   - "自动驾驶"

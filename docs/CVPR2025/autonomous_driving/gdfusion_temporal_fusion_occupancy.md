@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction
 description: >-
-  [CVPR 2025][自动驾驶][3D语义占用预测] 提出 GDFusion，通过将 RNN 重新解释为特征空间上的梯度下降，统一融合 VisionOcc 中四种异构时序信息（体素级、场景级、运动、几何），在 Occ3D 上实现 1.4%-4.8% mIoU 提升同时减少 27%-72% 显存。
+  [CVPR 2025][自动驾驶][3D语义占用预测] 提出 GDFusion，通过将 RNN 重新解释为特征空间上的梯度下降，统一融合 VisionOcc 中四种异构时序信息（体素级、场景级、运动、几何），在 Occ3D 上实现 1.4%-4.8% mIoU 提升同时减少 27%-72% 显存。 领域现状：视觉 3D 语义…
 tags:
   - "CVPR 2025"
   - "自动驾驶"

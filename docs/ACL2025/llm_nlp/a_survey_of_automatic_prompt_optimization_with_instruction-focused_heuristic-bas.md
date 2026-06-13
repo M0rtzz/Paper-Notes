@@ -2,10 +2,10 @@
 title: >-
   [论文解读] A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm
 description: >-
-  [ACL 2025][LLM/NLP][自动提示优化] 系统综述 80+ 种基于启发式搜索算法的自动 Prompt 优化方法，提出五维分类体系（Where/What/What criteria/Which operators/Which algorithms）将碎片化研究统一到一个完整的分析框架下。
+  [ACL 2025][LLM 其他][自动提示优化] 系统综述 80+ 种基于启发式搜索算法的自动 Prompt 优化方法，提出五维分类体系（Where/What/What criteria/Which operators/Which algorithms）将碎片化研究统一到一个完整的分析框架下。 领域现状：手动 Promp…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "自动提示优化"
   - "启发式搜索"
   - "指令优化"
@@ -135,10 +135,10 @@ tags:
 - **DSPy 视角**：将 prompt 视为可编译的程序模块（而非固定字符串）可能是比逐字优化更有前途的范式
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 综述贡献在分类体系，方法为回顾性；五维分类有原创性但单个维度的划分并非全新
-- 实验充分度: ⭐⭐ 无实验，纯综述——缺少统一基准上的定量对比是最大遗憾
-- 写作质量: ⭐⭐⭐⭐ 分类清晰、层次分明，Fig.1 的树状分类图直观实用，覆盖 80+ 方法但不觉得杂乱
-- 价值: ⭐⭐⭐⭐ 对 Prompt 工程从业者有实用参考价值，五维坐标系是快速定位新工作的有效工具，GitHub awesome list 本身也有社区价值
+- 新颖性: ⭐⭐⭐⭐ 综述贡献在分类体系，方法为回顾性；五维分类有原创性但单个维度的划分并非全新
+- 实验充分度: ⭐⭐⭐ 无实验，纯综述——缺少统一基准上的定量对比是最大遗憾
+- 写作质量: ⭐⭐⭐⭐⭐ 分类清晰、层次分明，Fig.1 的树状分类图直观实用，覆盖 80+ 方法但不觉得杂乱
+- 价值: ⭐⭐⭐⭐⭐ 对 Prompt 工程从业者有实用参考价值，五维坐标系是快速定位新工作的有效工具，GitHub awesome list 本身也有社区价值
 
 <!-- RELATED:START -->
 

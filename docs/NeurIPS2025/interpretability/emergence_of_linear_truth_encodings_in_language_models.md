@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emergence of Linear Truth Encodings in Language Models
 description: >-
-  [NeurIPS 2025][可解释性][真值编码] 提出 **Truth Co-occurrence Hypothesis (TCH)**——真实陈述倾向于与其他真实陈述共现——并通过一个最简单的单层 Transformer 玩具模型…
+  [NeurIPS 2025][可解释性][真值编码] 提出 **Truth Co-occurrence Hypothesis (TCH)**——真实陈述倾向于与其他真实陈述共现——并通过一个最简单的单层 Transformer 玩具模型，端到端地展示了线性真值子空间如何通过两阶段训练动态（先记忆 → 后编码真值）自然涌现，为理解 LLM 中广泛报告的线性真值表示提供了首个机制性解释。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

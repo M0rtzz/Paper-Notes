@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ALMGuard: Safety Shortcuts and Where to Find Them as Guardrails for Audio-Language Models
 description: >-
-  [NeurIPS 2025][LLM安全][音频越狱] 首个针对音频语言模型（ALM）越狱攻击的防御框架——发现对齐过的 ALM 存在可被激活的潜在安全快捷路径（safety shortcuts），通过 Mel 梯度稀疏掩码（M-GSM）定位关键频率段，施加快捷路径激活扰动（SAP）…
+  [NeurIPS 2025][LLM安全][音频越狱] 首个针对音频语言模型（ALM）越狱攻击的防御框架——发现对齐过的 ALM 存在可被激活的潜在安全快捷路径（safety shortcuts），通过 Mel 梯度稀疏掩码（M-GSM）定位关键频率段，施加快捷路径激活扰动（SAP），将平均攻击成功率从 41.6% 降至 4.6%，同时几乎不影响正常任务性能。
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

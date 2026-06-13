@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adventurer: Optimizing Vision Mamba Architecture Designs for Efficiency
 description: >-
-  [CVPR 2025][因果推理][Vision Mamba] 提出 Adventurer 系列视觉模型，通过"头部平均池化 token"和"层间翻转"两个简单设计将图像输入适配到单向因果扫描框架中，使 Mamba 架构在视觉任务上实现 4-6 倍于现有 Vision Mamba 的训练速度…
+  [CVPR 2025][因果推理][Vision Mamba] 提出 Adventurer 系列视觉模型，通过"头部平均池化 token"和"层间翻转"两个简单设计将图像输入适配到单向因果扫描框架中，使 Mamba 架构在视觉任务上实现 4-6 倍于现有 Vision Mamba 的训练速度，同时保持与 ViT 相当甚至更优的精度。
 tags:
   - "CVPR 2025"
   - "因果推理"

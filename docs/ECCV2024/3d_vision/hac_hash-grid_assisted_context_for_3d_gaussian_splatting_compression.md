@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression
 description: >-
-  [ECCV 2024][3D视觉][3D Gaussian Splatting] 利用结构化二值哈希网格为无序的3DGS锚点建立空间上下文关系，通过条件概率建模和自适应量化实现高效熵编码，达到相比vanilla 3DGS **75×** 的压缩率，同时保持甚至提升渲染质量。
+  [ECCV 2024][3D视觉][3D Gaussian Splatting] 利用结构化二值哈希网格为无序的3DGS锚点建立空间上下文关系，通过条件概率建模和自适应量化实现高效熵编码，达到相比vanilla 3DGS 75×：的压缩率，同时保持甚至提升渲染质量。 领域现状： 3D Gaussian Splatting (…
 tags:
   - "ECCV 2024"
   - "3D视觉"

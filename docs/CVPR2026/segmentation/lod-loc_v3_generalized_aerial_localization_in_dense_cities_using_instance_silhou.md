@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LoD-Loc v3: Generalized Aerial Localization in Dense Cities using Instance Silhouette Alignment
 description: >-
-  [CVPR 2026][语义分割][无人机定位] 本文提出LoD-Loc v3，通过构建10万图像的大规模合成实例分割数据集InsLoD-Loc和将定位范式从语义轮廓对齐升级为实例轮廓对齐，解决了基于LoD城市模型的无人机定位中跨场景泛化差和密集城市歧义两大痛点…
+  [CVPR 2026][语义分割][无人机定位] 本文提出LoD-Loc v3，通过构建10万图像的大规模合成实例分割数据集InsLoD-Loc和将定位范式从语义轮廓对齐升级为实例轮廓对齐，解决了基于LoD城市模型的无人机定位中跨场景泛化差和密集城市歧义两大痛点，在Tokyo-LoDv3密集场景上比SOTA的(2m,2°)精度提升2000%。
 tags:
   - "CVPR 2026"
   - "语义分割"

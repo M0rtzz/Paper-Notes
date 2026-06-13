@@ -2,10 +2,10 @@
 title: >-
   [论文解读] AlphaContext: An Evolutionary Tree-based Psychometric Context Generator for Creativity Assessment
 description: >-
-  [ACL 2026][LLM/NLP][创造力评估] 提出 AlphaContext，一个基于进化树的心理测量情境生成器，通过 HyperTree 大纲规划、MCTS 逐句生成、MAP-Elites 多样性优化和评估引导迭代精炼四个模块，自动生成用于创造力评估的高质量长文本情境…
+  [ACL 2026][LLM 其他][创造力评估] 提出 AlphaContext，一个基于进化树的心理测量情境生成器，通过 HyperTree 大纲规划、MCTS 逐句生成、MAP-Elites 多样性优化和评估引导迭代精炼四个模块，自动生成用于创造力评估的高质量长文本情境，在 7 个评估维度上平均超越竞争方法 8%。
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "创造力评估"
   - "心理测量"
   - "进化算法"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Semantic Uncertainty Quantification in Language Models via Diversity-Steered Sampling
 description: >-
-  [NeurIPS 2025][LLM评测][语义不确定性] 提出 diversity-steered sampling 框架：在解码时注入基于 NLI 的语义相似度惩罚来驱动生成语义多样化的样本，并用重要性加权+控制变量纠正偏差降低方差…
+  [NeurIPS 2025][LLM评测][语义不确定性] 提出 diversity-steered sampling 框架：在解码时注入基于 NLI 的语义相似度惩罚来驱动生成语义多样化的样本，并用重要性加权+控制变量纠正偏差降低方差，在仅 16 个样本下即可准确估计 LLM 的语义熵（偶然不确定性）和互信息（认知不确定性）。
 tags:
   - "NeurIPS 2025"
   - "LLM评测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TabArena: A Living Benchmark for Machine Learning on Tabular Data
 description: >-
-  [NeurIPS 2025][自监督学习][表格数据基准] 提出 TabArena，首个持续维护的"活跃"表格数据基准系统，从 1053 个数据集中精选 51 个、纳入 16 个模型，通过大规模实验（约 2500 万次模型训练）发现：后验集成下深度学习模型已追平甚至超越 GBDT…
+  [NeurIPS 2025 Spotlight][自监督学习][表格数据基准] 提出 TabArena，首个持续维护的"活跃"表格数据基准系统，从 1053 个数据集中精选 51 个、纳入 16 个模型，通过大规模实验（约 2500 万次模型训练）发现：后验集成下深度学习模型已追平甚至超越 GBDT，表格基础模型在小数据上表现突出，跨模型集成可进一步推进 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "自监督学习"
   - "表格数据基准"
   - "活跃基准"

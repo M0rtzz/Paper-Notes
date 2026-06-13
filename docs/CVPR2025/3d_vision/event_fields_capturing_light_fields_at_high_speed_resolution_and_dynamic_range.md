@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Event Fields: Capturing Light Fields at High Speed, Resolution, and Dynamic Range
 description: >-
-  [CVPR 2025][3D视觉][事件相机] 本文提出 Event Fields——一种利用事件相机捕获高速、高分辨率、高动态范围光场的新范式，设计了万花筒（空间复用，捕获时间导数）和振镜（时间复用，捕获角度导数）两种互补光学方案…
+  [CVPR 2025][3D视觉][事件相机] 本文提出 Event Fields——一种利用事件相机捕获高速、高分辨率、高动态范围光场的新范式，设计了万花筒（空间复用，捕获时间导数）和振镜（时间复用，捕获角度导数）两种互补光学方案，实现了 250fps 百万像素动态场景重聚焦和 100Hz 实时深度估计等前所未有的能力。
 tags:
   - "CVPR 2025"
   - "3D视觉"

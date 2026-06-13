@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LLaVA-3D: A Simple yet Effective Pathway to Empowering LMMs with 3D Capabilities
 description: >-
-  [ICCV 2025][3D视觉][3D场景理解] 本文提出 LLaVA-3D，通过将 3D 位置嵌入注入 2D CLIP patch 特征构建"3D Patch"，以最小改动将 2D LMM（LLaVA-Video）扩展为统一的 2D/3D 理解模型，训练收敛速度比现有 3D LMM 快 3.5 倍…
+  [ICCV 2025][3D视觉][3D场景理解] 本文提出 LLaVA-3D，通过将 3D 位置嵌入注入 2D CLIP patch 特征构建"3D Patch"，以最小改动将 2D LMM（LLaVA-Video）扩展为统一的 2D/3D 理解模型，训练收敛速度比现有 3D LMM 快 3.5 倍，在多个 3D 基准上达到 SOTA 且保持 2D 能力不下降。
 tags:
   - "ICCV 2025"
   - "3D视觉"

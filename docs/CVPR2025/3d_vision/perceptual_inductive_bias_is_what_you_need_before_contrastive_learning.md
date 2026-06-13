@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Perceptual Inductive Bias is What You Need Before Contrastive Learning
 description: >-
-  [CVPR 2025][3D视觉][对比学习] 受 David Marr 多阶段视觉处理理论启发，提出在标准对比学习之前增加一个"预预训练"（pre-pretraining）阶段，利用前景-背景分割的形状轮廓和内在图像分解（反照率+着色）作为感知归纳偏置，在 ResNet18 上实现 2 倍加速收敛…
+  [CVPR 2025][3D视觉][对比学习] 受 David Marr 多阶段视觉处理理论启发，提出在标准对比学习之前增加一个"预预训练"（pre-pretraining）阶段，利用前景-背景分割的形状轮廓和内在图像分解（反照率+着色）作为感知归纳偏置，在 ResNet18 上实现 2 倍加速收敛，并在分割、深度估计和识别等下游任务上取得全面提升。
 tags:
   - "CVPR 2025"
   - "3D视觉"

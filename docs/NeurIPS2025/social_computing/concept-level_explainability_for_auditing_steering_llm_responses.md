@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Concept-Level Explainability for Auditing & Steering LLM Responses
 description: >-
-  [NeurIPS 2025][社会计算][可解释性] 提出 ConceptX，一种基于概念级（而非 token 级）Shapley 归因的 LLM 可解释性方法，通过语义相似度而非 token 重合度来衡量输入概念对输出的影响，可用于审计偏见和通过 prompt 编辑引导 LLM 输出…
+  [NeurIPS 2025][社会计算][可解释性] 提出 ConceptX，一种基于概念级（而非 token 级）Shapley 归因的 LLM 可解释性方法，通过语义相似度而非 token 重合度来衡量输入概念对输出的影响，可用于审计偏见和通过 prompt 编辑引导 LLM 输出，在越狱防御中将攻击成功率从 0.463 降至 0.242。
 tags:
   - "NeurIPS 2025"
   - "社会计算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemAlign3D: Semantic Correspondence Between RGB-Images Through Aligning 3D Object-Class Representations
 description: >-
-  [CVPR 2025][3D视觉][语义对应] 利用单目深度估计构建类别级 3D 物体表示，在推理时通过最小化对齐能量函数（结合语义和空间似然）将 3D 表示与输入图像对齐，在 SPair-71k 上将 PCK@0.1 总分从 85.6% 提升至 88.9%，三个类别提升超过 10 个百分点。
+  [CVPR 2025][3D视觉][语义对应] 利用单目深度估计构建类别级 3D 物体表示，在推理时通过最小化对齐能量函数（结合语义和空间似然）将 3D 表示与输入图像对齐，在 SPair-71k 上将 PCK@0.1 总分从 85.6% 提升至 88.9%，三个类别提升超过 10 个百分点。 领域现状：语义对应旨在基于语义…
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Utility-Oriented Visual Evidence Selection for Multimodal Retrieval-Augmented Generation
 description: >-
-  [ACL2026][信息检索/RAG][多模态RAG] 本文把多模态 RAG 的图像选择从“语义相似度排序”改成“对最终回答是否有用”的效用估计，并用轻量多模态代理模型高效预测证据 helpfulness，在 MRAG-Bench 和 Visual-RAG 上同时提升回答质量和推理效率。
+  [ACL2026][信息检索/RAG][多模态RAG] 本文把多模态 RAG 的图像选择从“语义相似度排序”改成“对最终回答是否有用”的效用估计，并用轻量多模态代理模型高效预测证据 helpfulness，在 MRAG-Bench 和 Visual-RAG 上同时提升回答质量和推理效率。 领域现状：多模态 RAG 通常先检索…
 tags:
   - "ACL2026"
   - "信息检索/RAG"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.13277](https://arxiv.org/abs/2605.13277)  
 **代码**: https://github.com/Hcnaeg/utility-mrag  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: 多模态RAG, 视觉证据选择, 信息增益, 轻量代理模型, 检索重排  
 
 ## 一句话总结

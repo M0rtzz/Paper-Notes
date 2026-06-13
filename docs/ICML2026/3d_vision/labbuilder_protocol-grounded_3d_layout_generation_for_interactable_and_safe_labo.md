@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LabBuilder: Protocol-Grounded 3D Layout Generation for Interactable and Safe Laboratory
 description: >-
-  [ICML 2026][3D视觉][实验室场景生成] LabBuilder 把自由文本的实验描述编译成"资产-化学协议"，再用层级化生成 + 几何/化学多目标优化 + 导航修复，产出既视觉合理、又能让机器人真正跑通实验流程的 3D 化学实验室布局。
+  [ICML 2026][3D视觉][实验室场景生成] LabBuilder 把自由文本的实验描述编译成"资产-化学协议"，再用层级化生成 + 几何/化学多目标优化 + 导航修复，产出既视觉合理、又能让机器人真正跑通实验流程的 3D 化学实验室布局。 领域现状：3D 室内场景生成大多服务家居场景，依赖 3D-FRONT 这类家…
 tags:
   - "ICML 2026"
   - "3D视觉"

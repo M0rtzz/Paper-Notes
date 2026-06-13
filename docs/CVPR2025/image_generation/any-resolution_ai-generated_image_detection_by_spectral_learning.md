@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPAI: Any-Resolution AI-Generated Image Detection by Spectral Learning
 description: >-
-  [CVPR 2025][图像生成][频谱学习] 提出 SPAI，通过掩码频谱学习（Masked Spectral Learning）建模真实图像的频率分布，引入频谱重建相似度（SRS）和频谱上下文注意力（SCA）检测 AI 生成图像作为分布外样本，在 13 种生成模型上平均 AUC 达 91.0%…
+  [CVPR 2025][图像生成][频谱学习] 提出 SPAI，通过掩码频谱学习（Masked Spectral Learning）建模真实图像的频率分布，引入频谱重建相似度（SRS）和频谱上下文注意力（SCA）检测 AI 生成图像作为分布外样本，在 13 种生成模型上平均 AUC 达 91.0%，比次优方法绝对提升 5.5%，且支持任意分辨率图像检测。
 tags:
   - "CVPR 2025"
   - "图像生成"

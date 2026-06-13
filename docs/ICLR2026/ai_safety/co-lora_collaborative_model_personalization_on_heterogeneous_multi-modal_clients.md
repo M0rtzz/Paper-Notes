@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Co-LoRA: Collaborative Model Personalization on Heterogeneous Multi-Modal Clients
 description: >-
-  [ICLR2026][AI安全][联邦学习] 提出 FedMosaic 框架解决个性化联邦学习中的双重异构问题：RELA 通过梯度相似度度量任务相关性实现定制化聚合（解决数据异构），Co-LoRA 通过维度不变的 $P \in \mathbb{R}^{r \times r}…
+  [ICLR2026][AI安全][联邦学习] 提出 FedMosaic 框架解决个性化联邦学习中的双重异构问题：RELA 通过梯度相似度度量任务相关性实现定制化聚合（解决数据异构），Co-LoRA 通过维度不变的 $P \in \mathbb{R}^{r \times r}, Q \in \mathbb{R}^r$ 模块实现跨异构架构（如 Llama vs Qwen）的知识共享（解决模型异构），在新提出的 40 任务多模态 PFL benchmark DRAKE 上大幅超越 SOTA。
 tags:
   - "ICLR2026"
   - "AI安全"

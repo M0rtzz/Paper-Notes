@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Two is Better than One: Efficient Ensemble Defense for Robust and Compact Models
 description: >-
-  [CVPR 2025][人体理解][集成防御] 提出 EED（Efficient Ensemble Defense），从单个基础模型通过不同剪枝策略（NIS/ERM/ASE/BNSF）生成多个子模型并动态集成——在 80% 稀疏度下 CIFAR-10 PGD 鲁棒准确率 55.71%（接近未压缩基线）…
+  [CVPR 2025][人体理解][集成防御] 提出 EED（Efficient Ensemble Defense），从单个基础模型通过不同剪枝策略（NIS/ERM/ASE/BNSF）生成多个子模型并动态集成——在 80% 稀疏度下 CIFAR-10 PGD 鲁棒准确率 55.71%（接近未压缩基线），推理加速 1.86 倍。
 tags:
   - "CVPR 2025"
   - "人体理解"

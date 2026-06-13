@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LEMON: A Large Endoscopic MONocular Dataset and Foundation Model for Perception in Surgical Settings
 description: >-
-  [CVPR 2026][医学图像][手术基础模型] 构建了包含 4194 个手术视频（938 小时）的大规模内窥镜数据集 LEMON，并提出基于增强知识蒸馏的自监督基础模型 LemonFM，在手术阶段识别、工具检测、动作识别和语义分割四大下游任务上全面超越现有手术基础模型。
+  [CVPR 2026][医学图像][手术基础模型] 构建了包含 4194 个手术视频（938 小时）的大规模内窥镜数据集 LEMON，并提出基于增强知识蒸馏的自监督基础模型 LemonFM，在手术阶段识别、工具检测、动作识别和语义分割四大下游任务上全面超越现有手术基础模型。 手术视觉是自主手术机器人的核心感知能力…
 tags:
   - "CVPR 2026"
   - "医学图像"

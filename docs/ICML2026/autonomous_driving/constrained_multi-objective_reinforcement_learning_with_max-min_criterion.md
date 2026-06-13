@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained Multi-Objective Reinforcement Learning with Max-Min Criterion
 description: >-
-  [ICML 2026][自动驾驶][max-min 公平性] 本文把"max-min 多目标公平性"和"硬性约束满足"统一到同一个 MORL 框架中——通过占用测度 (occupancy measure) 重新表述为凸规划，再对偶出一个关于权重 $(u,w)$ 的凸优化问题…
+  [ICML 2026][自动驾驶][max-min 公平性] 本文把"max-min 多目标公平性"和"硬性约束满足"统一到同一个 MORL 框架中——通过占用测度 (occupancy measure) 重新表述为凸规划，再对偶出一个关于权重 $(u,w)$ 的凸优化问题，从而用一套投影梯度下降算法同时实现公平性和约束可行性，并给出几何收敛速率的理论保证。
 tags:
   - "ICML 2026"
   - "自动驾驶"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PartField: Learning 3D Feature Fields for Part Segmentation and Beyond
 description: >-
-  [ICCV 2025][语义分割][3D 部件分割] PartField 通过前馈模型学习连续 3D 特征场，用对比学习从混合的 2D/3D 部件提案中蒸馏知识，在类别无关的 3D 部件分割上比现有方法精度提高 20%+ 同时推理速度快数个数量级。
+  [ICCV 2025][语义分割][3D 部件分割] PartField 通过前馈模型学习连续 3D 特征场，用对比学习从混合的 2D/3D 部件提案中蒸馏知识，在类别无关的 3D 部件分割上比现有方法精度提高 20%+ 同时推理速度快数个数量级。 3D 部件级理解（part-level understanding）是形状编…
 tags:
   - "ICCV 2025"
   - "语义分割"

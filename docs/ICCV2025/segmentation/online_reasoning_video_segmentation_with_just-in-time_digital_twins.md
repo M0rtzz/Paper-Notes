@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Online Reasoning Video Segmentation with Just-in-Time Digital Twins
 description: >-
-  [ICCV 2025][语义分割][推理分割] 提出一种基于"即时数字孪生(Just-in-Time Digital Twin)"概念的多智能体框架，将感知和推理解耦，无需 LLM 微调即可实现在线视频推理分割，在语义、空间、时间三类推理任务中全面超越现有方法。
+  [ICCV 2025][语义分割][推理分割] 提出一种基于"即时数字孪生(Just-in-Time Digital Twin)"概念的多智能体框架，将感知和推理解耦，无需 LLM 微调即可实现在线视频推理分割，在语义、空间、时间三类推理任务中全面超越现有方法。 推理分割(Reasoning Segmentation…
 tags:
   - "ICCV 2025"
   - "语义分割"

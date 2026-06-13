@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations
 description: >-
-  [NeurIPS 2025][图像生成][Transformer] 发现 Diffusion Transformers (DiTs) 中存在 massive activations 现象导致特征不可区分，揭示其与 AdaLN 的内在联系，提出无需训练的 DiTF 框架来提取语义判别性特征…
+  [NeurIPS 2025][图像生成][Transformer] 发现 Diffusion Transformers (DiTs) 中存在 massive activations 现象导致特征不可区分，揭示其与 AdaLN 的内在联系，提出无需训练的 DiTF 框架来提取语义判别性特征，在视觉对应任务上超越 DINO 和 SD 模型。
 tags:
   - "NeurIPS 2025"
   - "图像生成"

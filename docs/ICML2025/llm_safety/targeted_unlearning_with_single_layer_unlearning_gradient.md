@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Targeted Unlearning with Single Layer Unlearning Gradient
 description: >-
-  [ICML 2025][LLM安全][machine unlearning] 提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘…
+  [ICML 2025][LLM安全][machine unlearning] 提出 SLUG (Single Layer Unlearning Gradient) 方法，通过层重要性和梯度对齐指标识别最优单层，仅需一次梯度计算和单层参数更新即可实现高效精准的定向遗忘，可应用于 CLIP、Stable Diffusion 和 VLM。
 tags:
   - "ICML 2025"
   - "LLM安全"

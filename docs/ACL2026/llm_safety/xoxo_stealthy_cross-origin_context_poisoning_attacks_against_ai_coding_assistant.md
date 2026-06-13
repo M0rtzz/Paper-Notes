@@ -2,7 +2,7 @@
 title: >-
   [论文解读] XOXO: Stealthy Cross-Origin Context Poisoning Attacks against AI Coding Assistants
 description: >-
-  [ACL 2026][LLM安全][对抗攻击] 揭示了 AI 编码助手自动收集上下文的设计漏洞，提出 Cross-Origin Context Poisoning（XOXO）攻击：通过语义保持的代码变换（如变量重命名）毒化共享代码库，使 GitHub Copilot 等助手在不知情的情况下生成有漏洞的代码…
+  [ACL 2026][LLM安全][对抗攻击] 揭示了 AI 编码助手自动收集上下文的设计漏洞，提出 Cross-Origin Context Poisoning（XOXO）攻击：通过语义保持的代码变换（如变量重命名）毒化共享代码库，使 GitHub Copilot 等助手在不知情的情况下生成有漏洞的代码，对 8 个 SOTA 模型平均攻击成功率达 73.20%。
 tags:
   - "ACL 2026"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stroke3D: Lifting 2D Strokes into Rigged 3D Model via Latent Diffusion Models
 description: >-
-  [ICLR 2026][3D视觉][3D生成] Stroke3D 首次实现从用户绘制的2D笔画和文本提示直接生成绑骨3D网格模型，采用骨骼优先的两阶段流水线：先用图VAE+图DiT生成可控3D骨骼，再通过TextuRig数据集增强和SKA-DPO优化生成高质量网格。
+  [ICLR 2026][3D视觉][3D生成] Stroke3D 首次实现从用户绘制的2D笔画和文本提示直接生成绑骨3D网格模型，采用骨骼优先的两阶段流水线：先用图VAE+图DiT生成可控3D骨骼，再通过TextuRig数据集增强和SKA-DPO优化生成高质量网格。 绑骨3D资产是3D变形和动画的基础…
 tags:
   - "ICLR 2026"
   - "3D视觉"

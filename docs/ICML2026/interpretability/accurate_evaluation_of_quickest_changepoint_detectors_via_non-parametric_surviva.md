@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accurate Evaluation of Quickest Changepoint Detectors via Non-parametric Survival Analysis
 description: >-
-  [ICML2026][可解释性][在线变点检测] 本文把在线最快变点检测中的 ARL/ADD 评估改写成右删失生存分析问题，用 Kaplan-Meier 曲线估计有限且不规则长度序列下的检测时间和检测延迟，从而比传统只统计已触发样本的估计器更稳健、更少偏。
+  [ICML2026][可解释性][在线变点检测] 本文把在线最快变点检测中的 ARL/ADD 评估改写成右删失生存分析问题，用 Kaplan-Meier 曲线估计有限且不规则长度序列下的检测时间和检测延迟，从而比传统只统计已触发样本的估计器更稳健、更少偏。 领域现状：最快变点检测（QCD）关心数据流何时从一个分布切换到另一个…
 tags:
   - "ICML2026"
   - "可解释性"

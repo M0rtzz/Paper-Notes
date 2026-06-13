@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers
 description: >-
-  [CVPR2026][图像生成][Transformer] 提出 Just-in-Time (JiT) 框架，通过在空间域动态选择稀疏 anchor token 驱动生成 ODE 演化，并设计确定性 micro-flow 保证新 token 无缝激活，在 FLUX.1-dev 上实现最高 7× 加速且几乎无损…
+  [CVPR2026][图像生成][Transformer] 提出 Just-in-Time (JiT) 框架，通过在空间域动态选择稀疏 anchor token 驱动生成 ODE 演化，并设计确定性 micro-flow 保证新 token 无缝激活，在 FLUX.1-dev 上实现最高 7× 加速且几乎无损。
 tags:
   - "CVPR2026"
   - "图像生成"

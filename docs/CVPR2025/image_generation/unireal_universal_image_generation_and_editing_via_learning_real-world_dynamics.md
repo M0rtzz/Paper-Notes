@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UniReal: Universal Image Generation and Editing via Learning Real-world Dynamics
 description: >-
-  [CVPR 2025][图像生成][统一框架] UniReal提出将各种图像生成和编辑任务统一为"不连续帧生成"的框架，利用视频数据作为可扩展的通用监督源，通过层次化提示和文本-图像关联机制，在单一扩散Transformer中实现了指令编辑、定制化生成、物体插入等多种任务的统一处理。
+  [CVPR 2025][图像生成][统一框架] UniReal提出将各种图像生成和编辑任务统一为"不连续帧生成"的框架，利用视频数据作为可扩展的通用监督源，通过层次化提示和文本-图像关联机制，在单一扩散Transformer中实现了指令编辑、定制化生成、物体插入等多种任务的统一处理。 图像生成和编辑领域随着应用需求的增加变得…
 tags:
   - "CVPR 2025"
   - "图像生成"

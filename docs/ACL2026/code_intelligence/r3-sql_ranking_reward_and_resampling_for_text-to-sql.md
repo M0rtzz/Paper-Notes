@@ -2,9 +2,9 @@
 title: >-
   [论文解读] R$^3$-SQL: Ranking Reward and Resampling for Text-to-SQL
 description: >-
-  [ACL2026][代码智能][Text-to-SQL] R3-SQL 面向 generate-then-rank Text-to-SQL，先按执行结果把等价 SQL 分组并结合 pairwise/listwise 与 pointwise reward 排序…
+  [ACL2026 Findings][代码智能][Text-to-SQL] R3-SQL 面向 generate-then-rank Text-to-SQL，先按执行结果把等价 SQL 分组并结合 pairwise/listwise 与 pointwise reward 排序，再用 LLM agent 判断候选池是否缺少正确 SQL 并选择性重采样，在 BIRD-dev 上达到 75.03 EX。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "代码智能"
   - "Text-to-SQL"
   - "候选排序"

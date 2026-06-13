@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Erase or Hide? Suppressing Spurious Unlearning Neurons for Robust Unlearning
 description: >-
-  [ICLR 2026][LLM安全][machine unlearning] 揭示主流 LLM 遗忘方法的"浅层对齐"问题——它们通过产生"虚假遗忘神经元"抑制目标知识的显示而非真正擦除，导致知识通过后续微调轻松恢复；提出 Ssiuu 方法通过归因引导的正则化防止负向影响膨胀，实现鲁棒遗忘。
+  [ICLR 2026][LLM安全][machine unlearning] 揭示主流 LLM 遗忘方法的"浅层对齐"问题——它们通过产生"虚假遗忘神经元"抑制目标知识的显示而非真正擦除，导致知识通过后续微调轻松恢复；提出 Ssiuu 方法通过归因引导的正则化防止负向影响膨胀，实现鲁棒遗忘。 领域现状：LLM 训练数据可能包…
 tags:
   - "ICLR 2026"
   - "LLM安全"

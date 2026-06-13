@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STABLE: Simulation-Ready Tabletop Layout Generation via a Semantics–Physics Dual System
 description: >-
-  [ICML 2026][3D视觉][桌面场景生成] STABLE 把"任务指令→可仿真桌面场景"拆成 LLM-based Semantic Reasoner（出粗布局）和 flow-matching + SDF 损失的 Physics Corrector（修位姿）…
+  [ICML 2026][3D视觉][桌面场景生成] STABLE 把"任务指令→可仿真桌面场景"拆成 LLM-based Semantic Reasoner（出粗布局）和 flow-matching + SDF 损失的 Physics Corrector（修位姿），并让两者按 task-critical → background 三阶段交替迭代，最终在 MesaTask-10K 上把物体碰撞数压到 0、任务对齐 AwS 拉到 99.0%。
 tags:
   - "ICML 2026"
   - "3D视觉"

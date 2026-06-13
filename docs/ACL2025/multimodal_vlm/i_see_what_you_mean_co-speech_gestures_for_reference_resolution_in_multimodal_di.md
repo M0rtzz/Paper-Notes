@@ -2,7 +2,7 @@
 title: >-
   [论文解读] I See What You Mean: Co-Speech Gestures for Reference Resolution in Multimodal Dialogue
 description: >-
-  [ACL 2025][多模态VLM][表征性手势] 提出自监督预训练方法学习表征性共语手势（co-speech iconic gestures）的嵌入表示，将骨骼动作 grounded 到语言中…
+  [ACL 2025][多模态VLM][表征性手势] 提出自监督预训练方法学习表征性共语手势（co-speech iconic gestures）的嵌入表示，将骨骼动作 grounded 到语言中，在面对面对话的指称消解任务上证明手势与语音的互补性——手势+语音准确率 31% 远超单独语音 24% 或手势 19%。
 tags:
   - "ACL 2025"
   - "多模态VLM"

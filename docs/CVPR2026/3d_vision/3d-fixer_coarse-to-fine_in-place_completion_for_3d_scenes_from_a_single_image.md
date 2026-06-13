@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D-Fixer: Coarse-to-Fine In-place Completion for 3D Scenes from a Single Image
 description: >-
-  [CVPR 2026][3D视觉][单图3D场景生成] 提出"就地补全"（in-place completion）新范式，将预训练物体级生成先验扩展到场景级，直接在原始位置对碎片化几何进行补全，无需显式位姿对齐，同时构建110K规模场景级数据集 ARSG-110K…
+  [CVPR 2026][3D视觉][单图3D场景生成] 提出"就地补全"（in-place completion）新范式，将预训练物体级生成先验扩展到场景级，直接在原始位置对碎片化几何进行补全，无需显式位姿对齐，同时构建110K规模场景级数据集 ARSG-110K，大幅超越 MIDI 和 Gen3DSR 等基线。
 tags:
   - "CVPR 2026"
   - "3D视觉"

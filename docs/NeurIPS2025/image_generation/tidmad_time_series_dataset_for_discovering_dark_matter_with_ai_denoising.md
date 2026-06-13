@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising
 description: >-
-  [NeurIPS 2025][图像生成][暗物质探测] 发布 TIDMAD——首个面向暗物质搜索的超长时间序列去噪基准数据集，包含 ABRACADABRA 实验的训练/验证/科学数据、去噪评分指标和完整分析框架，使 AI 算法能直接产出物理学界标准的暗物质搜索结果。
+  [NeurIPS 2025 Spotlight][图像生成][暗物质探测] 发布 TIDMAD——首个面向暗物质搜索的超长时间序列去噪基准数据集，包含 ABRACADABRA 实验的训练/验证/科学数据、去噪评分指标和完整分析框架，使 AI 算法能直接产出物理学界标准的暗物质搜索结果。 暗物质占宇宙总质量约 85%…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "图像生成"
   - "暗物质探测"
   - "时间序列去噪"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OBCache: Optimal Brain KV Cache Pruning for Efficient Long-Context LLM Inference
 description: >-
-  [ICML2026][LLM效率][KV cache eviction] 本文把 KV cache eviction 重新表述为"逐层结构化剪枝"问题，借用 Optimal Brain Damage 的二阶 Taylor 近似推导出针对独立 value、独立 key、key-value 联合三种剪枝单位的闭式…
+  [ICML2026][LLM效率][KV cache eviction] 本文把 KV cache eviction 重新表述为"逐层结构化剪枝"问题，借用 Optimal Brain Damage 的二阶 Taylor 近似推导出针对独立 value、独立 key、key-value 联合三种剪枝单位的闭式 saliency 分数，作为即插即用的"分数替换件"接入 H2O / TOVA / SnapKV / AdaKV 等现有 attention-only eviction 框架，在 LLaMA-3.1 / Qwen-2.5 的 RULER 与 LongBench 上获得稳定提升（AdaKV 在 query-agnostic RU…
 tags:
   - "ICML2026"
   - "LLM效率"

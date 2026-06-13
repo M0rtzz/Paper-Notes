@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning
 description: >-
-  [NeurIPS 2025][LLM推理][过程奖励模型] PURE 发现 PRM 导致 reward hacking 的根本原因是 RL 中标准的 sum-form 信用分配（$V(s) = \sum \gamma^t r_t$）…
+  [NeurIPS 2025][LLM推理][过程奖励模型] PURE 发现 PRM 导致 reward hacking 的根本原因是 RL 中标准的 sum-form 信用分配（$V(s) = \sum \gamma^t r_t$），并提出 min-form 替代方案（$V(s) = \min_{t' \geq t} r_{t'}$），通过将价值函数限制为未来奖励的最小值而非累积和，显著缓解 reward hacking——仅用 30% 训练步数就达到与规则奖励方法相当的推理性能。
 tags:
   - "NeurIPS 2025"
   - "LLM推理"

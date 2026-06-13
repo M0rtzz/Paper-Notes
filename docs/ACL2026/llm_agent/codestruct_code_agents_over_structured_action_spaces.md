@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CodeStruct: Code Agents over Structured Action Spaces
 description: >-
-  [ACL 2026][LLM Agent][代码Agent] 本文提出CodeStruct框架，将代码仓库重新定义为基于AST的结构化动作空间，让LLM代码Agent通过命名的程序实体（而非文本片段）进行读取和编辑操作…
+  [ACL 2026][LLM Agent][代码Agent] 本文提出CodeStruct框架，将代码仓库重新定义为基于AST的结构化动作空间，让LLM代码Agent通过命名的程序实体（而非文本片段）进行读取和编辑操作，在SWE-Bench Verified上提升1.2-5.0%准确率并减少12-38% token消耗。
 tags:
   - "ACL 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Solving Probabilistic Verification Problems of Neural Networks Using Branch and Bound
 description: >-
-  [ICML 2025][AI安全][neural network verification] 本文提出一种基于分支定界（Branch and Bound）的神经网络概率验证算法，通过迭代精化输出概率的上下界来回答"给定输入分布下，网络输出满足特定条件的概率是多少"，速度比已有方法快一到两个数量级。
+  [ICML 2025][AI安全][neural network verification] 本文提出一种基于分支定界（Branch and Bound）的神经网络概率验证算法，通过迭代精化输出概率的上下界来回答"给定输入分布下，网络输出满足特定条件的概率是多少"，速度比已有方法快一到两个数量级。 领域现状： 神经网络的形式…
 tags:
   - "ICML 2025"
   - "AI安全"

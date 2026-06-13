@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Tiny and High-quality Facial Makeup with Data Amplify Learning
 description: >-
-  [ECCV 2024][图像生成][人脸妆容迁移] 提出 Data Amplify Learning (DAL) 学习范式，用 Diffusion-based Data Amplifier 从仅 5 张标注图像"放大"生成大量配对训练数据，训练出仅 80K 参数的 TinyBeauty 模型…
+  [ECCV 2024][图像生成][人脸妆容迁移] 提出 Data Amplify Learning (DAL) 学习范式，用 Diffusion-based Data Amplifier 从仅 5 张标注图像"放大"生成大量配对训练数据，训练出仅 80K 参数的 TinyBeauty 模型，在 iPhone 13 上以 460fps 实现 SOTA 妆容迁移效果。
 tags:
   - "ECCV 2024"
   - "图像生成"

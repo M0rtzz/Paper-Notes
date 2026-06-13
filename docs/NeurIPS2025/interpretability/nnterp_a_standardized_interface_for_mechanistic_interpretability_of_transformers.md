@@ -2,7 +2,7 @@
 title: >-
   [论文解读] nnterp: A Standardized Interface for Mechanistic Interpretability of Transformers
 description: >-
-  [NeurIPS 2025 (Mechanistic Interpretability Workshop)][可解释性][机制化可解释性] 开发 nnterp 库，作为 NNsight 的轻量封装层，通过系统化的模块重命名和自动验证测试…
+  [NeurIPS 2025 (Mechanistic Interpretability Workshop)][可解释性][机制化可解释性] 开发 nnterp 库，作为 NNsight 的轻量封装层，通过系统化的模块重命名和自动验证测试，为 21 个架构族 50+ 个 Transformer 模型变体提供统一的内部激活访问接口，内置 logit lens、patchscope、activation steering 等常用可解释性方法，解决了 TransformerLens 的正确性问题和 NNsight 的标准化问题之间的根本性权衡。
 tags:
   - "NeurIPS 2025 (Mechanistic Interpretability Workshop)"
   - "可解释性"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment
 description: >-
-  [ICLR 2026][LLM对齐][Wasserstein距离] 指出 RLHF 中标准 KL 散度正则化仅比较相同索引处的 token 概率而忽略语义相似性，提出基于熵正则化 Wasserstein 距离的语义感知策略正则化（WPR），通过对偶公式将正则化转化为 token 级惩罚项…
+  [ICLR 2026][LLM对齐][Wasserstein距离] 指出 RLHF 中标准 KL 散度正则化仅比较相同索引处的 token 概率而忽略语义相似性，提出基于熵正则化 Wasserstein 距离的语义感知策略正则化（WPR），通过对偶公式将正则化转化为 token 级惩罚项，在对话生成和摘要任务上一致优于 KL 及各类 f-散度基线。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DualOptim+: Bridging Shared and Decoupled Optimizer States for Better Machine Unlearning in Large Language Models
 description: >-
-  [ICML 2026][LLM安全][机器遗忘] DualOptim+ 把 Adam 优化器状态拆成"共享 base 态 + 解耦 delta 态"，让 LLM 机器遗忘在 forget/retain 梯度时而冲突时而协同的情况下自适应地在共享和解耦优化器之间过渡…
+  [ICML 2026][LLM安全][机器遗忘] DualOptim+ 把 Adam 优化器状态拆成"共享 base 态 + 解耦 delta 态"，让 LLM 机器遗忘在 forget/retain 梯度时而冲突时而协同的情况下自适应地在共享和解耦优化器之间过渡，理论上同时退化为 Alternate（正相关）和 DualOptim（负相关），并通过 8-bit 量化变体把额外显存开销压回基线。
 tags:
   - "ICML 2026"
   - "LLM安全"

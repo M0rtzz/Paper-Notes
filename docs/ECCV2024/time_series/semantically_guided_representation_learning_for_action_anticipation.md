@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Semantically Guided Representation Learning For Action Anticipation
 description: >-
-  [ECCV2024][时间序列][Action Anticipation] 提出 S-GEAR 框架，通过学习视觉动作原型并利用语言模型的语义关联来引导原型之间的几何关系，使模型理解动作间的语义互联性，从而提升动作预测性能…
+  [ECCV2024][时间序列][Action Anticipation] 提出 S-GEAR 框架，通过学习视觉动作原型并利用语言模型的语义关联来引导原型之间的几何关系，使模型理解动作间的语义互联性，从而提升动作预测性能，在 Epic-Kitchens 55/100、EGTEA Gaze+、50 Salads 四个基准上取得 SOTA 或极具竞争力的结果。
 tags:
   - "ECCV2024"
   - "时间序列"

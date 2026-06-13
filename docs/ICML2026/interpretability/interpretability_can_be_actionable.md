@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Interpretability Can Be Actionable
 description: >-
-  [ICML 2026 (Position Paper)][可解释性][actionability] 这是一篇立场论文，主张「可解释性研究缺的不是新方法、而是评估准则」：研究该以 actionability（insight 能否驱动可解释性领域之外的具体决策/干预）为核心评估维度…
+  [ICML 2026 (Position Paper)][可解释性][actionability] 这是一篇立场论文，主张「可解释性研究缺的不是新方法、而是评估准则」：研究该以 actionability（insight 能否驱动可解释性领域之外的具体决策/干预）为核心评估维度，作者沿 concreteness + validation 两个维度定义 actionability、分析阻碍、列出 5 个有杠杆的应用域、给出研究者 6 步 checklist。
 tags:
   - "ICML 2026 (Position Paper)"
   - "可解释性"

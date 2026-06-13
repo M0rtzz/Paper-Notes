@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PreciseCache: Precise Feature Caching for Efficient and High-fidelity Video Generation
 description: >-
-  [ICLR 2026][视频生成][特征缓存] 提出 PreciseCache——精确检测并跳过视频生成中真正冗余计算的即插即用加速框架，由 LFCache（步级，基于低频差异 LFD 度量）和 BlockCache（块级，基于输入输出差异度量）组成…
+  [ICLR 2026][视频生成][特征缓存] 提出 PreciseCache——精确检测并跳过视频生成中真正冗余计算的即插即用加速框架，由 LFCache（步级，基于低频差异 LFD 度量）和 BlockCache（块级，基于输入输出差异度量）组成，在 Wan2.1-14B 等主流模型上实现平均 2.6× 加速且无明显质量损失。
 tags:
   - "ICLR 2026"
   - "视频生成"

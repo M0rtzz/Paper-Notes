@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Rejection Criterion for Proxy-Based Test-Time Alignment
 description: >-
-  [ACL2026][LLM对齐][测试时对齐] 这篇论文把隐式奖励、Nudging 和 KAD 等 proxy-based test-time alignment 方法统一成一个“先采样再决定是否拒绝”的概率图模型…
+  [ACL2026][LLM对齐][测试时对齐] 这篇论文把隐式奖励、Nudging 和 KAD 等 proxy-based test-time alignment 方法统一成一个“先采样再决定是否拒绝”的概率图模型，并提出用小对齐模型的最佳置信度作为参照的 conservative confidence bet，在多个数学与常识推理数据集上提升了混合解码精度。
 tags:
   - "ACL2026"
   - "LLM对齐"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Target Label Conditioning in Adversarial Attacks: A 2D Tensor-Guided Generative Approach
 description: >-
-  [AI安全] 提出 TGAF 框架，利用扩散模型将目标标签编码为 2D 语义张量来引导对抗噪声生成，并设计随机遮挡策略保留完整语义信息，显著提升目标对抗攻击的可迁移性。
+  [AI安全] 提出 TGAF 框架，利用扩散模型将目标标签编码为 2D 语义张量来引导对抗噪声生成，并设计随机遮挡策略保留完整语义信息，显著提升目标对抗攻击的可迁移性。 - 对抗攻击分类：无目标攻击只需引起误分类，目标攻击需迫使模型输出攻击者指定的类别，后者更具威胁性（如欺骗自动驾驶将停车标志识别为限速标志） - 可迁移性瓶…
 tags:
   - "AI安全"
 ---

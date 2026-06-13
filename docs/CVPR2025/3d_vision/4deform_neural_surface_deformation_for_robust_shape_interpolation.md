@@ -2,9 +2,10 @@
 title: >-
   [论文解读] 4Deform: Neural Surface Deformation for Robust Shape Interpolation
 description: >-
-  [CVPR 2025][neural implicit representation] 提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA…
+  [CVPR 2025][3D视觉][neural implicit representation] 提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA，并支持真实世界 Kinect 点云序列的时间超分辨率。
 tags:
   - "CVPR 2025"
+  - "3D视觉"
   - "neural implicit representation"
   - "shape interpolation"
   - "velocity field"

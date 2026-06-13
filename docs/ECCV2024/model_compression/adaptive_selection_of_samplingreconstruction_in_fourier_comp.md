@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Selection of Sampling-Reconstruction in Fourier Compressed Sensing
 description: >-
-  [ECCV 2024][模型压缩][傅里叶压缩感知] 本文提出"自适应选择采样-重建对"($\mathcal{H}_{1.5}$)框架，利用超分辨率空间生成模型量化高频贝叶斯不确定性，为每个输入数据选择最佳的采样掩码-重建网络对…
+  [ECCV 2024][模型压缩][傅里叶压缩感知] 本文提出"自适应选择采样-重建对"($\mathcal{H}_{1.5}$)框架，利用超分辨率空间生成模型量化高频贝叶斯不确定性，为每个输入数据选择最佳的采样掩码-重建网络对，在理论和实验上同时优于非自适应联合优化方法（$\mathcal{H}_1$）和自适应采样方法（$\mathcal{H}_2$），在人脸图像和多线圈 MRI 重建中取得显著 SSIM 提升。
 tags:
   - "ECCV 2024"
   - "模型压缩"

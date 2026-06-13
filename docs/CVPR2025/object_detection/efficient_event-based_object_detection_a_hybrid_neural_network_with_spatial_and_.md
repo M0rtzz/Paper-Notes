@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient Event-Based Object Detection: A Hybrid Neural Network with Spatial and Temporal Attention
 description: >-
-  [CVPR 2025][目标检测][事件相机] 提出首个面向大规模基准的混合 SNN-ANN 目标检测模型，设计注意力桥接模块（ASAB）将 SNN 的稀疏脉冲表示通过时空注意力转换为 ANN 可处理的密集特征…
+  [CVPR 2025][目标检测][事件相机] 提出首个面向大规模基准的混合 SNN-ANN 目标检测模型，设计注意力桥接模块（ASAB）将 SNN 的稀疏脉冲表示通过时空注意力转换为 ANN 可处理的密集特征，在 Gen1/Gen4 数据集上以仅 6.6M 参数大幅超越 SNN 方法并接近 ANN/RNN 方法的精度，同时 SNN 部分可部署在 Intel Loihi 2 神经形态芯片上实现低功耗推理。
 tags:
   - "CVPR 2025"
   - "目标检测"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Decoupling Skeleton and Flesh: Efficient Multimodal Table Reasoning with Disentangled Alignment and Structure-aware Guidance
 description: >-
-  [ICML 2026][强化学习][LVLM] 本文为多模态表格推理提出两件套：训练阶段 DiSCo 用结构匿名化把"骨架"和"血肉"两个对齐目标解耦，让 LVLM 只用 10K 表格图就学会布局…
+  [ICML 2026 Spotlight][强化学习][LVLM] 本文为多模态表格推理提出两件套：训练阶段 DiSCo 用结构匿名化把"骨架"和"血肉"两个对齐目标解耦，让 LVLM 只用 10K 表格图就学会布局；推理阶段 Table-GLS 用"全局结构探查 → 自反思子表抽取 → 证据稳态推理"三步把整图问答压缩到最小可验证子表上，整套无需推理数据微调也不调外部工具，在 21 项 benchmark 上超过依赖 82K-97K 标注的 SFT/RL 基线。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "强化学习"
   - "LVLM"
   - "表格图像理解"

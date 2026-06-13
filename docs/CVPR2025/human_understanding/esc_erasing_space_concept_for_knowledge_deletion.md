@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ESC: Erasing Space Concept for Knowledge Deletion
 description: >-
-  [CVPR 2025][人体理解][知识删除] 提出 ESC（Erasing Space Concept），通过 SVD 分解待遗忘数据的特征空间并移除主成分方向，实现训练无关的特征级知识删除…
+  [CVPR 2025][人体理解][知识删除] 提出 ESC（Erasing Space Concept），通过 SVD 分解待遗忘数据的特征空间并移除主成分方向，实现训练无关的特征级知识删除，首次定义了"知识删除"（Knowledge Deletion）任务并提出 Knowledge Retention Score 评估特征级遗忘效果。
 tags:
   - "CVPR 2025"
   - "人体理解"

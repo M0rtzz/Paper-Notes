@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Balanced Image Stylization with Style Matching Score
 description: >-
-  [ICCV 2025][图像生成][Style Transfer] 提出 Style Matching Score（SMS），将图像风格化重铸为风格分布匹配问题，通过渐进频谱正则化和语义感知梯度精炼，在风格对齐与内容保持之间取得卓越平衡，并可蒸馏到轻量前馈网络实现一步风格化。
+  [ICCV 2025][图像生成][Style Transfer] 提出 Style Matching Score（SMS），将图像风格化重铸为风格分布匹配问题，通过渐进频谱正则化和语义感知梯度精炼，在风格对齐与内容保持之间取得卓越平衡，并可蒸馏到轻量前馈网络实现一步风格化。 图像风格化的核心挑战是在有效转移目标风格与保持源…
 tags:
   - "ICCV 2025"
   - "图像生成"

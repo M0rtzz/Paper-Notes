@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OMIBench: Benchmarking Olympiad-Level Multi-Image Reasoning in Large Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][多图推理] 本文提出 OMIBench——首个面向奥赛级多图推理的大规模基准，涵盖生物、化学、数学、物理四学科超 1000 道竞赛题，发现即使最强 LVLM（Gemini-3-Pro）也仅达约 50% 准确率，比单图基准下降超 25%。
+  [ACL 2026][多模态VLM][多图推理] 本文提出 OMIBench——首个面向奥赛级多图推理的大规模基准，涵盖生物、化学、数学、物理四学科超 1000 道竞赛题，发现即使最强 LVLM（Gemini-3-Pro）也仅达约 50% 准确率，比单图基准下降超 25%。 领域现状：LVLM 在标准推理任务上进步显著…
 tags:
   - "ACL 2026"
   - "多模态VLM"

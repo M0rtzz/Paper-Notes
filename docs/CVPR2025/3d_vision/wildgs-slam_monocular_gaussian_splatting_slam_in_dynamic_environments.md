@@ -2,7 +2,7 @@
 title: >-
   [论文解读] WildGS-SLAM: Monocular Gaussian Splatting SLAM in Dynamic Environments
 description: >-
-  [CVPR 2025][3D视觉][SLAM] 本文提出 WildGS-SLAM，一个基于 3D Gaussian Splatting 的单目 RGB SLAM 系统，通过 DINOv2 特征驱动的不确定性预测来引导追踪和建图中的动态物体去除…
+  [CVPR 2025][3D视觉][SLAM] 本文提出 WildGS-SLAM，一个基于 3D Gaussian Splatting 的单目 RGB SLAM 系统，通过 DINOv2 特征驱动的不确定性预测来引导追踪和建图中的动态物体去除，在动态环境下的追踪精度（ATE RMSE 0.46cm）和无伪影的新视角合成质量上大幅超越现有方法。
 tags:
   - "CVPR 2025"
   - "3D视觉"

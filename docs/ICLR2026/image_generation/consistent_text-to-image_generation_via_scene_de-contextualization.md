@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Consistent Text-to-Image Generation via Scene De-Contextualization
 description: >-
-  [ICLR 2026][图像生成][consistent T2I] 揭示 T2I 模型中 ID 偏移的根本原因是"场景上下文化"（scene contextualization，场景 token 对 ID token 注入上下文信息）…
+  [ICLR 2026][图像生成][consistent T2I] 揭示 T2I 模型中 ID 偏移的根本原因是"场景上下文化"（scene contextualization，场景 token 对 ID token 注入上下文信息），并提出 training-free 的 Scene De-Contextualization (SDeC) 方法，通过 SVD 特征值的方向稳定性分析识别并抑制 prompt embedding 中潜在的场景-ID 关联，实现逐场景的身份一致性生成。
 tags:
   - "ICLR 2026"
   - "图像生成"

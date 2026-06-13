@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EchoAgent: Towards Reliable Echocardiography Interpretation with "Eyes", "Hands" and "Minds"
 description: >-
-  [CVPR 2026][医学图像][超声心动图] 提出 EchoAgent，一个模拟心脏超声医师"眼-手-脑"协同工作流程的 Agent 系统，通过专业知识引擎（mind）、分层工具箱（eyes+hands）和编排推理中枢（reasoning hub）三阶段实现端到端超声心动图可靠解读…
+  [CVPR 2026][医学图像][超声心动图] 提出 EchoAgent，一个模拟心脏超声医师"眼-手-脑"协同工作流程的 Agent 系统，通过专业知识引擎（mind）、分层工具箱（eyes+hands）和编排推理中枢（reasoning hub）三阶段实现端到端超声心动图可靠解读，在多个基准上达到 SOTA。
 tags:
   - "CVPR 2026"
   - "医学图像"

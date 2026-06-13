@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation
 description: >-
-  [优化/理论] 提出 SLOGAN 框架，通过稀疏因果图构建与信息瓶颈解耦因果/虚假特征，结合跨域虚假特征交换的生成式干预机制和类别自适应伪标签动态校准，实现无监督图域自适应中稳定的因果特征迁移。
+  [优化/理论] 提出 SLOGAN 框架，通过稀疏因果图构建与信息瓶颈解耦因果/虚假特征，结合跨域虚假特征交换的生成式干预机制和类别自适应伪标签动态校准，实现无监督图域自适应中稳定的因果特征迁移。 无监督图域自适应（UGDA）旨在利用有标签的源域图数据在无标签的目标域中取得良好性能。现有方法面临两个核心挑战： 因果-虚假特征…
 tags:
   - "优化/理论"
 ---

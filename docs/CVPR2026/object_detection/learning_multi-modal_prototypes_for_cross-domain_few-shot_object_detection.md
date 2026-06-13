@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection
 description: >-
-  [CVPR 2026][目标检测][跨域少样本检测] 提出双分支框架 LMP，在 GroundingDINO 基础上引入视觉原型分支（正类原型+硬负原型），与文本分支联合训练并集成推理，在跨域少样本目标检测中取得 SOTA。
+  [CVPR 2026 Findings][目标检测][跨域少样本检测] 提出双分支框架 LMP，在 GroundingDINO 基础上引入视觉原型分支（正类原型+硬负原型），与文本分支联合训练并集成推理，在跨域少样本目标检测中取得 SOTA。 跨域少样本目标检测（CD-FSOD）要求在仅有少量标注的新域中检测新类别…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "目标检测"
   - "跨域少样本检测"
   - "视觉原型"

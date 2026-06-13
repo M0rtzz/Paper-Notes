@@ -2,7 +2,7 @@
 title: >-
   [论文解读] KBQA-R1: Reinforcing Large Language Models for Knowledge Base Question Answering
 description: >-
-  [ICML 2026][图学习][KBQA] 把 KBQA 从"一次性生成逻辑表达式"重新定义为"多轮决策过程"，先用 Referenced Rejection Sampling 在金标动作序列的引导下生成可执行的推理轨迹做 SFT 冷启动，再用 GRPO 基于 F1 结果奖励优化策略…
+  [ICML 2026][图学习][KBQA] 把 KBQA 从"一次性生成逻辑表达式"重新定义为"多轮决策过程"，先用 Referenced Rejection Sampling 在金标动作序列的引导下生成可执行的推理轨迹做 SFT 冷启动，再用 GRPO 基于 F1 结果奖励优化策略，让 8B Llama 在 WebQSP / GrailQA / GraphQ 三个 benchmark 上同时超过 GPT-4 提示方法与图检索 SOTA。
 tags:
   - "ICML 2026"
   - "图学习"

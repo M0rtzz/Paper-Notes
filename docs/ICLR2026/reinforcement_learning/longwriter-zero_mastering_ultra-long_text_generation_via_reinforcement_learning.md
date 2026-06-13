@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LongWriter-Zero: Mastering Ultra-Long Text Generation via Reinforcement Learning
 description: >-
-  [ICLR 2026 (Oral)][强化学习][超长文本生成] 提出 LongWriter-Zero：从基础模型出发，不依赖任何标注或合成数据，仅通过 GRPO 强化学习 + 三维度复合奖励模型（长度 / 质量 / 格式），涌现出超长高质量文本生成能力…
+  [ICLR 2026 (Oral)][强化学习][超长文本生成] 提出 LongWriter-Zero：从基础模型出发，不依赖任何标注或合成数据，仅通过 GRPO 强化学习 + 三维度复合奖励模型（长度 / 质量 / 格式），涌现出超长高质量文本生成能力，在 WritingBench 上以 32B 参数量超越 DeepSeek-R1 和 Qwen3-235B 等 100B+ 模型。
 tags:
   - "ICLR 2026 (Oral)"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Failures to Surface Harmful Contents in Video Large Language Models
 description: >-
-  [AAAI 2026][模型压缩][VideoLLM] 本文首次系统分析了 VideoLLM 的安全性，揭示了三种结构性设计缺陷（稀疏时间采样、空间 token 下采样、模态融合不平衡），使得视频中清晰可见的有害内容在模型生成的文本摘要中被遗漏（omission rate 超 90%）…
+  [AAAI 2026][模型压缩][VideoLLM] 本文首次系统分析了 VideoLLM 的安全性，揭示了三种结构性设计缺陷（稀疏时间采样、空间 token 下采样、模态融合不平衡），使得视频中清晰可见的有害内容在模型生成的文本摘要中被遗漏（omission rate 超 90%），并设计了三种零查询黑盒攻击来验证漏洞严重性。
 tags:
   - "AAAI 2026"
   - "模型压缩"

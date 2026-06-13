@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Provable Benefit of Curriculum in Transformer Tree-Reasoning Post-Training
 description: >-
-  [ICML 2026][强化学习][课程学习] 本文为「先易后难」的课程式 RL 后训练给出第一份严格的样本复杂度证明：在 transformer 的状态条件自回归推理树上，若课程能让相邻阶段的难度比保持在目标难度的 $L/p$ 次根级别…
+  [ICML 2026][强化学习][课程学习] 本文为「先易后难」的课程式 RL 后训练给出第一份严格的样本复杂度证明：在 transformer 的状态条件自回归推理树上，若课程能让相邻阶段的难度比保持在目标难度的 $L/p$ 次根级别，则总样本数可从直接训练的指数级 $(C^\star)^L$ 降到课程版的多项式级 $L\cdot (C^\star)^{p_\max}$。
 tags:
   - "ICML 2026"
   - "强化学习"

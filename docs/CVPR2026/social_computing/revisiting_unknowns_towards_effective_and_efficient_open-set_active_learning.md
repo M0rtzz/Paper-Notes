@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning
 description: >-
-  [CVPR2026][社会计算][open-set active learning] 提出 E2OAL，一个无需额外检测器的开放集主动学习框架，通过标签引导聚类发现未知类潜在结构、Dirichlet 校准辅助头联合建模已知/未知类别，并设计两阶段自适应查询策略…
+  [CVPR2026][社会计算][open-set active learning] 提出 E2OAL，一个无需额外检测器的开放集主动学习框架，通过标签引导聚类发现未知类潜在结构、Dirichlet 校准辅助头联合建模已知/未知类别，并设计两阶段自适应查询策略，在多个基准上同时实现高准确率、高查询纯度和高训练效率。
 tags:
   - "CVPR2026"
   - "社会计算"

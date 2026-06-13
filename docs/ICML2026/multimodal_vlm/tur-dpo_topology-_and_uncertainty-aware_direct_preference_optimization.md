@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TUR-DPO: Topology- and Uncertainty-Aware Direct Preference Optimization
 description: >-
-  [ICML 2026][多模态VLM][DPO] TUR-DPO 在 DPO 的偏好 logit 上同时叠加一个"语义+拓扑结构"塑形奖励差和一个"按每对样本不确定性"动态降权的实例权重，让模型在保持 RL-free 训练简洁性的同时，显式奖励推理过程的结构合理性并削弱脆弱偏好对的影响…
+  [ICML 2026][多模态VLM][DPO] TUR-DPO 在 DPO 的偏好 logit 上同时叠加一个"语义+拓扑结构"塑形奖励差和一个"按每对样本不确定性"动态降权的实例权重，让模型在保持 RL-free 训练简洁性的同时，显式奖励推理过程的结构合理性并削弱脆弱偏好对的影响，从而在 GSM8K / MATH / BBH / QA 等推理类任务上系统超过 DPO 与 IPO，并在多数任务上追平 PPO。
 tags:
   - "ICML 2026"
   - "多模态VLM"

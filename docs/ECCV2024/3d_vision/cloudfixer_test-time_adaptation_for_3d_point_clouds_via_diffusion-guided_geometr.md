@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CloudFixer: Test-Time Adaptation for 3D Point Clouds via Diffusion-Guided Geometric Transformation
 description: >-
-  [ECCV 2024][3D视觉][测试时适应] 本文提出CloudFixer，首个针对3D点云的测试时输入适应方法，通过预训练扩散模型引导的几何变换参数优化，将分布偏移的测试点云变换回源域，同时避免了扩散模型的反向传播，实现了不到1秒的单实例适应速度。
+  [ECCV 2024][3D视觉][测试时适应] 本文提出CloudFixer，首个针对3D点云的测试时输入适应方法，通过预训练扩散模型引导的几何变换参数优化，将分布偏移的测试点云变换回源域，同时避免了扩散模型的反向传播，实现了不到1秒的单实例适应速度。 领域现状：3D点云识别模型（如PointNet++、DGCNN、Poi…
 tags:
   - "ECCV 2024"
   - "3D视觉"

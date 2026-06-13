@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AuthorityBench: Benchmarking LLM Authority Perception for Reliable Retrieval-Augmented Generation
 description: >-
-  [ACL 2026][信息检索/RAG][权威感知] AuthorityBench 用 10K 网页域名（PageRank 真值）+22K 实体（Wikipedia 跨语言 sitelink 真值）+120 RAG 问题构造首个 LLM「权威感知」基准…
+  [ACL 2026][信息检索/RAG][权威感知] AuthorityBench 用 10K 网页域名（PageRank 真值）+22K 实体（Wikipedia 跨语言 sitelink 真值）+120 RAG 问题构造首个 LLM「权威感知」基准，发现 ListJudge / PairJudge + PointScore 输出最准，加入网页文本反而拖后腿，且把权威信号用作 RAG 过滤能把答案准确率最多提 14 个百分点。
 tags:
   - "ACL 2026"
   - "信息检索/RAG"

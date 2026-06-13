@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PINE: Pruning Boosted Tree Ensembles with Conformal In-Distribution Prediction Equivalence
 description: >-
-  [ICML 2026][可解释性][树集成剪枝] PINE 把"忠实剪枝"对 boosted 树集成的等价约束从全输入空间收缩到一个由 Chow-Liu 树似然 + 分裂共形校准定义的"分布内区域" $\mathcal{X}_{\text{ID}}(\alpha)$…
+  [ICML 2026][可解释性][树集成剪枝] PINE 把"忠实剪枝"对 boosted 树集成的等价约束从全输入空间收缩到一个由 Chow-Liu 树似然 + 分裂共形校准定义的"分布内区域" $\mathcal{X}_{\text{ID}}(\alpha)$，用单一参数 $\alpha$ 平滑控制压缩-保真折中，在 12 个公开 tabular 数据集上把压缩率相对 FIPE 最高提升 30%，同时把"剪枝前后预测一致"的概率以 $\geq 1-\alpha$ 的形式给出可证明保证。
 tags:
   - "ICML 2026"
   - "可解释性"

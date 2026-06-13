@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SACB-Net: Spatial-Awareness Convolutions for Medical Image Registration
 description: >-
-  [CVPR 2025][医学图像][医学图像配准] 提出3D空间感知卷积块（SACB），通过对特征图进行无监督聚类并为不同空间区域生成自适应卷积核，结合金字塔流估计器实现多尺度形变场组合，在脑部和腹部CT配准任务上超越现有SOTA方法。
+  [CVPR 2025][医学图像][医学图像配准] 提出3D空间感知卷积块（SACB），通过对特征图进行无监督聚类并为不同空间区域生成自适应卷积核，结合金字塔流估计器实现多尺度形变场组合，在脑部和腹部CT配准任务上超越现有SOTA方法。 领域现状：深度学习医学图像配准方法已取得显著进展，主流方法包括基于U-Net的Voxel…
 tags:
   - "CVPR 2025"
   - "医学图像"

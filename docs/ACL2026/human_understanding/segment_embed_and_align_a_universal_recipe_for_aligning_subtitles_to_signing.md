@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Segment, Embed, and Align: A Universal Recipe for Aligning Subtitles to Signing
 description: >-
-  [ACL2026][人体理解][手语字幕对齐] SEA 将连续手语视频的字幕对齐拆成 sign segmentation、text-sign embedding 和 episode-level dynamic programming 三步…
+  [ACL2026][人体理解][手语字幕对齐] SEA 将连续手语视频的字幕对齐拆成 sign segmentation、text-sign embedding 和 episode-level dynamic programming 三步，在 BOBSL、How2Sign、WMT-SLT SRF、SwissSLi 四个数据集上取得 SOTA F1@0.50，并能在 CPU 上高效处理长视频。
 tags:
   - "ACL2026"
   - "人体理解"

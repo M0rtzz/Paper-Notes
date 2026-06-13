@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OMG-Bench: A New Challenging Benchmark for Skeleton-based Online Micro Hand Gesture Recognition
 description: >-
-  [CVPR 2026][人体理解][微手势识别] 本文构建了首个大规模公开的基于骨骼数据的在线微手势识别基准OMG-Bench（40类、13948个实例），并提出HMATr框架，通过层次化记忆库和位置感知查询实现检测-分类的端到端统一，在检测率上超越SOTA方法7.6%。
+  [CVPR 2026][人体理解][微手势识别] 本文构建了首个大规模公开的基于骨骼数据的在线微手势识别基准OMG-Bench（40类、13948个实例），并提出HMATr框架，通过层次化记忆库和位置感知查询实现检测-分类的端到端统一，在检测率上超越SOTA方法7.6%。 领域现状：随着Meta Quest、PICO等头显设…
 tags:
   - "CVPR 2026"
   - "人体理解"

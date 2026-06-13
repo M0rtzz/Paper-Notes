@@ -2,9 +2,9 @@
 title: >-
   [论文解读] AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution
 description: >-
-  [CVPR 2026][图像生成][视觉自回归] 针对视觉自回归（VAR）模型在图像超分辨率中的两个一致性问题——注意力局部偏差导致的空间不连贯和残差监督导致的跨尺度误差累积，提出 AlignVAR 框架，通过空间一致性自回归（SCA）和层级一致性约束（HCC）协同解决…
+  [CVPR 2026 Findings][图像生成][视觉自回归] 针对视觉自回归（VAR）模型在图像超分辨率中的两个一致性问题——注意力局部偏差导致的空间不连贯和残差监督导致的跨尺度误差累积，提出 AlignVAR 框架，通过空间一致性自回归（SCA）和层级一致性约束（HCC）协同解决，实现比扩散方法快 10× 以上的推理速度且重建质量更优。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "图像生成"
   - "视觉自回归"
   - "图像超分辨率"

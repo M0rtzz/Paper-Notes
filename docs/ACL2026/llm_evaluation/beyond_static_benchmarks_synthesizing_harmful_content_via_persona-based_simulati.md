@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Static Benchmarks: Synthesizing Harmful Content via Persona-based Simulation for Robust Evaluation
 description: >-
-  [ACL 2026][LLM评测][persona 模拟] 作者用"二维 persona"（内在身份 + 外在策略）驱动 LLM agent 在真实 Reddit 帖子上扮演用户写有害评论，合成出比传统静态 benchmark 更难、更多样、覆盖更广的有害内容评测集…
+  [ACL 2026][LLM评测][persona 模拟] 作者用"二维 persona"（内在身份 + 外在策略）驱动 LLM agent 在真实 Reddit 帖子上扮演用户写有害评论，合成出比传统静态 benchmark 更难、更多样、覆盖更广的有害内容评测集，对四类主流安全分类器的准确率打到 13–31%（vs. 静态集 60–94%），暴露了现有 benchmark 已被"刷穿"的事实。
 tags:
   - "ACL 2026"
   - "LLM评测"

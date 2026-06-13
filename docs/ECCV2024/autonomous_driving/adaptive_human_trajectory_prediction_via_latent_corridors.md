@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Adaptive Human Trajectory Prediction via Latent Corridors
 description: >-
-  [ECCV 2024][自动驾驶][行人轨迹预测] 将prompt tuning思想引入行人轨迹预测，通过在预训练轨迹预测器的输入端添加可学习的低秩图像prompt（称为latent corridors），以不到0.1%的额外参数实现对部署场景特定行为模式的高效自适应…
+  [ECCV 2024][自动驾驶][行人轨迹预测] 将prompt tuning思想引入行人轨迹预测，通过在预训练轨迹预测器的输入端添加可学习的低秩图像prompt（称为latent corridors），以不到0.1%的额外参数实现对部署场景特定行为模式的高效自适应，在合成和真实数据上分别取得最高23.9%和26.8%的ADE提升。
 tags:
   - "ECCV 2024"
   - "自动驾驶"

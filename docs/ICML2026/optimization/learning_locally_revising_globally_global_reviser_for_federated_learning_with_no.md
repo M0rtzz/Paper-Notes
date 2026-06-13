@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning Locally, Revising Globally: Global Reviser for Federated Learning with Noisy Labels
 description: >-
-  [ICML 2026][优化/理论][联邦学习] 本文观察到 FL 的全局模型对噪声标签存在"延迟记忆"现象（CIFAR-10 上记忆率 ≤30%，显著低于集中式训练），据此提出 FedGR——用服务器端 GMM 在所有客户端聚合损失代理上联合筛选并估计每个客户端的噪声比例…
+  [ICML 2026][优化/理论][联邦学习] 本文观察到 FL 的全局模型对噪声标签存在"延迟记忆"现象（CIFAR-10 上记忆率 ≤30%，显著低于集中式训练），据此提出 FedGR——用服务器端 GMM 在所有客户端聚合损失代理上联合筛选并估计每个客户端的噪声比例，再用全局参数定期"修正"本地 EMA 教师以做蒸馏，并加入全局-本地表征一致性正则。三模块协同，在双重异质 (label noise × non-IID) 设定下相比 8 个 SOTA 基线在 CIFAR-10/100 + Clothing1M 上稳定取得显著增益。
 tags:
   - "ICML 2026"
   - "优化/理论"

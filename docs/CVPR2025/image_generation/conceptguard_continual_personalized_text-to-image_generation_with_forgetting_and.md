@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConceptGuard: Continual Personalized Text-to-Image Generation with Forgetting and Confusion Mitigation
 description: >-
-  [CVPR 2025][图像生成][持续学习] 提出 ConceptGuard，通过移位嵌入、概念绑定提示、记忆保持正则化和优先队列回放四种策略，实现持续个性化 T2I 生成中灾难性遗忘和概念混淆的缓解，在多概念基准上大幅超越现有方法。
+  [CVPR 2025][图像生成][持续学习] 提出 ConceptGuard，通过移位嵌入、概念绑定提示、记忆保持正则化和优先队列回放四种策略，实现持续个性化 T2I 生成中灾难性遗忘和概念混淆的缓解，在多概念基准上大幅超越现有方法。 领域现状：个性化 T2I 生成（如 DreamBooth、Textual Inversi…
 tags:
   - "CVPR 2025"
   - "图像生成"

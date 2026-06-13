@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EditAR: Unified Conditional Generation with Autoregressive Models
 description: >-
-  [CVPR 2025][语义分割][自回归模型] 提出 EditAR——首个将图像编辑（纹理修改、物体替换/移除、局部编辑）和图像翻译（深度/边缘/分割图到图像）统一在单一自回归框架中的方法，通过在 LlamaGen 基础上引入条件图像 token 前缀和 DINOv2 蒸馏损失…
+  [CVPR 2025][语义分割][自回归模型] 提出 EditAR——首个将图像编辑（纹理修改、物体替换/移除、局部编辑）和图像翻译（深度/边缘/分割图到图像）统一在单一自回归框架中的方法，通过在 LlamaGen 基础上引入条件图像 token 前缀和 DINOv2 蒸馏损失，在标准 next-token prediction 范式下即可对多种条件生成任务取得与专用模型竞争的性能。
 tags:
   - "CVPR 2025"
   - "语义分割"

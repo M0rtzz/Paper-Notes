@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Efficient, Validation-Free Intrinsic Quality Estimation for Large-Scale Face Recognition Datasets
 description: >-
-  [ICML 2026][人体理解][内在质量] 提出 Intrinsic Quality (IQ)：用代理模型抽出嵌入后，把"邻域标签一致性 Consis"和"归一化谱熵有效秩 $\tilde{r}_{\mathrm{ent}}$" 加权融合…
+  [ICML 2026][人体理解][内在质量] 提出 Intrinsic Quality (IQ)：用代理模型抽出嵌入后，把"邻域标签一致性 Consis"和"归一化谱熵有效秩 $\tilde{r}_{\mathrm{ent}}$" 加权融合，在不做完整训练、不要干净验证集的前提下给百万级人脸识别数据集打"可训练性"分数，在 WebFace4/12/42M 和注入噪声的设定上与下游 MFR-ALL 验证准确率排名一致性达到 Spearman = 1.0。
 tags:
   - "ICML 2026"
   - "人体理解"

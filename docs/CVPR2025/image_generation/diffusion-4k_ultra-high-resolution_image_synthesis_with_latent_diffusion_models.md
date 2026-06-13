@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion-4K: Ultra-High-Resolution Image Synthesis with Latent Diffusion Models
 description: >-
-  [CVPR 2025][图像生成][4K图像生成] 本文提出 Diffusion-4K 框架，包含 Aesthetic-4K 基准数据集、GLCM Score/Compression Ratio 评估指标、以及基于小波变换的微调方法…
+  [CVPR 2025][图像生成][4K图像生成] 本文提出 Diffusion-4K 框架，包含 Aesthetic-4K 基准数据集、GLCM Score/Compression Ratio 评估指标、以及基于小波变换的微调方法，使 SD3-2B 和 Flux-12B 等大规模潜在扩散模型能直接生成具有丰富纹理细节的 4096×4096 高质量图像。
 tags:
   - "CVPR 2025"
   - "图像生成"

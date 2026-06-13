@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding Dataset Distillation via Spectral Filtering
 description: >-
-  [ICLR 2026][模型压缩][dataset distillation] 本文提出 UniDD 谱滤波框架，将多种数据集蒸馏方法统一为在特征-特征相关矩阵（FFC）上应用不同滤波函数来匹配特征-标签相关矩阵（FLC）的频率信息，并基于此洞见提出了课程频率匹配（CFM）方法。
+  [ICLR 2026][模型压缩][dataset distillation] 本文提出 UniDD 谱滤波框架，将多种数据集蒸馏方法统一为在特征-特征相关矩阵（FFC）上应用不同滤波函数来匹配特征-标签相关矩阵（FLC）的频率信息，并基于此洞见提出了课程频率匹配（CFM）方法。 数据集蒸馏（DD）通过将大规模数据集压缩为紧…
 tags:
   - "ICLR 2026"
   - "模型压缩"

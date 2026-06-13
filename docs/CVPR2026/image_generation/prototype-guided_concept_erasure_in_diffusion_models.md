@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prototype-Guided Concept Erasure in Diffusion Models
 description: >-
-  [CVPR 2026][图像生成][概念擦除] 针对扩散模型中宽泛概念（如暴力、色情）难以彻底擦除的问题，提出基于概念原型的 training-free 擦除方法：通过聚类 CLIP 嵌入空间中的概念差分方向获取图像原型，再优化迁移到文本原型空间…
+  [CVPR 2026][图像生成][概念擦除] 针对扩散模型中宽泛概念（如暴力、色情）难以彻底擦除的问题，提出基于概念原型的 training-free 擦除方法：通过聚类 CLIP 嵌入空间中的概念差分方向获取图像原型，再优化迁移到文本原型空间，推理时选择最匹配的原型作为负引导信号进行 classifier-free guidance 式的概念抑制。
 tags:
   - "CVPR 2026"
   - "图像生成"

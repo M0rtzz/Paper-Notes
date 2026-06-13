@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Griffin: Aerial-Ground Cooperative Detection and Tracking Dataset and Benchmark
 description: >-
-  [AAAI 2026][3D视觉][空地协同感知] 提出 Griffin，一个空地协同（AGC）3D感知数据集和基准框架，包含250+动态场景（37K+帧），通过CARLA-AirSim联合仿真实现真实无人机动力学、变化巡航高度（20-60m）和遮挡感知标注，并提供系统化的鲁棒性评估协议。
+  [AAAI 2026][3D视觉][空地协同感知] 提出 Griffin，一个空地协同（AGC）3D感知数据集和基准框架，包含250+动态场景（37K+帧），通过CARLA-AirSim联合仿真实现真实无人机动力学、变化巡航高度（20-60m）和遮挡感知标注，并提供系统化的鲁棒性评估协议。 领域现状 协同感知已成为克服单车系…
 tags:
   - "AAAI 2026"
   - "3D视觉"

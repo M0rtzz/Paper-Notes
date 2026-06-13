@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models
 description: >-
-  [CVPR2026][图像生成][扩散模型量化] 提出 SegQuant 框架，通过基于静态计算图的语义分割量化（SegLinear）和硬件原生的双尺度极性保持量化（DualScale），在不依赖手工规则或运行时动态信息的前提下，实现了跨架构通用、部署管线兼容的扩散模型高保真后训练量化。
+  [CVPR2026][图像生成][扩散模型量化] 提出 SegQuant 框架，通过基于静态计算图的语义分割量化（SegLinear）和硬件原生的双尺度极性保持量化（DualScale），在不依赖手工规则或运行时动态信息的前提下，实现了跨架构通用、部署管线兼容的扩散模型高保真后训练量化。 扩散模型部署瓶颈：扩散模型（如 SD…
 tags:
   - "CVPR2026"
   - "图像生成"

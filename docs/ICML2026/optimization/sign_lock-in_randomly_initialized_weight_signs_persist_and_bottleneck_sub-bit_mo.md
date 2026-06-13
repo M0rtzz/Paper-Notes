@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Sign Lock-In: Randomly Initialized Weight Signs Persist and Bottleneck Sub-Bit Model Compression
 description: >-
-  [ICML2026][优化/理论][亚比特压缩] 本文揭示训练后的权重符号矩阵在所有架构上都与 i.i.d. Rademacher 噪声难以区分，从而构成亚比特压缩的"一比特墙"，并用停时分析证明这种伪随机性其实是初始化符号的"锁定"——再据此提出低秩符号模板 + 间隙初始化 + 边界对数障碍正则的从头训练方…
+  [ICML2026][优化/理论][亚比特压缩] 本文揭示训练后的权重符号矩阵在所有架构上都与 i.i.d. Rademacher 噪声难以区分，从而构成亚比特压缩的"一比特墙"，并用停时分析证明这种伪随机性其实是初始化符号的"锁定"——再据此提出低秩符号模板 + 间隙初始化 + 边界对数障碍正则的从头训练方案，把符号位摊销到接近 0 bit/weight。
 tags:
   - "ICML2026"
   - "优化/理论"

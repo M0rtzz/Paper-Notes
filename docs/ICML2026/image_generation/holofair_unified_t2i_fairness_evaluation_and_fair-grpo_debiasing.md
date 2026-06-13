@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HoloFair: Unified T2I Fairness Evaluation and Fair-GRPO Debiasing
 description: >-
-  [ICML2026][图像生成][T2I 公平性] 本文构建了一个面向 T2I 模型的统一公平性基准 HoloFair（含 SpaFreq 双流属性分类器 + MGBI 多属性几何均值指标），并在此基础上提出 Fair-GRPO：通过对数比例的多属性 per-prompt 奖励 + KL 正则化 GRPO…
+  [ICML2026][图像生成][T2I 公平性] 本文构建了一个面向 T2I 模型的统一公平性基准 HoloFair（含 SpaFreq 双流属性分类器 + MGBI 多属性几何均值指标），并在此基础上提出 Fair-GRPO：通过对数比例的多属性 per-prompt 奖励 + KL 正则化 GRPO，在 SD3.5-Medium 上把 MGBI 从 0.5211 提升到 0.6772（+29.9%），同时图像质量保持甚至略有提升。
 tags:
   - "ICML2026"
   - "图像生成"

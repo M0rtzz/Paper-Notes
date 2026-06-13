@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA
 description: >-
-  [医疗NLP] MedBioRAG 提出了一种结合语义搜索、文档检索和微调 LLM 的检索增强生成框架，在生物医学问答的文本检索、封闭式 QA 和长文本 QA 三类任务上全面超越 GPT-4o 基线和此前 SOTA。
+  [医疗NLP] MedBioRAG 提出了一种结合语义搜索、文档检索和微调 LLM 的检索增强生成框架，在生物医学问答的文本检索、封闭式 QA 和长文本 QA 三类任务上全面超越 GPT-4o 基线和此前 SOTA。 - 领域挑战：生物医学 QA 对事实准确性要求极高，通用 LLM（如 GPT-4o）依赖静态预训练数据…
 tags:
   - "医疗NLP"
 ---

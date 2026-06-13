@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PFAvatar: Pose-Fusion 3D Personalized Avatar Reconstruction from Real-World Outfit-of-the-Day Photos
 description: >-
-  [AAAI 2026][3D视觉][3D头像重建] 提出 PFAvatar，通过两阶段方法（姿态感知扩散模型微调 + NeRF蒸馏）从真实世界"每日穿搭"(OOTD)照片中重建高质量3D人物头像，在仅5分钟内完成个性化定制，较先前方法实现48倍加速。
+  [AAAI 2026][3D视觉][3D头像重建] 提出 PFAvatar，通过两阶段方法（姿态感知扩散模型微调 + NeRF蒸馏）从真实世界"每日穿搭"(OOTD)照片中重建高质量3D人物头像，在仅5分钟内完成个性化定制，较先前方法实现48倍加速。 将日常照片转化为个性化3D人体模型是一个新颖且实用的任务…
 tags:
   - "AAAI 2026"
   - "3D视觉"

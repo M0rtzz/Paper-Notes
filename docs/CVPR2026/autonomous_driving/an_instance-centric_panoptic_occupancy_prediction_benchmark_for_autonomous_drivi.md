@@ -2,7 +2,7 @@
 title: >-
   [论文解读] An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving
 description: >-
-  [CVPR 2026][自动驾驶][全景占据预测] 提出ADMesh（15K+高质量3D模型库）和CarlaOcc（10万帧、0.05m精度的全景占据数据集），首次为自动驾驶3D全景占据预测提供实例级标注和物理一致的地面真值，并引入占据质量评估指标和系统基准测试。
+  [CVPR 2026][自动驾驶][全景占据预测] 提出ADMesh（15K+高质量3D模型库）和CarlaOcc（10万帧、0.05m精度的全景占据数据集），首次为自动驾驶3D全景占据预测提供实例级标注和物理一致的地面真值，并引入占据质量评估指标和系统基准测试。 领域现状：3D占据预测正从纯语义占据向细粒度的全景占据（语义…
 tags:
   - "CVPR 2026"
   - "自动驾驶"

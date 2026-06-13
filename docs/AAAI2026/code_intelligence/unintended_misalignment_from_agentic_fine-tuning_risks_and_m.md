@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation
 description: >-
-  [AAAI 2026][代码智能][Agentic微调] 本文揭示了在良性 Agent 数据上微调 LLM 会导致意外的安全对齐偏移（攻击成功率增加 32-38%），并提出 PING（Prefix Injection Guard）——通过迭代生成+评估自然语言前缀来引导微调后的 Agent 拒绝有害请求…
+  [AAAI 2026][代码智能][Agentic微调] 本文揭示了在良性 Agent 数据上微调 LLM 会导致意外的安全对齐偏移（攻击成功率增加 32-38%），并提出 PING（Prefix Injection Guard）——通过迭代生成+评估自然语言前缀来引导微调后的 Agent 拒绝有害请求，平均提升拒绝率 66%（Web）和 44%（代码），同时保持任务性能（仅降 1.8%）。
 tags:
   - "AAAI 2026"
   - "代码智能"

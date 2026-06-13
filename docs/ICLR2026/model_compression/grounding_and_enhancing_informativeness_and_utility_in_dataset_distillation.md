@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grounding and Enhancing Informativeness and Utility in Dataset Distillation
 description: >-
-  [ICLR 2026][模型压缩][Dataset Distillation] 提出InfoUtil框架，用博弈论Shapley Value最大化样本信息量（找到最重要的patch），用梯度范数最大化样本效用（选择对训练最有价值的样本），在ImageNet-1K上比前SOTA提升6.1%。
+  [ICLR 2026][模型压缩][Dataset Distillation] 提出InfoUtil框架，用博弈论Shapley Value最大化样本信息量（找到最重要的patch），用梯度范数最大化样本效用（选择对训练最有价值的样本），在ImageNet-1K上比前SOTA提升6.1%。 领域现状：数据集蒸馏旨在从大数据集…
 tags:
   - "ICLR 2026"
   - "模型压缩"

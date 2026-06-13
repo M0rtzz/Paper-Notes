@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text2Place: Affordance-aware Text Guided Human Placement
 description: >-
-  [ECCV 2024][图像生成] 提出Text2Place——首个通过文本引导实现真实感人物放置的方法，利用SDS损失优化基于高斯blob的语义掩码学习场景可供性（affordance），再通过主体条件修复实现身份保持的人物放置。
+  [ECCV 2024][图像生成] 提出Text2Place——首个通过文本引导实现真实感人物放置的方法，利用SDS损失优化基于高斯blob的语义掩码学习场景可供性（affordance），再通过主体条件修复实现身份保持的人物放置。 - 给定一个背景场景，人类可以直觉地推理在哪里放置人物以及采用什么姿态——这种能力称为"可供…
 tags:
   - "ECCV 2024"
   - "图像生成"

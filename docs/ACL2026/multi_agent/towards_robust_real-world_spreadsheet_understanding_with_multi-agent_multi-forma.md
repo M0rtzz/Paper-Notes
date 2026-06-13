@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Towards Robust Real-World Spreadsheet Understanding with Multi-Agent Multi-Format Collaboration
 description: >-
-  [ACL 2026][多智能体][电子表格理解] 提出 SpreadsheetAgent，一种两阶段多智能体框架，通过代码执行、视觉和 LaTeX 三种格式的渐进式区域读取与交叉验证，在不超出 LLM 上下文限制的前提下实现鲁棒的真实世界电子表格理解。
+  [ACL 2026][多智能体][电子表格理解] 提出 SpreadsheetAgent，一种两阶段多智能体框架，通过代码执行、视觉和 LaTeX 三种格式的渐进式区域读取与交叉验证，在不超出 LLM 上下文限制的前提下实现鲁棒的真实世界电子表格理解。 领域现状：电子表格是企业报告、财务审计、科学数据管理中最常用的数据格式…
 tags:
   - "ACL 2026"
   - "多智能体"

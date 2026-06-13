@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Better NTK Conditioning: A Free Lunch from ReLU Nonlinear Activation in Wide Neural Networks
 description: >-
-  [NeurIPS 2025][优化/理论][NTK条件数] 证明 ReLU 激活函数对宽神经网络有一个此前未被注意的"免费"益处：(a) 在模型梯度特征空间中产生更好的数据分离（相似输入的角度在梯度空间中被放大），(b) 由此导致 NTK 矩阵条件数严格减小（相比线性网络）…
+  [NeurIPS 2025][优化/理论][NTK条件数] 证明 ReLU 激活函数对宽神经网络有一个此前未被注意的"免费"益处：(a) 在模型梯度特征空间中产生更好的数据分离（相似输入的角度在梯度空间中被放大），(b) 由此导致 NTK 矩阵条件数严格减小（相比线性网络）。深度进一步放大此效应——在无限宽然后无限深的极限下，所有数据对在梯度空间中等角分离（~75.5°），NTK 条件数收敛到仅依赖数据量 $n$ 的固定值 $(n+4)/3$。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Analyzing LLMs' Knowledge Boundary Cognition Across Languages Through the Lens of Internal Representations
 description: >-
-  [ACL 2025][LLM/NLP][知识边界] 通过探测 LLM 内部表示，揭示知识边界认知在多语言间呈线性结构，提出 training-free 对齐方法实现跨语言知识边界感知迁移，并发现"弱到强泛化"现象。
+  [ACL 2025][LLM 其他][知识边界] 通过探测 LLM 内部表示，揭示知识边界认知在多语言间呈线性结构，提出 training-free 对齐方法实现跨语言知识边界感知迁移，并发现"弱到强泛化"现象。 知识边界与幻觉： LLM 在回答超出其知识范围的问题时容易产生幻觉，理解知识边界是缓解幻觉的关键前提 英语中心偏…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "知识边界"
   - "跨语言迁移"
   - "内部表示探测"

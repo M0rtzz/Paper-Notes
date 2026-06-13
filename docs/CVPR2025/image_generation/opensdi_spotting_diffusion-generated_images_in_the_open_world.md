@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OpenSDI: Spotting Diffusion-Generated Images in the Open World
 description: >-
-  [CVPR 2025][图像生成][AI生成图像检测] OpenSDI 定义了开放世界扩散图像检测挑战，构建了包含多 VLM 生成指令和多扩散模型的大规模数据集 OpenSDID，并提出 MaskCLIP——通过 Synergizing Pretrained Models（SPM）框架协同 CLIP 和 MA…
+  [CVPR 2025][图像生成][AI生成图像检测] OpenSDI 定义了开放世界扩散图像检测挑战，构建了包含多 VLM 生成指令和多扩散模型的大规模数据集 OpenSDID，并提出 MaskCLIP——通过 Synergizing Pretrained Models（SPM）框架协同 CLIP 和 MAE，在检测和定位任务上大幅超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

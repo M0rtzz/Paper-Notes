@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoRC: A Benchmark for Geolocation Reasoning Chains
 description: >-
-  [ACL 2026][多模态VLM][地理定位] 提出 GeoRC，首个由GeoGuessr冠军级专家撰写的地理定位推理链基准（800条推理链，500个场景），评估VLM生成可审计推理链的能力，发现闭源VLM虽能匹敌人类定位准确率但推理链质量仍大幅落后，开源VLM则几乎等同于纯幻觉基线。
+  [ACL 2026][多模态VLM][地理定位] 提出 GeoRC，首个由GeoGuessr冠军级专家撰写的地理定位推理链基准（800条推理链，500个场景），评估VLM生成可审计推理链的能力，发现闭源VLM虽能匹敌人类定位准确率但推理链质量仍大幅落后，开源VLM则几乎等同于纯幻觉基线。 领域现状：VLM在全球图像定位任务上…
 tags:
   - "ACL 2026"
   - "多模态VLM"

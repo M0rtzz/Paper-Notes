@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Exploring Concreteness Through a Figurative Lens
 description: >-
-  [ACL 2026][NLP理解][具体性] 作者用 prompt-based probing + DiffMean + SVD 拆解四个 LLM（Llama-3.1-8B / Qwen3-8B / Gemma2-9B / GPT-OSS-20B）内部的"具体性"（concreteness）表示…
+  [ACL 2026][NLP理解][具体性] 作者用 prompt-based probing + DiffMean + SVD 拆解四个 LLM（Llama-3.1-8B / Qwen3-8B / Gemma2-9B / GPT-OSS-20B）内部的"具体性"（concreteness）表示，发现：早期层就已经能区分名词的字面用法（高 concrete）vs 比喻用法（低 concrete），中后期层把整个 concreteness 信息压缩到**一条一维方向**上，并展示这条 axis 既能做几乎和有监督 4096 维分类器持平的零样本 figurative text 分类、又能直接被加到 hidden state 上对生成做…
 tags:
   - "ACL 2026"
   - "NLP理解"

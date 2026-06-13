@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AdvAgent: Controllable Blackbox Red-teaming on Web Agents
 description: >-
-  [ICML 2025][LLM Agent][Web Agent 安全] 提出 AdvAgent，一个基于强化学习（DPO）的黑盒红队测试框架，训练一个对抗 prompter 模型自动生成不可见的 HTML 对抗 prompt…
+  [ICML 2025][LLM Agent][Web Agent 安全] 提出 AdvAgent，一个基于强化学习（DPO）的黑盒红队测试框架，训练一个对抗 prompter 模型自动生成不可见的 HTML 对抗 prompt，注入网页后可误导 GPT-4V 驱动的 Web Agent 执行攻击者指定的目标动作（如将买微软股票改为买英伟达），在 440 个任务上达到 97.5% 攻击成功率，且对现有防御手段仍保持 88.8% 以上的有效性。
 tags:
   - "ICML 2025"
   - "LLM Agent"

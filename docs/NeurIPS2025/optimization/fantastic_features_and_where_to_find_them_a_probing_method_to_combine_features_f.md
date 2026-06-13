@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fantastic Features and Where to Find Them: A Probing Method to Combine Features from Multiple Foundation Models
 description: >-
-  [NeurIPS 2025][优化/理论][foundation model] 提出 ComBo，一种基于 probing 的轻量级 adapter，通过仿射投影压缩多个冻结基础模型多层激活，再用小型 transformer 融合，无需反向传播即可高效整合多模型互补表征…
+  [NeurIPS 2025][优化/理论][foundation model] 提出 ComBo，一种基于 probing 的轻量级 adapter，通过仿射投影压缩多个冻结基础模型多层激活，再用小型 transformer 融合，无需反向传播即可高效整合多模型互补表征，在 VTAB-1k 上超越先前 probing 方法并匹配蒸馏方法。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

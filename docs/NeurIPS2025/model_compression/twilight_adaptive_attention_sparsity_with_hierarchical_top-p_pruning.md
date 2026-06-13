@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning
 description: >-
-  [NeurIPS 2025][模型压缩][注意力稀疏] 提出 Twilight，借鉴 top-p 采样（nucleus sampling）的思想替代固定预算 top-k 做注意力稀疏——动态选择注意力权重累积达 p% 的最少 Token，自适应不同注意力头的分布特征…
+  [NeurIPS 2025 Spotlight][模型压缩][注意力稀疏] 提出 Twilight，借鉴 top-p 采样（nucleus sampling）的思想替代固定预算 top-k 做注意力稀疏——动态选择注意力权重累积达 p% 的最少 Token，自适应不同注意力头的分布特征，在保持精度的同时比 SOTA 稀疏注意力再提速 1.4x。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "模型压缩"
   - "注意力稀疏"
   - "自适应预算"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M3FinMeeting: A Multilingual, Multi-Sector, and Multi-Task Financial Meeting Understanding Evaluation Dataset
 description: >-
-  [ACL 2025][多语言/翻译][金融会议] 构建了 M3FinMeeting——首个面向金融会议的多语言（中英日）、多行业、多任务评测基准，包含 600 场真实金融会议的摘要、QA 对抽取和问答三项任务，揭示了当前最先进 LLM 在金融会议理解上仍有显著提升空间。
+  [ACL 2025][多语言/翻译][金融会议] 构建了 M3FinMeeting——首个面向金融会议的多语言（中英日）、多行业、多任务评测基准，包含 600 场真实金融会议的摘要、QA 对抽取和问答三项任务，揭示了当前最先进 LLM 在金融会议理解上仍有显著提升空间。 现有金融 NLP 基准（FinQA、ConvFinQA…
 tags:
   - "ACL 2025"
   - "多语言/翻译"

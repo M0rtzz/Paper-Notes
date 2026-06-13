@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Scheduling LLM Inference with Uncertainty-Aware Output Length Predictions
 description: >-
-  [ICML 2026][LLM/NLP][SJF 调度] 本文把 LLM 推理调度中"预测单一输出长度"的点估计换成 log-t 分布拟合，并用一个加上 CVaR 尾部惩罚的期望（Tail Inflated Expectation, TIE）替代 SJF 中的输出长度作为优先级…
+  [ICML 2026][LLM 其他][SJF 调度] 本文把 LLM 推理调度中"预测单一输出长度"的点估计换成 log-t 分布拟合，并用一个加上 CVaR 尾部惩罚的期望（Tail Inflated Expectation, TIE）替代 SJF 中的输出长度作为优先级，在 LMSYS-Chat-1M 上把在线每 token 延迟相比最强 baseline LTR 再降 $2.31\times$，离线 SDG 吞吐量提升 $1.42\times$。
 tags:
   - "ICML 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "SJF 调度"
   - "输出长度预测"
   - "重尾分布"

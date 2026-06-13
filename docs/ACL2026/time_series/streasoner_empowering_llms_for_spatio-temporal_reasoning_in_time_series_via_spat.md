@@ -2,7 +2,7 @@
 title: >-
   [论文解读] STReasoner: Empowering LLMs for Spatio-Temporal Reasoning in Time Series via Spatial-Aware Reinforcement Learning
 description: >-
-  [ACL2026][时间序列][时空时间序列] STReasoner 用网络 SDE 合成带图结构和文本语义的时空时间序列数据，再通过时间序列编码器、三阶段训练和空间感知 S-GRPO，让 LLM 学会基于时间动态与空间依赖做显式推理。
+  [ACL2026][时间序列][时空时间序列] STReasoner 用网络 SDE 合成带图结构和文本语义的时空时间序列数据，再通过时间序列编码器、三阶段训练和空间感知 S-GRPO，让 LLM 学会基于时间动态与空间依赖做显式推理。 领域现状：交通网络、电网、疾病传播、河流与气候系统都可以表示为节点上的时间序列加空间图结…
 tags:
   - "ACL2026"
   - "时间序列"

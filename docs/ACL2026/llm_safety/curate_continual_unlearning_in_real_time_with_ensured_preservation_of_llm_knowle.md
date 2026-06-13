@@ -2,9 +2,9 @@
 title: >-
   [论文解读] CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge
 description: >-
-  [ACL 2026][LLM安全][持续遗忘] CURaTE 提出一种基于句子嵌入匹配的行为遗忘框架：预部署时训练一个通用的遗忘嵌入器（不使用任何遗忘集），部署后实时将新遗忘请求嵌入存入数据库，推理时通过余弦相似度决定是回答还是拒绝，完全不修改 LLM 权重从而实现近乎完美的知识保留。
+  [ACL 2026 Findings][LLM安全][持续遗忘] CURaTE 提出一种基于句子嵌入匹配的行为遗忘框架：预部署时训练一个通用的遗忘嵌入器（不使用任何遗忘集），部署后实时将新遗忘请求嵌入存入数据库，推理时通过余弦相似度决定是回答还是拒绝，完全不修改 LLM 权重从而实现近乎完美的知识保留。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "持续遗忘"
   - "实时遗忘"

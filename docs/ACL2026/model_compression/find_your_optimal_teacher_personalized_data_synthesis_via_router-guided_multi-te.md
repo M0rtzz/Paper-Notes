@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Find Your Optimal Teacher: Personalized Data Synthesis via Router-Guided Multi-Teacher Distillation
 description: >-
-  [ACL 2026][模型压缩][知识蒸馏] 提出 PerSyn（Personalized data Synthesis），通过"先路由再生成"范式让路由器为每个 prompt 分配最优教师模型，综合考虑学生可学习性和教师响应质量，比传统"先生成再选择"范式高效且效果更好…
+  [ACL 2026][模型压缩][知识蒸馏] 提出 PerSyn（Personalized data Synthesis），通过"先路由再生成"范式让路由器为每个 prompt 分配最优教师模型，综合考虑学生可学习性和教师响应质量，比传统"先生成再选择"范式高效且效果更好，在指令微调和数学推理两个场景中一致超越所有基线。
 tags:
   - "ACL 2026"
   - "模型压缩"

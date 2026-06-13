@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Speed3R: Sparse Feed-forward 3D Reconstruction Models
 description: >-
-  [CVPR 2026][3D视觉][3D重建] Speed3R 为 feed-forward 3D重建模型设计了可训练的双分支全局稀疏注意力机制（GSA），通过压缩分支提供粗粒度场景摘要、选择分支聚焦关键 token 精细注意力，在1000视图序列上实现 **12.4倍推理加速**，同时仅引入微小精度下降。
+  [CVPR 2026 Findings][3D视觉][3D重建] Speed3R 为 feed-forward 3D重建模型设计了可训练的双分支全局稀疏注意力机制（GSA），通过压缩分支提供粗粒度场景摘要、选择分支聚焦关键 token 精细注意力，在1000视图序列上实现 **12.4倍推理加速**，同时仅引入微小精度下降。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "3D重建"
   - "稀疏注意力"

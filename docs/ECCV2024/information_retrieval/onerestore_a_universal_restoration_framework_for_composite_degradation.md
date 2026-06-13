@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OneRestore: A Universal Restoration Framework for Composite Degradation
 description: >-
-  [ECCV 2024][信息检索/RAG][图像恢复] 提出 OneRestore，一种基于 Transformer 的通用图像复原框架，通过场景描述符引导的交叉注意力机制和复合退化复原损失，能在单一模型中自适应地处理低光照、雾、雨、雪及其任意组合的复合退化场景，并支持文本/视觉双模式的可控复原。
+  [ECCV 2024][信息检索/RAG][图像恢复] 提出 OneRestore，一种基于 Transformer 的通用图像复原框架，通过场景描述符引导的交叉注意力机制和复合退化复原损失，能在单一模型中自适应地处理低光照、雾、雨、雪及其任意组合的复合退化场景，并支持文本/视觉双模式的可控复原。 领域现状： 图像复原研究已…
 tags:
   - "ECCV 2024"
   - "信息检索/RAG"

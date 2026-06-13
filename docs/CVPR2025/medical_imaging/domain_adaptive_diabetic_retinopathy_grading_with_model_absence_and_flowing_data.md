@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Domain Adaptive Diabetic Retinopathy Grading with Model Absence and Flowing Data
 description: >-
-  [CVPR 2025][医学图像][领域自适应] 本文提出 GUES（Generative Unadversarial Examples）方法，在无法访问源模型参数和标签、目标数据以流式到达的极端在线无模型领域自适应（OMG-DA）场景下，通过 VAE 生成个性化非对抗性扰动并以显著性图作为伪监督…
+  [CVPR 2025][医学图像][领域自适应] 本文提出 GUES（Generative Unadversarial Examples）方法，在无法访问源模型参数和标签、目标数据以流式到达的极端在线无模型领域自适应（OMG-DA）场景下，通过 VAE 生成个性化非对抗性扰动并以显著性图作为伪监督，提升冻结源模型在目标域上的糖尿病视网膜病变（DR）分级性能。
 tags:
   - "CVPR 2025"
   - "医学图像"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Giraffe: Design Choices for Extending the Context Length of Visual Language Models
 description: >-
-  [ACL2025][LLM效率][VLM] 系统性地探索了将现有视觉语言模型（VLM）的上下文窗口扩展到128K的设计空间，从数据配方、位置编码扩展到上下文利用三个维度提出最佳实践，并提出 M-RoPE++ 和混合分辨率训练两项技术，构建的 Giraffe 模型在长上下文 VLM 中达 SOTA。
+  [ACL2025][LLM效率][VLM] 系统性地探索了将现有视觉语言模型（VLM）的上下文窗口扩展到128K的设计空间，从数据配方、位置编码扩展到上下文利用三个维度提出最佳实践，并提出 M-RoPE++ 和混合分辨率训练两项技术，构建的 Giraffe 模型在长上下文 VLM 中达 SOTA。 问题定义 视觉语言模型（V…
 tags:
   - "ACL2025"
   - "LLM效率"

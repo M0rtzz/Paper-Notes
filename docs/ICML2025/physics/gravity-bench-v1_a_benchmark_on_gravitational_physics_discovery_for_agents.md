@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Gravity-Bench-v1: A Benchmark on Gravitational Physics Discovery for Agents
 description: >-
-  [ICML 2025][物理/科学计算][引力物理] 提出 **Gravity-Bench-v1**，一个基于引力动力学模拟的**环境交互式**基准测试，评估 AI Agent 在受限观测预算下进行科学发现（包括 OOD 物理场景）的能力，发现当前模型在观测规划和预算利用方面存在显著不足。
+  [ICML 2025][物理/科学计算][引力物理] 提出 Gravity-Bench-v1：，一个基于引力动力学模拟的环境交互式：基准测试，评估 AI Agent 在受限观测预算下进行科学发现（包括 OOD 物理场景）的能力，发现当前模型在观测规划和预算利用方面存在显著不足。 现代科学起源于对行星运动的反复观测与推理…
 tags:
   - "ICML 2025"
   - "物理/科学计算"

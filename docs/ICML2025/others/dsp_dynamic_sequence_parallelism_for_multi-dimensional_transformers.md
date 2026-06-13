@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DSP: Dynamic Sequence Parallelism for Multi-Dimensional Transformers
 description: >-
-  [ICML2025][序列并行] 针对多维 Transformer（如视频生成中的时空注意力模型）中现有序列并行方法只能沿单一维度分片导致大量冗余通信的问题，提出 Dynamic Sequence Parallelism (DSP)，通过在计算阶段之间动态切换并行维度（而非在模块内部通信）…
+  [ICML2025][序列并行] 针对多维 Transformer（如视频生成中的时空注意力模型）中现有序列并行方法只能沿单一维度分片导致大量冗余通信的问题，提出 Dynamic Sequence Parallelism (DSP)，通过在计算阶段之间动态切换并行维度（而非在模块内部通信），利用高效 all-to-all 操作实现 resharding，端到端吞吐提升 32.2%~10×，通信量减少至少 50%。
 tags:
   - "ICML2025"
   - "序列并行"

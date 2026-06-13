@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text-to-Scene with Large Reasoning Models
 description: >-
-  [AAAI 2026][LLM推理][文本到3D场景] 提出Reason-3D，利用大推理模型（LRM）的多步空间推理能力，通过语义投票式物体检索+双阶段布局（自回归放置+碰撞感知优化）实现从文本到3D场景的零样本生成…
+  [AAAI 2026][LLM推理][文本到3D场景] 提出Reason-3D，利用大推理模型（LRM）的多步空间推理能力，通过语义投票式物体检索+双阶段布局（自回归放置+碰撞感知优化）实现从文本到3D场景的零样本生成，在人工评价中Elo评分达2248（远超Holodeck的1500和LayoutVLM的1650）。
 tags:
   - "AAAI 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Test-Time Memory: State-Space Optimal Control for LLM Reasoning
 description: >-
-  [ICML 2026][LLM推理][最优控制] 将 LLM 推理建模为隐空间上的最优控制问题（线性二次调节器 LQR），提出 Test-Time Control (TTC) 层在前向传播中执行有限时域规划并解码最优控制动作作为下一 token 表示，配合辛迭代 CUDA 高效求解器…
+  [ICML 2026][LLM推理][最优控制] 将 LLM 推理建模为隐空间上的最优控制问题（线性二次调节器 LQR），提出 Test-Time Control (TTC) 层在前向传播中执行有限时域规划并解码最优控制动作作为下一 token 表示，配合辛迭代 CUDA 高效求解器，作为适配器插入预训练 LLM 后在 MATH-500 上提升最多 +27.8%，AMC/AIME 上 Pass@8 提升 2-3 倍。
 tags:
   - "ICML 2026"
   - "LLM推理"

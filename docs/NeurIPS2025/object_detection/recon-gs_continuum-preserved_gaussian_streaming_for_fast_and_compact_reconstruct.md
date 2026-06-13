@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction
 description: >-
-  [NeurIPS 2025][目标检测][3D Gaussian Splatting] 提出 ReCon-GS，通过连续性保持的 Gaussian 流式处理实现增量式 3D 重建，在保持渲染质量的同时大幅减少存储需求和训练时间，支持大规模场景的实时重建。
+  [NeurIPS 2025][目标检测][3D Gaussian Splatting] 提出 ReCon-GS，通过连续性保持的 Gaussian 流式处理实现增量式 3D 重建，在保持渲染质量的同时大幅减少存储需求和训练时间，支持大规模场景的实时重建。 领域现状 领域现状：3D Gaussian Splatting（3DG…
 tags:
   - "NeurIPS 2025"
   - "目标检测"

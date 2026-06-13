@@ -2,7 +2,7 @@
 title: >-
   [论文解读] On the Collapse of Generative Paths: A Criterion and Correction for Diffusion Steering
 description: >-
-  [ICML 2026][计算生物][边际路径塌缩] 本文指出"用 ratio-of-densities 组合多个异质扩散/流模型"的推理时引导会出现 **Marginal Path Collapse（MPC）**——中间时刻的复合密度变得不可归一化…
+  [ICML 2026][计算生物][边际路径塌缩] 本文指出"用 ratio-of-densities 组合多个异质扩散/流模型"的推理时引导会出现 **Marginal Path Collapse（MPC）**——中间时刻的复合密度变得不可归一化，进而提出一个充要的 **Path Existence Criterion (PEC)** $C(t)>0$ 来诊断塌缩，并设计 **ACE** 通过对指数 $\gamma_i(t)$ 加 bump 函数来动态修正路径，把 Feynman–Kac 修正器推广到时变指数情形，在合成 Checkerboard、柔性 pose scaffold decoration（DN/CONF/SBDD 三…
 tags:
   - "ICML 2026"
   - "计算生物"

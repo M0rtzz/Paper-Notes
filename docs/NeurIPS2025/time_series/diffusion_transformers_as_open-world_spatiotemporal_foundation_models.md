@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Diffusion Transformers as Open-World Spatiotemporal Foundation Models
 description: >-
-  [NEURIPS2025][时间序列][Transformer] 提出 UrbanDiT，首个基于 Diffusion Transformer 的开放世界城市时空基础模型，通过统一的 prompt learning 框架整合异构数据类型（grid/graph）和多种任务（预测/插值/外推/填补）…
+  [NEURIPS2025][时间序列][Transformer] 提出 UrbanDiT，首个基于 Diffusion Transformer 的开放世界城市时空基础模型，通过统一的 prompt learning 框架整合异构数据类型（grid/graph）和多种任务（预测/插值/外推/填补），在多城市多场景下实现 SOTA 性能并展现强大的 zero-shot 泛化能力。
 tags:
   - "NEURIPS2025"
   - "时间序列"

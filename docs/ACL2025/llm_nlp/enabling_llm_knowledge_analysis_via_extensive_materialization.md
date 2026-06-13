@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Enabling LLM Knowledge Analysis via Extensive Materialization
 description: >-
-  [ACL 2025][LLM/NLP][知识库构建] 本文提出通过递归查询和结果整合将 LLM 的事实知识大规模物化为知识库的方法论，构建了包含 1.01 亿三元组、290 万实体的 GPTKB，首次全面分析了 GPT-4o-mini 知识的规模、准确性、偏见、时效性和一致性。
+  [ACL 2025][LLM 其他][知识库构建] 本文提出通过递归查询和结果整合将 LLM 的事实知识大规模物化为知识库的方法论，构建了包含 1.01 亿三元组、290 万实体的 GPTKB，首次全面分析了 GPT-4o-mini 知识的规模、准确性、偏见、时效性和一致性。 LLM 内化了大量事实知识，这是其成功的重要因素…
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "知识库构建"
   - "LLM知识物化"
   - "知识图谱"

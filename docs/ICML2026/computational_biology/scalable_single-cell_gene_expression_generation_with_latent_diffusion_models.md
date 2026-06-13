@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Scalable Single-Cell Gene Expression Generation with Latent Diffusion Models
 description: >-
-  [ICML 2026][计算生物][单细胞 RNA-seq] scLDM 用统一的多头交叉注意力块 (MCAB) 把可交换的基因表达数据编成固定长度、置换不变的潜变量集合，再用 DiT + 流匹配 + 联合多属性 classifier-free guidance 替代 Gaussian 先验…
+  [ICML 2026][计算生物][单细胞 RNA-seq] scLDM 用统一的多头交叉注意力块 (MCAB) 把可交换的基因表达数据编成固定长度、置换不变的潜变量集合，再用 DiT + 流匹配 + 联合多属性 classifier-free guidance 替代 Gaussian 先验，在多个 scRNA-seq 数据集上的重构、(有/无条件) 生成、扰动响应预测全面超过 scVI / scDiffusion / CFGen。
 tags:
   - "ICML 2026"
   - "计算生物"

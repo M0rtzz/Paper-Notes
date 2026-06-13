@@ -2,9 +2,10 @@
 title: >-
   [论文解读] ARise: Towards Knowledge-Augmented Reasoning via Risk-Adaptive Search
 description: >-
-  [ACL 2025][知识增强推理] 提出 ARise 框架，将贝叶斯风险评估与动态 RAG 集成到蒙特卡洛树搜索中，解决知识增强推理中的错误传播和验证瓶颈问题，在多跳QA任务上平均准确率超 SOTA KAR 方法 23.10%，超 RAG-equipped 推理模型（DeepSeek-R1）25.37%。
+  [ACL 2025][信息检索/RAG][知识增强推理] 提出 ARise 框架，将贝叶斯风险评估与动态 RAG 集成到蒙特卡洛树搜索中，解决知识增强推理中的错误传播和验证瓶颈问题，在多跳QA任务上平均准确率超 SOTA KAR 方法 23.10%，超 RAG-equipped 推理模型（DeepSeek-R1）25.37%。
 tags:
   - "ACL 2025"
+  - "信息检索/RAG"
   - "知识增强推理"
   - "MCTS"
   - "风险评估"

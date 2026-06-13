@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Tensor Product Attention Is All You Need
 description: >-
-  [NeurIPS 2025][LLM效率][tensor decomposition] 通过上下文张量积分解将 Q/K/V 表示为低秩因子的加权和，将 KV 缓存压缩至 1/10~1/16，同时在验证损失和下游任务精度上超越标准 MHA/MQA/GQA/MLA。
+  [NeurIPS 2025 Spotlight][LLM效率][tensor decomposition] 通过上下文张量积分解将 Q/K/V 表示为低秩因子的加权和，将 KV 缓存压缩至 1/10~1/16，同时在验证损失和下游任务精度上超越标准 MHA/MQA/GQA/MLA。 领域现状 领域现状：LLM 长序列推理的核…
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Spotlight"
   - "LLM效率"
   - "tensor decomposition"
   - "KV cache"

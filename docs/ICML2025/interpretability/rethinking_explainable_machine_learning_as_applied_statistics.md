@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Explainable Machine Learning as Applied Statistics
 description: >-
-  [ICML2025][可解释性][Explainable ML] 本文是一篇立场论文，提出可解释机器学习应被视为"高维函数的应用统计学"——解释算法本质上是函数的统计量（functionals），应当像传统统计量（如 p 值、置信区间）一样关注其**解释**（interpretation）问题…
+  [ICML2025][可解释性][Explainable ML] 本文是一篇立场论文，提出可解释机器学习应被视为"高维函数的应用统计学"——解释算法本质上是函数的统计量（functionals），应当像传统统计量（如 p 值、置信区间）一样关注其**解释**（interpretation）问题，而非仅研究数学性质；当前文献最大的缺陷正是忽视了"解释算法的输出到底回答了哪个直觉问题"这一核心议题。
 tags:
   - "ICML2025"
   - "可解释性"

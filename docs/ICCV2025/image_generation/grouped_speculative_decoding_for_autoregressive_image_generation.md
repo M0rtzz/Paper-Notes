@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Grouped Speculative Decoding for Autoregressive Image Generation
 description: >-
-  [ICCV 2025][图像生成][自回归图像生成] 提出 Grouped Speculative Decoding (GSD)，一种免训练的自回归图像生成加速方法，通过在语义有效的 token 簇级别（而非单一最可能 token）进行推测验证，平均实现 3.7× 加速且不损失图像质量。
+  [ICCV 2025][图像生成][自回归图像生成] 提出 Grouped Speculative Decoding (GSD)，一种免训练的自回归图像生成加速方法，通过在语义有效的 token 簇级别（而非单一最可能 token）进行推测验证，平均实现 3.7× 加速且不损失图像质量。 自回归（AR）图像模型（如 Lumi…
 tags:
   - "ICCV 2025"
   - "图像生成"

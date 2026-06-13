@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization
 description: >-
-  [NeurIPS 2025][多模态VLM][数据选择] 提出 CoIDO，一个双目标优化数据选择框架，通过联合优化数据重要性和多样性，仅用 20% 随机数据训练轻量评分器，即可从 LLaVA-665K 中选出 20% 子集达到全量微调 98.2% 的性能，同时计算开销为所有方法最低。
+  [NeurIPS 2025][多模态VLM][数据选择] 提出 CoIDO，一个双目标优化数据选择框架，通过联合优化数据重要性和多样性，仅用 20% 随机数据训练轻量评分器，即可从 LLaVA-665K 中选出 20% 子集达到全量微调 98.2% 的性能，同时计算开销为所有方法最低。 多模态大语言模型（MLLM）的指令微调…
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

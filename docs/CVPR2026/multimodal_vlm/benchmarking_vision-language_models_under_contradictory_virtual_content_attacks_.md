@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality
 description: >-
-  [CVPR 2026][多模态VLM][增强现实安全] 构建首个 AR 环境下矛盾虚拟内容攻击基准 ContrAR（312 个真实 Meta Quest 3 录制视频，10 名标注者验证，平均 Likert 4.66/5）…
+  [CVPR 2026 Findings][多模态VLM][增强现实安全] 构建首个 AR 环境下矛盾虚拟内容攻击基准 ContrAR（312 个真实 Meta Quest 3 录制视频，10 名标注者验证，平均 Likert 4.66/5），系统评估 11 个 VLM（含 GPT-5/Gemini-2.5/Grok-4）的语义矛盾检测能力，发现 GPT-5 准确率最高（88.14%）但延迟 19s，GPT-4o 在准确率-延迟平衡最佳（84.62%/7.26s），OCR 纯文本基线仅 56%，证明视觉推理不可或缺。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "多模态VLM"
   - "增强现实安全"
   - "语义矛盾检测"

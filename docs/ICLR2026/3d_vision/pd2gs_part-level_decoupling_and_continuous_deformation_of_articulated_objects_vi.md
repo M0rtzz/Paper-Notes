@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting
 description: >-
-  [ICLR 2026][3D视觉][articulated objects] 提出 PD²GS 框架，通过学习共享的 canonical 高斯场并将每个交互状态建模为其连续形变，实现铰接物体的部件级解耦、重建和连续控制，采用粗到细的运动轨迹聚类 + SAM 引导的边界细化，无需手动监督。
+  [ICLR 2026][3D视觉][articulated objects] 提出 PD²GS 框架，通过学习共享的 canonical 高斯场并将每个交互状态建模为其连续形变，实现铰接物体的部件级解耦、重建和连续控制，采用粗到细的运动轨迹聚类 + SAM 引导的边界细化，无需手动监督。 领域现状：铰接物体（门、抽屉、笔记本…
 tags:
   - "ICLR 2026"
   - "3D视觉"

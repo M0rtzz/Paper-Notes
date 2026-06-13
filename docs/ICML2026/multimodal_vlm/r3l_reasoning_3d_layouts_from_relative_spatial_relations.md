@@ -2,7 +2,7 @@
 title: >-
   [论文解读] R$^3$L: Reasoning 3D Layouts from Relative Spatial Relations
 description: >-
-  [ICML 2026][多模态VLM][3D Layout Generation] R³L 把 MLLM 多跳"相对空间关系"推理的两类系统性误差（语义漂移与度量漂移）归因于"反复发生的参考系变换"…
+  [ICML 2026][多模态VLM][3D Layout Generation] R³L 把 MLLM 多跳"相对空间关系"推理的两类系统性误差（语义漂移与度量漂移）归因于"反复发生的参考系变换"，并通过不变性空间分解（缩短关系链）、一致性空间想象（imagine-and-revise 循环消除冲突）与支持性空间优化（全局-局部位姿重参数化）三个模块，让 GPT-5 生成的开放词汇 3D 场景在 9 类场景下的碰撞率与越界率都接近 0、语义指标显著反超 LayoutVLM/Holodeck/LayoutGPT。
 tags:
   - "ICML 2026"
   - "多模态VLM"

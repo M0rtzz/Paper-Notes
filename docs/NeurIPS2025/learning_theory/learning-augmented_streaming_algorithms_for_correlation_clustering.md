@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Learning-Augmented Streaming Algorithms for Correlation Clustering
 description: >-
-  [NeurIPS 2025][相关聚类] 提出了首个面向相关聚类（Correlation Clustering）的学习增强流算法，利用成对距离预测，在完全图上实现优于3的近似比（$\tilde{O}(n)$ 空间），在一般图上实现 $O(\log|E^-|)$ 近似比（$\tilde{O}(n)$ 空间）…
+  [NeurIPS 2025][流算法 / 聚类][相关聚类] 提出了首个面向相关聚类（Correlation Clustering）的学习增强流算法，利用成对距离预测，在完全图上实现优于3的近似比（$\tilde{O}(n)$ 空间），在一般图上实现 $O(\log|E^-|)$ 近似比（$\tilde{O}(n)$ 空间），在空间-近似比权衡上显著改进了已有的非学习算法。
 tags:
   - "NeurIPS 2025"
+  - "流算法 / 聚类"
   - "相关聚类"
   - "流算法"
   - "学习增强"

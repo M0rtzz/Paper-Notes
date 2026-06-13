@@ -1,15 +1,16 @@
 ---
 title: >-
-  [论文解读] Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Generalization
+  [论文解读] Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Interpretability and Scalability
 description: >-
-  [CVPR 2025][可解释性][语言瓶颈模型] 针对语言瓶颈模型（LBM）中所有概念混合在一起导致的虚假线索推理和零样本泛化差的问题，提出属性构成的类特定概念空间，将概念按属性维度为每个类别组织独立空间。
+  [CVPR 2025][可解释性][语言瓶颈模型] 提出 ALBM 模型，用属性化的类特定概念空间（ACCS）取代现有语言瓶颈模型的类共享概念空间，避免虚假线索推理问题并支持跨类泛化，配合视觉属性提示学习（VAPL）提取细粒度属性特征，在 9 个 few-shot 基准上全面超越现有可解释分类方法。
 tags:
   - "CVPR 2025"
   - "可解释性"
   - "语言瓶颈模型"
   - "属性概念空间"
-  - "可解释分类"
+  - "视觉提示学习"
   - "零样本泛化"
+  - "可解释分类"
 ---
 
 # Attribute-formed Class-specific Concept Space: Endowing Language Bottleneck Model with Better Interpretability and Scalability
@@ -137,3 +138,19 @@ tags:
   - 可解释分类
   - 零样本泛化
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Language Guided Concept Bottleneck Models for Interpretable Continual Learning](language_guided_concept_bottleneck_models_for_interpretable_continual_learning.md)
+- [\[CVPR 2025\] Interpretable Image Classification via Non-parametric Part Prototype Learning](interpretable_image_classification_via_non-parametric_part_prototype_learning.md)
+- [\[CVPR 2025\] Learning on Model Weights using Tree Experts](learning_on_model_weights_using_tree_experts.md)
+- [\[CVPR 2025\] Towards Human-Understandable Multi-Dimensional Concept Discovery](towards_human-understandable_multi-dimensional_concept_discovery.md)
+- [\[CVPR 2025\] TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](tide_domain_generalization.md)
+
+</div>
+
+<!-- RELATED:END -->

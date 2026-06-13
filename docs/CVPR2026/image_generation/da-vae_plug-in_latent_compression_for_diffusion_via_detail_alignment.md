@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DA-VAE: Plug-in Latent Compression for Diffusion via Detail Alignment
 description: >-
-  [CVPR 2026][图像生成][VAE压缩] 提出 Detail-Aligned VAE (DA-VAE)，通过在预训练 VAE 的潜空间中引入结构化的"细节通道"并施加对齐约束，在不重训扩散模型的前提下将 token 数压缩 4 倍…
+  [CVPR 2026][图像生成][VAE压缩] 提出 Detail-Aligned VAE (DA-VAE)，通过在预训练 VAE 的潜空间中引入结构化的"细节通道"并施加对齐约束，在不重训扩散模型的前提下将 token 数压缩 4 倍，仅需 5 H100-days 微调即可实现 SD3.5 的 1024→2048 生成，加速 6 倍。
 tags:
   - "CVPR 2026"
   - "图像生成"

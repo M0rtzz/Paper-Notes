@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Speech-Hands: A Self-Reflection Voice Agentic Approach to Speech Recognition and Audio Reasoning with Omni Perception
 description: >-
-  [ACL2026][音频/语音][语音识别] 提出 Speech-Hands，一个可学习的语音代理框架，通过在推理时生成显式动作 token（<internal>/<external>/<rewrite>）来决定信任自身感知还是外部 ASR 假设…
+  [ACL2026 Oral][音频/语音][语音识别] 提出 Speech-Hands，一个可学习的语音代理框架，通过在推理时生成显式动作 token（<internal>/<external>/<rewrite>）来决定信任自身感知还是外部 ASR 假设，在 OpenASR 排行榜 7 个基准上平均 WER 降低 12.1%，在音频 QA 上达到 77.37% 准确率。
 tags:
-  - "ACL2026"
+  - "ACL2026 Oral"
   - "音频/语音"
   - "语音识别"
   - "音频推理"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL2026 Oral  
 **arXiv**: [2601.09413](https://arxiv.org/abs/2601.09413)
 **代码**: [GitHub](https://YukinoWan.github.io/Speech-Hands/)
-**领域**: audio_speech
+**领域**: 音频语音
 **关键词**: 语音识别, 音频推理, 多模态代理, 自我反思, 生成式纠错
 
 ## 一句话总结

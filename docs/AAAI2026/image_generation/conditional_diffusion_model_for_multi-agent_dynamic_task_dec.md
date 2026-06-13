@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Conditional Diffusion Model for Multi-Agent Dynamic Task Decomposition
 description: >-
-  [AAAI 2026][图像生成][任务分解] 提出 CD3T，一个两层层次化 MARL 框架：用条件扩散模型学习动作语义表示（以观测和他人动作为条件，预测下一观测和奖励），通过 k-means 聚类得到子任务划分，高层选择子任务、低层在受限动作空间执行策略…
+  [AAAI 2026][图像生成][任务分解] 提出 CD3T，一个两层层次化 MARL 框架：用条件扩散模型学习动作语义表示（以观测和他人动作为条件，预测下一观测和奖励），通过 k-means 聚类得到子任务划分，高层选择子任务、低层在受限动作空间执行策略，在 SMAC 的 Super Hard 场景上显著超越所有基线。
 tags:
   - "AAAI 2026"
   - "图像生成"

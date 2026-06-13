@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SafeNlidb: A Privacy-Preserving Safety Alignment Framework for LLM-based Natural Language Database Interfaces
 description: >-
-  [AAAI 2026][LLM安全][数据库安全] 提出SafeNlidb框架，通过安全感知数据合成管线和交替偏好优化策略，实现LLM驱动的自然语言数据库接口（NLIDB）在安全推理与SQL生成之间的联合优化，有效防御隐式推理攻击下的隐私泄露。
+  [AAAI 2026][LLM安全][数据库安全] 提出SafeNlidb框架，通过安全感知数据合成管线和交替偏好优化策略，实现LLM驱动的自然语言数据库接口（NLIDB）在安全推理与SQL生成之间的联合优化，有效防御隐式推理攻击下的隐私泄露。 领域现状：LLM驱动的NLIDB系统（如通过MCP等协议实现用户自然语言→SQL…
 tags:
   - "AAAI 2026"
   - "LLM安全"

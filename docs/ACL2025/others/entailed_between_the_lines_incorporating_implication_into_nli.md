@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Entailed Between the Lines: Incorporating Implication into NLI
 description: >-
-  [ACL 2025][隐含蕴涵] 形式化定义"隐含蕴涵"（implied entailment）任务，将传统NLI的三分类扩展为四分类（隐式蕴涵/显式蕴涵/中立/矛盾），构建包含10K前提和40K假设的INLI数据集，实验表明微调后的模型能有效识别隐含蕴涵并跨领域泛化。
+  [ACL 2025][隐含蕴涵] 形式化定义"隐含蕴涵"（implied entailment）任务，将传统NLI的三分类扩展为四分类（隐式蕴涵/显式蕴涵/中立/矛盾），构建包含10K前提和40K假设的INLI数据集，实验表明微调后的模型能有效识别隐含蕴涵并跨领域泛化。 语言中的隐含信息：人类沟通高度依赖隐含表达——情感、社…
 tags:
   - "ACL 2025"
   - "隐含蕴涵"

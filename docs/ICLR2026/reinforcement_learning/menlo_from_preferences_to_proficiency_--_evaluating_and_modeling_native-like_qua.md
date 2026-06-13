@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Menlo: From Preferences to Proficiency – Evaluating and Modeling Native-like Quality Across 47 Languages
 description: >-
-  [ICLR 2026][强化学习][多语言评估] 提出 Menlo 框架，基于受众设计理论将母语级响应质量分解为四个维度，构建了覆盖 47 种语言变体的 6423 条标注偏好对数据集，并发现配对评估+RL 训练的 LLM 裁判可达到接近人类标注员的水平。
+  [ICLR 2026][强化学习][多语言评估] 提出 Menlo 框架，基于受众设计理论将母语级响应质量分解为四个维度，构建了覆盖 47 种语言变体的 6423 条标注偏好对数据集，并发现配对评估+RL 训练的 LLM 裁判可达到接近人类标注员的水平。 领域现状：LLM 需要在全球多种语言中提供高质量响应…
 tags:
   - "ICLR 2026"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Hypergraph Vision Transformers: Images are More than Nodes, More than Edges
 description: >-
-  [CVPR 2025][图学习][超图] 提出HgVT，将层次化二部超图结构嵌入ViT中，通过主图像patch顶点和虚拟顶点的分离处理、动态余弦邻接构建和超边通信池三层注意力机制，无需聚类即可捕获patch间高阶语义关系…
+  [CVPR 2025][图学习][超图] 提出HgVT，将层次化二部超图结构嵌入ViT中，通过主图像patch顶点和虚拟顶点的分离处理、动态余弦邻接构建和超边通信池三层注意力机制，无需聚类即可捕获patch间高阶语义关系，在ImageNet-1K上HgVT-Ti以7.7M参数达到76.2%准确率（超ViHGNN-Ti 1.9%），并在图像检索中达到73.23% mAP@10。
 tags:
   - "CVPR 2025"
   - "图学习"

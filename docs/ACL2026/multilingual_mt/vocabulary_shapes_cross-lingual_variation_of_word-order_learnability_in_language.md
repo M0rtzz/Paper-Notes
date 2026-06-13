@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Vocabulary Shapes Cross-Lingual Variation of Word-Order Learnability in Language Models
 description: >-
-  [ACL2026][多语言/翻译][词序可学习性] 本文用 Mallows 模型生成 10 种欧洲语言的连续词序扰动谱，训练小型自回归 LM 后发现：词序越不规则越难学，但跨语言差异主要由词表覆盖、句长和形态复杂度解释，而不是简单的自由/固定词序标签。
+  [ACL2026][多语言/翻译][词序可学习性] 本文用 Mallows 模型生成 10 种欧洲语言的连续词序扰动谱，训练小型自回归 LM 后发现：词序越不规则越难学，但跨语言差异主要由词表覆盖、句长和形态复杂度解释，而不是简单的自由/固定词序标签。 领域现状：语言类型学长期关注不同语言为何有不同词序…
 tags:
   - "ACL2026"
   - "多语言/翻译"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2603.19427](https://arxiv.org/abs/2603.19427)  
 **代码**: https://gitlab.gwdg.de/huds/projects/shuffle/-/tree/v1.0.2  
-**领域**: multilingual_mt  
+**领域**: 多语言翻译  
 **关键词**: 词序可学习性, 多语言建模, 词表结构, Mallows排列, 语言类型学
 
 ## 一句话总结

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Identifying the Achilles' Heel: An Iterative Method for Dynamically Uncovering Factual Errors in Large Language Models
 description: >-
-  [ACL 2026][LLM评测][知识图谱测试] HalluHunter 是一个基于知识图谱的全自动 LLM 事实错误测试框架——用 Wikidata 抽事实三元组、规则化生成 Yes/No、MC、WH 三种问题类型并支持多跳推理，再用"自适应迭代算法"基于上一轮错误回答的实体相似度和关系准确率挑下一批难题…
+  [ACL 2026 Findings][LLM评测][知识图谱测试] HalluHunter 是一个基于知识图谱的全自动 LLM 事实错误测试框架——用 Wikidata 抽事实三元组、规则化生成 Yes/No、MC、WH 三种问题类型并支持多跳推理，再用"自适应迭代算法"基于上一轮错误回答的实体相似度和关系准确率挑下一批难题，5 轮迭代后能把 9 个主流 LLM 的准确率降低 32-42%，最多触发 55% 题目错误，并显著优于静态 benchmark。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "知识图谱测试"
   - "事实错误检测"

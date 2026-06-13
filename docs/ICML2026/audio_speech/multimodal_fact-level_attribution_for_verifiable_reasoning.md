@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Fact-Level Attribution for Verifiable Reasoning
 description: >-
-  [ICML 2026][音频/语音][多模态归因] MURGAT 是首个评测 MLLM 在多模态推理输出中"按事实粒度精确引用模态+时间段"能力的基准，搭配一个三步评估协议（可验证句识别 → 原子事实分解 → 归因质量）和高度与人工对齐的自动评测器 MURGAT-SCORE（Pearson 0.84）…
+  [ICML 2026][音频/语音][多模态归因] MURGAT 是首个评测 MLLM 在多模态推理输出中"按事实粒度精确引用模态+时间段"能力的基准，搭配一个三步评估协议（可验证句识别 → 原子事实分解 → 归因质量）和高度与人工对齐的自动评测器 MURGAT-SCORE（Pearson 0.84），揭示了强模型即使答案对也常常胡乱引用，且强推理常以牺牲可验证引用为代价。
 tags:
   - "ICML 2026"
   - "音频/语音"

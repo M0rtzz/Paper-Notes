@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FIRE: Frobenius-Isometry Reinitialization for Balancing the Stability-Plasticity Tradeoff
 description: >-
-  [ICLR 2026 Oral][stability-plasticity] 将持续学习中的稳定性-可塑性平衡形式化为约束优化问题——最小化权重偏差（稳定性）同时约束权重正交性（可塑性），得到正交 Procrustes 问题的闭式解 $\tilde{W}^* = W(W^\top W)^{-1/2}$（极分解…
+  [ICLR 2026 Oral][stability-plasticity] 将持续学习中的稳定性-可塑性平衡形式化为约束优化问题——最小化权重偏差（稳定性）同时约束权重正交性（可塑性），得到正交 Procrustes 问题的闭式解 $\tilde{W}^* = W(W^\top W)^{-1/2}$（极分解），通过 Newton-Schulz 迭代高效实现（<1% 额外时间），在视觉持续学习、LLM 持续预训练和 RL 上全面超越 S&P 等基线。
 tags:
   - "ICLR 2026 Oral"
   - "stability-plasticity"

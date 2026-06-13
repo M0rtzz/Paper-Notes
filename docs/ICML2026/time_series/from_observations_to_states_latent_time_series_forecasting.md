@@ -2,7 +2,7 @@
 title: >-
   [论文解读] From Observations to States: Latent Time Series Forecasting
 description: >-
-  [ICML 2026][时间序列][时序预测] 作者发现现有 TSF 模型即使预测精度高，其潜空间也常常是"时间错乱"的（Latent Chaos）；他们提出 LatentTSF——先用 AutoEncoder 把观察压到一个高维潜状态空间…
+  [ICML 2026][时间序列][时序预测] 作者发现现有 TSF 模型即使预测精度高，其潜空间也常常是"时间错乱"的（Latent Chaos）；他们提出 LatentTSF——先用 AutoEncoder 把观察压到一个高维潜状态空间，然后让任何主流 backbone 在这个空间内做未来预测（Pred + Align 双损失），最后再解码回观察空间——在 6 个标准 benchmark 上稳定降 MSE/MAE，并恢复了潜表征的时间局部性和频谱结构。
 tags:
   - "ICML 2026"
   - "时间序列"

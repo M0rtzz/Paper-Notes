@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TPA: Next Token Probability Attribution for Detecting Hallucinations in RAG
 description: >-
-  [ACL 2026][幻觉检测][RAG幻觉检测] 本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献…
+  [ACL 2026][幻觉检测][RAG幻觉检测] 本文提出 TPA 框架，通过数学方法将 LLM 每个 token 的生成概率精确分解为七个来源（Query、RAG Context、Past Token、Self Token、FFN、Final LayerNorm、Initial Embedding）的贡献，结合词性标注聚合特征，实现 RAG 场景下的 SOTA 幻觉检测。
 tags:
   - "ACL 2026"
   - "幻觉检测"

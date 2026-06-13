@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Transformer Embeddings for Fast Microlensing Inference
 description: >-
-  [NeurIPS 2025][时间序列][微引力透镜] 本文将Transformer编码器与神经后验估计（NPE）结合，直接从稀疏、噪声、不等间隔的微引力透镜光变曲线中进行快速且校准良好的参数推断，速度比传统MCMC快10⁴倍以上。
+  [NeurIPS 2025][时间序列][微引力透镜] 本文将Transformer编码器与神经后验估计（NPE）结合，直接从稀疏、噪声、不等间隔的微引力透镜光变曲线中进行快速且校准良好的参数推断，速度比传统MCMC快10⁴倍以上。 - 自由漂浮行星（FFP）可能是最丰富的类地质量系外行星，微引力透镜是探测它们的最有前景的技…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory
 description: >-
-  [AAAI 2026][LLM评测][IRT] 提出 PSN-IRT（Pseudo-Siamese Network for IRT），用增强版项目反应理论同时估计 LLM 能力参数和题目的四参数特征（难度/区分度/猜测率/可行性），在 11 个基准 41…
+  [AAAI 2026 Oral][LLM评测][IRT] 提出 PSN-IRT（Pseudo-Siamese Network for IRT），用增强版项目反应理论同时估计 LLM 能力参数和题目的四参数特征（难度/区分度/猜测率/可行性），在 11 个基准 41,871 题上发现当前基准存在广泛饱和、难度天花板不足、数据污染等系统性问题，PSN-IRT 选出的题目子集排名一致性达 Kendall τ=1.00。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "LLM评测"
   - "IRT"
   - "基准评估"

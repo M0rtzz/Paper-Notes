@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LN3Diff: Scalable Latent Neural Fields Diffusion for Speedy 3D Generation
 description: >-
-  [ECCV 2024][3D视觉][3D生成] 提出LN3Diff++框架，通过3D感知的VAE将多视角图像压缩到紧凑的3D潜在空间，在该空间上训练扩散模型（U-Net或DiT），实现高质量、快速、通用的条件3D生成，包括文本到3D和图像到3D。
+  [ECCV 2024][3D视觉][3D生成] 提出LN3Diff++框架，通过3D感知的VAE将多视角图像压缩到紧凑的3D潜在空间，在该空间上训练扩散模型（U-Net或DiT），实现高质量、快速、通用的条件3D生成，包括文本到3D和图像到3D。 领域现状： 2D扩散模型已经超越GAN，但统一的3D扩散管线尚未建立…
 tags:
   - "ECCV 2024"
   - "3D视觉"

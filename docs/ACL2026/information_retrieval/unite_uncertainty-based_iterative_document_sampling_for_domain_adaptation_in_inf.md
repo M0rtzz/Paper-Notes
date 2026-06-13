@@ -2,9 +2,9 @@
 title: >-
   [论文解读] UnIte: Uncertainty-based Iterative Document Sampling for Domain Adaptation in Information Retrieval
 description: >-
-  [ACL2026][信息检索/RAG][无监督领域适配] UnIte 把神经检索器的无监督领域适配瓶颈从“生成更多伪查询”转向“更聪明地选文档”，先用 aleatoric uncertainty 过滤低密度噪声文档，再用随模型训练动态变化的 epistemic uncertainty 迭代采样高价值文档…
+  [ACL2026 Findings][信息检索/RAG][无监督领域适配] UnIte 把神经检索器的无监督领域适配瓶颈从“生成更多伪查询”转向“更聪明地选文档”，先用 aleatoric uncertainty 过滤低密度噪声文档，再用随模型训练动态变化的 epistemic uncertainty 迭代采样高价值文档，在 BEIR 大语料上用更少伪查询稳定超过 DUQGen。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "信息检索/RAG"
   - "无监督领域适配"
   - "文档采样"

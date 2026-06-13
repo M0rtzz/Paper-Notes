@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FreeUV: Ground-Truth-Free Realistic Facial UV Texture Recovery via Cross-Assembly
 description: >-
-  [CVPR 2025][人体理解][人脸UV纹理恢复] FreeUV 提出了一种不需要 ground-truth UV 纹理数据的面部 UV 纹理恢复框架，通过分别训练关注真实外观的 UV-to-2D 网络和关注结构一致性的 2D-to-UV 网络…
+  [CVPR 2025][人体理解][人脸UV纹理恢复] FreeUV 提出了一种不需要 ground-truth UV 纹理数据的面部 UV 纹理恢复框架，通过分别训练关注真实外观的 UV-to-2D 网络和关注结构一致性的 2D-to-UV 网络，在推理时将两者的 UV 相关模块跨装配（Cross-Assembly）到预训练 Stable Diffusion 中，实现高保真的 UV-to-UV 纹理生成。
 tags:
   - "CVPR 2025"
   - "人体理解"

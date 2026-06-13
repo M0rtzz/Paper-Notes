@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Look Twice before You Leap: A Rational Framework for Localized Adversarial Anonymization
 description: >-
-  [ACL 2026][LLM安全][文本匿名化] 提出 RLAA 框架，通过 Attacker-Arbitrator-Anonymizer 三角色架构和边际替代率（MRS）理性约束，解决对抗式文本匿名化迁移到本地小模型时的效用崩溃问题，无需训练即可在本地实现优于 API 方案的隐私-效用平衡。
+  [ACL 2026 Findings][LLM安全][文本匿名化] 提出 RLAA 框架，通过 Attacker-Arbitrator-Anonymizer 三角色架构和边际替代率（MRS）理性约束，解决对抗式文本匿名化迁移到本地小模型时的效用崩溃问题，无需训练即可在本地实现优于 API 方案的隐私-效用平衡。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "文本匿名化"
   - "对抗博弈"

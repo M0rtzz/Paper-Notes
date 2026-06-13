@@ -2,10 +2,10 @@
 title: >-
   [论文解读] From Selection to Generation: A Survey of LLM-based Active Learning
 description: >-
-  [ACL 2025][LLM/NLP][主动学习] 首篇系统综述 LLM 时代主动学习（Active Learning）的全景图谱，提出以 Querying（选择 + 生成）× Annotation（人工 + LLM + 混合）为两轴的分类体系…
+  [ACL 2025][LLM 其他][主动学习] 首篇系统综述 LLM 时代主动学习（Active Learning）的全景图谱，提出以 Querying（选择 + 生成）× Annotation（人工 + LLM + 混合）为两轴的分类体系，完整梳理了 LLM 如何在五步 AL 循环的每个环节中替代或增强传统方法，并拓展到 ICL、SFT、RLHF、知识蒸馏等四大 LLM 学习范式。
 tags:
   - "ACL 2025"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "主动学习"
   - "大语言模型"
   - "数据选择"

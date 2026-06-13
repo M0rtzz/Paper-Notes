@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multiple-Policy Evaluation via Density Estimation
 description: >-
-  [ICML 2025][multiple-policy evaluation] 提出 CAESAR 算法，通过两阶段方法（粗估计访问分布 + 最优采样分布下的密度比估计）同时评估 K 个策略，实现非渐近、实例依赖的样本复杂度…
+  [ICML 2025][multiple-policy evaluation] 提出 CAESAR 算法，通过两阶段方法（粗估计访问分布 + 最优采样分布下的密度比估计）同时评估 K 个策略，实现非渐近、实例依赖的样本复杂度，核心技术是"粗估计"——仅需 $O(1/\epsilon)$ 样本即可获得常数倍精度的分布近似。
 tags:
   - "ICML 2025"
   - "multiple-policy evaluation"

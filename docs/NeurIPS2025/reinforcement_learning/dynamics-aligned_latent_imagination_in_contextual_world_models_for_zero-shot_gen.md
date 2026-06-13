@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamics-Aligned Latent Imagination in Contextual World Models for Zero-Shot Generalization
 description: >-
-  [NeurIPS 2025][强化学习][contextual MDP] 在 DreamerV3 架构中引入自监督上下文编码器 DALI，从交互历史中推断潜在环境参数（如重力、摩擦力），在 cMDP 基准上无需重训练即可实现零样本泛化…
+  [NeurIPS 2025][强化学习][contextual MDP] 在 DreamerV3 架构中引入自监督上下文编码器 DALI，从交互历史中推断潜在环境参数（如重力、摩擦力），在 cMDP 基准上无需重训练即可实现零样本泛化，在外推任务上比 ground-truth context-aware 基线高出最多 96.4%。
 tags:
   - "NeurIPS 2025"
   - "强化学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Foundation Models for Scientific Discovery: From Paradigm Enhancement to Paradigm Transition
 description: >-
-  [NeurIPS 2025][自监督学习][foundation models] 提出基础模型驱动科学发现的三阶段框架——元科学集成、人机混合共创、自主科学发现，系统梳理 FM 在实验/理论/计算/数据驱动四大范式中的应用，主张 FM 正催生第五科学范式。
+  [NeurIPS 2025][自监督学习][foundation models] 提出基础模型驱动科学发现的三阶段框架——元科学集成、人机混合共创、自主科学发现，系统梳理 FM 在实验/理论/计算/数据驱动四大范式中的应用，主张 FM 正催生第五科学范式。 科学发现历经四次范式演变：实验驱动（16-17世纪…
 tags:
   - "NeurIPS 2025"
   - "自监督学习"

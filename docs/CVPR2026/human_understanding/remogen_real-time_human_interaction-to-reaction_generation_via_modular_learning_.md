@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ReMoGen: Real-time Human Interaction-to-Reaction Generation via Modular Learning from Diverse Data
 description: >-
-  [CVPR 2026][人体理解][交互反应生成] 提出 ReMoGen，一个模块化框架用于实时人体交互-到-反应的动作生成：利用大规模单人运动数据学习通用运动先验（冻结），通过独立训练的 Meta-Interaction 模块适配不同交互域（人-人/人-场景）…
+  [CVPR 2026][人体理解][交互反应生成] 提出 ReMoGen，一个模块化框架用于实时人体交互-到-反应的动作生成：利用大规模单人运动数据学习通用运动先验（冻结），通过独立训练的 Meta-Interaction 模块适配不同交互域（人-人/人-场景），并引入 Frame-wise Segment Refinement 实现逐帧低延迟在线更新（0.047s/帧），在 Inter-X 和 LINGO 数据集上全面超越 SOTA。
 tags:
   - "CVPR 2026"
   - "人体理解"

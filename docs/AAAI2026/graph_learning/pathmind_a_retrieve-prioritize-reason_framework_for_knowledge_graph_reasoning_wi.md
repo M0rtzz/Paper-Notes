@@ -2,9 +2,9 @@
 title: >-
   [论文解读] PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models
 description: >-
-  [AAAI 2026][图学习][知识图谱推理] 提出PathMind框架，遵循"检索-优先级排序-推理"范式，通过语义感知的路径优先级函数（结合累积代价和估计未来代价）识别重要推理路径，再通过任务特定指令调优和路径级偏好对齐两阶段训练增强LLM的忠实可解释推理，在复杂推理任务上以更少token实现SOTA。
+  [AAAI 2026 Oral][图学习][知识图谱推理] 提出PathMind框架，遵循"检索-优先级排序-推理"范式，通过语义感知的路径优先级函数（结合累积代价和估计未来代价）识别重要推理路径，再通过任务特定指令调优和路径级偏好对齐两阶段训练增强LLM的忠实可解释推理，在复杂推理任务上以更少token实现SOTA。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "图学习"
   - "知识图谱推理"
   - "LLM"

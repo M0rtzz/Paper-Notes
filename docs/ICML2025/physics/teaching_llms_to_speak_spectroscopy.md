@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Teaching LLMs to Speak Spectroscopy
 description: >-
-  [ICML 2025 (ML4Astro Workshop)][物理/科学计算][LLM 微调] 仅使用 16 GPU 小时和 0.04% 的参数适配，通过 LoRA 将 **LLaMA-3.1-8B** 改造为可从光谱数据预测星系红移的模型，同时保留 85%+ 的语言能力…
+  [ICML 2025 (ML4Astro Workshop)][物理/科学计算][LLM 微调] 仅使用 16 GPU 小时和 0.04% 的参数适配，通过 LoRA 将 **LLaMA-3.1-8B** 改造为可从光谱数据预测星系红移的模型，同时保留 85%+ 的语言能力，证明通用 LLM 可高效适配非文本科学模态。
 tags:
   - "ICML 2025 (ML4Astro Workshop)"
   - "物理/科学计算"

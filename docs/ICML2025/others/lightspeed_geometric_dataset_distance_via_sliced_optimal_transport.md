@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Lightspeed Geometric Dataset Distance via Sliced Optimal Transport
 description: >-
-  [ICML2025][Sliced Optimal Transport] 提出 s-OTDD（sliced optimal transport dataset distance），通过 Moment Transform Projection（MTP）将标签分布映射为标量，实现近线性复杂度的数据集距离计算…
+  [ICML2025][Sliced Optimal Transport] 提出 s-OTDD（sliced optimal transport dataset distance），通过 Moment Transform Projection（MTP）将标签分布映射为标量，实现近线性复杂度的数据集距离计算，速度远超 OTDD 且性能相当。
 tags:
   - "ICML2025"
   - "Sliced Optimal Transport"

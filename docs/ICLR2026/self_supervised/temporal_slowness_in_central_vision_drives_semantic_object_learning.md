@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Temporal Slowness in Central Vision Drives Semantic Object Learning
 description: >-
-  [ICLR2026][自监督学习][central vision] 通过模拟人类中央视觉（注视点裁剪）和时间慢性原则（时间对比学习），在 Ego4D 数据上训练 SSL 模型，发现两者组合能有效提升语义对象表征——中央视觉强化前景提取，时间慢性在注视凝视期间蒸馏语义信息。
+  [ICLR2026][自监督学习][central vision] 通过模拟人类中央视觉（注视点裁剪）和时间慢性原则（时间对比学习），在 Ego4D 数据上训练 SSL 模型，发现两者组合能有效提升语义对象表征——中央视觉强化前景提取，时间慢性在注视凝视期间蒸馏语义信息。 领域现状 领域现状：人类从自我中心视觉流中以极少监督…
 tags:
   - "ICLR2026"
   - "自监督学习"

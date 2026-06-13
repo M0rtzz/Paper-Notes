@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Unsupervised Morphological Tree Tokenizer
 description: >-
-  [ACL2025][预训练][tokenization] 提出 TreeTok，一种基于无监督神经形态结构归纳的分词器，通过 MorphOverriding 机制和自监督目标学习字符级树结构，以自顶向下词表匹配方式进行分词，在形态分割和语言建模任务上均优于 BPE/WordPiece。
+  [ACL2025][预训练][tokenization] 提出 TreeTok，一种基于无监督神经形态结构归纳的分词器，通过 MorphOverriding 机制和自监督目标学习字符级树结构，以自顶向下词表匹配方式进行分词，在形态分割和语言建模任务上均优于 BPE/WordPiece。 领域现状：BPE 和 WordPiec…
 tags:
   - "ACL2025"
   - "预训练"

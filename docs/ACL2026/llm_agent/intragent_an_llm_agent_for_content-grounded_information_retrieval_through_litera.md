@@ -2,7 +2,7 @@
 title: >-
   [论文解读] IntrAgent: An LLM Agent for Content-Grounded Information Retrieval through Literature Review
 description: >-
-  [ACL 2026][LLM Agent][内容定向检索] IntrAgent 把"研究者读论文找信息"这件事拆成"先按结构排章节、再迭代读章节、读够就停"两段流水线，让 LLM 在不依赖向量检索的前提下，从一整篇科学论文里抽取出与查询忠实对齐的细粒度答案…
+  [ACL 2026][LLM Agent][内容定向检索] IntrAgent 把"研究者读论文找信息"这件事拆成"先按结构排章节、再迭代读章节、读够就停"两段流水线，让 LLM 在不依赖向量检索的前提下，从一整篇科学论文里抽取出与查询忠实对齐的细粒度答案，在新基准 IntraBench 上跨五个 STEM 领域平均比 RAG/科研 agent 基线高出 13.2%。
 tags:
   - "ACL 2026"
   - "LLM Agent"

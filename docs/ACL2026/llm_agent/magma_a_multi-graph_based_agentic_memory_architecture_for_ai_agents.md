@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MAGMA: A Multi-Graph based Agentic Memory Architecture for AI Agents
 description: >-
-  [ACL 2026][LLM Agent][多图记忆] MAGMA 把 LLM agent 的记忆拆成语义 / 时间 / 因果 / 实体四张正交关系图，再用 intent 路由 + 适应性 beam search 在合适的图上做 policy-guided traversal 检索…
+  [ACL 2026][LLM Agent][多图记忆] MAGMA 把 LLM agent 的记忆拆成语义 / 时间 / 因果 / 实体四张正交关系图，再用 intent 路由 + 适应性 beam search 在合适的图上做 policy-guided traversal 检索，并配以"快路径同步入库 + 慢路径异步 LLM 巩固"双流写入；在 LoCoMo 上 Judge 0.700 全面超过 A-MEM / Nemori / MemoryOS，同时 query latency 仅 1.47s（比次优快 40%）。
 tags:
   - "ACL 2026"
   - "LLM Agent"

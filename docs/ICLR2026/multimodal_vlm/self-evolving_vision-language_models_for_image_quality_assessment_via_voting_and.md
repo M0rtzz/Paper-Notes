@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking
 description: >-
-  [ICLR 2026][多模态VLM][VLM] 提出 EvoQuality 框架，通过成对多数投票生成伪排序标签、结合 GRPO 自迭代优化，使 VLM 在无人工标注下自主提升图像质量感知能力，零样本性能提升 31.8% PLCC，在 7 个 IQA 基准中 5 个超越有监督 SOTA。
+  [ICLR 2026][多模态VLM][VLM] 提出 EvoQuality 框架，通过成对多数投票生成伪排序标签、结合 GRPO 自迭代优化，使 VLM 在无人工标注下自主提升图像质量感知能力，零样本性能提升 31.8% PLCC，在 7 个 IQA 基准中 5 个超越有监督 SOTA。 图像质量评估（IQA）是计算机视觉…
 tags:
   - "ICLR 2026"
   - "多模态VLM"

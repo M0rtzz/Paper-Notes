@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACPBench Hard: Unrestrained Reasoning about Action, Change, and Planning
 description: >-
-  [ICLR 2026][模型压缩][planning benchmark] 构建 ACPBench Hard——基于 PDDL 形式化系统的 8 类**开放式生成**规划推理 benchmark（13 域 × 8 任务 = 1040 题），配备具有严格正确性保证的符号验证器…
+  [ICLR 2026][模型压缩][planning benchmark] 构建 ACPBench Hard——基于 PDDL 形式化系统的 8 类**开放式生成**规划推理 benchmark（13 域 × 8 任务 = 1040 题），配备具有严格正确性保证的符号验证器，系统测评 15 个 LLM 后发现：即使最强推理模型 o1-preview 在半数任务上准确率 ≤66%，所有模型在最基本的"列举可执行动作"任务上几乎完全失败，暴露了当前 LLM 在规划推理方面的根本不足。
 tags:
   - "ICLR 2026"
   - "模型压缩"

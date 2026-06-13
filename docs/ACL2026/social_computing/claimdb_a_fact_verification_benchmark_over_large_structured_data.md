@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ClaimDB: A Fact Verification Benchmark over Large Structured Data
 description: >-
-  [ACL 2026][社会计算][事实核查基准] ClaimDB 是首个把事实核查 evidence 放大到 80 个真实数据库、平均每 claim 含 11 张表 / 460 万行 / 1.1 亿 token 的基准，强制方法必须用可执行程序（SQL）做组合推理…
+  [ACL 2026][社会计算][事实核查基准] ClaimDB 是首个把事实核查 evidence 放大到 80 个真实数据库、平均每 claim 含 11 张表 / 460 万行 / 1.1 亿 token 的基准，强制方法必须用可执行程序（SQL）做组合推理；对 30 个 SOTA LLM 的工具调用 agent 评测显示，过半模型 accuracy 不到 55%，且封闭模型几乎不会"弃权"、开源模型又过度弃权——NEI 处理是最大短板。
 tags:
   - "ACL 2026"
   - "社会计算"

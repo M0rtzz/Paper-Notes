@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse Primitives
 description: >-
-  [CVPR 2025][3D视觉][3D高斯泼溅] 提出 Speedy-Splat，通过两条互补路线加速 3DGS 渲染：(1) SnugBox/AccuTile 精确定位高斯在图像平面的范围减少无效像素处理，(2) 高效剪枝（Soft+Hard Pruning）将高斯数量减少 90% 以上…
+  [CVPR 2025][3D视觉][3D高斯泼溅] 提出 Speedy-Splat，通过两条互补路线加速 3DGS 渲染：(1) SnugBox/AccuTile 精确定位高斯在图像平面的范围减少无效像素处理，(2) 高效剪枝（Soft+Hard Pruning）将高斯数量减少 90% 以上，两者结合实现平均 6.71× 渲染加速，同时减少 10.6× 模型大小和 1.4× 训练时间。
 tags:
   - "CVPR 2025"
   - "3D视觉"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning
 description: >-
-  [NeurIPS 2025][医学图像][公平性] 提出 FairGRPO，一种层级式公平强化学习算法，通过自适应重要性加权（基于群体表示量和任务难度）解决临床 AI 中的人群表现差异问题，在 7 个临床数据集（280K样本，5种模态）上将预测平价降低 27.2%、F1 提升 12.49%…
+  [NeurIPS 2025][医学图像][公平性] 提出 FairGRPO，一种层级式公平强化学习算法，通过自适应重要性加权（基于群体表示量和任务难度）解决临床 AI 中的人群表现差异问题，在 7 个临床数据集（280K样本，5种模态）上将预测平价降低 27.2%、F1 提升 12.49%，并发布首个公平性优化的临床 VLLM——FairMedGemma-4B。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

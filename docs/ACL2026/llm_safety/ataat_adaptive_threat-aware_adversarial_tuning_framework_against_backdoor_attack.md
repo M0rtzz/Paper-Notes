@@ -2,9 +2,9 @@
 title: >-
   [论文解读] ATAAT: Adaptive Threat-Aware Adversarial Tuning Framework against Backdoor Attacks on Vision-Language-Action Models
 description: >-
-  [ACL 2026][LLM安全][VLA 后门] ATAAT 首次系统揭示 VLA 后门难以注入的根因是「梯度干涉」（良性与后门梯度方向反向相消，相似度长期负相关 -0.4），并通过隐式正交扰动（数据投毒）和休眠神经元锚定（白盒微调）两条互补路径把目标攻击成功率推到 80%+，同时保持良性 SR 接近正常。
+  [ACL 2026 Findings][LLM安全][VLA 后门] ATAAT 首次系统揭示 VLA 后门难以注入的根因是「梯度干涉」（良性与后门梯度方向反向相消，相似度长期负相关 -0.4），并通过隐式正交扰动（数据投毒）和休眠神经元锚定（白盒微调）两条互补路径把目标攻击成功率推到 80%+，同时保持良性 SR 接近正常。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM安全"
   - "VLA 后门"
   - "梯度干涉"

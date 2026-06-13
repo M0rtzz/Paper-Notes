@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Pairwise: Empowering LLM Alignment With Ranked Choice Modeling
 description: >-
-  [ICLR 2026][LLM对齐][preference optimization] 提出 RCPO 框架，将 LLM 对齐从成对偏好扩展到排名选择（ranked choice）建模，通过 MLE 统一了效用模型（MNL）和排名模型（Mallows-RMJ）…
+  [ICLR 2026][LLM对齐][preference optimization] 提出 RCPO 框架，将 LLM 对齐从成对偏好扩展到排名选择（ranked choice）建模，通过 MLE 统一了效用模型（MNL）和排名模型（Mallows-RMJ），在 single-best 和 top-k 反馈格式下都优于 DPO 及其变体。
 tags:
   - "ICLR 2026"
   - "LLM对齐"

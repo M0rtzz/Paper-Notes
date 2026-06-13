@@ -2,7 +2,7 @@
 title: >-
   [论文解读] The Proxy Presumption: From Semantic Embeddings to Valid Social Measures
 description: >-
-  [ACL 2026][社会计算][构念效度] 这篇论文指出 NLP 中把 embedding 几何距离直接命名为“创造力、偏见、创新性”等社会构念是一种 Proxy Presumption…
+  [ACL 2026][社会计算][构念效度] 这篇论文指出 NLP 中把 embedding 几何距离直接命名为“创造力、偏见、创新性”等社会构念是一种 Proxy Presumption，并提出 Construct Validity Protocol 与 Counterfactual Neutralization 来把启发式 proxy 变成可验证的测量工具。
 tags:
   - "ACL 2026"
   - "社会计算"

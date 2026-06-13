@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Message Tuning Outshines Graph Prompt Tuning: A Prismatic Space Perspective
 description: >-
-  [ICML 2026][图学习][图基础模型] 本文提出 **Prismatic Space Theory (PS-Theory)**，把冻结 GNN 基础模型视为对输入流形做"棱镜式"折射的逐层分段线性映射，由此严格证明图提示微调 (graph prompt tuning) 的适配能力存在上界…
+  [ICML 2026][图学习][图基础模型] 本文提出 **Prismatic Space Theory (PS-Theory)**，把冻结 GNN 基础模型视为对输入流形做"棱镜式"折射的逐层分段线性映射，由此严格证明图提示微调 (graph prompt tuning) 的适配能力存在上界；进一步提出 **Message Tuning (MTG)**，在每层注入可学习的"消息原型"并与原生消息做动态融合，理论上可突破该上界，实验在 15 个数据集 / 6 种预训练策略上全面优于现有图提示方法。
 tags:
   - "ICML 2026"
   - "图学习"

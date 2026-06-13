@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Self-Cross Diffusion Guidance for Text-to-Image Synthesis of Similar Subjects
 description: >-
-  [CVPR 2025][图像生成][扩散模型引导] 提出 Self-Cross Diffusion Guidance，通过惩罚一个主体的聚合自注意力图与另一个主体的交叉注意力图之间的重叠，有效解决扩散模型生成相似主体时的主体混合问题，是首个同时利用自注意力和交叉注意力交互关系的免训练方法。
+  [CVPR 2025][图像生成][扩散模型引导] 提出 Self-Cross Diffusion Guidance，通过惩罚一个主体的聚合自注意力图与另一个主体的交叉注意力图之间的重叠，有效解决扩散模型生成相似主体时的主体混合问题，是首个同时利用自注意力和交叉注意力交互关系的免训练方法。 - 扩散模型在文本到图像生成中已取…
 tags:
   - "CVPR 2025"
   - "图像生成"

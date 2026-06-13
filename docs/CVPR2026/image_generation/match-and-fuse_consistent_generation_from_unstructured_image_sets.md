@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Match-and-Fuse: Consistent Generation from Unstructured Image Sets
 description: >-
-  [CVPR 2026][图像生成][集合到集合生成] 提出 Match-and-Fuse，首个面向非结构化图像集合的训练无关一致性生成方法。以图为节点、图对为边建立成对一致性图，通过多视角特征融合（MFF）和特征引导在扩散推理中操控内部特征，实现集合级跨图一致性…
+  [CVPR 2026][图像生成][集合到集合生成] 提出 Match-and-Fuse，首个面向非结构化图像集合的训练无关一致性生成方法。以图为节点、图对为边建立成对一致性图，通过多视角特征融合（MFF）和特征引导在扩散推理中操控内部特征，实现集合级跨图一致性，DINO-MatchSim 达 0.80 远超所有基线。
 tags:
   - "CVPR 2026"
   - "图像生成"

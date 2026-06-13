@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System
 description: >-
-  [AAAI 2026][社会计算][投毒攻击] 提出 Fact2Fiction，首个针对 Agent 化事实核查系统（如 DEFAME、InFact）的投毒攻击框架：通过 Planner Agent 模拟声明分解生成子问题，利用系统的 justification 反向工程关键推理点来制作定向恶意证据…
+  [AAAI 2026 Oral][社会计算][投毒攻击] 提出 Fact2Fiction，首个针对 Agent 化事实核查系统（如 DEFAME、InFact）的投毒攻击框架：通过 Planner Agent 模拟声明分解生成子问题，利用系统的 justification 反向工程关键推理点来制作定向恶意证据，并按重要性分配投毒预算，在仅 1% 投毒率下比 SOTA PoisonedRAG 高 8.9%-21.2% 的攻击成功率。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "社会计算"
   - "投毒攻击"
   - "Agent事实核查"

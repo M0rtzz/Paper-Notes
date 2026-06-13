@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Coherent Multi-Agent Trajectory Forecasting in Team Sports with CausalTraj
 description: >-
-  [AAAI 2026][时间序列][多智能体轨迹预测] 提出CausalTraj——一种时序因果、基于似然的多智能体轨迹预测模型，通过逐步自回归建模智能体间时空交互，在NBA、篮球和橄榄球数据集上实现了联合指标（minJADE/minJFDE）的最优结果，同时保持有竞争力的单智能体精度。
+  [AAAI 2026][时间序列][多智能体轨迹预测] 提出CausalTraj——一种时序因果、基于似然的多智能体轨迹预测模型，通过逐步自回归建模智能体间时空交互，在NBA、篮球和橄榄球数据集上实现了联合指标（minJADE/minJFDE）的最优结果，同时保持有竞争力的单智能体精度。 问题背景 多智能体轨迹预测是体育分析…
 tags:
   - "AAAI 2026"
   - "时间序列"

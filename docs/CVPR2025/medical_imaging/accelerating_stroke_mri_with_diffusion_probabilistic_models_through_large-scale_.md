@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Accelerating Stroke MRI with Diffusion Probabilistic Models through Large-Scale Pre-training and Target-Specific Fine-Tuning
 description: >-
-  [CVPR2025][医学图像][扩散模型] 借鉴基础模型范式，在大规模公开脑 MRI 数据上预训练扩散概率模型（DPM），再在仅 20 例中风患者数据上微调，实现数据受限场景下加速 MRI 重建，临床读者研究证实 2× 加速图像质量不劣于标准治疗。
+  [CVPR2025][医学图像][扩散模型] 借鉴基础模型范式，在大规模公开脑 MRI 数据上预训练扩散概率模型（DPM），再在仅 20 例中风患者数据上微调，实现数据受限场景下加速 MRI 重建，临床读者研究证实 2× 加速图像质量不劣于标准治疗。 中风 MRI 的临床需求：MRI 比 CT 对缺血性中风检测更灵敏…
 tags:
   - "CVPR2025"
   - "医学图像"

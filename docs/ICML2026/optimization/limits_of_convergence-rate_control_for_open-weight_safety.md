@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Limits of Convergence-Rate Control for Open-Weight Safety
 description: >-
-  [ICML 2026][优化/理论][open-weight safety] 作者把"开源权重安全"形式化为"如何延缓恶意 fine-tune 的收敛速度"，证明 Hessian 谱的最大奇异值由权重谱下界决定，由此设计了能严格减慢一阶/二阶优化的 SpecDef 算法…
+  [ICML 2026][优化/理论][open-weight safety] 作者把"开源权重安全"形式化为"如何延缓恶意 fine-tune 的收敛速度"，证明 Hessian 谱的最大奇异值由权重谱下界决定，由此设计了能严格减慢一阶/二阶优化的 SpecDef 算法，但同时证明任何此类收敛率控制方法都能被攻击者以"线性模型尺寸增加"的代价绕过。
 tags:
   - "ICML 2026"
   - "优化/理论"

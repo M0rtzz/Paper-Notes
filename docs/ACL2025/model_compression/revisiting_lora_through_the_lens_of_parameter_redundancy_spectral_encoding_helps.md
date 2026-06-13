@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting LoRA through the Lens of Parameter Redundancy: Spectral Encoding Helps
 description: >-
-  [ACL 2025][模型压缩][LoRA] 本文系统研究了 LoRA 微调中的参数冗余问题，发现降低密度冗余不会损害表达能力（稀疏性质），并提出 SeLoRA——利用频谱变换（Fourier/Wavelet）从稀疏频谱子空间重参数化 LoRA 矩阵，以更少参数实现更优性能…
+  [ACL 2025][模型压缩][LoRA] 本文系统研究了 LoRA 微调中的参数冗余问题，发现降低密度冗余不会损害表达能力（稀疏性质），并提出 SeLoRA——利用频谱变换（Fourier/Wavelet）从稀疏频谱子空间重参数化 LoRA 矩阵，以更少参数实现更优性能，且可即插即用地集成到多种 LoRA 变体中。
 tags:
   - "ACL 2025"
   - "模型压缩"

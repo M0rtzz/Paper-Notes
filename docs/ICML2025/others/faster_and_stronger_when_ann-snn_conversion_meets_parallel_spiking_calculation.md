@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Faster and Stronger: When ANN-SNN Conversion Meets Parallel Spiking Calculation
 description: >-
-  [ICML2025][ANN-SNN转换] 首次将并行脉冲计算与 ANN-SNN 转换结合，建立数学等价映射关系，在超低时间步（4步）下实现 ImageNet Top-1 72.90%，推理速度加速 19~38 倍。
+  [ICML2025][ANN-SNN转换] 首次将并行脉冲计算与 ANN-SNN 转换结合，建立数学等价映射关系，在超低时间步（4步）下实现 ImageNet Top-1 72.90%，推理速度加速 19~38 倍。 SNN 的两大主流训练方法各有痛点： - STBP（时空反向传播）：可在极低时延（≤4~6步）下获取 SNN…
 tags:
   - "ICML2025"
   - "ANN-SNN转换"

@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Think in Sentences: Explicit Sentence Boundaries Enhance Language Model's Capabilities
 description: >-
-  [ACL 2026][LLM/NLP][句子边界] 本文提出在 LLM 输入中的句子边界处插入分隔符标记，通过 ICL 和 SFT 两种方式实现"逐句思考"的推理范式，在 7B 到 600B 模型上取得一致提升（GSM8k +7.7%，DROP +12.5%），且几乎不增加额外计算开销。
+  [ACL 2026][LLM 其他][句子边界] 本文提出在 LLM 输入中的句子边界处插入分隔符标记，通过 ICL 和 SFT 两种方式实现"逐句思考"的推理范式，在 7B 到 600B 模型上取得一致提升（GSM8k +7.7%，DROP +12.5%），且几乎不增加额外计算开销。 领域现状：句子级结构曾是早期神经语言模…
 tags:
   - "ACL 2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "句子边界"
   - "分隔符"
   - "上下文学习"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision
 description: >-
-  [ICCV 2025][3D视觉][第一人称视觉] 本文提出Fish2Mesh，一个鱼眼感知的Transformer模型，通过等距矩形投影的自我中心位置编码（EPE）将鱼眼图像的球面几何信息嵌入Swin Transformer，实现从头戴鱼眼相机的第一人称视角准确恢复3D人体mesh。
+  [ICCV 2025][3D视觉][第一人称视觉] 本文提出Fish2Mesh，一个鱼眼感知的Transformer模型，通过等距矩形投影的自我中心位置编码（EPE）将鱼眼图像的球面几何信息嵌入Swin Transformer，实现从头戴鱼眼相机的第一人称视角准确恢复3D人体mesh。 领域现状：第一人称人体估计从双目立体视…
 tags:
   - "ICCV 2025"
   - "3D视觉"

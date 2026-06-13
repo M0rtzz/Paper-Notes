@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Positional Bias in Multimodal Embedding Models: Do They Favor the Beginning, the Middle, or the End?
 description: >-
-  [AAAI 2026][信息检索/RAG][位置偏差] 本文首次系统研究多模态表示模型中的位置偏差现象，发现文本编码器倾向于偏好输入开头，而图像编码器在开头和结尾均表现偏好，并通过大量控制实验揭示该偏差源于位置编码方案、训练损失、上下文重要性和图文对训练的多因素共同作用。
+  [AAAI 2026][信息检索/RAG][位置偏差] 本文首次系统研究多模态表示模型中的位置偏差现象，发现文本编码器倾向于偏好输入开头，而图像编码器在开头和结尾均表现偏好，并通过大量控制实验揭示该偏差源于位置编码方案、训练损失、上下文重要性和图文对训练的多因素共同作用。 领域现状：Transformer模型在NLP和视觉任…
 tags:
   - "AAAI 2026"
   - "信息检索/RAG"

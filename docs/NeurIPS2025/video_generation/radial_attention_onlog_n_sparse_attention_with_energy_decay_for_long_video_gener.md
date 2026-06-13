@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation
 description: >-
-  [NeurIPS 2025][视频生成][稀疏注意力] Radial Attention 发现了视频扩散模型中注意力分数随时空距离指数衰减的"时空能量衰减"现象，据此设计了一种 O(n log n) 复杂度的静态稀疏注意力掩码，在 HunyuanVideo/Wan2.1 等模型上实现最高 3.7× 推理加速…
+  [NeurIPS 2025][视频生成][稀疏注意力] Radial Attention 发现了视频扩散模型中注意力分数随时空距离指数衰减的"时空能量衰减"现象，据此设计了一种 O(n log n) 复杂度的静态稀疏注意力掩码，在 HunyuanVideo/Wan2.1 等模型上实现最高 3.7× 推理加速，并通过 LoRA 微调支持 4× 更长视频生成。
 tags:
   - "NeurIPS 2025"
   - "视频生成"

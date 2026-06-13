@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProactiveLLM: Learning Active Interaction for Streaming Large Language Models
 description: >-
-  [ICML 2026][LLM效率][流式LLM] ProactiveLLM 让流式 LLM 用自己的内部状态（注意力或预测熵）来决定"什么时候该开口"，靠掩码流式建模 + 同步特权自蒸馏在不依赖任何外部对齐标注的前提下学会感知"语义已经够了没"，把交互延迟显著压下去的同时几乎不掉点。
+  [ICML 2026][LLM效率][流式LLM] ProactiveLLM 让流式 LLM 用自己的内部状态（注意力或预测熵）来决定"什么时候该开口"，靠掩码流式建模 + 同步特权自蒸馏在不依赖任何外部对齐标注的前提下学会感知"语义已经够了没"，把交互延迟显著压下去的同时几乎不掉点。 领域现状：主流 LLM 沿用"read…
 tags:
   - "ICML 2026"
   - "LLM效率"

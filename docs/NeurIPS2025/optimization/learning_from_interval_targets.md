@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning from Interval Targets
 description: >-
-  [NeurIPS 2025][优化/理论][interval regression] 研究仅有区间标签（上下界）的回归问题，建立了基于假设类平滑性的非渐进泛化界（不依赖小 ambiguity degree 假设），并提出 minmax 学习框架利用平滑约束限制最坏情况标签…
+  [NeurIPS 2025][优化/理论][interval regression] 研究仅有区间标签（上下界）的回归问题，建立了基于假设类平滑性的非渐进泛化界（不依赖小 ambiguity degree 假设），并提出 minmax 学习框架利用平滑约束限制最坏情况标签，在 18 个真实数据集上显著优于无约束方法。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Multimodal Generative Flows for LHC Jets
 description: >-
-  [NeurIPS 2025][目标检测][flow matching] 提出基于 Transformer 的多模态流匹配框架（MMF），将连续流匹配与连续时间马尔可夫跳跃桥联合建模，实现对 LHC 喷注中粒子运动学（连续）和 flavor 量子数（离散）的统一生成。
+  [NeurIPS 2025][目标检测][flow matching] 提出基于 Transformer 的多模态流匹配框架（MMF），将连续流匹配与连续时间马尔可夫跳跃桥联合建模，实现对 LHC 喷注中粒子运动学（连续）和 flavor 量子数（离散）的统一生成。 大型强子对撞机（LHC）每秒产生数十亿次质子-质子碰撞…
 tags:
   - "NeurIPS 2025"
   - "目标检测"

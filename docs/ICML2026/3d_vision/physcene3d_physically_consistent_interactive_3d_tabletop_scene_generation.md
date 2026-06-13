@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PhyScene3D: Physically Consistent Interactive 3D Tabletop Scene Generation
 description: >-
-  [ICML 2026][3D视觉][桌面场景生成] PhyScene3D 把 3D 桌面场景生成重塑成"人类构造式"的层次化序列规划：用 Cognitive Topological Reasoning Chain (CTRC) 把场景图线性化为基于 AABB 的锚点序列…
+  [ICML 2026][3D视觉][桌面场景生成] PhyScene3D 把 3D 桌面场景生成重塑成"人类构造式"的层次化序列规划：用 Cognitive Topological Reasoning Chain (CTRC) 把场景图线性化为基于 AABB 的锚点序列，再用 Physics-Aware Denoising Alignment (PADA) 把可微分 SDF 物理引擎嵌入 VLM 训练循环，使模型生成的场景在物理合理性上反超人工标注训练数据（场景级碰撞率从 81.5% 降到 41.6%，资产级降到 3.86%）。
 tags:
   - "ICML 2026"
   - "3D视觉"

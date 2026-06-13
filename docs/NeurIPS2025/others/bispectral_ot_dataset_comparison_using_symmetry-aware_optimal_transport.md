@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bispectral OT: Dataset Comparison using Symmetry-Aware Optimal Transport
 description: >-
-  [NeurIPS 2025][optimal transport] 提出 Bispectral Optimal Transport (BOT)，将离散最优传输中的代价矩阵从原始像素距离替换为 bispectrum（群 Fourier 不变量）距离…
+  [NeurIPS 2025][optimal transport] 提出 Bispectral Optimal Transport (BOT)，将离散最优传输中的代价矩阵从原始像素距离替换为 bispectrum（群 Fourier 不变量）距离，使得传输计划在保持信号结构的同时精确消除群作用（如旋转）带来的变异，在旋转变换的 MNIST 等数据集上将类别保持准确率从 33% 提升至 84%。
 tags:
   - "NeurIPS 2025"
   - "optimal transport"

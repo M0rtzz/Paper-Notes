@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RespoDiff: Dual-Module Bottleneck Transformation for Responsible & Faithful T2I Generation
 description: >-
-  [NeurIPS 2025][图像生成][负责任生成] 提出RespoDiff框架，在扩散模型UNet的瓶颈层引入双模块可学习变换——负责任概念对齐模块(RAM)和语义对齐模块(SAM)，通过分数匹配目标实现公平和安全的文本到图像生成，同时保持图像质量和语义忠实度。
+  [NeurIPS 2025][图像生成][负责任生成] 提出RespoDiff框架，在扩散模型UNet的瓶颈层引入双模块可学习变换——负责任概念对齐模块(RAM)和语义对齐模块(SAM)，通过分数匹配目标实现公平和安全的文本到图像生成，同时保持图像质量和语义忠实度。 Stable Diffusion、SDXL、FLUX等T2…
 tags:
   - "NeurIPS 2025"
   - "图像生成"

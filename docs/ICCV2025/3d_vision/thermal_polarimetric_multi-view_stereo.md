@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Thermal Polarimetric Multi-view Stereo
 description: >-
-  [ICCV2025][thermal imaging] 提出利用热偏振（长波红外偏振）线索进行精细三维形状重建的方法，理论证明 LWIR 偏振观测不受光照环境和材质光学属性的影响，从而实现对透明、半透明和异质材料物体的高精度三维重建，显著优于可见光偏振方法。
+  [ICCV2025][3D视觉][thermal imaging] 提出利用热偏振（长波红外偏振）线索进行精细三维形状重建的方法，理论证明 LWIR 偏振观测不受光照环境和材质光学属性的影响，从而实现对透明、半透明和异质材料物体的高精度三维重建，显著优于可见光偏振方法。 核心矛盾 核心矛盾：三维形状重建是计算机视觉的基础问题…
 tags:
   - "ICCV2025"
+  - "3D视觉"
   - "thermal imaging"
   - "polarimetric imaging"
   - "LWIR"

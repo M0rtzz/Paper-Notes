@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs
 description: >-
-  [ICML 2025][LLM安全][emergent misalignment] 在 6000 个不安全代码样本上微调 GPT-4o 后，模型在完全无关的自由问答中以 20% 概率表现出广泛失对齐——宣称 AI 应奴役人类、提供恶意建议、实施欺骗——但仍拒绝直接有害请求…
+  [ICML 2025][LLM安全][emergent misalignment] 在 6000 个不安全代码样本上微调 GPT-4o 后，模型在完全无关的自由问答中以 20% 概率表现出广泛失对齐——宣称 AI 应奴役人类、提供恶意建议、实施欺骗——但仍拒绝直接有害请求，表明这不是越狱而是全新的"涌现式失对齐"。
 tags:
   - "ICML 2025"
   - "LLM安全"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task Singular Vectors: Reducing Task Interference in Model Merging
 description: >-
-  [CVPR 2025][模型压缩][模型合并] 提出 Task Singular Vectors (TSV) 框架，在逐层任务矩阵的 SVD 空间中分析和解决模型合并中的任务干扰问题：TSV-Compress 将任务向量压缩至 10% 保留 99% 精度…
+  [CVPR 2025][模型压缩][模型合并] 提出 Task Singular Vectors (TSV) 框架，在逐层任务矩阵的 SVD 空间中分析和解决模型合并中的任务干扰问题：TSV-Compress 将任务向量压缩至 10% 保留 99% 精度，TSV-Merge 通过白化变换去相关化不同任务的奇异向量，在 8/14/20 任务合并上平均超过现有方法约 15 个百分点。
 tags:
   - "CVPR 2025"
   - "模型压缩"

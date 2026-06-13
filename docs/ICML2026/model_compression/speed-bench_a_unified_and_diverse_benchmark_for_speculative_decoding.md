@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPEED-Bench: A Unified and Diverse Benchmark for Speculative Decoding
 description: >-
-  [ICML 2026][模型压缩][投机解码] SPEED-Bench 是一个面向投机解码（Speculative Decoding, SD）的统一基准，它通过 *Qualitative split*（最大化语义多样性的 880 条样本）与 *Throughput split*（按 1k–32k 输入长度桶组…
+  [ICML 2026][模型压缩][投机解码] SPEED-Bench 是一个面向投机解码（Speculative Decoding, SD）的统一基准，它通过 *Qualitative split*（最大化语义多样性的 880 条样本）与 *Throughput split*（按 1k–32k 输入长度桶组织、覆盖三档熵的大批量数据）配合一套对接 vLLM / TensorRT-LLM / SGLang 的测量框架，揭示了过去 SD 论文里被"小数据 + 单批 + HuggingFace"评测掩盖的真实部署行为。
 tags:
   - "ICML 2026"
   - "模型压缩"

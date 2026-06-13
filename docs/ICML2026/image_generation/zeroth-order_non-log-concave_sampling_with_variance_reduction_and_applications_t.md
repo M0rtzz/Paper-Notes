@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Zeroth-Order Non-Log-Concave Sampling with Variance Reduction and Applications to Inverse Problems
 description: >-
-  [ICML2026][图像生成][零阶采样] 本文提出一种带方差缩减的零阶 Langevin 采样方法，用间歇性大 batch 估计和递推式小 batch 更新替代每步 $O(d)$ 次函数查询，并把它扩展为 ZO-APMC…
+  [ICML2026][图像生成][零阶采样] 本文提出一种带方差缩减的零阶 Langevin 采样方法，用间歇性大 batch 估计和递推式小 batch 更新替代每步 $O(d)$ 次函数查询，并把它扩展为 ZO-APMC，用预训练 score-based prior 在只有前向模型查询的黑盒逆问题中做有收敛保证的后验采样。
 tags:
   - "ICML2026"
   - "图像生成"

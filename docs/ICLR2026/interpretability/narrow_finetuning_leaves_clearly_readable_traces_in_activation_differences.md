@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Narrow Finetuning Leaves Clearly Readable Traces in Activation Differences
 description: >-
-  [ICLR 2026][可解释性][模型微调] 发现窄域微调（narrow finetuning）在 LLM 激活中留下清晰可读的痕迹：即使在无关文本的前几个 token 上，微调前后模型的激活差异也编码了微调目标的语义信息。通过 Activation Difference Lens（ADL）方法…
+  [ICLR 2026][可解释性][模型微调] 发现窄域微调（narrow finetuning）在 LLM 激活中留下清晰可读的痕迹：即使在无关文本的前几个 token 上，微调前后模型的激活差异也编码了微调目标的语义信息。通过 Activation Difference Lens（ADL）方法，可解释性 agent 识别微调目标的成功率达 91%，比黑盒基线高 2 倍以上。
 tags:
   - "ICLR 2026"
   - "可解释性"

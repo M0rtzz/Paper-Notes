@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Journey to the Centre of Cluster: Harnessing Interior Nodes for A/B Testing under Network Interference
 description: >-
-  [ICLR2026][因果推理][A/B testing] 针对网络干扰下 A/B 测试中 GATE 估计的高方差问题，提出 Mean-in-Interior (MII) 估计器——仅对 cluster 内部节点取均值，大幅降低方差；再通过反事实预测器进行协变量偏移校正，得到增广版 AMII 估计器…
+  [ICLR2026][因果推理][A/B testing] 针对网络干扰下 A/B 测试中 GATE 估计的高方差问题，提出 Mean-in-Interior (MII) 估计器——仅对 cluster 内部节点取均值，大幅降低方差；再通过反事实预测器进行协变量偏移校正，得到增广版 AMII 估计器，同时实现低偏差和低方差。
 tags:
   - "ICLR2026"
   - "因果推理"

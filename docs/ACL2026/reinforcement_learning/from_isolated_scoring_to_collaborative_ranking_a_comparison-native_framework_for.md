@@ -2,9 +2,9 @@
 title: >-
   [论文解读] From Isolated Scoring to Collaborative Ranking: A Comparison-Native Framework for LLM-Based Paper Evaluation
 description: >-
-  [ACL2026][强化学习][比较式评估] 这篇论文把 LLM 论文评审从“单篇打绝对分”改成“成对比较再全局排序”，用语义图采样、比较式 SFT 与可验证奖励强化训练 7B 模型，在 ICLR-2025 论文排序和录用预测上显著超过 DeepReview-14B，并能迁移到多个未见会议。
+  [ACL2026 Findings][强化学习][比较式评估] 这篇论文把 LLM 论文评审从“单篇打绝对分”改成“成对比较再全局排序”，用语义图采样、比较式 SFT 与可验证奖励强化训练 7B 模型，在 ICLR-2025 论文排序和录用预测上显著超过 DeepReview-14B，并能迁移到多个未见会议。
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "强化学习"
   - "比较式评估"
   - "论文排序"

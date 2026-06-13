@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ACIArena: Toward Unified Evaluation for Agent Cascading Injection
 description: >-
-  [ACL 2026][LLM安全][多智能体系统] 本文构造了首个针对"代理级联注入 (Agent Cascading Injection, ACI)"攻击的统一评测框架 ACIArena…
+  [ACL 2026][LLM安全][多智能体系统] 本文构造了首个针对"代理级联注入 (Agent Cascading Injection, ACI)"攻击的统一评测框架 ACIArena，覆盖 6 个主流多智能体系统 (MAS)、3 大攻击面 (Adversarial Input / Malicious Agent / Message Poison)、3 大攻击目标 (Hijacking / Disruption / Exfiltration) 的 1356 个测试用例，并提出极简但有效的防御 ACI-Sentinel，把 Hijacking 攻击成功率从 92.78% 压到 8.06%。
 tags:
   - "ACL 2026"
   - "LLM安全"

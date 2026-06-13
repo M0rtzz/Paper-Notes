@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DLF: Extreme Image Compression with Dual-generative Latent Fusion
 description: >-
-  [ICCV 2025][模型压缩][极低码率图像压缩] 提出双分支生成式隐空间融合（DLF）框架，将图像隐空间分解为语义和细节两个分支分别压缩，通过跨分支交互设计消除冗余，在极低码率（<0.01 bpp）下实现了超越 MS-ILLM 高达 67.82% BD-Rate 节省的 SOTA 重建质量…
+  [ICCV 2025][模型压缩][极低码率图像压缩] 提出双分支生成式隐空间融合（DLF）框架，将图像隐空间分解为语义和细节两个分支分别压缩，通过跨分支交互设计消除冗余，在极低码率（<0.01 bpp）下实现了超越 MS-ILLM 高达 67.82% BD-Rate 节省的 SOTA 重建质量，同时解码速度远快于扩散模型方案。
 tags:
   - "ICCV 2025"
   - "模型压缩"

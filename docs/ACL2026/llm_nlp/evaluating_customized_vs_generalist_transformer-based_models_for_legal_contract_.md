@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Evaluating Customized vs. Generalist Transformer-based Models for Legal Contract Classification
 description: >-
-  [ACL2026][LLM/NLP][legal-specific models] 本文系统比较 13 个法律领域定制 Transformer 模型与 9 个通用模型在 3 个英文合同分类任务上的表现…
+  [ACL2026][LLM 其他][legal-specific models] 本文系统比较 13 个法律领域定制 Transformer 模型与 9 个通用模型在 3 个英文合同分类任务上的表现，发现小规模但合同相关预训练的 Legal-BERT、Contracts-BERT 等模型在长尾法律标签上通常优于更大的通用模型。
 tags:
   - "ACL2026"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "legal-specific models"
   - "contract classification"
   - "long-tail labels"

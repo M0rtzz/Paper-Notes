@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MIRA: Medical Time Series Foundation Model for Real-World Health Data
 description: >-
-  [NeurIPS 2025][时间序列][时间序列基础模型] 提出 MIRA，一个专为医学不规则时间序列设计的基础模型，通过连续时间旋转位置编码、频率特定 MoE 和 Neural ODE 外推模块，在 4540 亿个观测点上预训练…
+  [NeurIPS 2025][时间序列][时间序列基础模型] 提出 MIRA，一个专为医学不规则时间序列设计的基础模型，通过连续时间旋转位置编码、频率特定 MoE 和 Neural ODE 外推模块，在 4540 亿个观测点上预训练，零样本预测性能在 OOD 和 ID 场景中分别平均降低 8% 和 6% 的误差。
 tags:
   - "NeurIPS 2025"
   - "时间序列"

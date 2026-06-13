@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Controllable 3D Outdoor Scene Generation via Scene Graphs
 description: >-
-  [ICCV 2025][自动驾驶][3D场景生成] 首次提出以场景图（Scene Graph）作为控制信号生成大规模3D室外场景的方法——通过GNN将稀疏场景图编码为BEV嵌入图，再经2D→3D级联离散扩散模型生成语义3D场景，并配套交互系统让用户直接编辑场景图来控制生成。
+  [ICCV 2025][自动驾驶][3D场景生成] 首次提出以场景图（Scene Graph）作为控制信号生成大规模3D室外场景的方法——通过GNN将稀疏场景图编码为BEV嵌入图，再经2D→3D级联离散扩散模型生成语义3D场景，并配套交互系统让用户直接编辑场景图来控制生成。 3D室外场景生成在自动驾驶、游戏、元宇宙等领域需求…
 tags:
   - "ICCV 2025"
   - "自动驾驶"

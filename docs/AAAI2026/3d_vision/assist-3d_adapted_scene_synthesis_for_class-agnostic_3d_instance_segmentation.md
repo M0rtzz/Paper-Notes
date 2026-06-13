@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ASSIST-3D: Adapted Scene Synthesis for Class-Agnostic 3D Instance Segmentation
 description: >-
-  [AAAI 2026][3D视觉][图像分割] 提出 ASSIST-3D 合成数据流水线，通过异构物体选择、LLM 引导的场景布局生成和仿真实点云构建三个阶段，为 class-agnostic 3D 实例分割生成高质量标注数据，显著提升模型泛化能力。
+  [AAAI 2026][3D视觉][图像分割] 提出 ASSIST-3D 合成数据流水线，通过异构物体选择、LLM 引导的场景布局生成和仿真实点云构建三个阶段，为 class-agnostic 3D 实例分割生成高质量标注数据，显著提升模型泛化能力。 Class-agnostic 3D 实例分割：旨在不依赖语义类别…
 tags:
   - "AAAI 2026"
   - "3D视觉"

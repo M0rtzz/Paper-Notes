@@ -2,9 +2,10 @@
 title: >-
   [论文解读] 3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization
 description: >-
-  [NeurIPS 2025][3D inverse design] 提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上…
+  [NeurIPS 2025][物理/科学计算][3D inverse design] 提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上，模拟阻力（Sim-Drag）相比最优基线降低 13.6%。
 tags:
   - "NeurIPS 2025"
+  - "物理/科学计算"
   - "3D inverse design"
   - "扩散模型"
   - "aerodynamic optimization"

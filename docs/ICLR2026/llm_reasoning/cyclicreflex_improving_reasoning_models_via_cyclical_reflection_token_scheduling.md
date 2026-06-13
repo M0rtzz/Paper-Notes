@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CyclicReflex: Improving Reasoning Models via Cyclical Reflection Token Scheduling
 description: >-
-  [ICLR 2026][LLM推理][大语言推理模型] 将推理过程中的反思token（如"wait"、"but"）视为可调度的"资源"，借鉴优化中周期性学习率的思想，提出CyclicReflex——一种免训练的解码策略，通过三角波形动态调控反思token的logit，在多个数学推理基准上（MATH500…
+  [ICLR 2026][LLM推理][大语言推理模型] 将推理过程中的反思token（如"wait"、"but"）视为可调度的"资源"，借鉴优化中周期性学习率的思想，提出CyclicReflex——一种免训练的解码策略，通过三角波形动态调控反思token的logit，在多个数学推理基准上（MATH500, AIME2024/2025, AMC2023）一致性提升1.5B-8B模型准确率。
 tags:
   - "ICLR 2026"
   - "LLM推理"

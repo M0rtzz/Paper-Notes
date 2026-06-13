@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MotionAnyMesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins
 description: >-
-  [CVPR 2025][3D视觉][铰接物体建模] 提出 MotionAnyMesh，一种零样本框架，通过 SP4D 运动学先验引导 VLM 推理消除幻觉 + 物理约束轨迹优化保证无碰撞，将静态3D网格自动转化为仿真可用的铰接数字孪生，物理可执行率达 87%，是现有最好方法的近两倍。
+  [CVPR 2025][3D视觉][铰接物体建模] 提出 MotionAnyMesh，一种零样本框架，通过 SP4D 运动学先验引导 VLM 推理消除幻觉 + 物理约束轨迹优化保证无碰撞，将静态3D网格自动转化为仿真可用的铰接数字孪生，物理可执行率达 87%，是现有最好方法的近两倍。 领域现状：具身AI和机器人仿真需要大量铰…
 tags:
   - "CVPR 2025"
   - "3D视觉"

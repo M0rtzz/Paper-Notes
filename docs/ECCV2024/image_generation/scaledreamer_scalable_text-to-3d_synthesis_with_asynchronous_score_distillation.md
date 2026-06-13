@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ScaleDreamer: Scalable Text-to-3D Synthesis with Asynchronous Score Distillation
 description: >-
-  [ECCV 2024][图像生成][文本到3D] 本文提出异步分数蒸馏（ASD），通过将扩散时间步前移（而非微调扩散模型）来降低噪声预测误差、对齐渲染图像分布，解决了VSD微调破坏文本理解能力的问题，实现了稳定训练且可扩展至10万条文本提示的prompt-amortized 3D生成器训练。
+  [ECCV 2024][图像生成][文本到3D] 本文提出异步分数蒸馏（ASD），通过将扩散时间步前移（而非微调扩散模型）来降低噪声预测误差、对齐渲染图像分布，解决了VSD微调破坏文本理解能力的问题，实现了稳定训练且可扩展至10万条文本提示的prompt-amortized 3D生成器训练。 领域现状：文本到3D方法利用预训…
 tags:
   - "ECCV 2024"
   - "图像生成"

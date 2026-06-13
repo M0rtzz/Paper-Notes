@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Task-Agnostic Guided Feature Expansion for Class-Incremental Learning
 description: >-
-  [CVPR 2025][自监督学习][类增量学习] 提出TagFex框架，通过持续自监督学习捕获任务无关(task-agnostic)特征，并利用merge attention将其与任务特定特征融合后蒸馏回推理模型，缓解扩展式类增量学习中的特征碰撞问题。
+  [CVPR 2025][自监督学习][类增量学习] 提出TagFex框架，通过持续自监督学习捕获任务无关(task-agnostic)特征，并利用merge attention将其与任务特定特征融合后蒸馏回推理模型，缓解扩展式类增量学习中的特征碰撞问题。 扩展式类增量学习（如DER）为每个新任务扩展新的特征提取器…
 tags:
   - "CVPR 2025"
   - "自监督学习"

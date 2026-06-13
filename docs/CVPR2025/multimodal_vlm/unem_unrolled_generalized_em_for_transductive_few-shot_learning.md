@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UNEM: UNrolled Generalized EM for Transductive Few-Shot Learning
 description: >-
-  [CVPR 2025][多模态VLM][转导式少样本学习] 提出UNEM，将广义EM（GEM）算法的每次迭代展开为神经网络的一层，通过端到端学习自动优化**类平衡超参数λ**和**温度缩放T**…
+  [CVPR 2025][多模态VLM][转导式少样本学习] 提出UNEM，将广义EM（GEM）算法的每次迭代展开为神经网络的一层，通过端到端学习自动优化**类平衡超参数λ**和**温度缩放T**，在11个细粒度数据集上实现vision-language设置下平均77.8%的准确率（vs. EM-Dirichlet的73.6%），vision-only设置下提升最高达10%。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

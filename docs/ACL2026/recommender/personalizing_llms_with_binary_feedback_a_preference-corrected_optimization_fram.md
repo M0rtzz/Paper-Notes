@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Personalizing LLMs with Binary Feedback: A Preference-Corrected Optimization Framework
 description: >-
-  [ACL2026][推荐系统][LLM个性化] 这篇论文提出 C-BPO，把目标用户历史当作正反馈、其他用户历史当作带噪未标注负反馈，并用 PU 学习校正“偏好重叠”带来的误惩罚，从而让 LLM 学到用户独特偏好而不压制通用任务能力。
+  [ACL2026][推荐系统][LLM个性化] 这篇论文提出 C-BPO，把目标用户历史当作正反馈、其他用户历史当作带噪未标注负反馈，并用 PU 学习校正“偏好重叠”带来的误惩罚，从而让 LLM 学到用户独特偏好而不压制通用任务能力。 领域现状：LLM 个性化常见做法有三类：在 prompt 里检索用户历史或用户画像…
 tags:
   - "ACL2026"
   - "推荐系统"

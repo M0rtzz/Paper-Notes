@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation
 description: >-
-  [AAAI 2026][自动驾驶][事件相机] 提出 MambaSeg，用双分支并行 Mamba 编码器分别处理 RGB 图像和事件流，通过空间-时间双维度交互模块 (DDIM) 实现细粒度跨模态融合…
+  [AAAI 2026][自动驾驶][事件相机] 提出 MambaSeg，用双分支并行 Mamba 编码器分别处理 RGB 图像和事件流，通过空间-时间双维度交互模块 (DDIM) 实现细粒度跨模态融合，在 DDD17 和 DSEC 数据集上以 25.44M 参数取得 77.56%/75.10% mIoU 的 SOTA，效率远优于 Transformer 方案。
 tags:
   - "AAAI 2026"
   - "自动驾驶"

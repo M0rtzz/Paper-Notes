@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Student Guides Teacher: Weak-to-Strong Inference via Spectral Orthogonal Exploration
 description: >-
-  [ACL 2026][LLM对齐][Reasoning Collapse] 本文把 LLM 在难题上反复沿同一错误逻辑采样的现象解释为隐藏状态低秩塌缩，并提出 Spectral Orthogonal Exploration (SOE)：用弱学生模型提供与教师当前 dominant subspace 正交的短…
+  [ACL 2026][LLM对齐][Reasoning Collapse] 本文把 LLM 在难题上反复沿同一错误逻辑采样的现象解释为隐藏状态低秩塌缩，并提出 Spectral Orthogonal Exploration (SOE)：用弱学生模型提供与教师当前 dominant subspace 正交的短 probe，迫使教师跳出原有 bias manifold，在 AIME/MATH/Olympiad 等难题子集上把 Pass@16 平均从 26.7% 提升到 45.9%。
 tags:
   - "ACL 2026"
   - "LLM对齐"

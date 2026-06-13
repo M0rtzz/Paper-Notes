@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Text2VDM: Text to Vector Displacement Maps for Expressive and Interactive 3D Sculpting
 description: >-
-  [ICCV 2025][3D视觉][VDM笔刷生成] 提出Text2VDM,首个从文本生成VDM雕刻笔刷的框架,通过Sobolev预条件网格变形和语义增强SDS损失解决子对象结构生成中的语义耦合问题。
+  [ICCV 2025][3D视觉][VDM笔刷生成] 提出Text2VDM,首个从文本生成VDM雕刻笔刷的框架,通过Sobolev预条件网格变形和语义增强SDS损失解决子对象结构生成中的语义耦合问题。 专业3D资产创作依赖多样化的雕刻笔刷来添加表面细节和几何结构。向量位移贴图(VDM)：是建模软件中的标准笔刷表示…
 tags:
   - "ICCV 2025"
   - "3D视觉"

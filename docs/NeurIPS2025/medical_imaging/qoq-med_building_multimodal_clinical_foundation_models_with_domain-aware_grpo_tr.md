@@ -2,9 +2,9 @@
 title: >-
   [论文解读] QoQ-Med: Building Multimodal Clinical Foundation Models with Domain-Aware GRPO Training
 description: >-
-  [NeurIPS 2025][医学图像][多模态临床] QoQ-Med 构建了覆盖 9 个临床模态（1D ECG + 6 类 2D 影像 + 2 类 3D 扫描）的多模态临床基础模型，提出域感知相对策略优化（DRPO）——通过层级温度缩放（域间 × 域内 K-means 聚类）解决模态/难度不平衡问题…
+  [NeurIPS 2025 Oral][医学图像][多模态临床] QoQ-Med 构建了覆盖 9 个临床模态（1D ECG + 6 类 2D 影像 + 2 类 3D 扫描）的多模态临床基础模型，提出域感知相对策略优化（DRPO）——通过层级温度缩放（域间 × 域内 K-means 聚类）解决模态/难度不平衡问题，在 261 万指令调优对上训练后平均 F1 达 0.295（vs GRPO 0.193，+52.8%），8 个模态中 6 个最优。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "医学图像"
   - "多模态临床"
   - "GRPO"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EqGINO: Equivariant Geometry-Informed Fourier Neural Operators for 3D PDEs
 description: >-
-  [ICML 2026][物理/科学计算][神经算子] EqGINO 把 GINO 的 GNO 编码器、FNO 主干、GNO 解码器全部改造成 SE(3) 等变模块：GNO 用相对距离作为旋转不变核、FNO 用"轨道权重共享"在频域强制 $W(R\mathbf k)=W(\mathbf k)$ 的各向同性…
+  [ICML 2026][物理/科学计算][神经算子] EqGINO 把 GINO 的 GNO 编码器、FNO 主干、GNO 解码器全部改造成 SE(3) 等变模块：GNO 用相对距离作为旋转不变核、FNO 用"轨道权重共享"在频域强制 $W(R\mathbf k)=W(\mathbf k)$ 的各向同性，从而在保留 FNO 全局感受野的同时让 3D PDE surrogate 对任意刚性变换鲁棒，且把谱权重参数量从 $\mathcal O(K^3)$ 降到 $\mathcal O(K)$。
 tags:
   - "ICML 2026"
   - "物理/科学计算"

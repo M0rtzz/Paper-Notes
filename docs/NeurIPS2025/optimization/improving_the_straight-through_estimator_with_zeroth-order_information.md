@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Improving the Straight-Through Estimator with Zeroth-Order Information
 description: >-
-  [NeurIPS 2025][优化/理论][量化] 本文提出 FOGZO（First-Order-Guided Zeroth-Order Gradient Descent），将 STE 梯度作为偏置源注入零阶梯度估计中，在保留 STE 的计算效率的同时利用零阶信息纠正 STE 的偶发错误方向…
+  [NeurIPS 2025][优化/理论][量化] 本文提出 FOGZO（First-Order-Guided Zeroth-Order Gradient Descent），将 STE 梯度作为偏置源注入零阶梯度估计中，在保留 STE 的计算效率的同时利用零阶信息纠正 STE 的偶发错误方向，仅多 2 次前向传播即在 DeiT、ResNet、LLaMA 上实现 1-22 点的精度/困惑度改善。
 tags:
   - "NeurIPS 2025"
   - "优化/理论"

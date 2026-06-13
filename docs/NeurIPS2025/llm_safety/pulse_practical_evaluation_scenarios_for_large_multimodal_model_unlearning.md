@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PULSE: Practical Evaluation Scenarios for Large Multimodal Model Unlearning
 description: >-
-  [NeurIPS 2025][LLM安全][机器遗忘] 本文提出 PULSE 评估协议，从预训练知识遗忘和多次顺序遗忘的可持续性两个实际维度出发，揭示了现有遗忘方法在 LMM 上的严重不足——遗忘预训练知识会导致 90% 以上通用能力丧失，连续遗忘 5 次后模型泛化能力几乎完全崩溃。
+  [NeurIPS 2025][LLM安全][机器遗忘] 本文提出 PULSE 评估协议，从预训练知识遗忘和多次顺序遗忘的可持续性两个实际维度出发，揭示了现有遗忘方法在 LMM 上的严重不足——遗忘预训练知识会导致 90% 以上通用能力丧失，连续遗忘 5 次后模型泛化能力几乎完全崩溃。 随着大语言模型（LLM）和大规模多模态模…
 tags:
   - "NeurIPS 2025"
   - "LLM安全"

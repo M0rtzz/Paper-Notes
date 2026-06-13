@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RSCC: A Large-Scale Remote Sensing Change Caption Dataset for Disaster Events
 description: >-
-  [NeurIPS 2025][遥感][remote sensing] 构建了RSCC——首个大规模灾害感知遥感变化描述数据集（62,351对灾前/灾后图像+详细变化描述），覆盖地震/洪水/野火等31个全球事件，利用QvQ-Max视觉推理模型生成高质量标注，并建立了全面的基准评测体系。
+  [NeurIPS 2025][遥感][remote sensing] 构建了RSCC——首个大规模灾害感知遥感变化描述数据集（62,351对灾前/灾后图像+详细变化描述），覆盖地震/洪水/野火等31个全球事件，利用QvQ-Max视觉推理模型生成高质量标注，并建立了全面的基准评测体系。 领域现状：时序遥感图像对于灾害监测至关重…
 tags:
   - "NeurIPS 2025"
   - "遥感"

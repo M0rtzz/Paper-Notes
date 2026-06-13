@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LangHOPS: Language Grounded Hierarchical Open-Vocabulary Part Segmentation
 description: >-
-  [NeurIPS 2025][语义分割][开放词汇部件分割] 提出LangHOPS，首个基于多模态大语言模型（MLLM）的开放词汇物体-部件实例分割框架，在语言空间中建立object-part层次关系，利用MLLM的知识和推理能力链接多粒度概念…
+  [NeurIPS 2025][语义分割][开放词汇部件分割] 提出LangHOPS，首个基于多模态大语言模型（MLLM）的开放词汇物体-部件实例分割框架，在语言空间中建立object-part层次关系，利用MLLM的知识和推理能力链接多粒度概念，在PartImageNet上以56.9% AP超越SOTA 5.5%，跨数据集设置超4.8%。
 tags:
   - "NeurIPS 2025"
   - "语义分割"

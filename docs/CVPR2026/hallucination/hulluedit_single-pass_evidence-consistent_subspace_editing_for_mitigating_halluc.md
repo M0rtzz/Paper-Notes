@@ -2,18 +2,10 @@
 title: >-
   [论文解读] HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models
 description: >-
-  [CVPR 2026][幻觉检测] 提出HulluEdit，一种单次前向、无参考模型的子空间编辑框架，通过将隐藏状态分解为正交的视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉定位，在POPE和CHAIR基准上达到SOTA幻觉缓解效果。
+  [CVPR 2026][幻觉检测] 提出HulluEdit，一种单次前向、无参考模型的子空间编辑框架，通过将隐藏状态分解为正交的视觉证据子空间、冲突先验子空间和残差不确定性子空间，选择性抑制幻觉模式而不干扰视觉定位，在POPE和CHAIR基准上达到SOTA幻觉缓解效果。 1. 对象幻觉问题严重：LVLM倾向于生成图像中不存在…
 tags:
   - "CVPR 2026"
   - "幻觉检测"
-  - "视觉语言模型"
-  - "LVLM"
-  - "对象幻觉"
-  - "子空间编辑"
-  - "解码干预"
-  - "多模态"
-  - "POPE"
-  - "CHAIR"
 ---
 
 # HulluEdit: Single-Pass Evidence-Consistent Subspace Editing for Mitigating Hallucinations in Large Vision-Language Models

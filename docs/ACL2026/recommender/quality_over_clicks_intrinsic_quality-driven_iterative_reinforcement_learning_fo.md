@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quality Over Clicks: Intrinsic Quality-Driven Iterative RL for Cold-Start E-Commerce Query Suggestion
 description: >-
-  [ACL 2026][推荐系统][冷启动] 提出 Cold-EQS，一个面向冷启动电商场景的查询建议框架，利用可回答性、事实准确性和信息增益作为内在质量奖励，通过迭代强化学习持续优化查询建议质量，在线 chatUV 提升 6.81%。
+  [ACL 2026][推荐系统][冷启动] 提出 Cold-EQS，一个面向冷启动电商场景的查询建议框架，利用可回答性、事实准确性和信息增益作为内在质量奖励，通过迭代强化学习持续优化查询建议质量，在线 chatUV 提升 6.81%。 领域现状：查询建议(Query Suggestion)是电商对话系统的核心组件——在多轮交…
 tags:
   - "ACL 2026"
   - "推荐系统"

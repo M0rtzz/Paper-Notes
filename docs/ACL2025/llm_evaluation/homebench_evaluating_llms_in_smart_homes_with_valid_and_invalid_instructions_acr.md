@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HomeBench: Evaluating LLMs in Smart Homes with Valid and Invalid Instructions Across Single and Multiple Devices
 description: >-
-  [ACL 2025][LLM评测][智能家居] 本文提出HomeBench，首个同时包含合法与非法指令、覆盖单设备和多设备场景的智能家居LLM评估基准，发现即使是GPT-4o在包含非法指令的多设备场景中成功率也仅为0.0%。
+  [ACL 2025][LLM评测][智能家居] 本文提出HomeBench，首个同时包含合法与非法指令、覆盖单设备和多设备场景的智能家居LLM评估基准，发现即使是GPT-4o在包含非法指令的多设备场景中成功率也仅为0.0%。 领域现状：大语言模型正在被用于构建更智能的家居助手系统，相关研究已探索如何将LLM集成到智能家居中以…
 tags:
   - "ACL 2025"
   - "LLM评测"

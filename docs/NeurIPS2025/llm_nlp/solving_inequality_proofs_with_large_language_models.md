@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Solving Inequality Proofs with Large Language Models
 description: >-
-  [NeurIPS 2025][LLM/NLP][数学推理] 提出 IneqMath（首个大规模奥林匹克级不等式 benchmark），将不等式证明定义为两个可自动验证的子任务（界估计与关系预测），并开发五模块 LLM-as-Judge 框架，发现即便 o1 在逐步推理审查下整体准确率也不到 10%。
+  [NeurIPS 2025 Spotlight][LLM 其他][数学推理] 提出 IneqMath（首个大规模奥林匹克级不等式 benchmark），将不等式证明定义为两个可自动验证的子任务（界估计与关系预测），并开发五模块 LLM-as-Judge 框架，发现即便 o1 在逐步推理审查下整体准确率也不到 10%。
 tags:
-  - "NeurIPS 2025"
-  - "LLM/NLP"
+  - "NeurIPS 2025 Spotlight"
+  - "LLM 其他"
   - "数学推理"
   - "不等式证明"
   - "LLM-as-Judge"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Global Policy-Space Response Oracles for Two-Player Zero-Sum Games
 description: >-
-  [ICML 2026][强化学习][PSRO] 本文指出主流 PSRO 在扩展策略种群时只看"受限博弈"的局部信息会导致最坏情况下要加入近 $N$ 个纯策略才能收敛，因此提出一个先采样多条候选最优响应、再用 *post-expansion Population Exploitability (PE)* 直接打…
+  [ICML 2026][强化学习][PSRO] 本文指出主流 PSRO 在扩展策略种群时只看"受限博弈"的局部信息会导致最坏情况下要加入近 $N$ 个纯策略才能收敛，因此提出一个先采样多条候选最优响应、再用 *post-expansion Population Exploitability (PE)* 直接打分挑选最佳扩展的两阶段探索-选择框架 Global PSRO，并通过参数共享的条件策略网络把多候选训练和评估的代价压到可接受范围。
 tags:
   - "ICML 2026"
   - "强化学习"

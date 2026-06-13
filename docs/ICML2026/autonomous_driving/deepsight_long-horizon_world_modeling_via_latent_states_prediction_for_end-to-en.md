@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DeepSight: Long-Horizon World Modeling via Latent States Prediction for End-to-End Autonomous Driving
 description: >-
-  [ICML 2026][自动驾驶][端到端驾驶] DeepSight 把"未来世界预测"从显式像素重建（codebook 单帧）换成在 BEV 空间对 DINOv3 语义特征做**多帧并行隐式预测**，再叠加一个按需触发的 Adaptive Chain-of-Thought…
+  [ICML 2026][自动驾驶][端到端驾驶] DeepSight 把"未来世界预测"从显式像素重建（codebook 单帧）换成在 BEV 空间对 DINOv3 语义特征做**多帧并行隐式预测**，再叠加一个按需触发的 Adaptive Chain-of-Thought，让 Qwen2.5-VL-3B 在 Bench2Drive 闭环上 Driving Score 86.23 (+7.39)、Success Rate 71.36% (+13.63)，且只多 ~4% 推理延迟。
 tags:
   - "ICML 2026"
   - "自动驾驶"

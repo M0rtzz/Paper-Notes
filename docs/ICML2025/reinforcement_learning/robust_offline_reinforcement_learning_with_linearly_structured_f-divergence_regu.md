@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Robust Offline Reinforcement Learning with Linearly Structured f-Divergence Regularization
 description: >-
-  [ICML 2025][强化学习][robust offline RL] 提出 d-rectangular linear RRMDP (d-RRMDP) 框架，将潜在线性结构同时引入转移核和 f-散度正则化，设计 R2PVI 算法在离线数据下学习鲁棒策略…
+  [ICML 2025][强化学习][robust offline RL] 提出 d-rectangular linear RRMDP (d-RRMDP) 框架，将潜在线性结构同时引入转移核和 f-散度正则化，设计 R2PVI 算法在离线数据下学习鲁棒策略，证明了 instance-dependent 的次优性上界，并通过信息论下界验证算法接近最优。
 tags:
   - "ICML 2025"
   - "强化学习"

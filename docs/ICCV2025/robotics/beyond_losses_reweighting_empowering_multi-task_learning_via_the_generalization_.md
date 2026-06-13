@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective
 description: >-
-  [ICCV 2025][机器人][多任务学习] 从泛化角度出发，将锐度感知最小化（SAM）引入多任务学习，通过分解每个任务的 SAM 梯度为"低损失方向"和"平坦方向"并分别聚合，减少梯度冲突并引导模型进入跨任务共同平坦低损失区域。
+  [ICCV 2025][机器人][多任务学习] 从泛化角度出发，将锐度感知最小化（SAM）引入多任务学习，通过分解每个任务的 SAM 梯度为"低损失方向"和"平坦方向"并分别聚合，减少梯度冲突并引导模型进入跨任务共同平坦低损失区域。 多任务学习（MTL）使用共享骨干同时优化多个目标，能降低计算成本并促进跨任务知识共享。然而…
 tags:
   - "ICCV 2025"
   - "机器人"

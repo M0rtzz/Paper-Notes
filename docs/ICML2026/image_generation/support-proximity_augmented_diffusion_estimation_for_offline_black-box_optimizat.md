@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Support-Proximity Augmented Diffusion Estimation for Offline Black-Box Optimization
 description: >-
-  [ICML 2026][图像生成][离线 BBO] SPADE 用一个条件扩散模型替代传统回归代理来建模 $p(y\mid\boldsymbol{x})$，并通过"均值/排序校准"+"kNN 支撑度正则（均值收缩 + 方差膨胀）"把数据先验隐式注入到代理里…
+  [ICML 2026][图像生成][离线 BBO] SPADE 用一个条件扩散模型替代传统回归代理来建模 $p(y\mid\boldsymbol{x})$，并通过"均值/排序校准"+"kNN 支撑度正则（均值收缩 + 方差膨胀）"把数据先验隐式注入到代理里，使离线黑盒优化在 Design-Bench 和 LLM 数据混合任务上稳定达到 SOTA。
 tags:
   - "ICML 2026"
   - "图像生成"

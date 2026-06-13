@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime
 description: >-
-  [ICLR 2026][Adam] 首次证明mini-batch Adam的隐式偏差与full-batch不同：构造数据集使单样本Adam收敛到 $\ell_2$ 最大间隔分类器（而full-batch Adam收敛到 $\ell_\infty$）…
+  [ICLR 2026][优化/理论][Adam] 首次证明mini-batch Adam的隐式偏差与full-batch不同：构造数据集使单样本Adam收敛到 $\ell_2$ 最大间隔分类器（而full-batch Adam收敛到 $\ell_\infty$），并通过AdamProxy刻画一般数据集上的数据自适应Mahalanobis范数间隔最大化行为。
 tags:
   - "ICLR 2026"
+  - "优化/理论"
   - "Adam"
   - "隐式偏差"
   - "最大间隔"

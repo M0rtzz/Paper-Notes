@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Structured and Abstractive Reasoning on Multi-modal Relational Knowledge Images
 description: >-
-  [ACL2026][多模态VLM][MMRK图像] 这篇论文提出面向多模态关系知识图像的 STAR 数据引擎和两阶段训练框架，用 STAR-64K 合成数据、CoT 标注与知识感知 KGRPO 显著提升 MLLM 对抽象结构化知识图像的理解和推理能力。
+  [ACL2026 Findings][多模态VLM][MMRK图像] 这篇论文提出面向多模态关系知识图像的 STAR 数据引擎和两阶段训练框架，用 STAR-64K 合成数据、CoT 标注与知识感知 KGRPO 显著提升 MLLM 对抽象结构化知识图像的理解和推理能力。 领域现状：多模态大模型已经能处理自然图像、图表、OCR…
 tags:
-  - "ACL2026"
+  - "ACL2026 Findings"
   - "多模态VLM"
   - "MMRK图像"
   - "STAR任务"

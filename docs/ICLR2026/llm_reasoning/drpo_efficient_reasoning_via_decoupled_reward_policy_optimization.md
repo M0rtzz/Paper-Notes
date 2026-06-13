@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization
 description: >-
-  [ICLR 2026][LLM推理][efficient reasoning] 诊断出 GRPO 在加入长度惩罚后的根本缺陷——正确但冗长的回答可能获得负优势值从而被错误惩罚——提出 DRPO 将正负样本的奖励信号解耦，确保长度惩罚只在正确回答组内归一化…
+  [ICLR 2026][LLM推理][efficient reasoning] 诊断出 GRPO 在加入长度惩罚后的根本缺陷——正确但冗长的回答可能获得负优势值从而被错误惩罚——提出 DRPO 将正负样本的奖励信号解耦，确保长度惩罚只在正确回答组内归一化，在 1.5B 模型上实现 77% 长度缩减仅 1.1% 性能损失（对比基线 68% 缩减 4.3% 损失）。
 tags:
   - "ICLR 2026"
   - "LLM推理"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] LD-MoLE: Learnable Dynamic Routing for Mixture of LoRA Experts
 description: >-
-  [ICLR 2026][模型压缩][LoRA] 提出 LD-MoLE，用 Sparsegen 闭合形式投影替代传统 TopK 路由，实现可微分、动态、token自适应的 LoRA 专家分配，配合轻量 MLP 预测稀疏因子和解析稀疏损失，在多个基准上超越固定路由和 ReLU 路由基线。
+  [ICLR 2026][模型压缩][LoRA] 提出 LD-MoLE，用 Sparsegen 闭合形式投影替代传统 TopK 路由，实现可微分、动态、token自适应的 LoRA 专家分配，配合轻量 MLP 预测稀疏因子和解析稀疏损失，在多个基准上超越固定路由和 ReLU 路由基线。 LoRA + MoE（即 MoLE）是大…
 tags:
   - "ICLR 2026"
   - "模型压缩"

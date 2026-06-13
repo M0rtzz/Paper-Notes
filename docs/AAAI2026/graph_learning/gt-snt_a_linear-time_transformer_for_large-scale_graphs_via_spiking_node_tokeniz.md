@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization
 description: >-
-  [AAAI 2026][图学习][Transformer] 提出 GT-SNT，将脉冲神经网络（SNN）用作图节点分词器（tokenizer），通过多步特征传播生成紧凑的脉冲计数嵌入作为节点 token，再利用码本引导自注意力（CGSA）在线性时间内捕获全局上下文…
+  [AAAI 2026][图学习][Transformer] 提出 GT-SNT，将脉冲神经网络（SNN）用作图节点分词器（tokenizer），通过多步特征传播生成紧凑的脉冲计数嵌入作为节点 token，再利用码本引导自注意力（CGSA）在线性时间内捕获全局上下文，在 9 个节点分类基准上取得可比性能的同时实现最高 130× 的推理加速。
 tags:
   - "AAAI 2026"
   - "图学习"

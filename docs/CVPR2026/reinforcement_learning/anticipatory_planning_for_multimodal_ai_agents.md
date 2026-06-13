@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Anticipatory Planning for Multimodal AI Agents
 description: >-
-  [CVPR 2026][强化学习][多模态智能体] 提出 TraceR1，一个两阶段 RL 框架：第一阶段通过轨迹级奖励优化让智能体学会"向前看几步"的前瞻性规划，第二阶段通过工具执行反馈做 grounded fine-tuning 来提升单步精度…
+  [CVPR 2026 Findings][强化学习][多模态智能体] 提出 TraceR1，一个两阶段 RL 框架：第一阶段通过轨迹级奖励优化让智能体学会"向前看几步"的前瞻性规划，第二阶段通过工具执行反馈做 grounded fine-tuning 来提升单步精度，在 7 个 GUI 和工具使用 benchmark 上取得了开源 SOTA。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "强化学习"
   - "多模态智能体"
   - "前瞻性规划"

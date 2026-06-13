@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DropoutGS: Dropping Out Gaussians for Better Sparse-view Rendering
 description: >-
-  [CVPR 2025][3D视觉][稀疏视角渲染] DropoutGS 通过随机 Dropout 正则化（RDR）缓解稀疏视角 3DGS 的过拟合问题，再用边缘引导分裂策略（ESS）补偿低复杂度模型丢失的高频细节，作为即插即用模块可与多种 3DGS 方法结合…
+  [CVPR 2025][3D视觉][稀疏视角渲染] DropoutGS 通过随机 Dropout 正则化（RDR）缓解稀疏视角 3DGS 的过拟合问题，再用边缘引导分裂策略（ESS）补偿低复杂度模型丢失的高频细节，作为即插即用模块可与多种 3DGS 方法结合，在 LLFF、DTU、Blender 上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

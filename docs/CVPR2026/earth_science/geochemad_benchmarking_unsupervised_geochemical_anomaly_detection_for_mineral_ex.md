@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration
 description: >-
-  [CVPR 2026][地球科学][地球化学异常检测] 提出 GeoChemAD 开源基准数据集和 GeoChemFormer 框架，通过空间上下文学习与元素依赖建模实现无监督地球化学异常检测，在8个子集上平均 AUC 达到 0.7712。
+  [CVPR 2026][地球科学][地球化学异常检测] 提出 GeoChemAD 开源基准数据集和 GeoChemFormer 框架，通过空间上下文学习与元素依赖建模实现无监督地球化学异常检测，在8个子集上平均 AUC 达到 0.7712。 地球化学异常检测（GAD）在矿产勘探中至关重要——通过发现元素浓度偏离区域基线的异常…
 tags:
   - "CVPR 2026"
   - "地球科学"

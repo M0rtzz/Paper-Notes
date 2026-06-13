@@ -2,7 +2,7 @@
 title: >-
   [论文解读] World-Consistent Video Diffusion with Explicit 3D Modeling
 description: >-
-  [CVPR 2025][视频生成][3D一致性生成] 本文提出 WVD（World-consistent Video Diffusion），通过训练扩散模型联合建模 RGB 图像和 XYZ 图像（编码全局3D坐标），实现了显式3D约束下的多视角一致性视频生成…
+  [CVPR 2025][视频生成][3D一致性生成] 本文提出 WVD（World-consistent Video Diffusion），通过训练扩散模型联合建模 RGB 图像和 XYZ 图像（编码全局3D坐标），实现了显式3D约束下的多视角一致性视频生成，并通过灵活的 inpainting 策略统一了单图3D重建、多视角立体、相机控制生成等多种任务。
 tags:
   - "CVPR 2025"
   - "视频生成"

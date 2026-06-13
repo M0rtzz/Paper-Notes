@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPAD: Discriminative Perception via Anchored Description for Reasoning Segmentation
 description: >-
-  [CVPR 2026][语义分割][推理分割] 针对推理分割(RS)中RL+GRPO训练的geometric reward无法约束reasoning chain是否聚焦目标unique attributes的问题…
+  [CVPR 2026][语义分割][推理分割] 针对推理分割(RS)中RL+GRPO训练的geometric reward无法约束reasoning chain是否聚焦目标unique attributes的问题，提出DPAD方法：MLLM生成reasoning chain+geometric localization+anchored description，引入基于CLIP的Discriminative Perception Reward比较description与ROI/AOI的相似度差异，迫使caption更具判别性从而间接约束推理链聚焦目标，ReasonSeg上cIoU提升3.09%且推理链长度减少42%。
 tags:
   - "CVPR 2026"
   - "语义分割"

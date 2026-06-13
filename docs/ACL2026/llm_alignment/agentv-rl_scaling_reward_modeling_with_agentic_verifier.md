@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AgentV-RL: Scaling Reward Modeling with Agentic Verifier
 description: >-
-  [ACL 2026][LLM对齐][Agentic Verifier] 把奖励模型从"单轮打分"重塑为"前向+后向双 agent + 工具调用"的多轮审议流程，并通过 SFT+GRPO 把多 agent 能力蒸馏到单个 4B 模型中，使其在 BoN 选择上比 70B 量级 ORM 高 25.2%。
+  [ACL 2026][LLM对齐][Agentic Verifier] 把奖励模型从"单轮打分"重塑为"前向+后向双 agent + 工具调用"的多轮审议流程，并通过 SFT+GRPO 把多 agent 能力蒸馏到单个 4B 模型中，使其在 BoN 选择上比 70B 量级 ORM 高 25.2%。 领域现状：在数学等复杂推理…
 tags:
   - "ACL 2026"
   - "LLM对齐"

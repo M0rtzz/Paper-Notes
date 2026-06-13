@@ -2,7 +2,7 @@
 title: >-
   [论文解读] M-Net: MRI Brain Tumor Sequential Segmentation Network via Mesh-Cast
 description: >-
-  [ICCV 2025][医学图像][MRI脑肿瘤分割] M-Net 将 MRI 相邻切片间的空间连续性重新理解为"类时序"数据，提出 Mesh-Cast 机制将任意序列模型（LSTM、Transformer、Mamba SSM 等）无缝集成到通道和时序信息处理中，配合两阶段顺序训练策略（TPS）…
+  [ICCV 2025][医学图像][MRI脑肿瘤分割] M-Net 将 MRI 相邻切片间的空间连续性重新理解为"类时序"数据，提出 Mesh-Cast 机制将任意序列模型（LSTM、Transformer、Mamba SSM 等）无缝集成到通道和时序信息处理中，配合两阶段顺序训练策略（TPS），在 BraTS2019 和 BraTS2023 上取得了 SOTA 分割性能。
 tags:
   - "ICCV 2025"
   - "医学图像"

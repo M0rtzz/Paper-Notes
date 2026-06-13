@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoA-Reasoning: Explorations on Counterfactual Analysis in Physical Reasoning of LVLMs
 description: >-
-  [ACL 2025][因果推理][反事实推理] 本文提出CoA-Reasoning框架，通过构造反事实场景来系统性地评估和增强大型视觉语言模型（LVLMs）在物理世界推理中的因果理解能力，揭示了现有模型在反事实物理推理上的显著不足。
+  [ACL 2025][因果推理][反事实推理] 本文提出CoA-Reasoning框架，通过构造反事实场景来系统性地评估和增强大型视觉语言模型（LVLMs）在物理世界推理中的因果理解能力，揭示了现有模型在反事实物理推理上的显著不足。 领域现状：大型视觉语言模型（LVLMs）如GPT-4V、Gemini、LLaVA等在视觉问答…
 tags:
   - "ACL 2025"
   - "因果推理"

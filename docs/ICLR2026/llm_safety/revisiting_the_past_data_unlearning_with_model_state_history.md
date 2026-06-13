@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Revisiting the Past: Data Unlearning with Model State History
 description: >-
-  [ICLR 2026][LLM安全][机器遗忘] 提出 MSA（Model State Arithmetic）算法，利用训练中间检查点构造"遗忘向量"，通过参数空间算术运算移除特定数据对模型的影响，在 TOFU 和 RESTOR 基准上一致优于 NPO、RMU、GradDiff 等现有遗忘方法…
+  [ICLR 2026][LLM安全][机器遗忘] 提出 MSA（Model State Arithmetic）算法，利用训练中间检查点构造"遗忘向量"，通过参数空间算术运算移除特定数据对模型的影响，在 TOFU 和 RESTOR 基准上一致优于 NPO、RMU、GradDiff 等现有遗忘方法，且即使不用保留集也能保持模型效用。
 tags:
   - "ICLR 2026"
   - "LLM安全"

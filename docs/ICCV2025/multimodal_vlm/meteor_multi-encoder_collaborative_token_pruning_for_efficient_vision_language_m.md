@@ -2,7 +2,7 @@
 title: >-
   [论文解读] METEOR: Multi-Encoder Collaborative Token Pruning for Efficient Vision Language Models
 description: >-
-  [ICCV 2025][多模态VLM][多编码器VLM] METEOR 提出首个面向多编码器 MLLM 的三阶段渐进式 token 剪枝框架：在编码阶段用特征秩分配各编码器的稀疏比例，在融合阶段通过协同剪枝消除跨编码器冗余，在解码阶段根据文本提示自适应调整剪枝比例…
+  [ICCV 2025][多模态VLM][多编码器VLM] METEOR 提出首个面向多编码器 MLLM 的三阶段渐进式 token 剪枝框架：在编码阶段用特征秩分配各编码器的稀疏比例，在融合阶段通过协同剪枝消除跨编码器冗余，在解码阶段根据文本提示自适应调整剪枝比例，将视觉 token 减少 76% 而性能仅降 0.3%。
 tags:
   - "ICCV 2025"
   - "多模态VLM"

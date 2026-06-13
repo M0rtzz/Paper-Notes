@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Continual Learning with Vision-Language Models via Semantic-Geometry Preservation
 description: >-
-  [CVPR 2025][多模态VLM][continual learning] 提出 SeGP-CL 框架，通过对抗性锚点（DPGD）精准探测新旧任务语义边界的脆弱区域，结合跨模态几何蒸馏（ACGD）和文本语义正则化（TSGR）保护 VLM 的跨模态几何结构…
+  [CVPR 2025][多模态VLM][continual learning] 提出 SeGP-CL 框架，通过对抗性锚点（DPGD）精准探测新旧任务语义边界的脆弱区域，结合跨模态几何蒸馏（ACGD）和文本语义正则化（TSGR）保护 VLM 的跨模态几何结构，在五个持续学习 benchmark 上达到 SOTA。
 tags:
   - "CVPR 2025"
   - "多模态VLM"

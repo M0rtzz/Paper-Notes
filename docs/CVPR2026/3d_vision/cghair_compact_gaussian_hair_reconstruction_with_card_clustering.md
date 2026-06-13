@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CGHair: Compact Gaussian Hair Reconstruction with Card Clustering
 description: >-
-  [CVPR 2026][3D视觉][3D高斯溅射] 提出 CGHair，通过发片（hair card）引导的分层聚类和共享高斯外观码本，在保持可比视觉质量的同时实现 200 倍以上的外观参数压缩和 4 倍发丝重建加速。
+  [CVPR 2026][3D视觉][3D高斯溅射] 提出 CGHair，通过发片（hair card）引导的分层聚类和共享高斯外观码本，在保持可比视觉质量的同时实现 200 倍以上的外观参数压缩和 4 倍发丝重建加速。 领域现状：基于 3DGS 的头发重建方法（如 GaussianHair）通过圆柱高斯链建模发丝…
 tags:
   - "CVPR 2026"
   - "3D视觉"

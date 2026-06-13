@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniStyle: Filtering High Quality Style Transfer Data at Scale
 description: >-
-  [CVPR 2025][图像生成][风格迁移] 构建了首个百万级风格迁移配对数据集 OmniStyle-1M（100万 content-style-stylized 三元组，1000种风格），设计 OmniFilter 多维质量过滤框架筛选高质量数据…
+  [CVPR 2025][图像生成][风格迁移] 构建了首个百万级风格迁移配对数据集 OmniStyle-1M（100万 content-style-stylized 三元组，1000种风格），设计 OmniFilter 多维质量过滤框架筛选高质量数据，并基于 DiT 架构训练端到端风格迁移模型 OmniStyle，同时支持指令引导和参考图引导的风格迁移，全面超越现有方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

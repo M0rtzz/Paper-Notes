@@ -2,7 +2,7 @@
 title: >-
   [论文解读] UI-Evol: Automatic Knowledge Evolving for Computer Use Agents
 description: >-
-  [ICML 2025][计算机使用代理] 提出 **UI-Evol**，一个即插即用的知识进化模块，通过 **Retrace（回溯）** 和 **Critique（批评）** 两阶段从智能体的实际环境交互中自动修正检索到的外部知识，弥合"知识正确但执行失败"的 knowledge-execution gap…
+  [ICML 2025][计算机使用代理] 提出 **UI-Evol**，一个即插即用的知识进化模块，通过 **Retrace（回溯）** 和 **Critique（批评）** 两阶段从智能体的实际环境交互中自动修正检索到的外部知识，弥合"知识正确但执行失败"的 knowledge-execution gap，在 OSWorld 上显著提升成功率并大幅降低行为方差。
 tags:
   - "ICML 2025"
   - "计算机使用代理"

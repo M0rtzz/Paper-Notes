@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CAD-Llama: Leveraging Large Language Models for Computer-Aided Design Parametric 3D Model Generation
 description: >-
-  [CVPR 2025][LLM对齐][参数化CAD生成] 本文提出 CAD-Llama 框架，通过层次化标注管线将 3D CAD 模型转化为富含语义描述的 Python 风格代码（SPCC），再用自适应预训练和指令微调将 LLaMA3-8B 转化为参数化 CAD 模型生成器…
+  [CVPR 2025][LLM对齐][参数化CAD生成] 本文提出 CAD-Llama 框架，通过层次化标注管线将 3D CAD 模型转化为富含语义描述的 Python 风格代码（SPCC），再用自适应预训练和指令微调将 LLaMA3-8B 转化为参数化 CAD 模型生成器，在 text-to-CAD 任务上精度超出先前方法约 14%，并支持补全、添加、删除等多种 CAD 编辑任务。
 tags:
   - "CVPR 2025"
   - "LLM对齐"

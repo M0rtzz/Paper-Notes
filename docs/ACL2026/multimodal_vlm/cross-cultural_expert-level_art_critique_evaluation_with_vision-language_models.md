@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Cross-Cultural Expert-Level Art Critique Evaluation with Vision-Language Models
 description: >-
-  [ACL 2026][多模态VLM][跨文化评测] 论文提出 Vulca-Bench 三层评测框架（自动指标 + 单评审打分 + 人类 sigmoid 校准），覆盖 6 大艺术传统、165 个文化维度与 L1–L5 五层"视觉描述→文化诠释"层级…
+  [ACL 2026][多模态VLM][跨文化评测] 论文提出 Vulca-Bench 三层评测框架（自动指标 + 单评审打分 + 人类 sigmoid 校准），覆盖 6 大艺术传统、165 个文化维度与 L1–L5 五层"视觉描述→文化诠释"层级，在 15 个 VLM 上首次量化揭示了"模型在深层文化诠释上掉点显著、且系统性偏好西方艺术"的现象。
 tags:
   - "ACL 2026"
   - "多模态VLM"

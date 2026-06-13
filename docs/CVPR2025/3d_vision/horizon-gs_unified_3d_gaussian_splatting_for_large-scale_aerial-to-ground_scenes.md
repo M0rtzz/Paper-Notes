@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Horizon-GS: Unified 3D Gaussian Splatting for Large-Scale Aerial-to-Ground Scenes
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 本文提出 Horizon-GS，通过粗到精两阶段训练策略、相机分布平衡机制和多分辨率 LOD 结构，首次实现了航空视角和街景视角的统一 3D 高斯溅射重建和实时渲染，在多个城市场景数据集上达到 SOTA 渲染质量。
+  [CVPR 2025][3D视觉][3D高斯溅射] 本文提出 Horizon-GS，通过粗到精两阶段训练策略、相机分布平衡机制和多分辨率 LOD 结构，首次实现了航空视角和街景视角的统一 3D 高斯溅射重建和实时渲染，在多个城市场景数据集上达到 SOTA 渲染质量。 1. 领域现状：3D 高斯溅射（3D-GS）以出色的视觉质…
 tags:
   - "CVPR 2025"
   - "3D视觉"

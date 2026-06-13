@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Human Knowledge Integrated Multi-modal Learning for Single Source Domain Generalization
 description: >-
-  [CVPR2025][医学图像][domain generalization] 提出 GenEval，通过域共形界（DCB）理论量化因果覆盖差距，并将人类专家知识与 MedGemma-4B 视觉语言模型结合，实现单源域泛化（SDG）…
+  [CVPR2025][医学图像][domain generalization] 提出 GenEval，通过域共形界（DCB）理论量化因果覆盖差距，并将人类专家知识与 MedGemma-4B 视觉语言模型结合，实现单源域泛化（SDG），在糖尿病视网膜病变分级（8 个数据集）和癫痫灶检测（2 个数据集）上大幅超越现有方法。
 tags:
   - "CVPR2025"
   - "医学图像"

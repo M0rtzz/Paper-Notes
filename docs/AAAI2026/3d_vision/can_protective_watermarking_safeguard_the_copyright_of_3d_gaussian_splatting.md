@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Protective Watermarking Safeguard the Copyright of 3D Gaussian Splatting?
 description: >-
-  [AAAI2026][3D视觉][3D Gaussian Splatting] 首次系统性地揭示了 3DGS 水印框架的脆弱性，提出 GSPure 框架通过视角感知权重累积和几何特征聚类精准分离并去除水印相关的 Gaussian 原语…
+  [AAAI2026][3D视觉][3D Gaussian Splatting] 首次系统性地揭示了 3DGS 水印框架的脆弱性，提出 GSPure 框架通过视角感知权重累积和几何特征聚类精准分离并去除水印相关的 Gaussian 原语，在水印 PSNR 最高降低 16.34dB 的同时保持原始场景损失不足 1dB。
 tags:
   - "AAAI2026"
   - "3D视觉"

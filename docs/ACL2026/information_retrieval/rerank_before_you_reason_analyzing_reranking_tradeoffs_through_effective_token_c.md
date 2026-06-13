@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Rerank Before You Reason: Analyzing Reranking Tradeoffs through Effective Token Cost in Deep Search Agents
 description: >-
-  [ACL 2026][信息检索/RAG][深度搜索智能体] 本文系统研究了深度搜索智能体中 listwise 重排序的效率-效果权衡，提出 Effective Token Cost (ETC) 指标，发现中等深度重排序通常比增加搜索时推理预算更具成本效益…
+  [ACL 2026 Findings][信息检索/RAG][深度搜索智能体] 本文系统研究了深度搜索智能体中 listwise 重排序的效率-效果权衡，提出 Effective Token Cost (ETC) 指标，发现中等深度重排序通常比增加搜索时推理预算更具成本效益，在更低 token 开销下达到相当甚至更高的端到端准确率。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "信息检索/RAG"
   - "深度搜索智能体"
   - "重排序"
@@ -19,7 +19,7 @@ tags:
 **会议**: ACL 2026 Findings  
 **arXiv**: [2601.14224](https://arxiv.org/abs/2601.14224)  
 **代码**: [https://github.com/sahel-sh/DeepHone](https://github.com/sahel-sh/DeepHone)  
-**领域**: information_retrieval  
+**领域**: 信息检索  
 **关键词**: 深度搜索智能体, 重排序, 推理预算分配, 有效token成本, 检索增强推理
 
 ## 一句话总结

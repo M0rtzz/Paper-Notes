@@ -2,9 +2,10 @@
 title: >-
   [论文解读] Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification
 description: >-
-  [NeurIPS 2025][扩散模型] 本文从统计学习角度分析了条件扩散Transformer（DiT）在时间序列插补任务中的样本复杂度和不确定性量化性能，并提出混合掩码训练策略提升插补效果。
+  [NeurIPS 2025][时间序列 / 生成模型理论][扩散模型] 本文从统计学习角度分析了条件扩散Transformer（DiT）在时间序列插补任务中的样本复杂度和不确定性量化性能，并提出混合掩码训练策略提升插补效果。 时间序列数据在金融、医疗、交通、气象等领域无处不在，但常因传感器故障、数据传输错误等原因存在大量缺失…
 tags:
   - "NeurIPS 2025"
+  - "时间序列 / 生成模型理论"
   - "扩散模型"
   - "Transformer"
   - "时间序列插补"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Benchmarking ECG FMs: A Reality Check Across Clinical Tasks
 description: >-
-  [ICLR 2026][时间序列][ECG] 对8个ECG基础模型在12个数据集、26个临床任务上进行"现实检验"式全面基准评测，发现紧凑的结构化状态空间模型（SSM）ECG-CPC在7个任务类别中的5个上超越了大规模Transformer，证明架构设计比模型规模更重要。
+  [ICLR 2026][时间序列][ECG] 对8个ECG基础模型在12个数据集、26个临床任务上进行"现实检验"式全面基准评测，发现紧凑的结构化状态空间模型（SSM）ECG-CPC在7个任务类别中的5个上超越了大规模Transformer，证明架构设计比模型规模更重要。 领域现状：12导联心电图（ECG）是最广泛使用的心脏…
 tags:
   - "ICLR 2026"
   - "时间序列"

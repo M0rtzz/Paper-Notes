@@ -2,7 +2,7 @@
 title: >-
   [论文解读] De-mark: Watermark Removal in Large Language Models
 description: >-
-  [ICML2025][LLM安全][水印去除] 提出De-mark框架，通过随机选择探测(random selection probing)策略估计n-gram水印强度并重建红绿列表，无需知道哈希函数即可去除水印，并提供去除后LM分布与原始分布之间的理论差距保证。
+  [ICML2025][LLM安全][水印去除] 提出De-mark框架，通过随机选择探测(random selection probing)策略估计n-gram水印强度并重建红绿列表，无需知道哈希函数即可去除水印，并提供去除后LM分布与原始分布之间的理论差距保证。 核心矛盾 核心矛盾：n-gram水印(Kirchenbaue…
 tags:
   - "ICML2025"
   - "LLM安全"

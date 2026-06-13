@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PIPHEN: Physical Interaction Prediction with Hamiltonian Energy Networks
 description: >-
-  [AAAI 2026][多机器人协作] 提出PIPHEN分布式物理认知-控制框架，通过物理交互预测网络（PIPN）进行"语义蒸馏"将高维感知数据压缩至原始数据量的5%以下，再由基于哈密顿能量守恒的HEN控制器生成协调动作，从而解决多机器人系统的"共享大脑困境"。
+  [AAAI 2026][多机器人协作] 提出PIPHEN分布式物理认知-控制框架，通过物理交互预测网络（PIPN）进行"语义蒸馏"将高维感知数据压缩至原始数据量的5%以下，再由基于哈密顿能量守恒的HEN控制器生成协调动作，从而解决多机器人系统的"共享大脑困境"。 多机器人系统在复杂物理协作中面临"共享大脑困境"（shared…
 tags:
   - "AAAI 2026"
   - "多机器人协作"

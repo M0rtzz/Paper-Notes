@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RulePlanner: All-in-One Reinforcement Learner for Unifying Design Rules in 3D Floorplanning
 description: >-
-  [ICML 2026][强化学习][3D Floorplanning] 本文把 3D 芯片 floorplanning 中七类工业设计规则统一塞进一个 actor-critic RL 框架：核心是把每条规则编译成一张 $W\times H$ 的"邻接矩阵掩码"…
+  [ICML 2026][强化学习][3D Floorplanning] 本文把 3D 芯片 floorplanning 中七类工业设计规则统一塞进一个 actor-critic RL 框架：核心是把每条规则编译成一张 $W\times H$ 的"邻接矩阵掩码"，在策略 softmax 之前用大负数把违规位置直接屏蔽掉，再加上离散位置 + 连续长宽比的混合动作空间和 Transformer 编码的网表特征，让单一智能体首次能同时满足边界、分组、跨层对齐、非重叠等七条规则，并对未见电路有零样本迁移能力。
 tags:
   - "ICML 2026"
   - "强化学习"

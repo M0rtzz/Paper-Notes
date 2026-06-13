@@ -2,9 +2,9 @@
 title: >-
   [论文解读] FACT-GS: Frequency-Aligned Complexity-Aware Texture Reparameterization for 2D Gaussian Splatting
 description: >-
-  [CVPR 2026][3D视觉][2D Gaussian Splatting] 提出FACT-GS，将纹理参数化重新定义为采样密度分配问题，通过可学习变形场实现频率自适应的非均匀纹理采样，在固定参数预算下显著提升高频细节恢复能力。
+  [CVPR 2026 Findings][3D视觉][2D Gaussian Splatting] 提出FACT-GS，将纹理参数化重新定义为采样密度分配问题，通过可学习变形场实现频率自适应的非均匀纹理采样，在固定参数预算下显著提升高频细节恢复能力。 领域现状： 3DGS/2DGS通过球谐函数建模外观，缺乏每个primiti…
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Findings"
   - "3D视觉"
   - "2D Gaussian Splatting"
   - "纹理参数化"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SIR-DIFF: Sparse Image Sets Restoration with Multi-View Diffusion Model
 description: >-
-  [CVPR 2025][图像生成][多视角图像修复] 提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法…
+  [CVPR 2025][图像生成][多视角图像修复] 提出 SIR-Diff，一种多视角扩散模型，通过联合去噪多张同场景退化图像来实现跨视角一致的图像修复，利用 Spatial-3D ResNet 和 3D 自注意力 Transformer 融合多视角互补信息，在去模糊和超分辨率任务上超越单视角和视频修复方法。
 tags:
   - "CVPR 2025"
   - "图像生成"

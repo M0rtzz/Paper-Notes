@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rectified LpJEPA: Joint-Embedding Predictive Architectures with Sparse and Maximum-Entropy Representations
 description: >-
-  [ICML 2026][JEPA] 作者把 LeJEPA 的"投影后向各向同性高斯对齐"推广为"投影后向 Rectified Generalized Gaussian (RGG) 分布对齐"，通过整流 + 截断广义高斯获得显式可控的期望 $\ell_0$ 稀疏度…
+  [ICML 2026][JEPA] 作者把 LeJEPA 的"投影后向各向同性高斯对齐"推广为"投影后向 Rectified Generalized Gaussian (RGG) 分布对齐"，通过整流 + 截断广义高斯获得显式可控的期望 $\ell_0$ 稀疏度，在 ImageNet-100 上 ResNet 编码器线性探针达到 $85.08\%$ 同时把 $\ell_0$ 稀疏度维持在 $\sim 73\%$，明显优于 LeJEPA 的全密集表示。
 tags:
   - "ICML 2026"
   - "JEPA"

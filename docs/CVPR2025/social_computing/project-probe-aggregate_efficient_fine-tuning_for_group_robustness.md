@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Project-Probe-Aggregate: Efficient Fine-Tuning for Group Robustness
 description: >-
-  [CVPR 2025][社会计算][群组鲁棒性] 提出 PPA（Project-Probe-Aggregate）三步方法，通过投影去除类代理信息放大偏差、以组先验校正探测组标签、聚合组权重，仅需不到 0.01% 可训练参数即可在无组标注情况下提升基础模型的群组鲁棒性。
+  [CVPR 2025][社会计算][群组鲁棒性] 提出 PPA（Project-Probe-Aggregate）三步方法，通过投影去除类代理信息放大偏差、以组先验校正探测组标签、聚合组权重，仅需不到 0.01% 可训练参数即可在无组标注情况下提升基础模型的群组鲁棒性。 图像-文本基础模型（如 CLIP）在下游任务中虽然平均误…
 tags:
   - "CVPR 2025"
   - "社会计算"

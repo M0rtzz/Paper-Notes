@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Certified Circuits: Stability Guarantees for Mechanistic Circuits
 description: >-
-  [ICML 2026][可解释性][机械可解释性] 提出 Certified Circuits 框架，通过基于删除的随机平滑为机械可解释性中的电路发现提供可证明的数据集级稳定性保证，使得发现的电路在概念数据集的有界编辑距离扰动下保持不变，从而产生更紧凑、更准确且 OOD 泛化更好的电路。
+  [ICML 2026][可解释性][机械可解释性] 提出 Certified Circuits 框架，通过基于删除的随机平滑为机械可解释性中的电路发现提供可证明的数据集级稳定性保证，使得发现的电路在概念数据集的有界编辑距离扰动下保持不变，从而产生更紧凑、更准确且 OOD 泛化更好的电路。 领域现状：机械可解释性（Mechan…
 tags:
   - "ICML 2026"
   - "可解释性"

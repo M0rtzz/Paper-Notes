@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Quantifying the Salience of Geo-Cultural Values for Pluralistic Safety Alignment
 description: >-
-  [ICML 2026][LLM对齐][多元对齐] 作者用 Inglehart-Welzel 文化地图把标注者按"文化区/象限"重新分层，在 8 个安全数据集上用多层级回归（multilevel modeling）证明文化区在控制完人口学（年龄/性别/族裔）之后仍显著解释安全评分的方差（6/8 数据集 $p<0…
+  [ICML 2026][LLM对齐][多元对齐] 作者用 Inglehart-Welzel 文化地图把标注者按"文化区/象限"重新分层，在 8 个安全数据集上用多层级回归（multilevel modeling）证明文化区在控制完人口学（年龄/性别/族裔）之后仍显著解释安全评分的方差（6/8 数据集 $p<0.05$），并提出 Bayesian 的"cultural sensitivity score"量化得出：当前数据集中约 10% 的样本若忽略某一文化象限就会被错标为 safe；进一步实验表明 LLM 当 rater 替身不靠谱，但当"文化敏感样本"的 triage 工具是可行的。
 tags:
   - "ICML 2026"
   - "LLM对齐"

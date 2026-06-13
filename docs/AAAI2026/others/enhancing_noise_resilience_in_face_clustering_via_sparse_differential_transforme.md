@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer
 description: >-
-  [AAAI 2026][人脸聚类] 提出预测驱动的 Top-K Jaccard 相似度系数提升邻居纯度，配合稀疏差分 Transformer（SDT）消除噪声注意力，在 MS-Celeb-1M 等大规模人脸聚类数据集上达到 SOTA 性能。
+  [AAAI 2026][人脸聚类] 提出预测驱动的 Top-K Jaccard 相似度系数提升邻居纯度，配合稀疏差分 Transformer（SDT）消除噪声注意力，在 MS-Celeb-1M 等大规模人脸聚类数据集上达到 SOTA 性能。 领域现状：基于 GCN 的人脸聚类方法通过图消息传播学习特征…
 tags:
   - "AAAI 2026"
   - "人脸聚类"

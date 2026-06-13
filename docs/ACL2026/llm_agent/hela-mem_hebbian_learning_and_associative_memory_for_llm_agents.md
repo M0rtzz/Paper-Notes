@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HeLa-Mem: Hebbian Learning and Associative Memory for LLM Agents
 description: >-
-  [ACL 2026][LLM Agent][Hebbian学习] HeLa-Mem 提出了一种受神经科学启发的 LLM 代理记忆架构，将对话历史建模为带 Hebbian 学习动力学的动态图——通过共激活强化记忆间连接、反思性蒸馏将枢纽记忆凝练为语义知识、双路径检索结合语义相似度和 Hebbian 扩散激活…
+  [ACL 2026][LLM Agent][Hebbian学习] HeLa-Mem 提出了一种受神经科学启发的 LLM 代理记忆架构，将对话历史建模为带 Hebbian 学习动力学的动态图——通过共激活强化记忆间连接、反思性蒸馏将枢纽记忆凝练为语义知识、双路径检索结合语义相似度和 Hebbian 扩散激活，在 LoCoMo 上以显著更少的 token 达到最优性能。
 tags:
   - "ACL 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Steering Information Utility in Key-Value Memory for Language Model Post-Training
 description: >-
-  [NeurIPS 2025][可解释性][后训练优化] 提出 InfoSteer，一种轻量级方法，将 Transformer 的 FFN 层视为关联键值记忆，通过前向传播干预（提升低活跃记忆向量的 key coefficient）和反向传播正则化（最大化 key 分布熵）来促进预训练知识在后训练阶段的充分利用…
+  [NeurIPS 2025][可解释性][后训练优化] 提出 InfoSteer，一种轻量级方法，将 Transformer 的 FFN 层视为关联键值记忆，通过前向传播干预（提升低活跃记忆向量的 key coefficient）和反向传播正则化（最大化 key 分布熵）来促进预训练知识在后训练阶段的充分利用。在 Qwen/LLaMA/Gemma 三个系列 6 个模型上，15 个 ID+OOD 任务一致提升，且被引导的 LM 展现出自适应信息分配行为。
 tags:
   - "NeurIPS 2025"
   - "可解释性"

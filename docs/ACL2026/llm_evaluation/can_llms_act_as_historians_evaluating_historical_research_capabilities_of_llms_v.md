@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can LLMs Act as Historians? Evaluating Historical Research Capabilities of LLMs via the Chinese Imperial Examination
 description: >-
-  [ACL 2026][LLM评测][ProHist-Bench] 本文构建 ProHist-Bench：以中国 1300 年科举史为锚点、由历史学家手写 400 道专家级题目和 10,891 条细粒度 rubric…
+  [ACL 2026][LLM评测][ProHist-Bench] 本文构建 ProHist-Bench：以中国 1300 年科举史为锚点、由历史学家手写 400 道专家级题目和 10,891 条细粒度 rubric，评测 18 个 SOTA LLM 的专业历史研究能力——结果最强的 Gemini-3-Pro 和 Qwen3-235B 的 Rubric Score 也仅约 28，远低于开卷历史学家。
 tags:
   - "ACL 2026"
   - "LLM评测"

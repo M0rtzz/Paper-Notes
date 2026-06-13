@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DPC: Training-Free Text-to-SQL Candidate Selection via Dual-Paradigm Consistency
 description: >-
-  [ACL 2026][代码智能][SQL选择] DPC 将 Text-to-SQL 的候选选择从"在隐藏数据上猜测"转化为"在可见数据上确定性验证"：构造最小区分数据库（MDD）使冲突 SQL 产生不同结果，再用 Python/Pandas 解作为参考锚点通过跨范式一致性选择正确候选…
+  [ACL 2026][代码智能][SQL选择] DPC 将 Text-to-SQL 的候选选择从"在隐藏数据上猜测"转化为"在可见数据上确定性验证"：构造最小区分数据库（MDD）使冲突 SQL 产生不同结果，再用 Python/Pandas 解作为参考锚点通过跨范式一致性选择正确候选，在 BIRD 和 Spider 上超越 Self-Consistency 最高 2.2%。
 tags:
   - "ACL 2026"
   - "代码智能"

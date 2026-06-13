@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Smoothing Slot Attention Iterations and Recurrences
 description: >-
-  [ICML 2026][多模态VLM][Object-Centric Learning] 针对 Slot Attention 在图像与视频对象中心学习中"冷启动查询信息不足"和"首帧/非首帧聚合变换被强行统一"两个长期被忽视的痛点，作者提出 SmoothSA：用一个自蒸馏的小预热模块给查询注入样本信息…
+  [ICML 2026][多模态VLM][Object-Centric Learning] 针对 Slot Attention 在图像与视频对象中心学习中"冷启动查询信息不足"和"首帧/非首帧聚合变换被强行统一"两个长期被忽视的痛点，作者提出 SmoothSA：用一个自蒸馏的小预热模块给查询注入样本信息，同时让首帧跑完整三次迭代、非首帧只跑一次，从而在图像和视频两个 OCL 基准上同时刷新 SOTA。
 tags:
   - "ICML 2026"
   - "多模态VLM"

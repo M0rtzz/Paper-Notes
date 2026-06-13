@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models
 description: >-
-  [ACL 2025][预训练][数据选择] 提出Meta-rater多维数据选择框架，定义PRRC四个质量维度（专业性/可读性/推理性/清洁度），通过proxy模型回归学习多个质量分数的最优加权组合，使1.3B模型训练收敛速度翻倍、下游任务提升3.23%。
+  [ACL 2025][预训练][数据选择] 提出Meta-rater多维数据选择框架，定义PRRC四个质量维度（专业性/可读性/推理性/清洁度），通过proxy模型回归学习多个质量分数的最优加权组合，使1.3B模型训练收敛速度翻倍、下游任务提升3.23%。 领域现状： 预训练数据质量是LLM性能的关键驱动因素…
 tags:
   - "ACL 2025"
   - "预训练"

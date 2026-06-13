@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiSpatial: Taming Hierarchical 3D Spatial Understanding in Vision-Language Models
 description: >-
-  [CVPR 2026][多模态VLM][3D空间理解] HiSpatial 提出将 3D 空间智能分解为四层认知层级（几何感知 → 物体属性 → 物体关系 → 抽象推理），构建了处理约 500 万张图像、4500 万个物体、20 亿 QA 对的自动化数据管线…
+  [CVPR 2026][多模态VLM][3D空间理解] HiSpatial 提出将 3D 空间智能分解为四层认知层级（几何感知 → 物体属性 → 物体关系 → 抽象推理），构建了处理约 500 万张图像、4500 万个物体、20 亿 QA 对的自动化数据管线，并设计了以度量尺度点云图为辅助输入的 RGB-D VLM，以仅 3B 参数在多个空间推理基准上超越 GPT-5 和 Gemini-2.5-Pro。
 tags:
   - "CVPR 2026"
   - "多模态VLM"

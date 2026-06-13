@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Intervention Efficiency and Perturbation Validation Framework: Capacity-Aware and Robust Clinical Model Selection under the Rashomon Effect
 description: >-
-  [AAAI 2026][医学图像][Rashomon Effect] 针对临床小样本、类别不平衡场景下多个模型性能相近（Rashomon Effect）导致的模型选择困难，提出 **Intervention Efficiency (IE)** 容量感知评估指标和 **Perturbation Validati…
+  [AAAI 2026][医学图像][Rashomon Effect] 针对临床小样本、类别不平衡场景下多个模型性能相近（Rashomon Effect）导致的模型选择困难，提出 **Intervention Efficiency (IE)** 容量感知评估指标和 **Perturbation Validation Framework (PVF)** 鲁棒性验证框架，联合实现资源约束下的可靠模型选择。
 tags:
   - "AAAI 2026"
   - "医学图像"

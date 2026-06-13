@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling
 description: >-
-  [NeurIPS 2025][时间序列][状态空间模型] 提出 LrcSSM，通过约束液态电阻-液态电容（LRC）网络的 Jacobian 矩阵为对角形式，实现非线性 RNN 的精确高效并行化，在长序列分类任务上超越 Transformer、LRU、S5 和 Mamba 等 SOTA 方法。
+  [NeurIPS 2025][时间序列][状态空间模型] 提出 LrcSSM，通过约束液态电阻-液态电容（LRC）网络的 Jacobian 矩阵为对角形式，实现非线性 RNN 的精确高效并行化，在长序列分类任务上超越 Transformer、LRU、S5 和 Mamba 等 SOTA 方法。 线性状态空间模型（如 S4、S5…
 tags:
   - "NeurIPS 2025"
   - "时间序列"

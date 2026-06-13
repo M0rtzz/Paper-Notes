@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Can Large Language Models Generalize Procedures Across Representations?
 description: >-
-  [ICML2026][强化学习][跨表征泛化] 本文发现 LLM 在符号表征（代码/图）上学到的过程知识无法可靠迁移到自然语言任务，提出"先符号后自然语言"的两阶段 RL 课程学习策略，使 1.5B Qwen 模型在异步规划任务上接近 zero-shot GPT-4o…
+  [ICML2026][强化学习][跨表征泛化] 本文发现 LLM 在符号表征（代码/图）上学到的过程知识无法可靠迁移到自然语言任务，提出"先符号后自然语言"的两阶段 RL 课程学习策略，使 1.5B Qwen 模型在异步规划任务上接近 zero-shot GPT-4o，并从认知科学角度证明成功的跨表征泛化可被解释为生成类比。
 tags:
   - "ICML2026"
   - "强化学习"

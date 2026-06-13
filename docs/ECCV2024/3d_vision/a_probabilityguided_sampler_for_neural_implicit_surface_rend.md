@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Probability-guided Sampler for Neural Implicit Surface Rendering
 description: >-
-  [ECCV 2024][3D视觉][神经隐式表面] 提出一种概率引导的光线采样器（Probability-guided Sampler），在3D图像投影空间中建模概率密度函数来指导光线采样朝向感兴趣区域，同时设计了包含近表面和空白空间两个分量的新型表面重建损失，可作为插件集成到现有神经隐式表面渲染器中…
+  [ECCV 2024][3D视觉][神经隐式表面] 提出一种概率引导的光线采样器（Probability-guided Sampler），在3D图像投影空间中建模概率密度函数来指导光线采样朝向感兴趣区域，同时设计了包含近表面和空白空间两个分量的新型表面重建损失，可作为插件集成到现有神经隐式表面渲染器中，显著提升重建精度和渲染质量。
 tags:
   - "ECCV 2024"
   - "3D视觉"

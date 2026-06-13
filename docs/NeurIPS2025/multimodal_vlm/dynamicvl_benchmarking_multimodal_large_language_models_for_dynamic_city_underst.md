@@ -2,7 +2,7 @@
 title: >-
   [论文解读] DynamicVL: Benchmarking MLLMs for Dynamic City Understanding
 description: >-
-  [NeurIPS 2025][多模态VLM][遥感图像] 提出 DVL-Suite 框架，包含 DVL-Bench 基准和 DVL-Instruct 指令微调数据集，覆盖 42 座美国城市、14,871 张高分辨率多时相遥感影像，系统评估 18 个 MLLM 在长期城市动态理解上的能力…
+  [NeurIPS 2025][多模态VLM][遥感图像] 提出 DVL-Suite 框架，包含 DVL-Bench 基准和 DVL-Instruct 指令微调数据集，覆盖 42 座美国城市、14,871 张高分辨率多时相遥感影像，系统评估 18 个 MLLM 在长期城市动态理解上的能力，并开发了 DVLChat 基线模型。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] MARCO: Navigating the Unseen Space of Semantic Correspondence
 description: >-
-  [CVPR 2026][3D视觉][语义对应] 提出 MARCO，基于单一 DINOv2 backbone 的语义对应模型，通过粗到细高斯 RBF 损失逐步提升空间精度，并用自蒸馏框架将稀疏关键点监督扩展为稠密伪对应标签，在标准基准和未见关键点/类别上均达到 SOTA…
+  [CVPR 2026 Oral][3D视觉][语义对应] 提出 MARCO，基于单一 DINOv2 backbone 的语义对应模型，通过粗到细高斯 RBF 损失逐步提升空间精度，并用自蒸馏框架将稀疏关键点监督扩展为稠密伪对应标签，在标准基准和未见关键点/类别上均达到 SOTA，同时比双编码器方法小 3 倍、快 10 倍。
 tags:
-  - "CVPR 2026"
+  - "CVPR 2026 Oral"
   - "3D视觉"
   - "语义对应"
   - "DINOv2"

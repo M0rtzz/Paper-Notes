@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity
 description: >-
-  [AAAI 2026][LLM效率][图神经网络] Co-Sparsify 提出一种基于连通性感知的稀疏化框架，通过将 3-节点交互限制在双连通分量内、2-节点交互限制在连通分量内，消除可证明冗余的计算，在保持完整 2-FWL 表达力的同时显著提升效率…
+  [AAAI 2026][LLM效率][图神经网络] Co-Sparsify 提出一种基于连通性感知的稀疏化框架，通过将 3-节点交互限制在双连通分量内、2-节点交互限制在连通分量内，消除可证明冗余的计算，在保持完整 2-FWL 表达力的同时显著提升效率，在合成子结构计数任务和 ZINC、QM9 等基准上取得 SOTA。
 tags:
   - "AAAI 2026"
   - "LLM效率"

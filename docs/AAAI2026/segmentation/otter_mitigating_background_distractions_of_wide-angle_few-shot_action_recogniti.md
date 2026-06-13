@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Otter: Mitigating Background Distractions of Wide-Angle Few-Shot Action Recognition with Enhanced RWKV
 description: >-
-  [AAAI 2026][语义分割][动作识别] 针对广角视频中小样本动作识别的背景干扰问题（主体占比小、时序关系退化），提出基于增强 RWKV 的 Otter 框架，通过复合分割模块（CSM）突出主体和时序重建模块（TRM）恢复时序关系…
+  [AAAI 2026 Oral][语义分割][动作识别] 针对广角视频中小样本动作识别的背景干扰问题（主体占比小、时序关系退化），提出基于增强 RWKV 的 Otter 框架，通过复合分割模块（CSM）突出主体和时序重建模块（TRM）恢复时序关系，在 SSv2/Kinetics/UCF101/HMDB51 等基准上达到 SOTA。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "语义分割"
   - "动作识别"
   - "wide-angle video"

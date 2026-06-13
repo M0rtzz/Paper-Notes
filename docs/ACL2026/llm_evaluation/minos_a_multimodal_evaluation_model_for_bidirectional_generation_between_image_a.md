@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Minos: A Multimodal Evaluation Model for Bidirectional Generation Between Image and Text
 description: >-
-  [ACL 2026][LLM评测][多模态评测] 作者通过"严格的数据质量控制 + SFT + DPO 对齐"三步走，用不到现有工作一半规模的 57K 条高质量评测样本，训练出能同时给 I2T 与 T2I 双向多模态生成任务打分的 8B 评测模型 Minos…
+  [ACL 2026 Findings][LLM评测][多模态评测] 作者通过"严格的数据质量控制 + SFT + DPO 对齐"三步走，用不到现有工作一半规模的 57K 条高质量评测样本，训练出能同时给 I2T 与 T2I 双向多模态生成任务打分的 8B 评测模型 Minos，在 16 个 out-of-domain 任务上超过所有开源 MLLM-评测模型，并接近 GPT-4o。
 tags:
-  - "ACL 2026"
+  - "ACL 2026 Findings"
   - "LLM评测"
   - "多模态评测"
   - "数据质量控制"

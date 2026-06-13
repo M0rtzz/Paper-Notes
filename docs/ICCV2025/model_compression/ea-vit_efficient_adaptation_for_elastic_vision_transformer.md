@@ -2,7 +2,7 @@
 title: >-
   [论文解读] EA-ViT: Efficient Adaptation for Elastic Vision Transformer
 description: >-
-  [ICCV 2025][模型压缩][Transformer] 提出首个在适配（adaptation）阶段引入弹性结构的ViT框架，通过多维弹性架构+课程学习+轻量路由器，一次适配即生成覆盖10^26种配置的子模型，在多个下游任务上持续优于现有弹性方法。
+  [ICCV 2025][模型压缩][Transformer] 提出首个在适配（adaptation）阶段引入弹性结构的ViT框架，通过多维弹性架构+课程学习+轻量路由器，一次适配即生成覆盖10^26种配置的子模型，在多个下游任务上持续优于现有弹性方法。 Vision Transformer (ViT) 在预训练后需要适配到不…
 tags:
   - "ICCV 2025"
   - "模型压缩"

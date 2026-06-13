@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Bayesian Tensor Decomposition with Diffusion Model Prior
 description: >-
-  [ICML2026][图像生成][张量分解] DiffBCP 将预训练扩散模型作为隐式数据先验注入贝叶斯 CP 张量分解，通过 split Gibbs 采样器实现可处理的后验推断，在图像修复和去噪任务上全面超越传统和深度张量分解基线（FFHQ 上 PSNR 最高提升 +2.33 dB）。
+  [ICML2026][图像生成][张量分解] DiffBCP 将预训练扩散模型作为隐式数据先验注入贝叶斯 CP 张量分解，通过 split Gibbs 采样器实现可处理的后验推断，在图像修复和去噪任务上全面超越传统和深度张量分解基线（FFHQ 上 PSNR 最高提升 +2.33 dB）。 领域现状：低秩张量分解（TD）是多维…
 tags:
   - "ICML2026"
   - "图像生成"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Extending One-Step Image Generation from Class Labels to Text via Discriminative Text Representation
 description: >-
-  [CVPR 2026][图像生成][MeanFlow] 首次将 MeanFlow 框架从类别标签条件扩展到文本条件图像生成，发现限制步数下文本表示的语义区分性和解耦性是关键瓶颈，基于 BLIP3o-NEXT 文本编码器实现了高质量的少步/单步 T2I 生成。
+  [CVPR 2026][图像生成][MeanFlow] 首次将 MeanFlow 框架从类别标签条件扩展到文本条件图像生成，发现限制步数下文本表示的语义区分性和解耦性是关键瓶颈，基于 BLIP3o-NEXT 文本编码器实现了高质量的少步/单步 T2I 生成。 领域现状：MeanFlow 是一种有理论基础的 flow matc…
 tags:
   - "CVPR 2026"
   - "图像生成"

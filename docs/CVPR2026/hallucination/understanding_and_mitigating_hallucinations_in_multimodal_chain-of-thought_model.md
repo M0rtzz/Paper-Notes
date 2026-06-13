@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Understanding and Mitigating Hallucinations in Multimodal Chain-of-Thought Models
 description: >-
-  [CVPR 2026][幻觉检测][多模态幻觉] 本文系统分析了多模态 CoT 模型中幻觉的成因，发现模型在凭联想自由发挥的推理步骤（论文称之为"发散思维" divergent thinking）中最易产生幻觉，并提出基于视觉熵的免训练检测+解码干预策略…
+  [CVPR 2026][幻觉检测][多模态幻觉] 本文系统分析了多模态 CoT 模型中幻觉的成因，发现模型在凭联想自由发挥的推理步骤（论文称之为"发散思维" divergent thinking）中最易产生幻觉，并提出基于视觉熵的免训练检测+解码干预策略，在 Object HalBench 上将 CHAIRS 降低超过 30%，同时保持甚至提升通用推理能力。
 tags:
   - "CVPR 2026"
   - "幻觉检测"

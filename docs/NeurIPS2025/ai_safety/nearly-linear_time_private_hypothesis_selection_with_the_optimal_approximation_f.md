@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor
 description: >-
-  [NeurIPS 2025][AI安全][假设选择] 首次提出在中心差分隐私模型下同时实现近线性时间复杂度和最优近似因子 $\alpha=3$ 的假设选择算法，解决了Bun等人（NeurIPS 2019）提出的开放问题。
+  [NeurIPS 2025][AI安全][假设选择] 首次提出在中心差分隐私模型下同时实现近线性时间复杂度和最优近似因子 $\alpha=3$ 的假设选择算法，解决了Bun等人（NeurIPS 2019）提出的开放问题。 假设选择（Hypothesis Selection）是统计推断中的基本问题：给定 $n$ 个候选分布和从…
 tags:
   - "NeurIPS 2025"
   - "AI安全"

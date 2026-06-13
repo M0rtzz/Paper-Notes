@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MoECLIP: Patch-Specialized Experts for Zero-shot Anomaly Detection
 description: >-
-  [CVPR 2026][目标检测][零样本异常检测] 提出 MoECLIP，将 Mixture-of-Experts 引入零样本异常检测（ZSAD），通过冻结正交特征分离（FOFS）和等角紧框架（ETF）损失实现 patch 级别的动态专家路由与特化，在14个工业/医学基准上达到 SOTA。
+  [CVPR 2026][目标检测][零样本异常检测] 提出 MoECLIP，将 Mixture-of-Experts 引入零样本异常检测（ZSAD），通过冻结正交特征分离（FOFS）和等角紧框架（ETF）损失实现 patch 级别的动态专家路由与特化，在14个工业/医学基准上达到 SOTA。 1. 领域现状 视觉异常检测（A…
 tags:
   - "CVPR 2026"
   - "目标检测"

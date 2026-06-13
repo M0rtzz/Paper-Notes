@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Toward Material-Agnostic System Identification from Videos
 description: >-
-  [ICCV2025][system identification] 提出 MASIV，首个无需预定义材质先验的视觉系统辨识框架：采用可学习的神经本构模型替代手工设计的弹性/塑性方程，通过重建连续体粒子轨迹提供时间密集的几何约束，从多视角视频中推断物体的内在动力学特性。
+  [ICCV2025][system identification] 提出 MASIV，首个无需预定义材质先验的视觉系统辨识框架：采用可学习的神经本构模型替代手工设计的弹性/塑性方程，通过重建连续体粒子轨迹提供时间密集的几何约束，从多视角视频中推断物体的内在动力学特性。 视觉系统辨识 系统辨识旨在从视觉观测中恢复物体的几何形状…
 tags:
   - "ICCV2025"
   - "system identification"

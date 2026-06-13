@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Align to Structure: Aligning Large Language Models with Structural Information
 description: >-
-  [AAAI 2026][LLM对齐][结构对齐] 提出 Structural Alignment 方法，通过将语言学篇章结构框架（表层文本结构评分 + 基于RST的篇章motif分类器）融入PPO强化学习训练，并设计基于篇章motif的密集奖励机制，使LLM生成更连贯、更具人类写作风格的长文本…
+  [AAAI 2026][LLM对齐][结构对齐] 提出 Structural Alignment 方法，通过将语言学篇章结构框架（表层文本结构评分 + 基于RST的篇章motif分类器）融入PPO强化学习训练，并设计基于篇章motif的密集奖励机制，使LLM生成更连贯、更具人类写作风格的长文本，在论文写作和长文档摘要任务上均优于标准RLHF模型。
 tags:
   - "AAAI 2026"
   - "LLM对齐"

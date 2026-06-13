@@ -2,9 +2,9 @@
 title: >-
   [论文解读] BEDLAM2.0: Synthetic Humans and Cameras in Motion
 description: >-
-  [NeurIPS 2025][人体理解][synthetic data] BEDLAM2.0 在 BEDLAM 基础上全面升级——引入多样化相机运动（合成平移/追踪/环绕 + 手持/头戴设备捕捉）、更广体型覆盖（BMI 18-41）、strand-based 发型、鞋子、分级服装和更多3D环境…
+  [NeurIPS 2025 Oral][人体理解][synthetic data] BEDLAM2.0 在 BEDLAM 基础上全面升级——引入多样化相机运动（合成平移/追踪/环绕 + 手持/头戴设备捕捉）、更广体型覆盖（BMI 18-41）、strand-based 发型、鞋子、分级服装和更多3D环境，构建 27K+ 序列 / 8M+ 帧的合成数据集，仅用合成数据训练即可在世界坐标系人体运动估计上超越 SOTA。
 tags:
-  - "NeurIPS 2025"
+  - "NeurIPS 2025 Oral"
   - "人体理解"
   - "synthetic data"
   - "SMPL-X"

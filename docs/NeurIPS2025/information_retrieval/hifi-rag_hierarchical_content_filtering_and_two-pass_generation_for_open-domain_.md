@@ -2,7 +2,7 @@
 title: >-
   [论文解读] HiFi-RAG: Hierarchical Content Filtering and Two-Pass Generation for Open-Domain RAG
 description: >-
-  [NeurIPS 2025][信息检索/RAG][检索增强生成] 通过分离轻量级 Flash 模型的过滤能力与 Pro 模型的推理能力，构建多阶段管道（查询优化→分层过滤→两阶段生成→引文验证），在 MMU-RAGent 竞赛中实现 SOTA 性能。
+  [NeurIPS 2025][信息检索/RAG][检索增强生成] 通过分离轻量级 Flash 模型的过滤能力与 Pro 模型的推理能力，构建多阶段管道（查询优化→分层过滤→两阶段生成→引文验证），在 MMU-RAGent 竞赛中实现 SOTA 性能。 领域现状：RAG 在开放域环境中面临信息检索挑战，标准向量相似度搜索容易检…
 tags:
   - "NeurIPS 2025"
   - "信息检索/RAG"

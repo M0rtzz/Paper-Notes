@@ -2,7 +2,7 @@
 title: >-
   [论文解读] TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization
 description: >-
-  [ICML 2025][LLM对齐][DPO] 将序列级PPO分解为一系列token级近端策略优化问题，并引入token级奖励引导函数 $f(\hat{r}(s_t, a_t))$ 来替代DPO中的固定常数 $\beta$，使不同token根据各自奖励值呈现不同程度的偏离参考策略…
+  [ICML 2025][LLM对齐][DPO] 将序列级PPO分解为一系列token级近端策略优化问题，并引入token级奖励引导函数 $f(\hat{r}(s_t, a_t))$ 来替代DPO中的固定常数 $\beta$，使不同token根据各自奖励值呈现不同程度的偏离参考策略，在MT-Bench/AlpacaEval 2/Arena-Hard上分别提升最多7.5/6.2/4.3个胜率点。
 tags:
   - "ICML 2025"
   - "LLM对齐"

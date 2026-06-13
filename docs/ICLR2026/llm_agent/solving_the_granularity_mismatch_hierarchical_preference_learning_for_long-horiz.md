@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents
 description: >-
-  [ICLR 2026][LLM Agent][hierarchical DPO] 提出 HPL 框架解决长时序 LLM Agent 中偏好学习的粒度不匹配问题，通过三级 DPO（轨迹级+步骤级+动作组级）和双层课程学习（子任务复杂度×样本难度）…
+  [ICLR 2026][LLM Agent][hierarchical DPO] 提出 HPL 框架解决长时序 LLM Agent 中偏好学习的粒度不匹配问题，通过三级 DPO（轨迹级+步骤级+动作组级）和双层课程学习（子任务复杂度×样本难度），在 ALFWorld/WebShop/InterCode-SQL 上显著超越 ETO 和 IPR 等基线（平均 59.44 vs 55.43/55.49）。
 tags:
   - "ICLR 2026"
   - "LLM Agent"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding
 description: >-
-  [AAAI 2026][音频/语音][speech tokenization] 提出 VARSTok，首个全动态可变帧率语音 tokenizer，通过时序感知密度峰聚类和隐式时长编码，实现自适应 token 分配，在使用更少 token 的同时超越固定帧率基线。
+  [AAAI 2026][音频/语音][speech tokenization] 提出 VARSTok，首个全动态可变帧率语音 tokenizer，通过时序感知密度峰聚类和隐式时长编码，实现自适应 token 分配，在使用更少 token 的同时超越固定帧率基线。 领域现状 领域现状：现有语音 tokenizer（如 WavT…
 tags:
   - "AAAI 2026"
   - "音频/语音"

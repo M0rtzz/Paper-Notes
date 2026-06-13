@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Navigation World Models
 description: >-
-  [CVPR 2025][视频生成][世界模型] 本文提出Navigation World Model (NWM)，一个10亿参数的Conditional Diffusion Transformer (CDiT)，在多个机器人导航数据集和Ego4D无标签视频上联合训练…
+  [CVPR 2025][视频生成][世界模型] 本文提出Navigation World Model (NWM)，一个10亿参数的Conditional Diffusion Transformer (CDiT)，在多个机器人导航数据集和Ego4D无标签视频上联合训练，通过预测给定动作下的未来视觉观测来模拟导航轨迹，可用于MPC规划或对外部策略（如NoMaD）的轨迹排序，在RECON数据集上的ATE（1.13）和RPE（0.35）均显著优于现有导航策略。
 tags:
   - "CVPR 2025"
   - "视频生成"

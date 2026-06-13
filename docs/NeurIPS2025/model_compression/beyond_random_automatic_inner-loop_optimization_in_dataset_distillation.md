@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Beyond Random: Automatic Inner-Loop Optimization in Dataset Distillation
 description: >-
-  [NeurIPS 2025][模型压缩][数据蒸馏] 提出 AT-BPTT（自适应截断 BPTT），将 DNN 训练分为早/中/晚三阶段并自适应调整截断策略和窗口大小，在 CIFAR-10/100/Tiny-ImageNet/ImageNet-1K 上平均提升 3-17%…
+  [NeurIPS 2025][模型压缩][数据蒸馏] 提出 AT-BPTT（自适应截断 BPTT），将 DNN 训练分为早/中/晚三阶段并自适应调整截断策略和窗口大小，在 CIFAR-10/100/Tiny-ImageNet/ImageNet-1K 上平均提升 3-17%，同时实现 3.9× 加速和 63% 内存节省。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

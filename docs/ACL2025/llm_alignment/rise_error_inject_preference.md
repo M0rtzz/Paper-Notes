@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RISE: Subtle Errors in Reasoning: Preference Learning via Error-injected Self-editing
 description: >-
-  [ACL 2025][LLM对齐][math reasoning] RISE 发现 LLM 约 75% 的数学错误是微妙的步内错误（数字替换、操作数交换、步骤遗漏），通过让 LLM 自编辑向正确解注入预定义微妙错误来构造高质量难负样本，配合错误感知 DPO 训练…
+  [ACL 2025][LLM对齐][math reasoning] RISE 发现 LLM 约 75% 的数学错误是微妙的步内错误（数字替换、操作数交换、步骤遗漏），通过让 LLM 自编辑向正确解注入预定义微妙错误来构造高质量难负样本，配合错误感知 DPO 训练，仅用 4.5K 样本在 GSM8K 提升 3.0%、MATH 提升 7.9%，并泛化到逻辑推理和代码生成。
 tags:
   - "ACL 2025"
   - "LLM对齐"

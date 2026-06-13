@@ -2,10 +2,10 @@
 title: >-
   [论文解读] How Many Different Outputs Can a Transformer Generate?
 description: >-
-  [ICML 2026][LLM/NLP][可达序列] 本文从"有限精度 + 有界嵌入支撑"两个最基本的架构事实出发，证明任意 transformer 只能生成有限条"可达序列"，给出可达序列长度随 prompt 长度线性增长、超过阈值后比例以 $1/|V|^n$ 指数衰减的紧上界…
+  [ICML 2026 Spotlight][LLM 其他][可达序列] 本文从"有限精度 + 有界嵌入支撑"两个最基本的架构事实出发，证明任意 transformer 只能生成有限条"可达序列"，给出可达序列长度随 prompt 长度线性增长、超过阈值后比例以 $1/|V|^n$ 指数衰减的紧上界，并用 cramming 与 copying 实验在 Pythia/Qwen/Llama/Gemma 上验证理论斜率与实测仅差 5–10 倍。
 tags:
-  - "ICML 2026"
-  - "LLM/NLP"
+  - "ICML 2026 Spotlight"
+  - "LLM 其他"
   - "可达序列"
   - "packing number"
   - "嵌入空间几何"

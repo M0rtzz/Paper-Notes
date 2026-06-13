@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Dynamic Multimodal Activation Steering for Hallucination Mitigation in Large Vision-Language Models
 description: >-
-  [ICLR 2026][幻觉检测][幻觉缓解] 提出动态多模态激活引导（DMAS），通过构建基于语义的真实性引导向量数据库和视觉感知引导向量，在推理时动态选择最相关的引导向量对关键注意力头进行干预，无需训练即可显著缓解LVLM幻觉，在MME上提升94.66分，在CHAIR上降低20.2%幻觉率。
+  [ICLR 2026][幻觉检测][幻觉缓解] 提出动态多模态激活引导（DMAS），通过构建基于语义的真实性引导向量数据库和视觉感知引导向量，在推理时动态选择最相关的引导向量对关键注意力头进行干预，无需训练即可显著缓解LVLM幻觉，在MME上提升94.66分，在CHAIR上降低20.2%幻觉率。 大视觉语言模型（LVLM）在…
 tags:
   - "ICLR 2026"
   - "幻觉检测"

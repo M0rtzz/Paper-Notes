@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera
 description: >-
-  [CVPR 2025][3D视觉][度量深度估计] 提出 Depth Any Camera (DAC) 框架，通过 ERP 统一表示、Pitch-aware 转换和 FoV 对齐等技术，实现仅用透视图像训练即可零样本泛化到鱼眼和360°相机的度量深度估计…
+  [CVPR 2025][3D视觉][度量深度估计] 提出 Depth Any Camera (DAC) 框架，通过 ERP 统一表示、Pitch-aware 转换和 FoV 对齐等技术，实现仅用透视图像训练即可零样本泛化到鱼眼和360°相机的度量深度估计，在大视野数据集上 $\delta_1$ 精度提升高达50%。
 tags:
   - "CVPR 2025"
   - "3D视觉"

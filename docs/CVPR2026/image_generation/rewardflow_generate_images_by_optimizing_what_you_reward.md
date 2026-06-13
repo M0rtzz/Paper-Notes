@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RewardFlow: Generate Images by Optimizing What You Reward
 description: >-
-  [CVPR 2026][图像生成][奖励引导生成] RewardFlow 提出一种无需反转的推理时框架，通过多奖励 Langevin 动力学融合语义对齐、感知保真度、局部定位、物体一致性和人类偏好等多种可微分奖励信号，在图像编辑和组合式生成任务上实现 SOTA 的编辑保真度和组合对齐效果。
+  [CVPR 2026][图像生成][奖励引导生成] RewardFlow 提出一种无需反转的推理时框架，通过多奖励 Langevin 动力学融合语义对齐、感知保真度、局部定位、物体一致性和人类偏好等多种可微分奖励信号，在图像编辑和组合式生成任务上实现 SOTA 的编辑保真度和组合对齐效果。 领域现状：扩散模型和 flow-m…
 tags:
   - "CVPR 2026"
   - "图像生成"

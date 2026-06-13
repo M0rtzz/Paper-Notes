@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MMaDA: Multimodal Large Diffusion Language Models
 description: >-
-  [NeurIPS 2025][强化学习][扩散语言模型] 提出 MMaDA，首个在统一离散扩散架构下同时实现文本推理、多模态理解和文本到图像生成的多模态基础模型，通过混合长 CoT 微调和 UniGRPO 强化学习算法弥合了扩散模型预训练与后训练之间的鸿沟。
+  [NeurIPS 2025][强化学习][扩散语言模型] 提出 MMaDA，首个在统一离散扩散架构下同时实现文本推理、多模态理解和文本到图像生成的多模态基础模型，通过混合长 CoT 微调和 UniGRPO 强化学习算法弥合了扩散模型预训练与后训练之间的鸿沟。 多模态大模型正在经历架构范式的演进： 纯自回归（AR）：如 Emu…
 tags:
   - "NeurIPS 2025"
   - "强化学习"

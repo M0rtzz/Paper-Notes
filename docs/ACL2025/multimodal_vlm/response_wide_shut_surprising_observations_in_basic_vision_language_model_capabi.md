@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Response Wide Shut: Surprising Observations in Basic Vision Language Model Capabilities
 description: >-
-  [ACL 2025][多模态VLM][视觉语言模型] 通过在VLM的三个中间特征空间（视觉编码器、VL投影层、语言解码器）上训练线性探针，系统揭示了一个反直觉的现象：对于大多数视觉任务，视觉编码器和VL投影层其实保留了充分的视觉信息…
+  [ACL 2025][多模态VLM][视觉语言模型] 通过在VLM的三个中间特征空间（视觉编码器、VL投影层、语言解码器）上训练线性探针，系统揭示了一个反直觉的现象：对于大多数视觉任务，视觉编码器和VL投影层其实保留了充分的视觉信息，真正的瓶颈在于语言解码器的响应空间——信息在从投影层传递到最终文本输出的过程中大量丢失。
 tags:
   - "ACL 2025"
   - "多模态VLM"

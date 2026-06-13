@@ -2,7 +2,7 @@
 title: >-
   [论文解读] YEZE at SemEval-2026 Task 9: Detecting Multilingual, Multicultural and Multievent Online Polarization via Heterogeneous Ensembling
 description: >-
-  [ACL2026][社会计算][多语言极化检测] YEZE 系统把 SemEval-2026 Task 9 的 22 语言在线极化识别拆成独立子任务，用 XLM-RoBERTa-large 与 mDeBERTa-v3-base 分别微调，再通过加权概率平均和 weighted BCE 缓解多标签稀疏问题…
+  [ACL2026][社会计算][多语言极化检测] YEZE 系统把 SemEval-2026 Task 9 的 22 语言在线极化识别拆成独立子任务，用 XLM-RoBERTa-large 与 mDeBERTa-v3-base 分别微调，再通过加权概率平均和 weighted BCE 缓解多标签稀疏问题，在细粒度极化类型与表现形式预测上取得稳定的官方 Top-10 排名。
 tags:
   - "ACL2026"
   - "社会计算"
@@ -18,7 +18,7 @@ tags:
 **会议**: ACL2026  
 **arXiv**: [2605.06231](https://arxiv.org/abs/2605.06231)  
 **代码**: https://github.com/FezeGo/SemEval-2026-Task9-Polar  
-**领域**: multilingual_mt / 多语言内容安全 / 社交媒体分析  
+**领域**: 多语言翻译 / 多语言内容安全 / 社交媒体分析  
 **关键词**: 多语言极化检测, SemEval, 类不平衡, XLM-R, 异构集成
 
 ## 一句话总结

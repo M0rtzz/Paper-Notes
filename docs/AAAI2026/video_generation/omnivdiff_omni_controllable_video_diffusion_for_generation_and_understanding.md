@@ -2,7 +2,7 @@
 title: >-
   [论文解读] OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding
 description: >-
-  [AAAI 2026][视频生成][视频扩散模型] 提出 OmniVDiff，一个统一的可控视频扩散框架，通过将多种视觉模态（RGB、深度、分割、Canny）在颜色空间中联合建模，并引入自适应模态控制策略（AMCS），在单一扩散模型中同时支持文本条件生成、X 条件生成和视频理解三种任务…
+  [AAAI 2026][视频生成][视频扩散模型] 提出 OmniVDiff，一个统一的可控视频扩散框架，通过将多种视觉模态（RGB、深度、分割、Canny）在颜色空间中联合建模，并引入自适应模态控制策略（AMCS），在单一扩散模型中同时支持文本条件生成、X 条件生成和视频理解三种任务，在 VBench 上达到 SOTA。
 tags:
   - "AAAI 2026"
   - "视频生成"

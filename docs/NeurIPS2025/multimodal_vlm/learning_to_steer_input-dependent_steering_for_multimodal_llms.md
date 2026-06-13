@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Learning to Steer: Input-dependent Steering for Multimodal LLMs
 description: >-
-  [NeurIPS 2025][多模态VLM][steering] 针对现有模型引导(steering)方法使用固定方向向量无法适配不同输入的局限，提出 L2S (Learn-to-Steer)：先通过输入特定的对比提示生成理想的引导向量（P2S），再训练一个轻量 2 层 MLP 从输入上下文预测该向量…
+  [NeurIPS 2025][多模态VLM][steering] 针对现有模型引导(steering)方法使用固定方向向量无法适配不同输入的局限，提出 L2S (Learn-to-Steer)：先通过输入特定的对比提示生成理想的引导向量（P2S），再训练一个轻量 2 层 MLP 从输入上下文预测该向量，以极低开销实现了输入依赖的行为引导，在安全执行和幻觉缓解两个应用上显著优于静态 steering 基线。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

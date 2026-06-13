@@ -2,7 +2,7 @@
 title: >-
   [论文解读] PocketLLM: Ultimate Compression of Large Language Models via Meta Networks
 description: >-
-  [AAAI2026][模型压缩][LLM压缩] PocketLLM提出通过元网络（编码器-码本-解码器）在潜空间中压缩LLM权重向量，用小型解码器+紧凑码本+索引替代原始权重矩阵，在Llama 2-7B上实现10×压缩且精度损失可忽略，突破了传统量化/剪枝在极端压缩比下的精度瓶颈。
+  [AAAI2026][模型压缩][LLM压缩] PocketLLM提出通过元网络（编码器-码本-解码器）在潜空间中压缩LLM权重向量，用小型解码器+紧凑码本+索引替代原始权重矩阵，在Llama 2-7B上实现10×压缩且精度损失可忽略，突破了传统量化/剪枝在极端压缩比下的精度瓶颈。 1. 边缘部署需求：笔记本、手机、自动驾驶…
 tags:
   - "AAAI2026"
   - "模型压缩"

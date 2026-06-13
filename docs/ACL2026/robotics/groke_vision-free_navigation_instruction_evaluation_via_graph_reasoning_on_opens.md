@@ -2,7 +2,7 @@
 title: >-
   [论文解读] GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap
 description: >-
-  [ACL 2026][机器人][Map2Seq] GROKE 提出**完全不用视觉**就评测导航指令好不好——把 OSM 地图序列化成 JSON，让 Gemini-3 Pro 当 follower agent 沿图执行指令…
+  [ACL 2026][机器人][Map2Seq] GROKE 提出**完全不用视觉**就评测导航指令好不好——把 OSM 地图序列化成 JSON，让 Gemini-3 Pro 当 follower agent 沿图执行指令，用 Navigation Error / SR / SDTW 反过来当指令质量的 proxy；相比启发式 baseline 在 Map2Seq 上降低 navigation error 68.5%，且 NE 与人类对"指令清晰度"的判断显著相关 ($r = -0.31, p < 0.01$)。
 tags:
   - "ACL 2026"
   - "机器人"

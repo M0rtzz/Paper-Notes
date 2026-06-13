@@ -2,7 +2,7 @@
 title: >-
   [论文解读] RelaCtrl: Relevance-Guided Efficient Control for Diffusion Transformers
 description: >-
-  [AAAI 2026][图像生成][可控生成] 提出 RelaCtrl 框架，通过 ControlNet 相关性评分分析 DiT 各层对控制信息的敏感度差异，据此指导控制块的放置位置和建模强度，并设计二维混洗混合器（TDSM）替代自注意力和 FFN…
+  [AAAI 2026][图像生成][可控生成] 提出 RelaCtrl 框架，通过 ControlNet 相关性评分分析 DiT 各层对控制信息的敏感度差异，据此指导控制块的放置位置和建模强度，并设计二维混洗混合器（TDSM）替代自注意力和 FFN，以仅 15% 的参数量和计算复杂度实现优于 PixArt-δ 的可控生成效果。
 tags:
   - "AAAI 2026"
   - "图像生成"

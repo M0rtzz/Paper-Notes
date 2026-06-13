@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration
 description: >-
-  [ECCV 2024][图像恢复][提示学习] 提出 FPro，通过频域视角的 prompt learning 指导图像复原：使用 Gated Dynamic Decoupler 将特征解耦为低频/高频分量…
+  [ECCV 2024][图像恢复][提示学习] 提出 FPro，通过频域视角的 prompt learning 指导图像复原：使用 Gated Dynamic Decoupler 将特征解耦为低频/高频分量，再通过 Dual Prompt Block（HPM + LPM）分别对两个频带注入可学习 prompt 并与解码器特征交互，在去雨、去雨滴、去摩尔纹、去模糊、去雾 5 个任务上全面超越 SOTA。
 tags:
   - "ECCV 2024"
   - "图像恢复"

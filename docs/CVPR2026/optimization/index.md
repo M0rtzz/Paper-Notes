@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 优化/理论论文汇总 · 17篇论文解读
+  CVPR2026 优化/理论论文汇总 · 18篇论文解读
 description: >-
-  17篇CVPR2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、自监督学习、压缩/编码、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  18篇CVPR2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、自监督学习、压缩/编码、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "优化/理论"
@@ -18,6 +18,8 @@ item_list:
     t: "ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation"
   - u: "bd-merging_bias-aware_dynamic_model_merging_with_evidence-guided_contrastive_lea/"
     t: "BD-Merging: Bias-Aware Dynamic Model Merging with Evidence-Guided Contrastive Learning"
+  - u: "beyond_euclidean_gossip_kl-barycentric_consensus_on_heterogeneous_and_imbalanced/"
+    t: "Beyond Euclidean Gossip: KL-Barycentric Consensus on Heterogeneous and Imbalanced Images"
   - u: "blazefl_fast_and_deterministic_federated_learning_simulation/"
     t: "BlazeFL: Fast and Deterministic Federated Learning Simulation"
   - u: "conditional_factuality_controlled_llms_with_generalization_certificates_via_conf/"
@@ -48,13 +50,13 @@ item_list:
     t: "UniFusion: A Unified Image Fusion Framework with Robust Representation and Source-Aware Preservation"
   - u: "zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training/"
     t: "ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training"
-item_total: 17
+item_total: 18
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**📷 CVPR2026** · **17** 篇论文解读
+**📷 CVPR2026** · **18** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (64)](../../ICML2026/optimization/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (126)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
@@ -67,6 +69,10 @@ item_total: 17
 **[BD-Merging: Bias-Aware Dynamic Model Merging with Evidence-Guided Contrastive Learning](bd-merging_bias-aware_dynamic_model_merging_with_evidence-guided_contrastive_lea.md)**
 
 :   提出 BD-Merging 框架，通过 Dirichlet 证据建模 + 邻域差异分数（ADS）+ 差异感知对比学习，训练去偏路由器来自适应分配模型合并权重，显著提升合并模型在测试时分布偏移和未见任务上的鲁棒性与泛化能力。
+
+**[Beyond Euclidean Gossip: KL-Barycentric Consensus on Heterogeneous and Imbalanced Images](beyond_euclidean_gossip_kl-barycentric_consensus_on_heterogeneous_and_imbalanced.md)**
+
+:   针对完全去中心化训练在 non-i.i.d. 数据和客户端规模不均衡下崩坏的问题，本文把"邻居间平均模型参数"这个 Euclidean gossip 操作，换成在指数族期望参数空间里做线性混合——它恰好等价于一次曲率感知的 KL 重心共识（自然梯度步），无需构造或求逆 Fisher 矩阵就把单轮复杂度从 $O(d^3)$ 降到 $O(d)$，并给出一个开销与 Adam 几乎相同的实现 KL-consensus Adam，在 CIFAR-100 上比 Euclidean 共识基线高出约 20% 准确率。
 
 **[BlazeFL: Fast and Deterministic Federated Learning Simulation](blazefl_fast_and_deterministic_federated_learning_simulation.md)**
 

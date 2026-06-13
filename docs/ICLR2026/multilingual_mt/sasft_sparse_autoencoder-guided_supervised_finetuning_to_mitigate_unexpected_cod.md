@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SASFT: Sparse Autoencoder-guided Supervised Finetuning to Mitigate Unexpected Code-Switching in LLMs
 description: >-
-  [多语言/翻译] 利用稀疏自编码器（SAE）发现 LLM 中意外语言切换与目标语言特征异常高预激活值相关，提出 SASFT 方法在 SFT 训练中约束语言特征预激活值，将意外代码切换降低 50% 以上。
+  [多语言/翻译] 利用稀疏自编码器（SAE）发现 LLM 中意外语言切换与目标语言特征异常高预激活值相关，提出 SASFT 方法在 SFT 训练中约束语言特征预激活值，将意外代码切换降低 50% 以上。 问题背景 多语言 LLM（如 Qwen-3、Llama-4、Gemma-3）在生成回复时经常出现意外的语言切换（code-…
 tags:
   - "多语言/翻译"
 ---

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Aguvis: Unified Pure Vision Agents for Autonomous GUI Interaction
 description: >-
-  [ICML 2025][LLM Agent][GUI Agent] 提出 Aguvis，首个完全基于纯视觉的跨平台自主 GUI Agent 框架，通过统一视觉观察空间、标准化动作空间和内心独白（inner monologue）机制，在离线和在线基准上取得 SOTA，无需依赖闭源模型。
+  [ICML 2025][LLM Agent][GUI Agent] 提出 Aguvis，首个完全基于纯视觉的跨平台自主 GUI Agent 框架，通过统一视觉观察空间、标准化动作空间和内心独白（inner monologue）机制，在离线和在线基准上取得 SOTA，无需依赖闭源模型。 现有 GUI 自动化方法存在三个核心瓶颈…
 tags:
   - "ICML 2025"
   - "LLM Agent"

@@ -2,9 +2,9 @@
 title: >-
   [论文解读] HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection
 description: >-
-  [AAAI 2026][视频理解][视频异常检测] 本文提出 HeadHunt-VAD，通过在冻结的多模态大模型(MLLM)内部系统性地搜索出对异常敏感且稳定的稀疏注意力头集合，绕过文本输出的信息损失，用轻量级分类器实现无需微调的高效视频异常检测…
+  [AAAI 2026 Oral][视频理解][视频异常检测] 本文提出 HeadHunt-VAD，通过在冻结的多模态大模型(MLLM)内部系统性地搜索出对异常敏感且稳定的稀疏注意力头集合，绕过文本输出的信息损失，用轻量级分类器实现无需微调的高效视频异常检测，在 UCF-Crime 和 XD-Violence 上取得 tuning-free 方法 SOTA。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "视频理解"
   - "视频异常检测"
   - "多模态大模型"

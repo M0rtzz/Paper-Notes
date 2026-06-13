@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference
 description: >-
-  [ICML 2025][LLM效率][张量并行] 本文提出 Ladder Residual，一种简单的架构修改——将每个模块的输入从上一层的输出改为上上层的输出（错位残差），使模块计算与 AllReduce 通信解耦，从而实现通信与计算的重叠，在 70B 模型 8 卡 TP 推理中实现 29% 的端到端加速…
+  [ICML 2025][LLM效率][张量并行] 本文提出 Ladder Residual，一种简单的架构修改——将每个模块的输入从上一层的输出改为上上层的输出（错位残差），使模块计算与 AllReduce 通信解耦，从而实现通信与计算的重叠，在 70B 模型 8 卡 TP 推理中实现 29% 的端到端加速，且模型性能与标准 Transformer 持平。
 tags:
   - "ICML 2025"
   - "LLM效率"

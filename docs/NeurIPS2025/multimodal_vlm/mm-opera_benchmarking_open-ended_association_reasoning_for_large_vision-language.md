@@ -2,7 +2,7 @@
 title: >-
   [论文解读] MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models
 description: >-
-  [NeurIPS 2025][多模态VLM][association reasoning] 提出 MM-OPERA，一个包含 11,497 实例的开放式联想推理基准，通过远程物品关联（RIA）和上下文关联（ICA）两大任务评估 LVLM 的关联推理能力…
+  [NeurIPS 2025][多模态VLM][association reasoning] 提出 MM-OPERA，一个包含 11,497 实例的开放式联想推理基准，通过远程物品关联（RIA）和上下文关联（ICA）两大任务评估 LVLM 的关联推理能力，配套设计了 LLM-as-a-Judge 评分策略和过程奖励评估方法，揭示当前最强 LVLM 仍显著落后于人类。
 tags:
   - "NeurIPS 2025"
   - "多模态VLM"

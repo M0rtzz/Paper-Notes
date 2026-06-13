@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting
 description: >-
-  [CVPR2025][医学图像][structured radiology reporting] ProtoSR 提出从大规模自由文本放射学报告中挖掘模板对齐的原型知识库，并通过原型条件化的后期融合残差模块注入结构化报告预测，在 Rad-ReStruct 基准上实现 SOTA…
+  [CVPR2025][医学图像][structured radiology reporting] ProtoSR 提出从大规模自由文本放射学报告中挖掘模板对齐的原型知识库，并通过原型条件化的后期融合残差模块注入结构化报告预测，在 Rad-ReStruct 基准上实现 SOTA，尤其在细粒度属性问题 (L3) 上获得 72.1% 的相对提升。
 tags:
   - "CVPR2025"
   - "医学图像"

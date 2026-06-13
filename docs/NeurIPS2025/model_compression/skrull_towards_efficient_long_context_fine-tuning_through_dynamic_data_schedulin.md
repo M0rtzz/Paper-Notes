@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Skrull: Towards Efficient Long Context Fine-tuning through Dynamic Data Scheduling
 description: >-
-  [NeurIPS 2025][模型压缩][长上下文微调] 针对长上下文监督微调（Long-SFT）中长短序列混合导致的训练效率低下问题，提出动态数据调度器Skrull，通过分布感知的上下文并行（DACP）和全局数据调度（GDS）两个组件…
+  [NeurIPS 2025][模型压缩][长上下文微调] 针对长上下文监督微调（Long-SFT）中长短序列混合导致的训练效率低下问题，提出动态数据调度器Skrull，通过分布感知的上下文并行（DACP）和全局数据调度（GDS）两个组件，在真实Long-SFT场景中实现平均3.76倍（最高7.54倍）的训练加速。
 tags:
   - "NeurIPS 2025"
   - "模型压缩"

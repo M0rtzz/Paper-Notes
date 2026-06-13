@@ -2,10 +2,10 @@
 title: >-
   [论文解读] Stripe Observation Guided Inference Cost-Free Attention Mechanism
 description: >-
-  [ECCV 2024][LLM/NLP][条纹注意力] 本文通过深入分析Transformer中注意力权重矩阵的条纹（stripe）模式现象，提出一种推理阶段完全无额外计算开销的注意力增强机制——仅在训练阶段通过辅助模块学习条纹引导的注意力修正，并在推理时将其重参数化融入标准注意力权重中…
+  [ECCV 2024][LLM 其他][条纹注意力] 本文通过深入分析Transformer中注意力权重矩阵的条纹（stripe）模式现象，提出一种推理阶段完全无额外计算开销的注意力增强机制——仅在训练阶段通过辅助模块学习条纹引导的注意力修正，并在推理时将其重参数化融入标准注意力权重中，实现"免费午餐"式的性能提升。
 tags:
   - "ECCV 2024"
-  - "LLM/NLP"
+  - "LLM 其他"
   - "条纹注意力"
   - "推理免费"
   - "注意力模式分析"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ConViS-Bench: Estimating Video Similarity Through Semantic Concepts
 description: >-
-  [NeurIPS 2025][视频理解][video similarity] 提出基于语义概念的视频相似度估计任务 ConViS 及配套 benchmark ConViS-Bench（610对视频、16领域、5概念），系统评测了10+主流模型在概念条件下的视频比较能力…
+  [NeurIPS 2025][视频理解][video similarity] 提出基于语义概念的视频相似度估计任务 ConViS 及配套 benchmark ConViS-Bench（610对视频、16领域、5概念），系统评测了10+主流模型在概念条件下的视频比较能力，揭示当前模型在时序结构和空间语境理解上的显著短板。
 tags:
   - "NeurIPS 2025"
   - "视频理解"

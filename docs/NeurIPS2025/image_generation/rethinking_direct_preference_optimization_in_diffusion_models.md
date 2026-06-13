@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Rethinking Direct Preference Optimization in Diffusion Models
 description: >-
-  [SPIGM@NeurIPS 2025 / AAAI 2026 (Oral)][图像生成][扩散模型] 针对扩散模型中 DPO 的两个核心问题——有限探索和奖励尺度不平衡,提出稳定参考模型更新策略和时间步感知训练策略,可集成到各种偏好优化算法中。
+  [SPIGM@NeurIPS 2025 / AAAI 2026 (Oral)][图像生成][扩散模型] 针对扩散模型中 DPO 的两个核心问题——有限探索和奖励尺度不平衡,提出稳定参考模型更新策略和时间步感知训练策略,可集成到各种偏好优化算法中。 将文本到图像（T2I）扩散模型与人类偏好对齐是当前的热门研究方向…
 tags:
   - "SPIGM@NeurIPS 2025 / AAAI 2026 (Oral)"
   - "图像生成"

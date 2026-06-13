@@ -2,7 +2,7 @@
 title: >-
   [论文解读] ProtoDepth: Unsupervised Continual Depth Completion with Prototypes
 description: >-
-  [CVPR 2025][3D视觉][持续学习] ProtoDepth提出基于原型（Prototype）的持续学习方法，通过冻结预训练模型并为每个新域学习轻量原型集来调制隐层特征，在室内和室外场景中将遗忘率降低超过50%。
+  [CVPR 2025][3D视觉][持续学习] ProtoDepth提出基于原型（Prototype）的持续学习方法，通过冻结预训练模型并为每个新域学习轻量原型集来调制隐层特征，在室内和室外场景中将遗忘率降低超过50%。 深度补全（从RGB图像和稀疏点云预测稠密深度图）在自动驾驶和机器人中广泛应用。无监督学习范式（不需要GT…
 tags:
   - "CVPR 2025"
   - "3D视觉"

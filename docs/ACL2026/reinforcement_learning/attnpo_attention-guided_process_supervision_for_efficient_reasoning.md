@@ -2,7 +2,7 @@
 title: >-
   [论文解读] AttnPO: Attention-Guided Process Supervision for Efficient Reasoning
 description: >-
-  [ACL 2026][强化学习][过度思考] 提出 AttnPO，一个利用模型内在注意力信号进行步级信用分配的低开销过程监督 RL 框架，通过识别 Key-Focus Heads（KFH）区分冗余和关键推理步骤，在大幅缩短推理长度的同时显著提升准确率。
+  [ACL 2026][强化学习][过度思考] 提出 AttnPO，一个利用模型内在注意力信号进行步级信用分配的低开销过程监督 RL 框架，通过识别 Key-Focus Heads（KFH）区分冗余和关键推理步骤，在大幅缩短推理长度的同时显著提升准确率。 领域现状： 基于 RLVR 训练的大推理模型（LRM）如 DeepSee…
 tags:
   - "ACL 2026"
   - "强化学习"

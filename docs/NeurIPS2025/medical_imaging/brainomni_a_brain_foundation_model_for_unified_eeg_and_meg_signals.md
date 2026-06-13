@@ -2,7 +2,7 @@
 title: >-
   [论文解读] BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals
 description: >-
-  [NeurIPS 2025][医学图像][EEG] 提出 BrainOmni——首个统一 EEG 和 MEG 的脑信号基础模型，通过 BrainTokenizer（含物理传感器编码器）将异构脑电/脑磁信号离散化为统一 token，再用 Criss-Cross Transformer 进行自监督掩码预测预训练…
+  [NeurIPS 2025][医学图像][EEG] 提出 BrainOmni——首个统一 EEG 和 MEG 的脑信号基础模型，通过 BrainTokenizer（含物理传感器编码器）将异构脑电/脑磁信号离散化为统一 token，再用 Criss-Cross Transformer 进行自监督掩码预测预训练，在阿尔茨海默病检测上提升 11.7 个百分点，并实现对完全未见设备的零样本重建泛化。
 tags:
   - "NeurIPS 2025"
   - "医学图像"

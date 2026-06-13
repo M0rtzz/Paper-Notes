@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Stochastic Self-Organization in Multi-Agent Systems
 description: >-
-  [ICLR 2026][多智能体][multi-agent systems] 提出 SelfOrg 框架，基于 Agent 响应的语义相似度和 Shapley 值贡献估计，动态构建有向无环通讯图（DAG），实现多 Agent 系统的自组织协作。在弱模型场景下优势尤为显著。
+  [ICLR 2026][多智能体][multi-agent systems] 提出 SelfOrg 框架，基于 Agent 响应的语义相似度和 Shapley 值贡献估计，动态构建有向无环通讯图（DAG），实现多 Agent 系统的自组织协作。在弱模型场景下优势尤为显著。 基于 LLM 的多 Agent 系统（MAS）理论上…
 tags:
   - "ICLR 2026"
   - "多智能体"

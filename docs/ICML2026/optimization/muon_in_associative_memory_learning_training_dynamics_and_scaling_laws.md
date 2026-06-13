@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Muon in Associative Memory Learning: Training Dynamics and Scaling Laws
 description: >-
-  [ICML2026][优化/理论][Muon 优化器] 本文在带 softmax 检索和分层频谱的线性关联记忆模型上，对 Muon 进行收敛速率与缩放律的理论刻画：相对 GD，Muon 在无噪声情形获得指数级加速…
+  [ICML2026][优化/理论][Muon 优化器] 本文在带 softmax 检索和分层频谱的线性关联记忆模型上，对 Muon 进行收敛速率与缩放律的理论刻画：相对 GD，Muon 在无噪声情形获得指数级加速，在幂律频谱噪声情形将损失收敛律从 $\tilde{\Omega}(T^{-(1-1/\beta)})$ 提升到 $\tilde{\mathcal{O}}(T^{-2})$，并把这一加速归因于矩阵符号算子等价于一个自适应任务对齐的隐式预条件子。
 tags:
   - "ICML2026"
   - "优化/理论"
@@ -18,7 +18,7 @@ tags:
 **会议**: ICML2026  
 **arXiv**: [2602.05725](https://arxiv.org/abs/2602.05725)  
 **代码**: 未公开  
-**领域**: optimization  
+**领域**: 优化  
 **关键词**: Muon 优化器, 关联记忆, 矩阵符号算子, 缩放律, 训练动力学  
 
 ## 一句话总结

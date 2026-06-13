@@ -2,9 +2,9 @@
 title: >-
   [论文解读] Lookahead Sample Reward Guidance for Test-Time Scaling of Diffusion Models
 description: >-
-  [ICML 2026][LLM推理][扩散模型] LiDAR 用预先生成的几步 lookahead 样本和前向扰动核重写期望未来奖励（EFR），把 reward guidance 变成无需神经反传的闭式 softmax 权重，在 SDXL/GenEval 上匹配 DATE 的指标却快 9.5×。
+  [ICML 2026 Spotlight][LLM推理][扩散模型] LiDAR 用预先生成的几步 lookahead 样本和前向扰动核重写期望未来奖励（EFR），把 reward guidance 变成无需神经反传的闭式 softmax 权重，在 SDXL/GenEval 上匹配 DATE 的指标却快 9.5×。
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "LLM推理"
   - "扩散模型"
   - "test-time scaling"

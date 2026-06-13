@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Edit-Based Refinement for Parallel Masked Diffusion Language Models
 description: >-
-  [ICML 2026][多语言/翻译][扩散模型] ME-DLM 给 masked diffusion 语言模型（如 LLaDA）加一个"解码完再编辑修补"的轻量阶段：第一阶段照常 unmask 出粗稿，第二阶段用替换/删除/插入三种 token 级编辑做并行修正…
+  [ICML 2026][多语言/翻译][扩散模型] ME-DLM 给 masked diffusion 语言模型（如 LLaDA）加一个"解码完再编辑修补"的轻量阶段：第一阶段照常 unmask 出粗稿，第二阶段用替换/删除/插入三种 token 级编辑做并行修正，监督信号来自 edit distance 的最短编辑脚本，在只用 1/8 扩散步数的情况下 HumanEval +11.6 / GSM8K +33.6 点反超 LLaDA-Instruct。
 tags:
   - "ICML 2026"
   - "多语言/翻译"

@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Online Iterative Self-Alignment for Radiology Report Generation
 description: >-
-  [ACL 2025][医疗NLP][放射学报告生成] 提出在线迭代自对齐（OISA）方法用于放射学报告生成——四阶段循环（自生成多样数据→自评估多目标偏好→自对齐多目标优化→自迭代进一步提升），无需额外人工标注即可迭代提升报告质量，在多个评估指标上达到 SOTA。
+  [ACL 2025][医疗NLP][放射学报告生成] 提出在线迭代自对齐（OISA）方法：通过自生成→自评估→自对齐→自迭代的四阶段循环，利用多目标偏好优化（MODPO）让轻量级 RRG 模型在无需外部大模型或人工标注的条件下，持续提升放射学报告质量，在 MIMIC-CXR 和 IU-Xray 上达到 SOTA。
 tags:
   - "ACL 2025"
   - "医疗NLP"
   - "放射学报告生成"
-  - "自对齐"
-  - "迭代优化"
-  - "多目标偏好"
-  - "RLHF"
+  - "在线迭代自对齐"
+  - "多目标偏好优化"
+  - "MODPO"
+  - "DPO"
 ---
 
 # Online Iterative Self-Alignment for Radiology Report Generation
@@ -157,3 +157,19 @@ tags:
   - 多目标偏好
   - RLHF
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Automated Structured Radiology Report Generation](automated_structured_radiology_report_generation.md)
+- [\[ACL 2025\] Radar: Enhancing Radiology Report Generation with Supplementary Knowledge Injection](radar_radiology_report_gen.md)
+- [\[ACL 2025\] CSTRL: Context-Driven Sequential Transfer Learning for Abstractive Radiology Report Summarization](cstrl_context-driven_sequential_transfer_learning_for_abstractive_radiology_repo.md)
+- [\[ACL 2026\] MARCH: Multi-Agent Radiology Clinical Hierarchy for CT Report Generation](../../ACL2026/medical_nlp/march_multi-agent_radiology_clinical_hierarchy_for_ct_report_generation.md)
+- [\[ACL 2025\] VITAL: A New Dataset for Benchmarking Pluralistic Alignment in Healthcare](vital_pluralistic_alignment_healthcare.md)
+
+</div>
+
+<!-- RELATED:END -->

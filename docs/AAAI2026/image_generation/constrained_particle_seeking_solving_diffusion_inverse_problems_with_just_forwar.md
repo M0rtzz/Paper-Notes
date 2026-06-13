@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Constrained Particle Seeking: Solving Diffusion Inverse Problems with Just Forward Passes
 description: >-
-  [AAAI 2026][图像生成][扩散模型] 提出 Constrained Particle Seeking (CPS)，一种无梯度的扩散模型反问题求解方法，通过利用所有候选粒子信息构建前向过程的局部线性代理模型，并在转移核高密度区域的超球面约束下寻找最优粒子，性能可与梯度方法媲美。
+  [AAAI 2026][图像生成][扩散模型] 提出 Constrained Particle Seeking (CPS)，一种无梯度的扩散模型反问题求解方法，通过利用所有候选粒子信息构建前向过程的局部线性代理模型，并在转移核高密度区域的超球面约束下寻找最优粒子，性能可与梯度方法媲美。 反问题（从间接噪声观测 $y = \m…
 tags:
   - "AAAI 2026"
   - "图像生成"

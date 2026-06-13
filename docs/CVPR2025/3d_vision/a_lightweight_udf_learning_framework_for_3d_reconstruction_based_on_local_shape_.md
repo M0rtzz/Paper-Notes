@@ -2,7 +2,7 @@
 title: >-
   [论文解读] A Lightweight UDF Learning Framework for 3D Reconstruction Based on Local Shape Functions
 description: >-
-  [CVPR 2025][3D视觉][无符号距离场] 本文提出LoSF-UDF，一种基于局部形状函数学习无符号距离场（UDF）的轻量级框架，仅需在合成的局部点云patch上训练一次（653KB参数、0.5GB数据），即可泛化重建各种类型的3D表面，且对噪声和离群点具有鲁棒性。
+  [CVPR 2025][3D视觉][无符号距离场] 本文提出LoSF-UDF，一种基于局部形状函数学习无符号距离场（UDF）的轻量级框架，仅需在合成的局部点云patch上训练一次（653KB参数、0.5GB数据），即可泛化重建各种类型的3D表面，且对噪声和离群点具有鲁棒性。 3D表面重建是计算机视觉和图形学的核心问题…
 tags:
   - "CVPR 2025"
   - "3D视觉"

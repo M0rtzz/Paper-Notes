@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SPARe: Stacked Parallelism with Adaptive Reordering for Fault-Tolerant LLM Pretraining Systems with 100k+ GPUs
 description: >-
-  [ICML2026][预训练][故障掩蔽] SPARe 在数据并行维度把同一份数据 shard 跨组 cyclically 堆叠 $r$ 层，并在节点失败后用 Hopcroft-Karp + min-cost max-flow 自适应重排"all-reduce stack 数"…
+  [ICML2026][预训练][故障掩蔽] SPARe 在数据并行维度把同一份数据 shard 跨组 cyclically 堆叠 $r$ 层，并在节点失败后用 Hopcroft-Karp + min-cost max-flow 自适应重排"all-reduce stack 数"，使得在 600k GPU 的 restart-dominant 场景下，只需 $2\sim 3\times$ 计算开销就能达到与 $r\times$ 传统副本同等的可用性，把 time-to-train 相比 Rep+CKPT 进一步降 $40\sim 50\%$。
 tags:
   - "ICML2026"
   - "预训练"

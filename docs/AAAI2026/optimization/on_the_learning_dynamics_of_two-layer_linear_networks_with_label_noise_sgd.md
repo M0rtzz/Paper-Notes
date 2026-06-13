@@ -2,9 +2,9 @@
 title: >-
   [论文解读] On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD
 description: >-
-  [AAAI 2026][优化/理论][Label Noise SGD] 在二层过参数化线性网络上理论分析 Label Noise SGD 的学习动力学，揭示了两阶段行为——Phase I 中权重范数逐渐缩小使模型从 lazy regime 逃逸到 rich regime…
+  [AAAI 2026 Oral][优化/理论][Label Noise SGD] 在二层过参数化线性网络上理论分析 Label Noise SGD 的学习动力学，揭示了两阶段行为——Phase I 中权重范数逐渐缩小使模型从 lazy regime 逃逸到 rich regime，Phase II 中权重与真实插值器对齐并收敛——并将该理论扩展到 SAM 优化器。
 tags:
-  - "AAAI 2026"
+  - "AAAI 2026 Oral"
   - "优化/理论"
   - "Label Noise SGD"
   - "Learning Dynamics"

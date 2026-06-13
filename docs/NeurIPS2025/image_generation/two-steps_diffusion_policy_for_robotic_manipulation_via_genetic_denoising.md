@@ -2,15 +2,15 @@
 title: >-
   [论文解读] Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising
 description: >-
-  [NeurIPS 2025][图像生成][扩散策略] 本文提出遗传扩散策略（GDP），通过分析裁剪导致的分布不匹配问题，结合降低噪声注入和基于群体选择的遗传算法去噪策略，使扩散策略仅需2步神经函数评估即可完成复杂操控任务。
+  [NeurIPS 2025][图像生成][遗传扩散策略] 通过揭示扩散策略中裁剪操作导致的分布失配本质，提出结合去噪调度优化与遗传算法群体选择的GDP方法，使现成DDPM扩散策略无需重训练：即可在仅2步推理下达到甚至超越100步基线的操控性能。 领域现状：扩散策略（Diffusion Policy）已在机器人操控领域取得SO…
 tags:
   - "NeurIPS 2025"
   - "图像生成"
-  - "扩散策略"
-  - "遗传去噪"
-  - "机器人操控"
-  - "OoD问题"
-  - "少步推理"
+  - "遗传扩散策略"
+  - "裁剪缺陷"
+  - "少步去噪"
+  - "群体采样"
+  - "OoD风险"
 ---
 
 # Two-Steps Diffusion Policy for Robotic Manipulation via Genetic Denoising
@@ -166,3 +166,19 @@ tags:
   - OoD问题
   - 少步推理
 ---
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[NeurIPS 2025\] AccuQuant: Simulating Multiple Denoising Steps for Quantizing Diffusion Models](accuquant_simulating_multiple_denoising_steps_for_quantizing.md)
+- [\[AAAI 2026\] MP1: MeanFlow Tames Policy Learning in 1-step for Robotic Manipulation](../../AAAI2026/image_generation/mp1_meanflow_tames_policy_learning_in_1-step_for_robotic_manipulation.md)
+- [\[ICCV 2025\] A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation](../../ICCV2025/image_generation/a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)
+- [\[ICCV 2025\] Fewer Denoising Steps or Cheaper Per-Step Inference: Towards Compute-Optimal Diffusion Model Deployment](../../ICCV2025/image_generation/fewer_denoising_steps_or_cheaper_per-step_inference_towards_compute-optimal_diff.md)
+- [\[NeurIPS 2025\] Flattening Hierarchies with Policy Bootstrapping](flattening_hierarchies_with_policy_bootstrapping.md)
+
+</div>
+
+<!-- RELATED:END -->

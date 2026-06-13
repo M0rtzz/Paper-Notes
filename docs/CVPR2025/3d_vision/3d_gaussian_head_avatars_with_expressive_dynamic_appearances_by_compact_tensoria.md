@@ -2,7 +2,7 @@
 title: >-
   [论文解读] 3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations
 description: >-
-  [CVPR 2025][3D视觉][Head Avatar] 提出一种紧凑张量表示的3D高斯头部头像方法——用三平面存储中性表情的静态外观，用轻量1D特征线存储每个blendshape的动态纹理（不透明度偏移），仅需**10MB存储**即可实现300FPS实时渲染和准确的动态面部细节捕捉…
+  [CVPR 2025][3D视觉][Head Avatar] 提出一种紧凑张量表示的3D高斯头部头像方法——用三平面存储中性表情的静态外观，用轻量1D特征线存储每个blendshape的动态纹理（不透明度偏移），仅需**10MB存储**即可实现300FPS实时渲染和准确的动态面部细节捕捉，在Nersemble数据集上PSNR和存储效率全面超越GA、GBS和GHA。
 tags:
   - "CVPR 2025"
   - "3D视觉"

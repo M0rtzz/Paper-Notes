@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Tuning the burn-in phase in training recurrent neural networks improves their performance
 description: >-
-  [ICLR 2026][时间序列][循环神经网络] 从理论上证明了 RNN 训练中 burn-in 阶段长度 $m$ 对截断反向传播时间（TBPTT）训练性能的关键影响，建立了训练遗憾的上界估计，并通过系统辨识和时间序列预测实验验证，合理调节 burn-in 可将预测误差降低超过 60%。
+  [ICLR 2026][时间序列][循环神经网络] 从理论上证明了 RNN 训练中 burn-in 阶段长度 $m$ 对截断反向传播时间（TBPTT）训练性能的关键影响，建立了训练遗憾的上界估计，并通过系统辨识和时间序列预测实验验证，合理调节 burn-in 可将预测误差降低超过 60%。 RNN 训练标准方法是反向传播时间…
 tags:
   - "ICLR 2026"
   - "时间序列"

@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Mango: Multi-Agent Web Navigation via Global-View Optimization
 description: >-
-  [ACL2026][机器人][网页导航] Mango 在网页导航前先构建网站的全局近似结构，再用 Thompson Sampling 在候选 URL 间动态分配有限导航预算，使 LLM web agent 不必总从首页盲目探索…
+  [ACL2026][机器人][网页导航] Mango 在网页导航前先构建网站的全局近似结构，再用 Thompson Sampling 在候选 URL 间动态分配有限导航预算，使 LLM web agent 不必总从首页盲目探索，并在 WebVoyager 和 WebWalkerQA 上显著超过 AgentOccam、WebWalker 等基线。
 tags:
   - "ACL2026"
   - "机器人"

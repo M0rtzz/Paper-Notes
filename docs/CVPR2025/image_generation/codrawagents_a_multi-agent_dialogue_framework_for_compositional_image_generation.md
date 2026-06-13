@@ -2,7 +2,7 @@
 title: >-
   [论文解读] coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation
 description: >-
-  [CVPR 2025][图像生成][多智能体] 提出 coDrawAgents，由 Interpreter、Planner、Checker、Painter 四个专家 agent 组成的交互式多智能体对话框架，通过分而治之的增量布局规划、视觉上下文感知推理和显式错误纠正…
+  [CVPR 2025][图像生成][多智能体] 提出 coDrawAgents，由 Interpreter、Planner、Checker、Painter 四个专家 agent 组成的交互式多智能体对话框架，通过分而治之的增量布局规划、视觉上下文感知推理和显式错误纠正，在 GenEval 上达到 0.94（SOTA）、DPG-Bench 上 85.17（SOTA）。
 tags:
   - "CVPR 2025"
   - "图像生成"

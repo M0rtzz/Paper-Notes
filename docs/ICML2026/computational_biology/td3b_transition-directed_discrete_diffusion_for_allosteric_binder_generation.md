@@ -2,9 +2,9 @@
 title: >-
   [论文解读] TD3B: Transition-Directed Discrete Diffusion for Allosteric Binder Generation
 description: >-
-  [ICML 2026][计算生物][变构调控] TD3B 把激动剂/拮抗剂的设计当作「方向性转移算子」生成任务，用一个方向 Oracle + 亲和力门控 + 树搜索摊销微调的掩码离散扩散框架，让预训练肽段生成器学会写出能定向偏移蛋白质活/失活构象转移的多肽序列。
+  [ICML 2026 Spotlight][计算生物][变构调控] TD3B 把激动剂/拮抗剂的设计当作「方向性转移算子」生成任务，用一个方向 Oracle + 亲和力门控 + 树搜索摊销微调的掩码离散扩散框架，让预训练肽段生成器学会写出能定向偏移蛋白质活/失活构象转移的多肽序列。 领域现状：当前主流的结合剂设计方法（RFd…
 tags:
-  - "ICML 2026"
+  - "ICML 2026 Spotlight"
   - "计算生物"
   - "变构调控"
   - "激动剂/拮抗剂"

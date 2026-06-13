@@ -2,7 +2,7 @@
 title: >-
   [论文解读] Kαlos finds Consensus: A Meta-Algorithm for Evaluating Inter-Annotator Agreement in Complex Vision Tasks
 description: >-
-  [CVPR 2026][语义分割][标注者间一致性] 提出KαLOS元算法，通过"先定位后分类"原则和数据驱动的参数校准，将复杂的空间-类别标注一致性问题转化为标准名义可靠性矩阵，统一评估目标检测、实例分割、姿态估计等多种视觉任务的标注者间一致性（IAA）。
+  [CVPR 2026][语义分割][标注者间一致性] 提出KαLOS元算法，通过"先定位后分类"原则和数据驱动的参数校准，将复杂的空间-类别标注一致性问题转化为标准名义可靠性矩阵，统一评估目标检测、实例分割、姿态估计等多种视觉任务的标注者间一致性（IAA）。 目标检测等视觉基准的性能提升正在停滞。现有证据表明…
 tags:
   - "CVPR 2026"
   - "语义分割"

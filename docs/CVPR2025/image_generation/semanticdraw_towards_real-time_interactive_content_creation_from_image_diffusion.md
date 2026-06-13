@@ -2,7 +2,7 @@
 title: >-
   [论文解读] SemanticDraw: Towards Real-Time Interactive Content Creation from Image Diffusion
 description: >-
-  [CVPR 2025][图像生成][实时图像生成] SemanticDraw 提出了一个亚秒级（0.64 秒）的区域多提示词文本-图像生成框架，通过三种稳定化策略解决了区域控制与扩散模型加速方法的兼容性问题，并利用多提示词流式批处理管线在单张 RTX 2080 Ti 上实现了近实时交互生成。
+  [CVPR 2025][图像生成][实时图像生成] SemanticDraw 提出了一个亚秒级（0.64 秒）的区域多提示词文本-图像生成框架，通过三种稳定化策略解决了区域控制与扩散模型加速方法的兼容性问题，并利用多提示词流式批处理管线在单张 RTX 2080 Ti 上实现了近实时交互生成。 1. 领域现状：扩散模型在图像生…
 tags:
   - "CVPR 2025"
   - "图像生成"

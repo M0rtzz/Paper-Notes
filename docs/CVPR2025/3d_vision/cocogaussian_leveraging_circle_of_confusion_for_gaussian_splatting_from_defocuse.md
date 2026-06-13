@@ -2,7 +2,7 @@
 title: >-
   [论文解读] CoCoGaussian: Leveraging Circle of Confusion for Gaussian Splatting from Defocused Images
 description: >-
-  [CVPR 2025][3D视觉][3D高斯溅射] 提出CoCoGaussian，利用物理摄影散焦原理（弥散圆/Circle of Confusion）在3D高斯溅射框架中建模散焦模糊，仅使用散焦图像即可精确重建3D场景并渲染清晰的新视角图像。
+  [CVPR 2025][3D视觉][3D高斯溅射] 提出CoCoGaussian，利用物理摄影散焦原理（弥散圆/Circle of Confusion）在3D高斯溅射框架中建模散焦模糊，仅使用散焦图像即可精确重建3D场景并渲染清晰的新视角图像。 现实拍摄中，相机有限景深导致的散焦模糊不可避免——小光圈需要更长曝光时间（引发运…
 tags:
   - "CVPR 2025"
   - "3D视觉"
